@@ -4,100 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAFEACD343F
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 07:40:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3F95CD37B5
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 07:40:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLcHd-0003Ze-Qw; Sat, 09 May 2026 03:39:34 -0400
+	id 1wLcI0-0004CG-6X; Sat, 09 May 2026 03:39:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wLcHX-0003F3-QY
- for qemu-devel@nongnu.org; Sat, 09 May 2026 03:39:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wLcHs-0003jO-Vj
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 03:39:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wLcHT-0007a2-BB
- for qemu-devel@nongnu.org; Sat, 09 May 2026 03:39:27 -0400
+ id 1wLcHn-0007hk-T6
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 03:39:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778312362;
+ s=mimecast20190719; t=1778312383;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7QYqPOdnppReAVRJ5P/m4/A1UFEhBGpvGj/XUDUfT3M=;
- b=ZwNXSmijDX9nHmhNzLURD3A/ynRis6SQeApJMXItEurDwFS5owDUxTBPZnrWmmg29hsbQl
- w196MeBjU3V/qtnU26E/ruyOgGSQ7RJ+hQ9MdTZHhSnXYYtiWJ+2CFGr/kz7EPOxerYVxU
- DB1uCYMCIeYcOAOXi2gcQKOtYPSN4cg=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=kNSuhbRxJ7Ckojk55vWidV435yJ9A299+A5PWlIkzSo=;
+ b=gl0RUf/H3SfRitLBhL+WqDA+1QHwG1UWwZ9BFHFafWDditcm3JEWsRjggNdVeI4nDAKO4m
+ GDMsD/ksQCkPPmX1tXA0g4bXlU49sNgrVIeZAjX/xaIR4oHBj75TB899Jw7khNwmM8MwsJ
+ OUK79mWrbhCcrSfshoPCGeURYgV5n/A=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-70-manh_PZEMKe58UYmNSnICg-1; Sat,
- 09 May 2026 03:39:16 -0400
-X-MC-Unique: manh_PZEMKe58UYmNSnICg-1
-X-Mimecast-MFC-AGG-ID: manh_PZEMKe58UYmNSnICg_1778312353
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-213-yGgVlEb0M4KAj2WNqDRaAg-1; Sat,
+ 09 May 2026 03:39:38 -0400
+X-MC-Unique: yGgVlEb0M4KAj2WNqDRaAg-1
+X-Mimecast-MFC-AGG-ID: yGgVlEb0M4KAj2WNqDRaAg_1778312377
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DD2BE195608B; Sat,  9 May 2026 07:39:10 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D96301800367; Sat,  9 May 2026 07:39:36 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8496E1800374; Sat,  9 May 2026 07:39:05 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 586CD19560A2; Sat,  9 May 2026 07:39:32 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: stefanha@gmail.com,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Jan Kiszka <jan.kiszka@web.de>, Peter Maydell <peter.maydell@linaro.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>,
+ John Snow <jsnow@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Samuel Tardieu <sam@rfc1149.net>,
- =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
- Aleksandar Rikalo <arikalo@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
- Thomas Huth <th.huth+qemu@posteo.eu>, BALATON Zoltan <balaton@eik.bme.hu>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>,
- Alex Williamson <alex@shazbot.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- qemu-arm@nongnu.org (open list:Musicpal),
- qemu-ppc@nongnu.org (open list:sam460ex),
- xen-devel@lists.xenproject.org (open list:X86 Xen CPUs)
-Subject: [PULL 28/32] ui/console: rename public API to use consistent
- qemu_console_ prefix
-Date: Sat,  9 May 2026 11:36:14 +0400
-Message-ID: <20260509073621.1011778-29-marcandre.lureau@redhat.com>
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
+Subject: [PULL 32/32] tools/qemu-vnc: add standalone VNC server over D-Bus
+Date: Sat,  9 May 2026 11:36:18 +0400
+Message-ID: <20260509073621.1011778-33-marcandre.lureau@redhat.com>
 In-Reply-To: <20260509073621.1011778-1-marcandre.lureau@redhat.com>
 References: <20260509073621.1011778-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,2749 +95,5164 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Rename the display and graphic console public functions to follow a
-consistent qemu_console_ (or qemu_graphic_console_) naming convention.
+Add a standalone VNC server binary that connects to a running QEMU
+instance via the D-Bus display interface (org.qemu.Display1, via the bus
+or directly p2p). This allows serving a VNC display without compiling
+VNC support directly into the QEMU system emulator, and enables running
+the VNC server as a separate process with independent lifecycle and
+privilege domain.
 
-The previous API used a mix of prefixes: dpy_, graphic_hw_,
-graphic_console_, console_has_, and update_displaychangelistener().
-Unify them under a common qemu_console_ namespace for better
-discoverability and consistency.
+Built only when both VNC and D-Bus display support are enabled.
+If we wanted to have qemu -vnc disabled, and qemu-vnc built, we would
+need to split CONFIG_VNC. This is left as a future exercise.
 
-The main renames are:
-- dpy_gfx_*() / dpy_text_*() / dpy_gl_*() → qemu_console_*()
-- dpy_{get,set}_ui_info() → qemu_console_{get,set}_ui_info()
-- graphic_hw_*() → qemu_console_hw_*()
-- graphic_console_*() → qemu_graphic_console_*()
-- console_has_gl() → qemu_console_has_gl()
-- update_displaychangelistener() → qemu_console_listener_set_refresh()
+Current omissions include some QEMU VNC runtime features (better handled via
+restart), legacy options, and Windows support.
 
-No functional changes.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/ui/console.h             | 108 ++++++++++++------------
- hw/arm/musicpal.c                |   4 +-
- hw/display/artist.c              |   4 +-
- hw/display/ati.c                 |  16 ++--
- hw/display/bcm2835_fb.c          |   5 +-
- hw/display/bochs-display.c       |  14 ++--
- hw/display/cg3.c                 |   6 +-
- hw/display/cirrus_vga.c          |   8 +-
- hw/display/cirrus_vga_isa.c      |   2 +-
- hw/display/dm163.c               |   6 +-
- hw/display/exynos4210_fimd.c     |   4 +-
- hw/display/g364fb.c              |  10 +--
- hw/display/jazz_led.c            |   8 +-
- hw/display/macfb.c               |   6 +-
- hw/display/next-fb.c             |   4 +-
- hw/display/omap_lcdc.c           |   4 +-
- hw/display/pl110.c               |   4 +-
- hw/display/qxl-render.c          |  12 +--
- hw/display/qxl.c                 |  14 ++--
- hw/display/ramfb-standalone.c    |   2 +-
- hw/display/ramfb.c               |   4 +-
- hw/display/sm501.c               |   6 +-
- hw/display/ssd0303.c             |   4 +-
- hw/display/ssd0323.c             |   5 +-
- hw/display/tcx.c                 |  16 ++--
- hw/display/vga-isa.c             |   2 +-
- hw/display/vga-mmio.c            |   2 +-
- hw/display/vga-pci.c             |   6 +-
- hw/display/vga.c                 |  40 +++++----
- hw/display/vhost-user-gpu.c      |  22 ++---
- hw/display/virtio-gpu-base.c     |   2 +-
- hw/display/virtio-gpu-rutabaga.c |  10 +--
- hw/display/virtio-gpu-udmabuf.c  |   4 +-
- hw/display/virtio-gpu-virgl.c    |  20 ++---
- hw/display/virtio-gpu.c          |  26 +++---
- hw/display/virtio-vga.c          |   2 +-
- hw/display/vmware_vga.c          |  12 +--
- hw/display/xenfb.c               |   6 +-
- hw/display/xlnx_dp.c             |  10 +--
- hw/vfio/display.c                |  32 +++----
- ui/console-vc.c                  |  12 +--
- ui/console.c                     | 140 +++++++++++++++----------------
- ui/curses.c                      |   8 +-
- ui/dbus-console.c                |   4 +-
- ui/dbus-listener.c               |  10 +--
- ui/egl-headless.c                |   4 +-
- ui/gtk-egl.c                     |   6 +-
- ui/gtk-gl-area.c                 |   6 +-
- ui/gtk.c                         |  18 ++--
- ui/sdl2-2d.c                     |   2 +-
- ui/sdl2-gl.c                     |   2 +-
- ui/sdl2.c                        |   6 +-
- ui/spice-display.c               |  16 ++--
- ui/vnc.c                         |  22 ++---
- hw/display/apple-gfx.m           |  16 ++--
- ui/cocoa.m                       |  10 +--
- 56 files changed, 372 insertions(+), 382 deletions(-)
+ MAINTAINERS                   |    5 +
+ docs/conf.py                  |    3 +
+ docs/interop/dbus-display.rst |    2 +
+ docs/interop/dbus-vnc.rst     |   26 +
+ docs/interop/index.rst        |    1 +
+ docs/meson.build              |    1 +
+ docs/tools/index.rst          |    1 +
+ docs/tools/qemu-vnc.rst       |  226 ++++++
+ meson.build                   |   17 +
+ tools/qemu-vnc/qemu-vnc.h     |   49 ++
+ tools/qemu-vnc/trace.h        |    4 +
+ tests/qtest/dbus-vnc-test.c   | 1346 +++++++++++++++++++++++++++++++++
+ tools/qemu-vnc/audio.c        |  308 ++++++++
+ tools/qemu-vnc/chardev.c      |  148 ++++
+ tools/qemu-vnc/clipboard.c    |  376 +++++++++
+ tools/qemu-vnc/console.c      |  170 +++++
+ tools/qemu-vnc/dbus.c         |  474 ++++++++++++
+ tools/qemu-vnc/display.c      |  456 +++++++++++
+ tools/qemu-vnc/input.c        |  239 ++++++
+ tools/qemu-vnc/qemu-vnc.c     |  581 ++++++++++++++
+ tools/qemu-vnc/stubs.c        |   62 ++
+ tools/qemu-vnc/utils.c        |   59 ++
+ meson_options.txt             |    2 +
+ scripts/meson-buildoptions.sh |    3 +
+ tests/dbus-daemon.sh          |   14 +-
+ tests/qtest/meson.build       |   13 +
+ tools/qemu-vnc/meson.build    |   26 +
+ tools/qemu-vnc/qemu-vnc1.xml  |  201 +++++
+ tools/qemu-vnc/trace-events   |   21 +
+ 29 files changed, 4831 insertions(+), 3 deletions(-)
+ create mode 100644 docs/interop/dbus-vnc.rst
+ create mode 100644 docs/tools/qemu-vnc.rst
+ create mode 100644 tools/qemu-vnc/qemu-vnc.h
+ create mode 100644 tools/qemu-vnc/trace.h
+ create mode 100644 tests/qtest/dbus-vnc-test.c
+ create mode 100644 tools/qemu-vnc/audio.c
+ create mode 100644 tools/qemu-vnc/chardev.c
+ create mode 100644 tools/qemu-vnc/clipboard.c
+ create mode 100644 tools/qemu-vnc/console.c
+ create mode 100644 tools/qemu-vnc/dbus.c
+ create mode 100644 tools/qemu-vnc/display.c
+ create mode 100644 tools/qemu-vnc/input.c
+ create mode 100644 tools/qemu-vnc/qemu-vnc.c
+ create mode 100644 tools/qemu-vnc/stubs.c
+ create mode 100644 tools/qemu-vnc/utils.c
+ create mode 100644 tools/qemu-vnc/meson.build
+ create mode 100644 tools/qemu-vnc/qemu-vnc1.xml
+ create mode 100644 tools/qemu-vnc/trace-events
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index 69ac7b01b33..cfa940d4c66 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -294,49 +294,49 @@ DisplayState *init_displaystate(void);
- void qemu_console_register_listener(QemuConsole *con,
-                                     DisplayChangeListener *dcl,
-                                     const DisplayChangeListenerOps *ops);
--void update_displaychangelistener(DisplayChangeListener *dcl,
--                                  uint64_t interval);
-+void qemu_console_listener_set_refresh(DisplayChangeListener *dcl,
-+                                       uint64_t interval);
- void qemu_console_unregister_listener(DisplayChangeListener *dcl);
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 9d3d6459537..93a1e4e4822 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2830,6 +2830,11 @@ F: docs/interop/vhost-user-gpu.rst
+ F: contrib/vhost-user-gpu
+ F: hw/display/vhost-user-*
  
--bool dpy_ui_info_supported(const QemuConsole *con);
--const QemuUIInfo *dpy_get_ui_info(const QemuConsole *con);
--int dpy_set_ui_info(QemuConsole *con, QemuUIInfo *info, bool delay);
--
--void dpy_gfx_update(QemuConsole *con, int x, int y, int w, int h);
--void dpy_gfx_update_full(QemuConsole *con);
--void dpy_gfx_replace_surface(QemuConsole *con,
--                             DisplaySurface *surface);
--void dpy_text_cursor(QemuConsole *con, int x, int y);
--void dpy_text_update(QemuConsole *con, int x, int y, int w, int h);
--void dpy_text_resize(QemuConsole *con, int w, int h);
--void dpy_mouse_set(QemuConsole *con, int x, int y, bool on);
--void dpy_cursor_define(QemuConsole *con, QEMUCursor *cursor);
--bool dpy_gfx_check_format(QemuConsole *con,
--                          pixman_format_code_t format);
--
--void dpy_gl_scanout_disable(QemuConsole *con);
--void dpy_gl_scanout_texture(QemuConsole *con,
--                            uint32_t backing_id, bool backing_y_0_top,
--                            uint32_t backing_width, uint32_t backing_height,
--                            uint32_t x, uint32_t y, uint32_t w, uint32_t h,
--                            void *d3d_tex2d);
--void dpy_gl_scanout_dmabuf(QemuConsole *con,
--                           QemuDmaBuf *dmabuf);
--void dpy_gl_cursor_dmabuf(QemuConsole *con, QemuDmaBuf *dmabuf,
--                          bool have_hot, uint32_t hot_x, uint32_t hot_y);
--void dpy_gl_cursor_position(QemuConsole *con,
--                            uint32_t pos_x, uint32_t pos_y);
--void dpy_gl_release_dmabuf(QemuConsole *con,
--                           QemuDmaBuf *dmabuf);
--void dpy_gl_update(QemuConsole *con,
--                   uint32_t x, uint32_t y, uint32_t w, uint32_t h);
--
--QEMUGLContext dpy_gl_ctx_create(QemuConsole *con,
--                                QEMUGLParams *params);
--void dpy_gl_ctx_destroy(QemuConsole *con, QEMUGLContext ctx);
--int dpy_gl_ctx_make_current(QemuConsole *con, QEMUGLContext ctx);
--
--bool console_has_gl(QemuConsole *con);
-+bool qemu_console_ui_info_supported(const QemuConsole *con);
-+const QemuUIInfo *qemu_console_get_ui_info(const QemuConsole *con);
-+int qemu_console_set_ui_info(QemuConsole *con, QemuUIInfo *info, bool delay);
++qemu-vnc:
++M: Marc-André Lureau <marcandre.lureau@redhat.com>
++S: Maintained
++F: tools/qemu-vnc
 +
-+void qemu_console_update(QemuConsole *con, int x, int y, int w, int h);
-+void qemu_console_update_full(QemuConsole *con);
-+void qemu_console_set_surface(QemuConsole *con,
-+                              DisplaySurface *surface);
-+void qemu_console_text_set_cursor(QemuConsole *con, int x, int y);
-+void qemu_console_text_update(QemuConsole *con, int x, int y, int w, int h);
-+void qemu_console_text_resize(QemuConsole *con, int w, int h);
-+void qemu_console_set_mouse(QemuConsole *con, int x, int y, bool on);
-+void qemu_console_set_cursor(QemuConsole *con, QEMUCursor *cursor);
-+bool qemu_console_check_format(QemuConsole *con,
-+                               pixman_format_code_t format);
+ Cirrus VGA
+ M: Gerd Hoffmann <kraxel@redhat.com>
+ S: Odd Fixes
+diff --git a/docs/conf.py b/docs/conf.py
+index f835904ba1e..7e35d2158d3 100644
+--- a/docs/conf.py
++++ b/docs/conf.py
+@@ -333,6 +333,9 @@
+     ('tools/qemu-trace-stap', 'qemu-trace-stap',
+      'QEMU SystemTap trace tool',
+      [], 1),
++    ('tools/qemu-vnc', 'qemu-vnc',
++     'QEMU standalone VNC server',
++     [], 1),
+ ]
+ man_make_section_directory = False
+ 
+diff --git a/docs/interop/dbus-display.rst b/docs/interop/dbus-display.rst
+index 8c6e8e0f5a8..87648e91dc0 100644
+--- a/docs/interop/dbus-display.rst
++++ b/docs/interop/dbus-display.rst
+@@ -1,3 +1,5 @@
++.. _dbus-display:
 +
-+void qemu_console_gl_scanout_disable(QemuConsole *con);
-+void qemu_console_gl_scanout_texture(QemuConsole *con,
-+                                     uint32_t backing_id, bool backing_y_0_top,
-+                                     uint32_t backing_width, uint32_t backing_height,
-+                                     uint32_t x, uint32_t y, uint32_t w, uint32_t h,
-+                                     void *d3d_tex2d);
-+void qemu_console_gl_scanout_dmabuf(QemuConsole *con,
-+                                    QemuDmaBuf *dmabuf);
-+void qemu_console_gl_cursor_dmabuf(QemuConsole *con, QemuDmaBuf *dmabuf,
-+                                   bool have_hot, uint32_t hot_x, uint32_t hot_y);
-+void qemu_console_gl_cursor_position(QemuConsole *con,
-+                                     uint32_t pos_x, uint32_t pos_y);
-+void qemu_console_gl_release_dmabuf(QemuConsole *con,
-+                                    QemuDmaBuf *dmabuf);
-+void qemu_console_gl_update(QemuConsole *con,
-+                            uint32_t x, uint32_t y, uint32_t w, uint32_t h);
+ D-Bus display
+ =============
+ 
+diff --git a/docs/interop/dbus-vnc.rst b/docs/interop/dbus-vnc.rst
+new file mode 100644
+index 00000000000..d2b77978f63
+--- /dev/null
++++ b/docs/interop/dbus-vnc.rst
+@@ -0,0 +1,26 @@
++D-Bus VNC
++=========
 +
-+QEMUGLContext qemu_console_gl_ctx_create(QemuConsole *con,
-+                                         QEMUGLParams *params);
-+void qemu_console_gl_ctx_destroy(QemuConsole *con, QEMUGLContext ctx);
-+int qemu_console_gl_ctx_make_current(QemuConsole *con, QEMUGLContext ctx);
++The ``qemu-vnc`` standalone VNC server exposes a D-Bus interface for management
++and monitoring of VNC connections.
 +
-+bool qemu_console_has_gl(QemuConsole *con);
- 
- enum {
-     GRAPHIC_FLAGS_NONE     = 0,
-@@ -361,19 +361,19 @@ typedef struct GraphicHwOps {
-     void (*gl_block)(void *opaque, bool block);
- } GraphicHwOps;
- 
--QemuConsole *graphic_console_init(DeviceState *dev, uint32_t head,
--                                  const GraphicHwOps *ops,
--                                  void *opaque);
--void graphic_console_set_hwops(QemuConsole *con,
--                               const GraphicHwOps *hw_ops,
--                               void *opaque);
--void graphic_console_close(QemuConsole *con);
--
--void graphic_hw_update(QemuConsole *con);
--void graphic_hw_update_done(QemuConsole *con);
--void graphic_hw_invalidate(QemuConsole *con);
--void graphic_hw_text_update(QemuConsole *con, uint32_t *chardata);
--void graphic_hw_gl_block(QemuConsole *con, bool block);
-+QemuConsole *qemu_graphic_console_create(DeviceState *dev, uint32_t head,
-+                                         const GraphicHwOps *ops,
-+                                         void *opaque);
-+void qemu_graphic_console_set_hwops(QemuConsole *con,
-+                                    const GraphicHwOps *hw_ops,
-+                                    void *opaque);
-+void qemu_graphic_console_close(QemuConsole *con);
++The service is available on the bus under the well-known name ``org.qemu.vnc``.
++Objects are exported under ``/org/qemu/Vnc1/``.
 +
-+void qemu_console_hw_update(QemuConsole *con);
-+void qemu_console_hw_update_done(QemuConsole *con);
-+void qemu_console_hw_invalidate(QemuConsole *con);
-+void qemu_console_hw_text_update(QemuConsole *con, uint32_t *chardata);
-+void qemu_console_hw_gl_block(QemuConsole *con, bool block);
- 
- void qemu_console_early_init(void);
- 
-diff --git a/hw/arm/musicpal.c b/hw/arm/musicpal.c
-index ba88ed756e2..83676eb7fea 100644
---- a/hw/arm/musicpal.c
-+++ b/hw/arm/musicpal.c
-@@ -170,7 +170,7 @@ static bool lcd_refresh(void *opaque)
-         }
-     }
- 
--    dpy_gfx_update(s->con, 0, 0, 128*3, 64*3);
-+    qemu_console_update(s->con, 0, 0, 128*3, 64*3);
-     return true;
- }
- 
-@@ -253,7 +253,7 @@ static const GraphicHwOps musicpal_gfx_ops = {
- static void musicpal_lcd_realize(DeviceState *dev, Error **errp)
- {
-     musicpal_lcd_state *s = MUSICPAL_LCD(dev);
--    s->con = graphic_console_init(dev, 0, &musicpal_gfx_ops, s);
-+    s->con = qemu_graphic_console_create(dev, 0, &musicpal_gfx_ops, s);
-     qemu_console_resize(s->con, 128 * 3, 64 * 3);
- }
- 
-diff --git a/hw/display/artist.c b/hw/display/artist.c
-index a07508378c7..288d466ec64 100644
---- a/hw/display/artist.c
-+++ b/hw/display/artist.c
-@@ -1324,7 +1324,7 @@ static bool artist_update_display(void *opaque)
-     artist_draw_cursor(s);
- 
-     if (first >= 0) {
--        dpy_gfx_update(s->con, 0, first, s->width, last - first + 1);
-+        qemu_console_update(s->con, 0, first, s->width, last - first + 1);
-     }
- 
-     return true;
-@@ -1424,7 +1424,7 @@ static void artist_realizefn(DeviceState *dev, Error **errp)
-     s->misc_video |= 0x0A000000;
-     s->misc_ctrl  |= 0x00800000;
- 
--    s->con = graphic_console_init(dev, 0, &artist_ops, s);
-+    s->con = qemu_graphic_console_create(dev, 0, &artist_ops, s);
-     qemu_console_resize(s->con, s->width, s->height);
- }
- 
-diff --git a/hw/display/ati.c b/hw/display/ati.c
-index 3a7d45a8820..d77589df67a 100644
---- a/hw/display/ati.c
-+++ b/hw/display/ati.c
-@@ -161,7 +161,7 @@ static void ati_cursor_define(ATIVGAState *s)
-     }
-     cursor_set_mono(s->cursor, s->regs.cur_color1, s->regs.cur_color0,
-                     (uint8_t *)&data[64], 1, (uint8_t *)&data[0]);
--    dpy_cursor_define(s->vga.con, s->cursor);
-+    qemu_console_set_cursor(s->vga.con, s->cursor);
- }
- 
- /* Alternatively support guest rendered hardware cursor */
-@@ -626,9 +626,9 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-                 if (s->regs.crtc_gen_cntl & CRTC2_CUR_EN) {
-                     ati_cursor_define(s);
-                 }
--                dpy_mouse_set(s->vga.con, s->regs.cur_hv_pos >> 16,
--                              s->regs.cur_hv_pos & 0xffff,
--                              (s->regs.crtc_gen_cntl & CRTC2_CUR_EN) != 0);
-+                qemu_console_set_mouse(s->vga.con, s->regs.cur_hv_pos >> 16,
-+                                       s->regs.cur_hv_pos & 0xffff,
-+                                       (s->regs.crtc_gen_cntl & CRTC2_CUR_EN) != 0);
-             }
-         }
-         if ((val & (CRTC2_EXT_DISP_EN | CRTC2_EN)) !=
-@@ -780,8 +780,8 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-         }
-         if (!s->cursor_guest_mode &&
-             (s->regs.crtc_gen_cntl & CRTC2_CUR_EN) && !(t & BIT(31))) {
--            dpy_mouse_set(s->vga.con, s->regs.cur_hv_pos >> 16,
--                          s->regs.cur_hv_pos & 0xffff, true);
-+            qemu_console_set_mouse(s->vga.con, s->regs.cur_hv_pos >> 16,
-+                                   s->regs.cur_hv_pos & 0xffff, true);
-         }
-         break;
-     }
-@@ -1094,7 +1094,7 @@ static void ati_vga_realize(PCIDevice *dev, Error **errp)
-     }
-     vga_init(vga, OBJECT(s), pci_address_space(dev),
-              pci_address_space_io(dev), true);
--    vga->con = graphic_console_init(DEVICE(s), 0, s->vga.hw_ops, vga);
-+    vga->con = qemu_graphic_console_create(DEVICE(s), 0, s->vga.hw_ops, vga);
-     if (s->cursor_guest_mode) {
-         vga->cursor_invalidate = ati_cursor_invalidate;
-         vga->cursor_draw_line = ati_cursor_draw_line;
-@@ -1167,7 +1167,7 @@ static void ati_vga_exit(PCIDevice *dev)
-     ATIVGAState *s = ATI_VGA(dev);
- 
-     timer_del(&s->vblank_timer);
--    graphic_console_close(s->vga.con);
-+    qemu_graphic_console_close(s->vga.con);
- }
- 
- static const Property ati_vga_properties[] = {
-diff --git a/hw/display/bcm2835_fb.c b/hw/display/bcm2835_fb.c
-index 83c4c03c7ca..bd58f625fcd 100644
---- a/hw/display/bcm2835_fb.c
-+++ b/hw/display/bcm2835_fb.c
-@@ -207,8 +207,7 @@ static bool fb_update_display(void *opaque)
-                                draw_line_src16, s, &first, &last);
- 
-     if (first >= 0) {
--        dpy_gfx_update(s->con, 0, first, s->config.xres,
--                       last - first + 1);
-+        qemu_console_update(s->con, 0, first, s->config.xres, last - first + 1);
-     }
- 
-     s->invalidate = false;
-@@ -427,7 +426,7 @@ static void bcm2835_fb_realize(DeviceState *dev, Error **errp)
- 
-     bcm2835_fb_reset(dev);
- 
--    s->con = graphic_console_init(dev, 0, &vgafb_ops, s);
-+    s->con = qemu_graphic_console_create(dev, 0, &vgafb_ops, s);
-     qemu_console_resize(s->con, s->config.xres, s->config.yres);
- }
- 
-diff --git a/hw/display/bochs-display.c b/hw/display/bochs-display.c
-index 8ef9b76cf85..64e669429c4 100644
---- a/hw/display/bochs-display.c
-+++ b/hw/display/bochs-display.c
-@@ -224,12 +224,12 @@ static bool bochs_display_update(void *opaque)
-                                              mode.format,
-                                              mode.stride,
-                                              ptr + mode.offset);
--        dpy_gfx_replace_surface(s->con, ds);
-+        qemu_console_set_surface(s->con, ds);
-         full_update = true;
-     }
- 
-     if (full_update) {
--        dpy_gfx_update_full(s->con);
-+        qemu_console_update_full(s->con);
-     } else {
-         snap = memory_region_snapshot_and_clear_dirty(&s->vram,
-                                                       mode.offset, mode.size,
-@@ -243,14 +243,12 @@ static bool bochs_display_update(void *opaque)
-                 ys = y;
-             }
-             if (!dirty && ys >= 0) {
--                dpy_gfx_update(s->con, 0, ys,
--                               mode.width, y - ys);
-+                qemu_console_update(s->con, 0, ys, mode.width, y - ys);
-                 ys = -1;
-             }
-         }
-         if (ys >= 0) {
--            dpy_gfx_update(s->con, 0, ys,
--                           mode.width, y - ys);
-+            qemu_console_update(s->con, 0, ys, mode.width, y - ys);
-         }
- 
-         g_free(snap);
-@@ -279,7 +277,7 @@ static void bochs_display_realize(PCIDevice *dev, Error **errp)
-     }
-     s->vgamem = pow2ceil(s->vgamem);
- 
--    s->con = graphic_console_init(DEVICE(dev), 0, &bochs_display_gfx_ops, s);
-+    s->con = qemu_graphic_console_create(DEVICE(dev), 0, &bochs_display_gfx_ops, s);
- 
-     memory_region_init_ram(&s->vram, obj, "bochs-display-vram", s->vgamem,
-                            &error_fatal);
-@@ -344,7 +342,7 @@ static void bochs_display_exit(PCIDevice *dev)
- {
-     BochsDisplayState *s = BOCHS_DISPLAY(dev);
- 
--    graphic_console_close(s->con);
-+    qemu_graphic_console_close(s->con);
- }
- 
- static const Property bochs_display_properties[] = {
-diff --git a/hw/display/cg3.c b/hw/display/cg3.c
-index 963bb3427a6..f9dda1549dd 100644
---- a/hw/display/cg3.c
-+++ b/hw/display/cg3.c
-@@ -137,7 +137,7 @@ static bool cg3_update_display(void *opaque)
-             }
-         } else {
-             if (y_start >= 0) {
--                dpy_gfx_update(s->con, 0, y_start, width, y - y_start);
-+                qemu_console_update(s->con, 0, y_start, width, y - y_start);
-                 y_start = -1;
-             }
-             pix += width;
-@@ -146,7 +146,7 @@ static bool cg3_update_display(void *opaque)
-     }
-     s->full_update = 0;
-     if (y_start >= 0) {
--        dpy_gfx_update(s->con, 0, y_start, width, y - y_start);
-+        qemu_console_update(s->con, 0, y_start, width, y - y_start);
-     }
-     /* vsync interrupt? */
-     if (s->regs[0] & CG3_CR_ENABLE_INTS) {
-@@ -311,7 +311,7 @@ static void cg3_realizefn(DeviceState *dev, Error **errp)
- 
-     sysbus_init_irq(sbd, &s->irq);
- 
--    s->con = graphic_console_init(dev, 0, &cg3_ops, s);
-+    s->con = qemu_graphic_console_create(dev, 0, &cg3_ops, s);
-     qemu_console_resize(s->con, s->width, s->height);
- }
- 
-diff --git a/hw/display/cirrus_vga.c b/hw/display/cirrus_vga.c
-index 48be3c8a932..0a8c74e1374 100644
---- a/hw/display/cirrus_vga.c
-+++ b/hw/display/cirrus_vga.c
-@@ -779,9 +779,9 @@ static int cirrus_do_copy(CirrusVGAState *s, int dst, int src, int w, int h)
-                       s->cirrus_blt_width, s->cirrus_blt_height);
- 
-     if (notify) {
--        dpy_gfx_update(s->vga.con, dx, dy,
--                       s->cirrus_blt_width / depth,
--                       s->cirrus_blt_height);
-+        qemu_console_update(s->vga.con, dx, dy,
-+                            s->cirrus_blt_width / depth,
-+                            s->cirrus_blt_height);
-     }
- 
-     /* we don't have to notify the display that this portion has
-@@ -2964,7 +2964,7 @@ static void pci_cirrus_vga_realize(PCIDevice *dev, Error **errp)
-     }
-     cirrus_init_common(s, OBJECT(dev), device_id, 1, pci_address_space(dev),
-                        pci_address_space_io(dev));
--    s->vga.con = graphic_console_init(DEVICE(dev), 0, s->vga.hw_ops, &s->vga);
-+    s->vga.con = qemu_graphic_console_create(DEVICE(dev), 0, s->vga.hw_ops, &s->vga);
- 
-     /* setup PCI */
-     memory_region_init(&s->pci_bar, OBJECT(dev), "cirrus-pci-bar0", 0x2000000);
-diff --git a/hw/display/cirrus_vga_isa.c b/hw/display/cirrus_vga_isa.c
-index 76034a88605..b8052d1d8ed 100644
---- a/hw/display/cirrus_vga_isa.c
-+++ b/hw/display/cirrus_vga_isa.c
-@@ -62,7 +62,7 @@ static void isa_cirrus_vga_realizefn(DeviceState *dev, Error **errp)
-     cirrus_init_common(&d->cirrus_vga, OBJECT(dev), CIRRUS_ID_CLGD5430, 0,
-                        isa_address_space(isadev),
-                        isa_address_space_io(isadev));
--    s->con = graphic_console_init(dev, 0, s->hw_ops, s);
-+    s->con = qemu_graphic_console_create(dev, 0, s->hw_ops, s);
-     rom_add_vga(VGABIOS_CIRRUS_FILENAME);
-     /* XXX ISA-LFB support */
-     /* FIXME not qdev yet */
-diff --git a/hw/display/dm163.c b/hw/display/dm163.c
-index 9ea62cb4f76..afade0b98c3 100644
---- a/hw/display/dm163.c
-+++ b/hw/display/dm163.c
-@@ -277,8 +277,8 @@ static uint32_t *update_display_of_row(DM163State *s, uint32_t *dest,
-         }
-     }
- 
--    dpy_gfx_update(s->console, 0, LED_SQUARE_SIZE * row,
--                    RGB_MATRIX_NUM_COLS * LED_SQUARE_SIZE, LED_SQUARE_SIZE);
-+    qemu_console_update(s->console, 0, LED_SQUARE_SIZE * row,
-+                        RGB_MATRIX_NUM_COLS * LED_SQUARE_SIZE, LED_SQUARE_SIZE);
-     s->redraw &= ~(1 << row);
-     trace_dm163_redraw(s->redraw);
- 
-@@ -322,7 +322,7 @@ static void dm163_realize(DeviceState *dev, Error **errp)
-     qdev_init_gpio_in(dev, dm163_en_b_gpio_handler, 1);
-     qdev_init_gpio_out_named(dev, &s->sout, "sout", 1);
- 
--    s->console = graphic_console_init(dev, 0, &dm163_ops, s);
-+    s->console = qemu_graphic_console_create(dev, 0, &dm163_ops, s);
-     qemu_console_resize(s->console, RGB_MATRIX_NUM_COLS * LED_SQUARE_SIZE,
-                         RGB_MATRIX_NUM_ROWS * LED_SQUARE_SIZE);
- }
-diff --git a/hw/display/exynos4210_fimd.c b/hw/display/exynos4210_fimd.c
-index a91f04aaf79..5133623ee2e 100644
---- a/hw/display/exynos4210_fimd.c
-+++ b/hw/display/exynos4210_fimd.c
-@@ -1340,7 +1340,7 @@ static bool exynos4210_fimd_update(void *opaque)
-             fimd_copy_line_toqemu(global_width, s->ifb + global_width * line *
-                     RGBA_SIZE, d + global_width * line * bpp);
-         }
--        dpy_gfx_update_full(s->console);
-+        qemu_console_update_full(s->console);
-     }
-     s->invalidate = false;
-     s->vidintcon[1] |= FIMD_VIDINT_INTFRMPEND;
-@@ -1964,7 +1964,7 @@ static void exynos4210_fimd_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
--    s->console = graphic_console_init(dev, 0, &exynos4210_fimd_ops, s);
-+    s->console = qemu_graphic_console_create(dev, 0, &exynos4210_fimd_ops, s);
- }
- 
- static void exynos4210_fimd_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/display/g364fb.c b/hw/display/g364fb.c
-index bd15f6f0acc..af54f1f9005 100644
---- a/hw/display/g364fb.c
-+++ b/hw/display/g364fb.c
-@@ -191,8 +191,8 @@ static void g364fb_draw_graphic8(G364State *s)
-         } else {
-             int dy;
-             if (xmax || ymax) {
--                dpy_gfx_update(s->con, xmin, ymin,
--                               xmax - xmin + 1, ymax - ymin + 1);
-+                qemu_console_update(s->con, xmin, ymin,
-+                                   xmax - xmin + 1, ymax - ymin + 1);
-                 xmin = s->width;
-                 xmax = 0;
-                 ymin = s->height;
-@@ -211,7 +211,7 @@ static void g364fb_draw_graphic8(G364State *s)
- 
- done:
-     if (xmax || ymax) {
--        dpy_gfx_update(s->con, xmin, ymin, xmax - xmin + 1, ymax - ymin + 1);
-+        qemu_console_update(s->con, xmin, ymin, xmax - xmin + 1, ymax - ymin + 1);
-     }
-     g_free(snap);
- }
-@@ -234,7 +234,7 @@ static void g364fb_draw_blank(G364State *s)
-         d += surface_stride(surface);
-     }
- 
--    dpy_gfx_update_full(s->con);
-+    qemu_console_update_full(s->con);
-     s->blanked = 1;
- }
- 
-@@ -478,7 +478,7 @@ static const GraphicHwOps g364fb_ops = {
- 
- static void g364fb_init(DeviceState *dev, G364State *s)
- {
--    s->con = graphic_console_init(dev, 0, &g364fb_ops, s);
-+    s->con = qemu_graphic_console_create(dev, 0, &g364fb_ops, s);
- 
-     memory_region_init_io(&s->mem_ctrl, OBJECT(dev), &g364fb_ctrl_ops, s,
-                           "ctrl", 0x180000);
-diff --git a/hw/display/jazz_led.c b/hw/display/jazz_led.c
-index ee9758a94b5..84fe1058406 100644
---- a/hw/display/jazz_led.c
-+++ b/hw/display/jazz_led.c
-@@ -217,7 +217,7 @@ static bool jazz_led_update_display(void *opaque)
-     }
- 
-     s->state = REDRAW_NONE;
--    dpy_gfx_update_full(s->con);
-+    qemu_console_update_full(s->con);
- 
-     return true;
- }
-@@ -233,7 +233,7 @@ static void jazz_led_text_update(void *opaque, uint32_t *chardata)
-     LedState *s = opaque;
-     char buf[3];
- 
--    dpy_text_cursor(s->con, -1, -1);
-+    qemu_console_text_set_cursor(s->con, -1, -1);
-     qemu_console_resize(s->con, 2, 1);
- 
-     /* TODO: draw the segments */
-@@ -243,7 +243,7 @@ static void jazz_led_text_update(void *opaque, uint32_t *chardata)
-     *chardata++ = ATTR2CHTYPE(buf[1], QEMU_COLOR_BLUE,
-                               QEMU_COLOR_BLACK, 1);
- 
--    dpy_text_update(s->con, 0, 0, 2, 1);
-+    qemu_console_text_update(s->con, 0, 0, 2, 1);
- }
- 
- static int jazz_led_post_load(void *opaque, int version_id)
-@@ -284,7 +284,7 @@ static void jazz_led_realize(DeviceState *dev, Error **errp)
- {
-     LedState *s = JAZZ_LED(dev);
- 
--    s->con = graphic_console_init(dev, 0, &jazz_led_ops, s);
-+    s->con = qemu_graphic_console_create(dev, 0, &jazz_led_ops, s);
- }
- 
- static void jazz_led_reset(DeviceState *d)
-diff --git a/hw/display/macfb.c b/hw/display/macfb.c
-index 848c3c282bd..f40a7ed9f52 100644
---- a/hw/display/macfb.c
-+++ b/hw/display/macfb.c
-@@ -320,14 +320,14 @@ static void macfb_draw_graphic(MacfbState *s)
-             }
-         } else {
-             if (ymin >= 0) {
--                dpy_gfx_update(s->con, 0, ymin, s->width, y - ymin);
-+                qemu_console_update(s->con, 0, ymin, s->width, y - ymin);
-                 ymin = -1;
-             }
-         }
-     }
- 
-     if (ymin >= 0) {
--        dpy_gfx_update(s->con, 0, ymin, s->width, y - ymin);
-+        qemu_console_update(s->con, 0, ymin, s->width, y - ymin);
-     }
- 
-     g_free(snap);
-@@ -671,7 +671,7 @@ static bool macfb_common_realize(DeviceState *dev, MacfbState *s, Error **errp)
-     s->regs[DAFB_MODE_CTRL1 >> 2] = s->mode->mode_ctrl1;
-     s->regs[DAFB_MODE_CTRL2 >> 2] = s->mode->mode_ctrl2;
- 
--    s->con = graphic_console_init(dev, 0, &macfb_ops, s);
-+    s->con = qemu_graphic_console_create(dev, 0, &macfb_ops, s);
-     surface = qemu_console_surface(s->con);
- 
-     if (surface_bits_per_pixel(surface) != 32) {
-diff --git a/hw/display/next-fb.c b/hw/display/next-fb.c
-index e758b223ef7..fa2e0d0da80 100644
---- a/hw/display/next-fb.c
-+++ b/hw/display/next-fb.c
-@@ -89,7 +89,7 @@ static bool nextfb_update(void *opaque)
-                                src_width, dest_width, 0, 1, nextfb_draw_line,
-                                s, &first, &last);
- 
--    dpy_gfx_update(s->con, 0, 0, s->cols, s->rows);
-+    qemu_console_update(s->con, 0, 0, s->cols, s->rows);
- 
-     return true;
- }
-@@ -117,7 +117,7 @@ static void nextfb_realize(DeviceState *dev, Error **errp)
-     s->cols = 1120;
-     s->rows = 832;
- 
--    s->con = graphic_console_init(dev, 0, &nextfb_ops, s);
-+    s->con = qemu_graphic_console_create(dev, 0, &nextfb_ops, s);
-     qemu_console_resize(s->con, s->cols, s->rows);
- }
- 
-diff --git a/hw/display/omap_lcdc.c b/hw/display/omap_lcdc.c
-index 1e8385ebffb..2a8d5ffdd57 100644
---- a/hw/display/omap_lcdc.c
-+++ b/hw/display/omap_lcdc.c
-@@ -320,7 +320,7 @@ static bool omap_update_display(void *opaque)
-                                &first, &last);
- 
-     if (first >= 0) {
--        dpy_gfx_update(omap_lcd->con, 0, first, width, last - first + 1);
-+        qemu_console_update(omap_lcd->con, 0, first, width, last - first + 1);
-     }
-     omap_lcd->invalidate = 0;
- 
-@@ -504,7 +504,7 @@ struct omap_lcd_panel_s *omap_lcdc_init(MemoryRegion *sysmem,
-     memory_region_init_io(&s->iomem, NULL, &omap_lcdc_ops, s, "omap.lcdc", 0x100);
-     memory_region_add_subregion(sysmem, base, &s->iomem);
- 
--    s->con = graphic_console_init(NULL, 0, &omap_ops, s);
-+    s->con = qemu_graphic_console_create(NULL, 0, &omap_ops, s);
- 
-     return s;
- }
-diff --git a/hw/display/pl110.c b/hw/display/pl110.c
-index e134ac28eb6..4a93cf4cda9 100644
---- a/hw/display/pl110.c
-+++ b/hw/display/pl110.c
-@@ -303,7 +303,7 @@ static bool pl110_update_display(void *opaque)
-                                &first, &last);
- 
-     if (first >= 0) {
--        dpy_gfx_update(s->con, 0, first, s->cols, last - first + 1);
-+        qemu_console_update(s->con, 0, first, s->cols, last - first + 1);
-     }
-     s->invalidate = 0;
-     return true;
-@@ -557,7 +557,7 @@ static void pl110_realize(DeviceState *dev, Error **errp)
-     s->vblank_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-                                    pl110_vblank_interrupt, s);
-     qdev_init_gpio_in(dev, pl110_mux_ctrl_set, 1);
--    s->con = graphic_console_init(dev, 0, &pl110_gfx_ops, s);
-+    s->con = qemu_graphic_console_create(dev, 0, &pl110_gfx_ops, s);
- }
- 
- static void pl110_init(Object *obj)
-diff --git a/hw/display/qxl-render.c b/hw/display/qxl-render.c
-index 5b4f8842011..7b692d5a854 100644
---- a/hw/display/qxl-render.c
-+++ b/hw/display/qxl-render.c
-@@ -135,7 +135,7 @@ static void qxl_render_update_area_unlocked(PCIQXLDevice *qxl)
-                 (width,
-                  height);
-         }
--        dpy_gfx_replace_surface(vga->con, surface);
-+        qemu_console_set_surface(vga->con, surface);
-     }
- 
-     if (!qxl->guest_primary.data) {
-@@ -154,16 +154,16 @@ static void qxl_render_update_area_unlocked(PCIQXLDevice *qxl)
-             continue;
-         }
-         qxl_blit(qxl, qxl->dirty+i);
--        dpy_gfx_update(vga->con,
--                       qxl->dirty[i].left, qxl->dirty[i].top,
--                       qxl->dirty[i].right - qxl->dirty[i].left,
--                       qxl->dirty[i].bottom - qxl->dirty[i].top);
-+        qemu_console_update(vga->con,
-+                            qxl->dirty[i].left, qxl->dirty[i].top,
-+                            qxl->dirty[i].right - qxl->dirty[i].left,
-+                            qxl->dirty[i].bottom - qxl->dirty[i].top);
-     }
-     qxl->num_dirty_rects = 0;
- 
- end:
-     if (qxl->render_update_cookie_num == 0) {
--        graphic_hw_update_done(qxl->ssd.dcl.con);
-+        qemu_console_hw_update_done(qxl->ssd.dcl.con);
-     }
- }
- 
-diff --git a/hw/display/qxl.c b/hw/display/qxl.c
-index 4244ebe51d2..74258afa582 100644
---- a/hw/display/qxl.c
-+++ b/hw/display/qxl.c
-@@ -1153,13 +1153,13 @@ static void qxl_enter_vga_mode(PCIQXLDevice *d)
-     }
-     trace_qxl_enter_vga_mode(d->id);
-     spice_qxl_driver_unload(&d->ssd.qxl);
--    graphic_console_set_hwops(d->ssd.dcl.con, d->vga.hw_ops, &d->vga);
--    update_displaychangelistener(&d->ssd.dcl, GUI_REFRESH_INTERVAL_DEFAULT);
-+    qemu_graphic_console_set_hwops(d->ssd.dcl.con, d->vga.hw_ops, &d->vga);
-+    qemu_console_listener_set_refresh(&d->ssd.dcl, GUI_REFRESH_INTERVAL_DEFAULT);
-     qemu_spice_create_host_primary(&d->ssd);
-     d->mode = QXL_MODE_VGA;
-     qemu_spice_display_switch(&d->ssd, d->ssd.ds);
-     vga_dirty_log_start(&d->vga);
--    graphic_hw_update(d->vga.con);
-+    qemu_console_hw_update(d->vga.con);
- }
- 
- static void qxl_exit_vga_mode(PCIQXLDevice *d)
-@@ -1168,8 +1168,8 @@ static void qxl_exit_vga_mode(PCIQXLDevice *d)
-         return;
-     }
-     trace_qxl_exit_vga_mode(d->id);
--    graphic_console_set_hwops(d->ssd.dcl.con, &qxl_ops, d);
--    update_displaychangelistener(&d->ssd.dcl, GUI_REFRESH_INTERVAL_IDLE);
-+    qemu_graphic_console_set_hwops(d->ssd.dcl.con, &qxl_ops, d);
-+    qemu_console_listener_set_refresh(&d->ssd.dcl, GUI_REFRESH_INTERVAL_IDLE);
-     vga_dirty_log_stop(&d->vga);
-     qxl_destroy_primary(d, QXL_SYNC);
- }
-@@ -2237,7 +2237,7 @@ static void qxl_realize_primary(PCIDevice *dev, Error **errp)
-     portio_list_add(&qxl->vga_port_list, pci_address_space_io(dev), 0x3b0);
-     qxl->have_vga = true;
- 
--    vga->con = graphic_console_init(DEVICE(dev), 0, &qxl_ops, qxl);
-+    vga->con = qemu_graphic_console_create(DEVICE(dev), 0, &qxl_ops, qxl);
-     qxl->id = qemu_console_get_index(vga->con); /* == channel_id */
-     if (qxl->id != 0) {
-         error_setg(errp, "primary qxl-vga device must be console 0 "
-@@ -2262,7 +2262,7 @@ static void qxl_realize_secondary(PCIDevice *dev, Error **errp)
-     memory_region_init_ram(&qxl->vga.vram, OBJECT(dev), "qxl.vgavram",
-                            qxl->vga.vram_size, &error_fatal);
-     qxl->vga.vram_ptr = memory_region_get_ram_ptr(&qxl->vga.vram);
--    qxl->vga.con = graphic_console_init(DEVICE(dev), 0, &qxl_ops, qxl);
-+    qxl->vga.con = qemu_graphic_console_create(DEVICE(dev), 0, &qxl_ops, qxl);
-     qxl->ssd.dcl.con = qxl->vga.con;
-     qxl->id = qemu_console_get_index(qxl->vga.con); /* == channel_id */
- 
-diff --git a/hw/display/ramfb-standalone.c b/hw/display/ramfb-standalone.c
-index 27f0ba19f90..8e8ba37514a 100644
---- a/hw/display/ramfb-standalone.c
-+++ b/hw/display/ramfb-standalone.c
-@@ -41,7 +41,7 @@ static void ramfb_realizefn(DeviceState *dev, Error **errp)
- {
-     RAMFBStandaloneState *ramfb = RAMFB(dev);
- 
--    ramfb->con = graphic_console_init(dev, 0, &wrapper_ops, dev);
-+    ramfb->con = qemu_graphic_console_create(dev, 0, &wrapper_ops, dev);
-     ramfb->state = ramfb_setup(ramfb->use_legacy_x86_rom, errp);
- }
- 
-diff --git a/hw/display/ramfb.c b/hw/display/ramfb.c
-index 50c25706a52..7a88f934e11 100644
---- a/hw/display/ramfb.c
-+++ b/hw/display/ramfb.c
-@@ -111,12 +111,12 @@ void ramfb_display_update(QemuConsole *con, RAMFBState *s)
-     }
- 
-     if (s->ds) {
--        dpy_gfx_replace_surface(con, s->ds);
-+        qemu_console_set_surface(con, s->ds);
-         s->ds = NULL;
-     }
- 
-     /* simple full screen update */
--    dpy_gfx_update_full(con);
-+    qemu_console_update_full(con);
- }
- 
- static int ramfb_post_load(void *opaque, int version_id)
-diff --git a/hw/display/sm501.c b/hw/display/sm501.c
-index a3993ceba29..af870048372 100644
---- a/hw/display/sm501.c
-+++ b/hw/display/sm501.c
-@@ -1822,7 +1822,7 @@ static bool sm501_update_display(void *opaque)
-         } else {
-             if (y_start >= 0) {
-                 /* flush to display */
--                dpy_gfx_update(s->con, 0, y_start, width, y - y_start);
-+                qemu_console_update(s->con, 0, y_start, width, y - y_start);
-                 y_start = -1;
-             }
-         }
-@@ -1831,7 +1831,7 @@ static bool sm501_update_display(void *opaque)
- 
-     /* complete flush to display */
-     if (y_start >= 0) {
--        dpy_gfx_update(s->con, 0, y_start, width, y - y_start);
-+        qemu_console_update(s->con, 0, y_start, width, y - y_start);
-     }
- 
-     return true;
-@@ -1936,7 +1936,7 @@ static void sm501_init(SM501State *s, DeviceState *dev,
-                                 &s->twoD_engine_region);
- 
-     /* create qemu graphic console */
--    s->con = graphic_console_init(dev, 0, &sm501_ops, s);
-+    s->con = qemu_graphic_console_create(dev, 0, &sm501_ops, s);
- }
- 
- static const VMStateDescription vmstate_sm501_state = {
-diff --git a/hw/display/ssd0303.c b/hw/display/ssd0303.c
-index 229856cc427..4e3dede33f1 100644
---- a/hw/display/ssd0303.c
-+++ b/hw/display/ssd0303.c
-@@ -268,7 +268,7 @@ static bool ssd0303_update_display(void *opaque)
-         }
-     }
-     s->redraw = 0;
--    dpy_gfx_update(s->con, 0, 0, 96 * MAGNIFY, 16 * MAGNIFY);
-+    qemu_console_update(s->con, 0, 0, 96 * MAGNIFY, 16 * MAGNIFY);
- 
-     return true;
- }
-@@ -309,7 +309,7 @@ static void ssd0303_realize(DeviceState *dev, Error **errp)
- {
-     ssd0303_state *s = SSD0303(dev);
- 
--    s->con = graphic_console_init(dev, 0, &ssd0303_ops, s);
-+    s->con = qemu_graphic_console_create(dev, 0, &ssd0303_ops, s);
-     qemu_console_resize(s->con, 96 * MAGNIFY, 16 * MAGNIFY);
- }
- 
-diff --git a/hw/display/ssd0323.c b/hw/display/ssd0323.c
-index 67db16086c8..9309d4d10c4 100644
---- a/hw/display/ssd0323.c
-+++ b/hw/display/ssd0323.c
-@@ -270,7 +270,8 @@ static bool ssd0323_update_display(void *opaque)
-         }
-     }
-     s->redraw = 0;
--    dpy_gfx_update(s->con, 0, 0, 128 * MAGNIFY, 64 * MAGNIFY);
-+    qemu_console_update(s->con, 0, 0, 128 * MAGNIFY, 64 * MAGNIFY);
++.. contents::
++   :local:
++   :depth: 1
 +
-     return true;
- }
- 
-@@ -356,7 +357,7 @@ static void ssd0323_realize(SSIPeripheral *d, Error **errp)
- 
-     s->col_end = 63;
-     s->row_end = 79;
--    s->con = graphic_console_init(dev, 0, &ssd0323_ops, s);
-+    s->con = qemu_graphic_console_create(dev, 0, &ssd0323_ops, s);
-     qemu_console_resize(s->con, 128 * MAGNIFY, 64 * MAGNIFY);
- 
-     qdev_init_gpio_in(dev, ssd0323_cd, 1);
-diff --git a/hw/display/tcx.c b/hw/display/tcx.c
-index cedbf5c7acd..2c33a9c4a32 100644
---- a/hw/display/tcx.c
-+++ b/hw/display/tcx.c
-@@ -243,8 +243,7 @@ static bool tcx_update_display(void *opaque)
-         } else {
-             if (y_start >= 0) {
-                 /* flush to display */
--                dpy_gfx_update(ts->con, 0, y_start,
--                               ts->width, y - y_start);
-+                qemu_console_update(ts->con, 0, y_start, ts->width, y - y_start);
-                 y_start = -1;
-             }
-         }
-@@ -253,8 +252,7 @@ static bool tcx_update_display(void *opaque)
-     }
-     if (y_start >= 0) {
-         /* flush to display */
--        dpy_gfx_update(ts->con, 0, y_start,
--                       ts->width, y - y_start);
-+        qemu_console_update(ts->con, 0, y_start, ts->width, y - y_start);
-     }
-     g_free(snap);
-     return true;
-@@ -297,8 +295,7 @@ static bool tcx24_update_display(void *opaque)
-         } else {
-             if (y_start >= 0) {
-                 /* flush to display */
--                dpy_gfx_update(ts->con, 0, y_start,
--                               ts->width, y - y_start);
-+                qemu_console_update(ts->con, 0, y_start, ts->width, y - y_start);
-                 y_start = -1;
-             }
-         }
-@@ -309,8 +306,7 @@ static bool tcx24_update_display(void *opaque)
-     }
-     if (y_start >= 0) {
-         /* flush to display */
--        dpy_gfx_update(ts->con, 0, y_start,
--                       ts->width, y - y_start);
-+        qemu_console_update(ts->con, 0, y_start, ts->width, y - y_start);
-     }
-     g_free(snap);
-     return true;
-@@ -864,9 +860,9 @@ static void tcx_realize(DeviceState *dev, Error **errp)
-     sysbus_init_irq(sbd, &s->irq);
- 
-     if (s->depth == 8) {
--        s->con = graphic_console_init(dev, 0, &tcx_ops, s);
-+        s->con = qemu_graphic_console_create(dev, 0, &tcx_ops, s);
-     } else {
--        s->con = graphic_console_init(dev, 0, &tcx24_ops, s);
-+        s->con = qemu_graphic_console_create(dev, 0, &tcx24_ops, s);
-     }
-     s->thcmisc = 0;
- 
-diff --git a/hw/display/vga-isa.c b/hw/display/vga-isa.c
-index 5f55c884a1b..2cccb0ef12e 100644
---- a/hw/display/vga-isa.c
-+++ b/hw/display/vga-isa.c
-@@ -79,7 +79,7 @@ static void vga_isa_realizefn(DeviceState *dev, Error **errp)
-                                         0x000a0000,
-                                         vga_io_memory, 1);
-     memory_region_set_coalescing(vga_io_memory);
--    s->con = graphic_console_init(dev, 0, s->hw_ops, s);
-+    s->con = qemu_graphic_console_create(dev, 0, s->hw_ops, s);
- 
-     memory_region_add_subregion(isa_address_space(isadev),
-                                 VBE_DISPI_LFB_PHYSICAL_ADDRESS,
-diff --git a/hw/display/vga-mmio.c b/hw/display/vga-mmio.c
-index 1a9608d865f..3cd64951c09 100644
---- a/hw/display/vga-mmio.c
-+++ b/hw/display/vga-mmio.c
-@@ -108,7 +108,7 @@ static void vga_mmio_realizefn(DeviceState *dev, Error **errp)
-     }
- 
-     sysbus_init_mmio(sbd, &s->vga.vram);
--    s->vga.con = graphic_console_init(dev, 0, s->vga.hw_ops, &s->vga);
-+    s->vga.con = qemu_graphic_console_create(dev, 0, s->vga.hw_ops, &s->vga);
- }
- 
- static const Property vga_mmio_properties[] = {
-diff --git a/hw/display/vga-pci.c b/hw/display/vga-pci.c
-index 4e68dd57a17..d089847bdae 100644
---- a/hw/display/vga-pci.c
-+++ b/hw/display/vga-pci.c
-@@ -247,7 +247,7 @@ static void pci_std_vga_realize(PCIDevice *dev, Error **errp)
-     vga_init(s, OBJECT(dev), pci_address_space(dev), pci_address_space_io(dev),
-              true);
- 
--    s->con = graphic_console_init(DEVICE(dev), 0, s->hw_ops, s);
-+    s->con = qemu_graphic_console_create(DEVICE(dev), 0, s->hw_ops, s);
- 
-     /* XXX: VGA_RAM_SIZE must be a power of two */
-     pci_register_bar(&d->dev, 0, PCI_BASE_ADDRESS_MEM_PREFETCH, &s->vram);
-@@ -282,7 +282,7 @@ static void pci_secondary_vga_realize(PCIDevice *dev, Error **errp)
-     if (!vga_common_init(s, OBJECT(dev), errp)) {
-         return;
-     }
--    s->con = graphic_console_init(DEVICE(dev), 0, s->hw_ops, s);
-+    s->con = qemu_graphic_console_create(DEVICE(dev), 0, s->hw_ops, s);
- 
-     /* mmio bar */
-     memory_region_init_io(&d->mmio, OBJECT(dev), &unassigned_io_ops, NULL,
-@@ -306,7 +306,7 @@ static void pci_secondary_vga_exit(PCIDevice *dev)
-     PCIVGAState *d = PCI_VGA(dev);
-     VGACommonState *s = &d->vga;
- 
--    graphic_console_close(s->con);
-+    qemu_graphic_console_close(s->con);
-     memory_region_del_subregion(&d->mmio, &d->mrs[0]);
-     memory_region_del_subregion(&d->mmio, &d->mrs[1]);
-     if (d->flags & (1 << PCI_VGA_FLAG_ENABLE_QEXT)) {
-diff --git a/hw/display/vga.c b/hw/display/vga.c
-index 2f266f47a39..0ac4bf37310 100644
---- a/hw/display/vga.c
-+++ b/hw/display/vga.c
-@@ -1246,7 +1246,7 @@ static void vga_draw_text(VGACommonState *s, int full_update)
-         s->last_scr_height = height * cheight;
-         qemu_console_resize(s->con, s->last_scr_width, s->last_scr_height);
-         surface = qemu_console_surface(s->con);
--        dpy_text_resize(s->con, width, height);
-+        qemu_console_text_resize(s->con, width, height);
-         s->last_depth = 0;
-         s->last_width = width;
-         s->last_height = height;
-@@ -1365,8 +1365,8 @@ static void vga_draw_text(VGACommonState *s, int full_update)
-             ch_attr_ptr++;
-         }
-         if (cx_max != -1) {
--            dpy_gfx_update(s->con, cx_min * cw, cy * cheight,
--                           (cx_max - cx_min + 1) * cw, cheight);
-+            qemu_console_update(s->con, cx_min * cw, cy * cheight,
-+                                (cx_max - cx_min + 1) * cw, cheight);
-         }
-         dest += linesize * cheight;
-         line1 = line + cheight;
-@@ -1610,7 +1610,7 @@ static void vga_draw_graphic(VGACommonState *s, int full_update)
-      */
-     format = qemu_default_pixman_format(depth, !byteswap);
-     if (format) {
--        allocate_surface = !dpy_gfx_check_format(s->con, format)
-+        allocate_surface = !qemu_console_check_format(s->con, format)
-             || s->force_shadow || force_shadow;
-     } else {
-         allocate_surface = true;
-@@ -1647,7 +1647,7 @@ static void vga_draw_graphic(VGACommonState *s, int full_update)
-             surface = qemu_create_displaysurface_from(disp_width,
-                     height, format, s->params.line_offset,
-                     s->vram_ptr + (s->params.start_addr * 4));
--            dpy_gfx_replace_surface(s->con, surface);
-+            qemu_console_set_surface(s->con, surface);
-         } else {
-             qemu_console_resize(s->con, disp_width, height);
-             surface = qemu_console_surface(s->con);
-@@ -1720,8 +1720,7 @@ static void vga_draw_graphic(VGACommonState *s, int full_update)
-         } else {
-             if (y_start >= 0) {
-                 /* flush to display */
--                dpy_gfx_update(s->con, 0, y_start,
--                               disp_width, y - y_start);
-+                qemu_console_update(s->con, 0, y_start, disp_width, y - y_start);
-                 y_start = -1;
-             }
-         }
-@@ -1745,8 +1744,7 @@ static void vga_draw_graphic(VGACommonState *s, int full_update)
-     }
-     if (y_start >= 0) {
-         /* flush to display */
--        dpy_gfx_update(s->con, 0, y_start,
--                       disp_width, y - y_start);
-+        qemu_console_update(s->con, 0, y_start, disp_width, y - y_start);
-     }
-     g_free(snap);
-     memset(s->invalidated_y_table, 0, sizeof(s->invalidated_y_table));
-@@ -1767,7 +1765,7 @@ static void vga_draw_blank(VGACommonState *s, int full_update)
-         /* unshare buffer, otherwise the blanking corrupts vga vram */
-         surface = qemu_create_displaysurface(s->last_scr_width,
-                                              s->last_scr_height);
--        dpy_gfx_replace_surface(s->con, surface);
-+        qemu_console_set_surface(s->con, surface);
-     }
- 
-     w = s->last_scr_width * surface_bytes_per_pixel(surface);
-@@ -1776,7 +1774,7 @@ static void vga_draw_blank(VGACommonState *s, int full_update)
-         memset(d, 0, w);
-         d += surface_stride(surface);
-     }
--    dpy_gfx_update_full(s->con);
-+    qemu_console_update_full(s->con);
- }
- 
- #define GMODE_TEXT     0
-@@ -1967,7 +1965,7 @@ static void vga_update_text(void *opaque, uint32_t *chardata)
-             s->last_scr_width = width * cw;
-             s->last_scr_height = height * cheight;
-             qemu_console_resize(s->con, s->last_scr_width, s->last_scr_height);
--            dpy_text_resize(s->con, width, height);
-+            qemu_console_text_resize(s->con, width, height);
-             s->last_depth = 0;
-             s->last_width = width;
-             s->last_height = height;
-@@ -1992,11 +1990,11 @@ static void vga_update_text(void *opaque, uint32_t *chardata)
-             s->cr[VGA_CRTC_CURSOR_END] != s->cursor_end || full_update) {
-             cursor_visible = !(s->cr[VGA_CRTC_CURSOR_START] & 0x20);
-             if (cursor_visible && cursor_offset < size && cursor_offset >= 0)
--                dpy_text_cursor(s->con,
--                                TEXTMODE_X(cursor_offset),
--                                TEXTMODE_Y(cursor_offset));
-+                qemu_console_text_set_cursor(s->con,
-+                                             TEXTMODE_X(cursor_offset),
-+                                             TEXTMODE_Y(cursor_offset));
-             else
--                dpy_text_cursor(s->con, -1, -1);
-+                qemu_console_text_set_cursor(s->con, -1, -1);
-             s->cursor_offset = cursor_offset;
-             s->cursor_start = s->cr[VGA_CRTC_CURSOR_START];
-             s->cursor_end = s->cr[VGA_CRTC_CURSOR_END];
-@@ -2009,7 +2007,7 @@ static void vga_update_text(void *opaque, uint32_t *chardata)
-             for (i = 0; i < size; src ++, dst ++, i ++)
-                 *dst = VMEM2CHTYPE(le32_to_cpu(*src));
- 
--            dpy_text_update(s->con, 0, 0, width, height);
-+            qemu_console_text_update(s->con, 0, 0, width, height);
-         } else {
-             c_max = 0;
- 
-@@ -2032,7 +2030,7 @@ static void vga_update_text(void *opaque, uint32_t *chardata)
- 
-             if (c_min <= c_max) {
-                 i = TEXTMODE_Y(c_min);
--                dpy_text_update(s->con, 0, i, width, TEXTMODE_Y(c_max) - i + 1);
-+                qemu_console_text_update(s->con, 0, i, width, TEXTMODE_Y(c_max) - i + 1);
-             }
-         }
- 
-@@ -2057,8 +2055,8 @@ static void vga_update_text(void *opaque, uint32_t *chardata)
-     /* Display a message */
-     s->last_width = 60;
-     s->last_height = height = 3;
--    dpy_text_cursor(s->con, -1, -1);
--    dpy_text_resize(s->con, s->last_width, height);
-+    qemu_console_text_set_cursor(s->con, -1, -1);
-+    qemu_console_text_resize(s->con, s->last_width, height);
- 
-     for (dst = chardata, i = 0; i < s->last_width * height; i ++)
-         *dst++ = ' ';
-@@ -2070,7 +2068,7 @@ static void vga_update_text(void *opaque, uint32_t *chardata)
-         *dst++ = ATTR2CHTYPE(msg_buffer[i], QEMU_COLOR_BLUE,
-                              QEMU_COLOR_BLACK, 1);
- 
--    dpy_text_update(s->con, 0, 0, s->last_width, height);
-+    qemu_console_text_update(s->con, 0, 0, s->last_width, height);
- }
- 
- static uint64_t vga_mem_read(void *opaque, hwaddr addr,
-diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
-index 3f6fb7a8033..6e5e6540a46 100644
---- a/hw/display/vhost-user-gpu.c
-+++ b/hw/display/vhost-user-gpu.c
-@@ -142,11 +142,11 @@ vhost_user_gpu_handle_cursor(VhostUserGPU *g, VhostUserGpuMsg *msg)
-         memcpy(s->current_cursor->data, up->data,
-                64 * 64 * sizeof(uint32_t));
- 
--        dpy_cursor_define(s->con, s->current_cursor);
-+        qemu_console_set_cursor(s->con, s->current_cursor);
-     }
- 
--    dpy_mouse_set(s->con, pos->x, pos->y,
--                  msg->request != VHOST_USER_GPU_CURSOR_POS_HIDE);
-+    qemu_console_set_mouse(s->con, pos->x, pos->y,
-+                           msg->request != VHOST_USER_GPU_CURSOR_POS_HIDE);
- }
- 
- static void
-@@ -238,7 +238,7 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
-         con = s->con;
- 
-         if (m->width == 0) {
--            dpy_gfx_replace_surface(con, NULL);
-+            qemu_console_set_surface(con, NULL);
-         } else {
-             s->ds = qemu_create_displaysurface(m->width, m->height);
-             /* replace surface on next update */
-@@ -269,12 +269,12 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
- 
-         if (dmabuf) {
-             qemu_dmabuf_close(dmabuf);
--            dpy_gl_release_dmabuf(con, dmabuf);
-+            qemu_console_gl_release_dmabuf(con, dmabuf);
-             g_clear_pointer(&dmabuf, qemu_dmabuf_free);
-         }
- 
-         if (fd == -1) {
--            dpy_gl_scanout_disable(con);
-+            qemu_console_gl_scanout_disable(con);
-             g->dmabuf[m->scanout_id] = NULL;
-             break;
-         }
-@@ -291,7 +291,7 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
-                                  &fd, 1, false, m->fd_flags &
-                                  VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP);
- 
--        dpy_gl_scanout_dmabuf(con, dmabuf);
-+        qemu_console_gl_scanout_dmabuf(con, dmabuf);
-         g->dmabuf[m->scanout_id] = dmabuf;
-         break;
-     }
-@@ -306,13 +306,13 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
-         }
- 
-         con = g->parent_obj.scanout[m->scanout_id].con;
--        if (!console_has_gl(con)) {
-+        if (!qemu_console_has_gl(con)) {
-             error_report("console doesn't support GL!");
-             vhost_user_gpu_unblock(g);
-             break;
-         }
-         g->backend_blocked = true;
--        dpy_gl_update(con, m->x, m->y, m->width, m->height);
-+        qemu_console_gl_update(con, m->x, m->y, m->width, m->height);
-         break;
-     }
- #ifdef CONFIG_PIXMAN
-@@ -337,9 +337,9 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
- 
-         pixman_image_unref(image);
-         if (qemu_console_surface(con) != s->ds) {
--            dpy_gfx_replace_surface(con, s->ds);
-+            qemu_console_set_surface(con, s->ds);
-         } else {
--            dpy_gfx_update(con, m->x, m->y, m->width, m->height);
-+            qemu_console_update(con, m->x, m->y, m->width, m->height);
-         }
-         break;
-     }
-diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
-index bdc24492850..a68b1848295 100644
---- a/hw/display/virtio-gpu-base.c
-+++ b/hw/display/virtio-gpu-base.c
-@@ -253,7 +253,7 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
-     g->hw_ops = &virtio_gpu_ops;
-     for (i = 0; i < g->conf.max_outputs; i++) {
-         g->scanout[i].con =
--            graphic_console_init(DEVICE(g), i, &virtio_gpu_ops, g);
-+            qemu_graphic_console_create(DEVICE(g), i, &virtio_gpu_ops, g);
-     }
- 
-     return true;
-diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
-index ebb6c783fb0..6ff12639012 100644
---- a/hw/display/virtio-gpu-rutabaga.c
-+++ b/hw/display/virtio-gpu-rutabaga.c
-@@ -282,7 +282,7 @@ rutabaga_cmd_resource_flush(VirtIOGPU *g, struct virtio_gpu_ctrl_command *cmd)
-                                              rf.resource_id, &transfer,
-                                              &transfer_iovec);
-     CHECK(!result, cmd);
--    dpy_gfx_update_full(scanout->con);
-+    qemu_console_update_full(scanout->con);
- }
- 
- static void
-@@ -306,8 +306,8 @@ rutabaga_cmd_set_scanout(VirtIOGPU *g, struct virtio_gpu_ctrl_command *cmd)
-     scanout = &vb->scanout[ss.scanout_id];
- 
-     if (ss.resource_id == 0) {
--        dpy_gfx_replace_surface(scanout->con, NULL);
--        dpy_gl_scanout_disable(scanout->con);
-+        qemu_console_set_surface(scanout->con, NULL);
-+        qemu_console_gl_scanout_disable(scanout->con);
-         return;
-     }
- 
-@@ -331,8 +331,8 @@ rutabaga_cmd_set_scanout(VirtIOGPU *g, struct virtio_gpu_ctrl_command *cmd)
- 
-     /* realloc the surface ptr */
-     scanout->ds = qemu_create_displaysurface_pixman(res->image);
--    dpy_gfx_replace_surface(scanout->con, NULL);
--    dpy_gfx_replace_surface(scanout->con, scanout->ds);
-+    qemu_console_set_surface(scanout->con, NULL);
-+    qemu_console_set_surface(scanout->con, scanout->ds);
-     res->scanout_bitmask = ss.scanout_id;
- }
- 
-diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
-index 74b6a7766af..d5ac1cfca0e 100644
---- a/hw/display/virtio-gpu-udmabuf.c
-+++ b/hw/display/virtio-gpu-udmabuf.c
-@@ -156,7 +156,7 @@ static void virtio_gpu_free_dmabuf(VirtIOGPU *g, VGPUDMABuf *dmabuf)
-     struct virtio_gpu_scanout *scanout;
- 
-     scanout = &g->parent_obj.scanout[dmabuf->scanout_id];
--    dpy_gl_release_dmabuf(scanout->con, dmabuf->buf);
-+    qemu_console_gl_release_dmabuf(scanout->con, dmabuf->buf);
-     g_clear_pointer(&dmabuf->buf, qemu_dmabuf_free);
-     QTAILQ_REMOVE(&g->dmabuf.bufs, dmabuf, next);
-     g_free(dmabuf);
-@@ -232,7 +232,7 @@ int virtio_gpu_update_dmabuf(VirtIOGPU *g,
-     height = qemu_dmabuf_get_height(new_primary->buf);
-     g->dmabuf.primary[scanout_id] = new_primary;
-     qemu_console_resize(scanout->con, width, height);
--    dpy_gl_scanout_dmabuf(scanout->con, new_primary->buf);
-+    qemu_console_gl_scanout_dmabuf(scanout->con, new_primary->buf);
- 
-     if (old_primary) {
-         virtio_gpu_free_dmabuf(g, old_primary);
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index add85bd4e61..60c78af06a4 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -521,7 +521,7 @@ static void virtio_gpu_rect_update(VirtIOGPU *g, int idx, int x, int y,
-         return;
-     }
- 
--    dpy_gl_update(g->parent_obj.scanout[idx].con, x, y, width, height);
-+    qemu_console_gl_update(g->parent_obj.scanout[idx].con, x, y, width, height);
- }
- 
- static void virgl_cmd_resource_flush(VirtIOGPU *g,
-@@ -584,16 +584,15 @@ static void virgl_cmd_set_scanout(VirtIOGPU *g,
-         qemu_console_resize(g->parent_obj.scanout[ss.scanout_id].con,
-                             ss.r.width, ss.r.height);
-         virgl_renderer_force_ctx_0();
--        dpy_gl_scanout_texture(
-+        qemu_console_gl_scanout_texture(
-             g->parent_obj.scanout[ss.scanout_id].con, info.tex_id,
-             info.flags & VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP,
-             info.width, info.height,
-             ss.r.x, ss.r.y, ss.r.width, ss.r.height,
-             d3d_tex2d);
-     } else {
--        dpy_gfx_replace_surface(
--            g->parent_obj.scanout[ss.scanout_id].con, NULL);
--        dpy_gl_scanout_disable(g->parent_obj.scanout[ss.scanout_id].con);
-+        qemu_console_set_surface(g->parent_obj.scanout[ss.scanout_id].con, NULL);
-+        qemu_console_gl_scanout_disable(g->parent_obj.scanout[ss.scanout_id].con);
-     }
-     g->parent_obj.scanout[ss.scanout_id].resource_id = ss.resource_id;
- }
-@@ -1315,7 +1314,7 @@ virgl_create_context(void *opaque, int scanout_idx,
-     qparams.major_ver = params->major_ver;
-     qparams.minor_ver = params->minor_ver;
- 
--    ctx = dpy_gl_ctx_create(g->parent_obj.scanout[scanout_idx].con, &qparams);
-+    ctx = qemu_console_gl_ctx_create(g->parent_obj.scanout[scanout_idx].con, &qparams);
-     return (virgl_renderer_gl_context)ctx;
- }
- 
-@@ -1324,7 +1323,7 @@ static void virgl_destroy_context(void *opaque, virgl_renderer_gl_context ctx)
-     VirtIOGPU *g = opaque;
-     QEMUGLContext qctx = (QEMUGLContext)ctx;
- 
--    dpy_gl_ctx_destroy(g->parent_obj.scanout[0].con, qctx);
-+    qemu_console_gl_ctx_destroy(g->parent_obj.scanout[0].con, qctx);
- }
- 
- static int virgl_make_context_current(void *opaque, int scanout_idx,
-@@ -1333,8 +1332,7 @@ static int virgl_make_context_current(void *opaque, int scanout_idx,
-     VirtIOGPU *g = opaque;
-     QEMUGLContext qctx = (QEMUGLContext)ctx;
- 
--    return dpy_gl_ctx_make_current(g->parent_obj.scanout[scanout_idx].con,
--                                   qctx);
-+    return qemu_console_gl_ctx_make_current(g->parent_obj.scanout[scanout_idx].con, qctx);
- }
- 
- static struct virgl_renderer_callbacks virtio_gpu_3d_cbs = {
-@@ -1399,8 +1397,8 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
-     int i;
- 
-     for (i = 0; i < g->parent_obj.conf.max_outputs; i++) {
--        dpy_gfx_replace_surface(g->parent_obj.scanout[i].con, NULL);
--        dpy_gl_scanout_disable(g->parent_obj.scanout[i].con);
-+        qemu_console_set_surface(g->parent_obj.scanout[i].con, NULL);
-+        qemu_console_gl_scanout_disable(g->parent_obj.scanout[i].con);
-     }
- }
- 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index dbb72bbb22d..88526051a99 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -103,14 +103,14 @@ static void update_cursor(VirtIOGPU *g, struct virtio_gpu_update_cursor *cursor)
-         if (cursor->resource_id > 0) {
-             vgc->update_cursor_data(g, s, cursor->resource_id);
-         }
--        dpy_cursor_define(s->con, s->current_cursor);
-+        qemu_console_set_cursor(s->con, s->current_cursor);
- 
-         s->cursor = *cursor;
-     } else {
-         s->cursor.pos.x = cursor->pos.x;
-         s->cursor.pos.y = cursor->pos.y;
-     }
--    dpy_mouse_set(s->con, cursor->pos.x, cursor->pos.y, cursor->resource_id);
-+    qemu_console_set_mouse(s->con, cursor->pos.x, cursor->pos.y, cursor->resource_id);
- }
- 
- struct virtio_gpu_simple_resource *
-@@ -390,7 +390,7 @@ void virtio_gpu_disable_scanout(VirtIOGPU *g, int scanout_id)
-         res->scanout_bitmask &= ~(1 << scanout_id);
-     }
- 
--    dpy_gfx_replace_surface(scanout->con, NULL);
-+    qemu_console_set_surface(scanout->con, NULL);
-     scanout->resource_id = 0;
-     scanout->ds = NULL;
-     scanout->width = 0;
-@@ -531,8 +531,8 @@ static void virtio_gpu_resource_flush(VirtIOGPU *g,
-                 rf.r.y + rf.r.height >= scanout->y) {
-                 within_bounds = true;
- 
--                if (console_has_gl(scanout->con)) {
--                    dpy_gl_update(scanout->con, 0, 0, scanout->width,
-+                if (qemu_console_has_gl(scanout->con)) {
-+                    qemu_console_gl_update(scanout->con, 0, 0, scanout->width,
-                                   scanout->height);
-                     update_submitted = true;
-                 }
-@@ -582,8 +582,8 @@ static void virtio_gpu_resource_flush(VirtIOGPU *g,
-         /* work out the area we need to update for each console */
-         if (qemu_rect_intersect(&flush_rect, &rect, &rect)) {
-             qemu_rect_translate(&rect, -scanout->x, -scanout->y);
--            dpy_gfx_update(g->parent_obj.scanout[i].con,
--                           rect.x, rect.y, rect.width, rect.height);
-+            qemu_console_update(g->parent_obj.scanout[i].con,
-+                                rect.x, rect.y, rect.width, rect.height);
-         }
-     }
- }
-@@ -649,7 +649,7 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
-     g->parent_obj.enable = 1;
- 
-     if (res->blob) {
--        if (console_has_gl(scanout->con)) {
-+        if (qemu_console_has_gl(scanout->con)) {
-             if (!virtio_gpu_update_dmabuf(g, scanout_id, res, fb, r)) {
-                 virtio_gpu_update_scanout(g, scanout_id, res, fb, r);
-             } else {
-@@ -665,7 +665,7 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
-     }
- 
-     /* create a surface for this scanout */
--    if ((res->blob && !console_has_gl(scanout->con)) ||
-+    if ((res->blob && !qemu_console_has_gl(scanout->con)) ||
-         !scanout->ds ||
-         surface_data(scanout->ds) != data + fb->offset ||
-         scanout->width != r->width ||
-@@ -686,7 +686,7 @@ static bool virtio_gpu_do_set_scanout(VirtIOGPU *g,
-         qemu_displaysurface_set_share_handle(scanout->ds, res->share_handle, fb->offset);
- 
-         pixman_image_unref(rect);
--        dpy_gfx_replace_surface(g->parent_obj.scanout[scanout_id].con,
-+        qemu_console_set_surface(g->parent_obj.scanout[scanout_id].con,
-                                 scanout->ds);
-     }
- 
-@@ -1483,10 +1483,10 @@ static int virtio_gpu_post_load(void *opaque, int version_id)
-             }
-             scanout->ds = qemu_create_displaysurface_pixman(res->image);
-             qemu_displaysurface_set_share_handle(scanout->ds, res->share_handle, 0);
--            dpy_gfx_replace_surface(scanout->con, scanout->ds);
-+            qemu_console_set_surface(scanout->con, scanout->ds);
-         }
- 
--        dpy_gfx_update_full(scanout->con);
-+        qemu_console_update_full(scanout->con);
-         if (scanout->cursor.resource_id) {
-             update_cursor(g, &scanout->cursor);
-         }
-@@ -1602,7 +1602,7 @@ static void virtio_gpu_reset_bh(void *opaque)
-     }
- 
-     for (i = 0; i < g->parent_obj.conf.max_outputs; i++) {
--        dpy_gfx_replace_surface(g->parent_obj.scanout[i].con, NULL);
-+        qemu_console_set_surface(g->parent_obj.scanout[i].con, NULL);
-     }
- 
-     g->reset_finished = true;
-diff --git a/hw/display/virtio-vga.c b/hw/display/virtio-vga.c
-index efd4858f3d0..2ae649c91ae 100644
---- a/hw/display/virtio-vga.c
-+++ b/hw/display/virtio-vga.c
-@@ -172,7 +172,7 @@ static void virtio_vga_base_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
-                                  vvga->vga_mrs, true, false);
- 
-     vga->con = g->scanout[0].con;
--    graphic_console_set_hwops(vga->con, &virtio_vga_base_ops, vvga);
-+    qemu_graphic_console_set_hwops(vga->con, &virtio_vga_base_ops, vvga);
- 
-     for (i = 0; i < g->conf.max_outputs; i++) {
-         object_property_set_link(OBJECT(g->scanout[i].con), "device",
-diff --git a/hw/display/vmware_vga.c b/hw/display/vmware_vga.c
-index 11f13c98d7a..f6f9edfd1d9 100644
---- a/hw/display/vmware_vga.c
-+++ b/hw/display/vmware_vga.c
-@@ -378,7 +378,7 @@ static inline void vmsvga_update_rect(struct vmsvga_state_s *s,
-     for (line = h; line > 0; line--, src += bypl, dst += bypl) {
-         memcpy(dst, src, width);
-     }
--    dpy_gfx_update(s->vga.con, x, y, w, h);
-+    qemu_console_update(s->vga.con, x, y, w, h);
- }
- 
- static inline void vmsvga_update_rect_flush(struct vmsvga_state_s *s)
-@@ -554,7 +554,7 @@ static inline void vmsvga_cursor_define(struct vmsvga_state_s *s,
-         qc = cursor_builtin_left_ptr();
-     }
- 
--    dpy_cursor_define(s->vga.con, qc);
-+    qemu_console_set_cursor(s->vga.con, qc);
-     cursor_unref(qc);
- }
- #endif
-@@ -1082,7 +1082,7 @@ static void vmsvga_value_write(void *opaque, uint32_t address, uint32_t value)
-         s->cursor.on &= (value != SVGA_CURSOR_ON_HIDE);
- #ifdef HW_MOUSE_ACCEL
-         if (value <= SVGA_CURSOR_ON_SHOW) {
--            dpy_mouse_set(s->vga.con, s->cursor.x, s->cursor.y, s->cursor.on);
-+            qemu_console_set_mouse(s->vga.con, s->cursor.x, s->cursor.y, s->cursor.on);
-         }
- #endif
-         break;
-@@ -1130,7 +1130,7 @@ static inline void vmsvga_check_size(struct vmsvga_state_s *s)
-         surface = qemu_create_displaysurface_from(s->new_width, s->new_height,
-                                                   format, stride,
-                                                   s->vga.vram_ptr);
--        dpy_gfx_replace_surface(s->vga.con, surface);
-+        qemu_console_set_surface(s->vga.con, surface);
-         s->invalidated = 1;
-     }
- }
-@@ -1151,7 +1151,7 @@ static bool vmsvga_update_display(void *opaque)
- 
-     if (s->invalidated) {
-         s->invalidated = 0;
--        dpy_gfx_update_full(s->vga.con);
-+        qemu_console_update_full(s->vga.con);
-     }
- 
-     return true;
-@@ -1254,7 +1254,7 @@ static void vmsvga_init(DeviceState *dev, struct vmsvga_state_s *s,
-     s->scratch_size = SVGA_SCRATCH_SIZE;
-     s->scratch = g_malloc(s->scratch_size * 4);
- 
--    s->vga.con = graphic_console_init(dev, 0, &vmsvga_ops, s);
-+    s->vga.con = qemu_graphic_console_create(dev, 0, &vmsvga_ops, s);
- 
-     s->fifo_size = SVGA_FIFO_SIZE;
-     memory_region_init_ram(&s->fifo_ram, NULL, "vmsvga.fifo", s->fifo_size,
-diff --git a/hw/display/xenfb.c b/hw/display/xenfb.c
-index 2e431e27be6..8e9953bda43 100644
---- a/hw/display/xenfb.c
-+++ b/hw/display/xenfb.c
-@@ -657,7 +657,7 @@ static void xenfb_guest_copy(struct XenFB *xenfb, int x, int y, int w, int h)
-         xen_pv_printf(&xenfb->c.xendev, 0, "%s: oops: convert %d -> %d bpp?\n",
-                       __func__, xenfb->depth, bpp);
- 
--    dpy_gfx_update(xenfb->con, x, y, w, h);
-+    qemu_console_update(xenfb->con, x, y, w, h);
- }
- 
- #ifdef XENFB_TYPE_REFRESH_PERIOD
-@@ -743,7 +743,7 @@ static bool xenfb_update(void *opaque)
-             surface = qemu_create_displaysurface(xenfb->width, xenfb->height);
-             break;
-         }
--        dpy_gfx_replace_surface(xenfb->con, surface);
-+        qemu_console_set_surface(xenfb->con, surface);
-         xen_pv_printf(&xenfb->c.xendev, 1,
-                       "update: resizing: %dx%d @ %d bpp%s\n",
-                       xenfb->width, xenfb->height, xenfb->depth,
-@@ -903,7 +903,7 @@ static int fb_initialise(struct XenLegacyDevice *xendev)
-     if (rc != 0)
-         return rc;
- 
--    fb->con = graphic_console_init(NULL, 0, &xenfb_ops, fb);
-+    fb->con = qemu_graphic_console_create(NULL, 0, &xenfb_ops, fb);
- 
-     if (xenstore_read_fe_int(xendev, "feature-update", &fb->feature_update) == -1)
-         fb->feature_update = 0;
-diff --git a/hw/display/xlnx_dp.c b/hw/display/xlnx_dp.c
-index 50e6ef10984..2486d9e5825 100644
---- a/hw/display/xlnx_dp.c
-+++ b/hw/display/xlnx_dp.c
-@@ -605,7 +605,7 @@ static void xlnx_dp_recreate_surface(XlnxDPState *s)
- 
-     if ((width != 0) && (height != 0)) {
-         /*
--         * As dpy_gfx_replace_surface calls qemu_free_displaysurface on the
-+         * As qemu_console_replace_surface calls qemu_free_displaysurface on the
-          * surface we need to be careful and don't free the surface associated
-          * to the console or double free will happen.
-          */
-@@ -631,10 +631,10 @@ static void xlnx_dp_recreate_surface(XlnxDPState *s)
-                                                             height,
-                                                             s->g_plane.format,
-                                                             0, NULL);
--            dpy_gfx_replace_surface(s->console, s->bout_plane.surface);
-+            qemu_console_set_surface(s->console, s->bout_plane.surface);
-         } else {
-             s->bout_plane.surface = NULL;
--            dpy_gfx_replace_surface(s->console, s->g_plane.surface);
-+            qemu_console_set_surface(s->console, s->g_plane.surface);
-         }
- 
-         xlnx_dpdma_set_host_data_location(s->dpdma, DP_GRAPHIC_DMA_CHANNEL,
-@@ -1287,7 +1287,7 @@ static bool xlnx_dp_update_display(void *opaque)
-     /*
-      * XXX: We might want to update only what changed.
-      */
--    dpy_gfx_update_full(s->console);
-+    qemu_console_update_full(s->console);
- 
-     return true;
- }
-@@ -1387,7 +1387,7 @@ static void xlnx_dp_realize(DeviceState *dev, Error **errp)
-     qdev_realize(DEVICE(s->edid), BUS(aux_get_i2c_bus(s->aux_bus)),
-                  &error_fatal);
- 
--    s->console = graphic_console_init(dev, 0, &xlnx_dp_gfx_ops, s);
-+    s->console = qemu_graphic_console_create(dev, 0, &xlnx_dp_gfx_ops, s);
-     surface = qemu_console_surface(s->console);
-     xlnx_dpdma_set_host_data_location(s->dpdma, DP_GRAPHIC_DMA_CHANNEL,
-                                       surface_data(surface));
-diff --git a/hw/vfio/display.c b/hw/vfio/display.c
-index 4a9a58036e3..8f91e83da88 100644
---- a/hw/vfio/display.c
-+++ b/hw/vfio/display.c
-@@ -264,7 +264,7 @@ static void vfio_display_free_one_dmabuf(VFIODisplay *dpy, VFIODMABuf *dmabuf)
-     QTAILQ_REMOVE(&dpy->dmabuf.bufs, dmabuf, next);
- 
-     qemu_dmabuf_close(dmabuf->buf);
--    dpy_gl_release_dmabuf(dpy->con, dmabuf->buf);
-+    qemu_console_gl_release_dmabuf(dpy->con, dmabuf->buf);
-     g_clear_pointer(&dmabuf->buf, qemu_dmabuf_free);
-     g_free(dmabuf);
- }
-@@ -307,7 +307,7 @@ static bool vfio_display_dmabuf_update(void *opaque)
-     if (dpy->dmabuf.primary != primary) {
-         dpy->dmabuf.primary = primary;
-         qemu_console_resize(dpy->con, width, height);
--        dpy_gl_scanout_dmabuf(dpy->con, primary->buf);
-+        qemu_console_gl_scanout_dmabuf(dpy->con, primary->buf);
-         free_bufs = true;
-     }
- 
-@@ -321,21 +321,21 @@ static bool vfio_display_dmabuf_update(void *opaque)
-     if (cursor && (new_cursor || cursor->hot_updates)) {
-         bool have_hot = (cursor->hot_x != 0xffffffff &&
-                          cursor->hot_y != 0xffffffff);
--        dpy_gl_cursor_dmabuf(dpy->con, cursor->buf, have_hot,
--                             cursor->hot_x, cursor->hot_y);
-+        qemu_console_gl_cursor_dmabuf(dpy->con, cursor->buf, have_hot,
-+                                      cursor->hot_x, cursor->hot_y);
-         cursor->hot_updates = 0;
-     } else if (!cursor && new_cursor) {
--        dpy_gl_cursor_dmabuf(dpy->con, NULL, false, 0, 0);
-+        qemu_console_gl_cursor_dmabuf(dpy->con, NULL, false, 0, 0);
-     }
- 
-     if (cursor && cursor->pos_updates) {
--        dpy_gl_cursor_position(dpy->con,
-+        qemu_console_gl_cursor_position(dpy->con,
-                                cursor->pos_x,
-                                cursor->pos_y);
-         cursor->pos_updates = 0;
-     }
- 
--    dpy_gl_update(dpy->con, 0, 0, width, height);
-+    qemu_console_gl_update(dpy->con, 0, 0, width, height);
- 
-     if (free_bufs) {
-         vfio_display_free_dmabufs(vdev);
-@@ -363,7 +363,7 @@ static bool vfio_display_dmabuf_init(VFIOPCIDevice *vdev, Error **errp)
-     }
- 
-     vdev->dpy = g_new0(VFIODisplay, 1);
--    vdev->dpy->con = graphic_console_init(DEVICE(vdev), 0,
-+    vdev->dpy->con = qemu_graphic_console_create(DEVICE(vdev), 0,
-                                           &vfio_display_dmabuf_ops,
-                                           vdev);
-     if (vdev->enable_ramfb) {
-@@ -396,9 +396,9 @@ void vfio_display_reset(VFIOPCIDevice *vdev)
-         return;
-     }
- 
--    dpy_gl_scanout_disable(vdev->dpy->con);
-+    qemu_console_gl_scanout_disable(vdev->dpy->con);
-     vfio_display_dmabuf_exit(vdev->dpy);
--    dpy_gfx_update_full(vdev->dpy->con);
-+    qemu_console_update_full(vdev->dpy->con);
- }
- 
- static bool vfio_display_region_update(void *opaque)
-@@ -471,13 +471,13 @@ static bool vfio_display_region_update(void *opaque)
-         dpy->region.surface = qemu_create_displaysurface_from
-             (plane.width, plane.height, format,
-              plane.stride, dpy->region.buffer.mmaps[0].mmap);
--        dpy_gfx_replace_surface(dpy->con, dpy->region.surface);
-+        qemu_console_set_surface(dpy->con, dpy->region.surface);
-     }
- 
-     /* full screen update */
--    dpy_gfx_update(dpy->con, 0, 0,
--                   surface_width(dpy->region.surface),
--                   surface_height(dpy->region.surface));
-+    qemu_console_update(dpy->con, 0, 0,
-+                        surface_width(dpy->region.surface),
-+                        surface_height(dpy->region.surface));
-     return true;
- 
- err:
-@@ -493,7 +493,7 @@ static const GraphicHwOps vfio_display_region_ops = {
- static bool vfio_display_region_init(VFIOPCIDevice *vdev, Error **errp)
- {
-     vdev->dpy = g_new0(VFIODisplay, 1);
--    vdev->dpy->con = graphic_console_init(DEVICE(vdev), 0,
-+    vdev->dpy->con = qemu_graphic_console_create(DEVICE(vdev), 0,
-                                           &vfio_display_region_ops,
-                                           vdev);
-     if (vdev->enable_ramfb) {
-@@ -553,7 +553,7 @@ void vfio_display_finalize(VFIOPCIDevice *vdev)
-         return;
-     }
- 
--    graphic_console_close(vdev->dpy->con);
-+    qemu_graphic_console_close(vdev->dpy->con);
-     vfio_display_dmabuf_exit(vdev->dpy);
-     vfio_display_region_exit(vdev->dpy);
-     vfio_display_edid_exit(vdev->dpy);
-diff --git a/ui/console-vc.c b/ui/console-vc.c
-index 99ad6d079df..828e78c41ea 100644
---- a/ui/console-vc.c
-+++ b/ui/console-vc.c
-@@ -90,15 +90,15 @@ static void text_console_update(void *opaque, uint32_t *chardata)
-                                           s->vt.cells[src].t_attrib.bgcol,
-                                           s->vt.cells[src].t_attrib.bold);
-             }
--        dpy_text_update(QEMU_CONSOLE(s), s->vt.text_x[0], s->vt.text_y[0],
--                        s->vt.text_x[1] - s->vt.text_x[0], i - s->vt.text_y[0]);
-+        qemu_console_text_update(QEMU_CONSOLE(s), s->vt.text_x[0], s->vt.text_y[0],
-+                                 s->vt.text_x[1] - s->vt.text_x[0], i - s->vt.text_y[0]);
-         s->vt.text_x[0] = s->vt.width;
-         s->vt.text_y[0] = s->vt.height;
-         s->vt.text_x[1] = 0;
-         s->vt.text_y[1] = 0;
-     }
-     if (s->vt.cursor_invalidate) {
--        dpy_text_cursor(QEMU_CONSOLE(s), s->vt.x, s->vt.y);
-+        qemu_console_text_set_cursor(QEMU_CONSOLE(s), s->vt.x, s->vt.y);
-         s->vt.cursor_invalidate = 0;
-     }
- }
-@@ -186,14 +186,14 @@ static void vc_chr_set_echo(Chardev *chr, bool echo)
- 
- void qemu_text_console_update_size(QemuTextConsole *c)
- {
--    dpy_text_resize(QEMU_CONSOLE(c), c->vt.width, c->vt.height);
++.. only:: sphinx4
++
++   .. dbus-doc:: tools/qemu-vnc/qemu-vnc1.xml
++
++.. only:: not sphinx4
++
++   .. warning::
++      Sphinx 4 is required to build D-Bus documentation.
++
++      This is the content of ``tools/qemu-vnc/qemu-vnc1.xml``:
++
++   .. literalinclude:: ../../tools/qemu-vnc/qemu-vnc1.xml
++      :language: xml
+diff --git a/docs/interop/index.rst b/docs/interop/index.rst
+index d830c5c4104..2cf3a8c9aa3 100644
+--- a/docs/interop/index.rst
++++ b/docs/interop/index.rst
+@@ -13,6 +13,7 @@ are useful for making QEMU interoperate with other software.
+    dbus
+    dbus-vmstate
+    dbus-display
++   dbus-vnc
+    live-block-operations
+    nbd
+    parallels
+diff --git a/docs/meson.build b/docs/meson.build
+index 7e54b01e6a0..c3e9fb05846 100644
+--- a/docs/meson.build
++++ b/docs/meson.build
+@@ -54,6 +54,7 @@ if build_docs
+         'qemu-pr-helper.8': (have_tools ? 'man8' : ''),
+         'qemu-storage-daemon.1': (have_tools ? 'man1' : ''),
+         'qemu-trace-stap.1': (stap.found() ? 'man1' : ''),
++        'qemu-vnc.1': (have_qemu_vnc ? 'man1' : ''),
+         'qemu.1': 'man1',
+         'qemu-block-drivers.7': 'man7',
+         'qemu-cpu-models.7': 'man7'
+diff --git a/docs/tools/index.rst b/docs/tools/index.rst
+index 1e88ae48cdc..868c3c4d9d8 100644
+--- a/docs/tools/index.rst
++++ b/docs/tools/index.rst
+@@ -16,3 +16,4 @@ command line utilities and other standalone programs.
+    qemu-pr-helper
+    qemu-trace-stap
+    qemu-vmsr-helper
++   qemu-vnc
+diff --git a/docs/tools/qemu-vnc.rst b/docs/tools/qemu-vnc.rst
+new file mode 100644
+index 00000000000..6e28457cf80
+--- /dev/null
++++ b/docs/tools/qemu-vnc.rst
+@@ -0,0 +1,226 @@
++.. _qemu-vnc:
++
++==========================
++QEMU standalone VNC server
++==========================
++
++Synopsis
++--------
++
++**qemu-vnc** [*OPTION*]...
++
++Description
++-----------
++
++``qemu-vnc`` is a standalone VNC server that connects to a running QEMU instance
++via the D-Bus display interface (:ref:`dbus-display`). It serves the guest
++display, input, audio, clipboard, and serial console chardevs over the VNC
++protocol, allowing VNC clients to interact with the virtual machine without QEMU
++itself binding a VNC socket.
++
++Options
++-------
++
++.. program:: qemu-vnc
++
++.. option:: -h, --help
++
++  Display help and exit.
++
++.. option:: -V, --version
++
++  Print version information and exit.
++
++.. option:: -a ADDRESS, --dbus-address=ADDRESS
++
++  D-Bus address to connect to. When not specified, ``qemu-vnc`` connects to the
++  session bus.
++
++.. option:: -p FD, --dbus-p2p-fd=FD
++
++  File descriptor of an inherited Unix socket for a peer-to-peer D-Bus
++  connection to QEMU. This is mutually exclusive with ``--dbus-address`` and
++  ``--bus-name``.
++
++.. option:: -n NAME, --bus-name=NAME
++
++  D-Bus bus name of the QEMU instance to connect to. The default is
++  ``org.qemu``. When a custom ``--dbus-address`` is given without a bus name,
++  peer-to-peer D-Bus is used.
++
++.. option:: -W, --wait
++
++  Wait for the D-Bus bus name to appear. Only for bus connections.
++
++.. option:: --password
++
++  Require VNC password authentication from connecting clients. The password is
++  set at runtime via the D-Bus ``SetPassword`` method (see
++  :doc:`/interop/dbus-vnc`). Clients will not be able to connect until a
++  password has been set.
++
++  This option is ignored when a systemd credential password is present, since
++  password authentication is already enabled via ``password-secret`` in that
++  case.
++
++.. option:: -l ADDR, --vnc-addr=ADDR
++
++  VNC listen address in the same format as the QEMU ``-vnc`` option (default
++  ``localhost:0``, i.e. TCP port 5900).
++
++.. option:: -w ADDR, --websocket=ADDR
++
++  Enable WebSocket transport on the given address. *ADDR* can be a port number
++  or an *address:port* pair.
++
++.. option:: -O OBJDEF, --object=OBJDEF
++
++  Create a QEMU user-creatable object. *OBJDEF* uses the same key=value syntax
++  as the QEMU ``-object`` option. This option may be given multiple times. It is
++  needed, for example, to create authorization objects referenced by
++  ``--tls-authz``.
++
++.. option:: -t DIR, --tls-creds=DIR
++
++  Directory containing TLS x509 credentials (``ca-cert.pem``,
++  ``server-cert.pem``, ``server-key.pem``). When specified, the VNC server
++  requires TLS from connecting clients.
++
++.. option:: --tls-authz=ID
++
++  ID of a ``QAuthZ`` object previously created with ``--object`` for TLS client
++  certificate authorization. When specified, the TLS credentials are created
++  with ``verify-peer=yes`` so connecting clients must present a valid
++  certificate. After the TLS handshake, the client certificate Distinguished
++  Name is checked against the authorization object. This option requires
++  ``--tls-creds``.
++
++.. option:: --sasl
++
++  Require that the client use SASL to authenticate with the VNC server. The
++  exact choice of authentication method used is controlled from the system /
++  user's SASL configuration file for the 'qemu' service. This is typically found
++  in ``/etc/sasl2/qemu.conf``. If running QEMU as an unprivileged user, an
++  environment variable ``SASL_CONF_PATH`` can be used to make it search
++  alternate locations for the service config. While some SASL auth methods can
++  also provide data encryption (eg GSSAPI), it is recommended that SASL always
++  be combined with the 'tls' and 'x509' settings to enable use of SSL and server
++  certificates. This ensures a data encryption preventing compromise of
++  authentication credentials. See the :ref:`VNC security` section in the System
++  Emulation Users Guide for details on using SASL authentication.
++
++.. option:: --sasl-authz=ID
++
++  ID of a ``QAuthZ`` object previously created with ``--object`` for SASL
++  username authorization. After successful SASL authentication, the
++  authenticated username is checked against the authorization object. If the
++  check fails, the client is disconnected. This option requires ``--sasl``.
++
++.. option:: -s POLICY, --share=POLICY
++
++  Set display sharing policy. *POLICY* is one of ``allow-exclusive``,
++  ``force-shared``, or ``ignore``.
++
++  ``allow-exclusive`` allows clients to ask for exclusive access. As suggested
++  by the RFB spec this is implemented by dropping other connections. Connecting
++  multiple clients in parallel requires all clients asking for a shared session
++  (vncviewer: -shared switch). This is the default.
++
++  ``force-shared`` disables exclusive client access. Useful for shared desktop
++  sessions, where you don't want someone forgetting to specify -shared
++  disconnect everybody else.
++
++  ``ignore`` completely ignores the shared flag and allows everybody to connect
++  unconditionally. Doesn't conform to the RFB spec but is traditional QEMU
++  behavior.
++
++.. option:: -C NAME, --vt-chardev=NAME
++
++  Chardev type name to expose as a VNC text console. This option may be given
++  multiple times to expose several chardevs. When not specified, the defaults
++  ``org.qemu.console.serial.0`` and ``org.qemu.monitor.hmp.0`` are used.
++
++.. option:: -N, --no-vt
++
++  Do not expose any chardevs as text consoles. This overrides the default
++  chardev list and any ``--vt-chardev`` options.
++
++.. option:: -k LAYOUT, --keyboard-layout=LAYOUT
++
++  Keyboard layout (e.g. ``en-us``). Passed through to the VNC server for
++  key-code translation.
++
++.. option:: --lossy
++
++  Enable lossy compression methods (gradient, JPEG, ...). If this option is set,
++  VNC client may receive lossy framebuffer updates depending on its encoding
++  settings. Enabling this option can save a lot of bandwidth at the expense of
++  quality.
++
++.. option:: --non-adaptive
++
++  Disable adaptive encodings. Adaptive encodings are enabled by default. An
++  adaptive encoding will try to detect frequently updated screen regions, and
++  send updates in these regions using a lossy encoding (like JPEG). This can be
++  really helpful to save bandwidth when playing videos. Disabling adaptive
++  encodings restores the original static behavior of encodings like Tight.
++
++.. option:: -T, --trace [[enable=]PATTERN][,events=FILE][,file=FILE]
++
++  .. include:: ../qemu-option-trace.rst.inc
++
++Examples
++--------
++
++Start QEMU with the D-Bus display backend::
++
++    qemu-system-x86_64 -display dbus ...
++
++Then attach ``qemu-vnc``::
++
++    qemu-vnc
++
++A VNC client can now connect to ``localhost:5900``.
++
++To listen on a different port with TLS::
++
++    qemu-vnc --vnc-addr localhost:1 --tls-creds /etc/pki/qemu-vnc
++
++To require TLS with client certificate authorization::
++
++    qemu-vnc --object authz-list-file,id=auth0,filename=/etc/qemu/vnc.acl,refresh=on \
++             --tls-creds /etc/pki/qemu-vnc --tls-authz auth0
++
++To enable SASL authentication with TLS::
++
++    qemu-vnc --tls-creds /etc/pki/qemu-vnc --sasl
++
++VNC password authentication
++----------------------------
++
++There are two ways to enable VNC password authentication:
++
++1. ``--password`` flag -- start ``qemu-vnc`` with ``--password`` and
++   then set the password at runtime using the D-Bus ``SetPassword``
++   method.  Clients will be rejected until a password is set.
++
++2. systemd credentials -- if the ``CREDENTIALS_DIRECTORY``
++   environment variable is set (see :manpage:`systemd.exec(5)`) and
++   contains a file named ``vnc-password``, the VNC server will use
++   that file's contents as the password automatically.  The
++   ``--password`` flag is not needed in this case.
++
++D-Bus interface
++---------------
++
++``qemu-vnc`` exposes a D-Bus interface for management and monitoring of
++VNC connections.  See :doc:`/interop/dbus-vnc` for the full interface
++reference.
++
++See also
++--------
++
++:manpage:`qemu(1)`,
++:doc:`/interop/dbus-display`,
++:doc:`/interop/dbus-vnc`,
++`The RFB Protocol <https://github.com/rfbproto/rfbproto>`_
+diff --git a/meson.build b/meson.build
+index 5fbdc75a0fc..d4bbe90e1f8 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2338,6 +2338,17 @@ dbus_display = get_option('dbus_display') \
+            error_message: gdbus_codegen_error.format('-display dbus')) \
+   .allowed()
+ 
++have_qemu_vnc = get_option('qemu_vnc') \
++  .require(have_tools,
++           error_message: 'qemu-vnc requires tools support') \
++  .require(dbus_display,
++           error_message: 'qemu-vnc requires dbus-display support') \
++  .require(vnc.found(),
++           error_message: 'qemu-vnc requires vnc support') \
++  .require(host_os != 'windows',
++           error_message: 'qemu-vnc is not currently supported on Windows') \
++  .allowed()
++
+ have_virtfs = get_option('virtfs') \
+     .require(host_os == 'linux' or host_os == 'darwin' or host_os == 'freebsd',
+              error_message: 'virtio-9p (virtfs) requires Linux or macOS or FreeBSD') \
+@@ -3591,6 +3602,7 @@ trace_events_subdirs = [
+   'monitor',
+   'util',
+   'gdbstub',
++  'tools/qemu-vnc',
+ ]
+ if have_linux_user
+   trace_events_subdirs += [ 'linux-user' ]
+@@ -4580,6 +4592,10 @@ if have_tools
+     subdir('contrib/ivshmem-client')
+     subdir('contrib/ivshmem-server')
+   endif
++
++  if have_qemu_vnc
++    subdir('tools/qemu-vnc')
++  endif
+ endif
+ 
+ if stap.found()
+@@ -4915,6 +4931,7 @@ if vnc.found()
+   summary_info += {'VNC SASL support':  sasl}
+   summary_info += {'VNC JPEG support':  jpeg}
+ endif
++summary_info += {'VNC D-Bus server (qemu-vnc)': have_qemu_vnc}
+ summary_info += {'spice protocol support': spice_protocol}
+ if spice_protocol.found()
+   summary_info += {'  spice server support': spice}
+diff --git a/tools/qemu-vnc/qemu-vnc.h b/tools/qemu-vnc/qemu-vnc.h
+new file mode 100644
+index 00000000000..6e483e4b475
+--- /dev/null
++++ b/tools/qemu-vnc/qemu-vnc.h
+@@ -0,0 +1,49 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#ifndef TOOLS_QEMU_VNC_H
++#define TOOLS_QEMU_VNC_H
++
++#include "qemu/osdep.h"
++
++#include <gio/gunixfdlist.h>
++#include "qemu/dbus.h"
++#include "qapi-types-char.h"
++#include "ui/console.h"
++#include "ui/dbus-display1.h"
++
++#define TEXT_COLS 80
++#define TEXT_ROWS 24
++#define TEXT_FONT_WIDTH  8
++#define TEXT_FONT_HEIGHT 16
++
++
++QemuTextConsole *qemu_vnc_text_console_new(const char *name,
++                                           int fd, bool echo,
++                                           ChardevVCEncoding encoding);
++
++void input_setup(QemuDBusDisplay1Keyboard *kbd,
++                 QemuDBusDisplay1Mouse *mouse);
++bool console_setup(GDBusConnection *bus, const char *bus_name,
++                   const char *console_path);
++QemuDBusDisplay1Keyboard *console_get_keyboard(QemuConsole *con);
++QemuDBusDisplay1Mouse *console_get_mouse(QemuConsole *con);
++
++void audio_setup(GDBusObjectManager *manager);
++void clipboard_setup(GDBusObjectManager *manager, GDBusConnection *bus);
++void chardev_setup(const char * const *chardev_names,
++                   GDBusObjectManager *manager);
++
++GThread *p2p_dbus_thread_new(int fd);
++
++void vnc_dbus_setup(GDBusConnection *bus);
++void vnc_dbus_emit_leaving(const char *reason);
++void vnc_dbus_cleanup(void);
++void vnc_dbus_client_connected(const char *host, const char *service,
++                               const char *family, bool websocket);
++void vnc_dbus_client_initialized(const char *host, const char *service,
++                                 const char *x509_dname,
++                                 const char *sasl_username);
++void vnc_dbus_client_disconnected(const char *host, const char *service);
++
++#endif /* TOOLS_QEMU_VNC_H */
+diff --git a/tools/qemu-vnc/trace.h b/tools/qemu-vnc/trace.h
+new file mode 100644
+index 00000000000..5fb7b432359
+--- /dev/null
++++ b/tools/qemu-vnc/trace.h
+@@ -0,0 +1,4 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include "trace/trace-tools_qemu_vnc.h"
+diff --git a/tests/qtest/dbus-vnc-test.c b/tests/qtest/dbus-vnc-test.c
+new file mode 100644
+index 00000000000..2a1bf67b9d7
+--- /dev/null
++++ b/tests/qtest/dbus-vnc-test.c
+@@ -0,0 +1,1346 @@
++/*
++ * D-Bus VNC server (qemu-vnc) end-to-end test
++ *
++ * Copyright (c) 2026 Red Hat, Inc.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include <gio/gio.h>
++#include <gvnc.h>
++#include <sys/un.h>
++#include "qemu/sockets.h"
++#include "libqtest.h"
++#include "qemu-vnc1.h"
++#ifdef CONFIG_TASN1
++#include "tests/unit/crypto-tls-x509-helpers.h"
++#endif
++
++#define VNC_TEST_TIMEOUT_MS 10000
++
++typedef struct DbusTest {
++    QTestState *qts;
++    GSubprocess *vnc_subprocess;
++    GTestDBus *bus;
++    GDBusConnection *bus_conn;
++    GMainLoop *loop;
++    char *vnc_sock_path;
++    char *tmp_dir;
++    char *bus_addr;
++} DbusTest;
++
++typedef struct LifecycleData {
++    DbusTest *dt;
++    QemuVnc1Server *server_proxy;
++    VncConnection *conn;
++    char *client_path;
++    gboolean got_connected;
++    gboolean got_initialized;
++    gboolean got_disconnected;
++} LifecycleData;
++
++static QemuVnc1Server *
++create_server_proxy(GDBusConnection *bus_conn, GError **errp)
++{
++    return qemu_vnc1_server_proxy_new_sync(
++        bus_conn,
++        G_DBUS_PROXY_FLAGS_NONE,
++        "org.qemu.vnc",
++        "/org/qemu/Vnc1/Server",
++        NULL, errp);
++}
++
++static void
++on_vnc_error(VncConnection *self, const char *msg)
++{
++    g_error("vnc-error: %s", msg);
++}
++
++static void
++on_vnc_auth_failure(VncConnection *self, const char *msg)
++{
++    g_error("vnc-auth-failure: %s", msg);
++}
++
++static void
++on_vnc_initialized(VncConnection *self, GMainLoop *loop)
++{
++    const char *name = vnc_connection_get_name(self);
++
++    g_assert_cmpstr(name, ==, "QEMU (dbus-vnc-test)");
++    g_main_loop_quit(loop);
++}
++
++static gboolean
++timeout_cb(gpointer data)
++{
++    g_error("test timed out");
++    return G_SOURCE_REMOVE;
++}
++
++static int
++connect_unix_socket(const char *path)
++{
++    int fd;
++    struct sockaddr_un addr = { .sun_family = AF_UNIX };
++
++    fd = socket(AF_UNIX, SOCK_STREAM, 0);
++    g_assert(fd >= 0);
++
++    snprintf(addr.sun_path, sizeof(addr.sun_path), "%s", path);
++
++    if (connect(fd, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
++        close(fd);
++        return -1;
++    }
++    return fd;
++}
++
++static int
++wait_for_vnc_socket(const char *path, int timeout_ms)
++{
++    int elapsed = 0;
++    const int interval = 50;
++
++    while (elapsed < timeout_ms) {
++        int fd = connect_unix_socket(path);
++
++        if (fd >= 0) {
++            return fd;
++        }
++
++        g_usleep(interval * 1000);
++        elapsed += interval;
++    }
++    return -1;
++}
++
++static GSubprocess *
++spawn_qemu_vnc(int dbus_fd, const char *sock_path)
++{
++    const char *binary;
++    g_autoptr(GError) err = NULL;
++    g_autoptr(GSubprocessLauncher) launcher = NULL;
++    GSubprocess *proc;
++    g_autofree char *fd_str = NULL;
++    g_autofree char *vnc_addr = NULL;
++
++    binary = g_getenv("QTEST_QEMU_VNC_BINARY");
++    g_assert(binary != NULL);
++
++    fd_str = g_strdup_printf("%d", dbus_fd);
++    vnc_addr = g_strdup_printf("unix:%s", sock_path);
++
++    launcher = g_subprocess_launcher_new(G_SUBPROCESS_FLAGS_NONE);
++    g_subprocess_launcher_take_fd(launcher, dbus_fd, dbus_fd);
++
++    proc = g_subprocess_launcher_spawn(launcher, &err,
++                                       binary,
++                                       "--dbus-p2p-fd", fd_str,
++                                       "--vnc-addr", vnc_addr,
++                                       NULL);
++    g_assert_no_error(err);
++    g_assert(proc != NULL);
++
++    return proc;
++}
++
++static GSubprocess *
++spawn_qemu_vnc_bus_full(const char *dbus_addr, const char *sock_path,
++                        const char *const *extra_args)
++{
++    const char *binary;
++    g_autoptr(GError) err = NULL;
++    g_autoptr(GSubprocessLauncher) launcher = NULL;
++    g_autoptr(GPtrArray) argv = NULL;
++    GSubprocess *proc;
++    g_autofree char *vnc_addr = NULL;
++
++    binary = g_getenv("QTEST_QEMU_VNC_BINARY");
++    g_assert(binary != NULL);
++
++    vnc_addr = g_strdup_printf("unix:%s", sock_path);
++
++    argv = g_ptr_array_new();
++    g_ptr_array_add(argv, (gpointer)binary);
++    g_ptr_array_add(argv, (gpointer)"--dbus-address");
++    g_ptr_array_add(argv, (gpointer)dbus_addr);
++    g_ptr_array_add(argv, (gpointer)"--bus-name");
++    g_ptr_array_add(argv, (gpointer)"org.qemu");
++    g_ptr_array_add(argv, (gpointer)"--vnc-addr");
++    g_ptr_array_add(argv, (gpointer)vnc_addr);
++
++    if (extra_args) {
++        for (int i = 0; extra_args[i]; i++) {
++            g_ptr_array_add(argv, (gpointer)extra_args[i]);
++        }
++    }
++
++    g_ptr_array_add(argv, NULL);
++
++    launcher = g_subprocess_launcher_new(G_SUBPROCESS_FLAGS_NONE);
++    proc = g_subprocess_launcher_spawnv(launcher,
++        (const char *const *)argv->pdata, &err);
++    g_assert_no_error(err);
++    g_assert(proc != NULL);
++
++    return proc;
++}
++
++
++static void
++name_appeared_cb(GDBusConnection *connection,
++                 const gchar *name,
++                 const gchar *name_owner,
++                 gpointer user_data)
++{
++    gboolean *appeared = user_data;
++    *appeared = TRUE;
++}
++
++static bool
++setup_dbus_test_full(DbusTest *dt, const char *const *vnc_extra_args)
++{
++    g_autoptr(GError) err = NULL;
++    g_auto(GStrv) addr_parts = NULL;
++    g_autofree char *qemu_args = NULL;
++
++    if (!g_getenv("QTEST_QEMU_VNC_BINARY")) {
++        g_test_skip("QTEST_QEMU_VNC_BINARY not set");
++        return false;
++    }
++
++    dt->bus = g_test_dbus_new(G_TEST_DBUS_NONE);
++    g_test_dbus_up(dt->bus);
++
++    /* remove ,guid=foo part */
++    addr_parts = g_strsplit(g_test_dbus_get_bus_address(dt->bus), ",", 2);
++    dt->bus_addr = g_strdup(addr_parts[0]);
++
++    dt->bus_conn = g_dbus_connection_new_for_address_sync(
++        g_test_dbus_get_bus_address(dt->bus),
++        G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_CLIENT |
++        G_DBUS_CONNECTION_FLAGS_MESSAGE_BUS_CONNECTION,
++        NULL, NULL, &err);
++    g_assert_no_error(err);
++
++    qemu_args = g_strdup_printf("-display dbus,addr=%s "
++                                "-name dbus-vnc-test", dt->bus_addr);
++    dt->qts = qtest_init(qemu_args);
++
++    dt->tmp_dir = g_dir_make_tmp("dbus-vnc-test-XXXXXX", NULL);
++    g_assert(dt->tmp_dir != NULL);
++    dt->vnc_sock_path = g_build_filename(dt->tmp_dir, "vnc.sock", NULL);
++    dt->vnc_subprocess = spawn_qemu_vnc_bus_full(dt->bus_addr,
++                                                 dt->vnc_sock_path,
++                                                 vnc_extra_args);
++
++    /*
++     * Wait for the org.qemu.vnc bus name to appear, which indicates
++     * qemu-vnc has fully initialized (connected to QEMU, set up the
++     * display, exported its D-Bus interfaces, and opened the VNC
++     * socket).
++     */
++    {
++        guint watch_id, timeout_id;
++        gboolean appeared = FALSE;
++
++        watch_id = g_bus_watch_name_on_connection(
++            dt->bus_conn, "org.qemu.vnc",
++            G_BUS_NAME_WATCHER_FLAGS_NONE,
++            name_appeared_cb, NULL, &appeared, NULL);
++        timeout_id = g_timeout_add_seconds(10, timeout_cb, NULL);
++
++        while (!appeared) {
++            if (!g_main_context_iteration(NULL, TRUE)) {
++                break;
++            }
++        }
++
++        g_bus_unwatch_name(watch_id);
++        g_source_remove(timeout_id);
++
++        if (!appeared) {
++            g_test_fail();
++            g_test_message("Timed out waiting for org.qemu.vnc bus name");
++            return false;
++        }
++    }
++
++    return true;
++}
++
++static bool
++setup_dbus_test(DbusTest *dt)
++{
++    return setup_dbus_test_full(dt, NULL);
++}
++
++static void
++cleanup_dbus_test(DbusTest *dt)
++{
++    if (dt->bus_conn) {
++        g_dbus_connection_close_sync(dt->bus_conn, NULL, NULL);
++        g_object_unref(dt->bus_conn);
++    }
++    if (dt->vnc_subprocess) {
++        g_subprocess_force_exit(dt->vnc_subprocess);
++        g_subprocess_wait(dt->vnc_subprocess, NULL, NULL);
++        g_object_unref(dt->vnc_subprocess);
++    }
++    if (dt->vnc_sock_path) {
++        unlink(dt->vnc_sock_path);
++        g_free(dt->vnc_sock_path);
++    }
++    if (dt->tmp_dir) {
++        rmdir(dt->tmp_dir);
++        g_free(dt->tmp_dir);
++    }
++    if (dt->qts) {
++        qtest_quit(dt->qts);
++    }
++    if (dt->bus) {
++        g_test_dbus_down(dt->bus);
++        g_object_unref(dt->bus);
++    }
++    g_free(dt->bus_addr);
++}
++
++static void
++test_dbus_vnc_basic(void)
++{
++    DbusTest dt = { 0 };
++    VncConnection *conn = NULL;
++    GMainLoop *loop = NULL;
++    int pair[2];
++    int vnc_fd;
++    guint timeout_id;
++
++    if (!g_getenv("QTEST_QEMU_VNC_BINARY")) {
++        g_test_skip("QTEST_QEMU_VNC_BINARY not set");
++        return;
++    }
++
++    dt.qts = qtest_init("-display dbus,p2p=yes -name dbus-vnc-test");
++
++    g_assert_cmpint(qemu_socketpair(AF_UNIX, SOCK_STREAM, 0, pair), ==, 0);
++    qtest_qmp_add_client(dt.qts, "@dbus-display", pair[1]);
++    close(pair[1]);
++
++    dt.tmp_dir = g_dir_make_tmp("dbus-vnc-test-XXXXXX", NULL);
++    g_assert(dt.tmp_dir != NULL);
++    dt.vnc_sock_path = g_build_filename(dt.tmp_dir, "vnc.sock", NULL);
++
++    dt.vnc_subprocess = spawn_qemu_vnc(pair[0], dt.vnc_sock_path);
++
++    vnc_fd = wait_for_vnc_socket(dt.vnc_sock_path, VNC_TEST_TIMEOUT_MS);
++    g_assert(vnc_fd >= 0);
++
++    loop = g_main_loop_new(NULL, FALSE);
++
++    conn = vnc_connection_new();
++    g_signal_connect(conn, "vnc-error",
++                     G_CALLBACK(on_vnc_error), NULL);
++    g_signal_connect(conn, "vnc-auth-failure",
++                     G_CALLBACK(on_vnc_auth_failure), NULL);
++    g_signal_connect(conn, "vnc-initialized",
++                     G_CALLBACK(on_vnc_initialized), loop);
++    vnc_connection_set_auth_type(conn, VNC_CONNECTION_AUTH_NONE);
++    vnc_connection_open_fd(conn, vnc_fd);
++
++    timeout_id = g_timeout_add_seconds(10, timeout_cb, NULL);
++    g_main_loop_run(loop);
++    g_source_remove(timeout_id);
++
++    if (conn) {
++        vnc_connection_shutdown(conn);
++        g_object_unref(conn);
++    }
++    g_clear_pointer(&loop, g_main_loop_unref);
++    cleanup_dbus_test(&dt);
++}
++
++static void
++test_dbus_vnc_server_props(void)
++{
++    DbusTest dt = { 0 };
++    QemuVnc1Server *proxy = NULL;
++    g_autoptr(GError) err = NULL;
++    const gchar *const *clients;
++    GVariant *listeners;
++
++    if (!setup_dbus_test(&dt)) {
++        goto cleanup;
++    }
++
++    proxy = create_server_proxy(dt.bus_conn, &err);
++    g_assert_no_error(err);
++    g_assert_nonnull(proxy);
++
++    g_assert_cmpstr(qemu_vnc1_server_get_name(proxy), ==,
++                    "dbus-vnc-test");
++    g_assert_cmpstr(qemu_vnc1_server_get_auth(proxy), ==,
++                    "none");
++    g_assert_cmpstr(qemu_vnc1_server_get_vencrypt_sub_auth(proxy), ==,
++                    "");
++
++    clients = qemu_vnc1_server_get_clients(proxy);
++    g_assert_nonnull(clients);
++    g_assert_cmpint(g_strv_length((gchar **)clients), ==, 0);
++
++    listeners = qemu_vnc1_server_get_listeners(proxy);
++    g_assert_nonnull(listeners);
++    g_assert_cmpint(g_variant_n_children(listeners), >, 0);
++
++cleanup:
++    g_clear_object(&proxy);
++    cleanup_dbus_test(&dt);
++}
++
++static void
++on_client_connected(QemuVnc1Server *proxy,
++                    const gchar *client_path,
++                    LifecycleData *data)
++{
++    data->got_connected = TRUE;
++    data->client_path = g_strdup(client_path);
++}
++
++static void
++on_client_initialized(QemuVnc1Server *proxy,
++                      const gchar *client_path,
++                      LifecycleData *data)
++{
++    data->got_initialized = TRUE;
++    g_main_loop_quit(data->dt->loop);
++}
++
++static void
++on_client_disconnected(QemuVnc1Server *proxy,
++                       const gchar *client_path,
++                       LifecycleData *data)
++{
++    data->got_disconnected = TRUE;
++    g_main_loop_quit(data->dt->loop);
++}
++
++static void
++test_dbus_vnc_client_lifecycle(void)
++{
++    DbusTest dt = { 0 };
++    QemuVnc1Server *server_proxy = NULL;
++    QemuVnc1Client *client_proxy = NULL;
++    g_autoptr(GError) err = NULL;
++    LifecycleData ldata = { 0 };
++    int vnc_fd;
++    guint timeout_id;
++
++    if (!setup_dbus_test(&dt)) {
++        goto cleanup;
++    }
++
++    server_proxy = create_server_proxy(dt.bus_conn, &err);
++    g_assert_no_error(err);
++
++    ldata.dt = &dt;
++    ldata.server_proxy = server_proxy;
++
++    g_signal_connect(server_proxy, "client-connected",
++                     G_CALLBACK(on_client_connected), &ldata);
++    g_signal_connect(server_proxy, "client-initialized",
++                     G_CALLBACK(on_client_initialized), &ldata);
++    g_signal_connect(server_proxy, "client-disconnected",
++                     G_CALLBACK(on_client_disconnected), &ldata);
++
++    vnc_fd = wait_for_vnc_socket(dt.vnc_sock_path, VNC_TEST_TIMEOUT_MS);
++    g_assert(vnc_fd >= 0);
++
++    ldata.conn = vnc_connection_new();
++    g_signal_connect(ldata.conn, "vnc-error",
++                     G_CALLBACK(on_vnc_error), NULL);
++    g_signal_connect(ldata.conn, "vnc-auth-failure",
++                     G_CALLBACK(on_vnc_auth_failure), NULL);
++    vnc_connection_set_auth_type(ldata.conn, VNC_CONNECTION_AUTH_NONE);
++    vnc_connection_open_fd(ldata.conn, vnc_fd);
++
++    /* wait for ClientInitialized */
++    dt.loop = g_main_loop_new(NULL, FALSE);
++    timeout_id = g_timeout_add_seconds(10, timeout_cb, NULL);
++    g_main_loop_run(dt.loop);
++    g_source_remove(timeout_id);
++
++    g_assert_true(ldata.got_connected);
++    g_assert_true(ldata.got_initialized);
++    g_assert_nonnull(ldata.client_path);
++
++    /* Check client properties while still connected */
++    client_proxy = qemu_vnc1_client_proxy_new_sync(
++        dt.bus_conn,
++        G_DBUS_PROXY_FLAGS_NONE,
++        "org.qemu.vnc",
++        ldata.client_path,
++        NULL, &err);
++    g_assert_no_error(err);
++
++    g_assert_cmpstr(qemu_vnc1_client_get_family(client_proxy), ==,
++                    "unix");
++    g_assert_false(qemu_vnc1_client_get_web_socket(client_proxy));
++    g_assert_cmpstr(qemu_vnc1_client_get_x509_dname(client_proxy), ==,
++                    "");
++    g_assert_cmpstr(qemu_vnc1_client_get_sasl_username(client_proxy),
++                    ==, "");
++
++    /* disconnect and wait for ClientDisconnected */
++    vnc_connection_shutdown(ldata.conn);
++    timeout_id = g_timeout_add_seconds(10, timeout_cb, NULL);
++    g_main_loop_run(dt.loop);
++    g_source_remove(timeout_id);
++
++    g_assert_true(ldata.got_disconnected);
++
++    g_object_unref(ldata.conn);
++    g_main_loop_unref(dt.loop);
++    dt.loop = NULL;
++    g_free(ldata.client_path);
++
++cleanup:
++    g_clear_object(&server_proxy);
++    g_clear_object(&client_proxy);
++    cleanup_dbus_test(&dt);
++}
++
++static void
++test_dbus_vnc_no_password(void)
++{
++    DbusTest dt = { 0 };
++    QemuVnc1Server *proxy = NULL;
++    g_autoptr(GError) err = NULL;
++    gboolean ret;
++
++    if (!setup_dbus_test(&dt)) {
++        goto cleanup;
++    }
++
++    proxy = create_server_proxy(dt.bus_conn, &err);
++    g_assert_no_error(err);
++
++    /*
++     * With default auth=none, SetPassword should return an error
++     * because VNC password authentication is not enabled.
++     */
++    ret = qemu_vnc1_server_call_set_password_sync(
++        proxy, "secret",
++        G_DBUS_CALL_FLAGS_NONE, -1, NULL, &err);
++    g_assert_false(ret);
++    g_assert_error(err, G_DBUS_ERROR, G_DBUS_ERROR_FAILED);
++    g_clear_error(&err);
++
++    ret = qemu_vnc1_server_call_expire_password_sync(
++        proxy, "never",
++        G_DBUS_CALL_FLAGS_NONE, -1, NULL, &err);
++    g_assert_no_error(err);
++    g_assert_true(ret);
++
++    ret = qemu_vnc1_server_call_expire_password_sync(
++        proxy, "+3600",
++        G_DBUS_CALL_FLAGS_NONE, -1, NULL, &err);
++    g_assert_no_error(err);
++    g_assert_true(ret);
++
++cleanup:
++    g_clear_object(&proxy);
++    cleanup_dbus_test(&dt);
++}
++
++typedef struct PasswordData {
++    DbusTest *dt;
++    VncConnection *conn;
++    const char *password;
++    gboolean auth_succeeded;
++    gboolean auth_failed;
++} PasswordData;
++
++G_GNUC_BEGIN_IGNORE_DEPRECATIONS
++static void
++on_pw_vnc_auth_credential(VncConnection *conn, GValueArray *creds,
++                          PasswordData *data)
++{
++    for (guint i = 0; i < creds->n_values; i++) {
++        int type = g_value_get_enum(g_value_array_get_nth(creds, i));
++
++        if (type == VNC_CONNECTION_CREDENTIAL_PASSWORD) {
++            vnc_connection_set_credential(conn, type, data->password);
++        }
++    }
++}
++G_GNUC_END_IGNORE_DEPRECATIONS
++
++static void
++on_pw_vnc_initialized(VncConnection *conn, PasswordData *data)
++{
++    data->auth_succeeded = TRUE;
++    g_main_loop_quit(data->dt->loop);
++}
++
++static void
++on_pw_vnc_auth_failure(VncConnection *conn, const char *msg,
++                       PasswordData *data)
++{
++    data->auth_failed = TRUE;
++    g_main_loop_quit(data->dt->loop);
++}
++
++static void
++on_pw_vnc_error(VncConnection *conn, const char *msg,
++                PasswordData *data)
++{
++    data->auth_failed = TRUE;
++    g_main_loop_quit(data->dt->loop);
++}
++
++static void
++test_dbus_vnc_password_auth(void)
++{
++    DbusTest dt = { 0 };
++    QemuVnc1Server *proxy = NULL;
++    g_autoptr(GError) err = NULL;
++    PasswordData pdata = { 0 };
++    const char *extra_args[] = { "--password", NULL };
++    int vnc_fd;
++    guint timeout_id;
++    gboolean ret;
++
++    if (!setup_dbus_test_full(&dt, extra_args)) {
++        goto cleanup;
++    }
++
++    proxy = create_server_proxy(dt.bus_conn, &err);
++    g_assert_no_error(err);
++
++    g_assert_cmpstr(qemu_vnc1_server_get_auth(proxy), ==, "vnc");
++
++    ret = qemu_vnc1_server_call_set_password_sync(
++        proxy, "testpass123",
++        G_DBUS_CALL_FLAGS_NONE, -1, NULL, &err);
++    g_assert_no_error(err);
++    g_assert_true(ret);
++
++    vnc_fd = wait_for_vnc_socket(dt.vnc_sock_path, VNC_TEST_TIMEOUT_MS);
++    g_assert(vnc_fd >= 0);
++
++    pdata.dt = &dt;
++    pdata.password = "testpass123";
++    pdata.conn = vnc_connection_new();
++
++    g_signal_connect(pdata.conn, "vnc-error",
++                     G_CALLBACK(on_pw_vnc_error), &pdata);
++    g_signal_connect(pdata.conn, "vnc-auth-failure",
++                     G_CALLBACK(on_pw_vnc_auth_failure), &pdata);
++    g_signal_connect(pdata.conn, "vnc-auth-credential",
++                     G_CALLBACK(on_pw_vnc_auth_credential), &pdata);
++    g_signal_connect(pdata.conn, "vnc-initialized",
++                     G_CALLBACK(on_pw_vnc_initialized), &pdata);
++    vnc_connection_set_auth_type(pdata.conn, VNC_CONNECTION_AUTH_VNC);
++    vnc_connection_open_fd(pdata.conn, vnc_fd);
++
++    dt.loop = g_main_loop_new(NULL, FALSE);
++    timeout_id = g_timeout_add_seconds(10, timeout_cb, NULL);
++    g_main_loop_run(dt.loop);
++    g_source_remove(timeout_id);
++
++    g_assert_true(pdata.auth_succeeded);
++    g_assert_false(pdata.auth_failed);
++
++    vnc_connection_shutdown(pdata.conn);
++    g_object_unref(pdata.conn);
++    g_main_loop_unref(dt.loop);
++    dt.loop = NULL;
++
++cleanup:
++    g_clear_object(&proxy);
++    cleanup_dbus_test(&dt);
++}
++
++static void
++test_dbus_vnc_sasl_authz_no_sasl(void)
++{
++    const char *binary;
++    g_autoptr(GError) err = NULL;
++    g_autoptr(GSubprocess) proc = NULL;
++    gboolean ok;
++
++    binary = g_getenv("QTEST_QEMU_VNC_BINARY");
++    if (!binary) {
++        g_test_skip("QTEST_QEMU_VNC_BINARY not set");
++        return;
++    }
++
++    proc = g_subprocess_new(G_SUBPROCESS_FLAGS_STDERR_SILENCE,
++                            &err,
++                            binary,
++                            "--sasl-authz", "authz0",
++                            NULL);
++    g_assert_no_error(err);
++    g_assert_nonnull(proc);
++
++    ok = g_subprocess_wait(proc, NULL, &err);
++    g_assert_no_error(err);
++    g_assert_true(ok);
++    g_assert_false(g_subprocess_get_successful(proc));
++}
++
++#ifdef CONFIG_VNC_SASL
++static void
++test_dbus_vnc_sasl_server_props(void)
++{
++    DbusTest dt = { 0 };
++    QemuVnc1Server *proxy = NULL;
++    g_autoptr(GError) err = NULL;
++    const char *extra_args[] = { "--sasl", NULL };
++
++    if (!setup_dbus_test_full(&dt, extra_args)) {
++        goto cleanup;
++    }
++
++    proxy = create_server_proxy(dt.bus_conn, &err);
++    g_assert_no_error(err);
++    g_assert_nonnull(proxy);
++
++    g_assert_cmpstr(qemu_vnc1_server_get_auth(proxy), ==, "sasl");
++
++cleanup:
++    g_clear_object(&proxy);
++    cleanup_dbus_test(&dt);
++}
++
++#define SASL_TEST_USER "testuser"
++#define SASL_TEST_PASS "testpass123"
++
++typedef struct SaslAuthData {
++    DbusTest *dt;
++    const char *username;
++    const char *password;
++    gboolean auth_succeeded;
++    gboolean auth_failed;
++} SaslAuthData;
++
++typedef struct SaslTestData {
++    DbusTest dt;
++    SaslAuthData sdata;
++    char *sasl_dir;
++    char *db_path;
++} SaslTestData;
++
++G_GNUC_BEGIN_IGNORE_DEPRECATIONS
++static void
++on_sasl_vnc_auth_credential(VncConnection *conn, GValueArray *creds,
++                            SaslAuthData *data)
++{
++    for (guint i = 0; i < creds->n_values; i++) {
++        int type = g_value_get_enum(g_value_array_get_nth(creds, i));
++
++        switch (type) {
++        case VNC_CONNECTION_CREDENTIAL_USERNAME:
++            vnc_connection_set_credential(conn, type, data->username);
++            break;
++        case VNC_CONNECTION_CREDENTIAL_PASSWORD:
++            vnc_connection_set_credential(conn, type, data->password);
++            break;
++        }
++    }
++}
++G_GNUC_END_IGNORE_DEPRECATIONS
++
++static void
++on_sasl_vnc_initialized(VncConnection *conn, SaslAuthData *data)
++{
++    data->auth_succeeded = TRUE;
++    g_main_loop_quit(data->dt->loop);
++}
++
++static void
++on_sasl_vnc_auth_failure(VncConnection *conn, const char *msg,
++                         SaslAuthData *data)
++{
++    data->auth_failed = TRUE;
++    g_main_loop_quit(data->dt->loop);
++}
++
++static void
++on_sasl_vnc_error(VncConnection *conn, const char *msg,
++                  SaslAuthData *data)
++{
++    data->auth_failed = TRUE;
++    g_main_loop_quit(data->dt->loop);
++}
++
++/*
++ * Create a SASL configuration directory with a qemu.conf and a
++ * sasldb2 user database.  Returns the path to the sasldb file,
++ * or NULL if saslpasswd2 is not available.
++ */
++static char *
++create_sasl_config(const char *dir, const char *username,
++                   const char *password)
++{
++    g_autofree char *conf_path = g_strdup_printf("%s/qemu.conf", dir);
++    g_autofree char *db_path = g_strdup_printf("%s/sasldb2", dir);
++    g_autoptr(GError) err = NULL;
++    g_autoptr(GSubprocess) proc = NULL;
++    g_autofree char *conf = NULL;
++    GOutputStream *stdin_stream;
++    gboolean ok;
++
++    /* use PLAIN, and local auxprop sasldb plugin */
++    conf = g_strdup_printf(
++        "mech_list: plain\n"
++        "pwcheck_method: auxprop\n"
++        "auxprop_plugin: sasldb\n"
++        "sasldb_path: %s\n", db_path);
++    g_assert_true(g_file_set_contents(conf_path, conf, -1, NULL));
++
++    proc = g_subprocess_new(
++        G_SUBPROCESS_FLAGS_STDIN_PIPE |
++        G_SUBPROCESS_FLAGS_STDOUT_SILENCE |
++        G_SUBPROCESS_FLAGS_STDERR_SILENCE,
++        &err,
++        "saslpasswd2", "-f", db_path, "-a", "qemu", "-p", "-c",
++        username, NULL);
++    if (!proc) {
++        return NULL;
++    }
++
++    stdin_stream = g_subprocess_get_stdin_pipe(proc);
++    g_output_stream_write_all(stdin_stream, password,
++                              strlen(password), NULL, NULL, NULL);
++    g_output_stream_close(stdin_stream, NULL, NULL);
++
++    ok = g_subprocess_wait_check(proc, NULL, &err);
++    if (!ok) {
++        return NULL;
++    }
++
++    return g_strdup(db_path);
++}
++
++static void
++cleanup_sasl_config(const char *dir, const char *db_path)
++{
++    g_autofree char *conf = g_strdup_printf("%s/qemu.conf", dir);
++
++    unlink(conf);
++    if (db_path) {
++        unlink(db_path);
++    }
++    rmdir(dir);
++}
++
++/*
++ * Set up SASL environment: create temp config dir, sasldb, and
++ * start qemu-vnc with the given extra_args.  Returns FALSE if the
++ * test should be skipped.
++ */
++static gboolean
++setup_sasl_test(SaslTestData *st, const char **extra_args)
++{
++    if (!g_getenv("QTEST_QEMU_VNC_BINARY")) {
++        g_test_skip("QTEST_QEMU_VNC_BINARY not set");
++        return FALSE;
++    }
++
++    st->sasl_dir = g_dir_make_tmp("dbus-vnc-sasl-XXXXXX", NULL);
++    g_assert_nonnull(st->sasl_dir);
++
++    st->db_path = create_sasl_config(st->sasl_dir, SASL_TEST_USER,
++                                     SASL_TEST_PASS);
++    if (!st->db_path) {
++        g_test_skip("saslpasswd2 not available or failed");
++        cleanup_sasl_config(st->sasl_dir, NULL);
++        return FALSE;
++    }
++
++    g_setenv("SASL_CONF_PATH", st->sasl_dir, TRUE);
++
++    if (!setup_dbus_test_full(&st->dt, extra_args)) {
++        return FALSE;
++    }
++
++    return TRUE;
++}
++
++/*
++ * Connect to the VNC server using SASL and run the main loop
++ * until authentication completes or times out.
++ */
++static void
++run_sasl_auth(SaslTestData *st, const char *username,
++              const char *password)
++{
++    VncConnection *conn;
++    guint timeout_id;
++    int vnc_fd;
++
++    st->sdata.dt = &st->dt;
++    st->sdata.username = username;
++    st->sdata.password = password;
++
++    vnc_fd = wait_for_vnc_socket(st->dt.vnc_sock_path, VNC_TEST_TIMEOUT_MS);
++    g_assert(vnc_fd >= 0);
++
++    conn = vnc_connection_new();
++    g_signal_connect(conn, "vnc-error",
++                     G_CALLBACK(on_sasl_vnc_error), &st->sdata);
++    g_signal_connect(conn, "vnc-auth-failure",
++                     G_CALLBACK(on_sasl_vnc_auth_failure), &st->sdata);
++    g_signal_connect(conn, "vnc-auth-credential",
++                     G_CALLBACK(on_sasl_vnc_auth_credential),
++                     &st->sdata);
++    g_signal_connect(conn, "vnc-initialized",
++                     G_CALLBACK(on_sasl_vnc_initialized), &st->sdata);
++    vnc_connection_set_auth_type(conn, VNC_CONNECTION_AUTH_SASL);
++    vnc_connection_open_fd(conn, vnc_fd);
++
++    st->dt.loop = g_main_loop_new(NULL, FALSE);
++    timeout_id = g_timeout_add_seconds(10, timeout_cb, NULL);
++    g_main_loop_run(st->dt.loop);
++    g_source_remove(timeout_id);
++
++    g_signal_handlers_disconnect_by_data(conn, &st->sdata);
++    vnc_connection_shutdown(conn);
++    g_object_unref(conn);
++    g_main_loop_unref(st->dt.loop);
++    st->dt.loop = NULL;
++}
++
++static void
++cleanup_sasl_test(SaslTestData *st)
++{
++    cleanup_dbus_test(&st->dt);
++    g_unsetenv("SASL_CONF_PATH");
++    cleanup_sasl_config(st->sasl_dir, st->db_path);
++    g_free(st->sasl_dir);
++    g_free(st->db_path);
++}
++
++static void
++test_dbus_vnc_sasl_auth(void)
++{
++    SaslTestData st = { 0 };
++    const char *extra_args[] = { "--sasl", NULL };
++
++    if (!setup_sasl_test(&st, extra_args)) {
++        return;
++    }
++
++    run_sasl_auth(&st, SASL_TEST_USER, SASL_TEST_PASS);
++
++    g_assert_true(st.sdata.auth_succeeded);
++    g_assert_false(st.sdata.auth_failed);
++
++    cleanup_sasl_test(&st);
++}
++
++static void
++test_dbus_vnc_sasl_auth_bad_password(void)
++{
++    SaslTestData st = { 0 };
++    const char *extra_args[] = { "--sasl", NULL };
++
++    if (!setup_sasl_test(&st, extra_args)) {
++        return;
++    }
++
++    run_sasl_auth(&st, SASL_TEST_USER, "wrongpassword");
++
++    g_assert_false(st.sdata.auth_succeeded);
++    g_assert_true(st.sdata.auth_failed);
++
++    cleanup_sasl_test(&st);
++}
++
++static void
++test_dbus_vnc_sasl_authz_denied(void)
++{
++    SaslTestData st = { 0 };
++    const char *extra_args[] = {
++        "--sasl",
++        "--object",
++        "authz-simple,id=authz0,identity=otheruser",
++        "--sasl-authz", "authz0",
++        NULL
++    };
++
++    if (!setup_sasl_test(&st, extra_args)) {
++        return;
++    }
++
++    run_sasl_auth(&st, SASL_TEST_USER, SASL_TEST_PASS);
++
++    g_assert_false(st.sdata.auth_succeeded);
++    g_assert_true(st.sdata.auth_failed);
++
++    cleanup_sasl_test(&st);
++}
++#endif /* CONFIG_VNC_SASL */
++
++static void
++test_dbus_vnc_tls_authz_no_creds(void)
++{
++    const char *binary;
++    g_autoptr(GError) err = NULL;
++    g_autoptr(GSubprocess) proc = NULL;
++    gboolean ok;
++
++    binary = g_getenv("QTEST_QEMU_VNC_BINARY");
++    if (!binary) {
++        g_test_skip("QTEST_QEMU_VNC_BINARY not set");
++        return;
++    }
++
++    proc = g_subprocess_new(G_SUBPROCESS_FLAGS_STDERR_SILENCE,
++                            &err,
++                            binary,
++                            "--tls-authz", "authz0",
++                            NULL);
++    g_assert_no_error(err);
++    g_assert_nonnull(proc);
++
++    ok = g_subprocess_wait(proc, NULL, &err);
++    g_assert_no_error(err);
++    g_assert_true(ok);
++    g_assert_false(g_subprocess_get_successful(proc));
++}
++
++#ifdef CONFIG_TASN1
++#define CLIENT_CERT_CN "qemu-vnc-test"
++
++static char *
++create_tls_certs(const char *dir)
++{
++    char *keyfile = g_strdup_printf("%s/key.pem", dir);
++    char *cacert = g_strdup_printf("%s/ca-cert.pem", dir);
++    char *servercert = g_strdup_printf("%s/server-cert.pem", dir);
++    char *serverkey = g_strdup_printf("%s/server-key.pem", dir);
++    char *clientcert = g_strdup_printf("%s/client-cert.pem", dir);
++
++    test_tls_init(keyfile);
++    g_assert(link(keyfile, serverkey) == 0);
++
++    TLS_ROOT_REQ_SIMPLE(cacertreq, cacert);
++    TLS_CERT_REQ_SIMPLE_SERVER(servercertreq, cacertreq,
++                               servercert, "localhost", NULL);
++    TLS_CERT_REQ_SIMPLE_CLIENT(clientcertreq, cacertreq,
++                               CLIENT_CERT_CN, clientcert);
++
++    test_tls_deinit_cert(&clientcertreq);
++    test_tls_deinit_cert(&servercertreq);
++    test_tls_deinit_cert(&cacertreq);
++
++    g_free(cacert);
++    g_free(servercert);
++    g_free(serverkey);
++    g_free(clientcert);
++    return keyfile;
++}
++
++static void
++cleanup_tls_certs(const char *dir, const char *keyfile)
++{
++    g_autofree char *cacert = g_strdup_printf("%s/ca-cert.pem", dir);
++    g_autofree char *servercert = g_strdup_printf("%s/server-cert.pem", dir);
++    g_autofree char *serverkey = g_strdup_printf("%s/server-key.pem", dir);
++    g_autofree char *clientcert = g_strdup_printf("%s/client-cert.pem", dir);
++
++    unlink(cacert);
++    unlink(servercert);
++    unlink(serverkey);
++    unlink(clientcert);
++    unlink(keyfile);
++    test_tls_cleanup(keyfile);
++    rmdir(dir);
++}
++
++/*
++ * Do a minimal VNC/VeNCrypt negotiation on @fd up to the point where
++ * the TLS handshake should begin, then perform a GnuTLS handshake
++ * using the given credentials.
++ */
++static bool
++try_raw_tls_connect(int fd, gnutls_certificate_credentials_t cred)
++{
++    char buf[13];
++    uint8_t num_types, type;
++    uint8_t vencrypt_ver[2], ack;
++    uint8_t num_sub;
++    uint32_t subtype;
++    gnutls_session_t session;
++    int ret;
++    bool success;
++
++    /* RFB version exchange */
++    g_assert_cmpint(read(fd, buf, 12), ==, 12);
++    g_assert_cmpint(write(fd, "RFB 003.008\n", 12), ==, 12);
++
++    /* Select VeNCrypt (type 19) from the auth list */
++    g_assert_cmpint(read(fd, &num_types, 1), ==, 1);
++    for (int i = 0; i < num_types; i++) {
++        g_assert_cmpint(read(fd, &type, 1), ==, 1);
++    }
++    type = 19;
++    g_assert_cmpint(write(fd, &type, 1), ==, 1);
++
++    /* VeNCrypt version exchange */
++    g_assert_cmpint(read(fd, vencrypt_ver, 2), ==, 2);
++    g_assert_cmpint(write(fd, vencrypt_ver, 2), ==, 2);
++    g_assert_cmpint(read(fd, &ack, 1), ==, 1);
++    g_assert_cmpint(ack, ==, 0);
++
++    /* Select x509-none (260) sub-auth */
++    g_assert_cmpint(read(fd, &num_sub, 1), ==, 1);
++    for (int i = 0; i < num_sub; i++) {
++        g_assert_cmpint(read(fd, &subtype, 4), ==, 4);
++    }
++    subtype = htonl(260);
++    g_assert_cmpint(write(fd, &subtype, 4), ==, 4);
++
++    /* Server sends 1-byte ack (1 = accepted) before TLS starts */
++    g_assert_cmpint(read(fd, &ack, 1), ==, 1);
++    g_assert_cmpint(ack, ==, 1);
++
++    /* TLS handshake */
++    g_assert_cmpint(gnutls_init(&session, GNUTLS_CLIENT), >=, 0);
++    g_assert_cmpint(
++        gnutls_set_default_priority(session), >=, 0);
++    g_assert_cmpint(
++        gnutls_credentials_set(session, GNUTLS_CRD_CERTIFICATE, cred),
++        >=, 0);
++    gnutls_transport_set_int(session, fd);
++
++    do {
++        ret = gnutls_handshake(session);
++    } while (ret == GNUTLS_E_AGAIN || ret == GNUTLS_E_INTERRUPTED);
++
++    if (ret < 0) {
++        success = false;
++    } else {
++        /*
++         * Try reading the VNC security-result (4 bytes) — if the
++         * server rejected us it will have closed the connection.
++         */
++        char tmp[4];
++        do {
++            ret = gnutls_record_recv(session, tmp, sizeof(tmp));
++        } while (ret == GNUTLS_E_AGAIN || ret == GNUTLS_E_INTERRUPTED);
++        success = (ret > 0);
++    }
++
++    gnutls_deinit(session);
++    return success;
++}
++
++static void
++test_dbus_vnc_tls_server_props(void)
++{
++    DbusTest dt = { 0 };
++    QemuVnc1Server *proxy = NULL;
++    g_autoptr(GError) err = NULL;
++    g_autofree char *tls_dir = NULL;
++    g_autofree char *keyfile = NULL;
++
++    if (!g_getenv("QTEST_QEMU_VNC_BINARY")) {
++        g_test_skip("QTEST_QEMU_VNC_BINARY not set");
++        return;
++    }
++
++    tls_dir = g_dir_make_tmp("dbus-vnc-tls-XXXXXX", NULL);
++    g_assert_nonnull(tls_dir);
++    keyfile = create_tls_certs(tls_dir);
++
++    {
++        const char *extra_args[] = {
++            "--tls-creds", tls_dir, NULL
++        };
++        if (!setup_dbus_test_full(&dt, extra_args)) {
++            goto cleanup;
++        }
++    }
++
++    proxy = create_server_proxy(dt.bus_conn, &err);
++    g_assert_no_error(err);
++    g_assert_nonnull(proxy);
++
++    g_assert_cmpstr(qemu_vnc1_server_get_auth(proxy), ==, "vencrypt");
++    g_assert_cmpstr(qemu_vnc1_server_get_vencrypt_sub_auth(proxy), ==,
++                    "x509-none");
++
++    /*
++     * With verify-peer=no, a client without a certificate should
++     * be able to connect successfully through TLS.
++     */
++    {
++        g_autofree char *ca_path =
++            g_strdup_printf("%s/ca-cert.pem", tls_dir);
++        gnutls_certificate_credentials_t cred;
++        int fd;
++
++        g_assert_cmpint(
++            gnutls_certificate_allocate_credentials(&cred), >=, 0);
++        g_assert_cmpint(
++            gnutls_certificate_set_x509_trust_file(
++                cred, ca_path, GNUTLS_X509_FMT_PEM), >=, 0);
++
++        fd = wait_for_vnc_socket(dt.vnc_sock_path, VNC_TEST_TIMEOUT_MS);
++        g_assert(fd >= 0);
++        g_assert_true(try_raw_tls_connect(fd, cred));
++        close(fd);
++
++        gnutls_certificate_free_credentials(cred);
++    }
++
++cleanup:
++    g_clear_object(&proxy);
++    cleanup_dbus_test(&dt);
++    cleanup_tls_certs(tls_dir, keyfile);
++}
++
++static void
++test_dbus_vnc_tls_authz(void)
++{
++    DbusTest dt = { 0 };
++    g_autofree char *tls_dir = NULL;
++    g_autofree char *keyfile = NULL;
++    g_autofree char *ca_path = NULL;
++
++    if (!g_getenv("QTEST_QEMU_VNC_BINARY")) {
++        g_test_skip("QTEST_QEMU_VNC_BINARY not set");
++        return;
++    }
++
++    tls_dir = g_dir_make_tmp("dbus-vnc-tls-XXXXXX", NULL);
++    g_assert_nonnull(tls_dir);
++    keyfile = create_tls_certs(tls_dir);
++
++    /*
++     * The client cert has CN=qemu-vnc-test, so the DN string
++     * reported by GnuTLS is "CN=qemu-vnc-test".  Configure
++     * authz-simple to accept exactly that identity.
++     */
++    {
++        g_autofree char *identity =
++            g_strdup_printf("CN=%s", CLIENT_CERT_CN);
++        const char *extra_args[] = {
++            "--tls-creds", tls_dir,
++            "--object",
++            NULL, /* filled below */
++            "--tls-authz", "authz0",
++            NULL
++        };
++        g_autofree char *object_arg =
++            g_strdup_printf("authz-simple,id=authz0,identity=%s", identity);
++        extra_args[3] = object_arg;
++
++        if (!setup_dbus_test_full(&dt, extra_args)) {
++            goto cleanup;
++        }
++    }
++
++    ca_path = g_strdup_printf("%s/ca-cert.pem", tls_dir);
++
++    /*
++     * Connect without a client certificate.
++     * With verify-peer=yes the TLS handshake must fail.
++     */
++    {
++        gnutls_certificate_credentials_t cred;
++        int fd;
++
++        g_assert_cmpint(
++            gnutls_certificate_allocate_credentials(&cred), >=, 0);
++        g_assert_cmpint(
++            gnutls_certificate_set_x509_trust_file(
++                cred, ca_path, GNUTLS_X509_FMT_PEM), >=, 0);
++
++        fd = wait_for_vnc_socket(dt.vnc_sock_path, VNC_TEST_TIMEOUT_MS);
++        g_assert(fd >= 0);
++        g_assert_false(try_raw_tls_connect(fd, cred));
++        close(fd);
++
++        gnutls_certificate_free_credentials(cred);
++    }
++
++    /*
++     * Connect with a valid client certificate whose DN
++     * matches the authz-simple identity.  This must succeed.
++     */
++    {
++        g_autofree char *cert_path =
++            g_strdup_printf("%s/client-cert.pem", tls_dir);
++        g_autofree char *key_path =
++            g_strdup_printf("%s/key.pem", tls_dir);
++        gnutls_certificate_credentials_t cred;
++        int fd;
++
++        g_assert_cmpint(
++            gnutls_certificate_allocate_credentials(&cred), >=, 0);
++        g_assert_cmpint(
++            gnutls_certificate_set_x509_trust_file(
++                cred, ca_path, GNUTLS_X509_FMT_PEM), >=, 0);
++        g_assert_cmpint(
++            gnutls_certificate_set_x509_key_file(
++                cred, cert_path, key_path, GNUTLS_X509_FMT_PEM), >=, 0);
++
++        fd = wait_for_vnc_socket(dt.vnc_sock_path, VNC_TEST_TIMEOUT_MS);
++        g_assert(fd >= 0);
++        g_assert_true(try_raw_tls_connect(fd, cred));
++        close(fd);
++
++        gnutls_certificate_free_credentials(cred);
++    }
++
++cleanup:
++    cleanup_dbus_test(&dt);
++    cleanup_tls_certs(tls_dir, keyfile);
++}
++#endif /* CONFIG_TASN1 */
++
++int
++main(int argc, char **argv)
++{
++    g_log_set_always_fatal(G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL);
++
++    if (getenv("GTK_VNC_DEBUG")) {
++        vnc_util_set_debug(true);
++    }
++
++    g_test_init(&argc, &argv, NULL);
++
++    qtest_add_func("/dbus-vnc/basic", test_dbus_vnc_basic);
++    qtest_add_func("/dbus-vnc/server-props", test_dbus_vnc_server_props);
++    qtest_add_func("/dbus-vnc/client-lifecycle",
++                   test_dbus_vnc_client_lifecycle);
++    qtest_add_func("/dbus-vnc/no-password", test_dbus_vnc_no_password);
++    qtest_add_func("/dbus-vnc/password-auth", test_dbus_vnc_password_auth);
++    qtest_add_func("/dbus-vnc/sasl-authz-no-sasl",
++                   test_dbus_vnc_sasl_authz_no_sasl);
++#ifdef CONFIG_VNC_SASL
++    qtest_add_func("/dbus-vnc/sasl-server-props",
++                   test_dbus_vnc_sasl_server_props);
++    qtest_add_func("/dbus-vnc/sasl-auth",
++                   test_dbus_vnc_sasl_auth);
++    qtest_add_func("/dbus-vnc/sasl-auth-bad-password",
++                   test_dbus_vnc_sasl_auth_bad_password);
++    qtest_add_func("/dbus-vnc/sasl-authz-denied",
++                   test_dbus_vnc_sasl_authz_denied);
++#endif
++    qtest_add_func("/dbus-vnc/tls-authz-no-creds",
++                   test_dbus_vnc_tls_authz_no_creds);
++#ifdef CONFIG_TASN1
++    qtest_add_func("/dbus-vnc/tls-server-props",
++                   test_dbus_vnc_tls_server_props);
++    qtest_add_func("/dbus-vnc/tls-authz",
++                   test_dbus_vnc_tls_authz);
++#endif
++
++    return g_test_run();
++}
+diff --git a/tools/qemu-vnc/audio.c b/tools/qemu-vnc/audio.c
+new file mode 100644
+index 00000000000..89921d1fad8
+--- /dev/null
++++ b/tools/qemu-vnc/audio.c
+@@ -0,0 +1,308 @@
++/*
++ * Standalone VNC server connecting to QEMU via D-Bus display interface.
++ * Audio support. Only one audio stream is tracked.
++ * Mixing/resampling to be added, if needed.
++ *
++ * Copyright (C) 2026 Red Hat, Inc.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++
++#include "qemu/audio.h"
++#include "qemu/audio-capture.h"
++#include "qemu/sockets.h"
++#include "qemu/error-report.h"
++#include "ui/dbus-display1.h"
++#include "trace.h"
++#include "qemu-vnc.h"
++
++struct CaptureVoiceOut {
++    struct audsettings as;
++    struct audio_capture_ops ops;
++    void *opaque;
++    QLIST_ENTRY(CaptureVoiceOut) entries;
++};
++
++typedef struct AudioOut {
++    guint64 id;
++    struct audsettings as;
++} AudioOut;
++
++static QLIST_HEAD(, CaptureVoiceOut) capture_list =
++    QLIST_HEAD_INITIALIZER(capture_list);
++static GDBusConnection *audio_listener_conn;
++static AudioOut audio_out;
++
++static bool audsettings_eq(const struct audsettings *a,
++                           const struct audsettings *b)
++{
++    return a->freq == b->freq &&
++           a->nchannels == b->nchannels &&
++           a->fmt == b->fmt &&
++           a->big_endian == b->big_endian;
++}
++
++static gboolean
++on_audio_out_init(QemuDBusDisplay1AudioOutListener *listener,
++                  GDBusMethodInvocation *invocation,
++                  guint64 id, guchar bits, gboolean is_signed,
++                  gboolean is_float, guint freq, guchar nchannels,
++                  guint bytes_per_frame, guint bytes_per_second,
++                  gboolean be, gpointer user_data)
++{
++    AudioFormat fmt;
++
++    switch (bits) {
++    case 8:
++        fmt = is_signed ? AUDIO_FORMAT_S8 : AUDIO_FORMAT_U8;
++        break;
++    case 16:
++        fmt = is_signed ? AUDIO_FORMAT_S16 : AUDIO_FORMAT_U16;
++        break;
++    case 32:
++        fmt = is_float ? AUDIO_FORMAT_F32 :
++              is_signed ? AUDIO_FORMAT_S32 : AUDIO_FORMAT_U32;
++        break;
++    default:
++        g_return_val_if_reached(DBUS_METHOD_INVOCATION_HANDLED);
++    }
++
++    struct audsettings as = {
++        .freq = freq,
++        .nchannels = nchannels,
++        .fmt = fmt,
++        .big_endian = be,
++    };
++    audio_out = (AudioOut) {
++        .id = id,
++        .as = as,
++    };
++
++    trace_qemu_vnc_audio_out_init(id, freq, nchannels, bits);
++
++    qemu_dbus_display1_audio_out_listener_complete_init(
++        listener, invocation);
++    return DBUS_METHOD_INVOCATION_HANDLED;
++}
++
++static gboolean
++on_audio_out_fini(QemuDBusDisplay1AudioOutListener *listener,
++                  GDBusMethodInvocation *invocation,
++                  guint64 id, gpointer user_data)
++{
++    trace_qemu_vnc_audio_out_fini(id);
++
++    qemu_dbus_display1_audio_out_listener_complete_fini(
++        listener, invocation);
++    return DBUS_METHOD_INVOCATION_HANDLED;
++}
++
++static gboolean
++on_audio_out_set_enabled(QemuDBusDisplay1AudioOutListener *listener,
++                         GDBusMethodInvocation *invocation,
++                         guint64 id, gboolean enabled,
++                         gpointer user_data)
++{
++    CaptureVoiceOut *cap;
++
++    trace_qemu_vnc_audio_out_set_enabled(id, enabled);
++
++    if (id == audio_out.id) {
++        QLIST_FOREACH(cap, &capture_list, entries) {
++            cap->ops.notify(cap->opaque,
++                            enabled ? AUD_CNOTIFY_ENABLE
++                                : AUD_CNOTIFY_DISABLE);
++        }
++    }
++
++    qemu_dbus_display1_audio_out_listener_complete_set_enabled(
++        listener, invocation);
++    return DBUS_METHOD_INVOCATION_HANDLED;
++}
++
++static gboolean
++on_audio_out_set_volume(QemuDBusDisplay1AudioOutListener *listener,
++                        GDBusMethodInvocation *invocation,
++                        guint64 id, gboolean mute,
++                        GVariant *volume, gpointer user_data)
++{
++    qemu_dbus_display1_audio_out_listener_complete_set_volume(
++        listener, invocation);
++    return DBUS_METHOD_INVOCATION_HANDLED;
++}
++
++static gboolean
++on_audio_out_write(QemuDBusDisplay1AudioOutListener *listener,
++                   GDBusMethodInvocation *invocation,
++                   guint64 id, GVariant *data,
++                   gpointer user_data)
++{
++    CaptureVoiceOut *cap;
++    gsize size;
++    const void *buf;
++
++    if (id == audio_out.id) {
++        buf = g_variant_get_fixed_array(data, &size, 1);
++
++        trace_qemu_vnc_audio_out_write(id, size);
++
++        QLIST_FOREACH(cap, &capture_list, entries) {
++            /* we don't handle audio resampling/format conversion */
++            if (audsettings_eq(&cap->as, &audio_out.as)) {
++                cap->ops.capture(cap->opaque, buf, size);
++            }
++        }
++    }
++
++    qemu_dbus_display1_audio_out_listener_complete_write(
++        listener, invocation);
++    return DBUS_METHOD_INVOCATION_HANDLED;
++}
++
++CaptureVoiceOut *audio_be_add_capture(
++    AudioBackend *be,
++    const struct audsettings *as,
++    const struct audio_capture_ops *ops,
++    void *opaque)
++{
++    CaptureVoiceOut *cap;
++
++    if (!audio_listener_conn) {
++        return NULL;
++    }
++
++    cap = g_new0(CaptureVoiceOut, 1);
++    cap->ops = *ops;
++    cap->opaque = opaque;
++    cap->as = *as;
++    QLIST_INSERT_HEAD(&capture_list, cap, entries);
++
++    return cap;
++}
++
++void audio_be_del_capture(
++    AudioBackend *be,
++    CaptureVoiceOut *cap,
++    void *cb_opaque)
++{
++    if (!cap) {
++        return;
++    }
++
++    cap->ops.destroy(cap->opaque);
++    QLIST_REMOVE(cap, entries);
++    g_free(cap);
++}
++
++/*
++ * Dummy audio backend — the VNC server only needs a non-NULL pointer
++ * so that audio capture registration doesn't bail out.  The pointer
++ * is never dereferenced by our code (audio_be_add_capture ignores it).
++ */
++static AudioBackend dummy_audio_be;
++
++AudioBackend *audio_get_default_audio_be(Error **errp)
++{
++    return &dummy_audio_be;
++}
++
++AudioBackend *audio_be_by_name(const char *name, Error **errp)
++{
++    return NULL;
++}
++
++static void
++on_register_audio_listener_finished(GObject *source_object,
++                                    GAsyncResult *res,
++                                    gpointer user_data)
++{
++    GThread *thread = user_data;
++    g_autoptr(GError) err = NULL;
++    g_autoptr(GDBusObjectSkeleton) obj = NULL;
++    GDBusObjectManagerServer *server;
++    QemuDBusDisplay1AudioOutListener *audio_skel;
++
++    qemu_dbus_display1_audio_call_register_out_listener_finish(
++        QEMU_DBUS_DISPLAY1_AUDIO(source_object),
++        NULL, res, &err);
++
++    if (err) {
++        error_report("RegisterOutListener failed: %s", err->message);
++        g_thread_join(thread);
++        return;
++    }
++
++    audio_listener_conn = g_thread_join(thread);
++    if (!audio_listener_conn) {
++        return;
++    }
++
++    server = g_dbus_object_manager_server_new(DBUS_DISPLAY1_ROOT);
++    obj = g_dbus_object_skeleton_new(
++        DBUS_DISPLAY1_ROOT "/AudioOutListener");
++
++    audio_skel = qemu_dbus_display1_audio_out_listener_skeleton_new();
++    g_object_connect(audio_skel,
++                     "signal::handle-init",
++                     on_audio_out_init, NULL,
++                     "signal::handle-fini",
++                     on_audio_out_fini, NULL,
++                     "signal::handle-set-enabled",
++                     on_audio_out_set_enabled, NULL,
++                     "signal::handle-set-volume",
++                     on_audio_out_set_volume, NULL,
++                     "signal::handle-write",
++                     on_audio_out_write, NULL,
++                     NULL);
++    g_dbus_object_skeleton_add_interface(
++        obj, G_DBUS_INTERFACE_SKELETON(audio_skel));
++
++    g_dbus_object_manager_server_export(server, obj);
++    g_dbus_object_manager_server_set_connection(
++        server, audio_listener_conn);
++
++    g_dbus_connection_start_message_processing(audio_listener_conn);
++}
++
++void audio_setup(GDBusObjectManager *manager)
++{
++    g_autoptr(GError) err = NULL;
++    g_autoptr(GUnixFDList) fd_list = NULL;
++    g_autoptr(GDBusInterface) iface = NULL;
++    GThread *thread;
++    int pair[2];
++    int idx;
++
++    iface = g_dbus_object_manager_get_interface(
++        manager, DBUS_DISPLAY1_ROOT "/Audio",
++        "org.qemu.Display1.Audio");
++    if (!iface) {
++        return;
++    }
++
++    if (qemu_socketpair(AF_UNIX, SOCK_STREAM, 0, pair) < 0) {
++        error_report("audio socketpair failed: %s", strerror(errno));
++        return;
++    }
++
++    fd_list = g_unix_fd_list_new();
++    idx = g_unix_fd_list_append(fd_list, pair[1], &err);
++    close(pair[1]);
++    if (idx < 0) {
++        close(pair[0]);
++        error_report("Failed to append fd: %s", err->message);
++        return;
++    }
++
++    thread = p2p_dbus_thread_new(pair[0]);
++
++    qemu_dbus_display1_audio_call_register_out_listener(
++        QEMU_DBUS_DISPLAY1_AUDIO(iface),
++        g_variant_new_handle(idx),
++        G_DBUS_CALL_FLAGS_NONE, -1,
++        fd_list, NULL,
++        on_register_audio_listener_finished,
++        thread);
++}
+diff --git a/tools/qemu-vnc/chardev.c b/tools/qemu-vnc/chardev.c
+new file mode 100644
+index 00000000000..f02312217e2
+--- /dev/null
++++ b/tools/qemu-vnc/chardev.c
+@@ -0,0 +1,148 @@
++/*
++ * Standalone VNC server connecting to QEMU via D-Bus display interface.
++ *
++ * Copyright (C) 2026 Red Hat, Inc.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++
++#include "qemu/sockets.h"
++#include "qemu/error-report.h"
++#include "qapi/util.h"
++#include "qapi-types-char.h"
++#include "ui/dbus-display1.h"
++#include "trace.h"
++#include "qemu-vnc.h"
++
++typedef struct ChardevRegisterData {
++    QemuDBusDisplay1Chardev *proxy;
++    int local_fd;
++    char *name;
++    bool echo;
++    ChardevVCEncoding encoding;
++} ChardevRegisterData;
++
++static void
++on_chardev_register_finished(GObject *source_object,
++                             GAsyncResult *res,
++                             gpointer user_data)
++{
++    ChardevRegisterData *data = user_data;
++    g_autoptr(GError) err = NULL;
++    QemuTextConsole *tc;
++
++    if (!qemu_dbus_display1_chardev_call_register_finish(
++            data->proxy, NULL, res, &err)) {
++        error_report("Chardev Register failed for %s: %s",
++                     data->name, err->message);
++        close(data->local_fd);
++        goto out;
++    }
++
++    tc = qemu_vnc_text_console_new(data->name, data->local_fd, data->echo,
++                                   data->encoding);
++    if (!tc) {
++        close(data->local_fd);
++        goto out;
++    }
++
++    trace_qemu_vnc_chardev_connected(data->name);
++
++out:
++    g_object_unref(data->proxy);
++    g_free(data->name);
++    g_free(data);
++}
++
++/* Default chardevs to expose as VNC text consoles */
++static const char * const default_names[] = {
++    "org.qemu.console.serial.0",
++    "org.qemu.monitor.hmp.0",
++    NULL,
++};
++
++/* Active chardev names list (points to CLI args or default_names) */
++static const char * const *names;
++
++static void
++chardev_register(QemuDBusDisplay1Chardev *proxy,
++                 ChardevVCEncoding encoding)
++{
++    g_autoptr(GUnixFDList) fd_list = NULL;
++    ChardevRegisterData *data;
++    const char *name;
++    int pair[2];
++    int idx;
++
++    name = qemu_dbus_display1_chardev_get_name(proxy);
++    if (!name || !g_strv_contains(names, name)) {
++        return;
++    }
++
++    if (qemu_socketpair(AF_UNIX, SOCK_STREAM, 0, pair) < 0) {
++        error_report("chardev socketpair failed: %s", strerror(errno));
++        return;
++    }
++
++    fd_list = g_unix_fd_list_new();
++    idx = g_unix_fd_list_append(fd_list, pair[1], NULL);
++    close(pair[1]);
++
++    data = g_new0(ChardevRegisterData, 1);
++    data->proxy = g_object_ref(proxy);
++    data->local_fd = pair[0];
++    data->name = g_strdup(name);
++    data->echo = qemu_dbus_display1_chardev_get_echo(proxy);
++    data->encoding = encoding;
++
++    qemu_dbus_display1_chardev_call_register(
++        proxy, g_variant_new_handle(idx),
++        G_DBUS_CALL_FLAGS_NONE, -1,
++        fd_list, NULL,
++        on_chardev_register_finished, data);
++}
++
++void chardev_setup(const char * const *chardev_names,
++                   GDBusObjectManager *manager)
++{
++    GList *objects, *l;
++
++    names = chardev_names ? chardev_names : default_names;
++
++    objects = g_dbus_object_manager_get_objects(manager);
++    for (l = objects; l; l = l->next) {
++        GDBusObject *obj = l->data;
++        const char *path = g_dbus_object_get_object_path(obj);
++        g_autoptr(GDBusInterface) iface = NULL;
++        g_autoptr(GDBusInterface) enc_iface = NULL;
++        ChardevVCEncoding encoding = CHARDEV_VC_ENCODING_UTF8;
++
++        if (!g_str_has_prefix(path, DBUS_DISPLAY1_ROOT "/Chardev_")) {
++            continue;
++        }
++
++        iface = g_dbus_object_get_interface(
++            obj, "org.qemu.Display1.Chardev");
++        if (!iface) {
++            continue;
++        }
++
++        enc_iface = g_dbus_object_get_interface(
++            obj, "org.qemu.Display1.Chardev.VCEncoding");
++        if (enc_iface) {
++            const char *enc_str =
++                qemu_dbus_display1_chardev_vcencoding_get_encoding(
++                    QEMU_DBUS_DISPLAY1_CHARDEV_VCENCODING(enc_iface));
++            int enc = qapi_enum_parse(&ChardevVCEncoding_lookup,
++                                      enc_str, -1, NULL);
++            if (enc >= 0) {
++                encoding = enc;
++            }
++        }
++
++        chardev_register(QEMU_DBUS_DISPLAY1_CHARDEV(iface), encoding);
++    }
++    g_list_free_full(objects, g_object_unref);
++}
+diff --git a/tools/qemu-vnc/clipboard.c b/tools/qemu-vnc/clipboard.c
+new file mode 100644
+index 00000000000..f62b2f29495
+--- /dev/null
++++ b/tools/qemu-vnc/clipboard.c
+@@ -0,0 +1,376 @@
++/*
++ * Standalone VNC server connecting to QEMU via D-Bus display interface.
++ *
++ * Copyright (C) 2026 Red Hat, Inc.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++
++#include "qemu/error-report.h"
++#include "ui/clipboard.h"
++#include "ui/dbus-display1.h"
++#include "trace.h"
++#include "qemu-vnc.h"
++
++#define MIME_TEXT_PLAIN_UTF8 "text/plain;charset=utf-8"
++
++typedef struct {
++    GDBusMethodInvocation *invocation;
++    QemuClipboardType type;
++    guint timeout_id;
++} VncDBusClipboardRequest;
++
++static QemuDBusDisplay1Clipboard *clipboard_proxy;
++static QemuDBusDisplay1Clipboard *clipboard_skel;
++static QemuClipboardPeer clipboard_peer;
++static uint32_t clipboard_serial;
++static VncDBusClipboardRequest
++    clipboard_request[QEMU_CLIPBOARD_SELECTION__COUNT];
++
++static void
++vnc_dbus_clipboard_complete_request(
++    GDBusMethodInvocation *invocation,
++    QemuClipboardInfo *info,
++    QemuClipboardType type)
++{
++    GVariant *v_data = g_variant_new_from_data(
++        G_VARIANT_TYPE("ay"),
++        info->types[type].data,
++        info->types[type].size,
++        TRUE,
++        (GDestroyNotify)qemu_clipboard_info_unref,
++        qemu_clipboard_info_ref(info));
++
++    qemu_dbus_display1_clipboard_complete_request(
++        clipboard_skel, invocation,
++        MIME_TEXT_PLAIN_UTF8, v_data);
++}
++
++static void
++vnc_dbus_clipboard_request_cancelled(VncDBusClipboardRequest *req)
++{
++    if (!req->invocation) {
++        return;
++    }
++
++    g_dbus_method_invocation_return_error(
++        req->invocation,
++        G_DBUS_ERROR,
++        G_DBUS_ERROR_FAILED,
++        "Cancelled clipboard request");
++
++    g_clear_object(&req->invocation);
++    g_clear_handle_id(&req->timeout_id, g_source_remove);;
++}
++
++static gboolean
++vnc_dbus_clipboard_request_timeout(gpointer user_data)
++{
++    vnc_dbus_clipboard_request_cancelled(user_data);
++    return G_SOURCE_REMOVE;
++}
++
++static void
++vnc_dbus_clipboard_request(QemuClipboardInfo *info,
++                           QemuClipboardType type)
++{
++    g_autofree char *mime = NULL;
++    g_autoptr(GVariant) v_data = NULL;
++    g_autoptr(GError) err = NULL;
++    const char *data = NULL;
++    const char *mimes[] = { MIME_TEXT_PLAIN_UTF8, NULL };
++    size_t n;
++
++    if (type != QEMU_CLIPBOARD_TYPE_TEXT) {
++        return;
++    }
++
++    if (!clipboard_proxy) {
++        return;
++    }
++
++    if (!qemu_dbus_display1_clipboard_call_request_sync(
++            clipboard_proxy,
++            info->selection,
++            mimes,
++            G_DBUS_CALL_FLAGS_NONE, -1, &mime, &v_data, NULL, &err)) {
++        error_report("Failed to request clipboard: %s", err->message);
++        return;
++    }
++
++    if (!g_str_equal(mime, MIME_TEXT_PLAIN_UTF8)) {
++        error_report("Unsupported returned MIME: %s", mime);
++        return;
++    }
++
++    data = g_variant_get_fixed_array(v_data, &n, 1);
++    qemu_clipboard_set_data(&clipboard_peer, info, type,
++                            n, data, true);
++}
++
++static void
++vnc_dbus_clipboard_update_info(QemuClipboardInfo *info)
++{
++    bool self_update = info->owner == &clipboard_peer;
++    const char *mime[QEMU_CLIPBOARD_TYPE__COUNT + 1] = { 0, };
++    VncDBusClipboardRequest *req;
++    int i = 0;
++
++    if (info->owner == NULL) {
++        if (clipboard_proxy) {
++            qemu_dbus_display1_clipboard_call_release(
++                clipboard_proxy,
++                info->selection,
++                G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
++        }
++        return;
++    }
++
++    if (self_update) {
++        return;
++    }
++
++    req = &clipboard_request[info->selection];
++    if (req->invocation && info->types[req->type].data) {
++        vnc_dbus_clipboard_complete_request(
++            req->invocation, info, req->type);
++        g_clear_object(&req->invocation);
++        g_clear_handle_id(&req->timeout_id, g_source_remove);;
++        return;
++    }
++
++    if (info->types[QEMU_CLIPBOARD_TYPE_TEXT].available) {
++        mime[i++] = MIME_TEXT_PLAIN_UTF8;
++    }
++
++    if (i > 0 && clipboard_proxy) {
++        uint32_t serial = info->has_serial ?
++            info->serial : ++clipboard_serial;
++        qemu_dbus_display1_clipboard_call_grab(
++            clipboard_proxy,
++            info->selection,
++            serial,
++            mime,
++            G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
++    }
++}
++
++static void
++vnc_dbus_clipboard_notify(Notifier *notifier, void *data)
++{
++    QemuClipboardNotify *notify = data;
++
++    switch (notify->type) {
++    case QEMU_CLIPBOARD_UPDATE_INFO:
++        vnc_dbus_clipboard_update_info(notify->info);
++        return;
++    case QEMU_CLIPBOARD_RESET_SERIAL:
++        if (clipboard_proxy) {
++            qemu_dbus_display1_clipboard_call_register(
++                clipboard_proxy,
++                G_DBUS_CALL_FLAGS_NONE,
++                -1, NULL, NULL, NULL);
++        }
++        return;
++    }
++}
++
++static gboolean
++on_clipboard_register(QemuDBusDisplay1Clipboard *clipboard,
++                      GDBusMethodInvocation *invocation,
++                      gpointer user_data)
++{
++    clipboard_serial = 0;
++    qemu_clipboard_reset_serial();
++
++    qemu_dbus_display1_clipboard_complete_register(
++        clipboard, invocation);
++    return DBUS_METHOD_INVOCATION_HANDLED;
++}
++
++static gboolean
++on_clipboard_unregister(QemuDBusDisplay1Clipboard *clipboard,
++                        GDBusMethodInvocation *invocation,
++                        gpointer user_data)
++{
++    int i;
++
++    for (i = 0; i < G_N_ELEMENTS(clipboard_request); ++i) {
++        vnc_dbus_clipboard_request_cancelled(&clipboard_request[i]);
++    }
++
++    qemu_dbus_display1_clipboard_complete_unregister(
++        clipboard, invocation);
++    return DBUS_METHOD_INVOCATION_HANDLED;
++}
++
++static gboolean
++on_clipboard_grab(QemuDBusDisplay1Clipboard *clipboard,
++                  GDBusMethodInvocation *invocation,
++                  gint arg_selection,
++                  guint arg_serial,
++                  const gchar *const *arg_mimes,
++                  gpointer user_data)
++{
++    QemuClipboardSelection s = arg_selection;
++    g_autoptr(QemuClipboardInfo) info = NULL;
++
++    if (s >= QEMU_CLIPBOARD_SELECTION__COUNT) {
++        g_dbus_method_invocation_return_error(
++            invocation,
++            G_DBUS_ERROR,
++            G_DBUS_ERROR_FAILED,
++            "Invalid clipboard selection: %d", arg_selection);
++        return DBUS_METHOD_INVOCATION_HANDLED;
++    }
++
++    trace_qemu_vnc_clipboard_grab(arg_selection, arg_serial);
++
++    info = qemu_clipboard_info_new(&clipboard_peer, s);
++    if (g_strv_contains(arg_mimes, MIME_TEXT_PLAIN_UTF8)) {
++        info->types[QEMU_CLIPBOARD_TYPE_TEXT].available = true;
++    }
++    info->serial = arg_serial;
++    info->has_serial = true;
++    if (qemu_clipboard_check_serial(info, true)) {
++        qemu_clipboard_update(info);
++    }
++
++    qemu_dbus_display1_clipboard_complete_grab(
++        clipboard, invocation);
++    return DBUS_METHOD_INVOCATION_HANDLED;
++}
++
++static gboolean
++on_clipboard_release(QemuDBusDisplay1Clipboard *clipboard,
++                     GDBusMethodInvocation *invocation,
++                     gint arg_selection,
++                     gpointer user_data)
++{
++    trace_qemu_vnc_clipboard_release(arg_selection);
++
++    qemu_clipboard_peer_release(&clipboard_peer, arg_selection);
++
++    qemu_dbus_display1_clipboard_complete_release(
++        clipboard, invocation);
++    return DBUS_METHOD_INVOCATION_HANDLED;
++}
++
++static gboolean
++on_clipboard_request(QemuDBusDisplay1Clipboard *clipboard,
++                     GDBusMethodInvocation *invocation,
++                     gint arg_selection,
++                     const gchar *const *arg_mimes,
++                     gpointer user_data)
++{
++    QemuClipboardSelection s = arg_selection;
++    QemuClipboardType type = QEMU_CLIPBOARD_TYPE_TEXT;
++    QemuClipboardInfo *info = NULL;
++
++    trace_qemu_vnc_clipboard_request(arg_selection);
++
++    if (s >= QEMU_CLIPBOARD_SELECTION__COUNT) {
++        g_dbus_method_invocation_return_error(
++            invocation,
++            G_DBUS_ERROR,
++            G_DBUS_ERROR_FAILED,
++            "Invalid clipboard selection: %d", arg_selection);
++        return DBUS_METHOD_INVOCATION_HANDLED;
++    }
++
++    if (clipboard_request[s].invocation) {
++        g_dbus_method_invocation_return_error(
++            invocation,
++            G_DBUS_ERROR,
++            G_DBUS_ERROR_FAILED,
++            "Pending request");
++        return DBUS_METHOD_INVOCATION_HANDLED;
++    }
++
++    info = qemu_clipboard_info(s);
++    if (!info || !info->owner || info->owner == &clipboard_peer) {
++        g_dbus_method_invocation_return_error(
++            invocation,
++            G_DBUS_ERROR,
++            G_DBUS_ERROR_FAILED,
++            "Empty clipboard");
++        return DBUS_METHOD_INVOCATION_HANDLED;
++    }
++
++    if (!g_strv_contains(arg_mimes, MIME_TEXT_PLAIN_UTF8) ||
++        !info->types[type].available) {
++        g_dbus_method_invocation_return_error(
++            invocation,
++            G_DBUS_ERROR,
++            G_DBUS_ERROR_FAILED,
++            "Unhandled MIME types requested");
++        return DBUS_METHOD_INVOCATION_HANDLED;
++    }
++
++    if (info->types[type].data) {
++        vnc_dbus_clipboard_complete_request(invocation, info, type);
++    } else {
++        qemu_clipboard_request(info, type);
++
++        clipboard_request[s].invocation = g_object_ref(invocation);
++        clipboard_request[s].type = type;
++        clipboard_request[s].timeout_id =
++            g_timeout_add_seconds(5,
++                                  vnc_dbus_clipboard_request_timeout,
++                                  &clipboard_request[s]);
++    }
++
++    return DBUS_METHOD_INVOCATION_HANDLED;
++}
++
++void clipboard_setup(GDBusObjectManager *manager, GDBusConnection *bus)
++{
++    g_autoptr(GError) err = NULL;
++    g_autoptr(GDBusInterface) iface = NULL;
++
++    iface = g_dbus_object_manager_get_interface(
++        manager, DBUS_DISPLAY1_ROOT "/Clipboard",
++        "org.qemu.Display1.Clipboard");
++    if (!iface) {
++        return;
++    }
++
++    clipboard_proxy = g_object_ref(QEMU_DBUS_DISPLAY1_CLIPBOARD(iface));
++
++    clipboard_skel = qemu_dbus_display1_clipboard_skeleton_new();
++    g_object_connect(clipboard_skel,
++                     "signal::handle-register",
++                     on_clipboard_register, NULL,
++                     "signal::handle-unregister",
++                     on_clipboard_unregister, NULL,
++                     "signal::handle-grab",
++                     on_clipboard_grab, NULL,
++                     "signal::handle-release",
++                     on_clipboard_release, NULL,
++                     "signal::handle-request",
++                     on_clipboard_request, NULL,
++                     NULL);
++
++    if (!g_dbus_interface_skeleton_export(
++            G_DBUS_INTERFACE_SKELETON(clipboard_skel),
++            bus,
++            DBUS_DISPLAY1_ROOT "/Clipboard",
++            &err)) {
++        error_report("Failed to export clipboard: %s", err->message);
++        g_clear_object(&clipboard_skel);
++        g_clear_object(&clipboard_proxy);
++        return;
++    }
++
++    clipboard_peer.name = "dbus";
++    clipboard_peer.notifier.notify = vnc_dbus_clipboard_notify;
++    clipboard_peer.request = vnc_dbus_clipboard_request;
++    qemu_clipboard_peer_register(&clipboard_peer);
++
++    qemu_dbus_display1_clipboard_call_register(
++        clipboard_proxy,
++        G_DBUS_CALL_FLAGS_NONE,
++        -1, NULL, NULL, NULL);
++}
+diff --git a/tools/qemu-vnc/console.c b/tools/qemu-vnc/console.c
+new file mode 100644
+index 00000000000..4a8fc82e1ee
+--- /dev/null
++++ b/tools/qemu-vnc/console.c
+@@ -0,0 +1,170 @@
++/*
++ * Minimal QemuConsole helpers for the standalone qemu-vnc binary.
++ *
++ * Copyright (C) 2026 Red Hat, Inc.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++
++#include "ui/console.h"
++#include "ui/console-priv.h"
++#include "ui/vt100.h"
++#include "qapi-types-char.h"
++#include "qemu-vnc.h"
++#include "trace.h"
++
++/*
++ * Our own QemuTextConsole definition — the one in console-vc.c uses
++ * a Chardev* backend which is not available in the standalone binary.
++ * Here we drive the VT100 emulator directly over a raw file descriptor.
++ */
++typedef struct QemuTextConsole {
++    QemuConsole parent;
++    QemuVT100 vt;
++    int chardev_fd;
++    guint io_watch_id;
++    char *name;
++} QemuTextConsole;
++
++typedef QemuConsoleClass QemuTextConsoleClass;
++
++OBJECT_DEFINE_TYPE(QemuTextConsole, qemu_text_console,
++                   QEMU_TEXT_CONSOLE, QEMU_CONSOLE)
++
++static void qemu_text_console_class_init(ObjectClass *oc, const void *data)
++{
++}
++
++static void text_console_invalidate(void *opaque)
++{
++    QemuTextConsole *s = QEMU_TEXT_CONSOLE(opaque);
++
++    vt100_set_image(&s->vt, QEMU_CONSOLE(s)->surface->image);
++    vt100_refresh(&s->vt);
++}
++
++static const GraphicHwOps text_console_ops = {
++    .invalidate  = text_console_invalidate,
++};
++
++static void qemu_text_console_init(Object *obj)
++{
++    QemuTextConsole *c = QEMU_TEXT_CONSOLE(obj);
++
++    QEMU_CONSOLE(c)->hw_ops = &text_console_ops;
++    QEMU_CONSOLE(c)->hw = c;
++}
++
++static void qemu_text_console_finalize(Object *obj)
++{
++    QemuTextConsole *tc = QEMU_TEXT_CONSOLE(obj);
++
++    vt100_fini(&tc->vt);
++    if (tc->io_watch_id) {
++        g_source_remove(tc->io_watch_id);
++    }
++    if (tc->chardev_fd >= 0) {
++        close(tc->chardev_fd);
++    }
++    g_free(tc->name);
++}
++
++
++static void text_console_out_flush(QemuVT100 *vt)
++{
++    QemuTextConsole *tc = container_of(vt, QemuTextConsole, vt);
++    const uint8_t *data;
++    uint32_t len;
++
++    while (!fifo8_is_empty(&vt->out_fifo)) {
++        ssize_t ret;
++
++        data = fifo8_pop_bufptr(&vt->out_fifo,
++                                fifo8_num_used(&vt->out_fifo), &len);
++        ret = write(tc->chardev_fd, data, len);
++        if (ret < 0) {
++            trace_qemu_vnc_console_io_error(tc->name);
++            break;
++        }
++    }
++}
++
++static void text_console_image_update(QemuVT100 *vt, int x, int y, int w, int h)
++{
++    QemuTextConsole *tc = container_of(vt, QemuTextConsole, vt);
++    QemuConsole *con = QEMU_CONSOLE(tc);
++
++    qemu_console_update(con, x, y, w, h);
++}
++
++static gboolean text_console_io_cb(GIOChannel *source,
++    GIOCondition cond, gpointer data)
++{
++    QemuTextConsole *tc = data;
++    uint8_t buf[4096];
++    ssize_t n;
++
++    if (cond & (G_IO_HUP | G_IO_ERR)) {
++        tc->io_watch_id = 0;
++        return G_SOURCE_REMOVE;
++    }
++
++    n = read(tc->chardev_fd, buf, sizeof(buf));
++    if (n <= 0) {
++        trace_qemu_vnc_console_io_error(tc->name);
++        tc->io_watch_id = 0;
++        return G_SOURCE_REMOVE;
++    }
++
++    vt100_input(&tc->vt, buf, n);
++    return G_SOURCE_CONTINUE;
++}
++
++QemuTextConsole *qemu_vnc_text_console_new(const char *name,
++                                           int fd, bool echo,
++                                           ChardevVCEncoding encoding)
++{
++    int w = TEXT_COLS * TEXT_FONT_WIDTH;
++    int h = TEXT_ROWS * TEXT_FONT_HEIGHT;
++    QemuTextConsole *tc;
++    QemuConsole *con;
++    pixman_image_t *image;
++    GIOChannel *chan;
++
++    tc = QEMU_TEXT_CONSOLE(object_new(TYPE_QEMU_TEXT_CONSOLE));
++    con = QEMU_CONSOLE(tc);
++
++    tc->name = g_strdup(name);
++    tc->chardev_fd = fd;
++
++    image = pixman_image_create_bits(PIXMAN_x8r8g8b8, w, h, NULL, 0);
++    con->surface = qemu_create_displaysurface_pixman(image);
++    con->scanout.kind = SCANOUT_SURFACE;
++    qemu_pixman_image_unref(image);
++
++    vt100_init(&tc->vt, con->surface->image, encoding,
++               text_console_image_update, text_console_out_flush);
++    tc->vt.echo = echo;
++    vt100_refresh(&tc->vt);
++
++    chan = g_io_channel_unix_new(fd);
++    g_io_channel_set_encoding(chan, NULL, NULL);
++    tc->io_watch_id = g_io_add_watch(chan,
++                                      G_IO_IN | G_IO_HUP | G_IO_ERR,
++                                      text_console_io_cb, tc);
++    g_io_channel_unref(chan);
++
++    return tc;
++}
++
++void qemu_text_console_handle_keysym(QemuTextConsole *s, int keysym)
++{
++    vt100_keysym(&s->vt, keysym);
++}
++
++void qemu_text_console_update_size(QemuTextConsole *c)
++{
 +    qemu_console_text_resize(QEMU_CONSOLE(c), c->vt.width, c->vt.height);
- }
- 
- static void text_console_image_update(QemuVT100 *vt, int x, int y, int width, int height)
- {
-     QemuTextConsole *console = container_of(vt, QemuTextConsole, vt);
- 
--    dpy_gfx_update(QEMU_CONSOLE(console), x, y, width, height);
-+    qemu_console_update(QEMU_CONSOLE(console), x, y, width, height);
- }
- 
- static void text_console_out_flush(QemuVT100 *vt)
-@@ -232,7 +232,7 @@ static bool vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-         s = QEMU_TEXT_CONSOLE(object_new(TYPE_QEMU_FIXED_TEXT_CONSOLE));
-     }
- 
--    dpy_gfx_replace_surface(QEMU_CONSOLE(s), qemu_create_displaysurface(width, height));
-+    qemu_console_set_surface(QEMU_CONSOLE(s), qemu_create_displaysurface(width, height));
-     if (vc->has_encoding) {
-         drv->encoding = vc->encoding;
-     }
-diff --git a/ui/console.c b/ui/console.c
-index 22ca1c35db3..6f6330d61f1 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -129,26 +129,26 @@ static void gui_setup_refresh(DisplayState *ds)
-     }
- }
- 
--void graphic_hw_update_done(QemuConsole *con)
-+void qemu_console_hw_update_done(QemuConsole *con)
- {
-     if (con) {
-         qemu_co_enter_all(&con->dump_queue, NULL);
-     }
- }
- 
--void graphic_hw_update(QemuConsole *con)
-+void qemu_console_hw_update(QemuConsole *con)
- {
-     if (!con) {
-         return;
-     }
-     if (!con->hw_ops->gfx_update || con->hw_ops->gfx_update(con->hw)) {
--        graphic_hw_update_done(con);
-+        qemu_console_hw_update_done(con);
-     }
- }
- 
--static void graphic_hw_update_bh(void *con)
-+static void console_hw_update_bh(void *con)
- {
--    graphic_hw_update(con);
-+    qemu_console_hw_update(con);
- }
- 
- void qemu_console_co_wait_update(QemuConsole *con)
-@@ -156,18 +156,18 @@ void qemu_console_co_wait_update(QemuConsole *con)
-     if (qemu_co_queue_empty(&con->dump_queue)) {
-         /* Defer the update, it will restart the pending coroutines */
-         aio_bh_schedule_oneshot(qemu_get_aio_context(),
--                                graphic_hw_update_bh, con);
-+                                console_hw_update_bh, con);
-     }
-     qemu_co_queue_wait(&con->dump_queue, NULL);
- 
- }
- 
--static void graphic_hw_gl_unblock_timer(void *opaque)
-+static void console_hw_gl_unblock_timer(void *opaque)
- {
-     warn_report("console: no gl-unblock within one second");
- }
- 
--void graphic_hw_gl_block(QemuConsole *con, bool block)
-+void qemu_console_hw_gl_block(QemuConsole *con, bool block)
- {
-     uint64_t timeout;
-     assert(con != NULL);
-@@ -205,14 +205,14 @@ void qemu_console_set_window_id(QemuConsole *con, int window_id)
-     con->window_id = window_id;
- }
- 
--void graphic_hw_invalidate(QemuConsole *con)
-+void qemu_console_hw_invalidate(QemuConsole *con)
- {
-     if (con && con->hw_ops->invalidate) {
-         con->hw_ops->invalidate(con->hw);
-     }
- }
- 
--void graphic_hw_text_update(QemuConsole *con, uint32_t *chardata)
-+void qemu_console_hw_text_update(QemuConsole *con, uint32_t *chardata)
- {
-     if (con && con->hw_ops->text_update) {
-         con->hw_ops->text_update(con->hw, chardata);
-@@ -502,7 +502,7 @@ qemu_graphic_console_init(Object *obj)
- {
- }
- 
--bool console_has_gl(QemuConsole *con)
-+bool qemu_console_has_gl(QemuConsole *con)
- {
-     return con->gl != NULL;
- }
-@@ -527,7 +527,7 @@ static bool console_compatible_with(QemuConsole *con,
- 
-     flags = con->hw_ops->get_flags ? con->hw_ops->get_flags(con->hw) : 0;
- 
--    if (console_has_gl(con) &&
-+    if (qemu_console_has_gl(con) &&
-         !con->gl->ops->dpy_gl_ctx_is_compatible_dcl(con->gl, dcl)) {
-         error_setg(errp, "Display %s is incompatible with the GL context",
-                    dcl->ops->dpy_name);
-@@ -535,7 +535,7 @@ static bool console_compatible_with(QemuConsole *con,
-     }
- 
-     if (flags & GRAPHIC_FLAGS_GL &&
--        !console_has_gl(con)) {
-+        !qemu_console_has_gl(con)) {
-         error_setg(errp, "The console requires a GL context.");
-         return false;
- 
-@@ -605,8 +605,8 @@ void qemu_console_register_listener(QemuConsole *con,
-     vt100_update_cursor();
- }
- 
--void update_displaychangelistener(DisplayChangeListener *dcl,
--                                  uint64_t interval)
-+void qemu_console_listener_set_refresh(DisplayChangeListener *dcl,
-+                                       uint64_t interval)
- {
-     DisplayState *ds = dcl->ds;
- 
-@@ -645,7 +645,7 @@ static void dpy_set_ui_info_timer(void *opaque)
-     con->hw_ops->ui_info(con->hw, head, &con->ui_info);
- }
- 
--bool dpy_ui_info_supported(const QemuConsole *con)
-+bool qemu_console_ui_info_supported(const QemuConsole *con)
- {
-     if (con == NULL) {
-         return false;
-@@ -654,16 +654,16 @@ bool dpy_ui_info_supported(const QemuConsole *con)
-     return con->hw_ops->ui_info != NULL;
- }
- 
--const QemuUIInfo *dpy_get_ui_info(const QemuConsole *con)
-+const QemuUIInfo *qemu_console_get_ui_info(const QemuConsole *con)
- {
--    assert(dpy_ui_info_supported(con));
-+    assert(qemu_console_ui_info_supported(con));
- 
-     return &con->ui_info;
- }
- 
--int dpy_set_ui_info(QemuConsole *con, QemuUIInfo *info, bool delay)
-+int qemu_console_set_ui_info(QemuConsole *con, QemuUIInfo *info, bool delay)
- {
--    if (!dpy_ui_info_supported(con)) {
-+    if (!qemu_console_ui_info_supported(con)) {
-         return -1;
-     }
-     if (memcmp(&con->ui_info, info, sizeof(con->ui_info)) == 0) {
-@@ -682,7 +682,7 @@ int dpy_set_ui_info(QemuConsole *con, QemuUIInfo *info, bool delay)
-     return 0;
- }
- 
--void dpy_gfx_update(QemuConsole *con, int x, int y, int w, int h)
-+void qemu_console_update(QemuConsole *con, int x, int y, int w, int h)
- {
-     DisplayState *s = con->ds;
-     DisplayChangeListener *dcl;
-@@ -707,15 +707,15 @@ void dpy_gfx_update(QemuConsole *con, int x, int y, int w, int h)
-     }
- }
- 
--void dpy_gfx_update_full(QemuConsole *con)
-+void qemu_console_update_full(QemuConsole *con)
- {
-     int w = qemu_console_get_width(con, 0);
-     int h = qemu_console_get_height(con, 0);
- 
--    dpy_gfx_update(con, 0, 0, w, h);
-+    qemu_console_update(con, 0, 0, w, h);
- }
- 
--void dpy_gfx_replace_surface(QemuConsole *con,
-+void qemu_console_set_surface(QemuConsole *con,
-                              DisplaySurface *surface)
- {
-     static const char placeholder_msg[] = "Display output is not active.";
-@@ -753,8 +753,8 @@ void dpy_gfx_replace_surface(QemuConsole *con,
-     qemu_free_displaysurface(old_surface);
- }
- 
--bool dpy_gfx_check_format(QemuConsole *con,
--                          pixman_format_code_t format)
-+bool qemu_console_check_format(QemuConsole *con,
-+                               pixman_format_code_t format)
- {
-     DisplayChangeListener *dcl;
-     DisplayState *s = con->ds;
-@@ -789,7 +789,7 @@ static void dpy_refresh(DisplayState *s)
-     }
- }
- 
--void dpy_text_cursor(QemuConsole *con, int x, int y)
-+void qemu_console_text_set_cursor(QemuConsole *con, int x, int y)
- {
-     DisplayState *s = con->ds;
-     DisplayChangeListener *dcl;
-@@ -804,7 +804,7 @@ void dpy_text_cursor(QemuConsole *con, int x, int y)
-     }
- }
- 
--void dpy_text_update(QemuConsole *con, int x, int y, int w, int h)
-+void qemu_console_text_update(QemuConsole *con, int x, int y, int w, int h)
- {
-     DisplayState *s = con->ds;
-     DisplayChangeListener *dcl;
-@@ -819,7 +819,7 @@ void dpy_text_update(QemuConsole *con, int x, int y, int w, int h)
-     }
- }
- 
--void dpy_text_resize(QemuConsole *con, int w, int h)
-+void qemu_console_text_resize(QemuConsole *con, int w, int h)
- {
-     DisplayState *s = con->ds;
-     DisplayChangeListener *dcl;
-@@ -834,7 +834,7 @@ void dpy_text_resize(QemuConsole *con, int w, int h)
-     }
- }
- 
--void dpy_mouse_set(QemuConsole *c, int x, int y, bool on)
-+void qemu_console_set_mouse(QemuConsole *c, int x, int y, bool on)
- {
-     QemuGraphicConsole *con = QEMU_GRAPHIC_CONSOLE(c);
-     DisplayState *s = c->ds;
-@@ -853,7 +853,7 @@ void dpy_mouse_set(QemuConsole *c, int x, int y, bool on)
-     }
- }
- 
--void dpy_cursor_define(QemuConsole *c, QEMUCursor *cursor)
-+void qemu_console_set_cursor(QemuConsole *c, QEMUCursor *cursor)
- {
-     QemuGraphicConsole *con = QEMU_GRAPHIC_CONSOLE(c);
-     DisplayState *s = c->ds;
-@@ -871,26 +871,26 @@ void dpy_cursor_define(QemuConsole *c, QEMUCursor *cursor)
-     }
- }
- 
--QEMUGLContext dpy_gl_ctx_create(QemuConsole *con,
--                                struct QEMUGLParams *qparams)
-+QEMUGLContext qemu_console_gl_ctx_create(QemuConsole *con,
-+                                         QEMUGLParams *qparams)
- {
-     assert(con->gl);
-     return con->gl->ops->dpy_gl_ctx_create(con->gl, qparams);
- }
- 
--void dpy_gl_ctx_destroy(QemuConsole *con, QEMUGLContext ctx)
-+void qemu_console_gl_ctx_destroy(QemuConsole *con, QEMUGLContext ctx)
- {
-     assert(con->gl);
-     con->gl->ops->dpy_gl_ctx_destroy(con->gl, ctx);
- }
- 
--int dpy_gl_ctx_make_current(QemuConsole *con, QEMUGLContext ctx)
-+int qemu_console_gl_ctx_make_current(QemuConsole *con, QEMUGLContext ctx)
- {
-     assert(con->gl);
-     return con->gl->ops->dpy_gl_ctx_make_current(con->gl, ctx);
- }
- 
--void dpy_gl_scanout_disable(QemuConsole *con)
-+void qemu_console_gl_scanout_disable(QemuConsole *con)
- {
-     DisplayState *s = con->ds;
-     DisplayChangeListener *dcl;
-@@ -908,14 +908,14 @@ void dpy_gl_scanout_disable(QemuConsole *con)
-     }
- }
- 
--void dpy_gl_scanout_texture(QemuConsole *con,
--                            uint32_t backing_id,
--                            bool backing_y_0_top,
--                            uint32_t backing_width,
--                            uint32_t backing_height,
--                            uint32_t x, uint32_t y,
--                            uint32_t width, uint32_t height,
--                            void *d3d_tex2d)
-+void qemu_console_gl_scanout_texture(QemuConsole *con,
-+                                     uint32_t backing_id,
-+                                     bool backing_y_0_top,
-+                                     uint32_t backing_width,
-+                                     uint32_t backing_height,
-+                                     uint32_t x, uint32_t y,
-+                                     uint32_t width, uint32_t height,
-+                                     void *d3d_tex2d)
- {
-     DisplayState *s = con->ds;
-     DisplayChangeListener *dcl;
-@@ -939,8 +939,8 @@ void dpy_gl_scanout_texture(QemuConsole *con,
-     }
- }
- 
--void dpy_gl_scanout_dmabuf(QemuConsole *con,
--                           QemuDmaBuf *dmabuf)
-+void qemu_console_gl_scanout_dmabuf(QemuConsole *con,
-+                                    QemuDmaBuf *dmabuf)
- {
-     DisplayState *s = con->ds;
-     DisplayChangeListener *dcl;
-@@ -957,8 +957,8 @@ void dpy_gl_scanout_dmabuf(QemuConsole *con,
-     }
- }
- 
--void dpy_gl_cursor_dmabuf(QemuConsole *con, QemuDmaBuf *dmabuf,
--                          bool have_hot, uint32_t hot_x, uint32_t hot_y)
-+void qemu_console_gl_cursor_dmabuf(QemuConsole *con, QemuDmaBuf *dmabuf,
-+                                   bool have_hot, uint32_t hot_x, uint32_t hot_y)
- {
-     DisplayState *s = con->ds;
-     DisplayChangeListener *dcl;
-@@ -974,8 +974,8 @@ void dpy_gl_cursor_dmabuf(QemuConsole *con, QemuDmaBuf *dmabuf,
-     }
- }
- 
--void dpy_gl_cursor_position(QemuConsole *con,
--                            uint32_t pos_x, uint32_t pos_y)
-+void qemu_console_gl_cursor_position(QemuConsole *con,
-+                                     uint32_t pos_x, uint32_t pos_y)
- {
-     DisplayState *s = con->ds;
-     DisplayChangeListener *dcl;
-@@ -990,8 +990,8 @@ void dpy_gl_cursor_position(QemuConsole *con,
-     }
- }
- 
--void dpy_gl_release_dmabuf(QemuConsole *con,
--                          QemuDmaBuf *dmabuf)
-+void qemu_console_gl_release_dmabuf(QemuConsole *con,
-+                                    QemuDmaBuf *dmabuf)
- {
-     DisplayState *s = con->ds;
-     DisplayChangeListener *dcl;
-@@ -1006,15 +1006,15 @@ void dpy_gl_release_dmabuf(QemuConsole *con,
-     }
- }
- 
--void dpy_gl_update(QemuConsole *con,
--                   uint32_t x, uint32_t y, uint32_t w, uint32_t h)
-+void qemu_console_gl_update(QemuConsole *con,
-+                            uint32_t x, uint32_t y, uint32_t w, uint32_t h)
- {
-     DisplayState *s = con->ds;
-     DisplayChangeListener *dcl;
- 
-     assert(con->gl);
- 
--    graphic_hw_gl_block(con, true);
-+    qemu_console_hw_gl_block(con, true);
-     QLIST_FOREACH(dcl, &s->listeners, next) {
-         if (con != dcl->con) {
-             continue;
-@@ -1023,7 +1023,7 @@ void dpy_gl_update(QemuConsole *con,
-             dcl->ops->dpy_gl_update(dcl, x, y, w, h);
-         }
-     }
--    graphic_hw_gl_block(con, false);
-+    qemu_console_hw_gl_block(con, false);
- }
- 
- /***********************************************************/
-@@ -1060,17 +1060,17 @@ DisplayState *init_displaystate(void)
-     return display_state;
- }
- 
--void graphic_console_set_hwops(QemuConsole *con,
--                               const GraphicHwOps *hw_ops,
--                               void *opaque)
-+void qemu_graphic_console_set_hwops(QemuConsole *con,
-+                                    const GraphicHwOps *hw_ops,
-+                                    void *opaque)
- {
-     con->hw_ops = hw_ops;
-     con->hw = opaque;
- }
- 
--QemuConsole *graphic_console_init(DeviceState *dev, uint32_t head,
--                                  const GraphicHwOps *hw_ops,
--                                  void *opaque)
-+QemuConsole *qemu_graphic_console_create(DeviceState *dev, uint32_t head,
-+                                         const GraphicHwOps *hw_ops,
-+                                         void *opaque)
- {
-     static const char noinit[] =
-         "Guest has not initialized the display (yet).";
-@@ -1089,16 +1089,16 @@ QemuConsole *graphic_console_init(DeviceState *dev, uint32_t head,
-         s = (QemuConsole *)object_new(TYPE_QEMU_GRAPHIC_CONSOLE);
-     }
-     QEMU_GRAPHIC_CONSOLE(s)->head = head;
--    graphic_console_set_hwops(s, hw_ops, opaque);
-+    qemu_graphic_console_set_hwops(s, hw_ops, opaque);
-     if (dev) {
-         object_property_set_link(OBJECT(s), "device", OBJECT(dev),
-                                  &error_abort);
-     }
- 
-     surface = qemu_create_placeholder_surface(width, height, noinit);
--    dpy_gfx_replace_surface(s, surface);
-+    qemu_console_set_surface(s, surface);
-     s->gl_unblock_timer = timer_new_ms(QEMU_CLOCK_REALTIME,
--                                       graphic_hw_gl_unblock_timer, s);
-+                                       console_hw_gl_unblock_timer, s);
-     return s;
- }
- 
-@@ -1106,7 +1106,7 @@ static const GraphicHwOps unused_ops = {
-     /* no callbacks */
- };
- 
--void graphic_console_close(QemuConsole *con)
-+void qemu_graphic_console_close(QemuConsole *con)
- {
-     static const char unplugged[] =
-         "Guest display has been unplugged";
-@@ -1116,13 +1116,13 @@ void graphic_console_close(QemuConsole *con)
- 
-     trace_console_gfx_close(con->index);
-     object_property_set_link(OBJECT(con), "device", NULL, &error_abort);
--    graphic_console_set_hwops(con, &unused_ops, NULL);
-+    qemu_graphic_console_set_hwops(con, &unused_ops, NULL);
- 
-     if (con->gl) {
--        dpy_gl_scanout_disable(con);
-+        qemu_console_gl_scanout_disable(con);
-     }
-     surface = qemu_create_placeholder_surface(width, height, unplugged);
--    dpy_gfx_replace_surface(con, surface);
++}
+diff --git a/tools/qemu-vnc/dbus.c b/tools/qemu-vnc/dbus.c
+new file mode 100644
+index 00000000000..400142683de
+--- /dev/null
++++ b/tools/qemu-vnc/dbus.c
+@@ -0,0 +1,474 @@
++/*
++ * D-Bus interface for qemu-vnc standalone VNC server.
++ *
++ * Copyright (C) 2026 Red Hat, Inc.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++
++#include "qemu/cutils.h"
++#include "qapi-types-trace.h"
++#include "system/system.h"
++#include "qapi/qapi-types-ui.h"
++#include "qapi/qapi-commands-ui.h"
++#include "qemu-vnc.h"
++#include "qemu-vnc1.h"
++#include "qapi/qapi-emit-events.h"
++#include "qobject/qdict.h"
++#include "ui/vnc.h"
++#include "trace.h"
++
++typedef struct VncDbusClient {
++    QemuVnc1ClientSkeleton *skeleton;
++    char *path;
++    char *host;
++    char *service;
++    unsigned int id;
++    QTAILQ_ENTRY(VncDbusClient) next;
++} VncDbusClient;
++
++static QemuVnc1ServerSkeleton *server_skeleton;
++static GDBusObjectManagerServer *obj_manager;
++static unsigned int next_client_id;
++
++static QTAILQ_HEAD(, VncDbusClient)
++    dbus_clients = QTAILQ_HEAD_INITIALIZER(dbus_clients);
++
++static VncDbusClient *vnc_dbus_find_client(const char *host,
++                                           const char *service)
++{
++    VncDbusClient *c;
++
++    QTAILQ_FOREACH(c, &dbus_clients, next) {
++        if (g_str_equal(c->host, host) &&
++            g_str_equal(c->service, service)) {
++            return c;
++        }
++    }
++    return NULL;
++}
++
++static void vnc_dbus_update_clients_property(void)
++{
++    VncDbusClient *c;
++    GPtrArray *paths;
++    const char **strv;
++
++    paths = g_ptr_array_new();
++    QTAILQ_FOREACH(c, &dbus_clients, next) {
++        g_ptr_array_add(paths, c->path);
++    }
++    g_ptr_array_add(paths, NULL);
++
++    strv = (const char **)paths->pdata;
++    qemu_vnc1_server_set_clients(QEMU_VNC1_SERVER(server_skeleton), strv);
++    g_ptr_array_free(paths, TRUE);
++}
++
++void vnc_dbus_client_connected(const char *host, const char *service,
++                               const char *family, bool websocket)
++{
++    VncDbusClient *c;
++    g_autoptr(GDBusObjectSkeleton) obj = NULL;
++
++    if (!server_skeleton) {
++        return;
++    }
++
++    c = g_new0(VncDbusClient, 1);
++    c->id = next_client_id++;
++    c->host = g_strdup(host);
++    c->service = g_strdup(service);
++    c->path = g_strdup_printf("/org/qemu/Vnc1/Client_%u", c->id);
++
++    c->skeleton = QEMU_VNC1_CLIENT_SKELETON(qemu_vnc1_client_skeleton_new());
++    qemu_vnc1_client_set_host(QEMU_VNC1_CLIENT(c->skeleton), host);
++    qemu_vnc1_client_set_service(QEMU_VNC1_CLIENT(c->skeleton), service);
++    qemu_vnc1_client_set_family(QEMU_VNC1_CLIENT(c->skeleton), family);
++    qemu_vnc1_client_set_web_socket(QEMU_VNC1_CLIENT(c->skeleton), websocket);
++    qemu_vnc1_client_set_x509_dname(QEMU_VNC1_CLIENT(c->skeleton), "");
++    qemu_vnc1_client_set_sasl_username(QEMU_VNC1_CLIENT(c->skeleton), "");
++
++    obj = g_dbus_object_skeleton_new(c->path);
++    g_dbus_object_skeleton_add_interface(
++        obj, G_DBUS_INTERFACE_SKELETON(c->skeleton));
++    g_dbus_object_manager_server_export(obj_manager, obj);
++
++    QTAILQ_INSERT_TAIL(&dbus_clients, c, next);
++    vnc_dbus_update_clients_property();
++
++    qemu_vnc1_server_emit_client_connected(
++        QEMU_VNC1_SERVER(server_skeleton), c->path);
++}
++
++void vnc_dbus_client_initialized(const char *host, const char *service,
++                                 const char *x509_dname,
++                                 const char *sasl_username)
++{
++    VncDbusClient *c;
++
++    if (!server_skeleton) {
++        return;
++    }
++
++    c = vnc_dbus_find_client(host, service);
++    if (!c) {
++        trace_qemu_vnc_client_not_found(host, service);
++        return;
++    }
++
++    if (x509_dname) {
++        qemu_vnc1_client_set_x509_dname(
++            QEMU_VNC1_CLIENT(c->skeleton), x509_dname);
++    }
++    if (sasl_username) {
++        qemu_vnc1_client_set_sasl_username(
++            QEMU_VNC1_CLIENT(c->skeleton), sasl_username);
++    }
++
++    qemu_vnc1_server_emit_client_initialized(
++        QEMU_VNC1_SERVER(server_skeleton), c->path);
++}
++
++void vnc_dbus_client_disconnected(const char *host, const char *service)
++{
++    VncDbusClient *c;
++
++    if (!server_skeleton) {
++        return;
++    }
++
++    c = vnc_dbus_find_client(host, service);
++    if (!c) {
++        trace_qemu_vnc_client_not_found(host, service);
++        return;
++    }
++
++    qemu_vnc1_server_emit_client_disconnected(
++        QEMU_VNC1_SERVER(server_skeleton), c->path);
++
++    g_dbus_object_manager_server_unexport(obj_manager, c->path);
++    QTAILQ_REMOVE(&dbus_clients, c, next);
++    vnc_dbus_update_clients_property();
++
++    g_object_unref(c->skeleton);
++    g_free(c->path);
++    g_free(c->host);
++    g_free(c->service);
++    g_free(c);
++}
++
++static gboolean
++on_set_password(QemuVnc1Server *iface,
++                GDBusMethodInvocation *invocation,
++                const gchar *password,
++                gpointer user_data)
++{
++    Error *err = NULL;
++
++    if (vnc_display_password("default", password, &err) < 0) {
++        g_dbus_method_invocation_return_error(
++            invocation, G_DBUS_ERROR, G_DBUS_ERROR_FAILED,
++            "%s", error_get_pretty(err));
++        error_free(err);
++        return TRUE;
++    }
++
++    qemu_vnc1_server_complete_set_password(iface, invocation);
++    return TRUE;
++}
++
++static gboolean
++on_expire_password(QemuVnc1Server *iface,
++                   GDBusMethodInvocation *invocation,
++                   const gchar *time_str,
++                   gpointer user_data)
++{
++    time_t when;
++
++    if (g_str_equal(time_str, "now")) {
++        when = 0;
++    } else if (g_str_equal(time_str, "never")) {
++        when = TIME_MAX;
++    } else if (time_str[0] == '+') {
++        int seconds;
++        if (qemu_strtoi(time_str + 1, NULL, 10, &seconds) < 0) {
++            g_dbus_method_invocation_return_error(
++                invocation, G_DBUS_ERROR, G_DBUS_ERROR_INVALID_ARGS,
++                "Invalid time format: %s", time_str);
++            return TRUE;
++        }
++        when = time(NULL) + seconds;
++    } else {
++        int64_t epoch;
++        if (qemu_strtoi64(time_str, NULL, 10, &epoch) < 0) {
++            g_dbus_method_invocation_return_error(
++                invocation, G_DBUS_ERROR, G_DBUS_ERROR_INVALID_ARGS,
++                "Invalid time format: %s", time_str);
++            return TRUE;
++        }
++        when = epoch;
++    }
++
++    if (vnc_display_pw_expire("default", when) < 0) {
++        g_dbus_method_invocation_return_error(
++            invocation, G_DBUS_ERROR, G_DBUS_ERROR_FAILED,
++            "Failed to set password expiry");
++        return TRUE;
++    }
++
++    qemu_vnc1_server_complete_expire_password(iface, invocation);
++    return TRUE;
++}
++
++static gboolean
++on_reload_certificates(QemuVnc1Server *iface,
++                       GDBusMethodInvocation *invocation,
++                       gpointer user_data)
++{
++    Error *err = NULL;
++
++    if (!vnc_display_reload_certs("default", &err)) {
++        g_dbus_method_invocation_return_error(
++            invocation, G_DBUS_ERROR, G_DBUS_ERROR_FAILED,
++            "%s", error_get_pretty(err));
++        error_free(err);
++        return TRUE;
++    }
++
++    qemu_vnc1_server_complete_reload_certificates(iface, invocation);
++    return TRUE;
++}
++
++static gboolean
++on_add_client(QemuVnc1Server *iface,
++              GDBusMethodInvocation *invocation,
++              GUnixFDList *fd_list,
++              GVariant *arg_socket,
++              gboolean skipauth,
++              gpointer user_data)
++{
++    gint32 handle = g_variant_get_handle(arg_socket);
++    g_autoptr(GError) err = NULL;
++    int fd;
++
++    fd = g_unix_fd_list_get(fd_list, handle, &err);
++    if (fd < 0) {
++        g_dbus_method_invocation_return_error(
++            invocation, G_DBUS_ERROR, G_DBUS_ERROR_FAILED,
++            "Failed to get fd: %s", err->message);
++        return TRUE;
++    }
++
++    vnc_display_add_client("default", fd, skipauth);
++
++    qemu_vnc1_server_complete_add_client(iface, invocation, NULL);
++    return TRUE;
++}
++
++static void vnc_dbus_add_listeners(VncInfo2 *info)
++{
++    GVariantBuilder builder;
++    VncServerInfo2List *entry;
++
++    g_variant_builder_init(&builder, G_VARIANT_TYPE("aa{sv}"));
++
++    for (entry = info->server; entry; entry = entry->next) {
++        VncServerInfo2 *s = entry->value;
++        const char *vencrypt_str = "";
++
++        if (s->has_vencrypt) {
++            vencrypt_str = VncVencryptSubAuth_str(s->vencrypt);
++        }
++
++        g_variant_builder_open(&builder, G_VARIANT_TYPE("a{sv}"));
++        g_variant_builder_add(&builder, "{sv}", "Host",
++                              g_variant_new_string(s->host));
++        g_variant_builder_add(&builder, "{sv}", "Service",
++                              g_variant_new_string(s->service));
++        g_variant_builder_add(&builder, "{sv}", "Family",
++                              g_variant_new_string(
++                                  NetworkAddressFamily_str(s->family)));
++        g_variant_builder_add(&builder, "{sv}", "WebSocket",
++                              g_variant_new_boolean(s->websocket));
++        g_variant_builder_add(&builder, "{sv}", "Auth",
++                              g_variant_new_string(
++                                  VncPrimaryAuth_str(s->auth)));
++        g_variant_builder_add(&builder, "{sv}", "VencryptSubAuth",
++                              g_variant_new_string(vencrypt_str));
++        g_variant_builder_close(&builder);
++    }
++
++    qemu_vnc1_server_set_listeners(
++        QEMU_VNC1_SERVER(server_skeleton),
++        g_variant_builder_end(&builder));
++}
++
++void vnc_dbus_setup(GDBusConnection *bus)
++{
++    g_autoptr(GDBusObjectSkeleton) server_obj = NULL;
++    g_autoptr(VncInfo2List) info_list = NULL;
++    Error *err = NULL;
++    const char *auth_str = "none";
++    const char *vencrypt_str = "";
++
++    obj_manager = g_dbus_object_manager_server_new("/org/qemu/Vnc1");
++
++    server_skeleton = QEMU_VNC1_SERVER_SKELETON(
++        qemu_vnc1_server_skeleton_new());
++
++    qemu_vnc1_server_set_name(QEMU_VNC1_SERVER(server_skeleton),
++                              qemu_name ? qemu_name : "");
++    qemu_vnc1_server_set_clients(QEMU_VNC1_SERVER(server_skeleton), NULL);
++
++    /* Query auth info from the VNC display */
++    info_list = qmp_query_vnc_servers(&err);
++    if (info_list) {
++        VncInfo2 *info = info_list->value;
++        auth_str = VncPrimaryAuth_str(info->auth);
++        if (info->has_vencrypt) {
++            vencrypt_str = VncVencryptSubAuth_str(info->vencrypt);
++        }
++        vnc_dbus_add_listeners(info);
++    }
++
++    qemu_vnc1_server_set_auth(QEMU_VNC1_SERVER(server_skeleton), auth_str);
++    qemu_vnc1_server_set_vencrypt_sub_auth(
++        QEMU_VNC1_SERVER(server_skeleton), vencrypt_str);
++
++    g_signal_connect(server_skeleton, "handle-set-password",
++                     G_CALLBACK(on_set_password), NULL);
++    g_signal_connect(server_skeleton, "handle-expire-password",
++                     G_CALLBACK(on_expire_password), NULL);
++    g_signal_connect(server_skeleton, "handle-reload-certificates",
++                     G_CALLBACK(on_reload_certificates), NULL);
++    g_signal_connect(server_skeleton, "handle-add-client",
++                     G_CALLBACK(on_add_client), NULL);
++
++    server_obj = g_dbus_object_skeleton_new("/org/qemu/Vnc1/Server");
++    g_dbus_object_skeleton_add_interface(
++        server_obj, G_DBUS_INTERFACE_SKELETON(server_skeleton));
++    g_dbus_object_manager_server_export(obj_manager, server_obj);
++
++    g_dbus_object_manager_server_set_connection(obj_manager, bus);
++
++    if (g_dbus_connection_get_flags(bus)
++        & G_DBUS_CONNECTION_FLAGS_MESSAGE_BUS_CONNECTION) {
++        g_bus_own_name_on_connection(
++            bus, "org.qemu.vnc",
++            G_BUS_NAME_OWNER_FLAGS_NONE,
++            NULL, NULL, NULL, NULL);
++    }
++}
++
++void vnc_action_shutdown(VncState *vs)
++{
++    VncDbusClient *c;
++
++    c = vnc_dbus_find_client(vs->info->host, vs->info->service);
++    if (!c) {
++        trace_qemu_vnc_client_not_found(vs->info->host, vs->info->service);
++        return;
++    }
++
++    qemu_vnc1_client_emit_shutdown_request(QEMU_VNC1_CLIENT(c->skeleton));
++}
++
++void vnc_action_reset(VncState *vs)
++{
++    VncDbusClient *c;
++
++    c = vnc_dbus_find_client(vs->info->host, vs->info->service);
++    if (!c) {
++        trace_qemu_vnc_client_not_found(vs->info->host, vs->info->service);
++        return;
++    }
++
++    qemu_vnc1_client_emit_reset_request(QEMU_VNC1_CLIENT(c->skeleton));
++}
++
++/*
++ * Override the stub qapi_event_emit() to capture VNC events
++ * and forward them to the D-Bus interface.
++ */
++void qapi_event_emit(QAPIEvent event, QDict *qdict)
++{
++    QDict *data, *client;
++    const char *host, *service, *family;
++    bool websocket;
++
++    if (event != QAPI_EVENT_VNC_CONNECTED &&
++        event != QAPI_EVENT_VNC_INITIALIZED &&
++        event != QAPI_EVENT_VNC_DISCONNECTED) {
++        return;
++    }
++
++    data = qdict_get_qdict(qdict, "data");
++    if (!data) {
++        return;
++    }
++
++    client = qdict_get_qdict(data, "client");
++    if (!client) {
++        return;
++    }
++
++    host = qdict_get_str(client, "host");
++    service = qdict_get_str(client, "service");
++    family = qdict_get_str(client, "family");
++    websocket = qdict_get_bool(client, "websocket");
++
++    switch (event) {
++    case QAPI_EVENT_VNC_CONNECTED:
++        vnc_dbus_client_connected(host, service, family, websocket);
++        break;
++    case QAPI_EVENT_VNC_INITIALIZED: {
++        const char *x509_dname = NULL;
++        const char *sasl_username = NULL;
++
++        if (qdict_haskey(client, "x509_dname")) {
++            x509_dname = qdict_get_str(client, "x509_dname");
++        }
++        if (qdict_haskey(client, "sasl_username")) {
++            sasl_username = qdict_get_str(client, "sasl_username");
++        }
++        vnc_dbus_client_initialized(host, service,
++                                    x509_dname, sasl_username);
++        break;
++    }
++    case QAPI_EVENT_VNC_DISCONNECTED:
++        vnc_dbus_client_disconnected(host, service);
++        break;
++    default:
++        break;
++    }
++}
++
++void vnc_dbus_emit_leaving(const char *reason)
++{
++    if (!server_skeleton) {
++        return;
++    }
++
++    qemu_vnc1_server_emit_leaving(QEMU_VNC1_SERVER(server_skeleton), reason);
++}
++
++void vnc_dbus_cleanup(void)
++{
++    VncDbusClient *c, *next;
++
++    QTAILQ_FOREACH_SAFE(c, &dbus_clients, next, next) {
++        g_dbus_object_manager_server_unexport(obj_manager, c->path);
++        QTAILQ_REMOVE(&dbus_clients, c, next);
++        g_object_unref(c->skeleton);
++        g_free(c->path);
++        g_free(c->host);
++        g_free(c->service);
++        g_free(c);
++    }
++
++    g_clear_object(&server_skeleton);
++    g_clear_object(&obj_manager);
++}
+diff --git a/tools/qemu-vnc/display.c b/tools/qemu-vnc/display.c
+new file mode 100644
+index 00000000000..8fe9b6fc898
+--- /dev/null
++++ b/tools/qemu-vnc/display.c
+@@ -0,0 +1,456 @@
++/*
++ * D-Bus display listener — scanout, update and cursor handling.
++ *
++ * Copyright (C) 2026 Red Hat, Inc.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++
++#include "qemu/sockets.h"
++#include "qemu/error-report.h"
++#include "ui/console-priv.h"
++#include "ui/dbus-display1.h"
++#include "ui/surface.h"
++#include "trace.h"
++#include "qemu-vnc.h"
++
++typedef struct ConsoleData {
++    QemuDBusDisplay1Console *console_proxy;
++    QemuDBusDisplay1Keyboard *keyboard_proxy;
++    QemuDBusDisplay1Mouse *mouse_proxy;
++    QemuGraphicConsole *gfx_con;
++    GDBusConnection *listener_conn;
++    /*
++     * When true the surface is backed by a read-only mmap (ScanoutMap path)
++     * and Update messages must be rejected because compositing into the
++     * surface is not possible.  The plain Scanout path provides a writable
++     * copy and clears this flag.
++     */
++    bool read_only;
++} ConsoleData;
++
++static void display_ui_info(void *opaque, uint32_t head, QemuUIInfo *info)
++{
++    ConsoleData *cd = opaque;
++    g_autoptr(GError) err = NULL;
++
++    if (!cd || !cd->console_proxy) {
++        return;
++    }
++
++    qemu_dbus_display1_console_call_set_uiinfo_sync(
++        cd->console_proxy,
++        info->width_mm, info->height_mm,
++        info->xoff, info->yoff,
++        info->width, info->height,
++        G_DBUS_CALL_FLAGS_NONE, -1, NULL, &err);
++    if (err) {
++        error_report("SetUIInfo failed: %s", err->message);
++    }
++}
++
++static void
++scanout_image_destroy(pixman_image_t *image, void *data)
++{
++    g_variant_unref(data);
++}
++
++typedef struct {
++    void *addr;
++    size_t len;
++} ScanoutMapData;
++
++static void
++scanout_map_destroy(pixman_image_t *image, void *data)
++{
++    ScanoutMapData *map = data;
++    munmap(map->addr, map->len);
++    g_free(map);
++}
++
++static gboolean
++on_scanout(QemuDBusDisplay1Listener *listener,
++           GDBusMethodInvocation *invocation,
++           guint width, guint height, guint stride,
++           guint pixman_format, GVariant *data,
++           gpointer user_data)
++{
++    ConsoleData *cd = user_data;
++    QemuConsole *con = QEMU_CONSOLE(cd->gfx_con);
++    gsize size;
++    const uint8_t *pixels;
++    pixman_image_t *image;
++    DisplaySurface *surface;
++
++    trace_qemu_vnc_scanout(width, height, stride, pixman_format);
++
++    pixels = g_variant_get_fixed_array(data, &size, 1);
++
++    image = pixman_image_create_bits((pixman_format_code_t)pixman_format,
++        width, height, (uint32_t *)pixels, stride);
++    assert(image);
++
++    g_variant_ref(data);
++    pixman_image_set_destroy_function(image, scanout_image_destroy, data);
++
++    cd->read_only = false;
++    surface = qemu_create_displaysurface_pixman(image);
 +    qemu_console_set_surface(con, surface);
- }
- 
- QemuConsole *qemu_console_lookup_default(void)
-@@ -1308,7 +1308,7 @@ void qemu_console_resize(QemuConsole *s, int width, int height)
-     }
- 
-     surface = qemu_create_displaysurface(width, height);
--    dpy_gfx_replace_surface(s, surface);
-+    qemu_console_set_surface(s, surface);
- }
- 
- DisplaySurface *qemu_console_surface(QemuConsole *console)
-diff --git a/ui/curses.c b/ui/curses.c
-index dbb5992981c..24d3713e57d 100644
---- a/ui/curses.c
-+++ b/ui/curses.c
-@@ -1,8 +1,8 @@
- /*
-  * QEMU curses/ncurses display driver
-- * 
++
++    qemu_dbus_display1_listener_complete_scanout(listener, invocation);
++    return DBUS_METHOD_INVOCATION_HANDLED;
++}
++
++static gboolean
++on_update(QemuDBusDisplay1Listener *listener,
++          GDBusMethodInvocation *invocation,
++          gint x, gint y, gint w, gint h,
++          guint stride, guint pixman_format, GVariant *data,
++          gpointer user_data)
++{
++    ConsoleData *cd = user_data;
++    QemuConsole *con = QEMU_CONSOLE(cd->gfx_con);
++    DisplaySurface *surface = qemu_console_surface(con);
++    gsize size;
++    const uint8_t *pixels;
++    pixman_image_t *src;
++
++    trace_qemu_vnc_update(x, y, w, h, stride, pixman_format);
++    if (!surface || cd->read_only) {
++        g_dbus_method_invocation_return_error(invocation, G_DBUS_ERROR,
++            G_DBUS_ERROR_FAILED, "No active or writable console");
++        return DBUS_METHOD_INVOCATION_HANDLED;
++    }
++
++    pixels = g_variant_get_fixed_array(data, &size, 1);
++    src = pixman_image_create_bits((pixman_format_code_t)pixman_format,
++        w, h, (uint32_t *)pixels, stride);
++    assert(src);
++    pixman_image_composite(PIXMAN_OP_SRC, src, NULL,
++            surface->image,
++            0, 0, 0, 0, x, y, w, h);
++    pixman_image_unref(src);
++
++    qemu_console_update(con, x, y, w, h);
++
++    qemu_dbus_display1_listener_complete_update(listener, invocation);
++    return DBUS_METHOD_INVOCATION_HANDLED;
++}
++
++static gboolean
++on_scanout_map(QemuDBusDisplay1ListenerUnixMap *listener,
++               GDBusMethodInvocation *invocation,
++               GUnixFDList *fd_list,
++               GVariant *arg_handle,
++               guint offset, guint width, guint height,
++               guint stride, guint pixman_format,
++               gpointer user_data)
++{
++    ConsoleData *cd = user_data;
++    gint32 handle = g_variant_get_handle(arg_handle);
++    g_autoptr(GError) err = NULL;
++    DisplaySurface *surface;
++    int fd;
++    void *addr;
++    size_t len = (size_t)height * stride;
++    pixman_image_t *image;
++
++    trace_qemu_vnc_scanout_map(width, height, stride, pixman_format, offset);
++
++    fd = g_unix_fd_list_get(fd_list, handle, &err);
++    if (fd < 0) {
++        g_dbus_method_invocation_return_error(invocation, G_DBUS_ERROR,
++            G_DBUS_ERROR_FAILED, "Failed to get fd: %s", err->message);
++        return DBUS_METHOD_INVOCATION_HANDLED;
++    }
++
++    /* MAP_PRIVATE: we only read; avoid propagating writes back to QEMU */
++    addr = mmap(NULL, len, PROT_READ, MAP_PRIVATE, fd, offset);
++    close(fd);
++    if (addr == MAP_FAILED) {
++        g_dbus_method_invocation_return_error(invocation, G_DBUS_ERROR,
++            G_DBUS_ERROR_FAILED, "mmap failed: %s", g_strerror(errno));
++        return DBUS_METHOD_INVOCATION_HANDLED;
++    }
++
++    image = pixman_image_create_bits((pixman_format_code_t)pixman_format,
++                                     width, height, addr, stride);
++    assert(image);
++    {
++        ScanoutMapData *map = g_new0(ScanoutMapData, 1);
++        map->addr = addr;
++        map->len = len;
++        pixman_image_set_destroy_function(image, scanout_map_destroy, map);
++    }
++
++    cd->read_only = true;
++    surface = qemu_create_displaysurface_pixman(image);
++    qemu_console_set_surface(QEMU_CONSOLE(cd->gfx_con), surface);
++
++    qemu_dbus_display1_listener_unix_map_complete_scanout_map(
++        listener, invocation, NULL);
++    return DBUS_METHOD_INVOCATION_HANDLED;
++}
++
++static gboolean
++on_update_map(QemuDBusDisplay1ListenerUnixMap *listener,
++              GDBusMethodInvocation *invocation,
++              guint x, guint y, guint w, guint h,
++              gpointer user_data)
++{
++    ConsoleData *cd = user_data;
++
++    trace_qemu_vnc_update_map(x, y, w, h);
++
++    qemu_console_update(QEMU_CONSOLE(cd->gfx_con), x, y, w, h);
++
++    qemu_dbus_display1_listener_unix_map_complete_update_map(
++        listener, invocation);
++    return DBUS_METHOD_INVOCATION_HANDLED;
++}
++
++static gboolean
++on_cursor_define(QemuDBusDisplay1Listener *listener,
++                 GDBusMethodInvocation *invocation,
++                 gint width, gint height,
++                 gint hot_x, gint hot_y,
++                 GVariant *data,
++                 gpointer user_data)
++{
++    ConsoleData *cd = user_data;
++    gsize size;
++    const uint8_t *pixels;
++    QEMUCursor *c;
++
++    trace_qemu_vnc_cursor_define(width, height, hot_x, hot_y);
++
++    c = cursor_alloc(width, height);
++    if (!c) {
++        qemu_dbus_display1_listener_complete_cursor_define(
++            listener, invocation);
++        return DBUS_METHOD_INVOCATION_HANDLED;
++    }
++
++    c->hot_x = hot_x;
++    c->hot_y = hot_y;
++
++    pixels = g_variant_get_fixed_array(data, &size, 1);
++    memcpy(c->data, pixels, MIN(size, (gsize)width * height * 4));
++
++    qemu_console_set_cursor(QEMU_CONSOLE(cd->gfx_con), c);
++    cursor_unref(c);
++
++    qemu_dbus_display1_listener_complete_cursor_define(
++        listener, invocation);
++    return DBUS_METHOD_INVOCATION_HANDLED;
++}
++
++typedef struct {
++    GMainLoop *loop;
++    GThread *thread;
++    GDBusConnection *listener_conn;
++} ListenerSetupData;
++
++static void
++on_register_listener_finished(GObject *source_object,
++                              GAsyncResult *res,
++                              gpointer user_data)
++{
++    ListenerSetupData *data = user_data;
++    g_autoptr(GError) err = NULL;
++
++    qemu_dbus_display1_console_call_register_listener_finish(
++        QEMU_DBUS_DISPLAY1_CONSOLE(source_object),
++        NULL,
++        res, &err);
++
++    if (err) {
++        error_report("RegisterListener failed: %s", err->message);
++        g_main_loop_quit(data->loop);
++        return;
++    }
++
++    data->listener_conn = g_thread_join(data->thread);
++    g_main_loop_quit(data->loop);
++}
++
++static GDBusConnection *
++console_register_display_listener(QemuDBusDisplay1Console *console)
++{
++    g_autoptr(GError) err = NULL;
++    g_autoptr(GMainLoop) loop = NULL;
++    g_autoptr(GUnixFDList) fd_list = NULL;
++    ListenerSetupData data = { 0 };
++    int pair[2];
++    int idx;
++
++    if (qemu_socketpair(AF_UNIX, SOCK_STREAM, 0, pair) < 0) {
++        error_report("socketpair failed: %s", strerror(errno));
++        return NULL;
++    }
++
++    fd_list = g_unix_fd_list_new();
++    idx = g_unix_fd_list_append(fd_list, pair[1], &err);
++    close(pair[1]);
++    if (idx < 0) {
++        close(pair[0]);
++        error_report("Failed to append fd: %s", err->message);
++        return NULL;
++    }
++
++    loop = g_main_loop_new(NULL, FALSE);
++    data.loop = loop;
++    data.thread = p2p_dbus_thread_new(pair[0]);
++
++    qemu_dbus_display1_console_call_register_listener(
++        console,
++        g_variant_new_handle(idx),
++        G_DBUS_CALL_FLAGS_NONE,
++        -1,
++        fd_list,
++        NULL,
++        on_register_listener_finished,
++        &data);
++
++    g_main_loop_run(loop);
++
++    return data.listener_conn;
++}
++
++static void
++setup_display_listener(ConsoleData *cd)
++{
++    g_autoptr(GDBusObjectSkeleton) obj = NULL;
++    GDBusObjectManagerServer *server;
++    QemuDBusDisplay1Listener *iface;
++    QemuDBusDisplay1ListenerUnixMap *iface_map;
++
++    server = g_dbus_object_manager_server_new(DBUS_DISPLAY1_ROOT);
++    obj = g_dbus_object_skeleton_new(DBUS_DISPLAY1_ROOT "/Listener");
++
++    /* Main listener interface */
++    iface = qemu_dbus_display1_listener_skeleton_new();
++    g_object_connect(iface,
++                     "signal::handle-scanout", on_scanout, cd,
++                     "signal::handle-update", on_update, cd,
++                     "signal::handle-cursor-define", on_cursor_define, cd,
++                     NULL);
++    g_dbus_object_skeleton_add_interface(obj,
++                                         G_DBUS_INTERFACE_SKELETON(iface));
++
++    /* Unix shared memory map interface */
++    iface_map = qemu_dbus_display1_listener_unix_map_skeleton_new();
++    g_object_connect(iface_map,
++                     "signal::handle-scanout-map", on_scanout_map, cd,
++                     "signal::handle-update-map", on_update_map, cd,
++                     NULL);
++    g_dbus_object_skeleton_add_interface(obj,
++                                         G_DBUS_INTERFACE_SKELETON(iface_map));
++
++    {
++        const gchar *ifaces[] = {
++            "org.qemu.Display1.Listener.Unix.Map", NULL
++        };
++        g_object_set(iface, "interfaces", ifaces, NULL);
++    }
++
++    g_dbus_object_manager_server_export(server, obj);
++    g_dbus_object_manager_server_set_connection(server,
++                                                 cd->listener_conn);
++
++    g_dbus_connection_start_message_processing(cd->listener_conn);
++}
++
++static const GraphicHwOps vnc_hw_ops = {
++    .ui_info = display_ui_info,
++};
++
++bool console_setup(GDBusConnection *bus, const char *bus_name,
++                   const char *console_path)
++{
++    g_autoptr(GError) err = NULL;
++    ConsoleData *cd;
++    QemuConsole *con;
++
++    cd = g_new0(ConsoleData, 1);
++
++    cd->console_proxy = qemu_dbus_display1_console_proxy_new_sync(
++        bus, G_DBUS_PROXY_FLAGS_NONE, bus_name,
++        console_path, NULL, &err);
++    if (!cd->console_proxy) {
++        error_report("Failed to create console proxy for %s: %s",
++                     console_path, err->message);
++        g_free(cd);
++        return false;
++    }
++
++    cd->keyboard_proxy = QEMU_DBUS_DISPLAY1_KEYBOARD(
++        qemu_dbus_display1_keyboard_proxy_new_sync(
++            bus, G_DBUS_PROXY_FLAGS_NONE, bus_name,
++            console_path, NULL, &err));
++    if (!cd->keyboard_proxy) {
++        error_report("Failed to create keyboard proxy for %s: %s",
++                     console_path, err->message);
++        g_object_unref(cd->console_proxy);
++        g_free(cd);
++        return false;
++    }
++
++    g_clear_error(&err);
++    cd->mouse_proxy = QEMU_DBUS_DISPLAY1_MOUSE(
++        qemu_dbus_display1_mouse_proxy_new_sync(
++            bus, G_DBUS_PROXY_FLAGS_NONE, bus_name,
++            console_path, NULL, &err));
++    if (!cd->mouse_proxy) {
++        error_report("Failed to create mouse proxy for %s: %s",
++                     console_path, err->message);
++        g_object_unref(cd->keyboard_proxy);
++        g_object_unref(cd->console_proxy);
++        g_free(cd);
++        return false;
++    }
++
++    con = qemu_graphic_console_create(NULL, 0, &vnc_hw_ops, cd);
++    cd->gfx_con = QEMU_GRAPHIC_CONSOLE(con);
++
++    cd->listener_conn = console_register_display_listener(
++        cd->console_proxy);
++    if (!cd->listener_conn) {
++        error_report("Failed to setup D-Bus listener for %s",
++                     console_path);
++        g_object_unref(cd->mouse_proxy);
++        g_object_unref(cd->keyboard_proxy);
++        g_object_unref(cd->console_proxy);
++        g_free(cd);
++        return false;
++    }
++
++    setup_display_listener(cd);
++    input_setup(cd->keyboard_proxy, cd->mouse_proxy);
++
++    return true;
++}
++
++QemuDBusDisplay1Keyboard *console_get_keyboard(QemuConsole *con)
++{
++    ConsoleData *cd;
++
++    if (!QEMU_IS_GRAPHIC_CONSOLE(con)) {
++        return NULL;
++    }
++    cd = con->hw;
++    return cd ? cd->keyboard_proxy : NULL;
++}
++
++QemuDBusDisplay1Mouse *console_get_mouse(QemuConsole *con)
++{
++    ConsoleData *cd;
++
++    if (!QEMU_IS_GRAPHIC_CONSOLE(con)) {
++        return NULL;
++    }
++    cd = con->hw;
++    return cd ? cd->mouse_proxy : NULL;
++}
+diff --git a/tools/qemu-vnc/input.c b/tools/qemu-vnc/input.c
+new file mode 100644
+index 00000000000..2313b0a7c77
+--- /dev/null
++++ b/tools/qemu-vnc/input.c
+@@ -0,0 +1,239 @@
++/*
++ * Keyboard and mouse input dispatch via D-Bus.
 + *
-  * Copyright (c) 2005 Andrzej Zaborowski  <balrog@zabor.org>
-- * 
++ * Copyright (C) 2026 Red Hat, Inc.
 + *
-  * Permission is hereby granted, free of charge, to any person obtaining a copy
-  * of this software and associated documentation files (the "Software"), to deal
-  * in the Software without restriction, including without limitation the rights
-@@ -275,11 +275,11 @@ static void curses_refresh(DisplayChangeListener *dcl)
-         clear();
-         refresh();
-         curses_calc_pad();
--        graphic_hw_invalidate(dcl->con);
-+        qemu_console_hw_invalidate(dcl->con);
-         invalidate = 0;
-     }
- 
--    graphic_hw_text_update(dcl->con, screen);
-+    qemu_console_hw_text_update(dcl->con, screen);
- 
-     while (1) {
-         /* while there are any pending key strokes to process */
-diff --git a/ui/dbus-console.c b/ui/dbus-console.c
-index 23f547a673d..b8e5c57b148 100644
---- a/ui/dbus-console.c
-+++ b/ui/dbus-console.c
-@@ -200,7 +200,7 @@ dbus_console_set_ui_info(DBusDisplayConsole *ddc,
-         .height = arg_height,
-     };
- 
--    if (!dpy_ui_info_supported(ddc->dcl.con)) {
-+    if (!qemu_console_ui_info_supported(ddc->dcl.con)) {
-         g_dbus_method_invocation_return_error(invocation,
-                                               DBUS_DISPLAY_ERROR,
-                                               DBUS_DISPLAY_ERROR_UNSUPPORTED,
-@@ -208,7 +208,7 @@ dbus_console_set_ui_info(DBusDisplayConsole *ddc,
-         return DBUS_METHOD_INVOCATION_HANDLED;
-     }
- 
--    dpy_set_ui_info(ddc->dcl.con, &info, false);
-+    qemu_console_set_ui_info(ddc->dcl.con, &info, false);
-     qemu_dbus_display1_console_complete_set_uiinfo(ddc->iface, invocation);
-     return DBUS_METHOD_INVOCATION_HANDLED;
- }
-diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
-index cc2c969686e..2e2f6ba4183 100644
---- a/ui/dbus-listener.c
-+++ b/ui/dbus-listener.c
-@@ -241,7 +241,7 @@ static void dbus_update_gl_cb(GObject *source_object,
-     }
- #endif
- 
--    graphic_hw_gl_block(ddl->dcl.con, false);
-+    qemu_console_hw_gl_block(ddl->dcl.con, false);
-     g_object_unref(ddl);
- }
- #endif
-@@ -257,7 +257,7 @@ static void dbus_call_update_gl(DisplayChangeListener *dcl,
- 
-     glFlush();
- #ifdef CONFIG_GBM
--    graphic_hw_gl_block(ddl->dcl.con, true);
-+    qemu_console_hw_gl_block(ddl->dcl.con, true);
-     qemu_dbus_display1_listener_call_update_dmabuf(ddl->proxy,
-         x, y, w, h,
-         G_DBUS_CALL_FLAGS_NONE,
-@@ -276,7 +276,7 @@ static void dbus_call_update_gl(DisplayChangeListener *dcl,
-         Error *err = NULL;
-         assert(ddl->d3d_texture);
- 
--        graphic_hw_gl_block(ddl->dcl.con, true);
-+        qemu_console_hw_gl_block(ddl->dcl.con, true);
-         if (!d3d_texture2d_release0(ddl->d3d_texture, &err)) {
-             error_report_err(err);
-             return;
-@@ -711,7 +711,7 @@ static void dbus_gl_refresh(DisplayChangeListener *dcl)
- {
-     DBusDisplayListener *ddl = container_of(dcl, DBusDisplayListener, dcl);
- 
--    graphic_hw_update(dcl->con);
-+    qemu_console_hw_update(dcl->con);
- 
-     if (!ddl->ds || qemu_console_is_gl_blocked(ddl->dcl.con)) {
-         return;
-@@ -740,7 +740,7 @@ static void dbus_gl_refresh(DisplayChangeListener *dcl)
- 
- static void dbus_refresh(DisplayChangeListener *dcl)
- {
--    graphic_hw_update(dcl->con);
-+    qemu_console_hw_update(dcl->con);
- }
- 
- #ifdef CONFIG_OPENGL
-diff --git a/ui/egl-headless.c b/ui/egl-headless.c
-index 4f046c975a9..878bfebb40c 100644
---- a/ui/egl-headless.c
-+++ b/ui/egl-headless.c
-@@ -23,7 +23,7 @@ typedef struct egl_dpy {
- 
- static void egl_refresh(DisplayChangeListener *dcl)
- {
--    graphic_hw_update(dcl->con);
-+    qemu_console_hw_update(dcl->con);
- }
- 
- static void egl_gfx_update(DisplayChangeListener *dcl,
-@@ -161,7 +161,7 @@ static void egl_scanout_flush(DisplayChangeListener *dcl,
-     }
- 
-     egl_fb_read(edpy->ds, &edpy->blit_fb);
--    dpy_gfx_update(edpy->dcl.con, x, y, w, h);
-+    qemu_console_update(edpy->dcl.con, x, y, w, h);
- }
- 
- static const DisplayChangeListenerOps egl_ops = {
-diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-index fa8fe8970c1..7c5c9b2428c 100644
---- a/ui/gtk-egl.c
-+++ b/ui/gtk-egl.c
-@@ -108,7 +108,7 @@ void gd_egl_draw(VirtualConsole *vc)
-                 qemu_set_fd_handler(fence_fd, gd_hw_gl_flushed, NULL, vc);
-                 return;
-             }
--            graphic_hw_gl_block(vc->gfx.dcl.con, false);
-+            qemu_console_hw_gl_block(vc->gfx.dcl.con, false);
-         }
- #endif
-     } else {
-@@ -176,7 +176,7 @@ void gd_egl_refresh(DisplayChangeListener *dcl)
-         return;
-     }
- 
--    graphic_hw_update(dcl->con);
-+    qemu_console_hw_update(dcl->con);
- 
-     if (vc->gfx.glupdates) {
-         vc->gfx.glupdates = 0;
-@@ -405,7 +405,7 @@ void gd_egl_flush(DisplayChangeListener *dcl,
- 
-     if (vc->gfx.guest_fb.dmabuf &&
-         !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
--        graphic_hw_gl_block(vc->gfx.dcl.con, true);
-+        qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
-         qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
-         gtk_egl_set_scanout_mode(vc, true);
-         gtk_widget_queue_draw_area(area, x, y, w, h);
-diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-index ce49000d3f1..23806b9d01b 100644
---- a/ui/gtk-gl-area.c
-+++ b/ui/gtk-gl-area.c
-@@ -131,7 +131,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
-                 qemu_set_fd_handler(fence_fd, gd_hw_gl_flushed, NULL, vc);
-                 return;
-             }
--            graphic_hw_gl_block(vc->gfx.dcl.con, false);
-+            qemu_console_hw_gl_block(vc->gfx.dcl.con, false);
-         }
- #endif
-     } else {
-@@ -195,7 +195,7 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
-         }
-     }
- 
--    graphic_hw_update(dcl->con);
-+    qemu_console_hw_update(dcl->con);
- 
-     if (vc->gfx.glupdates) {
-         vc->gfx.glupdates = 0;
-@@ -347,7 +347,7 @@ void gd_gl_area_scanout_flush(DisplayChangeListener *dcl,
- 
-     if (vc->gfx.guest_fb.dmabuf &&
-         !qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
--        graphic_hw_gl_block(vc->gfx.dcl.con, true);
-+        qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
-         qemu_dmabuf_set_draw_submitted(vc->gfx.guest_fb.dmabuf, true);
-         gtk_gl_area_set_scanout_mode(vc, true);
-     }
-diff --git a/ui/gtk.c b/ui/gtk.c
-index ef3707b3634..2c61b601f78 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -436,7 +436,7 @@ static void gd_update(DisplayChangeListener *dcl,
- 
- static void gd_refresh(DisplayChangeListener *dcl)
- {
--    graphic_hw_update(dcl->con);
-+    qemu_console_hw_update(dcl->con);
- }
- 
- static GdkDevice *gd_get_pointer(GdkDisplay *dpy)
-@@ -602,7 +602,7 @@ void gd_hw_gl_flushed(void *vcon)
-         qemu_set_fd_handler(fence_fd, NULL, NULL, NULL);
-         close(fence_fd);
-         qemu_dmabuf_set_fence_fd(dmabuf, -1);
--        graphic_hw_gl_block(vc->gfx.dcl.con, false);
-+        qemu_console_hw_gl_block(vc->gfx.dcl.con, false);
-     }
- }
- 
-@@ -729,27 +729,27 @@ static void gd_set_ui_refresh_rate(VirtualConsole *vc, int refresh_rate)
- {
-     QemuUIInfo info;
- 
--    if (!dpy_ui_info_supported(vc->gfx.dcl.con)) {
-+    if (!qemu_console_ui_info_supported(vc->gfx.dcl.con)) {
-         return;
-     }
- 
--    info = *dpy_get_ui_info(vc->gfx.dcl.con);
-+    info = *qemu_console_get_ui_info(vc->gfx.dcl.con);
-     info.refresh_rate = refresh_rate;
--    dpy_set_ui_info(vc->gfx.dcl.con, &info, true);
-+    qemu_console_set_ui_info(vc->gfx.dcl.con, &info, true);
- }
- 
- static void gd_set_ui_size(VirtualConsole *vc, gint width, gint height)
- {
-     QemuUIInfo info;
- 
--    if (!dpy_ui_info_supported(vc->gfx.dcl.con)) {
-+    if (!qemu_console_ui_info_supported(vc->gfx.dcl.con)) {
-         return;
-     }
- 
--    info = *dpy_get_ui_info(vc->gfx.dcl.con);
-+    info = *qemu_console_get_ui_info(vc->gfx.dcl.con);
-     info.width = width;
-     info.height = height;
--    dpy_set_ui_info(vc->gfx.dcl.con, &info, true);
-+    qemu_console_set_ui_info(vc->gfx.dcl.con, &info, true);
- }
- 
- #if defined(CONFIG_OPENGL)
-@@ -2333,7 +2333,7 @@ static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
-     gd_connect_vc_gfx_signals(vc);
-     group = gd_vc_menu_init(s, vc, idx, group, view_menu);
- 
--    if (dpy_ui_info_supported(vc->gfx.dcl.con)) {
-+    if (qemu_console_ui_info_supported(vc->gfx.dcl.con)) {
-         zoom_to_fit = true;
-     }
-     if (s->opts->u.gtk.has_zoom_to_fit) {
-diff --git a/ui/sdl2-2d.c b/ui/sdl2-2d.c
-index 73052383c2e..68a3aff7151 100644
---- a/ui/sdl2-2d.c
-+++ b/ui/sdl2-2d.c
-@@ -129,7 +129,7 @@ void sdl2_2d_refresh(DisplayChangeListener *dcl)
-     struct sdl2_console *scon = container_of(dcl, struct sdl2_console, dcl);
- 
-     assert(!scon->opengl);
--    graphic_hw_update(dcl->con);
-+    qemu_console_hw_update(dcl->con);
-     sdl2_poll_events(scon);
- }
- 
-diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
-index bb066cdd885..1547ad2f6f8 100644
---- a/ui/sdl2-gl.c
-+++ b/ui/sdl2-gl.c
-@@ -115,7 +115,7 @@ void sdl2_gl_refresh(DisplayChangeListener *dcl)
- 
-     assert(scon->opengl);
- 
--    graphic_hw_update(dcl->con);
-+    qemu_console_hw_update(dcl->con);
-     if (scon->updates && scon->real_window) {
-         scon->updates = 0;
-         sdl2_gl_render_surface(scon);
-diff --git a/ui/sdl2.c b/ui/sdl2.c
-index 89516f95c41..4fcdbd79d3c 100644
---- a/ui/sdl2.c
-+++ b/ui/sdl2.c
-@@ -604,7 +604,7 @@ static void handle_windowevent(SDL_Event *ev)
-                 .width = ev->window.data1,
-                 .height = ev->window.data2,
-             };
--            dpy_set_ui_info(scon->dcl.con, &info, true);
-+            qemu_console_set_ui_info(scon->dcl.con, &info, true);
-         }
-         sdl2_redraw(scon);
-         break;
-@@ -632,10 +632,10 @@ static void handle_windowevent(SDL_Event *ev)
-         }
-         break;
-     case SDL_WINDOWEVENT_RESTORED:
--        update_displaychangelistener(&scon->dcl, GUI_REFRESH_INTERVAL_DEFAULT);
-+        qemu_console_listener_set_refresh(&scon->dcl, GUI_REFRESH_INTERVAL_DEFAULT);
-         break;
-     case SDL_WINDOWEVENT_MINIMIZED:
--        update_displaychangelistener(&scon->dcl, 500);
-+        qemu_console_listener_set_refresh(&scon->dcl, 500);
-         break;
-     case SDL_WINDOWEVENT_CLOSE:
-         if (qemu_console_is_graphic(scon->dcl.con)) {
-diff --git a/ui/spice-display.c b/ui/spice-display.c
-index 56d8140fad8..e3716127203 100644
---- a/ui/spice-display.c
-+++ b/ui/spice-display.c
-@@ -468,7 +468,7 @@ void qemu_spice_cursor_refresh_bh(void *opaque)
-         assert(ssd->dcl.con);
-         cursor_ref(c);
-         qemu_mutex_unlock(&ssd->lock);
--        dpy_cursor_define(ssd->dcl.con, c);
-+        qemu_console_set_cursor(ssd->dcl.con, c);
-         qemu_mutex_lock(&ssd->lock);
-         cursor_unref(c);
-     }
-@@ -481,7 +481,7 @@ void qemu_spice_cursor_refresh_bh(void *opaque)
-         ssd->mouse_x = -1;
-         ssd->mouse_y = -1;
-         qemu_mutex_unlock(&ssd->lock);
--        dpy_mouse_set(ssd->dcl.con, x, y, true);
-+        qemu_console_set_mouse(ssd->dcl.con, x, y, true);
-     } else {
-         qemu_mutex_unlock(&ssd->lock);
-     }
-@@ -489,7 +489,7 @@ void qemu_spice_cursor_refresh_bh(void *opaque)
- 
- void qemu_spice_display_refresh(SimpleSpiceDisplay *ssd)
- {
--    graphic_hw_update(ssd->dcl.con);
-+    qemu_console_hw_update(ssd->dcl.con);
- 
-     WITH_QEMU_LOCK_GUARD(&ssd->lock) {
-         if (QTAILQ_EMPTY(&ssd->updates) && ssd->ds) {
-@@ -668,7 +668,7 @@ static int interface_client_monitors_config(QXLInstance *sin,
-     QemuUIInfo info;
-     int head;
- 
--    if (!dpy_ui_info_supported(ssd->dcl.con)) {
-+    if (!qemu_console_ui_info_supported(ssd->dcl.con)) {
-         return 0; /* == not supported by guest */
-     }
- 
-@@ -676,7 +676,7 @@ static int interface_client_monitors_config(QXLInstance *sin,
-         return 1;
-     }
- 
--    info = *dpy_get_ui_info(ssd->dcl.con);
-+    info = *qemu_console_get_ui_info(ssd->dcl.con);
- 
-     head = qemu_console_get_index(ssd->dcl.con);
-     if (mc->num_of_monitors > head) {
-@@ -690,7 +690,7 @@ static int interface_client_monitors_config(QXLInstance *sin,
-     }
- 
-     trace_qemu_spice_ui_info(ssd->qxl.id, info.width, info.height);
--    dpy_set_ui_info(ssd->dcl.con, &info, false);
-+    qemu_console_set_ui_info(ssd->dcl.con, &info, false);
-     return 1;
- }
- 
-@@ -817,7 +817,7 @@ static void qemu_spice_gl_block(SimpleSpiceDisplay *ssd, bool block)
-     } else {
-         timer_del(ssd->gl_unblock_timer);
-     }
--    graphic_hw_gl_block(ssd->dcl.con, block);
-+    qemu_console_hw_gl_block(ssd->dcl.con, block);
- }
- 
- static void qemu_spice_gl_unblock_bh(void *opaque)
-@@ -861,7 +861,7 @@ static void spice_gl_refresh(DisplayChangeListener *dcl)
-         return;
-     }
- 
--    graphic_hw_update(dcl->con);
-+    qemu_console_hw_update(dcl->con);
-     if (ssd->gl_updates && ssd->have_surface) {
-         qemu_spice_gl_block(ssd, true);
-         glFlush();
-diff --git a/ui/vnc.c b/ui/vnc.c
-index e8c8773a36e..d3dfabede03 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -2325,8 +2325,8 @@ static void set_pixel_format(VncState *vs, int bits_per_pixel,
- 
-     set_pixel_conversion(vs);
- 
--    graphic_hw_invalidate(vs->vd->dcl.con);
--    graphic_hw_update(vs->vd->dcl.con);
-+    qemu_console_hw_invalidate(vs->vd->dcl.con);
-+    qemu_console_hw_update(vs->vd->dcl.con);
- }
- 
- static void pixel_format_message (VncState *vs) {
-@@ -2384,7 +2384,7 @@ static int protocol_client_msg(VncState *vs, uint8_t *data, size_t len)
-     VncDisplay *vd = vs->vd;
- 
-     if (data[0] > 3) {
--        update_displaychangelistener(&vd->dcl, VNC_REFRESH_INTERVAL_BASE);
-+        qemu_console_listener_set_refresh(&vd->dcl, VNC_REFRESH_INTERVAL_BASE);
-     }
- 
-     switch (data[0]) {
-@@ -2638,9 +2638,9 @@ static int protocol_client_msg(VncState *vs, uint8_t *data, size_t len)
-         h = read_u16(data, 4);
- 
-         trace_vnc_msg_client_set_desktop_size(vs, vs->ioc, w, h, screens);
--        if (dpy_ui_info_supported(vs->vd->dcl.con)) {
-+        if (qemu_console_ui_info_supported(vs->vd->dcl.con)) {
-             QemuUIInfo info = { .width = w, .height = h };
--            dpy_set_ui_info(vs->vd->dcl.con, &info, false);
-+            qemu_console_set_ui_info(vs->vd->dcl.con, &info, false);
-             vnc_desktop_resize_ext(vs, 4 /* Request forwarded */);
-         } else {
-             vnc_desktop_resize_ext(vs, 3 /* Invalid screen layout */);
-@@ -3242,14 +3242,14 @@ static void vnc_refresh(DisplayChangeListener *dcl)
-     int has_dirty, rects = 0;
- 
-     if (QTAILQ_EMPTY(&vd->clients)) {
--        update_displaychangelistener(&vd->dcl, VNC_REFRESH_INTERVAL_MAX);
-+        qemu_console_listener_set_refresh(&vd->dcl, VNC_REFRESH_INTERVAL_MAX);
-         return;
-     }
- 
--    graphic_hw_update(vd->dcl.con);
-+    qemu_console_hw_update(vd->dcl.con);
- 
-     if (vnc_trylock_display(vd)) {
--        update_displaychangelistener(&vd->dcl, VNC_REFRESH_INTERVAL_BASE);
-+        qemu_console_listener_set_refresh(&vd->dcl, VNC_REFRESH_INTERVAL_BASE);
-         return;
-     }
- 
-@@ -3323,7 +3323,7 @@ static void vnc_connect(VncDisplay *vd, QIOChannelSocket *sioc,
-               sioc, websocket, vs->auth, vs->subauth);
- 
-     VNC_DEBUG("New client on socket %p\n", vs->sioc);
--    update_displaychangelistener(&vd->dcl, VNC_REFRESH_INTERVAL_BASE);
-+    qemu_console_listener_set_refresh(&vd->dcl, VNC_REFRESH_INTERVAL_BASE);
-     qio_channel_set_blocking(vs->ioc, false, &error_abort);
-     g_clear_handle_id(&vs->ioc_tag, g_source_remove);
-     if (websocket) {
-@@ -3363,7 +3363,7 @@ static void vnc_connect(VncDisplay *vd, QIOChannelSocket *sioc,
-         vnc_update_server_surface(vd);
-     }
- 
--    graphic_hw_update(vd->dcl.con);
-+    qemu_console_hw_update(vd->dcl.con);
- 
-     if (!vs->websocket) {
-         vnc_start_protocol(vs);
-@@ -3419,7 +3419,7 @@ static void vmstate_change_handler(void *opaque, bool running, RunState state)
-     if (state != RUN_STATE_RUNNING) {
-         return;
-     }
--    update_displaychangelistener(&vd->dcl, VNC_REFRESH_INTERVAL_BASE);
-+    qemu_console_listener_set_refresh(&vd->dcl, VNC_REFRESH_INTERVAL_BASE);
- }
- 
- static bool vnc_display_open(VncDisplay *vd, Error **errp);
-diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
-index 77d80fb7cef..be0061b9db2 100644
---- a/hw/display/apple-gfx.m
-+++ b/hw/display/apple-gfx.m
-@@ -317,8 +317,8 @@ static void apple_gfx_render_frame_completed_bh(void *opaque)
-             copy_mtl_texture_to_surface_mem(s->texture, surface_data(s->surface));
-             if (s->gfx_update_requested) {
-                 s->gfx_update_requested = false;
--                dpy_gfx_update_full(s->con);
--                graphic_hw_update_done(s->con);
-+                qemu_console_update_full(s->con);
-+                qemu_console_hw_update_done(s->con);
-                 s->new_frame_ready = false;
-             } else {
-                 s->new_frame_ready = true;
-@@ -337,7 +337,7 @@ static bool apple_gfx_fb_update_display(void *opaque)
- 
-     assert(bql_locked());
-     if (s->new_frame_ready) {
--        dpy_gfx_update_full(s->con);
-+        qemu_console_update_full(s->con);
-         s->new_frame_ready = false;
-     } else if (s->pending_frames > 0) {
-         s->gfx_update_requested = true;
-@@ -380,14 +380,14 @@ static void set_mode(AppleGFXState *s, uint32_t width, uint32_t height)
-             (s->texture.storageMode == MTLStorageModeManaged);
-     }
- 
--    dpy_gfx_replace_surface(s->con, s->surface);
-+    qemu_console_set_surface(s->con, s->surface);
- }
- 
- static void update_cursor(AppleGFXState *s)
- {
-     assert(bql_locked());
--    dpy_mouse_set(s->con, s->pgdisp.cursorPosition.x,
--                  s->pgdisp.cursorPosition.y, qatomic_read(&s->cursor_show));
-+    qemu_console_set_mouse(s->con, s->pgdisp.cursorPosition.x,
-+                           s->pgdisp.cursorPosition.y, qatomic_read(&s->cursor_show));
- }
- 
- static void update_cursor_bh(void *opaque)
-@@ -443,7 +443,7 @@ static void set_cursor_glyph(void *opaque)
-             }
-             px_data += padding_bytes_per_row;
-         }
--        dpy_cursor_define(s->con, s->cursor);
-+        qemu_console_set_cursor(s->con, s->cursor);
-         update_cursor(s);
-     }
-     [glyph release];
-@@ -792,7 +792,7 @@ bool apple_gfx_common_realize(AppleGFXState *s, DeviceState *dev,
-         apple_gfx_create_display_mode_array(display_modes, num_display_modes);
-     [mode_array release];
- 
--    s->con = graphic_console_init(dev, 0, &apple_gfx_fb_ops, s);
-+    s->con = qemu_graphic_console_create(dev, 0, &apple_gfx_fb_ops, s);
-     return true;
- }
- 
-diff --git a/ui/cocoa.m b/ui/cocoa.m
-index aaf82421589..98394cdc507 100644
---- a/ui/cocoa.m
-+++ b/ui/cocoa.m
-@@ -421,7 +421,7 @@ - (void) selectConsoleLocked:(unsigned int)index
-         return;
-     }
- 
--    unregister_displaychangelistener(&dcl);
-+    qemu_console_unregister_listener(&dcl);
-     qkbd_state_switch_console(kbd, con);
-     qemu_console_register_listener(con, &dcl, &dcl_ops);
-     [self notifyMouseModeChange];
-@@ -669,8 +669,8 @@ - (void) updateUIInfoLocked
-             CVTime period = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(displayLink);
-             CVDisplayLinkRelease(displayLink);
-             if (!(period.flags & kCVTimeIsIndefinite)) {
--                update_displaychangelistener(&dcl,
--                                             1000 * period.timeValue / period.timeScale);
-+                qemu_console_listener_set_refresh(&dcl,
-+                                                  1000 * period.timeValue / period.timeScale);
-                 info.refresh_rate = (int64_t)1000 * period.timeScale / period.timeValue;
-             }
-         }
-@@ -688,7 +688,7 @@ - (void) updateUIInfoLocked
-     info.width = frameSize.width * [[self window] backingScaleFactor];
-     info.height = frameSize.height * [[self window] backingScaleFactor];
- 
--    dpy_set_ui_info(dcl.con, &info, TRUE);
-+    qemu_console_set_ui_info(dcl.con, &info, TRUE);
- }
- 
- #pragma clang diagnostic pop
-@@ -2056,7 +2056,7 @@ static void cocoa_refresh(DisplayChangeListener *dcl)
-     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
- 
-     COCOA_DEBUG("qemu_cocoa: cocoa_refresh\n");
--    graphic_hw_update(dcl->con);
-+    qemu_console_hw_update(dcl->con);
- 
-     if (cbchangecount != [[NSPasteboard generalPasteboard] changeCount]) {
-         qemu_clipboard_info_unref(cbinfo);
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++
++#include "ui/dbus-display1.h"
++#include "ui/input.h"
++#include "trace.h"
++#include "qemu-vnc.h"
++
++struct QEMUPutLEDEntry {
++    QEMUPutLEDEvent *put_led;
++    void *opaque;
++    QTAILQ_ENTRY(QEMUPutLEDEntry) next;
++};
++
++static NotifierList mouse_mode_notifiers =
++    NOTIFIER_LIST_INITIALIZER(mouse_mode_notifiers);
++static QTAILQ_HEAD(, QEMUPutLEDEntry) led_handlers =
++    QTAILQ_HEAD_INITIALIZER(led_handlers);
++
++/* Track the target console for pending mouse events (used by sync) */
++static QemuConsole *mouse_target;
++
++QEMUPutLEDEntry *qemu_add_led_event_handler(QEMUPutLEDEvent *func,
++                                            void *opaque)
++{
++    QEMUPutLEDEntry *s;
++
++    s = g_new0(QEMUPutLEDEntry, 1);
++    s->put_led = func;
++    s->opaque = opaque;
++    QTAILQ_INSERT_TAIL(&led_handlers, s, next);
++    return s;
++}
++
++void qemu_remove_led_event_handler(QEMUPutLEDEntry *entry)
++{
++    if (!entry) {
++        return;
++    }
++    QTAILQ_REMOVE(&led_handlers, entry, next);
++    g_free(entry);
++}
++
++static void
++on_keyboard_modifiers_changed(GObject *gobject, GParamSpec *pspec,
++                              gpointer user_data)
++{
++    guint modifiers;
++    QEMUPutLEDEntry *cursor;
++
++    modifiers = qemu_dbus_display1_keyboard_get_modifiers(
++        QEMU_DBUS_DISPLAY1_KEYBOARD(gobject));
++
++    /*
++     * The D-Bus Keyboard.Modifiers property uses the same
++     * bit layout as QEMU's LED constants.
++     */
++    QTAILQ_FOREACH(cursor, &led_handlers, next) {
++        cursor->put_led(cursor->opaque, modifiers);
++    }
++}
++
++void qemu_add_mouse_mode_change_notifier(Notifier *notify)
++{
++    notifier_list_add(&mouse_mode_notifiers, notify);
++}
++
++void qemu_remove_mouse_mode_change_notifier(Notifier *notify)
++{
++    notifier_remove(notify);
++}
++
++void qemu_input_event_send_key_delay(uint32_t delay_ms)
++{
++}
++
++void qemu_input_event_send_key_qcode(QemuConsole *src, QKeyCode q, bool down)
++{
++    QemuDBusDisplay1Keyboard *kbd;
++    guint qnum;
++
++    trace_qemu_vnc_key_event(q, down);
++
++    if (!src) {
++        return;
++    }
++    kbd = console_get_keyboard(src);
++    if (!kbd) {
++        return;
++    }
++
++    if (q >= qemu_input_map_qcode_to_qnum_len) {
++        return;
++    }
++    qnum = qemu_input_map_qcode_to_qnum[q];
++
++    if (down) {
++        qemu_dbus_display1_keyboard_call_press(
++            kbd, qnum,
++            G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
++    } else {
++        qemu_dbus_display1_keyboard_call_release(
++            kbd, qnum,
++            G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
++    }
++}
++
++static guint abs_x, abs_y;
++static bool abs_pending;
++static gint rel_dx, rel_dy;
++static bool rel_pending;
++
++void qemu_input_queue_abs(QemuConsole *src, InputAxis axis,
++                          int value, int min_in, int max_in)
++{
++    if (axis == INPUT_AXIS_X) {
++        abs_x = value;
++    } else if (axis == INPUT_AXIS_Y) {
++        abs_y = value;
++    }
++    abs_pending = true;
++    mouse_target = src;
++}
++
++void qemu_input_queue_rel(QemuConsole *src, InputAxis axis, int value)
++{
++    if (axis == INPUT_AXIS_X) {
++        rel_dx += value;
++    } else if (axis == INPUT_AXIS_Y) {
++        rel_dy += value;
++    }
++    rel_pending = true;
++    mouse_target = src;
++}
++
++void qemu_input_event_sync(void)
++{
++    QemuDBusDisplay1Mouse *mouse;
++
++    if (!mouse_target) {
++        return;
++    }
++
++    mouse = console_get_mouse(mouse_target);
++    if (!mouse) {
++        abs_pending = false;
++        rel_pending = false;
++        return;
++    }
++
++    if (abs_pending) {
++        trace_qemu_vnc_input_abs(abs_x, abs_y);
++        abs_pending = false;
++        qemu_dbus_display1_mouse_call_set_abs_position(
++            mouse, abs_x, abs_y,
++            G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
++    }
++
++    if (rel_pending) {
++        trace_qemu_vnc_input_rel(rel_dx, rel_dy);
++        rel_pending = false;
++        qemu_dbus_display1_mouse_call_rel_motion(
++            mouse, rel_dx, rel_dy,
++            G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
++        rel_dx = 0;
++        rel_dy = 0;
++    }
++}
++
++bool qemu_input_is_absolute(QemuConsole *con)
++{
++    QemuDBusDisplay1Mouse *mouse;
++
++    if (!con) {
++        return false;
++    }
++    mouse = console_get_mouse(con);
++
++    if (!mouse) {
++        return false;
++    }
++    return qemu_dbus_display1_mouse_get_is_absolute(mouse);
++}
++
++static void
++on_mouse_is_absolute_changed(GObject *gobject, GParamSpec *pspec,
++                              gpointer user_data)
++{
++    notifier_list_notify(&mouse_mode_notifiers, NULL);
++}
++
++void qemu_input_update_buttons(QemuConsole *src, uint32_t *button_map,
++                               uint32_t button_old, uint32_t button_new)
++{
++    QemuDBusDisplay1Mouse *mouse;
++    uint32_t changed;
++    int i;
++
++    if (!src) {
++        return;
++    }
++    mouse = console_get_mouse(src);
++    if (!mouse) {
++        return;
++    }
++
++    changed = button_old ^ button_new;
++    for (i = 0; i < 32; i++) {
++        if (!(changed & (1u << i))) {
++            continue;
++        }
++        trace_qemu_vnc_input_btn(i, !!(button_new & (1u << i)));
++        if (button_new & (1u << i)) {
++            qemu_dbus_display1_mouse_call_press(
++                mouse, i,
++                G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
++        } else {
++            qemu_dbus_display1_mouse_call_release(
++                mouse, i,
++                G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
++        }
++    }
++}
++
++void input_setup(QemuDBusDisplay1Keyboard *kbd,
++                 QemuDBusDisplay1Mouse *mouse)
++{
++    g_signal_connect(kbd, "notify::modifiers",
++                     G_CALLBACK(on_keyboard_modifiers_changed), NULL);
++    g_signal_connect(mouse, "notify::is-absolute",
++                     G_CALLBACK(on_mouse_is_absolute_changed), NULL);
++}
+diff --git a/tools/qemu-vnc/qemu-vnc.c b/tools/qemu-vnc/qemu-vnc.c
+new file mode 100644
+index 00000000000..5c2ba3b7a56
+--- /dev/null
++++ b/tools/qemu-vnc/qemu-vnc.c
+@@ -0,0 +1,581 @@
++/*
++ * Standalone VNC server connecting to QEMU via D-Bus display interface.
++ *
++ * Copyright (C) 2026 Red Hat, Inc.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++
++#include "qemu/cutils.h"
++#include "qemu/datadir.h"
++#include "qemu/error-report.h"
++#include "qemu/config-file.h"
++#include "qemu/option.h"
++#include "qemu/log.h"
++#include "qemu/main-loop.h"
++#include "qemu-version.h"
++#include "ui/vnc.h"
++#include "crypto/secret.h"
++#include "crypto/tlscredsx509.h"
++#include "qom/object_interfaces.h"
++#include "trace.h"
++#include "qemu-vnc.h"
++
++const char *qemu_name;
++const char *keyboard_layout;
++
++typedef struct {
++    GDBusConnection *bus;
++    const char *bus_name;
++    const char * const *chardev_names;
++    char *terminate_reason;
++    bool no_vt;
++    bool terminate;
++    bool owner_seen;
++    bool wait_for_owner;
++} QemuVncState;
++
++static GType
++dbus_display_get_proxy_type(GDBusObjectManagerClient *manager,
++                            const gchar *object_path,
++                            const gchar *interface_name,
++                            gpointer user_data)
++{
++    static const struct {
++        const char *iface;
++        GType (*get_type)(void);
++    } types[] = {
++        { "org.qemu.Display1.Clipboard",
++          qemu_dbus_display1_clipboard_proxy_get_type },
++        { "org.qemu.Display1.Audio",
++          qemu_dbus_display1_audio_proxy_get_type },
++        { "org.qemu.Display1.Chardev",
++          qemu_dbus_display1_chardev_proxy_get_type },
++        { "org.qemu.Display1.Chardev.VCEncoding",
++          qemu_dbus_display1_chardev_vcencoding_proxy_get_type },
++    };
++
++    if (!interface_name) {
++        return G_TYPE_DBUS_OBJECT_PROXY;
++    }
++
++    for (int i = 0; i < G_N_ELEMENTS(types); i++) {
++        if (g_str_equal(interface_name, types[i].iface)) {
++            return types[i].get_type();
++        }
++    }
++
++    return G_TYPE_DBUS_PROXY;
++}
++
++static void
++on_bus_closed(GDBusConnection *connection,
++              gboolean remote_peer_vanished,
++              GError *error,
++              gpointer user_data)
++{
++    QemuVncState *state = user_data;
++
++    state->terminate_reason = g_strdup("D-Bus connection closed");
++    state->terminate = true;
++    qemu_notify_event();
++}
++
++static void
++on_manager_ready(GObject *source_object,
++                 GAsyncResult *res,
++                 gpointer user_data)
++{
++    QemuVncState *state = user_data;
++    g_autoptr(GError) err = NULL;
++    g_autoptr(GDBusObjectManager) manager = NULL;
++    GList *objects, *l;
++    g_autoptr(GPtrArray) console_paths = NULL;
++    bool found = false;
++    Error *local_err = NULL;
++
++    manager = G_DBUS_OBJECT_MANAGER(
++        g_dbus_object_manager_client_new_finish(res, &err));
++    if (!manager) {
++        error_report("Failed to create object manager: %s",
++                     err->message);
++        g_assert_not_reached();
++        return;
++    }
++
++    /*
++     * Discover all Console objects and sort them so that console
++     * indices are assigned in a predictable order matching QEMU's.
++     */
++    console_paths = g_ptr_array_new_with_free_func(g_free);
++    objects = g_dbus_object_manager_get_objects(manager);
++    for (l = objects; l; l = l->next) {
++        GDBusObject *obj = l->data;
++        const char *path = g_dbus_object_get_object_path(obj);
++
++        if (g_str_has_prefix(path, DBUS_DISPLAY1_ROOT "/Console_")) {
++            g_ptr_array_add(console_paths, g_strdup(path));
++        }
++    }
++    g_list_free_full(objects, g_object_unref);
++
++    g_ptr_array_sort(console_paths, (GCompareFunc)qemu_pstrcmp0);
++
++    for (guint i = 0; i < console_paths->len; i++) {
++        const char *path = g_ptr_array_index(console_paths, i);
++
++        if (!console_setup(state->bus, state->bus_name, path)) {
++            error_report("Failed to setup console %s", path);
++            continue;
++        }
++        found = true;
++    }
++
++    if (!found) {
++        error_report("No consoles found");
++        state->terminate_reason = g_strdup("No consoles found");
++        state->terminate = true;
++        qemu_notify_event();
++        return;
++    }
++
++    /*
++     * Create the VNC display now that consoles exist, so that the
++     * display change listener is registered against a valid console.
++     */
++    if (!vnc_display_new("default", &local_err)) {
++        error_report("Failed to create VNC display: %s",
++                     error_get_pretty(local_err));
++        g_assert_not_reached();
++        return;
++    }
++
++    vnc_dbus_setup(state->bus);
++
++    clipboard_setup(manager, state->bus);
++    audio_setup(manager);
++    if (!state->no_vt) {
++        chardev_setup(state->chardev_names, manager);
++    }
++}
++
++static void
++start_display_setup(QemuVncState *state)
++{
++    g_autoptr(QemuDBusDisplay1VMProxy) vm_proxy =
++        QEMU_DBUS_DISPLAY1_VM_PROXY(
++            qemu_dbus_display1_vm_proxy_new_sync(
++                state->bus, G_DBUS_PROXY_FLAGS_NONE,
++                state->bus_name,
++                DBUS_DISPLAY1_ROOT "/VM", NULL, NULL));
++    if (vm_proxy) {
++        qemu_name = g_strdup(qemu_dbus_display1_vm_get_name(
++            QEMU_DBUS_DISPLAY1_VM(vm_proxy)));
++    }
++
++    g_dbus_object_manager_client_new(
++        state->bus,
++        G_DBUS_OBJECT_MANAGER_CLIENT_FLAGS_NONE,
++        state->bus_name, DBUS_DISPLAY1_ROOT,
++        dbus_display_get_proxy_type,
++        NULL, NULL, NULL,
++        on_manager_ready, state);
++}
++
++static void
++on_owner_appeared(GDBusConnection *connection,
++                  const gchar *name,
++                  const gchar *name_owner,
++                  gpointer user_data)
++{
++    QemuVncState *state = user_data;
++
++    if (state->owner_seen) {
++        return;
++    }
++
++    info_report("D-Bus name %s appeared.", name);
++    state->owner_seen = true;
++    trace_qemu_vnc_owner_appeared(name);
++    start_display_setup(state);
++}
++
++static void
++on_owner_vanished(GDBusConnection *connection,
++                  const gchar *name,
++                  gpointer user_data)
++{
++    QemuVncState *state = user_data;
++
++    trace_qemu_vnc_owner_vanished(name);
++
++    if (!state->owner_seen) {
++        if (state->wait_for_owner) {
++            return;
++        }
++        error_report("D-Bus name %s not found. "
++                     "Is QEMU running? "
++                     "Use --wait to wait for it to appear.", name);
++        state->terminate_reason =
++            g_strdup_printf("D-Bus name %s not found", name);
++    } else {
++        error_report("D-Bus peer %s vanished, terminating", name);
++        state->terminate_reason =
++            g_strdup_printf("D-Bus peer %s vanished", name);
++    }
++
++    state->terminate = true;
++    qemu_notify_event();
++}
++
++static GDBusConnection *
++setup_dbus_connection(int dbus_p2p_fd, const char *dbus_address,
++                      char **bus_name)
++{
++    g_autoptr(GError) err = NULL;
++    GDBusConnection *bus;
++
++    if (dbus_p2p_fd >= 0) {
++        g_autoptr(GSocket) socket = NULL;
++        g_autoptr(GSocketConnection) socketc = NULL;
++
++        if (*bus_name) {
++            error_report("--bus-name is not supported with --dbus-p2p-fd");
++            return NULL;
++        }
++
++        socket = g_socket_new_from_fd(dbus_p2p_fd, &err);
++        if (!socket) {
++            error_report("Failed to create socket from fd %d: %s",
++                         dbus_p2p_fd, err->message);
++            return NULL;
++        }
++
++        socketc = g_socket_connection_factory_create_connection(socket);
++        if (!socketc) {
++            error_report("Failed to create socket connection");
++            return NULL;
++        }
++
++        bus = g_dbus_connection_new_sync(
++            G_IO_STREAM(socketc), NULL,
++            G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_CLIENT,
++            NULL, NULL, &err);
++    } else if (dbus_address) {
++        GDBusConnectionFlags flags =
++            G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_CLIENT;
++        if (*bus_name) {
++            flags |= G_DBUS_CONNECTION_FLAGS_MESSAGE_BUS_CONNECTION;
++        }
++        bus = g_dbus_connection_new_for_address_sync(
++            dbus_address, flags, NULL, NULL, &err);
++    } else {
++        bus = g_bus_get_sync(G_BUS_TYPE_SESSION, NULL, &err);
++        if (!*bus_name) {
++            *bus_name = g_strdup("org.qemu");
++        }
++    }
++
++    if (!bus) {
++        error_report("Failed to connect to D-Bus: %s", err->message);
++    }
++
++    return bus;
++}
++
++static bool
++setup_credentials(const char *tls_creds_dir, const char *tls_authz,
++                  bool *has_vnc_password)
++{
++    Error *local_err = NULL;
++    const char *creds_dir;
++
++    /*
++     * Set up TLS credentials if requested.  The object must exist
++     * before vnc_display_open() which looks it up by ID.
++     */
++    if (tls_creds_dir) {
++        if (!object_new_with_props(TYPE_QCRYPTO_TLS_CREDS_X509,
++                                   object_get_objects_root(),
++                                   "tlscreds0",
++                                   &local_err,
++                                   "endpoint", "server",
++                                   "dir", tls_creds_dir,
++                                   "verify-peer", tls_authz ? "yes" : "no",
++                                   NULL)) {
++            error_report_err(local_err);
++            return false;
++        }
++    }
++
++    /*
++     * Check for systemd credentials: if a vnc-password credential
++     * file exists, create a QCryptoSecret and enable VNC password auth.
++     */
++    creds_dir = g_getenv("CREDENTIALS_DIRECTORY");
++    if (creds_dir) {
++        g_autofree char *password_path =
++            g_build_filename(creds_dir, "vnc-password", NULL);
++        if (g_file_test(password_path, G_FILE_TEST_EXISTS)) {
++            if (!object_new_with_props(TYPE_QCRYPTO_SECRET,
++                                       object_get_objects_root(),
++                                       "vncsecret0",
++                                       &local_err,
++                                       "file", password_path,
++                                       NULL)) {
++                error_report_err(local_err);
++                return false;
++            }
++            *has_vnc_password = true;
++        }
++    }
++
++    return true;
++}
++
++static bool
++setup_vnc_opts(const char *vnc_addr, const char *tls_creds_dir,
++               const char *tls_authz, bool sasl, const char *sasl_authz,
++               bool has_vnc_password, const char *ws_addr,
++               const char *share, bool password, bool lossy,
++               bool non_adaptive)
++{
++    g_autoptr(GString) opts_str = g_string_new(vnc_addr);
++    QemuOptsList *olist = qemu_find_opts("vnc");
++    QemuOpts *opts;
++
++    if (tls_creds_dir) {
++        g_string_append(opts_str, ",tls-creds=tlscreds0");
++    }
++    if (tls_authz) {
++        g_string_append_printf(opts_str, ",tls-authz=%s", tls_authz);
++    }
++    if (sasl) {
++        g_string_append(opts_str, ",sasl=on");
++    }
++    if (sasl_authz) {
++        g_string_append_printf(opts_str, ",sasl-authz=%s", sasl_authz);
++    }
++    if (has_vnc_password) {
++        g_string_append(opts_str, ",password-secret=vncsecret0");
++    }
++    if (ws_addr) {
++        g_string_append_printf(opts_str, ",websocket=%s", ws_addr);
++    }
++    if (share) {
++        g_string_append_printf(opts_str, ",share=%s", share);
++    }
++    if (password && !has_vnc_password) {
++        g_string_append(opts_str, ",password=on");
++    }
++    if (lossy) {
++        g_string_append(opts_str, ",lossy=on");
++    }
++    if (non_adaptive) {
++        g_string_append(opts_str, ",non-adaptive=on");
++    }
++
++    opts = qemu_opts_parse_noisily(olist, opts_str->str, true);
++    if (!opts) {
++        return false;
++    }
++    qemu_opts_set_id(opts, g_strdup("default"));
++    return true;
++}
++
++int
++main(int argc, char *argv[])
++{
++    g_autoptr(GError) err = NULL;
++    g_autoptr(GDBusConnection) bus = NULL;
++    g_autofree char *dbus_address = NULL;
++    g_autofree char *bus_name = NULL;
++    int dbus_p2p_fd = -1;
++    g_autofree char *vnc_addr = NULL;
++    g_autofree char *ws_addr = NULL;
++    g_autofree char *share = NULL;
++    g_autofree char *tls_creds_dir = NULL;
++    g_autofree char *tls_authz = NULL;
++    g_autofree char *sasl_authz = NULL;
++    g_autofree char *trace_opt = NULL;
++    g_auto(GStrv) chardev_names = NULL;
++    g_auto(GStrv) object_strs = NULL;
++    QemuVncState state = { 0 };
++    bool has_vnc_password = false;
++    bool show_version = false;
++    bool no_vt = false;
++    bool wait_for_owner = false;
++    bool password = false;
++    bool sasl = false;
++    bool lossy = false;
++    bool non_adaptive = false;
++    g_autoptr(GOptionContext) context = NULL;
++    GOptionEntry entries[] = {
++        { "dbus-address", 'a', 0, G_OPTION_ARG_STRING, &dbus_address,
++          "D-Bus address to connect to (default: session bus)", "ADDRESS" },
++        { "dbus-p2p-fd", 'p', 0, G_OPTION_ARG_INT, &dbus_p2p_fd,
++          "D-Bus peer-to-peer socket file descriptor", "FD" },
++        { "bus-name", 'n', 0, G_OPTION_ARG_STRING, &bus_name,
++          "D-Bus bus name (default: org.qemu)", "NAME" },
++        { "wait", 'W', 0, G_OPTION_ARG_NONE, &wait_for_owner,
++          "Wait for the D-Bus name to appear", NULL },
++        { "vnc-addr", 'l', 0, G_OPTION_ARG_STRING, &vnc_addr,
++          "VNC display address (default localhost:0, \"none\" to disable)",
++          "ADDR" },
++        { "websocket", 'w', 0, G_OPTION_ARG_STRING, &ws_addr,
++          "WebSocket address (e.g. port number or addr:port)", "ADDR" },
++        { "share", 's', 0, G_OPTION_ARG_STRING, &share,
++          "Display sharing policy "
++          "(allow-exclusive|force-shared|ignore)", "POLICY" },
++        { "tls-creds", 't', 0, G_OPTION_ARG_STRING, &tls_creds_dir,
++          "TLS x509 credentials directory", "DIR" },
++        { "tls-authz", 0, 0, G_OPTION_ARG_STRING, &tls_authz,
++          "ID of a QAuthZ object for TLS client certificate "
++          "authorization", "ID" },
++        { "object", 'O', 0, G_OPTION_ARG_STRING_ARRAY, &object_strs,
++          "QEMU user-creatable object "
++          "(e.g. authz-list-file,id=auth0,filename=acl.json)", "OBJDEF" },
++        { "vt-chardev", 'C', 0, G_OPTION_ARG_STRING_ARRAY, &chardev_names,
++          "Chardev type names to expose as text console (repeatable, "
++          "default: serial & hmp)", "NAME" },
++        { "no-vt", 'N', 0, G_OPTION_ARG_NONE, &no_vt,
++          "Do not expose any chardevs as text consoles", NULL },
++        { "keyboard-layout", 'k', 0, G_OPTION_ARG_STRING, &keyboard_layout,
++          "Keyboard layout", "LAYOUT" },
++        { "trace", 'T', 0, G_OPTION_ARG_STRING, &trace_opt,
++          "Trace options (same as QEMU -trace)", "PATTERN" },
++        { "version", 'V', 0, G_OPTION_ARG_NONE, &show_version,
++          "Print version information and exit", NULL },
++        { "password", 0, 0, G_OPTION_ARG_NONE, &password,
++          "Require password authentication (use D-Bus SetPassword to set)",
++          NULL },
++        { "lossy", 0, 0, G_OPTION_ARG_NONE, &lossy,
++          "Enable lossy compression", NULL },
++        { "non-adaptive", 0, 0, G_OPTION_ARG_NONE, &non_adaptive,
++          "Disable adaptive encodings", NULL },
++        { "sasl", 0, 0, G_OPTION_ARG_NONE, &sasl,
++          "Enable SASL authentication", NULL },
++        { "sasl-authz", 0, 0, G_OPTION_ARG_STRING, &sasl_authz,
++          "ID of a QAuthZ object for SASL username "
++          "authorization", "ID" },
++        { NULL }
++    };
++
++    qemu_init_exec_dir(argv[0]);
++    qemu_add_data_dir(g_strdup(CONFIG_QEMU_DATADIR));
++    qemu_add_data_dir(get_relocated_path(CONFIG_QEMU_DATADIR));
++
++    module_call_init(MODULE_INIT_TRACE);
++    module_call_init(MODULE_INIT_QOM);
++    module_call_init(MODULE_INIT_OPTS);
++    qemu_add_opts(&qemu_trace_opts);
++
++    context = g_option_context_new(NULL);
++    g_option_context_set_summary(context,
++        "Standalone VNC server connecting to a QEMU instance via the\n"
++        "D-Bus display interface (org.qemu.Display1).");
++    g_option_context_add_main_entries(context, entries, NULL);
++    if (!g_option_context_parse(context, &argc, &argv, &err)) {
++        error_report("Option parsing failed: %s", err->message);
++        return 1;
++    }
++
++    if (show_version) {
++        printf("qemu-vnc " QEMU_FULL_VERSION "\n");
++        return 0;
++    }
++
++    if (trace_opt) {
++        trace_opt_parse(trace_opt);
++        qemu_set_log(LOG_TRACE, &error_fatal);
++    }
++    trace_init_file();
++
++    qemu_init_main_loop(&error_fatal);
++
++    if (!vnc_addr) {
++        vnc_addr = g_strdup("localhost:0");
++    }
++
++    if (object_strs) {
++        for (int i = 0; object_strs[i]; i++) {
++            user_creatable_process_cmdline(object_strs[i]);
++        }
++    }
++
++    if (tls_authz && !tls_creds_dir) {
++        error_report("--tls-authz requires --tls-creds");
++        return 1;
++    }
++
++    if (sasl_authz && !sasl) {
++        error_report("--sasl-authz requires --sasl");
++        return 1;
++    }
++
++    if (dbus_p2p_fd >= 0 && dbus_address) {
++        error_report("--dbus-p2p-fd and --dbus-address are"
++                     " mutually exclusive");
++        return 1;
++    }
++
++    if (wait_for_owner && dbus_p2p_fd >= 0) {
++        error_report("--wait is not supported with --dbus-p2p-fd");
++        return 1;
++    }
++
++    bus = setup_dbus_connection(dbus_p2p_fd, dbus_address, &bus_name);
++    if (!bus) {
++        return 1;
++    }
++
++    if (wait_for_owner && !bus_name) {
++        error_report("--wait requires a D-Bus bus name (--bus-name)");
++        return 1;
++    }
++
++    if (!setup_credentials(tls_creds_dir, tls_authz, &has_vnc_password)) {
++        return 1;
++    }
++
++    if (!setup_vnc_opts(vnc_addr, tls_creds_dir, tls_authz, sasl, sasl_authz,
++                        has_vnc_password, ws_addr, share, password, lossy,
++                        non_adaptive)) {
++        return 1;
++    }
++
++    state.bus = bus;
++    state.bus_name = bus_name;
++    state.chardev_names = (const char * const *)chardev_names;
++    state.no_vt = no_vt;
++    state.wait_for_owner = wait_for_owner;
++
++    g_signal_connect(bus, "closed", G_CALLBACK(on_bus_closed), &state);
++
++    if (bus_name) {
++        if (wait_for_owner) {
++            info_report("Waiting for D-Bus name %s to appear...", bus_name);
++        }
++        g_bus_watch_name_on_connection(bus, bus_name,
++                                       G_BUS_NAME_WATCHER_FLAGS_NONE,
++                                       on_owner_appeared,
++                                       on_owner_vanished,
++                                       &state, NULL);
++    } else {
++        state.owner_seen = true;
++        start_display_setup(&state);
++    }
++
++    while (!state.terminate) {
++        main_loop_wait(false);
++    }
++
++    vnc_dbus_emit_leaving(state.terminate_reason ?: "Shutting down");
++    vnc_dbus_cleanup();
++    vnc_cleanup();
++    g_free(state.terminate_reason);
++
++    return 0;
++}
+diff --git a/tools/qemu-vnc/stubs.c b/tools/qemu-vnc/stubs.c
+new file mode 100644
+index 00000000000..a865ce85f04
+--- /dev/null
++++ b/tools/qemu-vnc/stubs.c
+@@ -0,0 +1,62 @@
++/*
++ * Stubs for qemu-vnc standalone binary.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++
++#include "system/runstate.h"
++#include "hw/core/qdev.h"
++#include "monitor/monitor.h"
++#include "migration/vmstate.h"
++
++bool runstate_is_running(void)
++{
++    return true;
++}
++
++bool phase_check(MachineInitPhase phase)
++{
++    return true;
++}
++
++DeviceState *qdev_find_recursive(BusState *bus, const char *id)
++{
++    return NULL;
++}
++
++/*
++ * Provide the monitor stubs locally so that the linker does not
++ * pull stubs/monitor-core.c.o from libqemuutil.a (which would
++ * bring a conflicting qapi_event_emit definition).
++ */
++Monitor *monitor_cur(void)
++{
++    return NULL;
++}
++
++bool monitor_cur_is_qmp(void)
++{
++    return false;
++}
++
++Monitor *monitor_set_cur(Coroutine *co, Monitor *mon)
++{
++    return NULL;
++}
++
++int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap)
++{
++    return -1;
++}
++
++/*
++ * Link-time stubs for VMState symbols referenced by VNC code.
++ * The standalone binary never performs migration, so these are
++ * never actually used at runtime.
++ */
++const VMStateInfo vmstate_info_bool = {};
++const VMStateInfo vmstate_info_int32 = {};
++const VMStateInfo vmstate_info_uint32 = {};
++const VMStateInfo vmstate_info_buffer = {};
+diff --git a/tools/qemu-vnc/utils.c b/tools/qemu-vnc/utils.c
+new file mode 100644
+index 00000000000..d261aa9eaf0
+--- /dev/null
++++ b/tools/qemu-vnc/utils.c
+@@ -0,0 +1,59 @@
++/*
++ * Standalone VNC server connecting to QEMU via D-Bus display interface.
++ *
++ * Copyright (C) 2026 Red Hat, Inc.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++
++#include "qemu/error-report.h"
++#include "qemu-vnc.h"
++
++static GDBusConnection *
++dbus_p2p_from_fd(int fd)
++{
++    g_autoptr(GError) err = NULL;
++    g_autoptr(GSocket) socket = NULL;
++    g_autoptr(GSocketConnection) socketc = NULL;
++    GDBusConnection *conn;
++
++    socket = g_socket_new_from_fd(fd, &err);
++    if (!socket) {
++        error_report("Failed to create socket: %s", err->message);
++        return NULL;
++    }
++
++    socketc = g_socket_connection_factory_create_connection(socket);
++    if (!socketc) {
++        error_report("Failed to create socket connection");
++        return NULL;
++    }
++
++    conn = g_dbus_connection_new_sync(
++        G_IO_STREAM(socketc), NULL,
++        G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_CLIENT |
++        G_DBUS_CONNECTION_FLAGS_DELAY_MESSAGE_PROCESSING,
++        NULL, NULL, &err);
++    if (!conn) {
++        error_report("Failed to create D-Bus connection: %s", err->message);
++        return NULL;
++    }
++
++    return conn;
++}
++
++static gpointer
++p2p_server_setup_thread(gpointer data)
++{
++    return dbus_p2p_from_fd(GPOINTER_TO_INT(data));
++}
++
++GThread *
++p2p_dbus_thread_new(int fd)
++{
++    return g_thread_new("p2p-server-setup",
++                         p2p_server_setup_thread,
++                         GINT_TO_POINTER(fd));
++}
+diff --git a/meson_options.txt b/meson_options.txt
+index 286461129bd..ae17a3d8830 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -119,6 +119,8 @@ option('vfio_user_server', type: 'feature', value: 'disabled',
+        description: 'vfio-user server support')
+ option('dbus_display', type: 'feature', value: 'auto',
+        description: '-display dbus support')
++option('qemu_vnc', type: 'feature', value: 'auto',
++       description: 'standalone VNC server over D-Bus')
+ option('tpm', type : 'feature', value : 'auto',
+        description: 'TPM support')
+ option('valgrind', type : 'feature', value: 'auto',
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index 80de8c4af42..23c960b2482 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -173,6 +173,7 @@ meson_options_help() {
+   printf "%s\n" '  qatzip          QATzip compression support'
+   printf "%s\n" '  qcow1           qcow1 image format support'
+   printf "%s\n" '  qed             qed image format support'
++  printf "%s\n" '  qemu-vnc        standalone VNC server over D-Bus'
+   printf "%s\n" '  qga-vss         build QGA VSS support (broken with MinGW)'
+   printf "%s\n" '  qpl             Query Processing Library support'
+   printf "%s\n" '  rbd             Ceph block device driver'
+@@ -455,6 +456,8 @@ _meson_option_parse() {
+     --qemu-ga-manufacturer=*) quote_sh "-Dqemu_ga_manufacturer=$2" ;;
+     --qemu-ga-version=*) quote_sh "-Dqemu_ga_version=$2" ;;
+     --with-suffix=*) quote_sh "-Dqemu_suffix=$2" ;;
++    --enable-qemu-vnc) printf "%s" -Dqemu_vnc=enabled ;;
++    --disable-qemu-vnc) printf "%s" -Dqemu_vnc=disabled ;;
+     --enable-qga-vss) printf "%s" -Dqga_vss=enabled ;;
+     --disable-qga-vss) printf "%s" -Dqga_vss=disabled ;;
+     --enable-qom-cast-debug) printf "%s" -Dqom_cast_debug=true ;;
+diff --git a/tests/dbus-daemon.sh b/tests/dbus-daemon.sh
+index c4a50c73774..85f9597db43 100755
+--- a/tests/dbus-daemon.sh
++++ b/tests/dbus-daemon.sh
+@@ -62,9 +62,17 @@ write_config()
+      <deny send_destination="org.freedesktop.DBus"
+            send_interface="org.freedesktop.systemd1.Activator"/>
+ 
+-     <allow own="org.qemu.VMState1"/>
+-     <allow send_destination="org.qemu.VMState1"/>
+-     <allow receive_sender="org.qemu.VMState1"/>
++    <allow own="org.qemu"/>
++    <allow send_destination="org.qemu"/>
++    <allow receive_sender="org.qemu"/>
++
++    <allow own="org.qemu.VMState1"/>
++    <allow send_destination="org.qemu.VMState1"/>
++    <allow receive_sender="org.qemu.VMState1"/>
++
++    <allow own="org.qemu.vnc"/>
++    <allow send_destination="org.qemu.vnc"/>
++    <allow receive_sender="org.qemu.vnc"/>
+ 
+   </policy>
+ 
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 0067f767eea..728dde54b3f 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -414,6 +414,15 @@ if vnc.found()
+   if gvnc.found()
+     qtests += {'vnc-display-test': [gvnc, keymap_targets]}
+     qtests_generic += [ 'vnc-display-test' ]
++    if have_qemu_vnc and dbus_display and config_all_devices.has_key('CONFIG_VGA')
++      dbus_vnc_test_deps = [dbus_display1, qemu_vnc1, gio, gvnc, keymap_targets]
++      if gnutls.found() and tasn1.found()
++        dbus_vnc_test_deps += [files('../unit/crypto-tls-x509-helpers.c'),
++                               gnutls, tasn1]
++      endif
++      qtests += {'dbus-vnc-test': dbus_vnc_test_deps}
++      qtests_x86_64 += ['dbus-vnc-test']
++    endif
+   endif
+ endif
+ 
+@@ -445,6 +454,10 @@ foreach dir : target_dirs
+     qtest_env.set('QTEST_QEMU_STORAGE_DAEMON_BINARY', './storage-daemon/qemu-storage-daemon')
+     test_deps += [qsd]
+   endif
++  if have_qemu_vnc
++    qtest_env.set('QTEST_QEMU_VNC_BINARY', './tools/qemu-vnc/qemu-vnc')
++    test_deps += [qemu_vnc]
++  endif
+ 
+   qtest_env.set('PYTHON', python.full_path())
+ 
+diff --git a/tools/qemu-vnc/meson.build b/tools/qemu-vnc/meson.build
+new file mode 100644
+index 00000000000..08168da0630
+--- /dev/null
++++ b/tools/qemu-vnc/meson.build
+@@ -0,0 +1,26 @@
++vnca = vnc_ss.apply({}, strict: false)
++
++qemu_vnc1 = custom_target('qemu-vnc1 gdbus-codegen',
++                           output: ['qemu-vnc1.h', 'qemu-vnc1.c'],
++                           input: files('qemu-vnc1.xml'),
++                           command: [gdbus_codegen, '@INPUT@',
++                                     '--glib-min-required', '2.64',
++                                     '--output-directory', meson.current_build_dir(),
++                                     '--interface-prefix', 'org.qemu.',
++                                     '--c-namespace', 'Qemu',
++                                     '--generate-c-code', '@BASENAME@'])
++
++qemu_vnc = executable('qemu-vnc',
++  sources: ['qemu-vnc.c', 'display.c', 'input.c',
++            'audio.c', 'chardev.c', 'clipboard.c', 'console.c',
++            'dbus.c', 'stubs.c', 'utils.c',
++            vnca.sources(), dbus_display1, qemu_vnc1],
++  dependencies: [vnca.dependencies(), io, crypto, qemuutil, gio, ui])
++
++# The executable lives in a subdirectory of the build tree, but
++# get_relocated_path() looks for qemu-bundle relative to the binary.
++# Create a symlink so that firmware/keymap lookup works during development.
++run_command('ln', '-sfn',
++            '../../qemu-bundle',
++            meson.current_build_dir() / 'qemu-bundle',
++            check: false)
+diff --git a/tools/qemu-vnc/qemu-vnc1.xml b/tools/qemu-vnc/qemu-vnc1.xml
+new file mode 100644
+index 00000000000..13c5f17025a
+--- /dev/null
++++ b/tools/qemu-vnc/qemu-vnc1.xml
+@@ -0,0 +1,201 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++ SPDX-License-Identifier: GPL-2.0-or-later
++ -->
++<node>
++  <!--
++      org.qemu.Vnc1.Server:
++
++      This interface is implemented on ``/org/qemu/Vnc1/Server``.
++      It provides management and monitoring of the VNC server.
++  -->
++  <interface name="org.qemu.Vnc1.Server">
++    <!--
++        Name:
++
++        The VM name.
++    -->
++    <property name="Name" type="s" access="read"/>
++
++    <!--
++        Auth:
++
++        Primary authentication method (none, vnc, vencrypt, sasl, etc.).
++    -->
++    <property name="Auth" type="s" access="read"/>
++
++    <!--
++        VencryptSubAuth:
++
++        VEncrypt sub-authentication method, if applicable.
++        Empty string otherwise.
++    -->
++    <property name="VencryptSubAuth" type="s" access="read"/>
++
++    <!--
++        Clients:
++
++        Object paths of connected VNC clients.
++    -->
++    <property name="Clients" type="ao" access="read"/>
++
++    <!--
++        Listeners:
++
++        List of listening sockets. Each entry is a dictionary with keys:
++        ``Host`` (s), ``Service`` (s), ``Family`` (s),
++        ``WebSocket`` (b), ``Auth`` (s), ``VencryptSubAuth`` (s).
++    -->
++    <property name="Listeners" type="aa{sv}" access="read"/>
++
++    <!--
++        SetPassword:
++        @password: The new VNC password.
++
++        Change the VNC password.  Existing clients are unaffected.
++    -->
++    <method name="SetPassword">
++      <arg type="s" name="password" direction="in"/>
++    </method>
++
++    <!--
++        ExpirePassword:
++        @time: Expiry specification.
++
++        Set password expiry.  Values: ``"now"``, ``"never"``,
++        ``"+N"`` (seconds from now), ``"N"`` (absolute epoch seconds).
++    -->
++    <method name="ExpirePassword">
++      <arg type="s" name="time" direction="in"/>
++    </method>
++
++    <!--
++        ReloadCertificates:
++
++        Reload TLS certificates from disk.
++    -->
++    <method name="ReloadCertificates"/>
++
++    <!--
++        AddClient:
++        @socket: file descriptor of a connected socket.
++        @skipauth: whether to skip VNC authentication.
++
++        Add a VNC client from an already-connected socket.
++    -->
++    <method name="AddClient">
++      <arg type="h" name="socket" direction="in"/>
++      <arg type="b" name="skipauth" direction="in"/>
++    </method>
++
++    <!--
++        ClientConnected:
++        @client: Object path of the new client.
++
++        Emitted when a VNC client TCP connection is established
++        (before authentication).
++    -->
++    <signal name="ClientConnected">
++      <arg type="o" name="client"/>
++    </signal>
++
++    <!--
++        ClientInitialized:
++        @client: Object path of the client.
++
++        Emitted when a VNC client has completed authentication
++        and is active.
++    -->
++    <signal name="ClientInitialized">
++      <arg type="o" name="client"/>
++    </signal>
++
++    <!--
++        ClientDisconnected:
++        @client: Object path of the client.
++
++        Emitted when a VNC client disconnects.
++    -->
++    <signal name="ClientDisconnected">
++      <arg type="o" name="client"/>
++    </signal>
++
++    <!--
++        Leaving:
++        @reason: A human-readable reason for shutting down (e.g.
++                 "D-Bus peer org.qemu vanished").
++
++        Emitted when the VNC server is shutting down cleanly.
++        Clients should expect the connection to close shortly after.
++    -->
++    <signal name="Leaving">
++      <arg type="s" name="reason"/>
++    </signal>
++  </interface>
++
++  <!--
++      org.qemu.Vnc1.Client:
++
++      This interface is implemented on ``/org/qemu/Vnc1/Client_$id``.
++      It exposes information about a connected VNC client.
++  -->
++  <interface name="org.qemu.Vnc1.Client">
++    <!--
++        Host:
++
++        Client IP address.
++    -->
++    <property name="Host" type="s" access="read"/>
++
++    <!--
++        Service:
++
++        Client port or service name. This may depend on the host system’s
++        service database so symbolic names should not be relied on.
++    -->
++    <property name="Service" type="s" access="read"/>
++
++    <!--
++        Family:
++
++        Address family (ipv4, ipv6, unix).
++    -->
++    <property name="Family" type="s" access="read"/>
++
++    <!--
++        WebSocket:
++
++        Whether this is a WebSocket connection.
++    -->
++    <property name="WebSocket" type="b" access="read"/>
++
++    <!--
++        X509Dname:
++
++        X.509 distinguished name (empty if not applicable).
++    -->
++    <property name="X509Dname" type="s" access="read"/>
++
++    <!--
++        SaslUsername:
++
++        SASL username (empty if not applicable).
++    -->
++    <property name="SaslUsername" type="s" access="read"/>
++
++    <!--
++        ShutdownRequest:
++
++        Emitted when the VNC client requests a guest shutdown.
++    -->
++    <signal name="ShutdownRequest"/>
++
++    <!--
++        ResetRequest:
++
++        Emitted when the VNC client requests a guest reset.
++    -->
++    <signal name="ResetRequest"/>
++  </interface>
++
++</node>
+diff --git a/tools/qemu-vnc/trace-events b/tools/qemu-vnc/trace-events
+new file mode 100644
+index 00000000000..e3b550de10e
+--- /dev/null
++++ b/tools/qemu-vnc/trace-events
+@@ -0,0 +1,21 @@
++qemu_vnc_audio_out_fini(uint64_t id) "id=%" PRIu64
++qemu_vnc_audio_out_init(uint64_t id, uint32_t freq, uint8_t channels, uint8_t bits) "id=%" PRIu64 " freq=%u ch=%u bits=%u"
++qemu_vnc_audio_out_set_enabled(uint64_t id, bool enabled) "id=%" PRIu64 " enabled=%d"
++qemu_vnc_audio_out_write(uint64_t id, size_t size) "id=%" PRIu64 " size=%zu"
++qemu_vnc_chardev_connected(const char *name) "name=%s"
++qemu_vnc_clipboard_grab(int selection, uint32_t serial) "selection=%d serial=%u"
++qemu_vnc_clipboard_release(int selection) "selection=%d"
++qemu_vnc_clipboard_request(int selection) "selection=%d"
++qemu_vnc_client_not_found(const char *host, const char *service) "host=%s service=%s"
++qemu_vnc_console_io_error(const char *name) "name=%s"
++qemu_vnc_cursor_define(int width, int height, int hot_x, int hot_y) "w=%d h=%d hot=%d,%d"
++qemu_vnc_input_abs(uint32_t x, uint32_t y) "x=%u y=%u"
++qemu_vnc_input_btn(int button, bool press) "button=%d press=%d"
++qemu_vnc_input_rel(int dx, int dy) "dx=%d dy=%d"
++qemu_vnc_key_event(int qcode, bool down) "qcode=%d down=%d"
++qemu_vnc_owner_appeared(const char *name) "peer=%s"
++qemu_vnc_owner_vanished(const char *name) "peer=%s"
++qemu_vnc_scanout(uint32_t width, uint32_t height, uint32_t stride, uint32_t format) "w=%u h=%u stride=%u fmt=0x%x"
++qemu_vnc_scanout_map(uint32_t width, uint32_t height, uint32_t stride, uint32_t format, uint32_t offset) "w=%u h=%u stride=%u fmt=0x%x offset=%u"
++qemu_vnc_update(int x, int y, int w, int h, uint32_t stride, uint32_t format) "x=%d y=%d w=%d h=%d stride=%u fmt=0x%x"
++qemu_vnc_update_map(uint32_t x, uint32_t y, uint32_t w, uint32_t h) "x=%u y=%u w=%u h=%u"
 -- 
 2.54.0
 
