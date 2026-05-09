@@ -4,51 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C210ACD3445
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 16:02:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C9E0CD3447
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 16:02:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLk79-0004Ud-Ed; Sat, 09 May 2026 12:01:15 -0400
+	id 1wLk6O-00048e-Af; Sat, 09 May 2026 12:00:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wLk71-0004Nc-SE
- for qemu-devel@nongnu.org; Sat, 09 May 2026 12:01:13 -0400
-Received: from 10.mo533.mail-out.ovh.net ([46.105.72.194])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wLk6L-00047k-ER
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 12:00:25 -0400
+Received: from smtpout6.mo534.mail-out.ovh.net ([54.36.140.177])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wLk6y-0000L1-3p
- for qemu-devel@nongnu.org; Sat, 09 May 2026 12:01:07 -0400
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net [79.137.60.36])
- by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4gCW1T3fBQz5x42;
- Sat,  9 May 2026 16:01:00 +0000 (UTC)
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net. [127.0.0.1])
- by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Sat,  9 May 2026 16:01:00 +0000 (UTC)
-Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.168.27])
- by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4gCW1S5bLHz1xqZ; Sat,  9 May 2026 16:01:00 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.0])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wLk6I-0008OP-M3
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 12:00:25 -0400
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net [79.137.60.37])
+ by mo534.mail-out.ovh.net (Postfix) with ESMTPS id 4gCW0f5wfvz6Lx5;
+ Sat,  9 May 2026 16:00:18 +0000 (UTC)
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net. [127.0.0.1])
+ by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Sat,  9 May 2026 16:00:18 +0000 (UTC)
+Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.0.135])
+ by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4gCW0f3cPMz1xqj;
+ Sat,  9 May 2026 16:00:18 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.5])
  (Authenticated sender: clg@kaod.org)
- by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 8202B1B43553;
- Sat,  9 May 2026 16:00:59 +0000 (UTC)
+ by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 85DEC2034FA; 
+ Sat,  9 May 2026 16:00:16 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-107S00167d56ed6-7904-431a-9a01-6d0788867be9,
+ (GARM-113S007e0eed196-7bf3-4ce7-89e3-e7b40c3e3832,
  3D272E53171ADE400D76652CEA3707ABC032970B) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <c04147a8-795c-420d-abd9-2f56c62dbd09@kaod.org>
-Date: Sat, 9 May 2026 18:00:58 +0200
+Message-ID: <56330071-f967-42db-a285-6aa2ee873f10@kaod.org>
+Date: Sat, 9 May 2026 18:00:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/i3c/dw-i3c: Fix BCR/DCR extraction and PID assembly
- during ENTDAA
-To: Ashish Anand <ashish.a6@samsung.com>, qemu-devel@nongnu.org
-Cc: komlodi@google.com, jamin_lin@aspeedtech.com, nabihestefan@google.com,
- saurabh@samsung.com, vishwa.mg@samsung.com, y.kaushal@samsung.com,
- ashish.anand202@gmail.com
-References: <CGME20260505134412epcas5p1ccd2bd43c50ec651636847fa8c516072@epcas5p1.samsung.com>
- <20260505134002.509037-1-ashish.a6@samsung.com>
+Subject: Re: [PATCH v1 0/2] hw/usb/ehci: Improve migration helper and property
+ naming
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ "philmd@linaro.org" <philmd@linaro.org>,
+ "peterx@redhat.com" <peterx@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>, "farosas@suse.de" <farosas@suse.de>,
+ "flwu@google.com" <flwu@google.com>,
+ "nabihestefan@google.com" <nabihestefan@google.com>
+References: <20260506032643.2510575-1-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -93,30 +100,30 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260505134002.509037-1-ashish.a6@samsung.com>
+In-Reply-To: <20260506032643.2510575-1-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 6502071965185256552
+x-ovh-tracer-id: 6490250014553320493
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFqewUzqd5f9m+fdOrVh631dS3Gv4Bw10eSBuwUUR4hg2vxWE4JfBPZNlaYETdbu2d5R1IuzkaRerEIMGZYEO3ID7mYmyIy474RzmChlVLF4CgEDBJ/ykVI19yXbVrbBizGvYN9i4JKQYIeFolI1veZeU2+X4KOqjPHAu3P9gKHlVO02NXJD4xpah0VUZcHhXaWEj58xq2FhVdVJBhSgZnR13wRuLqHnnM81vj1onw5BY0ygnz3VB6QC90ZXDFNqnyff1Lf1pIsNuvs7+jpCc5HRkGjMmVtje1EQdFFlAAV3fTAXCcdsB8TD5Lq0UJe7fFD3oRAv2uaZDvj8upel4OVDFb1BZzzf+bX+HSyC58uXrfCCa4dXBCRe1NHAPTTXZdcTxdm/Fwyl5SKDFiIi4zuEc+XmeOxN28/oT0QT97gFxcJVcywC0MLOAkwzcFuFp/oEdmPcwdGW2D0Jy9dt9y/Lsezd+E0HArLbJ7Bj2S4cZu5yW4/oeLa3NLvVmt5fryP8JiOSbQMmYhxNBllQmNQXEYO73VKC450okb3dbPmn7UM64nBOURLQlenyirq3YQ4LMdDtmyiE9+BIt4NbJaF0ExFkg91Viu10zAD1dMriIcC2EonUoKtCvxzOjgjiijRn3vf9y5uQtlKbtNmsdJhOFJZ3Lii9o02Dy2v9y1TEA
-DKIM-Signature: a=rsa-sha256; bh=udzx5XDz+9IWzy5TwXK1lIJZ81nRNZFaXf9XaK67jNY=; 
+X-VR-SPAMCAUSE: dmFkZTEU+dg/QwQjktXvmR28+mBvYWbBe4TVtNDuoPEqLYt972DAkaa8Q6uT07EwiSRpGjxwahEcKNAXjWkdBLeiEvbAIB3E522MN4xoAnAQYk6heHLYXfArtrjGM61/zYe8toez4tlnefqT5zUY6+1mVymKmhQ/qOeCoB+ano8y2tbEOLyIlkJQEIqcyBgc+0KNN6P5e3Sixc3wzXsFWfGEL5/D5lYFT7ucuv9+3CQH6K6LSFE/tXZ3kw//C+M4pFrH/oWvjVrGbPMVJywEiyp95SmE8I7yUcfpKaM2Ip7bpLJ6TcVI8Xe+Rh20llAAw/CZyy+a8NwOp29fB9CvvWi8wfb9dN84fzjwOlCFAuSmoLE2B5/+leThz/VU/HV8jw8E5x4aOstFiAcuMifgfD+GXAO4ZgY7883JB3kEkp7c6w7RQufJj6Stz+bVYBQOqiNnFzmg3hIfTTIJNO7+pq+pRYHWs5Hp54DXBO6fcv8wd6ngbIbVsiuNra+H/QudFBoXaxPCCU/Heqpm6bFlaGgbd484r1btWjU8Z3U6hj1vm7j4n5c9lbMHvaaOKEs1I+tCvMhuMwe2G+4BPToH86nKMe5pOWzblOpm2erqDwHpST3WmmdiNoWNRVu0+Zk/G7Nz5wJH0qOh8naPwUs/qcn1UD2TNfDpQjXuNTaLLdNwOC79og
+DKIM-Signature: a=rsa-sha256; bh=W5jJa21ALl1eE7KsYlXN+rhU81cBuAWiCsOVqkLArnU=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1778342462; v=1;
- b=ofwUtS5vkL7K2hW3l1hfRO4axJrJ64GmYtdWPAe8NuxgTV3tzzvpKFE+KDsQiuge+TY/UbXS
- wQIThODvKfzrqPEd0nC42UQwCYHDqBfrH53Tk4bbA9WRvUaUGBQ4yFW6wt4fbLSGZklt7apumWU
- axQPf0vwnTnoEdc9qm9jBx4yDtO/h7O6YE3E6xgv/nAtOsqgB7sVyKuEPoZiI2FkEI0k3qTIo3k
- KMPRNyzWHm5PBAE9inoPjOfKzoRm3HWsa1ykBkfwf/ebqixNqVN1R/JBTSIT6CFoLcTj8TWoZzY
- Mb6JFNZXi6IA6jmPz5FqccRnOxn9UBXkXrVkpACmeSN+A==
-Received-SPF: pass client-ip=46.105.72.194; envelope-from=clg@kaod.org;
- helo=10.mo533.mail-out.ovh.net
+ t=1778342419; v=1;
+ b=WHAvEvwF42PU10NMLeOwj4Hc9wIQ2Jz1GoV8XfCNCsqYr5psc1aBw3f3YitQJRPLeY07wSUI
+ Dwa9VJapZfSHVPRRXicWx6VW7MSmnfncOpseRdRFGHrN9ETwURLc3IQHNmOLa1bGJ0bioubId2c
+ RxaaCp/3+UZ7VaryAi4knjBiKIa+U0aufBKzoVNuYRH+bXg1jN4yiN/0hs+pcPjwU7gfn2eDKdx
+ qYxd7JDlQqqkXx5AFhIb9td2wb//BgBlztfkrufRQs/Y4Ph2vLqFWYUZrT4ETgN1G5Z8vSW2eRK
+ RQXxtVWiQvrdQrbwb1/9Fit7RrupqaGDqerTrGq7+FZ3w==
+Received-SPF: pass client-ip=54.36.140.177; envelope-from=clg@kaod.org;
+ helo=smtpout6.mo534.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,110 +139,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jamin,
+JAmin,
 
-Does that look good ?
+On 5/6/26 05:26, Jamin Lin wrote:
+> This patch series is based on the following patch series:
+> 
+> https://patchwork.kernel.org/project/qemu-devel/list/?series=1089061
+> 
+> hw/usb/ehci: Add 64-bit descriptor addressing support
+> 
+> The above patch series has already been applied to the aspeed-next
+> branch of:
+> https://github.com/legoater/qemu
+> 
+> This series only contains naming and comment improvements based on
+> reviewer suggestions.
+> 
+> This patch series depends on the aspeed-next branch of:
+> https://github.com/legoater/qemu
+> 
+> v1:
+>   1. Rename migration compatibility fetch address fields
+>   2. Rename CTRLDSSEGMENT default property
+> 
+> Jamin Lin (2):
+>    hw/usb/hcd-ehci: Rename migration compatibility fetch address fields
+>    hw/usb/hcd-ehci: Rename CTRLDSSEGMENT default property
+> 
+>   hw/usb/hcd-ehci.h       | 23 +++++++++++++++++------
+>   hw/arm/aspeed_ast27x0.c |  2 +-
+>   hw/usb/hcd-ehci.c       | 14 +++++++-------
+>   3 files changed, 25 insertions(+), 14 deletions(-)
+> 
+
+I still haven't read comments on v6 ... Since we have time for
+QEMU 11.1, please wait a bit before resending.
 
 Thanks,
 
 C.
 
-On 5/5/26 15:40, Ashish Anand wrote:
-> The target_info union in dw_i3c_addr_assign_cmd() declares pid, bcr,
-> and dcr as separate union members, causing them to all alias b[0]
-> rather than their correct positions in the ENTDAA response buffer.
-> This results in dw_i3c_update_char_table() being called with BCR and
-> DCR both read from b[0] instead of b[6] and b[7] respectively,
-> corrupting the device characteristics table on every ENTDAA operation.
-> Fix by replacing the broken members with uint64_t d and extracting fields
-> per the I3C spec ENTDAA wire format.
-> 
-> Additionally, dw_i3c_update_char_table() incorrectly splits PID across
-> LOC1 and LOC2 at bit 32. Per the Linux kernel HCI driver
-> (drivers/i3c/master/mipi-i3c-hci/dct_v1.c), the DCT layout requires
-> LOC1 to hold pid[47:16] and LOC2 to hold pid[15:0]. Fix the split
-> accordingly.
-> 
-> Signed-off-by: Ashish Anand <ashish.a6@samsung.com>
-> ---
-> 
-> Changes from v1 :
-> 1. Replaced broken union members with uint64_t d, added wire format comment.
-> 2. Replaced loop with be64_to_cpu(target_info.d) >> 16.
-> 3. Fixed LOC1/LOC2 split at bit 16 in dw_i3c_update_char_table.
-> 4. Added comment to i3c.h clarifying how core.c transmits t->pid during ENTDAA.
-> 
-> Link to v1 - https://lore.kernel.org/qemu-devel/exdu52mug6fh3bwj7ofo3jlltyuwjfnddxobio4w3jhaq6uv7k@boxo3j5ocef2/T/#t
-> 
-> This bug was discovered during end-to-end ENTDAA testing where BCR and
-> DCR values observed in the char table register did not match the target's
-> actual BCR and DCR values.
-> 
->   hw/i3c/dw-i3c.c      | 16 +++++++---------
->   include/hw/i3c/i3c.h |  7 +++++++
->   2 files changed, 14 insertions(+), 9 deletions(-)
-> 
-> diff --git a/hw/i3c/dw-i3c.c b/hw/i3c/dw-i3c.c
-> index d87d42be89..17ff484c5d 100644
-> --- a/hw/i3c/dw-i3c.c
-> +++ b/hw/i3c/dw-i3c.c
-> @@ -1459,11 +1459,10 @@ static void dw_i3c_update_char_table(DWI3C *s, uint8_t offset, uint64_t pid,
->                                             P_DEV_CHAR_TABLE_START_ADDR) /
->                                             sizeof(uint32_t)) +
->                                             (offset * sizeof(uint32_t));
-> -    s->regs[dev_index] = pid & 0xffffffff;
-> -    pid >>= 32;
-> +    s->regs[dev_index] = (pid >> 16) & 0xffffffff;
->       s->regs[dev_index + 1] = FIELD_DP32(s->regs[dev_index + 1],
->                                           DEVICE_CHARACTERISTIC_TABLE_LOC2,
-> -                                        MSB_PID, pid);
-> +                                        MSB_PID, pid & 0xffff);
->       s->regs[dev_index + 2] = FIELD_DP32(s->regs[dev_index + 2],
->                                           DEVICE_CHARACTERISTIC_TABLE_LOC3, DCR,
->                                           dcr);
-> @@ -1507,10 +1506,9 @@ static void dw_i3c_addr_assign_cmd(DWI3C *s, DWI3CAddrAssignCmd cmd)
->       for (i = 0; i < cmd.dev_count; i++) {
->           uint8_t addr = dw_i3c_target_addr(s, cmd.dev_index + i);
->           union {
-> -            uint64_t pid:48;
-> -            uint8_t bcr;
-> -            uint8_t dcr;
-> +            uint64_t d;
->               uint32_t w[2];
-> +            /* Per I3C spec: b[0]=PID MSB, b[5]=PID LSB, b[6]=BCR, b[7]=DCR */
->               uint8_t b[8];
->           } target_info;
->   
-> @@ -1544,9 +1542,9 @@ static void dw_i3c_addr_assign_cmd(DWI3C *s, DWI3CAddrAssignCmd cmd)
->               err = DW_I3C_RESP_QUEUE_ERR_DAA_NACK;
->               break;
->           }
-> -        dw_i3c_update_char_table(s, cmd.dev_index + i,
-> -                                            target_info.pid, target_info.bcr,
-> -                                            target_info.dcr, addr);
-> +        uint64_t pid = be64_to_cpu(target_info.d) >> 16;
-> +        dw_i3c_update_char_table(s, cmd.dev_index + i, pid, target_info.b[6],
-> +                                 target_info.b[7], addr);
->   
->           /* Push the PID, BCR, and DCR to the RX queue. */
->           dw_i3c_push_rx(s, target_info.w[0]);
-> diff --git a/include/hw/i3c/i3c.h b/include/hw/i3c/i3c.h
-> index 6ba90793ad..dcf8d9b143 100644
-> --- a/include/hw/i3c/i3c.h
-> +++ b/include/hw/i3c/i3c.h
-> @@ -138,6 +138,13 @@ struct I3CTarget {
->       uint8_t static_address;
->       uint8_t dcr;
->       uint8_t bcr;
-> +    /*
-> +     * Provisioned ID. Since core.c sends this LSB-first during ENTDAA
-> +     * via (pid >> (offset * 8)) & 0xff, targets must store it
-> +     * pre-reversed so that pid[47:40] goes on the wire first, as
-> +     * required by the I3C spec.
-> +     *  e.g. for a device with pid 0xAABBCCDDEEFF, store 0xFFEEDDCCBBAA.
-> +     */
->       uint64_t pid;
->   
->       /* CCC State tracking. */
 
 
