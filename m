@@ -4,114 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE3AACD3445
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 14:46:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83547CD3447
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 14:47:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLiwf-0002vb-ON; Sat, 09 May 2026 10:46:21 -0400
+	id 1wLixX-0003Be-65; Sat, 09 May 2026 10:47:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wLiwa-0002ux-Ob; Sat, 09 May 2026 10:46:16 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wLixV-0003BV-D4
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 10:47:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wLiwZ-0002NH-9p; Sat, 09 May 2026 10:46:16 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 649Ddts4523084; Sat, 9 May 2026 14:46:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=JuA8Yc
- QTCahviaIFtQJ/TFFExaiICZSdqnblvdGxS+0=; b=djmEA7yN0COEOJb9zYL2UO
- hYA0ZJZUgpx2ufbrdkxywpc0sIhklaYJDe7XX/hwLIGFw1+29/o20zdPuFA7fYg+
- OCR9JEXCRDuyS3aXKJbvg/PNCNvL2W7ugvvrdtgmbzqNb6bNkgWP1J7irkOJrV5R
- gtsxhC9ZTkv9aY8gyQL4BEULD1/2eedv5/N25DA5+u6e9e/6aWi8NAgrBKkOYYlZ
- U1GJShueRQrkuMPMzFSF0Jy1ETuG5CDcrD4isMycHLf9FXigDSHNXqjlLU8luqP7
- EnCfsQoH2vyvmqqWNwVEBoyOEW37quVu8xf9iXD5/48KdLVHfIPn8nh0MlrjeiVA
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e1ve6sx1s-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 09 May 2026 14:46:04 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 649EdWeg024766;
- Sat, 9 May 2026 14:46:03 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dwx9yvmw0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 09 May 2026 14:46:03 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 649Ek0HI47120696
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 9 May 2026 14:46:00 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 01D0420043;
- Sat,  9 May 2026 14:46:00 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6F48320040;
- Sat,  9 May 2026 14:45:52 +0000 (GMT)
-Received: from [9.39.25.188] (unknown [9.39.25.188])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Sat,  9 May 2026 14:45:52 +0000 (GMT)
-Message-ID: <b055cb2f-6610-4714-9ecd-c79a57274b11@linux.ibm.com>
-Date: Sat, 9 May 2026 20:15:50 +0530
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wLixT-0002rm-9k
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 10:47:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778338029;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=w+kItUMALMrVfS3dpS21UMuCChUOQfFK9xIiVko4lL0=;
+ b=Hw4zO8wmaufFTRF4oSv+MppBPX8ckRjen2SXH/jnRwYeJOnx0xR7c6MrMGoI0NEc5wFxRM
+ cfnmvVeJJGaBlDGNZHO582aqTK1geb9VO1Cvb5B2Uog33h1ml1PwQ0QMccbosMD9t3FlTc
+ +zECL2gByVmx+L/Br/tyozr+GtyaThc=
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-186-NM3ayIAwNoKJnAS5uOVhlw-1; Sat, 09 May 2026 10:47:07 -0400
+X-MC-Unique: NM3ayIAwNoKJnAS5uOVhlw-1
+X-Mimecast-MFC-AGG-ID: NM3ayIAwNoKJnAS5uOVhlw_1778338026
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-c82726f7b0bso260596a12.3
+ for <qemu-devel@nongnu.org>; Sat, 09 May 2026 07:47:06 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778338025; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Q9bqPXHpm0NOY6QEuUOPo1M16cGmd/OAT8DId2Y1rQnyOhAdkhQw0vrb4wAFf8wgEN
+ sLxd+m+Nf0iUL63bxn177PljndoeG/1qh6tbR08YWJAjM5PbBwsqhJA4kZvM+FJwPCGA
+ YwUKVGGZKzWupn/SAtECCXVxyaZ6H2vgf3bd5qTCSyanlugxXhJ6X+Pry1INcCewAn/t
+ r5VtnLxRXeN9j8VysOBOBbSqsIv0vn62k4/2u9lJg7Dtl/hiG0JQ/NGPr5hyX/JKC/Fj
+ UHQvegbGuL+xWELHEJ+1Nrf81YeJRnRRgmVWlfshJmL69pH4+wkhLhCLJmrPNo0BbiMh
+ 4fQQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=w+kItUMALMrVfS3dpS21UMuCChUOQfFK9xIiVko4lL0=;
+ fh=02jnkWVY3rbSB8WszijT7jWeD6exb8TTJsZM0/CtVbY=;
+ b=Kx4UwqE1AC3i8DRENSZwWPM5APJvGa2pZig7EbzQKnhqWvosaUJ/2jMVyXgXrBUGMG
+ VLq0OewdtmrA54OkCovtdgakGFMCoKcJGc+59pqxYJub8vq+gpmWqjCyQ8xLjwEtRqrB
+ oVhgIMpEZGDfKTRr+RiKI4JGGTHv524Ls8dZhG8SzTHfDbnRdskIOfB325zSDXs18sDk
+ HWV2/b11kKmMP1yXf4GDllJ1TNsycNIW0GiBfOkZ4QrMvnd6yvZxyyGt8S5Vxzgy5geF
+ aUp+EM4hrxBSdxuuOQpoF9fSk9gJxWNVBpojNoNKcwPF1WY8AizFmo+NbOaLXHJVmJtj
+ N5Vw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1778338025; x=1778942825; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=w+kItUMALMrVfS3dpS21UMuCChUOQfFK9xIiVko4lL0=;
+ b=EaOzsAoVg53X1NQKxGwp3p97yaGXI0LceUhCplZUk2nl0OUlmh7HjhntvV4sb5GUpy
+ RXFc/DaDYGAClHG+YXD56WvfjFL6ilA5VImQ87i/4Dqm/4C0KUGFm818k0/h5qolcSJo
+ O4asAxfuTUweNtmbDILHcxu4fQa9RC/fYNmo7eHv5DUGXN0S5T662JYckOZThjx+3nlm
+ i1gjs8eD/cg4yOqyyS3qHxV5pj4WmNtUXfQPBZXan0LFblBX74aRNGuDYB3FOlJQ+vDz
+ qsZPRw5RvDtny/lyhNrGSt/IRILfOntUyAZMdBPPq7H5Q3IM284YRdhZV7IkhHl8vtri
+ 0P7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778338025; x=1778942825;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=w+kItUMALMrVfS3dpS21UMuCChUOQfFK9xIiVko4lL0=;
+ b=tL6lk4avKvUx4+fe4Fxro49LSjGOFgVtEf+gGEmqvnM+zH7f1v9E5aM6dEuW7nHfkc
+ Zyi0D48vgykD1/f7RCwJv08/3/YI3NpsxTK3jhC7Qyawu6iektcrg7MQyh2fVHmFQIAT
+ eYD8QUlUi4sfHbOVqZJIa06APes0+nvyz9TLq2FiMnpvdFNtHC536Dcnq8WGvtwJAbMS
+ gAWU5ymgwf+7xaTWI/kJgUa68vM0g1nK8u81/C4TGQmMIJRnQWlvFSm5JY3WDTqBRDdq
+ r9UeI3/MtMBotKjnM1OFn5PUGAlDNNup+FudR+RI3x1W0HHRBkRnIrzTJHrEPgblLrVv
+ Yc6w==
+X-Gm-Message-State: AOJu0Yx1826bI2NTTWHY6SCO/zlYtemotafLWsMhIb/KW2uUhtDc/wLe
+ 9vMhyg4GcIaLy8jl/d8bTQcWRUr57h2gy33qASNXA4ctGkkN08NOSA/S+VSLF+eIB7Idnvj9gDR
+ 7ICTehaIM8KX7ZDaROdYVLxZFwqcYxViRZllkSNCC1mRouSfQaZS76M/Nznfu5+BUEkFKAE77Ln
+ vdEf8zU6BgLlH0LK7FK4CDNLxEpac6keFPnJ2ASl8=
+X-Gm-Gg: Acq92OEMc147+oOwiHT0BCeoXxL0c5eyXEeV5vs1ItUyjQrv7r5mPEjKkQo/HlzeooV
+ ASqMLhbkGlnhcq6VylZNeSjB1BHN+fYZopXE72as3//y1fLmDz7QVWYxAPQ8I9zLU4/P1hrR3uX
+ Oz+AX1Lpx3Rr8QAxqnLaGslk5p3KP93gOaFUB9N53p2J6SvdOsuy2MJ+riFwbhMyD3+HmaaYjww
+ px62GrLX2JUm/TAPV/AMHlXrUiZ5OIyL6dFEZNQRpwWq0MpbaDx2y6/jTkpnPcfgfaZ8LMo5qil
+ HR491WM+DRpGyYJIi1iob6s=
+X-Received: by 2002:a05:6a20:958f:b0:3a2:dabf:feed with SMTP id
+ adf61e73a8af0-3aa5a72c4d7mr19394407637.3.1778338025328; 
+ Sat, 09 May 2026 07:47:05 -0700 (PDT)
+X-Received: by 2002:a05:6a20:958f:b0:3a2:dabf:feed with SMTP id
+ adf61e73a8af0-3aa5a72c4d7mr19394381637.3.1778338024856; Sat, 09 May 2026
+ 07:47:04 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/9] qtest/phb4: Add testbench for PHB4
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, clg@kaod.org,
- npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
- marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
- thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, jishnuvw@linux.ibm.com
-References: <20260210134110.1515322-1-saif.abrar@linux.vnet.ibm.com>
- <20260305060923.3753402-1-saif.abrar@linux.vnet.ibm.com>
- <20260305060923.3753402-2-saif.abrar@linux.vnet.ibm.com>
- <af9FJIWPOH5Bej7y@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-Content-Language: en-US
-In-Reply-To: <af9FJIWPOH5Bej7y@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA5MDE1OSBTYWx0ZWRfX5KfkiaQIhX+X
- ANDDsStH9BfbluqNv/kuZ0NvOW9TDc83l0peq4RrpZvH5hod3ACgJG5FqF0uM02GfzPt0s3Mf2w
- yzohDF8JcFzjPSbU3ASMk1AucnIOvuB2A70fqamXTWuZJkYsHXPUv+4gDS+KO9MwcEYXjnGKFhp
- hFi2DS9NcgTCfgFQbY40N7ZOKRplcUHvbJRNGjXEwpofEKKVW9ZA4CYa5w7/uNWoE/jngUw6fka
- kcsb+8izIbPANy/bZu6hOHrS+RvRGWhb60M+/ix3FG0cpl1MeD31ivDfdcB0DlD+rVspNJZYaN1
- gh9xWqGuezYpG7MLukoE3LzsBIwpOqhLCrGnjQSo1A4aiM5nnJajLoH6BZNbpPAxYOyr31aDz1S
- LvQWG3BMi8fibfPpNAC1ALbThmXueoClfiN6JSww1Vy+/a0B7e81h/wbnyiB1iFcnCeRO6qYpAv
- qGotXNPne7ceYJqTT/g==
-X-Proofpoint-GUID: _rTItnQgcvg9dJ1PnZh3cQVxmJR3e4qQ
-X-Proofpoint-ORIG-GUID: _56L4OMPlqBgknfinh4forrXRH3iJsej
-X-Authority-Analysis: v=2.4 cv=CeQ4Irrl c=1 sm=1 tr=0 ts=69ff48ac cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=zjctwEK5lmB8oGVZkGgA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-09_05,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015 adultscore=0 malwarescore=0 bulkscore=0
- priorityscore=1501 phishscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605090159
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260509094801.111103-1-i@uchout.moe>
+In-Reply-To: <20260509094801.111103-1-i@uchout.moe>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Sat, 9 May 2026 18:46:52 +0400
+X-Gm-Features: AVHnY4LbA4CoxRgogZOsXR0a5H8MDzohZe2_nRA8E1r3PmSpMzUDkZVSdLfErVQ
+Message-ID: <CAMxuvayTSuoe5xE2y==B=vTbCGWrr2YMOgds42+7QD8BRdeWDg@mail.gmail.com>
+Subject: Re: [PATCH] qemu-options: document -chardev dbus
+To: uchouT <i@uchout.moe>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,23 +135,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09/05/26 20:03, Aditya Gupta wrote:
-> On 26/03/05 12:09AM, Saif Abrar wrote:
->> <...snip...>
->>
->> +#define PHB3_PBCQ_SPCI_ASB_ADDR      0x0
->> +#define PHB3_PBCQ_SPCI_ASB_DATA      0x2
->> +
->> +/* Index of PNV_CHIP_POWER10 in pnv_chips[] within "pnv-xscom.h" */
->> +#define PNV_P10_CHIP_INDEX      3
-> nit: this is unused as of this patch.
+On Sat, May 9, 2026 at 1:48=E2=80=AFPM uchouT <i@uchout.moe> wrote:
 >
-> rest looks good to me. i had comment about using p11, but noticed none
-> of the qtest having it, maybe that can be done separately.
+> Document the dbus backend introduced in commit 3e301c8d7ef0 ("ui/dbus:
+> add chardev backend & interface")
 >
-> Thanks,
-> - Aditya G
+> Signed-off-by: uchouT <i@uchout.moe>
 
-Cc: +harsh +jishnu
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
+> ---
+>  qemu-options.hx | 16 ++++++++++++++--
+>  1 file changed, 14 insertions(+), 2 deletions(-)
+>
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index 5566da41a3..59ff62aa7b 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -4077,6 +4077,9 @@ DEF("chardev", HAS_ARG, QEMU_OPTION_chardev,
+>  #if defined(CONFIG_SPICE)
+>      "-chardev spicevmc,id=3Did,name=3Dname[,debug=3Ddebug][,logfile=3DPA=
+TH][,logappend=3Don|off]\n"
+>      "-chardev spiceport,id=3Did,name=3Dname[,debug=3Ddebug][,logfile=3DP=
+ATH][,logappend=3Don|off]\n"
+> +#endif
+> +#if defined(CONFIG_DBUS_DISPLAY)
+> +    "-chardev dbus,id=3Did,name=3Dname[,mux=3Don|off][,logfile=3DPATH][,=
+logappend=3Don|off]\n"
+>  #endif
+>      , QEMU_ARCH_ALL
+>  )
+> @@ -4088,8 +4091,8 @@ The general form of a character device option is:
+>      Backend is one of: ``null``, ``socket``, ``udp``, ``msmouse``, ``hub=
+``,
+>      ``vc``, ``ringbuf``, ``file``, ``pipe``, ``console``, ``serial``,
+>      ``pty``, ``stdio``, ``braille``, ``parallel``,
+> -    ``spicevmc``, ``spiceport``. The specific backend will determine the
+> -    applicable options.
+> +    ``spicevmc``, ``spiceport``, ``dbus``. The specific backend will
+> +    determine the applicable options.
+>
+>      Use ``-chardev help`` to print all available chardev backend types.
+>
+> @@ -4396,6 +4399,15 @@ The available backends are:
+>
+>      Connect to a spice port, allowing a Spice client to handle the
+>      traffic identified by a name (preferably a fqdn).
+> +
+> +``-chardev dbus,id=3Did,name=3Dname``
+> +    ``dbus`` is only available when D-Bus display support is built in.
+> +
+> +    ``name`` name of the chardev as exported on the D-Bus display
+> +    interface
+> +
+> +    Export the character device on the D-Bus display interface, so that
+> +    a D-Bus client can connect to it.
+>  ERST
+>
+>  DEFHEADING()
+> --
+> 2.54.0
+>
 
 
