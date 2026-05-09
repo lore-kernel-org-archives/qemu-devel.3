@@ -4,73 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2383CD343F
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 07:40:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7314CD3447
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 07:56:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLcGs-0001BM-Up; Sat, 09 May 2026 03:38:46 -0400
+	id 1wLcXY-0000uy-7K; Sat, 09 May 2026 03:56:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wLcGr-0001AM-CJ
- for qemu-devel@nongnu.org; Sat, 09 May 2026 03:38:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <fangyu.yu@linux.alibaba.com>)
+ id 1wLcXR-0000uQ-4B; Sat, 09 May 2026 03:55:54 -0400
+Received: from out30-113.freemail.mail.aliyun.com ([115.124.30.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wLcGp-0007Mh-Pe
- for qemu-devel@nongnu.org; Sat, 09 May 2026 03:38:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778312323;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=0Ut9hVNcaNcfqrxmvxrNuTtAlj/ior+DgGj+U0dvZAo=;
- b=VZgcaXjTHvHgBqZmjbsCoXx6Nrk/1sk1PGRenFxXNDDlOx39+Az6lhfHbAGn7GHHQDBKbU
- J728vXjL9C98XoSgxoSDRrGPighUH1cJR5mnSQd+/phJHej2VzuUbE8gTrymTv53sMczV6
- CPIUuOtrxdwX05tB8WshhdDVswY5le8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-0kQeV29vOS-WSCU15QtifQ-1; Sat,
- 09 May 2026 03:38:39 -0400
-X-MC-Unique: 0kQeV29vOS-WSCU15QtifQ-1
-X-Mimecast-MFC-AGG-ID: 0kQeV29vOS-WSCU15QtifQ_1778312318
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 484C7180035D; Sat,  9 May 2026 07:38:38 +0000 (UTC)
-Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9D2B519560A2; Sat,  9 May 2026 07:38:36 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: stefanha@gmail.com,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 23/32] ui/vnc: clean up VNC displays on exit
-Date: Sat,  9 May 2026 11:36:09 +0400
-Message-ID: <20260509073621.1011778-24-marcandre.lureau@redhat.com>
-In-Reply-To: <20260509073621.1011778-1-marcandre.lureau@redhat.com>
-References: <20260509073621.1011778-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <fangyu.yu@linux.alibaba.com>)
+ id 1wLcXF-0003sL-VY; Sat, 09 May 2026 03:55:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1778313330; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=Zyu6d19rbXi0NodA8aF35knLoRYeO1uKV6FzevQ7IWQ=;
+ b=rFiHCxkcnIdS2LXUjYQChhNf3y+n6fstqJlJPZJ1D1G8r61PtVIMYolH3p7RX+IJQsqQkQGBCksvuVriOTnrugWTp9xmYpHuVACv58xWfGuS7oYDGkN5YlbgaTRgatjGTNsEt8N0D1DH03nzvgVN/guIXJ5rF+uk730JX6s/JGs=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R201e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045133197;
+ MF=fangyu.yu@linux.alibaba.com; NM=1; PH=DS; RN=11; SR=0;
+ TI=SMTPD_---0X2Zv8dP_1778313019; 
+Received: from localhost.localdomain(mailfrom:fangyu.yu@linux.alibaba.com
+ fp:SMTPD_---0X2Zv8dP_1778313019 cluster:ay36) by smtp.aliyun-inc.com;
+ Sat, 09 May 2026 15:50:21 +0800
+From: fangyu.yu@linux.alibaba.com
+To: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu.zevorn@gmail.com, tjeznach@rivosinc.com
+Cc: guoren@kernel.org, qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
+ Fangyu Yu <fangyu.yu@linux.alibaba.com>
+Subject: [PATCH] hw/riscv/riscv-iommu: Fix IOCOUNTINH.CY toggle detection
+Date: Sat,  9 May 2026 15:49:41 +0800
+Message-Id: <20260509074941.99295-1-fangyu.yu@linux.alibaba.com>
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=115.124.30.113;
+ envelope-from=fangyu.yu@linux.alibaba.com;
+ helo=out30-113.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,109 +68,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Fangyu Yu <fangyu.yu@linux.alibaba.com>
 
-Previously, VNC displays were never torn down on QEMU exit, leaking
-resources and leaving connected clients with unclean disconnects.
+Fix IOCOUNTINH.CY toggle detection by comparing normalized CY bit
+rather than XORing whole register with boolean.
 
-Add vnc_cleanup() to free all VNC displays during qemu_cleanup().
-Make vnc_display_close() initiate disconnection of active clients,
-and have vnc_display_free() drain the main loop until all clients
-have completed their teardown, instead of asserting the client list
-is empty.
-
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Fixes: 2cf2a6c027ba ("hw/riscv/riscv-iommu: add IOCOUNTINH mmio writes")
+Signed-off-by: Fangyu Yu <fangyu.yu@linux.alibaba.com>
 ---
- include/ui/console.h |  1 +
- system/runstate.c    |  5 +++++
- ui/vnc.c             | 20 ++++++++++++++++++--
- 3 files changed, 24 insertions(+), 2 deletions(-)
+ hw/riscv/riscv-iommu-hpm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index 550a5e08e46..89fb4c1942a 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -445,6 +445,7 @@ void vnc_parse(const char *str);
- int vnc_init_func(void *opaque, QemuOpts *opts, Error **errp);
- bool vnc_display_reload_certs(const char *id,  Error **errp);
- bool vnc_display_update(DisplayUpdateOptionsVNC *arg, Error **errp);
-+void vnc_cleanup(void);
+diff --git a/hw/riscv/riscv-iommu-hpm.c b/hw/riscv/riscv-iommu-hpm.c
+index e8d284ac8b..5bf80a8db9 100644
+--- a/hw/riscv/riscv-iommu-hpm.c
++++ b/hw/riscv/riscv-iommu-hpm.c
+@@ -245,7 +245,8 @@ void riscv_iommu_process_iocntinh_cy(RISCVIOMMUState *s, bool prev_cy_inh)
+         s, RISCV_IOMMU_REG_IOCOUNTINH);
  
- /* input.c */
- int index_from_key(const char *key, size_t key_length);
-diff --git a/system/runstate.c b/system/runstate.c
-index 770253b467b..0e1cb3b4e67 100644
---- a/system/runstate.c
-+++ b/system/runstate.c
-@@ -61,6 +61,8 @@
- #include "system/confidential-guest-support.h"
- #include "system/system.h"
- #include "system/tpm.h"
-+#include "ui/console.h"
-+
- #include "trace.h"
- 
- static NotifierList exit_notifiers =
-@@ -1044,5 +1046,8 @@ void qemu_cleanup(int status)
-     monitor_cleanup();
-     qemu_chr_cleanup();
-     user_creatable_cleanup();
-+#ifdef CONFIG_VNC
-+    vnc_cleanup();
-+#endif
-     /* TODO: unref root container, check all devices are ok */
- }
-diff --git a/ui/vnc.c b/ui/vnc.c
-index 1c649e7bccf..d65153a5001 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -3473,8 +3473,13 @@ VncDisplay *vnc_display_new(const char *id, Error **errp)
- 
- static void vnc_display_close(VncDisplay *vd)
- {
-+    VncState *vs;
-+
-     assert(vd);
- 
-+    QTAILQ_FOREACH(vs, &vd->clients, next) {
-+        vnc_disconnect_start(vs);
-+    }
-     if (vd->listener) {
-         qio_net_listener_disconnect(vd->listener);
-         object_unref(OBJECT(vd->listener));
-@@ -3515,10 +3520,12 @@ void vnc_display_free(VncDisplay *vd)
+     /* We only need to process CY bit toggle. */
+-    if (!(inhibit ^ prev_cy_inh)) {
++    bool cy_inh = !!(inhibit & RISCV_IOMMU_IOCOUNTINH_CY);
++    if (cy_inh == prev_cy_inh) {
          return;
      }
  
--    assert(QTAILQ_EMPTY(&vd->clients));
-+    vnc_display_close(vd);
-+    while (!QTAILQ_EMPTY(&vd->clients)) {
-+        main_loop_wait(false);
-+    }
- 
-     vnc_stop_worker_thread(vd);
--    vnc_display_close(vd);
-     unregister_displaychangelistener(&vd->dcl);
-     qkbd_state_free(vd->kbd);
-     qemu_del_vm_change_state_handler(vd->vmstate_handler_entry);
-@@ -4348,6 +4355,15 @@ int vnc_init_func(void *opaque, QemuOpts *opts, Error **errp)
-     return vnc_display_new(id, errp) != NULL ? 0 : -1;
- }
- 
-+void vnc_cleanup(void)
-+{
-+    VncDisplay *vd, *vd_next;
-+
-+    QTAILQ_FOREACH_SAFE(vd, &vnc_displays, next, vd_next) {
-+        vnc_display_free(vd);
-+    }
-+}
-+
- static void vnc_register_config(void)
- {
-     qemu_add_opts(&qemu_vnc_opts);
 -- 
-2.54.0
+2.50.1
 
 
