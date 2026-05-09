@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5680ECD37AC
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 00:56:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A31B3CD3445
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 00:56:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLVyb-0000bm-1N; Fri, 08 May 2026 20:55:29 -0400
+	id 1wLVyd-0000dU-7G; Fri, 08 May 2026 20:55:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wLVyN-0000TV-Aw
+ id 1wLVyO-0000Th-VN
  for qemu-devel@nongnu.org; Fri, 08 May 2026 20:55:20 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wLVyK-0005xd-Gn
- for qemu-devel@nongnu.org; Fri, 08 May 2026 20:55:15 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ id 1wLVyL-0005xw-Qv
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 20:55:16 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 648GWNEj2335604
- for <qemu-devel@nongnu.org>; Sat, 9 May 2026 00:55:10 GMT
+ 6490JhC81767965
+ for <qemu-devel@nongnu.org>; Sat, 9 May 2026 00:55:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=G57Nouu8Cwy
- vuWiaefu+uNrgJj5uC88qon/6Wi3OVsw=; b=GmflL7XpDW1EWgDfZe+aWMaLw0k
- uf1EBmwFk7s4o8fm773vHZhuiOOGzHSLeOB93w5u2K/Mzorvmdl88ddV3JYNXUtw
- m1l29nW3cr8s58jzXwCoMmcrh34obUwJ1A771M7CBs41u8N0bQt+P7/ayBQzfoK2
- V66sMDoeRAAwNlukhuDVRNdG1TEP/SU/unjhBTkZW3yiV+Dqafz2mW5v97fPf2hz
- MxKnuwoYKe0ObVzN+pm16NPoTTNHQTZ1hBzymD8cPxdJFaTOe+11tIc4mJjzk+Ac
- 7OffZyvFFYe/Ex+3MBzWdDAgP2gyjS7h4pg2v9vgS7TkLoZJg26dnN3PfMA==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
- [74.125.82.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e1keh9bc5-1
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ ccJY+iG0pd89Vp/075sBmYMQIkXmTwvv+melW/PueCk=; b=YFPNUj7ZGzSKhn0O
+ 7mX2eiROdvzOakNGpjCnijDvJKwrZPKIvs3+bE/6uBcdJG4q1PhYWX2GFYDz41Yu
+ 2SeaQAkQUHu47KXlmHmvgJoR/I9gUcEEvRcSKI7Y1Myz+Gl+qZYf0oVdTEQQEU1W
+ MWZ4knGRbYfmaxERAvGTc8PNceNX04iK55UKJ+h6r7KCmAYrsI961Po/lBx2h5Mr
+ JenJRL5uI6lNNo0FIBPVxfnW5kfArmGsol9cFUtX8cYiK/c41WkANiLYs7HMrD0d
+ a7p8D/9buvcO0DDbc6gTbsA9E/dqlLqBtwp4owdq6mawRQz+fDa2GKxVqSEW4Mwq
+ GGKuVg==
+Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e1t9q01sw-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sat, 09 May 2026 00:55:10 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id
- 5a478bee46e88-2f525565b33so3407949eec.0
- for <qemu-devel@nongnu.org>; Fri, 08 May 2026 17:55:10 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Sat, 09 May 2026 00:55:12 +0000 (GMT)
+Received: by mail-dl1-f71.google.com with SMTP id
+ a92af1059eb24-12dece274b1so2702810c88.1
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 17:55:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778288109; x=1778892909; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1778288111; x=1778892911; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=G57Nouu8CwyvuWiaefu+uNrgJj5uC88qon/6Wi3OVsw=;
- b=fl/GrP8KYLJCIcBdoiwbQxRVuy6xO/vJOJh8NNZMCLzFQZesee0FvjweTg2xqBTap3
- D1ainsuSsHtLg+PC9wtnrEIzI08ro0NNUFkCl9YTlbE9+S2gSd5qYYHmnVYjD9H758+B
- 7rYmdItgSKXb/LYB4SO5ZobWcQBXVptUunPR1KW3X9CPoYXT+CPhWq2tLh4RmOcjyAKJ
- B3gFpqwORTPLA1hUPFOxwWtNAfL9v7SERbumCTbFSjQ9bbczkG3Q3bK4zGwcWYpEnfbY
- RYGWWJaaVebvWd3cW1aR86tu279KfpqRZWNoRrvITlqms3ER0jcAjbmiaBiKvl+OD7A0
- OOWw==
+ bh=ccJY+iG0pd89Vp/075sBmYMQIkXmTwvv+melW/PueCk=;
+ b=A0n6OmERbQsg+03sIV6/k8Y0RMJNMkULsxVIR6gnOsTTwP+F8vw1TfPjG9v12VO/G4
+ tRVvfjV7cVm4r8L4Ump6ndByGp+Yfp4U0bGKe3Nc59dae6Q7Ug1EaZAhyexQzoQmJd8b
+ Vroy0ESsdGyqqsG5b6kETsZwsPqltRNp48n75uJTCAr4NT5tMuEYJn+ZMof/ARjH5kVz
+ 1im1q0FPsEQjs9L3wQ0UIm/I+tsw7piAcNB4u8DadKDmVsDM235S6HOzjv0XNSIouvX9
+ T0xwYcOjIdC7GfJXkWHzuLGBMgewHjY7+8TbrrZ+kpB1/0hiQeTBGCKcrwZ/4kBuf2Ni
+ Ocpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778288109; x=1778892909;
+ d=1e100.net; s=20251104; t=1778288111; x=1778892911;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=G57Nouu8CwyvuWiaefu+uNrgJj5uC88qon/6Wi3OVsw=;
- b=UnEI+bnqJAcL3njAqLSImJHDtjvYTr/HpEZ0V+0uJ4CqLpqngb5yUrwAqPQIDgZOAt
- y3SNY/W+nJZmo3WD10jAZgBwEYVkyzbBLnfvdeo6MgdsDXab5yegmimbQ1d6yDwzDJO3
- Nn/0JY93J4iPCYPejAmdu+2kI4BLM6VaDdkIROlVDIORyU7+wK0CNYBBhmwdqglW4QAR
- IpzjNkC+I2uIIFBGpIfkUERJhTXLsS+sW0x1srDYStoWHBkhS3lntS2kp5z72QV0yre0
- zJe9CrxGiW1U35+bouwLWhPn1+QeXFT3WyUswQwM/W+RmMha7114C5A0G9V8Ng/JjCL1
- aokw==
-X-Gm-Message-State: AOJu0YwEWuGrKM6rtdYMVG/v9sNZwQb7xCkk7WYG8hqLWMk/h9vKDJgp
- WKJ/LMpzQiqa/3wsjXBwmzBvGH32SJBNrjJcT9bf3Ba3HmxWc07TVLjAtQGK0MmrTyxqVFITlbN
- G+H03b/MLakgtjpgI3W7uiNe+CSZUAQ9twLq7HvlCr/MCoRZguime7xn4fadzI8ULqCDB
-X-Gm-Gg: Acq92OF7IcQIRaerw3tC7vGUYQxsVhtC2j3iGkKmPWKlxiMNujVk76QdV+5cB/Ns7Z3
- nRxaUFcTAKQNip+4mbC5ygo8yCcLG3/EE0sHp7nh4Bv0UOKcWcqJUHKQ9cLuWNEO+YxvIqF160h
- 3/uh5bS+WNQmpwU8vwfDaLJI5biTTs3ZuABFNUGBBut3YsmstPMAtRk8xq3XymHd2EOXESVORH4
- oIbmNsXPRR/REoAfEpspRp7I+nAjAA7anrlcOIeFIXUGD+cy3a9GD5Zn4tt1wzI6VpBM/5QheGB
- 6bHEtiE9poD4sJGV8fxeTQqnMPy50EcxJFBWGoIf2fsRB/LavAawEuI5Nf40nA5ZTQiFR3xjqa5
- 9jSWeA2klLKwif8+U3MJhKQeECysyhVp5NbbFJEU+EVi4kBhf3P/E1WhtHUlnzXHeWJ/+cVMo1E
- 6XTGoyaA==
-X-Received: by 2002:a05:7301:1018:b0:2e2:27bb:a48c with SMTP id
- 5a478bee46e88-2f54df9f289mr7325694eec.14.1778288109056; 
- Fri, 08 May 2026 17:55:09 -0700 (PDT)
-X-Received: by 2002:a05:7301:1018:b0:2e2:27bb:a48c with SMTP id
- 5a478bee46e88-2f54df9f289mr7325667eec.14.1778288108457; 
- Fri, 08 May 2026 17:55:08 -0700 (PDT)
+ bh=ccJY+iG0pd89Vp/075sBmYMQIkXmTwvv+melW/PueCk=;
+ b=jh79VhPx1oWviOYDtP0MCYwGIH5ZD+WkF1x6UyOSFg4EMARXIOhBpDe+deZWWSucyC
+ +KVDuu11SVun9f7koUf7b7q/lKzqPi8pAT+K+qOqW078ZOV93D5knnKw3RKdHlxNHaWq
+ ZGAtsKGJRMeBGZ5ADIVXoIIjONhuieaBvJFc12YDOcvq4dhT0ScY6CTRq+Gc8ruZ7aKh
+ b26V3p/evs2k1xmwZd+wsdAVXecxQxrtSdm4XK8iYfANT/Xt+yjV/bfvhcvt/XgVhw5U
+ Xnh0uhoGmtmMaJ0Oy3S3OfmSOP1s63H8a1XK81+7P9xyKesDaY9kVyqGlcqm6OAOktwS
+ aNkw==
+X-Gm-Message-State: AOJu0YxF2cM4KuLiB+eXOsu/9IulI/FkBGQZXPxtX1bSLM8FFRe0UEuP
+ yAUBLw250UTKGrtihbWuSpN35Qh8jJpXVTzV+trh9h5zyHkNLN8E3vHzpOEqBDo80NMLEXvJ4ia
+ ddIQ8APSC0dgIm3XN5OHuA+xD4HSbcaMmERGfntKlr65hPLnG09ED3dg+/kfHqvwTyc6q
+X-Gm-Gg: AeBDiesgKJKzUd9a6qDAKluIDmlnZuUn1LH1XjpJo6cEJLIuMJOvEucHV3XzvTjiPdf
+ WXxVxHABRUHPek9czIxgCVHny4SQ8zOMusdr4z9xX0Brfph8PBQg/jUoINlBJd1iXuTqgdcvRqg
+ /+J4XJ+ikUpVpjU8tU0gJqZFYpqWnzkGgVKO9hNEmPIlrEQkLHWQe+Tgwwpgmxi3gvlcQdhOd0i
+ NtHiFApfzCb63/jlVybpReYQLBksH/Bbj7Bf5VF/wav9URnxPv7148t9Hj5TOubROpimzxXBR27
+ /4fKqvMc0z76Nf5wdSTo2YMaPd8zulcMsuY7/htNJyZh9JS+Vi4foWtWvkyDjfSWXbw9HrNqrRm
+ 5DPvUvQeKZOVNY9ysW0PUfmGT78mEhP3Rm7/S+dG1u11rk+fnmLKBahBCNDoKy1qPpdiV5MKIym
+ Ul+TtYCg==
+X-Received: by 2002:a05:7022:625:b0:128:d715:b717 with SMTP id
+ a92af1059eb24-131852d534fmr7296470c88.13.1778288111107; 
+ Fri, 08 May 2026 17:55:11 -0700 (PDT)
+X-Received: by 2002:a05:7022:625:b0:128:d715:b717 with SMTP id
+ a92af1059eb24-131852d534fmr7296453c88.13.1778288110512; 
+ Fri, 08 May 2026 17:55:10 -0700 (PDT)
 Received: from hu-pbouvier-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2f888c3b301sm5352610eec.23.2026.05.08.17.55.07
+ 5a478bee46e88-2f888c3b301sm5352610eec.23.2026.05.08.17.55.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 May 2026 17:55:07 -0700 (PDT)
+ Fri, 08 May 2026 17:55:09 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -96,43 +96,43 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v5 1/6] qom/object: register OBJECT and INTERFACE QOM types
- before main
-Date: Fri,  8 May 2026 17:54:48 -0700
-Message-ID: <20260509005453.3984184-2-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v5 3/6] target-info: extract target_info() definition in
+ target-info-init.h
+Date: Fri,  8 May 2026 17:54:50 -0700
+Message-ID: <20260509005453.3984184-4-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260509005453.3984184-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260509005453.3984184-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=CJIamxrD c=1 sm=1 tr=0 ts=69fe85ee cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=KKAkSRfTAAAA:8
- a=EUspDBNiAAAA:8 a=VDdTCajPACCFXhBZtZ0A:9 a=scEy_gLbYbu1JhEsrz4S:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: AXAmRTR3BIBAZEdbiYq8HW-0tBZSYkJl
-X-Proofpoint-ORIG-GUID: AXAmRTR3BIBAZEdbiYq8HW-0tBZSYkJl
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA5MDAwNiBTYWx0ZWRfX6ql5z2GJT74e
- F9L92ltxtZkUZJJ+/W3saXGlr2NXMQ1JLnQFJ/p8zQIiLbQsaLjiFxAFwYSc7tkzwnsEq+RaQPi
- 5QXY3piuOqCAYZ8f+lVzcMs7qpC3g2iHRksPJzC0P9KWb0GqlUL41TQnbFALXvfq/0XAgErx5nN
- cvL2hz5riHOXajH8VF9E6/OgBw0DX9/whKNsE+WAEcnWeCfYobuqnsjfbjRA0Py8V3aziVf9xcy
- fKU53hIEJkcPr/R1tRcIJQp6AbsZmyH5hBt8LYabokEA2tfTULks+LQ9G0FshXRfbueViJNqWsZ
- OeASvM3gij9z9MBhbKLuuF9dI0aD26t9Tq3Qclun8i829GzEAj7UZpZzHqq5XWinEoezsdjo0Zg
- FkaER9/Eu0NxWkcy9qrwrP5zM6sfu56OSbk7TDmQ7JvFTihEnxemoOgIU2MdxK0ep4Kbk4GUvZl
- EA77sh8xWbEge/FW+Pw==
+X-Proofpoint-GUID: nn1Awcif12AurF78UJb6K7OddsBjBcGv
+X-Proofpoint-ORIG-GUID: nn1Awcif12AurF78UJb6K7OddsBjBcGv
+X-Authority-Analysis: v=2.4 cv=J7yaKgnS c=1 sm=1 tr=0 ts=69fe85f0 cx=c_pps
+ a=JYo30EpNSr/tUYqK9jHPoA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=l1QZgXgEFyKk2KBU3EsA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=Fk4IpSoW4aLDllm1B1p-:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA5MDAwNiBTYWx0ZWRfX+GP9gaInVIaw
+ FNxzKmJeJSX+5K5IQczXYfIIckT7obEczufdvTzSTz+SswF6y2gk2h1JFK0UrZqI18hrYsx7Ev6
+ +IUzsnmyb0BH3BNl9GMyXx2U3Amo8aWkKEkrjynBwfkjfal5R/P8sFNRYVl6pBYWuI1l+Mr6tMp
+ RN13t6vFXFzMSRW/BYf4CGZBvMIEtU5eweUYCO24No4V3IB65AMlLKGA21L6Okv6QHiKZiygOfp
+ FZziuVqyt4+NL5mjsKxypRp5joS54Na95cTDPgVKtVX+neNpdD3VXo3wp91EQ/I4NXY62IqDsnH
+ GK+2bwNu1zIIkAjB+8zhFIdLVEG/qdbeV0pat4wfPmxaH1dEaQNybzvEB9WoQrqD2xiBpLaeVbb
+ Oe/j8Qrd6qHS85USuNGgE8NSU0SThtZlSru8Q1jlj1ydM1zAwxdFjTXfYakPGEXDEDT4D4qhL8d
+ jtW8vTJNOgOC31hjNEQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-09_01,2026-05-08_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 adultscore=0 spamscore=0 impostorscore=0
- phishscore=0 lowpriorityscore=0 malwarescore=0 priorityscore=1501
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
- definitions=main-2605090006
-Received-SPF: pass client-ip=205.220.168.131;
+ bulkscore=0 impostorscore=0 clxscore=1015 suspectscore=0 priorityscore=1501
+ adultscore=0 lowpriorityscore=0 malwarescore=0 phishscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605090006
+Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -155,42 +155,260 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Those types are special, as they are the base of all other QOM types. In
-next commit, we'll introduce an extra step in module initialization for
-target-info-* types.
+This allows us to prepare next commits, which will introduce qom
+registration for system mode.
 
-However, those types depend on TYPE_OBJECT, which is only registered
-at MODULE_INIT_QOM step.
-
-To avoid having to introduce another step, and modify all code calling
-module_call_init(MODULE_INIT_QOM), we simply register those base types
-directly in the static constructor, before anything else.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- qom/object.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ configs/targets/aarch64-softmmu.c |  6 +--
+ configs/targets/arm-softmmu.c     |  6 +--
+ include/qemu/module.h             |  1 +
+ include/qemu/target-info-init.h   | 78 +++++++++++++++++++++++++++++++
+ include/qemu/target-info-qom.h    | 28 +++++++++++
+ system/vl.c                       |  2 +
+ target-info-qom.c                 | 14 ++++++
+ target-info-stub.c                |  6 +--
+ 8 files changed, 129 insertions(+), 12 deletions(-)
+ create mode 100644 include/qemu/target-info-init.h
+ create mode 100644 include/qemu/target-info-qom.h
 
-diff --git a/qom/object.c b/qom/object.c
-index f981e270440..a5d268d0722 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -2839,7 +2839,7 @@ static void object_class_init(ObjectClass *klass, const void *data)
-                                   NULL);
- }
+diff --git a/configs/targets/aarch64-softmmu.c b/configs/targets/aarch64-softmmu.c
+index 82ccb575759..75d95b0e743 100644
+--- a/configs/targets/aarch64-softmmu.c
++++ b/configs/targets/aarch64-softmmu.c
+@@ -8,6 +8,7 @@
  
--static void register_types(void)
-+static void __attribute__((constructor)) register_types(void)
- {
-     static const TypeInfo interface_info = {
-         .name = TYPE_INTERFACE,
-@@ -2857,5 +2857,3 @@ static void register_types(void)
-     type_interface = type_register_internal(&interface_info);
-     type_register_internal(&object_info);
- }
--
--type_init(register_types)
+ #include "qemu/osdep.h"
+ #include "qemu/target-info-impl.h"
++#include "qemu/target-info-init.h"
+ #include "hw/arm/machines-qom.h"
+ #include "target/arm/cpu-qom.h"
+ #include "target/arm/cpu-param.h"
+@@ -23,7 +24,4 @@ static const TargetInfo target_info_aarch64_system = {
+     .page_bits_init = TARGET_PAGE_BITS_LEGACY,
+ };
+ 
+-const TargetInfo *target_info(void)
+-{
+-    return &target_info_aarch64_system;
+-}
++target_info_init(target_info_aarch64_system)
+diff --git a/configs/targets/arm-softmmu.c b/configs/targets/arm-softmmu.c
+index 18940e51e55..73546fa5737 100644
+--- a/configs/targets/arm-softmmu.c
++++ b/configs/targets/arm-softmmu.c
+@@ -8,6 +8,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/target-info-impl.h"
++#include "qemu/target-info-init.h"
+ #include "hw/arm/machines-qom.h"
+ #include "target/arm/cpu-qom.h"
+ #include "target/arm/cpu-param.h"
+@@ -23,7 +24,4 @@ static const TargetInfo target_info_arm_system = {
+     .page_bits_init = TARGET_PAGE_BITS_LEGACY,
+ };
+ 
+-const TargetInfo *target_info(void)
+-{
+-    return &target_info_arm_system;
+-}
++target_info_init(target_info_arm_system)
+diff --git a/include/qemu/module.h b/include/qemu/module.h
+index 9885ac9afb3..fccf017bf9e 100644
+--- a/include/qemu/module.h
++++ b/include/qemu/module.h
+@@ -43,6 +43,7 @@ typedef enum {
+     MODULE_INIT_MIGRATION,
+     MODULE_INIT_BLOCK,
+     MODULE_INIT_OPTS,
++    MODULE_INIT_TARGET_INFO,
+     MODULE_INIT_QOM,
+     MODULE_INIT_TRACE,
+     MODULE_INIT_XEN_BACKEND,
+diff --git a/include/qemu/target-info-init.h b/include/qemu/target-info-init.h
+new file mode 100644
+index 00000000000..3f4eda19083
+--- /dev/null
++++ b/include/qemu/target-info-init.h
+@@ -0,0 +1,78 @@
++/*
++ * QEMU target info initialization
++ *
++ * Copyright (c) Qualcomm
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This file is included by each file defining a TargetInfo structure and is
++ * responsible for registering it.
++ */
++
++#ifndef QEMU_TARGET_INFO_INIT_H
++#define QEMU_TARGET_INFO_INIT_H
++
++#define DEFINE_TARGET_INFO_TYPE(info)                                       \
++static void do_qemu_init_target_info(void)                                  \
++{                                                                           \
++    type_register_static(&info);                                            \
++}                                                                           \
++module_init(do_qemu_init_target_info, MODULE_INIT_TARGET_INFO)
++
++#ifdef COMPILING_PER_TARGET
++#ifdef CONFIG_USER_ONLY
++
++/*
++ * User mode does not support multiple targets in the same binary, so just
++ * define target_info().
++ */
++#define target_info_init(ti_var)        \
++const TargetInfo *target_info(void)     \
++{                                       \
++    return &ti_var;                     \
++}
++
++#else /* CONFIG_USER_ONLY */
++
++#include "qemu/target-info-qom.h"
++#include "qom/object.h"
++
++#define TYPE_TARGET_INFO_TARGET TYPE_TARGET_INFO"-"TARGET_NAME
++
++typedef struct TargetInfoQomTarget {
++    TargetInfoQom parent;
++} TargetInfoQomTarget;
++
++typedef struct TargetInfoQomTargetClass {
++    TargetInfoQomClass parent_class;
++} TargetInfoQomTargetClass;
++
++OBJECT_DECLARE_TYPE(TargetInfoQomTarget, TargetInfoQomTargetClass, TARGET_INFO_TARGET)
++
++#define target_info_init(ti_var)                                            \
++const TargetInfo *target_info(void)                                         \
++{                                                                           \
++    return &ti_var;                                                         \
++}                                                                           \
++                                                                            \
++static void target_info_qom_class_init(ObjectClass *oc, const void * data)  \
++{                                                                           \
++    TargetInfoQomTargetClass *klass = TARGET_INFO_TARGET_CLASS(oc);         \
++    klass->parent_class.target_info = &ti_var;                              \
++}                                                                           \
++                                                                            \
++static const TypeInfo target_info_qom_target_type_info = {                  \
++    .name = TYPE_TARGET_INFO_TARGET,                                        \
++    .parent = TYPE_TARGET_INFO,                                             \
++    .instance_size = sizeof(TargetInfoQomTarget),                           \
++    .class_size = sizeof(TargetInfoQomTargetClass),                         \
++    .class_init = target_info_qom_class_init,                               \
++    .abstract = false,                                                      \
++};                                                                          \
++                                                                            \
++DEFINE_TARGET_INFO_TYPE(target_info_qom_target_type_info)
++
++#endif /* CONFIG_USER_ONLY */
++#endif /* COMPILING_PER_TARGET */
++
++#endif /* QEMU_TARGET_INFO_INIT_H */
+diff --git a/include/qemu/target-info-qom.h b/include/qemu/target-info-qom.h
+new file mode 100644
+index 00000000000..585995c7ad0
+--- /dev/null
++++ b/include/qemu/target-info-qom.h
+@@ -0,0 +1,28 @@
++/*
++ * QEMU target info QOM types
++ *
++ * Copyright (c) Qualcomm
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef QEMU_TARGET_INFO_QOM_H
++#define QEMU_TARGET_INFO_QOM_H
++
++#include "qemu/target-info-impl.h"
++#include "qom/object.h"
++
++#define TYPE_TARGET_INFO "target-info"
++
++typedef struct TargetInfoQom {
++    Object parent_obj;
++} TargetInfoQom;
++
++typedef struct TargetInfoQomClass {
++    ObjectClass parent_class;
++    const TargetInfo *target_info;
++} TargetInfoQomClass;
++
++OBJECT_DECLARE_TYPE(TargetInfoQom, TargetInfoQomClass, TARGET_INFO)
++
++#endif /* QEMU_TARGET_INFO_QOM_H */
+diff --git a/system/vl.c b/system/vl.c
+index d2f4044e5d8..e44da0941d4 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -2889,6 +2889,8 @@ void qemu_init(int argc, char **argv)
+ 
+     os_setup_limits();
+ 
++    module_call_init(MODULE_INIT_TARGET_INFO);
++
+     module_init_info(qemu_modinfo);
+     module_allow_arch(target_name());
+ 
+diff --git a/target-info-qom.c b/target-info-qom.c
+index 7fd58d24818..ba2c7923760 100644
+--- a/target-info-qom.c
++++ b/target-info-qom.c
+@@ -7,7 +7,11 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qapi/error.h"
+ #include "qom/object.h"
++#include "qemu/target-info-impl.h"
++#include "qemu/target-info-init.h"
++#include "qemu/target-info-qom.h"
+ #include "hw/arm/machines-qom.h"
+ 
+ static const TypeInfo target_info_types[] = {
+@@ -22,3 +26,13 @@ static const TypeInfo target_info_types[] = {
+ };
+ 
+ DEFINE_TYPES(target_info_types)
++
++static const TypeInfo target_info_parent_type = {
++    .name = TYPE_TARGET_INFO,
++    .parent = TYPE_OBJECT,
++    .instance_size = sizeof(TargetInfoQom),
++    .class_size = sizeof(TargetInfoQomClass),
++    .abstract = true,
++};
++
++DEFINE_TARGET_INFO_TYPE(target_info_parent_type)
+diff --git a/target-info-stub.c b/target-info-stub.c
+index 07d8647ed8e..22b7911201c 100644
+--- a/target-info-stub.c
++++ b/target-info-stub.c
+@@ -9,6 +9,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/target-info.h"
+ #include "qemu/target-info-impl.h"
++#include "qemu/target-info-init.h"
+ #include "hw/core/boards.h"
+ #include "cpu.h"
+ #include "exec/cpu-defs.h"
+@@ -41,7 +42,4 @@ static const TargetInfo target_info_stub = {
+ #endif
+ };
+ 
+-const TargetInfo *target_info(void)
+-{
+-    return &target_info_stub;
+-}
++target_info_init(target_info_stub)
 -- 
 2.43.0
 
