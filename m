@@ -4,100 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD852CD3445
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 15:03:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15787CD3447
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 15:04:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLjDO-0000wv-Ie; Sat, 09 May 2026 11:03:38 -0400
+	id 1wLjDz-0001Jc-9t; Sat, 09 May 2026 11:04:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wLjDI-0000vn-NJ
- for qemu-devel@nongnu.org; Sat, 09 May 2026 11:03:32 -0400
-Received: from mail-oa1-x34.google.com ([2001:4860:4864:20::34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wLjDE-0007VB-CN
- for qemu-devel@nongnu.org; Sat, 09 May 2026 11:03:31 -0400
-Received: by mail-oa1-x34.google.com with SMTP id
- 586e51a60fabf-42fdab683a9so2224822fac.1
- for <qemu-devel@nongnu.org>; Sat, 09 May 2026 08:03:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778339006; x=1778943806; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oECUhms8xXPdGv2JZBB5q6VF/mwAZxrenD2nZvD2qwU=;
- b=YJ+gCsaHG4O6PWWX0BzyRyCYOQbOLPr/sBQLCxQIgKIhRJUcVhBfxBtaVRz07ljMJD
- Esfq3ihE15Mdob4JApxp9V6DrzuamkJuEA347XJg0bieHMTLDrJH1h0R1xykkFVLXTzc
- VAXLAr31RfGWBDONJHjWDmFEbh6zGJ/Vt+mVrOmpHgTRGYjXhzXXsZdGfgF87O/rYMEK
- HdYZa4uNoA2O0dWElDcqiN6ttgaWVP8Q9wUJWfVAx0Gl9WrBzbhDJSeLPrEOtRoA16dV
- tOKSrYrbyFsHREoCuCnHd3/ju/vGNy69XOZRGuUZKWRLjEBHMAPh04I7nrs22Om3HXDU
- /EDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778339006; x=1778943806;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=oECUhms8xXPdGv2JZBB5q6VF/mwAZxrenD2nZvD2qwU=;
- b=bGjdI2wh7glDC+Mt89CnuE6WErN4YMUPPQ1em90XA7Qka5pgnPYvzUFji+3lk9Cgfe
- xpkztoZmETdZW98/xpMBE6gW63m1XQcoNoSBtFJpxEcBs2rbbPmHa7nLewjIBVoyFNeS
- rki/djPnhF66zYf5SvvPJcHKbPx2S09TuNHobF1bKnqc+jy7uT2DRHhvJKT5sPqsK+Fs
- lYKNzIxklOrCAlJ1SK06LVXMEBt1T/RWH16dIEuvrLyL+ztPwarMQWd960aTx2E63TBR
- S0HSMIflaOnn5tyVrcwJ+I8ky7Hx6Dvj1dic1BdbFoI+wFlmS3Qk17PoGrSqqgJ5HWee
- seDw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8nYl/Yw5cZiCmYyxnTycs1d+5x6DXMAWIpTRHzABIFsEXkSehYwfg/GHnGEzybatNmMvRdkxLaxwDR@nongnu.org
-X-Gm-Message-State: AOJu0YyJfO3kO9JYplK8vbGuyZYb9uv0/h8rQREV0BTvPj+7oQHMm313
- r7JXrP1UK+aqhYVp9VTWgPQCCVeflWvPGZ4Nn1qAkY0tU0QTndC8f9VGFd3l/psIvxg=
-X-Gm-Gg: Acq92OGY+nernpilpt3PwB+D5a7yV6IBZpNBsblfuCm5gAn04OlNVNJIgIYEs9s3Pnh
- gWEnbCp7SxYRZ+/7yWBIhl8KT6lqxjIMajnCGe0ufPztL8l1vsANUO+zoKxkx8dRfFdxu9KC+76
- eyb61XL2Ei7lvQZdlALXdjG69x17/OMc/7DhfXk93Z3w5foi+kItbfKsQPf3Nkj7fPDgbIyMI2c
- j1+5eB7IXw852RTcoItOK1he4Q723Z5D2CWozWov9anu58HQS8L0/Y+x2AoyHeXxSapPh45oXx6
- WnlwZKDhXktksqynf9acQ9lXW8B0+jkaTylrQtHj3gurrx5CrwR2ZE1qeJeQIMwWZYzMbmy055Y
- li8VVqEisDsHJGwPWwdnmX5Sh3seagvKB/bOQZOMahZDUGl2ahg5oPfHxqb5we5SD+tbbWpqnrL
- GlCXZtliNCvDVY27GApk4dpL++OQowUUf3BkALISFbXkF/PvObHdwaNRE4hiwVALYVFD3bDyKab
- 1s+E1vgvg==
-X-Received: by 2002:a05:6870:16d2:b0:41c:616:5317 with SMTP id
- 586e51a60fabf-434f6776953mr11315705fac.39.1778339005556; 
- Sat, 09 May 2026 08:03:25 -0700 (PDT)
-Received: from ?IPV6:2600:381:c938:6375:88d3:58e4:a68b:b30c?
- ([2600:381:c938:6375:88d3:58e4:a68b:b30c])
- by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-43557109b67sm4479590fac.6.2026.05.09.08.03.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 09 May 2026 08:03:25 -0700 (PDT)
-Message-ID: <7bdc61c1-3dad-49b5-b385-4e9fbd0fc1c6@linaro.org>
-Date: Sat, 9 May 2026 10:03:21 -0500
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wLjDu-0001J3-CO; Sat, 09 May 2026 11:04:11 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wLjDs-0007eX-UZ; Sat, 09 May 2026 11:04:09 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6492uJJO2692231; Sat, 9 May 2026 15:04:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Bw5ozN
+ ic1+0kcCWCH26VYzHXANrvK7umBzeDf9bav/I=; b=LjVgGDqdZ44ldhFvxjlvOE
+ Q10i4Ie26BLcGQD7Rh7Tp8u+ONJHWX9M5cNif89NXR0B0oo6/VSWDM509SOFT76h
+ O1p1IPeXM8GKbaJiFkZUY5XOTC4gFI/y+7eS3Twto+nU5Tuxu8HnIOwFNWcAt9Yv
+ RMRi7C9y8l7aLN18fGnLDx6yBD3Y2CFASheTKgPq+hiGueU/LK+5bj9XrJFOtErS
+ wqj2AGPfq3F6Qw8MLIASQfuqROY2qCWEm8FlLJx9kOMM5ytGdOcoU7tnG7CChDOd
+ ZCvJRuJMnT5t8A/+Cd3QMM72booyhT5UnDcH7ts7KYAUl0CpMH0PGWuk9fLeccUw
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e1vju1trn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 09 May 2026 15:03:59 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 649EsSm2023628;
+ Sat, 9 May 2026 15:03:59 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dwuywn1mh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 09 May 2026 15:03:59 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 649F3tZ050594258
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sat, 9 May 2026 15:03:55 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5DAD820043;
+ Sat,  9 May 2026 15:03:55 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1726E20040;
+ Sat,  9 May 2026 15:03:48 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.39.25.188]) by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Sat,  9 May 2026 15:03:47 +0000 (GMT)
+Date: Sat, 9 May 2026 20:33:44 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, clg@kaod.org,
+ npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
+ thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, jishnuvw@linux.ibm.com
+Subject: Re: [PATCH v4 8/9] pnv/phb4: Implement IODA PCT table
+Message-ID: <af9MlXbuexdd9FQQ@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+References: <20260210134110.1515322-1-saif.abrar@linux.vnet.ibm.com>
+ <20260305060923.3753402-1-saif.abrar@linux.vnet.ibm.com>
+ <20260305060923.3753402-9-saif.abrar@linux.vnet.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 6/6] target-info-qom: use a single class_init for
- target-info-* classes
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Anton Johansson <anjo@rev.ng>
-References: <20260509005453.3984184-1-pierrick.bouvier@oss.qualcomm.com>
- <20260509005453.3984184-7-pierrick.bouvier@oss.qualcomm.com>
- <7854820a-9879-47ec-95ba-7f7ae65374a0@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <7854820a-9879-47ec-95ba-7f7ae65374a0@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::34;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x34.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260305060923.3753402-9-saif.abrar@linux.vnet.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=cYbiaHDM c=1 sm=1 tr=0 ts=69ff4ce0 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=aow-egSQAAAA:8 a=KK503DH6ScZrwmnqgNYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=gFNbaldVC-z-bsjSTzMo:22
+X-Proofpoint-GUID: uF81q3rkZFBDaSaB4MQHmocRo_D9iBc4
+X-Proofpoint-ORIG-GUID: 7sskJAcJ00wyuVArDxU3wjBKVO0NK3z7
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA5MDE1OSBTYWx0ZWRfXwkIr9cAEeOa/
+ Sih8shN0CSjKomESXwH1+U8Y27ccnequt9RpVl41tZ2ku15LA3hyV2qTGQ4lk3jN12neVFRt9NS
+ W6JWStfXBiVSeU0eU5CxK9do7urYKgpp0vv+fsl0omoGjlf5X+2Jgxp+VHAUSe5cPQ3TdcubKs+
+ K/mIh/KZZLD1qprkRRxm6bBWMa5Xtjmes2qPVTK8zx0CM42Xjcz0XSj7xuEdaPCi2SNvP9P527v
+ +wiJWkTzffWxATRgzYnCN/gZmbz6gTEKpKLmW3rQghGNqcmw4JtUbzMbdN4fRFIqnrBAYa160q4
+ m1t0xoY1PDMAKzjgZNPQ1E/SZuurKld9H7QKDIfv0+oaF0Oq1095x9usKCEXAMvxt2BKyh37lzQ
+ YOK9roIzTC3UgSPehAZXS3bBHqvknDl/WuZof500TF0k4yesA9C/h6rQmfE7AYV8oX+gEpNgXsw
+ JgyYbIhZV3Zzpq+mVRg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-09_05,2026-05-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 clxscore=1015 spamscore=0 priorityscore=1501
+ suspectscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605090159
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,95 +126,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/8/26 19:59, Pierrick Bouvier wrote:
-> On 5/8/2026 5:54 PM, Pierrick Bouvier wrote:
->> Instead of defining a class_init per class, just use a common
->> constructor and set class_data to corresponding TargetInfo structure.
->>
->> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->> ---
->>   include/qemu/target-info-init.h | 14 ++------------
->>   include/qemu/target-info-qom.h  |  1 +
->>   target-info-qom.c               |  6 ++++++
->>   3 files changed, 9 insertions(+), 12 deletions(-)
->>
->> diff --git a/include/qemu/target-info-init.h b/include/qemu/target-info-init.h
->> index 176fd975a16..3945f2998e0 100644
->> --- a/include/qemu/target-info-init.h
->> +++ b/include/qemu/target-info-init.h
->> @@ -37,8 +37,6 @@ const TargetInfo *target_info(void)     \
->>   #include "qemu/target-info-qom.h"
->>   #include "qom/object.h"
->>   
->> -#define TYPE_TARGET_INFO_TARGET TYPE_TARGET_INFO"-"TARGET_NAME
->> -
->>   typedef struct TargetInfoQomTarget {
->>       TargetInfoQom parent;
->>   } TargetInfoQomTarget;
->> @@ -47,24 +45,16 @@ typedef struct TargetInfoQomTargetClass {
->>       TargetInfoQomClass parent_class;
->>   } TargetInfoQomTargetClass;
->>   
->> -OBJECT_DECLARE_TYPE(TargetInfoQomTarget, TargetInfoQomTargetClass, TARGET_INFO_TARGET)
->> -
->>   #define target_info_init(ti_var)                                            \
->> -static void target_info_qom_class_init(ObjectClass *oc, const void * data)  \
->> -{                                                                           \
->> -    TargetInfoQomTargetClass *klass = TARGET_INFO_TARGET_CLASS(oc);         \
->> -    klass->parent_class.target_info = &ti_var;                              \
->> -}                                                                           \
->> -                                                                            \
->>   static const TypeInfo target_info_qom_target_type_info = {                  \
->> -    .name = TYPE_TARGET_INFO_TARGET,                                        \
->> +    .name =  TYPE_TARGET_INFO"-"TARGET_NAME,                                \
->>       .parent = TYPE_TARGET_INFO,                                             \
->>       .instance_size = sizeof(TargetInfoQomTarget),                           \
->>       .class_size = sizeof(TargetInfoQomTargetClass),                         \
->>       .class_init = target_info_qom_class_init,                               \
->> +    .class_data = &ti_var,                                                  \
->>       .abstract = false,                                                      \
->>   };                                                                          \
->> -                                                                            \
->>   DEFINE_TARGET_INFO_TYPE(target_info_qom_target_type_info)
->>   
->>   #endif /* CONFIG_USER_ONLY */
->> diff --git a/include/qemu/target-info-qom.h b/include/qemu/target-info-qom.h
->> index 91be415ed33..a37c3e101e0 100644
->> --- a/include/qemu/target-info-qom.h
->> +++ b/include/qemu/target-info-qom.h
->> @@ -25,6 +25,7 @@ typedef struct TargetInfoQomClass {
->>   
->>   OBJECT_DECLARE_TYPE(TargetInfoQom, TargetInfoQomClass, TARGET_INFO)
->>   
->> +void target_info_qom_class_init(ObjectClass *oc, const void * data);
->>   void target_info_qom_set_target(void);
->>   
->>   #endif /* QEMU_TARGET_INFO_QOM_H */
->> diff --git a/target-info-qom.c b/target-info-qom.c
->> index cc470b3b4d6..5b0498ca654 100644
->> --- a/target-info-qom.c
->> +++ b/target-info-qom.c
->> @@ -37,6 +37,12 @@ static const TypeInfo target_info_parent_type = {
->>   
->>   DEFINE_TARGET_INFO_TYPE(target_info_parent_type)
->>   
->> +void target_info_qom_class_init(ObjectClass *oc, const void * data)
->> +{
->> +    TargetInfoQomClass *klass = TARGET_INFO_CLASS(oc);
->> +    klass->target_info = data;
->> +}
->> +
->>   static const TargetInfo *target_info_ptr;
->>   
->>   const TargetInfo *target_info(void)
+On 26/03/05 12:09AM, Saif Abrar wrote:
+> IODA PCT table (#3) is implemented
+
+nit: '#3' is probably from github, can remove
+
+> without any functionality, being a debug table.
 > 
-> This patch can be squashed with 3, but I thought it might be better for
-> review to keep it on top for now.
+> Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+> Reviewed-by: Cédric Le Goater <clg@kaod.org>
 
-Mmm.  You've missed the part about using class_base_init instead of class_init, so that 
-you don't need the extern function declaration.  See review of patch 3.
+rest of the patch looks good to me.
 
+Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
 
-r~
+- Aditya G
+
 
