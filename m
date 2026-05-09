@@ -4,74 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E75F4CD3445
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 17:19:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75C41CD3445
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 17:25:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLlHt-0005wN-8b; Sat, 09 May 2026 13:16:25 -0400
+	id 1wLlQZ-0007hC-4q; Sat, 09 May 2026 13:25:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wLlHg-0005Zs-7x
- for qemu-devel@nongnu.org; Sat, 09 May 2026 13:16:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wLlQX-0007h1-Gn
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 13:25:21 -0400
+Received: from 7.mo533.mail-out.ovh.net ([54.36.140.182])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wLlHe-0005EU-IN
- for qemu-devel@nongnu.org; Sat, 09 May 2026 13:16:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778346969;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cfYs1LjQpDYe54tsVrqJvVf2U2NzuLWTpllOslebg8A=;
- b=iXzTj1bFuh2mtWNDKyv8UCSdjSUIqsezOLKh1wCsYMHMC4k6pHQspZrntTmAm5ElBsIQNI
- 9777iJJafFPGeR5unnKtI7zz1cEtRh5VkTUOT0Q/zjVC0hq3A+sOdGWeRMLhzHa5PH4cx6
- fNVEdkvHdvn/CUx4TG22W1dGB3FbKYs=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-605-SaZKL8O1PnKv18Y3w1ZYdA-1; Sat,
- 09 May 2026 13:16:07 -0400
-X-MC-Unique: SaZKL8O1PnKv18Y3w1ZYdA-1
-X-Mimecast-MFC-AGG-ID: SaZKL8O1PnKv18Y3w1ZYdA_1778346967
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F00781956080; Sat,  9 May 2026 17:16:06 +0000 (UTC)
-Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A849F18004A3; Sat,  9 May 2026 17:16:05 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: stefanha@gmail.com,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL v2 21/33] ui/vnc: vnc_display_init() and vnc_display_open()
- return bool
-Date: Sat,  9 May 2026 21:13:42 +0400
-Message-ID: <20260509171356.1157879-22-marcandre.lureau@redhat.com>
-In-Reply-To: <20260509171356.1157879-1-marcandre.lureau@redhat.com>
-References: <20260509171356.1157879-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wLlQU-0007x1-6D
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 13:25:21 -0400
+Received: from director3.derp.mail-out.ovh.net
+ (director3.derp.mail-out.ovh.net [152.228.215.222])
+ by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4gCXtf3437z5wkM;
+ Sat,  9 May 2026 17:25:14 +0000 (UTC)
+Received: from director3.derp.mail-out.ovh.net
+ (director3.derp.mail-out.ovh.net. [127.0.0.1])
+ by director3.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <alexander.hansen@9elements.com>; Sat,  9 May 2026 17:25:14 +0000 (UTC)
+Received: from mta10.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.96.172])
+ by director3.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4gCXtf1KQ7z5vgQ; Sat,  9 May 2026 17:25:14 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.1])
+ (Authenticated sender: clg@kaod.org)
+ by mta10.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
+ 9988E19234FC; Sat,  9 May 2026 17:25:13 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-101G0049b698fcd-751a-41b5-9379-afae7ab64787,
+ 3D272E53171ADE400D76652CEA3707ABC032970B) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <63269f5e-bf4e-4e82-8c4e-742667643777@kaod.org>
+Date: Sat, 9 May 2026 19:25:13 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/4] initial support for yosemite v4
+To: Alexander Hansen <alexander.hansen@9elements.com>, qemu-devel@nongnu.org
+References: <20260505154410.230969-1-alexander.hansen@9elements.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260505154410.230969-1-alexander.hansen@9elements.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+x-ovh-tracer-id: 7924646496193195019
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTGsqBjkP9xUdAH2VhzCuGl9v0Oc2kl2gMpmek/Y7QJKVEElRcgXjvD1Rh+whysGu6M5f7VZZNRt3taBDZJ0i11sdGsz+O1CThi/zBbioRLE5LwgGZyHLHV28ToAEhe+QPH/Rijg/QItMly9k8lnjJRtLdZxbGGLviNVRW3xpBaDvZUQsaoCI3O+HfniYvyn/w6bNM2yhh4yZIrPeguLnyC8kOxYDSdKdYafYWRdNSEi6NyX8Q3hnHdZOwgFOz06ELf2/o16rNJLhPlny3Qxymq1aI63RRdXVwpaYx4jHPNKRm5aB714NkQlKLXeZ10YDnN23Bt/pZ88lLPtMfg4fH2Fdi64Wei+zEzY99ajzUNBprdvEQYEbfAtqhxEjN5jTgQIR2JKHuR7063mR0ZrRxxG21P/KIeJL9A5HYVtl3HJVA05ooa2DjlAyI9zD11IwhstVMklvtvGFJwRbVP3vXaKlWRwpGVGfxT13c6mWPEFTkZ5xqsf8asdEaxMHZttyjBQBYogvSO9tE2H07y/z3zvwicsksgVCSuAUX2Y0yLYttxQ/HmixyITpHHcdYBhsL+SqmfG0Uty3Aki5k0ScKv778AST5tRozadpT0f+aRNPhohCLCm+NF7Ew4fhlQazY2faBEY/XcFiD+5CbbKhShzYrwxbB0cMSK5AdzD3Ed4EQ
+DKIM-Signature: a=rsa-sha256; bh=Mbs6ZcK+fuatE3z4vkFfgtzMO1iwmRShrnIkzrstF14=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1778347514; v=1;
+ b=UstQdvN5SOHyHWnFk5/ZOVntY6FgJ8imnpKabVwedO8TuufddM7KE/DALfkHaEJmYGmODIJ8
+ 53dW2u6GzZNONg6aGWUKJ1Wh2HYsEy2PUab7qEpefbZgXCk4herKGP9qLd/rLz+XfTCdGtgYUW6
+ vQkGBKZBQXzSfcP8Jw7at6e8YUFNejQnb1fKt4+JKvYCs4Vgx5NaYMU3NxKGtlBl13JouKP1HNC
+ 6+05s0bmZCfaFud0s4NbLDsLlvXb1UByjQ8LGjBctrmgfo/shbZWElit6bF+BWSJrR0k6b9w9my
+ uzg6wMbRGCZa+mvI4IO1jkn2fD1O5lNxz1tKtVxxrS0UQ==
+Received-SPF: pass client-ip=54.36.140.182; envelope-from=clg@kaod.org;
+ helo=7.mo533.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,116 +127,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+Hi,
 
-Use the QEMU-style error pattern returning "true" on success.
+On 5/5/26 17:42, Alexander Hansen wrote:
+> Add initial and incomplete support for yosemite v4 BMC-side emulation.
+> 
+> As part of this effort 3 new sensor ICs are added.
+> 
+> Alexander Hansen (4):
+>    hw/sensor: MAX31790 support
+>    hw/sensor: support MAX11615
+>    hw/sensor: support Texas Instruments ADC128D818
+>    ast2600: yosemite4 initial support
+> 
+>   hw/arm/Kconfig                           |   3 +
+>   hw/arm/aspeed_ast2600_fby4.c             | 289 +++++++++++++
+>   hw/arm/meson.build                       |   1 +
+>   hw/sensor/Kconfig                        |  12 +
+>   hw/sensor/adc128d818.c                   | 414 +++++++++++++++++++
+>   hw/sensor/max11615.c                     | 202 +++++++++
+>   hw/sensor/max31790.c                     | 499 +++++++++++++++++++++++
+>   hw/sensor/meson.build                    |   3 +
+>   hw/sensor/trace-events                   |  24 ++
+>   include/hw/sensor/adc128d818.h           |  20 +
+>   include/hw/sensor/max11615.h             |  20 +
+>   include/hw/sensor/max31790.h             |   7 +
+>   tests/functional/arm/meson.build         |   2 +
+>   tests/functional/arm/test_aspeed_fby4.py |  44 ++
+>   14 files changed, 1540 insertions(+)
+>   create mode 100644 hw/arm/aspeed_ast2600_fby4.c
+>   create mode 100644 hw/sensor/adc128d818.c
+>   create mode 100644 hw/sensor/max11615.c
+>   create mode 100644 hw/sensor/max31790.c
+>   create mode 100644 include/hw/sensor/adc128d818.h
+>   create mode 100644 include/hw/sensor/max11615.h
+>   create mode 100644 include/hw/sensor/max31790.h
+>   create mode 100755 tests/functional/arm/test_aspeed_fby4.py
+> 
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- include/ui/console.h |  4 ++--
- ui/vnc.c             | 20 ++++++++++----------
- 2 files changed, 12 insertions(+), 12 deletions(-)
+I would organized the series as :
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index 2bf768ed482..7224b8142f3 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -438,8 +438,8 @@ const char *qemu_display_get_vc(DisplayOptions *opts);
- void qemu_display_help(void);
- 
- /* vnc.c */
--void vnc_display_init(const char *id, Error **errp);
--void vnc_display_open(const char *id, Error **errp);
-+bool vnc_display_init(const char *id, Error **errp);
-+bool vnc_display_open(const char *id, Error **errp);
- void vnc_display_add_client(const char *id, int csock, bool skipauth);
- int vnc_display_password(const char *id, const char *password, Error **errp);
- int vnc_display_pw_expire(const char *id, time_t expires);
-diff --git a/ui/vnc.c b/ui/vnc.c
-index 3a908670ab9..067f534cf08 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -3425,12 +3425,12 @@ static void vmstate_change_handler(void *opaque, bool running, RunState state)
- 
- static void vnc_display_free(VncDisplay *vd);
- 
--void vnc_display_init(const char *id, Error **errp)
-+bool vnc_display_init(const char *id, Error **errp)
- {
-     VncDisplay *vd;
- 
-     if (vnc_display_find(id) != NULL) {
--        return;
-+        return true;
-     }
-     vd = g_malloc0(sizeof(*vd));
- 
-@@ -3451,7 +3451,7 @@ void vnc_display_init(const char *id, Error **errp)
- 
-     if (!vd->kbd_layout) {
-         vnc_display_free(vd);
--        return;
-+        return false;
-     }
- 
-     vd->share_policy = VNC_SHARE_POLICY_ALLOW_EXCLUSIVE;
-@@ -3465,6 +3465,7 @@ void vnc_display_init(const char *id, Error **errp)
-         &vmstate_change_handler, vd);
- 
-     QTAILQ_INSERT_TAIL(&vnc_displays, vd, next);
-+    return true;
- }
- 
- static void vnc_display_close(VncDisplay *vd)
-@@ -4070,7 +4071,7 @@ bool vnc_display_update(DisplayUpdateOptionsVNC *arg, Error **errp)
-     return true;
- }
- 
--void vnc_display_open(const char *id, Error **errp)
-+bool vnc_display_open(const char *id, Error **errp)
- {
-     VncDisplay *vd = vnc_display_find(id);
-     QemuOpts *opts = qemu_opts_find(&qemu_vnc_opts, id);
-@@ -4273,7 +4274,7 @@ void vnc_display_open(const char *id, Error **errp)
-     qkbd_state_set_delay(vd->kbd, key_delay_ms);
- 
-     if (saddr_list == NULL) {
--        return;
-+        return true;
-     }
- 
-     if (reverse) {
-@@ -4291,10 +4292,11 @@ void vnc_display_open(const char *id, Error **errp)
-     }
- 
-     /* Success */
--    return;
-+    return true;
- 
- fail:
-     vnc_display_close(vd);
-+    return false;
- }
- 
- void vnc_display_add_client(const char *id, int csock, bool skipauth)
-@@ -4350,12 +4352,10 @@ int vnc_init_func(void *opaque, QemuOpts *opts, Error **errp)
-         id = vnc_auto_assign_id(opts);
-     }
- 
--    vnc_display_init(id, errp);
--    if (*errp) {
-+    if (!vnc_display_init(id, errp)) {
-         return -1;
-     }
--    vnc_display_open(id, errp);
--    if (*errp) {
-+    if (!vnc_display_open(id, errp)) {
-         return -1;
-     }
-     return 0;
--- 
-2.54.0
+1: Introduce new machine xyz
+2: Add functional test for machine xyz
+3: Introduce new sensor1 model (and possibly unit test)
+4: Integrate sensor1 sensors in machine xyz, extend machine test.
+5: Repeat 3-4 for each new sensor model
 
+Thanks,
+
+C.
 
