@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 816C2CD343F
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 07:37:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C3A7CD343F
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 07:37:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLcFD-00046S-Ru; Sat, 09 May 2026 03:37:03 -0400
+	id 1wLcFG-00048q-N5; Sat, 09 May 2026 03:37:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wLcFC-00043b-MI
- for qemu-devel@nongnu.org; Sat, 09 May 2026 03:37:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wLcFF-000487-6y
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 03:37:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wLcFA-0006ue-Bq
- for qemu-devel@nongnu.org; Sat, 09 May 2026 03:37:01 -0400
+ id 1wLcFD-0006v3-Nl
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 03:37:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778312219;
+ s=mimecast20190719; t=1778312223;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KMUtoZHZikDGthKoSDXtFH9v35JqZddhYCFbNlV2KEk=;
- b=aVBQtqCRZRbC43nEexirJIJCkvGTiv4iH09i32Zad7ZRohGKXOp+0WN027n9Dv9t6SA4gK
- b56T9DB3jUlhPuSx3lpV4uxS1lWiwTN0+li9ss1jzD7xcp3CvEX00H2bvjwEmLMg8aOj5G
- iYtSqUw96lMIcykANaSoOtOHMO+Y54U=
+ bh=grtWLLb6LuzwS7TKPExXe7gH/Kt+8pLarkBdFZ3yg4Y=;
+ b=LHNGTxdtJ8ojS70BXContVgNanYuly46diEyUvp9N+OMEeTl3k8op8b/SsFOHxSVKarQoA
+ IIe7J7eNDmDZpqpo0LdaKEKfSS21ROl7j6TV0oI8nXjuQaG7ozbtHfm1poYCqigjUkUEqE
+ Uolta2yIu3Y+k/ktjr1ugmpxbAdw2QU=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-687-w6jZlWfkPWSyRzO6PkMAHA-1; Sat,
- 09 May 2026 03:36:55 -0400
-X-MC-Unique: w6jZlWfkPWSyRzO6PkMAHA-1
-X-Mimecast-MFC-AGG-ID: w6jZlWfkPWSyRzO6PkMAHA_1778312214
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-222-wqaaIwmoPmC23pipRjYRjQ-1; Sat,
+ 09 May 2026 03:37:01 -0400
+X-MC-Unique: wqaaIwmoPmC23pipRjYRjQ-1
+X-Mimecast-MFC-AGG-ID: wqaaIwmoPmC23pipRjYRjQ_1778312220
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AF887195608C; Sat,  9 May 2026 07:36:54 +0000 (UTC)
+ id 39EA21956089; Sat,  9 May 2026 07:37:00 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4F3D219560A2; Sat,  9 May 2026 07:36:52 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 239E53002D30; Sat,  9 May 2026 07:36:58 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: stefanha@gmail.com, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 05/32] tests/qtest/dbus-vmstate: Re-enable the test
-Date: Sat,  9 May 2026 11:35:51 +0400
-Message-ID: <20260509073621.1011778-6-marcandre.lureau@redhat.com>
+Cc: stefanha@gmail.com,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 06/32] ui/input: do not assert() when tracing invalid input
+Date: Sat,  9 May 2026 11:35:52 +0400
+Message-ID: <20260509073621.1011778-7-marcandre.lureau@redhat.com>
 In-Reply-To: <20260509073621.1011778-1-marcandre.lureau@redhat.com>
 References: <20260509073621.1011778-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -68,7 +68,7 @@ X-Spam_score: 0.8
 X-Spam_bar: /
 X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -86,37 +86,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Back in 2020, the dbus-vmstate test was disabled by commit d46f81cb74
-("tests: Disable dbus-vmstate-test") due to Patchew failures. We don't
-use Patchew anymore for CI, so re-enable the test.
+It's possible to reach an assert() in the input tracing code by sending
+some out of range input values via D-Bus for ex:
 
-G_TEST_DBUS_DAEMON=../tests/dbus-vmstate-daemon.sh \
-QTEST_QEMU_BINARY=./qemu-system-x86_64  \
-./tests/qtest/dbus-vmstate-test
+  #0  0x00007fec8652186c in __pthread_kill_implementation () at /lib64/libc.so.6
+  #1  0x00007fec864c648e in raise () at /lib64/libc.so.6
+  #2  0x00007fec864ad7b3 in abort () at /lib64/libc.so.6
+  #3  0x00007fec864ae804 in __libc_message_impl.cold () at /lib64/libc.so.6
+  #4  0x00007fec864be345 in __assert_fail () at /lib64/libc.so.6
+  #5  0x00005597964c551e in qapi_enum_lookup[cold] ()
+  #6  0x000055979650514a in qemu_input_event_send_impl ()
+  #7  0x0000559796505a4d in qemu_input_queue_btn ()
+  #8  0x00007fec85780c19 in dbus_mouse_press () at /usr/bin/../lib64/qemu/ui-dbus.so
+  #9  0x00007fec857912fc in _g_dbus_codegen_marshal_BOOLEAN__OBJECT_UINT.part.0 () at /usr/bin/../lib64/qemu/ui-dbus.so
+  #10 0x00007fec874cce7c in g_closure_invoke () at /lib64/libgobject-2.0.so.0
+  #11 0x00007fec874eb849 in signal_emit_unlocked_R.isra.0 () at /lib64/libgobject-2.0.so.0
+  #12 0x00007fec874ec66f in g_signal_emitv () at /lib64/libgobject-2.0.so.0
+  #13 0x00007fec85797e0a in _qemu_dbus_display1_mouse_skeleton_handle_method_call () at /usr/bin/../lib64/qemu/ui-dbus.so
 
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260429190550.20122-6-farosas@suse.de>
+Other paths in input code accept out-of-range values
+(qemu_input_key_value_to_number etc). Let it pass tracing.
+
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/qtest/meson.build | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ ui/input.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index ba890c2b554..0067f767eea 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -125,8 +125,7 @@ endif
- 
- dbus_daemon = find_program('dbus-daemon', required: false)
- if dbus_daemon.found() and gdbus_codegen.found()
--  # Temporarily disabled due to Patchew failures:
--  #qtests_i386 += ['dbus-vmstate-test']
-+  qtests_i386 += ['dbus-vmstate-test']
-   dbus_vmstate1 = custom_target('dbus-vmstate description',
-                                 build_by_default: true,
-                                 output: [ 'dbus-vmstate1.h', 'dbus-vmstate1.c'],
+diff --git a/ui/input.c b/ui/input.c
+index 57e7817878a..966023d4f4d 100644
+--- a/ui/input.c
++++ b/ui/input.c
+@@ -207,22 +207,22 @@ static void qemu_input_event_trace(QemuConsole *src, InputEvent *evt)
+         break;
+     case INPUT_EVENT_KIND_BTN:
+         btn = evt->u.btn.data;
+-        name = InputButton_str(btn->button);
++        name = btn->button < INPUT_BUTTON__MAX ? InputButton_str(btn->button) : "invalid";
+         trace_input_event_btn(idx, name, btn->down);
+         break;
+     case INPUT_EVENT_KIND_REL:
+         move = evt->u.rel.data;
+-        name = InputAxis_str(move->axis);
++        name = move->axis < INPUT_AXIS__MAX ? InputAxis_str(move->axis) : "invalid";
+         trace_input_event_rel(idx, name, move->value);
+         break;
+     case INPUT_EVENT_KIND_ABS:
+         move = evt->u.abs.data;
+-        name = InputAxis_str(move->axis);
++        name = move->axis < INPUT_AXIS__MAX ? InputAxis_str(move->axis) : "invalid";
+         trace_input_event_abs(idx, name, move->value);
+         break;
+     case INPUT_EVENT_KIND_MTT:
+         mtt = evt->u.mtt.data;
+-        name = InputAxis_str(mtt->axis);
++        name = mtt->axis < INPUT_AXIS__MAX ? InputAxis_str(mtt->axis) : "invalid";
+         trace_input_event_mtt(idx, name, mtt->value);
+         break;
+     case INPUT_EVENT_KIND__MAX:
 -- 
 2.54.0
 
