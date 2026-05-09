@@ -4,114 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ED3CCD3447
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 15:05:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFFE3CD3447
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 15:56:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLjF0-0001mG-GU; Sat, 09 May 2026 11:05:18 -0400
+	id 1wLk1x-0002rX-DD; Sat, 09 May 2026 11:55:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wLjEy-0001lq-UU; Sat, 09 May 2026 11:05:16 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wLjEx-00088r-Aw; Sat, 09 May 2026 11:05:16 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64930oxP2539290; Sat, 9 May 2026 15:05:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=qBT4Th
- kNcpm16fvS94fmtwBfbxKGdW/5tNEv+hFPknw=; b=HhrNKn0TZqDP+FqHX9MFmE
- CLaexBT+bO2XB0x5BkzuthrBNV4iBSbnxerHwoj0ruD6EWJmjlzTt8aCl7/f2ydH
- EX2qz7RpmdPF8PexOt4hpIRrFf1W7qGELWRMSvpOGRnJNvwQ60SDXWWHuZPJdKXr
- JH0bHl4fLU3wl5e2neEQ9AizA3Xda9oFzmnF/NIhBWn7MnWM+kmuXrM6EKBsj+yw
- G/CvTX1dM2d1VPpqIpXCWw4XR3ORWkAoHnQ+B8uyRCX4Fe5EQbPUXfrBGb8A0ERo
- jLabVH0VMZhSjcHPIbdXPi+UcMBqiTs7dg9hiUBQTT4FCSJZ7U64/dHv+BoysZjw
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e1vn4hxde-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 09 May 2026 15:05:05 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 649EsSXg023618;
- Sat, 9 May 2026 15:05:04 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dwuywn1q1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 09 May 2026 15:05:04 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 649F506n57868690
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 9 May 2026 15:05:00 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7C29F20049;
- Sat,  9 May 2026 15:05:00 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BE75A20040;
- Sat,  9 May 2026 15:04:53 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.39.25.188]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Sat,  9 May 2026 15:04:53 +0000 (GMT)
-Date: Sat, 9 May 2026 20:34:50 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, clg@kaod.org,
- npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
- marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
- thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, jishnuvw@linux.ibm.com
-Subject: Re: [PATCH v4 9/9] pnv/phb4: Mask off LSI Source-ID based on number
- of interrupts
-Message-ID: <af9M4YtLceZXP06j@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20260210134110.1515322-1-saif.abrar@linux.vnet.ibm.com>
- <20260305060923.3753402-1-saif.abrar@linux.vnet.ibm.com>
- <20260305060923.3753402-10-saif.abrar@linux.vnet.ibm.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wLk1v-0002qq-2R
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 11:55:51 -0400
+Received: from mail-oi1-x22d.google.com ([2607:f8b0:4864:20::22d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wLk1s-00067c-HN
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 11:55:50 -0400
+Received: by mail-oi1-x22d.google.com with SMTP id
+ 5614622812f47-4645dde00a7so3458358b6e.1
+ for <qemu-devel@nongnu.org>; Sat, 09 May 2026 08:55:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778342147; x=1778946947; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=UIe1TwzzmtnhaTKxmUPSPKa1uj6sqPU9ENCN7VBJksA=;
+ b=L6aGssrlz2zfKX2atmvXqKLYimCfn7yj0t6f/EQ61gEf8InGxC79bm2McGcUIe6F66
+ mvLwkHiEOUxG0jstL6rf0piURVyPNzxKE8M+AHJQk4UMtLmA/GaE+fto6Cjx0FB7FDUI
+ z8le58qgTe7L9mfHbTUv0/VXecRcXwocqZKfSY/b/E9j9cnRutdccW8l3I5Hk/58iORJ
+ aKDiYV7lAoRo87Ga82Bm1UJHJPYFZPnKmj4mpKn7q1LHw2U6bSTh/rSxFOdYST5bkf0s
+ LBB2Ndo0qjyHCC/JhN10qBR1sHKJZ7u96JIG+NfWK1+sb69KzvIcCOX+ycGI92I09Ndf
+ w69Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778342147; x=1778946947;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UIe1TwzzmtnhaTKxmUPSPKa1uj6sqPU9ENCN7VBJksA=;
+ b=FZTu7X2bYa+Nn6+m5PvI4TvXArEHOkS9cqxykzIFpWf6z6Y7u96MCGY+udGS0Hw9+T
+ kbVycmbttLZlJmcj+3w6SzNI1RVKoPWrUnseXCAqTuHT7wUd8Mdl4oysr0wWPLzkjdlU
+ vYFVOtoZigb/XuhbLrL/69WgZqbcR47HSCsHjz09Xudc9CGDV7Ec2V+pwKzB3C++SVYd
+ 00nvEcnNLWWt8KCJodhHCnmILfrgqRyDcg4b+CFOVKeO7THVtxEORFAC2HPVxbroI9W2
+ rBTYeD0Jg/P/Kevf8kzH/ukby0Mea7jiWbN/lYa1fay2JrFH1SH0r1FZ54x4jY8/sw6n
+ eW9Q==
+X-Gm-Message-State: AOJu0Yw+qu483Cr46G+XXFCc+N5n0K3358bRnzZrqWjUDf9zUQFO1enc
+ s1K5i+EdZGfzciLBmXfZpZbHtBX9YcPOpwwsAbz/5EuqSmeBk8PAosyZYylN08yq1Vwuyd4WR0b
+ BHv/K
+X-Gm-Gg: Acq92OHXskkCtQFlwcDQ+9uttcQOevxSQJT2pHVkvFUcLNZUggkL0TJfQyo5oTuH56p
+ f6ttuNiCHYUkAMLfGbBpLASclWAr0ph3mRE7orlsKlzj9Lj2k7pTr6orgXckFFHfvg3FHa103EB
+ uuowWyvKw6M/k2AWAVDv1noWg/nOdS/bZZzpJO2bkboxw9xzoBjHxhCzsAxUR+erCRnDlb0hWdZ
+ Oswpn2BX3jTClnvhEPfc8lAjl+PPWyhOo6Fa3Irk/yh/dACrWdBlJ6cSefUsoO9wP/SgxIzsJEC
+ CjFp/1CRcIXOSjy9BSY7SjPjzsMB5XqrZ6aYIu68jo+q1gFdJmpP2tEeUZD0iAhAkuGdGVfeRHx
+ CwhksnGUSZXx1E0Tsz04KQsrjod3EgLKYFREf7sQtDnXgzsUIDpIG0yVJN2uYoSa+UNgc+kJc/J
+ gdboBO03U4op2kfZyFx+koZIc/45n4o7DQqBM4eHiUCThZy7OS6XxA3idDxvLR26R2kxw=
+X-Received: by 2002:a05:6808:1442:b0:450:b249:71bb with SMTP id
+ 5614622812f47-48061c39bdbmr6392923b6e.19.1778342146999; 
+ Sat, 09 May 2026 08:55:46 -0700 (PDT)
+Received: from stoup.attlocal.net ([2600:381:c938:6375:88d3:58e4:a68b:b30c])
+ by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-7e367a18481sm3278310a34.0.2026.05.09.08.55.46
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 09 May 2026 08:55:46 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL v2 00/28] fpu patch queue
+Date: Sat,  9 May 2026 10:55:44 -0500
+Message-ID: <20260509155544.848204-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260305060923.3753402-10-saif.abrar@linux.vnet.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=BM+DalQG c=1 sm=1 tr=0 ts=69ff4d22 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=kUKHeS9f1dJEPYFD:21 a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22
- a=VnNF1IyMAAAA:8 a=aow-egSQAAAA:8 a=PGcDxPPNg-x8-EFvyMgA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=gFNbaldVC-z-bsjSTzMo:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA5MDE1OSBTYWx0ZWRfX1c0zRN9NtjzE
- zBhTZVfLRdQwKpLpZo8Aqfxi7wj38cCeoRLt1fK+7Ae/ppeGD+arpVXJzYZ2iWYyBSToV4Arp63
- 0pL2up9GqC/YrKP4XD3W0fW2Dgq5bL0H6/4BFqnt7GhkbCCNDejVnwZx4epVvmWahqr0fpqg7t9
- hRlYvLBM/1AXSA0B2+pJOvb4msqHbQXYTKueubqmNQdI7gOQvIPF2/IvhZABgZuJTGv3awFtCBp
- wByMjmIhMVhn4Igq+XAI6SEPi1rGAhJnG1HFnxYyWGX5tilJg2n3ZvFfkVy7Excvh2ySqiHJWCT
- dHdHPU/PPEROJTMBagsxaEdi4g40dLjg+dTr9xHZkukouhsoWlYA8jVnev0gIVMdFcDRFwr7X+b
- QQWJ6neE0ju/dRAjGMLPvJzqEawY6WqkMDeTcdHOCK73ie5BiRhDQHmmOdhODDhAGVughy6K0eh
- nG3rQ0hf6wI9i5lj8Tg==
-X-Proofpoint-GUID: XOkHvR_h1oJf5bMv7LqOnQwxrFW2STNp
-X-Proofpoint-ORIG-GUID: WDXMQn7JQBYe23nO74qNQQvY52bbweJk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-09_05,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 suspectscore=0 bulkscore=0 spamscore=0
- lowpriorityscore=0 priorityscore=1501 adultscore=0 malwarescore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
- definitions=main-2605090159
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,58 +98,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/03/05 12:09AM, Saif Abrar wrote:
-> Add a method to reset the value of LSI Source-ID.
-> Mask off LSI source-id based on number of interrupts in the big/small PHB.
-> 
-> Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-> Reviewed-by: Cédric Le Goater <clg@kaod.org>
-> ---
-> v3: Updates for coding guidelines.
-> v2: Introduced method pnv_phb4_xsrc_reset().
-> 
->  hw/pci-host/pnv_phb4.c | 12 +++++++++---
->  1 file changed, 9 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
-> index 254bbe4089..5e885cb89d 100644
-> --- a/hw/pci-host/pnv_phb4.c
-> +++ b/hw/pci-host/pnv_phb4.c
-> @@ -490,6 +490,7 @@ static void pnv_phb4_update_xsrc(PnvPHB4 *phb)
->  
->      lsi_base = GETFIELD(PHB_LSI_SRC_ID, phb->regs[PHB_LSI_SOURCE_ID >> 3]);
->      lsi_base <<= 3;
-> +    lsi_base &= (xsrc->nr_irqs - 1);
->  
->      /* TODO: handle reset values of PHB_LSI_SRC_ID */
->      if (!lsi_base) {
-> @@ -1944,6 +1945,12 @@ static void pnv_phb4_ro_mask_init(PnvPHB4 *phb)
->      /* TODO: Add more RO-masks as regs are implemented in the model */
->  }
->  
-> +static void pnv_phb4_xsrc_reset(PnvPHB4 *phb)
-> +{
-> +    phb->regs[PHB_LSI_SOURCE_ID >> 3] = PPC_BITMASK(4, 12);
-> +    pnv_phb4_update_xsrc(phb);
-> +}
-> +
->  static void pnv_phb4_err_reg_reset(PnvPHB4 *phb)
->  {
->      STICKY_RST(PHB_ERR_STATUS,       0, PPC_BITMASK(0, 33));
-> @@ -2000,10 +2007,11 @@ static void pnv_phb4_reset(Object *obj, ResetType type)
->      PnvPHB4 *phb = PNV_PHB4(obj);
->  
->      pnv_phb4_pbl_core_reset(phb);
-> +
-> +    pnv_phb4_xsrc_reset(phb);
->      pnv_phb4_err_reg_reset(phb);
->      pnv_phb4_pcie_stack_reg_reset(phb);
->      pnv_phb4_regb_err_reg_reset(phb);
-> -    phb->regs[PHB_PCIE_CRESET >> 3] = 0xE000000000000000;
+v2: Drop "Return struct from parts{64,128}_scalbn".
+I have a fix, but I'll include with the next patch set.
 
-why is resetting PHB_PCIE_CRESET removed here, is it not expected to
-change during reset ?
 
-- Aditya G
+r~
 
+
+The following changes since commit ee7eb612be8f8886d48c1d0c1f1c65e495138f83:
+
+  Merge tag 'single-binary-20260506' of https://github.com/philmd/qemu into staging (2026-05-06 10:45:02 -0400)
+
+are available in the Git repository at:
+
+  https://gitlab.com/rth7680/qemu.git tags/pull-fpu-20260509
+
+for you to fetch changes up to 16495533131af2eb94019e32c72688ea5e1b2742:
+
+  host-utils: Introduce signed saturation primitives (2026-05-09 10:50:01 -0500)
+
+----------------------------------------------------------------
+fpu: Cleanups and export FloatParts{64,128} internals,
+     so far with a limited number of primitives.
+host-utils: Introduce signed saturation primitives
+
+----------------------------------------------------------------
+Richard Henderson (28):
+      fpu: Inline float8_e4m3_pack_raw to single caller
+      fpu: Inline float8_e5m2_pack_raw into single caller
+      fpu: Inline float16_pack_raw into callers
+      fpu: Inline bfloat16_pack_raw into callers
+      fpu: Inline float32_pack_raw into callers
+      fpu: Inline float64_pack_raw into callers
+      fpu: Mark unpack_raw64 QEMU_ALWAYS_INLINE
+      fpu: Mark pack_raw64 QEMU_ALWAYS_INLINE
+      fpu: Split FloatParts{64,128} to softfloat-parts.h
+      fpu: Export FloatFmt structures
+      fpu: Export unpack_canonical and round_pack_canonical routines
+      fpu: Return struct from parts{64,128}_default_nan
+      fpu: Return struct from parts{64,128}_silence_nan
+      fpu: Return struct from parts{64,128}_return_nan
+      fpu: Sink exp_bias adjustment in float64r32_pack_raw
+      fpu: Return struct from parts{64,128}_pick_nan
+      fpu: Return struct from parts{64,128}_div
+      fpu: Return struct from parts{64,128}_round_to_int
+      fpu: Export default_nan, pick_nan, return_nan routines
+      fpu: Introduce parts64_round_to_fmt
+      fpu: Return struct from parts{64,128}_pick_nan_muladd
+      fpu: Introduce record_denormals_used
+      fpu: Split scalbn from partsN(muladd_scalbn)
+      fpu: Export parts{64,128}_compare
+      fpu: Return struct from parts{64,128}_mul
+      fpu: Return struct from parts{64,128}_addsub
+      fpu: Drop QEMU_FLATTEN from muladd routines
+      host-utils: Introduce signed saturation primitives
+
+ include/fpu/softfloat-parts.h  | 217 ++++++++++++++++++
+ include/qemu/host-utils.h      |  60 +++++
+ accel/tcg/tcg-runtime-gvec.c   |  20 +-
+ fpu/softfloat.c                | 507 ++++++++++++++++-------------------------
+ fpu/softfloat-parts.c.inc      | 270 ++++++++++------------
+ fpu/softfloat-specialize.c.inc |  42 ++--
+ 6 files changed, 630 insertions(+), 486 deletions(-)
+ create mode 100644 include/fpu/softfloat-parts.h
 
