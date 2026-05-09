@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4FBBCD343F
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 10:52:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CD4BCD3447
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 10:53:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLfFd-0000Qk-43; Sat, 09 May 2026 06:49:41 -0400
+	id 1wLfFc-0000OK-KK; Sat, 09 May 2026 06:49:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wLfF5-0008Ob-S0; Sat, 09 May 2026 06:49:09 -0400
+ id 1wLfF4-0008Me-3L; Sat, 09 May 2026 06:49:07 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wLfEy-0001ec-El; Sat, 09 May 2026 06:49:05 -0400
+ id 1wLfEy-0001eP-4v; Sat, 09 May 2026 06:49:05 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 649AlY2B090834
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 649AlY28090834
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 9 May 2026 19:47:59 +0900 (JST)
+ Sat, 9 May 2026 19:47:58 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=ROUhaRxtDzPB8FJJRyCm0S9ppDBULPhLkvEBb93D+50=; 
+DKIM-Signature: a=rsa-sha256; bh=z/EGey40LOEv17Pvn66VgBRZhGLL4HJQUkguBO+Y1og=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1778323679; v=1;
- b=lzTC9DyfFbto9QQqJIWX4TjTyGPPBAJyLLupmTJeGxRQGJSl/m+z8PbzrGj5hs5Y
- 84QpcOTGt4CAoUiRUmz6+tjrT/UqoeEQb9qAfhRxtUf7YNGY1wd1b3Lf8a0T6c11
- vor9zI6VjIBEyD7sutt1sCCc/pt+vyuQiA4Lr+CzuVgmzPORLpPOaycOiNXJy1aR
- KB2DGB0ETvv4v37fuYY7QfFxlZDJE9F4XyhrMnY5UaUcbnwTnYSm5SVr4SuKM/aQ
- E/5b8EMUHyI+CPmrnRojYg9V7ff5dRTjDhRpOe1G4l0ZZ3zplR32h3OZGA5AouHL
- XzFQzM4WKw9gg6KvIq+S0g==
+ s=rs20250326; t=1778323678; v=1;
+ b=GYMIwyk8UNicrCM4cO6ol5CgpiMFcpyJRHEzaB1y5mMJ+e3G+jJD2FY7wc/tdjei
+ 7uUvvXCo6sKFT+7m2CiA6Sn6VjJdZ6yMVyLdypAGnRE6FR49gnosYvZwSGdD0BNJ
+ BLt8KWwisGb+lka6q95XTW5npP71NUeEmPKae8cz2NKD+4z1APN3rVOO8Btis6XC
+ 2vD9H3TXrYSEtxq+CvV0GYaknE6MAWunPOAB5whuoXeCFzt0P6mwKFQo2swNQX6L
+ eR2rCUwiOvOlH3rNFroJPwuT2QqE4ar4Tp8nvmErDCT9a6LIUYdVfCfuDmLGufaz
+ yq6BbhtvoCB0m8ld80Q1rQ==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 09 May 2026 19:34:22 +0900
-Subject: [PATCH RFC 10/28] hw/input/adb-kbd: Use Linux key codes
+Date: Sat, 09 May 2026 19:34:19 +0900
+Subject: [PATCH RFC 07/28] hw/arm/musicpal: Use Linux key codes
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260509-input-v1-10-66f18d2edde6@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260509-input-v1-7-66f18d2edde6@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260509-input-v1-0-66f18d2edde6@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260509-input-v1-0-66f18d2edde6@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -58,13 +58,13 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.16-dev-16047
-X-Developer-Signature: v=1; a=openpgp-sha256; l=11545;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1974;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=IuNc0nZq13Cfg85XfjaPn1/m1nF4glzSwdiuAeVhaoQ=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ+Z/gUu3xSqPLlG2uVqgmuKU9vDaMn/3f4kTXl74G97Rw
- mkd//9PRykLgxgXg6yYIktK0W5ujejaT4UJ8S0wc1iZQIYwcHEKwEQi8hn+x/GuUVd/6lP7xX1l
- htXZq2nLzl24X71jt8LHrOe79m7oMGP4Xyd7QKOyrOl61MacbtUXanklidZJsRM2Meeov2i8r/u
- FAwA=
+ bh=RnkN4NRWsDSiP2qNkaQCIyNqKJi7Ny8kXSY3/H4eSpI=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ+Z/gYvPjmwQMus5Pi/fPct8to3mcd5pYs93zy5bH+/D+
+ b53sfWDjlIWBjEuBlkxRZaUot3cGtG1nwoT4ltg5rAygQxh4OIUgIlkqzP8M515nLfzurpPbNha
+ jc28ofbaTSt2xdss37tO9u5e55n3djL896hgWnhaYVHuhojiOVV1d2OUp01esjVzWnrC7VncsVL
+ nWAE=
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -73,8 +73,8 @@ X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_75_100=0.001 autolearn=no autolearn_force=no
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,280 +96,71 @@ representations.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/input/adb-kbd.c | 242 ++++++++++++++++++++++++++---------------------------
- 1 file changed, 120 insertions(+), 122 deletions(-)
+ hw/arm/musicpal.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/hw/input/adb-kbd.c b/hw/input/adb-kbd.c
-index 060481d0db6d..c4ef9ebb90c8 100644
---- a/hw/input/adb-kbd.c
-+++ b/hw/input/adb-kbd.c
-@@ -26,6 +26,7 @@
- #include "hw/input/adb.h"
- #include "migration/vmstate.h"
- #include "qemu/module.h"
+diff --git a/hw/arm/musicpal.c b/hw/arm/musicpal.c
+index bddbfb5d20a3..10722e2f6d07 100644
+--- a/hw/arm/musicpal.c
++++ b/hw/arm/musicpal.c
+@@ -24,6 +24,7 @@
+ #include "hw/core/ptimer.h"
+ #include "hw/core/qdev-properties.h"
+ #include "hw/block/flash.h"
 +#include "standard-headers/linux/input-event-codes.h"
- #include "ui/input.h"
- #include "hw/input/adb-keys.h"
- #include "adb-internal.h"
-@@ -55,124 +56,122 @@ struct ADBKeyboardClass {
- /* The adb keyboard doesn't have every key imaginable */
- #define NO_KEY 0xff
- 
--int qcode_to_adb_keycode[] = {
-+int linux_to_adb_keycode[] = {
-      /* Make sure future additions are automatically set to NO_KEY */
--    [0 ... 0xff]               = NO_KEY,
--
--    [Q_KEY_CODE_SHIFT]         = ADB_KEY_LEFT_SHIFT,
--    [Q_KEY_CODE_SHIFT_R]       = ADB_KEY_RIGHT_SHIFT,
--    [Q_KEY_CODE_ALT]           = ADB_KEY_LEFT_OPTION,
--    [Q_KEY_CODE_ALT_R]         = ADB_KEY_RIGHT_OPTION,
--    [Q_KEY_CODE_CTRL]          = ADB_KEY_LEFT_CONTROL,
--    [Q_KEY_CODE_CTRL_R]        = ADB_KEY_RIGHT_CONTROL,
--    [Q_KEY_CODE_META_L]        = ADB_KEY_COMMAND,
--    [Q_KEY_CODE_META_R]        = ADB_KEY_COMMAND,
--    [Q_KEY_CODE_SPC]           = ADB_KEY_SPACEBAR,
--
--    [Q_KEY_CODE_ESC]           = ADB_KEY_ESC,
--    [Q_KEY_CODE_1]             = ADB_KEY_1,
--    [Q_KEY_CODE_2]             = ADB_KEY_2,
--    [Q_KEY_CODE_3]             = ADB_KEY_3,
--    [Q_KEY_CODE_4]             = ADB_KEY_4,
--    [Q_KEY_CODE_5]             = ADB_KEY_5,
--    [Q_KEY_CODE_6]             = ADB_KEY_6,
--    [Q_KEY_CODE_7]             = ADB_KEY_7,
--    [Q_KEY_CODE_8]             = ADB_KEY_8,
--    [Q_KEY_CODE_9]             = ADB_KEY_9,
--    [Q_KEY_CODE_0]             = ADB_KEY_0,
--    [Q_KEY_CODE_MINUS]         = ADB_KEY_MINUS,
--    [Q_KEY_CODE_EQUAL]         = ADB_KEY_EQUAL,
--    [Q_KEY_CODE_BACKSPACE]     = ADB_KEY_DELETE,
--    [Q_KEY_CODE_TAB]           = ADB_KEY_TAB,
--    [Q_KEY_CODE_Q]             = ADB_KEY_Q,
--    [Q_KEY_CODE_W]             = ADB_KEY_W,
--    [Q_KEY_CODE_E]             = ADB_KEY_E,
--    [Q_KEY_CODE_R]             = ADB_KEY_R,
--    [Q_KEY_CODE_T]             = ADB_KEY_T,
--    [Q_KEY_CODE_Y]             = ADB_KEY_Y,
--    [Q_KEY_CODE_U]             = ADB_KEY_U,
--    [Q_KEY_CODE_I]             = ADB_KEY_I,
--    [Q_KEY_CODE_O]             = ADB_KEY_O,
--    [Q_KEY_CODE_P]             = ADB_KEY_P,
--    [Q_KEY_CODE_BRACKET_LEFT]  = ADB_KEY_LEFT_BRACKET,
--    [Q_KEY_CODE_BRACKET_RIGHT] = ADB_KEY_RIGHT_BRACKET,
--    [Q_KEY_CODE_RET]           = ADB_KEY_RETURN,
--    [Q_KEY_CODE_A]             = ADB_KEY_A,
--    [Q_KEY_CODE_S]             = ADB_KEY_S,
--    [Q_KEY_CODE_D]             = ADB_KEY_D,
--    [Q_KEY_CODE_F]             = ADB_KEY_F,
--    [Q_KEY_CODE_G]             = ADB_KEY_G,
--    [Q_KEY_CODE_H]             = ADB_KEY_H,
--    [Q_KEY_CODE_J]             = ADB_KEY_J,
--    [Q_KEY_CODE_K]             = ADB_KEY_K,
--    [Q_KEY_CODE_L]             = ADB_KEY_L,
--    [Q_KEY_CODE_SEMICOLON]     = ADB_KEY_SEMICOLON,
--    [Q_KEY_CODE_APOSTROPHE]    = ADB_KEY_APOSTROPHE,
--    [Q_KEY_CODE_GRAVE_ACCENT]  = ADB_KEY_GRAVE_ACCENT,
--    [Q_KEY_CODE_BACKSLASH]     = ADB_KEY_BACKSLASH,
--    [Q_KEY_CODE_Z]             = ADB_KEY_Z,
--    [Q_KEY_CODE_X]             = ADB_KEY_X,
--    [Q_KEY_CODE_C]             = ADB_KEY_C,
--    [Q_KEY_CODE_V]             = ADB_KEY_V,
--    [Q_KEY_CODE_B]             = ADB_KEY_B,
--    [Q_KEY_CODE_N]             = ADB_KEY_N,
--    [Q_KEY_CODE_M]             = ADB_KEY_M,
--    [Q_KEY_CODE_COMMA]         = ADB_KEY_COMMA,
--    [Q_KEY_CODE_DOT]           = ADB_KEY_PERIOD,
--    [Q_KEY_CODE_SLASH]         = ADB_KEY_FORWARD_SLASH,
--    [Q_KEY_CODE_ASTERISK]      = ADB_KEY_KP_MULTIPLY,
--    [Q_KEY_CODE_CAPS_LOCK]     = ADB_KEY_CAPS_LOCK,
--
--    [Q_KEY_CODE_F1]            = ADB_KEY_F1,
--    [Q_KEY_CODE_F2]            = ADB_KEY_F2,
--    [Q_KEY_CODE_F3]            = ADB_KEY_F3,
--    [Q_KEY_CODE_F4]            = ADB_KEY_F4,
--    [Q_KEY_CODE_F5]            = ADB_KEY_F5,
--    [Q_KEY_CODE_F6]            = ADB_KEY_F6,
--    [Q_KEY_CODE_F7]            = ADB_KEY_F7,
--    [Q_KEY_CODE_F8]            = ADB_KEY_F8,
--    [Q_KEY_CODE_F9]            = ADB_KEY_F9,
--    [Q_KEY_CODE_F10]           = ADB_KEY_F10,
--    [Q_KEY_CODE_F11]           = ADB_KEY_F11,
--    [Q_KEY_CODE_F12]           = ADB_KEY_F12,
--    [Q_KEY_CODE_PRINT]         = ADB_KEY_F13,
--    [Q_KEY_CODE_SYSRQ]         = ADB_KEY_F13,
--    [Q_KEY_CODE_SCROLL_LOCK]   = ADB_KEY_F14,
--    [Q_KEY_CODE_PAUSE]         = ADB_KEY_F15,
--
--    [Q_KEY_CODE_NUM_LOCK]      = ADB_KEY_KP_CLEAR,
--    [Q_KEY_CODE_KP_EQUALS]     = ADB_KEY_KP_EQUAL,
--    [Q_KEY_CODE_KP_DIVIDE]     = ADB_KEY_KP_DIVIDE,
--    [Q_KEY_CODE_KP_MULTIPLY]   = ADB_KEY_KP_MULTIPLY,
--    [Q_KEY_CODE_KP_SUBTRACT]   = ADB_KEY_KP_SUBTRACT,
--    [Q_KEY_CODE_KP_ADD]        = ADB_KEY_KP_PLUS,
--    [Q_KEY_CODE_KP_ENTER]      = ADB_KEY_KP_ENTER,
--    [Q_KEY_CODE_KP_DECIMAL]    = ADB_KEY_KP_PERIOD,
--    [Q_KEY_CODE_KP_0]          = ADB_KEY_KP_0,
--    [Q_KEY_CODE_KP_1]          = ADB_KEY_KP_1,
--    [Q_KEY_CODE_KP_2]          = ADB_KEY_KP_2,
--    [Q_KEY_CODE_KP_3]          = ADB_KEY_KP_3,
--    [Q_KEY_CODE_KP_4]          = ADB_KEY_KP_4,
--    [Q_KEY_CODE_KP_5]          = ADB_KEY_KP_5,
--    [Q_KEY_CODE_KP_6]          = ADB_KEY_KP_6,
--    [Q_KEY_CODE_KP_7]          = ADB_KEY_KP_7,
--    [Q_KEY_CODE_KP_8]          = ADB_KEY_KP_8,
--    [Q_KEY_CODE_KP_9]          = ADB_KEY_KP_9,
--
--    [Q_KEY_CODE_UP]            = ADB_KEY_UP,
--    [Q_KEY_CODE_DOWN]          = ADB_KEY_DOWN,
--    [Q_KEY_CODE_LEFT]          = ADB_KEY_LEFT,
--    [Q_KEY_CODE_RIGHT]         = ADB_KEY_RIGHT,
--
--    [Q_KEY_CODE_HELP]          = ADB_KEY_HELP,
--    [Q_KEY_CODE_INSERT]        = ADB_KEY_HELP,
--    [Q_KEY_CODE_DELETE]        = ADB_KEY_FORWARD_DELETE,
--    [Q_KEY_CODE_HOME]          = ADB_KEY_HOME,
--    [Q_KEY_CODE_END]           = ADB_KEY_END,
--    [Q_KEY_CODE_PGUP]          = ADB_KEY_PAGE_UP,
--    [Q_KEY_CODE_PGDN]          = ADB_KEY_PAGE_DOWN,
--
--    [Q_KEY_CODE_POWER]         = ADB_KEY_POWER
-+    [0 ... KEY_MAX]  = NO_KEY,
-+
-+    [KEY_LEFTSHIFT]  = ADB_KEY_LEFT_SHIFT,
-+    [KEY_RIGHTSHIFT] = ADB_KEY_RIGHT_SHIFT,
-+    [KEY_LEFTALT]    = ADB_KEY_LEFT_OPTION,
-+    [KEY_RIGHTALT]   = ADB_KEY_RIGHT_OPTION,
-+    [KEY_LEFTCTRL]   = ADB_KEY_LEFT_CONTROL,
-+    [KEY_RIGHTCTRL]  = ADB_KEY_RIGHT_CONTROL,
-+    [KEY_LEFTMETA]   = ADB_KEY_COMMAND,
-+    [KEY_RIGHTMETA]  = ADB_KEY_COMMAND,
-+    [KEY_SPACE]      = ADB_KEY_SPACEBAR,
-+
-+    [KEY_ESC]        = ADB_KEY_ESC,
-+    [KEY_1]          = ADB_KEY_1,
-+    [KEY_2]          = ADB_KEY_2,
-+    [KEY_3]          = ADB_KEY_3,
-+    [KEY_4]          = ADB_KEY_4,
-+    [KEY_5]          = ADB_KEY_5,
-+    [KEY_6]          = ADB_KEY_6,
-+    [KEY_7]          = ADB_KEY_7,
-+    [KEY_8]          = ADB_KEY_8,
-+    [KEY_9]          = ADB_KEY_9,
-+    [KEY_0]          = ADB_KEY_0,
-+    [KEY_MINUS]      = ADB_KEY_MINUS,
-+    [KEY_EQUAL]      = ADB_KEY_EQUAL,
-+    [KEY_BACKSPACE]  = ADB_KEY_DELETE,
-+    [KEY_TAB]        = ADB_KEY_TAB,
-+    [KEY_Q]          = ADB_KEY_Q,
-+    [KEY_W]          = ADB_KEY_W,
-+    [KEY_E]          = ADB_KEY_E,
-+    [KEY_R]          = ADB_KEY_R,
-+    [KEY_T]          = ADB_KEY_T,
-+    [KEY_Y]          = ADB_KEY_Y,
-+    [KEY_U]          = ADB_KEY_U,
-+    [KEY_I]          = ADB_KEY_I,
-+    [KEY_O]          = ADB_KEY_O,
-+    [KEY_P]          = ADB_KEY_P,
-+    [KEY_LEFTBRACE]  = ADB_KEY_LEFT_BRACKET,
-+    [KEY_RIGHTBRACE] = ADB_KEY_RIGHT_BRACKET,
-+    [KEY_ENTER]      = ADB_KEY_RETURN,
-+    [KEY_A]          = ADB_KEY_A,
-+    [KEY_S]          = ADB_KEY_S,
-+    [KEY_D]          = ADB_KEY_D,
-+    [KEY_F]          = ADB_KEY_F,
-+    [KEY_G]          = ADB_KEY_G,
-+    [KEY_H]          = ADB_KEY_H,
-+    [KEY_J]          = ADB_KEY_J,
-+    [KEY_K]          = ADB_KEY_K,
-+    [KEY_L]          = ADB_KEY_L,
-+    [KEY_SEMICOLON]  = ADB_KEY_SEMICOLON,
-+    [KEY_APOSTROPHE] = ADB_KEY_APOSTROPHE,
-+    [KEY_GRAVE]      = ADB_KEY_GRAVE_ACCENT,
-+    [KEY_BACKSLASH]  = ADB_KEY_BACKSLASH,
-+    [KEY_Z]          = ADB_KEY_Z,
-+    [KEY_X]          = ADB_KEY_X,
-+    [KEY_C]          = ADB_KEY_C,
-+    [KEY_V]          = ADB_KEY_V,
-+    [KEY_B]          = ADB_KEY_B,
-+    [KEY_N]          = ADB_KEY_N,
-+    [KEY_M]          = ADB_KEY_M,
-+    [KEY_COMMA]      = ADB_KEY_COMMA,
-+    [KEY_DOT]        = ADB_KEY_PERIOD,
-+    [KEY_SLASH]      = ADB_KEY_FORWARD_SLASH,
-+    [KEY_CAPSLOCK]   = ADB_KEY_CAPS_LOCK,
-+
-+    [KEY_F1]         = ADB_KEY_F1,
-+    [KEY_F2]         = ADB_KEY_F2,
-+    [KEY_F3]         = ADB_KEY_F3,
-+    [KEY_F4]         = ADB_KEY_F4,
-+    [KEY_F5]         = ADB_KEY_F5,
-+    [KEY_F6]         = ADB_KEY_F6,
-+    [KEY_F7]         = ADB_KEY_F7,
-+    [KEY_F8]         = ADB_KEY_F8,
-+    [KEY_F9]         = ADB_KEY_F9,
-+    [KEY_F10]        = ADB_KEY_F10,
-+    [KEY_F11]        = ADB_KEY_F11,
-+    [KEY_F12]        = ADB_KEY_F12,
-+    [KEY_SYSRQ]      = ADB_KEY_F13,
-+    [KEY_SCROLLLOCK] = ADB_KEY_F14,
-+    [KEY_PAUSE]      = ADB_KEY_F15,
-+
-+    [KEY_NUMLOCK]    = ADB_KEY_KP_CLEAR,
-+    [KEY_KPEQUAL]    = ADB_KEY_KP_EQUAL,
-+    [KEY_KPSLASH]    = ADB_KEY_KP_DIVIDE,
-+    [KEY_KPASTERISK] = ADB_KEY_KP_MULTIPLY,
-+    [KEY_KPMINUS]    = ADB_KEY_KP_SUBTRACT,
-+    [KEY_KPPLUS]     = ADB_KEY_KP_PLUS,
-+    [KEY_KPENTER]    = ADB_KEY_KP_ENTER,
-+    [KEY_KPDOT]      = ADB_KEY_KP_PERIOD,
-+    [KEY_KP0]        = ADB_KEY_KP_0,
-+    [KEY_KP1]        = ADB_KEY_KP_1,
-+    [KEY_KP2]        = ADB_KEY_KP_2,
-+    [KEY_KP3]        = ADB_KEY_KP_3,
-+    [KEY_KP4]        = ADB_KEY_KP_4,
-+    [KEY_KP5]        = ADB_KEY_KP_5,
-+    [KEY_KP6]        = ADB_KEY_KP_6,
-+    [KEY_KP7]        = ADB_KEY_KP_7,
-+    [KEY_KP8]        = ADB_KEY_KP_8,
-+    [KEY_KP9]        = ADB_KEY_KP_9,
-+
-+    [KEY_UP]         = ADB_KEY_UP,
-+    [KEY_DOWN]       = ADB_KEY_DOWN,
-+    [KEY_LEFT]       = ADB_KEY_LEFT,
-+    [KEY_RIGHT]      = ADB_KEY_RIGHT,
-+
-+    [KEY_HELP]       = ADB_KEY_HELP,
-+    [KEY_INSERT]     = ADB_KEY_HELP,
-+    [KEY_DELETE]     = ADB_KEY_FORWARD_DELETE,
-+    [KEY_HOME]       = ADB_KEY_HOME,
-+    [KEY_END]        = ADB_KEY_END,
-+    [KEY_PAGEUP]     = ADB_KEY_PAGE_UP,
-+    [KEY_PAGEDOWN]   = ADB_KEY_PAGE_DOWN,
-+
-+    [KEY_POWER]      = ADB_KEY_POWER
- };
- 
- static void adb_kbd_put_keycode(void *opaque, int keycode)
-@@ -309,14 +308,13 @@ static void adb_keyboard_event(DeviceState *dev, QemuConsole *src,
+ #include "ui/console.h"
+ #include "hw/i2c/i2c.h"
+ #include "hw/i2c/bitbang_i2c.h"
+@@ -1068,40 +1069,39 @@ static void musicpal_key_event(DeviceState *dev, QemuConsole *src,
                                 QemuInputEvent *evt)
  {
-     KBDState *s = (KBDState *)dev;
--    int qcode, keycode;
-+    int keycode;
+     musicpal_key_state *s = MUSICPAL_KEY(dev);
+-    int qcode = qemu_input_linux_to_qcode(evt->key.key);
+     uint32_t event = 0;
+     int i;
  
--    qcode = qemu_input_linux_to_qcode(evt->key.key);
--    if (qcode >= ARRAY_SIZE(qcode_to_adb_keycode)) {
-+    if (evt->key.key >= ARRAY_SIZE(linux_to_adb_keycode)) {
-         return;
+-    switch (qcode) {
+-    case Q_KEY_CODE_UP:
++    switch (evt->key.key) {
++    case KEY_UP:
+         event = MP_KEY_WHEEL_NAV | MP_KEY_WHEEL_NAV_INV;
+         break;
+ 
+-    case Q_KEY_CODE_DOWN:
++    case KEY_DOWN:
+         event = MP_KEY_WHEEL_NAV;
+         break;
+ 
+-    case Q_KEY_CODE_LEFT:
++    case KEY_LEFT:
+         event = MP_KEY_WHEEL_VOL | MP_KEY_WHEEL_VOL_INV;
+         break;
+ 
+-    case Q_KEY_CODE_RIGHT:
++    case KEY_RIGHT:
+         event = MP_KEY_WHEEL_VOL;
+         break;
+ 
+-    case Q_KEY_CODE_F:
++    case KEY_F:
+         event = MP_KEY_BTN_FAVORITS;
+         break;
+ 
+-    case Q_KEY_CODE_TAB:
++    case KEY_TAB:
+         event = MP_KEY_BTN_VOLUME;
+         break;
+ 
+-    case Q_KEY_CODE_RET:
++    case KEY_ENTER:
+         event = MP_KEY_BTN_NAVIGATION;
+         break;
+ 
+-    case Q_KEY_CODE_M:
++    case KEY_M:
+         event = MP_KEY_BTN_MENU;
+         break;
      }
--    /* FIXME: take handler into account when translating qcode */
--    keycode = qcode_to_adb_keycode[qcode];
-+    /* FIXME: take handler into account when translating evt->key.key */
-+    keycode = linux_to_adb_keycode[evt->key.key];
-     if (keycode == NO_KEY) {  /* We don't want to send this to the guest */
-         trace_adb_device_kbd_no_key();
-         return;
 
 -- 
 2.54.0
