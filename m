@@ -4,74 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B6EACD3445
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 17:16:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF02BCD3447
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 17:16:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLlHJ-0003qf-SL; Sat, 09 May 2026 13:15:49 -0400
+	id 1wLlHO-0004OV-Bx; Sat, 09 May 2026 13:15:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wLlGs-0003IA-AC
- for qemu-devel@nongnu.org; Sat, 09 May 2026 13:15:26 -0400
+ id 1wLlHH-0003qE-Ms
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 13:15:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wLlGq-00052o-3k
- for qemu-devel@nongnu.org; Sat, 09 May 2026 13:15:21 -0400
+ id 1wLlHG-00059S-6i
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 13:15:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778346917;
+ s=mimecast20190719; t=1778346945;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xI/X402CtmtDzIEVp/khfjIWs7e18AEbTBGOXmkqZYM=;
- b=iFdzBfjhiAgeHfBPOUxDiPvx0ciebhN9Ji/2+ORjYQzCYxdysba/gQFJCVUdGElpc++0A+
- v4FifoFKC4QHFbLYeJalRhUXgVLwGfXTDV3Z3omuRHeeTml0lRpXs0HO/OeChhYkhAQeY3
- B3MIqbspV1Afz9AIZ5Itxn/GVwJFa00=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=7Ew8EtolbjA1D7Hs4jgTfKrH6QjkTzcJn1UfbgtMMQk=;
+ b=WopFJ0IQQ5FB9E0lPD8eIhdi2BLhSHCyv4xZEjbdhuQ+nMlsK7QqAowLmboOAEdJ175PBL
+ i5tGqT/v/HglEe3wPk7f4z6gr3bb+oBD2okmseuiP9g2A27kj4OdHsgTow2xXNsue6Oiml
+ qrP+TGpgrSOdxq1zxGD7YyCTnSsjO7o=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-253-VTM4AlTYNNqdzq2mqTRUyQ-1; Sat,
- 09 May 2026 13:15:14 -0400
-X-MC-Unique: VTM4AlTYNNqdzq2mqTRUyQ-1
-X-Mimecast-MFC-AGG-ID: VTM4AlTYNNqdzq2mqTRUyQ_1778346913
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-179-aVfZwtckP7WDAgx4PhCv4g-1; Sat,
+ 09 May 2026 13:15:44 -0400
+X-MC-Unique: aVfZwtckP7WDAgx4PhCv4g-1
+X-Mimecast-MFC-AGG-ID: aVfZwtckP7WDAgx4PhCv4g_1778346943
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 401D21956094; Sat,  9 May 2026 17:15:13 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1CAB81800343; Sat,  9 May 2026 17:15:43 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 922AA3002D30; Sat,  9 May 2026 17:15:11 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BB29119560A2; Sat,  9 May 2026 17:15:41 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: stefanha@gmail.com,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL v2 12/33] ui/dbus: expose vc encoding via D-Bus
- Chardev.VCEncoding interface
-Date: Sat,  9 May 2026 21:13:33 +0400
-Message-ID: <20260509171356.1157879-13-marcandre.lureau@redhat.com>
+Subject: [PULL v2 17/33] ui/console-vc: extract vt100_init() and vt100_fini()
+Date: Sat,  9 May 2026 21:13:38 +0400
+Message-ID: <20260509171356.1157879-18-marcandre.lureau@redhat.com>
 In-Reply-To: <20260509171356.1157879-1-marcandre.lureau@redhat.com>
 References: <20260509171356.1157879-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,111 +87,127 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-When a D-Bus VC chardev is instantiated, export an extra
-org.qemu.Display1.Chardev.VCEncoding interface on the chardev
-object.  This lets D-Bus display clients discover the encoding
-(cp437 or utf8) in use by the virtual console.
+Consolidate VT100 initialization and finalization into dedicated
+functions, continuing the extraction of the VT100 layer from the
+console/chardev code.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+vt100_init() gathers the scattered setup (cursor timer, list insertion,
+FIFO creation, default attributes, and image) that was previously spread
+across vc_chr_open() and qemu_text_console_class_init().
+
+vt100_fini() pairs with it by handling list removal, FIFO destruction,
+and cells cleanup, replacing the open-coded QTAILQ_REMOVE in
+qemu_text_console_finalize().
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/dbus.h            |  1 +
- ui/dbus-chardev.c    | 10 ++++++++++
- ui/dbus.c            |  6 ++++++
- ui/dbus-display1.xml | 18 ++++++++++++++++++
- 4 files changed, 35 insertions(+)
+ ui/console-vc.c | 55 +++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 37 insertions(+), 18 deletions(-)
 
-diff --git a/ui/dbus.h b/ui/dbus.h
-index 986d7774601..e4e78590b49 100644
---- a/ui/dbus.h
-+++ b/ui/dbus.h
-@@ -126,6 +126,7 @@ typedef struct DBusChardev {
- 
-     bool exported;
-     QemuDBusDisplay1Chardev *iface;
-+    QemuDBusDisplay1ChardevVCEncoding *iface_vc_encoding;
- } DBusChardev;
- 
- DECLARE_INSTANCE_CHECKER(DBusChardev, DBUS_CHARDEV, TYPE_CHARDEV_DBUS)
-diff --git a/ui/dbus-chardev.c b/ui/dbus-chardev.c
-index 9442b475517..55117029acc 100644
---- a/ui/dbus-chardev.c
-+++ b/ui/dbus-chardev.c
-@@ -53,6 +53,15 @@ dbus_display_chardev_export(DBusDisplay *dpy, DBusChardev *chr)
-     sk = g_dbus_object_skeleton_new(path);
-     g_dbus_object_skeleton_add_interface(
-         sk, G_DBUS_INTERFACE_SKELETON(chr->iface));
-+    if (chr->iface_vc_encoding) {
-+        const char *interfaces[] = {
-+            "org.qemu.Display1.Chardev.VCEncoding",
-+            NULL
-+        };
-+        g_dbus_object_skeleton_add_interface(
-+            sk, G_DBUS_INTERFACE_SKELETON(chr->iface_vc_encoding));
-+        g_object_set(chr->iface, "interfaces", interfaces, NULL);
-+    }
-     g_dbus_object_manager_server_export(dpy->server, sk);
-     chr->exported = true;
- }
-@@ -290,6 +299,7 @@ char_dbus_finalize(Object *obj)
-     };
- 
-     dbus_display_notify(&event);
-+    g_clear_object(&dc->iface_vc_encoding);
-     g_clear_object(&dc->iface);
+diff --git a/ui/console-vc.c b/ui/console-vc.c
+index 9f5f49413d2..b58fe5de827 100644
+--- a/ui/console-vc.c
++++ b/ui/console-vc.c
+@@ -331,7 +331,7 @@ static void vt100_write(QemuVT100 *vt, const void *buf, size_t len)
+     vt->out_flush(vt);
  }
  
-diff --git a/ui/dbus.c b/ui/dbus.c
-index 59b73e0aa94..e02a94df2f3 100644
---- a/ui/dbus.c
-+++ b/ui/dbus.c
-@@ -514,6 +514,7 @@ CHARDEV_VC_ENCODING_PROPERTY_DEFINE(DBUS_VC_CHARDEV)
- static bool
- dbus_vc_open(Chardev *chr, ChardevBackend *backend, Error **errp)
+-static int vt100_input(QemuVT100 *vt, const uint8_t *buf, int len);
++static size_t vt100_input(QemuVT100 *vt, const uint8_t *buf, size_t len);
+ 
+ static void vt100_keysym(QemuVT100 *vt, int keysym)
  {
-+    DBusChardev *dc = DBUS_CHARDEV(chr);
-     DBusVCChardev *vc = DBUS_VC_CHARDEV(chr);
-     ChardevClass *parent =
-         CHARDEV_CLASS(object_class_by_name(TYPE_CHARDEV_DBUS));
-@@ -522,6 +523,11 @@ dbus_vc_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-     if (be->has_encoding) {
-         vc->encoding = be->encoding;
-     }
-+    dc->iface_vc_encoding =
-+        qemu_dbus_display1_chardev_vcencoding_skeleton_new();
-+    qemu_dbus_display1_chardev_vcencoding_set_encoding(
-+        dc->iface_vc_encoding,
-+        qapi_enum_lookup(&ChardevVCEncoding_lookup, vc->encoding));
- 
-     return parent->chr_open(chr, backend, errp);
+@@ -1129,12 +1129,19 @@ static void text_console_invalidate(void *opaque)
+     vt100_refresh(&s->vt);
  }
-diff --git a/ui/dbus-display1.xml b/ui/dbus-display1.xml
-index 4a41a7e0f34..d96bae2ed64 100644
---- a/ui/dbus-display1.xml
-+++ b/ui/dbus-display1.xml
-@@ -1141,4 +1141,22 @@
-     -->
-     <property name="Interfaces" type="as" access="read"/>
-   </interface>
+ 
++static void vt100_fini(QemuVT100 *vt)
++{
++    QTAILQ_REMOVE(&vt100s, vt, list);
++    fifo8_destroy(&vt->out_fifo);
++    g_free(vt->cells);
++}
 +
-+  <!--
-+      org.qemu.Display1.Chardev.VCEncoding:
+ static void
+ qemu_text_console_finalize(Object *obj)
+ {
+     QemuTextConsole *s = QEMU_TEXT_CONSOLE(obj);
+ 
+-    QTAILQ_REMOVE(&vt100s, &s->vt, list);
++    vt100_fini(&s->vt);
+ }
+ 
+ static void
+@@ -1142,10 +1149,6 @@ qemu_text_console_class_init(ObjectClass *oc, const void *data)
+ {
+     QemuConsoleClass *cc = QEMU_CONSOLE_CLASS(oc);
+ 
+-    if (!cursor_timer) {
+-        cursor_timer = timer_new_ms(QEMU_CLOCK_REALTIME, cursor_timer_cb, NULL);
+-    }
+-
+     cc->get_label = qemu_text_console_get_label;
+ }
+ 
+@@ -1211,6 +1214,27 @@ static void text_console_out_flush(QemuVT100 *vt)
+     qemu_text_console_out_flush(console);
+ }
+ 
++static void vt100_init(QemuVT100 *vt,
++                       pixman_image_t *image,
++                       ChardevVCEncoding encoding,
++                       void (*image_update)(QemuVT100 *vt, int x, int y, int w, int h),
++                       void (*out_flush)(QemuVT100 *vt))
++{
++    if (!cursor_timer) {
++        cursor_timer = timer_new_ms(QEMU_CLOCK_REALTIME, cursor_timer_cb, NULL);
++    }
 +
-+      Provides encoding information for virtual console chardevs.
++    vt->encoding = encoding;
++    QTAILQ_INSERT_HEAD(&vt100s, vt, list);
++    fifo8_create(&vt->out_fifo, 16);
++    vt->total_height = DEFAULT_BACKSCROLL;
++    vt->image_update = image_update;
++    vt->out_flush = out_flush;
++    /* set current text attributes to default */
++    vt->t_attrib = TEXT_ATTRIBUTES_DEFAULT;
++    vt100_set_image(vt, image);
++}
 +
-+      This interface is present on chardev objects that are virtual
-+      consoles, and exposes the character encoding used by the guest.
-+  -->
-+  <interface name="org.qemu.Display1.Chardev.VCEncoding">
-+    <!--
-+        Encoding:
-+
-+        The character encoding used by the virtual console
-+        (matching ``ChardevVCEncoding``): ``cp437`` or ``utf8``.
-+    -->
-+    <property name="Encoding" type="s" access="read"/>
-+  </interface>
- </node>
+ static bool vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
+ {
+     ChardevVC *vc = backend->u.vc.data;
+@@ -1240,22 +1264,17 @@ static bool vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
+         s = QEMU_TEXT_CONSOLE(object_new(TYPE_QEMU_FIXED_TEXT_CONSOLE));
+     }
+ 
+-    QTAILQ_INSERT_HEAD(&vt100s, &s->vt, list);
+-    fifo8_create(&s->vt.out_fifo, 16);
+-    s->vt.total_height = DEFAULT_BACKSCROLL;
+     dpy_gfx_replace_surface(QEMU_CONSOLE(s), qemu_create_displaysurface(width, height));
+-    s->vt.image_update = text_console_image_update;
+-    s->vt.out_flush = text_console_out_flush;
+-
+-    s->chr = chr;
+-    drv->console = s;
+     if (vc->has_encoding) {
+-        drv->encoding = s->vt.encoding = vc->encoding;
++        drv->encoding = vc->encoding;
+     }
++    vt100_init(&s->vt, QEMU_CONSOLE(s)->surface->image,
++               drv->encoding,
++               text_console_image_update,
++               text_console_out_flush);
+ 
+-    /* set current text attributes to default */
+-    s->vt.t_attrib = TEXT_ATTRIBUTES_DEFAULT;
+-    vt100_set_image(&s->vt, QEMU_CONSOLE(s)->surface->image);
++    s->chr = chr;
++    drv->console = s;
+ 
+     if (chr->label) {
+         char *msg;
 -- 
 2.54.0
 
