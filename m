@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A269CD37B2
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 10:55:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03D03CD37B2
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 10:55:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLfFc-0000O9-BR; Sat, 09 May 2026 06:49:40 -0400
+	id 1wLfFb-0000NT-Qx; Sat, 09 May 2026 06:49:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wLfF5-0008Op-ST; Sat, 09 May 2026 06:49:09 -0400
+ id 1wLfF2-0008KV-6s; Sat, 09 May 2026 06:49:05 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wLfEz-0001f1-Kc; Sat, 09 May 2026 06:49:07 -0400
+ id 1wLfEx-0001e6-Ib; Sat, 09 May 2026 06:49:02 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 649AlY2H090834
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 649AlY2E090834
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 9 May 2026 19:48:00 +0900 (JST)
+ Sat, 9 May 2026 19:47:59 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=gkxRfmhwkMY4g+S+WEuTzEvmi4wzQaAGYuAfCMapg0A=; 
+DKIM-Signature: a=rsa-sha256; bh=jYzmLTbWax8JogN3WJf0BurekwSvWMhETlPn4yFttW0=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
  s=rs20250326; t=1778323680; v=1;
- b=NJrJoRiGLLxqMa0lMY6Rh19isgTMkU+oPrkMUSWr0drsIU+2Gy7kodTh04H4QJWe
- p2hG3XWP7pYslJI2NrxCybg9res96sdo72slm/dwpdrLNSBliD8NhWZ7Otq0rH/h
- K1ZUcSyPEHlko5K/hZOpi+F8l5pFphZRl7/V56Z0BAoTXzx6cVEsxgXIvEIuyO6/
- xgvr/3dHZrYYQmYMu2mmcsu7qU0QNoHsLhuAUQPs7IiO5p5ZGDGae68kTOb/WBRR
- D7rTBfccnutVqfX2cgc94Ul3sixV6ZYEOMPaW2we0biY5ZtMMVtUQ9fWrTL/ChWN
- /qKe62k84rENPbEF1cZN7A==
+ b=iunl5CceMu7WtKDfvF4u1wtP4gK8f2BvxgidjHusJV9SVQMKD/7i69jH8M1ebFU3
+ 8OmeptkXILo4vLeHMJMqccFaQr/CGDspkHNnC1+ssA8QFjq/P5uJ0vBAaiCKvPld
+ zsgVNMNyo9G6pG4aoAHSasB1Pnvjl/NUWeXFzCYsZHhXt0eF4nSnhrG9qhl8hysh
+ 4loo6PYKlcLs3l2b1hM7zIqjzB4+XHqgLFv2dKyXwVH1io0bD+rTTDBKC7l1+upV
+ 0xpR+OFd0lIwWXPJVgsDGC+nnmBRIu99BtWyPTXpQ9UC8CinnVfJfI8RB4QdU7PV
+ fNDJbFAXY33ow3cKZaUMrA==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 09 May 2026 19:34:28 +0900
-Subject: [PATCH RFC 16/28] ui/cocoa: Use Linux key codes
+Date: Sat, 09 May 2026 19:34:25 +0900
+Subject: [PATCH RFC 13/28] hw/input/virtio-input: Use Linux key codes
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260509-input-v1-16-66f18d2edde6@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260509-input-v1-13-66f18d2edde6@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260509-input-v1-0-66f18d2edde6@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260509-input-v1-0-66f18d2edde6@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -58,13 +58,13 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.16-dev-16047
-X-Developer-Signature: v=1; a=openpgp-sha256; l=18862;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3015;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=tV1ogjuk1q8Bmv1QndVZt/tE+dOaJaxGwVIX/iF1iAs=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ+Z/gasMTjsYbN0X3nR/emW33qJQ/R3/BGe4ls2YNXNv6
- JfT1iGdHaUsDGJcDLJiiiwpRbu5NaJrPxUmxLfAzGFlAhvCxSkAE7nPyvDPSlZdb3niis68vT0P
- 9i+aPWnrqTClY92rp07ysvXd37A7k5HhqEW4hegMvV8W9+3/Ol+4Nym9opRXPPS896ksp3+aszm
- YAQ==
+ bh=EmtPHZ4VrwnBl0E92Q8PvtguFqdBkezuol02LtNVvV0=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ+Z/gSvzfv+xztew1A+df7T50dHW53turpq15NGvZXNlS
+ vW/r47f1VHKwiDGxSArpsiSUrSbWyO69lNhQnwLzBxWJpAhDFycAjCRa2cYGS6cPLNlwn1OU/c2
+ qY6GvRsP5i3et6l30cfC6DMc/2Y8dExn+CvGt4ndQ6pMOqLZK1Ohxn69sG3GNOMZhvZXdSpXbjF
+ QZQIA
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -96,484 +96,73 @@ representations.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- ui/cocoa.m | 326 ++++++++++++++++++++++++++++---------------------------------
- 1 file changed, 147 insertions(+), 179 deletions(-)
+ hw/input/virtio-input-hid.c | 40 +++++++++++++++++++++++-----------------
+ 1 file changed, 23 insertions(+), 17 deletions(-)
 
-diff --git a/ui/cocoa.m b/ui/cocoa.m
-index 2322c590cbc0..e82815483c4e 100644
---- a/ui/cocoa.m
-+++ b/ui/cocoa.m
-@@ -30,6 +30,7 @@
- 
- #include "qemu/help-texts.h"
- #include "qemu-main.h"
-+#include "standard-headers/linux/input-event-codes.h"
- #include "ui/clipboard.h"
- #include "ui/console.h"
- #include "ui/input.h"
-@@ -142,124 +143,124 @@ static bool bool_with_bql(BoolCodeBlock block)
-     return val;
- }
- 
--// Mac to QKeyCode conversion
--static const int mac_to_qkeycode_map[] = {
--    [kVK_ANSI_A] = Q_KEY_CODE_A,
--    [kVK_ANSI_B] = Q_KEY_CODE_B,
--    [kVK_ANSI_C] = Q_KEY_CODE_C,
--    [kVK_ANSI_D] = Q_KEY_CODE_D,
--    [kVK_ANSI_E] = Q_KEY_CODE_E,
--    [kVK_ANSI_F] = Q_KEY_CODE_F,
--    [kVK_ANSI_G] = Q_KEY_CODE_G,
--    [kVK_ANSI_H] = Q_KEY_CODE_H,
--    [kVK_ANSI_I] = Q_KEY_CODE_I,
--    [kVK_ANSI_J] = Q_KEY_CODE_J,
--    [kVK_ANSI_K] = Q_KEY_CODE_K,
--    [kVK_ANSI_L] = Q_KEY_CODE_L,
--    [kVK_ANSI_M] = Q_KEY_CODE_M,
--    [kVK_ANSI_N] = Q_KEY_CODE_N,
--    [kVK_ANSI_O] = Q_KEY_CODE_O,
--    [kVK_ANSI_P] = Q_KEY_CODE_P,
--    [kVK_ANSI_Q] = Q_KEY_CODE_Q,
--    [kVK_ANSI_R] = Q_KEY_CODE_R,
--    [kVK_ANSI_S] = Q_KEY_CODE_S,
--    [kVK_ANSI_T] = Q_KEY_CODE_T,
--    [kVK_ANSI_U] = Q_KEY_CODE_U,
--    [kVK_ANSI_V] = Q_KEY_CODE_V,
--    [kVK_ANSI_W] = Q_KEY_CODE_W,
--    [kVK_ANSI_X] = Q_KEY_CODE_X,
--    [kVK_ANSI_Y] = Q_KEY_CODE_Y,
--    [kVK_ANSI_Z] = Q_KEY_CODE_Z,
--
--    [kVK_ANSI_0] = Q_KEY_CODE_0,
--    [kVK_ANSI_1] = Q_KEY_CODE_1,
--    [kVK_ANSI_2] = Q_KEY_CODE_2,
--    [kVK_ANSI_3] = Q_KEY_CODE_3,
--    [kVK_ANSI_4] = Q_KEY_CODE_4,
--    [kVK_ANSI_5] = Q_KEY_CODE_5,
--    [kVK_ANSI_6] = Q_KEY_CODE_6,
--    [kVK_ANSI_7] = Q_KEY_CODE_7,
--    [kVK_ANSI_8] = Q_KEY_CODE_8,
--    [kVK_ANSI_9] = Q_KEY_CODE_9,
--
--    [kVK_ANSI_Grave] = Q_KEY_CODE_GRAVE_ACCENT,
--    [kVK_ANSI_Minus] = Q_KEY_CODE_MINUS,
--    [kVK_ANSI_Equal] = Q_KEY_CODE_EQUAL,
--    [kVK_Delete] = Q_KEY_CODE_BACKSPACE,
--    [kVK_CapsLock] = Q_KEY_CODE_CAPS_LOCK,
--    [kVK_Tab] = Q_KEY_CODE_TAB,
--    [kVK_Return] = Q_KEY_CODE_RET,
--    [kVK_ANSI_LeftBracket] = Q_KEY_CODE_BRACKET_LEFT,
--    [kVK_ANSI_RightBracket] = Q_KEY_CODE_BRACKET_RIGHT,
--    [kVK_ANSI_Backslash] = Q_KEY_CODE_BACKSLASH,
--    [kVK_ANSI_Semicolon] = Q_KEY_CODE_SEMICOLON,
--    [kVK_ANSI_Quote] = Q_KEY_CODE_APOSTROPHE,
--    [kVK_ANSI_Comma] = Q_KEY_CODE_COMMA,
--    [kVK_ANSI_Period] = Q_KEY_CODE_DOT,
--    [kVK_ANSI_Slash] = Q_KEY_CODE_SLASH,
--    [kVK_Space] = Q_KEY_CODE_SPC,
--
--    [kVK_ANSI_Keypad0] = Q_KEY_CODE_KP_0,
--    [kVK_ANSI_Keypad1] = Q_KEY_CODE_KP_1,
--    [kVK_ANSI_Keypad2] = Q_KEY_CODE_KP_2,
--    [kVK_ANSI_Keypad3] = Q_KEY_CODE_KP_3,
--    [kVK_ANSI_Keypad4] = Q_KEY_CODE_KP_4,
--    [kVK_ANSI_Keypad5] = Q_KEY_CODE_KP_5,
--    [kVK_ANSI_Keypad6] = Q_KEY_CODE_KP_6,
--    [kVK_ANSI_Keypad7] = Q_KEY_CODE_KP_7,
--    [kVK_ANSI_Keypad8] = Q_KEY_CODE_KP_8,
--    [kVK_ANSI_Keypad9] = Q_KEY_CODE_KP_9,
--    [kVK_ANSI_KeypadDecimal] = Q_KEY_CODE_KP_DECIMAL,
--    [kVK_ANSI_KeypadEnter] = Q_KEY_CODE_KP_ENTER,
--    [kVK_ANSI_KeypadPlus] = Q_KEY_CODE_KP_ADD,
--    [kVK_ANSI_KeypadMinus] = Q_KEY_CODE_KP_SUBTRACT,
--    [kVK_ANSI_KeypadMultiply] = Q_KEY_CODE_KP_MULTIPLY,
--    [kVK_ANSI_KeypadDivide] = Q_KEY_CODE_KP_DIVIDE,
--    [kVK_ANSI_KeypadEquals] = Q_KEY_CODE_KP_EQUALS,
--    [kVK_ANSI_KeypadClear] = Q_KEY_CODE_NUM_LOCK,
--
--    [kVK_UpArrow] = Q_KEY_CODE_UP,
--    [kVK_DownArrow] = Q_KEY_CODE_DOWN,
--    [kVK_LeftArrow] = Q_KEY_CODE_LEFT,
--    [kVK_RightArrow] = Q_KEY_CODE_RIGHT,
--
--    [kVK_Help] = Q_KEY_CODE_INSERT,
--    [kVK_Home] = Q_KEY_CODE_HOME,
--    [kVK_PageUp] = Q_KEY_CODE_PGUP,
--    [kVK_PageDown] = Q_KEY_CODE_PGDN,
--    [kVK_End] = Q_KEY_CODE_END,
--    [kVK_ForwardDelete] = Q_KEY_CODE_DELETE,
--
--    [kVK_Escape] = Q_KEY_CODE_ESC,
-+// Mac to Linux conversion
-+static const unsigned int mac_to_linux_map[] = {
-+    [kVK_ANSI_A] = KEY_A,
-+    [kVK_ANSI_B] = KEY_B,
-+    [kVK_ANSI_C] = KEY_C,
-+    [kVK_ANSI_D] = KEY_D,
-+    [kVK_ANSI_E] = KEY_E,
-+    [kVK_ANSI_F] = KEY_F,
-+    [kVK_ANSI_G] = KEY_G,
-+    [kVK_ANSI_H] = KEY_H,
-+    [kVK_ANSI_I] = KEY_I,
-+    [kVK_ANSI_J] = KEY_J,
-+    [kVK_ANSI_K] = KEY_K,
-+    [kVK_ANSI_L] = KEY_L,
-+    [kVK_ANSI_M] = KEY_M,
-+    [kVK_ANSI_N] = KEY_N,
-+    [kVK_ANSI_O] = KEY_O,
-+    [kVK_ANSI_P] = KEY_P,
-+    [kVK_ANSI_Q] = KEY_Q,
-+    [kVK_ANSI_R] = KEY_R,
-+    [kVK_ANSI_S] = KEY_S,
-+    [kVK_ANSI_T] = KEY_T,
-+    [kVK_ANSI_U] = KEY_U,
-+    [kVK_ANSI_V] = KEY_V,
-+    [kVK_ANSI_W] = KEY_W,
-+    [kVK_ANSI_X] = KEY_X,
-+    [kVK_ANSI_Y] = KEY_Y,
-+    [kVK_ANSI_Z] = KEY_Z,
-+
-+    [kVK_ANSI_0] = KEY_0,
-+    [kVK_ANSI_1] = KEY_1,
-+    [kVK_ANSI_2] = KEY_2,
-+    [kVK_ANSI_3] = KEY_3,
-+    [kVK_ANSI_4] = KEY_4,
-+    [kVK_ANSI_5] = KEY_5,
-+    [kVK_ANSI_6] = KEY_6,
-+    [kVK_ANSI_7] = KEY_7,
-+    [kVK_ANSI_8] = KEY_8,
-+    [kVK_ANSI_9] = KEY_9,
-+
-+    [kVK_ANSI_Grave] = KEY_GRAVE,
-+    [kVK_ANSI_Minus] = KEY_MINUS,
-+    [kVK_ANSI_Equal] = KEY_EQUAL,
-+    [kVK_Delete] = KEY_BACKSPACE,
-+    [kVK_CapsLock] = KEY_CAPSLOCK,
-+    [kVK_Tab] = KEY_TAB,
-+    [kVK_Return] = KEY_ENTER,
-+    [kVK_ANSI_LeftBracket] = KEY_LEFTBRACE,
-+    [kVK_ANSI_RightBracket] = KEY_RIGHTBRACE,
-+    [kVK_ANSI_Backslash] = KEY_BACKSLASH,
-+    [kVK_ANSI_Semicolon] = KEY_SEMICOLON,
-+    [kVK_ANSI_Quote] = KEY_APOSTROPHE,
-+    [kVK_ANSI_Comma] = KEY_COMMA,
-+    [kVK_ANSI_Period] = KEY_DOT,
-+    [kVK_ANSI_Slash] = KEY_SLASH,
-+    [kVK_Space] = KEY_SPACE,
-+
-+    [kVK_ANSI_Keypad0] = KEY_KP0,
-+    [kVK_ANSI_Keypad1] = KEY_KP1,
-+    [kVK_ANSI_Keypad2] = KEY_KP2,
-+    [kVK_ANSI_Keypad3] = KEY_KP3,
-+    [kVK_ANSI_Keypad4] = KEY_KP4,
-+    [kVK_ANSI_Keypad5] = KEY_KP5,
-+    [kVK_ANSI_Keypad6] = KEY_KP6,
-+    [kVK_ANSI_Keypad7] = KEY_KP7,
-+    [kVK_ANSI_Keypad8] = KEY_KP8,
-+    [kVK_ANSI_Keypad9] = KEY_KP9,
-+    [kVK_ANSI_KeypadDecimal] = KEY_KPDOT,
-+    [kVK_ANSI_KeypadEnter] = KEY_KPENTER,
-+    [kVK_ANSI_KeypadPlus] = KEY_KPPLUS,
-+    [kVK_ANSI_KeypadMinus] = KEY_KPMINUS,
-+    [kVK_ANSI_KeypadMultiply] = KEY_KPASTERISK,
-+    [kVK_ANSI_KeypadDivide] = KEY_KPSLASH,
-+    [kVK_ANSI_KeypadEquals] = KEY_KPEQUAL,
-+    [kVK_ANSI_KeypadClear] = KEY_NUMLOCK,
-+
-+    [kVK_UpArrow] = KEY_UP,
-+    [kVK_DownArrow] = KEY_DOWN,
-+    [kVK_LeftArrow] = KEY_LEFT,
-+    [kVK_RightArrow] = KEY_RIGHT,
-+
-+    [kVK_Help] = KEY_INSERT,
-+    [kVK_Home] = KEY_HOME,
-+    [kVK_PageUp] = KEY_PAGEUP,
-+    [kVK_PageDown] = KEY_PAGEDOWN,
-+    [kVK_End] = KEY_END,
-+    [kVK_ForwardDelete] = KEY_DELETE,
-+
-+    [kVK_Escape] = KEY_ESC,
- 
-     /* The Power key can't be used directly because the operating system uses
-      * it. This key can be emulated by using it in place of another key such as
-      * F1. Don't forget to disable the real key binding.
-      */
--    /* [kVK_F1] = Q_KEY_CODE_POWER, */
--
--    [kVK_F1] = Q_KEY_CODE_F1,
--    [kVK_F2] = Q_KEY_CODE_F2,
--    [kVK_F3] = Q_KEY_CODE_F3,
--    [kVK_F4] = Q_KEY_CODE_F4,
--    [kVK_F5] = Q_KEY_CODE_F5,
--    [kVK_F6] = Q_KEY_CODE_F6,
--    [kVK_F7] = Q_KEY_CODE_F7,
--    [kVK_F8] = Q_KEY_CODE_F8,
--    [kVK_F9] = Q_KEY_CODE_F9,
--    [kVK_F10] = Q_KEY_CODE_F10,
--    [kVK_F11] = Q_KEY_CODE_F11,
--    [kVK_F12] = Q_KEY_CODE_F12,
--    [kVK_F13] = Q_KEY_CODE_PRINT,
--    [kVK_F14] = Q_KEY_CODE_SCROLL_LOCK,
--    [kVK_F15] = Q_KEY_CODE_PAUSE,
-+    /* [kVK_F1] = KEY_POWER, */
-+
-+    [kVK_F1] = KEY_F1,
-+    [kVK_F2] = KEY_F2,
-+    [kVK_F3] = KEY_F3,
-+    [kVK_F4] = KEY_F4,
-+    [kVK_F5] = KEY_F5,
-+    [kVK_F6] = KEY_F6,
-+    [kVK_F7] = KEY_F7,
-+    [kVK_F8] = KEY_F8,
-+    [kVK_F9] = KEY_F9,
-+    [kVK_F10] = KEY_F10,
-+    [kVK_F11] = KEY_F11,
-+    [kVK_F12] = KEY_F12,
-+    [kVK_F13] = KEY_SYSRQ,
-+    [kVK_F14] = KEY_SCROLLLOCK,
-+    [kVK_F15] = KEY_PAUSE,
- 
-     // JIS keyboards only
--    [kVK_JIS_Yen] = Q_KEY_CODE_YEN,
--    [kVK_JIS_Underscore] = Q_KEY_CODE_RO,
--    [kVK_JIS_KeypadComma] = Q_KEY_CODE_KP_COMMA,
--    [kVK_JIS_Eisu] = Q_KEY_CODE_MUHENKAN,
--    [kVK_JIS_Kana] = Q_KEY_CODE_HENKAN,
-+    [kVK_JIS_Yen] = KEY_YEN,
-+    [kVK_JIS_Underscore] = KEY_RO,
-+    [kVK_JIS_KeypadComma] = KEY_KPCOMMA,
-+    [kVK_JIS_Eisu] = KEY_MUHENKAN,
-+    [kVK_JIS_Kana] = KEY_HENKAN,
- 
-     /*
-      * The eject and volume keys can't be used here because they are handled at
-@@ -267,13 +268,13 @@ static bool bool_with_bql(BoolCodeBlock block)
-      */
- };
- 
--static int cocoa_keycode_to_qemu(int keycode)
-+static unsigned int cocoa_keycode_to_linux(int keycode)
+diff --git a/hw/input/virtio-input-hid.c b/hw/input/virtio-input-hid.c
+index 1d2e922567ab..75fe45d89a2a 100644
+--- a/hw/input/virtio-input-hid.c
++++ b/hw/input/virtio-input-hid.c
+@@ -83,23 +83,13 @@ static void virtio_input_handle_event(DeviceState *dev, QemuConsole *src,
  {
--    if (ARRAY_SIZE(mac_to_qkeycode_map) <= keycode) {
-+    if (ARRAY_SIZE(mac_to_linux_map) <= keycode) {
-         error_report("(cocoa) warning unknown keycode 0x%x", keycode);
-         return 0;
-     }
--    return mac_to_qkeycode_map[keycode];
-+    return mac_to_linux_map[keycode];
+     VirtIOInput *vinput = VIRTIO_INPUT(dev);
+     virtio_input_event event;
+-    int qcode;
+ 
+     switch (evt->type) {
+     case INPUT_EVENT_KIND_KEY:
+-        qcode = qemu_input_linux_to_qcode(evt->key.key);
+-        if (qcode < qemu_input_map_qcode_to_linux_len &&
+-            qemu_input_map_qcode_to_linux[qcode]) {
+-            event.type  = cpu_to_le16(EV_KEY);
+-            event.code  = cpu_to_le16(qemu_input_map_qcode_to_linux[qcode]);
+-            event.value = cpu_to_le32(evt->key.down ? 1 : 0);
+-            virtio_input_send(vinput, &event);
+-        } else {
+-            if (evt->key.down) {
+-                fprintf(stderr, "%s: unmapped key: %d [%s]\n", __func__,
+-                        qcode, QKeyCode_str(qcode));
+-            }
+-        }
++        event.type  = cpu_to_le16(EV_KEY);
++        event.code  = cpu_to_le16(evt->key.key);
++        event.value = cpu_to_le32(evt->key.down ? 1 : 0);
++        virtio_input_send(vinput, &event);
+         break;
+     case INPUT_EVENT_KIND_BTN:
+         if ((evt->btn.button == INPUT_BUTTON_WHEEL_UP ||
+@@ -293,12 +283,28 @@ static void virtio_keyboard_init(Object *obj)
+ {
+     VirtIOInputHID *vhid = VIRTIO_INPUT_HID(obj);
+     VirtIOInput *vinput = VIRTIO_INPUT(obj);
++    virtio_input_config ext = {
++        .select = VIRTIO_INPUT_CFG_EV_BITS,
++        .subsel = EV_KEY,
++        .size = DIV_ROUND_UP(KEY_REPLY, 8)
++    };
++    unsigned int i;
+ 
+     vhid->handler = &virtio_keyboard_handler;
+     virtio_input_init_config(vinput, virtio_keyboard_config);
+-    virtio_input_extend_config(vinput, qemu_input_map_qcode_to_linux,
+-                               qemu_input_map_qcode_to_linux_len,
+-                               VIRTIO_INPUT_CFG_EV_BITS, EV_KEY);
++
++    /*
++     * Cover as many keys as possible since we cannot tell what keys the host
++     * supports. This follows Linux xen-kbdfront's approach:
++     * https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/diff/drivers/input/xen-kbdfront.c?id=4ee36dc08e5c4d16d078f59acd6d9d536f9718dd
++     *
++     * Stop before KEY_REPLY for migration compatibility.
++     */
++    for (i = KEY_ESC; i < KEY_REPLY; i++) {
++        ext.u.bitmap[i / 8] |= (1 << (i % 8));
++    }
++
++    virtio_input_add_config(vinput, &ext);
  }
  
- /* Displays an alert dialog box with the specified message */
-@@ -770,8 +771,7 @@ - (void) setFullGrab:(id)sender
- }
- 
- - (void) toggleKey: (int)keycode {
--    unsigned int lnx = qemu_input_map_qcode_to_linux[keycode];
--    qkbd_state_key_event(kbd, lnx, !qkbd_state_key_get(kbd, lnx));
-+    qkbd_state_key_event(kbd, keycode, !qkbd_state_key_get(kbd, keycode));
- }
- 
- // Does the work of sending input to the monitor
-@@ -851,7 +851,7 @@ - (bool) handleEventLocked:(NSEvent *)event
-     /* Return true if we handled the event, false if it should be given to OSX */
-     COCOA_DEBUG("QemuCocoaView: handleEvent\n");
-     InputButton button;
--    int keycode = 0;
-+    unsigned int keycode;
-     NSUInteger modifiers = [event modifierFlags];
- 
-     /*
-@@ -893,62 +893,34 @@ - (bool) handleEventLocked:(NSEvent *)event
-      */
-     if (!!(modifiers & NSEventModifierFlagCapsLock) !=
-         qkbd_state_modifier_get(kbd, QKBD_MOD_CAPSLOCK)) {
--        qkbd_state_key_event(kbd,
--                             qemu_input_map_qcode_to_linux[Q_KEY_CODE_CAPS_LOCK],
--                             true);
--        qkbd_state_key_event(kbd,
--                             qemu_input_map_qcode_to_linux[Q_KEY_CODE_CAPS_LOCK],
--                             false);
-+        qkbd_state_key_event(kbd, KEY_CAPSLOCK, true);
-+        qkbd_state_key_event(kbd, KEY_CAPSLOCK, false);
-     }
- 
-     if (!(modifiers & NSEventModifierFlagShift)) {
--        qkbd_state_key_event(kbd,
--                             qemu_input_map_qcode_to_linux[Q_KEY_CODE_SHIFT],
--                             false);
--        qkbd_state_key_event(kbd,
--                             qemu_input_map_qcode_to_linux[Q_KEY_CODE_SHIFT_R],
--                             false);
-+        qkbd_state_key_event(kbd, KEY_LEFTSHIFT, false);
-+        qkbd_state_key_event(kbd, KEY_RIGHTSHIFT, false);
-     }
-     if (!(modifiers & NSEventModifierFlagControl)) {
--        qkbd_state_key_event(kbd,
--                             qemu_input_map_qcode_to_linux[Q_KEY_CODE_CTRL],
--                             false);
--        qkbd_state_key_event(kbd,
--                             qemu_input_map_qcode_to_linux[Q_KEY_CODE_CTRL_R],
--                             false);
-+        qkbd_state_key_event(kbd, KEY_LEFTCTRL, false);
-+        qkbd_state_key_event(kbd, KEY_RIGHTCTRL, false);
-     }
-     if (!(modifiers & NSEventModifierFlagOption)) {
-         if (swap_opt_cmd) {
--            qkbd_state_key_event(kbd,
--                                 qemu_input_map_qcode_to_linux[Q_KEY_CODE_META_L],
--                                 false);
--            qkbd_state_key_event(kbd,
--                                 qemu_input_map_qcode_to_linux[Q_KEY_CODE_META_R],
--                                 false);
-+            qkbd_state_key_event(kbd, KEY_LEFTMETA, false);
-+            qkbd_state_key_event(kbd, KEY_RIGHTMETA, false);
-         } else {
--            qkbd_state_key_event(kbd,
--                                 qemu_input_map_qcode_to_linux[Q_KEY_CODE_ALT],
--                                 false);
--            qkbd_state_key_event(kbd,
--                                 qemu_input_map_qcode_to_linux[Q_KEY_CODE_ALT_R],
--                                 false);
-+            qkbd_state_key_event(kbd, KEY_LEFTALT, false);
-+            qkbd_state_key_event(kbd, KEY_RIGHTALT, false);
-         }
-     }
-     if (!(modifiers & NSEventModifierFlagCommand)) {
-         if (swap_opt_cmd) {
--            qkbd_state_key_event(kbd,
--                                 qemu_input_map_qcode_to_linux[Q_KEY_CODE_ALT],
--                                 false);
--            qkbd_state_key_event(kbd,
--                                 qemu_input_map_qcode_to_linux[Q_KEY_CODE_ALT_R],
--                                 false);
-+            qkbd_state_key_event(kbd, KEY_LEFTALT, false);
-+            qkbd_state_key_event(kbd, KEY_RIGHTALT, false);
-         } else {
--            qkbd_state_key_event(kbd,
--                                 qemu_input_map_qcode_to_linux[Q_KEY_CODE_META_L],
--                                 false);
--            qkbd_state_key_event(kbd,
--                                 qemu_input_map_qcode_to_linux[Q_KEY_CODE_META_R],
--                                 false);
-+            qkbd_state_key_event(kbd, KEY_LEFTMETA, false);
-+            qkbd_state_key_event(kbd, KEY_RIGHTMETA, false);
-         }
-     }
- 
-@@ -957,34 +929,34 @@ - (bool) handleEventLocked:(NSEvent *)event
-             switch ([event keyCode]) {
-                 case kVK_Shift:
-                     if (!!(modifiers & NSEventModifierFlagShift)) {
--                        [self toggleKey:Q_KEY_CODE_SHIFT];
-+                        [self toggleKey:KEY_LEFTSHIFT];
-                     }
-                     break;
- 
-                 case kVK_RightShift:
-                     if (!!(modifiers & NSEventModifierFlagShift)) {
--                        [self toggleKey:Q_KEY_CODE_SHIFT_R];
-+                        [self toggleKey:KEY_RIGHTSHIFT];
-                     }
-                     break;
- 
-                 case kVK_Control:
-                     if (!!(modifiers & NSEventModifierFlagControl)) {
--                        [self toggleKey:Q_KEY_CODE_CTRL];
-+                        [self toggleKey:KEY_LEFTCTRL];
-                     }
-                     break;
- 
-                 case kVK_RightControl:
-                     if (!!(modifiers & NSEventModifierFlagControl)) {
--                        [self toggleKey:Q_KEY_CODE_CTRL_R];
-+                        [self toggleKey:KEY_RIGHTCTRL];
-                     }
-                     break;
- 
-                 case kVK_Option:
-                     if (!!(modifiers & NSEventModifierFlagOption)) {
-                         if (swap_opt_cmd) {
--                            [self toggleKey:Q_KEY_CODE_META_L];
-+                            [self toggleKey:KEY_LEFTMETA];
-                         } else {
--                            [self toggleKey:Q_KEY_CODE_ALT];
-+                            [self toggleKey:KEY_LEFTALT];
-                         }
-                     }
-                     break;
-@@ -992,9 +964,9 @@ - (bool) handleEventLocked:(NSEvent *)event
-                 case kVK_RightOption:
-                     if (!!(modifiers & NSEventModifierFlagOption)) {
-                         if (swap_opt_cmd) {
--                            [self toggleKey:Q_KEY_CODE_META_R];
-+                            [self toggleKey:KEY_RIGHTMETA];
-                         } else {
--                            [self toggleKey:Q_KEY_CODE_ALT_R];
-+                            [self toggleKey:KEY_RIGHTALT];
-                         }
-                     }
-                     break;
-@@ -1005,9 +977,9 @@ - (bool) handleEventLocked:(NSEvent *)event
-                         !!(modifiers & NSEventModifierFlagCommand) &&
-                         left_command_key_enabled) {
-                         if (swap_opt_cmd) {
--                            [self toggleKey:Q_KEY_CODE_ALT];
-+                            [self toggleKey:KEY_LEFTALT];
-                         } else {
--                            [self toggleKey:Q_KEY_CODE_META_L];
-+                            [self toggleKey:KEY_LEFTMETA];
-                         }
-                     }
-                     break;
-@@ -1016,16 +988,16 @@ - (bool) handleEventLocked:(NSEvent *)event
-                     if (isMouseGrabbed &&
-                         !!(modifiers & NSEventModifierFlagCommand)) {
-                         if (swap_opt_cmd) {
--                            [self toggleKey:Q_KEY_CODE_ALT_R];
-+                            [self toggleKey:KEY_RIGHTALT];
-                         } else {
--                            [self toggleKey:Q_KEY_CODE_META_R];
-+                            [self toggleKey:KEY_RIGHTMETA];
-                         }
-                     }
-                     break;
-             }
-             return true;
-         case NSEventTypeKeyDown:
--            keycode = cocoa_keycode_to_qemu([event keyCode]);
-+            keycode = cocoa_keycode_to_linux([event keyCode]);
- 
-             // forward command key combos to the host UI unless the mouse is grabbed
-             if (!isMouseGrabbed && ([event modifierFlags] & NSEventModifierFlagCommand)) {
-@@ -1055,15 +1027,13 @@ - (bool) handleEventLocked:(NSEvent *)event
-             }
- 
-             if (qemu_console_is_graphic(dcl.con)) {
--                qkbd_state_key_event(kbd,
--                                     qemu_input_map_qcode_to_linux[keycode],
--                                     true);
-+                qkbd_state_key_event(kbd, keycode, true);
-             } else {
-                 [self handleMonitorInput: event];
-             }
-             return true;
-         case NSEventTypeKeyUp:
--            keycode = cocoa_keycode_to_qemu([event keyCode]);
-+            keycode = cocoa_keycode_to_linux([event keyCode]);
- 
-             // don't pass the guest a spurious key-up if we treated this
-             // command-key combo as a host UI action
-@@ -1072,9 +1042,7 @@ - (bool) handleEventLocked:(NSEvent *)event
-             }
- 
-             if (qemu_console_is_graphic(dcl.con)) {
--                qkbd_state_key_event(kbd,
--                                     qemu_input_map_qcode_to_linux[keycode],
--                                     false);
-+                qkbd_state_key_event(kbd, keycode, false);
-             }
-             return true;
-         case NSEventTypeScrollWheel:
+ static const TypeInfo virtio_keyboard_info = {
 
 -- 
 2.54.0
