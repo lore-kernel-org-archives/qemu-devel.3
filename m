@@ -4,144 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 905F5CD37AC
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 00:59:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3697FCD37AC
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 01:17:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLW2N-0003cu-S8; Fri, 08 May 2026 20:59:23 -0400
+	id 1wLWJ6-0005q8-OX; Fri, 08 May 2026 21:16:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wLW2L-0003cm-Q7
- for qemu-devel@nongnu.org; Fri, 08 May 2026 20:59:21 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wLWJ4-0005o9-L1; Fri, 08 May 2026 21:16:38 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wLW2K-0006VS-6S
- for qemu-devel@nongnu.org; Fri, 08 May 2026 20:59:21 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 648GTgQQ145197
- for <qemu-devel@nongnu.org>; Sat, 9 May 2026 00:59:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- mtlcyq4gW2kekOHPEsMKa9ui5E+y29feXr6fBtrcslI=; b=WyJIy0tMdVKt+Ke/
- b+gVABQcClqDma+rIWOWd2RxdVrynDBMM0tzPHox+EsNPJ3ASDpmaoIkjRq+c1ae
- BkjsA8S7jUwKtTKWWoKGiM8OvGMZFF1Ynju8HXvVYuV0imD61FlYhIbIes75hjTD
- f1MnMVBNwTJKnmh2FIjB2Hfx/MofmHgqLBTRTP0rykRh3ib8CrbbpLdxHyh37NMr
- 8ieweIQlhNKiq5r7UfjAP28NRyK1LRWShCzJA1pnh7LBcN+h61LU6ccwsA1SFqjr
- MeWn7rTzqT0LZMdNmsnKW1uaPzPIVEOozgSEKoZUg7rhO71FYnH93kK+DGbRvq8j
- tQDqng==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e1kdc1c8n-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sat, 09 May 2026 00:59:18 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-2ef62078ee7so3184454eec.0
- for <qemu-devel@nongnu.org>; Fri, 08 May 2026 17:59:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778288357; x=1778893157; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=mtlcyq4gW2kekOHPEsMKa9ui5E+y29feXr6fBtrcslI=;
- b=kQY1E2XuqEP2i2pEIrQn2jl8OqKkQ7rv7HWnXvSL1k/Uin6YWKpV/V/KoKD6CEg4D6
- iC5BGEQVEvzgesgxqPFgpdNWN/LLcczyp4SV7zHeh3BftNp+EImRDvycf6DYapA5k4aI
- 8I7f5DTrrNO0r2u1WqBkcVD7NeddtrU7pAdLJlUsp2WU86lwFxDUgL1M2qvQtBXlnQyw
- CBYIGTLYyaJPkYOdA/bw24BrNZDmjm/3LKZ7ksuSDdTYbjImVNvlv9pAO0xnmQu/qlw1
- y6ZXQcgAO3ookLKduw54q6fO7Gh1LiGXZ8Q81T4b8J080QV67KxN0f0QqwQhI1RM2iNg
- gvTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778288357; x=1778893157;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=mtlcyq4gW2kekOHPEsMKa9ui5E+y29feXr6fBtrcslI=;
- b=CrPRQ8w0Pl/WyG+4e9iKIDajnzjFF47N2n4VdI4adNm4TYZR8kB2n4tR0nBoOGToA2
- T+XsfsmttSjJPjhwjXxxHZUrvuQwUdP14kKwthsVHanOCNH77k9LOrZFM8DoLboOCnqM
- U2BPocG1PSfHU95vtm3dGTfxS0elJgCIeJGQJYIljOqertfcMkVqHGWMr+Y0zTYmlQ1Z
- 3v93jUXalLzPKfYbd/nmnTpzhoFGMlNPZyHmCyIlHPM3tsvo6Lq0M4q6ZqBlHb16zpBe
- Aw05f4FeJiag+CesNmI9VJTsZ8QCte7QaQnYLnlXz6CGF8scNGeuHPCVvVoi4p23TJJi
- zWXg==
-X-Gm-Message-State: AOJu0YzfAbBKNFK5jP7lTpj5XRquFlSMqJ9almrdXeYJYagwTtP33yIm
- izPL5soSaH3KmSf+TCdNBhl+yvjHuzqzwOq+KnBEmAMkcRFHQVykATdnwwlCpy4Eu7wV9WMExql
- WU4n41Zx1uVsmfwASmq4cP/0+BcdFokArnQsRrNG4F3gk15J2Aog+0wSOmgCRJjuosgw7
-X-Gm-Gg: AeBDiesQbED/hjzj3d8txhXB9wdlEuQCSrr+J0Vfrw5a94uSKrdJdHiYCmGZkBXS3Cy
- dUTpYbWc0HFAMvkcGtLNOrCNfeRThRc8FvnXIK6Q9tEj13LqOk3NyKXhHebdNWu6fPU1/JyroDP
- Ntes2O9jM3DYEKJj60J7sGTNnNsbceRUglJqmFtD0VCLP9ocVuwicMz/wiY3yOsT3K3K3st4h5f
- UZV6fs/lPNcB4o/htAZKPRCLKVQ7bQI6oKbKmZdSPOkxx3Q4lovqUZ65L/uE9FgWbygpau8L8eH
- c6zBJIw4X0BXSWEDEkcrl/z/HjypEWz0TdPsgI9NWbt8UvNf6SwlkvGPCYWCRyFIaednySUcJkN
- 2KnoVEfipbYLD3OjxO8p5PxRfGzRS4tKCQnuUD9/2LqfNqzF4dZMgEHEQ/eWXUdIqHyHj6xaQWI
- 9qUzxkW3myn4bzqQ==
-X-Received: by 2002:a05:7022:4594:b0:11a:fb3c:568b with SMTP id
- a92af1059eb24-131853e5b5amr6478633c88.17.1778288356908; 
- Fri, 08 May 2026 17:59:16 -0700 (PDT)
-X-Received: by 2002:a05:7022:4594:b0:11a:fb3c:568b with SMTP id
- a92af1059eb24-131853e5b5amr6478622c88.17.1778288356331; 
- Fri, 08 May 2026 17:59:16 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1327865a1a4sm4572208c88.10.2026.05.08.17.59.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 May 2026 17:59:15 -0700 (PDT)
-Message-ID: <7854820a-9879-47ec-95ba-7f7ae65374a0@oss.qualcomm.com>
-Date: Fri, 8 May 2026 17:59:14 -0700
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wLWJ2-0001I0-FO; Fri, 08 May 2026 21:16:38 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 648EsgWa2503246; Sat, 9 May 2026 01:16:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=p58GKm
+ dpoNE6O/HxwgyoiRhehxrK3yLCqIe44vfn8lk=; b=r4M82mbHpe5NPISHk7xMkY
+ 96c5SwE+xxDOi0pQqJH455mp/ToHPWVr0grRorP5m6vPRDTsFc6FcTmALi8QI6w0
+ t5cOzM3IUiPbLzomZrxooL7ND3bZLjaabcXoSQEGtSWQMKmnKOASdk9fmYhGfqGM
+ hTIogseVzaP7ZGQYgYdWgXtxbczqH0fg/XGyo/XQHEibwkiKnuxKGHJYO0LZeNW6
+ b9it1K93w1gXctfZgWb4vTAhX9fJvI8qDuuwPxBeY7utMkauvciWfkJaFpBRSx9D
+ x1jukiZ9HHxRQklm0RdZQEEB9GLqpN3Qir2hs8LFZnpHqfekSQKBdxOQvI75bF4A
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dw9y1x656-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 09 May 2026 01:16:33 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64919hHg020387;
+ Sat, 9 May 2026 01:16:33 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dwwtgtceu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 09 May 2026 01:16:33 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6491GVqa30278340
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sat, 9 May 2026 01:16:31 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0F9DF5805C;
+ Sat,  9 May 2026 01:16:31 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6DED55805E;
+ Sat,  9 May 2026 01:16:30 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.61.111.34]) by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Sat,  9 May 2026 01:16:30 +0000 (GMT)
+Message-ID: <60502b8ce770a418bd8c66f3b236e15bcbda6892.camel@linux.ibm.com>
+Subject: Re: [PATCH 4/6] s390x: Introduce PCI SCSI IPLB and boot type
+From: Eric Farman <farman@linux.ibm.com>
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ cohuck@redhat.com
+Cc: jjherne@linux.ibm.com, mjrosato@linux.ibm.com, zycai@linux.ibm.com
+Date: Fri, 08 May 2026 21:16:30 -0400
+In-Reply-To: <20260504221613.826825-5-jrossi@linux.ibm.com>
+References: <20260504221613.826825-1-jrossi@linux.ibm.com>
+ <20260504221613.826825-5-jrossi@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 6/6] target-info-qom: use a single class_init for
- target-info-* classes
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Max Filippov <jcmvbkbc@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Anton Johansson <anjo@rev.ng>
-References: <20260509005453.3984184-1-pierrick.bouvier@oss.qualcomm.com>
- <20260509005453.3984184-7-pierrick.bouvier@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260509005453.3984184-7-pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA5MDAwNyBTYWx0ZWRfX48nFLEvbD0gl
- 5JnkYspa+060r1BXfwuTQbaatXqfck49NOjPEVF2F8LQ0AxtMULO6qpgCKsvxrvCXlIFecuxS8q
- bM60TG37FOMjZRvvb6SQZmDsQlA+zYhiCiWYMV3f/k962kQX/fjA/ZAdXjZuepRCzgvGBOsp7FN
- j0q8cAwKE69TzX+SYm/y8omQLOsuYvk+jMhKSvtCEMMuS1As+XZfSHjOKb6wQupy7SRPWUr1yge
- IVkhXjv+UZHFVdy+bszVJAQ6sF70VZNoQJp0Rzjj/gbk/hrdQbV8dzyuwQZ6B+B9HBZ4nPhp0v+
- OzOaDK848STcjWMPy0Lj11a0r9sSmfGajZJ7kfXr91imwhsCMVljTp+eYXMcNqwQj3AQNUkgL2k
- desPEQRQ2eN3Ib50+UG5rsWCHKbCd0yLsvVHTaxQkmO3tBZnkIr879WUOxhT3p+tSZsuYaveIk7
- 93IGaIg3XNbTuBAFG/w==
-X-Authority-Analysis: v=2.4 cv=RZOgzVtv c=1 sm=1 tr=0 ts=69fe86e6 cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=h2DMTY1dD-fEPWrfL-YA:9 a=QEXdDO2ut3YA:10
- a=bBxd6f-gb0O0v-kibOvt:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: 0ULXmnpA8lRL276W5h7JXI3Iks6eNSFc
-X-Proofpoint-ORIG-GUID: 0ULXmnpA8lRL276W5h7JXI3Iks6eNSFc
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: tbdiDEQIoFE0crpy28M1XgHNowuHvOHL
+X-Proofpoint-GUID: tbdiDEQIoFE0crpy28M1XgHNowuHvOHL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA5MDAwOSBTYWx0ZWRfX2p5xyur0GsCX
+ aD9RWAyeatyk6QbRLvjlCiYGZYqQqEa0cN1Cee3ODrAK3XaVlBJxFkagT4xIqj3Z5ba8LqTQG6+
+ VznKq19SJ9Ntx6ipliro8vd75QIKjYCaS6GPB0ZtRB4SvZRhqWuakcoAjregt+kW7W3FkC8XXwm
+ v0tsvbeXoYxwgABmLlw760t6ngK2R7QzNNma83xgrs/lielVnK9s3jaZvVO+/QHL7U7obNH2XfW
+ ycwdkeFumGQl5RGo0Be0+YUJmZpvGFIZXCi7qtXMTcxN+qOyem9fwbaHbf4jJythjqHskg+RKJG
+ IWXZDGx0pwAFjFnceneKNA9LqD2Ico2UjfhYkPSR5vMH0bUy//Pi9CY6wnjcYnVj1MJMTEhRnRr
+ hSLx76mmBp9t5ruuM32KkhGUfsmRPxNraThMWB3BLgxFdCDSpBABEWnFDu4PGMVvBC7ikQ2KcRJ
+ hRPObo90PA5RYvGYHKQ==
+X-Authority-Analysis: v=2.4 cv=UbFhjqSN c=1 sm=1 tr=0 ts=69fe8af1 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=6Bxsp5yC6BjMQxoAau0A:9 a=QEXdDO2ut3YA:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-09_01,2026-05-08_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 suspectscore=0 impostorscore=0 malwarescore=0
- adultscore=0 phishscore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0
+ clxscore=1015 spamscore=0 lowpriorityscore=0 malwarescore=0 suspectscore=0
+ adultscore=0 priorityscore=1501 bulkscore=0 phishscore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605090007
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605090009
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -158,91 +120,256 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/8/2026 5:54 PM, Pierrick Bouvier wrote:
-> Instead of defining a class_init per class, just use a common
-> constructor and set class_data to corresponding TargetInfo structure.
-> 
-> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+On Mon, 2026-05-04 at 18:16 -0400, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
+>=20
+> Define a new IPLB format for SCSI PCI devices and add cases to handle it.
+>=20
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 > ---
->  include/qemu/target-info-init.h | 14 ++------------
->  include/qemu/target-info-qom.h  |  1 +
->  target-info-qom.c               |  6 ++++++
->  3 files changed, 9 insertions(+), 12 deletions(-)
-> 
-> diff --git a/include/qemu/target-info-init.h b/include/qemu/target-info-init.h
-> index 176fd975a16..3945f2998e0 100644
-> --- a/include/qemu/target-info-init.h
-> +++ b/include/qemu/target-info-init.h
-> @@ -37,8 +37,6 @@ const TargetInfo *target_info(void)     \
->  #include "qemu/target-info-qom.h"
->  #include "qom/object.h"
->  
-> -#define TYPE_TARGET_INFO_TARGET TYPE_TARGET_INFO"-"TARGET_NAME
-> -
->  typedef struct TargetInfoQomTarget {
->      TargetInfoQom parent;
->  } TargetInfoQomTarget;
-> @@ -47,24 +45,16 @@ typedef struct TargetInfoQomTargetClass {
->      TargetInfoQomClass parent_class;
->  } TargetInfoQomTargetClass;
->  
-> -OBJECT_DECLARE_TYPE(TargetInfoQomTarget, TargetInfoQomTargetClass, TARGET_INFO_TARGET)
-> -
->  #define target_info_init(ti_var)                                            \
-> -static void target_info_qom_class_init(ObjectClass *oc, const void * data)  \
-> -{                                                                           \
-> -    TargetInfoQomTargetClass *klass = TARGET_INFO_TARGET_CLASS(oc);         \
-> -    klass->parent_class.target_info = &ti_var;                              \
-> -}                                                                           \
-> -                                                                            \
->  static const TypeInfo target_info_qom_target_type_info = {                  \
-> -    .name = TYPE_TARGET_INFO_TARGET,                                        \
-> +    .name =  TYPE_TARGET_INFO"-"TARGET_NAME,                                \
->      .parent = TYPE_TARGET_INFO,                                             \
->      .instance_size = sizeof(TargetInfoQomTarget),                           \
->      .class_size = sizeof(TargetInfoQomTargetClass),                         \
->      .class_init = target_info_qom_class_init,                               \
-> +    .class_data = &ti_var,                                                  \
->      .abstract = false,                                                      \
->  };                                                                          \
-> -                                                                            \
->  DEFINE_TARGET_INFO_TYPE(target_info_qom_target_type_info)
->  
->  #endif /* CONFIG_USER_ONLY */
-> diff --git a/include/qemu/target-info-qom.h b/include/qemu/target-info-qom.h
-> index 91be415ed33..a37c3e101e0 100644
-> --- a/include/qemu/target-info-qom.h
-> +++ b/include/qemu/target-info-qom.h
-> @@ -25,6 +25,7 @@ typedef struct TargetInfoQomClass {
->  
->  OBJECT_DECLARE_TYPE(TargetInfoQom, TargetInfoQomClass, TARGET_INFO)
->  
-> +void target_info_qom_class_init(ObjectClass *oc, const void * data);
->  void target_info_qom_set_target(void);
->  
->  #endif /* QEMU_TARGET_INFO_QOM_H */
-> diff --git a/target-info-qom.c b/target-info-qom.c
-> index cc470b3b4d6..5b0498ca654 100644
-> --- a/target-info-qom.c
-> +++ b/target-info-qom.c
-> @@ -37,6 +37,12 @@ static const TypeInfo target_info_parent_type = {
->  
->  DEFINE_TARGET_INFO_TYPE(target_info_parent_type)
->  
-> +void target_info_qom_class_init(ObjectClass *oc, const void * data)
+>  include/hw/s390x/ipl/qipl.h    | 15 +++++++++++++++
+>  pc-bios/s390-ccw/main.c        | 11 ++++++++++-
+>  pc-bios/s390-ccw/virtio-pci.c  | 29 +++++++++++++++++++++++++++++
+>  pc-bios/s390-ccw/virtio-scsi.c | 14 +++++++++++++-
+>  pc-bios/s390-ccw/virtio.c      |  5 +++++
+>  5 files changed, 72 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
+> index 67db54c964..951c5e2d8e 100644
+> --- a/include/hw/s390x/ipl/qipl.h
+> +++ b/include/hw/s390x/ipl/qipl.h
+> @@ -25,6 +25,7 @@ enum S390IplType {
+>      S390_IPL_TYPE_CCW =3D 0x02,
+>      S390_IPL_TYPE_PCI =3D 0x04,
+>      S390_IPL_TYPE_PV =3D 0x05,
+> +    S390_IPL_TYPE_PCI_SCSI =3D 0xfe,
+>      S390_IPL_TYPE_CCW_SCSI =3D 0xff
+>  };
+>  typedef enum S390IplType S390IplType;
+> @@ -117,6 +118,19 @@ struct IplBlockPci {
+>  } QEMU_PACKED;
+>  typedef struct IplBlockPci IplBlockPci;
+> =20
+> +struct IplBlockPciScsi {
+> +    uint32_t lun;
+> +    uint16_t target;
+> +    uint16_t channel;
+> +    uint8_t  reserved0[74];
+> +    uint8_t  opt;
+> +    uint8_t  reserved1[3];
+> +    uint32_t fid;
+> +    uint8_t  ssid;
+> +    uint16_t devno;
+> +} QEMU_PACKED;
+> +typedef struct IplBlockPciScsi IplBlockPciScsi;
+
+Now that I get to the point where I see why you renamed the ...QemuScsi str=
+uct in patch one, I'm
+struggling.
+
+This combines the PCI stuff in IplBlockPci, with the CCW (!) and SCSI stuff=
+ in IplBlockCcwScsi (nee
+IplBlockQemuScsi). Some of the stuff (ssid, devno) isn't needed for PCI, an=
+d I find myself wondering
+what the "right" struct should look like...
+
+Can we add the PCI stuff to a (generalized) struct that's just "IplBlockScs=
+i" and have fields that
+are specific to -ccw or -pci? That's basically what IplBlockPciScsi is, eve=
+n though it's not used
+that way. Or is it better that there's overlap between Ccw/CcwScsi (e.g., o=
+ffsetof(Ccw.ssid) =3D=3D
+offsetof(CcwScsi.ssid)) and Pci/PciScsi? If the latter, there's quite a bit=
+ of difference in their
+layouts, e.g., the location of the opt and fid fields. That worries me...
+
+> +
+>  union IplParameterBlock {
+>      struct {
+>          uint32_t len;
+> @@ -133,6 +147,7 @@ union IplParameterBlock {
+>              IPLBlockPV pv;
+>              IplBlockCcwScsi ccw_scsi;
+>              IplBlockPci pci;
+> +            IplBlockPciScsi pci_scsi;
+>          };
+>      } QEMU_PACKED;
+>      struct {
+> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+> index 1a9579beab..b2bc35962a 100644
+> --- a/pc-bios/s390-ccw/main.c
+> +++ b/pc-bios/s390-ccw/main.c
+> @@ -257,7 +257,15 @@ static bool find_boot_device(void)
+>          blk_schid.ssid =3D iplb.ccw_scsi.ssid & 0x3;
+>          found =3D find_subch(iplb.ccw_scsi.devno);
+>          break;
+> +     case S390_IPL_TYPE_PCI_SCSI:
+> +        vdev->scsi_device_selected =3D true;
+> +        vdev->selected_scsi_device.channel =3D iplb.pci_scsi.channel;
+> +        vdev->selected_scsi_device.target =3D iplb.pci_scsi.target;
+> +        vdev->selected_scsi_device.lun =3D iplb.pci_scsi.lun;
+> +        found =3D find_fid(iplb.pci_scsi.fid);
+
+...because of this. I don't see iplb.pci_scsi.fid set anywhere. Patch 5 set=
+s ipl.pci.fid, but that's
+at a different offset within the respective structs in that union.
+
+> +        break;
+>       case S390_IPL_TYPE_PCI:
+> +        vdev->scsi_device_selected =3D false;
+>          found =3D find_fid(iplb.pci.fid);
+>          break;
+>      default:
+> @@ -318,13 +326,13 @@ static void ipl_pci_device(void)
+>  {
+>      VDev *vdev =3D virtio_get_device();
+>      vdev->is_cdrom =3D false;
+> -    vdev->scsi_device_selected =3D false;
+> =20
+>      if (virtio_pci_setup_device()) {
+>          return;
+>      }
+> =20
+>      switch (vdev->dev_type) {
+> +    case VIRTIO_ID_SCSI:
+>      case VIRTIO_ID_BLOCK:
+>          if (virtio_setup() =3D=3D 0) {
+>              zipl_load(); /* only return on error */
+> @@ -343,6 +351,7 @@ static void ipl_boot_device(void)
+>      case S390_IPL_TYPE_CCW:
+>          ipl_ccw_device();
+>          break;
+> +    case S390_IPL_TYPE_PCI_SCSI:
+>      case S390_IPL_TYPE_PCI:
+>          ipl_pci_device();
+>          break;
+> diff --git a/pc-bios/s390-ccw/virtio-pci.c b/pc-bios/s390-ccw/virtio-pci.=
+c
+> index 736869f4f5..01a1401ef2 100644
+> --- a/pc-bios/s390-ccw/virtio-pci.c
+> +++ b/pc-bios/s390-ccw/virtio-pci.c
+> @@ -53,6 +53,10 @@ void virtio_pci_id2type(VDev *vdev, uint16_t device_id=
+)
+>      case 0x1001:
+>          vdev->dev_type =3D VIRTIO_ID_BLOCK;
+>          break;
+> +    case 0x1048:
+> +    case 0x1004:
+> +        vdev->dev_type =3D VIRTIO_ID_SCSI;
+> +        break;
+>      default:
+>          vdev->dev_type =3D 0;
+>      }
+> @@ -200,6 +204,26 @@ static int virtio_pci_get_blk_config(void)
+>      return rc;
+>  }
+> =20
+> +static int virtio_pci_get_scsi_config(void)
 > +{
-> +    TargetInfoQomClass *klass = TARGET_INFO_CLASS(oc);
-> +    klass->target_info = data;
+> +    VirtioScsiConfig *cfg =3D &virtio_get_device()->config.scsi;
+> +    int rc =3D vpci_read_flex(d_cap.off, d_cap.bar, cfg, sizeof(VirtioSc=
+siConfig));
+> +
+> +    /* all fields of scsi config must be byte swapped */
+> +    cfg->num_queues =3D bswap32(cfg->num_queues);
+> +    cfg->seg_max =3D bswap32(cfg->seg_max);
+> +    cfg->max_sectors =3D bswap32(cfg->max_sectors);
+> +    cfg->cmd_per_lun =3D bswap32(cfg->cmd_per_lun);
+> +    cfg->event_info_size =3D bswap32(cfg->event_info_size);
+> +    cfg->sense_size =3D bswap32(cfg->sense_size);
+> +    cfg->cdb_size =3D bswap32(cfg->cdb_size);
+> +    cfg->max_channel =3D bswap16(cfg->max_channel);
+> +    cfg->max_target =3D bswap16(cfg->max_target);
+> +    cfg->max_lun =3D bswap32(cfg->max_lun);
+> +
+> +    return rc;
 > +}
 > +
->  static const TargetInfo *target_info_ptr;
->  
->  const TargetInfo *target_info(void)
-
-This patch can be squashed with 3, but I thought it might be better for
-review to keep it on top for now.
-
-Regards,
-Pierrick
+>  static int virtio_pci_negotiate(void)
+>  {
+>      int i, rc;
+> @@ -367,6 +391,11 @@ int virtio_pci_setup(VDev *vdev)
+>          vdev->cmd_vr_idx =3D 0;
+>          virtio_pci_get_blk_config();
+>          break;
+> +    case VIRTIO_ID_SCSI:
+> +        vdev->nr_vqs =3D 3;
+> +        vdev->cmd_vr_idx =3D 2;
+> +        virtio_pci_get_scsi_config();
+> +        break;
+>      default:
+>          puts("Unsupported virtio device");
+>          return -ENODEV;
+> diff --git a/pc-bios/s390-ccw/virtio-scsi.c b/pc-bios/s390-ccw/virtio-scs=
+i.c
+> index 9ea00c6fe6..09d2caa879 100644
+> --- a/pc-bios/s390-ccw/virtio-scsi.c
+> +++ b/pc-bios/s390-ccw/virtio-scsi.c
+> @@ -16,6 +16,7 @@
+>  #include "scsi.h"
+>  #include "virtio-scsi.h"
+>  #include "virtio-ccw.h"
+> +#include "virtio-pci.h"
+>  #include "s390-time.h"
+>  #include "helper.h"
+> =20
+> @@ -479,7 +480,18 @@ static int virtio_scsi_setup(VDev *vdev)
+> =20
+>  int virtio_scsi_setup_device(VDev *vdev)
+>  {
+> -    virtio_ccw_setup(vdev);
+> +    switch (vdev->ipl_type) {
+> +    case S390_IPL_TYPE_CCW_SCSI:
+> +    case S390_IPL_TYPE_CCW:
+> +        virtio_ccw_setup(vdev);
+> +        break;
+> +    case S390_IPL_TYPE_PCI_SCSI:
+> +    case S390_IPL_TYPE_PCI:
+> +        virtio_pci_setup(vdev);
+> +        break;
+> +    default:
+> +        return 1;
+> +    }
+> =20
+>      if (vdev->config.scsi.sense_size !=3D VIRTIO_SCSI_SENSE_SIZE) {
+>          puts("Config: sense size mismatch");
+> diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
+> index 79dccdcbfc..598768d12b 100644
+> --- a/pc-bios/s390-ccw/virtio.c
+> +++ b/pc-bios/s390-ccw/virtio.c
+> @@ -89,6 +89,8 @@ static int virtio_do_run(VDev *vdev, int vqid, VirtioCm=
+d *cmd)
+>  int virtio_run(VDev *vdev, int vqid, VirtioCmd *cmd)
+>  {
+>      switch (vdev->ipl_type) {
+> +    case S390_IPL_TYPE_PCI_SCSI:
+> +    case S390_IPL_TYPE_PCI:
+>      case S390_IPL_TYPE_CCW_SCSI:
+>      case S390_IPL_TYPE_CCW:
+>          return virtio_do_run(vdev, vqid, cmd);
+> @@ -130,6 +132,7 @@ bool vring_notify(VRing *vr)
+>      case S390_IPL_TYPE_CCW:
+>          vr->cookie =3D virtio_ccw_notify(vdev.schid, vr->id, vr->cookie)=
+;
+>          break;
+> +    case S390_IPL_TYPE_PCI_SCSI:
+>      case S390_IPL_TYPE_PCI:
+>          vr->cookie =3D virtio_pci_notify(vr);
+>          break;
+> @@ -150,6 +153,7 @@ bool be_ipl(void)
+>      case S390_IPL_TYPE_CCW_SCSI:
+>      case S390_IPL_TYPE_CCW:
+>          return true;
+> +    case S390_IPL_TYPE_PCI_SCSI:
+>      case S390_IPL_TYPE_PCI:
+>          return false;
+>      default:
+> @@ -252,6 +256,7 @@ int virtio_reset(VDev *vdev)
+>      case S390_IPL_TYPE_CCW_SCSI:
+>      case S390_IPL_TYPE_CCW:
+>          return virtio_ccw_reset(vdev);
+> +    case S390_IPL_TYPE_PCI_SCSI:
+>      case S390_IPL_TYPE_PCI:
+>          return virtio_pci_reset(vdev);
+>      default:
 
