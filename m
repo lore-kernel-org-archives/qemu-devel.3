@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99044CD37AC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C07BCD3447
 	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 02:47:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLXi6-0007ti-9F; Fri, 08 May 2026 22:46:34 -0400
+	id 1wLXi0-0007tF-Dg; Fri, 08 May 2026 22:46:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wLXhj-0007sW-R8
+ id 1wLXhj-0007sT-8O
  for qemu-devel@nongnu.org; Fri, 08 May 2026 22:46:16 -0400
-Received: from out30-97.freemail.mail.aliyun.com ([115.124.30.97])
+Received: from out30-112.freemail.mail.aliyun.com ([115.124.30.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wLXhg-0003Cp-T7
- for qemu-devel@nongnu.org; Fri, 08 May 2026 22:46:11 -0400
+ id 1wLXhg-0003BE-LX
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 22:46:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1778294761; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=bOHocsDjBbGwePHYMHf0XP/MmULd8FxzUFtMETBjpTg=;
- b=mhlyFTt7mQJTflIDK6VsjxnLBHECPgoegRyHOayuazip2kIf2i01YWdl0gByYce3xJSdgbRigkPwCdNGXVPBJQxR2YGNsZWr68kNQqHhTXZGpeMBrF9pSKywddCB0wxivLblgzWFS7Ce4lf/NwVEREIvpBejhPAruqr0JEoZn/4=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R101e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037033178;
+ t=1778294755; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=6sbYWlJN+z4hkTQrsoN7IxSNEeSI4CJC1PosPUP5cnY=;
+ b=ca/Dp5AaFaqk+Hhadttqx0NBoSLBGzJXAoCUOC76sSZTOE0R7JItXoZJq+0rDecG4zVpLxVvRoECV189BxUQLieUDt11AvIwnswd3/2i8xaaGCt8HI/YPgjn3ENhXUoqIGlUdRGDiEVkNk/RASVVjYTNCsRLyfMD8bSWsZ0+2Rc=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R161e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
  MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=3; SR=0;
- TI=SMTPD_---0X2Z4CJH_1778294755; 
+ TI=SMTPD_---0X2ZCFg-_1778294749; 
 Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0X2Z4CJH_1778294755 cluster:ay36) by smtp.aliyun-inc.com;
- Sat, 09 May 2026 10:46:01 +0800
+ fp:SMTPD_---0X2ZCFg-_1778294749 cluster:ay36) by smtp.aliyun-inc.com;
+ Sat, 09 May 2026 10:45:54 +0800
 From: Bin Guo <guobin@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com,
 	kvm@vger.kernel.org
-Subject: [PATCH 2/2] kvm: fix kvm_irqchip_release_virq loop after swap-remove
-Date: Sat,  9 May 2026 10:45:39 +0800
-Message-ID: <20260509024539.90998-3-guobin@linux.alibaba.com>
+Subject: [PATCH 1/2] kvm: remove redundant check in kvm_close
+Date: Sat,  9 May 2026 10:45:38 +0800
+Message-ID: <20260509024539.90998-2-guobin@linux.alibaba.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260509024539.90998-1-guobin@linux.alibaba.com>
 References: <20260509024539.90998-1-guobin@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.97;
- envelope-from=guobin@linux.alibaba.com; helo=out30-97.freemail.mail.aliyun.com
+Received-SPF: pass client-ip=115.124.30.112;
+ envelope-from=guobin@linux.alibaba.com;
+ helo=out30-112.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -69,37 +70,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In kvm_irqchip_release_virq(), when an entry matching the target GSI is
-found, the code removes it by swapping in the last entry:
+In kvm_close(), the condition `!kvm_state || kvm_state->fd == -1` is
+checked at the function entry, causing an early return if either is
+true. Later in the function, the same condition is redundantly checked
+again before closing vmfd and fd.
 
-    s->irq_routes->nr--;
-    *e = s->irq_routes->entries[s->irq_routes->nr];
-
-However, the loop then increments `i` unconditionally, which means the
-newly-swapped entry at position `i` is never re-checked. If that entry
-also has `gsi == virq`, it will be skipped and left in the routing
-table.
-
-Fix this by decrementing `i` after the swap, so the same index is
-re-examined in the next iteration.
+Remove the redundant second check since it can never be true at that
+point.
 
 Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 ---
- accel/kvm/kvm-all.c | 1 +
- 1 file changed, 1 insertion(+)
+ accel/kvm/kvm-all.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
 diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 70bc2c86a2..3c5b62c97e 100644
+index 92af42503b..70bc2c86a2 100644
 --- a/accel/kvm/kvm-all.c
 +++ b/accel/kvm/kvm-all.c
-@@ -2278,6 +2278,7 @@ void kvm_irqchip_release_virq(KVMState *s, int virq)
-         if (e->gsi == virq) {
-             s->irq_routes->nr--;
-             *e = s->irq_routes->entries[s->irq_routes->nr];
-+            i--;
-         }
+@@ -769,12 +769,11 @@ void kvm_close(void)
+         cpu->kvm_vcpu_stats_fd = -1;
      }
-     clear_gsi(s, virq);
+ 
+-    if (kvm_state && kvm_state->fd != -1) {
+-        close(kvm_state->vmfd);
+-        kvm_state->vmfd = -1;
+-        close(kvm_state->fd);
+-        kvm_state->fd = -1;
+-    }
++    close(kvm_state->vmfd);
++    kvm_state->vmfd = -1;
++    close(kvm_state->fd);
++    kvm_state->fd = -1;
++
+     kvm_state = NULL;
+ }
+ 
 -- 
 2.50.1 (Apple Git-155)
 
