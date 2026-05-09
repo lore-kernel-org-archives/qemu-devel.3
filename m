@@ -4,58 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C9E0CD3447
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 16:02:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A253CD3447
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 16:02:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLk6O-00048e-Af; Sat, 09 May 2026 12:00:28 -0400
+	id 1wLk8H-0004pk-M6; Sat, 09 May 2026 12:02:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wLk6L-00047k-ER
- for qemu-devel@nongnu.org; Sat, 09 May 2026 12:00:25 -0400
-Received: from smtpout6.mo534.mail-out.ovh.net ([54.36.140.177])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wLk7r-0004ez-Gu
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 12:02:05 -0400
+Received: from 7.mo533.mail-out.ovh.net ([54.36.140.182])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wLk6I-0008OP-M3
- for qemu-devel@nongnu.org; Sat, 09 May 2026 12:00:25 -0400
-Received: from director4.derp.mail-out.ovh.net
- (director4.derp.mail-out.ovh.net [79.137.60.37])
- by mo534.mail-out.ovh.net (Postfix) with ESMTPS id 4gCW0f5wfvz6Lx5;
- Sat,  9 May 2026 16:00:18 +0000 (UTC)
-Received: from director4.derp.mail-out.ovh.net
- (director4.derp.mail-out.ovh.net. [127.0.0.1])
- by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Sat,  9 May 2026 16:00:18 +0000 (UTC)
-Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.0.135])
- by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4gCW0f3cPMz1xqj;
- Sat,  9 May 2026 16:00:18 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.5])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wLk7n-0000Zh-TO
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 12:01:57 -0400
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net [51.68.94.138])
+ by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4gCW1x35ZVz5vfC;
+ Sat,  9 May 2026 16:01:25 +0000 (UTC)
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net. [127.0.0.1])
+ by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Sat,  9 May 2026 16:01:25 +0000 (UTC)
+Received: from mta10.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.178.140])
+ by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4gCW1x0rN3z7tj9;
+ Sat,  9 May 2026 16:01:25 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.6])
  (Authenticated sender: clg@kaod.org)
- by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 85DEC2034FA; 
- Sat,  9 May 2026 16:00:16 +0000 (UTC)
+ by mta10.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
+ 8894C19234FC; Sat,  9 May 2026 16:01:23 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-113S007e0eed196-7bf3-4ce7-89e3-e7b40c3e3832,
+ (GARM-113S00701d4d1b2-27fb-4908-b910-03e0f16a3c27,
  3D272E53171ADE400D76652CEA3707ABC032970B) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <56330071-f967-42db-a285-6aa2ee873f10@kaod.org>
-Date: Sat, 9 May 2026 18:00:15 +0200
+Message-ID: <885688b7-5d54-4466-8dcd-e7c0bcbd05c3@kaod.org>
+Date: Sat, 9 May 2026 18:01:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 0/2] hw/usb/ehci: Improve migration helper and property
- naming
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- "philmd@linaro.org" <philmd@linaro.org>,
- "peterx@redhat.com" <peterx@redhat.com>,
+Subject: Re: [PATCH v1 0/1] aspeed/hace: Fix mapped address may not be
+ unmapped issue
+To: Kane Chen <kane_chen@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
  Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>, "farosas@suse.de" <farosas@suse.de>,
- "flwu@google.com" <flwu@google.com>,
- "nabihestefan@google.com" <nabihestefan@google.com>
-References: <20260506032643.2510575-1-jamin_lin@aspeedtech.com>
+Cc: Troy Lee <troy_lee@aspeedtech.com>
+References: <20260508051619.3887383-1-kane_chen@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -100,30 +96,30 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260506032643.2510575-1-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260508051619.3887383-1-kane_chen@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 6490250014553320493
+x-ovh-tracer-id: 6509108838805384203
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEU+dg/QwQjktXvmR28+mBvYWbBe4TVtNDuoPEqLYt972DAkaa8Q6uT07EwiSRpGjxwahEcKNAXjWkdBLeiEvbAIB3E522MN4xoAnAQYk6heHLYXfArtrjGM61/zYe8toez4tlnefqT5zUY6+1mVymKmhQ/qOeCoB+ano8y2tbEOLyIlkJQEIqcyBgc+0KNN6P5e3Sixc3wzXsFWfGEL5/D5lYFT7ucuv9+3CQH6K6LSFE/tXZ3kw//C+M4pFrH/oWvjVrGbPMVJywEiyp95SmE8I7yUcfpKaM2Ip7bpLJ6TcVI8Xe+Rh20llAAw/CZyy+a8NwOp29fB9CvvWi8wfb9dN84fzjwOlCFAuSmoLE2B5/+leThz/VU/HV8jw8E5x4aOstFiAcuMifgfD+GXAO4ZgY7883JB3kEkp7c6w7RQufJj6Stz+bVYBQOqiNnFzmg3hIfTTIJNO7+pq+pRYHWs5Hp54DXBO6fcv8wd6ngbIbVsiuNra+H/QudFBoXaxPCCU/Heqpm6bFlaGgbd484r1btWjU8Z3U6hj1vm7j4n5c9lbMHvaaOKEs1I+tCvMhuMwe2G+4BPToH86nKMe5pOWzblOpm2erqDwHpST3WmmdiNoWNRVu0+Zk/G7Nz5wJH0qOh8naPwUs/qcn1UD2TNfDpQjXuNTaLLdNwOC79og
-DKIM-Signature: a=rsa-sha256; bh=W5jJa21ALl1eE7KsYlXN+rhU81cBuAWiCsOVqkLArnU=; 
+X-VR-SPAMCAUSE: dmFkZTF/0715XjJovH2PqBcnfVeM9n4dcxoALNFVrOow/65r7IFUkYn8Hk8mfsn6d0GOUvPjYav/IDXeXKSGhOV+eODze6K7oBdYWqn8z1kzEmyeT8LISSrpukUwkPimwAO8Kd2o+Z2NJofYHJKeMEDOOXC2WPvrjif+HraZL5JZy3XCwY/++oF44jYLZ6qJhrXal1pKMNd8wRiFoXK2+DnsTru6ZOho0DrdEIjs026oaMsdY+GxS+c9zs6eDopT2vXR5ZPSXo+KxVW/CTHmF66FByYaj2xY6UxTCSLEf7WUJP2J/xgfnD8pG3Pol0tW6ZR4IPCToWteb7Jb0DQ8dNDbN75eWBiLva9vH8gEeg7WlDzP/m7LlcxLROZ3C1rIlMNyMU2vW6pA2+CwF49SKxChVqgbVomLnL/AeJxkibhdbSAtRh3ILL2qs/VEewsVGUWPO6t3FVDh5x/cb4zmmco2kT1z+etZ4sxcvCMC/p2KJ6kS5+0satppr9EX20EFrBPbCrV+uya/Fo/J4NblUiKuIlg7E2bKQQBLkYIrLuv7kDt6EM5Ot+RqfJC8VdENBJSZA4xYjDmPw/VeoxoF2/gLqcZnCnkJQxboVM18bM4AIOalx/eSOD/wAqvM2HvtUdzbFeDygSQ8hWSlvmclt9f1KOYKYkJy6yijbwMJekCnsqmCfg
+DKIM-Signature: a=rsa-sha256; bh=Hk1wrpJosznk6PmepK4DdjyXmsdKzmNciSbgkqsoSzE=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1778342419; v=1;
- b=WHAvEvwF42PU10NMLeOwj4Hc9wIQ2Jz1GoV8XfCNCsqYr5psc1aBw3f3YitQJRPLeY07wSUI
- Dwa9VJapZfSHVPRRXicWx6VW7MSmnfncOpseRdRFGHrN9ETwURLc3IQHNmOLa1bGJ0bioubId2c
- RxaaCp/3+UZ7VaryAi4knjBiKIa+U0aufBKzoVNuYRH+bXg1jN4yiN/0hs+pcPjwU7gfn2eDKdx
- qYxd7JDlQqqkXx5AFhIb9td2wb//BgBlztfkrufRQs/Y4Ph2vLqFWYUZrT4ETgN1G5Z8vSW2eRK
- RQXxtVWiQvrdQrbwb1/9Fit7RrupqaGDqerTrGq7+FZ3w==
-Received-SPF: pass client-ip=54.36.140.177; envelope-from=clg@kaod.org;
- helo=smtpout6.mo534.mail-out.ovh.net
+ t=1778342486; v=1;
+ b=p2lkvpDq+kfmz4K7odgFyx8qTvLLzVBHAum5Hx1ErWblaZWO0KjtN8mF4mC6dwOw4CO1y+11
+ SaHXvgFLhcjm9deLbQvmPwVMw6wCG+Ma7shlEYV635+9sBTMQNNx18cCnVgX5zWvLRWTddUI5ea
+ b78z/5FkB55sYUtD9VwE+kU6aLUscc3sXgzdl1i8Tgdaku7UahptXFsG/u/OyTrhIxwkt6jcJJW
+ fZm8OQDcbwXA58skNNFvYPLw0cH8Pd9TyhCl/gnNQbHXxKKGDckoVWOqFzFakMO4DiFjPMH06pJ
+ ZytMQ0mWVFQz07LHD8XyDQuAtVUeWABkncs9rbvVlk5rg==
+Received-SPF: pass client-ip=54.36.140.182; envelope-from=clg@kaod.org;
+ helo=7.mo533.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,41 +135,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-JAmin,
-
-On 5/6/26 05:26, Jamin Lin wrote:
-> This patch series is based on the following patch series:
+On 5/8/26 07:16, Kane Chen wrote:
+> Dear reviewer,
 > 
-> https://patchwork.kernel.org/project/qemu-devel/list/?series=1089061
+> The Aspeed HACE hash flow may leave DMA mappings active when an error
+> occurs after guest buffers have already been mapped.
 > 
-> hw/usb/ehci: Add 64-bit descriptor addressing support
+> Several failure paths return early without unmapping previously mapped
+> iov entries. This can lead to stale mappings and resource leaks.
 > 
-> The above patch series has already been applied to the aspeed-next
-> branch of:
-> https://github.com/legoater/qemu
+> Fix this by introducing a common cleanup helper that unmaps all
+> previously mapped iov entries before returning from error paths.
 > 
-> This series only contains naming and comment improvements based on
-> reviewer suggestions.
+> Additionally, track the actual mapped length of each iov entry
+> explicitly. This is necessary because some hashing flows may apply
+> padding during processing, and the resulting buffer length used later
+> in the flow can differ from the original DMA mapped length. Using the
+> modified length during dma_memory_unmap() may result in an incorrect
+> unmap size.
 > 
-> This patch series depends on the aspeed-next branch of:
-> https://github.com/legoater/qemu
+> Note: this patch series is based on
+> https://patchew.org/QEMU/20260504213421.710035-1-clg@redhat.com/.
 > 
-> v1:
->   1. Rename migration compatibility fetch address fields
->   2. Rename CTRLDSSEGMENT default property
-> 
-> Jamin Lin (2):
->    hw/usb/hcd-ehci: Rename migration compatibility fetch address fields
->    hw/usb/hcd-ehci: Rename CTRLDSSEGMENT default property
-> 
->   hw/usb/hcd-ehci.h       | 23 +++++++++++++++++------
->   hw/arm/aspeed_ast27x0.c |  2 +-
->   hw/usb/hcd-ehci.c       | 14 +++++++-------
->   3 files changed, 25 insertions(+), 14 deletions(-)
-> 
-
-I still haven't read comments on v6 ... Since we have time for
-QEMU 11.1, please wait a bit before resending.
+> Best Regards,
+> Kane
+Jamin, I need your help here too.
 
 Thanks,
 
