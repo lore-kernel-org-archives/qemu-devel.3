@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F7EDCD3427
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 13:47:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2D72CD3427
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 13:47:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wM4UU-0002H0-4N; Sun, 10 May 2026 09:46:42 -0400
+	id 1wM4Ul-0003DF-QK; Sun, 10 May 2026 09:47:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wM4U6-0001RP-Gc
- for qemu-devel@nongnu.org; Sun, 10 May 2026 09:46:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wM4UT-0002CB-Iy
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 09:46:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wM4U2-0004si-5u
- for qemu-devel@nongnu.org; Sun, 10 May 2026 09:46:17 -0400
+ id 1wM4US-0004w5-0P
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 09:46:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778420772;
+ s=mimecast20190719; t=1778420799;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=da49YcjtyzZ7IWUjNAm74XjosgyIF8J3ZpDMLUAi2dw=;
- b=E4BD8pyevrVoDvHyp7EtAGef8db2PxjIF968GCTi6nqGKF0CWQPuB1cpsqk5gXY5YF9u5n
- G6yP68T6ll/rmqFDAxlmnZsIAxKi7FrusY8IubBi4XErBuEG7Q/rD2i3JAq+EaMcUHtZDj
- NNwpVjhAGkQuH8o7YT7wchkzVeY/kwc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=FJVPgFmkndqxhAeNe76OT5PkkkXmq2X5amAic4RIpMo=;
+ b=Du+n02s4iDVkWW30bq+jPOrtfhcFSObPV6T8Av2P1j4082L+xEl+4g7mCwNa3pDZ95hwId
+ 1q3Dpj+XHMIoFA8ewN56Pn4pdLy6AUcUhS3Y//9ntm3tbocGWqu/iCee1ipbVkI437XgyV
+ xBILFxxsPf3xbnd55bjabKg6DpTm0RI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-533-4ygrH8IGNcecsuChCZmEFA-1; Sun,
- 10 May 2026 09:46:11 -0400
-X-MC-Unique: 4ygrH8IGNcecsuChCZmEFA-1
-X-Mimecast-MFC-AGG-ID: 4ygrH8IGNcecsuChCZmEFA_1778420770
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-62-btbGTpBtMZatRjv0xhoKtw-1; Sun,
+ 10 May 2026 09:46:37 -0400
+X-MC-Unique: btbGTpBtMZatRjv0xhoKtw-1
+X-Mimecast-MFC-AGG-ID: btbGTpBtMZatRjv0xhoKtw_1778420797
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 68968195608B
- for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:46:10 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 231C718005B3
+ for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:46:37 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0E5651800374; Sun, 10 May 2026 13:46:08 +0000 (UTC)
+ id C3BC218004A3; Sun, 10 May 2026 13:46:31 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 10 May 2026 17:43:10 +0400
-Subject: [PATCH 13/54] qom: remove old enum property registration API
+Date: Sun, 10 May 2026 17:43:12 +0400
+Subject: [PATCH 15/54] qom: convert struct properties to QAPI-aware
+ registration
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260510-qom-qapi-v1-13-48ba6a1a1fa5@redhat.com>
+Message-Id: <20260510-qom-qapi-v1-15-48ba6a1a1fa5@redhat.com>
 References: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
 In-Reply-To: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
 To: qemu-devel@nongnu.org
@@ -62,25 +63,25 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7006;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1701;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=ptvW9hb7yA9/uf7GEQJoTFW9arADjSwFMNUBwLBxgVw=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqAItv0ZxSXZ+eH5Ta4L1wlqAcjkmjLQ8Cgekby
- kErwQHY/0OJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCagCLbwAKCRDa6OEJdZac
- 5fF/EACiO7OVT/El9ro9vX2Ar7KJsvzQH1UEp80fiK1eQWHnqSeCretWzk1d1JWpyjUNJS1PJuj
- 89DxmGOzHIosnligZYs7vEU9ewikefsT6cLuctjRo5hR6ASQTBtYD+++9Hn0UWpgjqK2Gm2j04/
- JC+WJlAJBmatjz016ZI5ZWQvmif0DzYSfIETq8/+rf4BbRMeOoJJ/fWrU+TpxHwnrYwTTpqkIe+
- /krjR43nOeeXtqcDPYXVPHn35xAKxzAgdPTGRWJVwVSpC0+cPRG09Ji9xqO7u24yTlzhlHXwT8t
- +uf/xBcWhcHnU7J7MzjyzSSYjTskB16Irgd0+jhRuxbxfvaZ2V3h+9zN+hd1Fp439ddbYVAsoVf
- ey9zQ6Fh33D8Bd1E7sLG2UrPieCvUiBK4D/VmWIiazC6sUtx90uesTV/PZQghyj0qyrwwJeDyFP
- 8+K4XWNQS3cDntX+6qqs2SlHFZEybVRW2sJB9MV5IY87k+6EnsOGVrgw4lNOhJ13hghMNE9i4u8
- RLTPDzRr8G6wqwT5pdWGcqJIctNh9QPuyK/vZ7A76nJ1Fb7jEUtGX6zIUHKvIjMCdTd0OmLUR3c
- rehLC68qiGP7WUHKMYImXi5qG6X2XBusq7LD6Ynoc9I1Kqa41m67VctXoYSq9QBj2ZKTFZvUxCj
- c7xdhzifvdihoag==
+ bh=SrT2x1EQeUZfUkznMNB+UxE+epWiRHNKJ0FEXJcLuWE=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqAItvWHt2hMCrZ9nGCVXdEYPTn2QN0ymay5jIP
+ QMMfV7FHVeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCagCLbwAKCRDa6OEJdZac
+ 5YYYEACIcBMr2WU0JQ4y293rozmEYD9g5G4hBeofsW77c2EMWRHNFi5TkLhlyyhZC5wflm62EMX
+ ZljS3X8m/aQIYwWPRUkCzvCigGAX/dT1Gaca1x36fZaaQgySvn+s42ujb8xxGXbOIcmdG86CyqQ
+ kzcQBcKd9Cvtm0/UTOUklhyW7qZP/0eFRikfBt4yPQm23e4GQPwdYLofTQgaE+Nn3Nd2qLaMhLD
+ vunkV6d0VOOCokbQddBq07HvHCY8QfsrzBvW5qNg5ZpEaECWS/CXQy7X8+JioxU+BK/3G37xLTP
+ +Z5xD90pccViZjz1Oe+Z/1HzSGWBbPq4NAmh3KqbmeiQTPlLXcmzU7IEORS2Eflk1QMIDhoMm2u
+ VmNbcP9H5fCOLmXBc7o6tItKnaI5zOTUG0krT4F/6yIx9MajQQzo8RQVbsh+F4pbETAHtVvCu0W
+ JvTbZBJSNVDBq2LFp+nMCvkafDALiq+4rcyOWtzMU5zyDVokyq4yBvHeEUDjrM4dQEN96JCbPtM
+ ApsA2mpPuFFH27G2VeWa4EnzBRq9x0QiNdJNO8tryk0ofMs0pfE5Ogn0xow5GdaxWzNdSXa+Xqw
+ /m5ydkue60y2DWpakvmeE3b5OIXOu+rQUipTSpQAeNhqANCp3t5+5igpdeYK8qeOYJgevKRU9US
+ qVxAlojBnWZ3eBg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -88,7 +89,7 @@ X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,189 +106,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that all callers use object_class_property_add_qapi_enum(), remove
-the legacy object_property_add_enum() and object_class_property_add_enum()
-functions along with their EnumProperty struct and property_get_enum /
-property_set_enum helpers.
+Convert all callers of object_property_add() and
+object_class_property_add() that register struct-typed properties with
+QAPI visitor-based getters/setters to use object_property_add_qapi() and
+object_class_property_add_qapi() instead.
 
-Simplify object_property_get_enum() to assert on qapi_type rather than
-falling back to the old EnumProperty opaque data.
+This replaces the manual string type name with a reference to the
+generated QAPITypeInfo constant, enabling QMP introspection to report
+accurate QAPI type information for struct properties. Existing
+getters/setters are preserved unchanged.
+
+The cxl-fmw property type is corrected from "CXLFixedMemoryWindow"
+(not a real QAPI type) to "CXLFixedMemoryWindowOptions".
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/qom/object.h | 31 ++-----------------
- qom/object.c         | 84 ++--------------------------------------------------
- 2 files changed, 5 insertions(+), 110 deletions(-)
+ block/throttle-groups.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index 0eaa02688b0..14238e4b844 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -1577,12 +1577,12 @@ char *object_get_canonical_path(const Object *obj);
-  *   because it was ambiguous, or %NULL. Set to %false on success.
-  *
-  * There are two types of supported paths--absolute paths and partial paths.
-- * 
-+ *
-  * Absolute paths are derived from the root object and can follow child<> or
-  * link<> properties.  Since they can follow link<> properties, they can be
-  * arbitrarily long.  Absolute paths look like absolute filenames and are
-  * prefixed with a leading slash.
-- * 
-+ *
-  * Partial paths look like relative filenames.  They do not begin with a
-  * prefix.  The matching rules for partial paths are subtle but designed to make
-  * specifying objects easy.  At each level of the composition tree, the partial
-@@ -1797,33 +1797,6 @@ ObjectProperty *object_class_property_add_bool(ObjectClass *klass,
-                                     bool (*get)(Object *, Error **),
-                                     void (*set)(Object *, bool, Error **));
- 
--/**
-- * object_property_add_enum:
-- * @obj: the object to add a property to
-- * @name: the name of the property
-- * @typename: the name of the enum data type
-- * @lookup: enum value namelookup table
-- * @get: the getter or %NULL if the property is write-only.
-- * @set: the setter or %NULL if the property is read-only
-- *
-- * Add an enum property using getters/setters.  This function will add a
-- * property of type '@typename'.
-- *
-- * Returns: The newly added property on success, or %NULL on failure.
-- */
--ObjectProperty *object_property_add_enum(Object *obj, const char *name,
--                              const char *typename,
--                              const QEnumLookup *lookup,
--                              int (*get)(Object *, Error **),
--                              void (*set)(Object *, int, Error **));
--
--ObjectProperty *object_class_property_add_enum(ObjectClass *klass,
--                                    const char *name,
--                                    const char *typename,
--                                    const QEnumLookup *lookup,
--                                    int (*get)(Object *, Error **),
--                                    void (*set)(Object *, int, Error **));
--
- /**
-  * struct QapiEnumProp - Descriptor for a QOM property backed by a QAPI enum type
-  *
-diff --git a/qom/object.c b/qom/object.c
-index 164907289a6..48d7a88ee43 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -1055,7 +1055,7 @@ static void object_class_foreach_tramp(gpointer key, gpointer value,
-         return;
+diff --git a/block/throttle-groups.c b/block/throttle-groups.c
+index 4b1b1944c20..b161576432a 100644
+--- a/block/throttle-groups.c
++++ b/block/throttle-groups.c
+@@ -31,6 +31,7 @@
+ #include "qemu/thread.h"
+ #include "system/qtest.h"
+ #include "qapi/error.h"
++#include "qapi/qapi-type-infos-block-core.h"
+ #include "qapi/qapi-visit-block-core.h"
+ #include "qom/object.h"
+ #include "qom/object_interfaces.h"
+@@ -985,8 +986,8 @@ static void throttle_group_obj_class_init(ObjectClass *klass,
      }
  
--    if (data->implements_type && 
-+    if (data->implements_type &&
-         !object_class_dynamic_cast(k, data->implements_type)) {
-         return;
-     }
-@@ -1603,12 +1603,6 @@ uint64_t object_property_get_uint(Object *obj, const char *name,
-     return retval;
- }
- 
--typedef struct EnumProperty {
--    const QEnumLookup *lookup;
--    int (*get)(Object *, Error **);
--    void (*set)(Object *, int, Error **);
--} EnumProperty;
--
- int object_property_get_enum(Object *obj, const char *name,
-                              const char *typename, Error **errp)
- {
-@@ -1632,12 +1626,8 @@ int object_property_get_enum(Object *obj, const char *name,
-         return -1;
-     }
- 
--    if (prop->qapi_type) {
--        ret = qapi_enum_parse(prop->qapi_type->lookup, str, -1, errp);
--    } else {
--        EnumProperty *enumprop = prop->opaque;
--        ret = qapi_enum_parse(enumprop->lookup, str, -1, errp);
--    }
-+    assert(prop->qapi_type);
-+    ret = qapi_enum_parse(prop->qapi_type->lookup, str, -1, errp);
-     g_free(str);
- 
-     return ret;
-@@ -2362,74 +2352,6 @@ object_class_property_add_bool(ObjectClass *klass, const char *name,
-                                      prop);
- }
- 
--static void property_get_enum(Object *obj, Visitor *v, const char *name,
--                              void *opaque, Error **errp)
--{
--    EnumProperty *prop = opaque;
--    int value;
--    Error *err = NULL;
--
--    value = prop->get(obj, &err);
--    if (err) {
--        error_propagate(errp, err);
--        return;
--    }
--
--    visit_type_enum(v, name, &value, prop->lookup, errp);
--}
--
--static void property_set_enum(Object *obj, Visitor *v, const char *name,
--                              void *opaque, Error **errp)
--{
--    EnumProperty *prop = opaque;
--    int value;
--
--    if (!visit_type_enum(v, name, &value, prop->lookup, errp)) {
--        return;
--    }
--    prop->set(obj, value, errp);
--}
--
--ObjectProperty *
--object_property_add_enum(Object *obj, const char *name,
--                         const char *typename,
--                         const QEnumLookup *lookup,
--                         int (*get)(Object *, Error **),
--                         void (*set)(Object *, int, Error **))
--{
--    EnumProperty *prop = g_malloc(sizeof(*prop));
--
--    prop->lookup = lookup;
--    prop->get = get;
--    prop->set = set;
--
--    return object_property_add(obj, name, typename,
--                               get ? property_get_enum : NULL,
--                               set ? property_set_enum : NULL,
--                               property_release_data,
--                               prop);
--}
--
--ObjectProperty *
--object_class_property_add_enum(ObjectClass *klass, const char *name,
--                                    const char *typename,
--                                    const QEnumLookup *lookup,
--                                    int (*get)(Object *, Error **),
--                                    void (*set)(Object *, int, Error **))
--{
--    EnumProperty *prop = g_malloc(sizeof(*prop));
--
--    prop->lookup = lookup;
--    prop->get = get;
--    prop->set = set;
--
--    return object_class_property_add(klass, name, typename,
--                                     get ? property_get_enum : NULL,
--                                     set ? property_set_enum : NULL,
--                                     NULL,
--                                     prop);
--}
--
- static void get_qapi_enum(Object *obj, Visitor *v, const char *name,
-                           void *opaque, Error **errp)
- {
+     /* ThrottleLimits */
+-    object_class_property_add(klass,
+-                              "limits", "ThrottleLimits",
++    object_class_property_add_qapi(klass,
++                              "limits", &ThrottleLimits_type_info,
+                               throttle_group_get_limits,
+                               throttle_group_set_limits,
+                               NULL, NULL);
 
 -- 
 2.54.0
