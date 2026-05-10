@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F34F3CD37B6
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 13:44:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C9B2CD37B6
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 13:46:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wM4Rr-0007qi-6X; Sun, 10 May 2026 09:43:59 -0400
+	id 1wM4Tb-00010r-Fx; Sun, 10 May 2026 09:45:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wM4Rf-0007of-CL
- for qemu-devel@nongnu.org; Sun, 10 May 2026 09:43:51 -0400
+ id 1wM4So-0000ad-Op
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 09:45:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wM4Rd-0004K8-W9
- for qemu-devel@nongnu.org; Sun, 10 May 2026 09:43:47 -0400
+ id 1wM4Sn-0004XD-Cr
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 09:44:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778420624;
+ s=mimecast20190719; t=1778420696;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JLTM7UlfM2pcl1kfhxldekHF9MgNbRrfS8dL3DFlmHQ=;
- b=cD9wNhiM5WGChHJh+FlTGqJgSsCgWcmH1CZB/gQnDppSbYJnaGjvGFkgEU0WwlGaueWIHq
- 2Vwi7tnpy2XsaeuFW2Zwhosatjibq8IBtqRwk5bLVLUs00CMB6FJOSUHKzkQT4xa2WZOMw
- El89n0258ou1s5i0lp/i8A9zuo8AFWI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=96aVvIKYi/+IKghTyv8FAOjWg2CZgFa5wUJKmBhpQFs=;
+ b=Rt4HRUvb9JMYQtd8L7P0pObEk4lzHZhFPMR7H4GNSxrFT5pbbFUnOk78B3oQhRbUclOU5k
+ QqCqXi6fBhXlUAP87sT46JvMJ8bgfLmHpCFdbFXOrLJ5r1JlOhTw7YM3dzGfY8EMIsWxvo
+ BHeky9ebJVzhoEmcClvjFBNDiFiKrtc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-544-1RYI-hJZOzy9vu4Mk-9UtQ-1; Sun,
- 10 May 2026 09:43:43 -0400
-X-MC-Unique: 1RYI-hJZOzy9vu4Mk-9UtQ-1
-X-Mimecast-MFC-AGG-ID: 1RYI-hJZOzy9vu4Mk-9UtQ_1778420622
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-606-v3UEtQPPMpmPpNQ1nVL5SQ-1; Sun,
+ 10 May 2026 09:44:54 -0400
+X-MC-Unique: v3UEtQPPMpmPpNQ1nVL5SQ-1
+X-Mimecast-MFC-AGG-ID: v3UEtQPPMpmPpNQ1nVL5SQ_1778420693
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 675F3180056E
- for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:43:42 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CA4861800344
+ for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:44:53 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E37E53002D30; Sun, 10 May 2026 13:43:30 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A0D221953952; Sun, 10 May 2026 13:44:50 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 10 May 2026 17:42:58 +0400
-Subject: [PATCH 01/54] qapi: add QAPITypeInfo struct definition
+Date: Sun, 10 May 2026 17:43:04 +0400
+Subject: [PATCH 07/54] qom: add qapi_type field to ObjectProperty
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260510-qom-qapi-v1-1-48ba6a1a1fa5@redhat.com>
+Message-Id: <20260510-qom-qapi-v1-7-48ba6a1a1fa5@redhat.com>
 References: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
 In-Reply-To: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
 To: qemu-devel@nongnu.org
@@ -62,24 +62,24 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1077;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1364;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=SbF0347iS9KGewslgupoZANFsDp/EFCir1K5kbjzQyc=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqAItuVXWs7IRMOD6iOebR376lWpbJKUkbDNmVa
- WZYuJP4BAaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCagCLbgAKCRDa6OEJdZac
- 5So5D/4vrP220B3HJPdf4V+jgOrRZ1LLXDdswPkhmdueJEdu8LIOLV5QXu+4/LJ7B3oiF4kGogi
- 8xK0GxesxXGY8LkBbtPbSL5enu1a2aKCTTItlzHYJyHY1GBC+/5SNCqpQd63Y2kfv9R1VK2U8Kc
- AiiVx4ZGvQmcB6g50zuf2qnJbbSyx3Ktp68NMKA3CBLAW6Jft/koKZiQVMR9QTArH49m3GRiJyj
- ExVT6GELZuh47hqiOwCzRG3mceOm9yCo2UbHM2KkkaCxCdNICSmvUCNYYEj822nPlV/mIlB/Wm+
- 4t0WJtjOSpRFNV8UP28xsSG4oWv0CyK+iPZUZflT0YqDUw2nHkptm6KSabAAcSwBJTi5+dwV2B7
- /6XgJTLDCWhQiGjaN1MdJSKjwpQFVCxiLr5c/PX+C+A9FzDBZlKRB8jbIdFSiF9/mWENBiAE0C0
- 7WDkyTFmwwQ2MjVSNjPTrT8RyxUWkh9uYX+7qiax942oPdbTy/Qk+pIdg5PVIyuCsxayyxnLR6w
- 9gHd0ChhLH5QP7Ps/UFw+6CeucY9DS/XRfWOzK6awpQbTR9e26847JmZcdRxLxXYZt+Odn4w65R
- X5JfCGoZmu9hG8FDIX9C7uvSnAXFxf8B08sAsUBCWcxKJRWZmcUs+MI0rSqzRKCITV4o8guI8lH
- UuAsRC2YhZ0HmZg==
+ bh=hiZ7iR3bOaD93l4sMZ0atw37En0Wxn36sEmBAxTmkJU=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqAItuwzEJ7SSRaN3FthKesxRu7/uRtiiCxyBak
+ 3LGalOzE+SJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCagCLbgAKCRDa6OEJdZac
+ 5VfbD/46o0kotYQIWtHQeVD/6hBd+K9lk09rCxovQ9XnQqV7o+cusN2mRwAQLIYiJUPRh+QcK+c
+ nlTmFuKzKFRChgB1U9WyVsNsc5GjplJVEzii0CtlTzMXo2/Nvtvl/uRj0ZvCupFZiO3lt6X8gzr
+ Ggmnb2u30gcfSvamyYKDslSmzKE29d+ybFT0U5pYMA2Kg7/muZi5SQBg+xs20xz4QJ9gwBu84Nt
+ 9IungrCNSoi7GibfpXZWIgm2kuuLBTuhSxDw2LfevYBnmPJhiP+4TFsAxIRtM/XLt5Lkt2Dx2CD
+ nLMcMRe/Sdy+E2+ov2FAdQB2m50DSZjthk02i2MXfilNSQTo5Q0GrlLVFhZcsk6vYmICUH2X+dt
+ RPk3Zs0YUrmJsOtOQw04Qw0tNeeTZWnRP2yQTFpHh3mo4K5pHZRaJ7Ici4HtJ2DAv8rHR7L0grZ
+ IKanhQAGx1vrHPN1QLn5nB1s9eaUgiMsEYLKFjZRp9zZUA/7sYxJgY/OSfwFPqGoN1+XNttZQa7
+ Zc/ZjtpCBaNrMaRpdrQrqEKqvNldu4ACZUh8y3PCBcCJyFno4hwlLuRk0nnLf5P8LWbGA1kzNuM
+ AfA0IzFuwHYavNQoG4FNzOJUR9UHSu+IbwdJOlveXqWuXoyR3nWZTu0LEXgM+nQfO/HmayXJGWC
+ jg93MURaAI5QqFQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -105,41 +105,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a minimal struct that pairs a QAPI type's internal name with
-its "masked" introspection name. Generated constants of this type will
-let QOM property registration carry a reliable reference to the QAPI
-schema and possibly other associated data.
+Add a const pointer to QAPITypeInfo in ObjectProperty. NULL for legacy
+properties, set by new QAPI-aware registration wrappers.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/qapi/qapi-type-info.h | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ include/qom/object.h | 2 ++
+ qom/object.c         | 1 +
+ 2 files changed, 3 insertions(+)
 
-diff --git a/include/qapi/qapi-type-info.h b/include/qapi/qapi-type-info.h
-new file mode 100644
-index 00000000000..53b4732297d
---- /dev/null
-+++ b/include/qapi/qapi-type-info.h
-@@ -0,0 +1,19 @@
-+/*
-+ * QAPITypeInfo — associates a QOM property with its QAPI schema type.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef QAPI_TYPE_INFO_H
-+#define QAPI_TYPE_INFO_H
-+
-+#include "qapi/util.h"
-+
-+typedef struct QAPITypeInfo {
-+    const char *name;
-+    const char *schema_name;
-+    const QEnumLookup *lookup;
-+    const struct QAPITypeInfo *list;
-+} QAPITypeInfo;
-+
-+#endif /* QAPI_TYPE_INFO_H */
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 510885218ba..d47ae209170 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -15,6 +15,7 @@
+ #define QEMU_OBJECT_H
+ 
+ #include "qapi/qapi-builtin-types.h"
++#include "qapi/qapi-type-info.h"
+ #include "qemu/module.h"
+ 
+ struct TypeImpl;
+@@ -91,6 +92,7 @@ struct ObjectProperty
+     char *name;
+     char *type;
+     char *description;
++    const QAPITypeInfo *qapi_type;
+     ObjectPropertyAccessor *get;
+     ObjectPropertyAccessor *set;
+     ObjectPropertyResolve *resolve;
+diff --git a/qom/object.c b/qom/object.c
+index f981e270440..dd657903f7c 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -2803,6 +2803,7 @@ object_property_add_alias(Object *obj, const char *name,
+                              property_release_alias,
+                              prop);
+     op->resolve = property_resolve_alias;
++    op->qapi_type = target_prop->qapi_type;
+     if (target_prop->defval) {
+         op->defval = qobject_ref(target_prop->defval);
+     }
 
 -- 
 2.54.0
