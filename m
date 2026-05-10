@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 752C8CD3447
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 02:15:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 371CBCD37AF
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 02:15:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLtgi-0006Jx-Ms; Sat, 09 May 2026 22:14:36 -0400
+	id 1wLtgC-00068c-NS; Sat, 09 May 2026 22:14:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wLtgd-0006Hd-9d
- for qemu-devel@nongnu.org; Sat, 09 May 2026 22:14:31 -0400
-Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
+ id 1wLtgA-00067v-GT
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 22:14:02 -0400
+Received: from mail-oa1-x30.google.com ([2001:4860:4864:20::30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wLtgb-00038s-Ji
- for qemu-devel@nongnu.org; Sat, 09 May 2026 22:14:31 -0400
-Received: by mail-ot1-x32a.google.com with SMTP id
- 46e09a7af769-7dbccf6a23dso2717896a34.2
- for <qemu-devel@nongnu.org>; Sat, 09 May 2026 19:14:29 -0700 (PDT)
+ id 1wLtg9-0002xz-0p
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 22:14:02 -0400
+Received: by mail-oa1-x30.google.com with SMTP id
+ 586e51a60fabf-42c08cbae4cso2560798fac.2
+ for <qemu-devel@nongnu.org>; Sat, 09 May 2026 19:14:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778379268; x=1778984068; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778379239; x=1778984039; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=84NzeKO4E0K6QGx3U+uuPPhbslMAL8hqeCojK1H7E5I=;
- b=WNpOXKVSs38syA0lw2pD/fSbftx8NhW7jZ9tAapqtQFOUWx0KGGFS8bydO6a6HhAYS
- EnG+0F9YA9UfdWHXTH/gDCMhkL0i658VZdic8ufxLkY7BqNwjcZLe45X9qWM6Ji3KamR
- xOGoGUhGVnjYhV6eD6I3ijgBNj54o2cZhCGtco4wKERxshQctdtiF0Q/oWaf9C6OItWd
- 2T/LC9vxfWv4AoehL87X7nWSCEF+Dv02VxmfnLpli3sNBbUH4BoBn7hSJaIuvLEHyB0u
- m8p9zaj4gNebrDSozSFQMGOHO4So9zejWjdFDhFBNOR1/i5t3yTQ9coOwnOrQXFPqCol
- oCBA==
+ :reply-to; bh=Kt/X9h3ebfY2yAsj4mYC6DTi18sxMdPXWVIaTnR56mU=;
+ b=LRmtqElQYGpXHcNJRnZZ8zI29oXIrKWb+MYvXJm6jFLXtKC1BzgGLHp+Quyltiph3B
+ m+z5ii5oVFngwuR11KEUFkZx5SlcbFQFHOMcWH2k/o2ehjErrkk4aAStBfh7RPqSxhec
+ OP8vGq20+f4YUaFWpor7nG0J0cTF0FRpjRnzQWggnFJju3Xy4Z2EfA3u4BHO/YM7WmaQ
+ x9bfId1D00mCepp9z2LK5A3dOJ4oOftPM1JVNA2rWZZBcOAI936pGp2pLJjOPQhT63Ii
+ cLaMuakgMX03MM8xxoTd7m5jawO+/3ZDOH92x2rYrboyDvkoSQx0AfT2Mp1tZRViUJOD
+ F4gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778379268; x=1778984068;
+ d=1e100.net; s=20251104; t=1778379239; x=1778984039;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=84NzeKO4E0K6QGx3U+uuPPhbslMAL8hqeCojK1H7E5I=;
- b=ey4soj0Qp72ehOoB5/1ecWxm72aHUad1FVH8k1wuCcmBv7HyoeIDMfcS8ixsExsSkK
- +62a+VWYNeK+qVhctLv7FbGIdFMvKfRPLm+IZknI/pk7/aD0Jm9skDXIOtX9V+C7H6B2
- qxlfsNFBtyafYUY/351n+x8S2ZPVJrfLdbNQCbHbCcDAeuswwX5iJ9lj6osn8pBKhOLU
- TzULVo/v5u39IppoNAxSW0AmSTbTTM/4c3ukqNEWL/0HsQPH9edoLiPDGMyDvEgtS/Te
- G5RJlmJ9ZdMut4EK/eQYs5Y6OSgzILUH858w3tnJICxV4NgzAFVYokqKiTYMzlTgjNTi
- YMiA==
-X-Gm-Message-State: AOJu0YxtWi0qD77ag9mC80kt5kp44MR7seJKYY8NiRStai7zAa5ka9dX
- Oh5DYqAKyMshn7L64H1M4/XAOs50ERKaeDnTiJlGrbyB6apXkumsmI1+n4Ud6/8P
-X-Gm-Gg: Acq92OEwLDt0omAQafNFq1l6wh99ZC2DgzA1qo6lcPUyDowDbSWaBVbYR8zGrbio7kp
- 76587kwhgbLT2htocR3UficZ2aQAnpoRbcT5aQV/9KFlUNTg/5MB8k3aaPgQN8S1p5JhI6jtAA9
- TdXZ1LRgK1RpVnfJhlNw10ZfjZ4L+VcQXBMcARdq6oxVD7zd2BkNDgYFQgz0PlVDxKFQG8yye31
- PLb2+KklCKdt2+nSBex2LYwRon453g8O7CqtzRtma5/kgnq+8ZknbgurAZQlOCmhcwQyWXk80k3
- faKDOeOK9e4GVhTcoD46jgSmqj+MSUfTkWQMzR5X1VEP/2TqvqyaJDfRj1Xr46TdxAYIQ7sc95v
- NYxnAfRSo5VNODr2pidgap8pfuMQ2a3DJjJ82qVYWxtB9yh/cagOdk2gsM9JSWwS98Ing1wtCBi
- 8zXMzSD5Q6B6a0kPVWt2PMkwIWRGYW+aF9/iIvP9vHf5m2CiBWjnwg1uCFDo8sYKZHYND+1M+DT
- McaNwHD8GXC/jAftb7ZEDkg1Bu4gTCAxdeJMUkRgzHVyLrzsU1FlDdZeg7M2/QSQSDVxCqCFJ6z
- e00=
-X-Received: by 2002:a05:6820:2016:b0:67d:ea53:b9c8 with SMTP id
- 006d021491bc7-69b25b76649mr4786855eaf.18.1778379268278; 
- Sat, 09 May 2026 19:14:28 -0700 (PDT)
+ bh=Kt/X9h3ebfY2yAsj4mYC6DTi18sxMdPXWVIaTnR56mU=;
+ b=Mgc/PGBfpYqSfuLtsxEeI8tTkyKp/WzIl881nZlWC4cW9VnRXiesSYOY8vgJRLDN25
+ 0j4ZpiJ+O3IhKgxZ6B4dMcks7Ipqq0tdM60xqJ4m8JLyrsnpHUcJutke9mUjm3gNedWL
+ LMC8J2bqCuivUzrB/LAfrPYHBY4T4WMdDnlMqTmLj8MHNIf7tC6wmvD9QXEfr2/iaacL
+ OkFkYZ+dgN+CLKCxyo5qgVEUiIFXwLdupBLinB1vF59le7iRrH+J5p01lxCMlmtFMkYU
+ 3KeP+b0ZbbpZOlmd0b117z0wzfKVBv4J9QxPfMGv06oxoedTJHiYSd6q831aIi/pXcPt
+ a12Q==
+X-Gm-Message-State: AOJu0YxNHDKup23XwzXlojwg4+AAAjf5JQ/QlP6X1dfNlig+CRIyFsTz
+ ATjTb2cZifj4Q6arFKN0+yQhSeylFhqhmqniGcklt2RcivW39WOHbMOAgVDL+yTr
+X-Gm-Gg: Acq92OHx4YwtgHj7eBlcU2A6WdTQJh9Qs73Qjpd6VkKTcPsPFqj1SZA7ZwYtJa/KUy1
+ gy9+6EnN8mo4704uwJma3eMwWKei3j4au2pcZmHFrE6LtzpaB1fpppE1cnLyKkgiqO2RCSe5Y5n
+ t6H2SBCNJcHYu8sHWwFMhm55Cky32VDLrW6z5ibdHa5mMbrUFHKoW90tH6CELSqJ4PgD8ag8+Pf
+ RiV8x5VqiP0D/R+TequdL6TnxdvXJLYpZDUbn6vgAP+vgcgoRRawPw+zKadOq3ia5No+55GdpzI
+ kaYbkgta19crNyulge5QexfdR5E2FYmCXqfFq0dm7NO8DwCb3uQho48TBDahV8kQ6L3rnoVVrJd
+ UYBkClvpD9jR3O+Cq4nNspXKrdTxKc+ZckGAwJJYwLdWBfKGzzlByYS7YcatqeS3IvnEeoWAIn/
+ aT/sQ7MDBa5AK/RwQh33cBqsKK/TIdo6qMosc6j/z1V5xnrKXswPrUs5T477Kk5Y9IF5bYPW8MR
+ tcUMvftsLgdw03pYcCuaaNVahGPuo51Z7zhAJ+ARmITw2cRCmaEFeuyL5g+L4rG/o0N9TXAOpcC
+ wCEiWPhaUZdBNA==
+X-Received: by 2002:a05:6820:169f:b0:694:9f32:11 with SMTP id
+ 006d021491bc7-69998c8feb9mr10592690eaf.5.1778379239540; 
+ Sat, 09 May 2026 19:13:59 -0700 (PDT)
 Received: from mac.localdomain (71-218-106-55.hlrn.qwest.net. [71.218.106.55])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-69b25dbffdbsm3645643eaf.9.2026.05.09.19.14.27
+ 006d021491bc7-69b25dbffdbsm3645643eaf.9.2026.05.09.19.13.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 09 May 2026 19:14:27 -0700 (PDT)
+ Sat, 09 May 2026 19:13:59 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Sat, 09 May 2026 20:13:55 -0600
-Subject: [PATCH v4 32/32] target/mips: expose Octeon68XX floating-point support
+Date: Sat, 09 May 2026 20:13:31 -0600
+Subject: [PATCH v4 08/32] target/mips: add Octeon LBX instruction
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260509-mips-octeon-missing-insns-v2-v4-32-d669dcd05c2f@gmail.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260509-mips-octeon-missing-insns-v2-v4-8-d669dcd05c2f@gmail.com>
 References: <20260509-mips-octeon-missing-insns-v2-v4-0-d669dcd05c2f@gmail.com>
 In-Reply-To: <20260509-mips-octeon-missing-insns-v2-v4-0-d669dcd05c2f@gmail.com>
 To: qemu-devel@nongnu.org
@@ -84,8 +84,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
- envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x32a.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::30;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oa1-x30.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -109,51 +109,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Octeon68XX cores implement CP1. Advertise that in the CPU definition by
-setting Config1.FP, enabling the writable Status bits, and providing the
-FCR0/FCR31 defaults used by this CPU model.
+LBX performs an indexed signed byte load from base + index and writes the
+sign-extended result to rd.
 
-This lets guests observe the expected floating-point feature bits and
-use CP1 with -cpu Octeon68XX.
+Wire the existing indexed-load helper to MO_SB so Octeon user-mode
+binaries can use the signed byte variant alongside the existing LBUX
+path.
 
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-
 ---
-Changes v1 -> v2:
-  - Move this CPU-model correction into a separate final patch.
-    (suggested by Philippe Mathieu-Daudé)
+Changes v2 -> v3:
+  - Split LBX out of the combined Octeon arithmetic and memory
+    instruction patch.  (requested by Richard Henderson)
 ---
- target/mips/cpu-defs.c.inc | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ target/mips/tcg/octeon.decode      | 1 +
+ target/mips/tcg/octeon_translate.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/target/mips/cpu-defs.c.inc b/target/mips/cpu-defs.c.inc
-index 69e02532c4..37c14663b2 100644
---- a/target/mips/cpu-defs.c.inc
-+++ b/target/mips/cpu-defs.c.inc
-@@ -997,7 +997,8 @@ const mips_def_t mips_defs[] =
-         .CP0_PRid = 0x000D9100,
-         .CP0_Config0 = MIPS_CONFIG0 | (0x1 << CP0C0_AR) | (0x2 << CP0C0_AT) |
-                        (MMU_TYPE_R4000 << CP0C0_MT),
--        .CP0_Config1 = MIPS_CONFIG1 | (0x3F << CP0C1_MMU) |
-+        .CP0_Config1 = MIPS_CONFIG1 | (1 << CP0C1_FP) |
-+                       (0x3F << CP0C1_MMU) |
-                        (1 << CP0C1_IS) | (4 << CP0C1_IL) | (1 << CP0C1_IA) |
-                        (1 << CP0C1_DS) | (4 << CP0C1_DL) | (1 << CP0C1_DA) |
-                        (1 << CP0C1_PC) | (1 << CP0C1_WR) | (1 << CP0C1_EP),
-@@ -1011,7 +1012,12 @@ const mips_def_t mips_defs[] =
-         .CP0_PageGrain = (1 << CP0PG_ELPA),
-         .SYNCI_Step = 32,
-         .CCRes = 2,
--        .CP0_Status_rw_bitmask = 0x12F8FFFF,
-+        .CP0_Status_rw_bitmask = 0x36F8FFFF,
-+        .CP1_fcr0 = (1 << FCR0_F64) | (1 << FCR0_3D) | (1 << FCR0_PS) |
-+                    (1 << FCR0_L) | (1 << FCR0_W) | (1 << FCR0_D) |
-+                    (1 << FCR0_S) | (0x00 << FCR0_PRID) | (0x0 << FCR0_REV),
-+        .CP1_fcr31 = 0,
-+        .CP1_fcr31_rw_bitmask = 0xFF83FFFF,
-         .SEGBITS = 42,
-         .PABITS = 49,
-         .insn_flags = CPU_MIPS64R2 | INSN_OCTEON | INSN_OCTEONP,
+diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
+index a2bfd0751d..efb1a48b38 100644
+--- a/target/mips/tcg/octeon.decode
++++ b/target/mips/tcg/octeon.decode
+@@ -49,4 +49,5 @@ SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
+ LWX          011111 ..... ..... ..... 00000 001010 @lx
+ LHX          011111 ..... ..... ..... 00100 001010 @lx
+ LBUX         011111 ..... ..... ..... 00110 001010 @lx
++LBX          011111 ..... ..... ..... 10110 001010 @lx
+ LDX          011111 ..... ..... ..... 01000 001010 @lx
+diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
+index 1893bf359f..ecdce6ab9b 100644
+--- a/target/mips/tcg/octeon_translate.c
++++ b/target/mips/tcg/octeon_translate.c
+@@ -161,6 +161,7 @@ static bool trans_lx(DisasContext *ctx, arg_lx *a, MemOp mop)
+     return true;
+ }
+ 
++TRANS(LBX,  trans_lx, MO_SB);
+ TRANS(LBUX, trans_lx, MO_UB);
+ TRANS(LHX,  trans_lx, MO_SW);
+ TRANS(LWX,  trans_lx, MO_SL);
 
 -- 
 2.54.0
