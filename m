@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3D13CD37AF
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 02:16:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B741BCD37AF
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 02:16:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLtgY-0006Dx-Gk; Sat, 09 May 2026 22:14:26 -0400
+	id 1wLtgT-0006C2-GO; Sat, 09 May 2026 22:14:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wLtgQ-0006C1-3S
- for qemu-devel@nongnu.org; Sat, 09 May 2026 22:14:19 -0400
-Received: from mail-oo1-xc31.google.com ([2607:f8b0:4864:20::c31])
+ id 1wLtgI-0006AF-DM
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 22:14:10 -0400
+Received: from mail-oo1-xc35.google.com ([2607:f8b0:4864:20::c35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wLtgN-00030O-IB
- for qemu-devel@nongnu.org; Sat, 09 May 2026 22:14:17 -0400
-Received: by mail-oo1-xc31.google.com with SMTP id
- 006d021491bc7-697bcc9d769so1700236eaf.0
- for <qemu-devel@nongnu.org>; Sat, 09 May 2026 19:14:14 -0700 (PDT)
+ id 1wLtgG-0002zQ-SN
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 22:14:10 -0400
+Received: by mail-oo1-xc35.google.com with SMTP id
+ 006d021491bc7-6948da50eb5so1727824eaf.1
+ for <qemu-devel@nongnu.org>; Sat, 09 May 2026 19:14:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778379253; x=1778984053; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778379247; x=1778984047; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=+Hqrzj08wtj3b2hP2t7try1LvJnEWInWlbluQGarIwY=;
- b=EVJiQCHsD5s6+KDzCMVnI9+RqXF8bbqzIfI448svl1itkctFF18MnT0IliU51jzSBv
- AGdYl3qxMYvum+FQmhj8iqWZxMskD4vqujglbwx93JnTecPp8/XD/oMCYRDta1UJV78B
- xIa8YnVrW+a47OXx249c/9NFMsiRWEeLM6V3y7c7QDtI1vX/1ORQZbnXllfoCUZZeq7o
- 9rL+30R81djp7vvKiVtj6EofRZ1/rpgFszYflKvnApWLFlbgArKjjMIdaC+xfTkDHKvs
- cYyBo5uUOddhZOdNvFzoQM5TXbrB22Zqv3U3WypIrtcLFfPXLizYfkf1gsU3OHOnh9pk
- IT+w==
+ :reply-to; bh=JORHga7aTlCMz+QuOKMjtA/2ISg6aPqI+xE2yOVY0q8=;
+ b=SBs/Wr2TooJLi96hc5NZxbSoKkMn9Ev5NXDlwYFWfztFGI5OW7WQVQvLruxfU0vMIE
+ xUwOvhRigiSGaI4XpnfpU3JHsQ6YX1tPJ9WTiF5Xl33Cx33bY3tr1HKcSwyE1zqdT7ns
+ uzaYl8bPSEcHD/NseNOmjVZIs+gScbWgS+XSGA7BisqbsSEM0OBboFOR/3mkCFfbhXU7
+ 0zKBehnoX9LzR8bEYolh6c03ToOyf3huISWcbknXMZeGZIAlRBIlNEXHeOCmF5RkzT6p
+ JnIasB9iqNuGhm01BDo+Gv/5Ll2Nsz+Gvk6lG9qut9dbX0yHzLPq/I75RX5SEoCaxgwO
+ P+Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778379253; x=1778984053;
+ d=1e100.net; s=20251104; t=1778379247; x=1778984047;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=+Hqrzj08wtj3b2hP2t7try1LvJnEWInWlbluQGarIwY=;
- b=Bw/lACApyYlldCtNXDCWz8fXvTDaB85vqTvZz4jqzqf3Ep1Jb+k1JVTnuvtNGMT6W0
- mbCzR0d/7lSZcmYZjKVb73+NhR0oOwlsG4rWADh+6h2iegpwM+OeKXm1GoHvx9j8tuxq
- veIcUkyJyDYtPjNdBtdxc1MGR3aKGXI46lgbRm50JOay2dg5FU/nn0CMgZ3hTZCjs6P4
- 362QrvSn7TCUIVjx7s4RdwE4AFYcFkZlcn1X7300tZ+DccYeKuVPkayeLL6cK0rbPGfp
- a5yOcU1gPybIHpQs4CmL0GbB1AQVq7W+dcaWhueELGZbFdktKsxx5KzoyeQTB74l5PyP
- QvYg==
-X-Gm-Message-State: AOJu0Yy1C3FrnmobUOe1tf0KRVSv160SU0SqaIROuLnr4mnv3ENsr8Ox
- /8eWcGuXDPMhFANYz9/cRNEdFNFi9NIeVd4k9ZAEfpUt/Nza1WzVWWGjPESIcZOu
-X-Gm-Gg: Acq92OGe5bT6ar/vi9qsVVKQ6tTcIy0ItDhdcig+ud4m5Cl9tH4D4JQ4IgsYA0BgXfc
- eyNym7+3JIPqwM0ByLKFtYJM7btwU48rW1nPeRnwRPSHOiGY060pIHakUQJfSMzQvGyXu+/gBWa
- KomTjYPUkulguQttgNgDFqcJuWqqS65tPipghH64Slt754wl8JUcS4fE/AIeP0KBBD2FV2qmm+4
- STDGfq4OdMr8A5dFzY+vz6KTPjgRe6Xgv/4OOdH4ZIhuvm1p+Xy91Ff7cO4sEEDR6zoNQLi7be1
- Erki4Zan+v9WwW8JxE5PQ+2jqpEcjbQRzu78UkbJRs9L9bUDfDJ2Adtf+ZGntNgb2sU/2645xwX
- +gsOtaeN/syK3PcFLZXVqsRh5/wUAzlb8HlA4YIvZ/zZ43eTYOKpHf6LgFhaHRnTtE3kzNCWgD6
- D0N/GndeltIBWDDdR2knri96DIo/CYKKB3D83riVlBRn6Xt/rzlfsrIstEV9fdivsUS1jK1rIbr
- JHhQ0bUAdSyxtOZmu1ao5yV+o5NPoOHZrEN45bmbw15CFtTpKxwnvxv0Y/82qQrCZmP
-X-Received: by 2002:a05:6820:a0e:b0:696:89e4:5493 with SMTP id
- 006d021491bc7-69998d1d8d8mr10338707eaf.34.1778379253288; 
- Sat, 09 May 2026 19:14:13 -0700 (PDT)
+ bh=JORHga7aTlCMz+QuOKMjtA/2ISg6aPqI+xE2yOVY0q8=;
+ b=g01WByqI+3EiS5zplwavmOs4qwP+p/em0ZKl6Dwt4NL7ziktAJRgB5wb5QooYl+L/6
+ P4yxbLn4bIiTp8w01sR7TEx3qe51cSrfZcGKn/v0zHfO4n2nVcfcN4Alktpod3uLgX+G
+ KpPFBRZXmQc/4AXYUsf0PJSVO8Z8/73BHXRrOmw1RIxXn8SDnXvNSKP2jf9Ho21yCuxh
+ 711si92q0YO65I7Whu94wAYJ3vN9RrBdJ3UauIu4urfWwLPWUnjyYjZ55y15r1ApnPb0
+ J+EmnQ3iyFIY/JdGDpu+tiTszkeMle4AKZQPZY4bqXfeBpLjrEw09gIrZqagYZdbJRdp
+ lCJQ==
+X-Gm-Message-State: AOJu0Yylw/DFpl+vQWWHHtP6u4H7HLeu8y94lZmb6Kb01w1UwD82JnM+
+ AcEY4olgzWFIQaxOioNPk/U6tEwlDgPSM2mQtxFBLxLWP6tPEI3v+VjPROtlGVtE
+X-Gm-Gg: Acq92OHMzn+PzGhCG59rYpdSvti7DNSQEq2zdEA2rXdlkHrdOaX/BH+TFZZyqGW1YeC
+ nHsFamv3Q0YyDpyxfcEgKuxAtiMnbfRBh1qRD7IvSq/aIZeSTna5HnGzH8Pz1e2jiJetT1B/3n+
+ w7KYRLUrQfRECCJEmBadGYr4A4DpRFp+5CXnAyJxhhb67PHjlQG0pHO+X0cBLzyKWp2SrbokITr
+ bws6Vcv8XvpNMXDr5DwN8wRX6VHkEyRZ+kztHmNaOPhpXcCQqoOGCcMiCJJhYJ4AJo9m5dAqRla
+ nPxjAA29u8bubGi8nUOf9LFYzxqJKI7R8YriksUheikgfuPCMI4aFr4OsybtaLZa/KSZIY8ul5y
+ Xr2oT1D8JVgf59lIXQ0FGvaTgBKxo7nWCiJlqYFLmWic2btCTUmrX2fDw4CuqIBeh9q2HKDhceU
+ q3GrgJd4uM+9gAVzHm5H0sN8Zi0Xxe7Slo5oG+8N/nGUFeGmTecHZyf3yvzvzsBukqr47n0/vMk
+ he2aHtlGJwHG2t2fa5gDCWAG2MnJNBCzFDItfw4xkYkO/bSMCYdIRZNfw8gpGAW3p7dmt/62+jN
+ 3/I=
+X-Received: by 2002:a05:6820:290e:b0:696:1b18:18f3 with SMTP id
+ 006d021491bc7-699ab661cb5mr6451699eaf.24.1778379247633; 
+ Sat, 09 May 2026 19:14:07 -0700 (PDT)
 Received: from mac.localdomain (71-218-106-55.hlrn.qwest.net. [71.218.106.55])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-69b25dbffdbsm3645643eaf.9.2026.05.09.19.14.12
+ 006d021491bc7-69b25dbffdbsm3645643eaf.9.2026.05.09.19.14.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 09 May 2026 19:14:12 -0700 (PDT)
+ Sat, 09 May 2026 19:14:06 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Sat, 09 May 2026 20:13:42 -0600
-Subject: [PATCH v4 19/32] target/mips: add Octeon MTM1 instruction
+Date: Sat, 09 May 2026 20:13:37 -0600
+Subject: [PATCH v4 14/32] target/mips: add Octeon ZCBT instruction
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260509-mips-octeon-missing-insns-v2-v4-19-d669dcd05c2f@gmail.com>
+Message-Id: <20260509-mips-octeon-missing-insns-v2-v4-14-d669dcd05c2f@gmail.com>
 References: <20260509-mips-octeon-missing-insns-v2-v4-0-d669dcd05c2f@gmail.com>
 In-Reply-To: <20260509-mips-octeon-missing-insns-v2-v4-0-d669dcd05c2f@gmail.com>
 To: qemu-devel@nongnu.org
@@ -83,8 +84,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c31;
- envelope-from=james.hilliard1@gmail.com; helo=mail-oo1-xc31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c35;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oo1-xc35.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -108,50 +109,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-MTM1 loads the middle Octeon3 multiplier operand pair from rs/rt into
-MPL[1] and MPL[4].
+ZCBT has the same user-mode memory effect as ZCB for QEMU's purposes.
 
-Like the other MTM writes, it resets partial products so the following
-multiplier operation starts from the newly programmed operand state.
+Reuse the ZCB translator so both cache-block-zero forms clear the
+containing 128-byte line.
 
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
 Changes v2 -> v3:
-  - Split MTM1 out of the combined Octeon arithmetic and memory
+  - Split ZCBT out of the combined Octeon arithmetic and memory
     instruction patch.  (requested by Richard Henderson)
-
-Changes v3 -> v4:
-  - Describe the Octeon3 rs/rt MPL[1]/MPL[4] pair handled by the shared
-    MTM translator.
 ---
  target/mips/tcg/octeon.decode      | 1 +
- target/mips/tcg/octeon_translate.c | 1 +
- 2 files changed, 2 insertions(+)
+ target/mips/tcg/octeon_translate.c | 5 +++++
+ 2 files changed, 6 insertions(+)
 
 diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index 165cd5088f..82d0410e6c 100644
+index d8a1bfce77..56c54e0973 100644
 --- a/target/mips/tcg/octeon.decode
 +++ b/target/mips/tcg/octeon.decode
-@@ -48,6 +48,7 @@ MTM0         011100 rs:5 rt:5 00000 00000 001000 &r2
- MTP0         011100 rs:5 rt:5 00000 00000 001001 &r2
- MTP1         011100 rs:5 rt:5 00000 00000 001010 &r2
- MTP2         011100 rs:5 rt:5 00000 00000 001011 &r2
-+MTM1         011100 rs:5 rt:5 00000 00000 001100 &r2
+@@ -51,6 +51,7 @@ SAAD         011100 ..... ..... 00000 00000 011001 @saa
  
- &saa         base rt
- @saa         ...... base:5 rt:5 ................ &saa
+ &zcb         base
+ ZCB          011100 base:5 00000 00000 11100 011111 &zcb
++ZCBT         011100 base:5 00000 00000 11101 011111 &zcb
+ 
+ &lx          base index rd
+ @lx          ...... base:5 index:5 rd:5 ...... ..... &lx
 diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index 7f135d6293..cbf2e3188f 100644
+index 794c8f033b..477f681f9e 100644
 --- a/target/mips/tcg/octeon_translate.c
 +++ b/target/mips/tcg/octeon_translate.c
-@@ -285,6 +285,7 @@ TRANS(LWX,  trans_lx, MO_SL);
- TRANS(LWUX, trans_lx, MO_UL);
- TRANS(LDX,  trans_lx, MO_UQ);
- TRANS(MTM0, trans_mtm, 0);
-+TRANS(MTM1, trans_mtm, 1);
- TRANS(MTP0, trans_mtp, 0);
- TRANS(MTP1, trans_mtp, 1);
- TRANS(MTP2, trans_mtp, 2);
+@@ -203,6 +203,11 @@ static bool trans_ZCB(DisasContext *ctx, arg_zcb *a)
+     return true;
+ }
+ 
++static bool trans_ZCBT(DisasContext *ctx, arg_zcb *a)
++{
++    return trans_ZCB(ctx, a);
++}
++
+ TRANS(SAA,  trans_saa, MO_UL);
+ TRANS(SAAD, trans_saa, MO_UQ);
+ TRANS(LBX,  trans_lx, MO_SB);
 
 -- 
 2.54.0
