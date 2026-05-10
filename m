@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAA24CD37B2
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 16:17:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46E95CD37B2
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 16:17:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wM6pV-0007dO-Ep; Sun, 10 May 2026 12:16:33 -0400
+	id 1wM6pt-0007g0-Ul; Sun, 10 May 2026 12:16:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wM6pT-0007cw-OP
- for qemu-devel@nongnu.org; Sun, 10 May 2026 12:16:31 -0400
-Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
+ id 1wM6pl-0007fV-Rd
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 12:16:49 -0400
+Received: from mail-ot1-x330.google.com ([2607:f8b0:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wM6pS-0003gk-8v
- for qemu-devel@nongnu.org; Sun, 10 May 2026 12:16:31 -0400
-Received: by mail-oa1-x2c.google.com with SMTP id
- 586e51a60fabf-4042fe53946so1313672fac.3
- for <qemu-devel@nongnu.org>; Sun, 10 May 2026 09:16:29 -0700 (PDT)
+ id 1wM6pk-0003sJ-7L
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 12:16:49 -0400
+Received: by mail-ot1-x330.google.com with SMTP id
+ 46e09a7af769-7dea20cf21aso3348226a34.1
+ for <qemu-devel@nongnu.org>; Sun, 10 May 2026 09:16:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778429788; x=1779034588; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778429806; x=1779034606; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=jAUgqUZ1WEn+W4oDjOTsOJyMNpbaAkzETP432yjgKwc=;
- b=XnCxtZaIvn3kSgtlaYxktTWzyvp2R27dpozRmdItl22wrFVd/3PIvd/x6pfyJ5lAI/
- +Pxabd61lA2vzjFlLOl49E3hTPRTzTMb0MLfBnhgytsaFGSAwMX4JrPp1IMsFcLvWVWc
- gCJ+I6jcgwe4cdHfmKX1H7rmmGzGiHmJj40kWZfeQ5Ljn8Ez9EQZRKjP1atZqk3yQ4DW
- W+DLXjT5LlwCklsXCulQShxh12SKmiwnktW/xJhBWFs5ZIlm2mox7hG2tDruml8Xr8Ej
- ribZ29H/PqWEbUn7t5bULGD70cvzEyxmzGRJj9uMtATiXPtA/TrJFG4+TcnDb7cEQVRK
- P4Ag==
+ bh=KQ6ToM7Wf9WNRnbFxllkmpNyp4obz7B0oX4VVTw5oxQ=;
+ b=iXi7Awb4GUy9cYWovSwb+aumuMqzjkpcXrdscFOAhx7KEpQ9Vfd5oQFwcAG/2oDeVg
+ Ogcpl/y+ybUKFdKM16/ph2llIPkKUpdqgZWFtvtZkKaylEsM+hVvBR33zU8U/L6VAcNi
+ L/qjM2RmQs+WpdDN9DJ8BP+rA3zmecSXp9WXBhHC62wsbbXsEuo3KRh5sK/vlv3lvdfp
+ 3VUH8SU15MOl9T0YJvWKxb79xIgnkdsNDfgZgum+l3CP2qlCSbe9Ir5BM/+WgtW+MHjE
+ sCLoCAHGnC3vacOsuiPmLXK2HsYXVG5OoNTsNFmM+c20tWOvlh6zBc1VO5bsolHD2YRL
+ 2xSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778429788; x=1779034588;
+ d=1e100.net; s=20251104; t=1778429806; x=1779034606;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=jAUgqUZ1WEn+W4oDjOTsOJyMNpbaAkzETP432yjgKwc=;
- b=aDVlIAW7pvLCTo4mA7vOWfGvTg8PTM3UjmBSYaAbPPqzyWHTAu0GCcA4sSulRYIxiO
- 2rS6f4cMcmWR3h/F4q+aUL3zHFCHcQ1hwbgPIF2+syq4QCI9lpNk/n8b36b86LPYDv8d
- k4U+Vb4JRyXkDKUw3sdspL3Yuqm5kDiN68/MbSvGgEqI8SdIne9tUPfili3bhJJH1CIj
- Gs9FBaFxVBkSh8QgEYwfQ//OoCYJrEXH/ZkmYj0xcx3EOn7v+rUd4W9IAwf20q7K5vsQ
- 9L0KHsL0d1rIeqyki6xn8sN6GSpKlZlH+wqzYAV4Y1XtMuzTeW9sLFEoMwNASQ8Zp09G
- zrxA==
-X-Gm-Message-State: AOJu0YyZW9TxN6j2fuq6J3JOfCie04QbgP7OhrK2/ayJ9UFvukhvir3m
- 3sBOoOg4U+IJ1WcF0fRALMFVQRclUWiDKNCw9sKVX1Buzx5ikPmjqykSi/LhGNCoL1MbOGIZ0ze
- BwFuU
-X-Gm-Gg: Acq92OGLCj1lWrIsklTx2XnAL/9bp9lVL1OABUC0kUDjorMt2ZyuBM5w4PHtTaSUEMs
- /dnDllXIpEsfD/uteP/3HQkHK46FZ8erfmQNrqZ/1Pou3vW2kDyU8mYlXTjVLmFYPlL4n5YHzH7
- gdKDcbBqKfxVNrrrRLvH9M0sNut5l4W40W+8s11iW8dAZB44dr7cow9EohfaTqNkhA0swB65Ka/
- wzf92s2/qrOKiJCXvMCtfh4BavPdf9MVjgk+3RlgEBV1luKCfShddooq1fTsn8ZQEuJBo4Vqf40
- Nx1/0aE0ANUs17aepMuJ3ueCqWiacjCTTjQA7MIiMd/7luUhqyWVAfeZfSXklH2hpKTR58A7B/n
- sAcA7okAk02BRMe0gFjanX/RvVG3oQukAquI9TEY/0dJhC+h26NEY1Ya37PQxHxS+kuij38a1tL
- J0w4t9ncAF4YTnKoEIXTHN5OecDnjeB+4/8pkPaF+RobGxkbArKuUAZJtGkAsORrsbhlWjSgeDK
- EtRlwxRfRG5mZF/YA6v
-X-Received: by 2002:a05:6870:e0b0:b0:430:29c3:9d15 with SMTP id
- 586e51a60fabf-434f5577a52mr12325188fac.1.1778429788222; 
- Sun, 10 May 2026 09:16:28 -0700 (PDT)
+ bh=KQ6ToM7Wf9WNRnbFxllkmpNyp4obz7B0oX4VVTw5oxQ=;
+ b=h+Zb89FzcqgKlFTL+NDDdTF8pZZxeqciJE8o4wnNs59cBr52YN2t0ve5kWMCO4pipg
+ eMSYyXkPDcS0xaR9hQ7IXwmz2fYiq9lKrUoZHY1jrmK16nDwcbQB0UvaqAUXlGaXrBv3
+ sOuBBTdZZL0HMuGkE1p3FOCpJ3gCI2IyCA4nPIdiuJj1Npqynde4hjqO7k71MLRI+iul
+ ZsuPZcE8x/7ICR/uRSONOLbLY/4+eGutiWaACDHDmGdObLxjbXiv0hrPjIMQspaRYpcj
+ bC2NDrbmm7GmyxIEtfcjxdehyzZeDdiQxWSv8C9HaiS260WqDZSOuaD2RSz9MG74Ar0Q
+ JyhQ==
+X-Gm-Message-State: AOJu0YyoBS0Ger1lm6O36hQoKmCdznFgxNjvTpQ4hQ0I6E6r89BVUS5M
+ NS3AV9wRaGJq0c1sF3+YsSvzAMjcOI+sHBB2JjLvJxzTBWniD7O2cUj2JOD7QiCh8ZksymTdSdM
+ rk7PP
+X-Gm-Gg: Acq92OFyw+4kK+qyWS6OUKRqLtZFeyHfP0TqJep7jLsDJVtXwGb+l++CLcL1UaHYLWu
+ vyzTLKtuOOEcvKN2QRt4zjo/9DxTJjI8GUHR5urj3IrOGFsHFq5Pomx3NpLOt3NALqR279iMOJp
+ /4kVXS5WJvyZriqpVpOggL3rT4Wyb/9wT8W4eEAgkv52yP8LqGwaMYMlHuUdIClTJuhXasAnGAJ
+ VOqk+dLSHftVdT7ZV6pYoVengd0MNc50xfIwYuoo7rioK0W0ArZ7y7gdFBeVETAGwSStOZ2srup
+ Kelo2VxdOVJ1L3bcYr9ea3GoRSaCvqESRKdpI4M5i/JB5QI8yBfRUjSHMKzuGOmZwdnnQqtgWzF
+ 43skkjJHXVBVWF9FfLwLkxUnOl2zsuW2F2ro2ZUL6BC29L74PHMl6QE3n5cf1JzwYetn4PJAsN3
+ 8UQKj46INEFwnpOwoJx/CX4pT/Y57YlNSjXDbJOm5k75tITw9RnQ+ylhglt8scyCpXhEvl5er9I
+ riVhVhhDA==
+X-Received: by 2002:a05:6830:378e:b0:7de:49c0:a752 with SMTP id
+ 46e09a7af769-7e1df26c2d2mr12262571a34.27.1778429806239; 
+ Sun, 10 May 2026 09:16:46 -0700 (PDT)
 Received: from ?IPV6:2600:381:c938:6375:32c5:6ccf:a676:6508?
  ([2600:381:c938:6375:32c5:6ccf:a676:6508])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-435574490b0sm7700387fac.17.2026.05.10.09.16.26
+ 46e09a7af769-7e367a18481sm5236995a34.0.2026.05.10.09.16.45
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 10 May 2026 09:16:27 -0700 (PDT)
-Message-ID: <f2af3df7-75a4-4a7c-9009-ea42e7a0988b@linaro.org>
-Date: Sun, 10 May 2026 11:16:25 -0500
+ Sun, 10 May 2026 09:16:45 -0700 (PDT)
+Message-ID: <3be776b0-de87-4ffb-942e-a15128f092cf@linaro.org>
+Date: Sun, 10 May 2026 11:16:43 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 11/32] target/mips: add Octeon SAA instruction
+Subject: Re: [PATCH v4 12/32] target/mips: add Octeon SAAD instruction
 To: qemu-devel@nongnu.org
 References: <20260509-mips-octeon-missing-insns-v2-v4-0-d669dcd05c2f@gmail.com>
- <20260509-mips-octeon-missing-insns-v2-v4-11-d669dcd05c2f@gmail.com>
+ <20260509-mips-octeon-missing-insns-v2-v4-12-d669dcd05c2f@gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260509-mips-octeon-missing-insns-v2-v4-11-d669dcd05c2f@gmail.com>
+In-Reply-To: <20260509-mips-octeon-missing-insns-v2-v4-12-d669dcd05c2f@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2c;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::330;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,38 +107,27 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/9/26 21:13, James Hilliard wrote:
-> SAA is an Octeon+ instruction that atomically adds rt to the naturally
-> aligned 32-bit word at base and discards the old memory value.
+> SAAD is the Octeon+ doubleword form of SAA: it atomically adds rt to the
+> naturally aligned 64-bit doubleword at base and discards the old memory
+> value.
 > 
-> Add an Octeon+ feature bit, enable it for Octeon68XX, and implement the
-> common SAA/SAAD translator with TCG atomic_fetch_add_i64.  The MemOp
-> selects the word or doubleword transaction size.
+> Route it through the common SAA/SAAD translator so the MemOp selects the
+> aligned doubleword transaction size.
 > 
-> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+> Signed-off-by: James Hilliard<james.hilliard1@gmail.com>
 > ---
 > Changes v2 -> v3:
->    - Split SAA out of the combined Octeon arithmetic and memory
+>    - Split SAAD out of the combined Octeon arithmetic and memory
 >      instruction patch.  (requested by Richard Henderson)
 > 
 > Changes v3 -> v4:
->    - Gate SAA/SAAD behind an Octeon+ feature bit.  (reported by Richard
->      Henderson)
->    - Use the i64 TCG atomic add path for both word and doubleword sizes.
->      (suggested by Richard Henderson)
+>    - Note that SAAD shares the Octeon+ gated SAA translator path.
 > ---
->   target/mips/cpu-defs.c.inc         |  2 +-
->   target/mips/mips-defs.h            |  1 +
->   target/mips/tcg/octeon.decode      |  4 ++++
->   target/mips/tcg/octeon_translate.c | 19 +++++++++++++++++++
->   4 files changed, 25 insertions(+), 1 deletion(-)
+>   target/mips/tcg/octeon.decode      | 1 +
+>   target/mips/tcg/octeon_translate.c | 1 +
+>   2 files changed, 2 insertions(+)
 
-I beg your pardon here.  Given that we implement only Octeon68XX, which is Octeon3, 
-there's not really a need for new feature bits.  For clarity, we could rename INSN_OCTEON 
-to INSN_OCTEON3, but that's not really necessary either.
-
-Anyway,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
 
 r~
 
