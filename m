@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D096CD3427
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 13:46:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12D07CD37B9
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 13:46:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wM4U1-0001IG-Fi; Sun, 10 May 2026 09:46:14 -0400
+	id 1wM4U0-0001Hc-EK; Sun, 10 May 2026 09:46:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wM4T1-0000c6-0p
- for qemu-devel@nongnu.org; Sun, 10 May 2026 09:45:16 -0400
+ id 1wM4TH-0000uJ-RZ
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 09:45:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wM4Sz-0004lU-3w
- for qemu-devel@nongnu.org; Sun, 10 May 2026 09:45:10 -0400
+ id 1wM4TA-0004mR-1t
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 09:45:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778420708;
+ s=mimecast20190719; t=1778420719;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CcXfLzNY8fSZYo9PLVA3EmHZ0GPkDr4koAHbu3BXWIg=;
- b=OpzirniKAMag+lM/JsIc0Jc7ZZ/XlcpF6j6I7x+yVB0BqGFJfEHAXj+XwzX4HUeojMRpfv
- bsFCmxa6gZ8V6oFI1TPC3YE67H2tQ/UlFVu+PmbVVA7JchgC5BWBachHGBlPM4X7JIQhko
- cEU4q2sfoj8Sa8ReMvJto5q5R+G34l0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=EbnCJ8KhbnfJGLdBe0wqiH9aHQKYgPcb5yn/6ly/rUM=;
+ b=Cao2aitpkEW0lOHqJjI+bp29rJyliGECApybIt3Qc25tIq8cs8j613gxrm/gi61Q0ZZdVi
+ CaUyBR6AG2Rjnj8+1jAmkVdZAH+LbvDpgpNm06cMwhZ9hs6MTi4qU5nGfIo/e8ECb+4H3d
+ I/kjSCavAaLMm5vi8txv/kecTyWiFS8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-112-ouaLQO3BP7mNG6Nkb1QhOA-1; Sun,
- 10 May 2026 09:45:06 -0400
-X-MC-Unique: ouaLQO3BP7mNG6Nkb1QhOA-1
-X-Mimecast-MFC-AGG-ID: ouaLQO3BP7mNG6Nkb1QhOA_1778420705
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-160-mXh2AQHUOvepGEgNrEWZKQ-1; Sun,
+ 10 May 2026 09:45:17 -0400
+X-MC-Unique: mXh2AQHUOvepGEgNrEWZKQ-1
+X-Mimecast-MFC-AGG-ID: mXh2AQHUOvepGEgNrEWZKQ_1778420717
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 896C3180034E
- for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:45:05 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E3484180034A
+ for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:45:16 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 53E9219560A7; Sun, 10 May 2026 13:45:01 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id CB8171955D84; Sun, 10 May 2026 13:45:11 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 10 May 2026 17:43:05 +0400
-Subject: [PATCH 08/54] qapi/qom: add qapi-type field to ObjectPropertyInfo
+Date: Sun, 10 May 2026 17:43:06 +0400
+Subject: [PATCH 09/54] qom/qmp: populate qapi-type in QMP handlers
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260510-qom-qapi-v1-8-48ba6a1a1fa5@redhat.com>
+Message-Id: <20260510-qom-qapi-v1-9-48ba6a1a1fa5@redhat.com>
 References: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
 In-Reply-To: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
 To: qemu-devel@nongnu.org
@@ -62,24 +62,24 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1867;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3243;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=l98NcHIYxcIgRoI9lT+AEGU4cey8Hr4xwKBBC+to5GQ=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqAItuHAYzltGcdqubEA5XlgSxkpr2aiKaRVLy/
- WNTH1zgZTGJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCagCLbgAKCRDa6OEJdZac
- 5fMTEACt2AGvjc4zTcN67lYHel5D8sT5gzgMSiwqeqlbfWxOzlZC9sNFYmKhfmogdbZ8e4mgFEU
- yb0ERDt9gQYS6lwIBSWg5oUyJEKZgmOGbdK9ui1AM4gsLeZ7etcghQm6ZqBfBV+dN9v8OGfJMwX
- Jaxui/cwqYbRMvrHjK42FwwpU9Hpjs/e/ryCmnMWCeNQSxXnuw8q462IiYJowrU0rTcBT3EdloX
- Y52OgUbF/UbaK4G00M/KG15vilzLYmhTGhYAv+UQtH2jyXKANbDAKPDBtk0lYUMkV3El0cNJO8n
- Qv6LxwsBYXb+qBoL5EIcQx1T91lsrI9EbL7uJoo8JeGSE7832nmZ+JCqIWWPo6JhJ2gc0hAeaRC
- B3lTqyyDG0noZGEVKa66iU/541n2V+1bJnW4sd+LIVpaVNKVY4i6cUzQ6tJMIKSJHo1P2z90+H3
- XYdHwv0sa3SYlJQurekSuYvXrydEoXxJ5GyFsbcgNm0IbYM2Ej7aU1GeVv/sCnvC3+FnrXnoY9+
- nylhcixYUU8KobUaKfhxJSu/Cx9X4C0XDRT9xvqsU7bN9uQAedyl48i9rZ1U1YLZ/Ja/mCu+r0N
- XKDmgxHPh+l8iqO8tRaORfEiqCu/S2rd6YRne0hNs5y889J0LyBGSoeStp6YlfT0Q0N+WKybiI+
- erMwQ42wk2RC8tQ==
+ bh=r+eXTVaOUCoKIvVLtys96ITsZDTbvm7APkbtzQtAcRk=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqAItuvc5WbsnmLVhBuOT6QQMo9SQmYJVBg1k+O
+ HsRLvOOw9+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCagCLbgAKCRDa6OEJdZac
+ 5UoSD/0XOfNXrc6tmyVHX0rZLK7EUbDOME/D1Ll9bkOsx/kyiKce6Vg4rUb7cXgAuMeWFh39Vfg
+ r+vm2qGvAEQm2TvG+dRrH8ERfKPxr8eU3uJ7l8lSn1PTFmvWapVKMTVlQW1hlQ+n7AhCDhXt1Xz
+ /i+blORyIiC4vSjoXC6TsH7DIy67wDcWElNHvu3HhjOJ15NmuN3mqRPnliLrFDssvIaDpob/bnh
+ AKOjSDifziu2a9W8Oi5qbDU7mgbGOyKCUXP9g7wIV9FM7IRXYN2XBMg4YIG1r6T6Xbs12qnPT8e
+ dA6wfkP5FJoZuJLyleLkGMNgBotR+Wyli4dqtg/HQKZMnt1qdAkz4guSdY2gUEqlxkCnrn9YdjC
+ 7k+0VrneFsxaTf7PIR0R1afZlgu3dgwwfOs4tM58Q9cY+/Si8AjT0tjVHPttLha/XrAXdoxM8Ne
+ NB//6v7ZB28dYk7erj3pjAV4jstxD7EOAXc0EGlDiC2H65xOLM/Nt+cx7Gc8vQ2jI9u/Nysbzi8
+ s+Ih/ZZTLH8OXMOGR5PeHryxcAexCv8zgby70KhmIMeNoICIX9TXjotzW4PsQB5XAXHjYFaaO+P
+ 7NgwC5Oy4/w21ZR9QPsFUNUlezZQWuYmVy9Q8my1Fo+1oBx+J2IlYe75RhhBeghVc57hVEWOF5d
+ Z55nJmVBntEHqsQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -105,60 +105,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add an optional 'qapi-type' field to ObjectPropertyInfo and
-ObjectPropertyValue. When present, it contains the masked type name that
-can be looked up in query-qmp-schema output. Absent for properties
-without a QAPI type association.
+Wire up the new qapi-type field in all four QMP handlers that return
+ObjectPropertyInfo or ObjectPropertyValue: qom-list, qom-list-get,
+device-list-properties, and qom-list-properties.
+
+When an ObjectProperty has a qapi_type set, the masked QAPI type name
+is copied into the response, allowing clients to cross-reference with
+query-qmp-schema.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- qapi/qom.json | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ qom/qom-qmp-cmds.c | 32 +++++++++++++++++++-------------
+ 1 file changed, 19 insertions(+), 13 deletions(-)
 
-diff --git a/qapi/qom.json b/qapi/qom.json
-index dd45ac1087c..a655be0beaa 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -35,6 +35,11 @@
- #        qdev device type name.  Link properties form the device model
- #        graph.
- #
-+# @qapi-type: if the property was registered with a QAPI type
-+#     association, the type name as it appears in the output of
-+#     ``query-qmp-schema``.  Absent for properties without a QAPI
-+#     type association.  (since 11.1)
-+#
- # @description: if specified, the description of the property.
- #
- # @default-value: the default value, if any (since 5.0)
-@@ -44,6 +49,7 @@
- { 'struct': 'ObjectPropertyInfo',
-   'data': { 'name': 'str',
-             'type': 'str',
-+            '*qapi-type': 'str',
-             '*description': 'str',
-             '*default-value': 'any' } }
+diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
+index 48b38d2b7f7..30af2cef53e 100644
+--- a/qom/qom-qmp-cmds.c
++++ b/qom/qom-qmp-cmds.c
+@@ -25,9 +25,22 @@
+ #include "qapi/qobject-input-visitor.h"
+ #include "qapi/qobject-output-visitor.h"
+ #include "qemu/cutils.h"
++#include "qapi/qapi-type-info.h"
+ #include "qom/object_interfaces.h"
+ #include "qom/qom-qobject.h"
  
-@@ -55,6 +61,11 @@
- # @type: the type of the property, as described in
- #     `ObjectPropertyInfo`.
- #
-+# @qapi-type: if the property was registered with a QAPI type
-+#     association, the type name as it appears in the output of
-+#     ``query-qmp-schema``.  Absent for properties without a QAPI
-+#     type association.  (since 11.1)
-+#
- # @value: the value of the property.  Absent when the property cannot
- #     be read.
- #
-@@ -63,6 +74,7 @@
- { 'struct': 'ObjectPropertyValue',
-   'data': { 'name': 'str',
-             'type': 'str',
-+            '*qapi-type': 'str',
-             '*value': 'any' } }
++static ObjectPropertyInfo *qom_property_info(ObjectProperty *prop)
++{
++    ObjectPropertyInfo *info = g_new0(ObjectPropertyInfo, 1);
++
++    info->name = g_strdup(prop->name);
++    info->type = g_strdup(prop->type);
++    if (prop->qapi_type) {
++        info->qapi_type = g_strdup(prop->qapi_type->schema_name);
++    }
++    return info;
++}
++
+ static Object *qom_resolve_path(const char *path, Error **errp)
+ {
+     bool ambiguous = false;
+@@ -58,12 +71,7 @@ ObjectPropertyInfoList *qmp_qom_list(const char *path, Error **errp)
  
- ##
+     object_property_iter_init(&iter, obj);
+     while ((prop = object_property_iter_next(&iter))) {
+-        ObjectPropertyInfo *value = g_new0(ObjectPropertyInfo, 1);
+-
+-        QAPI_LIST_PREPEND(props, value);
+-
+-        value->name = g_strdup(prop->name);
+-        value->type = g_strdup(prop->type);
++        QAPI_LIST_PREPEND(props, qom_property_info(prop));
+     }
+ 
+     return props;
+@@ -78,6 +86,9 @@ static void qom_list_add_property_value(Object *obj, ObjectProperty *prop,
+ 
+     item->name = g_strdup(prop->name);
+     item->type = g_strdup(prop->type);
++    if (prop->qapi_type) {
++        item->qapi_type = g_strdup(prop->qapi_type->schema_name);
++    }
+     item->value = object_property_get_qobject(obj, prop->name, NULL);
+ }
+ 
+@@ -225,9 +236,7 @@ ObjectPropertyInfoList *qmp_device_list_properties(const char *typename,
+             continue;
+         }
+ 
+-        info = g_new0(ObjectPropertyInfo, 1);
+-        info->name = g_strdup(prop->name);
+-        info->type = g_strdup(prop->type);
++        info = qom_property_info(prop);
+         info->description = g_strdup(prop->description);
+         info->default_value = qobject_ref(prop->defval);
+ 
+@@ -268,11 +277,8 @@ ObjectPropertyInfoList *qmp_qom_list_properties(const char *typename,
+         object_property_iter_init(&iter, obj);
+     }
+     while ((prop = object_property_iter_next(&iter))) {
+-        ObjectPropertyInfo *info;
++        ObjectPropertyInfo *info = qom_property_info(prop);
+ 
+-        info = g_malloc0(sizeof(*info));
+-        info->name = g_strdup(prop->name);
+-        info->type = g_strdup(prop->type);
+         info->description = g_strdup(prop->description);
+         info->default_value = qobject_ref(prop->defval);
+ 
 
 -- 
 2.54.0
