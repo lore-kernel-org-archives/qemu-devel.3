@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1E4ACD3427
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 13:48:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84D96CD37B6
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 13:48:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wM4WD-00059i-Cq; Sun, 10 May 2026 09:48:29 -0400
+	id 1wM4WS-0007In-Fc; Sun, 10 May 2026 09:48:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wM4W9-0004mU-Nr
- for qemu-devel@nongnu.org; Sun, 10 May 2026 09:48:26 -0400
+ id 1wM4WQ-00073w-Hv
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 09:48:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wM4W7-0005NG-VB
- for qemu-devel@nongnu.org; Sun, 10 May 2026 09:48:25 -0400
+ id 1wM4WO-0005PK-Uq
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 09:48:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778420903;
+ s=mimecast20190719; t=1778420920;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=L0jtZDyAG6ut3FJS5KdqQHzzK1iO9S/wXHIo8VlO86w=;
- b=SlCYL1e4as+eOvVJJ7RO5sp4rCUbhB2gISc3a+nZg3+53Yo3ZcnMIS0JK+b4pQsa7hpcLT
- 66kQ5TWCdUZ8x05td2u0FefZrHGOOzbPgBXy7RvfU75GYQuA09PcgVYCjXu9OSE8n9G4+T
- ozi+chHkLNfz+/cqCSnbS4XwHI2IYAM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=DWwxkLE91xXofymgFvGI+w9Kgvt7VkkQKMY2pY7orTU=;
+ b=Rsd9qm/g7n67SlpSxrMJi1yRYKloUc6uxBxgnXZuS0qKJm1HBkDNskrQdEzAyYp0QbM6FH
+ R8Wp9dSZw6MVrL2S9bL8pYL55xoBncX9ZvzgvWiR/WzlwDU2QFEU2rVirrKv0NrzCkN1r+
+ w1khIwgsBz6vC93YrmJ6arfHEi9HOKo=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-348-_ZhXd684OdGFiw4Sq528EQ-1; Sun,
- 10 May 2026 09:48:22 -0400
-X-MC-Unique: _ZhXd684OdGFiw4Sq528EQ-1
-X-Mimecast-MFC-AGG-ID: _ZhXd684OdGFiw4Sq528EQ_1778420901
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-14-kxOCISNzNRCYS5az5thCOQ-1; Sun,
+ 10 May 2026 09:48:38 -0400
+X-MC-Unique: kxOCISNzNRCYS5az5thCOQ-1
+X-Mimecast-MFC-AGG-ID: kxOCISNzNRCYS5az5thCOQ_1778420917
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 30EB3180044D
- for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:48:21 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B1028195608B
+ for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:48:37 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9041B18004A3; Sun, 10 May 2026 13:48:17 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 18A6819560A6; Sun, 10 May 2026 13:48:28 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 10 May 2026 17:43:22 +0400
-Subject: [PATCH 25/54] whpx: convert OnOffAuto arch properties to
- QAPI-aware registration
+Date: Sun, 10 May 2026 17:43:23 +0400
+Subject: [PATCH 26/54] accel/kvm: convert OnOffSplit property to QAPI-aware
+ registration
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260510-qom-qapi-v1-25-48ba6a1a1fa5@redhat.com>
+Message-Id: <20260510-qom-qapi-v1-26-48ba6a1a1fa5@redhat.com>
 References: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
 In-Reply-To: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
 To: qemu-devel@nongnu.org
@@ -63,24 +63,24 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6655;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2731;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=rc6etq1KNjRjMh12qePYEMBwWZktfhrnrhMoSB8Vxws=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqAItvEcKyIj/tgS+S3MrGk1v/P7jefP2kcOKNs
- fYFAUhsgVOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCagCLbwAKCRDa6OEJdZac
- 5Rc7D/98b3YQAStp4t1b8cpfTegADn6C7mJc6VRQZy6tc0aMi0yfseAfgt9tnFdUFCzGZ6NnQqQ
- tHBez1GhakZTbuY5s2D8ojo8I64hp1BgE9IIZBg1E9GnWgoYOYxqG3OdT7h3Pu/yRFzDoVNjMv0
- KVvDP7K6jnex2PSTW3O4RFwY9XdEv9oa12dZ2HSEDNJEVcru1/N7K/iG2/5YR6xtrEDYjCkzKYj
- 6TIlWh6rAS/BRAYaCUtHdwCVvJlum4U6ucN2PPykAb8W629QrcYzntjUWpSLfNBkq0AVRoNWWYI
- bNUJyFPQ3o9FJCtZKiBJ/FA0IfIxZMhqyRsuEI554cy5jSbpXIqPh1PpUYLCSOGnKEPQOz4Lvrx
- qBjAPRwY8auGNV9s9QZT5KCxeEOzeWogsSYqU55IK7g1ZnHZIH0nudFiCwj0kipNifQFVSRtZsC
- Lj01F69+dapJUUDBrYnULICUK4+DWeRwl/0/JWyqeFYYBaDxSC/gJM8uCrCCRIF+6m2Fk+QzdkV
- 8Sg0cirGTGs60DzBIGU4BN1bYYkB/s6FgzlnPZMlypNIIPHSxj2nEM60Nv9ym7Tsy9uxZgNF0Ze
- NRrKbGs3rFUTmtkrC19ZUZmFpuJWwt4FcWwUwF/f9UoAjr39fFbbM7L+EXDXkZTZCbmSfpmfPPo
- hZEfX3ZA4u23VvQ==
+ bh=1C5Es6ei64bnxBu+6I2DyhEV4JA9pADA42542Q0T2jY=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqAItvFtT7jDWgmd0qyt0mhsmEkIfRZhmoKTAH7
+ kmkZcQLxIOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCagCLbwAKCRDa6OEJdZac
+ 5YxAD/4heKCOXgE7BDbtXcNWTzApUn7LSSyu6AE61P8cQbXaGqJF/ROw/2xOCY5xL184Q+E38/F
+ X85l165Ix9AqQWeNizJo04fqkO9rWDwWnyNpO7roKA+V5/JqETnxURExQ0TbgZqESyZdqACpLAC
+ qt0KP00KpmKavBZzK0/5s0IANjerZQ3KFK6ribo3CcD0Sok4VDl2peytWTIsCEeU0zEsYwMGRDe
+ 0QdUPEtPt5NKd+tcHQWbUFrdsokG9px+3+aihYilh7tPoozIvrHbZW4Ktb7DlMYHBQhxAX/nq3D
+ q4/7VRSN4CKP9CmsWO4hhKf0jyQWCtEANVPGaw5utV0wP5wB5RerBHWq1JHMToO7V8cpX59fF/y
+ fb/0jFt2pM4yjBpPfUqsurdxWbC26bQ9WLmfnGguGUCP0q01ReTIkG+/FvuxXidn9dr7ADEzSc+
+ bs6EPSFKOMhm9yF7vuDvL+Hz5bvr7ibAVxNaSyVUeDmqsY0xja5h15pa1A3O0ipRsKETMaNThaz
+ TRprrhB96omoaxDravaIbniUzKF4x694/RVlyC3quZS4S/xi3AXrE/a21oS0rrgpIpDXyGQpR2H
+ N2yozY1XWHU9wy93g8dAJwRhX1iZ5N7DGH6jP/Kc3oTiIEDcGv/80t0fCS+eyokqiLdNjuDQtqt
+ JaVY8p95aeW0fcQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -106,96 +106,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the ignore-unknown-msr, intercept-msr-gp, and ssd OnOffAuto
-properties from manual visitor-based callbacks to
-property_add_qapi_enum().
+Convert the OnOffSplit property from manual visitor-based
+callbacks to property_add_qapi_enum().
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- target/i386/whpx/whpx-all.c | 102 +++++++++++++++-----------------------------
- 1 file changed, 34 insertions(+), 68 deletions(-)
+ accel/kvm/kvm-all.c | 26 ++++++++++----------------
+ 1 file changed, 10 insertions(+), 16 deletions(-)
 
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 9d0c391e36f..6826ac5bb18 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -30,7 +30,7 @@
- #include "qemu/error-report.h"
- #include "qapi/error.h"
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 92af42503b1..94b64cde621 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -46,6 +46,7 @@
+ #include "qapi/visitor.h"
  #include "qapi/qapi-types-common.h"
--#include "qapi/qapi-visit-common.h"
+ #include "qapi/qapi-visit-common.h"
 +#include "qapi/qapi-type-infos-common.h"
- #include "migration/blocker.h"
- #include "host-cpu.h"
- #include "accel/accel-cpu-target.h"
-@@ -1853,7 +1853,7 @@ void whpx_apply_breakpoints(
-     }
+ #include "system/reset.h"
+ #include "qemu/guest-random.h"
+ #include "system/hw_accel.h"
+@@ -4142,22 +4143,17 @@ static void kvm_set_kvm_shadow_mem(Object *obj, Visitor *v,
+     s->kvm_shadow_mem = value;
  }
  
--bool whpx_arch_supports_guest_debug(void) 
-+bool whpx_arch_supports_guest_debug(void)
- {
-     return true;
- }
-@@ -1938,7 +1938,7 @@ static int whpx_handle_hyperv_guestidle(CPUState *cpu)
-     return whpx_handle_halt(cpu);
- }
- 
--static void whpx_vcpu_kick_out_of_hlt(CPUState *cpu) 
-+static void whpx_vcpu_kick_out_of_hlt(CPUState *cpu)
- {
-     WHV_REGISTER_VALUE reg;
-     whpx_get_reg(cpu, WHvRegisterInternalActivityState, &reg);
-@@ -2042,7 +2042,7 @@ static void whpx_vcpu_pre_run(CPUState *cpu)
-                 .Vector = irq,
-             };
-             reg_count += 1;
--            /* 
-+            /*
-              * When the Hyper-V APIC is enabled, to get out of HLT we
-              * either have to request an interrupt or manually get it away
-              * from HLT.
-@@ -2342,7 +2342,7 @@ int whpx_vcpu_run(CPUState *cpu)
-             WHV_REGISTER_VALUE reg_values[3] = {0};
-             WHV_REGISTER_NAME reg_names[3];
-             UINT32 reg_count;
--            bool is_known_msr = 0; 
-+            bool is_known_msr = 0;
-             bool raises_gpf = false;
-             uint64_t val;
- 
-@@ -2898,120 +2898,86 @@ void whpx_cpu_instance_init(CPUState *cs)
-  * Partition support
-  */
- 
--static void whpx_set_unknown_msr(Object *obj, Visitor *v,
+-static void kvm_set_kernel_irqchip(Object *obj, Visitor *v,
 -                                   const char *name, void *opaque,
--                                   Error **errp)
-+static void whpx_set_unknown_msr(Object *obj, int value, Error **errp)
++static void kvm_set_kernel_irqchip(Object *obj, int value,
+                                    Error **errp)
  {
-     struct whpx_state *whpx = &whpx_global;
--    OnOffAuto mode;
--
--    if (!visit_type_OnOffAuto(v, name, &mode, errp)) {
+     KVMState *s = KVM_STATE(obj);
+-    OnOffSplit mode;
+ 
+     if (s->fd != -1) {
+         error_setg(errp, "Cannot set properties after the accelerator has been initialized");
+         return;
+     }
+ 
+-    if (!visit_type_OnOffSplit(v, name, &mode, errp)) {
 -        return;
 -    }
- 
 -    switch (mode) {
 +    switch (value) {
-     case ON_OFF_AUTO_ON:
-         whpx->ignore_unknown_msr = true;
-         break;
--
-     case ON_OFF_AUTO_OFF:
-         whpx->ignore_unknown_msr = false;
-         break;
--
-     case ON_OFF_AUTO_AUTO:
-         whpx->ignore_unknown_msr = true;
+     case ON_OFF_SPLIT_ON:
+         s->kernel_irqchip_allowed = true;
+         s->kernel_irqchip_required = true;
+@@ -4174,10 +4170,7 @@ static void kvm_set_kernel_irqchip(Object *obj, Visitor *v,
+         s->kernel_irqchip_split = ON_OFF_AUTO_ON;
          break;
      default:
--        /*
--         * The value was checked in visit_type_OnOffAuto() above. If
+-        /* The value was checked in visit_type_OnOffSplit() above. If
 -         * we get here, then something is wrong in QEMU.
 -         */
 -        abort();
@@ -203,117 +163,24 @@ index 9d0c391e36f..6826ac5bb18 100644
      }
  }
  
--static void whpx_set_intercept_msr_gp(Object *obj, Visitor *v,
--                                   const char *name, void *opaque,
--                                   Error **errp)
-+static void whpx_set_intercept_msr_gp(Object *obj, int value, Error **errp)
- {
-     struct whpx_state *whpx = &whpx_global;
--    OnOffAuto mode;
--
--    if (!visit_type_OnOffAuto(v, name, &mode, errp)) {
--        return;
--    }
+@@ -4306,11 +4299,12 @@ static void kvm_accel_class_init(ObjectClass *oc, const void *data)
+     ac->allowed = &kvm_allowed;
+     ac->gdbstub_supported_sstep_flags = kvm_gdbstub_sstep_flags;
  
--    switch (mode) {
-+    switch (value) {
-     case ON_OFF_AUTO_ON:
-         whpx->intercept_msr_gp = true;
-         break;
--
-     case ON_OFF_AUTO_OFF:
-         whpx->intercept_msr_gp = false;
-         break;
--
-     case ON_OFF_AUTO_AUTO:
-         whpx->intercept_msr_gp = false;
-         break;
-     default:
--        /*
--         * The value was checked in visit_type_OnOffAuto() above. If
--         * we get here, then something is wrong in QEMU.
--         */
--        abort();
-+        g_assert_not_reached();
-     }
- }
- 
--static void whpx_set_ssd(Object *obj, Visitor *v,
--                                   const char *name, void *opaque,
--                                   Error **errp)
-+static void whpx_set_ssd(Object *obj, int value, Error **errp)
- {
-     struct whpx_state *whpx = &whpx_global;
--    OnOffAuto mode;
--
--    if (!visit_type_OnOffAuto(v, name, &mode, errp)) {
--        return;
--    }
- 
--    switch (mode) {
-+    switch (value) {
-     case ON_OFF_AUTO_ON:
-         whpx->separate_security_domain = true;
-         break;
--
-     case ON_OFF_AUTO_OFF:
-         whpx->separate_security_domain = false;
-         break;
--
-     case ON_OFF_AUTO_AUTO:
-         whpx->separate_security_domain = true;
-         break;
-     default:
--        /*
--         * The value was checked in visit_type_OnOffAuto() above. If
--         * we get here, then something is wrong in QEMU.
--         */
--        abort();
-+        g_assert_not_reached();
-     }
- }
- 
- 
- void whpx_arch_accel_class_init(ObjectClass *oc)
- {
--    object_class_property_add(oc, "ignore-unknown-msr", "OnOffAuto",
--        NULL, whpx_set_unknown_msr,
+-    object_class_property_add(oc, "kernel-irqchip", "on|off|split",
+-        NULL, kvm_set_kernel_irqchip,
 -        NULL, NULL);
--    object_class_property_set_description(oc, "ignore-unknown-msr",
--        "Configure unknown MSR behavior");
--    object_class_property_add(oc, "intercept-msr-gp", "OnOffAuto",
--        NULL, whpx_set_intercept_msr_gp,
--        NULL, NULL);
--    object_class_property_set_description(oc, "intercept-msr-gp",
--        "Intercept #GP to log erroring MSR accesses.");
--    object_class_property_add(oc, "ssd", "OnOffAuto",
--        NULL, whpx_set_ssd,
--        NULL, NULL);
--    object_class_property_set_description(oc, "ssd",
--        "Separate security domain");
+-    object_class_property_set_description(oc, "kernel-irqchip",
+-        "Configure KVM in-kernel irqchip");
 +    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "ignore-unknown-msr",
-+        .description = "Configure unknown MSR behavior",
-+        .qapi_type = &OnOffAuto_type_info,
-+        .set = whpx_set_unknown_msr,
++        .name = "kernel-irqchip",
++        .qapi_type = &OnOffSplit_type_info,
++        .set = kvm_set_kernel_irqchip,
++        .description = "Configure KVM in-kernel irqchip",
 +    ));
-+
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "intercept-msr-gp",
-+        .description = "Intercept #GP to log erroring MSR accesses.",
-+        .qapi_type = &OnOffAuto_type_info,
-+        .set = whpx_set_intercept_msr_gp,
-+    ));
-+
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "ssd",
-+        .description = "Separate security domain",
-+        .qapi_type = &OnOffAuto_type_info,
-+        .set = whpx_set_ssd,
-+    ));
- }
  
- int whpx_accel_init(AccelState *as, MachineState *ms)
+     object_class_property_add(oc, "kvm-shadow-mem", "int",
+         kvm_get_kvm_shadow_mem, kvm_set_kvm_shadow_mem,
 
 -- 
 2.54.0
