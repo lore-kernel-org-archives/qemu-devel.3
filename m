@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2EA7CD37B2
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 20:42:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D190FCD37B2
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 20:42:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMAxA-0005EC-Ng; Sun, 10 May 2026 16:40:44 -0400
+	id 1wMAx4-0005AA-CR; Sun, 10 May 2026 16:40:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wMAx7-0005C3-Sb
- for qemu-devel@nongnu.org; Sun, 10 May 2026 16:40:41 -0400
-Received: from mail-oi1-x236.google.com ([2607:f8b0:4864:20::236])
+ id 1wMAwy-00058Z-Hm
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 16:40:34 -0400
+Received: from mail-oi1-x22d.google.com ([2607:f8b0:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wMAx6-00049A-E6
- for qemu-devel@nongnu.org; Sun, 10 May 2026 16:40:41 -0400
-Received: by mail-oi1-x236.google.com with SMTP id
- 5614622812f47-479e4835e26so2198599b6e.3
- for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:40:40 -0700 (PDT)
+ id 1wMAww-00045C-Ce
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 16:40:31 -0400
+Received: by mail-oi1-x22d.google.com with SMTP id
+ 5614622812f47-48270ea6dd1so168869b6e.3
+ for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:40:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778445639; x=1779050439; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778445629; x=1779050429; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=hJekX8dH52yMvYykB5HOFELCbhNNSoNRaiTZ7e0Y8tM=;
- b=AvbdQlXTOx/UPawMnEamGnYWmZ8cPxCefEAPIPSwugKtHjjRaiyEkIs9Pxa68Awt1k
- EtQLeMYsQkKd+6s6LTfevjjgDNMcvoJE5QzDZGKZVM+BMQOr7QXCLRnUv+E2LF4jeEIz
- vmVGRocaJVoN65xBKAMWVIisI3sznsuJ8yTnqM0yIocXOQKIBJZhxvFyG6KWVyC5eApK
- 7FBL+gB58TLqFuXhKsJMGxJnmAUcm3hoyrZctFfnEGTRg/BEINuNVUXGXfkPGqFkezoN
- kFdLCRsUtzHXDQ8ZqGZZ/iDeAZ+rp1AsUxT2B9K7Xg1/Vfr/eRMCjXMMzQKDYNpAiKlC
- sNwQ==
+ :reply-to; bh=B3UNL1/6n/lzjlvUSFATnbJbKsAbf3lnMtixzSUB/jE=;
+ b=Bv81dCV7QnFtq3o2DMTJ8QuoLTG5FbDTvN+CtmSq6Y5cW+GMY8qnEYe1MAjtfW1XhN
+ BGymP/aHQN2/p70XQ5abnefWT0YnEnoG+2c7EdT4yR+pAwS0S6q4EAO1K3iujjngdG7y
+ frDT9fbZx+Vz0rzUdHSz6GB1hqW4IoX9X/W1Ad4Oy18QRpVoD1jNs434LswC0crWBhAN
+ ocKSy3hBepGjf65sCCJay8zcvcoF9G2zdN/bU07l3hSzmSiCMGhpO/xUodKZjGr0/is5
+ NPgaJREAKupsvxFQ+g7IQLB0j738bS92jewFIiVY5FluUjStJgp4FnFKVK5GW9e22xFA
+ ETyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778445639; x=1779050439;
+ d=1e100.net; s=20251104; t=1778445629; x=1779050429;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=hJekX8dH52yMvYykB5HOFELCbhNNSoNRaiTZ7e0Y8tM=;
- b=NEDGfH5Y+6PgkHjyLthGndrNb2t+7rM6J4op07Y/zDjg4FffChqmQ0dlZM0Q+HqiUd
- KnW/7VBp2DZmnDfuMbRJe6bIS+4RvA+75jRTbR6/I0LOTsTyWEAXqWshpakzc9hVOusV
- Y4wddscywPsNWlF91qShkYPTEH0pZxcgZEoV5MhnV9JsO6mDOP2d4zTHWMUT7/a4dNFb
- a8aWjtdUlr/YYpelN0cmVsNPafkUEkQoZydCsV13o3M5sfj14ZBTt3s/WySrxdoj/jDP
- UhTDZDF4rn7uwos8C5vmJcMsEpI50U0afVJP/xqZmUoz2F0YdPvgU4VBGOX2OXgqS5ji
- RJKA==
-X-Gm-Message-State: AOJu0YyioL/Vor1YGAb6prOke0raoHiV+NOMYUZlcKHb2yH2hu6K76xs
- 7Gsp4IQdZ+u4Jw6yjSukk9IIcjVtwSfbQAp0VBu9RlJut9ZrY3qPFDyw
-X-Gm-Gg: Acq92OHsvq0DlklSrk2IihJ7rfbQvpfmeksXd69au87rZ8D9ZjJG4jlZbAFiHWDOR0c
- YsHso/ni5G2QGOJjCG4/YWr9SyriKLQS/9Fi4rhDAfjXZMoOi/tPtOaETv+kVhegsvEywAjvl9E
- 3x0AHx+XeCvTmde70PWk2yNo9tnhfDcQ4DyfgDkO4Vr7aMMfLR7hbekVP7o5s+edI5Xvz5NRUuX
- kuxuaejfhqGacyy4nTvw7MmslpmBpjgDc2oK8kYhtQjLwMtaQ2ktVoueSbvH1M85DqQO/HQjbp7
- F2+MAnCduf5796tkFicvMWkyDldzGBidsse+WjPLFCrkRoQ0p/NWnDLaBjbeTcIkHonFLGPTzDP
- HkFhkkXHTO+wFlkC/PIwRgsKxYE3kVkqYC6acKZQKmkbfOa/RjabqwhHWO4qpL4PcxxJVxgoJyN
- a5WJJgey9G45LRUsjY43qjhFF5qGTcTr1mlUFmD9q/wECrWsdP33iqFEJfL8CNDwvuRcCWFGxRj
- SxZV6sMn7yRuUdqTCC9HOmnwtelx5Dlb8tA0j4xI8o=
-X-Received: by 2002:a05:6808:d52:b0:467:9ca:4b8a with SMTP id
- 5614622812f47-4804221828cmr13378633b6e.11.1778445639362; 
- Sun, 10 May 2026 13:40:39 -0700 (PDT)
+ bh=B3UNL1/6n/lzjlvUSFATnbJbKsAbf3lnMtixzSUB/jE=;
+ b=QNsqN/vqCh/j7wxMXlOmlaystFxdfuvTehhSKJfCzAJwwD4byUeg+5pHMV1gUzvoEZ
+ Tn+rvFhCQ74g4I8mK1aqGgy29TVmzScQJPVfmMsQ73TNXrLxE8ndFnm3oQFRUYFZtPyL
+ LXGGPij3I9X24opfcZcJDTynR+V+tU/cr3K/zeR3RD38fsDRLUHPEX4MESkCTD4zd9nQ
+ js0WahbWC3ocu1SDLpxSGEh2fQ9ZI/mk7q2jvz7ggyMG7rJwvF0Zc8MMRZhOaBFKD7hG
+ ThKoWL8zcnE1HLE5+8ZUgZEN2Jb8aSGdZyE6vBE0CTg/zxlDQWqCi7HoC+RxnZhAwIqL
+ hqlQ==
+X-Gm-Message-State: AOJu0YwDMP/PDKoqOF51hKTPQrmlPtY7XMS7kPNAnEoPjlTEFE4VAgtQ
+ +dSGQRfPeyEOCSZ+Tb6SbhAMVjSpPjRz+yEhughoc7P/7bDUzINPV0rW
+X-Gm-Gg: Acq92OF3HxCDjnA5XpmRkJUN36Okoo/Z4EzGRDJ14cNpMJ9D1mwVffW6KcNte/tVzl7
+ vfSDo9tAOEaMaBAAdOpTeFdjsWcJK2rbib3epYhAkNzDA4H9Azycue5v49L2fKVqpktFH3+KM2r
+ QAWFj1acyE8vFEtD+x1uLh4CcisFPDnb9Vv/2U6qgjl46qfm3p+aXhXfa7AFHJ8mTzTXlEXinpB
+ C3MVoOBeIEwvnU6QQ5Bl0l73Q1sQn8cF6RqPmUj/0qY6jdVwcf14s11SDDqXzSXamjyu4A/vMcQ
+ 5R0Mr4meC4+EP5OReSJh4ohwfBK8mBcNcd03hbXaOSLjY5Xqd4yqlL3Zs0Q8L696i0sL5byaqYX
+ IOJSx7I9uTH5CizbD05T9hVTpEWCS7/hWTdv+9b0DViWuygUHH6CDo0hg8QCaHllzA+n6KtZyPh
+ YzRLPlF47xr1pn1ynuSWDo3BCLjzHkqP7Av/qtco5P+WtLtz9RuzEzjnQNvjD3pj0YAiXI10Kum
+ B9Iju2F0C1tGLCngLBwJar4O6NSvOVvHYRWInMpVaY=
+X-Received: by 2002:a05:6809:2d0:20b0:482:6b8a:33a6 with SMTP id
+ 5614622812f47-4826b8a34e6mr1192858b6e.23.1778445628741; 
+ Sun, 10 May 2026 13:40:28 -0700 (PDT)
 Received: from MacBook-Pro.local ([209.245.15.183])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-47c76935637sm18908207b6e.12.2026.05.10.13.40.38
+ 5614622812f47-47c76935637sm18908207b6e.12.2026.05.10.13.40.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 10 May 2026 13:40:38 -0700 (PDT)
+ Sun, 10 May 2026 13:40:28 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Sun, 10 May 2026 14:40:02 -0600
-Subject: [PATCH v5 32/32] target/mips: expose Octeon68XX floating-point support
+Date: Sun, 10 May 2026 14:39:53 -0600
+Subject: [PATCH v5 23/32] target/mips: add Octeon V3MULU instruction
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260510-mips-octeon-missing-insns-v2-v5-32-d5d2668d15ab@gmail.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260510-mips-octeon-missing-insns-v2-v5-23-d5d2668d15ab@gmail.com>
 References: <20260510-mips-octeon-missing-insns-v2-v5-0-d5d2668d15ab@gmail.com>
 In-Reply-To: <20260510-mips-octeon-missing-insns-v2-v5-0-d5d2668d15ab@gmail.com>
 To: qemu-devel@nongnu.org
@@ -83,8 +83,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::236;
- envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x236.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22d;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x22d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -108,51 +108,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Octeon68XX cores implement CP1. Advertise that in the CPU definition by
-setting Config1.FP, enabling the writable Status bits, and providing the
-FCR0/FCR31 defaults used by this CPU model.
+V3MULU extends VMULU across the full Octeon3 multiplier state, adding rt
+and queued partial products.
 
-This lets guests observe the expected floating-point feature bits and
-use CP1 with -cpu Octeon68XX.
+Return the low result while shifting the remaining accumulated limbs back
+into P[0] through P[5].
 
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-
 ---
-Changes v1 -> v2:
-  - Move this CPU-model correction into a separate final patch.
-    (suggested by Philippe Mathieu-Daudé)
----
- target/mips/cpu-defs.c.inc | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+Changes v2 -> v3:
+  - Split V3MULU out of the combined Octeon arithmetic and memory
+    instruction patch.  (requested by Richard Henderson)
 
-diff --git a/target/mips/cpu-defs.c.inc b/target/mips/cpu-defs.c.inc
-index faefab0473..cc1916232f 100644
---- a/target/mips/cpu-defs.c.inc
-+++ b/target/mips/cpu-defs.c.inc
-@@ -997,7 +997,8 @@ const mips_def_t mips_defs[] =
-         .CP0_PRid = 0x000D9100,
-         .CP0_Config0 = MIPS_CONFIG0 | (0x1 << CP0C0_AR) | (0x2 << CP0C0_AT) |
-                        (MMU_TYPE_R4000 << CP0C0_MT),
--        .CP0_Config1 = MIPS_CONFIG1 | (0x3F << CP0C1_MMU) |
-+        .CP0_Config1 = MIPS_CONFIG1 | (1 << CP0C1_FP) |
-+                       (0x3F << CP0C1_MMU) |
-                        (1 << CP0C1_IS) | (4 << CP0C1_IL) | (1 << CP0C1_IA) |
-                        (1 << CP0C1_DS) | (4 << CP0C1_DL) | (1 << CP0C1_DA) |
-                        (1 << CP0C1_PC) | (1 << CP0C1_WR) | (1 << CP0C1_EP),
-@@ -1011,7 +1012,12 @@ const mips_def_t mips_defs[] =
-         .CP0_PageGrain = (1 << CP0PG_ELPA),
-         .SYNCI_Step = 32,
-         .CCRes = 2,
--        .CP0_Status_rw_bitmask = 0x12F8FFFF,
-+        .CP0_Status_rw_bitmask = 0x36F8FFFF,
-+        .CP1_fcr0 = (1 << FCR0_F64) | (1 << FCR0_3D) | (1 << FCR0_PS) |
-+                    (1 << FCR0_L) | (1 << FCR0_W) | (1 << FCR0_D) |
-+                    (1 << FCR0_S) | (0x00 << FCR0_PRID) | (0x0 << FCR0_REV),
-+        .CP1_fcr31 = 0,
-+        .CP1_fcr31_rw_bitmask = 0xFF83FFFF,
-         .SEGBITS = 42,
-         .PABITS = 49,
-         .insn_flags = CPU_MIPS64R2 | INSN_OCTEON,
+Changes v3 -> v4:
+  - Keep the Octeon3 MPL3-MPL5/P3-P5 high lanes used by the two-source
+    MTM/MTP forms and Cavium SDK/runtime code.
+---
+ target/mips/helper.h               |  1 +
+ target/mips/tcg/octeon.decode      |  1 +
+ target/mips/tcg/octeon_translate.c |  1 +
+ target/mips/tcg/op_helper.c        | 46 ++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 49 insertions(+)
+
+diff --git a/target/mips/helper.h b/target/mips/helper.h
+index 46ccad95c3..08fda55ae1 100644
+--- a/target/mips/helper.h
++++ b/target/mips/helper.h
+@@ -26,6 +26,7 @@ DEF_HELPER_3(crc32c, tl, tl, tl, i32)
+ DEF_HELPER_FLAGS_4(rotx, TCG_CALL_NO_RWG_SE, tl, tl, i32, i32, i32)
+ DEF_HELPER_3(octeon_vmulu, i64, env, i64, i64)
+ DEF_HELPER_3(octeon_vmm0, i64, env, i64, i64)
++DEF_HELPER_3(octeon_v3mulu, i64, env, i64, i64)
+ 
+ /* microMIPS functions */
+ DEF_HELPER_4(lwm, void, env, tl, tl, i32)
+diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
+index c60af2d39a..9c1fe8f4f1 100644
+--- a/target/mips/tcg/octeon.decode
++++ b/target/mips/tcg/octeon.decode
+@@ -52,6 +52,7 @@ MTM1         011100 rs:5 rt:5 00000 00000 001100 &r2
+ MTM2         011100 rs:5 rt:5 00000 00000 001101 &r2
+ VMULU        011100 ..... ..... ..... 00000 001111 @r3
+ VMM0         011100 ..... ..... ..... 00000 010000 @r3
++V3MULU       011100 ..... ..... ..... 00000 010001 @r3
+ 
+ &saa         base rt
+ @saa         ...... base:5 rt:5 ................ &saa
+diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
+index 63e2719b1f..11a15a3cff 100644
+--- a/target/mips/tcg/octeon_translate.c
++++ b/target/mips/tcg/octeon_translate.c
+@@ -298,3 +298,4 @@ TRANS(MTP1, trans_mtp, 1);
+ TRANS(MTP2, trans_mtp, 2);
+ TRANS(VMULU, trans_vmul, gen_helper_octeon_vmulu);
+ TRANS(VMM0, trans_vmul, gen_helper_octeon_vmm0);
++TRANS(V3MULU, trans_vmul, gen_helper_octeon_v3mulu);
+diff --git a/target/mips/tcg/op_helper.c b/target/mips/tcg/op_helper.c
+index 124855d4dc..f565aaea20 100644
+--- a/target/mips/tcg/op_helper.c
++++ b/target/mips/tcg/op_helper.c
+@@ -192,6 +192,52 @@ uint64_t helper_octeon_vmm0(CPUMIPSState *env, uint64_t rs, uint64_t rt)
+     return lo;
+ }
+ 
++uint64_t helper_octeon_v3mulu(CPUMIPSState *env, uint64_t rs, uint64_t rt)
++{
++    uint64_t lo, hi;
++    uint64_t sum[OCTEON_MULTIPLIER_REGS + 1] = {};
++
++    mulu64(&lo, &hi, env->active_tc.octeon.MPL[0], rs);
++    sum[0] = lo;
++    sum[1] = hi;
++
++    mulu64(&lo, &hi, env->active_tc.octeon.MPL[1], rs);
++    octeon_add_limb(sum, ARRAY_SIZE(sum), lo, 1);
++    octeon_add_limb(sum, ARRAY_SIZE(sum), hi, 2);
++
++    mulu64(&lo, &hi, env->active_tc.octeon.MPL[2], rs);
++    octeon_add_limb(sum, ARRAY_SIZE(sum), lo, 2);
++    octeon_add_limb(sum, ARRAY_SIZE(sum), hi, 3);
++
++    mulu64(&lo, &hi, env->active_tc.octeon.MPL[3], rs);
++    octeon_add_limb(sum, ARRAY_SIZE(sum), lo, 3);
++    octeon_add_limb(sum, ARRAY_SIZE(sum), hi, 4);
++
++    mulu64(&lo, &hi, env->active_tc.octeon.MPL[4], rs);
++    octeon_add_limb(sum, ARRAY_SIZE(sum), lo, 4);
++    octeon_add_limb(sum, ARRAY_SIZE(sum), hi, 5);
++
++    mulu64(&lo, &hi, env->active_tc.octeon.MPL[5], rs);
++    octeon_add_limb(sum, ARRAY_SIZE(sum), lo, 5);
++    octeon_add_limb(sum, ARRAY_SIZE(sum), hi, 6);
++
++    octeon_add_limb(sum, ARRAY_SIZE(sum), rt, 0);
++    octeon_add_limb(sum, ARRAY_SIZE(sum), env->active_tc.octeon.P[0], 0);
++    octeon_add_limb(sum, ARRAY_SIZE(sum), env->active_tc.octeon.P[1], 1);
++    octeon_add_limb(sum, ARRAY_SIZE(sum), env->active_tc.octeon.P[2], 2);
++    octeon_add_limb(sum, ARRAY_SIZE(sum), env->active_tc.octeon.P[3], 3);
++    octeon_add_limb(sum, ARRAY_SIZE(sum), env->active_tc.octeon.P[4], 4);
++    octeon_add_limb(sum, ARRAY_SIZE(sum), env->active_tc.octeon.P[5], 5);
++
++    env->active_tc.octeon.P[0] = sum[1];
++    env->active_tc.octeon.P[1] = sum[2];
++    env->active_tc.octeon.P[2] = sum[3];
++    env->active_tc.octeon.P[3] = sum[4];
++    env->active_tc.octeon.P[4] = sum[5];
++    env->active_tc.octeon.P[5] = sum[6];
++    return sum[0];
++}
++
+ /* these crc32 functions are based on target/loongarch/tcg/op_helper.c */
+ target_ulong helper_crc32(target_ulong val, target_ulong m, uint32_t sz)
+ {
 
 -- 
 2.54.0
