@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7365ECD37AF
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 02:16:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7450ECD37AF
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 02:16:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLtgI-0006AM-R9; Sat, 09 May 2026 22:14:11 -0400
+	id 1wLtgY-0006Dy-M1; Sat, 09 May 2026 22:14:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wLtgH-0006A7-ET
- for qemu-devel@nongnu.org; Sat, 09 May 2026 22:14:09 -0400
-Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
+ id 1wLtgS-0006CB-RQ
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 22:14:21 -0400
+Received: from mail-oo1-xc2c.google.com ([2607:f8b0:4864:20::c2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wLtgF-0002z9-Oh
- for qemu-devel@nongnu.org; Sat, 09 May 2026 22:14:09 -0400
-Received: by mail-oi1-x22f.google.com with SMTP id
- 5614622812f47-479dc6d26e3so1889052b6e.0
- for <qemu-devel@nongnu.org>; Sat, 09 May 2026 19:14:07 -0700 (PDT)
+ id 1wLtgQ-00030o-1J
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 22:14:20 -0400
+Received: by mail-oo1-xc2c.google.com with SMTP id
+ 006d021491bc7-6966d0665baso2117810eaf.1
+ for <qemu-devel@nongnu.org>; Sat, 09 May 2026 19:14:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778379246; x=1778984046; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778379256; x=1778984056; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=jnTxvj2NRvBp/PsYuz9M5M2pWClh5EWOHRLfqtuRYzk=;
- b=oqCOtDgt4dWAH4Tt8LV0X9QvQ099b7uqxRJHjK0LWQOnyVYzxVCoNUIQQCrEoinyVw
- ueJxeu6aUYhgcUyg7bZyQfq3MqstBFtHzePq3DorxWRjFQUbTCgZf/cbgY5xUFWLaLhd
- GIDqNVOOt4+l5KMYnnvw5kKpaQ9VayuQxDHjtERxSU+62mDPs7sN+fyBGm5cPyEZ0nTC
- tQ0v0jKfpEdMI58MysybKxrOmBidRhUoc2yirprMbQtrYhg0mysr7htosK2fzOnGPWT1
- BmlTNlk8FOYNJICFpbslj2l966TzWTqoBHPa/3Q0/Ia5XOvgm1qsbwS7bRJazxpoREpH
- 3xOA==
+ :reply-to; bh=LoNmYG1cQkrp/9whUGZf4X5/VvPiiEWcf17xdy+REgs=;
+ b=Hf0mZXL/9YFqG3wDNAltZ1N8pCSYGlmxBhkqJCWVaRnOYzbWKRk54+QpXOWYfRxXK6
+ GZoMfIanqOKXRtB3w2NgLQmmU4PgTCDu1M0w7yNzBs6Ht8i5D90CjJD03vSvB2VTAjCX
+ r5Nifcq2IpFfv7sHCZbg28svk9KRq/z2PRyTP/fW1OdBvpO5cgDWRaK5NxQndj6qehKW
+ /JBGLgMMyzTPqtOU8+HWy7VCl+YkMrnoV8vZAQguGfUPKSSbK1qVi0O20EeIbTFzanTK
+ ni9Hq8rutIK/jJ2psl/Dr6eB3nqINCzthONcu321wItclF73UXBK0wqkxhgiolT05qmh
+ Kr5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778379246; x=1778984046;
+ d=1e100.net; s=20251104; t=1778379256; x=1778984056;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=jnTxvj2NRvBp/PsYuz9M5M2pWClh5EWOHRLfqtuRYzk=;
- b=q+VcFdbbJpa86Rzb8VNgLL4fWEyB8b+qpuPfi795M8xPDD5hawa73IUg52MsigdTCK
- 8/yJfvoRcE5HTgKbYxCZDkNDQIw6Te/PwMbGzq4i9mZcAkJPnZY1DUOsyTbETDrMvgnX
- eXUzofG/24fDu7KgtDTpNr4++4GAhVR+pJ4X5r1t/G4jpb7tfJmcregvLKr+t5jBFS+1
- zvohtCbYLbVvJIoIEbcqkoa7M0z/XawJdF0Ci2R3K7sGiPaYc1u9YbKZZTMc6hRAFKo7
- 8SwnljxCEoqoQeHkZw/7McmbynPW1QXXtT4HD2i+zkwC0pbmaqsvNinLXtj3xi+SubiA
- zj3w==
-X-Gm-Message-State: AOJu0YxoksLenfiF29/qzYCBEGN9KWFWHzH6xmra1o47DtlSsGxGkHSL
- aPCbQ4+i+oNkKcl7l60KWWIQWbirae9z+h7dVAqDq7TUPFu3vYovyWbo5pTFwk8Q
-X-Gm-Gg: Acq92OEa/bXJNOt68WkRPQHb/WltKlYABflapaIUug401Xbe5mI0bDXajMC9HlfmVqR
- sAawxAzaKdC26bhh5nhMcjT1/vbyUhnSyIkHNUHyIxlyp23KhtRsujtzewJmqWJkrWjZfyk7VTS
- nXfW52f7A+FMulwt7lVxf9D+w7f5t4dUwyTtCTtB1a5A98oxqiWwOit7z4sT5OlDxd8fjXKSRpM
- 6jpYfyHOH0y7BbqPFaDGvkmUXmRNe49GzA/0jINxszBBRnWgecmomBlae8y346hXTFiqSPzwxyw
- TPV58Cy4yi2qnitdFzM4TxFvBpvJxgLLNuw3sSSsq7G25s9wgkLJTQR6PVs3U7S9YfSXLb4IsxJ
- WNTkt692td/rxQ7CwM5pATXdXDPO49tLG+zP/vDi/2HHkyBT0g52i0Z141mu7RwVNu4I/7jEv0G
- PE24ETUuMNf05cJ9+jO0e8JP+cBEUHj974HpU3slGPeZNTmNHUHMllKOWTuvBQjQe7HyXLp22KH
- +rI6yahoysIVe9Ho2deQFOr4YPVwJLGFRbLN9A9k5vs0GFJehq2ISQhXLSrXE2S9LUb
-X-Received: by 2002:a05:6820:f010:b0:696:8ccc:55a0 with SMTP id
- 006d021491bc7-69998d22f89mr11372973eaf.42.1778379246197; 
- Sat, 09 May 2026 19:14:06 -0700 (PDT)
+ bh=LoNmYG1cQkrp/9whUGZf4X5/VvPiiEWcf17xdy+REgs=;
+ b=UKxhMF5DbGRiTlvgT0OyLS2dviaojei6XZe8RubQPPLUn0s/gxUZZOYOvDySXYSTCO
+ io3TA02SuYqpSOJ9Ul6sB6YdrzF4MqNIWx4hzxkuCwkmSQul7QTI7+hPyr2Oce/X+Gio
+ Es5bw141Wh0RRMtvXbljme1bT9flCJyu/wiS+1Ud78LTHqZZfv346UDW9AUluFHrVXw9
+ 84y5WyMQfPq5wF5ctNcBsdDM7ggO9RcWxsPLk3yL2AXtK6j9JlxrgbXVx3GMccbaxkC+
+ iNpM8VeZ67TnNytvNQg0+SmbheMAh0/HS3Bn9YAye0dmv3wAJWcB/PTaaHcKQy0qkeip
+ V9DA==
+X-Gm-Message-State: AOJu0YyIz2TCXb68QyhB4KJn7lpo4cx+9+SiRUDX9bPY8Fb04H0aqqbT
+ LulG1iH2Xs4DTdQ5pieg0c5tzE8tPZ2LMQHr78ErnCb+8Wgrh5nYprmxgim9Z9dZ
+X-Gm-Gg: Acq92OH4gUyYTTXKZMDrpSX7prTDpPxI6j0UfuCNOi9ttlgZy61YP49jPHg6ZUis3zc
+ uhoXooq8R8sC0SzTYQaGygYcstXDmyMgwC7I3d5OdsXnUZa1IONycCYwlJ03QGeD7GVxMNqBU6h
+ BA5zOJCbWcuMGRki7NkdfbxTjfC1bLR2R29b3z0Yuzg+XK9OI/2K439LQ7CG9OoqKoCAQc/+MQp
+ ofbTH9mUBJ37pTsYLkVMa0vRdbhC9qSRidNv9wGyUZp55RObiEWztFHrp0pPvEsJnRglSzsF4OW
+ niBweFN5kpRdPhri4kKKyLdKSr4oEi67sWH5Y2xmhzu4mvQwya3v8vm/teRcBHDdBOO641sXbrD
+ lwpg3+TOoNgGROt39eAoIXp2DOQZhhEHDjTRmiSG2bDwIhqjyQ4neVT5II2+nOSE7l9wyWUNl7h
+ FnJVpXdcl/I4kW4qtvccGbvuRzspSiMVRDkTwex1Q1Migd62DJ+JZMJ2ydVQ4DAzB2jOamYR0e5
+ 5WHs9teIbFLrjiPoan2sma4Oh+WQNg6/b0nrHTfmUT3acr/3W6OFEFkgFDv0AYcTpN+
+X-Received: by 2002:a05:6820:3082:b0:696:3196:59bf with SMTP id
+ 006d021491bc7-69998cbdb66mr10818118eaf.22.1778379255912; 
+ Sat, 09 May 2026 19:14:15 -0700 (PDT)
 Received: from mac.localdomain (71-218-106-55.hlrn.qwest.net. [71.218.106.55])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-69b25dbffdbsm3645643eaf.9.2026.05.09.19.14.04
+ 006d021491bc7-69b25dbffdbsm3645643eaf.9.2026.05.09.19.14.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 09 May 2026 19:14:05 -0700 (PDT)
+ Sat, 09 May 2026 19:14:15 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Sat, 09 May 2026 20:13:36 -0600
-Subject: [PATCH v4 13/32] target/mips: add Octeon ZCB instruction
+Date: Sat, 09 May 2026 20:13:44 -0600
+Subject: [PATCH v4 21/32] target/mips: add Octeon VMULU instruction
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260509-mips-octeon-missing-insns-v2-v4-13-d669dcd05c2f@gmail.com>
+Message-Id: <20260509-mips-octeon-missing-insns-v2-v4-21-d669dcd05c2f@gmail.com>
 References: <20260509-mips-octeon-missing-insns-v2-v4-0-d669dcd05c2f@gmail.com>
 In-Reply-To: <20260509-mips-octeon-missing-insns-v2-v4-0-d669dcd05c2f@gmail.com>
 To: qemu-devel@nongnu.org
@@ -83,8 +83,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
- envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x22f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2c;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oo1-xc2c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -108,70 +108,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ZCB zeros the 128-byte cache block containing the base address.
+VMULU multiplies the active Octeon multiplier state by rs, adds rt and
+queued partial products, returns the low result, and advances P[0]/P[1]
+with carry limbs.
 
-Model the user-mode-visible effect by aligning the address down to a
-128-byte line and storing sixteen zero doublewords to guest memory.
+Add helper and translator support for the two-limb accumulator operation.
 
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
 Changes v2 -> v3:
-  - Split ZCB out of the combined Octeon arithmetic and memory
+  - Split VMULU out of the combined Octeon arithmetic and memory
     instruction patch.  (requested by Richard Henderson)
+  - Use uadd64_overflow() for multiplier limb carry accumulation.
+    (suggested by Richard Henderson)
 ---
- target/mips/tcg/octeon.decode      |  3 +++
- target/mips/tcg/octeon_translate.c | 24 ++++++++++++++++++++++++
- 2 files changed, 27 insertions(+)
+ target/mips/helper.h               |  1 +
+ target/mips/tcg/octeon.decode      |  1 +
+ target/mips/tcg/octeon_translate.c | 17 +++++++++++++++++
+ target/mips/tcg/op_helper.c        | 32 ++++++++++++++++++++++++++++++++
+ 4 files changed, 51 insertions(+)
 
+diff --git a/target/mips/helper.h b/target/mips/helper.h
+index e2b83a1d19..f1e78ae329 100644
+--- a/target/mips/helper.h
++++ b/target/mips/helper.h
+@@ -24,6 +24,7 @@ DEF_HELPER_FLAGS_1(dbitswap, TCG_CALL_NO_RWG_SE, tl, tl)
+ DEF_HELPER_3(crc32, tl, tl, tl, i32)
+ DEF_HELPER_3(crc32c, tl, tl, tl, i32)
+ DEF_HELPER_FLAGS_4(rotx, TCG_CALL_NO_RWG_SE, tl, tl, i32, i32, i32)
++DEF_HELPER_3(octeon_vmulu, i64, env, i64, i64)
+ 
+ /* microMIPS functions */
+ DEF_HELPER_4(lwm, void, env, tl, tl, i32)
 diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index d77717cd50..d8a1bfce77 100644
+index 7de2a8f6ec..1c3dbb4a33 100644
 --- a/target/mips/tcg/octeon.decode
 +++ b/target/mips/tcg/octeon.decode
-@@ -49,6 +49,9 @@ SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
- SAA          011100 ..... ..... 00000 00000 011000 @saa
- SAAD         011100 ..... ..... 00000 00000 011001 @saa
+@@ -50,6 +50,7 @@ MTP1         011100 rs:5 rt:5 00000 00000 001010 &r2
+ MTP2         011100 rs:5 rt:5 00000 00000 001011 &r2
+ MTM1         011100 rs:5 rt:5 00000 00000 001100 &r2
+ MTM2         011100 rs:5 rt:5 00000 00000 001101 &r2
++VMULU        011100 ..... ..... ..... 00000 001111 @r3
  
-+&zcb         base
-+ZCB          011100 base:5 00000 00000 11100 011111 &zcb
-+
- &lx          base index rd
- @lx          ...... base:5 index:5 rd:5 ...... ..... &lx
- LWX          011111 ..... ..... ..... 00000 001010 @lx
+ &saa         base rt
+ @saa         ...... base:5 rt:5 ................ &saa
 diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index 2a3f502e1f..794c8f033b 100644
+index 366b70548c..6c2edc2d47 100644
 --- a/target/mips/tcg/octeon_translate.c
 +++ b/target/mips/tcg/octeon_translate.c
-@@ -179,6 +179,30 @@ static bool trans_saa(DisasContext *ctx, arg_saa *a, MemOp mop)
+@@ -13,6 +13,8 @@
+ /* Include the auto-generated decoder.  */
+ #include "decode-octeon.c.inc"
+ 
++typedef void gen_helper_lmi(TCGv_i64, TCGv_ptr, TCGv_i64, TCGv_i64);
++
+ static bool trans_BBIT(DisasContext *ctx, arg_BBIT *a)
+ {
+     TCGv_i64 p;
+@@ -275,6 +277,20 @@ static bool trans_mtp(DisasContext *ctx, arg_r2 *a, unsigned int index)
      return true;
  }
  
-+static bool trans_ZCB(DisasContext *ctx, arg_zcb *a)
++static bool trans_vmul(DisasContext *ctx, arg_decode_ext_octeon1 *a,
++                       gen_helper_lmi *helper)
 +{
-+    TCGv_i64 addr = tcg_temp_new_i64();
-+    TCGv_i64 line = tcg_temp_new_i64();
-+    TCGv_i64 zero = tcg_constant_i64(0);
++    TCGv_i64 rs = tcg_temp_new_i64();
++    TCGv_i64 rt = tcg_temp_new_i64();
++    TCGv_i64 rd = tcg_temp_new_i64();
 +
-+    gen_base_offset_addr(ctx, addr, a->base, 0);
-+
-+    /*
-+     * QEMU models ZCB/ZCBT as zeroing the containing 128-byte cache line
-+     * in guest memory.
-+     */
-+    tcg_gen_andi_i64(line, addr, ~0x7fULL);
-+
-+    for (int i = 0; i < 16; i++) {
-+        TCGv_i64 slot = tcg_temp_new_i64();
-+
-+        tcg_gen_addi_i64(slot, line, i * 8);
-+        tcg_gen_qemu_st_i64(zero, slot, ctx->mem_idx, mo_endian(ctx) | MO_UQ);
-+    }
-+
++    gen_load_gpr(rs, a->rs);
++    gen_load_gpr(rt, a->rt);
++    helper(rd, tcg_env, rs, rt);
++    gen_store_gpr(rd, a->rd);
 +    return true;
 +}
 +
  TRANS(SAA,  trans_saa, MO_UL);
  TRANS(SAAD, trans_saa, MO_UQ);
  TRANS(LBX,  trans_lx, MO_SB);
+@@ -290,3 +306,4 @@ TRANS(MTM2, trans_mtm, 2);
+ TRANS(MTP0, trans_mtp, 0);
+ TRANS(MTP1, trans_mtp, 1);
+ TRANS(MTP2, trans_mtp, 2);
++TRANS(VMULU, trans_vmul, gen_helper_octeon_vmulu);
+diff --git a/target/mips/tcg/op_helper.c b/target/mips/tcg/op_helper.c
+index 4502ae2b5b..ab3fb06a16 100644
+--- a/target/mips/tcg/op_helper.c
++++ b/target/mips/tcg/op_helper.c
+@@ -144,6 +144,38 @@ target_ulong helper_rotx(target_ulong rs, uint32_t shift, uint32_t shiftx,
+     return (int64_t)(int32_t)(uint32_t)tmp5;
+ }
+ 
++static void octeon_add_limb(uint64_t *sum, int limb_count,
++                            uint64_t value, int limb)
++{
++    while (limb < limb_count &&
++           uadd64_overflow(sum[limb], value, &sum[limb])) {
++        value = 1;
++        limb++;
++    }
++}
++
++uint64_t helper_octeon_vmulu(CPUMIPSState *env, uint64_t rs, uint64_t rt)
++{
++    uint64_t lo, hi;
++    uint64_t sum[3] = {};
++
++    mulu64(&lo, &hi, env->active_tc.octeon.MPL[0], rs);
++    sum[0] = lo;
++    sum[1] = hi;
++
++    mulu64(&lo, &hi, env->active_tc.octeon.MPL[1], rs);
++    octeon_add_limb(sum, 3, lo, 1);
++    octeon_add_limb(sum, 3, hi, 2);
++
++    octeon_add_limb(sum, 3, rt, 0);
++    octeon_add_limb(sum, 3, env->active_tc.octeon.P[0], 0);
++    octeon_add_limb(sum, 3, env->active_tc.octeon.P[1], 1);
++
++    env->active_tc.octeon.P[0] = sum[1];
++    env->active_tc.octeon.P[1] = sum[2];
++    return sum[0];
++}
++
+ /* these crc32 functions are based on target/loongarch/tcg/op_helper.c */
+ target_ulong helper_crc32(target_ulong val, target_ulong m, uint32_t sz)
+ {
 
 -- 
 2.54.0
