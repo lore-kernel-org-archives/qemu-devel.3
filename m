@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44372CD37AF
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 06:54:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E27D2CD37AF
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 06:58:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLy3C-0000P3-5J; Sun, 10 May 2026 02:54:06 -0400
+	id 1wLy6w-0001IK-BM; Sun, 10 May 2026 02:57:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wLy3A-0000OG-N4; Sun, 10 May 2026 02:54:04 -0400
+ id 1wLy6t-0001HS-CU; Sun, 10 May 2026 02:57:56 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wLy38-0008Fc-Oc; Sun, 10 May 2026 02:54:04 -0400
+ id 1wLy6r-000176-9d; Sun, 10 May 2026 02:57:54 -0400
 Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64A6rbWX002129
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64A6vRJ4003538
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sun, 10 May 2026 15:53:37 +0900 (JST)
+ Sun, 10 May 2026 15:57:27 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=G9emTGkrvM3t4uYYQCICocvVaM6zTDTY+/VnP/uEYM4=; 
+DKIM-Signature: a=rsa-sha256; bh=kLTm3xpI2Ygui73orK8LXcp9PHIv2jpQkYxS9D9saJU=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1778396017; v=1;
- b=h9qltRfOtfxbJ++oHaUvD975QZeRsVHpvxJpDWqmc7nPZ7+gNf+Rb0SMpkEkEQSr
- /d0WM3B0fMZgpmFsS06DAW+q2UeCkqYVLiUnnz40OUkrgk5isaVrV9UznlATA2NG
- xdgczUrHLHzlGzwHyVc9Xb7dyKE0j/EPgKdwJ/Jlcqv+vYVEyeCPWf1evWC6EXR1
- +1gBtHzYM7Qx5YCQd0uyl+MKH2AZahSLQJ8cpZmPE2e+j7C4ItHFZ1HWL/u6LxBV
- 3ww2bMWmFttwL89x2XrDDanbwDvvXa2cEZ+0SPY4P555DFUr0nqlnLCF8p7nmFtn
- YHPnuabf4g22dKWFIQuLpw==
-Message-ID: <bce51652-31ae-42a2-a0bf-bd14fb19ba38@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sun, 10 May 2026 15:53:36 +0900
+ s=rs20250326; t=1778396247; v=1;
+ b=OorHRfE+ec5pgfyrzNAze64+t8E+kcK55OjETdQ3Fl/hw2walDh0O31U7mh0xHpr
+ sd2V7kGA/ia7ahLNl2hsQGNoK0CdFa0oYRFp+90dptZRi+076EBzTeNyDlXv9xuV
+ YdMJ5+ND6R0PRbTx+Odps4j6DqRuwO0mBfjJqfs/eiPYkUU3P9a/DzYqxSxzHoZL
+ WFCVUoiOl6wR9ngIgEyRgI6apyhFJQnpvTP3TjWGa8sUbZfC/UJdQtZSEuXBalik
+ AnnEvLtmTX98lEElxY8Do51nfjb6A0MxYiEhfxqBsvngEkYHQOcojzYNy/Y+UwlM
+ LVQ0zRuZVpstQwNd8Agc3Q==
+Message-ID: <fd2a85a8-0e23-4e35-80a8-b4dfe4813e10@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sun, 10 May 2026 15:57:26 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 09/28] hw/display/xenfb: Use Linux key codes
+Subject: Re: [PATCH RFC 12/28] hw/input/ps2: Use Linux key codes
 To: marcandre.lureau@redhat.com
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Jan Kiszka <jan.kiszka@web.de>, Peter Maydell <peter.maydell@linaro.org>,
@@ -52,11 +52,11 @@ Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  qemu-arm@nongnu.org, xen-devel@lists.xenproject.org, qemu-ppc@nongnu.org,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 References: <20260509-input-v1-0-66f18d2edde6@rsg.ci.i.u-tokyo.ac.jp>
- <20260509-input-v1-9-66f18d2edde6@rsg.ci.i.u-tokyo.ac.jp>
- <177839287566.1301060.18404851357869345635.b4-review@b4>
+ <20260509-input-v1-12-66f18d2edde6@rsg.ci.i.u-tokyo.ac.jp>
+ <177839287567.1301060.18218108403655321396.b4-review@b4>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <177839287566.1301060.18404851357869345635.b4-review@b4>
+In-Reply-To: <177839287567.1301060.18218108403655321396.b4-review@b4>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -83,26 +83,20 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026/05/10 15:01, marcandre.lureau@redhat.com wrote:
-> On Sat, 09 May 2026 19:34:21 +0900, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->> diff --git a/hw/display/xenfb.c b/hw/display/xenfb.c
->> index 9bf89a1e622..ee23c483499 100644
->> --- a/hw/display/xenfb.c
->> +++ b/hw/display/xenfb.c
->> @@ -191,29 +191,14 @@ static int xenfb_send_position(struct XenInput *xenfb,
->> [ ... skip 23 lines ... ]
->> -            trace_xenfb_key_event(xenfb, lnx, evt->key.down);
->> -            xenfb_send_key(xenfb, evt->key.down, lnx);
->> -        }
->> -    }
->> +    trace_xenfb_key_event(xenfb, evt->key.key, evt->key.down);
->> +    xenfb_send_key(xenfb, evt->key.down, evt->key.key);
+> On Sat, 09 May 2026 19:34:24 +0900, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>> diff --git a/hw/input/ps2.c b/hw/input/ps2.c
+>> index 93c3c737205..1f266bc6a07 100644
+>> --- a/hw/input/ps2.c
+>> +++ b/hw/input/ps2.c
+>> @@ -126,17 +127,17 @@ static uint8_t translate_table[256] = {
+>>   static unsigned int ps2_modifier_bit(QKeyCode key)
 > 
-> As before, it should guard against KEY_RESERVED (0).
+> QemuInputKeyEvent.key is unsigned int after patch 4.
 
-I think I will move the guard to qemu_input_event_send() so that it can 
-be shared with virtio-input and everyone else.
+I ran a codebase-wide search of QKeyCode but there are clearly 
+occurrences I missed (ui/vnc is another case you spotted). I'll 
+double-check to ensure there won't be such except the intended cases.
 
 Regards,
 Akihiko Odaki
-
 
