@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E508CD3427
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 13:49:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36F92CD37B6
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 13:49:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wM4Wl-0008Ua-Kh; Sun, 10 May 2026 09:49:03 -0400
+	id 1wM4Wu-0000qP-Ck; Sun, 10 May 2026 09:49:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wM4Wa-00082r-J9
- for qemu-devel@nongnu.org; Sun, 10 May 2026 09:48:56 -0400
+ id 1wM4Wt-0000jt-7z
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 09:49:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wM4WX-0005QQ-WE
- for qemu-devel@nongnu.org; Sun, 10 May 2026 09:48:51 -0400
+ id 1wM4Wr-0005Sm-P5
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 09:49:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778420929;
+ s=mimecast20190719; t=1778420949;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+BND9yUE3GxPUKfjsdV3K95sn9j97eyDe1saK9Z1IW0=;
- b=TAcyr4uhp8o+LFU1z3a1btZpKRyig4k3xEggKrcfZdhkLH4Cx2eTlmH+wuNSlqjBuqauCd
- aSPHuoBLfF584mkVKvqX4LXApnFdyeDERME8wBGVKr1bA+JGnIUFUjDXL+kcnOgIWeoJj0
- 75Vx4O6qnmsAzXZXqa8Dnw4sBVNkL2M=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=+ev1PeSHIFk2Iiuk7tPiVQatd/LOr8RRJQ84xO9C9mM=;
+ b=Vm0NlfcDMurF63XibpUJQswTh9EY1ge9EXxgGAndpZCWARyT7mLJ6iTtuaNfMgDIN4pRZN
+ wVtWn/+p3+JKp990qjQ0rCFpcFmWmP3Dvk1UGhwlLDYXpmjz1hwxJ5G3BcC4vr7H4Xngl1
+ SVBpZRvnTP/g4npOjhJVIIOOGETro6Q=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-508-xptvokV2OzWBYgXcVzmBMg-1; Sun,
- 10 May 2026 09:48:47 -0400
-X-MC-Unique: xptvokV2OzWBYgXcVzmBMg-1
-X-Mimecast-MFC-AGG-ID: xptvokV2OzWBYgXcVzmBMg_1778420927
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-624-S0LRcpGWOYKGaE2N4ctL6A-1; Sun,
+ 10 May 2026 09:49:07 -0400
+X-MC-Unique: S0LRcpGWOYKGaE2N4ctL6A-1
+X-Mimecast-MFC-AGG-ID: S0LRcpGWOYKGaE2N4ctL6A_1778420946
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CE95419560BB
- for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:48:46 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C739D19560B6
+ for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:49:06 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 54B3E19560A6; Sun, 10 May 2026 13:48:44 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0759318004A3; Sun, 10 May 2026 13:49:04 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 10 May 2026 17:43:24 +0400
-Subject: [PATCH 27/54] whpx: convert OnOffSplit property to QAPI-aware
- registration
+Date: Sun, 10 May 2026 17:43:26 +0400
+Subject: [PATCH 29/54] system/memory: fix "priority" property typename
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260510-qom-qapi-v1-27-48ba6a1a1fa5@redhat.com>
+Message-Id: <20260510-qom-qapi-v1-29-48ba6a1a1fa5@redhat.com>
 References: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
 In-Reply-To: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
 To: qemu-devel@nongnu.org
@@ -63,24 +62,24 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2331;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=888;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=SvoSExUYXPg6sVDa5rVzKfXzAc13YDagtIfmWECFwp8=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqAItveMqrfVIU/Eix9gwEk2txaSX6nIc77kP9R
- sOxiT1KSmuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCagCLbwAKCRDa6OEJdZac
- 5UIsEAClL15ukfKZcv9gvdyDGb1n4cebPxryvugoIboXjRR1crRFy4wsEJJ8CyPtJEgzFt2ZhuK
- yAgicIX0mm3JK/9fr6LR7K+DigofI0q+ysxAmbhgm6hTlevMcZ3IbmBgHgT/AgPFdvMAbUgNM7G
- yfc5Ho6uhD7JuAU95uFVGQ2KC5NBBz96NUsGLne6HGaczvTHHNQv9vjn3/JtDeeua85DbXzgNoD
- 3VlNcCUxd32nHXMgYwyE23Z/rp5nODykgjoN3nYcrCLox7nX1UY5VtA/QnWm02xCqvRwGFYaVg2
- NFaANeTqEMv09QgonhOCE1DJ6T5S3NbFoDvnLsHwRBBXUDP2I9XLEiTk93hbl62opYbachtOAAW
- ApGGMSOe6RMOWCX7K8sD8lIsBb9nDStlgKLtTLiZ2s+++RMJJ99b1iGMRmiK/6Iw6LQeVwI5nsw
- BoCSmFwFJC/jX77zrElwk3tk9sbKZGv0zITLqGvzJFoxuy5BeQSZr/0X3fBl9IivGuy8R7JQ52D
- tXDbFp38nngLBTDGI/sdLuv4yfFFgy91EQ/C6n2Cism/RDs7wHBUCjDDw56AUuj58qmfTiDFVqQ
- ElI42ICnj4ORGws2zBE7qPN4/WWSwm7fQVNDvHkQpNWZbK+UnNJdSNZ1iiHaOLrQNFBcjOy+/Si
- 68KrorE0crdvmRg==
+ bh=Xrt1FBAZRulDtkYOHNAjkH2vkSnHoHVfXqM5I051WW0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqAItwlCq44+i++irgLdqQFKvGMJ34t+iJ+9il4
+ CXrieaHP1yJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCagCLcAAKCRDa6OEJdZac
+ 5QzjEACxtuwQHVTk7UCY1t3/AcMT1/EGABJtXY9T0+4683ocEG9ZR0LhcBhSnseAFIDSejtnUfx
+ p+mRYEXXyMF6mJ4HlpUAy1gFqsS/XAQUMQhHvPPBsz7DXpaMPn6TbMKI8c0Gf7QYcidMiX9/onb
+ 64ZNWnB6TsMIqv6NDS5R2RO92QWn39cYSCsQVHCuJwE3ck5fINPh6PJRLuYK1tNgQryNDMbDJ1w
+ nWo5da0Apvh72EOaSwukjmCJPzU/czqW5Ldwlvv0vendsDkHQksdJKIqAESX1OIe3aamwn2P/zD
+ WskjOB10SDv/9lpYkpQ7ZLJ0gjfkbzygK7a0FBhv6XYf4enupqOqJUrhNr1FBVcsumtks8TG1tW
+ BxFGSZMo3ZkRgD3pP6CY7ZvmXQE+ZN9YqUYWhuGRzplUYR0r4NQJ0fTY7FEczbvDEYLbrn5Lo+Q
+ mZQL4wbbGoE3xJRVuDQne8+sKI9G/8l6LwnNUfv7+ZjgX7qH+oYwiT3RZRnC5K9BI1uv2d8zII6
+ tmcvWBqMvo2k1L7051r6kITxAmyFVMEh7idj2ikT5OzcWmgIE26+2ZkWRG0Hi/8FmZn9McEVwnQ
+ S3rR/Nrxz0mPgZhK8azRiTI4mDwElko+P7k3QluWRAaOiWcYyzj4uMaUyXRLCIsQ8Ku+La/b7tp
+ BBJhiLqw49ZNWpw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -106,71 +105,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the OnOffSplit property from manual visitor-based
-callbacks to property_add_qapi_enum().
+The value and the getter are int32.
 
+Fixes: d33382da9ab ("memory: MemoryRegion: Add may-overlap and priority props")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- accel/whpx/whpx-common.c | 29 ++++++++++-------------------
- 1 file changed, 10 insertions(+), 19 deletions(-)
+ system/memory.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
-index 187938c02b5..5d4b405e56d 100644
---- a/accel/whpx/whpx-common.c
-+++ b/accel/whpx/whpx-common.c
-@@ -434,18 +434,12 @@ error:
-     return false;
- }
+diff --git a/system/memory.c b/system/memory.c
+index 739ba11da6f..aaf5ec40230 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1316,7 +1316,7 @@ static void memory_region_initfn(Object *obj)
  
--static void whpx_set_kernel_irqchip(Object *obj, Visitor *v,
--                                   const char *name, void *opaque,
--                                   Error **errp)
-+static void whpx_set_kernel_irqchip(Object *obj, int value,
-+                                    Error **errp)
- {
-     struct whpx_state *whpx = &whpx_global;
--    OnOffSplit mode;
- 
--    if (!visit_type_OnOffSplit(v, name, &mode, errp)) {
--        return;
--    }
--
--    switch (mode) {
-+    switch (value) {
-     case ON_OFF_SPLIT_ON:
-         whpx->kernel_irqchip_allowed = true;
-         whpx->kernel_irqchip_required = true;
-@@ -463,11 +457,7 @@ static void whpx_set_kernel_irqchip(Object *obj, Visitor *v,
-         break;
- 
-     default:
--        /*
--         * The value was checked in visit_type_OnOffSplit() above. If
--         * we get here, then something is wrong in QEMU.
--         */
--        abort();
-+        g_assert_not_reached();
-     }
- }
- 
-@@ -518,11 +508,12 @@ static void whpx_accel_class_init(ObjectClass *oc, const void *data)
-     ac->pre_resume_vm = whpx_pre_resume_vm;
-     ac->allowed = &whpx_allowed;
- 
--    object_class_property_add(oc, "kernel-irqchip", "on|off|split",
--        NULL, whpx_set_kernel_irqchip,
--        NULL, NULL);
--    object_class_property_set_description(oc, "kernel-irqchip",
--        "Configure WHPX in-kernel irqchip");
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "kernel-irqchip",
-+        .qapi_type = &OnOffSplit_type_info,
-+        .set = whpx_set_kernel_irqchip,
-+        .description = "Configure WHPX in-kernel irqchip",
-+    ));
-     object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-         .name = "hyperv",
-         .description = "Configure Hyper-V enlightenments",
+     object_property_add_uint64_ptr(OBJECT(mr), "addr",
+                                    &mr->addr, OBJ_PROP_FLAG_READ);
+-    object_property_add(OBJECT(mr), "priority", "uint32",
++    object_property_add(OBJECT(mr), "priority", "int32",
+                         memory_region_get_priority,
+                         NULL, /* memory_region_set_priority */
+                         NULL, NULL);
 
 -- 
 2.54.0
