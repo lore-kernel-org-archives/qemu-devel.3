@@ -4,112 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BF7CCD3427
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 20:20:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA498CD3427
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 20:20:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMAcU-0001y8-Nl; Sun, 10 May 2026 16:19:22 -0400
+	id 1wMAd2-0001zr-Vn; Sun, 10 May 2026 16:19:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wMAcT-0001xx-FF
- for qemu-devel@nongnu.org; Sun, 10 May 2026 16:19:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wMAcR-0007TK-Gb
- for qemu-devel@nongnu.org; Sun, 10 May 2026 16:19:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778444357;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=EdAlnFz40RGJfP7V6Yaew8z+iOTkh/EpHNqN9bFSCaU=;
- b=AUJXLQgjgQ9yI7tjSdrF8ChxqylpqXiufYLcbcIdnuzo419RXdJk7v91IQTxY8mS7rWP6g
- 2MPcO4XFRu7eqRLlYG8gw1pL6+OKLdwg1h9Py5EkwFig/5CCUXAZ39bzEDbHSnl3ZjgX34
- Ia6WhLIJtRB3fP4RaOu14/uJ24v7WRU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-375-9giQpZbxM_GoP9CbXYggqA-1; Sun, 10 May 2026 16:19:16 -0400
-X-MC-Unique: 9giQpZbxM_GoP9CbXYggqA-1
-X-Mimecast-MFC-AGG-ID: 9giQpZbxM_GoP9CbXYggqA_1778444355
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-48d127eb013so20576665e9.1
- for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:19:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
+ id 1wMAd1-0001zi-Hi
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 16:19:55 -0400
+Received: from mail-ua1-x929.google.com ([2607:f8b0:4864:20::929])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
+ id 1wMAd0-0007aV-1t
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 16:19:55 -0400
+Received: by mail-ua1-x929.google.com with SMTP id
+ a1e0cc1a2514c-95cc8ac98bfso787150241.3
+ for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:19:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778444393; cv=none;
+ d=google.com; s=arc-20240605;
+ b=A6PFS1arOLUEQE5p8EuRrydLQlSboAUwx3O4GwR9+PmB981le2Dfyu2AEh5FGydAFK
+ AgypMHHBnZmXiPeqCmYn0QamLGAMOhL7yQNEL3uj1oYLtkfepZZsYriauHLz/NHuVYJ+
+ KDpbiCt91MvcU4Py5W/4IrEGbxz1toPvzX3GLa8tLc251+vn1uanCf/JAU6yMjZcfW8L
+ zBTHDnaWgONsY2OVfoQTSq8h0EQv8AyjRsMgMIF4JrE1EkYcHreEzEbXX5AZFtsVsQf9
+ FODQsfFXlsjbDGW1cWfbmk5pFfd6BwKkYEwyOSSeoHo4iXQNQskNjVZRaVZHtZt2xanG
+ /ppQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=U7yr0DdjuYuFCKOJsgOjp2fJGowaiR391m2zc6rjHDc=;
+ fh=GI2e/SBiq4MTIPc9mHou6R6WJe3VvhdDMWKbaXflkfU=;
+ b=DU7G7/gcapr4oLtmNOcb+EjUb4Jv7keCkSgTN+h/dHNnzeJPGFrSbUTJsvuK0frbPK
+ DHnzI0XqZsq+BMVN2Gm36zP8gmZWyUoYglrXhFIZpoNiXRJGkvdR6/l9wONKC53cWYAd
+ Obab8t56Z2mOoia3Citj7lyeB4Qik0W4QA7wMt+aBTgGjhLSbh9bGDIWJKhPTnZrAGI/
+ xejMIq1S1NILoBXEToxz2c27rcejGtpCs1FFExn5h9DCt933FxlCrVt5MkmziEk6vgQ9
+ CAcdbhX5Ry9mt0L8KDEYHmTSKffMaaxc3AJCQTWX2craYlS9bQnkoxsDaD/qU2K9Y5vX
+ xARg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778444355; x=1779049155; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=EdAlnFz40RGJfP7V6Yaew8z+iOTkh/EpHNqN9bFSCaU=;
- b=nkXBlNJWiKh913Li/QB35i+zM7I57rlt6wEuUP0cdy48y0gea1egP0PhvCAVi16YU8
- S129fpMMwfsLAZzYnajtMeP5n3jkknapyQta60UuphCjvCksxLm/BPeKDABkkyTozX0k
- ODYREqby0CcxED40h1S+IA85PndquvVVc73sqKpWSB7mPYJDsxbmA/ENrThgnWarUXyZ
- HfPDKq0CMWV2LFBidex2IBI0XYVxsyBym1rrT/2Hgz//8PgujpNgPAL0tyJ5htwbijLx
- H+FXd3Sp3j4WLy42EaLuQoSUDfetvc9cWNY00q4iP0V9fXYIJDJ1RJTohBpZNA4/5I9R
- gImg==
+ d=gmail.com; s=20251104; t=1778444393; x=1779049193; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=U7yr0DdjuYuFCKOJsgOjp2fJGowaiR391m2zc6rjHDc=;
+ b=rpwXnh1JYnLWL82UTkjwR5c1hieqsn2NTsdr8D/Pb19BIvI3Obkg7Wf/TqZQ39iFdC
+ hw64G/e/1ap/OYAsqtfL04d54mPYAOenfASmAMEiWY7IvMqItUbvC4r0WWlu1f8Fi4Gr
+ LzSp3vW7gnplYUBd+P5Ll3ZXCUEiLaVKAABFmgCl6r1uIyKPhvB//G8d+xBBpq1xRNU5
+ GY/OMOiFmIli4rGKqOk3BI9txlrmB3dNcusL9Uyud5U77gTETu7iS8PivKh/IEaG720F
+ X/egl1ISS4BTE1LPeyw0+tJrFZt9gM06sLjgMx+gifM/tWmPZQMTVefV1gnjwM3v1jxE
+ frfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778444355; x=1779049155;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EdAlnFz40RGJfP7V6Yaew8z+iOTkh/EpHNqN9bFSCaU=;
- b=E/E8iWzgn7azMTNnGyo8rDz1Jsknaee62UN7bSGn7BbH47Qny6/WIeNA55SOQ8ND/G
- yOYc+oIqrrhM3hjM+0yvJvddZoLitrI5ljXqqSWaNCdQ5eVG2phzDqQ0sNIJAKIeaaa5
- DItIHKNuwxQVYGKi4E2YbC7QOLG9uDCRqJH1SmWU9Coz+sTYy+icMTQh18pDHKi3lrjT
- BBBMT1hT+7dra/4onYlJc3OCSi6HfPRCKevj0Nm7FawV4TNYVxu7qwtPajt9dYy2sKZ+
- RmXBD5KRAuT1BsSiu2z/v0NTyCFMhaZZETNuoHnHtpHDo1JgIwyqKkLk26eKMzLqbS2D
- ZUtg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8e9+R5iIM3xywrn7LXGuB545/BO9yvv6wH6CQCFGmzKyMXAZlnwaOJ5aV9iWW8EwlckG5HsgAshD65@nongnu.org
-X-Gm-Message-State: AOJu0YwHr4r5rzGcNcxg5cqoswrNG9Ishsinz0gqTMpYZc1gorPy8alA
- +K8Uikv5sGcRGTedx6V4WIOs3+gUy/RXnkdnsK1N2AvJz0WPhJv/iZY/CrUuiSdDMzBtcaWU+3i
- U6oOLUoyU2hsQDk5iJREWp4sTwmIDYQVnyUbl6RyfM13QBeMozvi4s/Os
-X-Gm-Gg: Acq92OFmOX2221pGyF6ZcEjg+qeGkf+cQYa3M/jNzsx9YL4IbvrCDeAZj81S4nN3oYc
- DzP4F8/baFAzwnzbY8SVVRQr8AV1o7ocgqTxWCEg2WG4wSOwrCNtjefYP+pswEa6VD1JXo1oL6y
- cKS4O1iGrKiSq92uDaxMHsCXO4tOWlVGBnRSGjPAdsRoPmcqGF4V//JSw2pMH9afCEVT9vzMs2n
- CH72z/BH9y84yYTNXLo1zf9AQWOMtEDJx/eI3Xvc8FI5Oqsr8zkpI3sYEaxl/UxsJrCDihjJh8g
- cYXq8I9i5G/4bGCLLMxYLnwdYpsgN8AVykrZYJLlw7xELLIn2Cf8KO2E2IHO4NsPgwm3kNakoV9
- 7lgxYbXj8JGj9uZ88kSjjCQV0ozCvmt/yuxvbqLdH
-X-Received: by 2002:a05:600c:1e0f:b0:48e:51f5:2764 with SMTP id
- 5b1f17b1804b1-48e676c0353mr197016695e9.27.1778444354661; 
- Sun, 10 May 2026 13:19:14 -0700 (PDT)
-X-Received: by 2002:a05:600c:1e0f:b0:48e:51f5:2764 with SMTP id
- 5b1f17b1804b1-48e676c0353mr197016355e9.27.1778444354217; 
- Sun, 10 May 2026 13:19:14 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-48-7.inter.net.il. [80.230.48.7])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e7040a8f1sm127775815e9.11.2026.05.10.13.19.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 10 May 2026 13:19:13 -0700 (PDT)
-Date: Sun, 10 May 2026 16:19:10 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
-Cc: Song Gao <gaosong@loongson.cn>, maobibo@loongson.cn,
- qemu-devel@nongnu.org, lixianglai@loongson.cn,
- chenhuacai@loongson.cn, Avihai Horon <avihaih@nvidia.com>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Cornelia Huck <cohuck@redhat.com>
-Subject: Re: [PATCH v2 2/4] linux-headers: Update to Linux v7.1-rc1
-Message-ID: <20260510161352-mutt-send-email-mst@kernel.org>
-References: <20260507092358.2479135-1-gaosong@loongson.cn>
- <20260507092358.2479135-3-gaosong@loongson.cn>
- <c87311a3-b214-4705-8ed3-7386aea1056e@redhat.com>
+ d=1e100.net; s=20251104; t=1778444393; x=1779049193;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=U7yr0DdjuYuFCKOJsgOjp2fJGowaiR391m2zc6rjHDc=;
+ b=LXZZJZbKW0y40NZpmVofll5hYZ0KIyQuLLJ7fYlitf2Aw2qe2hrNO4OJBuB4FEl7G6
+ psAhE3zLASRXXRNnMxtlmYuL4qbAUzcWtaQs6FBYlI9lRHco2rdAyIeajmX4rtvMGZRC
+ RHxMCN5vO/3vznQZ8ku+h9k03v2d1et0SQhQtx4UYkeFm3c76kcsveKm8uz2PkHmcyTm
+ qWRvfPN9o2/GS2xgYr8uIUnh6HslJs8cUVnZXYBR0IR+fvULR3/zPxIs0sDsPZs3LeN4
+ LoCaOqTj6aQxml+Y/xJ78rlXQD5DNRZGBNokeWbNcK2gKCROBjEcFs9a+B7uAJbmyIp/
+ ZuBw==
+X-Gm-Message-State: AOJu0YxOIbV3dja4OUnY7X8bXamX1s9RvNKds9NKth4RB8yE51jVgMr8
+ c3vxHoqvWmhPQWo1Lo1Yzbrh/Bu3jDTmhtPExtLMHvBn9moogQaIPmvIf+EWdIjLyeTMUkg5Lus
+ U1DgifVa8qmCqszUtYIGdMWFD2ruJAcHIKf8g1OE=
+X-Gm-Gg: Acq92OFmesM59jqhh9E8kNIrZD7hymU6Y6FEj2xns+mHqKH+L/qzt/bicH6kXsS4v8I
+ r5vrNPvW20OMf7J+d+/M6+xlWRdguZPDWU3D8H+F6Jon3ZOgUf99zDGeK/z42HyOiwYgfx+jJ9G
+ aut9xw3QYlhGlh0Zx7JDX2oyAzlcH0ncCWAHq8Gog8Ju8g4/+cTGu8I1e19qPnb1kjDza0pLCC5
+ VSYxYBbQVpUIVquxkh6zcJ+YpJYkuh+mxrr36wmNv89qqMroA+qtGFWKxLl1+FbrPJwOZpv0hi2
+ xalK4fWQyF3U6Jah8vMWaiZ4ly4p/bLZcIm0WAR5Z/rgGePsPzAanUMrmk1uwQlwmpeWlQ==
+X-Received: by 2002:a05:6102:8551:20b0:631:26f6:7016 with SMTP id
+ ada2fe7eead31-63126f6a89bmr5351296137.28.1778444392766; Sun, 10 May 2026
+ 13:19:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c87311a3-b214-4705-8ed3-7386aea1056e@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260509-mips-octeon-missing-insns-v2-v4-0-d669dcd05c2f@gmail.com>
+ <20260509-mips-octeon-missing-insns-v2-v4-11-d669dcd05c2f@gmail.com>
+ <f2af3df7-75a4-4a7c-9009-ea42e7a0988b@linaro.org>
+In-Reply-To: <f2af3df7-75a4-4a7c-9009-ea42e7a0988b@linaro.org>
+From: James Hilliard <james.hilliard1@gmail.com>
+Date: Sun, 10 May 2026 14:19:41 -0600
+X-Gm-Features: AVHnY4IunlRpnFkP6vj83otS0WdU0-nBP0M7si_6QBxCmtpjWDFVsT087gjE-Hs
+Message-ID: <CADvTj4pMFpXftMtZzjw3YN7fCsAJkS79Um1vRgN9S3BLu8E4Dg@mail.gmail.com>
+Subject: Re: [PATCH v4 11/32] target/mips: add Octeon SAA instruction
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::929;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-ua1-x929.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,47 +118,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, May 10, 2026 at 10:08:49PM +0200, Cédric Le Goater wrote:
-> On 5/7/26 11:23, Song Gao wrote:
-> > diff --git a/include/standard-headers/linux/virtio_ring.h b/include/standard-headers/linux/virtio_ring.h
-> > index 22f6eb8ca7..7baf1968a3 100644
-> > --- a/include/standard-headers/linux/virtio_ring.h
-> > +++ b/include/standard-headers/linux/virtio_ring.h
-> > @@ -31,7 +31,6 @@
-> >    * SUCH DAMAGE.
-> >    *
-> >    * Copyright Rusty Russell IBM Corporation 2007. */
-> > -#include <stdint.h>
-> >   #include "standard-headers/linux/types.h"
-> >   #include "standard-headers/linux/virtio_types.h"
-> > @@ -200,7 +199,7 @@ static inline void vring_init(struct vring *vr, unsigned int num, void *p,
-> >   	vr->num = num;
-> >   	vr->desc = p;
-> >   	vr->avail = (struct vring_avail *)((char *)p + num * sizeof(struct vring_desc));
-> > -	vr->used = (void *)(((uintptr_t)&vr->avail->ring[num] + sizeof(__virtio16)
-> > +	vr->used = (void *)(((unsigned long)&vr->avail->ring[num] + sizeof(__virtio16)
-> >   		+ align-1) & ~(align - 1));
-> >   }
-> 
-> The kernel commit 3c4629b68dbe ("virtio: uapi: avoid usage of
-> libc types") changed this virtio header and this breaks the
-> build on Windows :
-> 
->   https://gitlab.com/legoater/qemu/-/jobs/14297040230
-> 
-> A fix could be to reintroduce 'uintptr_t' (available through
-> osdep.h) by modifying the linux headers update script. Ideas ?
-> 
-> Thanks,
-> 
-> C.
+On Sun, May 10, 2026 at 1:37=E2=80=AFPM Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 5/9/26 21:13, James Hilliard wrote:
+> > SAA is an Octeon+ instruction that atomically adds rt to the naturally
+> > aligned 32-bit word at base and discards the old memory value.
+> >
+> > Add an Octeon+ feature bit, enable it for Octeon68XX, and implement the
+> > common SAA/SAAD translator with TCG atomic_fetch_add_i64.  The MemOp
+> > selects the word or doubleword transaction size.
+> >
+> > Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+> > ---
+> > Changes v2 -> v3:
+> >    - Split SAA out of the combined Octeon arithmetic and memory
+> >      instruction patch.  (requested by Richard Henderson)
+> >
+> > Changes v3 -> v4:
+> >    - Gate SAA/SAAD behind an Octeon+ feature bit.  (reported by Richard
+> >      Henderson)
+> >    - Use the i64 TCG atomic add path for both word and doubleword sizes=
+.
+> >      (suggested by Richard Henderson)
+> > ---
+> >   target/mips/cpu-defs.c.inc         |  2 +-
+> >   target/mips/mips-defs.h            |  1 +
+> >   target/mips/tcg/octeon.decode      |  4 ++++
+> >   target/mips/tcg/octeon_translate.c | 19 +++++++++++++++++++
+> >   4 files changed, 25 insertions(+), 1 deletion(-)
+>
+> I beg your pardon here.  Given that we implement only Octeon68XX, which i=
+s Octeon3,
+> there's not really a need for new feature bits.  For clarity, we could re=
+name INSN_OCTEON
+> to INSN_OCTEON3, but that's not really necessary either.
 
-Yea sorry ( Just add
-#define VIRTIO_RING_NO_LEGACY
-somewhere.
+You're right that a separate INSN_OCTEONP bit does not buy us much while
+QEMU only has one Octeon CPU model, so I'll drop that in v5.
 
+One small correction: Octeon68XX corresponds to CN68XX / Octeon II, not
+Octeon III. My understanding is roughly:
 
--- 
-MST
+  CN3XXX -> original Octeon
+  CN58XX -> Octeon / Octeon+
+  CN68XX -> Octeon II
+  CN7XXX -> Octeon III
 
+Some later patches model Octeon III-style state/forms because existing
+binaries/toolchains use those encodings and QEMU has no separate Octeon
+III CPU model today. But for SAA/SAAD, I agree the extra feature bit is
+not worth carrying in this series.
+
+>
+> Anyway,
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>
+>
+> r~
+>
+>
 
