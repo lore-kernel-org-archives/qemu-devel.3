@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71F2BCD3427
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 13:48:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80E33CD37B6
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 13:48:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wM4WD-00059K-AL; Sun, 10 May 2026 09:48:29 -0400
+	id 1wM4WE-0005OP-LZ; Sun, 10 May 2026 09:48:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wM4VT-00048Y-GS
- for qemu-devel@nongnu.org; Sun, 10 May 2026 09:47:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wM4W2-0004e7-Gb
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 09:48:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wM4VR-0005AZ-FU
- for qemu-devel@nongnu.org; Sun, 10 May 2026 09:47:43 -0400
+ id 1wM4W0-0005K9-W2
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 09:48:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778420860;
+ s=mimecast20190719; t=1778420894;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XK6hQBJWe6s0pE48BHhzuffI9fvmlLQPWRYr4LvE39c=;
- b=Okxxa/ddQetPew0Gnm3RloDWuVVcXmPPxmcUObIuXNxE4YY2uK7fhbxpk1pBDm5ZgbrnB+
- +Xlef9q3p7DQ8U3aY+QPjJmqsr/odj07AULR6ojltS/bx1w7mDkn9aW1rQOrxuW/L81v7W
- sht1+9AmjNypMW+XQ6HP0FxKlX4p9qQ=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=vUOuphh7lwDnDlIAl256jv50Zp2Hh7oDJoVpT2dTnLY=;
+ b=WPQXOIooUyIfCdPlJGOEhPfBfswL7OzGgeoXpaf0/cSiryFOoBcEt8hOKatYGQAwPFbCxd
+ IeXze16vKw18KovrSmYUwR2e4wf5qgcFUGR8JFd3oaZbZUnXvrCP+AiJIk/u/jueCKCVT+
+ tFdIwFvJjwm1EonA5+j3/QWQ2M49s+c=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-478-aUYDuIzOMCGchI8lGjA7Og-1; Sun,
- 10 May 2026 09:47:39 -0400
-X-MC-Unique: aUYDuIzOMCGchI8lGjA7Og-1
-X-Mimecast-MFC-AGG-ID: aUYDuIzOMCGchI8lGjA7Og_1778420858
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-647-Ue7ULSP4OgyVpUsbZ9UV9A-1; Sun,
+ 10 May 2026 09:48:11 -0400
+X-MC-Unique: Ue7ULSP4OgyVpUsbZ9UV9A-1
+X-Mimecast-MFC-AGG-ID: Ue7ULSP4OgyVpUsbZ9UV9A_1778420890
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5E5FF19560B4
- for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:47:38 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 65961195608E
+ for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:48:10 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DB7A219560A2; Sun, 10 May 2026 13:47:34 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3664A3002D30; Sun, 10 May 2026 13:48:07 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 10 May 2026 17:43:18 +0400
-Subject: [PATCH 21/54] loongarch/virt: convert OnOffAuto properties to
+Date: Sun, 10 May 2026 17:43:21 +0400
+Subject: [PATCH 24/54] whpx: convert OnOffAuto hyperv property to
  QAPI-aware registration
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260510-qom-qapi-v1-21-48ba6a1a1fa5@redhat.com>
+Message-Id: <20260510-qom-qapi-v1-24-48ba6a1a1fa5@redhat.com>
 References: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
 In-Reply-To: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
 To: qemu-devel@nongnu.org
@@ -63,25 +63,25 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5899;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2550;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=VKaT/RM+bX6JnsN2i4XW8lfpbA4Tsvv3WOtvPasSpx8=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqAItv4V6F7PsL6IpCGSCSWzYBAjUgaHa1KIrvH
- ixX4MJn2X6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCagCLbwAKCRDa6OEJdZac
- 5SxPEACw9pd9zqk31+SnWzMBqruXB2lDxXcAyhBf96WbOZuLxTTJM7QgGZclP75s/PanFYZql+l
- c95dTlu81GasPOKKKNF6YGxGZT1gSlRYujtGnbYQCRiWAzn1NdN/QE58A86jojUIkuYkJc05Dqr
- d+7tX6HG8G4oOJpHexvnqoFRDKq+MGl+rLZKxvIV5AYV+qb9CX8SKIKqLTezKAqqbFdWxPDCq2A
- OowVUSHcaxwjsE8NMiY9+ro6c164shjbVsaQwsUSdCiyB63DIKZnbT2bZYVhV7NTiYDIZ+cJUnN
- WXt1oJEbC2yEpbXA/UtxFEgOQBfN7vxXW7TRUH4NnXgHi3Q9X+2r5dvehjZHiujezl1O3NJ7tlj
- QocsDzyn09uUDn2ClCeroLwAIYnHMk4WaYIxkfuNqMyUTUzIdCCzGoyHiP5dHmtaU4YODnWoaJe
- 1r0Y020TizMuRtNaQ+QYb4Q5Lj3oqf2G+jVMOPjcLMwFanlysWkdJp6tr20PTl5w7X6Uxq194A8
- dCWY5KJ2oMEQxjc6/vQ1ZVBqUFHyduQT5ryt+L5maxVMQbtyyIgBrEhnvMtD/z3e0A/BlxQj8RK
- Vq+tXa8GPJ1zKq1rgfMe3TbHvITaYZ4kCkcXElNSmztuigginMME8a3v75f+aXPXbFJmdmG8XVP
- tv2p/WecL1HvLjQ==
+ bh=tNUW/HBog+/AnPLyqxY75SQ9HHIGR8hgSoU/pzjmByg=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqAItvI5fn1713UO8RcMupeUPRW1Ss8xgLD0l9H
+ PX48CuUNOWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCagCLbwAKCRDa6OEJdZac
+ 5ef7EACa72qHz9n98mHFOQoOgSx+ec3utmD0LBWCGfpGFCUw58noJdyn2d6xtp4gisYpaq3E1di
+ lJt5fzchHFVmf9E78OcmK/8se0kyJscfrZammeDs5P6tyUW59TmvGToQPXCrcZ7HaHgpFCuq0dw
+ +pSEMbZK4Z5ospRX75ayywwZBE1+V5WuW4wy5BZnNGq/GcnUQRAtEIxS5+bPXqNcI0DN8maIFnL
+ D5NIl3mD+hJtK36fdoRYf4BlmDtTLWG5sbByhomZ9ZBurdzzimirYa+4r0LVua+YXCxL99liI/b
+ c7WwseIJtAixogQEGhqhyU0Ep74U3K56UHCE+bcM3B1sa0q5Cht/x/znFhr0GzcjCX4oYz7P85M
+ NNyFNyQ9zovYQN5pQu/jR0Tulo4HhdlYERu3SgLmukIFz20G07zvMnVrBjDuIWZL82q5eoFOTy3
+ 3jXLsFj5QNuBY/g3NgLqMbg6TeN1wF9YQZKJwr5WUDNWKfpglydd0iqYLM3S6MlDVenieUrhS7u
+ BtLdZMAgDA7k6KOf3FHUz3BpErW8qmPtRs6unufDX1Ie3AR923CAzUFTd+qU7h8ytcAbtUZcEb2
+ HzcrPJKBk2IIVpchyiPMQahk0ZzoPx6D1aQS0tKB4QPbjXRpmbMimKYjC2oNWokxRTAu7FPlCo8
+ 55hHi9qXzgl/neQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -89,7 +89,7 @@ X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,158 +106,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the acpi, v-eiointc, and dmsi OnOffAuto properties from
-manual visitor-based callbacks to property_add_qapi_enum().
+Convert the hyperv OnOffAuto property from manual visitor-based
+callbacks to property_add_qapi_enum().
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/loongarch/virt.c | 85 +++++++++++++++++++++++++----------------------------
- 1 file changed, 40 insertions(+), 45 deletions(-)
+ accel/whpx/whpx-common.c | 29 ++++++++++-------------------
+ 1 file changed, 10 insertions(+), 19 deletions(-)
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 2fc15261309..b301398d1bd 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -36,7 +36,8 @@
- #include "target/loongarch/cpu.h"
- #include "target/loongarch/cpu-mmu.h"
- #include "hw/firmware/smbios.h"
--#include "qapi/qapi-visit-common.h"
+diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
+index 247e12db812..187938c02b5 100644
+--- a/accel/whpx/whpx-common.c
++++ b/accel/whpx/whpx-common.c
+@@ -22,6 +22,7 @@
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-types-common.h"
 +#include "qapi/qapi-type-infos-common.h"
-+#include "qapi/visitor.h"
- #include "hw/acpi/generic_event_device.h"
- #include "hw/mem/nvdimm.h"
- #include "hw/core/platform-bus.h"
-@@ -51,26 +52,21 @@
- #include "qemu/log.h"
- #include "kvm/kvm_loongarch.h"
- 
--static void virt_get_dmsi(Object *obj, Visitor *v, const char *name,
--                             void *opaque, Error **errp)
-+static int virt_get_dmsi(Object *obj, Error **errp)
- {
-     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
--    OnOffAuto dmsi = lvms->dmsi;
--
--    visit_type_OnOffAuto(v, name, &dmsi, errp);
--
-+    return lvms->dmsi;
- }
--static void virt_set_dmsi(Object *obj, Visitor *v, const char *name,
--                              void *opaque, Error **errp)
-+
-+static void virt_set_dmsi(Object *obj, int value, Error **errp)
- {
-     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-+    lvms->dmsi = value;
- 
--    visit_type_OnOffAuto(v, name, &lvms->dmsi, errp);
--
--    if (lvms->dmsi == ON_OFF_AUTO_OFF) {
-+    if (value == ON_OFF_AUTO_OFF) {
-         lvms->misc_feature &= ~BIT(IOCSRF_DMSI);
-         lvms->misc_status &= ~BIT_ULL(IOCSRM_DMSI_EN);
--    } else if (lvms->dmsi == ON_OFF_AUTO_ON) {
-+    } else if (value == ON_OFF_AUTO_ON) {
-         lvms->misc_feature = BIT(IOCSRF_DMSI);
+ #include "qapi/qapi-visit-common.h"
+ #include "migration/blocker.h"
+ #include "accel/accel-cpu-target.h"
+@@ -470,18 +471,11 @@ static void whpx_set_kernel_irqchip(Object *obj, Visitor *v,
      }
  }
-@@ -78,21 +74,16 @@ static void virt_set_dmsi(Object *obj, Visitor *v, const char *name,
- #define DEFAULT_HIGH_PCIE_MMIO_SIZE_GB 64
- #define DEFAULT_HIGH_PCIE_MMIO_SIZE (DEFAULT_HIGH_PCIE_MMIO_SIZE_GB * GiB)
  
--static void virt_get_veiointc(Object *obj, Visitor *v, const char *name,
--                              void *opaque, Error **errp)
-+static int virt_get_veiointc(Object *obj, Error **errp)
+-static void whpx_set_hyperv(Object *obj, Visitor *v,
+-                                   const char *name, void *opaque,
+-                                   Error **errp)
++static void whpx_set_hyperv(Object *obj, int value, Error **errp)
  {
-     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
--    OnOffAuto veiointc = lvms->veiointc;
+     struct whpx_state *whpx = &whpx_global;
+-    OnOffAuto mode;
 -
--    visit_type_OnOffAuto(v, name, &veiointc, errp);
-+    return lvms->veiointc;
+-    if (!visit_type_OnOffAuto(v, name, &mode, errp)) {
+-        return;
+-    }
+ 
+-    switch (mode) {
++    switch (value) {
+     case ON_OFF_AUTO_ON:
+         whpx->hyperv_enlightenments_allowed = true;
+         whpx->hyperv_enlightenments_required = true;
+@@ -497,11 +491,7 @@ static void whpx_set_hyperv(Object *obj, Visitor *v,
+         whpx->hyperv_enlightenments_required = false;
+         break;
+     default:
+-        /*
+-         * The value was checked in visit_type_OnOffAuto() above. If
+-         * we get here, then something is wrong in QEMU.
+-         */
+-        abort();
++        g_assert_not_reached();
+     }
  }
  
--static void virt_set_veiointc(Object *obj, Visitor *v, const char *name,
--                              void *opaque, Error **errp)
-+static void virt_set_veiointc(Object *obj, int value, Error **errp)
- {
-     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
--
--    visit_type_OnOffAuto(v, name, &lvms->veiointc, errp);
-+    lvms->veiointc = value;
- }
- 
- static bool virt_get_highmem_mmio(Object *obj, Error **errp)
-@@ -1025,21 +1016,16 @@ static void virt_init(MachineState *machine)
-     loongarch_load_kernel(machine, &lvms->bootinfo, phys_addr_mask);
- }
- 
--static void virt_get_acpi(Object *obj, Visitor *v, const char *name,
--                          void *opaque, Error **errp)
-+static int virt_get_acpi(Object *obj, Error **errp)
- {
-     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
--    OnOffAuto acpi = lvms->acpi;
--
--    visit_type_OnOffAuto(v, name, &acpi, errp);
-+    return lvms->acpi;
- }
- 
--static void virt_set_acpi(Object *obj, Visitor *v, const char *name,
--                               void *opaque, Error **errp)
-+static void virt_set_acpi(Object *obj, int value, Error **errp)
- {
-     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
--
--    visit_type_OnOffAuto(v, name, &lvms->acpi, errp);
-+    lvms->acpi = value;
- }
- 
- static char *virt_get_oem_id(Object *obj, Error **errp)
-@@ -1484,20 +1470,29 @@ static void virt_class_init(ObjectClass *oc, const void *data)
-     hc->unplug_request = virt_device_unplug_request;
-     hc->unplug = virt_device_unplug;
- 
--    object_class_property_add(oc, "acpi", "OnOffAuto",
--        virt_get_acpi, virt_set_acpi,
+@@ -533,11 +523,12 @@ static void whpx_accel_class_init(ObjectClass *oc, const void *data)
+         NULL, NULL);
+     object_class_property_set_description(oc, "kernel-irqchip",
+         "Configure WHPX in-kernel irqchip");
+-    object_class_property_add(oc, "hyperv", "OnOffAuto",
+-        NULL, whpx_set_hyperv,
 -        NULL, NULL);
--    object_class_property_set_description(oc, "acpi",
--        "Enable ACPI");
--    object_class_property_add(oc, "v-eiointc", "OnOffAuto",
--        virt_get_veiointc, virt_set_veiointc,
--        NULL, NULL);
--    object_class_property_set_description(oc, "v-eiointc",
--                            "Enable Virt Extend I/O Interrupt Controller.");
--    object_class_property_add(oc, "dmsi", "OnOffAuto",
--        virt_get_dmsi, virt_set_dmsi, NULL, NULL);
--    object_class_property_set_description(oc, "dmsi",
--                            "Enable direct Message-interrupts Controller.");
+-    object_class_property_set_description(oc, "hyperv",
+-        "Configure Hyper-V enlightenments");
 +    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "acpi",
-+        .description = "Enable ACPI",
++        .name = "hyperv",
++        .description = "Configure Hyper-V enlightenments",
 +        .qapi_type = &OnOffAuto_type_info,
-+        .get = virt_get_acpi,
-+        .set = virt_set_acpi,
++        .set = whpx_set_hyperv,
 +    ));
-+
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "v-eiointc",
-+        .description = "Enable Virt Extend I/O Interrupt Controller.",
-+        .qapi_type = &OnOffAuto_type_info,
-+        .get = virt_get_veiointc,
-+        .set = virt_set_veiointc,
-+    ));
-+
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "dmsi",
-+        .description = "Enable direct Message-interrupts Controller.",
-+        .qapi_type = &OnOffAuto_type_info,
-+        .get = virt_get_dmsi,
-+        .set = virt_set_dmsi,
-+    ));
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_UEFI_VARS_SYSBUS);
- #ifdef CONFIG_TPM
+ 
+     whpx_arch_accel_class_init(oc);
+ }
 
 -- 
 2.54.0
