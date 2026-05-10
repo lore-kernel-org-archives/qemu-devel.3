@@ -4,113 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78121CD3427
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 20:24:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10BB3CD3427
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 20:40:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMAgo-0002ul-Se; Sun, 10 May 2026 16:23:50 -0400
+	id 1wMAwl-000548-EF; Sun, 10 May 2026 16:40:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wMAgn-0002ua-90
- for qemu-devel@nongnu.org; Sun, 10 May 2026 16:23:49 -0400
-Received: from mail-dy1-x132e.google.com ([2607:f8b0:4864:20::132e])
+ (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
+ id 1wMAwj-00053f-VY
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 16:40:17 -0400
+Received: from mail-oi1-x234.google.com ([2607:f8b0:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wMAgl-0008I7-DU
- for qemu-devel@nongnu.org; Sun, 10 May 2026 16:23:49 -0400
-Received: by mail-dy1-x132e.google.com with SMTP id
- 5a478bee46e88-2c156c4a9efso4729475eec.1
- for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:23:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778444624; cv=none;
- d=google.com; s=arc-20240605;
- b=IDEtxHhgETBY0XeSbW11d+CRVNPxGaFfmKEHJjaDe+QaOedWg81WEKHBcUa6DNcp5B
- Zyr/HbBwWPV8aucAb5b1KHhK2ZiqRCFZB76toeZXemWTJ0zYCDhU6Pmo/XH6y0ONH5X9
- k7BBt8EYuvl4cpA2YmjsgA6nHLS4/rTuIjDSGOi+q37o5OUysOw7XWPg7h/vqAuRv+vm
- n6PQddqsaPxohU0VdJtBQPwqEa0qxZVeQvATs5w62VpMAhsj6aFeeB01OHAMrFKCsXtw
- 4wXJ6hyn5/PywrvJeKds+VH1JSw1MzLt2uH8fopw+nezvJI9nZjrtqjghm+ZQipI5T95
- DrQQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=Jkh1uL1rgPpDJYzB8P2TQ/rVAk5fcg+k9t8zp/yZ2zE=;
- fh=XKfMv48PXgm//5sA40RdF01wGGjLzCVfJBOCZgVsECs=;
- b=isbarvTypw2P5FWTfKXjVdlv9GG1nrLpvT42v0rNLcZQVzcu02lfNjnkDbPHStwsSd
- rwRBmhiYVaWa7IvZ4M79bxhNdos+/NgwrHnNgyfuMb+fywVahbk8b4+PW+xwQRx6VBbL
- BtS/nnHTZNQAD3ovioIsxIZchaW4RTQBEg8iToIFuJ2PLeJX/YxYOaF52yPQWFpgbxAq
- nEBbAEwk/+r1IwcgVj0GpLkPkLI2tGOgV8vcXlf/Y9o44F7WYTGq4mkRea1wNoV1zgcX
- 3D4Ra83EyMtWK4D4JBAKn5N8Yrg7iZzc6aW7UcLCjBhZdDewg7cFKJVbwxWLmJpm3xS5
- QrtQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
+ id 1wMAwi-0003zh-CK
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 16:40:17 -0400
+Received: by mail-oi1-x234.google.com with SMTP id
+ 5614622812f47-479d85152c9so1433198b6e.2
+ for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:40:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778444624; x=1779049424; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Jkh1uL1rgPpDJYzB8P2TQ/rVAk5fcg+k9t8zp/yZ2zE=;
- b=SfLHaMXjLysDwc7sF3Xe6vRjzHL0cxDBkFavpGgogg0lwWOlMOyjYj5tfUk8cJ8B3O
- UL1gPYRvUygdZcc6CNiBYsq5E24Zr5693e4V2gX1gSXVfnmB71UIsMwnUvukD+62fP6a
- 7zmokfvFfJkJ77Hn8LIo86QzmLlP2XgDzwtFajm+YFFBegrDF+aJAru0bYT5o3QCBdij
- peSdtzSPM4a5TYgD/sMILnCf2ILzxUbwCRXPcwEh40E4JNd2FMCYI6Hs4xxrn9zLt3Th
- GcBm6kONAusRy0h32vpfyrrZx0KJ6hl4avZ3dvWxoDWs2UcbNg+YrQTmlaPKGdFaBNVy
- OGnQ==
+ d=gmail.com; s=20251104; t=1778445615; x=1779050415; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=3hmk9qzN5HeCVX+0rIOHRUrubJl8uCd6CnVJBu3Bj/I=;
+ b=YIaZbnoIOysPsAriF0DJ9d+FJdsZhGxJWtVj5ob7CGopbiwU7+B6dY7CwGJ4VCvD0m
+ aFKyvCNnUFzR+XOVRsOqy7ouf/iRffY+P7O/wmPjt4MdPAhN/ubkpbmu8gDBiXHgcJuA
+ IPimjxRE2a3AVLDiJTnqaP4JrYDwvhyuPGOXYCbTKdtdnvihWS2VuTGpXi/9jkUS2ILv
+ lyAp9CqvAirNat+QiPbDrNKWCkNUFcU6B3ekVrZrKs5jDsBomxO0nKbDqdmJ/plQkbUb
+ /KASfZNAafanN3ITpxNFBCfzN7V+BwyGHDWqwSZb9K/WzwuHzLxxePaartNnWOr5gzeP
+ 5sDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778444624; x=1779049424;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Jkh1uL1rgPpDJYzB8P2TQ/rVAk5fcg+k9t8zp/yZ2zE=;
- b=MlNGebPw2IxH7QSvSAy7WHMG8V6VN7z8YMTlsgIhCD6EditP5twnykWrEqGfGlK0NY
- abAQnlWwFQJHqG4DJoQCRaanHE3MRWrv+Bx6DTyEiauzgGLQxM4TGquLByXuEiNOvM7Z
- QXSUnijsI1L8d3HcGpq7FAvmPjAZyu5zo6S+OfbwjoekhhRRZHtQbCVPFSY32DvFzwjC
- EwV+iNv74tZn5wheB1sqWz55rClBg/NUUstuxyOsEcFidnkyZdM+HRKoYzRrvxZifyRt
- RFC6L+OMuW/RRaieh4Spq09a+03AizcTQqKktIfsWsr3soMvfgu1V5DzO6Fr3jIzac4U
- DGLg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+N/iwjnZmMgOT6BUSvCC4sumR0YQsFB4TIjXljeFqzNY5br7mOp7di2OaWR2mQJzYBW8WeAI595Dwl@nongnu.org
-X-Gm-Message-State: AOJu0YwDOXf2qCa/pF19o18mftvjJHtGULHlTPPbYKpivk+RlPCwTnzN
- OGPcIHuz1xGbzbLV4AKZMb7iPTZvc09paP4MQBFMmYmDz4JnXIc3eltHzOM0Vmf8qoWzBKlTQ7M
- rec1lcgIygxHqNTUZuVW8U+NZkxVGQzA=
-X-Gm-Gg: Acq92OGzRaO+ttwqMu5oH8XVhmxJETpGhiqyn3/qJ4QqO2Tisjhe8ObWKF7Qfjzya91
- 9+qYxubJZvpuQdyJTln9jBHvQZ6ygMJBQbFzhNAznskm1XrcHo51vqhCi/OFbDSybV64ajTyYWW
- S+zzV1GeI+KGVXVSHIH4pXb/EB91jwI+jZ4jnB8Cu94LZoQN4snUmRANGR3gbcTiKe5Bv/f7+7m
- ehsBoj5vKVYg5m6rP/lD97tyHIuheuUisuZgCpoZCpNSqO2uoY5pmopT4uJJYWun4wz1qD1Q2E6
- 3skinbBxGyfjB8oVLpK96Ny/uFiIJefo2EBVAWM=
-X-Received: by 2002:a05:7300:dc14:b0:2da:2ec2:64fe with SMTP id
- 5a478bee46e88-2f55034e591mr8974252eec.24.1778444624056; Sun, 10 May 2026
- 13:23:44 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1778445615; x=1779050415;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=3hmk9qzN5HeCVX+0rIOHRUrubJl8uCd6CnVJBu3Bj/I=;
+ b=LKEEGaoLLVVFjRou11yXh7xGeYbhFCktjerzPPDWMtaP/4enagh+KSTh9E5sF15yBY
+ 49zme+iL/XEq0kZeB55XhCHXpQb81wK1FfcEV8tBwbPv9c4zQv2B5SCjyWB1gM4GGzc7
+ 6DZequ+Y2cPBF9SpMFYZy5pqsEYzEobOoFK69BX8jr6JrMKpeSPw5mIpJ6CHMyj83dbY
+ O4+1MGJnuTp3xS+dh4UxhA7JbTcI3htaCKO3/+uOmOUVQB9pY26G2CuNCr0konJ+8RJb
+ 9fX61rIoOwACSH2rIXJrrnIrKtJV7Ed48b60YNwUI9ywNwAqVXFfGNf8ZCvGX0KNmn6+
+ Wl9w==
+X-Gm-Message-State: AOJu0YwRVQ0le9c53TL4JFYXHkb8sgxD+JtXZ08nmrnWzSNlOBJM1tqs
+ pVnDSL85b8i4jY9+4Lr7Sc2mMq1P9QNV4jn45EEv/88srVVdWcdlqEaI
+X-Gm-Gg: Acq92OEc9qdDSb+DhsKe5ihM0mjGN3lOuG2V5rd+CdOZxK4oArmo7wSpfnsILuNAdOu
+ chh0aU3j6mtlllOwaW4iyAtsyG8Lf29xwRukoJBZcQK33XWuPTkpOtQVgzaA/SczHD7hFPOD1jC
+ utyn8TF/KVe5cq8NnZpciqoruwq2r64h0cvoj2V3zgYRWng9Hp+aSI7LhjUxR8irYvLpM28rp6/
+ ZWwZcDH8RDHIeOGc0mk8ma1Gmn4AcNqijlT96xejjNTujGD4teuT6hm55cosYghZoy7eS27E203
+ Q/6XdP904lPYXPxCbJlF8/ISVgVqaPZ2BypiuzANbbFmQt59gqOYIrOfFfBYotPo+BctiMWB67+
+ DX24sPG61I/D2+tcmXxX78LOGd4TksyXUtfAqoXtqnPbOmluU7Lyz6sdYF0zkA3yo+wjz1J3lKK
+ OVrurv2eZwIbwilfSb4hlJ6oAWIAfi/n0etl9C1NfeT4oibYxMa2vjYnmTjiqXeQlQNfBbKXL96
+ TBoKPUH+FVhXHsuM9b38TBuuARL3Ztb0KIpV4QXips=
+X-Received: by 2002:a05:6808:10d3:b0:474:7000:9669 with SMTP id
+ 5614622812f47-480420dcf07mr12186941b6e.4.1778445615285; 
+ Sun, 10 May 2026 13:40:15 -0700 (PDT)
+Received: from MacBook-Pro.local ([209.245.15.183])
+ by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-47c76935637sm18908207b6e.12.2026.05.10.13.40.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 10 May 2026 13:40:14 -0700 (PDT)
+From: James Hilliard <james.hilliard1@gmail.com>
+Date: Sun, 10 May 2026 14:39:42 -0600
+Subject: [PATCH v5 12/32] target/mips: add Octeon SAAD instruction
 MIME-Version: 1.0
-References: <20260508152428.2648560-1-peter.maydell@linaro.org>
- <735327c6-f23f-42cf-9b8e-a651d8ee7770@oss.qualcomm.com>
- <CAFEAcA8eKM_DNK4kWX0DNudMiq__uZ-MQM0L-2CfWL39CgCyJw@mail.gmail.com>
-In-Reply-To: <CAFEAcA8eKM_DNK4kWX0DNudMiq__uZ-MQM0L-2CfWL39CgCyJw@mail.gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Mon, 11 May 2026 00:23:32 +0400
-X-Gm-Features: AVHnY4Ipntbl5HYZ5HUcQUpDcY2st1qNhYG08CbSlCYgER1CW52yGMI9jy-HfSI
-Message-ID: <CAJ+F1C+XzzsGRwLjUCYiDaS9OGXMq5oc3QM5pm4obZAgLP7Z1w@mail.gmail.com>
-Subject: Re: [PATCH 0/9] tools: Move more tools sources into tools/
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Viktor Prutyanov <viktor.prutyanov@phystech.edu>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, Gerd Hoffmann <kraxel@redhat.com>,
- Eric Blake <eblake@redhat.com>, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Jason Wang <jasowang@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132e;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x132e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260510-mips-octeon-missing-insns-v2-v5-12-d5d2668d15ab@gmail.com>
+References: <20260510-mips-octeon-missing-insns-v2-v5-0-d5d2668d15ab@gmail.com>
+In-Reply-To: <20260510-mips-octeon-missing-insns-v2-v5-0-d5d2668d15ab@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Aurelien Jarno <aurelien@aurel32.net>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>, 
+ James Hilliard <james.hilliard1@gmail.com>, Helge Deller <deller@gmx.de>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Richard Henderson <richard.henderson@linaro.org>
+X-Mailer: b4 0.15.2
+Received-SPF: pass client-ip=2607:f8b0:4864:20::234;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x234.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -128,72 +109,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+SAAD is the doubleword form of SAA: it atomically adds rt to the
+naturally aligned 64-bit doubleword at base and discards the old memory
+value.
 
-On Fri, May 8, 2026 at 8:23=E2=80=AFPM Peter Maydell <peter.maydell@linaro.=
-org> wrote:
->
-> On Fri, 8 May 2026 at 17:00, Pierrick Bouvier
-> <pierrick.bouvier@oss.qualcomm.com> wrote:
-> >
-> > On 5/8/2026 8:24 AM, Peter Maydell wrote:
-> > > We have a set of binaries that we call "tools": they're built based o=
-n
-> > > the --enable-tools/--disable-tools configure setting, they're
-> > > documented in docs/tools, and they're standalone executables of one
-> > > form or another.
-> > >
-> > > Currently the sources for these are a bit scattered: many still in th=
-e
-> > > top level source directory, some in contrib, one or two actually in
-> > > the tools directory.
-> > >
-> > > As an initial attempt at cleanup, this patchset moves the sources for
-> > > qemu-bridge-helper, qemu-edid, qemu-img, qemu-io, qemu-nbd,
-> > > qemu-keymap, qemu-vmsr-helper and elf2dmp into the tools/ directory.
-> > >
-> > > The patchseries also moves the ebfp skeleton sources from tools/ebpf/
-> > > to ebpf/bpf-src/, because this isn't a tool by the above definition.
-> > >
-> > > As per my thread from a while back, I would ultimately like us to
-> > > clean up contrib/:
-> > > https://lore.kernel.org/qemu-devel/CAFEAcA_5HvGriDsWnb1ALuA_dgG320eKv=
-7yuM2kThv=3DrfOSZQA@mail.gmail.com/
-> > > But parts of that clearly need more discussion. So this is just doing
-> > > some parts that I hope are not controversial.
-> > >
-> > > Annoyingly, meson doesn't seem to provide any way for a subdirectory
-> > > meson.build to say "the foo.c in this subdir builds into a foo
-> > > executable that lives at the top level of the builddir". And we have =
-a
-> > > lot of test harness stuff plus user muscle memory that assumes that
-> > > qemu-img and qemu-io live there. So the build runes for these tools
-> > > have to stay in the top level meson.build (and tools/meson.build
-> > > remains an empty file). The exception is that contrib/elf2dmp/elf2dmp
-> > > is now tools/elf2dmp/elf2dmp, but I think the set of people who were
-> > > running that from the build directory will be small.
-> > >
-> >
-> > It's a deliberate design more than an annoyance. It pushes users to mak=
-e
-> > things explicit at top level, which is good to understand what is built
-> > and how, and hide details in subdirs in variables. QEMU's top level
-> > meson.build is over complex, so it may appear more as a burden than a
-> > benefit though.
->
-> Personally I think if the build system doesn't let you do a
-> pretty normal and reasonable thing that's annoying. Meson
-> annoys me because it has a tendency to be over-opinionated.
->
+Route it through the common SAA/SAAD translator so the MemOp selects the
+aligned doubleword transaction size.
 
-I have to agree that meson is sometimes lacking. In this case, it
-would be convenient to have a link created at build time. But you have
-to resort to fairly annoying custom_target python code today. In the
-meantime, there is also fs.copyfile() that could work (although it's
-also somewhat limited or buggy). For later, we could try adding
-fs.symlink() perhaps. Paolo might have better chances than me getting
-it accepted ;)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+---
+Changes v2 -> v3:
+  - Split SAAD out of the combined Octeon arithmetic and memory
+    instruction patch.  (requested by Richard Henderson)
 
---=20
-Marc-Andr=C3=A9 Lureau
+Changes v3 -> v4:
+  - Note that SAAD shares the Octeon+ gated SAA translator path.
+
+Changes v4 -> v5:
+  - Drop the Octeon+ gated wording/path and keep SAAD under the existing
+    Octeon feature bucket.
+---
+ target/mips/tcg/octeon.decode      | 1 +
+ target/mips/tcg/octeon_translate.c | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
+index d6b241de42..d77717cd50 100644
+--- a/target/mips/tcg/octeon.decode
++++ b/target/mips/tcg/octeon.decode
+@@ -47,6 +47,7 @@ SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
+ &saa         base rt
+ @saa         ...... base:5 rt:5 ................ &saa
+ SAA          011100 ..... ..... 00000 00000 011000 @saa
++SAAD         011100 ..... ..... 00000 00000 011001 @saa
+ 
+ &lx          base index rd
+ @lx          ...... base:5 index:5 rd:5 ...... ..... &lx
+diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
+index f5f09464ce..dc16a5935e 100644
+--- a/target/mips/tcg/octeon_translate.c
++++ b/target/mips/tcg/octeon_translate.c
+@@ -175,6 +175,7 @@ static bool trans_saa(DisasContext *ctx, arg_saa *a, MemOp mop)
+ }
+ 
+ TRANS(SAA,  trans_saa, MO_UL);
++TRANS(SAAD, trans_saa, MO_UQ);
+ TRANS(LBX,  trans_lx, MO_SB);
+ TRANS(LBUX, trans_lx, MO_UB);
+ TRANS(LHX,  trans_lx, MO_SW);
+
+-- 
+2.54.0
+
 
