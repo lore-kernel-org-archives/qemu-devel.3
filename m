@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84D59CD37B7
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 20:41:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C62CECD37B5
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 20:41:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMAwn-00055R-Tu; Sun, 10 May 2026 16:40:21 -0400
+	id 1wMAwe-00051i-W2; Sun, 10 May 2026 16:40:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wMAwm-00054a-N3
- for qemu-devel@nongnu.org; Sun, 10 May 2026 16:40:20 -0400
-Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
+ id 1wMAwc-000508-SN
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 16:40:10 -0400
+Received: from mail-oi1-x233.google.com ([2607:f8b0:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wMAwl-00040I-1Q
- for qemu-devel@nongnu.org; Sun, 10 May 2026 16:40:20 -0400
-Received: by mail-oa1-x33.google.com with SMTP id
- 586e51a60fabf-4043b27ddeaso2198134fac.1
- for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:40:18 -0700 (PDT)
+ id 1wMAwb-0003xZ-Ah
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 16:40:10 -0400
+Received: by mail-oi1-x233.google.com with SMTP id
+ 5614622812f47-479ef2b78f3so3130945b6e.2
+ for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:40:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778445618; x=1779050418; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778445608; x=1779050408; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=4IK85PPMBI2youTGdlMjIY8YEP9i5/O2uDLfdpbX004=;
- b=X9XsbO/s7h539N6Wu03sbinDLatTyOmUQOd8sP1fZl8U1X904+IaNBMopoNmXrtXir
- ANoodSUKYQmP7qMuVUWXdDopUZ3fgKNhRce/CaVn3OZd8jyv4ex4//gdpWzGP4h0f399
- wa2TtgcSNaDdcFIPXqlKwO/KNtx5kHXvaBr2FcCJThwjICHRKGqaFVVYowM4pNkacnrY
- 0wyngkqopdz9JRNkUQqGWDOVb/+8eRfTDaGZbuxsScoY9tKo8OWNk+HSTAoXU+MgIkna
- 3VkuYE6TfhOEt0d9wn8Wf/agTAeSl4AvW5fuZoSl4UB/yD5uf2rUsuqJWQJIHobK3g5r
- kcCg==
+ :reply-to; bh=npONxRmCOObiUeLQ9Wvq5fljbBHTluS2k89tWvyshpk=;
+ b=SuVtNm0J1+sil1gLeh1V55la5p7pTkyl5feW6YebCXc5KnSrM/0q96SUh1gvpEzQpP
+ PxaqTKbQyp6rx9H5NhYhcryyuloeJjB7fI5odJmJW2677QrLD3wmS+VmEvWtp03blMfB
+ FboSGNLT/hNcDceJW5AiO+vv4ejv/tgJmXQZF933OLSthiJh2S1B7pXJaRk0Vs/Jub3f
+ TNpnmSwEqW6N7Gw1Bgg7qaShnPZnLue7cQYq3q4hq2IDi8bl2Txlk9mI/Ffn6QKkUfDh
+ sXDVNbGp0s6BSTERsk0to8gxUkH3LSq41Xv7zmb+XnO0WNGYPtFv3HBWlvKCUtOzgp5Y
+ r7xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778445618; x=1779050418;
+ d=1e100.net; s=20251104; t=1778445608; x=1779050408;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=4IK85PPMBI2youTGdlMjIY8YEP9i5/O2uDLfdpbX004=;
- b=PzQuruvS8dIQf7Hg6VjLjQQe6JhSGsKVXt8nUOw8cS7Lee6pkTQts1qCKAt6v/SzZH
- NoJdIGNfPJFzbJHyXCFZbh8bS0BHcxEuvR6dSbEM+150uh6Vih18iWUl3fEV87FR7gf8
- wHoZbd8ZAwe59xtlxlBGj10Iau5TyNxo8wHQZy4xKtZDKtC8HJP9VM8NIpNSVfEVPAv6
- NfGilG7HCcf9m5/7yazCdmsA2BRQmuxLGhHnPY65jlyqSU1KQ6eXYm28UfMFrjDlwRsC
- 09DlWwRzr4tjNl3Y/RXFR+IDpqJ3Jt0omhSIeBTEssNPMVrd3flW2NC+1OIucQ18/2io
- 42YQ==
-X-Gm-Message-State: AOJu0Yyx3HeQ5fmCNxDFNgTyApYiUOdGOSvjXI7U5cUmo8cO1sC8Pwx/
- 8mVNcmrkpmkHfxkcaAsCod/t8r3g69HmUzsIXpSOlePgv/T+OXznMmiW
-X-Gm-Gg: Acq92OFJlV61ju3YY/aB94HV/UduqZuu91cCjvtRlnAPyXpMqpuYG3zvhI7f6PWygwj
- fw7dXeLbBxDWdkfX8SbwDu7+5zftsvpIMOuq9FL9o42cwovB/xWZlm2/8/trs2HdyT9n6m2kNdB
- zgnRcc0U+RDyAQiSZoQ6yrZr70C9LgJNds5dFoC+6Hx9466ft/ShxpbvTgTOH/jZPlnv05XaXGZ
- R7bIFRIB/N6rumArBBVv7SJYUJtxLcLI8mfw+5Ym8sJUWylr0RfBHzy1IqcBCPNzbs3pScpR5+s
- x1FQHtQ1RMiTR+H2VcoPuc+Ms1SDTJIZ45pKIntxJ1Y8L4h2WR6Hz2fKZqFbaC3xkC5T+JLEdAw
- ssmD9cOiXc0c3LkxFLi9bD8NiVUY8GpeuKiax24EQb3Ehpx9XeleK9eCTyZxiS6Vb81raN87tDp
- xKpZBfSx8XPGvixX7ZmWuovi2/1GMenewto5ZhGHJVSG28ujD7I0p8VPxMNd/UGIbJxGWHiK5S8
- pY03Vl4dGN8CGzPW8CuP6B1zmmp20lEKfbODOCx5WM=
-X-Received: by 2002:a05:6808:3a13:b0:482:6b96:5ad0 with SMTP id
- 5614622812f47-4826b967455mr2081193b6e.26.1778445617734; 
- Sun, 10 May 2026 13:40:17 -0700 (PDT)
+ bh=npONxRmCOObiUeLQ9Wvq5fljbBHTluS2k89tWvyshpk=;
+ b=XWBwbt1BiUWvfT8NuWKjKi9P9KmbbjbFR2ava/y5metw98ZvFodVaTKZxZJPr2Y0V3
+ n+i1sempKQGvfL4pplsj+9Djki2U8cr3CR21Gbeadz843+eAdmg0rwBFXotvMyhGrG1Y
+ Li3oBSluBDnvmEeUUklEiCnUtMpVypi8fbxJxLc/1C2j3dmDMtyVWe5Rd7K0ig45+jZJ
+ syfgdKfyzvRXUDZpqpyHGIyynuH7fOja0+gHE8ICgmK6EIKUQBhHdCWP9GqVLjRWJwdC
+ /25+rQwaOh+cDosVBFBZnPvLAzewM/riRDG7qeAw+Otzz4sJ+D8h/Z1d0syuk3cbYXCy
+ PvTw==
+X-Gm-Message-State: AOJu0YxmrKTEWvLhit7dgD+K/AzuA1+eRubt6D8DeEAtq0hZU1hk+kJa
+ wzLOvX1J+S3nfpKjXkPEE6CW2RuAappPMbBzT+SJxwcYfRtPul4U1LdB
+X-Gm-Gg: Acq92OFjCjBfzwkFC2N/pw0fLKUyU+koWzRvG7O36t1GQjhEu8wCUztf7D/ZNQMtWKJ
+ sV+vh4OgzfOkpb9euTvgjhDaBwoBwn31+VUIYc6uTs0awTvVIB1V0khJeo668kUm/LIXRjlWBZv
+ 9z0M2JiQ4WXERSy5YC1R4zorh4sAcewfYiefXg5q54tQWmfjs7zNlryzC7LBwkusIjXygTY01lE
+ +3M3btv5YS5DYvF0tUNCLt/JQlyl2qoT7nuNq+cLkPs0kdZjeWJxjhZWTOjL2eUywfCcntQSAqb
+ 0c7ZDGDc4SR3sENNjYvOsrMxCvMcOrMaUIjCzmMKu3sHIxzXBKOdkHkBm/D9zn+mVXCXWLIuxxH
+ rq2woJDLDlM+Xt/feYht+BeZ2/BtGPrHhDYZzG0Lrh+fpTZANnS9616ft2uj4SeeyL9w9Cna9aI
+ moQLPp1MuYeoFkoNg9Q5Ozn9VmSNxl8qyr7RNFanWWunG2R/0oA1ou6OltscNR89C7vlkSc70L5
+ QlJk045yw+voIWq088y3FBW39DD/KQCy/pVaUOEUw0=
+X-Received: by 2002:a05:6808:1807:b0:47a:8c2:a54e with SMTP id
+ 5614622812f47-4807fda52c5mr6709461b6e.34.1778445607772; 
+ Sun, 10 May 2026 13:40:07 -0700 (PDT)
 Received: from MacBook-Pro.local ([209.245.15.183])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-47c76935637sm18908207b6e.12.2026.05.10.13.40.16
+ 5614622812f47-47c76935637sm18908207b6e.12.2026.05.10.13.40.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 10 May 2026 13:40:17 -0700 (PDT)
+ Sun, 10 May 2026 13:40:07 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Sun, 10 May 2026 14:39:44 -0600
-Subject: [PATCH v5 14/32] target/mips: add Octeon ZCBT instruction
+Date: Sun, 10 May 2026 14:39:36 -0600
+Subject: [PATCH v5 06/32] target/mips: drop Octeon zero-register fast paths
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260510-mips-octeon-missing-insns-v2-v5-14-d5d2668d15ab@gmail.com>
+Message-Id: <20260510-mips-octeon-missing-insns-v2-v5-6-d5d2668d15ab@gmail.com>
 References: <20260510-mips-octeon-missing-insns-v2-v5-0-d5d2668d15ab@gmail.com>
 In-Reply-To: <20260510-mips-octeon-missing-insns-v2-v5-0-d5d2668d15ab@gmail.com>
 To: qemu-devel@nongnu.org
@@ -84,8 +84,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Richard Henderson <richard.henderson@linaro.org>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2001:4860:4864:20::33;
- envelope-from=james.hilliard1@gmail.com; helo=mail-oa1-x33.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::233;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x233.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -109,38 +109,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ZCBT has the same user-mode memory effect as ZCB for QEMU's purposes.
+EXTS, CINS, and POP route their destination writes through
+gen_store_gpr(), which already discards writes to $zero. Remove the
+remaining translator fast paths for destination $zero so these Octeon
+instructions follow the same shape as BADDU/DMUL and the generic MIPS
+translator helpers.
 
-Reuse the ZCB translator so both cache-block-zero forms clear the
-containing 128-byte line.
-
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
 Changes v2 -> v3:
-  - Split ZCBT out of the combined Octeon arithmetic and memory
-    instruction patch.  (requested by Richard Henderson)
-
-Changes v4 -> v5:
-  - Fold ZCBT into the ZCB decodetree entry with a selector comment
-    instead of adding a separate translator thunk.  (suggested by Richard
+  - Remove the remaining destination $zero fast paths and let
+    gen_store_gpr() discard writes to $zero.  (suggested by Richard
     Henderson)
 ---
- target/mips/tcg/octeon.decode | 1 +
- 1 file changed, 1 insertion(+)
+ target/mips/tcg/octeon_translate.c | 15 ---------------
+ 1 file changed, 15 deletions(-)
 
-diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index d8a1bfce77..5377f7b3ef 100644
---- a/target/mips/tcg/octeon.decode
-+++ b/target/mips/tcg/octeon.decode
-@@ -51,6 +51,7 @@ SAAD         011100 ..... ..... 00000 00000 011001 @saa
+diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
+index e69dd56c8e..1893bf359f 100644
+--- a/target/mips/tcg/octeon_translate.c
++++ b/target/mips/tcg/octeon_translate.c
+@@ -74,11 +74,6 @@ static bool trans_EXTS(DisasContext *ctx, arg_EXTS *a)
+ {
+     TCGv_i64 t0;
  
- &zcb         base
- ZCB          011100 base:5 00000 00000 11100 011111 &zcb
-+ZCB          011100 base:5 00000 00000 11101 011111 &zcb  # ZCBT
+-    if (a->rt == 0) {
+-        /* nop */
+-        return true;
+-    }
+-
+     t0 = tcg_temp_new_i64();
+     gen_load_gpr(t0, a->rs);
+     tcg_gen_sextract_i64(t0, t0, a->p, a->lenm1 + 1);
+@@ -90,11 +85,6 @@ static bool trans_CINS(DisasContext *ctx, arg_CINS *a)
+ {
+     TCGv_i64 t0;
  
- &lx          base index rd
- @lx          ...... base:5 index:5 rd:5 ...... ..... &lx
+-    if (a->rt == 0) {
+-        /* nop */
+-        return true;
+-    }
+-
+     t0 = tcg_temp_new_i64();
+     gen_load_gpr(t0, a->rs);
+     tcg_gen_deposit_z_i64(t0, t0, a->p, a->lenm1 + 1);
+@@ -106,11 +96,6 @@ static bool trans_POP(DisasContext *ctx, arg_POP *a)
+ {
+     TCGv_i64 t0;
+ 
+-    if (a->rd == 0) {
+-        /* nop */
+-        return true;
+-    }
+-
+     t0 = tcg_temp_new_i64();
+     gen_load_gpr(t0, a->rs);
+     if (!a->dw) {
 
 -- 
 2.54.0
