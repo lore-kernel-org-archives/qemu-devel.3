@@ -4,146 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF632CD3427
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 20:09:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BF7CCD3427
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 20:20:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMASQ-0000ea-JO; Sun, 10 May 2026 16:08:58 -0400
+	id 1wMAcU-0001y8-Nl; Sun, 10 May 2026 16:19:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wMASP-0000eS-Lh
- for qemu-devel@nongnu.org; Sun, 10 May 2026 16:08:57 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wMAcT-0001xx-FF
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 16:19:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wMASN-0005PD-MN
- for qemu-devel@nongnu.org; Sun, 10 May 2026 16:08:57 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wMAcR-0007TK-Gb
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 16:19:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778443733;
+ s=mimecast20190719; t=1778444357;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=vUDWc0D7Mt4y/EpGEaDuptObLQRjGXQLFARoVlMuJYk=;
- b=dQyzongG7nGNrPLzdkgixV4MTS0TUineBK4G5N3bARdzHr3d+wmVhU9Tp92Id4PTmCfCkf
- cLqH+X22bomrJEHLvbSHnaRin9YV3k9Y2WYjogsA5B+mTO6y2V2TXGjaOMeiLUNfIjzZry
- czUJSMzDQOK8I2pupDMJK63eTgGPriI=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=EdAlnFz40RGJfP7V6Yaew8z+iOTkh/EpHNqN9bFSCaU=;
+ b=AUJXLQgjgQ9yI7tjSdrF8ChxqylpqXiufYLcbcIdnuzo419RXdJk7v91IQTxY8mS7rWP6g
+ 2MPcO4XFRu7eqRLlYG8gw1pL6+OKLdwg1h9Py5EkwFig/5CCUXAZ39bzEDbHSnl3ZjgX34
+ Ia6WhLIJtRB3fP4RaOu14/uJ24v7WRU=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-311-teS-taSyNHe6u5qlFI8h9A-1; Sun, 10 May 2026 16:08:52 -0400
-X-MC-Unique: teS-taSyNHe6u5qlFI8h9A-1
-X-Mimecast-MFC-AGG-ID: teS-taSyNHe6u5qlFI8h9A_1778443731
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-43d7d0947aeso2227700f8f.3
- for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:08:52 -0700 (PDT)
+ us-mta-375-9giQpZbxM_GoP9CbXYggqA-1; Sun, 10 May 2026 16:19:16 -0400
+X-MC-Unique: 9giQpZbxM_GoP9CbXYggqA-1
+X-Mimecast-MFC-AGG-ID: 9giQpZbxM_GoP9CbXYggqA_1778444355
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-48d127eb013so20576665e9.1
+ for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:19:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778443731; x=1779048531; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=vUDWc0D7Mt4y/EpGEaDuptObLQRjGXQLFARoVlMuJYk=;
- b=pF+eok2siHQK1cA6YXfX6My5Ten4b3pECJTQpGw6UMjNzHAnmAOrAzRxwsfCr/+zVJ
- vQnuKveth2Dr0oNMoTF/UrlJQL/yCRvzxPawDWJnqDWinjxgOaWUfScmiHloilX71b1U
- 7rufqOtVM0Q/+wSWyV37abZKIYd9c5EQyAf9bplrwQrd6Kz7ud1mEegNjJFxjaWMOT7N
- Fsq48Mcs2bmPXiG7OdeeoBhejzAA4bB8UN1FiJlnEab8YHFo9BxNO2MgpPkzb/XULESK
- ZaX3LLI+gs4tWd0t64xDu16sqC7KIqEjzEIkHdHLLecWHQiuQciod37XOUr6ItnrPI3f
- BzFw==
+ d=redhat.com; s=google; t=1778444355; x=1779049155; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=EdAlnFz40RGJfP7V6Yaew8z+iOTkh/EpHNqN9bFSCaU=;
+ b=nkXBlNJWiKh913Li/QB35i+zM7I57rlt6wEuUP0cdy48y0gea1egP0PhvCAVi16YU8
+ S129fpMMwfsLAZzYnajtMeP5n3jkknapyQta60UuphCjvCksxLm/BPeKDABkkyTozX0k
+ ODYREqby0CcxED40h1S+IA85PndquvVVc73sqKpWSB7mPYJDsxbmA/ENrThgnWarUXyZ
+ HfPDKq0CMWV2LFBidex2IBI0XYVxsyBym1rrT/2Hgz//8PgujpNgPAL0tyJ5htwbijLx
+ H+FXd3Sp3j4WLy42EaLuQoSUDfetvc9cWNY00q4iP0V9fXYIJDJ1RJTohBpZNA4/5I9R
+ gImg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778443731; x=1779048531;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vUDWc0D7Mt4y/EpGEaDuptObLQRjGXQLFARoVlMuJYk=;
- b=F0arBQiW4GP2MuY2k9SBBciI9yiMqRZNdHnrI0OPnfl18iiqdjx8YMqRJiJZK6M0KF
- DGrEMRiN9MYxurbUAbFzUlL2+SG8T0B8g4GaAmoRtm99AVPXxGg7PcL+Mwv+jMV9R9y/
- SHgsSkBjOa10APAkdGDpOdQlz2RriSNe0Hg+M3K1WU5di2NEyUBpjnau46CzvRDFdT8V
- Ddj+RffVggOr9AwYjEnS/1eH7Ew0Fi8c2yzTTCokKshLmZN0zNsrJC2xECkzqBDiNSTv
- DXlJMSyn2bldfF6Ifpt753WB9xIyv98n3eu0VJgi8JcFrjRQI/usRzBKtZR8b8rOXvE8
- HcCw==
-X-Gm-Message-State: AOJu0YwzHFW78BzOD5Z71XW8jzV2kqtTbtkDbARadpdV29BbZ7j39BP1
- WVD/YfCxWwpQD2Ldz0M0JjypU1kjOhzQWalHU9X0RBbZUzaF5v0aBcDwrmrAgfZ88tV87fHbwfl
- yDuFOVVw2ejQXwnBjxLvdiks8t//K5nDm+m8IEJOOKje2VfV6A1sJR5bz
-X-Gm-Gg: Acq92OHPQDCJC0aJmtcILAuEAym5L1DmrHnutjqihKDkCUZUcrsTKNBv0cUKdBHfuWc
- Rd7YgRAPxeHfO45788BFCBt6iZ2rEatayoejyFSdf4PadWT5BYSIGsX7rDT4XCO/SPY+bPeHGa4
- 5EfJtM9X3XKOeyUK6CKMyEYucnKiw19Lm6cCL8daF7ADIdCMH9b9BXKw3tpcPHFfWPU9PV6f5Ob
- ckVpxxkfhuLpoFx20I3b3o5XYQ+YT40pc0Izq37qxoMo69K8HT4b5CSYWn5bCoL46RDVHs4RpdS
- uRbfFJSUbNDCUIWTCbScY3S3ouZCT8pgcpyJnSBhzVWCL6+vh2o9mgobFKC55y1EiQ0LMFNkpgO
- ZTqaJrZhPJVHRDanjw+q0cvcDBoZza+yelu1qbHQr8GMEUnJ/9TJsccSyoLMA
-X-Received: by 2002:a05:6000:2dc6:b0:439:c661:3245 with SMTP id
- ffacd0b85a97d-4515cc31e43mr34149307f8f.34.1778443731002; 
- Sun, 10 May 2026 13:08:51 -0700 (PDT)
-X-Received: by 2002:a05:6000:2dc6:b0:439:c661:3245 with SMTP id
- ffacd0b85a97d-4515cc31e43mr34149283f8f.34.1778443730519; 
- Sun, 10 May 2026 13:08:50 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ d=1e100.net; s=20251104; t=1778444355; x=1779049155;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=EdAlnFz40RGJfP7V6Yaew8z+iOTkh/EpHNqN9bFSCaU=;
+ b=E/E8iWzgn7azMTNnGyo8rDz1Jsknaee62UN7bSGn7BbH47Qny6/WIeNA55SOQ8ND/G
+ yOYc+oIqrrhM3hjM+0yvJvddZoLitrI5ljXqqSWaNCdQ5eVG2phzDqQ0sNIJAKIeaaa5
+ DItIHKNuwxQVYGKi4E2YbC7QOLG9uDCRqJH1SmWU9Coz+sTYy+icMTQh18pDHKi3lrjT
+ BBBMT1hT+7dra/4onYlJc3OCSi6HfPRCKevj0Nm7FawV4TNYVxu7qwtPajt9dYy2sKZ+
+ RmXBD5KRAuT1BsSiu2z/v0NTyCFMhaZZETNuoHnHtpHDo1JgIwyqKkLk26eKMzLqbS2D
+ ZUtg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8e9+R5iIM3xywrn7LXGuB545/BO9yvv6wH6CQCFGmzKyMXAZlnwaOJ5aV9iWW8EwlckG5HsgAshD65@nongnu.org
+X-Gm-Message-State: AOJu0YwHr4r5rzGcNcxg5cqoswrNG9Ishsinz0gqTMpYZc1gorPy8alA
+ +K8Uikv5sGcRGTedx6V4WIOs3+gUy/RXnkdnsK1N2AvJz0WPhJv/iZY/CrUuiSdDMzBtcaWU+3i
+ U6oOLUoyU2hsQDk5iJREWp4sTwmIDYQVnyUbl6RyfM13QBeMozvi4s/Os
+X-Gm-Gg: Acq92OFmOX2221pGyF6ZcEjg+qeGkf+cQYa3M/jNzsx9YL4IbvrCDeAZj81S4nN3oYc
+ DzP4F8/baFAzwnzbY8SVVRQr8AV1o7ocgqTxWCEg2WG4wSOwrCNtjefYP+pswEa6VD1JXo1oL6y
+ cKS4O1iGrKiSq92uDaxMHsCXO4tOWlVGBnRSGjPAdsRoPmcqGF4V//JSw2pMH9afCEVT9vzMs2n
+ CH72z/BH9y84yYTNXLo1zf9AQWOMtEDJx/eI3Xvc8FI5Oqsr8zkpI3sYEaxl/UxsJrCDihjJh8g
+ cYXq8I9i5G/4bGCLLMxYLnwdYpsgN8AVykrZYJLlw7xELLIn2Cf8KO2E2IHO4NsPgwm3kNakoV9
+ 7lgxYbXj8JGj9uZ88kSjjCQV0ozCvmt/yuxvbqLdH
+X-Received: by 2002:a05:600c:1e0f:b0:48e:51f5:2764 with SMTP id
+ 5b1f17b1804b1-48e676c0353mr197016695e9.27.1778444354661; 
+ Sun, 10 May 2026 13:19:14 -0700 (PDT)
+X-Received: by 2002:a05:600c:1e0f:b0:48e:51f5:2764 with SMTP id
+ 5b1f17b1804b1-48e676c0353mr197016355e9.27.1778444354217; 
+ Sun, 10 May 2026 13:19:14 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-48-7.inter.net.il. [80.230.48.7])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4548e4bbebdsm22175093f8f.5.2026.05.10.13.08.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 10 May 2026 13:08:50 -0700 (PDT)
-Message-ID: <c87311a3-b214-4705-8ed3-7386aea1056e@redhat.com>
-Date: Sun, 10 May 2026 22:08:49 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] linux-headers: Update to Linux v7.1-rc1
-To: Song Gao <gaosong@loongson.cn>, maobibo@loongson.cn
-Cc: qemu-devel@nongnu.org, lixianglai@loongson.cn, chenhuacai@loongson.cn,
- Avihai Horon <avihaih@nvidia.com>, Thomas Huth <thuth@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ 5b1f17b1804b1-48e7040a8f1sm127775815e9.11.2026.05.10.13.19.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 10 May 2026 13:19:13 -0700 (PDT)
+Date: Sun, 10 May 2026 16:19:10 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
+Cc: Song Gao <gaosong@loongson.cn>, maobibo@loongson.cn,
+ qemu-devel@nongnu.org, lixianglai@loongson.cn,
+ chenhuacai@loongson.cn, Avihai Horon <avihaih@nvidia.com>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, Cornelia Huck <cohuck@redhat.com>
+Subject: Re: [PATCH v2 2/4] linux-headers: Update to Linux v7.1-rc1
+Message-ID: <20260510161352-mutt-send-email-mst@kernel.org>
 References: <20260507092358.2479135-1-gaosong@loongson.cn>
  <20260507092358.2479135-3-gaosong@loongson.cn>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260507092358.2479135-3-gaosong@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ <c87311a3-b214-4705-8ed3-7386aea1056e@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <c87311a3-b214-4705-8ed3-7386aea1056e@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -167,40 +125,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/7/26 11:23, Song Gao wrote:
-> diff --git a/include/standard-headers/linux/virtio_ring.h b/include/standard-headers/linux/virtio_ring.h
-> index 22f6eb8ca7..7baf1968a3 100644
-> --- a/include/standard-headers/linux/virtio_ring.h
-> +++ b/include/standard-headers/linux/virtio_ring.h
-> @@ -31,7 +31,6 @@
->    * SUCH DAMAGE.
->    *
->    * Copyright Rusty Russell IBM Corporation 2007. */
-> -#include <stdint.h>
->   #include "standard-headers/linux/types.h"
->   #include "standard-headers/linux/virtio_types.h"
->   
-> @@ -200,7 +199,7 @@ static inline void vring_init(struct vring *vr, unsigned int num, void *p,
->   	vr->num = num;
->   	vr->desc = p;
->   	vr->avail = (struct vring_avail *)((char *)p + num * sizeof(struct vring_desc));
-> -	vr->used = (void *)(((uintptr_t)&vr->avail->ring[num] + sizeof(__virtio16)
-> +	vr->used = (void *)(((unsigned long)&vr->avail->ring[num] + sizeof(__virtio16)
->   		+ align-1) & ~(align - 1));
->   }
->   
+On Sun, May 10, 2026 at 10:08:49PM +0200, Cédric Le Goater wrote:
+> On 5/7/26 11:23, Song Gao wrote:
+> > diff --git a/include/standard-headers/linux/virtio_ring.h b/include/standard-headers/linux/virtio_ring.h
+> > index 22f6eb8ca7..7baf1968a3 100644
+> > --- a/include/standard-headers/linux/virtio_ring.h
+> > +++ b/include/standard-headers/linux/virtio_ring.h
+> > @@ -31,7 +31,6 @@
+> >    * SUCH DAMAGE.
+> >    *
+> >    * Copyright Rusty Russell IBM Corporation 2007. */
+> > -#include <stdint.h>
+> >   #include "standard-headers/linux/types.h"
+> >   #include "standard-headers/linux/virtio_types.h"
+> > @@ -200,7 +199,7 @@ static inline void vring_init(struct vring *vr, unsigned int num, void *p,
+> >   	vr->num = num;
+> >   	vr->desc = p;
+> >   	vr->avail = (struct vring_avail *)((char *)p + num * sizeof(struct vring_desc));
+> > -	vr->used = (void *)(((uintptr_t)&vr->avail->ring[num] + sizeof(__virtio16)
+> > +	vr->used = (void *)(((unsigned long)&vr->avail->ring[num] + sizeof(__virtio16)
+> >   		+ align-1) & ~(align - 1));
+> >   }
+> 
+> The kernel commit 3c4629b68dbe ("virtio: uapi: avoid usage of
+> libc types") changed this virtio header and this breaks the
+> build on Windows :
+> 
+>   https://gitlab.com/legoater/qemu/-/jobs/14297040230
+> 
+> A fix could be to reintroduce 'uintptr_t' (available through
+> osdep.h) by modifying the linux headers update script. Ideas ?
+> 
+> Thanks,
+> 
+> C.
 
-The kernel commit 3c4629b68dbe ("virtio: uapi: avoid usage of
-libc types") changed this virtio header and this breaks the
-build on Windows :
+Yea sorry ( Just add
+#define VIRTIO_RING_NO_LEGACY
+somewhere.
 
-   https://gitlab.com/legoater/qemu/-/jobs/14297040230
 
-A fix could be to reintroduce 'uintptr_t' (available through
-osdep.h) by modifying the linux headers update script. Ideas ?
-
-Thanks,
-
-C.
+-- 
+MST
 
 
