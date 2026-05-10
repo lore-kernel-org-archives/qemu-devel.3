@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D96CCD37B2
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 20:40:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C750CD3427
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 20:41:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMAwh-00052n-VM; Sun, 10 May 2026 16:40:15 -0400
+	id 1wMAwg-000529-FN; Sun, 10 May 2026 16:40:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wMAwg-000528-92
- for qemu-devel@nongnu.org; Sun, 10 May 2026 16:40:14 -0400
-Received: from mail-oi1-x236.google.com ([2607:f8b0:4864:20::236])
+ id 1wMAwd-00050o-Vn
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 16:40:12 -0400
+Received: from mail-oi1-x234.google.com ([2607:f8b0:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wMAwe-0003yh-Nz
- for qemu-devel@nongnu.org; Sun, 10 May 2026 16:40:13 -0400
-Received: by mail-oi1-x236.google.com with SMTP id
- 5614622812f47-47c941f6bdcso2424194b6e.3
- for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:40:12 -0700 (PDT)
+ id 1wMAwc-0003xr-9p
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 16:40:11 -0400
+Received: by mail-oi1-x234.google.com with SMTP id
+ 5614622812f47-479d593a0c3so3146376b6e.0
+ for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:40:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778445611; x=1779050411; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778445609; x=1779050409; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=PEu4bxdZzBvm/FcrMu/o48/BBVs1bzBzMRb6ggGLE68=;
- b=l7CopqDtx8zQD+WZjsS9ZdNQdxnA11iLSkB1p6fOiGXoGIXVazogqESGF/1qL86jpV
- +YdNpY9maAUUZj/andXfbNwOTHmu64M3nR7GU6Vcwm+vje/iFq6E/AuuhyEfhWtZ6XqU
- SvJ4c4jTexZ9reR9ukmL/zmkxWT75CcrrDjQZOnACLYHr/wMhniC5wz8lDritgOKRJPK
- 9AkBQXzKQNF5Op+Ttb5n34MO8DwnR8hJ4jQoyPxpvY3S59acddZo0SER84kFbZz9Dh14
- A50e1BQVNo3a8Ti6q3tN19uOJR96A0Qk4vu8G8EyZ9VtjsHe2pRaFSnKgQeZzx5/pdjE
- eDZg==
+ :reply-to; bh=kXG9bIpf2vehciJOosSGn1ALlxlG293W6jH4Q8Jdd3k=;
+ b=jgSoo1bJTeMpZLJtPCidNhgh16UGD1RJUuxU9Mq4NitSKJJdLE4LF0uklXbXgpwuMg
+ GKDWALmzzoacjmcbRzGRF7XzvfhBUEp/IwIwXpU/qnBFTMQ6r6w2OOqyElhrBsPWO5Qf
+ vTWsibzWWBnbcGDcOneXHVm/bfjURdBwJmh7t65xWaXlmqlNXpFjX+lL09E++YQXkGUB
+ cArUn2Xvta5i6f9m2GZblyJvq2zyNTbmp6X0qtZaWwes2KgRTr1UwoPfy9aClA+VjwTJ
+ MwxoGoO1hZbD2X8urP+SCZkAJ99fI0LgVb5sCmG/uIjAZKe/Wd2U836TDQmtcZFffyU5
+ lhcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778445611; x=1779050411;
+ d=1e100.net; s=20251104; t=1778445609; x=1779050409;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=PEu4bxdZzBvm/FcrMu/o48/BBVs1bzBzMRb6ggGLE68=;
- b=kRykoMhYqL5LOyB64r1v9pRwpHEBpj8HZ+co7fmXVNpx4UAr3lD2l3zkk+op2IQMnm
- juxeTU4HmnmcX7YwaXk75CqDCPElEgipaUMj2Zn2QPFvih/VU33JeD8oire4Q6TTtA1j
- TfVg48vul/h+bGOhHn8AqPl9mBzDivZaZPAifvySBPgaQfGX8BRRROqyS9f7pQQyzzc5
- 0Rz/Im1YjAUg4V2h6EuF634vKTHxlcm7CrAKan1CHGOCBHpa6QL3FOaRwQCD7NTWx+aI
- HOLbmLRsMbcIDR5ibDb3JDvL22FhqqYrkyZrw2aAyb2hvW7ngZMmIDrZD9N4gzzP0Hvo
- xfxg==
-X-Gm-Message-State: AOJu0Yy4yewBah5jjXbq1nBeSsy/paAH7AIqZKthQEk7KZ3KzJgEI5eU
- 3ce0JAXr3/vMuR/QGXazBdp8+GbGHAbGNK9zVlqR3Ddh2OZUP/7SxZSW
-X-Gm-Gg: Acq92OGrU3YAwIeinLab9wCoSZRkmKCwHGepoTrnRFy+gMoosF4Vb4LdPgTcoV3U/FP
- yztN3doLXS1Z6Yu6JGrNJ90DJWOzjLKQ+wgHck6DwLGSUywkSpXQ0WfxUdZrIXtr078E+q+cQ8e
- LGChjbadO3Jr9aGoAzMs+TDqB6oMsbL17DEc6/xO9SsKkntFdjDjbWkmTEaPh00pb/1PxTbWKuV
- RNSLdXYl3RCUgPxcVOyqAVXunRwIEzEGkCpaGK+VBB4rk4UU405eJCX+dK/JzxZfkZWmrBLU3hC
- wTcs/NTkOEWcAx9e28QTLWPkxkZhr4jzS6dfxrMB+YOTUW3pYH6Myf2QhjIN0ucW/Qb3qyYJ9Lm
- hqQppBe9eLSPGbVx6YZAS/e/6FnFtU1d0DCpH9cXSM2C0piiebCV3hBtdjqCKPrBLep/igoG1z1
- /Pbs9G8GN02AVGZ5plXq+VwtK4iTo3vrTei3T4rQ5tI0eYxaG+mJeOabgrBDaFwhiyFQpFSYWnr
- tXk4VMZrxZTIG3UDD1X6I3eXIBsPtOcH4PAOQ0V4Wk=
-X-Received: by 2002:a05:6808:150d:b0:467:1a69:d0be with SMTP id
- 5614622812f47-480424e1a7dmr13433253b6e.32.1778445611515; 
- Sun, 10 May 2026 13:40:11 -0700 (PDT)
+ bh=kXG9bIpf2vehciJOosSGn1ALlxlG293W6jH4Q8Jdd3k=;
+ b=qm6vrN2uWqHTgZjU5Dg6Gpky76x0rMCGck/bmkXBSwM3EyXwg8MT2XJN1IfA2M5u5J
+ DsM7hgYZkg5o2IQjlm1SZA1kqaJJyifcKblOODCODWdqzKIRuJePB/GB2M3zMMIUgXmS
+ Dv4coww69tDiEUWIlrwwJ51Wn6J4DbjHWtAqs0C+/wbhEwafAjui4EA+dzHAao9z8K4d
+ eWY8pxRceWjdvKOKfFKb04wUGkgjT1ZIk7Kqks2Zs4nfUDyhYgz1Nupi71rwbk7rD87j
+ 2FsCJ6KfDujFrx2BgP4Ch2eXRAKJBQAzEGJpqJqSy4KpjU4WIKxPQ4QyBzym4k63b3BI
+ 7Mhw==
+X-Gm-Message-State: AOJu0Yy5EEydW+eeFi/8LkAAh8AmKydb26K7AXT5wcaPgx9gBpNT7VBl
+ X7lz4DRQ8MN2O1iM9eXA1WQz82h9+qrl/jJD+Ob8XWVP9/7IOrFonqXC
+X-Gm-Gg: Acq92OHV/3L48VP0403UpBqwFCoIoN17vdQii0+BdJjUnrktN7T1cb3iCOIG3ej6TF1
+ EOh0XT7Xy0k1izSLcw+zPyhMlifiiza/+BpXZcqXiz3XJoSouOLgjb5tZ9PVrchTR/ccb/bU+uA
+ gFEOT9y196V+F6vdgejbaCjQ2/XYXwcAGMlcu5LWDF9K1DeutcDU3orRYJZkaMGynnAJ3b4G/3u
+ zD2d4egcbBbk9qUZrW8geOOAkbCFC6Y0H3OSjQBaUvJAn4FsAnwEpCf14HHP/upAeJVSpuGIlOo
+ rorwiCCUaHHSQm9MsE9aatEArTeRr/63depupwT1OZVYHhO9xUMUpkUO5gBJFQDeU4cJT3k4nGz
+ btoo3efrG6ApIPezgrqBvsMytp2/sfm9OOF7I9ST2oqd/A6in8tL/RmJ1EH/VjOtvNrRjoI52Bm
+ qkBIq51jZ1nFDOurTmz7iElkZ4Lop0Fw++VX4CLQbe76pGxmMmx8kezejI9pyCvXKCEY8WzVPim
+ lPlbDTbCHcz1mk8TV+DKz64fRFBNI8UycGj2EEMgodhUqJck8ilcA==
+X-Received: by 2002:a05:6808:f04:b0:479:e826:ccdd with SMTP id
+ 5614622812f47-48061aa6a41mr9798024b6e.5.1778445609060; 
+ Sun, 10 May 2026 13:40:09 -0700 (PDT)
 Received: from MacBook-Pro.local ([209.245.15.183])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-47c76935637sm18908207b6e.12.2026.05.10.13.40.10
+ 5614622812f47-47c76935637sm18908207b6e.12.2026.05.10.13.40.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 10 May 2026 13:40:11 -0700 (PDT)
+ Sun, 10 May 2026 13:40:08 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Sun, 10 May 2026 14:39:39 -0600
-Subject: [PATCH v5 09/32] target/mips: add Octeon LHUX instruction
+Date: Sun, 10 May 2026 14:39:37 -0600
+Subject: [PATCH v5 07/32] target/mips: add Octeon multiplier state
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260510-mips-octeon-missing-insns-v2-v5-9-d5d2668d15ab@gmail.com>
+Message-Id: <20260510-mips-octeon-missing-insns-v2-v5-7-d5d2668d15ab@gmail.com>
 References: <20260510-mips-octeon-missing-insns-v2-v5-0-d5d2668d15ab@gmail.com>
 In-Reply-To: <20260510-mips-octeon-missing-insns-v2-v5-0-d5d2668d15ab@gmail.com>
 To: qemu-devel@nongnu.org
@@ -81,11 +81,10 @@ Cc: Laurent Vivier <laurent@vivier.eu>,
  Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>, 
  James Hilliard <james.hilliard1@gmail.com>, Helge Deller <deller@gmx.de>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Richard Henderson <richard.henderson@linaro.org>
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::236;
- envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x236.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::234;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x234.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -109,46 +108,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-LHUX performs an indexed unsigned halfword load from base + index and
-zero-extends the result into rd.
+Add per-thread Octeon multiplier state for the MPL and P limb banks used
+by the VMULU/VMM0/V3MULU instruction family.
 
-Add the decode entry and reuse the common indexed-load translator with
-MO_UW.
+Octeon3 extends the older MPL0-MPL2/P0-P2 state with high lanes
+MPL3-MPL5/P3-P5, programmed by the two-source MTM/MTP forms. Represent
+both banks as uint64_t arrays so the TC state matches the architected
+64-bit limb layout used by Octeon68XX user-mode code.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Migrate the multiplier registers in an Octeon-only subsection so
+non-Octeon CPU models do not grow migration state.
+
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
 Changes v2 -> v3:
-  - Split LHUX out of the combined Octeon arithmetic and memory
-    instruction patch.  (requested by Richard Henderson)
----
- target/mips/tcg/octeon.decode      | 1 +
- target/mips/tcg/octeon_translate.c | 1 +
- 2 files changed, 2 insertions(+)
+  - Split the multiplier state out of the combined Octeon arithmetic and
+    memory instruction patch.  (requested by Richard Henderson)
 
-diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index efb1a48b38..8a755075e8 100644
---- a/target/mips/tcg/octeon.decode
-+++ b/target/mips/tcg/octeon.decode
-@@ -48,6 +48,7 @@ SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
- @lx          ...... base:5 index:5 rd:5 ...... ..... &lx
- LWX          011111 ..... ..... ..... 00000 001010 @lx
- LHX          011111 ..... ..... ..... 00100 001010 @lx
-+LHUX         011111 ..... ..... ..... 10100 001010 @lx
- LBUX         011111 ..... ..... ..... 00110 001010 @lx
- LBX          011111 ..... ..... ..... 10110 001010 @lx
- LDX          011111 ..... ..... ..... 01000 001010 @lx
-diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index ecdce6ab9b..5a189c6484 100644
---- a/target/mips/tcg/octeon_translate.c
-+++ b/target/mips/tcg/octeon_translate.c
-@@ -164,5 +164,6 @@ static bool trans_lx(DisasContext *ctx, arg_lx *a, MemOp mop)
- TRANS(LBX,  trans_lx, MO_SB);
- TRANS(LBUX, trans_lx, MO_UB);
- TRANS(LHX,  trans_lx, MO_SW);
-+TRANS(LHUX, trans_lx, MO_UW);
- TRANS(LWX,  trans_lx, MO_SL);
- TRANS(LDX,  trans_lx, MO_UQ);
+Changes v3 -> v4:
+  - Document and keep the Octeon3 MPL3-MPL5/P3-P5 high-lane state used by
+    the two-source MTM/MTP forms.
+---
+ target/mips/cpu.h            | 12 ++++++++++++
+ target/mips/system/machine.c | 33 +++++++++++++++++++++++++++++++++
+ 2 files changed, 45 insertions(+)
+
+diff --git a/target/mips/cpu.h b/target/mips/cpu.h
+index 84d12b77f9..d549994aa2 100644
+--- a/target/mips/cpu.h
++++ b/target/mips/cpu.h
+@@ -459,6 +459,14 @@ typedef struct mips_def_t mips_def_t;
+ 
+ 
+ typedef struct TCState TCState;
++
++/*
++ * Octeon3 adds a second bank of multiplier/product limbs used by the
++ * two-source MTM/MTP forms: MPL0..2/P0..2 from rs and MPL3..5/P3..5 from rt.
++ */
++#define OCTEON_MULTIPLIER_LANES 3
++#define OCTEON_MULTIPLIER_REGS (2 * OCTEON_MULTIPLIER_LANES)
++
+ struct TCState {
+     target_ulong gpr[32];
+ #if defined(TARGET_MIPS64)
+@@ -497,6 +505,10 @@ struct TCState {
+     target_ulong CP0_TCScheFBack;
+     int32_t CP0_Debug_tcstatus;
+     target_ulong CP0_UserLocal;
++    struct {
++        uint64_t MPL[OCTEON_MULTIPLIER_REGS];
++        uint64_t P[OCTEON_MULTIPLIER_REGS];
++    } octeon;
+ 
+     int32_t msacsr;
+ 
+diff --git a/target/mips/system/machine.c b/target/mips/system/machine.c
+index 5880b401b0..f988b3695b 100644
+--- a/target/mips/system/machine.c
++++ b/target/mips/system/machine.c
+@@ -120,6 +120,17 @@ static const VMStateDescription vmstate_inactive_tc = {
+     .fields = vmstate_tc_fields
+ };
+ 
++static const VMStateDescription vmstate_octeon_multiplier_tc = {
++    .name = "cpu/tc/octeon_multiplier",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT64_ARRAY(octeon.MPL, TCState, OCTEON_MULTIPLIER_REGS),
++        VMSTATE_UINT64_ARRAY(octeon.P, TCState, OCTEON_MULTIPLIER_REGS),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ /* MVP state */
+ 
+ static const VMStateDescription vmstate_mvp = {
+@@ -247,6 +258,27 @@ static const VMStateDescription mips_vmstate_timer = {
+     }
+ };
+ 
++static bool mips_octeon_needed(void *opaque)
++{
++    MIPSCPU *cpu = opaque;
++
++    return cpu->env.insn_flags & INSN_OCTEON;
++}
++
++static const VMStateDescription mips_vmstate_octeon_multiplier = {
++    .name = "cpu/octeon_multiplier",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = mips_octeon_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_STRUCT(env.active_tc, MIPSCPU, 1,
++                       vmstate_octeon_multiplier_tc, TCState),
++        VMSTATE_STRUCT_ARRAY(env.tcs, MIPSCPU, MIPS_SHADOW_SET_MAX, 1,
++                             vmstate_octeon_multiplier_tc, TCState),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ const VMStateDescription vmstate_mips_cpu = {
+     .name = "cpu",
+     .version_id = 21,
+@@ -363,6 +395,7 @@ const VMStateDescription vmstate_mips_cpu = {
+     },
+     .subsections = (const VMStateDescription * const []) {
+         &mips_vmstate_timer,
++        &mips_vmstate_octeon_multiplier,
+         NULL
+     }
+ };
 
 -- 
 2.54.0
