@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C62CECD37B5
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 20:41:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0FDDCD3427
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 20:41:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMAwe-00051i-W2; Sun, 10 May 2026 16:40:13 -0400
+	id 1wMAwj-00053d-Uk; Sun, 10 May 2026 16:40:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wMAwc-000508-SN
- for qemu-devel@nongnu.org; Sun, 10 May 2026 16:40:10 -0400
-Received: from mail-oi1-x233.google.com ([2607:f8b0:4864:20::233])
+ id 1wMAwi-00053C-U2
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 16:40:16 -0400
+Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wMAwb-0003xZ-Ah
- for qemu-devel@nongnu.org; Sun, 10 May 2026 16:40:10 -0400
-Received: by mail-oi1-x233.google.com with SMTP id
- 5614622812f47-479ef2b78f3so3130945b6e.2
- for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:40:08 -0700 (PDT)
+ id 1wMAwh-0003zQ-9A
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 16:40:16 -0400
+Received: by mail-oi1-x235.google.com with SMTP id
+ 5614622812f47-4824b15c19eso939387b6e.2
+ for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:40:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778445608; x=1779050408; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778445614; x=1779050414; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=npONxRmCOObiUeLQ9Wvq5fljbBHTluS2k89tWvyshpk=;
- b=SuVtNm0J1+sil1gLeh1V55la5p7pTkyl5feW6YebCXc5KnSrM/0q96SUh1gvpEzQpP
- PxaqTKbQyp6rx9H5NhYhcryyuloeJjB7fI5odJmJW2677QrLD3wmS+VmEvWtp03blMfB
- FboSGNLT/hNcDceJW5AiO+vv4ejv/tgJmXQZF933OLSthiJh2S1B7pXJaRk0Vs/Jub3f
- TNpnmSwEqW6N7Gw1Bgg7qaShnPZnLue7cQYq3q4hq2IDi8bl2Txlk9mI/Ffn6QKkUfDh
- sXDVNbGp0s6BSTERsk0to8gxUkH3LSq41Xv7zmb+XnO0WNGYPtFv3HBWlvKCUtOzgp5Y
- r7xg==
+ :reply-to; bh=aqsuYbowt8xgBXPY0wGXm/Zcrj5Kri8srcZpZj5O34Y=;
+ b=mSEAgk5lEKByblnLRlrPxRnMm77WE7aA32ABcRBmEKA8qzhxSesUaVPX7vJtcCtU/f
+ cyN/ZPoMnNdwkLGAoHSXh2Lko7nkGT1fvF28kNdXTJV6F+9z5u/BYTRW4XgmxrEP43hJ
+ QSq5nGcS6umeUDJQk80AYLmCOkKufWuo2ZKSiN+mXBD3+xStx8WpqzWAgdHnmk6l5a94
+ Bm/dbOhhMdQgKugXjcm86XZR6omDGFY/OJog8oykSCublxXf2pwmtPC3IQ5iuAuKQJBb
+ Mln8EAYmVWez1POZTul/3u+FijlyOCd4fw2mCZKLURjzMJWOBzZGHGxIx0YiVn6v7xeG
+ dXhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778445608; x=1779050408;
+ d=1e100.net; s=20251104; t=1778445614; x=1779050414;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=npONxRmCOObiUeLQ9Wvq5fljbBHTluS2k89tWvyshpk=;
- b=XWBwbt1BiUWvfT8NuWKjKi9P9KmbbjbFR2ava/y5metw98ZvFodVaTKZxZJPr2Y0V3
- n+i1sempKQGvfL4pplsj+9Djki2U8cr3CR21Gbeadz843+eAdmg0rwBFXotvMyhGrG1Y
- Li3oBSluBDnvmEeUUklEiCnUtMpVypi8fbxJxLc/1C2j3dmDMtyVWe5Rd7K0ig45+jZJ
- syfgdKfyzvRXUDZpqpyHGIyynuH7fOja0+gHE8ICgmK6EIKUQBhHdCWP9GqVLjRWJwdC
- /25+rQwaOh+cDosVBFBZnPvLAzewM/riRDG7qeAw+Otzz4sJ+D8h/Z1d0syuk3cbYXCy
- PvTw==
-X-Gm-Message-State: AOJu0YxmrKTEWvLhit7dgD+K/AzuA1+eRubt6D8DeEAtq0hZU1hk+kJa
- wzLOvX1J+S3nfpKjXkPEE6CW2RuAappPMbBzT+SJxwcYfRtPul4U1LdB
-X-Gm-Gg: Acq92OFjCjBfzwkFC2N/pw0fLKUyU+koWzRvG7O36t1GQjhEu8wCUztf7D/ZNQMtWKJ
- sV+vh4OgzfOkpb9euTvgjhDaBwoBwn31+VUIYc6uTs0awTvVIB1V0khJeo668kUm/LIXRjlWBZv
- 9z0M2JiQ4WXERSy5YC1R4zorh4sAcewfYiefXg5q54tQWmfjs7zNlryzC7LBwkusIjXygTY01lE
- +3M3btv5YS5DYvF0tUNCLt/JQlyl2qoT7nuNq+cLkPs0kdZjeWJxjhZWTOjL2eUywfCcntQSAqb
- 0c7ZDGDc4SR3sENNjYvOsrMxCvMcOrMaUIjCzmMKu3sHIxzXBKOdkHkBm/D9zn+mVXCXWLIuxxH
- rq2woJDLDlM+Xt/feYht+BeZ2/BtGPrHhDYZzG0Lrh+fpTZANnS9616ft2uj4SeeyL9w9Cna9aI
- moQLPp1MuYeoFkoNg9Q5Ozn9VmSNxl8qyr7RNFanWWunG2R/0oA1ou6OltscNR89C7vlkSc70L5
- QlJk045yw+voIWq088y3FBW39DD/KQCy/pVaUOEUw0=
-X-Received: by 2002:a05:6808:1807:b0:47a:8c2:a54e with SMTP id
- 5614622812f47-4807fda52c5mr6709461b6e.34.1778445607772; 
- Sun, 10 May 2026 13:40:07 -0700 (PDT)
+ bh=aqsuYbowt8xgBXPY0wGXm/Zcrj5Kri8srcZpZj5O34Y=;
+ b=FLgH2Vn/rIXEUgvBgwKaNiEyLnq63Pb16B+d4miKcuByeQL6Avbwpfe7cuiYT8hdhz
+ 1IjK8GCjjfpzST/3PZ+VeUdugETIuYNf98PYd/nURiuSoIWkzXpub8+DE4u4f1hsjO9a
+ zxQ5sPMcMYCHll3uRetcz850Zpg5UZ36o/XeLZU/ho70GSODTHLLok5m9jcI6xdysNp2
+ +GJbDsX6CoN5uXb3SQ2N3EPDRcmR35buYi3TD+Wx53B4TEp5KWGbj0ICuIw6fBbLuKs2
+ xe5LRH0HrlTI0pv334G3XxKVbOhr75N7ISn2VyNWBa48a5ZM//Lq6x5Dj/BJspNUdl1F
+ BcHg==
+X-Gm-Message-State: AOJu0Yw4gV+wBkZThIsy9yT8PT6+YsKI2T+mK6R6+vPgR26aonVvYtM9
+ c+xFnB3YfKzomZCg9QtrMMrRwOQWc+cjUyTYp5tcX7YEBeVZWHho/IFl
+X-Gm-Gg: Acq92OFyrrrB7EmF2qJkbJN4qUFXiPZl2X9+6RD4Dm9xRMcY8qCWxAhRZwCKNnkGSHs
+ 0Q2momgLV/MRjQniifc8sbnVq4KbhU8zLkJsELXOgE30StLHnDEqOZoe5iK+V8B5USeBMmnYaHR
+ nEmDhwlwM8Nwgu89R/D5uxsJK6g4fxnI6KdFal9HRtmJduatzSXTOavI/vbPbhQJfgVqyNuUfrq
+ F9ShP/ya65YHOzEe9zF3XuBFAxbyJ8wxsD2IckGsxl/NnpDJKxsdhTFnc+tagzc2pOS7F4fJ47i
+ HVW99pHTPIjPckC+0c7MdKRM4WxB+EHzRifH9mlknvqYs+l8JqB4Cx64+PEL/nffg2Mf78+e7M9
+ e+krZKNKLYW/Sc6+E7z8Q0CCbiG4+d8TVzkBfXM4kt09+4WF2e7MtA8iDRADPxsfYYtMjFDDh74
+ CujkmJxQAG6vsQDQUvpaRyDcvId3Pp7s1Hx4j485fwfLCaSiF/sQXYjuM9r4yzxcD24KYYeQIiE
+ XXuSSMLUlfYveZi/b8v+9dIlp3cDtjUEDgJ3WXOKRg=
+X-Received: by 2002:a05:6808:171a:b0:479:d6cf:ca8f with SMTP id
+ 5614622812f47-4824ab06984mr3922191b6e.39.1778445614096; 
+ Sun, 10 May 2026 13:40:14 -0700 (PDT)
 Received: from MacBook-Pro.local ([209.245.15.183])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-47c76935637sm18908207b6e.12.2026.05.10.13.40.06
+ 5614622812f47-47c76935637sm18908207b6e.12.2026.05.10.13.40.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 10 May 2026 13:40:07 -0700 (PDT)
+ Sun, 10 May 2026 13:40:13 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Sun, 10 May 2026 14:39:36 -0600
-Subject: [PATCH v5 06/32] target/mips: drop Octeon zero-register fast paths
+Date: Sun, 10 May 2026 14:39:41 -0600
+Subject: [PATCH v5 11/32] target/mips: add Octeon SAA instruction
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260510-mips-octeon-missing-insns-v2-v5-6-d5d2668d15ab@gmail.com>
+Message-Id: <20260510-mips-octeon-missing-insns-v2-v5-11-d5d2668d15ab@gmail.com>
 References: <20260510-mips-octeon-missing-insns-v2-v5-0-d5d2668d15ab@gmail.com>
 In-Reply-To: <20260510-mips-octeon-missing-insns-v2-v5-0-d5d2668d15ab@gmail.com>
 To: qemu-devel@nongnu.org
@@ -84,8 +84,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Richard Henderson <richard.henderson@linaro.org>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::233;
- envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x233.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::235;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x235.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -109,63 +109,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-EXTS, CINS, and POP route their destination writes through
-gen_store_gpr(), which already discards writes to $zero. Remove the
-remaining translator fast paths for destination $zero so these Octeon
-instructions follow the same shape as BADDU/DMUL and the generic MIPS
-translator helpers.
+SAA atomically adds rt to the naturally aligned 32-bit word at base and
+discards the old memory value.
+
+Implement the common SAA/SAAD translator with TCG atomic_fetch_add_i64.
+The MemOp selects the word or doubleword transaction size.  QEMU only has
+one Octeon CPU model today, so keep SAA/SAAD under the existing Octeon
+instruction feature bucket instead of adding a finer-grained Octeon+
+feature bit.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
 Changes v2 -> v3:
-  - Remove the remaining destination $zero fast paths and let
-    gen_store_gpr() discard writes to $zero.  (suggested by Richard
-    Henderson)
----
- target/mips/tcg/octeon_translate.c | 15 ---------------
- 1 file changed, 15 deletions(-)
+  - Split SAA out of the combined Octeon arithmetic and memory
+    instruction patch.  (requested by Richard Henderson)
 
+Changes v3 -> v4:
+  - Gate SAA/SAAD behind an Octeon+ feature bit.  (reported by Richard
+    Henderson)
+  - Use the i64 TCG atomic add path for both word and doubleword sizes.
+    (suggested by Richard Henderson)
+
+Changes v4 -> v5:
+  - Drop the separate Octeon+ feature bit; QEMU only has one Octeon CPU
+    model today.  (comment by Richard Henderson)
+---
+ target/mips/tcg/octeon.decode      |  4 ++++
+ target/mips/tcg/octeon_translate.c | 14 ++++++++++++++
+ 2 files changed, 18 insertions(+)
+
+diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
+index db7d5f55f0..d6b241de42 100644
+--- a/target/mips/tcg/octeon.decode
++++ b/target/mips/tcg/octeon.decode
+@@ -44,6 +44,10 @@ SNE          011100 ..... ..... ..... 00000 101011 @r3
+ SEQI         011100 rs:5 rt:5 imm:s10 101110 &cmpi
+ SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
+ 
++&saa         base rt
++@saa         ...... base:5 rt:5 ................ &saa
++SAA          011100 ..... ..... 00000 00000 011000 @saa
++
+ &lx          base index rd
+ @lx          ...... base:5 index:5 rd:5 ...... ..... &lx
+ LWX          011111 ..... ..... ..... 00000 001010 @lx
 diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index e69dd56c8e..1893bf359f 100644
+index c93eff59a5..f5f09464ce 100644
 --- a/target/mips/tcg/octeon_translate.c
 +++ b/target/mips/tcg/octeon_translate.c
-@@ -74,11 +74,6 @@ static bool trans_EXTS(DisasContext *ctx, arg_EXTS *a)
- {
-     TCGv_i64 t0;
+@@ -161,6 +161,20 @@ static bool trans_lx(DisasContext *ctx, arg_lx *a, MemOp mop)
+     return true;
+ }
  
--    if (a->rt == 0) {
--        /* nop */
--        return true;
--    }
--
-     t0 = tcg_temp_new_i64();
-     gen_load_gpr(t0, a->rs);
-     tcg_gen_sextract_i64(t0, t0, a->p, a->lenm1 + 1);
-@@ -90,11 +85,6 @@ static bool trans_CINS(DisasContext *ctx, arg_CINS *a)
- {
-     TCGv_i64 t0;
- 
--    if (a->rt == 0) {
--        /* nop */
--        return true;
--    }
--
-     t0 = tcg_temp_new_i64();
-     gen_load_gpr(t0, a->rs);
-     tcg_gen_deposit_z_i64(t0, t0, a->p, a->lenm1 + 1);
-@@ -106,11 +96,6 @@ static bool trans_POP(DisasContext *ctx, arg_POP *a)
- {
-     TCGv_i64 t0;
- 
--    if (a->rd == 0) {
--        /* nop */
--        return true;
--    }
--
-     t0 = tcg_temp_new_i64();
-     gen_load_gpr(t0, a->rs);
-     if (!a->dw) {
++static bool trans_saa(DisasContext *ctx, arg_saa *a, MemOp mop)
++{
++    TCGv_i64 addr = tcg_temp_new_i64();
++    TCGv_i64 value = tcg_temp_new_i64();
++    TCGv_i64 old = tcg_temp_new_i64();
++    MemOp amo = mo_endian(ctx) | mop | MO_ALIGN;
++
++    gen_base_offset_addr(ctx, addr, a->base, 0);
++    gen_load_gpr(value, a->rt);
++    tcg_gen_atomic_fetch_add_i64(old, addr, value, ctx->mem_idx, amo);
++    return true;
++}
++
++TRANS(SAA,  trans_saa, MO_UL);
+ TRANS(LBX,  trans_lx, MO_SB);
+ TRANS(LBUX, trans_lx, MO_UB);
+ TRANS(LHX,  trans_lx, MO_SW);
 
 -- 
 2.54.0
