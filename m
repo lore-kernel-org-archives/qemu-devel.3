@@ -4,93 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86CFECD3427
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 16:21:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F7DBCD37B2
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 16:58:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wM6tn-0001Qv-2g; Sun, 10 May 2026 12:21:00 -0400
+	id 1wM7TD-0007it-Cs; Sun, 10 May 2026 12:57:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wM6tl-0001Qg-HO
- for qemu-devel@nongnu.org; Sun, 10 May 2026 12:20:58 -0400
-Received: from mail-oi1-x231.google.com ([2607:f8b0:4864:20::231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wM6tj-0005MG-RF
- for qemu-devel@nongnu.org; Sun, 10 May 2026 12:20:57 -0400
-Received: by mail-oi1-x231.google.com with SMTP id
- 5614622812f47-479d68a9063so1265501b6e.0
- for <qemu-devel@nongnu.org>; Sun, 10 May 2026 09:20:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778430054; x=1779034854; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=+DsZG5wnD/fjJCgNAV9jM2okGfnLsCHm9V4kWRflOO0=;
- b=sLq+4334SS9wL8caxpRuFeM0QvTcAsbFpk/Qy1CUrLMczMVoFK1B+Lmdm22HKB9s5B
- AA/UUTBJhamKRP7vIy+5QUemd0ovRjkpfY4IPn5RRNF0kz7GSWYSb1KNCe1qBsp95AoV
- dkBDIzfIfCBEvKqfIg8ZQm7fujvIOZa0F4sgHo8yI1CEDtVw6XIOaYOZ+hoWfuKi4pHa
- 3vt5dFOArt6ev/FgpQe/TfU5yz0Yop05TNDC6trPGtvrFn8f3iYhNkevsr2eBlh+JwR/
- 7KzFUJ1gcHM3v9sht5wTUVDEtK2HWglwEJrqwwjiJUOwLQ+RBsQT5iOMOwURfbdCBbEL
- xltA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778430054; x=1779034854;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+DsZG5wnD/fjJCgNAV9jM2okGfnLsCHm9V4kWRflOO0=;
- b=TTltZcDO9dYuPQAQPenik48h7trTBLDv9Qe2CfubbsH9mYVVhvFt2LVhlRWZ0Z0Wu8
- HAtoMuHaK3ta+1YcQGuA8QreTgXHw+a9PWAceD2a7FtsH/RwFpgic7JHsp7BBCHkHPIw
- IIt/ttzDT3NCJRRkIn7ljTgHDkvWkOJhuiVaO+dT3KMTJDpjLqYAKR65WG0O1BA2HuWh
- 8T98bYsEoKY87Nl9SgZ1FjJOAWfpUtcZddbL8eMJGIvgxktOTlYN7b5v7g+RS9MYaD5S
- ymDGooQVc/wMcrPoI7PBlAYg6p9It0gE3rQtGl1nM06+NIdNIkvD5wgpuZ79k6STONNX
- cUNA==
-X-Gm-Message-State: AOJu0YxakttzncwV1uOiO4SlNDu+YRBdQXrUhvAX5kfxIMVTIaS1alZA
- prptAPaYHZio7PMcfoxPm6wctmy653usiMfHGBiK0mD+lMDbjTazZF85OkCWcZlh5mpbFji+dTo
- X40hB
-X-Gm-Gg: Acq92OEduyNKKoxG937sOGXnAb7UpJJi04ZRlnw9LXIMHwXHcWvgXv8ztx4/rEqgL/k
- iAljm0u6Je/eHZGgF9NLne8ue2yK5/kKHhYDHdFgj+fh8Dn2augKJLe1dDpVcc+hKV9O6vYHfsR
- 2XNtHvBzzyuRhNPtULEt9MERlTn5cixXdnMhz7JqoiqAx9MScSncbTtJk/dy7+UF0pJEuqvqsM6
- k0/0mJ7Z6k4dWmSrWLHYBlTmCSg3p8rdLgJzJ0JH6qS5h3EIBw5ecsyqzOfpa+SURrJmv/uhpG7
- 6KzVVtVs44v/vJ/CjWuC2ohN6g4GWnqCdX+D0+kPjW4gldUY0IQZwsbHhoj2qPaMViKsiYNAcSM
- X/0t1CqJ17+9+AEzm8uFX5w9Yywa/1uN7K5rv45CviFdXsdhvsY81DBHt9CRcnfj21xNggIqDwW
- GZUNsD4Wc1LnLY9MLbdKITq7kPB3AMQUZr0khTYAQcSCZ2j1sKE1XnvGWmV10v31PViIPjo4mgd
- JQ1wQZMUA==
-X-Received: by 2002:a05:6808:3010:b0:467:2652:b29d with SMTP id
- 5614622812f47-4824a568d39mr3699169b6e.8.1778430054457; 
- Sun, 10 May 2026 09:20:54 -0700 (PDT)
-Received: from ?IPV6:2600:381:c938:6375:32c5:6ccf:a676:6508?
- ([2600:381:c938:6375:32c5:6ccf:a676:6508])
- by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-435571099a4sm7200781fac.7.2026.05.10.09.20.53
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 10 May 2026 09:20:54 -0700 (PDT)
-Message-ID: <6f3fe92f-5e69-4942-ba6e-ea59f36825a5@linaro.org>
-Date: Sun, 10 May 2026 11:20:52 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wM7TB-0007iG-7e
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 12:57:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wM7T8-0008JS-IW
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 12:57:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778432249;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=42IX29jwlVzKy/Bw9Kvk0U3cZzFRJ3xq+hDR5pmyoT8=;
+ b=JtmRa/M3Upa5HyxXX9X+v34HiZDnjVJnlMV9ZdJet9R3ehmpZqH7wTwXsUOgvA7feP+FBm
+ fhyEleMB9pP1LAEaNEE5BcUcNHZooAZbn32d/p73YTlH1pN0c86gl4TLSjKPm9U3nlKHjv
+ 8dBFFG6/gF/wl1SA0vtxksTE+hemK6E=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-531-tEICY0BSP4Wqbzo2UpS16A-1; Sun,
+ 10 May 2026 12:57:23 -0400
+X-MC-Unique: tEICY0BSP4Wqbzo2UpS16A-1
+X-Mimecast-MFC-AGG-ID: tEICY0BSP4Wqbzo2UpS16A_1778432242
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DDB3C1800451; Sun, 10 May 2026 16:57:21 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.44.49.156])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 521771800465; Sun, 10 May 2026 16:57:17 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ pierrick.bouvier@oss.qualcomm.com
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, kane_chen@aspeedtech.com,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH 2/4] hw/arm: Remove qcom-dc-scm-v1-bmc and qcom-firework-bmc
+ machines
+Date: Sun, 10 May 2026 18:57:02 +0200
+Message-ID: <20260510165704.2935316-3-clg@redhat.com>
+In-Reply-To: <20260510165704.2935316-1-clg@redhat.com>
+References: <20260510165704.2935316-1-clg@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 14/32] target/mips: add Octeon ZCBT instruction
-To: qemu-devel@nongnu.org
-References: <20260509-mips-octeon-missing-insns-v2-v4-0-d669dcd05c2f@gmail.com>
- <20260509-mips-octeon-missing-insns-v2-v4-14-d669dcd05c2f@gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260509-mips-octeon-missing-insns-v2-v4-14-d669dcd05c2f@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::231;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x231.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,54 +88,261 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/9/26 21:13, James Hilliard wrote:
-> ZCBT has the same user-mode memory effect as ZCB for QEMU's purposes.
-> 
-> Reuse the ZCB translator so both cache-block-zero forms clear the
-> containing 128-byte line.
-> 
-> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-> ---
-> Changes v2 -> v3:
->    - Split ZCBT out of the combined Octeon arithmetic and memory
->      instruction patch.  (requested by Richard Henderson)
-> ---
->   target/mips/tcg/octeon.decode      | 1 +
->   target/mips/tcg/octeon_translate.c | 5 +++++
->   2 files changed, 6 insertions(+)
-> 
-> diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-> index d8a1bfce77..56c54e0973 100644
-> --- a/target/mips/tcg/octeon.decode
-> +++ b/target/mips/tcg/octeon.decode
-> @@ -51,6 +51,7 @@ SAAD         011100 ..... ..... 00000 00000 011001 @saa
->   
->   &zcb         base
->   ZCB          011100 base:5 00000 00000 11100 011111 &zcb
-> +ZCBT         011100 base:5 00000 00000 11101 011111 &zcb
->   
->   &lx          base index rd
->   @lx          ...... base:5 index:5 rd:5 ...... ..... &lx
-> diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-> index 794c8f033b..477f681f9e 100644
-> --- a/target/mips/tcg/octeon_translate.c
-> +++ b/target/mips/tcg/octeon_translate.c
-> @@ -203,6 +203,11 @@ static bool trans_ZCB(DisasContext *ctx, arg_zcb *a)
->       return true;
->   }
->   
-> +static bool trans_ZCBT(DisasContext *ctx, arg_zcb *a)
-> +{
-> +    return trans_ZCB(ctx, a);
-> +}
+The qcom-dc-scm-v1-bmc and qcom-firework-bmc machines were deprecated
+in QEMU 10.2 and are now removed in QEMU 11.1.
 
-In other places I've avoided such thunks for a mere comment in decodetree, like
+These Qualcomm lab servers never entered production and do not rely on
+specific device models. They can be replaced by the ast2600-evb
+machine with appropriate fmc-model and I2C device configuration via
+command line.
 
-ZCB   011100 base:5 00000 00000 11101 011111 &zcb  # ZCBT
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ docs/about/deprecated.rst              | 10 ---
+ docs/about/removed-features.rst        | 10 +++
+ docs/system/arm/aspeed.rst             |  6 +-
+ hw/arm/aspeed_ast2600_qcom-dc-scm-v1.c | 55 ----------------
+ hw/arm/aspeed_ast2600_qcom-firework.c  | 91 --------------------------
+ hw/arm/meson.build                     |  2 -
+ 6 files changed, 12 insertions(+), 162 deletions(-)
+ delete mode 100644 hw/arm/aspeed_ast2600_qcom-dc-scm-v1.c
+ delete mode 100644 hw/arm/aspeed_ast2600_qcom-firework.c
 
-But as you prefer...
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index cc75afe55d95..bbb4a9886fbc 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -250,16 +250,6 @@ deprecated; use the new name ``dtb-randomness`` instead. The new name
+ better reflects the way this property affects all random data within
+ the device tree blob, not just the ``kaslr-seed`` node.
+ 
+-Arm ``qcom-dc-scm-v1-bmc`` and ``qcom-firework-bmc`` machine (since 10.2)
+-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+-
+-The ``qcom-dc-scm-v1-bmc`` and ``qcom-firework-bmc`` represent lab
+-servers that never entered production. Since they do not rely on any
+-specific device models, they can be replaced by the ``ast2600-evb``
+-machine using the ``fmc-model`` option to specify the flash type. The
+-I2C devices connected to the board can be defined via the QEMU command
+-line.
+-
+ Arm ``fp5280g2-bmc`` machine (since 10.2)
+ '''''''''''''''''''''''''''''''''''''''''
+ 
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index 02e3c06b2988..b9e9d43dada3 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -1195,6 +1195,16 @@ using the ``fmc-model`` option to specify the flash type. The I2C
+ devices connected to the board can be defined via the QEMU command
+ line.
+ 
++Arm ``qcom-dc-scm-v1-bmc`` and ``qcom-firework-bmc`` machine (removed in 11.1)
++''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
++
++The ``qcom-dc-scm-v1-bmc`` and ``qcom-firework-bmc`` represent lab
++servers that never entered production. Since they do not rely on any
++specific device models, they can be replaced by the ``ast2600-evb``
++machine using the ``fmc-model`` option to specify the flash type. The
++I2C devices connected to the board can be defined via the QEMU command
++line.
++
+ linux-user mode CPUs
+ --------------------
+ 
+diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
+index 1871f31713d4..cbaab5edd65c 100644
+--- a/docs/system/arm/aspeed.rst
++++ b/docs/system/arm/aspeed.rst
+@@ -1,5 +1,5 @@
+-Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``gb200nvl-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
+-===============================================================================================================================================================================================================================================================================================================================================================================================
++Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``gb200nvl-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
++================================================================================================================================================================================================================================================================================================================================================
+ 
+ The QEMU Aspeed machines model BMCs of various OpenPOWER systems and
+ Aspeed evaluation boards. They are based on different releases of the
+@@ -35,8 +35,6 @@ AST2600 SoC based machines :
+ - ``bletchley-bmc``        Facebook Bletchley BMC
+ - ``fby35-bmc``            Facebook fby35 BMC
+ - ``gb200nvl-bmc``         Nvidia GB200nvl BMC
+-- ``qcom-dc-scm-v1-bmc``   Qualcomm DC-SCM V1 BMC
+-- ``qcom-firework-bmc``    Qualcomm Firework BMC
+ 
+ Supported devices
+ -----------------
+diff --git a/hw/arm/aspeed_ast2600_qcom-dc-scm-v1.c b/hw/arm/aspeed_ast2600_qcom-dc-scm-v1.c
+deleted file mode 100644
+index bbdeb6023686..000000000000
+--- a/hw/arm/aspeed_ast2600_qcom-dc-scm-v1.c
++++ /dev/null
+@@ -1,55 +0,0 @@
+-/*
+- * Qualcomm DC-SCM V1
+- *
+- * Copyright 2016 IBM Corp.
+- *
+- * SPDX-License-Identifier: GPL-2.0-or-later
+- */
+-
+-#include "qemu/osdep.h"
+-#include "qapi/error.h"
+-#include "hw/arm/machines-qom.h"
+-#include "hw/arm/aspeed.h"
+-#include "hw/arm/aspeed_soc.h"
+-
+-/* Qualcomm DC-SCM hardware value */
+-#define QCOM_DC_SCM_V1_BMC_HW_STRAP1  0x00000000
+-#define QCOM_DC_SCM_V1_BMC_HW_STRAP2  0x00000041
+-
+-static void qcom_dc_scm_bmc_i2c_init(AspeedMachineState *bmc)
+-{
+-    AspeedSoCState *soc = bmc->soc;
+-
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 15), "tmp105", 0x4d);
+-}
+-
+-static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
+-                                                     const void *data)
+-{
+-    MachineClass *mc = MACHINE_CLASS(oc);
+-    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
+-
+-    mc->desc       = "Qualcomm DC-SCM V1 BMC (Cortex A7)";
+-    mc->deprecation_reason = "use 'ast2600-evb' instead";
+-    amc->soc_name  = "ast2600-a3";
+-    amc->hw_strap1 = QCOM_DC_SCM_V1_BMC_HW_STRAP1;
+-    amc->hw_strap2 = QCOM_DC_SCM_V1_BMC_HW_STRAP2;
+-    amc->fmc_model = "n25q512a";
+-    amc->spi_model = "n25q512a";
+-    amc->num_cs    = 2;
+-    amc->macs_mask = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
+-    amc->i2c_init  = qcom_dc_scm_bmc_i2c_init;
+-    mc->default_ram_size = 1 * GiB;
+-    aspeed_machine_class_init_cpus_defaults(mc);
+-};
+-
+-static const TypeInfo aspeed_ast2600_qcom_dc_scm_v1_types[] = {
+-    {
+-        .name          = MACHINE_TYPE_NAME("qcom-dc-scm-v1-bmc"),
+-        .parent        = TYPE_ASPEED_MACHINE,
+-        .class_init    = aspeed_machine_qcom_dc_scm_v1_class_init,
+-        .interfaces    = arm_machine_interfaces,
+-    }
+-};
+-
+-DEFINE_TYPES(aspeed_ast2600_qcom_dc_scm_v1_types)
+diff --git a/hw/arm/aspeed_ast2600_qcom-firework.c b/hw/arm/aspeed_ast2600_qcom-firework.c
+deleted file mode 100644
+index a4dbe6eea8ab..000000000000
+--- a/hw/arm/aspeed_ast2600_qcom-firework.c
++++ /dev/null
+@@ -1,91 +0,0 @@
+-/*
+- * Qualcomm DC-SCM V1/Firework
+- *
+- * Copyright 2016 IBM Corp.
+- *
+- * SPDX-License-Identifier: GPL-2.0-or-later
+- */
+-
+-#include "qemu/osdep.h"
+-#include "qapi/error.h"
+-#include "hw/arm/machines-qom.h"
+-#include "hw/arm/aspeed.h"
+-#include "hw/arm/aspeed_soc.h"
+-#include "hw/i2c/i2c_mux_pca954x.h"
+-#include "hw/sensor/tmp105.h"
+-
+-/* Qualcomm DC-SCM Firework hardware value */
+-#define QCOM_DC_SCM_FIREWORK_BMC_HW_STRAP1  0x00000000
+-#define QCOM_DC_SCM_FIREWORK_BMC_HW_STRAP2  0x00000041
+-
+-#define TYPE_LM75 TYPE_TMP105
+-
+-static void qcom_dc_scm_bmc_i2c_init(AspeedMachineState *bmc)
+-{
+-    AspeedSoCState *soc = bmc->soc;
+-
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 15), "tmp105", 0x4d);
+-}
+-
+-static void qcom_dc_scm_firework_i2c_init(AspeedMachineState *bmc)
+-{
+-    AspeedSoCState *soc = bmc->soc;
+-    I2CSlave *therm_mux, *cpuvr_mux;
+-
+-    /* Create the generic DC-SCM hardware */
+-    qcom_dc_scm_bmc_i2c_init(bmc);
+-
+-    /* Now create the Firework specific hardware */
+-
+-    /* I2C7 CPUVR MUX */
+-    cpuvr_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 7),
+-                                        "pca9546", 0x70);
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 0), "pca9548", 0x72);
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 1), "pca9548", 0x72);
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 2), "pca9548", 0x72);
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(cpuvr_mux, 3), "pca9548", 0x72);
+-
+-    /* I2C8 Thermal Diodes*/
+-    therm_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 8),
+-                                        "pca9548", 0x70);
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 0), TYPE_LM75, 0x4C);
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 1), TYPE_LM75, 0x4C);
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 2), TYPE_LM75, 0x48);
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 3), TYPE_LM75, 0x48);
+-    i2c_slave_create_simple(pca954x_i2c_get_bus(therm_mux, 4), TYPE_LM75, 0x48);
+-
+-    /* I2C9 Fan Controller (MAX31785) */
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "max31785", 0x52);
+-    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 9), "max31785", 0x54);
+-}
+-
+-static void aspeed_machine_qcom_firework_class_init(ObjectClass *oc,
+-                                                    const void *data)
+-{
+-    MachineClass *mc = MACHINE_CLASS(oc);
+-    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
+-
+-    mc->desc       = "Qualcomm DC-SCM V1/Firework BMC (Cortex A7)";
+-    mc->deprecation_reason = "use 'ast2600-evb' instead";
+-    amc->soc_name  = "ast2600-a3";
+-    amc->hw_strap1 = QCOM_DC_SCM_FIREWORK_BMC_HW_STRAP1;
+-    amc->hw_strap2 = QCOM_DC_SCM_FIREWORK_BMC_HW_STRAP2;
+-    amc->fmc_model = "n25q512a";
+-    amc->spi_model = "n25q512a";
+-    amc->num_cs    = 2;
+-    amc->macs_mask = ASPEED_MAC2_ON | ASPEED_MAC3_ON;
+-    amc->i2c_init  = qcom_dc_scm_firework_i2c_init;
+-    mc->default_ram_size = 1 * GiB;
+-    aspeed_machine_class_init_cpus_defaults(mc);
+-};
+-
+-static const TypeInfo aspeed_ast2600_qcom_firework_types[] = {
+-    {
+-        .name          = MACHINE_TYPE_NAME("qcom-firework-bmc"),
+-        .parent        = TYPE_ASPEED_MACHINE,
+-        .class_init    = aspeed_machine_qcom_firework_class_init,
+-        .interfaces    = arm_machine_interfaces,
+-    }
+-};
+-
+-DEFINE_TYPES(aspeed_ast2600_qcom_firework_types)
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 098015357ddc..2be74b575efc 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -61,8 +61,6 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+   'aspeed_ast2600_fby35.c',
+   'aspeed_ast2600_fuji.c',
+   'aspeed_ast2600_gb200nvl.c',
+-  'aspeed_ast2600_qcom-dc-scm-v1.c',
+-  'aspeed_ast2600_qcom-firework.c',
+   'aspeed_ast2600_rainier.c',
+   'aspeed_ast10x0.c',
+   'aspeed_ast10x0_evb.c',
+-- 
+2.54.0
 
-
-r~
 
