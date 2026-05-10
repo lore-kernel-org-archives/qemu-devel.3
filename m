@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DFB0CD37B6
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 13:51:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9C97CD37B6
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 13:51:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wM4Yu-0004fr-MA; Sun, 10 May 2026 09:51:16 -0400
+	id 1wM4Yw-0004rR-Pj; Sun, 10 May 2026 09:51:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wM4Yd-0004WT-HW
- for qemu-devel@nongnu.org; Sun, 10 May 2026 09:51:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wM4Yq-0004fp-Of
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 09:51:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wM4Yb-00066J-UU
- for qemu-devel@nongnu.org; Sun, 10 May 2026 09:50:59 -0400
+ id 1wM4Yn-00066h-T1
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 09:51:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778421057;
+ s=mimecast20190719; t=1778421069;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fblFAfWvPjTcuTdOqmHwe2ln7ZdoKOzUMwULX0TawoE=;
- b=Qm2ho7RerCsITtwSn8eMp7iG4238d2laLNr8Ecq//F+tejFA352uGp9JB76FOqhIVD8oyv
- iIdGaGSXKEr9LKMtt/4TlYY5BiX0jh+dF2Vx58tJTtsocf4qUTjvTej2B4X12G43C+KH/6
- IEntRgnHylhVp1vrIpstRFX9OWTxTMA=
+ bh=T0Fqjl75wKXDMdOiRL0Bi1Jn3WnH3jnr2jg1Rrh5wbc=;
+ b=Zcm1eOUM5pjcFFU3oreJkxIJhw3KvEZZtAes6MWRpEeaooFE3CLh7unyOPD+F/rVyOJj3l
+ hj/OKGT9BLyvRnqi3gdRngWzSBT/Wu76dKarHhApAhLjaKRLDzW0O9ZmfOL7eZ/KB8z2XF
+ uxdvlGiktMd646FhXpvLmQlRHHTG64w=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-226-HFPnqCgoNRyHWjPPdUjnhg-1; Sun,
- 10 May 2026 09:50:55 -0400
-X-MC-Unique: HFPnqCgoNRyHWjPPdUjnhg-1
-X-Mimecast-MFC-AGG-ID: HFPnqCgoNRyHWjPPdUjnhg_1778421055
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-297-R1zWVs8FMMyevMGvEVq8IQ-1; Sun,
+ 10 May 2026 09:51:07 -0400
+X-MC-Unique: R1zWVs8FMMyevMGvEVq8IQ-1
+X-Mimecast-MFC-AGG-ID: R1zWVs8FMMyevMGvEVq8IQ_1778421067
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1E50A19560AF
- for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:50:55 +0000 (UTC)
+ id E7B171956096
+ for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:51:06 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9BCF83002D31; Sun, 10 May 2026 13:50:51 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2BBE419560A2; Sun, 10 May 2026 13:51:02 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 10 May 2026 17:43:36 +0400
-Subject: [PATCH 39/54] hw/ppc/spapr_drc: convert fdt property to QAPI-aware
- registration
+Date: Sun, 10 May 2026 17:43:37 +0400
+Subject: [PATCH 40/54] spdm-socket: convert SpdmTransportType to QAPI enum
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260510-qom-qapi-v1-39-48ba6a1a1fa5@redhat.com>
+Message-Id: <20260510-qom-qapi-v1-40-48ba6a1a1fa5@redhat.com>
 References: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
 In-Reply-To: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
 To: qemu-devel@nongnu.org
@@ -63,25 +62,25 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=998;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=13513;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=oNnnydeZ+Z/4woqlL+ZtQDVgVy8svDVrLv4Ho4BK3Dc=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqAItw9CxQvn9K1jS+QvITYdbWoMLhHmmE1uNFL
- CWWMfrXTrWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCagCLcAAKCRDa6OEJdZac
- 5Y6kEACDli5AF77NrTOgm79NPM7Vz+vd+BCGVV0t9UiobBUOrhkyQ3C5znfk2I+wmCr0e70yGZf
- QXhfl30foTEzeEb0o699NqHEnt5cARnxqFdAOxqRdJhhSPhmom+THR9IFnYZwHIaRyBKqqf6vor
- xcKLlfP69XLJsMcg+m5+7nY4nN06a98ayxXrLeGfcWlZJXdBONVk2DVXGVRgRgCrIHwltrJTFS5
- prgAZyOIUgLIcrjtcBEN1ZJlKKjXDkid32kBWC5JB9NVolCm9kOUS1u5QNgD9baNJBDu3ap5MOs
- 3T4Lot/MxhyE5uKGl7xTV775B5Gy52+1LrDkDQE2xOymqBa/qZzSPxh1zfr7ca/UsDObffaGLGI
- baLAUq33xv5+yAqoFQJ85EPDVdnQJi9gts3bDIzOQW0QO2Hc4HylWKuz7y9YxN/ByOvDexuVtkj
- CU3rj83sg3BqcPR7e0xTZHhT3Ix8B1zQi3MgGL8LSSleO5XP9SboBNI5tNm/KIzQ9zGIi35QDJ8
- gXZfNFzzjO2drRYMjguCSVdux6cexwZU1zWREGhKdt5SHX8nF/1nuqU0afLFo7uGVWtp2zYuXaJ
- +PP4Yp0BWtgtKAvd2lTsxcHq6eh5cO4vGC6PyteyNqDuDyFHEBwaMX76R28wPWQzXDYI00/D20T
- T6vgA+ToZTMw+tw==
+ bh=prJyBWTOMW+oLPTzuG1ld9mKGV8wIhGGWr9aZ3q7KSk=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqAItw+6vr+spKoicH+2yBP4cza0E3MUvlk8e3W
+ TIijUqeqWCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCagCLcAAKCRDa6OEJdZac
+ 5WDtD/4hQd2iW0U5pNYLn9Ff6FC52SGZUk4xSTZAicHdLS67WRIUlyA5wtVXcyM3ErBs9nRy2f/
+ 0dib+hUye4Osq0YGtHQsAr+5lx4w8Z9Lg34SY2TApF8AfJ7rADvsdIIcxQyIPRp1F3w25BzUxej
+ WvF1IJKUNck7oWXIaqm8EOULmIWCE9JnUyLBAj9RwV/pDq6LMuAzCM86RDV2OssHvKsfqlqzqst
+ 9G1ZTjM5NaUUSAF1nC6prQIOUn/sUow5+RN9w4l35Y13NoUYbbKaEqJepv7fRSPyHTgdr/SpGaz
+ 0QDiHBvEd9hLa4gGlGa/Sc/uODDXvdGU1+fxkkZqyuH4GaAvkknYL3DTZecB6WbyC4rpH8FPHF4
+ ovUOV2UfxkdKoaE8eEMMva5hE8gwHR4Ieovt8IheLDaWd3+Dtkr9YRxFJBjmwYClB+SOZeDqunR
+ zChVOKUYxbNunwrlinDnOfWiYTGB7idW5Ib16tbBE+QsdvScZ+RO1WAlr4Qxx1whMWioyqmTKV2
+ jmclhJX7eWXrUATojt9++9et+7pKNepvNNDtgLD75DFD5T9LxKmca1gnb2B4yx4VMmmR5addwZx
+ WD5BFPdEqeuiKbrpwFuiP1qBDtk+fdeQ3pE/CyxGtrLthICztJeTBWu9VKNzS3dbTxUpV0mdoPf
+ qSMxPg0v7Trfejw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -89,7 +88,7 @@ X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,28 +105,322 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use object_property_add_qapi() with any_type_info for the "fdt"
-property, since the FDT structure is dynamically shaped at runtime and
-cannot be represented as a static QAPI type.
+Replace the hand-written SpdmTransportType C enum and QEnumLookup
+table with a QAPI schema definition in qapi/sockets.json. Update
+all users in hw/nvme/ctrl.c to use the QAPI-generated enum constants
+(SPDM_TRANSPORT_TYPE_* instead of SPDM_SOCKET_TRANSPORT_TYPE_*).
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/ppc/spapr_drc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ qapi/sockets.json            | 20 ++++++++++++++++++++
+ include/system/spdm-socket.h | 28 +++++++++++-----------------
+ backends/spdm-socket.c       | 23 +++++++----------------
+ hw/nvme/ctrl.c               | 26 +++++++++++++-------------
+ 4 files changed, 51 insertions(+), 46 deletions(-)
 
-diff --git a/hw/ppc/spapr_drc.c b/hw/ppc/spapr_drc.c
-index 62baf38a00e..fcafdef7dff 100644
---- a/hw/ppc/spapr_drc.c
-+++ b/hw/ppc/spapr_drc.c
-@@ -586,7 +586,7 @@ static void spapr_dr_connector_instance_init(Object *obj)
-     object_property_add_uint32_ptr(obj, "id", &drc->id, OBJ_PROP_FLAG_READ);
-     object_property_add_qapi(obj, "index", &uint32_type_info, prop_get_index,
-                         NULL, NULL, NULL);
--    object_property_add(obj, "fdt", "struct", prop_get_fdt,
-+    object_property_add_qapi(obj, "fdt", &any_type_info, prop_get_fdt,
-                         NULL, NULL, NULL);
-     drc->state = drck->empty_state;
+diff --git a/qapi/sockets.json b/qapi/sockets.json
+index 473be2ac58a..dbb452cfb72 100644
+--- a/qapi/sockets.json
++++ b/qapi/sockets.json
+@@ -252,3 +252,23 @@
+             'unix': 'UnixSocketAddress',
+             'vsock': 'VsockSocketAddress',
+             'fd': 'FdSocketAddress' } }
++
++##
++# @SpdmTransportType:
++#
++# SPDM transport type
++#
++# @unspecified: Unspecified transport
++#
++# @mctp: MCTP transport
++#
++# @doe: PCI Data Object Exchange (DOE) transport
++#
++# @scsi: SCSI transport
++#
++# @nvme: NVMe transport
++#
++# Since: 11.1
++##
++{ 'enum': 'SpdmTransportType',
++  'data': [ 'unspecified', 'mctp', 'doe', 'scsi', 'nvme' ] }
+diff --git a/include/system/spdm-socket.h b/include/system/spdm-socket.h
+index 00cb0e97f36..b5a68d3d60b 100644
+--- a/include/system/spdm-socket.h
++++ b/include/system/spdm-socket.h
+@@ -23,6 +23,8 @@
+ #ifndef SPDM_REQUESTER_H
+ #define SPDM_REQUESTER_H
+ 
++#include "qapi/qapi-types-sockets.h"
++
+ /**
+  * spdm_socket_connect: connect to an external SPDM socket
+  * @port: port to connect to
+@@ -37,7 +39,7 @@ int spdm_socket_connect(uint16_t port, Error **errp);
+ /**
+  * spdm_socket_rsp: send and receive a message to a SPDM server
+  * @socket: socket returned from spdm_socket_connect()
+- * @transport_type: SPDM_SOCKET_TRANSPORT_TYPE_* macro
++ * @transport_type: the SPDM transport type
+  * @req: request buffer
+  * @req_len: request buffer length
+  * @rsp: response buffer
+@@ -46,14 +48,14 @@ int spdm_socket_connect(uint16_t port, Error **errp);
+  * Send platform data to a SPDM server on socket and then receive
+  * a response.
+  */
+-uint32_t spdm_socket_rsp(const int socket, uint32_t transport_type,
++uint32_t spdm_socket_rsp(const int socket, SpdmTransportType transport_type,
+                          void *req, uint32_t req_len,
+                          void *rsp, uint32_t rsp_len);
+ 
+ /**
+  * spdm_socket_rsp: Receive a message from an SPDM server
+  * @socket: socket returned from spdm_socket_connect()
+- * @transport_type: SPDM_SOCKET_TRANSPORT_TYPE_* macro
++ * @transport_type: the SPDM transport type
+  * @rsp: response buffer
+  * @rsp_len: response buffer length
+  *
+@@ -61,14 +63,14 @@ uint32_t spdm_socket_rsp(const int socket, uint32_t transport_type,
+  * received or 0 on failure. This can be used to receive a message from the SPDM
+  * server without sending anything first.
+  */
+-uint32_t spdm_socket_receive(const int socket, uint32_t transport_type,
++uint32_t spdm_socket_receive(const int socket, SpdmTransportType transport_type,
+                              void *rsp, uint32_t rsp_len);
+ 
+ /**
+  * spdm_socket_rsp: Sends a message to an SPDM server
+  * @socket: socket returned from spdm_socket_connect()
+  * @socket_cmd: socket command type (normal/if_recv/if_send etc...)
+- * @transport_type: SPDM_SOCKET_TRANSPORT_TYPE_* macro
++ * @transport_type: the SPDM transport type
+  * @req: request buffer
+  * @req_len: request buffer length
+  *
+@@ -77,16 +79,17 @@ uint32_t spdm_socket_receive(const int socket, uint32_t transport_type,
+  * spdm_socket_receive().
+  */
+ bool spdm_socket_send(const int socket, uint32_t socket_cmd,
+-                      uint32_t transport_type, void *req, uint32_t req_len);
++                      SpdmTransportType transport_type, void *req,
++                      uint32_t req_len);
+ 
+ /**
+  * spdm_socket_close: send a shutdown command to the server
+  * @socket: socket returned from spdm_socket_connect()
+- * @transport_type: SPDM_SOCKET_TRANSPORT_TYPE_* macro
++ * @transport_type: the SPDM transport type
+  *
+  * This will issue a shutdown command to the server.
+  */
+-void spdm_socket_close(const int socket, uint32_t transport_type);
++void spdm_socket_close(const int socket, SpdmTransportType transport_type);
+ 
+ /*
+  * Defines the transport encoding for SPDM, this information shall be passed
+@@ -115,15 +118,6 @@ typedef struct {
+ #define SPDM_SOCKET_MAX_MESSAGE_BUFFER_SIZE       0x1200
+ #define SPDM_SOCKET_MAX_MSG_STATUS_LEN            0x02
+ 
+-typedef enum SpdmTransportType {
+-    SPDM_SOCKET_TRANSPORT_TYPE_UNSPEC = 0,
+-    SPDM_SOCKET_TRANSPORT_TYPE_MCTP,
+-    SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE,
+-    SPDM_SOCKET_TRANSPORT_TYPE_SCSI,
+-    SPDM_SOCKET_TRANSPORT_TYPE_NVME,
+-    SPDM_SOCKET_TRANSPORT_TYPE_MAX
+-} SpdmTransportType;
+-
+ extern const PropertyInfo qdev_prop_spdm_trans;
+ 
+ #define DEFINE_PROP_SPDM_TRANS(_name, _state, _field, _default) \
+diff --git a/backends/spdm-socket.c b/backends/spdm-socket.c
+index b625a65d28f..826efc276dc 100644
+--- a/backends/spdm-socket.c
++++ b/backends/spdm-socket.c
+@@ -13,6 +13,7 @@
+ #include "qemu/osdep.h"
+ #include "system/spdm-socket.h"
+ #include "qapi/error.h"
++#include "qapi/qapi-types-sockets.h"
+ #include "hw/core/qdev-properties.h"
+ #include "hw/core/qdev-properties-system.h"
+ #include "hw/core/qdev-prop-internal.h"
+@@ -205,7 +206,7 @@ static bool spdm_socket_command_valid(uint32_t command)
+     }
  }
+ 
+-uint32_t spdm_socket_receive(const int socket, uint32_t transport_type,
++uint32_t spdm_socket_receive(const int socket, SpdmTransportType transport_type,
+                              void *rsp, uint32_t rsp_len)
+ {
+     uint32_t command;
+@@ -223,13 +224,14 @@ uint32_t spdm_socket_receive(const int socket, uint32_t transport_type,
+ }
+ 
+ bool spdm_socket_send(const int socket, uint32_t socket_cmd,
+-                      uint32_t transport_type, void *req, uint32_t req_len)
++                      SpdmTransportType transport_type, void *req,
++                      uint32_t req_len)
+ {
+     return send_platform_data(socket, transport_type, socket_cmd, req,
+                               req_len);
+ }
+ 
+-uint32_t spdm_socket_rsp(const int socket, uint32_t transport_type,
++uint32_t spdm_socket_rsp(const int socket, SpdmTransportType transport_type,
+                          void *req, uint32_t req_len,
+                          void *rsp, uint32_t rsp_len)
+ {
+@@ -244,27 +246,16 @@ uint32_t spdm_socket_rsp(const int socket, uint32_t transport_type,
+     return spdm_socket_receive(socket, transport_type, rsp, rsp_len);
+ }
+ 
+-void spdm_socket_close(const int socket, uint32_t transport_type)
++void spdm_socket_close(const int socket, SpdmTransportType transport_type)
+ {
+     send_platform_data(socket, transport_type,
+                        SPDM_SOCKET_COMMAND_SHUTDOWN, NULL, 0);
+ }
+ 
+-const QEnumLookup SpdmTransport_lookup = {
+-    .array = (const char *const[]) {
+-        [SPDM_SOCKET_TRANSPORT_TYPE_UNSPEC] = "unspecified",
+-        [SPDM_SOCKET_TRANSPORT_TYPE_MCTP] = "mctp",
+-        [SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE] = "doe",
+-        [SPDM_SOCKET_TRANSPORT_TYPE_SCSI] = "scsi",
+-        [SPDM_SOCKET_TRANSPORT_TYPE_NVME] = "nvme",
+-    },
+-    .size = SPDM_SOCKET_TRANSPORT_TYPE_MAX
+-};
+-
+ const PropertyInfo qdev_prop_spdm_trans = {
+     .type = "SpdmTransportType",
+     .description = "Spdm Transport, doe/nvme/mctp/scsi/unspecified",
+-    .enum_table = &SpdmTransport_lookup,
++    .enum_table = &SpdmTransportType_lookup,
+     .get = qdev_propinfo_get_enum,
+     .set = qdev_propinfo_set_enum,
+     .set_default_value = qdev_propinfo_set_default_value_enum,
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index b10b45f157e..85ecb910858 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -7363,14 +7363,14 @@ static uint16_t nvme_sec_prot_spdm_send(NvmeCtrl *n, NvmeRequest *req)
+     }
+ 
+     spdm_res = spdm_socket_send(n->spdm_socket, SPDM_SOCKET_STORAGE_CMD_IF_SEND,
+-                                SPDM_SOCKET_TRANSPORT_TYPE_NVME, sec_buf,
++                                SPDM_TRANSPORT_TYPE_NVME, sec_buf,
+                                 transport_transfer_len);
+     if (!spdm_res) {
+         return NVME_DATA_TRAS_ERROR | NVME_DNR;
+     }
+ 
+     /* The responder shall ack with message status */
+-    recvd = spdm_socket_receive(n->spdm_socket, SPDM_SOCKET_TRANSPORT_TYPE_NVME,
++    recvd = spdm_socket_receive(n->spdm_socket, SPDM_TRANSPORT_TYPE_NVME,
+                                 &nvme_cmd_status,
+                                 SPDM_SOCKET_MAX_MSG_STATUS_LEN);
+ 
+@@ -7426,14 +7426,14 @@ static uint16_t nvme_sec_prot_spdm_receive(NvmeCtrl *n, NvmeRequest *req)
+ 
+     /* Forward if_recv to the SPDM Server with SPSP0 */
+     spdm_res = spdm_socket_send(n->spdm_socket, SPDM_SOCKET_STORAGE_CMD_IF_RECV,
+-                                SPDM_SOCKET_TRANSPORT_TYPE_NVME,
++                                SPDM_TRANSPORT_TYPE_NVME,
+                                 &hdr, sizeof(hdr));
+     if (!spdm_res) {
+         return NVME_DATA_TRAS_ERROR | NVME_DNR;
+     }
+ 
+     /* The responder shall ack with message status */
+-    recvd = spdm_socket_receive(n->spdm_socket, SPDM_SOCKET_TRANSPORT_TYPE_NVME,
++    recvd = spdm_socket_receive(n->spdm_socket, SPDM_TRANSPORT_TYPE_NVME,
+                                 &nvme_cmd_status,
+                                 SPDM_SOCKET_MAX_MSG_STATUS_LEN);
+     if (recvd < SPDM_SOCKET_MAX_MSG_STATUS_LEN) {
+@@ -7453,7 +7453,7 @@ static uint16_t nvme_sec_prot_spdm_receive(NvmeCtrl *n, NvmeRequest *req)
+     }
+ 
+     recvd = spdm_socket_receive(n->spdm_socket,
+-                                SPDM_SOCKET_TRANSPORT_TYPE_NVME,
++                                SPDM_TRANSPORT_TYPE_NVME,
+                                 rsp_spdm_buf, alloc_len);
+     if (!recvd) {
+         return NVME_DATA_TRAS_ERROR | NVME_DNR;
+@@ -8927,7 +8927,7 @@ static bool pcie_doe_spdm_rsp(DOECap *doe_cap)
+     uint32_t rsp_len = SPDM_SOCKET_MAX_MESSAGE_BUFFER_SIZE;
+ 
+     uint32_t recvd = spdm_socket_rsp(doe_cap->spdm_socket,
+-                             SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE,
++                             SPDM_TRANSPORT_TYPE_DOE,
+                              req, req_len, rsp, rsp_len);
+     doe_cap->read_mbox_len += DIV_ROUND_UP(recvd, 4);
+ 
+@@ -9029,7 +9029,7 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
+         uint16_t doe_offset = PCI_CONFIG_SPACE_SIZE;
+ 
+         switch  (pci_dev->spdm_trans) {
+-        case SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE:
++        case SPDM_TRANSPORT_TYPE_DOE:
+             if (n->params.sriov_max_vfs) {
+                 doe_offset += PCI_ARI_SIZEOF;
+             }
+@@ -9044,7 +9044,7 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
+                 return false;
+             }
+             break;
+-        case SPDM_SOCKET_TRANSPORT_TYPE_NVME:
++        case SPDM_TRANSPORT_TYPE_NVME:
+             n->spdm_socket = spdm_socket_connect(pci_dev->spdm_port, errp);
+             if (n->spdm_socket < 0) {
+                 return false;
+@@ -9347,10 +9347,10 @@ static void nvme_exit(PCIDevice *pci_dev)
+     assert(!(pci_dev->doe_spdm.spdm_socket > 0 && n->spdm_socket >= 0));
+     if (pci_dev->doe_spdm.spdm_socket > 0) {
+         spdm_socket_close(pci_dev->doe_spdm.spdm_socket,
+-                          SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE);
++                          SPDM_TRANSPORT_TYPE_DOE);
+     } else if (n->spdm_socket >= 0) {
+         spdm_socket_close(pci_dev->doe_spdm.spdm_socket,
+-                          SPDM_SOCKET_TRANSPORT_TYPE_NVME);
++                          SPDM_TRANSPORT_TYPE_NVME);
+     }
+ 
+     if (n->pmr.dev) {
+@@ -9406,7 +9406,7 @@ static const Property nvme_props[] = {
+     DEFINE_PROP_UINT16("mqes", NvmeCtrl, params.mqes, 0x7ff),
+     DEFINE_PROP_UINT16("spdm_port", PCIDevice, spdm_port, 0),
+     DEFINE_PROP_SPDM_TRANS("spdm_trans", PCIDevice, spdm_trans,
+-                           SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE),
++                           SPDM_TRANSPORT_TYPE_DOE),
+     DEFINE_PROP_BOOL("ctratt.mem", NvmeCtrl, params.ctratt.mem, false),
+     DEFINE_PROP_BOOL("atomic.dn", NvmeCtrl, params.atomic_dn, 0),
+     DEFINE_PROP_UINT16("atomic.awun", NvmeCtrl, params.atomic_awun, 0),
+@@ -9484,7 +9484,7 @@ static void nvme_pci_write_config(PCIDevice *dev, uint32_t address,
+ 
+     /* DOE is only initialised if SPDM over DOE is used */
+     if (pcie_find_capability(dev, PCI_EXT_CAP_ID_DOE) &&
+-        dev->spdm_trans == SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE) {
++        dev->spdm_trans == SPDM_TRANSPORT_TYPE_DOE) {
+         pcie_doe_write_config(&dev->doe_spdm, address, val, len);
+     }
+     pci_default_write_config(dev, address, val, len);
+@@ -9497,7 +9497,7 @@ static uint32_t nvme_pci_read_config(PCIDevice *dev, uint32_t address, int len)
+     uint32_t val;
+ 
+     if (dev->spdm_port && pcie_find_capability(dev, PCI_EXT_CAP_ID_DOE) &&
+-        (dev->spdm_trans == SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE)) {
++        (dev->spdm_trans == SPDM_TRANSPORT_TYPE_DOE)) {
+         if (pcie_doe_read_config(&dev->doe_spdm, address, len, &val)) {
+             return val;
+         }
 
 -- 
 2.54.0
