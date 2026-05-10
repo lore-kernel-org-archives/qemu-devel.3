@@ -4,103 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA498CD3427
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 20:20:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78121CD3427
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 20:24:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMAd2-0001zr-Vn; Sun, 10 May 2026 16:19:56 -0400
+	id 1wMAgo-0002ul-Se; Sun, 10 May 2026 16:23:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wMAd1-0001zi-Hi
- for qemu-devel@nongnu.org; Sun, 10 May 2026 16:19:55 -0400
-Received: from mail-ua1-x929.google.com ([2607:f8b0:4864:20::929])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wMAgn-0002ua-90
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 16:23:49 -0400
+Received: from mail-dy1-x132e.google.com ([2607:f8b0:4864:20::132e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wMAd0-0007aV-1t
- for qemu-devel@nongnu.org; Sun, 10 May 2026 16:19:55 -0400
-Received: by mail-ua1-x929.google.com with SMTP id
- a1e0cc1a2514c-95cc8ac98bfso787150241.3
- for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:19:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778444393; cv=none;
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wMAgl-0008I7-DU
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 16:23:49 -0400
+Received: by mail-dy1-x132e.google.com with SMTP id
+ 5a478bee46e88-2c156c4a9efso4729475eec.1
+ for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:23:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778444624; cv=none;
  d=google.com; s=arc-20240605;
- b=A6PFS1arOLUEQE5p8EuRrydLQlSboAUwx3O4GwR9+PmB981le2Dfyu2AEh5FGydAFK
- AgypMHHBnZmXiPeqCmYn0QamLGAMOhL7yQNEL3uj1oYLtkfepZZsYriauHLz/NHuVYJ+
- KDpbiCt91MvcU4Py5W/4IrEGbxz1toPvzX3GLa8tLc251+vn1uanCf/JAU6yMjZcfW8L
- zBTHDnaWgONsY2OVfoQTSq8h0EQv8AyjRsMgMIF4JrE1EkYcHreEzEbXX5AZFtsVsQf9
- FODQsfFXlsjbDGW1cWfbmk5pFfd6BwKkYEwyOSSeoHo4iXQNQskNjVZRaVZHtZt2xanG
- /ppQ==
+ b=IDEtxHhgETBY0XeSbW11d+CRVNPxGaFfmKEHJjaDe+QaOedWg81WEKHBcUa6DNcp5B
+ Zyr/HbBwWPV8aucAb5b1KHhK2ZiqRCFZB76toeZXemWTJ0zYCDhU6Pmo/XH6y0ONH5X9
+ k7BBt8EYuvl4cpA2YmjsgA6nHLS4/rTuIjDSGOi+q37o5OUysOw7XWPg7h/vqAuRv+vm
+ n6PQddqsaPxohU0VdJtBQPwqEa0qxZVeQvATs5w62VpMAhsj6aFeeB01OHAMrFKCsXtw
+ 4wXJ6hyn5/PywrvJeKds+VH1JSw1MzLt2uH8fopw+nezvJI9nZjrtqjghm+ZQipI5T95
+ DrQQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=U7yr0DdjuYuFCKOJsgOjp2fJGowaiR391m2zc6rjHDc=;
- fh=GI2e/SBiq4MTIPc9mHou6R6WJe3VvhdDMWKbaXflkfU=;
- b=DU7G7/gcapr4oLtmNOcb+EjUb4Jv7keCkSgTN+h/dHNnzeJPGFrSbUTJsvuK0frbPK
- DHnzI0XqZsq+BMVN2Gm36zP8gmZWyUoYglrXhFIZpoNiXRJGkvdR6/l9wONKC53cWYAd
- Obab8t56Z2mOoia3Citj7lyeB4Qik0W4QA7wMt+aBTgGjhLSbh9bGDIWJKhPTnZrAGI/
- xejMIq1S1NILoBXEToxz2c27rcejGtpCs1FFExn5h9DCt933FxlCrVt5MkmziEk6vgQ9
- CAcdbhX5Ry9mt0L8KDEYHmTSKffMaaxc3AJCQTWX2craYlS9bQnkoxsDaD/qU2K9Y5vX
- xARg==; darn=nongnu.org
+ bh=Jkh1uL1rgPpDJYzB8P2TQ/rVAk5fcg+k9t8zp/yZ2zE=;
+ fh=XKfMv48PXgm//5sA40RdF01wGGjLzCVfJBOCZgVsECs=;
+ b=isbarvTypw2P5FWTfKXjVdlv9GG1nrLpvT42v0rNLcZQVzcu02lfNjnkDbPHStwsSd
+ rwRBmhiYVaWa7IvZ4M79bxhNdos+/NgwrHnNgyfuMb+fywVahbk8b4+PW+xwQRx6VBbL
+ BtS/nnHTZNQAD3ovioIsxIZchaW4RTQBEg8iToIFuJ2PLeJX/YxYOaF52yPQWFpgbxAq
+ nEBbAEwk/+r1IwcgVj0GpLkPkLI2tGOgV8vcXlf/Y9o44F7WYTGq4mkRea1wNoV1zgcX
+ 3D4Ra83EyMtWK4D4JBAKn5N8Yrg7iZzc6aW7UcLCjBhZdDewg7cFKJVbwxWLmJpm3xS5
+ QrtQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778444393; x=1779049193; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778444624; x=1779049424; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=U7yr0DdjuYuFCKOJsgOjp2fJGowaiR391m2zc6rjHDc=;
- b=rpwXnh1JYnLWL82UTkjwR5c1hieqsn2NTsdr8D/Pb19BIvI3Obkg7Wf/TqZQ39iFdC
- hw64G/e/1ap/OYAsqtfL04d54mPYAOenfASmAMEiWY7IvMqItUbvC4r0WWlu1f8Fi4Gr
- LzSp3vW7gnplYUBd+P5Ll3ZXCUEiLaVKAABFmgCl6r1uIyKPhvB//G8d+xBBpq1xRNU5
- GY/OMOiFmIli4rGKqOk3BI9txlrmB3dNcusL9Uyud5U77gTETu7iS8PivKh/IEaG720F
- X/egl1ISS4BTE1LPeyw0+tJrFZt9gM06sLjgMx+gifM/tWmPZQMTVefV1gnjwM3v1jxE
- frfA==
+ bh=Jkh1uL1rgPpDJYzB8P2TQ/rVAk5fcg+k9t8zp/yZ2zE=;
+ b=SfLHaMXjLysDwc7sF3Xe6vRjzHL0cxDBkFavpGgogg0lwWOlMOyjYj5tfUk8cJ8B3O
+ UL1gPYRvUygdZcc6CNiBYsq5E24Zr5693e4V2gX1gSXVfnmB71UIsMwnUvukD+62fP6a
+ 7zmokfvFfJkJ77Hn8LIo86QzmLlP2XgDzwtFajm+YFFBegrDF+aJAru0bYT5o3QCBdij
+ peSdtzSPM4a5TYgD/sMILnCf2ILzxUbwCRXPcwEh40E4JNd2FMCYI6Hs4xxrn9zLt3Th
+ GcBm6kONAusRy0h32vpfyrrZx0KJ6hl4avZ3dvWxoDWs2UcbNg+YrQTmlaPKGdFaBNVy
+ OGnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778444393; x=1779049193;
+ d=1e100.net; s=20251104; t=1778444624; x=1779049424;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=U7yr0DdjuYuFCKOJsgOjp2fJGowaiR391m2zc6rjHDc=;
- b=LXZZJZbKW0y40NZpmVofll5hYZ0KIyQuLLJ7fYlitf2Aw2qe2hrNO4OJBuB4FEl7G6
- psAhE3zLASRXXRNnMxtlmYuL4qbAUzcWtaQs6FBYlI9lRHco2rdAyIeajmX4rtvMGZRC
- RHxMCN5vO/3vznQZ8ku+h9k03v2d1et0SQhQtx4UYkeFm3c76kcsveKm8uz2PkHmcyTm
- qWRvfPN9o2/GS2xgYr8uIUnh6HslJs8cUVnZXYBR0IR+fvULR3/zPxIs0sDsPZs3LeN4
- LoCaOqTj6aQxml+Y/xJ78rlXQD5DNRZGBNokeWbNcK2gKCROBjEcFs9a+B7uAJbmyIp/
- ZuBw==
-X-Gm-Message-State: AOJu0YxOIbV3dja4OUnY7X8bXamX1s9RvNKds9NKth4RB8yE51jVgMr8
- c3vxHoqvWmhPQWo1Lo1Yzbrh/Bu3jDTmhtPExtLMHvBn9moogQaIPmvIf+EWdIjLyeTMUkg5Lus
- U1DgifVa8qmCqszUtYIGdMWFD2ruJAcHIKf8g1OE=
-X-Gm-Gg: Acq92OFmesM59jqhh9E8kNIrZD7hymU6Y6FEj2xns+mHqKH+L/qzt/bicH6kXsS4v8I
- r5vrNPvW20OMf7J+d+/M6+xlWRdguZPDWU3D8H+F6Jon3ZOgUf99zDGeK/z42HyOiwYgfx+jJ9G
- aut9xw3QYlhGlh0Zx7JDX2oyAzlcH0ncCWAHq8Gog8Ju8g4/+cTGu8I1e19qPnb1kjDza0pLCC5
- VSYxYBbQVpUIVquxkh6zcJ+YpJYkuh+mxrr36wmNv89qqMroA+qtGFWKxLl1+FbrPJwOZpv0hi2
- xalK4fWQyF3U6Jah8vMWaiZ4ly4p/bLZcIm0WAR5Z/rgGePsPzAanUMrmk1uwQlwmpeWlQ==
-X-Received: by 2002:a05:6102:8551:20b0:631:26f6:7016 with SMTP id
- ada2fe7eead31-63126f6a89bmr5351296137.28.1778444392766; Sun, 10 May 2026
- 13:19:52 -0700 (PDT)
+ bh=Jkh1uL1rgPpDJYzB8P2TQ/rVAk5fcg+k9t8zp/yZ2zE=;
+ b=MlNGebPw2IxH7QSvSAy7WHMG8V6VN7z8YMTlsgIhCD6EditP5twnykWrEqGfGlK0NY
+ abAQnlWwFQJHqG4DJoQCRaanHE3MRWrv+Bx6DTyEiauzgGLQxM4TGquLByXuEiNOvM7Z
+ QXSUnijsI1L8d3HcGpq7FAvmPjAZyu5zo6S+OfbwjoekhhRRZHtQbCVPFSY32DvFzwjC
+ EwV+iNv74tZn5wheB1sqWz55rClBg/NUUstuxyOsEcFidnkyZdM+HRKoYzRrvxZifyRt
+ RFC6L+OMuW/RRaieh4Spq09a+03AizcTQqKktIfsWsr3soMvfgu1V5DzO6Fr3jIzac4U
+ DGLg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+N/iwjnZmMgOT6BUSvCC4sumR0YQsFB4TIjXljeFqzNY5br7mOp7di2OaWR2mQJzYBW8WeAI595Dwl@nongnu.org
+X-Gm-Message-State: AOJu0YwDOXf2qCa/pF19o18mftvjJHtGULHlTPPbYKpivk+RlPCwTnzN
+ OGPcIHuz1xGbzbLV4AKZMb7iPTZvc09paP4MQBFMmYmDz4JnXIc3eltHzOM0Vmf8qoWzBKlTQ7M
+ rec1lcgIygxHqNTUZuVW8U+NZkxVGQzA=
+X-Gm-Gg: Acq92OGzRaO+ttwqMu5oH8XVhmxJETpGhiqyn3/qJ4QqO2Tisjhe8ObWKF7Qfjzya91
+ 9+qYxubJZvpuQdyJTln9jBHvQZ6ygMJBQbFzhNAznskm1XrcHo51vqhCi/OFbDSybV64ajTyYWW
+ S+zzV1GeI+KGVXVSHIH4pXb/EB91jwI+jZ4jnB8Cu94LZoQN4snUmRANGR3gbcTiKe5Bv/f7+7m
+ ehsBoj5vKVYg5m6rP/lD97tyHIuheuUisuZgCpoZCpNSqO2uoY5pmopT4uJJYWun4wz1qD1Q2E6
+ 3skinbBxGyfjB8oVLpK96Ny/uFiIJefo2EBVAWM=
+X-Received: by 2002:a05:7300:dc14:b0:2da:2ec2:64fe with SMTP id
+ 5a478bee46e88-2f55034e591mr8974252eec.24.1778444624056; Sun, 10 May 2026
+ 13:23:44 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260509-mips-octeon-missing-insns-v2-v4-0-d669dcd05c2f@gmail.com>
- <20260509-mips-octeon-missing-insns-v2-v4-11-d669dcd05c2f@gmail.com>
- <f2af3df7-75a4-4a7c-9009-ea42e7a0988b@linaro.org>
-In-Reply-To: <f2af3df7-75a4-4a7c-9009-ea42e7a0988b@linaro.org>
-From: James Hilliard <james.hilliard1@gmail.com>
-Date: Sun, 10 May 2026 14:19:41 -0600
-X-Gm-Features: AVHnY4IunlRpnFkP6vj83otS0WdU0-nBP0M7si_6QBxCmtpjWDFVsT087gjE-Hs
-Message-ID: <CADvTj4pMFpXftMtZzjw3YN7fCsAJkS79Um1vRgN9S3BLu8E4Dg@mail.gmail.com>
-Subject: Re: [PATCH v4 11/32] target/mips: add Octeon SAA instruction
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
+References: <20260508152428.2648560-1-peter.maydell@linaro.org>
+ <735327c6-f23f-42cf-9b8e-a651d8ee7770@oss.qualcomm.com>
+ <CAFEAcA8eKM_DNK4kWX0DNudMiq__uZ-MQM0L-2CfWL39CgCyJw@mail.gmail.com>
+In-Reply-To: <CAFEAcA8eKM_DNK4kWX0DNudMiq__uZ-MQM0L-2CfWL39CgCyJw@mail.gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Mon, 11 May 2026 00:23:32 +0400
+X-Gm-Features: AVHnY4Ipntbl5HYZ5HUcQUpDcY2st1qNhYG08CbSlCYgER1CW52yGMI9jy-HfSI
+Message-ID: <CAJ+F1C+XzzsGRwLjUCYiDaS9OGXMq5oc3QM5pm4obZAgLP7Z1w@mail.gmail.com>
+Subject: Re: [PATCH 0/9] tools: Move more tools sources into tools/
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Viktor Prutyanov <viktor.prutyanov@phystech.edu>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, Gerd Hoffmann <kraxel@redhat.com>,
+ Eric Blake <eblake@redhat.com>, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Jason Wang <jasowang@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::929;
- envelope-from=james.hilliard1@gmail.com; helo=mail-ua1-x929.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132e;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x132e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -118,64 +128,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, May 10, 2026 at 1:37=E2=80=AFPM Richard Henderson
-<richard.henderson@linaro.org> wrote:
+Hi
+
+On Fri, May 8, 2026 at 8:23=E2=80=AFPM Peter Maydell <peter.maydell@linaro.=
+org> wrote:
 >
-> On 5/9/26 21:13, James Hilliard wrote:
-> > SAA is an Octeon+ instruction that atomically adds rt to the naturally
-> > aligned 32-bit word at base and discards the old memory value.
+> On Fri, 8 May 2026 at 17:00, Pierrick Bouvier
+> <pierrick.bouvier@oss.qualcomm.com> wrote:
 > >
-> > Add an Octeon+ feature bit, enable it for Octeon68XX, and implement the
-> > common SAA/SAAD translator with TCG atomic_fetch_add_i64.  The MemOp
-> > selects the word or doubleword transaction size.
+> > On 5/8/2026 8:24 AM, Peter Maydell wrote:
+> > > We have a set of binaries that we call "tools": they're built based o=
+n
+> > > the --enable-tools/--disable-tools configure setting, they're
+> > > documented in docs/tools, and they're standalone executables of one
+> > > form or another.
+> > >
+> > > Currently the sources for these are a bit scattered: many still in th=
+e
+> > > top level source directory, some in contrib, one or two actually in
+> > > the tools directory.
+> > >
+> > > As an initial attempt at cleanup, this patchset moves the sources for
+> > > qemu-bridge-helper, qemu-edid, qemu-img, qemu-io, qemu-nbd,
+> > > qemu-keymap, qemu-vmsr-helper and elf2dmp into the tools/ directory.
+> > >
+> > > The patchseries also moves the ebfp skeleton sources from tools/ebpf/
+> > > to ebpf/bpf-src/, because this isn't a tool by the above definition.
+> > >
+> > > As per my thread from a while back, I would ultimately like us to
+> > > clean up contrib/:
+> > > https://lore.kernel.org/qemu-devel/CAFEAcA_5HvGriDsWnb1ALuA_dgG320eKv=
+7yuM2kThv=3DrfOSZQA@mail.gmail.com/
+> > > But parts of that clearly need more discussion. So this is just doing
+> > > some parts that I hope are not controversial.
+> > >
+> > > Annoyingly, meson doesn't seem to provide any way for a subdirectory
+> > > meson.build to say "the foo.c in this subdir builds into a foo
+> > > executable that lives at the top level of the builddir". And we have =
+a
+> > > lot of test harness stuff plus user muscle memory that assumes that
+> > > qemu-img and qemu-io live there. So the build runes for these tools
+> > > have to stay in the top level meson.build (and tools/meson.build
+> > > remains an empty file). The exception is that contrib/elf2dmp/elf2dmp
+> > > is now tools/elf2dmp/elf2dmp, but I think the set of people who were
+> > > running that from the build directory will be small.
+> > >
 > >
-> > Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-> > ---
-> > Changes v2 -> v3:
-> >    - Split SAA out of the combined Octeon arithmetic and memory
-> >      instruction patch.  (requested by Richard Henderson)
-> >
-> > Changes v3 -> v4:
-> >    - Gate SAA/SAAD behind an Octeon+ feature bit.  (reported by Richard
-> >      Henderson)
-> >    - Use the i64 TCG atomic add path for both word and doubleword sizes=
-.
-> >      (suggested by Richard Henderson)
-> > ---
-> >   target/mips/cpu-defs.c.inc         |  2 +-
-> >   target/mips/mips-defs.h            |  1 +
-> >   target/mips/tcg/octeon.decode      |  4 ++++
-> >   target/mips/tcg/octeon_translate.c | 19 +++++++++++++++++++
-> >   4 files changed, 25 insertions(+), 1 deletion(-)
+> > It's a deliberate design more than an annoyance. It pushes users to mak=
+e
+> > things explicit at top level, which is good to understand what is built
+> > and how, and hide details in subdirs in variables. QEMU's top level
+> > meson.build is over complex, so it may appear more as a burden than a
+> > benefit though.
 >
-> I beg your pardon here.  Given that we implement only Octeon68XX, which i=
-s Octeon3,
-> there's not really a need for new feature bits.  For clarity, we could re=
-name INSN_OCTEON
-> to INSN_OCTEON3, but that's not really necessary either.
+> Personally I think if the build system doesn't let you do a
+> pretty normal and reasonable thing that's annoying. Meson
+> annoys me because it has a tendency to be over-opinionated.
+>
 
-You're right that a separate INSN_OCTEONP bit does not buy us much while
-QEMU only has one Octeon CPU model, so I'll drop that in v5.
+I have to agree that meson is sometimes lacking. In this case, it
+would be convenient to have a link created at build time. But you have
+to resort to fairly annoying custom_target python code today. In the
+meantime, there is also fs.copyfile() that could work (although it's
+also somewhat limited or buggy). For later, we could try adding
+fs.symlink() perhaps. Paolo might have better chances than me getting
+it accepted ;)
 
-One small correction: Octeon68XX corresponds to CN68XX / Octeon II, not
-Octeon III. My understanding is roughly:
-
-  CN3XXX -> original Octeon
-  CN58XX -> Octeon / Octeon+
-  CN68XX -> Octeon II
-  CN7XXX -> Octeon III
-
-Some later patches model Octeon III-style state/forms because existing
-binaries/toolchains use those encodings and QEMU has no separate Octeon
-III CPU model today. But for SAA/SAAD, I agree the extra feature bit is
-not worth carrying in this series.
-
->
-> Anyway,
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->
->
-> r~
->
->
+--=20
+Marc-Andr=C3=A9 Lureau
 
