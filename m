@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DA31CD3427
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 13:47:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2F15CD37B6
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 13:47:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wM4VG-0003vr-4O; Sun, 10 May 2026 09:47:38 -0400
+	id 1wM4UR-0001jH-2L; Sun, 10 May 2026 09:46:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wM4Um-0003NI-Ht
- for qemu-devel@nongnu.org; Sun, 10 May 2026 09:47:05 -0400
+ id 1wM4TW-00013l-CD
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 09:45:51 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wM4Uj-00053r-GH
- for qemu-devel@nongnu.org; Sun, 10 May 2026 09:46:59 -0400
+ id 1wM4TS-0004pZ-NI
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 09:45:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778420816;
+ s=mimecast20190719; t=1778420737;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7u9zogX3P0JAeuJRmCXuJczbBXaLBM6jDEKlOB3rLiQ=;
- b=Ha2MsxaI1hsV0NhxgN6zbnkevvj3xpAPhAcL1ZATOJnBq+3miW0x7W8ZcYTY4B8UObqju2
- 1q2fTKB+UvXzDXbhrAqXgczJWKToJUi2vh9D6RHkndwJMjCQR4GKB2DJt3U13yIRrpPz0e
- JbFVWJIJr9FVxn8sg3xjtJrwHwh7hE0=
+ bh=5G459n7lWCR6RHTw6ZXPgMDR6fRbZNSZklrPlvbvRh8=;
+ b=V+Pnwu9uA8zda3lqyzcOUx1eqPooSdXdrHr3cKBSRPpDzd0dgsP1NnW4eUM3Xwzin40feS
+ blYeFDo0uDXRw9LdvfxSKEE0UcWjHuyi03FA17ewNGLC2tvpWBm7p9hKVQGBf3hnMSUve7
+ wQhF8ITtUAW0n2vk6Tzi57HoPasz5Q0=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-311-Y6OjNzVjPM6Pgk17jMygHg-1; Sun,
- 10 May 2026 09:46:54 -0400
-X-MC-Unique: Y6OjNzVjPM6Pgk17jMygHg-1
-X-Mimecast-MFC-AGG-ID: Y6OjNzVjPM6Pgk17jMygHg_1778420814
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-711-lcI3LTA7MImIj7vmDntVAQ-1; Sun,
+ 10 May 2026 09:45:36 -0400
+X-MC-Unique: lcI3LTA7MImIj7vmDntVAQ-1
+X-Mimecast-MFC-AGG-ID: lcI3LTA7MImIj7vmDntVAQ_1778420735
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EE3E01956095
- for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:46:53 +0000 (UTC)
+ id 399A7195608A
+ for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:45:35 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B2E7B3002D30; Sun, 10 May 2026 13:46:51 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7EEDD19560A2; Sun, 10 May 2026 13:45:31 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 10 May 2026 17:43:14 +0400
-Subject: [PATCH 17/54] microvm: convert OnOffAuto properties to QAPI-aware
- registration
+Date: Sun, 10 May 2026 17:43:08 +0400
+Subject: [PATCH 11/54] tests: update check-qom-proplist for QAPI-aware
+ property registration
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260510-qom-qapi-v1-17-48ba6a1a1fa5@redhat.com>
+Message-Id: <20260510-qom-qapi-v1-11-48ba6a1a1fa5@redhat.com>
 References: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
 In-Reply-To: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
 To: qemu-devel@nongnu.org
@@ -63,24 +63,24 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5488;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5561;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=Iu7GG3sr59ODnv4VSdfdXSvssxBqtJhK0LiuLiI+exg=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqAItv1fgWP5dQEgYigslvfPrCX18FvKpeMD3E1
- zGYBYTbYqeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCagCLbwAKCRDa6OEJdZac
- 5UBuD/0ZvgUI/Ctl/R8m8G81AwJDGsHw37XEvS0L7QgMGQn8ssze+Z7HYtrHy1Znh2AZ8DZMZCl
- VtcFnTZMwOeJ55/BIeFycxa+2NNQn7fHF0I+Z8RDzax/lyZKn4dNxVzuVbr/eltvr8mpJDTMFqj
- yC9+1JNc0F5eSj502UatXev0RQLoryJa86n1iGUSH78Mg42b0HXfuD39h6hz4n/ne0l4DFi0hKf
- IfVxT8oZegCK9FYHyuPVKBE6d7XfHnXZLg+vTeSOMI8Ggel6XGSi+WFFtwBw+oAsZq+TmOF42sA
- oDUPLlBylR8H/naoNDUDyapfoNYJBkSDt0z1VvMevAX4uWDEkDG6/mqxS2Vhi3r6h1OugUinPRy
- O4+f1Ry2askVn7T5FWHB6+qz3jAnAnUpKbQnLPUih2hBOq5XQ85Yx8fKBrmZ1DB3ABFnKlmw3/U
- G2lTt3droJqAfpKrLBcK3B2bE75Nb2vQZFepSzS1CMvuHhmMNokePWkb7zwg3WvWzzdS+KklGr3
- a8jFhEaUHmXkheW5IuuSjCnCF2pUBTMyVP7sb6NJBBFJCYOAv3ekmGHQrex0r/WsOqZOB0RLKlf
- UVqZo6Gga55gvEDUDF3X8IMzVgXNVpeO7WRf2CAobh6ydswrdGEUVAylWWRQ62pcxQLGEHDWAfz
- t5/BGXR7DSdbqFg==
+ bh=AYySB4whkyxqj4vvcpXqAD8zNJIJd16aWiD3AOenPUQ=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqAItul/Y9cbWxeV5ZWNEHQbbJvzyQcNQbi63gc
+ PWIINSZXzuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCagCLbgAKCRDa6OEJdZac
+ 5YT2EACrLs2+Z/izomzenr8vm/CVB2rjnJW8oO3Btpqu5NU3B9XzTn9NHoFD3I1H5/XEZKGyVVo
+ 8jNoKLerfoQpdZgAPRIM3COVPNyhslw8GXrGQ9EQNPHuFDzmVMaYG/8PDnqbIaVXKFglqvedC7A
+ JeYuIQgRdWIMkuuCFcsZZVPeU77Ak1/c9+3oQmYTDEsXPMhBJeKQwIYbVl3YJuXY8NDslhvzNEG
+ ys/MNeRne1Qopv6dlSEh3Ah3SvUDprXfMkP7lyhheNWlSKEQ1HMgbELnM5qAK5FkUB25/VH0Lyq
+ l0vuKQgEZMY2lsXtA7oA11/PisqH9sxOmSj9bShn9TgCJTiTJxVEFHJkStj/gocMA9kw3ahW0YK
+ iKsKLRgVw/Th1y5yrz5U3mHwUazeA1ilaKAscIHvJ4hFCwvLwkhUD+dmqCwYxC8qtH+RTTJZ4nV
+ aCzH++N+RfyCIwb2wCdnfSw7+azNRTyrMXHZ3+R9p45JnkhHI60heMd+vkmLAIpRDBxoDsi9SN1
+ 0tzOAblNq4nus9wI2gpF4q0XbY0luCzaZMi6FW8+UEIIPn94J20VJfmQrPgrpCjI3GB0Rxc1wlA
+ jbZGtVPCP4EABnM/Mt5J5VqPZ59KOjhdQOLNWdBu1ldQhiCNf8Eok2enFEUsGTwF6R79siOF59E
+ 2bPTVUMo52wRz+g==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -106,145 +106,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the rtc, pcie, and ioapic2 OnOffAuto properties from
-manual visitor-based callbacks to property_add_qapi_enum().
+Migrate the dummy object's string and enum properties from the legacy
+object_class_property_add_str/enum() helpers to the new QAPI-aware
+object_class_property_add_qapi/qapi_enum() registration.
+
+Add test cases verifying that the qapi_type metadata is correctly
+populated on properties registered through the new API, and that it
+remains NULL for properties using the old-style registration.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/i386/microvm.c | 84 ++++++++++++++++++++++++-------------------------------
- 1 file changed, 36 insertions(+), 48 deletions(-)
+ tests/unit/check-qom-proplist.c | 94 ++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 78 insertions(+), 16 deletions(-)
 
-diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
-index 5a7889f21b8..54bdde515b1 100644
---- a/hw/i386/microvm.c
-+++ b/hw/i386/microvm.c
-@@ -21,7 +21,7 @@
- #include "qemu/units.h"
+diff --git a/tests/unit/check-qom-proplist.c b/tests/unit/check-qom-proplist.c
+index ee3c6fb32b1..7f10befe687 100644
+--- a/tests/unit/check-qom-proplist.c
++++ b/tests/unit/check-qom-proplist.c
+@@ -21,6 +21,7 @@
+ #include "qemu/osdep.h"
+ 
  #include "qapi/error.h"
- #include "qapi/visitor.h"
--#include "qapi/qapi-visit-common.h"
-+#include "qapi/qapi-type-infos-common.h"
- #include "system/system.h"
- #include "system/cpus.h"
- #include "system/numa.h"
-@@ -519,55 +519,40 @@ static void microvm_machine_reset(MachineState *machine, ResetType type)
-     }
++#include "qapi/qapi-type-info.h"
+ #include "qapi/qobject-input-visitor.h"
+ #include "qobject/qdict.h"
+ #include "qobject/qobject.h"
+@@ -108,22 +109,21 @@ static int dummy_get_av(Object *obj,
  }
  
--static void microvm_machine_get_rtc(Object *obj, Visitor *v, const char *name,
--                                    void *opaque, Error **errp)
-+static int microvm_machine_get_rtc(Object *obj, Error **errp)
+ 
+-static void dummy_set_sv(Object *obj,
+-                         const char *value,
+-                         Error **errp)
++static void dummy_set_sv(Object *obj, Visitor *v, const char *name,
++                         void *opaque, Error **errp)
  {
-     MicrovmMachineState *mms = MICROVM_MACHINE(obj);
--    OnOffAuto rtc = mms->rtc;
--
--    visit_type_OnOffAuto(v, name, &rtc, errp);
-+    return mms->rtc;
+     DummyObject *dobj = DUMMY_OBJECT(obj);
+ 
+-    g_free(dobj->sv);
+-    dobj->sv = g_strdup(value);
++    g_clear_pointer(&dobj->sv, g_free);
++    visit_type_str(v, name, &dobj->sv, errp);
  }
  
--static void microvm_machine_set_rtc(Object *obj, Visitor *v, const char *name,
--                                    void *opaque, Error **errp)
-+static void microvm_machine_set_rtc(Object *obj, int value, Error **errp)
+-static char *dummy_get_sv(Object *obj,
+-                          Error **errp)
++static void dummy_get_sv(Object *obj, Visitor *v, const char *name,
++                         void *opaque, Error **errp)
  {
-     MicrovmMachineState *mms = MICROVM_MACHINE(obj);
--
--    visit_type_OnOffAuto(v, name, &mms->rtc, errp);
-+    mms->rtc = value;
+     DummyObject *dobj = DUMMY_OBJECT(obj);
+ 
+-    return g_strdup(dobj->sv);
++    visit_type_str(v, name, &dobj->sv, errp);
  }
  
--static void microvm_machine_get_pcie(Object *obj, Visitor *v, const char *name,
--                                     void *opaque, Error **errp)
-+static int microvm_machine_get_pcie(Object *obj, Error **errp)
- {
-     MicrovmMachineState *mms = MICROVM_MACHINE(obj);
--    OnOffAuto pcie = mms->pcie;
--
--    visit_type_OnOffAuto(v, name, &pcie, errp);
-+    return mms->pcie;
+ 
+@@ -135,16 +135,28 @@ static void dummy_init(Object *obj)
  }
  
--static void microvm_machine_set_pcie(Object *obj, Visitor *v, const char *name,
--                                     void *opaque, Error **errp)
-+static void microvm_machine_set_pcie(Object *obj, int value, Error **errp)
- {
-     MicrovmMachineState *mms = MICROVM_MACHINE(obj);
--
--    visit_type_OnOffAuto(v, name, &mms->pcie, errp);
-+    mms->pcie = value;
- }
  
--static void microvm_machine_get_ioapic2(Object *obj, Visitor *v, const char *name,
--                                        void *opaque, Error **errp)
-+static int microvm_machine_get_ioapic2(Object *obj, Error **errp)
- {
-     MicrovmMachineState *mms = MICROVM_MACHINE(obj);
--    OnOffAuto ioapic2 = mms->ioapic2;
--
--    visit_type_OnOffAuto(v, name, &ioapic2, errp);
-+    return mms->ioapic2;
- }
- 
--static void microvm_machine_set_ioapic2(Object *obj, Visitor *v, const char *name,
--                                        void *opaque, Error **errp)
-+static void microvm_machine_set_ioapic2(Object *obj, int value, Error **errp)
- {
-     MicrovmMachineState *mms = MICROVM_MACHINE(obj);
--
--    visit_type_OnOffAuto(v, name, &mms->ioapic2, errp);
-+    mms->ioapic2 = value;
- }
- 
- static bool microvm_machine_get_isa_serial(Object *obj, Error **errp)
-@@ -673,26 +658,29 @@ static void microvm_class_init(ObjectClass *oc, const void *data)
-     hc->unplug_request = microvm_device_unplug_request_cb;
-     hc->unplug = microvm_device_unplug_cb;
- 
--    object_class_property_add(oc, MICROVM_MACHINE_RTC, "OnOffAuto",
--                              microvm_machine_get_rtc,
--                              microvm_machine_set_rtc,
--                              NULL, NULL);
--    object_class_property_set_description(oc, MICROVM_MACHINE_RTC,
--        "Enable MC146818 RTC");
--
--    object_class_property_add(oc, MICROVM_MACHINE_PCIE, "OnOffAuto",
--                              microvm_machine_get_pcie,
--                              microvm_machine_set_pcie,
--                              NULL, NULL);
--    object_class_property_set_description(oc, MICROVM_MACHINE_PCIE,
--        "Enable PCIe");
--
--    object_class_property_add(oc, MICROVM_MACHINE_IOAPIC2, "OnOffAuto",
--                              microvm_machine_get_ioapic2,
--                              microvm_machine_set_ioapic2,
--                              NULL, NULL);
--    object_class_property_set_description(oc, MICROVM_MACHINE_IOAPIC2,
--        "Enable second IO-APIC");
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = MICROVM_MACHINE_RTC,
-+        .description = "Enable MC146818 RTC",
-+        .qapi_type = &OnOffAuto_type_info,
-+        .get = microvm_machine_get_rtc,
-+        .set = microvm_machine_set_rtc,
-+    ));
++static const QAPITypeInfo dummy_animal_qapi_type_info = {
++    .name = "DummyAnimal",
++    .schema_name = "DummyAnimalSchema",
++    .lookup = &dummy_animal_map,
++};
 +
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = MICROVM_MACHINE_PCIE,
-+        .description = "Enable PCIe",
-+        .qapi_type = &OnOffAuto_type_info,
-+        .get = microvm_machine_get_pcie,
-+        .set = microvm_machine_set_pcie,
-+    ));
++static const QAPITypeInfo dummy_str_qapi_type_info = {
++    .name = "str",
++    .schema_name = "StrSchema",
++};
 +
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = MICROVM_MACHINE_IOAPIC2,
-+        .description = "Enable second IO-APIC",
-+        .qapi_type = &OnOffAuto_type_info,
-+        .get = microvm_machine_get_ioapic2,
-+        .set = microvm_machine_set_ioapic2,
+ static void dummy_class_init(ObjectClass *cls, const void *data)
+ {
+-    object_class_property_add_str(cls, "sv",
+-                                  dummy_get_sv,
+-                                  dummy_set_sv);
+-    object_class_property_add_enum(cls, "av",
+-                                   "DummyAnimal",
+-                                   &dummy_animal_map,
+-                                   dummy_get_av,
+-                                   dummy_set_av);
++    object_class_property_add_qapi(cls, "sv", &dummy_str_qapi_type_info,
++                                   dummy_get_sv, dummy_set_sv,
++                                   NULL, NULL);
++    object_class_property_add_qapi_enum(cls, QAPI_ENUM_PROP(
++        .name = "av",
++        .qapi_type = &dummy_animal_qapi_type_info,
++        .get = dummy_get_av,
++        .set = dummy_set_av,
 +    ));
+ }
  
-     object_class_property_add_bool(oc, MICROVM_MACHINE_ISA_SERIAL,
-                                    microvm_machine_get_isa_serial,
+ 
+@@ -648,6 +660,54 @@ static void test_qom_partial_path(void)
+     object_unparent(cont1);
+ }
+ 
++static void test_dummy_qapi_enum(void)
++{
++    ObjectProperty *prop;
++    Object *parent = object_get_objects_root();
++    DummyObject *dobj = DUMMY_OBJECT(
++        object_new_with_props(TYPE_DUMMY,
++                              parent,
++                              "dummy0",
++                              &error_abort,
++                              "av", "platypus",
++                              NULL));
++
++    g_assert(dobj->av == DUMMY_PLATYPUS);
++
++    prop = object_property_find(OBJECT(dobj), "av");
++    g_assert(prop);
++    g_assert(prop->qapi_type == &dummy_animal_qapi_type_info);
++    g_assert_cmpstr(prop->qapi_type->name, ==, "DummyAnimal");
++    g_assert_cmpstr(prop->qapi_type->schema_name, ==, "DummyAnimalSchema");
++    g_assert(prop->qapi_type->lookup == &dummy_animal_map);
++
++    object_unparent(OBJECT(dobj));
++}
++
++static void test_dummy_qapi_prop(void)
++{
++    ObjectProperty *prop;
++    Object *parent = object_get_objects_root();
++    DummyObject *dobj = DUMMY_OBJECT(
++        object_new_with_props(TYPE_DUMMY,
++                              parent,
++                              "dummy0",
++                              &error_abort,
++                              "sv", "hello",
++                              NULL));
++
++    g_assert_cmpstr(dobj->sv, ==, "hello");
++
++    prop = object_property_find(OBJECT(dobj), "sv");
++    g_assert(prop);
++    g_assert(prop->qapi_type == &dummy_str_qapi_type_info);
++    g_assert_cmpstr(prop->qapi_type->name, ==, "str");
++    g_assert_cmpstr(prop->qapi_type->schema_name, ==, "StrSchema");
++    g_assert(prop->qapi_type->lookup == NULL);
++
++    object_unparent(OBJECT(dobj));
++}
++
+ int main(int argc, char **argv)
+ {
+     g_test_init(&argc, &argv, NULL);
+@@ -666,6 +726,8 @@ int main(int argc, char **argv)
+     g_test_add_func("/qom/proplist/iterator", test_dummy_iterator);
+     g_test_add_func("/qom/proplist/class_iterator", test_dummy_class_iterator);
+     g_test_add_func("/qom/proplist/delchild", test_dummy_delchild);
++    g_test_add_func("/qom/proplist/qapi_enum", test_dummy_qapi_enum);
++    g_test_add_func("/qom/proplist/qapi_prop", test_dummy_qapi_prop);
+     g_test_add_func("/qom/resolve/partial", test_qom_partial_path);
+ 
+     return g_test_run();
 
 -- 
 2.54.0
