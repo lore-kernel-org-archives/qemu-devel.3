@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A573CD37B6
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 13:52:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F36F0CD3427
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 13:53:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wM4aD-00062f-NI; Sun, 10 May 2026 09:52:39 -0400
+	id 1wM4aR-0006Ad-8p; Sun, 10 May 2026 09:52:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wM4ZU-0005dp-Sa
- for qemu-devel@nongnu.org; Sun, 10 May 2026 09:51:54 -0400
+ id 1wM4Zt-0005wo-IW
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 09:52:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wM4ZT-0006EI-2B
- for qemu-devel@nongnu.org; Sun, 10 May 2026 09:51:52 -0400
+ id 1wM4Zq-0006HP-NB
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 09:52:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778421109;
+ s=mimecast20190719; t=1778421132;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lJ6YVk9irKlQOlbGHeKV4DjlzShkLcal/Hj1rNSds4s=;
- b=VG6rr5TQ0KI+qIE934jJSsHcmA/YGF5xuWNVhCzG01tu7pYiVShfhqOGzCbGlqO+p5++dL
- wmlM2wwAp9EuW9G0sDa8KfW8jspeKcTKN8iXRkevGfoO6g0JXp+5rMbSySWvD9EtBKKLt1
- JKkbHpe4VAH9e1KA6WlQgJHTNAI77sM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=QFvF2wHuybLN0/ylLzW5QkzS2+7pxZJbHZXPboEd8JE=;
+ b=jPl0BiMIk07YR8VttOARggfBwrnccucHL7NgJIEmod5o7FTXhAAAfJcIhasDBkSA9nhgkD
+ 0gL9PHCtyYzBW/9g+lQc/Jq0IcTgv7LGdgyxyYn3cd6YcRUyygUp1m1/ayxPoLCkoStinL
+ 10bCheYk3h2RQyi6EvpdjAkaSyEWmvo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-220-ZD3JaHjEPPyjCYLUJNL5Hg-1; Sun,
- 10 May 2026 09:51:48 -0400
-X-MC-Unique: ZD3JaHjEPPyjCYLUJNL5Hg-1
-X-Mimecast-MFC-AGG-ID: ZD3JaHjEPPyjCYLUJNL5Hg_1778421107
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-578-73NC-F-dMdGYxZCpGhRlvg-1; Sun,
+ 10 May 2026 09:52:10 -0400
+X-MC-Unique: 73NC-F-dMdGYxZCpGhRlvg-1
+X-Mimecast-MFC-AGG-ID: 73NC-F-dMdGYxZCpGhRlvg_1778421130
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 73D511800578
- for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:51:47 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F2272195608A
+ for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:52:09 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8CF7618004A3; Sun, 10 May 2026 13:51:44 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6A69519560A2; Sun, 10 May 2026 13:52:06 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 10 May 2026 17:43:40 +0400
-Subject: [PATCH 43/54] qdev: convert core PropertyInfo definitions to use
- qapi_type
+Date: Sun, 10 May 2026 17:43:42 +0400
+Subject: [PATCH 45/54] hw: convert device-local PropertyInfo definitions to
+ use qapi_type
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260510-qom-qapi-v1-43-48ba6a1a1fa5@redhat.com>
+Message-Id: <20260510-qom-qapi-v1-45-48ba6a1a1fa5@redhat.com>
 References: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
 In-Reply-To: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
 To: qemu-devel@nongnu.org
@@ -63,24 +63,24 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6552;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8639;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=tcRQLOx7yH29wX/F2qmEq+1s28yNGkCzWFTucYIoVMM=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqAItwxDBt9ZRgPYXy9dOLsX0R6XCl/1H60ezbL
- q66mzp9/GqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCagCLcAAKCRDa6OEJdZac
- 5anMD/oDYyVz4/I34R7whghXrq0QbYAMbgRkpX8zP8MR0/z1CHmGfnyucXhJrm96PtuTeBHYcYk
- AqAr0UmCnh4/eyRbOInaB+vKUaYHmAQiLhD1YPLI7HRNHrwu0/ZxB2N89HzlhvVSjjcUZfEs2hQ
- rdweMnplJffhiaWUKdpziLKOU1o+RP+JFqDMN0iOPcKtZEtjo6G/YLMkqdYRjb2ieK4ShgUio08
- ap0zuER8ofWR8Xb/NjMsXaI4/1ZYvkKCEM+VrpaNhf/I9OV3fd0AFWVmtWJeCoVSBnJ9xvDlSbm
- xKLtIaFd40tVDpx2teo1efQlchOM2APuvTJ+rkz2KvD4jqccOfOx29mBOiABroSJlRsCYOdSo0D
- b7DdqcdKxUdUhuN81VXwaAHOKP2b82PNzC9poSYT71vLyZuHe97294e4tfHp177Bx9kBf669pVh
- osekbExNiPfjLnbCcmaNyq5iyye0wLF44X+jEQREPpMd2CYCeNNCsVB6lxgTdXKv88nxjILUN6c
- Mzg9Hazqzk4DZrvtnwpWnmRX0eU8Fpg18nA6Elmmq/BbiYMXJepu0et/G4LCeBM5xn8NBKIQOxZ
- ciNhwnFxPm3G1gT/cIjjqq2GYbNTLpkwnNKBIZQ/q6MFp3qDDUU6AqBPhwDhumrBKCQO4kfFHFC
- c1lhkHM5k/SROJg==
+ bh=3I2WuYw4vFPMH8Ir1mFjxpbKEzAwCx4bK7UExLGhVdM=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqAItwG0Dv41x1/9nUFnBolzzHQY0bRJPxiNI21
+ hUklqmOHfGJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCagCLcAAKCRDa6OEJdZac
+ 5SG7D/9if9hAHi2mcZapnun9EZk8B2osVprIwTuRRmP3NjBRBeTwdXj82F5lgX/Wiv3a3Q0tcRZ
+ uTCSvxtMeswO4dl0aYFJRcyhayyL7dX4BwH3x+/NOkhBSOuYoNISWleKbMeXWGWPBRpXeR7XrdC
+ /ajje80sN5Dkkq50MOPetRMbBSp62OGJJp/8HFhixRGYuBZ4wNxw7OzR2yAuiOSHnVHGmx9zmGv
+ +bkCZKwAkOufJ0bdpYsm8cWQIgFzcR34GYfS5trESMXEbmu+r76J3MvNHhqbF7MSN/cbYENNeYa
+ 9UcaaXJgOPRcyNuGIwzQnqXoEufMTgdjvqLedEuFcMacb452mIBNGyi1kVk5cS2dqNnbOwtaYZh
+ 21numCh2p3Q8HXqD8reld7PqmT70tQPBmnfKEpFhYczBce2sxbn45GNyb/ffdl00M3iobZmC5gf
+ kB2V+cJWYgLNESOemh2/Y43FamoM9VpQBB/GwX+/OmSaYzAX3mh/bMhmruuBid42QktXmnGVIdo
+ 4YxGa/zbIlmOYFKCh7Mv1d1OHxWvhA9zOntXyS15yzu7hvknH2+4O9jcpx/qHrxvQXNZcsw49e2
+ GQaPyNqMIecGecCNAPYrR4SiTNUucEm0MFmyUOoCq9BCXdccBlzVzxigKwgUt+Sy5y/7JiXqPLm
+ UkV7l6tQltJNEbg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -106,190 +106,265 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace .type string with .qapi_type pointer on all core PropertyInfo
-definitions in qdev-properties.c. Remove .enum_table from enum
-definitions, since the lookup is now accessed through .qapi_type->lookup
-via the qdev_propinfo_enum_lookup() fallback helper.
-
-Note that qdev_prop_usize now reports "uint32" or "uint64" depending on
-the host. If usize is worth preserving, it should be added as a QAPI
-builtin type. Or perhaps we should simply use "size" everywhere (u64)?
-
-It's also strange to use type "size" for both u32 (prop_size32) and u64
-(prop_size).
-
-The qdev_prop_link and qdev_prop_array definitions are unchanged:
-link uses .create for registration, and array will be refactored in
-a subsequent patch.
+Mechanical conversion of PropertyInfo definitions in device-specific
+files, replacing .type string with .qapi_type pointer to the
+corresponding QAPITypeInfo.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/core/qdev-properties.c | 40 ++++++++++++++++++++++------------------
- 1 file changed, 22 insertions(+), 18 deletions(-)
+ hw/block/xen-block.c       | 3 ++-
+ hw/misc/xlnx-versal-trng.c | 3 ++-
+ hw/nvme/nguid.c            | 3 ++-
+ hw/nvram/xlnx-bbram.c      | 3 ++-
+ hw/nvram/xlnx-efuse.c      | 3 ++-
+ hw/pci/pci.c               | 3 ++-
+ hw/s390x/ccw-device.c      | 3 ++-
+ hw/s390x/css.c             | 5 +++--
+ hw/s390x/s390-pci-bus.c    | 3 ++-
+ hw/vfio/pci-quirks.c       | 3 ++-
+ hw/display/apple-gfx.m     | 3 ++-
+ 11 files changed, 23 insertions(+), 12 deletions(-)
 
-diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-index eb7caa32557..7e562518184 100644
---- a/hw/core/qdev-properties.c
-+++ b/hw/core/qdev-properties.c
-@@ -12,6 +12,8 @@
- #include "qdev-prop-internal.h"
- #include "qom/compat-properties.h"
- #include "qom/qom-qobject.h"
+diff --git a/hw/block/xen-block.c b/hw/block/xen-block.c
+index 474c12fe4ac..d9721c565c5 100644
+--- a/hw/block/xen-block.c
++++ b/hw/block/xen-block.c
+@@ -29,6 +29,7 @@
+ #include "dataplane/xen-block.h"
+ #include "hw/xen/interface/io/xs_wire.h"
+ #include "trace.h"
 +#include "qapi/qapi-builtin-type-infos.h"
-+#include "qapi/qapi-type-infos-common.h"
  
- void qdev_prop_set_after_realize(DeviceState *dev, const char *name,
-                                   Error **errp)
-@@ -180,7 +182,7 @@ static void set_default_value_bool(ObjectProperty *op, const Property *prop)
- }
- 
- const PropertyInfo qdev_prop_bit = {
--    .type  = "bool",
-+    .qapi_type = &bool_type_info,
-     .description = "on/off",
-     .get   = prop_get_bit,
-     .set   = prop_set_bit,
-@@ -230,7 +232,7 @@ static void prop_set_bit64(Object *obj, Visitor *v, const char *name,
- }
- 
- const PropertyInfo qdev_prop_bit64 = {
--    .type  = "bool",
-+    .qapi_type = &bool_type_info,
-     .description = "on/off",
-     .get   = prop_get_bit64,
-     .set   = prop_set_bit64,
-@@ -292,9 +294,8 @@ static void prop_set_on_off_auto_bit64(Object *obj, Visitor *v,
- }
- 
- const PropertyInfo qdev_prop_on_off_auto_bit64 = {
--    .type = "OnOffAuto",
-+    .qapi_type = &OnOffAuto_type_info,
-     .description = "on/off/auto",
--    .enum_table = &OnOffAuto_lookup,
-     .get = prop_get_on_off_auto_bit64,
-     .set = prop_set_on_off_auto_bit64,
-     .set_default_value = qdev_propinfo_set_default_value_enum,
-@@ -321,7 +322,7 @@ static void set_bool(Object *obj, Visitor *v, const char *name, void *opaque,
- }
- 
- const PropertyInfo qdev_prop_bool = {
--    .type  = "bool",
-+    .qapi_type = &bool_type_info,
-     .description = "on/off",
-     .get   = get_bool,
-     .set   = set_bool,
-@@ -361,7 +362,7 @@ void qdev_propinfo_set_default_value_uint(ObjectProperty *op,
- }
- 
- const PropertyInfo qdev_prop_uint8 = {
--    .type  = "uint8",
-+    .qapi_type = &uint8_type_info,
-     .get   = get_uint8,
-     .set   = set_uint8,
-     .set_default_value = qdev_propinfo_set_default_value_uint,
-@@ -388,7 +389,7 @@ static void set_uint16(Object *obj, Visitor *v, const char *name,
- }
- 
- const PropertyInfo qdev_prop_uint16 = {
--    .type  = "uint16",
-+    .qapi_type = &uint16_type_info,
-     .get   = get_uint16,
-     .set   = set_uint16,
-     .set_default_value = qdev_propinfo_set_default_value_uint,
-@@ -433,14 +434,14 @@ static void set_int32(Object *obj, Visitor *v, const char *name, void *opaque,
- }
- 
- const PropertyInfo qdev_prop_uint32 = {
--    .type  = "uint32",
-+    .qapi_type = &uint32_type_info,
-     .get   = get_uint32,
-     .set   = set_uint32,
-     .set_default_value = qdev_propinfo_set_default_value_uint,
- };
- 
- const PropertyInfo qdev_prop_int32 = {
--    .type  = "int32",
-+    .qapi_type = &int32_type_info,
-     .get   = qdev_propinfo_get_int32,
-     .set   = set_int32,
-     .set_default_value = qdev_propinfo_set_default_value_int,
-@@ -485,14 +486,14 @@ static void set_int64(Object *obj, Visitor *v, const char *name,
- }
- 
- const PropertyInfo qdev_prop_uint64 = {
--    .type  = "uint64",
-+    .qapi_type = &uint64_type_info,
-     .get   = get_uint64,
-     .set   = set_uint64,
-     .set_default_value = qdev_propinfo_set_default_value_uint,
- };
- 
- const PropertyInfo qdev_prop_int64 = {
--    .type  = "int64",
-+    .qapi_type = &int64_type_info,
-     .get   = get_int64,
-     .set   = set_int64,
-     .set_default_value = qdev_propinfo_set_default_value_int,
-@@ -514,7 +515,7 @@ static void set_uint64_checkmask(Object *obj, Visitor *v, const char *name,
- }
- 
- const PropertyInfo qdev_prop_uint64_checkmask = {
--    .type  = "uint64",
-+    .qapi_type = &uint64_type_info,
-     .get   = get_uint64,
-     .set   = set_uint64_checkmask,
- };
-@@ -550,7 +551,11 @@ static void set_usize(Object *obj, Visitor *v, const char *name, void *opaque,
- }
- 
- const PropertyInfo qdev_prop_usize = {
--    .type  = "usize",
-+#if HOST_LONG_BITS == 32
-+    .qapi_type = &uint32_type_info,
-+#else
-+    .qapi_type = &uint64_type_info,
-+#endif
-     .get   = get_usize,
-     .set   = set_usize,
-     .set_default_value = qdev_propinfo_set_default_value_uint,
-@@ -594,7 +599,7 @@ static void set_string(Object *obj, Visitor *v, const char *name,
- }
- 
- const PropertyInfo qdev_prop_string = {
+ #define XVDA_MAJOR 202
+ #define XVDQ_MAJOR (1 << 20)
+@@ -663,7 +664,7 @@ invalid:
+  * https://xenbits.xen.org/docs/unstable/man/xen-vbd-interface.7.html
+  */
+ static const PropertyInfo xen_block_prop_vdev = {
 -    .type  = "str",
 +    .qapi_type = &str_type_info,
-     .release = release_string,
-     .get   = get_string,
-     .set   = set_string,
-@@ -603,9 +608,8 @@ const PropertyInfo qdev_prop_string = {
- /* --- on/off/auto --- */
+     .description = "Virtual Disk specifier (d*p*/xvd*/hd*/sd*)",
+     .get = xen_block_get_vdev,
+     .set = xen_block_set_vdev,
+diff --git a/hw/misc/xlnx-versal-trng.c b/hw/misc/xlnx-versal-trng.c
+index aa1d65de7b7..4c358104c50 100644
+--- a/hw/misc/xlnx-versal-trng.c
++++ b/hw/misc/xlnx-versal-trng.c
+@@ -36,6 +36,7 @@
+ #include "qapi/visitor.h"
+ #include "migration/vmstate.h"
+ #include "hw/core/qdev-properties.h"
++#include "qapi/qapi-builtin-type-infos.h"
  
- const PropertyInfo qdev_prop_on_off_auto = {
--    .type = "OnOffAuto",
-+    .qapi_type = &OnOffAuto_type_info,
-     .description = "on/off/auto",
--    .enum_table = &OnOffAuto_lookup,
-     .get = qdev_propinfo_get_enum,
-     .set = qdev_propinfo_set_enum,
-     .set_default_value = qdev_propinfo_set_default_value_enum,
-@@ -646,7 +650,7 @@ static void set_size32(Object *obj, Visitor *v, const char *name, void *opaque,
+ #ifndef XLNX_VERSAL_TRNG_ERR_DEBUG
+ #define XLNX_VERSAL_TRNG_ERR_DEBUG 0
+@@ -651,7 +652,7 @@ static void trng_prop_fault_event_set(Object *obj, Visitor *v,
  }
  
- const PropertyInfo qdev_prop_size32 = {
--    .type  = "size",
-+    .qapi_type = &size_type_info,
-     .get = qdev_propinfo_get_size32,
-     .set = set_size32,
-     .set_default_value = qdev_propinfo_set_default_value_uint,
-@@ -1052,7 +1056,7 @@ static void set_size(Object *obj, Visitor *v, const char *name, void *opaque,
+ static const PropertyInfo trng_prop_fault_events = {
+-    .type = "uint32",
++    .qapi_type = &uint32_type_info,
+     .description = "Set to trigger TRNG fault events",
+     .set = trng_prop_fault_event_set,
+     .realized_set_allowed = true,
+diff --git a/hw/nvme/nguid.c b/hw/nvme/nguid.c
+index 4cd6fad6ac9..6eaf90fca88 100644
+--- a/hw/nvme/nguid.c
++++ b/hw/nvme/nguid.c
+@@ -18,6 +18,7 @@
+ #include "qapi/visitor.h"
+ #include "qemu/ctype.h"
+ #include "nvme.h"
++#include "qapi/qapi-builtin-type-infos.h"
+ 
+ #define NGUID_SEPARATOR '-'
+ 
+@@ -179,7 +180,7 @@ static void set_nguid(Object *obj, Visitor *v, const char *name, void *opaque,
  }
  
- const PropertyInfo qdev_prop_size = {
--    .type  = "size",
-+    .qapi_type = &size_type_info,
-     .get = get_size,
-     .set = set_size,
-     .set_default_value = qdev_propinfo_set_default_value_uint,
+ const PropertyInfo qdev_prop_nguid = {
+-    .type  = "str",
++    .qapi_type = &str_type_info,
+     .description =
+         "NGUID or \"" NGUID_VALUE_AUTO "\" for random value",
+     .get   = get_nguid,
+diff --git a/hw/nvram/xlnx-bbram.c b/hw/nvram/xlnx-bbram.c
+index edfb592a5ec..8198790b98f 100644
+--- a/hw/nvram/xlnx-bbram.c
++++ b/hw/nvram/xlnx-bbram.c
+@@ -34,6 +34,7 @@
+ #include "hw/core/qdev-properties.h"
+ #include "hw/core/qdev-properties-system.h"
+ #include "hw/nvram/xlnx-efuse.h"
++#include "qapi/qapi-builtin-type-infos.h"
+ 
+ #ifndef XLNX_BBRAM_ERR_DEBUG
+ #define XLNX_BBRAM_ERR_DEBUG 0
+@@ -486,7 +487,7 @@ static void bbram_prop_release_drive(Object *obj, const char *name,
+ }
+ 
+ static const PropertyInfo bbram_prop_drive = {
+-    .type  = "str",
++    .qapi_type = &str_type_info,
+     .description = "Node name or ID of a block device to use as BBRAM backend",
+     .realized_set_allowed = true,
+     .get = bbram_prop_get_drive,
+diff --git a/hw/nvram/xlnx-efuse.c b/hw/nvram/xlnx-efuse.c
+index 1a9650ba128..50a7f2baba1 100644
+--- a/hw/nvram/xlnx-efuse.c
++++ b/hw/nvram/xlnx-efuse.c
+@@ -34,6 +34,7 @@
+ #include "system/blockdev.h"
+ #include "hw/core/qdev-properties.h"
+ #include "hw/core/qdev-properties-system.h"
++#include "qapi/qapi-builtin-type-infos.h"
+ 
+ #define TBIT0_OFFSET     28
+ #define TBIT1_OFFSET     29
+@@ -251,7 +252,7 @@ static void efuse_prop_release_drive(Object *obj, const char *name,
+ }
+ 
+ static const PropertyInfo efuse_prop_drive = {
+-    .type  = "str",
++    .qapi_type = &str_type_info,
+     .description = "Node name or ID of a block device to use as eFUSE backend",
+     .realized_set_allowed = true,
+     .get = efuse_prop_get_drive,
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index c65cf6e089b..99c583f3aeb 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -52,6 +52,7 @@
+ #include "qapi/error.h"
+ #include "qemu/cutils.h"
+ #include "pci-internal.h"
++#include "qapi/qapi-builtin-type-infos.h"
+ 
+ #include "hw/xen/xen.h"
+ #include "hw/i386/kvm/xen_evtchn.h"
+@@ -72,7 +73,7 @@ static void prop_pci_busnr_get(Object *obj, Visitor *v, const char *name,
+ }
+ 
+ static const PropertyInfo prop_pci_busnr = {
+-    .type = "uint8",
++    .qapi_type = &uint8_type_info,
+     .get = prop_pci_busnr_get,
+ };
+ 
+diff --git a/hw/s390x/ccw-device.c b/hw/s390x/ccw-device.c
+index 25c42732795..fd21a434652 100644
+--- a/hw/s390x/ccw-device.c
++++ b/hw/s390x/ccw-device.c
+@@ -17,6 +17,7 @@
+ #include "qapi/visitor.h"
+ #include "qemu/ctype.h"
+ #include "qapi/error.h"
++#include "qapi/qapi-builtin-type-infos.h"
+ 
+ static void ccw_device_refill_ids(CcwDevice *dev)
+ {
+@@ -74,7 +75,7 @@ static void ccw_device_set_loadparm(Object *obj, Visitor *v,
+ }
+ 
+ const PropertyInfo ccw_loadparm = {
+-    .type  = "str",
++    .qapi_type = &str_type_info,
+     .description = "Up to 8 chars in set of [A-Za-z0-9. ] to select"
+             " a guest kernel",
+     .get = ccw_device_get_loadparm,
+diff --git a/hw/s390x/css.c b/hw/s390x/css.c
+index ecd28fed5c3..541a53db2c1 100644
+--- a/hw/s390x/css.c
++++ b/hw/s390x/css.c
+@@ -23,6 +23,7 @@
+ #include "hw/s390x/s390-virtio-ccw.h"
+ #include "hw/s390x/s390-ccw.h"
+ #include "exec/cpu-common.h"
++#include "qapi/qapi-builtin-type-infos.h"
+ 
+ typedef struct CrwContainer {
+     CRW crw;
+@@ -2494,7 +2495,7 @@ out:
+ }
+ 
+ const PropertyInfo css_devid_propinfo = {
+-    .type = "str",
++    .qapi_type = &str_type_info,
+     .description = "Identifier of an I/O device in the channel "
+                    "subsystem, example: fe.1.23ab",
+     .get = get_css_devid,
+@@ -2502,7 +2503,7 @@ const PropertyInfo css_devid_propinfo = {
+ };
+ 
+ const PropertyInfo css_devid_ro_propinfo = {
+-    .type = "str",
++    .qapi_type = &str_type_info,
+     .description = "Read-only identifier of an I/O device in the channel "
+                    "subsystem, example: fe.1.23ab",
+     .get = get_css_devid,
+diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+index 4de7b587e8a..6de5caab411 100644
+--- a/hw/s390x/s390-pci-bus.c
++++ b/hw/s390x/s390-pci-bus.c
+@@ -32,6 +32,7 @@
+ #include "system/runstate.h"
+ 
+ #include "trace.h"
++#include "qapi/qapi-builtin-type-infos.h"
+ 
+ S390pciState *s390_get_phb(void)
+ {
+@@ -1540,7 +1541,7 @@ static void s390_pci_set_fid(Object *obj, Visitor *v, const char *name,
+ }
+ 
+ static const PropertyInfo s390_pci_fid_propinfo = {
+-    .type = "uint32",
++    .qapi_type = &uint32_type_info,
+     .description = "zpci_fid",
+     .get = s390_pci_get_fid,
+     .set = s390_pci_set_fid,
+diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
+index bccf31751fd..288bcab9f21 100644
+--- a/hw/vfio/pci-quirks.c
++++ b/hw/vfio/pci-quirks.c
+@@ -26,6 +26,7 @@
+ #include "pci.h"
+ #include "pci-quirks.h"
+ #include "trace.h"
++#include "qapi/qapi-builtin-type-infos.h"
+ 
+ /*
+  * List of device ids/vendor ids for which to disable
+@@ -1436,7 +1437,7 @@ static void set_nv_gpudirect_clique_id(Object *obj, Visitor *v,
+ }
+ 
+ const PropertyInfo qdev_prop_nv_gpudirect_clique = {
+-    .type = "uint8",
++    .qapi_type = &uint8_type_info,
+     .description = "NVIDIA GPUDirect Clique ID (0 - 15)",
+     .get = get_nv_gpudirect_clique_id,
+     .set = set_nv_gpudirect_clique_id,
+diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
+index 77d80fb7cef..982b7c6597d 100644
+--- a/hw/display/apple-gfx.m
++++ b/hw/display/apple-gfx.m
+@@ -15,6 +15,7 @@
+ #include "qemu/lockable.h"
+ #include "qemu/cutils.h"
+ #include "qemu/log.h"
++#include "qapi/qapi-builtin-type-infos.h"
+ #include "qapi/visitor.h"
+ #include "qapi/error.h"
+ #include "qemu/aio-wait.h"
+@@ -871,7 +872,7 @@ static void apple_gfx_set_display_mode(Object *obj, Visitor *v,
+ }
+ 
+ const PropertyInfo qdev_prop_apple_gfx_display_mode = {
+-    .type  = "display_mode",
++    .qapi_type = &str_type_info,
+     .description =
+         "Display mode in pixels and Hertz, as <width>x<height>@<refresh-rate> "
+         "Example: 3840x2160@60",
 
 -- 
 2.54.0
