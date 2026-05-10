@@ -4,104 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCFBCCD37AF
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 01:42:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 748E3CD3447
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 02:14:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLtBQ-00033K-3o; Sat, 09 May 2026 21:42:16 -0400
+	id 1wLtgF-00069U-ND; Sat, 09 May 2026 22:14:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1wLtBO-000333-5r; Sat, 09 May 2026 21:42:14 -0400
-Received: from fout-b6-smtp.messagingengine.com ([202.12.124.149])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1wLtBM-0003Zm-Md; Sat, 09 May 2026 21:42:13 -0400
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfout.stl.internal (Postfix) with ESMTP id 22F2F1D000AF;
- Sat,  9 May 2026 21:42:09 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-04.internal (MEProxy); Sat, 09 May 2026 21:42:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
- t=1778377328; x=1778463728; bh=3WAumMk0sxq89DgD8sv+OkF3ZvrA6gT3
- EDSzK52GKT8=; b=P2gZdrfZolysC4qDnHMuAAYU9MutDeRsM/wyaesHdxeqDHvZ
- fcQM184yNWrTs0jglzl9k6n76fqwLIE7Clv5mBEYAI14RlBoI82lpeTvX9ULkGaE
- c+upz0+LrPmlSY/g3QoZ7XQZ3XfXe6JIFv98NBw/Eio4kF1QAOpqDDl6tvm75fMy
- krstyTQSblva8f6ZyV1zECeClY6AlZYBH5+SZehZ+BlYJxE6uahRAOHRnMO5MzXU
- WhG78T/oxsrMVuibqujBYwHzrbqCuALu0xOfDbktAb86Gz5syNibIi33CgYCtbtP
- I4QmsrM01imkblOIklj/JLtminpGHNGhrwxb0g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1778377328; x=
- 1778463728; bh=3WAumMk0sxq89DgD8sv+OkF3ZvrA6gT3EDSzK52GKT8=; b=s
- 0hPvMNIcvPQ1ZIf404ZbzRcaN2z7MjYts5ZioyXlSnHS57LHilsX6lKCraz/naSd
- 0qTkIRuxZDXTVUwXYBb74POQWW4vd7hLOpFi/BCCfdKc1Mbic9SuZj5TXrgEfsEt
- QN1K2FQ2hJuJkpJFWVGHdLwnTWm0ihF0qtK+E4TdU0ZIh99BGyAIgZxu+nJoj1oQ
- MSEe2cS+TEQOhWes1uEhUC7BBUgAQ48GCYqpohhj8uMSH2sG6fkuHqxWQQSC9p3z
- NAJOOlSjrWKm/1riNZgEdJQip+/KoR/YmeXKLF8Q/SOqhsU+JezeeMrVFS3jGThY
- x7ZmdG8E53iSNRfouvLQA==
-X-ME-Sender: <xms:b-L_acouLI2nwwWmEL-33jz1SInkWntRFNxZpFvS0SuiGEry2WwJfg>
- <xme:b-L_aU5s3xouYaxLLpqw-vagDsSbCA_XZk-yj7gFRMEyXozrU8BT_1FXdSjuwOyLj
- IKPGB3L_CXTqkL08gnMYPPFA58UtuXLgemvEIsTohKbK1J0pqAzhAA>
-X-ME-Received: <xmr:b-L_aTcNm5PvBdva83VevXr2oa2ry4HGukEEwM53UMZg_nzQh2KlEvlEVJ8t>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduudegkedvucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
- hlucfvnfffucdljedtmdenucfjughrpegggfgtfffkvefuhffvofhfjgesthhqredtredt
- jeenucfhrhhomhepfdevhhgrugculfgrsghlohhnshhkihdfuceotghhrggusehjrggslh
- honhhskhhirdighiiiqeenucggtffrrghtthgvrhhnpefhfeduffekffehudffteelvdek
- tedvjeehtdehkeethfehvdeghfehtefhffekgeenucevlhhushhtvghrufhiiigvpedtne
- curfgrrhgrmhepmhgrihhlfhhrohhmpegthhgrugesjhgrsghlohhnshhkihdrgiihiidp
- nhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrg
- gusehjrggslhhonhhskhhirdighiiipdhrtghpthhtohepsggrlhgrthhonhesvghikhdr
- sghmvgdrhhhupdhrtghpthhtohepkhhrrgigvghlsehrvgguhhgrthdrtghomhdprhgtph
- htthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepmhgr
- rhgtrghnughrvgdrlhhurhgvrghusehrvgguhhgrthdrtghomhdprhgtphhtthhopehphh
- hilhhmugeslhhinhgrrhhordhorhhgpdhrtghpthhtohepqhgvmhhuqdhsthgrsghlvges
- nhhonhhgnhhurdhorhhg
-X-ME-Proxy: <xmx:b-L_aZ54R5YkZFVhuZ1GBc6BHvP8XOucWQCpJjABqrOD_QO8XWd4fQ>
- <xmx:b-L_aasjKbDJo7_EAhCsXdzJjWjzYrZEu1_eSebHEJIigoz7674SaQ>
- <xmx:b-L_aZgxgXUmxl1wt5tThtRpaTiwmhXwpgpMuNNRS2DXYD5h7ZxnjA>
- <xmx:b-L_aVoJixYpO8syQZVl4CzNIGGc3pSkPEe9O_mNYAtnpnVAe1e3JA>
- <xmx:cOL_aQK6bVSh9hMVZbMFaBmupTOyX4tlnz7Uhm782XfnWRre_CACsMmJ>
-Feedback-ID: ib26944c1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 9 May 2026 21:42:07 -0400 (EDT)
-Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id f6f7d29e;
- Sun, 10 May 2026 01:42:06 +0000 (UTC)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sat, 09 May 2026 21:42:06 -0400
-Message-Id: <DIEM5D5TZCT8.220EX775JYH3F@jablonski.xyz>
-Cc: "Gerd Hoffmann" <kraxel@redhat.com>, <marcandre.lureau@redhat.com>,
- "Chad Jablonski" <chad@jablonski.xyz>, <qemu-stable@nongnu.org>
-Subject: Re: [PATCH v3] ati-vga: fix ati_set_dirty address calculation
-From: "Chad Jablonski" <chad@jablonski.xyz>
-To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "BALATON
- Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.21.0
-References: <20260506153920.C6B27596978@zero.eik.bme.hu>
- <e454a3c4-5d9c-4482-9f99-553f799a6d39@linaro.org>
-In-Reply-To: <e454a3c4-5d9c-4482-9f99-553f799a6d39@linaro.org>
-Received-SPF: pass client-ip=202.12.124.149; envelope-from=chad@jablonski.xyz;
- helo=fout-b6-smtp.messagingengine.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
+ id 1wLtgB-00068I-Im
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 22:14:03 -0400
+Received: from mail-oo1-xc2d.google.com ([2607:f8b0:4864:20::c2d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
+ id 1wLtgA-0002y9-1p
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 22:14:03 -0400
+Received: by mail-oo1-xc2d.google.com with SMTP id
+ 006d021491bc7-66f747175d8so1902578eaf.0
+ for <qemu-devel@nongnu.org>; Sat, 09 May 2026 19:14:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1778379241; x=1778984041; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=vKRIKunBp1BcQ/wvFKLfVR8rprQQ5oAvC03+LhObVds=;
+ b=lfI0dOjiIi/9HgwZaVksyeubWgpNP4e0r3u0BOi+nGPKVhuNL+8yi/SSCVo0mjPW8U
+ bYXpKZW18qnFSxbxFRY32r45T5wbr5vYhyZyvDoRbMwZWjbKfj6AOVQDlTVLqLlBoeOo
+ PSoMDeIDcocOSFzoDZ5lm3mfi3uss+yqwQhy9Wq2CKlocbkTan60CVOD/VtFRSU0QnVy
+ 1ppPnbQTRnMul6ljJIygRd8stVA+w3//JWiylDYJRZ4EMQ72v0Ij+HqFAWagLhYZVEjw
+ ow8hNDAR6EyFhvjtZkTgcJPIxHk9pprXBZDQP+Ydbq3Ah4XMYzi/g2nb0zxrkdp4wigp
+ OIaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778379241; x=1778984041;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=vKRIKunBp1BcQ/wvFKLfVR8rprQQ5oAvC03+LhObVds=;
+ b=qPanMbisnGlSW8fkxnJsx7bpfyIdFuF20+xZkAXd6iWvGEoPb9OmiVIScejSlKU0LP
+ aYyzfN3V16C///vvFN4mLNKSBMki4LDay8rCAYVppEw+PF6ApwsAmdtZaLGOjRx8FjMW
+ M7rD7duo3qHo/fDnMuqFPmVj256DIcHCND3amFqpwVcbUuZlvFaWeSal7yH0GEH5IRsm
+ LiV1dG/Hnbg2BcT4qtBvGPK74RU7gBTPbxqCbz4IyzlVCdBsqmbl9rQEyHwHZ0WJ+MCX
+ 0Ko8DMkiR49YnGhigg1PeCenUPVqgq90Tx7TZ8/Jab++0Xb0g2eRCLzmWOmGltCiVOvY
+ Y04Q==
+X-Gm-Message-State: AOJu0Yx84ZTHGjSXkV9R9VJ0tRLU65XtAs6bcwDoi4yxLcsJTJnwAsYr
+ BauI1cTpREGHBYalyD6wISqwFxEQyq4r9UXlLMeBYyzA7mMIkuIBUl63jUl+2Z7B
+X-Gm-Gg: Acq92OGvYEwObBn98NKE9/bvXmA/0Q7q/OnLboiAUR21NDZPH8YFONWr/qqR/5QsZ8/
+ 9rfc81ylyuSEaOKZyclhqO95fQ0+ZWrQQE5T3B2j3T+VJfFkF/Lliiql+L7QZHDPQNm6JBgD9C1
+ HK6i6o2xuUslUpL8M33ZM9JEpqzfvkO3Kj/bTT49HU6nwLiGcsD5MP8JSIVnoRNnH0HWOvpMzdD
+ nRhjrDQGuiiqYBNz4/qNba6+7aUZOTZdCaJWwtEt6PKtEhr/A4YlqyFQ1JocioWNrxWCIJ7h51y
+ 4lv8vGM7tBMVGkFB5pjLdVKaiJ1ad8igpW2Dmfg133FARCAyQ5R2dbXM45IHiyDUIQIdXIAvEPK
+ Up57/MKZVlnxKaya4SwSJIne2GzZRIeAABPL1if2HUCn7K6VUgWdYFJ+QAh5lIOwToaMo1qN2G+
+ lVFb3zx4uiQ3jxK0pMPA2pifCvPTHRwRsOuevZ99OeOTI/90FUthU6rUCxP4f2cR9pV5L94rB/0
+ tkKg5SWf196deKMKyfKbHX+tJtisUgFetozW8B6cP4SVuZkgNeFPVYVKhvg4ODXXdch1bTxSTJE
+ czI=
+X-Received: by 2002:a05:6820:80cb:b0:696:6c93:e82c with SMTP id
+ 006d021491bc7-69998d34577mr10199972eaf.49.1778379240782; 
+ Sat, 09 May 2026 19:14:00 -0700 (PDT)
+Received: from mac.localdomain (71-218-106-55.hlrn.qwest.net. [71.218.106.55])
+ by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-69b25dbffdbsm3645643eaf.9.2026.05.09.19.13.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 09 May 2026 19:14:00 -0700 (PDT)
+From: James Hilliard <james.hilliard1@gmail.com>
+Date: Sat, 09 May 2026 20:13:32 -0600
+Subject: [PATCH v4 09/32] target/mips: add Octeon LHUX instruction
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260509-mips-octeon-missing-insns-v2-v4-9-d669dcd05c2f@gmail.com>
+References: <20260509-mips-octeon-missing-insns-v2-v4-0-d669dcd05c2f@gmail.com>
+In-Reply-To: <20260509-mips-octeon-missing-insns-v2-v4-0-d669dcd05c2f@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Aurelien Jarno <aurelien@aurel32.net>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>, 
+ James Hilliard <james.hilliard1@gmail.com>, Helge Deller <deller@gmx.de>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: b4 0.15.2
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2d;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oo1-xc2d.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_SUSPICIOUS_NTLD=0.5, RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_PDS_OTHER_BAD_TLD=0.01,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,6 +109,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks Zoltan for the v3. I was away for a bit there.
-Glad to see it queued. Thank you Philippe.
+LHUX performs an indexed unsigned halfword load from base + index and
+zero-extends the result into rd.
+
+Add the decode entry and reuse the common indexed-load translator with
+MO_UW.
+
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+---
+Changes v2 -> v3:
+  - Split LHUX out of the combined Octeon arithmetic and memory
+    instruction patch.  (requested by Richard Henderson)
+---
+ target/mips/tcg/octeon.decode      | 1 +
+ target/mips/tcg/octeon_translate.c | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
+index efb1a48b38..8a755075e8 100644
+--- a/target/mips/tcg/octeon.decode
++++ b/target/mips/tcg/octeon.decode
+@@ -48,6 +48,7 @@ SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
+ @lx          ...... base:5 index:5 rd:5 ...... ..... &lx
+ LWX          011111 ..... ..... ..... 00000 001010 @lx
+ LHX          011111 ..... ..... ..... 00100 001010 @lx
++LHUX         011111 ..... ..... ..... 10100 001010 @lx
+ LBUX         011111 ..... ..... ..... 00110 001010 @lx
+ LBX          011111 ..... ..... ..... 10110 001010 @lx
+ LDX          011111 ..... ..... ..... 01000 001010 @lx
+diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
+index ecdce6ab9b..5a189c6484 100644
+--- a/target/mips/tcg/octeon_translate.c
++++ b/target/mips/tcg/octeon_translate.c
+@@ -164,5 +164,6 @@ static bool trans_lx(DisasContext *ctx, arg_lx *a, MemOp mop)
+ TRANS(LBX,  trans_lx, MO_SB);
+ TRANS(LBUX, trans_lx, MO_UB);
+ TRANS(LHX,  trans_lx, MO_SW);
++TRANS(LHUX, trans_lx, MO_UW);
+ TRANS(LWX,  trans_lx, MO_SL);
+ TRANS(LDX,  trans_lx, MO_UQ);
+
+-- 
+2.54.0
+
 
