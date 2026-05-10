@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79600CD37B6
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 13:48:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7201DCD37B9
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 13:48:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wM4VX-0004CW-8j; Sun, 10 May 2026 09:47:52 -0400
+	id 1wM4WE-0005OS-Lh; Sun, 10 May 2026 09:48:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wM4Uv-0003UZ-0Z
- for qemu-devel@nongnu.org; Sun, 10 May 2026 09:47:10 -0400
+ id 1wM4Vn-0004Ri-28
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 09:48:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wM4Us-00054r-Nx
- for qemu-devel@nongnu.org; Sun, 10 May 2026 09:47:08 -0400
+ id 1wM4Vl-0005I6-Ev
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 09:48:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778420826;
+ s=mimecast20190719; t=1778420880;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=nF/cntTLQgSDNskyD9TtxEb9BydSOVYtLSszBBpe5GI=;
- b=QTcawLyS9j/UFZLYn1HMERFfzghmSUOKjltUADy7m4KjYIdSXxgWfjWPNbIqNVyHwnWTuk
- c7ZSYN/Gny28t3ykCdXrxEXibLfwL27XKnHALwGbhSsI8MJpP9to3lKPBNIk207DSUJLTe
- oCy2JMnLcOwq+P9dtL3SDkVumetSNVQ=
+ bh=A6IjphfFlkWecZxoxHHgYRag4X36gOO8u9OQ9MNBXLA=;
+ b=RohUR+YEAVUamOJBknp0yHhKBBWGqDJZr96Rkix0picZcwKbTvvmz76mlO/5eSYlVPa5Nt
+ xZtkZbMle54s0nre32g8IG9xsDgSvUHXOeBmbPziFT6Jw3uk0/5t9P/QE+LS9brrQfouX3
+ kTaM94jIIWsUIifNMbt0lFnOJ/4yFV0=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-335-OovMOV3DOgieNcRsdp39BA-1; Sun,
- 10 May 2026 09:47:04 -0400
-X-MC-Unique: OovMOV3DOgieNcRsdp39BA-1
-X-Mimecast-MFC-AGG-ID: OovMOV3DOgieNcRsdp39BA_1778420824
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-573-T6lwaSEIO6qxP5n2yM-oRw-1; Sun,
+ 10 May 2026 09:47:59 -0400
+X-MC-Unique: T6lwaSEIO6qxP5n2yM-oRw-1
+X-Mimecast-MFC-AGG-ID: T6lwaSEIO6qxP5n2yM-oRw_1778420878
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EF5FA1956080
- for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:47:03 +0000 (UTC)
+ id 9C857195608B
+ for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:47:58 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BEF531800240; Sun, 10 May 2026 13:46:59 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D22BA3002D31; Sun, 10 May 2026 13:47:54 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 10 May 2026 17:43:15 +0400
-Subject: [PATCH 18/54] pc: convert OnOffAuto vmport property to QAPI-aware
- registration
+Date: Sun, 10 May 2026 17:43:20 +0400
+Subject: [PATCH 23/54] sev: convert OnOffAuto legacy-vm-type property to
+ QAPI-aware registration
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260510-qom-qapi-v1-18-48ba6a1a1fa5@redhat.com>
+Message-Id: <20260510-qom-qapi-v1-23-48ba6a1a1fa5@redhat.com>
 References: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
 In-Reply-To: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
 To: qemu-devel@nongnu.org
@@ -63,24 +63,24 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2472;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2858;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=TZ9resH5GV3T2agEDTnUC7y/xCP2iY9Bvn5Xykd3Gpo=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqAItvhaEU3mulFozRucTm4K+XMMr75eI+ynk5I
- 5hZsUQNeKuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCagCLbwAKCRDa6OEJdZac
- 5VuAD/4p6bltS1ieGF0reGetxhtyLns+//ghNshrBj755ncbS+iFjm5bGCLAkFV7l4hbHB+wX20
- opPlE+cMhZ18Q78OkoeOLvvdxPNp3ufczqF0+eS/VwU9jJS4vFctOArCb3c3hlZ5WTiabFOJnJs
- 3xzBpGYsuOMBfOW6Ht7BV8SpnrDsaQzpEFayp91k8oUGs12KXC1dPmfmeNzBS4RvyIzMOzQIpju
- /bNx6In3gvLN2DONETy9WgFbZasZjmr8kH6AfTA2k+ia1jasbhEMha7StuYuCKBUjn/mH7pqp4k
- yZ6zNMegTwedx0oHXeraWdz8+C8Rkb23ULqa8uqCHFbGhdjoidgJ4eKcIw3kHzx+rhb8l42/hlY
- vYrOA+UtcyIqTSc5AGmVGRAp8ESh386S38dNB9XWHBAEblmo2ZMFk1kuCFXGZaOleSsRGYvgDrv
- /4oDwlVDcoKgOW1nuK4CSWnV4WhMUU+89NH4gek9w43wjSAe32+EWhGxIseKH1BI3QWpYp3cVlJ
- WJP6b+X2/6x9o0gHJEam2hZaeyqd+f5Vu/GUWOoQlQkvaSQe7fAWdW/Iyh4VjLu4dmnLX07ELsC
- W2InSdb/b+P5QiXJdWvXOFjqnQ3pDKrnzRwwWRWxz9qr4+KxZhvtfzfiepW0bhSVgbZhOQ1kQJX
- nWrfgpsu/fgXlfg==
+ bh=MCVQzqetiyAUsBGisw6UOIizQC6YBYCi0CNUpoXUhDk=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqAItvvcs5t9ir5IO5svDXi7r6yUzm7yuZfIhCs
+ mKoc2YLceyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCagCLbwAKCRDa6OEJdZac
+ 5VapD/sFlagvuBiriF0fIxmnyQlCG0PHJWtQ0vwoH6H+y6Xr8QmxVqPbI2M2nPtQFqu9kqBEG8B
+ 7VIrqdaN9iMF24ONJxg1zn/yahmcB0UC04kuJzoWylaC6lfKN0L25hlyuAmkYDumdi9xuc4qVS6
+ ZtbNlwoDt9tpO6WRGdQftVM4kqF881D+xA+gu73sbN13p2UYrFC6h8Gu4dd6PE8jOYhkeU961Qs
+ Jfa0hoHiiR/Ha5iaqTHwFCTwAj7hcJOGjHXRm+wPej5ekszJII/124N1Llfrxv72FTdHdjlmewA
+ pKq7FHCuBh5J007Q7POeaG8fmz/9YzB9OMNn95G3AqaIWhYR/2WnyDz1j9NnkRvmoIYMaB7/7bl
+ 5t2dd6xfSFfdClbbyaDI2twDcASTvE7ydYzIeKnXTjaUqNFpnCZnW5ZWAkZg//eN4BQSOrThi4W
+ uiR1cCCqdg6ES012lKqxaOZh0yWFowYrCucqk2FE53kyojY3jnoEuohZMR32QXuPfbHokiSmzgC
+ Z9f9F8y+TGxvhG3cYmh0t2IXDA52fBhJSK1XwbgE5siAWWKt1CO2Xa8IWbK3tAIH+UsRZLnGCbf
+ H1Av5Y3Zrimug9cFyN00Z2pwxlqG88u/eyh7CzsiMuS0HSejzLOnN15vjGjC/3UHPzwEc8Ac16k
+ qTUvVrZqSwmJA2Q==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -106,71 +106,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the vmport OnOffAuto property from manual visitor-based
-callbacks to property_add_qapi_enum().
+Convert the legacy-vm-type OnOffAuto property from manual
+visitor-based callbacks to property_add_qapi_enum().
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/i386/pc.c | 26 ++++++++++++--------------
- 1 file changed, 12 insertions(+), 14 deletions(-)
+ target/i386/sev.c | 29 +++++++++++++----------------
+ 1 file changed, 13 insertions(+), 16 deletions(-)
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 2ecad3c503f..6a4fe126bc0 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -46,6 +46,7 @@
- #include "kvm/kvm_i386.h"
- #include "kvm/tdx.h"
- #include "hw/xen/xen.h"
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index b44b5a1c2b9..50a9bfc35d7 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -20,6 +20,7 @@
+ #include <sys/ioctl.h>
+ 
+ #include "qapi/error.h"
 +#include "qapi/qapi-type-infos-common.h"
- #include "qobject/qlist.h"
- #include "qemu/error-report.h"
- #include "hw/acpi/acpi.h"
-@@ -1379,21 +1380,16 @@ static HotplugHandler *pc_get_hotplug_handler(MachineState *machine,
-     return NULL;
+ #include "qom/object_interfaces.h"
+ #include "qemu/base64.h"
+ #include "qemu/module.h"
+@@ -2872,23 +2873,16 @@ sev_guest_set_session_file(Object *obj, const char *value, Error **errp)
+     SEV_GUEST(obj)->session_file = g_strdup(value);
  }
  
--static void pc_machine_get_vmport(Object *obj, Visitor *v, const char *name,
--                                  void *opaque, Error **errp)
-+static int pc_machine_get_vmport(Object *obj, Error **errp)
+-static void sev_guest_get_legacy_vm_type(Object *obj, Visitor *v,
+-                                         const char *name, void *opaque,
+-                                         Error **errp)
++static int sev_guest_get_legacy_vm_type(Object *obj, Error **errp)
  {
-     PCMachineState *pcms = PC_MACHINE(obj);
--    OnOffAuto vmport = pcms->vmport;
+     SevGuestState *sev_guest = SEV_GUEST(obj);
+-    OnOffAuto legacy_vm_type = sev_guest->legacy_vm_type;
 -
--    visit_type_OnOffAuto(v, name, &vmport, errp);
-+    return pcms->vmport;
+-    visit_type_OnOffAuto(v, name, &legacy_vm_type, errp);
++    return sev_guest->legacy_vm_type;
  }
  
--static void pc_machine_set_vmport(Object *obj, Visitor *v, const char *name,
--                                  void *opaque, Error **errp)
-+static void pc_machine_set_vmport(Object *obj, int value, Error **errp)
+-static void sev_guest_set_legacy_vm_type(Object *obj, Visitor *v,
+-                                         const char *name, void *opaque,
+-                                         Error **errp)
++static void sev_guest_set_legacy_vm_type(Object *obj, int value, Error **errp)
  {
-     PCMachineState *pcms = PC_MACHINE(obj);
+     SevGuestState *sev_guest = SEV_GUEST(obj);
 -
--    visit_type_OnOffAuto(v, name, &pcms->vmport, errp);
-+    pcms->vmport = value;
+-    visit_type_OnOffAuto(v, name, &sev_guest->legacy_vm_type, errp);
++    sev_guest->legacy_vm_type = value;
  }
  
- static bool pc_machine_get_fd_bootchk(Object *obj, Error **errp)
-@@ -1681,11 +1677,13 @@ static void pc_machine_class_init(ObjectClass *oc, const void *data)
-     object_class_property_set_description(oc, PC_MACHINE_MAX_RAM_BELOW_4G,
-         "Maximum ram below the 4G boundary (32bit boundary)");
- 
--    object_class_property_add(oc, PC_MACHINE_VMPORT, "OnOffAuto",
--        pc_machine_get_vmport, pc_machine_set_vmport,
--        NULL, NULL);
--    object_class_property_set_description(oc, PC_MACHINE_VMPORT,
--        "Enable vmport (pc & q35)");
+ static void
+@@ -2914,11 +2908,14 @@ sev_guest_class_init(ObjectClass *oc, const void *data)
+                                   sev_guest_set_session_file);
+     object_class_property_set_description(oc, "session-file",
+             "guest owners session parameters (encoded with base64)");
+-    object_class_property_add(oc, "legacy-vm-type", "OnOffAuto",
+-                              sev_guest_get_legacy_vm_type,
+-                              sev_guest_set_legacy_vm_type, NULL, NULL);
+-    object_class_property_set_description(oc, "legacy-vm-type",
+-            "use legacy VM type to maintain measurement compatibility with older QEMU or kernel versions.");
 +    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = PC_MACHINE_VMPORT,
-+        .description = "Enable vmport (pc & q35)",
++        .name = "legacy-vm-type",
++        .description = "use legacy VM type to maintain measurement "
++                       "compatibility with older QEMU or kernel versions.",
 +        .qapi_type = &OnOffAuto_type_info,
-+        .get = pc_machine_get_vmport,
-+        .set = pc_machine_set_vmport,
++        .get = sev_guest_get_legacy_vm_type,
++        .set = sev_guest_set_legacy_vm_type,
 +    ));
+ }
  
-     object_class_property_add_bool(oc, PC_MACHINE_SMBUS,
-         pc_machine_get_smbus, pc_machine_set_smbus);
+ static void
 
 -- 
 2.54.0
