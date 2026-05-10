@@ -4,75 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE399CD3447
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 02:17:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FFEBCD37AF
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 02:17:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLtgg-0006It-2N; Sat, 09 May 2026 22:14:34 -0400
+	id 1wLtgZ-0006E3-52; Sat, 09 May 2026 22:14:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wLtgd-0006Hp-R0
- for qemu-devel@nongnu.org; Sat, 09 May 2026 22:14:31 -0400
-Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
+ id 1wLtgN-0006BY-Ro
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 22:14:17 -0400
+Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wLtgb-00037C-5J
- for qemu-devel@nongnu.org; Sat, 09 May 2026 22:14:31 -0400
-Received: by mail-oa1-x2a.google.com with SMTP id
- 586e51a60fabf-40ea36b56b7so2393846fac.3
- for <qemu-devel@nongnu.org>; Sat, 09 May 2026 19:14:28 -0700 (PDT)
+ id 1wLtgL-000306-MD
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 22:14:15 -0400
+Received: by mail-ot1-x32d.google.com with SMTP id
+ 46e09a7af769-7dbd801138eso1878611a34.1
+ for <qemu-devel@nongnu.org>; Sat, 09 May 2026 19:14:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778379267; x=1778984067; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778379252; x=1778984052; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=aZvuyuzwR0crLsgKlDG7KWNQDambS9WD++v8oJcBiKQ=;
- b=bRnN6S2DzgXaQeFtJGhhv+dMOMo/eANqXAkszJR+LU9ROCCxzXejhnyFgJnse4D1qL
- e3pUjymVadN8TAeP37wuaYtffet2mDm+/k314xPiPQ9P+2t7xu7Vf0zhk1bCk/EPsCta
- 1IYVg3g7qbKpRs9669VYDQwFG8nCugkLuGbcKE7QiXYeWvRU8fQeX5fyC/Mwpt4VBHC7
- KywXf8+wxgY/oH3mFhxzG4DOR8H98CdCU3CfKCXCeXA59PhiwHJK67UVZKmnGQsODM3l
- sWwOOjLoW+shD2cIqapP6WNTsOF4KrhJ7E0fwlIzi6wa+nDSf2AK62IyM9FMKxfB5Gcq
- Y7Rw==
+ :reply-to; bh=6mXGnIwxsH9ElFtokWnfseqntsFuX5o3zEpJE5nKGvU=;
+ b=lcBtE/GcVLqlg/8mdL3sOs7u+ABJik3+EiXE2Uz4C1prqns/FDVnzoVZnzC4U/ag7L
+ tCdlBN05332ENpDurLIXyiPmEO8WtyrX+3Yi/jzcEyb3xbbgEZUf1naagfP9LrEBny5/
+ RMScZQgi+RkXeE9aMcU16TJLk5XJywFPN/fkZPMXJi3+CNwMrB5ksW5Vq3lEXh9xZeFl
+ uMVniWNTVbVm/0ThjILzoOZTn5Vb4YfQoNaDc5Rac+hO0EFLEVQr1JIvP0MyrcSy0jyM
+ gSUDb7U9C28ytHIp6FXyZvshdhux5ygwA1aJw5j5meTV9CPzxLE0mQvysYAUiV7cT+0w
+ fwcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778379267; x=1778984067;
+ d=1e100.net; s=20251104; t=1778379252; x=1778984052;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=aZvuyuzwR0crLsgKlDG7KWNQDambS9WD++v8oJcBiKQ=;
- b=kT3GSmJIoKIGF74n3BrFDkX2XIVKc2v89UqmycNtEYzuOUglMmSST1wBFGptYyImTi
- zQTVZPM9u83h3iVvPCh8CmoGIqM2NtdQDXJ+k9lghHmFA4x9LjfCUIAPHmo7AqUJ+WNz
- 5CILeeg2bzrD+yMsWTtI1PSxCnIMN6VzHwI2IVilFJMTxXcFA+mW0IC2P6pAXvdMznkq
- dIiJnxjZrD/Ui63H5TKfar4U7eDJxKy7gwpNJNfxo4p9WwOGnXGK3MleUJQx5uv8j+Q0
- OxIJL+UuwPFV7LZwLKWC/eVjBULKFmHpCBwf1JiLwpd8+v4Jv3gKE3oE3bJCgMoMowRQ
- /ezg==
-X-Gm-Message-State: AOJu0YyL+/fTXijq6MaHbHug9YxviIUsfjOUiZg57cov3+23BoDppjL/
- 2fK/MYNilbsmkROW71nHOJnJD7IT+YxfucC0oOridp5KTDJ7ZJBkFpI3y06Tu3yP
-X-Gm-Gg: Acq92OEGgLwl2E4fjT8BGKpOAXjyx4350FntbiGUXHzF+iYpqlpU9GQlfVzIYiCkhTj
- eQMlcc54jVO1xVanzB/41GFHhJyyBP2mYRSE5Ao9QHPP/gwqSXbGAQegwVRnZhNrYMqz5tOk0wT
- E6whPmEK0Gaf0XIL1JiibhNfqQMA8qDc23fvc5bm5uli0+TYhsJ7pEwcZV8E6UAqFpRSYzT7x8p
- tBUthZuCLYEa3awdEgWB3xM906q6abDJsFQtei5xoB1W9WE8mUJWr1P4yOnWWhOdxPH4Yv+ye5q
- keEfINOu4TJ+csGZSpSE3k6VR/pO4HbtA83Msji8p2EnreUeqmiACxDTNXH7s/l4P8CzEBuDIc5
- ZXWQ4WywtpmHZ6/8X8hA2zNTteeTclt9EqPqv21LZBCbxGgUSDm/VIEBSPDWI6DzHQENc+ZsHPv
- 46bh9Hc9jKLNxYOGvKwdYawiXCk9LLdG8PDTJOsOAG3TSctOpjVKJ4NbNSAYRHwlQ14qX+SIpM8
- Sa6dqRNE5N3AeT4eqUFMMZayZ0Mll6t4tyfsBZsgFJZLri5TDXwhmFEpdxwSUludZEe9Ig64CP+
- OZM=
-X-Received: by 2002:a05:6820:f034:b0:696:8e8b:2097 with SMTP id
- 006d021491bc7-69998cb0d2fmr10667665eaf.21.1778379267353; 
- Sat, 09 May 2026 19:14:27 -0700 (PDT)
+ bh=6mXGnIwxsH9ElFtokWnfseqntsFuX5o3zEpJE5nKGvU=;
+ b=SyaNecR6VnwOqOL/HMFRgV5jJvlWB2a0d71JR8zTQslJjkKlJuyDeSEkrxa+J2RZwr
+ 1lyrCZyFZMYf4L4sR0eY6sipaoVglmKPos4OXR059fin/5nyfPj1L5iHoluTuh1BZt1T
+ eAzpYHWq+O3t4JSth15s44PeRnCJDVlCIY1F+AKCYMnvA/BZutxCD3rpuPlmSTB+oheh
+ 9b2N4uiSoJy6AqiwihiBe/cEUVgEBKAQw94/kjcj4rbzqUt9Y7+l4AXpsdLHcXB8Ha/3
+ A2HaCBawng53Ikg/F0pBquffc+UFu+9NlzsQgYOgveJidABnLz2ImL0T94A61fDlx4et
+ e6AQ==
+X-Gm-Message-State: AOJu0Ywd0RXOJQMRzxe8bUSpPWJCcwB1M8RaEqToyXU7e6+grdOfLxef
+ x9kgU6bFNUqoK27lEBFa4sOORz5RC3LGh4kankdwc065FfP9SRTApIjTehO++1pl
+X-Gm-Gg: Acq92OGJNEeGapzjNcx0lNzdwZ5b1n3h3fWK0u2qFuB9FJQQ7RkpyDMHvY95WbxdXEE
+ uKXLw0ETkMXoAoC25GFm5Gub9/8g29u4Pb9Yz2lEUaceoD6Bd9FyDhprbNXfkCbktUvOwXAtpkp
+ nZve96TyxrFfoflFdSLmUL8ouMyBS16Np0uA7+w2sWzLCjLiFUP2qjo5mhCI4dpCyeXTP+21vuI
+ MuUNu+p1PdUAknXAdZSZwPTtx2gJKPRECvSfPrhEHyf6k1o1D3nq4hLuY4YDdBjLRits5gaO2mF
+ DqK3P1Dz0XRTfEiyDM7NeGzRF5H1LtIWoDcQaqRvdebmQtYlK1rCDwnsrjpYBIP/idZlONQTT7V
+ KLc7CktxRvVojMfG/ythJ0TZtmIpO0DghyEMjPvc/+YhYoMR54+21qVrE2s9W21InAjN771TvvN
+ W9jS0Cn7YUGTPGpcfbTHw6wNGaqU6Y5JL51sRwqX8afPOy4VqU+qlsdbJj/JbibljlcahRWzasP
+ N8M1iIs+9eUW7iu2g0A6vL1wlgCz9gvbz7lLrdivzvXRHo4C8k/lZgGEzyGMTzXOSMl
+X-Received: by 2002:a05:6820:4cc4:b0:696:2b13:6c63 with SMTP id
+ 006d021491bc7-699ab5a2cc8mr6672699eaf.10.1778379252375; 
+ Sat, 09 May 2026 19:14:12 -0700 (PDT)
 Received: from mac.localdomain (71-218-106-55.hlrn.qwest.net. [71.218.106.55])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-69b25dbffdbsm3645643eaf.9.2026.05.09.19.14.26
+ 006d021491bc7-69b25dbffdbsm3645643eaf.9.2026.05.09.19.14.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 09 May 2026 19:14:26 -0700 (PDT)
+ Sat, 09 May 2026 19:14:11 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Sat, 09 May 2026 20:13:54 -0600
-Subject: [PATCH v4 31/32] target/mips: add Octeon CHORD and LLM COP2
- support
+Date: Sat, 09 May 2026 20:13:41 -0600
+Subject: [PATCH v4 18/32] target/mips: add Octeon MTP2 instruction
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260509-mips-octeon-missing-insns-v2-v4-31-d669dcd05c2f@gmail.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260509-mips-octeon-missing-insns-v2-v4-18-d669dcd05c2f@gmail.com>
 References: <20260509-mips-octeon-missing-insns-v2-v4-0-d669dcd05c2f@gmail.com>
 In-Reply-To: <20260509-mips-octeon-missing-insns-v2-v4-0-d669dcd05c2f@gmail.com>
 To: qemu-devel@nongnu.org
@@ -85,8 +83,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2001:4860:4864:20::2a;
- envelope-from=james.hilliard1@gmail.com; helo=mail-oa1-x2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x32d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -110,473 +108,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the Octeon CHORD hardware register access path and the LLM
-narrow/wide read and write windows.
+MTP2 loads the high Octeon3 partial-product pair from rs/rt into P[2]
+and P[5].
 
-Model both CHORD access forms, including the rdhwr $30 path and the
-legacy dmfc2 alias, and implement sparse backing storage for the two LLM
-sets so user-mode code can save, restore, and probe the architectural
-state.
+This exposes the final guest-managed partial-product slot for the
+Octeon multiplier operations.
 
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
-Changes v1 -> v2:
-  - Use neutral selector-slot wording for the LLM/CHORD alias comment.
-  - Add selector dispatch updates in octeon_translate.c after moving
-    COP2 decode out of translate.c.  (suggested by Philippe
-    Mathieu-Daudé)
----
- target/mips/cpu.c                  | 67 +++++++++++++++++++++++++++++++++++
- target/mips/cpu.h                  | 20 +++++++++++
- target/mips/helper.h               |  1 +
- target/mips/internal.h             |  3 ++
- target/mips/system/machine.c       | 67 +++++++++++++++++++++++++++++++++++
- target/mips/tcg/octeon_crypto.c    | 72 ++++++++++++++++++++++++++++++++++++++
- target/mips/tcg/octeon_translate.c | 13 +++++++
- target/mips/tcg/op_helper.c        |  6 ++++
- target/mips/tcg/translate.c        |  8 +++++
- 9 files changed, 257 insertions(+)
+Changes v2 -> v3:
+  - Split MTP2 out of the combined Octeon arithmetic and memory
+    instruction patch.  (requested by Richard Henderson)
 
-diff --git a/target/mips/cpu.c b/target/mips/cpu.c
-index 19001d829c..d439b14f7b 100644
---- a/target/mips/cpu.c
-+++ b/target/mips/cpu.c
-@@ -27,6 +27,7 @@
- #include "internal.h"
- #include "kvm_mips.h"
- #include "qemu/module.h"
-+#include "qemu/qtree.h"
- #include "system/kvm.h"
- #include "system/qtest.h"
- #include "hw/core/qdev-properties.h"
-@@ -183,6 +184,57 @@ static bool mips_cpu_has_work(CPUState *cs)
+Changes v3 -> v4:
+  - Describe the Octeon3 rs/rt P[2]/P[5] pair handled by the shared MTP
+    translator.
+---
+ target/mips/tcg/octeon.decode      | 1 +
+ target/mips/tcg/octeon_translate.c | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
+index d339e6d1b8..165cd5088f 100644
+--- a/target/mips/tcg/octeon.decode
++++ b/target/mips/tcg/octeon.decode
+@@ -47,6 +47,7 @@ SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
+ MTM0         011100 rs:5 rt:5 00000 00000 001000 &r2
+ MTP0         011100 rs:5 rt:5 00000 00000 001001 &r2
+ MTP1         011100 rs:5 rt:5 00000 00000 001010 &r2
++MTP2         011100 rs:5 rt:5 00000 00000 001011 &r2
  
- #include "cpu-defs.c.inc"
- 
-+static gint mips_octeon_u64_tree_compare(gconstpointer a, gconstpointer b,
-+                                         gpointer user_data)
-+{
-+    uint64_t av = *(const uint64_t *)a;
-+    uint64_t bv = *(const uint64_t *)b;
-+
-+    return (av > bv) - (av < bv);
-+}
-+
-+QTree *mips_octeon_llm_tree_new(void)
-+{
-+    return q_tree_new_full(mips_octeon_u64_tree_compare,
-+                           NULL, g_free, g_free);
-+}
-+
-+uint64_t mips_octeon_llm_load(QTree *tree, uint64_t addr)
-+{
-+    uint64_t key = addr;
-+    uint64_t *value = tree ? q_tree_lookup(tree, &key) : NULL;
-+
-+    return value ? *value : 0;
-+}
-+
-+void mips_octeon_llm_store(QTree **treep, uint64_t addr, uint64_t value)
-+{
-+    uint64_t *key;
-+    uint64_t *stored;
-+
-+    if (!*treep) {
-+        *treep = mips_octeon_llm_tree_new();
-+    }
-+
-+    key = g_new(uint64_t, 1);
-+    stored = g_new(uint64_t, 1);
-+    *key = addr;
-+    *stored = value;
-+    q_tree_replace(*treep, key, stored);
-+}
-+
-+static void mips_octeon_destroy_llm_state(MIPSOcteonCryptoState *crypto)
-+{
-+    if (crypto->llm_narrow) {
-+        q_tree_destroy(crypto->llm_narrow);
-+        crypto->llm_narrow = NULL;
-+    }
-+    if (crypto->llm_wide) {
-+        q_tree_destroy(crypto->llm_wide);
-+        crypto->llm_wide = NULL;
-+    }
-+}
-+
- static void mips_cpu_reset_hold(Object *obj, ResetType type)
- {
-     CPUState *cs = CPU(obj);
-@@ -194,6 +246,7 @@ static void mips_cpu_reset_hold(Object *obj, ResetType type)
-         mcc->parent_phases.hold(obj, type);
-     }
- 
-+    mips_octeon_destroy_llm_state(&env->octeon_crypto);
-     memset(env, 0, offsetof(CPUMIPSState, end_reset_fields));
- 
-     /* Reset registers to their default values */
-@@ -248,6 +301,9 @@ static void mips_cpu_reset_hold(Object *obj, ResetType type)
-     env->active_fpu.fcr31 = env->cpu_model->CP1_fcr31;
-     env->msair = env->cpu_model->MSAIR;
-     env->insn_flags = env->cpu_model->insn_flags;
-+    if (env->insn_flags & INSN_OCTEON) {
-+        env->octeon_crypto.chord = 1;
-+    }
- 
- #if defined(CONFIG_USER_ONLY)
-     env->CP0_Status = (MIPS_HFLAG_UM << CP0St_KSU);
-@@ -264,6 +320,9 @@ static void mips_cpu_reset_hold(Object *obj, ResetType type)
-      * hardware registers.
-      */
-     env->CP0_HWREna |= 0x0000000F;
-+    if (env->insn_flags & INSN_OCTEON) {
-+        env->CP0_HWREna |= 0x40000000u;
-+    }
-     if (env->CP0_Config1 & (1 << CP0C1_FP)) {
-         env->CP0_Status |= (1 << CP0St_CU1);
-     }
-@@ -422,6 +481,13 @@ static void mips_cpu_reset_hold(Object *obj, ResetType type)
- #endif
- }
- 
-+static void mips_cpu_finalize(Object *obj)
-+{
-+    MIPSCPU *cpu = MIPS_CPU(obj);
-+
-+    mips_octeon_destroy_llm_state(&cpu->env.octeon_crypto);
-+}
-+
- static void mips_cpu_disas_set_info(const CPUState *cs, disassemble_info *info)
- {
-     const MIPSCPU *cpu = MIPS_CPU(cs);
-@@ -648,6 +714,7 @@ static const TypeInfo mips_cpu_type_info = {
-     .instance_size = sizeof(MIPSCPU),
-     .instance_align = __alignof(MIPSCPU),
-     .instance_init = mips_cpu_initfn,
-+    .instance_finalize = mips_cpu_finalize,
-     .abstract = true,
-     .class_size = sizeof(MIPSCPUClass),
-     .class_init = mips_cpu_class_init,
-diff --git a/target/mips/cpu.h b/target/mips/cpu.h
-index 8d020d8967..4d98824c75 100644
---- a/target/mips/cpu.h
-+++ b/target/mips/cpu.h
-@@ -11,6 +11,7 @@
- #include "fpu/softfloat-types.h"
- #include "hw/core/clock.h"
- #include "mips-defs.h"
-+#include "qemu/qtree.h"
- 
- typedef struct CPUMIPSTLBContext CPUMIPSTLBContext;
- 
-@@ -617,6 +618,21 @@ typedef enum MIPSOcteonCop2Sel {
-     OCTEON_COP2_SEL_SMS4_ENC0 = OCTEON_COP2_SEL_AES_ENC0,
-     OCTEON_COP2_SEL_SMS4_DEC_CBC0 = OCTEON_COP2_SEL_AES_DEC_CBC0,
-     OCTEON_COP2_SEL_SMS4_DEC0 = OCTEON_COP2_SEL_AES_DEC0,
-+    /*
-+     * Selector 0x0400 is the narrow LLM read selector and is also used as a
-+     * DMFC2 alias for the CHORD POW tag-switch completion bit.
-+     */
-+    OCTEON_COP2_SEL_LLM_READ_ADDR0 = 0x0400,
-+    OCTEON_COP2_SEL_CHORD = OCTEON_COP2_SEL_LLM_READ_ADDR0,
-+    OCTEON_COP2_SEL_LLM_WRITE_ADDR_INTERNAL0 = 0x0401,
-+    OCTEON_COP2_SEL_LLM_DATA0 = 0x0402,
-+    OCTEON_COP2_SEL_LLM_READ64_ADDR0 = 0x0404,
-+    OCTEON_COP2_SEL_LLM_WRITE64_ADDR_INTERNAL0 = 0x0405,
-+    OCTEON_COP2_SEL_LLM_READ_ADDR1 = 0x0408,
-+    OCTEON_COP2_SEL_LLM_WRITE_ADDR_INTERNAL1 = 0x0409,
-+    OCTEON_COP2_SEL_LLM_DATA1 = 0x040a,
-+    OCTEON_COP2_SEL_LLM_READ64_ADDR1 = 0x040c,
-+    OCTEON_COP2_SEL_LLM_WRITE64_ADDR_INTERNAL1 = 0x040d,
-     OCTEON_COP2_SEL_CRC_POLYNOMIAL = 0x0200,
-     OCTEON_COP2_SEL_CRC_IV = 0x0201,
-     OCTEON_COP2_SEL_CRC_LEN = 0x0202,
-@@ -754,6 +770,10 @@ typedef struct MIPSOcteonCryptoState {
-     uint32_t zuc_lfsr[16];
-     uint32_t zuc_window[3];
-     uint32_t zuc_tresult;
-+    uint64_t llm_data[2];
-+    uint64_t chord;
-+    QTree *llm_narrow;
-+    QTree *llm_wide;
- } MIPSOcteonCryptoState;
- 
- typedef struct CPUArchState {
-diff --git a/target/mips/helper.h b/target/mips/helper.h
-index 93a5a497d0..5e63572838 100644
---- a/target/mips/helper.h
-+++ b/target/mips/helper.h
-@@ -200,6 +200,7 @@ DEF_HELPER_1(rdhwr_cc, tl, env)
- DEF_HELPER_1(rdhwr_ccres, tl, env)
- DEF_HELPER_1(rdhwr_performance, tl, env)
- DEF_HELPER_1(rdhwr_xnp, tl, env)
-+DEF_HELPER_1(rdhwr_chord, tl, env)
- DEF_HELPER_2(pmon, void, env, int)
- DEF_HELPER_1(wait, void, env)
- 
-diff --git a/target/mips/internal.h b/target/mips/internal.h
-index 23e1ada185..026dc0ea4f 100644
---- a/target/mips/internal.h
-+++ b/target/mips/internal.h
-@@ -93,6 +93,9 @@ extern const int mips_defs_number;
- 
- int mips_cpu_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
- int mips_cpu_gdb_write_register(CPUState *cpu, uint8_t *buf, int reg);
-+QTree *mips_octeon_llm_tree_new(void);
-+uint64_t mips_octeon_llm_load(QTree *tree, uint64_t addr);
-+void mips_octeon_llm_store(QTree **treep, uint64_t addr, uint64_t value);
- 
- #define USEG_LIMIT      ((target_ulong)(int32_t)0x7FFFFFFFUL)
- #define KSEG0_BASE      ((target_ulong)(int32_t)0x80000000UL)
-diff --git a/target/mips/system/machine.c b/target/mips/system/machine.c
-index 9389e4eae4..64d4eb1294 100644
---- a/target/mips/system/machine.c
-+++ b/target/mips/system/machine.c
-@@ -131,6 +131,69 @@ static const VMStateDescription vmstate_octeon_multiplier_tc = {
-     }
- };
- 
-+typedef struct OcteonLLMTreePutData {
-+    QEMUFile *f;
-+} OcteonLLMTreePutData;
-+
-+static gboolean put_octeon_llm_tree_entry(gpointer key, gpointer value,
-+                                          gpointer user_data)
-+{
-+    OcteonLLMTreePutData *data = user_data;
-+
-+    qemu_put_be64(data->f, *(uint64_t *)key);
-+    qemu_put_be64(data->f, *(uint64_t *)value);
-+    return false;
-+}
-+
-+static int put_octeon_llm_tree(QEMUFile *f, void *pv, size_t size,
-+                               const VMStateField *field, JSONWriter *vmdesc)
-+{
-+    QTree *tree = *(QTree **)pv;
-+    OcteonLLMTreePutData data = { .f = f };
-+    uint32_t nnodes = tree ? q_tree_nnodes(tree) : 0;
-+
-+    qemu_put_be32(f, nnodes);
-+    if (tree) {
-+        q_tree_foreach(tree, put_octeon_llm_tree_entry, &data);
-+    }
-+
-+    return 0;
-+}
-+
-+static int get_octeon_llm_tree(QEMUFile *f, void *pv, size_t size,
-+                               const VMStateField *field)
-+{
-+    QTree **treep = pv;
-+    uint32_t nnodes = qemu_get_be32(f);
-+
-+    if (*treep) {
-+        q_tree_destroy(*treep);
-+    }
-+    *treep = mips_octeon_llm_tree_new();
-+
-+    for (uint32_t i = 0; i < nnodes; i++) {
-+        uint64_t addr = qemu_get_be64(f);
-+        uint64_t value = qemu_get_be64(f);
-+
-+        mips_octeon_llm_store(treep, addr, value);
-+    }
-+
-+    return 0;
-+}
-+
-+static const VMStateInfo vmstate_info_octeon_llm_tree = {
-+    .name = "octeon_llm_tree",
-+    .get = get_octeon_llm_tree,
-+    .put = put_octeon_llm_tree,
-+};
-+
-+#define VMSTATE_OCTEON_LLM_TREE(_f, _s) {                         \
-+    .name = stringify(_f),                                        \
-+    .version_id = 1,                                              \
-+    .info = &vmstate_info_octeon_llm_tree,                        \
-+    .offset = vmstate_offset_pointer(_s, _f, QTree),              \
-+}
-+
- /* MVP state */
- 
- static const VMStateDescription vmstate_mvp = {
-@@ -316,6 +379,10 @@ static const VMStateDescription mips_vmstate_octeon_crypto = {
-         VMSTATE_UINT32_ARRAY(env.octeon_crypto.zuc_lfsr, MIPSCPU, 16),
-         VMSTATE_UINT32_ARRAY(env.octeon_crypto.zuc_window, MIPSCPU, 3),
-         VMSTATE_UINT32(env.octeon_crypto.zuc_tresult, MIPSCPU),
-+        VMSTATE_UINT64_ARRAY(env.octeon_crypto.llm_data, MIPSCPU, 2),
-+        VMSTATE_UINT64(env.octeon_crypto.chord, MIPSCPU),
-+        VMSTATE_OCTEON_LLM_TREE(env.octeon_crypto.llm_narrow, MIPSCPU),
-+        VMSTATE_OCTEON_LLM_TREE(env.octeon_crypto.llm_wide, MIPSCPU),
-         VMSTATE_END_OF_LIST()
-     }
- };
-diff --git a/target/mips/tcg/octeon_crypto.c b/target/mips/tcg/octeon_crypto.c
-index 9c5f19f41d..3369993fc9 100644
---- a/target/mips/tcg/octeon_crypto.c
-+++ b/target/mips/tcg/octeon_crypto.c
-@@ -16,6 +16,42 @@
- #include "qemu/bitops.h"
- #include "qemu/host-utils.h"
- 
-+#define OCTEON_LLM_NARROW_MASK ((1ULL << 36) - 1)
-+
-+static uint64_t octeon_llm_pack_narrow(uint64_t value)
-+{
-+    value &= OCTEON_LLM_NARROW_MASK;
-+    return value | ((uint64_t)(ctpop64(value) & 1) << 36);
-+}
-+
-+static void octeon_llm_read(MIPSOcteonCryptoState *crypto, unsigned int set,
-+                            uint64_t addr, bool wide)
-+{
-+    uint64_t value;
-+
-+    if (wide) {
-+        value = mips_octeon_llm_load(crypto->llm_wide, addr);
-+    } else {
-+        value = octeon_llm_pack_narrow(
-+            mips_octeon_llm_load(crypto->llm_narrow, addr));
-+    }
-+
-+    crypto->llm_data[set] = value;
-+}
-+
-+static void octeon_llm_write(MIPSOcteonCryptoState *crypto, unsigned int set,
-+                             uint64_t addr, bool wide)
-+{
-+    uint64_t value = crypto->llm_data[set];
-+
-+    if (wide) {
-+        mips_octeon_llm_store(&crypto->llm_wide, addr, value);
-+    } else {
-+        mips_octeon_llm_store(&crypto->llm_narrow, addr,
-+                              value & OCTEON_LLM_NARROW_MASK);
-+    }
-+}
-+
- static inline void octeon_set_shared_mode(MIPSOcteonCryptoState *crypto,
-                                           MIPSOcteonSharedMode mode)
- {
-@@ -2001,6 +2037,12 @@ uint64_t helper_octeon_cop2_dmfc2(CPUMIPSState *env, uint32_t sel)
-         return crypto->crc_len;
-     case OCTEON_COP2_SEL_CRC_IV_REFLECT:
-         return octeon_crc_reflect32_by_byte(crypto->crc_iv);
-+    case OCTEON_COP2_SEL_CHORD:
-+        return crypto->chord;
-+    case OCTEON_COP2_SEL_LLM_DATA0:
-+        return crypto->llm_data[0];
-+    case OCTEON_COP2_SEL_LLM_DATA1:
-+        return crypto->llm_data[1];
-     case OCTEON_COP2_SEL_HSH_DATW0:
-     case OCTEON_COP2_SEL_HSH_DATW1:
-     case OCTEON_COP2_SEL_HSH_DATW2:
-@@ -2157,6 +2199,36 @@ void helper_octeon_cop2_dmtc2(CPUMIPSState *env, uint64_t value,
-     case OCTEON_COP2_SEL_AES_KEYLENGTH:
-         crypto->aes_keylen = q;
-         break;
-+    case OCTEON_COP2_SEL_LLM_READ_ADDR0:
-+        octeon_llm_read(crypto, 0, q, false);
-+        break;
-+    case OCTEON_COP2_SEL_LLM_WRITE_ADDR_INTERNAL0:
-+        octeon_llm_write(crypto, 0, q, false);
-+        break;
-+    case OCTEON_COP2_SEL_LLM_DATA0:
-+        crypto->llm_data[0] = q;
-+        break;
-+    case OCTEON_COP2_SEL_LLM_READ64_ADDR0:
-+        octeon_llm_read(crypto, 0, q, true);
-+        break;
-+    case OCTEON_COP2_SEL_LLM_WRITE64_ADDR_INTERNAL0:
-+        octeon_llm_write(crypto, 0, q, true);
-+        break;
-+    case OCTEON_COP2_SEL_LLM_READ_ADDR1:
-+        octeon_llm_read(crypto, 1, q, false);
-+        break;
-+    case OCTEON_COP2_SEL_LLM_WRITE_ADDR_INTERNAL1:
-+        octeon_llm_write(crypto, 1, q, false);
-+        break;
-+    case OCTEON_COP2_SEL_LLM_DATA1:
-+        crypto->llm_data[1] = q;
-+        break;
-+    case OCTEON_COP2_SEL_LLM_READ64_ADDR1:
-+        octeon_llm_read(crypto, 1, q, true);
-+        break;
-+    case OCTEON_COP2_SEL_LLM_WRITE64_ADDR_INTERNAL1:
-+        octeon_llm_write(crypto, 1, q, true);
-+        break;
-     case OCTEON_COP2_SEL_CAMELLIA_FL:
-         octeon_camellia_fl_layer(crypto, q, false);
-         break;
+ &saa         base rt
+ @saa         ...... base:5 rt:5 ................ &saa
 diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index 5087267d53..b303851869 100644
+index b93506eb5a..7f135d6293 100644
 --- a/target/mips/tcg/octeon_translate.c
 +++ b/target/mips/tcg/octeon_translate.c
-@@ -76,6 +76,9 @@ static bool octeon_cop2_is_supported_dmfc2(uint16_t sel)
-     case OCTEON_COP2_SEL_GFM_RESINP0:
-     case OCTEON_COP2_SEL_GFM_RESINP1:
-     case OCTEON_COP2_SEL_GFM_POLY:
-+    case OCTEON_COP2_SEL_CHORD:
-+    case OCTEON_COP2_SEL_LLM_DATA0:
-+    case OCTEON_COP2_SEL_LLM_DATA1:
-         return true;
-     default:
-         return false;
-@@ -111,6 +114,16 @@ static bool octeon_cop2_is_supported_dmtc2(uint16_t sel)
-     case OCTEON_COP2_SEL_AES_KEYLENGTH:
-     case OCTEON_COP2_SEL_CAMELLIA_FL:
-     case OCTEON_COP2_SEL_CAMELLIA_FLINV:
-+    case OCTEON_COP2_SEL_LLM_READ_ADDR0:
-+    case OCTEON_COP2_SEL_LLM_WRITE_ADDR_INTERNAL0:
-+    case OCTEON_COP2_SEL_LLM_DATA0:
-+    case OCTEON_COP2_SEL_LLM_READ64_ADDR0:
-+    case OCTEON_COP2_SEL_LLM_WRITE64_ADDR_INTERNAL0:
-+    case OCTEON_COP2_SEL_LLM_READ_ADDR1:
-+    case OCTEON_COP2_SEL_LLM_WRITE_ADDR_INTERNAL1:
-+    case OCTEON_COP2_SEL_LLM_DATA1:
-+    case OCTEON_COP2_SEL_LLM_READ64_ADDR1:
-+    case OCTEON_COP2_SEL_LLM_WRITE64_ADDR_INTERNAL1:
-     case OCTEON_COP2_SEL_CRC_WRITE_POLYNOMIAL:
-     case OCTEON_COP2_SEL_CRC_IV:
-     case OCTEON_COP2_SEL_CRC_WRITE_LEN:
-diff --git a/target/mips/tcg/op_helper.c b/target/mips/tcg/op_helper.c
-index f565aaea20..36c402a6c2 100644
---- a/target/mips/tcg/op_helper.c
-+++ b/target/mips/tcg/op_helper.c
-@@ -349,6 +349,12 @@ target_ulong helper_rdhwr_xnp(CPUMIPSState *env)
-     return (env->CP0_Config5 >> CP0C5_XNP) & 1;
- }
- 
-+target_ulong helper_rdhwr_chord(CPUMIPSState *env)
-+{
-+    check_hwrena(env, 30, GETPC());
-+    return env->octeon_crypto.chord;
-+}
-+
- void helper_pmon(CPUMIPSState *env, int function)
- {
-     function /= 2;
-diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index 5c19adbbcf..65bca8a987 100644
---- a/target/mips/tcg/translate.c
-+++ b/target/mips/tcg/translate.c
-@@ -10923,6 +10923,14 @@ void gen_rdhwr(DisasContext *ctx, int rt, int rd, int sel)
-         }
-         break;
- #endif
-+    case 30:
-+        if (!(ctx->insn_flags & INSN_OCTEON)) {
-+            gen_reserved_instruction(ctx);
-+            break;
-+        }
-+        gen_helper_rdhwr_chord(t0, tcg_env);
-+        gen_store_gpr(t0, rt);
-+        break;
-     default:            /* Invalid */
-         MIPS_INVAL("rdhwr");
-         gen_reserved_instruction(ctx);
+@@ -287,3 +287,4 @@ TRANS(LDX,  trans_lx, MO_UQ);
+ TRANS(MTM0, trans_mtm, 0);
+ TRANS(MTP0, trans_mtp, 0);
+ TRANS(MTP1, trans_mtp, 1);
++TRANS(MTP2, trans_mtp, 2);
 
 -- 
 2.54.0
