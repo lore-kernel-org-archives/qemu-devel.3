@@ -4,42 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C309FCD37AF
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 06:53:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44372CD37AF
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 06:54:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLy1h-0008Jd-1L; Sun, 10 May 2026 02:52:33 -0400
+	id 1wLy3C-0000P3-5J; Sun, 10 May 2026 02:54:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wLy1f-0008J7-Aq; Sun, 10 May 2026 02:52:31 -0400
+ id 1wLy3A-0000OG-N4; Sun, 10 May 2026 02:54:04 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wLy1c-0007w3-Di; Sun, 10 May 2026 02:52:31 -0400
+ id 1wLy38-0008Fc-Oc; Sun, 10 May 2026 02:54:04 -0400
 Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64A6ptmF001441
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64A6rbWX002129
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sun, 10 May 2026 15:51:56 +0900 (JST)
+ Sun, 10 May 2026 15:53:37 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=VOEDL6NXraz7Y1ib3+3zrn2sY/jn8axyzIJKRtM1j/o=; 
+DKIM-Signature: a=rsa-sha256; bh=G9emTGkrvM3t4uYYQCICocvVaM6zTDTY+/VnP/uEYM4=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1778395916; v=1;
- b=Atq204n3W30a6caKEE/w7vUE9jY+jYsEhm2FzFelRX/LuWAONLK1HML7zH9TqIlI
- 9gcHWAbLxO1ihKxeUYB6PncZDWBtUCXJwZprZRhOO6PZjyfTOL6a5VdwG3psXFMH
- UoLX4b5xPW3zD2aYvV7JLsxRc6LnaXHwDR0X53Bf7sBg4/fjQF3HW9Y1c1ORJP0E
- oYwcYA89gUxutzOso0vKo3BgamUs1YvsRCur+kKZFOS39tIi8wutobYxv000fZPd
- 6geeyIC0i0ygUrjdTOEU8N0LLI+o1DVg8EI6siAx1zersTIlJuydvGg8NDdKfjyF
- cEgSh8Ra3qhMVORl9PVsHA==
-Message-ID: <28005362-7092-449a-97ef-4360e5a5ee0d@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sun, 10 May 2026 15:51:55 +0900
+ s=rs20250326; t=1778396017; v=1;
+ b=h9qltRfOtfxbJ++oHaUvD975QZeRsVHpvxJpDWqmc7nPZ7+gNf+Rb0SMpkEkEQSr
+ /d0WM3B0fMZgpmFsS06DAW+q2UeCkqYVLiUnnz40OUkrgk5isaVrV9UznlATA2NG
+ xdgczUrHLHzlGzwHyVc9Xb7dyKE0j/EPgKdwJ/Jlcqv+vYVEyeCPWf1evWC6EXR1
+ +1gBtHzYM7Qx5YCQd0uyl+MKH2AZahSLQJ8cpZmPE2e+j7C4ItHFZ1HWL/u6LxBV
+ 3ww2bMWmFttwL89x2XrDDanbwDvvXa2cEZ+0SPY4P555DFUr0nqlnLCF8p7nmFtn
+ YHPnuabf4g22dKWFIQuLpw==
+Message-ID: <bce51652-31ae-42a2-a0bf-bd14fb19ba38@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sun, 10 May 2026 15:53:36 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 02/28] ui/input: Remove QAPI wrappers from
- QemuInputEvent
+Subject: Re: [PATCH RFC 09/28] hw/display/xenfb: Use Linux key codes
 To: marcandre.lureau@redhat.com
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Jan Kiszka <jan.kiszka@web.de>, Peter Maydell <peter.maydell@linaro.org>,
@@ -53,11 +52,11 @@ Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  qemu-arm@nongnu.org, xen-devel@lists.xenproject.org, qemu-ppc@nongnu.org,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 References: <20260509-input-v1-0-66f18d2edde6@rsg.ci.i.u-tokyo.ac.jp>
- <20260509-input-v1-2-66f18d2edde6@rsg.ci.i.u-tokyo.ac.jp>
- <177839287566.1301060.6783840665482202851.b4-review@b4>
+ <20260509-input-v1-9-66f18d2edde6@rsg.ci.i.u-tokyo.ac.jp>
+ <177839287566.1301060.18404851357869345635.b4-review@b4>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <177839287566.1301060.6783840665482202851.b4-review@b4>
+In-Reply-To: <177839287566.1301060.18404851357869345635.b4-review@b4>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -84,30 +83,26 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026/05/10 15:01, marcandre.lureau@redhat.com wrote:
-> On Sat, 09 May 2026 19:34:14 +0900, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+> On Sat, 09 May 2026 19:34:21 +0900, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>> diff --git a/hw/display/xenfb.c b/hw/display/xenfb.c
+>> index 9bf89a1e622..ee23c483499 100644
+>> --- a/hw/display/xenfb.c
+>> +++ b/hw/display/xenfb.c
+>> @@ -191,29 +191,14 @@ static int xenfb_send_position(struct XenInput *xenfb,
+>> [ ... skip 23 lines ... ]
+>> -            trace_xenfb_key_event(xenfb, lnx, evt->key.down);
+>> -            xenfb_send_key(xenfb, evt->key.down, lnx);
+>> -        }
+>> -    }
+>> +    trace_xenfb_key_event(xenfb, evt->key.key, evt->key.down);
+>> +    xenfb_send_key(xenfb, evt->key.down, evt->key.key);
 > 
-> Hi,
-> 
->>
->> diff --git a/ui/input.c b/ui/input.c
->> index 52ab7beb942..a3ced08429e 100644
->> --- a/ui/input.c
->> +++ b/ui/input.c
->> @@ -159,16 +159,55 @@ void qmp_input_send_event(const char *device,
->> [ ... skip 30 lines ... ]
->> +                g_assert_not_reached();
->> +            }
->> +
->> +            evt.key.key.type = KEY_VALUE_KIND_QCODE;
->> +            evt.key.key.u.qcode.data = code;
->> +            evt.key.key = *qapi->u.key.data->key;
-> 
-> You are overwriting the QCODE/code with this assignment. Swap the lines?
-> 
+> As before, it should guard against KEY_RESERVED (0).
 
-I will remove evt.key.key = *qapi->u.key.data->key. It is likely to be 
-an artifact of rebase.
+I think I will move the guard to qemu_input_event_send() so that it can 
+be shared with virtio-input and everyone else.
 
 Regards,
 Akihiko Odaki
+
 
