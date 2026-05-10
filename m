@@ -4,84 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40F46CD37B6
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 13:53:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6206CD37B9
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 16:10:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wM4b8-00027F-5T; Sun, 10 May 2026 09:53:34 -0400
+	id 1wM6jK-0004Rj-27; Sun, 10 May 2026 12:10:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wM4b2-0001wC-Ft
- for qemu-devel@nongnu.org; Sun, 10 May 2026 09:53:28 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wM6jH-0004Pt-Ry
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 12:10:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wM4b0-0006Rs-Gm
- for qemu-devel@nongnu.org; Sun, 10 May 2026 09:53:28 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wM6jD-0001k8-Co
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 12:10:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778421205;
+ s=mimecast20190719; t=1778429399;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kMHgE33Hk8bxjc8Z7+XxgDyHkUfsz/F1aWHoVzZJB6g=;
- b=N7QM6OLmOBjEVU3TlyQu6uHlYqU0NpDEs7mKIBytqv4Yfb7edwazxo2F2aGsowEZLxK/th
- m69blQyub7rTFlNtMlri2Sh6RZVsAwwi7msSIYPPD+SRgf6UXMpS6cHHPPQuyUsPh/vD5X
- 7T/0xpGjJKRWyCWbSK4jXwzaU30Ix6s=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-489-3rAwoZ9sOA2yuzwkP3XQ1A-1; Sun,
- 10 May 2026 09:53:23 -0400
-X-MC-Unique: 3rAwoZ9sOA2yuzwkP3XQ1A-1
-X-Mimecast-MFC-AGG-ID: 3rAwoZ9sOA2yuzwkP3XQ1A_1778421203
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1F58C1956080
- for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:53:23 +0000 (UTC)
-Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D26D13002D32; Sun, 10 May 2026 13:53:21 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 10 May 2026 17:43:51 +0400
-Subject: [PATCH 54/54] qom: use QAPITypeInfo in object_property_get_enum
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=wCVoF57DmLFbijeLjFcPhA0Q4tYJoByuDNn5uU58sLU=;
+ b=Rp8JCa+fHmBcawPUi58XB6rMJrb0muFnM6WXk7Vo71EFSBelrHvERg7dSl5njVajmErgHj
+ O5OQ6Rq6lvIqD1ZIj1v6mFwv2Wih8ZWgLMfLW4Ial27qIiCzztmPqJTzfVyhmCEz/LYjsB
+ DgkIYdMVh2v97YTIzcv3WatZWYOjw3Y=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-649-PiQu2nb2OB6fEkOoStbchQ-1; Sun, 10 May 2026 12:09:58 -0400
+X-MC-Unique: PiQu2nb2OB6fEkOoStbchQ-1
+X-Mimecast-MFC-AGG-ID: PiQu2nb2OB6fEkOoStbchQ_1778429397
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-488ba2f4094so26288895e9.1
+ for <qemu-devel@nongnu.org>; Sun, 10 May 2026 09:09:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1778429397; x=1779034197; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=wCVoF57DmLFbijeLjFcPhA0Q4tYJoByuDNn5uU58sLU=;
+ b=Un8asNTlAzu89ziq4vRZ0BC5qduAFuTeGN9S8f8ggXgorCkjVevL/XZLzYULshAsYE
+ oHXgxQz30h1e93pbJPjO/PQ148uVXh3lwJx7pabSr0w6nvgY6vwwMjh79Z0uEC11JfMX
+ 8LaM8gjDrEX8wZfp2lIu4gYwgUKKP7xyJsI/cX0BEHVgsrYQtf5tLFxE60kmROU06rDk
+ mWAXrlTPaCq3/MIt2Y3a1CumW3coDzHyl/0csjT17Smro7X16EqDJiWKgLuCxO3Y1KBB
+ 7CrPk/bas7fXq0nOWCm/LqmUcVXeXg535YejiHlJOEnxNN9Rjy+23muZo2Qi6z6xyfV1
+ U43A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778429397; x=1779034197;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wCVoF57DmLFbijeLjFcPhA0Q4tYJoByuDNn5uU58sLU=;
+ b=X8NSTCOuTGDtRHaw1AH4Ye7/qw3XPA6bQErbJffmSgPItI2XjB4vWyqBRhSywFERIR
+ t9ZtoXQ5FQ51dalFGf0Gf0WTt3b076EXLO1K6xE1qUwvC/PGMTuYuzvUZ+6+CrGDtK22
+ 0bw2HpcDPykGz8wjFHhcyD9C9Tb6UvjIgHplEWf9OHjh//mZjbSOJ6/ZQN3v8r2Eezm9
+ 4hwBz0skghDQqZ5j/Dat4IRhyVzuEIsormjVvYsk903m3i/bOgnzGhJ4HRSICPtITslp
+ Mu2nMo0DGq25XkMiQyVpxi4Zznlty5bJOiIghsbAVu09Yi6kV0OP85h8WbpJT6fE/RQk
+ ZlgQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/MuAV2+itpFm9UW3XSkV3PpCsgcPEbEbfnV532SUFRAmSJ7k2LHI4JHeg9DyuB3Im8Wjl/V11g5bSk@nongnu.org
+X-Gm-Message-State: AOJu0YwyOGWaL+S21fjRyqspEd8LlHA6kk0rUV1RnEUEF8smyC/uWYNM
+ nIV+Uo0ulV3OuyAbq6pRbsZh/ohyUjlbAxXKkfYAUkAjCNdY7nF1C3FibnM29BSAXYN3A1OgwgR
+ cvpj0OPM0keVDP0rJ/UEJiCEgY113ZYxUV6h8qK6EiYaPH81etAESiI9Y
+X-Gm-Gg: Acq92OGWd7oDICDuSTqyuGnU8OJJFiFv83+3/fW8qMm+0xyDdu20QLBZBkX/CIi29Cv
+ cuSb8NRj4Pp+79389Mn2bsvXr2QbkpgYqFqyzb1c3Q4LbHpn6JwLrSwS0pYQkY/OygHGNgerGgA
+ RqY4U1naz5aOwTUyQfT4FuOuvc9fKEoxsxdoKuDCOU8MfUNe4dx3codL2eDsghtcdabBi0NyTND
+ SCmq5tUuIEUWdBpR/mCPL8G5falPP+8ZfrEtCxDfmRmDLy6BuwYELlAYe7X9YrmZwQPoRwx4SC9
+ g1Ms36GneVoaWSqIgef1hYVKZ14Dofip58x/lV48pgGBXxMsZ6n4kmlPjDpIOfMRyswRq5es+WP
+ /DkC0czbs0tR0HmQV3nZCfNEmBC31i+3yyStTt/Ub55bYgAvzC0WiY8sK+TfHsanzLMVWkE4=
+X-Received: by 2002:a05:600c:34ca:b0:489:1f08:91b with SMTP id
+ 5b1f17b1804b1-48e521e6085mr340952285e9.16.1778429397157; 
+ Sun, 10 May 2026 09:09:57 -0700 (PDT)
+X-Received: by 2002:a05:600c:34ca:b0:489:1f08:91b with SMTP id
+ 5b1f17b1804b1-48e521e6085mr340951855e9.16.1778429396610; 
+ Sun, 10 May 2026 09:09:56 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48e702e5630sm114958585e9.8.2026.05.10.09.09.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 10 May 2026 09:09:56 -0700 (PDT)
+Message-ID: <6373a75e-eee5-421f-b178-3c82696a8149@redhat.com>
+Date: Sun, 10 May 2026 18:09:54 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/2] vfio: propagate IRQ notifier registration failure
+To: zhaoguohan@kylinos.cn, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Alex Williamson <alex@shazbot.org>,
+ Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Tony Krowiak <akrowiak@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>
+References: <20260510084353.58263-1-zhaoguohan@kylinos.cn>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260510084353.58263-1-zhaoguohan@kylinos.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260510-qom-qapi-v1-54-48ba6a1a1fa5@redhat.com>
-References: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
-In-Reply-To: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4649;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=RI9rLy0513Xk0Jg11GM3GXY46K98BlGPdQxdRVl/trQ=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqAItxnmMmUi+8nbXZV5kDZFF9J3thfQNCCBbL4
- Ji6+BbwCjiJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCagCLcQAKCRDa6OEJdZac
- 5VB7D/wMybTPK75VO0ZA44e5hqNFOBAZvltaMM0UGqZQb9IByol8zCnnwCPTgOvAdyOYlact8X/
- izyXLRI24V+ImHSEcgUi1MlVA6DQLG2ZhvZZ9O+Wcyj0N97dUXEnrg8BDfyktKjy2yU8VxjG9qM
- WYAvlkrwHKkDZzZIwdegaN0bf4Drwl1g5tn/GA4lxol1xeRvxWWJMjNuyee4eyTosma6kl0WOD6
- IRUFGwJbQCT4I9JwzWoJGa+OrAOi2taygAmE2ebJQaqdtfkb47FKP3qhM5A3GN18ZM2yHOYoqsC
- YooqVtuyVmbawgm7x/qX8+53BZs0slDtLg2scwaaCFwyRj9Cf56sw9t429ir0KVfYbtfH9Iajmu
- PLVmKuSZsh8owbBvY7vgVTA+sNU31PA6GbBxjfFXG6H1QUI1j1TBu12XW76G1RNsxWCmIrb//0I
- /z41EeGTnfJPuWLArKz0KzYMRtqy2kdEvWaYirURN+gO3qzwil0AA2Rs2vLAfWdHr3zRhl5M4+G
- d2v4ckFCd7LkUi2KqCrts+r2wJw+koLhFeutgpO0rRIyzelOQVk0pzoXWSjEtQXDYfoy2aZGSjn
- Ru7BlI4aHFCR8LgjeSzR4Ej95LaU7Ev4W+kVTC2wrOfVrDRyVjxiLo6oJkWMDHqL1WXBEeJP0S8
- 1Pr5TXStepPw/Zw==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -89,7 +153,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,120 +169,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The typename parameter becomes a QAPITypeInfo pointer, and the
-validation compares prop->qapi_type against it instead of matching
-prop->type strings.
+On 5/10/26 10:43, zhaoguohan@kylinos.cn wrote:
+> From: GuoHan Zhao <zhaoguohan@kylinos.cn>
+> 
+> vfio_ap_register_irq_notifier() and vfio_ccw_register_irq_notifier() clean
+> up the fd handler and EventNotifier when vfio_device_irq_set_signaling()
+> fails, but still return true to their callers.
+> 
+> Return false after cleanup so callers can handle the failed registration
+> path instead of treating it as a successful notifier setup.
+> 
+> Please ignore the previous version.
+> 
+> GuoHan Zhao (2):
+>    vfio/ap: Return false when IRQ notifier setup fails
+>    vfio/ccw: Return false when IRQ notifier setup fails
+> 
+>   hw/vfio/ap.c  | 1 +
+>   hw/vfio/ccw.c | 1 +
+>   2 files changed, 2 insertions(+)
+> 
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- include/qom/object.h            | 4 ++--
- hw/core/machine-qmp-cmds.c      | 3 ++-
- qom/object.c                    | 8 ++++----
- tests/unit/check-qom-proplist.c | 6 +++---
- 4 files changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index ba2df54258b..573414c7270 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -1410,7 +1410,7 @@ uint64_t object_property_get_uint(Object *obj, const char *name,
-  * object_property_get_enum:
-  * @obj: the object
-  * @name: the name of the property
-- * @typename: the name of the enum data type
-+ * @type_info: the QAPITypeInfo of the enum
-  * @errp: returns an error if this function fails
-  *
-  * Returns: the value of the property, converted to an integer (which
-@@ -1418,7 +1418,7 @@ uint64_t object_property_get_uint(Object *obj, const char *name,
-  * value is not an enum).
-  */
- int object_property_get_enum(Object *obj, const char *name,
--                             const char *typename, Error **errp);
-+                             const QAPITypeInfo *type_info, Error **errp);
- 
- /**
-  * object_property_set:
-diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-index e62cb4ec888..9b449080dd5 100644
---- a/hw/core/machine-qmp-cmds.c
-+++ b/hw/core/machine-qmp-cmds.c
-@@ -17,6 +17,7 @@
- #include "qapi/qapi-commands-accelerator.h"
- #include "qapi/qapi-commands-machine.h"
- #include "qobject/qobject.h"
-+#include "qapi/qapi-type-infos-common.h"
- #include "qapi/qobject-input-visitor.h"
- #include "qapi/type-helpers.h"
- #include "qemu/uuid.h"
-@@ -218,7 +219,7 @@ static int query_memdev(Object *obj, void *opaque)
-         } else {
-             m->has_reserve = true;
-         }
--        m->policy = object_property_get_enum(obj, "policy", "HostMemPolicy",
-+        m->policy = object_property_get_enum(obj, "policy", &HostMemPolicy_type_info,
-                                              &error_abort);
-         host_nodes = object_property_get_qobject(obj,
-                                                  "host-nodes",
-diff --git a/qom/object.c b/qom/object.c
-index c378d20c4db..08f2e93d0a1 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -1604,7 +1604,7 @@ uint64_t object_property_get_uint(Object *obj, const char *name,
- }
- 
- int object_property_get_enum(Object *obj, const char *name,
--                             const char *typename, Error **errp)
-+                             const QAPITypeInfo *type_info, Error **errp)
- {
-     char *str;
-     int ret;
-@@ -1614,10 +1614,10 @@ int object_property_get_enum(Object *obj, const char *name,
-         return -1;
-     }
- 
--    if (!g_str_equal(prop->type, typename)) {
-+    if (prop->qapi_type != type_info) {
-         error_setg(errp, "Property %s on %s is not '%s' enum type",
--                   name, object_class_get_name(
--                       object_get_class(obj)), typename);
-+                   name, object_class_get_name(object_get_class(obj)),
-+                   type_info->name);
-         return -1;
-     }
- 
-diff --git a/tests/unit/check-qom-proplist.c b/tests/unit/check-qom-proplist.c
-index 7f10befe687..d6703e64827 100644
---- a/tests/unit/check-qom-proplist.c
-+++ b/tests/unit/check-qom-proplist.c
-@@ -528,14 +528,14 @@ static void test_dummy_getenum(void)
- 
-     val = object_property_get_enum(OBJECT(dobj),
-                                    "av",
--                                   "DummyAnimal",
-+                                   &dummy_animal_qapi_type_info,
-                                    &error_abort);
-     g_assert(val == DUMMY_PLATYPUS);
- 
-     /* A bad enum type name */
-     val = object_property_get_enum(OBJECT(dobj),
-                                    "av",
--                                   "BadAnimal",
-+                                   &dummy_str_qapi_type_info,
-                                    &err);
-     g_assert(val == -1);
-     error_free_or_abort(&err);
-@@ -543,7 +543,7 @@ static void test_dummy_getenum(void)
-     /* A non-enum property name */
-     val = object_property_get_enum(OBJECT(dobj),
-                                    "iv",
--                                   "DummyAnimal",
-+                                   &dummy_animal_qapi_type_info,
-                                    &err);
-     g_assert(val == -1);
-     error_free_or_abort(&err);
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
--- 
-2.54.0
+Thanks,
+
+C.
 
 
