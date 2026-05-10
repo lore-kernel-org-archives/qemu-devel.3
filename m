@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46E95CD37B2
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 16:17:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0900FCD37B2
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 16:18:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wM6pt-0007g0-Ul; Sun, 10 May 2026 12:16:58 -0400
+	id 1wM6rd-0000b0-Lt; Sun, 10 May 2026 12:18:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wM6pl-0007fV-Rd
- for qemu-devel@nongnu.org; Sun, 10 May 2026 12:16:49 -0400
-Received: from mail-ot1-x330.google.com ([2607:f8b0:4864:20::330])
+ id 1wM6rb-0000ah-0n
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 12:18:43 -0400
+Received: from mail-oi1-x22d.google.com ([2607:f8b0:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wM6pk-0003sJ-7L
- for qemu-devel@nongnu.org; Sun, 10 May 2026 12:16:49 -0400
-Received: by mail-ot1-x330.google.com with SMTP id
- 46e09a7af769-7dea20cf21aso3348226a34.1
- for <qemu-devel@nongnu.org>; Sun, 10 May 2026 09:16:47 -0700 (PDT)
+ id 1wM6rW-0004VK-6X
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 12:18:39 -0400
+Received: by mail-oi1-x22d.google.com with SMTP id
+ 5614622812f47-48270f099d5so241554b6e.0
+ for <qemu-devel@nongnu.org>; Sun, 10 May 2026 09:18:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778429806; x=1779034606; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778429916; x=1779034716; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=KQ6ToM7Wf9WNRnbFxllkmpNyp4obz7B0oX4VVTw5oxQ=;
- b=iXi7Awb4GUy9cYWovSwb+aumuMqzjkpcXrdscFOAhx7KEpQ9Vfd5oQFwcAG/2oDeVg
- Ogcpl/y+ybUKFdKM16/ph2llIPkKUpdqgZWFtvtZkKaylEsM+hVvBR33zU8U/L6VAcNi
- L/qjM2RmQs+WpdDN9DJ8BP+rA3zmecSXp9WXBhHC62wsbbXsEuo3KRh5sK/vlv3lvdfp
- 3VUH8SU15MOl9T0YJvWKxb79xIgnkdsNDfgZgum+l3CP2qlCSbe9Ir5BM/+WgtW+MHjE
- sCLoCAHGnC3vacOsuiPmLXK2HsYXVG5OoNTsNFmM+c20tWOvlh6zBc1VO5bsolHD2YRL
- 2xSg==
+ bh=3d0h7SiHKgaegJHYh9DyHcj5wh74yOP+cUl9vOuCqRQ=;
+ b=sh+exqAlz0j/0rNvRk5EVoxi838Eb1FzsrNW/QfrTAzh5x7UUwwzGlWYtbS/4kAOFq
+ bYn928hVphACD00rm4mdoxzlLfh2EwJBoUaZVcNMwbF4M0Hk9MoniTC85S70510BLZ5d
+ NLWoNUvAgFijkxuInb42rAKzRXawmX1AkOwKNENZcfYka8qmKIdQcxHRxjh4Ok1KIyfc
+ DNvoYcenODA2fEdW2dmZAnaXGA+YvQiEs4Y3Q4dfeBEyI8+h1CRqWKHPLmzRLZUC70LO
+ oH2i4JRVminBukn+N/8IYMHfQTNEBZpDd1gVKJc4LP9w0YWtTLwO622j1e386VXUU9H9
+ 16tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778429806; x=1779034606;
+ d=1e100.net; s=20251104; t=1778429916; x=1779034716;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=KQ6ToM7Wf9WNRnbFxllkmpNyp4obz7B0oX4VVTw5oxQ=;
- b=h+Zb89FzcqgKlFTL+NDDdTF8pZZxeqciJE8o4wnNs59cBr52YN2t0ve5kWMCO4pipg
- eMSYyXkPDcS0xaR9hQ7IXwmz2fYiq9lKrUoZHY1jrmK16nDwcbQB0UvaqAUXlGaXrBv3
- sOuBBTdZZL0HMuGkE1p3FOCpJ3gCI2IyCA4nPIdiuJj1Npqynde4hjqO7k71MLRI+iul
- ZsuPZcE8x/7ICR/uRSONOLbLY/4+eGutiWaACDHDmGdObLxjbXiv0hrPjIMQspaRYpcj
- bC2NDrbmm7GmyxIEtfcjxdehyzZeDdiQxWSv8C9HaiS260WqDZSOuaD2RSz9MG74Ar0Q
- JyhQ==
-X-Gm-Message-State: AOJu0YyoBS0Ger1lm6O36hQoKmCdznFgxNjvTpQ4hQ0I6E6r89BVUS5M
- NS3AV9wRaGJq0c1sF3+YsSvzAMjcOI+sHBB2JjLvJxzTBWniD7O2cUj2JOD7QiCh8ZksymTdSdM
- rk7PP
-X-Gm-Gg: Acq92OFyw+4kK+qyWS6OUKRqLtZFeyHfP0TqJep7jLsDJVtXwGb+l++CLcL1UaHYLWu
- vyzTLKtuOOEcvKN2QRt4zjo/9DxTJjI8GUHR5urj3IrOGFsHFq5Pomx3NpLOt3NALqR279iMOJp
- /4kVXS5WJvyZriqpVpOggL3rT4Wyb/9wT8W4eEAgkv52yP8LqGwaMYMlHuUdIClTJuhXasAnGAJ
- VOqk+dLSHftVdT7ZV6pYoVengd0MNc50xfIwYuoo7rioK0W0ArZ7y7gdFBeVETAGwSStOZ2srup
- Kelo2VxdOVJ1L3bcYr9ea3GoRSaCvqESRKdpI4M5i/JB5QI8yBfRUjSHMKzuGOmZwdnnQqtgWzF
- 43skkjJHXVBVWF9FfLwLkxUnOl2zsuW2F2ro2ZUL6BC29L74PHMl6QE3n5cf1JzwYetn4PJAsN3
- 8UQKj46INEFwnpOwoJx/CX4pT/Y57YlNSjXDbJOm5k75tITw9RnQ+ylhglt8scyCpXhEvl5er9I
- riVhVhhDA==
-X-Received: by 2002:a05:6830:378e:b0:7de:49c0:a752 with SMTP id
- 46e09a7af769-7e1df26c2d2mr12262571a34.27.1778429806239; 
- Sun, 10 May 2026 09:16:46 -0700 (PDT)
+ bh=3d0h7SiHKgaegJHYh9DyHcj5wh74yOP+cUl9vOuCqRQ=;
+ b=IyW8NmIfVmh+wkf2nZ2VvZwaoIFzkiWEW0ABlvRnJzS1FBLigj/MuN7YwHy3me/u0V
+ nT4ozbQLbM9hFKIur8q8PwBJMgC3E0hsva2hkpfnldYyII+7yvOIrLQBnMinEeki5NfQ
+ TTwmgnw8CXXrf/sSSF/gKD2KaeW5DUKHsejIwtmr056KUabxiocek0fIA4PBKVE+GFqJ
+ wjS4GSbUYs/9Hg109TsiQ0E0+/txxYLVYtDJlc772MO1eajDhkD9xugJnyZxsAfl/AWS
+ 27CC7l4bVLh4nZc8yc10ZK/tECoG4G99LX0uw9QOuWQn6yESBBHJdF1yfJbpfoFCgHPv
+ /UrQ==
+X-Gm-Message-State: AOJu0Yzs24jGpxPlPuXnPfBQHAzI3LY45dPJReQZllWehSEH9c3PLFHv
+ Cc0tSLwaptzKaW1AdQ5cmfayxwTDcXUQdfCd/Th9gXFAoYyBgGK3/lH8Z8b3P6KEBCVS2gkW/Q/
+ MPyfM
+X-Gm-Gg: Acq92OE49Vi0ppkdfAwOAgJ3ndujO1WpgxLxoIUuwOYfiHBUxrKEQ+W/behTKQv55JV
+ xmwmD4wMqYBOcybmhbaRuzO/eoDIGQGtb0OQl/WNCh01XWi9avUtvbXeK9NL1jAIEOhRRphD65L
+ n/oWwLw3Fv4iIWm8aAyQiefNdJk6rypdw41UNyC9p852EWCX1++zFjsieetM1rHGQbXgzp8AP2B
+ DqxcIX2Gd/bGGnMlDndnc21PVwsz9xM8GK+JySRhjK0fRIgr1ka0Xwb8jGFtFImAi2jAFsu7Fv+
+ wRHg0ToBfyQyFcA1+Ywb6u8KMVUoam3QCe279EWvEuTretM1i8n+4UldJtE3aNL6n2yiF415yFU
+ 2S4VfYWBxilM+0xVP1sj3yHQzSagmQ8BQlp3F5qg7jmkNchFN4WyarS9/9n1MtqaUT0JXFzcELm
+ cTToZo7afXn+6HjBqDT4+NwZgYLJSUYIIwCLZdvlP5XXTqbt/2uwWu0wgCEEpwGHlP60CReX9fv
+ 05wdrX2xg==
+X-Received: by 2002:a05:6808:178d:b0:467:49c0:5f6d with SMTP id
+ 5614622812f47-4804247a9d2mr11050394b6e.23.1778429916395; 
+ Sun, 10 May 2026 09:18:36 -0700 (PDT)
 Received: from ?IPV6:2600:381:c938:6375:32c5:6ccf:a676:6508?
  ([2600:381:c938:6375:32c5:6ccf:a676:6508])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e367a18481sm5236995a34.0.2026.05.10.09.16.45
+ 5614622812f47-47c76986f87sm18664018b6e.13.2026.05.10.09.18.35
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 10 May 2026 09:16:45 -0700 (PDT)
-Message-ID: <3be776b0-de87-4ffb-942e-a15128f092cf@linaro.org>
-Date: Sun, 10 May 2026 11:16:43 -0500
+ Sun, 10 May 2026 09:18:35 -0700 (PDT)
+Message-ID: <ad009186-2006-4a5f-8521-08677ddbc900@linaro.org>
+Date: Sun, 10 May 2026 11:18:33 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 12/32] target/mips: add Octeon SAAD instruction
+Subject: Re: [PATCH v4 13/32] target/mips: add Octeon ZCB instruction
 To: qemu-devel@nongnu.org
 References: <20260509-mips-octeon-missing-insns-v2-v4-0-d669dcd05c2f@gmail.com>
- <20260509-mips-octeon-missing-insns-v2-v4-12-d669dcd05c2f@gmail.com>
+ <20260509-mips-octeon-missing-insns-v2-v4-13-d669dcd05c2f@gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260509-mips-octeon-missing-insns-v2-v4-12-d669dcd05c2f@gmail.com>
+In-Reply-To: <20260509-mips-octeon-missing-insns-v2-v4-13-d669dcd05c2f@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::330;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x330.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,27 +107,24 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/9/26 21:13, James Hilliard wrote:
-> SAAD is the Octeon+ doubleword form of SAA: it atomically adds rt to the
-> naturally aligned 64-bit doubleword at base and discards the old memory
-> value.
+> ZCB zeros the 128-byte cache block containing the base address.
 > 
-> Route it through the common SAA/SAAD translator so the MemOp selects the
-> aligned doubleword transaction size.
+> Model the user-mode-visible effect by aligning the address down to a
+> 128-byte line and storing sixteen zero doublewords to guest memory.
 > 
 > Signed-off-by: James Hilliard<james.hilliard1@gmail.com>
 > ---
 > Changes v2 -> v3:
->    - Split SAAD out of the combined Octeon arithmetic and memory
+>    - Split ZCB out of the combined Octeon arithmetic and memory
 >      instruction patch.  (requested by Richard Henderson)
-> 
-> Changes v3 -> v4:
->    - Note that SAAD shares the Octeon+ gated SAA translator path.
 > ---
->   target/mips/tcg/octeon.decode      | 1 +
->   target/mips/tcg/octeon_translate.c | 1 +
->   2 files changed, 2 insertions(+)
+>   target/mips/tcg/octeon.decode      |  3 +++
+>   target/mips/tcg/octeon_translate.c | 24 ++++++++++++++++++++++++
+>   2 files changed, 27 insertions(+)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
+
+I don't see documentation for ZCB{T}, but it all looks plausible.
 
 r~
 
