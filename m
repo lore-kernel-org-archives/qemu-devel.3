@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40D85CD37B2
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 20:43:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DD20CD37B2
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 20:43:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMAx6-0005BS-MG; Sun, 10 May 2026 16:40:40 -0400
+	id 1wMAxA-0005E9-FH; Sun, 10 May 2026 16:40:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wMAx0-000598-1V
- for qemu-devel@nongnu.org; Sun, 10 May 2026 16:40:35 -0400
-Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
+ id 1wMAx0-00059C-7y
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 16:40:36 -0400
+Received: from mail-oi1-x233.google.com ([2607:f8b0:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wMAwy-00045P-4f
- for qemu-devel@nongnu.org; Sun, 10 May 2026 16:40:33 -0400
-Received: by mail-oi1-x230.google.com with SMTP id
- 5614622812f47-48270ea6dd1so168873b6e.3
- for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:40:30 -0700 (PDT)
+ id 1wMAwy-00046y-Gm
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 16:40:34 -0400
+Received: by mail-oi1-x233.google.com with SMTP id
+ 5614622812f47-479d4df9035so3127999b6e.0
+ for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:40:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778445630; x=1779050430; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778445631; x=1779050431; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=hFVHCN58pY4Te0rUYFWkIZamhOgAdl/wBYf7gt8R5Bs=;
- b=WibnxKfk06+boWBTskBPz1jXz5ajuYy7I8p3WCZ/A5x0HiX30ptKBJ4LIA5BnMUiZL
- 3sEr8+I3sLFNCWH4Y9in8vPmMr/tTunKJIFniTTacUCM5RDux/Q7aFlygbqep8hSuCbB
- C2Tjjnmxx0b4nlfccEUF1Kc1JPPsHXPqPQ4wo+MlUCX0v9xU+H6B0rJZ7NJE24itDwcX
- lyHy69Mfp1R9osrKQEjAEg/D9pMWxSiFHsH+jet0OKuY5rQ+8ArJaUwjNfWBoLxsq3EH
- YhdlSSBP/qeZmIWjXzBT22u8cim2flDMVYWNf+6SmugqBDNr6EjN9gnToHD/KbI45pVM
- xFsQ==
+ :reply-to; bh=x1n/wa+vo1hnO+AttuyRN+qTfObXqzgkhvrlkD7A7fk=;
+ b=WDARVtXndasDiuJccIKPkiBT4nELRSdCxmZwuw6SlERvNhIpZvxE7JwRTML7dfPlki
+ ROuCm9ajdlqtWG6jNPdybW0P9zAud3IThcBvXrYpCemxspMZWHUE1pLaPNsCluDOraC2
+ QWWtzsrmDhgiwZJKGuLsSo2oQrcHWOAmc+F3k+F82p6QScfyH+NlrQLUoecqkMZq2KjT
+ V77lMoMnwoo30u/LHxGySZ/FLltVvTNCm0j8s4qq46swFSW9ZHYGzyzCHjex5pKeDmrf
+ H2LdOSfh8xD+xEuq3TxgpxiHhmpIbvz8nTxBwevRdiJ9gGva2CsdgdSgRGEuLl2hBI4r
+ FGNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778445630; x=1779050430;
+ d=1e100.net; s=20251104; t=1778445631; x=1779050431;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=hFVHCN58pY4Te0rUYFWkIZamhOgAdl/wBYf7gt8R5Bs=;
- b=DHmJTbyAgiNV82ufb0yKveUq+dl7YxNs8MLk51Ke9ivgZMDoaxhvrcM8YApxG7sOaQ
- byRu6IKXbaVtWTGXsMRMgNQe/Vj4Dt4wchyfiurpbBlaikY4asoz2Buv4wkxZo/x4OQx
- gqw7Df4DHG3gXbglKZuXfuhJTBmKmnXE7E5D9e/h33S5ZpQqMCFH9PThBZfIv0iurLDZ
- Nib6tq+QqsjmrAc6ealWAn1EbkgMBRUwtwnXnoObQ7if31FxY9/Gg27CqOd8RCvLCzSS
- 94bzM7YEsdpFDW1o0Sh8Vdv2CmmjVx7CuBdauHiFXVf4zvAn8b6UxTfHNOkhcwTBkQ7C
- 6hEA==
-X-Gm-Message-State: AOJu0YySXGZ0Xj6fNOaHy1zE8kyCLgWv7Kd5An7kL3RW1Iwi9K8UcDTR
- 156zcsUqT9HYZrH79BskrwuCMIqxSLy2rnWVxRbldgfN8bx3choAY9W2
-X-Gm-Gg: Acq92OHyS1/8yL5o6tDeb//fUNyNZD8duMSwSWzvnjNgTgVFHzot2oV8nYhTEbsNkvi
- 7LaJFHNRzO2uypijMa6D7NZ/f2UDRQdXXsvm/qZA/RwMo/O6rRPCcaOFT8gbFNtfRTaEnSkJWm5
- 1zrQUKBpFdgNkaCJ6mVNSUGy0gUY8Jt5i2bf6uZDKK6numexdtrZkkoKr+ugdCy+S9EI/RRdiEK
- RXuY38fmsDYdtmZikuahS5Mk6bh58qDYrkHIOKTwWtO3VLFUyGaRFd2iRI5emazxQwJqwmh7HJ/
- 9Aouf51BjZvcxuotHIGqyqu3WbWW9ATB311OayU7RTz4k+Qu8emFRYKc7GfpPEp/7Kcu903opVe
- 75PrMwCS+oyq5yrqxKbB8sdRr8XDSyN+qjFZ5eYgS5+aflRSeSSLrM73b4tgKDS5MC7pRYAq5Bd
- R66/sK4yJj/V8ir+cbub7UfmCwfNJPsJ6SDHneWy4O/GFlXW4dkWlXp7wJ1VWszVbcvAfVdXbfA
- uFMvr8nSNdJpPyzMwBOqtGCHHNV8TEFAZg3Fk0M4o8=
-X-Received: by 2002:a05:6808:3448:b0:47c:3733:255a with SMTP id
- 5614622812f47-4804223f6admr12024545b6e.16.1778445629956; 
- Sun, 10 May 2026 13:40:29 -0700 (PDT)
+ bh=x1n/wa+vo1hnO+AttuyRN+qTfObXqzgkhvrlkD7A7fk=;
+ b=Q9dS1XdRPhLnEK0cqZB46f5DoAImX6ab9My+SGTlhg1s19aplhWiw47pe+YA69MTEV
+ R2cxC4BWeP5zw/o2VVbA/uqyE8PZTwEXi/GmV6leWBzFYrXCt8/c63e7LmhphrKekoyq
+ z7fMiLTqvHMJzOSjK/v/pnUneXcagRrtHZP0DBt++Tdpgr7fY4dISNPHgQGGyaYA9fhj
+ RCGnfoyYs2Iu6mJjiekstrv55Kiklm8Fv2f4tltzf2gx4/cL1AoHWNK5cnfJzlpjMu7s
+ K4oKO5Cd7jxgK9xQR9reKrYQ3aUTS6qeuKDRhJHhUUaIjI6zhtdWK54QbYDH/q5FU4Ju
+ xVYQ==
+X-Gm-Message-State: AOJu0YwTTGNEyDu+gmbZq1Vzm4wb9VhU/1D0V0sUOl/4IKPCLMYvVQZi
+ yihqAPF0v1pP89kDCFjrUj3LZ0ENeLfK4oYS0A//07JIZdcRVn3hEhhp
+X-Gm-Gg: Acq92OGvvolB26l5FpjzNGmTut1EhG8ZJv5ExTagT33ie3y69aF1DVxzzwQYUvRPtK2
+ nSXu76bb4NKAgKYcbyoZliJWIlpzBmMNK+XUe1G8WzNnFfwCVoZWmTutlJEfjjv9quDrPw5VdR6
+ um7c+rNmERX/MYzSloIXjihLhhdxAbYqTKX5mo768e7jyYa5seGpoEbZQOZRR+qPF2R89kV0uqK
+ vHoQZKwxl+Wbc4yIEYWqNO8u9R6dMK52auN9J91NebLIzhFTPr560TLfx2elB62ayrEGNilzFjK
+ Z4uqgJ0HurAD3q/IjDPQpzpgvq2tj6ykw93lCsAIU6/QDtoio6m8D4u/+8xev/UHO7R3s7B3Qys
+ Jgjti7x/gibdMKiBYnjFWjp+r0Pj4JifJWAAZJjfYnsBPWgem5iqeLubA349oPgPdr3dcvGxC/v
+ wIeY21BeGNGAdGquCYkJbxfmfiRjTij99uY1ZoZ1AMflDCx5UmoO6dsjTcNiEtcNlqNOnj6ecoW
+ qjNpLdO+wPoJDtD+aQBaMCq2rQWcEZNFr2rDPguPr8=
+X-Received: by 2002:a05:6808:5087:b0:453:58dc:c006 with SMTP id
+ 5614622812f47-48061aa68afmr7778751b6e.3.1778445631093; 
+ Sun, 10 May 2026 13:40:31 -0700 (PDT)
 Received: from MacBook-Pro.local ([209.245.15.183])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-47c76935637sm18908207b6e.12.2026.05.10.13.40.28
+ 5614622812f47-47c76935637sm18908207b6e.12.2026.05.10.13.40.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 10 May 2026 13:40:29 -0700 (PDT)
+ Sun, 10 May 2026 13:40:30 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Sun, 10 May 2026 14:39:54 -0600
-Subject: [PATCH v5 24/32] tests/tcg/mips: add Octeon instruction smoke test
+Date: Sun, 10 May 2026 14:39:55 -0600
+Subject: [PATCH v5 25/32] target/mips: add Octeon LA* atomic instructions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260510-mips-octeon-missing-insns-v2-v5-24-d5d2668d15ab@gmail.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260510-mips-octeon-missing-insns-v2-v5-25-d5d2668d15ab@gmail.com>
 References: <20260510-mips-octeon-missing-insns-v2-v5-0-d5d2668d15ab@gmail.com>
 In-Reply-To: <20260510-mips-octeon-missing-insns-v2-v5-0-d5d2668d15ab@gmail.com>
 To: qemu-devel@nongnu.org
@@ -83,8 +83,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::230;
- envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x230.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::233;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x233.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -108,252 +108,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a mips64/mips64el linux-user TCG smoke test for representative
-Octeon integer, comparison, population count, and multiplier instruction
-paths.
+Implement the Octeon LA* read-modify-write atomic instruction family:
+LAI/LAID, LAD/LADD, LAA/LAAD, LAS/LASD, LAC/LACD, and LAW/LAWD.
 
-Run the test with -cpu Octeon68XX and share the source between the
-mips64 and mips64el target directories.
+These operations are architecturally distinct from SAA/SAAD and are used
+by existing Octeon user-mode code for atomic counters, bit operations,
+and exchange-style updates.
 
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
-Changes v2 -> v3:
-  - Split the smoke test out of the combined Octeon arithmetic and memory
-    instruction patch.  (requested by Richard Henderson)
----
- MAINTAINERS                                   |   2 +
- tests/tcg/mips/Makefile.target                |  11 ++
- tests/tcg/mips/user/isa/octeon/octeon-insns.c | 145 ++++++++++++++++++++++++++
- tests/tcg/mips64/Makefile.target              |  20 ++++
- tests/tcg/mips64el/Makefile.target            |   8 ++
- 5 files changed, 186 insertions(+)
+Changes v1 -> v2:
+  - Keep LA* atomics naturally aligned per Octeon L2 transaction
+    semantics.
+  - Use explicit i64 TCG ops in the LA* translator paths.  (suggested by
+    Philippe Mathieu-Daudé)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 9d3d645953..9501aaf36c 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -311,6 +311,8 @@ F: target/mips/
- F: disas/*mips.c
- F: docs/system/cpu-models-mips.rst.inc
- F: tests/tcg/mips/
-+F: tests/tcg/mips64/
-+F: tests/tcg/mips64el/
+Changes v2 -> v3:
+  - Drop redundant TARGET_LONG_BITS guards from doubleword atomic paths.
+    (suggested by Richard Henderson)
+  - Group LA* translator wrappers by argument shape instead of adding one
+    wrapper per instruction.  (suggested by Richard Henderson)
+
+Changes v3 -> v4:
+  - Use i64 atomic helpers for both word and doubleword paths and select
+    word sign-extension through MO_SL.  (suggested by Richard Henderson)
+---
+ target/mips/tcg/octeon.decode      | 17 +++++++++
+ target/mips/tcg/octeon_translate.c | 74 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 91 insertions(+)
+
+diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
+index 9c1fe8f4f1..69c592fc23 100644
+--- a/target/mips/tcg/octeon.decode
++++ b/target/mips/tcg/octeon.decode
+@@ -59,6 +59,23 @@ V3MULU       011100 ..... ..... ..... 00000 010001 @r3
+ SAA          011100 ..... ..... 00000 00000 011000 @saa
+ SAAD         011100 ..... ..... 00000 00000 011001 @saa
  
- OpenRISC TCG CPUs
- M: Stafford Horne <shorne@gmail.com>
-diff --git a/tests/tcg/mips/Makefile.target b/tests/tcg/mips/Makefile.target
-index 5d17c1706e..d9dc16f8ec 100644
---- a/tests/tcg/mips/Makefile.target
-+++ b/tests/tcg/mips/Makefile.target
-@@ -8,6 +8,17 @@ MIPS_SRC=$(SRC_PATH)/tests/tcg/mips
- # Set search path for all sources
- VPATH 		+= $(MIPS_SRC)
++&la          base rd
++&laa         base add rd
++@la          ...... base:5 ..... rd:5 ........... &la
++@laa         ...... base:5 add:5 rd:5 ........... &laa
++LAI          011100 ..... 00000 ..... 00010 011111 @la
++LAID         011100 ..... 00000 ..... 00011 011111 @la
++LAD          011100 ..... 00000 ..... 00110 011111 @la
++LADD         011100 ..... 00000 ..... 00111 011111 @la
++LAA          011100 ..... ..... ..... 10010 011111 @laa
++LAAD         011100 ..... ..... ..... 10011 011111 @laa
++LAS          011100 ..... 00000 ..... 01010 011111 @la
++LASD         011100 ..... 00000 ..... 01011 011111 @la
++LAC          011100 ..... 00000 ..... 01110 011111 @la
++LACD         011100 ..... 00000 ..... 01111 011111 @la
++LAW          011100 ..... ..... ..... 10110 011111 @laa
++LAWD         011100 ..... ..... ..... 10111 011111 @laa
++
+ &zcb         base
+ ZCB          011100 base:5 00000 00000 11100 011111 &zcb
+ ZCB          011100 base:5 00000 00000 11101 011111 &zcb  # ZCBT
+diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
+index 11a15a3cff..7bbc20d82b 100644
+--- a/target/mips/tcg/octeon_translate.c
++++ b/target/mips/tcg/octeon_translate.c
+@@ -176,6 +176,68 @@ static bool trans_saa(DisasContext *ctx, arg_saa *a, MemOp mop)
+     return true;
+ }
  
-+ifneq ($(findstring 64,$(TARGET_NAME)),)
-+VPATH += $(MIPS_SRC)/user/isa/octeon
-+
-+MIPS64_TESTS=octeon-insns
-+
-+TESTS += $(MIPS64_TESTS)
-+
-+octeon-insns: CFLAGS+=-mabi=64
-+run-octeon-insns: QEMU_OPTS+=-cpu Octeon68XX
-+endif
-+
- # hello-mips is 32 bit only
- ifeq ($(findstring 64,$(TARGET_NAME)),)
- MIPS_TESTS=hello-mips
-diff --git a/tests/tcg/mips/user/isa/octeon/octeon-insns.c b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
-new file mode 100644
-index 0000000000..e9db93d1b6
---- /dev/null
-+++ b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
-@@ -0,0 +1,145 @@
-+/*
-+ * Test Octeon-specific user-mode instructions.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include <assert.h>
-+#include <stdint.h>
-+
-+static uint64_t octeon_baddu(uint64_t rs, uint64_t rt)
++static bool trans_la_common(DisasContext *ctx, int base, int add_reg,
++                            int rd, int64_t imm, MemOp mop)
 +{
-+    uint64_t rd;
++    TCGv_i64 addr = tcg_temp_new_i64();
++    TCGv_i64 value = tcg_temp_new_i64();
++    TCGv_i64 old = tcg_temp_new_i64();
++    MemOp amo = mo_endian(ctx) | mop | MO_ALIGN;
 +
-+    asm volatile(
-+        "move $8, %[rs]\n\t"
-+        "move $9, %[rt]\n\t"
-+        ".word 0x71095028\n\t" /* baddu $10, $8, $9 */
-+        "move %[rd], $10\n\t"
-+        : [rd] "=r" (rd)
-+        : [rs] "r" (rs), [rt] "r" (rt)
-+        : "$8", "$9", "$10");
++    gen_base_offset_addr(ctx, addr, base, 0);
 +
-+    return rd;
++    if (add_reg >= 0) {
++        gen_load_gpr(value, add_reg);
++    } else {
++        tcg_gen_movi_i64(value, imm);
++    }
++
++    tcg_gen_atomic_fetch_add_i64(old, addr, value, ctx->mem_idx, amo);
++    gen_store_gpr(old, rd);
++    return true;
 +}
 +
-+static uint64_t octeon_dmul(uint64_t rs, uint64_t rt)
++static bool trans_law_common(DisasContext *ctx, int base, int add_reg, int rd,
++                             int64_t imm, MemOp mop)
 +{
-+    uint64_t rd;
++    TCGv_i64 addr = tcg_temp_new_i64();
++    TCGv_i64 value = tcg_temp_new_i64();
++    TCGv_i64 old = tcg_temp_new_i64();
++    MemOp amo = mo_endian(ctx) | mop | MO_ALIGN;
 +
-+    asm volatile(
-+        "move $8, %[rs]\n\t"
-+        "move $9, %[rt]\n\t"
-+        ".word 0x71095003\n\t" /* dmul $10, $8, $9 */
-+        "move %[rd], $10\n\t"
-+        : [rd] "=r" (rd)
-+        : [rs] "r" (rs), [rt] "r" (rt)
-+        : "$8", "$9", "$10");
++    gen_base_offset_addr(ctx, addr, base, 0);
 +
-+    return rd;
++    if (add_reg >= 0) {
++        gen_load_gpr(value, add_reg);
++    } else {
++        tcg_gen_movi_i64(value, imm);
++    }
++
++    tcg_gen_atomic_xchg_i64(old, addr, value, ctx->mem_idx, amo);
++    gen_store_gpr(old, rd);
++    return true;
 +}
 +
-+static uint64_t octeon_dpop(uint64_t rs)
++static bool do_lai(DisasContext *ctx, arg_la *a, int64_t imm, MemOp mop)
 +{
-+    uint64_t rd;
-+
-+    asm volatile(
-+        "move $8, %[rs]\n\t"
-+        ".word 0x7100502d\n\t" /* dpop $10, $8 */
-+        "move %[rd], $10\n\t"
-+        : [rd] "=r" (rd)
-+        : [rs] "r" (rs)
-+        : "$8", "$10");
-+
-+    return rd;
++    return trans_la_common(ctx, a->base, -1, a->rd, imm, mop);
 +}
 +
-+static uint64_t octeon_seq(uint64_t rs, uint64_t rt)
++static bool do_laa(DisasContext *ctx, arg_laa *a, MemOp mop)
 +{
-+    uint64_t rd;
-+
-+    asm volatile(
-+        "move $8, %[rs]\n\t"
-+        "move $9, %[rt]\n\t"
-+        ".word 0x7109502a\n\t" /* seq $10, $8, $9 */
-+        "move %[rd], $10\n\t"
-+        : [rd] "=r" (rd)
-+        : [rs] "r" (rs), [rt] "r" (rt)
-+        : "$8", "$9", "$10");
-+
-+    return rd;
++    return trans_la_common(ctx, a->base, a->add, a->rd, 0, mop);
 +}
 +
-+static uint64_t octeon_sne(uint64_t rs, uint64_t rt)
++static bool do_las(DisasContext *ctx, arg_la *a, int64_t imm, MemOp mop)
 +{
-+    uint64_t rd;
-+
-+    asm volatile(
-+        "move $8, %[rs]\n\t"
-+        "move $9, %[rt]\n\t"
-+        ".word 0x7109502b\n\t" /* sne $10, $8, $9 */
-+        "move %[rd], $10\n\t"
-+        : [rd] "=r" (rd)
-+        : [rs] "r" (rs), [rt] "r" (rt)
-+        : "$8", "$9", "$10");
-+
-+    return rd;
++    return trans_law_common(ctx, a->base, -1, a->rd, imm, mop);
 +}
 +
-+static uint64_t octeon_vmulu(uint64_t mpl0, uint64_t rs, uint64_t rt)
++static bool do_law(DisasContext *ctx, arg_laa *a, MemOp mop)
 +{
-+    uint64_t rd;
-+
-+    asm volatile(
-+        "move $8, %[mpl0]\n\t"
-+        "move $9, $0\n\t"
-+        ".word 0x71090008\n\t" /* mtm0 $8, $9 */
-+        "move $8, %[rs]\n\t"
-+        "move $9, %[rt]\n\t"
-+        ".word 0x7109500f\n\t" /* vmulu $10, $8, $9 */
-+        "move %[rd], $10\n\t"
-+        : [rd] "=r" (rd)
-+        : [mpl0] "r" (mpl0), [rs] "r" (rs), [rt] "r" (rt)
-+        : "$8", "$9", "$10");
-+
-+    return rd;
++    return trans_law_common(ctx, a->base, a->add, a->rd, 0, mop);
 +}
 +
-+static uint64_t octeon_vmm0(uint64_t mpl0, uint64_t p0,
-+                            uint64_t rs, uint64_t rt)
-+{
-+    uint64_t rd;
-+
-+    asm volatile(
-+        "move $8, %[mpl0]\n\t"
-+        "move $9, $0\n\t"
-+        ".word 0x71090008\n\t" /* mtm0 $8, $9 */
-+        "move $8, %[p0]\n\t"
-+        "move $9, $0\n\t"
-+        ".word 0x71090009\n\t" /* mtp0 $8, $9 */
-+        "move $8, %[rs]\n\t"
-+        "move $9, %[rt]\n\t"
-+        ".word 0x71095010\n\t" /* vmm0 $10, $8, $9 */
-+        "move %[rd], $10\n\t"
-+        : [rd] "=r" (rd)
-+        : [mpl0] "r" (mpl0), [p0] "r" (p0),
-+          [rs] "r" (rs), [rt] "r" (rt)
-+        : "$8", "$9", "$10");
-+
-+    return rd;
-+}
-+
-+int main(void)
-+{
-+    assert(octeon_baddu(0x123, 0x0f0) == 0x13);
-+    assert(octeon_dmul(0x12345678, 0x10) == 0x123456780);
-+    assert(octeon_dpop(0xf0f0f0f0f0f0f0f0ULL) == 32);
-+    assert(octeon_seq(0xabc, 0xabc) == 1);
-+    assert(octeon_seq(0xabc, 0xdef) == 0);
-+    assert(octeon_sne(0xabc, 0xabc) == 0);
-+    assert(octeon_sne(0xabc, 0xdef) == 1);
-+    assert(octeon_vmulu(5, 7, 11) == 46);
-+    assert(octeon_vmm0(5, 13, 7, 11) == 59);
-+
-+    return 0;
-+}
-diff --git a/tests/tcg/mips64/Makefile.target b/tests/tcg/mips64/Makefile.target
-new file mode 100644
-index 0000000000..042855844a
---- /dev/null
-+++ b/tests/tcg/mips64/Makefile.target
-@@ -0,0 +1,20 @@
-+# -*- Mode: makefile -*-
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# MIPS64 - included from tests/tcg/Makefile.target
-+#
-+
-+MIPS64_SRC=$(SRC_PATH)/tests/tcg/mips64
-+MIPS_OCTEON_SRC=$(SRC_PATH)/tests/tcg/mips/user/isa/octeon
-+
-+# Set search path for all sources
-+VPATH 		+= $(MIPS64_SRC) $(MIPS_OCTEON_SRC)
-+
-+MIPS64_TESTS=octeon-insns
-+
-+TESTS += $(MIPS64_TESTS)
-+
-+$(MIPS64_TESTS): CFLAGS+=-mabi=64
-+
-+run-octeon-insns: QEMU_OPTS+=-cpu Octeon68XX
-diff --git a/tests/tcg/mips64el/Makefile.target b/tests/tcg/mips64el/Makefile.target
-new file mode 100644
-index 0000000000..dbc5f8dc5f
---- /dev/null
-+++ b/tests/tcg/mips64el/Makefile.target
-@@ -0,0 +1,8 @@
-+# -*- Mode: makefile -*-
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# MIPS64 little-endian - included from tests/tcg/Makefile.target
-+#
-+
-+include $(SRC_PATH)/tests/tcg/mips64/Makefile.target
+ static bool trans_ZCB(DisasContext *ctx, arg_zcb *a)
+ {
+     TCGv_i64 addr = tcg_temp_new_i64();
+@@ -283,6 +345,18 @@ static bool trans_vmul(DisasContext *ctx, arg_decode_ext_octeon1 *a,
+ 
+ TRANS(SAA,  trans_saa, MO_UL);
+ TRANS(SAAD, trans_saa, MO_UQ);
++TRANS(LAI,  do_lai, 1, MO_SL);
++TRANS(LAID, do_lai, 1, MO_UQ);
++TRANS(LAD,  do_lai, -1, MO_SL);
++TRANS(LADD, do_lai, -1, MO_UQ);
++TRANS(LAA,  do_laa, MO_SL);
++TRANS(LAAD, do_laa, MO_UQ);
++TRANS(LAS,  do_las, -1, MO_SL);
++TRANS(LASD, do_las, -1, MO_UQ);
++TRANS(LAC,  do_las, 0, MO_SL);
++TRANS(LACD, do_las, 0, MO_UQ);
++TRANS(LAW,  do_law, MO_SL);
++TRANS(LAWD, do_law, MO_UQ);
+ TRANS(LBX,  trans_lx, MO_SB);
+ TRANS(LBUX, trans_lx, MO_UB);
+ TRANS(LHX,  trans_lx, MO_SW);
 
 -- 
 2.54.0
