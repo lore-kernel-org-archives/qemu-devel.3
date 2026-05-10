@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A90BCD37B6
-	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 13:50:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F84BCD37B6
+	for <qemu-devel@archiver.kernel.org>; Sun, 10 May 2026 13:50:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wM4YO-0003Zv-Ap; Sun, 10 May 2026 09:50:44 -0400
+	id 1wM4YX-0004Ne-CS; Sun, 10 May 2026 09:50:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wM4YJ-0003Rs-ON
- for qemu-devel@nongnu.org; Sun, 10 May 2026 09:50:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wM4YU-0004HF-W5
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 09:50:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wM4YI-00063e-8z
- for qemu-devel@nongnu.org; Sun, 10 May 2026 09:50:39 -0400
+ id 1wM4YT-00065g-8X
+ for qemu-devel@nongnu.org; Sun, 10 May 2026 09:50:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778421037;
+ s=mimecast20190719; t=1778421048;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iK6p34NeRCxzvFd3/PxdfEqrfFR+rupWElGG0xvLF+M=;
- b=JdvumAbz+1barQzIEIRaYTzAypxkKmULVrz3ZRoaEMhKVeetj2ojHH9C5LMVGXEb2dgGY2
- shK6YEY3zG/EkW61BtwDCMhleskd1KHuVR5UDSe0yeTFW+1NLapNLMnLWiH1RL0jdv5vkz
- vZAnnDF06kjHrIkeBk8hHM0j3WVJrlE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=bL0YotY8U+w1vhp/ZdhhG6qZnzRYwTMrPjsj6IHAqwQ=;
+ b=MqCVjLpiA3TRxI1AHEhq8qKvSe72DHPhrRwzQJLUHW/W0XDL+SgcmXnMLT6xbJ9HeBVLBb
+ 5Dpa4Sxu4doGQu7ooyd9MxkwUnBTirOYVexu2SpUiuPNnRsFocz7T+AHsYO+iTqzST+fJG
+ EYSINbfwVlY/V7oRzZzIUJnYUxU3SmA=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-90-pKXR-_esO--9bgo2cRYTjw-1; Sun,
- 10 May 2026 09:50:35 -0400
-X-MC-Unique: pKXR-_esO--9bgo2cRYTjw-1
-X-Mimecast-MFC-AGG-ID: pKXR-_esO--9bgo2cRYTjw_1778421035
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-397-Bss_fv4-PGuglr9h2xPoZQ-1; Sun,
+ 10 May 2026 09:50:46 -0400
+X-MC-Unique: Bss_fv4-PGuglr9h2xPoZQ-1
+X-Mimecast-MFC-AGG-ID: Bss_fv4-PGuglr9h2xPoZQ_1778421046
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 28C6419560B7
- for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:50:35 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 271EA180034E
+ for <qemu-devel@nongnu.org>; Sun, 10 May 2026 13:50:46 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 57463180034E; Sun, 10 May 2026 13:50:31 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3F98A19560A2; Sun, 10 May 2026 13:50:42 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sun, 10 May 2026 17:43:34 +0400
-Subject: [PATCH 37/54] hw/nvdimm: convert UUID property to QAPI-aware
- registration
+Date: Sun, 10 May 2026 17:43:35 +0400
+Subject: [PATCH 38/54] hw/s390-virtio-ccw: convert loadparm property to
+ QAPI-aware registration
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260510-qom-qapi-v1-37-48ba6a1a1fa5@redhat.com>
+Message-Id: <20260510-qom-qapi-v1-38-48ba6a1a1fa5@redhat.com>
 References: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
 In-Reply-To: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
 To: qemu-devel@nongnu.org
@@ -63,25 +63,25 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2291;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1348;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=fjqQ6W0fz1f2OTCsCzNtLVDoI46ZtMBL144FqIZ8uxQ=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqAItwQSioNR/IlUXW5d1G6Tmw6kZVgrGdRWCNR
- 80r3tJnqaaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCagCLcAAKCRDa6OEJdZac
- 5RvID/4gGS1ZzfCH12LqWYbElVX5r0+7l3WwmzkCBJQ+7LEHHt1HnRXvvUTBe2+a7rSCkAW7oAG
- T5nakkyjlYaY0SLcfHKgf4w8yJLDbYeCcE+clPQQQIMkZgWEm373KDMZGdBHH+I6AGqcDhxwj0H
- Pvki+AUBNd148KhAmVLY+QsxCkJ4iBcZrOvJ9nEBen40SFi/9Aic/Nuah7/9MXVvSc8ZTqmRH/+
- 91brxtFpsQuIkFcTKKG35c/vzTc1/EZOOvVPmz/7r7QNDbnZSvby8iTWt/hb/4uvn9PDthMyxrL
- edfS41/kYr0hjzpOGGviFHJbFArPuRi83KP3id7DcZ7vgb0IpzI0P2brDNIFEn4OwjVj3GPTOqX
- wkBPnMpu5w40/3dKLBKseQ5tOn5LtOwCQtKAlUiiaclEWpbOGyvC44I0mZggp1nGJxkYo9po02Q
- LCh4bEB/LJSROfOKDqaTpVwh13iUlYvS4DmWhAwKBGynw7OMpqKISzIli2pjTUqcUWyBccCbDbo
- NmAYqLVjf9Cn+0QYVzhMt0UkRo7OFDjpm6C05tU294SE+hdTVq9PE1f+iPfSGjGpA1+v0QTprTw
- 1shyRMLlR7aybaQK88E5WWI0GlZOPaNfDY/kZexJ7yGvv9EUWUk5Vm8LPHEAUiGxKveAGLN8Sqi
- ng4zjFXDzznlrlA==
+ bh=D6LPPuOFDLk2mp6M40+tSW3VFNMIGGCKwaJbYFaghiw=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqAItwW4RGv1VJOrtrMvU1Pvce7XIr2k8o/hI8N
+ thLtVplJ6mJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCagCLcAAKCRDa6OEJdZac
+ 5ZoNEACmKfOdflLrTfXDbr2JDolVSIg2nXIAC+4rv8Qkb8Ins9zm9LVStRUdpa2AOUV3II4pADV
+ dI0CVnSUt2OEALw1SwxVW66C/aqs4KpKfUk1b5ZbiVTiN8NjMs588nSr2g2uh1D1dkGAiAWor08
+ Ryi7IfPzRU8VA2hLJ69OQKC7STL2ogESqP/dMDh42+XT7sB3/Kz0YPKBk8JUUEVIBtyrEjOkB5t
+ O8Qw+PEXakyU9jXUj7FCihq2COrX8Pr8V7aGVMUP2vLYh1fQoeWTjp6ksn+UA73D9HbYrL1EGDr
+ Jccr7TDega0bgOJ0Yg4rRa/rg+Ea5U5ZPVqFchfis6HUSKB8rp5YcgJ6B1yaWEQ/8HoW1e8Dynp
+ 0qTHO/Ygay51f4x4DMov3R5g2Can/KGrL0XfZTgoPcd/t7QdRTGZnbK+MKeqaK6bO7T/0IOFzWL
+ HPA6uBsGJPUHZx/N6+fmt5Gn7U/5EWpZLZ9EkFFNOWH5+0m5GBzLl47N1vXS4I64okvx7+x6hVF
+ JVtb85fhREVaIoSAKEAy8xTgsyEihLb3TXfIhDGwyACsgoPUTzB9vq8qEEgW/G8yB27m6u94RAN
+ iUnf5IVllWH+Rkdsr2HIZ111C9ziDU2lomNzxbSFC2J+d/ExaKj6HoVE3EThBS7ERiVJlMNmvVO
+ l8i7QEbT0OnbWzw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -89,7 +89,7 @@ X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,76 +106,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a QemuUUID_type_info and use object_property_add_qapi() instead of
-object_property_add() for the nvdimm UUID property.
-
-The type info is defined manually in uuid.c rather than generated,
-since QAPI does not yet support string typedefs. An alternative would
-be to extend the QAPI schema language with a 'typedef' construct
-(e.g. { 'typedef': 'UUID', 'data': 'str' }), which would let the
-generator produce the type info, C typedef, and introspection entry
-automatically.
-
-Alternatively, the exposed type being a string, we could change the
-property to be str_type_info.
+The QAPI type is actually a string. Here also, if we had typedef support
+we could expose a more specific type.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/qemu/uuid.h | 4 ++++
- hw/mem/nvdimm.c     | 4 ++--
- util/uuid.c         | 4 ++++
- 3 files changed, 10 insertions(+), 2 deletions(-)
+ hw/s390x/s390-virtio-ccw.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/include/qemu/uuid.h b/include/qemu/uuid.h
-index 869f84af09d..ed0c62327d4 100644
---- a/include/qemu/uuid.h
-+++ b/include/qemu/uuid.h
-@@ -16,6 +16,8 @@
- #ifndef QEMU_UUID_H
- #define QEMU_UUID_H
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index 4d35f9b10bc..638eddfd121 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -43,6 +43,7 @@
+ #include "system/hostmem.h"
+ #include "target/s390x/kvm/pv.h"
+ #include "migration/blocker.h"
++#include "qapi/qapi-builtin-type-infos.h"
+ #include "qapi/visitor.h"
+ #include "hw/s390x/cpu-topology.h"
+ #include "kvm/kvm_s390x.h"
+@@ -849,7 +850,8 @@ static void ccw_machine_class_init(ObjectClass *oc, const void *data)
+     object_class_property_set_description(oc, "dea-key-wrap",
+             "enable/disable DEA key wrapping using the CPACF wrapping key");
  
-+#include "qapi/qapi-type-info.h"
-+
- 
- /* Version 4 UUID (pseudo random numbers), RFC4122 4.4. */
- 
-@@ -99,4 +101,6 @@ QemuUUID qemu_uuid_bswap(QemuUUID uuid);
- 
- uint32_t qemu_uuid_hash(const void *uuid);
- 
-+extern const QAPITypeInfo QemuUUID_type_info;
-+
- #endif
-diff --git a/hw/mem/nvdimm.c b/hw/mem/nvdimm.c
-index 123ddc93854..b7ccb5c9367 100644
---- a/hw/mem/nvdimm.c
-+++ b/hw/mem/nvdimm.c
-@@ -104,8 +104,8 @@ static void nvdimm_init(Object *obj)
-                              nvdimm_get_label_size, nvdimm_set_label_size, NULL,
-                              NULL);
- 
--    object_property_add(obj, NVDIMM_UUID_PROP, "QemuUUID", nvdimm_get_uuid,
--                        nvdimm_set_uuid, NULL, NULL);
-+    object_property_add_qapi(obj, NVDIMM_UUID_PROP, &QemuUUID_type_info,
-+                             nvdimm_get_uuid, nvdimm_set_uuid, NULL, NULL);
- }
- 
- static void nvdimm_finalize(Object *obj)
-diff --git a/util/uuid.c b/util/uuid.c
-index 234619dd5e6..4468520c414 100644
---- a/util/uuid.c
-+++ b/util/uuid.c
-@@ -17,6 +17,10 @@
- #include "qemu/uuid.h"
- #include "qemu/bswap.h"
- 
-+const QAPITypeInfo QemuUUID_type_info = {
-+    .name = "QemuUUID",
-+};
-+
- void qemu_uuid_generate(QemuUUID *uuid)
- {
-     int i;
+-    object_class_property_add(oc, "loadparm", "loadparm",
++    /* if QAPI learns to typedef str, we could expose a more specific type */
++    object_class_property_add_qapi(oc, "loadparm", &str_type_info,
+                               machine_get_loadparm, machine_set_loadparm,
+                               NULL, NULL);
+     object_class_property_set_description(oc, "loadparm",
 
 -- 
 2.54.0
