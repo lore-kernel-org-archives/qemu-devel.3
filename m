@@ -4,92 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19D59CD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 18:47:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 453D9CD4840
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 18:49:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMVeM-0006lK-Vn; Mon, 11 May 2026 14:46:43 -0400
+	id 1wMVgG-0007BE-7Z; Mon, 11 May 2026 14:48:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wMVe9-0006kU-HK
- for qemu-devel@nongnu.org; Mon, 11 May 2026 14:46:30 -0400
-Received: from mail-ot1-x336.google.com ([2607:f8b0:4864:20::336])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wMVgC-0007B1-Tg
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 14:48:36 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wMVe6-0001eC-Od
- for qemu-devel@nongnu.org; Mon, 11 May 2026 14:46:29 -0400
-Received: by mail-ot1-x336.google.com with SMTP id
- 46e09a7af769-7dca00c1591so1581393a34.3
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 11:46:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778525185; x=1779129985; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=MsRtXsr2acqXGr/nj5ascymdXoHkUn8mmAufmXxiU5A=;
- b=O6wIVIgXq02JDqmzfpKbC9zI9/NmOPBvQT9c/0+4yiWcqjHdRJbnHGYGRUDfIEHPtG
- 1iK6JygBzS3XsP6PD9x1x/lsf2aamDE3RVolNbJ+NkdxadNqiQpHsHCwAL3w8jwBd4OK
- pjyTsKGqRdZrMPzNgzGRLSOwu1IKMQ1Fuzlp9vi3M/kiOhONQc1cbgTnhbibVOwJ43G/
- Jk1lBhI0ttu9fZ5vA67k1Xlu0I+FKOzeEedwrWycy1bqQ+hIIKsM+NiEhqlIoljK3Bk3
- lxOEvzAccXzo6SmI31momso/I4koKzI+YQb0gKPSSK3LEfLMkHo/qU7wysdD/rPFybec
- lR+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778525185; x=1779129985;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MsRtXsr2acqXGr/nj5ascymdXoHkUn8mmAufmXxiU5A=;
- b=ahUzlZeuXwPAW0eaqkIOu/cryYPnEdgDlGVWAaqIOdVwTG9rqPSy2Pxmwc7xiWiA00
- 9bBGmQ5reZxu+u3CfkME6m76QmWDXMfj/w5TSEyXow0egHYsvyARDPNrebpCijA8Q6t8
- Jb1Jtr/JWbon9rIH+M1O4ChPE+pWLyE2SpsCynn/hpOo4K+okDhtA/2yW0ksg4DZqBB3
- oRryaM831mQR3jbhBJYSvAolyjFJQDxk3ByEGgHx1tGAHNhjZEIgUiaTfj5qnxLtXE30
- jsP808cbyT5ZEzfM3o0oZQ3CT4ZI3JJiZ34W8koadMwdhUhKQTRdEDgh4N01Ba6EWcGE
- dPjg==
-X-Gm-Message-State: AOJu0YwZe/5gVb8ZBjSGcfH5wy8MVq4GVL6d2l5/4yJYelw4rQRszXyO
- AqW2qdLW9uRQGAk/6kQ7NE9JYOO2dAnm5Cu+8+ID7NNqkeV1NeMiduEKWe/q1IjR5A76vSEMqRC
- JYC6l
-X-Gm-Gg: Acq92OGIPhD22I0TxgTxgsXowd6mc2CqRQ4eGA2kfoK6xs6c3Hd5AyJZ1qWZfnotlV+
- l+fACAVl+vyVW7NZX7qI5dulV3ifRUNRRxuZxHZgVnSgz1h6Bc2BAIRxxf7U/zeMsZaAWP0M/oU
- eoYfLKuzxdroat80AYsTxQMluVyMAdmpvY/+/EXn1IA9jZ88SL9KLYJI8/LEHvBO/jKFdHNPDK9
- qQsi/Hwv3EGdv6BA1NICgaWhoLX+Yz2nzoAtl9o5P4+RIDMXRihbEy8S4HpsOKXzzboiXUyHGq/
- N+77RoFCMvlJkJpjeGIFeU3tdO4Mggjtv1Ng0c3d7tK6s9UpmzGfoAR2QjBP5PAaKD8dmsoYN+x
- Jp4/4pKp4DAPidRlQST3agwWZwRUDg2StFXPW2Kp+kU1u0PfgpzOt0VV/JNJCtmIQjIdKpBAgsh
- UFxCN/Q8HDHXqvhJrsiK/tAKz1en+2a0Gq2ib+YmigW55lRI05Ac51FR2fUtfxi6n/MM+C39uuD
- kEOBBdsSk54sZrp3XRH
-X-Received: by 2002:a05:6830:82d3:b0:7d7:faef:fa0 with SMTP id
- 46e09a7af769-7e1dee30c64mr15133536a34.3.1778525184931; 
- Mon, 11 May 2026 11:46:24 -0700 (PDT)
-Received: from ?IPV6:2600:381:c938:6375:e3e5:757d:3cef:3491?
- ([2600:381:c938:6375:e3e5:757d:3cef:3491])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e367df2fc5sm7386445a34.25.2026.05.11.11.46.24
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 May 2026 11:46:24 -0700 (PDT)
-Message-ID: <0071f563-ba94-4c9a-ba4a-7999a0881084@linaro.org>
-Date: Mon, 11 May 2026 13:46:22 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wMVgA-00020g-R2
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 14:48:36 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 7381E617F4;
+ Mon, 11 May 2026 18:48:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1778525310; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lsfZ73LSDciMcVFXLjAuAu+15hExVSXznwEaW7SgAUU=;
+ b=KM+gygbEy0XmevbHsAiT7qRJDnVH08RWtg/1jWp5AtGL9Bkf2Zmtf8ya5TQnObELDUo/dJ
+ bffARrivy62180dSS1TkEUnfVccDGS7sHjWbWAwD+INJL00rWexIgeoLjPkxXQUp8s4r0r
+ RkFxKoFI/4l2qqyhN8ezgY5l5IxGAI8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1778525310;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lsfZ73LSDciMcVFXLjAuAu+15hExVSXznwEaW7SgAUU=;
+ b=dOSRup7M8S558M6w9w1EEI+mbBd5HwvWdDIp1FEnJ7ocl89yrzqblnDsF+TqrUnXuqEkaP
+ 8pLk9CWl0icfvCDQ==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=EkJhSfgS;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=z0v+7Vr0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1778525309; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lsfZ73LSDciMcVFXLjAuAu+15hExVSXznwEaW7SgAUU=;
+ b=EkJhSfgSe7IUyCQPBLGoY7oqqxGlye3wG8sQ8lp1jXdrSF56XCVT3k5wCrCJJkFxZDVAFA
+ dEk0QnFYEUIVAcnka0ttR6QrrImdBgOijnfN9Yf7NNt0ltTWCqs/iUAum8NbHkRzVP60Wg
+ 0UnyKUVVDxTl9gVOD0SgpOmUhOo+Qn0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1778525309;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lsfZ73LSDciMcVFXLjAuAu+15hExVSXznwEaW7SgAUU=;
+ b=z0v+7Vr0teMJIoEuv5SDkIs8Q124wG54usX1RoX6iJ1nIl9hC6yIK+Ja9y/37DLsF+I5yC
+ ArKwL6UmO/ENhvAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0DCC2593A3;
+ Mon, 11 May 2026 18:48:28 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id clZWNHwkAmqrZQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 11 May 2026 18:48:28 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: peterx@redhat.com, "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH] MAINTAINERS: Update RDMA migration entry with M:
+In-Reply-To: <20260511143026.1296485-1-peterx@redhat.com>
+References: <20260511143026.1296485-1-peterx@redhat.com>
+Date: Mon, 11 May 2026 15:48:18 -0300
+Message-ID: <877bp9ye8d.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 16/35] target/mips: add Octeon MTP0 instruction
-To: qemu-devel@nongnu.org
-References: <20260511-mips-octeon-missing-insns-v2-v6-0-5062889c4d3c@gmail.com>
- <20260511-mips-octeon-missing-insns-v2-v6-16-5062889c4d3c@gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260511-mips-octeon-missing-insns-v2-v6-16-5062889c4d3c@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::336;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,fujitsu.com:email];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 7381E617F4
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,35 +126,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/11/26 13:22, James Hilliard wrote:
-> +static bool trans_mtp(DisasContext *ctx, arg_r2 *a, unsigned int index)
-> +{
-> +    TCGv_i64 value = tcg_temp_new_i64();
-> +
-> +    /*
-> +     * Octeon3 two-source MTP forms load lane index from rs and lane index + 3
-> +     * from rt.  Legacy one-source forms encode rt as $zero.
-> +     */
-> +    gen_load_gpr(value, a->rs);
-> +    octeon_store_p(index, value);
-> +    gen_load_gpr(value, a->rt);
-> +    octeon_store_p(index + 3, value);
-> +    if (index == 0) {
-> +        /*
-> +         * The hardware description and register-state table define P1 as zero;
-> +         * model P2/P4/P5 as zero for deterministic emulation.
-> +         */
-> +        TCGv_i64 zero = tcg_constant_i64(0);
-> +
-> +        octeon_store_p(1, zero);
-> +        octeon_store_p(2, zero);
-> +        octeon_store_p(4, zero);
-> +        octeon_store_p(5, zero);
+Peter Xu <peterx@redhat.com> writes:
 
-Likewise, where does this come from?
+> We wanted to remove RDMA migration once but that didn't go further.  In
+> reality, with the help of Zhijian it's in Odd Fixes stage, even if we just
+> merged one new parameter for it, for performance improvements.
+>
+> Markus pointed out we'd better have at least one M: for it to match
+> anything that is not orphaned.
+>
+> Remove the X: for Migration entry for RDMA files, then it'll start to cover
+> RDMA migration again. Keep the separate entry so Zhijian can keep getting
+> copied, and copy the M:s over to say someone is collecting patches.
+> Logically these M:s aren't needed after removing X:, but make it clearer.
+>
+> Link: https://lore.kernel.org/r/5326b854-fcea-4af6-a479-792888a94a4d@fujitsu.com
+> Cc: Zhijian Li (Fujitsu) <lizhijian@fujitsu.com>
+> Cc: Markus Armbruster <armbru@redhat.com>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  MAINTAINERS | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 9d3d645953..c57ef413ca 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -3758,11 +3758,11 @@ F: docs/devel/migration/
+>  F: qapi/migration.json
+>  F: tests/migration-stress/
+>  F: util/userfaultfd.c
+> -X: migration/rdma*
+>  
+>  RDMA Migration
+> +M: Peter Xu <peterx@redhat.com>
+> +M: Fabiano Rosas <farosas@suse.de>
+>  R: Li Zhijian <lizhijian@fujitsu.com>
+> -R: Peter Xu <peterx@redhat.com>
+>  S: Odd Fixes
+>  F: migration/rdma*
+>  F: scripts/rdma-migration-helper.sh
 
-The octeon2 manual for MTP* are quite simple, writing to just the one register.
-
-
-r~
+Acked-by: Fabiano Rosas <farosas@suse.de>
 
