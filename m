@@ -4,134 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 836A0CD4840
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 16:57:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3202CCD4840
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 16:57:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMTw4-0006X7-Uq; Mon, 11 May 2026 12:56:53 -0400
+	id 1wMTwd-0006vl-Qf; Mon, 11 May 2026 12:57:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wMTw3-0006Wd-1f
- for qemu-devel@nongnu.org; Mon, 11 May 2026 12:56:51 -0400
+ id 1wMTwc-0006rn-1q
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 12:57:26 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wMTw0-0004lN-Hz
- for qemu-devel@nongnu.org; Mon, 11 May 2026 12:56:50 -0400
+ id 1wMTwa-00050Y-HU
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 12:57:25 -0400
 Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64BD3PhP774991
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 16:56:42 GMT
+ 64BD3PhW774991
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 16:57:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- LNG49oAYLl84GB3lJnrw3eJ5gpiePL2lqdzmtMR3LTE=; b=IxccfPf6sgsJMvOr
- QdlnRSQw4kGpxFAbVssybjBVy5uwNnBiZZEwsbaT8e05k2ZlQMNdNOG5Qq5INo89
- Lp0+RONCT6e1uSyl8QMXwdDBkKbUfsG5IaMkX31awwEToeICWrIKnIei6PRPjdQi
- drGDQjrun1mWtUmXVJCzX8FB8kl7wRTVvu/2t3tzg06TLQy6Vs/1i42f2FwS15+n
- t6lMLFUQtT2POd/q5DjqBmY8FfO4MFvMJXZR8g+5mCOt1zceOW5YDOX47o2cP0kO
- r56Ne4V0BlE94TqVwmM4h6p1lV10kkni1sLVK969/rUDevInkGg7Iztkp7yAVkSu
- xc7pvA==
-Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e3a32jcqa-1
+ 7zXJfCFj5vHcY74v9eQI2PbBe3SNfendqrqzMpF7ljg=; b=kuWvWbIZfBFZDI9E
+ FvxU7w1NZgPGv+uOFG61h31CtlnSelj97DG1o/DxaVqw9oLMZjkekEsfxhi00XNX
+ p2w2XUdhbkrbPyt7NlaQxO+2Qw2MawPIKYRggOaIvGz+MAc3ot8JsvJCBQEqpbzh
+ mUfSWfXFmW5SoNsi4cQqlGL+u6cUjbjbL2hVtLJ2AcPGAACYlj/AP4NiVNagSEkA
+ y5rkd1vk/scMTiSjG9CTE1l2DCokDwGmxrzqwPxyQAHb3jThE1OeFakZ0s2wWcs1
+ L5jgTazaTburoUJTCiNDG3612cTkomscnm0t3hjj1paHWejswiCqhF+W1msInvVn
+ NL2+Jw==
+Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e3a32jctp-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 16:56:41 +0000 (GMT)
-Received: by mail-dl1-f69.google.com with SMTP id
- a92af1059eb24-1270dcd11c1so9471011c88.0
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 09:56:41 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 16:57:23 +0000 (GMT)
+Received: by mail-dl1-f71.google.com with SMTP id
+ a92af1059eb24-132a8f93432so4341060c88.0
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 09:57:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778518601; x=1779123401; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1778518642; x=1779123442; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=LNG49oAYLl84GB3lJnrw3eJ5gpiePL2lqdzmtMR3LTE=;
- b=QDTux94t68HDrKw3xwKxImu8fb9ItpRu43QhOQ46vkJbtxbzdGUQ9rm0aCJn0d8jl9
- z1yYbtwLUvy1M3cNqUVXYP8ZMXgZHr9ny7vuhWaE2GiMkl741nOkTlXiyZY6pBSI4IKt
- NCeRpW/In++FZa1oSk2SRv79nRelPZ2NkkewQ84bSJU3Fje29I21V8s6JBXGaX2OIFTB
- G5NB7y0Obtk/AXnv11HMZlR+zTRsdEh2oIRtoxrYAr+55lfxFzDOm7A9dVtIPu5qvoO+
- xcErkFbrL6kauVf2f0s7xiLaaNhkMGB4Nr405WAOKhDd6++fILkl4m9BqtTRCocnIcrT
- r3XA==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=7zXJfCFj5vHcY74v9eQI2PbBe3SNfendqrqzMpF7ljg=;
+ b=XhM1IrxR9Kb0rwhQLzY6uA+upnkjBpiB8G8JLmakGkM7MQBXDEBF9mvfTrFL/fDtl2
+ PWtXI9pohXCg5FqpUQApfYeerhSOHRUTU3/sK6MDW0uMb9kT6r2lQ1lzmZNrNnUkC5ZA
+ V7jQS5QhLTr36b5pXvlPdzPMyyV7bEJh34mVLgH9kDL4+iRrDQno6N4D+xiDY1Is7+dR
+ j3TAw/lQ8FuGEuJu+8b08/2fY7vRk71I+kFQrGrssNfVYaoMXixKLjacW61T4bHx/C6G
+ Zfv+LSiEveD1rlspXXWbNnx1kYk400tJ5q7s9Jcj7dTjf9x8VD7TJCO7SVKH/93akmXH
+ aDXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778518601; x=1779123401;
+ d=1e100.net; s=20251104; t=1778518642; x=1779123442;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=LNG49oAYLl84GB3lJnrw3eJ5gpiePL2lqdzmtMR3LTE=;
- b=l0sP+k+wHbe3U6bCfc4XoNE3viaUlwexZ50wZVioXRAzicRP2xRqGgRbPW9UOsSu0l
- cNLYQd14lpz2AlZ8EH4Vj9meKzvNVJ6qzsOCU6l0UlNAZwY4amx80Tv72YThs0T/j6up
- 5jnSuIv3EIfkAeR092P2DGD507RwKaMrekMIRrzvtUjuQ6CUZxfl/9p5th69bZTaUXIB
- jPIf3D4Fx/DrJGkhSHwZzRpqO/48gSqN49E75y9AEGKnq2HoVC5iS22PTKNJuNE8+boy
- 8H/whqhMcpQV58d+X7W5NwAuNYslfqOqHOAGX+0znLbPHXwzLT624Mm6wI1UeTq0SRZ8
- IqNQ==
+ bh=7zXJfCFj5vHcY74v9eQI2PbBe3SNfendqrqzMpF7ljg=;
+ b=UqFxWQ5eS5AMsi45eT6Od8I7Na7NfpLbTEgPTebbSc613yY0bXEIzbHHlX73NwLlbO
+ d8vuim3lYmFWpg/lJO0X/KFpcUJ4CD06n7bl6hYQhHsm/bvcJo/aa4xcvfV5+OUPR9wv
+ feOm/jbm28yM5BamtSwmSZKw7hWmQKRj3AOFX0rdrYH5gUnKBUy7T7vcKmJgdfsCZJxL
+ HokEf7VpP0+TKtE8vP9qbqyYk0q+WjpdkgNaMaMQYpKVDxE7m1L/1XN9ekrcwdr7mRvR
+ 2A/bSw7XgJdlZtiTSNkNioQ4EznMqchjvT+//kWnbDTNRVD2r57wdB6ix97N+5gsjR93
+ npPA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+gs3023+Bapwu+zrQqe/0Ae3gKRsE9Y3Poifciki5Gi+8L2gps9gF0RhcOSmUqmGhC+3hXBKnW4AGK@nongnu.org
-X-Gm-Message-State: AOJu0YyNhz33H5fH6aO7fnFAwgwUVCyPzm60eVwNZ8gOQxZqaPeODew5
- eWvUg0e8oFMoKsCwaKXd1OdIZFSI5eKtB85MGspDnf51q9uMCJ5J3lUFALZCPi9S7LCDTwD3uCw
- 8KuCnZjWusClLoi2zzRBkyeIJg1TFHIybtCzEyJoi+Z7z8XkOUQPAYhgW9g==
-X-Gm-Gg: Acq92OG2vru2CsdU8EPUUdvWPyfc1XZAmuZuyFoWAnK5DMJuqfv9yOoNo6pwkmus0Ox
- rCu07S392KKoHl7Bl3HPahClnz7IAyhcEE0oeaVvTpTFoxi4y2BVJYxlzrdF/SQS08hjnWdFstE
- EkD7B7/gcn/PTGbSe+hMTwu2HMAE4geNGrdYadCiPwvGOenHoFwOz9+ua289iH0bTXGk6I3J4vb
- xt2TjqFro8XlMMOxiWr0hoOaxW7GpjWFjytTxTpm8qONge+wKqAMofi+6EnkEFG96yt6PMwWWdE
- wo0bVyq4m5P4w7JxCKPbgFaxZOg7yC3ape+ZOhDoIbzP0aKHy/lc2AOLgBk4bgtncsGvyIX4zcz
- 0RTmlu5asjfe6I+qm+K6WbZ6RxyOVH3zowhCnfnNcqTDHHsxyY/zf2ljFAmw6x/bXCUEoUWjsZc
- LqdRMeHxOwKLm1/g==
-X-Received: by 2002:a05:7022:11c:b0:133:3c47:92de with SMTP id
- a92af1059eb24-1333c47934cmr168796c88.17.1778518600853; 
- Mon, 11 May 2026 09:56:40 -0700 (PDT)
-X-Received: by 2002:a05:7022:11c:b0:133:3c47:92de with SMTP id
- a92af1059eb24-1333c47934cmr168747c88.17.1778518600025; 
- Mon, 11 May 2026 09:56:40 -0700 (PDT)
+ AFNElJ8C3BWuktX+BGL1U3hHlCe8pPwbzilrmxLhLJSiUq4QVGL+uGBmJ0PPuQOQ/a0+ojdGb5yZlkThTGed@nongnu.org
+X-Gm-Message-State: AOJu0Yy6qaBwGHrFkK0RWk83rf53jmRrRn6oHOcoVxV2JInafLIpFHOI
+ 8pk1tlkUJ1MnUCyorNBk4SMIluzYX98R8zSJiDmDJQjXey/6WoAbo68VHeWkI2jDCxvD/NpBJvG
+ KcWDepYq5crSTZNgVL3uLWB8U7ED/us0VlKevBE7E01HCTOSO6i7/fI9gMg==
+X-Gm-Gg: Acq92OGvOUVm7/h9pBSF5M12mRXTFak7Jc01j5AhvB6yIxJNOLu3T51jE4lxI3GvilR
+ N2A6Ij7avQxhRQXhz1vQpy5x3/6BHIpLXnFB7DJsEtz0g9vgHPZZA0w5vd/zaOkOCQnPM2rLeWX
+ NMgg11Xy5CliWSEPDCPQJGy+SljkwOnu3EbtJCxMDWtCeWY/julmt4Ws77zmcsR9rpIOUtj8H47
+ BvBEzrbAtPX+eR14DEGCYhZ4xWr/WL1yPPceK3YPLBQlXChZeCaoeq8M33PBa3RrvYsPRO5FFkc
+ 4UmI6WAc1zni+aRE/T10I/7aao+KhuUPJhsi/d0dJ7FrlsbAv1fZmQxC74/11OQ830sxOIIdBH7
+ ortP9ay+5sNWrPyQfglYSRlQL0c8gjjmuIrzEaqBMvxYaLHHr31IM/2s4225djEkT0mdF2GS1V9
+ g7D1PpXCHtZKWPag==
+X-Received: by 2002:a05:7022:2511:b0:12a:b39a:339f with SMTP id
+ a92af1059eb24-1319cd2660fmr12013617c88.21.1778518642440; 
+ Mon, 11 May 2026 09:57:22 -0700 (PDT)
+X-Received: by 2002:a05:7022:2511:b0:12a:b39a:339f with SMTP id
+ a92af1059eb24-1319cd2660fmr12013594c88.21.1778518641809; 
+ Mon, 11 May 2026 09:57:21 -0700 (PDT)
 Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-132781103e7sm18232819c88.1.2026.05.11.09.56.38
+ a92af1059eb24-132781103e7sm18236342c88.1.2026.05.11.09.57.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 May 2026 09:56:39 -0700 (PDT)
-Message-ID: <6d2dde96-7728-4106-9989-86ad5c103598@oss.qualcomm.com>
-Date: Mon, 11 May 2026 09:56:37 -0700
+ Mon, 11 May 2026 09:57:20 -0700 (PDT)
+Message-ID: <b601aa7e-e26b-42b4-908e-f5e5df3c61cb@oss.qualcomm.com>
+Date: Mon, 11 May 2026 09:57:20 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/9] tools: Move more tools sources into tools/
-To: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
- qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Viktor Prutyanov <viktor.prutyanov@phystech.edu>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Gerd Hoffmann <kraxel@redhat.com>, Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Jason Wang <jasowang@redhat.com>
-References: <20260508152428.2648560-1-peter.maydell@linaro.org>
- <735327c6-f23f-42cf-9b8e-a651d8ee7770@oss.qualcomm.com>
- <CAFEAcA8eKM_DNK4kWX0DNudMiq__uZ-MQM0L-2CfWL39CgCyJw@mail.gmail.com>
- <CAJ+F1C+XzzsGRwLjUCYiDaS9OGXMq5oc3QM5pm4obZAgLP7Z1w@mail.gmail.com>
- <agGVRFsSh1mbKc4U@redhat.com>
- <CAFEAcA8XfDGZ4kytHk63BmLfHMOGgtiAxv8M-MaY1Xh060=d_A@mail.gmail.com>
+Subject: Re: [PATCH] meson: drop sphix-build < 1.7 compatiblity check
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+References: <20260511104629.2634357-1-marcandre.lureau@redhat.com>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <CAFEAcA8XfDGZ4kytHk63BmLfHMOGgtiAxv8M-MaY1Xh060=d_A@mail.gmail.com>
+In-Reply-To: <20260511104629.2634357-1-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: j7He1aWloxThnQHIa3jKCUvN6bGMmI7y
-X-Proofpoint-GUID: j7He1aWloxThnQHIa3jKCUvN6bGMmI7y
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDE4MCBTYWx0ZWRfX20DD0WzuuqwT
- D2edYFRW4QJrBRAY+rtrmshEfMHYm+KW3gG8AK8ry2vwWFvpQJBLTxuKmnCRlVSf5B0Wda1gLDR
- YAO0j3zeZn2dbpMMNwqgFjp5Qt4PnYV/fMGqjrk8e56ot0jdVunHPfdN9ZeFb+a3tbAtTSCcukG
- Z43Q+SwLQj1FxG0IvC6xIpHqUJgt0cRNZIHVkJmli25wd2tca3TLeOxNP6CrbJeOBcYZF13TAIb
- Musob/YN7L/vACLimH9sCflqFrZHh1S5X9eaC1xeNt49e25a039u9kiueic6ydkTtaUAfMTnYsW
- RAy5SqnK5QbkYOyv8uotTQNPiQHDDvhFEg1X3Ev+xWeMlygN7KleLx/luNL84bosX5EAq8y92X4
- Wn/TpdejVejPv0SrEYqvB5WWVAfZqRAioewfjq/EmQGRcn/jn3rpGkW57w+3dpHwje1Uwout+YT
- EJzEVpp6FNDe1SqqkkA==
-X-Authority-Analysis: v=2.4 cv=SLVykuvH c=1 sm=1 tr=0 ts=6a020a49 cx=c_pps
- a=kVLUcbK0zfr7ocalXnG1qA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-ORIG-GUID: nT8niIEZ7Tgdy3fyV-4X_hR_enVN7886
+X-Proofpoint-GUID: nT8niIEZ7Tgdy3fyV-4X_hR_enVN7886
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDE4MCBTYWx0ZWRfX7ugo+ombYQlP
+ bgOb4Q35wWv00bX2dIZNfI+Rw9+uG+m9V79szFpLIpQHwks9D8RwJ14PKsNzdaf4cuP/+lj0wv7
+ FYP0fQ68TtAGzSLz4BwW2Csul7eMuO0Q1gtziU2hn5CXGUDJO+LuF0nK/bOhY/3LNEqV82xhSZn
+ vZbkFduXnPRxjZ1UUq49oX9hFm1b3T96ecSg8LLQq3xYdpvOeYqDRZBbZRAit69OA+W+HeaR//H
+ JigPei82+7D0WuA2yKMxg/V5Ta5An95l41IkTouxvdSe8LmtkNHWjabPEpJSkgojW/UXnoA+/Tb
+ vHW4ElGuUF+S1KRimW7gjrCtlxoJFdxEAcu8Pj7tc3nNhzqC6o+e+0kWz/TxP6RBaSDMEuyIOBK
+ svotd0KXRUHD7YX24IYL+jPPDQbSon+nk0a341KVinbMY1aYMHrR31yn76KZkNaiH5Ex4NBiCKR
+ T+kd9xnPPfOZP5x05kg==
+X-Authority-Analysis: v=2.4 cv=SLVykuvH c=1 sm=1 tr=0 ts=6a020a73 cx=c_pps
+ a=JYo30EpNSr/tUYqK9jHPoA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=20KFwNOVAAAA:8 a=vKW7GOL4CJmWShU5NoUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=vr4QvYf-bLy2KjpDp97w:22
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=knIHz0dcQFE184SfQxEA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=Fk4IpSoW4aLDllm1B1p-:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-11_05,2026-05-08_02,2025-10-01_01
@@ -165,54 +150,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/11/2026 2:27 AM, Peter Maydell wrote:
-> On Mon, 11 May 2026 at 09:37, Daniel P. Berrangé <berrange@redhat.com> wrote:
->> IIUC, the main reason to want binaries in a specific location is
->> so that tests find them in that location.  That is a valid historical
->> approach, but meson offer an alternative approach that could be used
->> instead.
+On 5/11/2026 3:46 AM, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> It's not the only reason, though. The other half is humans.
-> People do run QEMU and the tools out of the build directory quite
-> frequently, and so the location of the binaries in the build tree
-> shouldn't have to depend on where we put the tool sources in the
-> source tree or where we want to put the meson runes in the
-> meson.build files. Just as we prefer to have qemu-system-foo
-> in the top level of the build tree, I think it's also preferable
-> to put the qemu-bar tools binaries there. It's more consistent,
-> and they're easier to find.
+> Since commit fe791b7fcc ("Python: bump minimum sphinx version to
+> 3.4.3"), we no longer support building with sphinx-build < 3.4.3
 > 
->> We can set the test environment so that meson modifies $PATH such that
->> all the built binaries appear at head of $PATH. Tests then don't need
->> to assume a location for them in the build directory, just let execvp
->> search $PATH as normal.  For execution outside of 'meson test', we have
->> "meson devenv" which sets up a local interactive shell environment, or
->> we can launch the test via the "run" script which wraps "meson devenv"
->> for a single command.
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>  docs/meson.build | 14 +-------------
+>  1 file changed, 1 insertion(+), 13 deletions(-)
 > 
-> I definitely don't want to have to run a separate command to
-> set up an environment: this is painful whenever I have to
-> interact with python venvs, and it's not something I think
-> we want or need here.
->
 
-I agree, this kind of "source my_env" are really not convenient to work
-with. Better to have things in the correct place instead.
-
-> I think the least-worst option is that we say "all the
-> meson runes for building executables must live in the
-> top level meson.build even if the sources and most of
-> the meson runes for the source/object files are in a
-> subdirectory".
->
-
-Which is the way meson devs expect you to write it. For people looking
-for the definition of those executable, they can expect, without any
-surprise, that definition will be in top level meson.build.
-From there, it's easy to see which sources var it uses and where it's
-declared.
-
-> thanks
-> -- PMM
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
