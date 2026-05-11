@@ -4,73 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0977CD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 14:17:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83E4BCD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 14:17:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMRPL-0003Ak-6M; Mon, 11 May 2026 10:14:55 -0400
+	id 1wMRRB-0004WY-Dy; Mon, 11 May 2026 10:16:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wMRPC-00038c-4Z
- for qemu-devel@nongnu.org; Mon, 11 May 2026 10:14:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1wMRQK-00042x-JM; Mon, 11 May 2026 10:15:59 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wMRPA-00013l-Ii
- for qemu-devel@nongnu.org; Mon, 11 May 2026 10:14:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778508884;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sfxBSukgXDZPtvTVXw5hj6A2Y0LAcOg2hsFIj+FphcY=;
- b=YM3g7RnpNd7Fw32CBG4yzM9ec6aQTmP7/joKYi1kC0Z2SycNzNUUv2vtDvGM7KvkLknJba
- vSSkWVKfhZGmdi2A7O8AiHwuZEGauOvwwhm7XlxPDYHPHj6ba8YQ3NOgSV42T7VtiPI/c0
- kbAR+D2UDwIZ7ILUAYPbFWSlFOz5+qE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-88-H60B9n8PPaqijytTwuW0_w-1; Mon,
- 11 May 2026 10:14:39 -0400
-X-MC-Unique: H60B9n8PPaqijytTwuW0_w-1
-X-Mimecast-MFC-AGG-ID: H60B9n8PPaqijytTwuW0_w_1778508878
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 71A3319560AA; Mon, 11 May 2026 14:14:38 +0000 (UTC)
-Received: from berrange.com (unknown [10.44.50.30])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 80E2219560A2; Mon, 11 May 2026 14:14:36 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 05/10] qom: have object_set_props_keyval return bool
-Date: Mon, 11 May 2026 15:14:15 +0100
-Message-ID: <20260511141420.229023-6-berrange@redhat.com>
-In-Reply-To: <20260511141420.229023-1-berrange@redhat.com>
-References: <20260511141420.229023-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1wMRQI-0001SJ-Gr; Mon, 11 May 2026 10:15:56 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64BDKwJn3470197; Mon, 11 May 2026 14:15:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=3N4Us7
+ tfXloL9/VCLpLRk07P9XnF03ChVcQo30+Kpgs=; b=fa9QRelkwvVaR+XQjughJM
+ TEvV9i4sMgShFAGiq3HB7IFnuK+APTcMcSSsVHPfUEvuPfNX8VqgMwp2Dx1xfGGS
+ OzHcUAPGU/YjB7ymWp4HbaOn9VSNRtvmS9m8B7xdFBwc5hdCkH7WjuBZi2Zaosp0
+ orcYVqESPrzPCPVFglf1XVcak2N9AJTQS0ZXA9P5Sf6JxZXj8A6x0ZAlyHSFQbCp
+ O+JlckLV3++bqRMiV+yZ1fiwFWNoo3vVc/t9upTKTjTZ+CzzqCiGMF/6zFMg9X8k
+ fcZMKb3aVJ1yBAjJ0C04oPMbYxr4wk5/D5eaIxB8w86JLk3nk7x8B4Z5jXWeaiIA
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e1vkqrmff-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 11 May 2026 14:15:47 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64BE9X8C022212;
+ Mon, 11 May 2026 14:15:46 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e2hfg5dvw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 11 May 2026 14:15:46 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64BEFjZb62521740
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 11 May 2026 14:15:45 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5EB615805C;
+ Mon, 11 May 2026 14:15:45 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4CBA658058;
+ Mon, 11 May 2026 14:15:44 +0000 (GMT)
+Received: from [9.61.44.159] (unknown [9.61.44.159])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 11 May 2026 14:15:44 +0000 (GMT)
+Message-ID: <f776d88f-e5a5-4e14-846c-c313cb8ab9a4@linux.ibm.com>
+Date: Mon, 11 May 2026 10:15:43 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/2] vfio: propagate IRQ notifier registration failure
+To: zhaoguohan@kylinos.cn, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Tony Krowiak <akrowiak@linux.ibm.com>,
+ Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>
+References: <20260510084353.58263-1-zhaoguohan@kylinos.cn>
+Content-Language: en-US
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <20260510084353.58263-1-zhaoguohan@kylinos.cn>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDE1NiBTYWx0ZWRfX2xBPInuIbuUi
+ eLYf+x1vERVetZLIHSZSQt2liDF6WkNDkkjLIcx4avU+Qx7MBlX0IaJdUKN7hO3ye4K+sbCbZt/
+ jitMI39sj3LMRAshg6t7oILdJ9ioeDYREK5AGuyfvxAAgyhHzYLEfsqwxtON61G+qtBbc+M3u3U
+ 5SqCFmGPM2ipLId9hRJw8Z+hgKsSJAUW1fhBk0pkMqpwGotveNnk+EhW3kcTkUpoNHVJrbblZ2w
+ DFypuwd4TkHGeuDVar6/JRPw9SBj6/7dc5k4u59+LJTg5oNAmupNXZ+9gHQ3JFcd9LtLeFV3His
+ jxXuxMKGifkoBxPODaqEr1QN0Wv+4oe0IXhiM01j4oGXxJCNgu6Z21dkaS03STUO1YaDEY3gLGS
+ O4xE8rQ/fnVqkA64gzTcsECPX6kFTnfnaIA9K5FpmkqNMUvCBG4JQWR1lu/MNfiMw6uoKoJLilM
+ aM/gN/xbBETkarUpw3w==
+X-Authority-Analysis: v=2.4 cv=OaWoyBTY c=1 sm=1 tr=0 ts=6a01e493 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=8M64wXIwSogFT7ZN38IA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: x51vs-20vB4L9Pt2Rm0jutKlIW428FBS
+X-Proofpoint-GUID: x51vs-20vB4L9Pt2Rm0jutKlIW428FBS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-11_04,2026-05-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0 spamscore=0 clxscore=1011 bulkscore=0
+ phishscore=0 lowpriorityscore=0 priorityscore=1501 impostorscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2605110156
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,80 +124,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This matches the convention established by the object_set_props and
-object_set_propv methods.
+On 5/10/26 4:43 AM, zhaoguohan@kylinos.cn wrote:
+> From: GuoHan Zhao <zhaoguohan@kylinos.cn>
+> 
+> vfio_ap_register_irq_notifier() and vfio_ccw_register_irq_notifier() clean
+> up the fd handler and EventNotifier when vfio_device_irq_set_signaling()
+> fails, but still return true to their callers.
+> 
+> Return false after cleanup so callers can handle the failed registration
+> path instead of treating it as a successful notifier setup.
+> 
+> Please ignore the previous version.
+> 
+> GuoHan Zhao (2):
+>   vfio/ap: Return false when IRQ notifier setup fails
+>   vfio/ccw: Return false when IRQ notifier setup fails
+> 
+>  hw/vfio/ap.c  | 1 +
+>  hw/vfio/ccw.c | 1 +
+>  2 files changed, 2 insertions(+)
+> 
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- include/qom/object.h    |  4 +++-
- qom/object_interfaces.c | 13 +++++++++----
- 2 files changed, 12 insertions(+), 5 deletions(-)
+For the series:
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index d841c338a2..20a04cc4a9 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -924,8 +924,10 @@ bool type_print_class_properties(const char *type);
-  *
-  * For each key in the dictionary, parse the value string if needed,
-  * then set the corresponding property in @obj.
-+ *
-+ * Returns: %true on success, %false on error.
-  */
--void object_set_props_from_keyval(Object *obj, const QDict *qdict,
-+bool object_set_props_from_keyval(Object *obj, const QDict *qdict,
-                                   bool from_json, Error **errp);
- 
- /**
-diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
-index 4377d65b76..50736b80c8 100644
---- a/qom/object_interfaces.c
-+++ b/qom/object_interfaces.c
-@@ -44,13 +44,14 @@ bool user_creatable_can_be_deleted(UserCreatable *uc)
-     }
- }
- 
--static void object_set_props_from_qdict(Object *obj, const QDict *qdict,
-+static bool object_set_props_from_qdict(Object *obj, const QDict *qdict,
-                                         Visitor *v, Error **errp)
- {
-+    ERRP_GUARD();
-     const QDictEntry *e;
- 
-     if (!visit_start_struct(v, NULL, NULL, 0, errp)) {
--        return;
-+        return false;
-     }
-     for (e = qdict_first(qdict); e; e = qdict_next(qdict, e)) {
-         if (!object_property_set(obj, e->key, v, errp)) {
-@@ -60,19 +61,23 @@ static void object_set_props_from_qdict(Object *obj, const QDict *qdict,
-     visit_check_struct(v, errp);
- out:
-     visit_end_struct(v, NULL);
-+
-+    return *errp == NULL;
- }
- 
--void object_set_props_from_keyval(Object *obj, const QDict *qdict,
-+bool object_set_props_from_keyval(Object *obj, const QDict *qdict,
-                                   bool from_json, Error **errp)
- {
-+    bool ret;
-     Visitor *v;
-     if (from_json) {
-         v = qobject_input_visitor_new(QOBJECT(qdict));
-     } else {
-         v = qobject_input_visitor_new_keyval(QOBJECT(qdict));
-     }
--    object_set_props_from_qdict(obj, qdict, v, errp);
-+    ret = object_set_props_from_qdict(obj, qdict, v, errp);
-     visit_free(v);
-+    return ret;
- }
- 
- Object *user_creatable_add_type(const char *type, const char *id,
--- 
-2.54.0
-
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 
