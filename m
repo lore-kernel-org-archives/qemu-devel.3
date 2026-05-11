@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAA40CD37AC
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 14:07:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29939CD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 14:07:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMRHN-0002B4-5H; Mon, 11 May 2026 10:06:41 -0400
+	id 1wMRHe-0003RL-9o; Mon, 11 May 2026 10:06:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wMRG6-0000VS-7N
- for qemu-devel@nongnu.org; Mon, 11 May 2026 10:05:22 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ id 1wMRG4-0000Ps-KK
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 10:05:21 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wMRG2-00070v-3f
- for qemu-devel@nongnu.org; Mon, 11 May 2026 10:05:21 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-c80203b9d7bso1692776a12.0
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 07:04:59 -0700 (PDT)
+ id 1wMRFz-0007Ce-V7
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 10:05:19 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2ba3e3c4f87so39835625ad.3
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 07:05:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778508298; x=1779113098; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778508307; x=1779113107; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4l9Xr1hbjH1tyACtoEoX12/kjkgfEPIxAbMNxctooNw=;
- b=nkjlZpmt9b6HKzhBTsnbCt0mEHsG8zoAOe+l55ou1etqqfGA3SnELxizO1IKa+Th8I
- T0gP4vyx+qUeiw89R6iC0AgsQCDAhRGxLDupNK6pBn524GpIw5BSttvcf+via1AAJTFz
- 1VnzngiYklMiVfB7AYxmvGzbsUTayGo/Un6adq40NWeIQM1Pubyauja8E32vb8M9gH4I
- 4P8JHpNpSUhPibSTptcGCYLkWt+rPpOQP9rPxQohjLePTM20N5nTJHZENYRgN5i06Gbg
- ZCq2BZQROcHf3a53S7nLAjftzXvu5Z+vWeKFdq3MksN8U3cMad8PO58IV026mfwnJ4aB
- Pdmw==
+ bh=GgP4NvXflcioWVWaM/x7kgPS9jjy07btsZQtNOLI1OY=;
+ b=TtwxvkVv3raIBrpnYiMDdFEueNEH4IOUldM79hi6rZfndl4ELbuMOzewpeH1q4+Nco
+ 05wRyIqxTriVXAnOH1DODvdHahSP5SzFG1wSfapNKPjHWnjnkXfSpizUoZd3PZQ3UNO9
+ X5mrBmWEFosfM4kz/z9xpShyeBQie1kfXvFC0q2a31sLdfkZT0tV6TYuR+OCxflDoOFo
+ 53kJCeqR5LTV6sbPeIFpcLJrzwzz49PiTtbf2364QCdJynVQsrvG3AEFJyfKZFsE/nnw
+ GVmn5Q5EcHQ4aut0cPs5oSfKn4SXL0hFmmdbs5HVokUmn611pWW0v2IUVzgY8e+JF6bS
+ tpnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778508298; x=1779113098;
+ d=1e100.net; s=20251104; t=1778508307; x=1779113107;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=4l9Xr1hbjH1tyACtoEoX12/kjkgfEPIxAbMNxctooNw=;
- b=alP4KgWDQcyqpDGj1FRYU7RDUcjACLcV8DVqtCRhKHPC/qdancZtn0IuHlDJoRCFJz
- mHje0ClUestG9cADvA7zfXIrvpznb6nWWBoAJ1oh/SJStPW7DBf+WqkviESOzrfdBLG6
- ZxuNuF1rTMujSVQTzZDgIIQZDEunnB+Iqxz1WT12ASOrOMrN8OIU0BrPrsnTbHmg/Uss
- q3vKWJp4Pkn+1i0a7X0GtuVDNMWdeIgRyjzMRtgnwBc4lN1KrCxXK8c8anBTt6+dZLq9
- 3IoIfJX96wiM731INU4+J0qXRr3EV2We6miV3s75Z9X6RDUlBK1FpSA86KAFQhS4wuB5
- 1gUg==
-X-Gm-Message-State: AOJu0YwRlAOqJRMGvL/IdCG5W3wtxGt/PbwuXfqJWhZgHKDibC8ZlWBI
- Voq4hIgBe95wjLOnpXGii8GJXEM6nwVfg11jY2ALCEytXyejrhHb67nhDW5EigWDJzc=
-X-Gm-Gg: Acq92OHTkseABjqhfZjE66X0XqfdRAoBXLYTGjHU/2FB+L1gdyoUb7ESGtP6ZLRizQz
- +R3zawbJ1aBjNV3Zdhevw2Z1XIBjJiyTZsuY9JAdjGIImW0vpSri3qFihJyMK81akFHKLIjrdYT
- 9UM0/wwePKtey0Ra69nGW4ma0Pp1g9dyxz9E/c13KpAuC6YXW4O3CPc12owC3aIeFR8JbeP5Qzi
- 8qZ5bBJ3HzkeWq/qQreQSrvtP4+7+uWsJEPCY4DZk8mk3H8VfqwUY70zU6/HwtETBX6mj6CFZ6J
- zlKMSyuBGQLzoyrE3sRMBZJXGIqYKJjsir+S5f4CwjOL6qqqPBTBV+XHkw23T2TI4wPBwa89iF7
- deL8ddX5tDIVQvWLs/SAC845OAKnzopERoiXYfPnNI8BPq/quyS1nWqMdLjD/IRF++N0dUaCpJt
- lnxKfipi28FBBayLRTpL4nu/LMBLPtgQyGiyMKD72MB4S3wg==
-X-Received: by 2002:a17:903:3c45:b0:2bc:7eff:2d08 with SMTP id
- d9443c01a7336-2bc7eff2ec0mr101248835ad.41.1778508297875; 
- Mon, 11 May 2026 07:04:57 -0700 (PDT)
+ bh=GgP4NvXflcioWVWaM/x7kgPS9jjy07btsZQtNOLI1OY=;
+ b=me22qEMGEYCStoa+9DTrpH0JDesoXV2p6JdfLfyLlHTX9nB7H27X314PZ7S10iUHxi
+ JZWCRMMaFLvxx4EcVbg6yo/xYGXfSMViiO5JpLY0k4BwtWtx87mNgDwubg+EDrgki+2B
+ FURHeMdsIngZlzpVpeWyYoNPo9sTTIWT7Ae04b4Q327/Tjq/dJ6moE02Eik750FohpQ4
+ m3g+YCof39QbuZ9ndapVi/aOabAqecfJplXG2EPaT6gYFsvLbZMSyh0AAsXRsSbD61G3
+ IUDSFN4MQZ1VI50fy0QgoodI7hOEKqHfqpu/ipsgi/a2BLe+3peV2NjhWyG4MWfklxoz
+ kZkg==
+X-Gm-Message-State: AOJu0YyH1hWAIvt1Ry/TCDoVQM/gk/+TJZ6diz4XPhR8Hk5A7/K/tH2+
+ +Eg3cHDnP8sHr43uMzIHo8iqHPLHAKjvNv/Gc0yGdIpGEfAom//qUxYAfpY5NEAyRRM=
+X-Gm-Gg: Acq92OEKe3WnTtZp0KoKvohUtQ6apxghe8FU+FGySZdvhgQyG5Ig72GtzFKNMvKfsJm
+ oveqgQfkPDLYprAKRUk0mGZ3HlVeDz6cXDUTDIvwxqcHQ108D7q1MYn+sLXmtUsNZHIdUGhvvTq
+ U0HOKu3dKMAs+NLZii57Sy3P4vu90vRfaQc0wy9WOYxcfeIrUriAdEjzm3flqx+9P6P3GdsyZBA
+ gShHvOfOzHbVCAK+b/tjzR2XDINwjvmEvFmtv9Xo6cYu1k2G6yBHIGm82PgodGFesiSdCKfGMif
+ yIEPvWkhr6QnyNcFlZzLdlRMPol/JnfZR9C4e7ADa/R7cTtLYTfwzrmeGP5cTKx8gwYdUnrD6Lc
+ lQHdwej9IeIpqZ2TqHesqHW8sRuGu763sBaNwpOd2kT+IvHuNnmTBwPaMgx5bsqzzijK3+UqMje
+ aBFoNMp4Y8Hb/s2iBYvQanpb6PNdQVJfZNUEHsvqlCq1Ug0WVwrHEHlvn7
+X-Received: by 2002:a17:902:b585:b0:2b9:fb0b:b727 with SMTP id
+ d9443c01a7336-2ba7a323e95mr186909865ad.39.1778508305836; 
+ Mon, 11 May 2026 07:05:05 -0700 (PDT)
 Received: from ZBMac-LWN10QXKQ0.taila0cd24.ts.net ([115.108.63.147])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2baf1e90854sm105113435ad.66.2026.05.11.07.04.54
+ d9443c01a7336-2baf1e90854sm105113435ad.66.2026.05.11.07.05.02
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 11 May 2026 07:04:57 -0700 (PDT)
+ Mon, 11 May 2026 07:05:05 -0700 (PDT)
 From: Zhang Chen <zhangckid@gmail.com>
 To: qemu-devel <qemu-devel@nongnu.org>,
  "Dr . David Alan Gilbert" <dave@treblig.org>,
@@ -71,17 +71,18 @@ To: qemu-devel <qemu-devel@nongnu.org>,
  "Michael S . Tsirkin" <mst@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>
 Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [PATCH V7 04/14] blockdev: Update tracking iothread users with holder
+Subject: [PATCH V7 06/14] monitor: Update tracking iothread users with holder
  name
-Date: Mon, 11 May 2026 22:04:06 +0800
-Message-ID: <20260511140416.28271-5-zhangckid@gmail.com>
+Date: Mon, 11 May 2026 22:04:08 +0800
+Message-ID: <20260511140416.28271-7-zhangckid@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20260511140416.28271-1-zhangckid@gmail.com>
 References: <20260511140416.28271-1-zhangckid@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=zhangckid@gmail.com; helo=mail-pg1-x536.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=zhangckid@gmail.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,66 +105,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, x-blockdev-set-iothread changes the AioContext but does not
-track the IOThread object itself within the block layer. This makes it
-difficult to manage IOThread reference counting (put/get) during
-dynamic context switching.
+Since the Monitor struct is not a QOM Object, we cannot use
+object_get_canonical_path(). Instead, this patch uses the monitor's
+name (or a default type-based name) as the holder identifier like QOM
+Object.
 
-Introduce an 'iothread' field to BlockDriverState to store the current
-assigned IOThread. Update qmp_x_blockdev_set_iothread to perform
-proper reference counting using iothread_ref/put when moving nodes
-between an IOThread and the main loop.
+Because Daniel Berrangé's "[PATCH RFC 00/17] monitor: turn QMP and HMP into
+QOM objects" under review, when that series gets merged, the kind monitor
+can go away. Current patch assume the monitor already been a QOM Object
+in IOthread. Will keep looking at Daniel Berrangé's patch about monitor
+QOM in case any future changes needed here.
 
-This ensures 'info iothreads' (holders) accurately reflects the block
-device attachment state after dynamic migrations.
+Cache the AioContext in the Monitor struct to avoid repeated calls to
+iothread_get_aio_context() and ensure symmetrical ref/unref during
+monitor lifecycle.
 
 Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 ---
- blockdev.c                       | 6 +++++-
- include/block/block_int-common.h | 5 +++++
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ monitor/monitor-internal.h |  3 +++
+ monitor/monitor.c          | 24 ++++++++++++++++++++++--
+ monitor/qmp.c              |  3 ++-
+ 3 files changed, 27 insertions(+), 3 deletions(-)
 
-diff --git a/blockdev.c b/blockdev.c
-index 6e86c6262f..6e20579187 100644
---- a/blockdev.c
-+++ b/blockdev.c
-@@ -3683,8 +3683,12 @@ void qmp_x_blockdev_set_iothread(const char *node_name, StrOrNull *iothread,
-             goto out;
-         }
- 
--        new_context = iothread_get_aio_context(obj);
-+        new_context = iothread_ref_and_get_aio_context(obj, node_name);
-+        bs->iothread = obj;
-     } else {
-+        if (bs->iothread) {
-+            iothread_put_aio_context(bs->iothread, node_name);
-+        }
-         new_context = qemu_get_aio_context();
-     }
- 
-diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
-index 147c08155f..6edaf53377 100644
---- a/include/block/block_int-common.h
-+++ b/include/block/block_int-common.h
-@@ -1101,6 +1101,8 @@ typedef struct BdrvBlockStatusCache {
-     int64_t data_end;
- } BdrvBlockStatusCache;
- 
-+typedef struct IOThread IOThread;
+diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+index a5c4aba306..3e2c141c27 100644
+--- a/monitor/monitor-internal.h
++++ b/monitor/monitor-internal.h
+@@ -125,6 +125,9 @@ struct Monitor {
+     guint out_watch;
+     int mux_out;
+     int reset_seen;
 +
- struct BlockDriverState {
-     /*
-      * Protected by big QEMU lock or read-only after opening.  No special
-@@ -1289,6 +1291,9 @@ struct BlockDriverState {
- 
-     /* array of write pointers' location of each zone in the zoned device. */
-     BlockZoneWps *wps;
-+
-+    /* Track the iothread for detach aio context*/
-+    IOThread *iothread;
++    /* iothread context */
++    AioContext *ctx;
  };
  
- struct BlockBackendRootState {
+ struct MonitorHMP {
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index 00b93ed612..b6efe776d6 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -529,7 +529,7 @@ int monitor_suspend(Monitor *mon)
+          * Kick I/O thread to make sure this takes effect.  It'll be
+          * evaluated again in prepare() of the watch object.
+          */
+-        aio_notify(iothread_get_aio_context(mon_iothread));
++        aio_notify(mon->ctx);
+     }
+ 
+     trace_monitor_suspend(mon, 1);
+@@ -564,7 +564,7 @@ void monitor_resume(Monitor *mon)
+         AioContext *ctx;
+ 
+         if (mon->use_io_thread) {
+-            ctx = iothread_get_aio_context(mon_iothread);
++            ctx = mon->ctx;
+         } else {
+             ctx = qemu_get_aio_context();
+         }
+@@ -612,6 +612,18 @@ void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
+ {
+     if (use_io_thread && !mon_iothread) {
+         monitor_iothread_init();
++        /*
++         * Because of current Monitor is not a QOM Object,
++         * so using OBJECT(mon) is undefined behavior and may crash.
++         * Try using a hard-coded future implementation of the qom path instead.
++         * (Like the name of the "mon_iothread").
++         * long-term solution would be making Monitor QOM, after that change
++         * here to:
++         * g_autofree path = object_get_canonical_path(OBJECT(mon));
++         */
++        g_autofree char *path = g_strdup(is_qmp ? "/monitor/qmp_mon0" :
++                                                  "/monitor/hmp_mon0");
++        mon->ctx = iothread_ref_and_get_aio_context(mon_iothread, path);
+     }
+     qemu_mutex_init(&mon->mon_lock);
+     mon->is_qmp = is_qmp;
+@@ -631,6 +643,14 @@ void monitor_data_destroy(Monitor *mon)
+     }
+     g_string_free(mon->outbuf, true);
+     qemu_mutex_destroy(&mon->mon_lock);
++
++    if (mon->ctx && mon_iothread) {
++        g_autofree char *path = g_strdup(monitor_is_qmp(mon) ?
++                                        "/monitor/qmp_mon0" :
++                                        "/monitor/hmp_mon0");
++        iothread_put_aio_context(mon_iothread, path);
++        mon->ctx = NULL;
++    }
+ }
+ 
+ void monitor_cleanup(void)
+diff --git a/monitor/qmp.c b/monitor/qmp.c
+index 687019811f..8e4a775fac 100644
+--- a/monitor/qmp.c
++++ b/monitor/qmp.c
+@@ -549,7 +549,8 @@ void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
+          * since chardev might be running in the monitor I/O
+          * thread.  Schedule a bottom half.
+          */
+-        aio_bh_schedule_oneshot(iothread_get_aio_context(mon_iothread),
++        Monitor *mon_p = &mon->common;
++        aio_bh_schedule_oneshot(mon_p->ctx,
+                                 monitor_qmp_setup_handlers_bh, mon);
+         /* The bottom half will add @mon to @mon_list */
+     } else {
 -- 
 2.49.0
 
