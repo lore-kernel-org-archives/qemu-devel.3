@@ -4,107 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BBB1CD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 19:26:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7E12CD484E
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 19:40:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMWGD-0000lB-Ew; Mon, 11 May 2026 15:25:50 -0400
+	id 1wMWTf-0007gJ-IP; Mon, 11 May 2026 15:39:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wMWG4-0000iS-N5
- for qemu-devel@nongnu.org; Mon, 11 May 2026 15:25:41 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wMWG2-0005xN-Sl
- for qemu-devel@nongnu.org; Mon, 11 May 2026 15:25:40 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-bc66ad3742fso766486566b.1
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 12:25:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778527537; cv=none;
- d=google.com; s=arc-20240605;
- b=Bh37+DIYpXF0IoEmumEVTADIpO9p9SJKKRRmYZ2iOjxPMh8OQebmo7AIyM8RweCG9n
- mZuRe5m1r6CC7Y00C4l9yNQGViB+wuaVmmgZejuXasnWI+OudGJQLIyxDdio1xOOVAm4
- wZ4SiVE07L79rrMohBhrxSC0VuzmwwVUgr+YMQk17TZa+q9ce4UIhJ7oUcKXbRWoes6T
- qKO27wAefjoUaOjci/1kpfe/X5TVWy2N+LOa1MW3LDep9dQ2ehltCgO6Xi79CxA8cWQX
- c/phzxCRDM5+yPqkjgZWZMuyUaVr/3jjVHV/CtDA8LbBcFUDjZNEdY2GlXP0Aj1y/s2q
- jbTQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=RW8Oa/jgeLirSJv50q54g20Gsc6f/BwR8EGsiyq53Uw=;
- fh=aYT0Dte32zScO0z23mE8usKARXq3g0LPBKVr7DfkjMg=;
- b=D3DFtlIbDfQQq9Ggc2EPJRsvGmQcUqahc43sdull9hg774KMu8baMviBYSAkvjdZxL
- VoIvHs8rBteG3Zr93vBJ0AQa6NoNCULnGdo56JZ+AjEoZhCG+YL2pF37SANUBCP+JIkE
- yggBGy/CSmbuOOjjscFRIaXCZYhIA0l5GLzN0b6btLdlArrl+qvnYmL+eBfYY5LX9b1I
- /T5norc79riXbiF4CZ6kEGREjCOx95L/ykd6VPiAK0nexKTnpLJqhH5mmjj6yK9LUV8e
- ia1n62VUQVS+WbNosd9VKZvBWb0mferzjxkQu/v75vId1Pr7CKLtozj3p3+jOkpKS2wE
- eikQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wMWSX-0006Yd-Ja
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 15:38:34 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wMWSV-00035f-8H
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 15:38:32 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64BEpmUB1513254
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 19:38:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ XK3vWY7GrBfYPa31b45aR/f5spKKvGWnk1OJA9MiH8s=; b=Km5KcIY46kXqF7uV
+ lMPOnPWfD3Qu5pSN9KWTQVPcgzBXrsxrECRR8tzvtUdmoxaDdW3CDvJ8nhcYDZSM
+ J/LGeAEx7cZlOn9aS9dJZgEOKEWrOaXo7gSINAAAUg6AfgLKCIaSYfj1i+qqYq53
+ ff4GrpnagOwUir5BeVeux5H2hh8jTvO0LJsNh17uV/lf4GTMfcl+E4Nx0/1nl48Z
+ rd1vZYSPW6LSQyMGWLlK1KA4Wy1OOhPig/O8yicoZ/OmKg0Hq++RmaVNxla7AYMH
+ 099I60cSsJh/ruEGB7C8a6NPgn8Fg9oZ5eDVH/w7ZGMRkGJ1bhtmME8loeGkPV8R
+ oAWSAw==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
+ [74.125.82.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e3h8g96u9-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 19:38:28 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id
+ 5a478bee46e88-2ee1da7a13fso6264522eec.1
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 12:38:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778527537; x=1779132337; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RW8Oa/jgeLirSJv50q54g20Gsc6f/BwR8EGsiyq53Uw=;
- b=onBh8sOiWcGYDBGrGhoxaTJAmZVRgn8G6Od/l6XYQeeO1/1lMpYWch4NKkOM04e3L3
- 7AOsKPma5K5CwK+w+Ocpn89IWgs4dQ3AwF/R7+SXrF4XEpfJaezc9fGLDkPxsWH8GQS6
- s/S5j3kkDg3nsvhQtuglX5RYoHUpXL9f8oQBRITVCBBn3cELtWztAJh97eA2GOhrUHRO
- HvthqxmIkBL937seGv6pQJdnt2HpfC5NF5q/iOFosmSUxJQUnV2kDHJFVGY5THe9VIKK
- TkBdhgVWYpbcBWaes4uuomQDsoOslRB9y/y3mqr/VjTC68hf0qdE3tNXzgQNIdTyJIS7
- g0xA==
+ d=oss.qualcomm.com; s=google; t=1778528308; x=1779133108; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=XK3vWY7GrBfYPa31b45aR/f5spKKvGWnk1OJA9MiH8s=;
+ b=UkGf/MTnmaCtwXELwkd6o7mhu4FCwn6nLALq2zbpeivyukvRSM0TKzdcbSb8/ev94g
+ QvAOShJ+Ca2VtMSA/L1A9Z+p2d3MLzMiH+0GlJyL+lkYOD/mPDvlnWuLHpb8DYmoYRwW
+ 9/GJqQlIUkMlTs/CABxJZPzjJlhDbeDcQs5r3EKXqtzdfqCMcpvOXi3Vu9/boEmAS4jG
+ zXrchjhmZqQVEURAXdQ0FchGHy7zi5jSTdOqzUCaZrNMnWFO9rJkfRns/tB2HF8KtJeM
+ 4M/ofUhZOaq0vk8DtQJjwCnYH0J24AEIhy6Kf5TKFDkn6huL6tPmIpgdWR+K/kalo8TE
+ 4ucg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778527537; x=1779132337;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=RW8Oa/jgeLirSJv50q54g20Gsc6f/BwR8EGsiyq53Uw=;
- b=AJAJADQtvOV+L2R+H6SvCy3Pi18fGuoeYmiVMTLIl+rAxh2P6f+DftSgxOO1iN/O3r
- iK0dvyla3/OmVJN/6Unv8U5GkcdI1+Bk9bDIvBcKwXG/DVLtJkhGyJCQycQPpI3araH2
- 9y7mlZB85b3dcpxOfNsdL0Td41Ca8hA5OXoS8XYP1nLbznYigRIw6IiiV8NMHLP9/WPP
- jsplrdJoAOlwc2euCWoVFkN4z7U0F0pfFsLAtWd+HR2pnpuSf417Gn2fZkZIg/7enErW
- ZC/GiXBvEbqfobnz52QkeL4jmpz1vpHNPifF0cG++hf0pSnodJNBXQUIYAJgJoQ6GM1s
- iw3A==
-X-Gm-Message-State: AOJu0Yy0rlJJOmZdZbTHlm52g89bGqh972o0OfZ20jlWTU4bwKMmDSoz
- en9r8uV9LBlByDKATEBCqt78ZkmHtrPi0MJUBeJ0HKO+QdQNOaHhO/uoeFQInezCCb2AdOrJbxZ
- bIypWQTj7LyhwC3OWRT4cN/Ijv5NaJJg=
-X-Gm-Gg: Acq92OF2NdBTF+MnuRjnDgjnBC72BzlN/vILIrY4Nljq4IWSxXl/pnCImbd2Os0yJZE
- PMcHUDgDDOSw8sNcXHiHnJV9A0YX/cWwAmN2nWVJk9IamFObWBNVG0nDYUdZJKK4p5374GGWB8o
- c4TLcI49bh1gUS/7L4X6dw+pm36XQhjBapOR8tlsIga+kSoszFoed71Wb2gu0xObz8gp5CNMgmM
- A0azq+jzNl9CRdiXMKCAgemnPtB3ArQ3HLaGxop2JI+C6eNlxuGr2jqtTz6hCFrtM6JDn8uYRp+
- ZVogiGCcKNjCc8uueoU=
-X-Received: by 2002:a17:907:3948:b0:bd2:2852:683b with SMTP id
- a640c23a62f3a-bd228526f98mr76237966b.16.1778527536908; Mon, 11 May 2026
- 12:25:36 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1778528308; x=1779133108;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=XK3vWY7GrBfYPa31b45aR/f5spKKvGWnk1OJA9MiH8s=;
+ b=OwGcZM9mln5dwzWlyNytD4Mef31x6ezoe6pU/IwFG57aM9R+a5DakYG9VzwpwGiuJT
+ Zcb7O5gMxexAJV03kaikjFvOuPEAh9Ol2w5fB9cSyt57E7mo6AdeTVQqu9QTa7kdcFJS
+ tp8RHbTJuhpY4coXDmcI2JgcCZ5KMICspydrxopqC0a+HeyCbtGLNh01r8qT8OfeA+gX
+ Taseu/7VNj65IRj5u+2fsWBti8+jYHYAKv9ufJFkwXzRCTbMZ8UA3qE7lpVWmnEiiARr
+ H+lh6z9e4Ag9AYOqU8bGc3Alsrt9jMXO3HVVQjV2+Kq2kVGgbCezxLMewwqINXem0NJ1
+ UJ/g==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8DJPVDrszUE9PS+JHFCKdoNW0zGr0IAHqb0MajmcAuJMGgGmgG5fE4pMC/yQ44tXh50+yXzbxbJNyy@nongnu.org
+X-Gm-Message-State: AOJu0YxNY/Dv6Rhe/AO+5O2oJM74QIYLKnIEOEjy9UtDIedv6A30OSgf
+ IOYBqzGlBnl56GXuj9kUPrWhzfn6ait3wkrmfZn+ldp4p4rnU8HUdvk3zp/3qCsIpxOSfYJpFPQ
+ bjpdXab5m8mpKxNuuNiKwFxqmSUqJYstI4CRJOjn+1zyzFa9eNk9x9OpocQ==
+X-Gm-Gg: Acq92OGhgZr1qps1iV79nPfAuyO0ECMChKyg38GgJArKc+B75Rs1lUF3G7RDPtaJ8/Y
+ i9EOEPry3Qux3GQ+Lw4AqNraaceupeMHvUmVLcvzEFH9rnbyP5Kd2Geg0rNR3eD/zbq2dlb5s5l
+ JwLdjcfWUouzzfz9aXChITi3dgDpF/K/QRN0EgVjBoIhfJf53tkd3R5+jfXTay1oBVmUyIBbrJV
+ t4dRw5GwnMwXfysUjngNQWhbuAeJ0DqKRQq0SAgUU6Qc1pOIICPQAGAyv1Ogh0pvSXHUzpssKx3
+ I/J3sDLfXfppnz95/F3JnjRA02NiqtzKMxyVPVgFaOgn1DpyqSFAEb8foeDpuINyZCGdRzd95fA
+ 9AC6VSezbmEk6rchM4YtBV5NT3VDdWX3bJ8gjE+TcJhp0iVTSXqre1WuVz8gwqShFaSD0rI4Yyh
+ 70GpF33eWr3RUljw==
+X-Received: by 2002:a05:7300:a984:b0:2d8:df01:d9f6 with SMTP id
+ 5a478bee46e88-2f55034e59emr11568833eec.23.1778528308062; 
+ Mon, 11 May 2026 12:38:28 -0700 (PDT)
+X-Received: by 2002:a05:7300:a984:b0:2d8:df01:d9f6 with SMTP id
+ 5a478bee46e88-2f55034e59emr11568814eec.23.1778528307515; 
+ Mon, 11 May 2026 12:38:27 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2f88847506fsm18056034eec.18.2026.05.11.12.38.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 11 May 2026 12:38:26 -0700 (PDT)
+Message-ID: <1b05886e-e193-404d-ba78-d342147daece@oss.qualcomm.com>
+Date: Mon, 11 May 2026 12:38:25 -0700
 MIME-Version: 1.0
-References: <20260511140416.28271-1-zhangckid@gmail.com>
- <20260511140416.28271-5-zhangckid@gmail.com>
- <20260511190523.GF536999@fedora>
-In-Reply-To: <20260511190523.GF536999@fedora>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Tue, 12 May 2026 03:25:00 +0800
-X-Gm-Features: AVHnY4JKAnJHfzkPIQA6ZqZaNc4eCu7wH4-3HLirH09q_dDeIn64PEvtbPzp0FE
-Message-ID: <CAK3tnvKQGEVpMGyqzftritSQ4Vw1KGd3WWhaJEsR=GwrZJPZcg@mail.gmail.com>
-Subject: Re: [PATCH V7 04/14] blockdev: Update tracking iothread users with
- holder name
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=zhangckid@gmail.com; helo=mail-ej1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/5] meson: Build target-info-qom.c with -fno-lto
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: philmd@linaro.org
+References: <20260511190634.472174-1-richard.henderson@linaro.org>
+ <20260511190634.472174-2-richard.henderson@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260511190634.472174-2-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDIwOCBTYWx0ZWRfX5fS5TtlOBds1
+ 8KG6LtwdQZUkxJi5dItUrrNnioXV6XyzeFcOgZvRYmYgFS+HvsR8sE7ZkuSui5xl/DIaVclsoxb
+ mtegpq4kbViZ0L6tAeTRk02OyfypHVNj8oyRqkkRqtfUrl7ON2wJlaGw9l5Dndr6G2b1UgZ79/I
+ bPZd1Gs0gjbTWTYME1MGEpVUBMbY4FPammCvrrcbLG9nmXM5JNG8UDb4b9MJije8mgKe91zAgTv
+ c899kKLx2huFYq4PulNyvG4ZOqqOrwe0gYlU8tkA3tI9Y7ztSSIuzRgmDXaJC92oz+TklrLt8K/
+ xvntkbUBRmSb8VfY36pd7KH8uDk+1zTJ10cCqhZmGr3JRPNSFIsteC8xD0n+dpuQFwyzqXvVdud
+ 91Vw1l3/aFnQY7XutE6MqFo/1LYptI08LscF1l+SzyC/JyXhhSwtZkuHcEgcIjCsgeYhse6uNTm
+ oU8upDS6WzlxMpQHZXg==
+X-Proofpoint-GUID: Av7qSHvCDLbJDOgJMR8cCjeAMfEkVh8O
+X-Proofpoint-ORIG-GUID: Av7qSHvCDLbJDOgJMR8cCjeAMfEkVh8O
+X-Authority-Analysis: v=2.4 cv=OeyoyBTY c=1 sm=1 tr=0 ts=6a023034 cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=KKAkSRfTAAAA:8 a=xm5hNnOssjAkdZ9UmqkA:9 a=QEXdDO2ut3YA:10 a=F4whdlzREtsA:10
+ a=VxAk22fqlfwA:10 a=bBxd6f-gb0O0v-kibOvt:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-11_05,2026-05-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0
+ phishscore=0 spamscore=0 priorityscore=1501 adultscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605110208
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,104 +153,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 12, 2026 at 3:05=E2=80=AFAM Stefan Hajnoczi <stefanha@redhat.co=
-m> wrote:
->
-> On Mon, May 11, 2026 at 10:04:06PM +0800, Zhang Chen wrote:
-> > Currently, x-blockdev-set-iothread changes the AioContext but does not
-> > track the IOThread object itself within the block layer. This makes it
-> > difficult to manage IOThread reference counting (put/get) during
-> > dynamic context switching.
-> >
-> > Introduce an 'iothread' field to BlockDriverState to store the current
-> > assigned IOThread. Update qmp_x_blockdev_set_iothread to perform
-> > proper reference counting using iothread_ref/put when moving nodes
-> > between an IOThread and the main loop.
-> >
-> > This ensures 'info iothreads' (holders) accurately reflects the block
-> > device attachment state after dynamic migrations.
-> >
-> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> > ---
-> >  blockdev.c                       | 6 +++++-
-> >  include/block/block_int-common.h | 5 +++++
-> >  2 files changed, 10 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/blockdev.c b/blockdev.c
-> > index 6e86c6262f..6e20579187 100644
-> > --- a/blockdev.c
-> > +++ b/blockdev.c
-> > @@ -3683,8 +3683,12 @@ void qmp_x_blockdev_set_iothread(const char *nod=
-e_name, StrOrNull *iothread,
-> >              goto out;
-> >          }
-> >
-> > -        new_context =3D iothread_get_aio_context(obj);
-> > +        new_context =3D iothread_ref_and_get_aio_context(obj, node_nam=
-e);
-> > +        bs->iothread =3D obj;
-> >      } else {
-> > +        if (bs->iothread) {
-> > +            iothread_put_aio_context(bs->iothread, node_name);
-> > +        }
-> >          new_context =3D qemu_get_aio_context();
-> >      }
->
-> This command is the wrong place to associate an IOThread with a
-> BlockDriverState:
-> 1. Do we need to call iothread_put_aio_context() on the current IOThread
->    when x-blockdev-set-iothread is called with a new IOThread?
-> 2. Is the AioContext leaked when x-blockdev-set-iothread iothread=3Dnull
->    is not called before the BlockDriverState is freed?
->
-> Every BlockDriverState would need to get/put the IOThread AioContext in
-> bdrv_change_aio_context() or related functions.
->
-> However, the QEMU block layer has been moving away from having a
-> per-BlockDriverState AioContext. It is possible to use a
-> BlockDriverState from any AioContext (including multiple AioContexts at
-> the same time). I'm in favor of not associating BlockDriverStates with
-> IOThreads and instead relying on their device owners (e.g. emulated
-> storage controllers) to be the IOThread holders. That means you could
-> use iothread->ctx directly or create an
-> iothread_unsafe_get_aio_context() API to document that this is a
-> low-level unsafe way of getting the AioContext.
+On 5/11/2026 12:06 PM, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  meson.build | 12 ++++++++----
+>  1 file changed, 8 insertions(+), 4 deletions(-)
+> 
 
-It's fine for me, I was troubled for a long time by the specific
-implementation of this problem.
-
-Thanks
-Chen
-
->
-> >
-> > diff --git a/include/block/block_int-common.h b/include/block/block_int=
--common.h
-> > index 147c08155f..6edaf53377 100644
-> > --- a/include/block/block_int-common.h
-> > +++ b/include/block/block_int-common.h
-> > @@ -1101,6 +1101,8 @@ typedef struct BdrvBlockStatusCache {
-> >      int64_t data_end;
-> >  } BdrvBlockStatusCache;
-> >
-> > +typedef struct IOThread IOThread;
-> > +
-> >  struct BlockDriverState {
-> >      /*
-> >       * Protected by big QEMU lock or read-only after opening.  No spec=
-ial
-> > @@ -1289,6 +1291,9 @@ struct BlockDriverState {
-> >
-> >      /* array of write pointers' location of each zone in the zoned dev=
-ice. */
-> >      BlockZoneWps *wps;
-> > +
-> > +    /* Track the iothread for detach aio context*/
-> > +    IOThread *iothread;
-> >  };
-> >
-> >  struct BlockBackendRootState {
-> > --
-> > 2.49.0
-> >
+Why?
+Does LTO breaks anything in this case?
 
