@@ -4,90 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49F1CCD37AC
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 10:06:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D042DCD37B5
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 10:07:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMNWr-0005NI-5J; Mon, 11 May 2026 06:06:25 -0400
+	id 1wMNY8-0005kk-5l; Mon, 11 May 2026 06:07:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wMNWp-0005N1-Uf
- for qemu-devel@nongnu.org; Mon, 11 May 2026 06:06:23 -0400
-Received: from mail-pf1-x442.google.com ([2607:f8b0:4864:20::442])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wMNWo-0000KO-4c
- for qemu-devel@nongnu.org; Mon, 11 May 2026 06:06:23 -0400
-Received: by mail-pf1-x442.google.com with SMTP id
- d2e1a72fcca58-82faf871346so2938771b3a.0
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 03:06:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wMNXn-0005ei-9v
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 06:07:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wMNXg-0000Zw-Kp
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 06:07:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778494035;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3xARPOZBMa4JMWXAh+1mMa/W2rdZ/pp3M23ZoELmx1M=;
+ b=TixvmAgljSRKuh1NerCvFuGo8ihjR3TzEaNh1SdPsoOKN61566EbKieqR3P1dqHlfB5/CT
+ SHzd5AOMNRo9HEbN0zGN7KbngrZBR7zq0bZ9tJ4fko121qvXwBoukiupXVJOJmQ7E8nbGv
+ mIM8C6vRp/OhYjVZtz3VJYMemqRtVyc=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-222-xhQpSJRcNuuMytUgBzl51g-1; Mon, 11 May 2026 02:59:27 -0400
+X-MC-Unique: xhQpSJRcNuuMytUgBzl51g-1
+X-Mimecast-MFC-AGG-ID: xhQpSJRcNuuMytUgBzl51g_1778482767
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-8bc5ab12bb5so91728376d6.3
+ for <qemu-devel@nongnu.org>; Sun, 10 May 2026 23:59:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778482767; cv=none;
+ d=google.com; s=arc-20240605;
+ b=UhpZbpj5OcivUysPqD1OPi8YrjOKCwMa4McMiWAp6zJOkJ95fMLA8jUMqGJlo7mBCQ
+ nWS7TD2xqRPe2rCE8Ywsg1CF1uohIsufMcOrFwpwhkVHmBU6WlA5bgPkBeJZsSZGsKmy
+ nfsfVvn876sjqQ4cH7DpAu64HjBDMovcQjIO4yAINedMGgMfvmXfl3QVfKFANhUHR6Kg
+ ElWd3Y7Jvvtp4vZwYUk0YU3whs3EqbkWh+w4xFQxJXLSpFs16CjGU8QycHb1MMvNpMtQ
+ cU6O+DYKOHRERE2cVJN3+Twt0Um5kq6Vjxd9PsQtFCm/eB89Fn1KnknHg2FlHWcqVjCY
+ Iw5Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=3xARPOZBMa4JMWXAh+1mMa/W2rdZ/pp3M23ZoELmx1M=;
+ fh=G3k45vOq6tGQ1it1xT4L5EuRIfjrG+ZzI0PlARbvKLY=;
+ b=fvvHNZFV3g2tHsQxIGqiKJGVaJafrp7ctS+duAHZ4xjgGzvRE5qiF6iD2ajXlLNzft
+ nGXttpjDsIlHM4q8SfV5k2Soi3t5J80n0hRobemrLGHL2+3T6GyN+3OVKT8a/ILCkvQm
+ jJVtrfoptvSWxG+F2s+h2xn2/kCTrrrBiMTR/QiW1ZcvA6NmLuRkbyh6oyWtRwjOfD5B
+ lj0IZjViMQErtFhZPBOfVrF6tCDmnokW9uwbRNpWQ4BsWFtw89dEDOtMxCWxT2QwmHZ2
+ qmFYBj3xh1Yv4LR7zzp7eFGl7QWGJmcOyrWHtSf1LIIfcjoQXNGk/bHNBN5OqdNL4vKg
+ MImg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778493980; x=1779098780; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=wTJc7UA2V8JMzRXLaaedBFFLjVXzLaGIYPymhUPPix0=;
- b=C+EoLFuJvDEd3NHz4YScyWK08JmfMCaua+VTVHZdl94XdhiUUuJqRrVHEO9GdkahYI
- Swo7ODUmrQ8SkCWu5vxK4AKgnNcg8boigc1Mi4rExB/TCkVFv+4/majBisZ+qZCQBVdd
- MJFY95fGkp4HTbWGfLdwtDKMwnOHYVNuBtFGBt/5cW2OWmzIw2g2eYHKeIVl0krgHCnu
- 8IZeGxyxE9YjX4Aabr3bYnBQ1jtzjYnn7ICDjI74MiEKvUOvm9FhaSUhtOF0sU96mAOt
- 6sSaMITML+Dy8dveGY6OMwvwDSCe/ydjQY+CFgPkvk3z7lCP8nJPX2O5RvV6BbGTqNr0
- DXGg==
+ d=redhat.com; s=google; t=1778482767; x=1779087567; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3xARPOZBMa4JMWXAh+1mMa/W2rdZ/pp3M23ZoELmx1M=;
+ b=tFDxzd45ZCTsaO+QKclusxkMk6kAIN0Mq1ExlVGGdcgMFmZm2VYTPdA5oqsUNVa2pZ
+ DUZMMdkCIQTkRv2bKNMoVSJFz+g8i3+NT9OpE3QeURAi/s+G20FEQUsQGHXFxwrVhht6
+ J+pxYbDonqfHemwEl1NYvDSMAMkhOz8vatYacJm3QvL/Aeu29a12S21kXcEsQ2oA2dEK
+ 9AExCsZ0jGO+ct8JonRuyBrfyxrOQtc9sNgv4756Pn06HoT7zTzINiWliKbQviD14UwU
+ 8XhHlnQpfqF5Qn+t1svjG7L7ml1o40kwEYCZBEUArr64k0laUPN7lSv4KFcLQUEtZgh5
+ eNoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778493980; x=1779098780;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wTJc7UA2V8JMzRXLaaedBFFLjVXzLaGIYPymhUPPix0=;
- b=Vtn3tZty9YkJqNy+mFvktapIN2ZdUfXRCF7qT+5fXIi7qgv7+qdwxVPl6Zvrqh4uSr
- Lqx60tZT+s5eW9ylqBeMXOo/FeQ256vXg6L0hZMyW6ubwTttpAKwSZgVwUx1zq79Q4A1
- aTQ5NioStFDJJG04eIKHmkn4j5g+o2OQOpybZdze+PvdW9B4aFaGk67ECwe3/a6PlnGk
- 427MpUw00BvvVjtUEYh6rppUukIXmenyeWSH21q3bNk5gwFgWmaOiED87fvoEIWbzByp
- j6ozhBQ2ABkCkITRi8cM6/P0xE9j+s9SE4Ggp+EjtpCk49EBPlw/aaMaiLW28T6MbOGD
- fhJQ==
+ d=1e100.net; s=20251104; t=1778482767; x=1779087567;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=3xARPOZBMa4JMWXAh+1mMa/W2rdZ/pp3M23ZoELmx1M=;
+ b=JplxQAHhkBBDs9jra1Nw7v/jTuf1ufTivd8lHoNkmCUdSd955EFhJha+7zvuv11WK5
+ l4NGHVSXTSzhPGpt9mLB//L+wmq3eSodlnjM5ZBRlLbCmnWqOMYVgGCZagzWs03oJqZc
+ Kbtt5FAMe8pu6or7tOh2CmIBzcf+ONSgs86cXYhMXCU6g0TFMuWqnAXCHwUyL37nBGsY
+ dxuoAwIgEMCoKy36lzrwFwX75AQ1yCyglNDUMjwoYRCe6qFerzMp2BhMWFn+bPixh+6e
+ XJCQM/Fo3z0ehN+ifCvKkDxDcTfRmwCmteT9kz+OQ9TjPka6/UpRPciuDDxI55EQp5M+
+ JhVg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/F8MykaNZNICtw79kOf8kAXKpRttrm+JzGE8iVndnxUTXeSBx88GAu/qYjiTGAgh8o0MdkrRWIDBu/@nongnu.org
-X-Gm-Message-State: AOJu0YxF/ZnJPTRiTcIldBokwz1P6D6hLYmcNKPcPFlGnZv/hjuwwiSk
- 6opHe6LGHU5g55i6XweKoMWVbSHuct5GBEihY2zBpElJjVgU5mSbeRo7Jb7Ab1gTRNyRJw==
-X-Gm-Gg: Acq92OEf19uqtwM1UdB5em8BxM+fn49bOiTnTqjzY9HRESS86qdSlnWn9VtjCyukgLj
- nh+XSQL8W2KW7iRC5clktUtYmb4f8hMNrDu1xUD+/KejnBu3h6OIa1NT48SivchT5nTmEDxRmdk
- lQ3okldy+Ltt5eOvYDIgQGLkb2tMoQApDukz8w6NEQboDicC27kV3Ngvs66BmE4xeV1rLj96AkV
- 8LaesafvlKkYPEHbxqRGgDmxRiPUJWEWo/eOdcOf16j1SaiZFv7rlqwjUffIpr/hFpdE3RIv2wy
- H81aWImoGJUZhAnqTg51j+BEZ8nX/Z3yE8bcL52VBvB4L+3iYRstNCDIGvHWYlqJYr2Qjsl/vKK
- eROIbYDIkPOJA679HBIQetAZG/hwUVf5LaNsLMS0fKrL6Ldh0+6vnMSIwEKCbPnUzRyQ3ImZ09G
- Wyp7V+ijiE8CUX74xfFOEoHKpiM0b9RRCVxHznSvyMPr75+oal/U+MrzMW4BHT3/4RgZNwEpOdI
- ZaS5boJTUI=
-X-Received: by 2002:a05:6102:5816:b0:634:92df:4dc3 with SMTP id
- ada2fe7eead31-63492df5c9bmr436739137.16.1778482368304; 
- Sun, 10 May 2026 23:52:48 -0700 (PDT)
-Received: from ZEVORN-PC.localdomain ([162.244.208.119])
- by smtp.gmail.com with ESMTPSA id
- a1e0cc1a2514c-95f219c6d64sm4809127241.3.2026.05.10.23.52.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 10 May 2026 23:52:46 -0700 (PDT)
-Date: Mon, 11 May 2026 14:52:31 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Zishun Yi <vulab@iscas.ac.cn>
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com, 
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2] target/riscv: Allow mseccfg access based on ext_zicfilp
-Message-ID: <agF8MNb9aKbqsniz@ZEVORN-PC.localdomain>
-References: <20260511031719.2826247-1-vulab@iscas.ac.cn>
+ AFNElJ/z+nRf6fYI/gimUeehPWgFe5FSVOZQnp8vFGDexBu3EBw7krJfWuBp+cfdq+zCS4nC5u1t57C45RIj@nongnu.org
+X-Gm-Message-State: AOJu0YyHFxZ6wN3Queiztw8yaueSyArRTlvSKheXeszWhMZ0DLcAxgRj
+ v814hPBX+js5w44pbTPtuZxmie1JbpjWYKAG7eBNOS9rgd85C6YBpqe4oj/Jt8NZq/MiIOspJFF
+ VKTeBnuXU1y4KG0mEPbsEkP1/3+d/xsGMjDxFYweYlXnCu+nXcUQC3QcxwkY9VhHpcGQIBdDN/L
+ 0ZpB/P5vSQpo5KKRm6u9WD+urH99wHhCo=
+X-Gm-Gg: Acq92OH4eyeJtomfxGRlfUdIMRR5Wnx98/WRPbAKqj4rJOeCVig/wkw5cYTqNKKa0RD
+ ZVLLhCpOIFJLuUAKXHPTQmepWHkxo+ARsj9QDLeLfOo+4sD5nRSVeeBoYFmD36LAKPxKSu2o0mz
+ 96QmYYZwjwHbDFkqcXgr7k4C26RmDh7iAgp0qUurxtnhg3Vn0G4BP/6R66mf4uRM78BPx7tGb82
+ 8nl8GKnMs+6jdcs1RhnoLhTY7uS+4WjHDwBafNgZfdKSUIQtw==
+X-Received: by 2002:a05:6214:46a0:b0:8ac:b5e0:bf92 with SMTP id
+ 6a1803df08f44-8bc422a61f2mr342201256d6.9.1778482766997; 
+ Sun, 10 May 2026 23:59:26 -0700 (PDT)
+X-Received: by 2002:a05:6214:46a0:b0:8ac:b5e0:bf92 with SMTP id
+ 6a1803df08f44-8bc422a61f2mr342201106d6.9.1778482766572; Sun, 10 May 2026
+ 23:59:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260511031719.2826247-1-vulab@iscas.ac.cn>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::442;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pf1-x442.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20260508101901.930781-1-mark.caveayland@nutanix.com>
+ <20260508101901.930781-2-mark.caveayland@nutanix.com>
+In-Reply-To: <20260508101901.930781-2-mark.caveayland@nutanix.com>
+From: Ani Sinha <anisinha@redhat.com>
+Date: Mon, 11 May 2026 12:29:15 +0530
+X-Gm-Features: AVHnY4J6lHgyoujUeG-4H-mo11SSZx6DvkRFQ9SO6LMOYWjBEz_jN3DuGsDGDlI
+Message-ID: <CAK3XEhNHQSkorBUgVrYYzmc8mfxV+cMFrC0+j-pbhcJxG0zCrA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/4] hw/acpi/aml-build.c: add aml_irq() representing
+ the 3-byte IRQ descriptor
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Cc: mst@redhat.com, imammedo@redhat.com, pbonzini@redhat.com, 
+ marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,51 +139,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 11, 2026 at 11:17:19AM +0800, Zishun Yi wrote:
-> The Zicfilp extension adds the MLPE field to the mseccfg CSR. According
-> to the RISC-V Privileged Specification, mseccfg exists if any extension
-> that adds a field to it is implemented.
-> 
-> Currently, the `have_mseccfg()` predicate function checks for Smepmp,
-> Zkr, and Smmpm, but misses Zicfilp. As a result, if a CPU is configured
-> with `zicfilp=true` but without the other extensions, accessing the
-> mseccfg CSR will incorrectly raise an illegal instruction exception.
-> 
-> This patch adds the missing check for `ext_zicfilp` to ensure the CSR
-> is properly accessible when the Zicfilp extension is enabled.
-> 
-> This issue was discovered and reported by SpecHunter, an AI-driven
-> architecture specification analysis tool.
-> 
-> Link:https://github.com/yizishun/rv-isa-sec/blob/master/output/riscv-isa-manual/pr-2561/qemu.txt
-The `Link:` tag is missing a space after the colon.
+On Fri, May 8, 2026 at 3:49=E2=80=AFPM Mark Cave-Ayland
+<mark.caveayland@nutanix.com> wrote:
+>
+> The existing aml_interrupt() uses the Extended Interrupt Descriptor to st=
+ore
+> the interrupt information, however newer Windows will only parse the
+> standard IRQ Descriptor when enumerating ISA serial ports.
+>
+> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 
-> Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
 
-Thanks,
-Chao
 > ---
-> v2: Removed mistakenly added #include "cpu_bits.h".
-> 
->  target/riscv/csr.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index da366cf56271..e1cd4a299cb0 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -783,6 +783,9 @@ static RISCVException have_mseccfg(CPURISCVState *env, int csrno)
->      if (riscv_cpu_cfg(env)->ext_smmpm) {
->          return RISCV_EXCP_NONE;
->      }
-> +    if (riscv_cpu_cfg(env)->ext_zicfilp) {
-> +        return RISCV_EXCP_NONE;
-> +    }
->  
->      return RISCV_EXCP_ILLEGAL_INST;
+>  include/hw/acpi/aml-build.h |  2 ++
+>  hw/acpi/aml-build-stub.c    |  6 ++++++
+>  hw/acpi/aml-build.c         | 25 +++++++++++++++++++++++++
+>  3 files changed, 33 insertions(+)
+>
+> diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
+> index e70e0643b1..eaff025d26 100644
+> --- a/include/hw/acpi/aml-build.h
+> +++ b/include/hw/acpi/aml-build.h
+> @@ -343,6 +343,8 @@ Aml *aml_io(AmlIODecode dec, uint16_t min_base, uint1=
+6_t max_base,
+>  Aml *aml_operation_region(const char *name, AmlRegionSpace rs,
+>                            Aml *offset, uint32_t len);
+>  Aml *aml_irq_no_flags(uint8_t irq);
+> +Aml *aml_irq(uint8_t irq, AmlLevelAndEdge level_and_edge,
+> +             AmlActiveHighAndLow high_and_low, AmlShared shared);
+>  Aml *aml_named_field(const char *name, unsigned length);
+>  Aml *aml_reserved_field(unsigned length);
+>  Aml *aml_local(int num);
+> diff --git a/hw/acpi/aml-build-stub.c b/hw/acpi/aml-build-stub.c
+> index 89a8fec4af..3180c7c962 100644
+> --- a/hw/acpi/aml-build-stub.c
+> +++ b/hw/acpi/aml-build-stub.c
+> @@ -67,6 +67,12 @@ Aml *aml_irq_no_flags(uint8_t irq)
+>      return NULL;
 >  }
-> -- 
-> 2.51.2
-> 
+>
+> +Aml *aml_irq(uint8_t irq, AmlLevelAndEdge level_and_edge,
+> +             AmlActiveHighAndLow high_and_low, AmlShared shared)
+> +{
+> +    return NULL;
+> +}
+> +
+>  Aml *aml_interrupt(AmlConsumerAndProducer con_and_pro,
+>                     AmlLevelAndEdge level_and_edge,
+>                     AmlActiveHighAndLow high_and_low, AmlShared shared,
+> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+> index 7edc8aed42..3aaf96c2a7 100644
+> --- a/hw/acpi/aml-build.c
+> +++ b/hw/acpi/aml-build.c
+> @@ -1061,6 +1061,31 @@ Aml *aml_irq_no_flags(uint8_t irq)
+>      return var;
+>  }
+>
+> +/*
+> + * ACPI 1.0b: 6.4.2.1.1 ASL Macro for IRQ Descriptor
+> + *
+> + * More verbose description at:
+> + * ACPI 5.0: 19.5.63 IRQ (Interrupt Resource Descriptor Macro)
+> + *           6.4.2.1 IRQ Descriptor
+> + */
+> +Aml *aml_irq(uint8_t irq, AmlLevelAndEdge level_and_edge,
+> +             AmlActiveHighAndLow high_and_low, AmlShared shared)
+> +{
+> +    uint16_t irq_mask;
+> +    Aml *var =3D aml_alloc();
+> +    uint8_t irq_flags =3D level_and_edge | (high_and_low << 3) |
+> +                        (shared << 4);
+> +
+> +    assert(irq < 16);
+> +    build_append_byte(var->buf, 0x23); /* IRQ descriptor 3 byte form */
+> +
+> +    irq_mask =3D 1U << irq;
+> +    build_append_byte(var->buf, irq_mask & 0xFF); /* IRQ mask bits[7:0] =
+*/
+> +    build_append_byte(var->buf, irq_mask >> 8); /* IRQ mask bits[15:8] *=
+/
+> +    build_append_byte(var->buf, irq_flags); /* IRQ flags */
+> +    return var;
+> +}
+> +
+>  /* ACPI 1.0b: 16.2.5.4 Type 2 Opcodes Encoding: DefLNot */
+>  Aml *aml_lnot(Aml *arg)
+>  {
+> --
+> 2.43.0
+>
+
 
