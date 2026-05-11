@@ -4,139 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FCC0CD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 18:11:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16313CD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 18:15:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMV5l-0001C6-Su; Mon, 11 May 2026 14:10:57 -0400
+	id 1wMV9J-00029B-VM; Mon, 11 May 2026 14:14:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tdave@nvidia.com>)
- id 1wMV5h-0001AV-Kc; Mon, 11 May 2026 14:10:53 -0400
-Received: from mail-eastus2azlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c110::3] helo=BN8PR05CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wMV9G-00028N-HG
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 14:14:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tdave@nvidia.com>)
- id 1wMV5f-0006hq-QZ; Mon, 11 May 2026 14:10:53 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=MaRnxmNNKU5k8aKoWsRrZX3yJSeHv7ec3QgQt89IaE6ZJ+K9MeC0lHJ0Pqq7CAdVDp1S7sNSOgKWuDMuqEb140GdpRFGvGfq7nUQGm38Pm2T/aqEXJY5TZH/ZfTucqLd0LVUv2G45+cEsZDlNmSyg8NpeXSqJ6LzB0fuQXYgF/l5+dQQcSK/Avb+ZX/cNbEPGQWd4FbPr5Oka61n9cRzgUKLApLpnQKLtv5pj7Ew9j34LbcIDnMMQ75cC+QISB32uJkTh82mgTawOtYD5fW462jb08m7XgpaIvkHpxzMVWUVFDMQ6+FH/tEOmITtOsPbDXNx/Cwykp1qcnDtx2HNdw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qn+Ldnu0aElTBkw8QMbvPMnLxAQWHPA45bSVzPQEbPg=;
- b=Mr4263n3f1GLqDszaCf2iU8hlXuJSu/5FHe0Gv4Wx9Y1JtpRvJYZct4tvjmk1oqEejRxOPaGHVqmsx7Mty33LjRx3p+NteReYxrDcaoSl9xv8LRldT3t+7FZbzZ6SPcFPiKH4oEUQvm5bCGYpELmHZQDJtivhE/1vuhA9vsa4WWUbOvbI+KRXBaGIFvlNB0cnIxtdHfrycj+wPBPgYqgRNxRqQEJmaL3OcEt77kEoYaUrje9tbrDzAAc0BB78VEmbPr2MryKm05VRBJpdPpQzwI68FUR3FvXj0SqPT5fMq1m8h9XbF+ptajIpRUnG4aByQ67gNyWmQXXdO1MLjMpEw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qn+Ldnu0aElTBkw8QMbvPMnLxAQWHPA45bSVzPQEbPg=;
- b=RnfP0TQY4cW6GO/JwyQkrUvJW3Z0O7It6xvO1tjCsA73584CDxI8G0KT5Ngjp/s7be+oRg5qT07WWzScROu7QVbN1gmEKhuf6+cUiDei+v+AjwVyC8d7Sa6tGOjYIfAvnOkivN05ZkJuSCEf7YY/qqxKA5Ipzwzk6TOdvUS7ddDf4YUZt98JGswPNQaLWBwoL+izD1MYfHNcHaxS6yClVp58xQcTJC6iqVjw9pci0JhXm+mIqiA1386wAggt+2C97cs7e05e4LWhZA1IxQCnfW3e9ougq2veEzsf/nNVey+na5alaXVESmom6i5MUE1+7eEDyaxvbn7aCLB+ubFPIQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB4186.namprd12.prod.outlook.com (2603:10b6:5:21b::11)
- by PH8PR12MB6865.namprd12.prod.outlook.com (2603:10b6:510:1c8::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.23; Mon, 11 May
- 2026 18:10:45 +0000
-Received: from DM6PR12MB4186.namprd12.prod.outlook.com
- ([fe80::3885:dd8c:612c:a746]) by DM6PR12MB4186.namprd12.prod.outlook.com
- ([fe80::3885:dd8c:612c:a746%7]) with mapi id 15.20.9891.021; Mon, 11 May 2026
- 18:10:45 +0000
-Message-ID: <d5190676-11e7-40e8-ab12-da69aa751301@nvidia.com>
-Date: Mon, 11 May 2026 13:10:43 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 0/8] hw/arm/virt, hw/pci: PCI pre-enumeration and
- fixed BAR allocation
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, alwilliamson@nvidia.com, jgg@nvidia.com,
- skolothumtho@nvidia.com, qemu-arm@nongnu.org, peter.maydell@linaro.org,
- marcel.apfelbaum@gmail.com, devel@edk2.groups.io
-References: <20260508183717.193630-1-tdave@nvidia.com>
- <20260511050459-mutt-send-email-mst@kernel.org>
-From: Tushar Dave <tdave@nvidia.com>
-Content-Language: en-US
-In-Reply-To: <20260511050459-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SN7PR04CA0105.namprd04.prod.outlook.com
- (2603:10b6:806:122::20) To DM6PR12MB4186.namprd12.prod.outlook.com
- (2603:10b6:5:21b::11)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wMV9E-0007PG-Hu
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 14:14:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778523271;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=sk5KHeqd/I2evwlxg2tLrwLGBHkyTlPHy5BGIsUoP40=;
+ b=Kle2YtAHb9Z2kz+RtCWeTtB5rj3jDC1bRljFEE7gXisthwHpDz5Us3gVSVNEcp+8xc5YPO
+ TU8X4SVu8huEwp2/wp0OcUA4l/qUAWqXMwVagnZ+lIFLc8aqY6NLlMULbEa9EVZPRiW4FX
+ YU68eFzKyk9JcMvpM0TxGCSisq/XK4Y=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-WmxVf9m-O92DPv7V_Q-1uQ-1; Mon,
+ 11 May 2026 14:14:28 -0400
+X-MC-Unique: WmxVf9m-O92DPv7V_Q-1uQ-1
+X-Mimecast-MFC-AGG-ID: WmxVf9m-O92DPv7V_Q-1uQ_1778523267
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3422B1956067; Mon, 11 May 2026 18:14:27 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.172])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3DE331953952; Mon, 11 May 2026 18:14:26 +0000 (UTC)
+Date: Mon, 11 May 2026 14:14:25 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH V7 02/14] iothread: introduce iothread_ref/unref to track
+ attached devices
+Message-ID: <20260511181425.GD536999@fedora>
+References: <20260511140416.28271-1-zhangckid@gmail.com>
+ <20260511140416.28271-3-zhangckid@gmail.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB4186:EE_|PH8PR12MB6865:EE_
-X-MS-Office365-Filtering-Correlation-Id: 107c14db-e382-4881-d9a3-08deaf889ed3
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|366016|1800799024|22082099003|18002099003|56012099003|11063799003;
-X-Microsoft-Antispam-Message-Info: Rfj+rFp/QQrmZjR7ZkBpnBBn4IxwN+f7L7EazzxQ661+SakPOxvRwrK6v/2r5Gv7V+ePh4wzm6UTfrLWUOmktW2xYHP6mEL9UCYZEU671U/eF0hoEeYvrniUiyTUJYQ29bBDE+yTCzpMiia8IbguSSwYdXqG7vMHJP4xXgNg3qcin95GVfaEH1Ba5suRO5oC3hji6B3PHlk9hBU87/yN5BYCxhPhwOme4cFKts5LPCT3oQzNZtfhVIWkC1HJ8FGmvFxyOC15p2QXfWK6WFLlxxgKcmLaDo9g9RSq+1vr/N3+YpD6nxAu+ftBCzE0mR+0WUmoeNTmDlVELufCe7Agocf+emsvpM/NV4SPc7Eb/XPn2OzA0xlmkYqwurZdT+zJfmI8/2yETNKLH2+5chUOcvnGoFBt3jYXJB/FGibm0d9GTyV9z6Dmptya+6f3Io8Jq6B7fakAq0TrLUA6yq4XFLq4GXGQnqvs/OVwAUAHSKKXKnDVNx94YCGC5lu5oCjbTHQvl0M5i8fAwoJswjUv5JolZOBLgcKnXAz0BaBvBKAMYWKVG/zBs8F9TpsT2mOsrwLixHN6yqMSXCh7/WZ3LsiBCOoNsJDLzQgHMsBE3NwOuF1qxjyOqLa89EBDET4AG6AjyX5J9XKBA4/CEUBJxU50KLFjync16z3UmOy+yMgjv9tkqIpFjXA7Iur/b+KG
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR12MB4186.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024)(22082099003)(18002099003)(56012099003)(11063799003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cXprOUh1eGZYNnA3WW0zQkJEK2Ztak5vZXF1Wi9vaHlmUkZnbVN3MU01M3Vr?=
- =?utf-8?B?U3FZZFZ6MWg5VkQ5eU9RMWFYMittRDk0M3c4ZnViWmdmcTIyODA3VmlJZ2ND?=
- =?utf-8?B?YkhqRWcvejdITTMreXM4TlNrNytaMHovNk9FcVNuSEtXMVRzZjQ3NDFGM1lt?=
- =?utf-8?B?UjcreUFMbnR4bE4rMEV0ancxaTZ0b2ZxSXQwS2owc2xKQXE0b2pMQUVBWFF5?=
- =?utf-8?B?VzloVVE3MVN3cjk5cmVMc0xQZ2hMYUxxSC9Ta3Yybnk5b21lbGRjZlZwTy8w?=
- =?utf-8?B?NzdkNUEvMWc3MUYxSGZpSGtaTGdPRVpZWHRWYUpBOXdDaERpRC9pS09LVWlE?=
- =?utf-8?B?TWpzcGloVzJHVnhvZElnelZPVVo2YUt0Y0JESGxRbGx2SGF6WnJiK25SNXJG?=
- =?utf-8?B?NTVCbm5LaHZoVWtMaCtPR1poTWlsellkSDJHQnUweFNMOEJFNnZ6ODQ5TTdv?=
- =?utf-8?B?ZFhTRkdnUXMrWXpiMDVjR25tVEsydmcyVGM3Vm53dkt0NlRuT1RCUEpwYTgx?=
- =?utf-8?B?NG8zOC9xUmhGZWVCWE9zZGVqYmpoNjBwN1ZYTjVReCtzSUM3U1Z3em0vQW5u?=
- =?utf-8?B?bkJ6VHU0WGRsR1VrZVZzbGEwa1pSbC9qckRINlJNRDRxYWxkMkJVeUpEc0hZ?=
- =?utf-8?B?WnRESGJPRkpGc3JhSVVuQmRRejhyZjg1RWtGbW9ieXh0cmsrUlpZZmkzcmxC?=
- =?utf-8?B?TUtXNU5acnB5UEhmeFlrWGJJV1BES1VKWWlXWFBEUHZYU1M3YWZoUWxEd1dq?=
- =?utf-8?B?VkRlY3BpRW9NSDRYSEN5bHluam1ianBhdEVJTGMveTVud1ZwWFIvbkY5RkR1?=
- =?utf-8?B?TEJmbDFkZEM3Y2Evd2hPbUt5cWVwNjM5OFZFd0FTNU5kRUU0aXUyc0RWZU85?=
- =?utf-8?B?UzRubklJQTQ4MVZuNTQ4VHhkb1JNZVFaSlFUS3BjUGRBcGYyWXNnN0t6Um53?=
- =?utf-8?B?SVBJZmZ4bUVkcHBGK0plY1hGT2pscForVkRkTU9LbWlpbkU3ekhYT1NXdGpX?=
- =?utf-8?B?MWFUbkt5QldBQk8xSUJ4bGpJL2ZhbnRJVWVvSzJscWpiL2djbXdPVU92UDFo?=
- =?utf-8?B?NWtFNVlPeU9zV20zb3ZubjBYOTZacmhhdXBSOGVZdnNRUjlkWVp6WTkxM2lj?=
- =?utf-8?B?RncxYytBQzVSV0ZqemUzTTl1ekZTSWR1eUNJeGxVeHRybmJBNzQwcWpQMEpC?=
- =?utf-8?B?NkRWR0VIem4zZ1FtREk5RkxUYjc2OXlmelZzSU51MStKT1NwWjZiUllmZ2Ns?=
- =?utf-8?B?YkFhdTU3K09oWFJIZU5EVmI5YndmR3BMQkVSZytMUCt1TFRLRGR5S1JLTENm?=
- =?utf-8?B?ZVo0VENNODYrbHF3THYyUXgxNUVXRVVKQkRrdVpwVVIzMWZBaFplZTVKSkdP?=
- =?utf-8?B?Ynh2N1FZWEszSHphd1F3UXJqcGtmWHppZXJtQmpmRWtjRE9KdVNNZkxmdDFS?=
- =?utf-8?B?MEt0L3RiS3Nua21xYTVQMmNMWVZIV3k0aEh3NTBlbm96ZVJkN1JMOE1GQ1lU?=
- =?utf-8?B?SmZZWnY2TDJ1cERxTHl5bHBxd3BEM3JVa056RjdTWVQ0dyt0T3BKbmUwZUNN?=
- =?utf-8?B?SmdsV0d1T0NrRjJMeVlWOEdTS2dDL1lIMDZkdk9ySGNPT2NqRXFUNVhPczZP?=
- =?utf-8?B?YnF4SFdpaWlncGsxdDgreTZEMnQzYVIyTTk2eklEY2l5aUZCcUNJWWVmUy9s?=
- =?utf-8?B?VXN2OGdzR29OcDBCRGNZQzBVYjVkdFN0MHYweDg2eHVSazZFaXcrSU9Bb2ZN?=
- =?utf-8?B?U041bXNvM2JHbXRUTmhmMnpMSTJYMHRzTmk3ZkFXZ3JtaWNLTzE1YTJyQUI1?=
- =?utf-8?B?VXZibnRsZGVkZDJTSTNrRnVmdjFiZy9YT2hpeFBjaTQvT25qb2ExckJML1No?=
- =?utf-8?B?bXdTUUlZTkpwUGRJWENFMnMyQlJXNk90WWVFczM1Q0gxRTU5UnJ4S0JOVUth?=
- =?utf-8?B?TWUzSldpTGh0K2ZJeFErbTlXZjJNSEZZOU82Njg0WWMvRlRDOHJtTGUrQzlt?=
- =?utf-8?B?dnBaM0Nja3NCVXlpR0N6WklnSjFxbG5qRkdRSWVTL0lmNzJDMURUUkw5cUxC?=
- =?utf-8?B?L3owZ1hlSVROMnRtdFd4RHd6cW05aHFpeTE1RHFqanJMbXpMd1pxUlhUS3V1?=
- =?utf-8?B?bzF5YmJGVFZTL0tIams2V21WYVdBV1V2NXhhM0V3b1dNeitBQ1c3NlhsMXFv?=
- =?utf-8?B?ZFdCQm5DMDMxK3NoanBGMHhqaCthbXhVdnB1dGdVdlZwQjlTT010UC9tOFdu?=
- =?utf-8?B?bzlRaXliZ01PVmdPRzlha1U5OVZ6aXZ3ZkswSFltU282KzZUOXRCV0NpOWQy?=
- =?utf-8?Q?lj7NYeZdUhsp+LPf8G?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 107c14db-e382-4881-d9a3-08deaf889ed3
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4186.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 May 2026 18:10:45.0911 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ja197E8M0dH1NcFdJ1dlx8rXI1fHyZpNKJ5uFvqGwgU5jOWx0VJDEgMKWYKyxERgDqPbedWlS7TUrAhbj7OnOw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6865
-Received-SPF: permerror client-ip=2a01:111:f403:c110::3;
- envelope-from=tdave@nvidia.com;
- helo=BN8PR05CU002.outbound.protection.outlook.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="lurMsHPbV7OpdbEw"
+Content-Disposition: inline
+In-Reply-To: <20260511140416.28271-3-zhangckid@gmail.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,30 +89,250 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+--lurMsHPbV7OpdbEw
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 5/11/2026 4:09 AM, Michael S. Tsirkin wrote:
-> On Fri, May 08, 2026 at 01:37:09PM -0500, Tushar Dave wrote:
->> This RFC introduces a mechanism to specify Guest Physical Addresses
->> (GPAs) for PCI BARs, allowing explicit placement of guest MMIO BAR
->> addresses to match host physical addresses for assigned devices.
->>
->> On some platforms, P2P DMA is performed between devices within the same
->> IOMMU group. The PCI fabric ACS is configured to permit direct P2P
->> without going through the host bridge in order to achieve the required
->> performance.
-> 
-> Pass this info to guest firmware, let it set bars any way it wants?
+On Mon, May 11, 2026 at 10:04:04PM +0800, Zhang Chen wrote:
+> Currently, IOThreads do not maintain a record of which devices are
+> associated with them. This makes it difficult to monitor the
+> workload distribution of IOThreads, especially in complex
+> hotplug scenarios involving multiple virtio-blk or virtio-scsi devices.
+>=20
+> This patch introduces a reference counting and tracking mechanism
+> within the IOThread object:
+>=20
+> - iothread_ref(): Prepends the device's QOM path to a list.
+> - iothread_unref(): Searches for the device path using a custom
+>   string comparison (g_strcmp0), releases the associated memory
+>   upon a successful match.
+> - holders: A GList storing the QOM paths of attached devices
+>   for runtime introspection.
+>=20
+> A later commit will add QMP commands to let management applications
+> query the attachment status of IOThreads.
+>=20
+> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> ---
+>  include/system/iothread.h |  5 +++
+>  iothread.c                | 67 +++++++++++++++++++++++++++++++++++++++
+>  qapi/misc.json            | 48 ++++++++++++++++++++++++++++
+>  3 files changed, 120 insertions(+)
+>=20
+> diff --git a/include/system/iothread.h b/include/system/iothread.h
+> index a1ef7696cb..2871b06edc 100644
+> --- a/include/system/iothread.h
+> +++ b/include/system/iothread.h
+> @@ -50,6 +50,11 @@ struct IOThread {
+>      bool stopping;              /* has iothread_stop() been called? */
+>      bool running;               /* should iothread_run() continue? */
+>      int thread_id;
+> +    /*
+> +     * The list elements are of type IoThreadHolder, which can
+> +     * represent either a QOM path or a block node name.
+> +     */
+> +    GList *holders;
+> =20
+>      /* AioContext poll parameters */
+>      int64_t poll_max_ns;
+> diff --git a/iothread.c b/iothread.c
+> index 3558535b40..b805e4f97d 100644
+> --- a/iothread.c
+> +++ b/iothread.c
+> @@ -25,6 +25,66 @@
+>  #include "qemu/rcu.h"
+>  #include "qemu/main-loop.h"
+> =20
+> +/*
+> + * Add the @holder path to the iothread's tracking list.
+> + * The @holder is a QOM path if it starts with '/', else a block node na=
+me.
+> + */
 
-We are using firmware, relying on the existing EDK2-supported mode
-enabled by PcdPciDisableBusEnumeration, where firmware is expected
-to preserve the PCI topology and BAR programming established by
-the hypervisor.
+It would be cleaner to use IoThreadHolder in the iothread_ref() and
+iothread_unref() APIs instead of a string:
 
-In our case, the hypervisor is QEMU, which performs PCI enumeration
-and resource assignment before handing control to firmware. EDK2
-then explicitly refrains from re-enumerating or reallocating PCI
-BARs, as this is already a supported firmware behavior.
+  static void iothread_ref(IOThread *iothread, const IoThreadHolder *holder=
+);
+  static void iothread_unref(IOThread *iothread, const IoThreadHolder *hold=
+er);
 
--Tushar
+That way the caller already uses IO_THREAD_HOLDER_KIND_QOM_OBJECT or
+IO_THREAD_HOLDER_KIND_BLOCK_NODE to clearly distinguish QOM paths from
+block node names. No string parsing is necessary.
+
+> +static void iothread_ref(IOThread *iothread, const char *holder)
+> +{
+> +    IoThreadHolder *h =3D g_new0(IoThreadHolder, 1);
+
+IoThreadHolder vs IOThread. Name it IOThreadHolder for consistency?
+
+> +
+> +    assert(holder);
+> +
+> +    if (holder[0] =3D=3D '/') {
+> +        h->type =3D IO_THREAD_HOLDER_KIND_QOM_OBJECT;
+> +        h->u.qom_object.data =3D g_strdup(holder);
+> +    } else {
+> +        h->type =3D IO_THREAD_HOLDER_KIND_BLOCK_NODE;
+> +        h->u.block_node.data =3D g_strdup(holder);
+> +    }
+> +
+> +    iothread->holders =3D g_list_prepend(iothread->holders, h);
+> +}
+> +
+> +static int iothread_holder_compare(gconstpointer a, gconstpointer b)
+> +{
+> +    const IoThreadHolder *holder_node =3D a;
+> +    const char *target_name =3D b;
+> +    const char *current_name;
+> +
+> +    if (holder_node->type =3D=3D IO_THREAD_HOLDER_KIND_QOM_OBJECT) {
+> +        current_name =3D holder_node->u.qom_object.data;
+> +    } else if (holder_node->type =3D=3D IO_THREAD_HOLDER_KIND_BLOCK_NODE=
+) {
+> +        current_name =3D holder_node->u.block_node.data;
+> +    } else {
+> +        /*
+> +         * This should not happen. If it does, current_name remains
+> +         * NULL and g_strcmp0 will handle it safely.
+> +         */
+> +        current_name =3D NULL;
+> +    }
+> +
+> +    return g_strcmp0(current_name, target_name);
+> +}
+> +
+> +/*
+> + * This function removes the @holder from the @iothread's tracking list.
+> + * The @holder string must match the one used previously in iothread_ref=
+().
+> + * It is a programming error to call this with a @holder that is not
+> + * currently associated with the @iothread.
+> + */
+> +static void iothread_unref(IOThread *iothread, const char *holder)
+> +{
+> +    GList *link =3D g_list_find_custom(iothread->holders, holder,
+> +                                     (GCompareFunc)iothread_holder_compa=
+re);
+> +
+> +    assert(link);
+> +
+> +    IoThreadHolder *h =3D (IoThreadHolder *)link->data;
+> +    qapi_free_IoThreadHolder(h);
+> +    iothread->holders =3D g_list_delete_link(iothread->holders, link);
+> +}
+> +
+>  static void *iothread_run(void *opaque)
+>  {
+>      IOThread *iothread =3D opaque;
+> @@ -108,6 +168,9 @@ static void iothread_instance_finalize(Object *obj)
+> =20
+>      iothread_stop(iothread);
+> =20
+> +    /* We don't support finalize without holders */
+
+The double-negative is confusing and the logic seems incorrect: we don't
+support finalize while there are holders. A clearer comment would be:
+
+  /* All holders must have called iothread_unref() */
+
+> +    assert(iothread->holders =3D=3D NULL);
+> +
+>      /*
+>       * Before glib2 2.33.10, there is a glib2 bug that GSource context
+>       * pointer may not be cleared even if the context has already been
+> @@ -356,6 +419,10 @@ char *iothread_get_id(IOThread *iothread)
+> =20
+>  AioContext *iothread_get_aio_context(IOThread *iothread)
+>  {
+> +    /* Remove in next patch for build */
+> +    iothread_ref(iothread, "tmp");
+> +    iothread_unref(iothread, "tmp");
+> +
+>      return iothread->ctx;
+>  }
+> =20
+> diff --git a/qapi/misc.json b/qapi/misc.json
+> index c71a5fe657..5fb7dcfcad 100644
+> --- a/qapi/misc.json
+> +++ b/qapi/misc.json
+> @@ -67,6 +67,54 @@
+>  ##
+>  { 'command': 'query-name', 'returns': 'NameInfo', 'allow-preconfig': tru=
+e }
+> =20
+> +
+> +##
+> +# @IoThreadHolderBlockNode:
+> +#
+> +# @data: Block node name.
+> +#
+> +# Since: 11.1
+> +#
+> +##
+> +{ 'struct': 'IoThreadHolderBlockNode',
+> +  'data': { 'data': 'str' } }
+> +
+> +##
+> +# @IoThreadHolderQomObject:
+> +#
+> +# @data: Absolute @qom-path.
+> +#
+> +# Since: 11.1
+> +#
+> +##
+> +{ 'struct': 'IoThreadHolderQomObject',
+> +  'data': { 'data': 'str' } }
+> +
+> +##
+> +# @IoThreadHolderKind:
+> +#
+> +# @block-node: Block node name.
+> +# @qom-object: Absolute @qom-path.
+> +#
+> +# Since: 11.1
+> +##
+> +{ 'enum': 'IoThreadHolderKind',
+> +  'data': [ 'block-node', 'qom-object' ] }
+> +
+> +##
+> +# @IoThreadHolder:
+> +#
+> +# @type: the kind of I/O thread holder.
+> +#
+> +# Since: 11.1
+> +##
+> +{ 'union': 'IoThreadHolder',
+> +  'base': { 'type': 'IoThreadHolderKind' },
+> +  'discriminator': 'type',
+> +  'data': {
+> +    'block-node': 'IoThreadHolderBlockNode',
+> +    'qom-object': 'IoThreadHolderQomObject' } }
+> +
+>  ##
+>  # @IOThreadInfo:
+>  #
+> --=20
+> 2.49.0
+>=20
+
+--lurMsHPbV7OpdbEw
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmoCHIEACgkQnKSrs4Gr
+c8h4Ogf+JGm52raj5MN2ksrEcnSfGkgstQVoOnZd80o/b2RpLlXz0BTWyKvnmTMd
+5yyN9O5QWxfI2FdApv12tUFNLBAyQ1f1JTQNL/z1R/3elUQ1jVIBQfvZaGIGmm6U
+ZZdA9fKx3NonAzEFwoYVZZH3fYuEm5SdWVnngPFZfHBrOchYsVScN67fz3in7jjK
+BaMvFAoXRYnAwZCFDBPVWSZ1fExZ+N7w7LnhbXi8f6yW+hxouQn346q2opIxw0sa
+kafe4A6f/bxwyHBkAM6/ZBe/JRU8yhf11sk5v0wc4l6QX4y7XR5H9ysA8P6n6TWk
+xg1lpf1hnhQ692+/vxALQvuat3CQ3A==
+=Bvbz
+-----END PGP SIGNATURE-----
+
+--lurMsHPbV7OpdbEw--
 
 
