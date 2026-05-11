@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CC18CD4855
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 20:22:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD44BCD484E
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 20:22:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMX8K-0001n4-7q; Mon, 11 May 2026 16:21:44 -0400
+	id 1wMX8m-0003Gx-Ub; Mon, 11 May 2026 16:22:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wMX8I-0001kX-IQ
- for qemu-devel@nongnu.org; Mon, 11 May 2026 16:21:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wMX8g-0002jR-VL
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 16:22:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wMX8G-0001qI-UA
- for qemu-devel@nongnu.org; Mon, 11 May 2026 16:21:42 -0400
+ id 1wMX8f-0001zC-9f
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 16:22:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778530900;
+ s=mimecast20190719; t=1778530923;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0DVIqgt4ZxibSTGq0lCCHRhM1b3/sOlzkp6SNbD+lxU=;
- b=IS9Bl9hc4s0pZ4ycV17OG4do68uywuCyE7NI/lHO+czsyk7YyrBE9v6Qkibs6/eZ4QRS/y
- 28WaK/iJ15RIUN+FVnG489ONDP0zwXThQspoEsuXibKZYSnW8mQi4hdQspWRm2kkkI3osH
- DVGRDDaByrped8CthTqtCqAu5X0ouCQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=x8Qmpo6a6KqNjqYgOJX9U9yGoThB2VAWHy8SqRE6iCQ=;
+ b=DTHBtUSJmiLpkNAlFu34hqNCNXrB83tHcA2mRTGvQVZFxOC3KiuMF7xwcH4oVedrLEQ7ts
+ HF3Y7E+oDGftFKskKYwp+9MHii6k1ED+EB+HEzmZY7Z+u6uIAfdkasIYGQk/WNtNIpuQyG
+ zlDRFOqPPIqOEsfVU388hq5687VkZw8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-252-qZgkE65hM3GRmOhr-ev7Gg-1; Mon,
- 11 May 2026 16:21:38 -0400
-X-MC-Unique: qZgkE65hM3GRmOhr-ev7Gg-1
-X-Mimecast-MFC-AGG-ID: qZgkE65hM3GRmOhr-ev7Gg_1778530897
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-319-6oakSBQ0NguyzgKX2TmwVw-1; Mon,
+ 11 May 2026 16:22:00 -0400
+X-MC-Unique: 6oakSBQ0NguyzgKX2TmwVw-1
+X-Mimecast-MFC-AGG-ID: 6oakSBQ0NguyzgKX2TmwVw_1778530919
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ADD46195609D
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 20:21:37 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 69FEB180035D; Mon, 11 May 2026 20:21:59 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 67D3118004A3; Mon, 11 May 2026 20:21:35 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E5EC230001BE; Mon, 11 May 2026 20:21:57 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- peterx@redhat.com,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 04/24] io/net-listener: move mutex init to instance_init
-Date: Tue, 12 May 2026 00:20:50 +0400
-Message-ID: <20260511202111.3091440-5-marcandre.lureau@redhat.com>
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PULL 08/24] hw/i386/x86: free oem_id and oem_table_id on finalization
+Date: Tue, 12 May 2026 00:20:54 +0400
+Message-ID: <20260511202111.3091440-9-marcandre.lureau@redhat.com>
 In-Reply-To: <20260511202111.3091440-1-marcandre.lureau@redhat.com>
 References: <20260511202111.3091440-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -71,7 +71,7 @@ X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,59 +90,46 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The QIONetListener mutex is initialized in the convenience
-constructor qio_net_listener_new() rather than in an instance_init.
-This means a bare object_new(TYPE_QIO_NET_LISTENER) produces an
-object with an uninitialized mutex, but instance_finalize
-unconditionally calls qemu_mutex_destroy() on it, which aborts.
+x86_machine_initfn allocates oem_id and oem_table_id via g_strndup,
+but no instance_finalize existed for x86_machine_info, so these
+strings were never freed when the object was destroyed.
 
-Move the mutex initialization to a proper instance_init so that init
-and finalize are always paired regardless of how the object is
-created.
+Add x86_machine_finalize to release both fields.
 
-Fixes: 9d86181874a ("qio: Protect NetListener callback with mutex")
-Cc: peterx@redhat.com
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Fixes: d07b22863b8e ("acpi: Move setters/getters of oem fields to X86MachineState")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- io/net-listener.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ hw/i386/x86.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/io/net-listener.c b/io/net-listener.c
-index 9410d72da9c..1fd0f6cb5ab 100644
---- a/io/net-listener.c
-+++ b/io/net-listener.c
-@@ -38,7 +38,6 @@ QIONetListener *qio_net_listener_new(void)
-     QIONetListener *listener;
- 
-     listener = QIO_NET_LISTENER(object_new(TYPE_QIO_NET_LISTENER));
--    qemu_mutex_init(&listener->lock);
-     return listener;
+diff --git a/hw/i386/x86.c b/hw/i386/x86.c
+index 01872cba073..dc7f0d56b01 100644
+--- a/hw/i386/x86.c
++++ b/hw/i386/x86.c
+@@ -372,6 +372,14 @@ static void x86_machine_initfn(Object *obj)
+     x86ms->above_4g_mem_start = 4 * GiB;
  }
  
-@@ -440,6 +439,13 @@ qio_net_listener_get_local_address(QIONetListener *listener, size_t n,
-     return qio_channel_socket_get_local_address(sioc, errp);
- }
- 
-+static void qio_net_listener_instance_init(Object *obj)
++static void x86_machine_finalize(Object *obj)
 +{
-+    QIONetListener *listener = QIO_NET_LISTENER(obj);
++    X86MachineState *x86ms = X86_MACHINE(obj);
 +
-+    qemu_mutex_init(&listener->lock);
++    g_free(x86ms->oem_id);
++    g_free(x86ms->oem_table_id);
 +}
 +
- static void qio_net_listener_finalize(Object *obj)
+ static void x86_machine_class_init(ObjectClass *oc, const void *data)
  {
-     QIONetListener *listener = QIO_NET_LISTENER(obj);
-@@ -463,6 +469,7 @@ static const TypeInfo qio_net_listener_info = {
-     .parent = TYPE_OBJECT,
-     .name = TYPE_QIO_NET_LISTENER,
-     .instance_size = sizeof(QIONetListener),
-+    .instance_init = qio_net_listener_instance_init,
-     .instance_finalize = qio_net_listener_finalize,
- };
- 
+     MachineClass *mc = MACHINE_CLASS(oc);
+@@ -445,6 +453,7 @@ static const TypeInfo x86_machine_info = {
+     .abstract = true,
+     .instance_size = sizeof(X86MachineState),
+     .instance_init = x86_machine_initfn,
++    .instance_finalize = x86_machine_finalize,
+     .class_size = sizeof(X86MachineClass),
+     .class_init = x86_machine_class_init,
+     .interfaces = (const InterfaceInfo[]) {
 -- 
 2.54.0
 
