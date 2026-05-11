@@ -4,111 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AE96CD37AC
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 13:01:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2384ECD37AC
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 13:02:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMQFs-0007yV-Tz; Mon, 11 May 2026 09:01:05 -0400
+	id 1wMQHH-0008Tt-BY; Mon, 11 May 2026 09:02:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wMQFe-0007n6-NB; Mon, 11 May 2026 09:00:55 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wMQFa-0007YX-HE; Mon, 11 May 2026 09:00:48 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64BC2ltL3334475; Mon, 11 May 2026 13:00:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=q8D3Xo
- Hu6i8IdYSf8K9sT5Tn8r+KZajPsLaygZpwMrg=; b=f/2vXM0/FzhPDgfPf3yxdB
- uNdujRyV1YTCrp2hLh+mpB9DXKbZ6HZhqFH5d9wD80gFYGLTrcmdQc2LCkan8AO5
- 1XQevpwnu0dIWaD4AZyH5IGVCUvvRt+u2XT138gttiiswpIIMLZyiwkmjL+5KDnn
- td+9YFacBGAMB7jzW9NI0sn1fylZnvk84ZQpD4qRD27qFwHNf/MZilYYgBVWY5wf
- xAAiYtStaSckE/fp5dPTxox4XNu3wE2+kK2EzySPRU6VGGAQ0jxKWrBdomSrb2xQ
- 4ZVR6vT8QwALdJBO3YFkGcvYb5G9W+SITuElzKT3hl7EkEu7J62jCdLnjCTPfIrg
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e1vju7qmt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 11 May 2026 13:00:37 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64BCdQgq023377;
- Mon, 11 May 2026 13:00:37 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e2hfg54r6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 11 May 2026 13:00:36 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64BD0ZE821627634
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 11 May 2026 13:00:35 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 22D7858067;
- Mon, 11 May 2026 13:00:35 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 545EF5805D;
- Mon, 11 May 2026 13:00:34 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.111.34]) by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 11 May 2026 13:00:34 +0000 (GMT)
-Message-ID: <4a098f0bc624dd5b4214e09e43a947305b03c867.camel@linux.ibm.com>
-Subject: Re: [PATCH v2 2/2] vfio/ccw: Return false when IRQ notifier setup
- fails
-From: Eric Farman <farman@linux.ibm.com>
-To: zhaoguohan@kylinos.cn, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Alex Williamson <alex@shazbot.org>,
- =?ISO-8859-1?Q?C=E9dric?= Le Goater	 <clg@redhat.com>, Cornelia Huck
- <cohuck@redhat.com>, Matthew Rosato	 <mjrosato@linux.ibm.com>, Tony Krowiak
- <akrowiak@linux.ibm.com>, Halil Pasic	 <pasic@linux.ibm.com>, Jason Herne
- <jjherne@linux.ibm.com>
-Date: Mon, 11 May 2026 09:00:33 -0400
-In-Reply-To: <20260510084353.58263-3-zhaoguohan@kylinos.cn>
-References: <20260510084353.58263-1-zhaoguohan@kylinos.cn>
- <20260510084353.58263-3-zhaoguohan@kylinos.cn>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wMQGQ-0008BR-G3
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 09:01:52 -0400
+Received: from mail-dl1-x1235.google.com ([2607:f8b0:4864:20::1235])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wMQGN-0008BQ-Lg
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 09:01:37 -0400
+Received: by mail-dl1-x1235.google.com with SMTP id
+ a92af1059eb24-132830d8281so1006119c88.1
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 06:01:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778504493; cv=none;
+ d=google.com; s=arc-20240605;
+ b=fTvVAJv+YSWlY/OpVSVi3hvVvZyAAi7EUoau+bJ/1T7IdfKUw7U3vkJU3bAAM3Ske2
+ s83UzLhrAL1wg9bIkf+CFsy0zVoKWrleCcRkvppD+FeB9tyZWwFA812m6eYcyeIWte/x
+ f4dgEOG2mrFPQQwMmITcCPKocJswB3xQzQI+aA662/ifelg0hcsPRsROB8E6DOuD27+c
+ npJoNkpPOHBWpQDkdsx/Wb9dheX3cblqYntznLZbft7wD+krs0OTTlPrxoYCJecR/TD+
+ 6bXasZvfN5C53KjOKOQ4mNWjJz2ft9smTRoRR8eo8yJFtRe7XMgXui+z8wlaq/WIeocj
+ 4MXw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=xrGfqbDAa0NvbHQFVcegD2ewwESeKh0udY4eiR8vTiA=;
+ fh=WKVAFeCdguYsJXqlk5lGaBA/nthK7I/6BoQi75o8zIs=;
+ b=Ld7xZ6ldaW8lP3w7eFJrlAhZAfd/Ydwp4mSMl4AJLiux3v/JpGPkqG6YXgBWW51dNR
+ Y3Xrnhx/3a0x0Z1NOF+3aCDiAHIXSuOiU1nrGuMoeehLXlr9KIEHqbP8o2gfE6CRtQjm
+ 4sKg53eiZnEQLxw1ZwwlH/MGB0q2PDvPKd7vw+dirkVBzY8wg6B3xz7pVvxl9eWrvyVQ
+ 182/oZV9xjSGIFgUGhqMv14RgsVwgvCnDODhoOXhBp/9VZ2EMLGJKPvMpO9uNPO4ymYq
+ 9II6jthnGQm0M7nXXmYfl8kdCDtXgCsK8B+s6VdQRr/y5jcZBaIVKI6U84Sje6WGMnMv
+ hVDA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1778504493; x=1779109293; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xrGfqbDAa0NvbHQFVcegD2ewwESeKh0udY4eiR8vTiA=;
+ b=W9x9bHGFlaZg7JhsrdeyaxtRa+IDRa30Nny9/MX2TLSc8MvxqgPV7R4M3DRvyhkaiD
+ ZgvQ7Yjyxx2YhKJI5nCj5cI5bRe63rw9azSmLAwpR79o6QvUcygxjhqLHKE0/WpQLSre
+ BiV+ltrgKVxEmYULRYzX589HyG2sl5pzKzddCFUyqLo0TAySUuxvyNz8A1S4ftDiL3CO
+ uww0E4PtJ21WaNxrF9AMoZXv1YNYR2mQ0eY6FiPjSMrSHtvwVf257IhCfdW4YGgIrowG
+ DqhnzK++rHUEGj8cso7UGhVJPIlYqoykjTkihddhbHoKL1gwYZSGASPPvtJ87qz5qe5/
+ W/8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778504493; x=1779109293;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=xrGfqbDAa0NvbHQFVcegD2ewwESeKh0udY4eiR8vTiA=;
+ b=oDRtuCJHcV+sftvzXCVePnqUR7ljtzML/38pOrI7RqJFAgVrqqgIzMogEuuiBqLeU7
+ tEb5FaNaW0ATgZSUgzvvlavu5YJFzcbW2eiXKd2MUfmT+Jchts2htecLyawFcy81WY7F
+ NO/ASYZ7Xxk6pOHJiOjgJIE6vNC6TEkbYWXdh7THUP7/RLHSG+0bHPE2dwsLKUNa/Bwl
+ hhu+y3a0vdRp1DyLtFpSRzEH/UZx9R91zMiZ9yurfds4gpcYl19e+NeHrvRNKbGIMu6x
+ E5j6JpIMOl08W2rp9ocm3O0CPLNWdNdH2UAMZJo7GLnvcIM5w9IicR+mlLPUsPXAYgua
+ cc5A==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9U2FDK7jdyIXXz7CjFyVZVsjrDKmLS3elzloB0A8SajLmYhzaFNMS6zlfb7CKd7aMCI94i9SMQ87XD@nongnu.org
+X-Gm-Message-State: AOJu0YziZLkGe30b2ZW/sFVXVFFWJKDhPcS1tQl99vohIlS506z6qN3A
+ /128t5Q8dRuDpG/kjPOti6bExEx/j0RODHrj+7+n5wRPgx8m2ELZ/WCpIaTL+A4BuQsUk7fVNoq
+ nYDmJOcbt+YJlAJ/QtuF+pbKCXVUpT/Q=
+X-Gm-Gg: Acq92OHY16eT7nVPn30grjI+bxJeNKzAfnsueryT5bgTViW/ISq0q79UzNEWDDrooPw
+ N9GAk+2+8R30hV4Dntb7rzpd36pNzEq1b/kzHuPTc28UwTb4ijSwODct0IT6nj+/0yM8/ACF22k
+ TcPhRDsUMkv6jwEa7D4jYIr0FBAxENkMxfroS3C9sg/JWmhSyLEkhWpXxAhSKCPLgeM7pEhBUtk
+ iCrZ/zDi6qku79HfH7A/oJD4QLHV7ZIT+CaZDZeaFpOXuucQR0e00bSPpAxZpH0s0Hp1Tu3jSYj
+ X/Mi8yXxKOXscC8HPsY5K1GX2nIlodqxbI/DmQPWKtB7JljkhQ==
+X-Received: by 2002:a05:7301:6783:b0:2f2:5c68:5052 with SMTP id
+ 5a478bee46e88-2f85c17af84mr6126956eec.13.1778504492327; Mon, 11 May 2026
+ 06:01:32 -0700 (PDT)
+MIME-Version: 1.0
+References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
+ <20260427-qom-tests-v1-34-c413f3605311@redhat.com>
+ <CAFEAcA-tSqa7SQUE-f5yTq_P9eW6p_XrnNSnHZjw4g=Z2WncAQ@mail.gmail.com>
+ <4f90d39a-560f-4922-ac54-2c975dae249d@linaro.org>
+ <CAFEAcA_LcHgtAAYFjqm+P68ULwSRJWfr6LipMg9YsviyWDxH7Q@mail.gmail.com>
+In-Reply-To: <CAFEAcA_LcHgtAAYFjqm+P68ULwSRJWfr6LipMg9YsviyWDxH7Q@mail.gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Mon, 11 May 2026 17:01:20 +0400
+X-Gm-Features: AVHnY4LUUZJj-Uy0PeC5jOSV9tGBO4n3odeOOGNkax2UoonWn0NhbVICukz_7p4
+Message-ID: <CAJ+F1CKFcPy3NtKgVfUruN_Mp1498EiQpRNz65HNE6YeqJD3CA@mail.gmail.com>
+Subject: Re: [PATCH 34/41] hw/arm/virt: free flash devices and OEM strings on
+ finalization
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, armbru@redhat.com, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
-MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=cYbiaHDM c=1 sm=1 tr=0 ts=6a01d2f5 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=6b0_1KtOqNYRJENXbOIA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: opZ07VGJ5WOOJKrGtQGpZE29p6h3XvO2
-X-Proofpoint-ORIG-GUID: opZ07VGJ5WOOJKrGtQGpZE29p6h3XvO2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDE0MCBTYWx0ZWRfX3u/8nCyv24y+
- tR4jKpszejZCR/FyeFg9h55q20IrCauUn3y3r8IPEPI9EIiP+SQXiq859fH3fBSTEL8dHMqGAAk
- Fs6bwWxOPNE3H9mwSLSdevxnyND3n7hQ0hPYF03uy5Q8Z4dpBjfacUrqmxPJ/6fZW0wgpjW1X/y
- cVnkvOod9Pk1bOquvIidlX9+480pvUB66c9xCBeAsbMiWiikI7wf016xkX5recIxIsJO/3dreDQ
- 0CWAf0wjOHIhWsZn5s02ELTGUd29Y4kVLGqPg5xr5toZ5G5uel5Jr/z5rnrVdPnOdGj4ImbjivF
- Q7z6Xdn4bS2jxt47IzbB+j7PRscydWtEGu/eFw5j9zasMu3nrkoIwRzgI8GcgIxY7sF0pc/E6UC
- ZIiW1rr4UkSJ0YysQxzXTbplBChFDk1ftVbDIycf4PhU0UKM3y3e+43rcTdN+pgep2Y3x2as8ou
- rL0PAHxVG5cTWcrBLAA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-11_03,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 clxscore=1011 spamscore=0 priorityscore=1501
- suspectscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605110140
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1235;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dl1-x1235.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,23 +124,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 2026-05-10 at 16:43 +0800, zhaoguohan@kylinos.cn wrote:
-> From: GuoHan Zhao <zhaoguohan@kylinos.cn>
->=20
-> vfio_ccw_register_irq_notifier() cleans up the fd handler and EventNotifi=
-er
-> when vfio_device_irq_set_signaling() fails, but still returns true to its
-> caller.
->=20
-> Return false after cleanup so the caller can handle the failed
-> registration path instead of treating it as a successful notifier setup.
->=20
-> Fixes: 8aaeff97acee ("vfio/ccw: Make vfio_ccw_register_irq_notifier() ret=
-urn a bool")
-> Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
-> ---
->  hw/vfio/ccw.c | 1 +
->  1 file changed, 1 insertion(+)
+Hi
 
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
+On Thu, Apr 30, 2026 at 7:32=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+>
+> On Thu, 30 Apr 2026 at 16:18, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.=
+org> wrote:
+> >
+> > On 30/4/26 17:12, Peter Maydell wrote:
+> > > On Mon, 27 Apr 2026 at 20:45, Marc-Andr=C3=A9 Lureau
+> > > <marcandre.lureau@redhat.com> wrote:
+> > >>
+> > >> +static void virt_instance_finalize(Object *obj)
+> > >> +{
+> > >> +    VirtMachineState *vms =3D VIRT_MACHINE(obj);
+> > >> +
+> > >> +    for (int i =3D 0; i < ARRAY_SIZE(vms->flash); i++) {
+> > >> +        if (vms->flash[i] && !qdev_is_realized(DEVICE(vms->flash[i]=
+))) {
+> > >> +            object_unref(OBJECT(vms->flash[i]));
+> > >> +        }
+> > >
+> > > We currently use qdev_is_realized() almost nowhere in
+> > > the codebase. Isn't there some way to do this such that we
+> > > don't have to care about this because the object is
+> > > parented and gets auto-dereffed ? Having each object
+> > > have to care about the possibility of "inited but
+> > > not realized" devices in finalize seems like it's going
+> > > to result in a lot of bugs...
+> >
+> > Why are we creating pflash devices if we aren't realizing them
+> > (thus not using them at all)? Destroying them when unneeded
+> > would avoid that manual cleanup, right?
+>
+> I wondered that, but what happens is that we init the pflash
+> devices in the machine's instance_init by calling virt_flash_create(),
+> and then later we do the "configure, realize, map" part in
+> virt_flash_map() in the MachineClass::init method. So if
+> you init the Machine object but never call its init method
+> before finalizing it, the flash devices are still in the
+> inited-but-not-realized state. (This is similar to how with
+> a normal qdev object, if you init it but don't realize it
+> it will init but not realize all its child objects.)
+> (We need to create the flash devices earlier than we do
+> the other devices on the board to make the machine properties
+> that virt_flash_create() sets up work.)
+>
+> Since virt_flash_create1() calls object_property_add_child()
+> to make the flash device a child of the machine, I think
+> we could make that be the only reference, by having
+> virt_flash_create1() do:
+>
+>  Object *obj =3D object_new_with_props(TYPE_PFLASH_CFI01, OBJECT(vms),
+>                                      name, &error_fatal, NULL);
+>  DeviceState *dev =3D DEVICE(obj);
+>
+> and then using sysbus_realize() rather than sysbus_realize_and_unref()
+> in virt_flash_map1(). Not tested, though...
+
+Yes, in general, if a device creates & keeps a reference to an
+instance, it should be a strong reference (we don't have support for
+weak reference the way gobject has for ex). It should then unref it
+unconditonally on finalize. Is it ok if it is addressed in a follow-up
+series after this one lands? I am afraid it would delay this series or
+make it longer, and a shift its focus
+
+thanks
 
