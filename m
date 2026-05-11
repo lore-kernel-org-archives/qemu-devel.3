@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52156CD484E
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 20:22:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77C50CD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 20:22:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMX9G-0004cM-MM; Mon, 11 May 2026 16:22:42 -0400
+	id 1wMX8y-0004EU-Kr; Mon, 11 May 2026 16:22:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wMX93-0004TM-6T
- for qemu-devel@nongnu.org; Mon, 11 May 2026 16:22:32 -0400
+ id 1wMX8v-00043j-SL
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 16:22:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wMX8z-00027n-47
- for qemu-devel@nongnu.org; Mon, 11 May 2026 16:22:26 -0400
+ id 1wMX8u-00027X-5E
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 16:22:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778530944;
+ s=mimecast20190719; t=1778530939;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bm28jziSjOXa5vZgSqyUu0062h7zFWqzxLiwmvEvuTc=;
- b=YjaVdYs9QaOgnoqv7WJfPDUPz4kgEIhGTwQrVIH/Wo/eeU2teiROon9dqYp8O+r3OUqfyp
- /Q5eLEuoksith+n8/MCwKmmwGASr4pPYzP41o32ozmMty8O4ES/v8Tp36rihH4T7a0Zg3R
- PBPYAAcVy0xhz/S6Ri/PNfNxxnMe/TQ=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=EEip8eP/B5FO65d2IFv0VJc8NU9987pdSHR+yjUVtnM=;
+ b=Z+lnB9n7hLU0RS8Ofvfunq211yl0DQH+TqqP2YpakT7O6wPxjHPBtxw61SaJOF0j5LJ8TW
+ wRkCpXZ7zSq5EvFYc2gvx4DC3APmQUTyUSPr8ud3FaVYmtnvvwIASLMVHga7J2QYy1mTIM
+ vAA97dFhH2UJVWeHdJu1XaahnMf/P/o=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-624-yPedE7O_NUy2GhpxJFHNKg-1; Mon,
- 11 May 2026 16:22:22 -0400
-X-MC-Unique: yPedE7O_NUy2GhpxJFHNKg-1
-X-Mimecast-MFC-AGG-ID: yPedE7O_NUy2GhpxJFHNKg_1778530941
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-44-Ke-j2s7hN72dUbOfzjR1Gg-1; Mon,
+ 11 May 2026 16:22:16 -0400
+X-MC-Unique: Ke-j2s7hN72dUbOfzjR1Gg-1
+X-Mimecast-MFC-AGG-ID: Ke-j2s7hN72dUbOfzjR1Gg_1778530936
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5C28C1956066; Mon, 11 May 2026 20:22:21 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F0F9E18002E4
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 20:22:15 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EDBD219560AB; Mon, 11 May 2026 20:22:19 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5142C3002D31; Mon, 11 May 2026 20:22:13 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- qemu-block@nongnu.org (open list:Block SCSI subsystem)
-Subject: [PULL 12/24] scsi/pr-manager-helper: free path on finalization
-Date: Tue, 12 May 2026 00:20:58 +0400
-Message-ID: <20260511202111.3091440-13-marcandre.lureau@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 11/24] backends/igvm-cfg: free filename on finalization
+Date: Tue, 12 May 2026 00:20:57 +0400
+Message-ID: <20260511202111.3091440-12-marcandre.lureau@redhat.com>
 In-Reply-To: <20260511202111.3091440-1-marcandre.lureau@redhat.com>
 References: <20260511202111.3091440-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -89,27 +90,25 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-set_path allocates path via g_strdup, but
-pr_manager_helper_instance_finalize did not free it.
+set_igvm allocates filename via g_strdup, but igvm_cfg_finalize
+did not free it.
 
-Fixes: 9bad2a6b9d0a ("scsi: add persistent reservation manager using qemu-pr-helper")
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Fixes: c1d466d267cf ("backends/igvm: Add IGVM loader and configuration")
+Reviewed-by: Gerd Hoffmann <kraxel@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- scsi/pr-manager-helper.c | 1 +
+ backends/igvm-cfg.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/scsi/pr-manager-helper.c b/scsi/pr-manager-helper.c
-index f6454cd80de..53432e6d606 100644
---- a/scsi/pr-manager-helper.c
-+++ b/scsi/pr-manager-helper.c
-@@ -284,6 +284,7 @@ static void pr_manager_helper_instance_finalize(Object *obj)
- {
-     PRManagerHelper *pr_mgr = PR_MANAGER_HELPER(obj);
- 
-+    g_free(pr_mgr->path);
-     object_unref(OBJECT(pr_mgr->ioc));
-     qemu_mutex_destroy(&pr_mgr->lock);
+diff --git a/backends/igvm-cfg.c b/backends/igvm-cfg.c
+index 64589ca34f2..e1f09855f66 100644
+--- a/backends/igvm-cfg.c
++++ b/backends/igvm-cfg.c
+@@ -108,4 +108,5 @@ static void igvm_cfg_finalize(Object *obj)
+     if (igvm->file >= 0) {
+         igvm_free(igvm->file);
+     }
++    g_free(igvm->filename);
  }
 -- 
 2.54.0
