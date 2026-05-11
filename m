@@ -4,75 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B164CD4840
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 18:40:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8A16CD4840
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 18:41:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMVX6-0005FC-9Q; Mon, 11 May 2026 14:39:12 -0400
+	id 1wMVYo-0005yj-3J; Mon, 11 May 2026 14:40:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wMVX4-0005Eg-FP
- for qemu-devel@nongnu.org; Mon, 11 May 2026 14:39:10 -0400
-Received: from p-east2-cluster1-host2-snip4-5.eps.apple.com ([57.103.76.38]
- helo=outbound.st.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wMVX1-0007hs-RN
- for qemu-devel@nongnu.org; Mon, 11 May 2026 14:39:10 -0400
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-10 (Postfix) with ESMTPS id
- EBAD718069CD; Mon, 11 May 2026 18:39:00 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRJA01fDl4fBBdGGVUERx5dVkAZGQJRHFYNV0NUBF9QSQxBUGxaAEcXSB1dGVlvUF0cDhhZG0AVXRFQGVYJXhUXHkFNWgJWTQU8BVUFXHMzDVUDVQJZH0QJTgtAdlpzSBRJAlxyKXY2AE0ELnQrRx5JClYJXghGEVsUVkNRGQxQTQFDCAoIRwNNF14yUwRfEVAW
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1778524744; x=1781116744;
- bh=HrDiUX/m1sVNw40ckFgYf4G5OrERdo/IyQoPlmyEv7Q=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=Pg/s5XuyFBz4iudxOQ9QVC1AcJ/e0Er6iopDFey7FMZ3SHv28tuQKurcF2ctlILBiVjuoutUm3doqruVzfW20IxMZpT64i/rklDUuvhDD82alnCPVVe+yP3OneHbwdYAPyzegAAC9yz0cDQQIshGRlt3MLxqcX1sd/LjgZ67EyoXqASjKTnDvz/lsGythGmAr9ZNZ58o8x3qA23AZspxZcrGiWEa5MEE3DtjLhHz4E9hal8pX/W84NldQKKeKOeYrzoDh1EOkdnYLJrjpDkyVjg7Ilh+Ch3ii9Rhrt5XQ63SxokIEglKqFy+WRvxgMjUfgZw0ha9nN0ed86SgsgGrQ==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.42.251.67])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-10 (Postfix) with ESMTPSA id
- 5AE20180303A; Mon, 11 May 2026 18:38:58 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [RFC PATCH 0/8] hw/arm/virt, hw/pci: PCI pre-enumeration and
- fixed BAR allocation
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20260511122633.GE1116784@nvidia.com>
-Date: Mon, 11 May 2026 20:38:44 +0200
-Cc: Peter Maydell <peter.maydell@linaro.org>, Tushar Dave <tdave@nvidia.com>,
- qemu-devel@nongnu.org, alwilliamson@nvidia.com, skolothumtho@nvidia.com,
- qemu-arm@nongnu.org, mst@redhat.com, marcel.apfelbaum@gmail.com,
- devel@edk2.groups.io
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <D6827AC4-0852-4068-A1A8-111EBDF957CC@unpredictable.fr>
-References: <20260508183717.193630-1-tdave@nvidia.com>
- <CAFEAcA9KxUF6c555Q_Kqn_NVE3z1ojr91+KuatYudj_T4GjbxA@mail.gmail.com>
- <20260511122633.GE1116784@nvidia.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-X-Mailer: Apple Mail (2.3864.500.181)
-X-Proofpoint-GUID: dPTda6USknI3hMRBRaHVf00R9PeIKVx1
-X-Authority-Info-Out: v=2.4 cv=TP1Iilla c=1 sm=1 tr=0 ts=6a022246
- cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
- a=YrL12D//S6tul8v/L+6tKg==:17 a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=Ikd4Dj_1AAAA:8 a=Vdg3MsYikgLEERl5QvQA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDE5OCBTYWx0ZWRfX6qJ+CM8MwTy4
- A1DG3foCg+eDML4vUiNN1iWdRw2F7t8mkcaksDEy0abArQ79PTJifpgAnccI5YVLQQTK/sJ7d9s
- /CmaqV6xoaLroe5GlywPMeqrnrzExm09ld8EK3gV0qOjLPbDZrURf9Zrt8noNbwM2+VpWM7u/Po
- 8w2LY1VkUMbfzXmuCKhNjpAi8bvPO5S1tuvlU7SxCE0EA18k+UIqXjLDn01i7MWM2XdftPUZJyr
- Cqr1rUFMV8Bj9gAJhM275twCc/uze6qIxv1+VrZoTpM0nZ/tjjSCv8MxRK+1NsTdLYQYp0GNXjU
- quX+Cfrjc/MIe0mVE4Gt6soXZcRL8KT6GYGlPMGTI7iHLDPdrwjgvi0xU7nO7U=
-X-Proofpoint-ORIG-GUID: dPTda6USknI3hMRBRaHVf00R9PeIKVx1
-Received-SPF: pass client-ip=57.103.76.38;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wMVYm-0005yX-Rr
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 14:40:56 -0400
+Received: from mail-oa1-x2d.google.com ([2001:4860:4864:20::2d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wMVYl-0008Qf-Cn
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 14:40:56 -0400
+Received: by mail-oa1-x2d.google.com with SMTP id
+ 586e51a60fabf-4350cd5b97fso2788837fac.0
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 11:40:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778524854; x=1779129654; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=jtG3foV3RgelOTLNAdbD1fNP4fO+C49Ya4sJvG4H6hE=;
+ b=UPg3Ltg/dTmlSKg1Sc2C9fNe+ojdois3RMaM8Hjl1IZxFTn+8cceEE+NxqC4yg2LVL
+ 0ShUjYA7iRFfxokT1cD68fGKynAi6wkfalWzbVoIo22lWS2sQF91hOIrsgophB5qa1Np
+ rbMa0yT/PQ3nPRnnlLuX94CM27KjhPGtHqb8uncp0bmDqalLXZgkbVKQPCxQNIfjCmcE
+ O8msn38i84VyVO4KwelLGmWuO7QoQuWfM9yXrwpsZ5+okLOrZ6ce98U6oKux0lri7tC4
+ P8amCOX7vdTXx4lZDCX3bnSnXDwnxvrexZzBZHGp2/S/NvLr4Q9lgp1WH9Q8smMgz1gH
+ RZPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778524854; x=1779129654;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jtG3foV3RgelOTLNAdbD1fNP4fO+C49Ya4sJvG4H6hE=;
+ b=f/4nFgmBM9J/1XWDtycehCem2jpU5yHJPhIq3adEbc23xc4/o5bz+tRitsAQAAhvJ4
+ X+nckbhnADfgVgq34ia27D1mObLkKxmzh8DlvxjWEzHobEMgnyNuP9tpN6I7PjfvBKj9
+ B2siktRv4QU6Ofh/mu02FWt81OBZGPVjWiea5f5kcq5ugu07hsXxU6SqM0vzYgcehd9U
+ GIkgJeVrC0iUVofctsYf4R4bjr694rxeA0q1seLehGQB5Z0G3UMKwb3ByBr9L2i81PWa
+ X6/VFGALh/Ako0cUO82N/sthehpzaWEomcAq98QzAHJN8eLrXV+DQ8PrRtNsozCClKdQ
+ c63w==
+X-Gm-Message-State: AOJu0Ywl0a4f4xenMRlambBuYdj8otoBPqZmpWpU9KcN0rtbsIuqbK6u
+ EzmioFGaLSQ0FWJXKItHDfbCexfcoFqQXzv/54WyXeFZeJVreB1TLBVIDhbnhXPc4kmo8WAZO3F
+ Py7z7
+X-Gm-Gg: Acq92OHn+8/NZgccTXUBcfrF0o0km7DRltsyhcL83UMk26r0k8a2wGCM/q5PeqvxfgG
+ UTychgU26wOMltOPGwEq312mvh3qPI6ZwcECWu0DBBZBx6FCbHxOFz6KbbPpBc9hvEul/7qu45u
+ IKz6mW16qx4u/KRQtttWUHic7xt8DID4eyBDFaS15k1ubcEC2FDoicRVCZTODWRgZ6vPQFX1oeX
+ QeTsf2rwvzfZu75hexmiYL5q6u/dnjYeBc1rr7Q5nHGxpPpkLfytlWH6UHCKNjmQCbYkvs4IsNF
+ 6l5dH6Cy+vlScw5Z+tVkCPz7BFCBLlyHbPzlcoSnGqNuthBfmK4d2RqQ1WrWPFZ1+oaMhpltwDF
+ M9wJRQwNRWPglC5iZbCWtbSJWuKh0GHlL54BO/3PBLPMle1wOLH4yAkyiW1zbizyON0ZVOCK2K5
+ QCkpg/TklM4jTzDwwt/2bnjXiHFf0g43MOgs9RQX8P3CJoW8IKRHXLlzt8mbHmykRDQ4VXLr4az
+ Ab+DSzIQw==
+X-Received: by 2002:a05:6808:350b:b0:467:3f4:907c with SMTP id
+ 5614622812f47-4804252f32cmr15529409b6e.47.1778524853917; 
+ Mon, 11 May 2026 11:40:53 -0700 (PDT)
+Received: from ?IPV6:2600:381:c938:6375:e3e5:757d:3cef:3491?
+ ([2600:381:c938:6375:e3e5:757d:3cef:3491])
+ by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-47c76936271sm20671849b6e.9.2026.05.11.11.40.52
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 11 May 2026 11:40:53 -0700 (PDT)
+Message-ID: <39cfd3f5-0c20-4246-8fe6-a0242029d88a@linaro.org>
+Date: Mon, 11 May 2026 13:40:50 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 15/35] target/mips: add Octeon MTM0 instruction
+To: qemu-devel@nongnu.org
+References: <20260511-mips-octeon-missing-insns-v2-v6-0-5062889c4d3c@gmail.com>
+ <20260511-mips-octeon-missing-insns-v2-v6-15-5062889c4d3c@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260511-mips-octeon-missing-insns-v2-v6-15-5062889c4d3c@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2001:4860:4864:20::2d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,74 +106,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 5/11/26 13:22, James Hilliard wrote:
+> +static void octeon_reset_mtm0_mpl_state(void)
+> +{
+> +    TCGv_i64 zero = tcg_constant_i64(0);
+> +
+> +    /*
+> +     * MTM0 defines MPL1 as zero; model the architecturally unpredictable
+> +     * MPL2/MPL4/MPL5 lanes as zero for deterministic emulation.
+> +     */
+> +    octeon_store_mpl(1, zero);
+> +    octeon_store_mpl(2, zero);
+> +    octeon_store_mpl(4, zero);
+> +    octeon_store_mpl(5, zero);
+
+Where do you get that from?
+
+The octeon2 documentation, which only has MPL[0-2], MTM0 does *not* modify either MPL1 or 
+MPL2.  While I don't know what changed with octeon3, I really doubt this statement is 
+true.  It just doesn't make any sense.
 
 
-> On 11. May 2026, at 14:26, Jason Gunthorpe <jgg@nvidia.com> wrote:
->=20
-> On Mon, May 11, 2026 at 08:46:57AM +0100, Peter Maydell wrote:
->> On Fri, 8 May 2026 at 19:37, Tushar Dave <tdave@nvidia.com> wrote:
->>>=20
->>> This RFC introduces a mechanism to specify Guest Physical Addresses
->>> (GPAs) for PCI BARs, allowing explicit placement of guest MMIO BAR
->>> addresses to match host physical addresses for assigned devices.
->>>=20
->>> On some platforms, P2P DMA is performed between devices within the =
-same
->>> IOMMU group. The PCI fabric ACS is configured to permit direct P2P
->>> without going through the host bridge in order to achieve the =
-required
->>> performance.
->>>=20
->>> To support this multi-device IOMMU group P2P scenario in =
-virtualization,
->>> the VM may need to use the same MMIO BAR addresses as the host =
-physical
->>> address layout.
->>=20
->> This feels like something's wrong in the design. A VM doesn't
->> necessarily have the same memory layout as the host: the
->> VM hardware is all about making that possible.
->=20
-> The HW running these systems is unfortunately limited and doesn't have
-> ATS support. Without the right HW features the physical PCI topology
-> is leaked into the VM and there is no choice but to have the VM guest
-> physical and true physical match, otherwise the VM can't work.
->=20
-> There is no other way to support these VM shapes on this HW.
->=20
-> Newer CPUs in this family have more HW features and won't need to do
-> these things.
->=20
-> Jason
->=20
-
-Hi,
-
-It has been years already since I last looked at Grace (synthetic-)PCIe =
-handling
-(and it was with another VMM than QEMU) but...
-=20
-As you=E2=80=99ve said newer parts will not have this quite peculiar =
-requirement, and
-that makes me think that this is maybe suited as more of a workaround =
-that
-is not open ended... by having it open just like that there=E2=80=99s a =
-chance that it
-would get future users and I don=E2=80=99t think that makes a bunch of =
-sense.
-
-And not very relevant to Grace + GPU systems specifically, but any hopes =
-of live
-migration support are lost outside of very awkward placement trickery =
-when using
-this to match host addresses.
-
-Is this specific to the NIC attached directly to the GPU (that is
-then attached over C2C) configuration?
-
-Using PCIe passthrough with ATS disabled doesn=E2=80=99t sound like such =
-a great idea
-on the security side of things imo.
-
-
+r~
 
