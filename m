@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51B1ACD484C
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 18:23:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8608CD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 18:23:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMVHb-0004kj-Lg; Mon, 11 May 2026 14:23:11 -0400
+	id 1wMVHY-0004it-3M; Mon, 11 May 2026 14:23:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wMVHQ-0004hY-Gh
- for qemu-devel@nongnu.org; Mon, 11 May 2026 14:23:00 -0400
-Received: from mail-ot1-x32e.google.com ([2607:f8b0:4864:20::32e])
+ id 1wMVHO-0004gk-6J
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 14:22:58 -0400
+Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wMVHN-0002fj-TX
- for qemu-devel@nongnu.org; Mon, 11 May 2026 14:23:00 -0400
-Received: by mail-ot1-x32e.google.com with SMTP id
- 46e09a7af769-7e363c6141dso3047611a34.2
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 11:22:56 -0700 (PDT)
+ id 1wMVHL-0002fP-LE
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 14:22:57 -0400
+Received: by mail-ot1-x32d.google.com with SMTP id
+ 46e09a7af769-7de4a9cb8eeso3989374a34.0
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 11:22:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778523776; x=1779128576; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778523773; x=1779128573; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=nr1RHhakz2fMCwd5oVw8Lh14BokGT3MnBkKAzUjV7o8=;
- b=M90wcVcnYxxuPX8qs6ng1oJ3MJuIcCkD575x9ktsGl4McmbRlF+2uJjd9ZWMdtW12X
- aQ2Oc1emoagrk2awdSizzuJBagVKpBTeAP1bdabfp/yTs7VGyct+j04lYDXUGHoPkYUb
- RMGrLg0cgHLIrom/vI0tBLfsY4M+ydh/M4wpHIzuwqZ+560FmSTcgFPrgW5G6PFVEk5p
- bT+9XiFS5ysLYTdIS+ps3S2+enYNwQyeF3tkXe7O8dZNq1XjOkcesf5VVM7lv94ZGinc
- 9cP2opYL02iqUoCGcb1HDOGQjfwtqFPs3YUm5nxEs9hA2SXS1O7qfuYYgWdzSzomLK8K
- vdBw==
+ :reply-to; bh=khVlB/iuHBqSxDf1ci1EMIV9f0Ywmy6N/0aX6cS55HM=;
+ b=pKxHWaCxuwU1AKM8OWlfSZdcNFMyTarc0Flfdgg/KY6oBneDRRaDnTae3Db0ijHtmx
+ uaXgeXcxx/BHjpKbMZNtkq7N8PAUyxKhVuZcKZ++DYn+mnVdLFtTAXHvU8lZgyjQenhb
+ tD4DYrHYv6YDR7xL13UFl38Ghacfjjl+HI7pk4DuxNGi+cAON+PsaUqhx4zxZGqxX1//
+ L90U+pI2QffKvgNnwRMDD9pte+4W7RKh2wp6OMDi7UgkoARfGbz5QGdry/yMqE5bNhI3
+ nCxkLqjzvzUNhIA85qNa8ISSgtBYijgSch4x+I2XyGFpk98tXthNTh/1oX3Gf3XmeK9O
+ oSJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778523776; x=1779128576;
+ d=1e100.net; s=20251104; t=1778523773; x=1779128573;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=nr1RHhakz2fMCwd5oVw8Lh14BokGT3MnBkKAzUjV7o8=;
- b=fAZWXb837ynVyTlkTm6BhiYNLUiZF50GPof9RYyHTWji6nXzT8aC+ibTnV91akn3pW
- opOxAJDzOcmYt7awapfoN7QMt4zDVOo69OqlHmitVbBWNXknABSTl2L1UX055GUXkOfM
- seCsp7q2iPBOvr8qeONhR6LzypRmSd5r7n6GbWkP/xmrbHlr2/dTuF5DWme1m1vXP07n
- Obf8h5RM78XhHAgNN2tbvReQtay7n1nmZJJ7RuIwroTtpUU6y2u9Qv/vvmPPjHDaCmNa
- y8UvdxVZMi+A+mkuVwOekbDULUvcr6b/tvyijutip3BWc97TU7lAE3co/ScR6sd1bNEX
- FBUw==
-X-Gm-Message-State: AOJu0YwyC0oMc85myiMI4aSjTsJiOPeW++SkAXXV73pFTpA0cDEhF9fT
- fpv+kjqm175GHBPIQbhQgii7W2Y1j0iegYe+k5AjHbJUpm/Wie/k6QBi
-X-Gm-Gg: Acq92OG8VkbGPLWII0hzESw+bCqs7T2veoH/j5/X5wNeEIh74wXmi5jo+4ZtA9yWGaq
- ugJ3b0Hoprr9N2gEIYIzBe2uMASKy1HXmi6M6M/8ZGy4jo16I+/1nHmJPL/5esqGqQ8lc6EAPfM
- D5J2Jpac58Kge6Z49fwtgLFtSJISQJXu773PTUGRT2ugNtUcHNIy0GehvYLbdmQv+f6ghAZie4F
- 7D+B21IybI8dtCu/dlT3ohG7uupe774HTVrAvIKFt/YC1kfqKeZk6LNbM4Sg9h68TIi0GY7fIwj
- nAREBmXU1frzvn1JOGDubGsTgaHUNSGnKCD39MvIudEZMT0Gxc8ApLNNCy83TV1iL5L20QQGyOK
- HOumSI7pCQebw70/gL/TpvrGtMQoy3b9Ig4GKpGejIUbviXpHVKuN4e3OZ7mgKnUU4EYZ5QmNee
- maXRvt+6awOx/v4go2t+gUY3qj2FqKhS6WfZD8UASxSJvLczQLg9UJHFXJKD9jvMPwgNfArg+kC
- sLuG5JbRcAX6osgNZpKZQIXCHoHC2f9wD6fuK6kWQp6GlCwvFNk4yaGVA8tVIz2+B52RN697mFu
- F9E=
-X-Received: by 2002:a05:6830:6734:b0:7de:42d5:6243 with SMTP id
- 46e09a7af769-7e1df0da8c3mr15487439a34.13.1778523775975; 
- Mon, 11 May 2026 11:22:55 -0700 (PDT)
+ bh=khVlB/iuHBqSxDf1ci1EMIV9f0Ywmy6N/0aX6cS55HM=;
+ b=NWM9U/LC3Pv0l69mr7vCfRz2juBNELqmVc/9gDgkuZyIgX26cqHE2bBpdQPEEqP/Qg
+ PtXIC5YYtH5Q3lwWHGJhoD5JuogizCyehACKYnS2RAo0LKCA65BRTGgHkTYhNALVD/KJ
+ bKXzIFY9UWR091mvJX4shDfCKaZh86V63Rnt18lyV+ufwj492tuTPoeB07ToHbUvfNia
+ Xpn8Um88sFTnVUUz/gHvPJ+aMDCsJAj9uf4kTShSOdrvRSpPk4ULilKAhwqJElMTowNM
+ Q7mI0cr+WmMOTpcxIxHSPcCAyJumVqgNgP4YqC+BPfblwoCcZiS8KLm2MNX7SyIDQ8Um
+ Y4/g==
+X-Gm-Message-State: AOJu0YweM7s0i1Pv+XOwB48lDV9milf+aTp8bE+2jxtNmiLoOhrsMEtH
+ jW33uQB7Bvi8HxfqymVUHesiI9v31UNQfpLqHLxVZVpAMGE6wtfcsN4p
+X-Gm-Gg: Acq92OH0pTVzJwkcYDmyG/Du/Q9wJg8c1WyKFd9RBcqvxsr93NMXZMAUmSt3xdGWxr6
+ nTdkSKOuXOKLgpoVkg/gZCkUaZ6UKgD1uX17tlUiI4cl2H8YLTJsTo46DPZkQiKRluvx6ooU4gA
+ UweiIHN33ggV639CrdPRN+uetQLVByWXXoKr5y/Vi2WDpqRP/QxWFO7FU8xMMH6h5osksVg9fwL
+ nTtUuiGgw0G/uk0QYdAgwZVnEHIFWGsOIT2Root2xl1H3BQEVorziSU1xtiNTtUUcj5vipnAiLf
+ rI4gLolYvJnP0noxE9b00zvt2US3J43LN2nlQ0zS+/9Tb46T7KNzlvpPLUhe6B2BmE+weZS7J5J
+ BroSVZqmm3Tt+szWEomfI4qOSfiubnJpRwkMBFrNXJfWM+GX61LmB1U59lKALl6x3UVWi/gYlqp
+ F2Q4fWx1vsYABghVVYUpTOsbx4HZCmTaGdPYdo4zqmmZt1wMkIvrytrjRbGehlYPaynyAvKpLWx
+ 4RyOetVnPOAvXIgv/FfgeYzeSBEYvzaOZvk/WAsquhR9+Uy4Korf0uAyxrJ0lYkZElWpwKDquUO
+ F0g=
+X-Received: by 2002:a05:6830:378e:b0:7dc:cbaa:d730 with SMTP id
+ 46e09a7af769-7e1def3deabmr15233129a34.8.1778523773326; 
+ Mon, 11 May 2026 11:22:53 -0700 (PDT)
 Received: from mac.localdomain (71-218-106-55.hlrn.qwest.net. [71.218.106.55])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e367d90148sm7504871a34.20.2026.05.11.11.22.55
+ 46e09a7af769-7e367d90148sm7504871a34.20.2026.05.11.11.22.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 May 2026 11:22:55 -0700 (PDT)
+ Mon, 11 May 2026 11:22:52 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Mon, 11 May 2026 12:22:36 -0600
-Subject: [PATCH v6 05/35] target/mips: split Octeon SEQ/SNE decode
+Date: Mon, 11 May 2026 12:22:33 -0600
+Subject: [PATCH v6 02/35] linux-user/mips: implement sysmips(MIPS_ATOMIC_SET)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260511-mips-octeon-missing-insns-v2-v6-5-5062889c4d3c@gmail.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260511-mips-octeon-missing-insns-v2-v6-2-5062889c4d3c@gmail.com>
 References: <20260511-mips-octeon-missing-insns-v2-v6-0-5062889c4d3c@gmail.com>
 In-Reply-To: <20260511-mips-octeon-missing-insns-v2-v6-0-5062889c4d3c@gmail.com>
 To: qemu-devel@nongnu.org
@@ -84,8 +84,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  James Hilliard <james.hilliard1@gmail.com>, 
  Richard Henderson <richard.henderson@linaro.org>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32e;
- envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x32e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x32d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -109,139 +109,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Decode the equality and inequality forms as explicit SEQ/SNE and
-SEQI/SNEI instructions rather than using shared generated SEQNE/SEQNEI
-entries.
+Implement the MIPS_ATOMIC_SET sysmips command as an aligned 32-bit atomic
+exchange in target memory.
 
-The explicit decoder names match the architectural mnemonics, which makes
-the translator entry points and trace/debug output easier to correlate
-with the instruction set.
+MIPS reports syscall errors through a separate register, so successful old
+values can overlap the errno range.  Write the return value and error flag
+directly and return -QEMU_ESIGRETURN so the common syscall path leaves the
+registers unchanged.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
-Changes v1 -> v2:
-  - Split the SEQ/SNE decode cleanup out of the Octeon arithmetic
-    instruction patch.  (suggested by Philippe Mathieu-Daudé)
-
 Changes v2 -> v3:
-  - Remove the decoded ne field now that the instructions are split.
-  - Reuse @r3 for SEQ/SNE and pass the TCG condition into a shared
-    translator helper.  (suggested by Richard Henderson)
+  - Split MIPS_ATOMIC_SET out of the combined sysmips/MIPS_FIXADE patch.
+    (suggested by Richard Henderson)
+  - Always use the explicit MIPS return-register path for successful
+    atomic_set results.  (suggested by Richard Henderson)
 ---
- target/mips/tcg/octeon.decode      |  7 +++--
- target/mips/tcg/octeon_translate.c | 52 ++++++++++++++++++++------------------
- 2 files changed, 32 insertions(+), 27 deletions(-)
+ linux-user/mips/target_syscall.h   |  1 +
+ linux-user/mips64/target_syscall.h |  1 +
+ linux-user/syscall.c               | 31 +++++++++++++++++++++++++++++++
+ 3 files changed, 33 insertions(+)
 
-diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index 102a05860d..a2bfd0751d 100644
---- a/target/mips/tcg/octeon.decode
-+++ b/target/mips/tcg/octeon.decode
-@@ -30,6 +30,7 @@ BBIT         11 set:1 . 10 rs:5 ..... offset:s16 p=%bbit_p
- # SNEI rt, rs, immediate
+diff --git a/linux-user/mips/target_syscall.h b/linux-user/mips/target_syscall.h
+index 3f36c1695a..9206694f4f 100644
+--- a/linux-user/mips/target_syscall.h
++++ b/linux-user/mips/target_syscall.h
+@@ -11,6 +11,7 @@
  
- @r3          ...... rs:5 rt:5 rd:5 ..... ......
-+&cmpi        rs rt imm
- %bitfield_p  0:1 6:5
- @bitfield    ...... rs:5 rt:5 lenm1:5 ..... ..... . p=%bitfield_p
+ #define TARGET_FORCE_SHMLBA
+ #define TARGET_SYSMIPS_FLUSH_CACHE     3
++#define TARGET_SYSMIPS_ATOMIC_SET   2001
  
-@@ -38,8 +39,10 @@ DMUL         011100 ..... ..... ..... 00000 000011 @r3
- EXTS         011100 ..... ..... ..... ..... 11101 . @bitfield
- CINS         011100 ..... ..... ..... ..... 11001 . @bitfield
- POP          011100 rs:5 00000 rd:5 00000 10110 dw:1
--SEQNE        011100 rs:5 rt:5 rd:5 00000 10101 ne:1
--SEQNEI       011100 rs:5 rt:5 imm:s10 10111 ne:1
-+SEQ          011100 ..... ..... ..... 00000 101010 @r3
-+SNE          011100 ..... ..... ..... 00000 101011 @r3
-+SEQI         011100 rs:5 rt:5 imm:s10 101110 &cmpi
-+SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
- 
- &lx          base index rd
- @lx          ...... base:5 index:5 rd:5 ...... ..... &lx
-diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index 4dd7626835..8e49e16b5a 100644
---- a/target/mips/tcg/octeon_translate.c
-+++ b/target/mips/tcg/octeon_translate.c
-@@ -121,52 +121,54 @@ static bool trans_POP(DisasContext *ctx, arg_POP *a)
-     return true;
- }
- 
--static bool trans_SEQNE(DisasContext *ctx, arg_SEQNE *a)
-+static bool do_seq_sne(DisasContext *ctx, const arg_decode_ext_octeon1 *a,
-+                       TCGCond cond)
+ static inline abi_ulong target_shmlba(CPUMIPSState *env)
  {
-     TCGv_i64 t0, t1;
+diff --git a/linux-user/mips64/target_syscall.h b/linux-user/mips64/target_syscall.h
+index 20ea7c6ab9..e07687f8ac 100644
+--- a/linux-user/mips64/target_syscall.h
++++ b/linux-user/mips64/target_syscall.h
+@@ -11,6 +11,7 @@
  
--    if (a->rd == 0) {
--        /* nop */
--        return true;
--    }
--
-     t0 = tcg_temp_new_i64();
-     t1 = tcg_temp_new_i64();
+ #define TARGET_FORCE_SHMLBA
+ #define TARGET_SYSMIPS_FLUSH_CACHE     3
++#define TARGET_SYSMIPS_ATOMIC_SET   2001
  
-     gen_load_gpr(t0, a->rs);
-     gen_load_gpr(t1, a->rt);
- 
--    if (a->ne) {
--        tcg_gen_setcond_i64(TCG_COND_NE, cpu_gpr[a->rd], t1, t0);
--    } else {
--        tcg_gen_setcond_i64(TCG_COND_EQ, cpu_gpr[a->rd], t1, t0);
--    }
-+    tcg_gen_setcond_i64(cond, t0, t1, t0);
-+    gen_store_gpr(t0, a->rd);
-     return true;
- }
- 
--static bool trans_SEQNEI(DisasContext *ctx, arg_SEQNEI *a)
-+static bool trans_SEQ(DisasContext *ctx, arg_SEQ *a)
+ static inline abi_ulong target_shmlba(CPUMIPSState *env)
  {
--    TCGv_i64 t0;
-+    return do_seq_sne(ctx, a, TCG_COND_EQ);
-+}
- 
--    if (a->rt == 0) {
--        /* nop */
--        return true;
--    }
-+static bool trans_SNE(DisasContext *ctx, arg_SNE *a)
-+{
-+    return do_seq_sne(ctx, a, TCG_COND_NE);
-+}
- 
--    t0 = tcg_temp_new_i64();
-+static bool do_seqi_snei(DisasContext *ctx, const arg_cmpi *a, TCGCond cond)
-+{
-+    TCGv_i64 t0;
- 
-+    t0 = tcg_temp_new_i64();
-     gen_load_gpr(t0, a->rs);
- 
--    /* Sign-extend to 64 bit value */
--    target_ulong imm = a->imm;
--    if (a->ne) {
--        tcg_gen_setcondi_i64(TCG_COND_NE, cpu_gpr[a->rt], t0, imm);
--    } else {
--        tcg_gen_setcondi_i64(TCG_COND_EQ, cpu_gpr[a->rt], t0, imm);
--    }
-+    tcg_gen_setcondi_i64(cond, t0, t0, a->imm);
-+    gen_store_gpr(t0, a->rt);
-     return true;
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 73f09bb775..3786a34041 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -6631,10 +6631,41 @@ static abi_long do_prctl_syscall_user_dispatch(CPUArchState *env,
  }
  
-+static bool trans_SEQI(DisasContext *ctx, arg_SEQI *a)
+ #ifdef TARGET_NR_sysmips
++static abi_long do_sysmips_atomic_set(CPUArchState *env, abi_ulong addr,
++                                      abi_long value)
 +{
-+    return do_seqi_snei(ctx, a, TCG_COND_EQ);
++    uint32_t *ptr;
++    abi_long old;
++
++    if (addr & 3) {
++        return -TARGET_EINVAL;
++    }
++
++    ptr = lock_user(VERIFY_WRITE, addr, sizeof(*ptr), true);
++    if (!ptr) {
++        return -TARGET_EINVAL;
++    }
++
++    old = tswap32(qatomic_xchg(ptr, tswap32((uint32_t)value)));
++    unlock_user(ptr, addr, sizeof(*ptr));
++
++    /*
++     * MIPS uses a separate error flag, but the common linux-user syscall
++     * path infers that flag from the return value.  Successful atomic_set
++     * results can overlap the target errno range, so write the result
++     * registers here and ask the CPU loop to leave them alone.
++     */
++    env->active_tc.gpr[2] = old;
++    env->active_tc.gpr[7] = 0;
++    return -QEMU_ESIGRETURN;
 +}
 +
-+static bool trans_SNEI(DisasContext *ctx, arg_SNEI *a)
-+{
-+    return do_seqi_snei(ctx, a, TCG_COND_NE);
-+}
-+
- static bool trans_lx(DisasContext *ctx, arg_lx *a, MemOp mop)
+ static abi_long do_sysmips(CPUArchState *env, abi_long cmd, abi_long arg1,
+                            abi_long arg2)
  {
-     gen_lx(ctx, a->rd, a->base, a->index, mop);
+     switch (cmd) {
++    case TARGET_SYSMIPS_ATOMIC_SET:
++        return do_sysmips_atomic_set(env, arg1, arg2);
+     case TARGET_SYSMIPS_FLUSH_CACHE:
+         return 0;
+     default:
 
 -- 
 2.54.0
