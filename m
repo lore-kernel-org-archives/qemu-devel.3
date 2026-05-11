@@ -4,137 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E476CD37AC
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 13:52:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D6D0CD484A
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 13:53:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMR33-0007aK-Nf; Mon, 11 May 2026 09:51:56 -0400
+	id 1wMR4j-0008PJ-74; Mon, 11 May 2026 09:53:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wMR2s-0007ZU-9K
- for qemu-devel@nongnu.org; Mon, 11 May 2026 09:51:42 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wMR2p-0004GF-QG
- for qemu-devel@nongnu.org; Mon, 11 May 2026 09:51:41 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64BD14OF452800
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 13:51:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- CTi9U74sVfOJ8w4JyQ7PwEQT2To4DSoAn9WhH+BUXrs=; b=JBhOPpfpciwqtUz7
- jR3HhhpQ0nXnmZwD43UP06qCjI22GXnnTd5NueOiwM8p3Ecdm9J+g1UtoLfX1CYW
- aGEFLqoWVL9GatRtLtuczBYBlxUD7egMWy2LgXWtx74LcOYjj0kw5z8N7gBBgReu
- w3m9Ei5fEaBi5K+am5Tw+F59/1R9LIKHaMIdrWhk/6UIEboAzQfsvQ8n/WdSE9Pn
- ECAP2uEh5aOE0/mNc2giPZS5d9x7KylV0iqbUcZvZLdMBp7uN6rZIWWUcsmNuiby
- pqLAkrFrojZQ23LAoh2O6x/QtAyjeIcYWuEPWtqcWoDN0Qi/PcIj1AZH6P2QHT2a
- dJ92Pg==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e3ag6hc3y-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 13:51:38 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-514ae0edeb6so38675981cf.1
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 06:51:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMR4d-0008Ox-U7
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 09:53:33 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMR4c-0004R3-1U
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 09:53:31 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4891c0620bcso30625735e9.1
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 06:53:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778507498; x=1779112298; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=CTi9U74sVfOJ8w4JyQ7PwEQT2To4DSoAn9WhH+BUXrs=;
- b=UzJKlQ4DpQyXHmRjct+T48l1QE9PqowsZlB9OC422F3P0kgY03eLqEYzS2EvKZc+VT
- HFspBaKY8h4ikhkF2B2A4ahXz9jBzk/piAxT6DV9fZj9VNNVtcfE60LLwUuZAMPW8ABt
- OBt/BBoDsuf6LXoau1J4EmHS9tGVyciWjwt3ERFbrFeWlBUrytWielehkgjImB95bxtX
- Ftkjs1dMycCLR58w0qzYA4FLCMiOm+A9+mtzwq1X2xbvdo3zFUTDpyVluv0Z6v75dlvl
- HMG9YkXFVs/dUsFkA4/4aE05UxG8RFrvIO8pkdA20mXy6DKEwh3hAai9ye6HfaxySQe0
- kt5w==
+ d=linaro.org; s=google; t=1778507608; x=1779112408; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RblXm9dhEHZv279MNl7uYc29BPUcgmnZmPt//VeUYCc=;
+ b=bPfak/fid/JC9UWhB+5LZNjhpdP024SMvHvhk+AMd4+NVwLHE9vwd8zUiiR8L3v+Pp
+ qbqz5jkg4lhTrfj8tE0x1t8YAk9hIRl6ElYORi442GiPbZvO9QtSkoTVB2J93RHnEE2C
+ 2k154FjdzFUJChXiIUqfeh+MolRqP0atSsoOBcpMaYAYQYo7ccR/kr48AWzZO5DS6Ge2
+ VzVZxOopcdhp/v5tYW2I7Wj4Uwv0NA3/d1Yo/XMcLZSlKs2fkNZLynrCk4A+5KV17PPN
+ l7Y59aq+2VOtHQp12EhSV8IcHYeGp9oiyR5sWQXwoVAo+4u8SdRGYG7Q4HKoapT5CLo2
+ 6ReA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778507498; x=1779112298;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=CTi9U74sVfOJ8w4JyQ7PwEQT2To4DSoAn9WhH+BUXrs=;
- b=EHgZ2Tn+PqqEeUmA1wSDRROjBQ3hZQRQRGYzdn6u2/x9n6Fi3MhNYrbwKiozmh+r1w
- yTW3ZUYpB9/Jf9HVAn6eYxXTYvW24XnBBnRdEu6HZC08C/oglGAcIQBENw+LAOHdQW1Z
- KPuP6j6jtMvgO9awY2MqqtpLTVFbb/e2IWuKnP+fAvFfxQRnA9wXpR6YAS5bjfLZpeTz
- 48GAGYLoZgbZ1bCwXwt/RlQzPdabR1ObC9T1An++G1jpvCwsbSpkoKeAburLFjQtyrEt
- blmIvNe9acyND4aXwdTcyX9XcYCgb/gytgw2nhUXE6AGlh+IBkRMbP3PfYK2+97jg9Zo
- rXNA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+3sW5HExdbxjK6QzMH5UGUsOIKlTgo1AJeKz48mRdWanlwgqMAXOrdL10iJwF8U2AFRzS5dF/e5pLG@nongnu.org
-X-Gm-Message-State: AOJu0Yx9+C/4L40hKP5y03Idh2Udueyo9JqfQbp/dWRbUbFlkayQGPW4
- L2yMwWxUg+rxBTL3kPD229dHjLlrbY3/9eu1fALun2/TJEF2kgu9eOW2QA4jyFNLjNUU+3kO1tY
- mgR4Qv/4BSy/ACO5es2wEQgC5wnVoqoX705e2omye002Efbwkx6erM3lQCw==
-X-Gm-Gg: Acq92OE7UBygVYsTUd2GDWgrSuW9NZQsklpwU9RRBXHCCOMzRnm48BEVi+S5B+9PN4a
- CaXjz8R75m5DIQ6iUyKsyENZT1dJRxr/QUAaR7iKXltNqlkoC6HLPD15JlkDNUu+cr6LPKileQV
- TOlaWMIgJd4L+QTz6A5dvC8oL8xfap5ikbdUceI9MgK0KK42PzAn0iNJDwnypwwEYsZHoAQBt8j
- 1A+imnAqqgM6De4dWBbmmZZWqKINrUeDKFa9xV3BpbCb2k+cS8lZDx2uXZOqvw3nlz0HIsryEgv
- w/N9eKYBslqT27to1GobfNYPnXfK/lkcUzyXqS0oCcwtxYq9rB0z4h0nUyn02DaWM4QLFOzMrfZ
- 4U7pX3LmEVsgcYHkABPKBptFGV0jDkXmC87B/DQouW3UYcZn69WZnTXfgmWE=
-X-Received: by 2002:ac8:5a0d:0:b0:50f:f030:920d with SMTP id
- d75a77b69052e-51475c618e8mr226944321cf.30.1778507497582; 
- Mon, 11 May 2026 06:51:37 -0700 (PDT)
-X-Received: by 2002:ac8:5a0d:0:b0:50f:f030:920d with SMTP id
- d75a77b69052e-51475c618e8mr226943971cf.30.1778507496987; 
- Mon, 11 May 2026 06:51:36 -0700 (PDT)
-Received: from [192.168.68.106] ([191.202.238.222])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b53d6442d0sm309542716d6.46.2026.05.11.06.51.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 May 2026 06:51:36 -0700 (PDT)
-Message-ID: <7b0b90cd-0c45-4c11-9655-10024918e7c1@oss.qualcomm.com>
-Date: Mon, 11 May 2026 10:51:33 -0300
+ d=1e100.net; s=20251104; t=1778507608; x=1779112408;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=RblXm9dhEHZv279MNl7uYc29BPUcgmnZmPt//VeUYCc=;
+ b=BMUUf2EaP9Jh/LMlGuOS8SPhy1a5wVEuvC7sNeVDr1ZaIy5ZZls9uydak8LgmgQzVD
+ Heeibup5UkG4VgFUAyCyk4Y4PyU6sU2pW8wj19vNJrbinelgZ1lbzd9ZJWrbpaZ9jMBv
+ 3GMvMlfnmHpjUpudPyR83hcrxFvlkeI4yR3EP5Wr07pwjgaMdxdH/Vbeb4ShqjUXi0kO
+ uCK1burwolFgUCB2Zlamh7JyzkpymGA5HsXn4tpmuMFvvE38KZDwEb6DN2y6/gwUWGtQ
+ FEHUlCKmrnCh2xlbJe3Rr2HwuO5Lwmwpwbl7pf9u3iiHKKQynhUx0EosE/Sr2XfD3uzS
+ NZKw==
+X-Gm-Message-State: AOJu0YwUn/tf+ljHrWIhcbDrruFII/P12l50QdW67Ipylvtk2BjT+PCD
+ Up8DLxdfbkZmnbJZ95FWSbWv9jt26ivUspqO6DfI2B5MtakY8vIny+QP0OzJ0pbxMzm7U31csX9
+ 7Mvk2xgY=
+X-Gm-Gg: Acq92OESbjU29uO+JFaHp07KeHAFiwWR59BLnffLMmew1MI3xpRl6rRJt+URq21+tT2
+ HFRkezhkvDqZB2QmTXOxupKlmzBul+ZnpZ0kKBPaw397IXM6O2seBqyNkD0+JuAHczJcudkCMZB
+ ma7rn35c1SEnRZGyE3wkaQdfQS4FwkIACerOgGoIa4MGq2I1z/telMLt6A81PckYQ63WnToyv5d
+ C+qxXUMzJOA7fXPfZ5cimXzRNX1fyvp+ht8JJbW4AjzaMvZNswlleZ+ccQuMJSi+hFLpXYNi723
+ l1mnPqN7y1mHvWj6paUpOTt5So44AyRA6y/oxZ6jWwpaiutfQFTdxthlUJKhtqqMsUxULP5etNu
+ 8SYYxaH68Guth8legzwapOUxXkl59wrgFh38iP0fjG8gPsQg7bMdw5NIBzvDlytkwHvSvWlKgYb
+ SYbcN7IRhvful86gpS9V4zjG01hAxy+S+OQPCvUi4mZS96i2Ntebawlunk3KRlgUjzNHTQ77/Q
+X-Received: by 2002:a05:600c:8594:b0:48a:52ce:a4b1 with SMTP id
+ 5b1f17b1804b1-48e676a4e1fmr169162165e9.15.1778507608202; 
+ Mon, 11 May 2026 06:53:28 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48e702e0bf2sm328985905e9.4.2026.05.11.06.53.27
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 11 May 2026 06:53:27 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Huacai Chen <chenhuacai@kernel.org>, devel@lists.libvirt.org,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 2/5] buildsys: Remove support for MIPS hosts
+Date: Mon, 11 May 2026 15:53:08 +0200
+Message-ID: <20260511135312.38705-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260511135312.38705-1-philmd@linaro.org>
+References: <20260511135312.38705-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/riscv/riscv-iommu: Fix Svnapot 64KB pages
-To: Andrew Jones <andrew.jones@oss.qualcomm.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Cc: alistair.francis@wdc.com, palmer@dabbelt.com, tjeznach@rivosinc.com
-References: <20260508205129.377032-1-andrew.jones@oss.qualcomm.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260508205129.377032-1-andrew.jones@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=fOsJG5ae c=1 sm=1 tr=0 ts=6a01deea cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=etEqFfc6qwXwpI8uT8rzbw==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=EUspDBNiAAAA:8 a=DFJLJhpOamtIQcbWox0A:9 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDE1NCBTYWx0ZWRfX0RY/gLgdYx17
- g3HTcNchZuDhZiU+mn+d9t9dpFan1x9T+dEdznOS8rBYVq48cSw853hw2u9btqe2X/m1yAGYIWM
- F0jsf8vNOa4rw6j4ISCaSmYBUYtnvYvArQvq1boa3ezmFnFYysFqGElEsA54ZxJtFwuMuNusyJ/
- FjckEXQKIr8vlacSMwRj1roA/cau84ffRu1/Tg6qQhv8wkpkijMiGkoQzzuFYWdmU/UZfO+jctF
- UiqzupbNhOBEp2U1PBFOKQEUZEeWpPydsLGP4iG4H0THnNjv2rzC/fsC2G7EONF1gbqQ+ZnDoRQ
- XzYK6KD/jsrB5bc73diicI4V3AojyIOYW5ioqmK+LFCGvNKxCC6qzMpQUML3S/37Zyvlalobtpd
- E7NGPfh2dV78SjnNmZwn2lAkviPi5DPHuJmBK6ZvDfq/z7TjyShZOecyzUwlQeWC8s1Ajr9tGR5
- Q+aQ0SuOIXe/GNx5USg==
-X-Proofpoint-GUID: UG9M6KJKK_azTyKV_anMtMQbeUBCxTZk
-X-Proofpoint-ORIG-GUID: UG9M6KJKK_azTyKV_anMtMQbeUBCxTZk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-11_04,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 impostorscore=0 bulkscore=0 suspectscore=0
- malwarescore=0 lowpriorityscore=0 phishscore=0 spamscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605110154
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -151,107 +108,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+MIPS host support is deprecated since commit 269ffaabc84
+("buildsys: Remove support for 32-bit MIPS hosts"). Time
+to remove.
 
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ docs/about/deprecated.rst       |  8 --------
+ docs/about/removed-features.rst |  6 ++++++
+ configure                       | 19 -------------------
+ meson.build                     | 10 +---------
+ include/qemu/timer.h            | 30 ------------------------------
+ util/cacheflush.c               | 16 ----------------
+ 6 files changed, 7 insertions(+), 82 deletions(-)
 
-On 5/8/2026 5:51 PM, Andrew Jones wrote:
-> The Svnapot extension encodes a 64KB leaf PTE by setting PTE_N and
-> storing bits [3:0] of the PPN as a NAPOT size indicator. The IOMMU
-> model wasn't checking PTE_N and therefore was using the raw (NAPOT-
-> encoded) PPN directly in the physical address, yielding an address
-> 32 KB above the correct base.
-> 
-> Fix both riscv_iommu_spa_fetch() and pdt_memory_read() by mirroring
-> the Svnapot handling already present in target/riscv/cpu_helper.c:
-> 
->    napot_bits  = ctz64(ppn) + 1          /* 4 for 64KB */
->    napot_mask  = (1 << napot_bits) - 1   /* 0xF */
->    phys_base   = PPN_PHYS(ppn & ~napot_mask)
->    page_offset = addr & (PPN_PHYS(napot_mask) | (TARGET_PAGE_SIZE - 1))
-> 
-> The spec only defines napot_bits == 4 (64KB); any other value is
-> treated as a reserved encoding.
-> 
-> This is a fix, rather than new feature support, because the spec
-> says "IOMMU implementations must support the Svnapot standard
-> extension for NAPOT Translation Contiguity."
-> 
-> Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
-> Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
-> ---
-
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-
->   hw/riscv/riscv-iommu.c | 44 ++++++++++++++++++++++++++++++++++++++----
->   1 file changed, 40 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index 25a356d1d366..eb09cc974812 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -237,6 +237,25 @@ static bool riscv_iommu_msi_check(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
->       return true;
->   }
->   
-> +/* Returns the NAPOT page mask, or 0 for reserved encodings. */
-> +static hwaddr riscv_iommu_napot_page_mask(hwaddr ppn, hwaddr addr, hwaddr *out)
-> +{
-> +    int napot_bits = ctz64(ppn) + 1;
-> +    hwaddr napot_mask, page_mask;
-> +
-> +    /* The spec only defines 64KB (napot_bits == 4) */
-> +    if (napot_bits != 4) {
-> +        return 0;
-> +    }
-> +
-> +    napot_mask = (1ULL << napot_bits) - 1;
-> +    page_mask = PPN_PHYS(napot_mask) | (TARGET_PAGE_SIZE - 1);
-> +
-> +    *out = PPN_PHYS(ppn & ~napot_mask) | (addr & page_mask);
-> +
-> +    return page_mask;
-> +}
-> +
->   /*
->    * RISCV IOMMU Address Translation Lookup - Page Table Walk
->    *
-> @@ -458,9 +477,20 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
->           } else {
->               /* Leaf PTE, translation completed. */
->               sc[pass].step = sc[pass].levels;
-> -            base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
-> -            /* Update address mask based on smallest translation granularity */
-> -            iotlb->addr_mask &= (1ULL << va_skip) - 1;
-> +
-> +            if (pte & PTE_N) {
-> +                hwaddr mask = riscv_iommu_napot_page_mask(ppn, addr, &base);
-> +
-> +                if (!mask) {
-> +                    break;
-> +                }
-> +                iotlb->addr_mask &= mask;
-> +            } else {
-> +                base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
-> +                /* Update address mask based on smallest translation granularity */
-> +                iotlb->addr_mask &= (1ULL << va_skip) - 1;
-> +            }
-> +
->               /* Continue with S-Stage translation? */
->               if (pass && sc[0].step != sc[0].levels) {
->                   pass = S_STAGE;
-> @@ -997,7 +1027,13 @@ static MemTxResult pdt_memory_read(RISCVIOMMUState *s,
->               return MEMTX_ACCESS_ERROR; /* Misaligned PPN */
->           } else {
->               /* Leaf PTE, translation completed. */
-> -            base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
-> +            if (pte & PTE_N) {
-> +                if (!riscv_iommu_napot_page_mask(ppn, addr, &base)) {
-> +                    return MEMTX_ACCESS_ERROR;
-> +                }
-> +            } else {
-> +                base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
-> +            }
->               break;
->           }
->   
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 5551bd12ad8..9e889601df1 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -177,14 +177,6 @@ The ``info capture`` command is deprecated and will be removed in a future relea
+ Host Architectures
+ ------------------
+ 
+-MIPS (since 10.2)
+-'''''''''''''''''
+-
+-MIPS is not supported by Debian 13 ("Trixie") and newer, making it hard to
+-maintain our cross-compilation CI tests of the architecture. As we no longer
+-have CI coverage support may bitrot away before the deprecation process
+-completes.
+-
+ TCG Plugin support not enabled by default with TCI (since 9.2)
+ ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ 
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index 626162022a8..1a30b941d65 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -938,6 +938,12 @@ From 10.0, QEMU has disabled configuration of 64-bit guests on 32-bit hosts.
+ Debian 12 "Bookworm" removed support for 32-bit MIPS, making it hard to
+ maintain our cross-compilation CI tests of the architecture.
+ 
++64-bit MIPS (removed in 11.1)
++'''''''''''''''''''''''''''''
++
++Debian 13 "Trixie" removed support for MIPS, making it hard to maintain our
++cross-compilation CI tests of the architecture.
++
+ 32-bit PPC (removed in 10.2)
+ ''''''''''''''''''''''''''''
+ 
+diff --git a/configure b/configure
+index b6dd797de5b..e138d83bc9f 100755
+--- a/configure
++++ b/configure
+@@ -399,8 +399,6 @@ elif check_define _ARCH_PPC64 ; then
+   else
+     cpu="ppc64"
+   fi
+-elif check_define __mips64 ; then
+-  cpu="mips64"
+ elif check_define __s390__ ; then
+   if check_define __s390x__ ; then
+     cpu="s390x"
+@@ -446,12 +444,6 @@ case "$cpu" in
+     linux_arch=loongarch
+     ;;
+ 
+-  mips64*|mipsisa64*)
+-    cpu=mips64
+-    host_arch=mips64
+-    linux_arch=mips
+-    ;;
+-
+   ppc64)
+     host_arch=ppc64
+     linux_arch=powerpc
+@@ -1244,11 +1236,6 @@ EOF
+         rust_osvariant=${rust_osvariant}eabi
+       fi
+       ;;
+-
+-    mips64)
+-      # e.g. mips64-unknown-linux-gnuabi64
+-      rust_osvariant=${rust_osvariant}abi64
+-      ;;
+     esac
+     ;;
+ 
+@@ -1281,12 +1268,6 @@ EOF
+     test "$rust_arch" = arm && test "$rust_os" != linux && rust_arch=armv7
+     ;;
+ 
+-  mips)
+-    # preserve ISA version (mipsisa64r6 etc.) and include endianness
+-    rust_arch=${raw_cpu%el}
+-    test "$bigendian" = no && rust_arch=${rust_arch}el
+-    ;;
+-
+   riscv64)
+     # e.g. riscv64gc-unknown-linux-gnu, but riscv64-linux-android
+     test "$android" = no && rust_arch=${rust_arch}gc
+diff --git a/meson.build b/meson.build
+index 5fbdc75a0fc..692d0bc0eab 100644
+--- a/meson.build
++++ b/meson.build
+@@ -55,7 +55,7 @@ qapi_trace_events = []
+ bsd_oses = ['gnu/kfreebsd', 'freebsd', 'netbsd', 'openbsd', 'dragonfly', 'darwin']
+ supported_oses = ['windows', 'freebsd', 'netbsd', 'openbsd', 'darwin', 'sunos', 'linux', 'emscripten']
+ supported_cpus = ['ppc64', 's390x', 'riscv64', 'x86_64',
+-  'aarch64', 'loongarch64', 'mips64', 'sparc64', 'wasm64']
++  'aarch64', 'loongarch64', 'sparc64', 'wasm64']
+ 
+ cpu = host_machine.cpu_family()
+ 
+@@ -5036,14 +5036,6 @@ if host_arch == 'unknown'
+     message('configure has succeeded and you can continue to build, but')
+     message('QEMU will use a slow interpreter to emulate the target CPU.')
+   endif
+-elif host_arch == 'mips'
+-  message()
+-  warning('DEPRECATED HOST CPU')
+-  message()
+-  message('Support for CPU host architecture ' + cpu + ' is going to be')
+-  message('dropped as soon as the QEMU project stops supporting Debian 12')
+-  message('("Bookworm"). Going forward, the QEMU project will not guarantee')
+-  message('that QEMU will compile or work on this host CPU.')
+ endif
+ 
+ if not supported_oses.contains(host_os)
+diff --git a/include/qemu/timer.h b/include/qemu/timer.h
+index b931181f53d..ec03635dd34 100644
+--- a/include/qemu/timer.h
++++ b/include/qemu/timer.h
+@@ -922,36 +922,6 @@ static inline int64_t cpu_get_host_ticks (void)
+ #endif
+ }
+ 
+-#elif defined(__mips__) && \
+-    ((defined(__mips_isa_rev) && __mips_isa_rev >= 2) || defined(__linux__))
+-/*
+- * binutils wants to use rdhwr only on mips32r2
+- * but as linux kernel emulate it, it's fine
+- * to use it.
+- *
+- */
+-#define MIPS_RDHWR(rd, value) {                         \
+-        __asm__ __volatile__ (".set   push\n\t"         \
+-                              ".set mips32r2\n\t"       \
+-                              "rdhwr  %0, "rd"\n\t"     \
+-                              ".set   pop"              \
+-                              : "=r" (value));          \
+-    }
+-
+-static inline int64_t cpu_get_host_ticks(void)
+-{
+-    /* On kernels >= 2.6.25 rdhwr <reg>, $2 and $3 are emulated */
+-    uint32_t count;
+-    static uint32_t cyc_per_count = 0;
+-
+-    if (!cyc_per_count) {
+-        MIPS_RDHWR("$3", cyc_per_count);
+-    }
+-
+-    MIPS_RDHWR("$2", count);
+-    return (int64_t)(count * cyc_per_count);
+-}
+-
+ #elif defined(__alpha__)
+ 
+ static inline int64_t cpu_get_host_ticks(void)
+diff --git a/util/cacheflush.c b/util/cacheflush.c
+index c043c5f881a..247c4ce2980 100644
+--- a/util/cacheflush.c
++++ b/util/cacheflush.c
+@@ -301,22 +301,6 @@ void flush_idcache_range(uintptr_t rx, uintptr_t rw, size_t len)
+ }
+ #endif /* CONFIG_DARWIN */
+ 
+-#elif defined(__mips__)
+-
+-#ifdef __OpenBSD__
+-#include <machine/sysarch.h>
+-#else
+-#include <sys/cachectl.h>
+-#endif
+-
+-void flush_idcache_range(uintptr_t rx, uintptr_t rw, size_t len)
+-{
+-    if (rx != rw) {
+-        cacheflush((void *)rw, len, DCACHE);
+-    }
+-    cacheflush((void *)rx, len, ICACHE);
+-}
+-
+ #elif defined(__powerpc__)
+ 
+ void flush_idcache_range(uintptr_t rx, uintptr_t rw, size_t len)
+-- 
+2.53.0
 
 
