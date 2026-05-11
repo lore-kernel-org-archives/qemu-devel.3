@@ -4,146 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88636CD4840
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 17:59:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEE02CD4840
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 18:00:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMUux-0004ma-Ow; Mon, 11 May 2026 13:59:47 -0400
+	id 1wMUvC-0004ue-K1; Mon, 11 May 2026 14:00:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wMUun-0004iA-Sl
- for qemu-devel@nongnu.org; Mon, 11 May 2026 13:59:39 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wMUvA-0004sv-GE
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 14:00:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wMUul-00043r-NV
- for qemu-devel@nongnu.org; Mon, 11 May 2026 13:59:37 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64BHe5t51857314
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 17:59:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- cJ/4GmqhDoBx1xn18nrQCJ9gYCcCuaJh9Bm2rUybRyA=; b=Nw5WCfmuEAO4+z/O
- wSJqQ0KeDs8Hzwy5pQnP05n1IbdhEawByyqEZ3+qXJbiOP/bh+53vdnQ2M/Sp6+7
- 0CwOQYPdAZB7+FWrPTPaurnEWQTvIf0cWHPFvT/ThfwNfzrXFIpZqr+s3BPcf2Br
- yysSSuYpxDT64Gn8IswUVqHsNO12Yvqc7bcXvOfAqH5iuIbqrMJvP8eI0ibPchyg
- 70S4EXaFBafHVGqZdBWAfFOBvF0sBe2XVlpdjeT00ac43nBGpTPoUIYjgxzAj1zo
- 1wLj814UMktLz0t1zs3B09zmzk3obm/IO3E9N8BAsut8jpqBSdTbfKGI89GGDmzq
- qlzJvw==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e3kqb82m1-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 17:59:32 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-2ba8013a9e3so7360369eec.0
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 10:59:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778522372; x=1779127172; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=cJ/4GmqhDoBx1xn18nrQCJ9gYCcCuaJh9Bm2rUybRyA=;
- b=hgP631aVHu4fo+UaCgDub/j9zy684jPv2jY3IqF/E3BB8VfRoGkTADFY+9KMr+hlvj
- IIjuA8JcqPWtMRmEWj3SldHDUMqr1Khih1t7WYrqEa/K3sqTRzZOVntwKYIuxJkZRKOH
- a0vY/cBnMFT8PQEefmpnmU5a/l1lj+OlcQd5qc/Gf39PZpEymwL91X0udVKZIpGSomEk
- Kuaif3/nmTq20pkwnUTl4gbolMUn+FHq302/AymSHLgrfxtAbAS2j61EklMMZvaXChhW
- FVXv0D7iwtIp1LMBv4++bHMZhD3zI/XGo4VxLNCn6UImnGfhlRZ8K41wNjCa2U9rIvbL
- Qb3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778522372; x=1779127172;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=cJ/4GmqhDoBx1xn18nrQCJ9gYCcCuaJh9Bm2rUybRyA=;
- b=ImlonESy40aJQg2C0KNkTN2MGO/ZgdZf6kyz5CpoIFmGvBvWdngIEqFIE2bBp5wOzw
- c7K8ub19l6W+unbbE1F3Mu1V0UT0QCWghVlNq9boZJF+cWJp7AGDmcVThuRKip0WkfO3
- 11lYn0cNbgWnuDITX6xsRCL0cGDLr1aAW4gYA5w7iUeIN6mwHN9vh8TFxTZm5BWWQ0KH
- Zz3r3FOggYy28OFq/cXXy7TWTy5qwitUArPAPsaYxdnA6puP32u7rFZVQgZcgQce8h63
- 0bd2Gl9cwT03yfu1ev/YOcF882gYTyTXMoj00db9GskkLsA8T7ah4O2teL5e7Z1IGh8V
- CPXg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9U85NGnHVS4q/6ER1aHxJ1rwb5ZtT2QMnHUiQ1HSGMY6uaNcPB2wV/Hsq+xSxI4ML1Xa2+V6u07pKU@nongnu.org
-X-Gm-Message-State: AOJu0YyEvf+uQbAqDAnFvHCfWYsVQFdcPJqmIP4U0YXUKDKjySQKydLg
- APxCPFgFNQBq9g+cLf40N9MC0XUMlqUcIYi2NGdt66P25pkOugnUFwrg0DJEtPCjN9K01KDcyd5
- 8KYR7Uc6VHgnWggRHPZGnur3stw4xSqKWA5Upsmjpo+/N9Hue2y5ijc+z5Q==
-X-Gm-Gg: Acq92OFuVv1x3TYQfXTMKoDYA/ISDmODe8nfLHlRs58hY0pTDxo411eHR4bNz2TMG48
- SKL94TQprJkgDSENISCw+/CCom2OpwJONnMCIGHD9tVOA1zfO/lbOl9bXPxRFw7hidnTek8S0Op
- oqAM/Ow2Z2yaqEtl5xtQZ0IVurW/SFbGWxH5Ob6b643uDbUpG5eBEmXNR4Pk70r/ePoty2lZsLZ
- +FSiyFwHAU8kbu8O29zFrQwb+oVTABGKjyzR5gST1Oa7JP8g6Xhfgo0kMbZle66YE5h77jQF50S
- uq+jNmcBdMbL4kXDwz/j/SEaDWSMPJ15HKhTLz3QJDCes1mO0rRZUarkpxpOB7DKb05jSniitvE
- M87+OMPSaDt+5Wq5Tr3otB0/qza2v2WtPVVP4aO0tZtcQhpiOQsRS1uzJb1HyeD6QWdn6z6em5l
- d9l3FNoL5ganRqRhDxvHTp9ru3
-X-Received: by 2002:a05:7022:388a:b0:132:5d96:39d4 with SMTP id
- a92af1059eb24-1325d963a32mr8827240c88.42.1778522371675; 
- Mon, 11 May 2026 10:59:31 -0700 (PDT)
-X-Received: by 2002:a05:7022:388a:b0:132:5d96:39d4 with SMTP id
- a92af1059eb24-1325d963a32mr8827209c88.42.1778522371074; 
- Mon, 11 May 2026 10:59:31 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1327865955fsm19437598c88.11.2026.05.11.10.59.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 May 2026 10:59:30 -0700 (PDT)
-Message-ID: <49384318-3050-46fd-af06-4b5c0a14699b@oss.qualcomm.com>
-Date: Mon, 11 May 2026 10:59:28 -0700
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wMUv8-0004Ck-4g
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 14:00:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778522396;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ERtsniumwKSbi60W6pFWHhCtZPwfSu5kaKXsSqd5AKg=;
+ b=bf0gA9rvWdd4EctzXVeCP6TAqLdPww9sfeQUBWp8m22xD/oKHn4xv1M7rE4cm06vaMcNeL
+ t841Kq4J7oEfLz9Dc8nRxucHmq+e4Ps3vLoTDwHJKBp3sRjOeQ2Y4oRvzY1wvQNKpdGSi3
+ RUMbQx674s1UnkXwnt90aWQ8ucqL22U=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-630-0cg6QHAwPzyHeqyqUy5xhw-1; Mon,
+ 11 May 2026 13:59:52 -0400
+X-MC-Unique: 0cg6QHAwPzyHeqyqUy5xhw-1
+X-Mimecast-MFC-AGG-ID: 0cg6QHAwPzyHeqyqUy5xhw_1778522390
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 511F41955DE2; Mon, 11 May 2026 17:59:49 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.172])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D0D401800465; Mon, 11 May 2026 17:59:46 +0000 (UTC)
+Date: Mon, 11 May 2026 13:59:44 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Keith Busch <kbusch@kernel.org>, Fam Zheng <fam@euphon.net>,
+ =?iso-8859-1?Q?St=E9phane?= Graber <stgraber@stgraber.org>,
+ Klaus Jensen <its@irrelevant.dk>, Zhao Liu <zhao1.liu@intel.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
+ Jesper Devantier <foss@defmacro.it>,
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Subject: Re: [PATCH v7 0/8] hw/nvme: add basic live migration support
+Message-ID: <20260511175944.GC536999@fedora>
+References: <20260511151131.483217-1-alexander@mihalicyn.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 089/110] target/s390x: Introduce common system/user meson
- source set
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- qemu-devel@nongnu.org, Cornelia Huck <cohuck@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Farhan Ali <alifm@linux.ibm.com>
-References: <20260506135524.20617-1-philmd@linaro.org>
- <20260506135524.20617-90-philmd@linaro.org>
- <5b1fd1f6-00ec-4575-9609-845218405403@redhat.com>
- <a57d5120-dabf-4953-a680-a9c875ecf238@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <a57d5120-dabf-4953-a680-a9c875ecf238@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: h7QFnjqUxjGwVnDSvFYV70ydAU3BwmWy
-X-Authority-Analysis: v=2.4 cv=LOJWhpW9 c=1 sm=1 tr=0 ts=6a021904 cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=AlK-u2zkgHcvNUKW-4MA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDE5MSBTYWx0ZWRfX5WcduwKfO2Az
- tOnnCL76nr8OcAt110rRK/XnRGGu7YDQlg/b/5cSA+sKSd15Un599G3fdMSkjMhxoLDXYU6ZGsM
- WXm0Xm/nff5cS39GvJodso9HGPFcsAubOrgALOGiexjeYNjOWX1P9ypKiuWFTHdJzEC+xf0Y3oi
- pITPG5tRqQeoZJ9fA4m1wiz5Z3JQBiJHEtJNXta6MtutrY6v/kPOD+KoNaazsffmB7KmrBAtqOd
- eZ+CnKScgBgUU9SEawn5reVUdkdmC8e4WfsB7MOQRKRNGrG8BjmAU7Le9voPPamqMgPf0/9zm+h
- J3cQw/cipMJltJsS7yJeWdp6kpwff8WA3YS+SRGpidBMkXG//08ofG9S5YnwWQQmpC4xiOuykr2
- labqmd9QVlMXSPkWO1cd2iNSbIHFEaWMaTB23OJkBP8p0GuFvmEOajsMhdP73xfHrbBByAcp0LN
- jqbyeCQV11GBC+JNlVA==
-X-Proofpoint-GUID: h7QFnjqUxjGwVnDSvFYV70ydAU3BwmWy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-11_05,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0 lowpriorityscore=0 suspectscore=0 spamscore=0
- clxscore=1015 bulkscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605110191
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="Dlyw/wRC0XpqNivX"
+Content-Disposition: inline
+In-Reply-To: <20260511151131.483217-1-alexander@mihalicyn.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,44 +92,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/11/2026 10:48 AM, Philippe Mathieu-Daudé wrote:
-> On 11/5/26 17:48, Cédric Le Goater wrote:
->> Hello,
->>
->> On 5/6/26 15:55, Philippe Mathieu-Daudé wrote:
->>> Introduce a source set common to system / user. Start it
->>> with the files built in both sets: 'cpu_models_user.c'
->>> and 'gdbstub.c' No logical change intended.
->>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
->>> Message-Id: <20260423135035.50126-4-philmd@linaro.org>
->>
->> This change introduced a regression with PCI passthrough which
->> stopped working. Guest kernel reports :
->>
->>    [    0.156501] zpci: PCI is not supported because CPU facilities 69
->> or 71 are not available
->>
->> and other devices (ap, ccw) are impacted too I think.
-> 
-> Is it something we could test with the mainstream CI, or does this
-> requires specific hardware?
->
 
-It could be tested with a tcg arm vm + nested VM with PCI passthrough.
-However, the problem is that you need to cross-compile QEMU in CI to
-test current version to launch the nested VM.
-This would imply to have a "standard" target environment (like debian
-with X,Y,Z deps preinstalled) which CI does not have at the moment.
+--Dlyw/wRC0XpqNivX
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-So in practice, it's hard to test it.
+On Mon, May 11, 2026 at 05:11:23PM +0200, Alexander Mikhalitsyn wrote:
+> From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+>=20
+> Dear friends,
+>=20
+> This patchset adds basic live migration support for
+> QEMU emulated NVMe device.
+>=20
+> Implementation has some limitations:
+> - only one NVMe namespace is supported
+> - SMART counters are not preserved
+> - CMB is not supported
+> - PMR is not supported
+> - SPDM is not supported
+> - SR-IOV is not supported
+>=20
+> I believe this is something I can support in next patchset versions or
+> separately on-demand (when usecase appears).
+>=20
+> Testing.
+>=20
+> This patch series was manually tested on:
+> - Debian 13.3 VM (kernel 6.12.69+deb13-amd64) using fio on *non-root* NVM=
+e disk
+>   (root disk was virtio-scsi):
+>=20
+> time fio --name=3Dnvme-verify \
+>     --filename=3D/dev/nvme0n1 \
+>     --size=3D5G \
+>     --rw=3Drandwrite \
+>     --bs=3D4k \
+>     --iodepth=3D16 \
+>     --numjobs=3D1 \
+>     --direct=3D0 \
+>     --ioengine=3Dio_uring \
+>     --verify=3Dcrc32c \
+>     --verify_fatal=3D1
+>=20
+> - Windows Server 2022 VM (NVMe drive was a *root* disk) with opened brows=
+er
+>   playing video.
+>=20
+> No defects were found.
+>=20
+> Git tree:
+> https://github.com/mihalicyn/qemu/commits/nvme-live-migration
+>=20
+> Changelog for version 7:
+> - rebased on top of recent main
+> - addressed review comments from Stefan Hajnoczi:
+>   - better incoming migration stream validation (SQ/CQids correctness)
+>   - endianness bugs are fixed in qtest (validated on s390x)
+> - added RWB tags from Klaus
+>=20
+> Changelog for version 6:
+> - rebased on top of:
+>   https://gitlab.com/peterx/qemu/-/tree/vmstate-array-null
+>   (see also https://lore.kernel.org/all/20260401202844.673494-1-peterx@re=
+dhat.com)
+> - addressed review comments from Stefan Hajnoczi:
+>   - supported "full CQ" case by serializing NvmeRequest state
+>   - added qtest for NVMe device migration with full CQ
+>=20
+> Changelog for version 5:
+> - rebased on top of https://lore.kernel.org/all/20260304212303.667141-1-v=
+sementsov@yandex-team.ru/
+>   (as Peter has requested)
+>=20
+> Changelog for version 4:
+> - vmstate dynamic array support reworked as suggested by Peter Xu
+>   VMS_ARRAY_OF_POINTER_ALLOW_NULL flag was introduced
+>   qtests were added
+> - NVMe migration blockers were reworked as Klaus has requested earlier
+>   Now, instead of having "deny list" approach, we have more strict pattern
+>   of NVMe features filtering and it should be harded to break migration w=
+hen
+>   adding new NVMe features.
+>=20
+> Changelog for version 3:
+> - rebased
+> - simple functional test was added (in accordance with Klaus Jensen's rev=
+iew comment)
+>   $ meson test 'func-x86_64-nvme_migration' --setup thorough -C build
+>=20
+> Changelog for version 2:
+> - full support for AERs (in-flight requests and queued events too)
+>=20
+> Kind regards,
+> Alex
+>=20
+> Alexander Mikhalitsyn (8):
+>   tests/functional/migration: add VM launch/configure hooks
+>   hw/nvme: add migration blockers for non-supported cases
+>   hw/nvme: split nvme_init_sq/nvme_init_cq into helpers
+>   hw/nvme: set CQE.sq_id earlier in nvme_process_sq
+>   hw/nvme: unmap req->sg earlier in nvme_enqueue_req_completion
+>   hw/nvme: add basic live migration support
+>   tests/functional/x86_64: add migration test for NVMe device
+>   tests/qtest/nvme-test: add migration test with full CQ
+>=20
+>  hw/nvme/ctrl.c                                | 1007 ++++++++++++++++-
+>  hw/nvme/ns.c                                  |  160 +++
+>  hw/nvme/nvme.h                                |   12 +
+>  hw/nvme/trace-events                          |   10 +
+>  include/block/nvme.h                          |   12 +
+>  tests/functional/migration.py                 |   22 +-
+>  tests/functional/x86_64/meson.build           |    1 +
+>  .../functional/x86_64/test_nvme_migration.py  |  159 +++
+>  tests/qtest/nvme-test.c                       |  395 +++++++
+>  9 files changed, 1742 insertions(+), 36 deletions(-)
+>  create mode 100755 tests/functional/x86_64/test_nvme_migration.py
+>=20
+> --=20
+> 2.47.3
+>=20
 
->>
->>> ---
->>>   target/s390x/meson.build | 25 +++++++++++++------------
->>>   1 file changed, 13 insertions(+), 12 deletions(-)
-> 
-> 
+Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+
+--Dlyw/wRC0XpqNivX
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmoCGRAACgkQnKSrs4Gr
+c8hkqwf/XDDJ9QIFUD4n1PRh79jPuqpYmwksfapzEUAb4qq7LY4OWiolsJzkdfw1
+QHU1Ot19654ppbMcHUpFN0QVOt7OmWRqvRd4rZru6Q94PaqYKuKygdUCToUVI6+8
+LMV31YfC0T0xyOVNgKF5yOwlaoPUSkpHG3Zp3VrfmKVlKgpY0BL5spsX1Nusc/Cj
++CZrFhj84BVnzHXiutBOD4Ez6wtK56K6Z0PM6ybKFivF06g3uYv5AmHWrT72hSte
+ncwZ8iMzwfnp+dKv5HCx12Eh2sa6DEGe4uPzeZ1lLxMJ1/7BaOZcIx+ct8JyQk/m
+zpLdzFO9ldMhF32mWGb6sCmQdMo1/g==
+=Ss5J
+-----END PGP SIGNATURE-----
+
+--Dlyw/wRC0XpqNivX--
 
 
