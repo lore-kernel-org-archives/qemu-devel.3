@@ -4,70 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31B3DCD484E
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 20:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7364CD484E
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 20:23:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMX9P-0005XU-9U; Mon, 11 May 2026 16:22:51 -0400
+	id 1wMX9J-0004qq-1u; Mon, 11 May 2026 16:22:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wMX9N-0005Kn-6I
- for qemu-devel@nongnu.org; Mon, 11 May 2026 16:22:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wMX9F-0004bg-4M
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 16:22:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wMX9L-0002FQ-KO
- for qemu-devel@nongnu.org; Mon, 11 May 2026 16:22:48 -0400
+ id 1wMX9C-000295-B0
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 16:22:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778530967;
+ s=mimecast20190719; t=1778530956;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=V4iSM+T4OP0fJeJqglC+eTicdbxJnPoKhqUi6eEqqtI=;
- b=G3kRuieJOhR2IilFcHRdAYGojRZN+LrjGWsdK73SLM1WN77kV7oicEZdnUQEk4+NtskXBM
- 1VSk62/Q41AA26Ju1GgJTTg+WVxeONYUeCQ8+TukI1oqSa8kYr0lG+uVJfOD+lCIijNLCN
- hvHtEXCQXWkPRt2I3Td+skYjEWYravY=
+ bh=zaFmpzO9wm5ZBT47gYTD3GZuFhtThIZcvMGQksKD/Co=;
+ b=abRL2uknNkdw8k7huIRi1B4vaHWIPmVoNoiC/rmHxrELPBZ8q2R886FAY8NJSkJwPV+rD1
+ T4ANx+M/Q/YmhqUP2Fx6NjL1BNubKtAwFt7RoWEMI612Iy6YPBXHYgnPwaRssyi2dP9WoC
+ tBXkminkR8ogOZMFPp2nko9HIy0UtgY=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-134-lKpJnAvtO2GtdZiEqWgh4Q-1; Mon,
- 11 May 2026 16:22:41 -0400
-X-MC-Unique: lKpJnAvtO2GtdZiEqWgh4Q-1
-X-Mimecast-MFC-AGG-ID: lKpJnAvtO2GtdZiEqWgh4Q_1778530959
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-515-mw7HuTHwOPWd0h16rRB-ew-1; Mon,
+ 11 May 2026 16:22:33 -0400
+X-MC-Unique: mw7HuTHwOPWd0h16rRB-ew-1
+X-Mimecast-MFC-AGG-ID: mw7HuTHwOPWd0h16rRB-ew_1778530952
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BAF491800372; Mon, 11 May 2026 20:22:38 +0000 (UTC)
+ id 62AF618002C8; Mon, 11 May 2026 20:22:32 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 667EE1800465; Mon, 11 May 2026 20:22:35 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D16C91955D84; Mon, 11 May 2026 20:22:30 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Ninad Palsule <ninad@linux.ibm.com>,
- qemu-arm@nongnu.org (open list:ASPEED BMCs)
-Subject: [PULL 15/24] hw/fsi: move OPBus address space init to realize
-Date: Tue, 12 May 2026 00:21:01 +0400
-Message-ID: <20260511202111.3091440-16-marcandre.lureau@redhat.com>
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 14/24] system/qtest: add missing qtest_finalize()
+Date: Tue, 12 May 2026 00:21:00 +0400
+Message-ID: <20260511202111.3091440-15-marcandre.lureau@redhat.com>
 In-Reply-To: <20260511202111.3091440-1-marcandre.lureau@redhat.com>
 References: <20260511202111.3091440-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -75,8 +70,8 @@ X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,68 +89,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The OPBus instance_init initializes an AddressSpace, registering it in
-the global address_spaces list. When a bare OPBus object is created
-and destroyed (e.g. by qom-tests), there is no finalize to remove the
-stale entry, leading to a heap-use-after-free when a subsequent
-flatviews_reset iterates the list.
+Free owned resources on object finalization.
 
-Move address_space_init to the bus realize callback and add the
-corresponding address_space_destroy in unrealize, following the
-NubusBus pattern. Also fix the memory_region_init owner from NULL to
-the OPBus object, so the MR is properly parented instead of dangling
-under the "unattached" container.
-
-Fixes: eb04c35da2c0 ("hw/fsi: Aspeed APB2OPB & On-chip peripheral bus")
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Fixes: 6ba7ada3559e ("qtest: add a QOM object for qtest")
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/fsi/aspeed_apb2opb.c | 24 +++++++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
+ system/qtest.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/hw/fsi/aspeed_apb2opb.c b/hw/fsi/aspeed_apb2opb.c
-index b9d72f3ecf6..36092468391 100644
---- a/hw/fsi/aspeed_apb2opb.c
-+++ b/hw/fsi/aspeed_apb2opb.c
-@@ -348,15 +348,37 @@ static void fsi_opb_init(Object *o)
- {
-     OPBus *opb = OP_BUS(o);
- 
--    memory_region_init(&opb->mr, 0, TYPE_FSI_OPB, UINT32_MAX);
-+    memory_region_init(&opb->mr, o, TYPE_FSI_OPB, UINT32_MAX);
-+}
-+
-+static void fsi_opb_realize(BusState *bus, Error **errp)
-+{
-+    OPBus *opb = OP_BUS(bus);
-+
-     address_space_init(&opb->as, &opb->mr, TYPE_FSI_OPB);
+diff --git a/system/qtest.c b/system/qtest.c
+index cf90cd53adb..a79d10d1361 100644
+--- a/system/qtest.c
++++ b/system/qtest.c
+@@ -1020,10 +1020,20 @@ static void qtest_class_init(ObjectClass *oc, const void *data)
+                                   qtest_get_log, qtest_set_log);
  }
  
-+static void fsi_opb_unrealize(BusState *bus)
++static void qtest_finalize(Object *obj)
 +{
-+    OPBus *opb = OP_BUS(bus);
++    QTest *q = QTEST(obj);
 +
-+    address_space_destroy(&opb->as);
++    g_free(q->chr_name);
++    g_free(q->log);
++    object_unref(q->chr);
 +}
 +
-+static void fsi_opb_class_init(ObjectClass *klass, const void *data)
-+{
-+    BusClass *bc = BUS_CLASS(klass);
-+
-+    bc->realize = fsi_opb_realize;
-+    bc->unrealize = fsi_opb_unrealize;
-+}
-+
- static const TypeInfo opb_info = {
-     .name = TYPE_OP_BUS,
-     .parent = TYPE_BUS,
-     .instance_init = fsi_opb_init,
-     .instance_size = sizeof(OPBus),
-+    .class_init = fsi_opb_class_init,
- };
- 
- static void fsi_opb_register_types(void)
+ static const TypeInfo qtest_info = {
+     .name = TYPE_QTEST,
+     .parent = TYPE_OBJECT,
+     .class_init = qtest_class_init,
++    .instance_finalize = qtest_finalize,
+     .instance_size = sizeof(QTest),
+     .interfaces = (const InterfaceInfo[]) {
+         { TYPE_USER_CREATABLE },
 -- 
 2.54.0
 
