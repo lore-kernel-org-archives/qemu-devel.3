@@ -4,107 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A41B4CD37B5
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 10:10:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47484CD37AC
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 10:12:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMNav-0008E9-G2; Mon, 11 May 2026 06:10:37 -0400
+	id 1wMNc5-0000zs-By; Mon, 11 May 2026 06:11:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wMNar-00087Q-BQ
- for qemu-devel@nongnu.org; Mon, 11 May 2026 06:10:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wMNap-0002XT-33
- for qemu-devel@nongnu.org; Mon, 11 May 2026 06:10:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778494227;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=3JgfucjXhnrXoRBjJn+YYfXGGZ8pgZ0Hd1IC3uctW9I=;
- b=c22RKhUNzQCb5o3+5YO7tqfATvfZzvzrXf43lu0tYQMDbYqn4TABzKxBumi8ypB/XlJXG9
- pueK4khnAzkKEXtXMG5tGgQTQL0jDYCT+hj4pT799YmpGw+fzYClj5iIrxKiiVaj4QUHR2
- NBMhuP3IWyCCfdecA0Ug0Aozz8317eo=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-465-4igW4JOkNO6l_FjpJdYngw-1; Mon,
- 11 May 2026 03:06:59 -0400
-X-MC-Unique: 4igW4JOkNO6l_FjpJdYngw-1
-X-Mimecast-MFC-AGG-ID: 4igW4JOkNO6l_FjpJdYngw_1778483218
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 537D018002EF; Mon, 11 May 2026 07:06:58 +0000 (UTC)
-Received: from [10.44.49.55] (unknown [10.44.49.55])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8B0D630001BE; Mon, 11 May 2026 07:06:56 +0000 (UTC)
-Message-ID: <92cecc93-1f68-44f2-8d0b-934e868d3e2c@redhat.com>
-Date: Mon, 11 May 2026 09:06:54 +0200
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMNbd-0000mW-R9
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 06:11:24 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMNbc-0002fB-7d
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 06:11:21 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-459bf19e87bso293563f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 03:11:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778494278; x=1779099078; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=n1tCYwCA6vMalyhyBe3A80+FO3JNz0MZ1bTEpKLIZIc=;
+ b=H9maiQDODjEcc8BeFYeuDkCyi2z2HE2QoFZNvG/aOMBXSOfoLYrqiyf+3jM0Bl+wMy
+ w1lHYdeQU73UrceKq5ZcXj2GlscK/znTepn6m6lr4vbY2r793Sjr2ZQrREV5jwN52vWe
+ haR4ci7rasHqs1q4XO5U2Dh9OuZjaWEPZvNkr282JcCqHDDFugIxPoH5CLuPnspiuJRy
+ XKKlimB35wCpAUUqkQb5ZW+VQoj9OYX3R/Z0IWGka1YZVE/7tOwZF/0vFy2f0NtYJN4N
+ MEIJmXqWXUueNjwU8KpQNtOeRBr1OOsMMsCuXIbxZAzENpSNyC1Tk5H+rGg4hN1m4EjB
+ WeWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778494278; x=1779099078;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=n1tCYwCA6vMalyhyBe3A80+FO3JNz0MZ1bTEpKLIZIc=;
+ b=AdL6w6QRwav5msNoV7R0P+Vac9lt8pxuU66tuMdcWv05OYDQ9plIhCm1WuzKtIkM4F
+ rmw4zDY/tZMSJGNpzKXq1cZaT6NTn4Ksh1QP0x0mH2TDHY+KNDDRmUowZkR8rxMIjGjX
+ xUgxIo55sZ5JsMhLJdBdrq4gN1TdNCtAvO89CkA4POvEwh/CyAydV5VlMBQkTNE6wC6d
+ cf8AZs0beEryrQIwg/ODy8V5XIPV2gJh3RyFep4aU7rMjhkoVtqOt0usePfPTYOCnb/M
+ Rwi537kWi/MEwYWft0PMGPN3F4pul965ut/zQXk5YO7Cez6P2l/nvLUqKvYYYN5g9aO8
+ 4qhg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ87iuGXjdfU9sGUlXcqYbeKuQconfyra9WJ36T5EMoJ5UpTxgLpaFK9E8d9h0+cKlwZaudoSNgjNjVj@nongnu.org
+X-Gm-Message-State: AOJu0Yxxp5Ci4bgBJsJZ9v9/SHvEy8ZWR4Opexj4Ho7nuZo/sDdVyC4S
+ HCpre6DpAoWGtARxeCPL8dlGkkAl6aPhSzNPJL8EVYJF5fgnrHIK/0V1fTodwcmqdZ8=
+X-Gm-Gg: Acq92OH5bPUGiQeNPwyKj49wr8FgaaNuZZQWiok01fqXm55eXcv2KjyrApYYh3N+LJ6
+ h6hqlJS4iGV4WG8oVpAOzQLVGk1uUW/uqnsz+7NJ3S9pj6Q9NckEN3vG/i1/w72mRWkZF1T4ITr
+ tqNX9sKSL5rhvBT5n72a/2Zlq8ipD69nveR1VgfqY6IqTQD0hRUwIRKE7VZpjgkkz9g8HpBNPlc
+ xjwmACrOZ/8Mubk2aae+L5+YnNSxH517XdnmowedG0yzBennv/9aleHS9rGWYQTvupcLfI40wAA
+ 5ApwJg36oP+EYyukD4RjHBgM+RcnX7bntVoakjMS7iZvgo+YyfpQCbjKTliPX7CaevaVT3VTWD3
+ xN7lADboN3J476QPzv4lP7S/N7CBCz8uRxR0L40FUjfKRlEfLcq3cvE22PKW1vzFLDEimp2bPWU
+ gBJnK971iHANut0AeU2WbnMJR+E2UUZQp0GpzLrZfIX+h6aGYhaPsBmbaF/+dZtDmATA==
+X-Received: by 2002:a05:6000:420c:b0:43b:4136:1e6f with SMTP id
+ ffacd0b85a97d-454637c817fmr19373674f8f.38.1778494278025; 
+ Mon, 11 May 2026 03:11:18 -0700 (PDT)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45491cab9c2sm25789464f8f.31.2026.05.11.03.11.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 11 May 2026 03:11:17 -0700 (PDT)
+Message-ID: <5178c9a1-50b0-4864-a48e-d316b602abd9@linaro.org>
+Date: Mon, 11 May 2026 12:11:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/rtc/mc146818rtc: Fix get_guest_rtc_ns() overflow bug
-To: Jinjie Ruan <ruanjinjie@huawei.com>, peter.maydell@linaro.org,
- mst@redhat.com, qemu-devel@nongnu.org
-References: <20260114013257.3500578-1-ruanjinjie@huawei.com>
+Subject: Re: [PATCH 2/4] hw/arm: Remove qcom-dc-scm-v1-bmc and
+ qcom-firework-bmc machines
 Content-Language: en-US
-From: Paolo Bonzini <pbonzini@redhat.com>
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20260114013257.3500578-1-ruanjinjie@huawei.com>
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, pierrick.bouvier@oss.qualcomm.com
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, kane_chen@aspeedtech.com,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
+References: <20260510165704.2935316-1-clg@redhat.com>
+ <20260510165704.2935316-3-clg@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260510165704.2935316-3-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,31 +108,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/14/26 02:32, Jinjie Ruan wrote:
-> In get_guest_rtc_ns(), "s->base_rtc" is uint64_t, which multiplied by
-> "NANOSECONDS_PER_SECOND" may overflow the uint64_t type, which will
-> cause the QEMU Linux Virtual Machine's RTC time to jump and in turn
-> triggers a kernel Soft Lockup and ultimately leads to a crash.
+On 10/5/26 18:57, Cédric Le Goater wrote:
+> The qcom-dc-scm-v1-bmc and qcom-firework-bmc machines were deprecated
+> in QEMU 10.2 and are now removed in QEMU 11.1.
 > 
-> Fix it by avoiding adding s->base_rtc in get_guest_rtc_ns_offset(),
-> because get_guest_rtc_ns() is used either take the remainder of
-> NANOSECONDS_PER_SECOND or take the quotient of NANOSECONDS_PER_SECOND.
+> These Qualcomm lab servers never entered production and do not rely on
+> specific device models. They can be replaced by the ast2600-evb
+> machine with appropriate fmc-model and I2C device configuration via
+> command line.
 > 
-> Fixes: 56038ef6234e ("RTC: Update the RTC clock only when reading it")
-> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>   docs/about/deprecated.rst              | 10 ---
+>   docs/about/removed-features.rst        | 10 +++
+>   docs/system/arm/aspeed.rst             |  6 +-
+>   hw/arm/aspeed_ast2600_qcom-dc-scm-v1.c | 55 ----------------
+>   hw/arm/aspeed_ast2600_qcom-firework.c  | 91 --------------------------
+>   hw/arm/meson.build                     |  2 -
+>   6 files changed, 12 insertions(+), 162 deletions(-)
+>   delete mode 100644 hw/arm/aspeed_ast2600_qcom-dc-scm-v1.c
+>   delete mode 100644 hw/arm/aspeed_ast2600_qcom-firework.c
 
-Thanks, queued - I also renamed the function to 
-get_rtc_ns_since_last_update().  It's not entirely accurate due the 
-presence of the sub-second offset s->offset, but it's good enough.
-
-I have also considered changing the function to return a struct 
-timespec.  I didn't like it too much because struct timespec uses a 
-time_t which is possibly 32-bit.  Now, QEMU is probably broken for Y2038 
-anyway, but having time_t dependencies in device emulation code is not 
-great; at least mktimegm and gmtime_r could be rewritten easily.
-
-Apologies for the delay!
-
-Paolo
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
