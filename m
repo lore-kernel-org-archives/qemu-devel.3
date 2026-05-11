@@ -4,103 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9286DCD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 14:27:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95B9ECD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 14:28:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMRau-0005be-OX; Mon, 11 May 2026 10:26:52 -0400
+	id 1wMRcW-0006Ic-LF; Mon, 11 May 2026 10:28:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wMRaS-0005Uy-GU
- for qemu-devel@nongnu.org; Mon, 11 May 2026 10:26:24 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wMRaQ-0004FM-5t
- for qemu-devel@nongnu.org; Mon, 11 May 2026 10:26:24 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-bd124546379so100325966b.3
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 07:26:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778509580; cv=none;
- d=google.com; s=arc-20240605;
- b=dy0TmGB0jxRre95iIO6QOefde1YB3rg9IUUN5VxMtmeqy9ffd3SSdnuamUz0NVqGsd
- wCz41UzqyRqtgxfD51w1DFO39nlB8tZ2+WuptEo5/fDvJEiQwkY4oET+xVOG/RtT6F0Z
- cdU4IzF4IYzSReJuh0CPBDp8oE05uCYPxgqzHsJFvEHwuBN4HDJ7Pd+CdguBEHhsYjM0
- p6bTYYdJ2mxXPpkdBk6+IIiIo/ceok7pMJv5fP+C1dyQToaz0j0of16PztVry/otYdHF
- DRnniZrQ8YZt9D6K7Ga5SCmDeS8tz8T6vW/2GEOKs3vBuTCKvzWgLKukmv7PWj01zqRW
- 9dXQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=VScJPRn7kUHiCGsfov1RINMympbLnS85EsQwYRBChRo=;
- fh=8jLQ9BF8TzoH/ErGnlkH4vSIZ9SpUVgmQkqZ4x0ADis=;
- b=BaRZJTV0za+ckPr2Zw1ONqpnVX61GiAfpDyycQsCtyM+OSrTHt+Q+hYl/CJSndaqF8
- 1KYEPil/E+FPe0zHuNyjFC4B8S03033z+xjZ8UZ1K+85T440JXiRLgaHlEslwABushgN
- 2KJJq1CcI0MAHq8XkK9NguPLR1ERFSAiXNGvXCBaxZjE/jnrBczANUGlDUEX1qmT7nK9
- nJ7B5U03KgQIf6ko8VdukqY5ZBI5+c7FI1IJbx+vRxcCofTFAJtmrkF+j5leWQ/+nfPU
- XJyqjtZrC32A1bcMRD805k1SEnJFo9yyA18YAD5CO6M17lPDIa4arZM7hBlKhaoSOhCY
- 46HA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778509580; x=1779114380; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=VScJPRn7kUHiCGsfov1RINMympbLnS85EsQwYRBChRo=;
- b=LYzUul32V/wL2FUJullTxYir1E1ma8ahF+Vm9Q3ufdUv1QPNrihaH05+vUPaPHRuOA
- g8eOyB/Vd6Q7NSVu8bG2v8qN1mdSb5TECpJz009UgZINcUu9SMU0OvJq5iUyyANVKZ7b
- Jv+49Awe8kS3zY7heAhwnOIHu58+kw92l+TDf2wKxoHgFY8IpShSxbV7ThUbN/l6gGJw
- VWept/5BPGFN8u7DZhfAHZT4BczE1n6XhyGxHCxiqzMRf/T+qRkEIh1dwXjHiM6lXlxW
- EZRoYIlzdzMy14F3bSxGXj2N99Fj10QCLn3PS+4c597tEq/56DRB4QSG4VXk3gtSBGSa
- yg8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778509580; x=1779114380;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VScJPRn7kUHiCGsfov1RINMympbLnS85EsQwYRBChRo=;
- b=aHbDQyC0Z3+PMUhnCedWiHdYx23V8oVvJcMqLUTBDft9+3i9ZXpcE9qn4T7yvj81RP
- 4hnorlloIGiAm3+OiQMMaODowz3iiQJ2vqF0SPkg5dov+Kz5tdg1hF7Prmg/LNfUwPp2
- CeHbkluO16sWQ2K+j3PMhnGHWSVdC1lb3HVwzv7ar/tDSW5YB9zyCNilDJYtgvjkC7WD
- keXebbiAtRAL2XVpAZSyofriBtFEH1w+rVkoxXuy7gmc9K6BQuoZU7XFFQVfOcPXyVn+
- GoJTiewY5qvJHKNfcyq1lpn4VHNibLdo9/0lBIKDNNXR2mXsQ6IDnJIjaAmPWWswMYsI
- zTeA==
-X-Gm-Message-State: AOJu0Yz+baOLyX3WU5vgnE/mjlrIdfbF3lO7A7pNS3zp+bG7TxJ5iZWa
- DfvyLGgUFxxwfu+a3BsShXcqAGO2AFON/7qRmB3wboRzz9ZWFU4C0apiJNavlrLOnnMRLKPoZYN
- oFu3XBYWcBJzPuWfInUDwfrGfqkEkHOzrZ+xpDSY+Sg==
-X-Gm-Gg: Acq92OFClJOLI5rnFEUANTKmG3wWtOa885oKtc5dl5mLMY1zGYbG52TEqCvb7DZft0W
- W+ZOWkUKmj6eglUZV4icL5JKXLUiG/a0yRmkMIChYLiZ2s0pwj9r3Kc1BirYbgZG5M89057Dwa9
- TkUYZajxMTAr4+AvkxZrW8kjTJ+JHjpnKuGzn1ttNwTIw5G01rwvYOpMG8Y9Ef7hh6LVnvdq+dt
- 5H8Sh1LrnYUtX5VHqyCjlUsIG7wioO63Z3tBOrD8Qva/Jc2h8dJO2mDm5lVpmuOH4URfU/TY8hd
- vvwuTf61vsvhYmU1+8F9DV9AoLQeQ2WtsKzVjt+LQOSalVa42QNIXdKkMAXp+0XxtB4=
-X-Received: by 2002:a17:906:ef08:b0:bab:d8e9:53a7 with SMTP id
- a640c23a62f3a-bc56cd297b4mr1537056266b.29.1778509579424; Mon, 11 May 2026
- 07:26:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <wintera@linux.ibm.com>)
+ id 1wMR0n-0006YO-WC; Mon, 11 May 2026 09:49:34 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <wintera@linux.ibm.com>)
+ id 1wMR0m-0003nk-0N; Mon, 11 May 2026 09:49:33 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64B7AHQq2780021; Mon, 11 May 2026 13:49:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=g2vwvtwOodnc0kYOAA/WbkJwarTtpLyRgnu/FsF+Z
+ zs=; b=QME6DHNqqWxrJ61SOiqCADnjY8zDYmVbYX6t8WZttv6GK8BKI/LdEfe3Z
+ GgR3ieigxGXDcv/cKMsyz3UJJaAek9BQSVbdctwsnxxrGuMCz3E78tktjgtRt+YT
+ Xo3pvHkHbP3fQkhiZtJKD390DabygEx//KTfCX0NFAhCcFB89ZPE5xKqjiGLxMJE
+ fbHUnJWHnh2S336vPBFxGHZ4Zcqfnz00GIwOUhp1YK6ZqSkToGd/AvggpvuVxbrE
+ gp2iFjAEqNQ3IeSHBhdsoDh4DHhilWh+kErz8o/smiBXUgXw69vTL+CQmhfAkc9k
+ sm4w9cdARlqYfHeabHLQYIL55nW6Q==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e1ve70jqa-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 11 May 2026 13:49:24 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64BDdY1k007665;
+ Mon, 11 May 2026 13:49:23 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e2hxy585s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 11 May 2026 13:49:23 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64BDnIww13304096
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 11 May 2026 13:49:18 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 572202004B;
+ Mon, 11 May 2026 13:49:18 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F086E20043;
+ Mon, 11 May 2026 13:49:17 +0000 (GMT)
+Received: from macbookpro.aag-de.ibm.com (unknown [9.52.217.250])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 11 May 2026 13:49:17 +0000 (GMT)
+From: Alexandra Winter <wintera@linux.ibm.com>
+To: Heiko Carstens <hca@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>
+Cc: Halil Pasic <pasic@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
+ Alexander Gordeev <agordeev@linux.ibm.com>,
+ Sven Schnelle <svens@linux.ibm.com>, Gautam Gala <ggala@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Thomas Richter <tmricht@linux.ibm.com>,
+ Shrikanth Hegde <sshegde@linux.ibm.com>, Mete Durlu <meted@linux.ibm.com>,
+ linux390-list@tuxmaker.boeblingen.de.ibm.com,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@kernel.org>,
+ Cornelia Huck <cohuck@redhat.com>, qemu-stable@nongnu.org,
+ qemu-devel@nongnu.org, qemu-trivial@nongnu.org, qemu-s390x@nongnu.org,
+ Alexandra Winter <wintera@linux.ibm.com>
+Subject: [PATCH] target/s390x: Make container ids in SysIB_15x 1-based
+Date: Mon, 11 May 2026 15:49:09 +0200
+Message-Id: <20260511134909.43802-1-wintera@linux.ibm.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 MIME-Version: 1.0
-References: <20260511141049.1293449-1-peterx@redhat.com>
-In-Reply-To: <20260511141049.1293449-1-peterx@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 11 May 2026 15:26:06 +0100
-X-Gm-Features: AVHnY4JseARZ7mQGIXB9dRCxALimbPLtgXexhs3M5CWpblatB1hUhEy5KinJPA0
-Message-ID: <CAFEAcA88Ui1tG0PEwbwSnSBMaywMJEy5bLLVwXvGdW_06pgJ0w@mail.gmail.com>
-Subject: Re: [PATCH] migration: Fix possible division by zero on calc expected
- downtime
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Juraj Marcin <jmarcin@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDE1MSBTYWx0ZWRfX4RmEbpJQ+SBW
+ SroNvDg1q3/mVMehwyQ/Oj67glQox3NGlnHr06cJuWQUmHrS+W4snfAgjaBclI/0jmDIIgXX6NB
+ g7WcfXeZUrkY4fy77zNfHByJHLkf5URdjexloh2M28JtI42VO5lJH5KP+a6jqwwxy7Y2cMzYuT8
+ ZaopBohssPwq5nnmtMBEv4JtF+xk6XkIUI6NnNettkHH7F0dht2Iqi5bUTFlukC8/r4ul+T+eFS
+ xKoLXZoTcFj2/T398kWFPcRgVWydgsmTuskQ9qa/4z0KrrpLKxt7AXFU6lyMqrcLQkAcSgrvUhG
+ 5Luqw2mtl22Uvky45NaRZLeMoef+NUMWnaXob6Jl3b4JzEfuCy81SUxryfi5nyJO2TB7+E1LD7R
+ x/wBGyT0jlAfu2NZBXlDU5p9lluqM36XQjeYKaqe4pVm814AL5XUmfydkbBFkusfrq0s3mkulsY
+ oOnkQ+mK/w3pik1zalg==
+X-Proofpoint-GUID: 6Kwztrkm7jZ41G2agRk-9fcXJRZmx7yk
+X-Proofpoint-ORIG-GUID: 6Kwztrkm7jZ41G2agRk-9fcXJRZmx7yk
+X-Authority-Analysis: v=2.4 cv=CeQ4Irrl c=1 sm=1 tr=0 ts=6a01de64 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=q6vtooFActFUTKw_DCAA:9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-11_04,2026-05-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 clxscore=1011 adultscore=0 malwarescore=0 bulkscore=0
+ priorityscore=1501 phishscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605110151
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=wintera@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 11 May 2026 10:28:30 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -115,68 +129,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 11 May 2026 at 15:10, Peter Xu <peterx@redhat.com> wrote:
->
-> Commit dd4fe8844b changed the reporting of expected downtime behavior, so
-> that the value will be calculated on-demand.  One side effect on the change
-> is QEMU will allow the calculation to happen anytime even if there's no
-> transfer happening for a short while.
->
-> PeterM reported an ubsan report from clang when running migration-test with
-> aarch64 binary on x86_64 hosts.  I can also reproduce if I run the test
-> concurrently so some of the src QEMU may not get chance to push any data,
-> causing mbps to be 0:
->
-> ../migration/migration.c:1051:12: runtime error: -nan is outside the range of representable values of type 'long'
->
-> Fix it by checking mbps non-zero before the devision.
->
-> Link: https://lore.kernel.org/r/CAFEAcA-MYH6C39xO0OLx4-M5pKurJpurwRsMqZe9q=W-NShAbw@mail.gmail.com
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> Fixes: dd4fe8844b ("migration: Calculate expected downtime on demand")
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  migration/migration.c | 10 ++++++++--
->  1 file changed, 8 insertions(+), 2 deletions(-)
->
-> diff --git a/migration/migration.c b/migration/migration.c
-> index b6f78eb3ac..b06e577328 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -1044,12 +1044,18 @@ static bool migrate_show_downtime(MigrationState *s)
->  /* Return expected downtime (unit: milliseconds) */
->  int64_t migration_downtime_calc_expected(MigrationState *s)
->  {
-> +    double bw;
-> +
->      if (mig_stats.dirty_sync_count <= 1) {
->          return migrate_downtime_limit();
->      }
->
-> -    return mig_stats.dirty_bytes_last_sync /
-> -        migration_get_switchover_bw(s) * 1000;
-> +    bw = migration_get_switchover_bw(s) * 1000;
-> +    if (!bw) {
-> +        return INT64_MAX;
-> +    }
-> +
-> +    return mig_stats.dirty_bytes_last_sync / bw;
+The Container Id in a container-type TLE of SysIB_15x is defined as 8-bit
+unsigned nonzero integer. Make stsi fc 15 emulation architecture compliant,
+by starting the container ids at 1 for the lowest numbered container.
 
-I think this is still UB if bw is a value that's nonzero
-but still small enough that mig_stats.dirty_bytes_last_sync / bw
-is greater than INT64_MAX. It might be more robust to do
-something like:
+The qemu misbehaviour without this patch becomes obvious due to a recently
+proposed kernel fix. Older linux kernels pass the container ids from stsi
+fc15 unchanged to sysfs, i.e. starting at 1 on s390 hardware. This resulted
+in off-by-one values when compared to the values from HMC. A Linux kernel
+fix is being proposed to correct the sysfs topology ids by -1, so they
+start at 0, e.g. when displayed by 'lscpu -ye'. In case a KVM guest with a
+fixed kernel runs on a host with a qemu without this fix, this can result
+in container ids erroneously being shown as 255.
+Example (Fixed guest on unfixed qemu):
+$ lscpu -ye
+CPU NODE DRAWER BOOK SOCKET CORE L1d:L1i:L2 ONLINE CONFIGURED POLARIZATION ADDRESS
+  0    0    255  255    255    0 0:0:0         yes yes        vert-medium  0
+  1    0    255  255      0    1 1:1:1         yes yes        vert-medium  1
+After this fix:
+$ lscpu -ye
+CPU NODE DRAWER BOOK SOCKET CORE L1d:L1i:L2 ONLINE CONFIGURED POLARIZATION ADDRESS
+  0    0      0    0      0    0 0:0:0         yes yes        vert-medium  0
+  1    0      0    0      1    1 1:1:1         yes yes        vert-medium  1
 
-    double expected = mig_stats.dirty_bytes_last_sync /
-        migration_get_switchover_bw(s) * 1000;
+Fixes: f4f54b582f ("target/s390x/cpu topology: handle STSI(15) and build the SYSIB")
+Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
+---
+ target/s390x/kvm/stsi-topology.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-    if (expected >= (double)INT64_MAX) {
-        return INT64_MAX;
-    }
-    return (int64_t)expected;
+diff --git a/target/s390x/kvm/stsi-topology.c b/target/s390x/kvm/stsi-topology.c
+index 301d41b68d..afd00da0e6 100644
+--- a/target/s390x/kvm/stsi-topology.c
++++ b/target/s390x/kvm/stsi-topology.c
+@@ -90,9 +90,9 @@ static int stsi_topology_fill_sysib(S390TopologyList *topology_list,
+     int last_drawer = -1;
+     int last_book = -1;
+     int last_socket = -1;
+-    int drawer_id = 0;
+-    int book_id = 0;
+-    int socket_id = 0;
++    int drawer_id = 1;
++    int book_id = 1;
++    int socket_id = 1;
+     int n = sizeof(SysIB_151x);
+ 
+     QTAILQ_FOREACH(entry, topology_list, next) {
+@@ -103,12 +103,12 @@ static int stsi_topology_fill_sysib(S390TopologyList *topology_list,
+         if (level > 3 && drawer_change) {
+             SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
+             p = fill_container(p, 3, drawer_id++);
+-            book_id = 0;
++            book_id = 1;
+         }
+         if (level > 2 && book_change) {
+             SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
+             p = fill_container(p, 2, book_id++);
+-            socket_id = 0;
++            socket_id = 1;
+         }
+         if (socket_change) {
+             SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
+-- 
+2.39.5 (Apple Git-154)
 
-(which will also handle the infinity case, because
-in IEEE fp infinity is larger than any finite value).
-
--- PMM
 
