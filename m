@@ -4,75 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B185FCD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 19:06:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB359CD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 19:07:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMVwd-00026X-Ni; Mon, 11 May 2026 15:05:35 -0400
+	id 1wMVxz-0002Ks-97; Mon, 11 May 2026 15:07:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wMVwb-00026B-9S
- for qemu-devel@nongnu.org; Mon, 11 May 2026 15:05:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wMVwZ-0007mt-9V
- for qemu-devel@nongnu.org; Mon, 11 May 2026 15:05:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778526328;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0PEVDEYCNuIIAg0922CyPoNbODUS80bicA9t+3R0Nxg=;
- b=Q9VqFrCjXLMU6QjJLpOJyRl4VSoei3b0AwC3uWjqKTk0DqfUkA1XF7m9gu1ntPV8iBgRKT
- EGlj4mnUjoVzX+INlQNDeW+8aakthqaV3jaZQ1TRh1QqNhzl9ImKsFf3NE4jtxg+DTl8s5
- PLp7BWctWgp42utpnQnTLowZH7biYqA=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-505-FcNjnXITOIO5GbvUp3O1fQ-1; Mon,
- 11 May 2026 15:05:26 -0400
-X-MC-Unique: FcNjnXITOIO5GbvUp3O1fQ-1
-X-Mimecast-MFC-AGG-ID: FcNjnXITOIO5GbvUp3O1fQ_1778526325
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6A720180061B; Mon, 11 May 2026 19:05:25 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.172])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 89D62180034E; Mon, 11 May 2026 19:05:24 +0000 (UTC)
-Date: Mon, 11 May 2026 15:05:23 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Zhang Chen <zhangckid@gmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH V7 04/14] blockdev: Update tracking iothread users with
- holder name
-Message-ID: <20260511190523.GF536999@fedora>
-References: <20260511140416.28271-1-zhangckid@gmail.com>
- <20260511140416.28271-5-zhangckid@gmail.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wMVxi-0002JM-CM
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 15:06:43 -0400
+Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wMVxf-000869-LO
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 15:06:42 -0400
+Received: by mail-ot1-x32d.google.com with SMTP id
+ 46e09a7af769-7dcdd23fcdfso2521059a34.3
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 12:06:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778526398; x=1779131198; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DmY7F2wQOdNNHZqSlt4US+jGj2nBqRNa2RTnZ8QtfS8=;
+ b=biEBbcIwZfTer1QnlsrC8+Z0bQJ7FzFuOyBCZBtCQXoRVDqKsdyxb4gyyg1GXzAtqo
+ d6IX3ye+MGxy2f5MN7NeC5qHcP19RVsz9HhDce0gt/RwmKusuV7sb/moAxlaDOlv/j++
+ 3QYZ9RK2ihb06A915TR/CZSF63eu40iXjEOiRR/auwVfvslf1HzZGqUGc0spkEPeyBqy
+ a7T5pcXbJtCYgRX5bvtnceJZKSvSO/JrtwDMQKAJ0vIEKR6OGYAoqPB/JiuIqJwID+Nc
+ OOpIXXv53MUsG96L/A2XFFpGxKzKNW5duu+PocXGgx18LXLN4uVjP0Hqblmi6V2UYA9Z
+ mfuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778526398; x=1779131198;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=DmY7F2wQOdNNHZqSlt4US+jGj2nBqRNa2RTnZ8QtfS8=;
+ b=pGmX03k/Mu3lYMGVdw7XtEukRboqpg3accgQr608dMAtefyTYqyyVHhIybvQTQawt4
+ N++2n5ka6AGMZfvTBy3JLbpDNA32vHdqyYNx2FloCP/1gNcVSWUTU+P4uD2wDafMTuPt
+ V3A45qxJgBBxER98dNUbZQzQk1oJFyQDyljyMSDJqi1HIyp4r+5ipdxEBjAzzjm4CpdM
+ BsDGciUzn5dHCl7tD8XlxFxMo543v2uAa1XPIaEZHLVkqPMt5LIkd/Rn3CE9pIeKa43s
+ NVQKdQ/wCz5/snx5zANZgCX0/vnRaMdgBiIVkoQUnuC71sRtwvzrezOyK/7N9WA7Mi2t
+ hPVw==
+X-Gm-Message-State: AOJu0YxO0bSTDyx5rsSvp+Fifd4o1RM5uwpztYsocntLdD7eoSiYVsw1
+ Z9dU9PzegBTranYgCvU0iMptS32k6Mxubs7b9Tn3mwAXarpjtTJDS196m8Pu0xtUGAROqOvpNnn
+ n8/9a
+X-Gm-Gg: Acq92OHbrkbvpDDoApXGArV7SzYKlXjims/DWumMKbfuUIi7qzMYRGIw+yM3ZmQEmDi
+ XnXxdEDMi4Kxo/zEY0Y3bTErW8YA14VXtmXZl2ONXxNjQ9cZkBWFUmocrYhsnHhrkmEYYDKxSAe
+ 1vson5Lc9sGcDi6dbI/UyYG1mLETMV7l+nBC8WkWqfeGVhxcX3wPlyLV03pSAyeVVggO+W3AV6B
+ Gqsb9go6xL99YdhTeCBYfNW6RTmrWelyd90MrOoz+dtWV9R+/WgTznzZtMNvkbsyWLeFazQgm8R
+ ZhjpDMj4Ny5a3vPcExA0Sry+XZn+iWMmQm445M/NG6ADf6XpIUCJbeWA8iMM6vpIstyl2ECQFuN
+ JId+amy8lkHAIIwaMuEEZs0YiF6nsp0Han1EVH+Kjv4A//OXvhwdocZnaySXT7KEpbNJj/GJdWe
+ Ftho19WQUgzY/LXRBZjj4PGq7fS9SnvLPcuJzips8ff8Q5xA==
+X-Received: by 2002:a05:6830:6d48:b0:7de:a17c:3716 with SMTP id
+ 46e09a7af769-7e1df13142bmr15848868a34.28.1778526398248; 
+ Mon, 11 May 2026 12:06:38 -0700 (PDT)
+Received: from stoup.attlocal.net ([2600:381:c938:6375:e3e5:757d:3cef:3491])
+ by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-7e367d8feb1sm7157011a34.23.2026.05.11.12.06.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 11 May 2026 12:06:37 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: pierrick.bouvier@oss.qualcomm.com,
+	philmd@linaro.org
+Subject: [PATCH 1/5] meson: Build target-info-qom.c with -fno-lto
+Date: Mon, 11 May 2026 14:06:30 -0500
+Message-ID: <20260511190634.472174-2-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260511190634.472174-1-richard.henderson@linaro.org>
+References: <20260511190634.472174-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="LaADuwiADXDBieAv"
-Content-Disposition: inline
-In-Reply-To: <20260511140416.28271-5-zhangckid@gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,116 +101,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ meson.build | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---LaADuwiADXDBieAv
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, May 11, 2026 at 10:04:06PM +0800, Zhang Chen wrote:
-> Currently, x-blockdev-set-iothread changes the AioContext but does not
-> track the IOThread object itself within the block layer. This makes it
-> difficult to manage IOThread reference counting (put/get) during
-> dynamic context switching.
->=20
-> Introduce an 'iothread' field to BlockDriverState to store the current
-> assigned IOThread. Update qmp_x_blockdev_set_iothread to perform
-> proper reference counting using iothread_ref/put when moving nodes
-> between an IOThread and the main loop.
->=20
-> This ensures 'info iothreads' (holders) accurately reflects the block
-> device attachment state after dynamic migrations.
->=20
-> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> ---
->  blockdev.c                       | 6 +++++-
->  include/block/block_int-common.h | 5 +++++
->  2 files changed, 10 insertions(+), 1 deletion(-)
->=20
-> diff --git a/blockdev.c b/blockdev.c
-> index 6e86c6262f..6e20579187 100644
-> --- a/blockdev.c
-> +++ b/blockdev.c
-> @@ -3683,8 +3683,12 @@ void qmp_x_blockdev_set_iothread(const char *node_=
-name, StrOrNull *iothread,
->              goto out;
->          }
-> =20
-> -        new_context =3D iothread_get_aio_context(obj);
-> +        new_context =3D iothread_ref_and_get_aio_context(obj, node_name);
-> +        bs->iothread =3D obj;
->      } else {
-> +        if (bs->iothread) {
-> +            iothread_put_aio_context(bs->iothread, node_name);
-> +        }
->          new_context =3D qemu_get_aio_context();
->      }
-
-This command is the wrong place to associate an IOThread with a
-BlockDriverState:
-1. Do we need to call iothread_put_aio_context() on the current IOThread
-   when x-blockdev-set-iothread is called with a new IOThread?
-2. Is the AioContext leaked when x-blockdev-set-iothread iothread=3Dnull
-   is not called before the BlockDriverState is freed?
-
-Every BlockDriverState would need to get/put the IOThread AioContext in
-bdrv_change_aio_context() or related functions.
-
-However, the QEMU block layer has been moving away from having a
-per-BlockDriverState AioContext. It is possible to use a
-BlockDriverState from any AioContext (including multiple AioContexts at
-the same time). I'm in favor of not associating BlockDriverStates with
-IOThreads and instead relying on their device owners (e.g. emulated
-storage controllers) to be the IOThread holders. That means you could
-use iothread->ctx directly or create an
-iothread_unsafe_get_aio_context() API to document that this is a
-low-level unsafe way of getting the AioContext.
-
-> =20
-> diff --git a/include/block/block_int-common.h b/include/block/block_int-c=
-ommon.h
-> index 147c08155f..6edaf53377 100644
-> --- a/include/block/block_int-common.h
-> +++ b/include/block/block_int-common.h
-> @@ -1101,6 +1101,8 @@ typedef struct BdrvBlockStatusCache {
->      int64_t data_end;
->  } BdrvBlockStatusCache;
-> =20
-> +typedef struct IOThread IOThread;
-> +
->  struct BlockDriverState {
->      /*
->       * Protected by big QEMU lock or read-only after opening.  No special
-> @@ -1289,6 +1291,9 @@ struct BlockDriverState {
-> =20
->      /* array of write pointers' location of each zone in the zoned devic=
-e. */
->      BlockZoneWps *wps;
-> +
-> +    /* Track the iothread for detach aio context*/
-> +    IOThread *iothread;
->  };
-> =20
->  struct BlockBackendRootState {
-> --=20
-> 2.49.0
->=20
-
---LaADuwiADXDBieAv
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmoCKHMACgkQnKSrs4Gr
-c8iUdQf+Mbdv/GDFYBdw/T5DlM2gArQDZJlI0ly1yeOb3hOgBOm4UVgNzLeFuF0g
-yJ7cfRc8f2SqTtHXtuIZclBQlSu/D+yupk3U1Vz3kXAR1o9m3aENbYhhycKGsNx3
-75DSEOPKLGjncQESgq2o/LeCaSRpyR7hN8JzWbvBFeKAhauuCKZv1rXgVZ39x11c
-hCknxOa9hvw8rV0cKq4V8goPcUvqmyhoMmCKBeeue/e1vwr4jwe3hSw86AxClC2r
-QG2qndQOPJ7bzuA99zZJdyqrWxp9GgkcE/Xha/1cGfFiu2t4YdAcj7qCHXWmZ4ez
-U6A3SllQGneh/l9gGomnir4aWSAYSA==
-=e89Q
------END PGP SIGNATURE-----
-
---LaADuwiADXDBieAv--
+diff --git a/meson.build b/meson.build
+index 5fbdc75a0f..9a804dc810 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3852,20 +3852,24 @@ subdir('system')
+ # without lto, not even the alias is required -- we simply use different
+ # declarations in different compilation units.
+ pagevary = files('page-vary-common.c')
++tinfoqom = files('target-info-qom.c')
+ if get_option('b_lto')
+-  pagevary_flags = ['-fno-lto']
++  nolto_flags = ['-fno-lto']
+   if get_option('cfi')
+-    pagevary_flags += '-fno-sanitize=cfi-icall'
++    nolto_flags += '-fno-sanitize=cfi-icall'
+   endif
+   pagevary = static_library('page-vary-common', sources: pagevary + genh,
+-                            c_args: pagevary_flags)
++                            c_args: nolto_flags)
+   pagevary = declare_dependency(link_with: pagevary)
++  tinfoqom = static_library('target-info-qom', sources: tinfoqom + genh,
++                            c_args: nolto_flags)
++  tinfoqom = declare_dependency(link_with: tinfoqom)
+ endif
+ common_ss.add(pagevary)
+ system_ss.add(files('page-vary-system.c'))
+ 
+ common_ss.add(files('target-info.c'))
+-system_ss.add(files('target-info-qom.c'))
++system_ss.add(tinfoqom)
+ 
+ subdir('backends')
+ subdir('configs/targets')
+-- 
+2.43.0
 
 
