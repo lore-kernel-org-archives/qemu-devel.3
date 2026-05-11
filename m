@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CE13CD37B5
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 10:20:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3FCECD37B5
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 10:21:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMNkG-00063S-V2; Mon, 11 May 2026 06:20:18 -0400
+	id 1wMNkl-0006wi-1Z; Mon, 11 May 2026 06:20:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMNjn-0005v6-Ht
- for qemu-devel@nongnu.org; Mon, 11 May 2026 06:19:52 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMNki-0006of-DY
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 06:20:44 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMNjj-0006Cl-KV
- for qemu-devel@nongnu.org; Mon, 11 May 2026 06:19:46 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-444826c16ffso3618348f8f.1
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 03:19:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMNkg-0006aG-KR
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 06:20:44 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-459bf19e87bso300493f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 03:20:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778494782; x=1779099582; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778494841; x=1779099641; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=zMoXdvZrBGo6m8vCrMhMx01TsoQ1jPS2lHd2UGcU+g4=;
- b=vuv9miskK2vEyDQr725bbeqc0ZMppjPTGizWK6AKc7VVNKSFbOtLov8BwqMW5+aN4x
- hYnT0rTuxdWpUKNPwqFoufafXAeY3shksfurEpcn+I+/igs/7+/jL+FKpspmzPAN7HCn
- P59JWBjH8y+Q/GyjvsBeyUlBCYuyYktpavfFDBfiBffFE9mhqAQzwzojXC0g3Kv2aeZE
- HAYHdrbhuTqw8IngQFni+dEDPPGocnR8yWpxdiHgjYBBOmBthZLzXkgpjGhDfj6Mgyg3
- v0GPftnynCdms1Ga+vNV6t7ovbj8ejyEss6knYg6jy1w3gBOensbBjcLjapxFnW9dmJb
- dC6g==
+ bh=tmLrBdtBIQM7i1IDc8Gim+osakNjM9qPBV6yHh5N3EI=;
+ b=zBb8kg8DYctZmuv70TNTuxO9uuh0o+c8Hahopysnpjhw9Yi8Jpc7smhmKbcwQSTtux
+ cQUmsUPbf0NRLg9n8A0b5gbWhBadd7z4JBB1N0iKOVHHMACRquqHFAk72als7ed3C9Nm
+ oUcvVtsy0cqT445hETC/QbBLuGU5bjgiGFEI8WuUTYdnFYTR62afaAutk4GC2mxYV+jA
+ pULz7BEZ0VywWtPGrq9NM0IisNAN5fCZLE9YenLk7qFG47j1zzyKCdRa4A5ZdzmrlbOd
+ g7LUzrlh8rlxnlhxLbn2mSaoWnZ1Liu/poMMRDL6SMLYTZj1VXyz7NxPmBmb7cYRSrdd
+ SlnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778494782; x=1779099582;
+ d=1e100.net; s=20251104; t=1778494841; x=1779099641;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=zMoXdvZrBGo6m8vCrMhMx01TsoQ1jPS2lHd2UGcU+g4=;
- b=NzQdrThGovboIQ0nn8QpZHnI7yj843sX/ZCsZBYZC9agJYA8neDtq9ONYorZniKQ8r
- 3x9T7UHqfGs8lR43e3sHqFngvfc9pDdvGQ4JeMQJ22uLZ+t48MREdFfiwxkvFZnV0sxT
- +SmdgRakIRPPfUy1YsCLh+aku+jzS5QTPKN2QeQFV9QljUSYisu9VcpTkT18hKbYpYrF
- i3U+xUe1MfubkU13tLmM2CTsRIEYudYzAXnpJ1RaDz9kgX5mRpbv6kk6u7tiIheZXEYD
- XVOGbgwsOj6aPUWQT6jkMMwG1f4ZgFVK1wwxb7wGym/bNkYU5Po/5Sog6n0/nSIu6ktQ
- pBQA==
+ bh=tmLrBdtBIQM7i1IDc8Gim+osakNjM9qPBV6yHh5N3EI=;
+ b=g+bJPAAs9n7tvqzWxYCEwrFfmhXIsUQOC+XfBtsTaKUBLtgDeWjoebEm5WoP+NI5c4
+ /nYiyM1pmJ8IdG9AgAUymB0IfCMQoARToVZ6ixl8WOXS0bK7vC2UqykLp1hrnWcNu/ri
+ lLcmpVXJKy3iY7UiM84/k8nm4KtFHPY4mV2f8yxrEPj+tu65slY6OkOtPzWknoYIXu+X
+ 7F60Mzk2X9t1MGJ/ZLzZ3bu5HtCnycEWIaKeNRflJHrQ5Huql5Dj92d6ay/Z6HUrHx0m
+ fS9c6l9hurAWALqe0kh2ewTLR/ISo7O2oA8qydn4WCK0qxhKDgXkdptdeEjNIuttU/jW
+ yOyQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9/rNM5irLRnl2E9xqEKq5hKQVG8lXbRIU+05X4VcR0VJy1P8Wi88F+UWJ2JG4XhXu6pDGqcg/ou1bC@nongnu.org
-X-Gm-Message-State: AOJu0YzrToSLRysOHnR8zBYW5HQeDhZjxzZMuoULA6yBQXAEJSGCJBIS
- w5rySm9FRFEW7r7L5r8toru/iDL8U4Jj4Q68qq7GekxMEroolpJY96DgtLKhbBGwlzg=
-X-Gm-Gg: Acq92OF8ruFNwnqgQ8yKs5sDpelCAX/qi/Tjn0g9ZYxzS5PVmCkgttvZFze1n8MPIp7
- xJuDUSadYmd8xKC6xWUqhlOYWIkJUClXOFekeHpIs7FWc8ybp3qdiQFGgSfCpn1x8Vgiu3L/uJ1
- PDf3CEw/K3FAbD8QDzl/4Kgzj5tkHbdAyhlcb7rBr5+iYUm1goslL+utKWOwFst4+AtvjFajpvd
- kvx/0lnasZpflt26U7vT3Z8z12xCB31vxilIBz6fBzOLt2Ly0cwM8BVOkPjC7gf2WCsCtXY0A67
- ULsYHNxjsc3fbzIbVX4fhBrdlo5lbl3Y37pIfNKEOAnmd4amitUPdura/CaDZks//xXSzuziWrg
- ET9b+NehakTmuiqngqPyVNXb5x7IAvF18B5Qq4aTqUnoN0z5j1zdCn/6m7iacHQoVpXnQH2ytXw
- K6rxgixwOgJDGWNeifXvngnJG19wD5DkmBAxOHvaQDdjQfx1WNCSL/u8CpR35qIMyXNQ==
-X-Received: by 2002:a05:6000:4308:b0:455:4288:6c34 with SMTP id
- ffacd0b85a97d-45542886c70mr17085622f8f.24.1778494781978; 
- Mon, 11 May 2026 03:19:41 -0700 (PDT)
+ AFNElJ8sfpPzgo/yGpYxZVIaVuXXsybGiv1SlLrfAxZ6Aw91AU0IB9ZRDcaa2JMM4rht4ipzrzZEe+s113q0@nongnu.org
+X-Gm-Message-State: AOJu0YybYGYxlNU2v+88MLCdDANBgNK1Q9f2so+OYbcVqC+Rz3JnfbDe
+ fJackPX4xXPh8Oi6qBOQcFUqoUDorD15EFt2xnuO1YiJDoCL8r0k44LFRdpc0WuaUd4=
+X-Gm-Gg: Acq92OHLMGUTcQKx74602PoVcr5XVMezJrAmxtGgCKJq50mqpdDZ1rRCZ7SZk2tx7yq
+ zv0lTylJVlJ8mR1mPbez+UO6sne7aRbyD25t2TnePwwvQssMJt+2v3JqaPP9oTP+MqbrW2n1QPa
+ GLEf05w1n4ACbAz3y3d0e3Q9ddSsUkOkajOmobyyF3Cgh5ZtxcGpZBTTHdewiGrukBcF2jrUDQH
+ HCXx1txRuDGYa3A6R3nyuM3GvM+gZfbQsGGtH8zvMTX+DVCzpmfBFRTjj3hS0S71rTUrzlcDBtT
+ Rqa60Hnd/VC42bUkBLYnErGKO4VxbVnYq5dS1GvN4fNernUhbktSf1WxL45cOn60mvWs7qJcKgb
+ WayYo50OX3G5dcvC4q0tTtNnfeq6B9mwDGj1hFWjdtF6by40oemIhE/us/2DI0rnUArrYqbR9lD
+ +luZL82ekUjMJg/qQucClcOAZIO93wjAzIUIdIM7Esxgpr8VVTNt2egiovpGP+ww9lRdOZhMJDS
+ rVs
+X-Received: by 2002:a05:6000:26cf:b0:44e:902f:e341 with SMTP id
+ ffacd0b85a97d-45462c342a3mr20830809f8f.20.1778494840789; 
+ Mon, 11 May 2026 03:20:40 -0700 (PDT)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4548e4bbebdsm26518664f8f.5.2026.05.11.03.19.40
+ ffacd0b85a97d-4548ec6c79fsm26001277f8f.15.2026.05.11.03.20.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 May 2026 03:19:41 -0700 (PDT)
-Message-ID: <53a66de2-e155-45d0-bcac-2f4d45f1e5fe@linaro.org>
-Date: Mon, 11 May 2026 12:19:40 +0200
+ Mon, 11 May 2026 03:20:40 -0700 (PDT)
+Message-ID: <aaa19d8b-bc79-42e8-9783-62d0912941f5@linaro.org>
+Date: Mon, 11 May 2026 12:20:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] [RFC] hw/i2c/designware_i2c: add SMBUS_INTR_MASK
+Subject: Re: [PATCH 1/4] hw/i2c: Add designware i2c controller
 Content-Language: en-US
 To: Nicholas Piggin <npiggin@gmail.com>, Corey Minyard <cminyard@mvista.com>
 Cc: Alistair Francis <alistair.francis@wdc.com>,
@@ -78,22 +79,23 @@ Cc: Alistair Francis <alistair.francis@wdc.com>,
  Michael Ellerman <mpe@kernel.org>, Joel Stanley <jms@oss.tenstorrent.com>,
  Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
  Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org, Hao Wu <wuhaotsh@google.com>
+ qemu-devel@nongnu.org, Hao Wu <wuhaotsh@google.com>,
+ Joel Stanley <joel@jms.id.au>
 References: <20260507120524.111056-1-npiggin@gmail.com>
- <20260507120524.111056-5-npiggin@gmail.com>
+ <20260507120524.111056-2-npiggin@gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260507120524.111056-5-npiggin@gmail.com>
+In-Reply-To: <20260507120524.111056-2-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,15 +112,35 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/5/26 14:05, Nicholas Piggin wrote:
-> QEMU complains about access to unimplemented register when Linux
-> inits the controller. It is the SMBUS interrupt mask which the
-> driver unmasks. Since the model implements no SMBUS interrupts,
-> the mask can be implemented trivially.
+> From: Chris Rauer <crauer@google.com>
 > 
+> In the past this model has been submitted for use with the arm virt
+> machine, however in this case it will be used by the upcoming
+> Tenstorrent Atlantis RISC-V machine.
+> 
+> This is a re-submission of the model with Chris' permission, with a
+> light touch of updates to make it build with qemu master.
+> 
+> Reviewed-by: Hao Wu <wuhaotsh@google.com>
+> Signed-off-by: Chris Rauer <crauer@google.com>
+> Link: https://lore.kernel.org/qemu-devel/20220110214755.810343-2-venture@google.com
+> [jms: rebase and minor build fixes for class_init and reset callback]
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> Acked-by: Alistair Francis <alistair.francis@wdc.com>
 > ---
->   hw/i2c/designware_i2c.c | 5 +++++
->   1 file changed, 5 insertions(+)
+
+
+> diff --git a/roms/seabios-hppa b/roms/seabios-hppa
+> index d9560852a3..1a8ada1fb7 160000
+> --- a/roms/seabios-hppa
+> +++ b/roms/seabios-hppa
+> @@ -1 +1 @@
+> -Subproject commit d9560852a34f156155b3777745baa0d96d553f22
+> +Subproject commit 1a8ada1fb70643172e251aacbac673c9ecda99e9
+
+Unrelated change ;) Otherwise:
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
