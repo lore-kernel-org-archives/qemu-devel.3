@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D6D0CD484A
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 13:53:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 478BECD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 13:53:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMR4j-0008PJ-74; Mon, 11 May 2026 09:53:38 -0400
+	id 1wMR4x-0000Bx-CH; Mon, 11 May 2026 09:53:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMR4d-0008Ox-U7
- for qemu-devel@nongnu.org; Mon, 11 May 2026 09:53:33 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMR4r-00005h-7Y
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 09:53:46 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMR4c-0004R3-1U
- for qemu-devel@nongnu.org; Mon, 11 May 2026 09:53:31 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4891c0620bcso30625735e9.1
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 06:53:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMR4j-0004Rp-By
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 09:53:38 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-48a7fe4f40bso50626395e9.0
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 06:53:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778507608; x=1779112408; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778507615; x=1779112415; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RblXm9dhEHZv279MNl7uYc29BPUcgmnZmPt//VeUYCc=;
- b=bPfak/fid/JC9UWhB+5LZNjhpdP024SMvHvhk+AMd4+NVwLHE9vwd8zUiiR8L3v+Pp
- qbqz5jkg4lhTrfj8tE0x1t8YAk9hIRl6ElYORi442GiPbZvO9QtSkoTVB2J93RHnEE2C
- 2k154FjdzFUJChXiIUqfeh+MolRqP0atSsoOBcpMaYAYQYo7ccR/kr48AWzZO5DS6Ge2
- VzVZxOopcdhp/v5tYW2I7Wj4Uwv0NA3/d1Yo/XMcLZSlKs2fkNZLynrCk4A+5KV17PPN
- l7Y59aq+2VOtHQp12EhSV8IcHYeGp9oiyR5sWQXwoVAo+4u8SdRGYG7Q4HKoapT5CLo2
- 6ReA==
+ bh=tRuU/inbb+Eaj7b9xaJfM5WKP8b7b+xhLkC4V34QYE8=;
+ b=nnYkCRwWketJQj26f60VpMHJmA9IDnPxwk97se6FB34NW4tQ7J5usbzrJ97UxLDe73
+ xPQrs+Z3JOeZjg86JdmhkU8230df3Q2NfN/JPaEQmo1YXKYZu+7OkFTlABSlOfhxnj5y
+ xDQ/IdR5NgZAbvKZ0iUnI7caZ+sooOBmAlILEki/56KF8lHUT+Wu6ljWkLT8N54vUUC1
+ r9grtyqx38m/4UMmrfjrt3Sqv92rysUUwb8sn7rx+24vlTOVXOe/db826STJp799F4QO
+ 15MICOTZC7MToepgfeChMm8tmgeO/b7AHTKT7MfGAE6fLeDbPQNbWqEYyR4BQwMlKxa2
+ o+fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778507608; x=1779112408;
+ d=1e100.net; s=20251104; t=1778507615; x=1779112415;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=RblXm9dhEHZv279MNl7uYc29BPUcgmnZmPt//VeUYCc=;
- b=BMUUf2EaP9Jh/LMlGuOS8SPhy1a5wVEuvC7sNeVDr1ZaIy5ZZls9uydak8LgmgQzVD
- Heeibup5UkG4VgFUAyCyk4Y4PyU6sU2pW8wj19vNJrbinelgZ1lbzd9ZJWrbpaZ9jMBv
- 3GMvMlfnmHpjUpudPyR83hcrxFvlkeI4yR3EP5Wr07pwjgaMdxdH/Vbeb4ShqjUXi0kO
- uCK1burwolFgUCB2Zlamh7JyzkpymGA5HsXn4tpmuMFvvE38KZDwEb6DN2y6/gwUWGtQ
- FEHUlCKmrnCh2xlbJe3Rr2HwuO5Lwmwpwbl7pf9u3iiHKKQynhUx0EosE/Sr2XfD3uzS
- NZKw==
-X-Gm-Message-State: AOJu0YwUn/tf+ljHrWIhcbDrruFII/P12l50QdW67Ipylvtk2BjT+PCD
- Up8DLxdfbkZmnbJZ95FWSbWv9jt26ivUspqO6DfI2B5MtakY8vIny+QP0OzJ0pbxMzm7U31csX9
- 7Mvk2xgY=
-X-Gm-Gg: Acq92OESbjU29uO+JFaHp07KeHAFiwWR59BLnffLMmew1MI3xpRl6rRJt+URq21+tT2
- HFRkezhkvDqZB2QmTXOxupKlmzBul+ZnpZ0kKBPaw397IXM6O2seBqyNkD0+JuAHczJcudkCMZB
- ma7rn35c1SEnRZGyE3wkaQdfQS4FwkIACerOgGoIa4MGq2I1z/telMLt6A81PckYQ63WnToyv5d
- C+qxXUMzJOA7fXPfZ5cimXzRNX1fyvp+ht8JJbW4AjzaMvZNswlleZ+ccQuMJSi+hFLpXYNi723
- l1mnPqN7y1mHvWj6paUpOTt5So44AyRA6y/oxZ6jWwpaiutfQFTdxthlUJKhtqqMsUxULP5etNu
- 8SYYxaH68Guth8legzwapOUxXkl59wrgFh38iP0fjG8gPsQg7bMdw5NIBzvDlytkwHvSvWlKgYb
- SYbcN7IRhvful86gpS9V4zjG01hAxy+S+OQPCvUi4mZS96i2Ntebawlunk3KRlgUjzNHTQ77/Q
-X-Received: by 2002:a05:600c:8594:b0:48a:52ce:a4b1 with SMTP id
- 5b1f17b1804b1-48e676a4e1fmr169162165e9.15.1778507608202; 
- Mon, 11 May 2026 06:53:28 -0700 (PDT)
+ bh=tRuU/inbb+Eaj7b9xaJfM5WKP8b7b+xhLkC4V34QYE8=;
+ b=l4Oc2u0mGkfNhARU1Z4dG8kviYRvEnslIWeuPPmmHXJ8HcsR7LCWDjS6/hm5gPoIzz
+ +gDUnZyeV8FWoZ82bnvCovqDipqIHDM+hyoBltb3bNkCNQprzLc310no6pipd3SiBMRC
+ A2Q23AtTkbljsUyYM2PduW3KhaPyKlxI3MHZ904otmiz2RqfdiNw6qOoU90/zGMXzZwK
+ ngjDiwMAqxVbj69AVx8NPhnKU62n6h5ZetlhDPqpYN1TGcx5JoE+SxBPs1PQxBS3UO2a
+ xoBlvitW8HPC3Bg+uXhsLhMM6s4V4va0tLraGfwnxvT1F/jB86Dd3PX3SSMuqb4zop2/
+ greg==
+X-Gm-Message-State: AOJu0YyeD3wBidCgl9FawK4ii5FNXLtHcSALvN4TD/HY3EpRgOuZTVRi
+ S6G+WXkEPz3T5KrgvRq/BdtNpA9Ic7V3F9lq4aGpqxqG3W8edvr4weRGzq8yPe7D+1TbqZEbHRH
+ Sgx4hwNo=
+X-Gm-Gg: Acq92OEii2NfRzJQAFkJsQ4W6v972pSI1rV1Ut6Qf1bq+foKZO6nCZDtrqQV3QGfKtS
+ RANDfIgqMM1BX4KUaVUNhylEvT4NRpl+bS+JOcZu+q/LP8NSMm8fseQ5iTvN77jVKYlDMLx8xpx
+ obTJmwoHUPX4lp1z2uPRgbkkADsus27GHxKuffFveTRUbAeFT+iLR6M/s3BVlxljsdN9rHvCzFf
+ bbo7IQ6q566tX88seMg5Qqjq8sCAeMmpEmn9PLXKpf+X4gp55pNVgepkvTFNl/8Lh3aRO410HMN
+ 9IFCCkQK333PWWVRrGj4ztkMT+WdID2lBTHKDgNWCS3B3N+Iyt7En2vNjk9uwEOzUpCIWFV5gUr
+ XP5PfKYSFg7g1kjt7abnExqY3VQ5abVBkaxFU9ai7o4JNV8ITzwSMbfpv5lUJcttLe+eaBS+gSx
+ jQek1hxGlBgRiksi+48oP5v1RhVvQTV+ekBH37sACxfO+/QNTswRfk4VKXivlnEdvEvRxED0b3A
+ XBNlDT27fQ=
+X-Received: by 2002:a05:600c:4755:b0:48a:58ae:992f with SMTP id
+ 5b1f17b1804b1-48e51f2e8cfmr382129745e9.16.1778507615225; 
+ Mon, 11 May 2026 06:53:35 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e702e0bf2sm328985905e9.4.2026.05.11.06.53.27
+ ffacd0b85a97d-45491cab9c2sm27072127f8f.31.2026.05.11.06.53.34
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 11 May 2026 06:53:27 -0700 (PDT)
+ Mon, 11 May 2026 06:53:34 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -70,22 +71,18 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Aleksandar Rikalo <arikalo@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
  Richard Henderson <richard.henderson@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 2/5] buildsys: Remove support for MIPS hosts
-Date: Mon, 11 May 2026 15:53:08 +0200
-Message-ID: <20260511135312.38705-3-philmd@linaro.org>
+ Aurelien Jarno <aurelien@aurel32.net>
+Subject: [PATCH 3/5] hw/mips: Include missing 'cpu.h' header
+Date: Mon, 11 May 2026 15:53:09 +0200
+Message-ID: <20260511135312.38705-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260511135312.38705-1-philmd@linaro.org>
 References: <20260511135312.38705-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,203 +105,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-MIPS host support is deprecated since commit 269ffaabc84
-("buildsys: Remove support for 32-bit MIPS hosts"). Time
-to remove.
+"target/mips/cpu.h" is indirectly pulled in via the "system/kvm.h"
+header, which next commit will remove. Explicitly include the "cpu.h"
+header, otherwise we'd get:
+
+  hw/mips/mips_int.c:29:5: error: use of undeclared identifier 'MIPSCPU'
+     29 |     MIPSCPU *cpu = opaque;
+        |     ^
+  hw/mips/mips_int.c:30:5: error: use of undeclared identifier 'CPUMIPSState'
+     30 |     CPUMIPSState *env = &cpu->env;
+        |     ^
+
+  hw/mips/loongson3_virt.c:156:39: error: unknown type name 'MIPSCPU'
+    156 | static uint64_t get_cpu_freq_hz(const MIPSCPU *cpu)
+        |                                       ^
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- docs/about/deprecated.rst       |  8 --------
- docs/about/removed-features.rst |  6 ++++++
- configure                       | 19 -------------------
- meson.build                     | 10 +---------
- include/qemu/timer.h            | 30 ------------------------------
- util/cacheflush.c               | 16 ----------------
- 6 files changed, 7 insertions(+), 82 deletions(-)
+ hw/mips/loongson3_virt.c | 1 +
+ hw/mips/mips_int.c       | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 5551bd12ad8..9e889601df1 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -177,14 +177,6 @@ The ``info capture`` command is deprecated and will be removed in a future relea
- Host Architectures
- ------------------
+diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
+index cd94e9f5f77..c29cae86872 100644
+--- a/hw/mips/loongson3_virt.c
++++ b/hw/mips/loongson3_virt.c
+@@ -51,6 +51,7 @@
+ #include "system/runstate.h"
+ #include "system/system.h"
+ #include "qemu/error-report.h"
++#include "target/mips/cpu.h"
  
--MIPS (since 10.2)
--'''''''''''''''''
--
--MIPS is not supported by Debian 13 ("Trixie") and newer, making it hard to
--maintain our cross-compilation CI tests of the architecture. As we no longer
--have CI coverage support may bitrot away before the deprecation process
--completes.
--
- TCG Plugin support not enabled by default with TCI (since 9.2)
- ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ #define PM_CNTL_MODE          0x10
  
-diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index 626162022a8..1a30b941d65 100644
---- a/docs/about/removed-features.rst
-+++ b/docs/about/removed-features.rst
-@@ -938,6 +938,12 @@ From 10.0, QEMU has disabled configuration of 64-bit guests on 32-bit hosts.
- Debian 12 "Bookworm" removed support for 32-bit MIPS, making it hard to
- maintain our cross-compilation CI tests of the architecture.
+diff --git a/hw/mips/mips_int.c b/hw/mips/mips_int.c
+index 2b740afc4d8..fa9c78e74de 100644
+--- a/hw/mips/mips_int.c
++++ b/hw/mips/mips_int.c
+@@ -25,6 +25,7 @@
+ #include "hw/core/irq.h"
+ #include "system/kvm.h"
+ #include "kvm_mips.h"
++#include "target/mips/cpu.h"
  
-+64-bit MIPS (removed in 11.1)
-+'''''''''''''''''''''''''''''
-+
-+Debian 13 "Trixie" removed support for MIPS, making it hard to maintain our
-+cross-compilation CI tests of the architecture.
-+
- 32-bit PPC (removed in 10.2)
- ''''''''''''''''''''''''''''
- 
-diff --git a/configure b/configure
-index b6dd797de5b..e138d83bc9f 100755
---- a/configure
-+++ b/configure
-@@ -399,8 +399,6 @@ elif check_define _ARCH_PPC64 ; then
-   else
-     cpu="ppc64"
-   fi
--elif check_define __mips64 ; then
--  cpu="mips64"
- elif check_define __s390__ ; then
-   if check_define __s390x__ ; then
-     cpu="s390x"
-@@ -446,12 +444,6 @@ case "$cpu" in
-     linux_arch=loongarch
-     ;;
- 
--  mips64*|mipsisa64*)
--    cpu=mips64
--    host_arch=mips64
--    linux_arch=mips
--    ;;
--
-   ppc64)
-     host_arch=ppc64
-     linux_arch=powerpc
-@@ -1244,11 +1236,6 @@ EOF
-         rust_osvariant=${rust_osvariant}eabi
-       fi
-       ;;
--
--    mips64)
--      # e.g. mips64-unknown-linux-gnuabi64
--      rust_osvariant=${rust_osvariant}abi64
--      ;;
-     esac
-     ;;
- 
-@@ -1281,12 +1268,6 @@ EOF
-     test "$rust_arch" = arm && test "$rust_os" != linux && rust_arch=armv7
-     ;;
- 
--  mips)
--    # preserve ISA version (mipsisa64r6 etc.) and include endianness
--    rust_arch=${raw_cpu%el}
--    test "$bigendian" = no && rust_arch=${rust_arch}el
--    ;;
--
-   riscv64)
-     # e.g. riscv64gc-unknown-linux-gnu, but riscv64-linux-android
-     test "$android" = no && rust_arch=${rust_arch}gc
-diff --git a/meson.build b/meson.build
-index 5fbdc75a0fc..692d0bc0eab 100644
---- a/meson.build
-+++ b/meson.build
-@@ -55,7 +55,7 @@ qapi_trace_events = []
- bsd_oses = ['gnu/kfreebsd', 'freebsd', 'netbsd', 'openbsd', 'dragonfly', 'darwin']
- supported_oses = ['windows', 'freebsd', 'netbsd', 'openbsd', 'darwin', 'sunos', 'linux', 'emscripten']
- supported_cpus = ['ppc64', 's390x', 'riscv64', 'x86_64',
--  'aarch64', 'loongarch64', 'mips64', 'sparc64', 'wasm64']
-+  'aarch64', 'loongarch64', 'sparc64', 'wasm64']
- 
- cpu = host_machine.cpu_family()
- 
-@@ -5036,14 +5036,6 @@ if host_arch == 'unknown'
-     message('configure has succeeded and you can continue to build, but')
-     message('QEMU will use a slow interpreter to emulate the target CPU.')
-   endif
--elif host_arch == 'mips'
--  message()
--  warning('DEPRECATED HOST CPU')
--  message()
--  message('Support for CPU host architecture ' + cpu + ' is going to be')
--  message('dropped as soon as the QEMU project stops supporting Debian 12')
--  message('("Bookworm"). Going forward, the QEMU project will not guarantee')
--  message('that QEMU will compile or work on this host CPU.')
- endif
- 
- if not supported_oses.contains(host_os)
-diff --git a/include/qemu/timer.h b/include/qemu/timer.h
-index b931181f53d..ec03635dd34 100644
---- a/include/qemu/timer.h
-+++ b/include/qemu/timer.h
-@@ -922,36 +922,6 @@ static inline int64_t cpu_get_host_ticks (void)
- #endif
- }
- 
--#elif defined(__mips__) && \
--    ((defined(__mips_isa_rev) && __mips_isa_rev >= 2) || defined(__linux__))
--/*
-- * binutils wants to use rdhwr only on mips32r2
-- * but as linux kernel emulate it, it's fine
-- * to use it.
-- *
-- */
--#define MIPS_RDHWR(rd, value) {                         \
--        __asm__ __volatile__ (".set   push\n\t"         \
--                              ".set mips32r2\n\t"       \
--                              "rdhwr  %0, "rd"\n\t"     \
--                              ".set   pop"              \
--                              : "=r" (value));          \
--    }
--
--static inline int64_t cpu_get_host_ticks(void)
--{
--    /* On kernels >= 2.6.25 rdhwr <reg>, $2 and $3 are emulated */
--    uint32_t count;
--    static uint32_t cyc_per_count = 0;
--
--    if (!cyc_per_count) {
--        MIPS_RDHWR("$3", cyc_per_count);
--    }
--
--    MIPS_RDHWR("$2", count);
--    return (int64_t)(count * cyc_per_count);
--}
--
- #elif defined(__alpha__)
- 
- static inline int64_t cpu_get_host_ticks(void)
-diff --git a/util/cacheflush.c b/util/cacheflush.c
-index c043c5f881a..247c4ce2980 100644
---- a/util/cacheflush.c
-+++ b/util/cacheflush.c
-@@ -301,22 +301,6 @@ void flush_idcache_range(uintptr_t rx, uintptr_t rw, size_t len)
- }
- #endif /* CONFIG_DARWIN */
- 
--#elif defined(__mips__)
--
--#ifdef __OpenBSD__
--#include <machine/sysarch.h>
--#else
--#include <sys/cachectl.h>
--#endif
--
--void flush_idcache_range(uintptr_t rx, uintptr_t rw, size_t len)
--{
--    if (rx != rw) {
--        cacheflush((void *)rw, len, DCACHE);
--    }
--    cacheflush((void *)rx, len, ICACHE);
--}
--
- #elif defined(__powerpc__)
- 
- void flush_idcache_range(uintptr_t rx, uintptr_t rw, size_t len)
+ static void cpu_mips_irq_request(void *opaque, int irq, int level)
+ {
 -- 
 2.53.0
 
