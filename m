@@ -4,106 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C34FCD4842
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 19:07:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E16EECD4840
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 19:11:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMVyb-00033m-66; Mon, 11 May 2026 15:07:37 -0400
+	id 1wMW1t-0005VA-Fi; Mon, 11 May 2026 15:11:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wMVyY-0002sB-D8
- for qemu-devel@nongnu.org; Mon, 11 May 2026 15:07:34 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wMW1g-0005U8-4V
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 15:10:48 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wMVyW-0008TR-KF
- for qemu-devel@nongnu.org; Mon, 11 May 2026 15:07:34 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-bd1caeba6beso132743566b.3
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 12:07:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778526451; cv=none;
- d=google.com; s=arc-20240605;
- b=IBoKUfqjnAaMWz/coEqGyn/Q+QvA6R2HlIHuQiaS781S6r5RfHvGo/JzW0tjrexgBH
- Lo6/6l0eojNMG+PfvPt7QIMpM2kKQ3+cf1FesN6SAWdAajS8yC4qyH6zKhox+HQ9177f
- cC7zsLcMdfUq5TR8+H9lQxol/ILSYCzfLI5Km0SCxZitxVW3I7UsBFr9E4qBPSxee5GO
- 0AL6cfbjk8xzhWUdQYykRqb8imtF2wxpw7ihD9FK2aMB0ckdypgnxFfQ6XlJLMhTvUYv
- hKec+iwLxcGBVyXAQpxLrxORbgGh7hQ0O85SzkIpZsyTWvPYr2XPwUJ3v/K1XpeGHB8X
- 0Q0g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=mSEn69GTQbz9I9Zy2qz2yuNXu6m2sv+azupgqWTF7WQ=;
- fh=aYT0Dte32zScO0z23mE8usKARXq3g0LPBKVr7DfkjMg=;
- b=bP6xySn/tIgZUgtsrVQ8zKuiQs6e9bjdYwuhACC3PHZ5Jyme6qzlIdkyG1AuNjhMji
- dGivttnhd/ExOLUUVXQbC/Q8iewM2Xq408vEMTK7TZ9ugxPV9iRYiBSwwFbNxVREa5Uk
- icMq5vrh1xxo/ylb2cMi1OJZRTrr19YTFzSW56sq/vvD8BDuF50SaafbXVtdWgoNL3IR
- 68U8LFy+SM8mVI2/ukgPL6l8leyI66zDgHE3/052LqXwyr9VDRy7IwkOk77hyd/WuVHx
- vpTGcOfkc/VPK7OJEgisdwJgT3i48UJGapXvl6KqXUfVyD6/Hwwof9A0Jlmir+p1i7dD
- Bmwg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wMW1d-0000nm-QP
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 15:10:47 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4891e5b9c1fso44563675e9.2
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 12:10:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778526451; x=1779131251; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1778526644; x=1779131444; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mSEn69GTQbz9I9Zy2qz2yuNXu6m2sv+azupgqWTF7WQ=;
- b=VV0qZSm73ZDJCgXicVgoHIFT54LbiAegkF+fWIEMWQDNpS/EgX0p5FiKfuBM6llwU7
- pZCYf3By95NAE44WB83//eOuZe6ElsYn2Bp362SiptnxmXBh8eTdj/3wGqJsxY8cuui6
- hYBsSabpYUaLgAPQ83DcRFVra6Ag5psXFT9QikikeKpXkNH+hxxApG35A7J8V2GdOUSn
- aqt84xOuPPMGHz1eGBnoY6mK6R/QmAkYOS2kjwiamz5ho+yeOblqCUymWc66xpnBvL/x
- o1D5ynqPaaphbIi5SrcjoRgQSqPheUdWIpZcCL4cRwBKCqLgqgPT8eoxmNEl6wj2+oZ+
- /VrQ==
+ bh=4D6erpN4DeWX2fdEYJ1e2AWnvaOfG+j9wQBAlkBW9vY=;
+ b=zO+J6o+Kqs35f+y1JUaSy/naRPvQ7Hy8c/FEFsR1IuAI0gec4jO++Htr0PeiRIs67D
+ jCx/j4Qv8T4Rg9Erp4eCBo6+mLVwSZxIrMvrBGgR3kqnScVnGsGPWvsBAak4TsXHkX8B
+ pL64XZKZP705UPeP82lHQw91kQ5qch3W0AUmVd6lPPvlFBtIidXNAJ301O32VBrXU3vM
+ aqLYX+cHSgvjLFLf8FJS0qJkONSgd9wlkR88peW/MOcHA7flPUrGTnUD40UZhaTTjMeB
+ ETMCmxJQ1JRnw5od5V+1ZGTnp5GkluvkbqJ8r18YKIrqxcM+Me1V0kzOSsHgptcIhbVo
+ RlqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778526451; x=1779131251;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=mSEn69GTQbz9I9Zy2qz2yuNXu6m2sv+azupgqWTF7WQ=;
- b=OVEORkNCnsFRBpv64O/1IH9OyfFU8F5RK2x+/Bo4NN3Cvz+0ZsRMe5K9UcsdvuWVdn
- PJceLO70U8cUXauBwKmUaOTalwbp1mBtGHNbCBUSsW1c5QoPGYqvv9oAIt0iy+bSrDbL
- kUwwNA4IE4dwfZHnXx4IaqXG0YwE19s8AVeyLGZNvMENGzbU8V5eKqEd+ffCzCNi0o1y
- tEkmQDApWOEEGCoa6zFC6OBs7CX88lwLExk3z0uf4xUWxxWrIyW8IUvLUHl5lyfprgCG
- UgdSmTZGVqTK4tkAsgnJJYcCSfI19+56FEFuGXOPlEOBIgAblkq1SKTJpQfgy/BsDCQt
- G2uA==
-X-Gm-Message-State: AOJu0Yw3wsi2xtjQWj/Aow+FIblmaqgJHcYI9ncNCq5Vovg/mi9b8GiI
- 50GJMRREO6L70EB8N8fH6v5PBSQaZ8XO94NashMYbBWNKqq+ZL5dqMWShSpU4HixeOIvf1gB4N+
- XmRf4w33wuaMikCpqhB7dSE1L3gcVD0U=
-X-Gm-Gg: Acq92OHPQdHzBTXw6umRAH3vEypvYx7UqkBy9Ex+2I1v5anRGr7h7GZ1EL+z/hrw+lT
- +OOArSQb5unXe6ueUBLbOgLjBbIXXMMT+fiKbirlZNycdcgXFhiRgTUzsSs5eWyNLO8bl153K+i
- SwFOsuVgfm5RjHcz5yAe3+k5bJr8uCIhNmozv0bYkERUmLnDeb8XCQqgSOoH36x0+zYB0hC4NAE
- CYsa/sOJyAs6ZXQx52Z3ylKFXAmdGQJz6q3l09pTvge9nB3+hxuy2HV5i2CAWNOhE7F6Jh86mce
- JlmXoEWj
-X-Received: by 2002:a17:907:849:b0:bab:1839:cc61 with SMTP id
- a640c23a62f3a-bcaacf2b3a8mr806153266b.40.1778526450502; Mon, 11 May 2026
- 12:07:30 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1778526644; x=1779131444;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4D6erpN4DeWX2fdEYJ1e2AWnvaOfG+j9wQBAlkBW9vY=;
+ b=XpGmq9vUyPzY8Jx0CR/C0rFHtMElf0fPBKOLcI+rgyXAKkO2lqzUf+bF4NxjFivbFB
+ vWAmLlRNPgk/SKw0bWnUqNpHt2ZbT2kX6wV8PCH+H63bv39+wPts/+1g/b2CzNpuNlEP
+ yIo+fZXD+lLEfERYSgRV3O7TC47aYbk83+mXnn3UMM9euSiVo1/vOqxPuxLncQRQliLg
+ GiHfQrgZN1zL3U+MGFvvhXAq+YHhO3UWgQdR3hgnn2Q4/3J8lv3+gKW6xXjMLvZ/Azvy
+ GnF8rNFIxP/HhDoXt9inMDrESYYZ6R05DMuxMUm9yA0PNh8d60jkCEhXDjEPdtQ5paAV
+ jyqA==
+X-Gm-Message-State: AOJu0Yyl4SLL9q6UCGH2monH6tT1I2SoMoUKtrRnHBSA4MJmneTftteD
+ egvfoKavdTYVzTUhd5f0Q6qdYitThm9N8JFmvqOl5hI690L9arB8ECAM398HbvT4sfs=
+X-Gm-Gg: Acq92OFQ+QhDAhU72ovT27cYQKOAFLTgsxTVc1Slpjx1kkhIlp+zDQmCvDy7c7CnD/z
+ so/wzU+RZg9mav/IhU5nfnAFBevOMXf+b3aLvswf7n4qu//+KxGSN8qk2AJJZoelcQXx03QQzCi
+ mWesHakYPzuKTMRKpit7MFvZV18TzUoEZEQ1p4iC/tmFARUCf1bwnJb8OIBTP6lnvWsm4Syu+Wx
+ fCmZ2EdVwn7khDB2CJqrQcTwHwwz4X7Pfe9iDD5inocl8p8R0O+BoQm7rEabQljquer5BFODvhb
+ CULIhx3hHOphK9sCI1qEG/Wwu0GW30CfgGkN4hVXklorPcbndgB0MxO9AqLG5u2hAuM0EGirdpR
+ FtFxd5E7RmSzP1XfaMD041uKpiciNS4Tjc2RXdygBJoFo36rkqOkvcmebVXWI0zLH8Fxu8vUCHz
+ TiIkD1qH9MGmXYhS/sknpKn6kWruBKgpGQ5w==
+X-Received: by 2002:a05:600c:859b:b0:48e:7f1c:8778 with SMTP id
+ 5b1f17b1804b1-48e7f1c88b4mr111124445e9.17.1778526643782; 
+ Mon, 11 May 2026 12:10:43 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48e702ec51fsm181671245e9.12.2026.05.11.12.10.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 11 May 2026 12:10:43 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 121B05F7C1;
+ Mon, 11 May 2026 20:10:42 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org,  John Snow <jsnow@redhat.com>,  Cleber Rosa
+ <crosa@redhat.com>
+Subject: Re: [RFC PATCH v2 01/10] AGENTS.md: add basic AGENTS.md for QEMU
+In-Reply-To: <CAFEAcA_tTR0dXKGp2y3YanS3wASrMSgcNQAiET3ff-c7HfBLBw@mail.gmail.com>
+ (Peter Maydell's message of "Mon, 11 May 2026 18:58:43 +0100")
+References: <20260511170500.124211-1-alex.bennee@linaro.org>
+ <20260511170500.124211-2-alex.bennee@linaro.org>
+ <CAFEAcA_tTR0dXKGp2y3YanS3wASrMSgcNQAiET3ff-c7HfBLBw@mail.gmail.com>
+User-Agent: mu4e 1.14.1; emacs 30.1
+Date: Mon, 11 May 2026 20:10:42 +0100
+Message-ID: <87mry5daod.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20260511140416.28271-1-zhangckid@gmail.com>
- <20260511140416.28271-4-zhangckid@gmail.com>
- <20260511185430.GE536999@fedora>
-In-Reply-To: <20260511185430.GE536999@fedora>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Tue, 12 May 2026 03:06:53 +0800
-X-Gm-Features: AVHnY4J-ZI7RC9WmeBFai9QMNQyGIub7KbzVpj9Lzvu9WLPIedhxjF2W5dc7cC4
-Message-ID: <CAK3tnvLcPOoTa+ToqHxHiWJ+dhModBBhhkj5SV2gR4n8Ut5okQ@mail.gmail.com>
-Subject: Re: [PATCH V7 03/14] iothread: tracking iothread users with holder
- name
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=zhangckid@gmail.com; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -121,140 +106,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 12, 2026 at 2:54=E2=80=AFAM Stefan Hajnoczi <stefanha@redhat.co=
-m> wrote:
->
-> On Mon, May 11, 2026 at 10:04:05PM +0800, Zhang Chen wrote:
-> > Introduce iothread_get_aio_context() with a 'holder' argument and its
-> > counterpart iothread_put_aio_context().
-> >
-> > Previously, users of an IOThread's AioContext did not explicitly
-> > record their identity, making it difficult to debug which devices or
-> > subsystems were pinning an IOThread.
-> >
-> > This patch enhances the reference counting mechanism by:
-> > 1. Automatically incrementing the object reference count when a context
-> >    is retrieved.
-> > 2. Tracking holders by name using iothread_ref() and iothread_unref().
-> >
-> > In iothread_instance_finalize(), we now retrieve the source name from
-> > the GMainContext to correctly unref the initial internal holder.
-> >
-> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> > ---
-> >  include/system/iothread.h |  3 +++
-> >  iothread.c                | 33 +++++++++++++++++++++++++++++----
-> >  2 files changed, 32 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/include/system/iothread.h b/include/system/iothread.h
-> > index 2871b06edc..313ef61124 100644
-> > --- a/include/system/iothread.h
-> > +++ b/include/system/iothread.h
-> > @@ -70,6 +70,9 @@ DECLARE_INSTANCE_CHECKER(IOThread, IOTHREAD,
-> >  char *iothread_get_id(IOThread *iothread);
-> >  IOThread *iothread_by_id(const char *id);
-> >  AioContext *iothread_get_aio_context(IOThread *iothread);
-> > +AioContext *iothread_ref_and_get_aio_context(IOThread *iothread,
-> > +                                             const char *holder);
-> > +void iothread_put_aio_context(IOThread *iothread, const char *holder);
-> >  GMainContext *iothread_get_g_main_context(IOThread *iothread);
-> >
-> >  /*
-> > diff --git a/iothread.c b/iothread.c
-> > index b805e4f97d..5d6f46d286 100644
-> > --- a/iothread.c
-> > +++ b/iothread.c
-> > @@ -44,6 +44,12 @@ static void iothread_ref(IOThread *iothread, const c=
-har *holder)
-> >      }
-> >
-> >      iothread->holders =3D g_list_prepend(iothread->holders, h);
-> > +
-> > +    /*
-> > +     * This guarantees that the IOThread and its AioContext remain ali=
-ve
-> > +     * as long as there is a holder.
-> > +     */
-> > +    object_ref(OBJECT(iothread));
-> >  }
-> >
-> >  static int iothread_holder_compare(gconstpointer a, gconstpointer b)
-> > @@ -83,6 +89,8 @@ static void iothread_unref(IOThread *iothread, const =
-char *holder)
-> >      IoThreadHolder *h =3D (IoThreadHolder *)link->data;
-> >      qapi_free_IoThreadHolder(h);
-> >      iothread->holders =3D g_list_delete_link(iothread->holders, link);
-> > +
-> > +    object_unref(OBJECT(iothread));
-> >  }
-> >
-> >  static void *iothread_run(void *opaque)
-> > @@ -200,7 +208,7 @@ static void iothread_init_gcontext(IOThread *iothre=
-ad, const char *thread_name)
-> >      g_autofree char *name =3D g_strdup_printf("%s aio-context", thread=
-_name);
-> >
-> >      iothread->worker_context =3D g_main_context_new();
-> > -    source =3D aio_get_g_source(iothread_get_aio_context(iothread));
-> > +    source =3D aio_get_g_source(iothread->ctx);
-> >      g_source_set_name(source, name);
-> >      g_source_attach(source, iothread->worker_context);
-> >      g_source_unref(source);
-> > @@ -419,13 +427,30 @@ char *iothread_get_id(IOThread *iothread)
-> >
-> >  AioContext *iothread_get_aio_context(IOThread *iothread)
-> >  {
-> > -    /* Remove in next patch for build */
-> > -    iothread_ref(iothread, "tmp");
-> > -    iothread_unref(iothread, "tmp");
-> > +    return iothread->ctx;
-> > +}
-> > +
-> > +AioContext *iothread_ref_and_get_aio_context(IOThread *iothread,
-> > +                                             const char *holder)
-> > +{
-> > +    /*
-> > +     * In some cases, iothread user need the ctx to clearup other reso=
-urce.
-> > +     * When holder is empty, back to the legacy way.
->
-> Let's avoid referring to the legacy way. Developers working on the code
-> after this series has been merged may not know what the legacy way was.
->
-> If an API to fetch iothread->ctx without taking a reference is needed,
-> then it should probably be a separate API.
-> iothread_ref_and_get_aio_context() calls should have a matching
-> iothread_put_aio_context() call. That's not the case when
-> iothread_ref_and_get_aio_context(iothread, NULL) is allowed.
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-Sorry, my comments are out of date, for the V7 patch, the legacy
-way has been completely abandoned(you can double check it in the patch 14/1=
-4).
-I will remove this comments in the next version.
+> On Mon, 11 May 2026 at 18:06, Alex Benn=C3=A9e <alex.bennee@linaro.org> w=
+rote:
+>>
+>> This was written initially written by ECA based on its understanding of =
+the
+>> code base. I then expanded it with links to the various documents and
+>> the general coding style.
+>>
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>
+>> +## Security Policy
+>> +You MUST NOT report potential security vulnerabilities in public tracke=
+rs
+>> +(like GitLab issues). Refer to `docs/system/security.rst` for the proje=
+ct's
+>> +security stance. In brief:
+>> +- **Virtualization Use Case**: (with KVM/HVF and specific machine types=
+) is
+>> +  the focus of security support.
+>> +- **Non-virtualization Use Case**: (TCG) does not currently provide gue=
+st
+>> +  isolation guarantees.
+>> +- **Reporting**: Report vulnerabilities privately to `qemu-security@non=
+gnu.org`.
+>
+> I feel like the important thing we want to point out to agents is
+> that not all "this crashes / asserts / overruns a buffer" bugs
+> are security issues. As it stands I feel like this text is
+> going to steer them pretty strongly towards throwing anything
+> and everything at qemu-security@, including bugs which we
+> don't consider security issues. What we want ideally is to
+> give instructions that will make the LLM itself do the
+> initial "is this covered by the security policy" triage.
 
-Thanks
-Chen
+I think for that we should augment the triage skill itself.
 
 >
-> > +     */
-> > +    if (holder) {
-> > +        /* Add holder device path to the list */
-> > +        iothread_ref(iothread, holder);
-> > +    }
-> >
-> >      return iothread->ctx;
-> >  }
-> >
-> > +void iothread_put_aio_context(IOThread *iothread, const char *holder)
-> > +{
-> > +    /* Delete holder device path from the list */
-> > +    iothread_unref(iothread, holder);
-> > +}
-> > +
-> >  static int query_one_iothread(Object *object, void *opaque)
-> >  {
-> >      IOThreadInfoList ***tail =3D opaque;
-> > --
-> > 2.49.0
-> >
+> thanks
+> -- PMM
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
