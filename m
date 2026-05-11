@@ -4,97 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 243FACD4840
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 18:03:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83F1CCD4840
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 18:10:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMUyU-0007mS-4g; Mon, 11 May 2026 14:03:26 -0400
+	id 1wMV4A-0000eb-M1; Mon, 11 May 2026 14:09:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wMUyS-0007m1-Do
- for qemu-devel@nongnu.org; Mon, 11 May 2026 14:03:24 -0400
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wMV47-0000eL-2B
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 14:09:15 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wMUyQ-0004sj-KG
- for qemu-devel@nongnu.org; Mon, 11 May 2026 14:03:24 -0400
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-6587cee8b57so4933435d50.2
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 11:03:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778522601; cv=none;
- d=google.com; s=arc-20240605;
- b=VvE7kEKb/OjD7NWRJ78vPMC++jm1HU71XBuvwnC3irMlb2+kMPxf4uluu/oxd3Ib0T
- 4eeCgow8Xs8LOg6PyuFIaeD7xgT8o+AKvYZfSgN7KsKoGbci7MeWbTmZO2KftbC+mxUC
- DkM9f78qR+4hJvtQnXcrMqYYR6kmRzPmL7ETY45Qh4OmA491+adKeXVFogZBpCbIxETR
- +gxJCLKSrnyR8g/fiJsAdLHCnBFX+T6zwDwVm6zjYBz3MHcsYPaVwh5ZluJtpFrHoml5
- RpAKmKD78KAfpkREctUR5ErR88m2tA87bgGyQ7hcd5Z8DOfi2N6obCHVBmj+sBiCZzP6
- RdOg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Hjr3DF+VRICYio52f8Kesr9yiR5N06OIx3qPy2x8ZOU=;
- fh=D9TiOsAcOSpRlHrkA38ELZyIVSvZmg48LLzTtJLYv+0=;
- b=B7KX3W5kxWTApaO1sYAUdlzx98aXy0KcSm6vtdLVCsgYb2EmisMaDMfOquye5BUK7y
- Q7lTfMEktAD9RivTWvV/xU++B6EPnl/br5nC8B1apV4D0RkWcQyuUsy9vso7+/riStKJ
- w06nD8sqcjDEUSGA4hLtS3FuMXQZiOpHUcxzBYBzCajhRBs7ZDPs2X8wkpxMMkg6bPfI
- Y3ZzRuMkWrfE5u1cj3bri9DCl3NLCpYIHO+sqdvv2gR/ofyUVA/wiCwGTols9BIkd2Xi
- uLC+k6IbNMpl17JpR3YA4Ukj54PEyJOVnsukyMxdm5ZaOPjqd6yfp2UTpyqmWkTOYceP
- rjng==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wMV41-0006Ea-Nl
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 14:09:14 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-43d734223e4so2922413f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 11:09:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778522601; x=1779127401; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Hjr3DF+VRICYio52f8Kesr9yiR5N06OIx3qPy2x8ZOU=;
- b=xQ+jZBy+3jmdY/AylH+tt4+0djS5iltsCkaeLBEN45zTqevFG560TnbG8e8aWgCm21
- 5kjp121ORGeADDrk+9dPmSHWGpAl3V2bM7RG+zmBnbv7a4NEYxdBKYI8e50n42mBSamh
- KrD9ZCsRlNcjFiQguDHhhnV83bBBRjotfuO8WKoXot58VdaaZKoyRSF5tfytMIJRnxkt
- pauCaExATQ6KcDRYLYfXrH/KmrXYySWDf475u2eqPitMOQYtqXzI18KBRWLaEPi9vy1v
- LCmIoRKOHfO+WHCuAGxOwyTPn2MtfCdFjSiF8AUOkX1n5b2/csTYSUvGEBBtIHVWOvDP
- yDCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778522601; x=1779127401;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1778522947; x=1779127747; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Hjr3DF+VRICYio52f8Kesr9yiR5N06OIx3qPy2x8ZOU=;
- b=GFo5xuUaRrMzw3RTpmPGSX5J9q6ePxW6BCzsmIZ4KFZ94QAer1rgctqxhcE04nTtMN
- Cx0z6bB5WxLD0843U+1U9aaM9mYHFL3+tHg1MlHB4Cg07fMI5SHS4DtjTq2Tdu7iCyca
- 8w5jmkQf4QhrbmFvaYKFlvGbj1sELb/1b8bPQIeLcax/GI3KdMktcwgSAbi3+4MAKrwF
- 40cer87NRLkdBT8dPmLauJSpe2d661H0E+PtSR1jq1Zl3svSGeAA+kfSZvTfPQRM17Od
- 0ZNNXYT3lT+2mrgT/sSMNtmokb/BJnnotJq2/a/juPqgx9aZJw14HPffT1b5Dueb9fIf
- 3o5g==
-X-Gm-Message-State: AOJu0Yy7IYzGrgJlT9hog+7rKPWCqbDAF4Y65w0rb4plniFyIH3sVf/R
- fRRxgsSG9HbpI+otLBhodLdpRUupj4j+tJwmEFKqqfqWzZHf+c/dWCtGroTx9iNL6gIpiIDG23Z
- W0TfcXLakoc3D6qGk/Z4XxBSNON5m2Ostur9XkEE2LBT+slkl3lTZ
-X-Gm-Gg: Acq92OE7lSc5Hv/dAypAyK0dQw+0cGw4VNl/YWlfqFLJqOkGOWDoiESUZxXHrBkleHU
- pt7ExcDtFllQVU1vu6LwJey3EYpLfHWr3Qd09p8x96VtGk1aTvCAjSAoFx2P97v9v6zIAi4JpcG
- dllk0dhmaCK0P6/xjkJqXsNWORGhRtZRcmOqbVYPx0etFRVenXu2cna2K3LolgiuqBd99QrL+gN
- Skp4WlYz67GWLCl0KuGbVX47zqQthRdIZMXI2+3yP8enkUvXH+vyAShQ4PE9NDXGmKzCbhAfrD7
- TOkX7EYDZ96ZxHIiMv63QSF7EhkNvPJRpiIDCVbQOX7JVxeb9xDRj4qj2wwAKf0HiOo=
-X-Received: by 2002:a53:de0c:0:b0:656:30a1:70f3 with SMTP id
- 956f58d0204a3-65c798d3827mr19647273d50.14.1778522601207; Mon, 11 May 2026
- 11:03:21 -0700 (PDT)
+ bh=B6M2vC/5jMpg1K09n2YFUcQODvZ89jCVpV7ZbcwSdfk=;
+ b=P0HO1KnvLhsy9F8AvuXshNoGpfbmnsYhPcAZeFd12vJwh/Z8WapF8/5RqKOO7eWhLN
+ /wVsrxckbvQBsWrNorhHIleizVma5+oScZ1RPXf8xTAeKHXYeDAdwGruyUZDze/ec2Zz
+ GVTrpdaDluuf28MdRFIXLQyYzvhihtY6sapGn/hG8ByksoNIPLRYbG1EFxBBHzGjdaFn
+ 6yCn98eeUBR0CDj+A6Ldd5+Qmr+0ogI7IQjL6TEWtRUZfMVdHyVe2xdwzan0GmQFN+/f
+ kK1zLQQk7KX7NtwRiwFH6PdZDmNFjVK01keITduQnCrbAom9CF9Xxg/MffD+CLHXtstW
+ oTwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778522947; x=1779127747;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=B6M2vC/5jMpg1K09n2YFUcQODvZ89jCVpV7ZbcwSdfk=;
+ b=al4cZupb29zr8eSZ6cjEFtaO3Usn9z0FTEMkdxW7vB482Y6M2oIlt2EtMuQw4b0eak
+ cQ47dz+m8A7xyaOWC4H6IDm127zkQ3DcFSm+BJunAYa2v0FgkHu3hHYnZtVwj6jdGdlV
+ RAx4oGQmMofdG5wCLE9oQErJkaqlKlir0czjL53RtXzQFJrEG0f0pgvcnmTalPZ03eYV
+ OYSt/P/pghR+lsfd1OYWubzdfDO2p00ul4FSzx6Z3ogIjW3Rd3jOFh9etbtKbJMBA5yP
+ ZYrWE0duYPWCwWhOSjuYQcMbcNMMMpM/HUqM9gjmGfwM/M9kJTh50B0Hk7lidbLNCSph
+ Qkgg==
+X-Gm-Message-State: AOJu0Yz/8/URmKsR5I0kfiiMbh9s1KrWva3KHAI6IX4P+weWSYkwUHTs
+ XX6Nxxy6g8itZEOSAvupRxTxRNXVRjSkpnmH2WfRkGprUGY2WzWLgVmQWnpCcjgm09VjTU8ztBf
+ QGYGC9Q8=
+X-Gm-Gg: Acq92OGngSC25DfCJKrp44PD6wKm8/Crb+mRFCnongLelo4iOgF1Om+S96eICfKX2+6
+ JhBcNb88rb/WD+D28ij6Iy2pDrX9tIC4FTiqHE2b3UlhUw2wZRaTRqRqraLVjDhBQo1sHTQzDyv
+ 4lcBID+0DbhXXZO8EL2M66+e4DkyQ3P61OTJbG/RweRirh76F5Hp8fRh3JJuH89/sWqOfoa65jS
+ vUhjrxE+2HF9TsxtCSQaf4DB5rZciVM9b/EQetxu5hfHZalFI2o9TfYlyyLO4rlTssPgwOLevfO
+ lBjqq7Ozcyf6iWX03n2C9ciXHcFGCoqWBpLuHtDNNZ6Dp5Kbafpm21tUYg/5KKIxJWoutUE0vl9
+ 1pM1tZsSYG09KByQdouupudQpZMPk8nkEII0kur838QRiosyTjFTPvpRLHAYvmiFkq93DwzuNCV
+ i5MoJFB+7tezYaJIqjnj1w/Ys=
+X-Received: by 2002:a05:6000:100e:b0:454:353e:3f4b with SMTP id
+ ffacd0b85a97d-45ac0b2d931mr728955f8f.3.1778522947226; 
+ Mon, 11 May 2026 11:09:07 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4548e6a5b65sm28168705f8f.8.2026.05.11.11.09.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 11 May 2026 11:09:06 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 8A10C5F7C1;
+ Mon, 11 May 2026 19:09:05 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 2/5] accel/tcg: move jit thread manipulation into
+ do_tb_phys_invalidate
+In-Reply-To: <9794589b-0f4e-4f0a-9d67-ab7e9c1d749e@linaro.org> (Richard
+ Henderson's message of "Wed, 6 May 2026 23:58:48 -0500")
+References: <20260505103649.68361-1-alex.bennee@linaro.org>
+ <20260505103649.68361-3-alex.bennee@linaro.org>
+ <9794589b-0f4e-4f0a-9d67-ab7e9c1d749e@linaro.org>
+User-Agent: mu4e 1.14.1; emacs 30.1
+Date: Mon, 11 May 2026 19:09:05 +0100
+Message-ID: <87se7xddj2.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20260511152019.1316898-1-peterx@redhat.com>
- <CAFEAcA_Hk5EnPWK3Ho1fQVeN0o+2VFjjjz+1sZQk2f3f_CRmWg@mail.gmail.com>
- <agIWHJExoRQqfcNT@x1.local>
-In-Reply-To: <agIWHJExoRQqfcNT@x1.local>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 11 May 2026 19:03:08 +0100
-X-Gm-Features: AVHnY4K-XJbsuYU9Y80LmLd3Z5XbKW6rKZpbR7q7Pmo1YW-ZBkdoZGrDC8fS7EU
-Message-ID: <CAFEAcA-Tup_NPTTi3x0xk_thyku8yN3qNGvzJRt8A0_vJbQZ7g@mail.gmail.com>
-Subject: Re: [PATCH v2] migration: Fix possible division by zero on calc
- expected downtime
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,99 +107,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 11 May 2026 at 18:47, Peter Xu <peterx@redhat.com> wrote:
+Richard Henderson <richard.henderson@linaro.org> writes:
+
+> On 5/5/26 05:36, Alex Benn=C3=A9e wrote:
+>> To invalidate a TB on MacOS we need to enable write access to the JIT
+>> buffer. We were doing this for tb_phys_invalidate__locked but that is
+>> not the only path into do_tb_phys_invalidate. Move the manipulation
+>> into the shared function that does the work.
+>> This enables watchpoints to work in MacOS TCG guests.
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3444
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> ---
+>>   accel/tcg/tb-maint.c | 5 +++--
+>>   1 file changed, 3 insertions(+), 2 deletions(-)
+>> diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
+>> index cd7c32361bb..9a648f97865 100644
+>> --- a/accel/tcg/tb-maint.c
+>> +++ b/accel/tcg/tb-maint.c
+>> @@ -925,6 +925,7 @@ static void do_tb_phys_invalidate(TranslationBlock *=
+tb, bool rm_from_page_list)
+>>       uint32_t orig_cflags =3D tb_cflags(tb);
+>>         assert_memory_lock();
+>> +    qemu_thread_jit_write();
+>>         /* make sure no further incoming jumps will be chained to
+>> this TB */
+>>       qemu_spin_lock(&tb->jmp_lock);
+>> @@ -954,15 +955,15 @@ static void do_tb_phys_invalidate(TranslationBlock=
+ *tb, bool rm_from_page_list)
+>>       /* suppress any remaining jumps to this TB */
+>>       tb_jmp_unlink(tb);
+>>   +    qemu_thread_jit_execute();
 >
-> On Mon, May 11, 2026 at 04:47:22PM +0100, Peter Maydell wrote:
-> > On Mon, 11 May 2026 at 16:20, Peter Xu <peterx@redhat.com> wrote:
-> > >
-> > > Commit dd4fe8844b changed the reporting of expected downtime behavior, so
-> > > that the value will be calculated on-demand.  One side effect on the change
-> > > is QEMU will allow the calculation to happen anytime even if there's no
-> > > transfer happening for a short while.
-> > >
-> > > PeterM reported an ubsan report from clang when running migration-test with
-> > > aarch64 binary on x86_64 hosts.  I can also reproduce if I run the test
-> > > concurrently so some of the src QEMU may not get chance to push any data,
-> > > causing mbps to be 0:
-> > >
-> > > ../migration/migration.c:1051:12: runtime error: -nan is outside the range of representable values of type 'long'
-> > >
-> > > Fix it by properly handle both Inf and Nan.  One note is we can't use
-> > > ">"/">=" check here otherwise we cannot cover Nan.
-> > >
-> > > Link: https://lore.kernel.org/r/CAFEAcA-MYH6C39xO0OLx4-M5pKurJpurwRsMqZe9q=W-NShAbw@mail.gmail.com
-> > > Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> > > Fixes: dd4fe8844b ("migration: Calculate expected downtime on demand")
-> > > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > > ---
-> > >  migration/migration.c | 18 +++++++++++++++++-
-> > >  1 file changed, 17 insertions(+), 1 deletion(-)
-> > >
-> > > diff --git a/migration/migration.c b/migration/migration.c
-> > > index b6f78eb3ac..e4103cd3f0 100644
-> > > --- a/migration/migration.c
-> > > +++ b/migration/migration.c
-> > > @@ -1044,12 +1044,28 @@ static bool migrate_show_downtime(MigrationState *s)
-> > >  /* Return expected downtime (unit: milliseconds) */
-> > >  int64_t migration_downtime_calc_expected(MigrationState *s)
-> > >  {
-> > > +    double expected_ms;
-> > > +
-> > >      if (mig_stats.dirty_sync_count <= 1) {
-> > >          return migrate_downtime_limit();
-> > >      }
-> > >
-> > > -    return mig_stats.dirty_bytes_last_sync /
-> > > +    expected_ms = mig_stats.dirty_bytes_last_sync /
-> > >          migration_get_switchover_bw(s) * 1000;
-> > > +
-> > > +    /*
-> > > +     * This "<" check covers two cases where we want to fallback to
-> > > +     * INT64_MAX, the 1st case is obvious, but the 2nd is not:
-> > > +     *
-> > > +     * (1) when expected_ms is Inf, or anything too big for int64_t
-> > > +     * (2) when expected_ms is Nan (division by zero), evaluation of this
-> >
-> > This should say "zero divided by zero" -- general division by
-> > zero gives Inf, and it's only 0 / 0 that runs into NaN.
-> >
-> > > +     *     if clause will be FALSE
-> > > +     */
-> > > +    if (expected_ms < (double)INT64_MAX) {
-> >
-> > This works, but maybe we should write it out
-> >       if (isnan(expected_ms) || expected_ms < (double)INT64_MAX) {
+> You've missed the early return path from the middle of the function, whic=
+h should be fatal.
 >
-> I agree using isnan() is better than comment. Though code in the patch for
-> the next line here is:
+> But the place that needs this is tb_reset_jump, which is called from
+> tb_remove_from_jmp_list and tb_jmp_unlink.  Which is entirely covered
+> by moving this down toward the end of the function like so:
 >
-> +           return (int64_t) expected_ms;
+> ---
+> +   qemu_thread_jit_write();
 
-Oops, yes, I got the sense of the condition wrong.
+I think we also need to cover the spinlock:
 
-> Do you think below should work?
+    /* make sure no further incoming jumps will be chained to this TB */
+    qemu_spin_lock(&tb->jmp_lock);
+    qatomic_set(&tb->cflags, tb->cflags | CF_INVALID);
+    qemu_spin_unlock(&tb->jmp_lock);
+
+as that is what the original bug reported it was stuck spinning on.
+
 >
->     expected_ms = ...;
+>     /* suppress this TB from the two jump lists */
+>     tb_remove_from_jmp_list(tb, 0);
+>     tb_remove_from_jmp_list(tb, 1);
 >
->     /* For isnan() (0/0) case, we can return anything; return MAX too */
->     if (isnan(expected_ms) || expected_ms >= (double)INT64_MAX) {
->         return INT64_MAX;
->     }
+>     /* suppress any remaining jumps to this TB */
+>     tb_jmp_unlink(tb);
+>
+> +   qemu_thread_jit_execute();
+> ---
+>
+>
+>> +
+>>       qatomic_set(&tb_ctx.tb_phys_invalidate_count,
+>>                   tb_ctx.tb_phys_invalidate_count + 1);
+>>   }
+>>     static void tb_phys_invalidate__locked(TranslationBlock *tb)
+>>   {
+>> -    qemu_thread_jit_write();
+>>       do_tb_phys_invalidate(tb, true);
+>> -    qemu_thread_jit_execute();
+>>   }
+>
+> Might as well remove tb_phys_invalidate__locked entirely, and
+> propagate the direct call to do_tb_phys_invalidate.
+>
+> The __locked suffix does appear to be for the user
+> assert_memory_locked().  As evidenced by tb_phys_invalidate, for
+> system mode, we only sometimes take the page lock.
+>
+> Given that this jit protection is via pthread_jit_write_protect_np, I
+> assume the W^X protection is a magic Apple per-thread bit.  If so, we
+> don't actually require cross-thread locking at all, and all is well.
+>
+>
+> r~
 
-Yes, this will work. But I think rather than "return anything"
-we ought to say why what we're returning is a sensible value
-for the use case we have. How about:
-
-/*
- * If we haven't been able to transfer any data, the result here
- * could be NaN (for 0 / 0) or infinity (something else / 0).
- * Return INT64_MAX as our best approximation to "this will
- * take forever to complete". If the problem is transient
- * (e.g. we just haven't started to transfer yet) we'll
- * recalculate to a more accurate figure later.
- */
-
-?
-
--- PMM
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
