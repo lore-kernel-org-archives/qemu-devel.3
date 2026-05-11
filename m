@@ -4,61 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 443FDCD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 13:09:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33203CD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 13:09:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMQ3M-0007gl-Pb; Mon, 11 May 2026 08:48:08 -0400
+	id 1wMQ9M-00036I-PO; Mon, 11 May 2026 08:54:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1wMQ3D-0007eO-OA; Mon, 11 May 2026 08:48:02 -0400
-Received: from out30-100.freemail.mail.aliyun.com ([115.124.30.100])
+ (Exim 4.90_1) (envelope-from <jishnuvw@linux.ibm.com>)
+ id 1wMNHZ-0000Bn-2Q; Mon, 11 May 2026 05:50:48 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1wMQ3A-0000EX-Bd; Mon, 11 May 2026 08:47:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1778503670; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=MWmaeJFvQumaMB3al4y7CxTUj117LGo9Tcct9VUEYJo=;
- b=ciHnoanORNRbxQlje9x6fWHIQ4ZMFSHawZSGlxXw6KUy6MEHJR+j1FHXFjHVD1tl3TUB1Aijs1ug2gvAUJpblyMXUD0d/+zN881Na2PFpquCf11++MiqYYv4q0P7R6uHcP7DDHRueJWOLovoPcuanTzf4vb0BVfHFl7tYMzVLUs=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R421e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045098064;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=13; SR=0;
- TI=SMTPD_---0X2jPzTs_1778503668; 
-Received: from localhost.localdomain(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0X2jPzTs_1778503668 cluster:ay36) by smtp.aliyun-inc.com;
- Mon, 11 May 2026 20:47:49 +0800
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- daniel.barboza@oss.qualcomm.com, chao.liu.zevorn@gmail.com,
- liwei1518@gmail.com, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Huang Tao <eric.huang@linux.alibaba.com>,
- TANG Tiancheng <lyndra@linux.alibaba.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Frank Chang <frank.chang@sifive.com>, Nutty Liu <nutty.liu@hotmail.com>
-Subject: [PATCH v6 1/6] target/riscv: Add basic definitions and CSRs for SMMPT
-Date: Mon, 11 May 2026 20:47:00 +0800
-Message-Id: <20260511124705.28161-2-zhiwei_liu@linux.alibaba.com>
-X-Mailer: git-send-email 2.39.3 (Apple Git-146)
-In-Reply-To: <20260511124705.28161-1-zhiwei_liu@linux.alibaba.com>
-References: <20260511124705.28161-1-zhiwei_liu@linux.alibaba.com>
+ (Exim 4.90_1) (envelope-from <jishnuvw@linux.ibm.com>)
+ id 1wMNHX-0004Dh-9L; Mon, 11 May 2026 05:50:36 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64AFKaLM151140; Mon, 11 May 2026 07:24:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=pPzJ3z
+ Xceq9elkTxjaBguiiyGS2BZSIuP/m9G8whSW0=; b=DRtN/2mAyexpl7dJJ5VJXm
+ HxUcc1vnwVxnq1qLuySxi17vFxnKboRF2U1QNG0JfjDR1jhs8DGiLouvgWEk88Jz
+ QDuwJlbPF7KAMEYjGxlWcIwx8lrkU/3IghPk+Brg5KPjPDpMaowhBtJzshfGdigD
+ gaylFo8b/s6Vy4Pyhb+yb4+/Xg+tbTo71CjLbhTgT7POTta/ut4/YSXQcTtD5nFM
+ mhr7hC/1u9r2jwoGROgy2AkyP5nZ6cQPRoHBbsHyLrzpIfumnsWtvxSG2P2CZiE0
+ 3VWMYaHwIJtYKDR/KtE5BvcYa8PoOJIVjYfB+dngOnYHXo3Jm99kQVmau5lX6u4w
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e1ubdpq26-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 11 May 2026 07:24:34 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64B7ONaD026101;
+ Mon, 11 May 2026 07:24:34 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e2hxy3y0j-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 11 May 2026 07:24:33 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64B7OU0952166970
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 11 May 2026 07:24:30 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 47A0320043;
+ Mon, 11 May 2026 07:24:30 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7423120040;
+ Mon, 11 May 2026 07:24:26 +0000 (GMT)
+Received: from li-0bf05b4c-28e4-11b2-a85c-ce7af937d338.ibm.com (unknown
+ [9.123.4.46]) by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 11 May 2026 07:24:26 +0000 (GMT)
+Date: Mon, 11 May 2026 12:54:19 +0530
+From: Jishnu Warrier <jishnuvw@linux.ibm.com>
+To: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, clg@kaod.org,
+ npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
+ thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
+ harshpb@linux.ibm.com, adityag@linux.ibm.com
+Subject: Re: [PATCH v4 8/9] pnv/phb4: Implement IODA PCT table
+Message-ID: <wphhqba6a5d73fcvxsfk47gonvxobpn2ba6v4zj7xshhlp3msi@zvm2luq7gv2g>
+References: <20260210134110.1515322-1-saif.abrar@linux.vnet.ibm.com>
+ <20260305060923.3753402-1-saif.abrar@linux.vnet.ibm.com>
+ <20260305060923.3753402-9-saif.abrar@linux.vnet.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.100;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-100.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+In-Reply-To: <20260305060923.3753402-9-saif.abrar@linux.vnet.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=BezoFLt2 c=1 sm=1 tr=0 ts=6a018433 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=8nJEP1OIZ-IA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=aow-egSQAAAA:8 a=ZHIH-Mn1CJ9f4S4TJ0wA:9 a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10
+ a=gFNbaldVC-z-bsjSTzMo:22
+X-Proofpoint-GUID: cuH4mY3urI88Bx5R0HWQU6--h7hTIrWE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDA3NyBTYWx0ZWRfX2Fal/iEnLf8J
+ 2sadZvIztIoOQuO7s63ZiUcGdbFNJ5WZrHUX0VTU5GA467FTahja17tgSg6qjU7kmYd6DF3t8ZV
+ FBqZj/zqIS0kaib+ShMCI2XXQuc7FJA31j0qdduCgsBVIcpC8sIOPNOaCcwwemKyyRK9TZRjJph
+ fX1D5mo0hM/m9zu8gdPSUMTcMTIGGYmMpmY2o7OXMwlQ1f0Ls54DrRKpWz2nYkEQggSMLG3YZ/5
+ zXCWbk+QwjRgk4U9HrAmQHjT0kb6G9SGXIrv9jNG/Ny+xyuMex6rMibvQMiWMFoQ0U+oJfKdfVW
+ amr6Apf3Vxsgh1YvXO9aYDDz2UMF30Lxwr4yBpcM2zBu1JOF3VjxakoncfX6cau6cNriNFYHB/I
+ Etc4zGMTproATX7Muc8MXUJkiI2tmAGpGZpR4AHXBEylCOz2e2495azmgU7Irbc1nRUetSyi0dL
+ YgrV1EniWd9r8pVbKnQ==
+X-Proofpoint-ORIG-GUID: X-J0uCXiaAzZrPefrtbMQb5TpuPyqq1Q
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-11_02,2026-05-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 priorityscore=1501 bulkscore=0 phishscore=0 malwarescore=0
+ adultscore=0 lowpriorityscore=0 suspectscore=0 impostorscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605110077
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=jishnuvw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 11 May 2026 08:54:09 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,260 +127,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch lays the groundwork for the SMMPT (Supervisor Domains Access
-Protection) extension by introducing its fundamental components.
+On Thu, Mar 05, 2026 at 12:09:10AM -0600, Saif Abrar wrote:
+> IODA PCT table (#3) is implemented
+> without any functionality, being a debug table.
+> 
+> Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+> Reviewed-by: Cédric Le Goater <clg@kaod.org>
+> ---
+> v3: Updates for coding guidelines.
+> 
+>  hw/pci-host/pnv_phb4.c              | 6 ++++++
+>  include/hw/pci-host/pnv_phb4.h      | 2 ++
+>  include/hw/pci-host/pnv_phb4_regs.h | 1 +
+>  3 files changed, 9 insertions(+)
+> 
+> diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
+> index a6fa578e85..254bbe4089 100644
+> --- a/hw/pci-host/pnv_phb4.c
+> +++ b/hw/pci-host/pnv_phb4.c
+> @@ -264,6 +264,10 @@ static uint64_t *pnv_phb4_ioda_access(PnvPHB4 *phb,
+>          mask = phb->big_phb ? PNV_PHB4_MAX_MIST : (PNV_PHB4_MAX_MIST >> 1);
+>          mask -= 1;
+>          break;
+> +    case IODA3_TBL_PCT:
+> +        tptr = phb->ioda_PCT;
+> +        mask = 7;
 
-It adds:
-- New CPU configuration flags, `ext_smmpt` and `ext_smsdid`, to enable
-  the extension.
-- Bit-field definitions for the `mmpt` CSR in `cpu_bits.h`.
-- The `mmpt` and `msdcfg` CSR numbers and their read/write handlers in
-  `csr.c`.
-- New fields in `CPUArchState` to store the state of these new CSRs.
-- A new translation failure reason `TRANSLATE_MPT_FAIL`.
+According to PHB5 spec (lines 13568-13580):
+- Small PHB: 64 entries (mask should be 63)
+- Big PHB: 128 entries (mask should be 127)
+- Each entry has 2 parts, so total is 128/256
 
-This provides the necessary infrastructure for the core MPT logic and
-MMU integration that will follow.
+> +        break;
+>      case IODA3_TBL_RCAM:
+>          mask = phb->big_phb ? 127 : 63;
+>          break;
+> @@ -362,6 +366,8 @@ static void pnv_phb4_ioda_write(PnvPHB4 *phb, uint64_t val)
+>      /* Handle side effects */
+>      switch (table) {
+>      case IODA3_TBL_LIST:
+> +    case IODA3_TBL_PCT:
+> +        /* No action for debug tables */
+>          break;
+>      case IODA3_TBL_MIST: {
+>          /* Special mask for MIST partial write */
+> diff --git a/include/hw/pci-host/pnv_phb4.h b/include/hw/pci-host/pnv_phb4.h
+> index bea0684724..6bb75edeef 100644
+> --- a/include/hw/pci-host/pnv_phb4.h
+> +++ b/include/hw/pci-host/pnv_phb4.h
+> @@ -65,6 +65,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(PnvPHB4RootBus, PNV_PHB4_ROOT_BUS)
+>  #define PNV_PHB4_MAX_LSIs          8
+>  #define PNV_PHB4_MAX_INTs          4096
+>  #define PNV_PHB4_MAX_MIST          (PNV_PHB4_MAX_INTs >> 2)
+> +#define PNV_PHB4_MAX_PCT           128
 
-Co-authored-by: Huang Tao <eric.huang@linux.alibaba.com>
-Co-authored-by: TANG Tiancheng <lyndra@linux.alibaba.com>
-Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
----
- target/riscv/cpu.h                |  9 ++-
- target/riscv/cpu_bits.h           | 18 ++++++
- target/riscv/cpu_cfg_fields.h.inc |  2 +
- target/riscv/csr.c                | 95 +++++++++++++++++++++++++++++++
- target/riscv/riscv_smmpt.h        | 21 +++++++
- 5 files changed, 144 insertions(+), 1 deletion(-)
- create mode 100644 target/riscv/riscv_smmpt.h
+Question: Is PCT table 8 or 128 entries? Check PHB5 spec.
+- If 8 entries: mask=7 is correct
+- If 128 entries: mask should be 127
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index e42f369408..d1fb5c1909 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -130,7 +130,8 @@ enum {
-     TRANSLATE_SUCCESS,
-     TRANSLATE_FAIL,
-     TRANSLATE_PMP_FAIL,
--    TRANSLATE_G_STAGE_FAIL
-+    TRANSLATE_G_STAGE_FAIL,
-+    TRANSLATE_MPT_FAIL
- };
- 
- /* Extension context status */
-@@ -181,6 +182,7 @@ extern RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[];
- #if !defined(CONFIG_USER_ONLY)
- #include "pmp.h"
- #include "debug.h"
-+#include "riscv_smmpt.h"
- #endif
- 
- #define RV_VLEN_MAX 1024
-@@ -481,6 +483,11 @@ struct CPUArchState {
-     uint64_t hstateen[SMSTATEEN_MAX_COUNT];
-     uint64_t sstateen[SMSTATEEN_MAX_COUNT];
-     uint64_t henvcfg;
-+    /* Smsdid */
-+    uint32_t mptmode;
-+    uint32_t sdid;
-+    uint64_t mptppn;
-+    uint32_t msdcfg;
- #endif
- 
-     /* Fields from here on are preserved across CPU reset. */
-diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-index b62dd82fe7..70835e0d73 100644
---- a/target/riscv/cpu_bits.h
-+++ b/target/riscv/cpu_bits.h
-@@ -1164,4 +1164,22 @@ typedef enum CTRType {
- #define MCONTEXT64                         0x0000000000001FFFULL
- #define MCONTEXT32_HCONTEXT                0x0000007F
- #define MCONTEXT64_HCONTEXT                0x0000000000003FFFULL
-+
-+/* Smsdid */
-+#define CSR_MMPT        0xbc0
-+#define CSR_MSDCFG      0xbd1
-+
-+#define MMPT_MODE_MASK_32   0xC0000000
-+#define MMPT_SDID_MASK_32   0x3F000000
-+#define MMPT_PPN_MASK_32    0x003FFFFF
-+
-+#define MMPT_MODE_SHIFT_32  30
-+#define MMPT_SDID_SHIFT_32  24
-+
-+#define MMPT_MODE_MASK_64   0xF000000000000000ULL
-+#define MMPT_SDID_MASK_64   0x0FC0000000000000ULL
-+#define MMPT_PPN_MASK_64    0x000FFFFFFFFFFFFFULL
-+
-+#define MMPT_MODE_SHIFT_64  60
-+#define MMPT_SDID_SHIFT_64  54
- #endif
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index 734fa079f2..e30c97cf74 100644
---- a/target/riscv/cpu_cfg_fields.h.inc
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -63,6 +63,8 @@ BOOL_FIELD(ext_smpmpmt)
- BOOL_FIELD(ext_svrsw60t59b)
- BOOL_FIELD(ext_svvptc)
- BOOL_FIELD(ext_svukte)
-+BOOL_FIELD(ext_smmpt)
-+BOOL_FIELD(ext_smsdid)
- BOOL_FIELD(ext_zdinx)
- BOOL_FIELD(ext_zaamo)
- BOOL_FIELD(ext_zacas)
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index da366cf562..1d99bc7884 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -806,6 +806,15 @@ static RISCVException rnmi(CPURISCVState *env, int csrno)
- 
-     return RISCV_EXCP_ILLEGAL_INST;
- }
-+
-+static RISCVException smsdid(CPURISCVState *env, int csrno)
-+{
-+    if (riscv_cpu_cfg(env)->ext_smsdid) {
-+        return RISCV_EXCP_NONE;
-+    }
-+
-+    return RISCV_EXCP_ILLEGAL_INST;
-+}
- #endif
- 
- static RISCVException seed(CPURISCVState *env, int csrno)
-@@ -5511,6 +5520,89 @@ static RISCVException write_mnstatus(CPURISCVState *env, int csrno,
-     return RISCV_EXCP_NONE;
- }
- 
-+static RISCVException read_mmpt(CPURISCVState *env, int csrno,
-+                                target_ulong *val)
-+{
-+    if (riscv_cpu_xlen(env) == 32) {
-+        uint32_t value = 0;
-+        value |= env->mptmode << MMPT_MODE_SHIFT_32;
-+        value |= (env->sdid << MMPT_SDID_SHIFT_32) & MMPT_SDID_MASK_32;
-+        value |= env->mptppn & MMPT_PPN_MASK_32;
-+        *val = value;
-+    } else if (riscv_cpu_xlen(env) == 64) {
-+        uint64_t value_64 = 0;
-+        uint32_t mode_value = env->mptmode;
-+        /* mpt_mode_t convert to mmpt.mode value */
-+        if (mode_value) {
-+            mode_value -= SMMPT43 - SMMPT34;
-+        }
-+        value_64 |= (uint64_t)mode_value << MMPT_MODE_SHIFT_64;
-+        value_64 |= ((uint64_t)env->sdid << MMPT_SDID_SHIFT_64)
-+                    & MMPT_SDID_MASK_64;
-+        value_64 |= (uint64_t)env->mptppn & MMPT_PPN_MASK_64;
-+        *val = value_64;
-+    } else {
-+        return RISCV_EXCP_ILLEGAL_INST;
-+    }
-+    return RISCV_EXCP_NONE;
-+}
-+
-+static RISCVException write_mmpt(CPURISCVState *env, int csrno,
-+                                 target_ulong val, uintptr_t ra)
-+{
-+    uint32_t mode_value = 0;
-+    if (!riscv_cpu_cfg(env)->ext_smmpt) {
-+        goto set_remaining_fields_zero;
-+    }
-+
-+    if (riscv_cpu_xlen(env) == 32) {
-+        mode_value = (val & MMPT_MODE_MASK_32) >> MMPT_MODE_SHIFT_32;
-+        /* If mode is bare, the remaining fields in mmpt must be zero */
-+        if (mode_value == SMMPTBARE) {
-+            goto set_remaining_fields_zero;
-+        } else if (mode_value <= SMMPT34) {
-+            /* Only write the legal value */
-+            env->mptmode = mode_value;
-+        }
-+        env->sdid = (val & MMPT_SDID_MASK_32) >> MMPT_SDID_SHIFT_32;
-+        env->mptppn = val & MMPT_PPN_MASK_32;
-+    } else if (riscv_cpu_xlen(env) == 64) {
-+        mode_value = (val & MMPT_MODE_MASK_64) >> MMPT_MODE_SHIFT_64;
-+        if (mode_value == SMMPTBARE) {
-+            goto set_remaining_fields_zero;
-+        } else if (mode_value < SMMPTMAX) {
-+            /* convert to mpt_mode_t */
-+            mode_value += SMMPT43 - SMMPT34;
-+            env->mptmode = mode_value;
-+        }
-+        env->sdid = (val & MMPT_SDID_MASK_64) >> MMPT_SDID_SHIFT_64;
-+        env->mptppn = val & MMPT_PPN_MASK_64;
-+    } else {
-+        return RISCV_EXCP_ILLEGAL_INST;
-+    }
-+    return RISCV_EXCP_NONE;
-+
-+set_remaining_fields_zero:
-+    env->sdid = 0;
-+    env->mptmode = SMMPTBARE;
-+    env->mptppn = 0;
-+    return RISCV_EXCP_NONE;
-+}
-+
-+static RISCVException read_msdcfg(CPURISCVState *env, int csrno,
-+                                   target_ulong *val)
-+{
-+    *val = env->msdcfg;
-+    return RISCV_EXCP_NONE;
-+}
-+
-+static RISCVException write_msdcfg(CPURISCVState *env, int csrno,
-+                                    target_ulong val, uintptr_t ra)
-+{
-+    env->msdcfg = val;
-+    return RISCV_EXCP_NONE;
-+}
-+
- #endif
- 
- /* Crypto Extension */
-@@ -6725,6 +6817,9 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
-                              write_mhpmcounterh                         },
-     [CSR_SCOUNTOVF]      = { "scountovf", sscofpmf,  read_scountovf,
-                              .min_priv_ver = PRIV_VERSION_1_12_0 },
-+    /* Supervisor Domain Identifier and Protection Registers */
-+    [CSR_MMPT] =    { "mmpt",   smsdid,  read_mmpt,   write_mmpt   },
-+    [CSR_MSDCFG] =  { "msdcfg", smsdid,  read_msdcfg, write_msdcfg },
- 
- #endif /* !CONFIG_USER_ONLY */
- };
-diff --git a/target/riscv/riscv_smmpt.h b/target/riscv/riscv_smmpt.h
-new file mode 100644
-index 0000000000..74dcccf4be
---- /dev/null
-+++ b/target/riscv/riscv_smmpt.h
-@@ -0,0 +1,21 @@
-+/*
-+ * QEMU RISC-V Smmpt (Memory Protection Table)
-+ *
-+ * Copyright (c) 2024 Alibaba Group. All rights reserved.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef RISCV_SMMPT_H
-+#define RISCV_SMMPT_H
-+
-+typedef enum {
-+    SMMPTBARE = 0,
-+    SMMPT34   = 1,
-+    SMMPT43   = 2,
-+    SMMPT52   = 3,
-+    SMMPT64   = 4,
-+    SMMPTMAX
-+} mpt_mode_t;
-+
-+#endif
--- 
-2.43.0
+Thanks, 
+Jishnu
+
+>  #define PNV_PHB4_MAX_MMIO_WINDOWS  32
+>  #define PNV_PHB4_MIN_MMIO_WINDOWS  16
+>  #define PNV_PHB4_NUM_REGS          (0x3000 >> 3)
+> @@ -138,6 +139,7 @@ struct PnvPHB4 {
+>      /* On-chip IODA tables */
+>      uint64_t ioda_LIST[PNV_PHB4_MAX_LSIs];
+>      uint64_t ioda_MIST[PNV_PHB4_MAX_MIST];
+> +    uint64_t ioda_PCT[PNV_PHB4_MAX_PCT];
+>      uint64_t ioda_TVT[PNV_PHB4_MAX_TVEs];
+>      uint64_t ioda_MBT[PNV_PHB4_MAX_MBEs];
+>      uint64_t ioda_MDT[PNV_PHB4_MAX_PEs];
+> diff --git a/include/hw/pci-host/pnv_phb4_regs.h b/include/hw/pci-host/pnv_phb4_regs.h
+> index c1d5a83271..e30adff7b2 100644
+> --- a/include/hw/pci-host/pnv_phb4_regs.h
+> +++ b/include/hw/pci-host/pnv_phb4_regs.h
+> @@ -486,6 +486,7 @@
+>  
+>  #define IODA3_TBL_LIST          1
+>  #define IODA3_TBL_MIST          2
+> +#define IODA3_TBL_PCT           3
+>  #define IODA3_TBL_RCAM          5
+>  #define IODA3_TBL_MRT           6
+>  #define IODA3_TBL_PESTA         7
+> -- 
+> 2.47.3
+> 
+>
 
 
