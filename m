@@ -4,65 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 582C5CD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 20:22:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1284CCD484E
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 20:22:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMX8Z-0002P1-2Z; Mon, 11 May 2026 16:21:59 -0400
+	id 1wMX8J-0001mC-FE; Mon, 11 May 2026 16:21:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wMX8V-0002Hw-HA
- for qemu-devel@nongnu.org; Mon, 11 May 2026 16:21:55 -0400
+ id 1wMX8H-0001jP-7d
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 16:21:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wMX8T-0001xx-Pk
- for qemu-devel@nongnu.org; Mon, 11 May 2026 16:21:55 -0400
+ id 1wMX8F-0001q6-1x
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 16:21:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778530913;
+ s=mimecast20190719; t=1778530898;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YN5TIB8xZhcm71D8v6fTPFcE7OV/kWkJLILB23cEv/c=;
- b=ezlNn9t75o4j0Rs+CA6C6jBYt30d6oyfm2vOZaeIIixtl9K8pwQTLltm7w+ZOkbSvY8SHV
- yCB60JBboxQo58sKIgPRgur632aoftdbhuHdEy+311cf/YKSC+xq0YGvf8ixngZhi9t+KZ
- sRAW7hT3GwtLRf/SJdYO7ZqFV5aTVZY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=C4Mb8GE/GJL7hhpoIefqu6tZRIvl1ozEdnQQ06TJf5M=;
+ b=CwT1h3ZyO8tQHaq2GPdUmySr6KQefaAhUM7Edgj/z00Cu0upzo4l9Jj1pAPbgtfxFMCwzg
+ Q+qojqMmHyoDfO1DCuJgPyFr30Eu7NLTv+km7HG1mBMnyq4AsBLA6DF+cY9wbn935H1fmP
+ J8SDn9lIXqibwbLkyHwc6vG1fZGV4io=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-516-GCBrX2O-OXy8nl1Nx2kPKw-1; Mon,
- 11 May 2026 16:21:50 -0400
-X-MC-Unique: GCBrX2O-OXy8nl1Nx2kPKw-1
-X-Mimecast-MFC-AGG-ID: GCBrX2O-OXy8nl1Nx2kPKw_1778530908
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-418-mlec2B5qNleERu3swWFmLQ-1; Mon,
+ 11 May 2026 16:21:33 -0400
+X-MC-Unique: mlec2B5qNleERu3swWFmLQ-1
+X-Mimecast-MFC-AGG-ID: mlec2B5qNleERu3swWFmLQ_1778530892
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B2D8E195609D; Mon, 11 May 2026 20:21:48 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 79EE319560B2; Mon, 11 May 2026 20:21:32 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1F9C31800465; Mon, 11 May 2026 20:21:46 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1D22D18004A3; Mon, 11 May 2026 20:21:30 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, Peter Xu <peterx@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 06/24] system/ioport: Fix qom-list-properties crash on portio
- list obj
-Date: Tue, 12 May 2026 00:20:52 +0400
-Message-ID: <20260511202111.3091440-7-marcandre.lureau@redhat.com>
+Cc: stefanha@redhat.com,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ jag.raman@oracle.com, Elena Ufimtseva <elena.ufimtseva@oracle.com>
+Subject: [PULL 03/24] hw/remote: guard listener unregister in finalize
+Date: Tue, 12 May 2026 00:20:49 +0400
+Message-ID: <20260511202111.3091440-4-marcandre.lureau@redhat.com>
 In-Reply-To: <20260511202111.3091440-1-marcandre.lureau@redhat.com>
 References: <20260511202111.3091440-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -88,49 +86,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Currently qom-list-properties QMP command will crash when querying the
-portio list MR object.  It's because its finalize() assumes full
-initialization done in portio_list_add_1().
+Guard the unregister by checking whether the listener callback was
+set, which only happens right before registration.
 
-Provide a simple fix for now to avoid the crash.  There is chance for a
-longer term fix, ideally MR should be initialized in instance_init().
-
-However that'll need more work, and that should also be done with cleaning
-the hard-coded MR operations in portio_list_add_1().  To be explored.
-
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Link: https://lore.kernel.org/r/87a4uvw066.fsf@pond.sub.org
-Reported-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Peter Xu <peterx@redhat.com>
+Cc: jag.raman@oracle.com
+Fixes: c7d80c7c1d9 ("multi-process: Associate fd of a PCIDevice with its object")
+Reviewed-by: Jagannathan Raman <jag.raman@oracle.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- system/ioport.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ hw/remote/remote-obj.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/system/ioport.c b/system/ioport.c
-index 9209bff2eab..1a0e01fd06b 100644
---- a/system/ioport.c
-+++ b/system/ioport.c
-@@ -346,8 +346,15 @@ static void memory_region_portio_list_finalize(Object *obj)
- {
-     MemoryRegionPortioList *mrpio = MEMORY_REGION_PORTIO_LIST(obj);
+diff --git a/hw/remote/remote-obj.c b/hw/remote/remote-obj.c
+index 86192dc8dad..4e74ae76158 100644
+--- a/hw/remote/remote-obj.c
++++ b/hw/remote/remote-obj.c
+@@ -154,7 +154,9 @@ static void remote_object_finalize(Object *obj)
+     RemoteObjectClass *k = REMOTE_OBJECT_GET_CLASS(obj);
+     RemoteObject *o = REMOTE_OBJECT(obj);
  
--    object_unref(&mrpio->mr);
--    g_free(mrpio->ports);
-+    /*
-+     * This check makes sure any random object_new() (without doing the
-+     * rest inits in portio_list_add_1()) will not crash when finalizing.
-+     * One example is QMP command qom-list-properties.
-+     */
-+    if (mrpio->ports) {
-+        object_unref(&mrpio->mr);
-+        g_free(mrpio->ports);
+-    device_listener_unregister(&o->listener);
++    if (o->listener.unrealize) {
++        device_listener_unregister(&o->listener);
 +    }
- }
  
- static const TypeInfo memory_region_portio_list_info = {
+     if (o->ioc) {
+         qio_channel_shutdown(o->ioc, QIO_CHANNEL_SHUTDOWN_BOTH, NULL);
 -- 
 2.54.0
 
