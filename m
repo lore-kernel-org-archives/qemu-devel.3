@@ -4,116 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24408CD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 13:45:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAA61CD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 13:49:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMPy6-0004Ko-5N; Mon, 11 May 2026 08:42:42 -0400
+	id 1wMR0D-0006La-72; Mon, 11 May 2026 09:48:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1wMPy2-0004BJ-L5
- for qemu-devel@nongnu.org; Mon, 11 May 2026 08:42:38 -0400
-Received: from mail-westcentralusazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c112::7] helo=CY3PR05CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wMQzy-0006K8-4i
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 09:48:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1wMPy0-0005Dx-LL
- for qemu-devel@nongnu.org; Mon, 11 May 2026 08:42:38 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=eTg99AudyEL0nJ7jNcr0Q0vmmu7A5vejbDKsF0ioS3S6Z2NgLfFICQzQET7HHnGB3+dE6JpMoGs8j1iJ6L/jVxABBh371eXVaNTlgdQalHVKk1hzvRe/P75xz41VEhNQCov/W6TfPmM1lzEACsz1EUmmbf8x2xT18BMDaTdpBdWl3SORwQS68plqswgutP1PFfFU5PyusOic1c7wT6cs5Hvnt0hA4xWE7dBNO/AAUDZOGhCSTVM/xmBENVoCi+rRRaxIqh9WjdpbeKRQxPImspQJUR/COpAw4SIbMzaRIPo0aPW/gff4lYd3siNkeHFvySpdUSx9u3PrN4vRlKt7Gg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=dcM3xGSIZb8mpGAk28y5nTntwx7j1DvqF2sWnLbvL+A=;
- b=Md7AgbKpYg4KGL/TpnpLtLHRmxxG4EALGrRozgmp7v3UhouLuq3seMDEAsfzkB/ziQCCJtYehFsjjLs5tTBY0KB39Eedy8lxO0+m6ZW+iyImeGYTG4n2cxORQmVydDJbTb0M38PIf9/bzjzpxp8BEtTShRKGincgWvsF6jL8j/0epW3j1suVFlHN/dV2elKOMYoZ+2c/eMK3XOahSELr+6lc9vyFb86CZGxeqUBx81ymt9mw49p28/5S9U71rjz6SFqt70MH9cx8/w4YZGe2PoU6y5eFXDUdmr5kFJ93rGRJP2hMYvcqXPiewMD4UfAO8VKUJMRHaE3aft+hcevF1w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=dcM3xGSIZb8mpGAk28y5nTntwx7j1DvqF2sWnLbvL+A=;
- b=5pTrx39fBUflP2E5NrIO+/D4Dl2xWGFj2OCWLK7VmYXcmL12fJ1O2Sux3kQMV0ZL7BsfCE+TLNr7mvCS6q/7HKDccC/0yZ+IzrwgwLD5Y5n0lDE9e6TezTtYjr/XL7Ij0IHzbtXh5YkDO0qqj53ryDA38Lv5MeuHn2tRQdrYx+g=
-Received: from SJ0PR05CA0060.namprd05.prod.outlook.com (2603:10b6:a03:33f::35)
- by LV8PR12MB9716.namprd12.prod.outlook.com (2603:10b6:408:2a1::10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.20; Mon, 11 May
- 2026 12:42:30 +0000
-Received: from SJ1PEPF0000231C.namprd03.prod.outlook.com
- (2603:10b6:a03:33f:cafe::2) by SJ0PR05CA0060.outlook.office365.com
- (2603:10b6:a03:33f::35) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.25.13 via Frontend Transport; Mon, 11
- May 2026 12:42:29 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- SJ1PEPF0000231C.mail.protection.outlook.com (10.167.242.233) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.25.13 via Frontend Transport; Mon, 11 May 2026 12:42:29 +0000
-Received: from BLR-L1-SARUNKOD.amd.com (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Mon, 11 May
- 2026 07:42:25 -0500
-From: Sairaj Kodilkar <sarunkod@amd.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>, Alejandro Jimenez
- <alejandro.j.jimenez@oracle.com>, Ani Sinha <anisinha@redhat.com>, "Eduardo
- Habkost" <eduardo@habkost.net>, Igor Mammedov <imammedo@redhat.com>, "Marcel
- Apfelbaum" <marcel.apfelbaum@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, Sairaj Kodilkar
- <sarunkod@amd.com>, <qemu-devel@nongnu.org>
-CC: <vasant.hegde@amd.com>, <suravee.suthikulpanit@amd.com>
-Subject: [PATCH 6/8] acpi_build: Build IVRS feature report using extended
- feature register
-Date: Mon, 11 May 2026 18:09:35 +0530
-Message-ID: <20260511123937.32743-7-sarunkod@amd.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260511123937.32743-1-sarunkod@amd.com>
-References: <20260511123937.32743-1-sarunkod@amd.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wMQzv-0003gc-US
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 09:48:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778507318;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=4lRusBxp69b291Rn2KyoduTNZklrUnXfQmClhnt/9XI=;
+ b=SVOWsmOY13ABaALthqq73/P/T9Ca98xSr2nvUs26wlOEJhca9De+V3e1Okh0WuEFYDt/RL
+ nAkiJLjkrkYj4Co8Q2nn4vghZAqdtPZOB96yu/6yiSJT6hID6j03WFI4yZEhSO13MAJ+W6
+ 2b3XE8NF09cYI4IKw6tPH98UTns+JUA=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-596-g2w0QrP3MHOc7yUsTESPPw-1; Mon, 11 May 2026 09:48:33 -0400
+X-MC-Unique: g2w0QrP3MHOc7yUsTESPPw-1
+X-Mimecast-MFC-AGG-ID: g2w0QrP3MHOc7yUsTESPPw_1778507313
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-51009190feeso77454111cf.2
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 06:48:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1778507313; x=1779112113; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=4lRusBxp69b291Rn2KyoduTNZklrUnXfQmClhnt/9XI=;
+ b=OFqO/HYJAVxvYxDJcRr8ckFyDaejoPnjkQ0aP6qBwXteaIhJHyl73THqbbf078OBKN
+ uDjiBs5Q3KaSC4ffi5dR9zUvU0FZ7FOXGTxWjlXGPlIk0EzG4Yv14neiWZf19S/TCViz
+ PP4vS3iOW3fKO4goqRgbHKwSJo5V+L0fo6J2DBZxrMKmtA5dr73da/MTP/DiA1LcEMSw
+ RHIP0rV5q/gZnPXRlR1HXMYSj0HHCsUz+lDPrCvOeczg+pZznOh8bxYq0WRE1g0CZb+y
+ fdEoF/isv3WdSbnu5uDMOEku+lRQ2UXdDkAvqEBTzIM/sFNgoLahps3/TTcA4QsLikT2
+ Nm9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778507313; x=1779112113;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4lRusBxp69b291Rn2KyoduTNZklrUnXfQmClhnt/9XI=;
+ b=hiVaa3Trlyre+d716b7aLjCjzVS/v+TuSkBAbcVylwKn2gglCMyUC76/lydyAEokYQ
+ 6xQbN0KW/ZHZemRZv0TDRJ8ORWRTXwQlWWP2ndRqq3e/Hajmu7hRdRyTZjlmi9jfAl5U
+ pBdvapvDTkUv+optiqGD10Lh5BzLP1Nqzb1c3PZP97EGLkbuEEIVJv36wAu+dnYvOJfx
+ 7kz10hoINIrwAr1UpAQIHkuakI9E0QALm8+K0V5dmXAtIAEnQ/chYgAB0mYo+Yn5oTHl
+ Vy2leF9c5WKwXkaeoorLvz+Sxha6hPZP1gSJbeYNrobMd/JmJIIIVY64CWQw9U9a4jS4
+ PtBQ==
+X-Gm-Message-State: AOJu0YyMbt9fkKlrfYUyqLFzewJFYzm0KBcl7hes9Mq8QrPTz4qHgTwe
+ B0fdOu6blcpicY2qr7KoljzqF4D8D2g2sL7ImCs6oz139Z0yZPd5Bmb/wOQeoFN00p0RFqGthZi
+ EVqS7iHQLHOfcmUoZyyglV0lYpRarEIaaFTBEQnAeFy0qlgeqOvduOEvX
+X-Gm-Gg: Acq92OFuzPWljv+1m7rJMpfxHuTrhHogThWsYHte9lEjHnk7Dzl4ytVSEzwf9NOUzgJ
+ i4yUBBFudKU6dOIDDv5p/m/tlHc6fL5f5ssSW0Ijv4iVjF26NzdW1kFJi6DUyrBODdddEXd1kr8
+ RTGpj9nMs+n6KOxfwmMnzVovJCjQjsP2sjXg/k9oFu60NENayyJs9VLQ8whCmvxS5DkM1snjUlL
+ BZmTrteN/vzow5C/NdEBr8hBmh89R2BlrLQ7S/spPz/l7wuvEokE480TQV7MmN724M0vG1kN1H5
+ 5nKfq1mp8d+zjzuvHBkFtFCvNZNAMmERCy3FhIFCABmsZRMZ0i/nflrOndjYglw3+C5/vSEIRRP
+ O54/SOJsVQQIqia1ybuUV1zxBpH2sO+/fbeQTRQ1AKGFCXuM=
+X-Received: by 2002:a05:622a:149:b0:50f:b17d:7e5e with SMTP id
+ d75a77b69052e-514a0a8ebecmr132311481cf.24.1778507312994; 
+ Mon, 11 May 2026 06:48:32 -0700 (PDT)
+X-Received: by 2002:a05:622a:149:b0:50f:b17d:7e5e with SMTP id
+ d75a77b69052e-514a0a8ebecmr132310271cf.24.1778507311878; 
+ Mon, 11 May 2026 06:48:31 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8b53d35787esm312282626d6.44.2026.05.11.06.48.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 11 May 2026 06:48:30 -0700 (PDT)
+Date: Mon, 11 May 2026 09:48:29 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PULL 13/23] migration: Calculate expected downtime on demand
+Message-ID: <agHeLeJ-uVz0B5jg@x1.local>
+References: <20260505202640.1011006-1-peterx@redhat.com>
+ <20260505202640.1011006-14-peterx@redhat.com>
+ <CAFEAcA-MYH6C39xO0OLx4-M5pKurJpurwRsMqZe9q=W-NShAbw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ1PEPF0000231C:EE_|LV8PR12MB9716:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7a9bd0ed-3bbc-4f37-92ca-08deaf5ac384
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700016|1800799024|376014|82310400026|22082099003|18002099003|921020|56012099003|11063799003;
-X-Microsoft-Antispam-Message-Info: EMbrvrToEyQTpkn6N5ho4Q7mK2xBMu6TI0fgBCQESrHzNSZalngJQG2aGLDcoOuiEDjjUnjnO3uRmeK3Uyk77EHFJIlH+S05Ly6GtdupQzaGwtRoyzP3VfnT5MiXpPuo+AAWQ48gjtepkKYMk7W+fCsdxzhuSvDSYv4g1rgSbZDg1jWIXuVKXiewlVuTW5DMC0pEvV8dX7wns4Rsd4cO6wQJi6DkYzeb2rY+k2Tn2b7lb+tidvc1xwsRc0hXDDKeZshXUAhJi3pBqOsVXS+L7bPByrhWlUBK8Rc5RtnaTtCOzkiz//Q0eqdBpxl4X/6VsIJDzLW/CabG9SdeCcQk0t0Yml0sH2rDZu7m48ExUe5Ky/TN0WFKwV9gtHg3LdHfRr4GYRMZjB+wePKTnarDrGxKvt/ZLDrBsDF7NrT67I2fGUSzamZ7IkpTrf2b9CJAFbtLu3JUtcTt15EaUbjB94wfPw5qVAY+i3z3W33JJLDXbWSijjK6DhvQ42sHIpXGf5C1Y0pJlTeJ/cIz90rG+6VGSTPV0t6OwPVaxnAl07uJI5WTtNMyj7WcY+VYNbltNOSumWd1LG8XmtIILzP8eACtQcZFffl2jtU0rTRUAsH+q+M7bTHwBf6F7FmdSZWo0b5ZVAt7z5flnXlkDxL3UDOzw9TYM75ban65RIMOnG0LSs17x1EQxymFRrv5wr4PXxyUiG+HLGeoOQm2rdiZMY7N4aeMrApEaYv1CvUkxQOsOFhs0i9O/NXtJ2zm0dl29NmJjsY84FzDdhA+nB2oWQ==
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700016)(1800799024)(376014)(82310400026)(22082099003)(18002099003)(921020)(56012099003)(11063799003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: Th0M5yNFbNbajQx4uniErlV3BU/mZ2hSEQm4ZSAAwQtcNOd+GNEzoym7DUL8U51t8lfydHELlxIRcAgQ/GZRwOice5naRXYCFtiFLsJkiQRfVlSQZydu8W33akAtOeKsyFCW49ndZe6iXLynCtkTWXpgY8dj36LrLlO+Opo+cn092Q5y1gbo2eChl9DExVLClBcUBemxTR9HzgxEA6dxEaqtSYfpA1NPc1GybetNkmy2PtJcpe4uos9hHZHxs+LSMvuJKMBN57J6iAgvCqbS4OYIVYRh97OpjOl9fOqtwXCNi9rnnO70PQusAxlaSb3ZR+g2kInPjuuTh7916mcDHtGJuoI/OB+YTXwoQy08V1SEXBBMp8mkhamcE+G6aJvfOthMVinOrEKvZbt/6iUOFcI/5sMXo9ufMTEhT30aI83ww1x/2BXkzOk6OJi/eTB/
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 May 2026 12:42:29.4005 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7a9bd0ed-3bbc-4f37-92ca-08deaf5ac384
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF0000231C.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9716
-Received-SPF: permerror client-ip=2a01:111:f403:c112::7;
- envelope-from=Sairaj.K@amd.com;
- helo=CY3PR05CU001.outbound.protection.outlook.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA-MYH6C39xO0OLx4-M5pKurJpurwRsMqZe9q=W-NShAbw@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,83 +116,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently IVRS feature report values are hardcoded, this is difficult to
-maintain as any updates to extended feature must be synced. Along with
-it current feature report does not have GATS and HATS set. Hence use
-the extended feature registers to build the IVRS feature report.
+On Thu, May 07, 2026 at 08:57:24PM +0100, Peter Maydell wrote:
+> On Tue, 5 May 2026 at 21:29, Peter Xu <peterx@redhat.com> wrote:
+> >
+> > This value does not need to be calculated as frequent.  Only calculate it
+> > on demand when query-migrate happened.  With that we can remove the
+> > variable in MigrationState.
+> >
+> > This paves way for fixing this value to include all modules (not only RAM
+> > but others too).
+> >
+> > Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+> > Link: https://lore.kernel.org/r/20260421202110.306051-12-peterx@redhat.com
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> 
+> Hi; I'm seeing a clang undefined-behaviour sanitizer failure
+> in the code introduced in this change when running the
+> aarch64 migration-test via "make check" on an x86-64 host.
+> 
+> It seems to happen fairly reliably when I do a "make check -j20",
+> but not when I run the test on its own, so it's probably load dependent.
+> 
+> Here's the backtrace:
+> 
+> ../../migration/migration.c:1051:12: runtime error: inf is outside the
+> range of representable values of type 'long'
+>     #0 0x57b49d635c0d in migration_downtime_calc_expected
+> /home/pm215/qemu/build/arm-clang/../../migration/migration.c:1051:12
+>     #1 0x57b49d63e860 in populate_time_info
+> /home/pm215/qemu/build/arm-clang/../../migration/migration.c:1075:35
+>     #2 0x57b49d63617e in fill_source_migration_info
+> /home/pm215/qemu/build/arm-clang/../../migration/migration.c:1184:9
+>     #3 0x57b49d63617e in qmp_query_migrate
+> /home/pm215/qemu/build/arm-clang/../../migration/migration.c:1264:5
+>     #4 0x57b49e4aed75 in qmp_marshal_query_migrate
+> /home/pm215/qemu/build/arm-clang/qapi/qapi-commands-migration.c:48:14
+>     #5 0x57b49e526814 in do_qmp_dispatch_bh
+> /home/pm215/qemu/build/arm-clang/../../qapi/qmp-dispatch.c:128:5
+>     #6 0x57b49e58c35a in aio_bh_call
+> /home/pm215/qemu/build/arm-clang/../../util/async.c:173:5
+>     #7 0x57b49e58c698 in aio_bh_poll
+> /home/pm215/qemu/build/arm-clang/../../util/async.c:220:13
+>     #8 0x57b49e542fc1 in aio_dispatch
+> /home/pm215/qemu/build/arm-clang/../../util/aio-posix.c:390:5
+>     #9 0x57b49e58f10a in aio_ctx_dispatch
+> /home/pm215/qemu/build/arm-clang/../../util/async.c:365:5
+>     #10 0x7c74a09b8584
+> (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5d584) (BuildId:
+> 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+>     #11 0x7c74a09b86cf in g_main_context_dispatch
+> (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5d6cf) (BuildId:
+> 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+>     #12 0x57b49e5901cb in glib_pollfds_poll
+> /home/pm215/qemu/build/arm-clang/../../util/main-loop.c:290:9
+>     #13 0x57b49e5901cb in os_host_main_loop_wait
+> /home/pm215/qemu/build/arm-clang/../../util/main-loop.c:313:5
+>     #14 0x57b49e5901cb in main_loop_wait
+> /home/pm215/qemu/build/arm-clang/../../util/main-loop.c:592:11
+>     #15 0x57b49d5f5486 in qemu_main_loop
+> /home/pm215/qemu/build/arm-clang/../../system/runstate.c:948:9
+>     #16 0x57b49e42cdfb in qemu_default_main
+> /home/pm215/qemu/build/arm-clang/../../system/main.c:50:14
+>     #17 0x57b49e42cdd3 in main
+> /home/pm215/qemu/build/arm-clang/../../system/main.c:93:9
+> 
+> 
+> > +/* Return expected downtime (unit: milliseconds) */
+> > +int64_t migration_downtime_calc_expected(MigrationState *s)
+> > +{
+> > +    if (mig_stats.dirty_sync_count <= 1) {
+> > +        return migrate_downtime_limit();
+> > +    }
+> > +
+> > +    return mig_stats.dirty_bytes_last_sync /
+> > +        migration_get_switchover_bw(s) * 1000;
+> > +}
+> 
+> Presumably in this function migration_get_switchover_bw() returns 0,
+> so the (floating-point) division results in Infinity. That's fine
+> until we have to convert it to int64_t to return it, which is the
+> UB that the sanitizer is complaining about...
 
-Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
----
- hw/i386/acpi-build.c | 38 +++++++++++++++++++++++++++++++-------
- hw/i386/acpi-build.h |  1 -
- 2 files changed, 31 insertions(+), 8 deletions(-)
+True, I can easily reproduce the warning too.  I'll send a patch.
 
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index 718e3f546b18..82208e06e155 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -1747,6 +1747,36 @@ ivrs_host_bridges(Object *obj, void *opaque)
-     return 0;
- }
- 
-+/*
-+ * IVHD type 0x10 reports features using Feature Reporting field, which has
-+ * different format than extended feature register (EFR) in the IOMMU MMIO
-+ * space.
-+ *
-+ * Convert the EFR format to feature reporting format.
-+ */
-+static uint32_t
-+get_amd_ivhd_feature_report(AMDVIState *s)
-+{
-+    uint64_t feature = amdvi_extended_feature_register(s);
-+    uint32_t is_gt = !!(feature & AMDVI_FEATURE_GT);
-+    uint32_t is_ga = !!(feature & AMDVI_FEATURE_GA);
-+    uint64_t glx_sup = (feature & AMDVI_GLX_SUP_MASK) >> AMDVI_GLX_SUP_SHIFT;
-+    uint64_t hats_mode = (feature & AMDVI_HATS_MODE_MASK) >>
-+                         AMDVI_HATS_MODE_SHIFT;
-+    uint64_t gats_mode = (feature & AMDVI_GATS_MODE_MASK) >>
-+                         AMDVI_GATS_MODE_SHIFT;
-+    uint32_t feature_report;
-+
-+    feature_report = s->xtsup << AMD_IVHD_FEATURE_REPORT_XT_SUP_SHIFT |
-+                     is_gt << AMD_IVHD_FEATURE_REPORT_GT_SUP_SHIFT |
-+                     glx_sup << AMD_IVHD_FEATURE_REPORT_GLX_SUP_SHIFT |
-+                     is_ga << AMD_IVHD_FEATURE_REPORT_GA_SUP_SHIFT |
-+                     hats_mode << AMD_IVHD_FEATURE_REPORT_HATS_SHIFT |
-+                     gats_mode << AMD_IVHD_FEATURE_REPORT_GATS_SHIFT;
-+
-+    return feature_report;
-+}
-+
- static void
- build_amd_iommu(GArray *table_data, BIOSLinker *linker, const char *oem_id,
-                 const char *oem_table_id)
-@@ -1829,13 +1859,7 @@ build_amd_iommu(GArray *table_data, BIOSLinker *linker, const char *oem_id,
-     /* IOMMU info */
-     build_append_int_noprefix(table_data, 0, 2);
-     /* IOMMU Feature Reporting */
--    feature_report = (48UL << 30) | /* HATS   */
--                     (48UL << 28) | /* GATS   */
--                     (1UL << 2)   | /* GTSup  */
--                     (1UL << 6);    /* GASup  */
--    if (s->xtsup) {
--        feature_report |= (1UL << 0); /* XTSup */
--    }
-+    feature_report = get_amd_ivhd_feature_report(s);
-     build_append_int_noprefix(table_data, feature_report, 4);
- 
-     /* IVHD entries as found above */
-diff --git a/hw/i386/acpi-build.h b/hw/i386/acpi-build.h
-index 9fd60a186db1..d81b7890e6e2 100644
---- a/hw/i386/acpi-build.h
-+++ b/hw/i386/acpi-build.h
-@@ -1,4 +1,3 @@
--
- #ifndef HW_I386_ACPI_BUILD_H
- #define HW_I386_ACPI_BUILD_H
- #include "hw/acpi/acpi-defs.h"
+Thanks,
+
 -- 
-2.34.1
+Peter Xu
 
 
