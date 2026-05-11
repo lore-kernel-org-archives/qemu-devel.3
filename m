@@ -4,93 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 789C4CD37B2
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 15:44:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C7E5CD37B2
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 15:48:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMSnb-0006xO-Sm; Mon, 11 May 2026 11:44:03 -0400
+	id 1wMSr4-0007qb-Nq; Mon, 11 May 2026 11:47:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wMSna-0006x6-KZ
- for qemu-devel@nongnu.org; Mon, 11 May 2026 11:44:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wMSnY-00026C-TK
- for qemu-devel@nongnu.org; Mon, 11 May 2026 11:44:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778514239;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xIx5izfemCVe2rB24rHRsc6f0hTNKT7+Si4gXy7dcz8=;
- b=VyyFk0jlruqNBk74mc2PxRgHpLfXFBCDxj9yVd0AnhHG3HDrVI1qqHGDz/6C1CETclF7R7
- 9T/WrvXmIcFLKp/eA3AhNHf79zFE4wD0Y9DF6PWG4UzXQfLsXg/PFGP9vK0S8WObq1uhzW
- CQ+MdGczzOlw8778ZiXKUWYRIrcWsZI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-593-McwY6VHuNu-gdxQ0yJFEJA-1; Mon,
- 11 May 2026 11:43:57 -0400
-X-MC-Unique: McwY6VHuNu-gdxQ0yJFEJA-1
-X-Mimecast-MFC-AGG-ID: McwY6VHuNu-gdxQ0yJFEJA_1778514236
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2826718005B3; Mon, 11 May 2026 15:43:56 +0000 (UTC)
-Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1249F30001BE; Mon, 11 May 2026 15:43:54 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wMSr3-0007qQ-By
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 11:47:37 -0400
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wMSr1-00033m-HV
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 11:47:36 -0400
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-65c0bda7f15so4613607d50.0
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 08:47:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778514454; cv=none;
+ d=google.com; s=arc-20240605;
+ b=ipTD3vplmokbfJJUToW5G56N41sieFyFcp3LVsCs4CpNtFC2kW9xXtzU99bzEblRgv
+ BOGVO/f/TFv3d5UbosCS+i3Ccn9fY41joOm6XF0RcvAAXbkrG4fkPD/zBMsNX2wYtef7
+ ZA4jeOMJRaof8E/fbPrFFSvOfLauWTpGW+9HOm4RudSmpX6tMVDvJgi7wmYhdSwDEO7r
+ ZkTtfKRJLh0ZzBAFiOsKcb2RUVg1UXqpL3UOU9U+fY+E/TDCEkqZpXIG0S2jKNA7EL2i
+ 7vnMZSotXTBOlkvrxAzD/YXdrSaU0FjM8b/bKsDQVT/Xc5ZpPs2DWmjInqM1Xy4HgSug
+ osHw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=oXKqJOjVUUXo2/4UpUz3DfcvTtzOv9WA4qoF0cpXaLg=;
+ fh=D9TiOsAcOSpRlHrkA38ELZyIVSvZmg48LLzTtJLYv+0=;
+ b=BO5oZdhhREDuyQqYLgc2t8mQOFRu/4SOqhiBLwNaRoAQ5HNMrGAnWUGkRJC4858YV9
+ SUq6EqJ2craqYJxcPtk/WA5qMQsTinvptqXOiGaxINpRSN63ejawNeHZE64JvvYK0BxH
+ 6Co1mIXYjk95roiOGPKAwtzRq2J4UjGw8vymJpmx3mETcNd9LaqktObTxAayTx3FBlu/
+ lInmFP7q2uOHCpxCxpjkYGr9rNbJjs4gfV2gi1JfD9OfxdPn7uR/BBE8gn/YJfpQgPa9
+ V42nZ+7iimthmK9lSKzYqMQQWv5zrYVCWwqIsC1Q8JKZEI6FFTNO8B2GjuMnnfrd/u+u
+ mVEw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778514454; x=1779119254; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=oXKqJOjVUUXo2/4UpUz3DfcvTtzOv9WA4qoF0cpXaLg=;
+ b=SYqAAqxR74Z7mocuLjE0/qpe3024BsS1ZtIeb5u1wulxAwGSQ4B8UwghwBueq9wDT7
+ 9CBS0i6QTkW00tYGvS/iEgy5hMAgaUYnBXH5iDvoaodzKCymARiM/EnF82e0FY134UNt
+ Pgq2wow6cwmUIrFBA59auDan2ud7AA3MdGrXAHhJ5WpcabFlnZJLZYXbgj90IMxhGwdm
+ GILhgb3vi5BvOCuKM1INn+IR+bxlfy6bZ0FXQe68KIcjhQb3UecY+jfpeAIaUWWwNsLz
+ Yl55Er1iPmALRkYGAUhM07e9FClx+89j/7dmrsk80XqqkT6Ycj5wg3UEDOpSRkUcM1QM
+ HlSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778514454; x=1779119254;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=oXKqJOjVUUXo2/4UpUz3DfcvTtzOv9WA4qoF0cpXaLg=;
+ b=qm+gL8x/BjqWrLQWKAfSkW5MlJnUxbfyxtHGPlXYW7U191k8CuK94HKip8ZLylzWj7
+ Ktvq2NS8aQwVzlrtAiA6EHfEqz0Gh5kg5PxA7niDM90pvN3RcL63kW+RHxC256LCFIcU
+ VG/Da4nEo4DRHTr8ex+dx3tCmuB7PPQGJq+MlR/p9SPYMZn41+NUtF/apW5Ie3fDmZ8i
+ Ld4ViOAjD1hrAfKYwBhsz5Oe5MEXaKOfe3iqXTienDWyeetRwt3tV33kCygnIRTP3isP
+ qfEoZRkmT9habB6kdl6M+6OkE3MP4au1nTTjx5tUc7VERsfUAaXVPocn/9WHMU0UMrhF
+ rK6w==
+X-Gm-Message-State: AOJu0YxoaU79QEV9qZC/M/GGl5E+488qbiymNSBzwbK9wNHAIq4yY48l
+ S9C33LpM+xTHQdhM7/dzMN9hDGKeOeBkiMzWOzKjsk0jKA+d5ig+E/HY9MJ2KV1NW00YLSmNBVA
+ x3B2UKzaQsAOCzkZFOOB1AchcEaRB8CzZY9JkjD6BRA==
+X-Gm-Gg: Acq92OEOWgYcFhUJGDcMweBkIUN8WdfaNwJqR1jYigdmNi8zNNqyGrbB9QgOfWfqKkZ
+ 89jMGyknTaiHAD4aj8rD7fIUv3qeoJNOaOIGOesYrrqoP4DExASHW2gR4bEHKPAcUlS7/Qm/3WI
+ tLOzGdMvel1wEPJQOt/+tZ+bvMtkP5I518/irMViL6UKquSbEkh0OEDrS8Nkvy7iWGP5tWmzY0I
+ WzIkNLAM2zab+8D9nkLkHAVAlkuiA//gJhqtWzo9pwj6u5V7U8TvtKltR7dOQczmtotSuylYac4
+ 5pUTyPxmvm7RRPShTV2C5FccXm/eU7iqRJIQoSom/AodzTd+n6atOt8zL3WyTOpjOCk=
+X-Received: by 2002:a05:690e:408f:b0:65c:5b88:849f with SMTP id
+ 956f58d0204a3-65da85c8cecmr9051622d50.45.1778514453941; Mon, 11 May 2026
+ 08:47:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3 08/10] qom: fix ability to create objects without a
- parent
-From: marcandre.lureau@redhat.com
-To: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>
-In-Reply-To: <20260511141420.229023-9-berrange@redhat.com>
-References: <20260511141420.229023-1-berrange@redhat.com>
- <20260511141420.229023-9-berrange@redhat.com>
-Date: Mon, 11 May 2026 19:43:47 +0400
-Message-Id: <177851422776.2961528.2239563098128298952.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1408;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=EN/CofKq4L96kzo1BO4iOfPtfQ0Z7qshksT3B4TtEP0=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqAfk2BB1PQNUD1z1+GKS0DFsJSOLFUzsVM2yyp
- y0JTM55ygqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCagH5NgAKCRDa6OEJdZac
- 5X1mD/452/ipRxcNY3A2ejPURW156SvQbpNgDcp0fRqDaD8UvF0UqtDf82e3R2Uoiq5yzUbPM01
- 4uVVJHcMnmdgAmq2TUSoRm+u95h/FMjk/31yImEgl56kDIufjUtEcsicL6pgWJK4S6LwUq6TrMq
- G4K2lrindt9ysQxHgFnesjJ2weVvsfYCQzI7+MA8V9mcwDSR2PnXrHRIul5CpiIldsbwVQwoHMW
- qfx0yGoSNHF7Y2jMnZJljipB+LR9B6KDq1k7lzuBJM6S05uO5CdQZbFJFuk876P67HGutmRGPK1
- czEYhNe/kP/VROzJM4rtdA8KT3Pp3OkCVo4RUfEtXd8wCVi4iZ9kEq0nS/hnUrQpAPYrvZcGZYx
- YvCFWCeX2qLJd/avIm8Jb31Cb8LgfPJcmFqQXNCWRM+ZRvIGHsP25GdurYLqenI3uVCuMW1ZO3B
- NsvorupiIOMZWdXYRJaay3/tBPVL5xsZh0E2Dztv7ijwBAhtb2qLcCe8l7YIC4QVK1iOuLaEllh
- sCCKjH1QWpGnNn0sPkK1f3tBY0jYDSGn1J7K0dp/X/Tail0F/1dHdXkN71ArDlb/5j8rTzNGGgZ
- 5wJccdPY0WjT85nyRKUSKy6yqbaQWc8C5XxTaVIC76t5aiifcoLW9GA5RMOvcjRDqADniTVJoai
- Mbjezey+MlRJpyg==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260511152019.1316898-1-peterx@redhat.com>
+In-Reply-To: <20260511152019.1316898-1-peterx@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 11 May 2026 16:47:22 +0100
+X-Gm-Features: AVHnY4Ihw4EAhkzRb0CB7DCYsp4OhO_IQ_e_bYE9dfZW_lvgX1_KeQTLBBXsiQ8
+Message-ID: <CAFEAcA_Hk5EnPWK3Ho1fQVeN0o+2VFjjjz+1sZQk2f3f_CRmWg@mail.gmail.com>
+Subject: Re: [PATCH v2] migration: Fix possible division by zero on calc
+ expected downtime
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,46 +115,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 11 May 2026 15:14:18 +0100, Daniel P. Berrangé <berrange@redhat.com> wrote:
-
-Hi
-
-> object_new_with_propv allowed id/parent to be optional, in which case
-> the caller was expected to own the returned object. Unfortunately a
-> trailing object_unref() meant that the returned object was already
-> freed.
-> 
-> It is confusing to have a single method with two different ownership
-> scenarios for the returned object.
-> 
-> Make id/parent mandatory in object_new_with_propv once more, and add
-> a new object_new_with_propv_parentless that does not accept id/parent
-> at all and lets the caller own the returned reference.
-> 
-> The helper method has abstracted the way properties are represented
-> and setk in order to facilitate the subsequent commit.
-> 
-
-set
-
+On Mon, 11 May 2026 at 16:20, Peter Xu <peterx@redhat.com> wrote:
 >
+> Commit dd4fe8844b changed the reporting of expected downtime behavior, so
+> that the value will be calculated on-demand.  One side effect on the change
+> is QEMU will allow the calculation to happen anytime even if there's no
+> transfer happening for a short while.
 >
-> diff --git a/qom/object.c b/qom/object.c
-> index 0c13e5ee1ce..e4a01794687 100644
-> --- a/qom/object.c
-> +++ b/qom/object.c
-> @@ -868,12 +880,56 @@ Object *object_new_with_props_from_qdict(const char *typename,
-> [ ... skip 42 lines ... ]
-> +    Object *ret;
-> +    struct ObjectNewVargsData data;
-> +    va_copy(data.vargs, vargs);
-> +    ret = object_new_with_props_helper(typename, NULL, NULL, &data,
-> +                                       object_new_with_propv_setter, errp);
-> +    va_end(vargs);
+> PeterM reported an ubsan report from clang when running migration-test with
+> aarch64 binary on x86_64 hosts.  I can also reproduce if I run the test
+> concurrently so some of the src QEMU may not get chance to push any data,
+> causing mbps to be 0:
+>
+> ../migration/migration.c:1051:12: runtime error: -nan is outside the range of representable values of type 'long'
+>
+> Fix it by properly handle both Inf and Nan.  One note is we can't use
+> ">"/">=" check here otherwise we cannot cover Nan.
+>
+> Link: https://lore.kernel.org/r/CAFEAcA-MYH6C39xO0OLx4-M5pKurJpurwRsMqZe9q=W-NShAbw@mail.gmail.com
+> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> Fixes: dd4fe8844b ("migration: Calculate expected downtime on demand")
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  migration/migration.c | 18 +++++++++++++++++-
+>  1 file changed, 17 insertions(+), 1 deletion(-)
+>
+> diff --git a/migration/migration.c b/migration/migration.c
+> index b6f78eb3ac..e4103cd3f0 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -1044,12 +1044,28 @@ static bool migrate_show_downtime(MigrationState *s)
+>  /* Return expected downtime (unit: milliseconds) */
+>  int64_t migration_downtime_calc_expected(MigrationState *s)
+>  {
+> +    double expected_ms;
+> +
+>      if (mig_stats.dirty_sync_count <= 1) {
+>          return migrate_downtime_limit();
+>      }
+>
+> -    return mig_stats.dirty_bytes_last_sync /
+> +    expected_ms = mig_stats.dirty_bytes_last_sync /
+>          migration_get_switchover_bw(s) * 1000;
+> +
+> +    /*
+> +     * This "<" check covers two cases where we want to fallback to
+> +     * INT64_MAX, the 1st case is obvious, but the 2nd is not:
+> +     *
+> +     * (1) when expected_ms is Inf, or anything too big for int64_t
+> +     * (2) when expected_ms is Nan (division by zero), evaluation of this
 
-va_end(data.vargs), matching va_copy()
+This should say "zero divided by zero" -- general division by
+zero gives Inf, and it's only 0 / 0 that runs into NaN.
 
--- 
-Marc-André Lureau <marcandre.lureau@redhat.com>
+> +     *     if clause will be FALSE
+> +     */
+> +    if (expected_ms < (double)INT64_MAX) {
 
+This works, but maybe we should write it out
+      if (isnan(expected_ms) || expected_ms < (double)INT64_MAX) {
+
+rather than being clever and then needing to write a big comment
+to explain it?
+
+But if you'd rather just adjust the comment, your patch's code
+change does do the right thing.
+
+-- PMM
 
