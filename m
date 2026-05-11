@@ -4,59 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F76DCD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 13:38:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEAA0CD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 13:38:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMQ55-0000rd-M7; Mon, 11 May 2026 08:49:59 -0400
+	id 1wMPxR-0003nc-Nm; Mon, 11 May 2026 08:42:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1wMQ4i-0000gj-Bu; Mon, 11 May 2026 08:49:34 -0400
-Received: from out30-124.freemail.mail.aliyun.com ([115.124.30.124])
+ (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1wMPxO-0003iT-AM
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 08:41:58 -0400
+Received: from mail-westus2azlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c005::5] helo=CO1PR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1wMQ4f-0002P2-6B; Mon, 11 May 2026 08:49:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1778503764; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=kBMAgW0uIObIlyJVbDzsUtQQf0Z+qZHm2zvfapEiHCs=;
- b=Q6izBFyfByNdMdNcFvdo5qw/y0aPeSFQXsItvBuoxaTqH/K3HPDzpcvKCGqBQslVXCcxo/LRJmb63mwDQUlTYK8FLtbTtZgXNMqswX9gz6YbHYj7bzaUSq6GOFWvd8WZf6+elyS8ArY5cRS/NkoNAu1WxwjB6GqpaB/HCb0XM0M=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R701e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037033178;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=11; SR=0;
- TI=SMTPD_---0X2jPzrf_1778503762; 
-Received: from localhost.localdomain(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0X2jPzrf_1778503762 cluster:ay36) by smtp.aliyun-inc.com;
- Mon, 11 May 2026 20:49:23 +0800
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- daniel.barboza@oss.qualcomm.com, chao.liu.zevorn@gmail.com,
- liwei1518@gmail.com, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Huang Tao <eric.huang@linux.alibaba.com>,
- TANG Tiancheng <lyndra@linux.alibaba.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v6 4/6] target/riscv: Implement SMMPT fence instructions
-Date: Mon, 11 May 2026 20:47:03 +0800
-Message-Id: <20260511124705.28161-5-zhiwei_liu@linux.alibaba.com>
-X-Mailer: git-send-email 2.39.3 (Apple Git-146)
-In-Reply-To: <20260511124705.28161-1-zhiwei_liu@linux.alibaba.com>
-References: <20260511124705.28161-1-zhiwei_liu@linux.alibaba.com>
+ (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1wMPxL-0004Vy-SM
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 08:41:57 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=E3V0c3cJ9uJbwcugfKyM2H9nBkNKz+ULS7tF05L+EAMv8qGm7+gA6vfl1EYFOfsVNMwh3mDV4CefFD/qV2FCpr41YIvs3sGGO+NCXXwjIMWnu0lISdsD5Ll6DpQp7VBv4UGP3gntxB8fVDWqgUDrJhtuM0m7/FcPyzf1BOBohVJBdLUSBElivKqP6eUnyIkaFlB512frge4Xuik+tBCxdavg92+PYsN2ZPWIbNnJHQCbiuroZ7eKZPitlBABQm3ZbXJ35wfefAh605FGQhmxYniK+H4ZhxwN5sbyxmaVhd4QNylWLze+3Ozxc6+fwPe5H9aevf+N0/GLtok53wmPFg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rxSZi6fEtizG/Cwtcc/WVIF56W0QHW/05H9fa/wGAUA=;
+ b=udhZIcrgDWpxnbLVriGZZEamt0rAr0QNT5tJNhgcXQ/e7nIurdYZEtSTQIs2NAmVoWQyJxbto1enea6vSmc2lpBJsJcPwohvWy55e5XWOrD4auO9FfKmCl3qlw/GRjmKYCkkIfL9xGTApJ42Qf/+3EM3JUztZbIN3n8u8LaRSUYflcx+HpY0aDtJvGSH2/TOj5v4522CyXCV2BWhHAY3yY29M0OLkISlk1ROfzrjJqbJH2g+vrDUgN1uYGDc7hBdQ1eu9QfQ4SRT79SCgcBEUEdMisFxcLoYThkJrG8OZakXet9ho4QWfCbntXGj0bFHIX4hHsDJZzLYmY7IQeVuBg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rxSZi6fEtizG/Cwtcc/WVIF56W0QHW/05H9fa/wGAUA=;
+ b=hUC1BcH3hhQaO1YstLnmUQqqWO897cbp7L3h/oWdYQDGg/+hMTHyI2sDl/WfhjwkWW01aX91jz/M5H6/WUNDzIJFj1iP+y4Jl2nw6I8nDH/4uooYUNOefn0LlzwVaBXhe53FfE7Kk7Wm8FCiCDv+JYxl4qZMGvWN3XDFpr4DOZo=
+Received: from SA9PR13CA0157.namprd13.prod.outlook.com (2603:10b6:806:28::12)
+ by BL4PR12MB9480.namprd12.prod.outlook.com (2603:10b6:208:58d::7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.20; Mon, 11 May
+ 2026 12:41:49 +0000
+Received: from SN1PEPF000397AE.namprd05.prod.outlook.com
+ (2603:10b6:806:28:cafe::7a) by SA9PR13CA0157.outlook.office365.com
+ (2603:10b6:806:28::12) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.25.15 via Frontend Transport; Mon, 11
+ May 2026 12:41:49 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ SN1PEPF000397AE.mail.protection.outlook.com (10.167.248.52) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.25.13 via Frontend Transport; Mon, 11 May 2026 12:41:49 +0000
+Received: from BLR-L1-SARUNKOD.amd.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Mon, 11 May
+ 2026 07:41:45 -0500
+From: Sairaj Kodilkar <sarunkod@amd.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>, Alejandro Jimenez
+ <alejandro.j.jimenez@oracle.com>, Ani Sinha <anisinha@redhat.com>, "Eduardo
+ Habkost" <eduardo@habkost.net>, Igor Mammedov <imammedo@redhat.com>, "Marcel
+ Apfelbaum" <marcel.apfelbaum@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, Sairaj Kodilkar
+ <sarunkod@amd.com>, <qemu-devel@nongnu.org>
+CC: <vasant.hegde@amd.com>, <suravee.suthikulpanit@amd.com>
+Subject: [PATCH 4/8] acpi_build: Use IOMMU pci device to build IOMMU device ID
+Date: Mon, 11 May 2026 18:09:33 +0530
+Message-ID: <20260511123937.32743-5-sarunkod@amd.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260511123937.32743-1-sarunkod@amd.com>
+References: <20260511123937.32743-1-sarunkod@amd.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.124;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-124.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN1PEPF000397AE:EE_|BL4PR12MB9480:EE_
+X-MS-Office365-Filtering-Correlation-Id: 18869513-3a80-481d-3288-08deaf5aabbf
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|1800799024|36860700016|82310400026|18002099003|11063799003|921020|56012099003|22082099003;
+X-Microsoft-Antispam-Message-Info: R05PB1yDu5QyQ5eXCoDHPiFa6juNtNKNLFqOULOM0NYipeQp7z23ma+/zUhcynbGA0oyTXjFI/9OZUwGdGaLT6i9etMGs/3JZxRMswdfF5OQD71DXAG+oFGXt0ft4FKYTIiUahRnpp1gfX+hUU222G1flBHK7cI2cRor/z7l2hWCy3Aa0n5jobV9eOX4uHIh8b31rYbYm/phhaIIfwYJttHkE+gDpzf4i4ywtiJeWDv+kI2gJ5rG1KyZTWIvR5LAlB5zl3yz6MUeFzkZfe4wxMn4UMNDXP6gBVUmcA6Bnn4HR6ZEwF3B1UySCstdpha5dAWCRA0UsJTnVZS1catUys5NSStxlTpqoxJ74qc3VPG+XxfmnQ6qtHXsI8I+taiE4NXT/rcpWgjeKhgPRKPWyGXDrZI26N6pNAIVZZJBSshLEa16H1UmY1JFUwqvWmRRRuYs2tbBPzltSD2i7dVp8I75YM1J9OCajmxUxRw0Hld/TJfYLYBRXNihGS2YH0Q6qC0fjF3sfiLDfWYwcsM4lwG4GWWegIx6i+z4oLMZR1N3N0U4w4Uk0x35t6BmcVfqjXMEnElpiQrLPZwRR7QUpXE0TsZnQQMeao8Jt5kszqeNEgqmYDquVR33W7Jl7x6frzsI+UQWbX5haRigxdPOo0r9Fvr3eYF/0M+2wIMNYsnp4dv7CCzbAfCXklBLNzN6ygCHoxJDTfLLxhFWfpg+tvxZartNoQlHzluLjwgky37tDICcFMbHBVixuftZsvnw8WfXgrQTqGNr2nj0GOK45Q==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(36860700016)(82310400026)(18002099003)(11063799003)(921020)(56012099003)(22082099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: X3U2EWP009itnsDDXYq4LJYSo5iuyGQ3nnBLs0urktRWW28VA1fcz3xk8LK4/H791kl+t7aE5daM2c01p34sYmxlEiG4/GWOA7a0cwug7V73i6Ns/yfpDQfVhtWUdFEpUyCXyl1LjOAaa/aEAkmCa0/X1T/IezWIw3txix/+MomBJkjXBQe7gamI1NLyur5pRHctHcNyldC6KY4tpZtiNhWPTPVJGOtmmQCkf5W1tI6wYUW38Frak+KRs2+eiwUFujPQxqbMWcGnuUHGc6A/ru0vzlESZ4uyKh5Qr/qnt3/Wjun1ShEb3L/k75S0Y5RAxqu8fjQgbuPe9mrOF9ikWEbpd4P8MXLpgqGFooXFxQu2XJCLUjHCfU7MGluCrKbT4TmXpyFAHdO/jOeJjX1MDK8GnqvPHQ/9OoDZy8w8T/FWPqBgcotC3/aPAUR43aZb
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 May 2026 12:41:49.5895 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 18869513-3a80-481d-3288-08deaf5aabbf
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF000397AE.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL4PR12MB9480
+Received-SPF: permerror client-ip=2a01:111:f403:c005::5;
+ envelope-from=Sairaj.K@amd.com;
+ helo=CO1PR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,81 +127,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch completes the SMMPT implementation by adding support for the
-new fence instructions: `mfence.spa` and `minval.spa`.
+Currently, build_amd_iommu() uses "addr" property to build the device ID for
+IOMMU device and advertise it throught IVRS. But this property does not encode
+IOMMU bus. This will be a problem if IOMMU is attached to different bus.
+Hence use iommu pci device which provides bus, to build the IOMMU device ID.
 
-According to the specification, these instructions act as memory ordering
-fences for MPT updates. In QEMU's TCG model, this is conservatively
-implemented by flushing the entire TLB, which ensures that any subsequent
-memory accesses will re-evaluate permissions and see the effects of any prior
-MPT modifications.
-
-The instructions are privileged and will cause an illegal instruction
-exception if executed outside of M-mode.
-
-Co-authored-by: Huang Tao <eric.huang@linux.alibaba.com>
-Co-authored-by: TANG Tiancheng <lyndra@linux.alibaba.com>
-Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
 ---
- target/riscv/insn32.decode                    |  2 ++
- .../riscv/insn_trans/trans_privileged.c.inc   | 30 +++++++++++++++++++
- 2 files changed, 32 insertions(+)
+ hw/i386/acpi-build.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-index 6e35c4b1e6..84cec57daf 100644
---- a/target/riscv/insn32.decode
-+++ b/target/riscv/insn32.decode
-@@ -120,6 +120,8 @@ sret        0001000    00010 00000 000 00000 1110011
- mret        0011000    00010 00000 000 00000 1110011
- wfi         0001000    00101 00000 000 00000 1110011
- sfence_vma  0001001    ..... ..... 000 00000 1110011 @sfence_vma
-+mfence_spa  1000011    ..... ..... 000 00000 1110011 @sfence_vma
-+minval_spa  0000011    ..... ..... 000 00000 1110011 @sfence_vma
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index e4ad01eec037..718e3f546b18 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -1752,10 +1752,13 @@ build_amd_iommu(GArray *table_data, BIOSLinker *linker, const char *oem_id,
+                 const char *oem_table_id)
+ {
+     AMDVIState *s = AMD_IOMMU_DEVICE(x86_iommu_get_default());
++    PCIDevice *iommu_dev = &(s->pci->dev);
+     GArray *ivhd_blob = g_array_new(false, true, 1);
+     AcpiTable table = { .sig = "IVRS", .rev = 1, .oem_id = oem_id,
+                         .oem_table_id = oem_table_id };
+     uint64_t feature_report;
++    int iommu_bus = pci_bus_num(pci_get_bus(iommu_dev));
++    uint16_t iommu_devid = PCI_BUILD_BDF(iommu_bus, iommu_dev->devfn);
  
- # *** NMI ***
- mnret       0111000    00010 00000 000 00000 1110011
-diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/insn_trans/trans_privileged.c.inc
-index 8a62b4cfcd..5ec6bf5991 100644
---- a/target/riscv/insn_trans/trans_privileged.c.inc
-+++ b/target/riscv/insn_trans/trans_privileged.c.inc
-@@ -160,3 +160,33 @@ static bool trans_sfence_vma(DisasContext *ctx, arg_sfence_vma *a)
- #endif
-     return false;
- }
+     acpi_table_begin(&table, table_data);
+     /* IVinfo - IO virtualization information common to all
+@@ -1816,9 +1819,7 @@ build_amd_iommu(GArray *table_data, BIOSLinker *linker, const char *oem_id,
+     /* IVHD length */
+     build_append_int_noprefix(table_data, ivhd_blob->len + 24, 2);
+     /* DeviceID */
+-    build_append_int_noprefix(table_data,
+-                              object_property_get_int(OBJECT(s->pci), "addr",
+-                                                      &error_abort), 2);
++    build_append_int_noprefix(table_data, iommu_devid, 2);
+     /* Capability offset */
+     build_append_int_noprefix(table_data, s->pci->capab_offset, 2);
+     /* IOMMU base address */
+@@ -1850,10 +1851,9 @@ build_amd_iommu(GArray *table_data, BIOSLinker *linker, const char *oem_id,
+ 
+     /* IVHD length */
+     build_append_int_noprefix(table_data, ivhd_blob->len + 40, 2);
 +
-+#define REQUIRE_SMSDID(ctx) do {          \
-+    if (!ctx->cfg_ptr->ext_smsdid) {      \
-+        return false;                     \
-+    }                                     \
-+} while (0)
-+
-+static bool do_mfence_spa(DisasContext *ctx)
-+{
-+#ifndef CONFIG_USER_ONLY
-+    REQUIRE_SMSDID(ctx);
-+    if (ctx->priv != PRV_M) {
-+        return false;
-+    }
-+    decode_save_opc(ctx, 0);
-+    gen_helper_tlb_flush_all(tcg_env);
-+    return true;
-+#endif
-+    return false;
-+}
-+
-+static bool trans_mfence_spa(DisasContext *ctx, arg_mfence_spa *a)
-+{
-+    return do_mfence_spa(ctx);
-+}
-+
-+static bool trans_minval_spa(DisasContext *ctx, arg_minval_spa *a)
-+{
-+    return do_mfence_spa(ctx);
-+}
+     /* DeviceID */
+-    build_append_int_noprefix(table_data,
+-                              object_property_get_int(OBJECT(s->pci), "addr",
+-                                                      &error_abort), 2);
++    build_append_int_noprefix(table_data, iommu_devid, 2);
+     /* Capability offset */
+     build_append_int_noprefix(table_data, s->pci->capab_offset, 2);
+     /* IOMMU base address */
 -- 
-2.43.0
+2.34.1
 
 
