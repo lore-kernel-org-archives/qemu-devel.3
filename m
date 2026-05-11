@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9930CCD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 18:23:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11FE1CD4840
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 18:24:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMVI5-0005IC-LR; Mon, 11 May 2026 14:23:41 -0400
+	id 1wMVI9-0005YX-Nc; Mon, 11 May 2026 14:23:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wMVHh-0004q0-9c
- for qemu-devel@nongnu.org; Mon, 11 May 2026 14:23:18 -0400
-Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
+ id 1wMVHs-0004vo-Dt
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 14:23:29 -0400
+Received: from mail-oi1-x234.google.com ([2607:f8b0:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wMVHf-0002u7-BO
- for qemu-devel@nongnu.org; Mon, 11 May 2026 14:23:16 -0400
-Received: by mail-ot1-x32c.google.com with SMTP id
- 46e09a7af769-7dbe437b072so2660690a34.2
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 11:23:14 -0700 (PDT)
+ id 1wMVHq-0002ya-8O
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 14:23:27 -0400
+Received: by mail-oi1-x234.google.com with SMTP id
+ 5614622812f47-479d9b155deso1649100b6e.3
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 11:23:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778523794; x=1779128594; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778523805; x=1779128605; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=l2xdv/V1omlS3DieDctnUu0Uqp28rBCjJPIXTe0N9uY=;
- b=ijIEYLWzfET8aen0OUEqU8vKnRr6MujHcbUMj6ZMf3H+UEOeTwW3d0SqcSxOMCxmXI
- LrR1KQeKHqXIx4NhLZ4yMwLipTSnBJ1+0u+0Ze+xdJV/9PugLgMB6NTW4BDkCD5z+b9D
- WCD+vc0snAtEb4ZCh/3tkLDtszl5zDyAyik572+j5azr27lR458ZztAIl/DRKLu3C4Q9
- G7HBOI1fkGTE2d5ZHU3VXS1zFhg8hfJTijNalpA3zlPF4ts+ahr8tcoCqvtshh7QFeOJ
- vbfQocpC/jsJeGaskCsUFtzSQpLwv0eJIaBFS4Hm9off0BukzBvRuqvQcGxCdusFzpPD
- vybA==
+ :reply-to; bh=hJekX8dH52yMvYykB5HOFELCbhNNSoNRaiTZ7e0Y8tM=;
+ b=OsrWuSW7MX+XFOu2rUa0WSTmVObn/NAFuCzWb8Hqv3sxZLA/HhJbzHFCmCtJL57rkg
+ W5h8lq1vX1NI/jLZalgk09Y13zWmSvhuys1ExjoI871htt7D6DSDZhSGZVHnBfY2tLsp
+ lvRAu85yrL2VLyAeD+HHRRVei2uCtvE1KmoqjQBVmDkpQK6sq93M7vATavFY9Kz4LnTD
+ c/ob1/HvUw9N1llfmQ1FZ04T/UcVJShxXWmXBlC/0Ce4vj7mKBM1IeMHE+z6dYEiyDUl
+ cpE7Qh9y0AX1jbW/q90yp1cQd5Cpysurk00ImrePsTvRmGF9I1xCGGP7sH4gsLg3bKTk
+ 2W3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778523794; x=1779128594;
+ d=1e100.net; s=20251104; t=1778523805; x=1779128605;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=l2xdv/V1omlS3DieDctnUu0Uqp28rBCjJPIXTe0N9uY=;
- b=MJ/wWIi7LfjiPyK5L3/63lJYMM+I8Qdpojaudk/apxs+I3S6VHubjOxTNQ4INoN03P
- VeOTqDOG0hr6IWB0rVKYHM7674vOsqiHTY4Pdm00VrvWziWbUbJtlgFTu4agmUs4zwq3
- nuyHAFbZ6nksJpTqrLAJL22y7lnesJEmiwwG4falB966vKOsEyXTRH2ldwPTvFjHPgOe
- RmXAlWohuuJdCG15W6BMAhwGDYN+SopUMc6uUpdkEQAhRsZwE/XSgVDwbYp7sGu6rUdF
- YrZQzj7Ber5g1fXi0Ehq2h5jELZVplEtueJIQfz5frHpKl7ji6hleT0zq0Sh6eUjgcyo
- IVcw==
-X-Gm-Message-State: AOJu0Yx8G/P68A+tTnWMNFKYy85plkofAD/hw5v5x6eVyiG9vT+et4Zu
- 4BcjnNY61gWu+2ev/cm2SCYH588TyX3/qkm1h0QKS76YbdLZ5rEaBGN3
-X-Gm-Gg: Acq92OEEukBJVsuL+mFJruUI7XQWln42cJCn1E8fHJNVA8VUbHr96cN13JrGDNZ1uMs
- 10v/mEcH/p1REavX+RbDghBxuhzYScYY9zs6+7I20ymc7raWRqNCwbtaaWxLd0b2On+3t+HiBTJ
- OGYJZwdbxtoZJsttr17SRUHvhOvqCL7oRvVxBQvvKsKFYoGQUoNAnTpyp6DAsLA5YV03DJ3AG5+
- e0PESRvoV5OTTCueqAl3usboGKcKsKtAbUhuOUlqTOUpxOozYx02/Fzel6Iwe9opwQu0bGwpKMy
- Zjl0HBCbDP/mSaWHbTDkE4Yk+0e8RTlm65XW0GBwvKxpgF2Tp76jhn0ahQ8Vt1oUcnsR2lk3o9v
- Cr0BMJfHAlwAW+AADM/zKfn5ao4+Fa9TMANsgaRx3sbiFfxi9Twfd9ETsNbS++napqOHUcntsui
- 3tJDIHF1JCqk1yiKdHlXd6io6l94xtLerQKFDV2+kuhmCVqfJUxzbRdH9TFO/5AIN88rWpN25/o
- 6zopLPlc+7WAzrMwIDw8vJaipjll73Ru6N+xLXmqWCPDGiYrj7ViMgakZjYQt3PVjgd
-X-Received: by 2002:a05:6830:378a:b0:7dc:cdea:7d9 with SMTP id
- 46e09a7af769-7e1df072f91mr14270527a34.22.1778523794165; 
- Mon, 11 May 2026 11:23:14 -0700 (PDT)
+ bh=hJekX8dH52yMvYykB5HOFELCbhNNSoNRaiTZ7e0Y8tM=;
+ b=a8xNK+NNgLtxVrfgIizcXWgOQ91A7NqxWIgO35qFYsB417n3akSee02KtuyaOh9nQM
+ qcvi9lM7IgPJ+RE1wO1TE0DrRIUjQXABy8jvhtrAGOxpSYdZuzxbX2eMemeaeD5zQr4W
+ 7Ffkismwjt+we8VE0IgtiT13DIMzDP3BMq3UQUarqAkW2D0zr62hrXJE+tbVDQaeNWsc
+ +9cLBBqanU1WxXIFn/YO7Oi2IiO4oVnTip5lBlAxglQQx5O7mqarYyOTW7VvqnfOpo6D
+ BQrBKMrooZnLeXnlheNcYQHSDPU5TFncb/L8FNFACv8tHBogjQcWsrfjFW1r7TJeDOdk
+ DsWA==
+X-Gm-Message-State: AOJu0YxDhHWsK4lptysnkpnTQ4LFalyuZlEGyXObK2RSHjP+Wxp5YonR
+ xWPu8ikEgT3zZZJWFmaMoGywxjLwzbD8I7v8AM9m45K2qow0/NoWPh4R
+X-Gm-Gg: Acq92OGJnCiWdgDk6Yzqq6O+GlodYnW0v3IvvdtIKrVbM+VXZqf/ftxFKDJPCVyhOfd
+ 4KKP6gz2WK/zaJmzxP7TLJKGyfqP+Ku2sSaB2wSWQRt1ArGDTd5sLEekrySgexjA6/guDD/OUwQ
+ U1/9nV0vnjqwkeBTFZS44AWhaTaMrEzi1QbG7xgTfK4G+z1AylfRL60/5Y5xb2HXpYC/iPyJ+Jz
+ pRWF0jb7LXjzXxTdMjKuOeObga/GIO0zFvFoR1yi/NH7wxBwW17URic4Llw3VN4FQB1QfjmRyUB
+ zlfI022Yts9bMHsi7z6SEdSykJVJpFaV8J17ye2mJ9rDqwrRR9vJy0zKw/BjOQ+6VbtGvVKwXzI
+ IHKAqF+yPesVuvF/DbqcpsoR+gfNG1qEwh+OhFXK3oHzKs71psKLRxtn+bc6M8Zsj0e1mWPmk+Y
+ UINS4XHnhw9LT6SKokTPmi11VZ+P+Q0iRg/EMtCWSRNBVIFH7H3Z5GRu8w6sf2M3OzFKX4h2C0i
+ HTiDZZbYdyfeUgWzPcMG8ii8zga6dkabqgjS2602jUhi60Y25dqNKqXuTPFmXNU/ea7
+X-Received: by 2002:a05:6808:1481:b0:467:a44:dddd with SMTP id
+ 5614622812f47-480425a7060mr14459220b6e.47.1778523804709; 
+ Mon, 11 May 2026 11:23:24 -0700 (PDT)
 Received: from mac.localdomain (71-218-106-55.hlrn.qwest.net. [71.218.106.55])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e367d90148sm7504871a34.20.2026.05.11.11.23.13
+ 46e09a7af769-7e367d90148sm7504871a34.20.2026.05.11.11.23.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 May 2026 11:23:13 -0700 (PDT)
+ Mon, 11 May 2026 11:23:24 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Mon, 11 May 2026 12:22:55 -0600
-Subject: [PATCH v6 24/35] target/mips: add Octeon QMAC instructions
+Date: Mon, 11 May 2026 12:23:06 -0600
+Subject: [PATCH v6 35/35] target/mips: expose Octeon68XX floating-point support
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260511-mips-octeon-missing-insns-v2-v6-24-5062889c4d3c@gmail.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260511-mips-octeon-missing-insns-v2-v6-35-5062889c4d3c@gmail.com>
 References: <20260511-mips-octeon-missing-insns-v2-v6-0-5062889c4d3c@gmail.com>
 In-Reply-To: <20260511-mips-octeon-missing-insns-v2-v6-0-5062889c4d3c@gmail.com>
 To: qemu-devel@nongnu.org
@@ -82,8 +82,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>, 
  James Hilliard <james.hilliard1@gmail.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
- envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x32c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::234;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x234.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,171 +107,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QMAC.0x and QMACS.0x multiply the selected signed Q15 halfword lane
-from rs by rt<15:0> and accumulate the Q31 product into the Octeon
-HI/LO accumulator state.
+Octeon68XX cores implement CP1. Advertise that in the CPU definition by
+setting Config1.FP, enabling the writable Status bits, and providing the
+FCR0/FCR31 defaults used by this CPU model.
 
-QMAC updates the full 64-bit HI/LO accumulator. QMACS saturates the
-32-bit Q31 result in LO and keeps HI<0> as the sticky saturation flag.
+This lets guests observe the expected floating-point feature bits and
+use CP1 with -cpu Octeon68XX.
 
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
----
- target/mips/helper.h               |  2 ++
- target/mips/tcg/octeon.decode      |  5 ++++
- target/mips/tcg/octeon_translate.c | 16 +++++++++++
- target/mips/tcg/op_helper.c        | 59 ++++++++++++++++++++++++++++++++++++++
- 4 files changed, 82 insertions(+)
 
-diff --git a/target/mips/helper.h b/target/mips/helper.h
-index 08fda55ae1..e93bc37903 100644
---- a/target/mips/helper.h
-+++ b/target/mips/helper.h
-@@ -27,6 +27,8 @@ DEF_HELPER_FLAGS_4(rotx, TCG_CALL_NO_RWG_SE, tl, tl, i32, i32, i32)
- DEF_HELPER_3(octeon_vmulu, i64, env, i64, i64)
- DEF_HELPER_3(octeon_vmm0, i64, env, i64, i64)
- DEF_HELPER_3(octeon_v3mulu, i64, env, i64, i64)
-+DEF_HELPER_4(octeon_qmac, void, env, i64, i64, i32)
-+DEF_HELPER_4(octeon_qmacs, void, env, i64, i64, i32)
- 
- /* microMIPS functions */
- DEF_HELPER_4(lwm, void, env, tl, tl, i32)
-diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index 9c1fe8f4f1..5edcd95884 100644
---- a/target/mips/tcg/octeon.decode
-+++ b/target/mips/tcg/octeon.decode
-@@ -28,9 +28,12 @@ BBIT         11 set:1 . 10 rs:5 ..... offset:s16 p=%bbit_p
- # SEQI rt, rs, immediate
- # SNE rd, rs, rt
- # SNEI rt, rs, immediate
-+# QMAC.0x rs, rt
-+# QMACS.0x rs, rt
- 
- @r3          ...... rs:5 rt:5 rd:5 ..... ......
- &cmpi        rs rt imm
-+&qmac        rs rt lane
- %bitfield_p  0:1 6:5
- @bitfield    ...... rs:5 rt:5 lenm1:5 ..... ..... . p=%bitfield_p
- 
-@@ -43,6 +46,8 @@ SEQ          011100 ..... ..... ..... 00000 101010 @r3
- SNE          011100 ..... ..... ..... 00000 101011 @r3
- SEQI         011100 rs:5 rt:5 imm:s10 101110 &cmpi
- SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
-+QMACS        011100 rs:5 rt:5 00000 000 lane:2 010010 &qmac
-+QMAC         011100 rs:5 rt:5 00000 100 lane:2 010010 &qmac
- &r2          rs rt
- MTM0         011100 rs:5 rt:5 00000 00000 001000 &r2
- MTP0         011100 rs:5 rt:5 00000 00000 001001 &r2
-diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index 2d836afddb..b41bc1f81e 100644
---- a/target/mips/tcg/octeon_translate.c
-+++ b/target/mips/tcg/octeon_translate.c
-@@ -14,6 +14,8 @@
- #include "decode-octeon.c.inc"
- 
- typedef void gen_helper_octeon_vmul(TCGv_i64, TCGv_ptr, TCGv_i64, TCGv_i64);
-+typedef void gen_helper_octeon_qmac_fn(TCGv_ptr, TCGv_i64, TCGv_i64,
-+                                       TCGv_i32);
- 
- static bool trans_BBIT(DisasContext *ctx, arg_BBIT *a)
- {
-@@ -156,6 +158,18 @@ static bool trans_SNEI(DisasContext *ctx, arg_SNEI *a)
-     return do_seqi_snei(ctx, a, TCG_COND_NE);
- }
- 
-+static bool trans_qmac(DisasContext *ctx, arg_qmac *a,
-+                       gen_helper_octeon_qmac_fn *helper)
-+{
-+    TCGv_i64 rs = tcg_temp_new_i64();
-+    TCGv_i64 rt = tcg_temp_new_i64();
-+
-+    gen_load_gpr(rs, a->rs);
-+    gen_load_gpr(rt, a->rt);
-+    helper(tcg_env, rs, rt, tcg_constant_i32(a->lane));
-+    return true;
-+}
-+
- static bool trans_lx(DisasContext *ctx, arg_lx *a, MemOp mop)
- {
-     gen_lx(ctx, a->rd, a->base, a->index, mop);
-@@ -299,6 +313,8 @@ static bool trans_vmul(DisasContext *ctx, arg_decode_ext_octeon1 *a,
- 
- TRANS(SAA,  trans_saa, MO_UL);
- TRANS(SAAD, trans_saa, MO_UQ);
-+TRANS(QMAC,  trans_qmac, gen_helper_octeon_qmac);
-+TRANS(QMACS, trans_qmac, gen_helper_octeon_qmacs);
- TRANS(LBX,  trans_lx, MO_SB);
- TRANS(LBUX, trans_lx, MO_UB);
- TRANS(LHX,  trans_lx, MO_SW);
-diff --git a/target/mips/tcg/op_helper.c b/target/mips/tcg/op_helper.c
-index 740c181d27..0a892e31a8 100644
---- a/target/mips/tcg/op_helper.c
-+++ b/target/mips/tcg/op_helper.c
-@@ -144,6 +144,65 @@ target_ulong helper_rotx(target_ulong rs, uint32_t shift, uint32_t shiftx,
-     return (int64_t)(int32_t)(uint32_t)tmp5;
- }
- 
-+static int32_t octeon_mul_q15_q15(int16_t a, int16_t b, bool *overflow)
-+{
-+    if (a == INT16_MIN && b == INT16_MIN) {
-+        *overflow = true;
-+        return INT32_MAX;
-+    }
-+    return (int32_t)a * b * 2;
-+}
-+
-+static int32_t octeon_sat32_acc_q31(int32_t acc, int32_t value,
-+                                    bool *overflow)
-+{
-+    int64_t sum = (int64_t)acc + value;
-+
-+    if (sum > INT32_MAX) {
-+        *overflow = true;
-+        return INT32_MAX;
-+    }
-+    if (sum < INT32_MIN) {
-+        *overflow = true;
-+        return INT32_MIN;
-+    }
-+    return sum;
-+}
-+
-+static int16_t octeon_qmac_lane(uint64_t rs, uint32_t lane)
-+{
-+    return (int16_t)(uint16_t)extract64(rs, lane * 16, 16);
-+}
-+
-+void helper_octeon_qmac(CPUMIPSState *env, uint64_t rs, uint64_t rt,
-+                        uint32_t lane)
-+{
-+    bool overflow = false;
-+    int32_t product;
-+    int64_t acc;
-+
-+    product = octeon_mul_q15_q15((int16_t)(uint16_t)rt,
-+                                 octeon_qmac_lane(rs, lane), &overflow);
-+    acc = deposit64(env->active_tc.LO[0], 32, 32, env->active_tc.HI[0]);
-+    acc += product;
-+
-+    env->active_tc.LO[0] = (int64_t)(int32_t)acc;
-+    env->active_tc.HI[0] = (int64_t)(int32_t)((uint64_t)acc >> 32);
-+}
-+
-+void helper_octeon_qmacs(CPUMIPSState *env, uint64_t rs, uint64_t rt,
-+                         uint32_t lane)
-+{
-+    bool overflow = env->active_tc.HI[0] & 1;
-+    int32_t product;
-+
-+    product = octeon_mul_q15_q15((int16_t)(uint16_t)rt,
-+                                 octeon_qmac_lane(rs, lane), &overflow);
-+    env->active_tc.LO[0] = octeon_sat32_acc_q31(
-+        (int32_t)(uint32_t)env->active_tc.LO[0], product, &overflow);
-+    env->active_tc.HI[0] = overflow;
-+}
-+
- static void octeon_add_limb(uint64_t *sum, int limb_count,
-                             uint64_t value, int limb)
- {
+---
+Changes v1 -> v2:
+  - Move this CPU-model correction into a separate final patch.
+    (suggested by Philippe Mathieu-Daudé)
+---
+ target/mips/cpu-defs.c.inc | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/target/mips/cpu-defs.c.inc b/target/mips/cpu-defs.c.inc
+index faefab0473..cc1916232f 100644
+--- a/target/mips/cpu-defs.c.inc
++++ b/target/mips/cpu-defs.c.inc
+@@ -997,7 +997,8 @@ const mips_def_t mips_defs[] =
+         .CP0_PRid = 0x000D9100,
+         .CP0_Config0 = MIPS_CONFIG0 | (0x1 << CP0C0_AR) | (0x2 << CP0C0_AT) |
+                        (MMU_TYPE_R4000 << CP0C0_MT),
+-        .CP0_Config1 = MIPS_CONFIG1 | (0x3F << CP0C1_MMU) |
++        .CP0_Config1 = MIPS_CONFIG1 | (1 << CP0C1_FP) |
++                       (0x3F << CP0C1_MMU) |
+                        (1 << CP0C1_IS) | (4 << CP0C1_IL) | (1 << CP0C1_IA) |
+                        (1 << CP0C1_DS) | (4 << CP0C1_DL) | (1 << CP0C1_DA) |
+                        (1 << CP0C1_PC) | (1 << CP0C1_WR) | (1 << CP0C1_EP),
+@@ -1011,7 +1012,12 @@ const mips_def_t mips_defs[] =
+         .CP0_PageGrain = (1 << CP0PG_ELPA),
+         .SYNCI_Step = 32,
+         .CCRes = 2,
+-        .CP0_Status_rw_bitmask = 0x12F8FFFF,
++        .CP0_Status_rw_bitmask = 0x36F8FFFF,
++        .CP1_fcr0 = (1 << FCR0_F64) | (1 << FCR0_3D) | (1 << FCR0_PS) |
++                    (1 << FCR0_L) | (1 << FCR0_W) | (1 << FCR0_D) |
++                    (1 << FCR0_S) | (0x00 << FCR0_PRID) | (0x0 << FCR0_REV),
++        .CP1_fcr31 = 0,
++        .CP1_fcr31_rw_bitmask = 0xFF83FFFF,
+         .SEGBITS = 42,
+         .PABITS = 49,
+         .insn_flags = CPU_MIPS64R2 | INSN_OCTEON,
 
 -- 
 2.54.0
