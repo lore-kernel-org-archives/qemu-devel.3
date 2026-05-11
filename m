@@ -4,67 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C516CD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 20:24:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2E12CD484E
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 20:24:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMX9r-00075r-3R; Mon, 11 May 2026 16:23:19 -0400
+	id 1wMXAK-0007qx-1D; Mon, 11 May 2026 16:23:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wMX9i-0006uy-M9
- for qemu-devel@nongnu.org; Mon, 11 May 2026 16:23:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wMXA8-0007Ys-8l
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 16:23:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wMX9f-0002Lu-6f
- for qemu-devel@nongnu.org; Mon, 11 May 2026 16:23:09 -0400
+ id 1wMXA6-0002X4-Sm
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 16:23:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778530985;
+ s=mimecast20190719; t=1778531014;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=WjR3LbB920EXigDkIu5RxUuwQpgi24eawYW4XfIUDz8=;
- b=gFAc4Kf2t6r1lwE5NeXcJ8+6+avnslZK4/cdXFlhCmy1/lcCSDyRmjBZk2PagzXT/6eehm
- VFZMTC2QCAQgbXTRA+Cv2queCRQ5+cN0gMy7mWTAkjKnISndiNAk5IUnkTIR3ZUUASBoiC
- CI5cRU9MhYvVE3WpHdu8LB450ISA+44=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=6I4ISOJLTpqZetyAMA529Au/T3Q97FhNb5QDLAKB8oo=;
+ b=Qer9qKdfkzE9NlzE+GwF6NIW8Rm2VWnxdCLzpJ8O3lulrT+7yeWB50JZU9xaNz/Q5+1C7Q
+ K9bV6dlmsCP+ZNgU/SuBuUk+j6aA/xXOpLMe8vPua3VD04bO80G/9Cn6fAlutNMwmswUKG
+ j8eDlNZRPU+4submEOi/GkYjrqvU0eQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-518-sVr0VKRDMjuSYumLqnAxPQ-1; Mon,
- 11 May 2026 16:23:02 -0400
-X-MC-Unique: sVr0VKRDMjuSYumLqnAxPQ-1
-X-Mimecast-MFC-AGG-ID: sVr0VKRDMjuSYumLqnAxPQ_1778530981
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-157-UQSXOARiNvSYa2CXQ9cpMQ-1; Mon,
+ 11 May 2026 16:23:29 -0400
+X-MC-Unique: UQSXOARiNvSYa2CXQ9cpMQ-1
+X-Mimecast-MFC-AGG-ID: UQSXOARiNvSYa2CXQ9cpMQ_1778531007
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DE71319560AA; Mon, 11 May 2026 20:23:00 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A290C1800451; Mon, 11 May 2026 20:23:27 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 85F5830001BE; Mon, 11 May 2026 20:22:59 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 37FF219560AB; Mon, 11 May 2026 20:23:25 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
- qemu-arm@nongnu.org (open list:SBSA-REF)
-Subject: [PULL 19/24] hw/arm/sbsa-ref: free unrealized flash devices on
- finalization
-Date: Tue, 12 May 2026 00:21:05 +0400
-Message-ID: <20260511202111.3091440-20-marcandre.lureau@redhat.com>
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ qemu-s390x@nongnu.org (open list:S390 TCG CPUs)
+Subject: [PULL 24/24] target/s390x: add gen-features.h dependency to
+ s390x_system_ss
+Date: Tue, 12 May 2026 00:21:10 +0400
+Message-ID: <20260511202111.3091440-25-marcandre.lureau@redhat.com>
 In-Reply-To: <20260511202111.3091440-1-marcandre.lureau@redhat.com>
 References: <20260511202111.3091440-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -72,8 +74,8 @@ X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,49 +93,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Flash devices are created with qdev_new() in instance_init and added as
-children, but the initial reference from qdev_new() is only dropped by
-sysbus_realize_and_unref() during machine init. When the machine object
-is destroyed before realization (e.g. during qtest device introspection),
-the flash devices leak.
+Commit 0b83acf2f05 moved gen_features_h from s390x_ss to
+s390x_common_ss. However s390x_system_ss (containing ioinst.c) was left
+without the dependency, causing a build race: it can be compiled before
+gen-features.h is generated (via cpu.h -> cpu_models.h -> cpu_features.h
+-> gen-features.h)
 
-Fixes: e9fdf453240e ("hw/arm: Add arm SBSA reference machine, devices part")
+Add gen_features_h to s390x_system_ss to correct the build ordering.
+
+Fixes: 0b83acf2f05 ("target/s390x: Introduce common system/user meson source set")
+Acked-by: Eric Farman <farman@linux.ibm.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/arm/sbsa-ref.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ target/s390x/meson.build | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
-index 52c35e10c2d..484b90053e8 100644
---- a/hw/arm/sbsa-ref.c
-+++ b/hw/arm/sbsa-ref.c
-@@ -892,6 +892,17 @@ static void sbsa_ref_instance_init(Object *obj)
-     sbsa_flash_create(sms);
- }
+diff --git a/target/s390x/meson.build b/target/s390x/meson.build
+index 44f58ac2919..bc4459e8ed7 100644
+--- a/target/s390x/meson.build
++++ b/target/s390x/meson.build
+@@ -26,6 +26,7 @@ s390x_common_ss.add(files(
+   'gdbstub.c',
+ ))
  
-+static void sbsa_ref_instance_finalize(Object *obj)
-+{
-+    SBSAMachineState *sms = SBSA_MACHINE(obj);
-+
-+    for (int i = 0; i < ARRAY_SIZE(sms->flash); i++) {
-+        if (sms->flash[i] && !qdev_is_realized(DEVICE(sms->flash[i]))) {
-+            object_unref(OBJECT(sms->flash[i]));
-+        }
-+    }
-+}
-+
- static void sbsa_ref_class_init(ObjectClass *oc, const void *data)
- {
-     MachineClass *mc = MACHINE_CLASS(oc);
-@@ -930,6 +941,7 @@ static const TypeInfo sbsa_ref_info = {
-     .name          = TYPE_SBSA_MACHINE,
-     .parent        = TYPE_MACHINE,
-     .instance_init = sbsa_ref_instance_init,
-+    .instance_finalize = sbsa_ref_instance_finalize,
-     .class_init    = sbsa_ref_class_init,
-     .instance_size = sizeof(SBSAMachineState),
-     .interfaces    = aarch64_machine_interfaces,
++s390x_system_ss.add(gen_features_h)
+ s390x_system_ss.add(files(
+   'ioinst.c',
+ ))
 -- 
 2.54.0
 
