@@ -4,83 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89F29CD484C
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 14:06:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA7D4CD484D
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 14:06:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMRGb-0000ve-Sn; Mon, 11 May 2026 10:05:59 -0400
+	id 1wMRDa-0004pS-QN; Mon, 11 May 2026 10:02:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wMRG0-0000Ir-BB
- for qemu-devel@nongnu.org; Mon, 11 May 2026 10:05:18 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
+ id 1wMRCA-0003x9-Uz
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 10:01:35 -0400
+Received: from mail-vs1-xe31.google.com ([2607:f8b0:4864:20::e31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wMRFt-00075N-1S
- for qemu-devel@nongnu.org; Mon, 11 May 2026 10:05:14 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-c80167f56cdso1661887a12.3
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 07:05:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
+ id 1wMRC6-00063V-Ep
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 10:01:16 -0400
+Received: by mail-vs1-xe31.google.com with SMTP id
+ ada2fe7eead31-631a7868228so1391753137.0
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 07:01:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778508302; x=1779113102; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6M/hoXWqBMvPhrdOYgRm4aU7iBbj+zMMvv5Gl5LllJg=;
- b=fUZ+KhH/Ef9XSJ+HfUMeBWIV9XQdT4OD8ZVen6j/X3VfBI9ukADuOuufaW4/LOtbUs
- dqdKTfhISr6Otfrd6vwbkKXDgG25wEJLC9Cgd6lYby/JyU4ZukgL/1sZj4gsZVlqCZcM
- 1RCPc8jjmA4N3Yr9oogpt+VzWROKC3wOTRDq5xweefrWwLD482IEDKQgsrXyXheezFxC
- Oj9L9z65XoZ2NYJzD2oQKSP8SMxvtmpLnpg+avPj7tOG+Q9220WDzNM71417GSaaBOu3
- Bc0cXWBUUGXOZfBfebIM7tgu6qLRa55MAqLa1UJJnKAtNvLUd6Zg4V8KP5b9gOHlUflc
- Kdpw==
+ d=gmail.com; s=20251104; t=1778508073; x=1779112873; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=KO7Mq8JRuwohDcM/67cxG4Kl5R8QIg4FU/azGfOw7c8=;
+ b=AtfdCcx+yj6+q1dqcUWZKQYaAxWXBZBedzj4zOAll7s7+UusBaZYA2tjamJMQo0LaW
+ 3VdP/WEv1AhNRU2m8QM9Bv/Ftm64xBO7upzaWRyTwCvuxaYc1IqDtxMBx1lFJdn7uuOk
+ 8bsYijPkMJd/L2v6fviyC3N7YRYDOrpUSUyKeSdRRrQ4vnnaqJr7wIC65c8qmxWUn+iF
+ +3U+9krUC91HkoKoGnzlt1Vfa70ztr2qc96gQqkNR/JKwEyuQId3lO6aU5LL6h7yJoKT
+ An8IPkQseOm8Dh3xR8V95jtX8GwADz/GrQk3iaSplfhG6u7O1YXd+nx9OqGfieT9302d
+ iQeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778508302; x=1779113102;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=6M/hoXWqBMvPhrdOYgRm4aU7iBbj+zMMvv5Gl5LllJg=;
- b=llqQfYAR1OGz804ae7W+EwOeBjyG8hFMKHAgPJUArcXRn07aAXfTy1t23UoQSlOdDG
- 1yyNOL+R196deUzp1BuC704z2WDH3lLZWQIE9Q63bHEShNcdt+Jlm2A3cf1tg2rVJnYN
- IVXHpx1aS+90Rw1At6T5gyPZDNuvM1TGYoGC43lIr2rrGwXT9fehwd12uwiJ0Tk5INgZ
- rwKTSkKvua0XHuKXqujxKTrV2mS2i/nALblwsd2lj+Skt7WXyNDhRh2DnUgPuBu7QbUQ
- CjEH/NaDHgkdMWG1iJunrfrCt5q2LM/GbijUMstmBM8c1jw7Qh+0s4RBytwnEbW1+9EI
- SVgA==
-X-Gm-Message-State: AOJu0YyVVjs1ZC2QcUWmxzm5KyXPjPsXTaxHRIoNfdkreT/Wyc7SYhlm
- GrFuaeFjRjNeTze8N7PAAaUMI5BdF2FCww0w9Iiix2PXN6DSwv/qJszCEafO6VBoDxE=
-X-Gm-Gg: Acq92OGemJqkgcp6KhluX6ZwY5pEPu1FvDi9xpnHtKfrVIfPwIufmydBo8AWT28Lf+n
- 5ezCOMIXHx+EMapF7WOvPOJQ1KhyjgqYU1aP9u3JAi1thqbUHS8s64yC2eHtuAGanZje2e52tpS
- 6D1qKZCZMbWqoQJtpJwNRkEPrnYGbmTw/MxZMtVJ4OAkbdSAWMv1pAjR6N8ARHnsSOuWQ5ECf/j
- v61v73I3MyaivQTrmVrCLRCZP44JStM78ttTjsRZzCEsICZsA6IFW1FoKH2lsiAJS1LZraNy/D1
- ca8JBIjXqJTSKXxgwlx0qilxUCb9L4k78zWfEqdwYHeNoDV+4H49fC0K6LzWO4vNNw58IbCq4tp
- yLHn6zOBPfyvSVgqSFfA9a2QOfIri+CApD/O3gk3MTFZLF34ZeXaO0h4Sroe9qP5wuGY3I8M0L1
- mNEZrKLYrNPKzKFtYRUeirXMRM9OHVrsHhrkLy33PLQ542Pw==
-X-Received: by 2002:a17:903:11c7:b0:2bc:ac76:c1cf with SMTP id
- d9443c01a7336-2bcac76c3c9mr68827715ad.24.1778508301817; 
- Mon, 11 May 2026 07:05:01 -0700 (PDT)
-Received: from ZBMac-LWN10QXKQ0.taila0cd24.ts.net ([115.108.63.147])
+ d=1e100.net; s=20251104; t=1778508073; x=1779112873;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=KO7Mq8JRuwohDcM/67cxG4Kl5R8QIg4FU/azGfOw7c8=;
+ b=h6t+8BL9slROb/1n5v5F5yW/DTF6bVMIWm3PfnrVLtUx4y5t3hyIffMy4yb1dUBmrx
+ Yd7rvQuCq/mtrGjMvSxmQowoOgu/4wEo3ZNLru//dwKdW8hbxFBQ+2+2eWePpF+v1f7d
+ WEnpIj1FQc7CyT0MF/ifCG3i1mWvIuPqwemVXxj66Dbqt6xMU8o74ErUaZxogJfYaqO5
+ 5VUu5VmRc8bfZ6/AZwkEzOxFduToNH5NyifyHIb6wTXVJ2TMyfvwFTORMBGhxorczBmr
+ G5klIw2vy2PTji5zzZeHcRY7wbbiH6gYA600BBDbac3ecWVKh0Wm34YTrzT4vPMQBlqe
+ ObPA==
+X-Gm-Message-State: AOJu0YwLGEHN1sxX/Gj/f/gV/BfzlKIYl9BA23aK+Hc9+LbxY1f1JwGd
+ +BzwrKIiQkw7GuL9+tI8GxtPAjFvJEQ5ifyHdXBJCxKe+88TyoP4pPff
+X-Gm-Gg: Acq92OEaduK8dihTIZM9Lf9iTjugOQ/GTRGFo/MGtRL/171fYSb+k4g0zHCS2TfJB6L
+ lvIyuIvt5WE5lepy6wqGnbbXj6w+L9hvdPFr2Lx1fvwMo1Stw39W5QCoysKMyu1YVvVNtHCCHwa
+ AJ7I11wA2je2NToV6iofubpoSUW+SiSaab5HFc5zdEeXz1JGanjeG42xVwkRyfx3icgqpNmOXdS
+ cd/3YanDZr37pK/YqLUJilFxKmGox3qfODdwNzgdhm24w6buBZjVp/WpEg4NPXkQsadWaJgiTsK
+ F1oqUBIYmBfkHEh48FRoQdZxWEsLYkJvElIYD8GeS0OmOdFa2a34H+LZilXyUiB2pKgQLEFrxp8
+ axQ/TuOdJ2NI4Ch0YOdgh/2W7PVtUk4+wbKmtp7aZIIvHskLwjphhOGM93E1gp6Cvm/tNvd6hOc
+ SEZvTl6aeltXIsrcR/1azmnB6xKkfvbgvuGyuLjbbg
+X-Received: by 2002:a67:ef42:0:b0:631:28c1:154e with SMTP id
+ ada2fe7eead31-63128c11dfbmr6905313137.16.1778508071517; 
+ Mon, 11 May 2026 07:01:11 -0700 (PDT)
+Received: from [192.168.1.160] ([2600:4041:54f3:a400:c013:3550:ed5f:a59a])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2baf1e90854sm105113435ad.66.2026.05.11.07.04.58
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 11 May 2026 07:05:01 -0700 (PDT)
-From: Zhang Chen <zhangckid@gmail.com>
-To: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [PATCH V7 05/14] block/export: track IOThread reference in BlockExport
-Date: Mon, 11 May 2026 22:04:07 +0800
-Message-ID: <20260511140416.28271-6-zhangckid@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20260511140416.28271-1-zhangckid@gmail.com>
-References: <20260511140416.28271-1-zhangckid@gmail.com>
+ 6a1803df08f44-8bf39c7dd09sm94773756d6.31.2026.05.11.07.01.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 11 May 2026 07:01:10 -0700 (PDT)
+From: Gabriel Brookman <brookmangabriel@gmail.com>
+Date: Mon, 11 May 2026 10:01:02 -0400
+Subject: [PATCH v6 04/15] linux-user: add MTE_STORE_ONLY to prctl
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=zhangckid@gmail.com; helo=mail-pg1-x529.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260511-feat-mte4-v6-4-8557cc1313b9@gmail.com>
+References: <20260511-feat-mte4-v6-0-8557cc1313b9@gmail.com>
+In-Reply-To: <20260511-feat-mte4-v6-0-8557cc1313b9@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, 
+ Gustavo Romero <gustavo.romero@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org, 
+ Laurent Vivier <laurent@vivier.eu>, 
+ Gabriel Brookman <brookmangabriel@gmail.com>, Helge Deller <deller@gmx.de>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1778508062; l=4942;
+ i=brookmangabriel@gmail.com; s=20251009; h=from:subject:message-id;
+ bh=3NUHlDKCw8l8rqmAwbaWm0eM8fht4yd8LR/eAfpLXkM=;
+ b=3OHSB36w0QVpFZCmvTh4TzglFIT8Qb+/BuQREkd8pinTR0dwZ4cxyjxp8VVkrlKwRpdfJiE5K
+ oUSplSABADGAlikrVPS9t9VbKJKtywISZKropMQpQH0KidV4bW6Vsk1
+X-Developer-Key: i=brookmangabriel@gmail.com; a=ed25519;
+ pk=m9TtPDal6WzoHNnQiHHKf8dTrv3DUCPUUTujuo8vNrw=
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e31;
+ envelope-from=brookmangabriel@gmail.com; helo=mail-vs1-xe31.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,155 +112,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Users currently lack visibility into which block exports
-are utilizing specific IOThreads. This patch integrates IOThread
-referencing into the BlockExport lifecycle.
+Linux-user processes can now control whether MTE_STORE_ONLY is enabled
+using the prctl syscall.
 
-- Add iothreads array and holder_name to BlockExport struct.
-- Use iothread_ref_and_get_aio_context during export creation.
-- Implement proper cleanup in blk_exp_add fail path and blk_exp_delete_bh.
-- Support both single and multi-iothread export configurations.
-
-This ensures IOThread 'holders' status correctly reflects active block
-exports for better debugging and resource tracking.
-
-Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- block/export/export.c  | 44 +++++++++++++++++++++++++++++++++---------
- include/block/export.h |  6 ++++++
- 2 files changed, 41 insertions(+), 9 deletions(-)
+ linux-user/aarch64/mte_user_helper.c | 11 ++++++++++-
+ linux-user/aarch64/mte_user_helper.h | 14 +++++++++-----
+ linux-user/aarch64/target_prctl.h    |  6 +++++-
+ target/arm/gdbstub64.c               |  2 +-
+ tests/tcg/aarch64/mte.h              |  3 +++
+ 5 files changed, 28 insertions(+), 8 deletions(-)
 
-diff --git a/block/export/export.c b/block/export/export.c
-index b733f269f3..636633c324 100644
---- a/block/export/export.c
-+++ b/block/export/export.c
-@@ -15,7 +15,6 @@
+diff --git a/linux-user/aarch64/mte_user_helper.c b/linux-user/aarch64/mte_user_helper.c
+index a5b1c8503b..b5c4dafcda 100644
+--- a/linux-user/aarch64/mte_user_helper.c
++++ b/linux-user/aarch64/mte_user_helper.c
+@@ -10,7 +10,7 @@
+ #include "qemu.h"
+ #include "mte_user_helper.h"
  
- #include "block/block.h"
- #include "system/block-backend.h"
--#include "system/iothread.h"
- #include "block/export.h"
- #include "block/fuse.h"
- #include "block/nbd.h"
-@@ -85,6 +84,8 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
-     AioContext *ctx;
-     AioContext **multithread_ctxs = NULL;
-     size_t multithread_count = 0;
-+    g_autofree IOThread **local_iothreads = NULL;
-+    const char *holder_name = NULL;
-     uint64_t perm;
-     int ret;
- 
-@@ -139,7 +140,11 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
-             goto fail;
-         }
- 
--        new_ctx = iothread_get_aio_context(iothread);
-+        holder_name = bdrv_get_node_name(bs);
-+        new_ctx = iothread_ref_and_get_aio_context(iothread, holder_name);
-+        multithread_count = 1;
-+        local_iothreads = g_new0(IOThread *, 1);
-+        local_iothreads[0] = iothread;
- 
-         /* Ignore errors with fixed-iothread=false */
-         set_context_errp = fixed_iothread ? errp : NULL;
-@@ -163,8 +168,10 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
-             return NULL;
-         }
- 
-+        local_iothreads = g_new0(IOThread *, multithread_count);
-         multithread_ctxs = g_new(AioContext *, multithread_count);
-         i = 0;
-+        holder_name = bdrv_get_node_name(bs);
-         for (strList *e = iothread_list; e; e = e->next) {
-             IOThread *iothread = iothread_by_id(e->value);
- 
-@@ -172,7 +179,9 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
-                 error_setg(errp, "iothread \"%s\" not found", e->value);
-                 goto fail;
-             }
--            multithread_ctxs[i++] = iothread_get_aio_context(iothread);
-+            local_iothreads[i] = iothread;
-+            multithread_ctxs[i++] = iothread_ref_and_get_aio_context(iothread,
-+                                                                  holder_name);
-         }
-         assert(i == multithread_count);
+-void arm_set_mte_tcf0(CPUArchState *env, abi_long value)
++void arm_set_tagged_addr_ctrl(CPUArchState *env, abi_long value)
+ {
+     /*
+      * Write PR_MTE_TCF to SCTLR_EL1[TCF0].
+@@ -32,4 +32,13 @@ void arm_set_mte_tcf0(CPUArchState *env, abi_long value)
+         tcf = 2;
      }
-@@ -225,12 +234,15 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
-     assert(drv->instance_size >= sizeof(BlockExport));
-     exp = g_malloc0(drv->instance_size);
-     *exp = (BlockExport) {
--        .drv        = drv,
--        .refcount   = 1,
--        .user_owned = true,
--        .id         = g_strdup(export->id),
--        .ctx        = ctx,
--        .blk        = blk,
-+        .drv                  = drv,
-+        .refcount             = 1,
-+        .user_owned           = true,
-+        .id                   = g_strdup(export->id),
-+        .ctx                  = ctx,
-+        .blk                  = blk,
-+        .iothreads            = g_steal_pointer(&local_iothreads),
-+        .iothread_count       = multithread_count,
-+        .iothread_holder_name = g_strdup(holder_name),
-     };
- 
-     ret = drv->create(exp, export, multithread_ctxs, multithread_count, errp);
-@@ -253,6 +265,13 @@ fail:
-         g_free(exp->id);
-         g_free(exp);
-     }
-+    if (local_iothreads) {
-+        for (size_t j = 0; j < multithread_count; j++) {
-+            if (local_iothreads[j]) {
-+                iothread_put_aio_context(local_iothreads[j], holder_name);
-+            }
-+        }
-+    }
-     g_free(multithread_ctxs);
-     return NULL;
- }
-@@ -269,6 +288,13 @@ static void blk_exp_delete_bh(void *opaque)
-     BlockExport *exp = opaque;
- 
-     assert(exp->refcount == 0);
-+    if (exp->iothreads) {
-+        for (size_t i = 0; i < exp->iothread_count; i++) {
-+            iothread_put_aio_context(exp->iothreads[i],
-+                                     exp->iothread_holder_name);
-+        }
-+        g_free(exp->iothreads);
-+    }
-     QLIST_REMOVE(exp, next);
-     exp->drv->delete(exp);
-     blk_set_dev_ops(exp->blk, NULL, NULL);
-diff --git a/include/block/export.h b/include/block/export.h
-index ca45da928c..2bb98aae31 100644
---- a/include/block/export.h
-+++ b/include/block/export.h
-@@ -16,6 +16,7 @@
- 
- #include "qapi/qapi-types-block-export.h"
- #include "qemu/queue.h"
-+#include "system/iothread.h"
- 
- typedef struct BlockExport BlockExport;
- 
-@@ -89,6 +90,11 @@ struct BlockExport {
- 
-     /* List entry for block_exports */
-     QLIST_ENTRY(BlockExport) next;
+     env->cp15.sctlr_el[1] = deposit64(env->cp15.sctlr_el[1], 38, 2, tcf);
 +
-+    /* The iothreads list for block_exports */
-+    IOThread **iothreads;
-+    size_t iothread_count;
-+    char *iothread_holder_name;
- };
++    /*
++     * If MTE_STORE_ONLY is enabled, set the corresponding sctlr_el1 bit
++     */
++    if (value & PR_MTE_STORE_ONLY) {
++        env->cp15.sctlr_el[1] |= SCTLR_TCSO0;
++    } else {
++        env->cp15.sctlr_el[1] &= ~SCTLR_TCSO0;
++    }
+ }
+diff --git a/linux-user/aarch64/mte_user_helper.h b/linux-user/aarch64/mte_user_helper.h
+index 0c53abda22..8a46f743f4 100644
+--- a/linux-user/aarch64/mte_user_helper.h
++++ b/linux-user/aarch64/mte_user_helper.h
+@@ -20,15 +20,19 @@
+ # define PR_MTE_TAG_SHIFT       3
+ # define PR_MTE_TAG_MASK        (0xffffUL << PR_MTE_TAG_SHIFT)
+ #endif
++#ifndef PR_MTE_STORE_ONLY
++# define PR_MTE_STORE_ONLY      (1UL << 19)
++#endif
  
- BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp);
+ /**
+- * arm_set_mte_tcf0 - Set TCF0 field in SCTLR_EL1 register
++ * arm_set_tagged_addr_ctrl - Set TCF0 and TCSO0 fields in SCTLR_EL1 register
+  * @env: The CPU environment
+- * @value: The value to be set for the Tag Check Fault in EL0 field.
++ * @value: The value to be set for the Tag Check Fault and Tag Check Store Only
++ * in EL0 field.
+  *
+- * Only SYNC and ASYNC modes can be selected. If ASYMM mode is given, the SYNC
+- * mode is selected instead. So, there is no way to set the ASYMM mode.
++ * Only SYNC and ASYNC modes can be selected for TCF0. If ASYMM mode is given,
++ * the SYNC mode is selected instead. So, there is no way to set the ASYMM mode.
+  */
+-void arm_set_mte_tcf0(CPUArchState *env, abi_long value);
++void arm_set_tagged_addr_ctrl(CPUArchState *env, abi_long value);
+ 
+ #endif /* AARCH64_MTE_USER_HELPER_H */
+diff --git a/linux-user/aarch64/target_prctl.h b/linux-user/aarch64/target_prctl.h
+index 621be5727f..d91e75d60d 100644
+--- a/linux-user/aarch64/target_prctl.h
++++ b/linux-user/aarch64/target_prctl.h
+@@ -168,6 +168,9 @@ static abi_long do_prctl_set_tagged_addr_ctrl(CPUArchState *env, abi_long arg2)
+     if (cpu_isar_feature(aa64_mte, cpu)) {
+         valid_mask |= PR_MTE_TCF_MASK;
+         valid_mask |= PR_MTE_TAG_MASK;
++        if (cpu_isar_feature(aa64_mte_store_only, cpu)) {
++            valid_mask |= PR_MTE_STORE_ONLY;
++        }
+     }
+ 
+     if (arg2 & ~valid_mask) {
+@@ -176,7 +179,7 @@ static abi_long do_prctl_set_tagged_addr_ctrl(CPUArchState *env, abi_long arg2)
+     env->tagged_addr_enable = arg2 & PR_TAGGED_ADDR_ENABLE;
+ 
+     if (cpu_isar_feature(aa64_mte, cpu)) {
+-        arm_set_mte_tcf0(env, arg2);
++        arm_set_tagged_addr_ctrl(env, arg2);
+ 
+         /*
+          * Write PR_MTE_TAG to GCR_EL1[Exclude].
+@@ -185,6 +188,7 @@ static abi_long do_prctl_set_tagged_addr_ctrl(CPUArchState *env, abi_long arg2)
+          */
+         env->cp15.gcr_el1 =
+             deposit64(env->cp15.gcr_el1, 0, 16, ~arg2 >> PR_MTE_TAG_SHIFT);
++
+         arm_rebuild_hflags(env);
+     }
+     return 0;
+diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
+index a4fa740caf..0c3e5b30bd 100644
+--- a/target/arm/gdbstub64.c
++++ b/target/arm/gdbstub64.c
+@@ -684,7 +684,7 @@ int aarch64_gdb_set_tag_ctl_reg(CPUState *cs, uint8_t *buf, int reg)
+      * expose options regarding the type of MTE fault that can be controlled at
+      * runtime.
+      */
+-    arm_set_mte_tcf0(env, tcf);
++    arm_set_tagged_addr_ctrl(env, tcf);
+ 
+     return 1;
+ #else
+diff --git a/tests/tcg/aarch64/mte.h b/tests/tcg/aarch64/mte.h
+index 0805676b11..17b932f3f1 100644
+--- a/tests/tcg/aarch64/mte.h
++++ b/tests/tcg/aarch64/mte.h
+@@ -20,6 +20,9 @@
+ #ifndef PR_TAGGED_ADDR_ENABLE
+ # define PR_TAGGED_ADDR_ENABLE    (1UL << 0)
+ #endif
++#ifndef PR_MTE_STORE_ONLY
++# define PR_MTE_STORE_ONLY        (1UL << 19)
++#endif
+ #ifndef PR_MTE_TCF_SHIFT
+ # define PR_MTE_TCF_SHIFT         1
+ # define PR_MTE_TCF_NONE          (0UL << PR_MTE_TCF_SHIFT)
+
 -- 
-2.49.0
+2.54.0
 
 
