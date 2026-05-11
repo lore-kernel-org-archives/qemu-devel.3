@@ -4,64 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44D5BCD37AC
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 10:49:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36DD8CD37B5
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 10:49:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMOBt-0001OJ-M1; Mon, 11 May 2026 06:48:50 -0400
+	id 1wMOC1-0001Pt-3D; Mon, 11 May 2026 06:49:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wMOBZ-0001Kb-RK
- for qemu-devel@nongnu.org; Mon, 11 May 2026 06:48:30 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wMOBs-0001NJ-OJ
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 06:48:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wMOBX-0002iw-Nh
- for qemu-devel@nongnu.org; Mon, 11 May 2026 06:48:29 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wMOBr-0002mf-7U
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 06:48:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778496506;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=/qAPGhNf/WCKNLxedJD4OrD/oWjx49hX63Zr2Tady7A=;
- b=KX0D2wpefqdmhAziLrZdRWEh95LgP+QcaR/AxKFOc1Tlx9BeMoagaWV5IwLNpWyttABW2l
- ZYNbCgj1BQDnG9X3D+3DPL5JN13wa4l/ETGZkNX8M2KMBaYct77tJGOut+0E6CTIDja3bM
- 4eAV/aE9C/HJlDZX8vwf9CwvmjlVlhw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-DvYa0HRmPG-s4Lt-i5_Ljg-1; Mon,
- 11 May 2026 06:48:23 -0400
-X-MC-Unique: DvYa0HRmPG-s4Lt-i5_Ljg-1
-X-Mimecast-MFC-AGG-ID: DvYa0HRmPG-s4Lt-i5_Ljg_1778496502
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E1F5E1955F54; Mon, 11 May 2026 10:48:21 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.50.30])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 65C911800762; Mon, 11 May 2026 10:48:19 +0000 (UTC)
-Date: Mon, 11 May 2026 11:48:15 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Gonglei <arei.gonglei@huawei.com>
-Cc: qemu-devel@nongnu.org, zhenwei.pi@linux.dev, qemu-security@nongnu.org,
- mcascell@redhat.com, Buzzy <buzzy0257@gmail.com>
-Subject: Re: [PATCH v2] backends/cryptodev-lkcf: fix use-after-free in
- session lifecycle
-Message-ID: <agGz70Vjs2shvW1T@redhat.com>
-References: <20260416061933.1982-1-arei.gonglei@huawei.com>
+ s=mimecast20190719; t=1778496526;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+0U1MHFNaYv7Sttil56eRYisy3ne36tiAS+epZsQqy4=;
+ b=Fq7cTMMrJjV8WsMoaPWl8Hq394axEJgWz43KMGY2nLV/4pKX8oN5pQVHxdGs/N+rp+U6Jw
+ qmCI49iVT1f05Dso2eMsRMLjsshCnc3iXSRTgg74M35M98APtpyUAQpiKJRS+Tkql2YCDr
+ WZsSWD98DiTznss/bG+pgQ+4n2i3aWg=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-519-6et89fqGNtSYcDgsC1p0xQ-1; Mon, 11 May 2026 06:48:45 -0400
+X-MC-Unique: 6et89fqGNtSYcDgsC1p0xQ-1
+X-Mimecast-MFC-AGG-ID: 6et89fqGNtSYcDgsC1p0xQ_1778496524
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-44ffa15dc8cso2715405f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 03:48:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1778496524; x=1779101324; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=+0U1MHFNaYv7Sttil56eRYisy3ne36tiAS+epZsQqy4=;
+ b=r+dpqLOwRJxNVuc2bMywDSFYF445nHWQVEwA6O5ig03OQuzpp8/jTdtdxYK35OZgF7
+ 0B3PeUoFUbxRTyYVN3vVUxBWuSQImsPul+RsUIrcsVaLUDhOYLkqweVx7rPCeWC3ZITT
+ USk2w4NFdW2XENMXGwkVnd/RMMSiaXt71ceMir/lm6liVt2CH1bmwd0rKNcveCd/yAEh
+ L3Hj1oE9Xx2umLp5ISJ6FR1JnAQYFFPLzDSaEcpFcnZd7p+0XFDqmLqOu+iQoLvidZ3w
+ BqN/3bB7ab2a/GpBCkVFn8POHLp10vjWhAyMT8BRclE7HW+fHqdT5aHymyrY9qu23IDn
+ dHRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778496524; x=1779101324;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+0U1MHFNaYv7Sttil56eRYisy3ne36tiAS+epZsQqy4=;
+ b=LXc1bGMBfKrRA8q6ikLrKZHvjtab+pJnv6dvRUMu7quHzSQYaqKeQwz6RsBTfHbEOE
+ yshTsDVYeDTpxbJrXIsq2ijU7Xc17nVGFlx2sf07FXwhJZ49f0/3TWrBIhjvIVX+RqJg
+ EfvMy3VMAQOIboIL2vP2Vqxlokk5vvEomSfYY3M/P2hLr2t0giBUYFdxf6vtW4F7n3u6
+ kKGKJag1kA4d57Rux5lIOIqCWNNHfJt4rFaHdKoKBG7lZi1Fm4BZFP2n0LP2LmA+11Lq
+ r/o3g+pRDwp1XrlJ1qFIzAUPEmaZ/J/pjLuiL5Vo1L/Crf4Nxd/IoWfIqGIB5hRnL76n
+ ypww==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8S9SwYoEzF5FciBAbd6xAJNH0kZvhWBnxZTO1+6HcQxQ7ZpuWciO6mwhzwcBH/9+wl/uuxyNPub8Ys@nongnu.org
+X-Gm-Message-State: AOJu0Yy6ZlhJonr/hBoMTTIhglCgki3owkNp3TWkdq7ahXgQ1jvQsKfR
+ 8assF301usfbVS1TvLitsFdq24JQ+chDEwJt+WqhTINrFFNZ8xiBC+ut7haNziwgkOpt0BqIfgN
+ ovMJXMJrh34DcVbt3eG3XzxSRBSSACraI0DXFT5GnNXrmDjaxk9iYe9aI
+X-Gm-Gg: Acq92OFLiIozNmjaXEa1OU1UwwwDS+dGx11IE+cfPaOypI3ykwoYhSFl4ybdGeOakwU
+ I44lKpdCGkajQp+S+H6Pzs28LbCUClCpWFC/peoLfgliX7uQa4UTxYfVks3uWJ1N479P2eLZrgj
+ cmqOFljPU4PYCvUhci5lNZgpuFaz/w1EoQ0VYMKI4zmeO14v2mt3PHF/A0Y3VKHMYX/A8CtBgzj
+ 2BRueoMOl/pli1G09P/YPtkpCmNiqxmUrOQTF5vT6feYH+v4Q5zHn3nhpK4AN1k/u2XUXySEYaU
+ FCEqW7oT+7ncVkKQNOmm3PZLGRrVP8WCGuZsNRdVY8cNeA/BdgYSjLF4Ec0Zzl+jYIqMyN7f0zH
+ RG4AfmRR03QO4tpxgMoG8yI3xpQe7U4KRhQpIWF8t
+X-Received: by 2002:a05:6000:310a:b0:451:1143:7df5 with SMTP id
+ ffacd0b85a97d-4515d2e72ffmr37102141f8f.41.1778496523643; 
+ Mon, 11 May 2026 03:48:43 -0700 (PDT)
+X-Received: by 2002:a05:6000:310a:b0:451:1143:7df5 with SMTP id
+ ffacd0b85a97d-4515d2e72ffmr37102068f8f.41.1778496523051; 
+ Mon, 11 May 2026 03:48:43 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-48-7.inter.net.il. [80.230.48.7])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4548ec6c221sm25457448f8f.13.2026.05.11.03.48.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 11 May 2026 03:48:42 -0700 (PDT)
+Date: Mon, 11 May 2026 06:48:39 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
+Cc: Song Gao <gaosong@loongson.cn>, maobibo@loongson.cn,
+ qemu-devel@nongnu.org, lixianglai@loongson.cn,
+ chenhuacai@loongson.cn, Avihai Horon <avihaih@nvidia.com>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Cornelia Huck <cohuck@redhat.com>
+Subject: Re: [PATCH v2 2/4] linux-headers: Update to Linux v7.1-rc1
+Message-ID: <20260511064834-mutt-send-email-mst@kernel.org>
+References: <20260507092358.2479135-1-gaosong@loongson.cn>
+ <20260507092358.2479135-3-gaosong@loongson.cn>
+ <c87311a3-b214-4705-8ed3-7386aea1056e@redhat.com>
+ <20260510161352-mutt-send-email-mst@kernel.org>
+ <f1f3f8c9-4142-46ad-87b6-2681b9ec5bc6@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20260416061933.1982-1-arei.gonglei@huawei.com>
-User-Agent: Mutt/2.3.1 (2026-03-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <f1f3f8c9-4142-46ad-87b6-2681b9ec5bc6@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -82,149 +124,69 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 16, 2026 at 02:19:32PM +0800, Gonglei wrote:
-> The cryptodev-lkcf backend had a race condition where session close
-> could free a session while tasks using that session were still pending
-> in the queue. This leads to use-after-free when the worker thread
-> later accesses the freed session pointer.
+On Mon, May 11, 2026 at 11:26:56AM +0200, Cédric Le Goater wrote:
+> On 5/10/26 22:19, Michael S. Tsirkin wrote:
+> > On Sun, May 10, 2026 at 10:08:49PM +0200, Cédric Le Goater wrote:
+> > > On 5/7/26 11:23, Song Gao wrote:
+> > > > diff --git a/include/standard-headers/linux/virtio_ring.h b/include/standard-headers/linux/virtio_ring.h
+> > > > index 22f6eb8ca7..7baf1968a3 100644
+> > > > --- a/include/standard-headers/linux/virtio_ring.h
+> > > > +++ b/include/standard-headers/linux/virtio_ring.h
+> > > > @@ -31,7 +31,6 @@
+> > > >     * SUCH DAMAGE.
+> > > >     *
+> > > >     * Copyright Rusty Russell IBM Corporation 2007. */
+> > > > -#include <stdint.h>
+> > > >    #include "standard-headers/linux/types.h"
+> > > >    #include "standard-headers/linux/virtio_types.h"
+> > > > @@ -200,7 +199,7 @@ static inline void vring_init(struct vring *vr, unsigned int num, void *p,
+> > > >    	vr->num = num;
+> > > >    	vr->desc = p;
+> > > >    	vr->avail = (struct vring_avail *)((char *)p + num * sizeof(struct vring_desc));
+> > > > -	vr->used = (void *)(((uintptr_t)&vr->avail->ring[num] + sizeof(__virtio16)
+> > > > +	vr->used = (void *)(((unsigned long)&vr->avail->ring[num] + sizeof(__virtio16)
+> > > >    		+ align-1) & ~(align - 1));
+> > > >    }
+> > > 
+> > > The kernel commit 3c4629b68dbe ("virtio: uapi: avoid usage of
+> > > libc types") changed this virtio header and this breaks the
+> > > build on Windows :
+> > > 
+> > >    https://gitlab.com/legoater/qemu/-/jobs/14297040230
+> > > 
+> > > A fix could be to reintroduce 'uintptr_t' (available through
+> > > osdep.h) by modifying the linux headers update script. Ideas ?
+> > > 
+> > > Thanks,
+> > > 
+> > > C.
+> > 
+> > Yea sorry ( Just add
+> > #define VIRTIO_RING_NO_LEGACY
+> > somewhere.
+> > 
+> > 
 > 
-> Add reference counting (in_use) and pending_close flag to ensure:
-> - New operations are rejected when a session is closing
-> - Session close waits for all in-flight tasks to complete
-> - No use-after-free can occur
+> Something like :
 > 
-> Fixes: CVE-2026-6288
-> Fixes: 39fff6f3e8 ("cryptodev: Add a lkcf-backend for cryptodev")
-> Reported-by: Buzzy <buzzy0257@gmail.com>
-> Signed-off-by: Gonglei <arei.gonglei@huawei.com>
-> Tested-by: Buzzy <buzzy0257@gmail.com>
-> ---
+>   --- a/scripts/update-linux-headers.sh
+>   +++ b/scripts/update-linux-headers.sh
+>   @@ -104,6 +104,7 @@ cp_portable() {
+>            -e 's/struct ethhdr/struct eth_header/' \
+>            -e '/\#define _LINUX_ETHTOOL_H/a \\n\#include "net/eth.h"' \
+>   +        -e '/\#define _LINUX_VIRTIO_RING_H/a \\n\#define VIRTIO_RING_NO_LEGACY' \
+>            "$f" > "$to/$header";
+>    }
+> 
+> 
+> Thanks,
+> 
+> C.
 
-This patch was reviewed quite a while ago, but I don't see it
-merged in git yet, so just wanted to double-check it was
-queued for a future pull request and not lost. 
 
-> Changes:
-> 
-> v2: 
->  * moved sess->pending_close checking before @task allocated
->    in cryptodev_lkcf_operation().
-> 
-> ---
->  backends/cryptodev-lkcf.c | 59 ++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 58 insertions(+), 1 deletion(-)
-> 
-> diff --git a/backends/cryptodev-lkcf.c b/backends/cryptodev-lkcf.c
-> index 40c7bd3c5a..3a93c81372 100644
-> --- a/backends/cryptodev-lkcf.c
-> +++ b/backends/cryptodev-lkcf.c
-> @@ -66,6 +66,9 @@ typedef struct CryptoDevBackendLKCFSession {
->      size_t keylen;
->      QCryptoAkCipherKeyType keytype;
->      QCryptoAkCipherOptions akcipher_opts;
-> +    int in_use;  /* number of tasks currently using this session */
-> +    /* session close requested, waiting for in_use to become 0 */
-> +    bool pending_close;
->  } CryptoDevBackendLKCFSession;
->  
->  typedef struct CryptoDevLKCFTask CryptoDevLKCFTask;
-> @@ -428,6 +431,18 @@ out:
->      if (key_id >= 0) {
->          keyctl_unlink(key_id, KCTL_KEY_RING);
->      }
-> +
-> +    /*
-> +     * Decrement session in_use counter and signal if session is pending close.
-> +     * This allows close_session to proceed after all tasks complete.
-> +     */
-> +    qemu_mutex_lock(&task->lkcf->mutex);
-> +    task->sess->in_use--;
-> +    if (task->sess->pending_close && task->sess->in_use == 0) {
-> +        qemu_cond_broadcast(&task->lkcf->cond);
-> +    }
-> +    qemu_mutex_unlock(&task->lkcf->mutex);
-> +
->      task->status = status;
->  
->      qemu_mutex_lock(&task->lkcf->rsp_mutex);
-> @@ -486,12 +501,32 @@ static int cryptodev_lkcf_operation(
->          return -VIRTIO_CRYPTO_INVSESS;
->      }
->  
-> -    sess = lkcf->sess[op_info->session_id];
->      if (algtype != QCRYPTODEV_BACKEND_ALGO_TYPE_ASYM) {
->          error_report("algtype not supported: %u", algtype);
->          return -VIRTIO_CRYPTO_NOTSUPP;
->      }
->  
-> +    /*
-> +     * Check if session is pending close and increment in_use counter
-> +     * atomically under the mutex. This prevents the session from being
-> +     * freed while a task is pending.
-> +     */
-> +    qemu_mutex_lock(&lkcf->mutex);
-> +    sess = lkcf->sess[op_info->session_id];
-> +    if (!sess) {
-> +        qemu_mutex_unlock(&lkcf->mutex);
-> +        error_report("Cannot find a valid session id: %" PRIu64 "",
-> +                     op_info->session_id);
-> +        return -VIRTIO_CRYPTO_INVSESS;
-> +    }
-> +    if (sess->pending_close) {
-> +        qemu_mutex_unlock(&lkcf->mutex);
-> +        error_report("Session %" PRIu64 " is closing", op_info->session_id);
-> +        return -VIRTIO_CRYPTO_INVSESS;
-> +    }
-> +    sess->in_use++;
-> +    qemu_mutex_unlock(&lkcf->mutex);
-> +
->      task = g_new0(CryptoDevLKCFTask, 1);
->      task->op_info = op_info;
->      task->cb = op_info->cb;
-> @@ -606,8 +641,30 @@ static int cryptodev_lkcf_close_session(CryptoDevBackend *backend,
->      CryptoDevBackendLKCFSession *session;
->  
->      assert(session_id < MAX_SESSIONS && lkcf->sess[session_id]);
-> +
-> +    qemu_mutex_lock(&lkcf->mutex);
->      session = lkcf->sess[session_id];
-> +
-> +    /*
-> +     * Mark session as pending close. New operations using this session
-> +     * will be rejected. We hold the mutex until in_use becomes 0 to
-> +     * prevent race conditions.
-> +     */
-> +    session->pending_close = true;
-> +
-> +    /*
-> +     * Wait for all in-flight tasks using this session to complete.
-> +     * The worker thread decrements in_use after task execution.
-> +     */
-> +    while (session->in_use > 0) {
-> +        qemu_cond_wait(&lkcf->cond, &lkcf->mutex);
-> +    }
-> +
-> +    /*
-> +     * Now safe to remove session and free resources.
-> +     */
->      lkcf->sess[session_id] = NULL;
-> +    qemu_mutex_unlock(&lkcf->mutex);
->  
->      g_free(session->key);
->      g_free(session);
-> -- 
-> 2.43.0
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+right.
 
 
