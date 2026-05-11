@@ -4,151 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C735CD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 18:35:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B164CD4840
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 18:40:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMVT3-0003ch-Ii; Mon, 11 May 2026 14:35:02 -0400
+	id 1wMVX6-0005FC-9Q; Mon, 11 May 2026 14:39:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wMVSn-0003V1-4z
- for qemu-devel@nongnu.org; Mon, 11 May 2026 14:34:45 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wMVX4-0005Eg-FP
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 14:39:10 -0400
+Received: from p-east2-cluster1-host2-snip4-5.eps.apple.com ([57.103.76.38]
+ helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wMVSj-0005tt-PB
- for qemu-devel@nongnu.org; Mon, 11 May 2026 14:34:43 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64BHUuwU3051401
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 18:34:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- sR40ptHVtZftjleY3SdjKSPIBerXMuKjSDpQ2xc9Q/Q=; b=FMg05uKg9Te52sNV
- lsbDUtp4x/dqBrjmEzZUq80yeMSsW2Clr4u92zqyFVK1duj8+2XTQ2wUDMXM0tLd
- pyHWklmkWYlyu0QJ1l1N7uJ3izhRH6hg8sSK0mxYtfY8lq1VWhhTLocqRHL7x5i/
- oTgkk+fZ2jmqITkvi/oJicDpfwoZ67FFMPaT32N/DF+pRvT7nmOxjPZ7LmCfDiGj
- KAVAeWKi7I3CTwu8R0FC28pwxyTnK8GucN5uOdRjC8dLzNkCh21D3gTDRv/iCXsS
- 9B2YEXEjlPfLXuTvvryM45m9YXkDkrAKzawtKtPFiL/N7+H08VTF+ox6d3xF/0nU
- TvYW9Q==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e3kjwg993-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 18:34:38 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-2f3eb8f3419so1173167eec.1
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 11:34:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778524478; x=1779129278; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=sR40ptHVtZftjleY3SdjKSPIBerXMuKjSDpQ2xc9Q/Q=;
- b=H/fq3QLFdNvCdf2ZGi0+YpRuZAChxx31ny47q9w3jE/w1CFrXMUrudZUEyO2yFqKwj
- TaGvKXqa7d/Cbgk2zKdiDvjaAkoLgHYQBIm0y14EHXvQdkW3WP8thUjAd7ToRS0WlAkc
- YGv08ZmjIih5ymfLAJaOnF4atg7kjfonuOKXqzp2WnqCqkH3NS50VWsnfqB9FUgJ2IjO
- DA0vKfAiu8CR4igFoG/AnBj7W8B/p00WVV8Box2ssEs3w9cYuS+5WW6QCOMMp2claOo+
- cBoRyi39NsYiAxclURaiO9V6/v/nMbPZjkrbuN58gsCEN+RetaUl8OLoIxS4VXXU9rti
- zZ5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778524478; x=1779129278;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=sR40ptHVtZftjleY3SdjKSPIBerXMuKjSDpQ2xc9Q/Q=;
- b=Fygpg4HefzPc5vp0+E3wa1Abbt9BHJWM3AST2Hl/ussNJdwi/vDWmidKsUmhGdmBK0
- SyznsMBJiz2E3Xn/+S0zZGgSVqjG3QglUKkLyHpo67hIrsR96PqkHxPxq/v7dsQ00xCR
- D5SEApO7iCmbf8rqJxohZdO6Rglnrc5B5flt9XwULE01H4Ms0SSEZ38skaJqpJrUL6jY
- WOKWOSnc+4wP8BMR8pnVM6Z7OuICeEtfpvWJ0BZvovjuiu0HYrmVW4Q7ZEhoL42xHS7W
- mmMtmBR6qop6YcJGDZFJbIfek28okTtGOlFrz2dL6UFBg+v3C2KW9KbgNmLlfeUfwlAp
- gF0w==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/UWgxwH1uuDYtZL3auVpzAdZ7qz4u0QxDVjvEgfq4GFUxucS2hysP3uY25IlZw/FE1urYf61s7TRRJ@nongnu.org
-X-Gm-Message-State: AOJu0YxJqB6nw+0Sfh4hhCE0jdXqCWa3A+qiEpZvAxQouFrcDHs/atCM
- ExA039DR+gvkHbdBsuZ6KNJNjX/y1A8HFFOjkIJZEIvXp7MuDs/DuaH/YWdYb5J5cnQtcCKPtmX
- bbLUpsADnGWBj6fjPquBVUgbsboe3y5Vqxt9/anrxyjEeRDHdqv8xMPo8KQ==
-X-Gm-Gg: Acq92OG17J2iNlksYqOvHwDiG/10Ytqi6KM03AKM0aRCusxFRC2llH2TQLYl7DgQQCi
- fHxCEPEWsmhgLW3AeGqNl/FPJVaH/svz+F1IaLSEQeik+WZedH4l8FpiB8B5yWSOTOGONCdC/Ir
- sDBWURFHqRo1x+yx3ddeXI3P7CCdmaO3IlcS0jLWI34UdfModBwhDMRPFdO0TwySd/g4x9877Ol
- NV7mGEOM7kDP7LZXH/TlAQTUaffca6p+QP43SjiVtBRUjm9uANKrUZEHOqRQbMT1Qb5OKwfyM0v
- YEsLz5+HiQTtnq9kcJ61bTy8uSTE4+Odo11+xV8EsSooajVk2kCIRhLwXMV/0jwHrpw8KznPSfe
- wGSMdfYHwbuMnKNImQTfhmBUTs9yIj8YeYzz3FZ9q2G1Whrp+kqs08Kc9nlMFeABktEw/iil8Wv
- 4xVHGSalAP5IMi/y7iK8IXAg8Y
-X-Received: by 2002:a05:7300:d704:b0:2c1:7b61:8731 with SMTP id
- 5a478bee46e88-2f5490931d5mr13233272eec.10.1778524478264; 
- Mon, 11 May 2026 11:34:38 -0700 (PDT)
-X-Received: by 2002:a05:7300:d704:b0:2c1:7b61:8731 with SMTP id
- 5a478bee46e88-2f5490931d5mr13233248eec.10.1778524477693; 
- Mon, 11 May 2026 11:34:37 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2f8862d43b4sm14235574eec.11.2026.05.11.11.34.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 May 2026 11:34:37 -0700 (PDT)
-Message-ID: <d0be855a-2fab-4dc8-a70b-bdbdcded47f2@oss.qualcomm.com>
-Date: Mon, 11 May 2026 11:34:36 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 089/110] target/s390x: Introduce common system/user meson
- source set
-To: Matthew Rosato <mjrosato@linux.ibm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Eric Farman <farman@linux.ibm.com>, qemu-devel@nongnu.org,
- Cornelia Huck <cohuck@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Farhan Ali <alifm@linux.ibm.com>
-References: <20260506135524.20617-1-philmd@linaro.org>
- <20260506135524.20617-90-philmd@linaro.org>
- <5b1fd1f6-00ec-4575-9609-845218405403@redhat.com>
- <90ea3dacb27252a623c0f95bad334e4702222d83.camel@linux.ibm.com>
- <40f3f863-04fe-4eb5-9672-a21ae4fca950@redhat.com>
- <3b5ff524-75d6-41d0-949d-39bbff0558bb@linaro.org>
- <2a4981de-da3f-44a9-b422-3ba9c24b7dab@oss.qualcomm.com>
- <4d0a80a8-396d-4ce5-ae8c-ec5581f5e90f@oss.qualcomm.com>
- <9ec245d8-4a3f-4896-b633-c17c45b328f8@linux.ibm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <9ec245d8-4a3f-4896-b633-c17c45b328f8@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: RNLttPoTi_tEkyeoBdLLOxVUkkqvVhb6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDE5NiBTYWx0ZWRfX6xB8Vpb3fJU8
- 9/aza5b/YaGxXxGOTHipUfL/NzF4NOBTlQCi95RL3CSZd+WAGnsf4Aabjrp8qnAzbidd2iiqyUC
- HzbgjMNVv02MFIxCbsy+nPQAkEaE14NfGfaR16sFnZpTBQ4xn1oCaSnyzjdu7IGR13FrM2UplU9
- y32w+wZ8f8mX3yb9E6mDVPeXxpQLpWbBJmJZHTZ49PC5MS+dVzuSF52ta0VcoL3lCMLqoFNT1KX
- p4uqewakKei2jbuTcIcC6ItBviQ9qwGtzL9XiOOhMhYObhEhy6R++4lBZHMuAjPoqrwgCv1ys53
- zKby4omw7m/EDlEu6S5UU56yK5GiS24kVyA3/z48vm1g+rXMvJqBpEEGrD2pZiZx7sO3JC3BJzH
- xt3HzsXsHgi4slSY3wvw7MaZzn8+Bxt2xJNyx5+cUCJQN24NUpB0UBMA6uhTnsUIxkGt5bGHX9j
- 3gneTBkQT/UMtMNOgmA==
-X-Proofpoint-GUID: RNLttPoTi_tEkyeoBdLLOxVUkkqvVhb6
-X-Authority-Analysis: v=2.4 cv=MKRQXsZl c=1 sm=1 tr=0 ts=6a02213e cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=VNAxQWZTLBBph186XC4A:9 a=QEXdDO2ut3YA:10
- a=zZCYzV9kfG8A:10 a=PxkB5W3o20Ba91AHUih5:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-11_05,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 suspectscore=0 bulkscore=0 malwarescore=0
- spamscore=0 lowpriorityscore=0 priorityscore=1501 clxscore=1015 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605110196
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wMVX1-0007hs-RN
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 14:39:10 -0400
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-100-percent-10 (Postfix) with ESMTPS id
+ EBAD718069CD; Mon, 11 May 2026 18:39:00 +0000 (UTC)
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRJA01fDl4fBBdGGVUERx5dVkAZGQJRHFYNV0NUBF9QSQxBUGxaAEcXSB1dGVlvUF0cDhhZG0AVXRFQGVYJXhUXHkFNWgJWTQU8BVUFXHMzDVUDVQJZH0QJTgtAdlpzSBRJAlxyKXY2AE0ELnQrRx5JClYJXghGEVsUVkNRGQxQTQFDCAoIRwNNF14yUwRfEVAW
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1778524744; x=1781116744;
+ bh=HrDiUX/m1sVNw40ckFgYf4G5OrERdo/IyQoPlmyEv7Q=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=Pg/s5XuyFBz4iudxOQ9QVC1AcJ/e0Er6iopDFey7FMZ3SHv28tuQKurcF2ctlILBiVjuoutUm3doqruVzfW20IxMZpT64i/rklDUuvhDD82alnCPVVe+yP3OneHbwdYAPyzegAAC9yz0cDQQIshGRlt3MLxqcX1sd/LjgZ67EyoXqASjKTnDvz/lsGythGmAr9ZNZ58o8x3qA23AZspxZcrGiWEa5MEE3DtjLhHz4E9hal8pX/W84NldQKKeKOeYrzoDh1EOkdnYLJrjpDkyVjg7Ilh+Ch3ii9Rhrt5XQ63SxokIEglKqFy+WRvxgMjUfgZw0ha9nN0ed86SgsgGrQ==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.42.251.67])
+ by p00-icloudmta-asmtp-us-east-1a-100-percent-10 (Postfix) with ESMTPSA id
+ 5AE20180303A; Mon, 11 May 2026 18:38:58 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: [RFC PATCH 0/8] hw/arm/virt, hw/pci: PCI pre-enumeration and
+ fixed BAR allocation
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <20260511122633.GE1116784@nvidia.com>
+Date: Mon, 11 May 2026 20:38:44 +0200
+Cc: Peter Maydell <peter.maydell@linaro.org>, Tushar Dave <tdave@nvidia.com>,
+ qemu-devel@nongnu.org, alwilliamson@nvidia.com, skolothumtho@nvidia.com,
+ qemu-arm@nongnu.org, mst@redhat.com, marcel.apfelbaum@gmail.com,
+ devel@edk2.groups.io
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <D6827AC4-0852-4068-A1A8-111EBDF957CC@unpredictable.fr>
+References: <20260508183717.193630-1-tdave@nvidia.com>
+ <CAFEAcA9KxUF6c555Q_Kqn_NVE3z1ojr91+KuatYudj_T4GjbxA@mail.gmail.com>
+ <20260511122633.GE1116784@nvidia.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+X-Mailer: Apple Mail (2.3864.500.181)
+X-Proofpoint-GUID: dPTda6USknI3hMRBRaHVf00R9PeIKVx1
+X-Authority-Info-Out: v=2.4 cv=TP1Iilla c=1 sm=1 tr=0 ts=6a022246
+ cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
+ a=YrL12D//S6tul8v/L+6tKg==:17 a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Ikd4Dj_1AAAA:8 a=Vdg3MsYikgLEERl5QvQA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDE5OCBTYWx0ZWRfX6qJ+CM8MwTy4
+ A1DG3foCg+eDML4vUiNN1iWdRw2F7t8mkcaksDEy0abArQ79PTJifpgAnccI5YVLQQTK/sJ7d9s
+ /CmaqV6xoaLroe5GlywPMeqrnrzExm09ld8EK3gV0qOjLPbDZrURf9Zrt8noNbwM2+VpWM7u/Po
+ 8w2LY1VkUMbfzXmuCKhNjpAi8bvPO5S1tuvlU7SxCE0EA18k+UIqXjLDn01i7MWM2XdftPUZJyr
+ Cqr1rUFMV8Bj9gAJhM275twCc/uze6qIxv1+VrZoTpM0nZ/tjjSCv8MxRK+1NsTdLYQYp0GNXjU
+ quX+Cfrjc/MIe0mVE4Gt6soXZcRL8KT6GYGlPMGTI7iHLDPdrwjgvi0xU7nO7U=
+X-Proofpoint-ORIG-GUID: dPTda6USknI3hMRBRaHVf00R9PeIKVx1
+Received-SPF: pass client-ip=57.103.76.38;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -165,39 +89,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/11/2026 11:29 AM, Matthew Rosato wrote:
-> On 5/11/26 2:16 PM, Pierrick Bouvier wrote:
->> On 5/11/2026 11:01 AM, Pierrick Bouvier wrote:
-> 
-> [...]
-> 
->>>
->>> The only possible thing is that code becoming common skipped some ifdef
->>> that were here before per target.
->>> So, something that should have been poisoned has not been, and we
->>> definitely need to identify what it is to prevent other regressions like
->>> this.
->>>
->>> Regards,
->>> Pierrick
->>
->> Fortunately, it was a much simpler bug, where we incorrectly removed
->> cpu_models_system.c completely, and used user stubs for all versions.
->>
->> Attached patch should fix it. Can you please test and confirm?
->>
->> Regards,
->> Pierrick
-> 
-> FYI Eric already posted a very similar patch:
->
 
-Thanks, I didn't see it, as I was not in copy.
 
-> https://lore.kernel.org/qemu-devel/20260511163541.192533-1-farman@linux.ibm.com/
-> 
-> 
+> On 11. May 2026, at 14:26, Jason Gunthorpe <jgg@nvidia.com> wrote:
+>=20
+> On Mon, May 11, 2026 at 08:46:57AM +0100, Peter Maydell wrote:
+>> On Fri, 8 May 2026 at 19:37, Tushar Dave <tdave@nvidia.com> wrote:
+>>>=20
+>>> This RFC introduces a mechanism to specify Guest Physical Addresses
+>>> (GPAs) for PCI BARs, allowing explicit placement of guest MMIO BAR
+>>> addresses to match host physical addresses for assigned devices.
+>>>=20
+>>> On some platforms, P2P DMA is performed between devices within the =
+same
+>>> IOMMU group. The PCI fabric ACS is configured to permit direct P2P
+>>> without going through the host bridge in order to achieve the =
+required
+>>> performance.
+>>>=20
+>>> To support this multi-device IOMMU group P2P scenario in =
+virtualization,
+>>> the VM may need to use the same MMIO BAR addresses as the host =
+physical
+>>> address layout.
+>>=20
+>> This feels like something's wrong in the design. A VM doesn't
+>> necessarily have the same memory layout as the host: the
+>> VM hardware is all about making that possible.
+>=20
+> The HW running these systems is unfortunately limited and doesn't have
+> ATS support. Without the right HW features the physical PCI topology
+> is leaked into the VM and there is no choice but to have the VM guest
+> physical and true physical match, otherwise the VM can't work.
+>=20
+> There is no other way to support these VM shapes on this HW.
+>=20
+> Newer CPUs in this family have more HW features and won't need to do
+> these things.
+>=20
+> Jason
+>=20
 
-Regards,
-Pierrick
+Hi,
+
+It has been years already since I last looked at Grace (synthetic-)PCIe =
+handling
+(and it was with another VMM than QEMU) but...
+=20
+As you=E2=80=99ve said newer parts will not have this quite peculiar =
+requirement, and
+that makes me think that this is maybe suited as more of a workaround =
+that
+is not open ended... by having it open just like that there=E2=80=99s a =
+chance that it
+would get future users and I don=E2=80=99t think that makes a bunch of =
+sense.
+
+And not very relevant to Grace + GPU systems specifically, but any hopes =
+of live
+migration support are lost outside of very awkward placement trickery =
+when using
+this to match host addresses.
+
+Is this specific to the NIC attached directly to the GPU (that is
+then attached over C2C) configuration?
+
+Using PCIe passthrough with ATS disabled doesn=E2=80=99t sound like such =
+a great idea
+on the security side of things imo.
+
+
 
