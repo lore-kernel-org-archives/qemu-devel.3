@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59244CD37B5
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 10:37:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B9D4CD37B5
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 10:38:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMO0y-0005Y8-RY; Mon, 11 May 2026 06:37:32 -0400
+	id 1wMO1T-0005hY-1b; Mon, 11 May 2026 06:38:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMO0h-0005XN-Af
- for qemu-devel@nongnu.org; Mon, 11 May 2026 06:37:16 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMO1R-0005hN-LT
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 06:38:01 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMO0f-0005tG-IL
- for qemu-devel@nongnu.org; Mon, 11 May 2026 06:37:15 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4890d945eb4so30014905e9.0
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 03:37:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMO1P-0006V6-VP
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 06:38:01 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-488ff90d6c7so37421565e9.2
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 03:37:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778495832; x=1779100632; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1778495878; x=1779100678; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=v7JoOKyLSG9ozP1XDCyS++1vUHt6QquHii6vF91UvK0=;
- b=VJIBCIjqohtNNLWpY0VNeIV91nma9VR9Xgt96izql6MRiuOyjF4a0A7mbX5GjT4vw7
- 8Pf+9aa9ewzLWz6qArKquWwT8gF4aGytaGzuReAMjidEdNOJfAO/a73Psd8rlJDNNdnh
- AUP/008mbnTE1zz75LLZ0PGsvbkt6MHR6eYE9JO6APRfD57xZlGAolsUKPOoMnKOiaRN
- WefzU6FvZ46wFvcxFo/kufW7ZS++S/VhVU3YKgEqDMI/NWxXHGQORg5bIn/5jhDyD56Z
- w1kwelqj58dpaM0SLpYhhW13cha4GrM84rlmP5TQvIm72XmikGZAGPtyjVStQrGz/IjM
- j8gw==
+ bh=Ck8f98L72hDFetAfly7qzyHYi3YozppaLyDUGNh5+cU=;
+ b=w3QvsgrD/9Jp9ca2zJueZaZXhKbISPjQMQg6CQvuuccxnJUc62zDkrruMSa42TRblK
+ XUn+/ei2jkM4NKyrK04kvvzAfjXdnMnSxs00lJ0dnhC5/2Dm6HDcbisaAhx29p5pg50e
+ iIdcvJnSEOW5FwecdYjcp1PzJmr+DIRf3z1w/QjnHwM3brvCLfTJ0ZRFw9S9siABxex2
+ nG82k2OeT2tBrJqnRQMRZ5xellr2hlrA699JFe+1jVTeXDq7mt4UHeT6/KWByobg1k/9
+ 75HERpMGxkYFgjXG8+u8GPs72jmav0RH/+DAGtgc/W2+VCbCIegxbZb9x+w+YVqWIf3g
+ A/UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778495832; x=1779100632;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20251104; t=1778495878; x=1779100678;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=v7JoOKyLSG9ozP1XDCyS++1vUHt6QquHii6vF91UvK0=;
- b=sAPpcNQpHinkkHwxTIQznK6/pw6WZJFXRmeCpETzM4W0DgadsBl0Pfuu4r+Cd6G59i
- KYCB+eVuhnZykWNuAUnyOfOcAXmEZG0vqZv+Kwy+Mi0jXxc/lRqvUXCroZAMCBI6ubYx
- 33w/3ouH77j0RKnOLwW3NVddQ/zcli6Fw+LOJybAGAjkVgbQ0ZgX8DwgMiQnuZVrf77N
- gWJkNcWHbwUI/vs6D6s7naDlzH+uCO7hcjtkXpsO1A/Oa8QMz9bq0gUxMU0X5l1JKAf3
- 8Vx0Xm8Wx9SBLNwVXzkNJiFkjv4DhTM6USKRGYcRRsZJWUCm7gDJ5OOrKXdDOcwj544J
- WMAw==
+ bh=Ck8f98L72hDFetAfly7qzyHYi3YozppaLyDUGNh5+cU=;
+ b=leMNXzZ0aq9cLDMoUuNdqWYxYcT5c+pcZIXVoMqIiVz/lDPuCtUJB/GWhc6Eb4aVCp
+ 0hupFTbrlG1maVTeYdvWgR8SscpchzBmLxHnohHbe2vNNvmlWTeN3vlXFwA1GQBYLi7N
+ sG+Umua6n3Z23mQBL6q+IiERAjxZV6FNDtzcto0HV14JDFS8gPgF7kNKIZrqDttT7E8b
+ Dfff5v74EODdFqyRXpWATlVPZ+UiRxmvT0N5g8irhmZ7dYZzz5d8cMvsh1TGHpO4zCMC
+ wtkGR06QTor3mirM6qNqsx98TBatU6mS/4nrGHd74V2M4kPLB4TrCmb84AR4LS2pKPtb
+ L67w==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9WKeJ+Y36cTRvxJ463sELaB8XZdmef/lrWHZwgUdM+SbCKETZ4y+fodBrIJooIaa4wAVjIJ4JkCqDi@nongnu.org
-X-Gm-Message-State: AOJu0YxJyV0WTEbnLFYdeRQqhc2mbg4hsx64UaHCVUPPmDMuKkUGYvC0
- HAdg38DMITucrUAsuGlkKJKmvFh7BclNDgUBLQ+ZiNd7l6rH9AS5y0EmYkSIATBxR2g=
-X-Gm-Gg: Acq92OGL6kGh6NkxjWFgOZVHmFRQfPSnO+isdKvmLL8iFTAi/g9y3tdgbeCyy59dS/Z
- 0KUAlBTzNQYEHUJiTPgv56fyigkxhcYfJ8ZoR5828I0zA+SDZ5PTTfK1nVierALa4XOTB5p20k3
- Q8he8TACVQR/Ok2WntrpjoizAmyA+XOy3Yl3HEAhehuJzaPUOO17arCWp1MIutJTZupoPoJV1A6
- wRnnH31nDiJ+fgkKYAZ+tWUUoY/hIgFbXpchO/9lpahSRWP6KVjvrnoofuZ2ejwAGFz6nrsjbv7
- flyh9NZtiYoV0613GuwT51QND2i3Yds2kpXu+EmHBRnZtBfP6IGrVAg5QoQkSWUlNCEpDjbBvk2
- qNqAMs0W8iHNpjYMqRDrOwIR/qkhxIzly/0f71h+3rKai+HUhEpnnuO//xA3q+OB7TGL50uL8GY
- 3pG0SYMfsvWm8s9kMte1UOVZLum2hAK4wCmU2KjV9dCRtQwUvkjmyYsINKYx1o+jO9Mg==
-X-Received: by 2002:a05:600c:32af:b0:48a:534a:eed8 with SMTP id
- 5b1f17b1804b1-48e5dfcd722mr164655295e9.1.1778495831680; 
- Mon, 11 May 2026 03:37:11 -0700 (PDT)
+ AFNElJ+MD4pYWNOxLLVaglPy9YsJcqr3ePnZa1i6jF4fEd2Hq9gVTMOptZ/o3YvJz/aV8YFeVNhyDS1lVs8Z@nongnu.org
+X-Gm-Message-State: AOJu0Yxs2SF+GKHc+xNmT1qLp6qf+LVdBgJF5ehkHhO/y5sKGC/+0kai
+ wxRe1fJIc7U25cwPrOo3+Uvad+5l6eLCfR80w6tv3UZWualetE4lDte33eKtnTVJabc=
+X-Gm-Gg: Acq92OFhcenrj+iZL1VZwtnoYWoXDG5/N6NKY5VLlmJUGgp+LZCA5LOHyxPYRUXwoNZ
+ RnTfc+IRB9kOkuJH1Xc/Rp+qJTMPgWSQIHhInSvJvLcEu/8lHgfd6yFCRkUlAl19lDLh5pzQeq1
+ IZl8VPYx7RLs92zqTUyhxwV6bVhFLwjGZSYL51IBVMfMv09Bkqm9Riy2X0Sv3f1o9lKuc0Ql3y+
+ 9+nsSH3LjSDClBB7mYJBmf6g5VWrCk+2z3rZ4Hta2U08wFTZZNny4Zf2y+5U9Z8BBy7SFQ+ynWR
+ OeNF8B4QQHaDxjpgHOB9kpSARUF2hJqExP9ZQl7SHOR/h1/3UQHtQcXgEhV2ZZzQ5wdcssPXdzG
+ V8JWAg/grNQyvArMFcIEHSQAaWY9ciCsMGT7ffn6OBK6yCKX4KTxVq8bEZzsWK/bKqtIyF4FCrZ
+ G9SIaxBi5+hVB8WkQo5Fu90lNtm/JZNXZ3ktypqGbbgpt/WuokH7dd25OvENwF+8xUFA==
+X-Received: by 2002:a05:600c:c107:b0:48a:52d4:888c with SMTP id
+ 5b1f17b1804b1-48e51e0bb23mr273870855e9.3.1778495878205; 
+ Mon, 11 May 2026 03:37:58 -0700 (PDT)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e701e89fbsm160775865e9.4.2026.05.11.03.37.09
+ 5b1f17b1804b1-48e701e957asm178413615e9.6.2026.05.11.03.37.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 May 2026 03:37:10 -0700 (PDT)
-Message-ID: <5ce088fc-9a18-41fd-9982-9a353a809d08@linaro.org>
-Date: Mon, 11 May 2026 12:37:09 +0200
+ Mon, 11 May 2026 03:37:57 -0700 (PDT)
+Message-ID: <6e03fe79-2071-444f-880c-332c53539978@linaro.org>
+Date: Mon, 11 May 2026 12:37:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/10] qom: move object_set_prop_keyval into object.c
+Subject: Re: [PATCH v2 02/10] qom: validate ID format when creating objects
 Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
 References: <20260508112429.643360-1-berrange@redhat.com>
- <20260508112429.643360-7-berrange@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260508112429.643360-7-berrange@redhat.com>
+ <20260508112429.643360-3-berrange@redhat.com>
+ <b3acf8bc-7ac1-4b4d-b7a4-4848b58ec51d@linaro.org>
+In-Reply-To: <b3acf8bc-7ac1-4b4d-b7a4-4848b58ec51d@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,18 +106,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/5/26 13:24, Daniel P. Berrangé wrote:
-> This matches the location of the object_set_props and object_set_propv
-> methods, since this method is not inherently tied to the user creatable
-> interface. As part of this, object_set_props_from_qdict is also exposed
-> as a public API since it is still called from object_interfaces.c.
+On 11/5/26 12:35, Philippe Mathieu-Daudé wrote:
+> On 8/5/26 13:24, Daniel P. Berrangé wrote:
+>> The object_new_with_props/propv methods failed to validate the ID string
+>> format, thus diverging from user_creatable_add_type.
+>>
+>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+>> ---
+>>   qom/object.c | 9 +++++++++
+>>   1 file changed, 9 insertions(+)
+>>
+>> diff --git a/qom/object.c b/qom/object.c
+>> index 9c391071fb..62d2f0486a 100644
+>> --- a/qom/object.c
+>> +++ b/qom/object.c
+>> @@ -24,6 +24,8 @@
+>>   #include "qapi/forward-visitor.h"
+>>   #include "qapi/qapi-builtin-visit.h"
+>>   #include "qobject/qjson.h"
+>> +#include "qemu/id.h"
+>> +#include "qapi/qmp/qerror.h"
+>>   #include "trace.h"
+>>   /* TODO: replace QObject with a simpler visitor to avoid a dependency
+>> @@ -764,6 +766,13 @@ Object *object_new_with_propv(const char *typename,
+>>       ObjectClass *klass;
+>>       UserCreatable *uc;
+>> +    if (id != NULL && !id_wellformed(id)) {
+>> +        error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "id", "an 
+>> identifier");
+>> +        error_append_hint(errp, "Identifiers consist of letters, 
+>> digits, "
+>> +                          "'-', '.', '_', starting with a letter.\n");
+>> +        return NULL;
+>> +    }
 > 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   include/qom/object.h    | 47 +++++++++++++++++++++++++++--------------
->   qom/object.c            | 36 +++++++++++++++++++++++++++++++
->   qom/object_interfaces.c | 36 -------------------------------
->   3 files changed, 67 insertions(+), 52 deletions(-)
+> Use a common object_identifier_is_well_formed() helper?
+
+I see the last patch of this series remove the duplication, so:
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
