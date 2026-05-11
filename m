@@ -4,107 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 520E4CD37AC
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 11:43:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03C2DCD37B9
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 11:44:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMP2P-0005iz-DL; Mon, 11 May 2026 07:43:05 -0400
+	id 1wMP3L-00067L-Al; Mon, 11 May 2026 07:44:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wMP2O-0005ir-GZ
- for qemu-devel@nongnu.org; Mon, 11 May 2026 07:43:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <ardb@kernel.org>) id 1wMP35-00064f-Bi
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 07:43:49 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wMP2M-0006r6-Np
- for qemu-devel@nongnu.org; Mon, 11 May 2026 07:43:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778499781;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qX2tnJJNfV+osYZkXLO1DQa3mQgqX53HdEaTv1PbSD8=;
- b=LvEjb6DhcpWRerrWYWveWOhaON0DWCGqEXEp9+MoOqUVbGY1eqJDhIyIHfx03LYCx0M39j
- Sb+8r5sSEF23ziSSzZMTAhO+Pj7ZBcBeaQBpOnWhIKD+szTre2N6CyYbxLcxd5vvu+/YT9
- Za+sztqpoeTbG/h8bWyiaARaOUeJW04=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-413-8spRRmbEMF2wdhEt9Bshrg-1; Mon, 11 May 2026 07:43:00 -0400
-X-MC-Unique: 8spRRmbEMF2wdhEt9Bshrg-1
-X-Mimecast-MFC-AGG-ID: 8spRRmbEMF2wdhEt9Bshrg_1778499779
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-4411a2c034fso4019736f8f.3
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 04:42:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778499779; x=1779104579; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=qX2tnJJNfV+osYZkXLO1DQa3mQgqX53HdEaTv1PbSD8=;
- b=PBjNqZzgJRY4VK4rciYq6sQYdSsw/m94shE9XuxTCPpp6Xykr8pPoxBMIT8982/Ju5
- OMwc0tCyPJkGGn3czNbgtlXWFGmfYhf39w0WGwCYl6oJ39uO/NP6BVG28mEw/0WQq18k
- +cSpcX0/tWiJgeMdzefqnLULeR5kQ102NBVLKzyYM3j7UP9jaIwceNcelnL09Y1ZgORV
- FCg6pQlC317IEyZlnSlrPAJHq7IYVfvnzjG9hrBILClmUZgg7tRN7Kt3wezXFSSxzYw3
- E03Bbd+suH2Xo9r5ZDX4MvNOKt2Rx7eW7OJbeNjxwwF/LOk3ry27NBhlf8CG1gUmVbzE
- otNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778499779; x=1779104579;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qX2tnJJNfV+osYZkXLO1DQa3mQgqX53HdEaTv1PbSD8=;
- b=fR1i+SXvC5ccXQY+G4NJ4X9x1oqPlBAnNLHaAKbit/kvULiSUYvi7eI70lYpvPSk5C
- CHpuKAwv6kp0ZH6H1r7utlmdw0bSo5UeogJY33omGXugPrkY5HmbZcn+MckUKQz/SwuD
- crQhu/3JX3uCGYYI2To15VY6sLFvFE96zZyd35ik1gD/Q7Uvv7Od/kqCWHhloVBOg4vA
- A/DfGBfPlhg/hMLJEU13rCJ62R6Y+sXSGVIivblHJvcW7thlYxot+tC8/OqHjXZs6Z0X
- DAbr7Hn1Q6VbcvU+saShOrBFC7MkpNAGAT4pSA6N4PYIP5PMGMxFFPlQ5oC9phX9f4c8
- s2uA==
-X-Gm-Message-State: AOJu0YzdDO66ormWfzW/kasMy+be1RWlm9tPRyQ497ITfr+oWsUBThr/
- qh5h0Pt8gE1RdjQp7/GEqwWz95xCBRtGzMMMloucFa3YWDcyxGJNs8X6vqflhooMhhW00KzxVUg
- 4mV3jiFMT2P/Hv2sMkM9K5RoYHS3cmB0yNBTbI8CPjwk5SxOIeWdClVHg
-X-Gm-Gg: Acq92OFL+z3BqPxciuCDzIJaOFBKliPUYOAeJZxHFal7KTx3xpw4XmQemMSakd6ILf9
- rNBnHRGm4Xga8P4EbVZpJApqfzb3Eknt71MWl6KNbB0qdZYghclOjsWxdYJTXrw899drCnxkIv1
- u8oPGpAcutqynT6JHz1/NfWoWI3PdmPi4UEv13+pQUu5ye7MIVNIdoRHcHHzoqD87DAKC8wA74W
- e6UE0KsmK0+Qb6dYs223AMJ0Vb6Vyd6LOh/9o5fbHtdVqbNftLvbiaXHJ1UQPbDPH/5KaQzIhgQ
- j/2q5FF18u4xtnaLnIW2b+Hyeja44mJiU3ARaUgJNTt2tx3a1bjJLUCvrEpxN8pgtFZcOXooiSZ
- PiFKaGxXAQ9A62OCku9sD0o5EnLpo/+TMNK137ymX
-X-Received: by 2002:a5d:5c84:0:b0:43f:e721:76bf with SMTP id
- ffacd0b85a97d-4515df66f27mr34964029f8f.41.1778499778932; 
- Mon, 11 May 2026 04:42:58 -0700 (PDT)
-X-Received: by 2002:a5d:5c84:0:b0:43f:e721:76bf with SMTP id
- ffacd0b85a97d-4515df66f27mr34963960f8f.41.1778499778239; 
- Mon, 11 May 2026 04:42:58 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-48-7.inter.net.il. [80.230.48.7])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4548e6a66bfsm22030189f8f.4.2026.05.11.04.42.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 May 2026 04:42:57 -0700 (PDT)
-Date: Mon, 11 May 2026 07:42:55 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Song Gao <gaosong@loongson.cn>,
- Avihai Horon <avihaih@nvidia.com>
-Subject: Re: [PATCH] update-linux-headers: Inject VIRTIO_RING_NO_LEGACY in
- virtio_ring.h
-Message-ID: <20260511074232-mutt-send-email-mst@kernel.org>
-References: <20260511111913.3327672-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <ardb@kernel.org>) id 1wMP33-0006uk-4B
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 07:43:47 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 706A760125;
+ Mon, 11 May 2026 11:43:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA488C2BCB0;
+ Mon, 11 May 2026 11:43:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1778499813;
+ bh=q4sYFUv4z/6QEQIgQSpzNnKSOnwrkW15GUtyfAUtJm0=;
+ h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+ b=CHuCdQ6yyuFqAFiJwQ1eFfZZvdPsUSZsdEi1TZhaaLub+WT7VnvXmsPUV6kGZ6LLj
+ clfHpbl/aeo2ikjB6PcvKSCzUBf1x4784Hfj7DCPKVnQZCaazumktVFcQ3E4g5/2NC
+ 72pW22sh51+1l/xu0x6VwWElQl8/nZtsRGlFeh/M5TtJSM9Q8v4c8FexBvOpf10FrQ
+ aRfMhfe9W9k8YFY8Lq4GFUED3BBwPFNb0NDSC+KhWwG7hUd5Zj7gLMGkKjmNEeUIGs
+ MAHqgXKFSfdUx5xm0uL6GJsVlmdxGBJOEtsHKTRaUABGIvwq9RllXznfwy/jDI2bkU
+ 3XysgK3RM/sFQ==
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+ by mailfauth.phl.internal (Postfix) with ESMTP id DC38FF40083;
+ Mon, 11 May 2026 07:43:31 -0400 (EDT)
+Received: from phl-imap-14 ([10.202.2.87])
+ by phl-compute-01.internal (MEProxy); Mon, 11 May 2026 07:43:31 -0400
+X-ME-Sender: <xms:48ABajdpY2pVBjWokIpjkCIA3ZJHANakxh2iXhIPjTCxv-yAXQM0AA>
+ <xme:48ABakAKHilgtrssFtmDMNdmHuRjcr8Sew3jVlmUKESy1Wvn4y3v7gGjmjxgjkwFD
+ BNjfgNDYcOMAQ4v2teEMRxXzOs4400-4REI_3lpzEg140boMDKSwEk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduudekkeegucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvvefkjghfufgtgfesthejre
+ dtredttdenucfhrhhomhepfdetrhguuceuihgvshhhvghuvhgvlhdfuceorghruggssehk
+ vghrnhgvlhdrohhrgheqnecuggftrfgrthhtvghrnhepvdeuheeitdevtdelkeduudetgf
+ fftdelteefteevjeevjeeiheefhfejieejfedunecuvehluhhsthgvrhfuihiivgeptden
+ ucfrrghrrghmpehmrghilhhfrhhomheprghrugdomhgvshhmthhprghuthhhphgvrhhsoh
+ hnrghlihhthidqudeijedthedttdejledqfeefvdduieegudehqdgrrhgusgeppehkvghr
+ nhgvlhdrohhrghesfihorhhkohhfrghrugdrtghomhdpnhgspghrtghpthhtohepuddtpd
+ hmohguvgepshhmthhpohhuthdprhgtphhtthhopeguvghvvghlsegvughkvddrghhrohhu
+ phhsrdhiohdprhgtphhtthhopehmrghrtggvlhdrrghpfhgvlhgsrghumhesghhmrghilh
+ drtghomhdprhgtphhtthhopehpvghtvghrrdhmrgihuggvlhhlsehlihhnrghrohdrohhr
+ ghdprhgtphhtthhopehqvghmuhdqrghrmhesnhhonhhgnhhurdhorhhgpdhrtghpthhtoh
+ epqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopegrlhifihhl
+ lhhirghmshhonhesnhhvihguihgrrdgtohhmpdhrtghpthhtohepjhhgghesnhhvihguih
+ grrdgtohhmpdhrtghpthhtohepshhkohhlohhthhhumhhthhhosehnvhhiughirgdrtgho
+ mhdprhgtphhtthhopehtuggrvhgvsehnvhhiughirgdrtghomh
+X-ME-Proxy: <xmx:48ABau8bAzM9bFZtEDnDLXLnn4XkE0SZ5pd4Q-Hy0xGOZZBQx_LXIA>
+ <xmx:48ABahygNLY9hhZGXf6LOCMHHP5ohwCB6Mx3bt5Bcb90MsqNnE1j_g>
+ <xmx:48ABauorLxpnLMk0XyMSSegsNdvj7wGax7SeIM7Uy-utFM2aiN3f0Q>
+ <xmx:48ABaipmRMgnxMRj96PEAN7IuHI2CaWKfqhNGivaI6-YwHGgzWETVg>
+ <xmx:48ABauCkYedtOE-6qsE8_Sxh_2W9d3EICVN3vzYfWCnnBcm7B1IMQtZZ>
+Feedback-ID: ice86485a:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+ id B9015C4006E; Mon, 11 May 2026 07:43:31 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260511111913.3327672-1-clg@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Date: Mon, 11 May 2026 13:43:11 +0200
+From: "Ard Biesheuvel" <ardb@kernel.org>
+To: "devel@edk2.groups.io" <devel@edk2.groups.io>, tdave@nvidia.com,
+ qemu-devel@nongnu.org
+Cc: alwilliamson@nvidia.com, jgg@nvidia.com, skolothumtho@nvidia.com,
+ qemu-arm@nongnu.org, peter.maydell@linaro.org, mst@redhat.com,
+ marcel.apfelbaum@gmail.com
+Message-Id: <22cf37c2-b2b1-40db-b8b7-393b6c36a921@app.fastmail.com>
+In-Reply-To: <20260508183717.193630-1-tdave@nvidia.com>
+References: <20260508183717.193630-1-tdave@nvidia.com>
+Subject: Re: [edk2-devel] [RFC PATCH 0/8] hw/arm/virt,
+ hw/pci: PCI pre-enumeration and fixed BAR allocation
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=ardb@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,37 +105,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 11, 2026 at 01:19:13PM +0200, Cédric Le Goater wrote:
-> The kernel commit 3c4629b68dbe ("virtio: uapi: avoid usage of libc
-> types") changed the virtio_ring.h header and this breaks the build on
-> Windows which requires the uintptr_t type to cast from pointer to
-> integer.
-> 
-> Inject '#define VIRTIO_RING_NO_LEGACY' at the top of the synced header
-> via the update script after the include guard. This discards the code
-> section incompatible with Windows.
-> 
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Hello Tushar,
 
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
+On Fri, 8 May 2026, at 20:37, Tushar Dave via groups.io wrote:
+> This RFC introduces a mechanism to specify Guest Physical Addresses
+> (GPAs) for PCI BARs, allowing explicit placement of guest MMIO BAR
+> addresses to match host physical addresses for assigned devices.
+>
+> On some platforms, P2P DMA is performed between devices within the same
+> IOMMU group. The PCI fabric ACS is configured to permit direct P2P
+> without going through the host bridge in order to achieve the required
+> performance.
+>
+> To support this multi-device IOMMU group P2P scenario in virtualization,
+> the VM may need to use the same MMIO BAR addresses as the host physical
+> address layout.
+>
 
-> ---
->  scripts/update-linux-headers.sh | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
-> index da367acee790657e33c71c10bc118b085774f45d..3c3a0e9394d277766e613dd5ef4e9c7407ec0033 100755
-> --- a/scripts/update-linux-headers.sh
-> +++ b/scripts/update-linux-headers.sh
-> @@ -104,6 +104,7 @@ cp_portable() {
->          -e 's/__kernel_ulong_t/unsigned long/' \
->          -e 's/struct ethhdr/struct eth_header/' \
->          -e '/\#define _LINUX_ETHTOOL_H/a \\n\#include "net/eth.h"' \
-> +        -e '/\#define _LINUX_VIRTIO_RING_H/a \\n\#define VIRTIO_RING_NO_LEGACY' \
->          "$f" > "$to/$header";
->  }
->  
-> -- 
-> 2.54.0
+Did you consider implementing this using Enhanced Allocation (EA)? If so,
+could you explain why it is not suitable here?
+
+Also, I think I understand what the intent is here, but could you describe
+the topology in a bit more detail? These are assigned physical PCIe endpoints
+behind an emulated host bridge, right? And the BAR needs to reside at an
+a priori fixed address so that another PCIe endpoint behind the same emulated
+host bridge can DMA straight into it?
+
+Doing PCIe enumeration at yet another level is not a feasible approach imo,
+having UEFI and Linux play nice together is already a bit of a challenge.
+
+Is there any way this could be handled by having special rules for inbound
+translation in the host bridge driver/implementation?
+
 
 
