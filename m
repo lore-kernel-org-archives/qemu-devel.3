@@ -4,98 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28004CD37AC
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 15:25:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C551CD37B2
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 15:28:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMSV1-0002ZN-D1; Mon, 11 May 2026 11:24:51 -0400
+	id 1wMSYJ-0003bX-JA; Mon, 11 May 2026 11:28:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wMSUs-0002YF-0z
- for qemu-devel@nongnu.org; Mon, 11 May 2026 11:24:45 -0400
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ id 1wMSYG-0003b3-Ca
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 11:28:12 -0400
+Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wMSUo-00060r-7M
- for qemu-devel@nongnu.org; Mon, 11 May 2026 11:24:41 -0400
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-6579254f996so2681776d50.1
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 08:24:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778513077; cv=none;
+ id 1wMSYE-00071U-Lh
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 11:28:12 -0400
+Received: by mail-yx1-xb129.google.com with SMTP id
+ 956f58d0204a3-65c5361142fso4678817d50.0
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 08:28:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778513289; cv=none;
  d=google.com; s=arc-20240605;
- b=VeHjm4ejecqvfljUjhBqM8YNH8knXw+G4+D70Vv/+beaqiwWQg4LZ2oFSREXxh8eW7
- qERdRv1cxqueNPVcdsGryBvV7erFdWeTfs9Hsl5f9QOmYDUswKDV2AP4acjMnjHku1lm
- YiAV3BN3K1D+4ztjR5mqny4Ld10Nhnp2dWS0stS2bWoTaYToAstvGYpHSCq+13zRxJaV
- 8ebZxhvZmB89JckdkouDnaYZePYCxiwQm5zkt8vCwmOkM0gGx23e/iwJKsuZuBEzishf
- +6SV5rVxM8HWz6V2BRsVBVipSAZEh28rKzNnEDv8xdl+qpSfu7AefVepGPo9EGN1vTBE
- 5OGQ==
+ b=RgGeNW1Xqgggs0yt+Cqw23f0qt38wnn5Awpm350PKZuGsxkRKAIKdYfWoEeu1T4mmT
+ NQ6pjtNDXkv6eJOk4Ks5c8iNQZGUAbz9OWiu2Uh+zXBhuVqe+zCmo7LFwFmhlGvuSlrO
+ mvhgwSvzBd8iBWbfodjbUo9/g2XgBJUCtkp+t2XEnUrHJ7aPVAiMtEZbq6LfI7JGF13B
+ xWJIVxDPTgiPzwTCNj8g5TZNngXs5e03Iy5VqnTVvvmTyLhwsFkIyNclBWB/duQ/9wNs
+ LcBNg5aE0RluHBi/56ZguY3uK/J9eDpre/JwQU5q2LdRTGOQ5jwucF1Ldhln9Zew378X
+ 8bjw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=/2592oKrHfxZjl9hMlevnjuzicCWZKJ/yBJN/W1jPME=;
- fh=8jLQ9BF8TzoH/ErGnlkH4vSIZ9SpUVgmQkqZ4x0ADis=;
- b=L+0CYi5VCpnIzFPjV3OH0GFh9Bgp9ulVbHMH8JR9n03LXInxsQ4qqkA9/eiiVcKwz5
- aRCSaZFPkngFJlrrfit+QjiZbRL3fRrLBs83vnvUkB2wNlOGHbNuOulMkbRaCW6bZyMp
- LW4s3U2Pgin6hMmWuwZ7H84RittU03RFdZD7010WQSWU70E68gqS7Uta3Eg9u+zTo055
- /l7rURFzirJPvLywpcY55+A4b7Xs5lnCpcLnj1IyR2Nm36BymUn6X4xLxGXZlk9l0GTe
- VDPKLcqWFk028aRrNwtCrtdmHkohmWzH5uEUSr9dZE5WuqoUCRVlmSB9G2sR+F5FEPaZ
- 6RpQ==; darn=nongnu.org
+ bh=hM1r3JgOjTttAW30OJV6demfbDOt+19NxNRSsEEpDos=;
+ fh=D9TiOsAcOSpRlHrkA38ELZyIVSvZmg48LLzTtJLYv+0=;
+ b=iVc5oa1NuG8svbWCxRSQYmxkhZZoFpffy8cik7UqomLUIbbsPLKhq3HOfIAlt5ftMn
+ 7BGbbtNewrwctiDMzizIhkUXwR+Vf9c1SRRi4TtxhtsKEGeQ5XN1j4/wKKs3eEQezyoA
+ erV1Qymw1tgC8KtPDauc6PmyeKWjoNGcL+Ym9aP+8xnfi7ORPwIsoOfjoT79bZmWeQfa
+ Dpniw1TWZsn42ubnNcDMeY/6txrYHvM2NiMOm5hVh7uoIVHOq+Jq3ho0VBgbgWZ/p4FE
+ q56h+K4+tzR8+9o/wHw61OEHjs+C0wWLG8cV9gXwcEKyWo9reH7d5dTuhFuMDaJruBZ6
+ p7Pg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778513077; x=1779117877; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778513289; x=1779118089; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=/2592oKrHfxZjl9hMlevnjuzicCWZKJ/yBJN/W1jPME=;
- b=iRGmnEk/5dz8Bm8kqzmAv4iuudc16AaR5tJa1gUPB+MPuu7NfEIL3KMqp4aYQzq2Bc
- ke1xjftWpIN6YmLGIb3bE32LI4nfUrFCoQVkUOyyp+3sb9eBYWs5xxXts4RlZ43NFhy1
- dgNqC3y9nTbTGsn3g2HU0rIgapaPsUG7VbBYdh01mZYdD9z1iNwR47seD0BQSr/LlcdF
- vsS2X7lq9K5215PRtsURYsjXQcQd/n78oRt1a/xvfpgs8xNkjxgmYIJ70GfS7Vo3cu2L
- Bqvo0ZA/kVa+DuRltcOiW5OzXAWQuVvXeNNTQXpFWdRMk+1FGEqSGe327KnKkj86a4ur
- 9WWQ==
+ bh=hM1r3JgOjTttAW30OJV6demfbDOt+19NxNRSsEEpDos=;
+ b=NX/M+k2rwLFMHvi6sliRBmsAa5tDqzNOOERli91GCkcmw2gw5k0G29kLGhflufLJKz
+ q61+8ygEJCG5QBAEUMSenC0XqxEMCFsDf8pcZsQdV7blnweogXMrI/MCMRDmaccLHG8F
+ yVW0UJL6m0tmOZk+l33f88EQUTJoGDvZN/7Yfu7/3or0cb/VwoKspM9vMz1Lt8+R2PUP
+ dPsFzdO1iF/Tgpp3cRKE7dhhyHS1iWJwXuelmfmnqisHpKOrF4USzasJBS+DQDJ3Sw6b
+ k4lz0dnT8jRBLuGAbtrpjiKtLs++WDT85JewD398zAfqOp6GNluwaIGA+lnpr0JaMusT
+ 1oUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778513077; x=1779117877;
+ d=1e100.net; s=20251104; t=1778513289; x=1779118089;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/2592oKrHfxZjl9hMlevnjuzicCWZKJ/yBJN/W1jPME=;
- b=d0Vr5aCmAtYNiUkmLhsweIEyD63zivFOd5h061KwbJ2R2FDmjMw28dEtLr9o4od1As
- rz731hLIETZGzU3nijqc1XTqAackYNFUYET0EFDXlWXcNkOHXHzGbHuTnE1wrdDqCr0U
- q0mPWGFi5vrQknaIB3BwEqYH7xLQUtkPOhoeUQfbs85tOIun6AUBMjCO4fV1Rqt0YaGK
- lF7yTyyBaDc42ueXHAy8rjeiuzQGxcITjDtXnVVytXaM6juwbkIp5ryNlwGqX9b43hSd
- pvfYpYZ2uM8L728RVm3e9fIaxMSj3SMPDaWCA/PpL6nVhYV0SS+hHRTwT0HwENF0x5wP
- mQUw==
-X-Gm-Message-State: AOJu0YwwG0sA93fAz7RoFbOKzQu09iVWvYdB39Ui0i0Iz6JhZSgaEVuY
- khBCU2AcJVwYlDzdQb2ap9y4002g0ebxqbU3Qn/P9/ddd0k2pOHL4BulHYJF+HESWcaOq6F7cHM
- WmEdM4S5JZYRjyQuM0ORweMw6aLFKo1bRKqo/lz3nng==
-X-Gm-Gg: Acq92OG1SwFUkqlUpeAkUIUFWsCUNPn3/xHwS76CIkzPPeWcbaoi6DqlC5vazdKRe4m
- zCGjzIWl7Px6aqYeYWCFi3E85hgRgNOzt6m6FvfObUKhT2nr6KuMyBi1XDV4bAOOL8z/F59aJqd
- DmAEH03SqINm+0v8MbNUExpyw3i4D9u1LnpD7Zowq9q6tdurLPBaNEjOtT5uCGhA84iIrxInHGA
- 7sS0g2u+VneubyZw0o6eS2o5olj5gQjGzi7G7/wQxnQN5QWVQxa3hjEtppJmUGaFJ32H97xmlru
- vMrUYY+1aYdyxsrv9bd34KT1jUAAmBIITsPOd917e/S78h8jeQjZ3lwdkAuYHl6cAjsfC/ZJmEX
- mtQ==
-X-Received: by 2002:a53:d014:0:b0:65c:39db:7ab7 with SMTP id
- 956f58d0204a3-65c79e34de7mr22689729d50.55.1778513076721; Mon, 11 May 2026
- 08:24:36 -0700 (PDT)
+ bh=hM1r3JgOjTttAW30OJV6demfbDOt+19NxNRSsEEpDos=;
+ b=JcmRxa9ZMoZyGM2tJqofmIuL+2JDYDo9oYMyAEdsmbzqUSsmco7baIfd8zt/q9xXVY
+ LyhsGn620/ECu61ZK7GJ/or5qA9enTaSV61gOzwnrgqq70yWjaGEIOuVaEJW0OPD6kuj
+ ZhW514oG0MXR0zvv+FZcAri9KoI8lyQf4c3pAvgglJ3lD8OkRO3c6mC/BDswJNlsY3K3
+ UkJUG6F0BnX3xGDR4TeoqtWNb1QSj4LHhH25CJcMfIbQPIFfs4oy4zYTCFLqsPAYPuEu
+ ZfRv77nEef6r0buHv14bC4az9OH/+9Wg9cC/oS3i2NppprChZN2s/L8isHeog8fLqkE0
+ w7AQ==
+X-Gm-Message-State: AOJu0Yysx2PpNAR7EPV8OtFh1ske4teR/CSd54arU9DbCoZn0EuYxZ4f
+ cea4enhD18Hs0JRpq1fT9ngIfECc8JOHX5N8UBJjq89p5Za5DN8oh8ZD7Ll/AFEFZUyXodL+G8M
+ OWG5NUcajCCOpZjiQWG8U35v2MeVgtl98vwWtMUKROT7wU9LrKRkL
+X-Gm-Gg: Acq92OEFcMG1NC3c/Va/nxYRM5BA7PK8DbzRQ8+Ouzg+DeKc1wyoaa6CLWZtBrSzYpd
+ QgANwGHJP6qkdv//8V35+NwgmzlgKuBEMnENuXaNcQ6uPFNYLynCS1HSHdADsY12HUNrpaXwlDo
+ RkCHaiVJFSeEBs2Z8DuYYmKTKWkU7LuhvUezRJck7jUD8S6+3qjZZ0h7NnNe8Q+smETuArOX8Vk
+ EOgM8BmEUhhO6hSvGFwnQKvd1oe6E0S5e1Y/aWnaC4trjYHDf2YWQmWwO5hPx6lt8XmhOflqKln
+ a5WyXuTyetAHizLjomaQ2aU7wMc2GnjaS9IlIMq3bOu5GJBDD+vDXFwpne2tq+A/XdaAbTVAdzl
+ v5Q==
+X-Received: by 2002:a05:690e:1209:b0:651:be70:9261 with SMTP id
+ 956f58d0204a3-65da84fa6edmr9236957d50.43.1778513289151; Mon, 11 May 2026
+ 08:28:09 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260511141049.1293449-1-peterx@redhat.com>
- <CAFEAcA88Ui1tG0PEwbwSnSBMaywMJEy5bLLVwXvGdW_06pgJ0w@mail.gmail.com>
- <agHs1PcxZYJtba4W@x1.local> <agHzQnXFQbnam-RF@x1.local>
-In-Reply-To: <agHzQnXFQbnam-RF@x1.local>
+References: <20260511152019.1316898-1-peterx@redhat.com>
+In-Reply-To: <20260511152019.1316898-1-peterx@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 11 May 2026 16:24:24 +0100
-X-Gm-Features: AVHnY4JpnPbtqmZ97la-qZdHWepKzQBU5jjw0twcyBFWbNBENrlcEx5UOaiXiok
-Message-ID: <CAFEAcA8L_BgfHEUnJhWCJ9-aMPUadbvQWGrF2UAW8vE53JP=6A@mail.gmail.com>
-Subject: Re: [PATCH] migration: Fix possible division by zero on calc expected
- downtime
+Date: Mon, 11 May 2026 16:27:57 +0100
+X-Gm-Features: AVHnY4JxqMwXSxgilx-FpQIBmoFehAO5Ij8OBWIjtwx4zOnDNHhQNNf81zQnWtM
+Message-ID: <CAFEAcA-b5+MDVqVyaaWT=Un7gN6dZUR3Qn98Qv8GAH8M02QW7g@mail.gmail.com>
+Subject: Re: [PATCH v2] migration: Fix possible division by zero on calc
+ expected downtime
 To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Juraj Marcin <jmarcin@redhat.com>
+Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,82 +116,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 11 May 2026 at 16:18, Peter Xu <peterx@redhat.com> wrote:
+On Mon, 11 May 2026 at 16:20, Peter Xu <peterx@redhat.com> wrote:
 >
-> On Mon, May 11, 2026 at 10:51:00AM -0400, Peter Xu wrote:
-> > On Mon, May 11, 2026 at 03:26:06PM +0100, Peter Maydell wrote:
-> > > On Mon, 11 May 2026 at 15:10, Peter Xu <peterx@redhat.com> wrote:
-> > > >
-> > > > Commit dd4fe8844b changed the reporting of expected downtime behavior, so
-> > > > that the value will be calculated on-demand.  One side effect on the change
-> > > > is QEMU will allow the calculation to happen anytime even if there's no
-> > > > transfer happening for a short while.
-> > > >
-> > > > PeterM reported an ubsan report from clang when running migration-test with
-> > > > aarch64 binary on x86_64 hosts.  I can also reproduce if I run the test
-> > > > concurrently so some of the src QEMU may not get chance to push any data,
-> > > > causing mbps to be 0:
-> > > >
-> > > > ../migration/migration.c:1051:12: runtime error: -nan is outside the range of representable values of type 'long'
-> > > >
-> > > > Fix it by checking mbps non-zero before the devision.
-> > > >
-> > > > Link: https://lore.kernel.org/r/CAFEAcA-MYH6C39xO0OLx4-M5pKurJpurwRsMqZe9q=W-NShAbw@mail.gmail.com
-> > > > Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> > > > Fixes: dd4fe8844b ("migration: Calculate expected downtime on demand")
-> > > > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > > > ---
-> > > >  migration/migration.c | 10 ++++++++--
-> > > >  1 file changed, 8 insertions(+), 2 deletions(-)
-> > > >
-> > > > diff --git a/migration/migration.c b/migration/migration.c
-> > > > index b6f78eb3ac..b06e577328 100644
-> > > > --- a/migration/migration.c
-> > > > +++ b/migration/migration.c
-> > > > @@ -1044,12 +1044,18 @@ static bool migrate_show_downtime(MigrationState *s)
-> > > >  /* Return expected downtime (unit: milliseconds) */
-> > > >  int64_t migration_downtime_calc_expected(MigrationState *s)
-> > > >  {
-> > > > +    double bw;
-> > > > +
-> > > >      if (mig_stats.dirty_sync_count <= 1) {
-> > > >          return migrate_downtime_limit();
-> > > >      }
-> > > >
-> > > > -    return mig_stats.dirty_bytes_last_sync /
-> > > > -        migration_get_switchover_bw(s) * 1000;
-> > > > +    bw = migration_get_switchover_bw(s) * 1000;
+> Commit dd4fe8844b changed the reporting of expected downtime behavior, so
+> that the value will be calculated on-demand.  One side effect on the change
+> is QEMU will allow the calculation to happen anytime even if there's no
+> transfer happening for a short while.
 >
-> PS: I think I got the math wrong, not that it matters anymore.. :(
+> PeterM reported an ubsan report from clang when running migration-test with
+> aarch64 binary on x86_64 hosts.  I can also reproduce if I run the test
+> concurrently so some of the src QEMU may not get chance to push any data,
+> causing mbps to be 0:
 >
-> > > > +    if (!bw) {
-> > > > +        return INT64_MAX;
-> > > > +    }
-> > > > +
-> > > > +    return mig_stats.dirty_bytes_last_sync / bw;
-> > >
-> > > I think this is still UB if bw is a value that's nonzero
-> > > but still small enough that mig_stats.dirty_bytes_last_sync / bw
-> > > is greater than INT64_MAX. It might be more robust to do
-> > > something like:
-> > >
-> > >     double expected = mig_stats.dirty_bytes_last_sync /
-> > >         migration_get_switchover_bw(s) * 1000;
-> > >
-> > >     if (expected >= (double)INT64_MAX) {
-> > >         return INT64_MAX;
-> > >     }
+> ../migration/migration.c:1051:12: runtime error: -nan is outside the range of representable values of type 'long'
 >
-> This actually fails to fix the ubsan issue and I can still reproduce,
-> because the ubsan issue was a Nan reported, where it seems when Nan found
-> in normal such evaluations it'll return FALSE.  I'll need to use:
->
->         if (expected < (double)INT64_MAX) {
->             return (int64_t)expected;
->         }
->
+> Fix it by properly handle both Inf and Nan.  One note is we can't use
+> ">"/">=" check here otherwise we cannot cover Nan.
 
-Hmm, how do we get a NaN ?
+I don't really understand how we can get a NaN here -- where
+is it coming from? The only case I can think of is if s->mbps is
+a NaN -- but in that case that probably is causing other problems
+elsewhere too, and it would likely be better to do something
+where the NaN is first entering the calculations.
 
+thanks
 -- PMM
 
