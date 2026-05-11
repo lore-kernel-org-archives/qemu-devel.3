@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE223CD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 17:48:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B256CD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 17:49:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMUjp-0000qp-BM; Mon, 11 May 2026 13:48:17 -0400
+	id 1wMUkQ-0001H3-Ha; Mon, 11 May 2026 13:48:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMUjU-0000o5-Ev
- for qemu-devel@nongnu.org; Mon, 11 May 2026 13:48:00 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMUkG-00018U-OM
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 13:48:45 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMUjL-0008Bc-Ey
- for qemu-devel@nongnu.org; Mon, 11 May 2026 13:47:56 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-44a5174670eso2585244f8f.1
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 10:47:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMUkF-0000AX-94
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 13:48:44 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-453903ee4adso4002203f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 10:48:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778521666; x=1779126466; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=DHcDi5C+Qz5FFXCMxfbXpKHJ+Q6v0sF55OEfInDpCYI=;
- b=doABnVU+T1BeOgJQSHrgdtHQ8KtSAi9onHsdcGzCATCxtaqtPYTj9iwT0ku4v0um94
- h26CPAm68i8OEHUjAtfAuKt5Nl3jAflghlw4EtF5hwVvQamNLa6mBQeIU0dSTFgA/SrB
- DrrBqS7b99XmN3n8EMu25ltBLkrHfYNxBas49GyEHvAwhHBnkLWgi408isFRycOPsAhR
- ihrV/YG0w9W+0H7es32I6rNBaaJWsZP+6dYFdkVQy1dHCAAchOfKI4chsZdh1eDqHfN+
- Ddl/79TDkSAbR3Exq7ckNUz6Bbd0IyoDUNdDsJcumWXSLBxXx2QS9z+gmfsvv3nZ1rCn
- Xz5A==
+ d=linaro.org; s=google; t=1778521721; x=1779126521; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DV49/5ZVeWtAV1woDG9GF0F8fvY+EVfMnnzSeASK6v0=;
+ b=YgyOixF7D93qzH1tpYhG8c+JFlejUK6MShQLaa8UOSJ8ZsfaMPSL+/OQ93WthHsuYp
+ nyRVcUPjnjj434J1//Ssa/fsZDoHApXL4iE0eH6mgWrRiHA0pru3fswqoVEaoVaDlogr
+ Ptj6nxZ3t9HNCBiRrmkZNeGPfAqmEEhAtj5Jr9I5rpgvuDnx+usTy7JmpRjm17L3FfEY
+ xm9aRpE0uCsuj+duBFJAspKBg5Vikt616hqiLVWB0n/esnxCuCwb7tKWJauA0Ujy3FVX
+ Lu/+ZV1Z3Z7Ex1szIlwCTja5mwzO4gvhcwKbUsU9ipc9SU9Bu/k59yHf8oPDCR5sEVTw
+ 9S5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778521666; x=1779126466;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1778521721; x=1779126521;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=DHcDi5C+Qz5FFXCMxfbXpKHJ+Q6v0sF55OEfInDpCYI=;
- b=YBB10MVbkC5aJ+8CyWKFx/fWOJCj/dGxV4On/zUwVG3l6mkp8qMCkgmHMwz3zMbyAm
- iMT+xAkw3nUF0sS/XE4YVHp0h6yAw/DEGqoPs+nTzNS4/6WlyWXrXm0mf0NAQuNdb1/N
- +qv1IKOuiE+Xmc7cdODUeF7WyWuJ2vfXnhmTltrBmmeJ7B30f+9Eq+idWIfpBl1Vvon9
- Md5UVWMwPciQdRvCNhAuUTgynJ+w4D4jJxrmgTCtG4FkmO4LkeG61Myh56morW64LeV/
- F8/KeLiz6a24/pVZEDF6cOCwzNtDCJ5RksXy5ADQwAbKKGR0O4aSSPSLrx11+n+HSBfa
- fEAQ==
+ bh=DV49/5ZVeWtAV1woDG9GF0F8fvY+EVfMnnzSeASK6v0=;
+ b=OdUJupeNfp0cXDhGXaP6PjLf1jKjEC5xE7BkTSt77iR/aW6JjFEsrbMUoGXySAsE8o
+ nJ9Ag8HzOt3ppCG8i5BIMUZ2vgNupV7te9YETEmaH71yt0tTCaIOVpxjZM53JQ0SfsQT
+ ovVgoujtHXx6RqL71wyfVMoEBD/i3V6voDtLXRg3I4w1EfCOJDFzJNm7pOOiVCz/E1QV
+ 8ODfeq9whaEu7TeDOjcN9K0r4Tnxyu4vNcNL4QJniNKGn19lEbufbZMnlAA+cm3LSLO4
+ MFLIXxEiUfNafPIyE3LusCIo6k6yr9u/11V2mYPvo7LV4NtgiHuThWuSuoN8qPWoQjH3
+ 0fHw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ813BbfDUqK2CeaKdiDPDA7Rf+rNqDQ83rBj1h8UP8EU3lOAqgDm5T7FwnmpaR4UckQOodsr3PA/wZ2@nongnu.org
-X-Gm-Message-State: AOJu0Yzsw/3MPGmKzpGKcyq5uTz0d+5Ts9+jcPZ0TGelleK/5ix+XQAR
- TOMzsCkuIo9hYqPQQK0ikevLZcViuiHc5t5fRF8WMD7wbPnr9fiUm+dCTSg29KzZkc4=
-X-Gm-Gg: Acq92OER1ydWZkYLlCxQCRQgtTDnj7+BiHv22hJLKshNPeKlnZHgvXzCjYj1/ACROAC
- 7vZYgdL9Ma3usZsgMJv6DR7s7Uw42dNC3a/zhBXs7AsMEl7erp3Ipx30ga2ktRvDrUsq7mFUC0T
- g6mro6CEEIY/5wbpjWWzG8MpM/CCE8Ts6w0d9Uuv7NZkiWe0xnbIfproZ/1iLPaXWjQsmOj2sdV
- naLQiC9UoFvkkik71hFEkZv+1EAyYnO8dM2GXNEjXkmP473s1n5zVC0bC2bC68HAVWAjLw8dhTU
- bw0YnofMDllcYnUCrnxL4gQQL81+hId3lMSzOn3uKSd00bzgIN0fsnD572NN34W8FHxgDuU2tUc
- J0hy1FKFNMEEMIjBxyBl+kl28FCda3vFXy8151MfZ2cw8DiT8uRBwMT7Kd3iq+zm8+dNzp2jnPG
- wp2f/EB/rIiuMLPc491SBGuJx8goDoEgBBjuDmEpc3qiU0YHhw+ENqamHOJbVJq+50cg==
-X-Received: by 2002:a05:600c:4194:b0:48a:7965:b92a with SMTP id
- 5b1f17b1804b1-48e51f53980mr267498485e9.26.1778521665748; 
- Mon, 11 May 2026 10:47:45 -0700 (PDT)
+ AFNElJ+xSy2x5fe8jciyr5Rgha5GBl5pBgR6/0dWna2whfcgWDWFjEei0cV21vTHyVO4UH8+K3kgDeosnu6S@nongnu.org
+X-Gm-Message-State: AOJu0Yyt6bZ21qD5y4LNJPn2xsaHXINSG5J7Xa5992dJtz8T1GJhCGOz
+ 1w/bK3MF82q3F//XYzUtari5qJugeODMGbigjADAr4Zldx4hiab6vcb+9uR1TstY2T0=
+X-Gm-Gg: Acq92OGdCrmgRCTZu9qeL32jD5n9UOTC1DA09vl8Exi5kJbgLyzPNsKbtmGxRVOS4Et
+ z8GkVH7Ao2nFpe5NZ46ev5XLXPllqlVc0OXqyXKOXDKqTBet/LQZaTr+Xs3GeHuMpaM75bOqNBm
+ t4upOHrCg+aJaJnP+s5hhyjUVi2BKQjQj15ERMhfMAZoYNY/kOdkx1GzgK4Esb9kt9evYCGoPkm
+ TDtXdz+frSJHnHNTqni4UUFJGO8BjniiEg0ekqwAP224p4DYYL6JXiGcgSvyBx45eSYbfQanPZ+
+ wYm5knr5eUgGPg7bGMTaYGRJ8qzEPZaRFWTkOGnd6doMFFi9/0dl5TBkXkLKQZfwjjSK6wqjThZ
+ a9uQzYd2dELpEwSJh092C2v2H0LRhLLRElRcoXUJOEY6I08KDtp6qg3/JG8ctv2Pl+oNMSv9Tpr
+ cJAZQ2xfwissc7qBoZbvWopECzWfipl4kc+C8HvMWfD3zncU1t4vyGQ/oU9ZY0MI6ig1MIM/28K
+ Qb5
+X-Received: by 2002:a05:6000:4024:b0:43b:5b25:67f8 with SMTP id
+ ffacd0b85a97d-4569fe472dcmr16040748f8f.20.1778521721316; 
+ Mon, 11 May 2026 10:48:41 -0700 (PDT)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e6db1e6e9sm67129935e9.35.2026.05.11.10.47.44
+ ffacd0b85a97d-4549120eb95sm26123824f8f.20.2026.05.11.10.48.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 May 2026 10:47:45 -0700 (PDT)
-Message-ID: <3b5ff524-75d6-41d0-949d-39bbff0558bb@linaro.org>
-Date: Mon, 11 May 2026 19:47:44 +0200
+ Mon, 11 May 2026 10:48:40 -0700 (PDT)
+Message-ID: <a57d5120-dabf-4953-a680-a9c875ecf238@linaro.org>
+Date: Mon, 11 May 2026 19:48:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PULL 089/110] target/s390x: Introduce common system/user meson
  source set
+Content-Language: en-US
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Eric Farman <farman@linux.ibm.com>, qemu-devel@nongnu.org,
- Cornelia Huck <cohuck@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-devel@nongnu.org, Cornelia Huck <cohuck@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Eric Farman <farman@linux.ibm.com>,
  Matthew Rosato <mjrosato@linux.ibm.com>, Farhan Ali <alifm@linux.ibm.com>
 References: <20260506135524.20617-1-philmd@linaro.org>
  <20260506135524.20617-90-philmd@linaro.org>
  <5b1fd1f6-00ec-4575-9609-845218405403@redhat.com>
- <90ea3dacb27252a623c0f95bad334e4702222d83.camel@linux.ibm.com>
- <40f3f863-04fe-4eb5-9672-a21ae4fca950@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <40f3f863-04fe-4eb5-9672-a21ae4fca950@redhat.com>
+In-Reply-To: <5b1fd1f6-00ec-4575-9609-845218405403@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,125 +108,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/5/26 18:36, Cédric Le Goater wrote:
-> On 5/11/26 17:58, Eric Farman wrote:
->> On Mon, 2026-05-11 at 17:48 +0200, Cédric Le Goater wrote:
->>> Hello,
->>>
->>> On 5/6/26 15:55, Philippe Mathieu-Daudé wrote:
->>>> Introduce a source set common to system / user. Start it
->>>> with the files built in both sets: 'cpu_models_user.c'
->>>> and 'gdbstub.c' No logical change intended.
->>>>
->>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
->>>> Message-Id: <20260423135035.50126-4-philmd@linaro.org>
->>>
->>> This change introduced a regression with PCI passthrough which
->>> stopped working. Guest kernel reports :
->>>
->>>     [    0.156501] zpci: PCI is not supported because CPU facilities 
->>> 69 or 71 are not available
->>>
->>> and other devices (ap, ccw) are impacted too I think.
->>>
->>>> ---
->>>>    target/s390x/meson.build | 25 +++++++++++++------------
->>>>    1 file changed, 13 insertions(+), 12 deletions(-)
->>>>
->>>> diff --git a/target/s390x/meson.build b/target/s390x/meson.build
->>>> index 6f98ce34d73..44f58ac2919 100644
->>>> --- a/target/s390x/meson.build
->>>> +++ b/target/s390x/meson.build
->>>> @@ -1,4 +1,9 @@
->>>>    s390x_ss = ss.source_set()
->>>> +s390x_common_ss = ss.source_set()
->>>> +s390x_common_system_ss = ss.source_set()
->>>> +s390x_system_ss = ss.source_set()
->>>> +s390x_user_ss = ss.source_set()
->>>> +
->>>>    s390x_ss.add(files(
->>>>      'cpu.c',
->>>>      'cpu_features.c',
->>>> @@ -15,15 +20,16 @@ gen_features_h = custom_target('gen-features.h',
->>>>                                   capture: true,
->>>>                                   command: gen_features)
->>>> -s390x_ss.add(gen_features_h)
->>>> +s390x_common_ss.add(gen_features_h)
->>>> +s390x_common_ss.add(files(
->>>> +  'cpu_models_user.c',
->>>> +  'gdbstub.c',
->>>> +))
->>>> -s390x_system_ss = ss.source_set()
->>>>    s390x_system_ss.add(files(
->>>>      'ioinst.c',
->>>>    ))
->>>> -s390x_common_system_ss = ss.source_set()
->>>> -s390x_common_system_ss.add(gen_features_h)
->>>>    s390x_common_system_ss.add(files(
->>>>      'helper.c',
->>>>      'arch_dump.c',
->>>> @@ -32,19 +38,14 @@ s390x_common_system_ss.add(files(
->>>>      'mmu_helper.c',
->>>>      'sigp.c',
->>>>      'cpu-system.c',
->>>> -  'cpu_models_system.c',
->>>
->>> This file is compiled anymore and the CPU features and facilities are
->>> not propagated to the guest anymore.
->>>
->>> Without this patch, cpuinfo reports :
->>>
->>>     features    : esan3 zarch stfle msa ldisp eimm dfp edat etf3eh 
->>> highgprs te vx vxd vxe gs vxe2 vxp sort dflt vxp2 nnpa
->>>     facilities      : 0 1 2 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18 19 
->>> 20 21 22 23 24 25 26 27 28 30 31 32 33 34 35 36 37 38 40 41 42 43 44 
->>> 45 47 48 49 50 51 52 53 54 57 58 59 60 61 64 65 69 71 72 73 74 75 76 
->>> 77 78 80 81 82 129 130 131 133 134 135 138 139 140 146 147 148 150 
->>> 151 152 155 156 165 192 193 194 196 197
->>>
->>> with :
->>>
->>>     features    : esan3 zarch stfle msa ldisp eimm dfp edat etf3eh 
->>> highgprs te vx vxd vxe gs vxe2 vxp sort dflt vxp2
->>>     acilities      : 0 1 2 3 4 6 7 8 9 10 11 13 14 16 17 18 19 20 21 
->>> 22 23 24 25 26 27 28 30 31 32 33 34 35 36 37 38 40 41 42 43 44 45 46 
->>> 47 48 49 50 51 52 53 54 55 57 58 59 60 61 64 72 73 74 75 76 77 78 80 
->>> 81 82 129 130 131 133 134 135 138 139 146 147 148 150 151 152 155 192
->>>
+On 11/5/26 17:48, Cédric Le Goater wrote:
+> Hello,
+> 
+> On 5/6/26 15:55, Philippe Mathieu-Daudé wrote:
+>> Introduce a source set common to system / user. Start it
+>> with the files built in both sets: 'cpu_models_user.c'
+>> and 'gdbstub.c' No logical change intended.
 >>
->> Thanks, Cedric... I wonder if the above is addressed by this patch? (I 
->> haven't checked yet, but will
->> do that now.)
->>
->> https://lore.kernel.org/qemu-devel/20260510204640.2178926-1- 
->> marcandre.lureau@redhat.com/
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+>> Message-Id: <20260423135035.50126-4-philmd@linaro.org>
 > 
-> Something like below seems to work.
+> This change introduced a regression with PCI passthrough which
+> stopped working. Guest kernel reports :
 > 
-> C.
+>    [    0.156501] zpci: PCI is not supported because CPU facilities 69 
+> or 71 are not available
 > 
-> 
-> @@ -22,7 +22,6 @@ gen_features_h = custom_target('gen-feat
-> 
->   s390x_common_ss.add(gen_features_h)
->   s390x_common_ss.add(files(
-> -  'cpu_models_user.c',
->     'gdbstub.c',
->   ))
-> 
-> @@ -38,8 +37,11 @@ s390x_common_system_ss.add(files(
->     'mmu_helper.c',
->     'sigp.c',
->     'cpu-system.c',
-> +  'cpu_models_system.c',
->   ))
-> 
-> +s390x_user_ss.add(files('cpu_models_user.c'))
-> +
->   subdir('tcg')
->   subdir('kvm')
+> and other devices (ap, ccw) are impacted too I think.
 
-Right. I wonder how I could screw that change...
+Is it something we could test with the mainstream CI, or does this
+requires specific hardware?
+
+> 
+>> ---
+>>   target/s390x/meson.build | 25 +++++++++++++------------
+>>   1 file changed, 13 insertions(+), 12 deletions(-)
 
 
