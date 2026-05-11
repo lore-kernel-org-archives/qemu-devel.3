@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8396BCD37AC
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 13:26:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F23AFCD37AC
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 13:28:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMQdR-00084L-8v; Mon, 11 May 2026 09:25:25 -0400
+	id 1wMQgR-0000X2-Oj; Mon, 11 May 2026 09:28:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wMQdO-00083y-Su
- for qemu-devel@nongnu.org; Mon, 11 May 2026 09:25:23 -0400
-Received: from mail-qk1-x743.google.com ([2607:f8b0:4864:20::743])
+ (Exim 4.90_1) (envelope-from <agarwal.vineet2006@gmail.com>)
+ id 1wMQgQ-0000Wt-0h
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 09:28:30 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wMQdN-0006Dd-60
- for qemu-devel@nongnu.org; Mon, 11 May 2026 09:25:22 -0400
-Received: by mail-qk1-x743.google.com with SMTP id
- af79cd13be357-8ee7ffd738dso586883585a.1
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 06:25:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <agarwal.vineet2006@gmail.com>)
+ id 1wMQgO-0006xt-Cd
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 09:28:29 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-365eecc5885so4190581a91.0
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 06:28:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778505920; x=1779110720; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=rLcMmTIQtmYNcLEEOgpSf0x8i/oK3iudbgjRdyeuYHQ=;
- b=am4t+2QlC9RTB7TDBakKJYOoI5fupX3c1JaRpWKGXj/D502MFg+AewKmlK0Nl00Y8s
- CNXOrR6OihrQ633p9ySgxRBONnkCpdTw+MbYI/+22YiJK2Bsj93j7GIiGDDy/FLGEyhH
- kvmW07dYKmNtSyvOPPcJnC2omEW0j8tsq6r2wOqjJqrssl3JuaBesriQJcx8RN37s6Ke
- j3euPH8xGa2VJGU90+0lD267SPdJi/MIMoqnPeb0uQeLJNNCoqJp0VDLG5DDPxyO7Rp+
- gYUHxZXirwozxwvFwcd3eOihT/TsXTpWF8CPcuUTnPLhdHCjx4oTn4ll9VG4Eo8c0xhP
- qEcg==
+ d=gmail.com; s=20251104; t=1778506106; x=1779110906; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=4Mgi60AVQjdDo4uAUqDxD4yW5h5uW3gRwueZrleiCFk=;
+ b=OahPAVkUyr9p+Q/jBB8A6GeWWrnjG40bK/MHIwgSzrCzLlbzskq8OaifwnmtxEpRnp
+ KG6dsVRgM+1z4smCwldbykhLuSEJmgR9XAWChCA13yi5AZKtVjdy45AabwKQZcoeJIa6
+ s/DbFTuU68/cGnNU+awfnxT66E3Xt9bzLgSNOaVNL13ltbeyUxthdKfYEgbHd7YhzM6R
+ A8uI2STOWMMmsKoLT7ocZimWMqayWaBTT4fbtJZ1Gk+4UM4j+02+BIMrxrezeOqXziZL
+ JaRme77O6w45o4fuExI8fbhjdQ4ZAk8wBGP5LSvYkTPBIfaKQiCqSrPh5zRXoNfF+Da2
+ Qe4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778505920; x=1779110720;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=rLcMmTIQtmYNcLEEOgpSf0x8i/oK3iudbgjRdyeuYHQ=;
- b=dxotLCgRxIOad11+01KBIKmz4Pw2YKAK8FcZIgupIIQfTvIg4u9IXCWduM9REY35bj
- X4p85p7ukRVov+iAo5B2QkRg3aawItjrGu8yj7zbRqlylFDB01AuXK3xi/w2I7nPJIYC
- kt5Gcr4n+ztEBDiFdKnOql/QaMVPeRrtjmhV4HtMAawRUJN3585kWHZebw9aC3xUoOz1
- lwTdN003k57nMc1mHeyrtqqcL4aW2VMh5js1sjox4v0yigwhQchcr00lnETtrQ8sZOnn
- 8RxQOkSKPE/adqPPN2EGYk/xmNSyoNIgbQq3Dd+g4XFfhjJXyaYsL9DHChYXzpY2kRq/
- s54Q==
+ d=1e100.net; s=20251104; t=1778506106; x=1779110906;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4Mgi60AVQjdDo4uAUqDxD4yW5h5uW3gRwueZrleiCFk=;
+ b=QQwtht5LCovle8FH80GCPJV3lsq7jwCXFR4qZ98Q3nNYicXGx92C01zBrOxHe4dM2S
+ XP6En00CsTPLv5J6nF8GhRVAheAD0kYFItI1B57fey39qesJQ6SkgC6s2UoMs/P+iT5s
+ mY2v2UYCdYThhpSazeSgjGdufDgb3ivIVfJLyZkVHZ2diqP5pRvlTQdUl8beFuK4SWHc
+ kyAFWcPtL0SrTrZB/bJzWuh0JMlhMLNEEv3+T/3TgNWL7oSOcShmFr398DnZ2Zb7Zq+c
+ ZnbqSr7tGONx+QMDnqTHJs4/zQ9i7TWs7xc8CZBM2RUUC5aKsycLT4RaXeGdSrYY+d45
+ um8A==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+H+q12JD291YzcUomJg3VDsvMaxIfr+olabTVNupLrBs10aOnYNq3c5MctywON/Osf78A9dDoWS3y/@nongnu.org
-X-Gm-Message-State: AOJu0Yy4D1o+VLVadCWAyxk8TwtcbVviGLASX2elCRTPknGjNgQsdccm
- UkJW7Je+R2O0+rUfa7aYjNM1C+o9Nst2oWGtvqjnNHuzYY03MZU6NOpQ
-X-Gm-Gg: Acq92OGfDBSBO21E+qJspMv1s60fg5etuHQMWItowrKJnMRrdSFkeNIlmSSGI6c8EmL
- i7G1YlYpzNQcJUiSeJXaLfW3+OLfFb0Ie9zuQKN7BmGraDPc0XB0tC6elgzvyeZt4zO8ESrc1A5
- VlZMh//4ZFmX1I/Y4w2pBe5bGWuKF63DGZW9T0nlLZDZHQpxNxeeL4OnIB1fwxUoBJpacOHC08q
- 4Ptao+8DjeBKiKzaKUFaJQCDZD/+yJMDASoleA6I4m2Dz7fXyusSqBIZ8E5isk9qZS/K3Z5wfCh
- iFNntoZ8RFu01NOaNb834wuSGOIvDcvvC/PgF9hmrP2gV9xvEvSJA1ZT4OnOIl7smRWWDI5iRDi
- s6AHtK8HmVDWgmAtYoBVzpkozZUJfYyMgorHNgAQBNjtlQt6BH6PwXDqa9irXiTcHswG+V2JpnN
- YBxMY6vX55QeVlIr/2kj88HJoP60o5s6KmDm52fB8xTZxNM6zVFcTJ2C8WYeZm0Uo+52exAUFi
-X-Received: by 2002:a05:620a:c47:b0:8ee:91d6:cd2c with SMTP id
- af79cd13be357-90653250928mr2365342385a.42.1778505919720; 
- Mon, 11 May 2026 06:25:19 -0700 (PDT)
-Received: from ZEVORN-PC.localdomain ([162.244.208.119])
+ AFNElJ8aYq9Dloj99a/deAkxjxqB9WRM0/SxNczgRE0pDkvG/SdfxboC+rDoQMSTpzylckh7MpiSsGd46XKV@nongnu.org
+X-Gm-Message-State: AOJu0Yx73IDu2f9MBraVnWqDU2AwwWBhQZu9SUMHM6s1ktcKvqWcRsZK
+ IevUaEgfzQ+60XKnj2wXoRsPwF5+7HeVQtGygUmp5/fBjmf3RyTfDcCI
+X-Gm-Gg: Acq92OH3PUbqP1JYr84LMfcNHc4q14RILirSJOTE98KuSg5gUdcFi1fb0E9WUIUj+Xh
+ hdQOHEreSJLT17CDPFt537wUfzQ14M+ryOA/AHoDkTfnMLJr/HRMpMr2nstuLWs8lRHIuiHltUb
+ oso5KoMCqMmlrAeUvF9UlGnOo4NMTYd4zLdtGlayFnmsJW6HoLJIkuy3WguBXUa7qpQPNhyhE+y
+ ijW5V1CXDq0a5ji2dC9YQxihK8p9bgFciVBAXXON4MAw+irUQuWhV6cBXSJCJ5RwwcW3la5mpQ3
+ bUsKWq+1KKM43/Q+UTpk08XUM9n6LJbk45t10kIt5yzmzdH6F7LIexk3P4qLe7cOiJWK7djAzBo
+ mQd+4BdMimrCsU7Q8fYF39+Qtpyjuf5ng6cd7a2udUOnxDxE7b9uTpdAiQW5sBoL0u6/8i9h+U2
+ a3Uu3Xb74jNG0RyREuC8egJGGahgms2g==
+X-Received: by 2002:a17:90b:45:b0:366:159a:c228 with SMTP id
+ 98e67ed59e1d1-367d468cf75mr10421896a91.6.1778506106168; 
+ Mon, 11 May 2026 06:28:26 -0700 (PDT)
+Received: from vini ([2401:4900:8fc8:73c6:dda6:576b:fa0d:f68e])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-907b87bd789sm1138152185a.27.2026.05.11.06.25.16
+ d9443c01a7336-2baf1e9723esm112837665ad.67.2026.05.11.06.28.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 May 2026 06:25:19 -0700 (PDT)
-Date: Mon, 11 May 2026 21:25:03 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Zishun Yi <vulab@iscas.ac.cn>
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com, 
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3] target/riscv: Allow mseccfg access based on ext_zicfilp
-Message-ID: <agHYo_kQbaO-Euog@ZEVORN-PC.localdomain>
-References: <20260511072705.3015986-1-vulab@iscas.ac.cn>
+ Mon, 11 May 2026 06:28:25 -0700 (PDT)
+From: Vineet Agarwal <agarwal.vineet2006@gmail.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, Vineet Agarwal <agarwal.vineet2006@gmail.com>
+Subject: [PATCH] hw/core/sysbus: Guard sysbus_mmio_map_name() against NULL
+ names
+Date: Mon, 11 May 2026 18:58:14 +0530
+Message-ID: <20260511132814.63954-1-agarwal.vineet2006@gmail.com>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260511072705.3015986-1-vulab@iscas.ac.cn>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::743;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-qk1-x743.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=agarwal.vineet2006@gmail.com; helo=mail-pj1-x102b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,50 +101,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 11, 2026 at 03:27:05PM +0800, Zishun Yi wrote:
-> The Zicfilp extension adds the MLPE field to the mseccfg CSR. According
-> to the RISC-V Privileged Specification, mseccfg exists if any extension
-> that adds a field to it is implemented.
-> 
-> Currently, the `have_mseccfg()` predicate function checks for Smepmp,
-> Zkr, and Smmpm, but misses Zicfilp. As a result, if a CPU is configured
-> with `zicfilp=true` but without the other extensions, accessing the
-> mseccfg CSR will incorrectly raise an illegal instruction exception.
-> 
-> This patch adds the missing check for `ext_zicfilp` to ensure the CSR
-> is properly accessible when the Zicfilp extension is enabled.
-> 
-> This issue was discovered and reported by SpecHunter, an AI-driven
-> architecture specification analysis tool.
-> 
-> Link: https://github.com/yizishun/rv-isa-sec/blob/master/output/riscv-isa-manual/pr-2561/qemu.txt
-> Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+sysbus_mmio_map_name() passes MemoryRegion.name directly to
+strcmp() without checking whether the name is NULL.
 
-Thanks,
-Chao
-> ---
-> v2: Removed mistakenly added #include "cpu_bits.h".
-> v3: add a missing space after the Link tag clon
-> 
->  target/riscv/csr.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index da366cf56271..e1cd4a299cb0 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -783,6 +783,9 @@ static RISCVException have_mseccfg(CPURISCVState *env, int csrno)
->      if (riscv_cpu_cfg(env)->ext_smmpm) {
->          return RISCV_EXCP_NONE;
->      }
-> +    if (riscv_cpu_cfg(env)->ext_zicfilp) {
-> +        return RISCV_EXCP_NONE;
-> +    }
->  
->      return RISCV_EXCP_ILLEGAL_INST;
->  }
-> -- 
-> 2.51.2
-> 
+Commit e27194e087 ("virtio-gpu-virgl: correct parent for blob
+memory region") intentionally introduced a MemoryRegion with a
+NULL name, so sysbus_mmio_map_name() should not assume names are
+always present.
+
+Add a simple NULL check before calling strcmp().
+
+Signed-off-by: Vineet Agarwal <agarwal.vineet2006@gmail.com>
+---
+ hw/core/sysbus.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/hw/core/sysbus.c b/hw/core/sysbus.c
+index 3e1160ee92..80cfed442e 100644
+--- a/hw/core/sysbus.c
++++ b/hw/core/sysbus.c
+@@ -148,7 +148,9 @@ void sysbus_mmio_map(SysBusDevice *dev, int n, hwaddr addr)
+ int sysbus_mmio_map_name(SysBusDevice *dev, const char *name, hwaddr addr)
+ {
+     for (int i = 0; i < dev->num_mmio; i++) {
+-        if (!strcmp(dev->mmio[i].memory->name, name)) {
++        const char *mr_name = dev->mmio[i].memory->name;
++
++        if (mr_name && !strcmp(mr_name, name)) {
+             sysbus_mmio_map(dev, i, addr);
+             return i;
+         }
+-- 
+2.54.0
+
 
