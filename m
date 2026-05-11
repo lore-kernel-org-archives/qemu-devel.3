@@ -4,88 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C13BCD37B5
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 10:12:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BD60CD37B5
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 10:13:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMNc7-0001AT-3Q; Mon, 11 May 2026 06:11:51 -0400
+	id 1wMNdL-0002qM-Tw; Mon, 11 May 2026 06:13:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMNc4-0000wS-K1
- for qemu-devel@nongnu.org; Mon, 11 May 2026 06:11:48 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMNdA-0002mj-Mf
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 06:12:59 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMNc2-0002jA-UR
- for qemu-devel@nongnu.org; Mon, 11 May 2026 06:11:48 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-43fe3e22e33so2382472f8f.0
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 03:11:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMNd9-00033L-1Q
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 06:12:56 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-43d73422431so3186863f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 03:12:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778494305; x=1779099105; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1778494373; x=1779099173; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=yBjkC+AAaXfW3JTMdnJdtN8vSMhwVFrHL65kEN5sB7s=;
- b=cwpNNb4AWFfh7uC2fz47BiOn6lCVDPeeg9P9j3Ua8ahtsgnKqPOtCHzc5kPUWg4eWa
- gHbSQ0Zgx0rzwiKqkJ4kFF52lq8Lb//I5s9flVqxGFlbgR3NviyCAftHcBundHS4wscH
- PURvaDc+gflf9rEWlUZWkWifV9xVrPZL5JBp9M5upoa2FhvTfyCxD/muQV4tuoN6dz5l
- 8NsbTx+lZxHEKxnqB1TJ45BY0o5x9NrnM6yd4qjOASbLc7OMfvjfUjD69pO+iitem1sl
- UsSKXVMYv7h+sZzRYMdLj0LOXOXJxD7E5LD8unwkrvuBAZT08eGpKf2/kp6hVpZTRm69
- 4lmQ==
+ bh=SRYUAXnziZp+vIy4v+3MC/24jUlT/vn84MF2Ul3935M=;
+ b=s58yYSv/bHPyWV55bwIzfHbSLLIFKiCzy50cm/T9smgXNfRfPLZJ9pJ6uboBUPdfBo
+ 3LqfwXlFOUBiKKNxD3gKHDzUhkhFPINcw9K8PmHFFr9otpf72oPYroSegLFF9tKnkz9t
+ 7X66GXwfOjsFWO+wbeLKrhwWaLiMMg+c5b9otTwMujUHDSZrLmIXam2PrZGA12nbAaRB
+ /KOKro2tiMJ/uRYeUtpbDqz/y1zDfyJKnaCmOioaSFYmbRwdzB2EUyxjxMNg+R46TdHF
+ NUwfEAlyEj9DAtYO11AHVnSfj/6lu1+JHuJQJ40leVh0xvPN5BbW+FhAiwZ83462j+lH
+ ZivQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778494305; x=1779099105;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20251104; t=1778494373; x=1779099173;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=yBjkC+AAaXfW3JTMdnJdtN8vSMhwVFrHL65kEN5sB7s=;
- b=CDy11/IRooLFoHQvpxAJa9flWOQ+rSaxx2cSaTDLFR/Q6UlmUMjklnmV99iKv+QY/+
- FPHRbOtRk/Mv0kmoZrKRcWBPnyM7Oe+0tlWXnPHeo3h4rYyWvo+Fnzs8jBCN+FKqbjSY
- 7H581TCb51zyPh6ssou/5UfeXFc0/Yap9d0aA9emg7r7TSSrXyByIIQb8+V2pWRuhVnk
- Wm6xyBSSaQ6vakP22S4wwmx8v5+v7Dz8SzCxlTn4O+mm1u6reCBwR2g+ITVJzIUF/QR4
- +b+zAYpBxCaV1rl47XgxLihp4HeWcnyl9ld5QaeVhvdnbxqP4NrsyW9hVupdlOKmAyMc
- ekJg==
+ bh=SRYUAXnziZp+vIy4v+3MC/24jUlT/vn84MF2Ul3935M=;
+ b=XFAdZRNnSABaCLnR0g4qUFJx6t5NP0XyX5t+1lx/VVlXfSj0F+rBOdls5dIxaRk41S
+ Hx2ELDiIQ9hMJxjUdKyG6bjbqur0EkIQWAxezh/1bP0K+MqpzDwt0G0svzIm50r5sO4b
+ zGf1+dWMPvs1egzRh/50TvLPmnGTl8iPmtwU377SpHjIBx+Sda2ZMW/O/0vx6TBfzavp
+ 6qsB5/ss0lAQ/kq3NWL19kvbpmVzN/F/Pqs+tR2xwvKSkNCNC4LWZ5VKgyW0KQYmyr9s
+ jV5RIhh69Ji+R3UgLRJg6zEB+mGow4y3hdpYitYTfGRQXm7/D1mB4yEtxUOgDehp/HTd
+ XHbw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+qncH3ehU89VhQfj9bZYxiIx/x/ne0Y6RQkEifZSCC7lwiEm1VRcj1IFxtA95fjzekHrrFNEJ8KHnu@nongnu.org
-X-Gm-Message-State: AOJu0Yx1c0fkFsvVOuPXwY9dkxpzXYrQkY88dPjP36xZoCfh3fgsILIu
- qMZ3ZQXhFptxI+PdNfm1UHLUK9VKmUDw43tEHk62Z4n5fVC2jy1Xk5yLc7KwPSeHcsY=
-X-Gm-Gg: Acq92OExNiZhzHje1MODqXJ+U7DHX+XWzO3r9AJgTYMCnzFt2UZi+EiGHhiZtS9Phhx
- kVBtBuPdbF/wPLHMkDiE+3H920TA7Xtxm/3BGmd9xEgPa8bWI5N9fRJy0N4lKZyvNlv/2fArRRT
- ZL0guSyvGr4W78RYRnKnNsUdlM9yVQO5p7mKb1pgmW0kGP6ej+a/EGL6wD6fg5IZEMNTlnCbfCg
- icIiG7ASlB4rjDoy6TMHAd6TUK96fg7HfxnJEtn7JKEdc3cwgbgNAaJMYFDkSu/u4/XckFixxvw
- 4m0pD8ZLSASqHpn8ECLLimV56rpxU5mi9f/OgAPqLyzRXo7zmBSMqYbeakMqUrvnVRoph2Mbh9I
- 4BnPygcLIv7jUHNvU7UiJ/5LjGoHGZCpHsDxAC0SIn3p6LUfbn0uT7JonYN5dt9xwWSdCWF4afL
- Pm8BuCZPkiNpADP6Y3+2r92fjMXqStETORYEKWBj1HlIHFpRaqe3TC1k9Vr/FXDYQQ+jBwvegHp
- GEJ
-X-Received: by 2002:adf:e014:0:20b0:452:273:5cd6 with SMTP id
- ffacd0b85a97d-45202735d7emr25054153f8f.1.1778494305447; 
- Mon, 11 May 2026 03:11:45 -0700 (PDT)
+ AFNElJ+uif9l9SYju9t4TE/3oGthoafIYfZmLwmIgF4q+LKBRZdZ8mEk1/r8Q1eZxMIqovUh8KM7OP9EXjE6@nongnu.org
+X-Gm-Message-State: AOJu0YyYfRDMw+5AX64qBdMLKxM+haAfkv4WEMQTACZuctPwkTSB5VP8
+ JdycfHU2EqgX37v+87su39wUzKalnmVQWlraKmnv+Zgo/colBoR//a1hs5hmavf9vek=
+X-Gm-Gg: Acq92OGIIiNyowbpGfLrULSgekPFHAJmbyGccweKJoo79PUIKm8UszF8lFgUiILdnhB
+ yChQVMsZCDVt3OQYO2XEWgCJ5GCjb+ff+LF0FMLBNaQ7ThTt8GhpmIeqYrkLoprrZUGUCLycyu3
+ 6bKiw/rB8YdyIMgmatHE5EySZLBB4l8ui72/o/KTcMMCgA2lTyBj93NfR0aNKbTUlks/YMRrRvM
+ D/PmO0apgox61HYG00HfE/KYJE4ob1eKF0Ouo+suAr6VfHVRMWVUlwswKVvqSqmrg9+YavjuYxC
+ CC+QuOMxuej6i/L3s1bUX2+ZIFkLdgKvYkw1HoSdBTXEfX+e7l2kiAeVh6YqaC6jzLKocFa0AnI
+ Z1e38maVK0O00AuXNVWBo91ccza1W1TtusHwnIkSNZ7mzwnrFdXrrxRhL64Qd9gBPl7PV4MxIgY
+ C6tAdNsWicTCosBXYTfI8U56QzeQ326hA5L1hHvoNlRAe05q7DzRNLPDqV97B+wAm1cw==
+X-Received: by 2002:a5d:5d03:0:b0:441:1c95:17e7 with SMTP id
+ ffacd0b85a97d-4515b5243efmr35615173f8f.15.1778494372786; 
+ Mon, 11 May 2026 03:12:52 -0700 (PDT)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4548ec6b071sm24080110f8f.14.2026.05.11.03.11.44
+ ffacd0b85a97d-4548ec6cd75sm23445305f8f.16.2026.05.11.03.12.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 May 2026 03:11:44 -0700 (PDT)
-Message-ID: <dd3e03a2-e470-477f-a5e4-485ce9595cac@linaro.org>
-Date: Mon, 11 May 2026 12:11:43 +0200
+ Mon, 11 May 2026 03:12:52 -0700 (PDT)
+Message-ID: <8a319b22-3b72-4996-99c8-09ff95ea7808@linaro.org>
+Date: Mon, 11 May 2026 12:12:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] hw/arm: Remove fp5280g2-bmc machine
+Subject: Re: [PATCH] scripts: strip leading './' when searching MAINTAINERS
+ file
 Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, pierrick.bouvier@oss.qualcomm.com
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, kane_chen@aspeedtech.com,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
-References: <20260510165704.2935316-1-clg@redhat.com>
- <20260510165704.2935316-4-clg@redhat.com>
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+References: <20260511093858.82753-1-berrange@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260510165704.2935316-4-clg@redhat.com>
+In-Reply-To: <20260511093858.82753-1-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,23 +103,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/5/26 18:57, Cédric Le Goater wrote:
-> The fp5280g2-bmc machine was deprecated in QEMU 10.2 and is now
-> removed in QEMU 11.1.
+On 11/5/26 11:38, Daniel P. Berrangé wrote:
+> The following two uses of get_maintainer.pl should return the
+> same results, but do not:
 > 
-> This Inspur FP5280G2 BMC board does not rely on specific device models
-> and can be replaced by the ast2500-evb machine with appropriate
-> fmc-model and I2C device configuration via command line.
+>    $ ./scripts/get_maintainer.pl -f ./hw/net/vmxnet3.c
+>    get_maintainer.pl: No maintainers found, printing recent contributors.
+>    get_maintainer.pl: Do not blindly cc: them on patches!  Use common sense.
 > 
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>    "Philippe Mathieu-Daudé" <philmd@linaro.org> (commit_signer:4/7=57%)
+>    "Michael S. Tsirkin" <mst@redhat.com> (commit_signer:4/7=57%)
+>    Xiaoyao Li <xiaoyao.li@intel.com> (commit_signer:3/7=43%)
+>    Thomas Huth <thuth@redhat.com> (commit_signer:3/7=43%)
+>    Zhao Liu <zhao1.liu@intel.com> (commit_signer:3/7=43%)
+>    qemu-devel@nongnu.org (open list:All patches CC here)
+> 
+>    $ ./scripts/get_maintainer.pl -f hw/net/vmxnet3.c
+>    Dmitry Fleytman <dmitry.fleytman@gmail.com> (maintainer:VMware)
+>    Jason Wang <jasowang@redhat.com> (odd fixer:Network devices)
+>    qemu-devel@nongnu.org (open list:All patches CC here)
+> 
+> In the former case, the leading "./" needs to be removed before
+> trying to find a filename match.
+> 
+> Blindly stripping the "./" is valid because the script already
+> enforces that it is run from the QEMU git root directory, so
+> canonicalizing the filename vs $CWD is not required.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   docs/about/deprecated.rst        |  8 ---
->   docs/about/removed-features.rst  |  8 +++
->   docs/system/arm/aspeed.rst       |  5 +-
->   hw/arm/aspeed_ast2500_fp5280g2.c | 88 --------------------------------
->   hw/arm/meson.build               |  1 -
->   5 files changed, 10 insertions(+), 100 deletions(-)
->   delete mode 100644 hw/arm/aspeed_ast2500_fp5280g2.c
+>   scripts/get_maintainer.pl | 1 +
+>   1 file changed, 1 insertion(+)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
