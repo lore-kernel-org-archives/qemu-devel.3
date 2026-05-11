@@ -4,103 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A901CD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 14:04:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89F29CD484C
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 14:06:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMRDU-0004TS-Ew; Mon, 11 May 2026 10:02:40 -0400
+	id 1wMRGb-0000ve-Sn; Mon, 11 May 2026 10:05:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
- id 1wMRCA-0003xA-Uw
- for qemu-devel@nongnu.org; Mon, 11 May 2026 10:01:35 -0400
-Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1wMRG0-0000Ir-BB
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 10:05:18 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
- id 1wMRC2-00061T-Vd
- for qemu-devel@nongnu.org; Mon, 11 May 2026 10:01:15 -0400
-Received: by mail-ot1-x32b.google.com with SMTP id
- 46e09a7af769-7de4e6c5a30so4731295a34.0
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 07:01:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1wMRFt-00075N-1S
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 10:05:14 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-c80167f56cdso1661887a12.3
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 07:05:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778508065; x=1779112865; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=3eqSPE3Submx9ZcwazarbYXPZO6TQxftnN02xfQJBZQ=;
- b=HFxC3an5uU0cmHgEKNPgdZ+y9sp2UL7tGGh31PFILusQ3wKyBTPYw/73imxxGLhsod
- t7O/8xqVVWnH3C1ezW95sgKDu97p/Zlg1hA95zyMrJINWvxzGQfTQQZZ+Blfr5HmflEG
- 0OypIEFC110Oza/RZiBnauKjpi7y02Xqwzj63VU03FGpstRwsNz86A9EP7LsfMVeOYBN
- meOdVNTz7GGXPRqMG6DiS7y31TNVFGwYevQiUR5ULdXL/ClJcnq0aj/31VvCyctDd+SV
- lyjS3R5Qf6M5cQBLzyCKeC7NShtowgiw+dXpD+STVs9+iZ/gnGM3G3KMBvkLNJ6qzyOG
- DtHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778508065; x=1779112865;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1778508302; x=1779113102; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3eqSPE3Submx9ZcwazarbYXPZO6TQxftnN02xfQJBZQ=;
- b=ZS9BcVyTG4ND94jgYEZXwUFoMWbavMKhpwuwfsfUwEk4gD+42PDHi3lk/v9JgrBQdW
- dzkTMQAL7/FhewmrTx6CZZaegn9PYvLyRMr+JAvBzEO6zw8ikrLGUiZ4pILdxvBheKBb
- xXZc3jakdGDo1y7yjHvzfgKMkffxdKH+tnKqTXX2HMi1J0+ECbZXclyzdgTtR8B7zJF2
- JyptCh6WxJrOPQEJu5rmXvycdinyb6jLAbpIOBOKOHLp95Cj/+XQPcBlugLpkn7AnFgu
- YMamWs/l4koEoSUoZJNZlWMvZaabN3XVxwoZTQQSkatU0yXM96CwbgxHNJtjQ+1JemC7
- OGPQ==
-X-Gm-Message-State: AOJu0Yz75YR6OLT1AkiK1X9kEla8zSnei2nIaSHYXAaJatUwCNxMngZ7
- bg+bY4A+0HoAaJl+aX204g9fnaRzvPlcxDq0xr4h35+EIzn4XANTROcW
-X-Gm-Gg: Acq92OHxnRDYbuHBHOlEC4VgGh8JTGB5/4d9E4e+F3/66PE/NgG8cH6T2GdXD+XiUD4
- gPKVi4XfcP43wLEsJ3Fku7nMH7HVQNIMky408SYM2NSy8sF2zH1pBi1JLWOgfruyAFMWsz6qKRr
- 8v5Fm3FhHIF9wZl/I1SLgUdW0jlDjqBC3L5EOVhrcVcOt920NGAQy7ErBey8yhlkRrODqa0uxg4
- jMoMqCrMl8SKVjFUMJXRvnKrDbawdD7RKR5VlequpYEzuJ6jW8sV0M/CEn6YQskvNhKTXI6ed0O
- ntVKUaMsUq/iYYnYW5LxWj/fKuC9yoq+dRAxlRCNmp5BoIIzWxhrI7JdnQr5W23Jn/k9bXbag1d
- EX1984h4kFdSfUalLSA/+D+Oi9thpeNlAzafM0XlgNFkg7vKbrZsO+ctc86vsRhJqdI8DxSiSwK
- C84+jJLKhtdwHYNyj69WRMVMlvpJ1/U/2Vwxzkb4aC
-X-Received: by 2002:a05:6830:6b0b:b0:7cf:da97:57d6 with SMTP id
- 46e09a7af769-7e1dee81175mr14384517a34.6.1778508064938; 
- Mon, 11 May 2026 07:01:04 -0700 (PDT)
-Received: from [192.168.1.160] ([2600:4041:54f3:a400:c013:3550:ed5f:a59a])
+ bh=6M/hoXWqBMvPhrdOYgRm4aU7iBbj+zMMvv5Gl5LllJg=;
+ b=fUZ+KhH/Ef9XSJ+HfUMeBWIV9XQdT4OD8ZVen6j/X3VfBI9ukADuOuufaW4/LOtbUs
+ dqdKTfhISr6Otfrd6vwbkKXDgG25wEJLC9Cgd6lYby/JyU4ZukgL/1sZj4gsZVlqCZcM
+ 1RCPc8jjmA4N3Yr9oogpt+VzWROKC3wOTRDq5xweefrWwLD482IEDKQgsrXyXheezFxC
+ Oj9L9z65XoZ2NYJzD2oQKSP8SMxvtmpLnpg+avPj7tOG+Q9220WDzNM71417GSaaBOu3
+ Bc0cXWBUUGXOZfBfebIM7tgu6qLRa55MAqLa1UJJnKAtNvLUd6Zg4V8KP5b9gOHlUflc
+ Kdpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778508302; x=1779113102;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=6M/hoXWqBMvPhrdOYgRm4aU7iBbj+zMMvv5Gl5LllJg=;
+ b=llqQfYAR1OGz804ae7W+EwOeBjyG8hFMKHAgPJUArcXRn07aAXfTy1t23UoQSlOdDG
+ 1yyNOL+R196deUzp1BuC704z2WDH3lLZWQIE9Q63bHEShNcdt+Jlm2A3cf1tg2rVJnYN
+ IVXHpx1aS+90Rw1At6T5gyPZDNuvM1TGYoGC43lIr2rrGwXT9fehwd12uwiJ0Tk5INgZ
+ rwKTSkKvua0XHuKXqujxKTrV2mS2i/nALblwsd2lj+Skt7WXyNDhRh2DnUgPuBu7QbUQ
+ CjEH/NaDHgkdMWG1iJunrfrCt5q2LM/GbijUMstmBM8c1jw7Qh+0s4RBytwnEbW1+9EI
+ SVgA==
+X-Gm-Message-State: AOJu0YyVVjs1ZC2QcUWmxzm5KyXPjPsXTaxHRIoNfdkreT/Wyc7SYhlm
+ GrFuaeFjRjNeTze8N7PAAaUMI5BdF2FCww0w9Iiix2PXN6DSwv/qJszCEafO6VBoDxE=
+X-Gm-Gg: Acq92OGemJqkgcp6KhluX6ZwY5pEPu1FvDi9xpnHtKfrVIfPwIufmydBo8AWT28Lf+n
+ 5ezCOMIXHx+EMapF7WOvPOJQ1KhyjgqYU1aP9u3JAi1thqbUHS8s64yC2eHtuAGanZje2e52tpS
+ 6D1qKZCZMbWqoQJtpJwNRkEPrnYGbmTw/MxZMtVJ4OAkbdSAWMv1pAjR6N8ARHnsSOuWQ5ECf/j
+ v61v73I3MyaivQTrmVrCLRCZP44JStM78ttTjsRZzCEsICZsA6IFW1FoKH2lsiAJS1LZraNy/D1
+ ca8JBIjXqJTSKXxgwlx0qilxUCb9L4k78zWfEqdwYHeNoDV+4H49fC0K6LzWO4vNNw58IbCq4tp
+ yLHn6zOBPfyvSVgqSFfA9a2QOfIri+CApD/O3gk3MTFZLF34ZeXaO0h4Sroe9qP5wuGY3I8M0L1
+ mNEZrKLYrNPKzKFtYRUeirXMRM9OHVrsHhrkLy33PLQ542Pw==
+X-Received: by 2002:a17:903:11c7:b0:2bc:ac76:c1cf with SMTP id
+ d9443c01a7336-2bcac76c3c9mr68827715ad.24.1778508301817; 
+ Mon, 11 May 2026 07:05:01 -0700 (PDT)
+Received: from ZBMac-LWN10QXKQ0.taila0cd24.ts.net ([115.108.63.147])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8bf39c7dd09sm94773756d6.31.2026.05.11.07.01.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 May 2026 07:01:03 -0700 (PDT)
-From: Gabriel Brookman <brookmangabriel@gmail.com>
-Subject: [PATCH v6 00/15] target/arm: add support for MTE4
-Date: Mon, 11 May 2026 10:00:58 -0400
-Message-Id: <20260511-feat-mte4-v6-0-8557cc1313b9@gmail.com>
+ d9443c01a7336-2baf1e90854sm105113435ad.66.2026.05.11.07.04.58
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 11 May 2026 07:05:01 -0700 (PDT)
+From: Zhang Chen <zhangckid@gmail.com>
+To: qemu-devel <qemu-devel@nongnu.org>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Zhang Chen <zhangckid@gmail.com>
+Subject: [PATCH V7 05/14] block/export: track IOThread reference in BlockExport
+Date: Mon, 11 May 2026 22:04:07 +0800
+Message-ID: <20260511140416.28271-6-zhangckid@gmail.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20260511140416.28271-1-zhangckid@gmail.com>
+References: <20260511140416.28271-1-zhangckid@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/13PwW7DIAwG4FepOI8JDJiw095j2sFLTIu0NFMSo
- U1V3n1utak0xx/z/bIvauG58KJeDhc1cy1Lmc4S8Omg+hOdj6zLIFmBgWCtSTozrXpc2WuM3hD
- KgDun5P/XzLl837re3iWfyrJO88+tutrr61+LtU1LtdroCJxDnyFiTq/Hkcrncz+N6tpSoZXYS
- hCZKFqAj5gp4l66f4nGmtBKJ7JDMkNKnIH9Xvq7dA83Vy9yIMrGxSC3D3sZ7jIY38ogEhwQ+o7
- R9Q/bbtv2C7QA4IeKAQAA
-X-Change-ID: 20251109-feat-mte4-6740a6202e83
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, 
- Gustavo Romero <gustavo.romero@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org, 
- Laurent Vivier <laurent@vivier.eu>, 
- Gabriel Brookman <brookmangabriel@gmail.com>, Helge Deller <deller@gmx.de>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1778508062; l=5668;
- i=brookmangabriel@gmail.com; s=20251009; h=from:subject:message-id;
- bh=SK5q1H5I9CXbhkzwKm1EpLHwA9mUPunZAQ5iIOup6vU=;
- b=4sbgazomPUAfMQloeY0nZGBNBUbRg0eI3ApK78QXy/5BEHmcDVuyPijd6osO7fcVgWrOCdLfc
- 1B0iWdAp6NDC5aNA1PtuoDwarP3uUWCpEVb9I8od8t19QQD9VAvdG93
-X-Developer-Key: i=brookmangabriel@gmail.com; a=ed25519;
- pk=m9TtPDal6WzoHNnQiHHKf8dTrv3DUCPUUTujuo8vNrw=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32b;
- envelope-from=brookmangabriel@gmail.com; helo=mail-ot1-x32b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=zhangckid@gmail.com; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,132 +103,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series implements ARM's Enhanced Memory Tagging Extension
-(MTE4). MTE4 implies the presence of several subfeatures:
-FEAT_MTE_CANONICAL_TAGS, FEAT_MTE_TAGGED_FAR, FEAT_MTE_STORE_ONLY,
-FEAT_MTE_NO_ADDRESS_TAGS, and FEAT_MTE_PERM, none of which are
-currently implemented in QEMU. This patch implements all five.
+Users currently lack visibility into which block exports
+are utilizing specific IOThreads. This patch integrates IOThread
+referencing into the BlockExport lifecycle.
 
-Testing:
-  - Included for FAR and STORE_ONLY.
-  - The MTE_CANONICAL/NAT test from v2, modified so MTE_CANONICAL is
-    enabled in user mode (removed from tree in v3).
-  - A bare-metal testsuite that sets up page tables for S1 and S2
-    translation, to test the Tagged NoTagAccess fault.
-  - The bare-metal testsuite also was used to test LDGM and similar
-    instructions not permitted in user-mode.
-  - The bare-metal testsuite also was used to test the mtx related
-    patches.
+- Add iothreads array and holder_name to BlockExport struct.
+- Use iothread_ref_and_get_aio_context during export creation.
+- Implement proper cleanup in blk_exp_add fail path and blk_exp_delete_bh.
+- Support both single and multi-iothread export configurations.
 
-Thanks,
-Gabriel Brookman
+This ensures IOThread 'holders' status correctly reflects active block
+exports for better debugging and resource tracking.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3116
-Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
+Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 ---
-Changes in v6:
-- Moved certain functions between patches (Richard)
-- Added G_NORETURN to canonical_tag_write_fail
-- Updated ldg and bounds check functions to Richard's versions, tested
-  these
-- Link to v5: https://lore.kernel.org/qemu-devel/20260504-feat-mte4-v5-0-232a648e63c6@gmail.com
+ block/export/export.c  | 44 +++++++++++++++++++++++++++++++++---------
+ include/block/export.h |  6 ++++++
+ 2 files changed, 41 insertions(+), 9 deletions(-)
 
-Changes in v5:
-- MTX check feature split into three commits as per Richard's suggestion
-- MTX passed down to instruction helpers in a new argument
-- allocation_tag_mem_probe checks for probe in MTEPERM case
-- tbi helper combined into tbi_or_mtx_helper
-- MTX checks added to sme and sve functions
-- bug with type conversion in LDGM helper fixed
-- fixed multi-page tag-check bug and multi-page ST2G bug
-- removed erroneous changes to _stub functions
-- reorganized PAuth & MTX interactions to make them more readable
-- Link to v4: https://lore.kernel.org/qemu-devel/20260309-feat-mte4-v4-0-daaf0375620d@gmail.com
-
-Changes in v4:
-- MTX now interacts with PAuth.
-- Canonical tag checking only takes place in canonically tagged regions
-- MTX bits enable tag checking
-- MTX bits are placed in MTEDESC for access in mte_check helper
-- Separate feature bits are used to delineate each feature
-- PRCTL functions renamed and refactored as per Richard's suggestion
-- Link to v3: https://lore.kernel.org/qemu-devel/20260105-feat-mte4-v3-0-86a0d99ef2e4@gmail.com
-
-Changes in v3:
-- Added prctl for MTE_STORE_ONLY to linux-user
-- mte_check is no longer generated on read when STORE_ONLY enabled
-- Implemented LDGM instruction
-- Removed "long" datatype as per Richard's suggestion
-- Implemented masking for VA range checks when MTX bit enabled
-- Implemented MTE_PERM, with NoTagAccess attribute
-- Removed user-mode test for MTE_CANONICAL, since can't enable in
-  user-mode.
-- Removed TBI from mte_check generation logic
-- Link to v2: https://lore.kernel.org/qemu-devel/20251116-feat-mte4-v2-0-9a7122b7fa76@gmail.com
-
-Changes in v2:
-- Added tests for STORE_ONLY.
-- Refined commit messages.
-- Added FEAT_MTE_CANONICAL_TAGS and FEAT_MTE_NO_ADDRESS_TAGS + tests.
-- fixed TCSO bit macro names.
-- Link to v1: https://lore.kernel.org/qemu-devel/20251111-feat-mte4-v1-0-72ef5cf276f9@gmail.com
-
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>
-Cc: Helge Deller <deller@gmx.de>
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-
----
-Gabriel Brookman (15):
-      target/arm: implement MTE_PERM
-      target/arm: add TCSO bitmasks to SCTLR
-      target/arm: mte_check unemitted on STORE_ONLY load
-      linux-user: add MTE_STORE_ONLY to prctl
-      target/arm: emit tag check when MTX without TBI
-      target/arm: add MTX to MTEDESC and DisasContext
-      target/arm: add canonical tag check helper
-      target/arm: add canonical MTE check logic
-      target/arm: load on canonical tag loads ext bits
-      target/arm: fault on tag store to canonical tag
-      target/arm: skip tag bit bounds check if MTX is on
-      target/arm: tag is not a part of PAuth with MTX
-      docs: add MTE4 features to docs
-      tests/tcg: add test for MTE FAR
-      tests/tcg: add test for MTE_STORE_ONLY
-
- docs/system/arm/emulation.rst        |   5 ++
- linux-user/aarch64/mte_user_helper.c |  11 ++-
- linux-user/aarch64/mte_user_helper.h |  14 ++--
- linux-user/aarch64/target_prctl.h    |   6 +-
- target/arm/cpu-features.h            |  15 ++++
- target/arm/cpu.h                     |   5 ++
- target/arm/gdbstub64.c               |   2 +-
- target/arm/helper.c                  |  36 +++++++--
- target/arm/internals.h               |  40 ++++++++--
- target/arm/ptw.c                     |  60 ++++++++++++--
- target/arm/tcg/cpu64.c               |   8 ++
- target/arm/tcg/helper-a64-defs.h     |  16 ++--
- target/arm/tcg/helper-a64.c          |   7 +-
- target/arm/tcg/hflags.c              |  25 +++++-
- target/arm/tcg/mte_helper.c          | 146 +++++++++++++++++++++++++++++------
- target/arm/tcg/pauth_helper.c        |  18 ++++-
- target/arm/tcg/sme_helper.c          |   4 +-
- target/arm/tcg/sve_helper.c          |   6 +-
- target/arm/tcg/translate-a64.c       |  45 +++++++----
- target/arm/tcg/translate.h           |   3 +
- tests/tcg/aarch64/Makefile.target    |   2 +-
- tests/tcg/aarch64/mte-10.c           |  49 ++++++++++++
- tests/tcg/aarch64/mte-9.c            |  48 ++++++++++++
- tests/tcg/aarch64/mte.h              |   7 +-
- 24 files changed, 487 insertions(+), 91 deletions(-)
----
-base-commit: ee7eb612be8f8886d48c1d0c1f1c65e495138f83
-change-id: 20251109-feat-mte4-6740a6202e83
-
-Best regards,
---  
-Gabriel Brookman <brookmangabriel@gmail.com>
+diff --git a/block/export/export.c b/block/export/export.c
+index b733f269f3..636633c324 100644
+--- a/block/export/export.c
++++ b/block/export/export.c
+@@ -15,7 +15,6 @@
+ 
+ #include "block/block.h"
+ #include "system/block-backend.h"
+-#include "system/iothread.h"
+ #include "block/export.h"
+ #include "block/fuse.h"
+ #include "block/nbd.h"
+@@ -85,6 +84,8 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
+     AioContext *ctx;
+     AioContext **multithread_ctxs = NULL;
+     size_t multithread_count = 0;
++    g_autofree IOThread **local_iothreads = NULL;
++    const char *holder_name = NULL;
+     uint64_t perm;
+     int ret;
+ 
+@@ -139,7 +140,11 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
+             goto fail;
+         }
+ 
+-        new_ctx = iothread_get_aio_context(iothread);
++        holder_name = bdrv_get_node_name(bs);
++        new_ctx = iothread_ref_and_get_aio_context(iothread, holder_name);
++        multithread_count = 1;
++        local_iothreads = g_new0(IOThread *, 1);
++        local_iothreads[0] = iothread;
+ 
+         /* Ignore errors with fixed-iothread=false */
+         set_context_errp = fixed_iothread ? errp : NULL;
+@@ -163,8 +168,10 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
+             return NULL;
+         }
+ 
++        local_iothreads = g_new0(IOThread *, multithread_count);
+         multithread_ctxs = g_new(AioContext *, multithread_count);
+         i = 0;
++        holder_name = bdrv_get_node_name(bs);
+         for (strList *e = iothread_list; e; e = e->next) {
+             IOThread *iothread = iothread_by_id(e->value);
+ 
+@@ -172,7 +179,9 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
+                 error_setg(errp, "iothread \"%s\" not found", e->value);
+                 goto fail;
+             }
+-            multithread_ctxs[i++] = iothread_get_aio_context(iothread);
++            local_iothreads[i] = iothread;
++            multithread_ctxs[i++] = iothread_ref_and_get_aio_context(iothread,
++                                                                  holder_name);
+         }
+         assert(i == multithread_count);
+     }
+@@ -225,12 +234,15 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
+     assert(drv->instance_size >= sizeof(BlockExport));
+     exp = g_malloc0(drv->instance_size);
+     *exp = (BlockExport) {
+-        .drv        = drv,
+-        .refcount   = 1,
+-        .user_owned = true,
+-        .id         = g_strdup(export->id),
+-        .ctx        = ctx,
+-        .blk        = blk,
++        .drv                  = drv,
++        .refcount             = 1,
++        .user_owned           = true,
++        .id                   = g_strdup(export->id),
++        .ctx                  = ctx,
++        .blk                  = blk,
++        .iothreads            = g_steal_pointer(&local_iothreads),
++        .iothread_count       = multithread_count,
++        .iothread_holder_name = g_strdup(holder_name),
+     };
+ 
+     ret = drv->create(exp, export, multithread_ctxs, multithread_count, errp);
+@@ -253,6 +265,13 @@ fail:
+         g_free(exp->id);
+         g_free(exp);
+     }
++    if (local_iothreads) {
++        for (size_t j = 0; j < multithread_count; j++) {
++            if (local_iothreads[j]) {
++                iothread_put_aio_context(local_iothreads[j], holder_name);
++            }
++        }
++    }
+     g_free(multithread_ctxs);
+     return NULL;
+ }
+@@ -269,6 +288,13 @@ static void blk_exp_delete_bh(void *opaque)
+     BlockExport *exp = opaque;
+ 
+     assert(exp->refcount == 0);
++    if (exp->iothreads) {
++        for (size_t i = 0; i < exp->iothread_count; i++) {
++            iothread_put_aio_context(exp->iothreads[i],
++                                     exp->iothread_holder_name);
++        }
++        g_free(exp->iothreads);
++    }
+     QLIST_REMOVE(exp, next);
+     exp->drv->delete(exp);
+     blk_set_dev_ops(exp->blk, NULL, NULL);
+diff --git a/include/block/export.h b/include/block/export.h
+index ca45da928c..2bb98aae31 100644
+--- a/include/block/export.h
++++ b/include/block/export.h
+@@ -16,6 +16,7 @@
+ 
+ #include "qapi/qapi-types-block-export.h"
+ #include "qemu/queue.h"
++#include "system/iothread.h"
+ 
+ typedef struct BlockExport BlockExport;
+ 
+@@ -89,6 +90,11 @@ struct BlockExport {
+ 
+     /* List entry for block_exports */
+     QLIST_ENTRY(BlockExport) next;
++
++    /* The iothreads list for block_exports */
++    IOThread **iothreads;
++    size_t iothread_count;
++    char *iothread_holder_name;
+ };
+ 
+ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp);
+-- 
+2.49.0
 
 
