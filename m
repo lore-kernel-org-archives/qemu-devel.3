@@ -4,63 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C722CD37AC
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 04:08:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31C6CCD37AC
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 05:15:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMHv9-000497-Gu; Mon, 11 May 2026 00:07:17 -0400
+	id 1wMIyL-0002KN-Ej; Mon, 11 May 2026 01:14:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vulab@iscas.ac.cn>)
- id 1wMHts-00041w-Qm; Mon, 11 May 2026 00:05:48 -0400
-Received: from smtp81.cstnet.cn ([159.226.251.81] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <vulab@iscas.ac.cn>)
- id 1wMHtq-0000i8-0G; Mon, 11 May 2026 00:05:48 -0400
-Received: from yzs (unknown [183.156.89.125])
- by APP-03 (Coremail) with SMTP id rQCowABHaN+QVQFqNyOlEA--.12378S2;
- Mon, 11 May 2026 12:05:36 +0800 (CST)
-From: Zishun Yi <vulab@iscas.ac.cn>
-To: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Cc: Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org, Zishun Yi <vulab@iscas.ac.cn>
-Subject: [PATCH] target/riscv: Remove unconditional MENVCFG_CDE from mask
-Date: Mon, 11 May 2026 12:05:34 +0800
-Message-ID: <20260511040534.2862443-1-vulab@iscas.ac.cn>
-X-Mailer: git-send-email 2.51.2
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1wMIyF-0002Jv-V5
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 01:14:23 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1wMIyE-0002ib-C1
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 01:14:23 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-835399c11e0so1677816b3a.0
+ for <qemu-devel@nongnu.org>; Sun, 10 May 2026 22:14:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1778476459; x=1779081259; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=uY/3BCvApSqhWXajAFICkCmRzs5yfB4pXNodUvVTC58=;
+ b=V56yfZ+yivnxEr/H3gV9dmnW3ZrsNeQisN7Xp5Nd8UwaoA10QGnMpjsLx0sJdfzP11
+ DNG+Zf8j/kNrjdZrBXPAMP9HQ9b1X/Pu9GHbTewBLoYSSb6zz8WCM981faxG0r9cDxEv
+ x5tRoqtMUFUXZ3pw8/eWfA4dJEH/rvk+NC2WARaDITvcP5Ujz+8BPtA3F/H4NEAcZeGI
+ DLQ2Qb0mgk4sAUeYwcFdpRajcUppDYfjZSYzSlKB8OTf8pIizmUdjFL8+IVEPxv1yu1C
+ 9n5TT8SfNHAmEUUFaI+JCFknfpdJ+PP/ZfxX7+S6DD7/B21ewzxBaVV5nxVC6kJsNO0H
+ jFzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778476459; x=1779081259;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uY/3BCvApSqhWXajAFICkCmRzs5yfB4pXNodUvVTC58=;
+ b=Ty4X9DoS2HYMwRq/tPQuHMebUybvMBAPrKJjnaNBXONTxIXXiVDBXsmDyTOI6tRSeC
+ JRoUd7vhlyce+Thy5MmsqsQ1S9PD7J9kWSxfrWvhTlz4He6W5u3Q3KYw/pPjxSJIDd21
+ 8GKWcu+SJzuMk0/7bkAyb0712WmvA3MpmE+1oDNiXK/fdLGWxhOlqGuNaNgBTS9BJDEd
+ VcB14MQoYe7d2VmtULR0tLm8ePjHBKMt477BZb8ZK8/oyyZdxTF28+2mgGJmeWwAVOzV
+ sz8cnAD3LjtzWjB+sSHKgjtobt6gnvO2EukIV55RDcH9zDhoh9LXpR5KJ3LsFQDlJXJY
+ FF8g==
+X-Gm-Message-State: AOJu0YwSKwYaDFhxHM/9Jj7UFQhT5mICZy3jRmaQPlBU7pDbnpe2xSpi
+ lkdVkTakubw72yVW+yClckbW0ucq5gcxX3GSu8C3N6RxsawMh1c1JNrrfCA7dA==
+X-Gm-Gg: Acq92OFhtMVjxz6l4MaDub9KrQgeFW3gjeC6CVbNet7Dr+3/13ZiKUfbZCrvxrs2LN7
+ zYYP+r/rOSN0coKEYBTed0gk1GvtUQ2TuJXKeVLy319xMsBdqTSwWdYzsjRpL6KbollOsB8dAZN
+ caIy4bRIYKssisIcNoE0JZ/MYSxj4yz2a+V+Be5QysySiMNOCAPSiNeVbc4hemlKSJWS+dvcSlX
+ wKbBoaX3mqh0iCl+NqIrrMJejWBMhsfhtLiFp7MZx1g4npWxtJi6K9GdY8/JPJquLfSDbvxjRLh
+ SOLWBE0tdkS48Sbeex56l8cmh4stJKXMPitG8zhl09nakSNOJQ6mq3j+F9iXAKxVC26U0N9DVnL
+ OQitmpYg/I6+IO5qXzj3iG1xFSCGYcHCkUEN5vpF7Pk/nKdjm753Zjx4Kj8lCOvJ45MzbakEBKm
+ LDkAVwLu0AGWlvzI4fSJ+MJ4713n2GawA=
+X-Received: by 2002:a05:6a00:278e:b0:837:e9cc:d46d with SMTP id
+ d2e1a72fcca58-83a5e24add1mr20835333b3a.44.1778476458724; 
+ Sun, 10 May 2026 22:14:18 -0700 (PDT)
+Received: from jeuk-MS-7D42.. ([211.226.54.223])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-839679c9293sm18655775b3a.33.2026.05.10.22.14.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 10 May 2026 22:14:18 -0700 (PDT)
+From: Jeuk Kim <jeuk20.kim@gmail.com>
+X-Google-Original-From: Jeuk Kim <jeuk20.kim@samsung.com>
+To: qemu-devel@nongnu.org
+Cc: jeuk20.kim@samsung.com, qemu-block@nongnu.org, qemu-stable@nongnu.org,
+ j-young.choi@samsung.com
+Subject: [PATCH] hw/ufs: Zero reserved bytes in REPORT LUNS response header
+Date: Mon, 11 May 2026 14:14:09 +0900
+Message-ID: <c6bc0c611cf43f3d75bb6459362f71666d3b4240.1778476327.git.jeuk20.kim@samsung.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: rQCowABHaN+QVQFqNyOlEA--.12378S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7uF18urW3AFy8tFWrCw15Jwb_yoW8Jw1DpF
- s5Wa9rG395J392va48GFWrWF1YywnrWr42qwnrAws7tFW5JrWYqFWDKa1UGFyUWFWkJr1a
- 9F1qk345Ar40yaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUkG14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
- rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
- 1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
- 6F4UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x0267AKxVW0oV
- Cq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
- I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
- 4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY1x0262kKe7AKxVWU
- tVW8ZwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14
- v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkG
- c2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4U
- MIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x0JUd-B_UUU
- UU=
-X-Originating-IP: [183.156.89.125]
-X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiBwsEA2oBMZRl9QABsU
-Received-SPF: pass client-ip=159.226.251.81; envelope-from=vulab@iscas.ac.cn;
- helo=cstnet.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-pf1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,39 +98,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, the MENVCFG_CDE (Counter Delegation Enable) bit is
-unconditionally included in the base write mask for CSR_MENVCFG.
-This make the subsequent conditional check
-`(cfg->ext_smcdeleg ? MENVCFG_CDE : 0)` completely ineffective,
-as a bitwise OR cannot clear a bit that is already set.
+ufs_emulate_report_luns() writes the 4-byte LUN list length into
+outbuf[0..3] via stl_be_p() but leaves outbuf[4..7], the reserved
+field, uninitialized. Those bytes are then DMA'd to guest memory,
+leaking uninitialized QEMU stack data.
 
-Fix this by removing MENVCFG_CDE from the initial base mask. The bit
-will now only be writable when explicitly granted by the `ext_smcdeleg`
-configuration.
-
-This issue was discovered and reported by SpecHunter, an AI-driven
-architecture specification analysis tool.
-
-Link: https://github.com/yizishun/rv-isa-sec/blob/master/output/riscv-isa-manual/pr-2601/qemu.txt
-Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
+Fixes: 7708e298180 ("hw/ufs/lu: skip automatic zero-init of large array")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
 ---
- target/riscv/csr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/ufs/lu.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index da366cf56271..f6bcf128a147 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -3175,7 +3175,7 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
- {
-     const RISCVCPUConfig *cfg = riscv_cpu_cfg(env);
-     uint64_t mask = MENVCFG_FIOM | MENVCFG_CBIE | MENVCFG_CBCFE |
--                    MENVCFG_CBZE | MENVCFG_CDE;
-+                    MENVCFG_CBZE;
-     bool stce_changed = false;
+diff --git a/hw/ufs/lu.c b/hw/ufs/lu.c
+index 3f3c9589ce..709d6adcf6 100644
+--- a/hw/ufs/lu.c
++++ b/hw/ufs/lu.c
+@@ -101,6 +101,10 @@ static int ufs_emulate_report_luns(UfsRequest *req, uint8_t *outbuf,
+         return SCSI_COMMAND_FAIL;
+     }
  
-     if (riscv_cpu_mxl(env) == MXL_RV64) {
++    if (outbuf_len < 8) {
++        return SCSI_COMMAND_FAIL;
++    }
++    memset(outbuf, 0, 8);
+     len += 8;
+ 
+     for (uint8_t lun = 0; lun < UFS_MAX_LUS; ++lun) {
 -- 
-2.51.2
+2.43.0
 
 
