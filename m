@@ -4,69 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FA2CCD37B5
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 10:46:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93D20CD37B5
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 10:48:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMO9t-0000p9-Sa; Mon, 11 May 2026 06:46:45 -0400
+	id 1wMOBg-0001Kf-0N; Mon, 11 May 2026 06:48:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wMO9p-0000oF-Nj
- for qemu-devel@nongnu.org; Mon, 11 May 2026 06:46:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wMO9o-0002Vf-8c
- for qemu-devel@nongnu.org; Mon, 11 May 2026 06:46:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778496399;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=pZmM5bcLaTlJ0c4pf5pfWQL4WC0xQwp16a5unPkAfuU=;
- b=JDlsB6xowJPfcxU/KE8KSGzgDI6rB5hP4olbSTe11Pl7ptE7iBfCZb1GxtAcZjeUd1yXkF
- 5AN/d7/NCINuAzQJLggBn7SQ1REMkbwVTZ2TojrmAtrJ1V7+C1HKIHkV2vI7JQ4rH4QSt1
- MtpnyRBZbvmaLcbbIlRvIiVCfgYDWSU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-56-n2RWiLlJM4ehORe8_X0R8A-1; Mon,
- 11 May 2026 06:46:38 -0400
-X-MC-Unique: n2RWiLlJM4ehORe8_X0R8A-1
-X-Mimecast-MFC-AGG-ID: n2RWiLlJM4ehORe8_X0R8A_1778496397
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 136A7195609F; Mon, 11 May 2026 10:46:37 +0000 (UTC)
-Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C459718004A3; Mon, 11 May 2026 10:46:35 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH] meson: drop sphix-build < 1.7 compatiblity check
-Date: Mon, 11 May 2026 14:46:29 +0400
-Message-ID: <20260511104629.2634357-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMOBJ-0001Hj-2g
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 06:48:16 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMOBH-0002i0-43
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 06:48:12 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4891c00e7aeso34814775e9.2
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 03:48:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778496489; x=1779101289; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=wTP0Q0Rh9OQM75jdEF5bm3oW1JM9l6xDjkIOOVfOtUk=;
+ b=hRsOJsUJCc2WuS/Qh3aqYGe+69lUBjEMKOqVUVSQ3WH/T0TyC4+9icn2QBl19w0FNh
+ 32p7nUV2pdaCKFOmT/5d/JlQa8qxDau7I/pAe+P+0ro4BsNKkhUSRfYbJ70ntSS8+16A
+ OPupGL3Q91HcYx2heOfsm9RbuX14NMIs2a9a5HsAt0NVSNXzM6paj8QpXPXlm8U9uWiD
+ BkEoHki3xkYcdKwfS2QfH1vKb6Jf3cUtkWWeaZ370MpjjQWMGUVI3c6li16yiM53EeV/
+ RiEK2IYB9+G3ykdny2BVGfPqQWDCGAG2hFGj2/zILNbgSe3BRy8uyEaUN/N6SjqliUxb
+ PYEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778496489; x=1779101289;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wTP0Q0Rh9OQM75jdEF5bm3oW1JM9l6xDjkIOOVfOtUk=;
+ b=jg/57Hr2ffsQnsdIG5cYYTDv8yXT56Kv6E56VslCbMDkhqnQSqMoSOC+ZHnTq+Vsit
+ u0AyTWcuzPrHGgyqCXWLMuOvpmpg3XnPtPqOLi+BZYiit1dIcbwjEnMoLT713yMSFkhJ
+ AUgAi8Bh3Pu/vYVfFssK9OdgMkFj57TuImLQBo+8gdjb1aToDTTNfSyYPS094yDqcQPK
+ MHlFzc28Z94zAQVdg7UdWNggy2Wq/lQFkYkp4KZnBi9Tj4dnhHTSP7GBOPN4u+2UUn9O
+ ydn4vZXCNocoibue7K1qoEnsEslB+G4rky9YFmMDg79hZs0oFkruEuZ6xGD1bpYAVjse
+ x6EQ==
+X-Gm-Message-State: AOJu0YyqJJiPjWexB/9dSxpZfafdFZppekB5X4zT1yC+2KcN++hQOzD5
+ 19NNS7Rdfg2zMCcWL9BnROJZx/3g6W1LIBYJCxO4At9MjnoqDvgBqyfqWec8nIVzXbA=
+X-Gm-Gg: Acq92OG6YDAfhV6cIjM6Q1T7uT3bFeUp3aNoBd2ov8x3zXgsOCPdA4OwQX8cNJcaHpu
+ GKtapZy6zhVGyRQVnPdbQ5er7dn7LnGKxAn0OXUKbxLWlHirUvMvxN0SpfUheewiwktOTHLv0us
+ WAJHx9kV40YS23B2uPb0EW9ppFow+TkUoYxFNCbnovIC/ubtae9G0ftYR85YSc9X0BzUmaeEo1I
+ siXTCmxOddS01kpthLlCkHYYarC2q3ykM5NX8tapvIRtM9QjrwzcUZKlAB3i0g8WMDUl37r3AnZ
+ M2Fb154R6yBcAYPLc/MTsYDhLiMtK+A176P96Lkq/8TpoFGdkLZ5zNEca1+sA3yUL8IUDoHhOek
+ QUbeW6FVdeKbkUssHYkKJd35BfNnxZpHl65XkiUCb6YzMH6vDgZ9TRCYLIYnjs+gnFfkRYlpC40
+ Vu67RYIqsxcs1WMB21bSto4buA+AdZS2gQRBW36hbHbOkN/E4TpNu2vQ9NutzjAv8P7A==
+X-Received: by 2002:a05:600c:811b:b0:48e:89f9:9408 with SMTP id
+ 5b1f17b1804b1-48e89f99431mr1636545e9.20.1778496488968; 
+ Mon, 11 May 2026 03:48:08 -0700 (PDT)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48e702e0bf2sm310962755e9.4.2026.05.11.03.48.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 11 May 2026 03:48:08 -0700 (PDT)
+Message-ID: <8dd49a80-f0db-44f3-a9cb-19aa9f4b6791@linaro.org>
+Date: Mon, 11 May 2026 12:48:07 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] qom: improve use-after-free debugging
+Content-Language: en-US
+To: Roman Kiryanov <rkir@google.com>, pbonzini@redhat.com,
+ alex.bennee@linaro.org, marcandre.lureau@gmail.com
+Cc: qemu-devel@nongnu.org
+References: <20260427154441.1918536-1-rkir@google.com>
+ <20260428164545.2782523-1-rkir@google.com>
+ <20260428164545.2782523-2-rkir@google.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260428164545.2782523-2-rkir@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,47 +103,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+On 28/4/26 18:45, Roman Kiryanov wrote:
+> This patch invalidates dead objects so their usage will
+> lead to more predictable results (crashes or asserts).
+> 
+> Signed-off-by: Roman Kiryanov <rkir@google.com>
+> ---
+> Changes in v2:
+> - Updated clearing of obj->properties using g_clear_pointer.
+> - Moved clearing of obj->class into object_deinit.
+> - obj->class is checked to be NULL before obj->free(obj).
+> 
+>   qom/object.c | 6 +++++-
+>   1 file changed, 5 insertions(+), 1 deletion(-)
 
-Since commit fe791b7fcc ("Python: bump minimum sphinx version to
-3.4.3"), we no longer support building with sphinx-build < 3.4.3
-
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- docs/meson.build | 14 +-------------
- 1 file changed, 1 insertion(+), 13 deletions(-)
-
-diff --git a/docs/meson.build b/docs/meson.build
-index 7e54b01e6a0..f39e3e8b065 100644
---- a/docs/meson.build
-+++ b/docs/meson.build
-@@ -4,24 +4,12 @@ sphinx_build = find_program(fs.parent(python.full_path()) / 'sphinx-build',
- # Check if tools are available to build documentation.
- build_docs = false
- if sphinx_build.found()
--  SPHINX_ARGS = ['env', 'CONFDIR=' + qemu_confdir, sphinx_build, '-q']
-+  SPHINX_ARGS = ['env', 'CONFDIR=' + qemu_confdir, sphinx_build, '-q', '-j', 'auto']
-   # If we're making warnings fatal, apply this to Sphinx runs as well
-   if get_option('werror')
-     SPHINX_ARGS += [ '-W', '-Dkerneldoc_werror=1' ]
-   endif
- 
--  sphinx_version = run_command(SPHINX_ARGS + ['--version'],
--                               check: true).stdout().split()[1]
--  if sphinx_version.version_compare('>=1.7.0')
--    SPHINX_ARGS += ['-j', 'auto']
--  else
--    nproc = find_program('nproc')
--    if nproc.found()
--      jobs = run_command(nproc, check: true).stdout()
--      SPHINX_ARGS += ['-j', jobs]
--    endif
--  endif
--
-   # This is a bit awkward but works: create a trivial document and
-   # try to run it with our configuration file (which enforces a
-   # version requirement). This will fail if sphinx-build is too old.
--- 
-2.54.0
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
