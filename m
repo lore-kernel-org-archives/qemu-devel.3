@@ -4,111 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA48FCD37BE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2BDDCD4840
 	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 17:49:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMUkU-0001Uz-Ue; Mon, 11 May 2026 13:48:59 -0400
+	id 1wMUkd-0001iG-LK; Mon, 11 May 2026 13:49:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wMUjw-00010y-SI; Mon, 11 May 2026 13:48:27 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wMUkW-0001Ym-Av
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 13:49:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wMUjv-0008UE-7W; Mon, 11 May 2026 13:48:24 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64BDjNhS238892; Mon, 11 May 2026 17:48:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=v3oMsq
- yFC3K/Ijy6z4+hC5JlUbwLSx27QeuEAKRHR5A=; b=OVrqToKQ8ZNiYhsf7innSH
- wg7yH1ucWK2SkeFi3zeatStISu76svqyenvP2udiYkmD8xAbVzzgaHcFlU+DcFFF
- OcQYpc4B7oYQawPr0GjHvOIubIbTZeh8tLxEmygkGxYKkDGWTUBIByazzxnzspQH
- xqUmDNnYP9vi69rdRi+/gkaAgAjQBnhj2umlk60unKH4AqWKkZ2zaKqWo6dRXU/v
- YCCohvLrZSNteDtZRePYYBsljYSkOoR8PCU0zGqaNGXEyNh5KP2mMIvbbEeVqHxm
- PeGmsFAe5dx6qrr1zhex9Wkzyl/X6ZLKifEYLcDMhCzi5aJErlGoo1pkRW0rS0Kw
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e1tbhs4q9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 11 May 2026 17:48:20 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64BHOUdD002451;
- Mon, 11 May 2026 17:48:20 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e2grh6a2v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 11 May 2026 17:48:20 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64BHmIUV27329074
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 11 May 2026 17:48:19 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 915105805E;
- Mon, 11 May 2026 17:48:18 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 86DFB58058;
- Mon, 11 May 2026 17:48:17 +0000 (GMT)
-Received: from [9.61.44.159] (unknown [9.61.44.159])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 11 May 2026 17:48:17 +0000 (GMT)
-Message-ID: <0e376d73-acb5-47b5-8ac1-6b3851dfbc6c@linux.ibm.com>
-Date: Mon, 11 May 2026 13:48:17 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wMUkU-0000DW-Lf
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 13:49:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778521737;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=2k6EVpPdTvF6lgkq1jsRaaapq0/oSVZuA6kMYpBnMyM=;
+ b=AzNvLXo7cLTg+24abBxeo02Y5i4qoh6acvaz/78xd3wK5kbUDjbTymZTrCBzGd8Ys3JmjK
+ UK1GasnDtcg88F+wL1SS/M2w0qSYfmJssGqsrTsnzxvXulcH4kndxG/+O2YkTWDXoALj5j
+ nMEjw0meI/GAS+Rl9jGZYMoFDHVMRck=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-325-hsxk99K4MbylbZm3wff1WA-1; Mon, 11 May 2026 13:48:56 -0400
+X-MC-Unique: hsxk99K4MbylbZm3wff1WA-1
+X-Mimecast-MFC-AGG-ID: hsxk99K4MbylbZm3wff1WA_1778521736
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-514cbe73d00so10516221cf.1
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 10:48:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1778521735; x=1779126535; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=2k6EVpPdTvF6lgkq1jsRaaapq0/oSVZuA6kMYpBnMyM=;
+ b=tgOl08EYZTSZub8j8yq+BULjZtESBUFoXoy3/yGGUB8p+/KDFnM2E3mRGJjRZoI2NQ
+ A7gIqsArotSPfvci8/H2yIyw5att0fne+rfj+hvrIrhSo7fE53/cn0KLUwEnnbO+YUoW
+ MyKVj59P5NkCfKXaGESn5OD8dPD3zAmUEiikAwpQErcIpfwWumU1nM0iDXGua5bK5MjZ
+ 2GOBHOEyRVG7COsqrndzAW3IoUaW7GvtpKJbYNfgSptqMyiokpWjS0JBwQR/l3Kf+g3G
+ C3gqgQ9GsLXMtCrDqaVc8UvBI2v0kKnI4DbbQFEBELzOVa9GvSGRthbZRxxKrpiV8mvm
+ e0Aw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778521735; x=1779126535;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2k6EVpPdTvF6lgkq1jsRaaapq0/oSVZuA6kMYpBnMyM=;
+ b=LFwpLXI5n+UMy7Apdw6C6xN/M0g1dDUSAeim2/scpGfPgWWNxuQPJ79nfbmWh5zVEy
+ Wu+LQRn7rxDZmmhVBEPEZf1mOBhaM8OYBVNJuKyvLUwf/85WlzbupousUg1CoyOQVFZ5
+ lEWCIQf06BfUF9gwnS+MTw39F0FTZ92aTmlOzuzf/JewTxNWLOZIefb4yvTe63mL+J5z
+ w0yGUdjvs/N/7YCvO/Rsapl//s3zKkOuGNrMQaq0x4mKJNUIistBCo0tP9cFvKTGiDey
+ iLPyEdB1c0JVD3LK5BAKrzhflGmwBezf9nG2wAqHmNhUTLG8Q9vpQOmJ6YOmej0mXTmV
+ yf+Q==
+X-Gm-Message-State: AOJu0YyDqeHt+JXfPn7TLU3bZR+Idmmboi58IVJQsrDwtZYS0b93kEVs
+ JiljL/B8yGQsDlsuApRiJpp+1WFp3oZ93mEj7nlv/ZDiyzaQXzssw3bRLnDx0Ot0uVFRr+mIJPY
+ 1uo7srqkrYj3TLobB4GDAVR2z3ELVHhGTXzidnyXDkgWbPlJurnqQkk5YGRzAsG2hubNMPo8Z3U
+ D3Pw/Y5kJJLx7E7qvmb/vFW5kl/r2Rg+R6OfaKUg==
+X-Gm-Gg: Acq92OHHT83J67HeBepbVe4HgT1O0YbtbgOY8lK9gnp35pQqI0PzkQ+KgE3X6qnFy3n
+ +fMSYfDWgMtGV2KmBaBlvp3k2oP7ZDUV+No0EL0sPj3TucFHmUfkHZSP8T6113V+19bIEwvXETq
+ RtAlfLxgpedyFDSBMYh94qMppB2NBfICSWdET3XNPJQRaFdFtVzYyt/thq2pGspa37LQE2ckB93
+ WdBrBvBL6YwuTFQnDiauDujxpz1LLfSptK6wHCDIfHYJyEXqSLwDrRlL0dBux1KBVDexYp/dc55
+ Mi6V8nCiMvTQpGwjsgqSh6N734vN1itPR+ebdaoqerL5c81R0aGon1EUuDrSpUaYI97KyqSPTWv
+ 0vFC8+jjfHqoj5Lfsluyp2yKqBCAK7TliI1EkzcWxh7thUtc=
+X-Received: by 2002:ac8:5d11:0:b0:510:141d:9d03 with SMTP id
+ d75a77b69052e-5148e7ca391mr208727961cf.7.1778521735420; 
+ Mon, 11 May 2026 10:48:55 -0700 (PDT)
+X-Received: by 2002:ac8:5d11:0:b0:510:141d:9d03 with SMTP id
+ d75a77b69052e-5148e7ca391mr208727531cf.7.1778521734716; 
+ Mon, 11 May 2026 10:48:54 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-5148e6336c0sm102823551cf.2.2026.05.11.10.48.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 11 May 2026 10:48:54 -0700 (PDT)
+Date: Mon, 11 May 2026 13:48:53 -0400
+From: Peter Xu <peterx@redhat.com>
+To: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
+Cc: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH] MAINTAINERS: Update RDMA migration entry with M:
+Message-ID: <agIWhVlVazRBxNWe@x1.local>
+References: <20260511143026.1296485-1-peterx@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/s390x: restore cpu_models for system builds
-To: Eric Farman <farman@linux.ibm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Cornelia Huck <cohuck@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Farhan Ali <alifm@linux.ibm.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
-References: <20260511163541.192533-1-farman@linux.ibm.com>
-Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20260511163541.192533-1-farman@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=ZdQt8MVA c=1 sm=1 tr=0 ts=6a021664 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=20KFwNOVAAAA:8
- a=VnNF1IyMAAAA:8 a=maQemdB9CxkyP7EGjgsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: C6ajyHAlx8ul4AXNJL0WtEDKGycAx7ui
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDE4OCBTYWx0ZWRfX1Wxymxgqo98f
- 0gTKxxNmzHT3Kzh1U+X+r8aGapoUhm+BwZtbnzHvqnYA1x1MqeRK5x0F4MwLwkT6bPOidzLIR9S
- ++YX/0Z7qChu0ZEyRNvJmfNTJLFkJWc3y7RTdLLklMZLYoRzgczUAPsxYEXDRO9YxiDwr2mGTuw
- 0fZAWDjAWFCP300KxY6PSLZptL4+8K049YNnpqcB3hmEueRt4S5aWqqsGAaQNriACikjai3V2xd
- 75/cw5ZZlUqzNfYPK8kjJ66uWHNrA1jZtPJzwOCJn9IPXE8cb9O+Qnip0U3THdkSTKz9nAvp48N
- pf2W8kUAurvXA7BVEOsmrjH1WOvykVouFiRItUs5CEn4tCLSkKDvupMx2CzQeg+pGSHDCCqkfd1
- NBC/G4A416391R+XHR8JbRnIV0nvtj7dWiB1RmpkJRN4466FWJ9Lq5SMRFfylT6teWfI3yXoCxh
- R5h32/4P0dBparNu4ZQ==
-X-Proofpoint-GUID: C6ajyHAlx8ul4AXNJL0WtEDKGycAx7ui
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-11_05,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0
- priorityscore=1501 malwarescore=0 suspectscore=0 clxscore=1011 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605110188
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260511143026.1296485-1-peterx@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,64 +115,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/11/26 12:35 PM, Eric Farman wrote:
-> Commit 0b83acf2f05 stated:
+I somehow thought this will copy Fabiano by default.. now copied.
+
+On Mon, May 11, 2026 at 10:30:26AM -0400, Peter Xu wrote:
+> We wanted to remove RDMA migration once but that didn't go further.  In
+> reality, with the help of Zhijian it's in Odd Fixes stage, even if we just
+> merged one new parameter for it, for performance improvements.
 > 
->     Introduce a source set common to system / user. Start it
->     with the files built in both sets: 'cpu_models_user.c'
->     and 'gdbstub.c' No logical change intended.
+> Markus pointed out we'd better have at least one M: for it to match
+> anything that is not orphaned.
 > 
-> Except that's not true:
+> Remove the X: for Migration entry for RDMA files, then it'll start to cover
+> RDMA migration again. Keep the separate entry so Zhijian can keep getting
+> copied, and copy the M:s over to say someone is collecting patches.
+> Logically these M:s aren't needed after removing X:, but make it clearer.
 > 
->     git show 0b83acf2f0 | grep cpu_models
->         with the files built in both sets: 'cpu_models_user.c'
->     +  'cpu_models_user.c',
->     -  'cpu_models_system.c',
->     -  'cpu_models_user.c',
-> 
-> Restore the s390x_user_ss section, move "cpu_models_user.c" back
-> into it, and re-add "cpu_models_system.c" to the common_system
-> section.
-> 
-> Reported-by: Cédric Le Goater <clg@redhat.com>
-> Fixes: 0b83acf2f05 ("target/s390x: Introduce common system/user meson source set")
-> Signed-off-by: Eric Farman <farman@linux.ibm.com>
+> Link: https://lore.kernel.org/r/5326b854-fcea-4af6-a479-792888a94a4d@fujitsu.com
+> Cc: Zhijian Li (Fujitsu) <lizhijian@fujitsu.com>
+> Cc: Markus Armbruster <armbru@redhat.com>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
-
-Thanks Eric.
-
-Besides PCI passthrough this also broke at least s390x virtio-pci due
-to missing facilities; I verified both are working again after this
-fix.
-
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-
->  target/s390x/meson.build | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
+>  MAINTAINERS | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/target/s390x/meson.build b/target/s390x/meson.build
-> index 44f58ac291..6adc2b896d 100644
-> --- a/target/s390x/meson.build
-> +++ b/target/s390x/meson.build
-> @@ -22,7 +22,6 @@ gen_features_h = custom_target('gen-features.h',
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 9d3d645953..c57ef413ca 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -3758,11 +3758,11 @@ F: docs/devel/migration/
+>  F: qapi/migration.json
+>  F: tests/migration-stress/
+>  F: util/userfaultfd.c
+> -X: migration/rdma*
 >  
->  s390x_common_ss.add(gen_features_h)
->  s390x_common_ss.add(files(
-> -  'cpu_models_user.c',
->    'gdbstub.c',
->  ))
->  
-> @@ -38,6 +37,11 @@ s390x_common_system_ss.add(files(
->    'mmu_helper.c',
->    'sigp.c',
->    'cpu-system.c',
-> +  'cpu_models_system.c',
-> +))
-> +
-> +s390x_user_ss.add(files(
-> +  'cpu_models_user.c',
->  ))
->  
->  subdir('tcg')
+>  RDMA Migration
+> +M: Peter Xu <peterx@redhat.com>
+> +M: Fabiano Rosas <farosas@suse.de>
+>  R: Li Zhijian <lizhijian@fujitsu.com>
+> -R: Peter Xu <peterx@redhat.com>
+>  S: Odd Fixes
+>  F: migration/rdma*
+>  F: scripts/rdma-migration-helper.sh
+> -- 
+> 2.53.0
+> 
+
+-- 
+Peter Xu
 
 
