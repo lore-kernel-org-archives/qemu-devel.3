@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C598CD4840
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 18:25:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2767CD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 18:26:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMVI7-0005O7-Dw; Mon, 11 May 2026 14:23:43 -0400
+	id 1wMVI7-0005OJ-Gs; Mon, 11 May 2026 14:23:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wMVHc-0004lK-Uq
- for qemu-devel@nongnu.org; Mon, 11 May 2026 14:23:14 -0400
-Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
+ id 1wMVHa-0004kO-As
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 14:23:10 -0400
+Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wMVHb-0002tQ-F7
- for qemu-devel@nongnu.org; Mon, 11 May 2026 14:23:12 -0400
-Received: by mail-ot1-x331.google.com with SMTP id
- 46e09a7af769-7dca00c1591so1572353a34.3
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 11:23:11 -0700 (PDT)
+ id 1wMVHY-0002sq-MT
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 14:23:10 -0400
+Received: by mail-ot1-x32f.google.com with SMTP id
+ 46e09a7af769-7de7c57b52cso3783815a34.3
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 11:23:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778523790; x=1779128590; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778523787; x=1779128587; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ulZT3AyR9KxLxXeHp9mtF2udKofNN1JfLOpr3f1NM0c=;
- b=Jc9td46aeoYk0Qckgb9BNYCcj4x14tEkL8Sa0aAaYSp8je4HCOMPssoSgJMzzQIJPP
- +xPvxQfqDspP2E2HBhMHpk2IdFPvFsR/45xAAeuYqsvBMTm4zWJlaVhQYSZgqEDjATZ4
- r7mQT8jivwh9JMxpP/7pKNg9C9BilJaLwTN3GC09p6jDpBq/Ip/VQU2ykrNRgcjCTDec
- 89ebM7TIQxY2ZsqITKEABVFCOtDH5hI54B4dfnh66FQclSPd9sLiBHGMVXAm0PwwCf/7
- 8h3vnwMjZUa+BWJUEdeeKlBL+vB+aAfQyvSG0VVzXwz5jw5nFYkmEJdlnp/USapHHbLn
- u9Ww==
+ :reply-to; bh=K+G3B36X/9ry336xbKmucfkEPyEB6BJHY5PfVXdyEMQ=;
+ b=qb9DD+JuVMNOKGe6fIckQsHUMDIMv4l0k1mfY8U/2JLMaHk45ps0D4hd/MRHuerdbf
+ Ts9Fi+dXQ0uTPFud3yY7dw5taIXLoEydIIVMJG71uqo4ystPDQYlQygCFLNzUV2cH4O0
+ L/8wNbLrPoBzhgL0uXz7EK+P5RLm9PC+0DDcKjRkMnycXhf6ulB4+R8Gfwq/x1oPC0FB
+ h0DxsxVHD5w8YlgF1Q4cuewmfCaXO+T8lLM4W1H64yvf5yGPxNfatbB52dzqqD5/e2ta
+ mlorg5N3PvbgxqzqomN0xWtih4WRgGJmFok10gGcbYzpmGVZOuC9kcj9mc/c3IQNOATG
+ EQRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778523790; x=1779128590;
+ d=1e100.net; s=20251104; t=1778523787; x=1779128587;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=ulZT3AyR9KxLxXeHp9mtF2udKofNN1JfLOpr3f1NM0c=;
- b=Bd8SNdoVEefB0Tow8Nqj6EAvoBDpjJmlrhszcIm3sDCUStsejG+ZHceEmHNUpFbySH
- sKbpShm44FC9wjLC/ztaQaWJJaIEM5ZHaMV/iSEhb01C1SNcWt8ounyu01v45gMdjRX/
- htePaLlOOsHLVcxD011Sv/jbb8ulSelrih1/+mGIuflsRrD0R1l7VzTnf1+dEw5wynou
- HlSOmFHYZ8rxm7lxayDHGMe2ci3i9TnFwcHqg7Py+JJza8CyDvyRRg7d774w0MPFjACV
- Fk5u5nHxa3x/35Nqmt8gBapfQxNAATsr6Y6EzXYsTuXaMgWiWIOKLzg5y0tcQVZFgmQ2
- emLQ==
-X-Gm-Message-State: AOJu0YyKMZoCsUOWGyiDWiaD+6xLFjqCt6OsSFAxgrMEg65JXuC5yFPV
- gT++P74L2yevUQasB8drl/lodNpLmhiWIXaQRcwbkYuARuZTXTrES5Ez
-X-Gm-Gg: Acq92OHSR4WlBckWRbbyrVEqF7091UEec6CKEM59C3Aqruc80SckGvlfbG5jhbkDp59
- +jbYhGimckqynz09aXdvwvVSDYkt0cc1/Uvabful2AJerSRz5/6v+13YfS3VzJ+OhJ9t/XveSvS
- YiQ8322hi2wpolvWV17AWFQ97on80dowzfvYwCbZ0+0o7oFrYHEr+9IJE0MPl5t3d0E39ZA+kUM
- RdvShlaDyl/DnPGw/ak0mFRQcs456XGm7Ik3pFOVEjyP+AoWLe/nq76pLzJGDAw5h8eFKdecXrz
- 6ejxGWICa263sRmy2CpXqEidzDoFywj42x7uhfeqKywRYEnBQDeuFAHEbZ/3DoaaOshLLqOA1Mk
- QqBuc57htA8IfWH8D7hHSuG2nwtPyRcPTp65muq6WIJFdOXycXQ5+Yk+eb4PcMxmEQMNUI/sN1+
- ylBWAzvCJR48JbvtehXe+w9MJvfL0rKJ46pIDfToZVuYwxx7r69pPxlbOqvJvJxwWQ+srQuChOz
- /QRZW0ENrjzs5oAa2E9TvP24PAH0WDSMQw30yKaUCRyL1KZPgkuTbNxLuatPwIH1uX3
-X-Received: by 2002:a05:6830:82cf:b0:7dc:e6e8:62b with SMTP id
- 46e09a7af769-7e1defeb3b2mr16842077a34.13.1778523790155; 
- Mon, 11 May 2026 11:23:10 -0700 (PDT)
+ bh=K+G3B36X/9ry336xbKmucfkEPyEB6BJHY5PfVXdyEMQ=;
+ b=KejsZ96weEAlG4k/lpQPkySNCqscYDGhGXGyEw+4BfDmHkf6DPTssTsl1Ww8WveF6I
+ zLUATIP71LbJdlrGoodY0PKta5Mx6Vdh79K9M735fmP995tpEY37OxOc6pA4B5MwZmCh
+ dnrYALcjto08ARfzQVVtBsoAFv3AiUK9yVbXaqyNkj7VQmab04y2UfRJnQAFY7DJYClM
+ NbeF/XtDjgjT4RmhC+NIi6A+HCYTqtt4tS95IbmSCaO6EDYl15KGaD241Wavwsxuilaw
+ lhz8yRmupYZ73SgAi2+6Hvp9FQq8EYhiVLFlaW4Gbw6nqjKOrP+QnESa8/Soo65piv2j
+ vYHA==
+X-Gm-Message-State: AOJu0YxIa20k1rNFVs8Xv+IB+PyMOWPKSiAN4rLKIGFtkf0x8MVq5tpQ
+ F82zklVX05YjKo4rwH5YttEcIJzMwd7ZiUA752Jj2NDDP8hMSkdkwYzf
+X-Gm-Gg: Acq92OEq2J0ENzE1H0KNxee81a1JR8eSwLVibgmwf/+PQ/+CGUC5yletZvklgBz2wwA
+ Tf5FOUyM0i31FDrd7nrwx7wEpAC1aue7+p7YbQLmesMyrlEX8z4ymFxNNJfMRErHITVos/m2g2S
+ QUlop9pch+zfaVmqA96NuMgTRs8ST6Fy+4lEaJsFNRiQQMBvj0Nc0Klkr9dur2Rq2sJpSeRaQxH
+ 4DWLWC7PjNM9KMqouI1UOGyhMxWlcZIWrBvlJJA5EgM6PMnmPqb3wRzU3DAfnuYlSwT7t9igfmK
+ daOSaCZqnZfv0eZjf73HrUpwSXvnMnfMYsVke8MM3T4XbGh3dxvEvLdAEiNmSdbgVWFBm4UhBcz
+ gIBnpUGRD5ReIsBCI1MG+DoXUBsRI0WDuSOjvSv56pJbaio3ap0t7mwZ3+xYokGmxSvGsIwEZHF
+ Ua12vZgPDQVm+Ws3PpZG/hZaE4fFqTCheqLL1J/gIDtTKu3JL/xgZUQ5yeQc4kJZfTi4Z2HTkRw
+ ItYgBUgU8Dv+enVXghDTIcjiBnybAduvP4A3tCDVs0V2hkkFzessL0KwCguT5RZ0lHk3U5L2iwa
+ pD0=
+X-Received: by 2002:a05:6830:4986:b0:7dc:e032:9b5f with SMTP id
+ 46e09a7af769-7e1df220611mr16751181a34.25.1778523787580; 
+ Mon, 11 May 2026 11:23:07 -0700 (PDT)
 Received: from mac.localdomain (71-218-106-55.hlrn.qwest.net. [71.218.106.55])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e367d90148sm7504871a34.20.2026.05.11.11.23.09
+ 46e09a7af769-7e367d90148sm7504871a34.20.2026.05.11.11.23.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 May 2026 11:23:09 -0700 (PDT)
+ Mon, 11 May 2026 11:23:07 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Mon, 11 May 2026 12:22:51 -0600
-Subject: [PATCH v6 20/35] target/mips: add Octeon MTM2 instruction
+Date: Mon, 11 May 2026 12:22:48 -0600
+Subject: [PATCH v6 17/35] target/mips: add Octeon MTP1 instruction
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260511-mips-octeon-missing-insns-v2-v6-20-5062889c4d3c@gmail.com>
+Message-Id: <20260511-mips-octeon-missing-insns-v2-v6-17-5062889c4d3c@gmail.com>
 References: <20260511-mips-octeon-missing-insns-v2-v6-0-5062889c4d3c@gmail.com>
 In-Reply-To: <20260511-mips-octeon-missing-insns-v2-v6-0-5062889c4d3c@gmail.com>
 To: qemu-devel@nongnu.org
@@ -82,8 +83,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>, 
  James Hilliard <james.hilliard1@gmail.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
- envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x331.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x32f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,50 +108,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-MTM2 loads the high Octeon3 multiplier operand pair from rs/rt into
-MPL[2] and MPL[5].
+MTP1 loads the middle Octeon3 partial-product pair from rs/rt into P[1]
+and P[4].
 
-This supplies the final operand pair consumed by the V3MULU multiplier
-helper.
+This completes the second guest-visible partial-product slot used by the
+Octeon multiplier helpers.
 
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
 Changes v2 -> v3:
-  - Split MTM2 out of the combined Octeon arithmetic and memory
+  - Split MTP1 out of the combined Octeon arithmetic and memory
     instruction patch.  (requested by Richard Henderson)
 
 Changes v3 -> v4:
-  - Describe the Octeon3 rs/rt MPL[2]/MPL[5] pair handled by the shared
-    MTM translator.
+  - Describe the Octeon3 rs/rt P[1]/P[4] pair handled by the shared MTP
+    translator.
 ---
  target/mips/tcg/octeon.decode      | 1 +
  target/mips/tcg/octeon_translate.c | 1 +
  2 files changed, 2 insertions(+)
 
 diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index c85199ae32..682473b011 100644
+index 59ab7401ab..670a12a956 100644
 --- a/target/mips/tcg/octeon.decode
 +++ b/target/mips/tcg/octeon.decode
-@@ -49,6 +49,7 @@ MTP0         011100 rs:5 rt:5 00000 00000 001001 &r2
- MTP1         011100 rs:5 rt:5 00000 00000 001010 &r2
- MTP2         011100 rs:5 rt:5 00000 00000 001011 &r2
- MTM1         011100 rs:5 rt:5 00000 00000 001100 &r2
-+MTM2         011100 rs:5 rt:5 00000 00000 001101 &r2
+@@ -46,6 +46,7 @@ SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
+ &r2          rs rt
+ MTM0         011100 rs:5 rt:5 00000 00000 001000 &r2
+ MTP0         011100 rs:5 rt:5 00000 00000 001001 &r2
++MTP1         011100 rs:5 rt:5 00000 00000 001010 &r2
  
  &saa         base rt
  @saa         ...... base:5 rt:5 ................ &saa
 diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index c9ea72d832..86b384d312 100644
+index 88f64e791d..3f954eb134 100644
 --- a/target/mips/tcg/octeon_translate.c
 +++ b/target/mips/tcg/octeon_translate.c
-@@ -292,6 +292,7 @@ TRANS(LWUX, trans_lx, MO_UL);
+@@ -292,3 +292,4 @@ TRANS(LWUX, trans_lx, MO_UL);
  TRANS(LDX,  trans_lx, MO_UQ);
  TRANS(MTM0, trans_mtm, 0);
- TRANS(MTM1, trans_mtm, 1);
-+TRANS(MTM2, trans_mtm, 2);
  TRANS(MTP0, trans_mtp, 0);
- TRANS(MTP1, trans_mtp, 1);
- TRANS(MTP2, trans_mtp, 2);
++TRANS(MTP1, trans_mtp, 1);
 
 -- 
 2.54.0
