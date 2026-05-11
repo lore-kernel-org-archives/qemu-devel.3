@@ -4,93 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B9D4CD37B5
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 10:38:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 304D3CD37AC
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 10:39:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMO1T-0005hY-1b; Mon, 11 May 2026 06:38:03 -0400
+	id 1wMO2o-0006PT-N8; Mon, 11 May 2026 06:39:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMO1R-0005hN-LT
- for qemu-devel@nongnu.org; Mon, 11 May 2026 06:38:01 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMO1P-0006V6-VP
- for qemu-devel@nongnu.org; Mon, 11 May 2026 06:38:01 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-488ff90d6c7so37421565e9.2
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 03:37:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778495878; x=1779100678; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Ck8f98L72hDFetAfly7qzyHYi3YozppaLyDUGNh5+cU=;
- b=w3QvsgrD/9Jp9ca2zJueZaZXhKbISPjQMQg6CQvuuccxnJUc62zDkrruMSa42TRblK
- XUn+/ei2jkM4NKyrK04kvvzAfjXdnMnSxs00lJ0dnhC5/2Dm6HDcbisaAhx29p5pg50e
- iIdcvJnSEOW5FwecdYjcp1PzJmr+DIRf3z1w/QjnHwM3brvCLfTJ0ZRFw9S9siABxex2
- nG82k2OeT2tBrJqnRQMRZ5xellr2hlrA699JFe+1jVTeXDq7mt4UHeT6/KWByobg1k/9
- 75HERpMGxkYFgjXG8+u8GPs72jmav0RH/+DAGtgc/W2+VCbCIegxbZb9x+w+YVqWIf3g
- A/UQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778495878; x=1779100678;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Ck8f98L72hDFetAfly7qzyHYi3YozppaLyDUGNh5+cU=;
- b=leMNXzZ0aq9cLDMoUuNdqWYxYcT5c+pcZIXVoMqIiVz/lDPuCtUJB/GWhc6Eb4aVCp
- 0hupFTbrlG1maVTeYdvWgR8SscpchzBmLxHnohHbe2vNNvmlWTeN3vlXFwA1GQBYLi7N
- sG+Umua6n3Z23mQBL6q+IiERAjxZV6FNDtzcto0HV14JDFS8gPgF7kNKIZrqDttT7E8b
- Dfff5v74EODdFqyRXpWATlVPZ+UiRxmvT0N5g8irhmZ7dYZzz5d8cMvsh1TGHpO4zCMC
- wtkGR06QTor3mirM6qNqsx98TBatU6mS/4nrGHd74V2M4kPLB4TrCmb84AR4LS2pKPtb
- L67w==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+MD4pYWNOxLLVaglPy9YsJcqr3ePnZa1i6jF4fEd2Hq9gVTMOptZ/o3YvJz/aV8YFeVNhyDS1lVs8Z@nongnu.org
-X-Gm-Message-State: AOJu0Yxs2SF+GKHc+xNmT1qLp6qf+LVdBgJF5ehkHhO/y5sKGC/+0kai
- wxRe1fJIc7U25cwPrOo3+Uvad+5l6eLCfR80w6tv3UZWualetE4lDte33eKtnTVJabc=
-X-Gm-Gg: Acq92OFhcenrj+iZL1VZwtnoYWoXDG5/N6NKY5VLlmJUGgp+LZCA5LOHyxPYRUXwoNZ
- RnTfc+IRB9kOkuJH1Xc/Rp+qJTMPgWSQIHhInSvJvLcEu/8lHgfd6yFCRkUlAl19lDLh5pzQeq1
- IZl8VPYx7RLs92zqTUyhxwV6bVhFLwjGZSYL51IBVMfMv09Bkqm9Riy2X0Sv3f1o9lKuc0Ql3y+
- 9+nsSH3LjSDClBB7mYJBmf6g5VWrCk+2z3rZ4Hta2U08wFTZZNny4Zf2y+5U9Z8BBy7SFQ+ynWR
- OeNF8B4QQHaDxjpgHOB9kpSARUF2hJqExP9ZQl7SHOR/h1/3UQHtQcXgEhV2ZZzQ5wdcssPXdzG
- V8JWAg/grNQyvArMFcIEHSQAaWY9ciCsMGT7ffn6OBK6yCKX4KTxVq8bEZzsWK/bKqtIyF4FCrZ
- G9SIaxBi5+hVB8WkQo5Fu90lNtm/JZNXZ3ktypqGbbgpt/WuokH7dd25OvENwF+8xUFA==
-X-Received: by 2002:a05:600c:c107:b0:48a:52d4:888c with SMTP id
- 5b1f17b1804b1-48e51e0bb23mr273870855e9.3.1778495878205; 
- Mon, 11 May 2026 03:37:58 -0700 (PDT)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e701e957asm178413615e9.6.2026.05.11.03.37.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 May 2026 03:37:57 -0700 (PDT)
-Message-ID: <6e03fe79-2071-444f-880c-332c53539978@linaro.org>
-Date: Mon, 11 May 2026 12:37:56 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wMO2j-0006Jd-Ap
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 06:39:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wMO2f-0006wO-TB
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 06:39:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778495956;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VOtf3ltj0xptCWK6dRhka6dLyu1oQ0gLZf9KH0NvEZc=;
+ b=OBK6rN6z+MiiUQ7ODSoXECzFCrPJY8dm201/Ar7P4285GWm2gwvudHoVFoIJbm0HD2ZRsh
+ qa5el98sJd/oZhtzvdq8fd9VKFQkptn0sjue2FMrdyo+hhlvLL3EJVMO9PUk3JUHlgP3wO
+ mJ5fbJ/PeDWApaF0PBIKmIofbaN/7P4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-591-IJV1rWcUOkWjpAwgn55Ohw-1; Mon,
+ 11 May 2026 06:39:14 -0400
+X-MC-Unique: IJV1rWcUOkWjpAwgn55Ohw-1
+X-Mimecast-MFC-AGG-ID: IJV1rWcUOkWjpAwgn55Ohw_1778495953
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B7E6719560B7; Mon, 11 May 2026 10:39:13 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.50.30])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3A93019560A2; Mon, 11 May 2026 10:39:11 +0000 (UTC)
+Date: Mon, 11 May 2026 11:39:07 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
 Subject: Re: [PATCH v2 02/10] qom: validate ID format when creating objects
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Message-ID: <agGxy4ezw3lZc7g1@redhat.com>
 References: <20260508112429.643360-1-berrange@redhat.com>
  <20260508112429.643360-3-berrange@redhat.com>
  <b3acf8bc-7ac1-4b4d-b7a4-4848b58ec51d@linaro.org>
-In-Reply-To: <b3acf8bc-7ac1-4b4d-b7a4-4848b58ec51d@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <b3acf8bc-7ac1-4b4d-b7a4-4848b58ec51d@linaro.org>
+User-Agent: Mutt/2.3.1 (2026-03-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,47 +86,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/5/26 12:35, Philippe Mathieu-Daudé wrote:
+On Mon, May 11, 2026 at 12:35:57PM +0200, Philippe Mathieu-Daudé wrote:
 > On 8/5/26 13:24, Daniel P. Berrangé wrote:
->> The object_new_with_props/propv methods failed to validate the ID string
->> format, thus diverging from user_creatable_add_type.
->>
->> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
->> ---
->>   qom/object.c | 9 +++++++++
->>   1 file changed, 9 insertions(+)
->>
->> diff --git a/qom/object.c b/qom/object.c
->> index 9c391071fb..62d2f0486a 100644
->> --- a/qom/object.c
->> +++ b/qom/object.c
->> @@ -24,6 +24,8 @@
->>   #include "qapi/forward-visitor.h"
->>   #include "qapi/qapi-builtin-visit.h"
->>   #include "qobject/qjson.h"
->> +#include "qemu/id.h"
->> +#include "qapi/qmp/qerror.h"
->>   #include "trace.h"
->>   /* TODO: replace QObject with a simpler visitor to avoid a dependency
->> @@ -764,6 +766,13 @@ Object *object_new_with_propv(const char *typename,
->>       ObjectClass *klass;
->>       UserCreatable *uc;
->> +    if (id != NULL && !id_wellformed(id)) {
->> +        error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "id", "an 
->> identifier");
->> +        error_append_hint(errp, "Identifiers consist of letters, 
->> digits, "
->> +                          "'-', '.', '_', starting with a letter.\n");
->> +        return NULL;
->> +    }
+> > The object_new_with_props/propv methods failed to validate the ID string
+> > format, thus diverging from user_creatable_add_type.
+> > 
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > ---
+> >   qom/object.c | 9 +++++++++
+> >   1 file changed, 9 insertions(+)
+> > 
+> > diff --git a/qom/object.c b/qom/object.c
+> > index 9c391071fb..62d2f0486a 100644
+> > --- a/qom/object.c
+> > +++ b/qom/object.c
+> > @@ -24,6 +24,8 @@
+> >   #include "qapi/forward-visitor.h"
+> >   #include "qapi/qapi-builtin-visit.h"
+> >   #include "qobject/qjson.h"
+> > +#include "qemu/id.h"
+> > +#include "qapi/qmp/qerror.h"
+> >   #include "trace.h"
+> >   /* TODO: replace QObject with a simpler visitor to avoid a dependency
+> > @@ -764,6 +766,13 @@ Object *object_new_with_propv(const char *typename,
+> >       ObjectClass *klass;
+> >       UserCreatable *uc;
+> > +    if (id != NULL && !id_wellformed(id)) {
+> > +        error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "id", "an identifier");
+> > +        error_append_hint(errp, "Identifiers consist of letters, digits, "
+> > +                          "'-', '.', '_', starting with a letter.\n");
+> > +        return NULL;
+> > +    }
 > 
 > Use a common object_identifier_is_well_formed() helper?
 
-I see the last patch of this series remove the duplication, so:
+At the end of this series, the only other use of id_wellformed in
+qom/object_interfaces.c is removed, so there is no need for an
+extracted helper method IMHO
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+> > +
+> >       klass = object_class_by_name(typename);
+> >       if (!klass) {
+> >           error_setg(errp, "invalid object type: %s", typename);
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
