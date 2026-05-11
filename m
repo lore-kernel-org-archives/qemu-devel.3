@@ -4,107 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA29FCD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 15:37:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD883CD37B2
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 15:42:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMSgN-0005OZ-NA; Mon, 11 May 2026 11:36:35 -0400
+	id 1wMSlS-0006LY-UY; Mon, 11 May 2026 11:41:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wMSgG-0005Ny-Uu
- for qemu-devel@nongnu.org; Mon, 11 May 2026 11:36:30 -0400
-Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wMSlR-0006LL-N1
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 11:41:49 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wMSgE-0000aL-Pi
- for qemu-devel@nongnu.org; Mon, 11 May 2026 11:36:28 -0400
-Received: by mail-yx1-xb12b.google.com with SMTP id
- 956f58d0204a3-651bc83e74aso4587599d50.2
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 08:36:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778513785; cv=none;
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wMSlM-0001ff-Eu
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 11:41:48 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-67b6a6bd7b8so9237933a12.0
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 08:41:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778514100; cv=none;
  d=google.com; s=arc-20240605;
- b=hk+mIGYAkuQl5zT57SM1D5Q3nJWBl6/6CCs6NU5kXTimlptSnGioruIuJkUfhd3YYg
- v6/DKf7wIANiPbzifMZAnBo5swCJg2crhyhMvIzv2Bh/hQoFJVO19MqNlDUG90aVRkD3
- Jdkkw7rQWtpdfzDPz1Na/NYGwEr5oaDcoy3Zoxlvks9F9UjxymoDtxAv2eFbJJT6cmx/
- FCMqhvbQDayhw7JdoMkTf+F1pXH/skFelftAqHPimZUpiZibRwIGpAOucMyNqMKZ4Cue
- JC4wB3c7kd+DA4asiNDb0JP6O7U0peAYAyVGWwQ2jNGJwJ4b3VVt3fG5ePTDN2qS/oC3
- ny6A==
+ b=e4Me0o71Y2sFdNv9z73JHeoAr+18VCf2u3d8PKFy7EmRMTnxkRJwl9mBP9mI3HUvdX
+ iQP2A2VQACt+otEe+kUswNlLz0MG1QRE/N/vzlgm6QZE3DDteZ+rFiDEuG7rcQS27GYl
+ uk5lahsPraT67pCTZHeCMXKYYKoBasXCVXHVismWSrufnfEVVIXc6/Rb0BGVAiuEfu35
+ GSbY/ChO9SpSmq0zUKbKolXG56xXww/utLXJ/pjrHfZO9MJzB/xQZyH+pSg8CEAsyfmw
+ SXV024ZaeMST5GZxLDgNoNFUAffjOpNS48zk5B8tjOu1Z6/YzoSSi+5fbSHptMYptSM7
+ bX+Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=UAXPTf+CBdH/seoN2jt9okJOk9gv4Sm3p0JA94C8E0Y=;
- fh=8jLQ9BF8TzoH/ErGnlkH4vSIZ9SpUVgmQkqZ4x0ADis=;
- b=lJBNKMaB6sbxZ68T2/fIVs0fiO9hP8qKpPrFIo59sE2eY2VkiGh4inQmG01AjwBhDt
- 7aUuuTsnK0ZP1SkmagGGxsj7O7fvuloyodcdL4vGJVdWPJI3lcxZM2v6GmgqTWn3e+GR
- 261NPIPHliNVhQuqm2hZklk/hfrb1RbnnBgw/Tt5nHwavb4dxSS5LiXryMNnZywbnZss
- ENvs0v3iNVwGSKctRx+EmBQF4lZqDus7x9P8kPQKcQP9WgTTvAGXYVRI0rYcZ1hlKTP3
- 29nB8xQ4ZlvtPgUBlJTylYJPkysZU0RQkvCQX3ywtmf9QLVjc3tmzKQJQao4mVdY/uPJ
- 3IFw==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=x8HibxC7ANepOUfH956M/7+a5HE2oRqSkUnPyUYliP4=;
+ fh=LB0Jf5c78D+DGLUBMeMmlBa74IwZzQF/oYRpwkzmAl0=;
+ b=bVajXfIGlal8vr2YS/t94x3RGgnl3L+aUZZrNsmzTcsYq3ooiqY4A0WuhP22reYqyE
+ ceVxnXLiH0/rQKnyIDXBCRvkmuUl7rcubFYGP/5iSrJUBzD37cCXbla04FSvP19fsAed
+ 83BHpHAbAs12kZNCoJB4Xm2MixYmt8747ORwvnXoqLpESaeZrXPlMGxZoRymEUYerEba
+ AACq9OMvrdk0VjhKtSJ5bR9GK8FBuM0C+rxYfgD5fPtLai5UOHKOOc2VLGmTmoyn9+Sg
+ onmF70GrczSv3Twuc21e2L5p0eT+AP4Otz6dGoQ/tUSxlzVJ30xuFRUYLn4OrN2Bm+1z
+ pGdA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778513785; x=1779118585; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=UAXPTf+CBdH/seoN2jt9okJOk9gv4Sm3p0JA94C8E0Y=;
- b=l8L8ZbtyyuzYBrDDCiKyo95HMujsmvNOFC+ClhrJss6WZmKlI0u+hE2mUMRsASIMFJ
- fu9E0OBxwfPHHPJ+wBaAc9kHIW9yOD1diawZIMuOrzfkF1x3ErcUNPD7v1tZAGKJpHeF
- 1bf8SA7WEX2rR3LAz6/+QPQXRGq5W8DFMc37TMCPEg+Gf+j4XrcPUJW17G6W0L2H4ueU
- v8Xe1HwM1guZhbw+80E1nGHuPUlp0k9VZXcM6G6ZZRoqOeyJji9SqiOOOEwVGWIYGQCc
- sZqvtK8Ou81iD7zNXkSKUt2zA2npAFdU6yYcCiAboM9X0ZF872/9yGO8qTMANUMGFXdy
- q14Q==
+ d=gmail.com; s=20251104; t=1778514100; x=1779118900; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=x8HibxC7ANepOUfH956M/7+a5HE2oRqSkUnPyUYliP4=;
+ b=s75HUwbAAHDDg76Hlp5Zg+BdiS0gXaJBU+t9i339ZCdpHm84RgyhmEBRPOI8DtR7qT
+ j+3SGqW9eNkofOnUuMTkMoy29zgIPHbWEcrwMgEaZrO8AZ+V59oWgVObfE/bKAqxXQ9u
+ XNk/LHy6gXVVqBKM0qMJyPlHmo8vJv/NSK5vKGYyIWUdQs9dzchXJL9j9s4eZPSK6GTe
+ YPIKUhPgbg/nFOE7XKIGZT5mjmoYkAD2SioZ+ObBKa/EObTYoixFrBtlLSZ1p+vbv+19
+ qGKUNp1FbEq02dIKOng+rYD34IKWyvMrBno1iLwUfr8EnWMXYl3WGmcJR7b84qPiYlsD
+ S3/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778513785; x=1779118585;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UAXPTf+CBdH/seoN2jt9okJOk9gv4Sm3p0JA94C8E0Y=;
- b=JlRsoyLYQX8N1zdmBm9EsA3S87H0qfkMAc0iOm+w/Q4H2tTekHo0qOcAy2gSQQs+Nt
- GtuNKfa/qFRSZO4joExxsgWJ95oj8eyBbfo3w8ywgnbhEXfuxLhIKtBS5XQg6mjFVV31
- gJvmaKMEWk8ZmanDvEelMRYphy3mQXP0ahQs+pw2TEtzrOuiYZKJCm1pO3ObUYl0CCLi
- EWVxxbR13jkQ78uZdBhwFyJQhVTP80z3sPHRIn2PuxUlAkPxM4XrYj0PYZfuqnb7djy+
- P6Ym9CNtlfrdDGpNCqSPkHX7GCc2iBsYZGusWPuB8zEsmQemDoLRgT/6RqVS9OUiPtyQ
- igUw==
-X-Gm-Message-State: AOJu0YwfyQn9xdhRa5KL/WgQ1BmevD3NSabYK+bC3ZZnZLt1/Xh8bKjg
- iFf8cCa71PvHGOflSakC7KjlPnf3c1WNdXw/M9MVp8WOaoYAlQyEpHDdUPA7+FuhQhtQzjvQmud
- DodM2eJc4kiJt3P51yJTXkzU79C1jueElc+df4O5VmA==
-X-Gm-Gg: Acq92OGq4oUIKdfNkveQCtvandqi6KlMaGCzTLge/dA8elU5NjJ/kiONzcE4DNN9hDD
- jeamduL2seiFLT5Qa+ENzTfgHHdo0VFAmDVzqJYWu+T4VSIPYk7ZJ4t4r6SQg0+SMsURKfwjSDg
- aMn56M4JJ1HHaZcaGUSTpTK6yVvY7abKvYBH+Wa7UR6AgHtmGoULD0roGfNBAxcewtITPVJGuui
- 5fly4eItZ2cedUkH0f09vw16C+0tJ1Mg5/hRkpBx0UQgNLkRxUpYDzbKeVCWGlyPQ3biR5OYr4h
- 8kIvqVZA0oU7ZF2mKTVWplMPPyGxjJOYA6YYChGT0Ziehc+5ZapbLRF/mX6cvcPUgqui8BOH7Zz
- Rwg==
-X-Received: by 2002:a05:690e:b4d:b0:65c:2ac8:ec43 with SMTP id
- 956f58d0204a3-65c79c962f5mr25447022d50.19.1778513785088; Mon, 11 May 2026
- 08:36:25 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1778514100; x=1779118900;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=x8HibxC7ANepOUfH956M/7+a5HE2oRqSkUnPyUYliP4=;
+ b=kZ90uy/agVPFYZogdqlJ/7kQJ5u6FSkcgFywAH/wPAfESHnZAdMP8+/jCjF3QUiTZz
+ dSdqzrIyLS3tQvZMbmwQ3dg36bzhMmW6n1YBraW/efUSrxmfb6CEOkOP3kCaNTtRN7H0
+ nAlzUq1qNHAtGT0FaJYSCYJ2u9yF6ewbw/XQnYFyhZzx44zFTrB7NC4QtTA++AIiP92A
+ KDP7yb2Q0OR0pwZjJHBNlKqusJ2PIHop8q5xTT8DLT/S3vHzWz5T/EH2PlVvDB6EuLUu
+ 4x9fgvgfhZLZAw3U353PCtnO69+/D7agll4XV/K3/0Cr9d5MfuB6scBEtBmIeDog/JDq
+ 49DQ==
+X-Gm-Message-State: AOJu0YzNujffbOcf+n55HiRZV/7D7ilrZpN+46DTjXBffqKeLLw+9WoO
+ ZiVp07WF2LoRzieg/TMcpPi+GSEBCEFgI5ccyDiaQuxQGMRQnD0r4XdSVGTL8FY7SklzglhtrWx
+ QDfWm3DEMTq1JbPBTJASRC1NDDBziD575P7FzQZg=
+X-Gm-Gg: Acq92OFdW6oqFXZ4dkK01Ox1bIxPQCPqCWpdl+iwujTjsuRDTzNE4yFX6RN7E3a5adW
+ x5VOG4tudVzUlgtjSul953RNFYSkK3pR0aDlAiDt4oFLMY4ywc4xPxBKmfRoVyUE48Vpjl2g/aD
+ N4RN/m4HZN/CGzvQIKMLsSPTzsDASzYlQiWRMyf70lHiqBfxGQH35O5Sdm54ciGv2vSzA6XR3Mf
+ RjwgYzd35xZjroo0v8NOFhSPHILwRXBa5XeYnwiKBG3DM7YpVvrp9OzogtzNGaT8NmL5JnEE/wm
+ WhrhrUaYDTt+oePfiGVkAUWGqWR/hX526KcrtA==
+X-Received: by 2002:aa7:d354:0:b0:678:a5d1:ca74 with SMTP id
+ 4fb4d7f45d1cf-680b35fe35cmr12881a12.16.1778514100138; Mon, 11 May 2026
+ 08:41:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260511141049.1293449-1-peterx@redhat.com>
- <CAFEAcA88Ui1tG0PEwbwSnSBMaywMJEy5bLLVwXvGdW_06pgJ0w@mail.gmail.com>
- <agHs1PcxZYJtba4W@x1.local> <agHzQnXFQbnam-RF@x1.local>
- <CAFEAcA8L_BgfHEUnJhWCJ9-aMPUadbvQWGrF2UAW8vE53JP=6A@mail.gmail.com>
- <agH19jdl3UYZeStj@x1.local>
-In-Reply-To: <agH19jdl3UYZeStj@x1.local>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 11 May 2026 16:36:13 +0100
-X-Gm-Features: AVHnY4JQSc0rnYnUBxAznQHPOxf88Ui8ZteeVZ1ECPNd6yeWW0sTnVtUTOaLYI0
-Message-ID: <CAFEAcA9TaEdhofTbR++PSV4PFxYZyapJSz2-fsqORNMG31ifdg@mail.gmail.com>
-Subject: Re: [PATCH] migration: Fix possible division by zero on calc expected
- downtime
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Juraj Marcin <jmarcin@redhat.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Mon, 11 May 2026 11:41:27 -0400
+X-Gm-Features: AVHnY4IuIfh1zmaM8BNAWNTaMQjozbPuvj2tl7nyOnQpjIzd9ML5F8EbaELEe98
+Message-ID: <CAJSP0QUsXh5uY4rOp7vK_6pK3ctCwGCHgtYXt4FLDSmBMj6VSQ@mail.gmail.com>
+Subject: QEMU 11.1 release schedule
+To: qemu-devel <qemu-devel@nongnu.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ mohamed@unpredictable.fr, Paolo Bonzini <pbonzini@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x534.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,28 +114,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 11 May 2026 at 16:30, Peter Xu <peterx@redhat.com> wrote:
->
-> On Mon, May 11, 2026 at 04:24:24PM +0100, Peter Maydell wrote:
-> > > This actually fails to fix the ubsan issue and I can still reproduce,
-> > > because the ubsan issue was a Nan reported, where it seems when Nan found
-> > > in normal such evaluations it'll return FALSE.  I'll need to use:
-> > >
-> > >         if (expected < (double)INT64_MAX) {
-> > >             return (int64_t)expected;
-> > >         }
-> > >
-> >
-> > Hmm, how do we get a NaN ?
->
-> When mbps is zero (when it reproduces here).  I have the comment in v2
-> explaining it.
+Hi,
+I am proposing the following dates for the QEMU 11.1 release schedule.
+Please let me know if you see any issues with public holidays,
+upstream/downstream releases, etc.
 
-Oh, I think I see -- we get the NaN if both s->mbps == 0 and
-also mig_stats.dirty_bytes_last_sync == 0, because that's 0 / 0,
-which is NaN. If only s->mbps == 0 but dirty_bytes_last_sync is
-not zero, then we get +Inf.
+I CCed everyone who had more than 100 commits merged since QEMU 10.2
+in order to bring this to the attention of the most active developers
+and maintainers.
 
-thanks
--- PMM
+2025-04-22 Beginning of development phase
+2026-07-07 Soft feature freeze. Only bug fixes after this point. All
+feature changes must be already in a sub maintainer tree and all pull
+requests from submaintainers must have been sent to the list by this
+date.
+2026-07-14 Hard feature freeze. Tag rc0
+2026-07-21 Tag rc1
+2026-07-28 Tag rc2
+2026-08-04 Tag rc3
+2026-08-11 Release, or tag rc4 if needed
+2026-08-18 Release, if we needed an rc4
+
+Here is the wiki page:
+https://wiki.qemu.org/Planning/11.1
+
+Stefan
 
