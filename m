@@ -4,91 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D86D0CD484A
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 14:09:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C797CD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 14:11:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMRFd-00087l-98; Mon, 11 May 2026 10:04:53 -0400
+	id 1wMRLY-0001Yy-8a; Mon, 11 May 2026 10:11:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wMRFZ-0007lE-K5
- for qemu-devel@nongnu.org; Mon, 11 May 2026 10:04:49 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wMRFY-0006zV-1D
- for qemu-devel@nongnu.org; Mon, 11 May 2026 10:04:49 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-c70ea5e9e9dso1770677a12.1
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 07:04:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wMRLW-0001Yh-DS
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 10:10:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wMRLU-0000L9-Ek
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 10:10:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778508655;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=HcAPiqx5eJPPFOYNfGrebOm8/lyFxBK3BtHtCBUaDzg=;
+ b=ClGHqrBzEFgfaMMEFwd5HVAuAg2NxpvRoCok1FyFrccWff/6fyBwMRAxWm867VxbflCpJR
+ zvl8GvAROSlTO/clZYbjAHShOmGCLnPxB1peiPzLIttYf6oKPs5z5Gd+shXxbDickfJh5/
+ W5G6aSlZRfsETWr5qiR5bpBFZsMxcCI=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-410-s77cXyIxNkeM7jN9Tr9XCw-1; Mon, 11 May 2026 10:10:54 -0400
+X-MC-Unique: s77cXyIxNkeM7jN9Tr9XCw-1
+X-Mimecast-MFC-AGG-ID: s77cXyIxNkeM7jN9Tr9XCw_1778508654
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-8d5b5d607d1so818083585a.3
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 07:10:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778508286; x=1779113086; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iQp4e741RWeqANR+AnBnweSrNx7Xk2H8EAfqd4DwHpY=;
- b=lnFtAMeOgDTH+s6TX1fs8wZfB8Vml9lbnQEPPOJuhiRwMou9+Scu1bVPcJZEQLjCx0
- VL0AcgTqpOjXIafX1cSd4s/+F/DwU3/FX1B/hK5iOVhCuCJbsWVFuDreeWPHVR1imqTz
- 02ZLNb9nxfyH6CTIx6spe+R9mIizdaBtwvaLYOWLpUocnxEidAakhl8Pa6htm1zmDOLi
- WBZxDqVW3N14rebFNHHr4qR5fb/BSoYZ+IJG1EV3rUj3sLoreDxkB/2uN9jNp1NfZvt0
- CjxPcHSARdor8ZbGlQTAenqDt4gmyYmGDjg81s3Sb66Q4TgipTg1hyrxVkg7+j4CfEoc
- TViQ==
+ d=redhat.com; s=google; t=1778508653; x=1779113453; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=HcAPiqx5eJPPFOYNfGrebOm8/lyFxBK3BtHtCBUaDzg=;
+ b=okWiApubFu0Ezz64k1XKYrCmcMorJmfLCLX0zW8WOqk9LM1s6cMl4mb0CuXcWPfUjs
+ ntyeBjPIxCqglKMcFSQNSGSCOcVjOsx0bMD2W+uQpx7pEnVGODX5XLXczeK1rVXSYwtP
+ X2NV4zaOMZMuiIoJMoARc5RVoHSCV4/fYznC112jRXxjdLu2wueEq+wbFjbzoo6G73tG
+ MzLrWO8SeE4LLWvMRARhGiOhiHRRXdiRzeEW53EGKf/lL9osfW4ilit2uUKKAgbw8d0R
+ zvRpQX82EhzUK+K60h6Q3uFva7wTHdJtkISce9ZXXx9Tcb+bcrwT6mAdQOXlP9LVBbB9
+ vDDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778508286; x=1779113086;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=iQp4e741RWeqANR+AnBnweSrNx7Xk2H8EAfqd4DwHpY=;
- b=iPiUG+tyTVhNv9OTbwcYiTPeAuAb14n3NDS/8VV3OuuGkVxaDyN9zVQMtUgBCuaJFE
- mSRBntCq1tjM5iW3G2VkIb4OIJCalEq7w5Ch52QrYedh7An3oSSxEMS4xiWYcddFFTlQ
- ZKoV0+eKqB0UWYEWg/5LHYqQqvAt2I/3ys5aKG7WNXsFq96P3sAa0mHzPqG8L1CtA0yj
- nej6Ntl/7mDbCKn1AriU9TFzTB0gI9C5/EYXgINd52DSBPLjHrsHm4gATxsySEBeTa0C
- 2uCS28mt1W/CUNZOwLxbEcR1DcBihgbL1lYnAWeXdb/hfhdahFKz+W3edE58FnQqJ6JX
- aKnQ==
-X-Gm-Message-State: AOJu0YwDTTAQCZVYdqRaaYOXQujdIkd4Id45R8XefvgVwtl6WkxidwKO
- YZtxKVuMMcowA1H9I/weJP8KyBJOUogq8PFBm1Ne42tSnkiedYFemq1irJBIcW4e3qU=
-X-Gm-Gg: Acq92OH05UOOhEHn5SAHx50MVtWxxxU4eKHzZyOKAZnORD3gBdRR2RE8UGBxoUlfCHS
- yGROXvGq5x0YTemEs+7lTwj6H0Pel8cnYZcpMbgtnRfT1cYa4pSKZUrtFnD8D1MyncXJ87GCc2+
- hxReVu/ztCs0gfcjg8jDHd4SJWsyEKsTbPNCzkxa9l9SsxzY/fs1a4coJIDeoJBdeNFi64e61as
- Kqm38hBecbelYg6ZscBtY40zYBiN4M4f2QJZlrYXKrm8NdSQoC44qjB7CcynjkQQ2uxSUz4dc14
- +YInXN9jm9dxugcdbfvjVpRM/8D0ksjdn5oOirPZ/Tg7soOupk63guL9i1Euwad5umQ+TFOl/C2
- 2spr8Mvn0VW28RLPT1e/uleljy9qizkJeSJ15Ybc0A6V3HR960z1yy85rKv5pd6ZtYP0Eibzuaz
- qdMbxiBQfqRowgL98UFW/59DxYbVQujhxiSQfRmDh5i7x8uJNbxF35u1N1
-X-Received: by 2002:a17:90b:2750:b0:364:a173:2d61 with SMTP id
- 98e67ed59e1d1-365abcf240fmr23421312a91.11.1778508285804; 
- Mon, 11 May 2026 07:04:45 -0700 (PDT)
-Received: from ZBMac-LWN10QXKQ0.taila0cd24.ts.net ([115.108.63.147])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2baf1e90854sm105113435ad.66.2026.05.11.07.04.41
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 11 May 2026 07:04:45 -0700 (PDT)
-From: Zhang Chen <zhangckid@gmail.com>
-To: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Zhang Chen <zhangckid@gmail.com>,
-	qemu-stable@nongnu.org
-Subject: [PATCH V7 01/14] qapi/misc: Fix missed query-iothreads items
-Date: Mon, 11 May 2026 22:04:03 +0800
-Message-ID: <20260511140416.28271-2-zhangckid@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20260511140416.28271-1-zhangckid@gmail.com>
-References: <20260511140416.28271-1-zhangckid@gmail.com>
+ d=1e100.net; s=20251104; t=1778508653; x=1779113453;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=HcAPiqx5eJPPFOYNfGrebOm8/lyFxBK3BtHtCBUaDzg=;
+ b=QaQk0TThpKDw69PTcSkru0RD4O8/ijIHV6crelgveJHJVSO3eNeMLmUeSu5iqii6Id
+ YXgtnEv/HtxI6bKeyYmmjqNu6/fflmfuOMyQWkiUQ9AFWWLKfeHEpA3X/ChVG+KkbZmL
+ YLqvPF1K9cDrggxL+5coa6FbeLkodvjoBA1BYULVTIlM3WTExx6ptOX6npbK3orMRQkV
+ bHfUTwvEIU5/EJIl2UbXE02m1RS3T8XPYhy0F0XHOc/9+KZDSYQfGrV/QqoB7Mzvo7Lu
+ Vs5+aQwRNyENuiPmnLBdV/6Mi0Na0GJJEGdVG8vCmgfL4knlb15bd7WfqHM76uMWcAD4
+ Ww1A==
+X-Gm-Message-State: AOJu0Yz7qjtCub+01JsPDrtzW23pSpDE0RBYSV4+ZJjyi36kEPuNju3B
+ cYUq1Ed0rpXBTnQSoj6ca0Q/EomMpFlaY82KiHd2KliXmxm+2OqWpEWgzb/4Fl9EPTVOY33+iOt
+ mhklhUNq6wdF5S3cfBWhXLT7c97K62fGqVzkjIRlJwQWwlNK4///4u+SQDye4HnyZxWOQb+h64F
+ mqZ8jLCdDyknUFhuYOa/HKCqc12Z04Yi55OhM7CQ==
+X-Gm-Gg: Acq92OG9UcA5tukIik+3424YtTOWJzqHxVhrZZKxJfFU/rMQaKm9VpeuPqcTKR6Hjc4
+ nuh5j8u2O7Z/im2SGBvTCt4wL359d7mgXA/aeNPHRBAfIOAXlfBJAr3COVKnqM5SHeDhSSaPvgt
+ bFuPXkT1/Wlv/k4pal3mfWAOCvv2cNKhE5AD9zDslpE3PBV+hG/3zzosBupWtRXcT6qEcw69rSM
+ 2SnKZhPsAZ3Q5RyDG5KUhJoRHRzjd141ASASBlEIHrzIbrO0fHol6uR1jIyWIk65PWfKvgWnlFr
+ OJ2i/TLsbzzKbHpyepjjZhfhJJkPlUk1CbAXGX7rs6IajTjHSrgQD2+HWFu5L/V9a0dEQWlTkw4
+ aqDxBkeUS3zGNmds79SwBQx5utMdkLf/mdjWoQL8v0Ao4
+X-Received: by 2002:a05:620a:29cf:b0:8eb:cbf8:85e7 with SMTP id
+ af79cd13be357-904d61ef7d4mr3535809585a.34.1778508653403; 
+ Mon, 11 May 2026 07:10:53 -0700 (PDT)
+X-Received: by 2002:a05:620a:29cf:b0:8eb:cbf8:85e7 with SMTP id
+ af79cd13be357-904d61ef7d4mr3535800885a.34.1778508652535; 
+ Mon, 11 May 2026 07:10:52 -0700 (PDT)
+Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-907b8e99ccfsm1073742385a.16.2026.05.11.07.10.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 11 May 2026 07:10:52 -0700 (PDT)
+From: Peter Xu <peterx@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Juraj Marcin <jmarcin@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH] migration: Fix possible division by zero on calc expected
+ downtime
+Date: Mon, 11 May 2026 10:10:49 -0400
+Message-ID: <20260511141049.1293449-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=zhangckid@gmail.com; helo=mail-pg1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,47 +114,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The example is incomplete: it misses members @poll-max-ns, @poll-grow,
-@poll-shrink, @aio-max-batch.  Messed up in commit 5fc00480ab1
-(monitor: add poll-* properties into query-iothreads result) and
-commit 1793ad0247c (iothread: add aio-max-batch parameter).
+Commit dd4fe8844b changed the reporting of expected downtime behavior, so
+that the value will be calculated on-demand.  One side effect on the change
+is QEMU will allow the calculation to happen anytime even if there's no
+transfer happening for a short while.
 
-cc: qemu-stable@nongnu.org
+PeterM reported an ubsan report from clang when running migration-test with
+aarch64 binary on x86_64 hosts.  I can also reproduce if I run the test
+concurrently so some of the src QEMU may not get chance to push any data,
+causing mbps to be 0:
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+../migration/migration.c:1051:12: runtime error: -nan is outside the range of representable values of type 'long'
+
+Fix it by checking mbps non-zero before the devision.
+
+Link: https://lore.kernel.org/r/CAFEAcA-MYH6C39xO0OLx4-M5pKurJpurwRsMqZe9q=W-NShAbw@mail.gmail.com
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Fixes: dd4fe8844b ("migration: Calculate expected downtime on demand")
+Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- qapi/misc.json | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ migration/migration.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/qapi/misc.json b/qapi/misc.json
-index 22b7afed9f..c71a5fe657 100644
---- a/qapi/misc.json
-+++ b/qapi/misc.json
-@@ -123,11 +123,19 @@
- #     <- { "return": [
- #              {
- #                 "id":"iothread0",
--#                 "thread-id":3134
-+#                 "thread-id":3134,
-+#                 "poll-max-ns":32768,
-+#                 "poll-grow":0,
-+#                 "poll-shrink":0,
-+#                 "aio-max-batch":0
- #              },
- #              {
- #                 "id":"iothread1",
--#                 "thread-id":3135
-+#                 "thread-id":3135,
-+#                 "poll-max-ns":32768,
-+#                 "poll-grow":0,
-+#                 "poll-shrink":0,
-+#                 "aio-max-batch":0
- #              }
- #           ]
- #        }
+diff --git a/migration/migration.c b/migration/migration.c
+index b6f78eb3ac..b06e577328 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1044,12 +1044,18 @@ static bool migrate_show_downtime(MigrationState *s)
+ /* Return expected downtime (unit: milliseconds) */
+ int64_t migration_downtime_calc_expected(MigrationState *s)
+ {
++    double bw;
++
+     if (mig_stats.dirty_sync_count <= 1) {
+         return migrate_downtime_limit();
+     }
+ 
+-    return mig_stats.dirty_bytes_last_sync /
+-        migration_get_switchover_bw(s) * 1000;
++    bw = migration_get_switchover_bw(s) * 1000;
++    if (!bw) {
++        return INT64_MAX;
++    }
++
++    return mig_stats.dirty_bytes_last_sync / bw;
+ }
+ 
+ static void populate_time_info(MigrationInfo *info, MigrationState *s)
 -- 
-2.49.0
+2.53.0
 
 
