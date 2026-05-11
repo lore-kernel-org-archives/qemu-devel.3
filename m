@@ -4,84 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B9C0CD37AC
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 10:22:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEAB7CD37AC
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 10:25:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMNmW-0007qZ-HY; Mon, 11 May 2026 06:22:37 -0400
+	id 1wMNop-0008Tv-Hp; Mon, 11 May 2026 06:24:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMNmO-0007j7-JT
- for qemu-devel@nongnu.org; Mon, 11 May 2026 06:22:31 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMNoo-0008Ti-3k
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 06:24:58 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMNmN-0007wX-2m
- for qemu-devel@nongnu.org; Mon, 11 May 2026 06:22:28 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-449d6c68ed8so3556010f8f.0
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 03:22:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMNom-0004JM-In
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 06:24:57 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-488af96f6b2so48376235e9.0
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 03:24:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778494945; x=1779099745; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=linaro.org; s=google; t=1778495095; x=1779099895; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=yEzqFqGz9+DUHekuN5+5IJroaXlbMa2pZ90ZSJVmTYU=;
- b=anOo97SvppIDyDPfJS3vt5FiVUXnlzmbYzkkbh7pV2Y1G7BhvVDlKq3w8+DcZgV+Bf
- vAi1Mgx/YkB2LfrHFXZtgwhUUHo73H3ch0+JTJ5zCntp1dZPktohnSCqG+pO4fLOHoa+
- bhALwvIsniNuoE7a01dTAIR17PXvAhUIomZ6k5ujSuW/Lylp0lUA9AYVC+dIDlxzKv9/
- dkXwjnNOromHAGK8WSVPeY/6/GmshkAIlUdJc/ey3JRC3A2BqkvAVZhOmfa+iyohMay6
- pKnzmHxapVxZ3XF7NORLcGG5oQq6AyShiw8SKOPeVq2vkMCSXwhPMdDKOHucONDj8H+R
- Dc7w==
+ bh=OnpIAZg96hwYNyhTXcZZufRbRj0hTzbD9Y3atUeAz0w=;
+ b=kK4bmh/8/YSmVr0f8XLzzWWCjdfcCvdWtE1ncU0h1f3TO6HdnK5M3DrK0Q5sdfPlVu
+ E1/keKLfHNuc8+F9JO8T5RzbE6PHvzyyKaNz3rJpNtiB5/OyVKbqoXnvFJinxSqfEOf4
+ Fm3QRnAfbRAuq4wrai79e6YjgJwZXH5yaiQuK75dU/mwVyo3+IBZjHOhKZ6ie/YWJxjF
+ vxf0rtVGD3x5y1NEbOCs2RjRe9X+b5D8OW38OkgfXmVQFMDSBDlj25R8S43EG4iHVagl
+ YCxI8CEwtSAxwSjGtWCZWKRF9Nkd0zzlIg53G8J9eEVPBT5n55pAeex6P/l0IOBlfkRh
+ AgNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778494945; x=1779099745;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=1e100.net; s=20251104; t=1778495095; x=1779099895;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=yEzqFqGz9+DUHekuN5+5IJroaXlbMa2pZ90ZSJVmTYU=;
- b=ISK5P/jkdsTtQP5Td1Q9uy62e58HQkE5T30pjou68nq4Z5cWNOU0m/iChahpUbQuGe
- XRX7VaOhAE+fYKAA+IlLY4zjd/1UqDyTctsQ/utE9/8F5X+syi+sINFfsEQaT/Jh8XUs
- yewXK+PaYB+SRvHTDusieRcd4DbNZxdLzdUMcxxb8L5/1N/cdqLlcoaGzs5AnuSeHRb4
- PvFy8HODVhJi7b81fmRHhRw+2eAzhDw7r3+N9yRlkPxjWJKQSyiL1tvhBMtilAqtcTVw
- cQTLKSfL01nzj2eoQvhqFJu9k9NIlGNLWRCXtwB3X5KQ4g0ZX6vsYJOv6cjvfpWxA1xi
- DApA==
+ bh=OnpIAZg96hwYNyhTXcZZufRbRj0hTzbD9Y3atUeAz0w=;
+ b=kOAv21rN+zMTJ470fUAGEOn62vbFe+LEjtsnqGP2ePTY7B4LC3LcPxKD+0CJe8YTu9
+ TUMF12t4OFY/kp46P6MkmXtoDnoKahy+VYlJDbUAdUtXaQPJK1jK2o/Tai+YAUWL1hRD
+ ereAV67jNyi59MvtMLp4t0wB9lfUrGswkiLBtizgU+X96qxalpWy2hTVbbGDRzyUrSQr
+ AsINZxbqFtI68ZE9hRPt3rEJmVzYkpLrnOAIzjTJut4K/6vMOGEsLTahpGLGoeno+gl5
+ Kz+T7QlUzGJxWL/y0sKz70tGxU7LJip7tcw0u11PQtpdPcgtQDd62GeY0Tpv7DadoQVt
+ Ux6g==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9+B58NfctrxVtmdlYZqGUjKqmu/hKgceh0n1BjvI4CBEh71Pf1Eag5/PXCltBrBP5d9nI8uRbe9cui@nongnu.org
-X-Gm-Message-State: AOJu0Yw3L44fdt6RMLcEQZ0BtK+m2aPNrmORkU53vWvkTY1inzJq0bGY
- K85bY3I8laVMfJEpqgVn/RJ2SzMWqlZGbq/6kKCBLxsSDus5/NPXDG7g+Uh6UvbJM3g=
-X-Gm-Gg: Acq92OH/Efz/R8fc/UCvc/K16k2efemCVrHMSJs1SR1SjOCfdd/ijvR7uES9/xUMp5G
- rqlcKq4R7rvpKF7R2ViIagBc9HSlTcPFI/5Vm9UrHvMhtP0LE00sALYuUOvklKrvee1tpL0DTVl
- bf+3Avk+9DmCMVe9G9nZ7KmyqZbyjS8J//oLrmrsJLQlGWi8UOp7NPb+IyQwvGPdGRwhKHaKesz
- CtldSdKD3/FMkp68QopP1gRAPDPbnLKIn6yDg6LmwlfIgms1Ne7CXtz19w2ebGb0jcmaIYd/n5B
- DN1n++Ocb2ZhVPVCtuXXl0xZFL4tAm8EmjsPtCGVYCIg8LjE5L4VCKQMHlx+1WNbp+ATYAnRsbo
- tLWEt/qTwk/jqVv0YFT2PbXVq04a0QIMF0mq53lhludkobMAt3Ri5dT+qpy8/0Iqy7N5RfPtX21
- QLf/ngntnKSi/7ZMFqUV4DGdJ4lsqFLctiF8/cpxjHP/aVfC5hyU5wXFMK8cNOtihnqAQt61AJd
- A0T
-X-Received: by 2002:a05:6000:1a8d:b0:449:c5e2:a8ad with SMTP id
- ffacd0b85a97d-45696ea700amr13892329f8f.11.1778494945321; 
- Mon, 11 May 2026 03:22:25 -0700 (PDT)
+ AFNElJ++Iy3Kg68Ma6xxt7Cs4e4K6yOLZ2PZj0zXR8/MjHOuTg0nX6pwgBlAjBhP3awxqh2EP/Jt24H48qND@nongnu.org
+X-Gm-Message-State: AOJu0YwTiNokOWQElRM61BpvLpfFS5k1f3TMXCjoau5+LWITXpWm5QHb
+ gwl2YXUrxq7laBXFb+Lj6qGnzTf9JcfKPBgrxru1t4ondj7LQhxlfxoc6DYQtq+z8/E=
+X-Gm-Gg: Acq92OHkrkhvYpR/tsJMLana/1g6apImdUs8bChqGaFdzD9ASAv5L06gbYDaDZ4ZkRB
+ O/o6zUfEf8yumBGnCNJcqxgDv7AeRbeW0pnHNr/gqdoEOaeMkFQdkIoKV0FQuI2O0DLQPQTOUAT
+ FtFs1j2ZDecmjvjux/9LChIZQSqlHUa7D6QKly4fPKrMbfz3Eu9VbiCfc4HAfHHgDfsQOpSSLrr
+ sWfal3SVzglHigALOST4QoZb337t4CJB0Va+nizOMqrptpA51w/XqmazyIa9VuqB08AMq1HJ/mc
+ wV0lBJL1LhMlQB1wL4gdVrN7noNlgbFt4OsTNIwl9YJ8gZyOjgcYX+EnkRgHqSGinCJYi29hhmP
+ YabqrysYK2n3WTWZyApUu9E0XgCaksOjhmVnj1m0dSId4YnUQBxBdC97paff0DwweFhMXVZIC+F
+ 8mNZm9Y53MrCupFXTun3+TSAHdj6wDMni8eMuqRDy8ulj3/yi9TJpECxn6JJnwN7MHJA==
+X-Received: by 2002:a05:600c:4fc4:b0:489:5022:39a4 with SMTP id
+ 5b1f17b1804b1-48e706ba591mr139689765e9.9.1778495094735; 
+ Mon, 11 May 2026 03:24:54 -0700 (PDT)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-458b3664e3esm8977775f8f.3.2026.05.11.03.22.24
+ 5b1f17b1804b1-48e702f48a8sm171447765e9.15.2026.05.11.03.24.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 May 2026 03:22:24 -0700 (PDT)
-Message-ID: <d569568a-8831-48f3-b8e6-665efce8650e@linaro.org>
-Date: Mon, 11 May 2026 12:22:24 +0200
+ Mon, 11 May 2026 03:24:54 -0700 (PDT)
+Message-ID: <652b601f-4bcc-43da-b652-9417143bd185@linaro.org>
+Date: Mon, 11 May 2026 12:24:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/rtc/mc146818rtc: Fix get_guest_rtc_ns() overflow bug
+Subject: Re: [PATCH v5 1/6] qom/object: register OBJECT and INTERFACE QOM
+ types before main
 Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>, Jinjie Ruan <ruanjinjie@huawei.com>, 
- peter.maydell@linaro.org, mst@redhat.com, qemu-devel@nongnu.org
-References: <20260114013257.3500578-1-ruanjinjie@huawei.com>
- <92cecc93-1f68-44f2-8d0b-934e868d3e2c@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Anton Johansson <anjo@rev.ng>
+References: <20260509005453.3984184-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260509005453.3984184-2-pierrick.bouvier@oss.qualcomm.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <92cecc93-1f68-44f2-8d0b-934e868d3e2c@redhat.com>
+In-Reply-To: <20260509005453.3984184-2-pierrick.bouvier@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,13 +108,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/5/26 09:06, Paolo Bonzini wrote:
+On 9/5/26 02:54, Pierrick Bouvier wrote:
+> Those types are special, as they are the base of all other QOM types. In
+> next commit, we'll introduce an extra step in module initialization for
+> target-info-* types.
+> 
+> However, those types depend on TYPE_OBJECT, which is only registered
+> at MODULE_INIT_QOM step.
+> 
+> To avoid having to introduce another step, and modify all code calling
+> module_call_init(MODULE_INIT_QOM), we simply register those base types
+> directly in the static constructor, before anything else.
 
-> I have also considered changing the function to return a struct 
-> timespec.  I didn't like it too much because struct timespec uses a 
-> time_t which is possibly 32-bit.  Now, QEMU is probably broken for Y2038 
-> anyway, but having time_t dependencies in device emulation code is not 
-> great; at least mktimegm and gmtime_r could be rewritten easily.
+Clever!
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Worth tracking in GitLab issues?
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+>   qom/object.c | 4 +---
+>   1 file changed, 1 insertion(+), 3 deletions(-)
+
 
