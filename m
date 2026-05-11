@@ -4,114 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBC1CCD37AC
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 13:32:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 589B1CD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 13:33:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMPwe-0003Oq-Sv; Mon, 11 May 2026 08:41:12 -0400
+	id 1wMQha-00019U-UH; Mon, 11 May 2026 09:29:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1wMPwY-0003OU-4X
- for qemu-devel@nongnu.org; Mon, 11 May 2026 08:41:06 -0400
-Received: from mail-westus3azlp170120001.outbound.protection.outlook.com
- ([2a01:111:f403:c107::1] helo=PH8PR06CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wMQhX-00017C-6J
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 09:29:39 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.K@amd.com>) id 1wMPwW-0003rz-0m
- for qemu-devel@nongnu.org; Mon, 11 May 2026 08:41:05 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=VA7Kgbq/J5xgvDbvAg3zA4c7RRAqcX9X/x9FGIlEfoWuQ3LAopu6fZ8nerQS9UrSOy0u/FYkq6MMGGNVhKPsE53jmoyJhazSZ4C1uVUvGqoAEGQBEfOM0Sy2HogsQPx4ZXyxz/j3jOAP0y2GHfsdnXArmTd1CuCm89FRh98qZsGkHMQ7Y/cdSy3k9shltgE/TabOLhTgRBdZDv5S+fQ2ciPlGr6StwvCCVMokQErhubJOTBvcujpzGIBm8aFcBSc+wVlW0BWIqdBp8FfdJPFDw4a8P/cFwGwx24icXnXa8BSa/dRBsUJ1Ev5ebNjR/LJG3r6BRGw95NJiNdNmedkcQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=S5OwHnAWVM04WBVJ4uXYlg5PTUvN+OAwYYRVBlDS71I=;
- b=ys6U37y0OXQX8y3tKq3WHww1ZV+CSDQj71ms+hrIgfJmzSOWx2aGb92wvvpHgZ59uFvucycnPNuG91YhyFttoyppTNbs0dvAMmjX+S34iA93xdg3XXEKm9fRZ7msFODpFOgXmavLnp1N/yEt73nNKeviF/bwbxAFfa07/+yuD80G6OxNzQmcpvC3xnFcUAaWnjZ4Djl8KAZ/LAAKYFZYoaEHkTxAr3CA1jDB8qZV796wvSYZjaxe8rhKhaU6kquyl65c1igXWOxUIUQ5cnnBku4L7soX6PmCUuAqOwLlqsNWuS2HqXw8rkmEbWy3l8KGPdqAY2NeJlUhWv2TMmZxuA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=S5OwHnAWVM04WBVJ4uXYlg5PTUvN+OAwYYRVBlDS71I=;
- b=bTDlAIJHOsxdAJyd80yYkdTJsdjvZy9nUwh70dDijlW08N6gsw0qC+rqJzwWNjwXDgoV9UBjn9hRRdOpeTbrxZ1RihofQd23Ni2LCmOP/0ESk9DgG4Ogzr4DCA94YHKvugH2lw4df1HOe5A42El66Nb9OE/4NtpUyoPAGWYHOP4=
-Received: from SA1P222CA0122.NAMP222.PROD.OUTLOOK.COM (2603:10b6:806:3c5::17)
- by PH8PR12MB7025.namprd12.prod.outlook.com (2603:10b6:510:1bc::22)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.16; Mon, 11 May
- 2026 12:40:58 +0000
-Received: from SN1PEPF000397B4.namprd05.prod.outlook.com
- (2603:10b6:806:3c5:cafe::5) by SA1P222CA0122.outlook.office365.com
- (2603:10b6:806:3c5::17) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9891.23 via Frontend Transport; Mon,
- 11 May 2026 12:40:58 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- SN1PEPF000397B4.mail.protection.outlook.com (10.167.248.58) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.25.13 via Frontend Transport; Mon, 11 May 2026 12:40:58 +0000
-Received: from BLR-L1-SARUNKOD.amd.com (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Mon, 11 May
- 2026 07:40:54 -0500
-From: Sairaj Kodilkar <sarunkod@amd.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>, Alejandro Jimenez
- <alejandro.j.jimenez@oracle.com>, Ani Sinha <anisinha@redhat.com>, "Eduardo
- Habkost" <eduardo@habkost.net>, Igor Mammedov <imammedo@redhat.com>, "Marcel
- Apfelbaum" <marcel.apfelbaum@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, Sairaj Kodilkar
- <sarunkod@amd.com>, <qemu-devel@nongnu.org>
-CC: <vasant.hegde@amd.com>, <suravee.suthikulpanit@amd.com>
-Subject: [PATCH 1/8] tests/acpi: x86: Allow IVRS acpi table changes
-Date: Mon, 11 May 2026 18:09:30 +0530
-Message-ID: <20260511123937.32743-2-sarunkod@amd.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260511123937.32743-1-sarunkod@amd.com>
-References: <20260511123937.32743-1-sarunkod@amd.com>
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wMQhU-0007fh-O1
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 09:29:38 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64B9IQoc652833
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 13:29:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=SLbv6MDUf+4
+ G2Kgsyl41mILD1CKeErPTGKb/n1tKYdU=; b=Zd3oWNfB89qAudl6Kxd725cy+Bo
+ k+sx2YC+yfQW3cltlnzTte8SUdCNerTT2i3jaCDPWAdl/zqjtcwuz2ZjbtqnURSG
+ sCarJjmYDxRIcry35LGeDMyd+d5VADPzb9KGMss31v3aZw2TfGOxRWrKKAM/dr5k
+ b4Neie2a6CiMmTPjnZ353SuqYl2fdUzBs4azLK1H27hcxpwsiuUSF1uYvbmPpWo8
+ IlSp0/XyydfMjeZPwTtohlffH0ONgjxerBAzjQrsBFMAE8ffV3EExqd0rPBaYLJY
+ zi5auHCJhwwVHLy52Jrbs6W5mzyFd7gr6BanvrnDcx25p9nQchfeZSgAHUg==
+Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
+ [209.85.217.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e37xu9vng-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 13:29:35 +0000 (GMT)
+Received: by mail-vs1-f71.google.com with SMTP id
+ ada2fe7eead31-6333021c63fso1391617137.2
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 06:29:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1778506175; x=1779110975; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SLbv6MDUf+4G2Kgsyl41mILD1CKeErPTGKb/n1tKYdU=;
+ b=WLo6hVoTkEX5dZKyXw60CrDsiPMGB59ORqHxGRvDusk1CepoTOpUbkW5mEGTsIaOfk
+ F6fiJGIFUAKB7HEsdDLMDCqDPnr3CQL7mBtofbvnyjTGa/qKmKxCV7MyR69eESxmpnWN
+ lLAlCCxMSDE/eD4TAWHo9j1wkgiRucZu9oeXP05TgLf9pgr5caGy2mOJ76e7lBxgQa9t
+ I2PBvZXG5QirEN3nGxtXhrN3Jq5aDXg7vOp522YVtNC7+3Fx6ABqYn5qwtqYiHU1rRub
+ CRwISB53AakITZMUqCUuOoJuHw2YiIUSzCT3avgpY1lM25ZjXc98nDfA/xrY5iHXjqry
+ In0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778506175; x=1779110975;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=SLbv6MDUf+4G2Kgsyl41mILD1CKeErPTGKb/n1tKYdU=;
+ b=ZkJriPWA5wYqL68zDCwpiQQUNzaTC1/JTJWK29aCW/Gt7IAnnn1TvnWbW/G8V/wkHZ
+ beui+Mz+AF/Lm8dukmULJtlNalLSdFb9ywgqs8vq/B9BsBGrVmFclVlYLDSNW8XP7/r2
+ cB1zjJ0UZvfkzWxcqVr1FIP/McwIkg+AM8yVbyUNo7R0JX4IkDLvz85LyDjxmqXlAJse
+ C8LrxNyL5AbxNSIOktQIU4lEpbJrM0eODMn2d2FdORvDo682YJ87K5IPIcqeifpYp6vL
+ U4D8ahzZZcqSpjxjc/2DU6cOyP7x/fFqqG326hTudDMf5hTswb5+vVDMMLf40fYX1Liz
+ v5Xg==
+X-Gm-Message-State: AOJu0YwpAcWlMLadgmx0nqU7tJQCOVL0tp1XnvZGTCxLcf28q53lrCcZ
+ AfjOjOFqO++gqxJbaJ1K9UxRkusHLwy1eMg+nSbEt2BEMPy6AnDrO/Bx2ckzy4Sjg58ogsXYLi+
+ PPJZtUFoDkuVu30BL5p50lWlxYu8ultPOcUbPeeCZYLalQT2RgaMS7fPMwNN8MXzFSQ==
+X-Gm-Gg: Acq92OGVOf+khbOPaKMQGMArUpcxhIRvF8a8yB2GiyB0HDuxeMKE8zvJG+ys3eZKgfs
+ Id4csFvRuwbfFKenPwdL7P1PT3g8HIblBqzRKe+APW1IE9/3Ok9V297nml2zHgIAuZbbzsJR8/o
+ nqxC5561uOAoVP44GNZXBlhM0QAYr3O4uziMwT1y5PldQNWZKlaM6WJrqihcZPmk7qDzZqGiAuv
+ rMTbz6wqGmnkVwCL971MSJfUcGn1xlbzj1efXWtJgEIxIegvidBGA/G2/rEou60dwZJI6W11lrI
+ 1yLgigHaF8JY/5I9BqqfXA75RiEd5fpXTj3ZdmZSEDaiNrWTuN4bD3LpGlmIt1qOlNqRHynWwy4
+ ho56w5lh0gG1bRH8SB77gxfcYArUL3LT0+izkkRNTNXomP2SGriNqPrTYD6SU
+X-Received: by 2002:a05:6102:2ad5:b0:631:4580:6a4c with SMTP id
+ ada2fe7eead31-63145807548mr5831612137.14.1778506174718; 
+ Mon, 11 May 2026 06:29:34 -0700 (PDT)
+X-Received: by 2002:a05:6102:2ad5:b0:631:4580:6a4c with SMTP id
+ ada2fe7eead31-63145807548mr5831598137.14.1778506174326; 
+ Mon, 11 May 2026 06:29:34 -0700 (PDT)
+Received: from QCOM-UWl2o8bcGT.qualcomm.com ([191.202.238.222])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8bf39c81b3fsm95250326d6.29.2026.05.11.06.29.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 11 May 2026 06:29:33 -0700 (PDT)
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: [PATCH 09/13] target/riscv/tcg: use isa_edata_arr[] to enable max exts
+Date: Mon, 11 May 2026 10:29:06 -0300
+Message-ID: <20260511132910.1738069-10-daniel.barboza@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260511132910.1738069-1-daniel.barboza@oss.qualcomm.com>
+References: <20260511132910.1738069-1-daniel.barboza@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN1PEPF000397B4:EE_|PH8PR12MB7025:EE_
-X-MS-Office365-Filtering-Correlation-Id: 17048ce6-ca85-43ef-5c49-08deaf5a8d2f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|376014|36860700016|1800799024|56012099003|22082099003|18002099003|921020|11063799003;
-X-Microsoft-Antispam-Message-Info: YMrzh1gBiZ9RTmSC0cxpKUQUWywW3pmAKGVjdUan2Mmd2H7whtRC8lt1qd0nhIaH2uF2R6ekDxa9ugP2k2az7ofZp4SMEPVgUd7XAyUho7D48/WfRk26RtBiuhrtrZ0t9TnCPrABW7+wTJmsBGmgBD0JV3k6LhuU8f+K61c41uNI2GFN5NH+3suCMQY8mlwa8Z2Qh+z3KI840QUnPUV6UzB6vRTwOPv7GR7CmN6ueSC9ZHmar6iiMheP17vzzgRzqEMVdDXTmH34YgJU2nyMm/0ezBHk/0XIPbxL/ek4cEFAlrcNUHOgGF42nT7FNTE7o8+xJtqbWuDCyq4voyr3adInTebb+h3HA6D3mUCoeW52GYjdlPuHlxIKkOF7wwUBw2g69pdkmN18m2ExHO5CePicB/fq26EZiSF31x0t/AwOz8Hxefk20/2HJBBDoiZ+DFrAU99sB5zsLDJz45eAOLhT51bRFr1cacThIclDRTTmSGw/0BwIi8PVw5TGRfwLhk06gqHAj+VA59DfRd9wQmXlxLzKDaFBlBn0O8FToIrORjAGISALYYF00Uuf1tQtG4NNDuUkcXQVrMyyqvJrJiFVSGSdJIzgzjghmQGvDWET2/xrMPgCOBZtJw+sXOZwLGww3uXTPJG3Qyr7X+xE+qmafiWKHsDaa66fb5jWJip2bAKsHLNOIxciA0f10DKTNrjAVhxqxvlOApE9OZrr5pHIKe+qelQH7f/T2W1DkJFfpr43jo2RYxkPHbg9yAqpSZ+gOQrdpIsV/ED9ZndlFw==
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(82310400026)(376014)(36860700016)(1800799024)(56012099003)(22082099003)(18002099003)(921020)(11063799003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 5+oGDL7DUvMnqALhtym8YNaH5D17ywLVYOe8dD5W372jNUdoVtzAAtPWs+OAbcg1XKSvJ9F8TG2peVUAJUd11E5QAMGtlQ0nZuW63Y/DUcF2Kl5WnNO5h0SZBDLdi42yYkkTyEZ5YJ8BeohpOntdYQueBCFL8IPY8WyYByy7kJjDP4CjWSSpDqVGozY3eZDfvBWQOUKkeQiDHYe49z9sk5SWFdmQQka/XgZZ69TsPPuSFON2HEkxyF0cfAyCPvTbWVlR+BIKWSVPj3ZiwyyIMjx6Aq+Z/WMVkwRL+DK0GCi+SK/ncG18xhJuEokcSgi6A1CMpXv0gXr+7/6ESgLrTa/u7vwRI4xn2o9AhMqIll+/nQ35dV15Gwbdad782XMnUK1PI6uWQW7DUWjH4yW52sjNxADQyHO1LpOjS575ML7y3P7h/63jhpI5rRHEZOqd
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 May 2026 12:40:58.3480 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 17048ce6-ca85-43ef-5c49-08deaf5a8d2f
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF000397B4.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7025
-Received-SPF: permerror client-ip=2a01:111:f403:c107::1;
- envelope-from=Sairaj.K@amd.com;
- helo=PH8PR06CU001.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-Authority-Analysis: v=2.4 cv=EcL4hvmC c=1 sm=1 tr=0 ts=6a01d9bf cx=c_pps
+ a=P2rfLEam3zuxRRdjJWA2cw==:117 a=etEqFfc6qwXwpI8uT8rzbw==:17
+ a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=EUspDBNiAAAA:8
+ a=GeI1Fvk0TT0tVSHP69sA:9 a=ODZdjJIeia2B_SHc_B0f:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDE0OSBTYWx0ZWRfX5QGQjdj2/8tC
+ AA6g1h+G3PgUCCD0qKd2ygv0OLFA00b10jq4xW4aGHk6xPBDnMA4rR/FPtUSmX+ItkddWEBOWB8
+ KGz+5UyqqGcVmn8OiJbuXimoih7aZlFAfXPUqhGkeU+7qxCawfFwcgYklAgyi/oJjfpotpXAioU
+ KHG7FcT7NTINOuMBMmxJIoJdqU6Ge4WEYIK0S6FYtW+Oh+k2wLo1q5GHTkBfXaBGrhlgYQ/NC9X
+ lxaQj+xQsX28nGKkdwaeRY+fy0iXiOOomh7oR8nA/W0I3U9WK0Tzy+z4NSHK6U3wmkA2HgqQIuP
+ PeV2ADCiizEwC4Ua7lgFXvxg1XJvLQpw0TZBecxdsc6XW/60BsKzBuWRf9YczRu2fFMticbkT+U
+ etPvqdRxhHBfuewwPEtIuoQ4MLAVDUDGqEo/LtrpEuFWokb+CKSYQPsNHwHnVwDm/ZX9F7SuM5J
+ I7cp2x6CcvUZiahv8kA==
+X-Proofpoint-ORIG-GUID: UWtPH-QmvNwVYp9XB_377lBaInIZQ9-A
+X-Proofpoint-GUID: UWtPH-QmvNwVYp9XB_377lBaInIZQ9-A
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-11_04,2026-05-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 bulkscore=0 adultscore=0 spamscore=0 impostorscore=0
+ lowpriorityscore=0 clxscore=1015 malwarescore=0 phishscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605110149
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,19 +145,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
----
- tests/qtest/bios-tables-test-allowed-diff.h | 1 +
- 1 file changed, 1 insertion(+)
+Use isa_edata_arr[] to enable all feasible extensions.  Filter
+experimental and vendor extensions by checking if the riscv,isa or the
+prop name starts with 'x'.
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8bf4..33e998165591 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,2 @@
- /* List of comma-separated changed AML files to ignore */
-+tests/data/acpi/x86/q35/IVRS.ivrs
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+---
+ target/riscv/tcg/tcg-cpu.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index e17203dbb0..12c28f5b7a 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -1559,13 +1559,18 @@ static void riscv_init_max_cpu_extensions(Object *obj)
+ {
+     RISCVCPU *cpu = RISCV_CPU(obj);
+     CPURISCVState *env = &cpu->env;
+-    const RISCVCPUMultiExtConfig *prop;
++    const RISCVIsaExtData *edata;
+ 
+     /* Enable RVG and RVV that are disabled by default */
+     riscv_cpu_set_misa_ext(env, env->misa_ext | RVB | RVG | RVV);
+ 
+-    for (prop = riscv_cpu_extensions; prop && prop->name; prop++) {
+-        isa_ext_update_enabled(cpu, prop->offset, true);
++    for (edata = isa_edata_arr; edata && edata->name; edata++) {
++        if (edata->name[0] == 'x'
++            || (edata->prop_name && edata->prop_name[0] == 'x')) {
++            continue;
++        }
++
++        isa_ext_update_enabled(cpu, edata->ext_enable_offset, true);
+     }
+ 
+     /*
 -- 
-2.34.1
+2.43.0
 
 
