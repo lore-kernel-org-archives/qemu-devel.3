@@ -4,57 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1284CCD484E
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 20:22:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CC18CD4855
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 20:22:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMX8J-0001mC-FE; Mon, 11 May 2026 16:21:43 -0400
+	id 1wMX8K-0001n4-7q; Mon, 11 May 2026 16:21:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wMX8H-0001jP-7d
- for qemu-devel@nongnu.org; Mon, 11 May 2026 16:21:41 -0400
+ id 1wMX8I-0001kX-IQ
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 16:21:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wMX8F-0001q6-1x
- for qemu-devel@nongnu.org; Mon, 11 May 2026 16:21:40 -0400
+ id 1wMX8G-0001qI-UA
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 16:21:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778530898;
+ s=mimecast20190719; t=1778530900;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=C4Mb8GE/GJL7hhpoIefqu6tZRIvl1ozEdnQQ06TJf5M=;
- b=CwT1h3ZyO8tQHaq2GPdUmySr6KQefaAhUM7Edgj/z00Cu0upzo4l9Jj1pAPbgtfxFMCwzg
- Q+qojqMmHyoDfO1DCuJgPyFr30Eu7NLTv+km7HG1mBMnyq4AsBLA6DF+cY9wbn935H1fmP
- J8SDn9lIXqibwbLkyHwc6vG1fZGV4io=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=0DVIqgt4ZxibSTGq0lCCHRhM1b3/sOlzkp6SNbD+lxU=;
+ b=IS9Bl9hc4s0pZ4ycV17OG4do68uywuCyE7NI/lHO+czsyk7YyrBE9v6Qkibs6/eZ4QRS/y
+ 28WaK/iJ15RIUN+FVnG489ONDP0zwXThQspoEsuXibKZYSnW8mQi4hdQspWRm2kkkI3osH
+ DVGRDDaByrped8CthTqtCqAu5X0ouCQ=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-418-mlec2B5qNleERu3swWFmLQ-1; Mon,
- 11 May 2026 16:21:33 -0400
-X-MC-Unique: mlec2B5qNleERu3swWFmLQ-1
-X-Mimecast-MFC-AGG-ID: mlec2B5qNleERu3swWFmLQ_1778530892
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-252-qZgkE65hM3GRmOhr-ev7Gg-1; Mon,
+ 11 May 2026 16:21:38 -0400
+X-MC-Unique: qZgkE65hM3GRmOhr-ev7Gg-1
+X-Mimecast-MFC-AGG-ID: qZgkE65hM3GRmOhr-ev7Gg_1778530897
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 79EE319560B2; Mon, 11 May 2026 20:21:32 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ADD46195609D
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 20:21:37 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1D22D18004A3; Mon, 11 May 2026 20:21:30 +0000 (UTC)
+ id 67D3118004A3; Mon, 11 May 2026 20:21:35 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- jag.raman@oracle.com, Elena Ufimtseva <elena.ufimtseva@oracle.com>
-Subject: [PULL 03/24] hw/remote: guard listener unregister in finalize
-Date: Tue, 12 May 2026 00:20:49 +0400
-Message-ID: <20260511202111.3091440-4-marcandre.lureau@redhat.com>
+ peterx@redhat.com,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 04/24] io/net-listener: move mutex init to instance_init
+Date: Tue, 12 May 2026 00:20:50 +0400
+Message-ID: <20260511202111.3091440-5-marcandre.lureau@redhat.com>
 In-Reply-To: <20260511202111.3091440-1-marcandre.lureau@redhat.com>
 References: <20260511202111.3091440-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
@@ -88,32 +90,59 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Guard the unregister by checking whether the listener callback was
-set, which only happens right before registration.
+The QIONetListener mutex is initialized in the convenience
+constructor qio_net_listener_new() rather than in an instance_init.
+This means a bare object_new(TYPE_QIO_NET_LISTENER) produces an
+object with an uninitialized mutex, but instance_finalize
+unconditionally calls qemu_mutex_destroy() on it, which aborts.
 
-Cc: jag.raman@oracle.com
-Fixes: c7d80c7c1d9 ("multi-process: Associate fd of a PCIDevice with its object")
-Reviewed-by: Jagannathan Raman <jag.raman@oracle.com>
+Move the mutex initialization to a proper instance_init so that init
+and finalize are always paired regardless of how the object is
+created.
+
+Fixes: 9d86181874a ("qio: Protect NetListener callback with mutex")
+Cc: peterx@redhat.com
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/remote/remote-obj.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ io/net-listener.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/hw/remote/remote-obj.c b/hw/remote/remote-obj.c
-index 86192dc8dad..4e74ae76158 100644
---- a/hw/remote/remote-obj.c
-+++ b/hw/remote/remote-obj.c
-@@ -154,7 +154,9 @@ static void remote_object_finalize(Object *obj)
-     RemoteObjectClass *k = REMOTE_OBJECT_GET_CLASS(obj);
-     RemoteObject *o = REMOTE_OBJECT(obj);
+diff --git a/io/net-listener.c b/io/net-listener.c
+index 9410d72da9c..1fd0f6cb5ab 100644
+--- a/io/net-listener.c
++++ b/io/net-listener.c
+@@ -38,7 +38,6 @@ QIONetListener *qio_net_listener_new(void)
+     QIONetListener *listener;
  
--    device_listener_unregister(&o->listener);
-+    if (o->listener.unrealize) {
-+        device_listener_unregister(&o->listener);
-+    }
+     listener = QIO_NET_LISTENER(object_new(TYPE_QIO_NET_LISTENER));
+-    qemu_mutex_init(&listener->lock);
+     return listener;
+ }
  
-     if (o->ioc) {
-         qio_channel_shutdown(o->ioc, QIO_CHANNEL_SHUTDOWN_BOTH, NULL);
+@@ -440,6 +439,13 @@ qio_net_listener_get_local_address(QIONetListener *listener, size_t n,
+     return qio_channel_socket_get_local_address(sioc, errp);
+ }
+ 
++static void qio_net_listener_instance_init(Object *obj)
++{
++    QIONetListener *listener = QIO_NET_LISTENER(obj);
++
++    qemu_mutex_init(&listener->lock);
++}
++
+ static void qio_net_listener_finalize(Object *obj)
+ {
+     QIONetListener *listener = QIO_NET_LISTENER(obj);
+@@ -463,6 +469,7 @@ static const TypeInfo qio_net_listener_info = {
+     .parent = TYPE_OBJECT,
+     .name = TYPE_QIO_NET_LISTENER,
+     .instance_size = sizeof(QIONetListener),
++    .instance_init = qio_net_listener_instance_init,
+     .instance_finalize = qio_net_listener_finalize,
+ };
+ 
 -- 
 2.54.0
 
