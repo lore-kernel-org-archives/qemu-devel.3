@@ -4,137 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C67ACCD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 21:08:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3B1BCD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 21:53:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMXqe-0006Ec-KH; Mon, 11 May 2026 17:07:33 -0400
+	id 1wMYZ6-00069j-LP; Mon, 11 May 2026 17:53:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
- id 1wMXqU-0006DL-TE
- for qemu-devel@nongnu.org; Mon, 11 May 2026 17:07:23 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1wMYZ2-00066q-Vr; Mon, 11 May 2026 17:53:26 -0400
+Received: from mail-westeuropeazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::3] helo=AS8PR04CU009.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
- id 1wMXqS-0002Hf-3c
- for qemu-devel@nongnu.org; Mon, 11 May 2026 17:07:21 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64BK7TDF868141
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 21:07:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- bwQECDQ0yVLCK072h5Y8guHZwZ94T+3iT4RDRyPV+aM=; b=QCpdisJh27voQsfq
- s8j4CJSJBi0cmByI9N+ZYdsn15dkVty5Ayjfgmt2SkQVMYtpHVzbKNS6SEdhmXMf
- QqtY4wZMje/SYeYZ1+4FjvHY0CXoM9E8TcU3oAV+UIMJu1Tl7vnE7qJqpWxR5neb
- 0Sh+9CoqLpRYM8Al4wtRkhO5F43EL+dsa9G+hVGHx0VAfTGdfmR5kRPhrwPLCZQh
- WBK94t85xWzWF0naCaKxQul70IhF7OD1xJpmSS4AHxn6qF9X8g2oc9pkXQ2DLuuA
- zPfzWVY6+CGTQjXAMRBNmI1H3w6BFh+KuXXG5YiE/ly6LERnUYcczJwoNjDvr/Nf
- R4J30Q==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e3nv286aj-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 21:07:17 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-2ef62078ee7so6325448eec.0
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 14:07:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778533637; x=1779138437; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=bwQECDQ0yVLCK072h5Y8guHZwZ94T+3iT4RDRyPV+aM=;
- b=GIwenBYAFXJiyVaRshZR+PgSzD/i68GHiGr8gTMCSin0zV7YQPACSvjx8L9+vfijdc
- +u7eAMIXs0vSB5+5h6TkYr1dKGkgGGGN/Hu945Q/sFgU9bGuLEo1mSBJymMKw1lhNfNm
- S/+V/8VsUYURCzpx4zSZc32emlJYS8DOSAsisOkku2EiDApvY0tNvnuDUmAQWvVitV6G
- /HeXYtJamNUWHCw9Rj8VJUAODD9/lp7ynikwCoUuqADQTy1cXzmfvVJJG5zzRWPLIN7U
- jWx5mLgfX7vK5zQ7RSmkAz4m2EhC66ZllMQt3e1WYXEyCV7xoMtiQx9yFPlnbLTTAGzu
- THeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778533637; x=1779138437;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bwQECDQ0yVLCK072h5Y8guHZwZ94T+3iT4RDRyPV+aM=;
- b=rEDhgsBRAFuElwIFMjwaNZAZ43OC/uoOCh6btAfH80t77ok4+4xvJ2ZzC5nGEgSQRw
- OQXfNmRdoCXWympuG0vISPYaSfnpH4g3Cs7Sc5TmmFsP8bot5R1ab2OUoXquxvAHSyNE
- iz113KjF4pdndvKCJfhv6+aJqVRmPT+Ikvl35++tHoxA33gYK5TKZ4+zVyQw4/v+eiFs
- esbzBfujS7zmkuT+MyVXW7eN82fQa/I4mpynwgwl3LgnKTVLDWTGd4RpdO96dtzeldIG
- 5nEFHjOb+BzLqK5medTyYy/MaF5S4Ppt/30nn7WwvyCUXQT6zUnYgSSCcpcaqZpuR0gd
- 0Mrg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/Yd405BfLAdJIbEYO1m/B9rnrOtWSTLIUD9UUNughUcNSDqAE13bY2+B+d6hpgYyzw4XUOLcHykMFd@nongnu.org
-X-Gm-Message-State: AOJu0YxwudQifpF1Cei3GAit7l1ZsPUGdG+qgPOGakk/KDEhZvxamUCh
- hCvzBRBMEg8gzO4+TuLL+WmjSjxLRcVvWO5VderHH16so8R8ZB+lwL9Us1CxTRvXwBPzKQa/vX0
- Hjz+QyoDA3MpPSMCHtgQmvtnl26LyfX3rqYH4RdK3CPUfT1IgCp7RDZ0fTA==
-X-Gm-Gg: Acq92OGOv1ocpUWPkgpou4ustrytLmo3JZDajZ7k2aDX8JX3tpek1aalWi3AE14Ozkg
- JQO8Kbh8NQ7tJ5EvbCHk8P55E4VeKI5vQODc4/vkt8ZSZaxrJCbGLb1PPtRRdsETZyZEBIj/ENe
- zXe0UKuzO3NcOjaXd9HCuFPdGdA4A5n7plPzG4G4XwA85mU3kmTFhIhNP75m0Lcuc78+JL6NQzO
- 5yJyq+Iv8IdsZfaNjhR7Ab9z2DgFUFxA32119KYaCjrkVLiRAnXfdOE2hAD0RukNla0R5sml6rP
- fZHRvgRisNydVFEPHvdkT+xIbRGLFAb6OvYiEOHId6B8KFvVlRyqgMyXrWTwj8+IBkJwpUoHFgT
- DipzIlcqGzihWwrX0cOvviJ7Z6aX6/EPYMNpRzfEQ8A==
-X-Received: by 2002:a05:7022:e14:b0:132:5d96:3e48 with SMTP id
- a92af1059eb24-133452ac9ffmr185972c88.38.1778533636955; 
- Mon, 11 May 2026 14:07:16 -0700 (PDT)
-X-Received: by 2002:a05:7022:e14:b0:132:5d96:3e48 with SMTP id
- a92af1059eb24-133452ac9ffmr185943c88.38.1778533636244; 
- Mon, 11 May 2026 14:07:16 -0700 (PDT)
-Received: from localhost ([140.82.166.162]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-132787673ffsm20332452c88.15.2026.05.11.14.07.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 May 2026 14:07:15 -0700 (PDT)
-Date: Mon, 11 May 2026 16:07:14 -0500
-From: Andrew Jones <andrew.jones@oss.qualcomm.com>
-To: Tomasz Jeznach <tjeznach@rivosinc.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com,
- palmer@dabbelt.com, daniel.barboza@oss.qualcomm.com
-Subject: Re: [PATCH] hw/riscv/riscv-iommu: Fix Svnapot 64KB pages
-Message-ID: <7srjvclfyeoh56ofulv74vajeb2xx6abtnupmsofjzooljw4jl@mifjgm6kzhfh>
-References: <20260508205129.377032-1-andrew.jones@oss.qualcomm.com>
- <h6bbn25obwet4wvv5u4pjtdsndqjsywzsh5kojpv34ow73p5b7@vqnlfxfwbaqv>
- <CAH2o1u6XGcfXrAqREzAFQfi7uX3vStEjWKUdutESPgJdzhbKdA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1wMYYz-0004PH-9R; Mon, 11 May 2026 17:53:23 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=qgHsLJH+aDpH2igCG90jgEg81ut53BoZJ1rtE42NTPmy7TVMoy53Oz/TvS1fHASYLTTkY4GgCZ105cBlg+NAZKKmvhkFDlABY5dTmJWfSfPimxR5+mVsyZUs1zkQa3XKi1AZR4dldu321WOXcdO5PWg/zRR2/ZiqwT7cPFusgHftT/qK6ESn2vSPAIsMqKB1UTecSv+PLew5gDenlp00xIhZ+PqOcSwOUEfNAseDoeV0fdHXEWHE9HoI0JJbVLQtom7RiBZOc3MwKkSKierAJo1wf9VbPwEajzEv7S/wQJmCaHiKiY9/YZGW3j0qO1VCKq0e6JT4cjGGFGzMWZD5Ag==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=zDR2bXIP9D80TwKvGExqgJcR4VMsfOZgzivKcTIhk+k=;
+ b=JyfdOFhF0ru7BxUxDVx+6JBqownSr7MDqpcJlAict7GOhcZjwSEdHrgWodDR3gCxh3xQYjiA94d+Zr/ajLuY2bKX+9r/K828wbxlTWu0TKgoDsVQp8PeJqVQoQI/D3U7lYZfD2R523XZzh+o/elY0PWqllUrkcbN4DcLVp5KlGfFap3WlnlAOfcEMg+Sj636tF5Fx57r4eykC5QPaUSFGpz87AqIVuCBTOHcEj7oKlcRPFQiw1+vb5/Xv82nt69bPsvtjrcjMSEIRMiBQiagZ91UTc/Rv7+f4UhdcvndMOqVbrGzhI5WrzVfhnnjZA8IjC7Bud9bw0HT2tyiwfavNQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=zDR2bXIP9D80TwKvGExqgJcR4VMsfOZgzivKcTIhk+k=;
+ b=N0jUmhQ7KkR896+pC81NIy7MuWTfkBqRLS62TTT+tWZT8cdNXHnGsoc8nWO2zsmRl4TGNERtZAsRqEwEi0H3t6oH05IzKjJovj5jg5xnj5wYTmAs39WHQA5Wshb9xHoAfgq/EuEOuNaKF9q2V6Z3SdUclsAUNmdcZw7chDGuJvDQ/6z6PXJFyx673razcGw+AzrMjr5QfkjziSPJ0wif8rBQGka++fzJXTpXn6IoZtoV3zsNrb92sLxVwy0g6n023R7uFyG7L+WMzOlhpY9SbaUefYtCMgIoovyH9afxAJZeKh4abc0qeVy0R8BxhV5vC92a8T7o77wKjejlFkLtZQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
+ by PA4PR08MB6160.eurprd08.prod.outlook.com (2603:10a6:102:e5::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9913.11; Mon, 11 May
+ 2026 21:53:14 +0000
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd%4]) with mapi id 15.20.9913.009; Mon, 11 May 2026
+ 21:53:14 +0000
+Message-ID: <11911eb1-9917-4ff9-adcc-f339246e2ff8@virtuozzo.com>
+Date: Mon, 11 May 2026 23:53:12 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/1] qemu-img: add sub-command --remove-all to
+ 'qemu-img bitmap'
+To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>
+References: <20260424105949.254757-1-den@openvz.org>
+Content-Language: en-US
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <20260424105949.254757-1-den@openvz.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: VI1PR04CA0089.eurprd04.prod.outlook.com
+ (2603:10a6:803:64::24) To AM9PR08MB5892.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2dd::16)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAH2o1u6XGcfXrAqREzAFQfi7uX3vStEjWKUdutESPgJdzhbKdA@mail.gmail.com>
-X-Proofpoint-GUID: 00KpjwHRWD_WQI8jrzVnsKgCiRX-yYVk
-X-Authority-Analysis: v=2.4 cv=Mv9iLWae c=1 sm=1 tr=0 ts=6a024506 cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=cvcws7F5//HeuvjG1O1erQ==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=69wJf7TsAAAA:8 a=f-PZU8siZNvP0ST5edwA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=bBxd6f-gb0O0v-kibOvt:22
- a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-ORIG-GUID: 00KpjwHRWD_WQI8jrzVnsKgCiRX-yYVk
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDIyNCBTYWx0ZWRfX82uRW/Wy1Ic0
- VvhhDelU1Sjem1fYoFOIlpByD9nWCWUg898bsXXxZJfVtl5gnK8plRgVuORDhmKqUAmFq2Hqga3
- RldxFfBOe8EDwjubwDtKLDE1YqGpVMO+/h80+Wta302wqljTKFkCY07IRjHf3iZzfZHTBYaz0bF
- QVZ+vsZ8jrzgAfO87uu/ofA5hO0LbT10j7HqDHZ5U+9hNWfVJwKAtIw+KDdG5147tZi4qtJe2wS
- mhIQq+DLzh9EcKHWXPpXWe1yTJ6RmeOVRfzRWOc6eZqpv0FxXj9s7T2/D7KsD5Ye1CZ5WrJdoTk
- jPvq4z1n0caShMWh49xxE/u4GADj2m1n/FejiXzdGsJbAWa2ceXNmfHuIA+4kPHIPGOzEDFaN9q
- IM3IwaZvNQSa+ZhMFjBxDZDDnaIvMeSFsz8deCk1+qagHF7Iz/zRVTTOxtkjnIuJ3a/h6wHv+zw
- cLLH+BqbLeR9Y6D/Mgg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-11_05,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 malwarescore=0 priorityscore=1501 lowpriorityscore=0
- clxscore=1015 phishscore=0 spamscore=0 suspectscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605050000 definitions=main-2605110224
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=andrew.jones@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|PA4PR08MB6160:EE_
+X-MS-Office365-Filtering-Correlation-Id: 07d84970-1786-481e-57f4-08deafa7b36c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|10070799003|1800799024|366016|22082099003|56012099003|18002099003|3023799003;
+X-Microsoft-Antispam-Message-Info: kGXjWCZBqIXUKz0UzT+q6WkCcNzULde5ttW1LmonBVR1MUIspbVZq4N/YGzxNTBR1cGs9EDEvwMsD++ZcUzMi4U2YYEtsoWRTE2mI/lWaBBztlVimQufIa8h4KSpa0FJ/Lb9IrvqbpjcpYsqL3CMR8A8PrAs/jCA+sPQhGs0Rxpbyzt+eC4olqgI3+t9pkPIUTcFHnBB9Ys4WxZH9mXwXaaMbL0BxJnzFF6K/8/nz4paih4OG1tUkNk8MBQ6EPOewu8Ehcr9zd60tSlGrGYp9AQx41Y8i1rdjkIvtS6Ve99QJvFpRLy7WVIN54Xtie4QdZUni1hdoog5gRsXWbKrxZLxUJPvHRzluRXFA7q7hxn9tsHzUf+QfsgcCt3cuEJKQovQ5L4DutFrtvclw/toUGeUlB0gz169TFm509Zi0Q4ARVouNNnRwcdoL2OMGFhbTz91PttJ8biKkFRW9ce1oglWxYsjTCCNElVbmOaAd33MY+1JFcYi5z5MtonX/5ujQyBbSxqCGR+Dw6bX2zesxdnA2mppIztcRdSL4HI7BJUeCrzslnES1zTJU8lDhzfB+rrYvhU/pkKzTMuQMAAkAwEb6adEkGrrz8AOS7YMQ3HfplMIb31shW/ihssLfoE1uwcOHn2H9gODC1KN4VXAAiH/Yd9fR6Y624OTkW05hRCfTuvM690yVtGsbEwZwrqY
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(10070799003)(1800799024)(366016)(22082099003)(56012099003)(18002099003)(3023799003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bk9mdDNTaVBrckNFR0d0eFM3WkRIZVlZQmtBUGFBQXU5dXpJWmFOOVlrc0Vq?=
+ =?utf-8?B?aTNiLyswMnVEUCtFNG5Jc0Z6djJzSW1FNFErODh2QnBZdytQd2lzOWJobDUz?=
+ =?utf-8?B?bDFTbkhDejc3N2dGbVJIN0JHdWc1dm1zK1Eyd0h5TVNXRHp1RDJUUnJ4UzdE?=
+ =?utf-8?B?ZFRwVU1rNkg4WFBKV3hiU0kzSDRzOWhXZTZSOEhHa2I5aU5hMUhoWHlVeUV5?=
+ =?utf-8?B?S3MzR2xHdVNXR3l5d3lBOEpvWnhibkdwR3p4TUpJZ3pBRjNOTFFRaW1tSDd0?=
+ =?utf-8?B?V0RNNTZjaDg2NXZ6YUFZZE9hUmJGenN4dU9sQWtMS3I4dVU1Sndqa3ZoVXpU?=
+ =?utf-8?B?aUU3YzVQMk55cExvQndjdDJQSzZNMUJiMVc0L0hJL3cxNzF6ZFU4R1FzMjh5?=
+ =?utf-8?B?ZHhGdEFLaElhdkNKU0JwUVZvQm9xdlducENFNURWeFJpN3pxb1lnd2JheURr?=
+ =?utf-8?B?VENiMFMyeWRIUXFmYTdMNkgzMHdrSnhxZjlhNlhyWVVnNWNYdkV5aXM5RFdz?=
+ =?utf-8?B?ZmNpSUdrM0M5TGFMekxGMzdPTU5LKy92T003NkxQNGFsVnJDemE4dU1yeG8w?=
+ =?utf-8?B?Z3MrbWp3TWNZakErczFwOVNUV205OVh5eTlIMHpvaTZLbU9EaklwZFRDS1dJ?=
+ =?utf-8?B?UURFQUhWc2h1NDhtQVhidUQyOE43bzZFTENucklBM2lYWlROMHJPditHYlpp?=
+ =?utf-8?B?dUhRUjdiVHFWcHNQQXpmWjh3L1VxdlV3WmtuL0VQYjlKYnhIVm52YkJ2UTMz?=
+ =?utf-8?B?YUFoZEI5WUxvZ3Q5YkZ6UE9lV3d4LzBvT3ZWUkt1Y2pmbmpaY1UzS1MydU55?=
+ =?utf-8?B?NkhkVXNYNkZGanZ3RVdvWmNjK1NIVnNtbmN1VkJ5ODEwSkpLaGsvVFJNQkdY?=
+ =?utf-8?B?dDhqR2J1THVKSm9UUlY5S2lBOC8xcGY0T2JqSXQxbDJ3UVNIemY5V3RrdE1Y?=
+ =?utf-8?B?dm9DSUlSM2V1bVpZMnRHTW9uVGJ1N3BjNXZCVW13SFBSSmVId1FtNnVzcVEy?=
+ =?utf-8?B?NExNQ0pxN3pHSGwvaUxaNnZlakYvZURJT2o0c1pJK0Q3YzllSjZoU3VzNEJy?=
+ =?utf-8?B?OFVDN3BQUGRnWG1QaUxhUWpMYjc2bHY5eWozNW5zckdXMzUyODhPWURVL3F0?=
+ =?utf-8?B?VmVmVGQ0RzNISHlkb2NOT0sreHYrRm45RzNIS2VobGdyN2sySUY5dXA5aTBu?=
+ =?utf-8?B?aDEvNmtOcGo5bzdOVmRxM1d4MU8rWExQcjArRitzaXJzZWtpQStYbit1RERR?=
+ =?utf-8?B?aEJOYkRIZmhyVVg4aHhodmpNNG01MDgwZXp4akZGVU1UYWMvRkNUN2J2Q0ow?=
+ =?utf-8?B?Nm9SZnpjbnhxc2haZTRhUThVWW05bzZzNkNybTVPWnVPcndrUlpxbCtIcGdP?=
+ =?utf-8?B?UCtJOGxLOWxBNXpsbzVIblR2QTZWRTVmZTVzUHdNdC9mTjl1V3RxSTJxdDla?=
+ =?utf-8?B?UndoVEErak9FWWhUS2ljZVNmQkhxYVB2ckI0VDdXS29VMGYxRnRNTDZJNElO?=
+ =?utf-8?B?bm9sbGJIS2JjcU41bllBcSt4Q1VWYzYxSHg3anZFbzNEK3dyOXYrK1RiMjl3?=
+ =?utf-8?B?aStGNkZ4djh2WHRiWVVQUXpxdzhQVDlKZzJwR09TRzEvTWMramZoN3hjK24y?=
+ =?utf-8?B?WkprU3V3M3IyTnN5cWVGdU5rSzBzblUrTEp0eDNhOEdVSmk0dVRpU0pKOWg1?=
+ =?utf-8?B?elI3d25lc25RL3FqeGZQRjNHZW96Y3htUWdzWWxQRVBnWVdTWWcxNmhPQUll?=
+ =?utf-8?B?cGUxcDlnUEhFbFg5eEYxcFJ6U0Z1MzF2QVBNc01aemR6dHVHb29Na0ZpWnVh?=
+ =?utf-8?B?bnhiQ0d1WUJTOHYvcVJmcU82Y0MzV2xEa1Y1NlZ2ai9XM3dxeHBHQ05KcVlF?=
+ =?utf-8?B?bERVVllxSTl1eHpmSVhpVEJyTk1YQjZVWmZSUUxmdDRrNlM0N2FkbklGK1Bm?=
+ =?utf-8?B?SXZ4OEx4UnJldEk0d0pDL2V6SE54NWdUZ2FmcloxRVJaSzlQZUVlUDg1U3RF?=
+ =?utf-8?B?MDByS2YzQ3ZFeExuNnYvTHNWWG1MdjZQdW9UMFB6cm1idlJuclQ0TVVWbkFy?=
+ =?utf-8?B?SmFRcitHaEFQUW12TXYxbGlBbVRlTjZnRmcwNDhqZm1abCtJRXRLQVR5aDR4?=
+ =?utf-8?B?V0RUZExnSlhVRkVZVll5bktZd3NHVTVWNkdmKzkrVlkrVFpzUWgvR2lCS010?=
+ =?utf-8?B?V2NOYUhqZTFVWnFFRk53Y084Qjh0U0N1b2liZXVMQ1VLNnVBYnRJRGgwMHp2?=
+ =?utf-8?B?U2Z2SnUxc21BRHNpODF0dTdMYjM1Y3ZIYkZnTTFwSkdTUjJPZG1HTWNaVGdp?=
+ =?utf-8?B?YnNHc3VSalpNRnRDTjFWbDBXSW40ODhmYk92UFFTdmRucCtLOEVuMWcwNGQy?=
+ =?utf-8?Q?tJUkIyn2R+xhlB3szyztzt4UPjbZIDpBNAqczsiHh20M4?=
+X-MS-Exchange-AntiSpam-MessageData-1: n8GsQeXOI1uyOg==
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 07d84970-1786-481e-57f4-08deafa7b36c
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 May 2026 21:53:14.1315 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: OqK5E0z7xS2AA2aeS2FaeCn94mKiBNBkz8L1Q7yVys1xVThOurRZZcft4lK3ZpcOutcm9B62gXp048JMxn1yWQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR08MB6160
+Received-SPF: pass client-ip=2a01:111:f403:c201::3;
+ envelope-from=den@virtuozzo.com;
+ helo=AS8PR04CU009.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -151,105 +152,217 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 11, 2026 at 10:20:32AM -0700, Tomasz Jeznach wrote:
-> Hi Drew,
-> 
-> On Fri, May 8, 2026 at 2:29 PM Andrew Jones
-> <andrew.jones@oss.qualcomm.com> wrote:
-> >
-> > On Fri, May 08, 2026 at 03:51:29PM -0500, Andrew Jones wrote:
-> > > The Svnapot extension encodes a 64KB leaf PTE by setting PTE_N and
-> > > storing bits [3:0] of the PPN as a NAPOT size indicator. The IOMMU
-> > > model wasn't checking PTE_N and therefore was using the raw (NAPOT-
-> > > encoded) PPN directly in the physical address, yielding an address
-> > > 32 KB above the correct base.
-> > >
-> > > Fix both riscv_iommu_spa_fetch() and pdt_memory_read() by mirroring
-> > > the Svnapot handling already present in target/riscv/cpu_helper.c:
-> > >
-> > >   napot_bits  = ctz64(ppn) + 1          /* 4 for 64KB */
-> > >   napot_mask  = (1 << napot_bits) - 1   /* 0xF */
-> > >   phys_base   = PPN_PHYS(ppn & ~napot_mask)
-> > >   page_offset = addr & (PPN_PHYS(napot_mask) | (TARGET_PAGE_SIZE - 1))
-> > >
-> > > The spec only defines napot_bits == 4 (64KB); any other value is
-> > > treated as a reserved encoding.
-> > >
-> > > This is a fix, rather than new feature support, because the spec
-> > > says "IOMMU implementations must support the Svnapot standard
-> > > extension for NAPOT Translation Contiguity."
-> > >
-> > > Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
-> > > Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
-> >
-> > I should have added
-> >
-> > Cc: qemu-stable@nongnu.org
-> >
-> > because as soon as [1] is merged into Linux Linux will no longer boot
-> > on any QEMU build without this patch.
-> >
-> > [1] https://lore.kernel.org/all/20260508212339.381933-1-andrew.jones@oss.qualcomm.com/
-> >
-> > Thanks,
-> > drew
-> >
-> > > ---
-> > >  hw/riscv/riscv-iommu.c | 44 ++++++++++++++++++++++++++++++++++++++----
-> > >  1 file changed, 40 insertions(+), 4 deletions(-)
-> > >
-> > > diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> > > index 25a356d1d366..eb09cc974812 100644
-> > > --- a/hw/riscv/riscv-iommu.c
-> > > +++ b/hw/riscv/riscv-iommu.c
-> > > @@ -237,6 +237,25 @@ static bool riscv_iommu_msi_check(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-> > >      return true;
-> > >  }
-> > >
-> > > +/* Returns the NAPOT page mask, or 0 for reserved encodings. */
-> > > +static hwaddr riscv_iommu_napot_page_mask(hwaddr ppn, hwaddr addr, hwaddr *out)
-> > > +{
-> > > +    int napot_bits = ctz64(ppn) + 1;
-> > > +    hwaddr napot_mask, page_mask;
-> > > +
-> > > +    /* The spec only defines 64KB (napot_bits == 4) */
-> > > +    if (napot_bits != 4) {
-> > > +        return 0;
-> > > +    }
-> > > +
-> > > +    napot_mask = (1ULL << napot_bits) - 1;
-> > > +    page_mask = PPN_PHYS(napot_mask) | (TARGET_PAGE_SIZE - 1);
-> > > +
-> > > +    *out = PPN_PHYS(ppn & ~napot_mask) | (addr & page_mask);
-> > > +
-> > > +    return page_mask;
-> > > +}
-> > > +
-> > >  /*
-> > >   * RISCV IOMMU Address Translation Lookup - Page Table Walk
-> > >   *
-> > > @@ -458,9 +477,20 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-> > >          } else {
-> > >              /* Leaf PTE, translation completed. */
-> > >              sc[pass].step = sc[pass].levels;
-> > > -            base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
-> > > -            /* Update address mask based on smallest translation granularity */
-> > > -            iotlb->addr_mask &= (1ULL << va_skip) - 1;
-> > > +
-> > > +            if (pte & PTE_N) {
-> 
-> Would it be worth checking PTE_N only on the last level page table
-> entry (sc[pass].step == sc[pass].levels at the start of the block)?
+On 4/24/26 12:59, Denis V. Lunev wrote:
+> From time to time it is needed to remove all bitmaps from the image.
+> Before this patch the process is not very convenient. One should
+> perform
+>     qemu-img info
+> and parse the output to obtain all names. After that one should
+> sequentially call
+>     qemu-img bitmap --remove
+> for each present bitmap.
 >
-
-Hi Tomasz,
-
-I don't think we need it since we can't get here with non-zero napot bits
-on a superpage due to the "Misaligned PPN" check above. And, if we get
-past that and PTE_N is erroneously set, then we'll break from the loop
-when riscv_iommu_napot_page_mask() returns zero, allowing us to fault on
-the bad napot entry.
-
-Thanks,
-drew
+> The patch adds --remove-all sub-command to 'qemu-img bitmap'.
+>
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> CC: Kevin Wolf <kwolf@redhat.com>
+> CC: Hanna Reitz <hreitz@redhat.com>
+> ---
+> Changes from v2:
+> * rebased to the lastest head
+>
+> Changes from v1:
+> * rebased to latest head
+> * adopted bitmap help to the new layout
+>
+>  docs/tools/qemu-img.rst | 10 +++++---
+>  qemu-img.c              | 53 ++++++++++++++++++++++++++++++++++-------
+>  2 files changed, 52 insertions(+), 11 deletions(-)
+>
+> diff --git a/docs/tools/qemu-img.rst b/docs/tools/qemu-img.rst
+> index 558b0eb84d..b0c798b77a 100644
+> --- a/docs/tools/qemu-img.rst
+> +++ b/docs/tools/qemu-img.rst
+> @@ -301,15 +301,19 @@ Command description:
+>    For write tests, by default a buffer filled with zeros is written. This can be
+>    overridden with a pattern byte specified by *PATTERN*.
+>  
+> -.. option:: bitmap (--merge SOURCE | --add | --remove | --clear | --enable | --disable)... [-b SOURCE_FILE [-F SOURCE_FMT]] [-g GRANULARITY] [--object OBJECTDEF] [--image-opts | -f FMT] FILENAME BITMAP
+> +.. option:: bitmap (--merge SOURCE | --add | --remove | --remove-all | --clear | --enable | --disable)... [-b SOURCE_FILE [-F SOURCE_FMT]] [-g GRANULARITY] [--object OBJECTDEF] [--image-opts | -f FMT] FILENAME [BITMAP]
+>  
+> -  Perform one or more modifications of the persistent bitmap *BITMAP*
+> -  in the disk image *FILENAME*.  The various modifications are:
+> +  Perform one or more modifications of persistent bitmaps in the disk
+> +  image *FILENAME*.  Most operations require *BITMAP* to be specified;
+> +  ``--remove-all`` operates on all bitmaps and does not take *BITMAP*.
+> +  The various modifications are:
+>  
+>    ``--add`` to create *BITMAP*, enabled to record future edits.
+>  
+>    ``--remove`` to remove *BITMAP*.
+>  
+> +  ``--remove-all`` to remove all bitmaps.
+> +
+>    ``--clear`` to clear *BITMAP*.
+>  
+>    ``--enable`` to change *BITMAP* to start recording future edits.
+> diff --git a/qemu-img.c b/qemu-img.c
+> index c42dd4e995..22ddc7a627 100644
+> --- a/qemu-img.c
+> +++ b/qemu-img.c
+> @@ -87,6 +87,7 @@ enum {
+>      OPTION_FORCE = 276,
+>      OPTION_SKIP_BROKEN = 277,
+>      OPTION_LIMITS = 278,
+> +    OPTION_REMOVE_ALL = 279,
+>  };
+>  
+>  typedef enum OutputFormat {
+> @@ -5018,6 +5019,7 @@ enum ImgBitmapAct {
+>      BITMAP_ENABLE,
+>      BITMAP_DISABLE,
+>      BITMAP_MERGE,
+> +    BITMAP_REMOVE_ALL,
+>  };
+>  typedef struct ImgBitmapAction {
+>      enum ImgBitmapAct act;
+> @@ -5036,7 +5038,7 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
+>      BlockDriverState *bs = NULL, *src_bs = NULL;
+>      bool image_opts = false;
+>      int64_t granularity = 0;
+> -    bool add = false, merge = false;
+> +    bool add = false, merge = false, remove_all = false, any = false;
+>      QSIMPLEQ_HEAD(, ImgBitmapAction) actions;
+>      ImgBitmapAction *act, *act_next;
+>      const char *op;
+> @@ -5052,6 +5054,7 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
+>              {"add", no_argument, 0, OPTION_ADD},
+>              {"granularity", required_argument, 0, 'g'},
+>              {"remove", no_argument, 0, OPTION_REMOVE},
+> +            {"remove-all", no_argument, 0, OPTION_REMOVE_ALL},
+>              {"clear", no_argument, 0, OPTION_CLEAR},
+>              {"enable", no_argument, 0, OPTION_ENABLE},
+>              {"disable", no_argument, 0, OPTION_DISABLE},
+> @@ -5070,8 +5073,8 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
+>          switch (c) {
+>          case 'h':
+>              cmd_help(ccmd, "[-f FMT | --image-opts]\n"
+> -"        ( --add [-g SIZE] | --remove | --clear | --enable | --disable |\n"
+> -"          --merge SOURCE [-b SRC_FILE [-F SRC_FMT]] )..\n"
+> +"        ( --add [-g SIZE] | --remove | --remove-all | --clear | --enable |\n"
+> +"          --disable | --merge SOURCE [-b SRC_FILE [-F SRC_FMT]] )..\n"
+>  "        [--object OBJDEF] FILE BITMAP\n"
+>  ,
+>  "  -f, --format FMT\n"
+> @@ -5086,6 +5089,8 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
+>  "     with optional multiplier suffix (in powers of 1024)\n"
+>  "  --remove\n"
+>  "     removes BITMAP from FILE\n"
+> +"  --remove-all\n"
+> +"     removes all bitmaps from FILE\n"
+>  "  --clear\n"
+>  "     clears BITMAP in FILE\n"
+>  "  --enable, --disable\n"
+> @@ -5115,7 +5120,7 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
+>              act = g_new0(ImgBitmapAction, 1);
+>              act->act = BITMAP_ADD;
+>              QSIMPLEQ_INSERT_TAIL(&actions, act, next);
+> -            add = true;
+> +            add = any = true;
+>              break;
+>          case 'g':
+>              granularity = cvtnum("granularity", optarg, true);
+> @@ -5127,28 +5132,38 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
+>              act = g_new0(ImgBitmapAction, 1);
+>              act->act = BITMAP_REMOVE;
+>              QSIMPLEQ_INSERT_TAIL(&actions, act, next);
+> +            any = true;
+> +            break;
+> +        case OPTION_REMOVE_ALL:
+> +            act = g_new0(ImgBitmapAction, 1);
+> +            act->act = BITMAP_REMOVE_ALL;
+> +            QSIMPLEQ_INSERT_TAIL(&actions, act, next);
+> +            remove_all = true;
+>              break;
+>          case OPTION_CLEAR:
+>              act = g_new0(ImgBitmapAction, 1);
+>              act->act = BITMAP_CLEAR;
+>              QSIMPLEQ_INSERT_TAIL(&actions, act, next);
+> +            any = true;
+>              break;
+>          case OPTION_ENABLE:
+>              act = g_new0(ImgBitmapAction, 1);
+>              act->act = BITMAP_ENABLE;
+>              QSIMPLEQ_INSERT_TAIL(&actions, act, next);
+> +            any = true;
+>              break;
+>          case OPTION_DISABLE:
+>              act = g_new0(ImgBitmapAction, 1);
+>              act->act = BITMAP_DISABLE;
+>              QSIMPLEQ_INSERT_TAIL(&actions, act, next);
+> +            any = true;
+>              break;
+>          case OPTION_MERGE:
+>              act = g_new0(ImgBitmapAction, 1);
+>              act->act = BITMAP_MERGE;
+>              act->src = optarg;
+>              QSIMPLEQ_INSERT_TAIL(&actions, act, next);
+> -            merge = true;
+> +            any = merge = true;
+>              break;
+>          case 'b':
+>              src_filename = optarg;
+> @@ -5165,8 +5180,8 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
+>      }
+>  
+>      if (QSIMPLEQ_EMPTY(&actions)) {
+> -        error_report("Need at least one of --add, --remove, --clear, "
+> -                     "--enable, --disable, or --merge");
+> +        error_report("Need at least one of --add, --remove, --remove-all, "
+> +                     "--clear, --enable, --disable, or --merge");
+>          goto out;
+>      }
+>  
+> @@ -5184,10 +5199,14 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
+>          goto out;
+>      }
+>  
+> -    if (optind != argc - 2) {
+> +    if (any && optind != argc - 2) {
+>          error_report("Expecting filename and bitmap name");
+>          goto out;
+>      }
+> +    if (!any && remove_all && optind != argc - 1) {
+> +        error_report("Expecting filename");
+> +        goto out;
+> +    }
+>  
+>      filename = argv[optind];
+>      bitmap = argv[optind + 1];
+> @@ -5225,6 +5244,24 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
+>              qmp_block_dirty_bitmap_remove(bs->node_name, bitmap, &err);
+>              op = "remove";
+>              break;
+> +        case BITMAP_REMOVE_ALL: {
+> +            while (1) {
+> +                const char *name;
+> +                BdrvDirtyBitmap *bm = bdrv_dirty_bitmap_first(bs);
+> +                if (bm == NULL) {
+> +                    break;
+> +                }
+> +                name = bdrv_dirty_bitmap_name(bm);
+> +                qmp_block_dirty_bitmap_remove(bs->node_name, name, &err);
+> +                if (err) {
+> +                    /* Save name for proper error reporting */
+> +                    bitmap = name;
+> +                    break;
+> +                }
+> +            }
+> +            op = "remove-all";
+> +            break;
+> +        }
+>          case BITMAP_CLEAR:
+>              qmp_block_dirty_bitmap_clear(bs->node_name, bitmap, &err);
+>              op = "clear";
+ping
 
