@@ -4,104 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4081ECD37AC
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 09:51:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81DADCD37AC
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 09:51:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMNII-000157-Ji; Mon, 11 May 2026 05:51:22 -0400
+	id 1wMNIS-0002G9-Ot; Mon, 11 May 2026 05:51:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wMNGO-0007Op-3P
- for qemu-devel@nongnu.org; Mon, 11 May 2026 05:49:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wMNHK-0000AI-GA
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 05:50:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wMNGE-0003mT-6v
- for qemu-devel@nongnu.org; Mon, 11 May 2026 05:49:19 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wMNHG-0004Bz-CK
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 05:50:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778492952;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1778493015;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NhdVyNzcUS2qH8/jez6doF+ti3xk1/afh6wD+0/QKiA=;
- b=U4YPkdA/B82CqlnK3QwVmudOMWQ4Rt+HiIpIh0/rlqXCdd5I5VYq7EFGT3RASyA6rG1VSz
- XHJuuVZ90VAXyf5c2SjTGBAy9diXPVHAz1CC+zsIpdc1+fSr+it30mwJAkysimI86wwieZ
- UfWyv6PUUiTPYvKPtpGUWZnBD5HcUlg=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-367-pJ-RX_EkMrqlVcXEP8cN1Q-1; Mon, 11 May 2026 05:09:40 -0400
-X-MC-Unique: pJ-RX_EkMrqlVcXEP8cN1Q-1
-X-Mimecast-MFC-AGG-ID: pJ-RX_EkMrqlVcXEP8cN1Q_1778490579
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-488d8deb75fso30086955e9.3
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 02:09:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778490579; x=1779095379; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=NhdVyNzcUS2qH8/jez6doF+ti3xk1/afh6wD+0/QKiA=;
- b=H1DyKQpbEmWt655ouz3spkcujaXhPWbhs4eCOd+JKBq27N3NfR/ubQ0K+eDAJ1559x
- 2HYR/difnANZQLOFcNlK+VR4Fch2Y2JzuBBxBYbr0Bj3eMald9KpZSTJMar4p40c7g4t
- EO+Kc7KP6JrX3vQo+4IiAhL3FR8hzPTaW+LGBmoOdWnrje2KlukLb4o+oytwOtwPzQ9d
- Ymon3PWoudBCQJe/SEojBe+j4t9qhO13xncaJ+afU+R3uqFBJXiwiRVxFuxek+3TYBmY
- c26A634uYCk5qBswZIS0vgvxUYATcf66KlipMODvbFcXprV5Cdt/UeAFZPmgfFCp3xo6
- vNRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778490579; x=1779095379;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=NhdVyNzcUS2qH8/jez6doF+ti3xk1/afh6wD+0/QKiA=;
- b=dKGndnW8+cIAp5riGFxjTHVAg9qt9pCBcHUTX0LR6tlvhFw25bde8+NRyHGiUM1eYp
- z3shxI0BnfSFPOfKqmAoqZlYE6r6M4cDXVTpkOjY1aRrm54KcKnuSulOjHk3HuYIh49+
- Q++G7UxlBtq82EKRu00uqM2maJbxQ7G8sx2toYMiyTldQWCKIWcQAxk/Nxn2nP2XpSg9
- FvRL08PJsVs5fqRzzByTtbDned7iWzuB3MmzmqLPQm4EdSz9rZH+muOzMACpNzq5q72S
- 0+ozIafv1jTm3fXGNqsBinoOZ+gVedRe23w2PkRDs8JWWe/DWoQBL+2dyhNm9VleheVx
- 7IzQ==
-X-Gm-Message-State: AOJu0Yx4SrtFbZHRXA7nynszRgxPfd9WV+ZqbyKjWWSTXnTLJ4oxDTRT
- O5jEg016cFEJsPWBGgZjRzbSYTuBF/1fgTalnnz4QVSpk/9S0vnmSKD+7raq+RASQydqGfGKcb0
- 8XDSfI7GYJtZYfO1HTOgzeaBYNUGog+8VsNttfIrAU7We8aY+UIGsh6sp
-X-Gm-Gg: Acq92OH1687ur608lsJv/VFV+XxPDwHwC4VNGiWb6Aj4P6tLEmkQDp9ckRbXX0C9fiR
- NRNPu54/qUX2OkDbTxmjQA3ewSFsraWwjEp6AuC/+9HzHJ+FyDcqPAG+Lqi51A0OW90PFbDWDCA
- NWf5FGCJ+IngRjlkjrdrZgIbopiHmRLsSDas3Z6x0C2EtioJam5+lbVnKXAhVlIpZ5alWnXoMd5
- iWnGJWg/tPmBTiDrQg0+YBlly3snt5gJ1iLQnx4oA0IEpHa3yKiWZlRerudtaacbQ26QXxePMda
- IRBswWyWEeWb8ZgZqZosFJY94DaBl4sUooWJJmS6LfeVz4q/2bzOIJe0CIGYuY8CPveODSKqOku
- VFTGLsa3tcaTAG8/FyiDsrTy39ZXNGoXnDL12xqRG
-X-Received: by 2002:a05:600c:4450:b0:48e:8741:fd53 with SMTP id
- 5b1f17b1804b1-48e8741fed3mr14251895e9.15.1778490578897; 
- Mon, 11 May 2026 02:09:38 -0700 (PDT)
-X-Received: by 2002:a05:600c:4450:b0:48e:8741:fd53 with SMTP id
- 5b1f17b1804b1-48e8741fed3mr14251185e9.15.1778490578408; 
- Mon, 11 May 2026 02:09:38 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-48-7.inter.net.il. [80.230.48.7])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e6fff9c91sm182612165e9.1.2026.05.11.02.09.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 May 2026 02:09:38 -0700 (PDT)
-Date: Mon, 11 May 2026 05:09:35 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Tushar Dave <tdave@nvidia.com>
-Cc: qemu-devel@nongnu.org, alwilliamson@nvidia.com, jgg@nvidia.com,
- skolothumtho@nvidia.com, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, marcel.apfelbaum@gmail.com, devel@edk2.groups.io
-Subject: Re: [RFC PATCH 0/8] hw/arm/virt, hw/pci: PCI pre-enumeration and
- fixed BAR allocation
-Message-ID: <20260511050459-mutt-send-email-mst@kernel.org>
-References: <20260508183717.193630-1-tdave@nvidia.com>
+ bh=0aHAKfCeO6o7TFvCjCAZjHfFJRuYylMqFjy9QKrdb4w=;
+ b=AW7o/kM2hUJO2V4B/SWvqjUBQz3SiU3eKF69rNVQbe1ZeHELMj1HJAVfgQZj+GW/pjks3Z
+ 1cPWA34dg02hgPJEaAABe/lZgsSKANSEbLBI08rh/3RHv6qs37QcBz9RBIHyRHBOfVPiJG
+ zDJ9XAhGsEDzGHpmAkYYU27SgqnKtkA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-500-lwUyOwGkM2eKg-K6Jm7iig-1; Mon,
+ 11 May 2026 04:37:36 -0400
+X-MC-Unique: lwUyOwGkM2eKg-K6Jm7iig-1
+X-Mimecast-MFC-AGG-ID: lwUyOwGkM2eKg-K6Jm7iig_1778488655
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2172018005B3; Mon, 11 May 2026 08:37:34 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.50.30])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 60801180034E; Mon, 11 May 2026 08:37:28 +0000 (UTC)
+Date: Mon, 11 May 2026 09:37:24 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Viktor Prutyanov <viktor.prutyanov@phystech.edu>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Gerd Hoffmann <kraxel@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Jason Wang <jasowang@redhat.com>
+Subject: Re: [PATCH 0/9] tools: Move more tools sources into tools/
+Message-ID: <agGVRFsSh1mbKc4U@redhat.com>
+References: <20260508152428.2648560-1-peter.maydell@linaro.org>
+ <735327c6-f23f-42cf-9b8e-a651d8ee7770@oss.qualcomm.com>
+ <CAFEAcA8eKM_DNK4kWX0DNudMiq__uZ-MQM0L-2CfWL39CgCyJw@mail.gmail.com>
+ <CAJ+F1C+XzzsGRwLjUCYiDaS9OGXMq5oc3QM5pm4obZAgLP7Z1w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260508183717.193630-1-tdave@nvidia.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJ+F1C+XzzsGRwLjUCYiDaS9OGXMq5oc3QM5pm4obZAgLP7Z1w@mail.gmail.com>
+User-Agent: Mutt/2.3.1 (2026-03-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,19 +95,99 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 08, 2026 at 01:37:09PM -0500, Tushar Dave wrote:
-> This RFC introduces a mechanism to specify Guest Physical Addresses
-> (GPAs) for PCI BARs, allowing explicit placement of guest MMIO BAR
-> addresses to match host physical addresses for assigned devices.
+On Mon, May 11, 2026 at 12:23:32AM +0400, Marc-André Lureau wrote:
+> Hi
 > 
-> On some platforms, P2P DMA is performed between devices within the same
-> IOMMU group. The PCI fabric ACS is configured to permit direct P2P
-> without going through the host bridge in order to achieve the required
-> performance.
+> On Fri, May 8, 2026 at 8:23 PM Peter Maydell <peter.maydell@linaro.org> wrote:
+> >
+> > On Fri, 8 May 2026 at 17:00, Pierrick Bouvier
+> > <pierrick.bouvier@oss.qualcomm.com> wrote:
+> > >
+> > > On 5/8/2026 8:24 AM, Peter Maydell wrote:
+> > > > We have a set of binaries that we call "tools": they're built based on
+> > > > the --enable-tools/--disable-tools configure setting, they're
+> > > > documented in docs/tools, and they're standalone executables of one
+> > > > form or another.
+> > > >
+> > > > Currently the sources for these are a bit scattered: many still in the
+> > > > top level source directory, some in contrib, one or two actually in
+> > > > the tools directory.
+> > > >
+> > > > As an initial attempt at cleanup, this patchset moves the sources for
+> > > > qemu-bridge-helper, qemu-edid, qemu-img, qemu-io, qemu-nbd,
+> > > > qemu-keymap, qemu-vmsr-helper and elf2dmp into the tools/ directory.
+> > > >
+> > > > The patchseries also moves the ebfp skeleton sources from tools/ebpf/
+> > > > to ebpf/bpf-src/, because this isn't a tool by the above definition.
+> > > >
+> > > > As per my thread from a while back, I would ultimately like us to
+> > > > clean up contrib/:
+> > > > https://lore.kernel.org/qemu-devel/CAFEAcA_5HvGriDsWnb1ALuA_dgG320eKv7yuM2kThv=rfOSZQA@mail.gmail.com/
+> > > > But parts of that clearly need more discussion. So this is just doing
+> > > > some parts that I hope are not controversial.
+> > > >
+> > > > Annoyingly, meson doesn't seem to provide any way for a subdirectory
+> > > > meson.build to say "the foo.c in this subdir builds into a foo
+> > > > executable that lives at the top level of the builddir". And we have a
+> > > > lot of test harness stuff plus user muscle memory that assumes that
+> > > > qemu-img and qemu-io live there. So the build runes for these tools
+> > > > have to stay in the top level meson.build (and tools/meson.build
+> > > > remains an empty file). The exception is that contrib/elf2dmp/elf2dmp
+> > > > is now tools/elf2dmp/elf2dmp, but I think the set of people who were
+> > > > running that from the build directory will be small.
+> > > >
+> > >
+> > > It's a deliberate design more than an annoyance. It pushes users to make
+> > > things explicit at top level, which is good to understand what is built
+> > > and how, and hide details in subdirs in variables. QEMU's top level
+> > > meson.build is over complex, so it may appear more as a burden than a
+> > > benefit though.
+> >
+> > Personally I think if the build system doesn't let you do a
+> > pretty normal and reasonable thing that's annoying. Meson
+> > annoys me because it has a tendency to be over-opinionated.
 
-Pass this info to guest firmware, let it set bars any way it wants?
+Being opinionated is a double edge sword. A big part of the mess you
+get with traditional build tools is that they are not opinionated so
+every project ends up doing something slightly different and thus it
+is harder to understand each project.  Being opinionated is what keeps
+meson simpler to understand and learn, at the cost of loss of flexiblity.
+
+Meson may not have the balance entirely right, but overall I think it
+has been beneficial to be very opinionated, even if that means some
+places needs to be relaxed over time.
+
+
+> I have to agree that meson is sometimes lacking. In this case, it
+> would be convenient to have a link created at build time. But you have
+> to resort to fairly annoying custom_target python code today. In the
+> meantime, there is also fs.copyfile() that could work (although it's
+> also somewhat limited or buggy). For later, we could try adding
+> fs.symlink() perhaps. Paolo might have better chances than me getting
+> it accepted ;)
+
+IIUC, the main reason to want binaries in a specific location is
+so that tests find them in that location.  That is a valid historical
+approach, but meson offer an alternative approach that could be used
+instead.
+
+We can set the test environment so that meson modifies $PATH such that
+all the built binaries appear at head of $PATH. Tests then don't need
+to assume a location for them in the build directory, just let execvp
+search $PATH as normal.  For execution outside of 'meson test', we have
+"meson devenv" which sets up a local interactive shell environment, or
+we can launch the test via the "run" script which wraps "meson devenv"
+for a single command.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
