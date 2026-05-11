@@ -4,99 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 882D7CD484A
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 14:07:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0BBBCD37AC
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 14:07:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMRDR-0004OY-0f; Mon, 11 May 2026 10:02:37 -0400
+	id 1wMRHh-0003h7-6S; Mon, 11 May 2026 10:07:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
- id 1wMRCQ-0003xt-PO
- for qemu-devel@nongnu.org; Mon, 11 May 2026 10:01:35 -0400
-Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1wMRGS-0000z3-JB
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 10:05:48 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
- id 1wMRCO-00068E-8h
- for qemu-devel@nongnu.org; Mon, 11 May 2026 10:01:34 -0400
-Received: by mail-oa1-x33.google.com with SMTP id
- 586e51a60fabf-42fdab683a9so3255889fac.1
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 07:01:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1wMRGO-0007Li-3V
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 10:05:42 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2b9ea536877so25257935ad.1
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 07:05:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778508090; x=1779112890; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=i0UGA6W7acHfQzFgg07ojZd+ADYp8WlSjAFL26/Ip64=;
- b=jkTqgAqPShZo8x++EoXwpyJOXlofoyVxtKWVr7bqWBsa1/U5kxvdt2Tgz2t3eDxYDr
- LAGK5/LF5HbsQgeHYCLi9zi223H+52XyaJfkh7glvJ77USFxx+3i6FqbsJYodWgoGTYP
- VZG/Hw2ZdlkP7h5G+3i8slAkAWGGPZZAq+zn3Y4yBLJTMlR+Z3UCpRJDKEzmVt5rA8pQ
- XyD2DmU3mL4mm3JCOO37T7WBSYuVaMWI13ggaDHD4BGheK8aNNOe8jS6dGnLJ+H4C5Rx
- L+uGiwlDbBO1DqrZbzeR+tXeuhv6oyD2cqJrqYO0R7oYClGmYmF7R8mQXxTTsRap/0gZ
- ad0A==
+ d=gmail.com; s=20251104; t=1778508337; x=1779113137; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FZb1GGPCvoF4z/BARiR0nVXitII8lcm428TmgYXryN0=;
+ b=SLqaycl8Gb9fBQhpWmJh5CXS+msUfdhrdhjB/XrRb28QOcYMCoUd22N35ridhzg4CI
+ m3Qit9Orc6dDZYYVFSJcXMqdepyOdjVgxsecr8JAdDyxANUalRFQQqhuLf5vISTCFwXp
+ grc+TgmCeXkcqsVys+RuIGcZycnYOM5U7gWFTRz2MJndwQkwbx13wLRMHmLzojQ4360Q
+ IqhKX6IqjJvRseK0yq9CcfAynUittlzPxNYvYxqIzMlVMnSEwqGHcbjAkKRkRvRqZ9fF
+ 5P2fpZgAfl+1nVjDiyRHUc7CaDgFbN1FauZCWoZIPJkHpUGuHhddNr3iPcmb+BHiHBoo
+ 59kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778508090; x=1779112890;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=i0UGA6W7acHfQzFgg07ojZd+ADYp8WlSjAFL26/Ip64=;
- b=KyjyC48o4ijj/hNEqVxtYR5XSbWkf3xgJbecrizj6YJWDGvCCKnKR0UO7lDcfwK3r2
- ZCaIlylmpAUW9kupVy15h8z2t5knc4hF+9FVfi8MA4UP8BEI/IvMDut8klA+QaoXzbw1
- PCZ19TJrv2yWHHTkqtSuRgeWV3Wf1E+q5JyeoOtULGJNNGeWvger0MH3qMiElrIiHbau
- TWrSNJ+8ExPbbagCvDTizffxaOyWFB3o685POgiESQDyG4sg27TFsCqeTQwVuJKLiIH1
- 4xdY0CrPvk7P4IQIJn2CfQrEuEiW5eqdCDzzrGMxY5DcTba+fTuVPO+PXeWsbD5Yqddh
- 7OYw==
-X-Gm-Message-State: AOJu0YwAXRIO7S7iUUcS0aziGyMa9qN6EbMiU3mHtLKN18N74V12Lj/3
- 63J1pBWQkFyyBxBqS8fPk2ZPTiJDfapQyUBdyMqYowTzFInb1kv2RsKg
-X-Gm-Gg: Acq92OGgqJNwdFC8PK9zAM3Rqd1QNOmkP/e9OPj6xlWxmY1bqi8vLrX01utCj6B2bh5
- Galomo98luNY2tHICHGMwH0jgDAAopXsQZFARz2UFh2latF3cg5Ht/Bp6OPr5Iaf5H6Mxnt/MoL
- MsPXqL5WS+rOaKxJDRYYDq5f4M05sju5ZmQp0tKAAqItMwK7JtKCwQ61cDM8WasQSHoVILQAMPP
- mFG0Aw61KXaDfGbBc+TWhsqmmYnVTAAtzsJpWjQC6VdgL6YaSjo2yEVh8jGzUUMWk4qA/g0PBYz
- p2+SQ+fPe31OQCg+fLHPuaFsQXzcp3elGKTTC2wnGerN61TRZQPWv3BTSEe0D5N6v33XpnSO6R3
- cQiY6OkLTkERL2GdDYRZraC7GjANFyXORGjIuESYyO41sCZe/LyEHLyOln5a5oqUbxL5h7PdkV2
- iDFc1Z3F/SsvXhmlwolCAJ6vLYje6z3TYqHHzYvhBw
-X-Received: by 2002:a05:6820:99a:b0:694:9f32:b with SMTP id
- 006d021491bc7-69998c834a0mr12651716eaf.6.1778508090183; 
- Mon, 11 May 2026 07:01:30 -0700 (PDT)
-Received: from [192.168.1.160] ([2600:4041:54f3:a400:c013:3550:ed5f:a59a])
+ d=1e100.net; s=20251104; t=1778508337; x=1779113137;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=FZb1GGPCvoF4z/BARiR0nVXitII8lcm428TmgYXryN0=;
+ b=LkN1hjNNgYvGlYWcDX/oTKhea4G2/NXrlgvdZeNzcad2e4oOWiaV23/yy05Vt6CjW7
+ w79K26EQRt/e1v6A8c0GSTJ8BCOR0QMeM4b4RRpbfplV4miPFQl4jh99sJXzNaQvM/S3
+ 3Q0Gm7JM0BUY8Cf/0pRNB5xcvZuhwV53yU1IJ6obyV/sKc8FCi/9LCmiTuom1jw1E4vH
+ 5U6t8Uh/5yJFxuoVK9c0BCjACtzAg7PTcZDZnqMEkAQSvHODUrme1zxch7s4hAKe55wv
+ zARF/Ksos0yUuSY5S9qHzjRs8epPcokNzUOc0rD6IyKZGp80Y8ExuF6v06aaRGLBzv33
+ 7BYw==
+X-Gm-Message-State: AOJu0YwELxR6yEH7qCktD8VH+tM/hAhVksP1Nv5WuyzZAJM2YBfFGsKa
+ BT98NACXTZNOexFL5LE0wqfu9x3fCRUSYl3pjDSQ/1ob2/ILmHRplDf6oVWhgu+cga8=
+X-Gm-Gg: Acq92OFyl/5fIZeDE3gZOGTyGGc3X2KlxN43u9jaAFeUoN8BCjMN4BcAIwAqSagv48X
+ vCzkPYYi17NoFDfGggWRbFRfvU99urxymb9zaSTDxJWCUW+hWjrFaXAsm3/WgzJHzChAEWcJnMl
+ CSuWazS15k6KkUq2C7zRxCC0GEQ94qdRLmWn7l9n7O1clSCiTsJ4HEA/ruTz38NBm4KCmIMFPs0
+ 8M8F7vwkT5Nl5R+91wGfwVcdeYE3c+gPcAGhxWJ4yuZjt66rSiZUdv6gbJQ/sM0OpOXFcpJZ9B/
+ m+dILVBDx9DthnCEKPNrJJKSgv29/jm//Dr5/Ab6XYJHLlP3t6kw2TZ4n9HBKyLpkOBK9RopHi2
+ QobSOraLL2XQ6OxOxbJJsMFLwZLQdWSbB8fb1W26ozDnsiC+UjO0PeE/86W2Tf0U55dSLP8qu9M
+ wFgVYyq760xa1axNRCqjdJJijGNgqVy4ADfrZIxqmm5AUvPA==
+X-Received: by 2002:a17:902:db01:b0:2ba:76ff:57a6 with SMTP id
+ d9443c01a7336-2babc858f46mr177992785ad.4.1778508337351; 
+ Mon, 11 May 2026 07:05:37 -0700 (PDT)
+Received: from ZBMac-LWN10QXKQ0.taila0cd24.ts.net ([115.108.63.147])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8bf39c7dd09sm94773756d6.31.2026.05.11.07.01.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 May 2026 07:01:29 -0700 (PDT)
-From: Gabriel Brookman <brookmangabriel@gmail.com>
-Date: Mon, 11 May 2026 10:01:12 -0400
-Subject: [PATCH v6 14/15] tests/tcg: add test for MTE FAR
+ d9443c01a7336-2baf1e90854sm105113435ad.66.2026.05.11.07.05.33
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 11 May 2026 07:05:36 -0700 (PDT)
+From: Zhang Chen <zhangckid@gmail.com>
+To: qemu-devel <qemu-devel@nongnu.org>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Zhang Chen <zhangckid@gmail.com>
+Subject: [PATCH V7 14/14] iothread: simplify API by merging
+ iothread_get_aio_context variants
+Date: Mon, 11 May 2026 22:04:16 +0800
+Message-ID: <20260511140416.28271-15-zhangckid@gmail.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20260511140416.28271-1-zhangckid@gmail.com>
+References: <20260511140416.28271-1-zhangckid@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260511-feat-mte4-v6-14-8557cc1313b9@gmail.com>
-References: <20260511-feat-mte4-v6-0-8557cc1313b9@gmail.com>
-In-Reply-To: <20260511-feat-mte4-v6-0-8557cc1313b9@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, 
- Gustavo Romero <gustavo.romero@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org, 
- Laurent Vivier <laurent@vivier.eu>, 
- Gabriel Brookman <brookmangabriel@gmail.com>, Helge Deller <deller@gmx.de>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1778508062; l=2355;
- i=brookmangabriel@gmail.com; s=20251009; h=from:subject:message-id;
- bh=t9UKuOxOMkff21yBSwiqqFvgFWXDPNIeJTAexYT0IVc=;
- b=NriYzunSsNSBseoGW747LNEq11SNnkQzggStw8EU9AoPHAWCUhIl1EQ9S1xsPv3HSrlObGWuB
- 2XR/6E9mbJoCuFTLWrD4byQqJ9DJ5xWzkD4DkC9/JVu4AGuwe+Uc77w
-X-Developer-Key: i=brookmangabriel@gmail.com; a=ed25519;
- pk=m9TtPDal6WzoHNnQiHHKf8dTrv3DUCPUUTujuo8vNrw=
-Received-SPF: pass client-ip=2001:4860:4864:20::33;
- envelope-from=brookmangabriel@gmail.com; helo=mail-oa1-x33.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=zhangckid@gmail.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,87 +104,212 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This functionality was previously enabled but not advertised or tested.
-This commit adds a new test, mte-9, that tests the code for proper
-full-address reporting. FEAT_MTE_TAGGED_FAR requires that FAR_ELx
-report the full logical address, including tag bits.
+Simplify the interface by merging iothread_ref_and_get_aio_context()
+into iothread_get_aio_context(). The updated function now requires a
+'holder' parameter, ensuring that every retrieval of an AioContext for
+long-term use is automatically registered in the IOThread's holder list.
 
-Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Update all callers across block, virtio, scsi, net, and monitor
+subsystems to match the new signature. This cleanup reduces code
+redundancy and improves the reliability of IOThread introspection.
+
+Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 ---
- tests/tcg/aarch64/Makefile.target |  2 +-
- tests/tcg/aarch64/mte-9.c         | 48 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 49 insertions(+), 1 deletion(-)
+ block/export/export.c           | 6 +++---
+ blockdev.c                      | 2 +-
+ hw/block/dataplane/xen-block.c  | 3 +--
+ hw/block/virtio-blk.c           | 3 +--
+ hw/scsi/virtio-scsi-dataplane.c | 3 +--
+ hw/vfio-user/proxy.c            | 2 +-
+ hw/virtio/iothread-vq-mapping.c | 2 +-
+ hw/virtio/virtio-balloon.c      | 2 +-
+ include/system/iothread.h       | 5 ++---
+ iothread.c                      | 9 ++-------
+ monitor/monitor.c               | 2 +-
+ net/colo-compare.c              | 2 +-
+ 12 files changed, 16 insertions(+), 25 deletions(-)
 
-diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
-index 9fa8687453..b491cfb5e1 100644
---- a/tests/tcg/aarch64/Makefile.target
-+++ b/tests/tcg/aarch64/Makefile.target
-@@ -64,7 +64,7 @@ AARCH64_TESTS += bti-2
+diff --git a/block/export/export.c b/block/export/export.c
+index 636633c324..37bcb4f4d6 100644
+--- a/block/export/export.c
++++ b/block/export/export.c
+@@ -141,7 +141,7 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
+         }
  
- # MTE Tests
- ifneq ($(CROSS_CC_HAS_ARMV8_MTE),)
--AARCH64_TESTS += mte-1 mte-2 mte-3 mte-4 mte-5 mte-6 mte-7 mte-8
-+AARCH64_TESTS += mte-1 mte-2 mte-3 mte-4 mte-5 mte-6 mte-7 mte-8 mte-9
- mte-%: CFLAGS += $(CROSS_CC_HAS_ARMV8_MTE)
- endif
+         holder_name = bdrv_get_node_name(bs);
+-        new_ctx = iothread_ref_and_get_aio_context(iothread, holder_name);
++        new_ctx = iothread_get_aio_context(iothread, holder_name);
+         multithread_count = 1;
+         local_iothreads = g_new0(IOThread *, 1);
+         local_iothreads[0] = iothread;
+@@ -180,8 +180,8 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp)
+                 goto fail;
+             }
+             local_iothreads[i] = iothread;
+-            multithread_ctxs[i++] = iothread_ref_and_get_aio_context(iothread,
+-                                                                  holder_name);
++            multithread_ctxs[i++] = iothread_get_aio_context(iothread,
++                                                             holder_name);
+         }
+         assert(i == multithread_count);
+     }
+diff --git a/blockdev.c b/blockdev.c
+index 6e20579187..7eb206a02a 100644
+--- a/blockdev.c
++++ b/blockdev.c
+@@ -3683,7 +3683,7 @@ void qmp_x_blockdev_set_iothread(const char *node_name, StrOrNull *iothread,
+             goto out;
+         }
  
-diff --git a/tests/tcg/aarch64/mte-9.c b/tests/tcg/aarch64/mte-9.c
-new file mode 100644
-index 0000000000..9626a90c13
---- /dev/null
-+++ b/tests/tcg/aarch64/mte-9.c
-@@ -0,0 +1,48 @@
-+/*
-+ * Memory tagging, full-address reporting.
-+ *
-+ * Copyright (c) 2021 Linaro Ltd
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "mte.h"
-+
-+static void *faulting_ptr;
-+
-+void pass(int sig, siginfo_t *info, void *uc)
-+{
-+    assert(faulting_ptr == info->si_addr);
-+    exit(0);
-+}
-+
-+int main(int ac, char **av)
-+{
-+    struct sigaction sa;
-+    int *p0, *p1, *p2;
-+    long excl = 1;
-+
-+    enable_mte(PR_MTE_TCF_SYNC);
-+    p0 = alloc_mte_mem(sizeof(*p0));
-+
-+    /* Create two differently tagged pointers. */
-+    asm("irg %0,%1,%2" : "=r"(p1) : "r"(p0), "r"(excl));
-+    asm("gmi %0,%1,%0" : "+r"(excl) : "r" (p1));
-+    assert(excl != 1);
-+    asm("irg %0,%1,%2" : "=r"(p2) : "r"(p0), "r"(excl));
-+    assert(p1 != p2);
-+
-+    /* Store the tag from the first pointer.  */
-+    asm("stg %0, [%0]" : : "r"(p1));
-+
-+    *p1 = 0;
-+
-+    memset(&sa, 0, sizeof(sa));
-+    sa.sa_sigaction = pass;
-+    sa.sa_flags = SA_SIGINFO;
-+    sigaction(SIGSEGV, &sa, NULL);
-+
-+    faulting_ptr = p2;
-+    *p2 = 0;
-+
-+    abort();
-+}
-
+-        new_context = iothread_ref_and_get_aio_context(obj, node_name);
++        new_context = iothread_get_aio_context(obj, node_name);
+         bs->iothread = obj;
+     } else {
+         if (bs->iothread) {
+diff --git a/hw/block/dataplane/xen-block.c b/hw/block/dataplane/xen-block.c
+index 552bd8b039..f5984c86e9 100644
+--- a/hw/block/dataplane/xen-block.c
++++ b/hw/block/dataplane/xen-block.c
+@@ -624,8 +624,7 @@ XenBlockDataPlane *xen_block_dataplane_create(XenDevice *xendev,
+         g_autofree char *path = object_get_canonical_path(OBJECT(xendev));
+ 
+         dataplane->iothread = iothread;
+-        dataplane->ctx = iothread_ref_and_get_aio_context(dataplane->iothread,
+-                                                          path);
++        dataplane->ctx = iothread_get_aio_context(dataplane->iothread, path);
+     } else {
+         dataplane->ctx = qemu_get_aio_context();
+     }
+diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+index e9f1dd5f8d..eaefd7d245 100644
+--- a/hw/block/virtio-blk.c
++++ b/hw/block/virtio-blk.c
+@@ -1498,8 +1498,7 @@ static bool virtio_blk_vq_aio_context_init(VirtIOBlock *s, Error **errp)
+             return false;
+         }
+     } else if (conf->iothread) {
+-        AioContext *ctx = iothread_ref_and_get_aio_context(conf->iothread,
+-                                                           path);
++        AioContext *ctx = iothread_get_aio_context(conf->iothread, path);
+         for (unsigned i = 0; i < conf->num_queues; i++) {
+             s->vq_aio_context[i] = ctx;
+         }
+diff --git a/hw/scsi/virtio-scsi-dataplane.c b/hw/scsi/virtio-scsi-dataplane.c
+index cc318162f5..7b37e3d223 100644
+--- a/hw/scsi/virtio-scsi-dataplane.c
++++ b/hw/scsi/virtio-scsi-dataplane.c
+@@ -74,8 +74,7 @@ void virtio_scsi_dataplane_setup(VirtIOSCSI *s, Error **errp)
+             return;
+         }
+     } else if (vs->conf.iothread) {
+-        AioContext *ctx = iothread_ref_and_get_aio_context(vs->conf.iothread,
+-                                                           path);
++        AioContext *ctx = iothread_get_aio_context(vs->conf.iothread, path);
+         for (uint16_t i = 0; i < vs->conf.num_queues; i++) {
+             s->vq_aio_context[VIRTIO_SCSI_VQ_NUM_FIXED + i] = ctx;
+         }
+diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
+index eebe202c4a..9a9059290f 100644
+--- a/hw/vfio-user/proxy.c
++++ b/hw/vfio-user/proxy.c
+@@ -938,7 +938,7 @@ VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp)
+         vfio_user_iothread = iothread_create("VFIO user", errp);
+     }
+ 
+-    proxy->ctx = iothread_ref_and_get_aio_context(vfio_user_iothread, path);
++    proxy->ctx = iothread_get_aio_context(vfio_user_iothread, path);
+     proxy->req_bh = qemu_bh_new(vfio_user_request, proxy);
+ 
+     QTAILQ_INIT(&proxy->outgoing);
+diff --git a/hw/virtio/iothread-vq-mapping.c b/hw/virtio/iothread-vq-mapping.c
+index c993281d7f..7dadc43c44 100644
+--- a/hw/virtio/iothread-vq-mapping.c
++++ b/hw/virtio/iothread-vq-mapping.c
+@@ -94,7 +94,7 @@ bool iothread_vq_mapping_apply(
+ 
+     for (node = list; node; node = node->next) {
+         IOThread *iothread = iothread_by_id(node->value->iothread);
+-        AioContext *ctx = iothread_ref_and_get_aio_context(iothread, holder);
++        AioContext *ctx = iothread_get_aio_context(iothread, holder);
+ 
+         if (node->value->vqs) {
+             uint16List *vq;
+diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
+index 8a4494905a..bd47ba8256 100644
+--- a/hw/virtio/virtio-balloon.c
++++ b/hw/virtio/virtio-balloon.c
+@@ -899,7 +899,7 @@ static void virtio_balloon_device_realize(DeviceState *dev, Error **errp)
+         precopy_add_notifier(&s->free_page_hint_notify);
+ 
+         s->free_page_bh = aio_bh_new_guarded(
+-                            iothread_ref_and_get_aio_context(s->iothread, path),
++                            iothread_get_aio_context(s->iothread, path),
+                             virtio_ballloon_get_free_page_hints, s,
+                             &dev->mem_reentrancy_guard);
+     }
+diff --git a/include/system/iothread.h b/include/system/iothread.h
+index 313ef61124..cdeab63f0a 100644
+--- a/include/system/iothread.h
++++ b/include/system/iothread.h
+@@ -69,9 +69,8 @@ DECLARE_INSTANCE_CHECKER(IOThread, IOTHREAD,
+ 
+ char *iothread_get_id(IOThread *iothread);
+ IOThread *iothread_by_id(const char *id);
+-AioContext *iothread_get_aio_context(IOThread *iothread);
+-AioContext *iothread_ref_and_get_aio_context(IOThread *iothread,
+-                                             const char *holder);
++AioContext *iothread_get_aio_context(IOThread *iothread,
++                                     const char *holder);
+ void iothread_put_aio_context(IOThread *iothread, const char *holder);
+ GMainContext *iothread_get_g_main_context(IOThread *iothread);
+ 
+diff --git a/iothread.c b/iothread.c
+index a78744284b..d73de821c2 100644
+--- a/iothread.c
++++ b/iothread.c
+@@ -446,13 +446,8 @@ char *iothread_get_id(IOThread *iothread)
+     return g_strdup(object_get_canonical_path_component(OBJECT(iothread)));
+ }
+ 
+-AioContext *iothread_get_aio_context(IOThread *iothread)
+-{
+-    return iothread->ctx;
+-}
+-
+-AioContext *iothread_ref_and_get_aio_context(IOThread *iothread,
+-                                             const char *holder)
++AioContext *iothread_get_aio_context(IOThread *iothread,
++                                     const char *holder)
+ {
+     /*
+      * In some cases, iothread user need the ctx to clearup other resource.
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index b6efe776d6..0f9642f11a 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -623,7 +623,7 @@ void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
+          */
+         g_autofree char *path = g_strdup(is_qmp ? "/monitor/qmp_mon0" :
+                                                   "/monitor/hmp_mon0");
+-        mon->ctx = iothread_ref_and_get_aio_context(mon_iothread, path);
++        mon->ctx = iothread_get_aio_context(mon_iothread, path);
+     }
+     qemu_mutex_init(&mon->mon_lock);
+     mon->is_qmp = is_qmp;
+diff --git a/net/colo-compare.c b/net/colo-compare.c
+index 8c83da95e8..57d81f8bb0 100644
+--- a/net/colo-compare.c
++++ b/net/colo-compare.c
+@@ -968,7 +968,7 @@ static void colo_compare_handle_event(void *opaque)
+ static void colo_compare_iothread(CompareState *s)
+ {
+     g_autofree char *path = object_get_canonical_path(OBJECT(s));
+-    AioContext *ctx = iothread_ref_and_get_aio_context(s->iothread, path);
++    AioContext *ctx = iothread_get_aio_context(s->iothread, path);
+ 
+     s->iothread_ctx = ctx;
+     s->worker_context = iothread_get_g_main_context(s->iothread);
 -- 
-2.54.0
+2.49.0
 
 
