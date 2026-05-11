@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0427ECD484A
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 14:16:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65C8CCD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 14:16:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMRPS-0003Cd-HR; Mon, 11 May 2026 10:15:02 -0400
+	id 1wMRPU-0003DR-Kq; Mon, 11 May 2026 10:15:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wMRPK-0003Au-VL
- for qemu-devel@nongnu.org; Mon, 11 May 2026 10:14:55 -0400
+ id 1wMRPN-0003BZ-42
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 10:14:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wMRPH-00014x-6U
- for qemu-devel@nongnu.org; Mon, 11 May 2026 10:14:54 -0400
+ id 1wMRPK-00015o-Nt
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 10:14:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778508890;
+ s=mimecast20190719; t=1778508893;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=44ghoS8733tFYVEDqyM31T5lHaYLoS2R9vzjn7CXkkA=;
- b=Oh/iUSHxSLXF/hp2fKWrhV6OfdBhS1h882H+jW1eFXEi3vFlbKQVBradbcggGau+5piH5G
- 2ZgsIvfRmIz4U1yR7o6a2Hp1PinLO80hiyLRTDv0OVwIvmWzv/RsBjAn4lMe6axTaosa77
- +aM2qWINQNSFCnewJcfaBK04pKmdsyM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=19Mg2EdExOT050N3vQjL+MBdUKKskeVvo0VAIBOOz8Q=;
+ b=KMt6z5pR/4JpRGSCRqNTo/v7QdGU1xNGDlZ8Mz0v8y6IZunWuQQuooWuiF9cjxKGfNccfC
+ 4IxkC++de4Tz/TxVctbNQue8hXWWLCuPm3IrV8wH/ob4n7CmjwKsJacAEpcD1Ie4U1k6jm
+ YVn/gihm4lFBiYSh9vK/CmBINXR7Dek=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-640-75SlXnxEM7uKcugvGQac8w-1; Mon,
- 11 May 2026 10:14:47 -0400
-X-MC-Unique: 75SlXnxEM7uKcugvGQac8w-1
-X-Mimecast-MFC-AGG-ID: 75SlXnxEM7uKcugvGQac8w_1778508886
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-360-B9pd9srSNhuQIAHBDxhUGg-1; Mon,
+ 11 May 2026 10:14:52 -0400
+X-MC-Unique: B9pd9srSNhuQIAHBDxhUGg-1
+X-Mimecast-MFC-AGG-ID: B9pd9srSNhuQIAHBDxhUGg_1778508891
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 309A01954200; Mon, 11 May 2026 14:14:46 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3C9F41800612; Mon, 11 May 2026 14:14:51 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.50.30])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4A55B19560A2; Mon, 11 May 2026 14:14:43 +0000 (UTC)
+ id 6777419560A6; Mon, 11 May 2026 14:14:49 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 08/10] qom: fix ability to create objects without a parent
-Date: Mon, 11 May 2026 15:14:18 +0100
-Message-ID: <20260511141420.229023-9-berrange@redhat.com>
+Subject: [PATCH v3 10/10] qom: drop user_creatable_add_type method
+Date: Mon, 11 May 2026 15:14:20 +0100
+Message-ID: <20260511141420.229023-11-berrange@redhat.com>
 In-Reply-To: <20260511141420.229023-1-berrange@redhat.com>
 References: <20260511141420.229023-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -86,361 +86,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-object_new_with_propv allowed id/parent to be optional, in which case
-the caller was expected to own the returned object. Unfortunately a
-trailing object_unref() meant that the returned object was already
-freed.
+This can be replaced by object_new_with_props_from_qdict, which does
+functionally the same job, but the caller does not own the returned
+reference, instead the parent object owns it.
 
-It is confusing to have a single method with two different ownership
-scenarios for the returned object.
+In one case we can use object_new_with_props_from_qdict_owned instead
+since the object is not intended to have any parent.
 
-Make id/parent mandatory in object_new_with_propv once more, and add
-a new object_new_with_propv_parentless that does not accept id/parent
-at all and lets the caller own the returned reference.
-
-The helper method has abstracted the way properties are represented
-and setk in order to facilitate the subsequent commit.
-
-Unit tests are added to address the root cause that allowed the bug
-to slip through in commit 6134d752.
-
-Fixes: 6134d7522e570a30d7f0d1e092ee37351c5183ed
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/qom/object.h            | 47 ++++++++++++++++++
- qom/object.c                    | 74 +++++++++++++++++++++++----
- tests/unit/check-qom-proplist.c | 88 ++++++++++++++++++++++++++++-----
- 3 files changed, 187 insertions(+), 22 deletions(-)
+ authz/listfile.c                |  4 +-
+ include/qom/object_interfaces.h | 18 ---------
+ qom/object_interfaces.c         | 70 ++-------------------------------
+ tests/unit/check-qom-proplist.c |  5 +--
+ 4 files changed, 7 insertions(+), 90 deletions(-)
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index f33d512b19..4c2313a57b 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -719,6 +719,53 @@ Object *object_new_with_props_from_qdict(const char *typename,
-                                          Visitor *v,
-                                          Error **errp);
+diff --git a/authz/listfile.c b/authz/listfile.c
+index 13741d5a72..23655f8663 100644
+--- a/authz/listfile.c
++++ b/authz/listfile.c
+@@ -79,8 +79,8 @@ qauthz_list_file_load(QAuthZListFile *fauthz, Error **errp)
  
-+/**
-+ * object_new_with_props_parentless:
-+ * @typename:  The name of the type of the object to instantiate.
-+ * @errp: pointer to error object
-+ * @...: list of property names and values
-+ *
-+ * Behaviour as object_new_with_props(), except the object
-+ * will not be added to any parent and thus the caller will
-+ * own the returned instance. The caller must call
-+ * object_unref when it is no longer required.
-+ */
-+Object *object_new_with_props_parentless(const char *typename,
-+                                         Error **errp,
-+                                         ...) G_GNUC_NULL_TERMINATED;
-+
-+/**
-+ * object_new_with_propv_parentless:
-+ * @typename:  The name of the type of the object to instantiate.
-+ * @vargs: list of property names and values
-+ * @errp: pointer to error object
-+ *
-+ * Behaviour as object_new_with_propv(), except the object
-+ * will not be added to any parent and thus the caller will
-+ * own the returned instance. The caller must call
-+ * object_unref when it is no longer required.
-+ */
-+Object *object_new_with_propv_parentless(const char *typename,
-+                                         va_list vargs,
-+                                         Error **errp);
-+
-+/**
-+ * object_new_with_props_from_qdict_parentless:
-+ * @typename:  The name of the type of the object to instantiate.
-+ * @props: dictionary of property names and values
-+ * @v: visitor to iterate over @props
-+ * @errp: pointer to error object
-+ *
-+ * Behaviour as object_new_with_props_from_qdict(), except the
-+ * object will not be added to any parent and thus the caller
-+ * will own the returned instance. The caller must call
-+ * object_unref when it is no longer required.
-+ */
-+Object *object_new_with_props_from_qdict_parentless(const char *typename,
-+                                                    const QDict *props,
-+                                                    Visitor *v,
-+                                                    Error **errp);
-+
- /**
-  * object_set_props:
-  * @obj: the object instance to set properties on
-diff --git a/qom/object.c b/qom/object.c
-index 0c13e5ee1c..e4a0179468 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -749,6 +749,8 @@ Object *object_new_with_props(const char *typename,
-     va_list vargs;
-     Object *obj;
+     v = qobject_input_visitor_new(obj);
  
-+    assert(parent != NULL);
-+    assert(id != NULL);
-     va_start(vargs, errp);
-     obj = object_new_with_propv(typename, parent, id, vargs, errp);
-     va_end(vargs);
-@@ -766,10 +768,14 @@ object_new_with_props_helper(const char *typename,
-                                               Error **errp),
-                              Error **errp)
- {
-+    ERRP_GUARD();
-     Object *obj;
-     ObjectClass *klass;
-     UserCreatable *uc;
+-    ret = (QAuthZ *)user_creatable_add_type(TYPE_QAUTHZ_LIST,
+-                                            NULL, pdict, v, errp);
++    ret = QAUTHZ(object_new_with_props_from_qdict_parentless(
++                     TYPE_QAUTHZ_LIST, pdict, v, errp));
  
-+    assert((id != NULL && parent != NULL) ||
-+           (id == NULL && parent == NULL));
-+
-     if (id != NULL && !id_wellformed(id)) {
-         error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "id", "an identifier");
-         error_append_hint(errp, "Identifiers consist of letters, digits, "
-@@ -794,7 +800,10 @@ object_new_with_props_helper(const char *typename,
-     }
+  cleanup:
+     visit_free(v);
+diff --git a/include/qom/object_interfaces.h b/include/qom/object_interfaces.h
+index 02b11a7ef0..e2b8615617 100644
+--- a/include/qom/object_interfaces.h
++++ b/include/qom/object_interfaces.h
+@@ -69,24 +69,6 @@ bool user_creatable_complete(UserCreatable *uc, Error **errp);
+  */
+ bool user_creatable_can_be_deleted(UserCreatable *uc);
  
-     if (id != NULL) {
--        object_property_add_child(parent, id, obj);
-+        object_property_try_add_child(parent, id, obj, errp);
-+        if (*errp) {
-+            goto error;
-+        }
-     }
- 
-     uc = (UserCreatable *)object_dynamic_cast(obj, TYPE_USER_CREATABLE);
-@@ -807,7 +816,6 @@ object_new_with_props_helper(const char *typename,
-         }
-     }
- 
--    object_unref(obj);
-     return obj;
- 
-  error:
-@@ -835,7 +843,8 @@ Object *object_new_with_propv(const char *typename,
- {
-     Object *obj;
-     struct ObjectNewVargsData data;
+-/**
+- * user_creatable_add_type:
+- * @type: the object type name
+- * @id: the unique ID for the object
+- * @qdict: the object properties
+- * @v: the visitor
+- * @errp: if an error occurs, a pointer to an area to store the error
+- *
+- * Create an instance of the user creatable object @type, placing
+- * it in the object composition tree with name @id, initializing
+- * it with properties from @qdict
+- *
+- * Returns: the newly created object or NULL on error
+- */
+-Object *user_creatable_add_type(const char *type, const char *id,
+-                                const QDict *qdict,
+-                                Visitor *v, Error **errp);
 -
-+    assert(parent != NULL);
-+    assert(id != NULL);
-     va_copy(data.vargs, vargs);
-     obj = object_new_with_props_helper(typename,
-                                        parent,
-@@ -844,6 +853,9 @@ Object *object_new_with_propv(const char *typename,
-                                        object_new_with_propv_setter,
-                                        errp);
-     va_end(data.vargs);
-+    if (obj) {
-+        object_unref(obj);
-+    }
-     return obj;
+ /**
+  * user_creatable_add_qapi:
+  * @options: the object definition
+diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
+index e0a3cd8d0f..7080f85f95 100644
+--- a/qom/object_interfaces.c
++++ b/qom/object_interfaces.c
+@@ -44,75 +44,11 @@ bool user_creatable_can_be_deleted(UserCreatable *uc)
+     }
  }
  
-@@ -868,12 +880,56 @@ Object *object_new_with_props_from_qdict(const char *typename,
-                                          Error **errp)
+-Object *user_creatable_add_type(const char *type, const char *id,
+-                                const QDict *qdict,
+-                                Visitor *v, Error **errp)
+-{
+-    ERRP_GUARD();
+-    Object *obj;
+-    ObjectClass *klass;
+-    Error *local_err = NULL;
+-
+-    if (id != NULL && !id_wellformed(id)) {
+-        error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "id", "an identifier");
+-        error_append_hint(errp, "Identifiers consist of letters, digits, "
+-                          "'-', '.', '_', starting with a letter.\n");
+-        return NULL;
+-    }
+-
+-    klass = module_object_class_by_name(type);
+-    if (!klass) {
+-        error_setg(errp, "invalid object type: %s", type);
+-        return NULL;
+-    }
+-
+-    if (!object_class_dynamic_cast(klass, TYPE_USER_CREATABLE)) {
+-        error_setg(errp, "object type '%s' isn't supported by object-add",
+-                   type);
+-        return NULL;
+-    }
+-
+-    if (object_class_is_abstract(klass)) {
+-        error_setg(errp, "object type '%s' is abstract", type);
+-        return NULL;
+-    }
+-
+-    assert(qdict);
+-    obj = object_new_with_class(klass);
+-    object_set_props_from_qdict(obj, qdict, v, &local_err);
+-    if (local_err) {
+-        goto out;
+-    }
+-
+-    if (id != NULL) {
+-        object_property_try_add_child(object_get_objects_root(),
+-                                      id, obj, &local_err);
+-        if (local_err) {
+-            goto out;
+-        }
+-    }
+-
+-    if (!user_creatable_complete(USER_CREATABLE(obj), &local_err)) {
+-        if (id != NULL) {
+-            object_property_del(object_get_objects_root(), id);
+-        }
+-        goto out;
+-    }
+-out:
+-    if (local_err) {
+-        error_propagate(errp, local_err);
+-        object_unref(obj);
+-        return NULL;
+-    }
+-    return obj;
+-}
+-
+ void user_creatable_add_qapi(ObjectOptions *options, Error **errp)
  {
-     struct ObjectNewQDictData data = { props, v };
--    return object_new_with_props_helper(typename,
--                                        parent,
--                                        id,
--                                        &data,
--                                        object_new_with_qdict_setter,
--                                        errp);
-+    Object *obj;
-+    assert(parent != NULL);
-+    assert(id != NULL);
-+    obj = object_new_with_props_helper(typename,
-+                                       parent,
-+                                       id,
-+                                       &data,
-+                                       object_new_with_qdict_setter,
-+                                       errp);
-+    if (obj) {
-+        object_unref(obj);
-+    }
-+    return obj;
-+}
-+
-+Object *object_new_with_props_parentless(const char *typename,
-+                                         Error **errp,
-+                                         ...)
-+{
-+    va_list vargs;
-+    Object *obj;
-+
-+    va_start(vargs, errp);
-+    obj = object_new_with_propv_parentless(typename, vargs, errp);
-+    va_end(vargs);
-+
-+    return obj;
-+}
-+
-+Object *object_new_with_propv_parentless(const char *typename,
-+                                         va_list vargs,
-+                                         Error **errp)
-+{
-+    Object *ret;
-+    struct ObjectNewVargsData data;
-+    va_copy(data.vargs, vargs);
-+    ret = object_new_with_props_helper(typename, NULL, NULL, &data,
-+                                       object_new_with_propv_setter, errp);
-+    va_end(vargs);
-+    return ret;
-+}
-+
-+Object *object_new_with_props_from_qdict_parentless(const char *typename,
-+                                                    const QDict *props,
-+                                                    Visitor *v,
-+                                                    Error **errp)
-+{
-+    struct ObjectNewQDictData data = { props, v };
-+    return object_new_with_props_helper(typename, NULL, NULL, &data,
-+                                        object_new_with_qdict_setter, errp);
- }
+     Visitor *v;
+     QObject *qobj;
+     QDict *props;
+-    Object *obj;
  
- bool object_set_props(Object *obj,
+     v = qobject_output_visitor_new(&qobj);
+     visit_type_ObjectOptions(v, NULL, &options, &error_abort);
+@@ -124,9 +60,9 @@ void user_creatable_add_qapi(ObjectOptions *options, Error **errp)
+     qdict_del(props, "id");
+ 
+     v = qobject_input_visitor_new(QOBJECT(props));
+-    obj = user_creatable_add_type(ObjectType_str(options->qom_type),
+-                                  options->id, props, v, errp);
+-    object_unref(obj);
++    object_new_with_props_from_qdict(ObjectType_str(options->qom_type),
++                                     object_get_objects_root(),
++                                     options->id, props, v, errp);
+     qobject_unref(qobj);
+     visit_free(v);
+ }
 diff --git a/tests/unit/check-qom-proplist.c b/tests/unit/check-qom-proplist.c
-index 7f31735459..954c898ce1 100644
+index 954c898ce1..89de92b7d9 100644
 --- a/tests/unit/check-qom-proplist.c
 +++ b/tests/unit/check-qom-proplist.c
-@@ -336,7 +336,7 @@ static QemuOptsList qemu_object_opts = {
- };
- 
- 
--static void test_dummy_createv(void)
-+static void test_dummy_createv_tree(void)
- {
-     Error *err = NULL;
-     Object *parent = object_get_objects_root();
-@@ -351,6 +351,7 @@ static void test_dummy_createv(void)
-                               NULL));
- 
-     g_assert(err == NULL);
-+    g_assert_cmpint(dobj->parent_obj.ref, ==, 1);
-     g_assert_cmpstr(dobj->sv, ==, "Hiss hiss hiss");
-     g_assert(dobj->bv == true);
-     g_assert(dobj->av == DUMMY_PLATYPUS);
-@@ -362,9 +363,30 @@ static void test_dummy_createv(void)
- }
- 
- 
--static Object *new_helper(Error **errp,
--                          Object *parent,
--                          ...)
-+static void test_dummy_createv_parentless(void)
-+{
-+    Error *err = NULL;
-+    DummyObject *dobj = DUMMY_OBJECT(
-+        object_new_with_props_parentless(TYPE_DUMMY,
-+                                         &err,
-+                                         "bv", "yes",
-+                                         "sv", "Hiss hiss hiss",
-+                                         "av", "platypus",
-+                                         NULL));
-+
-+    g_assert(err == NULL);
-+    g_assert_cmpint(dobj->parent_obj.ref, ==, 1);
-+    g_assert_cmpstr(dobj->sv, ==, "Hiss hiss hiss");
-+    g_assert(dobj->bv == true);
-+    g_assert(dobj->av == DUMMY_PLATYPUS);
-+
-+    object_unref(OBJECT(dobj));
-+}
-+
-+
-+static Object *new_helper_tree(Error **errp,
-+                               Object *parent,
-+                               ...)
- {
-     va_list vargs;
-     Object *obj;
-@@ -379,19 +401,20 @@ static Object *new_helper(Error **errp,
-     return obj;
- }
- 
--static void test_dummy_createlist(void)
-+static void test_dummy_createlist_tree(void)
- {
-     Error *err = NULL;
-     Object *parent = object_get_objects_root();
-     DummyObject *dobj = DUMMY_OBJECT(
--        new_helper(&err,
--                   parent,
--                   "bv", "yes",
--                   "sv", "Hiss hiss hiss",
--                   "av", "platypus",
--                   NULL));
-+        new_helper_tree(&err,
-+                        parent,
-+                        "bv", "yes",
-+                        "sv", "Hiss hiss hiss",
-+                        "av", "platypus",
-+                        NULL));
- 
-     g_assert(err == NULL);
-+    g_assert_cmpint(dobj->parent_obj.ref, ==, 1);
-     g_assert_cmpstr(dobj->sv, ==, "Hiss hiss hiss");
-     g_assert(dobj->bv == true);
-     g_assert(dobj->av == DUMMY_PLATYPUS);
-@@ -402,6 +425,39 @@ static void test_dummy_createlist(void)
-     object_unparent(OBJECT(dobj));
- }
- 
-+static Object *new_helper_parentless(Error **errp,
-+                                     ...)
-+{
-+    va_list vargs;
-+    Object *obj;
-+
-+    va_start(vargs, errp);
-+    obj = object_new_with_propv_parentless(TYPE_DUMMY,
-+                                           vargs,
-+                                           errp);
-+    va_end(vargs);
-+    return obj;
-+}
-+
-+static void test_dummy_createlist_parentless(void)
-+{
-+    Error *err = NULL;
-+    DummyObject *dobj = DUMMY_OBJECT(
-+        new_helper_parentless(&err,
-+                              "bv", "yes",
-+                              "sv", "Hiss hiss hiss",
-+                              "av", "platypus",
-+                              NULL));
-+
-+    g_assert(err == NULL);
-+    g_assert_cmpint(dobj->parent_obj.ref, ==, 1);
-+    g_assert_cmpstr(dobj->sv, ==, "Hiss hiss hiss");
-+    g_assert(dobj->bv == true);
-+    g_assert(dobj->av == DUMMY_PLATYPUS);
-+
-+    object_unref(OBJECT(dobj));
-+}
-+
+@@ -461,10 +461,9 @@ static void test_dummy_createlist_parentless(void)
  static bool test_create_obj(QDict *qdict, Error **errp)
  {
      Visitor *v = qobject_input_visitor_new_keyval(QOBJECT(qdict));
-@@ -658,8 +714,14 @@ int main(int argc, char **argv)
-     type_register_static(&dummy_bus_info);
-     type_register_static(&dummy_backend_info);
+-    Object *obj = user_creatable_add_type(TYPE_DUMMY, "dev0", qdict, v, errp);
+-
++    Object *obj = object_new_with_props_from_qdict(
++        TYPE_DUMMY, object_get_objects_root(), "dev0", qdict, v, errp);
+     visit_free(v);
+-    object_unref(obj);
+     return !!obj;
+ }
  
--    g_test_add_func("/qom/proplist/createlist", test_dummy_createlist);
--    g_test_add_func("/qom/proplist/createv", test_dummy_createv);
-+    g_test_add_func("/qom/proplist/createlist/tree",
-+                    test_dummy_createlist_tree);
-+    g_test_add_func("/qom/proplist/createlist/parentless",
-+                    test_dummy_createlist_parentless);
-+    g_test_add_func("/qom/proplist/createv/tree",
-+                    test_dummy_createv_tree);
-+    g_test_add_func("/qom/proplist/createv/parentless",
-+                    test_dummy_createv_parentless);
-     g_test_add_func("/qom/proplist/createcmdline", test_dummy_createcmdl);
-     g_test_add_func("/qom/proplist/badenum", test_dummy_badenum);
-     g_test_add_func("/qom/proplist/getenum", test_dummy_getenum);
 -- 
 2.54.0
 
