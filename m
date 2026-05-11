@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62094CD37AC
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 15:13:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51012CD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 15:13:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMSJ5-00065J-DU; Mon, 11 May 2026 11:12:35 -0400
+	id 1wMSJe-0006NE-Lp; Mon, 11 May 2026 11:13:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wMSIM-0005pF-FG
- for qemu-devel@nongnu.org; Mon, 11 May 2026 11:11:46 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1wMSIR-0005qN-DE
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 11:11:53 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wMSIK-0001qT-Ol
- for qemu-devel@nongnu.org; Mon, 11 May 2026 11:11:46 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-444826c16ffso3909793f8f.1
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 08:11:44 -0700 (PDT)
+ id 1wMSIP-0001rS-5p
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 11:11:51 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-48896199cbaso40730775e9.1
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 08:11:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1778512303; x=1779117103; darn=nongnu.org;
+ d=mihalicyn.com; s=mihalicyn; t=1778512307; x=1779117107; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CXtR0f8lswzrNk5sn13Mr7WVfwlNVtnqZBag2y/b9bI=;
- b=XQoaQtpg80PdIAiSa7NTxkmZJYo6oXZfNBbs3lL30/AglU/6wQmj9WPVt21hZ9ntWM
- orAZQ8Xdnm4/hrs7XP7zhjkqehthZPhESUeOWysxwRhmP2bCXBPoxqC7jumDesUPhHcO
- a3tC2igGvJob8/Rma6PnMm8/jb6Dq7AenvOSA=
+ bh=sBpcKOoEk+DQ0qOwh5vSLzEuS5T0qQxiJFTEUttDnck=;
+ b=DRPLWYuxyPz3o+ZcBBxCw57c06OTm/xVmjq6u82O+aoHLcblR2gg5IuRdtkJWdW058
+ Z7TyRVe2f01yrNr19VPknXHaGwM32cWhUk1dayzsW4G/7x8iUrPYpfYyG+sp9nKyIm3F
+ SVamW+vBfffa08a4Gtn76YJFkUjFvS4TxCD7M=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778512303; x=1779117103;
+ d=1e100.net; s=20251104; t=1778512307; x=1779117107;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=CXtR0f8lswzrNk5sn13Mr7WVfwlNVtnqZBag2y/b9bI=;
- b=H3KJwBbJyKk1l4fIZxoFyFAeYhCANweq1lofDAv/A+r8RBDd5hIyGmuGqCNr3LZNZ3
- 2IjZKL+cETHbOndv8tY4xVBc1wev3NsD/uHBWUlOsRZs3jDB+03b0wyEqZwifm0iJQuf
- TE9/sbhQ2tYrJVoWh/oDqiVoJMHKykcIMbxOpuHaWX7MPEsRZDBOQgoWNPlhjpjgXfOt
- Tyyjc+8P/Tg5pR1akT3a6Va2NmSHtzWAO11U+nl+FLiDoOBsKey0Xi6LpjReC6wMMbu6
- NsFnTokZ6hdC8JZRI8qnl3BiVG5De4uzGrfHXGw8J1uFqJNREFAOSVJz1DnUgVxW+WP7
- Hygg==
-X-Gm-Message-State: AOJu0YygWbADoXXwpvaNkoaXMkMSDHGExHFqVm4ybsUKtrSmc21RyVhe
- hR9BFFYOx0d5K0k1RY1OJLhWqrXUT2hJuryLT/Jo5O6rmLpnzZFf1GF6Wyfma4mzvFH51FDEhAy
- MLbPJdag=
-X-Gm-Gg: Acq92OG5Wui9doHBGEd5vIlGIfblOmhpLGmk5WElcZPxu85LVk1TJdx/wunN58RtvPE
- iwx30N/B7GsXWy7jFN8eTnY0dlKfvevUqga1HaTODBDGhryzte3PpSYOCAKkxLFO8ABD2dUgEBG
- UDi4tdrDI8oC/496mmB2bvijFbZHUmxsCCpmoHbuNfStVGK6a38uB6v62fg+/11Rdt9Y25p/Fs/
- sTrUoyyw3cT1dWpQUAgcmyOr6RHPbK2HQvbaikZb/3iUptpbtvkolr8wy5AxgDlbuQvlNpFKUgC
- LuaTqMVuEHyNLmCzCvp7ndyG173839s42WCyyWVkBEr52tup46247gLaRQnj91lEh8oEituaVgR
- uYP3UHi6vFZSKoI6f3zlWiQ3OM19TrEcUcWzWTUfWUtfUHiXL/g3aaQYuAD3uGgdqXxov4Btwm+
- E6j+JGqtz2O4VYv1xRLVHtsXsjp3BbwSqSG115fs3uZrGIb9lhFZirJEGnbERbWUtYPh52aRXAu
- DD65yFAqus6JZJUfl5WqolG0+FDSnY=
-X-Received: by 2002:a05:600c:8908:b0:48a:7a10:4f17 with SMTP id
- 5b1f17b1804b1-48e51f21e0cmr271209205e9.6.1778512298557; 
- Mon, 11 May 2026 08:11:38 -0700 (PDT)
+ bh=sBpcKOoEk+DQ0qOwh5vSLzEuS5T0qQxiJFTEUttDnck=;
+ b=mUQn8KrkasZnjMZexl5uqEJ6+kyJiaZDMUlv1FbUN4CqLnlSLeTCKUdcuc8pWHSjbi
+ WX66W4/FrdL6RNNDked1JrDn0yJcnWM6T2FZbK2GTP6wZKyu8/myDFOd/X99DgskqEBN
+ SrBQLkvVZQHozatCzf+ioAPCm2hrZEXycj11x9UjQRsSDLDyZnp7wU9Rp6Msb0vc9u+B
+ OHV5Z2AIbcjfgLdO6CZj9a61ABN9jB4rj3xVMayDyDga/PRIMaMlVy2lt0j9W5kY8Tch
+ GXYpjfp3nEJ7xtqWJtedOhZcSyIW3sC82V2am0LwwPXs/qyPTuDkZh4r6+FpuNZpPA4I
+ 2tBw==
+X-Gm-Message-State: AOJu0YyKX+N8UmGMx1HDra81kDXe2ijyFWxJUkhAXV1fat4NOOjhGnpg
+ 9P0ZDG8pDRfL8EDMWaWEHIIaI0f2T6tZrxgudBJ7HZ8Sdw74a/L9JiwGEW6UygrFRULxc1frI+3
+ 6nwLf1mw=
+X-Gm-Gg: Acq92OETWyVwrXTFmTyS9g5FVDVOj42EluFwxkspLrPKA4n6pVahxsy1G2zxSwNoy19
+ hImdc+mb80aqT7Ami2Kx5CJsMmpUqDXJvSPrEo5iC26/RrV7NOH2As73bBu3kySdw+V2fnKgkAG
+ fkwUDC0CtDOsnJPEaqeHaGDzme5j3yKBo3tziEHzKCTp0xgfhR/gQZg0zEkrnRSu0q/ynbnnbbi
+ a4793woujY3rAoMiMHMRsXiA8Xl0FAQHhWafvZkTmJUNM/8uEaXDQ/bLKajfzG65z+Vm6VreZ4L
+ HOxZSleSvnvZ8mN9EwINV8pSb+ngveGlctryTDsGufpk8pOmn7wSOfAZvvlgEW6jE+r2Cn9rj8u
+ Y8OB7b5aLK5Cv8HafNOml3v04QMuB4BFfjaRLfedx1SMfomL7ITPY6Z2udciHIFK452dr0vnq1v
+ U2zB4xpAdmhw4/gOqUvnwara2wxScjvKS3KZrhxKd4LxWHt3G4tMKrroEBO0KZeMXSB9KDwVJ5a
+ aR2oUu14Hk7AXt3hNCA
+X-Received: by 2002:a05:600c:4e43:b0:485:30d4:6b9e with SMTP id
+ 5b1f17b1804b1-48e51f4c1e5mr419887325e9.21.1778512302278; 
+ Mon, 11 May 2026 08:11:42 -0700 (PDT)
 Received: from alex-laptop.lan
  (p200300cf57228c00267b069c8b2d0c7b.dip0.t-ipconnect.de.
  [2003:cf:5722:8c00:267b:69c:8b2d:c7b])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e6d8d6813sm65766925e9.6.2026.05.11.08.11.37
+ 5b1f17b1804b1-48e6d8d6813sm65766925e9.6.2026.05.11.08.11.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 May 2026 08:11:37 -0700 (PDT)
+ Mon, 11 May 2026 08:11:41 -0700 (PDT)
 From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
@@ -77,25 +77,25 @@ Cc: Stefan Hajnoczi <stefanha@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
  Jesper Devantier <foss@defmacro.it>,
  Alexander Mikhalitsyn <alexander@mihalicyn.com>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>,
- Klaus Jensen <k.jensen@samsung.com>
-Subject: [PATCH v7 4/8] hw/nvme: set CQE.sq_id earlier in nvme_process_sq
-Date: Mon, 11 May 2026 17:11:27 +0200
-Message-ID: <20260511151131.483217-5-alexander@mihalicyn.com>
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Subject: [PATCH v7 7/8] tests/functional/x86_64: add migration test for NVMe
+ device
+Date: Mon, 11 May 2026 17:11:30 +0200
+Message-ID: <20260511151131.483217-8-alexander@mihalicyn.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260511151131.483217-1-alexander@mihalicyn.com>
 References: <20260511151131.483217-1-alexander@mihalicyn.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=alexander@mihalicyn.com; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,40 +113,207 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-Instead of filling req->cqe.sq_id in nvme_post_cqes, let's set it earlier
-in nvme_process_sq.
+Introduce a very simple test to ensure that NVMe device
+migration works fine.
 
-This shouldn't cause any issues, because req->cqe.sq_id never changes
-during lifetime of req.
+Test plan is simple:
+1. prepare VM with NVMe device
+2. run workload that produces relatively heavy IO on the device
+3. migrate VM
+4. ensure that workload is alive and finishes without errors
 
-This will help us for migration support.
+Test can be run as simple as:
+$ meson test 'func-x86_64-nvme_migration' --setup thorough -C build
 
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+In the future we can extend this approach, and introduce some
+fio-based tests. And probably, it makes sense to make this test
+to apply not only to NVMe device, but also virtio-{blk,scsi},
+ide, sata and other migratable devices.
+
 Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 ---
- hw/nvme/ctrl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/functional/x86_64/meson.build           |   1 +
+ .../functional/x86_64/test_nvme_migration.py  | 159 ++++++++++++++++++
+ 2 files changed, 160 insertions(+)
+ create mode 100755 tests/functional/x86_64/test_nvme_migration.py
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index e79ef536ef8..ffee7ef224c 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -1520,7 +1520,6 @@ static void nvme_post_cqes(void *opaque)
- 
-         sq = req->sq;
-         req->cqe.status = cpu_to_le16((req->status << 1) | cq->phase);
--        req->cqe.sq_id = cpu_to_le16(sq->sqid);
-         req->cqe.sq_head = cpu_to_le16(sq->head);
-         addr = cq->dma_addr + (cq->tail << NVME_CQES);
-         ret = pci_dma_write(PCI_DEVICE(n), addr, (void *)&req->cqe,
-@@ -7850,6 +7849,7 @@ static void nvme_process_sq(void *opaque)
-         QTAILQ_REMOVE(&sq->req_list, req, entry);
-         QTAILQ_INSERT_TAIL(&sq->out_req_list, req, entry);
-         nvme_req_clear(req);
-+        req->cqe.sq_id = cpu_to_le16(sq->sqid);
-         req->cqe.cid = cmd.cid;
-         memcpy(&req->cmd, &cmd, sizeof(NvmeCmd));
- 
+diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
+index 1ed10ad6c29..fd77f19d726 100644
+--- a/tests/functional/x86_64/meson.build
++++ b/tests/functional/x86_64/meson.build
+@@ -37,6 +37,7 @@ tests_x86_64_system_thorough = [
+   'linux_initrd',
+   'multiprocess',
+   'netdev_ethtool',
++  'nvme_migration',
+   'replay',
+   'reverse_debug',
+   'tuxrun',
+diff --git a/tests/functional/x86_64/test_nvme_migration.py b/tests/functional/x86_64/test_nvme_migration.py
+new file mode 100755
+index 00000000000..3788a8e3473
+--- /dev/null
++++ b/tests/functional/x86_64/test_nvme_migration.py
+@@ -0,0 +1,159 @@
++#!/usr/bin/env python3
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# x86_64 NVMe migration test
++
++from migration import MigrationTest
++from qemu_test import QemuSystemTest, Asset
++from qemu_test import wait_for_console_pattern
++from qemu_test import exec_command, exec_command_and_wait_for_pattern
++
++
++class X8664NVMeMigrationTest(MigrationTest):
++    ASSET_KERNEL = Asset(
++        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
++         '/31/Server/x86_64/os/images/pxeboot/vmlinuz'),
++        'd4738d03dbbe083ca610d0821d0a8f1488bebbdccef54ce33e3adb35fda00129')
++
++    ASSET_INITRD = Asset(
++        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
++         '/31/Server/x86_64/os/images/pxeboot/initrd.img'),
++        '277cd6c7adf77c7e63d73bbb2cded8ef9e2d3a2f100000e92ff1f8396513cd8b')
++
++    ASSET_DISKIMAGE = Asset(
++        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
++         '/31/Cloud/x86_64/images/Fedora-Cloud-Base-31-1.9.x86_64.qcow2'),
++        'e3c1b309d9203604922d6e255c2c5d098a309c2d46215d8fc026954f3c5c27a0')
++
++    DEFAULT_KERNEL_PARAMS = ('root=/dev/nvme0n1p1 console=ttyS0 net.ifnames=0 '
++                             'rd.rescue quiet')
++
++    def wait_for_console_pattern(self, success_message, vm):
++        wait_for_console_pattern(
++            self,
++            success_message,
++            failure_message="Kernel panic - not syncing",
++            vm=vm,
++        )
++
++    def exec_command_and_check(self, command, vm):
++        prompt = '# '
++        exec_command_and_wait_for_pattern(self,
++                                        f"{command} && echo OK || echo FAIL",
++                                        'FAIL', vm=vm)
++        # Note, that commands we send to the console are echo-ed back, so if we have a word "FAIL"
++        # in the command itself, we should expect to see it once.
++        wait_for_console_pattern(self, 'OK', failure_message="FAIL", vm=vm)
++        self.wait_for_console_pattern(prompt, vm)
++
++    def configure_machine(self, vm):
++        kernel_path = self.ASSET_KERNEL.fetch()
++        initrd_path = self.ASSET_INITRD.fetch()
++        diskimage_path = self.ASSET_DISKIMAGE.fetch()
++
++        vm.set_console()
++        vm.add_args("-cpu", "max")
++        vm.add_args("-m", "2G")
++        vm.add_args("-accel", "kvm")
++
++        vm.add_args('-drive',
++                         f'file={diskimage_path},if=none,id=drv0,snapshot=on')
++        vm.add_args('-device', 'nvme,bus=pcie.0,' +
++                         'drive=drv0,id=nvme-disk0,serial=nvmemigratetest,bootindex=1')
++
++        vm.add_args(
++            "-kernel",
++            kernel_path,
++            "-initrd",
++            initrd_path,
++            "-append",
++            self.DEFAULT_KERNEL_PARAMS
++        )
++
++    def launch_source_vm(self, vm):
++        vm.launch()
++
++        self.wait_for_console_pattern('Entering emergency mode.', vm)
++        prompt = '# '
++        self.wait_for_console_pattern(prompt, vm)
++
++        # Synchronize on NVMe driver creating the root device
++        exec_command_and_wait_for_pattern(self,
++                        "while ! (dmesg -c | grep nvme0n1:) ; do sleep 1 ; done",
++                        "nvme0n1", vm=vm)
++        self.wait_for_console_pattern(prompt, vm)
++
++        # prepare system
++        exec_command_and_wait_for_pattern(self, 'mount /dev/nvme0n1p1 /sysroot',
++                                          prompt, vm=vm)
++        exec_command_and_wait_for_pattern(self, 'chroot /sysroot',
++                                          prompt, vm=vm)
++        exec_command_and_wait_for_pattern(self, 'mount -t proc proc /proc',
++                                          prompt, vm=vm)
++        exec_command_and_wait_for_pattern(self, 'mount -t sysfs sysfs /sys',
++                                          prompt, vm=vm)
++
++        # Run workload before migration to check if it continues to run properly after migration
++        #
++        # Workload is simple: it continuously calculates checksums of all files in /usr/bin
++        # to generate some I/O load on the NVMe disk and at the same time it drops caches to
++        # make sure that we have some read I/O on the disk as well.
++        # If there are any issues with the migration of the NVMe device, we should see errors
++        # in dmesg and consequently in the workload log.
++        exec_command_and_wait_for_pattern(self,
++                                        "(while [ ! -f /tmp/test_nvme_migration_workload.stop ]; do \
++                                            rm -f /tmp/test_nvme_migration_workload.iteration_finished; \
++                                            echo 3 > /proc/sys/vm/drop_caches; \
++                                            find /usr/bin -type f -exec cksum {} \\;; \
++                                            touch /tmp/test_nvme_migration_workload.iteration_finished; \
++                                        done) > /dev/null 2> /tmp/test_nvme_migration_workload.errors &",
++                                        prompt, vm=vm)
++        exec_command_and_wait_for_pattern(self, 'echo $! > /tmp/test_nvme_migration_workload.pid',
++                                          prompt, vm=vm)
++
++        # check if process is alive and running
++        self.exec_command_and_check("kill -0 $(cat /tmp/test_nvme_migration_workload.pid)", vm)
++
++    def assert_dest_vm(self, vm):
++        prompt = '# '
++
++        # check if process is alive and running after migration, if not - fail the test
++        self.exec_command_and_check("kill -0 $(cat /tmp/test_nvme_migration_workload.pid)", vm)
++
++        # signal workload to stop
++        exec_command_and_wait_for_pattern(self, 'touch /tmp/test_nvme_migration_workload.stop',
++                                          prompt, vm=vm)
++
++        # wait workload to finish, because we want to examine log to see if there are any errors
++        exec_command_and_wait_for_pattern(self,
++                                        "while [ ! -f /tmp/test_nvme_migration_workload.iteration_finished ]; do sleep 1; done;",
++                                        prompt, vm=vm)
++
++        exec_command_and_wait_for_pattern(self, 'cat /tmp/test_nvme_migration_workload.errors',
++                                          prompt, vm=vm)
++
++        # fail the test if non-empty
++        self.exec_command_and_check("[ ! -s /tmp/test_nvme_migration_workload.errors ]", vm)
++
++    def test_migration_with_tcp_localhost(self):
++        self.set_machine('q35')
++        self.require_accelerator("kvm")
++
++        self.migration_with_tcp_localhost()
++
++    def test_migration_with_unix(self):
++        self.set_machine('q35')
++        self.require_accelerator("kvm")
++
++        self.migration_with_unix()
++
++    def test_migration_with_exec(self):
++        self.set_machine('q35')
++        self.require_accelerator("kvm")
++
++        self.migration_with_exec()
++
++
++if __name__ == '__main__':
++    MigrationTest.main()
 -- 
 2.47.3
 
