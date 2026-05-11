@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81396CD4840
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 17:31:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1CCFCD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 17:33:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMUTo-0005Mp-So; Mon, 11 May 2026 13:31:45 -0400
+	id 1wMUVC-00063h-0u; Mon, 11 May 2026 13:33:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wMUTo-0005Mf-3S
- for qemu-devel@nongnu.org; Mon, 11 May 2026 13:31:44 -0400
+ id 1wMUV6-00062M-5q
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 13:33:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wMUTm-0001hg-F8
- for qemu-devel@nongnu.org; Mon, 11 May 2026 13:31:43 -0400
+ id 1wMUV4-00027P-ER
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 13:33:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778520701;
+ s=mimecast20190719; t=1778520781;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZUSo2zNRZCgjUmsJTqcl8JJdEuuR3GFj+TyrO2Jdi0A=;
- b=P7/z8glwEPiU3hkAyPf5iYG2tuE5zZQwgL9H4V3qyEZKNcJMU6I++X0REVmiegzQeNm0y5
- 9nWqCPZZ6czLZT+YU+Du46w+iSBDq3rjSl2BtVvYFQAF4dEb4621CHl6lXDbZ8hjWELIvI
- piHhSUYIZ8FRxFd/4Uik44lHWOe9YiI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=eklJSWeh/+HlCaCa015LzkbUWF+FvRwUjYwQztd8asw=;
+ b=Scf21+IGznSdsJ0l9mtI1e/WPJHxrRVLuf/crF5yU2770xofHtoNm3tDUN5M5iktCnKdLg
+ YfCf5mQpIi0UzDkXMgqu3o0wiDRrw2LH69S4pD1xPdnV9b3JPRTyWqGwubKAtqWfOp3TGj
+ TloXBFD0wZnSMzxLjrMv7hKv0WcLmts=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-540-QYEVGyXKNqKguO7PwqM-WA-1; Mon,
- 11 May 2026 13:31:37 -0400
-X-MC-Unique: QYEVGyXKNqKguO7PwqM-WA-1
-X-Mimecast-MFC-AGG-ID: QYEVGyXKNqKguO7PwqM-WA_1778520696
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-692-24fKK-yhNyixZfpr1suKfQ-1; Mon,
+ 11 May 2026 13:32:59 -0400
+X-MC-Unique: 24fKK-yhNyixZfpr1suKfQ-1
+X-Mimecast-MFC-AGG-ID: 24fKK-yhNyixZfpr1suKfQ_1778520778
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 462241956094; Mon, 11 May 2026 17:31:36 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 96DD4195608A; Mon, 11 May 2026 17:32:58 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.50.30])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7997418004A3; Mon, 11 May 2026 17:31:34 +0000 (UTC)
-Date: Mon, 11 May 2026 18:31:30 +0100
+ id F06931800349; Mon, 11 May 2026 17:32:56 +0000 (UTC)
+Date: Mon, 11 May 2026 18:32:53 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
 Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
  Cleber Rosa <crosa@redhat.com>
-Subject: Re: [RFC PATCH v2 02/10] scripts/expand-macro.py: helper script
- exploding macros
-Message-ID: <agIScsrfiXudewZ3@redhat.com>
+Subject: Re: [RFC PATCH v2 03/10] .agents/skills: add qemu-code-explorer skill
+Message-ID: <agISxb-entwoYzzF@redhat.com>
 References: <20260511170500.124211-1-alex.bennee@linaro.org>
- <20260511170500.124211-3-alex.bennee@linaro.org>
+ <20260511170500.124211-4-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260511170500.124211-3-alex.bennee@linaro.org>
+In-Reply-To: <20260511170500.124211-4-alex.bennee@linaro.org>
 User-Agent: Mutt/2.3.1 (2026-03-20)
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
@@ -90,44 +89,41 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 11, 2026 at 06:04:51PM +0100, Alex Bennée wrote:
-> QEMU makes heavy use of C Macros which can be confusing to humans and
-> seems almost impossible for AI agents to follow. In the past I've
-> dealt with this by compiling with V=1 and manually copying and pasting
-> the gcc command line and appending -E to run the pre-processor step.
-> 
-> With the modern build system we now have a compile_commands.json so we
-> can automate the process with a script.
-> 
-> There is some trickiness involved in following the line markers so we
-> know where in the source file we are. To handle this we implement a
-> PreprocessorState object to track where in the include chain we are.
-> This allows us to show the including location when we dump the
-> expanded macro.
+On Mon, May 11, 2026 at 06:04:52PM +0100, Alex Bennée wrote:
+> This provides a skill detailing how to explore the QEMU code base. It
+> guides the agents to use the tags and git-grep by default and outlines
+> some of the confusions that can occur with multiple build directories.
 > 
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->  scripts/expand-macro.py | 272 ++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 272 insertions(+)
->  create mode 100755 scripts/expand-macro.py
 > 
-> diff --git a/scripts/expand-macro.py b/scripts/expand-macro.py
-> new file mode 100755
-> index 00000000000..581f20b9897
+> ---
+> v2
+>   - remove personal gtag skill references, add global stanzas directly
+>   - moved macro information from AGENTS.md into code explorer
+>   - more imperative language to trigger its use
+>   - add section on using scripts/expand_macro.py
+>   - remove eca reference from evals.json (maybe we should just drop this)
+> ---
+>  .agents/skills/qemu-code-explorer/SKILL.md    | 119 ++++++++++++++++++
+>  .../qemu-code-explorer/evals/evals.json       |  26 ++++
+>  AGENTS.md                                     |   1 +
+>  3 files changed, 146 insertions(+)
+>  create mode 100644 .agents/skills/qemu-code-explorer/SKILL.md
+>  create mode 100644 .agents/skills/qemu-code-explorer/evals/evals.json
+> 
+> diff --git a/.agents/skills/qemu-code-explorer/SKILL.md b/.agents/skills/qemu-code-explorer/SKILL.md
+> new file mode 100644
+> index 00000000000..d5b7d6a35cd
 > --- /dev/null
-> +++ b/scripts/expand-macro.py
-> @@ -0,0 +1,272 @@
-> +#!/usr/bin/env python3
-> +#
-> +# Automate the expansion of QEMU macros based on compile_commands.json.
-> +#
-> +# This script runs the C preprocessor over a file to expand macros
-> +# in a specified line range, using the compilation flags defined in
-> +# compile_commands.json.
-> +#
-> +# Copyright (c) Linaro 2026
+> +++ b/.agents/skills/qemu-code-explorer/SKILL.md
+> @@ -0,0 +1,119 @@
+> +---
+> +name: qemu-code-explorer
+> +description: Systematic framework for deep-diving into the QEMU codebase. Use this to find precise symbol definitions (functions, structs, globals), locate all call sites or references, explore subsystem architectures, or search generated code in build directories. You MUST use this skill when exploring code flow and dependencies.
+> +license: GPL-2.0-or-later
 
-SPDX-License-Identifier  needed
+Is "license:" a mandatory tag from a schema we're following here,
+or can be used "SPDX-License-Identifier:" instead ?
 
 
 With regards,
