@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B029CD37BE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0427ECD484A
 	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 14:16:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMRP7-00034P-2H; Mon, 11 May 2026 10:14:41 -0400
+	id 1wMRPS-0003Cd-HR; Mon, 11 May 2026 10:15:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wMRP4-00030N-Gb
- for qemu-devel@nongnu.org; Mon, 11 May 2026 10:14:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wMRPK-0003Au-VL
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 10:14:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wMROz-000119-CX
- for qemu-devel@nongnu.org; Mon, 11 May 2026 10:14:36 -0400
+ id 1wMRPH-00014x-6U
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 10:14:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778508872;
+ s=mimecast20190719; t=1778508890;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yssNP4Qju6M+L9O9i/N+1SAZ/OA+QE9LNFEMu8/6mU4=;
- b=TsdD5tslYryj9Z8Nurps/ZOke/l59c3pC9cXCSx05QQtJffqiB5oxmCz+jBrywyNfEejnZ
- 1cdOdIl6sA0zvM3fhjVmOTtOL8WRl8qPgFQCY8CPUdG8MmwEeZmSQDk+dhuPiLP8pxeAyg
- yHg7iwfOJjhIQXMnZ2Rp3mUyp7OukfQ=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=44ghoS8733tFYVEDqyM31T5lHaYLoS2R9vzjn7CXkkA=;
+ b=Oh/iUSHxSLXF/hp2fKWrhV6OfdBhS1h882H+jW1eFXEi3vFlbKQVBradbcggGau+5piH5G
+ 2ZgsIvfRmIz4U1yR7o6a2Hp1PinLO80hiyLRTDv0OVwIvmWzv/RsBjAn4lMe6axTaosa77
+ +aM2qWINQNSFCnewJcfaBK04pKmdsyM=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-99-ok7fVZJJOjCHekQeVf0xgg-1; Mon,
- 11 May 2026 10:14:28 -0400
-X-MC-Unique: ok7fVZJJOjCHekQeVf0xgg-1
-X-Mimecast-MFC-AGG-ID: ok7fVZJJOjCHekQeVf0xgg_1778508867
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-640-75SlXnxEM7uKcugvGQac8w-1; Mon,
+ 11 May 2026 10:14:47 -0400
+X-MC-Unique: 75SlXnxEM7uKcugvGQac8w-1
+X-Mimecast-MFC-AGG-ID: 75SlXnxEM7uKcugvGQac8w_1778508886
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 71AA41800612; Mon, 11 May 2026 14:14:27 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 309A01954200; Mon, 11 May 2026 14:14:46 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.50.30])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7144319560A2; Mon, 11 May 2026 14:14:25 +0000 (UTC)
+ id 4A55B19560A2; Mon, 11 May 2026 14:14:43 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 01/10] qom: add trace events for object/property lifecycle
-Date: Mon, 11 May 2026 15:14:11 +0100
-Message-ID: <20260511141420.229023-2-berrange@redhat.com>
+Subject: [PATCH v3 08/10] qom: fix ability to create objects without a parent
+Date: Mon, 11 May 2026 15:14:18 +0100
+Message-ID: <20260511141420.229023-9-berrange@redhat.com>
 In-Reply-To: <20260511141420.229023-1-berrange@redhat.com>
 References: <20260511141420.229023-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,154 +86,361 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This adds tracing around object allocation & finalization, the addition &
-deletion of properties, and the addition & deletion of children.
+object_new_with_propv allowed id/parent to be optional, in which case
+the caller was expected to own the returned object. Unfortunately a
+trailing object_unref() meant that the returned object was already
+freed.
 
+It is confusing to have a single method with two different ownership
+scenarios for the returned object.
+
+Make id/parent mandatory in object_new_with_propv once more, and add
+a new object_new_with_propv_parentless that does not accept id/parent
+at all and lets the caller own the returned reference.
+
+The helper method has abstracted the way properties are represented
+and setk in order to facilitate the subsequent commit.
+
+Unit tests are added to address the root cause that allowed the bug
+to slip through in commit 6134d752.
+
+Fixes: 6134d7522e570a30d7f0d1e092ee37351c5183ed
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- qom/object.c     | 34 +++++++++++++++++++++++++++-------
- qom/trace-events | 12 ++++++++++--
- 2 files changed, 37 insertions(+), 9 deletions(-)
+ include/qom/object.h            | 47 ++++++++++++++++++
+ qom/object.c                    | 74 +++++++++++++++++++++++----
+ tests/unit/check-qom-proplist.c | 88 ++++++++++++++++++++++++++++-----
+ 3 files changed, 187 insertions(+), 22 deletions(-)
 
+diff --git a/include/qom/object.h b/include/qom/object.h
+index f33d512b19..4c2313a57b 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -719,6 +719,53 @@ Object *object_new_with_props_from_qdict(const char *typename,
+                                          Visitor *v,
+                                          Error **errp);
+ 
++/**
++ * object_new_with_props_parentless:
++ * @typename:  The name of the type of the object to instantiate.
++ * @errp: pointer to error object
++ * @...: list of property names and values
++ *
++ * Behaviour as object_new_with_props(), except the object
++ * will not be added to any parent and thus the caller will
++ * own the returned instance. The caller must call
++ * object_unref when it is no longer required.
++ */
++Object *object_new_with_props_parentless(const char *typename,
++                                         Error **errp,
++                                         ...) G_GNUC_NULL_TERMINATED;
++
++/**
++ * object_new_with_propv_parentless:
++ * @typename:  The name of the type of the object to instantiate.
++ * @vargs: list of property names and values
++ * @errp: pointer to error object
++ *
++ * Behaviour as object_new_with_propv(), except the object
++ * will not be added to any parent and thus the caller will
++ * own the returned instance. The caller must call
++ * object_unref when it is no longer required.
++ */
++Object *object_new_with_propv_parentless(const char *typename,
++                                         va_list vargs,
++                                         Error **errp);
++
++/**
++ * object_new_with_props_from_qdict_parentless:
++ * @typename:  The name of the type of the object to instantiate.
++ * @props: dictionary of property names and values
++ * @v: visitor to iterate over @props
++ * @errp: pointer to error object
++ *
++ * Behaviour as object_new_with_props_from_qdict(), except the
++ * object will not be added to any parent and thus the caller
++ * will own the returned instance. The caller must call
++ * object_unref when it is no longer required.
++ */
++Object *object_new_with_props_from_qdict_parentless(const char *typename,
++                                                    const QDict *props,
++                                                    Visitor *v,
++                                                    Error **errp);
++
+ /**
+  * object_set_props:
+  * @obj: the object instance to set properties on
 diff --git a/qom/object.c b/qom/object.c
-index f981e27044..9c391071fb 100644
+index 0c13e5ee1c..e4a0179468 100644
 --- a/qom/object.c
 +++ b/qom/object.c
-@@ -603,6 +603,8 @@ static void object_property_del_all(Object *obj)
-         object_property_iter_init(&iter, obj);
-         while ((prop = object_property_iter_next(&iter)) != NULL) {
-             if (g_hash_table_add(done, prop)) {
-+                trace_object_property_del(obj, obj->class->type->name,
-+                                          prop->name, prop->opaque);
-                 if (prop->release) {
-                     prop->release(obj, prop->name, prop->opaque);
-                     released = true;
-@@ -621,10 +623,14 @@ static void object_property_del_child(Object *obj, Object *child)
-     GHashTableIter iter;
-     gpointer key, value;
+@@ -749,6 +749,8 @@ Object *object_new_with_props(const char *typename,
+     va_list vargs;
+     Object *obj;
  
-+    trace_object_property_del_child(obj, obj->class->type->name,
-+                                    child, child->class->type->name);
-     g_hash_table_iter_init(&iter, obj->properties);
-     while (g_hash_table_iter_next(&iter, &key, &value)) {
-         prop = value;
-         if (object_property_is_child(prop) && prop->opaque == child) {
-+            trace_object_property_del(obj, obj->class->type->name,
-+                                      prop->name, prop->opaque);
-             if (prop->release) {
-                 prop->release(obj, prop->name, prop->opaque);
-                 prop->release = NULL;
-@@ -664,7 +670,7 @@ static void object_finalize(void *data)
++    assert(parent != NULL);
++    assert(id != NULL);
+     va_start(vargs, errp);
+     obj = object_new_with_propv(typename, parent, id, vargs, errp);
+     va_end(vargs);
+@@ -766,10 +768,14 @@ object_new_with_props_helper(const char *typename,
+                                               Error **errp),
+                              Error **errp)
  {
-     Object *obj = data;
-     TypeImpl *ti = obj->class->type;
++    ERRP_GUARD();
+     Object *obj;
+     ObjectClass *klass;
+     UserCreatable *uc;
+ 
++    assert((id != NULL && parent != NULL) ||
++           (id == NULL && parent == NULL));
++
+     if (id != NULL && !id_wellformed(id)) {
+         error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "id", "an identifier");
+         error_append_hint(errp, "Identifiers consist of letters, digits, "
+@@ -794,7 +800,10 @@ object_new_with_props_helper(const char *typename,
+     }
+ 
+     if (id != NULL) {
+-        object_property_add_child(parent, id, obj);
++        object_property_try_add_child(parent, id, obj, errp);
++        if (*errp) {
++            goto error;
++        }
+     }
+ 
+     uc = (UserCreatable *)object_dynamic_cast(obj, TYPE_USER_CREATABLE);
+@@ -807,7 +816,6 @@ object_new_with_props_helper(const char *typename,
+         }
+     }
+ 
+-    object_unref(obj);
+     return obj;
+ 
+  error:
+@@ -835,7 +843,8 @@ Object *object_new_with_propv(const char *typename,
+ {
+     Object *obj;
+     struct ObjectNewVargsData data;
 -
-+    trace_object_finalize(obj, obj->class->type->name);
-     object_property_del_all(obj);
-     object_deinit(obj, ti);
- 
-@@ -714,6 +720,7 @@ static Object *object_new_with_type(Type type)
-     object_initialize_with_type(obj, size, type);
-     obj->free = obj_free;
- 
-+    trace_object_new(obj, obj->class->type->name);
++    assert(parent != NULL);
++    assert(id != NULL);
+     va_copy(data.vargs, vargs);
+     obj = object_new_with_props_helper(typename,
+                                        parent,
+@@ -844,6 +853,9 @@ Object *object_new_with_propv(const char *typename,
+                                        object_new_with_propv_setter,
+                                        errp);
+     va_end(data.vargs);
++    if (obj) {
++        object_unref(obj);
++    }
      return obj;
  }
  
-@@ -844,8 +851,9 @@ Object *object_dynamic_cast(Object *obj, const char *typename)
- Object *object_dynamic_cast_assert(Object *obj, const char *typename,
-                                    const char *file, int line, const char *func)
+@@ -868,12 +880,56 @@ Object *object_new_with_props_from_qdict(const char *typename,
+                                          Error **errp)
  {
--    trace_object_dynamic_cast_assert(obj ? obj->class->type->name : "(null)",
--                                     typename, file, line, func);
-+    trace_object_dynamic_cast_assert(
-+        obj, obj ? obj->class->type->name : "(null)",
-+        typename, file, line, func);
- 
- #ifdef CONFIG_QOM_CAST_DEBUG
-     int i;
-@@ -935,8 +943,9 @@ ObjectClass *object_class_dynamic_cast_assert(ObjectClass *class,
- {
-     ObjectClass *ret;
- 
--    trace_object_class_dynamic_cast_assert(class ? class->type->name : "(null)",
--                                           typename, file, line, func);
-+    trace_object_class_dynamic_cast_assert(
-+        class ? class->type->name : "(null)",
-+        typename, file, line, func);
- 
- #ifdef CONFIG_QOM_CAST_DEBUG
-     int i;
-@@ -1220,6 +1229,8 @@ object_property_try_add(Object *obj, const char *name, const char *type,
-     prop->release = release;
-     prop->opaque = opaque;
- 
-+    trace_object_property_add(obj, obj->class->type->name,
-+                              prop->name, prop->opaque);
-     g_hash_table_insert(obj->properties, prop->name, prop);
-     return prop;
+     struct ObjectNewQDictData data = { props, v };
+-    return object_new_with_props_helper(typename,
+-                                        parent,
+-                                        id,
+-                                        &data,
+-                                        object_new_with_qdict_setter,
+-                                        errp);
++    Object *obj;
++    assert(parent != NULL);
++    assert(id != NULL);
++    obj = object_new_with_props_helper(typename,
++                                       parent,
++                                       id,
++                                       &data,
++                                       object_new_with_qdict_setter,
++                                       errp);
++    if (obj) {
++        object_unref(obj);
++    }
++    return obj;
++}
++
++Object *object_new_with_props_parentless(const char *typename,
++                                         Error **errp,
++                                         ...)
++{
++    va_list vargs;
++    Object *obj;
++
++    va_start(vargs, errp);
++    obj = object_new_with_propv_parentless(typename, vargs, errp);
++    va_end(vargs);
++
++    return obj;
++}
++
++Object *object_new_with_propv_parentless(const char *typename,
++                                         va_list vargs,
++                                         Error **errp)
++{
++    Object *ret;
++    struct ObjectNewVargsData data;
++    va_copy(data.vargs, vargs);
++    ret = object_new_with_props_helper(typename, NULL, NULL, &data,
++                                       object_new_with_propv_setter, errp);
++    va_end(vargs);
++    return ret;
++}
++
++Object *object_new_with_props_from_qdict_parentless(const char *typename,
++                                                    const QDict *props,
++                                                    Visitor *v,
++                                                    Error **errp)
++{
++    struct ObjectNewQDictData data = { props, v };
++    return object_new_with_props_helper(typename, NULL, NULL, &data,
++                                        object_new_with_qdict_setter, errp);
  }
-@@ -1258,6 +1269,8 @@ object_class_property_add(ObjectClass *klass,
-     prop->release = release;
-     prop->opaque = opaque;
  
-+    trace_object_class_property_add(klass->type->name, prop->name,
-+                                    prop->opaque);
-     g_hash_table_insert(klass->properties, prop->name, prop);
+ bool object_set_props(Object *obj,
+diff --git a/tests/unit/check-qom-proplist.c b/tests/unit/check-qom-proplist.c
+index 7f31735459..954c898ce1 100644
+--- a/tests/unit/check-qom-proplist.c
++++ b/tests/unit/check-qom-proplist.c
+@@ -336,7 +336,7 @@ static QemuOptsList qemu_object_opts = {
+ };
  
-     return prop;
-@@ -1346,6 +1359,8 @@ void object_property_del(Object *obj, const char *name)
+ 
+-static void test_dummy_createv(void)
++static void test_dummy_createv_tree(void)
  {
-     ObjectProperty *prop = g_hash_table_lookup(obj->properties, name);
+     Error *err = NULL;
+     Object *parent = object_get_objects_root();
+@@ -351,6 +351,7 @@ static void test_dummy_createv(void)
+                               NULL));
  
-+    trace_object_property_del(obj, obj->class->type->name, prop->name,
-+                              prop->opaque);
-     if (prop->release) {
-         prop->release(obj, name, prop->opaque);
-     }
-@@ -1634,8 +1649,11 @@ int object_property_get_enum(Object *obj, const char *name,
- bool object_property_parse(Object *obj, const char *name,
-                            const char *string, Error **errp)
+     g_assert(err == NULL);
++    g_assert_cmpint(dobj->parent_obj.ref, ==, 1);
+     g_assert_cmpstr(dobj->sv, ==, "Hiss hiss hiss");
+     g_assert(dobj->bv == true);
+     g_assert(dobj->av == DUMMY_PLATYPUS);
+@@ -362,9 +363,30 @@ static void test_dummy_createv(void)
+ }
+ 
+ 
+-static Object *new_helper(Error **errp,
+-                          Object *parent,
+-                          ...)
++static void test_dummy_createv_parentless(void)
++{
++    Error *err = NULL;
++    DummyObject *dobj = DUMMY_OBJECT(
++        object_new_with_props_parentless(TYPE_DUMMY,
++                                         &err,
++                                         "bv", "yes",
++                                         "sv", "Hiss hiss hiss",
++                                         "av", "platypus",
++                                         NULL));
++
++    g_assert(err == NULL);
++    g_assert_cmpint(dobj->parent_obj.ref, ==, 1);
++    g_assert_cmpstr(dobj->sv, ==, "Hiss hiss hiss");
++    g_assert(dobj->bv == true);
++    g_assert(dobj->av == DUMMY_PLATYPUS);
++
++    object_unref(OBJECT(dobj));
++}
++
++
++static Object *new_helper_tree(Error **errp,
++                               Object *parent,
++                               ...)
  {
--    Visitor *v = string_input_visitor_new(string);
--    bool ok = object_property_set(obj, name, v, errp);
-+    Visitor *v;
-+    bool ok;
-+    trace_object_property_parse(obj, obj->class->type->name, name, string);
-+    v = string_input_visitor_new(string);
-+    ok = object_property_set(obj, name, v, errp);
+     va_list vargs;
+     Object *obj;
+@@ -379,19 +401,20 @@ static Object *new_helper(Error **errp,
+     return obj;
+ }
  
-     visit_free(v);
-     return ok;
-@@ -1766,6 +1784,8 @@ object_property_try_add_child(Object *obj, const char *name,
-     g_autofree char *type = NULL;
-     ObjectProperty *op;
+-static void test_dummy_createlist(void)
++static void test_dummy_createlist_tree(void)
+ {
+     Error *err = NULL;
+     Object *parent = object_get_objects_root();
+     DummyObject *dobj = DUMMY_OBJECT(
+-        new_helper(&err,
+-                   parent,
+-                   "bv", "yes",
+-                   "sv", "Hiss hiss hiss",
+-                   "av", "platypus",
+-                   NULL));
++        new_helper_tree(&err,
++                        parent,
++                        "bv", "yes",
++                        "sv", "Hiss hiss hiss",
++                        "av", "platypus",
++                        NULL));
  
-+    trace_object_property_add_child(obj, obj->class->type->name, name,
-+                                    child, child->class->type->name);
-     assert(!child->parent);
+     g_assert(err == NULL);
++    g_assert_cmpint(dobj->parent_obj.ref, ==, 1);
+     g_assert_cmpstr(dobj->sv, ==, "Hiss hiss hiss");
+     g_assert(dobj->bv == true);
+     g_assert(dobj->av == DUMMY_PLATYPUS);
+@@ -402,6 +425,39 @@ static void test_dummy_createlist(void)
+     object_unparent(OBJECT(dobj));
+ }
  
-     type = g_strdup_printf("child<%s>", object_get_typename(child));
-diff --git a/qom/trace-events b/qom/trace-events
-index b2e9f4a712..44c63e72af 100644
---- a/qom/trace-events
-+++ b/qom/trace-events
-@@ -1,5 +1,13 @@
- # See docs/devel/tracing.rst for syntax documentation.
++static Object *new_helper_parentless(Error **errp,
++                                     ...)
++{
++    va_list vargs;
++    Object *obj;
++
++    va_start(vargs, errp);
++    obj = object_new_with_propv_parentless(TYPE_DUMMY,
++                                           vargs,
++                                           errp);
++    va_end(vargs);
++    return obj;
++}
++
++static void test_dummy_createlist_parentless(void)
++{
++    Error *err = NULL;
++    DummyObject *dobj = DUMMY_OBJECT(
++        new_helper_parentless(&err,
++                              "bv", "yes",
++                              "sv", "Hiss hiss hiss",
++                              "av", "platypus",
++                              NULL));
++
++    g_assert(err == NULL);
++    g_assert_cmpint(dobj->parent_obj.ref, ==, 1);
++    g_assert_cmpstr(dobj->sv, ==, "Hiss hiss hiss");
++    g_assert(dobj->bv == true);
++    g_assert(dobj->av == DUMMY_PLATYPUS);
++
++    object_unref(OBJECT(dobj));
++}
++
+ static bool test_create_obj(QDict *qdict, Error **errp)
+ {
+     Visitor *v = qobject_input_visitor_new_keyval(QOBJECT(qdict));
+@@ -658,8 +714,14 @@ int main(int argc, char **argv)
+     type_register_static(&dummy_bus_info);
+     type_register_static(&dummy_backend_info);
  
- # object.c
--object_dynamic_cast_assert(const char *type, const char *target, const char *file, int line, const char *func) "%s->%s (%s:%d:%s)"
--object_class_dynamic_cast_assert(const char *type, const char *target, const char *file, int line, const char *func) "%s->%s (%s:%d:%s)"
-+object_dynamic_cast_assert(void *obj, const char *type, const char *target, const char *file, int line, const char *func) "obj=%p type=%s->%s (%s:%d:%s)"
-+object_finalize(void *obj, const char *type) "obj=%p type=%s"
-+object_new(void *obj, const char *type) "obj=%p type=%s"
-+object_property_add(void *obj, const char *type, const char *name, void *value) "obj=%p type=%s name=%s value=%p"
-+object_property_add_child(void *obj, const char *type, const char *name, void *child, const char *childtype) "obj=%p type=%s name=%s child=%p child-type=%s"
-+object_property_del(void *obj, const char *type, const char *name, void *value) "obj=%p type=%s name=%s value=%p"
-+object_property_del_child(void *obj, const char *type, void *child, const char *childtype) "obj=%p type=%s child=%p child-type=%s"
-+object_property_parse(void *obj, const char *type, const char *name, const char *value) "obj=%p type=%s prop=%s value=%s"
-+object_class_dynamic_cast_assert(const char *type, const char *target, const char *file, int line, const char *func) "type=%s->%s (%s:%d:%s)"
-+object_class_property_add(const char *type, const char *name, void *value) "type=%s name=%s value=%p"
+-    g_test_add_func("/qom/proplist/createlist", test_dummy_createlist);
+-    g_test_add_func("/qom/proplist/createv", test_dummy_createv);
++    g_test_add_func("/qom/proplist/createlist/tree",
++                    test_dummy_createlist_tree);
++    g_test_add_func("/qom/proplist/createlist/parentless",
++                    test_dummy_createlist_parentless);
++    g_test_add_func("/qom/proplist/createv/tree",
++                    test_dummy_createv_tree);
++    g_test_add_func("/qom/proplist/createv/parentless",
++                    test_dummy_createv_parentless);
+     g_test_add_func("/qom/proplist/createcmdline", test_dummy_createcmdl);
+     g_test_add_func("/qom/proplist/badenum", test_dummy_badenum);
+     g_test_add_func("/qom/proplist/getenum", test_dummy_getenum);
 -- 
 2.54.0
 
