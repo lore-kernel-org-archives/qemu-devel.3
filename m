@@ -4,117 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95B9ECD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 14:28:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2368CD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 14:31:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMRcW-0006Ic-LF; Mon, 11 May 2026 10:28:32 -0400
+	id 1wMRen-0007FL-P4; Mon, 11 May 2026 10:30:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wintera@linux.ibm.com>)
- id 1wMR0n-0006YO-WC; Mon, 11 May 2026 09:49:34 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wMReh-0007En-Ri
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 10:30:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wintera@linux.ibm.com>)
- id 1wMR0m-0003nk-0N; Mon, 11 May 2026 09:49:33 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64B7AHQq2780021; Mon, 11 May 2026 13:49:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=g2vwvtwOodnc0kYOAA/WbkJwarTtpLyRgnu/FsF+Z
- zs=; b=QME6DHNqqWxrJ61SOiqCADnjY8zDYmVbYX6t8WZttv6GK8BKI/LdEfe3Z
- GgR3ieigxGXDcv/cKMsyz3UJJaAek9BQSVbdctwsnxxrGuMCz3E78tktjgtRt+YT
- Xo3pvHkHbP3fQkhiZtJKD390DabygEx//KTfCX0NFAhCcFB89ZPE5xKqjiGLxMJE
- fbHUnJWHnh2S336vPBFxGHZ4Zcqfnz00GIwOUhp1YK6ZqSkToGd/AvggpvuVxbrE
- gp2iFjAEqNQ3IeSHBhdsoDh4DHhilWh+kErz8o/smiBXUgXw69vTL+CQmhfAkc9k
- sm4w9cdARlqYfHeabHLQYIL55nW6Q==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e1ve70jqa-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 11 May 2026 13:49:24 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64BDdY1k007665;
- Mon, 11 May 2026 13:49:23 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e2hxy585s-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 11 May 2026 13:49:23 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64BDnIww13304096
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 11 May 2026 13:49:18 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 572202004B;
- Mon, 11 May 2026 13:49:18 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F086E20043;
- Mon, 11 May 2026 13:49:17 +0000 (GMT)
-Received: from macbookpro.aag-de.ibm.com (unknown [9.52.217.250])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 11 May 2026 13:49:17 +0000 (GMT)
-From: Alexandra Winter <wintera@linux.ibm.com>
-To: Heiko Carstens <hca@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Hendrik Brueckner <brueckner@linux.ibm.com>
-Cc: Halil Pasic <pasic@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
- Alexander Gordeev <agordeev@linux.ibm.com>,
- Sven Schnelle <svens@linux.ibm.com>, Gautam Gala <ggala@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Thomas Richter <tmricht@linux.ibm.com>,
- Shrikanth Hegde <sshegde@linux.ibm.com>, Mete Durlu <meted@linux.ibm.com>,
- linux390-list@tuxmaker.boeblingen.de.ibm.com,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@kernel.org>,
- Cornelia Huck <cohuck@redhat.com>, qemu-stable@nongnu.org,
- qemu-devel@nongnu.org, qemu-trivial@nongnu.org, qemu-s390x@nongnu.org,
- Alexandra Winter <wintera@linux.ibm.com>
-Subject: [PATCH] target/s390x: Make container ids in SysIB_15x 1-based
-Date: Mon, 11 May 2026 15:49:09 +0200
-Message-Id: <20260511134909.43802-1-wintera@linux.ibm.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wMRec-0005oB-Sm
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 10:30:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778509840;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=OQrM2e3+zBFO+lv56kvCJ/3v5u7O3E6TijgyFVxGAnE=;
+ b=P5tGMkaKeSFmV9w4EbxeYTzbcrq3nOugV9vBVlFnA40iKBuzUlC1BELhu59QyYsn9qtThA
+ H3+qk6y7+iKiAoyorgVH4cnkJXkktycYvpAFXvzrjQ3/hDdgTDndZDD4r0yLx8JiQ4Mdtk
+ 8XP4CVb7d/dxF0M8UiCXoK5sUXq97X0=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-83-VmsaIQvUNzOU2j3Mnvy_nw-1; Mon, 11 May 2026 10:30:39 -0400
+X-MC-Unique: VmsaIQvUNzOU2j3Mnvy_nw-1
+X-Mimecast-MFC-AGG-ID: VmsaIQvUNzOU2j3Mnvy_nw_1778509839
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-8eb82634cbeso928876385a.1
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 07:30:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1778509838; x=1779114638; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=OQrM2e3+zBFO+lv56kvCJ/3v5u7O3E6TijgyFVxGAnE=;
+ b=sNI+H60cglJlPvMFDa1FMhL0Q37lIGHkvtQsG8786ovY4xm9BKPTb3+q2y2118r9jc
+ eUeSGEsisLWDOaf9S6+dwcuVnUmHuXfw2Bp2dRmLNyeuS6GAqcKeMxEjlzd597THhKpF
+ akf/u0vKjylIvFJDsW44nMAhYh7LYRiJF+cYLn8Ie0ZZqHILS94fSS3nFdVWIe5VOq7c
+ KQVkURCCIPltwINTqVZB4FIEhZDsFwWp5EybZ3Fm4s6Mv9MkSEIBrpNRO5NCwAY4EnJH
+ 4qmIPEIk3hN5ED5Ocl1mK96D+4MDoHvHfGVtmbEAK1/B4KfJAmRoybDkCMZw+yGBnz8s
+ vF0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778509838; x=1779114638;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OQrM2e3+zBFO+lv56kvCJ/3v5u7O3E6TijgyFVxGAnE=;
+ b=gNtUQpo4xq3B/X0prIlDtFxzE9EwBvlkL2IW12bNs6L+NTJiihQOmLQIMsNi89sPy4
+ FSOfnGqfdeog91EPvuSlD3f+z7R8EhfLZNS8ZI8bPnoEztZyKNPd9AcbNgsVNVL6r2js
+ jCeEvJCG7T8+aBF9I1KXV49WBLUCLW0ZfxzwBNuf8RmtB2GahZESjSXdamZYdUlNwJbx
+ P/Y7Qh0JQuanreEIcLgAy+diSzHoH3kzSM2Y8EdH3rl1kbsZBcKmaZWauLiM9eq8IfAR
+ jjigK3xJ8n+3keA/2mxc43rd06vlSMUa5Dz+CpzJddqqmtVpiH5DehXkbXlWxTFvidXE
+ IZdg==
+X-Gm-Message-State: AOJu0Yyv0ylQ4nmHFwnfCzBDxtZca4nOHTcxflu9I59KDHs4uExT+9aJ
+ v3IUxQrLyczes1GXBkaIRueCS1CC2ScKYCUbVD28OiD+TbQAypB4CYWPP0fH438YZ/yST4kub+Y
+ KWA79FLR5WkSecCo4wbXTMDa3yNZDjkEJIGkuvwTICMdbQRQwFl1fk3E1VJoseLbMSi0/iKOD9x
+ ZkgliZHlJ1K/Mpq/QdWH8m7hGgISoOTdjaVRe4TA==
+X-Gm-Gg: Acq92OHShx2q4JcghWmzx0Xr4/9brTBpiqPUrtHXuv+nD7ez7TUam0AkDPLxxlS6af5
+ NOF65uKJzfV+Z+m8lTNTkHTB/7XPzLrFKodAJT0ND/4fuV7bFpP1jp0l2pNnN8c+uJPHIaxAqfx
+ 4IVU0/fOkIxcA/JsTaWTPAgf+CfTlEHc6tLJtGWk1OcvUFoTtkbOB4GedPqh/rIbnjxNkWy1Fa9
+ sScdKyngU9/npqaV73Nvuu9Qck1otx/d7RlxZOj8YydSKl6lDXzqYGBTkPqakdaBsn4HOSvooGn
+ /31xNWcdvWCu/s63daErlXDwj23xTdX0KCxM5oLeY2duPPWz5VXZeKC+dwUTDr+ulyz7FPwuYf/
+ VxIGHd2F2nxU3b8dMAvQ2vsY6NP14p4NsYMq6i17iV0iZ
+X-Received: by 2002:a05:620a:1a19:b0:8e4:ebbb:b162 with SMTP id
+ af79cd13be357-904d3eac012mr3323739585a.9.1778509835522; 
+ Mon, 11 May 2026 07:30:35 -0700 (PDT)
+X-Received: by 2002:a05:620a:1a19:b0:8e4:ebbb:b162 with SMTP id
+ af79cd13be357-904d3eac012mr3323624885a.9.1778509828209; 
+ Mon, 11 May 2026 07:30:28 -0700 (PDT)
+Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-907b8d9ea06sm1060974385a.20.2026.05.11.07.30.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 11 May 2026 07:30:27 -0700 (PDT)
+From: Peter Xu <peterx@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com, "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: [PATCH] MAINTAINERS: Update RDMA migration entry with M:
+Date: Mon, 11 May 2026 10:30:26 -0400
+Message-ID: <20260511143026.1296485-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDE1MSBTYWx0ZWRfX4RmEbpJQ+SBW
- SroNvDg1q3/mVMehwyQ/Oj67glQox3NGlnHr06cJuWQUmHrS+W4snfAgjaBclI/0jmDIIgXX6NB
- g7WcfXeZUrkY4fy77zNfHByJHLkf5URdjexloh2M28JtI42VO5lJH5KP+a6jqwwxy7Y2cMzYuT8
- ZaopBohssPwq5nnmtMBEv4JtF+xk6XkIUI6NnNettkHH7F0dht2Iqi5bUTFlukC8/r4ul+T+eFS
- xKoLXZoTcFj2/T398kWFPcRgVWydgsmTuskQ9qa/4z0KrrpLKxt7AXFU6lyMqrcLQkAcSgrvUhG
- 5Luqw2mtl22Uvky45NaRZLeMoef+NUMWnaXob6Jl3b4JzEfuCy81SUxryfi5nyJO2TB7+E1LD7R
- x/wBGyT0jlAfu2NZBXlDU5p9lluqM36XQjeYKaqe4pVm814AL5XUmfydkbBFkusfrq0s3mkulsY
- oOnkQ+mK/w3pik1zalg==
-X-Proofpoint-GUID: 6Kwztrkm7jZ41G2agRk-9fcXJRZmx7yk
-X-Proofpoint-ORIG-GUID: 6Kwztrkm7jZ41G2agRk-9fcXJRZmx7yk
-X-Authority-Analysis: v=2.4 cv=CeQ4Irrl c=1 sm=1 tr=0 ts=6a01de64 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=q6vtooFActFUTKw_DCAA:9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-11_04,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1011 adultscore=0 malwarescore=0 bulkscore=0
- priorityscore=1501 phishscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605110151
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=wintera@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 11 May 2026 10:28:30 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -129,68 +113,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Container Id in a container-type TLE of SysIB_15x is defined as 8-bit
-unsigned nonzero integer. Make stsi fc 15 emulation architecture compliant,
-by starting the container ids at 1 for the lowest numbered container.
+We wanted to remove RDMA migration once but that didn't go further.  In
+reality, with the help of Zhijian it's in Odd Fixes stage, even if we just
+merged one new parameter for it, for performance improvements.
 
-The qemu misbehaviour without this patch becomes obvious due to a recently
-proposed kernel fix. Older linux kernels pass the container ids from stsi
-fc15 unchanged to sysfs, i.e. starting at 1 on s390 hardware. This resulted
-in off-by-one values when compared to the values from HMC. A Linux kernel
-fix is being proposed to correct the sysfs topology ids by -1, so they
-start at 0, e.g. when displayed by 'lscpu -ye'. In case a KVM guest with a
-fixed kernel runs on a host with a qemu without this fix, this can result
-in container ids erroneously being shown as 255.
-Example (Fixed guest on unfixed qemu):
-$ lscpu -ye
-CPU NODE DRAWER BOOK SOCKET CORE L1d:L1i:L2 ONLINE CONFIGURED POLARIZATION ADDRESS
-  0    0    255  255    255    0 0:0:0         yes yes        vert-medium  0
-  1    0    255  255      0    1 1:1:1         yes yes        vert-medium  1
-After this fix:
-$ lscpu -ye
-CPU NODE DRAWER BOOK SOCKET CORE L1d:L1i:L2 ONLINE CONFIGURED POLARIZATION ADDRESS
-  0    0      0    0      0    0 0:0:0         yes yes        vert-medium  0
-  1    0      0    0      1    1 1:1:1         yes yes        vert-medium  1
+Markus pointed out we'd better have at least one M: for it to match
+anything that is not orphaned.
 
-Fixes: f4f54b582f ("target/s390x/cpu topology: handle STSI(15) and build the SYSIB")
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
+Remove the X: for Migration entry for RDMA files, then it'll start to cover
+RDMA migration again. Keep the separate entry so Zhijian can keep getting
+copied, and copy the M:s over to say someone is collecting patches.
+Logically these M:s aren't needed after removing X:, but make it clearer.
+
+Link: https://lore.kernel.org/r/5326b854-fcea-4af6-a479-792888a94a4d@fujitsu.com
+Cc: Zhijian Li (Fujitsu) <lizhijian@fujitsu.com>
+Cc: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- target/s390x/kvm/stsi-topology.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ MAINTAINERS | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/s390x/kvm/stsi-topology.c b/target/s390x/kvm/stsi-topology.c
-index 301d41b68d..afd00da0e6 100644
---- a/target/s390x/kvm/stsi-topology.c
-+++ b/target/s390x/kvm/stsi-topology.c
-@@ -90,9 +90,9 @@ static int stsi_topology_fill_sysib(S390TopologyList *topology_list,
-     int last_drawer = -1;
-     int last_book = -1;
-     int last_socket = -1;
--    int drawer_id = 0;
--    int book_id = 0;
--    int socket_id = 0;
-+    int drawer_id = 1;
-+    int book_id = 1;
-+    int socket_id = 1;
-     int n = sizeof(SysIB_151x);
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 9d3d645953..c57ef413ca 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3758,11 +3758,11 @@ F: docs/devel/migration/
+ F: qapi/migration.json
+ F: tests/migration-stress/
+ F: util/userfaultfd.c
+-X: migration/rdma*
  
-     QTAILQ_FOREACH(entry, topology_list, next) {
-@@ -103,12 +103,12 @@ static int stsi_topology_fill_sysib(S390TopologyList *topology_list,
-         if (level > 3 && drawer_change) {
-             SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
-             p = fill_container(p, 3, drawer_id++);
--            book_id = 0;
-+            book_id = 1;
-         }
-         if (level > 2 && book_change) {
-             SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
-             p = fill_container(p, 2, book_id++);
--            socket_id = 0;
-+            socket_id = 1;
-         }
-         if (socket_change) {
-             SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
+ RDMA Migration
++M: Peter Xu <peterx@redhat.com>
++M: Fabiano Rosas <farosas@suse.de>
+ R: Li Zhijian <lizhijian@fujitsu.com>
+-R: Peter Xu <peterx@redhat.com>
+ S: Odd Fixes
+ F: migration/rdma*
+ F: scripts/rdma-migration-helper.sh
 -- 
-2.39.5 (Apple Git-154)
+2.53.0
 
 
