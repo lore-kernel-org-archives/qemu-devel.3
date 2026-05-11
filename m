@@ -4,69 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 802B9CD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 20:24:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32138CD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 20:24:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMX9T-0005u1-R7; Mon, 11 May 2026 16:22:55 -0400
+	id 1wMXAK-0007r6-51; Mon, 11 May 2026 16:23:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wMX9R-0005cF-OR
- for qemu-devel@nongnu.org; Mon, 11 May 2026 16:22:53 -0400
+ id 1wMX9y-0007Ps-JT
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 16:23:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wMX9Q-0002IG-Bv
- for qemu-devel@nongnu.org; Mon, 11 May 2026 16:22:53 -0400
+ id 1wMX9w-0002Uv-Ex
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 16:23:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778530971;
+ s=mimecast20190719; t=1778531003;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2C0RocEaioxRTatUpe6UZmuTE1Y097AlBK4Uk3G/4Yk=;
- b=czhb2Va6RoFxrA5rFN88A3uu475wIy/AkdzsOrBrrBmXRi7OHen3B5eL9k359dYt0DnTKy
- BB6KYaqV4KytT8Ljs9VGPdYpgAVC/o+cjlGjWxC7zsWh1qbqhRx6/QkqSQ0Gf++aTfDcaQ
- n6ufx1TlVhWkRUBrxB28d84lcGGhIYE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=a135jQHbIQ62554WnpWQxBCIWQ7J2ppiEwLqVKvSLv4=;
+ b=KWpWv09j6L3sKqUF+G73KGe7H0A8AePDvGlfOTIIXF+pjMiDs0nBKMv1LZT+zO/0wd+kNY
+ mSmiX8Cl7f1JkJ/GVBwZHrh9L4ih4U5Jn0JvREbmbkIGw9DLnUZHIZZDP6zxn6Acm14bmQ
+ /2XEcJubJEMsP271Bq6ObWORh2WOVLA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-391-Y7VxbRrTNp6pNM2TO3WMIw-1; Mon,
- 11 May 2026 16:22:46 -0400
-X-MC-Unique: Y7VxbRrTNp6pNM2TO3WMIw-1
-X-Mimecast-MFC-AGG-ID: Y7VxbRrTNp6pNM2TO3WMIw_1778530964
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-341-VPuSDYFbMTqZnOUd4D9rIQ-1; Mon,
+ 11 May 2026 16:23:18 -0400
+X-MC-Unique: VPuSDYFbMTqZnOUd4D9rIQ-1
+X-Mimecast-MFC-AGG-ID: VPuSDYFbMTqZnOUd4D9rIQ_1778530996
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A0F8118002CB; Mon, 11 May 2026 20:22:44 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 87787195609D; Mon, 11 May 2026 20:23:16 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BC2481955D84; Mon, 11 May 2026 20:22:42 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4395C1800465; Mon, 11 May 2026 20:23:14 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Ninad Palsule <ninad@linux.ibm.com>,
- qemu-arm@nongnu.org (open list:ASPEED BMCs)
-Subject: [PULL 16/24] hw/fsi: move OPBus qbus_init() to instance_init
-Date: Tue, 12 May 2026 00:21:02 +0400
-Message-ID: <20260511202111.3091440-17-marcandre.lureau@redhat.com>
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
+Subject: [PULL 22/24] hw/riscv/virt: free flash devices and OEM strings on
+ finalization
+Date: Tue, 12 May 2026 00:21:08 +0400
+Message-ID: <20260511202111.3091440-23-marcandre.lureau@redhat.com>
 In-Reply-To: <20260511202111.3091440-1-marcandre.lureau@redhat.com>
 References: <20260511202111.3091440-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -94,47 +95,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Remove the TODO comment that documented the workaround, as it is
-no longer needed.
+Add instance_finalize to free the two pflash devices (when unrealized)
+and the OEM ID strings allocated during instance_init. Fixes leaks
+found by ASan.
 
-Suggested-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Fixes: 71eb522c4063 ("riscv/virt: Add the PFlash CFI01 device")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/fsi/aspeed_apb2opb.c | 13 +------------
- 1 file changed, 1 insertion(+), 12 deletions(-)
+ hw/riscv/virt.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/hw/fsi/aspeed_apb2opb.c b/hw/fsi/aspeed_apb2opb.c
-index 36092468391..058abc86452 100644
---- a/hw/fsi/aspeed_apb2opb.c
-+++ b/hw/fsi/aspeed_apb2opb.c
-@@ -273,6 +273,7 @@ static void fsi_aspeed_apb2opb_init(Object *o)
-     for (i = 0; i < ASPEED_FSI_NUM; i++) {
-         object_initialize_child(o, "fsi-master[*]", &s->fsi[i],
-                                 TYPE_FSI_MASTER);
-+        qbus_init(&s->opb[i], sizeof(s->opb[i]), TYPE_OP_BUS, DEVICE(s), NULL);
-     }
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index a1c323e66df..315049bc86c 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -1745,6 +1745,19 @@ static void virt_machine_init(MachineState *machine)
+     qemu_add_machine_init_done_notifier(&s->machine_done);
  }
  
-@@ -282,18 +283,6 @@ static void fsi_aspeed_apb2opb_realize(DeviceState *dev, Error **errp)
-     AspeedAPB2OPBState *s = ASPEED_APB2OPB(dev);
-     int i;
- 
--    /*
--     * TODO: The OPBus model initializes the OPB address space in
--     * the .instance_init handler and this is problematic for test
--     * device-introspect-test. To avoid a memory corruption and a QEMU
--     * crash, qbus_init() should be called from realize(). Something to
--     * improve. Possibly, OPBus could also be removed.
--     */
--    for (i = 0; i < ASPEED_FSI_NUM; i++) {
--        qbus_init(&s->opb[i], sizeof(s->opb[i]), TYPE_OP_BUS, DEVICE(s),
--                  NULL);
--    }
--
-     sysbus_init_irq(sbd, &s->irq);
- 
-     memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_apb2opb_ops, s,
++static void virt_machine_instance_finalize(Object *obj)
++{
++    RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
++
++    for (int i = 0; i < ARRAY_SIZE(s->flash); i++) {
++        if (s->flash[i] && !qdev_is_realized(DEVICE(s->flash[i]))) {
++            object_unref(OBJECT(s->flash[i]));
++        }
++    }
++    g_free(s->oem_id);
++    g_free(s->oem_table_id);
++}
++
+ static void virt_machine_instance_init(Object *obj)
+ {
+     RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
+@@ -1984,6 +1997,7 @@ static const TypeInfo virt_machine_typeinfo = {
+     .parent     = TYPE_MACHINE,
+     .class_init = virt_machine_class_init,
+     .instance_init = virt_machine_instance_init,
++    .instance_finalize = virt_machine_instance_finalize,
+     .instance_size = sizeof(RISCVVirtState),
+     .interfaces = (const InterfaceInfo[]) {
+          { TYPE_HOTPLUG_HANDLER },
 -- 
 2.54.0
 
