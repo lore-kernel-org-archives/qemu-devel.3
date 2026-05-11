@@ -4,89 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F23AFCD37AC
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 13:28:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07BC5CD37AC
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 13:29:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMQgR-0000X2-Oj; Mon, 11 May 2026 09:28:33 -0400
+	id 1wMQ9q-0003XM-6e; Mon, 11 May 2026 08:54:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <agarwal.vineet2006@gmail.com>)
- id 1wMQgQ-0000Wt-0h
- for qemu-devel@nongnu.org; Mon, 11 May 2026 09:28:30 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <agarwal.vineet2006@gmail.com>)
- id 1wMQgO-0006xt-Cd
- for qemu-devel@nongnu.org; Mon, 11 May 2026 09:28:29 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-365eecc5885so4190581a91.0
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 06:28:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778506106; x=1779110906; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=4Mgi60AVQjdDo4uAUqDxD4yW5h5uW3gRwueZrleiCFk=;
- b=OahPAVkUyr9p+Q/jBB8A6GeWWrnjG40bK/MHIwgSzrCzLlbzskq8OaifwnmtxEpRnp
- KG6dsVRgM+1z4smCwldbykhLuSEJmgR9XAWChCA13yi5AZKtVjdy45AabwKQZcoeJIa6
- s/DbFTuU68/cGnNU+awfnxT66E3Xt9bzLgSNOaVNL13ltbeyUxthdKfYEgbHd7YhzM6R
- A8uI2STOWMMmsKoLT7ocZimWMqayWaBTT4fbtJZ1Gk+4UM4j+02+BIMrxrezeOqXziZL
- JaRme77O6w45o4fuExI8fbhjdQ4ZAk8wBGP5LSvYkTPBIfaKQiCqSrPh5zRXoNfF+Da2
- Qe4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778506106; x=1779110906;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4Mgi60AVQjdDo4uAUqDxD4yW5h5uW3gRwueZrleiCFk=;
- b=QQwtht5LCovle8FH80GCPJV3lsq7jwCXFR4qZ98Q3nNYicXGx92C01zBrOxHe4dM2S
- XP6En00CsTPLv5J6nF8GhRVAheAD0kYFItI1B57fey39qesJQ6SkgC6s2UoMs/P+iT5s
- mY2v2UYCdYThhpSazeSgjGdufDgb3ivIVfJLyZkVHZ2diqP5pRvlTQdUl8beFuK4SWHc
- kyAFWcPtL0SrTrZB/bJzWuh0JMlhMLNEEv3+T/3TgNWL7oSOcShmFr398DnZ2Zb7Zq+c
- ZnbqSr7tGONx+QMDnqTHJs4/zQ9i7TWs7xc8CZBM2RUUC5aKsycLT4RaXeGdSrYY+d45
- um8A==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8aYq9Dloj99a/deAkxjxqB9WRM0/SxNczgRE0pDkvG/SdfxboC+rDoQMSTpzylckh7MpiSsGd46XKV@nongnu.org
-X-Gm-Message-State: AOJu0Yx73IDu2f9MBraVnWqDU2AwwWBhQZu9SUMHM6s1ktcKvqWcRsZK
- IevUaEgfzQ+60XKnj2wXoRsPwF5+7HeVQtGygUmp5/fBjmf3RyTfDcCI
-X-Gm-Gg: Acq92OH3PUbqP1JYr84LMfcNHc4q14RILirSJOTE98KuSg5gUdcFi1fb0E9WUIUj+Xh
- hdQOHEreSJLT17CDPFt537wUfzQ14M+ryOA/AHoDkTfnMLJr/HRMpMr2nstuLWs8lRHIuiHltUb
- oso5KoMCqMmlrAeUvF9UlGnOo4NMTYd4zLdtGlayFnmsJW6HoLJIkuy3WguBXUa7qpQPNhyhE+y
- ijW5V1CXDq0a5ji2dC9YQxihK8p9bgFciVBAXXON4MAw+irUQuWhV6cBXSJCJ5RwwcW3la5mpQ3
- bUsKWq+1KKM43/Q+UTpk08XUM9n6LJbk45t10kIt5yzmzdH6F7LIexk3P4qLe7cOiJWK7djAzBo
- mQd+4BdMimrCsU7Q8fYF39+Qtpyjuf5ng6cd7a2udUOnxDxE7b9uTpdAiQW5sBoL0u6/8i9h+U2
- a3Uu3Xb74jNG0RyREuC8egJGGahgms2g==
-X-Received: by 2002:a17:90b:45:b0:366:159a:c228 with SMTP id
- 98e67ed59e1d1-367d468cf75mr10421896a91.6.1778506106168; 
- Mon, 11 May 2026 06:28:26 -0700 (PDT)
-Received: from vini ([2401:4900:8fc8:73c6:dda6:576b:fa0d:f68e])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2baf1e9723esm112837665ad.67.2026.05.11.06.28.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 May 2026 06:28:25 -0700 (PDT)
-From: Vineet Agarwal <agarwal.vineet2006@gmail.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, Vineet Agarwal <agarwal.vineet2006@gmail.com>
-Subject: [PATCH] hw/core/sysbus: Guard sysbus_mmio_map_name() against NULL
- names
-Date: Mon, 11 May 2026 18:58:14 +0530
-Message-ID: <20260511132814.63954-1-agarwal.vineet2006@gmail.com>
-X-Mailer: git-send-email 2.54.0
+ (Exim 4.90_1) (envelope-from <jishnuvw@linux.ibm.com>)
+ id 1wMNET-0006rs-6W; Mon, 11 May 2026 05:47:39 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jishnuvw@linux.ibm.com>)
+ id 1wMNDu-0002tN-Jk; Mon, 11 May 2026 05:47:12 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64B3KmHH2971544; Mon, 11 May 2026 08:46:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=DtX9Z+
+ n8tmC9AGbEF45RaMWrzAE+YFssGdOOKs9RU+I=; b=JNvZ495wvgYceWYkLVmku+
+ gTibSs8AMkdLg/TGgkM5pF7RMGLYtQvVS1axnVDKHfrBJvXJ8S6UFwClbOogFWcN
+ vWvIyIsJGWy0ffIHVeLcl5li8+Ld6kyUS0I3MBlHzYFk4xM3bkm1fjnrVuUMBndT
+ adnW2tXRhMQDJne1b0SLd8Hq/L8K4vbTW7Fh2OrKRQHhcdd3pp6DCLcoKOw2Op8/
+ 8u6UQDMbuhmLI6KOEaJu3owv0B+/Slemy6wF95721qh6TABq4OJ/5zYgrFKLd2uK
+ /KAKyTcMOHMhttPgHHS+ESXENYdGURvk5yTg0mQZy0rrfXn9621+6UGpnba182RA
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e1tbhq4hs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 11 May 2026 08:46:36 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64B8dQKQ028824;
+ Mon, 11 May 2026 08:46:36 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e2fmvvj71-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 11 May 2026 08:46:36 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64B8kWsa13959546
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 11 May 2026 08:46:32 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5FD0320040;
+ Mon, 11 May 2026 08:46:32 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AC06A20043;
+ Mon, 11 May 2026 08:46:28 +0000 (GMT)
+Received: from li-0bf05b4c-28e4-11b2-a85c-ce7af937d338.ibm.com (unknown
+ [9.123.4.46]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 11 May 2026 08:46:28 +0000 (GMT)
+Date: Mon, 11 May 2026 14:16:04 +0530
+From: Jishnu Warrier <jishnuvw@linux.ibm.com>
+To: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, clg@kaod.org,
+ npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
+ thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
+ harshpb@linux.ibm.com, adityag@linux.ibm.com
+Subject: Re: [PATCH v4 9/9] pnv/phb4: Mask off LSI Source-ID based on number
+ of interrupts
+Message-ID: <auxjiykky33cggvrgi7jbeaaje3qo6szmtiilpgfs6dnbbolc5@zejcua7lpp5x>
+References: <20260210134110.1515322-1-saif.abrar@linux.vnet.ibm.com>
+ <20260305060923.3753402-1-saif.abrar@linux.vnet.ibm.com>
+ <20260305060923.3753402-10-saif.abrar@linux.vnet.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=agarwal.vineet2006@gmail.com; helo=mail-pj1-x102b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+In-Reply-To: <20260305060923.3753402-10-saif.abrar@linux.vnet.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=ZdQt8MVA c=1 sm=1 tr=0 ts=6a01976d cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=kUKHeS9f1dJEPYFD:21 a=8nJEP1OIZ-IA:10 a=NGcC8JguVDcA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22
+ a=VnNF1IyMAAAA:8 a=aow-egSQAAAA:8 a=uR97zm7AlWmegDsLJL8A:9 a=3ZKOabzyN94A:10
+ a=wPNLvfGTeEIA:10 a=gFNbaldVC-z-bsjSTzMo:22
+X-Proofpoint-ORIG-GUID: Nzo_qIA_mR3nyropNkOfp1IlGjoFmsTs
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDA5NCBTYWx0ZWRfX9xNjGkCwMmb/
+ bbVWLfGDF0XqPLZ92EdL/wzr9v8lVuU9eKp9G8E6aPay8UnwJOphIF1zpLSzfmsocCn9chArMLD
+ t5NYtVsQnUEmhvIgG2X+omujQF5IjqAH+V+IBbkt2jHmnCqx51MeZZ7K6cZ/bBvG6bK2rE0tMVG
+ T4cW1rRrIrF6z18CAJhettQWLty1YkTkb5Sn5wu4Dza8Jzt9UelscjBFZ9jzS4zQ7gIDdT+8Crw
+ kFloX3yu8V5bb7T8YV6m3NieB66VyinzICENvYWJsLR3VjMcz6P5E+Iv0kYuaDTxt4M+1SNXAZd
+ My0Mekb+7axTRmfqhLje7oQLuPExP9Yyi7yiuVaVZjosAFbN4HWX+gQdneIVjf9QZGlp3QKmb5M
+ N+EraGQ07fiFAJ9yeWSSe9KpVD7XlmfyC396NDHubwatJHU+aiB86JJF84N14jyyY8wbdwabCav
+ +eLeGPj9UWj3rCspahQ==
+X-Proofpoint-GUID: ebwgWl7pOmutu74KESqBB5vo5ZyGgmXC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-11_02,2026-05-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0
+ priorityscore=1501 malwarescore=0 suspectscore=0 clxscore=1015 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605110094
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=jishnuvw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 11 May 2026 08:54:08 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,37 +128,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-sysbus_mmio_map_name() passes MemoryRegion.name directly to
-strcmp() without checking whether the name is NULL.
+On Thu, Mar 05, 2026 at 12:09:11AM -0600, Saif Abrar wrote:
+> Add a method to reset the value of LSI Source-ID.
+> Mask off LSI source-id based on number of interrupts in the big/small PHB.
+> 
+> Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+> Reviewed-by: Cédric Le Goater <clg@kaod.org>
+> ---
+> v3: Updates for coding guidelines.
+> v2: Introduced method pnv_phb4_xsrc_reset().
+> 
+>  hw/pci-host/pnv_phb4.c | 12 +++++++++---
+>  1 file changed, 9 insertions(+), 3 deletions(-)
+> 
+> diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
+> index 254bbe4089..5e885cb89d 100644
+> --- a/hw/pci-host/pnv_phb4.c
+> +++ b/hw/pci-host/pnv_phb4.c
+> @@ -490,6 +490,7 @@ static void pnv_phb4_update_xsrc(PnvPHB4 *phb)
+>  
+>      lsi_base = GETFIELD(PHB_LSI_SRC_ID, phb->regs[PHB_LSI_SOURCE_ID >> 3]);
+>      lsi_base <<= 3;
+> +    lsi_base &= (xsrc->nr_irqs - 1);
+>  
+>      /* TODO: handle reset values of PHB_LSI_SRC_ID */
+>      if (!lsi_base) {
+> @@ -1944,6 +1945,12 @@ static void pnv_phb4_ro_mask_init(PnvPHB4 *phb)
+>      /* TODO: Add more RO-masks as regs are implemented in the model */
+>  }
+>  
+> +static void pnv_phb4_xsrc_reset(PnvPHB4 *phb)
+> +{
+> +    phb->regs[PHB_LSI_SOURCE_ID >> 3] = PPC_BITMASK(4, 12);
 
-Commit e27194e087 ("virtio-gpu-virgl: correct parent for blob
-memory region") intentionally introduced a MemoryRegion with a
-NULL name, so sysbus_mmio_map_name() should not assume names are
-always present.
+If I am not wrong, according to PHB5 spec page 104, the LSI Source ID field should be bits 3-15:
+    PPC_BITMASK(3, 15)  // 0x1FF8000000000000ULL
+03:12 LSI Source ID(00:09)
+RW
 
-Add a simple NULL check before calling strcmp().
+13:15 LSI Source ID(10:12)
+R0
 
-Signed-off-by: Vineet Agarwal <agarwal.vineet2006@gmail.com>
----
- hw/core/sysbus.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/hw/core/sysbus.c b/hw/core/sysbus.c
-index 3e1160ee92..80cfed442e 100644
---- a/hw/core/sysbus.c
-+++ b/hw/core/sysbus.c
-@@ -148,7 +148,9 @@ void sysbus_mmio_map(SysBusDevice *dev, int n, hwaddr addr)
- int sysbus_mmio_map_name(SysBusDevice *dev, const char *name, hwaddr addr)
- {
-     for (int i = 0; i < dev->num_mmio; i++) {
--        if (!strcmp(dev->mmio[i].memory->name, name)) {
-+        const char *mr_name = dev->mmio[i].memory->name;
-+
-+        if (mr_name && !strcmp(mr_name, name)) {
-             sysbus_mmio_map(dev, i, addr);
-             return i;
-         }
--- 
-2.54.0
-
+> +    pnv_phb4_update_xsrc(phb);
+> +}
+> +
+>  static void pnv_phb4_err_reg_reset(PnvPHB4 *phb)
+>  {
+>      STICKY_RST(PHB_ERR_STATUS,       0, PPC_BITMASK(0, 33));
+> @@ -2000,10 +2007,11 @@ static void pnv_phb4_reset(Object *obj, ResetType type)
+>      PnvPHB4 *phb = PNV_PHB4(obj);
+>  
+>      pnv_phb4_pbl_core_reset(phb);
+> +
+> +    pnv_phb4_xsrc_reset(phb);
+>      pnv_phb4_err_reg_reset(phb);
+>      pnv_phb4_pcie_stack_reg_reset(phb);
+>      pnv_phb4_regb_err_reg_reset(phb);
+> -    phb->regs[PHB_PCIE_CRESET >> 3] = 0xE000000000000000;
+>  }
+>  
+>  static void pnv_phb4_instance_init(Object *obj)
+> @@ -2080,8 +2088,6 @@ static void pnv_phb4_realize(DeviceState *dev, Error **errp)
+>          return;
+>      }
+>  
+> -    pnv_phb4_update_xsrc(phb);
+> -
+>      phb->qirqs = qemu_allocate_irqs(xive_source_set_irq, xsrc, xsrc->nr_irqs);
+>  
+>      pnv_phb4_xscom_realize(phb);
+> -- 
+> 2.47.3
+> 
+> 
 
