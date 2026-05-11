@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8A16CD4840
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 18:41:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19D59CD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 18:47:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMVYo-0005yj-3J; Mon, 11 May 2026 14:40:58 -0400
+	id 1wMVeM-0006lK-Vn; Mon, 11 May 2026 14:46:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wMVYm-0005yX-Rr
- for qemu-devel@nongnu.org; Mon, 11 May 2026 14:40:56 -0400
-Received: from mail-oa1-x2d.google.com ([2001:4860:4864:20::2d])
+ id 1wMVe9-0006kU-HK
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 14:46:30 -0400
+Received: from mail-ot1-x336.google.com ([2607:f8b0:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wMVYl-0008Qf-Cn
- for qemu-devel@nongnu.org; Mon, 11 May 2026 14:40:56 -0400
-Received: by mail-oa1-x2d.google.com with SMTP id
- 586e51a60fabf-4350cd5b97fso2788837fac.0
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 11:40:54 -0700 (PDT)
+ id 1wMVe6-0001eC-Od
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 14:46:29 -0400
+Received: by mail-ot1-x336.google.com with SMTP id
+ 46e09a7af769-7dca00c1591so1581393a34.3
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 11:46:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778524854; x=1779129654; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778525185; x=1779129985; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=jtG3foV3RgelOTLNAdbD1fNP4fO+C49Ya4sJvG4H6hE=;
- b=UPg3Ltg/dTmlSKg1Sc2C9fNe+ojdois3RMaM8Hjl1IZxFTn+8cceEE+NxqC4yg2LVL
- 0ShUjYA7iRFfxokT1cD68fGKynAi6wkfalWzbVoIo22lWS2sQF91hOIrsgophB5qa1Np
- rbMa0yT/PQ3nPRnnlLuX94CM27KjhPGtHqb8uncp0bmDqalLXZgkbVKQPCxQNIfjCmcE
- O8msn38i84VyVO4KwelLGmWuO7QoQuWfM9yXrwpsZ5+okLOrZ6ce98U6oKux0lri7tC4
- P8amCOX7vdTXx4lZDCX3bnSnXDwnxvrexZzBZHGp2/S/NvLr4Q9lgp1WH9Q8smMgz1gH
- RZPw==
+ bh=MsRtXsr2acqXGr/nj5ascymdXoHkUn8mmAufmXxiU5A=;
+ b=O6wIVIgXq02JDqmzfpKbC9zI9/NmOPBvQT9c/0+4yiWcqjHdRJbnHGYGRUDfIEHPtG
+ 1iK6JygBzS3XsP6PD9x1x/lsf2aamDE3RVolNbJ+NkdxadNqiQpHsHCwAL3w8jwBd4OK
+ pjyTsKGqRdZrMPzNgzGRLSOwu1IKMQ1Fuzlp9vi3M/kiOhONQc1cbgTnhbibVOwJ43G/
+ Jk1lBhI0ttu9fZ5vA67k1Xlu0I+FKOzeEedwrWycy1bqQ+hIIKsM+NiEhqlIoljK3Bk3
+ lxOEvzAccXzo6SmI31momso/I4koKzI+YQb0gKPSSK3LEfLMkHo/qU7wysdD/rPFybec
+ lR+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778524854; x=1779129654;
+ d=1e100.net; s=20251104; t=1778525185; x=1779129985;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=jtG3foV3RgelOTLNAdbD1fNP4fO+C49Ya4sJvG4H6hE=;
- b=f/4nFgmBM9J/1XWDtycehCem2jpU5yHJPhIq3adEbc23xc4/o5bz+tRitsAQAAhvJ4
- X+nckbhnADfgVgq34ia27D1mObLkKxmzh8DlvxjWEzHobEMgnyNuP9tpN6I7PjfvBKj9
- B2siktRv4QU6Ofh/mu02FWt81OBZGPVjWiea5f5kcq5ugu07hsXxU6SqM0vzYgcehd9U
- GIkgJeVrC0iUVofctsYf4R4bjr694rxeA0q1seLehGQB5Z0G3UMKwb3ByBr9L2i81PWa
- X6/VFGALh/Ako0cUO82N/sthehpzaWEomcAq98QzAHJN8eLrXV+DQ8PrRtNsozCClKdQ
- c63w==
-X-Gm-Message-State: AOJu0Ywl0a4f4xenMRlambBuYdj8otoBPqZmpWpU9KcN0rtbsIuqbK6u
- EzmioFGaLSQ0FWJXKItHDfbCexfcoFqQXzv/54WyXeFZeJVreB1TLBVIDhbnhXPc4kmo8WAZO3F
- Py7z7
-X-Gm-Gg: Acq92OHn+8/NZgccTXUBcfrF0o0km7DRltsyhcL83UMk26r0k8a2wGCM/q5PeqvxfgG
- UTychgU26wOMltOPGwEq312mvh3qPI6ZwcECWu0DBBZBx6FCbHxOFz6KbbPpBc9hvEul/7qu45u
- IKz6mW16qx4u/KRQtttWUHic7xt8DID4eyBDFaS15k1ubcEC2FDoicRVCZTODWRgZ6vPQFX1oeX
- QeTsf2rwvzfZu75hexmiYL5q6u/dnjYeBc1rr7Q5nHGxpPpkLfytlWH6UHCKNjmQCbYkvs4IsNF
- 6l5dH6Cy+vlScw5Z+tVkCPz7BFCBLlyHbPzlcoSnGqNuthBfmK4d2RqQ1WrWPFZ1+oaMhpltwDF
- M9wJRQwNRWPglC5iZbCWtbSJWuKh0GHlL54BO/3PBLPMle1wOLH4yAkyiW1zbizyON0ZVOCK2K5
- QCkpg/TklM4jTzDwwt/2bnjXiHFf0g43MOgs9RQX8P3CJoW8IKRHXLlzt8mbHmykRDQ4VXLr4az
- Ab+DSzIQw==
-X-Received: by 2002:a05:6808:350b:b0:467:3f4:907c with SMTP id
- 5614622812f47-4804252f32cmr15529409b6e.47.1778524853917; 
- Mon, 11 May 2026 11:40:53 -0700 (PDT)
+ bh=MsRtXsr2acqXGr/nj5ascymdXoHkUn8mmAufmXxiU5A=;
+ b=ahUzlZeuXwPAW0eaqkIOu/cryYPnEdgDlGVWAaqIOdVwTG9rqPSy2Pxmwc7xiWiA00
+ 9bBGmQ5reZxu+u3CfkME6m76QmWDXMfj/w5TSEyXow0egHYsvyARDPNrebpCijA8Q6t8
+ Jb1Jtr/JWbon9rIH+M1O4ChPE+pWLyE2SpsCynn/hpOo4K+okDhtA/2yW0ksg4DZqBB3
+ oRryaM831mQR3jbhBJYSvAolyjFJQDxk3ByEGgHx1tGAHNhjZEIgUiaTfj5qnxLtXE30
+ jsP808cbyT5ZEzfM3o0oZQ3CT4ZI3JJiZ34W8koadMwdhUhKQTRdEDgh4N01Ba6EWcGE
+ dPjg==
+X-Gm-Message-State: AOJu0YwZe/5gVb8ZBjSGcfH5wy8MVq4GVL6d2l5/4yJYelw4rQRszXyO
+ AqW2qdLW9uRQGAk/6kQ7NE9JYOO2dAnm5Cu+8+ID7NNqkeV1NeMiduEKWe/q1IjR5A76vSEMqRC
+ JYC6l
+X-Gm-Gg: Acq92OGIPhD22I0TxgTxgsXowd6mc2CqRQ4eGA2kfoK6xs6c3Hd5AyJZ1qWZfnotlV+
+ l+fACAVl+vyVW7NZX7qI5dulV3ifRUNRRxuZxHZgVnSgz1h6Bc2BAIRxxf7U/zeMsZaAWP0M/oU
+ eoYfLKuzxdroat80AYsTxQMluVyMAdmpvY/+/EXn1IA9jZ88SL9KLYJI8/LEHvBO/jKFdHNPDK9
+ qQsi/Hwv3EGdv6BA1NICgaWhoLX+Yz2nzoAtl9o5P4+RIDMXRihbEy8S4HpsOKXzzboiXUyHGq/
+ N+77RoFCMvlJkJpjeGIFeU3tdO4Mggjtv1Ng0c3d7tK6s9UpmzGfoAR2QjBP5PAaKD8dmsoYN+x
+ Jp4/4pKp4DAPidRlQST3agwWZwRUDg2StFXPW2Kp+kU1u0PfgpzOt0VV/JNJCtmIQjIdKpBAgsh
+ UFxCN/Q8HDHXqvhJrsiK/tAKz1en+2a0Gq2ib+YmigW55lRI05Ac51FR2fUtfxi6n/MM+C39uuD
+ kEOBBdsSk54sZrp3XRH
+X-Received: by 2002:a05:6830:82d3:b0:7d7:faef:fa0 with SMTP id
+ 46e09a7af769-7e1dee30c64mr15133536a34.3.1778525184931; 
+ Mon, 11 May 2026 11:46:24 -0700 (PDT)
 Received: from ?IPV6:2600:381:c938:6375:e3e5:757d:3cef:3491?
  ([2600:381:c938:6375:e3e5:757d:3cef:3491])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-47c76936271sm20671849b6e.9.2026.05.11.11.40.52
+ 46e09a7af769-7e367df2fc5sm7386445a34.25.2026.05.11.11.46.24
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 May 2026 11:40:53 -0700 (PDT)
-Message-ID: <39cfd3f5-0c20-4246-8fe6-a0242029d88a@linaro.org>
-Date: Mon, 11 May 2026 13:40:50 -0500
+ Mon, 11 May 2026 11:46:24 -0700 (PDT)
+Message-ID: <0071f563-ba94-4c9a-ba4a-7999a0881084@linaro.org>
+Date: Mon, 11 May 2026 13:46:22 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 15/35] target/mips: add Octeon MTM0 instruction
+Subject: Re: [PATCH v6 16/35] target/mips: add Octeon MTP0 instruction
 To: qemu-devel@nongnu.org
 References: <20260511-mips-octeon-missing-insns-v2-v6-0-5062889c4d3c@gmail.com>
- <20260511-mips-octeon-missing-insns-v2-v6-15-5062889c4d3c@gmail.com>
+ <20260511-mips-octeon-missing-insns-v2-v6-16-5062889c4d3c@gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260511-mips-octeon-missing-insns-v2-v6-15-5062889c4d3c@gmail.com>
+In-Reply-To: <20260511-mips-octeon-missing-insns-v2-v6-16-5062889c4d3c@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2d;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::336;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,24 +107,33 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/11/26 13:22, James Hilliard wrote:
-> +static void octeon_reset_mtm0_mpl_state(void)
+> +static bool trans_mtp(DisasContext *ctx, arg_r2 *a, unsigned int index)
 > +{
-> +    TCGv_i64 zero = tcg_constant_i64(0);
+> +    TCGv_i64 value = tcg_temp_new_i64();
 > +
 > +    /*
-> +     * MTM0 defines MPL1 as zero; model the architecturally unpredictable
-> +     * MPL2/MPL4/MPL5 lanes as zero for deterministic emulation.
+> +     * Octeon3 two-source MTP forms load lane index from rs and lane index + 3
+> +     * from rt.  Legacy one-source forms encode rt as $zero.
 > +     */
-> +    octeon_store_mpl(1, zero);
-> +    octeon_store_mpl(2, zero);
-> +    octeon_store_mpl(4, zero);
-> +    octeon_store_mpl(5, zero);
+> +    gen_load_gpr(value, a->rs);
+> +    octeon_store_p(index, value);
+> +    gen_load_gpr(value, a->rt);
+> +    octeon_store_p(index + 3, value);
+> +    if (index == 0) {
+> +        /*
+> +         * The hardware description and register-state table define P1 as zero;
+> +         * model P2/P4/P5 as zero for deterministic emulation.
+> +         */
+> +        TCGv_i64 zero = tcg_constant_i64(0);
+> +
+> +        octeon_store_p(1, zero);
+> +        octeon_store_p(2, zero);
+> +        octeon_store_p(4, zero);
+> +        octeon_store_p(5, zero);
 
-Where do you get that from?
+Likewise, where does this come from?
 
-The octeon2 documentation, which only has MPL[0-2], MTM0 does *not* modify either MPL1 or 
-MPL2.  While I don't know what changed with octeon3, I really doubt this statement is 
-true.  It just doesn't make any sense.
+The octeon2 manual for MTP* are quite simple, writing to just the one register.
 
 
 r~
