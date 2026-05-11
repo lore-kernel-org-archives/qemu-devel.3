@@ -4,79 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEE02CD4840
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 18:00:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECD7ACD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 18:01:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMUvC-0004ue-K1; Mon, 11 May 2026 14:00:02 -0400
+	id 1wMUvu-00060d-KU; Mon, 11 May 2026 14:00:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wMUvA-0004sv-GE
- for qemu-devel@nongnu.org; Mon, 11 May 2026 14:00:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wMUv8-0004Ck-4g
- for qemu-devel@nongnu.org; Mon, 11 May 2026 14:00:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778522396;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ERtsniumwKSbi60W6pFWHhCtZPwfSu5kaKXsSqd5AKg=;
- b=bf0gA9rvWdd4EctzXVeCP6TAqLdPww9sfeQUBWp8m22xD/oKHn4xv1M7rE4cm06vaMcNeL
- t841Kq4J7oEfLz9Dc8nRxucHmq+e4Ps3vLoTDwHJKBp3sRjOeQ2Y4oRvzY1wvQNKpdGSi3
- RUMbQx674s1UnkXwnt90aWQ8ucqL22U=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-630-0cg6QHAwPzyHeqyqUy5xhw-1; Mon,
- 11 May 2026 13:59:52 -0400
-X-MC-Unique: 0cg6QHAwPzyHeqyqUy5xhw-1
-X-Mimecast-MFC-AGG-ID: 0cg6QHAwPzyHeqyqUy5xhw_1778522390
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 511F41955DE2; Mon, 11 May 2026 17:59:49 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.172])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D0D401800465; Mon, 11 May 2026 17:59:46 +0000 (UTC)
-Date: Mon, 11 May 2026 13:59:44 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Keith Busch <kbusch@kernel.org>, Fam Zheng <fam@euphon.net>,
- =?iso-8859-1?Q?St=E9phane?= Graber <stgraber@stgraber.org>,
- Klaus Jensen <its@irrelevant.dk>, Zhao Liu <zhao1.liu@intel.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
- Jesper Devantier <foss@defmacro.it>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: Re: [PATCH v7 0/8] hw/nvme: add basic live migration support
-Message-ID: <20260511175944.GC536999@fedora>
-References: <20260511151131.483217-1-alexander@mihalicyn.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wMUvj-0005qw-9S
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 14:00:44 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wMUvg-0004Rq-O5
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 14:00:34 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-43d77f6092eso2868271f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 11:00:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778522430; x=1779127230; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6AL0hvEpQGG4e41gPn7iHuBeeLZ3f4rlm/X40Bd+1LU=;
+ b=Wf1bqzV3gd8raOEFv2++ssoldzpuTxsGIMnpNqzpO0LQdJJEZjcNncsg8sbHLpINwA
+ ZqeTq58PpdMBLm3CxPooUmAdk3iWIMSfuBz8usuFBKSHUjWNb2yvf1A4fsaPhc2zR0Ma
+ gpWDLKmcOdkCFzirsnl0qPc9RK7ChwPHzWcprDi77jeEuiNshsotjWvlapvRny8RP+vf
+ lcVYlabgmDzeNf9ghbN5HZg0f1LPZ4JcGtYJCRG9D2C+ksi/6Juw56RGp85ziuLuppbN
+ rR2Q7smsahMuvfBSgIOJA4y66D4YzdE+OYDZbOVSG6ujQVHjiONQJq23ESyZKdKWBHWV
+ +Tnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778522430; x=1779127230;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6AL0hvEpQGG4e41gPn7iHuBeeLZ3f4rlm/X40Bd+1LU=;
+ b=VB4CeuqwZo8BQZZ5iWNmRTCOKBVGxCZOvvup8exASDfE0qc9bgIuSbXmvH75lIo7zB
+ oJK2xEl5g40UeyxO7NbJGhHaGZ5WrFEqTGYd0gTHyk2GV156wswSWmHFGHdc4wicc/Uj
+ GKEuFUdxGT6jAxLsPZYoip9qL9OYGlN5sb6YWB3EPVsH/ge8HZvjbaY1P2MzUboKq2cq
+ MOV5JV3PIuqgxUyKAn92D0yM+L360jpQYjcSg+kjfzA6MVVzKP4GI4ooKsnq8NgqBDxZ
+ j4fREgpaj+KYcwTzIXM4pUYZbFxEY2Oo+6eBz5esDSxqvhKIE03wlid+69tDTR4n5Q3Y
+ T5cA==
+X-Gm-Message-State: AOJu0Yw5AIGElGOaQ3bVuqX8UgCIwawREvDIEXIrjodHMqHIKGj9rWt5
+ 5s6dljmwYqDs+vNuD6+qCj/ZcHX/z9EdCZrZScb1N9jLDALaZQaxLjwnzAt8ZeMyea4Mb/V+SIp
+ sTSFn0mc=
+X-Gm-Gg: Acq92OFebH6GhIr2V2l0NVYaFGwBvyH/fKS+vBklqH1KwB9OE8QwYV2aI/9cKcBHmkM
+ JRvPZj4upcmB8xxFxh2TMGcLolksSRHbZwi9a3GfpzPZ+7d6m74Nh7onn2pYGB2L8exkFyoNI6s
+ pSx9cNQbeZ10zD6P0UiTBgPrN4XaKMYUgv9ycSYJyl7cG1+fKd9nibLdJwyTwVwQMzMoFPzw/Bw
+ te++FetBte2py2JDgsz1VRj9NmuN7hNIenAM8wtb9xT4aTNDvl52ImmcgcxidMGxu29djTwavkx
+ GR859vM+NmAgq6O0GDbTyGp04j3rOW9w/UwEMow+1VsECeh9TR5pAqHksqTwe2V8q/z9h4oTcYL
+ CCGqlPz4mj4Rxc1dSY8wn6ASybEvZMKLb9CfDP4m2Xrr8ZCaaBF8rRVny/1PIogK34417fgChux
+ nXaXqUtK4/0FMEXhQVH8aUoBA=
+X-Received: by 2002:a05:6000:186b:b0:448:8db5:410b with SMTP id
+ ffacd0b85a97d-4515c574761mr39199173f8f.20.1778522429806; 
+ Mon, 11 May 2026 11:00:29 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4548ec6be40sm28349966f8f.12.2026.05.11.11.00.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 11 May 2026 11:00:29 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 3D9255F7C1;
+ Mon, 11 May 2026 19:00:28 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  John Snow <jsnow@redhat.com>,  Cleber Rosa
+ <crosa@redhat.com>
+Subject: Re: [RFC PATCH v2 03/10] .agents/skills: add qemu-code-explorer skill
+In-Reply-To: <agISxb-entwoYzzF@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Mon, 11 May 2026 18:32:53 +0100")
+References: <20260511170500.124211-1-alex.bennee@linaro.org>
+ <20260511170500.124211-4-alex.bennee@linaro.org>
+ <agISxb-entwoYzzF@redhat.com>
+User-Agent: mu4e 1.14.1; emacs 30.1
+Date: Mon, 11 May 2026 19:00:28 +0100
+Message-ID: <874ikdeshv.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="Dlyw/wRC0XpqNivX"
-Content-Disposition: inline
-In-Reply-To: <20260511151131.483217-1-alexander@mihalicyn.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,145 +108,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
---Dlyw/wRC0XpqNivX
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Mon, May 11, 2026 at 06:04:52PM +0100, Alex Benn=C3=A9e wrote:
+>> This provides a skill detailing how to explore the QEMU code base. It
+>> guides the agents to use the tags and git-grep by default and outlines
+>> some of the confusions that can occur with multiple build directories.
+>>=20
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>>=20
+>> ---
+>> v2
+>>   - remove personal gtag skill references, add global stanzas directly
+>>   - moved macro information from AGENTS.md into code explorer
+>>   - more imperative language to trigger its use
+>>   - add section on using scripts/expand_macro.py
+>>   - remove eca reference from evals.json (maybe we should just drop this)
+>> ---
+>>  .agents/skills/qemu-code-explorer/SKILL.md    | 119 ++++++++++++++++++
+>>  .../qemu-code-explorer/evals/evals.json       |  26 ++++
+>>  AGENTS.md                                     |   1 +
+>>  3 files changed, 146 insertions(+)
+>>  create mode 100644 .agents/skills/qemu-code-explorer/SKILL.md
+>>  create mode 100644 .agents/skills/qemu-code-explorer/evals/evals.json
+>>=20
+>> diff --git a/.agents/skills/qemu-code-explorer/SKILL.md b/.agents/skills=
+/qemu-code-explorer/SKILL.md
+>> new file mode 100644
+>> index 00000000000..d5b7d6a35cd
+>> --- /dev/null
+>> +++ b/.agents/skills/qemu-code-explorer/SKILL.md
+>> @@ -0,0 +1,119 @@
+>> +---
+>> +name: qemu-code-explorer
+>> +description: Systematic framework for deep-diving into the QEMU codebas=
+e. Use this to find precise symbol definitions (functions, structs, globals=
+), locate all call sites or references, explore subsystem architectures, or=
+ search generated code in build directories. You MUST use this skill when e=
+xploring code flow and dependencies.
+>> +license: GPL-2.0-or-later
+>
+> Is "license:" a mandatory tag from a schema we're following here,
+> or can be used "SPDX-License-Identifier:" instead ?
 
-On Mon, May 11, 2026 at 05:11:23PM +0200, Alexander Mikhalitsyn wrote:
-> From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
->=20
-> Dear friends,
->=20
-> This patchset adds basic live migration support for
-> QEMU emulated NVMe device.
->=20
-> Implementation has some limitations:
-> - only one NVMe namespace is supported
-> - SMART counters are not preserved
-> - CMB is not supported
-> - PMR is not supported
-> - SPDM is not supported
-> - SR-IOV is not supported
->=20
-> I believe this is something I can support in next patchset versions or
-> separately on-demand (when usecase appears).
->=20
-> Testing.
->=20
-> This patch series was manually tested on:
-> - Debian 13.3 VM (kernel 6.12.69+deb13-amd64) using fio on *non-root* NVM=
-e disk
->   (root disk was virtio-scsi):
->=20
-> time fio --name=3Dnvme-verify \
->     --filename=3D/dev/nvme0n1 \
->     --size=3D5G \
->     --rw=3Drandwrite \
->     --bs=3D4k \
->     --iodepth=3D16 \
->     --numjobs=3D1 \
->     --direct=3D0 \
->     --ioengine=3Dio_uring \
->     --verify=3Dcrc32c \
->     --verify_fatal=3D1
->=20
-> - Windows Server 2022 VM (NVMe drive was a *root* disk) with opened brows=
-er
->   playing video.
->=20
-> No defects were found.
->=20
-> Git tree:
-> https://github.com/mihalicyn/qemu/commits/nvme-live-migration
->=20
-> Changelog for version 7:
-> - rebased on top of recent main
-> - addressed review comments from Stefan Hajnoczi:
->   - better incoming migration stream validation (SQ/CQids correctness)
->   - endianness bugs are fixed in qtest (validated on s390x)
-> - added RWB tags from Klaus
->=20
-> Changelog for version 6:
-> - rebased on top of:
->   https://gitlab.com/peterx/qemu/-/tree/vmstate-array-null
->   (see also https://lore.kernel.org/all/20260401202844.673494-1-peterx@re=
-dhat.com)
-> - addressed review comments from Stefan Hajnoczi:
->   - supported "full CQ" case by serializing NvmeRequest state
->   - added qtest for NVMe device migration with full CQ
->=20
-> Changelog for version 5:
-> - rebased on top of https://lore.kernel.org/all/20260304212303.667141-1-v=
-sementsov@yandex-team.ru/
->   (as Peter has requested)
->=20
-> Changelog for version 4:
-> - vmstate dynamic array support reworked as suggested by Peter Xu
->   VMS_ARRAY_OF_POINTER_ALLOW_NULL flag was introduced
->   qtests were added
-> - NVMe migration blockers were reworked as Klaus has requested earlier
->   Now, instead of having "deny list" approach, we have more strict pattern
->   of NVMe features filtering and it should be harded to break migration w=
-hen
->   adding new NVMe features.
->=20
-> Changelog for version 3:
-> - rebased
-> - simple functional test was added (in accordance with Klaus Jensen's rev=
-iew comment)
->   $ meson test 'func-x86_64-nvme_migration' --setup thorough -C build
->=20
-> Changelog for version 2:
-> - full support for AERs (in-flight requests and queued events too)
->=20
-> Kind regards,
-> Alex
->=20
-> Alexander Mikhalitsyn (8):
->   tests/functional/migration: add VM launch/configure hooks
->   hw/nvme: add migration blockers for non-supported cases
->   hw/nvme: split nvme_init_sq/nvme_init_cq into helpers
->   hw/nvme: set CQE.sq_id earlier in nvme_process_sq
->   hw/nvme: unmap req->sg earlier in nvme_enqueue_req_completion
->   hw/nvme: add basic live migration support
->   tests/functional/x86_64: add migration test for NVMe device
->   tests/qtest/nvme-test: add migration test with full CQ
->=20
->  hw/nvme/ctrl.c                                | 1007 ++++++++++++++++-
->  hw/nvme/ns.c                                  |  160 +++
->  hw/nvme/nvme.h                                |   12 +
->  hw/nvme/trace-events                          |   10 +
->  include/block/nvme.h                          |   12 +
->  tests/functional/migration.py                 |   22 +-
->  tests/functional/x86_64/meson.build           |    1 +
->  .../functional/x86_64/test_nvme_migration.py  |  159 +++
->  tests/qtest/nvme-test.c                       |  395 +++++++
->  9 files changed, 1742 insertions(+), 36 deletions(-)
->  create mode 100755 tests/functional/x86_64/test_nvme_migration.py
->=20
-> --=20
-> 2.47.3
->=20
+It's from the spec: https://agentskills.io/specification#frontmatter
 
-Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+>
+>
+> With regards,
+> Daniel
 
---Dlyw/wRC0XpqNivX
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmoCGRAACgkQnKSrs4Gr
-c8hkqwf/XDDJ9QIFUD4n1PRh79jPuqpYmwksfapzEUAb4qq7LY4OWiolsJzkdfw1
-QHU1Ot19654ppbMcHUpFN0QVOt7OmWRqvRd4rZru6Q94PaqYKuKygdUCToUVI6+8
-LMV31YfC0T0xyOVNgKF5yOwlaoPUSkpHG3Zp3VrfmKVlKgpY0BL5spsX1Nusc/Cj
-+CZrFhj84BVnzHXiutBOD4Ez6wtK56K6Z0PM6ybKFivF06g3uYv5AmHWrT72hSte
-ncwZ8iMzwfnp+dKv5HCx12Eh2sa6DEGe4uPzeZ1lLxMJ1/7BaOZcIx+ct8JyQk/m
-zpLdzFO9ldMhF32mWGb6sCmQdMo1/g==
-=Ss5J
------END PGP SIGNATURE-----
-
---Dlyw/wRC0XpqNivX--
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
