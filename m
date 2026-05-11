@@ -4,63 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76DD9CD37AC
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 13:42:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6C03CD37AC
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 13:43:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMQ42-00007o-7I; Mon, 11 May 2026 08:48:50 -0400
+	id 1wMQ4T-0000U1-Me; Mon, 11 May 2026 08:49:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vulab@iscas.ac.cn>)
- id 1wMQ3t-0008JG-8J; Mon, 11 May 2026 08:48:43 -0400
-Received: from smtp81.cstnet.cn ([159.226.251.81] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <vulab@iscas.ac.cn>)
- id 1wMQ3q-0001KO-Ak; Mon, 11 May 2026 08:48:40 -0400
-Received: from yzs (unknown [183.156.89.125])
- by APP-03 (Coremail) with SMTP id rQCowADny+Id0AFq5RuuEA--.1067S2;
- Mon, 11 May 2026 20:48:29 +0800 (CST)
-From: Zishun Yi <vulab@iscas.ac.cn>
-To: Alistair Francis <alistair.francis@wdc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org, Zishun Yi <vulab@iscas.ac.cn>
-Subject: [PATCH v1] target/riscv: Add mseccfg to VMStateDescription
-Date: Mon, 11 May 2026 20:48:28 +0800
-Message-ID: <20260511124828.3210477-1-vulab@iscas.ac.cn>
-X-Mailer: git-send-email 2.51.2
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1wMQ4E-0000PD-Nc; Mon, 11 May 2026 08:49:04 -0400
+Received: from out30-133.freemail.mail.aliyun.com ([115.124.30.133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1wMQ4B-0001gi-E7; Mon, 11 May 2026 08:49:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1778503733; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=euUCDByZvkqsxPkd0TkxfvMAbIKiTTHDtS8ncpuqmrc=;
+ b=yPfLzk8tJLt6oAc2qjoFaEHyd2YEbYiVFrTQXsqfRhFrnFeb8qSuyoMqpf8Mw8z3ee6VGpNpq/G23S+EtklmKowob94XMq3Ss1ZGpP/bEmO8SfBBa5Z8oReoHfUULPDnG/vnumC0HaX9p42HWzJCaUVZ5giJE88L0VL73hSVa14=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R531e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045133197;
+ MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=11; SR=0;
+ TI=SMTPD_---0X2jPzjy_1778503731; 
+Received: from localhost.localdomain(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0X2jPzjy_1778503731 cluster:ay36) by smtp.aliyun-inc.com;
+ Mon, 11 May 2026 20:48:52 +0800
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ daniel.barboza@oss.qualcomm.com, chao.liu.zevorn@gmail.com,
+ liwei1518@gmail.com, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Huang Tao <eric.huang@linux.alibaba.com>,
+ TANG Tiancheng <lyndra@linux.alibaba.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH v6 3/6] target/riscv: Integrate SMMPT checks into MMU and TLB
+ fill
+Date: Mon, 11 May 2026 20:47:02 +0800
+Message-Id: <20260511124705.28161-4-zhiwei_liu@linux.alibaba.com>
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+In-Reply-To: <20260511124705.28161-1-zhiwei_liu@linux.alibaba.com>
+References: <20260511124705.28161-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: rQCowADny+Id0AFq5RuuEA--.1067S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7AFyUKF43CF1xJw43Jr45trb_yoW8WF4fpw
- 4DCay3GrWkGrWfWw4fJF18WFW5Kws5G3W2k39rCw4IganxGFWSqF4qkay2vr4ayFyrJw13
- uF1UAry5Cr4kArDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUkG14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
- rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
- 1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
- 6F4UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
- 0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
- jxv20xvE14v26r106r15McIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr
- 1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkF7I0En4kS14v26r1q
- 6r43MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI
- 0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y
- 0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxV
- W8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr0_Cr1l
- IxAIcVC2z280aVCY1x0267AKxVW8Jr0_Cr1UYxBIdaVFxhVjvjDU0xZFpf9x0JUQZ2fUUU
- UU=
-X-Originating-IP: [183.156.89.125]
-X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiDAYEA2oBvJ9bgwAAsd
-Received-SPF: pass client-ip=159.226.251.81; envelope-from=vulab@iscas.ac.cn;
- helo=cstnet.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=115.124.30.133;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-133.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,60 +73,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, the Machine Security Configuration Register (mseccfg) was
-missing from the live migration state. This omission causes the register
-to be reset to zero on the destination host after migration.
+With the core MPT lookup logic in place, this patch integrates the
+permission checks into QEMU's main MMU processing functions.
 
-Fixed by adding vmstate_mseccfg subsection
+A new helper, `get_physical_address_mpt`, is introduced to check the
+permissions for a given physical address against the MPT. This helper
+is then called at two critical points:
 
-This vulnerability was discovered and reported by SpecHunter, an
-AI-driven architecture specification analysis tool.
+1. During page table walks (`get_physical_address`): The physical
+   address of the Page Table Entry (PTE) itself is checked to ensure
+   the supervisor has permission to read it.
 
-Link: https://github.com/yizishun/rv-isa-sec/blob/a22e4459cd026ae970791dfbd9cfe5d110fbd46b/output/riscv-isa-manual/pr-1879/qemu.txt#L121
-Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
+2. After successful address translation (`riscv_cpu_tlb_fill`): The final
+   guest-physical address is checked against the MPT before the access
+   is allowed to proceed.
+
+This ensures that SMMPT protection is enforced for both the translation
+process and the final memory access, as required by the specification.
+
+Co-authored-by: Huang Tao <eric.huang@linux.alibaba.com>
+Co-authored-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 ---
- target/riscv/machine.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ target/riscv/cpu_helper.c | 112 +++++++++++++++++++++++++++++++++-----
+ 1 file changed, 99 insertions(+), 13 deletions(-)
 
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 09c032a87914..6776e7bf5a11 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -423,6 +423,25 @@ static const VMStateDescription vmstate_sstc = {
-     }
- };
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index d0f0e77dfe..f0126bf534 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1211,6 +1211,53 @@ static bool check_svukte_addr(CPURISCVState *env, vaddr addr)
+     return !high_bit;
+ }
  
-+static bool mseccfg_needed(void *opaque)
++/*
++ * get_physical_address_mpt - check mpt permission for this physical address
++ *
++ * Lookup the Memory Protection Table and check permission for this
++ * physical address. Returns 0 if the permission checking was successful
++ *
++ * @env: CPURISCVState
++ * @prot: The returned protection attributes
++ * @addr: The physical address to be checked permission
++ * @access_type: The type of MMU access
++ * @mode: Indicates current privilege level.
++ */
++static int get_physical_address_mpt(CPURISCVState *env, int *prot, hwaddr addr,
++                                    MMUAccessType access_type, int mode)
 +{
-+    RISCVCPU *cpu = opaque;
++    /*
++     * If the extension is not supported or the mmpt.mode is Bare,
++     * there is no protection, return success.
++     */
++    if (!riscv_cpu_cfg(env)->ext_smmpt || env->mptmode == SMMPTBARE) {
++        *prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
++        return TRANSLATE_SUCCESS;
++    }
 +
-+    return cpu->cfg.ext_smepmp || cpu->cfg.ext_zkr
-+        || cpu->cfg.ext_smmpm || cpu->cfg.ext_zicfilp;
++    /*
++     * MPT is checked for all accesses to physical memory, unless the
++     * effective privilege mode is M.
++     *
++     * Data accesses in M-mode when the MPRV bit in mstatus is set and
++     * the MPP field in mstatus contains S or U are subject to MPT checks.
++     *
++     * In riscv_env_mmu_index, The MPRV and MPP bits are already checked and
++     * encoded to mmu_idx, So we do not need to check it here.
++     */
++    if (mode == PRV_M) {
++        *prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
++        return TRANSLATE_SUCCESS;
++    }
++
++    if (!smmpt_check_access(env, addr, prot, access_type)) {
++        *prot = 0;
++        return TRANSLATE_MPT_FAIL;
++    }
++
++    return TRANSLATE_SUCCESS;
 +}
 +
-+static const VMStateDescription vmstate_mseccfg = {
-+    .name = "cpu/mseccfg",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = mseccfg_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINTTL(env.mseccfg, RISCVCPU),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
+ /*
+  * get_physical_address - get the physical address for this virtual address
+  *
+@@ -1408,6 +1455,13 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+             pte_addr = base + idx * ptesize;
+         }
+ 
++        int mpt_prot;
++        int mpt_ret = get_physical_address_mpt(env, &mpt_prot, pte_addr,
++                                               MMU_DATA_LOAD, PRV_S);
++        if (mpt_ret != TRANSLATE_SUCCESS) {
++            return mpt_ret;
++        }
 +
- const VMStateDescription vmstate_riscv_cpu = {
-     .name = "cpu",
-     .version_id = 11,
-@@ -499,6 +518,7 @@ const VMStateDescription vmstate_riscv_cpu = {
-         &vmstate_ssp,
-         &vmstate_ctr,
-         &vmstate_sstc,
-+        &vmstate_mseccfg,
-         NULL
+         int pmp_prot;
+         int pmp_ret = get_physical_address_pmp(env, &pmp_prot, pte_addr,
+                                                sxlen_bytes,
+@@ -1818,7 +1872,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+     CPURISCVState *env = &cpu->env;
+     vaddr im_address;
+     hwaddr pa = 0;
+-    int prot, prot2, prot_pmp;
++    int prot, prot2, prot_pmp, mpt_prot;
+     bool pmp_violation = false;
+     bool first_stage_error = true;
+     bool two_stage_lookup = mmuidx_2stage(mmu_idx);
+@@ -1872,26 +1926,42 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+             prot &= prot2;
+ 
+             if (ret == TRANSLATE_SUCCESS) {
+-                ret = get_physical_address_pmp(env, &prot_pmp, pa,
+-                                               size, access_type, mode);
+-                tlb_size = pmp_get_tlb_size(env, pa);
++                ret = get_physical_address_mpt(env, &mpt_prot, pa,
++                                               access_type, mode);
++                if (riscv_cpu_cfg(env)->ext_smmpt) {
++                    qemu_log_mask(CPU_LOG_MMU,
++                                  "%s MPT address=" HWADDR_FMT_plx " ret %d"
++                                  " prot %d\n",
++                                  __func__, pa, ret, mpt_prot);
++                }
++                prot &= mpt_prot;
+ 
+-                qemu_log_mask(CPU_LOG_MMU,
+-                              "%s PMP address=" HWADDR_FMT_plx " ret %d prot"
+-                              " %d tlb_size %" HWADDR_PRIu "\n",
+-                              __func__, pa, ret, prot_pmp, tlb_size);
++                if (ret == TRANSLATE_SUCCESS) {
++                    ret = get_physical_address_pmp(env, &prot_pmp, pa,
++                                                   size, access_type, mode);
++                    tlb_size = pmp_get_tlb_size(env, pa);
++
++                    qemu_log_mask(CPU_LOG_MMU,
++                                  "%s PMP address=" HWADDR_FMT_plx
++                                  " ret %d prot %d tlb_size %"
++                                  HWADDR_PRIu "\n",
++                                  __func__, pa, ret, prot_pmp,
++                                  tlb_size);
+ 
+-                prot &= prot_pmp;
++                    prot &= prot_pmp;
++                }
+             } else {
+                 /*
+                  * Guest physical address translation failed, this is a HS
+                  * level exception
+                  */
+                 first_stage_error = false;
+-                if (ret != TRANSLATE_PMP_FAIL) {
++                if (ret != TRANSLATE_PMP_FAIL &&
++                    ret != TRANSLATE_MPT_FAIL) {
+                     env->guest_phys_fault_addr = (im_address |
+                                                   (address &
+-                                                   (TARGET_PAGE_SIZE - 1))) >> 2;
++                                                   (TARGET_PAGE_SIZE - 1)))
++                                                 >> 2;
+                 }
+             }
+         }
+@@ -1906,6 +1976,18 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+                       HWADDR_FMT_plx " prot %d\n",
+                       __func__, address, ret, pa, prot);
+ 
++        if (ret == TRANSLATE_SUCCESS) {
++            ret = get_physical_address_mpt(env, &mpt_prot, pa,
++                                           access_type, mode);
++            if (riscv_cpu_cfg(env)->ext_smmpt) {
++                qemu_log_mask(CPU_LOG_MMU,
++                              "%s MPT address=" HWADDR_FMT_plx " ret %d"
++                              " prot %d\n",
++                              __func__, pa, ret, mpt_prot);
++            }
++            prot &= mpt_prot;
++        }
++
+         if (ret == TRANSLATE_SUCCESS) {
+             ret = get_physical_address_pmp(env, &prot_pmp, pa,
+                                            size, access_type, mode);
+@@ -1919,8 +2001,12 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+             prot &= prot_pmp;
+         }
      }
- };
+-
+-    if (ret == TRANSLATE_PMP_FAIL) {
++    /*
++     * Both MPT (Machine-level Memory Protection Table, Smmpt extension) and
++     * PMP (Physical Memory Protection) follow the same exception reporting
++     * rule when an access violation is detected
++     */
++    if (ret == TRANSLATE_PMP_FAIL || ret == TRANSLATE_MPT_FAIL) {
+         pmp_violation = true;
+     }
+ 
 -- 
-2.51.2
+2.43.0
 
 
