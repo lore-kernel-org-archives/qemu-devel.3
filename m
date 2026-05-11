@@ -4,104 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F18ECD37B9
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 10:33:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C016CD37B5
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 10:33:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMNvm-0002jB-TY; Mon, 11 May 2026 06:32:14 -0400
+	id 1wMNwh-0002s3-S8; Mon, 11 May 2026 06:33:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wMNv2-0002h4-7i; Mon, 11 May 2026 06:31:25 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
+ id 1wMNv2-0002h5-O2; Mon, 11 May 2026 06:31:25 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wMNv0-0002pm-Es; Mon, 11 May 2026 06:31:23 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
+ id 1wMNv1-0002m5-4v; Mon, 11 May 2026 06:31:24 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64B8nxUw2604219; Mon, 11 May 2026 09:28:54 GMT
+ 64BA7tBh2635669; Mon, 11 May 2026 10:31:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=eDbt2M
- Xxov11TqZBQraNoY/1WXXUhHCpBWXUWRgRECg=; b=WxgHu34U6tLPDPdPy1T6Jv
- oK6vLYpsAh8v2YJDEgd+cmnRxxM8VgOWit01KxwLYDGHMcuRs8GjeVwC3ZSoOMMI
- fc9lYGej3jI9b4izMVoSE4wxrZnPoWOB35WyDC8xabDw+EizfcBenL2YiPtHqOpj
- kc+8XVnBYmKe8DszrADPG7cffZ2T7oBfJlNwCioVJqibCaCSrS0DAFoZ0za9iMFZ
- kl/AxDmpKu82G5eW3jFvwq9D/uoTdICHgFArxXBwlPwqVu+UL71bQTd0VO7QWWgD
- cz5WHN9GyaldzrtAAv870yAbTrrdBzzhTu1A3ODEuu5n1L65kmNxNNG1BUyOYe1Q
+ :message-id:mime-version:references:subject:to; s=pp1; bh=gC9dN6
+ ZARWW5Y0/YqzelG/g9zjb9af4EfTyaKKNfEQ0=; b=rmcH5Vev9QV3GGnzEwfVx4
+ Y8RfYJ8GTrolCMz8mVPtzLU5oKyeoz8QAA8Nkw/6s56YPykeRuoEckBgN4erFNBS
+ u40ZcGm2EmIGc1urUhb6Nki9iL9MXmhpD937ZO7jV/4BLwoGESqHWQb1eCexqxqv
+ yN0ceGXbkGtLQnsvyh1wmWIOxxRGJei+E8FqE2cETT6IRRdmtgFTX8OcKe+wwPuq
+ RY3cfUb3tXePi9UgJz6Wo/RmqNkV0sriqFzly/WjIU3QAj60wWf718XLWRGX6ApE
+ xaMOmxnyTPWeBWLMoBJyLhIpuevwyU7f/q3+P9aM9f/m0dGFjoRYZw3XGAxfC9PA
  ==
 Received: from ppma13.dal12v.mail.ibm.com
  (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e1vju70my-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e1vn4qrs2-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 11 May 2026 09:28:53 +0000 (GMT)
+ Mon, 11 May 2026 10:31:14 +0000 (GMT)
 Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64B9OZRf013993;
- Mon, 11 May 2026 09:28:53 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e2hfg4enc-1
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64BAOSl4010275;
+ Mon, 11 May 2026 10:31:14 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e2hfg4msw-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 11 May 2026 09:28:52 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64B9Snih59703590
+ Mon, 11 May 2026 10:31:14 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64BAVDJF4850370
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 11 May 2026 09:28:49 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 73CBF2004B;
- Mon, 11 May 2026 09:28:49 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 13F4F20043;
- Mon, 11 May 2026 09:28:49 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.87.133.4])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 11 May 2026 09:28:49 +0000 (GMT)
-Message-ID: <abb08329-b6c0-4c93-ba23-a06a18e8ef6b@linux.ibm.com>
-Date: Mon, 11 May 2026 11:28:48 +0200
+ Mon, 11 May 2026 10:31:13 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 21E1A58067;
+ Mon, 11 May 2026 10:31:13 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 62E0358079;
+ Mon, 11 May 2026 10:31:12 +0000 (GMT)
+Received: from [9.61.29.46] (unknown [9.61.29.46])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 11 May 2026 10:31:12 +0000 (GMT)
+Message-ID: <8a95b6d6-70f7-40fd-950e-56b087715b58@linux.ibm.com>
+Date: Mon, 11 May 2026 06:30:45 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/s390x: add gen-features.h dependency to
- s390x_system_ss
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: philmd@linaro.org, Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@kernel.org>,
+Subject: Re: [PATCH v2 1/2] vfio/ap: Return false when IRQ notifier setup fails
+To: zhaoguohan@kylinos.cn, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
  Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
  Matthew Rosato <mjrosato@linux.ibm.com>,
- "open list:S390 TCG CPUs" <qemu-s390x@nongnu.org>
-References: <20260510204640.2178926-1-marcandre.lureau@redhat.com>
+ Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>
+References: <20260510084353.58263-1-zhaoguohan@kylinos.cn>
+ <20260510084353.58263-2-zhaoguohan@kylinos.cn>
 Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <20260510204640.2178926-1-marcandre.lureau@redhat.com>
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+In-Reply-To: <20260510084353.58263-2-zhaoguohan@kylinos.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=cYbiaHDM c=1 sm=1 tr=0 ts=6a01a155 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=BM+DalQG c=1 sm=1 tr=0 ts=6a01aff2 cx=c_pps
  a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=20KFwNOVAAAA:8
- a=VgQHmgxU-P_RjVidJewA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: Ams2_PGv3vjEsTwUsQpxkazYP4QPq9cf
-X-Proofpoint-ORIG-GUID: Ams2_PGv3vjEsTwUsQpxkazYP4QPq9cf
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDEwMCBTYWx0ZWRfX9AtPeJyjbnfu
- sU0QJbayiDRLEdkJgVAs6ZYPkfHo5n5b2atnguSRDOLCHmqiBc/5Hy4ZrYHErUL+P17vE/G5cBi
- OZt1Q5ByWg41IHTwysbvfL/JT5UfD3TK/tfDoup0JDmkcQcmanoTgRkg26tEKJ9dOrl/Qz3SYXl
- 8chf8N17k9ym91Jz00YkVTK51frWcGxYSm44BsbfTBA7BozR+8pxjl/ceSyO/mqv6Cs8NwNRHjH
- 2fAD83gxsxr2YLHNYBtTq98wEilm2OeR+uPuUQlRZsWk/ha0sQvYZotLs/nnf3/JG0m+oNG+OGj
- h+4iVVbyKc0vYpdVqGFW+C61WmA2ZSFvsGOOIkMmG7BDq49G/S1a++MnK5Qahss9Qzg1I/iltf7
- LUHdoLP7gbxEBjy68WisMp65hQ11NE2kFdz2kvtx/sQpN1nGJ8bIeSDmoEsrFfnZu9/jTXRkgoU
- hFqzbIhcpO4OA9wuwtA==
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=Qmd6pTco9rnQzs-oBLoA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDExMSBTYWx0ZWRfX6KlQasE02xPg
+ e7QCCpO6m43gikrDnBhDWhvP1v4QD/QncRsXfbW75gdR8o/0mQCvHm5MvHb1vQM+9Gi4pqdLR6P
+ TzpLAlPkLyP1YeD1yfH9Ry2CcqFUy+QeRzZcvsPGevdR+Y6T+kiCFbmYHSZmCJIdnYjK/x710qa
+ HnkdW4AzabU+Kpl8B2WaMi3f2N5DHdFyF8C5lRECmcZ2d70buAAqeOB9SRDTV7PUOo/VmLwH7js
+ BG7dHLJ0z+YmzTjouuFlubhT41hpu5YNuMSeEZ2sNsI70bNfY28eNKqOrtJaGgDiM20vo5VAnYk
+ 7O6bdQe7hwdO7o3EE1lSieWW8qqcZ+V4DTfWau1uPH1VFImll1SfX9uFrM3JndCMIdTCxZtO1NU
+ Tczj3zLOowiB5FeZvO3KuSSQil8GWvhSFd4VwNK76ptDiGw8wyn6hD16rgY3EOc+TP+m9tNUimU
+ SItWAWKa6qXA9o2f2EQ==
+X-Proofpoint-GUID: wBlNk4kxu5sSp3-6rsk1LhlqC-EnHHGA
+X-Proofpoint-ORIG-GUID: wBlNk4kxu5sSp3-6rsk1LhlqC-EnHHGA
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-11_02,2026-05-08_02,2025-10-01_01
+ definitions=2026-05-11_03,2026-05-08_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 clxscore=1011 spamscore=0 priorityscore=1501
- suspectscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605110100
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ clxscore=1011 impostorscore=0 suspectscore=0 bulkscore=0 spamscore=0
+ lowpriorityscore=0 priorityscore=1501 adultscore=0 malwarescore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2605110111
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=akrowiak@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -126,42 +127,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 5/10/26 22:46, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> Commit 0b83acf2f05 moved gen_features_h from s390x_ss to
-> s390x_common_ss. However s390x_system_ss (containing ioinst.c) was left
-> without the dependency, causing a build race: it can be compiled before
-> gen-features.h is generated (via cpu.h -> cpu_models.h -> cpu_features.h
-> -> gen-features.h)
-> 
-> Add gen_features_h to s390x_system_ss to correct the build ordering.
-> 
-> Fixes: 0b83acf2f05 ("target/s390x: Introduce common system/user meson source set")
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+On 5/10/26 4:43 AM, zhaoguohan@kylinos.cn wrote:
+> From: GuoHan Zhao <zhaoguohan@kylinos.cn>
+>
+> vfio_ap_register_irq_notifier() cleans up the fd handler and EventNotifier
+> when vfio_device_irq_set_signaling() fails, but still returns true to its
+> caller.
+>
+> Return false after cleanup so the caller can handle the failed
+> registration path instead of treating it as a successful notifier setup.
+>
+> Fixes: cbd470f0aac5 ("vfio/ap: Make vfio_ap_register_irq_notifier() return a bool")
+> Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
 > ---
->   target/s390x/meson.build | 1 +
+>   hw/vfio/ap.c | 1 +
 >   1 file changed, 1 insertion(+)
-> 
-> diff --git a/target/s390x/meson.build b/target/s390x/meson.build
-> index 44f58ac2919..bc4459e8ed7 100644
-> --- a/target/s390x/meson.build
-> +++ b/target/s390x/meson.build
-> @@ -26,6 +26,7 @@ s390x_common_ss.add(files(
->     'gdbstub.c',
->   ))
+>
+> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+> index 276ae8c207bf..6e2a1223ea8d 100644
+> --- a/hw/vfio/ap.c
+> +++ b/hw/vfio/ap.c
+> @@ -193,6 +193,7 @@ static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
+>                                          errp)) {
+>           qemu_set_fd_handler(fd, NULL, NULL, vapdev);
+>           event_notifier_cleanup(notifier);
+> +        return false;
+
+Reviewed-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+
+>       }
 >   
-> +s390x_system_ss.add(gen_features_h)
->   s390x_system_ss.add(files(
->     'ioinst.c',
->   ))
+>       return true;
 
-The patch makes sense, but somehow I cannot reproduce the issue.
-I would expect the following to do the trick:
-
-$ make clean
-$ make libqemu-s390x-softmmu.a.p/target_s390x_ioinst.c.o -j24
-
-because if there is no dependency, then the header file will not be
-generated and compiler will fail, but this actually succeeds.
 
