@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24F73CD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 20:21:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 582C5CD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 20:22:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMX8P-0001pP-Nm; Mon, 11 May 2026 16:21:49 -0400
+	id 1wMX8Z-0002P1-2Z; Mon, 11 May 2026 16:21:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wMX8O-0001p0-Kg
- for qemu-devel@nongnu.org; Mon, 11 May 2026 16:21:48 -0400
+ id 1wMX8V-0002Hw-HA
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 16:21:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wMX8N-0001so-1f
- for qemu-devel@nongnu.org; Mon, 11 May 2026 16:21:48 -0400
+ id 1wMX8T-0001xx-Pk
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 16:21:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778530906;
+ s=mimecast20190719; t=1778530913;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0f2D20iVt6N9YxgaBkpD02MX+ftT9HJHZr6qxmzRDNA=;
- b=iCdsqvkR9bLB/ccimb/lY+5N9PM1ORJaKlICdcfjb8DYZPQLw7I5LqUa9Dk/UJ5pevZ+/q
- UWUVxXUKNzkzm5iKbiAhrSFmCwzAkCoDdU/3qovl8kWtJcewL8I6VULDXngirPDD4ZZnbX
- c6Sc4QA85z2L6n5vthlOo4JVKVzz2a8=
+ bh=YN5TIB8xZhcm71D8v6fTPFcE7OV/kWkJLILB23cEv/c=;
+ b=ezlNn9t75o4j0Rs+CA6C6jBYt30d6oyfm2vOZaeIIixtl9K8pwQTLltm7w+ZOkbSvY8SHV
+ yCB60JBboxQo58sKIgPRgur632aoftdbhuHdEy+311cf/YKSC+xq0YGvf8ixngZhi9t+KZ
+ sRAW7hT3GwtLRf/SJdYO7ZqFV5aTVZY=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-7s_tsCe0N8--j4spPsIjHw-1; Mon,
- 11 May 2026 16:21:44 -0400
-X-MC-Unique: 7s_tsCe0N8--j4spPsIjHw-1
-X-Mimecast-MFC-AGG-ID: 7s_tsCe0N8--j4spPsIjHw_1778530903
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-516-GCBrX2O-OXy8nl1Nx2kPKw-1; Mon,
+ 11 May 2026 16:21:50 -0400
+X-MC-Unique: GCBrX2O-OXy8nl1Nx2kPKw-1
+X-Mimecast-MFC-AGG-ID: GCBrX2O-OXy8nl1Nx2kPKw_1778530908
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 04EBE1956094; Mon, 11 May 2026 20:21:43 +0000 (UTC)
+ id B2D8E195609D; Mon, 11 May 2026 20:21:48 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D08A218004A3; Mon, 11 May 2026 20:21:41 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1F9C31800465; Mon, 11 May 2026 20:21:46 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- peterx@redhat.com, Zhang Chen <zhangckid@gmail.com>,
- Li Zhijian <lizhijian@fujitsu.com>, Jason Wang <jasowang@redhat.com>
-Subject: [PULL 05/24] net/colo-compare: guard finalize against uninitialized
- state
-Date: Tue, 12 May 2026 00:20:51 +0400
-Message-ID: <20260511202111.3091440-6-marcandre.lureau@redhat.com>
+Cc: stefanha@redhat.com, Peter Xu <peterx@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 06/24] system/ioport: Fix qom-list-properties crash on portio
+ list obj
+Date: Tue, 12 May 2026 00:20:52 +0400
+Message-ID: <20260511202111.3091440-7-marcandre.lureau@redhat.com>
 In-Reply-To: <20260511202111.3091440-1-marcandre.lureau@redhat.com>
 References: <20260511202111.3091440-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -88,87 +88,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Peter Xu <peterx@redhat.com>
 
-colo_compare_finalize() assumes the object was fully set up by
-colo_compare_complete(), but a bare object_new() followed by
-object_unref() skips the complete callback entirely.
+Currently qom-list-properties QMP command will crash when querying the
+portio list MR object.  It's because its finalize() assumes full
+initialization done in portio_list_add_1().
 
-This causes two crashes:
-- qemu_mutex_destroy on the static event_mtx which was never
-  initialized (colo_compare_active is false)
-- qemu_bh_delete(NULL) and iothread dereference when s->iothread
-  is NULL
+Provide a simple fix for now to avoid the crash.  There is chance for a
+longer term fix, ideally MR should be initialized in instance_init().
 
-Guard the event_mtx teardown with colo_compare_active, and the
-iothread-dependent cleanup with an s->iothread NULL check.
+However that'll need more work, and that should also be done with cleaning
+the hard-coded MR operations in portio_list_add_1().  To be explored.
 
-Fixes: 45942b79b9f8 ("net/colo-compare.c: Check that colo-compare is active")
-Cc: peterx@redhat.com
-Acked-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Link: https://lore.kernel.org/r/87a4uvw066.fsf@pond.sub.org
+Reported-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- net/colo-compare.c | 31 +++++++++++++++----------------
- 1 file changed, 15 insertions(+), 16 deletions(-)
+ system/ioport.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/net/colo-compare.c b/net/colo-compare.c
-index abc1326b704..823b8aa323c 100644
---- a/net/colo-compare.c
-+++ b/net/colo-compare.c
-@@ -1416,7 +1416,7 @@ static void colo_compare_finalize(Object *obj)
-             break;
-         }
-     }
--    if (QTAILQ_EMPTY(&net_compares)) {
-+    if (colo_compare_active && QTAILQ_EMPTY(&net_compares)) {
-         colo_compare_active = false;
-         qemu_mutex_destroy(&event_mtx);
-         qemu_cond_destroy(&event_complete_cond);
-@@ -1431,30 +1431,29 @@ static void colo_compare_finalize(Object *obj)
-     }
+diff --git a/system/ioport.c b/system/ioport.c
+index 9209bff2eab..1a0e01fd06b 100644
+--- a/system/ioport.c
++++ b/system/ioport.c
+@@ -346,8 +346,15 @@ static void memory_region_portio_list_finalize(Object *obj)
+ {
+     MemoryRegionPortioList *mrpio = MEMORY_REGION_PORTIO_LIST(obj);
  
-     colo_compare_timer_del(s);
-+    g_clear_pointer(&s->event_bh, qemu_bh_delete);
- 
--    qemu_bh_delete(s->event_bh);
-+    if (s->iothread) {
-+        AioContext *ctx = iothread_get_aio_context(s->iothread);
- 
--    AioContext *ctx = iothread_get_aio_context(s->iothread);
--    AIO_WAIT_WHILE(ctx, !s->out_sendco.done);
--    if (s->notify_dev) {
--        AIO_WAIT_WHILE(ctx, !s->notify_sendco.done);
--    }
-+        AIO_WAIT_WHILE(ctx, !s->out_sendco.done);
-+        if (s->notify_dev) {
-+            AIO_WAIT_WHILE(ctx, !s->notify_sendco.done);
-+        }
-+
-+        /* Release all unhandled packets after compare thread exited */
-+        g_queue_foreach(&s->conn_list, colo_flush_packets, s);
-+        AIO_WAIT_WHILE(NULL, !s->out_sendco.done);
- 
--    /* Release all unhandled packets after compare thead exited */
--    g_queue_foreach(&s->conn_list, colo_flush_packets, s);
--    AIO_WAIT_WHILE(NULL, !s->out_sendco.done);
-+        object_unref(OBJECT(s->iothread));
+-    object_unref(&mrpio->mr);
+-    g_free(mrpio->ports);
++    /*
++     * This check makes sure any random object_new() (without doing the
++     * rest inits in portio_list_add_1()) will not crash when finalizing.
++     * One example is QMP command qom-list-properties.
++     */
++    if (mrpio->ports) {
++        object_unref(&mrpio->mr);
++        g_free(mrpio->ports);
 +    }
+ }
  
-     g_queue_clear(&s->conn_list);
-     g_queue_clear(&s->out_sendco.send_list);
-     if (s->notify_dev) {
-         g_queue_clear(&s->notify_sendco.send_list);
-     }
--
--    if (s->connection_track_table) {
--        g_hash_table_destroy(s->connection_track_table);
--    }
--
--    object_unref(OBJECT(s->iothread));
-+    g_clear_pointer(&s->connection_track_table, g_hash_table_destroy);
- 
-     g_free(s->pri_indev);
-     g_free(s->sec_indev);
+ static const TypeInfo memory_region_portio_list_info = {
 -- 
 2.54.0
 
