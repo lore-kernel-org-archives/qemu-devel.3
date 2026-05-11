@@ -4,85 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31C6CCD37AC
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 05:15:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC381CD37B7
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 05:18:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMIyL-0002KN-Ej; Mon, 11 May 2026 01:14:29 -0400
+	id 1wMJ1f-0003C5-3H; Mon, 11 May 2026 01:17:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1wMIyF-0002Jv-V5
- for qemu-devel@nongnu.org; Mon, 11 May 2026 01:14:23 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1wMIyE-0002ib-C1
- for qemu-devel@nongnu.org; Mon, 11 May 2026 01:14:23 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-835399c11e0so1677816b3a.0
- for <qemu-devel@nongnu.org>; Sun, 10 May 2026 22:14:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778476459; x=1779081259; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=uY/3BCvApSqhWXajAFICkCmRzs5yfB4pXNodUvVTC58=;
- b=V56yfZ+yivnxEr/H3gV9dmnW3ZrsNeQisN7Xp5Nd8UwaoA10QGnMpjsLx0sJdfzP11
- DNG+Zf8j/kNrjdZrBXPAMP9HQ9b1X/Pu9GHbTewBLoYSSb6zz8WCM981faxG0r9cDxEv
- x5tRoqtMUFUXZ3pw8/eWfA4dJEH/rvk+NC2WARaDITvcP5Ujz+8BPtA3F/H4NEAcZeGI
- DLQ2Qb0mgk4sAUeYwcFdpRajcUppDYfjZSYzSlKB8OTf8pIizmUdjFL8+IVEPxv1yu1C
- 9n5TT8SfNHAmEUUFaI+JCFknfpdJ+PP/ZfxX7+S6DD7/B21ewzxBaVV5nxVC6kJsNO0H
- jFzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778476459; x=1779081259;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uY/3BCvApSqhWXajAFICkCmRzs5yfB4pXNodUvVTC58=;
- b=Ty4X9DoS2HYMwRq/tPQuHMebUybvMBAPrKJjnaNBXONTxIXXiVDBXsmDyTOI6tRSeC
- JRoUd7vhlyce+Thy5MmsqsQ1S9PD7J9kWSxfrWvhTlz4He6W5u3Q3KYw/pPjxSJIDd21
- 8GKWcu+SJzuMk0/7bkAyb0712WmvA3MpmE+1oDNiXK/fdLGWxhOlqGuNaNgBTS9BJDEd
- VcB14MQoYe7d2VmtULR0tLm8ePjHBKMt477BZb8ZK8/oyyZdxTF28+2mgGJmeWwAVOzV
- sz8cnAD3LjtzWjB+sSHKgjtobt6gnvO2EukIV55RDcH9zDhoh9LXpR5KJ3LsFQDlJXJY
- FF8g==
-X-Gm-Message-State: AOJu0YwSKwYaDFhxHM/9Jj7UFQhT5mICZy3jRmaQPlBU7pDbnpe2xSpi
- lkdVkTakubw72yVW+yClckbW0ucq5gcxX3GSu8C3N6RxsawMh1c1JNrrfCA7dA==
-X-Gm-Gg: Acq92OFhtMVjxz6l4MaDub9KrQgeFW3gjeC6CVbNet7Dr+3/13ZiKUfbZCrvxrs2LN7
- zYYP+r/rOSN0coKEYBTed0gk1GvtUQ2TuJXKeVLy319xMsBdqTSwWdYzsjRpL6KbollOsB8dAZN
- caIy4bRIYKssisIcNoE0JZ/MYSxj4yz2a+V+Be5QysySiMNOCAPSiNeVbc4hemlKSJWS+dvcSlX
- wKbBoaX3mqh0iCl+NqIrrMJejWBMhsfhtLiFp7MZx1g4npWxtJi6K9GdY8/JPJquLfSDbvxjRLh
- SOLWBE0tdkS48Sbeex56l8cmh4stJKXMPitG8zhl09nakSNOJQ6mq3j+F9iXAKxVC26U0N9DVnL
- OQitmpYg/I6+IO5qXzj3iG1xFSCGYcHCkUEN5vpF7Pk/nKdjm753Zjx4Kj8lCOvJ45MzbakEBKm
- LDkAVwLu0AGWlvzI4fSJ+MJ4713n2GawA=
-X-Received: by 2002:a05:6a00:278e:b0:837:e9cc:d46d with SMTP id
- d2e1a72fcca58-83a5e24add1mr20835333b3a.44.1778476458724; 
- Sun, 10 May 2026 22:14:18 -0700 (PDT)
-Received: from jeuk-MS-7D42.. ([211.226.54.223])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-839679c9293sm18655775b3a.33.2026.05.10.22.14.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 10 May 2026 22:14:18 -0700 (PDT)
-From: Jeuk Kim <jeuk20.kim@gmail.com>
-X-Google-Original-From: Jeuk Kim <jeuk20.kim@samsung.com>
-To: qemu-devel@nongnu.org
-Cc: jeuk20.kim@samsung.com, qemu-block@nongnu.org, qemu-stable@nongnu.org,
- j-young.choi@samsung.com
-Subject: [PATCH] hw/ufs: Zero reserved bytes in REPORT LUNS response header
-Date: Mon, 11 May 2026 14:14:09 +0900
-Message-ID: <c6bc0c611cf43f3d75bb6459362f71666d3b4240.1778476327.git.jeuk20.kim@samsung.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <vulab@iscas.ac.cn>)
+ id 1wMJ1Z-0003Ag-BB; Mon, 11 May 2026 01:17:49 -0400
+Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <vulab@iscas.ac.cn>)
+ id 1wMJ1V-0003Lr-JX; Mon, 11 May 2026 01:17:48 -0400
+Received: from yzs (unknown [183.156.89.125])
+ by APP-01 (Coremail) with SMTP id qwCowAB3HmpxZgFqoBPfDw--.847S2;
+ Mon, 11 May 2026 13:17:38 +0800 (CST)
+From: Zishun Yi <vulab@iscas.ac.cn>
+To: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Cc: Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org, Zishun Yi <vulab@iscas.ac.cn>
+Subject: [PATCH] target/riscv: add Zvknha as an implied extension for Zvknhb
+Date: Mon, 11 May 2026 13:17:36 +0800
+Message-ID: <20260511051736.2916225-1-vulab@iscas.ac.cn>
+X-Mailer: git-send-email 2.51.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-pf1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-CM-TRANSID: qwCowAB3HmpxZgFqoBPfDw--.847S2
+X-Coremail-Antispam: 1UD129KBjvdXoWrtFy5WFW5Cr1fCr48GrykZrb_yoWkJrX_Ga
+ 1F9FWS9r1qvan29ayrCrn8Kr1vya4rGFWqgw4xGF4jkry7WFn8A3WvgrnrWF13ZrWUAF9a
+ qrW7Wry7WrsagjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+ 9fnUUIcSsGvfJTRUUUb48FF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
+ 6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
+ A2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_
+ Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
+ 0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
+ jxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr
+ 1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkF7I0En4kS14v26r1q
+ 6r43MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI
+ 0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y
+ 0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxV
+ WUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1l
+ IxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7VUbGQ6JUUUU
+ U==
+X-Originating-IP: [183.156.89.125]
+X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiDAcEA2oBMeu65QAAsi
+Received-SPF: pass client-ip=159.226.251.21; envelope-from=vulab@iscas.ac.cn;
+ helo=cstnet.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,34 +76,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ufs_emulate_report_luns() writes the 4-byte LUN list length into
-outbuf[0..3] via stl_be_p() but leaves outbuf[4..7], the reserved
-field, uninitialized. Those bytes are then DMA'd to guest memory,
-leaking uninitialized QEMU stack data.
+The RISC-V unpriv specification (zvk.adoc) states that "Zvknhb
+implies Zvknha". This means that enabling Zvknhb should automatically
+enable Zvknha.
 
-Fixes: 7708e298180 ("hw/ufs/lu: skip automatic zero-init of large array")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
+Add Zvknha to ZVKNHB_IMPLIED to ensure the dependency is correctly
+enforced.
+
+This issue was discovered and reported by SpecHunter, an AI-driven
+architecture specification analysis tool.
+
+Link:https://github.com/yizishun/rv-isa-sec/blob/master/output/riscv-isa-manual/pr-2635/qemu.txt
+Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
 ---
- hw/ufs/lu.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ target/riscv/cpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/ufs/lu.c b/hw/ufs/lu.c
-index 3f3c9589ce..709d6adcf6 100644
---- a/hw/ufs/lu.c
-+++ b/hw/ufs/lu.c
-@@ -101,6 +101,10 @@ static int ufs_emulate_report_luns(UfsRequest *req, uint8_t *outbuf,
-         return SCSI_COMMAND_FAIL;
-     }
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index ce15a17c37de..61430e44020e 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -2542,7 +2542,7 @@ static RISCVCPUImpliedExtsRule ZVKNG_IMPLIED = {
+ static RISCVCPUImpliedExtsRule ZVKNHB_IMPLIED = {
+     .ext = CPU_CFG_OFFSET(ext_zvknhb),
+     .implied_multi_exts = {
+-        CPU_CFG_OFFSET(ext_zve64x),
++        CPU_CFG_OFFSET(ext_zve64x), CPU_CFG_OFFSET(ext_zvknha),
  
-+    if (outbuf_len < 8) {
-+        return SCSI_COMMAND_FAIL;
-+    }
-+    memset(outbuf, 0, 8);
-     len += 8;
- 
-     for (uint8_t lun = 0; lun < UFS_MAX_LUS; ++lun) {
+         RISCV_IMPLIED_EXTS_RULE_END
+     },
 -- 
-2.43.0
+2.51.2
 
 
