@@ -4,103 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAA61CD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 13:49:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E476CD37AC
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 13:52:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMR0D-0006La-72; Mon, 11 May 2026 09:48:57 -0400
+	id 1wMR33-0007aK-Nf; Mon, 11 May 2026 09:51:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wMQzy-0006K8-4i
- for qemu-devel@nongnu.org; Mon, 11 May 2026 09:48:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wMR2s-0007ZU-9K
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 09:51:42 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wMQzv-0003gc-US
- for qemu-devel@nongnu.org; Mon, 11 May 2026 09:48:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778507318;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4lRusBxp69b291Rn2KyoduTNZklrUnXfQmClhnt/9XI=;
- b=SVOWsmOY13ABaALthqq73/P/T9Ca98xSr2nvUs26wlOEJhca9De+V3e1Okh0WuEFYDt/RL
- nAkiJLjkrkYj4Co8Q2nn4vghZAqdtPZOB96yu/6yiSJT6hID6j03WFI4yZEhSO13MAJ+W6
- 2b3XE8NF09cYI4IKw6tPH98UTns+JUA=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-596-g2w0QrP3MHOc7yUsTESPPw-1; Mon, 11 May 2026 09:48:33 -0400
-X-MC-Unique: g2w0QrP3MHOc7yUsTESPPw-1
-X-Mimecast-MFC-AGG-ID: g2w0QrP3MHOc7yUsTESPPw_1778507313
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51009190feeso77454111cf.2
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 06:48:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wMR2p-0004GF-QG
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 09:51:41 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64BD14OF452800
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 13:51:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ CTi9U74sVfOJ8w4JyQ7PwEQT2To4DSoAn9WhH+BUXrs=; b=JBhOPpfpciwqtUz7
+ jR3HhhpQ0nXnmZwD43UP06qCjI22GXnnTd5NueOiwM8p3Ecdm9J+g1UtoLfX1CYW
+ aGEFLqoWVL9GatRtLtuczBYBlxUD7egMWy2LgXWtx74LcOYjj0kw5z8N7gBBgReu
+ w3m9Ei5fEaBi5K+am5Tw+F59/1R9LIKHaMIdrWhk/6UIEboAzQfsvQ8n/WdSE9Pn
+ ECAP2uEh5aOE0/mNc2giPZS5d9x7KylV0iqbUcZvZLdMBp7uN6rZIWWUcsmNuiby
+ pqLAkrFrojZQ23LAoh2O6x/QtAyjeIcYWuEPWtqcWoDN0Qi/PcIj1AZH6P2QHT2a
+ dJ92Pg==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e3ag6hc3y-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 13:51:38 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-514ae0edeb6so38675981cf.1
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 06:51:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778507313; x=1779112113; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=4lRusBxp69b291Rn2KyoduTNZklrUnXfQmClhnt/9XI=;
- b=OFqO/HYJAVxvYxDJcRr8ckFyDaejoPnjkQ0aP6qBwXteaIhJHyl73THqbbf078OBKN
- uDjiBs5Q3KaSC4ffi5dR9zUvU0FZ7FOXGTxWjlXGPlIk0EzG4Yv14neiWZf19S/TCViz
- PP4vS3iOW3fKO4goqRgbHKwSJo5V+L0fo6J2DBZxrMKmtA5dr73da/MTP/DiA1LcEMSw
- RHIP0rV5q/gZnPXRlR1HXMYSj0HHCsUz+lDPrCvOeczg+pZznOh8bxYq0WRE1g0CZb+y
- fdEoF/isv3WdSbnu5uDMOEku+lRQ2UXdDkAvqEBTzIM/sFNgoLahps3/TTcA4QsLikT2
- Nm9g==
+ d=oss.qualcomm.com; s=google; t=1778507498; x=1779112298; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CTi9U74sVfOJ8w4JyQ7PwEQT2To4DSoAn9WhH+BUXrs=;
+ b=UzJKlQ4DpQyXHmRjct+T48l1QE9PqowsZlB9OC422F3P0kgY03eLqEYzS2EvKZc+VT
+ HFspBaKY8h4ikhkF2B2A4ahXz9jBzk/piAxT6DV9fZj9VNNVtcfE60LLwUuZAMPW8ABt
+ OBt/BBoDsuf6LXoau1J4EmHS9tGVyciWjwt3ERFbrFeWlBUrytWielehkgjImB95bxtX
+ Ftkjs1dMycCLR58w0qzYA4FLCMiOm+A9+mtzwq1X2xbvdo3zFUTDpyVluv0Z6v75dlvl
+ HMG9YkXFVs/dUsFkA4/4aE05UxG8RFrvIO8pkdA20mXy6DKEwh3hAai9ye6HfaxySQe0
+ kt5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778507313; x=1779112113;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4lRusBxp69b291Rn2KyoduTNZklrUnXfQmClhnt/9XI=;
- b=hiVaa3Trlyre+d716b7aLjCjzVS/v+TuSkBAbcVylwKn2gglCMyUC76/lydyAEokYQ
- 6xQbN0KW/ZHZemRZv0TDRJ8ORWRTXwQlWWP2ndRqq3e/Hajmu7hRdRyTZjlmi9jfAl5U
- pBdvapvDTkUv+optiqGD10Lh5BzLP1Nqzb1c3PZP97EGLkbuEEIVJv36wAu+dnYvOJfx
- 7kz10hoINIrwAr1UpAQIHkuakI9E0QALm8+K0V5dmXAtIAEnQ/chYgAB0mYo+Yn5oTHl
- Vy2leF9c5WKwXkaeoorLvz+Sxha6hPZP1gSJbeYNrobMd/JmJIIIVY64CWQw9U9a4jS4
- PtBQ==
-X-Gm-Message-State: AOJu0YyMbt9fkKlrfYUyqLFzewJFYzm0KBcl7hes9Mq8QrPTz4qHgTwe
- B0fdOu6blcpicY2qr7KoljzqF4D8D2g2sL7ImCs6oz139Z0yZPd5Bmb/wOQeoFN00p0RFqGthZi
- EVqS7iHQLHOfcmUoZyyglV0lYpRarEIaaFTBEQnAeFy0qlgeqOvduOEvX
-X-Gm-Gg: Acq92OFuzPWljv+1m7rJMpfxHuTrhHogThWsYHte9lEjHnk7Dzl4ytVSEzwf9NOUzgJ
- i4yUBBFudKU6dOIDDv5p/m/tlHc6fL5f5ssSW0Ijv4iVjF26NzdW1kFJi6DUyrBODdddEXd1kr8
- RTGpj9nMs+n6KOxfwmMnzVovJCjQjsP2sjXg/k9oFu60NENayyJs9VLQ8whCmvxS5DkM1snjUlL
- BZmTrteN/vzow5C/NdEBr8hBmh89R2BlrLQ7S/spPz/l7wuvEokE480TQV7MmN724M0vG1kN1H5
- 5nKfq1mp8d+zjzuvHBkFtFCvNZNAMmERCy3FhIFCABmsZRMZ0i/nflrOndjYglw3+C5/vSEIRRP
- O54/SOJsVQQIqia1ybuUV1zxBpH2sO+/fbeQTRQ1AKGFCXuM=
-X-Received: by 2002:a05:622a:149:b0:50f:b17d:7e5e with SMTP id
- d75a77b69052e-514a0a8ebecmr132311481cf.24.1778507312994; 
- Mon, 11 May 2026 06:48:32 -0700 (PDT)
-X-Received: by 2002:a05:622a:149:b0:50f:b17d:7e5e with SMTP id
- d75a77b69052e-514a0a8ebecmr132310271cf.24.1778507311878; 
- Mon, 11 May 2026 06:48:31 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b53d35787esm312282626d6.44.2026.05.11.06.48.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 May 2026 06:48:30 -0700 (PDT)
-Date: Mon, 11 May 2026 09:48:29 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PULL 13/23] migration: Calculate expected downtime on demand
-Message-ID: <agHeLeJ-uVz0B5jg@x1.local>
-References: <20260505202640.1011006-1-peterx@redhat.com>
- <20260505202640.1011006-14-peterx@redhat.com>
- <CAFEAcA-MYH6C39xO0OLx4-M5pKurJpurwRsMqZe9q=W-NShAbw@mail.gmail.com>
+ d=1e100.net; s=20251104; t=1778507498; x=1779112298;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CTi9U74sVfOJ8w4JyQ7PwEQT2To4DSoAn9WhH+BUXrs=;
+ b=EHgZ2Tn+PqqEeUmA1wSDRROjBQ3hZQRQRGYzdn6u2/x9n6Fi3MhNYrbwKiozmh+r1w
+ yTW3ZUYpB9/Jf9HVAn6eYxXTYvW24XnBBnRdEu6HZC08C/oglGAcIQBENw+LAOHdQW1Z
+ KPuP6j6jtMvgO9awY2MqqtpLTVFbb/e2IWuKnP+fAvFfxQRnA9wXpR6YAS5bjfLZpeTz
+ 48GAGYLoZgbZ1bCwXwt/RlQzPdabR1ObC9T1An++G1jpvCwsbSpkoKeAburLFjQtyrEt
+ blmIvNe9acyND4aXwdTcyX9XcYCgb/gytgw2nhUXE6AGlh+IBkRMbP3PfYK2+97jg9Zo
+ rXNA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+3sW5HExdbxjK6QzMH5UGUsOIKlTgo1AJeKz48mRdWanlwgqMAXOrdL10iJwF8U2AFRzS5dF/e5pLG@nongnu.org
+X-Gm-Message-State: AOJu0Yx9+C/4L40hKP5y03Idh2Udueyo9JqfQbp/dWRbUbFlkayQGPW4
+ L2yMwWxUg+rxBTL3kPD229dHjLlrbY3/9eu1fALun2/TJEF2kgu9eOW2QA4jyFNLjNUU+3kO1tY
+ mgR4Qv/4BSy/ACO5es2wEQgC5wnVoqoX705e2omye002Efbwkx6erM3lQCw==
+X-Gm-Gg: Acq92OE7UBygVYsTUd2GDWgrSuW9NZQsklpwU9RRBXHCCOMzRnm48BEVi+S5B+9PN4a
+ CaXjz8R75m5DIQ6iUyKsyENZT1dJRxr/QUAaR7iKXltNqlkoC6HLPD15JlkDNUu+cr6LPKileQV
+ TOlaWMIgJd4L+QTz6A5dvC8oL8xfap5ikbdUceI9MgK0KK42PzAn0iNJDwnypwwEYsZHoAQBt8j
+ 1A+imnAqqgM6De4dWBbmmZZWqKINrUeDKFa9xV3BpbCb2k+cS8lZDx2uXZOqvw3nlz0HIsryEgv
+ w/N9eKYBslqT27to1GobfNYPnXfK/lkcUzyXqS0oCcwtxYq9rB0z4h0nUyn02DaWM4QLFOzMrfZ
+ 4U7pX3LmEVsgcYHkABPKBptFGV0jDkXmC87B/DQouW3UYcZn69WZnTXfgmWE=
+X-Received: by 2002:ac8:5a0d:0:b0:50f:f030:920d with SMTP id
+ d75a77b69052e-51475c618e8mr226944321cf.30.1778507497582; 
+ Mon, 11 May 2026 06:51:37 -0700 (PDT)
+X-Received: by 2002:ac8:5a0d:0:b0:50f:f030:920d with SMTP id
+ d75a77b69052e-51475c618e8mr226943971cf.30.1778507496987; 
+ Mon, 11 May 2026 06:51:36 -0700 (PDT)
+Received: from [192.168.68.106] ([191.202.238.222])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8b53d6442d0sm309542716d6.46.2026.05.11.06.51.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 11 May 2026 06:51:36 -0700 (PDT)
+Message-ID: <7b0b90cd-0c45-4c11-9655-10024918e7c1@oss.qualcomm.com>
+Date: Mon, 11 May 2026 10:51:33 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA-MYH6C39xO0OLx4-M5pKurJpurwRsMqZe9q=W-NShAbw@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/riscv/riscv-iommu: Fix Svnapot 64KB pages
+To: Andrew Jones <andrew.jones@oss.qualcomm.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: alistair.francis@wdc.com, palmer@dabbelt.com, tjeznach@rivosinc.com
+References: <20260508205129.377032-1-andrew.jones@oss.qualcomm.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260508205129.377032-1-andrew.jones@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=fOsJG5ae c=1 sm=1 tr=0 ts=6a01deea cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=etEqFfc6qwXwpI8uT8rzbw==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=EUspDBNiAAAA:8 a=DFJLJhpOamtIQcbWox0A:9 a=QEXdDO2ut3YA:10
+ a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDE1NCBTYWx0ZWRfX0RY/gLgdYx17
+ g3HTcNchZuDhZiU+mn+d9t9dpFan1x9T+dEdznOS8rBYVq48cSw853hw2u9btqe2X/m1yAGYIWM
+ F0jsf8vNOa4rw6j4ISCaSmYBUYtnvYvArQvq1boa3ezmFnFYysFqGElEsA54ZxJtFwuMuNusyJ/
+ FjckEXQKIr8vlacSMwRj1roA/cau84ffRu1/Tg6qQhv8wkpkijMiGkoQzzuFYWdmU/UZfO+jctF
+ UiqzupbNhOBEp2U1PBFOKQEUZEeWpPydsLGP4iG4H0THnNjv2rzC/fsC2G7EONF1gbqQ+ZnDoRQ
+ XzYK6KD/jsrB5bc73diicI4V3AojyIOYW5ioqmK+LFCGvNKxCC6qzMpQUML3S/37Zyvlalobtpd
+ E7NGPfh2dV78SjnNmZwn2lAkviPi5DPHuJmBK6ZvDfq/z7TjyShZOecyzUwlQeWC8s1Ajr9tGR5
+ Q+aQ0SuOIXe/GNx5USg==
+X-Proofpoint-GUID: UG9M6KJKK_azTyKV_anMtMQbeUBCxTZk
+X-Proofpoint-ORIG-GUID: UG9M6KJKK_azTyKV_anMtMQbeUBCxTZk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-11_04,2026-05-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 clxscore=1015 impostorscore=0 bulkscore=0 suspectscore=0
+ malwarescore=0 lowpriorityscore=0 phishscore=0 spamscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605110154
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,92 +151,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 07, 2026 at 08:57:24PM +0100, Peter Maydell wrote:
-> On Tue, 5 May 2026 at 21:29, Peter Xu <peterx@redhat.com> wrote:
-> >
-> > This value does not need to be calculated as frequent.  Only calculate it
-> > on demand when query-migrate happened.  With that we can remove the
-> > variable in MigrationState.
-> >
-> > This paves way for fixing this value to include all modules (not only RAM
-> > but others too).
-> >
-> > Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
-> > Link: https://lore.kernel.org/r/20260421202110.306051-12-peterx@redhat.com
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> 
-> Hi; I'm seeing a clang undefined-behaviour sanitizer failure
-> in the code introduced in this change when running the
-> aarch64 migration-test via "make check" on an x86-64 host.
-> 
-> It seems to happen fairly reliably when I do a "make check -j20",
-> but not when I run the test on its own, so it's probably load dependent.
-> 
-> Here's the backtrace:
-> 
-> ../../migration/migration.c:1051:12: runtime error: inf is outside the
-> range of representable values of type 'long'
->     #0 0x57b49d635c0d in migration_downtime_calc_expected
-> /home/pm215/qemu/build/arm-clang/../../migration/migration.c:1051:12
->     #1 0x57b49d63e860 in populate_time_info
-> /home/pm215/qemu/build/arm-clang/../../migration/migration.c:1075:35
->     #2 0x57b49d63617e in fill_source_migration_info
-> /home/pm215/qemu/build/arm-clang/../../migration/migration.c:1184:9
->     #3 0x57b49d63617e in qmp_query_migrate
-> /home/pm215/qemu/build/arm-clang/../../migration/migration.c:1264:5
->     #4 0x57b49e4aed75 in qmp_marshal_query_migrate
-> /home/pm215/qemu/build/arm-clang/qapi/qapi-commands-migration.c:48:14
->     #5 0x57b49e526814 in do_qmp_dispatch_bh
-> /home/pm215/qemu/build/arm-clang/../../qapi/qmp-dispatch.c:128:5
->     #6 0x57b49e58c35a in aio_bh_call
-> /home/pm215/qemu/build/arm-clang/../../util/async.c:173:5
->     #7 0x57b49e58c698 in aio_bh_poll
-> /home/pm215/qemu/build/arm-clang/../../util/async.c:220:13
->     #8 0x57b49e542fc1 in aio_dispatch
-> /home/pm215/qemu/build/arm-clang/../../util/aio-posix.c:390:5
->     #9 0x57b49e58f10a in aio_ctx_dispatch
-> /home/pm215/qemu/build/arm-clang/../../util/async.c:365:5
->     #10 0x7c74a09b8584
-> (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5d584) (BuildId:
-> 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
->     #11 0x7c74a09b86cf in g_main_context_dispatch
-> (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5d6cf) (BuildId:
-> 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
->     #12 0x57b49e5901cb in glib_pollfds_poll
-> /home/pm215/qemu/build/arm-clang/../../util/main-loop.c:290:9
->     #13 0x57b49e5901cb in os_host_main_loop_wait
-> /home/pm215/qemu/build/arm-clang/../../util/main-loop.c:313:5
->     #14 0x57b49e5901cb in main_loop_wait
-> /home/pm215/qemu/build/arm-clang/../../util/main-loop.c:592:11
->     #15 0x57b49d5f5486 in qemu_main_loop
-> /home/pm215/qemu/build/arm-clang/../../system/runstate.c:948:9
->     #16 0x57b49e42cdfb in qemu_default_main
-> /home/pm215/qemu/build/arm-clang/../../system/main.c:50:14
->     #17 0x57b49e42cdd3 in main
-> /home/pm215/qemu/build/arm-clang/../../system/main.c:93:9
-> 
-> 
-> > +/* Return expected downtime (unit: milliseconds) */
-> > +int64_t migration_downtime_calc_expected(MigrationState *s)
-> > +{
-> > +    if (mig_stats.dirty_sync_count <= 1) {
-> > +        return migrate_downtime_limit();
-> > +    }
-> > +
-> > +    return mig_stats.dirty_bytes_last_sync /
-> > +        migration_get_switchover_bw(s) * 1000;
-> > +}
-> 
-> Presumably in this function migration_get_switchover_bw() returns 0,
-> so the (floating-point) division results in Infinity. That's fine
-> until we have to convert it to int64_t to return it, which is the
-> UB that the sanitizer is complaining about...
 
-True, I can easily reproduce the warning too.  I'll send a patch.
 
-Thanks,
+On 5/8/2026 5:51 PM, Andrew Jones wrote:
+> The Svnapot extension encodes a 64KB leaf PTE by setting PTE_N and
+> storing bits [3:0] of the PPN as a NAPOT size indicator. The IOMMU
+> model wasn't checking PTE_N and therefore was using the raw (NAPOT-
+> encoded) PPN directly in the physical address, yielding an address
+> 32 KB above the correct base.
+> 
+> Fix both riscv_iommu_spa_fetch() and pdt_memory_read() by mirroring
+> the Svnapot handling already present in target/riscv/cpu_helper.c:
+> 
+>    napot_bits  = ctz64(ppn) + 1          /* 4 for 64KB */
+>    napot_mask  = (1 << napot_bits) - 1   /* 0xF */
+>    phys_base   = PPN_PHYS(ppn & ~napot_mask)
+>    page_offset = addr & (PPN_PHYS(napot_mask) | (TARGET_PAGE_SIZE - 1))
+> 
+> The spec only defines napot_bits == 4 (64KB); any other value is
+> treated as a reserved encoding.
+> 
+> This is a fix, rather than new feature support, because the spec
+> says "IOMMU implementations must support the Svnapot standard
+> extension for NAPOT Translation Contiguity."
+> 
+> Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
+> Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
+> ---
 
--- 
-Peter Xu
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+
+>   hw/riscv/riscv-iommu.c | 44 ++++++++++++++++++++++++++++++++++++++----
+>   1 file changed, 40 insertions(+), 4 deletions(-)
+> 
+> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+> index 25a356d1d366..eb09cc974812 100644
+> --- a/hw/riscv/riscv-iommu.c
+> +++ b/hw/riscv/riscv-iommu.c
+> @@ -237,6 +237,25 @@ static bool riscv_iommu_msi_check(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+>       return true;
+>   }
+>   
+> +/* Returns the NAPOT page mask, or 0 for reserved encodings. */
+> +static hwaddr riscv_iommu_napot_page_mask(hwaddr ppn, hwaddr addr, hwaddr *out)
+> +{
+> +    int napot_bits = ctz64(ppn) + 1;
+> +    hwaddr napot_mask, page_mask;
+> +
+> +    /* The spec only defines 64KB (napot_bits == 4) */
+> +    if (napot_bits != 4) {
+> +        return 0;
+> +    }
+> +
+> +    napot_mask = (1ULL << napot_bits) - 1;
+> +    page_mask = PPN_PHYS(napot_mask) | (TARGET_PAGE_SIZE - 1);
+> +
+> +    *out = PPN_PHYS(ppn & ~napot_mask) | (addr & page_mask);
+> +
+> +    return page_mask;
+> +}
+> +
+>   /*
+>    * RISCV IOMMU Address Translation Lookup - Page Table Walk
+>    *
+> @@ -458,9 +477,20 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+>           } else {
+>               /* Leaf PTE, translation completed. */
+>               sc[pass].step = sc[pass].levels;
+> -            base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
+> -            /* Update address mask based on smallest translation granularity */
+> -            iotlb->addr_mask &= (1ULL << va_skip) - 1;
+> +
+> +            if (pte & PTE_N) {
+> +                hwaddr mask = riscv_iommu_napot_page_mask(ppn, addr, &base);
+> +
+> +                if (!mask) {
+> +                    break;
+> +                }
+> +                iotlb->addr_mask &= mask;
+> +            } else {
+> +                base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
+> +                /* Update address mask based on smallest translation granularity */
+> +                iotlb->addr_mask &= (1ULL << va_skip) - 1;
+> +            }
+> +
+>               /* Continue with S-Stage translation? */
+>               if (pass && sc[0].step != sc[0].levels) {
+>                   pass = S_STAGE;
+> @@ -997,7 +1027,13 @@ static MemTxResult pdt_memory_read(RISCVIOMMUState *s,
+>               return MEMTX_ACCESS_ERROR; /* Misaligned PPN */
+>           } else {
+>               /* Leaf PTE, translation completed. */
+> -            base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
+> +            if (pte & PTE_N) {
+> +                if (!riscv_iommu_napot_page_mask(ppn, addr, &base)) {
+> +                    return MEMTX_ACCESS_ERROR;
+> +                }
+> +            } else {
+> +                base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
+> +            }
+>               break;
+>           }
+>   
 
 
