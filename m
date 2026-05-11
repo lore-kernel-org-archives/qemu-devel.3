@@ -4,104 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0611CD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 14:34:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66E4DCD37AC
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 14:34:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMRiB-0008FK-Ox; Mon, 11 May 2026 10:34:24 -0400
+	id 1wMRiE-0008GM-2N; Mon, 11 May 2026 10:34:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wMRhd-0008DK-Uw
- for qemu-devel@nongnu.org; Mon, 11 May 2026 10:33:57 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMRi1-0008EU-JL
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 10:34:17 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wMRhb-0006XB-1e
- for qemu-devel@nongnu.org; Mon, 11 May 2026 10:33:48 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-67e9e343b22so5081295a12.0
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 07:33:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778510024; cv=none;
- d=google.com; s=arc-20240605;
- b=DO6sKTvB2afXmJI1OyzmmVcV4Sa7pURqSmx4A++Qv2us+hv0vMtdxkTvjEb0khV3nz
- kWhJyL3WknDZZNjqmzrrpoShr7cpN/MiuSChkllYoHXgcgzj3l6Ol+9Xye+pBkerQ2NM
- RXPo6ZcJ1zCKSsG/EcrfGchevhEhJ4WsNRtlz7UO+4RjtntZ7jUbGAzIU0//QSosdvqu
- i1ngtLD29E5pSOU5cms6xegT1/WRhyk8gOVNLPkYZG3xIVg94B/WNvL7Zk+m8nffAEtb
- xFz4JYu+ImRcatxetPN7gtIdza77AIfOErCNMCHvpXc0jrv9wYJHvgQrPgD7YOU7nMnd
- hdnA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=dMiKxnwj4kix6XqCs3wmtBcSPTJVyJXP/efIdat9BnY=;
- fh=o3NcXXNApN2T5QEs0RCBGBe7+cAP9cEBwYxeG+eDZ8E=;
- b=StE6aJiObfJyfKU3oeytlB9u9x8s7mNx6ytIbCswpb3yvNszjZX/9oegsoyrYlV4Sf
- lHbu/kuHZigrsHqlpTrbDV9BzAC9JRJKe1o7RTAWo6mAIR2Rm5bbeqFI2wNeD2VLkao0
- r6dOLFDlMnxxO7q3/FSFES2ZaBUQIlZNsX2VCl4nyqLvwwi50SjNscmGJwgvIkwOuib6
- ADJ6tLiChFuCFvBp4Eh80MuME3MyreTWZ1/6mI3T/55MGgIlwlhRZhve/AcTvEAMVWJD
- Uuvs6snrO/oiLcfJbbigagqhVgEttjxiIu8VqHLgW9IhvtjAIwsXIfMBoCTQHdRYvStT
- BCRg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMRhq-0006ba-74
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 10:34:13 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4891e5b9c1fso41995165e9.2
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 07:34:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778510024; x=1779114824; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dMiKxnwj4kix6XqCs3wmtBcSPTJVyJXP/efIdat9BnY=;
- b=y2esZkcJvacYHOfcWnF2aRnGNNolfU8Wk2828WtHlPFTV0L7qIzbDLnUpAJy/pn+gs
- 7Myng60JXq6MMk3ohPqsBPppxzewN918YNFW+/JTZ7PE/+weIUrPqzJJYK3/MAF8u433
- Hyeyw6E0ifmf1wXVmFpWllA+MyqoyLKf2m29VunGiCVQpJIjWasW87VUK02g11+qH2X2
- KLtpI99pdukHBOrjnp49bheiSt0EbXz9o1ZtvbUs65t41qfu6gLoFOm9BeFE34gbSrEt
- 3oNtfa7fs7zW5YYTKgMiSiSDCm5Jmh0gmd/kxxe88sdcLJzm1WrrqUuWo26bygYybm7D
- EqIQ==
+ d=linaro.org; s=google; t=1778510040; x=1779114840; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Bm9PaCYsOeVpqahfI+G/ZWpXs1a5KP3GztgsSOHapMY=;
+ b=VvXrJNUsH5o5Dg+o8Gi2vCYVzgUQRgk54LXFC9kxUXb/VhHqqyo0AZDFe9uXYcHn+u
+ D+QtM4subb9CpsbUPKbXkHTMeqqdYEct+n5dypuhiFD78UC9xT4CH1nGgVRDKy3oEaZO
+ vDjUqmmVTFbrGuwojI2fs+LeRS/VciuXlv8UYwxPiNTwb0yW+oKv1BomhZeqnm1yA0Gd
+ p8XtWiBCXFlQgIILe9c3CnQdwcFpRvSTYqKFkngR4SOqwcr0pHWeOXgRlZZpt2aQjlg3
+ WuXIa3exvKK6jfYF+iPyoOI5o7JqCJcouYM9WlLoLhF2ecfc7a2waMP5MGGhAUN970L+
+ wdAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778510024; x=1779114824;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=dMiKxnwj4kix6XqCs3wmtBcSPTJVyJXP/efIdat9BnY=;
- b=lDj7rJEEvgPjGO86gVoL1enUmBpWJs5xdNDN/TZgOLUvGQ/R1FPxGCXI0e8jchl3e/
- zPBl4RD6J9lUL4f+12FUU5mVisw5nojwUiSqJ9tiltczu4bTJxJpbIACd4zPL3eASovj
- C4aNmdnyaqYE0Qp26T8ssvn6k3q/FdiqxXAoeKjt7rc+JYsUC4ferQnHwBbELkRAHJux
- 62cY4lDWeHdHG4oZeW3eluS06r1jocn1EUTRGKAw3gMzq6unf9gbdqJDkOKHGwiAo5WO
- TjfaOYY8PGkZX3/N+U0C1hlQgrgTe/aYRURzHC6XeXW/SQ2/R2rKCP/9bW/x7Vnt+ZAk
- FwpA==
+ d=1e100.net; s=20251104; t=1778510040; x=1779114840;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Bm9PaCYsOeVpqahfI+G/ZWpXs1a5KP3GztgsSOHapMY=;
+ b=m87mNYrqOsxROM/Aw2tOGI3rRhhSryL/4yg+3lU0YJfuGyIE29RnaZFBtdc50/Hjc9
+ vZowm7Ppgw5u9zUt5tQCAnrCdKFocnAwndy/hDYTD9+jgiLIwMKuVUPbHYwrKMgE37NN
+ 3Ak78Szdn83g9/UVa/xNDBF05uvUKJ83vayOjwpxCxVHLqFl3Fur8t6L18Q/S7R0eB8L
+ DdRRAAmmoO2std5sJqTq+pZ7Biqno4Cfg14QOzhZAIcXOOdc2ht8KHxpSp0xik/bFahH
+ kzFij3hJ6FZ7qk3T2ObSKW3hdXeQXOJXLYkP0pkB97bz+ZWIDi/cb+CZkS2aUjabxN3j
+ tFFw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+4VAmHia0SyzYXG+3SEbeM9unoWn8BSRFhoUPEMIMcUaQbl0OKKXNb/kzAmG7QTiN4ePGahhYubLTF@nongnu.org
-X-Gm-Message-State: AOJu0YwA59mvfkEByoaxyFeg87tLXrF/1s8/gI+ScsQhJ2QsMOS8EnCb
- SSlgLbEJQvsnhMtIwQRKu0sWxCE8dAPktaj1dH6e8rGI3kx/pPURe0rQdbV+CSP+8hELQFGMTYq
- 6JlNdApkqn7QT2LI53tGrbewYa/cbgUO7D3ZRj/zG4Q==
-X-Gm-Gg: Acq92OHWvjrjYtwUFacpS0tqpA2O3Iqu1vQtrx3LN+IIzVOLEVGe/pjxvfxNVbSBrLP
- ZEgzDaDXjCQ6bCxsXvxtdHFoL2PDK5tYEU2iXEcGkqd0dvoX0M4wpHsfeeUCYsrO6xCJLnggiX7
- A0P1/+rT1MBvGr1okADOajbL4tHlyL3m9v8Eri8qj4deQnTSi583UZRjeGyf8buGz5/BFeRfxp5
- mIGQq8pfXyECfsKH6kNIbN4eL/9LjKgHFwq5lT+sktx8kRjsmx7EyNTfE4Fv8Vea4yc1VWD4fah
- jM6d2mSr+oEvKXnLBOsQzbEbx0/4RWCzsfq7/E+QB6Zq3AE8LUPpU51bGTZxcrlpdPo=
-X-Received: by 2002:a17:907:7b96:b0:bcc:ad8e:cffc with SMTP id
- a640c23a62f3a-bccad8ed0bcmr457501466b.33.1778510023830; Mon, 11 May 2026
- 07:33:43 -0700 (PDT)
+ AFNElJ/GKWjgJJxT+igILbHX/zUpWogZ3e2MW/9X2FmTpurRDZvyW4KS6a5LdiGSLbXDbTRLmJZDXtNZZ2qr@nongnu.org
+X-Gm-Message-State: AOJu0Yy4JxFr3SQ0AMmBbIFQcYrOir9gMgn6VdpkpU0lRy/NmatjDjiq
+ 9Nvu0cQLk6GGgeoPzfmUXsxOXO/KSj4zpgDZ+Ouy7fklNJpUqDDARiwol/apV/WxwD8=
+X-Gm-Gg: Acq92OEAm//lxWw/bP4byx8unMmzXumYxprm9KfErIN2eXjqeAh2nhdZnHH4dNGgWvr
+ eLHGWyzKWGbqKUdeMvd8U4RmzayTfxjqvdwhZ9oOuUSoAnMPEQryLE3EswvVhH/tCRQxlhriNRn
+ XkLG84pSbRjhu78f+O45g/DC+9RBvCbW0uAaJ5JMhl9wZVirNBrCnRGMPtbhqR6NThMeI68B14s
+ WLONMmHJIXry0wuntABL6gbUood+25rH379kb/5BIUlJELpJy1yMi72/b+mQRXtiNb4FqpaRTcT
+ ZTilnAtyWDN7YsKyb63Jns83qZJ6jw2McWOyq3oO/SED1wo9XwN43YYErf+ZJ//J7fAikkGfE7s
+ JYzcgz/57ywZohjYYQ2YvyY+GznItlUlC6Ll4gH5Zt7P8ZFmR3koNodGF9UJUnb+Sw4aRaBSxOC
+ Es9517xbl2WsPqtCP+t5mveEB9tH2mKfOURV+AdHBu0j3BTb5PzE9h8H1flpKdjl8aZA==
+X-Received: by 2002:a05:600c:c094:b0:48a:599a:3716 with SMTP id
+ 5b1f17b1804b1-48e51f40a29mr282691745e9.23.1778510040440; 
+ Mon, 11 May 2026 07:34:00 -0700 (PDT)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4549120ec0asm25690009f8f.17.2026.05.11.07.33.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 11 May 2026 07:33:59 -0700 (PDT)
+Message-ID: <fb8c2431-fffe-424d-b03b-37c85f5a4fee@linaro.org>
+Date: Mon, 11 May 2026 16:33:58 +0200
 MIME-Version: 1.0
-References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
- <20260427-qom-tests-v1-34-c413f3605311@redhat.com>
- <CAFEAcA-tSqa7SQUE-f5yTq_P9eW6p_XrnNSnHZjw4g=Z2WncAQ@mail.gmail.com>
- <4f90d39a-560f-4922-ac54-2c975dae249d@linaro.org>
- <CAFEAcA_LcHgtAAYFjqm+P68ULwSRJWfr6LipMg9YsviyWDxH7Q@mail.gmail.com>
- <CAJ+F1CKFcPy3NtKgVfUruN_Mp1498EiQpRNz65HNE6YeqJD3CA@mail.gmail.com>
-In-Reply-To: <CAJ+F1CKFcPy3NtKgVfUruN_Mp1498EiQpRNz65HNE6YeqJD3CA@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 11 May 2026 15:33:30 +0100
-X-Gm-Features: AVHnY4IvOAwGbP63OcIwl8KYe3nViuFBGjk2dfTwMRKmTlUXWHXktfQP2nn26_4
-Message-ID: <CAFEAcA84KeXuCKKd6B2P13OrH1Du9Y-hgehQZWb4zPSFSVuSHA@mail.gmail.com>
-Subject: Re: [PATCH 34/41] hw/arm/virt: free flash devices and OEM strings on
- finalization
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, armbru@redhat.com, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/5] buildsys: Remove MIPS TCG backend
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Huacai Chen <chenhuacai@kernel.org>, devel@lists.libvirt.org,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Aleksandar Rikalo
+ <arikalo@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
+ Aurelien Jarno <aurelien@aurel32.net>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+References: <20260511135312.38705-1-philmd@linaro.org>
+ <20260511135312.38705-6-philmd@linaro.org>
+ <222fe848-a46b-43db-9494-8a7d773c3716@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <222fe848-a46b-43db-9494-8a7d773c3716@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -124,16 +108,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 11 May 2026 at 14:01, Marc-Andr=C3=A9 Lureau
-<marcandre.lureau@redhat.com> wrote:
-> Yes, in general, if a device creates & keeps a reference to an
-> instance, it should be a strong reference (we don't have support for
-> weak reference the way gobject has for ex). It should then unref it
-> unconditonally on finalize. Is it ok if it is addressed in a follow-up
-> series after this one lands? I am afraid it would delay this series or
-> make it longer, and a shift its focus
+On 11/5/26 16:03, Richard Henderson wrote:
+> On 5/11/26 08:53, Philippe Mathieu-Daudé wrote:
+>> We removed support for MIPS host. Remove the now unreachable
+>> TCG host code.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+>> ---
+>>   MAINTAINERS                                  |    9 -
+>>   include/user/thunk.h                         |    2 +-
+>>   linux-user/include/host/mips64/host-signal.h |   75 -
+>>   tcg/mips64/tcg-target-con-set.h              |   30 -
+>>   tcg/mips64/tcg-target-con-str.h              |   20 -
+>>   tcg/mips64/tcg-target-has.h                  |   69 -
+>>   tcg/mips64/tcg-target-mo.h                   |   13 -
+>>   tcg/mips64/tcg-target.h                      |   75 -
+>>   tcg/mips64/tcg-target-opc.h.inc              |    1 -
+>>   linux-user/mmap.c                            |    2 +-
+>>   tcg/mips64/tcg-target.c.inc                  | 2605 ------------------
+>>   11 files changed, 2 insertions(+), 2899 deletions(-)
+>>   delete mode 100644 linux-user/include/host/mips64/host-signal.h
+>>   delete mode 100644 tcg/mips64/tcg-target-con-set.h
+>>   delete mode 100644 tcg/mips64/tcg-target-con-str.h
+>>   delete mode 100644 tcg/mips64/tcg-target-has.h
+>>   delete mode 100644 tcg/mips64/tcg-target-mo.h
+>>   delete mode 100644 tcg/mips64/tcg-target.h
+>>   delete mode 100644 tcg/mips64/tcg-target-opc.h.inc
+>>   delete mode 100644 tcg/mips64/tcg-target.c.inc
+> 
+> Missed ./common-user/host/mips64.
 
-Yes, that's OK.
+Oh, thanks!
 
--- PMM
+> Otherwise,
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> 
+> r~
+
 
