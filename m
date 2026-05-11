@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C5B7CD37AC
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 15:14:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA847CD37AC
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 15:14:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMSJu-0007AH-Vp; Mon, 11 May 2026 11:13:23 -0400
+	id 1wMSJv-0007Al-0W; Mon, 11 May 2026 11:13:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wMSIh-0005u2-66
- for qemu-devel@nongnu.org; Mon, 11 May 2026 11:12:09 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1wMSIh-0005tz-4b
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 11:12:08 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wMSIP-0001rH-8u
- for qemu-devel@nongnu.org; Mon, 11 May 2026 11:11:53 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-488ad135063so36089765e9.0
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 08:11:46 -0700 (PDT)
+ id 1wMSIP-0001rW-Q1
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 11:11:52 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-488ab2db91aso49105645e9.3
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 08:11:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1778512306; x=1779117106; darn=nongnu.org;
+ d=mihalicyn.com; s=mihalicyn; t=1778512308; x=1779117108; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=P6c4JQJF7847Wu/pKzcrmxMdVHLI89xuVASc0CK2Ia0=;
- b=hSEa0lfjh4Mppqx3NFvaoCz+K/yfgOIE0OfsfZ4H8xRE+gGG1DJWUci4RFLjQcaH7q
- COOXvvnodSu6txVUBaQIFslphgwQ359/1jaWlQEXWcdXKGVgxDHt+Wvfi+fjooQkoZfJ
- /se3IlEfruVD7YisXfHNbASP3bz7LC2mbPHW0=
+ bh=SJxkUm4jKMAc7kPfn1S0XWI7olLmjTreamMkr57EPvI=;
+ b=e+GtKdC/OSG4Q3gytkHxFdnXeAjjgBaCDAsErn+D5SC8buw/Z+bBkeMpmzl+9R9h95
+ cu0KsNFvWeY56waphaMvKWr+0VRqXqyOZ1R8KjSL62gdfOqvHS+hyEHzs5ap2igPZ+wc
+ J+ZPgNyrNT9ENh+7z3jgPVHmKw7VBk6gHyCgA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778512306; x=1779117106;
+ d=1e100.net; s=20251104; t=1778512308; x=1779117108;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=P6c4JQJF7847Wu/pKzcrmxMdVHLI89xuVASc0CK2Ia0=;
- b=g6+rpO+KvvvHuX0yDs++uQg8WlgkIXeFVGHOVvWrvNDcK/HJGT/4540iW+RrI/F6Np
- Lvz9hc35G+ZQF/GRen7M4ByqFEgAsxbiNbVxCBcx73eozUQ6OylaGlOGHUeJH/81FoJx
- 8RtXlqIc5iScsHn79TdvjS84ikVoOvppk4KF71ksUcl4HSZ6EG/et/SLNc73DcayibUC
- 2+5fyunD/Q6BQG4Sh+CanUgL2l0kHQ4cRkAoMWFgm3ShODqmbIS5ajx2rSMJODPKuBYl
- Al4PrinWvFWsVRQG3KfHmxTfnPRRr3GEQCjW7LhTcDUQeWccJz+f0Mi6s9Pn4jEoUvgi
- ffmA==
-X-Gm-Message-State: AOJu0Yxw+HsbxA+qx9TB5hWK5tFKTVZIM6lbMp4ftPbSKJ9CrEdgQfng
- cjZuD83PkrxwauDYrP0kI1G8CbH8y76DM1I7iL9HZeSLpOzOgH99p7/dZuMP/RzhC/mRuvpoN2t
- n5o/gBPM=
-X-Gm-Gg: Acq92OHZkudLAWqk239lcybd14iiGdZIJc680Yq2TQarTx2qYOYBP/tCpdF+NgZ8wCC
- 0dvYFmC8s0EQr9GYNu/jxSU2pacKIaBzAb9pidx916Zh2q0W40E10CfmlUHAING3XZE4DWw6A+6
- fTRI8tMUrDki2deB2fr9slp4uW0+qGOJdWvq5xHQj1Uq+E2WY8rQn9OGT1EPmywegOVlxO7WW1a
- X+W4j50cZmBKekzfS6b/Yux/kSPU4bFb9ULB8KaMqdXkJVo4k6gTzob1+WeGRoaPL6amkJ7ZDfW
- yFytUpWrf+zeaNDY0BbvP1n9Iz1ado9HvQCNEu6ppstUX7em0r7vl9407emVPIbP1x0iPmdxIv2
- JtqkjE9vbcv++1oqLK8SEDYJHLxHIP/4H0BHyWPeQnuY9SEQEznZRPVhxwfbyqBwPukiVpsyY6T
- nXEqAC25hWMCXa2iQSKTLi8x9W3q64Sf/H63a7FKu7oLI1k51BUbGDGO+WbAlgkOZCdmFoQhstV
- XSE+yxdgNzCPE7cNVfg
-X-Received: by 2002:a05:600c:6290:b0:485:3f30:6250 with SMTP id
- 5b1f17b1804b1-48e51f3fd58mr431754515e9.20.1778512301181; 
- Mon, 11 May 2026 08:11:41 -0700 (PDT)
+ bh=SJxkUm4jKMAc7kPfn1S0XWI7olLmjTreamMkr57EPvI=;
+ b=OXPlbxqzByvJcB4RJx/SazWUF0UGsWI1MVs/AJXyku9DWyf6p0eizf3iYYNv2zYzvN
+ 1Lco30SjHzctohcZ2PAHixcmz3dC4RCwbWnqfxHFjjRLp3WEwmx9wXgH4KV8ILrLmsr1
+ s4G+07wpjTtbtYrQoXXquSgADflDiY+ryYK98jUevt+5/PBhKuubCxGvIJyCQGrhFj4g
+ C3SFmyjlSGVRejf/HNHC9Ui9JtBZB95SikhRdD0mcIZBKnk/NLEfPLLrcCtSfKbA1xPh
+ EGFCrYO2dwGg+RoWYwq6SHTQM7CfFy+B4cMoSTJuEkLk6MMyErVay1hQXqn+KMNTGY7o
+ R3JA==
+X-Gm-Message-State: AOJu0YxWL9hUFRaJ6US+67qoE5PjutzZpPSIFLh8SfYDlat9ejN75aZO
+ S5cxhSW05M7eGHwmFrTsaYsgWjkUa+KOteOdnV0oeSAa6JEYXRD9tXRL77K6dbvpmCYr7IN9Z3d
+ vWpVaGFg=
+X-Gm-Gg: Acq92OEZ95uwn64z5BeZNgxMufkGayH5H6KNhjLt0TUYumT1mLrij/0bABHXP1zhyRE
+ 3gDYl+2IHVU/d8rfBKt6dFnGAaZnXqbm6A5anDbSswNsHS01hQ0zBxLQppc1K9QNztlwq/o1GOw
+ WlzNu+TFcu9Uk7LFY3LXyuOkxAHRhiACk6AZoOENk+mgo0u3bfv5MPoNVkdA/57hy0z1tloUOM/
+ MTig7/pAysssE7yM/89kAfDoXrkGud0mcVM1J8TIkwTbIfMGJKH16vW/rClL/Vt+CCjKN25uqUs
+ +883ifyihuHXW02LIeWn9gTqap0XuEzW6P5WYzbzPRV7Fe2AGGGWvAqn5TmawaqH5dkg3d98X0p
+ Mvqp4h7K2tZnOKKwYTg3niklkSlHlC4LWh6onXGoZgLvF6Di27SBj2dj0J2+Z3PtRPifAVkWbaE
+ gZdKQZb8jZuIm1AD4KnPAhhUKq5puiISCt0ehMxMwiqpmjl+0Y4yVVCzcdcKX32hTyXbpW6n44S
+ fX5oaQkziv/IRWyHtVxtW1frPZtPNw=
+X-Received: by 2002:a05:600c:a411:b0:488:af48:af11 with SMTP id
+ 5b1f17b1804b1-48e51e08ce3mr319709765e9.1.1778512303529; 
+ Mon, 11 May 2026 08:11:43 -0700 (PDT)
 Received: from alex-laptop.lan
  (p200300cf57228c00267b069c8b2d0c7b.dip0.t-ipconnect.de.
  [2003:cf:5722:8c00:267b:69c:8b2d:c7b])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e6d8d6813sm65766925e9.6.2026.05.11.08.11.39
+ 5b1f17b1804b1-48e6d8d6813sm65766925e9.6.2026.05.11.08.11.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 May 2026 08:11:40 -0700 (PDT)
+ Mon, 11 May 2026 08:11:43 -0700 (PDT)
 From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
@@ -78,16 +78,16 @@ Cc: Stefan Hajnoczi <stefanha@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Jesper Devantier <foss@defmacro.it>,
  Alexander Mikhalitsyn <alexander@mihalicyn.com>,
  Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH v7 6/8] hw/nvme: add basic live migration support
-Date: Mon, 11 May 2026 17:11:29 +0200
-Message-ID: <20260511151131.483217-7-alexander@mihalicyn.com>
+Subject: [PATCH v7 8/8] tests/qtest/nvme-test: add migration test with full CQ
+Date: Mon, 11 May 2026 17:11:31 +0200
+Message-ID: <20260511151131.483217-9-alexander@mihalicyn.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260511151131.483217-1-alexander@mihalicyn.com>
 References: <20260511151131.483217-1-alexander@mihalicyn.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,1106 +112,449 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-It has some limitations:
-- only one NVMe namespace is supported
-- SMART counters are not preserved
-- CMB is not supported
-- PMR is not supported
-- SPDM is not supported
-- SR-IOV is not supported
+As suggested by Stefan [1], let's add a migration test to cover
+rare scenario when CQ is full of non-processed CQEs and migration
+happens.
 
+To run this test:
+$ meson test -C build 'qtest-x86_64/qos-test'
+
+Link: https://lore.kernel.org/qemu-devel/20260408183529.GB319710@fedora/ [1]
+Suggested-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 ---
-v2:
-- AERs are now fully supported
-v6:
-- handle full CQ case
 v7:
-- renamed copy_cq_req_list to move_cq_req_list
-- validate incoming migration stream better
+    - fixed endianness bugs (and tested on s390x machine)
+    - code style changes (don't use ptr type for physical addresses)
+v6:
+    - test added
 ---
- hw/nvme/ctrl.c       | 737 ++++++++++++++++++++++++++++++++++++++++++-
- hw/nvme/ns.c         | 160 ++++++++++
- hw/nvme/nvme.h       |   9 +
- hw/nvme/trace-events |  10 +
- 4 files changed, 907 insertions(+), 9 deletions(-)
+ tests/qtest/nvme-test.c | 395 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 395 insertions(+)
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 31c1da4a61e..ea7590da1f0 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -208,6 +208,7 @@
- #include "hw/pci/pcie_sriov.h"
- #include "system/spdm-socket.h"
- #include "migration/blocker.h"
-+#include "migration/qemu-file-types.h"
- #include "migration/vmstate.h"
+diff --git a/tests/qtest/nvme-test.c b/tests/qtest/nvme-test.c
+index 4aec1651e6e..4d063ee971f 100644
+--- a/tests/qtest/nvme-test.c
++++ b/tests/qtest/nvme-test.c
+@@ -8,9 +8,12 @@
+  */
  
- #include "nvme.h"
-@@ -1518,6 +1519,18 @@ static void nvme_post_cqes(void *opaque)
-             break;
-         }
- 
-+        /*
-+         * Here we take the following fields from NvmeRequest structure
-+         * and write cqe to the guest RAM based on them:
-+         * - req->sq
-+         * - req->status
-+         * - req->cqe
-+         *
-+         * If you change this code and more fields from NvmeRequest are
-+         * used, please make sure that you have handled this in:
-+         * nvme_vmstate_request and nvme_ctrl_pre_save().
-+         */
-+
-         sq = req->sq;
-         req->cqe.status = cpu_to_le16((req->status << 1) | cq->phase);
-         req->cqe.sq_head = cpu_to_le16(sq->head);
-@@ -4903,6 +4916,25 @@ static void nvme_init_sq(NvmeSQueue *sq, NvmeCtrl *n, uint64_t dma_addr,
-     __nvme_init_sq(sq);
+ #include "qemu/osdep.h"
++#include <glib/gstdio.h>
++#include "qemu/bswap.h"
+ #include "qemu/module.h"
+ #include "qemu/units.h"
+ #include "libqtest.h"
++#include "libqtest-single.h"
+ #include "libqos/qgraph.h"
+ #include "libqos/pci.h"
+ #include "block/nvme.h"
+@@ -142,6 +145,396 @@ static void nvmetest_pmr_reg_test(void *obj, void *data, QGuestAllocator *alloc)
+     qpci_iounmap(pdev, pmr_bar);
  }
  
-+static void nvme_restore_sq(NvmeSQueue *sq_from)
++#define PAGE_SIZE 4096
++
++typedef struct nvme_ctrl nvme_ctrl;
++
++typedef struct nvme_queue {
++    nvme_ctrl *ctrl;
++    uint64_t doorbell;
++    uint32_t size;
++} nvme_queue;
++
++typedef struct nvme_cq {
++    nvme_queue common;
++    uint64_t phys_cqe; /* NvmeCqe* */
++    uint16_t head;
++    uint8_t phase;
++} nvme_cq;
++
++typedef struct nvme_sq {
++    nvme_queue common;
++    uint64_t phys_sqe; /* NvmeCmd* */
++    nvme_cq *cq;
++    uint16_t head;
++    uint16_t tail;
++} nvme_sq;
++
++struct nvme_ctrl {
++    QGuestAllocator *alloc;
++    QPCIDevice *pdev;
++    QPCIBar bar;
++
++    uint32_t db_stride;
++
++    nvme_sq admin_sq;
++    nvme_cq admin_cq;
++};
++
++#define PHYS_ADDR_OF(T, base_phys_addr, accessor) \
++    (uint64_t)&((T *)base_phys_addr)accessor
++
++static void nvme_init_queue_common(nvme_ctrl *ctrl, nvme_queue *q,
++                                   uint16_t db_idx, uint32_t size)
 +{
-+    NvmeCtrl *n = sq_from->ctrl;
-+    NvmeSQueue *sq = sq_from;
-+
-+    if (sq_from->sqid == 0) {
-+        sq = &n->admin_sq;
-+        sq->ctrl = n;
-+        sq->dma_addr = sq_from->dma_addr;
-+        sq->sqid = sq_from->sqid;
-+        sq->size = sq_from->size;
-+        sq->cqid = sq_from->cqid;
-+        sq->head = sq_from->head;
-+        sq->tail = sq_from->tail;
-+    }
-+
-+    __nvme_init_sq(sq);
++    q->ctrl = ctrl;
++    q->doorbell = (sizeof(NvmeBar) + db_idx * ctrl->db_stride);
++    g_test_message(" q %p db_idx %u doorbell %lx", q, db_idx, q->doorbell);
++    q->size = size;
 +}
 +
- static uint16_t nvme_create_sq(NvmeCtrl *n, NvmeRequest *req)
- {
-     NvmeSQueue *sq;
-@@ -5605,6 +5637,39 @@ static void nvme_init_cq(NvmeCQueue *cq, NvmeCtrl *n, uint64_t dma_addr,
-     __nvme_init_cq(cq);
- }
- 
-+static void move_cq_req_list(NvmeCQueue *cq_to, NvmeCQueue *cq_from)
++static void nvme_init_sq(nvme_ctrl *ctrl, nvme_sq *sq, uint16_t db_idx,
++                         uint32_t size, nvme_cq *cq)
 +{
-+    NvmeRequest *req, *next;
++    nvme_init_queue_common(ctrl, &sq->common, db_idx, size);
 +
-+    QTAILQ_FOREACH_SAFE(req, &cq_from->req_list, entry, next) {
-+        QTAILQ_REMOVE(&cq_from->req_list, req, entry);
-+        QTAILQ_INSERT_TAIL(&cq_to->req_list, req, entry);
-+    }
++    sq->phys_sqe = guest_alloc(ctrl->alloc, PAGE_SIZE);
++    g_assert(sq->phys_sqe);
++
++    g_test_message("sq %p db_idx %u sqe 0x%" PRIx64, sq, db_idx, sq->phys_sqe);
++    sq->cq = cq;
++    sq->head = 0;
++    sq->tail = 0;
 +}
 +
-+static void nvme_restore_cq(NvmeCQueue *cq_from)
++static void nvme_init_cq(nvme_ctrl *ctrl, nvme_cq *cq, uint16_t db_idx,
++                         uint32_t size)
 +{
-+    NvmeCtrl *n = cq_from->ctrl;
-+    NvmeCQueue *cq = cq_from;
++    nvme_init_queue_common(ctrl, &cq->common, db_idx, size);
 +
-+    if (cq_from->cqid == 0) {
-+        cq = &n->admin_cq;
-+        cq->ctrl = n;
-+        cq->cqid = cq_from->cqid;
-+        cq->size = cq_from->size;
-+        cq->dma_addr = cq_from->dma_addr;
-+        cq->phase = cq_from->phase;
-+        cq->irq_enabled = cq_from->irq_enabled;
-+        cq->vector = cq_from->vector;
-+        cq->head = cq_from->head;
-+        cq->tail = cq_from->tail;
-+        QTAILQ_INIT(&cq->req_list);
-+        move_cq_req_list(cq, cq_from);
-+    }
++    cq->phys_cqe = guest_alloc(ctrl->alloc, PAGE_SIZE);
++    g_assert(cq->phys_cqe);
 +
-+    __nvme_init_cq(cq);
++    g_test_message("cq %p db_idx %u cqe 0x%" PRIx64, cq, db_idx, cq->phys_cqe);
++    cq->head = 0;
++    cq->phase = 1;
 +}
 +
- static uint16_t nvme_create_cq(NvmeCtrl *n, NvmeRequest *req)
- {
-     NvmeCQueue *cq;
-@@ -7295,7 +7360,7 @@ static uint16_t nvme_dbbuf_config(NvmeCtrl *n, const NvmeRequest *req)
-     n->dbbuf_eis = eis_addr;
-     n->dbbuf_enabled = true;
- 
--    for (i = 0; i < n->params.max_ioqpairs + 1; i++) {
-+    for (i = 0; i < n->num_queues; i++) {
-         NvmeSQueue *sq = n->sq[i];
-         NvmeCQueue *cq = n->cq[i];
- 
-@@ -7739,7 +7804,7 @@ static int nvme_atomic_write_check(NvmeCtrl *n, NvmeCmd *cmd,
-     /*
-      * Walk the queues to see if there are any atomic conflicts.
-      */
--    for (i = 1; i < n->params.max_ioqpairs + 1; i++) {
-+    for (i = 1; i < n->num_queues; i++) {
-         NvmeSQueue *sq;
-         NvmeRequest *req;
-         NvmeRwCmd *req_rw;
-@@ -7809,6 +7874,12 @@ static void nvme_process_sq(void *opaque)
-     NvmeCmd cmd;
-     NvmeRequest *req;
- 
-+    /*
-+     * We don't want to have a race with nvme_ctrl_pre_save().
-+     * What implicitly protects us from this is BQL.
-+     */
-+    assert(bql_locked());
-+
-     if (n->dbbuf_enabled) {
-         nvme_update_sq_tail(sq);
-     }
-@@ -7926,12 +7997,12 @@ static void nvme_ctrl_reset(NvmeCtrl *n, NvmeResetType rst)
-         nvme_ns_drain(ns);
-     }
- 
--    for (i = 0; i < n->params.max_ioqpairs + 1; i++) {
-+    for (i = 0; i < n->num_queues; i++) {
-         if (n->sq[i] != NULL) {
-             nvme_free_sq(n->sq[i], n);
-         }
-     }
--    for (i = 0; i < n->params.max_ioqpairs + 1; i++) {
-+    for (i = 0; i < n->num_queues; i++) {
-         if (n->cq[i] != NULL) {
-             nvme_free_cq(n->cq[i], n);
-         }
-@@ -8601,6 +8672,8 @@ static bool nvme_check_params(NvmeCtrl *n, Error **errp)
-         params->max_ioqpairs = params->num_queues - 1;
-     }
- 
-+    n->num_queues = params->max_ioqpairs + 1;
-+
-     if (n->namespace.blkconf.blk && n->subsys) {
-         error_setg(errp, "subsystem support is unavailable with legacy "
-                    "namespace ('drive' property)");
-@@ -8755,8 +8828,8 @@ static void nvme_init_state(NvmeCtrl *n)
-         n->conf_msix_qsize = n->params.msix_qsize;
-     }
- 
--    n->sq = g_new0(NvmeSQueue *, n->params.max_ioqpairs + 1);
--    n->cq = g_new0(NvmeCQueue *, n->params.max_ioqpairs + 1);
-+    n->sq = g_new0(NvmeSQueue *, n->num_queues);
-+    n->cq = g_new0(NvmeCQueue *, n->num_queues);
-     n->temperature = NVME_TEMPERATURE;
-     n->features.temp_thresh_hi = NVME_TEMPERATURE_WARNING;
-     n->starttime_ms = qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL);
-@@ -8991,7 +9064,7 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
-     }
- 
-     if (n->params.msix_exclusive_bar && !pci_is_vf(pci_dev)) {
--        bar_size = nvme_mbar_size(n->params.max_ioqpairs + 1, 0, NULL, NULL);
-+        bar_size = nvme_mbar_size(n->num_queues, 0, NULL, NULL);
-         memory_region_init_io(&n->iomem, OBJECT(n), &nvme_mmio_ops, n, "nvme",
-                               bar_size);
-         pci_register_bar(pci_dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY |
-@@ -9003,7 +9076,7 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
-         /* add one to max_ioqpairs to account for the admin queue pair */
-         if (!pci_is_vf(pci_dev)) {
-             nr_vectors = n->params.msix_qsize;
--            bar_size = nvme_mbar_size(n->params.max_ioqpairs + 1,
-+            bar_size = nvme_mbar_size(n->num_queues,
-                                       nr_vectors, &msix_table_offset,
-                                       &msix_pba_offset);
-         } else {
-@@ -9726,9 +9799,655 @@ static uint32_t nvme_pci_read_config(PCIDevice *dev, uint32_t address, int len)
-     return pci_default_read_config(dev, address, len);
- }
- 
-+static const VMStateDescription nvme_vmstate_cqe = {
-+    .name = "nvme-cqe",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(result, NvmeCqe),
-+        VMSTATE_UINT32(dw1, NvmeCqe),
-+        VMSTATE_UINT16(sq_head, NvmeCqe),
-+        VMSTATE_UINT16(sq_id, NvmeCqe),
-+        VMSTATE_UINT16(cid, NvmeCqe),
-+        VMSTATE_UINT16(status, NvmeCqe),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static const VMStateDescription nvme_vmstate_cmd_dptr_sgl = {
-+    .name = "nvme-request-cmd-dptr-sgl",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64(addr, NvmeSglDescriptor),
-+        VMSTATE_UINT32(len, NvmeSglDescriptor),
-+        VMSTATE_UINT8_ARRAY(rsvd, NvmeSglDescriptor, 3),
-+        VMSTATE_UINT8(type, NvmeSglDescriptor),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static const VMStateDescription nvme_vmstate_cmd_dptr = {
-+    .name = "nvme-request-cmd-dptr",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64(prp1, NvmeCmdDptr),
-+        VMSTATE_UINT64(prp2, NvmeCmdDptr),
-+        VMSTATE_STRUCT(sgl, NvmeCmdDptr, 0, nvme_vmstate_cmd_dptr_sgl, NvmeSglDescriptor),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static const VMStateDescription nvme_vmstate_cmd = {
-+    .name = "nvme-request-cmd",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT8(opcode, NvmeCmd),
-+        VMSTATE_UINT8(flags, NvmeCmd),
-+        VMSTATE_UINT16(cid, NvmeCmd),
-+        VMSTATE_UINT32(nsid, NvmeCmd),
-+        VMSTATE_UINT64(res1, NvmeCmd),
-+        VMSTATE_UINT64(mptr, NvmeCmd),
-+        VMSTATE_STRUCT(dptr, NvmeCmd, 0, nvme_vmstate_cmd_dptr, NvmeCmdDptr),
-+        VMSTATE_UINT32(cdw10, NvmeCmd),
-+        VMSTATE_UINT32(cdw11, NvmeCmd),
-+        VMSTATE_UINT32(cdw12, NvmeCmd),
-+        VMSTATE_UINT32(cdw13, NvmeCmd),
-+        VMSTATE_UINT32(cdw14, NvmeCmd),
-+        VMSTATE_UINT32(cdw15, NvmeCmd),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static bool nvme_req_pre_load(void *opaque, Error **errp)
++static int nvme_cqe_pending(nvme_cq *cq)
 +{
-+    memset(opaque, 0x0, sizeof(NvmeRequest));
-+    return true;
++    uint16_t status = qtest_readw(cq->common.ctrl->pdev->bus->qts,
++                                  PHYS_ADDR_OF(NvmeCqe, cq->phys_cqe, [cq->head].status));
++    return (status & 1) == cq->phase;
 +}
 +
-+static const VMStateDescription nvme_vmstate_request = {
-+    .name = "nvme-request",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .pre_load_errp = nvme_req_pre_load,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT16(status, NvmeRequest),
-+        VMSTATE_STRUCT(cqe, NvmeRequest, 0, nvme_vmstate_cqe, NvmeCqe),
-+        VMSTATE_STRUCT(cmd, NvmeRequest, 0, nvme_vmstate_cmd, NvmeCmd),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static const VMStateDescription nvme_vmstate_bar = {
-+    .name = "nvme-bar",
-+    .minimum_version_id = 1,
-+    .version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64(cap, NvmeBar),
-+        VMSTATE_UINT32(vs, NvmeBar),
-+        VMSTATE_UINT32(intms, NvmeBar),
-+        VMSTATE_UINT32(intmc, NvmeBar),
-+        VMSTATE_UINT32(cc, NvmeBar),
-+        VMSTATE_UINT8_ARRAY(rsvd24, NvmeBar, 4),
-+        VMSTATE_UINT32(csts, NvmeBar),
-+        VMSTATE_UINT32(nssr, NvmeBar),
-+        VMSTATE_UINT32(aqa, NvmeBar),
-+        VMSTATE_UINT64(asq, NvmeBar),
-+        VMSTATE_UINT64(acq, NvmeBar),
-+        VMSTATE_UINT32(cmbloc, NvmeBar),
-+        VMSTATE_UINT32(cmbsz, NvmeBar),
-+        VMSTATE_UINT32(bpinfo, NvmeBar),
-+        VMSTATE_UINT32(bprsel, NvmeBar),
-+        VMSTATE_UINT64(bpmbl, NvmeBar),
-+        VMSTATE_UINT64(cmbmsc, NvmeBar),
-+        VMSTATE_UINT32(cmbsts, NvmeBar),
-+        VMSTATE_UINT8_ARRAY(rsvd92, NvmeBar, 3492),
-+        VMSTATE_UINT32(pmrcap, NvmeBar),
-+        VMSTATE_UINT32(pmrctl, NvmeBar),
-+        VMSTATE_UINT32(pmrsts, NvmeBar),
-+        VMSTATE_UINT32(pmrebs, NvmeBar),
-+        VMSTATE_UINT32(pmrswtp, NvmeBar),
-+        VMSTATE_UINT32(pmrmscl, NvmeBar),
-+        VMSTATE_UINT32(pmrmscu, NvmeBar),
-+        VMSTATE_UINT8_ARRAY(css, NvmeBar, 484),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
-+static bool nvme_cqueue_pre_load(void *opaque, Error **errp)
++static int nvme_is_cqe_success(NvmeCqe *cqe)
 +{
-+    NvmeCQueue *cq = opaque;
-+
-+    QTAILQ_INIT(&cq->req_list);
-+    return true;
++    return (le16_to_cpu(cqe->status) >> 1) == NVME_SUCCESS;
 +}
 +
-+static const VMStateDescription nvme_vmstate_cqueue = {
-+    .name = "nvme-cq",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .pre_load_errp = nvme_cqueue_pre_load,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT8(phase, NvmeCQueue),
-+        VMSTATE_UINT16(cqid, NvmeCQueue),
-+        VMSTATE_UINT16(irq_enabled, NvmeCQueue),
-+        VMSTATE_UINT32(head, NvmeCQueue),
-+        VMSTATE_UINT32(tail, NvmeCQueue),
-+        VMSTATE_UINT32(vector, NvmeCQueue),
-+        VMSTATE_UINT32(size, NvmeCQueue),
-+        VMSTATE_UINT64(dma_addr, NvmeCQueue),
-+
-+        VMSTATE_QTAILQ_V(req_list, NvmeCQueue, 1, nvme_vmstate_request,
-+                         NvmeRequest, entry),
-+
-+        /* db_addr, ei_addr, etc will be recalculated */
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static const VMStateDescription nvme_vmstate_squeue = {
-+    .name = "nvme-sq",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT16(sqid, NvmeSQueue),
-+        VMSTATE_UINT16(cqid, NvmeSQueue),
-+        VMSTATE_UINT32(head, NvmeSQueue),
-+        VMSTATE_UINT32(tail, NvmeSQueue),
-+        VMSTATE_UINT32(size, NvmeSQueue),
-+        VMSTATE_UINT64(dma_addr, NvmeSQueue),
-+        /* db_addr, ei_addr, etc will be recalculated */
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static const VMStateDescription nvme_vmstate_async_event_result = {
-+    .name = "nvme-async-event-result",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT8(event_type, NvmeAerResult),
-+        VMSTATE_UINT8(event_info, NvmeAerResult),
-+        VMSTATE_UINT8(log_page, NvmeAerResult),
-+        VMSTATE_UINT8(resv, NvmeAerResult),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static const VMStateDescription nvme_vmstate_async_event = {
-+    .name = "nvme-async-event",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_STRUCT(result, NvmeAsyncEvent, 0, nvme_vmstate_async_event_result, NvmeAerResult),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static const VMStateDescription nvme_vmstate_hbs = {
-+    .name = "nvme-hbs",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT8(acre, NvmeHostBehaviorSupport),
-+        VMSTATE_UINT8(etdas, NvmeHostBehaviorSupport),
-+        VMSTATE_UINT8(lbafee, NvmeHostBehaviorSupport),
-+        VMSTATE_UINT8(rsvd3, NvmeHostBehaviorSupport),
-+        VMSTATE_UINT16(cdfe, NvmeHostBehaviorSupport),
-+        VMSTATE_UINT8_ARRAY(rsvd6, NvmeHostBehaviorSupport, 506),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+const VMStateDescription nvme_vmstate_atomic = {
-+    .name = "nvme-atomic",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(atomic_max_write_size, NvmeAtomic),
-+        VMSTATE_UINT64(atomic_boundary, NvmeAtomic),
-+        VMSTATE_UINT64(atomic_nabo, NvmeAtomic),
-+        VMSTATE_BOOL(atomic_writes, NvmeAtomic),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static bool pre_save_validate_aer_req(NvmeRequest *req, Error **errp)
++static NvmeCqe nvme_handle_cqe(nvme_sq *sq)
 +{
-+    /*
-+     * Can't use assert() here, because we don't want
-+     * to just crash QEMU when user requests a migration.
-+     */
-+    if (!(req->cmd.opcode == NVME_ADM_CMD_ASYNC_EV_REQ)) {
-+        error_setg(errp, "req->cmd.opcode (%u) != NVME_ADM_CMD_ASYNC_EV_REQ", req->cmd.opcode);
-+        return false;
++    nvme_cq *cq = sq->cq;
++    uint64_t phys_cqe = PHYS_ADDR_OF(NvmeCqe, cq->phys_cqe, [cq->head]); /* NvmeCqe* */
++    NvmeCqe cqe;
++    uint16_t cq_next_head;
++
++    g_assert(nvme_cqe_pending(cq));
++
++    qtest_memread(sq->common.ctrl->pdev->bus->qts, phys_cqe, &cqe, sizeof(cqe));
++
++    cq_next_head = (cq->head + 1) % cq->common.size;
++    g_test_message("cq %p head %u -> %u", cq, cq->head, cq_next_head);
++    if (cq_next_head < cq->head) {
++        cq->phase ^= 1;
++    }
++    cq->head = cq_next_head;
++
++    if (cqe.sq_head != sq->head) {
++        sq->head = cqe.sq_head;
++        g_test_message("sq %p head = %u", sq, sq->head);
 +    }
 +
-+    if (!(req->ns == NULL)) {
-+        error_setg(errp, "req->ns != NULL");
-+        return false;
-+    }
++    qpci_io_writel(cq->common.ctrl->pdev, cq->common.ctrl->bar, cq->common.doorbell, cq->head);
 +
-+    if (!(req->sq == &req->sq->ctrl->admin_sq)) {
-+        error_setg(errp, "req->sq != &req->sq->ctrl->admin_sq");
-+        return false;
-+    }
-+
-+    if (!(req->aiocb == NULL)) {
-+        error_setg(errp, "req->aiocb != NULL");
-+        return false;
-+    }
-+
-+    if (!(req->opaque == NULL)) {
-+        error_setg(errp, "req->opaque != NULL");
-+        return false;
-+    }
-+
-+    if (!(req->atomic_write == false)) {
-+        error_setg(errp, "req->atomic_write != false");
-+        return false;
-+    }
-+
-+    if (req->sg.flags & NVME_SG_ALLOC) {
-+        error_setg(errp, "unexpected NVME_SG_ALLOC flag in req->sg.flags");
-+        return false;
-+    }
-+
-+    return true;
++    return cqe;
 +}
 +
-+static bool pre_save_validate_cq_req(NvmeRequest *req, Error **errp)
++static NvmeCqe nvme_wait(nvme_sq *sq)
 +{
-+    if (!(req->ns == NULL)) {
-+        error_setg(errp, "req->ns != NULL");
-+        return false;
++    int i;
++    bool ready = false;
++
++    for (i = 0; i < 10; i++) {
++        if (nvme_cqe_pending(sq->cq)) {
++            ready = true;
++            break;
++        }
++
++        g_usleep(1000);
 +    }
 +
-+    if (!(req->aiocb == NULL)) {
-+        error_setg(errp, "req->aiocb != NULL");
-+        return false;
-+    }
++    g_assert(ready);
 +
-+    if (!(req->opaque == NULL)) {
-+        error_setg(errp, "req->opaque != NULL");
-+        return false;
-+    }
-+
-+    if (!(req->atomic_write == false)) {
-+        error_setg(errp, "req->atomic_write != false");
-+        return false;
-+    }
-+
-+    if (req->sg.flags & NVME_SG_ALLOC) {
-+        error_setg(errp, "unexpected NVME_SG_ALLOC flag in req->sg.flags");
-+        return false;
-+    }
-+
-+    return true;
++    return nvme_handle_cqe(sq);
 +}
 +
-+static bool nvme_ctrl_pre_save(void *opaque, Error **errp)
++static uint64_t nvme_get_next_sqe(nvme_sq *sq, uint8_t opcode, uint16_t cid, uint64_t prp1)
 +{
-+    NvmeCtrl *n = opaque;
++    uint64_t phys_sqe = PHYS_ADDR_OF(NvmeCmd, sq->phys_sqe, [sq->tail]);
++
++    if (((sq->tail + 1) % sq->common.size) == sq->head) {
++        /* no space in SQ */
++        g_test_message("%s head %d tail %d", __func__, sq->head, sq->tail);
++        g_assert(false);
++        return 0;
++    }
++
++    qtest_memset(sq->common.ctrl->pdev->bus->qts,
++                 phys_sqe, 0, sizeof(NvmeCmd));
++
++    #define GUEST_MEM_WRITE(fn, phys_addr, val) \
++        fn(sq->common.ctrl->pdev->bus->qts, phys_addr, (val))
++
++    GUEST_MEM_WRITE(qtest_writeb, PHYS_ADDR_OF(NvmeCmd, phys_sqe, ->opcode), opcode);
++    GUEST_MEM_WRITE(qtest_writew, PHYS_ADDR_OF(NvmeCmd, phys_sqe, ->cid), cid);
++    GUEST_MEM_WRITE(qtest_writeq, PHYS_ADDR_OF(NvmeCmd, phys_sqe, ->dptr.prp1), prp1);
++
++    #undef GUEST_MEM_WRITE
++
++    g_test_message("sq %p next_sqe %u sqe 0x%" PRIx64, sq, sq->tail, phys_sqe);
++    return phys_sqe;
++}
++
++static void nvme_commit_sqe(nvme_sq *sq)
++{
++    g_test_message("sq %p commit sqe tail %u", sq, sq->tail);
++    sq->tail = (sq->tail + 1) % sq->common.size;
++    qpci_io_writel(sq->common.ctrl->pdev, sq->common.ctrl->bar, sq->common.doorbell, sq->tail);
++}
++
++static uint64_t nvme_admin_identify_ctrl(nvme_ctrl *ctrl, uint16_t cid, bool no_wait)
++{
++    uint64_t phys_cmd_identify; /* NvmeCmd* */
++    uint64_t phys_identify; /* NvmeIdCtrl* */
++    NvmeCqe cqe;
++
++    g_test_message("sending req cid %u no_wait %d", cid, no_wait);
++
++    phys_identify = guest_alloc(ctrl->alloc, PAGE_SIZE);
++    g_assert(phys_identify);
++
++    phys_cmd_identify = nvme_get_next_sqe(&ctrl->admin_sq,
++                                          NVME_ADM_CMD_IDENTIFY, cid,
++                                          phys_identify);
++    g_assert(phys_cmd_identify);
++
++    #define GUEST_MEM_WRITE(fn, phys_addr, val) \
++        fn(ctrl->pdev->bus->qts, phys_addr, (val))
++
++    GUEST_MEM_WRITE(qtest_writel, PHYS_ADDR_OF(NvmeCmd, phys_cmd_identify, ->nsid), 0);
++    GUEST_MEM_WRITE(qtest_writel, PHYS_ADDR_OF(NvmeIdentify, phys_cmd_identify, ->cns), NVME_ID_CNS_CTRL);
++
++    #undef GUEST_MEM_WRITE
++
++    nvme_commit_sqe(&ctrl->admin_sq);
++
++    if (no_wait) {
++        return phys_identify;
++    }
++
++    cqe = nvme_wait(&ctrl->admin_sq);
++    g_assert(nvme_is_cqe_success(&cqe));
++    g_assert(le16_to_cpu(cqe.cid) == cid);
++
++    return phys_identify;
++}
++
++static void nvme_wait_ready(nvme_ctrl *ctrl, int val)
++{
 +    int i;
 +
-+    trace_pci_nvme_pre_save_enter(n);
++    for (i = 0; i < 10; i++) {
++        uint32_t csts = qpci_io_readl(ctrl->pdev, ctrl->bar, NVME_REG_CSTS);
++        g_test_message("%s: csts %x", __func__, csts);
 +
-+    /*
-+     * We don't want to have a race with nvme_process_sq().
-+     * What implicitly protects us from this is BQL.
-+     */
-+    assert(bql_locked());
-+
-+    /* cancel all SQ processing BHs */
-+    for (i = 0; i < n->num_queues; i++) {
-+        NvmeSQueue *sq = n->sq[i];
-+
-+        if (!sq)
-+            continue;
-+
-+        qemu_bh_cancel(sq->bh);
-+    }
-+
-+    /* drain all IO */
-+    for (i = 1; i <= NVME_MAX_NAMESPACES; i++) {
-+        NvmeNamespace *ns;
-+
-+        ns = nvme_ns(n, i);
-+        if (!ns) {
-+            continue;
++        if (NVME_CSTS_RDY(csts) == val) {
++            return;
 +        }
 +
-+        trace_pci_nvme_pre_save_ns_drain(n, i);
-+        nvme_ns_drain(ns);
++        g_usleep(1000);
 +    }
 +
-+    /*
-+     * Now, we should take care of AERs.
-+     *
-+     * 1. Save all queued events (n->aer_queue).
-+     *    This is done automatically, see nvme_vmstate VMStateDescription.
-+     *    Here we only need to print them for debugging purpose.
-+     * 2. Go over outstanding AER requests (n->aer_reqs) and check they are
-+     *    all have expected opcode (NVME_ADM_CMD_ASYNC_EV_REQ) and other fields.
-+     *
-+     * We must be really careful here, because in case of further QEMU NVMe changes,
-+     * we may break migration without noticing it, or worse, introduce silent
-+     * data corruption during migration.
-+     */
-+    if (n->aer_queued) {
-+        NvmeAsyncEvent *event;
-+
-+        QTAILQ_FOREACH(event, &n->aer_queue, entry) {
-+            trace_pci_nvme_pre_save_aer(event->result.event_type, event->result.event_info,
-+                                        event->result.log_page);
-+        }
-+    }
-+
-+    for (i = 0; i < n->outstanding_aers; i++) {
-+        NvmeRequest *req = n->aer_reqs[i];
-+
-+        if (!pre_save_validate_aer_req(req, errp)) {
-+            return false;
-+        }
-+    }
-+
-+    /* make sure that all in-flight IO requests (except NVME_ADM_CMD_ASYNC_EV_REQ) are processed */
-+    for (i = 0; i < n->num_queues; i++) {
-+        NvmeRequest *req;
-+        NvmeSQueue *sq = n->sq[i];
-+
-+        if (!sq)
-+            continue;
-+
-+        trace_pci_nvme_pre_save_sq_out_req_check(n, i, sq->head, sq->tail, sq->size);
-+
-+        QTAILQ_FOREACH(req, &sq->out_req_list, entry) {
-+            assert(req->cmd.opcode == NVME_ADM_CMD_ASYNC_EV_REQ);
-+        }
-+    }
-+
-+    /* wait when all IO requests completions are written to guest memory */
-+    for (i = 0; i < n->num_queues; i++) {
-+        NvmeCQueue *cq = n->cq[i];
-+
-+        if (!cq)
-+            continue;
-+
-+        qemu_bh_cancel(cq->bh);
-+        /* this should empty cq->req_list unless CQ is full */
-+        nvme_post_cqes(cq);
-+
-+        trace_pci_nvme_pre_save_cq_req_check(n, i, cq->head, cq->tail, cq->size);
-+
-+        if (!QTAILQ_EMPTY(&cq->req_list)) {
-+            NvmeRequest *req;
-+
-+            assert(nvme_cq_full(cq));
-+
-+            QTAILQ_FOREACH(req, &cq->req_list, entry) {
-+                trace_pci_nvme_pre_save_cq_unposted_cqe(n, i, nvme_cid(req),
-+                                                        nvme_nsid(req->ns),
-+                                                        le32_to_cpu(req->cqe.result),
-+                                                        le32_to_cpu(req->cqe.dw1),
-+                                                        req->status, req->cmd.opcode);
-+                if (!pre_save_validate_cq_req(req, errp)) {
-+                    return false;
-+                }
-+            }
-+        }
-+    }
-+
-+    for (uint32_t nsid = 0; nsid <= NVME_MAX_NAMESPACES; nsid++) {
-+        NvmeNamespace *ns = n->namespaces[nsid];
-+
-+        if (!ns)
-+            continue;
-+
-+        if (ns != &n->namespace) {
-+            error_setg(errp, "only one NVMe namespace is supported for migration");
-+            return false;
-+        }
-+    }
-+
-+    return true;
++    g_assert(false);
 +}
 +
-+static bool nvme_ctrl_post_load(void *opaque, int version_id, Error **errp)
++static void test_migrate_setup_nvme_ctrl(nvme_ctrl *ctrl)
 +{
-+    NvmeCtrl *n = opaque;
++    uint64_t cap;
++
++    /* disable controller */
++    qpci_io_writel(ctrl->pdev, ctrl->bar, NVME_REG_CC, 0);
++    nvme_wait_ready(ctrl, 0);
++
++    cap = qpci_io_readq(ctrl->pdev, ctrl->bar, NVME_REG_CAP);
++    ctrl->db_stride = 4 << NVME_CAP_DSTRD(cap);
++
++    nvme_init_cq(ctrl, &ctrl->admin_cq, 1, 2 /* CQEs num */);
++    nvme_init_sq(ctrl, &ctrl->admin_sq, 0, 4 /* SQEs num */, &ctrl->admin_cq);
++
++    qpci_io_writel(ctrl->pdev, ctrl->bar, NVME_REG_AQA,
++        ((ctrl->admin_cq.common.size - 1) << AQA_ACQS_SHIFT) |
++        ((ctrl->admin_sq.common.size - 1) << AQA_ASQS_SHIFT)
++    );
++
++    qpci_io_writeq(ctrl->pdev, ctrl->bar,
++                   NVME_REG_ASQ, (uint64_t)ctrl->admin_sq.phys_sqe);
++    qpci_io_writeq(ctrl->pdev, ctrl->bar,
++                   NVME_REG_ACQ, (uint64_t)ctrl->admin_cq.phys_cqe);
++
++    /* enable controller */
++    {
++        uint32_t cc = 0;
++        NVME_SET_CC_EN(cc, 1);
++        qpci_io_writel(ctrl->pdev, ctrl->bar, NVME_REG_CC, cc);
++    }
++
++    nvme_wait_ready(ctrl, 1);
++}
++
++typedef struct test_migrate_req {
++    uint16_t cid;
++    bool handle_cqe;
++    uint64_t phys_identify; /* NvmeIdCtrl* */
++} test_migrate_req;
++
++static void test_migrate_send_nvme_reqs(nvme_ctrl *ctrl, test_migrate_req *reqs,
++                                        int num)
++{
 +    int i;
 +
-+    trace_pci_nvme_post_load_enter(n);
++    for (i = 0; i < num; i++) {
++        reqs[i].phys_identify = nvme_admin_identify_ctrl(ctrl, reqs[i].cid,
++                                                         !reqs[i].handle_cqe);
++        g_assert(reqs[i].phys_identify);
 +
-+    /* restore CQs first */
-+    for (i = 0; i < n->num_queues; i++) {
-+        NvmeCQueue *cq = n->cq[i];
-+
-+        if (!cq)
-+            continue;
-+
-+        if (cq->cqid != i) {
-+            error_setg(errp, "inconsistent migration stream (cq->cqid != i)");
-+            return false;
-+        }
-+
-+        cq->ctrl = n;
-+        nvme_restore_cq(cq);
-+        trace_pci_nvme_post_load_restore_cq(n, i, cq->head, cq->tail, cq->size);
-+
-+        if (i == 0) {
-+            /*
-+             * Admin CQ lives in n->admin_cq, we don't need
-+             * memory allocated for it in get_ptrs_array_entry() anymore.
-+             *
-+             * nvme_restore_cq() also takes care of:
-+             * n->cq[0] = &n->admin_cq;
-+             * so n->cq[0] remains valid.
-+             */
-+            g_free(cq);
++        if (reqs[i].handle_cqe) {
++            guest_free(ctrl->alloc, reqs[i].phys_identify);
 +        }
 +    }
-+
-+    for (i = 0; i < n->num_queues; i++) {
-+        NvmeSQueue *sq = n->sq[i];
-+
-+        if (!sq)
-+            continue;
-+
-+        if (sq->sqid != i) {
-+            error_setg(errp, "inconsistent migration stream (sq->sqid != i)");
-+            return false;
-+        }
-+
-+        if (!n->cq[sq->cqid]) {
-+            error_setg(errp, "inconsistent migration stream (n->cq[sq->cqid] is NULL)");
-+            return false;
-+        }
-+
-+        sq->ctrl = n;
-+        nvme_restore_sq(sq);
-+        trace_pci_nvme_post_load_restore_sq(n, i, sq->head, sq->tail, sq->size);
-+
-+        if (i == 0) {
-+            /* same as for CQ */
-+            g_free(sq);
-+        }
-+    }
-+
-+    /* restore cq->req_list-s */
-+    for (i = 0; i < n->num_queues; i++) {
-+        NvmeRequest *req_from, *next;
-+        typeof_field(NvmeCQueue, req_list) req_list;
-+        NvmeCQueue *cq = n->cq[i];
-+
-+        if (!cq || QTAILQ_EMPTY(&cq->req_list))
-+            continue;
-+
-+        /*
-+         * We use nvme_vmstate_request VMStateDescription to save/restore
-+         * NvmeRequest structures, but tricky thing here is that
-+         * memory for each cq->req_list item is allocated separately
-+         * during restore. It doesn't work for us. We need to take
-+         * an existing NvmeRequest structure from SQ's req_list pool
-+         * and fill it with data from the newly allocated one (req_from).
-+         * Then, we can safely release allocated memory for it.
-+         */
-+
-+        /* make a copy of cq->req_list (QTAILQ head) and clean cq->req_list */
-+        QTAILQ_INIT(&req_list);
-+        QTAILQ_FOREACH_SAFE(req_from, &cq->req_list, entry, next) {
-+            QTAILQ_REMOVE(&cq->req_list, req_from, entry);
-+            QTAILQ_INSERT_TAIL(&req_list, req_from, entry);
-+        }
-+        QTAILQ_INIT(&cq->req_list);
-+
-+        QTAILQ_FOREACH_SAFE(req_from, &req_list, entry, next) {
-+            uint16_t sqid = le16_to_cpu(req_from->cqe.sq_id);
-+            NvmeRequest *req;
-+            NvmeSQueue *sq;
-+
-+            assert(!nvme_check_sqid(n, sqid));
-+            sq = n->sq[sqid];
-+
-+            req = QTAILQ_FIRST(&sq->req_list);
-+            QTAILQ_REMOVE(&sq->req_list, req, entry);
-+            QTAILQ_INSERT_TAIL(&cq->req_list, req, entry);
-+            nvme_req_clear(req);
-+
-+            /* copy data from the source NvmeRequest */
-+            req->status = req_from->status;
-+            memcpy(&req->cqe, &req_from->cqe, sizeof(NvmeCqe));
-+            memcpy(&req->cmd, &req_from->cmd, sizeof(NvmeCmd));
-+
-+            QTAILQ_REMOVE(&req_list, req_from, entry);
-+            g_free(req_from);
-+        }
-+
-+        qemu_bh_schedule(cq->bh);
-+    }
-+
-+    if (n->aer_queued) {
-+        NvmeAsyncEvent *event;
-+
-+        QTAILQ_FOREACH(event, &n->aer_queue, entry) {
-+            trace_pci_nvme_post_load_aer(event->result.event_type, event->result.event_info,
-+                                         event->result.log_page);
-+        }
-+    }
-+
-+    for (i = 0; i < n->outstanding_aers; i++) {
-+        NvmeSQueue *sq = &n->admin_sq;
-+        NvmeRequest *req_from = n->aer_reqs[i];
-+        NvmeRequest *req;
-+
-+        /* Idea here is the same as for "restore cq->req_list-s" step */
-+
-+        /* take an NvmeRequest struct from SQ */
-+        req = QTAILQ_FIRST(&sq->req_list);
-+        QTAILQ_REMOVE(&sq->req_list, req, entry);
-+        QTAILQ_INSERT_TAIL(&sq->out_req_list, req, entry);
-+        nvme_req_clear(req);
-+
-+        /* copy data from the source NvmeRequest */
-+        req->status = req_from->status;
-+        memcpy(&req->cqe, &req_from->cqe, sizeof(NvmeCqe));
-+        memcpy(&req->cmd, &req_from->cmd, sizeof(NvmeCmd));
-+
-+        n->aer_reqs[i] = req;
-+        g_free(req_from);
-+    }
-+
-+    /*
-+     * We need to attach namespaces (currently, only one namespace is
-+     * supported for migration).
-+     * This logic comes from nvme_start_ctrl().
-+     */
-+    for (i = 1; i <= NVME_MAX_NAMESPACES; i++) {
-+        NvmeNamespace *ns = nvme_subsys_ns(n->subsys, i);
-+
-+        if (!ns || (!ns->params.shared && ns->ctrl != n)) {
-+            continue;
-+        }
-+
-+        if (nvme_csi_supported(n, ns->csi) && !ns->params.detached) {
-+            if (!ns->attached || ns->params.shared) {
-+                nvme_attach_ns(n, ns);
-+            }
-+        }
-+    }
-+
-+    /* schedule SQ processing */
-+    for (i = 0; i < n->num_queues; i++) {
-+        NvmeSQueue *sq = n->sq[i];
-+
-+        if (!sq)
-+            continue;
-+
-+        qemu_bh_schedule(sq->bh);
-+    }
-+
-+    return true;
 +}
 +
- static const VMStateDescription nvme_vmstate = {
-     .name = "nvme",
--    .unmigratable = 1,
-+    .minimum_version_id = 1,
-+    .version_id = 1,
-+    .pre_save_errp = nvme_ctrl_pre_save,
-+    .post_load_errp = nvme_ctrl_post_load,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_PCI_DEVICE(parent_obj, NvmeCtrl),
-+        VMSTATE_MSIX(parent_obj, NvmeCtrl),
-+        VMSTATE_STRUCT(bar, NvmeCtrl, 0, nvme_vmstate_bar, NvmeBar),
++static void test_migrate_check_nvme(nvme_ctrl *ctrl, test_migrate_req *reqs, int num)
++{
++    int i;
 +
-+        VMSTATE_BOOL(qs_created, NvmeCtrl),
-+        VMSTATE_UINT32(page_size, NvmeCtrl),
-+        VMSTATE_UINT16(page_bits, NvmeCtrl),
-+        VMSTATE_UINT16(max_prp_ents, NvmeCtrl),
-+        VMSTATE_UINT32(max_q_ents, NvmeCtrl),
-+        VMSTATE_UINT8(outstanding_aers, NvmeCtrl),
-+        VMSTATE_UINT32(irq_status, NvmeCtrl),
-+        VMSTATE_INT32(cq_pending, NvmeCtrl),
++    for (i = 0; i < num; i++) {
++        NvmeCqe cqe;
 +
-+        VMSTATE_UINT64(host_timestamp, NvmeCtrl),
-+        VMSTATE_UINT64(timestamp_set_qemu_clock_ms, NvmeCtrl),
-+        VMSTATE_UINT64(starttime_ms, NvmeCtrl),
-+        VMSTATE_UINT16(temperature, NvmeCtrl),
-+        VMSTATE_UINT8(smart_critical_warning, NvmeCtrl),
++        if (reqs[i].handle_cqe) {
++            continue;
++        }
 +
-+        VMSTATE_UINT32(conf_msix_qsize, NvmeCtrl),
-+        VMSTATE_UINT32(conf_ioqpairs, NvmeCtrl),
-+        VMSTATE_UINT64(dbbuf_dbs, NvmeCtrl),
-+        VMSTATE_UINT64(dbbuf_eis, NvmeCtrl),
-+        VMSTATE_BOOL(dbbuf_enabled, NvmeCtrl),
++        cqe = nvme_wait(&ctrl->admin_sq);
++        g_assert(nvme_is_cqe_success(&cqe));
 +
-+        VMSTATE_UINT8(aer_mask, NvmeCtrl),
-+        VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT8_ALLOC(
-+            aer_reqs, NvmeCtrl, outstanding_aers, 0, nvme_vmstate_request, NvmeRequest),
-+        VMSTATE_QTAILQ_V(aer_queue, NvmeCtrl, 1, nvme_vmstate_async_event,
-+                         NvmeAsyncEvent, entry),
-+        VMSTATE_INT32(aer_queued, NvmeCtrl),
++        g_assert_cmpint(le16_to_cpu(cqe.cid), ==, reqs[i].cid);
 +
-+        VMSTATE_STRUCT(namespace, NvmeCtrl, 0, nvme_vmstate_ns, NvmeNamespace),
++        #define GUEST_MEM_READB(phys_addr) \
++                    qtest_readb(ctrl->pdev->bus->qts, (phys_addr))
 +
-+        VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT32_ALLOC(
-+            sq, NvmeCtrl, num_queues, 0, nvme_vmstate_squeue, NvmeSQueue),
-+        VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT32_ALLOC(
-+            cq, NvmeCtrl, num_queues, 0, nvme_vmstate_cqueue, NvmeCQueue),
++        g_assert_cmpint(GUEST_MEM_READB(PHYS_ADDR_OF(NvmeIdCtrl, reqs[i].phys_identify, ->ieee[0])), ==, 0x0);
++        g_assert_cmpint(GUEST_MEM_READB(PHYS_ADDR_OF(NvmeIdCtrl, reqs[i].phys_identify, ->ieee[1])), ==, 0x54);
++        g_assert_cmpint(GUEST_MEM_READB(PHYS_ADDR_OF(NvmeIdCtrl, reqs[i].phys_identify, ->ieee[2])), ==, 0x52);
 +
-+        VMSTATE_UINT16(features.temp_thresh_hi, NvmeCtrl),
-+        VMSTATE_UINT16(features.temp_thresh_low, NvmeCtrl),
-+        VMSTATE_UINT32(features.async_config, NvmeCtrl),
-+        VMSTATE_STRUCT(features.hbs, NvmeCtrl, 0, nvme_vmstate_hbs, NvmeHostBehaviorSupport),
++        #undef GUEST_MEM_READB
 +
-+        VMSTATE_UINT32(dn, NvmeCtrl),
-+        VMSTATE_STRUCT(atomic, NvmeCtrl, 0, nvme_vmstate_atomic, NvmeAtomic),
++        guest_free(ctrl->alloc, reqs[i].phys_identify);
++    }
++}
 +
-+        VMSTATE_END_OF_LIST()
-+    },
- };
++static void test_migrate(void *obj, void *data, QGuestAllocator *alloc)
++{
++    g_autofree gchar *tmpfs = NULL;
++    GError *err = NULL;
++    g_autofree gchar *mig_path;
++    g_autofree gchar *uri;
++    GString *dest_cmdline;
++    QTestState *to;
++    QDict *rsp;
++    QNvme *nvme = obj;
++    QPCIDevice *pdev = &nvme->dev;
++    g_autofree nvme_ctrl *ctrl;
++    test_migrate_req test_reqs[] = {
++        { 123, true },
++        { 456, false },
++        { 300, false },
++        { 333, false }
++    };
++
++    /* create temporary dir and prepare unix socket path for migration */
++    tmpfs = g_dir_make_tmp("nvme-test-XXXXXX", &err);
++    if (!tmpfs) {
++        g_test_message("Can't create temporary directory in %s: %s",
++                       g_get_tmp_dir(), err->message);
++        g_error_free(err);
++    }
++    g_assert(tmpfs);
++
++    mig_path = g_strdup_printf("%s/socket.mig", tmpfs);
++    uri = g_strdup_printf("unix:%s", mig_path);
++
++    /* enable NVMe PCI device */
++    qpci_device_enable(pdev);
++
++    ctrl = g_malloc0(sizeof(*ctrl));
++    ctrl->alloc = alloc;
++    ctrl->pdev = pdev;
++    ctrl->bar = qpci_iomap(ctrl->pdev, 0, NULL);
++    g_assert(pdev->bus->qts == global_qtest);
++
++    test_migrate_setup_nvme_ctrl(ctrl);
++    test_migrate_send_nvme_reqs(ctrl, test_reqs, ARRAY_SIZE(test_reqs));
++
++    qpci_iounmap(ctrl->pdev, ctrl->bar);
++
++    dest_cmdline = g_string_new(qos_get_current_command_line());
++    g_string_append_printf(dest_cmdline, " -incoming %s", uri);
++
++    /* Create destination VM */
++    to = qtest_init(dest_cmdline->str);
++
++    /* Get access to PCI device from destination VM */
++    nvme = qos_allocate_objects(to, &ctrl->alloc);
++    pdev = &nvme->dev;
++    ctrl->pdev = pdev;
++    ctrl->bar = qpci_iomap(ctrl->pdev, 0, NULL);
++    g_assert(pdev->bus->qts == to);
++
++    /* Migrate VM */
++    rsp = qmp("{ 'execute': 'migrate', 'arguments': { 'uri': %s } }", uri);
++    g_assert(qdict_haskey(rsp, "return"));
++    qobject_unref(rsp);
++
++    /* Wait when source VM is stopped */
++    qmp_eventwait("STOP");
++
++    /* Copy guest physical memory allocator state */
++    migrate_allocator(alloc, ctrl->alloc);
++
++    /* Wait for destination VM to become alive */
++    qtest_qmp_eventwait(to, "RESUME");
++
++    test_migrate_check_nvme(ctrl, test_reqs, ARRAY_SIZE(test_reqs));
++
++    qpci_iounmap(ctrl->pdev, ctrl->bar);
++
++    qtest_quit(to);
++    g_unlink(mig_path);
++    g_rmdir(tmpfs);
++    g_string_free(dest_cmdline, true);
++}
++
+ static void nvme_register_nodes(void)
+ {
+     QOSGraphEdgeOptions opts = {
+@@ -168,6 +561,8 @@ static void nvme_register_nodes(void)
+     });
  
- static void nvme_class_init(ObjectClass *oc, const void *data)
-diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
-index b0106eaa5c8..3e91ac9eab1 100644
---- a/hw/nvme/ns.c
-+++ b/hw/nvme/ns.c
-@@ -20,6 +20,7 @@
- #include "qemu/bitops.h"
- #include "system/system.h"
- #include "system/block-backend.h"
-+#include "migration/vmstate.h"
- 
- #include "nvme.h"
- #include "trace.h"
-@@ -886,6 +887,164 @@ static void nvme_ns_realize(DeviceState *dev, Error **errp)
-     }
+     qos_add_test("reg-read", "nvme", nvmetest_reg_read_test, NULL);
++
++    qos_add_test("migrate", "nvme", test_migrate, NULL);
  }
  
-+static const VMStateDescription nvme_vmstate_lbaf = {
-+    .name = "nvme_lbaf",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT16(ms, NvmeLBAF),
-+        VMSTATE_UINT8(ds, NvmeLBAF),
-+        VMSTATE_UINT8(rp, NvmeLBAF),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static const VMStateDescription nvme_vmstate_id_ns = {
-+    .name = "nvme_id_ns",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64(nsze, NvmeIdNs),
-+        VMSTATE_UINT64(ncap, NvmeIdNs),
-+        VMSTATE_UINT64(nuse, NvmeIdNs),
-+        VMSTATE_UINT8(nsfeat, NvmeIdNs),
-+        VMSTATE_UINT8(nlbaf, NvmeIdNs),
-+        VMSTATE_UINT8(flbas, NvmeIdNs),
-+        VMSTATE_UINT8(mc, NvmeIdNs),
-+        VMSTATE_UINT8(dpc, NvmeIdNs),
-+        VMSTATE_UINT8(dps, NvmeIdNs),
-+        VMSTATE_UINT8(nmic, NvmeIdNs),
-+        VMSTATE_UINT8(rescap, NvmeIdNs),
-+        VMSTATE_UINT8(fpi, NvmeIdNs),
-+        VMSTATE_UINT8(dlfeat, NvmeIdNs),
-+        VMSTATE_UINT16(nawun, NvmeIdNs),
-+        VMSTATE_UINT16(nawupf, NvmeIdNs),
-+        VMSTATE_UINT16(nacwu, NvmeIdNs),
-+        VMSTATE_UINT16(nabsn, NvmeIdNs),
-+        VMSTATE_UINT16(nabo, NvmeIdNs),
-+        VMSTATE_UINT16(nabspf, NvmeIdNs),
-+        VMSTATE_UINT16(noiob, NvmeIdNs),
-+        VMSTATE_UINT8_ARRAY(nvmcap, NvmeIdNs, 16),
-+        VMSTATE_UINT16(npwg, NvmeIdNs),
-+        VMSTATE_UINT16(npwa, NvmeIdNs),
-+        VMSTATE_UINT16(npdg, NvmeIdNs),
-+        VMSTATE_UINT16(npda, NvmeIdNs),
-+        VMSTATE_UINT16(nows, NvmeIdNs),
-+        VMSTATE_UINT16(mssrl, NvmeIdNs),
-+        VMSTATE_UINT32(mcl, NvmeIdNs),
-+        VMSTATE_UINT8(msrc, NvmeIdNs),
-+        VMSTATE_UINT8_ARRAY(rsvd81, NvmeIdNs, 18),
-+        VMSTATE_UINT8(nsattr, NvmeIdNs),
-+        VMSTATE_UINT16(nvmsetid, NvmeIdNs),
-+        VMSTATE_UINT16(endgid, NvmeIdNs),
-+        VMSTATE_UINT8_ARRAY(nguid, NvmeIdNs, 16),
-+        VMSTATE_UINT64(eui64, NvmeIdNs),
-+        VMSTATE_STRUCT_ARRAY(lbaf, NvmeIdNs, NVME_MAX_NLBAF, 1,
-+                             nvme_vmstate_lbaf, NvmeLBAF),
-+        VMSTATE_UINT8_ARRAY(vs, NvmeIdNs, 3712),
-+
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static const VMStateDescription nvme_vmstate_id_ns_nvm = {
-+    .name = "nvme_id_ns_nvm",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64(lbstm, NvmeIdNsNvm),
-+        VMSTATE_UINT8(pic, NvmeIdNsNvm),
-+        VMSTATE_UINT8_ARRAY(rsvd9, NvmeIdNsNvm, 3),
-+        VMSTATE_UINT32_ARRAY(elbaf, NvmeIdNsNvm, NVME_MAX_NLBAF),
-+        VMSTATE_UINT32(npdgl, NvmeIdNsNvm),
-+        VMSTATE_UINT32(nprg, NvmeIdNsNvm),
-+        VMSTATE_UINT32(npra, NvmeIdNsNvm),
-+        VMSTATE_UINT32(nors, NvmeIdNsNvm),
-+        VMSTATE_UINT32(npdal, NvmeIdNsNvm),
-+        VMSTATE_UINT8_ARRAY(rsvd288, NvmeIdNsNvm, 3808),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static const VMStateDescription nvme_vmstate_id_ns_ind = {
-+    .name = "nvme_id_ns_ind",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT8(nsfeat, NvmeIdNsInd),
-+        VMSTATE_UINT8(nmic, NvmeIdNsInd),
-+        VMSTATE_UINT8(rescap, NvmeIdNsInd),
-+        VMSTATE_UINT8(fpi, NvmeIdNsInd),
-+        VMSTATE_UINT32(anagrpid, NvmeIdNsInd),
-+        VMSTATE_UINT8(nsattr, NvmeIdNsInd),
-+        VMSTATE_UINT8(rsvd9, NvmeIdNsInd),
-+        VMSTATE_UINT16(nvmsetid, NvmeIdNsInd),
-+        VMSTATE_UINT16(endgrpid, NvmeIdNsInd),
-+        VMSTATE_UINT8(nstat, NvmeIdNsInd),
-+        VMSTATE_UINT8_ARRAY(rsvd15, NvmeIdNsInd, 4081),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+typedef struct TmpNvmeNamespace {
-+    NvmeNamespace *parent;
-+    bool enable_write_cache;
-+} TmpNvmeNamespace;
-+
-+static bool nvme_ns_tmp_pre_save(void *opaque, Error **errp)
-+{
-+    struct TmpNvmeNamespace *tns = opaque;
-+
-+    tns->enable_write_cache = blk_enable_write_cache(tns->parent->blkconf.blk);
-+
-+    return true;
-+}
-+
-+static bool nvme_ns_tmp_post_load(void *opaque, int version_id, Error **errp)
-+{
-+    struct TmpNvmeNamespace *tns = opaque;
-+
-+    blk_set_enable_write_cache(tns->parent->blkconf.blk, tns->enable_write_cache);
-+
-+    return true;
-+}
-+
-+static const VMStateDescription nvme_vmstate_ns_tmp = {
-+    .name = "nvme_ns_tmp",
-+    .pre_save_errp = nvme_ns_tmp_pre_save,
-+    .post_load_errp = nvme_ns_tmp_post_load,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_BOOL(enable_write_cache, TmpNvmeNamespace),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+const VMStateDescription nvme_vmstate_ns = {
-+    .name = "nvme_ns",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_WITH_TMP(NvmeNamespace, TmpNvmeNamespace, nvme_vmstate_ns_tmp),
-+
-+        VMSTATE_STRUCT(id_ns, NvmeNamespace, 0, nvme_vmstate_id_ns, NvmeIdNs),
-+        VMSTATE_STRUCT(id_ns_nvm, NvmeNamespace, 0, nvme_vmstate_id_ns_nvm, NvmeIdNsNvm),
-+        VMSTATE_STRUCT(id_ns_ind, NvmeNamespace, 0, nvme_vmstate_id_ns_ind, NvmeIdNsInd),
-+        VMSTATE_STRUCT(lbaf, NvmeNamespace, 0, nvme_vmstate_lbaf, NvmeLBAF),
-+        VMSTATE_UINT32(nlbaf, NvmeNamespace),
-+        VMSTATE_UINT8(csi, NvmeNamespace),
-+        VMSTATE_UINT16(status, NvmeNamespace),
-+        VMSTATE_UINT8(pif, NvmeNamespace),
-+
-+        VMSTATE_UINT16(zns.zrwas, NvmeNamespace),
-+        VMSTATE_UINT16(zns.zrwafg, NvmeNamespace),
-+        VMSTATE_UINT32(zns.numzrwa, NvmeNamespace),
-+
-+        VMSTATE_UINT32(features.err_rec, NvmeNamespace),
-+        VMSTATE_STRUCT(atomic, NvmeNamespace, 0, nvme_vmstate_atomic, NvmeAtomic),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
- static const Property nvme_ns_props[] = {
-     DEFINE_BLOCK_PROPERTIES(NvmeNamespace, blkconf),
-     DEFINE_PROP_BOOL("detached", NvmeNamespace, params.detached, false),
-@@ -937,6 +1096,7 @@ static void nvme_ns_class_init(ObjectClass *oc, const void *data)
-     dc->bus_type = TYPE_NVME_BUS;
-     dc->realize = nvme_ns_realize;
-     dc->unrealize = nvme_ns_unrealize;
-+    dc->vmsd = &nvme_vmstate_ns;
-     device_class_set_props(dc, nvme_ns_props);
-     dc->desc = "Virtual NVMe namespace";
- }
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index 457b6637249..2e7597cded3 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -444,6 +444,11 @@ typedef struct NvmeRequest {
-     NvmeSg                  sg;
-     bool                    atomic_write;
-     QTAILQ_ENTRY(NvmeRequest)entry;
-+    /*
-+     * If you add a new field here, please make sure to update
-+     * nvme_vmstate_request, pre_save_validate_aer_req() and
-+     * pre_save_validate_cq_req().
-+     */
- } NvmeRequest;
- 
- typedef struct NvmeBounceContext {
-@@ -638,6 +643,7 @@ typedef struct NvmeCtrl {
- 
-     NvmeNamespace   namespace;
-     NvmeNamespace   *namespaces[NVME_MAX_NAMESPACES + 1];
-+    uint32_t        num_queues;
-     NvmeSQueue      **sq;
-     NvmeCQueue      **cq;
-     NvmeSQueue      admin_sq;
-@@ -749,4 +755,7 @@ void nvme_atomic_configure_max_write_size(bool dn, uint16_t awun,
- void nvme_ns_atomic_configure_boundary(bool dn, uint16_t nabsn,
-                                        uint16_t nabspf, NvmeAtomic *atomic);
- 
-+extern const VMStateDescription nvme_vmstate_atomic;
-+extern const VMStateDescription nvme_vmstate_ns;
-+
- #endif /* HW_NVME_NVME_H */
-diff --git a/hw/nvme/trace-events b/hw/nvme/trace-events
-index 6be0bfa1c1f..f97a6a11f36 100644
---- a/hw/nvme/trace-events
-+++ b/hw/nvme/trace-events
-@@ -7,6 +7,16 @@ pci_nvme_dbbuf_config(uint64_t dbs_addr, uint64_t eis_addr) "dbs_addr=0x%"PRIx64
- pci_nvme_map_addr(uint64_t addr, uint64_t len) "addr 0x%"PRIx64" len %"PRIu64""
- pci_nvme_map_addr_cmb(uint64_t addr, uint64_t len) "addr 0x%"PRIx64" len %"PRIu64""
- pci_nvme_map_prp(uint64_t trans_len, uint32_t len, uint64_t prp1, uint64_t prp2, int num_prps) "trans_len %"PRIu64" len %"PRIu32" prp1 0x%"PRIx64" prp2 0x%"PRIx64" num_prps %d"
-+pci_nvme_pre_save_enter(void *n) "n=%p"
-+pci_nvme_pre_save_ns_drain(void *n, int i) "n=%p i=%d"
-+pci_nvme_pre_save_sq_out_req_check(void *n, int i, uint32_t head, uint32_t tail, uint32_t size) "n=%p i=%d head=0x%"PRIx32" tail=0x%"PRIx32" size=0x%"PRIx32""
-+pci_nvme_pre_save_cq_req_check(void *n, int i, uint32_t head, uint32_t tail, uint32_t size) "n=%p i=%d head=0x%"PRIx32" tail=0x%"PRIx32" size=0x%"PRIx32""
-+pci_nvme_pre_save_cq_unposted_cqe(void *n, int i, uint16_t cid, uint32_t nsid, uint32_t dw0, uint32_t dw1, uint16_t status, uint8_t opc) "n=%p i=%d cid %"PRIu16" nsid %"PRIu32" dw0 0x%"PRIx32" dw1 0x%"PRIx32" status 0x%"PRIx16" opc 0x%"PRIx8""
-+pci_nvme_pre_save_aer(uint8_t typ, uint8_t info, uint8_t log_page) "type 0x%"PRIx8" info 0x%"PRIx8" lid 0x%"PRIx8""
-+pci_nvme_post_load_enter(void *n) "n=%p"
-+pci_nvme_post_load_restore_cq(void *n, int i, uint32_t head, uint32_t tail, uint32_t size) "n=%p i=%d head=0x%"PRIx32" tail=0x%"PRIx32" size=0x%"PRIx32""
-+pci_nvme_post_load_restore_sq(void *n, int i, uint32_t head, uint32_t tail, uint32_t size) "n=%p i=%d head=0x%"PRIx32" tail=0x%"PRIx32" size=0x%"PRIx32""
-+pci_nvme_post_load_aer(uint8_t typ, uint8_t info, uint8_t log_page) "type 0x%"PRIx8" info 0x%"PRIx8" lid 0x%"PRIx8""
- pci_nvme_map_sgl(uint8_t typ, uint64_t len) "type 0x%"PRIx8" len %"PRIu64""
- pci_nvme_io_cmd(uint16_t cid, uint32_t nsid, uint16_t sqid, uint8_t opcode, const char *opname) "cid %"PRIu16" nsid 0x%"PRIx32" sqid %"PRIu16" opc 0x%"PRIx8" opname '%s'"
- pci_nvme_admin_cmd(uint16_t cid, uint16_t sqid, uint8_t opcode, const char *opname) "cid %"PRIu16" sqid %"PRIu16" opc 0x%"PRIx8" opname '%s'"
+ libqos_init(nvme_register_nodes);
 -- 
 2.47.3
 
