@@ -4,93 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C797CD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 14:11:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB4BECD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 14:15:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMRLY-0001Yy-8a; Mon, 11 May 2026 10:11:00 -0400
+	id 1wMRP5-00031F-PZ; Mon, 11 May 2026 10:14:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wMRLW-0001Yh-DS
- for qemu-devel@nongnu.org; Mon, 11 May 2026 10:10:58 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wMRP1-0002zL-0Y
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 10:14:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wMRLU-0000L9-Ek
- for qemu-devel@nongnu.org; Mon, 11 May 2026 10:10:58 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wMROy-00010o-VU
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 10:14:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778508655;
+ s=mimecast20190719; t=1778508871;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding;
- bh=HcAPiqx5eJPPFOYNfGrebOm8/lyFxBK3BtHtCBUaDzg=;
- b=ClGHqrBzEFgfaMMEFwd5HVAuAg2NxpvRoCok1FyFrccWff/6fyBwMRAxWm867VxbflCpJR
- zvl8GvAROSlTO/clZYbjAHShOmGCLnPxB1peiPzLIttYf6oKPs5z5Gd+shXxbDickfJh5/
- W5G6aSlZRfsETWr5qiR5bpBFZsMxcCI=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-410-s77cXyIxNkeM7jN9Tr9XCw-1; Mon, 11 May 2026 10:10:54 -0400
-X-MC-Unique: s77cXyIxNkeM7jN9Tr9XCw-1
-X-Mimecast-MFC-AGG-ID: s77cXyIxNkeM7jN9Tr9XCw_1778508654
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-8d5b5d607d1so818083585a.3
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 07:10:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778508653; x=1779113453; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=HcAPiqx5eJPPFOYNfGrebOm8/lyFxBK3BtHtCBUaDzg=;
- b=okWiApubFu0Ezz64k1XKYrCmcMorJmfLCLX0zW8WOqk9LM1s6cMl4mb0CuXcWPfUjs
- ntyeBjPIxCqglKMcFSQNSGSCOcVjOsx0bMD2W+uQpx7pEnVGODX5XLXczeK1rVXSYwtP
- X2NV4zaOMZMuiIoJMoARc5RVoHSCV4/fYznC112jRXxjdLu2wueEq+wbFjbzoo6G73tG
- MzLrWO8SeE4LLWvMRARhGiOhiHRRXdiRzeEW53EGKf/lL9osfW4ilit2uUKKAgbw8d0R
- zvRpQX82EhzUK+K60h6Q3uFva7wTHdJtkISce9ZXXx9Tcb+bcrwT6mAdQOXlP9LVBbB9
- vDDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778508653; x=1779113453;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HcAPiqx5eJPPFOYNfGrebOm8/lyFxBK3BtHtCBUaDzg=;
- b=QaQk0TThpKDw69PTcSkru0RD4O8/ijIHV6crelgveJHJVSO3eNeMLmUeSu5iqii6Id
- YXgtnEv/HtxI6bKeyYmmjqNu6/fflmfuOMyQWkiUQ9AFWWLKfeHEpA3X/ChVG+KkbZmL
- YLqvPF1K9cDrggxL+5coa6FbeLkodvjoBA1BYULVTIlM3WTExx6ptOX6npbK3orMRQkV
- bHfUTwvEIU5/EJIl2UbXE02m1RS3T8XPYhy0F0XHOc/9+KZDSYQfGrV/QqoB7Mzvo7Lu
- Vs5+aQwRNyENuiPmnLBdV/6Mi0Na0GJJEGdVG8vCmgfL4knlb15bd7WfqHM76uMWcAD4
- Ww1A==
-X-Gm-Message-State: AOJu0Yz7qjtCub+01JsPDrtzW23pSpDE0RBYSV4+ZJjyi36kEPuNju3B
- cYUq1Ed0rpXBTnQSoj6ca0Q/EomMpFlaY82KiHd2KliXmxm+2OqWpEWgzb/4Fl9EPTVOY33+iOt
- mhklhUNq6wdF5S3cfBWhXLT7c97K62fGqVzkjIRlJwQWwlNK4///4u+SQDye4HnyZxWOQb+h64F
- mqZ8jLCdDyknUFhuYOa/HKCqc12Z04Yi55OhM7CQ==
-X-Gm-Gg: Acq92OG9UcA5tukIik+3424YtTOWJzqHxVhrZZKxJfFU/rMQaKm9VpeuPqcTKR6Hjc4
- nuh5j8u2O7Z/im2SGBvTCt4wL359d7mgXA/aeNPHRBAfIOAXlfBJAr3COVKnqM5SHeDhSSaPvgt
- bFuPXkT1/Wlv/k4pal3mfWAOCvv2cNKhE5AD9zDslpE3PBV+hG/3zzosBupWtRXcT6qEcw69rSM
- 2SnKZhPsAZ3Q5RyDG5KUhJoRHRzjd141ASASBlEIHrzIbrO0fHol6uR1jIyWIk65PWfKvgWnlFr
- OJ2i/TLsbzzKbHpyepjjZhfhJJkPlUk1CbAXGX7rs6IajTjHSrgQD2+HWFu5L/V9a0dEQWlTkw4
- aqDxBkeUS3zGNmds79SwBQx5utMdkLf/mdjWoQL8v0Ao4
-X-Received: by 2002:a05:620a:29cf:b0:8eb:cbf8:85e7 with SMTP id
- af79cd13be357-904d61ef7d4mr3535809585a.34.1778508653403; 
- Mon, 11 May 2026 07:10:53 -0700 (PDT)
-X-Received: by 2002:a05:620a:29cf:b0:8eb:cbf8:85e7 with SMTP id
- af79cd13be357-904d61ef7d4mr3535800885a.34.1778508652535; 
- Mon, 11 May 2026 07:10:52 -0700 (PDT)
-Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-907b8e99ccfsm1073742385a.16.2026.05.11.07.10.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 May 2026 07:10:52 -0700 (PDT)
-From: Peter Xu <peterx@redhat.com>
+ bh=iTDfxb/nLMKQf7jZO1JtjJoPIFhtLIuMnJx+rSt6XL4=;
+ b=hqQNPqEsgPEPvzk/6GlE4MZ8BxsLPGaPwFXeXooE/LjAiD7/cvvpQWn7Z6Qk721OGM2EEd
+ XTaeF5FY+cNIQTyqgLirrsQm+72rVxe6WV9bh7mXp4rEFTui5WSORjnSwpIpLxp6oxMlRb
+ cvzhjb8E9GD7TMWPqDu186NJ8luo4gM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-336-6e0MEYjQNNOmuiqAAPGW4Q-1; Mon,
+ 11 May 2026 10:14:25 -0400
+X-MC-Unique: 6e0MEYjQNNOmuiqAAPGW4Q-1
+X-Mimecast-MFC-AGG-ID: 6e0MEYjQNNOmuiqAAPGW4Q_1778508865
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D56F018002C7; Mon, 11 May 2026 14:14:24 +0000 (UTC)
+Received: from berrange.com (unknown [10.44.50.30])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DC15619560A2; Mon, 11 May 2026 14:14:22 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Juraj Marcin <jmarcin@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH] migration: Fix possible division by zero on calc expected
- downtime
-Date: Mon, 11 May 2026 10:10:49 -0400
-Message-ID: <20260511141049.1293449-1-peterx@redhat.com>
-X-Mailer: git-send-email 2.53.0
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v3 00/10] qom: misc cleanups / fixes
+Date: Mon, 11 May 2026 15:14:10 +0100
+Message-ID: <20260511141420.229023-1-berrange@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -114,54 +83,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit dd4fe8844b changed the reporting of expected downtime behavior, so
-that the value will be calculated on-demand.  One side effect on the change
-is QEMU will allow the calculation to happen anytime even if there's no
-transfer happening for a short while.
+The overall theme of this patch is to move some logic out of
+object_interfaces.c into object.c, since it is not tied to
+the user creatable interface.
 
-PeterM reported an ubsan report from clang when running migration-test with
-aarch64 binary on x86_64 hosts.  I can also reproduce if I run the test
-concurrently so some of the src QEMU may not get chance to push any data,
-causing mbps to be 0:
+Changed in v3:
 
-../migration/migration.c:1051:12: runtime error: -nan is outside the range of representable values of type 'long'
+ - Fix parent/child mixup in trace event param names
+ - Make QDict const in new constructors
 
-Fix it by checking mbps non-zero before the devision.
+Changed in v2:
 
-Link: https://lore.kernel.org/r/CAFEAcA-MYH6C39xO0OLx4-M5pKurJpurwRsMqZe9q=W-NShAbw@mail.gmail.com
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Fixes: dd4fe8844b ("migration: Calculate expected downtime on demand")
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- migration/migration.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ - Ensure object creation always triggers module loading
+ - Remove redundant NULL check in trace event
+ - Remove double #include line
 
-diff --git a/migration/migration.c b/migration/migration.c
-index b6f78eb3ac..b06e577328 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -1044,12 +1044,18 @@ static bool migrate_show_downtime(MigrationState *s)
- /* Return expected downtime (unit: milliseconds) */
- int64_t migration_downtime_calc_expected(MigrationState *s)
- {
-+    double bw;
-+
-     if (mig_stats.dirty_sync_count <= 1) {
-         return migrate_downtime_limit();
-     }
- 
--    return mig_stats.dirty_bytes_last_sync /
--        migration_get_switchover_bw(s) * 1000;
-+    bw = migration_get_switchover_bw(s) * 1000;
-+    if (!bw) {
-+        return INT64_MAX;
-+    }
-+
-+    return mig_stats.dirty_bytes_last_sync / bw;
- }
- 
- static void populate_time_info(MigrationInfo *info, MigrationState *s)
+Daniel P. Berrangé (10):
+  qom: add trace events for object/property lifecycle
+  qom: validate ID format when creating objects
+  qom: make errp last param in methods taking va_list
+  qom: shorten name of object_set_properties_from_keyval
+  qom: have object_set_props_keyval return bool
+  qom: move object_set_prop_keyval into object.c
+  qom: add object_new_with_props_from_qdict
+  qom: fix ability to create objects without a parent
+  qom: allow object_new_with_prop* to trigger module loading
+  qom: drop user_creatable_add_type method
+
+ authz/listfile.c                |   4 +-
+ include/qom/object.h            | 121 ++++++++++++++---
+ include/qom/object_interfaces.h |  18 ---
+ qom/object.c                    | 230 ++++++++++++++++++++++++++++----
+ qom/object_interfaces.c         | 101 +-------------
+ qom/trace-events                |  12 +-
+ system/qdev-monitor.c           |   4 +-
+ system/vl.c                     |   7 +-
+ tests/unit/check-qom-proplist.c |  97 +++++++++++---
+ 9 files changed, 409 insertions(+), 185 deletions(-)
+
 -- 
-2.53.0
+2.54.0
 
 
