@@ -4,64 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1431BCD37AC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14378CD37B5
 	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 09:52:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMNIT-0002Li-DB; Mon, 11 May 2026 05:51:33 -0400
+	id 1wMNIT-0002MU-GE; Mon, 11 May 2026 05:51:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vulab@iscas.ac.cn>)
- id 1wMNI1-0000VH-K2; Mon, 11 May 2026 05:51:15 -0400
-Received: from smtp25.cstnet.cn ([159.226.251.25] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <vulab@iscas.ac.cn>)
- id 1wMNHv-0004Ez-49; Mon, 11 May 2026 05:51:05 -0400
-Received: from yzs (unknown [183.156.89.125])
- by APP-05 (Coremail) with SMTP id zQCowABX7RB5gwFqQ+7xDw--.2866S2;
- Mon, 11 May 2026 15:21:30 +0800 (CST)
-From: Zishun Yi <vulab@iscas.ac.cn>
-To: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Cc: Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org, Zishun Yi <vulab@iscas.ac.cn>
-Subject: [PATCH v2] target/riscv/pmp: Fix integer overflow in TOR and NA4
- address computation
-Date: Mon, 11 May 2026 15:21:26 +0800
-Message-ID: <20260511072126.3009004-1-vulab@iscas.ac.cn>
-X-Mailer: git-send-email 2.51.2
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1wMNII-00019z-Pl; Mon, 11 May 2026 05:51:22 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1wMNIG-0004IW-Hp; Mon, 11 May 2026 05:51:22 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64B6urjL2232584; Mon, 11 May 2026 09:51:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=MlV7SnLwADaKPO313
+ 8kKInD8wFMfgwDamRknduAav4s=; b=g15BgJ/X+1vg+jtmc3Zo/jl3nBA7yS08X
+ vxNu6m8qE8acmNmiag3p/NF9vGjOXmF0Q5K2nrZ9chx8VYCHeQzqNEHlpvDczmE8
+ /TSXeIJCzE/5Deu05emUFjrN8rkDUgJqT0wPjvxFF6jh0+QPOhAsMgca+0DZmsRA
+ YUEFHjBizXaCu9Dkd3+Wkf3ogf1jicUXbJUH0wI1s0ohAT+cWhf1qqpOlq8PuEMb
+ BV9V8yKn48FhqomLbKxGpIySXj1tkJlaxXTTtld2C6GTvZ3w9eecbaZxc9WX07LB
+ MrKw3dt5OgvAaKUc28P82yd7lFuC2+peE/dG/dA05ujm2JTnehflg==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e1tbhqc2p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 11 May 2026 09:51:18 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64B9h6H7000376;
+ Mon, 11 May 2026 09:51:18 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e2g8jvp4j-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 11 May 2026 09:51:17 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64B9pCMa43778474
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 11 May 2026 09:51:12 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9D2DE20043;
+ Mon, 11 May 2026 09:51:12 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1488720040;
+ Mon, 11 May 2026 09:51:11 +0000 (GMT)
+Received: from shivang.bl1-in.ibm.com (unknown [9.123.12.247])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 11 May 2026 09:51:10 +0000 (GMT)
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+Cc: shivangu@linux.ibm.com, anushree.mathur@linux.vnet.ibm.com,
+ harshpb@linux.ibm.com, mahesh@linux.ibm.com, sourabhjain@linux.ibm.com,
+ vishalc@linux.ibm.com
+Subject: [PATCH v2] ppc/spapr: Skip system reset for quiesced CPUs
+Date: Mon, 11 May 2026 15:20:55 +0530
+Message-ID: <20260511095055.82495-1-shivangu@linux.ibm.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260430085409.680930-1-shivangu@linux.ibm.com>
+References: <20260430085409.680930-1-shivangu@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: zQCowABX7RB5gwFqQ+7xDw--.2866S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7CF45GF43Wr43JryxGr1DAwb_yoW8Ww47pF
- Z3Gw4fta9xt3yjqa1DCF18XF1kKrWrCr15tanxuw1F9w45XrWfZrya93WYya15XFZ5tr4I
- 9F18uF98AF4rur7anT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUkG14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
- rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
- 1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4j
- 6r4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oV
- Cq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
- I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
- 4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY1x0262kKe7AKxVW8
- ZVWrXwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14
- v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkG
- c2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4U
- MIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x0JUj4E_UUU
- UU=
-X-Originating-IP: [183.156.89.125]
-X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiCREEA2oBeZQp4QAAsR
-Received-SPF: pass client-ip=159.226.251.25; envelope-from=vulab@iscas.ac.cn;
- helo=cstnet.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=ZdQt8MVA c=1 sm=1 tr=0 ts=6a01a696 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
+ a=i00pLCdPjY8cvlh5Y4gA:9
+X-Proofpoint-ORIG-GUID: aE2GTTynZFXLVhp8F4QuexyKoDYpr0iF
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDEwNSBTYWx0ZWRfX0BOPSaQJSc3T
+ CzIiXn8ISjVHggVq49Hg7IvuqM0gwLwVSk9tOdpCXDMX8iwxaQhJTdd+Oj0uEMQCBlxyV45IrbL
+ 71YDjsHt3bFnh9faaualy/j8uiVZYWv1jzrPOH1ILu/+SLTsAYHmGwc3mp9EdEUBqQlGo172TDe
+ hUdiC4D6oTDWg1lYyNpr10J/2uaIvDy3IlOeR7QfJTdfvNAng56/7ppsrapNuJChXJ7iCKgsulJ
+ FD+naAvL0nnbO9KjvXIqMQP4raTDXrhkzFaCd+/PzuwGKHSbHO9EH0tOxyZerfrpXC/MWiRrPne
+ BnJ7vopQYTzA9lgH69FW+l3oeIia1Tstz2YDb+oPZn5tPfhPS1ATE5Chfn/yA7Ex+pVGcrC3vvo
+ ws1o6lt2qFpEWOHjtd7wD+2a1H0wGhsPK8H78lYJEyRNwHzmnTzqvC4ER1KgQdeklJi3obqxgUn
+ dce06Yhx9776hd4faMg==
+X-Proofpoint-GUID: aE2GTTynZFXLVhp8F4QuexyKoDYpr0iF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-11_03,2026-05-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0
+ priorityscore=1501 malwarescore=0 suspectscore=0 clxscore=1015 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605110105
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=shivangu@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,52 +118,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the RISC-V Privileged Manual: "The Sv32 page-based
-virtual-memory scheme described in sv32 supports 34-bit physical
-addresses for RV32, so the PMP scheme must support addresses wider than
-XLEN for RV32."
+During DLPAR CPU hotplug, newly added CPUs start in RTAS stopped state
+(quiesced). If a kexec crash occurs before the guest starts these CPUs
+via start-cpu RTAS call, H_SIGNAL_SYS_RESET_ALL_OTHERS will reset them
+anyway, causing the kdump kernel to hang:
 
-However, the current QEMU implementation uses `target_ulong` (which
-resolves to `uint32_t` on RV32) for PMP address variables.  When
-shifting these addresses left (e.g., `this_addr << 2`), an integer
-overflow occurs, truncating the high bits of the 34-bit physical
-address.
+  [    5.519483][    T1] Processor 0 is stuck.
+  [   11.089481][    T1] Processor 1 is stuck.
 
-Fix this issue by casting the `target_ulong` variables to `hwaddr`
-before performing the left shift operation.
+The hypervisor should only reset CPUs that the guest has started. The
+cpu->env.quiesced flag tracks RTAS stopped state - CPUs in this state
+are already inactive and should not be reset.
 
-This issue was discovered and reported by SpecHunter, an AI-driven
-architecture specification analysis tool.
+Skip system reset for quiesced CPUs to prevent kdump hangs during CPU
+hotplug operations.
 
-Link: https://github.com/yizishun/rv-isa-sec/blob/master/output/riscv-isa-manual/pr-2472/qemu.txt
-Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
+Cc: Sourabh Jain <sourabhjain@linux.ibm.com>
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
+Reported-by: Anushree Mathur <anushree.mathur@linux.vnet.ibm.com>
+Suggested-by: Vishal Chourasia <vishalc@linux.ibm.com>
+Reviewed-by: Vishal Chourasia <vishalc@linux.ibm.com>
+Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
 ---
-v2: add a missing space after the Link tag clon
+Changelog:
 
- target/riscv/pmp.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+v2:
+ * added braces to adhere to style guide.
+ * rebase to master
 
-diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
-index 5391caa59c7d..dfddafcbcb48 100644
---- a/target/riscv/pmp.c
-+++ b/target/riscv/pmp.c
-@@ -253,12 +253,12 @@ void pmp_update_rule_addr(CPURISCVState *env, uint32_t pmp_index)
-             sa = ea = 0u;
-             break;
+v1:
+ * https://lore.kernel.org/all/20260430085409.680930-1-shivangu@linux.ibm.com/
+---
+ hw/ppc/spapr_hcall.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
+index 032805a8d0..613dd893bb 100644
+--- a/hw/ppc/spapr_hcall.c
++++ b/hw/ppc/spapr_hcall.c
+@@ -1105,6 +1105,12 @@ static target_ulong h_signal_sys_reset(PowerPCCPU *cpu,
+                     continue;
+                 }
+             }
++
++            /* Skip quiesced CPUs */
++            if (c->env.quiesced) {
++                continue;
++            }
++
+             run_on_cpu(cs, spapr_do_system_reset_on_cpu, RUN_ON_CPU_NULL);
          }
--        sa = prev_addr << 2; /* shift up from [xx:0] to [xx+2:2] */
--        ea = (this_addr << 2) - 1u;
-+        sa = (hwaddr)prev_addr << 2; /* shift up from [xx:0] to [xx+2:2] */
-+        ea = ((hwaddr)this_addr << 2) - 1u;
-         break;
- 
-     case PMP_AMATCH_NA4:
--        sa = this_addr << 2; /* shift up from [xx:0] to [xx+2:2] */
-+        sa = (hwaddr)this_addr << 2; /* shift up from [xx:0] to [xx+2:2] */
-         ea = (sa + 4u) - 1u;
-         break;
- 
+         return H_SUCCESS;
 -- 
-2.51.2
+2.53.0
 
 
