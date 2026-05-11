@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 881FDCD4840
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 17:06:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC6A1CD484D
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 17:06:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMU46-0000tH-J3; Mon, 11 May 2026 13:05:10 -0400
+	id 1wMU48-0000wk-9T; Mon, 11 May 2026 13:05:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wMU43-0000r6-Cv
- for qemu-devel@nongnu.org; Mon, 11 May 2026 13:05:07 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1wMU44-0000s6-RA
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 13:05:09 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wMU40-0007iY-E9
- for qemu-devel@nongnu.org; Mon, 11 May 2026 13:05:07 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-48e8132c6d0so11919015e9.1
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 10:05:03 -0700 (PDT)
+ id 1wMU40-0007n4-Sc
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 13:05:08 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4891d7164ddso26355615e9.3
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 10:05:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1778519103; x=1779123903; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pY01G0y61H4ZgAg1sGo2nwoYnnGiNl6d8dUdjpbrmt8=;
- b=HaC7npiYVwfV8+8HoMui9vNGqsfW5yYYKne8U3PxJP2Ltz4i5Tb3npndyvwf2984jc
- B1b6W3r+LggVY4mQ6d2gRZCh0+xX5A+zmcRiQszI9mO4k5/8pvYTA5qISAX6iY+l5yFw
- KeNysppWeDusczZVXvNRKaGyeBe9/x8Wf47LdklkA9mr+IXfQ4but/iwAWU7IjoOaDbV
- /hroKFdHMDUymwXl4OPviQUKpUwNNTUzWzlrX6/J8TBVVh5El9dk+EAFlywllCR0D+tz
- iCx724clq4vfZROoG5R9XC/nnTQOsTugIYLJhqk5MSLYsUIx7OhPcNThxi+fxX5v0jaG
- 30+g==
+ bh=UfaB3+L+i4sQ/IYfKmKHU7JZ5c3J9BsgCMXTl8yVcMc=;
+ b=y2r/pj6L8UCo6z1KaOiVCNukChkXnyYPK+MQ7/x3WirvMsB7AePuHkyiGRj6WzVVvS
+ hS0IocHx1D6eYM6G/tp42CpmW7tPFEQrEmL6octWZG57hAvs1BZ0dfbbkR3tzBHpP4ny
+ mTzdHWjWchis4MxyQI7/AYS4hYIQ9mXEJnb7eN0b4IwCqSJ3CXHHE5XLNLUitc63BHwk
+ khWrKY9CkuZLxk/Srhm6r4F2X9DmbQcKse79rjbe9Aj8dBRRpwkAMfxFkeobi44wj9CA
+ W6yTVdoY3RiGfmhCmhTPRIzcJNPek9lOmEAKWhhS7ufPYy5rNmONKi1ZzWn0Ev9msyEU
+ OZnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20251104; t=1778519103; x=1779123903;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=pY01G0y61H4ZgAg1sGo2nwoYnnGiNl6d8dUdjpbrmt8=;
- b=VD3SvRvYu/N9cHR/jXUNePaku/RQyj5/7SVtSAPs5fT5Y6ZmdDknIDM52Xp2hPTuDY
- pcBzjTW7Qvl6GLDDRoRur8icMpp8n/pDas1Sxqx87bNJ62MFkecY+aOIcFqMNthizYxh
- hp44OkMsK0mRkEclWv3OC8tEBMnMTiFQbc6IKN7qdlfOXJ78k74ipy5e2EmnWDf6gy0v
- wKAF4PJTZ6YIxMg8c7+3Nn5szu9iZNtZp5llDSSaaqkQKJ8x5aiBhRQ0wI6D3wGpnomS
- q2M7lJ+Xb3pGRnBqiKBV+gwZ/iVH5mcKWCIe3/vR3SWWiwLt7LPT8UfkBzMkdKluwYVN
- xJDg==
-X-Gm-Message-State: AOJu0YyZDaDYjE/xMybT91Qm2Sx5NVRnF26vgjWIzwOQfVyjYZLi3HAp
- 8yCmmqaK0Et6cUBqeNZCZKJZxbnU/Kfu5XDnMqnviHi/Nd80N0k1BK0I/qb9aVHpxGI=
-X-Gm-Gg: Acq92OH+B6t/uyMbP/sf2VEoQaGfJfwe+d88BycCg0kuAxnhOcLyoYj1itK+JlhKuFy
- 9GltF3A3SWZo9vApbHuHg0JMvJlNp0bmfs7VMCb9T4qS0b8nz1eK1o3LpM5MLj2Prou+12yYd0S
- pvIKLResC04jiHjiPfdhYXWUFLiTBtb4SXAO6nbyPkULSO15/6G3rgZpaW1tWiuwvANTvzyRf8l
- fzb7KmmLuBfaJC+p4toXBfAcfNZ3Zhc+7v9LFXabhsrwQqSE+eG0Isg1gEWwzhnP5FrFS9zGKSU
- pzcilxzizCYZ3w0ragoAujLx2m5h7JcOHCKQdb4jfnnI4FSiw3k7CMS9wulrk30wg4p0ChhEJ6n
- LHqQfYSAHfCLv6k+ixiaRjv9M4tcYswlmKZB4mNR+mTYMQFG1lG3El71aDxenk2+Sz1jDfgbKpp
- kwRjOrDHJTWCfPV9/ItmEyJNGZvEaBE4Br1Q==
-X-Received: by 2002:a05:600c:1d18:b0:48a:8cb6:88b9 with SMTP id
- 5b1f17b1804b1-48e51f44621mr389731005e9.22.1778519102584; 
- Mon, 11 May 2026 10:05:02 -0700 (PDT)
+ bh=UfaB3+L+i4sQ/IYfKmKHU7JZ5c3J9BsgCMXTl8yVcMc=;
+ b=HKCm9PeG/THGALAskuoG0TJpZ8VOGCQ7k16UvHiV7AvM73a+iwYkKWJ1CAjzHnJggY
+ BT87m8xSpvZZscZYhhY/5o/VIDwfrfmOrRjf27Aru9tYtt43wEZ/G9loeQjcofsbkSjf
+ t8s3IRu44icCIXuYQcTXG5/aGQnIu1d3yygO3gakJN767hwNlqn1EM1LCRlLY4dPCiLs
+ 8h/Il7GzLRyHJ5dUJPHOO6aJsKlumRfRIcKE9wju20MTDMTYov54lhFZjBxiPFkLYxeJ
+ EdDnpL+pfNaEeSDW3g75VvXK0/qIcpEJWHb3uN5d1pJO192a1J/XOrAJGgU692Gj0HdN
+ 2VOQ==
+X-Gm-Message-State: AOJu0YwdvDkEtQ7GyLXzo0yyldAvLgNsPYbQ32cJsfrcIIdo39bXqNan
+ 7Z57aW45mGhGJCglzaP38cZHQEWMuWMhQXMrKxz3+ZiTOzzoiEHmGbEBi47Ya/3ZFjE=
+X-Gm-Gg: Acq92OG6Hq7NszPvzDFrvV49zK3wwH43DLYISwqiafoK74LoL1SramfTc9dtEdiAOKN
+ bUwPUyo8Ml8KKdbDbEszjCbIVTSUiGPYw3zgjlljOK/iUlHcjcDLAQKpJELPWkNeIRhqvv9AVAR
+ cqUZ4rtaRQB7kqd737jNaDELAbpNj8zc2DCCZzDkkktEDKaW/PN9OxxxqXXlZLJcukdDFYRYZXN
+ DAq1sx8pQt0gBKcQ2dRtwXFVBq7X2kSUTuPW0KixtXiQhOGFze83O61cuJ2mZ1dImeWeVLVoT2b
+ e3NvSVEQBc+VKwTGfjaGn3jhQNs84TqYRipgkpI82SOYr6X57KVy3g4g27OGNH6Q2W8JfjRGKEi
+ 8tVDRGcY+8su44quOXGfKBOif36tqdUPEO0JQi5u8HUQvJbCC/Do0EeSjFyGAzO9R5aBwh0nwwC
+ Hhw+asl8EIPMutuKSscRU4Kmk=
+X-Received: by 2002:a05:600c:859b:b0:48e:7f1c:8776 with SMTP id
+ 5b1f17b1804b1-48e7f1c8874mr105909695e9.25.1778519103172; 
+ Mon, 11 May 2026 10:05:03 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e702e0c70sm217274945e9.6.2026.05.11.10.05.01
+ 5b1f17b1804b1-48e8e5e08a5sm1125625e9.6.2026.05.11.10.05.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Mon, 11 May 2026 10:05:01 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id AB7E85F94E;
+ by draig.lan (Postfix) with ESMTP id 93F495F8CE;
  Mon, 11 May 2026 18:05:00 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: John Snow <jsnow@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Cleber Rosa <crosa@redhat.com>
-Subject: [RFC PATCH v2 02/10] scripts/expand-macro.py: helper script exploding
- macros
-Date: Mon, 11 May 2026 18:04:51 +0100
-Message-ID: <20260511170500.124211-3-alex.bennee@linaro.org>
+Subject: [RFC PATCH v2 01/10] AGENTS.md: add basic AGENTS.md for QEMU
+Date: Mon, 11 May 2026 18:04:50 +0100
+Message-ID: <20260511170500.124211-2-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260511170500.124211-1-alex.bennee@linaro.org>
 References: <20260511170500.124211-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,304 +104,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU makes heavy use of C Macros which can be confusing to humans and
-seems almost impossible for AI agents to follow. In the past I've
-dealt with this by compiling with V=1 and manually copying and pasting
-the gcc command line and appending -E to run the pre-processor step.
-
-With the modern build system we now have a compile_commands.json so we
-can automate the process with a script.
-
-There is some trickiness involved in following the line markers so we
-know where in the source file we are. To handle this we implement a
-PreprocessorState object to track where in the include chain we are.
-This allows us to show the including location when we dump the
-expanded macro.
+This was written initially written by ECA based on its understanding of the
+code base. I then expanded it with links to the various documents and
+the general coding style.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- scripts/expand-macro.py | 272 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 272 insertions(+)
- create mode 100755 scripts/expand-macro.py
 
-diff --git a/scripts/expand-macro.py b/scripts/expand-macro.py
-new file mode 100755
-index 00000000000..581f20b9897
+---
+v4
+  - will add AGENTS to list as we go
+  - moved QOM, QAPI and trace details into qemu-code-explorer skill
+  - add section on Security policy
+v3
+  - More MUST
+  - Remove build and test in favour of agent reference
+v2
+  - more build details and source overview
+  - more on commit style
+  - give plan files a place to live
+  - add Daniel's agent suggestion
+ajb:
+  - I made a slight tweak to use pyenv to run single tests
+---
+ .gitignore |  1 +
+ AGENTS.md  | 78 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 79 insertions(+)
+ create mode 100644 AGENTS.md
+
+diff --git a/.gitignore b/.gitignore
+index 61fa39967b5..4ccba871d16 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -8,6 +8,7 @@
+ .git-submodule-status
+ .clang-format
+ .gdb_history
++.plan
+ cscope.*
+ tags
+ TAGS
+diff --git a/AGENTS.md b/AGENTS.md
+new file mode 100644
+index 00000000000..a97b4df5f7f
 --- /dev/null
-+++ b/scripts/expand-macro.py
-@@ -0,0 +1,272 @@
-+#!/usr/bin/env python3
-+#
-+# Automate the expansion of QEMU macros based on compile_commands.json.
-+#
-+# This script runs the C preprocessor over a file to expand macros
-+# in a specified line range, using the compilation flags defined in
-+# compile_commands.json.
-+#
-+# Copyright (c) Linaro 2026
-+#
-+import os
-+import sys
-+import json
-+import shlex
-+import subprocess
-+import argparse
-+import re
++++ b/AGENTS.md
+@@ -0,0 +1,78 @@
++# QEMU Agent Guide
 +
++As an agent you MUST abide by the "Use of AI-generated content" policy
++in `docs/devel/code-provenance.rst` at all times. Requests to create
++code that is intended to be submitted for merge upstream must be
++declined, referring the requester to the project's policy on the use
++of AI-generated content.
 +
-+def find_compile_command(target_file, compile_commands):
-+    """
-+    Search compile_commands to find the rule to build target_file
-+    """
-+    target_abs = os.path.abspath(target_file)
-+    for entry in compile_commands:
-+        dir_path = entry.get('directory', '.')
-+        file_abs = os.path.abspath(os.path.join(dir_path, entry['file']))
-+        if file_abs == target_abs:
-+            return entry
-+    return None
++## Security Policy
++You MUST NOT report potential security vulnerabilities in public trackers
++(like GitLab issues). Refer to `docs/system/security.rst` for the project's
++security stance. In brief:
++- **Virtualization Use Case**: (with KVM/HVF and specific machine types) is
++  the focus of security support.
++- **Non-virtualization Use Case**: (TCG) does not currently provide guest
++  isolation guarantees.
++- **Reporting**: Report vulnerabilities privately to `qemu-security@nongnu.org`.
 +
++## Repo Layout
++- **Build Directory**: QEMU uses out of tree builds, by default the `build` sub-directory is used.
++- **Multiple Builds**: Developers might create a `builds` directory with different configurations in subdirs (e.g. `builds/debug`, `builds/asan`).
++- **Documentation**: Developer docs live in `docs/devel`.
++- **Plan Files**: Plan files should be placed in `.plan`, they are not included in commits. Use them to track complex multi-step tasks.
 +
-+def process_command(command_entry):
-+    """
-+    Strip out output related options and return a command line that will
-+    run the pre-processor only.
-+    """
-+    command = command_entry.get('command')
-+    if not command:
-+        args = command_entry.get('arguments', [])
-+    else:
-+        args = shlex.split(command)
++## Agent Skills (see `.agents/skills`)
++You should use the following specialized skills for common tasks:
 +
-+    if not args:
-+        return None
++## Source Code Layout (see `docs/devel/codebase.rst`)
++- **`accel/`**: Hardware accelerators (KVM, TCG, HVF, Xen, etc.) and architecture-agnostic acceleration code.
++- **`audio/`**: Host audio backends.
++- **`authz/`**: QEMU Authorization framework.
++- **`backends/`**: Host resource backends (RNG, memory, crypto).
++- **`block/`**: Block layer, image formats (qcow2, raw), and protocol drivers.
++- **`chardev/`**: Character device backends (TCP, serial, mux, etc.).
++- **`crypto/`**: Cryptographic algorithms and framework.
++- **`disas/`**: Disassembler support for various architectures.
++- **`dump/`**: Guest memory dump implementation.
++- **`ebpf/`**: eBPF program support (e.g. for virtio-net RSS).
++- **`fpu/`**: Software floating-point emulation.
++- **`gdbstub/`**: Remote GDB protocol support.
++- **`hw/`**: Hardware device emulation, organized by type (e.g., `hw/net`, `hw/pci`) or architecture.
++- **`include/`**: Global header files, mirroring the source tree layout.
++- **`io/`**: I/O channels framework.
++- **`linux-user/` & `bsd-user/`**: User-space process emulation.
++- **`migration/`**: VM migration framework.
++- **`monitor/`**: HMP and QMP monitor implementations.
++- **`nbd/`**: Network Block Device server and client code.
++- **`net/`**: Networking stack and host backends.
++- **`plugins/`**: TCG introspection plugins core.
++- **`qapi/`**: QAPI schema and code generation infrastructure.
++- **`qga/`**: QEMU Guest Agent.
++- **`qom/`**: QEMU Object Model implementation.
++- **`replay/`**: Deterministic record/replay support.
++- **`rust/`**: Rust integration and Rust-based device models.
++- **`scripts/`**: Build system helpers, `checkpatch.pl`, `tracetool`, etc.
++- **`system/`**: Core system-level emulation logic (replaces `softmmu`).
++- **`target/`**: CPU-specific emulation (ISA translation, CPU state).
++- **`tcg/`**: The Tiny Code Generator (JIT) backends.
++- **`tests/`**: Test suites (qtest, unit, functional, tcg).
++- **`ui/`**: User interface backends (GTK, SDL, VNC, Spice).
++- **`util/`**: Low-level utility functions and data structures.
 +
-+    out = []
-+    it = iter(args)
-+    for arg in it:
-+        # the -M* options all deal with generating deps
-+        if arg in ('-o', '-MF', '-MQ', '-MT', '-MD', '-MP'):
-+            next(it, None)  # Skip the option's argument
-+            continue
-+        if arg == '-c':
-+            continue
-+        out.append(arg)
++## Code Style (see `docs/devel/style.rst`)
++- **Formatting**: 4-space indents, NO tabs, 80-char line limit (max 100).
++- **C Braces**: Mandatory for all blocks (if/while/for). Open brace on same line (except functions).
++- **C Includes**: `#include "qemu/osdep.h"` MUST be the first include in every `.c` file.
++- **C Comments**: Use `/* ... */` only. No `//` comments.
++- **Naming**: `snake_case` for variables/functions; `CamelCase` for types/enums.
++- **Memory**: Use GLib (`g_malloc`, `g_free`, `g_autofree`) or QEMU (`qemu_memalign`). No `malloc`.
++- **Errors**: Use `error_report()` or `error_setg()`. Avoid `printf` for errors.
++- **Lints**: Run `./scripts/checkpatch.pl` on C patches. Use `make clippy` for Rust.
 +
-+    # Enable pre-processor output, don't strip comments, trace includes
-+    out.extend(['-E', '-CC', '-H'])
-+    return out
-+
-+
-+def normalize_path(raw_path, working_dir):
-+    """Normalize and make paths absolute."""
-+    if not os.path.isabs(raw_path):
-+        return os.path.abspath(os.path.join(working_dir, raw_path))
-+    return os.path.normpath(raw_path)
-+
-+
-+class PreprocessorState:
-+    """Tracks the state of the preprocessor as we parse its output."""
-+    def __init__(self):
-+        self.stack = []
-+        self.current_path = None
-+        self.current_line = 0
-+        self.current_instance_id = 0
-+        self.next_instance_id = 1
-+        self.sections = {}
-+
-+    def update_on_marker(self, new_line, flags, path):
-+        """Update the file stack and instance tracking based on markers."""
-+        # entering new file
-+        if "1" in flags:
-+            if self.current_path is not None:
-+                self.stack.append((self.current_path, self.current_line,
-+                                   self.current_instance_id))
-+            self.current_path = path
-+            self.current_line = new_line
-+            self.current_instance_id = self.next_instance_id
-+            self.next_instance_id += 1
-+            return
-+
-+        # leaving file
-+        if "2" in flags:
-+            if self.stack:
-+                _, _, popped_instance_id = self.stack.pop()
-+                self.current_path = path
-+                self.current_line = new_line
-+                self.current_instance_id = popped_instance_id
-+            else:
-+                self.current_path = path
-+                self.current_line = new_line
-+                self.current_instance_id = self.next_instance_id
-+                self.next_instance_id += 1
-+            return
-+
-+        # return to previous file without explicit flag 2
-+        if self.current_path != path:
-+            if self.stack and self.stack[-1][0] == path:
-+                _, _, popped_instance_id = self.stack.pop()
-+                self.current_path = path
-+                self.current_line = new_line
-+                self.current_instance_id = popped_instance_id
-+            else:
-+                self.current_path = path
-+                self.current_line = new_line
-+                self.current_instance_id = self.next_instance_id
-+                self.next_instance_id += 1
-+            return
-+            
-+        self.current_line = new_line
-+
-+    def get_context_string(self, target_abs, working_dir):
-+        """Generate a descriptive string showing the inclusion context."""
-+        if self.stack:
-+            ctx_path, ctx_line, _ = self.stack[-1]
-+            try:
-+                rel_ctx = os.path.relpath(ctx_path, working_dir)
-+            except ValueError:
-+                rel_ctx = ctx_path
-+            return f"{rel_ctx}:{ctx_line}"
-+
-+        try:
-+            rel_ctx = os.path.relpath(target_abs, working_dir)
-+        except ValueError:
-+            rel_ctx = target_abs
-+        return f"{rel_ctx} (main file)"
-+
-+    def add_line(self, line, line_range, target_abs, working_dir):
-+        """Add a line to the sections if it is within the requested range."""
-+        start_line, end_line = line_range
-+        if self.current_path == target_abs:
-+            if start_line <= self.current_line <= end_line:
-+                if self.current_instance_id not in self.sections:
-+                    ctx_str = self.get_context_string(target_abs, working_dir)
-+                    self.sections[self.current_instance_id] = {
-+                        "context": ctx_str,
-+                        "lines": []
-+                    }
-+                self.sections[self.current_instance_id]["lines"].append(line)
-+        self.current_line += 1
-+
-+
-+def format_output_sections(sections, target_file, start_line, end_line):
-+    """Format the accumulated sections into the final output string."""
-+    output_sections = []
-+    for _instance_id, data in sections.items():
-+        if not data["lines"]:
-+            continue
-+        header = f"/* Expansion from {data['context']} */"
-+        body = "\n".join(data["lines"])
-+        output_sections.append(f"{header}\n{body}")
-+
-+    if not output_sections:
-+        return (f"/* Error: No lines found for {target_file} "
-+                f"in range {start_line}-{end_line} */")
-+
-+    return "\n/* end of expansion */\n".join(output_sections)
-+
-+
-+def extract_range(stdout, target_file, start_line, end_line, working_dir):
-+    """
-+    Parse the output of the pre-processor while tracking where we
-+    are in the source code from the markers so we can extract the
-+    range asked for.
-+    """
-+    state = PreprocessorState()
-+    target_abs = os.path.abspath(target_file)
-+    line_range = (start_line, end_line)
-+
-+    # The format is undocumented but see:
-+    #
-+    #  gcc/c-family/c-ppoutput.c:print_line_1
-+    #
-+    # where 1 = entering file, 2 = leaving file
-+    # and the 3 or 3 4 depends on linemap_location_in_system_header_p
-+    line_marker_re = re.compile(r'^# (\d+) "(.*?)"(.*)')
-+
-+    for line in stdout.splitlines():
-+        match = line_marker_re.match(line)
-+        if match:
-+            new_line = int(match.group(1))
-+            raw_path = match.group(2)
-+            flags = match.group(3).split()
-+
-+            path = normalize_path(raw_path, working_dir)
-+            state.update_on_marker(new_line, flags, path)
-+            continue
-+
-+        state.add_line(line, line_range, target_abs, working_dir)
-+
-+    return format_output_sections(state.sections, target_file,
-+                                  start_line, end_line)
-+
-+
-+def main():
-+    """Main entry point for the script."""
-+    desc = 'Expand macros in a section of a file using compile_commands.json'
-+    parser = argparse.ArgumentParser(description=desc)
-+    parser.add_argument('file', help='Source file to expand macros in')
-+    parser.add_argument('--range', help='Line range (e.g. 100-120)')
-+
-+    ctx_help = ('Context file (.c) to get compilation flags from '
-+                '(useful for headers)')
-+    parser.add_argument('--context', help=ctx_help)
-+    parser.add_argument('--compile-commands', default='compile_commands.json',
-+                        help='Path to compile_commands.json')
-+    parser.add_argument('--show-command', action='store_true',
-+                        help='Print the modified compile command and exit')
-+
-+    args = parser.parse_args()
-+
-+    if not os.path.exists(args.compile_commands):
-+        print(f"Error: {args.compile_commands} not found.", file=sys.stderr)
-+        sys.exit(1)
-+
-+    with open(args.compile_commands, encoding="utf-8") as f:
-+        compile_commands = json.load(f)
-+
-+    query_file = args.context if args.context else args.file
-+    entry = find_compile_command(query_file, compile_commands)
-+
-+    if not entry:
-+        print(f"Error: Could not find compile command for {query_file}",
-+              file=sys.stderr)
-+        sys.exit(1)
-+
-+    cmdline = process_command(entry)
-+    if not cmdline:
-+        print(f"Error: Failed to process command for {query_file}",
-+              file=sys.stderr)
-+        sys.exit(1)
-+
-+    if args.show_command:
-+        print(shlex.join(cmdline))
-+        sys.exit(0)
-+
-+    working_dir = entry.get('directory', '.')
-+    result = subprocess.run(cmdline, stdout=subprocess.PIPE,
-+                            stderr=subprocess.PIPE, cwd=working_dir,
-+                            universal_newlines=True, check=False)
-+
-+    if result.returncode != 0:
-+        print(f"Preprocessor failed:\n{result.stderr}", file=sys.stderr)
-+        sys.exit(result.returncode)
-+
-+    content = result.stdout
-+    if args.range:
-+        try:
-+            start, end = map(int, args.range.split('-'))
-+            content = extract_range(content, args.file, start, end,
-+                                    working_dir)
-+        except ValueError:
-+            print(f"Error: Invalid range format {args.range}. Use start-end.",
-+                  file=sys.stderr)
-+            sys.exit(1)
-+
-+    print(content)
-+
-+
-+if __name__ == "__main__":
-+    main()
++## Commit Style
++- **Small Commits**: Favour small discreet commits changing one thing.
++- **Maintain Bisectability**: Each commit must compile and pass basic tests.
++- **Separate Refactoring**: Split code movement or style fixes from functional changes.
++- **Commit Messages**: Use a concise subject line, followed by a body explaining "why" (not just "what").
++- **Signed-off-by**: Every commit must have a `Signed-off-by` line.
 -- 
 2.47.3
 
