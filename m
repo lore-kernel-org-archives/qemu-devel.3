@@ -4,105 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59084CD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 16:37:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F8D5CD4840
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 16:39:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMTdV-0001iz-PM; Mon, 11 May 2026 12:37:41 -0400
+	id 1wMTed-0002Gr-Jb; Mon, 11 May 2026 12:38:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wMTdN-0001bX-E8
- for qemu-devel@nongnu.org; Mon, 11 May 2026 12:37:35 -0400
+ id 1wMTeb-0002D3-F2; Mon, 11 May 2026 12:38:49 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wMTdL-0006xR-Bq
- for qemu-devel@nongnu.org; Mon, 11 May 2026 12:37:32 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1wMTeZ-0007OI-TS; Mon, 11 May 2026 12:38:49 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64BEH9jk4107090; Mon, 11 May 2026 16:37:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=8L4jmB
- 4vjvMTQZfFjh54ySN+0RRv7iU9Aey51xkkx9A=; b=lEB89SKnzTHl2nCE7VrgJz
- ikiedBRzrOHijsPmDFzAiDfG60N5G3ds9hIOUBWN2HnAUqxSGZWjPPNh1mevaBwg
- YkRPer225w0ta+XgsgpmFQUu68O0+Wwh7bc3sQEtL1iUfM9tv0i02UWlsYFybJ3T
- AvR0rXvRN7EjGFcL60ugdZhL4rsEzGFmJ+ADTTBIoIz1+bVFNWipermunqKoRANh
- o0AQUY7GyutgSX+TRyeKagGmFd2tnJyPEmnypJ4jOpS2faDTzknfxmFWUGlJxGnh
- Wmw1/BmLUbvf049QOyfOmCvva8I7ghOg1xpKQgIteOYGIfgIlgW7cFHy3EjvhKGQ
+ 64B9S2CZ2762269; Mon, 11 May 2026 16:38:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=WLLmSO
+ gOzJpLSIxAUeE45epgsX9dm4YlBfLjSgPnIgo=; b=bWbEL7BTjFrjnSvY54nm7y
+ ap1yuOFVTHXMGjyQlIQwEAcbtWApbVhUoAT9egbWqiVEegvBFJ3VwxZOWKPqE6Br
+ 2fj3NumsaHh69S45kyGUUCWi9W1TWr5grSuDCq40Y1XNLSyoiyIWAYIenZPctcNQ
+ 7CStJN9hsoCnHew60lXQiwbMX6JGQx3ApFBlSvtlqRhYs2tI1c/qX6kTVqzCCW6x
+ K3bV0xqqQyp297ukB0VESY7WKjzYOiQrCOAqRGFmeTswVJNykINVEV4G7d/Xj2Ms
+ Bzrga6OL8ewwyjJqUJZmmt8mLD+iG0LyuYILeuqMui8vH7GNtHgscmDCfe1y++FQ
  ==
 Received: from ppma13.dal12v.mail.ibm.com
  (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e1vn4s896-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e1vkqs893-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 11 May 2026 16:37:28 +0000 (GMT)
+ Mon, 11 May 2026 16:38:43 +0000 (GMT)
 Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64BGOWGU003608;
- Mon, 11 May 2026 16:37:27 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e2hfg5xpg-1
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64BGOf73003657;
+ Mon, 11 May 2026 16:38:43 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e2hfg5xtr-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 11 May 2026 16:37:27 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64BGbQqB30605900
+ Mon, 11 May 2026 16:38:42 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64BGcgJQ18285266
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 11 May 2026 16:37:26 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C377158058;
- Mon, 11 May 2026 16:37:26 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1054F58057;
- Mon, 11 May 2026 16:37:26 +0000 (GMT)
+ Mon, 11 May 2026 16:38:42 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1A3CA5805E;
+ Mon, 11 May 2026 16:38:42 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5F7D75805A;
+ Mon, 11 May 2026 16:38:41 +0000 (GMT)
 Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.111.34]) by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 11 May 2026 16:37:25 +0000 (GMT)
-Message-ID: <0e0d64acfa003d17d5ca95242383a0a6c8bebfaf.camel@linux.ibm.com>
-Subject: Re: [PULL 089/110] target/s390x: Introduce common system/user meson
- source set
+ [9.61.111.34]) by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 11 May 2026 16:38:41 +0000 (GMT)
+Message-ID: <483e53a094086ef25c9a7532e3477e0cd4000524.camel@linux.ibm.com>
+Subject: Re: [PATCH] target/s390x: add gen-features.h dependency to
+ s390x_system_ss
 From: Eric Farman <farman@linux.ibm.com>
-To: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>, Philippe
- =?ISO-8859-1?Q?Mathieu-Daud=E9?=	 <philmd@linaro.org>,
- qemu-devel@nongnu.org, Cornelia Huck <cohuck@redhat.com>, Thomas Huth
- <thuth@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>, Farhan Ali
- <alifm@linux.ibm.com>
-Date: Mon, 11 May 2026 12:37:25 -0400
-In-Reply-To: <90ea3dacb27252a623c0f95bad334e4702222d83.camel@linux.ibm.com>
-References: <20260506135524.20617-1-philmd@linaro.org>
- <20260506135524.20617-90-philmd@linaro.org>
- <5b1fd1f6-00ec-4575-9609-845218405403@redhat.com>
- <90ea3dacb27252a623c0f95bad334e4702222d83.camel@linux.ibm.com>
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: philmd@linaro.org, Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Cornelia Huck <cohuck@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ "open list:S390 TCG CPUs" <qemu-s390x@nongnu.org>
+Date: Mon, 11 May 2026 12:38:41 -0400
+In-Reply-To: <20260510204640.2178926-1-marcandre.lureau@redhat.com>
+References: <20260510204640.2178926-1-marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 MIME-Version: 1.0
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=BM+DalQG c=1 sm=1 tr=0 ts=6a0205c8 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDE3OCBTYWx0ZWRfX94vVtObgn9sQ
+ anbR6CFduRBB56FhAM9vRkc3Y06YlbUh+WN5WzgVHGZLl1otZcTnmM5y3v6jFh/wuy5ODbNdWJO
+ aykBbSUnJMSaT2vJrdo4YjV632R4mMdkTRW6qWm7JPqI2bDOmtp/BWWNIFnWUsVz4OAwxfrXd9X
+ PpRZwhvjzvtvFyljJh/ETczkXlPqx76ZpnbUv6fQbYfCkj5amW81BweXdpZ2ldM/GQCYHmYH5ie
+ o9D/hXTAG3jiLWf4O3u2Skg/RsXqpKJgYm/pTOzISUfUmFgOe0mSAhbYSR22tkLzfCmSVXbQxTl
+ xR+jR3O5bv6iOvgyI8f4PND5ABulGUJ6RHA0/C+IfgcOoa2ihjsLiicLuIT2/GlN1uYTMs/a+RS
+ 4est+aNAFCy448ui6zPjp3UI2zz/N6hXS6vEzNi7k6rhfxmjFicR06OKEiM4tGEqB1tRHsENJ8c
+ tOImPah3kSluPQEi0mQ==
+X-Authority-Analysis: v=2.4 cv=OaWoyBTY c=1 sm=1 tr=0 ts=6a020613 cx=c_pps
  a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8
- a=20KFwNOVAAAA:8 a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=Mrv29JjFJpk7i-Sp4K8A:9
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDE3OCBTYWx0ZWRfX99uqUIRcFLn9
- 5l50Ud1i+XZ7T4HxINWPyl4QKpHHa5t8f5IdBchhijoWerI9vXsJa6746PHK0mkYcLdffAkGl5U
- XTW6BoYeuEIxbvYFoApJyQCW16DJoDpTnvfxQtFGNx91PYpGkgXwt/GUHcdkiOFjEAh82k73BGi
- DDP5xyKdd+39WnFu3uRuiwpPwwRL+jHgIuT+sydYKegg53iGI8nC5DBnHUuJMkE/kzhw0hn2BhT
- PYxyOBqbDXaJ+9DiDmk6/NvX4pIK8y5ktaDioELzC8Njt0RHz85ag55Gy6XZMyxeJGRADEQuist
- gDUyNwdQfPl1r7+8AVDaifPdeQ88UH8sHBtPCliRTxztxcuT4rt3FauuLKdtPHlMeTnc6aRX+z8
- BC4ZUJ3pwOL9IgUk2fIOwEXSoyMzAU7LNm50LXf4htmjZ8uZqnblgfH6azRaP4h3cDDPvuPmtAg
- 3TmUaPagXXx+daLp2hw==
-X-Proofpoint-GUID: GcXmp9JdXrLHmIvUL_Te5fi5ZyI5Hv2z
-X-Proofpoint-ORIG-GUID: GcXmp9JdXrLHmIvUL_Te5fi5ZyI5Hv2z
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=20KFwNOVAAAA:8
+ a=VnNF1IyMAAAA:8 a=VgQHmgxU-P_RjVidJewA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: fXDiH3eFxCZPINEsPWdVrTa9GrQqNDVv
+X-Proofpoint-GUID: fXDiH3eFxCZPINEsPWdVrTa9GrQqNDVv
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-11_04,2026-05-08_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 suspectscore=0 bulkscore=0 spamscore=0
- lowpriorityscore=0 priorityscore=1501 adultscore=0 malwarescore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ malwarescore=0 suspectscore=0 spamscore=0 clxscore=1015 bulkscore=0
+ phishscore=0 lowpriorityscore=0 priorityscore=1501 impostorscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
  definitions=main-2605110178
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
@@ -129,131 +123,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2026-05-11 at 11:58 -0400, Eric Farman wrote:
-> On Mon, 2026-05-11 at 17:48 +0200, C=C3=A9dric Le Goater wrote:
-> > Hello,
-> >=20
-> > On 5/6/26 15:55, Philippe Mathieu-Daud=C3=A9 wrote:
-> > > Introduce a source set common to system / user. Start it
-> > > with the files built in both sets: 'cpu_models_user.c'
-> > > and 'gdbstub.c' No logical change intended.
-> > >=20
-> > > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> > > Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> > > Message-Id: <20260423135035.50126-4-philmd@linaro.org>
-> >=20
-> > This change introduced a regression with PCI passthrough which
-> > stopped working. Guest kernel reports :
-> >=20
-> >    [    0.156501] zpci: PCI is not supported because CPU facilities 69 =
-or 71 are not available
-> >=20
-> > and other devices (ap, ccw) are impacted too I think.
-> >=20
-> > > ---
-> > >   target/s390x/meson.build | 25 +++++++++++++------------
-> > >   1 file changed, 13 insertions(+), 12 deletions(-)
-> > >=20
-> > > diff --git a/target/s390x/meson.build b/target/s390x/meson.build
-> > > index 6f98ce34d73..44f58ac2919 100644
-> > > --- a/target/s390x/meson.build
-> > > +++ b/target/s390x/meson.build
-> > > @@ -1,4 +1,9 @@
-> > >   s390x_ss =3D ss.source_set()
-> > > +s390x_common_ss =3D ss.source_set()
-> > > +s390x_common_system_ss =3D ss.source_set()
-> > > +s390x_system_ss =3D ss.source_set()
-> > > +s390x_user_ss =3D ss.source_set()
-> > > +
-> > >   s390x_ss.add(files(
-> > >     'cpu.c',
-> > >     'cpu_features.c',
-> > > @@ -15,15 +20,16 @@ gen_features_h =3D custom_target('gen-features.h'=
-,
-> > >                                  capture: true,
-> > >                                  command: gen_features)
-> > >  =20
-> > > -s390x_ss.add(gen_features_h)
-> > > +s390x_common_ss.add(gen_features_h)
-> > > +s390x_common_ss.add(files(
-> > > +  'cpu_models_user.c',
-> > > +  'gdbstub.c',
-> > > +))
-> > >  =20
-> > > -s390x_system_ss =3D ss.source_set()
-> > >   s390x_system_ss.add(files(
-> > >     'ioinst.c',
-> > >   ))
-> > >  =20
-> > > -s390x_common_system_ss =3D ss.source_set()
-> > > -s390x_common_system_ss.add(gen_features_h)
-> > >   s390x_common_system_ss.add(files(
-> > >     'helper.c',
-> > >     'arch_dump.c',
-> > > @@ -32,19 +38,14 @@ s390x_common_system_ss.add(files(
-> > >     'mmu_helper.c',
-> > >     'sigp.c',
-> > >     'cpu-system.c',
-> > > -  'cpu_models_system.c',
-> >=20
-> > This file is compiled anymore and the CPU features and facilities are
-> > not propagated to the guest anymore.
-> >=20
-> > Without this patch, cpuinfo reports :
-> >=20
-> >    features	: esan3 zarch stfle msa ldisp eimm dfp edat etf3eh highgprs=
- te vx vxd vxe gs vxe2 vxp sort dflt vxp2 nnpa
-> >    facilities      : 0 1 2 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20=
- 21 22 23 24 25 26 27 28 30 31 32 33 34 35 36 37 38 40 41 42 43 44 45 47 48=
- 49 50 51 52 53 54 57 58 59 60 61 64 65 69 71 72 73 74 75 76 77 78 80 81 82=
- 129 130 131 133 134 135 138 139 140 146 147 148 150 151 152 155 156 165 19=
-2 193 194 196 197
-> >=20
-> > with :
-> >=20
-> >    features	: esan3 zarch stfle msa ldisp eimm dfp edat etf3eh highgprs=
- te vx vxd vxe gs vxe2 vxp sort dflt vxp2
-> >    acilities      : 0 1 2 3 4 6 7 8 9 10 11 13 14 16 17 18 19 20 21 22 =
-23 24 25 26 27 28 30 31 32 33 34 35 36 37 38 40 41 42 43 44 45 46 47 48 49 =
-50 51 52 53 54 55 57 58 59 60 61 64 72 73 74 75 76 77 78 80 81 82 129 130 1=
-31 133 134 135 138 139 146 147 148 150 151 152 155 192
-> >=20
+On Mon, 2026-05-11 at 00:46 +0400, marcandre.lureau@redhat.com wrote:
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 >=20
-> Thanks, Cedric... I wonder if the above is addressed by this patch? (I ha=
-ven't checked yet, but will
-> do that now.)
+> Commit 0b83acf2f05 moved gen_features_h from s390x_ss to
+> s390x_common_ss. However s390x_system_ss (containing ioinst.c) was left
+> without the dependency, causing a build race: it can be compiled before
+> gen-features.h is generated (via cpu.h -> cpu_models.h -> cpu_features.h
+> -> gen-features.h)
 >=20
-> https://lore.kernel.org/qemu-devel/20260510204640.2178926-1-marcandre.lur=
-eau@redhat.com/
+> Add gen_features_h to s390x_system_ss to correct the build ordering.
+>=20
+> Fixes: 0b83acf2f05 ("target/s390x: Introduce common system/user meson sou=
+rce set")
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> ---
+>  target/s390x/meson.build | 1 +
+>  1 file changed, 1 insertion(+)
 
-Nope, didn't help this particular problem. But patch sent for it.
+Hardly an expert on meson, but seems correct to my brain. Thank you!
+
+Acked-by: Eric Farman <farman@linux.ibm.com>
 
 >=20
-> Thanks,
-> Eric
->=20
-> >=20
-> > Thanks,
-> >=20
-> > C.
-> >=20
-> >=20
-> > > -  'gdbstub.c',
-> > > -))
-> > > -
-> > > -s390x_user_ss =3D ss.source_set()
-> > > -s390x_user_ss.add(files(
-> > > -  'cpu_models_user.c',
-> > > -  'gdbstub.c',
-> > >   ))
-> > >  =20
-> > >   subdir('tcg')
-> > >   subdir('kvm')
-> > >  =20
-> > > +s390x_common_system_ss.add_all(s390x_common_ss)
-> > > +s390x_user_ss.add_all(s390x_common_ss)
-> > > +
-> > >   target_arch +=3D {'s390x': s390x_ss}
-> > >   target_system_arch +=3D {'s390x': s390x_system_ss}
-> > >   target_common_system_arch +=3D {'s390x': s390x_common_system_ss}
+> diff --git a/target/s390x/meson.build b/target/s390x/meson.build
+> index 44f58ac2919..bc4459e8ed7 100644
+> --- a/target/s390x/meson.build
+> +++ b/target/s390x/meson.build
+> @@ -26,6 +26,7 @@ s390x_common_ss.add(files(
+>    'gdbstub.c',
+>  ))
+> =20
+> +s390x_system_ss.add(gen_features_h)
+>  s390x_system_ss.add(files(
+>    'ioinst.c',
+>  ))
 
