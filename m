@@ -4,111 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C016CD37B5
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 10:33:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EAF8CD37B5
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 10:33:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMNwh-0002s3-S8; Mon, 11 May 2026 06:33:11 -0400
+	id 1wMNwm-0002xx-E7; Mon, 11 May 2026 06:33:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
- id 1wMNv2-0002h5-O2; Mon, 11 May 2026 06:31:25 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
- id 1wMNv1-0002m5-4v; Mon, 11 May 2026 06:31:24 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64BA7tBh2635669; Mon, 11 May 2026 10:31:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=gC9dN6
- ZARWW5Y0/YqzelG/g9zjb9af4EfTyaKKNfEQ0=; b=rmcH5Vev9QV3GGnzEwfVx4
- Y8RfYJ8GTrolCMz8mVPtzLU5oKyeoz8QAA8Nkw/6s56YPykeRuoEckBgN4erFNBS
- u40ZcGm2EmIGc1urUhb6Nki9iL9MXmhpD937ZO7jV/4BLwoGESqHWQb1eCexqxqv
- yN0ceGXbkGtLQnsvyh1wmWIOxxRGJei+E8FqE2cETT6IRRdmtgFTX8OcKe+wwPuq
- RY3cfUb3tXePi9UgJz6Wo/RmqNkV0sriqFzly/WjIU3QAj60wWf718XLWRGX6ApE
- xaMOmxnyTPWeBWLMoBJyLhIpuevwyU7f/q3+P9aM9f/m0dGFjoRYZw3XGAxfC9PA
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e1vn4qrs2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 11 May 2026 10:31:14 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64BAOSl4010275;
- Mon, 11 May 2026 10:31:14 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e2hfg4msw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 11 May 2026 10:31:14 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64BAVDJF4850370
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 11 May 2026 10:31:13 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 21E1A58067;
- Mon, 11 May 2026 10:31:13 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 62E0358079;
- Mon, 11 May 2026 10:31:12 +0000 (GMT)
-Received: from [9.61.29.46] (unknown [9.61.29.46])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 11 May 2026 10:31:12 +0000 (GMT)
-Message-ID: <8a95b6d6-70f7-40fd-950e-56b087715b58@linux.ibm.com>
-Date: Mon, 11 May 2026 06:30:45 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMNwH-0002oW-9C
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 06:32:48 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMNwD-0003gf-B3
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 06:32:39 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-488a8ca4aadso37698155e9.3
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 03:32:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778495553; x=1779100353; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=AxFchPChBZqoxllwc2s3Hblldrqrne/9XqRt5Wx0d2Q=;
+ b=oK+KwOd2AWcvZ6rYMVz6s13/EqlzshfchnZixkclBJwz4l8k93+pQcDYuYows5YKxv
+ e+kAgq7kiqMtQGscs4fLhmXIQNVpM9Evktk1W8JTUD4BEcxN4cjlXurP5HBzD4fKxAeA
+ D+8dTb6MT2lTHuLwmuUrwbKcPxsTQoWSDY2yqFJE73ws9yjt+oH0gOyp4HpwfuZEBY0H
+ CUSC37y7W0v2jH4rtQrXtsRJJ8grMY1dYscg7obo+WobDxE5ahPAuiCwslWF0xtjgZ6F
+ peznM7I4pTEBalazjaYyFlNYNFI1ejT4hzhq0wJdhptqHLFIvnVQrkXAR/Qb+8YfMoMs
+ L24w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778495553; x=1779100353;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=AxFchPChBZqoxllwc2s3Hblldrqrne/9XqRt5Wx0d2Q=;
+ b=khsdZv2AUpjqxZ9GIl1D5M5F3TR1hAgBbFi2XQQy2iqfIUmkCIK9B9l/GF8A1eVr+A
+ GSrsok1ixL6tNWdYGivUr8dx/BGr9JO9erghIu4k2KYVdf9x1GTrm5RbM6q5u0sIVtra
+ s7qAQzHTafIAIIKihqICWJpDMFiJoctRz3pIC9aWfZTJScn/IxO9vYs9DwewuqJOvz/S
+ yg+jOxLNtKNpGYMFLgrHOap3cBmxJI48AV0yBZ+XuESI+QMbPimKCri0nB9Yvaa/r5Fb
+ iVOa/q0yYUxDQN2LCH7awXisyw+V3c+B5te8iz5zQ8jMw0x0K0DElHDJEtfdB9FHxGsn
+ fZxw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8cJ1raBL4cPhD+oUgmAYCu1GhBSAQQsuuGT8Cjo78DzyI8sXiXymPhbR139cUijqnUWqaWU9dAFg5x@nongnu.org
+X-Gm-Message-State: AOJu0YwGjP9kEyK1e4Oc1/7WiDJAAQi+oCjqNWfQvTmn059XnIQ/TzS8
+ SJz2CGoTc+kmiLSxO7vn7GZCbZLKmQq1P3/bqNaWn5tMt8PPdAp3b+pHHJF1FsBZzCE=
+X-Gm-Gg: Acq92OHEsvgB9otOpGu4qgul/slAMXVUiLQii9yvaMQWqBaKyFC+ge7KbFH4VEcEdHd
+ GMmBGT+Xi1VaYLNbwhscgVn33WopGeITlNC8J7pxHVLTgHWWA8qEHkeJ8eyTIsRIr756NnDLKL+
+ eEwHZcfk8dTs8Re4ElPvqs4m6xwRkxyPIPLyUtV9mgLfzUWVmiiN5vkk7fqHoCUcw87aZ/5+zzs
+ /0ol/5EMcJGVXmcYRU1s97uuvk8zUruxn3VUkC2oyP8PGzENzJVicosgpkYbS9FsIKMRqB9HhyA
+ l3JNo7MK/6MhbAfrl+v9ubScOQvYJO7xtmNGNlDaygwCUnRQ4Z6Ack+j+/j1yF6JhN1uPNqN5i5
+ VN9vsPYULpQFLN7rRiYGoPg4e+QmR9GiapHK2JhmKWQaSenSd7qJrVAbau7kFLYqjloOpbsYkIs
+ K6SJCsxxC85jJ1foEAEk4700RQ0YFoufB+xRTi6HXNd38+KYYl78f+smjW3wv1qYnmag==
+X-Received: by 2002:a05:600c:3b17:b0:488:acbc:b2e with SMTP id
+ 5b1f17b1804b1-48e51f32c94mr366846665e9.17.1778495552565; 
+ Mon, 11 May 2026 03:32:32 -0700 (PDT)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48e702ec426sm170327945e9.10.2026.05.11.03.32.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 11 May 2026 03:32:31 -0700 (PDT)
+Message-ID: <21b759b0-e72e-49c4-9e1a-112fdb8e1370@linaro.org>
+Date: Mon, 11 May 2026 12:32:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] vfio/ap: Return false when IRQ notifier setup fails
-To: zhaoguohan@kylinos.cn, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Alex Williamson <alex@shazbot.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>
-References: <20260510084353.58263-1-zhaoguohan@kylinos.cn>
- <20260510084353.58263-2-zhaoguohan@kylinos.cn>
+Subject: Re: [PATCH v2 05/10] qom: have object_set_props_keyval return bool
 Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <20260510084353.58263-2-zhaoguohan@kylinos.cn>
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20260508112429.643360-1-berrange@redhat.com>
+ <20260508112429.643360-6-berrange@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260508112429.643360-6-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=BM+DalQG c=1 sm=1 tr=0 ts=6a01aff2 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=Qmd6pTco9rnQzs-oBLoA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDExMSBTYWx0ZWRfX6KlQasE02xPg
- e7QCCpO6m43gikrDnBhDWhvP1v4QD/QncRsXfbW75gdR8o/0mQCvHm5MvHb1vQM+9Gi4pqdLR6P
- TzpLAlPkLyP1YeD1yfH9Ry2CcqFUy+QeRzZcvsPGevdR+Y6T+kiCFbmYHSZmCJIdnYjK/x710qa
- HnkdW4AzabU+Kpl8B2WaMi3f2N5DHdFyF8C5lRECmcZ2d70buAAqeOB9SRDTV7PUOo/VmLwH7js
- BG7dHLJ0z+YmzTjouuFlubhT41hpu5YNuMSeEZ2sNsI70bNfY28eNKqOrtJaGgDiM20vo5VAnYk
- 7O6bdQe7hwdO7o3EE1lSieWW8qqcZ+V4DTfWau1uPH1VFImll1SfX9uFrM3JndCMIdTCxZtO1NU
- Tczj3zLOowiB5FeZvO3KuSSQil8GWvhSFd4VwNK76ptDiGw8wyn6hD16rgY3EOc+TP+m9tNUimU
- SItWAWKa6qXA9o2f2EQ==
-X-Proofpoint-GUID: wBlNk4kxu5sSp3-6rsk1LhlqC-EnHHGA
-X-Proofpoint-ORIG-GUID: wBlNk4kxu5sSp3-6rsk1LhlqC-EnHHGA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-11_03,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 impostorscore=0 suspectscore=0 bulkscore=0 spamscore=0
- lowpriorityscore=0 priorityscore=1501 adultscore=0 malwarescore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
- definitions=main-2605110111
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=akrowiak@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,38 +105,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 5/10/26 4:43 AM, zhaoguohan@kylinos.cn wrote:
-> From: GuoHan Zhao <zhaoguohan@kylinos.cn>
->
-> vfio_ap_register_irq_notifier() cleans up the fd handler and EventNotifier
-> when vfio_device_irq_set_signaling() fails, but still returns true to its
-> caller.
->
-> Return false after cleanup so the caller can handle the failed
-> registration path instead of treating it as a successful notifier setup.
->
-> Fixes: cbd470f0aac5 ("vfio/ap: Make vfio_ap_register_irq_notifier() return a bool")
-> Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
+On 8/5/26 13:24, Daniel P. Berrangé wrote:
+> This matches the convention established by the object_set_props and
+> object_set_propv methods.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   hw/vfio/ap.c | 1 +
->   1 file changed, 1 insertion(+)
->
-> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-> index 276ae8c207bf..6e2a1223ea8d 100644
-> --- a/hw/vfio/ap.c
-> +++ b/hw/vfio/ap.c
-> @@ -193,6 +193,7 @@ static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
->                                          errp)) {
->           qemu_set_fd_handler(fd, NULL, NULL, vapdev);
->           event_notifier_cleanup(notifier);
-> +        return false;
+>   include/qom/object.h    |  4 +++-
+>   qom/object_interfaces.c | 13 +++++++++----
+>   2 files changed, 12 insertions(+), 5 deletions(-)
 
-Reviewed-by: Anthony Krowiak <akrowiak@linux.ibm.com>
-
->       }
->   
->       return true;
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
