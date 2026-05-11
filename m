@@ -4,94 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECD7ACD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 18:01:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18532CD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 18:02:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMUvu-00060d-KU; Mon, 11 May 2026 14:00:46 -0400
+	id 1wMUxE-0006lm-Mj; Mon, 11 May 2026 14:02:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wMUvj-0005qw-9S
- for qemu-devel@nongnu.org; Mon, 11 May 2026 14:00:44 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wMUvg-0004Rq-O5
- for qemu-devel@nongnu.org; Mon, 11 May 2026 14:00:34 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-43d77f6092eso2868271f8f.2
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 11:00:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wMUxB-0006lS-RJ
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 14:02:05 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wMUx9-0004nE-KI
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 14:02:05 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64BHdxKR1856939
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 18:02:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ NA/nT04l+q+4hnfT6D72ZMw31Zj61L2f1KTHpn/kWSM=; b=NB6z1uR61ZjJbjdl
+ BIHU1AjrfGa5EZbYDqJmtfjB7bc+Xmsyst2JrZixup9HuAQZ0ba+Xx/EjcwKaEzC
+ krtB3iHkYcMTJACXNpyi4diFAlOYmlFYMQ9BXP7v3lJOfbJn2g5ayJ19/FVdJPqx
+ +Q1zCxu91kmqSieQkmNrAntjl2aMCBgWCeMQKSpIQ7158NSxXjrGN+zAlZRyZs06
+ aisabOFW6YWPj4IpKmxoI2fwFhDKh7GGWgfXd6956n19JCzB/W5CjZEApq6149cd
+ 4BJBaXkY9g/k5H3hhskdyntXwzRIpzWF1cflYPyjwmW2CgYtz1j1sLPd6F6prC+R
+ YUeb/w==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e3kqb83vm-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 18:02:01 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-2fe1cf409a1so2039690eec.1
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 11:02:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778522430; x=1779127230; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6AL0hvEpQGG4e41gPn7iHuBeeLZ3f4rlm/X40Bd+1LU=;
- b=Wf1bqzV3gd8raOEFv2++ssoldzpuTxsGIMnpNqzpO0LQdJJEZjcNncsg8sbHLpINwA
- ZqeTq58PpdMBLm3CxPooUmAdk3iWIMSfuBz8usuFBKSHUjWNb2yvf1A4fsaPhc2zR0Ma
- gpWDLKmcOdkCFzirsnl0qPc9RK7ChwPHzWcprDi77jeEuiNshsotjWvlapvRny8RP+vf
- lcVYlabgmDzeNf9ghbN5HZg0f1LPZ4JcGtYJCRG9D2C+ksi/6Juw56RGp85ziuLuppbN
- rR2Q7smsahMuvfBSgIOJA4y66D4YzdE+OYDZbOVSG6ujQVHjiONQJq23ESyZKdKWBHWV
- +Tnw==
+ d=oss.qualcomm.com; s=google; t=1778522521; x=1779127321; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=NA/nT04l+q+4hnfT6D72ZMw31Zj61L2f1KTHpn/kWSM=;
+ b=QywDCPWFAWxS+HPC7Xzn/+/0ssA0qbM21LkowwuGPvvoQ3gak1BdYzWH+C3Ihek0R6
+ d1Yl8mojs6vlvVkuyqXhsKBQnYtk6jL29Nxsdh0dCtUgAoxFFG53tLbp2O1RLB/utn34
+ QjOtdD3dkMl0jrGZ0XOYsgBw7NeJjKuUTr6xR5/ng/Bwrcakh8lOW5UAbBIVnebT9QfM
+ 8eqSwqbMbK7SwsLpVlgZaLzKCvWO12VJh/gyusRsPAGC+CuGNPDNoZzipr2RwqpgsyBY
+ kYKsvk9787w/uhBXY1HgnqKDCFkk7ZJjsxtIFTUx+UvSuwCHXLL3cZ0DXNkj7Pz+WrTP
+ uzLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778522430; x=1779127230;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6AL0hvEpQGG4e41gPn7iHuBeeLZ3f4rlm/X40Bd+1LU=;
- b=VB4CeuqwZo8BQZZ5iWNmRTCOKBVGxCZOvvup8exASDfE0qc9bgIuSbXmvH75lIo7zB
- oJK2xEl5g40UeyxO7NbJGhHaGZ5WrFEqTGYd0gTHyk2GV156wswSWmHFGHdc4wicc/Uj
- GKEuFUdxGT6jAxLsPZYoip9qL9OYGlN5sb6YWB3EPVsH/ge8HZvjbaY1P2MzUboKq2cq
- MOV5JV3PIuqgxUyKAn92D0yM+L360jpQYjcSg+kjfzA6MVVzKP4GI4ooKsnq8NgqBDxZ
- j4fREgpaj+KYcwTzIXM4pUYZbFxEY2Oo+6eBz5esDSxqvhKIE03wlid+69tDTR4n5Q3Y
- T5cA==
-X-Gm-Message-State: AOJu0Yw5AIGElGOaQ3bVuqX8UgCIwawREvDIEXIrjodHMqHIKGj9rWt5
- 5s6dljmwYqDs+vNuD6+qCj/ZcHX/z9EdCZrZScb1N9jLDALaZQaxLjwnzAt8ZeMyea4Mb/V+SIp
- sTSFn0mc=
-X-Gm-Gg: Acq92OFebH6GhIr2V2l0NVYaFGwBvyH/fKS+vBklqH1KwB9OE8QwYV2aI/9cKcBHmkM
- JRvPZj4upcmB8xxFxh2TMGcLolksSRHbZwi9a3GfpzPZ+7d6m74Nh7onn2pYGB2L8exkFyoNI6s
- pSx9cNQbeZ10zD6P0UiTBgPrN4XaKMYUgv9ycSYJyl7cG1+fKd9nibLdJwyTwVwQMzMoFPzw/Bw
- te++FetBte2py2JDgsz1VRj9NmuN7hNIenAM8wtb9xT4aTNDvl52ImmcgcxidMGxu29djTwavkx
- GR859vM+NmAgq6O0GDbTyGp04j3rOW9w/UwEMow+1VsECeh9TR5pAqHksqTwe2V8q/z9h4oTcYL
- CCGqlPz4mj4Rxc1dSY8wn6ASybEvZMKLb9CfDP4m2Xrr8ZCaaBF8rRVny/1PIogK34417fgChux
- nXaXqUtK4/0FMEXhQVH8aUoBA=
-X-Received: by 2002:a05:6000:186b:b0:448:8db5:410b with SMTP id
- ffacd0b85a97d-4515c574761mr39199173f8f.20.1778522429806; 
- Mon, 11 May 2026 11:00:29 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4548ec6be40sm28349966f8f.12.2026.05.11.11.00.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 May 2026 11:00:29 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3D9255F7C1;
- Mon, 11 May 2026 19:00:28 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  John Snow <jsnow@redhat.com>,  Cleber Rosa
- <crosa@redhat.com>
-Subject: Re: [RFC PATCH v2 03/10] .agents/skills: add qemu-code-explorer skill
-In-Reply-To: <agISxb-entwoYzzF@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Mon, 11 May 2026 18:32:53 +0100")
-References: <20260511170500.124211-1-alex.bennee@linaro.org>
- <20260511170500.124211-4-alex.bennee@linaro.org>
- <agISxb-entwoYzzF@redhat.com>
-User-Agent: mu4e 1.14.1; emacs 30.1
-Date: Mon, 11 May 2026 19:00:28 +0100
-Message-ID: <874ikdeshv.fsf@draig.linaro.org>
+ d=1e100.net; s=20251104; t=1778522521; x=1779127321;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NA/nT04l+q+4hnfT6D72ZMw31Zj61L2f1KTHpn/kWSM=;
+ b=f+fCf5nSaC54ZNchnTcS34XC/vdskoJBwPBhaekuIQAaAgozYXbeqQIjqdXrzmO+ls
+ p1ipSpqbJ6djtM5nkDgRmnA876tHUZO9/pMCcG+zhKSv+IbSQhyypHJbgvVDBXtvIcbW
+ t0+aGH/Zoa7fidk13oaet6CEEqM+wXk1/s+3O9aAkCP54hOKdvqgkKzcUHhpcihffk8c
+ zL0CwI0Hs8wrCZeJaZI+pGvSn874gqggxys/28iN+hDwdvpeuhoAUKWSkKzzofp1OmTZ
+ KZ8a6joayviaF1tqSlqJhUeN21O7EDk9g/ey1uKDy4V8CNWHAV9hbQwyKjRHXHRQh2rW
+ 2ntQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/07kNIvFPidK2PGJsujCCN10+X0oEQtnc3qxmJ4jEi+m5SrriCs8GmOhKRH4jYITrxVYnfDlJEbgzv@nongnu.org
+X-Gm-Message-State: AOJu0YwzPmkt+eMdBHCRpSA7eOGKV2x6VVDSyt/jayAwnBfVqgSydCw6
+ EeH8G6PTR5VpXB6j2GhggybROXDoCQtRlc1ya/4WUauHc5915nc9OXTwSbPrMxPg8nZacJbBKZo
+ bfya4Y+FuN3S3UF7HUn5WnRYD7elY1OGPZvtTzeu0etrDGXx9fIyYVwMpmw==
+X-Gm-Gg: Acq92OGJz4RLWxCtCBcOQU3QFXBiiwxq98bd8EtXEqLiueILewSKqDR1OQFytni/lcN
+ m6WQArXGZGn05e8SI9MOrLjx9oUN9xSnEXrbLO1KlN0gF4QIQt5dO9KUYm5xgy2u5vxjoj5ZrPB
+ QnkB4mTTI5C5GIlCQusQvZVVYY3ZiP6vKAaqyfhd5YBz17FqVjslgm/TxIVuWGjr/hbt9RLyNn+
+ M8nWMkPgNWCwMN6oM7P5Lhzn3TY9hUHJqrWegcPxUUcaDklgyrVeVjQZHzwof08OL/8sPOj2tB1
+ TYFjhztA6pgIVd3UCBWXjGV9iVoP3hLEfIGFxQC6NAEAQlth0qozII+6tNrn6lAIrU0MkM63H6s
+ bZPvA79WzItqALjtL/4Qp9jttW8jq3W3AtLWyIQDyaOeW1oOObBiupdG6JzOqYAZ5Y0KZKa8Q2y
+ 8s7H+puj5iw3Z4Cw==
+X-Received: by 2002:a05:693c:2c0d:b0:2de:aafb:feff with SMTP id
+ 5a478bee46e88-2f548895139mr11153879eec.2.1778522520598; 
+ Mon, 11 May 2026 11:02:00 -0700 (PDT)
+X-Received: by 2002:a05:693c:2c0d:b0:2de:aafb:feff with SMTP id
+ 5a478bee46e88-2f548895139mr11153829eec.2.1778522519919; 
+ Mon, 11 May 2026 11:01:59 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2f888e4016asm14325725eec.28.2026.05.11.11.01.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 11 May 2026 11:01:59 -0700 (PDT)
+Message-ID: <2a4981de-da3f-44a9-b422-3ba9c24b7dab@oss.qualcomm.com>
+Date: Mon, 11 May 2026 11:01:57 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 089/110] target/s390x: Introduce common system/user meson
+ source set
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>, qemu-devel@nongnu.org,
+ Cornelia Huck <cohuck@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Farhan Ali <alifm@linux.ibm.com>
+References: <20260506135524.20617-1-philmd@linaro.org>
+ <20260506135524.20617-90-philmd@linaro.org>
+ <5b1fd1f6-00ec-4575-9609-845218405403@redhat.com>
+ <90ea3dacb27252a623c0f95bad334e4702222d83.camel@linux.ibm.com>
+ <40f3f863-04fe-4eb5-9672-a21ae4fca950@redhat.com>
+ <3b5ff524-75d6-41d0-949d-39bbff0558bb@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <3b5ff524-75d6-41d0-949d-39bbff0558bb@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: e3hRELBsaDh4vlFRRl9zjL5dPSn8kBEs
+X-Authority-Analysis: v=2.4 cv=LOJWhpW9 c=1 sm=1 tr=0 ts=6a021999 cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=Ng9wYaPqCYiD3NJH1AcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=scEy_gLbYbu1JhEsrz4S:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDE5MiBTYWx0ZWRfXylXj1ByWI+cq
+ PzmQwPdu/1AejrAdIA4ECOIxorprtEMTBFNPyzD77d0Ba2OYhjEd1mlbG07Wx7GZlfxYgMoNCNQ
+ 4ZsyMsU5uuz4lmTCGrKuR2Pl+HMx6KZaM9Tzm/hIup/vyIOFJMGEh4fidq9g4BUY0NP07We/DjK
+ HDYfA+JaNqnPxB5tPAyt86lOPNBm3kqnfRWvECVgZJ3cfuXF62+5bXnhN+Ea9lG6WSdlx84iJxw
+ 3dG6Wq4IZP6jxDgi/ZusqRc08Mo44pgrUdehzP1Ri+++8/JJjR/TY2+cvRUOjuPgF7ixpKr7Eb3
+ 5WBu8xkSM2wnkkTX6SUgj7+xYij8I+hHQdf0sbOcF+Rn+TDEfGALZE++06OuHD3hBFj77/vtWbG
+ t8LMLm/YMxoPcwq9jgF9v6XfzucshpVNnS1KeNbSuekuNFGx1GGE+txU/YPShDZZhF569oIe7cK
+ y7PMTXuCtJVPtHlFqwg==
+X-Proofpoint-GUID: e3hRELBsaDh4vlFRRl9zjL5dPSn8kBEs
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-11_05,2026-05-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 adultscore=0 lowpriorityscore=0 suspectscore=0 spamscore=0
+ clxscore=1015 bulkscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605110192
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,57 +162,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On 5/11/2026 10:47 AM, Philippe Mathieu-Daudé wrote:
+> On 11/5/26 18:36, Cédric Le Goater wrote:
+>> On 5/11/26 17:58, Eric Farman wrote:
+>>> On Mon, 2026-05-11 at 17:48 +0200, Cédric Le Goater wrote:
+>>>> Hello,
+>>>>
+>>>> On 5/6/26 15:55, Philippe Mathieu-Daudé wrote:
+>>>>> Introduce a source set common to system / user. Start it
+>>>>> with the files built in both sets: 'cpu_models_user.c'
+>>>>> and 'gdbstub.c' No logical change intended.
+>>>>>
+>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>>> Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+>>>>> Message-Id: <20260423135035.50126-4-philmd@linaro.org>
+>>>>
+>>>> This change introduced a regression with PCI passthrough which
+>>>> stopped working. Guest kernel reports :
+>>>>
+>>>>     [    0.156501] zpci: PCI is not supported because CPU facilities
+>>>> 69 or 71 are not available
+>>>>
+>>>> and other devices (ap, ccw) are impacted too I think.
+>>>>
+>>>>> ---
+>>>>>    target/s390x/meson.build | 25 +++++++++++++------------
+>>>>>    1 file changed, 13 insertions(+), 12 deletions(-)
+>>>>>
+>>>>> diff --git a/target/s390x/meson.build b/target/s390x/meson.build
+>>>>> index 6f98ce34d73..44f58ac2919 100644
+>>>>> --- a/target/s390x/meson.build
+>>>>> +++ b/target/s390x/meson.build
+>>>>> @@ -1,4 +1,9 @@
+>>>>>    s390x_ss = ss.source_set()
+>>>>> +s390x_common_ss = ss.source_set()
+>>>>> +s390x_common_system_ss = ss.source_set()
+>>>>> +s390x_system_ss = ss.source_set()
+>>>>> +s390x_user_ss = ss.source_set()
+>>>>> +
+>>>>>    s390x_ss.add(files(
+>>>>>      'cpu.c',
+>>>>>      'cpu_features.c',
+>>>>> @@ -15,15 +20,16 @@ gen_features_h = custom_target('gen-features.h',
+>>>>>                                   capture: true,
+>>>>>                                   command: gen_features)
+>>>>> -s390x_ss.add(gen_features_h)
+>>>>> +s390x_common_ss.add(gen_features_h)
+>>>>> +s390x_common_ss.add(files(
+>>>>> +  'cpu_models_user.c',
+>>>>> +  'gdbstub.c',
+>>>>> +))
+>>>>> -s390x_system_ss = ss.source_set()
+>>>>>    s390x_system_ss.add(files(
+>>>>>      'ioinst.c',
+>>>>>    ))
+>>>>> -s390x_common_system_ss = ss.source_set()
+>>>>> -s390x_common_system_ss.add(gen_features_h)
+>>>>>    s390x_common_system_ss.add(files(
+>>>>>      'helper.c',
+>>>>>      'arch_dump.c',
+>>>>> @@ -32,19 +38,14 @@ s390x_common_system_ss.add(files(
+>>>>>      'mmu_helper.c',
+>>>>>      'sigp.c',
+>>>>>      'cpu-system.c',
+>>>>> -  'cpu_models_system.c',
+>>>>
+>>>> This file is compiled anymore and the CPU features and facilities are
+>>>> not propagated to the guest anymore.
+>>>>
+>>>> Without this patch, cpuinfo reports :
+>>>>
+>>>>     features    : esan3 zarch stfle msa ldisp eimm dfp edat etf3eh
+>>>> highgprs te vx vxd vxe gs vxe2 vxp sort dflt vxp2 nnpa
+>>>>     facilities      : 0 1 2 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18
+>>>> 19 20 21 22 23 24 25 26 27 28 30 31 32 33 34 35 36 37 38 40 41 42 43
+>>>> 44 45 47 48 49 50 51 52 53 54 57 58 59 60 61 64 65 69 71 72 73 74 75
+>>>> 76 77 78 80 81 82 129 130 131 133 134 135 138 139 140 146 147 148
+>>>> 150 151 152 155 156 165 192 193 194 196 197
+>>>>
+>>>> with :
+>>>>
+>>>>     features    : esan3 zarch stfle msa ldisp eimm dfp edat etf3eh
+>>>> highgprs te vx vxd vxe gs vxe2 vxp sort dflt vxp2
+>>>>     acilities      : 0 1 2 3 4 6 7 8 9 10 11 13 14 16 17 18 19 20 21
+>>>> 22 23 24 25 26 27 28 30 31 32 33 34 35 36 37 38 40 41 42 43 44 45 46
+>>>> 47 48 49 50 51 52 53 54 55 57 58 59 60 61 64 72 73 74 75 76 77 78 80
+>>>> 81 82 129 130 131 133 134 135 138 139 146 147 148 150 151 152 155 192
+>>>>
+>>>
+>>> Thanks, Cedric... I wonder if the above is addressed by this patch?
+>>> (I haven't checked yet, but will
+>>> do that now.)
+>>>
+>>> https://lore.kernel.org/qemu-devel/20260510204640.2178926-1-
+>>> marcandre.lureau@redhat.com/
+>>
+>> Something like below seems to work.
+>>
+>> C.
+>>
+>>
+>> @@ -22,7 +22,6 @@ gen_features_h = custom_target('gen-feat
+>>
+>>   s390x_common_ss.add(gen_features_h)
+>>   s390x_common_ss.add(files(
+>> -  'cpu_models_user.c',
+>>     'gdbstub.c',
+>>   ))
+>>
+>> @@ -38,8 +37,11 @@ s390x_common_system_ss.add(files(
+>>     'mmu_helper.c',
+>>     'sigp.c',
+>>     'cpu-system.c',
+>> +  'cpu_models_system.c',
+>>   ))
+>>
+>> +s390x_user_ss.add(files('cpu_models_user.c'))
+>> +
+>>   subdir('tcg')
+>>   subdir('kvm')
+> 
+> Right. I wonder how I could screw that change...
+> 
+> 
 
-> On Mon, May 11, 2026 at 06:04:52PM +0100, Alex Benn=C3=A9e wrote:
->> This provides a skill detailing how to explore the QEMU code base. It
->> guides the agents to use the tags and git-grep by default and outlines
->> some of the confusions that can occur with multiple build directories.
->>=20
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->>=20
->> ---
->> v2
->>   - remove personal gtag skill references, add global stanzas directly
->>   - moved macro information from AGENTS.md into code explorer
->>   - more imperative language to trigger its use
->>   - add section on using scripts/expand_macro.py
->>   - remove eca reference from evals.json (maybe we should just drop this)
->> ---
->>  .agents/skills/qemu-code-explorer/SKILL.md    | 119 ++++++++++++++++++
->>  .../qemu-code-explorer/evals/evals.json       |  26 ++++
->>  AGENTS.md                                     |   1 +
->>  3 files changed, 146 insertions(+)
->>  create mode 100644 .agents/skills/qemu-code-explorer/SKILL.md
->>  create mode 100644 .agents/skills/qemu-code-explorer/evals/evals.json
->>=20
->> diff --git a/.agents/skills/qemu-code-explorer/SKILL.md b/.agents/skills=
-/qemu-code-explorer/SKILL.md
->> new file mode 100644
->> index 00000000000..d5b7d6a35cd
->> --- /dev/null
->> +++ b/.agents/skills/qemu-code-explorer/SKILL.md
->> @@ -0,0 +1,119 @@
->> +---
->> +name: qemu-code-explorer
->> +description: Systematic framework for deep-diving into the QEMU codebas=
-e. Use this to find precise symbol definitions (functions, structs, globals=
-), locate all call sites or references, explore subsystem architectures, or=
- search generated code in build directories. You MUST use this skill when e=
-xploring code flow and dependencies.
->> +license: GPL-2.0-or-later
->
-> Is "license:" a mandatory tag from a schema we're following here,
-> or can be used "SPDX-License-Identifier:" instead ?
+The only possible thing is that code becoming common skipped some ifdef
+that were here before per target.
+So, something that should have been poisoned has not been, and we
+definitely need to identify what it is to prevent other regressions like
+this.
 
-It's from the spec: https://agentskills.io/specification#frontmatter
-
->
->
-> With regards,
-> Daniel
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Regards,
+Pierrick
 
