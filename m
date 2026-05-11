@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D007CD37AC
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 14:03:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 470AACD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 14:03:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMRCs-00044n-Sf; Mon, 11 May 2026 10:02:08 -0400
+	id 1wMRDb-0004u1-Uk; Mon, 11 May 2026 10:02:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
- id 1wMRCM-0003xf-OG
+ id 1wMRCN-0003xn-TR
  for qemu-devel@nongnu.org; Mon, 11 May 2026 10:01:35 -0400
-Received: from mail-vs1-xe2d.google.com ([2607:f8b0:4864:20::e2d])
+Received: from mail-oo1-xc36.google.com ([2607:f8b0:4864:20::c36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
- id 1wMRCJ-000663-Lw
- for qemu-devel@nongnu.org; Mon, 11 May 2026 10:01:30 -0400
-Received: by mail-vs1-xe2d.google.com with SMTP id
- ada2fe7eead31-6313c800372so2265063137.0
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 07:01:27 -0700 (PDT)
+ id 1wMRCM-00067H-0C
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 10:01:31 -0400
+Received: by mail-oo1-xc36.google.com with SMTP id
+ 006d021491bc7-679f6ee3fb0so1739422eaf.2
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 07:01:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778508086; x=1779112886; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778508089; x=1779112889; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Do+ufpOA4YSJpqU1qNqftH/AxWOZ177vIBGpoAZmUk4=;
- b=dQIX7OwEoo0B3dfqJ241fdeZu1AI+nM3BnptVv8/i5Pi5jgU+CW+7FUfeOqR9eSUWV
- 5t61FVCtF6MpGMdgi9BAzWkzvkDpf5A9PHDRE6fJLuMWyTurfoXcsnsild5LW5a8biCZ
- PtDm8w330aRlGCkNEk5SNsjzm6fDWVOdX4/wf2lz8viP5i6OAFZKn+3sm1vJCAUmKtnY
- eDgi9LkOYxGf1s7oRkRomC8eU/7eYJR2NC+uXF2scjBh/uABWZhamtFiUJyUFP78/ASV
- 77cVmQ+KJwH0HiWeG+jkV378VewIyVLdxfwPeuU1cISqaPGyv6fGyon4K7q/crsUVlGD
- mD/g==
+ :reply-to; bh=/WgX7SoeZhIHg97bvyLdMZe+eYz+Kg1zGjHAsHbNvCs=;
+ b=UBY1MUIACPLf3pvuVtFUk4UGEOP9ba0QK030NXUuRh+WPkuFvvGpvstlnyng7TM6C8
+ sAnHML0MFTgYEF6JEhRwYh5wSUZhUMoj8+naEdCv7Kw1bsTmBB0u44N2NmJxPXdU2jOq
+ uWkNPzoe+4cKi88y+E3cNe0LR3MBrVCds1ZK/EYmUp4cMDDAi/8qn2X0luwp24Fi2qAl
+ Wpk+mHt+cYXxoiUradYXYMrYaceOxTbec159+ONpCcr+BI48JuEXo+pJqOikY/hh/KP/
+ s0CUaUeFL/xA4i2GlrMyOxVYbi91Dmu9G7AwKYYwaMUdWYN9hW9gvd9Kp3gS4y0pGIoM
+ Ycxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778508086; x=1779112886;
+ d=1e100.net; s=20251104; t=1778508089; x=1779112889;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Do+ufpOA4YSJpqU1qNqftH/AxWOZ177vIBGpoAZmUk4=;
- b=hbXelLqsYkuc/YnzgSA1n8gzKta19e1YuLS7aU76LMdGdKNXbuuJ5Wa1Xvwv8MSXYI
- XlyGcVDCORy+H4TumOF5zO7UPOtY5hGt8V4Z2vPyeHUudeEzoeeq6U/f6Z8K8rqdMXF0
- augwhBmtqvECYbBbJZLHM61AjbJm7nG2c1+x8kLk/BfMvuvTKtXlH76bxyGeZXaay6fR
- TwO0IvCEocf90FdcbhnJVYazvE9tJmANYfPGDZ0fdZ12jP/0E//GJ+fZBrwomA+DFvwB
- OSrj7vi2MLSN7C+GEi08s3cqCmfzQWFkmYH0Zz48D6CXJYCJ/qtjELGhl0CEbk6qxxHR
- XPeg==
-X-Gm-Message-State: AOJu0YzW3eGXy8wnC86VI9hxGAXLcMnM0v+q5bXazehWI9Q821VSvcbf
- xIPpFeVGCVNDBfmhNYke3fOMw3ximtvEXIApx6AV4UM3YaRCQYqYb4sQ
-X-Gm-Gg: Acq92OEpGvrEBRAng3jsSH5bzSJoUzKb36KG9hmB1Hei7BhRAbOlk6M1NdyZKJ5Bpd4
- y938gKQKAs0AX7CcjUog8gKQEvjN7ma4YT0IGvigTq0y/grZ19iWvKvY6HAKvCV/ea9y55zZIvV
- 7/9Nrblt888O2TpeS0knOTN8+q4DAxk/QuYrMZNrkALxScEZC3Gwkub+qsCYRqehfs4ZEgMEU73
- lQUGTz66m/txHGjk431dQQgDnEm6e0UrT4V6keBe9bwFMWITGCkEeVwpBHqXJjZUxMOuxK51UoC
- pJ9MtTmz9lrEBiha1v5tZuDMGM7r0ijtiAKD4dP2MWZBVkCInosuUHZa4eHw/zhldc5iD/HE13j
- sFS1z5kaUNzpC6xs6VIrinE93wq3itYTsBiK5Z+wFqviV8vyjFKhG6bpDkELAu38Jne19ThNRHk
- qrB56WiCYFPVs1Q6XfyNL9CWfwyz5ekcS5pj7LUM/SybC0P2R7T3k=
-X-Received: by 2002:a05:6102:3a0c:b0:631:8665:3510 with SMTP id
- ada2fe7eead31-631dc7ac519mr3885381137.31.1778508081818; 
- Mon, 11 May 2026 07:01:21 -0700 (PDT)
+ bh=/WgX7SoeZhIHg97bvyLdMZe+eYz+Kg1zGjHAsHbNvCs=;
+ b=TK4yF0gy/BZnb7l9SFodHrejWi45FgQdxJmhvl3QyiCUbYHfC4eohdS/Q053neeqTe
+ mN+eQ4c1+Ba99rdmjzYYw1/pmjVd4ik5tmzMBHdEBkOVUgrylp7LpVq9zq72RZqo08bq
+ IC3uP2aCmdNYmO+v8XudFWHaJxzP4TCIm+ZcSqYsuvGdeq7F7UR3U+81uO4CWkCOupUD
+ eYPyZTtWUjrPuhtI1yoA/8pGIyl3Tuqs0rcSudNvE6mVy4L+yh9NLUTFS/EPeqr0maJe
+ Uwt4aOZnHRBmjnCPdagMXPK1TZW0jxC2148O4bupVH7WzL0Phh/BSRlWWUU+yrH5Ph8n
+ 6Gyw==
+X-Gm-Message-State: AOJu0YxZzdUTuLCefZGZ3jfv1KxzgrK9HdIurKMIVZYVGDBNxPCEXsvJ
+ gIMtBFLR6sWRv4ATzy3A6D+2ig1eM40zvfs0M6FlnRcNttsrGzxojQjt
+X-Gm-Gg: Acq92OHDiyqkbVcYdv5kZY0WeVvB8SqyTe4FWivL4hSfvtL0dVMc1yMxLTJ9PArZuIt
+ lWHurKGoxn7f+0txkX4cH6sFSU6/hxIKFST6dJXN7mGTCU5m/0d+2iRbH4+IFMfw4g4bKrTc6UW
+ Fpu8caN/zc0t4MKQsfTyj/kkEwMUhQwfgs1r5RkMdXokTgU1rpV02dd1FMi3TQyMLRzhoBx0byy
+ 3nUrMGDXixvVhOfl/KculUQFiMgC2iP/iM+Ax/qOS1GUKcP2+Hh7CUoW4NtXHctoPHfZfcJ4GpA
+ IBR6YpC6EVfjDO7+Yb3tf56L4agb0oQHf8OBqvuiUN/wcu7YPHsZ8XoU7MUMoZ+NrlZkJuXDbFm
+ LT1fQMfBilOHzW7OyDdm0JTXd+9RMAr6yk4uaLm0gycTD90aziE5nYlbStYGD3TxDzfw3eORnOE
+ ahfdt0KPBswsoR54abUxpO7b0xE9C1bCIXjhZI6+YuxeZ0tU3Z3r8=
+X-Received: by 2002:a05:6820:1993:b0:696:22dc:b4c1 with SMTP id
+ 006d021491bc7-69998d1814cmr11770432eaf.29.1778508088525; 
+ Mon, 11 May 2026 07:01:28 -0700 (PDT)
 Received: from [192.168.1.160] ([2600:4041:54f3:a400:c013:3550:ed5f:a59a])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8bf39c7dd09sm94773756d6.31.2026.05.11.07.01.20
+ 6a1803df08f44-8bf39c7dd09sm94773756d6.31.2026.05.11.07.01.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 May 2026 07:01:20 -0700 (PDT)
+ Mon, 11 May 2026 07:01:27 -0700 (PDT)
 From: Gabriel Brookman <brookmangabriel@gmail.com>
-Date: Mon, 11 May 2026 10:01:09 -0400
-Subject: [PATCH v6 11/15] target/arm: skip tag bit bounds check if MTX is
- on
+Date: Mon, 11 May 2026 10:01:11 -0400
+Subject: [PATCH v6 13/15] docs: add MTE4 features to docs
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260511-feat-mte4-v6-11-8557cc1313b9@gmail.com>
+Message-Id: <20260511-feat-mte4-v6-13-8557cc1313b9@gmail.com>
 References: <20260511-feat-mte4-v6-0-8557cc1313b9@gmail.com>
 In-Reply-To: <20260511-feat-mte4-v6-0-8557cc1313b9@gmail.com>
 To: qemu-devel@nongnu.org
@@ -82,15 +81,15 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1778508062; l=5222;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1778508062; l=2273;
  i=brookmangabriel@gmail.com; s=20251009; h=from:subject:message-id;
- bh=8jE/ExnW0afjmNINEpEf2ghGWWW+eTv/eM0GgsItKvo=;
- b=IzdpqFoLBsC4f/A5VQt3FOCjt3HJPfl8/b+lLGMG4Wf+JhG9U/uYBm8GGrgbQQNtqhPh9lf7B
- nb1g7CQhkX8DpCHSUB3BqS1jOLvhe5aG4D9PWwp+Lhh9kaXL8rnOULl
+ bh=ztIDgqfeOPD6qpIxmbbcUcgA0mWZp1FYw4KgD7jsfWo=;
+ b=HzwKC+JzmmLiKYq7qv5jMsXvxhnE9DFGxM9tEQ4DCgS+bU07tUIolSoqg9GVLPhrVzP8bDBcC
+ 4X7K1N24yeEDkfH01nOnDAwqrzQ4UTvHQV9eZmZnXddprxGoF9NOVA5
 X-Developer-Key: i=brookmangabriel@gmail.com; a=ed25519;
  pk=m9TtPDal6WzoHNnQiHHKf8dTrv3DUCPUUTujuo8vNrw=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2d;
- envelope-from=brookmangabriel@gmail.com; helo=mail-vs1-xe2d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c36;
+ envelope-from=brookmangabriel@gmail.com; helo=mail-oo1-xc36.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,134 +112,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Virtual address canonicity checks should ignore mismatch in tag bits
-during translation step if MTX is set. This mismatch is checked during
-the tag check instead, in that case.
+The implemented MTE4 features are now present in
+docs/system/arm/emulation.rst
 
 Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/helper.c    |  6 +++++-
- target/arm/internals.h |  1 +
- target/arm/ptw.c       | 35 ++++++++++++++++++++++++++++++-----
- 3 files changed, 36 insertions(+), 6 deletions(-)
+ docs/system/arm/emulation.rst | 5 +++++
+ target/arm/tcg/cpu64.c        | 8 ++++++++
+ 2 files changed, 13 insertions(+)
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 18352bd186..0e70822d34 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -9693,7 +9693,7 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
- {
-     uint64_t tcr = regime_tcr(env, mmu_idx);
-     bool epd, hpd, tsz_oob, ds, ha, hd, pie = false;
--    bool aie = false;
-+    bool mtx, aie = false;
-     int select, tsz, tbi, max_tsz, min_tsz, ps, sh;
-     ARMGranuleSize gran;
-     ARMCPU *cpu = env_archcpu(env);
-@@ -9730,6 +9730,7 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
-         ha = extract32(tcr, 21, 1) && cpu_isar_feature(aa64_hafs, cpu);
-         hd = extract32(tcr, 22, 1) && cpu_isar_feature(aa64_hdbs, cpu);
-         ds = extract64(tcr, 32, 1);
-+        mtx = extract64(tcr, 33, 1) && cpu_isar_feature(aa64_mte_mtx, cpu);
-     } else {
-         bool e0pd;
+diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+index 8cd7fe7b00..c660074ec4 100644
+--- a/docs/system/arm/emulation.rst
++++ b/docs/system/arm/emulation.rst
+@@ -111,6 +111,11 @@ the following architecture extensions:
+ - FEAT_MTE3 (MTE Asymmetric Fault Handling)
+ - FEAT_MTE_ASYM_FAULT (Memory tagging asymmetric faults)
+ - FEAT_MTE_ASYNC (Asynchronous reporting of Tag Check Fault)
++- FEAT_MTE_PERM (NoTagAccess memory attribute)
++- FEAT_MTE_TAGGED_FAR (Full address reporting of Tag Check Fault)
++- FEAT_MTE_STORE_ONLY (Store-only tag checking)
++- FEAT_MTE_CANONICAL_TAGS (Canonical tag checking)
++- FEAT_MTE_NO_ADDRESS_TAGS (Address tagging disabled)
+ - FEAT_NMI (Non-maskable Interrupt)
+ - FEAT_NV (Nested Virtualization)
+ - FEAT_NV2 (Enhanced nested virtualization support)
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index 649d854a65..77b8c2a0a9 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1291,8 +1291,16 @@ void aarch64_max_tcg_initfn(Object *obj)
+     t = FIELD_DP64(t, ID_AA64PFR1, CSV2_FRAC, 0); /* FEAT_CSV2_3 */
+     t = FIELD_DP64(t, ID_AA64PFR1, NMI, 1);       /* FEAT_NMI */
+     t = FIELD_DP64(t, ID_AA64PFR1, GCS, 1);       /* FEAT_GCS */
++    t = FIELD_DP64(t, ID_AA64PFR1,
++            MTEX, 1);   /* FEAT_MTE_NO_ADDRESS_TAGS + FEAT_MTE_CANONICAL_TAGS */
+     SET_IDREG(isar, ID_AA64PFR1, t);
  
-@@ -9745,6 +9746,7 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
-             sh = extract32(tcr, 12, 2);
-             hpd = extract64(tcr, 41, 1);
-             e0pd = extract64(tcr, 55, 1);
-+            mtx = extract64(tcr, 60, 1) && cpu_isar_feature(aa64_mte_mtx, cpu);
-         } else {
-             tsz = extract32(tcr, 16, 6);
-             gran = tg1_to_gran_size(extract32(tcr, 30, 2));
-@@ -9752,6 +9754,7 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
-             sh = extract32(tcr, 28, 2);
-             hpd = extract64(tcr, 42, 1);
-             e0pd = extract64(tcr, 56, 1);
-+            mtx = extract64(tcr, 61, 1) && cpu_isar_feature(aa64_mte_mtx, cpu);
-         }
-         ps = extract64(tcr, 32, 3);
-         ha = extract64(tcr, 39, 1) && cpu_isar_feature(aa64_hafs, cpu);
-@@ -9851,6 +9854,7 @@ ARMVAParameters aa64_va_parameters(CPUARMState *env, uint64_t va,
-         .gran = gran,
-         .pie = pie,
-         .aie = aie,
-+        .mtx = mtx,
-     };
- }
- 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 779eafabc8..d313d36603 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -1407,6 +1407,7 @@ typedef struct ARMVAParameters {
-     ARMGranuleSize gran : 2;
-     bool pie        : 1;
-     bool aie        : 1;
-+    bool mtx        : 1;
- } ARMVAParameters;
- 
- /**
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 467d815e0d..64778a7649 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -1951,9 +1951,18 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-      * validation to do here.
-      */
-     if (inputsize < addrsize) {
--        uint64_t top_bits = sextract64(address, inputsize,
--                                           addrsize - inputsize);
--        if (-top_bits != param.select) {
-+        /*
-+         * If MTX is enabled, bits 56-59 aren't checked for canonicity
-+         * during translation, since they will later be checked during
-+         * the tag check step.
-+         */
++    t = GET_IDREG(isar, ID_AA64PFR2);
++    t = FIELD_DP64(t, ID_AA64PFR2, MTEFAR, 1);    /* FEAT_MTE_TAGGED_FAR */
++    t = FIELD_DP64(t, ID_AA64PFR2, MTESTOREONLY, 1);   /* FEAT_MTE_STORE_ONLY */
++    t = FIELD_DP64(t, ID_AA64PFR2, MTEPERM, 1);    /* FEAT_MTE_PERM */
++    SET_IDREG(isar, ID_AA64PFR2, t);
 +
-+        uint64_t cmp_mask = MAKE_64BIT_MASK(inputsize, addrsize - inputsize);
-+
-+        if (param.mtx) {
-+            cmp_mask &= ~MAKE_64BIT_MASK(56, 4);
-+        }
-+        if ((address ^ -param.select) & cmp_mask) {
-             /* The gap between the two regions is a Translation fault */
-             goto do_translation_fault;
-         }
-@@ -3513,15 +3522,31 @@ static bool get_phys_addr_disabled(CPUARMState *env,
-             int pamax = arm_pamax(env_archcpu(env));
-             uint64_t tcr = env->cp15.tcr_el[r_el];
-             int addrtop, tbi;
-+            bool bit55;
- 
-             tbi = aa64_va_parameter_tbi(tcr, mmu_idx);
-             if (access_type == MMU_INST_FETCH) {
-                 tbi &= ~aa64_va_parameter_tbid(tcr, mmu_idx);
-             }
--            tbi = (tbi >> extract64(address, 55, 1)) & 1;
-+            bit55 = extract64(address, 55, 1);
-+            tbi = (tbi >> bit55) & 1;
-             addrtop = (tbi ? 55 : 63);
- 
--            if (extract64(address, pamax, addrtop - pamax + 1) != 0) {
-+            /*
-+             * With MTX enabled, bits 56-59 are not checked according to
-+             * AArch64.S1DisabledOutput.
-+             */
-+            uint64_t cmp_mask = MAKE_64BIT_MASK(pamax, addrtop - pamax + 1);
-+
-+            if (access_type != MMU_INST_FETCH &&
-+                cpu_isar_feature(aa64_mte_mtx, env_archcpu(env))) {
-+                int mtx = aa64_va_parameter_mtx(tcr, mmu_idx);
-+                if (mtx & (1 << bit55)) {
-+                    cmp_mask &= ~MAKE_64BIT_MASK(56, 4);
-+                }
-+            }
-+
-+            if (address & cmp_mask) {
-                 fi->type = ARMFault_AddressSize;
-                 fi->level = 0;
-                 fi->stage2 = false;
+     t = GET_IDREG(isar, ID_AA64MMFR0);
+     t = FIELD_DP64(t, ID_AA64MMFR0, PARANGE, 6); /* FEAT_LPA: 52 bits */
+     t = FIELD_DP64(t, ID_AA64MMFR0, TGRAN16, 1);   /* 16k pages supported */
 
 -- 
 2.54.0
