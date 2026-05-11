@@ -4,140 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4452CCD37B7
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 09:50:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A39D9CD37AC
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 09:50:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMNGl-0007rj-KR; Mon, 11 May 2026 05:49:47 -0400
+	id 1wMNGu-00080O-Fy; Mon, 11 May 2026 05:49:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wMNBo-0006LV-KA
- for qemu-devel@nongnu.org; Mon, 11 May 2026 05:45:06 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wMNBf-0002MO-5W
- for qemu-devel@nongnu.org; Mon, 11 May 2026 05:44:35 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64B7ANMK453161
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 09:44:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 8oP1PEUyx0hhU1MFWVAeskP/sv79C5mSmsH3GTVdaK4=; b=OlCk7faoTcJUn6ZI
- VtHErqpH3qgSaiAbjW8inml2FEABq/CHdYH8sG5FAoB/JAU2AFBTi+rJOV4pJRuL
- kNEMZTGFUSna8EQv+k0B/ety28jpd2b467hwdB1LwOB/iPpp8dnyliXVbC5P0mpK
- F8nSAOPBMf3ez0C7p23sjyZMeKZKUHTn5d1V/ezze48c+MdckoQyK4eJp71WJJRU
- vdBk+Oez6GC+KTYg1bx+QSX8s5GbHU7dGryJozXQMk4Lf3thLVORwO8KFuTUUJYx
- IQoSJceiQvqYVvFHcFWMDeleYjB8Qv5h3ETj7JDUZ3LjKGp47Cpd9xnM0nOVmFHg
- kFrtVA==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e3ag6gj5q-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 09:44:20 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-51494d74d4bso39795841cf.1
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 02:44:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wMNDf-0006lF-HE
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 05:47:13 -0400
+Received: from mail-dy1-x132a.google.com ([2607:f8b0:4864:20::132a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wMNDb-0002p3-W0
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 05:46:35 -0400
+Received: by mail-dy1-x132a.google.com with SMTP id
+ 5a478bee46e88-2ecf9e398f4so11021288eec.1
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 02:46:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778492768; cv=none;
+ d=google.com; s=arc-20240605;
+ b=TISnBxlGwLitggCHgV9jVgh+U8fqiBAStkrzk5ph3biG4KE8/5EW3iP52zHbmjPGzU
+ fsUX46JAi0BMFxKUaR2C4gM4pu5YoVI8G3nFwMlAgl/YGO8mJ/0k5PE5bLIAuplOFBkb
+ SI6Jhx81IAboQv2KyzJN8OlE/+aOPwz5mr4U82FnRdqktrb7t34R3a0TRUFMuoNKXR67
+ rKT2RwRBQj9K8QOhg0pwzZRPQyz8Z1ZR+GCb5oVcgyg+v9CVtIi/ANuNAUA3Go0lOz67
+ 0cYDAKdChIZNdstTT22W0mDsOqVN3p82Gqgbkru46vPK3Yem4j7uYytECBO2rKEPUe/H
+ 7zGQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=7m2jz84B9ksxD8ZH9ghgs3kEtAtNrw6tbDwuxw0Q0T8=;
+ fh=iOPeBV+aT+ySosZM5kjW3IjuwJ3i3sJrRgGCZ5/70bk=;
+ b=jh2QhKFsEWMdSGU5diBhgzzWg0UbEkY/EIuVWX1O+p2/xyrh97qs0P2NyspAI20Km3
+ mv1ohPziNwFEh0pPzO/1/62ZSf9zBar3lw6Yt63KUpz/G7gT7cD9s+tx8J32tWMQV0tx
+ ILdtuVBGrM7bhZbTlXe65bLCjVQLjH7BxtJhdRvatrcIg1QAH0UCGN/fuDN69TJAAbtc
+ LDzfPxoWiFUfx9mdzgMBC7wM2VtxZU6Gd+f21lPnVUDy0kP2qWj0YHLFYgZY7kIEmkgK
+ bUTke2yQcgB1iw0U9enmAegy3jpGIGwDcV75sFVL4AW+J8v0cASWhZEp6CaJbd7LPq3n
+ a0rg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778492659; x=1779097459; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8oP1PEUyx0hhU1MFWVAeskP/sv79C5mSmsH3GTVdaK4=;
- b=IOlujFeCaQwUSSSeEAlOdRnmXrpMF+j95G84ncaDt+ouSvZR7DdZ1n7njyeCC3vsRY
- ZN0CAWTZsGJgziYNC+1EkhMyQfj28nyfDUWlxikexbby22/0u+tDipivy2EePXnyyLfL
- rk7Fs06G5y63PzsE2Seutu4i6+DN1L9NdBEMmNSPISVHK1NfNkhBtE52Jp8kkX26sL9r
- S/Kcn0r1T1ee9czpk2hMCc28kN2LbLYVhpIGXLewNQ8bLn05etrTMmN6LD1V36Xja5ja
- WbY7suXySAnuXC/i0DcalV6FbR7VPfQ6LhRFBF4HjWFMscG/Ml+0Fuzfmm+rJOtnGvzP
- DUyQ==
+ d=linaro.org; s=google; t=1778492768; x=1779097568; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=7m2jz84B9ksxD8ZH9ghgs3kEtAtNrw6tbDwuxw0Q0T8=;
+ b=K1SYbmQs3kMt7LX2gHihQeOi0WYH9XuhjDvLmJS7NhG4Wd8k6FsfPP1iAX4iLWObh7
+ f5BYUFRodCLbBhT9fOtpB+Nsd4ZwwU5V0Ift+WJa964GzWdHmt6dZ8+lDRmn/M/0F9iT
+ rshRr5Pl/ixkrnV6u9yy4A3RH6bzUnUoZQpePlpFNMptHv6ARZo2Ie7gv4sBgXAmjlAY
+ umMt7r5hmqSamlNF6NLTmxLH+6iKLo3ORUpiGDRXuFNsERachuMoYE4bUiLUHsIEDRm3
+ 0GSMviMH/TcgqSE8SIsGoVwQxnjYJ6U74lAk0L8SgEai7MvsljpRNHy40m+e6FC4fW2f
+ edsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778492659; x=1779097459;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8oP1PEUyx0hhU1MFWVAeskP/sv79C5mSmsH3GTVdaK4=;
- b=aRVVNsmkUKFC7rtzTMyX4fbEuCJerXDE9Yv2EcM8I9/4TYX/8ksHGg5+f9nCne+4CU
- pcns8vcfLAS1kaFZ0NZ2dXU4QiSh/hFICj02nqTAQh98c31HaGPSslx4V1lZF0S41phO
- 10nk55AKKXFLRMJ5mnRPNEX6E6Ha7ueZBibZ3Xv7mS8zm2hmrX+lyyxD8VKSfi0XCh/w
- fZuaznqT27JtqNSsQT7rTf06+uJyQBkl7iZTVmvHLTGXly+t4ZfBsvGXnjmdxOLd16uQ
- RfF//WCrbz4trfKB3iDgMHA2LGNHeGAX/4yMnkG9QLM608LdO0/SpB63n63GbNVEZZjA
- HayA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ837rOoq83u82aWYGih86erA1lj5a99VAtcG1c51i6d4O6g5KmS1Qa9k60McAs/XEpjUsYdjdp8dCfa@nongnu.org
-X-Gm-Message-State: AOJu0YyUGpA+JGxiUp9wLKUwy57wX4VGMQi6/JEYI2+MdgZtEXq8ohy2
- CW8ZAoOhlkPUXMyYs5yo8QH/QSTyV1AyhoJIm3+rh8xoAeii4JXyC0vFE1NVyiUDCRJaaBz7XMl
- pkWVg2tCc6oAj32n6PAggSEl4BrQunFIsya/QuNm4oSefB2JvOjY0NUNH/g==
-X-Gm-Gg: Acq92OG9tQvrUIoGHgscB5mZxH1Xl3Su9MNc31oUxzVY4qwlpkF8DtdXuldxbrtdbWr
- 01fXSDsmN5FYHsZ21tyoHPy8N+yW6uG/oPmsbzgZ2LOCALqDU+ZW8CmFvncCcXIgoczqe7j4CHa
- O2Wi7SGdD+hyHFTjmELN9/SIVm4VkztUwvtaBxcXvKE+oz9bjSTkOvAfuOT9R2Cp/U3coQWYbhs
- +pej6mrXGYZD7tK+PpdDJhuzbJVd5T38AyxuX6Y0PY6xlP2i7+L1ZTjyJWjzkAL3TReAPB4j2qh
- IoGkYvLRD37e8hv24BDi6hiSwyZXbRNHdoCWjzUIirdzhpgWhwKghY9Pl+9Ewalr8vCP+shiZLm
- 84zO+6tmNZvDErKKxHDBRYsoFPoiyH1d0HwsneykTohSXmL1lhA6Hlda3p5k=
-X-Received: by 2002:a05:622a:4d07:b0:50d:6fd3:421 with SMTP id
- d75a77b69052e-51475b12eedmr234755591cf.6.1778492659566; 
- Mon, 11 May 2026 02:44:19 -0700 (PDT)
-X-Received: by 2002:a05:622a:4d07:b0:50d:6fd3:421 with SMTP id
- d75a77b69052e-51475b12eedmr234755281cf.6.1778492659093; 
- Mon, 11 May 2026 02:44:19 -0700 (PDT)
-Received: from [192.168.68.106] ([191.202.238.222])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-5149f5a6484sm62744561cf.1.2026.05.11.02.44.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 May 2026 02:44:18 -0700 (PDT)
-Message-ID: <4943fcb0-0a8e-4514-b390-4a929eebcee1@oss.qualcomm.com>
-Date: Mon, 11 May 2026 06:44:14 -0300
+ d=1e100.net; s=20251104; t=1778492768; x=1779097568;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7m2jz84B9ksxD8ZH9ghgs3kEtAtNrw6tbDwuxw0Q0T8=;
+ b=O8F3q/K7skAL3PP1SDaG3xt83YlBrs2+XCy0RcesEGTlejY9jdLtpl8LaDsoHJlCaE
+ f9Q6hVw+DJvd2i2A6mNgh/CzkPt9EN7vPIRG/HsQlnagIv342EN6vlpJusAZ8g7Jw8WQ
+ Bbu6mxlf9ZDs2tfFGlZFpoTNmB+V3qTgLMibwuyYBW/x+4lyQeO4Y0Y8Nfpct6SMa58O
+ UsDRqyFwmiIsPyn1g3dJB87W3Oz2peoxa4V8LdXOsISeWqvrCGKA7HuJRRwrRVu5ARYI
+ 8k1UHhsjNhvBqGS5ehL9hVi+ITB0IbYR8NVE40dKduIhVoCVLE0kqofeqoyTQ6g4ySf/
+ fD/g==
+X-Gm-Message-State: AOJu0YxGL6TTz9i6AtlDrlLGcpeUJloCvQUhR4CdOLqeQ/fZ+sSB2zxJ
+ +3qUP+6XYmNKuJ68LRPirPIQM5VjSkOUSBEGYfw7efrzIkOgzA6qE83Pjtsj9yqsd/LrjRUR+CD
+ 4CaVrMlhaIda6j8/WxkxECC47UZWbMrLY17i3aNjT/VydZKZJKyYI
+X-Gm-Gg: Acq92OHOOGYuu+emH5sBj+5cDE2OjWhHN65N9q2sOw1i49iWkOLlJGg3VOXZK+q07/X
+ +ymww3/8Uo3bx59ESYTWfAdxfZFPkclYXhWPoB8s7Z8ABOHKLVU8avQa8/cwyAarx+rnG81Cpgx
+ QIvJATPNh/MV/ZPyqWkHyT4wMlsxSzY9/exVdFWZEdYoW5FN/lqej3ZraJUhrydLfAL57i2MpP8
+ YAljE/p/iUtMXc9W3+Ea2zsD7ewuzi5qkwGbRWi8EoOKF8Xb8HaPvYot/KsJqCck1aZ4Hp73pEh
+ a4QWST479ZXh5IqSyTUXWlA/jX08DFv7aY4cuFNHmTMdVlAWRSJS1AFpemcdB7PrJGU=
+X-Received: by 2002:a05:690e:168c:b0:651:b938:188b with SMTP id
+ 956f58d0204a3-65c79c46c58mr22996973d50.24.1778485629370; Mon, 11 May 2026
+ 00:47:09 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: Remove unconditional MENVCFG_CDE from mask
-To: Zishun Yi <vulab@iscas.ac.cn>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-References: <20260511040534.2862443-1-vulab@iscas.ac.cn>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260511040534.2862443-1-vulab@iscas.ac.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=fOsJG5ae c=1 sm=1 tr=0 ts=6a01a4f4 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=etEqFfc6qwXwpI8uT8rzbw==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=7WufM6Q2AAAA:20 a=EUspDBNiAAAA:8 a=l_KUQgyWi1ag-XAO3WoA:9 a=QEXdDO2ut3YA:10
- a=kacYvNCVWA4VmyqE58fU:22 a=bA3UWDv6hWIuX7UZL3qL:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDEwNCBTYWx0ZWRfX8GitB6N2uJYz
- CRKS5bYBCDpKy5+ghhmLi+JaodT7ASwWOxGogC6Yqa7XvKR0y3dUfQgyGpKajlSnW1/7y93czgL
- Lmo/dXwESSi8OeMrkJuwDC41hw+oKrya4bjyxBi/n3jU3vhIZJ1477p5y8woTjCs/ScplFOzcq5
- pjuEBZmEPIQszIDEJIGIDW4lmRPJhcuZ9IJFpb1e/TmNymehXF2W/LU13wXIWbs6bFjnAk387uw
- cjEA1XnswhlOhQIcPfJ/oTvTVPhAWJfv1L8aOtxmxr2rY4zy/oRAHjpIur2KWnA5OfeU3NqWeO2
- COWeCMz0L/SzIgxsrkzHVXbCL+QmOdcPuuGnG/fnNp8i+gcXVO97zh5qBhC2sEjjIEgeLa/9L2h
- XeTR7jwXiFpqRoTJyegrz/hJmpshaAYiK4VqnNRInffbC5GPbbCASvj4Ww8YQ5ZR/ck1NhkAFWR
- wvIbgSkmmr2Nq/GGXGg==
-X-Proofpoint-GUID: SjlXUQmq9YDr0DBK-TFYbIjKl4staab5
-X-Proofpoint-ORIG-GUID: SjlXUQmq9YDr0DBK-TFYbIjKl4staab5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-11_03,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 impostorscore=0 bulkscore=0 suspectscore=0
- malwarescore=0 lowpriorityscore=0 phishscore=0 spamscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605110104
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260508183717.193630-1-tdave@nvidia.com>
+In-Reply-To: <20260508183717.193630-1-tdave@nvidia.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 11 May 2026 08:46:57 +0100
+X-Gm-Features: AVHnY4KJvyGgwSg3VDb4jYfnlrdFQ4HsXNAOChkVA_oRqH9XIYfUWmwNkWZrZBA
+Message-ID: <CAFEAcA9KxUF6c555Q_Kqn_NVE3z1ojr91+KuatYudj_T4GjbxA@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/8] hw/arm/virt, hw/pci: PCI pre-enumeration and
+ fixed BAR allocation
+To: Tushar Dave <tdave@nvidia.com>
+Cc: qemu-devel@nongnu.org, alwilliamson@nvidia.com, jgg@nvidia.com, 
+ skolothumtho@nvidia.com, qemu-arm@nongnu.org, mst@redhat.com, 
+ marcel.apfelbaum@gmail.com, devel@edk2.groups.io
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-dy1-x132a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,43 +116,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, 8 May 2026 at 19:37, Tushar Dave <tdave@nvidia.com> wrote:
+>
+> This RFC introduces a mechanism to specify Guest Physical Addresses
+> (GPAs) for PCI BARs, allowing explicit placement of guest MMIO BAR
+> addresses to match host physical addresses for assigned devices.
+>
+> On some platforms, P2P DMA is performed between devices within the same
+> IOMMU group. The PCI fabric ACS is configured to permit direct P2P
+> without going through the host bridge in order to achieve the required
+> performance.
+>
+> To support this multi-device IOMMU group P2P scenario in virtualization,
+> the VM may need to use the same MMIO BAR addresses as the host physical
+> address layout.
 
+This feels like something's wrong in the design. A VM doesn't
+necessarily have the same memory layout as the host: the
+VM hardware is all about making that possible.
 
-On 5/11/2026 1:05 AM, Zishun Yi wrote:
-> Currently, the MENVCFG_CDE (Counter Delegation Enable) bit is
-> unconditionally included in the base write mask for CSR_MENVCFG.
-> This make the subsequent conditional check
-> `(cfg->ext_smcdeleg ? MENVCFG_CDE : 0)` completely ineffective,
-> as a bitwise OR cannot clear a bit that is already set.
-> 
-> Fix this by removing MENVCFG_CDE from the initial base mask. The bit
-> will now only be writable when explicitly granted by the `ext_smcdeleg`
-> configuration.
-> 
-> This issue was discovered and reported by SpecHunter, an AI-driven
-> architecture specification analysis tool.
-> 
-> Link: https://github.com/yizishun/rv-isa-sec/blob/master/output/riscv-isa-manual/pr-2601/qemu.txt
-> Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
-> ---
+> Why QEMU programs PCI resources rather than EDK2:
+>
+> To support fixed BAR placement, QEMU performs PCI bus enumeration and
+> resource assignment prior to firmware execution. EDK2 already provides
+> a PCD-controlled mechanism (PcdPciDisableBusEnumeration) that allows
+> the platform to skip PCI enumeration and resource allocation. This
+> series leverages that mechanism so that, when enabled, firmware runs in
+> a discovery-only mode and preserves the configuration established by
+> QEMU.
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+I'm definitely not enthusiastic about having QEMU do PCI bus
+enumeration. This isn't the way the hardware does it, and it's a
+lot of code that's duplicating what the guest already has (there's
+over a thousand lines of code in this patchset).
 
->   target/riscv/csr.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index da366cf56271..f6bcf128a147 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -3175,7 +3175,7 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
->   {
->       const RISCVCPUConfig *cfg = riscv_cpu_cfg(env);
->       uint64_t mask = MENVCFG_FIOM | MENVCFG_CBIE | MENVCFG_CBCFE |
-> -                    MENVCFG_CBZE | MENVCFG_CDE;
-> +                    MENVCFG_CBZE;
->       bool stce_changed = false;
->   
->       if (riscv_cpu_mxl(env) == MXL_RV64) {
+> We use the virt machine in this series as the concrete example
+> consuming the fixed-BAR model. Other machines may require their own
+> machine-specific mechanism (such as pcie-mmio-window) if they want to
+> adopt the same approach.
+>
+> Example usage:
+>
+>   -machine virt,...,pcie-mmio-window=0x400000000000:0x400000000000,pci-pre-enum=on \
+>   -device vfio-pci,host=0009:06:00.0,id=dev0 \
+>   -set device.dev0.fixed-bars=bar2@0x6b8000000000,bar4@0x6c8000000000
 
+...and you end up with enormous command lines like this full of
+magic numbers relating to address space layout.
+
+I think it would be better to find a way of doing this that
+doesn't have the "VM address space layout has to match the
+host layout" restriction.
+
+-- PMM
 
