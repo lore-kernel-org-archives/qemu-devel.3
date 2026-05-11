@@ -4,103 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C551CD37B2
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 15:28:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA05BCD37BE
+	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 15:30:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMSYJ-0003bX-JA; Mon, 11 May 2026 11:28:15 -0400
+	id 1wMSa7-0004Fg-8n; Mon, 11 May 2026 11:30:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wMSYG-0003b3-Ca
- for qemu-devel@nongnu.org; Mon, 11 May 2026 11:28:12 -0400
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wMSYE-00071U-Lh
- for qemu-devel@nongnu.org; Mon, 11 May 2026 11:28:12 -0400
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-65c5361142fso4678817d50.0
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 08:28:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778513289; cv=none;
- d=google.com; s=arc-20240605;
- b=RgGeNW1Xqgggs0yt+Cqw23f0qt38wnn5Awpm350PKZuGsxkRKAIKdYfWoEeu1T4mmT
- NQ6pjtNDXkv6eJOk4Ks5c8iNQZGUAbz9OWiu2Uh+zXBhuVqe+zCmo7LFwFmhlGvuSlrO
- mvhgwSvzBd8iBWbfodjbUo9/g2XgBJUCtkp+t2XEnUrHJ7aPVAiMtEZbq6LfI7JGF13B
- xWJIVxDPTgiPzwTCNj8g5TZNngXs5e03Iy5VqnTVvvmTyLhwsFkIyNclBWB/duQ/9wNs
- LcBNg5aE0RluHBi/56ZguY3uK/J9eDpre/JwQU5q2LdRTGOQ5jwucF1Ldhln9Zew378X
- 8bjw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=hM1r3JgOjTttAW30OJV6demfbDOt+19NxNRSsEEpDos=;
- fh=D9TiOsAcOSpRlHrkA38ELZyIVSvZmg48LLzTtJLYv+0=;
- b=iVc5oa1NuG8svbWCxRSQYmxkhZZoFpffy8cik7UqomLUIbbsPLKhq3HOfIAlt5ftMn
- 7BGbbtNewrwctiDMzizIhkUXwR+Vf9c1SRRi4TtxhtsKEGeQ5XN1j4/wKKs3eEQezyoA
- erV1Qymw1tgC8KtPDauc6PmyeKWjoNGcL+Ym9aP+8xnfi7ORPwIsoOfjoT79bZmWeQfa
- Dpniw1TWZsn42ubnNcDMeY/6txrYHvM2NiMOm5hVh7uoIVHOq+Jq3ho0VBgbgWZ/p4FE
- q56h+K4+tzR8+9o/wHw61OEHjs+C0wWLG8cV9gXwcEKyWo9reH7d5dTuhFuMDaJruBZ6
- p7Pg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wMSa6-0004EY-Ah
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 11:30:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wMSa3-0007TA-Rh
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 11:30:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778513402;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Uh5ML71EGl0rE5kw0U2DO+XZS/2/H1Jb7Q8Xwy5zEwU=;
+ b=DqGrFD6jexhzwzqsIQceipP9b7rc3x7eXKwv6nC5XAqb99dH62G5xZH7oElt16fjCPr9AQ
+ EiS1h/tRxrHjSV66DTcC/UpAhVFaxKkw7jrq8Wx34YtVsyDgVfS2p6YFRuT04MpSz/gIaF
+ VVsCZaivCviQRRSdwbibAIGr0ObhMXE=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-359-tFYftuvFOwGNVtwaWrS-hQ-1; Mon, 11 May 2026 11:30:00 -0400
+X-MC-Unique: tFYftuvFOwGNVtwaWrS-hQ-1
+X-Mimecast-MFC-AGG-ID: tFYftuvFOwGNVtwaWrS-hQ_1778513400
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-8b55b5aa8c7so94964086d6.0
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 08:30:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778513289; x=1779118089; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=hM1r3JgOjTttAW30OJV6demfbDOt+19NxNRSsEEpDos=;
- b=NX/M+k2rwLFMHvi6sliRBmsAa5tDqzNOOERli91GCkcmw2gw5k0G29kLGhflufLJKz
- q61+8ygEJCG5QBAEUMSenC0XqxEMCFsDf8pcZsQdV7blnweogXMrI/MCMRDmaccLHG8F
- yVW0UJL6m0tmOZk+l33f88EQUTJoGDvZN/7Yfu7/3or0cb/VwoKspM9vMz1Lt8+R2PUP
- dPsFzdO1iF/Tgpp3cRKE7dhhyHS1iWJwXuelmfmnqisHpKOrF4USzasJBS+DQDJ3Sw6b
- k4lz0dnT8jRBLuGAbtrpjiKtLs++WDT85JewD398zAfqOp6GNluwaIGA+lnpr0JaMusT
- 1oUA==
+ d=redhat.com; s=google; t=1778513400; x=1779118200; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=Uh5ML71EGl0rE5kw0U2DO+XZS/2/H1Jb7Q8Xwy5zEwU=;
+ b=Ja07M0QNgcpwkrVJgVnRm/TRvY5G82Ku8diyygkT9dmmVk8cHkNFZCpCOzCSQFSGwq
+ GJun0/32dlTjWvcj9/JMVTM/Ovyz7F6cyPZIxUD1o4uyZPJ5a2hyyIxuOYy6i2AOsB2Y
+ lvoVdb8+OCnzbxFfBh4NZsN3NONFuKpLfx1iCJvx12chn6lVbcv6A6j7pJswPK7fOZHS
+ aIWG5qOnWpIGaa/qb2Zq6VMJwn78MrciGG0Khd25edxVtUy4tE4v7r0cusHLPxTf5Ipe
+ mPbcMRqYsnnJqRd+DHVh8am6ag+U97Wjy10uHaijjAIEKjkvr+iqrA9z3G0fsxAhgANA
+ c8ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778513289; x=1779118089;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hM1r3JgOjTttAW30OJV6demfbDOt+19NxNRSsEEpDos=;
- b=JcmRxa9ZMoZyGM2tJqofmIuL+2JDYDo9oYMyAEdsmbzqUSsmco7baIfd8zt/q9xXVY
- LyhsGn620/ECu61ZK7GJ/or5qA9enTaSV61gOzwnrgqq70yWjaGEIOuVaEJW0OPD6kuj
- ZhW514oG0MXR0zvv+FZcAri9KoI8lyQf4c3pAvgglJ3lD8OkRO3c6mC/BDswJNlsY3K3
- UkJUG6F0BnX3xGDR4TeoqtWNb1QSj4LHhH25CJcMfIbQPIFfs4oy4zYTCFLqsPAYPuEu
- ZfRv77nEef6r0buHv14bC4az9OH/+9Wg9cC/oS3i2NppprChZN2s/L8isHeog8fLqkE0
- w7AQ==
-X-Gm-Message-State: AOJu0Yysx2PpNAR7EPV8OtFh1ske4teR/CSd54arU9DbCoZn0EuYxZ4f
- cea4enhD18Hs0JRpq1fT9ngIfECc8JOHX5N8UBJjq89p5Za5DN8oh8ZD7Ll/AFEFZUyXodL+G8M
- OWG5NUcajCCOpZjiQWG8U35v2MeVgtl98vwWtMUKROT7wU9LrKRkL
-X-Gm-Gg: Acq92OEFcMG1NC3c/Va/nxYRM5BA7PK8DbzRQ8+Ouzg+DeKc1wyoaa6CLWZtBrSzYpd
- QgANwGHJP6qkdv//8V35+NwgmzlgKuBEMnENuXaNcQ6uPFNYLynCS1HSHdADsY12HUNrpaXwlDo
- RkCHaiVJFSeEBs2Z8DuYYmKTKWkU7LuhvUezRJck7jUD8S6+3qjZZ0h7NnNe8Q+smETuArOX8Vk
- EOgM8BmEUhhO6hSvGFwnQKvd1oe6E0S5e1Y/aWnaC4trjYHDf2YWQmWwO5hPx6lt8XmhOflqKln
- a5WyXuTyetAHizLjomaQ2aU7wMc2GnjaS9IlIMq3bOu5GJBDD+vDXFwpne2tq+A/XdaAbTVAdzl
- v5Q==
-X-Received: by 2002:a05:690e:1209:b0:651:be70:9261 with SMTP id
- 956f58d0204a3-65da84fa6edmr9236957d50.43.1778513289151; Mon, 11 May 2026
- 08:28:09 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260511152019.1316898-1-peterx@redhat.com>
-In-Reply-To: <20260511152019.1316898-1-peterx@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 11 May 2026 16:27:57 +0100
-X-Gm-Features: AVHnY4JxqMwXSxgilx-FpQIBmoFehAO5Ij8OBWIjtwx4zOnDNHhQNNf81zQnWtM
-Message-ID: <CAFEAcA-b5+MDVqVyaaWT=Un7gN6dZUR3Qn98Qv8GAH8M02QW7g@mail.gmail.com>
-Subject: Re: [PATCH v2] migration: Fix possible division by zero on calc
+ d=1e100.net; s=20251104; t=1778513400; x=1779118200;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Uh5ML71EGl0rE5kw0U2DO+XZS/2/H1Jb7Q8Xwy5zEwU=;
+ b=GRTGehLQh496ASqYZLudJwHAAy2RExZ5fOAjKddv6fA4KiZE0QBXRFUUKGcuQHsBXt
+ ulTzfcFP03XxeZoxCtTy+0bD7Y7Yetkp2LFRDiP+lwPkPlfwHkV/PO4nH+KpogENo3Mo
+ +r8YboIQqOU+iDo2f9veGsOoQlHV1WcUoYHZ+fjV64DdC7npnz1/+d/Pby3R1nIUc+8F
+ qgPF28DHLFGT6/nbY4n0xib7A5FJZ92MgnbzhCjzvpPFunhxW76pdesi70DKo74ZPotw
+ A2q2mtgC+C7mu/l8FppZodC8fZHGUWLZjtRK/owWSDW/A06lRrUWErDEVFwput+uy1RZ
+ FGsA==
+X-Gm-Message-State: AOJu0YxLnauhcZbfw6i0gQxguM8Z4OGqxLpNJz7XX3YeHtkYLm0wL3T2
+ 0bNUnKT7tMeOy2Xea6uwnlss/sMH0G0Q955zv8cU63LcZ/bN4h/NJKdDjGqIa5DaL7KA/x7U5OS
+ XefvXiGdwCDuZYngBJqc2RBw+UbeG/d1UJbFbVbU9e4xDQyquot8J7IJP
+X-Gm-Gg: Acq92OHh4avoOnXFC2KZmRe5yR1JnjSQXX3g2Zjtg8Nedmh6mU7sJdk/+z2ntq0mXax
+ MwY8wGwh92HUzWyp2hFvm1b0ZP4t7JNtguzAbN9DKZHDWKA2QC02qDlxldDilOb5I5HiC/MjgjU
+ 1LP3yklIys2SLHKaoQAOK1QMzXhluDQsMZ79duYoY7RlLCZsmI2iKpKv5M1tIYwzuaMiCShwzJM
+ RFoBLQHUy+g1izYKDm2st/DK/UcKpXHv7SXm/eZt7ddwplTX+nUjE59fUmhEmBG/oPpn1Dni+Xi
+ wzyWb3G/D5l2NLYWiyOzgi2D9+F4M6crwP0GpAGSianyjGeaiFvfaywToMyQpppOsaAUeqYVFBK
+ GXqnwmI4Z13iUX280uqmfKhf/5LELg3O7oAMfYvBKp210+n0=
+X-Received: by 2002:a05:6214:3bc3:b0:8bd:a072:cbc with SMTP id
+ 6a1803df08f44-8bda07213d6mr318471526d6.3.1778513400020; 
+ Mon, 11 May 2026 08:30:00 -0700 (PDT)
+X-Received: by 2002:a05:6214:3bc3:b0:8bd:a072:cbc with SMTP id
+ 6a1803df08f44-8bda07213d6mr318471006d6.3.1778513399487; 
+ Mon, 11 May 2026 08:29:59 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8bf3b0c4c9dsm100779906d6.5.2026.05.11.08.29.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 11 May 2026 08:29:59 -0700 (PDT)
+Date: Mon, 11 May 2026 11:29:58 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH] migration: Fix possible division by zero on calc
  expected downtime
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Message-ID: <agH19jdl3UYZeStj@x1.local>
+References: <20260511141049.1293449-1-peterx@redhat.com>
+ <CAFEAcA88Ui1tG0PEwbwSnSBMaywMJEy5bLLVwXvGdW_06pgJ0w@mail.gmail.com>
+ <agHs1PcxZYJtba4W@x1.local> <agHzQnXFQbnam-RF@x1.local>
+ <CAFEAcA8L_BgfHEUnJhWCJ9-aMPUadbvQWGrF2UAW8vE53JP=6A@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA8L_BgfHEUnJhWCJ9-aMPUadbvQWGrF2UAW8vE53JP=6A@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,29 +118,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 11 May 2026 at 16:20, Peter Xu <peterx@redhat.com> wrote:
->
-> Commit dd4fe8844b changed the reporting of expected downtime behavior, so
-> that the value will be calculated on-demand.  One side effect on the change
-> is QEMU will allow the calculation to happen anytime even if there's no
-> transfer happening for a short while.
->
-> PeterM reported an ubsan report from clang when running migration-test with
-> aarch64 binary on x86_64 hosts.  I can also reproduce if I run the test
-> concurrently so some of the src QEMU may not get chance to push any data,
-> causing mbps to be 0:
->
-> ../migration/migration.c:1051:12: runtime error: -nan is outside the range of representable values of type 'long'
->
-> Fix it by properly handle both Inf and Nan.  One note is we can't use
-> ">"/">=" check here otherwise we cannot cover Nan.
+On Mon, May 11, 2026 at 04:24:24PM +0100, Peter Maydell wrote:
+> > This actually fails to fix the ubsan issue and I can still reproduce,
+> > because the ubsan issue was a Nan reported, where it seems when Nan found
+> > in normal such evaluations it'll return FALSE.  I'll need to use:
+> >
+> >         if (expected < (double)INT64_MAX) {
+> >             return (int64_t)expected;
+> >         }
+> >
+> 
+> Hmm, how do we get a NaN ?
 
-I don't really understand how we can get a NaN here -- where
-is it coming from? The only case I can think of is if s->mbps is
-a NaN -- but in that case that probably is causing other problems
-elsewhere too, and it would likely be better to do something
-where the NaN is first entering the calculations.
+When mbps is zero (when it reproduces here).  I have the comment in v2
+explaining it.
 
-thanks
--- PMM
+Thanks,
+
+-- 
+Peter Xu
+
 
