@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C623CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:05:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C160CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:06:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuBP-00020k-9a; Tue, 12 May 2026 16:58:27 -0400
+	id 1wMuHz-0008Rk-2z; Tue, 12 May 2026 17:05:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuBA-0001ic-BX; Tue, 12 May 2026 16:58:13 -0400
+ id 1wMuHl-0007lV-9E; Tue, 12 May 2026 17:05:01 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuB7-00046t-LK; Tue, 12 May 2026 16:58:12 -0400
+ id 1wMuHi-0000ca-Op; Tue, 12 May 2026 17:05:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619275; bh=NXvklHLMe/1G/6v/zFdrKIGMlkdSHYR/Psz+Ummg+1c=;
+ t=1778619280; bh=NcJd8nN8udITBb8kuubjKg36rc3x3Tj18jI98dI1A5o=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=vlz05jTFwUtiQucGsmhVsPFvJB+IwFIclr3meCAwmJTAGVM15kB4w93olBvU8AX0/
- hpfT3JmCwndxj6YcoJBcMwtdDb4zN4/qZmoTIWIxs32MmWKUxM+y7xmMo4FoHhR+dM
- EQaaVCJPfTI33ij1PcKE/rQFI83S7hhLiqdxhDonB1b98pLTngpM+6/ko41oG4NVd/
- qxUjSc1miYj3CVifJj3/NC8TjXWXAsvbhty2OqKN81KXy9+5EacxmwWdUhin2KeHtF
- oWPSSM7EUqQL89/v4nHqiryWkIqZJ1sam3BKedV9Flc1KeDpP0wqqNBqRfXLZs77UV
- C0g0p0AcJhDUA==
+ b=luZkXaLOh2NsSqC6gh+9G67uXSTzsuU9AXOqbTxXyh1Y6+ORtmXqyXmoTBvgN0NBS
+ lQcFBxjiAxfnCSjqCcP/jlZJO926W2jNJVdLmBIdEsV/uB+wrzXB6YaclGgeCUKxVL
+ QmCqxe9EzxhX2PzI6Uhld2PKh/mIphPhW8NkhmOkfyjFZtjyzOcmRWNE6p1HuejMWi
+ S3mWCpExmpsWK0pWlTCVim/3WFHruSDESsbmRfq/ZLqKRLIrmFte6ydJPnN60wFYS/
+ b+fc3x6W7ZP2uPldjpiVSfJiXdY/961XL0vmYyRMQwYmpuPB9UKDvCKFB47kpUtNH+
+ D9igGeuFPvi6g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 85B7D1AA2EF;
- Tue, 12 May 2026 23:54:35 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1D4D61AA332;
+ Tue, 12 May 2026 23:54:40 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 93CE53ABC60;
- Tue, 12 May 2026 23:54:39 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2912B3ABCA3;
+ Tue, 12 May 2026 23:54:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Katherine Leaver <katherine.j.leaver@gmail.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 035/107] lsi53c895a: do not do anything else if a
- reset is requested by writing ISTAT0
-Date: Tue, 12 May 2026 23:53:22 +0300
-Message-ID: <20260512205437.360850-35-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 102/107] hw/uefi: fix buffer overruns
+Date: Tue, 12 May 2026 23:54:29 +0300
+Message-ID: <20260512205437.360850-102-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
@@ -69,42 +69,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-If the device is reset, anything that is done before will not really
-be visible.  So do the reset and exit immediately if that is one
-of the requests in the value written to ISTAT0.
+The buffer size checks do not consider the mm_header size, simliar to
+CVE-2026-5744.  Factor out the repeated size check to a small helper
+function, fix the check, update all places to use the new helper.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 64807c84e83f767c135aa9ba4b5f61162bb177ef)
+Fixes: CVE-2026-41435
+Fixes: db1ecfb473ac ("hw/uefi: add var-service-vars.c")
+Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20260422092910.444997-2-kraxel@redhat.com>
+(cherry picked from commit f252769a23e67765f9b95d8944ca3da6c9edf58b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
-index bf58212fb1..a5598931f9 100644
---- a/hw/scsi/lsi53c895a.c
-+++ b/hw/scsi/lsi53c895a.c
-@@ -1949,6 +1949,10 @@ static void lsi_reg_writeb(LSIState *s, int offset, uint8_t val)
-     CASE_SET_REG32(dsa, 0x10)
-     case 0x14: /* ISTAT0 */
-         s->istat0 = (s->istat0 & 0x0f) | (val & 0xf0);
-+        if (val & LSI_ISTAT0_SRST) {
-+            device_cold_reset(DEVICE(s));
-+            return;
-+        }
-         if (val & LSI_ISTAT0_ABRT) {
-             lsi_script_dma_interrupt(s, LSI_DSTAT_ABRT);
-         }
-@@ -1962,9 +1966,6 @@ static void lsi_reg_writeb(LSIState *s, int offset, uint8_t val)
-             s->dsp = s->dnad;
-             lsi_execute_script(s);
-         }
--        if (val & LSI_ISTAT0_SRST) {
--            device_cold_reset(DEVICE(s));
--        }
-         break;
-     case 0x16: /* MBOX0 */
-         s->mbox0 = val;
+diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
+index 27421c6e2d..82ff4e429a 100644
+--- a/hw/uefi/var-service-vars.c
++++ b/hw/uefi/var-service-vars.c
+@@ -260,6 +260,17 @@ static size_t uefi_vars_mm_error(mm_header *mhdr, mm_variable *mvar,
+     return sizeof(*mvar);
+ }
+ 
++static bool check_buffer_size(uefi_vars_state *uv, uint64_t length)
++{
++    /* uefi_vars_cmd_mm() checks that */
++    g_assert(uv->buf_size >= sizeof(mm_header));
++
++    if (uv->buf_size - sizeof(mm_header) < length) {
++        return false;
++    }
++    return true;
++}
++
+ static size_t uefi_vars_mm_get_variable(uefi_vars_state *uv, mm_header *mhdr,
+                                         mm_variable *mvar, void *func)
+ {
+@@ -307,7 +318,7 @@ static size_t uefi_vars_mm_get_variable(uefi_vars_state *uv, mm_header *mhdr,
+     if (uadd64_overflow(length, va->data_size, &length)) {
+         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
+     }
+-    if (uv->buf_size < length) {
++    if (!check_buffer_size(uv, length)) {
+         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
+     }
+ 
+@@ -377,7 +388,7 @@ uefi_vars_mm_get_next_variable(uefi_vars_state *uv, mm_header *mhdr,
+     }
+ 
+     length = sizeof(*mvar) + sizeof(*nv) + var->name_size;
+-    if (uv->buf_size < length) {
++    if (!check_buffer_size(uv, length)) {
+         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
+     }
+ 
+@@ -567,7 +578,7 @@ static size_t uefi_vars_mm_variable_info(uefi_vars_state *uv, mm_header *mhdr,
+     uint64_t length;
+ 
+     length = sizeof(*mvar) + sizeof(*vi);
+-    if (uv->buf_size < length) {
++    if (!check_buffer_size(uv, length)) {
+         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
+     }
+ 
+@@ -588,7 +599,7 @@ uefi_vars_mm_get_payload_size(uefi_vars_state *uv, mm_header *mhdr,
+     uint64_t length;
+ 
+     length = sizeof(*mvar) + sizeof(*ps);
+-    if (uv->buf_size < length) {
++    if (!check_buffer_size(uv, length)) {
+         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
+     }
+ 
 -- 
 2.47.3
 
