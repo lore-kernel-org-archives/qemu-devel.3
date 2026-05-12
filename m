@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86673CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:20:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBB0ACD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:20:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuT2-0001nQ-3t; Tue, 12 May 2026 17:16:45 -0400
+	id 1wMuQZ-0001xz-0M; Tue, 12 May 2026 17:14:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuS9-0001Mv-3v; Tue, 12 May 2026 17:15:45 -0400
+ id 1wMuQ3-0001Ia-Ji; Tue, 12 May 2026 17:13:44 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuS7-00069P-DZ; Tue, 12 May 2026 17:15:44 -0400
+ id 1wMuPz-00050U-LU; Tue, 12 May 2026 17:13:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619306; bh=NXvvGB+sQX3oEtbuQZJ7RswhfKOeUtLNpmBZ1vb3LXs=;
+ t=1778619304; bh=XjSNUKZ7g2A4ZQaafhzVVdB6xqtjKB5uLNMj1eJOMZQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=NNdzjrlxhj/LtKsCvB93RU5PTsb4NH9PeqFNg+0fS0a5g0xBpOckq/czZGhBNGhwq
- 79Ck8ybLabTrA+1slCQtSJDeA/lGvLLvRngBrNx93cBpcJD3F1WMB5DoStqmz1O6be
- DdYR9jD5gycyZ+9LZ2UQcK0oSowx9/9tdo6llo2whus8jPs3dcu7H4JMjntw8CVKbG
- /RSctLbZ4G0ev7ulC3IuvOaZsWLsJRxFPNszv7AWFTyaVeD715Q0jEYo4XCUv4ltKE
- Pl3+eyh4mQbguGZt0hp4svizFLUXHaVU7hYXiGic9wTeuAd+FSa00dN6CyOrETqIuI
- XnLrLS4lwtPbw==
+ b=eWX8QsBOVsWB2T7XVqTTpeBUUiYYypXTNE4FhP1PvsO1+qhaVVfr2UP20KSO0DrA8
+ XJ2FOvAJtr95PrfH3JH4xjxWXTrpKY2iLYgjsW7xVkS1bhIe3q4RtmtBiuYnoCrgH8
+ AOU/FbZIB31n/1Em71wkM58C09Dr7JEBkTPIs5fRXC7HMNP86Tez0doequ+7lNmLC3
+ U6/7hP8G0AJ94by5aECXrVj47Jp/4+MBZ9wjhjfI83C9lsfA9fBHtj1r/9a5NCU8Cg
+ UieX1IQZ/qRtwTt7+rA6FL8oNFfMJCvlPGCripOFQYkEJqUo4k6d/AOJoGwMIpzG8e
+ zyVOTbVLOyq7g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 159191AA39C;
- Tue, 12 May 2026 23:55:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C73641AA388;
+ Tue, 12 May 2026 23:55:04 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 205423ABD0B;
- Tue, 12 May 2026 23:55:10 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C765D3ABCF7;
+ Tue, 12 May 2026 23:55:08 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Sebasti=C3=A1n=20Alba=20Vives?= <sebasjosue84@gmail.com>,
- qemu-security@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 094/117] hw/intc: fix heap OOB in ACLINT MTIMER
- multi-socket
-Date: Tue, 12 May 2026 23:54:36 +0300
-Message-ID: <20260512205503.361097-94-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Stepan Popov <Stepan.Popov@kaspersky.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 074/117] meson: add missing semicolon in
+ pthread_condattr_setclock test
+Date: Tue, 12 May 2026 23:54:16 +0300
+Message-ID: <20260512205503.361097-74-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
@@ -72,75 +72,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sebastián Alba Vives <sebasjosue84@gmail.com>
+From: Stepan Popov <Stepan.Popov@kaspersky.com>
 
-The MMIO read/write handlers index timecmp[] with the absolute hartid
-(hartid_base + offset) but the array is allocated with num_harts
-elements. In multi-socket configurations with hartid_base > 0 this
-causes heap OOB access in the QEMU process.
+The test code was missing a semicolon after the pthread_condattr_t
+variable declaration.
 
-Fix by using the relative offset for array indexing.
-
-Cc: qemu-security@nongnu.org
-Signed-off-by: Sebastián Alba Vives <sebasjosue84@gmail.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260401053853.10473-2-sebasjosue84@gmail.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit d5b33fc180f557ee3574cef9c64650174d0ef5dd)
+Signed-off-by: Stepan Popov <Stepan.Popov@kaspersky.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Fixes: 657ac98b58c ("thread-posix: use monotonic clock for QemuCond and QemuSemaphore", 2022-02-22)
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Link: https://lore.kernel.org/r/20260330131406.87080-1-Stepan.Popov@kaspersky.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 79bc1771867723cb70dac0fae8f2c26fda1a635d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/riscv_aclint.c b/hw/intc/riscv_aclint.c
-index c6f13f647e..bd6b9ae586 100644
---- a/hw/intc/riscv_aclint.c
-+++ b/hw/intc/riscv_aclint.c
-@@ -131,6 +131,7 @@ static uint64_t riscv_aclint_mtimer_read(void *opaque, hwaddr addr,
-         addr < (mtimer->timecmp_base + (mtimer->num_harts << 3))) {
-         size_t hartid = mtimer->hartid_base +
-                         ((addr - mtimer->timecmp_base) >> 3);
-+        size_t hartid_offset = hartid - mtimer->hartid_base;
-         CPUState *cpu = cpu_by_arch_id(hartid);
-         CPURISCVState *env = cpu ? cpu_env(cpu) : NULL;
-         if (!env) {
-@@ -138,11 +139,11 @@ static uint64_t riscv_aclint_mtimer_read(void *opaque, hwaddr addr,
-                           "aclint-mtimer: invalid hartid: %zu", hartid);
-         } else if ((addr & 0x7) == 0) {
-             /* timecmp_lo for RV32/RV64 or timecmp for RV64 */
--            uint64_t timecmp = mtimer->timecmp[hartid];
-+            uint64_t timecmp = mtimer->timecmp[hartid_offset];
-             return (size == 4) ? (timecmp & 0xFFFFFFFF) : timecmp;
-         } else if ((addr & 0x7) == 4) {
-             /* timecmp_hi */
--            uint64_t timecmp = mtimer->timecmp[hartid];
-+            uint64_t timecmp = mtimer->timecmp[hartid_offset];
-             return (timecmp >> 32) & 0xFFFFFFFF;
-         } else {
-             qemu_log_mask(LOG_UNIMP,
-@@ -174,6 +175,7 @@ static void riscv_aclint_mtimer_write(void *opaque, hwaddr addr,
-         addr < (mtimer->timecmp_base + (mtimer->num_harts << 3))) {
-         size_t hartid = mtimer->hartid_base +
-                         ((addr - mtimer->timecmp_base) >> 3);
-+        size_t hartid_offset = hartid - mtimer->hartid_base;
-         CPUState *cpu = cpu_by_arch_id(hartid);
-         CPURISCVState *env = cpu ? cpu_env(cpu) : NULL;
-         if (!env) {
-@@ -182,7 +184,7 @@ static void riscv_aclint_mtimer_write(void *opaque, hwaddr addr,
-         } else if ((addr & 0x7) == 0) {
-             if (size == 4) {
-                 /* timecmp_lo for RV32/RV64 */
--                uint64_t timecmp_hi = mtimer->timecmp[hartid] >> 32;
-+                uint64_t timecmp_hi = mtimer->timecmp[hartid_offset] >> 32;
-                 riscv_aclint_mtimer_write_timecmp(mtimer, RISCV_CPU(cpu), hartid,
-                     timecmp_hi << 32 | (value & 0xFFFFFFFF));
-             } else {
-@@ -193,7 +195,7 @@ static void riscv_aclint_mtimer_write(void *opaque, hwaddr addr,
-         } else if ((addr & 0x7) == 4) {
-             if (size == 4) {
-                 /* timecmp_hi for RV32/RV64 */
--                uint64_t timecmp_lo = mtimer->timecmp[hartid];
-+                uint64_t timecmp_lo = mtimer->timecmp[hartid_offset];
-                 riscv_aclint_mtimer_write_timecmp(mtimer, RISCV_CPU(cpu), hartid,
-                     value << 32 | (timecmp_lo & 0xFFFFFFFF));
-             } else {
+diff --git a/meson.build b/meson.build
+index 5c8fa456e9..5ba29bc07d 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2887,7 +2887,7 @@ config_host_data.set('CONFIG_PTHREAD_CONDATTR_SETCLOCK', cc.links(osdep_prefix +
+ 
+   int main(void)
+   {
+-    pthread_condattr_t attr
++    pthread_condattr_t attr;
+     pthread_condattr_init(&attr);
+     pthread_condattr_setclock(&attr, CLOCK_MONOTONIC);
+     return 0;
 -- 
 2.47.3
 
