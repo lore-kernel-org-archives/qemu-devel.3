@@ -4,94 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17682CD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 10:53:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFD3FCD4851
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 11:03:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMkjg-0004Rs-H5; Tue, 12 May 2026 06:53:16 -0400
+	id 1wMksL-0006Hm-Hw; Tue, 12 May 2026 07:02:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMkjR-0004Qg-88
- for qemu-devel@nongnu.org; Tue, 12 May 2026 06:52:58 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMkjN-0001LT-Nc
- for qemu-devel@nongnu.org; Tue, 12 May 2026 06:52:55 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-48a7fe4f40bso62319415e9.0
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 03:52:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wMks8-0006CW-T9
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 07:01:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wMks4-0003Xw-CW
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 07:01:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778583709;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GmHPuEn/7Gry1RvBW/FMQh8n+qcPkS49sE/ehIWO008=;
+ b=Rg8cZbhmvXJXom/LceJ9Ix2gVUSkVHqoPRt1wgq2SHSwGD8nJcpkQAM/Q63WEmbGHfXkY3
+ jd3EXQjeMn9+6DdwHYjTWRcbkECamCI8cDy/a0J3EuAXGJib6pveJYuMPWd91uzYGEqaeT
+ 2rSAoEZ9uMkmeQPnz6yukYT3QdYX/Wk=
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
+ [209.85.210.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-488-QOXWXyWeN5OqfwhTtFZeow-1; Tue, 12 May 2026 07:01:47 -0400
+X-MC-Unique: QOXWXyWeN5OqfwhTtFZeow-1
+X-Mimecast-MFC-AGG-ID: QOXWXyWeN5OqfwhTtFZeow_1778583707
+Received: by mail-pf1-f199.google.com with SMTP id
+ d2e1a72fcca58-83536dc3be5so5724996b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 04:01:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778583706; cv=none;
+ d=google.com; s=arc-20240605;
+ b=EwlAiXRtmToEtmRFPz9XikWbmrOfaEN9aHGyrgQTuX5QF/IR3ws+qFrox8Yh7s3nCR
+ cFt/JlW5/KF5wNk2YlW6Qt1UD6EGwJtwp2qQqwpjsXS4TtV88aio1PMJF1nrMJfaUwIf
+ Xl5vfnvVwh8YUq3waaWtbL0RmHv0h376ccFL6QCYhUUfDLmIho5h8CZbxIGetUOpH1KI
+ jf1k/xCgZo/XdcYEcpG+fuEFEbVuDZ6w4FYhiU6XacKCUnTo8y0V0/fEbxOA4QI5jrQy
+ UxF2pPRiEuIJ9e7mlCmCEwQbbjnAy+ljet2ob0g3qD3T0AQ9bk/ANfykhBcbCMR2y2F5
+ cnCw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=GmHPuEn/7Gry1RvBW/FMQh8n+qcPkS49sE/ehIWO008=;
+ fh=DkcsS+wDAht8mg8Un44vEXzEP9PftsclVxpMktWLF+E=;
+ b=CmZkCt74Ainz+Ozr6ndRz0PTdBAEOl/ajpcL0dQRQG9tt2TAjUJNXActUnAMsf3PIO
+ wy57czb6XKQIgZ7hpbLUXA2pwAhd9pKq1eArUXDw9p7gQK5ixt+aMrTl9p4wAY9cnC9E
+ ezkIS8sVjVpPBGvfzKJYc7zbHFyU+5wKhB3U0pHX6GoUVNGOxs2b5tW1GP6xtcIa6AYE
+ +UVR/LSNo93rmhFrCYPJ20YFrMZXB8wymefobJB6KL9kKOy+Q/7jPVj+ICifMqOX+a52
+ 6zVlXFHIUDRPkz1zKnTo2YiYTLgX9yNv3ZUMWCCajIHUF5GOsLo4nkhIxa1L9/oznUPv
+ 0W8g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778583172; x=1779187972; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=XBNWRyzbtz1TGns5QgnSSPkjv9oZzZcM1M39ETy5/JI=;
- b=nloGdYy9SPC72ZomzmIzqnUd8VgGucqHuJGg2bljfRL0gpfkmYSkoxqmCTsFvjYTyB
- AAy/lhQChp8VLRcwVQGkHDDR5da0m3MkYHQcNKnIa8x/jtfYoVIoQwwZiZBfIoBGK/KA
- UNMgdvT9vK+AAQyfAKy0zNC6zlrSTIk0fGkAUKaXuH/8TzVHAuBPQjMOYvNWMP//XIv5
- srwX9QmYsO0ylC3uXG2s3v2ZikopKmTN9qzmgo1dahGJi8Y1qDn39UOdcEb3B7CvVLq0
- 7grIlMaoKe28CkSGuCbIlQTYwxxQyLDYY+qatRVRUQsSj+DxghJCY+nAw2q8IPB1Q1Z6
- EsRQ==
+ d=redhat.com; s=google; t=1778583706; x=1779188506; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GmHPuEn/7Gry1RvBW/FMQh8n+qcPkS49sE/ehIWO008=;
+ b=aLgFblNlI+alibC3DKtTLxp4/Y2voA87XpPTBufg87UOFA9yYOQGbUicEO7QXgTHIz
+ 3nTe9RQSy8TIym1a7Wzb31FdWINro5g4KyDXTWWe72J6mbZB1zgHVBso5YzF65OKp0nF
+ OInmj59oLdbU1kMdAwnpbqZiVjjo0c8GZ5wVS3xdzj2b0KORu/tYv23WTSMDAy8lvXce
+ siYeSm65eUzD3m/uBVmwYnaa9nE1ZmTNl9NoTdmNqnnJm8QouwqOWNca8PelE6rTKcn6
+ nHssxJtGeKjTeWBWJhXNwVWSkMGIpU9M4bGGT3HCqrd8nVbCQW/gr6bIEXNC4MM1Onsi
+ 35eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778583172; x=1779187972;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XBNWRyzbtz1TGns5QgnSSPkjv9oZzZcM1M39ETy5/JI=;
- b=nMbLDTYL8UXdWrcWmTREMJarvyKIeOUuHUTztllDgf9BOhNVXqRdz4Fhtp0E1oZ7XU
- qwZcKo5cRv5va5pKqI0AU2qrCjJ1rZ/6NXEg3JxMmttqc5mJ/5M3j0fx7lefRVlpGdRR
- CLT/LUDnjN7N7li1Me98DXlfelo/yXEl9lZKvVm+zKLfbwDL89EOlTwsSKF/BhTrQdlY
- Q1lK+/P9vwPYsJZegNadkxAfqIGDTInazildr22l7Cd4KpXZecvpUzyUAvCBDrf7kF/Y
- riEeRBXjrY70OjDtYUQ9uBxWQA80PsOK20S68u26GfG0Dqkg5bGbPL3Q2rXIwr/wqihM
- foIA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9Md5QkZZWMoZqhqejXSHM2RKxu90vIvbyk0lSjd8s69R/ppZwmCYAJjt6lfDSS5admr5sBaVxbkD9C@nongnu.org
-X-Gm-Message-State: AOJu0YzGQ7a2nH/tgCK9hm2o5ZGD2Zndq0gp0k0cj7JWS1iptlxXeEkH
- g8GpufImRJ0LM91hLXXN48O2lraT5+XOWt3Vz+kgIyhB4kJiTTUk+K4RNwcJRY0uskwxxRqCJp7
- rqL9gL3c=
-X-Gm-Gg: Acq92OGaai3rxWxfOCuBIPDUjuIkFWR7vu3PGqGvdJQZy/QQWmegmPJuqRAjlxLj9TC
- +Um3RKt9i+SqVyY7JTX4jdJSyeGbC4IGvGwcO2CV5d8JYQC9W/LHrrJHoF4oA7bHESsvU2PkS//
- UQaJ2ylWsoJKVgCj890VYbiWT5wnJVP9yyWGc2GJxWmlB+CIHhpP+xHMXUIl5kERcP7EFJxcDz4
- Nwlmu6sGaodTIC5maz3KAo2U2FYMa3iqraHmVmYMVuaO4HuYMwKAzbNWq+QINWjfP2QsERQDgUb
- sZQapRGJ4T8WIcBsjgKq7mbNUNFJ0tFg3/xU3F/XQXcf17xzQRj5UMTcajxw1DL5CnYnbCUVTiu
- TOB/vl+CTV1YsVYOmQD09q2/yU2aEgKjGVtrO5lBqX6Cw84zd5cBXFIPk4I3fq34g9zEpgnQOGc
- NESLG3I1najPxHUo8vuJPzeVmP+gRk1uHuSrJpKwu8iMabcKOpBV0SUXIwQXSFieJwzAMUzBMf0
- CFv
-X-Received: by 2002:a05:600c:2e15:b0:48e:5990:96b1 with SMTP id
- 5b1f17b1804b1-48e599097b8mr224977865e9.23.1778583171771; 
- Tue, 12 May 2026 03:52:51 -0700 (PDT)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4548ec6c221sm32746757f8f.13.2026.05.12.03.52.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 May 2026 03:52:51 -0700 (PDT)
-Message-ID: <42e934a6-67e9-4edd-89c2-92f77f0af5f3@linaro.org>
-Date: Tue, 12 May 2026 12:52:50 +0200
+ d=1e100.net; s=20251104; t=1778583706; x=1779188506;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=GmHPuEn/7Gry1RvBW/FMQh8n+qcPkS49sE/ehIWO008=;
+ b=Z0VYZEpr8HpfSZKQaFh3QSBkj+RxCsXK6mkF8ez5XQho7IirTdZ/uflis7KDwp3rsy
+ oJ+AoTAQssTocZ9tTo0b8pukYorIo95RTyaHjild6XWUiBzvUPIWIqQKU7vVrwo602Ch
+ fOLjttS17P/T5B+KZEyCWEqya+sCy76QFUj1El3OmFHD8zmhE/ziavqVCJOs/O3Z+0Mv
+ of20kByBupawFZCb1MMhrIX+SayCna6cIusXlNjit8Fo1nVIBxzHr0xRtzCOQqpgVJM4
+ vWwQu/pT/djsDVwht2ZUnjnQxVV7E1Q2BPmc3v4wgqYyfGq/ZNIQzwy6KyXj1kJQLKR+
+ plZA==
+X-Gm-Message-State: AOJu0YxF3B1Nmbnu5llBdD0DavfR/x9mSPOliRXVr4UGdobXOGd1J8nV
+ ZM7xr4fB2yrnRE+mPlT8hhryxUhEhMTAyTUF4ae6NJqQlke5dFVGuJCRz0nkf/MyWn4lF/6FOmS
+ bGSLJdt9FGR0J0RfLlCXakobWPVCbLyud06qkn2QzVLE0Fs8eLoHsA7wrtUcAfkUZsxL0+BW+IM
+ zTGHVIzpbK7D3O8rBgmkaHkUb8L2BvKTg=
+X-Gm-Gg: Acq92OExwdhr47aXn/9NtgxDHDsE+44a2LSBnUEp6fbgYKv0YP7j6L8paaKCYQcr4K1
+ bbJljUcis+20kTXXljS37nz6ak6ZPTQzIa9WcHImUPKK96AUZ+OorsCLytJ7llN/X0n0mhDznJm
+ 7lHXr5PBmf+UAXBxDm0q/0v5avmdwxek4zCu4loub6uh/WJEMe2KFxqWciziNmOvt6nHU4yFWHZ
+ Z4nbGhWI8uXRrKy2nhgp4sCoMqV6AUCy2jEP89d9Id9jqA29El9Hq7+2CS5MqhFz2ClYN3dVv3m
+ Ic2H7450YyVBGludK6LatIw=
+X-Received: by 2002:a05:6a00:2d12:b0:82f:4a4d:377e with SMTP id
+ d2e1a72fcca58-83a5d873344mr28498781b3a.28.1778583706169; 
+ Tue, 12 May 2026 04:01:46 -0700 (PDT)
+X-Received: by 2002:a05:6a00:2d12:b0:82f:4a4d:377e with SMTP id
+ d2e1a72fcca58-83a5d873344mr28498727b3a.28.1778583705645; Tue, 12 May 2026
+ 04:01:45 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/i2c/microbit_i2c: Don't index off end of
- twi_read_sequence[]
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Joel Stanley <joel@jms.id.au>
-References: <20260501162634.4092394-1-peter.maydell@linaro.org>
- <CAFEAcA8nVfzFrQ8y5x9_Qp62QogVcvN09Q0JkqcFrJv73g80oQ@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA8nVfzFrQ8y5x9_Qp62QogVcvN09Q0JkqcFrJv73g80oQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20260512104210.3330835-1-peter.maydell@linaro.org>
+In-Reply-To: <20260512104210.3330835-1-peter.maydell@linaro.org>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 12 May 2026 15:01:33 +0400
+X-Gm-Features: AVHnY4JLlpqhoFu4ac54wBkw9HGUUTbbNXiOV6Sl_t1PdmlDQNvl08QSSD8_mlk
+Message-ID: <CAMxuvawNHwQjJ3JUU=Z=jni=5mo24fbqMXx5mWkhhnAPzoORYA@mail.gmail.com>
+Subject: Re: [PATCH 0/2] ui/vt100: Use uint8_t for byte data
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,53 +135,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/5/26 16:48, Peter Maydell wrote:
-> Hi; ping for review?
-> 
-> thanks
-> -- PMM
-> 
-> On Fri, 1 May 2026 at 17:26, Peter Maydell <peter.maydell@linaro.org> wrote:
->>
->> If the guest tries to read more bytes from our fake stub I2C device
->> than we have provided, we incorrectly read one byte beyond the end of
->> this array. Avoid this, and instead keep reporting the RXD register
->> as containing the last byte of the "data transfer".
+On Tue, May 12, 2026 at 2:42=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+>
+> This patchset is prompted by a Coverity issue CID 1659590,
+> where it thinks that we use tainted data from the guest to
+> index an array in bh_utf8_decode() without bounds-checking.
+> In fact I think this is a false positive because the array
+> is 256 bytes and the data from the guest is always a byte,
+> but both Coverity and I get confused because the chain
+> of functions operating on this data switch between "uint8_t",
+> "int" and "uint32_t" types to hold it as it passes down.
+>
+> The patchset standardizes this all to uint8_t.
 
-Having the accelerator data buried in an i2c controller is not good
-practice. Anyway good enough for how we use it. Same for this fix:
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
->>
->> Cc: qemu-stable@nongnu.org
->> Fixes: 9d68bf564ec ("arm: Stub out NRF51 TWI magnetometer/accelerometer detection")
->> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3408
->> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->> ---
->>   hw/i2c/microbit_i2c.c | 7 ++++++-
->>   1 file changed, 6 insertions(+), 1 deletion(-)
->>
->> diff --git a/hw/i2c/microbit_i2c.c b/hw/i2c/microbit_i2c.c
->> index 2291d6370e..d9689b6f1a 100644
->> --- a/hw/i2c/microbit_i2c.c
->> +++ b/hw/i2c/microbit_i2c.c
->> @@ -41,8 +41,13 @@ static uint64_t microbit_i2c_read(void *opaque, hwaddr addr, unsigned int size)
->>           data = 0x01;
->>           break;
->>       case NRF51_TWI_REG_RXD:
->> +        /*
->> +         * Return the next byte from our fake data sequence. If
->> +         * the guest keeps reading the register after that, keep
->> +         * returning the same last byte value.
->> +         */
->>           data = twi_read_sequence[s->read_idx];
->> -        if (s->read_idx < G_N_ELEMENTS(twi_read_sequence)) {
->> +        if (s->read_idx + 1 < G_N_ELEMENTS(twi_read_sequence)) {
->>               s->read_idx++;
->>           }
->>           break;
->> --
-> 
+>
+> Peter Maydell (2):
+>   ui/vt100: Standardize on uint8_t for "ch" byte variables
+>   ui/vt100: Take byte as uint8_t in bh_utf8_decode()
+>
+>  ui/vt100.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> --
+> 2.43.0
+>
 
 
