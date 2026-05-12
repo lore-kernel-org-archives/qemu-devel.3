@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D74F2CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:37:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7372CD4F24
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:37:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuW0-0004KV-Fn; Tue, 12 May 2026 17:19:44 -0400
+	id 1wMuk7-0006LK-Io; Tue, 12 May 2026 17:34:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuVx-00044Q-4S; Tue, 12 May 2026 17:19:41 -0400
+ id 1wMujs-00063Y-GV; Tue, 12 May 2026 17:34:08 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuVv-000862-BC; Tue, 12 May 2026 17:19:40 -0400
+ id 1wMujC-0002rM-Fw; Tue, 12 May 2026 17:34:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619497; bh=B2c+vLvkbAabhRi7LphPcXaUSAm1v5TeHgGSBIHw5k4=;
+ t=1778619500; bh=GmszARVt7TPtIOh6I9oJ+mseqA72Tyv+NZcbJ25pw2E=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=WchYI7iw2aTRwkAv0XxkJ6JTgwg9f+IKiavImy4F0q1n58FgtLUM0C4pERqOPKfvd
- yQWR/NYb9v1+NRyyKgwIF9ajTNbZDig17ushWlSFz6kpQn7jYROb/dFYNnrpuPIqHa
- rDPJT+qnqWRelm+qvx5/s1JUSsGadd5XiHcqxTYCJpsSFRSw7hvkkdi+rk640wM2on
- 28+G0DvN/ayrAwiICPCKBtSrkY891cK6MMdnM4bzcDH+Gj1+aBxM9rsMUiloxj65N0
- CPAip2pLnwR3y5N3qf+/jtlNiVGFndc3INUHHbCZd9Kys6GT95KL16VIuPqAxbpSU9
- 0OD+zTxWQ49KA==
+ b=RXH6tjBvm3vZCx3CcbyH26k9pDyUqEuX4IRBSAyOqA5ClyKCQz0at6w4du+G5YcyI
+ eubskGOi1O3HuijVYcROGfo0AXJ/NsgjlWc/4woufzxrgzbLde/+eYEeZcB8MH+hxI
+ bjh1+K2sV/BzMEEeWFGLURAgsE9ChEJYA5mo+m3enmIxobgbRy/XHIOnTc7qc9c0+h
+ 8ruoK70UD77VskmBDV71a3owRLiEQERpxmpnXEp0zFKtQuyEV/o/FkjZDLCxmAulsg
+ 4p6K8FHhIQQV4RN1awveAT0rhQuNAnC8RZB1GyWD6kwdMRvbgRkNmO2TLtdVvP3cHD
+ zSe/3wQSMm+dA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EF2EE1AA3DB;
- Tue, 12 May 2026 23:58:17 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9A1C41AA400;
+ Tue, 12 May 2026 23:58:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 08B563ABD33;
- Tue, 12 May 2026 23:58:22 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9E2843ABD58;
+ Tue, 12 May 2026 23:58:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Katherine Leaver <katherine.j.leaver@gmail.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 16/58] hw/sh4/sh7750: Remove forgotten abort() in the
- MM_ITLB_DATA handler
-Date: Tue, 12 May 2026 23:57:37 +0300
-Message-ID: <20260512205820.361821-16-mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 53/58] hw/uefi: verify pio_xfer_offset before
+ calculating buffer checksum
+Date: Tue, 12 May 2026 23:58:14 +0300
+Message-ID: <20260512205820.361821-53-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,44 +70,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-QEMU currently aborts when the guest writes to the MM_ITLB_DATA register:
+Without that it is possible to do trigger OOB reads by first
+advancing offset, then making the buffer smaller, finally
+asking for a checksum.
 
- echo "writel 0xf3000000 0x11223344" | \
-  ./qemu-system-sh4 -M r2d -display none -accel qtest -qtest stdio
- [I 0.000000] OPENED
- [R +0.004476] writel 0xf3000000 0x11223344
- Aborted                    (core dumped)
-
-Looking at the history of the code, the abort() here has likely just
-been forgotten when the register handler had been implemented (it used
-to be a reminder about unimplemented functionality initially):
-
- https://gitlab.com/qemu-project/qemu/-/commit/9f97309a70f12df5f9104f1f
-
-Thus simply remove the abort() now to get rid of the problem.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3420
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260422075429.341409-1-thuth@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 3ab47a47d716f8f2b7686cc06c8312db2e6fc2d4)
+Fixes: CVE-2026-41436
+Fixes: 90ca4e03c27d ("hw/uefi: add var-service-core.c")
+Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20260422092910.444997-3-kraxel@redhat.com>
+(cherry picked from commit 94d9a8b2c9e6962aa7f7673229d2db7b110cfac6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/sh4/sh7750.c b/hw/sh4/sh7750.c
-index 3ae71f99fe..6aa7f63773 100644
---- a/hw/sh4/sh7750.c
-+++ b/hw/sh4/sh7750.c
-@@ -687,7 +687,6 @@ static void sh7750_mmct_write(void *opaque, hwaddr addr,
+diff --git a/hw/uefi/var-service-core.c b/hw/uefi/var-service-core.c
+index 68d7594c0d..828d760073 100644
+--- a/hw/uefi/var-service-core.c
++++ b/hw/uefi/var-service-core.c
+@@ -235,6 +235,10 @@ static uint64_t uefi_vars_read(void *opaque, hwaddr addr, unsigned size)
+         uv->pio_xfer_offset += size;
          break;
-     case MM_ITLB_DATA:
-         cpu_sh4_write_mmaped_itlb_data(&s->cpu->env, addr, mem_value);
--        abort();
+     case UEFI_VARS_REG_PIO_BUFFER_CRC32C:
++        if (uv->pio_xfer_offset > uv->buf_size) {
++            retval = 0;
++            break;
++        }
+         retval = crc32c(0xffffffff, uv->pio_xfer_buffer, uv->pio_xfer_offset);
          break;
-     case MM_OCACHE_ADDR:
-     case MM_OCACHE_DATA:
+     case UEFI_VARS_REG_FLAGS:
 -- 
 2.47.3
 
