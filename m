@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0196CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:11:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37507CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:11:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuKJ-0000Tc-1o; Tue, 12 May 2026 17:07:41 -0400
+	id 1wMuNO-0005sS-0x; Tue, 12 May 2026 17:10:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuJa-0007te-H4; Tue, 12 May 2026 17:06:54 -0400
+ id 1wMuNI-0005Ys-UM; Tue, 12 May 2026 17:10:45 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuJY-0001jQ-8v; Tue, 12 May 2026 17:06:53 -0400
+ id 1wMuNF-0003zB-Im; Tue, 12 May 2026 17:10:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619300; bh=G+0gqThKbNLLZS71dv1lJG+vMxDq2tBpgVUYj3t34VA=;
+ t=1778619302; bh=gjFyd651RWy0F6xlDfP/SdobmZuQcY+OKU1rjZMzzV0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=JymCCgzLosr+TnUgsowHUbnbPEBIOmH0F9V7iyaPhtcKs4sR8s+eJigz28eAuViq9
- lp3wDRc/cobn3BsVH/0QISK6m6UCKcsthhskuqAo6xsliDH3NcNMCOPJR/1h9j6n4M
- 8d1w4/Uoy69PvA+4mq0GkU8U6x6gPaV8ajlye1yHxjxAalbSO933RxITLi3fNGQRB8
- PUOvqBl6hoEnzHsZwJrjxl2oGIng7XRakvB8XrXrHi5AL2XtY01gca5r0Gdt/655bY
- bbdULXUBdH6yxe9n4zPI/2hfKDw3yRYAQWsh+d7/6bjlKvqs3+MlTbQbGU550oJyqO
- +5CVxvG6q99xw==
+ b=bVu/6zad7sSnazaAXm4MBurXQxmxqZ0BgY8RS93WW9FIav2rDhzTDD+r7O0fRo5K3
+ i3VAjZBIpkj9tnF7iXEOhE+OLehHBEHyVuZzVPf54MPOf6PEwcwFeKa4fIrieSHwMg
+ XVY+0L6cfKvC9xF+H5wZtUBBFU3wKGhw3lgj030GwDbFR8g1ZXLHkRUmJBL4e9Rnz5
+ UayU8MtuJbqvOIsuZ7bCSUtnxyTPfdjR5Lq7qi/qiz5lxmk5kW9wmevLRydMGRtrbx
+ 7uTGrYRFHgGeyaQI3Np7DLdT2g1xUDIIVoXByse4kzYcyU3JqXVuJ+SUDB493j+jcx
+ cJ920WAMKycFA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 610DE1AA346;
- Tue, 12 May 2026 23:55:00 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id DAA391AA36D;
+ Tue, 12 May 2026 23:55:02 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6E42C3ABCB7;
- Tue, 12 May 2026 23:55:04 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E46B33ABCDD;
+ Tue, 12 May 2026 23:55:06 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
- Hanna Czenczek <hreitz@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 010/117] block/mirror: fix assertion failure upon
- duplicate complete for job using 'replaces'
-Date: Tue, 12 May 2026 23:53:12 +0300
-Message-ID: <20260512205503.361097-10-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, hongmianquan <hongmianquan@bytedance.com>,
+ Kevin Wolf <kwolf@redhat.com>, "wubo.bob" <wubo.bob@bytedance.com>,
+ Markus Armbruster <armbru@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 048/117] monitor: Fix deadlock in monitor_cleanup
+Date: Tue, 12 May 2026 23:53:50 +0300
+Message-ID: <20260512205503.361097-48-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
@@ -69,63 +69,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fiona Ebner <f.ebner@proxmox.com>
+From: hongmianquan <hongmianquan@bytedance.com>
 
-If s->replace_blocker was already set by an earlier invocation of
-mirror_complete(), then there will be an assertion failure when
-error_setg() is called for it a second time. The bdrv_op_block_all()
-and bdrv_ref() operations should only be done a single time too.
+During qemu_cleanup, if a non-coroutine QMP command (e.g.,
+query-commands) is concurrently received and processed by the
+mon_iothread, it can lead to a deadlock in monitor_cleanup.
 
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Message-Id: <20260311145717.668492-2-f.ebner@proxmox.com>
-Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-(cherry picked from commit 9ac85f4cc7995217db8f736733b990d6addcb036)
+The root cause is a race condition between the main thread's shutdown
+sequence and the coroutine's dispatching mechanism. When handling a
+non-coroutine QMP command, qmp_dispatcher_co schedules the actual
+command execution as a bottom half in iohandler_ctx and then yields. At
+this suspended point, qmp_dispatcher_co_busy remains true.
+
+Subsequently, the main thread in monitor_cleanup(), sets
+qmp_dispatcher_co_shutdown, and calls qmp_dispatcher_co_wake(). Since
+qmp_dispatcher_co_busy is already true, the aio_co_wake is skipped. The
+main thread then enters the AIO_WAIT_WHILE_UNLOCKED loop, it executes
+the scheduled BH (do_qmp_dispatch_bh) via aio_poll(iohandler_ctx,
+false), which attempts to wake up the coroutine, aio_co_wake schedules a
+new wake-up BH in iohandler_ctx. The main thread then blocks
+indefinitely in aio_poll(qemu_aio_context, true), while the coroutine's
+wake-up BH is starved in iohandler_ctx, qmp_dispatcher_co never reaches
+termination, resulting in a deadlock.
+
+The execution sequence is illustrated below:
+
+ IO Thread                 Main Thread (qemu_aio_context)        qmp_dispatcher_co (iohandler_ctx)
+    |                                 |                                        |
+    |-- query-commands                |                                        |
+    |-- qmp_dispatcher_co_wake()      |                                        |
+    |    (sets busy = true)           |                                        |
+    |                                 |   <-- Wakes up in iohandler_ctx -->    |
+    |                                 |                                        |-- qmp_dispatch()
+    |                                 |                                        |-- Schedules BH (do_qmp_dispatch_bh)
+    |                                 |                                        |-- qemu_coroutine_yield()
+    |                                 |                                            [State: Suspended, busy=true]
+    |   [ quit triggered ]            |
+    |                                 |-- monitor_cleanup()
+    |                                 |-- qmp_dispatcher_co_shutdown = true
+    |                                 |-- qmp_dispatcher_co_wake()
+    |                                 |    -> Checks busy flag. It's TRUE!
+    |                                 |    -> Skips aio_co_wake().
+    |                                 |
+    |                                 |-- AIO_WAIT_WHILE_UNLOCKED:
+    |                                 |   |-- aio_poll(iohandler_ctx, false)
+    |                                 |   |    -> Executes do_qmp_dispatch_bh
+    |                                 |   |    -> Schedules 'co_schedule_bh' in iohandler_ctx
+    |                                 |   |
+    |                                 |   |-- aio_poll(qemu_aio_context, true)
+    |                                 |   |    -> Blocks indefinitely! (Deadlock)
+    |                                 |
+    |                                 X (Main thread sleeping)                 X (Waiting for next iohandler_ctx poll)
+
+To fix this, we add an explicit aio_wait_kick() in do_qmp_dispatch_bh()
+to break the main loop out of its blocking poll, allowing it to evaluate
+the loop condition and poll iohandler_ctx.
+
+Suggested-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: hongmianquan <hongmianquan@bytedance.com>
+Signed-off-by: wubo.bob <wubo.bob@bytedance.com>
+Message-ID: <20260327131024.51947-1-hongmianquan@bytedance.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit fc1a2ec7da531223b3473185dc2584f8a7c6c659)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/mirror.c b/block/mirror.c
-index fa1d975eb9..2fcded9e93 100644
---- a/block/mirror.c
-+++ b/block/mirror.c
-@@ -1276,23 +1276,25 @@ static void mirror_complete(Job *job, Error **errp)
-         return;
-     }
- 
--    /* block all operations on to_replace bs */
--    if (s->replaces) {
--        s->to_replace = bdrv_find_node(s->replaces);
--        if (!s->to_replace) {
--            error_setg(errp, "Node name '%s' not found", s->replaces);
--            return;
-+    if (!s->should_complete) {
-+        /* block all operations on to_replace bs */
-+        if (s->replaces) {
-+            s->to_replace = bdrv_find_node(s->replaces);
-+            if (!s->to_replace) {
-+                error_setg(errp, "Node name '%s' not found", s->replaces);
-+                return;
-+            }
+diff --git a/qapi/qmp-dispatch.c b/qapi/qmp-dispatch.c
+index e569224eae..50eae4f082 100644
+--- a/qapi/qmp-dispatch.c
++++ b/qapi/qmp-dispatch.c
+@@ -128,6 +128,16 @@ static void do_qmp_dispatch_bh(void *opaque)
+     data->cmd->fn(data->args, data->ret, data->errp);
+     monitor_set_cur(qemu_coroutine_self(), NULL);
+     aio_co_wake(data->co);
 +
-+            /* TODO Translate this into child freeze system. */
-+            error_setg(&s->replace_blocker,
-+                       "block device is in use by block-job-complete");
-+            bdrv_op_block_all(s->to_replace, s->replace_blocker);
-+            bdrv_ref(s->to_replace);
-         }
++    /*
++     * If the QMP dispatcher coroutine is waiting to be scheduled
++     * in iohandler_ctx, we must kick the main loop. This ensures
++     * that AIO_WAIT_WHILE_UNLOCKED() in monitor_cleanup() doesn't
++     * block indefinitely waiting for an event in qemu_aio_context,
++     * but actually gets the chance to poll iohandler_ctx and resume
++     * the coroutine.
++     */
++    aio_wait_kick();
+ }
  
--        /* TODO Translate this into child freeze system. */
--        error_setg(&s->replace_blocker,
--                   "block device is in use by block-job-complete");
--        bdrv_op_block_all(s->to_replace, s->replace_blocker);
--        bdrv_ref(s->to_replace);
-+        s->should_complete = true;
-     }
- 
--    s->should_complete = true;
--
-     /* If the job is paused, it will be re-entered when it is resumed */
-     WITH_JOB_LOCK_GUARD() {
-         if (!job->paused) {
+ /*
 -- 
 2.47.3
 
