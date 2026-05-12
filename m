@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB187CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:09:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E5B9CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:09:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuEj-0007fs-0n; Tue, 12 May 2026 17:01:53 -0400
+	id 1wMuGe-0002ZK-By; Tue, 12 May 2026 17:03:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuCw-0003vL-B1; Tue, 12 May 2026 17:00:03 -0400
+ id 1wMuF9-0000nM-Eb; Tue, 12 May 2026 17:02:23 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuCu-0005bw-5J; Tue, 12 May 2026 17:00:01 -0400
+ id 1wMuF4-0007Ro-Dt; Tue, 12 May 2026 17:02:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619276; bh=zvja2Ly8MOB+3TR7eyI+pbxqWtBhp+V27gwsfOW3bHU=;
+ t=1778619278; bh=3SPDU/MzEED/in/FPcMMdlRMZaMC11Nee7F0BCRqMtM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=aCz5XHIs0SGyeaePO2bVEdfllga643qBrF4P1zb9ip0iS+r80x7amM/2pGg+dZGOl
- I4kBtjST4Dq9mp8nPiUsW5kAnsI9uv1/8zmysVOZwd1Rkgw+By0WGWJliV15Kec87F
- Nt1FwXq9p6xhc+ymv3D4uFJjpWw4YOAH0Vi9RccrB4QJ6CVgsMLk/GxHKd7dYhkzE2
- kCQMOCyFe7yZ9N5gKLsnqPkeJ70mN7vKxkOU034NgMB8kFAWuYL9Smu9XphL4Irn6p
- mQ2ljk0NWPmwn/HigD13I5Hctfv0cKHvNamG0X0FNFhQew2tpR9JEE4rBBGSGBKmJI
- 8sUgvPgh2WscQ==
+ b=SbDqQPZiITzQLY2R7PLoFNPmEXyAFJ9vuRGpiFJlSGMcJSGIdfiWDbf8r/vD3kV4v
+ PkeTa5nc2Pp/QNdEo8MnWURQNAKBdwkrpyhB4U4TXouyyH5KuvpQ3kZS2paor+PXep
+ PPllDVGe0o0/vzhjf2rhqVuT/ZbqlMgBoi4InTpodgOlsNC7D5SwpXhvi3gIyOjX/6
+ ruST5gVRLmHL8Rx0IfFjrqGSFcboDri74jV2AfitYHsldZFym2w5Yh2lp+ASMmHsIk
+ Hd1r5lSLtfu5zzKHFEGQrdvDUrGDVeonIqhWQGS4TBCuK5Jf6Np1WxtlfnppW+dgHo
+ QJAnJvfFgDkQw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C84CD1AA302;
- Tue, 12 May 2026 23:54:36 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 686B21AA318;
+ Tue, 12 May 2026 23:54:38 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id CA8323ABC73;
- Tue, 12 May 2026 23:54:40 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 775163ABC89;
+ Tue, 12 May 2026 23:54:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Dietmar Maurer <dietmar@proxmox.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 054/107] qemu-keymap: fix altgr modifier lookup for
- newer xkeyboard-config
-Date: Tue, 12 May 2026 23:53:41 +0300
-Message-ID: <20260512205437.360850-54-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 076/107] linux-user: Define SO_TIMESTAMP*_NEW and
+ SO_RCVTIMEIO_NEW
+Date: Tue, 12 May 2026 23:54:03 +0300
+Message-ID: <20260512205437.360850-76-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,39 +69,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dietmar Maurer <dietmar@proxmox.com>
+From: Helge Deller <deller@gmx.de>
 
-xkeyboard-config 2.37 removed the "AltGr" virtual modifier in favor
-of mapping upper groups directly to Mod5. Since then,
-xkb_keymap_mod_get_index(map, "AltGr") returns XKB_MOD_INVALID, so
-AltGr-based keysyms were never generated.
+Define the entries which always use the 64-bit timestamps.
 
-See: https://gitlab.freedesktop.org/xkeyboard-config/xkeyboard-config/-/commit/473f9bc32f9ba869829cc0d06a75cd1f2560aa60
-
-Try "AltGr" first, and fall back to "Mod5" for compatibility with
-both old and new xkeyboard-config versions.
-
-Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260408091459.4001711-1-dietmar@proxmox.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 4e6fb62fb0f33c815b089d0b59e1313b768c55d0)
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 8b60ed835478a787dd60e0f7308a65f6d35b0268)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/qemu-keymap.c b/qemu-keymap.c
-index 6707067fea..402815139a 100644
---- a/qemu-keymap.c
-+++ b/qemu-keymap.c
-@@ -231,6 +231,9 @@ int main(int argc, char *argv[])
-     shift = get_mod(map, "Shift");
-     ctrl = get_mod(map, "Control");
-     altgr = get_mod(map, "AltGr");
-+    if (!altgr) {
-+        altgr = get_mod(map, "Mod5");
-+    }
-     numlock = get_mod(map, "NumLock");
+diff --git a/linux-user/alpha/sockbits.h b/linux-user/alpha/sockbits.h
+index d54dc98c09..0201ab9374 100644
+--- a/linux-user/alpha/sockbits.h
++++ b/linux-user/alpha/sockbits.h
+@@ -75,6 +75,13 @@
+ /* Instruct lower device to use last 4-bytes of skb data as FCS */
+ #define TARGET_SO_NOFCS     43
  
-     state = xkb_state_new(map);
++#define TARGET_SO_TIMESTAMP_NEW        63
++#define TARGET_SO_TIMESTAMPNS_NEW      64
++#define TARGET_SO_TIMESTAMPING_NEW     65
++
++#define TARGET_SO_RCVTIMEO_NEW         66
++#define TARGET_SO_SNDTIMEO_NEW         67
++
+ /* TARGET_O_NONBLOCK clashes with the bits used for socket types.  Therefore we
+  * have to define SOCK_NONBLOCK to a different value here.
+  */
+diff --git a/linux-user/generic/sockbits.h b/linux-user/generic/sockbits.h
+index b3b4a8e44c..33e6c3a572 100644
+--- a/linux-user/generic/sockbits.h
++++ b/linux-user/generic/sockbits.h
+@@ -58,4 +58,12 @@
+ 
+ #define TARGET_SO_PROTOCOL             38
+ #define TARGET_SO_DOMAIN               39
++
++#define TARGET_SO_TIMESTAMP_NEW        63
++#define TARGET_SO_TIMESTAMPNS_NEW      64
++#define TARGET_SO_TIMESTAMPING_NEW     65
++
++#define TARGET_SO_RCVTIMEO_NEW         66
++#define TARGET_SO_SNDTIMEO_NEW         67
++
+ #endif
+diff --git a/linux-user/hppa/sockbits.h b/linux-user/hppa/sockbits.h
+index 23f69a3293..2304dbbf79 100644
+--- a/linux-user/hppa/sockbits.h
++++ b/linux-user/hppa/sockbits.h
+@@ -67,6 +67,13 @@
+ 
+ #define TARGET_SO_CNX_ADVICE           0x402E
+ 
++#define TARGET_SO_TIMESTAMP_NEW        0x4038
++#define TARGET_SO_TIMESTAMPNS_NEW      0x4039
++#define TARGET_SO_TIMESTAMPING_NEW     0x403A
++
++#define TARGET_SO_RCVTIMEO_NEW         0x4040
++#define TARGET_SO_SNDTIMEO_NEW         0x4041
++
+ /* TARGET_O_NONBLOCK clashes with the bits used for socket types.  Therefore we
+  * have to define SOCK_NONBLOCK to a different value here.
+  */
+diff --git a/linux-user/mips/sockbits.h b/linux-user/mips/sockbits.h
+index 562cad88e2..1f479d54aa 100644
+--- a/linux-user/mips/sockbits.h
++++ b/linux-user/mips/sockbits.h
+@@ -71,6 +71,13 @@
+ #define TARGET_SO_RCVBUFFORCE          33
+ #define TARGET_SO_PASSSEC              34
+ 
++#define TARGET_SO_TIMESTAMP_NEW        63
++#define TARGET_SO_TIMESTAMPNS_NEW      64
++#define TARGET_SO_TIMESTAMPING_NEW     65
++
++#define TARGET_SO_RCVTIMEO_NEW         66
++#define TARGET_SO_SNDTIMEO_NEW         67
++
+ /** sock_type - Socket types
+  *
+  * Please notice that for binary compat reasons MIPS has to
+diff --git a/linux-user/sparc/sockbits.h b/linux-user/sparc/sockbits.h
+index 0a822e3e1f..42ecfdc8f9 100644
+--- a/linux-user/sparc/sockbits.h
++++ b/linux-user/sparc/sockbits.h
+@@ -61,6 +61,13 @@
+ #define TARGET_SO_TIMESTAMPING         0x0023
+ #define TARGET_SCM_TIMESTAMPING        TARGET_SO_TIMESTAMPING
+ 
++#define TARGET_SO_TIMESTAMP_NEW        0x0046
++#define TARGET_SO_TIMESTAMPNS_NEW      0x0042
++#define TARGET_SO_TIMESTAMPING_NEW     0x0043
++
++#define TARGET_SO_RCVTIMEO_NEW         0x0044
++#define TARGET_SO_SNDTIMEO_NEW         0x0045
++
+ #define TARGET_SO_RXQ_OVFL             0x0024
+ 
+ #define TARGET_SO_WIFI_STATUS          0x0025
 -- 
 2.47.3
 
