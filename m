@@ -4,120 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A438CD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 14:37:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CCB7CD4851
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 14:41:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMoDj-0000zz-8l; Tue, 12 May 2026 10:36:27 -0400
+	id 1wMoIK-0001vO-K8; Tue, 12 May 2026 10:41:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
- id 1wMoCm-0000od-Ny; Tue, 12 May 2026 10:35:30 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
- id 1wMoCk-0000nS-VP; Tue, 12 May 2026 10:35:28 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64CBNtCZ2607277; Tue, 12 May 2026 14:35:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:sender:subject:to; s=pp1; bh=T09pv40A+807iJLFXd7FnOc
- 1c0nZ46Et8eqk2KpOAG8=; b=bG1OQYNeKEqSj9cqeOIZ+7sN+JM/jf2icMkG65S
- 5XMw0hRNl3KTUaaipn2APozooB2FWR/LAmQswLZ3lU+NgyKhxT5ZHGYxOOIideEx
- H8YRbBN7+rT89y6xHerKTfLeNEFY1i0XWVNJysnKKNQIyOekscjukuW+PiJLrDtH
- fQB9G4XeQ9JeOeyZTZ+lqKgu4plE0AiW8TSDrbweUHfpvGEml1TCU1hGLn2Hg+67
- QhCRIvROjEK8CRa/nelOa4IQl+9502raBJk19gbOrCT2pwEPoTLz4nvCzBafcWpC
- MaoB5zwteJamWJha4cvs2Q+P1v8k6qX4IlhNVrjq5pPUAvA==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e3nv53h6d-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 May 2026 14:35:16 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64CEOXAc008270;
- Tue, 12 May 2026 14:35:15 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e3nfgkg71-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 May 2026 14:35:15 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64CEZAdW34275584
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 12 May 2026 14:35:10 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7DE2A2004B;
- Tue, 12 May 2026 14:35:10 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6A40D20043;
- Tue, 12 May 2026 14:35:10 +0000 (GMT)
-Received: from vela (unknown [9.52.206.27])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 12 May 2026 14:35:10 +0000 (GMT)
-Received: from brueckner by vela with local (Exim 4.99.1)
- (envelope-from <brueckner@linux.ibm.com>) id 1wMoCU-00000000ZIN-0TI5;
- Tue, 12 May 2026 16:35:10 +0200
-Date: Tue, 12 May 2026 16:35:10 +0200
-From: Hendrik Brueckner <brueckner@linux.ibm.com>
-To: Alexandra Winter <wintera@linux.ibm.com>
-Cc: Heiko Carstens <hca@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Hendrik Brueckner <brueckner@linux.ibm.com>,
- Halil Pasic <pasic@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
- Alexander Gordeev <agordeev@linux.ibm.com>,
- Sven Schnelle <svens@linux.ibm.com>, Gautam Gala <ggala@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Thomas Richter <tmricht@linux.ibm.com>,
- Shrikanth Hegde <sshegde@linux.ibm.com>, Mete Durlu <meted@linux.ibm.com>,
- linux390-list@tuxmaker.boeblingen.de.ibm.com,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@kernel.org>,
- Cornelia Huck <cohuck@redhat.com>, qemu-stable@nongnu.org,
- qemu-devel@nongnu.org, qemu-trivial@nongnu.org, qemu-s390x@nongnu.org
-Subject: Re: [PATCH] target/s390x: Make container ids in SysIB_15x 1-based
-Message-ID: <agM6nlfVdt3xAbe-@linux.ibm.com>
-References: <20260511134909.43802-1-wintera@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wMoIB-0001rl-9f
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 10:41:03 -0400
+Received: from mail-qk1-x742.google.com ([2607:f8b0:4864:20::742])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wMoI8-0004lE-F3
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 10:41:02 -0400
+Received: by mail-qk1-x742.google.com with SMTP id
+ af79cd13be357-8f231f3b130so433395985a.3
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 07:40:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1778596859; x=1779201659; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Ofshx5/G1dwS9t8TC8Tw6dk+VcQzubVaCoyEMeFaYjk=;
+ b=myhgM22nyL8vKD7aDuLAXtLcbeZ9LjKyovrH5FgGls/JfuA8vCDb9Nr/Q2YVvkQDv3
+ pxI4zOCu/ID3NI6+10V+EQ7XV8nvrv08Ju+WbB11N2kQFm/yDxlGMPR3xFquczEU7rHZ
+ Y7TqX7eB5wn7SbDx+HpD4GNNxUNRsFTnBZNPNmSPxqD7ikzpTlO4JektrWXV2BKxZrUU
+ wBrBEeeeLd6zxExDFgqjQICg74X9FtHzmO1SKVNN4ZJZzE1TOEB2tvpEoKvLSwgPXYRk
+ mMpLsICHjRFbzzCr7sqHM4iQBXFIPRoDIscjeXGYPmP5DBbczUg6wspaosaGQ/haqWC7
+ Ue0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778596859; x=1779201659;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ofshx5/G1dwS9t8TC8Tw6dk+VcQzubVaCoyEMeFaYjk=;
+ b=RzVp7sqJ1pqn/55nsjUWasfiW7+67dAvU/3L5GXhu2W2hCZw41UXkFkTorz9mpA7Mr
+ PhsJ9vtGPXr6VW62IcjcYwAD3MQz3p0Cp/5N0MeMF/7RZrNG2nJ+DGTZOU0gb2M8RQrP
+ utrRI6m7dNEUuYa3wQQv2FhQrGxzhIxBqjKE+Tue0XXSFMO459LzNXwQ9Fim93PNFl4v
+ 134cTDgug4LkF2yN8kbEEFOpV7SSNLazsSMLQYmnHbPELhlm4A6ovC/XcGd2swI8nlO5
+ sdZI9U3E7G34E7nUsdrNC/SvDk1Ne1gVEIw8zgfm7jM0LpWZy3nW6EmmTF+0OwCJhJ3j
+ IVqg==
+X-Gm-Message-State: AOJu0YzoEXN9FmCC0f5Gt6MEW1kpd4DU6xY6a/8EyfWMfxdikj3PvOZd
+ y7Y/c6fGtkJHyzvCT5CVv1DO+tCsQtvl4IkySneRajbL0fVP2q/sB5Mz
+X-Gm-Gg: Acq92OHD67DXDOSJUZ/tQbN0U/TJa6abpO/iBZ72sA2da4PQc51Eurl5P1j4eHvK4dJ
+ mu4ZSmgwWAK1J5dUiA3kdM5N262CIo8/zc0sM5rZJrJO9ph0BcHv+JlmiSNhBnO6jehWT3UTLBT
+ TmapU4X1BYPruqfCvoXeZtW2FP6o0qAHhML9+kiFnRnG7GSebyH9/7sj8BAcJGmpp/8cKDsAxpu
+ yQ0JbasB8o91zn7xRDTJMgALUWYrwzzUSqPPYfhiDRpCldUCVEm+nf7fPOTUh+leHa3YFJJbyrb
+ 4oBgbN/Ysi9Or8KbRSTMl5nm3cNYLrkkp2FBEptH7HMzxhrH+60jfR+LYhnwX8A6tAjnrR0Xqxk
+ SFy4yGzpPuENe7EQMqzkLGBJZiATCAAqIvePOYfdjr8dSxoksdcxGgYks1DeGD72TaNNNv+2iho
+ URVTlZ0yllzqnVMcQAVq7VihMOM0Zze8x9PGRpkJUAxAEvk7KYoltvNtCpkEZoJFoQoYefJwzM
+X-Received: by 2002:a05:622a:4ccc:b0:50d:97e8:939b with SMTP id
+ d75a77b69052e-51461f9e47fmr413642881cf.36.1778596858564; 
+ Tue, 12 May 2026 07:40:58 -0700 (PDT)
+Received: from ZEVORN-PC.localdomain ([162.244.208.119])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-5148e7bf7e4sm120881711cf.17.2026.05.12.07.40.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 May 2026 07:40:58 -0700 (PDT)
+Date: Tue, 12 May 2026 22:40:42 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>, 
+ Cleber Rosa <crosa@redhat.com>
+Subject: Re: [RFC PATCH v2 04/10] .agents/skills: add qemu-build skill
+Message-ID: <agM64b07ygnlb57_@ZEVORN-PC.localdomain>
+References: <20260511170500.124211-1-alex.bennee@linaro.org>
+ <20260511170500.124211-5-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20260511134909.43802-1-wintera@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEyMDE0OCBTYWx0ZWRfX9Cts7uwFBLRn
- TH8uAeMx9DXepR48wl8fvOJqXa6rd9uu949gDsDmWBF7FX4VQcHloi6bohB2iwMSqk/aK50E0Qk
- wb6T+1xY8f/wkH7PzOE8iFq9WzvFb0i+yFyCAiJjUFK4YwxKNXCheWZljbZBSb+6nv2CihdzzAN
- cyC6vLB4wEbI2XyaxW5KQlagx0YK1QLwigQu2hQj5woYnWHmfekzHa2DaMFfUmr/QUOBrj2OttU
- w/iu9Q6nFjsTHxVBjHM2Or+FWhRhCC2SFgrHQ/R4lmrdxFWDU/piqzeRRE6TmQCVU0cKomkmw5M
- G/J9CFnYtvgU+HDP3Rq6I5bAq1MIEWu4hZJvy+2pu3lKhlgzWQgt57uOkXtdHI0xzNOqsdgVlla
- 8RxFnevy5SCKv41/Ru1nD2e5zDgxp4Ghs9kXkh2NH91qV5SbBEXui+nryCAwAUqDkaA7CK6yz6f
- pnQhb2or0ZUPUy5mFhw==
-X-Proofpoint-ORIG-GUID: y0XlwJJ0orJiJIJXOWRFqJ8VjxzRdOyA
-X-Authority-Analysis: v=2.4 cv=Jc6Ma0KV c=1 sm=1 tr=0 ts=6a033aa4 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=kj9zAlcOel0A:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=hgKO5acy12MQRdbuvIgA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-GUID: y0XlwJJ0orJiJIJXOWRFqJ8VjxzRdOyA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-11_05,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 malwarescore=0 bulkscore=0 clxscore=1011
- phishscore=0 adultscore=0 lowpriorityscore=0 suspectscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605050000 definitions=main-2605120148
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=brueckner@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260511170500.124211-5-alex.bennee@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::742;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-qk1-x742.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -134,32 +102,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 11, 2026 at 03:49:09PM +0200, Alexandra Winter wrote:
-> The Container Id in a container-type TLE of SysIB_15x is defined as 8-bit
-> unsigned nonzero integer. Make stsi fc 15 emulation architecture compliant,
-> by starting the container ids at 1 for the lowest numbered container.
+On Mon, May 11, 2026 at 06:04:53PM +0100, Alex Bennée wrote:
+> This provides basic instructions for building QEMU.
 > 
-> The qemu misbehaviour without this patch becomes obvious due to a recently
-> proposed kernel fix. Older linux kernels pass the container ids from stsi
-> fc15 unchanged to sysfs, i.e. starting at 1 on s390 hardware. This resulted
-> in off-by-one values when compared to the values from HMC. A Linux kernel
-> fix is being proposed to correct the sysfs topology ids by -1, so they
-> start at 0, e.g. when displayed by 'lscpu -ye'. In case a KVM guest with a
-> fixed kernel runs on a host with a qemu without this fix, this can result
-> in container ids erroneously being shown as 255.
-> Example (Fixed guest on unfixed qemu):
-> $ lscpu -ye
-> CPU NODE DRAWER BOOK SOCKET CORE L1d:L1i:L2 ONLINE CONFIGURED POLARIZATION ADDRESS
->   0    0    255  255    255    0 0:0:0         yes yes        vert-medium  0
->   1    0    255  255      0    1 1:1:1         yes yes        vert-medium  1
-> After this fix:
-> $ lscpu -ye
-> CPU NODE DRAWER BOOK SOCKET CORE L1d:L1i:L2 ONLINE CONFIGURED POLARIZATION ADDRESS
->   0    0      0    0      0    0 0:0:0         yes yes        vert-medium  0
->   1    0      0    0      1    1 1:1:1         yes yes        vert-medium  1
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > 
-> Fixes: f4f54b582f ("target/s390x/cpu topology: handle STSI(15) and build the SYSIB")
-> Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
+> ---
+> v2
+>   - drop ECA/qemu-helper-agent sub-agent language
+>   - mention configure --help
+>   - drop mention of full paths - not needed for compilation
+>   - moved earlier is series so code-reviewer can refer to it
+> ---
+>  .agents/skills/qemu-build/SKILL.md | 50 ++++++++++++++++++++++++++++++
+>  AGENTS.md                          |  1 +
+>  2 files changed, 51 insertions(+)
+>  create mode 100644 .agents/skills/qemu-build/SKILL.md
+> 
+> diff --git a/.agents/skills/qemu-build/SKILL.md b/.agents/skills/qemu-build/SKILL.md
+> new file mode 100644
+> index 00000000000..91819a0992a
+> --- /dev/null
+> +++ b/.agents/skills/qemu-build/SKILL.md
+> @@ -0,0 +1,50 @@
+> +---
+> +name: qemu-build
+> +description: Provides step-by-step instructions on configuring and building QEMU. You MUST trigger this skill whenever the user asks to build QEMU or debug build failures. It includes critical details on build directory reuse and spawning sub-agents.
+> +license: GPL-2.0-or-later
+> +---
+> +
+> +# Instructions
+> +
+> +## Examining and Re-using Build Directories
+> +Before creating a new build directory, check if an existing one can be re-used. QEMU uses out-of-tree builds, typically in `build` or `builds/` sub-directories.
+> +
+> +1. **Check existing configs**: You can examine how an existing build directory was configured by checking its `config.log`. Run `head -n 2 builds/<dir>/config.log`. The second line typically contains the full `../configure` command line used.
+> +2. **Re-use and Reconfigure**: You have latitude to re-use existing directories when appropriate (e.g., `builds/debug` which is a general-purpose debug directory for whatever is currently going on). If an existing directory has the right flags (like debug/sanitizers) but the wrong target list, you can reconfigure it to keep the same config but change the `--target-list`:
+> +   ```bash
+> +   cd builds/debug
+> +   # Check the old config.log, then re-run configure with the new target-list
+> +   ../../configure <old-flags> --target-list=<new-targets>
+> +   ```
+> +
+I tested it, and it works okay. Maybe we should add builds/ to .gitignore to
+avoid accidentally committing multiple build cache files.
 
-Acked-by: Hendrik Brueckner <brueckner@linux.ibm.com>
+Tested-by: Chao Liu <chao.liu.zevorn@gmail.com>
+
+Thanks,
+Chao
+> +## Launching Builds
+> +**Crucial**: You MUST NEVER run builds directly in the main agent context. You MUST ALWAYS launch them by spawning a sub-agent.
+> +Pass the specific build commands, along with the required working directory, in the `task` argument. Give the subagent explicit instructions on what to verify and what to report back to you.
+> +For example: `task: "Navigate to builds/debug and run ninja. If it fails, report the exact compiler errors."`
+> +
+> +## Configuring a New Build
+> +If no suitable build directory exists, create a new one.
+> +
+> +1. **Create build directory**: `mkdir -p builds/test-target; cd builds/test-target`
+> +2. **Basic Configure**: `../../configure --target-list=[list of targets]`
+> +   - Common targets: `x86_64-softmmu`, `aarch64-softmmu`, `riscv64-softmmu`, `x86_64-linux-user`.
+> +3. **Common Options**:
+> +   - `--enable-debug-info`: Include symbols.
+> +   - `--enable-debug`: Enable assertions.
+> +4. **Sanitizers**:
+> +   - `--enable-asan`: Address Sanitizer.
+> +   - `--enable-tsan`: Thread Sanitizer.
+> +   - `--enable-ubsan`: Undefined Behavior Sanitizer.
+> +5. **Help**:
+> +   - `--help`: will give a comprehensive list of options
+> +
+> +## Building
+> +**Important**: Always re-run the build after making changes to the source code.
+> +
+> +## Reporting Results
+> +**Crucial**: After completing the build task, provide a concise summary of the results to the user.
+> +1. **Summary**: State whether the build passed or failed.
+> +2. **Failure Excerpts**: If the build fails, include relevant excerpts from the logs (e.g., compiler errors).
+> +
+> +## Debugging and Environment
+> +- **Verbose**: `V=1` for detailed output.
+> diff --git a/AGENTS.md b/AGENTS.md
+> index 74516c378ed..08bfe13ebd2 100644
+> --- a/AGENTS.md
+> +++ b/AGENTS.md
+> @@ -25,6 +25,7 @@ security stance. In brief:
+>  ## Agent Skills (see `.agents/skills`)
+>  You should use the following specialized skills for common tasks:
+>  - `qemu-code-explorer`: For finding where things are defined, how they're used, or understanding a specific subsystem.
+> +- `qemu-build`: For configuring and building QEMU (including debug and sanitizer builds).
+>  
+>  ## Source Code Layout (see `docs/devel/codebase.rst`)
+>  - **`accel/`**: Hardware accelerators (KVM, TCG, HVF, Xen, etc.) and architecture-agnostic acceleration code.
+> -- 
+> 2.47.3
+> 
+> 
 
