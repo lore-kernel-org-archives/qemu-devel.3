@@ -4,104 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C67BCD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 10:36:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D28E5CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 10:43:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMkSU-0007Q8-IU; Tue, 12 May 2026 06:35:29 -0400
+	id 1wMkZ8-00007w-FX; Tue, 12 May 2026 06:42:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wMkSQ-0007Mt-AL
- for qemu-devel@nongnu.org; Tue, 12 May 2026 06:35:23 -0400
-Received: from mail-dy1-x1332.google.com ([2607:f8b0:4864:20::1332])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wMkZ7-00007j-KL
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 06:42:17 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wMkSO-00081t-4v
- for qemu-devel@nongnu.org; Tue, 12 May 2026 06:35:21 -0400
-Received: by mail-dy1-x1332.google.com with SMTP id
- 5a478bee46e88-2c156c4a9efso7148082eec.1
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 03:35:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778582117; cv=none;
- d=google.com; s=arc-20240605;
- b=lv7LNcszxE55u/a5layhcm01GViVWo376QRNE1Nz6zMFoO48jrv1n8JCOg2fk7/+WO
- KcnzwS2SoaVUaXHfL1Iu3+6Wt0cLgLL7RuOonSA7UeQPVMSQTjvUwi3klGyC8T7DGE4p
- 4t8hi1PUFFsJOn/WaIMmb0G1K6hhjf4Tp6khjpWaZrBsWJtWjnCVOnYreavO0WnVbUM9
- dblPTmvHDFJyq+iyNQMVYTXhqxiEVApLUelfLXRB1Vdug6qFYVnIAW/HnmtONlsE/bEd
- z7XbYWJoDTglAECTlKMdTjsySVFE+yFx5jbppT7CqMBb9qPSXZFM9aZ8l7pbnbLYW1Gr
- tvcQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=1jSO5sUdtbhpGfeikIbf6FOp9bfR3ui7oOo/GbtAWZw=;
- fh=uGvLNvSDeW2j9plmhwgtPGPeDjgXdPgNgOS3dEsn9S4=;
- b=iob1BUZr9NWF+Ph0W0bvZNUNEBHjY4yZPnVX2xWOPj40dgD6Dy8Cwyb2a78LExiY6c
- WOc5HkoutVmok2pkJT4fxeIAOKr/ru+r7LBbj5KNyHp15/2gYhOKLtC1bJVmhhc7HdTf
- gVilWhszItBHYkVYLDosyzTp0z0SwqF4JbwosEnp92OL4EBcuY9eH3Nus1TrOl7V4ysl
- 4eS1hIdIcqFxYKfOs4Yk6wZ1pvAKSTjUS5JuiAh/81lwNhJvLbgBIgs59RVu1Z8OwGuP
- tRNHSVgkVLwAxhbX+F2VcbwwwqdRiFnBWk/6Elp5CedfF/6eGvzYqfn4Z9PnYlBKVBi2
- jTPw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wMkZ5-0004wY-V4
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 06:42:17 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-44b330c5cc6so3883759f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 03:42:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778582117; x=1779186917; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1778582534; x=1779187334; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1jSO5sUdtbhpGfeikIbf6FOp9bfR3ui7oOo/GbtAWZw=;
- b=mdrNSNA+qVC5pOM1yyu/puVnTe7uHhL0OO/tDkve7+3U8HktSmzFHoVnh19R1VEmp/
- XstbTYH+atSFonchqrhm0thyC2U+QxH4WG132o0KMNW4fscdpO//cvGINJQL+jxGijB+
- VaB2u2bS0NUV1bCRKdmgpYZvUewaiaElTfH9emOVJjVVycvtkDITRcV7osKJ+213j0tj
- F17XYoaKM229xJtRdvPkfv7vj4hzhl7dN4he1WIXOtkltU1wJRjPyu5iCy/5FVuNwQS9
- M/idv5bRlwoIkeX3uCKmu6CxND3wi0SBK2T8XcuDBmgs2P2Y6Bd+Qil/cXNEe/gcBN3L
- Izaw==
+ bh=MFZUlls1c5X4NMYGrbnJvphrDhgD5jx9UANy2AKruuc=;
+ b=vBI46e95+eVq7WpJ5RPrxXET+LMEbb/risLAynu581ByME8tnMcij5p9nRU1ms055O
+ W2qf34wc2DHfFVrz7/nAi6QoKbMFUeLcKSU+bY30sLcNRiZ82nElUvuTiDRdq6s7bsI6
+ m78zprU//p7H2+sXj+cqyV8S6SqlRXGGbW4kaM+Z5oD1FN5oHxJN35xFptqC6Ng+5zy3
+ oylAomEYQCj4wfC+tVTOmIGlPwKGoZ+vrbwSLvGvZVrdt6ldM3PNMKCWRIAF1vXDFsLX
+ oPag95lwyfahi5SN7Nz+SzmQQN2vy9DDxLxF1a4jqDOc1lClxZpGAt/w21kporQ7jZjT
+ js2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778582117; x=1779186917;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20251104; t=1778582534; x=1779187334;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=1jSO5sUdtbhpGfeikIbf6FOp9bfR3ui7oOo/GbtAWZw=;
- b=bpibzqJOqntRG5HFWMb8DWB8SnbhzkiHqGcDLWCYMsbDau9AQtUQtdeioVvpw27X6+
- pEKIjg6WfhXlxaoS0amhdWLWJelUyuiYqS1AnbKr+SHJqczGpw0LltV9uJXplu3dS8pD
- ujL1nbjOeTfbvbhiC/xNWGTSWh+1KpKbYHHgq6FloHPMpaSHCOVYESRab69dOQjveHOf
- rSzOJkbcOsnUgbo+dbBmnIRU7c/SEGQgjTPTp5EqSrL6Pn41Bz004etnyeXsTjek2udI
- mP7YGKOcVca9ipgYLoPsNLR+ZQ6OZRz4Jn/OP8NrWr6iFjAjdTE111HZjuoTL8O5D7R6
- 2Feg==
-X-Gm-Message-State: AOJu0YzP1/x95s+Xi/lfLqrB8rQyojZcDrfxH2/D1JzQqP48e8qIuAAv
- 8WkJVBOr+tqMvmOJDtgBkVDIXI3oyvutU1jpm3hFx7+CFU6HsetT3mTsj487f020BcGnwHLyRbV
- /kE2/yvwfbqBSfXeNMOs/J+xXUexOQ4w=
-X-Gm-Gg: Acq92OGr0ahftCfEgdqwB8FAybt2Pfezh3l7nlWVvY+ZWGBpxqQETlM9D+yErp5sS7n
- y7YLXt7YbksV82IkBtRChTekAUJlKG2tBWMYmREczccvkUNH7dZD7S3Fs5we8Gaa7mBwcYqV2gj
- JGOetCfbJHrS+otNrRA2diwLTG9opayvJ45RcHr/HUunwC4cDoD/ayXP+sPuKLFj5bsBZ1OzWWg
- IGk1vilc8EdqAbOjOGZQNppFlY/frUv4vOQpurhadQkrpDyCqXsNB+taJb8q1NTKUdyoVKaKD97
- BcDZaHTimUcDImQMBDup1A7VZeha1MQVZ1VckEw=
-X-Received: by 2002:a05:693c:2c01:b0:2de:c5ca:c1e8 with SMTP id
- 5a478bee46e88-2f54d696d50mr13406287eec.4.1778582116981; Tue, 12 May 2026
- 03:35:16 -0700 (PDT)
+ bh=MFZUlls1c5X4NMYGrbnJvphrDhgD5jx9UANy2AKruuc=;
+ b=anoXw3zo1iU2qKSMCZk+oG1bTgdymzhSrbZLy2x4H1agwfW4GPhTWp+0nmITYeQmqp
+ s4zku0ZYOgmZKklkp1SeAuVPWpVtph+ujWXltO6k/5hybAg4A1eY5faempbv3WqUyJjl
+ zdKjOKSoGIv+dLFuwLKdXIKsLjsMRZr9L+OpRWJ/B+KiN+TExAVEncrD31VhyKfyTcnB
+ OGGVCN0oB7Ul4DfAkKHNaHlXyVUu3Qu8xMPmOn+w67Fb/CPm90Lt4RJAAwLDKRevcI1C
+ SLIjQxX/Io+GxCFj746PYMq9xxDdTfkv+1J93UhQKBrwooNpug4mn5ZBu5ISUPKMoALO
+ RaxA==
+X-Gm-Message-State: AOJu0YwAtPjONqtb4uHKPOHf0Tjq3CbdfVUTEevdo7eMNiFInBY9tmwN
+ bwnk5wPAddIoxOcOaheaU5LVPyfbCnvR7EeO0YSP0IrGMn8K+Kilt+EuO5bVzFCIvAmN3acJJ/j
+ E0B2j
+X-Gm-Gg: Acq92OH7By4Zfjy9L9t/WHxgrZttNhjWo27ZjD/c1oJ5TODL+pszFdeSVS/KDJZnKBY
+ 9b2PZtJiRaO3OxGpyHMMv3MPL/bR1lq3UTndCbk7qrSnLXw0UKW3XFBLL/D87svrY3od4VjRDix
+ hnVohQfCbeoAn3WY5ISZXj1pwZLYpCwUuf8WUobs0L180rhjpTlcqEuIHDpG2b/U1tOcCyBD0ga
+ SmD7k6GI4TlgVzB9lSDbo2dTV2NgUONXfjT81liUQXbl2u4F5Xc8WhzWVidAKOByaLSjGJAXuUN
+ BvkGGdYgtROm7FBVlDojwUEX6ISkwQn29NiCOD1zmmN23uO/zcHuVxLvyzY4qJzmZPtZTzocU6N
+ ez9tcLqiI+7J1q5dIXYy3hE+HuYKw9aHj5HyjyPVjsxbiK2zyejsEyupzu95EIl96XTZ6GUX02D
+ GWNulza7GE3Er43D/Ocey+yBV07wptDchHSVcU4SSiJVUv0ZOmBsksLbBnTs2MGtzO5FmMe0Cxn
+ s3pXzhh7Xy6F3HXfEa7h0LjoPHw7cQ=
+X-Received: by 2002:a05:6000:61e:b0:43e:aa43:243 with SMTP id
+ ffacd0b85a97d-4515da96528mr44021450f8f.43.1778582534572; 
+ Tue, 12 May 2026 03:42:14 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45491f8d4c3sm31481680f8f.34.2026.05.12.03.42.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 May 2026 03:42:13 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH 2/2] ui/vt100: Take byte as uint8_t in bh_utf8_decode()
+Date: Tue, 12 May 2026 11:42:10 +0100
+Message-ID: <20260512104210.3330835-3-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260512104210.3330835-1-peter.maydell@linaro.org>
+References: <20260512104210.3330835-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-References: <20260512095543.459949-1-berrange@redhat.com>
-In-Reply-To: <20260512095543.459949-1-berrange@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 12 May 2026 14:35:04 +0400
-X-Gm-Features: AVHnY4Iazosim9Buv204B5tL5Q1XwSZWI7_Bl7DxtHvh3V8wQQsMP1F2oJDr1Zw
-Message-ID: <CAJ+F1CJcoOegJ6xyCztHKH31y7hnEXKE2b8r=GZi3cz7P8_mGg@mail.gmail.com>
-Subject: Re: [PATCH] ui: fix validation of VNC extended clipboard data length
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Feifan Qian <bea1e@proton.me>, 
- Heechan Kang <gganji11@naver.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1332;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1332.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,79 +101,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 12, 2026 at 1:57=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
->
-> From: Heechan Kang <gganji11@naver.com>
->
-> QEMU's VNC extended clipboard handler inflates a client-controlled
-> compressed clipboard payload. The code checks the declared text size
-> against the total inflated buffer size:
->
->     if (tsize < size)
->
-> but then copies from:
->
->     tbuf =3D buf + 4;
->     qemu_clipboard_set_data(..., tsize, tbuf, true);
->
-> The correct bound is the remaining data length after the 4-byte length
-> field, not the total inflated buffer length.
->
-> As a result, a VNC client can make QEMU copy up to 3 bytes past the end
-> of the inflated heap buffer. With a second VNC client, those copied
-> bytes are observable through the normal VNC extended clipboard PROVIDE
-> path.
->
-> Fixes: CVE-2026-8343
-> Reported-by: Heechan Kang <gganji11@naver.com>
-> Reported-by: Feifan Qian <bea1e@proton.me>
-> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> Signed-off-by: Heechan Kang <gganji11@naver.com>
-> [DB: added #include and 'return' statements]
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+The bh_utf8_decode() UTF8 decoder takes its next byte as a "uint32_t
+byte" parameter, but it assumes it to be in bounds as it immediately
+indexes into its array with it.
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+Use "uint8_t" as the argument type instead. This moves us away from
+the upstream implementation slightly, but it is the same type as
+we use in the one callsite, and it makes it clear that we can't
+be indexing off the end of the array with this guest-derived data.
 
-> ---
->  ui/vnc-clipboard.c | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
->
-> diff --git a/ui/vnc-clipboard.c b/ui/vnc-clipboard.c
-> index 124b6fbd9c..fa05d86f42 100644
-> --- a/ui/vnc-clipboard.c
-> +++ b/ui/vnc-clipboard.c
-> @@ -23,6 +23,7 @@
->   */
->
->  #include "qemu/osdep.h"
-> +#include "qemu/error-report.h"
->  #include "vnc.h"
->  #include "vnc-jobs.h"
->
-> @@ -282,10 +283,16 @@ void vnc_client_cut_text_ext(VncState *vs, int32_t =
-len, uint32_t flags, uint8_t
->              buf && size >=3D 4) {
->              uint32_t tsize =3D read_u32(buf, 0);
->              uint8_t *tbuf =3D buf + 4;
-> -            if (tsize < size) {
-> +            if (tsize <=3D size - 4) {
->                  qemu_clipboard_set_data(&vs->cbpeer, vs->cbinfo,
->                                          QEMU_CLIPBOARD_TYPE_TEXT,
->                                          tsize, tbuf, true);
-> +            } else {
-> +                error_report("vnc: malformed extended clipboard payload =
-"
-> +                             "with text length %u exceeding available %u=
-",
-> +                             tsize, size - 4);
-> +                vnc_client_error(vs);
-> +                return;
->              }
->          }
->      }
-> --
-> 2.54.0
->
->
+This probably helps make Coverity a bit happier (CID 1659590).
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+I was tempted to split the utf8d[] array in two, because it
+is really two entirely disjoint data structures -- we look up
+the input byte in elements 0..255, and then we look up
+(*state + type) in elements 256..363. But I left it alone.
+---
+ ui/vt100.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/ui/vt100.c b/ui/vt100.c
+index 7e373766bc..f8140cfa85 100644
+--- a/ui/vt100.c
++++ b/ui/vt100.c
+@@ -438,7 +438,7 @@ static void vt100_clear_xy(QemuVT100 *vt, int x, int y)
+ #define BH_UTF8_ACCEPT 0
+ #define BH_UTF8_REJECT 12
+ 
+-static uint32_t bh_utf8_decode(uint32_t *state, uint32_t *codep, uint32_t byte)
++static uint32_t bh_utf8_decode(uint32_t *state, uint32_t *codep, uint8_t byte)
+ {
+     static const uint8_t utf8d[] = {
+         /* character class lookup */
+-- 
+2.43.0
+
 
