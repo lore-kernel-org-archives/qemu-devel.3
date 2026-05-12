@@ -4,47 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1546CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:12:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C600FCD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:13:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuM5-0006bu-8j; Tue, 12 May 2026 17:09:29 -0400
+	id 1wMuLF-0001Vl-Iy; Tue, 12 May 2026 17:08:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuLL-0002W6-HB; Tue, 12 May 2026 17:08:43 -0400
+ id 1wMuKP-0000jq-Mt; Tue, 12 May 2026 17:07:58 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuLJ-00034k-23; Tue, 12 May 2026 17:08:43 -0400
+ id 1wMuKM-0002Zk-BD; Tue, 12 May 2026 17:07:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619301; bh=Da64mECTQE17+jqE7g6lsT6YLvaZ/CfaXZUmTbu9wGw=;
+ t=1778619301; bh=8qozznvzTVmJVwhcVDfjphOphXa+K/5Iw6UbqW4Nq/Y=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=M5XQKitGCu72zRMXWfzVxOdvTxMNK3HMIjL8oSc3YeE8GqilQy/qMmttOpk8gT+Ss
- q4uI//2KAj/ccIec7++WcvwVVBPUXrUBVOFZZNGThhAxEcRFtbg26iCRB9fq3ZOfhd
- UGDONmjptmq4GJ51KddjdHi5qROkxH8WIwzZTJDQbxw3/JAcpncHR2E1wOKBysqG0n
- yQTJiQvcixEEG0uqdmrSa33Z6+/m2uTwT1Yfz/wLvdQ8TvOG4tKKsC48VBlZ4Q9O3R
- yzoBgQH4l+1tQNgy1wEZ5TrBv7OrpIO1Ra4HuqDRr8Zwcq8VVtKQjSvetCopZO9pgR
- v3HIZxcJTzbRg==
+ b=EgLE+CczG5e56Fhn7n/nScyxXOA6UoSjLGqIR0P0dGgqJCta7RNo1Mvozq7KvLHmC
+ N30hW3FqMGBblqLG6mkfFIP6BUt1Fp2rB0F8TZM5TCZzQg1f5ln3VS//SpsIWTozdi
+ PEFexuJARXI4AnM7cILrNav/lTn2rVhYpFOgx292yJHrE2gR39YB1d7Pofz2FRrM3i
+ mkmHZTissodsv8FOMIunbzg+SJV3ISNOogPdbVVzdrhrCeJMf4YOi8KLGhu1d6Z3GW
+ +VSbuxgLqfz12+JuftbnBCpEpHu2G1RVCZfANeITL/MsThNJ/gC985VErxWVWI7sfO
+ Hjh8pZPy5CzqA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8F0631AA359;
+ by isrv.corpit.ru (Postfix) with ESMTP id 05F321AA34F;
  Tue, 12 May 2026 23:55:01 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9B7D23ABCC9;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1190E3ABCC0;
  Tue, 12 May 2026 23:55:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 028/117] linux-aio: Resubmit tails of short
- reads/writes
-Date: Tue, 12 May 2026 23:53:30 +0300
-Message-ID: <20260512205503.361097-28-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jenny Guanni Qu <qguanni@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 019/117] hw/usb/hcd-ohci: check for MPS=0 to avoid
+ infinite loop
+Date: Tue, 12 May 2026 23:53:21 +0300
+Message-ID: <20260512205503.361097-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,205 +72,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hanna Czenczek <hreitz@redhat.com>
+From: Jenny Guanni Qu <qguanni@gmail.com>
 
-Short reads/writes can happen.  One way to reproduce them is via our
-FUSE export, with the following diff applied (%s/escaped // to apply --
-if you put plain diffs in commit messages, git-am will apply them, and I
-would rather avoid breaking FUSE accidentally via this patch):
+When a guest sets MaxPacketSize to 0 in an OHCI Endpoint Descriptor,
+ohci_service_td() transfers 0 bytes per iteration. The Transfer
+Descriptor never completes because CBP never advances toward BE,
+causing ohci_service_ed_list() to loop indefinitely and hang QEMU.
 
-escaped diff --git a/block/export/fuse.c b/block/export/fuse.c
-escaped index a2a478d293..67dc50a412 100644
-escaped --- a/block/export/fuse.c
-escaped +++ b/block/export/fuse.c
-@@ -828,7 +828,7 @@ static ssize_t coroutine_fn GRAPH_RDLOCK
- fuse_co_init(FuseExport *exp, struct fuse_init_out *out,
-              const struct fuse_init_in_compat *in)
- {
--    const uint32_t supported_flags = FUSE_ASYNC_READ | FUSE_ASYNC_DIO;
-+    const uint32_t supported_flags = FUSE_ASYNC_READ;
+Add a check for MPS==0 after extracting the field from ED flags.
+If MPS is zero, call ohci_die() to reset the controller and return
+an error, preventing the infinite loop.
 
-     if (in->major != 7) {
-         error_report("FUSE major version mismatch: We have 7, but kernel has %"
-@@ -1060,6 +1060,8 @@ fuse_co_read(FuseExport *exp, void **bufptr, uint64_t offset, uint32_t size)
-     void *buf;
-     int ret;
-
-+    size = MIN(size, 4096);
-+
-     /* Limited by max_read, should not happen */
-     if (size > FUSE_MAX_READ_BYTES) {
-         return -EINVAL;
-@@ -1110,6 +1112,8 @@ fuse_co_write(FuseExport *exp, struct fuse_write_out *out,
-     int64_t blk_len;
-     int ret;
-
-+    size = MIN(size, 4096);
-+
-     QEMU_BUILD_BUG_ON(FUSE_MAX_WRITE_BYTES > BDRV_REQUEST_MAX_BYTES);
-     /* Limited by max_write, should not happen */
-     if (size > FUSE_MAX_WRITE_BYTES) {
-
-Then:
-$ ./qemu-img create -f raw test.raw 8k
-Formatting 'test.raw', fmt=raw size=8192
-$ ./qemu-io -f raw -c 'write -P 42 0 8k' test.raw
-wrote 8192/8192 bytes at offset 0
-8 KiB, 1 ops; 00.00 sec (64.804 MiB/sec and 8294.9003 ops/sec)
-$ hexdump -C test.raw
-00000000  2a 2a 2a 2a 2a 2a 2a 2a  2a 2a 2a 2a 2a 2a 2a 2a  |****************|
-*
-00002000
-
-With aio=threads, short I/O works:
-$ storage-daemon/qemu-storage-daemon \
-    --blockdev file,node-name=test,filename=test.raw \
-    --export fuse,id=exp,node-name=test,mountpoint=test.raw,writable=true
-
-Other shell:
-$ ./qemu-io --image-opts -c 'read -P 42 0 8k' \
-    driver=file,filename=test.raw,cache.direct=on,aio=threads
-read 8192/8192 bytes at offset 0
-8 KiB, 1 ops; 00.00 sec (36.563 MiB/sec and 4680.0923 ops/sec)
-$ ./qemu-io --image-opts -c 'write -P 23 0 8k' \
-    driver=file,filename=test.raw,cache.direct=on,aio=threads
-wrote 8192/8192 bytes at offset 0
-8 KiB, 1 ops; 00.00 sec (35.995 MiB/sec and 4607.2970 ops/sec)
-$ hexdump -C test.raw
-00000000  17 17 17 17 17 17 17 17  17 17 17 17 17 17 17 17  |................|
-*
-00002000
-
-But with aio=native, it does not:
-$ ./qemu-io --image-opts -c 'read -P 23 0 8k' \
-    driver=file,filename=test.raw,cache.direct=on,aio=native
-Pattern verification failed at offset 0, 8192 bytes
-read 8192/8192 bytes at offset 0
-8 KiB, 1 ops; 00.00 sec (86.155 MiB/sec and 11027.7900 ops/sec)
-$ ./qemu-io --image-opts -c 'write -P 42 0 8k' \
-    driver=file,filename=test.raw,cache.direct=on,aio=native
-write failed: No space left on device
-$ hexdump -C test.raw
-00000000  2a 2a 2a 2a 2a 2a 2a 2a  2a 2a 2a 2a 2a 2a 2a 2a  |****************|
-*
-00001000  17 17 17 17 17 17 17 17  17 17 17 17 17 17 17 17  |................|
-*
-00002000
-
-This patch fixes that.
-
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-ID: <20260324084338.37453-3-hreitz@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 7eca3d4883be8d328377001a9ea7ae9882b00f3c)
+Fixes: CVE-2026-3890
+Reported-by: Jenny Guanni Qu <qguanni@gmail.com>
+Signed-off-by: Jenny Guanni Qu <qguanni@gmail.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-ID: <20260321000444.909451-1-qguanni@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit 129922c2bc398b656a9180150e667f98fdf0d402)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/linux-aio.c b/block/linux-aio.c
-index c2c5e11946..84397de54c 100644
---- a/block/linux-aio.c
-+++ b/block/linux-aio.c
-@@ -45,6 +45,10 @@ struct qemu_laiocb {
-     size_t nbytes;
-     QEMUIOVector *qiov;
- 
-+    /* For handling short reads/writes */
-+    size_t total_done;
-+    QEMUIOVector resubmit_qiov;
-+
-     int fd;
-     int type;
-     BdrvRequestFlags flags;
-@@ -74,28 +78,61 @@ struct LinuxAioState {
- };
- 
- static void ioq_submit(LinuxAioState *s);
-+static int laio_do_submit(struct qemu_laiocb *laiocb);
- 
- static inline ssize_t io_event_ret(struct io_event *ev)
- {
-     return (ssize_t)(((uint64_t)ev->res2 << 32) | ev->res);
- }
- 
-+/**
-+ * Retry tail of short requests.
-+ */
-+static int laio_resubmit_short_io(struct qemu_laiocb *laiocb, size_t done)
-+{
-+    QEMUIOVector *resubmit_qiov = &laiocb->resubmit_qiov;
-+
-+    laiocb->total_done += done;
-+
-+    if (!resubmit_qiov->iov) {
-+        qemu_iovec_init(resubmit_qiov, laiocb->qiov->niov);
-+    } else {
-+        qemu_iovec_reset(resubmit_qiov);
-+    }
-+    qemu_iovec_concat(resubmit_qiov, laiocb->qiov,
-+                      laiocb->total_done, laiocb->nbytes - laiocb->total_done);
-+
-+    return laio_do_submit(laiocb);
-+}
-+
- /*
-  * Completes an AIO request.
-  */
- static void qemu_laio_process_completion(struct qemu_laiocb *laiocb)
- {
--    int ret;
-+    ssize_t ret;
- 
-     ret = laiocb->ret;
-     if (ret != -ECANCELED) {
--        if (ret == laiocb->nbytes) {
-+        if (ret == laiocb->nbytes - laiocb->total_done) {
-             ret = 0;
-+        } else if (ret > 0 && (laiocb->type == QEMU_AIO_READ ||
-+                               laiocb->type == QEMU_AIO_WRITE)) {
-+            ret = laio_resubmit_short_io(laiocb, ret);
-+            if (!ret) {
-+                return;
-+            }
-         } else if (ret >= 0) {
--            /* Short reads mean EOF, pad with zeros. */
+diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
+index 72a9f9f474..15406c51f6 100644
+--- a/hw/usb/hcd-ohci.c
++++ b/hw/usb/hcd-ohci.c
+@@ -956,6 +956,17 @@ static int ohci_service_td(OHCIState *ohci, struct ohci_ed *ed)
+         if (len && dir != OHCI_TD_DIR_IN) {
+             /* The endpoint may not allow us to transfer it all now */
+             pktlen = (ed->flags & OHCI_ED_MPS_MASK) >> OHCI_ED_MPS_SHIFT;
 +            /*
-+             * For normal reads and writes, we only get here if ret == 0, which
-+             * means EOF for reads and ENOSPC for writes.
-+             * For zone-append, we get here with any ret >= 0, which we just
-+             * treat as ENOSPC, too (safer than resubmitting, probably, but not
-+             * 100 % clear).
++             * The OHCI spec does not say what to do if the guest hands us
++             * an endpoint descriptor which specifies a MaximumPacketSize
++             * of zero, which would mean we can never actually make forward
++             * progress transferring data to it. We choose to treat it as
++             * an error.
 +             */
-             if (laiocb->type == QEMU_AIO_READ) {
--                qemu_iovec_memset(laiocb->qiov, ret, 0,
--                    laiocb->qiov->size - ret);
-+                qemu_iovec_memset(laiocb->qiov, laiocb->total_done, 0,
-+                                  laiocb->qiov->size - laiocb->total_done);
-             } else {
-                 ret = -ENOSPC;
++            if (pktlen == 0) {
++                ohci_die(ohci);
++                return 1;
++            }
+             if (pktlen > len) {
+                 pktlen = len;
              }
-@@ -103,6 +140,9 @@ static void qemu_laio_process_completion(struct qemu_laiocb *laiocb)
-     }
- 
-     laiocb->ret = ret;
-+    if (laiocb->resubmit_qiov.iov) {
-+        qemu_iovec_destroy(&laiocb->resubmit_qiov);
-+    }
- 
-     /*
-      * If the coroutine is already entered it must be in ioq_submit() and
-@@ -379,7 +419,11 @@ static int laio_do_submit(struct qemu_laiocb *laiocb)
-     struct iocb *iocbs = &laiocb->iocb;
-     QEMUIOVector *qiov = laiocb->qiov;
-     int fd = laiocb->fd;
--    off_t offset = laiocb->offset;
-+    off_t offset = laiocb->offset + laiocb->total_done;
-+
-+    if (laiocb->resubmit_qiov.iov) {
-+        qiov = &laiocb->resubmit_qiov;
-+    }
- 
-     switch (laiocb->type) {
-     case QEMU_AIO_WRITE:
 -- 
 2.47.3
 
