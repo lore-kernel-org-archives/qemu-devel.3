@@ -4,47 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A54BFCD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:41:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 841CFCD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:41:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuRb-0008KK-Ld; Tue, 12 May 2026 17:15:12 -0400
+	id 1wMulF-0001D0-3D; Tue, 12 May 2026 17:35:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuRX-0007ku-H7; Tue, 12 May 2026 17:15:07 -0400
+ id 1wMuky-0000c9-AA; Tue, 12 May 2026 17:35:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuRV-0005me-9i; Tue, 12 May 2026 17:15:07 -0400
+ id 1wMukq-0003dD-RO; Tue, 12 May 2026 17:35:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619305; bh=e0JvL3sYEJU/mCoOrF3i36zOFFzZB0pnd1VNTPwPu8s=;
+ t=1778619501; bh=LY0TJ+s2kr/iIXJIunpGAvKJ7pHGKcccos8a298YuYA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=qt+kTIeFmiUzmcKWHiGsklDZv10uM/2REMDtcXsTyz59ObhirxlJ4C8Jbgl513N04
- g+s4uuulSZrr8l9thlgxsBCSnYxfK+6Ep7h15gCLL9q/jKy59Uf9kNKkRQ7iasN8Ac
- 5cYyesN1GbbYZzw3f64e8h0lTcKdq67hzrrJQ657KnBEAjIVhn4Lnb51Df6U80N4FY
- cNiZKaBNog74eOgEMjdK833BPG92Lok7dLcupdqYDsMwNbK+uQAUIr8/Y968E1IrWH
- Xin2c7KlbYnVDS0n6gJH0akKbrhahrGMd3mEi8c5+VfUcVpQp7nac+p23Oaoh++ozj
- x6X5frtUQt3/A==
+ b=u48iDz4lO+CvQqSTtIuGIfZguZClwWWo+X+WBLlrxSoN2U49jjxqC1436gOK7QEOd
+ lAOX0ty9jkwcg701pS4s/Qmq/TOmBfGN+0nSVWq3XcTbJZIT+K/J+1/hQf+yiNDW7m
+ lXzOUBJslZzpWhsWUW+lrS8hye7BrZtE8WKEMfyXLgtW4louIp2dkj7cKgDZ+a9vDb
+ nH7/pXShoMXyiWQgH1s+3X2Z0bjOUtwBkOvSI1uS3niZyq8gEHjMfI4uZkf7SgaKTB
+ 3hb62Ac7dapmNtbCelGdpE0kV+2yEIX3lcerrg7TQzKBGDlbhpcNjb2cWMELBUXDn9
+ 26rNo6HQf3ToQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B54541AA397;
- Tue, 12 May 2026 23:55:05 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 04D9E1AA406;
+ Tue, 12 May 2026 23:58:21 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C169C3ABD06;
- Tue, 12 May 2026 23:55:09 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0F5C33ABD5D;
+ Tue, 12 May 2026 23:58:25 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 089/117] linux-user: Fix CLONE_PARENT_SETTID when
- using fork-like clone
-Date: Tue, 12 May 2026 23:54:31 +0300
-Message-ID: <20260512205503.361097-89-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Thomas Huth <thuth@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 58/58] tests/functional: Make socat wait longer in
+ migration exec test
+Date: Tue, 12 May 2026 23:58:19 +0300
+Message-ID: <20260512205820.361821-58-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
-References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,44 +72,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Fabiano Rosas <farosas@suse.de>
 
-The CLONE_PARENT_SETTID option requires the implementation to store the
-child thread ID at the location pointed to by parent_tid in the parent's
-memory.
+The migration_with_exec test is failing sporadically for all
+architectures due to a race when the destination socat process takes
+too long to start listening while the source process is already
+issuing connect().
 
-Fix our implementation and move the code from the client side (where
-fork returned 0), to the parent side and store the return value from the
-fork call (which is the client TID) in the parent_tid pointer.
+The race is inherent because the exec: migration spawns the
+to-be-exec'ed command asynchronously and returns from the
+migrate-incoming command. The localhost-only testcase is not
+representative of the majority of migrations. In a real scenario
+between two different hosts that race wouldn't happen.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3340
-Signed-off-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit b03a6ac6fa5d7775b9f912fa5c39f7b92388c6a2)
+Fix the testcase by configuring the source socat command to wait
+indefinitely while trying to connect.
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20260422230001.3168-1-farosas@suse.de
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+(cherry picked from commit b4ec2e8dae4da74498068536a336fd7424f8446e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 61f45adb52..755304d604 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -7053,8 +7053,6 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
-                the child process gets its own copy of the lock.  */
-             if (flags & CLONE_CHILD_SETTID)
-                 put_user_u32(sys_gettid(), child_tidptr);
--            if (flags & CLONE_PARENT_SETTID)
--                put_user_u32(sys_gettid(), parent_tidptr);
-             ts = get_task_state(cpu);
-             if (flags & CLONE_SETTLS)
-                 cpu_set_tls (env, newtls);
-@@ -7062,6 +7060,8 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
-                 ts->child_tidptr = child_tidptr;
-         } else {
-             cpu_clone_regs_parent(env, flags);
-+            if (flags & CLONE_PARENT_SETTID)
-+                put_user_u32(ret, parent_tidptr);
-             if (flags & CLONE_PIDFD) {
-                 int pid_fd = 0;
- #if defined(__NR_pidfd_open) && defined(TARGET_NR_pidfd_open)
+diff --git a/tests/functional/migration.py b/tests/functional/migration.py
+index 144f091ba8..3b7674af3b 100644
+--- a/tests/functional/migration.py
++++ b/tests/functional/migration.py
+@@ -85,5 +85,5 @@ def migration_with_exec(self):
+         with Ports() as ports:
+             free_port = self._get_free_port(ports)
+             dst_uri = 'exec:socat TCP-LISTEN:%u -' % free_port
+-            src_uri = 'exec:socat - TCP:localhost:%u' % free_port
++            src_uri = 'exec:socat - TCP:localhost:%u,forever' % free_port
+             self.migrate(dst_uri, src_uri)
 -- 
 2.47.3
 
