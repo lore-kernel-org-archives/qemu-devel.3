@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9203CD4F24
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97486CD343F
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:03:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMu8x-0004Ti-Ch; Tue, 12 May 2026 16:55:55 -0400
+	id 1wMu8x-0004Sj-4w; Tue, 12 May 2026 16:55:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMu8H-00042k-Vf; Tue, 12 May 2026 16:55:14 -0400
+ id 1wMu8K-00043V-Qu; Tue, 12 May 2026 16:55:26 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMu8A-0002wR-Gk; Tue, 12 May 2026 16:55:08 -0400
+ id 1wMu8J-00030w-56; Tue, 12 May 2026 16:55:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619273; bh=tcLESvGH/xKC4dW5ail80vsN8Oc+IrzX9ldk40aW6bU=;
+ t=1778619273; bh=/UX1VvtmohRWHEDkWGENAeLai4Fo3ba4/8Ez4pTw+7A=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=JZNcInnrUqJfKL0EBCZv9x5XsAcSZk1Bm99jjUaRN3apTzUHmn6jltS2poWtouEDG
- QY0+W0VuIANItoV2Wit+9pQa27xHVmsY5mf0Hrlr7ymsX7qXEe0Bpp06Sg0OzFT9zm
- DsP2FKOZMYIuK8+N3gA4bm6keJUKMhO8udkd242d7aJqNAAvr/UTyc7fg5ooBtzP1Q
- 21bcM7fpLmK/XGaovQ6t4xPu5MdXH1pnpAkODmpe9zMOxFa9FnFd+ke43eHSlFF94t
- AfG2jOHywFOP7sv5EuquZyKzTVVawJiLTmsT8JdzeoSy8cCwXH6akWpiwyPAi/qXKj
- u/NYCdkkAHjcQ==
+ b=xeOcZSyJLrsJ44VhyJAgxSw3em8oR5lTuxBNoU17J08Pxdtjl11D1Xb4RNjyNNAWX
+ jRaNpjeAztnpEkLmT4vuaZMrgXsvMgeVydh1ShNGhquOCy2g17PQaBWC0Zhpe+uIZv
+ hyKXteCrgtTo1BL08WI8fMXvD+5ZX3TVVkp4jA8Yv5HA13F3r1R4DIZdekbvfP/PQq
+ zjIk2N3iDECns5M3YMBwPCUIVH4FWFhTfKgTWxPznkNZUIHl154nJpNMvd3r9Ynfpy
+ pSMk1/24TIsusxdrcG9CK5phCeJUSFK1dwLL/Hn7fvnnenxW5W3CgBsUfVRenOpQyK
+ pSHAfwnC8VJsw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 980051AA2D0;
+ by isrv.corpit.ru (Postfix) with ESMTP id B7EDB1AA2D2;
  Tue, 12 May 2026 23:54:33 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A36523ABC41;
+ by tsrv.corpit.ru (Postfix) with ESMTP id C399B3ABC43;
  Tue, 12 May 2026 23:54:37 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Jim MacArthur <jim.macarthur@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 004/107] hw/dma/pl080: Handle bogus swidth and dwidth
- in transfers
-Date: Tue, 12 May 2026 23:52:51 +0300
-Message-ID: <20260512205437.360850-4-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Tao Ding <dingtao0430@163.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 006/107] hw/dma/pl080: Ignore bottom 2 bits of LLI
+ register
+Date: Tue, 12 May 2026 23:52:53 +0300
+Message-ID: <20260512205437.360850-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
@@ -69,54 +69,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Tao Ding <dingtao0430@163.com>
 
-The PL080 TRM states that the DWidth and SWidth fields of the channel
-control registers can only validly specify widths up to 32 bits (i.e.
-values from 0 to 2) and all other values are reserved.
+The PL080 channel LLI (linked list item) register has bits [31:2] of
+the address of the next LLI in bits [31:2], with bit [1] reserved
+and bits [0] the AHB master select. We were incorrectly using the
+whole register value as the address, which meant that if the guest
+programmed something into the AHB master select bit we would use
+an incorrect address, and read incorrect data from memory.
 
-Currently we don't check this, so if the guest specifies an invalid
-value we will transfer more data into our local 'buff[]' array than
-it can hold.
+The following reproducer creates a setup which has bit 0 set in
+an LLI value:
 
-Check the widths; since the TRM doesn't clearly specify any behaviour
-for what to do on invalid values, we choose to log them and then
-ignore the channel for transfers.
+Configuration
+    ../configure --target-list=arm-softmmu --enable-debug
+Reproducer
+    ./qemu-system-arm -M versatilepb -m 128M -nographic -S \
+     -device loader,addr=0x00002000,data=0x00000004,data-len=4 \
+     -device loader,addr=0x00002004,data=0x00001004,data-len=4 \
+     -device loader,addr=0x00002008,data=0x00000000,data-len=4 \
+     -device loader,addr=0x0000200c,data=0x9e4bf001,data-len=4 \
+     -device loader,addr=0x00000000,data=0x44332211,data-len=4 \
+     -device loader,addr=0x00000004,data=0x88776655,data-len=4 \
+     -device loader,addr=0x00001000,data=0x00000000,data-len=4 \
+     -device loader,addr=0x00001004,data=0x00000000,data-len=4 \
+     -device loader,addr=0x10130030,data=0x00000001,data-len=4 \
+     -device loader,addr=0x10130100,data=0x00000000,data-len=4 \
+     -device loader,addr=0x10130104,data=0x00001000,data-len=4 \
+     -device loader,addr=0x10130108,data=0x00002001,data-len=4 \
+     -device loader,addr=0x1013010C,data=0x1e4bf001,data-len=4 \
+     -device loader,addr=0x10130110,data=0x0000c001,data-len=4
+
+The correct result with this bug fix:
+    (qemu) xp /1wx 0x00001000
+     00001000: 0x44332211
+    (qemu) xp /1wx 0x00001004
+     00001004: 0x88776655
 
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3203
-Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
+Signed-off-by: Tao Ding <dingtao0430@163.com>
+[PMM: Adjusted commit message]
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: cb35c1b622674da7a2b70691402132f691933f2c.1773301927.git.dingtao0430@163.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260306152140.2191653-1-peter.maydell@linaro.org
-(cherry picked from commit 37c9f6fce5c59db216e7f7ad961395b6e702bda9)
+(cherry picked from commit f9b16f791502d912cf07ec040a1a2efb1009f713)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/hw/dma/pl080.c b/hw/dma/pl080.c
-index 8a9b073b24..ed79d331cc 100644
+index 477147281c..8b97cbb425 100644
 --- a/hw/dma/pl080.c
 +++ b/hw/dma/pl080.c
-@@ -164,6 +164,21 @@ again:
-                destination widths are different.  */
-             swidth = 1 << ((ch->ctrl >> 18) & 7);
-             dwidth = 1 << ((ch->ctrl >> 21) & 7);
-+
-+            /* Only widths of 1, 2 or 4 are valid */
-+            if (swidth > 4) {
-+                qemu_log_mask(LOG_GUEST_ERROR,
-+                              "pl080: channel %d: invalid SWidth %d\n",
-+                              c, extract32(ch->ctrl, 18, 3));
-+                continue;
-+            }
-+            if (dwidth > 4) {
-+                qemu_log_mask(LOG_GUEST_ERROR,
-+                              "pl080: channel %d: invalid DWidth %d\n",
-+                              c, extract32(ch->ctrl, 21, 3));
-+                continue;
-+            }
-+
-             for (n = 0; n < dwidth; n+= swidth) {
-                 address_space_read(&s->downstream_as, ch->src,
-                                    MEMTXATTRS_UNSPECIFIED, buff + n, swidth);
+@@ -102,6 +102,7 @@ static void pl080_run(PL080State *s)
+     int size;
+     uint8_t buff[4];
+     uint32_t req;
++    uint32_t next_lli;
+ 
+     s->tc_mask = 0;
+     for (c = 0; c < s->nchannels; c++) {
+@@ -198,21 +199,22 @@ again:
+             ch->ctrl = (ch->ctrl & 0xfffff000) | size;
+             if (size == 0) {
+                 /* Transfer complete.  */
+-                if (ch->lli) {
++                next_lli = (ch->lli & ~3);
++                if (next_lli) {
+                     ch->src = address_space_ldl_le(&s->downstream_as,
+-                                                   ch->lli,
++                                                   next_lli,
+                                                    MEMTXATTRS_UNSPECIFIED,
+                                                    NULL);
+                     ch->dest = address_space_ldl_le(&s->downstream_as,
+-                                                    ch->lli + 4,
++                                                    next_lli + 4,
+                                                     MEMTXATTRS_UNSPECIFIED,
+                                                     NULL);
+                     ch->ctrl = address_space_ldl_le(&s->downstream_as,
+-                                                    ch->lli + 12,
++                                                    next_lli + 12,
+                                                     MEMTXATTRS_UNSPECIFIED,
+                                                     NULL);
+                     ch->lli = address_space_ldl_le(&s->downstream_as,
+-                                                   ch->lli + 8,
++                                                   next_lli + 8,
+                                                    MEMTXATTRS_UNSPECIFIED,
+                                                    NULL);
+                 } else {
 -- 
 2.47.3
 
