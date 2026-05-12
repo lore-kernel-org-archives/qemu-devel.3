@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7D04CD4F24
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:22:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FA9DCD484E
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:22:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMgVx-0000pN-BF; Tue, 12 May 2026 02:22:45 -0400
+	id 1wMgW0-0000s2-VX; Tue, 12 May 2026 02:22:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgVW-0000eg-GF
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:22:25 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgVu-0000mG-T0
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:22:43 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgVU-00047o-Or
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:22:18 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-488a14c31eeso34988125e9.0
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 23:22:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgVp-0004Be-Ik
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:22:41 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-43eb05b1875so2991388f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 23:22:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778566933; x=1779171733; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778566954; x=1779171754; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=4+O/G90CzsbTg/n65ZUZn83pml2yX70Uu8nT+gwXYMs=;
- b=rC+Tv+xWzrBoXrWAe3v6zeEBhPJNp9RAW2YbaYei+HnYyPhnm38EuVURUIMyQjmpxQ
- BDk/zQ5BjdkMbcEFSo9kJcbQhJRPaFZGc88rCUN5khw8rKlHRVvk6kOe4PoOT9/PoyZY
- zOz6UZSs8teMxyajg9g6S6zzjKXR1nRLaYmT3l1xyTlicpL/bW9SIqSsWyCYtkcYfsE5
- t/q5+vajTxaCWQYQi/msBwtbehrbx65EUk1EWVSP1piN4OnnmRlZ89qd4DGnXWyH9Rwk
- v1qAMSaSumld3ybVPObgsiytnLOl3ZUcXua7pV7Otzr42m+D2yJ618ov1JO4gk7EdZ+X
- tNZQ==
+ :reply-to; bh=e9Ch+50Vvu+y+CEmf0cTw7Jm9O7lEL4i3plSrCUI1YE=;
+ b=CbS+akE5Xl2unl07VpifiTJtiyh1P7YDmxUF1qH6lxeTPoO8XzR3Ct9Ig7PjpWn/HA
+ Nx1IeRgI1wagsXJpE4kVSZpZZ3Wuac7BMP6WlXGoZ/HANZbawEh2pxtguN8GBlaMH90i
+ y1xII2bucDg3QnFtlJj88UvxyewNYs3+qUeSNsMIgurp2KP6B14rMOyORIR1CDFC6CqM
+ pk8a1JJS3YZd0fHLLGb3qGDz1VXtvsreYdv7CEmtlYaVeKYN8BuZEtG81nRIs/cd3AH4
+ n4TG6Tf6UGuoKeE1ZWJGjwfMl7D6Z+AKmQTx7/owcnzIFaW9dsZ0mWKF53cUY9ySaOwM
+ 43xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778566933; x=1779171733;
+ d=1e100.net; s=20251104; t=1778566954; x=1779171754;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=4+O/G90CzsbTg/n65ZUZn83pml2yX70Uu8nT+gwXYMs=;
- b=qfK6DEUyoN0e38lr0fTfLwui+BOADu1eQoS43cBBLuaIOsU/SJNwSMSu/ze9303ARg
- jNdoRN5LyHf0+ZiG55ofUtMNYNR3CwneP8nN4jimceCHd4SCD7zpeVhbU+MOdFlwwIri
- 6JYMoANSSHYzYo3Sexj6nY6tL3D8tjHiJHZ4JelS9jjZNT3Zz3cMXN3Xw3KhIc1tz2L6
- JgOxfGTVTy8ueoA6pOecR/HcJjqPZOJJiflaeazWGEksJExMGR5F4eR42cXUAt3qU/Ja
- cJpnFB+29S32vWB+6QQGwnFZ3X9itb7R2mlll7nN/sNiO2HwfPZBDRWrvqsVrb8NluHO
- RqGg==
-X-Gm-Message-State: AOJu0YwBk+Fq0SDClQnKrCj9RnfoZD/inOUqt5RojZxIkX4rj2hMHhWh
- NUl0ASkQy5zKSbQ+DUrkA+op/l0RiPj74Y9WzUrSiu+QxnXLUfQTUuC8rKbjFXw9yK2zd2wITac
- Gs0UY+8k=
-X-Gm-Gg: Acq92OGRXDy85wRotmbMhmaqxgv49vyn661e3J3XGS3j2/5idOlXNcFv96/51QrqBOU
- lhtYl65ffZmdxTWOyyRjRkaDfsdLsVT1o9vIVzXjPT1Itd5WlhtqDb4FvKlczvLnVk4v3iCLF1B
- 6wqqB2dfL5sL5hAXmd4fPdiuQZbk8V9H5Z6EwqSYpj2ywmsqd6hS4I/IbiaThv3qPs4h1YtkwpF
- mD/FpPdXPhWRqA+gPH0GV6jcGhB+qWxr19bQRzwPq0W1METgGFVX4w8vs1ZaPAQvfQJgygzWfAp
- U/MtuPZEcoJCIst6lkMF9DDjduwVf4+FJF5Ni4LmKfET3R404sNmbjGWP42u5KTDW334jj8ueT4
- B7iN7t/gP/IoHcK9qhMVlrPP+xHANYDbhuOiyNxx6idO/BZxjFucbm5N86Z+F8mbqm3phrGiCYY
- NdrQbw99JrVNIyV2HlNs5Y7Jh4a5jOZX1nlujtIei5oqtBaop/S59G+Q6vtLDdOijGC3gdLyJ1
-X-Received: by 2002:a05:600c:350a:b0:489:2005:b36e with SMTP id
- 5b1f17b1804b1-48e676ac333mr255592705e9.19.1778566933022; 
- Mon, 11 May 2026 23:22:13 -0700 (PDT)
+ bh=e9Ch+50Vvu+y+CEmf0cTw7Jm9O7lEL4i3plSrCUI1YE=;
+ b=f0/o4oRUUnqi+mfwq5qm3vpPf92Qi0dSjRYZ8FVy3lL6ipZxyWsFo0vRTpIfPQ+2sl
+ Ky8aNPxhN6YQTTk0BYC+8UisfaaUtgowC8kZT3HeqZ/UFpW3ruFB8KwSCbJTKEVZmAcX
+ CfEk4dhGiQkPlr/IJOEYwjk/P6UWeFtdJ2o6o9aGMV/073jeooF7nA6tXKi2Wctf2o17
+ ubpKC5TgnJJVwGP0Ep8UO6noN75FOEwxuN30hmtmaqQ5lO8hlwHNTRLqvqMpKXT8tzJv
+ yCSlQAtK15bZPxHVjPmXQRXSJyiWgLa8RZHleNWb5BVKZq1LGO7coe3rvxOTktI/1kyz
+ NLwQ==
+X-Gm-Message-State: AOJu0Ywnof2oPsf8PMPgLrYOXF8KJt+BXnif+OaCB+bvKiztz2jOOeyL
+ DyG3ZBw7Y6gFcep7Gjk9TSfVm+vDBNroginp4MPHWeaBq2R9vrfwnm1mpJIYH+yG6bcyQB5Iitk
+ NET4hnjU=
+X-Gm-Gg: Acq92OGxc/7khK8Bwy77liwXwHcRoe7O+qnCFq08ygmdgpbjA9FNJZMlO8RIJfrsQvM
+ lFMuyd7ciGhWRglvdTMLAd0eXAc4tJ2ASYXLHI/FbADzAy1a15eRtE5dZ09v+tHj2T7Ec/LZTvl
+ 9J6t5qwsCUcZHy1uz53TBwdXZiQAj9VNS5hC6tFO3sVmIrMotNFh/dGrzEogpUYgtSMKIfBCUOP
+ MUosT9QQGo2H1VTHTZIX8vuWTe5O0KctB2lypPYREFqpgf5NwNutZPD50ABjhnEDXxLfspR6NtE
+ BHgjR3RvMHv3EmGHkludVjTr6kYYzE8nfSLaFcz3tjC4A7QYjc9eK7NZQpOEzZIMe8SdPdo+2JE
+ rZGPFF0CRRmZO9b4cxwZ0kfdaqlB8dQHAEauAJwI/ZgvL5Q1c+rYJL8Yiah34z1tsO5vdhL50fW
+ LZLl1JTjNIRoA00juZRqyhB/xD8lktDDKntbPnSuUIjjpWAVehhC4RNeqlWWsggC0vw8d0x4g1
+X-Received: by 2002:a05:6000:2903:b0:455:d927:1b30 with SMTP id
+ ffacd0b85a97d-4568c47c928mr18374538f8f.28.1778566954310; 
+ Mon, 11 May 2026 23:22:34 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e8f3cf0cdsm15897265e9.2.2026.05.11.23.22.11
+ ffacd0b85a97d-454919c13c9sm29754513f8f.27.2026.05.11.23.22.33
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 11 May 2026 23:22:12 -0700 (PDT)
+ Mon, 11 May 2026 23:22:33 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 04/41] hw/sd/sdcard: Add support for pre-setting the
- authentication key
-Date: Tue, 12 May 2026 08:21:05 +0200
-Message-ID: <20260512062142.67998-5-philmd@linaro.org>
+Subject: [PULL 07/41] hw/sd: Update trace events for buf+len data
+Date: Tue, 12 May 2026 08:21:08 +0200
+Message-ID: <20260512062142.67998-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260512062142.67998-1-philmd@linaro.org>
 References: <20260512062142.67998-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,117 +98,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jan Kiszka <jan.kiszka@siemens.com>
+From: Christian Speich <c.speich@avm.de>
 
-In contrast to real eMMCs, we are not (yet) persisting the full state
-of the device. This particularly includes the authentication key used
-for RPMB access, complicating testing of firmware images which do not
-support initial provisioning of the key.
+After switching sdbuf and sdcard over to use buf+len instead of single
+byte operation, the trace events need to be updated.
 
-One way to address this would be, e.g., extending the eMMC disk image
-with a special sector to store further state. A simpler approach is used
-here: Add another device property that allows to specify the
-authentication key, bringing up the eMMC as if the key has already been
-provisioned before.
+This patch updates sdbus_{read,write} and sdcard_write_data to output the
+buffer that is worked on.
 
-This is how to tell qemu to use the OP-TEE test key:
+sdcard_read_data is left unchanged, as it did not print the read byte
+before anyways.
 
- -device emmc,[...],auth-key=D3EB3EC36E334C9F988CE2C0B85954610D2BCF8664844DF2AB56E6C61BB701E4
-
-Or use this for machine-configured eMMCs:
-
- -global emmc.auth-key=D3EB3EC36E334C9F988CE2C0B85954610D2BCF8664844DF2AB56E6C61BB701E4
-
-Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+Signed-off-by: Christian Speich <c.speich@avm.de>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Reviewed-by: Jerome Forissier <jerome.forissier@arm.com>
-Message-ID: <9fab19ee4c755f9cb2abf55494541fcadff46cbd.1776231967.git.jan.kiszka@siemens.com>
+Message-ID: <20260417-sdcard-performance-b4-v4-7-119e66be10c2@avm.de>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- docs/system/devices/emmc.rst | 23 +++++++++++++++++++++++
- hw/sd/sd.c                   | 23 +++++++++++++++++++++++
- 2 files changed, 46 insertions(+)
+ hw/sd/core.c       | 27 +++++++++++++++++++++++++--
+ hw/sd/sd.c         | 18 +++++++++++++++---
+ hw/sd/trace-events |  6 +++---
+ 3 files changed, 43 insertions(+), 8 deletions(-)
 
-diff --git a/docs/system/devices/emmc.rst b/docs/system/devices/emmc.rst
-index e62adfd68ed..e7d67c809d5 100644
---- a/docs/system/devices/emmc.rst
-+++ b/docs/system/devices/emmc.rst
-@@ -53,3 +53,26 @@ SDHCI controllers while assuming that the firmware needs a boot partitions of
-     -drive file=emmc.img,if=none,format=raw,id=emmc-img
-     -device sdhci-pci
-     -device emmc,drive=emmc-img,boot-partition-size=1048576,rpmb-partition-size=2097152
-+
-+RPMB Authentication Key
-+=======================
-+
-+A private shared key is used for authenticating requests of the host to the
-+RPMB. A real eMMC stores this persistently and permits no reprogramming once it
-+is set. QEMU emulates key programming but does not persist the key state
-+across restarts. To emulate the state "key is set", the eMMC can be created
-+with a user-provided key via the ``auth-key`` property:
-+
-+.. code-block:: console
-+
-+    -device emmc,[...],auth-key=D3EB3EC36E334C9F988CE2C0B85954610D2BCF8664844DF2AB56E6C61BB701E4
-+
-+This sets the well-known test key of OP-TEE on emmc device creation. In case an
-+eMMC is instantiated by the machine model already:
-+
-+.. code-block:: console
-+
-+    -global emmc.auth-key=D3EB3EC36E334C9F988CE2C0B85954610D2BCF8664844DF2AB56E6C61BB701E4
-+
-+A key always consists of 32 bytes that have to be encoded as hex numbers,
-+left-padding with zeros as needed.
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 58275e7fa19..ebe6e35b15e 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -205,6 +205,7 @@ struct SDState {
-     QEMUTimer *ocr_power_timer;
-     uint8_t dat_lines;
-     bool cmd_line;
-+    char *preset_auth_key;
- };
+diff --git a/hw/sd/core.c b/hw/sd/core.c
+index 594c5e011ba..eaa186fbfca 100644
+--- a/hw/sd/core.c
++++ b/hw/sd/core.c
+@@ -24,6 +24,7 @@
+ #include "hw/sd/sd.h"
+ #include "qemu/module.h"
+ #include "qapi/error.h"
++#include "qemu/cutils.h"
+ #include "sdmmc-internal.h"
+ #include "trace.h"
  
- static void sd_realize(DeviceState *dev, Error **errp);
-@@ -3132,6 +3133,27 @@ static void sd_realize(DeviceState *dev, Error **errp)
-                           "The RPMB partition size must be multiples of 128K"
-                           "and not larger than 16384K.\n");
-     }
-+    if (sd_is_emmc(sd) && sd->preset_auth_key) {
-+        if (strlen(sd->preset_auth_key) != 64) {
-+            error_setg(errp,
-+                       "Authentication key must be 32 bytes long, "
-+                       "encoded hexadecimally");
-+            return;
-+        }
-+
-+        char *pos = sd->preset_auth_key;
-+        unsigned int n;
-+        for (n = 0; n < RPMB_KEY_MAC_LEN; n++, pos += 2) {
-+            int chrs;
-+            if (sscanf(pos, "%02hhx%n", &sd->rpmb.key[n], &chrs) != 1 ||
-+                chrs != 2) {
-+                error_setg(errp,
-+                           "Authentication key contains invalid characters");
-+                return;
-+            }
-+        }
-+        sd->rpmb.key_set = 1;
-+    }
+@@ -43,6 +44,26 @@ static SDState *get_card(SDBus *sdbus)
+     return SDMMC_COMMON(kid->child);
  }
  
- static void emmc_realize(DeviceState *dev, Error **errp)
-@@ -3156,6 +3178,7 @@ static const Property emmc_properties[] = {
-     DEFINE_PROP_UINT64("boot-partition-size", SDState, boot_part_size, 0),
-     DEFINE_PROP_UINT8("boot-config", SDState, boot_config, 0x0),
-     DEFINE_PROP_UINT64("rpmb-partition-size", SDState, rpmb_part_size, 0),
-+    DEFINE_PROP_STRING("auth-key", SDState, preset_auth_key),
- };
++static void sdbus_write_dump(const char *bus_name, const void *buf, size_t len)
++{
++    g_autoptr(GString) str = NULL;
++
++    if (trace_event_get_state_backends(TRACE_SDBUS_WRITE)) {
++        str = qemu_hexdump_line(NULL, buf, len, 8, 0);
++        trace_sdbus_write(bus_name, str->str);
++    }
++}
++
++static void sdbus_read_dump(const char *bus_name, const void *buf, size_t len)
++{
++    g_autoptr(GString) str = NULL;
++
++    if (trace_event_get_state_backends(TRACE_SDBUS_READ)) {
++        str = qemu_hexdump_line(NULL, buf, len, 8, 0);
++        trace_sdbus_read(bus_name, str->str);
++    }
++}
++
+ uint8_t sdbus_get_dat_lines(SDBus *sdbus)
+ {
+     SDState *slave = get_card(sdbus);
+@@ -109,7 +130,7 @@ void sdbus_write_byte(SDBus *sdbus, uint8_t value)
+ {
+     SDState *card = get_card(sdbus);
  
- static void sdmmc_common_class_init(ObjectClass *klass, const void *data)
+-    trace_sdbus_write(sdbus_name(sdbus), value);
++    sdbus_write_dump(sdbus_name(sdbus), &value, 1);
+     if (card) {
+         SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
+ 
+@@ -121,6 +142,7 @@ void sdbus_write_data(SDBus *sdbus, const void *buf, size_t length)
+ {
+     SDState *card = get_card(sdbus);
+ 
++    sdbus_write_dump(sdbus_name(sdbus), buf, length);
+     if (card) {
+         SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
+ 
+@@ -145,7 +167,7 @@ uint8_t sdbus_read_byte(SDBus *sdbus)
+ 
+         sc->read_data(card, &value, 1);
+     }
+-    trace_sdbus_read(sdbus_name(sdbus), value);
++    sdbus_read_dump(sdbus_name(sdbus), &value, 1);
+ 
+     return value;
+ }
+@@ -166,6 +188,7 @@ void sdbus_read_data(SDBus *sdbus, void *buf, size_t length)
+             length -= read;
+         }
+     }
++    sdbus_read_dump(sdbus_name(sdbus), buf, length);
+ }
+ 
+ bool sdbus_receive_ready(SDBus *sdbus)
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index b49b83b96e8..92cf8aed58f 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -2647,6 +2647,18 @@ static bool sd_generic_read_data(SDState *sd, void *buf, size_t *len)
+     return false;
+ }
+ 
++static void sdcard_write_data_dump(const char *proto, const char *cmd_desc,
++                                   uint8_t cmd, uint32_t offset,
++                                   const void *buf, size_t len)
++{
++    g_autoptr(GString) str = NULL;
++
++    if (trace_event_get_state_backends(TRACE_SDCARD_WRITE_DATA)) {
++        str = qemu_hexdump_line(NULL, buf, len, 8, 0);
++        trace_sdcard_write_data(proto, cmd_desc, cmd, offset, str->str);
++    }
++}
++
+ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+ {
+     unsigned int partition_access;
+@@ -2666,9 +2678,9 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+     if (sd->card_status & (ADDRESS_ERROR | WP_VIOLATION))
+         return length;
+ 
+-    trace_sdcard_write_data(sd->proto->name,
+-                            sd->last_cmd_name,
+-                            sd->current_cmd, sd->data_offset, value[0]);
++    sdcard_write_data_dump(sd->proto->name,
++                           sd->last_cmd_name,
++                           sd->current_cmd, sd->data_offset, buf, length);
+     switch (sd->current_cmd) {
+     case 24:  /* CMD24:  WRITE_SINGLE_BLOCK */
+         if (sd_generic_write_data(sd, buf, &length)) {
+diff --git a/hw/sd/trace-events b/hw/sd/trace-events
+index 4ec52d2a819..c6811f3a08e 100644
+--- a/hw/sd/trace-events
++++ b/hw/sd/trace-events
+@@ -15,8 +15,8 @@ bcm2835_sdhost_update_irq(uint32_t irq) "IRQ bits 0x%x"
+ 
+ # core.c
+ sdbus_command(const char *bus_name, uint8_t cmd, uint32_t arg) "@%s CMD%02d arg 0x%08x"
+-sdbus_read(const char *bus_name, uint8_t value) "@%s value 0x%02x"
+-sdbus_write(const char *bus_name, uint8_t value) "@%s value 0x%02x"
++sdbus_read(const char *bus_name, const char *hexdump) "@%s data %s"
++sdbus_write(const char *bus_name, const char *hexdump) "@%s data %s"
+ sdbus_set_voltage(const char *bus_name, uint16_t millivolts) "@%s %u (mV)"
+ sdbus_get_dat_lines(const char *bus_name, uint8_t dat_lines) "@%s dat_lines: %u"
+ sdbus_get_cmd_line(const char *bus_name, bool cmd_line) "@%s cmd_line: %u"
+@@ -54,7 +54,7 @@ sdcard_unlock(void) ""
+ sdcard_req_addr(uint32_t req_arg, uint64_t addr) "req 0x%" PRIx32 " addr 0x%" PRIx64
+ sdcard_read_block(uint64_t addr, uint32_t len) "addr 0x%" PRIx64 " size 0x%x"
+ sdcard_write_block(uint64_t addr, uint32_t len) "addr 0x%" PRIx64 " size 0x%x"
+-sdcard_write_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t offset, uint8_t value) "%s %20s/ CMD%02d ofs %"PRIu32" value 0x%02x"
++sdcard_write_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t offset, const char *hexdump) "%s %20s/ CMD%02d ofs %"PRIu32" data %s"
+ sdcard_read_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t offset, uint64_t size, uint32_t blklen) "%s %20s/ CMD%02d ofs %"PRIu32" size %"PRIu64" blklen %" PRIu32
+ sdcard_set_voltage(uint16_t millivolts) "%u mV"
+ sdcard_ext_csd_update(unsigned index, uint8_t oval, uint8_t nval) "index %u: 0x%02x -> 0x%02x"
 -- 
 2.53.0
 
