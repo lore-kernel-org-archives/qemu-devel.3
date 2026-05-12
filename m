@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25761CD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:22:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B27F2CD4851
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:22:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMgVG-0000bb-Bk; Tue, 12 May 2026 02:22:04 -0400
+	id 1wMgVi-0000eh-Bn; Tue, 12 May 2026 02:22:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgV6-0000an-MX
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:21:54 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgVI-0000by-17
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:22:04 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgV3-0003nY-Jp
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:21:52 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-48a3e9862f0so33968365e9.1
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 23:21:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgVG-0003sM-0X
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:22:03 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-488af96f6b2so60762135e9.0
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 23:22:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778566906; x=1779171706; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=ea7PyUQXhY57XR1ShApSBGEwS4WPkPvBYx1aOuJ9yHk=;
- b=AGOoz6gK2Q9VEF4MywDKhM1wOmazJFixjLcdjQhlQUeDV6cIx6AdGfIsNimbzCCij7
- N0oCZRVwMArmtrZadJ6eA3NdShodyz0yAEpB68kvXXa8oZXtkxHSGXuMfbfpw37+GDfX
- 7gU0rXELQaw3/ZaP547JjUP1MCxGFmDf/57nst59gjaEwyhntnTsmsg0qq2PFT/qXHra
- gQ7k+TEDs5/obm6tyISOUc5LaJuORVQCR+2Kp71Wb8ZuZXZfxg7CFDIk6DRxh1OAtJDC
- 12FCeFcReR3nv9ue9cCqMCdbHuLG+J07HGJXUEo6Bq6I4cB4fRvmIsm+2TMDD5daR3cD
- X+2A==
+ d=linaro.org; s=google; t=1778566919; x=1779171719; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=WSk/dEbGgvaUxswyZj17bvNUE0aNKyiM/+UL1KCae38=;
+ b=r/BCHLmyK5xzvrB3/q90I5gAn8f+f/+ezOlvQR55SzUV8hP7GYPHfzaSDa3AtQp+bf
+ dMruiOHQTPWcjxEtgGuQZF+Rjz7dQCuvE9KhxbeIc/0E8ub7ungJTRL9+H8GEWinU3VQ
+ S9wdAP5N7M5/vpspTIp0V70tiiOVuZHJaP0RBqpcfFrhqozS0JOEGYNDHoaT64BJIvQH
+ 0nFTBEcCyAF9ry9AqxwF1YOPtTxitf4a0mbZZUS3nLqz8HsDo5E6Fo/XhQ7bhatkb9kq
+ AqOJEBPG4ukh5tTS1atNvnMGdKecZuK0R4F38DGUy/s6ikGCKv99a3KrnY6aNpkcWhtQ
+ yazA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778566906; x=1779171706;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ea7PyUQXhY57XR1ShApSBGEwS4WPkPvBYx1aOuJ9yHk=;
- b=Ss1k2OF3EsNZA5KsequLI3cdjW15LbaCGbViRsKa0Eiex7jrWDv7BCiTSZXblV5IjE
- VHGzpaylsa3LXr2c8fHL/6vaWct2xVAemnNJ/CSUlBqr2lok6Ft81yIUIkrozVa2YfIi
- +mA/o0IpJZq24G88RiFVChhmfl6KCk6jHDwZJVSK261anBB6Q9rdAGwWbyXgPyURXqIn
- 0SZUS7tJresL73vOY6XMAalsqweMTqAPee/AYFjaMbaLzXpeFFEXhcM1Aw03lM4yqDSb
- MjQNlNu5lpIHyRo8qx84Hqy3Q9k5SZ4dBZrqxhECb9odaHfvoFMC7ybP512gEnYeDov9
- k/Qg==
-X-Gm-Message-State: AOJu0YyW5kpyluO0yH2U/rI+Fz0fw66BCJl11voHpd1ORaaZSE01TB1Y
- eUreDd2JbX623gpIRbhUrXitwXLnTMFrMenJ2VFY6b10XesLeWUfirQ4ameJRKyLW82de1OsqhD
- HcorD5AA=
-X-Gm-Gg: Acq92OHZXhbBJCYV8hMJliQtKScIig34xYrA/jyLj0HC6dzy9CZ9uJU4myhHiTuncgc
- bqbk2hHDoqWVeK4tF6yDB8v8Yx7mA6smcJjJZYWJ+0Ll0O072cONFAtMcYD3D/Vr7D2VvyYaB+o
- KUkl6iM5WV6vp2DZFUNI8+YVWzkxomxBtiqL8QnCHHXWVaocObq4dPPSC4Qcm2TQr83ZhR6o78j
- 6mR/7eMiyHdRkE39W/ut9lHbtyAQkiSe+a3cpK7CSfuxN7QSXelmSdpNy5hGtqk5nlOjvliWQVN
- O54RAYFSXY2ZPjo9bfrKEnFHHPYpfNEsGLv8zeyav+ZEn2l3hele36OLUJrEdG6lSJRJnq4avN4
- XXW29Qdu8H2QIF97isZ1T+Gu1u6jFavvXMd2o5hxstKPsYeFeR2cBkJ7mcZOSdlUCKZhRUoiKO1
- xoKUq41Rd+p2HyB668LLfXe3/azBgcNWle7ghED7ATGxxfzCB7S0rL1usYbnTrK0LwTiYaE54k
-X-Received: by 2002:a05:600c:46d2:b0:48d:50a:6ef4 with SMTP id
- 5b1f17b1804b1-48e8e210753mr29972475e9.11.1778566905184; 
- Mon, 11 May 2026 23:21:45 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1778566919; x=1779171719;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=WSk/dEbGgvaUxswyZj17bvNUE0aNKyiM/+UL1KCae38=;
+ b=ETzGJTf6g9lHuzrkHyEUAfrS5mOVjHCpJRGUXAx2oCI2u1Yz8epJg3cOxIn652hS6s
+ wmtA9BbTIeaeLxK0MtIh4yXmf617TgHzftg2/WGqxkF5siZjKwkNgi0C+m0Vexw8r+Vk
+ umi1lyElC4vb3xz39jp1Ev4EAvjT/iTVFNwTP/tu5dKNd21GNaN7q+I43vYpvgpLQ41O
+ NL4FVA17ourjp8Jj34hP90S7XZi7AIbvuaVZlX7/5XkKYkPlh3kFmy/nrej6YRddU2KZ
+ TUGwn2vnAuN1erVJihFHkiisvy3VZ26YjoVPLG92dJpdxRC+XKFI8mXDtGdnCuaE8lo9
+ ftwQ==
+X-Gm-Message-State: AOJu0YzcrHW8vukKQr32+gw1T6X0WCOD3CH0B2vro6vK7m9GRAYABj2E
+ kSl+meYRNXyQfSFJ1UNiOB7UMdDGUprLOiz8n//24ZZC98OHEPr9XeETaolowznj0RIPde/cp46
+ 88fxMTV8=
+X-Gm-Gg: Acq92OHbVlPoo0A5isoDUjmQD+VOrzr+58Mj2wxxPdOFRUoK7D2xYAwkcAfZX7JGtSz
+ IODQQ1JqqD2XptUbmnzghUMvOnL4u7q132X8IxDfI/aqbEaeQkKRfBO9A5VuG5nzQstluM8ukuC
+ bKr76SdLN2ffJbpHSvix4+AVvzDFHlRPOp201tNSjxjpBUaNTZh9pq0wabx2OKy64wNFF31dlru
+ DQAdY+SQYuR59iuYdaytvTNN1DsWgoLyVbpEnIrd6PsVAwuYjogrsF5rePW4O4YyyYk16w/lus0
+ x/hJ8QJTyyM/ZDvUQixdIdZH0tmp08H+qHsa8eTWGPJHlSbyJaHJqhLZjg9zneZHIAJgIq1zjzd
+ hHlX479UDDLpXSFqbIyu+RnPoX01EyRQnuu0eaE9LNX3+/1YT3yVX91ghWu7jteS3nS+h7QFSdD
+ /wOZPFarGvXDtIMw7A+ygGnvaN3jdpTgqiZTtL9BVpJUCWzBETyCezpU7SWCtpkUOms2G7B2mz1
+ hBzQ2VyaYY=
+X-Received: by 2002:a05:600c:3011:b0:48a:568f:ae6d with SMTP id
+ 5b1f17b1804b1-48e73f1baebmr102503375e9.8.1778566919252; 
+ Mon, 11 May 2026 23:21:59 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e906a0615sm20790405e9.2.2026.05.11.23.21.43
+ 5b1f17b1804b1-48e8e64385bsm12211345e9.12.2026.05.11.23.21.58
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 11 May 2026 23:21:43 -0700 (PDT)
+ Mon, 11 May 2026 23:21:58 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/41] Misc HW patches for 2026-05-12
-Date: Tue, 12 May 2026 08:21:01 +0200
-Message-ID: <20260512062142.67998-1-philmd@linaro.org>
+Subject: [PULL 02/41] hw/display/cirrus_vga: Fix packed-24 color-expansion
+ transparent copies
+Date: Tue, 12 May 2026 08:21:03 +0200
+Message-ID: <20260512062142.67998-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260512062142.67998-1-philmd@linaro.org>
+References: <20260512062142.67998-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,181 +100,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 5e61afe211e82a9af15a8794a0bd29bb574e953b:
+From: Peter Maydell <peter.maydell@linaro.org>
 
-  Merge tag 'ui-pull-request' of https://gitlab.com/marcandre.lureau/qemu into staging (2026-05-11 10:49:53 -0400)
+For the "color expansion" subtype of raster operations, the source
+pixel format is a monochrome bitmap, and the destination can be any
+of 8, 16, 24 or 32bpp.
 
-are available in the Git repository at:
+For these pattern operations, the GR2F register includes a field
+which specifies how much to skip at the start of each scanline.  In
+the 8, 16 and 32 bit cases, this field is 3 bits and is a count of
+pixels to skip.  We get this case right.  However, for the 24 bit
+case, the field is 5 bits and is a count of destination bytes to
+skip.
 
-  https://github.com/philmd/qemu.git tags/hw-misc-20260512
+In commit ad81218e40e27 ("depth=24 write mask fix (Volker Ruppert)")
+in 2005, we updated the code to (attempt to) handle the 5-bit mask
+case.  However, we don't do the right thing when the 5-bit mask
+indicates that we need to skip more than 8 bits of the input bitmap:
+we will right-shift the 0x80 constant completely off the right hand
+side, and will be off-by-one for all the source bitmap loads.
 
-for you to fetch changes up to 275c8a594165a5c32bdc1a7aadcca626a64c4e9e:
+Fix this by calculating the whole number of input bytes we need to
+skip and the residual number of bits.  In the 8/16/32bpp case the
+bytes to skip is always zero.
 
-  scripts: strip leading './' when searching MAINTAINERS file (2026-05-12 08:15:03 +0200)
+Cc: qemu-stable@nongnu.org
+Fixes: ad81218e40e27 ("depth=24 write mask fix (Volker Ruppert)")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Junjie Cao <junjie.cao@intel.com>
+Tested-by: Junjie Cao <junjie.cao@intel.com>
+Message-ID: <20260410183249.4046456-3-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/display/cirrus_vga_rop2.h | 31 +++++++++++++++++++++++++++----
+ 1 file changed, 27 insertions(+), 4 deletions(-)
 
-----------------------------------------------------------------
-Misc HW patches
-
-- More ATI VGA fixes
-- Add support for pre-setting RPMB authentication key on eMMC cards
-- Fix VDPA on big-endian hosts
-- Handle sub-page granularity in cpu_memory_rw_debug()
-- Fix leak in pca955x_set_led()
-- Mark IPv6 header structure as packed
-- MAINTAINERS updates
-----------------------------------------------------------------
-
-Chad Jablonski (1):
-  ati-vga: fix ati_set_dirty address calculation
-
-Christian Speich (3):
-  hw/sd: Switch read/write primitive to buf+len
-  hw/sd/sd: Allow multi-byte read/write for generic paths
-  hw/sd: Update trace events for buf+len data
-
-Daniel P. Berrangé (1):
-  scripts: strip leading './' when searching MAINTAINERS file
-
-Jan Kiszka (2):
-  scripts: mkemmc.sh: Fix output pollution on missing images
-  hw/sd/sdcard: Add support for pre-setting the authentication key
-
-Konstantin Shkolnyy (1):
-  vdpa: Allow VDPA to work on big-endian machine
-
-Magnus Kulke (1):
-  MAINTAINERS: Add Doru Blânzeanu as MSHV reviewer
-
-Marc-André Lureau (1):
-  hw/gpio/pca9552: fix state_str leak in pca955x_set_led
-
-Mauro Carvalho Chehab (1):
-  MAINTAINERS: update HEST maintainership entries
-
-Peter Maydell (29):
-  hw/display/cirrus_vga: Fix packed-24 color-expansion transparent
-    pattern fills
-  hw/display/cirrus_vga: Fix packed-24 color-expansion transparent
-    copies
-  hw/i386/vapic: Cope with non-page-aligned return from
-    cpu_get_phys_page_debug()
-  target/riscv: Make get_phys_page_debug handle non-page-aligned addrs
-  target/alpha: Make get_phys_page_debug handle non-page-aligned addrs
-  target/microblaze: Make get_phys_page_attrs_debug handle
-    non-page-aligned addrs
-  target/sparc: Make get_phys_page_debug handle non-page-aligned addrs
-  target/x86: Make get_phys_page_attrs_debug handle non-page-aligned
-    addrs
-  target/s390x: Make get_phys_page_debug handle non-page-aligned addrs
-  target/ppc: Make get_phys_page_debug handle non-page-aligned addrs
-  target: Rename get_phys_page_debug to get_phys_addr_debug
-  target: Rename cpu_get_phys_page_{,attrs_}debug
-  hw/core: Update docs for get_phys_addr_{attrs_, }debug
-  target/arm: Rename arm_cpu_get_phys_page()
-  monitor: hmp_gva2gpa: Don't page-align cpu_get_phys_addr_debug() arg
-    and return
-  plugins/api.c: Trust cpu_get_phys_addr_debug() return address
-  hw/core: Implement new cpu_translate_for_debug()
-  hw/core: Implement cpu_get_phys_addr_attrs_debug() with
-    cpu_translate_for_debug()
-  target/arm: Implement translate_for_debug
-  system/physmem: Use translate_for_debug() in cpu_memory_rw_debug()
-  hw/i386/vapic.c: Use cpu_translate_for_debug()
-  target/sparc: Use cpu_translate_for_debug()
-  hw/xtensa: Use cpu_translate_for_debug()
-  target/xtensa/xtensa-semi: Use cpu_translate_for_debug()
-  monitor/hmp-cmds: Use cpu_translate_for_debug()
-  plugins/api.c: Use cpu_translate_for_debug()
-  Remove cpu_get_phys_addr_debug() and cpu_get_phys_addr_attrs_debug()
-  hw/i2c/microbit_i2c: Don't index off end of twi_read_sequence[]
-  net: mark struct ip6_header as QEMU_PACKED
-
-Philippe Mathieu-Daudé (1):
-  MAINTAINERS: Step up to maintain core machine code
-
- MAINTAINERS                      |  13 +++-
- docs/system/devices/emmc.rst     |  23 ++++++
- hw/display/cirrus_vga_rop2.h     |  52 +++++++++++--
- include/hw/core/cpu.h            |  40 +++++-----
- include/hw/core/sysemu-cpu-ops.h |  39 ++++++++--
- include/hw/sd/sd.h               |  22 ++++--
- include/net/eth.h                |   2 +-
- target/alpha/cpu.h               |   2 +-
- target/arm/cpu.h                 |   3 -
- target/arm/internals.h           |   4 +
- target/avr/cpu.h                 |   2 +-
- target/hppa/cpu.h                |   2 +-
- target/i386/cpu.h                |   2 +-
- target/loongarch/cpu-mmu.h       |   2 +-
- target/m68k/cpu.h                |   2 +-
- target/microblaze/cpu.h          |   2 +-
- target/mips/internal.h           |   2 +-
- target/or1k/cpu.h                |   2 +-
- target/ppc/cpu.h                 |   2 +-
- target/riscv/cpu.h               |   2 +-
- target/rx/cpu.h                  |   2 +-
- target/s390x/s390x-internal.h    |   1 -
- target/sh4/cpu.h                 |   2 +-
- target/sparc/cpu.h               |   2 +-
- target/tricore/cpu.h             |   2 +-
- target/xtensa/cpu.h              |   2 +-
- hw/core/cpu-system.c             |  47 +++++++-----
- hw/display/ati_2d.c              |  24 ++++--
- hw/gpio/pca9552.c                |   2 +-
- hw/i2c/microbit_i2c.c            |   7 +-
- hw/i386/vapic.c                  |  13 ++--
- hw/sd/core.c                     |  53 ++++++++++---
- hw/sd/sd.c                       | 125 +++++++++++++++++++++++--------
- hw/xtensa/sim.c                  |   6 +-
- hw/xtensa/xtfpga.c               |   6 +-
- monitor/hmp-cmds.c               |   8 +-
- net/vhost-vdpa.c                 |   5 +-
- plugins/api.c                    |   8 +-
- system/physmem.c                 |  38 ++++++----
- target/alpha/cpu.c               |   2 +-
- target/alpha/helper.c            |   3 +-
- target/arm/cpu.c                 |   2 +-
- target/arm/ptw.c                 |  39 ++++++----
- target/avr/cpu.c                 |   2 +-
- target/avr/helper.c              |   2 +-
- target/hppa/cpu.c                |   2 +-
- target/hppa/mem_helper.c         |   2 +-
- target/i386/cpu.c                |   2 +-
- target/i386/helper.c             |   4 +-
- target/i386/whpx/whpx-all.c      |   2 +-
- target/loongarch/cpu.c           |   2 +-
- target/loongarch/cpu_helper.c    |   2 +-
- target/m68k/cpu.c                |   2 +-
- target/m68k/helper.c             |   2 +-
- target/microblaze/cpu.c          |   2 +-
- target/microblaze/helper.c       |  11 ++-
- target/mips/cpu.c                |   2 +-
- target/mips/system/physaddr.c    |   2 +-
- target/or1k/cpu.c                |   2 +-
- target/or1k/mmu.c                |   2 +-
- target/ppc/cpu_init.c            |   2 +-
- target/ppc/mmu-hash32.c          |   2 +-
- target/ppc/mmu_common.c          |   4 +-
- target/riscv/cpu.c               |   2 +-
- target/riscv/cpu_helper.c        |   4 +-
- target/rx/cpu.c                  |   2 +-
- target/rx/helper.c               |   2 +-
- target/s390x/cpu-system.c        |   2 +-
- target/s390x/helper.c            |  20 ++---
- target/sh4/cpu.c                 |   2 +-
- target/sh4/helper.c              |   2 +-
- target/sparc/cpu.c               |   2 +-
- target/sparc/mmu_helper.c        |  23 ++++--
- target/tricore/cpu.c             |   2 +-
- target/tricore/helper.c          |   2 +-
- target/xtensa/cpu.c              |   2 +-
- target/xtensa/mmu_helper.c       |   2 +-
- target/xtensa/xtensa-semi.c      |   9 ++-
- hw/sd/trace-events               |   6 +-
- scripts/get_maintainer.pl        |   1 +
- scripts/mkemmc.sh                |   4 +-
- 81 files changed, 508 insertions(+), 253 deletions(-)
-
+diff --git a/hw/display/cirrus_vga_rop2.h b/hw/display/cirrus_vga_rop2.h
+index 8be35ec6e20..33f9b3b6134 100644
+--- a/hw/display/cirrus_vga_rop2.h
++++ b/hw/display/cirrus_vga_rop2.h
+@@ -108,12 +108,34 @@ glue(glue(glue(cirrus_colorexpand_transp_, ROP_NAME), _),DEPTH)
+     unsigned int col;
+     unsigned bitmask;
+     unsigned index;
++
++    /*
++     * Raster ops where the source is a monochrome bitmap with
++     * color expansion to 8/16/24/32bpp destination.
++     */
++
+ #if DEPTH == 24
++    /*
++     * For packed-24 modes, GR2F bits [4:0] are a count of destination
++     * bytes to be suppressed for each scanline, which we keep in
++     * dstskipleft. We want to track the number of whole bytes
++     * to skip in the source (always either 0 or 1) and the number
++     * of bits within the byte to skip.
++     */
+     int dstskipleft = s->vga.gr[0x2f] & 0x1f;
+-    int srcskipleft = dstskipleft / 3;
++    int srcskipleftbits = (dstskipleft / 3) & 0x7;
++    int srcskipleftbytes = (dstskipleft / 3) >> 3;
+ #else
+-    int srcskipleft = s->vga.gr[0x2f] & 0x07;
+-    int dstskipleft = srcskipleft * (DEPTH / 8);
++    /*
++     * In all other modes, GR2F bits [2:0] are a count of how many
++     * destination pixels to suppress for each scanline, which is our
++     * srcskipleftbits. We get dstskipleft, the number of bytes to
++     * skip, by multiplying this by the bytes-per-pixel. In these
++     * modes we never need to skip an entire source byte.
++     */
++    int srcskipleftbits = s->vga.gr[0x2f] & 0x07;
++    int srcskipleftbytes = 0;
++    int dstskipleft = srcskipleftbits * (DEPTH / 8);
+ #endif
+ 
+     if (s->cirrus_blt_modeext & CIRRUS_BLTMODEEXT_COLOREXPINV) {
+@@ -125,7 +147,8 @@ glue(glue(glue(cirrus_colorexpand_transp_, ROP_NAME), _),DEPTH)
+     }
+ 
+     for(y = 0; y < bltheight; y++) {
+-        bitmask = 0x80 >> srcskipleft;
++        bitmask = 0x80 >> srcskipleftbits;
++        srcaddr += srcskipleftbytes;
+         bits = cirrus_src(s, srcaddr++) ^ bits_xor;
+         addr = dstaddr + dstskipleft;
+         for (x = dstskipleft; x < bltwidth; x += (DEPTH / 8)) {
 -- 
 2.53.0
 
