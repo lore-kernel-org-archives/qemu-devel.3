@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE0D1CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:04:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16289CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:04:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuEB-0006yG-F7; Tue, 12 May 2026 17:01:21 -0400
+	id 1wMuAi-0008Cy-B0; Tue, 12 May 2026 16:57:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuCx-0003wt-Eu; Tue, 12 May 2026 17:00:03 -0400
+ id 1wMuAI-0007aq-7G; Tue, 12 May 2026 16:57:20 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuCu-0005cT-Rs; Tue, 12 May 2026 17:00:03 -0400
+ id 1wMuAF-0003bM-68; Tue, 12 May 2026 16:57:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619276; bh=1HdcgX/LMaeNImKpnuqp9kdYf9fsxq1yKsfOxvZzWZE=;
+ t=1778619275; bh=mx0/ygg3ICyu3MyXKw7556Pm/SQOAj08f2Tc/1grYrY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=kdvPqf3RbB3B3UsG6jnCBpk3Wfk4csICi9iKeUtqEAUEK8/FB4quPczWT79bdIIRK
- fqV2bfdG3exJcxLICIQDb4T0N3PU95D/0TUdRcVQS/x/oB22DH/shnBTRUUKYkNlss
- Ax0lR2BWBm2TEdwfzoWobTA5uDMcXuaXqHhFw739/J86CqBJH9xhbMhbO4DkTBNI3l
- 5e/lJRVBZO8nYYx/r0XZRMonkBUZ8OUQuYLxmcip6Te66d1UYIZhxZGHI3HI2Eml+4
- BJPFj99Be7JFBnsUhliuGhh/eO+JYMI2BkD9feylIL7sQlbC0MFKsgQjsjO6ccO7VK
- gPL7hS6Y2TfGA==
+ b=KZbUACH4GGB6MQ+fYux9eYCyh2CZaJUJpjvNKGop5/nyxKAPKRrDmwEwhyZs4NMwM
+ EF3sbooslDjO5NxIwCfTOBT/vMJ17trdHEl1oh64SVyYfFTElojrhvQdEvuFxFweJn
+ ilhTQA+pXq5GZKkQWYLhQ2OulroIW+M+P4l/NPFg5bS0YQ5+LAJJ2jbJ444pvNS7QR
+ ALrl7wjO6hQebHMy0uq+YFIpnk9NVesCHP6WcV+Pjeb04ehy70VWf/0fhXVg5HVxCe
+ Mepwnw5iYAypl61nVDZ8crANt0uVZ977TFP80ClijkOWhBSAEA0wBKK6bV3qkmHRy2
+ h8MbkfZO4RDxw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DCA6A1AA303;
- Tue, 12 May 2026 23:54:36 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1E7EA1AA2E8;
+ Tue, 12 May 2026 23:54:35 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E4B513ABC74;
- Tue, 12 May 2026 23:54:40 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2AF463ABC59;
+ Tue, 12 May 2026 23:54:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>,
- Dmitry Fomichev <dmitry.fomichev@wdc.com>,
- Mingyuan Luo <myluo24@m.fudan.edu.cn>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 055/107] virtio-blk: fix zone report buffer
- out-of-memory (CVE-2026-5761)
-Date: Tue, 12 May 2026 23:53:42 +0300
-Message-ID: <20260512205437.360850-55-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 028/107] tcg: Pass host-endian values to
+ plugin_gen_mem_callbacks_*
+Date: Tue, 12 May 2026 23:53:15 +0300
+Message-ID: <20260512205437.360850-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
@@ -71,288 +70,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-An internal buffer is used when processing VIRTIO_BLK_T_ZONE_REPORT
-requests. The buffer's size is controlled by the guest. A large value
-can result in g_malloc() failure and the QEMU process aborts, resulting
-in a Denial of Service (DoS) (most likely in cases where an untrusted
-guest application or a nested guest with virtio-blk passthrough is able
-to abort QEMU).
+If the host does not support swapped-endian loads and stores,
+then we emulate those within the tcg expanders with explicit
+bswap operations.
 
-Modify the zone report implementation to work incrementally with a
-bounded buffer size.
+However, we were passing values to the plugin interface in
+the middle of those bswap operations, which meant that we
+would pass values of the wrong endianness to plugins when
+running on hosts without swapped-endian loads and stores.
 
-This is purely a QEMU implementation issue and no VIRTIO spec changes
-are needed.
-
-Mingyuan Luo found this bug and provided a reproducer which I haven't
-put into tests/qtest/ because it requires a zoned storage device (e.g.
-root and modprobe null_blk):
-
-1) Prepare a zoned nullblk backend (/dev/nullb0):
-
-sudo modprobe -r null_blk || true
-sudo modprobe null_blk nr_devices=1 zoned=1
-sudo chmod 0666 /dev/nullb0
-cat /sys/block/nullb0/queue/zoned
-
-2) Create qtest input:
-
-cat >/tmp/vblk-zone-report-oom.qtest <<'EOF'
-outl 0xcf8 0x80002004
-outw 0xcfc 0x0007
-outl 0xcf8 0x80002010
-outl 0xcfc 0x0000c001
-outb 0xc012 0x00
-outb 0xc012 0x01
-outb 0xc012 0x03
-outl 0xc004 0x00000000
-outw 0xc00e 0x0000
-outl 0xc008 0x00000100
-outb 0xc012 0x07
-writel 0x00020000 0x00000010
-writel 0x00020004 0x00000000
-writeq 0x00020008 0x0000000000000000
-writeq 0x00100000 0x0000000000020000
-writel 0x00100008 0x00000010
-writew 0x0010000c 0x0001
-writew 0x0010000e 0x0001
-EOF
-
-for i in $(seq 1 1022); do
-d=$((0x00100000 + i * 16))
-n=$((i + 1))
-printf 'writeq 0x%08x 0x0000000000200000\n' "$d" >> /tmp/vblk-zone-report-oom.qtest
-printf 'writel 0x%08x 0x1fe00000\n' $((d + 8)) >> /tmp/vblk-zone-report-oom.qtest
-printf 'writew 0x%08x 0x0003\n' $((d + 12)) >> /tmp/vblk-zone-report-oom.qtest
-printf 'writew 0x%08x 0x%04x\n' $((d + 14)) "$n" >> /tmp/vblk-zone-report-oom.qtest
-done
-
-d=$((0x00100000 + 1023 * 16))
-printf 'writeq 0x%08x 0x0000000000200000\n' "$d" >> /tmp/vblk-zone-report-oom.qtest
-printf 'writel 0x%08x 0x1fe00000\n' $((d + 8)) >> /tmp/vblk-zone-report-oom.qtest
-printf 'writew 0x%08x 0x0002\n' $((d + 12)) >> /tmp/vblk-zone-report-oom.qtest
-printf 'writew 0x%08x 0x0000\n' $((d + 14)) >> /tmp/vblk-zone-report-oom.qtest
-cat >> /tmp/vblk-zone-report-oom.qtest <<'EOF'
-writew 0x00104000 0x0000
-writew 0x00104002 0x0001
-writew 0x00104004 0x0000
-outw 0xc010 0x0000
-EOF
-
-3) Run the qtest input with ASAN build (compile qemu with --enable-asan):
-
-build/qemu-system-x86_64 -display none \
--accel qtest -qtest stdio \
--machine pc -nodefaults -m 512M -monitor none -serial none \
--blockdev driver=host_device,node-name=disk0,filename=/dev/nullb0 \
--device virtio-blk-pci-transitional,drive=disk0,addr=04.0,queue-size=1024 \
-< /tmp/vblk-zone-report-oom.qtest
-
-Cc: Sam Li <faithilikerun@gmail.com>
-Cc: Damien Le Moal <dlemoal@kernel.org>
-Cc: Dmitry Fomichev <dmitry.fomichev@wdc.com>
-Fixes: CVE-2026-5761
-Fixes: 4f7366506a9 ("virtio-blk: add zoned storage emulation for zoned devices")
-Reported-by: Mingyuan Luo <myluo24@m.fudan.edu.cn>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-(cherry picked from commit 4913ae36f9796c55d434dcbfa6bdb9ebb3e5e4b1)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3351
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20260325024252.3369186-2-pierrick.bouvier@linaro.org
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+(cherry picked from commit 539421a428fd4b8231d9be042143f2d09c719e2a)
+(Mjt: back-port to 10.0.x)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 5077793e5e..add6ad9d55 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -38,6 +38,9 @@
- #include "hw/virtio/virtio-blk-common.h"
- #include "qemu/coroutine.h"
+diff --git a/tcg/tcg-op-ldst.c b/tcg/tcg-op-ldst.c
+index a8f35e1970..335b50f088 100644
+--- a/tcg/tcg-op-ldst.c
++++ b/tcg/tcg-op-ldst.c
+@@ -260,9 +260,6 @@ static void tcg_gen_qemu_ld_i32_int(TCGv_i32 val, TCGTemp *addr,
+     copy_addr = plugin_maybe_preserve_addr(addr);
+     gen_ldst(INDEX_op_qemu_ld_i32, TCG_TYPE_I32,
+              tcgv_i32_temp(val), NULL, addr_new, oi);
+-    plugin_gen_mem_callbacks_i32(val, copy_addr, addr, orig_oi,
+-                                 QEMU_PLUGIN_MEM_R);
+-    maybe_free_addr(addr, addr_new);
  
-+/* Internal buffer size limit for zone report */
-+#define VIRTIO_BLK_MAX_ZONES_PER_BATCH 4096
-+
- static void virtio_blk_ioeventfd_attach(VirtIOBlock *s);
- 
- static void virtio_blk_init_request(VirtIOBlock *s, VirtQueue *vq,
-@@ -451,15 +454,22 @@ err:
-     return err_status;
- }
- 
-+typedef struct {
-+    unsigned int total_nr_zones;    /* max zones to fill in this request */
-+    unsigned int nr_zones_done;     /* how many zones have been filled in */
-+    int64_t iov_offset;             /* current byte position in in_iov[] */
-+    int64_t offset;                 /* current zone report disk offset */
-+    unsigned int nr_zones;          /* for zone report calls */
-+    unsigned int zones_per_batch;   /* size of zone report buffer */
-+    BlockZoneDescriptor *zones;     /* zone report buffer */
-+} ZoneReportData;
-+
- typedef struct ZoneCmdData {
-     VirtIOBlockReq *req;
-     struct iovec *in_iov;
-     unsigned in_num;
-     union {
--        struct {
--            unsigned int nr_zones;
--            BlockZoneDescriptor *zones;
--        } zone_report_data;
-+        ZoneReportData zone_report_data;
-         struct {
-             int64_t offset;
-         } zone_append_data;
-@@ -516,16 +526,15 @@ static bool check_zoned_request(VirtIOBlock *s, int64_t offset, int64_t len,
- static void virtio_blk_zone_report_complete(void *opaque, int ret)
- {
-     ZoneCmdData *data = opaque;
-+    ZoneReportData *zrd = &data->zone_report_data;
-     VirtIOBlockReq *req = data->req;
-     VirtIODevice *vdev = VIRTIO_DEVICE(req->dev);
-     struct iovec *in_iov = data->in_iov;
-     unsigned in_num = data->in_num;
--    int64_t zrp_size, n, j = 0;
--    int64_t nz = data->zone_report_data.nr_zones;
-+    int64_t n;
-+    unsigned nz = zrd->nr_zones;
-     int8_t err_status = VIRTIO_BLK_S_OK;
--    struct virtio_blk_zone_report zrp_hdr = (struct virtio_blk_zone_report) {
--        .nr_zones = cpu_to_le64(nz),
--    };
-+    struct virtio_blk_zone_report zrp_hdr = {};
- 
-     trace_virtio_blk_zone_report_complete(vdev, req, nz, ret);
-     if (ret) {
-@@ -533,28 +542,18 @@ static void virtio_blk_zone_report_complete(void *opaque, int ret)
-         goto out;
-     }
- 
--    zrp_size = sizeof(struct virtio_blk_zone_report)
--               + sizeof(struct virtio_blk_zone_descriptor) * nz;
--    n = iov_from_buf(in_iov, in_num, 0, &zrp_hdr, sizeof(zrp_hdr));
--    if (n != sizeof(zrp_hdr)) {
--        virtio_error(vdev, "Driver provided input buffer that is too small!");
--        err_status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
--        goto out;
--    }
--
--    for (size_t i = sizeof(zrp_hdr); i < zrp_size;
--        i += sizeof(struct virtio_blk_zone_descriptor), ++j) {
-+    for (unsigned j = 0; j < nz; j++) {
-         struct virtio_blk_zone_descriptor desc =
-             (struct virtio_blk_zone_descriptor) {
--                .z_start = cpu_to_le64(data->zone_report_data.zones[j].start
-+                .z_start = cpu_to_le64(zrd->zones[j].start
-                     >> BDRV_SECTOR_BITS),
--                .z_cap = cpu_to_le64(data->zone_report_data.zones[j].cap
-+                .z_cap = cpu_to_le64(zrd->zones[j].cap
-                     >> BDRV_SECTOR_BITS),
--                .z_wp = cpu_to_le64(data->zone_report_data.zones[j].wp
-+                .z_wp = cpu_to_le64(zrd->zones[j].wp
-                     >> BDRV_SECTOR_BITS),
-         };
- 
--        switch (data->zone_report_data.zones[j].type) {
-+        switch (zrd->zones[j].type) {
-         case BLK_ZT_CONV:
-             desc.z_type = VIRTIO_BLK_ZT_CONV;
-             break;
-@@ -568,7 +567,7 @@ static void virtio_blk_zone_report_complete(void *opaque, int ret)
+     if ((orig_memop ^ memop) & MO_BSWAP) {
+         switch (orig_memop & MO_SIZE) {
+@@ -278,6 +275,10 @@ static void tcg_gen_qemu_ld_i32_int(TCGv_i32 val, TCGTemp *addr,
              g_assert_not_reached();
          }
- 
--        switch (data->zone_report_data.zones[j].state) {
-+        switch (zrd->zones[j].state) {
-         case BLK_ZS_RDONLY:
-             desc.z_state = VIRTIO_BLK_ZS_RDONLY;
-             break;
-@@ -598,18 +597,47 @@ static void virtio_blk_zone_report_complete(void *opaque, int ret)
-         }
- 
-         /* TODO: it takes O(n^2) time complexity. Optimizations required. */
--        n = iov_from_buf(in_iov, in_num, i, &desc, sizeof(desc));
-+        n = iov_from_buf(in_iov, in_num, zrd->iov_offset, &desc, sizeof(desc));
-         if (n != sizeof(desc)) {
-             virtio_error(vdev, "Driver provided input buffer "
-                                "for descriptors that is too small!");
-             err_status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
-+            goto out;
-         }
-+
-+        zrd->iov_offset += sizeof(desc);
-+    }
-+
-+    if (nz > 0) {
-+        BlockZoneDescriptor *zone = &zrd->zones[nz - 1];
-+        zrd->offset = zone->start + zone->length;
-+    }
-+
-+    zrd->nr_zones_done += nz;
-+
-+    /* Call zone report again if the end hasn't been reached yet */
-+    if (nz == zrd->zones_per_batch &&
-+        zrd->nr_zones_done < zrd->total_nr_zones) {
-+        zrd->nr_zones = MIN(zrd->zones_per_batch,
-+                            zrd->total_nr_zones - zrd->nr_zones_done);
-+        blk_aio_zone_report(req->dev->blk, zrd->offset, &zrd->nr_zones,
-+                            zrd->zones, virtio_blk_zone_report_complete, data);
-+        return;
-+    }
-+
-+    /* Fill in header now that all zones have been reported */
-+    zrp_hdr.nr_zones = cpu_to_le64(zrd->nr_zones_done);
-+    n = iov_from_buf(in_iov, in_num, 0, &zrp_hdr, sizeof(zrp_hdr));
-+    if (n != sizeof(zrp_hdr)) {
-+        virtio_error(vdev, "Driver provided input buffer that is too small!");
-+        err_status = VIRTIO_BLK_S_ZONE_INVALID_CMD;
-+        goto out;
      }
- 
- out:
-     virtio_blk_req_complete(req, err_status);
-     g_free(req);
--    g_free(data->zone_report_data.zones);
-+    g_free(zrd->zones);
-     g_free(data);
++
++    plugin_gen_mem_callbacks_i32(val, copy_addr, addr, orig_oi,
++                                 QEMU_PLUGIN_MEM_R);
++    maybe_free_addr(addr, addr_new);
  }
  
-@@ -621,7 +649,8 @@ static void virtio_blk_handle_zone_report(VirtIOBlockReq *req,
-     VirtIODevice *vdev = VIRTIO_DEVICE(s);
-     unsigned int nr_zones;
-     ZoneCmdData *data;
--    int64_t zone_size, offset;
-+    ZoneReportData *zrd;
-+    int64_t offset;
-     uint8_t err_status;
+ void tcg_gen_qemu_ld_i32_chk(TCGv_i32 val, TCGTemp *addr, TCGArg idx,
+@@ -288,10 +289,10 @@ void tcg_gen_qemu_ld_i32_chk(TCGv_i32 val, TCGTemp *addr, TCGArg idx,
+     tcg_gen_qemu_ld_i32_int(val, addr, idx, memop);
+ }
  
-     if (req->in_len < sizeof(struct virtio_blk_inhdr) +
-@@ -643,16 +672,21 @@ static void virtio_blk_handle_zone_report(VirtIOBlockReq *req,
-     trace_virtio_blk_handle_zone_report(vdev, req,
-                                         offset >> BDRV_SECTOR_BITS, nr_zones);
+-static void tcg_gen_qemu_st_i32_int(TCGv_i32 val, TCGTemp *addr,
++static void tcg_gen_qemu_st_i32_int(TCGv_i32 orig_val, TCGTemp *addr,
+                                     TCGArg idx, MemOp memop)
+ {
+-    TCGv_i32 swap = NULL;
++    TCGv_i32 val = orig_val;
+     MemOpIdx orig_oi, oi;
+     TCGOpcode opc;
+     TCGTemp *addr_new;
+@@ -301,18 +302,17 @@ static void tcg_gen_qemu_st_i32_int(TCGv_i32 val, TCGTemp *addr,
+     orig_oi = oi = make_memop_idx(memop, idx);
  
--    zone_size = sizeof(BlockZoneDescriptor) * nr_zones;
-     data = g_malloc(sizeof(ZoneCmdData));
-     data->req = req;
-     data->in_iov = in_iov;
-     data->in_num = in_num;
--    data->zone_report_data.nr_zones = nr_zones;
--    data->zone_report_data.zones = g_malloc(zone_size),
+     if ((memop & MO_BSWAP) && !tcg_target_has_memory_bswap(memop)) {
+-        swap = tcg_temp_ebb_new_i32();
++        val = tcg_temp_ebb_new_i32();
+         switch (memop & MO_SIZE) {
+         case MO_16:
+-            tcg_gen_bswap16_i32(swap, val, 0);
++            tcg_gen_bswap16_i32(val, orig_val, 0);
+             break;
+         case MO_32:
+-            tcg_gen_bswap32_i32(swap, val);
++            tcg_gen_bswap32_i32(val, orig_val);
+             break;
+         default:
+             g_assert_not_reached();
+         }
+-        val = swap;
+         memop &= ~MO_BSWAP;
+         oi = make_memop_idx(memop, idx);
+     }
+@@ -324,11 +324,12 @@ static void tcg_gen_qemu_st_i32_int(TCGv_i32 val, TCGTemp *addr,
+     }
+     addr_new = tci_extend_addr(addr);
+     gen_ldst(opc, TCG_TYPE_I32, tcgv_i32_temp(val), NULL, addr_new, oi);
+-    plugin_gen_mem_callbacks_i32(val, NULL, addr, orig_oi, QEMU_PLUGIN_MEM_W);
++    plugin_gen_mem_callbacks_i32(orig_val, NULL, addr, orig_oi,
++                                 QEMU_PLUGIN_MEM_W);
+     maybe_free_addr(addr, addr_new);
  
--    blk_aio_zone_report(s->blk, offset, &data->zone_report_data.nr_zones,
--                        data->zone_report_data.zones,
-+    zrd = &data->zone_report_data;
-+    zrd->total_nr_zones = nr_zones;
-+    zrd->nr_zones_done = 0;
-+    zrd->iov_offset = sizeof(struct virtio_blk_zone_report);
-+    zrd->offset = offset;
-+    zrd->zones_per_batch = MIN(nr_zones, VIRTIO_BLK_MAX_ZONES_PER_BATCH);
-+    zrd->zones = g_malloc(zrd->zones_per_batch * sizeof(BlockZoneDescriptor));
+-    if (swap) {
+-        tcg_temp_free_i32(swap);
++    if (val != orig_val) {
++        tcg_temp_free_i32(val);
+     }
+ }
+ 
+@@ -374,9 +375,6 @@ static void tcg_gen_qemu_ld_i64_int(TCGv_i64 val, TCGTemp *addr,
+     addr_new = tci_extend_addr(addr);
+     copy_addr = plugin_maybe_preserve_addr(addr);
+     gen_ldst_i64(INDEX_op_qemu_ld_i64, val, addr_new, oi);
+-    plugin_gen_mem_callbacks_i64(val, copy_addr, addr, orig_oi,
+-                                 QEMU_PLUGIN_MEM_R);
+-    maybe_free_addr(addr, addr_new);
+ 
+     if ((orig_memop ^ memop) & MO_BSWAP) {
+         int flags = (orig_memop & MO_SIGN
+@@ -396,6 +394,10 @@ static void tcg_gen_qemu_ld_i64_int(TCGv_i64 val, TCGTemp *addr,
+             g_assert_not_reached();
+         }
+     }
 +
-+    zrd->nr_zones = zrd->zones_per_batch;
-+    blk_aio_zone_report(s->blk, offset, &zrd->nr_zones, zrd->zones,
-                         virtio_blk_zone_report_complete, data);
-     return;
- out:
++    plugin_gen_mem_callbacks_i64(val, copy_addr, addr, orig_oi,
++                                 QEMU_PLUGIN_MEM_R);
++    maybe_free_addr(addr, addr_new);
+ }
+ 
+ void tcg_gen_qemu_ld_i64_chk(TCGv_i64 val, TCGTemp *addr, TCGArg idx,
+@@ -406,10 +408,10 @@ void tcg_gen_qemu_ld_i64_chk(TCGv_i64 val, TCGTemp *addr, TCGArg idx,
+     tcg_gen_qemu_ld_i64_int(val, addr, idx, memop);
+ }
+ 
+-static void tcg_gen_qemu_st_i64_int(TCGv_i64 val, TCGTemp *addr,
++static void tcg_gen_qemu_st_i64_int(TCGv_i64 orig_val, TCGTemp *addr,
+                                     TCGArg idx, MemOp memop)
+ {
+-    TCGv_i64 swap = NULL;
++    TCGv_i64 val = orig_val;
+     MemOpIdx orig_oi, oi;
+     TCGTemp *addr_new;
+ 
+@@ -423,32 +425,32 @@ static void tcg_gen_qemu_st_i64_int(TCGv_i64 val, TCGTemp *addr,
+     orig_oi = oi = make_memop_idx(memop, idx);
+ 
+     if ((memop & MO_BSWAP) && !tcg_target_has_memory_bswap(memop)) {
+-        swap = tcg_temp_ebb_new_i64();
++        val = tcg_temp_ebb_new_i64();
+         switch (memop & MO_SIZE) {
+         case MO_16:
+-            tcg_gen_bswap16_i64(swap, val, 0);
++            tcg_gen_bswap16_i64(val, orig_val, 0);
+             break;
+         case MO_32:
+-            tcg_gen_bswap32_i64(swap, val, 0);
++            tcg_gen_bswap32_i64(val, orig_val, 0);
+             break;
+         case MO_64:
+-            tcg_gen_bswap64_i64(swap, val);
++            tcg_gen_bswap64_i64(val, orig_val);
+             break;
+         default:
+             g_assert_not_reached();
+         }
+-        val = swap;
+         memop &= ~MO_BSWAP;
+         oi = make_memop_idx(memop, idx);
+     }
+ 
+     addr_new = tci_extend_addr(addr);
+     gen_ldst_i64(INDEX_op_qemu_st_i64, val, addr_new, oi);
+-    plugin_gen_mem_callbacks_i64(val, NULL, addr, orig_oi, QEMU_PLUGIN_MEM_W);
++    plugin_gen_mem_callbacks_i64(orig_val, NULL, addr, orig_oi,
++                                 QEMU_PLUGIN_MEM_W);
+     maybe_free_addr(addr, addr_new);
+ 
+-    if (swap) {
+-        tcg_temp_free_i64(swap);
++    if (val != orig_val) {
++        tcg_temp_free_i64(val);
+     }
+ }
+ 
 -- 
 2.47.3
 
