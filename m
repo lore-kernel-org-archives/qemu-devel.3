@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD6B5CD4F3E
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:05:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAE42CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:05:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuHK-0006BK-MW; Tue, 12 May 2026 17:04:34 -0400
+	id 1wMuEo-0008Bv-Ep; Tue, 12 May 2026 17:01:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuFd-0001Hz-Fz; Tue, 12 May 2026 17:02:51 -0400
+ id 1wMuDQ-0006Da-VA; Tue, 12 May 2026 17:00:33 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuFa-0007ga-Rv; Tue, 12 May 2026 17:02:49 -0400
+ id 1wMuDP-0006Ed-41; Tue, 12 May 2026 17:00:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619278; bh=MIEzqSu2UCJqfnFNsi6ybVFRhFehRgAJkGf+Ac9Sm7Y=;
+ t=1778619277; bh=M+N+5W0ciyI4YcjsoclU0l9rS1hi0yRTWV8xVz+rWEY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=C950thBGTEHn+OHsk5wrK/SmssvmzRB+rjc/wikE2wepRhlBo5m95JVZzKkpgFq1H
- gzLyuqXiMEMj6KTBVm9S71oPZwFQ1LB5l61NbOSPqBSvVm5BW9b+PniyCSIVBniv1/
- l4uMkJC4cdsUoTTGR9bWHALS0cTbyTpXnTSnC9gVLYQG9BJZXJv6h0mMYWSG4sM+xg
- ixTPLiBTn83NUHDu5WIoR4egmX3j+Y00PD+dKk9IrW4O2s6AJT6Mx4x/8Ef77RWG4E
- We1EqruCDOf0PcYKJjGgxBCmDzmwNSSWjAWmKlx1NLMdQT5C66Ajs9HNYvi4QdF6SS
- 2m35mJ7e5ZTFA==
+ b=IZKWZmwC/JOKPTgybdkuKvX+aE9ca3qsVNEWvrAZUx0GoxTImej3kjzP+e22tkzBP
+ UmzvFjUukqC5Up7Tr33VBHwdNN8VbYeCVZUdkQTrC6Q2qYQH2VOIXGY10BvgUSEqxj
+ OemEDkgAQl8XrPM0qFcGSanjIgHCXU0w/Em+HkyOFkZGJ//I0YJfsRnOO3xvMw7y3L
+ Kcjn528f2o9t3ridc+Kq9zFxu/NDNwi/OqFGXqBb5dxr/MiNjNlFcjF9qarxwV7J6n
+ 13gYiWeS3Vy5XqKIeVn107jWyVCevNdT7aNbV/byXWS1mAZS+xWgRmi4S1EY6A6E9q
+ 2HArlgFjU2OJg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9B4031AA31C;
- Tue, 12 May 2026 23:54:38 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4C5151AA308;
+ Tue, 12 May 2026 23:54:37 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A80913ABC8D;
- Tue, 12 May 2026 23:54:42 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4BFCD3ABC79;
+ Tue, 12 May 2026 23:54:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
- Peter Hartley <peter@talesfromthearmchair.net>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 080/107] linux-user: Use abi_int for imr_ifindex in
- ip_mreqn struct
-Date: Tue, 12 May 2026 23:54:07 +0300
-Message-ID: <20260512205437.360850-80-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 060/107] target/arm/tcg/translate.c: remove MO_TE
+ usage
+Date: Tue, 12 May 2026 23:53:47 +0300
+Message-ID: <20260512205437.360850-60-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
@@ -70,50 +70,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Peter Hartley noticed, that in the qemu code the imr_ifindex member of
-struct target_ip_mreq needs to be of type "int" instead of "long", which
-is what the Linux kernel uses on all architectures.
+dc->be_data is already set just above in the same function:
+```
+    dc->be_data = EX_TBFLAG_ANY(tb_flags, BE_DATA) ? MO_BE : MO_LE;
+```
 
-Adjust the type accordingly, and add a QEMU_BUILD_BUG_ON() checker to
-prevent such issues in the future.
-
-This change should fix multicast issues when using hosts and guests with
-different endianess or bit size.
-
-Reported-by: Peter Hartley <peter@talesfromthearmchair.net>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2553
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit e2af3eadc09b3672017c650e0abfd29a08521921)
+Cc: qemu-stable@nongnu.org
+Fixes: a729a46b05a ("target/arm: Add wrapper macros for accessing tbflags")
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-id: 20260407222208.271838-12-pierrick.bouvier@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 027ad866bd2984a8fc50b41d235aabf14711df3e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index b8b256c430..905db117ff 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -2165,6 +2165,8 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index 7e749fc15b..86a6888ab2 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -7602,7 +7602,6 @@ static void arm_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
  
-             QEMU_BUILD_BUG_ON(sizeof(struct ip_mreq) !=
-                               sizeof(struct target_ip_mreq));
-+            QEMU_BUILD_BUG_ON(sizeof(struct ip_mreqn) !=
-+                              sizeof(struct target_ip_mreqn));
- 
-             if (optname == IP_MULTICAST_IF) {
-                 min_size = sizeof(struct in_addr);
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index 86bdf88be7..1c546ce1a0 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -210,7 +210,7 @@ struct target_ip_mreq {
- struct target_ip_mreqn {
-     struct target_in_addr imr_multiaddr;
-     struct target_in_addr imr_address;
--    abi_long imr_ifindex;
-+    abi_int imr_ifindex;
- };
- 
- struct target_ip_mreq_source {
+     if (arm_feature(env, ARM_FEATURE_M)) {
+         dc->vfp_enabled = 1;
+-        dc->be_data = MO_TE;
+         dc->v7m_handler_mode = EX_TBFLAG_M32(tb_flags, HANDLER);
+         dc->v8m_secure = EX_TBFLAG_M32(tb_flags, SECURE);
+         dc->v8m_stackcheck = EX_TBFLAG_M32(tb_flags, STACKCHECK);
 -- 
 2.47.3
 
