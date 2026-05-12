@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF997CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:41:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C01F6CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:42:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMukZ-0007oZ-GV; Tue, 12 May 2026 17:34:48 -0400
+	id 1wMuW1-0004Pi-Hh; Tue, 12 May 2026 17:19:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMukS-0007bR-FM; Tue, 12 May 2026 17:34:41 -0400
+ id 1wMuVz-0004Io-C9; Tue, 12 May 2026 17:19:43 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuju-0003Ah-PF; Tue, 12 May 2026 17:34:36 -0400
+ id 1wMuVx-0008Al-Gf; Tue, 12 May 2026 17:19:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619500; bh=EeiXjvuU4ygfvIobdZuPB4O8zYg6YICyrhsTaWnc8oU=;
+ t=1778619498; bh=RI10+5zPGhJ/aOzuzHvVJ9FNHtrl/IeqoVNJcNULtVs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=azi3LyLZOcrpLYMUuqHzXYxJesA3sxcg34dzW/WcHv9buEWRBeX1vwA0yPu8gswkU
- IprGNgaeCbA4p9pRvWOc3NAogmALtM811pXfhaWZUMlK+ghZkeW4Ae3uPs4jCGPobZ
- dA8GQ62odC357cIg98ZmstzZXwKcFBl3LEtgOr29S0rrqH4IZltV0EfmAaiQyeIng0
- 4lbTr7namF2I70423EUNDZ/igxQpMoEXNNwDl0c9km3aH9w52hhkuiKl8kUTsusHOU
- UhcVNgvv/3ucc0drgWessYptrGGCgQoIBPt5YrKL0MAxxi/SovZ5NXlSBXm1J3rVxG
- 8RChFDRBjcU5w==
+ b=WlNKfINdL1zM3ckiimG7NZx//JYaLm6PjEW3Cgxnrn3ndRBGtWdidgRAD2DhDdnb0
+ FeJe2xLWvfrpXCqOcikn/AeYd4BpgM2/2m5jKF+xVG/+DYRjNyT2UM8sF04WmmNWOH
+ 1oAKc79yYddMCX/aqtTFGQDyQQxG0+fpaInmHAON41+tVB6QfqAjdxZg5HBZfc2bBX
+ 3DkwcljEp5BpSVzDxn1zwLx9QgYqX2hZuEwGUw85Bqt8E6/SN7qSSicKIttU2SU8Pw
+ 4JNzFNOaTyH6kyvR2Xt5GHsr+219yGuZt4HitxtrTLVbsq6055tmkXyogVPWDJPQC2
+ uBRF5mAXG9Tbg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C06861AA403;
- Tue, 12 May 2026 23:58:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0AF801AA3DC;
+ Tue, 12 May 2026 23:58:18 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C2EFA3ABD5A;
- Tue, 12 May 2026 23:58:24 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 175AB3ABD34;
+ Tue, 12 May 2026 23:58:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Katherine Leaver <katherine.j.leaver@gmail.com>,
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Helge Deller <deller@gmx.de>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 55/58] hw/uefi: add name_size check to
- uefi_vars_mm_lock_variable()
-Date: Tue, 12 May 2026 23:58:16 +0300
-Message-ID: <20260512205820.361821-55-mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 17/58] linux-user/ppc: Fix ppc64 rt_sigframe stack
+ offset
+Date: Tue, 12 May 2026 23:57:38 +0300
+Message-ID: <20260512205820.361821-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
@@ -70,32 +70,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: Matt Turner <mattst88@gmail.com>
 
-Make sure the total variable_policy_entry size stays below
-64k so the (16-bit) size field can not wrap.
+The kernel's 64-bit signal delivery (signal_64.c) uses:
 
-Fixes: CVE-2026-41438
-Fixes: db1ecfb473ac ("hw/uefi: add var-service-vars.c")
-Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260422092910.444997-5-kraxel@redhat.com>
-(cherry picked from commit c45b460d16f991ff3f753623f3423e1adc4077a2)
+    newsp = frame - __SIGNAL_FRAMESIZE
+
+while the 32-bit path (signal_32.c) uses:
+
+    newsp = frame - (__SIGNAL_FRAMESIZE + 16)
+
+The extra 16 bytes in the 32-bit case is to place siginfo and ucontext
+at the same offsets as older kernels (see the comment in signal_32.c).
+The 64-bit rt_sigframe starts with ucontext directly and does not need
+this adjustment.
+
+QEMU's setup_rt_frame() unconditionally used (SIGNAL_FRAMESIZE + 16)
+for both 32-bit and 64-bit, placing the handler's SP 16 bytes too low
+on ppc64. Signal delivery and return still worked because do_rt_sigreturn
+had the matching wrong offset, but the vDSO DWARF unwind info encodes
+the correct kernel offset. This caused any DWARF unwinder (libunwind,
+libgcc, etc.) to compute a CFA that is 16 bytes off, reading garbage
+register values from the signal frame.
+
+Define RT_SIGFRAME_ADJUST (0 on ppc64, 16 on ppc32) and use it in both
+setup_rt_frame and do_rt_sigreturn to match the kernel.
+
+This was verified by A/B testing with libunwind's test suite:
+
+  ppc64le: Gtest-bt, Ltest-bt, Gtest-concurrent, Ltest-concurrent,
+           and Ltest-sig-context all change from FAIL to PASS.
+  ppc64be: Gtest-bt, Ltest-bt, and Ltest-sig-context all change
+           from FAIL to PASS.
+
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: qemu-stable@nongnu.org
+(cherry picked from commit 654dce6c523612d38e8d53818dbc7c03cbe535a3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
-index 24e6516a9c..2c83130ebf 100644
---- a/hw/uefi/var-service-vars.c
-+++ b/hw/uefi/var-service-vars.c
-@@ -667,6 +667,9 @@ uefi_vars_mm_lock_variable(uefi_vars_state *uv, mm_header *mhdr,
-     if (mhdr->length < length) {
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
-+    if (sizeof(*pe) + lv->name_size > UINT16_MAX) {
-+        return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-+    }
+diff --git a/linux-user/ppc/signal.c b/linux-user/ppc/signal.c
+index 24e5a02a78..a9c10e0987 100644
+--- a/linux-user/ppc/signal.c
++++ b/linux-user/ppc/signal.c
+@@ -210,6 +210,18 @@ QEMU_BUILD_BUG_ON(offsetof(struct target_rt_sigframe, uc.tuc_mcontext)
  
-     uefi_trace_variable(__func__, lv->guid, name, lv->name_size);
+ #endif
+ 
++#ifdef TARGET_PPC64
++#define RT_SIGFRAME_ADJUST 0
++#else
++/*
++ * For 32-bit rt sigframes we have an extra 16 bytes of gap
++ * on top of __SIGNAL_FRAMESIZE; this is to get the siginfo
++ * and ucontext in the same positions as in older kernels.
++ * See Linux's arch/powerpc/kernel/signal_32.c.
++ */
++#define RT_SIGFRAME_ADJUST 16
++#endif
++
+ #if defined(TARGET_PPC64)
+ 
+ struct target_func_ptr {
+@@ -525,7 +537,7 @@ void setup_rt_frame(int sig, struct target_sigaction *ka,
+     env->fpscr = 0;
+ 
+     /* Create a stack frame for the caller of the handler.  */
+-    newsp = rt_sf_addr - (SIGNAL_FRAMESIZE + 16);
++    newsp = rt_sf_addr - (SIGNAL_FRAMESIZE + RT_SIGFRAME_ADJUST);
+     err |= put_user(env->gpr[1], newsp, target_ulong);
+ 
+     if (err)
+@@ -641,7 +653,7 @@ long do_rt_sigreturn(CPUPPCState *env)
+     struct target_rt_sigframe *rt_sf = NULL;
+     target_ulong rt_sf_addr;
+ 
+-    rt_sf_addr = env->gpr[1] + SIGNAL_FRAMESIZE + 16;
++    rt_sf_addr = env->gpr[1] + SIGNAL_FRAMESIZE + RT_SIGFRAME_ADJUST;
+     if (!lock_user_struct(VERIFY_READ, rt_sf, rt_sf_addr, 1))
+         goto sigsegv;
  
 -- 
 2.47.3
