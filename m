@@ -4,104 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD965CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 23:52:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B70ACD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 23:59:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMwta-0001IE-RQ; Tue, 12 May 2026 19:52:14 -0400
+	id 1wMx0G-0004kY-Ag; Tue, 12 May 2026 19:59:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wMwtW-0001Ek-UM
- for qemu-devel@nongnu.org; Tue, 12 May 2026 19:52:10 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wMwtV-0002oh-22
- for qemu-devel@nongnu.org; Tue, 12 May 2026 19:52:10 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-bccd251d622so555474866b.3
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 16:52:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778629926; cv=none;
- d=google.com; s=arc-20240605;
- b=beDWL7h3BkafCa/9cb5o8nhzGQ9sH5CRLAKynptCfeblXKWojjyuNtO+y5pNBa9I+G
- n+fVfsocdt/kyawiA6+GQ2NviOpMc8BOSIegIGeRSjRaQl5yMr7C7MCj3Z62BUSmSvAp
- ANGtpmHeeyE5TTEbwj1Y6T2r4T1kV7GckP2Dp9lXNYY9eJXYXR9eFtC2RMVGU5tuuh6/
- N2IXxFQN8BOxI1HDCHjLszoNdAM2344K+iPlxjZH8yTjCrbGSTqcPaGQpk0UNloHiKzM
- 1OciErIPMDAQYGQNevqMgzfPyfQwiAV5SBGVKHJG2zAwTUPnBFFbWPvehRTFmaGaI4x3
- TxEQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=G7mlqk1hfN+LgT4A5/nqphJIHm0Cs/3v9DJq+e4AeaY=;
- fh=V7okm/7Dq6rQogCwb8FDHB8o3ukpKEBrodBHJnH7MrM=;
- b=jaqMSBxYeNDypXmQ/KDmxlh6c1I5/3iDctC9rFmpPcvrEa+QLmLSE03pSE3Iq1XfDJ
- uwgx9NzICP1QfG63qC5HDcL3pK9xjTyajgy7WKQbpvYtOCP+Epp9lVmptklO7zUJu2sZ
- o8A1tQ5xVR7kfh7gWpgAbQHyphLUFF9qpzJwPKiayFZQlwmd29JHBial9xGqDokZtsKC
- NoiUm8QZELw8Z7ybOC4lM1//qNJmAQ+8+FfcqpUR3i4mjR1aUgfSzZhFYi50L3DwTYlh
- 0lKiM4UWvvNIhtaYU9MruUo6hupnnk54Th5iFgRYO3ihAp8ew7vKH9OxaDQNG4Ud0kj9
- 96yA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778629926; x=1779234726; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=G7mlqk1hfN+LgT4A5/nqphJIHm0Cs/3v9DJq+e4AeaY=;
- b=iIdUuabNi+b64o2YtXVN9NquN//iRA3O2OU9mnSzyoenJ7xeXsf+pctLa4vbz4TPMh
- KEreiCXDcdDjOsxnL66GLmZQ0joBh16uAfqWa3tqWoKCq4TuooqJHcL///7r6AlpTe4C
- tpp3R16N0iZC51zh0JXiBRIcQRL4iMidlEjCWkmuqGggg5uu/7teGl/siGGnE8ax/896
- u0lIWtKk3Th44HlPEoFyzsAQymuYF1JcnfpWjItQEVzs42NkJ0PqlEoFQKeIlin0rykA
- jcRnjJqHLhMr/w9LwO1xBkzl7kbdIIl4AQP36+2g1HfhXK5AYe3/85STLznEj1fIcodW
- 9iYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778629926; x=1779234726;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=G7mlqk1hfN+LgT4A5/nqphJIHm0Cs/3v9DJq+e4AeaY=;
- b=UwdQza8LzhLGMsDy/ZNvV7yM6X4JM3Ynl3BpkiSyGwGZ9mrPIXM8H1eyquV+ktQ51f
- cTJLV0uATJfHNMgBVB6vU1980s9yZkuLdkQ8asbl0mCG2/4WEYZbNQabAlKq+SgJk2s5
- S14UjIHHu6Hbp+MHs4mFoHpsVpeSjIHrC+5XKAMq3TGxxcNJ97QJLnhlzSDZTM8x3Ynh
- oycjuXyi/+967QCKKM3r84NvMTlr68uBAyoaNp/zcibMR5vCAY2LobjHpdQG84kpymKe
- YVNH6YM42bsjUll08n4Iz5V5BBQFPsu7GeurXyNZrmCTU9rseb5QRiq5Uvc1sI79ZFmn
- DXNA==
-X-Gm-Message-State: AOJu0YxlSg5aUy315uQX94OerT1NjdPo6yTWVBsHDdsW11EY28xitRZ8
- pmNE38bQ3Ub/8+H1nlpYxUZXwj8JsZ5BdcUGiVOSxFl/xB4p9sz3HsMPJSZjeMzFKaqqq1vQlJq
- 16bHmJXo7/zNq/RrmZA95AGcP7jvxnqw=
-X-Gm-Gg: Acq92OG2nRA7OJyUEBBDMKH7daXtUm2f4k6iov3m+5pF/s1SHwAvxh+P+6/wLHC7bkH
- mdqNlKNm1BekD56TfjJg0Dhx8V1nEEoOxWmIIotN33oOFdfOo6Jmxe7GBQAnAvL4Lp75C9AVwJl
- lwfb99n+Wn8UDFGXICBRNE4ykYXi+2//NIrR9wEt38PqbQD2fEqJjRon8NSyl69+Tii+h3NEdlj
- NuLaZZ2oBQH86baQ14cnqY2+MvYGmqpf7rHaE18QixFIhrOe1RI0xkyZM8N7NvLCVSEMzZdU9mp
- nomhPWjL51iJYcLnSFnjprXrlQxMpvXrdR8e+hmWj9XlFrRp
-X-Received: by 2002:a17:907:c0e:b0:b9d:8697:73b8 with SMTP id
- a640c23a62f3a-bd3c0ed840emr48663266b.22.1778629925940; Tue, 12 May 2026
- 16:52:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>)
+ id 1wMx0E-0004kJ-Ct; Tue, 12 May 2026 19:59:06 -0400
+Received: from fhigh-a8-smtp.messagingengine.com ([103.168.172.159])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>)
+ id 1wMx0C-0005N1-Gp; Tue, 12 May 2026 19:59:06 -0400
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 6D5241400228;
+ Tue, 12 May 2026 19:59:01 -0400 (EDT)
+Received: from phl-imap-18 ([10.202.2.89])
+ by phl-compute-02.internal (MEProxy); Tue, 12 May 2026 19:59:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm2; t=1778630341;
+ x=1778716741; bh=dnYLEEi++0I2t0mw8re1OWQHBOYwuuFAt8U1tMu0gGI=; b=
+ U1vLvUV4p3/UhAZb0JvrA6Wd7dNGRKgCQMubuKxDpVc/4VvHMIZgfQRBxkmQ4Taq
+ 9uQNWfgBZhXjdXwFhN/Em2hBZ8X92kQSo9dppfe9dgQtUs1cHc8m3JqoTvkCJNw8
+ txhMN2T6++CVJdwWQQttd6nebeqe4RAp3IQUP+Hszpy40rz1nfgXD5vjDSrEn2Wc
+ lfPeL7N/76WEZFcBjvhmEpb6Qra/saDZ21KmklQ+yP4XIamJvqbEW6TKah0tTpgf
+ XSvcOaY1C6z07TB9cxofJvpIkNYaPdrATwvK1jTfCtS1tbXd4MCYOoudm7csOQz0
+ ulX1Dzrso7dIke/GnZMeAQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1778630341; x=
+ 1778716741; bh=dnYLEEi++0I2t0mw8re1OWQHBOYwuuFAt8U1tMu0gGI=; b=p
+ tVJ0WVPPZh4IJM8NPvErupKJ+c4Yutq0Cj/05OW8RIb7jFghQaCZhQp6zmLYQauK
+ ejgCgwAexni8h6KJolXJTN9q+gWW5g/7AG2SGqVW77BUluypLwD1hyzU/5lhR5Wz
+ nvtAlHbO/hYxDfLJH3KJGyfYSwd3CFvWNqivwR8vIMhJfkYQo/iPldvevcbjwI1A
+ fHFX9D00sy6k4CjZcAI98WM/qcnig+JiXxFpha2N+9ju26yliVrGPH8acIq4DsP/
+ wOivQzfqrWNzySnOQqjKYfq6mmSbRF0kaUZkFRALU1WS3Ng+hOihwMJm1c3s6vWe
+ GEnk1YGGZax2j10IOOs+A==
+X-ME-Sender: <xms:xL4DanzEdfKbf-vV_hVWYyavnl8xlGIyyaWW3Ej_Cu9EpKNRDug1kw>
+ <xme:xL4DaqHkipCTtFFlH3m7GQvOypC0l6i7_-m1azp1smUWDl-ZjqGUHA1OvMon1MGNL
+ IIjxYNw32zc_WHZk2_omqhNqA8ZwO4k42FJZSCNiG9JHDhV-xiCdVc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvdefudejucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+ gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedftehlvgig
+ ucghihhllhhirghmshhonhdfuceorghlvgigsehshhgriigsohhtrdhorhhgqeenucggtf
+ frrghtthgvrhhnpefgfeeflefggfffveffteetiedvtedtgfdvieevfeejfeefffevteej
+ tedufffgveenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+ hmpegrlhgvgiesshhhrgiisghothdrohhrghdpnhgspghrtghpthhtohepuddvpdhmohgu
+ vgepshhmthhpohhuthdprhgtphhtthhopeguvghvvghlsegvughkvddrghhrohhuphhsrd
+ hiohdprhgtphhtthhopehmrghrtggvlhdrrghpfhgvlhgsrghumhesghhmrghilhdrtgho
+ mhdprhgtphhtthhopegrrhgusgeskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvth
+ gvrhdrmhgrhiguvghllheslhhinhgrrhhordhorhhgpdhrtghpthhtohepqhgvmhhuqdgr
+ rhhmsehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonh
+ hgnhhurdhorhhgpdhrtghpthhtoheprghlvgigrdifihhllhhirghmshhonhesnhhvihgu
+ ihgrrdgtohhmpdhrtghpthhtohepjhhgghesnhhvihguihgrrdgtohhmpdhrtghpthhtoh
+ epshhkohhlohhthhhumhhthhhosehnvhhiughirgdrtghomh
+X-ME-Proxy: <xmx:xL4DasVkhSO-P1r5tZm_MqpSxsbOC94_av62G6nxzohjw0qdp-L74w>
+ <xmx:xL4DaiIjn-Y43XM_UBqavEwDEQR6_VZ2TRQRwrvli3XJnqzoDYrwIg>
+ <xmx:xL4DavoXNVGCo_HBpmZcUruSu1KV_zTNGoya8z9FIZj4J3S4l1N_7Q>
+ <xmx:xL4DahyjnFhmGCYWqhymsjYS7mbbE1qCnjgYv7JTM-u6x1oN1jo8lA>
+ <xmx:xb4DagTxyDnYE-9ojlSj0S2rnYkX-_fJZCT-O_w9AW38nfTY6EZ6i0Iu>
+Feedback-ID: i03f14258:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+ id C174415C008C; Tue, 12 May 2026 19:59:00 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 MIME-Version: 1.0
-References: <20260511124705.28161-1-zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20260511124705.28161-1-zhiwei_liu@linux.alibaba.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 13 May 2026 09:51:39 +1000
-X-Gm-Features: AVHnY4Lk8ekERgMMoSnKvxrDDeXdcDL5ZewrtTbAEkmXtHWlf3lDzk3gncpKesY
-Message-ID: <CAKmqyKOOa9ZF4YGiTtLSS5sMj25zWkezK8JUCYXYVPkv7WpsKA@mail.gmail.com>
-Subject: Re: [PATCH v6 0/6] target/riscv: Implement Smsdid and Smmpt extension
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
- alistair.francis@wdc.com, daniel.barboza@oss.qualcomm.com, 
- chao.liu.zevorn@gmail.com, liwei1518@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x62b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Date: Tue, 12 May 2026 17:57:19 -0600
+From: "Alex Williamson" <alex@shazbot.org>
+To: "Michael S. Tsirkin" <mst@redhat.com>,
+ "Alex Williamson" <alex.williamson@nvidia.com>
+Cc: "Tushar Dave" <tdave@nvidia.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ "Ard Biesheuvel" <ardb@kernel.org>,
+ "devel@edk2.groups.io" <devel@edk2.groups.io>, qemu-devel@nongnu.org,
+ "Jason Gunthorpe" <jgg@nvidia.com>,
+ "Shameer Kolothum" <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ "Peter Maydell" <peter.maydell@linaro.org>, marcel.apfelbaum@gmail.com
+Message-Id: <382877be-edad-4eca-a646-a75e1654747f@app.fastmail.com>
+In-Reply-To: <20260512191140-mutt-send-email-mst@kernel.org>
+References: <20260508183717.193630-1-tdave@nvidia.com>
+ <22cf37c2-b2b1-40db-b8b7-393b6c36a921@app.fastmail.com>
+ <db604efd-9c1f-44e0-9921-71e4d97a81b3@nvidia.com>
+ <20260512170650.4551c9f6@nvidia.com>
+ <20260512191140-mutt-send-email-mst@kernel.org>
+Subject: Re: [edk2-devel] [RFC PATCH 0/8] hw/arm/virt,
+ hw/pci: PCI pre-enumeration and fixed BAR allocation
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=103.168.172.159; envelope-from=alex@shazbot.org;
+ helo=fhigh-a8-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,22 +122,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 11, 2026 at 10:48=E2=80=AFPM LIU Zhiwei
-<zhiwei_liu@linux.alibaba.com> wrote:
+On Tue, May 12, 2026, at 5:12 PM, Michael S. Tsirkin wrote:
+> On Tue, May 12, 2026 at 05:06:50PM -0600, Alex Williamson wrote:
+>> If we agree that homogeneous hierarchies (no mixing of EA and
+>> programmable BARs) is a reasonable constraint, and possibly extend that
+>> to homogeneous per host bridge to simplify the CRS mapping, we have the
+>> following work items:
+>> 
+>>  * Extend Linux EA support to program bridge apertures for subordinate
+>>    homogeneous EA hierarchies.
+>> 
+>>  * Develop options to virtualize programmable BARs as EA for vfio-pci
+>>    devices, if not generically for the benefit of testing.
+>> 
+>>  * Implement a way to poke holes in the VM address space and plumb
+>>    through to account for addresses used by EA devices.
+>> 
+>>  * Provide those same ranges to the guest via CRS (but not via DT to
+>>    EDK2), or alternatively expose them through additional PXB host
+>>    bridges.
+>> 
+>> Does that shape roughly seem accurate?  Are there additional gaps I've
+>> missed?  Thanks,
 >
-> This patch set introduces support for the RISC-V Smmpt (Supervisor
-> Memory-tracking and Protection Table) extension
-> v0.3.4(https://github.com/riscv/riscv-smmtt/releases/tag/v0.3.4).
+> just one question why not do it in firmware so windows
+> is thinkably also handled?
 
-Thanks.
+I suppose someone could chime in if they have a similar requirement for Windows guests.  Otherwise, the incremental effort to extend Linux EA support seems smaller, though I also don't know what, if any support Windows has for EA to bother.  Regardless, improving Linux EA support might help elsewhere and doesn't preclude edk2 support in the future.  Thanks,
 
-As this is a draft extension we need to support the latest version as
-described here [1].
-
-So this will need to support version 0.49
-
-1: https://wiki.qemu.org/Documentation/Platforms/RISCV#RISC-V_Foundation_Ex=
-tensions
-
-Alistair
+Alex
 
