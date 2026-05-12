@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 857AACD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:31:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E156CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:33:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuRh-0000Vm-S5; Tue, 12 May 2026 17:15:18 -0400
+	id 1wMuVp-0002sX-3R; Tue, 12 May 2026 17:19:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuRb-0008Mt-Br; Tue, 12 May 2026 17:15:11 -0400
+ id 1wMuVY-00029s-0e; Tue, 12 May 2026 17:19:17 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuRZ-00067K-9P; Tue, 12 May 2026 17:15:10 -0400
+ id 1wMuVV-0007un-Ee; Tue, 12 May 2026 17:19:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619305; bh=dm3H42c1x7JUzSv5Jkh42Fx0cbWalHn8RfvTCoAk7zE=;
+ t=1778619497; bh=KcCabwFzWrmO66mf9hxZ+26dvO/eGo3AO/wddZXfZCE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=erj9h2HgcEyRiSCIHdYo6gN1Ith3/XZHcRkPGiyAbf4CVuopxWMmZm3S3AjAFtqGR
- q9zPSa6+sw/ZWNvL4ZXWHxelbFcE9Mmsatl54h9yykU8tzbtgglES74u1P24ChSYET
- kuKo0COXVINNZ1VSrGHgwQG76ZglNyJzR5g3zh8W1iqUIqt3e3fBFXXHM11AlVqizm
- yepy7tdzlGOGfzSCHXwHXgA43tKGj0wobUh608GahOWvrXTRQakYc01X1pxOo1o07o
- 9ctIH6ELLIbr3sv4B5vPj8GQ9vWoMQVCcgXOtpQm1crEWHWWkPB3vx5kgOzyEG/CJb
- SO02VjJs1K85w==
+ b=MO9HmS7yQNuox9LDLWHdBzA0fmi7rMWh0hHdkapFq8crPKlzm7cgFZFcygnUnPaXv
+ lTdBMS+bWu4cka+v6VipBnVyP5yNUQs6gPyBuZppWmjoHE2mnoa29HY9mCU5dtPCe4
+ HP2Kz2O0pKaUOBd9moQReGRbhzeUjIHs4hryaVTvQ1Tb6nQ/v/ZLd3wuBoMv0wpPFk
+ 8nuK9kgxbkGudkRfOH6uMZ9PdotJchnEJzXMic6pONeooPfx3k1HSiNZXcigtxvd+a
+ q73/zuz/F6kY5ksv+1NRaaapsowf26qSWNaGoN3w6tyEjRuaEFeQIRaQrdbh12X0l+
+ HERrq0OMHVeMA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id ECF7B1AA39A;
- Tue, 12 May 2026 23:55:05 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9F4A51AA3D6;
+ Tue, 12 May 2026 23:58:17 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0228E3ABD09;
- Tue, 12 May 2026 23:55:10 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id AC4FB3ABD2E;
+ Tue, 12 May 2026 23:58:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Yicong Yang <yang.yicong@picoheart.com>,
- Andrew Jones <andrew.jones@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Anthony Roberts <anthony.roberts@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 092/117] hw/riscv/virt-acpi-build.c: Use kvm timer
- frequency when kvm enabled
-Date: Tue, 12 May 2026 23:54:34 +0300
-Message-ID: <20260512205503.361097-92-mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 11/58] ui/sdl2: Fix assumption of EGL presence at
+ runtime
+Date: Tue, 12 May 2026 23:57:32 +0300
+Message-ID: <20260512205820.361821-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
-References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,49 +71,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yicong Yang <yang.yicong@picoheart.com>
+From: Anthony Roberts <anthony.roberts@linaro.org>
 
-The timer frequency is decided by the host(kvm) rather than a fixed
-RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ on kvm accelerated VM. So build
-RCHT with KVM provided timer frequency if KVM is enabled, just like
-how we build the timer node on DT based VM.
+The original commit had a section of code which worked on the assumption
+that if OpenGL was enabled at build, it was present on the end user machine,
+and calls could be made to it. This is not always the case (such as Windows
+on Arm devices).
 
-Fixes: ebfd39289370 ("hw/riscv/virt: virt-acpi-build.c: Add RHCT Table")
-Signed-off-by: Yicong Yang <yang.yicong@picoheart.com>
-Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
-Message-ID: <20260325081314.57089-1-yang.yicong@picoheart.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 4cb2f91773e8ec9511002de851734820f7ba64fe)
+This line should have also included a runtime check.
+
+This commit moves the relevant line to inside a runtime check for OpenGL.
+
+Fixes: 52053b7e0a0e ("ui/sdl2: Implement dpy dmabuf functions")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3347
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Anthony Roberts <anthony.roberts@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Message-ID: <20260409110256.684-1-anthony.roberts@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+(cherry picked from commit 7077c83f71a7530af5d93748e998b00732f6fb36)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-index f1406cb683..fd6ca5dbc4 100644
---- a/hw/riscv/virt-acpi-build.c
-+++ b/hw/riscv/virt-acpi-build.c
-@@ -35,9 +35,11 @@
- #include "hw/riscv/virt.h"
- #include "hw/riscv/numa.h"
- #include "hw/virtio/virtio-acpi.h"
-+#include "kvm/kvm_riscv.h"
- #include "migration/vmstate.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
-+#include "system/kvm.h"
- #include "system/reset.h"
+diff --git a/ui/sdl2.c b/ui/sdl2.c
+index aaaede56e0..987ad334bb 100644
+--- a/ui/sdl2.c
++++ b/ui/sdl2.c
+@@ -120,15 +120,15 @@ void sdl2_window_create(struct sdl2_console *scon)
  
- #define ACPI_BUILD_TABLE_SIZE             0x20000
-@@ -296,7 +298,10 @@ static void build_rhct(GArray *table_data,
+         scon->winctx = SDL_GL_CreateContext(scon->real_window);
+         SDL_GL_SetSwapInterval(0);
++
++#ifdef CONFIG_OPENGL
++        qemu_egl_display = eglGetCurrentDisplay();
++#endif
+     } else {
+         /* The SDL renderer is only used by sdl2-2D, when OpenGL is disabled */
+         scon->real_renderer = SDL_CreateRenderer(scon->real_window, -1, 0);
+     }
  
-     /* Time Base Frequency */
-     build_append_int_noprefix(table_data,
--                              RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ, 8);
-+                              kvm_enabled() ?
-+                              kvm_riscv_get_timebase_frequency(&s->soc->harts[0]) :
-+                              RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ,
-+                              8);
+-#ifdef CONFIG_OPENGL
+-    qemu_egl_display = eglGetCurrentDisplay();
+-#endif
+-
+     sdl_update_caption(scon);
+ }
  
-     /* ISA + N hart info */
-     num_rhct_nodes = 1 + ms->smp.cpus;
 -- 
 2.47.3
 
