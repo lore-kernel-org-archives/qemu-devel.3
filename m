@@ -4,51 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DB3DCD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:18:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53AA1CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:19:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuUd-000896-Be; Tue, 12 May 2026 17:18:19 -0400
+	id 1wMuPi-0006uS-OW; Tue, 12 May 2026 17:13:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuUT-0006yu-Jr; Tue, 12 May 2026 17:18:09 -0400
+ id 1wMuPa-0006ai-TK; Tue, 12 May 2026 17:13:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuUR-000787-Sn; Tue, 12 May 2026 17:18:09 -0400
+ id 1wMuPZ-0004tc-EP; Tue, 12 May 2026 17:13:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619497; bh=SzhnecTGMLKADIL0bXg2IKkkugTTFzlX9B/O24H7RrY=;
+ t=1778619304; bh=ul1dScsPEhNq6f2NnhAIsVJw5M/JaAdrtBO2WNyiq7s=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=GbpXpI0Ib48DIIR+denf+iJVNWvScuNF6b88B7xeZe2wk2rT/291fz1a6n5prPW0j
- X0NRsYVCWyppybPDUQyiWCnYzpD1Ygwnbtr4V52vdkXwD8hweJ/kUbzlVDCFSeyUUh
- 7NkOVS9joY6Wb+unM1DNfVwBhHbRg/3XxWSMabn8rxXUAVjB49uREt44N8FYbDVmhJ
- EO9F1ra5mk2MMl6Aqr7E8r1JcZrqkioCmhYFNWkjVEhQZWa+AeQa3kZwiWOs2vt8Fw
- AqyeVdaIlVJ+ifqbtyTXPEzDaTpjdGl8Fh7ybgN3CC0j7xVpwiLflr2dKY9YYTiNL6
- VrEEOeAx8GlOQ==
+ b=UOwFJ3dHUQFSzcOhCANI2gLrHi2VUMNT4o/m8yApXxrkHbHhjV4J8iap53BoDAvlt
+ ZYrYkwPxrl2/i4K3oOoat49lDb6d67HQ5vyQ6guDKJ/z9W25oK6doqdE4lgQxbQ/QK
+ Mw+6XxxGRs5WUAoapVJbNcqLS6ql1yl6xJ7c5QtE8XLr5XZXc2Qr55DgAAXHXIEgS3
+ W9T4w6UeX58SozN8obJZIbRW1Jy2C85pP6n5BcBi1lidkpD1SmNF2T5xh/FkzTcv+m
+ nsNQqrnxkV+pUzR3OhdQB1GluIRjnm88glU7LfkOYyJpycbRiflKYIB8uq9ypW8vkl
+ xNtTK+TgrT3hw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 031C81AA3CE;
- Tue, 12 May 2026 23:58:17 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 79DF21AA384;
+ Tue, 12 May 2026 23:55:04 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 054783ABD26;
- Tue, 12 May 2026 23:58:21 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7A2E93ABCF3;
+ Tue, 12 May 2026 23:55:08 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 03/58] ui/console-vc: fix off-by-one in CSI J 2 (clear
- entire screen)
-Date: Tue, 12 May 2026 23:57:24 +0300
-Message-ID: <20260512205820.361821-3-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 070/117] target/arm/tcg/translate.c: remove MO_TE usage
+Date: Tue, 12 May 2026 23:54:12 +0300
+Message-ID: <20260512205503.361097-70-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
-References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,31 +69,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-The loop condition used `y <= s->height` instead of `y < s->height`,
-causing vc_clear_xy() to be called with y == s->height. This clears
-a row in the scrollback buffer beyond the visible screen.
+dc->be_data is already set just above in the same function:
+```
+    dc->be_data = EX_TBFLAG_ANY(tb_flags, BE_DATA) ? MO_BE : MO_LE;
+```
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-(cherry picked from commit 181fdf8a7e13c0460a26777ff9301e0ecdca3784)
+Cc: qemu-stable@nongnu.org
+Fixes: a729a46b05a ("target/arm: Add wrapper macros for accessing tbflags")
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-id: 20260407222208.271838-12-pierrick.bouvier@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 027ad866bd2984a8fc50b41d235aabf14711df3e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/console-vc.c b/ui/console-vc.c
-index f22806fed7..8dee1f9bd0 100644
---- a/ui/console-vc.c
-+++ b/ui/console-vc.c
-@@ -899,7 +899,7 @@ static void vc_putchar(VCChardev *vc, int ch)
-                     break;
-                 case 2:
-                     /* clear entire screen */
--                    for (y = 0; y <= s->height; y++) {
-+                    for (y = 0; y < s->height; y++) {
-                         for (x = 0; x < s->width; x++) {
-                             vc_clear_xy(vc, x, y);
-                         }
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index 63735d9789..0a92300f9b 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -6327,7 +6327,6 @@ static void arm_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+ 
+     if (arm_feature(env, ARM_FEATURE_M)) {
+         dc->vfp_enabled = 1;
+-        dc->be_data = MO_TE;
+         dc->v7m_handler_mode = EX_TBFLAG_M32(tb_flags, HANDLER);
+         dc->v8m_secure = EX_TBFLAG_M32(tb_flags, SECURE);
+         dc->v8m_stackcheck = EX_TBFLAG_M32(tb_flags, STACKCHECK);
 -- 
 2.47.3
 
