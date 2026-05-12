@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26CD6CD484E
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:29:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BB74CD4F24
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:29:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMgW4-0000u2-Rw; Tue, 12 May 2026 02:22:54 -0400
+	id 1wMgZg-0000hr-2h; Tue, 12 May 2026 02:26:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgW1-0000sl-3c
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:22:49 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgZB-0007g0-8l
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:26:08 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgVw-0004KH-OB
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:22:48 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-488ba840146so45138675e9.1
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 23:22:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgZ9-0007Qu-Cl
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:26:04 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-43d75312379so3860062f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 23:26:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778566961; x=1779171761; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778567161; x=1779171961; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=HJjHhanPxzEzFP7iU69XomdUjQFJLtfEo/O85wyJQto=;
- b=aVsmIv6hkPN9Td+//YW39dJ0HMHcacFlTl0q4X1yN3PJBtikuw3Gs3VI/Hfzq2IVfA
- PID2gFjnJdGLvk4+RKhVBSoqH86TpVxQVWZQKE2VI1omrq1N90IMhuroSEFn2Mfx+ZYf
- RTAx0zfHHFS/Hrdl/QNqJaqi8MT5un+1ndkzZL2l3KAbyY/UsvEUc/SVpRzgdklZZRC0
- c9p9pQhk6uPt3nmOPxkL9dCZQDdEE9Udj6wVgAKN0AXGQMwJF2zMoi6fI6yz/myQiUgx
- 5RxKMAt+4Hm+/Af6PhR1FV9eViwuA3M0n+a1vEPBc+Cuqs5Lm2GyY1ZynU6TBO0utxF8
- Gbpg==
+ :reply-to; bh=KTZoDqLkEaJpfPJBDyKt3ZmMMJNtjsP8cC3diZptPv0=;
+ b=F+RR2BbT4CKJHnnuJZPmZKNU+YMvSuy51fPQpaLrW92lzJm/veqoArpqz/FZDXkGuq
+ 9lwtbZRgUgWIyp6VOl4huQ3eiF79gIoI50JW0z1Srk932ybqDvHaqobPJxXm9h3nJkhe
+ ur0yHw6VxidOqe62TIz2bis18Nc0eiM8hXBIMVWjW0lNNuzv8RXUzE86bzz0sjdJ0/IB
+ sG2HQk+K0GgfZOpj7Tr0L/zmNfx35g6nt/IN4MirelZFDDy0hUv41hcM4+WPvZrjgirI
+ DmCFcW32dY5WMP5dzbNLkKZHZXHn0IYFYTp2xKZ+wjNqbbv48SAD1b4Jp5aU9DxA+jFW
+ ktnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778566961; x=1779171761;
+ d=1e100.net; s=20251104; t=1778567161; x=1779171961;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=HJjHhanPxzEzFP7iU69XomdUjQFJLtfEo/O85wyJQto=;
- b=e7L4byBA50N2I5JMYP8EkIkdX0kK3CrBrfonjfOckiAsGv379cWxqEjFJhtfM6uOtH
- KoIwr25WCjY9H6Eay9idX4zyzq7pTOSPGXaioPqoCBw/212sZ0/GX2/rfkon5EcXT2tY
- YPgOTT3tyJlmCLHiwhmzx96wxiqOfVWRqTUOKvZq4b+l2NR8QPu6dEn1RoL21kfx4iHk
- NRNZEXKjug+VaRaO8UEZPcF04NRv3hS0LpdgQb5WO4ibxdwpRxRZb+apLmGXAiRtLAQv
- Xq/8WqZdSeyZDVvXa/qWF0DaS8q46Ibrk8TVUmLtM5449kXYISd9ytcLYi7BvMFdJMc9
- nUag==
-X-Gm-Message-State: AOJu0YxwnsS4h5Z87R1JSrwF4lawjpj53fcfZtRDVzZvpM49NhfqEh+Z
- 5dNIq2kikZuGq7O9bEdihoXUOu1cogxg0gpOdbDC7uq1zouIpQ5tROkH+WKkLE7dZ21cn1KhX9G
- gY9HH5jc=
-X-Gm-Gg: Acq92OGvXQYz8sbB5Cta8ixqaposZl1CjqGNqQYfl+hugldYdRKSc7NW3JZltndvA07
- LGMgzZzEhrE3ZSgtl+DP7ABhmQE/QvSar0pF1r8x/en693qP0y/h75wpJdATSkYhjEzK99YxVUy
- ZrC4o36dA80sirToFe0Svc+/T9mPCJMiEMVWTHvGDXCnwy+yvTjrltOHsgOsU3FiXnLe4WN9Llv
- XXqy9ejUJjGaG+f3IgcpOnlR9Lb6oHIirlUtY8nhe89I2SWwqxHyle8SSCaXJuZLjLVCRVIKW50
- w7uyGgF2MVWLuK6MCgu1T4IDOdrlPyHYg7Gq5s6TOX15uMxMWS2GnxxQWRX7jIQrtiDc8SkMi/h
- xmGNFst0VKOKx9iQQq+0SZQ/36op78oPE4YxRVb6S4rpCJHvokg6w3PE95yqimNHQdQLz/o5Gmg
- keU2teiZSrPOL3KbxD3Fg2YBYmTy5vOgT3JcAeoNHezZsK+G6CDxVSdhoJtuJbbiUI1T1GgC26P
- IsqEizejwg=
-X-Received: by 2002:a05:600c:8289:b0:489:201c:dc46 with SMTP id
- 5b1f17b1804b1-48e8fe52c6bmr22077815e9.12.1778566961291; 
- Mon, 11 May 2026 23:22:41 -0700 (PDT)
+ bh=KTZoDqLkEaJpfPJBDyKt3ZmMMJNtjsP8cC3diZptPv0=;
+ b=gTV1XjaKWe+Icc7mqAujB0c0RaLtjqYrTUmr35D9zHESvpnZ/f4n6nhfu8YCrAb+8T
+ 3tQNmu3JXTxD46L+NEKMwIF3KTPfSYCuwS/9397i6cJML4D9np3f0/OkykN4JcyWn/RM
+ L0VAvXf0GZVeNrI6sLqmxz1Dgvppf+Be9x4OsJc+DdSEHJVHjTfy1gkcWlnIZiBIITCr
+ vwMpJ4qk/3k4OqRdRrWNOCHAyE0ViLdd8gmpCLUI8eimG6vLN/4tYo8UTX5uTDxbp2Jy
+ yNA9KQmOYasOGXMnRrcJCLQUMbA5dENIOAHia+W1tkHTBn9pssdc5fILV7vL6IDoh+6Z
+ pEYA==
+X-Gm-Message-State: AOJu0YxdrcmxW8joW+01AOQEVJH9FBc95vL0pzPyiRwv52BI12VE1gXB
+ DVGe7aOVYU0pZIRAFijNDA/BIKq1Q2zdVRz8velsH2HStyggX4WbF6tvLcFB4ZTkF9MpO5LXrNj
+ KaTMg1cI=
+X-Gm-Gg: Acq92OFCMvrsjqPyxcSqGcGqAONNGJDzv+P8yTQ80bjOKIEVyWeSMWv1ptHsutnOHvB
+ m0Z6F6dUt9ft3uqa/+Ds9/ixJ8jQ6p/T7JRhGVCDhRJ3BQ4XvniBygCkFeOaBC9lfRkyh0cNGDK
+ 1dIGdmg/UqA0jhVmrR4WPJJTwWlgwSawuiRlYh5Gw1NyOgmwG2Qm2XcuqlXwhFjcN8CwF7fyaFv
+ 0lmmbm3VVASEMsH/02NOq3CeucbkE/umrW6j3+CArtwCvjw7W4W0x3LJvGG8G1LOTKrEOmDTy/N
+ Fs5gLC0nTspVFfCd4lnJuUYphMuCuVLL+Sh7AXNcutZRflvu27nu742Oc0vFUGf/6i4Sglbyinn
+ z1CkHPqqgMaiEQXVM7bUjMOcqSBIXhxGkG1i2txS/PqRs3Binu8EAhnJYejccaaHPnhIp9Dff9M
+ McLTenl6BxWcvnUuzhrhOOKwaAC/k5BZbPxd9uCoxtIRZZNmHXM4rbvbCCkUv2zGBzuZ6K9OE6
+X-Received: by 2002:a5d:457b:0:b0:453:9897:76aa with SMTP id
+ ffacd0b85a97d-45ac32bc5ebmr2261296f8f.21.1778567161486; 
+ Mon, 11 May 2026 23:26:01 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e908d2c77sm23515565e9.12.2026.05.11.23.22.39
+ ffacd0b85a97d-4548ec6b00fsm33352813f8f.11.2026.05.11.23.26.00
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 11 May 2026 23:22:40 -0700 (PDT)
+ Mon, 11 May 2026 23:26:01 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/41] MAINTAINERS: Step up to maintain core machine code
-Date: Tue, 12 May 2026 08:21:09 +0200
-Message-ID: <20260512062142.67998-9-philmd@linaro.org>
+Subject: [PULL 36/41] hw/gpio/pca9552: fix state_str leak in pca955x_set_led
+Date: Tue, 12 May 2026 08:21:37 +0200
+Message-ID: <20260512062142.67998-37-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260512062142.67998-1-philmd@linaro.org>
 References: <20260512062142.67998-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,38 +98,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The 'Machine core' section is orphan. Being acquainted
-with the code, step up to maintain it.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Igor Mammedov <imammedo@redhat.com>
-Cc: Yanan Wang <wangyanan55@huawei.com>
-Cc: Eduardo Habkost <eduardo@habkost.net>
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+visit_type_str() allocates state_str, but the function never frees it
+on any code path. Use g_autofree to ensure it is freed on return.
+
+Fixes: a90d8f84674d ("misc/pca9552: Add qom set and get")
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260504-qom-tests-v2-35-ef7e3dc94f7a@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20260417110550.70068-3-philmd@linaro.org>
 ---
- MAINTAINERS | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/gpio/pca9552.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 93a1e4e4822..488d194a41e 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2037,9 +2037,9 @@ F: include/hw/i386/nitro_enclave.h
- F: docs/system/i386/nitro-enclave.rst
+diff --git a/hw/gpio/pca9552.c b/hw/gpio/pca9552.c
+index dd3f1536b65..472d8ad9571 100644
+--- a/hw/gpio/pca9552.c
++++ b/hw/gpio/pca9552.c
+@@ -342,7 +342,7 @@ static void pca955x_set_led(Object *obj, Visitor *v, const char *name,
+     PCA955xState *s = PCA955X(obj);
+     int led, rc, reg, val;
+     uint8_t state;
+-    char *state_str;
++    g_autofree char *state_str = NULL;
  
- Machine core
--R: Philippe Mathieu-Daudé <philmd@linaro.org>
-+M: Philippe Mathieu-Daudé <philmd@linaro.org>
- R: Zhao Liu <zhao1.liu@intel.com>
--S: Supported
-+S: Maintained
- F: hw/core/cpu-common.c
- F: hw/core/cpu-system.c
- F: hw/core/machine-qmp-cmds.c
+     if (!visit_type_str(v, name, &state_str, errp)) {
+         return;
 -- 
 2.53.0
 
