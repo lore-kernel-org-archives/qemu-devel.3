@@ -4,87 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65839CD484C
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 04:44:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38A53CD37AC
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 04:50:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMeyR-0006Rv-Cw; Tue, 12 May 2026 00:44:03 -0400
+	id 1wMf3z-0001N6-BW; Tue, 12 May 2026 00:49:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1wMexr-0006Hw-18
- for qemu-devel@nongnu.org; Tue, 12 May 2026 00:43:27 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1wMexp-00077R-BV
- for qemu-devel@nongnu.org; Tue, 12 May 2026 00:43:26 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2ba17c8cfacso52047415ad.2
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 21:43:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778561003; x=1779165803; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PDZF1y7Mn8Y8hY0V63j89ooKWGLaAhoP/CbntwCqFU4=;
- b=T0kzef3hLSvwXc354qb7FZVf7Qy/CiX39BrQ3yuhLaDdrPjamJD+LDfhgAbGlLwEEL
- sPTu6OYj1SGKSIWuf2zU3BVCKOyu22MPvvRlZa4M9vLt6BhvnKMbyYT7ZD7VQLMM1bxw
- zToCHzpOtbgqBQNasHDACFZk5NLDxGIkFgVOhJKKAQkprTlY0aWNRBKp1IFedlcFhQIP
- /ffXf+cMw+UhRwWgGbSdSkxIzNBqgRAd+q8cCHJaPWoSs5p42Lcbj0Kzn8rkjBttBOPv
- vulWEXpWm4BnDLJkJjTxVmB+aQKjnR9g3lAZKK6IdLAGFx2yz7kQG5th9yVoPl/TJWJ3
- KLtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778561003; x=1779165803;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=PDZF1y7Mn8Y8hY0V63j89ooKWGLaAhoP/CbntwCqFU4=;
- b=Q+CAStUPm9gQqCohcf76KEHwEF/BkXwSfWUtyA8rmmTymblK5Nh+7xuhJYFWhr+xne
- L2kuGGK3kpAhPhYshxdNo5bj5TyvTYfwAU/e2R32QHseXC7JF6lclbfR+LBssePL++wO
- gKc8ovlhpY4puFBsDLMeCF5ujqzqT+8VvOQ6IovMBVIMkBGYfO9tZ0OBfsdjhVzMIkS4
- xyFQEXblzHhWJO1pmV4Ei83+hgNveiczgQlKZ32Z38Ntmq2SUQQu+jcPJS3Nvz+Qa6H7
- 3O0AlGgB/J32KEqZpx8vLpqNvmuIICdOy6l9gRuDCaddQzZlEk64AG/hldL6LClPWeFl
- gf4Q==
-X-Gm-Message-State: AOJu0Yyj4xXY2A42Ro70lDriOGwKOohxslV0zfhXr1H7fRhcQqKbyO0q
- FgXOiUgNVrHSg8lSqj9385QtZgsoUTWlmyM4sLQt8rvbeWPAcNZSj9ES0YwIXw==
-X-Gm-Gg: Acq92OGS24/qcFTxyfQBTa01bNFADUUxldS1eJ9hS69CJ1nUUI/SNg+4rgjoG42g86+
- qQTKQ3c8xN6iRzU2Urf8VNrk5+5X8MxuhyGBfTw6l6CNXy9kv9nyrkEbTUV11fdUBy3F/+joLA1
- OWGGGYospKZJOI81fGL/PZMfuHqAShhUUd9QlQcebYTr9xEE8Y80/QXcrQZeZO7EcDprOs6kgr+
- LkZJ53Gty9SIHS+umK6wvpMJfUMZWqx/fe6CdyjIwZnYPcFI4cGk6MnnLDjtKl+S0AbgL8PfOW8
- Rz1MJM56X6mnowxU2zl+70hANT4A8P8SbSDayX2hF352PdDXWE1qNuWai3rp9ds22v6QmqdFOuE
- 2BF/AEwr6xCh3GpJ3cEKP9jwRQlWuODsULrIqmgxtzZESOt+vSuPLP2WWJZukLz8bVkouhr7nvc
- Vp4lh97EcTXsHa6tHtIxFk6uSk0Pfj
-X-Received: by 2002:a17:902:ed8b:b0:2b0:7531:b61e with SMTP id
- d9443c01a7336-2bd0135ec3bmr11534585ad.41.1778561003509; 
- Mon, 11 May 2026 21:43:23 -0700 (PDT)
-Received: from jeuk-MS-7D42.. ([211.226.54.223])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2baf1ebe7f1sm108938215ad.78.2026.05.11.21.43.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 May 2026 21:43:23 -0700 (PDT)
-From: Jeuk Kim <jeuk20.kim@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, qemu-block@nongnu.org, qemu-stable@nongnu.org,
- jeuk20.kim@samsung.com, j-young.choi@samsung.com
-Subject: [PULL 5/5] hw/ufs: Zero reserved bytes in REPORT LUNS response header
-Date: Tue, 12 May 2026 13:42:55 +0900
-Message-ID: <042dbcff8382393b20b716294a6c4b1a4af6b3f1.1778560533.git.jeuk20.kim@samsung.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1778560533.git.jeuk20.kim@samsung.com>
-References: <cover.1778560533.git.jeuk20.kim@samsung.com>
+ (Exim 4.90_1) (envelope-from <th.huth@posteo.de>) id 1wMf3x-0001MB-UB
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 00:49:45 -0400
+Received: from mout01.posteo.de ([185.67.36.65])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <th.huth@posteo.de>) id 1wMf3v-00019r-Og
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 00:49:45 -0400
+Received: from submission (posteo.de [185.67.36.169]) 
+ by mout01.posteo.de (Postfix) with ESMTPS id 4141D240027
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 06:49:38 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.de; s=2017;
+ t=1778561378; bh=7sHyeKN0qoXREnXZbdLAnWjoOzDEmrhpv4+SesI7SBQ=;
+ h=Message-ID:Date:MIME-Version:Subject:To:Cc:From:Content-Type:
+ Content-Transfer-Encoding:From;
+ b=h1dkJO+YfIMMjlkYtABlvLOo5bhlM/Nc8P+kzzwDyV5fApaijhymq5jRzoL6sjsMB
+ SQyIvxrWiBgzM5nM6UNdKwbMxzAwklh1m20tEYv6Ms81kWGXzoB82QBKkLMOZrABCx
+ gfQG8S4f7hEKJcBD3EuvlU1SH1706wuAZHlPkKzwMnKCNSPypnxZb1LF+jZVD0bUam
+ qzeLG2BIbth266cAlGhmYm6J5Mn64lZC+qwATtIyELyeKEZrigBXOkaknp6BPxah3h
+ nE3RUA+94DavNgQ5oVxFcYG88Aqzuxgu7s5uhTuZaVXLO0X8tEWTFOVy3f7MJW7Ouz
+ PxgzNFIn2R8xg==
+Received: from customer (localhost [127.0.0.1])
+ by submission (posteo.de) with ESMTPSA id 4gF3zP0YJXz9rxB;
+ Tue, 12 May 2026 06:49:36 +0200 (CEST)
+Message-ID: <7efaba42-5471-4b75-94ab-450aa1299a22@posteo.de>
+Date: Tue, 12 May 2026 04:49:38 +0000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Subject: Re: [PATCH] tests/functional/qemu_test/asset.py: Don't use setxattr
+ when it doesn't exist
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20260501115506.3792110-1-peter.maydell@linaro.org>
+ <CAFEAcA8QA32mcVOU+iB7Go40h_RwEtYKyZcOQT4nv1nEY92v+w@mail.gmail.com>
+Content-Language: en-US
+From: Thomas Huth <th.huth@posteo.de>
+In-Reply-To: <CAFEAcA8QA32mcVOU+iB7Go40h_RwEtYKyZcOQT4nv1nEY92v+w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=185.67.36.65; envelope-from=th.huth@posteo.de;
+ helo=mout01.posteo.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,36 +73,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jeuk Kim <jeuk20.kim@samsung.com>
+On 11/05/2026 16.47, Peter Maydell wrote:
+> On Fri, 1 May 2026 at 12:55, Peter Maydell <peter.maydell@linaro.org> wrote:
+>>
+>> The Python os.setxattr() API is Linux-specific, so trying to use
+>> it on other OSes triggers a failure:
+>>
+>>    File "/Users/pm215/src/qemu/tests/functional/qemu_test/asset.py",
+>> line 227, in fetch
+>>      os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
+>>      ^^^^^^^^^^^
+>> AttributeError: module 'os' has no attribute 'setxattr'
+>>
+>> Since we only set the attributes here for informational
+>> purposes, skip them when os.setxattr() isn't available.
+>>
+>> Cc: qemu-stable@nongnu.org
+>> Fixes: 9903217a4ed013 ("tests/functional: add a module for handling asset download & caching")
+>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> 
+> Is anybody going to pick this up via their tree, or should
+> I just put it into target-arm.next ?
 
-ufs_emulate_report_luns() writes the 4-byte LUN list length into
-outbuf[0..3] via stl_be_p() but leaves outbuf[4..7], the reserved
-field, uninitialized. Those bytes are then DMA'd to guest memory,
-leaking uninitialized QEMU stack data.
+I currently don't have any other patches in my queue, so it would be great 
+if Daniel or you could take it.
 
-Fixes: 7708e298180 ("hw/ufs/lu: skip automatic zero-init of large array")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
----
- hw/ufs/lu.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/hw/ufs/lu.c b/hw/ufs/lu.c
-index 3f3c9589ce..709d6adcf6 100644
---- a/hw/ufs/lu.c
-+++ b/hw/ufs/lu.c
-@@ -101,6 +101,10 @@ static int ufs_emulate_report_luns(UfsRequest *req, uint8_t *outbuf,
-         return SCSI_COMMAND_FAIL;
-     }
- 
-+    if (outbuf_len < 8) {
-+        return SCSI_COMMAND_FAIL;
-+    }
-+    memset(outbuf, 0, 8);
-     len += 8;
- 
-     for (uint8_t lun = 0; lun < UFS_MAX_LUS; ++lun) {
--- 
-2.43.0
+  Thanks,
+   Thomas
 
 
