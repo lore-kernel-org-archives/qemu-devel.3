@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7FB8CD4F24
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:04:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FB1ACD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:05:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuCq-0003O3-Dv; Tue, 12 May 2026 16:59:56 -0400
+	id 1wMuGz-0005DI-6U; Tue, 12 May 2026 17:04:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuBj-0002Nh-PT; Tue, 12 May 2026 16:58:51 -0400
+ id 1wMuF4-0000VZ-BE; Tue, 12 May 2026 17:02:14 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuBf-0004iV-0F; Tue, 12 May 2026 16:58:45 -0400
+ id 1wMuEz-0007DS-Hx; Tue, 12 May 2026 17:02:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619275; bh=x5mBKVMJZjq2GhMSm7vHo3lfE2ygnY2l74h1Qg6bN1U=;
+ t=1778619278; bh=xQ0tfYZJImVR/Vx9+Xggt87X5l9btilef0bKAkoTapc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Ep8FJPVtPPLRbR6CuOn2/zVURonoWT6iuXeUn7gRv7rBeTE/FlY/I9MbaSJrGF4Wg
- i9uzvJWkzfqvdUPwySBBlOaSJU7jptNWtV7vfZ9P6VpCtXjN41Zt+Bg79iFJGkElC/
- Y4ZGFZOwxKjMnPTkoY5rNu1NIAo8zJSEHV/adohwfTQdqPEYhenKpB8dMaVAUWJKM6
- Se+2EQtwMPkmY3jHu+QQC8WyDx8PmfUPF9u+02PQXu6QXpGMm/hh6TA2/33QgHfOvC
- AIazHlp4ilmrciPCwR2py+QstP5N/8rkePVWcxf/EBKt0aGnWcZ8tKEW6i7JkNqss0
- rxHxeNZW3lCtw==
+ b=jVrJC0OmSFdBCNasa3yaCvwrnt5v1wuWfAWawT9YcAfynsW+NvDOEZpYsY/pevm7N
+ OFhpwUM+G/3aoNiWsoLi25Go3lVxK+AKmukrhXuXynKO+f2Ez+TO0hqexG8/awi9PG
+ 5kad0RvrFEZTXVM351EprHVlKAc/nFoWlckv6cgjSR+TRjkNKj3LQcC8u21q9oGM2D
+ deOn6/5mwIwnq0ekYELPIR3NXSf5eIYI9q7ekKh4P1uZDj7uswIlhAh4pYNxtGhHzA
+ z3WMyDbspjS1IdlueRSfKZdyeh7zQJrgiVRd+3V1jMBZjVrE7s6RJxeYUl+FvYdZu6
+ fNd/L/LmIGOvg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EA58B1AA2F5;
- Tue, 12 May 2026 23:54:35 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4C2661AA316;
+ Tue, 12 May 2026 23:54:38 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 025543ABC66;
- Tue, 12 May 2026 23:54:40 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 56C5F3ABC87;
+ Tue, 12 May 2026 23:54:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Tingting Mao <timao@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 041/107] ide: Fix potential assertion failure on VM
- stop for PIO read error
-Date: Tue, 12 May 2026 23:53:28 +0300
-Message-ID: <20260512205437.360850-41-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
+ Nutty Liu <nutty.liu@hotmail.com>, Helge Deller <deller@gmx.de>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 074/107] linux-user/strace: Use pointer type for read
+ and write values
+Date: Tue, 12 May 2026 23:54:01 +0300
+Message-ID: <20260512205437.360850-74-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
@@ -69,45 +70,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Alistair Francis <alistair.francis@wdc.com>
 
-ide_sector_read() as well as its callers neglect to call ide_set_retry()
-before starting I/O. If the I/O fails, this means that the retry
-information is stale. In particular, ide_handle_rw_error() has an
-assertion that s->bus->retry_unit == s->unit, which can fail if either
-there was no previous request or it came from another device on the bus.
-If the assertion weren't there, a wrong request would be retried after
-resuming the VM.
+The stack pointer is being truncated as 32-bits for qemu-riscv64, so
+let's use %p to print the syscall pointer argument.
 
-Fix this by adding a ide_set_retry() call to ide_sector_read().
-
-This affects only reads because ide_transfer_start() does call
-ide_set_retry(). For writes, the data transfer comes first and the I/O
-is only started when the data has been read into s->io_buffer, so by
-that time, ide_set_retry() has been called. For reads, however, the I/O
-comes first and only then the data is transferred to the guest, so the
-call in ide_transfer_start() is too late.
-
-Buglink: https://redhat.atlassian.net/browse/RHEL-153537
-Reported-by: Tingting Mao <timao@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260326165124.138593-1-kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 59c1d31136688415e5d682a87942292dbb3caaeb)
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3238
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 1730e6f33f9732658b88c2e4eda257f50531ef0e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ide/core.c b/hw/ide/core.c
-index b14983ec54..9ca480f72e 100644
---- a/hw/ide/core.c
-+++ b/hw/ide/core.c
-@@ -799,6 +799,7 @@ static void ide_sector_read(IDEState *s)
-     s->error = 0; /* not needed by IDE spec, but needed by Windows */
-     sector_num = ide_get_sector(s);
-     n = s->nsector;
-+    ide_set_retry(s);
- 
-     if (n == 0) {
-         ide_transfer_stop(s);
+diff --git a/linux-user/strace.list b/linux-user/strace.list
+index 51b5ead969..eb1a414004 100644
+--- a/linux-user/strace.list
++++ b/linux-user/strace.list
+@@ -1114,7 +1114,7 @@
+ { TARGET_NR_quotactl, "quotactl" , NULL, NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_read
+-{ TARGET_NR_read, "read" , "%s(%d,%#x,%d)", NULL, NULL },
++{ TARGET_NR_read, "read" , "%s(%d,%p,%d)", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_readahead
+ { TARGET_NR_readahead, "readahead" , NULL, NULL, NULL },
+@@ -1674,7 +1674,7 @@
+                      print_syscall_ret_waitpid },
+ #endif
+ #ifdef TARGET_NR_write
+-{ TARGET_NR_write, "write" , "%s(%d,%#x,%d)", NULL, NULL },
++{ TARGET_NR_write, "write" , "%s(%d,%p,%d)", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_writev
+ { TARGET_NR_writev, "writev" , "%s(%d,%p,%#x)", NULL, NULL },
 -- 
 2.47.3
 
