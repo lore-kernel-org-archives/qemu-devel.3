@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 677B2CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:38:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48938CD4F24
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:38:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuVo-0002lg-0X; Tue, 12 May 2026 17:19:32 -0400
+	id 1wMuQq-0003af-SV; Tue, 12 May 2026 17:14:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuVZ-0002Aa-TO; Tue, 12 May 2026 17:19:18 -0400
+ id 1wMuQg-0002N0-GB; Tue, 12 May 2026 17:14:14 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuVY-00085L-18; Tue, 12 May 2026 17:19:17 -0400
+ id 1wMuQe-0005hX-Qf; Tue, 12 May 2026 17:14:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619497; bh=KmapxmHYpr6NMoLQ9AopXcpAvWN4EbWfaEYKTPZEfao=;
+ t=1778619305; bh=IV1KOOsP62EAMhURr/iHTfOhWJ/M086I5KB7WEGlK5c=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=haqZF4t6swvvQXR2Lecs2rr03ogpODIUMJ5eHxoU9hMEua5PxpsXbGT0I6b1dx6Qj
- w3bMYShiVGG+2965BCy1Z/Pgch3sPvJLYYiXQnWg1x0SHtjyO5QXRnZoNiW+UZ7g6C
- Iixr84Ntw2VD6puPBT6xplGEs2h1isiaK7AW6yZ/obiZ99YGODI6zE2qj1yioHEf6n
- bDOQhLVtaMjYjOkR8DhBmyelhcCL4/KMU2OUQg7hk5NPmHBY5jZ4yO1q/CYBXPtMc3
- a1Sosrvjj8YeF26IWvYkFdiqDsjng+hIQELJM5pscax1FqFjJ9tkD3rUV1dvtoq14I
- aNfmhH/flEdMQ==
+ b=YrFQXiAk244r3Imnc2sB1Vvr7kcXQFNI14yIc004aoSJFVSJtpWaj5xhBFFTF21o+
+ 9G8qCRtRvJ6g325mjHZCTWCJVigwVPNlk2zyvFxAqlJ8RG3OvyYx64aWE8QZe3s9qT
+ UNNVm40kcfYMzFqRUZSHY5ge72iqJaHYS9h/7lvoyurXnk/eV140EYIbqLcUKrCmnW
+ HHyt/DCalJsl63LR6a2khDy+9x3TJclX+NiZYGPojEcvenf0xzUSpffTy/AwmbN6jG
+ 75B7luANPRnbWun+j2S0ahQi/AJTLOjSCDFWUh3TOwJCfGMe+uSws5A9Mtiegythbi
+ JscdPN/EIemrQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D0E201AA3D9;
- Tue, 12 May 2026 23:58:17 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5E5D31AA391;
+ Tue, 12 May 2026 23:55:05 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id DCF863ABD31;
- Tue, 12 May 2026 23:58:21 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 693BB3ABD00;
+ Tue, 12 May 2026 23:55:09 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@intel.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 14/58] ati-vga: fix unsigned integer overflow in
- cursor bounds checks
-Date: Tue, 12 May 2026 23:57:35 +0300
-Message-ID: <20260512205820.361821-14-mjt@tls.msk.ru>
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 083/117] linux-user/arm/nwfpe: Use thread-local
+ storage for qemufpa
+Date: Tue, 12 May 2026 23:54:25 +0300
+Message-ID: <20260512205503.361097-83-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
-References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,48 +71,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The cursor bounds checks compare (srcoff + N) against vram_size, but
-both sides are uint32_t so the addition can wrap past UINT32_MAX when
-srcoff underflows from the cur_hv_offs subtraction, causing the check
-to be bypassed.
+Fix the thread safety of the emulation by not storing a
+pointer in global storage.
 
-Rewrite the checks as (srcoff > vram_size - N) to avoid the
-overflow-prone addition, matching the style already used in
-ati_mm_read() and ati_mm_write().
-
-Cc: qemu-stable@nongnu.org
-Fixes: 2f1fbe6ee9b5 ("ati-vga: Make sure hardware cursor data is within vram")
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Message-ID: <20260414141458.1076014-1-junjie.cao@intel.com>
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 0990cc8b286b9981b2548c3d591584d22c7bf2f1)
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 784f1dde90df1ed57de0697adcd8ebfe7c342f58)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/ati.c b/hw/display/ati.c
-index 88a5bbbf07..0489995d00 100644
---- a/hw/display/ati.c
-+++ b/hw/display/ati.c
-@@ -149,7 +149,7 @@ static void ati_cursor_define(ATIVGAState *s)
-     /* FIXME handle cur_hv_offs correctly */
-     srcoff = s->regs.cur_offset - (s->regs.cur_hv_offs >> 16) -
-              (s->regs.cur_hv_offs & 0xffff) * 16;
--    if (srcoff + 64 * 16 > s->vga.vram_size) {
-+    if (srcoff > s->vga.vram_size - 64 * 16) {
-         return;
-     }
-     for (int i = 0; i < 64; i++, srcoff += 16) {
-@@ -206,7 +206,7 @@ static void ati_cursor_draw_line(VGACommonState *vga, uint8_t *d, int scr_y)
-     }
-     /* FIXME handle cur_hv_offs correctly */
-     srcoff = s->cursor_offset + (scr_y - vga->hw_cursor_y) * 16;
--    if (srcoff + 16 > s->vga.vram_size) {
-+    if (srcoff > s->vga.vram_size - 16) {
-         return;
-     }
-     dp = &dp[vga->hw_cursor_x];
+diff --git a/linux-user/arm/nwfpe/fpa11.c b/linux-user/arm/nwfpe/fpa11.c
+index 44783934b2..15888463f7 100644
+--- a/linux-user/arm/nwfpe/fpa11.c
++++ b/linux-user/arm/nwfpe/fpa11.c
+@@ -29,7 +29,7 @@
+ //#include <asm/system.h>
+ 
+ 
+-FPA11* qemufpa = NULL;
++__thread FPA11* qemufpa = NULL;
+ 
+ /* Reset the FPA11 chip.  Called to initialize and reset the emulator. */
+ void resetFPA11(void)
+@@ -154,7 +154,6 @@ void SetRoundingPrecision(const unsigned int opcode)
+ }
+ 
+ /* Emulate the instruction in the opcode. */
+-/* ??? This is not thread safe.  */
+ unsigned int EmulateAll(unsigned int opcode, FPA11* qfpa)
+ {
+   unsigned int nRc = 0;
+diff --git a/linux-user/arm/nwfpe/fpa11.h b/linux-user/arm/nwfpe/fpa11.h
+index 20f9d2eb81..659d38ae3a 100644
+--- a/linux-user/arm/nwfpe/fpa11.h
++++ b/linux-user/arm/nwfpe/fpa11.h
+@@ -74,7 +74,7 @@ typedef struct tagFPA11 {
+     float_status fp_status;      /* QEMU float emulator status */
+ } FPA11;
+ 
+-extern FPA11* qemufpa;
++extern __thread FPA11* qemufpa;
+ 
+ void resetFPA11(void);
+ void SetRoundingMode(const unsigned int);
 -- 
 2.47.3
 
