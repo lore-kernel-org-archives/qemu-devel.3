@@ -4,44 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2BB7CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:14:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E696CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:14:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuO9-000055-Ac; Tue, 12 May 2026 17:11:39 -0400
+	id 1wMuMy-0002eQ-SY; Tue, 12 May 2026 17:10:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuNm-0007zn-Ot; Tue, 12 May 2026 17:11:15 -0400
+ id 1wMuMl-0001GF-NX; Tue, 12 May 2026 17:10:11 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuNk-0004T2-Qf; Tue, 12 May 2026 17:11:14 -0400
+ id 1wMuMi-0003hb-TI; Tue, 12 May 2026 17:10:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619303; bh=VeKpgqOhDJvb12hhwxrjcNWGil/fRUopMB5SDdOF6Cw=;
+ t=1778619302; bh=5PYlGv51Ih9TzksCqpzyIWicot3ZhsLNMi8S6ghzsnU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=uLrlS0/Xn1P9r3rPZJ8HyDAylMiI7RacEuad1GdbonEQPkoaXAr673kvU7u8IzKAi
- 9ipehU1rVeXBrvpr+vrTJRr9Ud7t8K3wR/1RqNEWaYOE6BOf4EMeG6iZnVfddLLIzT
- i0rx2XEKsLu1gnnFjVujNFM0HeTHwh4gDLvalBJBQyrrxeSQLJieFPtXhCi9zXv3Kp
- ZIJ96fotyFmElkrwfEGtlh8N2yLDE1lmcKAy5hcqzbVsU0neLDIqozaSk4MeLVFdWc
- pzYcgJQQnDqef31TfUB4lPFY6edqEwQxu0IZZGfy4z4WiSAw8s16zECDWnxnGvmDq5
- qrAxoDVfBDulw==
+ b=XGuxN2udLXL66fEZpxODgs2nhrgofzZoUQlqvChmihweM5ybnp9yJFIwaokFw8dgK
+ cHcxLpvszXNBZGRNvjNY8Om1seJxhTudVfBtSaGkxkNFBIOI6FZjH1iar/bRizsCTZ
+ LB7HBWu46COCiFx8DysA30k4xsXdDMfOXzv8Gs+O94vLhhD0zx4qs5TXWgTVPV+TyP
+ vNKysfN7r1vCR2u/Fzy5IO4llP/jUQu1gz1/xeJeJYGppfHNOWp3xxzUL8TMtv+rh/
+ ehDyPU5XjG87MBmQNQCoy7jHBkFJw1g3Xwfh4IjyoVJC+K7+fHoigxSDihC31wRnKC
+ IP0HP4Aez8qmw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5240A1AA373;
- Tue, 12 May 2026 23:55:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7E2F71AA367;
+ Tue, 12 May 2026 23:55:02 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5D6783ABCE3;
- Tue, 12 May 2026 23:55:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 80F823ABCD7;
+ Tue, 12 May 2026 23:55:06 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Clayton Craft <craftyguy@postmarketos.org>,
- Helge Deller <deller@gmx.de>, Peter Maydell <peter.maydell@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 054/117] linux-user: fix name_to_handle_at when
- AT_HANDLE_MNT_ID_UNIQUE flag is set
-Date: Tue, 12 May 2026 23:53:56 +0300
-Message-ID: <20260512205503.361097-54-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Jihe Wang <wangjihe.mail@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 042/117] lsi53c895a: keep SCSIRequest alive during DMA
+Date: Tue, 12 May 2026 23:53:44 +0300
+Message-ID: <20260512205503.361097-42-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
@@ -70,78 +68,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Clayton Craft <craftyguy@postmarketos.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Linux 6.12 added AT_HANDLE_MNT_ID_UNIQUE, which indicates that mount_id
-is 64-bits. If name_to_handle_at is called with this flag set then qemu
-passes a 4 byte int to the kernel, which then tries to store 8 bytes in
-a 4 byte variable, causing a SIGSEGV[1][2].
+Reentrant MMIO can cause the SCSIRequest to be completed, at which
+point lsi_request_orphan would drop the last reference.  Anything
+that happens afterwards would access freed data.  Keep a reference
+to the SCSIRequest and, through req->hba_private, to the lsi_request*
+for as long as DMA runs.
 
-This stores mount_id in a 64-bit var if the flag is set.
-
-1. https://gitlab.postmarketos.org/postmarketOS/pmaports/-/work_items/4431
-2. https://github.com/systemd/systemd/issues/41279
-
-Signed-off-by: Clayton Craft <craftyguy@postmarketos.org>
-Reviewed-by: Helge Deller <deller@gmx.de>
-Message-id: 20260325-fix-name-to-handle-at-v1-1-49fb922e6fd3@craftyguy.net
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 22966937f4130278259a79d6462d1a0887e22c6e)
+Reported-by: Jihe Wang <wangjihe.mail@gmail.com>
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit d459131ff590c517bc89fa5867d4878b5eacbc30)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 7404af9194..adaa1e3542 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -8175,6 +8175,9 @@ static int do_futex(CPUState *cpu, bool time64, target_ulong uaddr,
- #endif
- 
- #if defined(TARGET_NR_name_to_handle_at) && defined(CONFIG_OPEN_BY_HANDLE)
-+#ifndef AT_HANDLE_MNT_ID_UNIQUE
-+#define AT_HANDLE_MNT_ID_UNIQUE 0x001
-+#endif
- static abi_long do_name_to_handle_at(abi_long dirfd, abi_long pathname,
-                                      abi_long handle, abi_long mount_id,
-                                      abi_long flags)
-@@ -8182,6 +8185,7 @@ static abi_long do_name_to_handle_at(abi_long dirfd, abi_long pathname,
-     struct file_handle *target_fh;
-     struct file_handle *fh;
-     int mid = 0;
-+    uint64_t mid64 = 0;
-     abi_long ret;
-     char *name;
-     unsigned int size, total_size;
-@@ -8205,7 +8209,12 @@ static abi_long do_name_to_handle_at(abi_long dirfd, abi_long pathname,
-     fh = g_malloc0(total_size);
-     fh->handle_bytes = size;
- 
--    ret = get_errno(name_to_handle_at(dirfd, path(name), fh, &mid, flags));
-+    if (flags & AT_HANDLE_MNT_ID_UNIQUE) {
-+        ret = get_errno(name_to_handle_at(dirfd, path(name), fh,
-+                                          (int *)&mid64, flags));
-+    } else {
-+        ret = get_errno(name_to_handle_at(dirfd, path(name), fh, &mid, flags));
-+    }
-     unlock_user(name, pathname, 0);
- 
-     /* man name_to_handle_at(2):
-@@ -8219,8 +8228,14 @@ static abi_long do_name_to_handle_at(abi_long dirfd, abi_long pathname,
-     g_free(fh);
-     unlock_user(target_fh, handle, total_size);
- 
--    if (put_user_s32(mid, mount_id)) {
--        return -TARGET_EFAULT;
-+    if (flags & AT_HANDLE_MNT_ID_UNIQUE) {
-+        if (put_user_u64(mid64, mount_id)) {
-+            return -TARGET_EFAULT;
-+        }
-+    } else {
-+        if (put_user_s32(mid, mount_id)) {
-+            return -TARGET_EFAULT;
-+        }
+diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
+index b2d3980286..0b1f68a40a 100644
+--- a/hw/scsi/lsi53c895a.c
++++ b/hw/scsi/lsi53c895a.c
+@@ -637,7 +637,7 @@ static void lsi_do_dma(LSIState *s, int out)
      }
  
-     return ret;
+     p = s->current;
+-    req = s->current->req;
++    req = scsi_req_ref(s->current->req);
+     dev = req->dev;
+     assert(dev);
+ 
+@@ -667,6 +667,11 @@ static void lsi_do_dma(LSIState *s, int out)
+     } else {
+         lsi_mem_write(s, addr, p->dma_buf, count);
+     }
++    if (p->orphan) {
++        scsi_req_unref(req);
++        return;
++    }
++    scsi_req_unref(req);
+ 
+     p->dma_len -= count;
+     if (p->dma_len == 0) {
 -- 
 2.47.3
 
