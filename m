@@ -4,115 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DA6BCD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 23:13:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1867CCD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 23:20:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMwH7-0005Px-CC; Tue, 12 May 2026 19:12:31 -0400
+	id 1wMwOI-0008A6-Fl; Tue, 12 May 2026 19:19:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wMwH1-0005Na-Dc
- for qemu-devel@nongnu.org; Tue, 12 May 2026 19:12:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wMwGs-0006LM-G0
- for qemu-devel@nongnu.org; Tue, 12 May 2026 19:12:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778627531;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YasJDCzxfNBcrakQ0lPIeppZdyED0d1agrLsSyUi29A=;
- b=bsbDpKH0ZCLUcOK7Ac0tx0KFXj2TZxoQnYKV9JtW+r68P4qHUgITlymtu1LOaj6/k43BZj
- eJ4Poji1VSF+10uO38cL39U1lRgb5HrDB60d5JeqsMqzkJxEoyhPEdnXlusaz3BcPT+fWG
- 1lKglkw1hx55+lNmjs0GOlHYg9udCA8=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-42-rkc0a66nMH62niTp-CIzeg-1; Tue, 12 May 2026 19:12:10 -0400
-X-MC-Unique: rkc0a66nMH62niTp-CIzeg-1
-X-Mimecast-MFC-AGG-ID: rkc0a66nMH62niTp-CIzeg_1778627529
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-4411a2c034fso5510141f8f.3
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 16:12:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wMwOF-00089v-82
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 19:19:51 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wMwOD-00017F-Ck
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 19:19:50 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-bd2e8931915so199256566b.1
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 16:19:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778627987; cv=none;
+ d=google.com; s=arc-20240605;
+ b=MVxAC5C+m0OuCPZJUiSIl27jG9ZIS3WeaYvVWAIIMkJR8PbWvEppM2xKmIj9VUACsv
+ tSj6zcEflPSv7o5oZCBBm5Esheh7lBhGa9DSm42sCu2bBiQQ1pO/NbGTHsWOHU+nfGg7
+ Ptww4Axx4H8PswIUoIIvosxVWBdoDO/JYZWFL/06TQGzVnAi8absZlbOg8R6viXMk2Ct
+ iUbLj4RGndz4N8ZuoahA4BwOLRYgDft79ED8bJi+gcMFVTIhPyHVYlouV6gVAOI9uLiC
+ 0v0F7IJ/4plwUyW4f8va9WwTRsCe3n+OhANp3YuEMaGd3nwvdymhbxMvir3zETIuWK6L
+ RC2g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=x91go3p3VWjB2inSAggxXEB6ysyXGbtQFiavM72zwgs=;
+ fh=zRgc5xzNSs1AAdQsbexii2liNpOwvH6igPx1QTv2Phw=;
+ b=fYg/aMtHzkTBL2gqMOzSrGom+sSqCnaTu044v8Nqzz+gu6H/iV6PxN7H//6XGjUj6y
+ Ig9d6cGRal5GA0ljgo1LLe3N0La9DpYQHULAfGhBrB0bjr8QSAnhDn5lEgkpYlusSZgG
+ i7+DaCYpXf072Btd8244ILfj++ujoUE237j3XkKClRMuHqNbubffQXItgOzmiQ82CFdc
+ o3ni19TQEC9TKvVWST8LqTglyCW12f4kzXakSpp8t5it/1hGh3zSBFLtg5Pfin9BuxOv
+ iFTf3XA1E6fnEJ/yhdZwsqPQBK0OTMdqux1dL0M3rHcEmzKBWcprLxvdm4M0vUY8lOKc
+ aB+g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778627529; x=1779232329; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=YasJDCzxfNBcrakQ0lPIeppZdyED0d1agrLsSyUi29A=;
- b=lIF26/2HyHecKkHE6Rv1lMSdNZZUdeIuS97cXngdAkLrQ+UOfz/KqWo2AcWhi2qb9s
- vjfEXUHe9HaztZ6AANQCgtAm+ff3bIytdch8UWLzIkh/+PHP3XZ1BSrwhb84Nk4m3k3G
- p6z92hEHVL1OoJtirMT5T37g9JjvBT6LbzuekvSuqW1c3kaJZUtHdRaUe6aPVgy6K7er
- jb71m6gCP1jWHV7Vc63DLkncdggMyRBk25H2loVHaLMbbN2TSgdMe8gjDwzFkOylLCoM
- XuLnnf6rMh5nXA5S+fwEaqvkBPSucuppd2120DtjCC9vn3igSyMrOhoH4Vh8BpP5cNmM
- m7tw==
+ d=gmail.com; s=20251104; t=1778627987; x=1779232787; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=x91go3p3VWjB2inSAggxXEB6ysyXGbtQFiavM72zwgs=;
+ b=FAsNeiTAfuReqnfyoUPVldbttb5W7yz6NuUTmhpisNa/flvFlLl95RVzINwFV5bOxA
+ mImdkn3Q4fqJf6YZIPEHOAeGkTzo4IqtsEHBvHGwiOulZfNuzGosAaIsQe6A8jZ3Pgx1
+ 9xUnE0vO7WRvYiRbtWc5UpKXtHSsgye1K5ccuud1lyHjgHrBqe5ZQJCQAGxEXc1Yy9nw
+ axtIKI4+JOn47TPW3AgASIe59YBMzknbseUlsZXCG1e6BmqCqJByV2xHxKow580a6j+r
+ t9/FuL4M4sxHp36xIk61zb7o+wXMYDym7isVIfTENzKLHfEGq4Zsh46Y50l1fKM17z+n
+ QBLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778627529; x=1779232329;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YasJDCzxfNBcrakQ0lPIeppZdyED0d1agrLsSyUi29A=;
- b=JSLTVTiA//0ucpps7byWE0CbuiuBhB5nACGWThXm+xGMkaE8VaJaeGFc7fE3UdDT5h
- +GvAroSwEQh4s8QaCxiis0gZO8xx5dw2AUxLPi/OtAbujsdVjBy6KLDkcY3AoGJYYfUJ
- M9fakp1PGSly/eptf6dGkh4x6s8NH5/Dj6xtonI/BhYcJUuTjg00x534IMEoZvLQoLqa
- U/2LxV4aaZTkkaJVxCoys6LI6P19+6WVqiaghpC5ERh4H/d7I41d0c0Fj+si09jevOv9
- I7PauevFhyKREM7m2PFQNboYA5XV8rfx6ya9YVtaLf4jzwHd8qA/COgGf9DGOOgayIWD
- 0kRw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+Y2H4sg/Fpnve0YR15UQuZk5DBVbxI7fZPxsIV/xN2wrLMAKJJCm8LMwNE688PGuoLMCoo9PMDC/gL@nongnu.org
-X-Gm-Message-State: AOJu0YyruAPejWdFu6Fw8bC5TLcSKNKrb2JrMBhtjnKz+CyAlW2xdj03
- IhyDJv6bX6Qwf1sPWSCbmxE4Hs5U8bcI6k3oM2SzLU9ZMQnZF6z+cZk8OFe4/Wg4VYs3cJ0ykmy
- afUWzAVFDgJ7ipTNSRAE7rmNYafqYkY4qy6SxTJXa2It43wC5mBepGm/A
-X-Gm-Gg: Acq92OE9ABzs5vE4oZJB9D8gaodMFfZM+rOesh6EF+WO+bpTHguur7ew27hOZymxWqm
- S7as6sGeqjYIc4rQ+34RYR3CLoYZaLSv89NShn86pOIgODa7q3fD+jh8ERe/4kAPsCGZxV/VXtQ
- RtKbLWyD+VW0AELqTML8B7iVI+AZ2qeYVYuovto26QOIQYG+nrShSmklKoI/KmfNGQ7tO5taOkQ
- RlcU6e+JfXDs+7aZEytyamOWCn5CW+PioGHsSFzcQG7KPbj3ZwGRu0SXl3hHszO47Mi/T56zpmY
- KG56W8tVGj6GVz0vg48bsInEvHyxWHIMT3duDy4RqnXxh4VQ2ihRDhJTMKKSgJh5afljT7j+zTB
- Gby9fcwzi8Fgv2avxZzXSIS5M/olCVed6Sm1DvQ6G
-X-Received: by 2002:a05:6000:4028:b0:449:a07a:9676 with SMTP id
- ffacd0b85a97d-45c5a68a7d6mr960267f8f.29.1778627529070; 
- Tue, 12 May 2026 16:12:09 -0700 (PDT)
-X-Received: by 2002:a05:6000:4028:b0:449:a07a:9676 with SMTP id
- ffacd0b85a97d-45c5a68a7d6mr960237f8f.29.1778627528615; 
- Tue, 12 May 2026 16:12:08 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-48-7.inter.net.il. [80.230.48.7])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4549130549bsm36930151f8f.18.2026.05.12.16.12.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 May 2026 16:12:07 -0700 (PDT)
-Date: Tue, 12 May 2026 19:12:04 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Alex Williamson <alex.williamson@nvidia.com>
-Cc: Tushar Dave <tdave@nvidia.com>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- Ard Biesheuvel <ardb@kernel.org>,
- "devel@edk2.groups.io" <devel@edk2.groups.io>,
- qemu-devel@nongnu.org, jgg@nvidia.com, skolothumtho@nvidia.com,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, marcel.apfelbaum@gmail.com
-Subject: Re: [edk2-devel] [RFC PATCH 0/8] hw/arm/virt, hw/pci: PCI
- pre-enumeration and fixed BAR allocation
-Message-ID: <20260512191140-mutt-send-email-mst@kernel.org>
-References: <20260508183717.193630-1-tdave@nvidia.com>
- <22cf37c2-b2b1-40db-b8b7-393b6c36a921@app.fastmail.com>
- <db604efd-9c1f-44e0-9921-71e4d97a81b3@nvidia.com>
- <20260512170650.4551c9f6@nvidia.com>
+ d=1e100.net; s=20251104; t=1778627987; x=1779232787;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=x91go3p3VWjB2inSAggxXEB6ysyXGbtQFiavM72zwgs=;
+ b=jgcswmJHV9tC51fWQCaqij4LAHblCAj4AYEZnOWmWGp0HFA9n794/AD8cEAzJHQDtn
+ fUg/31ibARqcp20Zav97BOvV7gFxLq5GxSl8XpRrm4e9tbV6LQJdNF72qyjzZq9ploct
+ VcpiEBegq9tMCfzlRCGRvyh+3Y1c/Mf/FqjGqSRpKlfl5WjhA1DVhWbh+d8rZf393D9e
+ kaAF7UXHym+pGqk36uoMH60Vzfpl2fXioc7E+bWj9zK8La/pbTLMT8wcWP357H5owRN6
+ QGb4oqorWvVb/KIEYDtFISKixfO8ht+3wxNXa66D7fCbhPPaQSIbtuJvORl8usk8MSyq
+ tXQQ==
+X-Gm-Message-State: AOJu0YyPjbxa0He+83XgpaTG0OjTYuW7SmRrT/xPmq/nCVBku2u7NL7e
+ xsYNfVNJfE1n80cZECgjumVC1xKvgVjT1K5ImfM+aBJOITcHGoGC/cuGQuXSApu5Ss7SSxqwww4
+ 9rK1sdrW7T7WCANWYBU4vb8/tcCrhEg0=
+X-Gm-Gg: Acq92OHFTcJSRjgeIg2qaGpVi958RXWxn8SxrYpOA0ZWzMKWCnr2V2yRgxfLJhlL8RW
+ R8S3fDHYa0gxJRzGVdDBYzlsrYXrfOUuPRYrF8/W61VnaDFv2drBUTMM5wODExn3jAlyrap6uPT
+ EDChbg162pSqMKBu69ORjWtFNIG/mE2lsKGKuqS2i0+bkXQDoQQTeVt4nCPbjSdsJ8OrSz6JkGW
+ bG78u7bHSL8Gj1/Y31TpUZgG9NhfJbXsnZG10c++Vj5iTsxMLbORq7UWDPL8XHTf1V0XxsyqA8n
+ VAFUPALpraU2bw7TDiYGDztoYAI32q7S3sMuevBQvfI/uzS1
+X-Received: by 2002:a17:907:3f89:b0:bd2:3726:79f4 with SMTP id
+ a640c23a62f3a-bd237b6d3b2mr350180266b.0.1778627987021; Tue, 12 May 2026
+ 16:19:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260512170650.4551c9f6@nvidia.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260511202111.3091440-1-marcandre.lureau@redhat.com>
+In-Reply-To: <20260511202111.3091440-1-marcandre.lureau@redhat.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Tue, 12 May 2026 19:19:33 -0400
+X-Gm-Features: AVHnY4KvmUpr_Z5xnoByPKeZ9gq-vKG0MAn_fACn-trgVU-EuyL5IyaRH_v0oZg
+Message-ID: <CAJSP0QVw+GHOC9_mOcn+V6BHZe5BR1jQyDJ1GocGaqiB_GSoBw@mail.gmail.com>
+Subject: Re: [PULL 00/24] Qom patches
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org, stefanha@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=stefanha@gmail.com; helo=mail-ej1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,128 +115,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 12, 2026 at 05:06:50PM -0600, Alex Williamson wrote:
-> On Tue, 12 May 2026 12:25:45 -0500
-> Tushar Dave <tdave@nvidia.com> wrote:
-> 
-> > On 5/11/2026 6:43 AM, Ard Biesheuvel wrote:
-> > > Hello Tushar,
-> > > 
-> > > On Fri, 8 May 2026, at 20:37, Tushar Dave via groups.io wrote:  
-> > >> This RFC introduces a mechanism to specify Guest Physical Addresses
-> > >> (GPAs) for PCI BARs, allowing explicit placement of guest MMIO BAR
-> > >> addresses to match host physical addresses for assigned devices.
-> > >>
-> > >> On some platforms, P2P DMA is performed between devices within the same
-> > >> IOMMU group. The PCI fabric ACS is configured to permit direct P2P
-> > >> without going through the host bridge in order to achieve the required
-> > >> performance.
-> > >>
-> > >> To support this multi-device IOMMU group P2P scenario in virtualization,
-> > >> the VM may need to use the same MMIO BAR addresses as the host physical
-> > >> address layout.
-> > >>  
-> > > 
-> > > Did you consider implementing this using Enhanced Allocation (EA)? If so,
-> > > could you explain why it is not suitable here?  
-> > 
-> > I have not evaluated EA for this design. When I looked at EDK2, I
-> > chose PcdPciDisableBusEnumeration because it cleanly preserves fixed
-> > BAR programming established by the hypervisor — at the cost of QEMU
-> > performing PCI bus number and resource assignment.
-> > 
-> > I did a quick search and do not see EA support in EDK2. Any pointers
-> > to EA being used in a similar fashion to achieve fixed BAR placement
-> > would be appreciated.
-> 
-> EA wasn't on my radar either, but I did some research and chatted with
-> Tushar and I think it could work.  I'll sketch out a rough idea of what
-> it might looks like.
-> 
-> EA describes BAR equivalents (fixed base address, size, and type) in a
-> separate capability while the corresponding device BAR registers appear
-> unimplemented.  Linux already consumes endpoint EA capabilities and
-> marks the resulting resources IORESOURCE_PCI_FIXED.  EDK2 doesn't know
-> about EA (cap 0x14 isn't defined anywhere in MdePkg, and PciBusDxe
-> never consults it afaict), but that turns out to be useful here rather
-> than a problem.
-> 
-> Starting at the QEMU device, for a vfio-pci device we'd need to
-> virtualize the real BARs as unimplemented and surface that information
-> via a synthesized EA capability instead.  It's debatable whether this
-> is a generic PCI mechanism or vfio-pci specific, whether HPA is
-> automatically used as the base address for vfio-pci devices or
-> user-specified, and the capability offset in config space.  None of
-> those fundamentally change the shape of the flow.
-> 
-> For the absolute bare-minimum level of support (EA device on the root
-> complex, EA resources don't overlap the VM address space or MMIO range,
-> EDK2 firmware, Linux guest booted with pci=nocrs) I think this actually
-> works with just adding the EA capability above.  Let's walk through
-> those constraints and how we relax them.
-> 
-> At the firmware level we lean on the real BAR registers being
-> unimplemented for EA devices, so EDK2 allocates no MMIO or IO resources
-> for them.  Only bus numbers get assigned if the EA device sits in a PCI
-> hierarchy.  That's exactly what we want, EDK2 doing conventional bus
-> assignment but staying out of the EA resource flow entirely.
-> 
-> Instead of firmware EA enlightenment we lean on the guest OS.  Linux
-> reads endpoint EA today, but the bridge aperture sizing path ignores
-> those fixed resources.  As Tushar's series demonstrates, generically
-> handling mixed "fixed-BAR" and programmable-BAR devices in one
-> hierarchy is hard.  An incremental Linux enhancement that greatly
-> simplifies the problem space would be to program bridge apertures only
-> for hierarchies consisting entirely of fixed resources.  The math
-> becomes trivial (window spans min..max of fixed children, aligned to
-> bridge granularity), and there's no regression risk, these hierarchies
-> currently fail silently.  The sizer ignores fixed children and the
-> fixed-claim walk-up finds no containing parent.  This enhancement,
-> plus the homogeneous-hierarchy constraint, removes the root-complex
-> constraint and lets us mirror the bare-metal topologies we need.
-> 
-> Resource ranges are a bit messier.  The extent of the EA device ranges
-> could be determined in QEMU and the VM address map adjusted to prevent
-> overlap.  Tushar already has a similar user-specified machine option in
-> this series.  That range also needs to reach the guest as a CRS (to
-> avoid pci=nocrs) but needs to stay distinct from the DT range passed to
-> EDK2 for programmable BAR devices so EDK2 won't place a programmable
-> BAR or bridge window into the EA region.  So long as we keep EA and
-> programmable devices in separate hierarchies, EDK2 only needs the
-> programmable range via DT and we can add the EA range as additional CRS
-> ranges visible only to the guest.
-> 
-> In practice, EDK2 programs all the programmable devices and the EA
-> devices live entirely in the additional CRS.  A possibly cleaner
-> alternative is additional PXB host bridges for the EA devices, each
-> with its own CRS.  That sidesteps the DT/CRS split entirely since the
-> EA PXB has nothing for EDK2 to allocate anyway.
-> 
-> If we agree that homogeneous hierarchies (no mixing of EA and
-> programmable BARs) is a reasonable constraint, and possibly extend that
-> to homogeneous per host bridge to simplify the CRS mapping, we have the
-> following work items:
-> 
->  * Extend Linux EA support to program bridge apertures for subordinate
->    homogeneous EA hierarchies.
-> 
->  * Develop options to virtualize programmable BARs as EA for vfio-pci
->    devices, if not generically for the benefit of testing.
-> 
->  * Implement a way to poke holes in the VM address space and plumb
->    through to account for addresses used by EA devices.
-> 
->  * Provide those same ranges to the guest via CRS (but not via DT to
->    EDK2), or alternatively expose them through additional PXB host
->    bridges.
-> 
-> Does that shape roughly seem accurate?  Are there additional gaps I've
-> missed?  Thanks,
-> 
-> Alex
+On Mon, May 11, 2026 at 4:21=E2=80=AFPM <marcandre.lureau@redhat.com> wrote=
+:
+>
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> The following changes since commit 5e61afe211e82a9af15a8794a0bd29bb574e95=
+3b:
+>
+>   Merge tag 'ui-pull-request' of https://gitlab.com/marcandre.lureau/qemu=
+ into staging (2026-05-11 10:49:53 -0400)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/marcandre.lureau/qemu.git tags/qom-pull-request
+>
+> for you to fetch changes up to bc61a3209bf064826481a5f8f2b4feb47c70b02f:
+>
+>   target/s390x: add gen-features.h dependency to s390x_system_ss (2026-05=
+-11 23:59:33 +0400)
+>
+> ----------------------------------------------------------------
+> QOM object lifecycle fixes
+>
+> ----------------------------------------------------------------
 
+Hi Marc-Andr=C3=A9,
+I'm not sure if this CI failure is related to this pull request, but
+there is a dbus-vnc issue:
 
-just one question why not do it in firmware so windows
-is thinkably also handled?
+>>> ASAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=3D1 Q=
+TEST_QEMU_VNC_BINARY=3D./tools/qemu-vnc/qemu-vnc MESON_TEST_ITERATION=3D1 P=
+YTHON=3D/home/gitlab-runner/builds/P3MFS4LUf/0/qemu-project/qemu/build/pyve=
+nv/bin/python3 QTEST_QEMU_STORAGE_DAEMON_BINARY=3D./storage-daemon/qemu-sto=
+rage-daemon G_TEST_DBUS_DAEMON=3D/home/gitlab-runner/builds/P3MFS4LUf/0/qem=
+u-project/qemu/tests/dbus-daemon.sh QTEST_QEMU_IMG=3D./qemu-img QTEST_QEMU_=
+BINARY=3D./qemu-system-x86_64 UBSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_er=
+ror=3D1:print_summary=3D1:print_stacktrace=3D1 RUST_BACKTRACE=3D1 MALLOC_PE=
+RTURB_=3D211 MSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summ=
+ary=3D1:print_stacktrace=3D1 /home/gitlab-runner/builds/P3MFS4LUf/0/qemu-pr=
+oject/qemu/build/tests/qtest/dbus-vnc-test --tap -k
 
+754/1075 /x86_64/dbus-vnc/password-auth -
+ERROR:../tests/qtest/dbus-vnc-test.c:621:test_dbus_vnc_password_auth:
+assertion failed (qemu_vnc1_server_get_auth(proxy) =3D=3D "vnc"): ("none"
+=3D=3D "vnc") FAIL
+
+https://gitlab.com/qemu-project/qemu/-/jobs/14337427774#L5512
+
+Any ideas?
+
+Stefan
+
+>
+> Marc-Andr=C3=A9 Lureau (23):
+>   hw/remote: check visit return in vfu_object_set_socket
+>   qom/object: update doc about NULL values in link properties
+>   hw/remote: guard listener unregister in finalize
+>   io/net-listener: move mutex init to instance_init
+>   net/colo-compare: guard finalize against uninitialized state
+>   ui/console: remove console from global list on finalization
+>   hw/i386/x86: free oem_id and oem_table_id on finalization
+>   hw/core/resetcontainer: free children array on finalization
+>   net/can: free ifname on socketcan finalization
+>   backends/igvm-cfg: free filename on finalization
+>   scsi/pr-manager-helper: free path on finalization
+>   accel/kvm: free device path on finalization
+>   system/qtest: add missing qtest_finalize()
+>   hw/fsi: move OPBus address space init to realize
+>   hw/fsi: move OPBus qbus_init() to instance_init
+>   hw/gpio/pca9552: fix state_str leak in pca955x_set_led
+>   hw/arm/aspeed: free fmc_model and spi_model on finalization
+>   hw/arm/sbsa-ref: free unrealized flash devices on finalization
+>   hw/arm/virt: free flash devices and OEM strings on finalization
+>   hw/ppc/pnv: drop extra ref on PHB after adding as child
+>   hw/riscv/virt: free flash devices and OEM strings on finalization
+>   meson: drop sphinx-build < 1.7 compatiblity check
+>   target/s390x: add gen-features.h dependency to s390x_system_ss
+>
+> Peter Xu (1):
+>   system/ioport: Fix qom-list-properties crash on portio list obj
+>
+>  docs/meson.build          | 14 +-------------
+>  include/qom/object.h      |  8 ++++----
+>  accel/kvm/kvm-all.c       |  8 ++++++++
+>  backends/igvm-cfg.c       |  1 +
+>  hw/arm/aspeed.c           |  9 +++++++++
+>  hw/arm/sbsa-ref.c         | 12 ++++++++++++
+>  hw/arm/virt.c             | 14 ++++++++++++++
+>  hw/core/resetcontainer.c  |  3 +++
+>  hw/fsi/aspeed_apb2opb.c   | 37 ++++++++++++++++++++++++-------------
+>  hw/gpio/pca9552.c         |  2 +-
+>  hw/i386/x86.c             |  9 +++++++++
+>  hw/ppc/pnv.c              |  1 +
+>  hw/remote/remote-obj.c    |  4 +++-
+>  hw/remote/vfio-user-obj.c |  4 +++-
+>  hw/riscv/virt.c           | 14 ++++++++++++++
+>  io/net-listener.c         |  9 ++++++++-
+>  net/can/can_socketcan.c   |  8 ++++++++
+>  net/colo-compare.c        | 31 +++++++++++++++----------------
+>  scsi/pr-manager-helper.c  |  1 +
+>  system/ioport.c           | 11 +++++++++--
+>  system/qtest.c            | 10 ++++++++++
+>  ui/console.c              |  5 ++++-
+>  target/s390x/meson.build  |  1 +
+>  23 files changed, 163 insertions(+), 53 deletions(-)
+>
+> --
+> 2.54.0
+>
+>
 
