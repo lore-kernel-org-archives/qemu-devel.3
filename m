@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EADACD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:25:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 576ACCD484E
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:25:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMgY8-00042S-85; Tue, 12 May 2026 02:25:00 -0400
+	id 1wMgYB-0004Uo-HD; Tue, 12 May 2026 02:25:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgXM-00038g-3X
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:24:15 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgXO-0003CU-0A
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:24:21 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgXJ-0005eX-H7
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:24:11 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-488b0e1b870so86228805e9.2
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 23:24:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgXJ-0005fC-I9
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:24:13 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-488ad135063so40804465e9.0
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 23:24:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778567040; x=1779171840; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778567046; x=1779171846; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=4LsJakp8b2CBC0mN45Pmy8Xk77w3/GigkSKwpcUu2kc=;
- b=PYjhuF7Fr7J9JDXSrLHF9D5fiXWAEj0yHjKHCnhYDiCnuWRiSZoNvBWoMVUV2Do9t2
- 6EBeFlG3srWeBFqXkdkFr0ljpdOSND1De4r7ctDPYUFf0bViuQoz8M5cQiAo1yPWqiB8
- Vuw0p7gVh1ZjNDR1MJnrZ+dauVpZBbxhPjss9MaKZSHBst6/coxbw2uN54+wk/K8TfCU
- Yt9CmolkiC1q5DIb+W20MLdd7Azpxqzx9PRQK2yQY8KtMIjtwuoF2zh5Sx6rckP7mPxY
- z/reNChknNvB+oTWBpd/3vYhvI28mq0MQBYhLaeY9zIQNOjnHopeHPxKZ4IYYLb1K7wz
- lajQ==
+ :reply-to; bh=UtE3JjODAUnAvXPyKWXTcePiI07h8a8f95hnZQ+UixU=;
+ b=nFJ+TFLC24aRIaIGcuiET55xdI29Ags/sf74l3NASlhqQkLF7RKIZQl67wbkZ+t+dn
+ CnNvRiTFTyMXmo0UtMvDXCkvk8i8smOsPNdGXqKoH/y6dB5zUAFhMEY/oBunOkCFAmlI
+ JMTnXq6siEKfyNbCsLgRxKZnBqs5gTvlAeQorV/bbor49Q8FF+7PBW+i4BZ5n3i/P61X
+ 3TvCM00IZt4EPkkds9bicw1HlPCtdzmrF5ypxJbSg3NWZ69mqM2/Qw/8V5E7Lzy7ltlQ
+ fphZz9eQB7NNwsFjWGJMLlzIOZ2vp238YuEH+sWv0Mm5S49ARa8JjVw4dgGLXI/j6eQy
+ JSVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778567040; x=1779171840;
+ d=1e100.net; s=20251104; t=1778567046; x=1779171846;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=4LsJakp8b2CBC0mN45Pmy8Xk77w3/GigkSKwpcUu2kc=;
- b=G5y+SKCCbcN4V8iUZQr7xFGAzcJs0PQUjMM5kWjh5WDF564MNvvDKEazcu6sMPk38O
- SzBHqlk6gI7XczZYjfOjpCG9T883AIkK9tTlTXAoEurL3YA/NlC16swCOnYxkzeDa01e
- sA76f/rsSJP19+g+El3GODxElgIyYMRexnuPyReXvr8zu/4qm4bKVb6dzMtuCd9wwKP8
- /bH8hnCM9UiEszt62vZFXAm8hRzZZ2lEugbLlS0eNpoY95jS5RatdgEumLc4aBqkVWL+
- 7XJ3bW8FqufRZSAU/pbJxQ9CHEazTjZxXAOMzQ0ebneXUKAWZn+mx0ytN15HuLL9w3v7
- kQhQ==
-X-Gm-Message-State: AOJu0YwesZeh9EbUT9Zw8IXM6QWuMI80gV9z5bbpTC9goQwabinGWR2t
- ocWgGwRB5QzHlQWkNmr3TwwI2XqU+QoAf3rjl9W7zq6xWm8sezi7+aM2FnJqzGw3Abc54goX3vx
- H9+hoKl4=
-X-Gm-Gg: Acq92OFRjFN35yMSQoEw62UnSU4RDKxyQ6EIFnCmC2e1JjagCb13j04XZG3PXF6/kNg
- H6k+82sCsRaYuhBR+LuHqmGPLi+HfwyeAxsD6lRRih7lDjZyMqqgWovp8pvVuxlwxxXz8vE/9si
- 1xF80spPZMTx27WhtBUD3VDttLvrp0lx5+xIWq6Rxwh5dCTTwaItQ8u7ApEfxQ0NHPYKYWTdDjU
- SZW6RfTjTUf5E8fCCBDHJv7Jmhm6nPtCJ+IHGga5FBL5nafxfwIkCK4Rrc7jyM4cHmRen0yZPEj
- NWbvK5Dttp6rTtmnDmzO7RzMJCpxOuMpyKOkv2M/Fw8vmxLGUoY2jPciNtwUqqokmyeBotTcodU
- EjUEzyOZ2lBwQR6vKv1PUvLIt4F7p7+pRt05VEL8rKj5Xz1tEGCEkqiZLpRZygB3+Q8O/xctit2
- Dcmq7M38cJjJsOSjlazsANxvYi+vRw2HQ31Sf22ZHq+8wlA706zNhWnutJ7d3uFse3P5QeF2nb
-X-Received: by 2002:a05:600c:8115:b0:48a:9540:1a3a with SMTP id
- 5b1f17b1804b1-48e51e196f9mr436472625e9.8.1778567039353; 
- Mon, 11 May 2026 23:23:59 -0700 (PDT)
+ bh=UtE3JjODAUnAvXPyKWXTcePiI07h8a8f95hnZQ+UixU=;
+ b=TRo3BRM5N+DwDiet8al/cy3DlMGPXuP5XDcpcgpp0r9LjJV/Pn0lHW1XvLyRj6ZfOR
+ 2fIUsxGonae4m6B4IaCj6XtQ72+BIVa2dnAl3Wg3lyTbN1l3EOolB0tE9aeLjIWKjkmd
+ 3XuSYy87OxJp18kLLKNFzwqddbO3tQwmUAbxhZx5pKo82+hfevn8GuqcEfp4iUfuiIzy
+ EcsnGDGRVpMG+cw2L1YMBA1r4zGXzCGT1rP7SBAIXvm1tJ3VF07R2IwncB0dCpkqQYn6
+ XWO8nNX1nquRbFaYnbd6mIUGQMiD2B5P1b2Lkqko6bsB2AuADsJkO20YEQ5pacXVLGei
+ aGnQ==
+X-Gm-Message-State: AOJu0YxGQVt75rxX6kSWJWpidyFz/XFQ5J2gfaSoi4Q0GOUiUOboMinv
+ N2dUcsNrTRt3D8xuwuha6BHjBII5Fi7ALnXXHLix+Tz5fIDHqbLnmpQuqL+8pH/0gglXKYavqg4
+ rgRAoueE=
+X-Gm-Gg: Acq92OGUWJUbqiLAcPE47VcGlSLJOKpgbwSoGmBNlMwhF0zq6VMsNbkw+jnZKAwJf1F
+ SpZ1cq/MVz0gzfX2jIxPVqrNtEZLYMEiZxv5fW9GGJCb+WID4n6oVXcxUu5v934bP4aJo6s0OQ7
+ rJLuSXPcT4i7Zk6NGVFUwwB4hJOPNJxTAy2VDNjMuS43KMQo6yn/zwE5iqnnr8qhv7Pl1BNwh0j
+ Q13qO9KnTkFEWZlsPOR/HGsdnOOWKKm6eTKn9VJKZCisnlcG9EMZESRmRNzGvHtDCEd0mqzkxwK
+ yPyuKV6vsPInVraYeeUWXU+rEw2wEthJLO2PRI8pwOe/kmn5xGq9To8MQ05ovytzgsv3G6hrhpV
+ qTZ1jg+dcJq5WwKi6JNqH1xWIisVneVyfU/XzIWPCxQXjrrAwRJRRbajucStaRlguomFpchL9vi
+ q7nuvtYXdj18Vx/9jE8iRrbv2gFDmOeaPyU0kNmosC3OFnCuBe4LYKQBA2XCL9sjyj3z07pPbOA
+ 0F7o7RNeks=
+X-Received: by 2002:a05:600c:6290:b0:485:3f30:6250 with SMTP id
+ 5b1f17b1804b1-48e51f3fd58mr472812605e9.20.1778567046105; 
+ Mon, 11 May 2026 23:24:06 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4548ec6b00fsm33341512f8f.11.2026.05.11.23.23.58
+ 5b1f17b1804b1-48e90678268sm25100645e9.10.2026.05.11.23.24.05
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 11 May 2026 23:23:58 -0700 (PDT)
+ Mon, 11 May 2026 23:24:05 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 19/41] target: Rename cpu_get_phys_page_{,attrs_}debug
-Date: Tue, 12 May 2026 08:21:20 +0200
-Message-ID: <20260512062142.67998-20-philmd@linaro.org>
+Subject: [PULL 20/41] hw/core: Update docs for get_phys_addr_{attrs_, }debug
+Date: Tue, 12 May 2026 08:21:21 +0200
+Message-ID: <20260512062142.67998-21-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260512062142.67998-1-philmd@linaro.org>
 References: <20260512062142.67998-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,222 +101,87 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-Rename cpu_phys_page_debug() and cpu_phys_page_attrs_debug() to
-cpu_phys_addr_debug() and cpu_phys_addr_attrs_debug().
-
-Commit created with:
- sed -i -e 's/cpu_get_phys_page_debug/cpu_get_phys_addr_debug/g;s/cpu_get_phys_page_attrs_debug/cpu_get_phys_addr_attrs_debug/g' $(git grep -l cpu_get_phys_page)
+Update the documentation for the get_phys_addr_{attrs_,}debug methods
+and wrapper functions to state that they can handle non-page aligned
+addresses and will return the corresponding exact physaddr for them.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260417173105.1648172-10-peter.maydell@linaro.org
-Message-ID: <20260430093810.2762539-11-peter.maydell@linaro.org>
+Message-id: 20260417173105.1648172-11-peter.maydell@linaro.org
+Message-ID: <20260430093810.2762539-12-peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/core/cpu.h       | 8 ++++----
- hw/core/cpu-system.c        | 6 +++---
- hw/i386/vapic.c             | 4 ++--
- hw/xtensa/sim.c             | 2 +-
- hw/xtensa/xtfpga.c          | 2 +-
- monitor/hmp-cmds.c          | 2 +-
- plugins/api.c               | 2 +-
- system/physmem.c            | 2 +-
- target/sparc/mmu_helper.c   | 6 +++---
- target/xtensa/xtensa-semi.c | 2 +-
- 10 files changed, 18 insertions(+), 18 deletions(-)
+ include/hw/core/cpu.h            | 16 +++++++++++-----
+ include/hw/core/sysemu-cpu-ops.h |  4 ++++
+ 2 files changed, 15 insertions(+), 5 deletions(-)
 
 diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index c9fea797435..75e47768d43 100644
+index 75e47768d43..e3436a1766f 100644
 --- a/include/hw/core/cpu.h
 +++ b/include/hw/core/cpu.h
-@@ -739,7 +739,7 @@ enum CPUDumpFlags {
- void cpu_dump_state(CPUState *cpu, FILE *f, int flags);
+@@ -740,15 +740,18 @@ void cpu_dump_state(CPUState *cpu, FILE *f, int flags);
  
  /**
-- * cpu_get_phys_page_attrs_debug:
-+ * cpu_get_phys_addr_attrs_debug:
-  * @cpu: The CPU to obtain the physical page address for.
+  * cpu_get_phys_addr_attrs_debug:
+- * @cpu: The CPU to obtain the physical page address for.
++ * @cpu: The CPU to use for the virtual-to-physical translation
   * @addr: The virtual address.
   * @attrs: Updated on return with the memory transaction attributes to use
-@@ -751,11 +751,11 @@ void cpu_dump_state(CPUState *cpu, FILE *f, int flags);
+  *         for this access.
   *
+- * Obtains the physical page corresponding to a virtual one, together
++ * Obtains the physical address corresponding to a virtual one, together
+  * with the corresponding memory transaction attributes to use for the access.
+  * Use it only for debugging because no protection checks are done.
+  *
++ * The address need not be page-aligned; the returned address will
++ * be the physical address corresponding to that virtual address.
++ *
   * Returns: Corresponding physical page address or -1 if no page found.
   */
--hwaddr cpu_get_phys_page_attrs_debug(CPUState *cpu, vaddr addr,
-+hwaddr cpu_get_phys_addr_attrs_debug(CPUState *cpu, vaddr addr,
-                                      MemTxAttrs *attrs);
+ hwaddr cpu_get_phys_addr_attrs_debug(CPUState *cpu, vaddr addr,
+@@ -756,13 +759,16 @@ hwaddr cpu_get_phys_addr_attrs_debug(CPUState *cpu, vaddr addr,
  
  /**
-- * cpu_get_phys_page_debug:
-+ * cpu_get_phys_addr_debug:
-  * @cpu: The CPU to obtain the physical page address for.
+  * cpu_get_phys_addr_debug:
+- * @cpu: The CPU to obtain the physical page address for.
++ * @cpu: The CPU to use for the virtual-to-physical translation
   * @addr: The virtual address.
   *
-@@ -764,7 +764,7 @@ hwaddr cpu_get_phys_page_attrs_debug(CPUState *cpu, vaddr addr,
+- * Obtains the physical page corresponding to a virtual one.
++ * Obtains the physical address corresponding to a virtual one.
+  * Use it only for debugging because no protection checks are done.
   *
-  * Returns: Corresponding physical page address or -1 if no page found.
+- * Returns: Corresponding physical page address or -1 if no page found.
++ * The address need not be page-aligned; the returned address will
++ * be the physical address corresponding to that virtual address.
++ *
++ * Returns: Corresponding physical address, or -1 if no page found.
   */
--hwaddr cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
-+hwaddr cpu_get_phys_addr_debug(CPUState *cpu, vaddr addr);
+ hwaddr cpu_get_phys_addr_debug(CPUState *cpu, vaddr addr);
  
- /** cpu_asidx_from_attrs:
-  * @cpu: CPU
-diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
-index 93dc861083c..05c126ecb6b 100644
---- a/hw/core/cpu-system.c
-+++ b/hw/core/cpu-system.c
-@@ -55,7 +55,7 @@ bool cpu_get_memory_mapping(CPUState *cpu, MemoryMappingList *list,
-     return false;
- }
- 
--hwaddr cpu_get_phys_page_attrs_debug(CPUState *cpu, vaddr addr,
-+hwaddr cpu_get_phys_addr_attrs_debug(CPUState *cpu, vaddr addr,
-                                      MemTxAttrs *attrs)
- {
-     hwaddr paddr;
-@@ -73,11 +73,11 @@ hwaddr cpu_get_phys_page_attrs_debug(CPUState *cpu, vaddr addr,
-     return paddr;
- }
- 
--hwaddr cpu_get_phys_page_debug(CPUState *cpu, vaddr addr)
-+hwaddr cpu_get_phys_addr_debug(CPUState *cpu, vaddr addr)
- {
-     MemTxAttrs attrs = {};
- 
--    return cpu_get_phys_page_attrs_debug(cpu, addr, &attrs);
-+    return cpu_get_phys_addr_attrs_debug(cpu, addr, &attrs);
- }
- 
- int cpu_asidx_from_attrs(CPUState *cpu, MemTxAttrs attrs)
-diff --git a/hw/i386/vapic.c b/hw/i386/vapic.c
-index 3738031a055..225f19a75c7 100644
---- a/hw/i386/vapic.c
-+++ b/hw/i386/vapic.c
-@@ -173,7 +173,7 @@ static int find_real_tpr_addr(VAPICROMState *s, CPUX86State *env)
-      * virtual address space for the APIC mapping.
+diff --git a/include/hw/core/sysemu-cpu-ops.h b/include/hw/core/sysemu-cpu-ops.h
+index 1524d6f25bb..c0e9e726708 100644
+--- a/include/hw/core/sysemu-cpu-ops.h
++++ b/include/hw/core/sysemu-cpu-ops.h
+@@ -31,6 +31,8 @@ typedef struct SysemuCPUOps {
+     bool (*get_paging_enabled)(const CPUState *cpu);
+     /**
+      * @get_phys_addr_debug: Callback for obtaining a physical address.
++     * This must be able to handle a non-page-aligned address, and will
++     * return the physical address corresponding to that address.
       */
-     for (addr = 0xfffff000; addr >= 0x80000000; addr -= TARGET_PAGE_SIZE) {
--        paddr = cpu_get_phys_page_debug(cs, addr);
-+        paddr = cpu_get_phys_addr_debug(cs, addr);
-         if (paddr != APIC_DEFAULT_ADDRESS) {
-             continue;
-         }
-@@ -305,7 +305,7 @@ static int update_rom_mapping(VAPICROMState *s, CPUX86State *env, target_ulong i
- 
-     /* find out virtual address of the ROM */
-     rom_state_vaddr = s->rom_state_paddr + (ip & 0xf0000000);
--    paddr = cpu_get_phys_page_debug(cs, rom_state_vaddr);
-+    paddr = cpu_get_phys_addr_debug(cs, rom_state_vaddr);
-     if (paddr == -1) {
-         return -1;
-     }
-diff --git a/hw/xtensa/sim.c b/hw/xtensa/sim.c
-index 994460d0414..32eb16442f0 100644
---- a/hw/xtensa/sim.c
-+++ b/hw/xtensa/sim.c
-@@ -41,7 +41,7 @@ static uint64_t translate_phys_addr(void *opaque, uint64_t addr)
- {
-     XtensaCPU *cpu = opaque;
- 
--    return cpu_get_phys_page_debug(CPU(cpu), addr);
-+    return cpu_get_phys_addr_debug(CPU(cpu), addr);
- }
- 
- static void sim_reset(void *opaque)
-diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
-index 5e509216df8..256497e162d 100644
---- a/hw/xtensa/xtfpga.c
-+++ b/hw/xtensa/xtfpga.c
-@@ -192,7 +192,7 @@ static uint64_t translate_phys_addr(void *opaque, uint64_t addr)
- {
-     XtensaCPU *cpu = opaque;
- 
--    return cpu_get_phys_page_debug(CPU(cpu), addr);
-+    return cpu_get_phys_addr_debug(CPU(cpu), addr);
- }
- 
- static void xtfpga_reset(void *opaque)
-diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-index db92d6cb86b..b37a9985c0d 100644
---- a/monitor/hmp-cmds.c
-+++ b/monitor/hmp-cmds.c
-@@ -771,7 +771,7 @@ void hmp_gva2gpa(Monitor *mon, const QDict *qdict)
-         return;
-     }
- 
--    gpa  = cpu_get_phys_page_debug(cs, addr & TARGET_PAGE_MASK);
-+    gpa  = cpu_get_phys_addr_debug(cs, addr & TARGET_PAGE_MASK);
-     if (gpa == -1) {
-         monitor_printf(mon, "Unmapped\n");
-     } else {
-diff --git a/plugins/api.c b/plugins/api.c
-index 0c348a789b2..4b6fad49998 100644
---- a/plugins/api.c
-+++ b/plugins/api.c
-@@ -619,7 +619,7 @@ bool qemu_plugin_translate_vaddr(uint64_t vaddr, uint64_t *hwaddr)
- #ifdef CONFIG_SOFTMMU
-     g_assert(current_cpu);
- 
--    uint64_t res = cpu_get_phys_page_debug(current_cpu, vaddr);
-+    uint64_t res = cpu_get_phys_addr_debug(current_cpu, vaddr);
- 
-     if (res == (uint64_t)-1) {
-         return false;
-diff --git a/system/physmem.c b/system/physmem.c
-index c58d940e807..652b03ad5f5 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -4041,7 +4041,7 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
-         MemTxResult res;
- 
-         page = addr & TARGET_PAGE_MASK;
--        phys_addr = cpu_get_phys_page_attrs_debug(cpu, page, &attrs);
-+        phys_addr = cpu_get_phys_addr_attrs_debug(cpu, page, &attrs);
-         asidx = cpu_asidx_from_attrs(cpu, attrs);
-         /* if no physical page mapped, return an error */
-         if (phys_addr == -1)
-diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
-index 34b212a7aa5..e1abd520c49 100644
---- a/target/sparc/mmu_helper.c
-+++ b/target/sparc/mmu_helper.c
-@@ -366,20 +366,20 @@ void dump_mmu(CPUSPARCState *env)
-     for (n = 0, va = 0; n < 256; n++, va += 16 * 1024 * 1024) {
-         pde = mmu_probe(env, va, 2);
-         if (pde) {
--            pa = cpu_get_phys_page_debug(cs, va);
-+            pa = cpu_get_phys_addr_debug(cs, va);
-             qemu_printf("VA: " TARGET_FMT_lx ", PA: " HWADDR_FMT_plx
-                         " PDE: " TARGET_FMT_lx "\n", va, pa, pde);
-             for (m = 0, va1 = va; m < 64; m++, va1 += 256 * 1024) {
-                 pde = mmu_probe(env, va1, 1);
-                 if (pde) {
--                    pa = cpu_get_phys_page_debug(cs, va1);
-+                    pa = cpu_get_phys_addr_debug(cs, va1);
-                     qemu_printf(" VA: " TARGET_FMT_lx ", PA: "
-                                 HWADDR_FMT_plx " PDE: " TARGET_FMT_lx "\n",
-                                 va1, pa, pde);
-                     for (o = 0, va2 = va1; o < 64; o++, va2 += 4 * 1024) {
-                         pde = mmu_probe(env, va2, 0);
-                         if (pde) {
--                            pa = cpu_get_phys_page_debug(cs, va2);
-+                            pa = cpu_get_phys_addr_debug(cs, va2);
-                             qemu_printf("  VA: " TARGET_FMT_lx ", PA: "
-                                         HWADDR_FMT_plx " PTE: "
-                                         TARGET_FMT_lx "\n",
-diff --git a/target/xtensa/xtensa-semi.c b/target/xtensa/xtensa-semi.c
-index 28dfb29cbd3..9a6a9c8b4e4 100644
---- a/target/xtensa/xtensa-semi.c
-+++ b/target/xtensa/xtensa-semi.c
-@@ -215,7 +215,7 @@ void HELPER(simcall)(CPUXtensaState *env)
-             uint32_t len_done = 0;
- 
-             while (len > 0) {
--                hwaddr paddr = cpu_get_phys_page_debug(cs, vaddr);
-+                hwaddr paddr = cpu_get_phys_addr_debug(cs, vaddr);
-                 uint32_t page_left =
-                     TARGET_PAGE_SIZE - (vaddr & (TARGET_PAGE_SIZE - 1));
-                 uint32_t io_sz = page_left < len ? page_left : len;
+     hwaddr (*get_phys_addr_debug)(CPUState *cpu, vaddr addr);
+     /**
+@@ -39,6 +41,8 @@ typedef struct SysemuCPUOps {
+      *       access.
+      * CPUs which use memory transaction attributes should implement this
+      * instead of get_phys_addr_debug.
++     * This must be able to handle a non-page-aligned address, and will
++     * return the physical address corresponding to that address.
+      */
+     hwaddr (*get_phys_addr_attrs_debug)(CPUState *cpu, vaddr addr,
+                                         MemTxAttrs *attrs);
 -- 
 2.53.0
 
