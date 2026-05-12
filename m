@@ -4,51 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E31BCD4F24
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ACAFCD343F
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:41:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuk9-0006XN-Ra; Tue, 12 May 2026 17:34:22 -0400
+	id 1wMuTa-0003PT-Bs; Tue, 12 May 2026 17:17:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuj7-0005KP-Bz; Tue, 12 May 2026 17:33:17 -0400
+ id 1wMuS8-0001Mq-5r; Tue, 12 May 2026 17:15:45 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuiq-0002k4-U3; Tue, 12 May 2026 17:33:16 -0400
+ id 1wMuS6-0006Rr-2x; Tue, 12 May 2026 17:15:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619500; bh=kN+vRBn/OLwmEbR2rmlF5FYYrIr0wj4Oa9rSHAR4hyI=;
+ t=1778619306; bh=QtZMv/eUNp00lZGF+Ax8EVZrxLcKxZLVCasWZm66xAY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=PKaT0Weepgtd1VTMtKcvC0+vdjir4vBD0i25MZ47PoMa/ucDG+bxOJyBjvMnEVU8R
- gI1GtkLkfs0SF2PZc4bdYFznu5KvtABxjn81CfYh2g1VNrHhvwLiEfykRUDPqe40SR
- u4bgCvz4pLokYE75KHpDjiYrOjvuxX4HY937H1AwFRXeKPM3qSDGTFr2RF24pppHNv
- T6Nfa6223IqwK+91qIGl5nHmpLw76ggeOttUoPVR/8JgrV0LY/FMvO7tz317nH7NDC
- yfKzifkhLyxntD/fjRjyoO4aRZagEer+fi0J1fTZXP5ZKOYZbZ9TFMjB1XH+C5038u
- TM1eJrxPAvaJw==
+ b=XKXRa0CEqUcBqvZD4lxsJVAP4/+jwcG/CVxOVxaC4hK7IycZpVVo8FlgB2uLPIBo5
+ zB/vLzWB1cdij28FqY9EQ7St+pheTWfXr1s0WpVECSgAoVuiF9v029pEYylXB2ozSW
+ SjKOgX/PcLtnoeIiDcCrxvlGXTogebrCc1yBjOa9Ao7gi8LDvJ/3p1oc92V+6hmZ4l
+ 7uEetQpY8LQSu498B2gEu98HKaAbKDneRjYN0mqLA5sZX1WAdp8M9/XJiLGVU2EqQm
+ Jyd2n+Yq09eNxUywJmogm+PNUyD+uHNwtmjwuJA/oACVode2JVLWL0l6jA//ySA6OY
+ bSlPGI34zFz+A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5B9ED1AA3FD;
- Tue, 12 May 2026 23:58:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 388A71AA39E;
+ Tue, 12 May 2026 23:55:06 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 676B03ABD55;
- Tue, 12 May 2026 23:58:24 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 438CC3ABD0D;
+ Tue, 12 May 2026 23:55:10 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 50/58] target/arm: Report IL=0 for Thumb 16-bit BKPT
- insn
-Date: Tue, 12 May 2026 23:58:11 +0300
-Message-ID: <20260512205820.361821-50-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 096/117] target/riscv: Generate access fault if sc
+ comparison fails
+Date: Tue, 12 May 2026 23:54:38 +0300
+Message-ID: <20260512205503.361097-96-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
-References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,43 +70,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Alistair Francis <alistair.francis@wdc.com>
 
-The Thumb BKPT insn is 16-bit, and the ESR_ELx syndrome register
-definition requires that we set the IL bit to 0 for this, and 1 for
-the 32-bit A32 and A64 BKPT/BRK.
+The RISC-V spec states:
 
-We used to do this correctly, but accidentally lost it in the
-conversion to decodetree, because we converted the A32 BKPT first,
-and then when we converted the T16 BKPT we forgot that trans_BKPT()
-was unconditionally setting IL=1.
+"For the purposes of memory protection, a failed SC.W may be treated
+like a store."
 
-Pass the right value for syn_aa32_bkpt()'s is_16bit argument.
+So if the comparison in sc.w fails we should still check for alignment
+and do a probe access to check permissions.
 
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3474
-Fixes: 43f7e42c7d515f ("target/arm: Convert T16, Miscellaneous 16-bit instructions")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260505103726.419195-1-peter.maydell@linaro.org
-(cherry picked from commit f443b687636205b7f70029692b244f1f90532cf2)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3323
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3136
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Message-ID: <20260415233740.3027321-2-alistair.francis@wdc.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit d107b748072cea3f86089a4a7b2e83f1a62745f2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index fe89131d34..c57d1a6e73 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -3578,7 +3578,7 @@ static bool trans_BKPT(DisasContext *s, arg_BKPT *a)
-         (a->imm == 0xab)) {
-         gen_exception_internal_insn(s, EXCP_SEMIHOST);
-     } else {
--        gen_exception_bkpt_insn(s, syn_aa32_bkpt(a->imm, false));
-+        gen_exception_bkpt_insn(s, syn_aa32_bkpt(a->imm, curr_insn_len(s) == 2));
-     }
-     return true;
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index b785456ee0..fa16ab2b82 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -1289,3 +1289,6 @@ DEF_HELPER_4(vsm4r_vs, void, ptr, ptr, env, i32)
+ #ifndef CONFIG_USER_ONLY
+ DEF_HELPER_1(ssamoswap_disabled, void, env)
+ #endif
++
++/* Zalrsc SC write probe */
++DEF_HELPER_FLAGS_3(sc_probe_write, TCG_CALL_NO_WG, void, env, tl, tl)
+diff --git a/target/riscv/insn_trans/trans_rva.c.inc b/target/riscv/insn_trans/trans_rva.c.inc
+index a7a3278d24..62c0fe673d 100644
+--- a/target/riscv/insn_trans/trans_rva.c.inc
++++ b/target/riscv/insn_trans/trans_rva.c.inc
+@@ -90,6 +90,12 @@ static bool gen_sc(DisasContext *ctx, arg_atomic *a, MemOp mop)
+      */
+     TCGBar bar_strl = (ctx->ztso || a->rl) ? TCG_BAR_STRL : 0;
+     tcg_gen_mb(TCG_MO_ALL + a->aq * TCG_BAR_LDAQ + bar_strl);
++    /*
++     * "For the purposes of memory protection, a failed SC.W may be treated
++     * like a store." so let's check the write access permissions
++     */
++    gen_helper_sc_probe_write(tcg_env, src1,
++                              tcg_constant_tl(memop_size(mop)));
+     gen_set_gpr(ctx, a->rd, tcg_constant_tl(1));
+ 
+     gen_set_label(l2);
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index 6ccc127c30..b569366369 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -281,6 +281,20 @@ void helper_cbo_inval(CPURISCVState *env, target_ulong address)
+     /* We don't emulate the cache-hierarchy, so we're done. */
  }
+ 
++void helper_sc_probe_write(CPURISCVState *env, target_ulong addr,
++                           target_ulong size)
++{
++    uintptr_t ra = GETPC();
++    int mmu_idx = riscv_env_mmu_index(env, false);
++
++    if (addr & (size - 1)) {
++        env->badaddr = addr;
++        riscv_raise_exception(env, RISCV_EXCP_STORE_AMO_ADDR_MIS, ra);
++    }
++
++    probe_write(env, addr, size, mmu_idx, ra);
++}
++
+ #ifndef CONFIG_USER_ONLY
+ 
+ target_ulong helper_sret(CPURISCVState *env)
 -- 
 2.47.3
 
