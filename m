@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A134BCD4855
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 08:58:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30D37CD4F35
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 08:58:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMiwN-0000tG-9f; Tue, 12 May 2026 04:58:11 -0400
+	id 1wMiwO-0000tO-PX; Tue, 12 May 2026 04:58:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1wMiwL-0000sP-IP
- for qemu-devel@nongnu.org; Tue, 12 May 2026 04:58:09 -0400
+ id 1wMiwN-0000t8-1X
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 04:58:11 -0400
 Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1wMiwJ-0007RW-Vr
- for qemu-devel@nongnu.org; Tue, 12 May 2026 04:58:09 -0400
+ id 1wMiwL-0007UU-G5
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 04:58:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1778576288; x=1810112288;
+ t=1778576289; x=1810112289;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=ccTxULIS1GySBSoFJkKx4mBbmknXtDaG4L2R2ogo9cQ=;
- b=f5OOw7c6UmoijNPco/AIexJxrwvlz3JK1PDJzCEaDAbtANeALwW2NCMF
- 2nUE7rYio0wvPFeirG/MtWniF+GFfLJOdLvonXTT04kCxI1xVBI902T0e
- UDmjAZs4Jf1hCy62UoowMvayJigYMjzhvD70k4uoq+El7kdACH26/Uq3i
- DfrftiwcwwiN8VOH3SMM1SGhH16KOXmUZx25JTSkqBoicuFaI1SCHLBol
- vaU/8ljFKUtLZpMTSQElrPflZm+DBD9NBLUrUYwFx3okvmwLqwgg3mRvB
- chT4voQgF0ZZpWmGfe30MiXf4rYlGwrizasA8VGLDZzPx/an1bKUO7Ast g==;
-X-CSE-ConnectionGUID: B+YuZEj9S968/UOocvoptw==
-X-CSE-MsgGUID: VMKtPY/2QZWhV2KLcnZBZg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11783"; a="78510933"
-X-IronPort-AV: E=Sophos;i="6.23,230,1770624000"; d="scan'208";a="78510933"
+ bh=2jrOHcNmmoeG8OYa4BUw32tOAHy5w3m8RmqkoBb0zUo=;
+ b=Zlr4C9SSzzgyGIpLQLc557rHj5nCzID7Uo7vJ3Ix/ofWznm3ciuZBDg/
+ 3+F71cAluGQ3q+UY2m7sclpcPnGEU4e1G6svETAZVCcbnDErmit0Wafd9
+ ad8sD3pQVKRRJ40d0OvsXFrIpKClTeBYlkX9wV7WdctbLrKmBDk58LDXb
+ liN+lDNsDoHH46RxsN6NdPfyGapIo6nLUdc+Xshzk6NVKcyZpbllGjoYj
+ XxAaDAtfXuMdrKOBoGhAApX4+pRLJ2ZBiqjL5Pu24+1SkCxhutfYtc9Gr
+ 4hnk3+Vl9fyaLYiA1QOxOIoiO3J7YShoLNzcp93FE4tiF/TNN/lXsiv2T g==;
+X-CSE-ConnectionGUID: YrFIOY73QGKi5QyXjbA4Gw==
+X-CSE-MsgGUID: tjPccyNRQtavzF2BVF85Qg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11783"; a="78510938"
+X-IronPort-AV: E=Sophos;i="6.23,230,1770624000"; d="scan'208";a="78510938"
 Received: from orviesa004.jf.intel.com ([10.64.159.144])
  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 May 2026 01:58:07 -0700
-X-CSE-ConnectionGUID: icoK65rAS46hwQ+dE1NtcA==
-X-CSE-MsgGUID: 6Vo1KRwlTOSHG8b/KS349Q==
+ 12 May 2026 01:58:09 -0700
+X-CSE-ConnectionGUID: I5ZNqitCSOGs0h4p6z7yAw==
+X-CSE-MsgGUID: ZoIDPVepTg+N+iWc63EU+Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,230,1770624000"; d="scan'208";a="242065547"
+X-IronPort-AV: E=Sophos;i="6.23,230,1770624000"; d="scan'208";a="242065557"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.22])
- by orviesa004.jf.intel.com with ESMTP; 12 May 2026 01:58:05 -0700
+ by orviesa004.jf.intel.com with ESMTP; 12 May 2026 01:58:07 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
@@ -52,13 +52,14 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  xiaoyao.li@intel.com
-Subject: [PATCH v2 4/5] qemu-options: Add description of tdx-guest object
-Date: Tue, 12 May 2026 16:44:57 +0800
-Message-ID: <20260512084458.622465-5-xiaoyao.li@intel.com>
+Subject: [PATCH v2 5/5] machine: Deprecate memory-encryption
+Date: Tue, 12 May 2026 16:44:58 +0800
+Message-ID: <20260512084458.622465-6-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260512084458.622465-1-xiaoyao.li@intel.com>
 References: <20260512084458.622465-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.19; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
@@ -84,70 +85,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add description of tdx-guest object so that QEMU doc page can have the
-description.
+We've had 'confidential-guest-support' for long enough that no one should
+be using 'memory-encryption' anymore.
 
+Deprecate 'memory-encryption' by adding notes in docs/about/deprecated.rst
+and print a warning when 'memory-encryptio' is used.
+
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Link: https://lore.kernel.org/qemu-devel/aMPYkUsytGxLPIM7@redhat.com/
 ---
-Changes in v2:
-- fix typo and add property after each property name; (Daniel)
-- include how 'quote-generation-socket' is configured in the example; (Daniel)
----
- qemu-options.hx | 41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ docs/about/deprecated.rst | 7 +++++++
+ hw/core/machine.c         | 2 ++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index ea4ae26b8d72..f13ce0a3aa22 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -6351,6 +6351,47 @@ SRST
-                  -machine ...,confidential-guest-support=sev0 \\
-                  .....
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 5551bd12ad83..d60c7206ec4d 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -305,6 +305,13 @@ they want to use and avoids confusion.  Existing users of the ``spike``
+ machine must ensure that they're setting the ``spike`` machine in the
+ command line (``-M spike``).
  
-+    ``-object tdx-guest,id=id,[attributes=attrs,sept-ve-disable=on|off,mrconfigid=sha384_digest,mrowner=sha384_digest,mrownerconfig=sha384_digest,quote-generation-socket=socketaddr]``
-+        Create an Intel Trusted Domain eXtensions (TDX) guest object, which is
-+        the type of ``confidential-guest-support`` object. When pass the object
-+        ID to machine's ``confidential-guest-support`` property, it can create
-+        a TDX guest.
++``memory-encryption`` machine property (since 11.1)
++'''''''''''''''''''''''''''''''''''''''''''''''''''
 +
-+        The ``attributes`` property is a 64-bit integer, which specifies the
-+        TD attributes of the TD.
++Use ``confidential-guest-support`` instead. The ``memory-encryption`` object
++was an early implementation of memory encryption support in QEMU, but it has
++been superseded by the more comprehensive ``confidential-guest-support``
++object.
+ 
+ Backend options
+ ---------------
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 63baff859f3d..baa275b87dcc 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -490,6 +490,8 @@ static void machine_set_memory_encryption(Object *obj, const char *value,
+     Object *cgs =
+         object_resolve_path_component(object_get_objects_root(), value);
+ 
++    warn_report("memory-encryption is deprecated, use confidential-guest-support instead");
 +
-+        The ``sept-ve-disable`` property controls the bit 28 of TD attributes
-+        specifically. When it's on, the EPT violation conversion to #VE on
-+        guest access of PENDING pages is disabled. Some guest OS (e.g., Linux
-+        TD guest) may require this to be set, otherwise they refuse to boot.
-+        The default value is on.
-+
-+        The ``mrconfigid`` property is base64 encoded SHA384 digest, which
-+        provides the ID for non-owner-defined configuration of the guest TD,
-+        e.g., run-time or OS configuration. The default value is all zeros.
-+
-+        The ``mrowner`` property is base64 encoded SHA384 digest, which
-+        provides the ID for guest TD's owner. The default value is all zeros.
-+
-+        The ``mrownerconfig`` property is base64 encoded SHA384 digest, which
-+        provides the ID for owner-defined configuration of the guest TD, e.g.,
-+        the configuration specific to the workload rather than the run-time of
-+        OS. The default value is all zeros.
-+
-+        The ``quote-generation-socket`` property specifies the socket address
-+        of the Quote Generation Service (QGS). QGS is a daemon running on the
-+        host. QEMU forwards the <GetQuote> request from TD guest to QGS and
-+        sents the reply (which contains generated QUOTE on success) from QGS
-+        to guest TD.
-+
-+        .. parsed-literal::
-+
-+             # |qemu_system_x86| \\
-+                 ...... \\
-+                 -object '{"qom-type":"tdx-guest","id":"tdx","quote-generation-socket":{"type":"unix","path":"/var/run/qgs.socket"}}' \\
-+                 -machine ...,confidential-guest-support=tdx \\
-+                 ......
-+
-     ``-object igvm-cfg,file=file``
-         Create an IGVM configuration object that defines the initial state
-         of the guest using a file in that conforms to the Independent Guest
+     if (!cgs) {
+         error_setg(errp, "No such memory encryption object '%s'", value);
+         return;
 -- 
 2.43.0
 
