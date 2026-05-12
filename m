@@ -4,50 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22B39CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 20:57:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B920CCD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 20:57:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMu9k-00067R-25; Tue, 12 May 2026 16:56:44 -0400
+	id 1wMu9v-0006s8-TF; Tue, 12 May 2026 16:56:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMu9e-0005xo-Mz; Tue, 12 May 2026 16:56:41 -0400
+ id 1wMu9t-0006i8-2o; Tue, 12 May 2026 16:56:53 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMu9V-0003Fc-Lb; Tue, 12 May 2026 16:56:38 -0400
+ id 1wMu9q-0003U5-7W; Tue, 12 May 2026 16:56:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619274; bh=acKlxLEDYl/rGWwOoSEJZsTAkfqrcjA+SI0dYYGI7p0=;
+ t=1778619274; bh=nE4Kx/GV3cjA/jdgyTB+YcJrEbkeDSw0RUVIU4/PBpg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fc32KqJOih4dtK8BKE4P1aG13PeVMl93n6LuFacM8Rot3hOEoKoetQzytKgKSFnlA
- 7yQiWgW0EF39tNdhhtT3RW/WgyyYbdhE4QYbtoiUey7nbfxbT2HjQYKia+gKoeECEn
- HXI8WF3mEYezBsX0bbXd7Vu2dRY/Nkjq1b6QyWW8gTrBq7kmn6qFJ1iQgMILG7+/0b
- 4B8RtBMKVhPWiql/ovwBOUXrSI9kOr/zKylqr8CkzighI5r+DRLMxL84y6VCWoaxS3
- 83o6zeX8354ScZSFf5O8RUXIp/Z/R7/b4SQi7CwBCnNgIRgdY3uVEmzdm93pY3hyNn
- vzXBL3G4Y6j/Q==
+ b=I+iNYx0Ns7I76tKlUwDoYaIxAwb6fm6qTlcTRq040p2YcQlb9LwpVMNLqtymr+SIL
+ h/MZBXHokXDNWGBYq5b7NiXF+0nonNDRJkIuWMo67QZET4rU5G1I1Qf8orcT733Fkg
+ lRYDKB+bcgIUuJGRQKVpIoIXc0RbEPQuGYqyajJE9BHf+wRqySWhF6WSiwm+rYatnF
+ 9/iS0zlqAj9mDzV8TymEbkDu8nZr9z0mdkj43t3SSoWgrPdYtFPXOeiex7Ljxn6k8J
+ jNWd6zTYP3LPX/4xv/DJx60UmDjmICNjmXSdBVDYrCCEUJnIA5N2oZyoOlyZ/CDjYO
+ S67yj+Sr01R2Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A205F1AA2E0;
+ by isrv.corpit.ru (Postfix) with ESMTP id E6E551AA2E5;
  Tue, 12 May 2026 23:54:34 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id AD6A93ABC51;
+ by tsrv.corpit.ru (Postfix) with ESMTP id F3AE13ABC56;
  Tue, 12 May 2026 23:54:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 020/107] hw/net/ftgmac100: Improve DMA error handling
-Date: Tue, 12 May 2026 23:53:07 +0300
-Message-ID: <20260512205437.360850-20-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 025/107] linux-aio: Resubmit tails of short
+ reads/writes
+Date: Tue, 12 May 2026 23:53:12 +0300
+Message-ID: <20260512205437.360850-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,59 +69,205 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+From: Hanna Czenczek <hreitz@redhat.com>
 
-Currently, DMA memory operation errors in the ftgmac100 model are not
-all tested and this can lead to a guest-triggerable denial of service
-as described in https://gitlab.com/qemu-project/qemu/-/work_items/3335.
+Short reads/writes can happen.  One way to reproduce them is via our
+FUSE export, with the following diff applied (%s/escaped // to apply --
+if you put plain diffs in commit messages, git-am will apply them, and I
+would rather avoid breaking FUSE accidentally via this patch):
 
-To fix this, check the return value of ftgmac100_write_bd() in the TX
-path and exit the TX loop on error to prevent further processing. In
-the event of a DMA error, also set FTGMAC100_INT_AHB_ERR interrupt
-flag as appropriate.
+escaped diff --git a/block/export/fuse.c b/block/export/fuse.c
+escaped index a2a478d293..67dc50a412 100644
+escaped --- a/block/export/fuse.c
+escaped +++ b/block/export/fuse.c
+@@ -828,7 +828,7 @@ static ssize_t coroutine_fn GRAPH_RDLOCK
+ fuse_co_init(FuseExport *exp, struct fuse_init_out *out,
+              const struct fuse_init_in_compat *in)
+ {
+-    const uint32_t supported_flags = FUSE_ASYNC_READ | FUSE_ASYNC_DIO;
++    const uint32_t supported_flags = FUSE_ASYNC_READ;
 
-The FTGMAC100_INT_AHB_ERR interrupt status bit only applies to the
-AST2400 SoC; on newer Aspeed SoCs, it is a reserved bit.
-Nevertheless, since it is supported by the Linux driver and it should
-be safe to use in the QEMU implementation across all SoCs.
+     if (in->major != 7) {
+         error_report("FUSE major version mismatch: We have 7, but kernel has %"
+@@ -1060,6 +1060,8 @@ fuse_co_read(FuseExport *exp, void **bufptr, uint64_t offset, uint32_t size)
+     void *buf;
+     int ret;
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3335
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260322215732.387383-3-clg@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit fa4a759fc1e19b2185becfadb00c6d8e57462849)
++    size = MIN(size, 4096);
++
+     /* Limited by max_read, should not happen */
+     if (size > FUSE_MAX_READ_BYTES) {
+         return -EINVAL;
+@@ -1110,6 +1112,8 @@ fuse_co_write(FuseExport *exp, struct fuse_write_out *out,
+     int64_t blk_len;
+     int ret;
+
++    size = MIN(size, 4096);
++
+     QEMU_BUILD_BUG_ON(FUSE_MAX_WRITE_BYTES > BDRV_REQUEST_MAX_BYTES);
+     /* Limited by max_write, should not happen */
+     if (size > FUSE_MAX_WRITE_BYTES) {
+
+Then:
+$ ./qemu-img create -f raw test.raw 8k
+Formatting 'test.raw', fmt=raw size=8192
+$ ./qemu-io -f raw -c 'write -P 42 0 8k' test.raw
+wrote 8192/8192 bytes at offset 0
+8 KiB, 1 ops; 00.00 sec (64.804 MiB/sec and 8294.9003 ops/sec)
+$ hexdump -C test.raw
+00000000  2a 2a 2a 2a 2a 2a 2a 2a  2a 2a 2a 2a 2a 2a 2a 2a  |****************|
+*
+00002000
+
+With aio=threads, short I/O works:
+$ storage-daemon/qemu-storage-daemon \
+    --blockdev file,node-name=test,filename=test.raw \
+    --export fuse,id=exp,node-name=test,mountpoint=test.raw,writable=true
+
+Other shell:
+$ ./qemu-io --image-opts -c 'read -P 42 0 8k' \
+    driver=file,filename=test.raw,cache.direct=on,aio=threads
+read 8192/8192 bytes at offset 0
+8 KiB, 1 ops; 00.00 sec (36.563 MiB/sec and 4680.0923 ops/sec)
+$ ./qemu-io --image-opts -c 'write -P 23 0 8k' \
+    driver=file,filename=test.raw,cache.direct=on,aio=threads
+wrote 8192/8192 bytes at offset 0
+8 KiB, 1 ops; 00.00 sec (35.995 MiB/sec and 4607.2970 ops/sec)
+$ hexdump -C test.raw
+00000000  17 17 17 17 17 17 17 17  17 17 17 17 17 17 17 17  |................|
+*
+00002000
+
+But with aio=native, it does not:
+$ ./qemu-io --image-opts -c 'read -P 23 0 8k' \
+    driver=file,filename=test.raw,cache.direct=on,aio=native
+Pattern verification failed at offset 0, 8192 bytes
+read 8192/8192 bytes at offset 0
+8 KiB, 1 ops; 00.00 sec (86.155 MiB/sec and 11027.7900 ops/sec)
+$ ./qemu-io --image-opts -c 'write -P 42 0 8k' \
+    driver=file,filename=test.raw,cache.direct=on,aio=native
+write failed: No space left on device
+$ hexdump -C test.raw
+00000000  2a 2a 2a 2a 2a 2a 2a 2a  2a 2a 2a 2a 2a 2a 2a 2a  |****************|
+*
+00001000  17 17 17 17 17 17 17 17  17 17 17 17 17 17 17 17  |................|
+*
+00002000
+
+This patch fixes that.
+
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+Message-ID: <20260324084338.37453-3-hreitz@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 7eca3d4883be8d328377001a9ea7ae9882b00f3c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/ftgmac100.c b/hw/net/ftgmac100.c
-index 1f524d7a01..abfb47a824 100644
---- a/hw/net/ftgmac100.c
-+++ b/hw/net/ftgmac100.c
-@@ -624,7 +624,10 @@ static void ftgmac100_do_tx(FTGMAC100State *s, uint64_t tx_ring,
-         bd.des0 &= ~FTGMAC100_TXDES0_TXDMA_OWN;
+diff --git a/block/linux-aio.c b/block/linux-aio.c
+index a315eb746c..d0f9bc389a 100644
+--- a/block/linux-aio.c
++++ b/block/linux-aio.c
+@@ -45,6 +45,10 @@ struct qemu_laiocb {
+     size_t nbytes;
+     QEMUIOVector *qiov;
  
-         /* Write back the modified descriptor.  */
--        ftgmac100_write_bd(&bd, addr);
-+        if (ftgmac100_write_bd(&bd, addr)) {
-+            s->isr |= FTGMAC100_INT_AHB_ERR;
-+            break;
-+        }
-         /* Advance to the next descriptor.  */
-         if (bd.des0 & s->txdes0_edotr) {
-             addr = tx_ring;
-@@ -1134,7 +1137,10 @@ static ssize_t ftgmac100_receive(NetClientState *nc, const uint8_t *buf,
-             bd.des0 |= flags | FTGMAC100_RXDES0_LRS;
-             s->isr |= FTGMAC100_INT_RPKT_BUF;
-         }
--        ftgmac100_write_bd(&bd, addr);
-+        if (ftgmac100_write_bd(&bd, addr)) {
-+            s->isr |= FTGMAC100_INT_AHB_ERR;
-+            break;
-+        }
-         if (bd.des0 & s->rxdes0_edorr) {
-             addr = s->rx_ring;
-         } else {
++    /* For handling short reads/writes */
++    size_t total_done;
++    QEMUIOVector resubmit_qiov;
++
+     int fd;
+     int type;
+     BdrvRequestFlags flags;
+@@ -74,28 +78,61 @@ struct LinuxAioState {
+ };
+ 
+ static void ioq_submit(LinuxAioState *s);
++static int laio_do_submit(struct qemu_laiocb *laiocb);
+ 
+ static inline ssize_t io_event_ret(struct io_event *ev)
+ {
+     return (ssize_t)(((uint64_t)ev->res2 << 32) | ev->res);
+ }
+ 
++/**
++ * Retry tail of short requests.
++ */
++static int laio_resubmit_short_io(struct qemu_laiocb *laiocb, size_t done)
++{
++    QEMUIOVector *resubmit_qiov = &laiocb->resubmit_qiov;
++
++    laiocb->total_done += done;
++
++    if (!resubmit_qiov->iov) {
++        qemu_iovec_init(resubmit_qiov, laiocb->qiov->niov);
++    } else {
++        qemu_iovec_reset(resubmit_qiov);
++    }
++    qemu_iovec_concat(resubmit_qiov, laiocb->qiov,
++                      laiocb->total_done, laiocb->nbytes - laiocb->total_done);
++
++    return laio_do_submit(laiocb);
++}
++
+ /*
+  * Completes an AIO request.
+  */
+ static void qemu_laio_process_completion(struct qemu_laiocb *laiocb)
+ {
+-    int ret;
++    ssize_t ret;
+ 
+     ret = laiocb->ret;
+     if (ret != -ECANCELED) {
+-        if (ret == laiocb->nbytes) {
++        if (ret == laiocb->nbytes - laiocb->total_done) {
+             ret = 0;
++        } else if (ret > 0 && (laiocb->type == QEMU_AIO_READ ||
++                               laiocb->type == QEMU_AIO_WRITE)) {
++            ret = laio_resubmit_short_io(laiocb, ret);
++            if (!ret) {
++                return;
++            }
+         } else if (ret >= 0) {
+-            /* Short reads mean EOF, pad with zeros. */
++            /*
++             * For normal reads and writes, we only get here if ret == 0, which
++             * means EOF for reads and ENOSPC for writes.
++             * For zone-append, we get here with any ret >= 0, which we just
++             * treat as ENOSPC, too (safer than resubmitting, probably, but not
++             * 100 % clear).
++             */
+             if (laiocb->type == QEMU_AIO_READ) {
+-                qemu_iovec_memset(laiocb->qiov, ret, 0,
+-                    laiocb->qiov->size - ret);
++                qemu_iovec_memset(laiocb->qiov, laiocb->total_done, 0,
++                                  laiocb->qiov->size - laiocb->total_done);
+             } else {
+                 ret = -ENOSPC;
+             }
+@@ -103,6 +140,9 @@ static void qemu_laio_process_completion(struct qemu_laiocb *laiocb)
+     }
+ 
+     laiocb->ret = ret;
++    if (laiocb->resubmit_qiov.iov) {
++        qemu_iovec_destroy(&laiocb->resubmit_qiov);
++    }
+ 
+     /*
+      * If the coroutine is already entered it must be in ioq_submit() and
+@@ -379,7 +419,11 @@ static int laio_do_submit(struct qemu_laiocb *laiocb)
+     struct iocb *iocbs = &laiocb->iocb;
+     QEMUIOVector *qiov = laiocb->qiov;
+     int fd = laiocb->fd;
+-    off_t offset = laiocb->offset;
++    off_t offset = laiocb->offset + laiocb->total_done;
++
++    if (laiocb->resubmit_qiov.iov) {
++        qiov = &laiocb->resubmit_qiov;
++    }
+ 
+     switch (laiocb->type) {
+     case QEMU_AIO_WRITE:
 -- 
 2.47.3
 
