@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16B48CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:10:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99867CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:10:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuMv-0002HL-Oh; Tue, 12 May 2026 17:10:21 -0400
+	id 1wMuHl-0007ls-SS; Tue, 12 May 2026 17:05:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuMp-0001ep-Me; Tue, 12 May 2026 17:10:15 -0400
+ id 1wMuGn-0003o5-7N; Tue, 12 May 2026 17:04:02 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuMn-0003jm-BN; Tue, 12 May 2026 17:10:15 -0400
+ id 1wMuGl-00088f-0G; Tue, 12 May 2026 17:04:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619302; bh=CMIISKtAozRrOZfl7oljL6zvYJNdXvkzoubSwfP4jS0=;
+ t=1778619279; bh=6V5+Hj3bIvptEvL5eLeiiqm5HnD/IjfEcLx4vNh3fEo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=VfWG1TZo/wBepagU1IzP9cZ7OCUqhOECJC62xEElVzemt6hAqlR3f2o2X4i0/f6CK
- COWy2FWmqOzuNs3tRZiOtoddaTZ6m3ogQgBHbk1QfIOwtPrkkgbN5PQAZPCN+zqW9P
- Ae4lTXBvQeBFcI7S893nx1T8KPj91V0QlKOgzgUwuwLNSEjlYJhVX/H00Zll/kVi2c
- CLpv/y98CxwgpS8jtvJ+weeMzfMyr4LkCeZyackEiqSIUJgLqh23H2UF5Gr8jbijfH
- mvqXyXNph8GMlb+O+vYnl8ykZT/APTvytrQNsu1643rh8zXmnbSCxOwaP+Y+E17SH3
- rUOu2ItiL3JMQ==
+ b=nnGe6Osli0I/8EW9ctIKS2Jka7rlYfNs7/+AFlSMLBkgDsKkL1YqWXRKnaiXMgX2O
+ AFXatafVC4+e5LJsh1+jXVdq27A51aKcEs09afFbzjZzr1RMnqoaR+g4qJryJey7r+
+ YoYKv44R8JRcOQKj3cARCMy/R+c3ykUneUaLV9igAsgRHE8wlpWzDFk1KVsw+ySUHx
+ SI1sQzuTISSTa0K/zM8yTOLRYr99tp8YQa0gSIvOA4exeKWO4/e/GBv6dsRcAdu+Xw
+ 3t546S1FRXGClMp8tQ6JMEE/95KALEAcBS9jSHV8UBndaWEuBvJw0U0bBUiUAmUd2z
+ QjNMlW9RoVbvg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9B62A1AA369;
- Tue, 12 May 2026 23:55:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 61D4C1AA327;
+ Tue, 12 May 2026 23:54:39 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A8A8F3ABCD9;
- Tue, 12 May 2026 23:55:06 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6ED6F3ABC98;
+ Tue, 12 May 2026 23:54:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 044/117] hw/net/rocker: Avoid double-free of
- l2_flood.group_ids
-Date: Tue, 12 May 2026 23:53:46 +0300
-Message-ID: <20260512205503.361097-44-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 091/107] linux-user: Allow getsockopt() with NULL
+ optval address
+Date: Tue, 12 May 2026 23:54:18 +0300
+Message-ID: <20260512205437.360850-91-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
-References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
+References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,40 +70,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Helge Deller <deller@gmx.de>
 
-In of_dpa_cmd_add_l2_flood(), we allocate memory for the
-group->l2_flood.group_ids array, freeing any previous array.
-However, in the error-exit path we free the group_ids memory but do
-not clear the pointer to NULL.  This means that if the guest causes
-us to take the error-exit path and then later call the function
-again, we will try again to free the memory we already freed.
+Some programs test availability of socket options by asking for the
+value with an NULL optval address, which currenrly always trigger an
+EFAULT in qemu.  Fix it by allowing a NULL address, in the same manner
+as the Linux kernel on physical machines.
 
-Fix this by clearing the group_ids pointer in the error exit
-path, so we maintain the invariant of "either it points at
-allocated memory, or it is NULL" (both being valid to g_free()).
-
-Cc: qemu-stable@nongnu.org
-Fixes: dc488f88806 ("rocker: add new rocker switch device")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3253
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260324193530.375628-1-peter.maydell@linaro.org
-(cherry picked from commit a0721c099b71f7bdfafa2675daee331d884163d2)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2390
+Signed-off-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+(cherry picked from commit 08dc3e240fc00213c0eb29b71569dc0ca9301337)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/rocker/rocker_of_dpa.c b/hw/net/rocker/rocker_of_dpa.c
-index 16b9bc7a4b..262ceb35f6 100644
---- a/hw/net/rocker/rocker_of_dpa.c
-+++ b/hw/net/rocker/rocker_of_dpa.c
-@@ -2054,6 +2054,7 @@ static int of_dpa_cmd_add_l2_flood(OfDpa *of_dpa, OfDpaGroup *group,
- err_out:
-     group->l2_flood.group_count = 0;
-     g_free(group->l2_flood.group_ids);
-+    group->l2_flood.group_ids = NULL;
-     g_free(tlvs);
- 
-     return err;
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 905db117ff..3a1b41e84b 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -2648,6 +2648,10 @@ get_timeout:
+             if (ret < 0) {
+                 return ret;
+             }
++            /* special case: destination address is NULL, return 0 */
++            if (optval_addr) {
++                len = 0;
++            }
+             if (len == sizeof(struct target__kernel_sock_timeval)) {
+                 if (copy_to_user_timeval64(optval_addr, &tv)) {
+                     return -TARGET_EFAULT;
+@@ -2848,7 +2852,10 @@ get_timeout:
+         }
+         if (len > lv)
+             len = lv;
+-        if (len == 4) {
++        if (!optval_addr) {
++            /* writing to NULL does not give error */
++            len = 0;
++        } else if (len == 4) {
+             if (put_user_u32(val, optval_addr))
+                 return -TARGET_EFAULT;
+         } else {
+@@ -2881,18 +2888,24 @@ get_timeout:
+                 return -TARGET_EINVAL;
+             lv = sizeof(lv);
+             ret = get_errno(getsockopt(sockfd, level, optname, &val, &lv));
++write_ret:
+             if (ret < 0)
+                 return ret;
+-            if (len < sizeof(int) && len > 0 && val >= 0 && val < 255) {
++            if (!optval_addr) {
++                len = 0;
++            } else if (len < sizeof(int) && len > 0 && val >= 0 && val < 255) {
+                 len = 1;
+-                if (put_user_u32(len, optlen)
+-                    || put_user_u8(val, optval_addr))
++                if (put_user_u8(val, optval_addr)) {
+                     return -TARGET_EFAULT;
++                }
+             } else {
+                 if (len > sizeof(int))
+                     len = sizeof(int);
+-                if (put_user_u32(len, optlen)
+-                    || put_user_u32(val, optval_addr))
++                if (put_user_u32(val, optval_addr)) {
++                    return -TARGET_EFAULT;
++                }
++            }
++            if (put_user_u32(len, optlen)) {
+                     return -TARGET_EFAULT;
+             }
+             break;
+@@ -2943,20 +2956,7 @@ get_timeout:
+                 return -TARGET_EINVAL;
+             lv = sizeof(lv);
+             ret = get_errno(getsockopt(sockfd, level, optname, &val, &lv));
+-            if (ret < 0)
+-                return ret;
+-            if (len < sizeof(int) && len > 0 && val >= 0 && val < 255) {
+-                len = 1;
+-                if (put_user_u32(len, optlen)
+-                    || put_user_u8(val, optval_addr))
+-                    return -TARGET_EFAULT;
+-            } else {
+-                if (len > sizeof(int))
+-                    len = sizeof(int);
+-                if (put_user_u32(len, optlen)
+-                    || put_user_u32(val, optval_addr))
+-                    return -TARGET_EFAULT;
+-            }
++            goto write_ret;
+             break;
+         default:
+             ret = -TARGET_ENOPROTOOPT;
+@@ -2990,8 +2990,14 @@ get_timeout:
+             if (ret < 0) {
+                 return ret;
+             }
+-            if (put_user_u32(lv, optlen)
+-                || put_user_u32(val, optval_addr)) {
++            if (optval_addr) {
++                if (put_user_u32(val, optval_addr)) {
++                    return -TARGET_EFAULT;
++                }
++            } else {
++                lv = 0;
++            }
++            if (put_user_u32(lv, optlen)) {
+                 return -TARGET_EFAULT;
+             }
+             break;
 -- 
 2.47.3
 
