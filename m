@@ -4,108 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A984CD37BE
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 May 2026 22:41:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5C2ECD484E
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 00:04:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMZJ2-0004g6-0S; Mon, 11 May 2026 18:40:56 -0400
+	id 1wMabB-0000dg-Aq; Mon, 11 May 2026 20:03:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tjeznach@rivosinc.com>)
- id 1wMZIx-0004fd-Ly
- for qemu-devel@nongnu.org; Mon, 11 May 2026 18:40:51 -0400
-Received: from mail-oo1-xc31.google.com ([2607:f8b0:4864:20::c31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tjeznach@rivosinc.com>)
- id 1wMZIt-0006LK-Ss
- for qemu-devel@nongnu.org; Mon, 11 May 2026 18:40:50 -0400
-Received: by mail-oo1-xc31.google.com with SMTP id
- 006d021491bc7-67e09232daeso2995901eaf.2
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 15:40:47 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778539246; cv=none;
- d=google.com; s=arc-20240605;
- b=cyzkjIHkuMyDT82N/4KAJw2ToP4Zo1bg3r04Ov+kAmsPAN+u3sECUnmOo8iVc4fkcj
- okum+MGv6k2vKDxlksnHmCMhGgKWjnWuGvSSzf+4zU5+XdLWJLbMwk7OdpSI/AtWVuCU
- OtlzVxKuchxyPrheIPbFFohIRLdz8CAYUc4j0buVHdlUP/hT7BvjD4XyChK6oE6yDo6w
- Q8yvnECq4nNP4/mvUCqBiQdq2jnWtldX4DyeliAH5peI6PHZ1G/OY7o4+10nWwtt3wLh
- DlkOkqlpgJKpFNEUqEqdCPX+g7IW04FBXQnkbhvgNlkbMPkb7B5ijl8wEMPqA1QRLG1E
- sP6Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=GhkU8+5bs4UWXG1s/Vnd0z3uRl3AdpD6g12lLRO3vPk=;
- fh=yLs/y4iP22pet4+Mvy0an+/WS5ihRi3m5FupHY8sfOk=;
- b=FhOkfRmgT5Fw0HoAaFjngxwN2MCMilODqHS1IkAHlhQzoI+2GQmnKal2ez2rGKm9Xw
- EUn8uUv/NOD2BU52INAMM0tOJ43crrCs8iKc6WDzzAwyL41hihJmzfg4r2kCzuC8YaDJ
- PQoNHc6kxfChFZjuECBm3rXoKIKlmW1oiO2l/1m82/QYTt+SKgcwOtQc76CVi2f9S2pi
- reWLQ8mO9cURTuEvIRe/cXGVBu/84eQaMXnezbm8y6oXXAICpSDSfFuLIednrAcMDCbS
- mf3JTrAnT06VtLagruEMGg6PNuKAuuxwjVgzYHUkz5XCqCtr/E4Q41/ZrbvM7yxVjW3t
- We3g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc.com; s=google; t=1778539246; x=1779144046; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GhkU8+5bs4UWXG1s/Vnd0z3uRl3AdpD6g12lLRO3vPk=;
- b=W33buQD8ZDqXS7BdWPB26XrzjggeiUKrVDuVNQy0Q9AO2mA2n7AOyws81N5gXoTV+y
- ptHHmBy/crth7s6nP8JMDkLV3ZH6ns6LwcGoTRj+gpgoGXcrVm9l9A5aSc+t2dO1YZm5
- EXgC6g19tTyHvFsU374VsI4G0S9SUZQ9zWBVMQFpiz7/znsFNmEPibb9yHoJ7F40MAfD
- KAFasJd7CeQugEFnNWdzS45BiUjrtVhivBa0tGHvX7fYam88q4PJF78kBmG2h/IG8rs/
- A33LS2BHYQWIa6MZDJbBBSsvE9rie7VWf9Mc8Hu+6qLTCwzCZhFDrIEw9x4+8+uwMRmW
- PDYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778539246; x=1779144046;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=GhkU8+5bs4UWXG1s/Vnd0z3uRl3AdpD6g12lLRO3vPk=;
- b=jsmOhxuCpPR9NHqGHIJ37sY8sKlilcLcBSTqjfs1clFpO0OdfL4abgPGeXuMJg3/9k
- FcWi5oGgLEzey4erZbfWaH9kGD/UBx4P3weyDUkEbShUFdH6M4LBlkPpyQO7lJwjdxJ9
- ilJXVZcvpQVaUyPWGxTnrpoCuS0oX4h4GzJPV9z2DyRGs3L2/vPql/t3Z07XtKCH67Op
- V+ClknwfpGlE3DNONjASeDTNVkl4cdYNq11HSw1Ew8UA/NXDdAOTf4bqGUxEyw+G6GkY
- bicBw1mAvOdo7Kjqpo31Pv3xQb/nuwIGMOhQrLWJdr3wBvgUQ4C6mouXMp9iYjnLmRu3
- IEIA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+4AUYXAkIdWkcKDUSMVlp83rcQ606TihBBXFOYfaqu1EuY45ivRavepKN3hDR+eUD4ieRpYE9vxpjX@nongnu.org
-X-Gm-Message-State: AOJu0YwJ1FlDVbgmQwwLDI2IN3UUjzKPKN248iugudgCA4JRPs6vpsWs
- SgpxhvZTigip1agy4FmmP1JoHK6+8IUmwABKUqnuuboU3tR5thqtx7BXPNKCtAiFQo3Zh/HS5aY
- SpwlIelOsPbC4gd6kWeuJ9EQZOtUg5ft740VmxutfQw==
-X-Gm-Gg: Acq92OHTQdROnfiI7suLT7dwg7jV58AR5GJyxZymuXuHROHOEdDs3nfTeH4HGLZFsNf
- tJZYcp6E9KB76VveWlpDBSAdxKlxZlgNJOrP4D1Yd4yNkaObqyxc46LwGk1lDbGkxt9wk61wWrz
- SXD1VLg7yTBZhqWY3QfEFGX/expKL3vPqtK8QkfTR2Z1nnohlSukW27O5eET7gxFwLp1+8Saajq
- 6QwgH6NJZUYj8/Bh5pe25kI7nU+SHHdk6IdLCPCEef3EbRLSNP4adCNkoqjk9oLC1G3blTMUZsb
- FkWX7RQ=
-X-Received: by 2002:a05:6820:f010:b0:696:8ccc:55a0 with SMTP id
- 006d021491bc7-69998d22f89mr15499646eaf.42.1778539246394; Mon, 11 May 2026
- 15:40:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1wMab9-0000dH-5S; Mon, 11 May 2026 20:03:43 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1wMab6-0005T1-Ra; Mon, 11 May 2026 20:03:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=MYxGCgPVawpwIS7htQV5qIYPtz9t3zNydcYz6OiWEhU=; b=nAYRWb0V4ewmQKnz
+ qmEqlDNr+1b5A+fY5ZKiu5wZj+JYwV+B1zg44WdGguIOqIVFQoI5lZJTGZq4morzzYlozt3vz4yHg
+ Fj0j2xGV08EXVbzN7NyW5JHLxAPf1wLj3DV1S+9S+wp5zJp3s6Nrnclo7w0X6ayyv+vxm8TcNDWjP
+ r3d5DCqkL9XiXFx24kmOuc4cwzgUmtpN9oE0JNtzvQhUoKJdnqHXlRwCGq7U+EviB5JHVcIyVQGuV
+ WrpJ2PBwK5xGVmm6qTji5qaBjN4pxp4FuIv/+UtJ6R4xWeCPz6Kt757P+FQbcHsX2khsohFLioD7v
+ 5BhXe7gLs0jJft45fw==;
+Received: from dg by mx.treblig.org with local (Exim 4.98.2)
+ (envelope-from <dg@treblig.org>) id 1wMab0-00000002P12-3G3n;
+ Tue, 12 May 2026 00:03:34 +0000
+Date: Tue, 12 May 2026 00:03:34 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Mateusz Nowicki <mateusz.nowicki@posteo.net>,
+ Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>, Eric Blake <eblake@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH 1/2] hw/nvme: add 'info nvme' HMP command
+Message-ID: <agJuVpu7EwtRNcMU@gallifrey>
+References: <cover.1778409416.git.mateusz.nowicki@posteo.net>
+ <f419a9cf97e79b5148c10cd0a3c138dccb5d36a0.1778409416.git.mateusz.nowicki@posteo.net>
 MIME-Version: 1.0
-References: <20260508205129.377032-1-andrew.jones@oss.qualcomm.com>
- <h6bbn25obwet4wvv5u4pjtdsndqjsywzsh5kojpv34ow73p5b7@vqnlfxfwbaqv>
- <CAH2o1u6XGcfXrAqREzAFQfi7uX3vStEjWKUdutESPgJdzhbKdA@mail.gmail.com>
- <7srjvclfyeoh56ofulv74vajeb2xx6abtnupmsofjzooljw4jl@mifjgm6kzhfh>
-In-Reply-To: <7srjvclfyeoh56ofulv74vajeb2xx6abtnupmsofjzooljw4jl@mifjgm6kzhfh>
-From: Tomasz Jeznach <tjeznach@rivosinc.com>
-Date: Mon, 11 May 2026 15:40:34 -0700
-X-Gm-Features: AVHnY4LbFM4bSHW12iNMEta8XmwkMmBGa16yIjNd_r3eC4HWkUWbkoo_zWXr6xQ
-Message-ID: <CAH2o1u7U6MDOCfgGA0wrhdWFjLshJe=G888KVUvMPMHymmcqXA@mail.gmail.com>
-Subject: Re: [PATCH] hw/riscv/riscv-iommu: Fix Svnapot 64KB pages
-To: Andrew Jones <andrew.jones@oss.qualcomm.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com, 
- palmer@dabbelt.com, daniel.barboza@oss.qualcomm.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c31;
- envelope-from=tjeznach@rivosinc.com; helo=mail-oo1-xc31.google.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <f419a9cf97e79b5148c10cd0a3c138dccb5d36a0.1778409416.git.mateusz.nowicki@posteo.net>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.12.85+deb13-amd64 (x86_64)
+X-Uptime: 00:02:13 up 11 days,  3:48,  3 users,  load average: 0.07, 0.06, 0.02
+User-Agent: Mutt/2.2.13 (2024-03-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,126 +74,199 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Drew,
+* Mateusz Nowicki (mateusz.nowicki@posteo.net) wrote:
+> Add an 'info nvme' HMP command for inspecting emulated NVMe
+> controllers from the QEMU monitor.
+> 
+> For each NVMe controller in the QOM tree the command prints:
+> 
+>   - PCI BDF, vendor/device ID and BAR0 base address;
+>   - Identify Controller fields visible to the host driver: SN, MN, FR
+>     and CNTLID;
+>   - the CC, CSTS and AQA registers (raw 32-bit values);
+>   - the number of admin and active I/O submission/completion queues.
+> 
+> Useful when debugging the Linux NVMe driver against the QEMU emulation
+> without attaching gdb to the QEMU process.
+> 
+> Example:
+> 
+>   (qemu) info nvme
+>   /machine/peripheral-anon/device[0]
+>     PCI:    BDF 00:04.0  VID=8086 DID=5845  BAR0=0x00000000feb50000
+>     ID:     SN=NVME0001  MN=QEMU NVMe Ctrl  FR=...  CNTLID=0x0000
+>     CC:     0x00460001
+>     CSTS:   0x00000001
+>     AQA:    0x001f001f
+>     Queues: 1 admin + 4 IO SQ / 4 IO CQ
 
-On Mon, May 11, 2026 at 2:07=E2=80=AFPM Andrew Jones
-<andrew.jones@oss.qualcomm.com> wrote:
->
-> On Mon, May 11, 2026 at 10:20:32AM -0700, Tomasz Jeznach wrote:
-> > Hi Drew,
-> >
-> > On Fri, May 8, 2026 at 2:29=E2=80=AFPM Andrew Jones
-> > <andrew.jones@oss.qualcomm.com> wrote:
-> > >
-> > > On Fri, May 08, 2026 at 03:51:29PM -0500, Andrew Jones wrote:
-> > > > The Svnapot extension encodes a 64KB leaf PTE by setting PTE_N and
-> > > > storing bits [3:0] of the PPN as a NAPOT size indicator. The IOMMU
-> > > > model wasn't checking PTE_N and therefore was using the raw (NAPOT-
-> > > > encoded) PPN directly in the physical address, yielding an address
-> > > > 32 KB above the correct base.
-> > > >
-> > > > Fix both riscv_iommu_spa_fetch() and pdt_memory_read() by mirroring
-> > > > the Svnapot handling already present in target/riscv/cpu_helper.c:
-> > > >
-> > > >   napot_bits  =3D ctz64(ppn) + 1          /* 4 for 64KB */
-> > > >   napot_mask  =3D (1 << napot_bits) - 1   /* 0xF */
-> > > >   phys_base   =3D PPN_PHYS(ppn & ~napot_mask)
-> > > >   page_offset =3D addr & (PPN_PHYS(napot_mask) | (TARGET_PAGE_SIZE =
-- 1))
-> > > >
-> > > > The spec only defines napot_bits =3D=3D 4 (64KB); any other value i=
-s
-> > > > treated as a reserved encoding.
-> > > >
-> > > > This is a fix, rather than new feature support, because the spec
-> > > > says "IOMMU implementations must support the Svnapot standard
-> > > > extension for NAPOT Translation Contiguity."
-> > > >
-> > > > Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
-> > > > Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
-> > >
-> > > I should have added
-> > >
-> > > Cc: qemu-stable@nongnu.org
-> > >
-> > > because as soon as [1] is merged into Linux Linux will no longer boot
-> > > on any QEMU build without this patch.
-> > >
-> > > [1] https://lore.kernel.org/all/20260508212339.381933-1-andrew.jones@=
-oss.qualcomm.com/
-> > >
-> > > Thanks,
-> > > drew
-> > >
-> > > > ---
-> > > >  hw/riscv/riscv-iommu.c | 44 ++++++++++++++++++++++++++++++++++++++=
-----
-> > > >  1 file changed, 40 insertions(+), 4 deletions(-)
-> > > >
-> > > > diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> > > > index 25a356d1d366..eb09cc974812 100644
-> > > > --- a/hw/riscv/riscv-iommu.c
-> > > > +++ b/hw/riscv/riscv-iommu.c
-> > > > @@ -237,6 +237,25 @@ static bool riscv_iommu_msi_check(RISCVIOMMUSt=
-ate *s, RISCVIOMMUContext *ctx,
-> > > >      return true;
-> > > >  }
-> > > >
-> > > > +/* Returns the NAPOT page mask, or 0 for reserved encodings. */
-> > > > +static hwaddr riscv_iommu_napot_page_mask(hwaddr ppn, hwaddr addr,=
- hwaddr *out)
-> > > > +{
-> > > > +    int napot_bits =3D ctz64(ppn) + 1;
-> > > > +    hwaddr napot_mask, page_mask;
-> > > > +
-> > > > +    /* The spec only defines 64KB (napot_bits =3D=3D 4) */
-> > > > +    if (napot_bits !=3D 4) {
-> > > > +        return 0;
-> > > > +    }
-> > > > +
-> > > > +    napot_mask =3D (1ULL << napot_bits) - 1;
-> > > > +    page_mask =3D PPN_PHYS(napot_mask) | (TARGET_PAGE_SIZE - 1);
-> > > > +
-> > > > +    *out =3D PPN_PHYS(ppn & ~napot_mask) | (addr & page_mask);
-> > > > +
-> > > > +    return page_mask;
-> > > > +}
-> > > > +
-> > > >  /*
-> > > >   * RISCV IOMMU Address Translation Lookup - Page Table Walk
-> > > >   *
-> > > > @@ -458,9 +477,20 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUSta=
-te *s, RISCVIOMMUContext *ctx,
-> > > >          } else {
-> > > >              /* Leaf PTE, translation completed. */
-> > > >              sc[pass].step =3D sc[pass].levels;
-> > > > -            base =3D PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - =
-1));
-> > > > -            /* Update address mask based on smallest translation g=
-ranularity */
-> > > > -            iotlb->addr_mask &=3D (1ULL << va_skip) - 1;
-> > > > +
-> > > > +            if (pte & PTE_N) {
-> >
-> > Would it be worth checking PTE_N only on the last level page table
-> > entry (sc[pass].step =3D=3D sc[pass].levels at the start of the block)?
-> >
->
-> Hi Tomasz,
->
-> I don't think we need it since we can't get here with non-zero napot bits
-> on a superpage due to the "Misaligned PPN" check above. And, if we get
-> past that and PTE_N is erroneously set, then we'll break from the loop
-> when riscv_iommu_napot_page_mask() returns zero, allowing us to fault on
-> the bad napot entry.
->
-> Thanks,
-> drew
+I won't claim to know what those NVMe magic numbers mean, but I'll
+trust you they're useful.
 
-Good point.
+> Signed-off-by: Mateusz Nowicki <mateusz.nowicki@posteo.net>
+> ---
+>  hmp-commands-info.hx | 13 ++++++++
+>  hw/nvme/meson.build  |  2 +-
+>  hw/nvme/monitor.c    | 76 ++++++++++++++++++++++++++++++++++++++++++++
+>  qapi/machine.json    | 17 ++++++++++
 
-Reviewed-by: Tomasz Jeznach <tjeznach@rivosinc.com>
+So that lot looks OK from an HMP point of view, I wonder if
+qapi/machine.json is the right place for it.  Markus?
 
-Thanks,
-- Tomasz
+Acked-by: Dr. David Alan Gilbert <dave@treblig.org>
+
+>  4 files changed, 107 insertions(+), 1 deletion(-)
+>  create mode 100644 hw/nvme/monitor.c
+> 
+> diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+> index 82134eb6c2..b984691c3c 100644
+> --- a/hmp-commands-info.hx
+> +++ b/hmp-commands-info.hx
+> @@ -340,6 +340,19 @@ SRST
+>      Show guest USB devices.
+>  ERST
+>  
+> +    {
+> +        .name       = "nvme",
+> +        .args_type  = "",
+> +        .params     = "",
+> +        .help       = "show emulated NVMe controllers",
+> +        .cmd_info_hrt = qmp_x_query_nvme,
+> +    },
+> +
+> +SRST
+> +  ``info nvme``
+> +    Show emulated NVMe controllers.
+> +ERST
+> +
+>      {
+>          .name       = "usbhost",
+>          .args_type  = "",
+> diff --git a/hw/nvme/meson.build b/hw/nvme/meson.build
+> index 7d5caa53c2..3017f058f9 100644
+> --- a/hw/nvme/meson.build
+> +++ b/hw/nvme/meson.build
+> @@ -1 +1 @@
+> -system_ss.add(when: 'CONFIG_NVME_PCI', if_true: files('ctrl.c', 'dif.c', 'ns.c', 'subsys.c', 'nguid.c'))
+> \ No newline at end of file
+> +system_ss.add(when: 'CONFIG_NVME_PCI', if_true: files('ctrl.c', 'dif.c', 'ns.c', 'subsys.c', 'nguid.c', 'monitor.c'))
+> \ No newline at end of file
+> diff --git a/hw/nvme/monitor.c b/hw/nvme/monitor.c
+> new file mode 100644
+> index 0000000000..95a6754437
+> --- /dev/null
+> +++ b/hw/nvme/monitor.c
+> @@ -0,0 +1,76 @@
+> +/*
+> + * QEMU NVMe Controller monitor commands
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qapi/error.h"
+> +#include "qapi/qapi-commands-machine.h"
+> +#include "qapi/type-helpers.h"
+> +#include "hw/pci/pci.h"
+> +
+> +#include "nvme.h"
+> +
+> +static int collect_one(Object *obj, void *opaque)
+> +{
+> +    GString *buf = opaque;
+> +    NvmeCtrl *n;
+> +    PCIDevice *pci;
+> +    pcibus_t bar0;
+> +    unsigned io_sq = 0, io_cq = 0;
+> +
+> +    if (!object_dynamic_cast(obj, TYPE_NVME)) {
+> +        return 0;
+> +    }
+> +    n = NVME(obj);
+> +    pci = PCI_DEVICE(n);
+> +    bar0 = pci_get_bar_addr(pci, 0);
+> +
+> +    for (unsigned i = 1; i <= n->params.max_ioqpairs; i++) {
+> +        if (n->sq && n->sq[i]) {
+> +            io_sq++;
+> +        }
+> +        if (n->cq && n->cq[i]) {
+> +            io_cq++;
+> +        }
+> +    }
+> +
+> +    g_string_append_printf(buf, "%s\n", object_get_canonical_path(obj));
+> +    g_string_append_printf(buf,
+> +        "  PCI:    BDF %02x:%02x.%x  VID=%04x DID=%04x  ",
+> +        pci_dev_bus_num(pci), PCI_SLOT(pci->devfn), PCI_FUNC(pci->devfn),
+> +        pci_get_word(pci->config + PCI_VENDOR_ID),
+> +        pci_get_word(pci->config + PCI_DEVICE_ID));
+> +    if (bar0 == PCI_BAR_UNMAPPED) {
+> +        g_string_append(buf, "BAR0=unmapped\n");
+> +    } else {
+> +        g_string_append_printf(buf, "BAR0=0x%016" PRIx64 "\n",
+> +                               (uint64_t)bar0);
+> +    }
+> +    g_string_append_printf(buf,
+> +        "  ID:     SN=%.20s  MN=%.40s  FR=%.8s  CNTLID=0x%04x\n",
+> +        n->id_ctrl.sn, n->id_ctrl.mn, n->id_ctrl.fr, n->cntlid);
+> +    g_string_append_printf(buf, "  CC:     0x%08x\n",
+> +                           ldl_le_p(&n->bar.cc));
+> +    g_string_append_printf(buf, "  CSTS:   0x%08x\n",
+> +                           ldl_le_p(&n->bar.csts));
+> +    g_string_append_printf(buf, "  AQA:    0x%08x\n",
+> +                           ldl_le_p(&n->bar.aqa));
+> +    g_string_append_printf(buf,
+> +        "  Queues: 1 admin + %u IO SQ / %u IO CQ\n", io_sq, io_cq);
+> +    return 0;
+> +}
+> +
+> +HumanReadableText *qmp_x_query_nvme(Error **errp)
+> +{
+> +    g_autoptr(GString) buf = g_string_new("");
+> +
+> +    object_child_foreach_recursive(object_get_root(), collect_one, buf);
+> +
+> +    if (buf->len == 0) {
+> +        g_string_append(buf, "no NVMe controllers\n");
+> +    }
+> +
+> +    return human_readable_text_from_str(buf);
+> +}
+> diff --git a/qapi/machine.json b/qapi/machine.json
+> index 685e4e29b8..d4a589e768 100644
+> --- a/qapi/machine.json
+> +++ b/qapi/machine.json
+> @@ -1772,6 +1772,23 @@
+>    'returns': 'HumanReadableText',
+>    'features': [ 'unstable' ] }
+>  
+> +##
+> +# @x-query-nvme:
+> +#
+> +# Query state of emulated NVMe controllers.
+> +#
+> +# Features:
+> +#
+> +# @unstable: This command is meant for debugging.
+> +#
+> +# Returns: NVMe controller state as human-readable text
+> +#
+> +# Since: 11.1
+> +##
+> +{ 'command': 'x-query-nvme',
+> +  'returns': 'HumanReadableText',
+> +  'features': [ 'unstable' ] }
+> +
+>  ##
+>  # @SmbiosEntryPointType:
+>  #
+> -- 
+> 2.53.0
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
