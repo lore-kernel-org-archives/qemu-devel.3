@@ -4,44 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69A15CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 20:57:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A652CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 20:57:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMu9m-0006Gx-NQ; Tue, 12 May 2026 16:56:47 -0400
+	id 1wMu9q-0006Zu-OM; Tue, 12 May 2026 16:56:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMu9k-0006Cy-V4; Tue, 12 May 2026 16:56:45 -0400
+ id 1wMu9o-0006Qg-PH; Tue, 12 May 2026 16:56:48 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMu9j-0003SJ-15; Tue, 12 May 2026 16:56:44 -0400
+ id 1wMu9m-0003T4-Kb; Tue, 12 May 2026 16:56:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619274; bh=CFdcyFhJMpa4dPXVqM5/4n6Qp9NEAF+U6RtvdELjvEU=;
+ t=1778619274; bh=S3KM7cORLEfFPxMRKe5a5pD8crq0Nnzzn+cbI8BdE6c=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=amcNs4CjlzARV1jwEhz2NItEazlsTtVPoTjQd5Sd9SWoD3IuFeC63YwWHHis+6CyJ
- WmGroWqOltyHvVX3Z3sfTkYMr5Nt6owUhwTp5I3GVaySMVSIi91TdJzsZnhqT4gtuW
- nih8kpMm8JIzCkyI8Vb+9/pSYeeuwCYkdfFxitxJZeLvFhJjZ1rugDPK5LDX6p8fS6
- oj6GTL7Fbwuplos0uncdcEXKQsXak6POQ88zekPlgEfnZOXfOvA8kstSFBDIt//3Fl
- SJ7mYNsmvV7cFXIPdkrBvnFT87kBY61N0e9aOmIuIcQZYVI2rK5RwRDHOX6nivhFDZ
- rBWIFJcfsC3fQ==
+ b=cXGGzJcCZRFNKN0/g8eUU1xwvY7OqipZkj17Q1cM3R8ajsQOnn1dpdTtZjcVvN1vn
+ Wf1OPVa7qg7CnRt256y6RlpC+kesEyjQINs9ZuCezJxfjlQ+SBagnKP2/jLTyYp1RC
+ ozO5CLhRdM7K4ujQxO/5jKbtlks3mfKt6n/w0jlVwaAffYxO70TUmK/wHrLqW8A6wP
+ BMwxq0gbBQ67SAAKh3oVOJH/tVXxZ2kS9jfWpR8t/EZ8b9Uk5dA8ryY5drf5fb6anh
+ sBaEHBSJJjOsxIuLxyUA47YRyeM2xsmNX0c31qgXEZV5NrC1UXfP7kdmMfKsYlGQ/Q
+ z8fsDD+r2THQg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BCC851AA2E2;
+ by isrv.corpit.ru (Postfix) with ESMTP id C9F8A1AA2E3;
  Tue, 12 May 2026 23:54:34 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id CA1173ABC53;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D7BE23ABC54;
  Tue, 12 May 2026 23:54:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 022/107] linux-user/i386/signal.c: Correct definition
- of target_fpstate_32
-Date: Tue, 12 May 2026 23:53:09 +0300
-Message-ID: <20260512205437.360850-22-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Tao Ding <dingtao0430@163.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 023/107] hw/dma/pl080: Fix transfer logic in PL080
+Date: Tue, 12 May 2026 23:53:10 +0300
+Message-ID: <20260512205437.360850-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
@@ -70,91 +68,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Tao Ding <dingtao0430@163.com>
 
-Our definition of the target_fpstate_32 struct doesn't match the
-kernel's version.  We only use this struct definition in the
-definition of 'struct sigframe', where it is used in a field that is
-present only for legacy reasons to retain the offset of the following
-'extramask' field.  So really all that matters is its length, and we
-do get that right; but our previous definition using
-X86LegacySaveArea implicitly added an extra alignment constraint
-(because X86LegacySaveArea is tagged as 16-aligned) which the real
-target_fpstate_32 does not have.  Because we allocate and use a
-'struct sigframe' on the guest's stack with the guest's alignment
-requirements, this resulted in the undefined-behaviour sanitizer
-complaining during 'make check-tcg' for i386-linux-user:
+The logic in the PL080 for transferring data has multiple bugs:
 
-../../linux-user/i386/signal.c:471:35: runtime error: member access within misaligned address 0x1000c07f75ec for type 'struct sigframe', which requires 16 byte alignment
-0x1000c07f75ec: note: pointer points here
-  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
-              ^
+ * The TransferSize field in the channel control register counts
+   in units of the source width; because our loop may do multiple
+   source loads if the destination width is greater than the
+   source width, we need to decrement it by (xsize / swidth),
+   not by 1, each loop
 
-../../linux-user/i386/signal.c:808:5: runtime error: member access within misaligned address 0x1000c07f75f4 for type 'struct target_sigcontext_32', which requires 8 byte alignment
-0x1000c07f75f4: note: pointer points here
-  0a 00 00 00 33 00 00 00  00 00 00 00 2b 00 00 00  2b 00 00 00 40 05 80 40  f4 7f 10 08 58 05 80 40
-              ^
+ * It is documented in the TRM that it is a software error to program
+   the source and destination width such that SWidth < DWidth and
+   TransferSize * SWidth is not a multiple of DWidth. (This would
+   mean that there isn't enough data to do a full final destination
+   write.) We weren't doing anything sensible with this case.
+   The TRM doesn't document what the hardware actually does (though
+   it drops some hints that suggest that it probably over-reads
+   from the source).
 
-and various similar errors.
+ * In the loop to write to the destination, each loop adds swidth
+   to  ch->dest for each loop and also uses (ch->dest + n) as the
+   destination address. This moves the destination address on
+   further than we should each time round the loop, and also
+   is incrementing ch->dest by swidth when it should be dwidth.
 
-Replace the use of X86LegacyXSaveArea with a set of fields that match
-the kernel _fpstate_32 struct, and assert that the length is correct.
-We could equally have used
-   uint8_t legacy_area[512];
-but following the kernel is probably less confusing overall.
+This patch fixes these problems:
+ * decrement TransferSize by the correct amount
+ * log and ignore the transfer size mismatch case
+ * correct the loop logic for the destination writes
 
-Since in target/i386/cpu.h we assert that X86LegacySaveArea is 512
-bytes, and in linux-user/i386/signal.c we assert that
-target_fregs_state is (32 + 80) bytes, the new assertion confirms
-that we didn't change the size of target_fpstate_32 here, only its
-alignment requirements.
+A repro case which exercises some of this is as follows.  It
+configures swidth to 1 byte, dwidth to 4 bytes, and transfer size 4,
+for a transfer from 0x00000000 to 0x000010000.  Examining the
+destination memory in the QEMU monitor should show that the
+source data 0x44332211 has all been copied, but before this
+fix it is not:
+
+    ./qemu-system-arm -M versatilepb -m 128M -nographic -S \
+    -device loader,addr=0x00000000,data=0x44332211,data-len=4 \
+    -device loader,addr=0x00001000,data=0x00000000,data-len=4 \
+    -device loader,addr=0x10130030,data=0x00000001,data-len=4 \
+    -device loader,addr=0x10130100,data=0x00000000,data-len=4 \
+    -device loader,addr=0x10130104,data=0x00001000,data-len=4 \
+    -device loader,addr=0x10130108,data=0x00000000,data-len=4 \
+    -device loader,addr=0x1013010C,data=0x9e47f004,data-len=4 \
+    -device loader,addr=0x10130110,data=0x0000c001,data-len=4
+
+Without this patch the QEMU monitor shows:
+    (qemu) xp /1wx 0x00001000
+    00001000: 0x00002211
+
+Correct result:
+    (qemu) xp /1wx 0x00001000
+    00001000: 0x44332211
 
 Cc: qemu-stable@nongnu.org
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Tao Ding <dingtao0430@163.com>
+[PMM: Wrote up what we are fixing in the commit message]
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260305161739.1775232-1-peter.maydell@linaro.org
-(cherry picked from commit 0376e9c2dd1f46dd779ebc85f40f7a8cfa46ed6f)
+(cherry picked from commit 5a2fa06b0957adad46ba1abe923bca04aad9a4d2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/i386/signal.c b/linux-user/i386/signal.c
-index 0f11dba831..b646fde431 100644
---- a/linux-user/i386/signal.c
-+++ b/linux-user/i386/signal.c
-@@ -60,10 +60,33 @@ struct target_fpx_sw_bytes {
- };
- QEMU_BUILD_BUG_ON(sizeof(struct target_fpx_sw_bytes) != 12*4);
+diff --git a/hw/dma/pl080.c b/hw/dma/pl080.c
+index 8b97cbb425..1eef71cb86 100644
+--- a/hw/dma/pl080.c
++++ b/hw/dma/pl080.c
+@@ -179,23 +179,28 @@ again:
+                               c, extract32(ch->ctrl, 21, 3));
+                 continue;
+             }
+-
+-            for (n = 0; n < dwidth; n+= swidth) {
++            if ((size * swidth) % dwidth) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                    "pl080: channel %d: transfer size mismatch: size=%d swidth=%d dwidth=%d\n",
++                    c, size, swidth, dwidth);
++                continue;
++            }
++            xsize = MAX(swidth, dwidth);
++            for (n = 0; n < xsize; n += swidth) {
+                 address_space_read(&s->downstream_as, ch->src,
+                                    MEMTXATTRS_UNSPECIFIED, buff + n, swidth);
+                 if (ch->ctrl & PL080_CCTRL_SI)
+                     ch->src += swidth;
+             }
+-            xsize = (dwidth < swidth) ? swidth : dwidth;
+             /* ??? This may pad the value incorrectly for dwidth < 32.  */
+             for (n = 0; n < xsize; n += dwidth) {
+-                address_space_write(&s->downstream_as, ch->dest + n,
++                address_space_write(&s->downstream_as, ch->dest,
+                                     MEMTXATTRS_UNSPECIFIED, buff + n, dwidth);
+                 if (ch->ctrl & PL080_CCTRL_DI)
+-                    ch->dest += swidth;
++                    ch->dest += dwidth;
+             }
  
-+struct fpxreg {
-+    uint16_t significand[4];
-+    uint16_t exponent;
-+    uint16_t padding[3];
-+};
-+
-+struct xmmreg {
-+    uint32_t element[4];
-+};
-+
-+/*
-+ * This corresponds to the kernel's _fpstate_32. Since we
-+ * only use it for the fpstate_unused padding section in
-+ * the target sigcontext, it doesn't actually matter what fields
-+ * we define here as long as we get the size right.
-+ */
- struct target_fpstate_32 {
-     struct target_fregs_state fpstate;
--    X86LegacyXSaveArea fxstate;
-+    uint32_t fxsr_env[6];
-+    uint32_t mxcsr;
-+    uint32_t reserved;
-+    struct fpxreg fxsr_st[8];
-+    struct xmmreg xmm[8];
-+    uint32_t padding1[44];
-+    uint32_t padding2[12]; /* aka sw_reserved */
- };
-+QEMU_BUILD_BUG_ON(sizeof(struct target_fpstate_32) != 32 + 80 + 512);
- 
- struct target_sigcontext_32 {
-     uint16_t gs, __gsh;
+-            size--;
++            size -= xsize / swidth;
+             ch->ctrl = (ch->ctrl & 0xfffff000) | size;
+             if (size == 0) {
+                 /* Transfer complete.  */
 -- 
 2.47.3
 
