@@ -4,47 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D22DACD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:39:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDFD5CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:39:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuWt-0000FO-4t; Tue, 12 May 2026 17:20:39 -0400
+	id 1wMuQn-0002pg-0I; Tue, 12 May 2026 17:14:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuWr-000056-Ix; Tue, 12 May 2026 17:20:37 -0400
+ id 1wMuQc-00024y-4C; Tue, 12 May 2026 17:14:10 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuWp-00007l-Ms; Tue, 12 May 2026 17:20:37 -0400
+ id 1wMuQa-0005Uc-7W; Tue, 12 May 2026 17:14:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619498; bh=favLerJjkR8u+IyO/lTJe1+072vjucbVd6lRH37CS3g=;
+ t=1778619305; bh=Q5smFhmGfV1eJoYo0hYO8uCEZYCYBG7+b+hXPxKbpaY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=BnwyEBQgITOrIPoUacjPPudMEtVB94B84GECWJR50N7AtbyRbiLFpS2VfY1d0L8uE
- fIDUSjMq5ZSFm/uu/xzDH6ifov2wOMOCPisessddCKYgX59jxHtzuFTppd+TF+FZWu
- WSpOVyOh/9DCS1PzTvPFnWHnmshZmHnCaKkHdXduIqATpyeI6DMge/yiDqVtWZrZfW
- veUkwb1mT9e6QpC+rhQTPV/vTVxC7jHibl6w5ZWNsVOjeVxGoAChXD29iIvDYh3Gmz
- YVUKyjOaUUU8cvy9IBQvuQbSBj5e9e4XuR6hbBpf+/MYYspVP/wgcLLxtsMQzclQRu
- ySc2lh5tQlnZQ==
+ b=p1l9JCsnkntechqSzMvuXjbbGy5GOjA1Mlu6LqEGs0SQIImfZrsywZIJ26bcEi1rU
+ Ndgwd+nppSsT3ijj6TnFBSeFshOhdmSJzazv9czZD3hBQ+542ncN2jztTtGK8ArCiL
+ kSZk4YpmOHoehqU2Tni2IqYzgyyeiJmhsnYiQpRfI7V9/Czzbb88TAUWFoxiKqSRJ4
+ LaDJnJlIxoQs/ypuVr6xuT0/El29xcAqugcVfTSwBo7it3++bAJdPYCArehcGvXkIS
+ gXXLCl/r2FU4OxLqmfiC8E7bctvvI64ntfb3Be5CTNZk30BK5qalAbTLsY4256LHDn
+ m3EyPqOU8oAVw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8AB881AA3E4;
- Tue, 12 May 2026 23:58:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2D55C1AA38E;
+ Tue, 12 May 2026 23:55:05 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 993B83ABD3C;
- Tue, 12 May 2026 23:58:22 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 37B403ABCFD;
+ Tue, 12 May 2026 23:55:09 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 25/58] linux-user: Add setsockopt() for
- SO_RCVTIMEO_NEW and SO_SNDTIMEO_NEW
-Date: Tue, 12 May 2026 23:57:46 +0300
-Message-ID: <20260512205820.361821-25-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Yixin Wei <easonwei1998@gmail.com>,
+ Yixin Wei <yixinwei@meta.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 080/117] linux-user: fix off-by-one in
+ host_to_target_for_each_rtattr()
+Date: Tue, 12 May 2026 23:54:22 +0300
+Message-ID: <20260512205503.361097-80-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
-References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,61 +72,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Yixin Wei <easonwei1998@gmail.com>
 
-Add handlers for both sockopts which use 64-bit time_t from userspace.
+host_to_target_for_each_rtattr() uses "len > sizeof(struct rtattr)"
+as its loop condition. When the last rtattr in a netlink message has
+exactly sizeof(struct rtattr) (4) bytes remaining, the loop exits
+without byte-swapping its rta_len and rta_type. A big-endian guest
+then reads rta_len in the wrong byte order and fails validation.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/885
+The companion function target_to_host_for_each_rtattr() correctly
+uses ">=" (added in commit fa2229dbf8). The kernel's RTA_OK macro
+also uses ">=". Fix the host_to_target direction to match.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2485
+Signed-off-by: Yixin Wei <yixinwei@meta.com>
+Fixes: 6c5b5645ae0 ("linux-user: add rtnetlink(7) support")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit edb4588309a753dea40f338fb8e02e3cfc2eed70)
+Cc: qemu-stable@nongnu.org
+(cherry picked from commit 029f10e852780da846d3e7f1691c495474683b73)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 8e96cc26db..751e6eabe5 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -1143,7 +1143,6 @@ static inline abi_long copy_to_user_timeval(abi_ulong target_tv_addr,
-     return 0;
- }
+diff --git a/linux-user/fd-trans.c b/linux-user/fd-trans.c
+index f83d1f79d5..1045ae7b1a 100644
+--- a/linux-user/fd-trans.c
++++ b/linux-user/fd-trans.c
+@@ -482,7 +482,7 @@ static abi_long host_to_target_for_each_rtattr(struct rtattr *rtattr,
+     unsigned short aligned_rta_len;
+     abi_long ret;
  
--#if defined(TARGET_NR_clock_adjtime64) && defined(CONFIG_CLOCK_ADJTIME)
- static inline abi_long copy_from_user_timeval64(struct timeval *tv,
-                                                 abi_ulong target_tv_addr)
- {
-@@ -1160,7 +1159,6 @@ static inline abi_long copy_from_user_timeval64(struct timeval *tv,
- 
-     return 0;
- }
--#endif
- 
- static inline abi_long copy_to_user_timeval64(abi_ulong target_tv_addr,
-                                               const struct timeval *tv)
-@@ -2391,6 +2389,25 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
-                                 &tv, sizeof(tv)));
-                 return ret;
-         }
-+        case TARGET_SO_RCVTIMEO_NEW:
-+        case TARGET_SO_SNDTIMEO_NEW:
-+        {
-+                struct timeval tv;
-+
-+                if (optlen != sizeof(struct target__kernel_sock_timeval)) {
-+                    return -TARGET_EINVAL;
-+                }
-+
-+                if (copy_from_user_timeval64(&tv, optval_addr)) {
-+                    return -TARGET_EFAULT;
-+                }
-+
-+                ret = get_errno(setsockopt(sockfd, SOL_SOCKET,
-+                                optname == TARGET_SO_RCVTIMEO_NEW ?
-+                                    SO_RCVTIMEO : SO_SNDTIMEO,
-+                                &tv, sizeof(tv)));
-+                return ret;
-+        }
-         case TARGET_SO_ATTACH_FILTER:
-         {
-                 struct target_sock_fprog *tfprog;
+-    while (len > sizeof(struct rtattr)) {
++    while (len >= sizeof(struct rtattr)) {
+         rta_len = rtattr->rta_len;
+         if (rta_len < sizeof(struct rtattr) ||
+             rta_len > len) {
 -- 
 2.47.3
 
