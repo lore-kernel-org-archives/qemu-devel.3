@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A407ECD4F24
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:47:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2695CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:47:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuif-0004R4-6p; Tue, 12 May 2026 17:32:49 -0400
+	id 1wMuRL-0005jM-38; Tue, 12 May 2026 17:14:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuiJ-00044U-RZ; Tue, 12 May 2026 17:32:30 -0400
+ id 1wMuR5-0005Cq-Nv; Tue, 12 May 2026 17:14:41 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuhb-0002EN-GU; Tue, 12 May 2026 17:32:27 -0400
+ id 1wMuR3-0005kw-Av; Tue, 12 May 2026 17:14:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619499; bh=F1ZjrKYiZq3Jun8XhqtVGKKyZHugcUCPVem+L/R0zQ4=;
+ t=1778619305; bh=3SPDU/MzEED/in/FPcMMdlRMZaMC11Nee7F0BCRqMtM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=XSxPa5DGMDpYoQM6f/2XQtu1i7KvvLSngKHAijY+Cyj1fnoGXTmn0Hrz920g9kNvo
- NAkAUCbFxhRMlP6Ub2oTs0W6/x4UyLbwoQC0O9lsbW/9+m5WgoMZjYyH+ZytUbyGGF
- sA6S7sEYhag5/OLU+Lesq/DwgUNKTw0Fvx+tZIlJOwb8xD6avWfdgB7JBlM3ElwLGn
- gUc0SmczYgJ3hv/M5pUf6oAvfsb3qWmQYb7vtmLOc/fEs+bVJBEVpoUMXDlyx6VnTq
- /WW6BXaDpe5reprVqdIH9b6yTMOYnPrlgoGvGTe1mwGu6GRmyCtpFz+/Y0ZSQyHWSs
- 0l72lPz3Qpz1g==
+ b=I4GV9AxF7suLI02Z3KEUm2XwLDzfqf0RxrNDzZ2XAdn3Bd/yH09xhPX+1RL47RWA4
+ 067yTId3Gf5a/gFnBX+iVqtSD1/vaVu6L6gilsd0NHfIXJ+5vGtvZ9xkbNtZR25IWk
+ YIIaz8h5czqDqrbpHlukvBSCi0mRLkcIgv27n58SQYQ9zTIyLNu/4Z1Nxg3mbT3Wh1
+ uGNHx0WgOPtHFEhVaSpnQg4jfA2rPDq8YzS4XjnTpZO7jcqIkFJhh47zrnyUoQZzYo
+ Gs0sCKgvX9EWCD9kyLjyTx5LiHf+Nz9+TGMS4pUI7LTjuycNdJSXq7D86G0zAGkRFN
+ qG8dlaVtrL1nw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 983D81AA3F3;
- Tue, 12 May 2026 23:58:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8BD041AA394;
+ Tue, 12 May 2026 23:55:05 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9C47F3ABD4B;
- Tue, 12 May 2026 23:58:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 999C33ABD03;
+ Tue, 12 May 2026 23:55:09 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
- Warner Losh <imp@bsdimp.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 40/58] linux-user: Flush errors by using exit()
- instead of _exit() in error path
-Date: Tue, 12 May 2026 23:58:01 +0300
-Message-ID: <20260512205820.361821-40-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 086/117] linux-user: Define SO_TIMESTAMP*_NEW and
+ SO_RCVTIMEIO_NEW
+Date: Tue, 12 May 2026 23:54:28 +0300
+Message-ID: <20260512205503.361097-86-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
-References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -71,29 +71,101 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Similiar to previous patch - ensure that we always flush I/O by using
-exit() instead of _exit().
+Define the entries which always use the 64-bit timestamps.
 
-Reported by: Tobias Bergkvist <tobias@bergkv.ist>
-Reviewed-by: Warner Losh <imp@bsdimp.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2544
 Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 9fb681792d65fa570cb3e1a769945c10bf276d25)
+(cherry picked from commit 8b60ed835478a787dd60e0f7308a65f6d35b0268)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/main.c b/linux-user/main.c
-index 84e110dfe9..86d04cca3c 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -975,7 +975,7 @@ int main(int argc, char **argv, char **envp)
-                       info, &bprm);
-     if (ret != 0) {
-         printf("Error while loading %s: %s\n", exec_path, strerror(-ret));
--        _exit(EXIT_FAILURE);
-+        exit(EXIT_FAILURE);
-     }
+diff --git a/linux-user/alpha/sockbits.h b/linux-user/alpha/sockbits.h
+index d54dc98c09..0201ab9374 100644
+--- a/linux-user/alpha/sockbits.h
++++ b/linux-user/alpha/sockbits.h
+@@ -75,6 +75,13 @@
+ /* Instruct lower device to use last 4-bytes of skb data as FCS */
+ #define TARGET_SO_NOFCS     43
  
-     for (wrk = target_environ; *wrk; wrk++) {
++#define TARGET_SO_TIMESTAMP_NEW        63
++#define TARGET_SO_TIMESTAMPNS_NEW      64
++#define TARGET_SO_TIMESTAMPING_NEW     65
++
++#define TARGET_SO_RCVTIMEO_NEW         66
++#define TARGET_SO_SNDTIMEO_NEW         67
++
+ /* TARGET_O_NONBLOCK clashes with the bits used for socket types.  Therefore we
+  * have to define SOCK_NONBLOCK to a different value here.
+  */
+diff --git a/linux-user/generic/sockbits.h b/linux-user/generic/sockbits.h
+index b3b4a8e44c..33e6c3a572 100644
+--- a/linux-user/generic/sockbits.h
++++ b/linux-user/generic/sockbits.h
+@@ -58,4 +58,12 @@
+ 
+ #define TARGET_SO_PROTOCOL             38
+ #define TARGET_SO_DOMAIN               39
++
++#define TARGET_SO_TIMESTAMP_NEW        63
++#define TARGET_SO_TIMESTAMPNS_NEW      64
++#define TARGET_SO_TIMESTAMPING_NEW     65
++
++#define TARGET_SO_RCVTIMEO_NEW         66
++#define TARGET_SO_SNDTIMEO_NEW         67
++
+ #endif
+diff --git a/linux-user/hppa/sockbits.h b/linux-user/hppa/sockbits.h
+index 23f69a3293..2304dbbf79 100644
+--- a/linux-user/hppa/sockbits.h
++++ b/linux-user/hppa/sockbits.h
+@@ -67,6 +67,13 @@
+ 
+ #define TARGET_SO_CNX_ADVICE           0x402E
+ 
++#define TARGET_SO_TIMESTAMP_NEW        0x4038
++#define TARGET_SO_TIMESTAMPNS_NEW      0x4039
++#define TARGET_SO_TIMESTAMPING_NEW     0x403A
++
++#define TARGET_SO_RCVTIMEO_NEW         0x4040
++#define TARGET_SO_SNDTIMEO_NEW         0x4041
++
+ /* TARGET_O_NONBLOCK clashes with the bits used for socket types.  Therefore we
+  * have to define SOCK_NONBLOCK to a different value here.
+  */
+diff --git a/linux-user/mips/sockbits.h b/linux-user/mips/sockbits.h
+index 562cad88e2..1f479d54aa 100644
+--- a/linux-user/mips/sockbits.h
++++ b/linux-user/mips/sockbits.h
+@@ -71,6 +71,13 @@
+ #define TARGET_SO_RCVBUFFORCE          33
+ #define TARGET_SO_PASSSEC              34
+ 
++#define TARGET_SO_TIMESTAMP_NEW        63
++#define TARGET_SO_TIMESTAMPNS_NEW      64
++#define TARGET_SO_TIMESTAMPING_NEW     65
++
++#define TARGET_SO_RCVTIMEO_NEW         66
++#define TARGET_SO_SNDTIMEO_NEW         67
++
+ /** sock_type - Socket types
+  *
+  * Please notice that for binary compat reasons MIPS has to
+diff --git a/linux-user/sparc/sockbits.h b/linux-user/sparc/sockbits.h
+index 0a822e3e1f..42ecfdc8f9 100644
+--- a/linux-user/sparc/sockbits.h
++++ b/linux-user/sparc/sockbits.h
+@@ -61,6 +61,13 @@
+ #define TARGET_SO_TIMESTAMPING         0x0023
+ #define TARGET_SCM_TIMESTAMPING        TARGET_SO_TIMESTAMPING
+ 
++#define TARGET_SO_TIMESTAMP_NEW        0x0046
++#define TARGET_SO_TIMESTAMPNS_NEW      0x0042
++#define TARGET_SO_TIMESTAMPING_NEW     0x0043
++
++#define TARGET_SO_RCVTIMEO_NEW         0x0044
++#define TARGET_SO_SNDTIMEO_NEW         0x0045
++
+ #define TARGET_SO_RXQ_OVFL             0x0024
+ 
+ #define TARGET_SO_WIFI_STATUS          0x0025
 -- 
 2.47.3
 
