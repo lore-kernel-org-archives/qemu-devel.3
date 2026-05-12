@@ -4,82 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 513E9CD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 05:56:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D0D3CD4851
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:06:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMg6B-0001l5-OK; Tue, 12 May 2026 01:56:07 -0400
+	id 1wMgFb-00032x-LA; Tue, 12 May 2026 02:05:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1wMg68-0001k4-MB; Tue, 12 May 2026 01:56:05 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wMgFV-0002zr-AF
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:05:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1wMg65-00048b-Bv; Tue, 12 May 2026 01:56:04 -0400
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:bf1f:0:640:c739:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id A370A805EC;
- Tue, 12 May 2026 08:55:54 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:803e:400:7dc2:21bd:2ba5:1314] (unknown
- [2a02:6bf:803e:400:7dc2:21bd:2ba5:1314])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id otC8TS1KGuQ0-5c70Vf3b; Tue, 12 May 2026 08:55:53 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1778565353;
- bh=bNbNTbpY+QRsyZBplhn06EnHhWzv8QAy+oIrLLN6J1Y=;
- h=In-Reply-To:Cc:Date:References:To:From:Subject:Message-ID;
- b=V76gEt0dR9PbOgFmd5NEpma+QPwEnJMQ/mbJZS8rj0FpFl5i4ezZXdHIPyUEgN7LG
- 6qAG/PoPkt078RSu7RLORmIlSq/C7RyZ37PMxMurho0q6ZK0s3kJw8KxI9o7NCsp45
- oMyNt+evnpeJvpP0uUG55UkuPeo33aLQOP4LwOhw=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <be99a7b5-1575-4da0-93dd-8460a77ddf77@yandex-team.ru>
-Date: Tue, 12 May 2026 10:55:50 +0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wMgFS-0001iX-CV
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:05:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778565933;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=lSRzAVXjgS0y1HIg4tO8zUh4ieqhsfxj8YuaBQZl3SM=;
+ b=IWfMXZ2w3ZmXZgmIjgKh2szYMV/DO65UV2nF2BeAcekqcEAneTFuBFopCvgKvTBCYVNq1Z
+ sDqvNs5NDsF9qbWYdINOdT3a8FSbLvayqAbYK9yn6MWYVieHxUvzCtlhyslhnzwWbAE5wo
+ UJDorsk+vGmYFG2vI8LCI7HnL4vVZQE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-75-mZcCwZfyMFSL2T63DBIDTg-1; Tue,
+ 12 May 2026 02:05:31 -0400
+X-MC-Unique: mZcCwZfyMFSL2T63DBIDTg-1
+X-Mimecast-MFC-AGG-ID: mZcCwZfyMFSL2T63DBIDTg_1778565930
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B2C5B19560B0; Tue, 12 May 2026 06:05:30 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.32.107])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E017718004A3; Tue, 12 May 2026 06:05:29 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 9ADD318000A7; Tue, 12 May 2026 08:05:23 +0200 (CEST)
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, Feifan Qian <bea1e@proton.me>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH] hw/uefi: check auth.hdr_length minimum size
+Date: Tue, 12 May 2026 08:05:23 +0200
+Message-ID: <20260512060523.17493-1-kraxel@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/5] vhost-user: add skip_drain param to GET_VRING_BASE
-From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-To: Raphael Norwitz <rnorwitz@nvidia.com>, qemu-devel@nongnu.org
-Cc: "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Milan Zamazal <mzamazal@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Jason Wang <jasowang@redhat.com>, qemu-block@nongnu.org,
- Fam Zheng <fam@euphon.net>, zhenwei pi <zhenwei.pi@linux.dev>,
- Hanna Reitz <hreitz@redhat.com>, virtio-fs@lists.linux.dev,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
- Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-References: <20260330095226.158386-1-dtalexundeer@yandex-team.ru>
- <20260330095226.158386-6-dtalexundeer@yandex-team.ru>
- <613f140f-de27-4f83-8a02-5370833dd659@nvidia.com>
- <965db8ae-b44a-4b29-b006-56e8474d52b5@yandex-team.ru>
- <c9082536-6b4b-4e9a-a6ff-764dbbf649c9@nvidia.com>
- <19b0aa2e-90dc-4467-acc8-adc0bec7c388@yandex-team.ru>
- <1c6af04b-9efd-4d07-ab5c-e6d616818c2c@nvidia.com>
- <9fb43ec4-7825-4382-991f-a2cc17142138@yandex-team.ru>
-Content-Language: en-US
-In-Reply-To: <9fb43ec4-7825-4382-991f-a2cc17142138@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -91,263 +81,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gentle ping :)
+auth.hdr_length maximum is already checked (against buffer size).  The
+header has some fixed fields which are included in the header length, so
+there also is a minimum size which must be verified.  Add a check for
+that.  Fixes possible integer underflow.
 
-On 4/27/26 16:15, Alexandr Moshkov wrote:
->
-> On 4/24/26 17:52, Raphael Norwitz wrote:
->>
->>
->> On 4/24/26 4:57 AM, Alexandr Moshkov wrote:
->>> Thanks for reply!
->>>
->>> On 4/23/26 19:15, Raphael Norwitz wrote:
->>>>
->>>>
->>>> On 4/16/26 5:26 AM, Alexandr Moshkov wrote:
->>>>> Greetings! Thanks for reply!
->>>>>
->>>>>
->>>>> On 4/15/26 20:21, Raphael Norwitz wrote:
->>>>>> I’m not sure I like using the num field in vhost_vring_state to 
->>>>>> set magic values which affect protocol behavior for 
->>>>>> GET_VRING_BASE. It feels like a hack to me. I would think the 
->>>>>> proper solution if we want to support migration from new to old 
->>>>>> would be to have new use a different new message entirely. Can we 
->>>>>> do that?
->>>>>
->>>>> I think we can, but I thought at first that this will be almost a 
->>>>> complete copy of GET_VRING_BASE message, with the exception of 
->>>>> waiting for drain of requests, so I choose to expand existing 
->>>>> message.
->>>>>
->>>>
->>>> I think a new message would be cleaner. Anyone else have thoughts?
->>>>
->>>>> If this is not an appropriate approach, is it better to make a new 
->>>>> message like GET_VRING_BASE or a separate message used together 
->>>>> with default GET_VRING_BASE message (for example, message for 
->>>>> setting some kind of status on the server)? What should I name 
->>>>> this new message?
->>>>>
->>>>
->>>> Maybe GET_VRING_BASE_SKIP_DRAIN? How would a separate message used 
->>>> together with default GET_VRING_BASE message work? 
->>>
->>> I was thinking about a message something like SET_VRING_ENABLE - for 
->>> example SET_SKIP_DRAIN_ENABLE, that would enable/disable some state 
->>> (skip_drain) in the backend.
->>
->> I'd need to see the flow in more detail but sounds promising.
->
-> On migration vhost-user-blk firstly send SET_SKIP_DRAIN_ENABLE with 
-> num = 1 message if `inflight-migration` device parameter 
-> and VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT enabled. Then send 
-> GET_VRING_BASE and continue work as usual.
->
-> On SET_SKIP_DRAIN_ENABLE backend sets inner state (skip_drain) so when 
-> GET_VRING_BASE is called and skip_drain is true the drain will skipped.
->
-> What do you think?
->
->>
->>>
->>>>
->>>>> I also fix other comments, thanks!
->>>>>
->>>>>>
->>>>>> On 3/30/26 11:52 AM, Alexandr Moshkov wrote:
->>>>>>> In case of migration of QEMU from the new version (where the
->>>>>>> inllight-migration parameter is present), to the old one (where 
->>>>>>> it is
->>>>>>
->>>>>> nit: spelling inllight-migration
->>>>>>
->>>>>>> absent) there is no way to disable this feature on the backend 
->>>>>>> during
->>>>>>> runtime.
->>>>>>>
->>>>>>> This commit slightly changes the semantics of the protocol feature
->>>>>>> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT. Enabling this 
->>>>>>> feature
->>>>>>> adds a new parameter for GET_VRING_BASE, which allows to control 
->>>>>>> the
->>>>>>> drain in-flight requests on the backend.
->>>>>>> Thus, QEMU will be able to turn this feature on GET_VRING_BASE 
->>>>>>> off and
->>>>>>> on anytime.
->>>>>>>
->>>>>>> In vhost-user-blk use inflight_migration param to enable 
->>>>>>> skip_drain to
->>>>>>> suspend in-flight I/O requests, and then migrate them throught 
->>>>>>> inflight
->>>>>>> subsection.
->>>>>>>
->>>>>>> Also now QEMU will always try to setup
->>>>>>> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT protocol featrue with
->>>>>>> backend. This will allow to use skip_drain parameter on 
->>>>>>> GET_VRING_BASE
->>>>>>> message.
->>>>>>>
->>>>>>> Reviewed-by: Vladimir Sementsov-Ogievskiy 
->>>>>>> <vsementsov@yandex-team.ru>
->>>>>>> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
->>>>>>> ---
->>>>>>>   docs/interop/vhost-user.rst    |  6 ++----
->>>>>>>   hw/block/vhost-user-blk.c      | 30 
->>>>>>> ++++++++++++++++++++++++------
->>>>>>>   hw/virtio/vhost-user.c         |  3 +--
->>>>>>>   hw/virtio/vhost.c              |  1 +
->>>>>>>   include/hw/virtio/vhost-user.h |  1 -
->>>>>>>   5 files changed, 28 insertions(+), 13 deletions(-)
->>>>>>>
->>>>>>> diff --git a/docs/interop/vhost-user.rst 
->>>>>>> b/docs/interop/vhost-user.rst
->>>>>>> index bfa75ff9a3..63efc87264 100644
->>>>>>> --- a/docs/interop/vhost-user.rst
->>>>>>> +++ b/docs/interop/vhost-user.rst
->>>>>>> @@ -1255,14 +1255,12 @@ Front-end message types
->>>>>>>     *suspended*, see :ref:`Suspended device state
->>>>>>>     <suspended_device_state>`.
->>>>>>>   -  The request payload's *num* field is currently reserved and 
->>>>>>> must be
->>>>>>> -  set to 0.
->>>>>>> -
->>>>>>>     By default, the back-end must complete all inflight I/O 
->>>>>>> requests for the
->>>>>>>     specified vring before stopping it.
->>>>>>>       If the ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT`` 
->>>>>>> protocol
->>>>>>> -  feature has been negotiated, the back-end may suspend 
->>>>>>> in-flight I/O
->>>>>>> +  feature has been negotiated, using request payload's *num* 
->>>>>>> field,
->>>>>>> +  when *num* is set to 1, QEMU can tell the back-end to suspend 
->>>>>>> in- flight I/O
->>>>>>>     requests and record them as described in :ref:`Inflight I/O 
->>>>>>> tracking
->>>>>>>     <inflight_io_tracking>` instead of completing them before 
->>>>>>> stopping the vring.
->>>>>>>     How to suspend an in-flight request depends on the 
->>>>>>> implementation of the back-end
->>>>>>> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
->>>>>>> index a3ecd83f54..522e9d34b5 100644
->>>>>>> --- a/hw/block/vhost-user-blk.c
->>>>>>> +++ b/hw/block/vhost-user-blk.c
->>>>>>> @@ -134,10 +134,7 @@ static bool 
->>>>>>> vhost_user_blk_inflight_needed(void *opaque)
->>>>>>>   {
->>>>>>>       struct VHostUserBlk *s = opaque;
->>>>>>>   -    bool inflight_migration = virtio_has_feature(s- 
->>>>>>> >dev.protocol_features,
->>>>>>> - VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
->>>>>>> -
->>>>>>> -    return inflight_migration;
->>>>>>> +    return s->inflight_migration;
->>>>>>>   }
->>>>>>>     @@ -232,11 +229,14 @@ static int 
->>>>>>> vhost_user_blk_stop(VirtIODevice *vdev)
->>>>>>>           return 0;
->>>>>>>       }
->>>>>>>   +    bool skip_drain = vhost_user_blk_inflight_needed(s) &&
->>>>>>
->>>>>> nit: declarations on top
->>>>>>
->>>>>>> + runstate_check(RUN_STATE_FINISH_MIGRATE);
->>>>>>> +
->>>>>>>       force_stop = s->skip_get_vring_base_on_force_shutdown &&
->>>>>>>                    qemu_force_shutdown_requested();
->>>>>>>         ret = force_stop ? vhost_dev_force_stop(&s->dev, vdev, 
->>>>>>> true) :
->>>>>>> -                       vhost_dev_stop(&s->dev, vdev, true, false);
->>>>>>> +                       vhost_dev_stop(&s->dev, vdev, true, 
->>>>>>> skip_drain);
->>>>>>>         if (k->set_guest_notifiers(qbus->parent, s->dev.nvqs, 
->>>>>>> false) < 0) {
->>>>>>>           error_report("vhost guest notifier cleanup failed: 
->>>>>>> %d", ret);
->>>>>>> @@ -364,7 +364,6 @@ static int 
->>>>>>> vhost_user_blk_connect(DeviceState *dev, Error **errp)
->>>>>>>       vhost_dev_set_config_notifier(&s->dev, &blk_ops);
->>>>>>>         s->vhost_user.supports_config = true;
->>>>>>> -    s->vhost_user.supports_inflight_migration = s- 
->>>>>>> >inflight_migration;
->>>>>>>       ret = vhost_dev_init(&s->dev, &s->vhost_user, 
->>>>>>> VHOST_BACKEND_TYPE_USER, 0,
->>>>>>>                            errp);
->>>>>>>       if (ret < 0) {
->>>>>>> @@ -580,10 +579,29 @@ static struct vhost_dev 
->>>>>>> *vhost_user_blk_get_vhost(VirtIODevice *vdev)
->>>>>>>       return &s->dev;
->>>>>>>   }
->>>>>>>   +static bool vhost_user_blk_pre_save(void *opaque, Error **errp)
->>>>>>> +{
->>>>>>> +    VHostUserBlk *s = VHOST_USER_BLK(opaque);
->>>>>>> +
->>>>>>> +    bool inflight_migration_enabled = virtio_has_feature(
->>>>>>> +        s->dev.protocol_features,
->>>>>>> + VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
->>>>>>> +    if (vhost_user_blk_inflight_needed(s) && ! 
->>>>>>> inflight_migration_enabled) {
->>>>>>> +        error_setg(errp, "can't migrate vhost-user-blk device: "
->>>>>>> +                         "backend doesn't support "
->>>>>>> + "VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT "
->>>>>>> +                         "protocol feature");
->>>>>>> +        return false;
->>>>>>> +    }
->>>>>>> +
->>>>>>> +    return true;
->>>>>>> +}
->>>>>>> +
->>>>>>>   static const VMStateDescription 
->>>>>>> vmstate_vhost_user_blk_inflight = {
->>>>>>>       .name = "vhost-user-blk/inflight",
->>>>>>>       .version_id = 1,
->>>>>>>       .needed = vhost_user_blk_inflight_needed,
->>>>>>> +    .pre_save_errp = vhost_user_blk_pre_save,
->>>>>>>       .fields = (const VMStateField[]) {
->>>>>>>           VMSTATE_VHOST_INFLIGHT_REGION(inflight, VHostUserBlk),
->>>>>>>           VMSTATE_END_OF_LIST()
->>>>>>> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
->>>>>>> index bb8f8eab77..ed95ec7523 100644
->>>>>>> --- a/hw/virtio/vhost-user.c
->>>>>>> +++ b/hw/virtio/vhost-user.c
->>>>>>> @@ -2225,8 +2225,7 @@ static int vhost_user_backend_init(struct 
->>>>>>> vhost_dev *dev, void *opaque,
->>>>>>>               }
->>>>>>>           }
->>>>>>>   -        if (!u->user->supports_inflight_migration ||
->>>>>>> -            !virtio_has_feature(protocol_features,
->>>>>>> +        if (!virtio_has_feature(protocol_features,
->>>>>>> VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD)) {
->>>>>>>               protocol_features &= ~(1ULL <<
->>>>>>> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
->>>>>>> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
->>>>>>> index ac4d6fca73..54e4ce2660 100644
->>>>>>> --- a/hw/virtio/vhost.c
->>>>>>> +++ b/hw/virtio/vhost.c
->>>>>>> @@ -1398,6 +1398,7 @@ static int do_vhost_virtqueue_stop(struct 
->>>>>>> vhost_dev *dev,
->>>>>>>       int vhost_vq_index = 
->>>>>>> dev->vhost_ops->vhost_get_vq_index(dev, idx);
->>>>>>>       struct vhost_vring_state state = {
->>>>>>>           .index = vhost_vq_index,
->>>>>>> +        .num = skip_drain,
->>>>>>>       };
->>>>>>>       int r = 0;
->>>>>>>   diff --git a/include/hw/virtio/vhost-user.h 
->>>>>>> b/include/hw/virtio/ vhost-user.h
->>>>>>> index 53fe996686..c95bad5ddc 100644
->>>>>>> --- a/include/hw/virtio/vhost-user.h
->>>>>>> +++ b/include/hw/virtio/vhost-user.h
->>>>>>> @@ -69,7 +69,6 @@ typedef struct VhostUserState {
->>>>>>>       GPtrArray *notifiers;
->>>>>>>       int memory_slots;
->>>>>>>       bool supports_config;
->>>>>>> -    bool supports_inflight_migration;
->>>>>>>   } VhostUserState;
->>>>>>>     /**
->>>>>>
->>>>
->>
+While being at it replace the magic number '24' with sizeof calculations
+for better code documentation.
+
+Fixes: CVE-2026-8341
+Fixes: f1488fac0584 ("hw/uefi: add var-service-auth.c")
+Reported-by: Feifan Qian <bea1e@proton.me>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ hw/uefi/var-service-auth.c  | 5 ++++-
+ hw/uefi/var-service-pkcs7.c | 4 ++--
+ 2 files changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/hw/uefi/var-service-auth.c b/hw/uefi/var-service-auth.c
+index 795f2f54e4ab..f3dc9c6ca608 100644
+--- a/hw/uefi/var-service-auth.c
++++ b/hw/uefi/var-service-auth.c
+@@ -194,7 +194,7 @@ static efi_status uefi_vars_check_auth_2_sb(uefi_vars_state *uv,
+         return EFI_SUCCESS;
+     }
+ 
+-    if (auth.hdr_length == 24) {
++    if (auth.hdr_length == (sizeof(auth) - sizeof(auth.timestamp))) {
+         /* no signature (auth->cert_data is empty) */
+         return EFI_SECURITY_VIOLATION;
+     }
+@@ -228,6 +228,9 @@ efi_status uefi_vars_check_auth_2(uefi_vars_state *uv, uefi_variable *var,
+     }
+     memcpy(&auth, data, sizeof(auth));
+ 
++    if (auth.hdr_length < (sizeof(auth) - sizeof(auth.timestamp))) {
++        return EFI_SECURITY_VIOLATION;
++    }
+     if (uadd64_overflow(sizeof(efi_time), auth.hdr_length, &data_offset)) {
+         return EFI_SECURITY_VIOLATION;
+     }
+diff --git a/hw/uefi/var-service-pkcs7.c b/hw/uefi/var-service-pkcs7.c
+index c859743e8677..8a1f1395a2fb 100644
+--- a/hw/uefi/var-service-pkcs7.c
++++ b/hw/uefi/var-service-pkcs7.c
+@@ -113,9 +113,9 @@ static gnutls_datum_t *build_pkcs7(void *data)
+ 
+     memcpy(&auth, data, sizeof(auth));
+     pkcs7 = g_new(gnutls_datum_t, 1);
+-    pkcs7->size = auth.hdr_length - 24;
++    pkcs7->size = auth.hdr_length - (sizeof(auth) - sizeof(auth.timestamp));
+     pkcs7->data = g_malloc(pkcs7->size);
+-    memcpy(pkcs7->data, data + 16 + 24, pkcs7->size);
++    memcpy(pkcs7->data, data + sizeof(auth), pkcs7->size);
+ 
+     wrap_pkcs7(pkcs7);
+ 
+-- 
+2.54.0
+
 
