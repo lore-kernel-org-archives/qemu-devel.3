@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39F00CD4F24
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:27:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0BF6CD4851
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:28:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMgZY-0008Bx-Q8; Tue, 12 May 2026 02:26:29 -0400
+	id 1wMgaH-0001pQ-FD; Tue, 12 May 2026 02:27:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgZV-0007sT-H9
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:26:25 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgZk-00015e-FK
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:26:44 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgZT-0007fG-Tj
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:26:25 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-488b0046078so42222825e9.1
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 23:26:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgZh-0007zh-Vd
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:26:39 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-43d734223e4so3147071f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 23:26:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778567182; x=1779171982; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778567195; x=1779171995; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=XA6XU+mWL7el+eRZO54pQpgH1NRB+GKgyK982sGAvAk=;
- b=cHqUbN36VzdQ60PMXASTUE0EjVmeLf6L44IFJDi+vky2YQnAghCu0QzP9IRxiMwOhi
- 7CY4ikWnNVoH2ag7eBtm1lXgvsfHASQxeQj6fYZWu180DqBe0+5XO994Jw6c1S9rt4SX
- K0tGgTbbE/x9wuxPDBowlWNgjNU1FuGzIVDr7HEHk8dwMV5WelQnSq/oWjaevf03WvFu
- 9bqiOMbZll2d2WTcC2rTv0Ugm/XFCE4guvYfTX6gdByLus6seaEy1a3ueC5oVDT7LoHN
- 6ur2IDiEfSbbpMwbw8pjjP9eJk/K+I5E0jv4GuIjgoRdXWUV4DCOdgRsDF00L8yRMOpy
- fOVg==
+ :reply-to; bh=s1ugNJYOLmq0RMJfysTgh5azhOcAvfEAh2lvllhKwK4=;
+ b=qHdKraGOPSSbyVrKeZqkBfdj4e7tG06EM+jO0NUHDrKN3F4R9F6l6VK1qK3gs7uQHe
+ At+dO7UqY96m72asvAtcKtVarQs74cq0S6an7GS9vlzRebz8SGgQB9iOxRATPpn0mHIy
+ SYpD79IcO14yJghXzbWtuc1ygC4qp8Li3q6o2c2ZlbU6QVFxAYfaWfellZe0T3TnwQy7
+ LufT1CrQA5dk/5V8bFnXGRx5E5ZoIqSi8IGpT+fcTZ7yc4aUI8BzuYptR/eMVto9FkyF
+ zGw1OLAOPDOtiyhM0BD7lcafDPWSawVxsI5hIYG99g/DAq0w77HozwJ5ASmotVPxoC8H
+ p+qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778567182; x=1779171982;
+ d=1e100.net; s=20251104; t=1778567195; x=1779171995;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=XA6XU+mWL7el+eRZO54pQpgH1NRB+GKgyK982sGAvAk=;
- b=j15LQNP2MdZ3UbbIGw44YznRL+3qk4ZNPUg8Nw01N5hdXhqCMtWFVlWN0lbEGfuV2b
- NT2Du/iSbZ+2vIHEo48e7Q1FGJmqv2gMTaS4KQFf/zRj5uzqyopjHWW8OeS1ZbPM0/9H
- 0N3ZhqyzyxT7XjS+wDCdsdx6S9E+6KqO+y9R5hWgCb56RbheuU5+NaAGqyubAtp4bg8f
- jI2fFvVachnhReIFV8SkBA09sFxn9Vbz/VKsKPvqIYFkmNHx362SISJF03gM3aB+A0fI
- SGUGYA2B8HpIwc5oc7/Ked9J7djJq05L7LKxU1FWnr6O3NOH2QNR/USgf32xGzEyaut0
- 3OCg==
-X-Gm-Message-State: AOJu0YyoYfNBdMuFyJZyj6A5R6xUy9XAbei3e0DL9L1Etxo6qF+Ce61Q
- JIsqNd7dlmGRutj7FqyrvaDHz/b4/7pqR2pGKK1Aiwt64SoDPGnwIUmW4AaIFh90fWvdv6QWyFS
- +/n+zRMI=
-X-Gm-Gg: Acq92OG5SlMGYlVsxsZEBYLFT2wJ5Bkm9XfbLmchhir5QDhhGxocyTIWNooHS7cmOjH
- UWFXuULhyQ1iHML5xZTacZBMLLYhDVajPHDrejPHnfZn0vtBVvTNaojtg8etLmLp8v9GRDPeGuK
- uWPXQdBcXoCQuXZs8LWiCf2JDdrnGGrU5g7Yp1RhQeRyygmfDNKI/Gpbw8RQcwKL15uC+/8b0HZ
- r/MI94ElSeoWcncvkhDtO3Bibil+K1Ka8RgdN7/DGDZSKFeLTfZS6Ha1ES/EmT3bWUE0oJE6by/
- QXjculbgv9FJgxmlnU3raXszZV7SxgwFhIhb7KhE1xphRUdIwvJkLC8O/mXalVW00IUazmY+tj6
- v8qJSBsPwkC51dBm4sanfCrAMa1+ZED42Lvahn/8BYJNoxHjtzGrXMlL36b9nQPJFbieOjDG0VS
- ycfylUdsVUrijSXiO6PajrVLcmG7PxOLXADZOrs0zuIPAnnmWXNJ8rIVkR2CVF1g32AVBDcWxl
-X-Received: by 2002:a05:600c:628b:b0:48a:557e:6b4f with SMTP id
- 5b1f17b1804b1-48e706cd77dmr214216525e9.23.1778567181857; 
- Mon, 11 May 2026 23:26:21 -0700 (PDT)
+ bh=s1ugNJYOLmq0RMJfysTgh5azhOcAvfEAh2lvllhKwK4=;
+ b=lqPAJYo3uYF9v19+Ie3xdOg3b7wG82COaRQ8Y/V1rB3vYqGgyFZ/Ifw7elXRRgKfUi
+ geX17XUUGiIVDV0trEwjXXei5AvMllCL9qKOdjPH5v/y3+O8wpa9CM4SpiMFjs4Krm2k
+ Chl69rSL9Nk4Bs9utrCIoQ1DDvSICKUIKYZBaaxw+j9Y/H8sba7HKWOI9Qe7lQqFpNrL
+ 69ecJ9nW6MwZHRWO3S780OVyqbZnUtZQSMxJL2oWLJhxCCfQ1l1dN0DO7wpPTVvs27J7
+ FA/nJWq1xAh9w6FYDa/+Lac2VBj6ammOhyDu/D+PC6oDIYVkcV4eIVc3RekEmo6WHz/h
+ 4VHg==
+X-Gm-Message-State: AOJu0Ywda68oPW6NvfcRLf/KYzsohyX+W9XOyKJ/4nzvlP1J1M5M21rs
+ ckWHq/8l5NsnfGUsuf2JI0bszz2CaU9UsDyoOpF1lk/VSsi64cQiW08I99fcbCMlQFzuwVUAmV2
+ RcKyks4o=
+X-Gm-Gg: Acq92OG2oRSLo4xjFcsygJa3OaJKiV/r7yRP029H0syuO+7nJsYnxVC7lAMyaOCF72k
+ NZjMOZsMpmGPwJzhwfDmYoBzQsazledyiYh9dIN3Jo+/eEahzY+DoZyjSc76vC1Lv2ZYZUXG7wM
+ 3V1DKCPGyQ40gtqp5iEf42GoCMx1ookQPrx18Q6K0qA4JlzMZtKMhJ9dDTpS3Ev8aAywVwwC5+2
+ V5O9pPLSmUsq3xI9Ql2w9WNxjNAzhxJ780YLN1lzXCXrm5IEDjN2zqetS+BGFH/Qioy8XViqpkO
+ Cexo4B4yn9kRGq3gWCgIm8SMKsdl8VW3TYWgrAf+cGV9+g4+yl2hIap4FLdL+6cvPStzzOzGDJs
+ Br6oVi72ZUf1cir26aKF254iJHFDT/qb8+ro6RNEgQpvfDtaOci9pBeaKwr2E3FqLGFg5U1GCXg
+ tDiM1HCf4Eqs8HIt/xJx1O1miSiyhf79jIxSyUM5DR0R8pYyEXwYI7FsyLA8bol2ZiDjiHk8FZ
+X-Received: by 2002:a05:6000:24c3:b0:455:51cf:9f92 with SMTP id
+ ffacd0b85a97d-45ac4224ea5mr3323033f8f.18.1778567195111; 
+ Mon, 11 May 2026 23:26:35 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e908d2c77sm23730785e9.12.2026.05.11.23.26.21
+ ffacd0b85a97d-45491cab9c2sm31988196f8f.31.2026.05.11.23.26.34
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 11 May 2026 23:26:21 -0700 (PDT)
+ Mon, 11 May 2026 23:26:34 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 39/41] MAINTAINERS: update HEST maintainership entries
-Date: Tue, 12 May 2026 08:21:40 +0200
-Message-ID: <20260512062142.67998-40-philmd@linaro.org>
+Subject: [PULL 41/41] scripts: strip leading './' when searching MAINTAINERS
+ file
+Date: Tue, 12 May 2026 08:21:42 +0200
+Message-ID: <20260512062142.67998-42-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260512062142.67998-1-philmd@linaro.org>
 References: <20260512062142.67998-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,45 +99,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Mark HEST code as maintained and assign them to me.
+The following two uses of get_maintainer.pl should return the
+same results, but do not:
 
-While here, add a "L" entry to EDAC ML as RAS discussions
-usually happen there.
+  $ ./scripts/get_maintainer.pl -f ./hw/net/vmxnet3.c
+  get_maintainer.pl: No maintainers found, printing recent contributors.
+  get_maintainer.pl: Do not blindly cc: them on patches!  Use common sense.
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Acked-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <6316f5b788cdc6b63e808606649dc5862271b22e.1778075257.git.mchehab+huawei@kernel.org>
+  "Philippe Mathieu-Daudé" <philmd@linaro.org> (commit_signer:4/7=57%)
+  "Michael S. Tsirkin" <mst@redhat.com> (commit_signer:4/7=57%)
+  Xiaoyao Li <xiaoyao.li@intel.com> (commit_signer:3/7=43%)
+  Thomas Huth <thuth@redhat.com> (commit_signer:3/7=43%)
+  Zhao Liu <zhao1.liu@intel.com> (commit_signer:3/7=43%)
+  qemu-devel@nongnu.org (open list:All patches CC here)
+
+  $ ./scripts/get_maintainer.pl -f hw/net/vmxnet3.c
+  Dmitry Fleytman <dmitry.fleytman@gmail.com> (maintainer:VMware)
+  Jason Wang <jasowang@redhat.com> (odd fixer:Network devices)
+  qemu-devel@nongnu.org (open list:All patches CC here)
+
+In the former case, the leading "./" needs to be removed before
+trying to find a filename match.
+
+Blindly stripping the "./" is valid because the script already
+enforces that it is run from the QEMU git root directory, so
+canonicalizing the filename vs $CWD is not required.
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260511093858.82753-1-berrange@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- MAINTAINERS | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ scripts/get_maintainer.pl | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index e5d58d58646..0790d13505c 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2236,14 +2236,17 @@ F: tests/functional/x86_64/test_acpi_bits.py
- F: docs/devel/testing/acpi-bits.rst
- 
- ACPI/HEST/GHES
-+M: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-+L: linux-edac@vger.kernel.org
- L: qemu-arm@nongnu.org
--S: Orphan
-+S: Maintained
- F: hw/acpi/ghes.c
- F: include/hw/acpi/ghes.h
- F: docs/specs/acpi_hest_ghes.rst
- 
- ACPI/HEST/GHES/ARM processor CPER
--R: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-+M: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-+L: linux-edac@vger.kernel.org
- S: Maintained
- F: hw/arm/ghes_cper.c
- F: hw/acpi/ghes_cper_stub.c
+diff --git a/scripts/get_maintainer.pl b/scripts/get_maintainer.pl
+index 00a0870b267..76be402e11e 100755
+--- a/scripts/get_maintainer.pl
++++ b/scripts/get_maintainer.pl
+@@ -384,6 +384,7 @@ foreach my $file (@ARGV) {
+ 	} elsif (!(stat $file)) {
+ 	    die "$P: file '${file}' not found: $!\n";
+ 	}
++	$file =~ s,^./,,;
+     }
+     if ($from_filename) {
+ 	push(@files, $file);
 -- 
 2.53.0
 
