@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1497ACD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:14:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2BB7CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:14:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuMA-0007Ef-0F; Tue, 12 May 2026 17:09:34 -0400
+	id 1wMuO9-000055-Ac; Tue, 12 May 2026 17:11:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuLm-0004F6-75; Tue, 12 May 2026 17:09:11 -0400
+ id 1wMuNm-0007zn-Ot; Tue, 12 May 2026 17:11:15 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuLk-000399-5D; Tue, 12 May 2026 17:09:09 -0400
+ id 1wMuNk-0004T2-Qf; Tue, 12 May 2026 17:11:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619301; bh=lO/xH7F2XwYwmnWfiZMLGCxPffnBX5YPHn1p7EpmG9s=;
+ t=1778619303; bh=VeKpgqOhDJvb12hhwxrjcNWGil/fRUopMB5SDdOF6Cw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fHq9U2HGSRiSH4it/rDlCi7kKEjqexWNYEZ6lU0EH0O4mrXa7pDhKIC9KC81lILuQ
- lq7ojYLBEtLgaoJC09j8V52BWZ8NE2G7QG/u/CiE8U+gryC8V5vgCOpnp8Osd56YgF
- HWs92Xb08wOk1sezcKtTOz4s1U57GuanhdajiFI0bI+SapE7qV2wiUWKobWrPcnF7L
- OWyMcpkgRTKzh6Qs195ke8KoC+hIQfL0Amzl7w5KUCHp1/cvhUdGAQ3fRaN2oftCyU
- kX9f8hqT8/74fSqLLSw1iBJVFmmCv7CeeWrDqmKTuadczjWwJzKTvtdJwTrx7c0DAf
- vERGlYbDHGDXA==
+ b=uLrlS0/Xn1P9r3rPZJ8HyDAylMiI7RacEuad1GdbonEQPkoaXAr673kvU7u8IzKAi
+ 9ipehU1rVeXBrvpr+vrTJRr9Ud7t8K3wR/1RqNEWaYOE6BOf4EMeG6iZnVfddLLIzT
+ i0rx2XEKsLu1gnnFjVujNFM0HeTHwh4gDLvalBJBQyrrxeSQLJieFPtXhCi9zXv3Kp
+ ZIJ96fotyFmElkrwfEGtlh8N2yLDE1lmcKAy5hcqzbVsU0neLDIqozaSk4MeLVFdWc
+ pzYcgJQQnDqef31TfUB4lPFY6edqEwQxu0IZZGfy4z4WiSAw8s16zECDWnxnGvmDq5
+ qrAxoDVfBDulw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D36AE1AA35D;
- Tue, 12 May 2026 23:55:01 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5240A1AA373;
+ Tue, 12 May 2026 23:55:03 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E00A23ABCCD;
- Tue, 12 May 2026 23:55:05 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5D6783ABCE3;
+ Tue, 12 May 2026 23:55:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+Cc: qemu-stable@nongnu.org, Clayton Craft <craftyguy@postmarketos.org>,
+ Helge Deller <deller@gmx.de>, Peter Maydell <peter.maydell@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 032/117] tcg: Pass host-endian values to
- plugin_gen_mem_callbacks_*
-Date: Tue, 12 May 2026 23:53:34 +0300
-Message-ID: <20260512205503.361097-32-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 054/117] linux-user: fix name_to_handle_at when
+ AT_HANDLE_MNT_ID_UNIQUE flag is set
+Date: Tue, 12 May 2026 23:53:56 +0300
+Message-ID: <20260512205503.361097-54-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
@@ -70,176 +70,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Clayton Craft <craftyguy@postmarketos.org>
 
-If the host does not support swapped-endian loads and stores,
-then we emulate those within the tcg expanders with explicit
-bswap operations.
+Linux 6.12 added AT_HANDLE_MNT_ID_UNIQUE, which indicates that mount_id
+is 64-bits. If name_to_handle_at is called with this flag set then qemu
+passes a 4 byte int to the kernel, which then tries to store 8 bytes in
+a 4 byte variable, causing a SIGSEGV[1][2].
 
-However, we were passing values to the plugin interface in
-the middle of those bswap operations, which meant that we
-would pass values of the wrong endianness to plugins when
-running on hosts without swapped-endian loads and stores.
+This stores mount_id in a 64-bit var if the flag is set.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3351
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260325024252.3369186-2-pierrick.bouvier@linaro.org
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-(cherry picked from commit 539421a428fd4b8231d9be042143f2d09c719e2a)
+1. https://gitlab.postmarketos.org/postmarketOS/pmaports/-/work_items/4431
+2. https://github.com/systemd/systemd/issues/41279
+
+Signed-off-by: Clayton Craft <craftyguy@postmarketos.org>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Message-id: 20260325-fix-name-to-handle-at-v1-1-49fb922e6fd3@craftyguy.net
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 22966937f4130278259a79d6462d1a0887e22c6e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/tcg-op-ldst.c b/tcg/tcg-op-ldst.c
-index 7716c3ad7c..c77e394f6c 100644
---- a/tcg/tcg-op-ldst.c
-+++ b/tcg/tcg-op-ldst.c
-@@ -274,9 +274,6 @@ static void tcg_gen_qemu_ld_i32_int(TCGv_i32 val, TCGTemp *addr,
-     addr_new = tci_extend_addr(addr);
-     copy_addr = plugin_maybe_preserve_addr(addr);
-     gen_ldst1(INDEX_op_qemu_ld, TCG_TYPE_I32, tcgv_i32_temp(val), addr_new, oi);
--    plugin_gen_mem_callbacks_i32(val, copy_addr, addr, orig_oi,
--                                 QEMU_PLUGIN_MEM_R);
--    maybe_free_addr(addr, addr_new);
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 7404af9194..adaa1e3542 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -8175,6 +8175,9 @@ static int do_futex(CPUState *cpu, bool time64, target_ulong uaddr,
+ #endif
  
-     if ((orig_memop ^ memop) & MO_BSWAP) {
-         switch (orig_memop & MO_SIZE) {
-@@ -292,6 +289,10 @@ static void tcg_gen_qemu_ld_i32_int(TCGv_i32 val, TCGTemp *addr,
-             g_assert_not_reached();
-         }
-     }
-+
-+    plugin_gen_mem_callbacks_i32(val, copy_addr, addr, orig_oi,
-+                                 QEMU_PLUGIN_MEM_R);
-+    maybe_free_addr(addr, addr_new);
- }
+ #if defined(TARGET_NR_name_to_handle_at) && defined(CONFIG_OPEN_BY_HANDLE)
++#ifndef AT_HANDLE_MNT_ID_UNIQUE
++#define AT_HANDLE_MNT_ID_UNIQUE 0x001
++#endif
+ static abi_long do_name_to_handle_at(abi_long dirfd, abi_long pathname,
+                                      abi_long handle, abi_long mount_id,
+                                      abi_long flags)
+@@ -8182,6 +8185,7 @@ static abi_long do_name_to_handle_at(abi_long dirfd, abi_long pathname,
+     struct file_handle *target_fh;
+     struct file_handle *fh;
+     int mid = 0;
++    uint64_t mid64 = 0;
+     abi_long ret;
+     char *name;
+     unsigned int size, total_size;
+@@ -8205,7 +8209,12 @@ static abi_long do_name_to_handle_at(abi_long dirfd, abi_long pathname,
+     fh = g_malloc0(total_size);
+     fh->handle_bytes = size;
  
- void tcg_gen_qemu_ld_i32_chk(TCGv_i32 val, TCGTemp *addr, TCGArg idx,
-@@ -302,10 +303,10 @@ void tcg_gen_qemu_ld_i32_chk(TCGv_i32 val, TCGTemp *addr, TCGArg idx,
-     tcg_gen_qemu_ld_i32_int(val, addr, idx, memop);
- }
+-    ret = get_errno(name_to_handle_at(dirfd, path(name), fh, &mid, flags));
++    if (flags & AT_HANDLE_MNT_ID_UNIQUE) {
++        ret = get_errno(name_to_handle_at(dirfd, path(name), fh,
++                                          (int *)&mid64, flags));
++    } else {
++        ret = get_errno(name_to_handle_at(dirfd, path(name), fh, &mid, flags));
++    }
+     unlock_user(name, pathname, 0);
  
--static void tcg_gen_qemu_st_i32_int(TCGv_i32 val, TCGTemp *addr,
-+static void tcg_gen_qemu_st_i32_int(TCGv_i32 orig_val, TCGTemp *addr,
-                                     TCGArg idx, MemOp memop)
- {
--    TCGv_i32 swap = NULL;
-+    TCGv_i32 val = orig_val;
-     MemOpIdx orig_oi, oi;
-     TCGTemp *addr_new;
+     /* man name_to_handle_at(2):
+@@ -8219,8 +8228,14 @@ static abi_long do_name_to_handle_at(abi_long dirfd, abi_long pathname,
+     g_free(fh);
+     unlock_user(target_fh, handle, total_size);
  
-@@ -314,29 +315,29 @@ static void tcg_gen_qemu_st_i32_int(TCGv_i32 val, TCGTemp *addr,
-     orig_oi = oi = make_memop_idx(memop, idx);
- 
-     if ((memop & MO_BSWAP) && !tcg_target_has_memory_bswap(memop)) {
--        swap = tcg_temp_ebb_new_i32();
-+        val = tcg_temp_ebb_new_i32();
-         switch (memop & MO_SIZE) {
-         case MO_16:
--            tcg_gen_bswap16_i32(swap, val, 0);
-+            tcg_gen_bswap16_i32(val, orig_val, 0);
-             break;
-         case MO_32:
--            tcg_gen_bswap32_i32(swap, val);
-+            tcg_gen_bswap32_i32(val, orig_val);
-             break;
-         default:
-             g_assert_not_reached();
-         }
--        val = swap;
-         memop &= ~MO_BSWAP;
-         oi = make_memop_idx(memop, idx);
+-    if (put_user_s32(mid, mount_id)) {
+-        return -TARGET_EFAULT;
++    if (flags & AT_HANDLE_MNT_ID_UNIQUE) {
++        if (put_user_u64(mid64, mount_id)) {
++            return -TARGET_EFAULT;
++        }
++    } else {
++        if (put_user_s32(mid, mount_id)) {
++            return -TARGET_EFAULT;
++        }
      }
  
-     addr_new = tci_extend_addr(addr);
-     gen_ldst1(INDEX_op_qemu_st, TCG_TYPE_I32, tcgv_i32_temp(val), addr_new, oi);
--    plugin_gen_mem_callbacks_i32(val, NULL, addr, orig_oi, QEMU_PLUGIN_MEM_W);
-+    plugin_gen_mem_callbacks_i32(orig_val, NULL, addr, orig_oi,
-+                                 QEMU_PLUGIN_MEM_W);
-     maybe_free_addr(addr, addr_new);
- 
--    if (swap) {
--        tcg_temp_free_i32(swap);
-+    if (val != orig_val) {
-+        tcg_temp_free_i32(val);
-     }
- }
- 
-@@ -382,9 +383,6 @@ static void tcg_gen_qemu_ld_i64_int(TCGv_i64 val, TCGTemp *addr,
-     addr_new = tci_extend_addr(addr);
-     copy_addr = plugin_maybe_preserve_addr(addr);
-     gen_ld_i64(val, addr_new, oi);
--    plugin_gen_mem_callbacks_i64(val, copy_addr, addr, orig_oi,
--                                 QEMU_PLUGIN_MEM_R);
--    maybe_free_addr(addr, addr_new);
- 
-     if ((orig_memop ^ memop) & MO_BSWAP) {
-         int flags = (orig_memop & MO_SIGN
-@@ -404,6 +402,10 @@ static void tcg_gen_qemu_ld_i64_int(TCGv_i64 val, TCGTemp *addr,
-             g_assert_not_reached();
-         }
-     }
-+
-+    plugin_gen_mem_callbacks_i64(val, copy_addr, addr, orig_oi,
-+                                 QEMU_PLUGIN_MEM_R);
-+    maybe_free_addr(addr, addr_new);
- }
- 
- void tcg_gen_qemu_ld_i64_chk(TCGv_i64 val, TCGTemp *addr, TCGArg idx,
-@@ -414,10 +416,10 @@ void tcg_gen_qemu_ld_i64_chk(TCGv_i64 val, TCGTemp *addr, TCGArg idx,
-     tcg_gen_qemu_ld_i64_int(val, addr, idx, memop);
- }
- 
--static void tcg_gen_qemu_st_i64_int(TCGv_i64 val, TCGTemp *addr,
-+static void tcg_gen_qemu_st_i64_int(TCGv_i64 orig_val, TCGTemp *addr,
-                                     TCGArg idx, MemOp memop)
- {
--    TCGv_i64 swap = NULL;
-+    TCGv_i64 val = orig_val;
-     MemOpIdx orig_oi, oi;
-     TCGTemp *addr_new;
- 
-@@ -431,32 +433,32 @@ static void tcg_gen_qemu_st_i64_int(TCGv_i64 val, TCGTemp *addr,
-     orig_oi = oi = make_memop_idx(memop, idx);
- 
-     if ((memop & MO_BSWAP) && !tcg_target_has_memory_bswap(memop)) {
--        swap = tcg_temp_ebb_new_i64();
-+        val = tcg_temp_ebb_new_i64();
-         switch (memop & MO_SIZE) {
-         case MO_16:
--            tcg_gen_bswap16_i64(swap, val, 0);
-+            tcg_gen_bswap16_i64(val, orig_val, 0);
-             break;
-         case MO_32:
--            tcg_gen_bswap32_i64(swap, val, 0);
-+            tcg_gen_bswap32_i64(val, orig_val, 0);
-             break;
-         case MO_64:
--            tcg_gen_bswap64_i64(swap, val);
-+            tcg_gen_bswap64_i64(val, orig_val);
-             break;
-         default:
-             g_assert_not_reached();
-         }
--        val = swap;
-         memop &= ~MO_BSWAP;
-         oi = make_memop_idx(memop, idx);
-     }
- 
-     addr_new = tci_extend_addr(addr);
-     gen_st_i64(val, addr_new, oi);
--    plugin_gen_mem_callbacks_i64(val, NULL, addr, orig_oi, QEMU_PLUGIN_MEM_W);
-+    plugin_gen_mem_callbacks_i64(orig_val, NULL, addr, orig_oi,
-+                                 QEMU_PLUGIN_MEM_W);
-     maybe_free_addr(addr, addr_new);
- 
--    if (swap) {
--        tcg_temp_free_i64(swap);
-+    if (val != orig_val) {
-+        tcg_temp_free_i64(val);
-     }
- }
- 
+     return ret;
 -- 
 2.47.3
 
