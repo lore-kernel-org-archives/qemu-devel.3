@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99867CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:10:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 383E1CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:10:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuHl-0007ls-SS; Tue, 12 May 2026 17:05:02 -0400
+	id 1wMuHy-0008NP-Cx; Tue, 12 May 2026 17:05:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuGn-0003o5-7N; Tue, 12 May 2026 17:04:02 -0400
+ id 1wMuHB-0005iH-Q4; Tue, 12 May 2026 17:04:27 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuGl-00088f-0G; Tue, 12 May 2026 17:04:00 -0400
+ id 1wMuH8-0008PD-Ob; Tue, 12 May 2026 17:04:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619279; bh=6V5+Hj3bIvptEvL5eLeiiqm5HnD/IjfEcLx4vNh3fEo=;
+ t=1778619279; bh=Q3lCuv4X+Ag/LDgtUcJpyEVJ8Rrvluf+nuqZHXrk1hg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=nnGe6Osli0I/8EW9ctIKS2Jka7rlYfNs7/+AFlSMLBkgDsKkL1YqWXRKnaiXMgX2O
- AFXatafVC4+e5LJsh1+jXVdq27A51aKcEs09afFbzjZzr1RMnqoaR+g4qJryJey7r+
- YoYKv44R8JRcOQKj3cARCMy/R+c3ykUneUaLV9igAsgRHE8wlpWzDFk1KVsw+ySUHx
- SI1sQzuTISSTa0K/zM8yTOLRYr99tp8YQa0gSIvOA4exeKWO4/e/GBv6dsRcAdu+Xw
- 3t546S1FRXGClMp8tQ6JMEE/95KALEAcBS9jSHV8UBndaWEuBvJw0U0bBUiUAmUd2z
- QjNMlW9RoVbvg==
+ b=qq9LXjvKM4iu0YuqSfnhXfOwAX7tDPuQ5LW5OEuiDdJ/0QTArzh0ZjwRVjDfs33OC
+ k5qv6X3e6zz/99uivijzmMKui2dyBgoq+Ab51++H0WTFpswddUtPTW/noDD+rowBPC
+ QXSH++tuVQHc3MiPSYDasi9P10shlf8ma6o/3whxJPQUFgd+MEyDxs6SIEQjYCLCwT
+ Z5yAt3kmOF33u7C0adcDs5J4qwEEWwanhpZgZhfOv3jR6DXykRbSvoPaigCIQeTIPk
+ 84bv/fYhulbWGYijtV2LcMSBPSRY3cG8OirfPO8psJhUxeKIWUih6YrAcwM1ezwSkI
+ AvnoKJIstU3gQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 61D4C1AA327;
+ by isrv.corpit.ru (Postfix) with ESMTP id 8FBD61AA32A;
  Tue, 12 May 2026 23:54:39 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6ED6F3ABC98;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9CB683ABC9B;
  Tue, 12 May 2026 23:54:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 091/107] linux-user: Allow getsockopt() with NULL
- optval address
-Date: Tue, 12 May 2026 23:54:18 +0300
-Message-ID: <20260512205437.360850-91-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 094/107] tests/rcutorture: Fix build error
+Date: Tue, 12 May 2026 23:54:21 +0300
+Message-ID: <20260512205437.360850-94-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,115 +71,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Cédric Le Goater <clg@redhat.com>
 
-Some programs test availability of socket options by asking for the
-value with an NULL optval address, which currenrly always trigger an
-EFAULT in qemu.  Fix it by allowing a NULL address, in the same manner
-as the Linux kernel on physical machines.
+Newer gcc compiler (version 16.0.0 20260103 (Red Hat 16.0.0-0) (GCC))
+detects an unused variable error:
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2390
-Signed-off-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-(cherry picked from commit 08dc3e240fc00213c0eb29b71569dc0ca9301337)
+  ../tests/unit/rcutorture.c: In function ‘rcu_read_stress_test’:
+  ../tests/unit/rcutorture.c:251:18: error: variable ‘garbage’ set but not used [-Werror=unused-but-set-variable=]
+    251 |     volatile int garbage = 0;
+        |                  ^~~~~~~
+
+Since the 'garbage' variable is used to generate memory reads from the
+CPU while holding the RCU lock, it can not be removed. Tag it as
+((unused)) instead to silence the compiler warnings/errors.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20260112163350.1251114-1-clg@redhat.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit 7a05be8c70bb789c23076b1ca2563ed7d87c6fb8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 905db117ff..3a1b41e84b 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -2648,6 +2648,10 @@ get_timeout:
-             if (ret < 0) {
-                 return ret;
-             }
-+            /* special case: destination address is NULL, return 0 */
-+            if (optval_addr) {
-+                len = 0;
-+            }
-             if (len == sizeof(struct target__kernel_sock_timeval)) {
-                 if (copy_to_user_timeval64(optval_addr, &tv)) {
-                     return -TARGET_EFAULT;
-@@ -2848,7 +2852,10 @@ get_timeout:
-         }
-         if (len > lv)
-             len = lv;
--        if (len == 4) {
-+        if (!optval_addr) {
-+            /* writing to NULL does not give error */
-+            len = 0;
-+        } else if (len == 4) {
-             if (put_user_u32(val, optval_addr))
-                 return -TARGET_EFAULT;
-         } else {
-@@ -2881,18 +2888,24 @@ get_timeout:
-                 return -TARGET_EINVAL;
-             lv = sizeof(lv);
-             ret = get_errno(getsockopt(sockfd, level, optname, &val, &lv));
-+write_ret:
-             if (ret < 0)
-                 return ret;
--            if (len < sizeof(int) && len > 0 && val >= 0 && val < 255) {
-+            if (!optval_addr) {
-+                len = 0;
-+            } else if (len < sizeof(int) && len > 0 && val >= 0 && val < 255) {
-                 len = 1;
--                if (put_user_u32(len, optlen)
--                    || put_user_u8(val, optval_addr))
-+                if (put_user_u8(val, optval_addr)) {
-                     return -TARGET_EFAULT;
-+                }
-             } else {
-                 if (len > sizeof(int))
-                     len = sizeof(int);
--                if (put_user_u32(len, optlen)
--                    || put_user_u32(val, optval_addr))
-+                if (put_user_u32(val, optval_addr)) {
-+                    return -TARGET_EFAULT;
-+                }
-+            }
-+            if (put_user_u32(len, optlen)) {
-                     return -TARGET_EFAULT;
-             }
-             break;
-@@ -2943,20 +2956,7 @@ get_timeout:
-                 return -TARGET_EINVAL;
-             lv = sizeof(lv);
-             ret = get_errno(getsockopt(sockfd, level, optname, &val, &lv));
--            if (ret < 0)
--                return ret;
--            if (len < sizeof(int) && len > 0 && val >= 0 && val < 255) {
--                len = 1;
--                if (put_user_u32(len, optlen)
--                    || put_user_u8(val, optval_addr))
--                    return -TARGET_EFAULT;
--            } else {
--                if (len > sizeof(int))
--                    len = sizeof(int);
--                if (put_user_u32(len, optlen)
--                    || put_user_u32(val, optval_addr))
--                    return -TARGET_EFAULT;
--            }
-+            goto write_ret;
-             break;
-         default:
-             ret = -TARGET_ENOPROTOOPT;
-@@ -2990,8 +2990,14 @@ get_timeout:
-             if (ret < 0) {
-                 return ret;
-             }
--            if (put_user_u32(lv, optlen)
--                || put_user_u32(val, optval_addr)) {
-+            if (optval_addr) {
-+                if (put_user_u32(val, optval_addr)) {
-+                    return -TARGET_EFAULT;
-+                }
-+            } else {
-+                lv = 0;
-+            }
-+            if (put_user_u32(lv, optlen)) {
-                 return -TARGET_EFAULT;
-             }
-             break;
+diff --git a/tests/unit/rcutorture.c b/tests/unit/rcutorture.c
+index 7662081683..2f19d479a3 100644
+--- a/tests/unit/rcutorture.c
++++ b/tests/unit/rcutorture.c
+@@ -248,7 +248,7 @@ static void *rcu_read_stress_test(void *arg)
+     int pc;
+     long long n_reads_local = 0;
+     long long rcu_stress_local[RCU_STRESS_PIPE_LEN + 1] = { 0 };
+-    volatile int garbage = 0;
++    volatile int garbage __attribute__ ((unused)) = 0;
+ 
+     rcu_register_thread();
+ 
 -- 
 2.47.3
 
