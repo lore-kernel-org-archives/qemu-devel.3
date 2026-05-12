@@ -4,67 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01302CD4F26
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:54:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46584CD4F26
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:57:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMh0S-0007aP-Ax; Tue, 12 May 2026 02:54:17 -0400
+	id 1wMh2t-0000AA-Se; Tue, 12 May 2026 02:56:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wMh0O-0007Zc-Fs
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:54:12 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wMh2r-00009y-Rd
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:56:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wMh0K-0007Sp-GB
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:54:12 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64C6rjXD027754
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 12 May 2026 15:53:45 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=4SZOxTx2ngUWWDMYQqQOHUP9oy/jvPtZDSnQs3QJjok=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1778568825; v=1;
- b=sz0zzkpKjq4w2CwJWpisGKHV5PpsbKNg1zy/SBo71AsN7yMYnJeahwhKBIQOJYVq
- WvD0TW9XyPzZQazTEH5WfPvMLobHM12BI05BtagrQt4/5BUSLr24qbkeTGUnWS7G
- +l3VlCSp1Z3GbyxyodOLE2Xm3ICdWi274SigVDim6o2tFU+j5KrMzklj2E4oG+kV
- 9Cz9sGucCjTDE9l0hxUnOjLYJPFqr3s4LpXWO9qjAox5LwBFJ/+oZ4DtK+fQ8ZCC
- 8RfdFSaXtwrohqFARuJ20ga6hpyAxPBvqhs4gsRRJZ5iw6V8U4X7BKUOvBBevXTa
- lRaB9qb3By6WFKXLIyxCAQ==
-Message-ID: <5618003e-a138-42de-b41e-90ef76d23aa6@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 12 May 2026 15:53:44 +0900
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wMh2q-0000tT-7S
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:56:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778569000;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=aDAMrQHPMVRbjEY1ga1gy1kkhDs885eVhoLHwVZIDB0=;
+ b=gFM9TFx+9QwZ9sia3wlhkGJ51zC4ytndFPwKyKzd0mlyE1xsZtI7zqqlocwJqQ7bWVrYVe
+ As1Wu42pWG1qEGhxQhd/9MazSWwszGNAZvl82fxPiP0RgwFmFq/HjkzNGqyLOUEFCxc8gg
+ +UXmjDbt0klKdviq7mHAOvDKk4OkoxY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-353-GuTUU1osM-27QNlQYzNxBw-1; Tue,
+ 12 May 2026 02:56:39 -0400
+X-MC-Unique: GuTUU1osM-27QNlQYzNxBw-1
+X-Mimecast-MFC-AGG-ID: GuTUU1osM-27QNlQYzNxBw_1778568998
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 011A618002CF; Tue, 12 May 2026 06:56:38 +0000 (UTC)
+Received: from localhost (unknown [10.44.24.4])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id AFDCB18004A3; Tue, 12 May 2026 06:56:36 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH] tests: tag slow tests with 'slow' suite for easy filtering
+Date: Tue, 12 May 2026 10:56:33 +0400
+Message-ID: <20260512065633.3542562-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/9] tools: Move qemu-vmsr-helper up a directory level
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Viktor Prutyanov <viktor.prutyanov@phystech.edu>,
- Gerd Hoffmann <kraxel@redhat.com>, Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Jason Wang <jasowang@redhat.com>
-References: <20260508152428.2648560-1-peter.maydell@linaro.org>
- <20260508152428.2648560-9-peter.maydell@linaro.org>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260508152428.2648560-9-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,67 +83,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/05/09 0:24, Peter Maydell wrote:
-> We currently have exactly one subdirectory of tools, i386, which has
-> the qemu-vmsr-helper sources in it.  An entire subdirectory isn't
-> really necessary here as we have only one i386-specific tool binary
-> and no expectation that we will have many more.  Move it up a
-> directory level so it's in tools/ with all the other tools sources.
-> 
-> This was previously covered by the "X86 general architecture support"
-> section of MAINTAINERS under the tools/i386/ path; add both the
-> source file and the docs file to that section.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   MAINTAINERS                         | 3 ++-
->   meson.build                         | 2 +-
->   tools/{i386 => }/qemu-vmsr-helper.c | 0
->   tools/{i386 => }/rapl-msr-index.h   | 0
->   4 files changed, 3 insertions(+), 2 deletions(-)
->   rename tools/{i386 => }/qemu-vmsr-helper.c (100%)
->   rename tools/{i386 => }/rapl-msr-index.h (100%)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index f2c66d7cc3..88cc1516d8 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -153,7 +153,8 @@ F: stubs/hmp-cmds-target-i386.c
->   F: target/i386/*.[ch]
->   F: target/i386/Kconfig
->   F: target/i386/meson.build
-> -F: tools/i386/
-> +F: tools/qemu-vmsr-helper.c
-> +F: docs/tools/qemu-vmsr-helper.rst
->   F: tests/functional/i386/
->   F: tests/functional/x86_64/
->   
-> diff --git a/meson.build b/meson.build
-> index 8164458eea..1dad3a2462 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -4569,7 +4569,7 @@ if have_tools
->                  install: true)
->   
->       if cpu == 'x86_64'
-> -      executable('qemu-vmsr-helper', files('tools/i386/qemu-vmsr-helper.c'),
-> +      executable('qemu-vmsr-helper', files('tools/qemu-vmsr-helper.c'),
->                  dependencies: [authz, crypto, io, qom, qemuutil,
->                                 libcap_ng, mpathpersist],
->                  install: true)
-> diff --git a/tools/i386/qemu-vmsr-helper.c b/tools/qemu-vmsr-helper.c
-> similarity index 100%
-> rename from tools/i386/qemu-vmsr-helper.c
-> rename to tools/qemu-vmsr-helper.c
-> diff --git a/tools/i386/rapl-msr-index.h b/tools/rapl-msr-index.h
-> similarity index 100%
-> rename from tools/i386/rapl-msr-index.h
-> rename to tools/rapl-msr-index.h
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
+Add several RCU and thread-pool unit tests to the slow_tests dict,
+and tag all slow tests (both qtest and unit) with a 'slow' suite so
+they can be excluded or selected via meson test --suite/--no-suite.
 
-tools/rapl-msr-index.h lost maintainer coverage when F: tools/i386/ was 
-narrowed to only tools/qemu-vmsr-helper.c
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ tests/qtest/meson.build | 3 ++-
+ tests/unit/meson.build  | 9 ++++++++-
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-Regards,
-Akihiko Odaki
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 728dde54b3f..2c5dcf2340f 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -493,6 +493,7 @@ foreach dir : target_dirs
+          protocol: 'tap',
+          timeout: slow_qtests.get(test, 60),
+          priority: slow_qtests.get(test, 60),
+-         suite: ['qtest', 'qtest-' + target_base])
++         suite: ['qtest', 'qtest-' + target_base] +
++                (slow_qtests.has_key(test) ? ['slow'] : []))
+   endforeach
+ endforeach
+diff --git a/tests/unit/meson.build b/tests/unit/meson.build
+index 03d36748c73..ed1172a107c 100644
+--- a/tests/unit/meson.build
++++ b/tests/unit/meson.build
+@@ -176,6 +176,12 @@ slow_tests = {
+   'test-crypto-tlscredsx509': 90,
+   'test-crypto-tlssession': 90,
+   'test-replication': 60,
++  'rcutorture': 30,
++  'test-rcu-list': 30,
++  'test-rcu-simpleq': 30,
++  'test-rcu-tailq': 30,
++  'test-rcu-slist': 30,
++  'test-thread-pool': 30,
+ }
+ 
+ foreach test_name, extra: tests
+@@ -197,5 +203,6 @@ foreach test_name, extra: tests
+        protocol: 'tap',
+        timeout: slow_tests.get(test_name, 30),
+        priority: slow_tests.get(test_name, 30),
+-       suite: ['unit'])
++       suite: ['unit'] +
++              (slow_tests.has_key(test_name) ? ['slow'] : []))
+ endforeach
+-- 
+2.54.0
+
 
