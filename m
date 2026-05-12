@@ -4,88 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28F28CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 17:25:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5517ACD4F24
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 17:26:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMqqU-0003wl-9H; Tue, 12 May 2026 13:24:38 -0400
+	id 1wMqrl-0004V5-Gm; Tue, 12 May 2026 13:25:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wMqqS-0003wC-Mz
- for qemu-devel@nongnu.org; Tue, 12 May 2026 13:24:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <tdave@nvidia.com>)
+ id 1wMqrk-0004Ue-C0; Tue, 12 May 2026 13:25:56 -0400
+Received: from mail-westcentralusazlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c112::5] helo=CY7PR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wMqqI-0008Cn-Ph
- for qemu-devel@nongnu.org; Tue, 12 May 2026 13:24:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778606665;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Of0z16qbpQJ6dtdrX5uuhqhJA2Fyr8jXLOzbP5xVEAA=;
- b=UuHRSkKMvsV2vgaMdAG9BKpRMg4f64MGhru8yD6SBG4YClZ7o09Ff/WEEy4zfW3vfeoelx
- /LvEL9MMBvU9QfjOD0gcEXqvMkXDjdnQzF6YzHHVItothWaRudWMl+qxaLiGRRyC9M5hks
- kLug3ctbBiegpFUPbQl3uw7Ew3koiq0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-538-wpmZBYEVN3OTDvDKH7GK6A-1; Tue,
- 12 May 2026 13:24:21 -0400
-X-MC-Unique: wpmZBYEVN3OTDvDKH7GK6A-1
-X-Mimecast-MFC-AGG-ID: wpmZBYEVN3OTDvDKH7GK6A_1778606660
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A0E7B18005B5; Tue, 12 May 2026 17:24:20 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.48.86])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D641018004A3; Tue, 12 May 2026 17:24:16 +0000 (UTC)
-Date: Tue, 12 May 2026 18:24:13 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-block@nongnu.org, Cleber Rosa <crosa@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, John Snow <jsnow@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH 14/16] tests: add QEMU_TEST_IO_SKIP for skipping I/O tests
-Message-ID: <agNiPRnoyxd7rBbz@redhat.com>
-References: <20260424154205.364268-1-berrange@redhat.com>
- <20260424154205.364268-15-berrange@redhat.com>
- <fa8be3d8-6d76-4811-83ab-69c256e8e44f@oss.qualcomm.com>
- <agNPkLRe0Rf4NYcU@redhat.com>
- <cc8714c3-143d-4f63-a608-d301e8ba023b@oss.qualcomm.com>
- <agNXCf5eXNQmhCAV@redhat.com>
- <55b66ce4-218c-462f-8e48-0775d5c36cba@oss.qualcomm.com>
- <agNbJS1WeWaxZ_Gx@redhat.com>
- <31eb8204-97bb-4f0e-b90a-048d1b5bf05d@oss.qualcomm.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+ (Exim 4.90_1) (envelope-from <tdave@nvidia.com>)
+ id 1wMqri-00013X-4f; Tue, 12 May 2026 13:25:56 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=iC2MmwZ8v80i4POJd4QzImoPpmu2gLCGhKP72GnEvOwakjcnaaPKRHfDnpy52qlddvvcwqQjDi+bmZzHlQI2uySI3t5q3py/oemN8RESm7hM9QAS0XA6YpB/BkkzCqEYH4ovQ7d1o46HmvxQzcZNK3vXt77MvU4Bp8J2hdFrLTYo58+4J+pC2X2EzAMRYLCW5bUmqWOWCcecKMX0dBZ0eoIT/ruvdli4QbK+Hk54RlML2tYIl6WzAmWHvearBlMC2it2g5vH0o11yZRRPK2Z+iiv8PiHOT7HFA2PtL/0xKyOHFNlOoCTgWfgukBbku2yCPKtc92NpdKe0yOKX1rl2g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=quP/4nG1yG3iajMlhgX14inOiVmtip8zaNg4vW5Pu+g=;
+ b=t/hv+UUaqoTDqgRpOYYum0FxcgtoqJOHsI0JUqNO2QhPYPwX3DT4/LeR5amu/SwKcny4JtnV66egrw+WK06S8AQRla3UeoJULPJgVRBECqEz6GnOBa/3wPkdvs4+gPI6XriPh/rp4rWJt/4YBDJqLM2WqFS/tdB8cTRbRTSxBfmgSWusQ/38fQ3FDznCuqWYo0qS9IfVH21q9GR1KJfuW8BCz4+TBhSLsgpHqyMpibSg9VdoMGQGKlyRNVPMwdag8yOl+oJYESQckae0meaSi7vZuEGf1nacA4bGxC6AqNBycmHx9yV2QIlriqzpznfffoPpQXyaG5Ivy4rnNF+jvA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=quP/4nG1yG3iajMlhgX14inOiVmtip8zaNg4vW5Pu+g=;
+ b=D2yv/MLlFhthoplKlEmjKZwdQdEQLHH4WR3GxoMKibRzaMIA/zg53h5bKts7YYZhFJ6SoxWI0Faa8I78JsSMRIjW+3vF1OGAuUNH6NpktmQaS2IuUYDRzBZCcpiGwohvaHml7kN5XSqFQDL2ZtuJpITQ9etpg5xdWIeMfNo1tN1mx5/1zix0xe1fMjac0s2SVXSRVj+PQAxHEElSPDqUknU0KKXJAwEeO4dcECBxVUw3ZCl6RM5bJJiN3JhcyCpLa18ZqyYefTOC770t6HWi8ehYak2Xc7MW9ucscgDKRK6bw8hSaXvJioHf1Nj4cpg4gkY4ju6VOQxCRxUKp3pTZA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB4186.namprd12.prod.outlook.com (2603:10b6:5:21b::11)
+ by DS0PR12MB8041.namprd12.prod.outlook.com (2603:10b6:8:147::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.23; Tue, 12 May
+ 2026 17:25:47 +0000
+Received: from DM6PR12MB4186.namprd12.prod.outlook.com
+ ([fe80::3885:dd8c:612c:a746]) by DM6PR12MB4186.namprd12.prod.outlook.com
+ ([fe80::3885:dd8c:612c:a746%7]) with mapi id 15.20.9891.021; Tue, 12 May 2026
+ 17:25:47 +0000
+Message-ID: <db604efd-9c1f-44e0-9921-71e4d97a81b3@nvidia.com>
+Date: Tue, 12 May 2026 12:25:45 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [edk2-devel] [RFC PATCH 0/8] hw/arm/virt, hw/pci: PCI
+ pre-enumeration and fixed BAR allocation
+To: Ard Biesheuvel <ardb@kernel.org>,
+ "devel@edk2.groups.io" <devel@edk2.groups.io>, qemu-devel@nongnu.org
+Cc: alwilliamson@nvidia.com, jgg@nvidia.com, skolothumtho@nvidia.com,
+ qemu-arm@nongnu.org, peter.maydell@linaro.org, mst@redhat.com,
+ marcel.apfelbaum@gmail.com
+References: <20260508183717.193630-1-tdave@nvidia.com>
+ <22cf37c2-b2b1-40db-b8b7-393b6c36a921@app.fastmail.com>
+From: Tushar Dave <tdave@nvidia.com>
+Content-Language: en-US
+In-Reply-To: <22cf37c2-b2b1-40db-b8b7-393b6c36a921@app.fastmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <31eb8204-97bb-4f0e-b90a-048d1b5bf05d@oss.qualcomm.com>
-User-Agent: Mutt/2.3.1 (2026-03-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-ClientProxiedBy: SN7PR04CA0091.namprd04.prod.outlook.com
+ (2603:10b6:806:122::6) To DM6PR12MB4186.namprd12.prod.outlook.com
+ (2603:10b6:5:21b::11)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB4186:EE_|DS0PR12MB8041:EE_
+X-MS-Office365-Filtering-Correlation-Id: f3abd9bd-7fd3-4f14-9923-08deb04b813d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|366016|1800799024|22082099003|18002099003|56012099003|3023799003|11063799003;
+X-Microsoft-Antispam-Message-Info: LHshUFeEa4JRtflVfCAgq0uQsAbte2LwCc9TLYkS3sjivX2BHBUITW8BrGnfnGv5v1ZBm/7L58qHC0aQ0bmx60BwsXANQLl1l3f7LzisjCx30uVyG6irylPqYHh9yt/9EhOVTesAh9GRJh9MyBNzDElM9XE5ntyVmDSmvBzCgNPoEBXr21KYK8QVyB7vCxGPCfOEteKr8vms5ffRd8ySyRYAKxqM07QNCLgSc9XneJ0os7Yv5NnS++wlocaxgctapgVoHeMJMBltwZ1gJLG0rwShQ7xFhjKkL+dC/k0hZeWkQI/Au6O59z08p/prgh2SyitTExTE9UJkEQIbFbdMvYt05KX6VE9KdQEnRV63U9xwkRVnb/s1EGnAHOKQFYJd42L6Fb38UasGsHUdsOraGncR0uBbJVOvUvcvMfroILVgkOugQcCQKep0lnF6zMnKkKRIPLogPCXsB5g9xlS6OrMMA/5vLpJtrr4EOzUdoAX+N/2bU85fDxh+vx3TOr1xaMDUTcq3m96isSGzry2KOfvPxDlQ5N0Kk70nYi98ZLSm3897SmmG8plkMBOs/DPE9/u/zAav6umS8SQ/dWCRxINlMcOy2fN3kam/Q3cX4/tyM09JKG9cHLmvQS+N5yBJMfxWXdFJ886UatG1jy9mA/OOAdQjEKdHJ3vtOZ9OmN7Or3vtg7ENl7JW5Noq9RyW
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR12MB4186.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(22082099003)(18002099003)(56012099003)(3023799003)(11063799003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VkptUElvcjUyaE9VSUFETXRrUGluQnVWc0VKbGFMQzNVUXYvOXFEblN4MGN4?=
+ =?utf-8?B?TlRXeDNkcUdJUnBvQnpQRmR0NXgzdUFSb2VVMHlJVU40S2w1K2VzdG1TOCtZ?=
+ =?utf-8?B?QmtpSzBJSGFSaDR3ZGNMQS9Md0VNb21RRUFuODRTdXpaU0c2STM3Z1FmandY?=
+ =?utf-8?B?Nks3dnJNOUxYUktDMnU3ZHRUZ1lBakgyODJCcDZ6WVhNMXptRmFrU1BlSUor?=
+ =?utf-8?B?U2Q4WlZuUVludkhlT0VkcWpCUWlrMzF1RGlQVGRpSGtvK29XT29MeDhiaWV5?=
+ =?utf-8?B?ZTVBeFpLdmFKalFqM25WVFE4cHN5N0pYNm5jYlpNeWlHUmNTK1pJUUhVUWtp?=
+ =?utf-8?B?MlhNbytPeUV6VWlDeksxcWpsZXZ4aG5Ba3BNMytHdHhTOTU0NHozWVptcU1N?=
+ =?utf-8?B?RWFtQU1IYTBjNDNENzlIOWY0RlJmU0IvdkkvTGQ5NGtiNU9ReUdQTGdlb3pu?=
+ =?utf-8?B?aFZqQ254Q284QXpBQ1c3QWdET25rM0kyRktodDV0MHN2dHBac0RKdGRpL0Uy?=
+ =?utf-8?B?d0ljM1BvZTJvQ2tlWHdhZEQxcGhRakVsSGRkZlpJRWlyZmwwTU53UVJMdXlD?=
+ =?utf-8?B?MGJvS3Rja0V1dlJleVRNamtWeWlTd2Fnd2N3dTNKcHhmb3g4Wkpxa2RNZUtY?=
+ =?utf-8?B?V2dLOUsxZ1RXM2lBL0x5alIvTjhMWEpLaXM1MDRrNmFuaTFZYjE3VUFKd3lH?=
+ =?utf-8?B?L01CL3kwTUw1LzlucFE0U2lZZFc1d0xRKzBMYjB6K2Q3YmlMMG5UYThtaWhK?=
+ =?utf-8?B?bm5yd3JiRkc1T3RYNlJFMnVMRlo4dWdWZ01kbXBMTG5YT1RUaVY0NDYvcHR2?=
+ =?utf-8?B?WlRyKzBsZFFIRTV6YkFuVHk3ZkhHUHNFR3d2dHRjS2VtYjVIWDdvREpWZG5n?=
+ =?utf-8?B?VG9xNmh0QTlDSmp6b3hEREl6ekFwWUZKVzl5YW1SQ0FveGlITHFZNFlrRmFW?=
+ =?utf-8?B?VUdpODZjRmdYbE1uam54K2pFLzNaSmNHQ0haajF6aEhMbzg5UCtmMGdneU9G?=
+ =?utf-8?B?ejFWcWZSNzYzbGVYZ0dnemo4STVUcUpSOTkvdmFNN0x5WW5KWitXRStrM2xq?=
+ =?utf-8?B?cTB1R0EremJUdFBKa1BGK1ZSS1FQL2cwbGJCekgxcDJNS3I4NkRGNUhBU3d3?=
+ =?utf-8?B?d1JGdkFJa0pOeVhUNmJKMkNQeDd3M01QcFBHUTBURjQyeUdUSFRaYWR3WCta?=
+ =?utf-8?B?eHo0dTMyTzNGVm5qNWFxaHdLRWNFN0I5R3l0MXJFci9pOUVPV2VaVi9JTVdi?=
+ =?utf-8?B?WDdtMVFqS0N1bVNZeXBPSlZMcm1yakF0V0Y3SWl6ZUJJWElTOGlzdG1XYWhW?=
+ =?utf-8?B?amorNHdhQ3N3NWdkaS9KQkRqQUtLdGFWYldGWWc5K1V0RTRqMUxuUTZxUDZm?=
+ =?utf-8?B?UHdWN1JjSmY5bXlzOUpKQlRmb2haUVE0ajNRTW8wK2R1OUs3UjFjYTIzK1ow?=
+ =?utf-8?B?WGYyenlZcXpnN2RaRlhZOXRBMUNNTVo4aHVvU1JpVkRsRHZoR3UrdGE2TldU?=
+ =?utf-8?B?NlIzQTFBeTkzeU5lc1d6ZG55YjNGbk1jeEJ1VlVmYVhYaE9zdEJkYVVVMTY1?=
+ =?utf-8?B?Q1NSZnVWRmVwZXl2RGtoRXdtK0NqTXZES2MrTFp1VVJ6SDBKY2o5RWNtOUMz?=
+ =?utf-8?B?bVROUXZVT0tjREl0dzROZHNnem0wcVpwQ1I5NEFHQmxtOFY4ZGpOU0dTdEll?=
+ =?utf-8?B?dTNjOHNITVZ1MllRRFV2MGd3c0pRQ01xTkxDNk53NTFLNVlFMmc0azg3Z2hl?=
+ =?utf-8?B?YlpaN3UyYVZXWjVKYXVoOVh5c2NFSi93VWFHVDQrQWRlWDJNSlh1cGRuUlEz?=
+ =?utf-8?B?SGZIVk9BbnFkbHNSZDNFRVByaE1yUHdrYzNISXBJSkxrM25JMlBQdTJUUGxW?=
+ =?utf-8?B?QzM3S2RIQm9RSC9nc2crNEdYeEV1cG1BUUJhK1didndRWEdQYldKSGg2Rjhm?=
+ =?utf-8?B?ekZ1ZUJxbXNxUUNaMVVObFU5QTlEUmZwZVV5MStoSEN3aTBsc0FFVUluZDJ6?=
+ =?utf-8?B?SWNCZXdlQTlKS3RIQzc2aWNudGRKekNBTDlwY3licW9OUUtoTnZ3aEVKUzRz?=
+ =?utf-8?B?QlE0cjBRU21vQ3RSdG01Nmc2b1U0SVNhOHIwNTI5cGplS3FseVRpTUZTQkg2?=
+ =?utf-8?B?MDZPNmFmRGZMOWU0ZjNDbHkyYUdEejY5a0JUaW1KY0J6L041eUIrQlNPQkZ0?=
+ =?utf-8?B?aUV5SFRYcXlSNTV2U3JIYklPZGUzcmlOUm0xMUExcFpwR0FoYklFamlTc3dF?=
+ =?utf-8?B?Vlp2UzYvVkZuUXdraCtmNkJrUEMxSGhkWDlCSnczSzd0SEd3R1k4b3IzV1Ru?=
+ =?utf-8?B?T3hpakJkRWRURTRvZE5PMGFwU2E4L3dzRUpFOEp2dmF2M1hDczVzZz09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f3abd9bd-7fd3-4f14-9923-08deb04b813d
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4186.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 May 2026 17:25:47.1997 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: pwA+vX5NcXxMw0bRbQ13tpRfAia+ki+zuz+NLffusGOvzEzvF3zQ4v0hN6CB658dggyIRAqk9Qvzg4Yd2NoU4Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8041
+Received-SPF: permerror client-ip=2a01:111:f403:c112::5;
+ envelope-from=tdave@nvidia.com;
+ helo=CY7PR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,200 +150,76 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 12, 2026 at 10:09:53AM -0700, Pierrick Bouvier wrote:
-> On 5/12/2026 9:53 AM, Daniel P. Berrangé wrote:
-> > On Tue, May 12, 2026 at 09:47:12AM -0700, Pierrick Bouvier wrote:
-> >> On 5/12/2026 9:36 AM, Daniel P. Berrangé wrote:
-> >>> On Tue, May 12, 2026 at 09:19:45AM -0700, Pierrick Bouvier wrote:
-> >>>> On 5/12/2026 9:06 AM, Daniel P. Berrangé wrote:
-> >>>>> On Tue, May 12, 2026 at 08:56:54AM -0700, Pierrick Bouvier wrote:
-> >>>>>> On 4/24/2026 8:42 AM, Daniel P. Berrangé wrote:
-> >>>>>>> The nature of block I/O tests is such that there can be unexpected false
-> >>>>>>> positive failures in certain scenarios that have not been encountered
-> >>>>>>> before, and sometimes non-deterministic failures that are hard to
-> >>>>>>> reproduce.
-> >>>>>>>
-> >>>>>>> Before enabling the I/O tests as gating jobs in CI, there needs to be a
-> >>>>>>> mechanism to dynamically mark tests as skipped, without having to commit
-> >>>>>>> code changes.
-> >>>>>>>
-> >>>>>>> This introduces the QEMU_TEST_IO_SKIP environment variable that is set
-> >>>>>>> to a list of FORMAT-OR-PROTOCOL:NAME pairs. The intent is that this
-> >>>>>>> variable can be set as a GitLab CI pipeline variable to temporarily
-> >>>>>>> disable a test while problems are being debugged.
-> >>>>>>>
-> >>>>>>> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> >>>>>>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> >>>>>>> ---
-> >>>>>>>  docs/devel/testing/main.rst      |  7 +++++++
-> >>>>>>>  tests/qemu-iotests/testrunner.py | 16 ++++++++++++++++
-> >>>>>>>  2 files changed, 23 insertions(+)
-> >>>>>>>
-> >>>>>>> diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
-> >>>>>>> index 797111009a..f779a64415 100644
-> >>>>>>> --- a/docs/devel/testing/main.rst
-> >>>>>>> +++ b/docs/devel/testing/main.rst
-> >>>>>>> @@ -284,6 +284,13 @@ that are specific to certain cache mode.
-> >>>>>>>  More options are supported by the ``./check`` script, run ``./check -h`` for
-> >>>>>>>  help.
-> >>>>>>>  
-> >>>>>>> +If a test program is known to be broken, it can be disabled by setting
-> >>>>>>> +the ``QEMU_TEST_IO_SKIP`` environment variable with a list of tests to
-> >>>>>>> +be skipped. The values are of the form FORMAT-OR-PROTOCOL:NAME, the
-> >>>>>>> +leading component can be omitted to skip the test for all formats and
-> >>>>>>> +protocols. For example ``export QEMU_TEST_IO_SKIP="luks:149 185 iov-padding``
-> >>>>>>> +will skip ``149`` for LUKS only, and ``185`` and ``iov-padding`` for all.
-> >>>>>>> +
-> >>>>>>>  Writing a new test case
-> >>>>>>>  ~~~~~~~~~~~~~~~~~~~~~~~
-> >>>>>>>  
-> >>>>>>> diff --git a/tests/qemu-iotests/testrunner.py b/tests/qemu-iotests/testrunner.py
-> >>>>>>> index dbe2dddc32..ecb5d4529f 100644
-> >>>>>>> --- a/tests/qemu-iotests/testrunner.py
-> >>>>>>> +++ b/tests/qemu-iotests/testrunner.py
-> >>>>>>> @@ -145,6 +145,18 @@ def __init__(self, env: TestEnv, tap: bool = False,
-> >>>>>>>  
-> >>>>>>>          self._stack: contextlib.ExitStack
-> >>>>>>>  
-> >>>>>>> +        self.skip = {}
-> >>>>>>> +        for rule in os.environ.get("QEMU_TEST_IO_SKIP", "").split(" "):
-> >>>>>>> +            rule = rule.strip()
-> >>>>>>> +            if rule == "":
-> >>>>>>> +                continue
-> >>>>>>> +            if ":" in rule:
-> >>>>>>> +                fmt, name = rule.split(":")
-> >>>>>>> +                if fmt in ("", env.imgfmt, env.imgproto):
-> >>>>>>> +                    self.skip[name] = True
-> >>>>>>> +            else:
-> >>>>>>> +                self.skip[rule] = True
-> >>>>>>> +
-> >>>>>>>      def __enter__(self) -> 'TestRunner':
-> >>>>>>>          self._stack = contextlib.ExitStack()
-> >>>>>>>          self._stack.enter_context(self.env)
-> >>>>>>> @@ -251,6 +263,10 @@ def do_run_test(self, test: str) -> TestResult:
-> >>>>>>>                                description='No qualified output '
-> >>>>>>>                                            f'(expected {f_reference})')
-> >>>>>>>  
-> >>>>>>> +        if f_test.name in self.skip:
-> >>>>>>> +            return TestResult(status='not run',
-> >>>>>>> +                              description='Listed in QEMU_TEST_IO_SKIP')
-> >>>>>>> +
-> >>>>>>>          args = [str(f_test.resolve())]
-> >>>>>>>          env = self.env.prepare_subprocess(args)
-> >>>>>>>  
-> >>>>>>
-> >>>>>> Why not simply remove the broken tests, and create issues to add them
-> >>>>>> again in the future?
-> >>>>>
-> >>>>> In theory that's what our policy today is, but in practice it is
-> >>>>> too much of a burden on the release co-ordinator, to expect them
-> >>>>> to create such a patch themselves, or wait on a subsys maintainer
-> >>>>> todo it for them.
-> >>>>>
-> >>>>> They end up just ignoring brokenness in CI which is a bad practice,
-> >>>>> and will prevent us ever making CI truely gating or switching to
-> >>>>> using MRs for pull requests. This gives us a super-fast way to skip
-> >>>>> flaky tests, while the subsystem maintainers figure out the right
-> >>>>> permanent answer.
-> >>>>>
-> >>>>
-> >>>> I disagree on this one, merging a single patch doing a git rm, and a git
-> >>>> revert later is not more expensive than merging a variable modifying a
-> >>>> variable in a yaml file.
-> >>>
-> >>> Any code changes like that need to be sent back to the subsystem
-> >>> maintainer to be acked. IMHO the release manager should not be
-> >>> unilaterally deleting tests without peer review.  So that's
-> >>> got a non-negligible turn around time, during which CI is broken.
-> >>>
-> >>
-> >> I accept the argument, but it seems like a workaround for a human
-> >> process, more than a proper solution to the problem.
-> >>
-> >> It would be better to have a proper policy for build/test fixes, instead
-> >> of implementing local overrides to this.
-> >>
-> >>> Setting an env variable to skip a problematic test is something
-> >>> reasonable to do with zero oversight.
-> >>>
-> >>>> The issue with this approach is that people running tests locally will
-> >>>> not see which tests are skipped, and will see false positives. So you
-> >>>> just keep CI green, but not the test base itself.
-> >>>
-> >>> I would still expect the release manager to file a bug about any
-> >>> flaky test they disable via the env var, and the subsystem maintainer
-> >>> should still be fixing it or disabling it such that tests won't fail
-> >>> more broadly, or deciding to remove it if terminally broken.
-> >>>
-> >>> We're just decoupling the process so that there is an immediate
-> >>> workaround possible. It can also be used by people working in
-> >>> their forks - often I've been testing stuff in my fork, but
-> >>> see spurious failures because git master has a non-deterministic
-> >>> test failure merged. I would like to easily skip those in my fork
-> >>> too, without adding extra commits to me working branches, as that
-> >>> would require the same commit to be duped into several in-progress
-> >>> branches, vs setting the env var once.
-> >>>
-> >>>> The risk I see is that some tests will stay forever in this skip
-> >>>> variable, so it will be dead code for CI, but still alive and failing
-> >>>> for people running tests manually who hit the regression.
-> >>>
-> >>> Again, there should be a bug filed for any flaky test. Anyone can
-> >>> do this, if they see it locally or in their fork CI, or in staging
-> >>> CI. If no one can see an obvious fix, then anyone can also propose
-> >>> to disable the test.
-> >>>
-> >>>> If you still want an alternative to removing test, implementing a
-> >>>> skip_list in tests/qemu-iotests/meson.build is better than an env var
-> >>>> IMHO, and achieves the exact same effect, for CI and for users.
-> >>>>
-> >>>> What do you think?
-> >>>
-> >>> IMHO there needs to be a way to skip flaky tests which does not
-> >>> require code changes as the only available option. Code changes
-> >>> are the permanent fix, env var is the immediate workaround.
-> >>>
-> >>
-> >> I'm not sure all this answers to my question about How to ensure users
-> >> who run tests and the CI both see the same skip list.
-> >>
-> >> I don't mind having an env var, a black list in meson or any other
-> >> solution, but having different results on a dev machine and in CI is not
-> >> a good design. So whatever the solution is, the CI yaml file is not the
-> >> proper place to store this information.
-> > 
-> > AFAICT the test 185 that is being skipped in the CI yaml file only
-> > fails when run under gitlab. I've never seen a failure running it
-> > locally.
-> > 
-> > If it failed locally too, then I'd agree that it should not be
-> > skipped in the CI yaml, but universally skipped in all scenarios.
-> >
+
+
+On 5/11/2026 6:43 AM, Ard Biesheuvel wrote:
+> Hello Tushar,
 > 
-> If I get all this correctly, we add a generic mechanic to be able to
-> gate CI with block tests just because there is a single test failing
-> with a single driver. Is that the right approach?
+> On Fri, 8 May 2026, at 20:37, Tushar Dave via groups.io wrote:
+>> This RFC introduces a mechanism to specify Guest Physical Addresses
+>> (GPAs) for PCI BARs, allowing explicit placement of guest MMIO BAR
+>> addresses to match host physical addresses for assigned devices.
+>>
+>> On some platforms, P2P DMA is performed between devices within the same
+>> IOMMU group. The PCI fabric ACS is configured to permit direct P2P
+>> without going through the host bridge in order to achieve the required
+>> performance.
+>>
+>> To support this multi-device IOMMU group P2P scenario in virtualization,
+>> the VM may need to use the same MMIO BAR addresses as the host physical
+>> address layout.
+>>
+> 
+> Did you consider implementing this using Enhanced Allocation (EA)? If so,
+> could you explain why it is not suitable here?
 
-The env variable is the generic mechanism.
+I have not evaluated EA for this design. When I looked at EDK2, I
+chose PcdPciDisableBusEnumeration because it cleanly preserves fixed
+BAR programming established by the hypervisor — at the cost of QEMU
+performing PCI bus number and resource assignment.
 
-The yaml file exclusion for 185 is the special case, but we get
-that basically for free with the former.
+I did a quick search and do not see EA support in EDK2. Any pointers
+to EA being used in a similar fashion to achieve fixed BAR placement
+would be appreciated.
 
-> In the future, do we expect to merge code breaking tests?
+> 
+> Also, I think I understand what the intent is here, but could you describe
+> the topology in a bit more detail? These are assigned physical PCIe endpoints
+> behind an emulated host bridge, right? And the BAR needs to reside at an
+> a priori fixed address so that another PCIe endpoint behind the same emulated
+> host bridge can DMA straight into it?
 
-Yes. We will certainly merge more non-deterministic tests. We've seen
-this over & over again. Something passes CI initially but after a
-number of CI pipelines turns out to be flaky
+Yes, that is all correct.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+      -[0000:00]-+-00.0  Host bridge
+                 +-01.0  Root Port
+                     \-[0000:02]
+                          +-00.0 Switch Upstream Port
+                          +-01.0 Switch Downstream Port A
+                          |      \-[0000:04] Device A
+                          +-02.0 Switch Downstream Port B
+                                 \-[0000:05] Device B
 
+> 
+> Doing PCIe enumeration at yet another level is not a feasible approach imo,
+> having UEFI and Linux play nice together is already a bit of a challenge.
+
+I agree but to clarify, in this case QEMU performs PCI topology
+initialization and resource assignment prior to firmware execution,
+where EDK2 avoids full PCI bus re-enumeration. Linux sees a fully
+enumerated bus from firmware just as it does today. There is no
+duplicated enumeration step between firmware and Linux when we use
+EDK2 with PcdPciDisableBusEnumeration.
+
+> 
+> Is there any way this could be handled by having special rules for inbound
+> translation in the host bridge driver/implementation?
+
+Not that I can think of.
+
+Thanks.
+-Tushar
 
