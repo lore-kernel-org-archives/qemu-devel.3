@@ -4,50 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86996CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:21:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95AA1CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:21:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuTc-0003fp-5q; Tue, 12 May 2026 17:17:16 -0400
+	id 1wMuPh-0006qY-1g; Tue, 12 May 2026 17:13:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuSC-0001Qs-D5; Tue, 12 May 2026 17:15:53 -0400
+ id 1wMuPY-0006ZC-GR; Tue, 12 May 2026 17:13:05 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuSA-0006SF-If; Tue, 12 May 2026 17:15:48 -0400
+ id 1wMuPW-0004t0-Ib; Tue, 12 May 2026 17:13:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619306; bh=J+Zpga7XieERCo9Al2g1OWFS+ZWADD7i5J4bcrupzy8=;
+ t=1778619304; bh=XoR2I0ePUXnBe84itAvihwGQ7mK09SiGw0FoTqAxv6o=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=KY5zTPNk/2NK+BisdulQCwaK1CZmHpXw74RZNxgN76Iehzq2JhkHcoU8WPUFzpK/S
- bNP1OOSTn8JwCf/m4SqfZTNefdssaM2cpwcUqZIXBn7Xu5wYJVpOS2zFA9tYAxFN25
- bxeDz6ZaE8s4g4V4ERvfjrD5P29RzNyo9DcwgkT7LUyTE4MJeexR8n71zO1H2VZcSg
- xVY3lmqsugb4jO+i35q2AQ+1Z4uPJ5jc2pT9xsYFBU8pGbOTYmi927GWC8KlhRm7Nd
- CX6t2wNRCQHa/kJsSjy2BOr9O3TaCjZWk8+YEsKoWyNoHZalPhXhKLLJASjH288NLD
- wH5meVMtU+CqA==
+ b=hTKgWGDbcZkLt/zkiZ3k+3PFmL3ptvDNqy5Of1mNNKafkABlY11w1PGgvoGFeCZIN
+ x2DsPvFL6JaWQhX/KIpe4j2cVXUbbgf2Jjw9b+VkgQsbs8DVMQtfuP5dWB0e0/umHK
+ VIaL2i4R17EG/oZogq3LsdLeuNfrn5MO2WWuYdCgo+d0wrbqs4tsdcXYHilV/G++KN
+ n8fLLQLoWisMU5vLOVpP3LvDcvor4OqJXYsLZJYaVtEH79fIHzgyHoV+VTNhPVFPQ9
+ B9FZ3iESH/bbFRWdj0QBniC+gpX/mDdYjyg5CXBSdBvy8a2fYqyhSFKCJDYHTKvQ4W
+ Lgg3EUuQseIXQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5CF891AA3A0;
- Tue, 12 May 2026 23:55:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5F1BD1AA383;
+ Tue, 12 May 2026 23:55:04 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 659293ABD0F;
- Tue, 12 May 2026 23:55:10 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 60CA23ABCF2;
+ Tue, 12 May 2026 23:55:08 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Max Chou <max.chou@sifive.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 098/117] target/riscv: Use ELEN for Fractional LMUL
- check
-Date: Tue, 12 May 2026 23:54:40 +0300
-Message-ID: <20260512205503.361097-98-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 069/117] ui/console-vc: fix off-by-one in CSI J 2
+ (clear entire screen)
+Date: Tue, 12 May 2026 23:54:11 +0300
+Message-ID: <20260512205503.361097-69-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,58 +73,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair.francis@wdc.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The RISC-V spec states that
+The loop condition used `y <= s->height` instead of `y < s->height`,
+causing vc_clear_xy() to be called with y == s->height. This clears
+a row in the scrollback buffer beyond the visible screen.
 
-"""
-For a given supported fractional LMUL setting, implementations
-must support SEW settings between SEWMIN and LMUL * ELEN, inclusive.
-"""
-
-We were previously checking VLEN, instead of ELEN, so let's update to
-check ELEN instead of VLEN for fractional scaling.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3196
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Reviewed-by: Max Chou <max.chou@sifive.com>
-Message-ID: <20260415233740.3027321-5-alistair.francis@wdc.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 5dcc64828dc79c2426905db5fae885f6ccf93347)
-(Mjt: context fixup)
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+(cherry picked from commit 181fdf8a7e13c0460a26777ff9301e0ecdca3784)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 6c0de3f82d..cb2c3148e5 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -47,18 +47,17 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
-     target_ulong reserved = s2 &
-                             MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
-                                             xlen - 1 - R_VTYPE_RESERVED_SHIFT);
--    uint16_t vlen = cpu->cfg.vlenb << 3;
-     int8_t lmul;
- 
-     if (vlmul & 4) {
-         /*
-          * Fractional LMUL, check:
-          *
--         * VLEN * LMUL >= SEW
--         * VLEN >> (8 - lmul) >= sew
--         * (vlenb << 3) >> (8 - lmul) >= sew
-+         * ELEN * LMUL >= SEW
-+         * ELEN >> (8 - vlmul) >= sew
-          */
--        if (vlmul == 4 || (vlen >> (8 - vlmul)) < sew) {
-+        if (vlmul == 4 ||
-+            (cpu->cfg.elen >> (8 - vlmul)) < sew) {
-             vill = true;
-         }
-     }
+diff --git a/ui/console-vc.c b/ui/console-vc.c
+index 830842064d..6b9d643a24 100644
+--- a/ui/console-vc.c
++++ b/ui/console-vc.c
+@@ -899,7 +899,7 @@ static void vc_putchar(VCChardev *vc, int ch)
+                     break;
+                 case 2:
+                     /* clear entire screen */
+-                    for (y = 0; y <= s->height; y++) {
++                    for (y = 0; y < s->height; y++) {
+                         for (x = 0; x < s->width; x++) {
+                             vc_clear_xy(vc, x, y);
+                         }
 -- 
 2.47.3
 
