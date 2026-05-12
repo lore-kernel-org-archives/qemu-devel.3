@@ -4,88 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54C0CCD4846
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 02:09:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A3B2CD37BE
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 02:15:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMcXZ-0003E1-TP; Mon, 11 May 2026 22:08:09 -0400
+	id 1wMceH-0004ay-97; Mon, 11 May 2026 22:15:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wMcXY-0003D7-IY
- for qemu-devel@nongnu.org; Mon, 11 May 2026 22:08:08 -0400
-Received: from mail-qv1-xf41.google.com ([2607:f8b0:4864:20::f41])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wMcXW-0004qr-Sj
- for qemu-devel@nongnu.org; Mon, 11 May 2026 22:08:08 -0400
-Received: by mail-qv1-xf41.google.com with SMTP id
- 6a1803df08f44-8b7f937ef44so28406246d6.0
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 19:08:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wMceC-0004Zx-0p
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 22:15:00 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wMceA-000193-0G
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 22:14:59 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64BK6rYJ3385188
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 02:14:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 1/T6HsVNbZ8MV9G/W0Cs7lihIlTVeTIpWZVIPs4UBFM=; b=mH1eRCWL4UzM2DJL
+ wE+guqKwpb5n5tiIfFaixGABslTucZXCdAnNyurR0mw5+hr3CK1SB6solJYfxT5K
+ XG9n45hKtAWpvzwYwP9DCHg/HFzdoOOzPLPVmwvGS58Yj3pBP01M9kno7vHE9bGQ
+ 4kacG2uWDwJ62TqW6M3d5je9e5O405l0AEJ/hNuDc+Y4b/dItoZzYvZePURWLXpZ
+ ZZD4n5jGhMKm3FmrxoLfqyU3HA9W5honE+kbRnIkJt37QzpFuOiycSMinXSJxyEE
+ sZ00Yqxo3z1fty34bN9OM1PJk6x5WyHhMciDl2davPe3kNaDfXvM6ZZJCAxF2avW
+ 2HpZCQ==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e3nv4h11g-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 02:14:55 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-2c16233ee11so6707098eec.1
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 19:14:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778551686; x=1779156486; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=vpuabHOf+U9MEgyNUnfpjMEoIyiMndXe69sZcdp5B8Y=;
- b=FqxK/A7JsegkGndudb1Z0TW8ReA7xsxL5r39hpoFBqyqJYbBGYPCB9LgIwmLIL4PF1
- EXW2KQiioIoBQHwBTXOpjsjYKGCJ9Yk1KQgDsp6Vg/Mv09bOw7CuUsZRpeG2WM/hdxtm
- wOFZsBe+vTil2BE8/E2HWUsFsdx87r4+GrofmEMaORKLfkKeqbP+APxY2qrbG+frKGot
- ITZMkAGrdNMKMzisrr6MUlcXuRiqkiCpFAkRX6WwcxxWaPeoUljmYPvcTr95b/IA0GQG
- pWH7aUyGtfq9LVB3f22fQM6ShLBp+Cs1Y3EKYwoPI8P0oPnT7XqihLbyMiC2J7amsCkD
- Frgg==
+ d=oss.qualcomm.com; s=google; t=1778552095; x=1779156895; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1/T6HsVNbZ8MV9G/W0Cs7lihIlTVeTIpWZVIPs4UBFM=;
+ b=iWHtPjFmd8wUb3SnrOPZiAvbvg0J7YA9yKUWExvxpKxNDnvoumNAPtZ8IskZJPYgVo
+ zna7jYZoLk16cL5jQOvlUV76D+IlITPHXqH3Wmh0V4DqkTmU2Hz3X4w6x+oqmSlF5KXV
+ MTWhfx7Z18yovF3sRg9ds3utjNPgqzWZKKtCjyB1FoUt9Grouim/bR/CaO0bI1Wvah6M
+ bpBXelt3ya5ZfhNUv0JrHQ/+X54O7hkGU1i0aCOrKkxN9U3On9jC2il50OwQuo20aNKv
+ EZLZTqiPUD6hvdY++Qz6jYqX1u7gbk2gw+h83MQIYw1n8HOizh5PNancQzA76dGEJ+3O
+ 8AQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778551686; x=1779156486;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vpuabHOf+U9MEgyNUnfpjMEoIyiMndXe69sZcdp5B8Y=;
- b=dT6xyp7LNolQyPFgbTsMXlVgpiKVJRNIe7AiLzbQ+OwxgFk6fEDeBEOLdOeNiLlwsY
- zcdxKPFh0+6tHuWxoFQZ5REQdhCWL/admSa25CTVN4abntS33ctCO9wLiUi86yRgOZh+
- If0uO0Wsjmwa90kyzV1CntI6R5PFumWRAZVmVIe4Uib2CKKFz1hxeK0t9koRrqujBEf/
- t1JlhENK6JaMfV/EoVL9wq/bAMlePEGKpIi3RVDVlgmSo31ZedkLf0djcX7VTCAgCmZM
- MvF/rbWntshn7lDmMQk4NEgpj8KC7wwL5M6/b1Fab6hSo1BEejl9u6UnJ1fYtKPvXqoD
- /RZw==
-X-Gm-Message-State: AOJu0YxydZjF9BaZTn4fvqBd7NHw6OPtyhABfRsouf4a74TeLvErv6RO
- p690GKm5mMeghqR4fcdJpfT0+eec1+bFIPnreNlPgt8cHQaonxPJtV7i
-X-Gm-Gg: Acq92OGtMoWmARn7L+5bcadnN7tpaxFQ2x4un6i7DphqIKyx7Nl5DmgrbE6jbA92En2
- XzXw/K3YNaLw2FpOdEJZ+lwckDcuyiMdZ4Vx4kcHRsyaymXzZVzSsdlzlRVtOiApxm62vkpoMWG
- CLHxiS5JLg3Ngrh4RSfsGb8TcXLmVX8aoplqWaHkkhZaqXkUca/dM7Jv8rYmaqVKTQ+e2cMLBNS
- 8m1Ocr9aLtZUMwX2GU0uJUXDZ5+/a3Rm1YybTdCCdkQy19OgL15e4OgOq80aKo3LkkOIe7+i0RC
- /j5Kvb6bhoOMT9neCOaq+K0RH9hwZy/MRlwWqTbnSjX8SPYff8za40MlB6oE9RgYHErWuJSUINg
- abUS6qkijSFIuNy8KV/Y270VY9odbZLfiguDfTViZPquaQH8nMz03dqQvGnh4i16Duonq3i4Lgc
- jKu53WNZ0okFMTDDEbldZk5wr9zELDG3zr463WFB/34j38QGNg8xaQHoe8e7RC+UNP4eu53GPv
-X-Received: by 2002:ad4:5ded:0:b0:8bd:75c2:5528 with SMTP id
- 6a1803df08f44-8bd75c255c0mr349531146d6.12.1778551685406; 
- Mon, 11 May 2026 19:08:05 -0700 (PDT)
-Received: from ZEVORN-PC.localdomain ([162.244.208.119])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8c2ec034252sm71420236d6.39.2026.05.11.19.08.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 May 2026 19:08:05 -0700 (PDT)
-Date: Tue, 12 May 2026 10:07:51 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com
-Subject: Re: [PATCH 00/13] target/riscv: remove riscv_cpu_* arrays
-Message-ID: <agKIuzJdhI6P4dmt@ZEVORN-PC.localdomain>
-References: <20260511132910.1738069-1-daniel.barboza@oss.qualcomm.com>
+ d=1e100.net; s=20251104; t=1778552095; x=1779156895;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1/T6HsVNbZ8MV9G/W0Cs7lihIlTVeTIpWZVIPs4UBFM=;
+ b=W6IBd2LSrEftuCJyNH888sWkNq0QFgDpF2JPlsrj9etq/xTDHIGW4GaJaAfmhzF62r
+ wH/KlVG5XNn1Qqb/VVj+QJVSXm1tqvZKK1ck3bipBXd34f/os4SFOoD8+B6Vq304GKiG
+ zVnMXgYPShZPUwKeNkNC9bYPfnnMhB+LXi/gineMwu1yIAQ+jBOSF2af2qKwwn5nkabL
+ QHsPtdHjoIHt8NW2sYz6sq/bPSwTxU1jdoPfDWOEJLqnQU5sYblnMJYqHkIH5qIMGvbz
+ RTR5ifPH+YIJX9pxCeewHKjUnkuA0kaP8NzD2/SreNIl2luFBWfIGKywklQqjroh4YOY
+ GX6Q==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8dBpWtZ5POwnZEy7iqJdagw+TDfl6uUy3O218il4vyjySZXXpunH5asd1IT1P+l4A5f4QwM1oIBKWe@nongnu.org
+X-Gm-Message-State: AOJu0YxsD5jHcpZpib6YqFbeCHOsSfm9IUV5+gB8ZJAFVlORqf2YDxM2
+ 5NLmoDkvjLft94geGqMZ2ULAx+u/PrilwmT1AJ2Y2af5oK69tz42r24iLK7KRL8prsX/3TNMsvZ
+ HO3QP5wQtXVqSNjK956FWHo+npJ77wEFbpZ9Hza1lCaeKqEy03vCjIX9Ivw==
+X-Gm-Gg: Acq92OHrzsmqEL+tSaUK7H5OnlUmeDniZE0jSygu5MJzzfGvZRuPVEjEYkl4jFvGysH
+ jo91TNbov6HP/c03JuqZf1qciRfrLzYWYWYOY6wRVXvdRJYGGLWZarI3MnTeoScZ3v5z9vdqfzd
+ ZLFsEywE82yBv/Af0r6qeofAwTIds0jPDaRa9/wvvJSXWYsjzHIsH1E+Ur82DZVr/sXJ/ZSi3JC
+ ljr70Ld+qcEYWPVoa8bzyt686417f4klvN4JeJ/4BHZwvdGEnjQBSgYCsXp9gAzs/Ag5wErNgii
+ TVqxzRHK+G9aLfeu+m5TEDB+ef5t+bPzvDIJtQMYT3g6K4WnCDSvigSexkFS9sSfWHfuWe2+IKG
+ A2Jo9SZqe4csqUEUSqR4qWxbUR6TAXcUHXesP9uYKk97HpXt4bSpLZ4ecZUvfUWHUO8m4wVz8GT
+ GZHiJ7hF9IjBPOQw==
+X-Received: by 2002:a05:7022:91f:b0:127:5c3d:bd95 with SMTP id
+ a92af1059eb24-132a84faedbmr6320231c88.32.1778552094560; 
+ Mon, 11 May 2026 19:14:54 -0700 (PDT)
+X-Received: by 2002:a05:7022:91f:b0:127:5c3d:bd95 with SMTP id
+ a92af1059eb24-132a84faedbmr6320214c88.32.1778552093968; 
+ Mon, 11 May 2026 19:14:53 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-13278210ff2sm17279925c88.6.2026.05.11.19.14.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 11 May 2026 19:14:53 -0700 (PDT)
+Message-ID: <a31c87d2-8c57-4353-af45-01bdaa02fdc0@oss.qualcomm.com>
+Date: Mon, 11 May 2026 19:14:51 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260511132910.1738069-1-daniel.barboza@oss.qualcomm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f41;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-qv1-xf41.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] target_info optimizations
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: philmd@linaro.org
+References: <20260511190634.472174-1-richard.henderson@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260511190634.472174-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=ZrTd7d7G c=1 sm=1 tr=0 ts=6a028d1f cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=EUspDBNiAAAA:8 a=d2ZiEkxV1j7TseBqg3kA:9 a=QEXdDO2ut3YA:10
+ a=6Ab_bkdmUrQuMsNx7PHu:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEyMDAxOSBTYWx0ZWRfX0aDTMCjnYkOQ
+ FYCzfgJApxZLl9IBOy4GeTkL/KL/C7EhNzZUumtDXE5UQk1o0hGGAGmmB5T1i36YkJvIMJ93WBS
+ w0krzax0k5q0z6qSb8z+J6JECTYbKZ2C9iOG8EBCbIsi6zE0jrgShyMq8xaPb57wNzvQ3BBej8e
+ XdxPm/+5tRY0Ui74wlq+wbgiqe4ZWoSoejGdPkx/8mcNVhU2YFkXT2HCIvL+E/bBoc8HC7syllM
+ +aGgHdUi0T/294DWWsXk1g3mLeQnf0eESPVCR7MBrg1tKCWGIKhOT4Tr6o82kfDZyaNMwbz7EWr
+ DmbG5No1OdweEewYZun/xVbSUdTHD9gNoxCwITMdMMQ8IRwhRKkudrwyGVcgw/sCnky6EjIFJ/t
+ gNpDJSrV1TQYrdGjaJNximl7R4C8itXa8wFwTw3sytJ72oWMH8tXwEZAB8eBPMJEpG1i2JsEsF1
+ eyYECcMTx7/4hwNrYrQ==
+X-Proofpoint-ORIG-GUID: 7oynwMgkyPaNvUz2BneF-64SN5pZrRNk
+X-Proofpoint-GUID: 7oynwMgkyPaNvUz2BneF-64SN5pZrRNk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-11_05,2026-05-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 spamscore=0 suspectscore=0 clxscore=1015
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 adultscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605050000
+ definitions=main-2605120019
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,93 +153,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Daniel,
-On Mon, May 11, 2026 at 10:28:57AM -0300, Daniel Henrique Barboza wrote:
-> Hi everyone,
+On 5/11/2026 12:06 PM, Richard Henderson wrote:
+> Based-on: 20260509005453.3984184-1-pierrick.bouvier@oss.qualcomm.com
+> ("[PATCH v5 0/6] single-binary: deduplicate target_info()")
 > 
-> We have been dealing with two sources of extensions information in
-> target/riscv/cpu.c:
-> 
-> - isa_edata_arr[]: an array that we must keep in riscv,isa ordering that
->   also has priv_spec info;
-> - riscv_cpu_* arrays: used to set user properties and set defaults for
->   rv32/rv64, among other users across the code.
-> 
-> The main issue here is the info being duplicated across arrays.  When
-> adding new extensions we go through a ritual of adding basically the
-> same stuff in both isa_edata_arr[] and riscv_cpu_extensions[].  We can
-> eventually forget to do all steps of that dance, resulting in patch 1.
-> 
-> The second issue is a desire for less abstractions.  An extension is
-> something that we report in riscv,isa, that might be exposed to users or
-> not, that might be a vendor or an experimental ext.  All these
-> distinctions don't require multiple distinct arrays.
-> 
-> I also made an effort to start moving away from the 'named features'
-> stuff we have going on.  A 'named feature' is just an extension that
-> most of the time isn't exposed to users, most of the time represents
-> innate TCG behavior, and sometimes have a different enable mechanism
-> aside from setting a flag to 'true'.  None of that is exclusive to this
-> class of extensions therefore I believe we should move away from it
-> over time.
-> 
-> There are more design simplifications I want to do in cpu.c and with CPUs
-> in general, but for now we can enjoy less lines to maintain.
-> 
-> Patches based on alistair/riscv-to-apply.next.
-> 
-I’m seeing some compile errors after applying these patches on top of commit
-0844c21f24ca (target/riscv: Update MISA.X for non-standard extensions) from
-alistair/riscv-to-apply.next.
+> Allow TargetInfo accesses to resolve to a direct structure access.
+> Arrange for the structure to appear const to the majority of qemu.
+> For user-only, the structure actually is const; for system, the
+> structure is initialized early.
+>
 
----
-../target/riscv/tcg/tcg-cpu.c: In function ‘riscv_cpu_update_misa_x’:
-../target/riscv/tcg/tcg-cpu.c:1158:11: error: unknown type name ‘RISCVCPUMultiExtConfig’; did you mean ‘RISCVCPUConfig’?
- 1158 |     const RISCVCPUMultiExtConfig *arr = riscv_cpu_vendor_exts;
-      |           ^~~~~~~~~~~~~~~~~~~~~~
-      |           RISCVCPUConfig
-../target/riscv/tcg/tcg-cpu.c:1158:41: error: ‘riscv_cpu_vendor_exts’ undeclared (first use in this function)
- 1158 |     const RISCVCPUMultiExtConfig *arr = riscv_cpu_vendor_exts;
-      |                                         ^~~~~~~~~~~~~~~~~~~~~
-../target/riscv/tcg/tcg-cpu.c:1158:41: note: each undeclared identifier is reported only once for each function it appears in
-../target/riscv/tcg/tcg-cpu.c:1160:27: error: request for member ‘name’ in something not a structure or union
- 1160 |     for (int i = 0; arr[i].name != NULL; i++) {
-      |                           ^
-../target/riscv/tcg/tcg-cpu.c:1161:43: error: request for member ‘offset’ in something not a structure or union
- 1161 |         if (isa_ext_is_enabled(cpu, arr[i].offset)) {
-      |                                           ^
-[1658/2250] Compiling C object libqemu-riscv64-softmmu.a.p/target_riscv_vector_helper.c.o
-ninja: build stopped: subcommand failed.
----
+It would be nice, if possible, to see those optimizations driven by a
+concrete benchmark. We had to deal with several premature optimizations
+along our road on the single-binary, and it would be great to not repeat
+the same thing again on this new component.
 
-Maybe try rebasing again and fixing it.
+> 
+> r~
+> 
+> 
+> Richard Henderson (5):
+>   meson: Build target-info-qom.c with -fno-lto
+>   target-info: Expose target_info as const data
+>   target-info: Merge target-info-impl.h into target-info.h
+>   target-info: Merge target-info-qapi.h into target-info.h
+>   target-info: Inline accessors
+> 
+>  include/qemu/target-info-impl.h   |  44 -----------
+>  include/qemu/target-info-init.h   |  45 ++++++++---
+>  include/qemu/target-info-qapi.h   |  29 -------
+>  include/qemu/target-info-qom.h    |   2 +-
+>  include/qemu/target-info.h        | 123 +++++++++++++++++++++++++++---
+>  configs/targets/aarch64-softmmu.c |  18 +----
+>  configs/targets/arm-softmmu.c     |  18 +----
+>  hw/core/machine-qmp-cmds.c        |   1 -
+>  hw/uefi/ovmf-log.c                |   2 +-
+>  hw/virtio/virtio-mem.c            |   2 +-
+>  page-vary-common.c                |  10 +--
+>  page-vary-system.c                |   8 +-
+>  system/arch_init.c                |   2 +-
+>  target-info-qom.c                 |  13 ++--
+>  target-info-stub.c                |  27 +------
+>  target-info.c                     |  95 -----------------------
+>  meson.build                       |  13 ++--
+>  17 files changed, 179 insertions(+), 273 deletions(-)
+>  delete mode 100644 include/qemu/target-info-impl.h
+>  delete mode 100644 include/qemu/target-info-qapi.h
+>  delete mode 100644 target-info.c
+> 
 
-Thanks,
-Chao
-> Daniel Henrique Barboza (13):
->   target/riscv/cpu.c: add xlrbr isa_edata_arr[] entry
->   target/riscv/cpu.c: fix smctr/ssctr isa_edata_arr[] order
->   target/riscv: make riscv-qmp-cmds use isa_data_arr[]
->   target/riscv/tcg: treat all exts equally in
->     cpu_disable_priv_spec_isa_exts
->   target/riscv/tcg: use only isa_edata_arr[] in cpu_cfg_ext_get_name()
->   target/riscv/cpu.c: remove riscv_cpu_enable_named_feat()
->   target/riscv: remove riscv_cpu_named_features[]
->   target/riscv/kvm: use isa_edata_arr[] for unavailable props
->   target/riscv/tcg: use isa_edata_arr[] to enable max exts
->   target/riscv/tcg: use cfg_offset as cpu_set_multi_ext cb opaque
->   target/riscv: do not set defaults in cpu prop callback
->   target/riscv/tcg: use isa_edata_arr[] to create user props
->   target/riscv/cpu: remove riscv_cpu_* arrays
-> 
->  target/riscv/cpu.c            | 315 ++++++++++++----------------------
->  target/riscv/cpu.h            |  12 +-
->  target/riscv/kvm/kvm-cpu.c    |  25 ++-
->  target/riscv/riscv-qmp-cmds.c |  30 +---
->  target/riscv/tcg/tcg-cpu.c    | 137 ++++-----------
->  5 files changed, 153 insertions(+), 366 deletions(-)
-> 
-> -- 
-> 2.43.0
-> 
 
