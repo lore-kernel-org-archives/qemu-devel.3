@@ -4,114 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10CC2CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:16:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0CFECD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:17:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuPe-0006b8-1p; Tue, 12 May 2026 17:13:10 -0400
+	id 1wMuNu-00081L-JN; Tue, 12 May 2026 17:11:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wMuPE-0004nR-CW
- for qemu-devel@nongnu.org; Tue, 12 May 2026 17:12:46 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wMuPC-0004tC-SH
- for qemu-devel@nongnu.org; Tue, 12 May 2026 17:12:44 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 2717C623A5;
- Tue, 12 May 2026 21:12:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1778620349; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dK9uBroXGIz4etI8qyTgwDI0YhmV4Tjq0hi3RQ/SAuk=;
- b=esCbElSh9ArR3w0Rb111AaduNbB0Mfhm7+E+3Kr6i/1d9NiTKfxoHyo6TioUU/pZJITqhl
- vPXi+Y7RiFoWnfaX3Q0KChL1jmgS1/R9QOPIIPlu/dvUKgYqLsfLwO78ZazhjOES1AnFs9
- m9ShYO5tIsrp3Ob6ueFi2nK/uaDLgkE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1778620349;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dK9uBroXGIz4etI8qyTgwDI0YhmV4Tjq0hi3RQ/SAuk=;
- b=ca6vFLi4zBQVh7qPoV/h6u3zk5mETuUJzUGjHsttqAIjajvqaFRQeej+aCj5JFoaER1M6O
- e9UYRqhi+In84jCQ==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=esCbElSh;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ca6vFLi4
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1778620349; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dK9uBroXGIz4etI8qyTgwDI0YhmV4Tjq0hi3RQ/SAuk=;
- b=esCbElSh9ArR3w0Rb111AaduNbB0Mfhm7+E+3Kr6i/1d9NiTKfxoHyo6TioUU/pZJITqhl
- vPXi+Y7RiFoWnfaX3Q0KChL1jmgS1/R9QOPIIPlu/dvUKgYqLsfLwO78ZazhjOES1AnFs9
- m9ShYO5tIsrp3Ob6ueFi2nK/uaDLgkE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1778620349;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dK9uBroXGIz4etI8qyTgwDI0YhmV4Tjq0hi3RQ/SAuk=;
- b=ca6vFLi4zBQVh7qPoV/h6u3zk5mETuUJzUGjHsttqAIjajvqaFRQeej+aCj5JFoaER1M6O
- e9UYRqhi+In84jCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 61CE2593A9;
- Tue, 12 May 2026 21:12:28 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id QMCsDLyXA2r+IAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 12 May 2026 21:12:28 +0000
-From: Fabiano Rosas <farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wMuNf-0007ot-VJ; Tue, 12 May 2026 17:11:10 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wMuNe-00040d-Gw; Tue, 12 May 2026 17:11:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1778619303; bh=REayO9aCVDrVaPWZeXJGYE5hvEQMCsaum6RUoViQERk=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=WhUC+MsuBnk9EbmKwvLpM6QfOaBaEmZaMylhKlqdmFZsh4+qjGH2wQKYDTCGk4D99
+ 4ceA478klgQrBAoYmlLP3D8VKyBFez0ohvft/3Ifx3jcVMSoPSrwRDmZfyQ8lunXrH
+ mqxnEpThK4vaspA0coLlC8HJmxcbj1+BuEdk9728ada88LfgHmgskIK/Dho+UOXVRd
+ 32wSIqEq3yS8ummtTCJ14ym5ABsppKKjg2F3yaT4l8fxVAYlYG9oUTFZf3SE3VnRI4
+ yTRrgWUDzTjfxjyhj+/UlhAIYgXn6l4waQfkJncsUI4Est7k2Gfoda35ueo03ZgtYS
+ wmczjDl4pwlhA==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 0CD3A1AA36F;
+ Tue, 12 May 2026 23:55:03 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0F5513ABCDF;
+ Tue, 12 May 2026 23:55:07 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 1/4] tests/qtest/libqtest: Replace QTEST_TRACE with
- QTEST_QEMU_ARGS
-Date: Tue, 12 May 2026 18:12:18 -0300
-Message-ID: <20260512211221.3173-2-farosas@suse.de>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260512211221.3173-1-farosas@suse.de>
-References: <20260512211221.3173-1-farosas@suse.de>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 050/117] accel/tcg: Don't pass NULL to
+ get_page_addr_code_hostp
+Date: Tue, 12 May 2026 23:53:52 +0300
+Message-ID: <20260512205503.361097-50-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_TWO(0.00)[2]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- URIBL_BLOCKED(0.00)[suse.de:dkim,suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,linaro.org:email];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
- TO_DN_SOME(0.00)[]; FROM_HAS_DN(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:email, suse.de:mid,
- linaro.org:email]
-X-Rspamd-Queue-Id: 2717C623A5
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,66 +71,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The QTEST_TRACE environment variable allows for any QEMU command line
-option to be passed if used like so:
+From: Richard Henderson <richard.henderson@linaro.org>
 
-export QTEST_TRACE="-trace tracepoint -more -opts -here"
+Pass a dummy variable instead to let the value be discarded,
+in preparation for making the argument mandatory.
 
-Formalize that usage by accepting a new QTEST_QEMU_ARGS
-variable. Since the QTEST_TRACE now becomes redundant, remove its
-usage.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit 813dbe869f4f82f00f2b465fdd22d30db1d5233e)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260429003130.15164-2-farosas@suse.de
-[end all fmt strings with space]
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- tests/qtest/libqtest.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
-
-diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
-index 116a8a3258..dc4a665cfa 100644
---- a/tests/qtest/libqtest.c
-+++ b/tests/qtest/libqtest.c
-@@ -454,28 +454,27 @@ gchar *qtest_qemu_args(const char *extra_args)
+diff --git a/accel/tcg/internal-common.h b/accel/tcg/internal-common.h
+index 6adfeefe13..0ca13750f9 100644
+--- a/accel/tcg/internal-common.h
++++ b/accel/tcg/internal-common.h
+@@ -105,7 +105,8 @@ tb_page_addr_t get_page_addr_code_hostp(CPUArchState *env, vaddr addr,
+ static inline tb_page_addr_t get_page_addr_code(CPUArchState *env,
+                                                 vaddr addr)
  {
-     g_autofree gchar *socket_path = qtest_socket_path("sock");
-     g_autofree gchar *qmp_socket_path = qtest_socket_path("qmp");
--    const char *trace = g_getenv("QTEST_TRACE");
--    g_autofree char *tracearg = trace ? g_strdup_printf("-trace %s ", trace) :
--                                        g_strdup("");
-+    const char *args_from_env = g_getenv("QTEST_QEMU_ARGS");
-+
-     gchar *args = g_strdup_printf(
--                      "%s"
-                       "-qtest unix:%s "
-                       "-qtest-log %s "
-                       "-chardev socket,path=%s,id=char0 "
-                       "-mon chardev=char0,mode=control "
-                       "-display none "
-                       "-audio none "
--                      "%s"
--                      "%s"
--                      " -accel qtest",
-+                      "%s "
-+                      "%s "
-+                      "%s "
-+                      "-accel qtest",
- 
--                      tracearg,
-                       socket_path,
-                       getenv("QTEST_LOG") ? DEV_STDERR : DEV_NULL,
-                       qmp_socket_path,
-                       can_exit_with_parent() ?
--                      "-run-with exit-with-parent=on " : "",
--                      extra_args ?: "");
-+                      "-run-with exit-with-parent=on" : "",
-+                      extra_args ?: "",
-+                      args_from_env ?: "");
- 
-     return args;
+-    return get_page_addr_code_hostp(env, addr, NULL);
++    void *discard;
++    return get_page_addr_code_hostp(env, addr, &discard);
  }
+ 
+ /*
 -- 
-2.51.0
+2.47.3
 
 
