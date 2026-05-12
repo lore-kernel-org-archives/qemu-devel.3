@@ -4,94 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E162CD4F24
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 18:09:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2370ACD4F25
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 18:30:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMrXe-0005Sj-JK; Tue, 12 May 2026 14:09:14 -0400
+	id 1wMrr3-0000MZ-1G; Tue, 12 May 2026 14:29:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMrXc-0005SE-S6
- for qemu-devel@nongnu.org; Tue, 12 May 2026 14:09:12 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMrXZ-0008KW-5C
- for qemu-devel@nongnu.org; Tue, 12 May 2026 14:09:10 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-488ab2db91aso63678055e9.3
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 11:09:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778609347; x=1779214147; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7kSJKvdDedYaA/WxmqjYn0+9CJjwXSAlO2Gh4DJJEU4=;
- b=dXP3maB7qyHWpBwEHjytYyeyyAYB9Ksfs+4z9hFN3OOlQ38O2yE6m9Q2cQk/WDtAWW
- hSQbLi8/GkojiFmugMhL7tR2wQjEO7/aoC6jQ6EOLMSLGlKUC51aGj1rNkVr5mHy2BdV
- MjQdjBFEPK9tAzunTIKGZcj7Cc/Q3mAIbhiJmK/dbdMQU1COkZnsvGN6J1RL/+t7nCDc
- veB4E9N4Q7kxy2f7KbsjB0EwxYGdVxA9tY9WgAhnprXZKtqs0KDSsL+OGONhf5o7Dw4t
- 454DgWtKDqyzXegul5u14NSmVIJujuXZmCPAYAgZyT9uXKdUjlm/Eo/cx1PgqtyDDwuk
- vKnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778609347; x=1779214147;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7kSJKvdDedYaA/WxmqjYn0+9CJjwXSAlO2Gh4DJJEU4=;
- b=tX4HbcGLPfCelfKrJNh4RAMQAAHaOCb3xpPdJgDFqqAvbWwzGxfanzlQSRanGeuPmi
- lanKpQuQl4A4WvW0/ngJIxV2Aypoqc8UeRybzRsfh58ac41caO6F6iVAj5Y3CJtLytqh
- 5EQdv1MD0Cv3MhWAO9Ao75GKj+dMmdIfAbdVObNO0CtpTouiQ8D6mtCN4bEL4AuHrAqy
- 38q1mqbemwA83N/lOIGq5RaMBRCY0scTAk6KVEnRcoCkr9Uvk8woNLjdHmKOzj05go38
- ZxhE4cl+YCmL5uW2d+St7RXJCNIvkjKCjholbp03Npb8oEy/wrkeatZWTTSOukSASqpU
- l/uA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+KJk+uumQy9HT1BW4npDgiSJ22BJU8x+HpkN9yBov7cO6syj5tsDPo1GugKhmXQlpatPQIUP7vD8yW@nongnu.org
-X-Gm-Message-State: AOJu0Yx/ICc0jr2iP+vgmdDXnlZH++/GNgnJpBFNI85PLZyvRs38ODIM
- ttRE/C6WgApUILgqAeaf0cjqp9cL4xp0PfLyOk27kT/Npdo2fuCoEdotEeSbuHStCyc=
-X-Gm-Gg: Acq92OGUWBW/mvvynpiCmuly6GTp0OZdt3xGFWpKf+Ifmu83Yxup6if16ar2Yq9qxnC
- OrT/LsuuAlvRSVunuKaVxjfwx2WD+ZvnfkBXS0EZ+j0K5kcAQ7AWvJuEr142SVo1Eii5yBNefXP
- /2NXQ4Wc9m1geFvEXVSfxg2mV5WMOuLECiXJio7w2J7OChmHjvIIv8X+iPYriF3cZYBRpmPXHdE
- VF8QyO4aZiPQb3thq1b+yNef9glM6P2+dFZp+SxyN5aFYIVLuYVouHy1C7CsWeGAr8kzf0RTtH2
- ipj5YMnsY84e4GJ4mt9TU+gGLlFAI/C5PYYYgOvgZH+4TC6HlTmbfQCSumZoMzqD3KXcND1+Wn9
- twrPrr9KWLh8MbQodvtTNPGwYJvAu7jd6Az7t+p3LVZtU0Z1Vikl2er6LjgkkZw1jRN10V9pyxC
- 8LN1XruYSBpgEwBWJMfi95Npbzxib0iLcBE95X0AUwRIUS5mnZwQjvtkjY7BCW/6pCrQ==
-X-Received: by 2002:a05:600c:3513:b0:48a:72ab:f88c with SMTP id
- 5b1f17b1804b1-48fc9a3327cmr36975e9.17.1778609347273; 
- Tue, 12 May 2026 11:09:07 -0700 (PDT)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fc8cccf90sm14259295e9.0.2026.05.12.11.09.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 May 2026 11:09:06 -0700 (PDT)
-Message-ID: <1a35c23a-0d95-4513-8b05-b0876bc9db92@linaro.org>
-Date: Tue, 12 May 2026 20:09:05 +0200
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wMrqc-0000Iw-5p
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 14:28:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wMrqZ-0008SZ-0O
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 14:28:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778610523;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=I5tbVYE/DPwdXmUTzfFLYyMnIDSRliFHz56I8ub7yco=;
+ b=JHAyccq+xCnoM3iLO89KugjXE9FYC2aePQ1N2QiTUtEeDwecLCgSawYKMC5qog6EFLNrd6
+ WucLwsrpoGOOmTlhQ3BHdyzBO1SoF1zscNnRHlQook72nV9cwJ5XXvx4xhZ94b0qXtqNbp
+ 3F+mbC9ExQaDf9b/pS+qNpHyBl9cEhE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-687-1fE60azeNAihUla3xSR9hA-1; Tue,
+ 12 May 2026 14:28:40 -0400
+X-MC-Unique: 1fE60azeNAihUla3xSR9hA-1
+X-Mimecast-MFC-AGG-ID: 1fE60azeNAihUla3xSR9hA_1778610518
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 43ABD180034C; Tue, 12 May 2026 18:28:38 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.233])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 51B181955D84; Tue, 12 May 2026 18:28:37 +0000 (UTC)
+Date: Tue, 12 May 2026 14:28:34 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: kwolf@redhat.com
+Cc: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, qemu-stable@nongnu.org,
+ Hanna Reitz <hreitz@redhat.com>, Fiona Ebner <f.ebner@proxmox.com>,
+ "Denis V. Lunev" <den@virtuozzo.com>
+Subject: Re: [PATCH 0/2] block: fix two missed-wakeup hangs on shutdown path
+Message-ID: <20260512182834.GA912491@fedora>
+References: <20260424103917.248668-1-den@openvz.org>
+ <055dc8bf-f5f8-44e3-b1da-b21e05b70d94@virtuozzo.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 5/5] target-info: replace target_info() in system-mode
-Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Max Filippov <jcmvbkbc@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- marcandre.lureau@redhat.com, Markus Armbruster <armbru@redhat.com>,
- Anton Johansson <anjo@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20260512150208.1167711-1-pierrick.bouvier@oss.qualcomm.com>
- <20260512150208.1167711-6-pierrick.bouvier@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260512150208.1167711-6-pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="/NjcVVcE5GJxgp92"
+Content-Disposition: inline
+In-Reply-To: <055dc8bf-f5f8-44e3-b1da-b21e05b70d94@virtuozzo.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,18 +87,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/5/26 17:02, Pierrick Bouvier wrote:
-> We now can use TargetInfo information available from QOM, and remove
-> duplicated target_info() symbol.
-> 
-> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> ---
->   include/qemu/target-info-init.h | 5 -----
->   target-info-qom.c               | 5 +++++
->   2 files changed, 5 insertions(+), 5 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+--/NjcVVcE5GJxgp92
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-:>
+On Mon, May 11, 2026 at 11:53:37PM +0200, Denis V. Lunev wrote:
+> On 4/24/26 12:39, Denis V. Lunev wrote:
+> > Problem
+> > -------
+> >
+> > The qemu shutdown / blockdev-close path can deadlock permanently on
+> > upstream master.  The main thread enters ppoll(timeout=-1) holding
+> > BQL, no other thread has a wake source that points back at it, and
+> > qemu has to be SIGKILLed.  The hang has no timeout -- it is a hard
+> > deadlock, not a slow operation; behind BQL, RCU, VCPUs and every
+> > iothread path that needs BQL stall with it.
+> >
+> > Two independent missed-wakeup races in the block layer contribute.
+> > Both share the same shape: a waiter arms on one side, the waker
+> > reads stale state on its fast path and silently skips the kick, and
+> > nothing else on the AioContext will fire to recover.  They are
+> > different bugs in different subsystems and each patch stands on its
+> > own; they are posted together because they surface through the same
+> > test and the same symptom and are easiest to diagnose side by side.
+> >
+> > Depending on which race fires, the main thread backtrace at the
+> > moment of hang is one of:
+> >
+> >   ppoll -> aio_poll -> bdrv_graph_wrlock -> blk_remove_bs
+> >       (patch 1 -- block/graph-lock)
+> >
+> >   ppoll -> aio_poll -> cache_clean_timer_del_and_wait -> qcow2_close
+> >       (patch 2 -- block/qcow2 cache_clean_timer)
+> >
+> > Race diagrams and the exact stale-state read are in each patch's
+> > commit message.
+> >
+> > Reproducer
+> > ----------
+> >
+> > Environment used for the numbers below: 4-vCPU VM guest,
+> > kernel 6.12.x, upstream master at bb230769b4.  On modern bare-metal
+> > the window is narrow enough that the hangs rarely reproduce without
+> > a VM -- a VM guest under full CPU saturation is what makes the
+> > timing reliable.  Downstream trees that still use plain
+> > bdrv_graph_wrlock() in blk_remove_bs() hit the graph-lock race on
+> > the first iteration without any stress at all.
+> >
+> >     # reproducer
+> >     stress-ng --cpu "$(nproc)" --timeout 0 &
+> >     for r in $(seq 20); do
+> >         timeout 120 ./build/tests/qemu-iotests/check -qcow2 iothreads-create
+> >     done
+> >     kill %1
+> >
+> > With `stress-ng --cpu $(nproc)` both races surface.  With
+> > `stress-ng --cpu $(($(nproc) - 1))` or without a stressor neither
+> > reproduces reliably across 20 iterations.
+> >
+> > When a race fires, the Python QMP client times out on vm.run_job()
+> > after 5 s, the qemu process keeps running but never makes forward
+> > progress, and the outer `timeout 120` eventually kills it.  attach
+> > gdb before the timeout kills qemu to capture the stack and
+> > distinguish which of the two races fired.
+> >
+> > Results
+> > -------
+> >
+> > Same guest, 20 iterations of the loop above:
+> >
+> >   upstream master:            10/20 FAIL (first fail at iter #2)
+> >   master + both patches:      20/20 PASS
+> >
+> > Signed-off-by: Denis V. Lunev <den@openvz.org>
+> > Cc: Kevin Wolf <kwolf@redhat.com>
+> > Cc: Hanna Reitz <hreitz@redhat.com>
+> > Cc: Stefan Hajnoczi <stefanha@redhat.com>
+> > Cc: Fiona Ebner <f.ebner@proxmox.com>
+> > Cc: Hanna Czenczek <hreitz@redhat.com>
+> >
+> > Denis V. Lunev (2):
+> >   block/graph-lock: fix missed wakeup in bdrv_graph_co_rdunlock()
+> >   block/qcow2: fix hangup in cache_clean_timer cancellation
+> >
+> >  block/graph-lock.c | 12 +++++-------
+> >  block/qcow2.c      | 28 +++++++++++++++++-----------
+> >  2 files changed, 22 insertions(+), 18 deletions(-)
+> >
+> > --
+> > 2.51.0
+> ping
+
+Hi Kevin,
+This looks like a series for your block tree. If I can help in some way,
+please let me know.
+
+Stefan
+
+--/NjcVVcE5GJxgp92
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmoDcVEACgkQnKSrs4Gr
+c8glYAgApA5gaY0vXtJn18F/HI5H9wlB3nj8spx7bHWbxcEew3wvhgaoEX0UaAQq
+rivyk9erY+zM+2+uGra2QbsOgCmI+TclE7Dnon2QT9gOpMXi8wf94zIxOvudv8o2
+qeH9AKMu9nrsYVD2HvaxfFs0NTI2TnqvevNRuI4/mW2aSZVj0ikwe/wILKcL/LRk
+kVpGKEE/l8jO5m8+rv9DKG+LvL0GY6EOAwBA0851124xyYD08q36L3Hm/SjGhzea
+GY2DDDkY617YqTzs/y0E09QmFF5qyUE7MBkL4zXG9CpQB1ejTgreTISq9o1ZvPWr
+piOXkgPdlc9PS06rlr/vhWsycuCIgw==
+=2pyC
+-----END PGP SIGNATURE-----
+
+--/NjcVVcE5GJxgp92--
+
 
