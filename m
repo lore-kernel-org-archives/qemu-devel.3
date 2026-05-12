@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 490FACD4F24
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 490BDCD4851
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:28:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMgZZ-0008J9-Jz; Tue, 12 May 2026 02:26:29 -0400
+	id 1wMgYn-0007Gc-Ol; Tue, 12 May 2026 02:25:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgYj-0006gN-0g
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:25:37 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgYA-0004Oi-GD
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:25:02 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgYh-0007C5-6q
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:25:36 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-43d734223e4so3146576f8f.0
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 23:25:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgY8-0006e4-48
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:25:02 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-441209fb77eso3072169f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 23:24:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778567133; x=1779171933; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778567096; x=1779171896; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=HfbY1c3UCIy8gQxFWOZ/VIeIMJesFzcBvmUGEZHahNE=;
- b=Z9k3OsOzb5Hg4KRbohexQVjqyQ81LWYIBnD8ilCiAC0qJRgmv4LdUAgGGwWmR8nNuf
- 5CevgiHX/jBkp8lhBuUl3nCREXOv/4iBmKqnXqCe6L4JXSfxCmWVqZQAPsYdLDFvjOeL
- EaEQv5amy6PZRuI0N/ISdw6D3b+xooEXsWWe/nDg5FjgG7otYJyKuryqr3SUWtuy7gp7
- tv7v2S1JTNrTn+4OvL8M9ApLrp/b5QiNznVUp5Bij1tuEhX8JgyDZgSSaYjXzNfYqZ4O
- DAkEHhmdaNgW1vrJcwYv68e9TsPcOk2x5e86PY97BmswONPFBVvRdHRHzQV/DRC3j2P5
- m3tg==
+ :reply-to; bh=Bn7X1HxFbi8TLPRLLkIpSiNkQaC8IQE21wNQZ9Ce9pk=;
+ b=mf4X9Ej92FZ8L0Jz41c+9URevfg/loVFV81i6nF3lLhOJb5rDBjRzMZvibpdwYf2Vq
+ Uw+F3vhFxS9nH2MHhZHnIl1VxFkO6TxQG3CrYvrXx1OjzOojUeza2dczKkyiNXiftM5E
+ NK0CogAbTUl4rOzT8eMRHkBy08SOeQ/nm7DYASwceHgKAqPD6o8/6jB/Ug04OnKOmsvn
+ YHKb0hyE/5RKWj6/g/+wi0RzTBCh7aAtALBQ5O2mXJyTw3fQotog9VFnYHluUoFIagrh
+ gtd+DMUhKpub1HiHoGOG4Tygf28QAfzZCdfynb6tStX03Ma4lT88lXUdOCAql45XJS6U
+ 5feA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778567133; x=1779171933;
+ d=1e100.net; s=20251104; t=1778567096; x=1779171896;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=HfbY1c3UCIy8gQxFWOZ/VIeIMJesFzcBvmUGEZHahNE=;
- b=W0u21aR6kxqx4YKTHzBKohWo57Q/GOqL5qdReFXU5ErHXMeG18gm+aqf5IwBdDUl/r
- z6B9l0ibHckEM+IHv6cm3I4JCA++XwPAom7TGSoWx2J4jytk1a4c02Q0eINSfhtC8vIN
- N5ARw98I04m/DxG8zec4Niq/UEcl+FMs42N1eQNt07wHBj4TPB+NE9FWf960KTjA1WxC
- JpxpYsrg2BwQCAzpy1WM5viRsTSmWWpXA453xmGZf8/JnRd9M5AMJDsWrFx0caYVlJkB
- t9cs/kHodh2xPjHLzWS9jrUep8E7f/4SzY9p1pK9G9ddsBudNI2bQQ54cuBsJWUY+Qc+
- QnUQ==
-X-Gm-Message-State: AOJu0YxL4INVF5MRbpiqhMp6sN+wMkN0uD62mVnqijEH/4ULunD4zgs3
- 7IMAphY+/UXNEk8NOaf7OV7tsescf7FH9JBCkKRNSgxpjPMyj+5kKscMsltwXAlR1yNoGzgqQNn
- ur33l0ps=
-X-Gm-Gg: Acq92OEmGaQ04fMmKVDuILqshlMKlKcEb+CfXZA43PVnVDJINdfFCgCjRgtsIz8lul2
- 0WrmIttJ048BhWWUpfeaD0GC1BcwzPEZ8dSAdO5uxf5ejEM1X0aaVYheWV7seAaWMAf2p90gCoO
- cEKyZE5E/tZgEKzZwQ0H6qAtTULiT7hndUr4rvmUlJa6uMMsanr1ewsXRuPq9zXmybos8UKVhPr
- 1OgYyaFYZhs9L+fnaKsA9VoeFULJzPwE8ksRf7GguzbLDS9X58jqwPTw9G74ZXAZMNBzj0n83yp
- fVYR6AqFzXvFc8Xz4P3fotwDQuGeI5UjvKD6eZUez540DkP9/vgazgRRRVg+R0vdetqyXUnqOas
- ystZIydLCCZCwZj89WqbL9/QzWObsdxueuuVmtJVIfGj7s2DNDCcexmvlmaVGRMf6lmfg+lbCuP
- NYa7Ta/j86C2E4IhEk2ASImmYn2p6ebvQC0c9MWdkiAvIrREWWZ7VocVq6EawlfLAONekG8V1g
-X-Received: by 2002:a05:6000:24c3:b0:455:51cf:9f92 with SMTP id
- ffacd0b85a97d-45ac4224ea5mr3317203f8f.18.1778567133150; 
- Mon, 11 May 2026 23:25:33 -0700 (PDT)
+ bh=Bn7X1HxFbi8TLPRLLkIpSiNkQaC8IQE21wNQZ9Ce9pk=;
+ b=peoPC4VybaEmtSGAQP0O/JnbQ1SV7RAS7cd1UMqA+GPnQhXjDCcVGYGKQN8GtS4Qz4
+ lTpBxmzeSFD5+LW1yNPx8CVeeq8auK65TjtmDOOw5NVdky03HZXruI8VSKU+3bH/auRI
+ GctoVMhAar28/L7l9v+zlt/6f7bSnTIz93CaaqulDs1ceA5O5Pb+ENhx/BxKSMyLI9HX
+ FiWClnBfyX0zVsBu+McH6+wMQp7e0O2+wmrAP189JgHfnfAXkBwAOCVIKMEnsudZqSQn
+ uYQnk2+k1SkY5UGSzr8bq89/2DVx8RiRKRgSGbRwzfHgKYslmTVxn0JuWnEJwXShyb5C
+ l6LA==
+X-Gm-Message-State: AOJu0YzuO5VX6A3ZcYDf0VG1SRwtGAsIjyZ6rUNG4fV4UOd6Xat1FRmg
+ ZBVL6ETFNxHAkbR+p2htuqQjRA90Y6tzi3DDVekecoQKZI91KetfofA6QcTyuwYaFOyloscqwc6
+ vVE37WnU=
+X-Gm-Gg: Acq92OHnNetD0b8xv0XvZTzK8D2J4dZ9vMZdGkc3zvsAIB0Gq52tstR+7IAO2uYdVJr
+ iBFIM+JWSsGkb/V5WBpxSlmac2A2V2pXmMwIpWaPwXAGdfTKoqNzymy98fXo1GW/Cc8toQsvpZC
+ 1fmOIXHkBSL5F8K4tCqqY0BaYj+ALxu6KG4oRHss3Vh3mcqKEej63kCQf+0P1rO7pYOrEM8vI0I
+ x8dxapU0VyDewFyaXkP0QpviPHFEP1pa9et9ivg5fSCiIBt9DtV3WfHrFDph8asmx2AHn0siGA6
+ Gtfd54eAYy4NhPSzCzyCVTAVaM06oT1BSoVR7juo/JIKEPwOXkTa6xesy2LPCskW884FP/JXB83
+ nw3yflucOtJ4iy4R6fgPiJ6pyxmSIXtol3s2RwSmhN23ljoIgeYDlhdOXhHVWnlLB4ZiuD+VYif
+ jOxnYrWSyS0ubZ5cZYOsg0npRiOZ6aqI2AH0E+psax6eeIdo6OM1TrHvHn1091hOubanaq51P+
+X-Received: by 2002:a05:6000:2288:b0:43e:a75e:352 with SMTP id
+ ffacd0b85a97d-45ac093a86amr3545573f8f.4.1778567096080; 
+ Mon, 11 May 2026 23:24:56 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4549120ec0asm29937331f8f.17.2026.05.11.23.25.32
+ ffacd0b85a97d-4548ec6c79fsm32151306f8f.15.2026.05.11.23.24.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 11 May 2026 23:25:32 -0700 (PDT)
+ Mon, 11 May 2026 23:24:54 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 32/41] monitor/hmp-cmds: Use cpu_translate_for_debug()
-Date: Tue, 12 May 2026 08:21:33 +0200
-Message-ID: <20260512062142.67998-33-philmd@linaro.org>
+Subject: [PULL 27/41] system/physmem: Use translate_for_debug() in
+ cpu_memory_rw_debug()
+Date: Tue, 12 May 2026 08:21:28 +0200
+Message-ID: <20260512062142.67998-28-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260512062142.67998-1-philmd@linaro.org>
 References: <20260512062142.67998-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,45 +101,90 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-We want to remove the cpu_get_phys_addr_debug() function; update the
-HMP gva2gpa command implementation to use cpu_translate_for_debug()
-instead.
+Currently cpu_memory_rw_debug() assumes page-granularity for translations,
+and it works in a loop where each iteration translates for the vaddr
+rounded down to a page boundary and then copies up to the end of the
+page boundary.
 
+Rewrite it to use the new cpu_translate_for_debug(): we no longer want
+to round down the input address, and the boundary we copy up to is now
+determined by the lg_page_size it returns rather than being assumed
+to be page-sized.
+
+This, together with the implementation of translate_for_debug for
+Arm targets, fixes the bug where semihosting would incorrectly
+fail to access parameter blocks that were in memory where the
+start of the 4K region they were in was inaccessible due to MPU
+region settings, even if the parameter block itself was readable.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3292
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260417173105.1648172-18-peter.maydell@linaro.org
+Acked-by: Peter Xu <peterx@redhat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260430093810.2762539-24-peter.maydell@linaro.org>
+Message-ID: <20260430093810.2762539-19-peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- monitor/hmp-cmds.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ system/physmem.c | 38 ++++++++++++++++++++++++--------------
+ 1 file changed, 24 insertions(+), 14 deletions(-)
 
-diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-index 88f9788bd9c..443b8c785dc 100644
---- a/monitor/hmp-cmds.c
-+++ b/monitor/hmp-cmds.c
-@@ -764,18 +764,17 @@ void hmp_gva2gpa(Monitor *mon, const QDict *qdict)
+diff --git a/system/physmem.c b/system/physmem.c
+index 652b03ad5f5..7bcbf875736 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -4030,28 +4030,38 @@ address_space_write_cached_slow(MemoryRegionCache *cache, hwaddr addr,
+ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+                         void *ptr, size_t len, bool is_write)
  {
-     vaddr addr = qdict_get_int(qdict, "addr");
-     CPUState *cs = mon_get_cpu(mon);
--    hwaddr gpa;
-+    TranslateForDebugResult tres;
+-    hwaddr phys_addr;
+-    vaddr l, page;
+     uint8_t *buf = ptr;
  
-     if (!cs) {
-         monitor_printf(mon, "No cpu\n");
-         return;
-     }
+     cpu_synchronize_state(cpu);
+     while (len > 0) {
+         int asidx;
+-        MemTxAttrs attrs;
++        TranslateForDebugResult tres;
+         MemTxResult res;
++        hwaddr blk_base, blk_size, l;
  
--    gpa  = cpu_get_phys_addr_debug(cs, addr);
--    if (gpa == -1) {
-+    if (!cpu_translate_for_debug(cs, addr, &tres)) {
-         monitor_printf(mon, "Unmapped\n");
-     } else {
--        monitor_printf(mon, "gpa: 0x%" HWADDR_PRIx "\n", gpa);
-+        monitor_printf(mon, "gpa: 0x%" HWADDR_PRIx "\n", tres.physaddr);
-     }
- }
- 
+-        page = addr & TARGET_PAGE_MASK;
+-        phys_addr = cpu_get_phys_addr_attrs_debug(cpu, page, &attrs);
+-        asidx = cpu_asidx_from_attrs(cpu, attrs);
+-        /* if no physical page mapped, return an error */
+-        if (phys_addr == -1)
++        if (!cpu_translate_for_debug(cpu, addr, &tres)) {
++            /* Return error if no physical page mapped */
+             return -1;
+-        l = (page + TARGET_PAGE_SIZE) - addr;
+-        if (l > len)
+-            l = len;
+-        phys_addr += (addr & ~TARGET_PAGE_MASK);
+-        res = address_space_rw(cpu->cpu_ases[asidx].as, phys_addr, attrs, buf,
+-                               l, is_write);
++        }
++        asidx = cpu_asidx_from_attrs(cpu, tres.attrs);
++        /*
++         * Clamp the amount we read to not go beyond a page even if
++         * the CPU returned a larger lg_page_size, in case this access
++         * is to a memory-mapped IO region.
++         */
++        tres.lg_page_size = MIN(tres.lg_page_size, TARGET_PAGE_BITS);
++        /*
++         * Find the length in bytes from tres.physaddr to the end of the
++         * block whose size is 1 << tres.lg_page_size; we will access
++         * that much in one go.
++         */
++        blk_size = 1ULL << tres.lg_page_size;
++        blk_base = ROUND_DOWN(tres.physaddr, blk_size);
++        l = blk_base + blk_size - tres.physaddr;
++        l = MIN(l, len);
++
++        res = address_space_rw(cpu->cpu_ases[asidx].as, tres.physaddr,
++                               tres.attrs, buf, l, is_write);
+         if (res != MEMTX_OK) {
+             return -1;
+         }
 -- 
 2.53.0
 
