@@ -4,118 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BB0CCD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:39:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7FACCD4857
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:51:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMglq-00034P-Qa; Tue, 12 May 2026 02:39:10 -0400
+	id 1wMgx1-0005hf-Rj; Tue, 12 May 2026 02:50:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wMglo-0002xN-40
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:39:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
+ id 1wMgwb-0005RS-9S; Tue, 12 May 2026 02:50:24 -0400
+Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
+ ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wMgll-0006Jh-Ec
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:39:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778567944;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NoVJ+c/uz80TrOdip6QXqOUN43LCIvcXnIK/rRMfnkc=;
- b=cLYwxtUP/ZfIsM6IyKDBHYiUNg0vS4M19qMqzaLPwNSWL7Lh79DZvHf0FCxMXditTwPB8s
- DR4qNR5FKCK9Nobb8U0z+JDoTo5R2wKwz82Ilk3eV0dnRgbGaW5bsBVeRQEjXu4dF5NnrM
- DDZJHMoEZTITli39ZH++95yuHH4h6hs=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-220-grW3Td4QOPmrEBRwHPZnKw-1; Tue, 12 May 2026 02:39:02 -0400
-X-MC-Unique: grW3Td4QOPmrEBRwHPZnKw-1
-X-Mimecast-MFC-AGG-ID: grW3Td4QOPmrEBRwHPZnKw_1778567941
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-43d7b7bacddso3213492f8f.0
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 23:39:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778567941; x=1779172741;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NoVJ+c/uz80TrOdip6QXqOUN43LCIvcXnIK/rRMfnkc=;
- b=JU7zG3a+cWgfHdB31/O6JoGC19Yj8S6KZcgdFAMVqZ+McavD7sZ62aFFpzkb4bad13
- igxruEqHhlBZfJ8jaWijek9JmXIRalOb9DgFihVOQceILVxGQkuAHQ5G0CKyxY7KPvVo
- Lo8wpX18UxcVU4ArCzMrkomJWVNB3FAf9cNblQd0xRYSxA9zWu9rQ2dafrRUCT77Cp0y
- BMN+hm2AY9CWlLUTRe1G9Xgz27/IxtFKX1gSv7oyBsMQqb11QgISvggQoiUYWXoxjbq/
- 3p80g8lAP2x67jz3AOEYOlM+9+aajnyl+DXvz/loyVk7zJmur8w946x6jP0o7jO3gcpo
- Q6ew==
-X-Forwarded-Encrypted: i=1;
- AFNElJ86wfUSiokQufkSyYeGU86vDu+t2lPUrFgBAmfxAp/unOTI4yPgBgOk64FbC7ZQR/Tyn+Faclw4Vhd4@nongnu.org
-X-Gm-Message-State: AOJu0YzBC2zzBGqoisxwU1fMEaLsbYyllGFhGZEwTouPeMm9hgH6L7qf
- /pwv08bpMLvwwW43R2xffyMI+zDCGauXUnziBi6XhtsYjFTK76OELjMKvp0w5oY1FYDf2cpebPo
- 6Dw7bOW1pzjv3aLX+s8FR4Oy6r8BzVKVgGOeF15TPmbWdDz2J8spqcnsv
-X-Gm-Gg: Acq92OHo/1j6snoNmC8K9fGL0rJ7dUhfIL7wCr0RBFAQzFPognFzUsm1K6maZlKQJ3d
- qYTUBeO0oBJpaBrBPW/xaJlJ83v+y+9W2D1+Du1iEAuPkVCK9XnbCcueWqhbUVnonfPrJ80Bd+/
- beLrhCH0v4iWd3NznnTjjyrC9WSgFbkk9bOqY1m6hdI4lbm3EPouf2IDn3lf1QlcQYCDSmykQcl
- 2JiSWy+0lt5n4ChfcT9IY6UX2oB+f7Od4XaV/+CN8YYJ7rcDn/KSH0l13v51cHkehAAXFJt7XSD
- GTJTP2f8kSE4AuMHhQXYuRYuVczVwqbd4Tqyu32vOEYFUzP025FkCRyW75OPPCQBgfrpgqF/FJm
- eerAjWnMOTxVWyz9cm18bdq/QhqEAKTqvXAFfb+Utbrv7GjUjGWBAJyQCxpKaTvUrC24Kkg==
-X-Received: by 2002:a05:600c:c058:b0:48e:6db3:ff33 with SMTP id
- 5b1f17b1804b1-48e6db40058mr168505735e9.14.1778567941138; 
- Mon, 11 May 2026 23:39:01 -0700 (PDT)
-X-Received: by 2002:a05:600c:c058:b0:48e:6db3:ff33 with SMTP id
- 5b1f17b1804b1-48e6db40058mr168505275e9.14.1778567940725; 
- Mon, 11 May 2026 23:39:00 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4548e6a5b65sm31614561f8f.8.2026.05.11.23.38.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 May 2026 23:39:00 -0700 (PDT)
-Message-ID: <c7bfd8f7-3e3f-49fe-a8f4-ac0212a1762b@redhat.com>
-Date: Tue, 12 May 2026 08:38:58 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 03/17] target/arm/cpu-sysregs.h.inc: Update with
- automatic generation
+ (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
+ id 1wMgwV-0005HB-C5; Tue, 12 May 2026 02:50:16 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Zfg1+mnIqNARlu+zWsaysm2F90i/idPnZcDcBjv9zVObGcwkm0uISUbqrl+Kce8Mf0CJj6/UkP0POXr91YB3GPrr9BQuAcxAKtP4E7mPnFYQpChSyq2xApyfmhg+QAVMIYdxtwJ4lPG4W3FMwuCWEyelbsO/BwGnMlIfkg16D9YpVm4EY7bSsVjbqHZaE0W1hgOlTUJF5fUBnnR6/4AR4BFQEYwubNorvPFOlLUPweCX8DPovpv1yBBm+siYdy8u2knLiqYtEo7eFduPoKa1k2Qml3NcSAYasU7gDjSquJz8tfL/M2LNr7Fc/9sEMJiBFwEuI2TCtuN2guP6QQEOFg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OC3gb6rxwq9EO/pLhfAKIFuJhpF0L63TTOROS9g7t1o=;
+ b=Qp8YRmwbn/WAEWOkQNy0TWI9tgohZwFgAGSBLHQmkAfpW/vfIpI+//w79kzVPcHy+5r/OqKhus1BeiK4na+LdIfe+jQFjXfIJA9opxe3v421K+9owa6nacsO5MtM7h/p7keYPctz2QNl2PiqtuYYWnECvfI416hyapIKz+TGZI71qWMdbd8YF629v0DZJZlqQhekt8/PhpfFax7OJ9U9ji4IRdQjRDKm7zKjrV9nt6Wha/JV/0v7tM05691tCCWgZu3SuJI6L2DStlntWY4pY8AfBiJd9q0pgqGs9C16wRQFarqRir5RJ6UVeh6AGWUJc12ur+AAkExb6jLgnIOaMQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OC3gb6rxwq9EO/pLhfAKIFuJhpF0L63TTOROS9g7t1o=;
+ b=jKaeqZijKP3h6zmD9qxDPVrlZwnkordbi2ilBiFChxVfEifpMgX5Et0/wpfPUKtfOCYyG8ay23z6gV03nxDvaG4T9uqdlgAGoEccSEAUgUIFep3nWN14nKRjt43MlYkG9JHHKloZIYyWGDZ1CRXeFBfpAJ+zBmSmhsz2T6FQ3kN1N6ca+q9UajRdnCqNzY+bYzYPct/uwFsjT2Uz8AzkpNGa0INrcUbY6tLp0ELVghbpskYnbLkpvKvmPLiR51KwybufLWqPfOd2ee3ANPH6u16xZprZHbbLLjs818jACREp7N6i5NCsWyTuLLFLLOHdAH1XUgnhP7GrpcQ+xqn8Bw==
+Received: from SI6PR06MB7631.apcprd06.prod.outlook.com (2603:1096:4:239::11)
+ by TYZPR06MB5225.apcprd06.prod.outlook.com (2603:1096:400:1fa::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9913.11; Tue, 12 May
+ 2026 06:50:03 +0000
+Received: from SI6PR06MB7631.apcprd06.prod.outlook.com
+ ([fe80::afe5:a3f1:b435:e43c]) by SI6PR06MB7631.apcprd06.prod.outlook.com
+ ([fe80::afe5:a3f1:b435:e43c%5]) with mapi id 15.20.9891.021; Tue, 12 May 2026
+ 06:50:03 +0000
+From: Kane Chen <kane_chen@aspeedtech.com>
+To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
+ list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>
+CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
+Subject: [PATCH v2 0/1] aspeed/hace: Fix mapped address may not be unmapped
+ issue
+Thread-Topic: [PATCH v2 0/1] aspeed/hace: Fix mapped address may not be
+ unmapped issue
+Thread-Index: AQHc4duP2Kqpj+X0T0CgILKUOm2C2w==
+Date: Tue, 12 May 2026 06:50:03 +0000
+Message-ID: <20260512065002.1516704-1-kane_chen@aspeedtech.com>
+Accept-Language: zh-TW, en-US
 Content-Language: en-US
-To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
- "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "cohuck@redhat.com" <cohuck@redhat.com>,
- "sebott@redhat.com" <sebott@redhat.com>,
- "philmd@linaro.org" <philmd@linaro.org>
-Cc: "maz@kernel.org" <maz@kernel.org>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>,
- "abologna@redhat.com" <abologna@redhat.com>,
- "jdenemar@redhat.com" <jdenemar@redhat.com>
-References: <20260503073541.790215-1-eric.auger@redhat.com>
- <20260503073541.790215-4-eric.auger@redhat.com>
- <CH3PR12MB7548C2AB4989FEF96C247D47AB3C2@CH3PR12MB7548.namprd12.prod.outlook.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <CH3PR12MB7548C2AB4989FEF96C247D47AB3C2@CH3PR12MB7548.namprd12.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SI6PR06MB7631:EE_|TYZPR06MB5225:EE_
+x-ms-office365-filtering-correlation-id: eba9ddd5-364f-4731-e93f-08deaff2b1b4
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|366016|376014|38070700021|56012099003|18002099003; 
+x-microsoft-antispam-message-info: wgMiJ7gmP0uaWsUwsF12wyZvoc2f2rP4/GyhNR1OzxsIi5J2kH2ZnRwRXSvNZtVBMhI97c4veBVQcMG2gRBppN143v526Kr+FLtkIH9dEFd/tRwA7GBSRTGqRqD0Ubv7DTH5sL2AnoJx9f1BI9QNyCqGkuWNnqcS95KvuMoav6hErJhDFxfYm2h1qxJZWzzAtUvEk9etv1LCY92uHrbh6nq/MtpAbD71/1Yf0/Ld7hTBO/2NB0xjGwIFyNiu+F7Y0nTvSCM4fxbTYo8Rl0z9YtlNIho2drw2fFktj93+u6JPpzRzdKIIroESOx8WxuuEbDX1U37kjKB4X7026XuDWW+4aeD4VA2SA6Qvd7XAsk1U8uXdvtlAzkT/9JPbfIdHLMWJ4b8nCfHOCDvGQH4BFpJT64OfwI8+mkoNw4gM0dYenYeQfn9Gvg1eOlDRn9y6T5lm71IuNjisiAqrW0SNFS174l3aNfGDcA08aGuF0f3ogcwQ75qJRad3QBYgphcXZfe9Q1gwa0k3oYOMe3uFGVNEn9a+/5nzzbBpnVFZNksKImjlVlHO/psMJD3w4upIOtbHFEYuAV2HTK0QljrOo5h3JY90y1lG93BoZtT4EYHHT/dbGWyLr6tvgaS3NJNkrsbrNj2g+mxT+Dg1yapAiwK2YaoiuS6DxF2KA7PcUIzqrx4BaOW/dt9G6OTWpyCe20zX/VdLh04Thc/646UrWg==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SI6PR06MB7631.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(38070700021)(56012099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?ID2K9LCsu1Ae0Hcx8R4AX3K5HqMar1IPY3ZYi1zuD7/JDBxVjEhJvh61vz?=
+ =?iso-8859-1?Q?dWRD37KgARPY9onVg5MYhGa/w9hbW04M80yiVlUdiIaukbxvL3zuN8Js6Y?=
+ =?iso-8859-1?Q?lalg5TtDrxCleSIe/6Yanz4WKiaF5AbzpXrZOPJhX5A00TxOTGoKO0wAtB?=
+ =?iso-8859-1?Q?9YGfHBqb8ni162LX3f72spZaqETo0SX/AD3Qd2qzmpwrE3q9JBsQCCHixU?=
+ =?iso-8859-1?Q?yL0x2YDygcXuFnI+HZSyH+HNsUBvOO/+5SsfNR/0un5hBobJNypROf9dGj?=
+ =?iso-8859-1?Q?NkwsVO4z7axsjT0GIyn0gF8jy2gQs1uUuHqJrLyC5GiQVNOC204f0H/uLY?=
+ =?iso-8859-1?Q?CY9LwXD9QadixrBo2R7G9zEQz7WGkYSUoPjXHRl9/6ohitTvbD8SNznfbY?=
+ =?iso-8859-1?Q?+fjWF32Ff8DTydQfvBcRJSq0jwt8ucY+wKI1FC2zprpqwpXPjpqbp0RdL/?=
+ =?iso-8859-1?Q?FHepNQinQ77EmMdXto2eEPNoHdSY89oSHMXoVUNrdBlgpjCxCzR0+iom0D?=
+ =?iso-8859-1?Q?VULu4m/BcwxDFUK2BaXNI1MtpdbIolRuRgTUWbHByZ1FaYmNkFTog8ubfM?=
+ =?iso-8859-1?Q?kwpuIy06MA/p0+CPDr6ILhtx6t3yrZrA5Ve4kHv7B39OYOqt0WukVC2dRs?=
+ =?iso-8859-1?Q?OQlh3IDApIL57NhcruafhTPz+fELmEkpLcR8gKV93Ek36b80ZtexmRuh49?=
+ =?iso-8859-1?Q?TMnQm6wfRqtjOWFrHLULDngSI9sGRFCOukSgY9RkRieKY7jEcULSPl1To2?=
+ =?iso-8859-1?Q?Nr1TAsokExIdrtxM+OPxA0b4XhmfwL18cUHaC5uIfRu5xv2ntVrZoz66QR?=
+ =?iso-8859-1?Q?XRtRtMYDPbjWsY4zu8Hp9bfmxf+o7flxqBYgaqqNgKAgCBRD/pnUXunHxk?=
+ =?iso-8859-1?Q?4cAzp15Fq9C+kVJxymnRJKa1jF9T/2nnwJA2kAUQqYpOPltl//u0Gd8RAZ?=
+ =?iso-8859-1?Q?yB4eS3sX4DoCIM4hdX/Rm1OJEa9wqg0s9UBbpBqKmEOk11fiRhsF8waV8a?=
+ =?iso-8859-1?Q?L2cJTxRAkCFad+8+LNNXlGaylxKyCdDfmycMub08+B8A+MV2ezrWCdS4iS?=
+ =?iso-8859-1?Q?9ipuU72mi6B39559kiFGGinkoNTZAODh0iJVKzIACBfy/bXEqztd2xgNr5?=
+ =?iso-8859-1?Q?JvM1qe4+/PPnPNokP71OKvgSWIHmCXogfOdOwN4do/ps7YDvcuz1EWTtwa?=
+ =?iso-8859-1?Q?U/0GghAwLZM/0kuObcqrCvL1XIlHU74e28Rd52qcNTbfWxpYm0DgNPTaOW?=
+ =?iso-8859-1?Q?w1dLC/9h8lH/GjIM4YW6qvC1aI0J453ZdYR3LE9KTotwhcTHlmZEE3abjL?=
+ =?iso-8859-1?Q?MD2RcWgi9lN1m4osBZVE0QwfExWWjLvUGJgLeYUvjoy/CFtcyTNwjzEVF5?=
+ =?iso-8859-1?Q?fjOSlxJX1R0rGsA7s0rPW2Gw8Wv9HAPPBaUUZ/8fNX6ykMuc79aElrFZ1c?=
+ =?iso-8859-1?Q?2uGk8NgkgtNqkKWeJNspwilIS05J4ATOXau1p53Yf47FbvCOrh3L9GR+/y?=
+ =?iso-8859-1?Q?HCHBvv2EMGAlAf7Nukj/3gGPFox8JbCOqMs/aolgNIcyvyBBe2XibpeXLL?=
+ =?iso-8859-1?Q?0mYs/w/bl8NL3kuTeTCv/MBoGy4BqbU4+39bRzohFjFVyP7779RqxdGFPo?=
+ =?iso-8859-1?Q?nFZmWAPkjzjEFvSDJBFReXofMsA/MVoIhhAbFUSrYUisNL32JvpYQIjPiM?=
+ =?iso-8859-1?Q?9k9ScOyJFsKyMvaJ5oynTWh5AHsRULE/Z16bckCrl1hES2w7nmD85IdP/B?=
+ =?iso-8859-1?Q?2oipEMVsT7YMQcfMOAdC/ugkFaG3tTYbaj20v9yHkDGGSm+bkWCb+vzWl/?=
+ =?iso-8859-1?Q?BFQoy0XZFw=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-Exchange-RoutingPolicyChecked: AdAE1hnKkl3oVjuo5388lB/MRQeilcMKuzQBvSGFwnYlFKp8k12mIwUjmd9xHNW/GmaXcuIz9q5Btno0Zd2ejnzPGwwSNWei9x1/d3BncyhU64FcHwfOBmQDC86JU9QCUL6nPAMAII1MTkXaVjaVG2Yxyvu1HLrGU5m7yTsVEBNFutdWMI4kMxzQtm4f0mlQs7AtrKU8Iy6R3e/rqQ9tBGcvHluka2mXzMbdikSDLJPjCM7lptQS2ri40I17isa9mEdlj2otl49VJyE6d6ypmqj78Ua0oOaksm8tNZaC94tKF7WRBkPjHhuXbH4XqiAHKx1Ogh6qIQdw/A+uWKwmRQ==
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SI6PR06MB7631.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: eba9ddd5-364f-4731-e93f-08deaff2b1b4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 May 2026 06:50:03.1100 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: TkgUAuLsf0Du+1thMErsiTj5nrV5ENDA3VE8ub/L+0dZhmswijVnZPeBzFS+7SGikCmBLqDVNMDvwssFMa966u6leIMAltjty5V0pheHDVI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB5225
+Received-SPF: pass client-ip=2a01:111:f403:c406::3;
+ envelope-from=kane_chen@aspeedtech.com;
+ helo=OS8PR02CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,103 +143,48 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
-
-On 5/7/26 10:45 AM, Shameer Kolothum Thodi wrote:
->
->> -----Original Message-----
->> From: Eric Auger <eric.auger@redhat.com>
->> Sent: 03 May 2026 08:33
->> To: eric.auger.pro@gmail.com; eric.auger@redhat.com; qemu-
->> devel@nongnu.org; qemu-arm@nongnu.org; kvmarm@lists.linux.dev;
->> peter.maydell@linaro.org; richard.henderson@linaro.org;
->> cohuck@redhat.com; sebott@redhat.com; Shameer Kolothum Thodi
->> <skolothumtho@nvidia.com>; philmd@linaro.org
->> Cc: maz@kernel.org; oliver.upton@linux.dev; pbonzini@redhat.com;
->> armbru@redhat.com; berrange@redhat.com; abologna@redhat.com;
->> jdenemar@redhat.com
->> Subject: [PATCH v4 03/17] target/arm/cpu-sysregs.h.inc: Update with
->> automatic generation
->>
->> External email: Use caution opening links or attachments
->>
->>
->> Generated definitions with scripts/update-aarch64-cpu-sysregs-header.py
->> based on "AARCHMRS containing the JSON files for Arm A-profile
->> architecture (2026-03)" Registers.json file.
->>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
->> Message-ID: <20251208163751.611186-4-eric.auger@redhat.com>
->> ---
->>  target/arm/cpu-sysregs.h.inc | 14 ++++++++++++++
->>  1 file changed, 14 insertions(+)
->>
->> diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
->> index d61f0d0a19..2188cd7be0 100644
->> --- a/target/arm/cpu-sysregs.h.inc
->> +++ b/target/arm/cpu-sysregs.h.inc
->> @@ -1,15 +1,25 @@
->>  /* SPDX-License-Identifier: GPL-2.0-or-later */
->> +
->> +/* This file is autogenerated by scripts/update-aarch64-cpu-sysregs-
->> header.py */
->> +/* DEF(<name>, <op0>, <op1>, <crn>, <crm>, <op2>) */
->> +
->> +DEF(AIDR_EL1, 3, 1, 0, 0, 7)
->> +DEF(CCSIDR2_EL1, 3, 1, 0, 0, 2)
->>  DEF(CCSIDR_EL1, 3, 1, 0, 0, 0)
->>  DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
->>  DEF(CTR_EL0, 3, 3, 0, 0, 1)
->>  DEF(DCZID_EL0, 3, 3, 0, 0, 7)
->> +DEF(GMID_EL1, 3, 1, 0, 0, 4)
->>  DEF(ID_AA64AFR0_EL1, 3, 0, 0, 5, 4)
->>  DEF(ID_AA64AFR1_EL1, 3, 0, 0, 5, 5)
->>  DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
->>  DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
->> +DEF(ID_AA64DFR2_EL1, 3, 0, 0, 5, 2)
->> +DEF(ID_AA64FPFR0_EL1, 3, 0, 0, 4, 7)
->>  DEF(ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
->>  DEF(ID_AA64ISAR1_EL1, 3, 0, 0, 6, 1)
->>  DEF(ID_AA64ISAR2_EL1, 3, 0, 0, 6, 2)
->> +DEF(ID_AA64ISAR3_EL1, 3, 0, 0, 6, 3)
->>  DEF(ID_AA64MMFR0_EL1, 3, 0, 0, 7, 0)
->>  DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
->>  DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
->> @@ -39,6 +49,10 @@ DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
->>  DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
->>  DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
->>  DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
->> +DEF(MIDR_EL1, 3, 0, 0, 0, 0)
->> +DEF(MPIDR_EL1, 3, 0, 0, 0, 5)
-> Do we need MPIDR_EL1 as well? Is this considered as a feature ID
-> register and is writable? I don't think so.
-MPIDR_EL1 is part of the ID regs range defined in the kernel doc
-
-op0 = 3, op1 = {0,1,3}, crn = 0, crm within [0, 7], op2 within [0, 7]
-
-That's why the python script extracts it. Effectively it is not writable yet.
-
-I can exclude it from the automatic generation but do we really need to? Any specific reason?
-
-Thanks
-
-Eric
-
-
-> Thanks,
-> Shameer
->
->>  DEF(MVFR0_EL1, 3, 0, 0, 3, 0)
->>  DEF(MVFR1_EL1, 3, 0, 0, 3, 1)
->>  DEF(MVFR2_EL1, 3, 0, 0, 3, 2)
->> +DEF(REVIDR_EL1, 3, 0, 0, 0, 6)
->> +DEF(SMIDR_EL1, 3, 1, 0, 0, 6)
->> --
->> 2.53.0
-
+Dear reviewer,=0A=
+=0A=
+The Aspeed HACE hash flow may leave DMA mappings active when an error=0A=
+occurs after guest buffers have already been mapped.=0A=
+=0A=
+Several failure paths return early without unmapping previously mapped=0A=
+iov entries. This can lead to stale mappings and resource leaks.=0A=
+=0A=
+Fix this by introducing a common cleanup helper that unmaps all=0A=
+previously mapped iov entries before returning from error paths.=0A=
+=0A=
+Additionally, track the actual mapped length of each iov entry=0A=
+explicitly. This is necessary because some hashing flows may apply=0A=
+padding during processing, and the resulting buffer length used later=0A=
+in the flow can differ from the original DMA mapped length. Using the=0A=
+modified length during dma_memory_unmap() may result in an incorrect=0A=
+unmap size.=0A=
+=0A=
+Note: this patch series is based on =0A=
+https://patchew.org/QEMU/20260504213421.710035-1-clg@redhat.com/.=0A=
+=0A=
+Best Regards,=0A=
+Kane=0A=
+=0A=
+---=0A=
+ChangeLog=0A=
+---------=0A=
+v2:=0A=
+- Adjust commit message=0A=
+=0A=
+v1:=0A=
+- Initial version=0A=
+---=0A=
+Kane-Chen-AS (1):=0A=
+  aspeed/hace: Fix mapped address may not be unmapped issue=0A=
+=0A=
+ hw/misc/aspeed_hace.c | 63 ++++++++++++++++++++++++++++++-------------=0A=
+ 1 file changed, 45 insertions(+), 18 deletions(-)=0A=
+=0A=
+-- =0A=
+2.43.0=0A=
 
