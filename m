@@ -4,102 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87EFDCD4F24
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 15:01:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33E12CD4F24
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 15:02:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMobZ-0007Nf-GM; Tue, 12 May 2026 11:01:05 -0400
+	id 1wMod9-00089q-Jl; Tue, 12 May 2026 11:02:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1wMobR-0007Kp-Mn
- for qemu-devel@nongnu.org; Tue, 12 May 2026 11:01:00 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wMod6-00086t-Kb
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 11:02:42 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1wMobN-0007zU-Hn
- for qemu-devel@nongnu.org; Tue, 12 May 2026 11:00:57 -0400
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64CAfYQb563418; Tue, 12 May 2026 15:00:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=corp-2025-04-25; bh=Bp3JWvn1TnZy2izBm5V2Qsc/QDF5r
- 9jqNKyngkSzXPY=; b=ZbDIjEQAn+QFnyUoy1yfujgtfM/OozH50ozEPSPGCA1hl
- zn5/kw18ktu/gFrWAoP/QVEa2KgCdX65Rk13BZKG7Wya4kwIEFCwv0T1t4DeO3Wd
- cOv/v18eNPWntd3CIWnpSA8P9ZF/vJTVHi14nnvbXJo58O8jgHBrFFwZbsQjXUt7
- nVh+UdrdJudrSGlxrDr4bN2WO6215T/7Vj/FmBBNt5ReCWgdMh4Gyd/OLqGoDTN2
- j9uEX3tCA0L7pV+0VtPrhloEI9DiLjGxur6QOqfra4OP04TPwIDEACdud22U3Oib
- 0zMrvILQ5ru8yCMidnwyG9wT8u0OL7YzaP756N9NA==
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4e3nv01dk6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 12 May 2026 15:00:47 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
- with ESMTP id 64CEuMve020643; Tue, 12 May 2026 15:00:46 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 4e3nebb087-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 12 May 2026 15:00:46 +0000 (GMT)
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 64CF0jEb001769;
- Tue, 12 May 2026 15:00:45 GMT
-Received: from alaljime-e5-test-20240903-1847.osdevelopmeniad.oraclevcn.com
- (alaljime-e5-test-20240903-1847.allregionaliads.osdevelopmeniad.oraclevcn.com
- [100.100.250.206])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 4e3nebb06u-1; Tue, 12 May 2026 15:00:45 +0000 (GMT)
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wMod1-0000d2-HF
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 11:02:40 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64CB5MQS591897
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 15:02:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ gNGJLVkbTbHWKUYSpa/rYAP/PeuRVSh8gnRsrqDij4A=; b=itvvMUgSDihdp07L
+ o/F7RmXpoILgyY4q3qM2BH+AtdIs/oArH9iXc4s1DznMaxLYOtwscXcdngbLJu6V
+ Uk2Hoqeg0wmswnFG5oYLJHOSAV70TLomaRuKNueVV+k6cajpbjGpAr3Gs5ci7g1w
+ uqdfq8eCjipM3oAt2Z1YKBgzMG/H5FM90rJqpVtmkLCbhKkDsD4oeD6UwDGBxEcg
+ pabnsDKDZx8uHY/V8rTgVZyijbmHAlae2VQpVketO04hrV9LMuD5L26vMNAPKDDg
+ y9r+v9jOnrjovA+Tfpv+JcIKdyIdj6INnHQ9ceKOPtAnOWD49sk1sUHbV8Dr6PO9
+ 8MZPPQ==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e4319ryg9-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 15:02:34 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-2ee34588671so7942842eec.0
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 08:02:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1778598153; x=1779202953; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gNGJLVkbTbHWKUYSpa/rYAP/PeuRVSh8gnRsrqDij4A=;
+ b=jNMGBHpMvHiYAzkAlS3H6oSjjgKyR4WzTst7804YKdeWRmeNWxQE5QG8YQLtyhlK/p
+ 5OC/vQI97eAsixYp/DYA7mX8o1y+RlZikqVjWXiFLFJrxZh23Xu/v2YuW8BA+GauH9td
+ TMl1uooSoBucOdHVBAHp6G36MHp0oo6u7UEm+j9qzIfezxXuXISWsHcCOO8DLJX21e6X
+ UKbv0l1nJEjePMfkCDQKfRbBDaM0sBKEmwfX87drtfUSMVC1ii6WTBIzSxCESGsWdjfa
+ GBR2b2ZfX0I+by08BBiJ2zWgzz/4oF5CQqp+tXxhFxoet2FyryXODDW1CntiIuM0yKyT
+ mJPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778598153; x=1779202953;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=gNGJLVkbTbHWKUYSpa/rYAP/PeuRVSh8gnRsrqDij4A=;
+ b=poIF3znldf+mhPqMJ765RzsyHDnLH3tLbW1A6QK8tKY3Kp+SgkxY89wO6ZiwK0KUb1
+ ghEwxHT+x8sTgsGOiJSwAc6CTMNn614qL3xlCrRWqHMptClQli+spjv3C6aV7a1cCTBj
+ bEo9pBnv/N32fdC58cNe/eBBniviBSaLmMFGyGuYRpgzH1Rujs0FlEqjclAdJyNhQHHg
+ wpnQ5pg1msHL7oMNZzauVDvp6Fa3zZGfgXCViPrRwUhPJBN2W6Br3rSgDz4iOgVlRnlM
+ 9luJjI2X+Abaee+zx4psF7wNMubhqgGN6MaU82fRb5PxDKE34RRDDhr50f8R/V1XO0q7
+ UUXw==
+X-Gm-Message-State: AOJu0YwMaVWhOeNxs9ZvruZwf8AMslLacyQ1zCwLjM7PVpUL4f2m4l9h
+ pLhz6ilZguEqFvFaIPJO+TsPPo1Uc4Py+HhbR1m6v9T8BVkAc/Q4OpmRuowADSRBdTNZMl/7oHx
+ YT2MtuQouTPog+AYgGCoRq72LjKsQb3HGasXgv4MMKvp8LWPyr8If05fWsjAGsSVtXU+d
+X-Gm-Gg: Acq92OHEqB51+u0wIe5/Y0RRlasVGPfNtsG4KiI5WsHBJ4P7h5Z1AOepCi8x07GOjae
+ Mnr3mFTkrrrCGBHfPqKJtusFjRH5GlYjNRK8myxXMNcMQfESZatlsz2Hlx1J/mS6/4fRJxf/XyD
+ x5mR83jOttnZI4PIKRJHaXHdb91/8H1cVyUsFU1JyIU+2wZNxz2aLXXaIBJL1JofU3zw0ldUYRO
+ 7RV+9DId3KtqtmPOU6OK88TrXLWjsZz2pWhJtlrOl8x1CMlLISuy261RU/f2pimNev3pdjG1KE8
+ FLBTwQk1DgsKjLQQiZW5+axxFBGnyKdx1Lz7YxptTAymqNI+pTjCF45rvxOnaqoDGvDHitHDHMN
+ lzU8ZGsCN3lwJZmJSdq5mS4rKQYygL4U1K6TlXGlGnzuSq10tZHJE3NqJBQqiGzllLvD7mdchqB
+ 4MW+jOVA==
+X-Received: by 2002:a05:7301:6089:b0:2de:3022:a459 with SMTP id
+ 5a478bee46e88-2ffd76e8145mr1937852eec.21.1778598145961; 
+ Tue, 12 May 2026 08:02:25 -0700 (PDT)
+X-Received: by 2002:a05:7301:6089:b0:2de:3022:a459 with SMTP id
+ 5a478bee46e88-2ffd76e8145mr1937721eec.21.1778598144881; 
+ Tue, 12 May 2026 08:02:24 -0700 (PDT)
+Received: from hu-pbouvier-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2f8862d429asm18270335eec.12.2026.05.12.08.02.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 May 2026 08:02:24 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: sarunkod@amd.com, pbonzini@redhat.com, mst@redhat.com,
- boris.ostrovsky@oracle.com, alejandro.j.jimenez@oracle.com
-Subject: [PATCH 1/1] amd_iommu: Update command buffer head ptr in MMIO region
- after wraparound
-Date: Tue, 12 May 2026 15:00:44 +0000
-Message-ID: <20260512150044.334867-1-alejandro.j.jimenez@oracle.com>
-X-Mailer: git-send-email 2.47.3
+Cc: Max Filippov <jcmvbkbc@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ marcandre.lureau@redhat.com, Markus Armbruster <armbru@redhat.com>,
+ Anton Johansson <anjo@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v6 5/5] target-info: replace target_info() in system-mode
+Date: Tue, 12 May 2026 08:02:08 -0700
+Message-ID: <20260512150208.1167711-6-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260512150208.1167711-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20260512150208.1167711-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEyMDE1NyBTYWx0ZWRfX4mVdlVXuLL3l
+ V2ZBESLUk8witrIqnengUReNds+2KdWEeLavc/kpS9PW5rqK3F4iMzDhYKYBAjipx33bT3KT0L2
+ k/PSmIPhkX7MHxgP6OBy1pFgngUu9wRyVWs2cwke8aP3lUtjxsQuKg5Ks0Y0wQHu9020pU93f+I
+ bbVwiXbtps9V6gu6QufZ1SfkajTckkVVoFs9EJaDduB3qGJr24whW6g2XGzDy4yPFqy5yr9EoM9
+ Yl1W93cTx0/5EtpWq6Of293YgJxGhtgJaGG3TigX3M3ERaUQWCPYjx1KbMU1jwl8A21bJail7xY
+ TSudpKIDMfN3beP2oQzDElnxOaxDDru1AZtTaLt8b+jRrShkXNylHvJxuwyhHVnO+1OlnE26MKe
+ wquDcaOirQ39IO40F0XYiQ/YktshzCBIpfcodSwx1PBIoTrExPnCAMMu4xww5IDHoet60vu4dyl
+ QFVKGjIlorG95Nq0Jbg==
+X-Proofpoint-GUID: qZqzwKq1YNIo4fvRvR2_X9XHWlPtUgaS
+X-Authority-Analysis: v=2.4 cv=bp98wkai c=1 sm=1 tr=0 ts=6a03410a cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=Ar47GhOyGom1hrc3c0YA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-ORIG-GUID: qZqzwKq1YNIo4fvRvR2_X9XHWlPtUgaS
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-11_05,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- lowpriorityscore=0 spamscore=0 bulkscore=0
- malwarescore=0 mlxlogscore=999
- adultscore=0 mlxscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2605050000 definitions=main-2605120156
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEyMDE1NiBTYWx0ZWRfXwE1Qkl/Y1Pl+
- AibFybX6T097e7SAiZ3ygsE68YXIKWffWz3HWN42L8MSSTfse1CdtaClRYreakDPKdKPxuvAEjg
- BwS7/OVyLZEvn5+adRXIpbp27E2JmwzNyKJpKINC7Arxtn7kYPEopIWHvTPouTDJXasRRZ1Q7WD
- SE57doZWPIIgFZ4eX+9yuTpAMS+vFsD/ZELx8W7oKq5+fhsCaCpVowRUYGD9EtSFN/G5JP5gDOH
- p+inpxU3BHPuDKiUzooFDP5z0bAr0IPTgICyH3xh2GiljaiSNwekBDaj3IsMXyqXGbWwpHLjR0Y
- tKAxLGodPnX7ZGziDT5FMYi+vELp43XiMn1ck4AKEW+lCHvrpk/zvkO00LVGU0beKZ53iZjYB4h
- r3VSIo7xWjKE7jw+M6/GG/MnAi0+Wut2HO30y01IoK7OWb3Sk1Qz4Uv7LIGoD96Bt3bBT56ou2s
- 6MjcAF37bj36bJOu8FtRgTInMI5S64r6BW7TpdB8=
-X-Proofpoint-ORIG-GUID: ug1X7epNw7Ar0WhFa6QUtLSxfixhZuJB
-X-Proofpoint-GUID: ug1X7epNw7Ar0WhFa6QUtLSxfixhZuJB
-X-Authority-Analysis: v=2.4 cv=OMoXGyaB c=1 sm=1 tr=0 ts=6a03409f b=1 cx=c_pps
- a=e1sVV491RgrpLwSTMOnk8w==:117
- a=e1sVV491RgrpLwSTMOnk8w==:17
- a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=x0eKOSpe3m1H3M0S9YoZ:22 a=69wJf7TsAAAA:8 a=yPCof4ZbAAAA:8
- a=nVvs5_CVLXPfDsJYVQUA:9 a=O8hF6Hzn-FEA:10 a=Fg1AiH1G6rFz08G2ETeA:22
- a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf awl=host:13839
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 adultscore=0 clxscore=1015 bulkscore=0 malwarescore=0
+ lowpriorityscore=0 suspectscore=0 phishscore=0 spamscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605050000 definitions=main-2605120157
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,48 +154,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When processing a command, amdvi_cmdbuf_run() increments cmdbuf_head and
-writes it to the emulated MMIO register space before checking whether it
-has reached the end of the command buffer.
+We now can use TargetInfo information available from QOM, and remove
+duplicated target_info() symbol.
 
-If the incremented value reaches the end of the buffer and the tail pointer
-is zero, the loop exits and the COMMAND_HEAD offset still contains an
-unwrapped value. There are no errors in command processing since internal
-cmdbuf_head state is always correctly updated, but the spec defines the
-CmdHeadPtr field in MMIO Offset 2000h Command Buffer Head Pointer Register
-as RW i.e. guest-visible, so it should be kept consistent.
-
-Wrap cmdbuf_head before updating COMMAND_HEAD so the MMIO-visible register
-always matches the internal command buffer head pointer position.
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- hw/i386/amd_iommu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/qemu/target-info-init.h | 5 -----
+ target-info-qom.c               | 5 +++++
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 197e452e3c..5d6a405263 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -1475,12 +1475,12 @@ static void amdvi_cmdbuf_run(AMDVIState *s)
-         trace_amdvi_command_exec(s->cmdbuf_head, s->cmdbuf_tail, s->cmdbuf);
-         amdvi_cmdbuf_exec(s);
-         s->cmdbuf_head += AMDVI_COMMAND_SIZE;
--        amdvi_writeq_raw(s, AMDVI_MMIO_COMMAND_HEAD, s->cmdbuf_head);
+diff --git a/include/qemu/target-info-init.h b/include/qemu/target-info-init.h
+index 32c323a7ef9..b7024c9faef 100644
+--- a/include/qemu/target-info-init.h
++++ b/include/qemu/target-info-init.h
+@@ -38,11 +38,6 @@ const TargetInfo *target_info(void)     \
+ #include "qom/object.h"
  
-         /* wrap head pointer */
-         if (s->cmdbuf_head >= s->cmdbuf_len * AMDVI_COMMAND_SIZE) {
-             s->cmdbuf_head = 0;
-         }
-+        amdvi_writeq_raw(s, AMDVI_MMIO_COMMAND_HEAD, s->cmdbuf_head);
-     }
- }
+ #define target_info_init(ti_var)                                            \
+-const TargetInfo *target_info(void)                                         \
+-{                                                                           \
+-    return &ti_var;                                                         \
+-}                                                                           \
+-                                                                            \
+ static const TypeInfo target_info_qom_target_type_info = {                  \
+     .name =  TYPE_TARGET_INFO"-"TARGET_NAME,                                \
+     .parent = TYPE_TARGET_INFO,                                             \
+diff --git a/target-info-qom.c b/target-info-qom.c
+index 9947fcc9922..b48714cc77f 100644
+--- a/target-info-qom.c
++++ b/target-info-qom.c
+@@ -49,6 +49,11 @@ DEFINE_TARGET_INFO_TYPE(target_info_parent_type)
  
-
-base-commit: 8333dba7326d89ce180221c4d0c6d34826a9a4a3
-prerequisite-patch-id: df656299f90e928acad39d99e3701c5641e972d5
+ static const TargetInfo *target_info_ptr;
+ 
++const TargetInfo *target_info(void)
++{
++    return target_info_ptr;
++}
++
+ void target_info_qom_set_target(void)
+ {
+     g_autoptr(GSList) targets = object_class_get_list(TYPE_TARGET_INFO, false);
 -- 
-2.47.3
+2.43.0
 
 
