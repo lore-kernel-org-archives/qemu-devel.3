@@ -4,63 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42DF3CD37BE
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 02:24:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B772CD37BE
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 02:25:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMcnF-0007bs-Vh; Mon, 11 May 2026 22:24:21 -0400
+	id 1wMcoJ-0008BM-9N; Mon, 11 May 2026 22:25:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1wMcnE-0007bE-6r; Mon, 11 May 2026 22:24:20 -0400
-Received: from out30-98.freemail.mail.aliyun.com ([115.124.30.98])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wMcoI-0008Am-JI
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 22:25:26 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1wMcnA-0006cl-Jt; Mon, 11 May 2026 22:24:19 -0400
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wMcoH-0007UU-0R
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 22:25:26 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64BK6paL2803821
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 02:25:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ Cg1rpkPgWL/FK+4tprc5BwYAFA8yfpBkWXZf6wZ5Q3A=; b=SiW1jRaa4T+fq7+x
+ 7aiIEAQHljqkemuEZyyisVNGGW7kyPJJpw1xs2+Gi8NFpBQyVvgiPZrLV1UnbL6N
+ TMkZkS9XUMC3fPKH+F+0ezlAJ30n6c5IdeVC7GdCUAMnkG1ejTvpBOhVhT4KauDB
+ KHcKdzp+pUW0PWGXP/U4yQ/695bZaIHt1BJppYa18yE0edRYjHe9My5XMbxN7Auj
+ XblpQdAuAo6kkjHGd8ZQAZTJZZbAYKkumaCBgVLwYisP52/eX4fibGuD7axvljg0
+ 5XHmXMRn4PilBgiCNlIJdsvyABMFpdHJju5HadFAvjT0/ZTc8//7p47MNYPBG6hZ
+ 1tQvng==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
+ [74.125.82.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e3nv393qq-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 02:25:23 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id
+ 5a478bee46e88-2ba8013a9e3so8064113eec.0
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 19:25:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1778552645; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=decHTiCdSj9aBwe7XX1En6fSguPibbm1Nr+4Xi3d85M=;
- b=TgDXDzUqd0AyabDtHrP60QZPb8ZGZMCREDUAkJIUB/Uimk6c9p4RqEbSl/wgXmLi3kA+8GZhyC4bRGV3Qui0P9RqdaugUAAlxmSa3d10xB/eVI3knkhTJkKzOTvI0y/kEuWRIfRY+GwStLfeg1lqSpgQB17XU7wAjU7Ipgval9Q=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R121e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam011083073210;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=10; SR=0;
- TI=SMTPD_---0X2op2KD_1778552643; 
-Received: from 30.166.64.212(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0X2op2KD_1778552643 cluster:ay36) by smtp.aliyun-inc.com;
- Tue, 12 May 2026 10:24:04 +0800
-Message-ID: <bdbdd6e7-f188-48f5-a9b0-6951aa383f4e@linux.alibaba.com>
-Date: Tue, 12 May 2026 10:24:03 +0800
+ d=oss.qualcomm.com; s=google; t=1778552723; x=1779157523; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Cg1rpkPgWL/FK+4tprc5BwYAFA8yfpBkWXZf6wZ5Q3A=;
+ b=PyAHZygpjv5jcJxWEWZeeS6D92WVID89cmbEUyPC+ELBH3BYDLx6OQFHCEWPBpoBmz
+ aa57e1ko21MjVtxMzVWRETXhN297CiT0aiyBe7MC3U8fpD4/gyYtqr/iaHEit8uJ3OjI
+ ew4D8aGjEXYh9rh4iOKoMOzM1V8ApZ5rcAwmDU9WhOIl6rg8WZ5cu53vWgdYM2ch+3YJ
+ G0LfcWZZy7RFTj4r8couMLonjvbZMrZNu1J+X3iUaaFNwFWoeVm84vNwiKlbuvMqJKmp
+ PwM1abWW06YszQoA/e1qsGdgHoppV7VhWnX+I+u3suSNxo+ulUjSVSrsYNcoTvbNzH0o
+ hRxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778552723; x=1779157523;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Cg1rpkPgWL/FK+4tprc5BwYAFA8yfpBkWXZf6wZ5Q3A=;
+ b=Bhpal52lDJqpXVRDql3tt5N9xVDl4LPYiamHj22nbaWkfiPb1elfyy97F4ZykEUWnf
+ tAN25q6stffpPGhm48KUcnFa1KYPrNWeTo52TK9r4c4cY4RE8ODrGecXUy3wf8zvFFmt
+ H97T9FiySK0Mjq8/Ryo2W9o9fYaLjAsriY4CrOjc3TQYmgu1bKkugX/z5zO0JgbBhzWa
+ 1QX/B0XS/eUdH/0y0jyP3iKCufaxyeNqwSl+5S61Q5BbD41aEWKmpIuxYt8h4v1sP4x4
+ StwSP3YNYXdR+rT8HoOW1uFajy+otoMS+k+hWh37CUwBWiErQEowPkxKHcsX4Q5gFATk
+ LXPQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8ryfYeooRgQkBhyj9xI0HFFD/5gXwiyMvNNbpUzS/Q/LUP/DuX6RHfRw/fCUic869ZqNmqM2BmFjIC@nongnu.org
+X-Gm-Message-State: AOJu0Yzz/0BMJNcLQDlmafuR6smuq4nwOdpsYWKUFXk066jGYbODn6YI
+ 9JY4Vpuyc1B4ewqM7KmcDqkOZClKtrzt1N3mZqBxBBdvxdo/gH1UvK13rYtBm86R2nesqY6g+U3
+ ZTcD9aUffbnry46K1nEyNdxii7ujTurZImg5yRlRqivcjZWjXz4aCECxD0A==
+X-Gm-Gg: Acq92OE6/2JVWyTRvG+qP8//urjXvdqAsmQb2ShHuNgcdRq/iq5+55oWbWmNRwW+kMu
+ sSJvLOe38aywyrRp1d4jkZv0Fot7Goe05exQbn3Meru8USG64Hl22hEYWvUt8qZ8S20ghC8bSVx
+ +Qxg+Ns5WmgXuaULfQvTapiZ2ajIqm88zvrYfcT0ZjbxwYjtGpXs12q5BDva1jcHTrfBYWT/1wl
+ dA3BiV+BKKotSy709mO11WWEnFbNK/F2Ts568Tq/dx4uHUHMEutPL5NTXLOGubpLK075e3e5/xA
+ CQzYD4y6D5GSqUMzQij1YsoFblRECUec/p34l/iDjaoK/OvG6311oR18Kmmcr5aX5rStOJq/UeK
+ XCPb7TwF4g/peqoIYppXOxR50f4X8HM3VaM8zul6tZxwxapmuZAsvBKvydAitLQevwQlB8zVvsC
+ WCIl1WlBO17PPjvQ==
+X-Received: by 2002:a05:693c:820a:b0:2f5:5907:3a48 with SMTP id
+ 5a478bee46e88-2f55916c8a4mr8630812eec.1.1778552722566; 
+ Mon, 11 May 2026 19:25:22 -0700 (PDT)
+X-Received: by 2002:a05:693c:820a:b0:2f5:5907:3a48 with SMTP id
+ 5a478bee46e88-2f55916c8a4mr8630802eec.1.1778552721978; 
+ Mon, 11 May 2026 19:25:21 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2f8859eafc2sm20303102eec.4.2026.05.11.19.25.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 11 May 2026 19:25:21 -0700 (PDT)
+Message-ID: <9a9c761d-e8e3-469f-bcdb-a5afc8981829@oss.qualcomm.com>
+Date: Mon, 11 May 2026 19:25:20 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/6] target/riscv: Integrate SMMPT checks into MMU and
- TLB fill
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, chao.liu.zevorn@gmail.com,
- palmer@dabbelt.com, daniel.barboza@oss.qualcomm.com, liwei1518@gmail.com,
- Huang Tao <eric.huang@linux.alibaba.com>,
- TANG Tiancheng <lyndra@linux.alibaba.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-References: <20260408140635.42546-1-zhiwei_liu@linux.alibaba.com>
- <20260408140635.42546-4-zhiwei_liu@linux.alibaba.com>
- <CAKmqyKMykD0tYkFnARggVLkS68arKps17tETcpH0coPL1k_FBw@mail.gmail.com>
+Subject: Re: [PATCH 3/5] target-info: Merge target-info-impl.h into
+ target-info.h
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: philmd@linaro.org
+References: <20260511190634.472174-1-richard.henderson@linaro.org>
+ <20260511190634.472174-4-richard.henderson@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <CAKmqyKMykD0tYkFnARggVLkS68arKps17tETcpH0coPL1k_FBw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.98;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-98.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+In-Reply-To: <20260511190634.472174-4-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEyMDAyMCBTYWx0ZWRfX1mnHAqUc+N23
+ Tcj5sAWbMnBcqW4aeuaeu+qcREiCp1eHA9PWrQWDf9kD9k72NUgLZRq8DJjVyetGp57IxT2VQR0
+ T/+tOYL3cgZ+2jBhQKMj7//4Bipg+fwb6ynTLfwrUDRhisU/5Kh9ZWptHc3C3OAjaNYcc0T8HMQ
+ 2tn4pTVkeNL9aTOdZ95y47fB1rhQJMJ8D82md68VCAAz7gNdaQTs1WOKUK6K1frAaGyMETLjy6w
+ aXsuKVQc/Gaq8EiE0vdJB2+1bZzgY7UZrQJLA0E4lgeF9KepZ4kdem/LaV0MX3mvKrQPOWIFera
+ /of6qoPDBp+QPZZYFyqJSwWylLoBAFDs4KTwtLm8CAwlF6+J9zM/MJt7VMnP4vAbVnxmxcYcOAg
+ f98mnAqibIL/PQtkUgcWp08FD2UJo8bESdbB3For2EvH3PDWaOoXbASC2gS6GhR0YKXivXs6rTJ
+ C9Hp1caEYh0EbjM56zA==
+X-Authority-Analysis: v=2.4 cv=Kvp9H2WN c=1 sm=1 tr=0 ts=6a028f93 cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=V82x7OlPaLxPN6-WJesA:9 a=QEXdDO2ut3YA:10
+ a=bBxd6f-gb0O0v-kibOvt:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: NBnHxn6bK2FUavxioZ82ZNsxCEAbtH9u
+X-Proofpoint-GUID: NBnHxn6bK2FUavxioZ82ZNsxCEAbtH9u
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-11_05,2026-05-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 adultscore=0 bulkscore=0 suspectscore=0 spamscore=0
+ lowpriorityscore=0 impostorscore=0 clxscore=1015 phishscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605050000 definitions=main-2605120020
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,140 +154,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alistair,
+On 5/11/2026 12:06 PM, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  include/qemu/target-info-impl.h   | 43 -------------------------------
+>  include/qemu/target-info-qom.h    |  2 +-
+>  include/qemu/target-info.h        | 31 ++++++++++++++++++++++
+>  configs/targets/aarch64-softmmu.c |  2 +-
+>  configs/targets/arm-softmmu.c     |  2 +-
+>  page-vary-common.c                |  2 +-
+>  page-vary-system.c                |  2 +-
+>  target-info-qom.c                 |  2 +-
+>  target-info-stub.c                |  1 -
+>  target-info.c                     |  1 -
+>  10 files changed, 37 insertions(+), 51 deletions(-)
+>  delete mode 100644 include/qemu/target-info-impl.h
+> 
 
-On 4/10/26 9:44 AM, Alistair Francis wrote:
-> On Thu, Apr 9, 2026 at 12:08 AM LIU Zhiwei <zhiwei_liu@linux.alibaba.com> wrote:
->> With the core MPT lookup logic in place, this patch integrates the
->> permission checks into QEMU's main MMU processing functions.
->>
->> A new helper, `get_physical_address_mpt`, is introduced to check the
->> permissions for a given physical address against the MPT. This helper
->> is then called at two critical points:
->>
->> 1. During page table walks (`get_physical_address`): The physical
->>     address of the Page Table Entry (PTE) itself is checked to ensure
->>     the supervisor has permission to read it.
->>
->> 2. After successful address translation (`riscv_cpu_tlb_fill`): The final
->>     guest-physical address is checked against the MPT before the access
->>     is allowed to proceed.
->>
->> This ensures that SMMPT protection is enforced for both the translation
->> process and the final memory access, as required by the specification.
->>
->> Co-authored-by: Huang Tao <eric.huang@linux.alibaba.com>
->> Co-authored-by: TANG Tiancheng <lyndra@linux.alibaba.com>
->> Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
->> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->> ---
->>   target/riscv/cpu_helper.c | 76 ++++++++++++++++++++++++++++++++++++++-
->>   1 file changed, 75 insertions(+), 1 deletion(-)
->>
->> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
->> index e3361fadae..2fab00e9b4 100644
->> --- a/target/riscv/cpu_helper.c
->> +++ b/target/riscv/cpu_helper.c
->> @@ -1161,6 +1161,60 @@ static bool check_svukte_addr(CPURISCVState *env, vaddr addr)
->>       return !high_bit;
->>   }
->>
->> +/*
->> + * get_physical_address_mpt - check mpt permission for this physical address
->> + *
->> + * Lookup the Memory Protection Table and check permission for this
->> + * physical address. Returns 0 if the permission checking was successful
->> + *
->> + * @env: CPURISCVState
->> + * @prot: The returned protection attributes
->> + * @addr: The physical address to be checked permission
->> + * @access_type: The type of MMU access
->> + * @mode: Indicates current privilege level.
->> + */
->> +static int get_physical_address_mpt(CPURISCVState *env, int *prot, hwaddr addr,
->> +                                    MMUAccessType access_type, int mode)
->> +{
->> +    mpt_access_t mpt_access;
->> +    bool mpt_has_access;
->> +
->> +    /*
->> +     * If the extension is not supported or the mmpt.mode is Bare,
->> +     * there is no protection, return success.
->> +     */
->> +    if (!riscv_cpu_cfg(env)->ext_smmpt || env->mptmode == 0) {
->> +        *prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
->> +        return TRANSLATE_SUCCESS;
->> +    }
->> +
->> +    /*
->> +     * MPT is checked for all accesses to physical memory, unless the
->> +     * effective privilege mode is M.
->> +     *
->> +     * Data accesses in M-mode when the MPRV bit in mstatus is set and
->> +     * the MPP field in mstatus contains S or U are subject to MPT checks.
->> +     *
->> +     * In riscv_env_mmu_index, The MPRV and MPP bits are already checked and
->> +     * encoded to mmu_idx, So we do not need to check it here.
->> +     */
->> +    if (mode == PRV_M) {
->> +        *prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
->> +        return TRANSLATE_SUCCESS;
->> +    }
->> +
->> +    mpt_has_access = smmpt_check_access(env, addr,
->> +                                      &mpt_access, access_type);
->> +    if (!mpt_has_access) {
->> +        *prot = 0;
->> +        return TRANSLATE_MPT_FAIL;
->> +    }
->> +
->> +    *prot = smmpt_access_to_page_prot(mpt_access);
->> +
->> +    return TRANSLATE_SUCCESS;
->> +}
->> +
->>   /*
->>    * get_physical_address - get the physical address for this virtual address
->>    *
->> @@ -1355,6 +1409,13 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
->>               pte_addr = base + idx * ptesize;
->>           }
->>
->> +        int mpt_prot;
->> +        int mpt_ret = get_physical_address_mpt(env, &mpt_prot, pte_addr,
->> +                                               MMU_DATA_LOAD, PRV_S);
->> +        if (mpt_ret != TRANSLATE_SUCCESS) {
->> +            return TRANSLATE_MPT_FAIL;
->> +        }
->> +
->>           int pmp_prot;
->>           int pmp_ret = get_physical_address_pmp(env, &pmp_prot, pte_addr,
->>                                                  sxlen_bytes,
->> @@ -1765,7 +1826,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
->>       CPURISCVState *env = &cpu->env;
->>       vaddr im_address;
->>       hwaddr pa = 0;
->> -    int prot, prot2, prot_pmp;
->> +    int prot, prot2, prot_pmp, mpt_prot;
->>       bool pmp_violation = false;
->>       bool first_stage_error = true;
->>       bool two_stage_lookup = mmuidx_2stage(mmu_idx);
->> @@ -1819,6 +1880,13 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
->>               prot &= prot2;
->>
->>               if (ret == TRANSLATE_SUCCESS) {
->> +                ret = get_physical_address_mpt(env, &mpt_prot, pa,
->> +                                               access_type, mode);
->> +                qemu_log_mask(CPU_LOG_MMU,
->> +                              "%s MPT address=" HWADDR_FMT_plx " ret %d prot"
->> +                              " %d\n",
->> +                              __func__, pa, ret, mpt_prot);
-> We should only log if the extension is enabled
-Yes. Output it under the condition of riscv_cpu_cfg(env)->ext_smmpt in 
-v6 patch set.
-
-Thanks,
-Zhiwei
->
-> Alistair
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
