@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE0FACD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:03:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61FB2CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:03:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuFU-00012L-Aa; Tue, 12 May 2026 17:02:41 -0400
+	id 1wMuDL-0005hL-NY; Tue, 12 May 2026 17:00:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuDt-0006uL-Dr; Tue, 12 May 2026 17:01:04 -0400
+ id 1wMuCR-0002ss-Ia; Tue, 12 May 2026 16:59:33 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuDr-0006LJ-76; Tue, 12 May 2026 17:01:01 -0400
+ id 1wMuCN-0005Af-TP; Tue, 12 May 2026 16:59:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619277; bh=HTBE+4uWbe8jRkHSoc5EWVScW05kW5626zuV3t53MVk=;
+ t=1778619276; bh=mRfYhhFPyTdMLLP732EPpqtu+xKUKEHclKlwUfbvgzo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=HRIbijYcyi36aJqa5QfAt/a7V6e2VJT/0qlTLw3z6AOWPiScgb30AfGmR+58xlMYH
- Hrm1NNWuuPmTBL4J3GmyqjCw+/odZOGZj4Z5BGBJasDhoz/bKSGUmWYOJxlxyet7tX
- 8OT8x8yHncdYbmc55M/1JOILJTcCZa9mQl1M5yxP8nLQJcDn2QBZrszmaqpWUDNMa+
- sBIWv6o1r8AoNY6sKqpBGpFON4at/xLOMEPZd3BtT5GuIUoGDhlvRyZtrsdbOf3tQV
- pOI4DFE0atBGk8uQBvOtOuhH8QNwTn92NO5mr1qICN2+pR1JRWgpDYEmUGgQNAEfzN
- /Q06Ke9AOIJ3w==
+ b=rHsagim5KYM841nNgr25Wey71Dvje5VoqwCNUGyx8wDJ2w5N6McN4ApgNy6aBGrJH
+ LbvsR+yqJBjWMKn4Y0eHBB83eigORUDCFecv9we66dQw+NC1wC+ic+g1GiN9t+sSYp
+ YcsyCCIs7hm7lGBNWYuHiNn2K41SiCw9uqE0RsZWjUjxKaPFdfutyE8hKnrTaeBMc8
+ YDBy7EXRUSNmHhrJ7zL3bLUFrrIjPqr/fZTgH84RbYXLB0l0D7ympc7rsva+OyKO/1
+ zLMEMudZ5lopVpC4lMIybi9DcLHv69yffD865O9zzyohg2A+DkjZZswUKK1lKx9ors
+ AkkbooFy83Wew==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9D4EA1AA30C;
- Tue, 12 May 2026 23:54:37 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7E2841AA2FE;
+ Tue, 12 May 2026 23:54:36 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9DD5E3ABC7D;
- Tue, 12 May 2026 23:54:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 89BE43ABC6F;
+ Tue, 12 May 2026 23:54:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stepan Popov <Stepan.Popov@kaspersky.com>,
+Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 064/107] meson: add missing semicolon in
- pthread_condattr_setclock test
-Date: Tue, 12 May 2026 23:53:51 +0300
-Message-ID: <20260512205437.360850-64-mjt@tls.msk.ru>
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 050/107] target/arm: fix fault_s1ns for stage 2 faults
+Date: Tue, 12 May 2026 23:53:37 +0300
+Message-ID: <20260512205437.360850-50-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
@@ -72,33 +71,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stepan Popov <Stepan.Popov@kaspersky.com>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-The test code was missing a semicolon after the pthread_condattr_t
-variable declaration.
+The computation of s1ns was simply wrong. For Stage 2 faults, it
+should indicate whether the faulting IPA is in the Non-Secure IPA
+space. Correct the logic to check for ARMSS_NonSecure and drop the
+extraneous s2_mmu_idx test.
 
-Signed-off-by: Stepan Popov <Stepan.Popov@kaspersky.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Fixes: 657ac98b58c ("thread-posix: use monotonic clock for QemuCond and QemuSemaphore", 2022-02-22)
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Link: https://lore.kernel.org/r/20260330131406.87080-1-Stepan.Popov@kaspersky.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 79bc1771867723cb70dac0fae8f2c26fda1a635d)
+This is effectively a change in the intended semantics of the
+ARMMMUFaultInfo::s1ns field, so that we no longer try to make it
+exactly match HPFAR_EL2.NS but instead set it for any stage 2 fault
+on an NS IPA, relying on users of the field to check whether the
+fault is to be taken to Secure EL2 before propagating the field to
+the HPFAR_EL2.NS bit.  Since the actual writing of HPFAR_EL2.NS is
+already gated by arm_is_secure_below_el3(env), we only need to update
+the comments to document this change of semantics.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2568
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260405112410.603223-1-alex.bennee@linaro.org
+[PMM: also update comments about the s1ns field]
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 566594f10873723a179057a604d890bfaa1a9f0a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/meson.build b/meson.build
-index 327c1e19f8..0fb949de14 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2845,7 +2845,7 @@ config_host_data.set('CONFIG_PTHREAD_CONDATTR_SETCLOCK', cc.links(osdep_prefix +
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 17221c847d..e95f791ce0 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -717,7 +717,10 @@ typedef enum ARMGPCF {
+  * @paddr_space: physical address space that caused a fault for gpc
+  * @stage2: True if we faulted at stage 2
+  * @s1ptw: True if we faulted at stage 2 while doing a stage 1 page-table walk
+- * @s1ns: True if we faulted on a non-secure IPA while in secure state
++ * @s1ns: True if we faulted on a non-secure IPA. Note that (unlike the
++ * HPFAR_EL2.NS bit) this is set for any stage 2 fault for an NS IPA, so
++ * code must check that this is for a fault taken to Secure EL2 before
++ * propagating s1ns to HPFAR_EL2.NS.
+  * @ea: True if we should set the EA (external abort type) bit in syndrome
+  */
+ typedef struct ARMMMUFaultInfo ARMMMUFaultInfo;
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 4330900348..92d6bd9d40 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -550,12 +550,14 @@ static ARMSecuritySpace S2_security_space(ARMSecuritySpace s1_space,
+ static bool fault_s1ns(ARMSecuritySpace space, ARMMMUIdx s2_mmu_idx)
+ {
+     /*
+-     * For stage 2 faults in Secure EL22, S1NS indicates
+-     * whether the faulting IPA is in the Secure or NonSecure
+-     * IPA space. For all other kinds of fault, it is false.
++     * For stage 2 faults, S1NS indicates whether the faulting IPA is
++     * in the Non-Secure (true) or Secure (false) IPA space. For all
++     * other kinds of fault, it is false. Note that we do not
++     * distinguish "s2 fault on NS IPA taken to Secure EL2" from
++     * "s2 fault on NS IPA taken to NS EL2 or Realm EL2" here, but
++     * instead do that when setting HPFAR_EL2.NS.
+      */
+-    return space == ARMSS_Secure && regime_is_stage2(s2_mmu_idx)
+-        && s2_mmu_idx == ARMMMUIdx_Stage2_S;
++    return space == ARMSS_NonSecure && regime_is_stage2(s2_mmu_idx);
+ }
  
-   int main(void)
-   {
--    pthread_condattr_t attr
-+    pthread_condattr_t attr;
-     pthread_condattr_init(&attr);
-     pthread_condattr_setclock(&attr, CLOCK_MONOTONIC);
-     return 0;
+ /* Translate a S1 pagetable walk through S2 if needed.  */
 -- 
 2.47.3
 
