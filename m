@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33CBBCD4846
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 02:42:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 686C9CD37BE
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 02:54:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMd4y-0006iu-EG; Mon, 11 May 2026 22:42:42 -0400
+	id 1wMdFW-0008OR-IS; Mon, 11 May 2026 22:53:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1wMd4v-0006iN-9e; Mon, 11 May 2026 22:42:37 -0400
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1wMdF9-0008NL-CZ; Mon, 11 May 2026 22:53:13 -0400
+Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1wMd4s-0002Nq-VJ; Mon, 11 May 2026 22:42:37 -0400
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1wMdF6-0008EV-En; Mon, 11 May 2026 22:53:11 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Dh/KO9C1pMuhQnw2uFj0aBUmk994/0UAiP814gmK2M9m5CF4s4z+W/0DeOdhjOWmiSVo2zItqHESmfJb2kBADlBNknUtsA5GC41Zt/KkQZA22to4flIiJ1gb0SLLwkejCAPcjo8kgJ9lhJEK3/R+fqgm5I1T5Oq+/3YM0B5PULdxrxw7VOrZGpf44FWmi837Qpe9AEFp/CN1rp52wYJEHzIoic66kq5QzCDgBWtiZJaLG6zfSAtNfQouPNdsTLoy5kbXEY+8np54cfautOvoYdx9v5xf6L8xQweqyzIKcaDL2H2zw/W7OmaO7+kAjaIaQBi/9aGqSvp46Yz6gqdPRw==
+ b=tBHsptwDYPVxIjyRbbj3NCMvx7Fiq804kZmNnhFtJdnE6TsD+nZ6rJAJRzM2lfodahqSyfnB/Ah36788r51il+JgSuxB/2WRk6JMOfIPpuZdcupLZxcTkE6PQC5ShGsMSW561av4PQpjOHEwR2t5txilfZG+I4aXDCpoLG0XawTHY/PqbpVJhJbtGDClrjtx08fF3++N1qjWqWSQCjOJlZpOEJz8PSD8KPOnLYKE3VuQQaHhcKt4GExBRoRWoQvg4Wha8YCxTp1kbox8QsL/F7Q8VyoODhMbJv2tWgp8OM5GLXKqIIvA9tObjoZL7ZlM6OcqOVmN7Zh3Hk+ZZlQYpg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8EmI9WjkJljrocyAKaj11ayvWXi28MdoYPqdECOFt+8=;
- b=pWoZknFVzJw+9C9/xTuRf6oxytEE1DrynCNkmvn3Trl64RGJqFdX4L1iFkOBfqDCvE0JE9aTzJje/XBbr288d3L9Cya3bACiNTksoBEBgER/hPGSAQ6MVDYHOKr0xOr9Nf1c7jR/56EBV12Hj+Lyb8Q+yTKYCaKv9xV8GvWyv8+VHZx1mPS7qujJ+OR2X7uc6CwwND8EsClOFgfdlkAdWEnl3j+nlxFtfTsb3VgmXplNrm9Y4K581PCMxP9EPtjB+KiCKDEoQ9JFDkoYgLSiu221t2ab81V5EC4Qc7eFwBs4Z2BUbgA7FUx4j/9ZrEtz1JcU8grro2Bk+zIF0gswnw==
+ bh=am2DK3CxFQiR+12pIFO7sijZXxaVJHzYXTCXMwAMohI=;
+ b=kPz7jeMblUotHG/9lifJVYuSqWJ3eyrYpNjzVzd1iXTFttk7XZUMgSHzcjsh1Mwup5cp9msYnXWaGNCNXx7ErG1KxNYMpoGOlAEUTQNQRpG7MAzkO/E5VF10hWuy3wFtO6TJ3dNgYHRj1Xpn3CD6jCQ3yId4nKKdt1Cw0blVQ0iQWtMRqAscXo3d9x5Yi76OTOfT7yAgQS7rxVHgeK6U8IuwQjUKKuWDEYateH67QxETTcCffg/E6XJsVOG2IxtwyyI6g0bsxJsh4mtK3BDqEp+v2rxYqA/uNcZWj2oKhRgXwiYfb3+QZG7f+lLEz6+xn7RBzY9aXHJH8hKhG0+Rcw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8EmI9WjkJljrocyAKaj11ayvWXi28MdoYPqdECOFt+8=;
- b=QDV6BMbs9IfFgmQpfnd38G9f7Qt/0yhczD/BAmzIhwgBFKVLN+BvFmgdg33nY6HGwlb6uCxwVVq50eXZVC/yTSmeRhj0xNGLx4XZVznh6cFcIbvRbY9uKBfYvbMmMTlBcNOg+DzuCnzEwlhe4bHYjkwUxsr22JfUHfgkCooWo4or0tGQw/71KjPP6NbHG/lydeE8Kl15rbzP6c76XEsdRrkDXArDe7bUTjnz6wfqBUl5W85RXahFRrljKsUUwhVkDsskgMmgS6OE63QonjIbmVjVENOG1PptZNl5cBuDDNowwGsynjE59m/GRX1F8yJFOg5qVnc7ll9ltQ5kJ803ng==
-Received: from SI6PR06MB7631.apcprd06.prod.outlook.com (2603:1096:4:239::11)
- by KL1PR06MB6448.apcprd06.prod.outlook.com (2603:1096:820:f2::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.21; Tue, 12 May
- 2026 02:42:20 +0000
-Received: from SI6PR06MB7631.apcprd06.prod.outlook.com
- ([fe80::afe5:a3f1:b435:e43c]) by SI6PR06MB7631.apcprd06.prod.outlook.com
- ([fe80::afe5:a3f1:b435:e43c%5]) with mapi id 15.20.9891.021; Tue, 12 May 2026
- 02:42:19 +0000
-From: Kane Chen <kane_chen@aspeedtech.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
+ bh=am2DK3CxFQiR+12pIFO7sijZXxaVJHzYXTCXMwAMohI=;
+ b=QhJfCDO7SEtwLEwlIInK73P2uPEm+i/yUCtPv7IAxDGc44Pm9lOMQazMFIP5cawpS9hvAmQ3N9wsbzmjZxdgjq6DMkl1jtZtDzMIBOg7G2Z/f1vivwwF4ZA2pxx9qGkkspYBv+mIwkLDQQsSXtl5IQ719zo/BY7t7yyWcm29mnBb3R0Fb5gQ5+nt5vHIeWcpZz1zZrqYvNXAktfIZIfGVQPT8KY1Gav3lrrOrhNZQ1AxoQvGghBwnY3VV+LQp0LrXxuSLi5FdM7g6nB/O8kZrmTfe532dBJmeXkkfRrVPatcoZZrhynrCeIiOlqRTM01wmpF6FXISf3cj4rWSaRCCA==
+Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
+ by TYZPR06MB6657.apcprd06.prod.outlook.com (2603:1096:400:451::8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.23; Tue, 12 May
+ 2026 02:52:59 +0000
+Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
+ ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
+ ([fe80::e659:1ead:77cb:f6d3%2]) with mapi id 15.20.9913.009; Tue, 12 May 2026
+ 02:52:59 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: Kane Chen <kane_chen@aspeedtech.com>, =?iso-8859-1?Q?C=E9dric_Le_Goater?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>, Steven Lee
+ <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Andrew Jeffery
  <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
  list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
@@ -55,13 +55,12 @@ Subject: RE: [PATCH v1 1/1] aspeed/hace: Fix mapped address may not be
  unmapped issue
 Thread-Topic: [PATCH v1 1/1] aspeed/hace: Fix mapped address may not be
  unmapped issue
-Thread-Index: AQHc3qnPl3aK51F7Y0aXhHDUgxk26LYIf7+AgAAZCKA=
-Date: Tue, 12 May 2026 02:42:19 +0000
-Message-ID: <SI6PR06MB76319014B83F4B0E7F0FB756F7392@SI6PR06MB7631.apcprd06.prod.outlook.com>
+Thread-Index: AQHc3qnQ7PoCz+q2K06UtftlgeRwf7YJtyqA
+Date: Tue, 12 May 2026 02:52:59 +0000
+Message-ID: <TYPPR06MB8206BD6FA4B76B8F9F3C945DFC392@TYPPR06MB8206.apcprd06.prod.outlook.com>
 References: <20260508051619.3887383-1-kane_chen@aspeedtech.com>
  <20260508051619.3887383-2-kane_chen@aspeedtech.com>
- <341d0267-cb81-4612-99d1-c1edd5a395dd@kaod.org>
-In-Reply-To: <341d0267-cb81-4612-99d1-c1edd5a395dd@kaod.org>
+In-Reply-To: <20260508051619.3887383-2-kane_chen@aspeedtech.com>
 Accept-Language: zh-TW, en-US
 Content-Language: zh-TW
 X-MS-Has-Attach: 
@@ -69,81 +68,73 @@ X-MS-TNEF-Correlator:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SI6PR06MB7631:EE_|KL1PR06MB6448:EE_
-x-ms-office365-filtering-correlation-id: 826c3b7e-3233-4f3b-f39c-08deafd0168b
+x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|TYZPR06MB6657:EE_
+x-ms-office365-filtering-correlation-id: a3967b49-5a44-405c-a912-08deafd193cd
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|1800799024|366016|22082099003|56012099003|38070700021|18002099003;
-x-microsoft-antispam-message-info: 0+5pUEkTrIlAG5XGcvrRQwZegkhWKJRNI9Vp7+zsusORh9NtCLvXgYqkkxkTTYLX7hG1bgH2gZ7ys8Jp6aFiRMu6ndO2mqLfRpOO78CcYE6VURoOUBC+YemxC4K9Ww6RhNPKKsxwkMd8/E5DAQyYUikFSOGEGC1xSPoDBJLqBCdu25EXgUrQV1tGu029T/AgL5bTKJqP7ESPXJtgU6Sd9jmFXNF0MXmff+jdZtgWLj7vUHk86Bq4ZRrNFjjWjGjt/gcm+pIgbPdPOkdLoZrUQIqDgXbS4UxIBDGz9NuyKjOigcAw7lFtWJppz7NotRpLye3VcljwQireyqv9k4gARBM82/o0lVLDys/+OuDO+meMa+uN2ynOEzhnKA0V4C29VEWBsojE42d7NV5QdF1t46LOeBYgouOwwjB1bKvTvnvSbuz9rCNH2/RQvO8YHsDid8lokOjCR+GR3AfGJLsJ1uQc6WfYN8xYQmw9UMGzwlsH+uIwwkPYpQ+PMYjQgQySqRMagy9svDeXDzJv29k7pjgt1IxVzg4wMLwSM+57GCZOICagkLgfWWbPl2Onus5grRxS+0FRLcnbCBR/Kn//T0guVXUhgb1aPuvdBWVPTJXnbiYwkVYQe9NguZwAsm8JsCxk8iXstSBsQ1lSgRpSYbHlaLeZi6VeWy3b2RhsUrwKjxxmoOLWadNiTYIHkDm6nf1U6lF9/1/3eU3u3U7dw8FUEVBqJbEg9/Xgl6SpiIoYy0yLIOYVFwRaGbOpWgeK
+ ARA:13230040|1800799024|376014|366016|38070700021|22082099003|18002099003|56012099003;
+x-microsoft-antispam-message-info: tNCT9+kUK31Hjp4dSwMX1/XVPEUg1l9hsz865ALqAvvRHVwdqHMSZD1NAAuk/zQAQVrQgnnx67Kaz+C2jbJnTt7GMCwYgBm70uX6LZ/B7A8bcbxQzo1u8OZaR9Q1rK0f4SW/vI1SdaML6hDAeJpocyBljAXxQboXNOiKyEEMOH0G9aqdh6EDpbY8mdE4G9L7/ocmAzBS4PfFeHGuIPAL/hLi5zdy3pUtB9xjFfVIZ+pwWJvr68SlSnvyoyagijmCprY4iqd6F0cn8f/tBKQU6KAwbRsMj+qde/pici4HLB/3QeKb7P1Ee1YMttrd18+uhyt9tXBPpp0RlVUfIxP6avgvnLrkq0e80sx+pu+5Qu1OjWhT4/0qhvoJwWN774zvVEliE1TMbWi2+ful8faPNjQ7iUXR9bXvbo8i0JAzgAwVIbdb1tUocIaOvqmlkqK3w2OFK6aEmQjmvqKAim9noNYbl4Ji1ibsR4sqiNPKNj0rIVvhuT+rARld6JK0YyYuLlZcqWh9oqRXaTgjngEPYJnGEq/5qcSnJp/wqokneyP8A3Pl49DcnW6j9NDiCXG98J0cEehEV2+S0B1ZOaCAI7J6ldCqMKnrzBNmPxFZVnffwoj1FJUKkdmFUVjw5BKKEpkJK+mMJ9cFCahKJ8uVKi9+exaItXGMIIpFdMol4wTV66G1SxzEjohNxT52JRjaKUI1LC0grFGzCHgpVe5Aw7H8Kt2A8HbYQnISEKWCqdSDvAO7CQszfRzcFFLinuhM
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:SI6PR06MB7631.apcprd06.prod.outlook.com; PTR:;
+ SRV:; IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:;
  CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016)(22082099003)(56012099003)(38070700021)(18002099003);
+ SFS:(13230040)(1800799024)(376014)(366016)(38070700021)(22082099003)(18002099003)(56012099003);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?b2xuQmR5ODFYZGl3L1d6UzFtNkdlb1NIaXJza0NXcXVqVE9lb3lYa25UbC9G?=
- =?utf-8?B?SXRZTTM0WDRBMjlRdkZOdkQ2RzlEdndzZzBZZUozOXMxNkNzSmFBT0krNDRk?=
- =?utf-8?B?TDFJTTlzUVFSOHdGVEVVQXgvTkJQYlVWRHhHYTJ0TG9LZkZNbnVGS253L203?=
- =?utf-8?B?Q2l1L0puNXR3cm04NDhVeFhld09tanBMVU03TENjL0g4bllhdHdxVnZlTmd0?=
- =?utf-8?B?cUpZM1poRmZJS1pyNnZyUVp5TlArd09QMUNLdTlHQmZjR3lKRUJyWUJLWE1m?=
- =?utf-8?B?SFR6Yml4a1gwS0IwVXhhTjRFUllpVU5wbmRwTHdRaXNJMjJxOGhFWUZoS2I0?=
- =?utf-8?B?cTFtM2F2bUhlSXAzMUVmK1F5V2I1aDNGa0RVTDFjT21XZGduRVljdGtiU1dV?=
- =?utf-8?B?WXFDeGZSU3BTUERiRnppam1xRFYrYzliQnEreEhqTmZLaHdaWS9Ib2tYVTZL?=
- =?utf-8?B?ZCtGSnNqTXRhVWVjR3JSUkpaMGNmM2NlT0dla3RsYWdLcXVvUm1wcDhyUHVx?=
- =?utf-8?B?OGdIUHRFMjZhY0h6T1ZYZXpzbnJtcHRORS82dHN5TUFNcS9tb3lxM1Y2bGhq?=
- =?utf-8?B?UjVQSExxZm1ObkI4blRRVUJSSkFmTG51cWRHWFFXQnVtSk1JMzRZU2VsNnNG?=
- =?utf-8?B?MXJaQzhROW56Zk9XZ2t0WFd0WjdhYXl3M0NXVFFuQnJSOXlRM1hySUdJaVY1?=
- =?utf-8?B?em9odm5TUHQ1bHRRREdaNmVwc1gvNjJFY21wbU9VWVpJK2lLUnExS2FPUG5v?=
- =?utf-8?B?T1J2eGgyWmltamlBTVdGcHhuUFFod21ZTHZQMlI4VEZudktJK2tXZGxLRGR2?=
- =?utf-8?B?VS8wR1NBSkdGUnkrYmlSMGMxcWo1ZUlSL0Ivb25nSU9IcThxbGRZV1Fqd0FB?=
- =?utf-8?B?Ni9KbzROMjNaYWdDTmVZN0JEbnRxTkp2ZW5YWm1LcEtqOWVFeEJDejZGaDh5?=
- =?utf-8?B?OEx3WDFKK1dzWVZISSthOGlNRHFCMkJ6TjFFbFNjcEJDQzVUcndxV2F6aWVq?=
- =?utf-8?B?bkVtak9kd1RXejhuTnp1Vnl3bGg4ZnVqcmxKM2FXTHlvWCttMlB6UVdlYTVX?=
- =?utf-8?B?NkxobkZQcUtxeGNRZ0dTMjRJc1RxdDRsNnF1MkhLbFJmSUs3N0dTcTNtWC8r?=
- =?utf-8?B?UzBLMmdmOTc5QzBteHpjUnJJc0FoNEFxN3ZQS284dk40bUp1YWNHRjJRdk85?=
- =?utf-8?B?Q3dwb3IyVEVVSDVvSXJWRjMraTR5b29jTmcyc21NTTlHRnVuZEFhYk1UMjBn?=
- =?utf-8?B?RFJFYlkrZzFGVFRkSm1oM3lMd0dEOCt3Vndsd0tHSGx0ZFdVYXJ3Ti9QUlBD?=
- =?utf-8?B?M2t3ZDhBcFF4KzRXUWw3bjJ2b0VsRDhXY3RNL0N1TUZCQlk2TWRtMzRNaEsw?=
- =?utf-8?B?TDRIWXVsRGVQSWhpZDdDZzB3TXYvVWNpNVBuY3cwS25qZ25OTG9ia2M5bXZQ?=
- =?utf-8?B?bG5uYTRZenJQMm9FWk5saTZUY3I3a0RqeVBla3NBZ3FrcThZektqQi81L3ln?=
- =?utf-8?B?cmhnSW8vUGlhNE13T09LNzNvL2VkOGNtYUk0QUxXR3dQZ2dFUjlWellvelFL?=
- =?utf-8?B?YWt1dVg1RGFnem05d2VLUGVCeXpaWEVSRlQzY0pJMi9uT1J4NVRVdUs0K1V5?=
- =?utf-8?B?ZE1Hb3FDakt2ZklaRmd0empsd3VVT0RBMWwzY2NXVnErVnRsNGhWT0hIT0tl?=
- =?utf-8?B?L2R0Z0ltU1J1VEF6VXBaVDFQZXRSM1FPK1A5ajNWZHpzVUN3a1NCMHlKT3JD?=
- =?utf-8?B?MUluaWxRVDA5NkdHcmxzQ3VscHZZeWFmM0FSUGN0TVJQMEdHUU9vQmVvV3NP?=
- =?utf-8?B?ckEzNGtMdE9XejQyRHR3KzhpSXJKSjNuZzBmbWZqOG5NTGVlU1ZORFQ3NTRa?=
- =?utf-8?B?SUVPekxFdjdHQzRsVENXRTV4Y3dOeXp0ajg1ZTlLVFRodVpUbGlSME1DVlBz?=
- =?utf-8?B?Nzc4NjJ0MEtEZGY2dUhlOUM4ZVJlU0tPdk9xcUFnYU5ZemRsK0EzSC92VTlM?=
- =?utf-8?B?UC9kN0J5eThnMXoweTJUMmZRSVJIUHE1QzlVcXhyTkVaZzdEVUVFNmJyL0w3?=
- =?utf-8?B?R3pmdUU0V2s0aFZPQ0NzQWRPNk5iaHZOVk9Sdms3Qmw4RWdVNjVOOUI3T29G?=
- =?utf-8?B?MTVORFVpL3ptR2VDTHlKZm9vTjZrdHhQUW16S1lzL2xjc3J3THJ2YzRBU2E1?=
- =?utf-8?B?MXFMdklNWmVEY3JuRE4rb0FKVDEvNDlTa1FoYTAyV2s1N29aY1RIOW1IZTll?=
- =?utf-8?B?RW4rejR2NjhyRzFqMEtyejhBS24zTXhwbjBsenl6WGtEUHdMYUE5ZHlvYmhi?=
- =?utf-8?B?SXJ0ODFvemxDczNHOW9iai9TZ0dtQmN3V0c1TWh1K2VzbHNXVUNJdz09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?NjQOFS5GrTg2x1rLtGn11/ZAXjNKRPBWLtqdXv8+uevC55ipjAPYZH130B?=
+ =?iso-8859-1?Q?6bIf0gILHgWHT5ZMwHhQzak/X3oryFEaqvA7VsGROeERJrfghhZZ/Qbion?=
+ =?iso-8859-1?Q?vBaQ9EKQJu48Ca1uo/utSbZ97RlAmlhbI4zuP8a7shtbp4nV9DsfamVDVU?=
+ =?iso-8859-1?Q?mysSFqjltz3ouvG5NA1cpw01I5hGCGFCpZC6AhUZQJgexsTTR6yKfjpQiO?=
+ =?iso-8859-1?Q?izEJqPR0Ki0IrY6M5jubUZRK2WQnABh9cJmPC69vxQKLroDqwjjhWPw4Tz?=
+ =?iso-8859-1?Q?LXafzegosUCipoiAG46Up7fDSVCdnLrOWekiKwxWcwKYMV+QV2phmQIny2?=
+ =?iso-8859-1?Q?kNoeO62Mnl0sk/NceOkb0wxVVwfjxtzp3GSkmdpMPChXSGsKAUJ7dEG+ai?=
+ =?iso-8859-1?Q?E7uKzPDrEqjOP86/SQPbfli1cX7Xznz3qcVTEWFc1OvpUIehiFGBMBIu5f?=
+ =?iso-8859-1?Q?7+neMathlxjboC8kBAfmlAL8Axpwl+AJH9H3SFwxF0SPf9gdiD03PrvYFw?=
+ =?iso-8859-1?Q?0JimEtQG4+ETBQ9Qor56cIK0eEaC0XAmgD1zH1v+ryNOnuomE4UdHs/wgz?=
+ =?iso-8859-1?Q?EnbzA1ddB+5+965SlsgC3In5ftXTiIDk/NhfYS8Mh3hsN6KCWPk69Zm36p?=
+ =?iso-8859-1?Q?YKx6qUKq1OUZG9KYWdSXhEZv8Vq1kiELh0a/i7nBEz8QfsBSGm9CzP1dI2?=
+ =?iso-8859-1?Q?FnEnB8IJpvfhK23PJ55KG9UAKtykti5N+kK3QW0VHojuBJ/zvDh2espVb/?=
+ =?iso-8859-1?Q?/wU5Nb1t68n8pD9Yl6NiC0H1yRToaaM2Hwzzo5LI3zYlGiEiu7nilkkj2W?=
+ =?iso-8859-1?Q?pWXDluyUs4HS/LpznzKPXJrO4rvF6CKNCQ1TP7ZYPvTL4P1DeVrF3jA0Zq?=
+ =?iso-8859-1?Q?ko3z0o+bDcUzI07JdacdWlmYZvS7rgw77xrYKJsOJVNqWYa0uSfh1x0PrT?=
+ =?iso-8859-1?Q?ouTCpgvcG8PKBzT0Qib5WElLFPkuxfQrhrOjtgUcNJoWluVd3/BPVN0w8V?=
+ =?iso-8859-1?Q?9tDt6h3eBdbQEuumGxStb6DrrEhv2a2U1kqE4K2UT+7emx8WcDdEDIw1/J?=
+ =?iso-8859-1?Q?aytn2y543XyIKOljIPVp0xVMPzgQTPuJRLILFsOOUndf3wYVNjFyY3CJ8/?=
+ =?iso-8859-1?Q?GRD2m2sj7GLsnbXrMOOoUoTep8floGXrhc6ZPwFiKqJdSXc+sucBCGM4M/?=
+ =?iso-8859-1?Q?z7nTa7OCMgDqyfgOna1TQs997kjgAIsxepLjojAgnNXC87kE0t/gmUBThh?=
+ =?iso-8859-1?Q?O4vt8jtXBWlsKMh9TiNjm5iFy0cRIktihrKuzunwNbe5fKGZJuF4U0m3RU?=
+ =?iso-8859-1?Q?ia+lDVM9JRpggfPSRzgavtEUSJiVkz5MCLsPe7ARAjVK3PgK20NGpVmW9V?=
+ =?iso-8859-1?Q?spFMOF323DXx9eGIaANeAGIDAK4QGSTjJYZAibuLGEaoyA2HhAB9o1tAiP?=
+ =?iso-8859-1?Q?l0OqVb1ga1AOle9h+8qoTtc3cCGPPHHnWRc4WZWjYipwH6yj3XCc60tc6e?=
+ =?iso-8859-1?Q?fKcXHH7gVl2baMrr4GN/DIUln6F3LkhNfsYnkyvHzJtH75eTpAMqtm0MNu?=
+ =?iso-8859-1?Q?apRzxfIZrkJ45WYTe45htc97Hf7Pz93/RKZxgvkCMnKwjdPNWF5XPF/19H?=
+ =?iso-8859-1?Q?y/nzi9dkO30/D/g1E4SWHPqfmlIjM/TluEUVZbtCh9F2pLHtWXj4d1k/Zb?=
+ =?iso-8859-1?Q?VH1wI5qV/CfEVuOEQ99b4yYAK8tLOxoXi8xE+Tov2FH4PogIFd/okUhTNe?=
+ =?iso-8859-1?Q?qlvIW7x2tODwNCki2CjBsVu/oI1IyXTtrfgEpSdOhPeJ7GgELoaltgzUAc?=
+ =?iso-8859-1?Q?kRXx0trBog=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: MIJ0TZGdgZUCA3GAvAIO1HETCaEONsB0s/3PmlTU8shLHvuusphzedt+gxEdvlQg5SUS1B8iYlKIQghqK5bM2767glks11I1AfdsCEo0JNzEAKBM6s92lZSgwqgFXs5GsL+G9dNFM3DV23i6ju/5i/rtbVt+AvX/wC15R+3L+Zl+yufxij3HzFkK2Q/tQWfUuVXnb/JBjQWpibO/rUF+mqeK2RUqa8ReAaRlteJpsRD4vyZIvjmGOnDiwu5NrWsbov2PV0rTNHpGiB0fvNy8xFNqQDGooAc8q2SmQO8ZuqHig3bsG70mSNyn8lX68nPjyBcF/VjS8VNkpj4xchc0Ig==
+X-Exchange-RoutingPolicyChecked: NvcEB7HW28uzfyIteQrFbfUstTGtMImGeBLU+BX0XtaenOvsz0L6BOPi0jR78eH9TeMhlkOcucq3kxSF9UqFWUiXK8pLZEB0cY1oWUrsBb3QIppCUicuucZpNkg+KwdfNr8A6KSWPdcuaN9S1xujaWwu4hNTyVKfkQAJ4OK4P/mqWmpMXDkQz0+cpNDw4ikxIf5wu2uO77TSrTkqE5/V/VToTb/FMJ3kM6UFPudKPj6o1zn/8eWcMNRsAzt8U4KNKUBsTVvqAmoM2sy/9OBV7f5fPi6d3DeO4LOc+alNgWFaOq46fXBsqFF9OJm/4FKff8SpMsMNj9nFLbxg6IPY3A==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SI6PR06MB7631.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 826c3b7e-3233-4f3b-f39c-08deafd0168b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 May 2026 02:42:19.9333 (UTC)
+X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a3967b49-5a44-405c-a912-08deafd193cd
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 May 2026 02:52:59.5361 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: hgD3BpkDZTY0cMUUMUCzpwRQd+TkkOL2jgEnLJooCH6k9qaGrs1Ds9MZ0PMoRqsbAmpxTDBdK9qEE0HVbWIXQuF6wWEpklH+ypTae9nM5mE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR06MB6448
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
- envelope-from=kane_chen@aspeedtech.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
+X-MS-Exchange-CrossTenant-userprincipalname: cOhNMVlcEa5XNjhK/JxQxaHT7JWm6u72g8w4lrC6IRQap8zmZY/OlAJbZV6V9l7HtY2mfCXwna0wGbCbwMf9pI85e/hjjhtvwX+FdkxOZRE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB6657
+Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=TYPPR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -160,32 +151,258 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBDw6lkcmljIExlIEdvYXRlciA8
-Y2xnQGthb2Qub3JnPg0KPiBTZW50OiBNb25kYXksIE1heSAxMSwgMjAyNiA0OjE3IFBNDQo+IFRv
-OiBLYW5lIENoZW4gPGthbmVfY2hlbkBhc3BlZWR0ZWNoLmNvbT47IFBldGVyIE1heWRlbGwNCj4g
-PHBldGVyLm1heWRlbGxAbGluYXJvLm9yZz47IFN0ZXZlbiBMZWUgPHN0ZXZlbl9sZWVAYXNwZWVk
-dGVjaC5jb20+OyBUcm95DQo+IExlZSA8bGVldHJveUBnbWFpbC5jb20+OyBKYW1pbiBMaW4gPGph
-bWluX2xpbkBhc3BlZWR0ZWNoLmNvbT47IEFuZHJldw0KPiBKZWZmZXJ5IDxhbmRyZXdAY29kZWNv
-bnN0cnVjdC5jb20uYXU+OyBKb2VsIFN0YW5sZXkgPGpvZWxAam1zLmlkLmF1Pjsgb3Blbg0KPiBs
-aXN0OkFTUEVFRCBCTUNzIDxxZW11LWFybUBub25nbnUub3JnPjsgb3BlbiBsaXN0OkFsbCBwYXRj
-aGVzIENDIGhlcmUNCj4gPHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz4NCj4gQ2M6IFRyb3kgTGVlIDx0
-cm95X2xlZUBhc3BlZWR0ZWNoLmNvbT4NCj4gU3ViamVjdDogUmU6IFtQQVRDSCB2MSAxLzFdIGFz
-cGVlZC9oYWNlOiBGaXggbWFwcGVkIGFkZHJlc3MgbWF5IG5vdCBiZQ0KPiB1bm1hcHBlZCBpc3N1
-ZQ0KPiANCj4gT24gNS84LzI2IDA3OjE2LCBLYW5lIENoZW4gd3JvdGU6DQo+ID4gSW4gdGhlIGRv
-X2hhc2hfb3BlcmF0aW9uLCB0aGUgY29kZSBtYXkgYmUgcmV0dXJuZWQgZWFybGllciBiZWNhdXNl
-DQo+ID4gaGFzaF9wcmVwYXJlX3NnX2lvdiBvciBoYXNoX3ByZXBhcmVfZGlyZWN0X2lvdiBtYXkg
-cmV0dXJuIGEgZmFpbHVyZS4NCj4gPiBXaGVuIHRoaXMgY29uZGl0aW9uIGlzIGhhcHBlbmVkLCBj
-dXJyZW50IGNvZGUgZmxvdyBkb2Vzbid0IGdvIHRocm91Z2gNCj4gPiBsYXRlciBjb2RlIHNlZ21l
-bnRzLiBGaW5hbGx5LCBpdCBjYXVzZXMgdGhlIG1hcHBlZCBhZGRyZXNzIGlzbid0DQo+ID4gdW5t
-YXBwZWQgcHJvcGVybHkuDQo+ID4NCj4gPiBUaGlzIGNoYW5nZSBpcyBpbnRlbmRlZCB0byB1bm1h
-cCB0aGUgbWFwcGVkIGFkZHJlc3MgaWYgdGhlcmUgaXMgYW55DQo+ID4gZXJyb3IgaXMgb2NjdXJy
-ZWQuIFRodXMsIGl0IGNvdWxkIHByZXZlbnQgYSByZWFzb3VyZSBsZWFrIHNpdHVhdGlvbi4NCj4g
-DQo+IE1heSBiZSBjaGFuZ2UgdGhhdCBsYXN0IHBhcmFncmFwaCB0byA6DQo+IA0KPiAgICBUaGlz
-IGNoYW5nZSB1bm1hcHMgYW55IG1hcHBlZCBhZGRyZXNzZXMgd2hlbiBhbiBlcnJvciBvY2N1cnMs
-DQo+ICAgIHByZXZlbnRpbmcgYSByZXNvdXJjZSBsZWFrLg0KPiANCj4gVGhlIGNoYW5nZSBsb29r
-cyBjb3JyZWN0LiBBbiBoYWNrIGZyb20gYW4gSEFDRS1hd2FyZSBlbmdpbmVlciB3b3VsZCBiZQ0K
-PiBhcHByZWNpYXRlZC4NCj4gDQo+IFRoYW5rcywNCj4gDQo+IEMuDQo+IA0KDQpIaSBDw6lkcmlj
-LA0KDQpUaGFua3MgZm9yIHlvdXIgcmV2aWV3IGFuZCBjb21tZW50cy4NClNob3VsZCBJIHN1Ym1p
-dCBhIHYyIHBhdGNoIHRvIGluY29ycG9yYXRlIHRoZSByZXF1ZXN0ZWQgY2hhbmdlcyB0byB0aGUg
-Y29tbWl0IGxvZz8NCg0KQmVzdCBSZWdhcmRzLA0KS2FuZQ0K
+Hi Kane,
+
+> Subject: [PATCH v1 1/1] aspeed/hace: Fix mapped address may not be
+> unmapped issue
+>=20
+> In the do_hash_operation, the code may be returned earlier because
+> hash_prepare_sg_iov or hash_prepare_direct_iov may return a failure.
+> When this condition is happened, current code flow doesn't go through lat=
+er
+> code segments. Finally, it causes the mapped address isn't unmapped prope=
+rly.
+>=20
+> This change is intended to unmap the mapped address if there is any error=
+ is
+> occurred. Thus, it could prevent a reasoure leak situation.
+>=20
+> Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
+> ---
+>  hw/misc/aspeed_hace.c | 63 ++++++++++++++++++++++++++++++-------------
+>  1 file changed, 45 insertions(+), 18 deletions(-)
+>=20
+> diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c index
+> 0504d61cbf..a322905cb3 100644
+> --- a/hw/misc/aspeed_hace.c
+> +++ b/hw/misc/aspeed_hace.c
+> @@ -218,8 +218,19 @@ static bool hash_accumulate_len(AspeedHACEState
+> *s, hwaddr plen)
+>      return true;
+>  }
+>=20
+> +static void hash_iov_unmap(AspeedHACEState *s, struct iovec *iov,
+> +                           hwaddr *mapped_lens, int iov_count) {
+> +    for (; iov_count > 0; iov_count--) {
+> +        address_space_unmap(&s->dram_as, iov[iov_count - 1].iov_base,
+> +                            mapped_lens[iov_count - 1], false,
+> +                            mapped_lens[iov_count - 1]);
+> +    }
+> +}
+> +
+>  static int hash_prepare_direct_iov(AspeedHACEState *s, struct iovec *iov=
+,
+> -                                   bool acc_mode, bool
+> *acc_final_request)
+> +                                   bool acc_mode, bool
+> *acc_final_request,
+> +                                   hwaddr *mapped_lens)
+>  {
+>      uint32_t total_msg_len;
+>      uint32_t pad_offset;
+> @@ -243,9 +254,11 @@ static int hash_prepare_direct_iov(AspeedHACEState
+> *s, struct iovec *iov,
+>=20
+>      iov[0].iov_base =3D haddr;
+>      iov_idx =3D 1;
+> +    mapped_lens[0] =3D plen;
+>=20
+>      if (acc_mode) {
+>          if (!hash_accumulate_len(s, plen)) {
+> +            hash_iov_unmap(s, iov, mapped_lens, 1);
+>              return -1;
+>          }
+>=20
+> @@ -265,7 +278,8 @@ static int hash_prepare_direct_iov(AspeedHACEState
+> *s, struct iovec *iov,  }
+>=20
+>  static int hash_prepare_sg_iov(AspeedHACEState *s, struct iovec *iov,
+> -                               bool acc_mode, bool
+> *acc_final_request)
+> +                               bool acc_mode, bool
+> *acc_final_request,
+> +                               hwaddr *mapped_lens)
+>  {
+>      uint32_t total_msg_len;
+>      uint32_t pad_offset;
+> @@ -275,6 +289,7 @@ static int hash_prepare_sg_iov(AspeedHACEState *s,
+> struct iovec *iov,
+>      int iov_idx;
+>      hwaddr plen;
+>      void *haddr;
+> +    int iov_mapped =3D 0;
+>=20
+>      src =3D hash_get_source_addr(s);
+>      for (iov_idx =3D 0; !(len & SG_LIST_LEN_LAST); iov_idx++) { @@ -282,=
+7
+> +297,7 @@ static int hash_prepare_sg_iov(AspeedHACEState *s, struct iovec
+> *iov,
+>              qemu_log_mask(LOG_GUEST_ERROR,
+>                            "%s: Failed to set end of sg list marker\n",
+>                            __func__);
+> -            return -1;
+> +            goto fail;
+>          }
+>=20
+>          len =3D address_space_ldl_le(&s->dram_as, src, @@ -307,15 +322,1=
+7
+> @@ static int hash_prepare_sg_iov(AspeedHACEState *s, struct iovec *iov,
+>                            "%s: Unable to map address, sg_addr=3D0x%x, "
+>                            "plen=3D0x%" HWADDR_PRIx "\n",
+>                            __func__, sg_addr, plen);
+> -            return -1;
+> +            goto fail;
+>          }
+>=20
+>          src +=3D SG_LIST_ENTRY_SIZE;
+>=20
+>          iov[iov_idx].iov_base =3D haddr;
+> +        iov_mapped =3D iov_idx + 1;
+> +        mapped_lens[iov_idx] =3D plen;
+>          if (acc_mode) {
+>              if (!hash_accumulate_len(s, plen)) {
+> -                return -1;
+> +                goto fail;
+>              }
+>=20
+>              if (has_padding(s, &iov[iov_idx], plen, &total_msg_len, @@
+> -332,6 +349,10 @@ static int hash_prepare_sg_iov(AspeedHACEState *s,
+> struct iovec *iov,
+>      }
+>=20
+>      return iov_idx;
+> +
+> +fail:
+> +    hash_iov_unmap(s, iov, mapped_lens, iov_mapped);
+> +    return -1;
+>  }
+>=20
+>  static uint64_t hash_get_digest_addr(AspeedHACEState *s) @@ -350,6
+> +371,7 @@ static uint64_t hash_get_digest_addr(AspeedHACEState *s)
+> static void hash_write_digest_and_unmap_iov(AspeedHACEState *s,
+>                                              struct iovec *iov,
+>                                              int iov_idx,
+> +                                            hwaddr *mapped_lens,
+>                                              uint8_t *digest_buf,
+>                                              size_t digest_len)
+> { @@ -369,15 +391,12 @@ static void
+> hash_write_digest_and_unmap_iov(AspeedHACEState *s,
+>          hace_hexdump("digest", (char *)digest_buf, digest_len);
+>      }
+>=20
+> -    for (; iov_idx > 0; iov_idx--) {
+> -        address_space_unmap(&s->dram_as, iov[iov_idx - 1].iov_base,
+> -                            iov[iov_idx - 1].iov_len, false,
+> -                            iov[iov_idx - 1].iov_len);
+> -    }
+> +    hash_iov_unmap(s, iov, mapped_lens, iov_idx);
+>  }
+>=20
+>  static void hash_execute_non_acc_mode(AspeedHACEState *s, int algo,
+> -                                      struct iovec *iov, int iov_idx)
+> +                                      struct iovec *iov, int iov_idx,
+> +                                      hwaddr *mapped_lens)
+>  {
+>      g_autofree uint8_t *digest_buf =3D NULL;
+>      Error *local_err =3D NULL;
+> @@ -389,15 +408,17 @@ static void
+> hash_execute_non_acc_mode(AspeedHACEState *s, int algo,
+>                        "%s: qcrypto hash bytesv failed : %s",
+>                        __func__, error_get_pretty(local_err));
+>          error_free(local_err);
+> +        hash_iov_unmap(s, iov, mapped_lens, iov_idx);
+>          return;
+>      }
+>=20
+> -    hash_write_digest_and_unmap_iov(s, iov, iov_idx, digest_buf,
+> digest_len);
+> +    hash_write_digest_and_unmap_iov(s, iov, iov_idx, mapped_lens,
+> +                                    digest_buf, digest_len);
+>  }
+>=20
+>  static void hash_execute_acc_mode(AspeedHACEState *s, int algo,
+>                                    struct iovec *iov, int iov_idx,
+> -                                  bool final_request)
+> +                                  bool final_request, hwaddr
+> + *mapped_lens)
+>  {
+>      g_autofree uint8_t *digest_buf =3D NULL;
+>      Error *local_err =3D NULL;
+> @@ -411,6 +432,7 @@ static void hash_execute_acc_mode(AspeedHACEState
+> *s, int algo,
+>              qemu_log_mask(LOG_GUEST_ERROR, "%s: qcrypto hash new
+> failed : %s",
+>                            __func__, error_get_pretty(local_err));
+>              error_free(local_err);
+> +            hash_iov_unmap(s, iov, mapped_lens, iov_idx);
+>              return;
+>          }
+>      }
+> @@ -419,6 +441,7 @@ static void hash_execute_acc_mode(AspeedHACEState
+> *s, int algo,
+>          qemu_log_mask(LOG_GUEST_ERROR, "%s: qcrypto hash updatev
+> failed : %s",
+>                        __func__, error_get_pretty(local_err));
+>          error_free(local_err);
+> +        hash_iov_unmap(s, iov, mapped_lens, iov_idx);
+>          return;
+>      }
+>=20
+> @@ -438,22 +461,25 @@ static void
+> hash_execute_acc_mode(AspeedHACEState *s, int algo,
+>          s->total_req_len =3D 0;
+>      }
+>=20
+> -    hash_write_digest_and_unmap_iov(s, iov, iov_idx, digest_buf,
+> digest_len);
+> +    hash_write_digest_and_unmap_iov(s, iov, iov_idx, mapped_lens,
+> +                                    digest_buf, digest_len);
+>  }
+>=20
+>  static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode=
+,
+>                                bool acc_mode)  {
+>      QEMU_UNINITIALIZED struct iovec iov[ASPEED_HACE_MAX_SG];
+> +    hwaddr mapped_lens[ASPEED_HACE_MAX_SG] =3D { 0 };
+>      bool acc_final_request =3D false;
+>      int iov_idx =3D -1;
+>=20
+>      /* Prepares the iov for hashing operations based on the selected mod=
+e
+> */
+>      if (sg_mode) {
+> -        iov_idx =3D hash_prepare_sg_iov(s, iov, acc_mode,
+> &acc_final_request);
+> +        iov_idx =3D hash_prepare_sg_iov(s, iov, acc_mode,
+> &acc_final_request,
+> +                                      mapped_lens);
+>      } else {
+>          iov_idx =3D hash_prepare_direct_iov(s, iov, acc_mode,
+> -                                          &acc_final_request);
+> +                                          &acc_final_request,
+> + mapped_lens);
+>      }
+>=20
+>      if (iov_idx <=3D 0) {
+> @@ -468,9 +494,10 @@ static void do_hash_operation(AspeedHACEState *s,
+> int algo, bool sg_mode,
+>=20
+>      /* Executes the hash operation */
+>      if (acc_mode) {
+> -        hash_execute_acc_mode(s, algo, iov, iov_idx, acc_final_request);
+> +        hash_execute_acc_mode(s, algo, iov, iov_idx, acc_final_request,
+> +                              mapped_lens);
+>      } else {
+> -        hash_execute_non_acc_mode(s, algo, iov, iov_idx);
+> +        hash_execute_non_acc_mode(s, algo, iov, iov_idx, mapped_lens);
+>      }
+>  }
+>=20
+> --
+> 2.43.0
+
+Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
+
+Thanks,
+Jamin
 
