@@ -4,97 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 686C1CD37BE
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 02:32:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8EFFCD4846
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 02:33:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMcuE-0003g0-SL; Mon, 11 May 2026 22:31:34 -0400
+	id 1wMcve-0004B0-9x; Mon, 11 May 2026 22:33:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wMcuC-0003f3-BK
- for qemu-devel@nongnu.org; Mon, 11 May 2026 22:31:32 -0400
-Received: from mail-qk1-x741.google.com ([2607:f8b0:4864:20::741])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wMcuA-0003Ci-TB
- for qemu-devel@nongnu.org; Mon, 11 May 2026 22:31:32 -0400
-Received: by mail-qk1-x741.google.com with SMTP id
- af79cd13be357-90d2acb9936so11493085a.0
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 19:31:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1wMcvc-0004Ao-Uh; Mon, 11 May 2026 22:33:00 -0400
+Received: from out30-112.freemail.mail.aliyun.com ([115.124.30.112])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1wMcvU-0003fX-2u; Mon, 11 May 2026 22:33:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778553088; x=1779157888; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=nhFP7hGs8ICqYOUqMML+hYb8Pw/MUz+qcAnPdAAtg8s=;
- b=PGOHDUdPRAhbc156rrc73Mh/ps2f3PMEpWh1vtvC9yQv8DZwu+Hy7sDXjK7oQOFblr
- K3Asg+F40zCHEzKnN2/VZngNL/KghxdIj086Slm5s/dYqlGALcSw9JZKZwZy4jPIx89e
- T2JfyWri4CD59qBm/5ao1uRLt5LZOaleRc3RtxUcFyN/T42w0UivVOGt44C0GWwtD0Mk
- CkhWQtWu+2bYaOL/kGqSb8e7znjBjLiRFxgK2YytBDVmamwHEN9A2l1liWkmyLRqRisx
- 0xc48aHMEv+JnheH9MA3twVqSPRenvEgHh/x/WMqV6V3InwxkM50YNxOqOzSlCW7Dirz
- uULQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778553088; x=1779157888;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nhFP7hGs8ICqYOUqMML+hYb8Pw/MUz+qcAnPdAAtg8s=;
- b=gN2nyWzjzxLz/O9p4jjcNeog9XzKdMtzCTj66j4uwZNBKyvoTDXwMjcoKE0phVNrW9
- 6IVf3A37LD+T20gwwkyIhTCm8A5AYLY2SC8tDjMoon9OrDJEane5htlJMm8uQJX4GcSB
- eTk4v9gGaPkVblN9l6qc/oH1P+fA0LYDNPnZ4S04UhX6D5Nz8andEv0tDsCfylXRQB+Y
- Lk9JVpfTJrDvr57aIXCRffJiXgSdS/rGO4qJPUmNkeEPefoGQmRkrnBJtAaEhxQr/ulz
- 42v9UM2cBsPX05VG+dq+9CsO7TAgpvo8xViC2V3vjUzEeTmwTmo8CumLN98WkhDSh+jT
- tkzA==
-X-Gm-Message-State: AOJu0Yxo3cMs2yNwsCjKbAMI6UftZ8Mrifj3aEYnDRvO4irU1h9EoNlw
- D7G/CQo5t4sOyjfnc5Sf6cBDhljv9bYReQ80C3oMXsMDqYP1KiTqobbn
-X-Gm-Gg: Acq92OEyZ6WhLN6Y/LMxwSUykPmL7cUg4xnqI9sgOZNCJ7ZFu1QbmhwVCc/B4fZXEjJ
- 5drc5Du+pE9eyRM+y7VCIFNXqTFZLTTSVCYoL1CwQYN47Qeoy8Yd+i/jXSDqEMxcIURX+rvjbGj
- 1wkmZVX4S4rFYVaN46Toki94GTQVeCozheSG5yOIP+JjTbvUMzTJtxO44SOUtcLxVsGuWVPot/q
- PwYvJ52BYi7r6CIjR6MnlCoimKFMgj/C9HKpUuDoAdcP0XVpb4Is0bm2HhCRTJ97UL2CBAwrbD4
- 3z7qkLceXWitmZTEY6PWqdDlcoFEQQRxdPKg2YT5Dud2KdRLROa6NcyQqRze2HqIFBDTTPUbQ3P
- 9l72Hq7XIoz7YtKx+myJrmvR3wBXZnGDET9B/7qYZStu4p17+qNJNfKPGGScXLw1co4BR/E9HoH
- mTrFKgLUTPS4JAVvxJPrgH2Z4OIHU9WUrB4dGktFperyxstsdDHFo+7hBVIFiyahrnYY8HPwrm
-X-Received: by 2002:a05:620a:470c:b0:8f8:7765:27da with SMTP id
- af79cd13be357-904d66e27f4mr3853897885a.42.1778553088171; 
- Mon, 11 May 2026 19:31:28 -0700 (PDT)
-Received: from ZEVORN-PC.localdomain ([162.244.208.119])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8fc2c91e11fsm3186453285a.40.2026.05.11.19.31.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 May 2026 19:31:27 -0700 (PDT)
-Date: Tue, 12 May 2026 10:31:12 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "cfu@mips.com" <cfu@mips.com>,
- "mst@redhat.com" <mst@redhat.com>, 
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>, 
- "philmd@linaro.org" <philmd@linaro.org>,
- "alistair23@gmail.com" <alistair23@gmail.com>, 
- "thuth@redhat.com" <thuth@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: Re: [PATCH v9 1/7] target/riscv: Define MSTATUS_SBE and MSTATUS_MBE
- bit masks
-Message-ID: <agKQ4Gbo1nJNMxs4@ZEVORN-PC.localdomain>
-References: <20260511083819.206216-1-djordje.todorovic@htecgroup.com>
- <20260511083819.206216-2-djordje.todorovic@htecgroup.com>
+ d=linux.alibaba.com; s=default;
+ t=1778553162; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=5Fs3v41EJHi7RqIDNm6WZbz78tVOSQgULvXqDnWe/4E=;
+ b=CK87anTm9weuMYkMk+RoP1tkJzkDIsnf5CWTwv4GSAFUF7HKpaM2nQonbo/abLumMNUzMA8rXA7/BsZ1+6kh8MoOEtwAYtJERF+Q17AlashG/sxYE1aiwkaGG8brEkFmjrkhWlL/PQFgiAe5LPhV9S+eFX4IPjUPUL8cD1sNKUw=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R271e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032089153;
+ MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=11; SR=0;
+ TI=SMTPD_---0X2oliUV_1778553160; 
+Received: from 30.166.64.212(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0X2oliUV_1778553160 cluster:ay36) by smtp.aliyun-inc.com;
+ Tue, 12 May 2026 10:32:41 +0800
+Message-ID: <1846c9bd-61c2-4ee0-8f61-0a95ba82eda7@linux.alibaba.com>
+Date: Tue, 12 May 2026 10:32:40 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 4/6] target/riscv: Implement SMMPT fence instructions
+To: Frank Chang <frank.chang@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, chao.liu.zevorn@gmail.com,
+ palmer@dabbelt.com, alistair23@gmail.com, daniel.barboza@oss.qualcomm.com,
+ liwei1518@gmail.com, Huang Tao <eric.huang@linux.alibaba.com>,
+ TANG Tiancheng <lyndra@linux.alibaba.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+References: <20260408140635.42546-1-zhiwei_liu@linux.alibaba.com>
+ <20260408140635.42546-5-zhiwei_liu@linux.alibaba.com>
+ <CANzO1D1m3Jht1BNuPi3MvCr=iQRHWSgEGZqHryNof=m4Dra7SA@mail.gmail.com>
+Content-Language: en-US
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <CANzO1D1m3Jht1BNuPi3MvCr=iQRHWSgEGZqHryNof=m4Dra7SA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260511083819.206216-2-djordje.todorovic@htecgroup.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::741;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-qk1-x741.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=115.124.30.112;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-112.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,39 +75,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 11, 2026 at 08:38:27AM +0000, Djordje Todorovic wrote:
-> Add the RISC-V privileged ISA defined bit positions for the Supervisor
-> Big-Endian (SBE, bit 36) and Machine Big-Endian (MBE, bit 37) fields
-> in the mstatus register. These are used alongside the existing
-> MSTATUS_UBE (bit 6) to control data endianness at each privilege level.
-> 
-> The MSTATUS_UBE definition was already present, but SBE and MBE were
-> missing.
-> 
-> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
-> Reviewed-by: Philippe Mathieu-Daud� <philmd@linaro.org>
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Hi Frank,
+
+On 4/13/26 4:19 PM, Frank Chang wrote:
+> Hi Zhiwei,
+>
+> LIU Zhiwei <zhiwei_liu@linux.alibaba.com> 於 2026年4月9日週四 上午3:24寫道：
+>> This patch completes the SMMPT implementation by adding support for the
+>> new fence instructions: `mfence.spa` and `minval.spa`.
+>>
+>> According to the specification, these instructions act as memory ordering
+>> fences for MPT updates. In QEMU's TCG model, this is conservatively
+>> implemented by flushing the entire TLB, which ensures that any subsequent
+>> memory accesses will re-evaluate permissions and see the effects of any prior
+>> MPT modifications.
+>>
+>> The instructions are privileged and will cause an illegal instruction
+>> exception if executed outside of M-mode.
+>>
+>> Co-authored-by: Huang Tao <eric.huang@linux.alibaba.com>
+>> Co-authored-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+>> Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+>> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>> ---
+>>   target/riscv/insn32.decode                    |  2 ++
+>>   .../riscv/insn_trans/trans_privileged.c.inc   | 30 +++++++++++++++++++
+>>   2 files changed, 32 insertions(+)
+>>
+>> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+>> index 6e35c4b1e6..84cec57daf 100644
+>> --- a/target/riscv/insn32.decode
+>> +++ b/target/riscv/insn32.decode
+>> @@ -120,6 +120,8 @@ sret        0001000    00010 00000 000 00000 1110011
+>>   mret        0011000    00010 00000 000 00000 1110011
+>>   wfi         0001000    00101 00000 000 00000 1110011
+>>   sfence_vma  0001001    ..... ..... 000 00000 1110011 @sfence_vma
+>> +mfence_spa  1000011    ..... ..... 000 00000 1110011 @sfence_vma
+>> +minval_spa  0000011    ..... ..... 000 00000 1110011 @sfence_vma
+>>
+>>   # *** NMI ***
+>>   mnret       0111000    00010 00000 000 00000 1110011
+>> diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/insn_trans/trans_privileged.c.inc
+>> index 8a62b4cfcd..5ec6bf5991 100644
+>> --- a/target/riscv/insn_trans/trans_privileged.c.inc
+>> +++ b/target/riscv/insn_trans/trans_privileged.c.inc
+>> @@ -160,3 +160,33 @@ static bool trans_sfence_vma(DisasContext *ctx, arg_sfence_vma *a)
+>>   #endif
+>>       return false;
+>>   }
+>> +
+>> +#define REQUIRE_SMSDID(ctx) do {          \
+>> +    if (!ctx->cfg_ptr->ext_smsdid) {      \
+>> +        return false;                     \
+>> +    }                                     \
+>> +} while (0)
+>> +
+>> +static bool do_mfence_spa(DisasContext *ctx)
+>> +{
+>> +#ifndef CONFIG_USER_ONLY
+>> +    REQUIRE_SMSDID(ctx);
+>> +    if (ctx->priv != PRV_M) {
+>> +        return false;
+>> +    }
+>> +    decode_save_opc(ctx, 0);
+>> +    gen_helper_tlb_flush_all(tcg_env);
+>> +    return true;
+>> +#endif
+>> +    return false;
+>> +}
+>> +
+>> +static bool trans_mfence_spa(DisasContext *ctx, arg_mfence_spa *a)
+>> +{
+>> +    return do_mfence_spa(ctx);
+>> +}
+>> +
+>> +static bool trans_minval_spa(DisasContext *ctx, arg_minval_spa *a)
+>> +{
+>> +    return do_mfence_spa(ctx);
+>> +}
+> The spec says that:
+> "When Svinval is implemented with Smsdid, the MINVAL.SPA instruction
+> must be implemented to
+> support such fine-granular invalidation of physical memory
+> access-permission caches."
+
+I see it is just "when", not explicitly requires Svinval. Another reason 
+is that we  implement minval.spa on QEMU in a not such fine-granular 
+invalidation way. Thus I don't make it require Svinval in v6 patch set. 
+If you have other comments, let me know.
 
 Thanks,
-Chao
-> ---
->  target/riscv/cpu_bits.h | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-> index b62dd82fe7..c2a3ee4bf3 100644
-> --- a/target/riscv/cpu_bits.h
-> +++ b/target/riscv/cpu_bits.h
-> @@ -628,6 +628,8 @@
->  #define MSTATUS_TSR         0x00400000 /* since: priv-1.10 */
->  #define MSTATUS_SPELP       0x00800000 /* zicfilp */
->  #define MSTATUS_SDT         0x01000000
-> +#define MSTATUS_SBE         0x1000000000ULL
-> +#define MSTATUS_MBE         0x2000000000ULL
->  #define MSTATUS_MPELP       0x020000000000 /* zicfilp */
->  #define MSTATUS_GVA         0x4000000000ULL
->  #define MSTATUS_MPV         0x8000000000ULL
-> -- 
-> 2.34.1
+Zhiwei
+
+>
+> So I think we should call REQUIRE_SVINVAL() for MINVAL.SPA.
+> However, trans_privileged.c.inc is included before trans_svinval.c.inc.
+> So it might be better to separate these instructions into trans_smmpt.c.inc
+> and include it after trans_svinval.c.inc.
+>
+> Regards,
+> Frank Chang
+>
+>> --
+>> 2.43.0
+>>
+>>
 
