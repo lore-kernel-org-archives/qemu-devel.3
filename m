@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AC29CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:44:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9755BCD4F39
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:44:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuUp-0001GB-Lz; Tue, 12 May 2026 17:18:31 -0400
+	id 1wMuY4-00029L-A8; Tue, 12 May 2026 17:21:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuUo-00019s-2s; Tue, 12 May 2026 17:18:30 -0400
+ id 1wMuXK-00019F-Ib; Tue, 12 May 2026 17:21:09 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuUm-00078i-Db; Tue, 12 May 2026 17:18:29 -0400
+ id 1wMuXG-0000Uy-Io; Tue, 12 May 2026 17:21:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619497; bh=Ot6VTe7LmoBlbNjo0DzPBrnXcPNhAl/oqaysgrnoOf4=;
+ t=1778619498; bh=zFDJf8yIYUB/twmcIlBtgTln1mnhH3QL8rKuTxLxqGY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=nwWZA2QX7EfQlKiI2WzYCww+IDILTFZIQynsO11odXPO06lN0O1hACMSGwdGiUYNt
- dlCe2lBV7X6RRzxSGcN9wl1KmGZdJysSrQDtipNbT/Av1rJH3LcCSZLDUQ5R03yVDu
- 65XkpjPX+J0hqVKV0C7qjyxNmhhNE7qh92KaI3SD2Aeef2mfnIyPzgb5NrGhkBAdvN
- B9ZWE11KBRkV2t27umoPlv5tskNg8nygt/a199YPJu3jNRg6thydKJXqgY0umhGWax
- z3vSBzuTs+mhBEpBSem8OagfPWtl9v3iEoIoTLtyj79GSSz4PMKJzUqYUd3vf5FIto
- 7+WNZNMDyeS3Q==
+ b=TkliS1jixZWiJYbntmXRsIDVXVOsLJqlX2W8/418QNpidxHh/APIZAjJJjLwzdyPY
+ VASG4TkEQjrxh14VR1F0bzbR7Q5Mdsm8RqxUrjI3vs+s9wSpV6DmUBOffJCB9+i4lz
+ KsHXi2ELBc0HSvBzwIMnXEypW7nfRRp1nQPnaFBWRuyOCWwech+uStB0WPQuU+bnqg
+ u+DKOlVVpTkJOf9GOJPX8u84sKB3LbFYhGXcJ7INV/wBlR31eMLWlyIBkdPS2n7xRI
+ 5SGzsWU1BepLlVTkXuPjntpwQEJcx92oZEv4DGnTxHYNEO/dG9JMXwW7TuPidPQXy0
+ NxBnlI+k4wiDA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1E55C1AA3CF;
- Tue, 12 May 2026 23:58:17 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CB1AD1AA3E8;
+ Tue, 12 May 2026 23:58:18 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1F0873ABD27;
- Tue, 12 May 2026 23:58:21 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D07573ABD40;
+ Tue, 12 May 2026 23:58:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 04/58] target/arm/tcg/translate.c: remove MO_TE usage
-Date: Tue, 12 May 2026 23:57:25 +0300
-Message-ID: <20260512205820.361821-4-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 29/58] linux-user: Flush errors by using exit()
+ instead of _exit() in error path
+Date: Tue, 12 May 2026 23:57:50 +0300
+Message-ID: <20260512205820.361821-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
@@ -69,34 +69,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Helge Deller <deller@gmx.de>
 
-dc->be_data is already set just above in the same function:
-```
-    dc->be_data = EX_TBFLAG_ANY(tb_flags, BE_DATA) ? MO_BE : MO_LE;
-```
+Qemu user mode does not properly flushes error messages related to bad
+arguments when exiting (at least when the output is piped to a file
+instead of running on a terminal).
+Ensure that we always flush by using exit() instead of _exit().
 
-Cc: qemu-stable@nongnu.org
-Fixes: a729a46b05a ("target/arm: Add wrapper macros for accessing tbflags")
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-id: 20260407222208.271838-12-pierrick.bouvier@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 027ad866bd2984a8fc50b41d235aabf14711df3e)
+Reported by: Tobias Bergkvist
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2544
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 9e7734ead149d73f1d25f61d0b7f075d4b2cb07d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index f9d1b8897d..fe89131d34 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -6343,7 +6343,6 @@ static void arm_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+diff --git a/linux-user/main.c b/linux-user/main.c
+index c49d1e91d2..84e110dfe9 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -767,7 +767,7 @@ int main(int argc, char **argv, char **envp)
+         execfd = open(exec_path, O_RDONLY);
+         if (execfd < 0) {
+             printf("Error while loading %s: %s\n", exec_path, strerror(errno));
+-            _exit(EXIT_FAILURE);
++            exit(EXIT_FAILURE);
+         }
+     }
  
-     if (arm_feature(env, ARM_FEATURE_M)) {
-         dc->vfp_enabled = 1;
--        dc->be_data = MO_TE;
-         dc->v7m_handler_mode = EX_TBFLAG_M32(tb_flags, HANDLER);
-         dc->v8m_secure = EX_TBFLAG_M32(tb_flags, SECURE);
-         dc->v8m_stackcheck = EX_TBFLAG_M32(tb_flags, STACKCHECK);
 -- 
 2.47.3
 
