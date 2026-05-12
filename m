@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95AA1CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:21:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55156CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:21:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuPh-0006qY-1g; Tue, 12 May 2026 17:13:13 -0400
+	id 1wMuNx-00088L-2n; Tue, 12 May 2026 17:11:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuPY-0006ZC-GR; Tue, 12 May 2026 17:13:05 -0400
+ id 1wMuNj-0007uN-Ao; Tue, 12 May 2026 17:11:13 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuPW-0004t0-Ib; Tue, 12 May 2026 17:13:04 -0400
+ id 1wMuNh-0004Sd-FA; Tue, 12 May 2026 17:11:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619304; bh=XoR2I0ePUXnBe84itAvihwGQ7mK09SiGw0FoTqAxv6o=;
+ t=1778619303; bh=8O43rCGIV6dv6xRohmtlMa+2vnknZ11NjLXOq+nmMC0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=hTKgWGDbcZkLt/zkiZ3k+3PFmL3ptvDNqy5Of1mNNKafkABlY11w1PGgvoGFeCZIN
- x2DsPvFL6JaWQhX/KIpe4j2cVXUbbgf2Jjw9b+VkgQsbs8DVMQtfuP5dWB0e0/umHK
- VIaL2i4R17EG/oZogq3LsdLeuNfrn5MO2WWuYdCgo+d0wrbqs4tsdcXYHilV/G++KN
- n8fLLQLoWisMU5vLOVpP3LvDcvor4OqJXYsLZJYaVtEH79fIHzgyHoV+VTNhPVFPQ9
- B9FZ3iESH/bbFRWdj0QBniC+gpX/mDdYjyg5CXBSdBvy8a2fYqyhSFKCJDYHTKvQ4W
- Lgg3EUuQseIXQ==
+ b=RpaDO9NjOQ7laA4a3vUQk0ZuBUZCrxDS3YBKYTcO4yiQ7XEFlpSHQh3davMfEFk/p
+ fczvOsWaK2yKP6oNsMCp9PQPKMTKSf4uuNs8HUyE5xSD9mccW0EBVcFiYS7cJ3dzBc
+ elGnX69obkVAO/YOuSbROox/3jbK+JbD+969H8x/mpZPQIPCFPRMTcfiUXYHLv83XY
+ wThdRaVuX6cwaa2VkNa/938nf2QfAyuSnEmB4ihnDKCk6sJ7stpxlCWTmpk9R0OFqX
+ OwuMP9IiNv2i70o/48Kj9bFKmLyAQHldSZlarhdFALRwGY0sHYoZ3RgvsDT5rq3cqE
+ wY7W/vCbeEQBQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5F1BD1AA383;
- Tue, 12 May 2026 23:55:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2F99C1AA371;
+ Tue, 12 May 2026 23:55:03 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 60CA23ABCF2;
- Tue, 12 May 2026 23:55:08 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 387C23ABCE1;
+ Tue, 12 May 2026 23:55:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 069/117] ui/console-vc: fix off-by-one in CSI J 2
- (clear entire screen)
-Date: Tue, 12 May 2026 23:54:11 +0300
-Message-ID: <20260512205503.361097-69-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 052/117] include: Don't include guest-host.h in
+ cpu-ldst.h
+Date: Tue, 12 May 2026 23:53:54 +0300
+Message-ID: <20260512205503.361097-52-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
@@ -73,31 +73,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The loop condition used `y <= s->height` instead of `y < s->height`,
-causing vc_clear_xy() to be called with y == s->height. This clears
-a row in the scrollback buffer beyond the visible screen.
+We currently include user/guest-host.h from accel/tcg/cpu-ldst.h.
+However that file doesn't need anything from guest-host.h, since we
+removed the uses of g2h() in commit 9b74d403b30e ("accel/tcg: Move
+user-only tlb_vaddr_to_host out of line").
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Move the include of guest-host.h to where it's actually needed.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260330143123.1685142-2-peter.maydell@linaro.org
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-(cherry picked from commit 181fdf8a7e13c0460a26777ff9301e0ecdca3784)
+(cherry picked from commit ad7a005d672a657a5344575426642bfbea20e3e0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/console-vc.c b/ui/console-vc.c
-index 830842064d..6b9d643a24 100644
---- a/ui/console-vc.c
-+++ b/ui/console-vc.c
-@@ -899,7 +899,7 @@ static void vc_putchar(VCChardev *vc, int ch)
-                     break;
-                 case 2:
-                     /* clear entire screen */
--                    for (y = 0; y <= s->height; y++) {
-+                    for (y = 0; y < s->height; y++) {
-                         for (x = 0; x < s->width; x++) {
-                             vc_clear_xy(vc, x, y);
-                         }
+diff --git a/bsd-user/qemu.h b/bsd-user/qemu.h
+index 93388e7c34..61c2e85177 100644
+--- a/bsd-user/qemu.h
++++ b/bsd-user/qemu.h
+@@ -27,6 +27,7 @@
+ #include "user/abitypes.h"
+ #include "user/cpu_loop.h"
+ #include "user/page-protection.h"
++#include "user/guest-host.h"
+ 
+ extern char **environ;
+ 
+diff --git a/include/accel/tcg/cpu-ldst.h b/include/accel/tcg/cpu-ldst.h
+index 0de7f5eaa6..88c49a95d3 100644
+--- a/include/accel/tcg/cpu-ldst.h
++++ b/include/accel/tcg/cpu-ldst.h
+@@ -71,10 +71,6 @@
+ #include "accel/tcg/cpu-mmu-index.h"
+ #include "exec/abi_ptr.h"
+ 
+-#if defined(CONFIG_USER_ONLY)
+-#include "user/guest-host.h"
+-#endif /* CONFIG_USER_ONLY */
+-
+ static inline uint32_t
+ cpu_ldub_mmuidx_ra(CPUArchState *env, abi_ptr addr, int mmu_idx, uintptr_t ra)
+ {
+diff --git a/linux-user/qemu.h b/linux-user/qemu.h
+index 85e68eff7b..cfe5f45fc4 100644
+--- a/linux-user/qemu.h
++++ b/linux-user/qemu.h
+@@ -10,6 +10,7 @@
+ #include "syscall_defs.h"
+ #include "target_syscall.h"
+ #include "accel/tcg/vcpu-state.h"
++#include "user/guest-host.h"
+ 
+ /*
+  * This is the size of the host kernel's sigset_t, needed where we make
 -- 
 2.47.3
 
