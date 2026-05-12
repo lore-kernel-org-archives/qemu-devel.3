@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58EDDCD4F39
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:42:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FE5FCD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:42:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuW5-0004kA-Hx; Tue, 12 May 2026 17:19:49 -0400
+	id 1wMuj3-00052k-Sd; Tue, 12 May 2026 17:33:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuW2-0004St-Dj; Tue, 12 May 2026 17:19:46 -0400
+ id 1wMuhb-0003ia-LR; Tue, 12 May 2026 17:31:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuW0-0008BR-Ry; Tue, 12 May 2026 17:19:46 -0400
+ id 1wMuhV-0001hs-4V; Tue, 12 May 2026 17:31:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619498; bh=pE8FGCMUOa/KDw+pyOkBJnpHIlSPh7/CPIuMTng6qws=;
+ t=1778619499; bh=GdU5rmywvm/PU8w5RHsCt+h5kcA2DbJoW72xFw1JLXo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=a51Q6jligCITLbd9DszKKdXqowJLwVHA/jVRxzR8MPvUjekAbzjxjuLKS1R0fltf/
- TtfjWC0U8ZRT7wUV/UnhMBCG1UhZcfPGmJc6YNRRBWqu/qUxNPkiLhpp2vJd4oJaRr
- g1bv5EcsQ6StDnX7azpV/UCHr1gB44JHkin1TUJu4xtyR7rr9Jq74O0wLXqBwyiLWj
- X7tENbMxJZPiyG66ITekHNmml0g3EB+8HKymKsMs/OT1o8CZ5eVkdXzamgbQKGJZW5
- 0hEg0fHxTRNntFUOaHb9fSfS1uaDK5DOwGhkLCHPNXmkx6esnmIeit6dQY1gXQtMNO
- +G28MMjbDUrQw==
+ b=phIvSxZ1vFVLXvkiPvQuGYPS4dnnOvuUIvVbveRp5ailyZ8WOHEcMPnni/pbTk93Y
+ OauunLzr/6Zzxy1xlE96IOXZv1/Zi0jvZrkMvOPbtM/QsJ2UoTDgGJJ9h3KBaRMvIG
+ HGLP71UCrsD7xjvCLXL2YhmyhFgYflrfcRuRxR9mMm9j+Zw451VimqTFmPBDmTYPcu
+ 9LAjobWPZnqbXiIO3HRxqsKoOtzVSEoYuBZ6Sn1uvwAjjdrnNKNFRoybTXDPfkDHK5
+ rxUHIpAUXvBnoKVpp2tNMmnRQrscIroWpaB7/93FtaBA8C9de7pGFxyoYlsPDGlwar
+ 2BtOf7Px2CVkw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2FB991AA3DE;
- Tue, 12 May 2026 23:58:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 72BE81AA3F1;
+ Tue, 12 May 2026 23:58:19 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3A2753ABD36;
- Tue, 12 May 2026 23:58:22 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7BBBD3ABD49;
+ Tue, 12 May 2026 23:58:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gyorgy Tamasi <gyorgy.tamasi@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Helge Deller <deller@gmx.de>,
+Cc: qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Max Chou <max.chou@sifive.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 19/58] linux-user: Don't define target_stat64 struct
- for loongarch64
-Date: Tue, 12 May 2026 23:57:40 +0300
-Message-ID: <20260512205820.361821-19-mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 38/58] target/riscv: Use ELEN for Fractional LMUL check
+Date: Tue, 12 May 2026 23:57:59 +0300
+Message-ID: <20260512205820.361821-38-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
@@ -50,13 +50,6 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
-X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,59 +64,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
+From: Alistair Francis <alistair.francis@wdc.com>
 
-The kernel defines 'struct stat64' only if
-__BITS_PER_LONG != 64 || defined(__ARCH_WANT_STAT64).
-loongarch64 doesn't set __ARCH_WANT_STAT64, and it isn't 32-bit,
-so it won't get this struct.
+The RISC-V spec states that
 
-QEMU incorrectly does define a target_stat64 struct. However this
-isn't causing any guest-visible problems, because defining the
-target_stat64 struct and TARGET_HAS_STRUCT_STAT64 affects these
-syscalls:
- TARGET_NR_stat64
- TARGET_NR_lstat64
- TARGET_NR_fstat64
- TARGET_NR_fstatat64
- TARGET_NR_newfstatat
+"""
+For a given supported fractional LMUL setting, implementations
+must support SEW settings between SEWMIN and LMUL * ELEN, inclusive.
+"""
 
-For loongarch64 the only one of those we provide is newfstatat,
-and that is actually a separate QEMU bug, because the kernel does
-not provide that syscall for this architecture. No real guest
-code will be using a syscall that doesn't exist in the ABI.
+We were previously checking VLEN, instead of ELEN, so let's update to
+check ELEN instead of VLEN for fractional scaling.
 
-(Some of these syscalls are present in the loongarch64 "ABI1.0",
-but that ABI was never accepted in the upstream kernel, and
-QEMU does not model that ABI, only the "ABI2.0".)
-
-Stop defining TARGET_HAS_STRUCT_STAT64 anyway, for consistency
-with the kernel and to avoid confusion.
-
-Note:
-Commit message suggested by Peter Maydell <peter.maydell@linaro.org>
-
-Signed-off-by: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
-Tested-by: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 93484c768f2b66947a91d6372f408ae01c83e8c6)
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3196
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Reviewed-by: Max Chou <max.chou@sifive.com>
+Message-ID: <20260415233740.3027321-5-alistair.francis@wdc.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 5dcc64828dc79c2426905db5fae885f6ccf93347)
+(Mjt: context fixup)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index 679af640c0..6967306be4 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -2005,7 +2005,7 @@ struct target_stat {
-     abi_uint __unused5;
- };
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index 83dd26314d..b4fc791eb7 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -47,18 +47,17 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
+     target_ulong reserved = s2 &
+                             MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
+                                             xlen - 1 - R_VTYPE_RESERVED_SHIFT);
+-    uint16_t vlen = cpu->cfg.vlenb << 3;
+     int8_t lmul;
  
--#if !defined(TARGET_RISCV64)
-+#if !defined(TARGET_RISCV64) && !defined(TARGET_LOONGARCH64)
- #define TARGET_HAS_STRUCT_STAT64
- struct target_stat64 {
-     abi_ullong st_dev;
+     if (vlmul & 4) {
+         /*
+          * Fractional LMUL, check:
+          *
+-         * VLEN * LMUL >= SEW
+-         * VLEN >> (8 - lmul) >= sew
+-         * (vlenb << 3) >> (8 - lmul) >= sew
++         * ELEN * LMUL >= SEW
++         * ELEN >> (8 - vlmul) >= sew
+          */
+-        if (vlmul == 4 || (vlen >> (8 - vlmul)) < sew) {
++        if (vlmul == 4 ||
++            (cpu->cfg.elen >> (8 - vlmul)) < sew) {
+             vill = true;
+         }
+     }
 -- 
 2.47.3
 
