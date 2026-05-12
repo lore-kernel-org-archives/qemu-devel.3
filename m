@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D59ECD4F24
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FBE0CD4F21
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:09:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuGi-00037b-6i; Tue, 12 May 2026 17:03:56 -0400
+	id 1wMuCo-00037r-7p; Tue, 12 May 2026 16:59:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuEI-0007D9-9D; Tue, 12 May 2026 17:01:31 -0400
+ id 1wMuBj-0002Ng-PH; Tue, 12 May 2026 16:58:51 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuEF-0006Ma-I3; Tue, 12 May 2026 17:01:25 -0400
+ id 1wMuBf-0004s4-2N; Tue, 12 May 2026 16:58:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619277; bh=J5+VJRCzbRNBfXbRXNW8A9al3nehZuIQu0HWw4ilJ7c=;
+ t=1778619276; bh=YzvE8O4x9zZLxo+Ep6+0WXIyCOVdcNes7Y0xXI9gjLo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=RSPh9ZQwzzU0UgHQv2rhtcvJ3OKkM/fbPymgVgum/gA5as9dEQPQCPU6VqgiWNpa+
- 4GVCN8F0hS1B1cpMKNsGvX2dcWT8ZSEOOE94dAW/0dlUvlJYbwp3MLcsvtdPkGPXhm
- gvCz6mWL7zOOEOW3wpBIKHh6AzMso0zDN4kw8CfVh0rJExb5OBXfU6QmOd4vkYRE/X
- elbo8J0AGYyR9HUQ87fQ6dr58LYIs2t5WSMhdv96pr2qNlqesvaqrZeuqb1UiLG+qN
- xNkbisCggUuVvSdsM/xVdqOAEA0gFWlWn+uR/e4gYbOuZOcrYFqN/XNS3eVYxtOsA5
- 9pqKwzyYNnGkQ==
+ b=nKCa6AKlO8iyE9VS4iXZUsu2XzRblD2uDL1xEGf6mmbs8FQ3xfoaluVh0nzAmnhZc
+ n6Mqe9Wm9z3u5UK3B/CjpJv3qhSH4jvhfsLSYPbvQfvpT5L+gYqokDQxNwzY6zDEpt
+ 6TnjXIMP6vCtYJ+Ck3cIgmRkmBTaKY0vwsBZHyYy40+DPR0DEWZ/em+MXBcPEuRnf6
+ LG5WzYRRKFhBq11GGliUSqEmzX7WShhod0MzhovhBZwIaZty20bofKnsyfEokxsvWU
+ wBWryylq9WLaqXj7/M0naXJqwjtyvnfgY7AFkZmujjgw86la46N7LmZQMcuF237100
+ /8j507UqdAq5g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BD8C81AA30E;
- Tue, 12 May 2026 23:54:37 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 065D61AA2F6;
+ Tue, 12 May 2026 23:54:36 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C82C03ABC7F;
- Tue, 12 May 2026 23:54:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 115593ABC67;
+ Tue, 12 May 2026 23:54:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 066/107] migration: vmstate_save_state_v: fix double
- error_setg
-Date: Tue, 12 May 2026 23:53:53 +0300
-Message-ID: <20260512205437.360850-66-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 042/107] scsi: Don't consider LOGICAL UNIT NOT
+ SUPPORTED guest recoverable
+Date: Tue, 12 May 2026 23:53:29 +0300
+Message-ID: <20260512205437.360850-42-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
@@ -71,46 +70,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+From: Kevin Wolf <kwolf@redhat.com>
 
-We may call error_setg twice on same errp if inner
-vmstate_save_state_v() or vmstate_save_state() call fails. Next we will
-crash on assertion in error_setv().
+When commit bdf9613b introduced scsi_sense_buf_is_guest_recoverable(),
+it included LOGICAL UNIT NOT SUPPORTED in the list of guest recoverable
+sense codes. It doesn't really explain how the codes to be in the list
+were selected.
 
-Fixes: 848a0503422d043 "migration: Update error description outside migration.c"
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260304212303.667141-2-vsementsov@yandex-team.ru
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-(cherry picked from commit d41ce10d0f5a3d6e497e4b75807a8e675033c597)
+As the LUN doesn't come from the guest, but from the block backend
+(usually the SCSI device on the host that was opened with host_device,
+but it could also be the iscsi block driver), there is really no way the
+guest could influence this.
+
+It seems that on some storage arrays, LOGICAL UNIT NOT SUPPORTED can
+happen during failover operations. When combined with multipath, the
+request should be retried on another path instead of being reported to
+the guest, which would offline the filesystem in response.
+
+Simply returning false in scsi_sense_buf_is_guest_recoverable() will
+enable the retry logic in file-posix, and will also make sure that if
+the error persists, the configured error policy is respected so that the
+VM can be stopped.
+
+Buglink: https://redhat.atlassian.net/browse/RHEL-158212
+Fixes: bdf9613b7f87 ('scsi: explicitly list guest-recoverable sense codes')
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20260330121635.49205-1-kwolf@redhat.com>
+Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit ccc613f96c66eb5401185ff6eeba18143892055d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 5feaa3244d..37316d2833 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -499,6 +499,9 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-                 } else {
-                     ret = inner_field->info->put(f, curr_elem, size,
-                                                  inner_field, vmdesc_loop);
-+                    if (ret < 0) {
-+                        error_setg(errp, "put failed");
-+                    }
-                 }
+diff --git a/scsi/utils.c b/scsi/utils.c
+index 357b036671..7533b25af1 100644
+--- a/scsi/utils.c
++++ b/scsi/utils.c
+@@ -373,7 +373,6 @@ static bool scsi_sense_is_guest_recoverable(int key, int asc, int ascq)
+     case 0x1a00: /* PARAMETER LIST LENGTH ERROR */
+     case 0x2000: /* INVALID OPERATION CODE */
+     case 0x2400: /* INVALID FIELD IN CDB */
+-    case 0x2500: /* LOGICAL UNIT NOT SUPPORTED */
+     case 0x2600: /* INVALID FIELD IN PARAMETER LIST */
  
-                 written_bytes = qemu_file_transferred(f) - old_offset;
-@@ -511,8 +514,8 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-                 }
- 
-                 if (ret) {
--                    error_setg(errp, "Save of field %s/%s failed",
--                                vmsd->name, field->name);
-+                    error_prepend(errp, "Save of field %s/%s failed: ",
-+                                  vmsd->name, field->name);
-                     if (vmsd->post_save) {
-                         vmsd->post_save(opaque);
-                     }
+     case 0x2104: /* UNALIGNED WRITE COMMAND */
 -- 
 2.47.3
 
