@@ -4,49 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0CFECD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:17:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 357C3CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:17:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuNu-00081L-JN; Tue, 12 May 2026 17:11:22 -0400
+	id 1wMuM3-0006Na-HZ; Tue, 12 May 2026 17:09:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuNf-0007ot-VJ; Tue, 12 May 2026 17:11:10 -0400
+ id 1wMuLM-0002h8-Jk; Tue, 12 May 2026 17:08:44 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuNe-00040d-Gw; Tue, 12 May 2026 17:11:07 -0400
+ id 1wMuLK-00037C-Hd; Tue, 12 May 2026 17:08:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619303; bh=REayO9aCVDrVaPWZeXJGYE5hvEQMCsaum6RUoViQERk=;
+ t=1778619301; bh=Ndy1JinN+8dDOV0pkJ/kHNaf9TUEdkRaTYOyEzpMu4Q=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=WhUC+MsuBnk9EbmKwvLpM6QfOaBaEmZaMylhKlqdmFZsh4+qjGH2wQKYDTCGk4D99
- 4ceA478klgQrBAoYmlLP3D8VKyBFez0ohvft/3Ifx3jcVMSoPSrwRDmZfyQ8lunXrH
- mqxnEpThK4vaspA0coLlC8HJmxcbj1+BuEdk9728ada88LfgHmgskIK/Dho+UOXVRd
- 32wSIqEq3yS8ummtTCJ14ym5ABsppKKjg2F3yaT4l8fxVAYlYG9oUTFZf3SE3VnRI4
- yTRrgWUDzTjfxjyhj+/UlhAIYgXn6l4waQfkJncsUI4Est7k2Gfoda35ueo03ZgtYS
- wmczjDl4pwlhA==
+ b=tqivsErfdN7YwfYtd46Lzn9uhvUKO7zsGAU4o1PM4bE91Ia1pEq1POwSSBUljpYPr
+ wpvldqxluqAYX8kSz6Ta3us/xgKWVQNELGx1nRh2XIG1PADy8GLclfLDkDHji8Y+3I
+ BHcoYl0oBvVJB7vB1oVj+DsjZqzvoLwCZvedW0TYw5cmDSsUzMdkZN/oFafVa9fKc5
+ dRp1SRp3K1t9vBzv7lqAPipyZHA9m2lNKPcxDwDw0hNqyxtNrYXFrEj/NP+m4jm+mh
+ vASv9FJbqeUohSWcF0J5yoU9oxxpH0JIWv3RS/CDScuOqAXnfqYBuH+TwnQqtfTuXh
+ n6L5PszFtc6cA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0CD3A1AA36F;
- Tue, 12 May 2026 23:55:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9D4FA1AA35A;
+ Tue, 12 May 2026 23:55:01 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0F5513ABCDF;
- Tue, 12 May 2026 23:55:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id A9F023ABCCA;
+ Tue, 12 May 2026 23:55:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 050/117] accel/tcg: Don't pass NULL to
- get_page_addr_code_hostp
-Date: Tue, 12 May 2026 23:53:52 +0300
-Message-ID: <20260512205503.361097-50-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, GuoHan Zhao <zhaoguohan@kylinos.cn>,
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 029/117] block/curl: free s->password in cleanup paths
+Date: Tue, 12 May 2026 23:53:31 +0300
+Message-ID: <20260512205503.361097-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,30 +68,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: GuoHan Zhao <zhaoguohan@kylinos.cn>
 
-Pass a dummy variable instead to let the value be discarded,
-in preparation for making the argument mandatory.
+When password-secret is used, curl_open() resolves it with
+qcrypto_secret_lookup_as_utf8() and stores the returned buffer in
+s->password.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 813dbe869f4f82f00f2b465fdd22d30db1d5233e)
+Unlike s->proxypassword, s->password is not freed either in the open
+failure path or in curl_close(), so the resolved secret leaks once it
+has been allocated.
+
+Free s->password in both cleanup paths.
+
+Fixes: 1bff96064290 ('curl: add support for HTTP authentication parameters')
+Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
+Message-ID: <20260320063016.262954-1-zhaoguohan_salmon@163.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 51fc8443c122fedf4d4891bbc3a1ff25dd8bacdf)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/accel/tcg/internal-common.h b/accel/tcg/internal-common.h
-index 6adfeefe13..0ca13750f9 100644
---- a/accel/tcg/internal-common.h
-+++ b/accel/tcg/internal-common.h
-@@ -105,7 +105,8 @@ tb_page_addr_t get_page_addr_code_hostp(CPUArchState *env, vaddr addr,
- static inline tb_page_addr_t get_page_addr_code(CPUArchState *env,
-                                                 vaddr addr)
- {
--    return get_page_addr_code_hostp(env, addr, NULL);
-+    void *discard;
-+    return get_page_addr_code_hostp(env, addr, &discard);
+diff --git a/block/curl.c b/block/curl.c
+index 6dccf00256..a249811ed1 100644
+--- a/block/curl.c
++++ b/block/curl.c
+@@ -865,6 +865,7 @@ out_noclean:
+     g_free(s->cookie);
+     g_free(s->url);
+     g_free(s->username);
++    g_free(s->password);
+     g_free(s->proxyusername);
+     g_free(s->proxypassword);
+     if (s->sockets) {
+@@ -976,6 +977,7 @@ static void curl_close(BlockDriverState *bs)
+     g_free(s->cookie);
+     g_free(s->url);
+     g_free(s->username);
++    g_free(s->password);
+     g_free(s->proxyusername);
+     g_free(s->proxypassword);
  }
- 
- /*
 -- 
 2.47.3
 
