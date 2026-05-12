@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E696CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:14:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFCB7CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:14:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuMy-0002eQ-SY; Tue, 12 May 2026 17:10:25 -0400
+	id 1wMuPj-00071h-N5; Tue, 12 May 2026 17:13:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuMl-0001GF-NX; Tue, 12 May 2026 17:10:11 -0400
+ id 1wMuPe-0006dh-6L; Tue, 12 May 2026 17:13:10 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuMi-0003hb-TI; Tue, 12 May 2026 17:10:11 -0400
+ id 1wMuPc-0004w6-Cd; Tue, 12 May 2026 17:13:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619302; bh=5PYlGv51Ih9TzksCqpzyIWicot3ZhsLNMi8S6ghzsnU=;
+ t=1778619304; bh=zT9TgF6o4TXyWanO3UNHzIF7RjU5cf9pufPgvf2Y+8g=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=XGuxN2udLXL66fEZpxODgs2nhrgofzZoUQlqvChmihweM5ybnp9yJFIwaokFw8dgK
- cHcxLpvszXNBZGRNvjNY8Om1seJxhTudVfBtSaGkxkNFBIOI6FZjH1iar/bRizsCTZ
- LB7HBWu46COCiFx8DysA30k4xsXdDMfOXzv8Gs+O94vLhhD0zx4qs5TXWgTVPV+TyP
- vNKysfN7r1vCR2u/Fzy5IO4llP/jUQu1gz1/xeJeJYGppfHNOWp3xxzUL8TMtv+rh/
- ehDyPU5XjG87MBmQNQCoy7jHBkFJw1g3Xwfh4IjyoVJC+K7+fHoigxSDihC31wRnKC
- IP0HP4Aez8qmw==
+ b=duGQcyo2PEIPDAV9IuXF0F2rfxqu6+tQ4uc3RZXT08ZKXYE2z2MbJ7nnECyIhhkb/
+ A2UIL6LoSwiRf+8GT+jEkPL++jYufXoLAHyC+bUr2tqlGMToFhjxUp9J5vbqay0NV7
+ QdQcQvx0L3jQ6I0uPOfTvGTxY2o7JCTzROmOhUauELRE3uSYk6WciM1Wy1jh6M5DJ9
+ /odzUQAOkauggbP1+tTo5cxIqd9EFBps6vl6O1346mwNjBe1UzPS3lAxFqnaJntJOy
+ aA2hdVtWpAsVBkAHhDf3n3fuEhE1fVkSJAtwOz7gQBGTNNTxvD8nzK+AWda7yGBzqV
+ c/eF6j0lVjmWA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7E2F71AA367;
- Tue, 12 May 2026 23:55:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9EE631AA386;
+ Tue, 12 May 2026 23:55:04 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 80F823ABCD7;
- Tue, 12 May 2026 23:55:06 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id AC8523ABCF5;
+ Tue, 12 May 2026 23:55:08 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Jihe Wang <wangjihe.mail@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 042/117] lsi53c895a: keep SCSIRequest alive during DMA
-Date: Tue, 12 May 2026 23:53:44 +0300
-Message-ID: <20260512205503.361097-42-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Simon Scherer <scherer.simon89@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 072/117] target/i386: fix missing PF_INSTR in SIGSEGV
+ context
+Date: Tue, 12 May 2026 23:54:14 +0300
+Message-ID: <20260512205503.361097-72-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
@@ -68,45 +69,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Simon Scherer <scherer.simon89@gmail.com>
 
-Reentrant MMIO can cause the SCSIRequest to be completed, at which
-point lsi_request_orphan would drop the last reference.  Anything
-that happens afterwards would access freed data.  Keep a reference
-to the SCSIRequest and, through req->hba_private, to the lsi_request*
-for as long as DMA runs.
+When running linux-user emulation, the SIGSEGV handler does not
+correctly set the 4th bit (PF_INSTR) in the error_code variable of
+the context argument (context->uc_mcontext.gregs[REG_ERR]).
 
-Reported-by: Jihe Wang <wangjihe.mail@gmail.com>
+Because this bit is never set, guest applications cannot distinguish
+if a fault was due to missing executable permissions. This patch
+ensures that when a page fault occurs during an instruction fetch,
+the PF_INSTR flag is properly populated in the signal context.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3384
+Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
+Link: https://lore.kernel.org/r/20260413115622.160212-1-scherer.simon89@gmail.com
 Cc: qemu-stable@nongnu.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit d459131ff590c517bc89fa5867d4878b5eacbc30)
+(cherry picked from commit 3eae91a8b93a35f194a39ab5b894ae405def9270)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
-index b2d3980286..0b1f68a40a 100644
---- a/hw/scsi/lsi53c895a.c
-+++ b/hw/scsi/lsi53c895a.c
-@@ -637,7 +637,7 @@ static void lsi_do_dma(LSIState *s, int out)
-     }
+diff --git a/target/i386/tcg/user/excp_helper.c b/target/i386/tcg/user/excp_helper.c
+index 98fab4cbc3..6c5df5e0e8 100644
+--- a/target/i386/tcg/user/excp_helper.c
++++ b/target/i386/tcg/user/excp_helper.c
+@@ -36,9 +36,10 @@ void x86_cpu_record_sigsegv(CPUState *cs, vaddr addr,
+      * signal and set exception_index to EXCP_INTERRUPT.
+      */
+     env->cr[2] = addr;
+-    env->error_code = ((access_type == MMU_DATA_STORE) << PG_ERROR_W_BIT)
+-                    | (maperr ? 0 : PG_ERROR_P_MASK)
+-                    | PG_ERROR_U_MASK;
++    env->error_code = (maperr ? 0 : PG_ERROR_P_MASK)
++                    | ((access_type == MMU_DATA_STORE) << PG_ERROR_W_BIT)
++                    | PG_ERROR_U_MASK
++                    | ((access_type == MMU_INST_FETCH) ? PG_ERROR_I_D_MASK : 0);
+     cs->exception_index = EXCP0E_PAGE;
  
-     p = s->current;
--    req = s->current->req;
-+    req = scsi_req_ref(s->current->req);
-     dev = req->dev;
-     assert(dev);
- 
-@@ -667,6 +667,11 @@ static void lsi_do_dma(LSIState *s, int out)
-     } else {
-         lsi_mem_write(s, addr, p->dma_buf, count);
-     }
-+    if (p->orphan) {
-+        scsi_req_unref(req);
-+        return;
-+    }
-+    scsi_req_unref(req);
- 
-     p->dma_len -= count;
-     if (p->dma_len == 0) {
+     /* Disable do_interrupt_user. */
 -- 
 2.47.3
 
