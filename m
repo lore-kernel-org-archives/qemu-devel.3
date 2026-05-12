@@ -4,102 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45014CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 18:32:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80C60CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 18:32:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMrtw-0001lj-Rt; Tue, 12 May 2026 14:32:17 -0400
+	id 1wMrtc-0001dz-Lf; Tue, 12 May 2026 14:31:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wMrtT-0001Xh-Q8
- for qemu-devel@nongnu.org; Tue, 12 May 2026 14:31:49 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wMrtR-0001SE-Vk
- for qemu-devel@nongnu.org; Tue, 12 May 2026 14:31:47 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 5FA4A5BF68;
- Tue, 12 May 2026 18:31:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1778610701; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=j5ZcDNm06oM/Tc2xH+cSkAh0CKCaVWblXZo1juqp5EI=;
- b=yXlsxj8hrZ9fyuyqKmuqAyFIX4ACEfeJ1gY34fz7Ea9rATIP4W5As0tTCOLTzplkf3goKm
- ahK3k1t8wCgby6yPnjKq+0Izr3MdyfHMOQK7S2iRBPsRwHkM59twxxPPwTY8hiTEYl16KV
- IFEN6efEtdryxo3cQ6Fm49Ueo+GhCn0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1778610701;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=j5ZcDNm06oM/Tc2xH+cSkAh0CKCaVWblXZo1juqp5EI=;
- b=kVbe+HBgpxTKG6xhGGD2Ohpfi9S2oA2DXTN/j5BOD8lMMW1sgQMEE05lJNb3vTnyNIzOxx
- Fn8kkbeR+2EFwQBw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1778610701; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=j5ZcDNm06oM/Tc2xH+cSkAh0CKCaVWblXZo1juqp5EI=;
- b=yXlsxj8hrZ9fyuyqKmuqAyFIX4ACEfeJ1gY34fz7Ea9rATIP4W5As0tTCOLTzplkf3goKm
- ahK3k1t8wCgby6yPnjKq+0Izr3MdyfHMOQK7S2iRBPsRwHkM59twxxPPwTY8hiTEYl16KV
- IFEN6efEtdryxo3cQ6Fm49Ueo+GhCn0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1778610701;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=j5ZcDNm06oM/Tc2xH+cSkAh0CKCaVWblXZo1juqp5EI=;
- b=kVbe+HBgpxTKG6xhGGD2Ohpfi9S2oA2DXTN/j5BOD8lMMW1sgQMEE05lJNb3vTnyNIzOxx
- Fn8kkbeR+2EFwQBw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F2D61593A9;
- Tue, 12 May 2026 18:31:40 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id ZhIhMAxyA2qABQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 12 May 2026 18:31:40 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, peterx@redhat.com, Juraj
- Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH v3] migration: Fix possible division by zero on calc
- expected downtime
-In-Reply-To: <20260511182432.1333467-1-peterx@redhat.com>
-References: <20260511182432.1333467-1-peterx@redhat.com>
-Date: Tue, 12 May 2026 15:31:34 -0300
-Message-ID: <8733zwxywp.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wMrsW-0001CL-Ve
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 14:30:50 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wMrsU-00017E-4g
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 14:30:48 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64CC4QAZ3320942
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 18:30:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ P3hKQ9f1wEcmiWzhTST187E49tUgOgiKvr3Kl31j/+w=; b=ddB2NdXzuQMXxeop
+ dc5y8y+OAlS2AhpGu1/fF291EZdoAWxKPD5CcLnixrsa4hPuKtjOpcyb1mPUkq5W
+ NvAv4j29coXfVqNDGhSlLQLK85LietUXAT6GVYfX1IlmXGMgmXJrLAYaVTcO4tXz
+ BGfzYiyZani8HUoH1IF+MIOISxA7g0sl7dpO/HqUQleuyECjoawlb9EVgl6SX1bp
+ fjdVQGrbafJRvjTtx6KWAPtCD/ItMUSVU/HL2TG525DABSgygIhEaT5BmGGfGK5Q
+ SxraZ33DM69ZtrhpjJPj+GT17Zg0mri4z+EDqSxWnAm5M8Op1Ggov8oHbxdHtJG2
+ eFMl1Q==
+Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e43w1sggs-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 18:30:44 +0000 (GMT)
+Received: by mail-dl1-f72.google.com with SMTP id
+ a92af1059eb24-1334825de51so775834c88.0
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 11:30:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1778610643; x=1779215443; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=P3hKQ9f1wEcmiWzhTST187E49tUgOgiKvr3Kl31j/+w=;
+ b=QpwnmOl6hrRVivB9DSL3a2MBYAAsBkDprfw6vkeVmiO9jFF8YhJycrEs8wdmUY7xDm
+ WRatvdELV3SORfWaIa0KfrtHXQjlYw3gr27i+ApnhcEkN1VfHGHTCwJFs1t9QI6o9oN0
+ Jxqn/DeENyDcJVLl9U0SrDNYqBeCI7D8ykeKNsRAsRrMBkF7g7VmE1YO4yiMpzz2GWHs
+ ev5UB5ntRknmZTGJiwJKMSUAF/5yYReZeDiEQ0Bd0oClOf5URqC1GKzIoqtRT+ztrCFj
+ YcJx4hiqdeshIMY+X1/nnw7h9fvUz5kcX9Kb4ZaIm52/e6uL2+6GVnrdHGST42Uylt51
+ 2b9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778610643; x=1779215443;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=P3hKQ9f1wEcmiWzhTST187E49tUgOgiKvr3Kl31j/+w=;
+ b=d/Fl+XdK9jdpoRa+ar5SJHO9M0YIQpE8JS1VKRLP8mFByFc7C57GLXaNPQLLZsjOdD
+ S4oWUWyBTazJwlWnQ/RkionbPErJOCItvxWqb5gWETcUaxupGS6BfNjq1yf39FQPAw3L
+ xInzlvfToHMKZWm4FGQhC8m2Wc5mBmHzFVMt8RjT2m9DBzcV0XQU1GbaS+D6rgOUC2g+
+ Q76mi7SLqLQdtfaGTuR6xYPOuJjRsB0vEu2SErklzJNrdxR8jISRuUNuzm6Br4SNjwWT
+ a2PCFdpZc63WOJMpHOLE2q2LbkNNO+kwrjrmw/Lb01B9wLD6cQiMrAgDwQnT47lSp6ak
+ g8gg==
+X-Gm-Message-State: AOJu0YxeII7W0zT7e3gN81HmJqEQ3nqhBz+xC8Mn0W9TYtohmUva9RwR
+ MxMMhyZWGXkgXdbRA5Dm6Jlb0OoEQRn9IcWuF6fIjP4skpD0fh3FHm85ep0x/OOqOldKC6HEByE
+ jSo1+u3eDHpmhIZuHZQzVLiiky19VblfhrLCuI/ck/1hqFingHwgXG9k/aKGDpJQUV3vv
+X-Gm-Gg: Acq92OEt5nmUl4NpQgxXlaTqugqzZB7P6oYbnWGCm8FVorOmoPc7CyIDYf/Z6CD9jkB
+ ElzUIRV6XObSY8TzRPpTFJv7ciN7H28QHVaFl0RJa9wMt2ocZ1yZqOYBZpKCv16hkW/ddq+HVtn
+ dBDsHO6QXEfYpE9NDc2d6PpnNd3OBTp+eIiepaQlOhsbZIZDySsQHDE6qzyzU82+o47w9uoQtif
+ pBtNl+5gJDWCb38DZ/Rmh+dpSgC/qfw8rJaYZRDb6vIMXkJh89QJ843nyv28otN50Vdo4HbMWD/
+ a+VKhPRbQDMW3CwsT6DctFmc09SENRPS925yfeiWiuj9pGRBZe0eM4RRUzDtCfuOTiKf67QCUhh
+ LyYOnX1nG4kGOlES+XgfrD2z72jfWf+1AE4EaejLf1wgNqowhINENUZIo/7TKuE9FP9/eH0aYUA
+ RiD3r3ng==
+X-Received: by 2002:a05:7022:218:b0:128:d3de:c9e4 with SMTP id
+ a92af1059eb24-13436aa4a35mr46512c88.30.1778610643149; 
+ Tue, 12 May 2026 11:30:43 -0700 (PDT)
+X-Received: by 2002:a05:7022:218:b0:128:d3de:c9e4 with SMTP id
+ a92af1059eb24-13436aa4a35mr46453c88.30.1778610641825; 
+ Tue, 12 May 2026 11:30:41 -0700 (PDT)
+Received: from hu-pbouvier-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1327865955fsm25221376c88.11.2026.05.12.11.30.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 May 2026 11:30:40 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
+Cc: pierrick.bouvier@oss.qualcomm.com
+Subject: [PULL 2/5] qom/object: initialize type_table in static ctor with
+ fundamental QOM types
+Date: Tue, 12 May 2026 11:30:27 -0700
+Message-ID: <20260512183030.1431103-3-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260512183030.1431103-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20260512183030.1431103-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; MISSING_XM_UA(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
- URIBL_BLOCKED(0.00)[suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo,linaro.org:email];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email, imap1.dmz-prg2.suse.org:helo,
- suse.de:email, suse.de:mid]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: AdVSXSdeOeQZvrRd7JmDeqnjlwMon9-h
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEyMDE5MiBTYWx0ZWRfX4jTr/AxSt0lw
+ HQlkY+7vFFHRlcRWB71K34NJMdHWtAAO+8N6K5ub0qQiSvuS8UMmhZPE522GEa7hAB90NTVxHdX
+ 9/K5LgVHZ2ZQJOMD2B5amZ4B7oqXxnUDGjC1rUqSemM6zpPchtOwfjR03rCg3nuZnE/pombVCZF
+ GcSPZBB24HOiKOXr9shvi8UGKKDmGk1xAbqxMhSGnwKRIgsffvHtaviMFdRP2dFwNPMmbvcl6z8
+ n/mJFs8h7eQqwfyxXCJmxo6dFhBvUPBcHKO+eKSBZlJXMyRMLrq5MJEH284bkiQPMrUXI/jJBKV
+ Wp0dGAIQoqyMvSq5+a1ENKPkXybZViJbRFF4WSTVdDZUoON1MZjtwdHkAg61DhPl3KS+SHKKNJp
+ TO/lOi09AHVQgNSlHHdQjrrpNVQdbiMftHqkG67yCaFjk8vx5kxaQr1MEPcIW7NOcQjzb+pi+WX
+ q2ndYrMZ/KZSt8MgAkw==
+X-Proofpoint-ORIG-GUID: AdVSXSdeOeQZvrRd7JmDeqnjlwMon9-h
+X-Authority-Analysis: v=2.4 cv=BoGtB4X5 c=1 sm=1 tr=0 ts=6a0371d4 cx=c_pps
+ a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=pDBHowQsxXgegazyqkAA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=vBUdepa8ALXHeOFLBtFW:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-11_05,2026-05-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 adultscore=0 clxscore=1015
+ impostorscore=0 phishscore=0 spamscore=0 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605050000 definitions=main-2605120192
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,75 +150,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+This saves us having to check if it's initialized everytime we have to
+access it. No other QOM type should be initialized or accessed during
+static ctor calls, so we don't depend on their ordering.
 
-> Commit dd4fe8844b changed the reporting of expected downtime behavior, so
-> that the value will be calculated on-demand.  One side effect on the change
-> is QEMU will allow the calculation to happen anytime even if there's no
-> transfer happening for a short while.
->
-> PeterM reported an ubsan report from clang when running migration-test with
-> aarch64 binary on x86_64 hosts.  I can also reproduce if I run the test
-> concurrently so some of the src QEMU may not get chance to push any data,
-> causing mbps to be 0:
->
-> ../migration/migration.c:1051:12: runtime error: -nan is outside the range of representable values of type 'long'
->
-> Fix it by properly handle both Inf and Nan to return INT64_MAX.
->
-> Add a rich comment, per PeterM's suggestion.
->
-> Link: https://lore.kernel.org/r/CAFEAcA-MYH6C39xO0OLx4-M5pKurJpurwRsMqZe9q=W-NShAbw@mail.gmail.com
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> Fixes: dd4fe8844b ("migration: Calculate expected downtime on demand")
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  migration/migration.c | 20 +++++++++++++++++++-
->  1 file changed, 19 insertions(+), 1 deletion(-)
->
-> diff --git a/migration/migration.c b/migration/migration.c
-> index b6f78eb3ac..05f10e4576 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -63,6 +63,7 @@
->  #include "system/dirtylimit.h"
->  #include "qemu/sockets.h"
->  #include "system/kvm.h"
-> +#include "math.h"
->  
->  #define NOTIFIER_ELEM_INIT(array, elem)    \
->      [elem] = NOTIFIER_WITH_RETURN_LIST_INITIALIZER((array)[elem])
-> @@ -1044,12 +1045,29 @@ static bool migrate_show_downtime(MigrationState *s)
->  /* Return expected downtime (unit: milliseconds) */
->  int64_t migration_downtime_calc_expected(MigrationState *s)
->  {
-> +    double expected_ms;
-> +
->      if (mig_stats.dirty_sync_count <= 1) {
->          return migrate_downtime_limit();
->      }
->  
-> -    return mig_stats.dirty_bytes_last_sync /
-> +    expected_ms = mig_stats.dirty_bytes_last_sync /
->          migration_get_switchover_bw(s) * 1000;
-> +
-> +    /*
-> +     * If we haven't been able to transfer any data, the result here could
-> +     * be NaN (for 0 / 0) or infinity (something else / 0).
-> +     *
-> +     * Return INT64_MAX as our best approximation to "this will take
-> +     * forever to complete". If the problem is transient (e.g. we just
-> +     * haven't started to transfer yet) we'll recalculate to a more
-> +     * accurate figure later.
-> +     */
-> +    if (isnan(expected_ms) || expected_ms >= (double)INT64_MAX) {
-> +        return INT64_MAX;
-> +    }
-> +
-> +    return (int64_t) expected_ms;
->  }
->  
->  static void populate_time_info(MigrationInfo *info, MigrationState *s)
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20260512150208.1167711-3-pierrick.bouvier@oss.qualcomm.com
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ qom/object.c | 18 +++++-------------
+ 1 file changed, 5 insertions(+), 13 deletions(-)
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+diff --git a/qom/object.c b/qom/object.c
+index b82b65a3a18..dfdc5c8e424 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -76,28 +76,19 @@ struct TypeImpl
+ 
+ static Type type_interface;
+ 
+-static GHashTable *type_table_get(void)
+-{
+-    static GHashTable *type_table;
+-
+-    if (type_table == NULL) {
+-        type_table = g_hash_table_new(g_str_hash, g_str_equal);
+-    }
+-
+-    return type_table;
+-}
++static GHashTable *type_table;
+ 
+ static bool enumerating_types;
+ 
+ static void type_table_add(TypeImpl *ti)
+ {
+     assert(!enumerating_types);
+-    g_hash_table_insert(type_table_get(), (void *)ti->name, ti);
++    g_hash_table_insert(type_table, (void *)ti->name, ti);
+ }
+ 
+ static TypeImpl *type_table_lookup(const char *name)
+ {
+-    return g_hash_table_lookup(type_table_get(), name);
++    return g_hash_table_lookup(type_table, name);
+ }
+ 
+ static TypeImpl *type_new(const TypeInfo *info)
+@@ -1069,7 +1060,7 @@ void object_class_foreach(void (*fn)(ObjectClass *klass, void *opaque),
+     OCFData data = { fn, implements_type, include_abstract, opaque };
+ 
+     enumerating_types = true;
+-    g_hash_table_foreach(type_table_get(), object_class_foreach_tramp, &data);
++    g_hash_table_foreach(type_table, object_class_foreach_tramp, &data);
+     enumerating_types = false;
+ }
+ 
+@@ -2859,6 +2850,7 @@ static void __attribute__((constructor)) register_types(void)
+         .abstract = true,
+     };
+ 
++    type_table = g_hash_table_new(g_str_hash, g_str_equal);
+     type_interface = type_register_internal(&interface_info);
+     type_register_internal(&object_info);
+ }
+-- 
+2.43.0
+
 
