@@ -4,46 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55156CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:21:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77B15CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:22:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuNx-00088L-2n; Tue, 12 May 2026 17:11:27 -0400
+	id 1wMuLt-0004yt-E9; Tue, 12 May 2026 17:09:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuNj-0007uN-Ao; Tue, 12 May 2026 17:11:13 -0400
+ id 1wMuKl-0000xe-2I; Tue, 12 May 2026 17:08:11 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuNh-0004Sd-FA; Tue, 12 May 2026 17:11:11 -0400
+ id 1wMuKf-0002d4-0I; Tue, 12 May 2026 17:08:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619303; bh=8O43rCGIV6dv6xRohmtlMa+2vnknZ11NjLXOq+nmMC0=;
+ t=1778619301; bh=4udaYFb8wZEl1kO1PHPBwef/lFSby6/dh8NrWRE/A98=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=RpaDO9NjOQ7laA4a3vUQk0ZuBUZCrxDS3YBKYTcO4yiQ7XEFlpSHQh3davMfEFk/p
- fczvOsWaK2yKP6oNsMCp9PQPKMTKSf4uuNs8HUyE5xSD9mccW0EBVcFiYS7cJ3dzBc
- elGnX69obkVAO/YOuSbROox/3jbK+JbD+969H8x/mpZPQIPCFPRMTcfiUXYHLv83XY
- wThdRaVuX6cwaa2VkNa/938nf2QfAyuSnEmB4ihnDKCk6sJ7stpxlCWTmpk9R0OFqX
- OwuMP9IiNv2i70o/48Kj9bFKmLyAQHldSZlarhdFALRwGY0sHYoZ3RgvsDT5rq3cqE
- wY7W/vCbeEQBQ==
+ b=d4a7hMpW77HBR6nWuzDGKbInuHTKH0XFuwvt5tMDBPVl+hECY8eOLNAqK28gBFMYN
+ +AgEFkcQ8Dza+7Ub6FJg6jJ5NcKJphTlIO2W10NCXhm2v+wjew+brIjZRQ/LwtNs+M
+ /p4ml96feWXabB3WvlQP8OqsnbuGk34xkP9TseiLSLeHW3XfsxY79CHMRdQmjw7tUD
+ LHbjDhb3jaZu8rZkwBEe5U0l8R9cuN4mHOpIlmme6dBKLzVknZ6l48hobceYay1iWY
+ AGqZRZ9QKBTQKOy7cm6gAMWZm9YtLA65/FKimCI4UY2w93YKr4qa303K256V9rCdps
+ wtcIacEsyOVsg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2F99C1AA371;
- Tue, 12 May 2026 23:55:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4583F1AA354;
+ Tue, 12 May 2026 23:55:01 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 387C23ABCE1;
- Tue, 12 May 2026 23:55:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 520133ABCC4;
+ Tue, 12 May 2026 23:55:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 052/117] include: Don't include guest-host.h in
- cpu-ldst.h
-Date: Tue, 12 May 2026 23:53:54 +0300
-Message-ID: <20260512205503.361097-52-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 023/117] hw/ssi/aspeed_smc: Convert mem ops to
+ read/write_with_attrs for error handling
+Date: Tue, 12 May 2026 23:53:25 +0300
+Message-ID: <20260512205503.361097-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
@@ -73,62 +71,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Cédric Le Goater <clg@redhat.com>
 
-We currently include user/guest-host.h from accel/tcg/cpu-ldst.h.
-However that file doesn't need anything from guest-host.h, since we
-removed the uses of g2h() in commit 9b74d403b30e ("accel/tcg: Move
-user-only tlb_vaddr_to_host out of line").
+Error conditions (invalid flash mode, unwritable flash) now return
+MEMTX_ERROR instead of silently succeeding or returning undefined
+values.
 
-Move the include of guest-host.h to where it's actually needed.
+This allows the memory subsystem to properly propagate transaction
+errors to the guest, improving QEMU reliability.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260330143123.1685142-2-peter.maydell@linaro.org
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit ad7a005d672a657a5344575426642bfbea20e3e0)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3335
+Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Link: https://lore.kernel.org/qemu-devel/20260323125545.577653-2-clg@redhat.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit 80c5be945877ea3f258679c6042df8f0efd77202)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/bsd-user/qemu.h b/bsd-user/qemu.h
-index 93388e7c34..61c2e85177 100644
---- a/bsd-user/qemu.h
-+++ b/bsd-user/qemu.h
-@@ -27,6 +27,7 @@
- #include "user/abitypes.h"
- #include "user/cpu_loop.h"
- #include "user/page-protection.h"
-+#include "user/guest-host.h"
+diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
+index e33496f502..4153aed3f2 100644
+--- a/hw/ssi/aspeed_smc.c
++++ b/hw/ssi/aspeed_smc.c
+@@ -493,17 +493,18 @@ static void aspeed_smc_flash_setup(AspeedSMCFlash *fl, uint32_t addr)
+     }
+ }
  
- extern char **environ;
- 
-diff --git a/include/accel/tcg/cpu-ldst.h b/include/accel/tcg/cpu-ldst.h
-index 0de7f5eaa6..88c49a95d3 100644
---- a/include/accel/tcg/cpu-ldst.h
-+++ b/include/accel/tcg/cpu-ldst.h
-@@ -71,10 +71,6 @@
- #include "accel/tcg/cpu-mmu-index.h"
- #include "exec/abi_ptr.h"
- 
--#if defined(CONFIG_USER_ONLY)
--#include "user/guest-host.h"
--#endif /* CONFIG_USER_ONLY */
--
- static inline uint32_t
- cpu_ldub_mmuidx_ra(CPUArchState *env, abi_ptr addr, int mmu_idx, uintptr_t ra)
+-static uint64_t aspeed_smc_flash_read(void *opaque, hwaddr addr, unsigned size)
++static MemTxResult aspeed_smc_flash_read(void *opaque, hwaddr addr,
++                                 uint64_t *data, unsigned size, MemTxAttrs attrs)
  {
-diff --git a/linux-user/qemu.h b/linux-user/qemu.h
-index 85e68eff7b..cfe5f45fc4 100644
---- a/linux-user/qemu.h
-+++ b/linux-user/qemu.h
-@@ -10,6 +10,7 @@
- #include "syscall_defs.h"
- #include "target_syscall.h"
- #include "accel/tcg/vcpu-state.h"
-+#include "user/guest-host.h"
+     AspeedSMCFlash *fl = opaque;
+     AspeedSMCState *s = fl->controller;
+-    uint64_t ret = 0;
+     int i;
+ 
++    *data = 0;
+     switch (aspeed_smc_flash_mode(fl)) {
+     case CTRL_USERMODE:
+         for (i = 0; i < size; i++) {
+-            ret |= (uint64_t) ssi_transfer(s->spi, 0x0) << (8 * i);
++            *data |= (uint64_t) ssi_transfer(s->spi, 0x0) << (8 * i);
+         }
+         break;
+     case CTRL_READMODE:
+@@ -512,18 +513,19 @@ static uint64_t aspeed_smc_flash_read(void *opaque, hwaddr addr, unsigned size)
+         aspeed_smc_flash_setup(fl, addr);
+ 
+         for (i = 0; i < size; i++) {
+-            ret |= (uint64_t) ssi_transfer(s->spi, 0x0) << (8 * i);
++            *data |= (uint64_t) ssi_transfer(s->spi, 0x0) << (8 * i);
+         }
+ 
+         aspeed_smc_flash_unselect(fl);
+         break;
+     default:
+         aspeed_smc_error("invalid flash mode %d", aspeed_smc_flash_mode(fl));
++        return MEMTX_ERROR;
+     }
+ 
+-    trace_aspeed_smc_flash_read(fl->cs, addr, size, ret,
++    trace_aspeed_smc_flash_read(fl->cs, addr, size, *data,
+                                 aspeed_smc_flash_mode(fl));
+-    return ret;
++    return MEMTX_OK;
+ }
  
  /*
-  * This is the size of the host kernel's sigset_t, needed where we make
+@@ -624,8 +626,8 @@ static bool aspeed_smc_do_snoop(AspeedSMCFlash *fl,  uint64_t data,
+     return false;
+ }
+ 
+-static void aspeed_smc_flash_write(void *opaque, hwaddr addr, uint64_t data,
+-                                   unsigned size)
++static MemTxResult aspeed_smc_flash_write(void *opaque, hwaddr addr,
++                                   uint64_t data, unsigned size, MemTxAttrs attrs)
+ {
+     AspeedSMCFlash *fl = opaque;
+     AspeedSMCState *s = fl->controller;
+@@ -636,7 +638,7 @@ static void aspeed_smc_flash_write(void *opaque, hwaddr addr, uint64_t data,
+ 
+     if (!aspeed_smc_is_writable(fl)) {
+         aspeed_smc_error("flash is not writable at 0x%" HWADDR_PRIx, addr);
+-        return;
++        return MEMTX_ERROR;
+     }
+ 
+     switch (aspeed_smc_flash_mode(fl)) {
+@@ -661,12 +663,15 @@ static void aspeed_smc_flash_write(void *opaque, hwaddr addr, uint64_t data,
+         break;
+     default:
+         aspeed_smc_error("invalid flash mode %d", aspeed_smc_flash_mode(fl));
++        return MEMTX_ERROR;
+     }
++
++    return MEMTX_OK;
+ }
+ 
+ static const MemoryRegionOps aspeed_smc_flash_ops = {
+-    .read = aspeed_smc_flash_read,
+-    .write = aspeed_smc_flash_write,
++    .read_with_attrs = aspeed_smc_flash_read,
++    .write_with_attrs = aspeed_smc_flash_write,
+     .endianness = DEVICE_LITTLE_ENDIAN,
+     .valid = {
+         .min_access_size = 1,
+@@ -754,7 +759,8 @@ static void aspeed_smc_reset(DeviceState *d)
+     s->snoop_dummies = 0;
+ }
+ 
+-static uint64_t aspeed_smc_read(void *opaque, hwaddr addr, unsigned int size)
++static MemTxResult aspeed_smc_read(void *opaque, hwaddr addr, uint64_t *data,
++                                   unsigned int size, MemTxAttrs attrs)
+ {
+     AspeedSMCState *s = ASPEED_SMC(opaque);
+     AspeedSMCClass *asc = ASPEED_SMC_GET_CLASS(opaque);
+@@ -782,12 +788,13 @@ static uint64_t aspeed_smc_read(void *opaque, hwaddr addr, unsigned int size)
+ 
+         trace_aspeed_smc_read(addr << 2, size, s->regs[addr]);
+ 
+-        return s->regs[addr];
++        *data = s->regs[addr];
+     } else {
+         qemu_log_mask(LOG_UNIMP, "%s: not implemented: 0x%" HWADDR_PRIx "\n",
+                       __func__, addr);
+-        return -1;
++        *data = -1;
+     }
++    return MEMTX_OK;
+ }
+ 
+ static uint8_t aspeed_smc_hclk_divisor(uint8_t hclk_mask)
+@@ -1108,8 +1115,8 @@ static void aspeed_2600_smc_dma_ctrl(AspeedSMCState *s, uint32_t dma_ctrl)
+     s->regs[R_DMA_CTRL] &= ~(DMA_CTRL_REQUEST | DMA_CTRL_GRANT);
+ }
+ 
+-static void aspeed_smc_write(void *opaque, hwaddr addr, uint64_t data,
+-                             unsigned int size)
++static MemTxResult aspeed_smc_write(void *opaque, hwaddr addr, uint64_t data,
++                                    unsigned int size, MemTxAttrs attrs)
+ {
+     AspeedSMCState *s = ASPEED_SMC(opaque);
+     AspeedSMCClass *asc = ASPEED_SMC_GET_CLASS(s);
+@@ -1159,13 +1166,13 @@ static void aspeed_smc_write(void *opaque, hwaddr addr, uint64_t data,
+     } else {
+         qemu_log_mask(LOG_UNIMP, "%s: not implemented: 0x%" HWADDR_PRIx "\n",
+                       __func__, addr);
+-        return;
+     }
++    return MEMTX_OK;
+ }
+ 
+ static const MemoryRegionOps aspeed_smc_ops = {
+-    .read = aspeed_smc_read,
+-    .write = aspeed_smc_write,
++    .read_with_attrs = aspeed_smc_read,
++    .write_with_attrs = aspeed_smc_write,
+     .endianness = DEVICE_LITTLE_ENDIAN,
+ };
+ 
+@@ -2007,8 +2014,8 @@ static const uint32_t aspeed_2700_fmc_resets[ASPEED_SMC_R_MAX] = {
+ };
+ 
+ static const MemoryRegionOps aspeed_2700_smc_flash_ops = {
+-    .read = aspeed_smc_flash_read,
+-    .write = aspeed_smc_flash_write,
++    .read_with_attrs = aspeed_smc_flash_read,
++    .write_with_attrs = aspeed_smc_flash_write,
+     .endianness = DEVICE_LITTLE_ENDIAN,
+     .valid = {
+         .min_access_size = 1,
 -- 
 2.47.3
 
