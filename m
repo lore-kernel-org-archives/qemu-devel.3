@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58068CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:01:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACCF8CD4F24
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:02:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuAG-0007Y0-S4; Tue, 12 May 2026 16:57:20 -0400
+	id 1wMuDE-0005AT-Jq; Tue, 12 May 2026 17:00:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuAC-0007T5-CG; Tue, 12 May 2026 16:57:12 -0400
+ id 1wMuCL-0002jN-2G; Tue, 12 May 2026 16:59:27 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuAA-0003UC-Fj; Tue, 12 May 2026 16:57:12 -0400
+ id 1wMuCI-00059I-16; Tue, 12 May 2026 16:59:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619275; bh=/QYez1SdCBu+cdrL5zYbsyo9GEw9crHY6ygsutfikKY=;
+ t=1778619276; bh=VFlagQokGgpz+0rC+O44k+NQdOhi3YbBOoMVcjIcjZ4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=T8pteQWyEA4Dk1ulhOkNz1xa2Pb9u6Spm3uIodo9iITV+//0aHQmaZLwaCC0D9/3q
- p0XTLRA+iihu4Tbg3oHcfpDV6DR4eyHv5jnGJXT6FjfvtiXUauVT0Nc4+c9a7HJ43a
- 5dKP0BBNP8w5qV5aa58QoZKH05BijaSQnqvvU1AJ8smq+NzZ66OZZn0rdnayJ+Sk9y
- izlc2Tr4h3WdhFGzoN/oQHav6tQ9N5pUtdShS81H/GXDNFiHjLTHQ365M4xhwv9kZo
- ggCwua4ts4C6hlYZ53NFFkbKyCvgB3PMlNprTNrBL9wTUgfp9n6avDm8S2IJ49zIdX
- 2SDbFFPV3h41Q==
+ b=DVckJj4c2oMmOMw2BkLYrHPgxwZSPe+cxsuN2m8QE++vZ+Iu2uUqEODlvWCL81M7N
+ EqEQmwXW77dcD70FFxTUiLACqFLrcf+9vHV9+drTJef96MsJ1bdrsqw9qzGy8BiQNq
+ 36pjRgBaD3s9maYOBafALQlMf1vH+/dqPsbIIP+TYv/FBvHPFZnKWNjo43wXs9qsSR
+ aOG5OTS6oiiaTBxOTi/r5S5rvGoiyo0fUdrRiLgzZnMle9lYabzmLRlF20cxuhHOqS
+ 3gzhN/ox9JItZOUu8Qz7Id9hipL9ipn1PE0TkyCMEsV5TUeWK2KwHlSShzqjtC1HFj
+ NiF7WFy3pKE8g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 018331AA2E6;
- Tue, 12 May 2026 23:54:35 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4D0141AA2FB;
+ Tue, 12 May 2026 23:54:36 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0E08D3ABC57;
- Tue, 12 May 2026 23:54:39 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5A2D23ABC6C;
+ Tue, 12 May 2026 23:54:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, GuoHan Zhao <zhaoguohan@kylinos.cn>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 026/107] block/curl: free s->password in cleanup paths
-Date: Tue, 12 May 2026 23:53:13 +0300
-Message-ID: <20260512205437.360850-26-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Sun Haoyu <shyliuli@aosc.io>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 047/107] linux-user: Make openat2() use -L for
+ absolute paths
+Date: Tue, 12 May 2026 23:53:34 +0300
+Message-ID: <20260512205437.360850-47-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
@@ -68,46 +69,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: GuoHan Zhao <zhaoguohan@kylinos.cn>
+From: Sun Haoyu <shyliuli@aosc.io>
 
-When password-secret is used, curl_open() resolves it with
-qcrypto_secret_lookup_as_utf8() and stores the returned buffer in
-s->password.
+openat2() ignored the -L prefix and opened host files directly.
+For example, openat2("/tmp/file") opened /tmp/file on the host, not
+QEMU_LD_PREFIX/tmp/file like openat() does.
 
-Unlike s->proxypassword, s->password is not freed either in the open
-failure path or in curl_close(), so the resolved secret leaks once it
-has been allocated.
+Fix this by using path() to rewrite absolute paths. Skip this
+when RESOLVE_BENEATH or RESOLVE_IN_ROOT is set:
+- RESOLVE_BENEATH rejects absolute paths anyway
+- RESOLVE_IN_ROOT resolves relative to dirfd
 
-Free s->password in both cleanup paths.
+Now openat() and openat2() work in the same way.
 
-Fixes: 1bff96064290 ('curl: add support for HTTP authentication parameters')
-Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
-Message-ID: <20260320063016.262954-1-zhaoguohan_salmon@163.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 51fc8443c122fedf4d4891bbc3a1ff25dd8bacdf)
+Link: https://gitlab.com/qemu-project/qemu/-/work_items/3341
+
+Signed-off-by: Sun Haoyu <shyliuli@aosc.io>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260317053827.25051-1-shyliuli@aosc.io
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit fa6dfcc373c244a767be04d236e0cdd075b80e69)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/curl.c b/block/curl.c
-index dabd2a905e..aabb602d9b 100644
---- a/block/curl.c
-+++ b/block/curl.c
-@@ -876,6 +876,7 @@ out_noclean:
-     g_free(s->cookie);
-     g_free(s->url);
-     g_free(s->username);
-+    g_free(s->password);
-     g_free(s->proxyusername);
-     g_free(s->proxypassword);
-     if (s->sockets) {
-@@ -987,6 +988,7 @@ static void curl_close(BlockDriverState *bs)
-     g_free(s->cookie);
-     g_free(s->url);
-     g_free(s->username);
-+    g_free(s->password);
-     g_free(s->proxyusername);
-     g_free(s->proxypassword);
- }
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 44675076ca..f2c8037356 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -8723,7 +8723,16 @@ static int do_openat2(CPUArchState *cpu_env, abi_long dirfd,
+     if (fd > -2) {
+         ret = get_errno(fd);
+     } else {
+-        ret = get_errno(safe_openat2(dirfd, pathname, &how,
++        const char *host_pathname = pathname;
++        if (pathname[0] == '/' &&
++            !(how.resolve & (RESOLVE_IN_ROOT | RESOLVE_BENEATH))) {
++            /*
++             * RESOLVE_BENEATH rejects absolute paths; RESOLVE_IN_ROOT
++             * resolves them relative to dirfd.
++             */
++            host_pathname = path(pathname);
++        }
++        ret = get_errno(safe_openat2(dirfd, host_pathname, &how,
+                                      sizeof(struct open_how_ver0)));
+     }
+ 
+diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
+index 5d22759992..b5a2ad3b2d 100644
+--- a/linux-user/syscall_defs.h
++++ b/linux-user/syscall_defs.h
+@@ -2771,7 +2771,12 @@ struct target_open_how_ver0 {
+ #ifndef RESOLVE_NO_SYMLINKS
+ #define RESOLVE_NO_SYMLINKS     0x04
+ #endif
+-
++#ifndef RESOLVE_BENEATH
++#define RESOLVE_BENEATH         0x08
++#endif
++#ifndef RESOLVE_IN_ROOT
++#define RESOLVE_IN_ROOT         0x10
++#endif
+ #if (defined(TARGET_I386) && defined(TARGET_ABI32)) || \
+     (defined(TARGET_ARM) && defined(TARGET_ABI32)) || \
+     defined(TARGET_M68K) || defined(TARGET_MICROBLAZE) || \
 -- 
 2.47.3
 
