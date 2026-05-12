@@ -4,52 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FE5FCD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:42:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5C80CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:42:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuj3-00052k-Sd; Tue, 12 May 2026 17:33:14 -0400
+	id 1wMuTb-0003cJ-3p; Tue, 12 May 2026 17:17:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuhb-0003ia-LR; Tue, 12 May 2026 17:31:46 -0400
+ id 1wMuSd-0001U7-3p; Tue, 12 May 2026 17:16:16 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuhV-0001hs-4V; Tue, 12 May 2026 17:31:43 -0400
+ id 1wMuSa-0006gR-Qv; Tue, 12 May 2026 17:16:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619499; bh=GdU5rmywvm/PU8w5RHsCt+h5kcA2DbJoW72xFw1JLXo=;
+ t=1778619306; bh=LYceuFNVfZlI3NhGxh42KxX3L2UXzJjeyydXziuX29E=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=phIvSxZ1vFVLXvkiPvQuGYPS4dnnOvuUIvVbveRp5ailyZ8WOHEcMPnni/pbTk93Y
- OauunLzr/6Zzxy1xlE96IOXZv1/Zi0jvZrkMvOPbtM/QsJ2UoTDgGJJ9h3KBaRMvIG
- HGLP71UCrsD7xjvCLXL2YhmyhFgYflrfcRuRxR9mMm9j+Zw451VimqTFmPBDmTYPcu
- 9LAjobWPZnqbXiIO3HRxqsKoOtzVSEoYuBZ6Sn1uvwAjjdrnNKNFRoybTXDPfkDHK5
- rxUHIpAUXvBnoKVpp2tNMmnRQrscIroWpaB7/93FtaBA8C9de7pGFxyoYlsPDGlwar
- 2BtOf7Px2CVkw==
+ b=OVMNmk6ObnKSJnmuZ2xPAS9sf7EVxzey9QjTRbdkjRdTsHrsuHMYfdQZ6PiVTFz5Q
+ vOoGhX4mgbKU4utUKUszS6a6u2cq/QrX3ilkWmMukYAqZejthPgJSh+EPNjn+XI0hZ
+ zuGzrudIKSlh42CR7FsaKa6oKc/zTKaR5PT3hnJVicVRl2AoV0D8cmbBIEQM//lh0O
+ sszD4dS1C5PgoiiZTtIKcOrs8J7ZzRHbYT/6VrtoC1iyCM8KxPUkmZZEUVE1B/MUNK
+ ZVDL2qUhk+eWU2I+NexAAQ7qj6N38N4CfEpjUryVpdTBHapKREeqnnrRSneNp7AEI8
+ yEpoPyiZ2zN2Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 72BE81AA3F1;
- Tue, 12 May 2026 23:58:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8FD651AA3A3;
+ Tue, 12 May 2026 23:55:06 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7BBBD3ABD49;
- Tue, 12 May 2026 23:58:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9C28F3ABD12;
+ Tue, 12 May 2026 23:55:10 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Max Chou <max.chou@sifive.com>,
+Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 38/58] target/riscv: Use ELEN for Fractional LMUL check
-Date: Tue, 12 May 2026 23:57:59 +0300
-Message-ID: <20260512205820.361821-38-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 101/117] linux-user: Allow getsockopt() with NULL
+ optval address
+Date: Tue, 12 May 2026 23:54:43 +0300
+Message-ID: <20260512205503.361097-101-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
-References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,58 +70,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair.francis@wdc.com>
+From: Helge Deller <deller@gmx.de>
 
-The RISC-V spec states that
+Some programs test availability of socket options by asking for the
+value with an NULL optval address, which currenrly always trigger an
+EFAULT in qemu.  Fix it by allowing a NULL address, in the same manner
+as the Linux kernel on physical machines.
 
-"""
-For a given supported fractional LMUL setting, implementations
-must support SEW settings between SEWMIN and LMUL * ELEN, inclusive.
-"""
-
-We were previously checking VLEN, instead of ELEN, so let's update to
-check ELEN instead of VLEN for fractional scaling.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3196
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Reviewed-by: Max Chou <max.chou@sifive.com>
-Message-ID: <20260415233740.3027321-5-alistair.francis@wdc.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 5dcc64828dc79c2426905db5fae885f6ccf93347)
-(Mjt: context fixup)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2390
+Signed-off-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+(cherry picked from commit 08dc3e240fc00213c0eb29b71569dc0ca9301337)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 83dd26314d..b4fc791eb7 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -47,18 +47,17 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
-     target_ulong reserved = s2 &
-                             MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
-                                             xlen - 1 - R_VTYPE_RESERVED_SHIFT);
--    uint16_t vlen = cpu->cfg.vlenb << 3;
-     int8_t lmul;
- 
-     if (vlmul & 4) {
-         /*
-          * Fractional LMUL, check:
-          *
--         * VLEN * LMUL >= SEW
--         * VLEN >> (8 - lmul) >= sew
--         * (vlenb << 3) >> (8 - lmul) >= sew
-+         * ELEN * LMUL >= SEW
-+         * ELEN >> (8 - vlmul) >= sew
-          */
--        if (vlmul == 4 || (vlen >> (8 - vlmul)) < sew) {
-+        if (vlmul == 4 ||
-+            (cpu->cfg.elen >> (8 - vlmul)) < sew) {
-             vill = true;
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 47270eb15e..8934aa9514 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -2647,6 +2647,10 @@ get_timeout:
+             if (ret < 0) {
+                 return ret;
+             }
++            /* special case: destination address is NULL, return 0 */
++            if (optval_addr) {
++                len = 0;
++            }
+             if (len == sizeof(struct target__kernel_sock_timeval)) {
+                 if (copy_to_user_timeval64(optval_addr, &tv)) {
+                     return -TARGET_EFAULT;
+@@ -2847,7 +2851,10 @@ get_timeout:
          }
-     }
+         if (len > lv)
+             len = lv;
+-        if (len == 4) {
++        if (!optval_addr) {
++            /* writing to NULL does not give error */
++            len = 0;
++        } else if (len == 4) {
+             if (put_user_u32(val, optval_addr))
+                 return -TARGET_EFAULT;
+         } else {
+@@ -2880,18 +2887,24 @@ get_timeout:
+                 return -TARGET_EINVAL;
+             lv = sizeof(lv);
+             ret = get_errno(getsockopt(sockfd, level, optname, &val, &lv));
++write_ret:
+             if (ret < 0)
+                 return ret;
+-            if (len < sizeof(int) && len > 0 && val >= 0 && val < 255) {
++            if (!optval_addr) {
++                len = 0;
++            } else if (len < sizeof(int) && len > 0 && val >= 0 && val < 255) {
+                 len = 1;
+-                if (put_user_u32(len, optlen)
+-                    || put_user_u8(val, optval_addr))
++                if (put_user_u8(val, optval_addr)) {
+                     return -TARGET_EFAULT;
++                }
+             } else {
+                 if (len > sizeof(int))
+                     len = sizeof(int);
+-                if (put_user_u32(len, optlen)
+-                    || put_user_u32(val, optval_addr))
++                if (put_user_u32(val, optval_addr)) {
++                    return -TARGET_EFAULT;
++                }
++            }
++            if (put_user_u32(len, optlen)) {
+                     return -TARGET_EFAULT;
+             }
+             break;
+@@ -2942,20 +2955,7 @@ get_timeout:
+                 return -TARGET_EINVAL;
+             lv = sizeof(lv);
+             ret = get_errno(getsockopt(sockfd, level, optname, &val, &lv));
+-            if (ret < 0)
+-                return ret;
+-            if (len < sizeof(int) && len > 0 && val >= 0 && val < 255) {
+-                len = 1;
+-                if (put_user_u32(len, optlen)
+-                    || put_user_u8(val, optval_addr))
+-                    return -TARGET_EFAULT;
+-            } else {
+-                if (len > sizeof(int))
+-                    len = sizeof(int);
+-                if (put_user_u32(len, optlen)
+-                    || put_user_u32(val, optval_addr))
+-                    return -TARGET_EFAULT;
+-            }
++            goto write_ret;
+             break;
+         default:
+             ret = -TARGET_ENOPROTOOPT;
+@@ -2989,8 +2989,14 @@ get_timeout:
+             if (ret < 0) {
+                 return ret;
+             }
+-            if (put_user_u32(lv, optlen)
+-                || put_user_u32(val, optval_addr)) {
++            if (optval_addr) {
++                if (put_user_u32(val, optval_addr)) {
++                    return -TARGET_EFAULT;
++                }
++            } else {
++                lv = 0;
++            }
++            if (put_user_u32(lv, optlen)) {
+                 return -TARGET_EFAULT;
+             }
+             break;
 -- 
 2.47.3
 
