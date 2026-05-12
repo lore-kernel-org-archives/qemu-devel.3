@@ -4,193 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E82CACD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 22:42:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00C1CCD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 23:08:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMvnS-0002qO-A1; Tue, 12 May 2026 18:41:50 -0400
+	id 1wMwCa-0001YU-QD; Tue, 12 May 2026 19:07:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1wMvnL-0002pO-Tm
- for qemu-devel@nongnu.org; Tue, 12 May 2026 18:41:44 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <alwilliamson@nvidia.com>)
+ id 1wMwBw-0001DR-1d; Tue, 12 May 2026 19:07:15 -0400
+Received: from mail-northcentralusazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c105::5] helo=CH5PR02CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1wMvnI-00039M-9g
- for qemu-devel@nongnu.org; Tue, 12 May 2026 18:41:43 -0400
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64CLagvZ2354666; Tue, 12 May 2026 22:41:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=G2bdcfbg0qWe9+S77EIFkR/3xSbDYsmxdZkCW6QsdtQ=; b=
- JpO34Kq/mZpef7szeP3W4MSvYGF6lD8B60OrCeK8ZSBMsmSASsELWYAqdb0xYGpe
- nRagtR/pXmK2ooqdPrbRivY74+YOR83JhAz8gwyfgZuZUP9jx9hFhWQ7e38nqOBr
- VCmY0CDUur/Ltjl8RNEZFisI+6gNkFlG1RFCj+60CF16Vullq5P8z4SR2j7ZCSs1
- zHhmGJ69ZdBwfa7y2FZ/pwML9pmeCsoKfgvr7lMzMUrfvjY5UzHhwBCC/ElPUDko
- My2dDl6Y32xBV7dQjanIYrelXuxAyMVQK5WuEfgVggQe3i8RUKMXAQgOmdQnTV6b
- 75aG7z3QBMp6dOhH3n8mjA==
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4e4c97r4kh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 12 May 2026 22:41:20 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
- with ESMTP id 64CMZ3Su000680; Tue, 12 May 2026 22:41:19 GMT
-Received: from bl0pr03cu003.outbound.protection.outlook.com
- (mail-eastusazon11012028.outbound.protection.outlook.com [52.101.53.28])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 4e3neav7xy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 12 May 2026 22:41:19 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <alwilliamson@nvidia.com>)
+ id 1wMwBq-0003kk-DJ; Tue, 12 May 2026 19:07:06 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=AcFtajOyGXKTrHSZlJr0vhZMlZZ4xhb7jqJebewM3ef3C0lq1ur849Mne/IpH4XMV1M7Ss4yVz5ltfud34mapDovOOG6VBBSjasGVJfU7ERiN8F7IIGjkHblIKP8BVNKbj+WsEowLGsTegEwTR0T6tj85EuTcGinqgCC38oJZ8/5b65O9YGLMfU+3gp/FcHN/B1X1jPZePsakehf9Z4eB0MklFTncsbasY6fqJi+i35lUsTNXRXpsMzTRzb6OT00xxa676aEwR25isX+jMUyGabarRZNercEFE49fb1InY3r1IPopv3jYDI4KHLmLpOVJ6pEBLuFjg9/PGwAs0mLvg==
+ b=PZu3ja1CKVsFkW/r5rdH5X0YcGYJs5raZC+CzD0H1PSwd7x2TqE6x6ojjh9xacWzWUrfTKBCT1uaggmlTKl8y0giAakIMPTvoCtN1WurwqVlahJm7HScnmS/PpFiuIL5hnS7XgtMGQfCocz+6Np+Dxw8JRn/h4CrxBBCjdBD/ktDYtGZhwhcb3hRx2TqRJXlMJwjRHbFMGxYVZtiJDRJ77HGJUqLnDE87NjyzUzYN0lviZjE+b2CxeYN+45gfJqiH2LDmlal0h9hX4aNKEaHuQEDSFI/k6eefNXmNU1zvZ1sven7JH2G3eT3tTebpmeJl1z9ltEXu90re/DJjsi2bQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=G2bdcfbg0qWe9+S77EIFkR/3xSbDYsmxdZkCW6QsdtQ=;
- b=P6f5L7cfpZb93Nc1FWSi0eKDHRnharOm4JwTiWzAb5+1iRh/VV1atWEhNaDQI9Wx3JOt2YlMWDwJJ0Y3U1ngmXov91z4eVGbaLn4po57HUI97vkmxWMMfUkCflbQ79W3DVn7BbOJF5gyLe/l/KDB1hcT6BC43zo8GcVVGEwN4+4ZUfbqH/M3PWD/C/Os0mtDX2AuQsKwiPWoCwRdUdFjnVm8wb3wtD0+EtavkneAqhQecS2A/ivX2irP7imwgv+srtFA4QiFeZH2iyPG9tkXEX2qfSYGKAZblTl27smbyIzwXBICVlx9jTtvgLTIXrqJ0iH3HvRs6LUIiUcrl7Bh6w==
+ bh=AshgZxaBptnP/Qnl8mvTexalD8JocnBb37zZ4B/jExg=;
+ b=bZwnD/ftw90Uf3MplbneQ90GqRtKAm+jGonKErhT9dLeRlQ14yz83zpG0VJRsenrN8UPkFCV6hX9cW/oI6V3f6XiXI6S+GBUY4Diys0sQDoDzsP7DC5jwMndmTTOHO5rjmGTfjh67HI/W0hEMGYJd+obB48TQxjnR9o6cQQ9lP+o9GVB6sO3G1nHxSJDC2IIJ84CpYmmQxP0zMPRDUH70fao36nIlDnVTLteVEBrQQFZri23/p6jMgtRYrpI9Koh36ozCTPfAb46RojhRafnVP7xFdXddd82/149JUIe9eo9i1se3/ilb8KFdQ7c8ChOVCKtTVTaomFieNPjONvw3w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=G2bdcfbg0qWe9+S77EIFkR/3xSbDYsmxdZkCW6QsdtQ=;
- b=gIivknT7Ex3Pby5KcNWzSpqqYR8Mst35cVjsHm6Y3q3udVauQ6oM0h+V9j4lAJBr/kplwv1kvCg/3wgZcdTm4rNjmnCTfjuXg6mZmh6WxSKW6m3imJrQWK8aQuYTDJVF/7pUYWDI1wXcMOZqFDqrTWd9kzKTYbEYKqWNUMA4mcw=
-Received: from BN0PR10MB5109.namprd10.prod.outlook.com (2603:10b6:408:124::23)
- by SJ0PR10MB6430.namprd10.prod.outlook.com (2603:10b6:a03:486::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9913.11; Tue, 12 May
- 2026 22:41:11 +0000
-Received: from BN0PR10MB5109.namprd10.prod.outlook.com
- ([fe80::d9fa:7ad2:804b:bb83]) by BN0PR10MB5109.namprd10.prod.outlook.com
- ([fe80::d9fa:7ad2:804b:bb83%6]) with mapi id 15.20.9913.009; Tue, 12 May 2026
- 22:41:11 +0000
-Message-ID: <ff57f46b-9cd5-4647-bdcd-3aa4d6cc778c@oracle.com>
-Date: Tue, 12 May 2026 15:41:08 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] hw/nvram/fw_cfg: update bootorder to fix SeaBIOS
- bootup failure
-From: Dongli Zhang <dongli.zhang@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, philmd@linaro.org, kraxel@redhat.com,
- joe.jin@oracle.com, Gerd Hoffmann <kraxel@redhat.com>
-References: <20260310170712.46336-1-dongli.zhang@oracle.com>
-Content-Language: en-US
-In-Reply-To: <20260310170712.46336-1-dongli.zhang@oracle.com>
+ bh=AshgZxaBptnP/Qnl8mvTexalD8JocnBb37zZ4B/jExg=;
+ b=lc2q81EG+5bP0hVEOr8eWViO4B419C8coj9yIY50bZNdxVLt1bOJ61OiOuBa35CuAcvCpGx1KzfGsoZ8HJdWT1A42pS2WftK6W6V/5c+WdSsTh+B8IGBK7Yi20nSF9/iX1jdWmCLGZVEasFL7nU6f/Z0xUwz7/e/1e6ZD3sSfLPJfK9/Si+gWWwgeIWTpJjcljuqOW+NW0nuSQGqkS28mbpfCSa8RKJYGKSIr1b/b0E6BvxMMoIvk/TWtQ1MgGVkQBiBoULaK0UKix3QosO4Uf+8AfeDIdNLb36eSge41UPKuP94iYebTeqY6UkaSndy+WGbmhK2VRNYqGqXOgL1Ow==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB9430.namprd12.prod.outlook.com (2603:10b6:610:1cd::18)
+ by DS7PR12MB6119.namprd12.prod.outlook.com (2603:10b6:8:99::8) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9891.23; Tue, 12 May 2026 23:06:53 +0000
+Received: from CH3PR12MB9430.namprd12.prod.outlook.com
+ ([fe80::3471:9f3f:761c:841]) by CH3PR12MB9430.namprd12.prod.outlook.com
+ ([fe80::3471:9f3f:761c:841%6]) with mapi id 15.20.9891.021; Tue, 12 May 2026
+ 23:06:53 +0000
+Date: Tue, 12 May 2026 17:06:50 -0600
+From: Alex Williamson <alex.williamson@nvidia.com>
+To: Tushar Dave <tdave@nvidia.com>, =?UTF-8?B?Q8OpZHJpYw==?= Le Goater
+ <clg@redhat.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>, "devel@edk2.groups.io"
+ <devel@edk2.groups.io>, qemu-devel@nongnu.org, jgg@nvidia.com,
+ skolothumtho@nvidia.com, qemu-arm@nongnu.org, peter.maydell@linaro.org,
+ mst@redhat.com, marcel.apfelbaum@gmail.com
+Subject: Re: [edk2-devel] [RFC PATCH 0/8] hw/arm/virt, hw/pci: PCI
+ pre-enumeration and fixed BAR allocation
+Message-ID: <20260512170650.4551c9f6@nvidia.com>
+In-Reply-To: <db604efd-9c1f-44e0-9921-71e4d97a81b3@nvidia.com>
+References: <20260508183717.193630-1-tdave@nvidia.com>
+ <22cf37c2-b2b1-40db-b8b7-393b6c36a921@app.fastmail.com>
+ <db604efd-9c1f-44e0-9921-71e4d97a81b3@nvidia.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: CH5PR02CA0012.namprd02.prod.outlook.com
- (2603:10b6:610:1ed::11) To BN0PR10MB5109.namprd10.prod.outlook.com
- (2603:10b6:408:124::23)
+Content-Transfer-Encoding: quoted-printable
+X-ClientProxiedBy: CYZPR14CA0021.namprd14.prod.outlook.com
+ (2603:10b6:930:8f::22) To CH3PR12MB9430.namprd12.prod.outlook.com
+ (2603:10b6:610:1cd::18)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN0PR10MB5109:EE_|SJ0PR10MB6430:EE_
-X-MS-Office365-Filtering-Correlation-Id: 03432315-781b-470f-3493-08deb077902a
+X-MS-TrafficTypeDiagnostic: CH3PR12MB9430:EE_|DS7PR12MB6119:EE_
+X-MS-Office365-Filtering-Correlation-Id: 04442df5-d627-4262-c406-08deb07b27d8
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|366016|1800799024|56012099003|18002099003|4133799003|22082099003;
-X-Microsoft-Antispam-Message-Info: nqnemdjt24DR32PVchbnqJphMO8GBfCe+lGJ50zCi8e3k8vYJlqHMiinnXsbFROb3GANaUfhejZU+mfbmOM+OizYIsOjDxpgNLYid2DYk5czfe54kh39yoRc+45uA41YB0y91szIpPCNuh3SxAFvJWEbwx19fa2QHnKIahmqizPHGPTepJKWDRcFv4Wi1xcfle4rfvMvGlR24Dy+UBWSnUt+Q4JFy1byuB8LLrFFp/9mJZE0dATuu7O+L2peF9NrUmlLWm+0475hFiVTEe5SvXEZRXznTDBK1foUqbrSUiRjJxO6UNJak5MY3fQ0am9qPP8kkH6flyy5kokLuamPycrmw2RsVoFAwHOwpY9MSmuYjBXlPx3Frry9SG8LtSEpd+Z1pD05ccIZAdTnrnYBwssRlETmpr6EKTeb28jygbGr2fmr8M9ZOJry1Uj2z21xKxKywMsq96+Lef8iyLkWnKPCN8JjHx4J+nPSqA9LJN3PAIhvnLjPj643tf7Yq0izu+ToKqjTF7VH4/ZJJKnyAFAhdUDmom7XWMF/CgdyqspPGdtP7gYF2evG+TR9OyHdqzkNNOdAn8IVdBPr/GuZvLio+5F5V31lXjj13B1SMLrvQuTPFOLjHaug5jqCxm41MoO1oq0xhG2NnjABhPbF8A==
+ ARA:13230040|376014|366016|1800799024|22082099003|18002099003|11063799003|56012099003|3023799003;
+X-Microsoft-Antispam-Message-Info: 7r7M/2wLBWHjqEbtzL8PmrBORug2tXmOwxTNoSlSwtUkKLb2U52/Zc8Gd+C1M7UExvRJNQI2TMmZmHJ0ex8kySZfVKDS4Eqk5AdGB7+NkL/Je9S6L51mK0suLVXAAO32mjCwhLad7q7MLb5i1TXRJ0IfOf0d9BUiJht2BIaKAOX/yOT2YaAqWBJsm643iYsV5hAgIWh41AAbNJMbAEoQ8tvGLk4zONxPPhae/Iw3cqTgAFPAjGyymnFtQC35n/s+BN0af3nv3TWAyIdEJTiaGxhxe9JhZzXzuasPvOu6PBcrCcLs8+3mtptLivmL0oNZxVAbbq8pNdntGiF+2aORF9jbhOis387fbnzm4TlcakeYEsogsJ7JXAriUONUK9RZMvJECu+CryNQ9Xv9fklTHRMSqEwUQA7f1pf7Sa7uEg6mKJ07SlWdG/VWYx6ZWleYpSstRDiHDFAYvhKPj8zFI67XY1gECATN6jcoiMJd3xAanKRur8GjUAlUl4S5jX/UDAkD/7PPf7YvJnlhMhlO/Na6Sx0IKu+bI26CtBzLc+WzuXwX961B00SpQwhHGaQ9rlzZ03a21eQfyqxMz+XvGRsBAaxK4hTNodEGGDF1FiZx0Rivof5rLWhbkjTLJkmHAyDjgwBfc4++rFLsT0tjz6BjdXa0I4ZTCVBPsphCW4HtLsDfDHdLM3hcrsdGfBY3
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BN0PR10MB5109.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024)(56012099003)(18002099003)(4133799003)(22082099003);
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB9430.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(22082099003)(18002099003)(11063799003)(56012099003)(3023799003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NWNzVmFDWlk3QlVFRkJwdVU0UndwSW85QWJONmZJRTJXQ25ST2xxNmVTNnJo?=
- =?utf-8?B?M1Z0OUh1V0RjNEw0cHlZMWlmc2dyK2d5Njl2OWVmeUlQMThuc1ZNeUlWZ1N0?=
- =?utf-8?B?dHowZHhaWDVDMFk4MEY5a3FpRDN5NjU0V2oxbU5xT1ZrV1JxaU1rRTBHZWRa?=
- =?utf-8?B?bS92SElIWVcxc2l4N2VVRC9sMFlnWmpRZS9WcHJnRWFwcTlMMDUzZU13SmYw?=
- =?utf-8?B?NWU4SGtSbjVJTVhtWVowM1c3SVBzSThBYVV2aXM3YVdvS1VOYnk5SzZ2cmR5?=
- =?utf-8?B?M0d0blpwWVU0cXdFT1FQelNGYis0R0VTeGFza3A4ckR0L3RZS0JHZWJRM2Nh?=
- =?utf-8?B?dVNyTVRCN0RWT0lHSWRPcWI0R2pDK09pVndrWWIxNlFCY29DNG0xRGZXR2JU?=
- =?utf-8?B?MmsrNWpEN2FiaGJtcTEvSnUxMEQ3amQrUFAxY2QwREhpWGdSRUhhR2dqNUla?=
- =?utf-8?B?NFhPb3lWUzRCalgxV2xvbTdJMWNWd3R3NmZrK2dZVnB3UWkwaklSQnErV2l3?=
- =?utf-8?B?T1dNKzhnL3NVbjRLNFRXNVNCS1BIMFFVOGZZOXIrMWVnWUk3MFV5YlYyV3BI?=
- =?utf-8?B?bzR3blQvMWNIWUZxMVUvdjBBL0FxaEVUQTFIVXg5R0FWYkRKUGdpWWVuUjBX?=
- =?utf-8?B?NEdCR3pjRThnRm4yMjBEOUZMWU53WDlWcCtNODZDYVZTaGFLNjBwVnYxM3I5?=
- =?utf-8?B?MFh6QnNxVUtRWWFadUVuT0c1UzhFYm5mMVFoRWtQc0FKdWgxdlJOSldMMVln?=
- =?utf-8?B?MFVJQ3EzOUtrOExBOXFnMnYvV0tqNVVveVhXb2V3OVRzS2FZY253YWFVK0lR?=
- =?utf-8?B?cStoS0VackEzamlyL2NZb0tvLy9velVqU0VNaUorVXRBUDJ5SGFLNmxXNGpF?=
- =?utf-8?B?dHFzYkNBWHhhSU5WcTlMUlYxbWpZUlpNVDREbkQ4OFZBTEp5WTZUM3J1OUVm?=
- =?utf-8?B?R29LN2txTmFKU2ZsbzJsaFRoQ0l5Ky9WWnNrZlVINDhRbGtmUGNGSkJFeDRL?=
- =?utf-8?B?dFFTZGp2dk5WY1Z0NUcvdklQNFM4TTltQkFwNlZTVHZOVGdLYk50bUVzejhs?=
- =?utf-8?B?YVZtZVVGVDdCaEh1cStwMkdJVzY4SjRRdzQvNUFFbC9LemFiaGwyVHY3WTlL?=
- =?utf-8?B?eEY2czQvTVRaZGdkdElXbmMyQWdXSFlQeVltUzlVQjdxZU5PMDh4QUFmWTl5?=
- =?utf-8?B?U1hpdFVIemtxa0tib0kyL3BCQVNlaXJ4dy9lU2paa29pemVvcjR1RXBFRmY0?=
- =?utf-8?B?c3dMaFdzYTFSbWgyTHBtVTRJZnM3SUMza1JjNElFOVJvcEpPb1RGQyttaWZO?=
- =?utf-8?B?MG1uSVgxTzQ0bFpLNkFIWGpwanNLYXQ5eWZpYlRxYXBydk05ZEJwWFd4ZlZX?=
- =?utf-8?B?aDdIeEdvR1RFSGNUc01rUS9uTFpJTWlDR2R5dUpNdlM0QTFMNmE5aUlmcmM0?=
- =?utf-8?B?cXdtZXEvd1dWOTdBdGNmeVVCM0t0ZzFjZmpFRFE5Y1l4Q1lWQnZMQStWWGgv?=
- =?utf-8?B?cHBZVUFDdS9zSmpOUzRtRTduUjUwcGRtNW90R1RKMXhiVmI4d0crU2JxZzZ4?=
- =?utf-8?B?OWxxR2VPZHdQdDh3Q3JxSGt2eTZCQ1lJWE5JZ3k2WkZCdGNUQW9scURieVk0?=
- =?utf-8?B?YmNhL1UyYkE0ZnFwd3RrdWZ3OE1XeWJwOERoaDU0eWRyck9vWlN5NS9NU0Fv?=
- =?utf-8?B?Uy9RQUNHeGdCdEVnOXZiaG5iYWFFRFVVY0VtMXR3M2ZIYjI1SmdZR3BUa1pX?=
- =?utf-8?B?aEI3ZTFjTCtOQ0tsY0JjSGhxeXBpUjJlbDRYUUY1UDlaYzhIeUlXSllWazRi?=
- =?utf-8?B?aVh5ZlRmQmlSOUdTbkZnTml3YXVkYkhOT2J4QlJYUmJ4NHNPZXhiNlNqMEFO?=
- =?utf-8?B?bTk0QVliY3ZXVjZla1B5aGJna3JLZGN2aWxzclZONG92KzA4emJVS2p5WnZz?=
- =?utf-8?B?RE9rQXdYTmdodFFheWp1ekdwd3hDVXlSTlV0RURhTmJkSUo0MFh3TnB0cS82?=
- =?utf-8?B?L3BMN3A1K1czMXFjSVVwWElYT2h3aVpqSDQ2WlRnbzhZUjBaeTNQMWEyZVQ1?=
- =?utf-8?B?N044SzZrM1lOMnJpdGxSZnZSSmtaUmNHeHQ4akZkVmQ2UzZ6Y1VOdHdRQVZ2?=
- =?utf-8?B?ZnA3NGhYR0VRR0Y2K1VrNTBObXJ3dWdnMFVCMXNXUEZTQmUzNytLY01kN2Rr?=
- =?utf-8?B?VjRoVmRPdkNabER5MjgwdGFybjAzNTBqa0d6ZHZ4VGtrTzI0NE5zeWJVeVZV?=
- =?utf-8?B?dGhJbS9tcG5WVUZPQk9DUEFZVFN2QUlwMjd2aGtzR1dDL3NmeEhmUVFzMFFK?=
- =?utf-8?B?VkFRSTNhQzJGTFFlK3loU254NmIzS04ybys5ZTZ4MHlpSkxVM0FaZz09?=
-X-Exchange-RoutingPolicyChecked: uJlBtNaZqilR/6WKEh7vyruYfluwYiED9hGKhU/31YzJ3s3zDLL1rDCRJs25tevAfcfZlMBZOatb1mBXt2WxH9oTM/fPKnStLRxD2Yjqzj53x8pjD7MZ1/NZXfZnjsaX8C6+hb+BtccKbjMZWJEmWN4fAlyTpeMYxTLccwgr9zqApli5P0VlUUYhqecvN1ABq9lA9DnVOsK3Zppfh1ux2zsFNBPPtfbuyFEa9eI2gzqiK+72iPPCAtoQFs+na/WhYHcdaylGJh/p8P7UOuJvfLQ6jA/t9euuIAiW82NhJPaeWVBHev4HmK1oz5VZbXJ7a/evZjTTiayELzY5YMzcuw==
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 98cRFKabusYwum81eTSLjxxhCaPeHR+FlOOMHHwmDL2WHTVKbJXCAFyWGej2Lrwu7ShcqTvTe5tkGAOtCGwYq2lVqkpCUpRHzy2dtLOIEaDV8BDVTGCfHB3UfFp6fP6WPvhHY1NdiBcHBsF+1cOX3JtLl3x3aAM3QvpXR55Utt9Bd/oN2uNBc3NRDGv1riahOd22R6QKGobuEZJsTuHohClPlat+yStZcbDd6JyNU/Zp23tPlfhssuqhlv0ZxEtqt8gCKvPEfjzmeYFvyU2PqgZdl2TuVGG3fuf2aQnBMUMzhS9QjXVOrSpROYa31yXvdRKFiIC/N99HPX7n/784k5xuf5VYeZcqW7jbjd2nND9MTYUdXz8v3adFqKUq6m3LY8krbCVfkDFLYLBMttjJfGzZxPP5ndo6GJU32/PP1oiQ9WreRLULrY67797b7Ztw5vhejB/T+iGGW+LY09Ot+YXBwPj9qmWqOA6AkaTdExnCbEIqTPU70SRA8medOdVZkOUktHHWhgJE5JNWj8oC+Sl8KewUN7heMrih/TF1zfJwHbZtBHy2LyWxHP/evbhQpTHUWyQiTCj9a5Afa/Bom/Z9xCcyJVSPM6y0lHu4bic=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 03432315-781b-470f-3493-08deb077902a
-X-MS-Exchange-CrossTenant-AuthSource: BN0PR10MB5109.namprd10.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?V2lSOXJRM1hyRnNmVUFaMHR2ZDNYMUQwMHhSSUdyY0xrUHBGL3FFQTVEUUV1?=
+ =?utf-8?B?dHJkL3R1Vi9haWxOVEMrejlrTTFxQlR1NWdKRnRqQlZCT0FiTjlkZTdPVSt4?=
+ =?utf-8?B?LzFKamhCSVpHM0R6R3doUzUrQzdYakN6UWZzcEszS2pORVZNc2tHY1hpbkNE?=
+ =?utf-8?B?TVlYdlkvbEZJb2w3NURkcTNEcGpvdEU3THJqeUpvRmJFZzZ4Q2VRaU5ZVXJF?=
+ =?utf-8?B?YVFTd2Z3ZkdQZ0lHcmU1U1JpdWgvTnp6WElpY3VRcVJMUkpXNi9TYldaNGNq?=
+ =?utf-8?B?TWNpYTVhS0pQTWxCcTFpTngvOVdmdit2eUtXMzV5UCtkaWZLZlVVN1J4UFVD?=
+ =?utf-8?B?K1NrRkxoS1ZndVFZNUxsZ2liUDdMaEZBYUl5NG9KTnB1L3VkMnhIc29zWmFL?=
+ =?utf-8?B?ekhidzhWT01yTk55TjBrNEI0cXlUM0pVQ3psUm04K3JURFFRaWgwcEwwS2hx?=
+ =?utf-8?B?eFhuMGo1NkVPZC93d2FLWmRna2lEazNCelN0Vklxdk93R3JJL1JoTE9TUDAr?=
+ =?utf-8?B?ZnZxa21SSlNyVDNkVGJqRmU2Q0lzdWU5WXVPT1RKRm5CczRDVnMrUlB5cW9R?=
+ =?utf-8?B?ekxsOGJ5L0tmb3JmWUdaYXQ0SVFrZFJQZFVFQ1JoQXlhenFJZlNqTEZSK3Z4?=
+ =?utf-8?B?NGpqRWZXWkR6UHhkVy9lV0VvVkdIUEdhemhaS3p1VFRXdElnN1J4Zm85OVo3?=
+ =?utf-8?B?UlFRbGpTcHZnZHlkalozdk16MjUrOXdzWUVIYmllelN3NmVGVzRnMzhPc2tk?=
+ =?utf-8?B?dExIWjBCZWtNSW95R2tWamxvcmZEdVNKS1JFSXRxM0FjcE0xNjlvYndHMmln?=
+ =?utf-8?B?NTg5bEF5ak9BTE9QR2RlS1NVQmRvWTYxaUg1R3lJRVIwV2lWOGh6RjVZQTBx?=
+ =?utf-8?B?UWsxbmZOUWpMYVhiTG5CeXJRN29LbUhGTXhFajZDSGlmVk9wZmpXNmNmYmNr?=
+ =?utf-8?B?UWRiRURnM2ZWOTdNUDhrK0xxaEhIWEd0dERWb242NjRQU3V4a3pQNHVwWWYx?=
+ =?utf-8?B?NWh1WDFtdUFEb0NrOWQ4NVl1TVNIWFBVWXJEeVdFZGthbkFVTXJjMUF3RG9I?=
+ =?utf-8?B?V1hHSWEydUcyL09XZHhhWFFPRzBJNnBKc2drYnYyQll4STBvY0p3V1F4akRC?=
+ =?utf-8?B?VlZiTzZnK1czM0kvVDY4NFZ5VlN3dXZETm4xdG12WTRBVmhocGhVdlowYkEv?=
+ =?utf-8?B?Nk12RHFmUlJVZCtHdUJNelBWdXBIZ1VYT2YxTmI5OEpTTmQxN3ZxUmcxTDBs?=
+ =?utf-8?B?US9HSHc4OS9OelJoR0xXckNCbU83VGdzMFA3OXI3VisrTy85TmxNOFdwK3Mr?=
+ =?utf-8?B?YmJEaTVxUzkwdGJ5ZjhKbkZBZHVHY2xpbWRXSGhuYzN1ZU9IcVlrNGZ4ODcw?=
+ =?utf-8?B?T1RRTXEvazBROVFyZGVUWW82WjYvZ0ZCQ2h1d08zNXp0YUpwUWJUNVJsdmhV?=
+ =?utf-8?B?aWF4UFl4bG1GSmdENzkveCtqS05JS1BreEtOZ09TdVVwc0YweFBMNHRDa1J1?=
+ =?utf-8?B?QjlqWU03ZEdmdG5MZFRzVnV6UWtlNUlIRWFDTElXRlVjdmFLUmp0emIyWllW?=
+ =?utf-8?B?MzhZVTBOQmRWRFJoRjZENHlnU2xpUWNrN0lFakhQRWVTZUNlQ01ZY0R0c1dl?=
+ =?utf-8?B?WElwOXNQdHE5MnlmTlU2UlZFaWpNM0kyRHQ3MHdCaXpENGJnTmZrUHVld2l1?=
+ =?utf-8?B?c1dXMmd2a2NycDFEV1U3aWNyNm9Fek9BdVNRaTEzeE1hR1M4YXhKbjVjZ1ZV?=
+ =?utf-8?B?N0xTc2VXdjlUc05MVjBDMjVQczNtN01rbkx4Mk83cU9CYjlIMHpBeUFEOEEy?=
+ =?utf-8?B?Tnl1MUk4d0NwZmJnMks0RWNOeEhhTFFhcGRNZi9yWGs3MldCMm5LMmVkdW8v?=
+ =?utf-8?B?Snc0ZFZyRjhHd0d4eUNQTkg4bjdpOExzZzFwQktrNkY0NFBJTG9yMHlsV2pk?=
+ =?utf-8?B?QU9lYVQxRWd2REdnTEdybUlhcnNtakE4TGlpWFNEbVJCTDB2WDRPUEtHN2xF?=
+ =?utf-8?B?NDhFT3J5TWhqN3NOc0R3bS9kYXBod1NMaWhHTjJadVpQdHFPZEFXMHo4aXhM?=
+ =?utf-8?B?Z3h6TWhVNWJzOEIybXFyblN6d3lycFZ6d3NibjJBQVI2d3Q0U2diZUo3aFIx?=
+ =?utf-8?B?b2tmRUN1QlNuWUlDcG5iM3RkU3JQUlFvcm11WmQ2ejY4elo4Q2pLSWFPY2Ry?=
+ =?utf-8?B?M0FSZ2d6TEJvT0lLRTNmYW8rYUViU2thblJtamVuaHZqUGZVM0ZTT0lseFlq?=
+ =?utf-8?B?UHAyY3hoY0hkc0ozSXljQmsxNFJVMDVqVDlBRGZwZGFoQVJ6QURZZGxmckJt?=
+ =?utf-8?B?SHNoaHZxUVdRYXB3U0YraENSRHgrV3h1QU1Rd2NhZno1bUxIdjlPZz09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 04442df5-d627-4262-c406-08deb07b27d8
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB9430.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 May 2026 22:41:11.3376 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 May 2026 23:06:53.0918 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: udD8nf5txmL8iopY3ScYE3hNSZYviV83j88hpjJeAgaNx/wBB7KdnW39RqLdMRGfUFGc2tiRVIKU/7++Pn/eVg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR10MB6430
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-11_05,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
- mlxscore=0 suspectscore=0 spamscore=0 phishscore=0
- lowpriorityscore=0
- bulkscore=0 adultscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2605050000 definitions=main-2605120231
-X-Proofpoint-GUID: qTuXAIUcjAdQ7IK5YhvLD1aGzf1stMgP
-X-Authority-Analysis: v=2.4 cv=AeCB2XXG c=1 sm=1 tr=0 ts=6a03ac90 b=1 cx=c_pps
- a=WeWmnZmh0fydH62SvGsd2A==:117
- a=WeWmnZmh0fydH62SvGsd2A==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=NGcC8JguVDcA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=jiCTI4zE5U7BLdzWsZGv:22 a=3I1J8UUJPc9JN9BFgKH3:22 a=Hnm2Hy9fAAAA:8
- a=xDyOQ7S2AAAA:8 a=VwQbUJbxAAAA:8 a=yPCof4ZbAAAA:8 a=taVDWLPRZv95-ixF4LIA:9
- a=QEXdDO2ut3YA:10 a=qByqzKpv1oajCkFmDuv_:22 a=xG0zjm5BtbRCg84i2bc1:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEyMDIzMiBTYWx0ZWRfX19NR5Cp1LAiR
- 0tOJlLnS5cJMEmT0h4o3z8Ev7mAcIoafSmirqJlUGyz0g9i3oNce1l2iXdBmnhxFgrgrxGGJX9w
- /5CHs6PPyoUCDDVybaOmSge0uv5R9VF74DXu/Jb395YuccCQtycTQHbPpG3xR+kIEbyfwj4+lsm
- a52XEF5ghLkO0EujZqQPT/TW1E4tLkITkwsIoMBRvSXUHvGfabDLI8+6GQnlh0scJnA2hciQj+G
- wSopiF0cSENQqncF2Ilx08VtxNVhIjY/ZEC252fmIxB/R3ibKmHWCYzt+BieU1MqogViJhxP8FO
- +/J7KgtNPhAznsdWvz+2hLHgYuoBxB/PYKypgSObQ4UjomK53O7Vof8BItKmtJvsCLo2+3g2no6
- niMaDizkPMqxS3Fd2hRTCjLccONy3nJpME2YWq1GqY1EKUKxNSL8Q/KLaG+T/liyHpuTEb7gPc5
- cEjnv4cryXz6Crkr6rQ==
-X-Proofpoint-ORIG-GUID: qTuXAIUcjAdQ7IK5YhvLD1aGzf1stMgP
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=dongli.zhang@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-Exchange-CrossTenant-UserPrincipalName: GPnepZV6zV/2YW+xpvzSS5rf66zbm2OsB3+q6v7QRBsWKRT9uyHzDRa5PsWa4AmB5TG+KFmB7J5cvuCIXHJ9Bw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB6119
+Received-SPF: permerror client-ip=2a01:111:f403:c105::5;
+ envelope-from=alwilliamson@nvidia.com;
+ helo=CH5PR02CU005.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -206,94 +153,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-FYI the SeaBIOS patch we used to submit to SeaBIOS two months ago.
+On Tue, 12 May 2026 12:25:45 -0500
+Tushar Dave <tdave@nvidia.com> wrote:
 
-We got the same suggestion from Gerd: system_reset before starting the instance.
+> On 5/11/2026 6:43 AM, Ard Biesheuvel wrote:
+> > Hello Tushar,
+> >=20
+> > On Fri, 8 May 2026, at 20:37, Tushar Dave via groups.io wrote: =20
+> >> This RFC introduces a mechanism to specify Guest Physical Addresses
+> >> (GPAs) for PCI BARs, allowing explicit placement of guest MMIO BAR
+> >> addresses to match host physical addresses for assigned devices.
+> >>
+> >> On some platforms, P2P DMA is performed between devices within the sam=
+e
+> >> IOMMU group. The PCI fabric ACS is configured to permit direct P2P
+> >> without going through the host bridge in order to achieve the required
+> >> performance.
+> >>
+> >> To support this multi-device IOMMU group P2P scenario in virtualizatio=
+n,
+> >> the VM may need to use the same MMIO BAR addresses as the host physica=
+l
+> >> address layout.
+> >> =20
+> >=20
+> > Did you consider implementing this using Enhanced Allocation (EA)? If s=
+o,
+> > could you explain why it is not suitable here? =20
+>=20
+> I have not evaluated EA for this design. When I looked at EDK2, I
+> chose PcdPciDisableBusEnumeration because it cleanly preserves fixed
+> BAR programming established by the hypervisor =E2=80=94 at the cost of QE=
+MU
+> performing PCI bus number and resource assignment.
+>=20
+> I did a quick search and do not see EA support in EDK2. Any pointers
+> to EA being used in a similar fashion to achieve fixed BAR placement
+> would be appreciated.
 
-[PATCH 1/1] boot: try one disk after another until system boots successfully
-https://mail.coreboot.org/archives/list/seabios@seabios.org/thread/KECOCJCQOMPUF3WMIVN6YUJ7JVF7EAYW
+EA wasn't on my radar either, but I did some research and chatted with
+Tushar and I think it could work.  I'll sketch out a rough idea of what
+it might looks like.
 
-Thank you very much!
+EA describes BAR equivalents (fixed base address, size, and type) in a
+separate capability while the corresponding device BAR registers appear
+unimplemented.  Linux already consumes endpoint EA capabilities and
+marks the resulting resources IORESOURCE_PCI_FIXED.  EDK2 doesn't know
+about EA (cap 0x14 isn't defined anywhere in MdePkg, and PciBusDxe
+never consults it afaict), but that turns out to be useful here rather
+than a problem.
 
-Dongli Zhang
+Starting at the QEMU device, for a vfio-pci device we'd need to
+virtualize the real BARs as unimplemented and surface that information
+via a synthesized EA capability instead.  It's debatable whether this
+is a generic PCI mechanism or vfio-pci specific, whether HPA is
+automatically used as the base address for vfio-pci devices or
+user-specified, and the capability offset in config space.  None of
+those fundamentally change the shape of the flow.
 
-On 3/10/26 10:06 AM, Dongli Zhang wrote:
-> During system reset, and only during system reset, QEMU updates the
-> "bootorder" and "bios-geometry" entries in fw_cfg based on the contents of
-> "fw_boot_order" and "fw_lchs". After the guest VM boots, the firmware
-> (e.g., SeaBIOS) can read the boot order from fw_cfg and boot from the disk
-> at the top of the list.
-> 
-> The reset handler fw_cfg_machine_reset() is invoked either implicitly
-> during instance creation or explicitly by the user via HMP/QMP.
-> 
-> However, users may attach or detach disks while the VM is in the prelaunch
-> state. Because there is no implicit reset when transitioning from prelaunch
-> to running, the "bootorder" and "bios-geometry" data in fw_cfg can become
-> stale. As a result, the firmware may be unable to locate the correct disk
-> to boot from.
-> 
-> Here is an example that demonstrates the bug.
-> 
-> 1. Create a QEMU instance with a virtio-scsi HBA and keep it in the
-> prelaunch state. Use SeaBIOS rather than UEFI.
-> 
-> -device virtio-scsi-pci,id=scsi0,num_queues=4 \
-> -S \
-> 
-> 2. First, attach the boot disk, then attach the secondary disk.
-> 
-> (qemu) drive_add 0 file=boot.qcow2,if=none,id=drive0
-> (qemu) device_add scsi-hd,drive=drive0,bus=scsi0.0,channel=0,scsi-id=0,lun=1,bootindex=1
-> (qemu) drive_add 0 file=secondary.qcow2,if=none,id=drive1
-> (qemu) device_add scsi-hd,drive=drive1,bus=scsi0.0,channel=0,scsi-id=0,lun=2,bootindex=-1
-> 
-> 3. Start the VM from the prelaunch state. Because the "bootorder" and
-> "bios-geometry" data in fw_cfg is stale, SeaBIOS attempts to boot from the
-> secondary disk only once and then stops. As a result, the VM fails to boot.
-> 
-> One possible workaround is to require QEMU users to explicitly issue a
-> system_reset before starting a guest VM from the prelaunch state, if any
-> disks have been attached or detached.
-> 
-> Another option is to address the issue in SeaBIOS. Nowadays, SeaBIOS
-> attempts to boot from only a single disk. We could enhance SeaBIOS to try
-> multiple disks in order until boot succeeds.
-> 
-> Another option is to update "bootorder" and "bios-geometry" everywhere
-> disks are attached or detached. This may require identifying the relevant
-> functions across multiple device types, such as SCSI, NVMe, virtio-blk, and
-> IDE.
-> 
-> This commit fixes the issue in QEMU by ensuring that "bootorder" and
-> "bios-geometry" are always updated when QEMU transitions from the prelaunch
-> state to running.
-> 
-> According to runstate_transitions_def[], RUN_STATE_PRELAUNCH is allowed to
-> transition to four states. Only the transition to RUN_STATE_RUNNING
-> requires updating "bootorder" and "bios-geometry".
-> 
-> v1: https://urldefense.com/v3/__https://lore.kernel.org/qemu-devel/20260225220556.11049-1-dongli.zhang@oracle.com__;!!ACWV5N9M2RV99hQ!OFofhPtLZFckBZ3aal7MYLiV9MLmAf5-4SKkVHOmWOb29_2JORlCE7NYn_NXBBOOZ7PC12n-UbJjmxaiPAqLJSHt$ 
-> 
-> v1 -> v2:
->   - Add new runstate tranisition notifier to track transition from
->     prelaunch to running.
-> 
-> 
-> Dongli Zhang (2)
->   system/runstate: add runstate transition notifier
->   hw/nvram/fw_cfg: update bootorder and bios-geometry before launching
-> 
->  hw/nvram/fw_cfg.c         | 31 +++++++++++++++++++++++++++++--
->  include/hw/nvram/fw_cfg.h |  1 +
->  include/system/runstate.h |  8 ++++++++
->  system/runstate.c         | 25 +++++++++++++++++++++++++
->  4 files changed, 63 insertions(+), 2 deletions(-)
-> 
-> Thank you very much!
-> 
-> Dongli Zhang
-> 
-> 
+For the absolute bare-minimum level of support (EA device on the root
+complex, EA resources don't overlap the VM address space or MMIO range,
+EDK2 firmware, Linux guest booted with pci=3Dnocrs) I think this actually
+works with just adding the EA capability above.  Let's walk through
+those constraints and how we relax them.
 
+At the firmware level we lean on the real BAR registers being
+unimplemented for EA devices, so EDK2 allocates no MMIO or IO resources
+for them.  Only bus numbers get assigned if the EA device sits in a PCI
+hierarchy.  That's exactly what we want, EDK2 doing conventional bus
+assignment but staying out of the EA resource flow entirely.
+
+Instead of firmware EA enlightenment we lean on the guest OS.  Linux
+reads endpoint EA today, but the bridge aperture sizing path ignores
+those fixed resources.  As Tushar's series demonstrates, generically
+handling mixed "fixed-BAR" and programmable-BAR devices in one
+hierarchy is hard.  An incremental Linux enhancement that greatly
+simplifies the problem space would be to program bridge apertures only
+for hierarchies consisting entirely of fixed resources.  The math
+becomes trivial (window spans min..max of fixed children, aligned to
+bridge granularity), and there's no regression risk, these hierarchies
+currently fail silently.  The sizer ignores fixed children and the
+fixed-claim walk-up finds no containing parent.  This enhancement,
+plus the homogeneous-hierarchy constraint, removes the root-complex
+constraint and lets us mirror the bare-metal topologies we need.
+
+Resource ranges are a bit messier.  The extent of the EA device ranges
+could be determined in QEMU and the VM address map adjusted to prevent
+overlap.  Tushar already has a similar user-specified machine option in
+this series.  That range also needs to reach the guest as a CRS (to
+avoid pci=3Dnocrs) but needs to stay distinct from the DT range passed to
+EDK2 for programmable BAR devices so EDK2 won't place a programmable
+BAR or bridge window into the EA region.  So long as we keep EA and
+programmable devices in separate hierarchies, EDK2 only needs the
+programmable range via DT and we can add the EA range as additional CRS
+ranges visible only to the guest.
+
+In practice, EDK2 programs all the programmable devices and the EA
+devices live entirely in the additional CRS.  A possibly cleaner
+alternative is additional PXB host bridges for the EA devices, each
+with its own CRS.  That sidesteps the DT/CRS split entirely since the
+EA PXB has nothing for EDK2 to allocate anyway.
+
+If we agree that homogeneous hierarchies (no mixing of EA and
+programmable BARs) is a reasonable constraint, and possibly extend that
+to homogeneous per host bridge to simplify the CRS mapping, we have the
+following work items:
+
+ * Extend Linux EA support to program bridge apertures for subordinate
+   homogeneous EA hierarchies.
+
+ * Develop options to virtualize programmable BARs as EA for vfio-pci
+   devices, if not generically for the benefit of testing.
+
+ * Implement a way to poke holes in the VM address space and plumb
+   through to account for addresses used by EA devices.
+
+ * Provide those same ranges to the guest via CRS (but not via DT to
+   EDK2), or alternatively expose them through additional PXB host
+   bridges.
+
+Does that shape roughly seem accurate?  Are there additional gaps I've
+missed?  Thanks,
+
+Alex
 
