@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16AA8CD4F39
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12656CD4F21
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 20:59:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuAt-00016k-Ui; Tue, 12 May 2026 16:57:56 -0400
+	id 1wMu93-0004iI-Gu; Tue, 12 May 2026 16:56:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuAm-0000Ec-6b; Tue, 12 May 2026 16:57:48 -0400
+ id 1wMu8f-00046a-2S; Tue, 12 May 2026 16:55:38 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuAj-00046B-RU; Tue, 12 May 2026 16:57:47 -0400
+ id 1wMu8c-00038F-O7; Tue, 12 May 2026 16:55:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619275; bh=UfCY160u0Z/PDrH/rzfGi7JtK4x16xXFa45/5pC6Fdk=;
+ t=1778619274; bh=yBUf5mPDddwteeja6RTb3Z3+b9mfjiSs70Ddir/gUGw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=kWLIMPM3tV0fncJerf8mVzyZhzpZLYcaKgUJRl3Zrx8fqvqJxvU1wgea0qtqYaBlf
- pk+qcqcT2XuP8C5qYWX/tLrsC6+qPfE/QfzXECBdYnETcxpbecBICytVREQj4qfa4w
- nh19dIlL5CEJqmKKnAqrw3edg0WoLJ8SlP6ZL+SuEmOjW+FlJpz5XpgCz6tTE/DyN/
- LapxBkRRjb47Dqyv0h7LH1PvaMZ7kU9X68XyUmT8GshxEtb8pE9/OEKezrUAS6Txv+
- KQr9VsWgi/bXVQqDFAkIogyHcF8InyEbeoq8HjLzFnVzLcBeLBlW/MoIP9yXUGwXbD
- EEpUTATaF5sSQ==
+ b=bHOvzH++xhAx8AdkLQGjdOfg1CiYsBRDLfxQFDmzWJU9mQnKsvlw+1VFshTngGiGq
+ /CTKAmIhQMMtWmMI0EnnnIsEQmlCiqNZoVsvgHUzFfPSc5WIuBRVLW/lnc26fZPKf7
+ 6tfSDeGMmga3qdhkvJEtUnY8uB8SEfHUfGmH6UVkZhXc5sOSNel8t+iA4C+2kRj7Hf
+ IOnoxUJxaerF/FDTs6FVYxUwSY0fB/7SGjupjTH9BzZspF8kCubbNN2qVgZaYhhnCB
+ wVVqEKiwaunjpNzQJg8sGucDD/f/sANb616+YJr8iTlRSNlg4wM++N9l+lNLYd6Z7k
+ EWjGA9a/bbwAQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 628991AA2ED;
- Tue, 12 May 2026 23:54:35 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 355661AA2D9;
+ Tue, 12 May 2026 23:54:34 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6E7DB3ABC5E;
- Tue, 12 May 2026 23:54:39 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4111C3ABC4A;
+ Tue, 12 May 2026 23:54:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Zero Day Initiative <zdi-disclosures@trendmicro.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 033/107] scripts/qemu-guest-agent/fsfreeze-hook: Fix
- syslog-fallback logic
-Date: Tue, 12 May 2026 23:53:20 +0300
-Message-ID: <20260512205437.360850-33-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 013/107] virtio-gpu: fix overflow check when
+ allocating 2d image
+Date: Tue, 12 May 2026 23:53:00 +0300
+Message-ID: <20260512205437.360850-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
@@ -72,59 +73,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-In the fsfreeze script we attempt to implement "log to a file if we
-can, and fall back to syslog if we cannot".  We do this with:
+The calc_image_hostmem() comment says pixman_image_create_bits() checks
+for overflow. However, this relied on the facts that "bits" was NULL and
+it performed it when it was introduced. Since commit 9462ff4695aa, the
+"bits" argument can be provided and the check is no longer applied.
 
-  [ ! -w "$LOGFILE" ] && USE_SYSLOG=1
-  touch "$LOGFILE" >/dev/null 2>&1 || USE_SYSLOG=1
+Promotes the computation to uint64_t and adds an explicit overflow check
+to avoid potential later OOB read/write on the image data.
 
-This has a weird behaviour if it is run in a setup where we have
-permissions that would allow us to write to $LOGFILE but it does not
-currently exist.  On the first execution, the '-w' fails and so we
-set USE_SYSLOG=1.  But since we also do the "touch $LOGFILE" step we
-create an empty logfile.  Then on the second time the script is
-executed, we see a writeable logfile and will use it.  The effect is
-"log to syslog once, then to the logfile thereafter", which is not
-likely to be what anybody wants.
-
-Update the condition of the first check to only pick syslog if
-the logfile exists but is not writable. This means that:
- * if the logfile doesn't exist but we are able to create it,
-   we will create it and use it
- * if the logfile already exists and we can write to it,
-   we will use it
- * if the logfile already exists but we can't write to it,
-   we will fall back to syslog
- * if the logfile doesn't exist and we can't create it,
-   we will fall back to syslog
-
-Cc: qemu-stable@nongnu.org
-Fixes: 85978dfb6b1c133 ("qemu-ga: Optimize freeze-hook script logic of logging error")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260317094806.1944053-4-peter.maydell@linaro.org
-Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-(cherry picked from commit 08497afcb2a737794991f17a37f0a0971fca411e)
+Fixes: CVE-2026-3886
+Fixes: ZDI-CAN-27578
+Fixes: 9462ff4695aa ("virtio-gpu/win32: allocate shareable 2d resources/images")
+Reported-by: Zero Day Initiative <zdi-disclosures@trendmicro.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260311-cve-v1-1-f72b4c7c1ab2@redhat.com>
+(cherry picked from commit c035d5eadf400670593a76778f98f052d7482968)
+(Mjt: adjust context for 10.0.x)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/scripts/qemu-guest-agent/fsfreeze-hook b/scripts/qemu-guest-agent/fsfreeze-hook
-index a635a25cb8..a279a57857 100755
---- a/scripts/qemu-guest-agent/fsfreeze-hook
-+++ b/scripts/qemu-guest-agent/fsfreeze-hook
-@@ -20,8 +20,8 @@ is_ignored_file() {
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 7ab5221fbc..0d1e991e1c 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -227,16 +227,20 @@ void virtio_gpu_get_edid(VirtIOGPU *g,
+     virtio_gpu_ctrl_response(g, cmd, &edid.hdr, sizeof(edid));
  }
  
- USE_SYSLOG=0
--# if log file is not writable, fallback to syslog
--[ ! -w "$LOGFILE" ] && USE_SYSLOG=1
-+# if log file exists but is not writable, fallback to syslog
-+[ -e "$LOGFILE" ] && [ ! -w "$LOGFILE" ] && USE_SYSLOG=1
- # try to update log file and fallback to syslog if it fails
- touch "$LOGFILE" >/dev/null 2>&1 || USE_SYSLOG=1
+-static uint32_t calc_image_hostmem(pixman_format_code_t pformat,
+-                                   uint32_t width, uint32_t height)
++static bool calc_image_hostmem(pixman_format_code_t pformat,
++                               uint32_t width, uint32_t height,
++                               uint32_t *hostmem)
+ {
+-    /* Copied from pixman/pixman-bits-image.c, skip integer overflow check.
+-     * pixman_image_create_bits will fail in case it overflow.
+-     */
++    uint64_t bpp = PIXMAN_FORMAT_BPP(pformat);
++    uint64_t stride = (((uint64_t)width * bpp + 0x1f) >> 5) * sizeof(uint32_t);
++    uint64_t size = (uint64_t)height * stride;
  
+-    int bpp = PIXMAN_FORMAT_BPP(pformat);
+-    int stride = ((width * bpp + 0x1f) >> 5) * sizeof(uint32_t);
+-    return height * stride;
++    if (size > UINT32_MAX) {
++        return false;
++    }
++
++    *hostmem = size;
++    return true;
+ }
+ 
+ static void virtio_gpu_resource_create_2d(VirtIOGPU *g,
+@@ -245,6 +249,7 @@ static void virtio_gpu_resource_create_2d(VirtIOGPU *g,
+     pixman_format_code_t pformat;
+     struct virtio_gpu_simple_resource *res;
+     struct virtio_gpu_resource_create_2d c2d;
++    uint32_t hostmem;
+ 
+     VIRTIO_GPU_FILL_CMD(c2d);
+     virtio_gpu_bswap_32(&c2d, sizeof(c2d));
+@@ -283,7 +288,12 @@ static void virtio_gpu_resource_create_2d(VirtIOGPU *g,
+         return;
+     }
+ 
+-    res->hostmem = calc_image_hostmem(pformat, c2d.width, c2d.height);
++    if (!calc_image_hostmem(pformat, c2d.width, c2d.height, &hostmem)) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: image dimensions overflow\n",
++                      __func__);
++        goto end;
++    }
++    res->hostmem = hostmem;
+     if (res->hostmem + g->hostmem < g->conf_max_hostmem) {
+         if (!qemu_pixman_image_new_shareable(
+                 &res->image,
+@@ -1283,7 +1293,7 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
+ {
+     VirtIOGPU *g = opaque;
+     struct virtio_gpu_simple_resource *res;
+-    uint32_t resource_id, pformat;
++    uint32_t resource_id, pformat, hostmem;
+     int i;
+ 
+     g->hostmem = 0;
+@@ -1309,7 +1319,11 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
+             return -EINVAL;
+         }
+ 
+-        res->hostmem = calc_image_hostmem(pformat, res->width, res->height);
++        if (!calc_image_hostmem(pformat, res->width, res->height, &hostmem)) {
++            g_free(res);
++            return -EINVAL;
++        }
++        res->hostmem = hostmem;
+         if (!qemu_pixman_image_new_shareable(&res->image,
+                                              &res->share_handle,
+                                              "virtio-gpu res",
 -- 
 2.47.3
 
