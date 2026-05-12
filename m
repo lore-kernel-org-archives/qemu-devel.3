@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FB4FCD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:34:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61741CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:34:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuVv-0003oB-05; Tue, 12 May 2026 17:19:39 -0400
+	id 1wMuhK-0003Hh-Lo; Tue, 12 May 2026 17:31:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuVX-00028M-Kg; Tue, 12 May 2026 17:19:17 -0400
+ id 1wMuXc-0001oL-IN; Tue, 12 May 2026 17:21:28 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuVU-00084C-GR; Tue, 12 May 2026 17:19:13 -0400
+ id 1wMuXY-0000co-Aa; Tue, 12 May 2026 17:21:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619497; bh=6bpVwPgBT8xb2Rf00Ig1uckenO4aE6GImxQGwKbTjS8=;
+ t=1778619499; bh=dm3H42c1x7JUzSv5Jkh42Fx0cbWalHn8RfvTCoAk7zE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Qe4t+xXMfGDW5K+VO0jo9osI8kzamYmq6nbQkuHbXR5eXCnuisQ8jLa7VcBmXAMdK
- CxJZfZ0gkE3QKX5q/JNM1XaxW37XmMHjqQgRFfa4mBZDvBcQ2R6Jb4NMJXZYrZPKXJ
- JnVaB2n91W3+vgAnIwb6RokIaBraJczZmgfW5gb6zUGa/B8mwjHzRRhxdeu2aeBMaf
- URt4cGXljWK3J8hFPQxoFKtEpSDQBeXA8iQwS5ksYvb30U+I05DSBzhchyQfuaa2kG
- 5YEdKd6IgAgVgLtLIT6xwU2dmbwTfp0w+gMga5EGP6pi0wN4Tw1TLeuc2sBMF1Edrj
- K0svCCPONdhnA==
+ b=lnPKR/XAMbaI521Xfi0hzvihvySMt5yXx810k8FApMDhkrtb3rMm53zjaUMpdAP49
+ 280dcaU380KsvCJ7k7yoUJptWpc+2OBQ343Z64rNV5GrhXJEq0+lrcEGbl6MSHtB/j
+ fJocl+3unp42O53Le0QYhVEkrJgRW4gcCOPSgv7yUqI91Zek9VGhprf3hPZ1BppR0z
+ RXzPWQFcJX2WzsOoIyH6uOjXjRdE2aowBcW6r2WhNH4lxe/3IFACWXpqH4nhIscfQi
+ pM/M7GshNTfVRlSAC1d46MuIjDonUmk1qI0yS9/SI6Yx5vJPDfjv3UVMPTBtD2vT3Q
+ Uy9xTCKbM8Qgw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C0D151AA3D8;
- Tue, 12 May 2026 23:58:17 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 099501AA3EB;
+ Tue, 12 May 2026 23:58:19 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id CCA363ABD30;
- Tue, 12 May 2026 23:58:21 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 15B2F3ABD43;
+ Tue, 12 May 2026 23:58:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
+Cc: qemu-stable@nongnu.org, Yicong Yang <yang.yicong@picoheart.com>,
+ Andrew Jones <andrew.jones@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 13/58] migration: vmstate_save_state_v: fix double
- error_setg
-Date: Tue, 12 May 2026 23:57:34 +0300
-Message-ID: <20260512205820.361821-13-mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 32/58] hw/riscv/virt-acpi-build.c: Use kvm timer
+ frequency when kvm enabled
+Date: Tue, 12 May 2026 23:57:53 +0300
+Message-ID: <20260512205820.361821-32-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
@@ -71,46 +71,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+From: Yicong Yang <yang.yicong@picoheart.com>
 
-We may call error_setg twice on same errp if inner
-vmstate_save_state_v() or vmstate_save_state() call fails. Next we will
-crash on assertion in error_setv().
+The timer frequency is decided by the host(kvm) rather than a fixed
+RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ on kvm accelerated VM. So build
+RCHT with KVM provided timer frequency if KVM is enabled, just like
+how we build the timer node on DT based VM.
 
-Fixes: 848a0503422d043 "migration: Update error description outside migration.c"
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260304212303.667141-2-vsementsov@yandex-team.ru
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-(cherry picked from commit d41ce10d0f5a3d6e497e4b75807a8e675033c597)
+Fixes: ebfd39289370 ("hw/riscv/virt: virt-acpi-build.c: Add RHCT Table")
+Signed-off-by: Yicong Yang <yang.yicong@picoheart.com>
+Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
+Message-ID: <20260325081314.57089-1-yang.yicong@picoheart.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 4cb2f91773e8ec9511002de851734820f7ba64fe)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 4d28364f7b..fccd030dfd 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -539,6 +539,9 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-                 } else {
-                     ret = inner_field->info->put(f, curr_elem, size,
-                                                  inner_field, vmdesc_loop);
-+                    if (ret < 0) {
-+                        error_setg(errp, "put failed");
-+                    }
-                 }
+diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+index f1406cb683..fd6ca5dbc4 100644
+--- a/hw/riscv/virt-acpi-build.c
++++ b/hw/riscv/virt-acpi-build.c
+@@ -35,9 +35,11 @@
+ #include "hw/riscv/virt.h"
+ #include "hw/riscv/numa.h"
+ #include "hw/virtio/virtio-acpi.h"
++#include "kvm/kvm_riscv.h"
+ #include "migration/vmstate.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
++#include "system/kvm.h"
+ #include "system/reset.h"
  
-                 written_bytes = qemu_file_transferred(f) - old_offset;
-@@ -551,8 +554,8 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-                 }
+ #define ACPI_BUILD_TABLE_SIZE             0x20000
+@@ -296,7 +298,10 @@ static void build_rhct(GArray *table_data,
  
-                 if (ret) {
--                    error_setg(errp, "Save of field %s/%s failed",
--                                vmsd->name, field->name);
-+                    error_prepend(errp, "Save of field %s/%s failed: ",
-+                                  vmsd->name, field->name);
-                     if (vmsd->post_save) {
-                         vmsd->post_save(opaque);
-                     }
+     /* Time Base Frequency */
+     build_append_int_noprefix(table_data,
+-                              RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ, 8);
++                              kvm_enabled() ?
++                              kvm_riscv_get_timebase_frequency(&s->soc->harts[0]) :
++                              RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ,
++                              8);
+ 
+     /* ISA + N hart info */
+     num_rhct_nodes = 1 + ms->smp.cpus;
 -- 
 2.47.3
 
