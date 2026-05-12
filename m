@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C651DCD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:12:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD890CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:12:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuJD-00070z-Kr; Tue, 12 May 2026 17:06:34 -0400
+	id 1wMuMs-0001uR-EY; Tue, 12 May 2026 17:10:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuJ9-0006l4-BU; Tue, 12 May 2026 17:06:27 -0400
+ id 1wMuMm-0001IE-3J; Tue, 12 May 2026 17:10:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuJ7-0001Lp-6M; Tue, 12 May 2026 17:06:26 -0400
+ id 1wMuMj-0003hk-40; Tue, 12 May 2026 17:10:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619300; bh=AKuaDRIW6j3SW5LAWBenlZTyf8BzwdYYtuCqvrmpQAA=;
+ t=1778619302; bh=AHato+pJk/46U2CB00QdotF83uO3YfTaijVJRABAxR8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=a+Ci7sQtJqCg5nwD+6MB4AW55xpuYR6Ej15dTCi6/UjO5H1PfuZw4keCUvNkHCMRk
- +Hpg50+M/517ggUhrNGibVDlCSx1xfVjCTQzk2tnremuDDtdzaCkcga+WHKaVHw6UN
- pqhwbljn252QlR6FaWz/UsfW85nUhZpn5KDB+yHnpKvRqSRXz9qQYyrGEOC/3wdhjy
- a4dMobHWBNPBXUqGXYCy2qo/DNHldaJXpTmwf178t1l+1R3DGWMzmx+2sW4/6YBGkr
- Pcng4OlvhoWspap9+Ts6fkhqZvgLxPzq1pMXKCsyAqDVnOs4MH/SRqY3V0F+sIo80f
- /SG4H7A+2p5fw==
+ b=IwrrIK9wiFsfK/wsGpiI5XvABqJBmQaasbqHl+GseQfEWeCpkdkn1esnCUB7dEUuC
+ uPllPtVQ3YbZSOG0Ao14F7wKSxc+dP1FnZJZUw+muddAiH4qCPSQLANmClVUnuul8S
+ fFohufiUaVsFK6YqiXPm7tLjHeS9COojzignlHX3Z600nZSedEi9UXlpaOchiU0Ad7
+ 2qKMuk3KMDbE0ADVLaQF5mb7dgSdYTKlG5NmACUzWGT2giJkncJkA4a5qQNai7u0ef
+ 4Cv/oFGt3SWQ5NKVpOTHET0YVe0BPqn4iV4DMkDnNsCZWgXYfXxgEB1t1d2nLvbiqr
+ cQodIU6oO0YyQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 216C61AA342;
- Tue, 12 May 2026 23:55:00 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8CFE11AA368;
+ Tue, 12 May 2026 23:55:02 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2E23B3ABCB3;
- Tue, 12 May 2026 23:55:04 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 99B6F3ABCD8;
+ Tue, 12 May 2026 23:55:06 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Tao Ding <dingtao0430@163.com>,
+Cc: qemu-stable@nongnu.org, Zenghui Yu <zenghui.yu@linux.dev>,
  Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 006/117] hw/dma/pl080: Ignore bottom 2 bits of LLI
- register
-Date: Tue, 12 May 2026 23:53:08 +0300
-Message-ID: <20260512205503.361097-6-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 043/117] target/arm: Don't skip access flag fault for
+ AccessType_AT
+Date: Tue, 12 May 2026 23:53:45 +0300
+Message-ID: <20260512205503.361097-43-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
@@ -69,92 +69,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tao Ding <dingtao0430@163.com>
+From: Zenghui Yu <zenghui.yu@linux.dev>
 
-The PL080 channel LLI (linked list item) register has bits [31:2] of
-the address of the next LLI in bits [31:2], with bit [1] reserved
-and bits [0] the AHB master select. We were incorrectly using the
-whole register value as the address, which meant that if the guest
-programmed something into the AHB master select bit we would use
-an incorrect address, and read incorrect data from memory.
+As per the pseudo code from DDI0487 M.a.a (on J1-16021) AArch64.S1Walk():
 
-The following reproducer creates a setup which has bit 0 set in
-an LLI value:
+  // Check descriptor AF bit
+  elsif (descriptor<10> == '0' && walkparams.ha == '0' &&
+          (!accdesc.acctype IN {AccessType_DC, AccessType_IC} ||
+           boolean IMPLEMENTATION_DEFINED "Generate access flag fault on IC/DC operations")) then
+      fault.statuscode = Fault_AccessFlag;
 
-Configuration
-    ../configure --target-list=arm-softmmu --enable-debug
-Reproducer
-    ./qemu-system-arm -M versatilepb -m 128M -nographic -S \
-     -device loader,addr=0x00002000,data=0x00000004,data-len=4 \
-     -device loader,addr=0x00002004,data=0x00001004,data-len=4 \
-     -device loader,addr=0x00002008,data=0x00000000,data-len=4 \
-     -device loader,addr=0x0000200c,data=0x9e4bf001,data-len=4 \
-     -device loader,addr=0x00000000,data=0x44332211,data-len=4 \
-     -device loader,addr=0x00000004,data=0x88776655,data-len=4 \
-     -device loader,addr=0x00001000,data=0x00000000,data-len=4 \
-     -device loader,addr=0x00001004,data=0x00000000,data-len=4 \
-     -device loader,addr=0x10130030,data=0x00000001,data-len=4 \
-     -device loader,addr=0x10130100,data=0x00000000,data-len=4 \
-     -device loader,addr=0x10130104,data=0x00001000,data-len=4 \
-     -device loader,addr=0x10130108,data=0x00002001,data-len=4 \
-     -device loader,addr=0x1013010C,data=0x1e4bf001,data-len=4 \
-     -device loader,addr=0x10130110,data=0x0000c001,data-len=4
+an access flag fault should be generated for AccessType_AT, if the AF bit
+is 0 and !param.ha.
 
-The correct result with this bug fix:
-    (qemu) xp /1wx 0x00001000
-     00001000: 0x44332211
-    (qemu) xp /1wx 0x00001004
-     00001004: 0x88776655
+Besides, we should continue to not raise the access flag fault for
+in_debug = true which is what we've been doing previously (before commit
+efebeec13d07) for LPAE and is what intention of the debugger access
+codepath is.
 
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Tao Ding <dingtao0430@163.com>
-[PMM: Adjusted commit message]
+Fixes: efebeec13d07 ("target/arm: Skip AF and DB updates for AccessType_AT")
+Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
+Message-id: 20260324160321.96347-1-zenghui.yu@linux.dev
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: cb35c1b622674da7a2b70691402132f691933f2c.1773301927.git.dingtao0430@163.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit f9b16f791502d912cf07ec040a1a2efb1009f713)
+(cherry picked from commit 31b8d287b7fe59d135b836cacaaa364efe598ec0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/dma/pl080.c b/hw/dma/pl080.c
-index 3af50425ef..18f5de3e04 100644
---- a/hw/dma/pl080.c
-+++ b/hw/dma/pl080.c
-@@ -102,6 +102,7 @@ static void pl080_run(PL080State *s)
-     int size;
-     uint8_t buff[4];
-     uint32_t req;
-+    uint32_t next_lli;
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index b2ae00b89e..e96b1c11e8 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -2128,6 +2128,14 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+     descaddr &= ~(hwaddr)(page_size - 1);
+     descaddr |= (address & (page_size - 1));
  
-     s->tc_mask = 0;
-     for (c = 0; c < s->nchannels; c++) {
-@@ -198,21 +199,22 @@ again:
-             ch->ctrl = (ch->ctrl & 0xfffff000) | size;
-             if (size == 0) {
-                 /* Transfer complete.  */
--                if (ch->lli) {
-+                next_lli = (ch->lli & ~3);
-+                if (next_lli) {
-                     ch->src = address_space_ldl_le(&s->downstream_as,
--                                                   ch->lli,
-+                                                   next_lli,
-                                                    MEMTXATTRS_UNSPECIFIED,
-                                                    NULL);
-                     ch->dest = address_space_ldl_le(&s->downstream_as,
--                                                    ch->lli + 4,
-+                                                    next_lli + 4,
-                                                     MEMTXATTRS_UNSPECIFIED,
-                                                     NULL);
-                     ch->ctrl = address_space_ldl_le(&s->downstream_as,
--                                                    ch->lli + 12,
-+                                                    next_lli + 12,
-                                                     MEMTXATTRS_UNSPECIFIED,
-                                                     NULL);
-                     ch->lli = address_space_ldl_le(&s->downstream_as,
--                                                   ch->lli + 8,
-+                                                   next_lli + 8,
-                                                    MEMTXATTRS_UNSPECIFIED,
-                                                    NULL);
-                 } else {
++    if (likely(!ptw->in_debug)) {
++        /* Check descriptor AF bit */
++        if (!(descriptor & (1 << 10)) && !param.ha) {
++            fi->type = ARMFault_AccessFlag;
++            goto do_fault;
++        }
++    }
++
+     /*
+      * For AccessType_AT, DB is not updated (AArch64.SetDirtyFlag),
+      * and it is IMPLEMENTATION DEFINED whether AF is updated
+@@ -2137,15 +2145,9 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+         /*
+          * Access flag.
+          * If HA is enabled, prepare to update the descriptor below.
+-         * Otherwise, pass the access fault on to software.
+          */
+-        if (!(descriptor & (1 << 10))) {
+-            if (param.ha) {
+-                new_descriptor |= 1 << 10; /* AF */
+-            } else {
+-                fi->type = ARMFault_AccessFlag;
+-                goto do_fault;
+-            }
++        if (!(descriptor & (1 << 10)) && param.ha) {
++            new_descriptor |= 1 << 10; /* AF */
+         }
+ 
+         /*
 -- 
 2.47.3
 
