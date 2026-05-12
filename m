@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E67FFCD4F3D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58EDDCD4F39
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:42:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuQn-0002uJ-9w; Tue, 12 May 2026 17:14:21 -0400
+	id 1wMuW5-0004kA-Hx; Tue, 12 May 2026 17:19:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuQW-0001y1-DV; Tue, 12 May 2026 17:14:05 -0400
+ id 1wMuW2-0004St-Dj; Tue, 12 May 2026 17:19:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuQU-0005NK-Nw; Tue, 12 May 2026 17:14:04 -0400
+ id 1wMuW0-0008BR-Ry; Tue, 12 May 2026 17:19:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619305; bh=RI10+5zPGhJ/aOzuzHvVJ9FNHtrl/IeqoVNJcNULtVs=;
+ t=1778619498; bh=pE8FGCMUOa/KDw+pyOkBJnpHIlSPh7/CPIuMTng6qws=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Pme2mriTuWJg3H6ymBTrtBYuVvjyN+3PBhPKQY7D6gVpQ8cOTO90Sxc229fg5fWGb
- I8NkY2PcZym5V+96cGVf6w544XkeT2DlcWbGanJo/ZzIM/+pzyrzLurtOcL2OPHhcT
- 5Uhbfjp/3jC1AfbdACVAC3kSEfqHJ06TrTVP2CYMpffBG3FYhBRdFsTvzsgGgXqXKy
- 4iCJ+6Yq3x/KyWn0NFn+QoqZ4PZMj1akvxXzFhQQt1E7lFVYUlWPkrv7c/tBsaKNMt
- ChadnX+HylGy/m1XzfbM6iD2wUTaMvc3LwJnSfJye4QkL9NhZKit/lfW3Lnm4HqTyo
- nX+gYuhFuV7jg==
+ b=a51Q6jligCITLbd9DszKKdXqowJLwVHA/jVRxzR8MPvUjekAbzjxjuLKS1R0fltf/
+ TtfjWC0U8ZRT7wUV/UnhMBCG1UhZcfPGmJc6YNRRBWqu/qUxNPkiLhpp2vJd4oJaRr
+ g1bv5EcsQ6StDnX7azpV/UCHr1gB44JHkin1TUJu4xtyR7rr9Jq74O0wLXqBwyiLWj
+ X7tENbMxJZPiyG66ITekHNmml0g3EB+8HKymKsMs/OT1o8CZ5eVkdXzamgbQKGJZW5
+ 0hEg0fHxTRNntFUOaHb9fSfS1uaDK5DOwGhkLCHPNXmkx6esnmIeit6dQY1gXQtMNO
+ +G28MMjbDUrQw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1CD9D1AA38D;
- Tue, 12 May 2026 23:55:05 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2FB991AA3DE;
+ Tue, 12 May 2026 23:58:18 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 287AA3ABCFC;
- Tue, 12 May 2026 23:55:09 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3A2753ABD36;
+ Tue, 12 May 2026 23:58:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+Cc: qemu-stable@nongnu.org, Gyorgy Tamasi <gyorgy.tamasi@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, Helge Deller <deller@gmx.de>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 079/117] linux-user/ppc: Fix ppc64 rt_sigframe stack
- offset
-Date: Tue, 12 May 2026 23:54:21 +0300
-Message-ID: <20260512205503.361097-79-mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 19/58] linux-user: Don't define target_stat64 struct
+ for loongarch64
+Date: Tue, 12 May 2026 23:57:40 +0300
+Message-ID: <20260512205820.361821-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
-References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -70,87 +71,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
 
-The kernel's 64-bit signal delivery (signal_64.c) uses:
+The kernel defines 'struct stat64' only if
+__BITS_PER_LONG != 64 || defined(__ARCH_WANT_STAT64).
+loongarch64 doesn't set __ARCH_WANT_STAT64, and it isn't 32-bit,
+so it won't get this struct.
 
-    newsp = frame - __SIGNAL_FRAMESIZE
+QEMU incorrectly does define a target_stat64 struct. However this
+isn't causing any guest-visible problems, because defining the
+target_stat64 struct and TARGET_HAS_STRUCT_STAT64 affects these
+syscalls:
+ TARGET_NR_stat64
+ TARGET_NR_lstat64
+ TARGET_NR_fstat64
+ TARGET_NR_fstatat64
+ TARGET_NR_newfstatat
 
-while the 32-bit path (signal_32.c) uses:
+For loongarch64 the only one of those we provide is newfstatat,
+and that is actually a separate QEMU bug, because the kernel does
+not provide that syscall for this architecture. No real guest
+code will be using a syscall that doesn't exist in the ABI.
 
-    newsp = frame - (__SIGNAL_FRAMESIZE + 16)
+(Some of these syscalls are present in the loongarch64 "ABI1.0",
+but that ABI was never accepted in the upstream kernel, and
+QEMU does not model that ABI, only the "ABI2.0".)
 
-The extra 16 bytes in the 32-bit case is to place siginfo and ucontext
-at the same offsets as older kernels (see the comment in signal_32.c).
-The 64-bit rt_sigframe starts with ucontext directly and does not need
-this adjustment.
+Stop defining TARGET_HAS_STRUCT_STAT64 anyway, for consistency
+with the kernel and to avoid confusion.
 
-QEMU's setup_rt_frame() unconditionally used (SIGNAL_FRAMESIZE + 16)
-for both 32-bit and 64-bit, placing the handler's SP 16 bytes too low
-on ppc64. Signal delivery and return still worked because do_rt_sigreturn
-had the matching wrong offset, but the vDSO DWARF unwind info encodes
-the correct kernel offset. This caused any DWARF unwinder (libunwind,
-libgcc, etc.) to compute a CFA that is 16 bytes off, reading garbage
-register values from the signal frame.
+Note:
+Commit message suggested by Peter Maydell <peter.maydell@linaro.org>
 
-Define RT_SIGFRAME_ADJUST (0 on ppc64, 16 on ppc32) and use it in both
-setup_rt_frame and do_rt_sigreturn to match the kernel.
-
-This was verified by A/B testing with libunwind's test suite:
-
-  ppc64le: Gtest-bt, Ltest-bt, Gtest-concurrent, Ltest-concurrent,
-           and Ltest-sig-context all change from FAIL to PASS.
-  ppc64be: Gtest-bt, Ltest-bt, and Ltest-sig-context all change
-           from FAIL to PASS.
-
-Signed-off-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
+Tested-by: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: qemu-stable@nongnu.org
-(cherry picked from commit 654dce6c523612d38e8d53818dbc7c03cbe535a3)
+(cherry picked from commit 93484c768f2b66947a91d6372f408ae01c83e8c6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/ppc/signal.c b/linux-user/ppc/signal.c
-index 24e5a02a78..a9c10e0987 100644
---- a/linux-user/ppc/signal.c
-+++ b/linux-user/ppc/signal.c
-@@ -210,6 +210,18 @@ QEMU_BUILD_BUG_ON(offsetof(struct target_rt_sigframe, uc.tuc_mcontext)
+diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
+index 679af640c0..6967306be4 100644
+--- a/linux-user/syscall_defs.h
++++ b/linux-user/syscall_defs.h
+@@ -2005,7 +2005,7 @@ struct target_stat {
+     abi_uint __unused5;
+ };
  
- #endif
- 
-+#ifdef TARGET_PPC64
-+#define RT_SIGFRAME_ADJUST 0
-+#else
-+/*
-+ * For 32-bit rt sigframes we have an extra 16 bytes of gap
-+ * on top of __SIGNAL_FRAMESIZE; this is to get the siginfo
-+ * and ucontext in the same positions as in older kernels.
-+ * See Linux's arch/powerpc/kernel/signal_32.c.
-+ */
-+#define RT_SIGFRAME_ADJUST 16
-+#endif
-+
- #if defined(TARGET_PPC64)
- 
- struct target_func_ptr {
-@@ -525,7 +537,7 @@ void setup_rt_frame(int sig, struct target_sigaction *ka,
-     env->fpscr = 0;
- 
-     /* Create a stack frame for the caller of the handler.  */
--    newsp = rt_sf_addr - (SIGNAL_FRAMESIZE + 16);
-+    newsp = rt_sf_addr - (SIGNAL_FRAMESIZE + RT_SIGFRAME_ADJUST);
-     err |= put_user(env->gpr[1], newsp, target_ulong);
- 
-     if (err)
-@@ -641,7 +653,7 @@ long do_rt_sigreturn(CPUPPCState *env)
-     struct target_rt_sigframe *rt_sf = NULL;
-     target_ulong rt_sf_addr;
- 
--    rt_sf_addr = env->gpr[1] + SIGNAL_FRAMESIZE + 16;
-+    rt_sf_addr = env->gpr[1] + SIGNAL_FRAMESIZE + RT_SIGFRAME_ADJUST;
-     if (!lock_user_struct(VERIFY_READ, rt_sf, rt_sf_addr, 1))
-         goto sigsegv;
- 
+-#if !defined(TARGET_RISCV64)
++#if !defined(TARGET_RISCV64) && !defined(TARGET_LOONGARCH64)
+ #define TARGET_HAS_STRUCT_STAT64
+ struct target_stat64 {
+     abi_ullong st_dev;
 -- 
 2.47.3
 
