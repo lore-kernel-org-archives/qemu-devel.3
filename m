@@ -4,121 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59847CD4F24
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 16:58:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EDD5CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 17:11:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMqRE-0007m4-Gg; Tue, 12 May 2026 12:58:32 -0400
+	id 1wMqcp-0003xc-8H; Tue, 12 May 2026 13:10:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wMqRA-0007jw-Ii
- for qemu-devel@nongnu.org; Tue, 12 May 2026 12:58:28 -0400
-Received: from smtpout7.mo534.mail-out.ovh.net ([54.36.140.178])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wMqcR-0003km-U1
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 13:10:10 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wMqR6-0001En-Q7
- for qemu-devel@nongnu.org; Tue, 12 May 2026 12:58:27 -0400
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net [51.68.94.138])
- by mo534.mail-out.ovh.net (Postfix) with ESMTPS id 4gFN8G4vXJz6MLG;
- Tue, 12 May 2026 16:58:22 +0000 (UTC)
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net. [127.0.0.1])
- by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <alexander.hansen@9elements.com>; Tue, 12 May 2026 16:58:22 +0000 (UTC)
-Received: from mta3.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.43.92])
- by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4gFN8G2Kwdz7thS;
- Tue, 12 May 2026 16:58:22 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.3])
- (Authenticated sender: clg@kaod.org)
- by mta3.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 4F87012E351A;
- Tue, 12 May 2026 16:58:20 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-103G0059e532bcb-f22a-4d99-a020-2146fb08d067,
- 39874C6F3F9F68F15966500C6FBBDB0B53A96BD7) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <d67ed753-1aca-4dff-8b6e-6397b7a6654b@kaod.org>
-Date: Tue, 12 May 2026 18:58:19 +0200
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wMqcP-0007Dl-ER
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 13:10:07 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64CBxLP4129127
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 17:09:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ yNg2v7axbPJD3RMY6w/2znLi1Pdx1vaUT+1fUIeXiVk=; b=Qt5njqXQhWkPH4f9
+ IpzInCVSUXNZ//VehlNwC7UytZsgdOZMHIwvWjzISiWNCPqxpG6ZH3xbkxHuNRVr
+ d02yRZkTFop4LQoGSKnEIpiHj9XPMspA+htnRgb+8pPxV5yGDLkKWv2QgML1dDR1
+ jhbOxcPiOLKzElO/WIH50FeHJYPXuCh8g6qMlrQG3AfcTAAIFHKiedYqR8SmoukK
+ EiBtN6C/1azYTeFt4DLMtlrbjDJcCL2wO6yIP/M8welcg8V35f9AA3qzYUXuc9FH
+ T7uZVhviWDFyvc3/9Vxt5yVe73oQY5yTFS5KdnMV88G/fjaNwefiHs+SXULjfGcj
+ lkpdBg==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
+ [74.125.82.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e43tn17bb-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 17:09:57 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id
+ 5a478bee46e88-2f5943ca81aso8064920eec.0
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 10:09:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1778605797; x=1779210597; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=yNg2v7axbPJD3RMY6w/2znLi1Pdx1vaUT+1fUIeXiVk=;
+ b=WRUG4qD3WEx/pzJ8zvym49C0Rxdpiv9xa5RMnE9mKFOKStrBo1b2nhTXZkuF1N79gO
+ lA12vAhLsP3rH8GlfXmlU0P8P3LqIDhcMGwtyVQXw+0PSmKGxFs0MWmOZBLGJ22d+QAE
+ MOIYxS86dOteuHfo35m1aSCGt7Dvsu0uwvGzppsJjLbq6CX60ROegHWruQwgDsq3g3qb
+ BXN0V61EpsGNjL+ZQ1/1kh2bzqtjOAd8Rs0HVlJ+dGMxZVXARB6+6oidcmNalDkjdu0y
+ 02PI1dF7+QtHSMyI6NRaBXzrubeVjpCmg/GKsFtpcG2E47sk9tt8l0FROMka6cltEmk1
+ wq8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778605797; x=1779210597;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yNg2v7axbPJD3RMY6w/2znLi1Pdx1vaUT+1fUIeXiVk=;
+ b=sYH5a7lUC2rrEMi4SLMqznpHWMg9sHRn3CCxMXhPGUhGk+F3L36QCrqxniFjzuRD7s
+ kfRntjUpf7b+/ayMs9lIs/R0zqoXJqSHgPLd9Ld8/z+6QwOKkfxEf/mYQufXEbrVeHaH
+ t4A8tcVQqItvMYN1NM75jDLlFFNJENn2dsl7B4rxM+QH9DFUkTZkrsLY5zJmQwVq9PWZ
+ NN4chKgjFGsesYMPdQL2lxkgAjD9T072boT/gAIIaifNjR367Baq8LGhciQ+1EpWVrh0
+ +NM0c5bIQ394/Ct9C+N4DTcPCkHQWngnf0vHgP5eN1DmuM/7SNLIAQMNVLTKDZnYDiF4
+ h9XQ==
+X-Gm-Message-State: AOJu0YyYZjW9P2eU/Nu9EOs0tK3gq6oJ9P+JoSNoTSUSn77+tjU9OLFD
+ b3nYPK07YgOHcu0BxjX5jqb1T5a42XUArffyYvVy2Jf+Twk/R659BEbvRMcJ3CHgnQUKAf6um2R
+ DxJHFXn19Pz4JDWIQKM/dvdNfF/eXksMII2cnErQ7ku2c+vd1DWBhQ4JOAA==
+X-Gm-Gg: Acq92OH+AkSQPl1KM4OLNNGWHpxkrkjMA5VO2nm7dK9CeWFFKNsm5AHfqKCC/Fr74ZX
+ xyn2OrX+CbjEPPSTvblr8EX+sYDS/wR2JXtdi+63OvZKmyXLqpuOn+pnew7xUjPSfB7hv2fNHks
+ WQqz9is6jYbVEyd5iu8PDR1c5NKvIBj6RQFX6oikiIE8Z4CaGy4rljcyeSxH8SMUkCG0nS2eUj3
+ duudKOjXBWpWLsJxMqdrJHAfTcG+ta2bqMv8Osx7K9y4vFeIW94v5wCrR3LMwbp51hduNJCpoRr
+ 9ov1cED1ZwB05f0p+LwNOCEOHfAY6URzAux2G9ELpuEBRIFT9ncwRESnYu5kvk4Cxd9/Uy8xo3y
+ blKrZBgJGTGXVWA5Q3tDXH20lhF/3dgYWfjhoWZFHwB2Dq9Rc9fkZQR6/w6mKFr2JNJk6I2OL+a
+ JVpqXg814+I5aetA==
+X-Received: by 2002:a05:7300:a984:b0:2ed:e17:d50d with SMTP id
+ 5a478bee46e88-2fb4c3e3d9bmr6751209eec.32.1778605796611; 
+ Tue, 12 May 2026 10:09:56 -0700 (PDT)
+X-Received: by 2002:a05:7300:a984:b0:2ed:e17:d50d with SMTP id
+ 5a478bee46e88-2fb4c3e3d9bmr6751169eec.32.1778605795872; 
+ Tue, 12 May 2026 10:09:55 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2f888c469b6sm18749445eec.24.2026.05.12.10.09.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 12 May 2026 10:09:55 -0700 (PDT)
+Message-ID: <31eb8204-97bb-4f0e-b90a-048d1b5bf05d@oss.qualcomm.com>
+Date: Tue, 12 May 2026 10:09:53 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/5] hw/sensor: support MAX11615
-To: Alexander Hansen <alexander.hansen@9elements.com>, qemu-devel@nongnu.org
-Cc: Titus Rwantare <titusr@google.com>,
+Subject: Re: [PATCH 14/16] tests: add QEMU_TEST_IO_SKIP for skipping I/O tests
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-block@nongnu.org, Cleber Rosa <crosa@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, John Snow <jsnow@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
-References: <20260512102157.176511-1-alexander.hansen@9elements.com>
- <20260512102157.176511-5-alexander.hansen@9elements.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20260512102157.176511-5-alexander.hansen@9elements.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Thomas Huth <thuth@redhat.com>
+References: <20260424154205.364268-1-berrange@redhat.com>
+ <20260424154205.364268-15-berrange@redhat.com>
+ <fa8be3d8-6d76-4811-83ab-69c256e8e44f@oss.qualcomm.com>
+ <agNPkLRe0Rf4NYcU@redhat.com>
+ <cc8714c3-143d-4f63-a608-d301e8ba023b@oss.qualcomm.com>
+ <agNXCf5eXNQmhCAV@redhat.com>
+ <55b66ce4-218c-462f-8e48-0775d5c36cba@oss.qualcomm.com>
+ <agNbJS1WeWaxZ_Gx@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <agNbJS1WeWaxZ_Gx@redhat.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 6642246501930937583
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTElHUC7i34OQWCkUhy1Ghv+n0PKyrELB+S7cl0oyJX0vjtctR0N4nrpWiRKLHtzlHshcu0IjZGK8169NE/iYHuteipp3399qQIhbf3fx0rUE8w7mICd86ftlmJviAlixkyjuuG6YpUx0DI8TSOKnM32anPZM7Ulf/uwGfWInJF8xlN9sp8ArvmrEJDPpZ7h3EPwuI88vZSKBUNQr7w4uUeYLJkRXGO8RgxuOi0TjrexBFAdYS9Km4lFlFXpOj3batfWphEncsxeZ4/u56Xf2qWFgP63b94Fi0C7EpJQzSbzQ135xdKeAedVYtKn5aw+FDuhRM2On9yWOnKfeizilma4rpZczl1oCHdAW3c4/GRPrUjBNaqcqfyrmjceqJsaYO1DDKcFgg+wSaaew8nRiL2ma59HYPpQBkqjU0qCmCc0U5Z2c6HcJLw2WJyd3kXjiihIDm/FRH7HbRuT88AbhIUgoSXAdFOkDm02NHQbE+yLT5WkLlq/6nf+11YfRsbfyhfpSr/VtJ8y1G9NfCsC/GxlYEeryFYGTCf7RAs2jGMJI/yMtz7HBdWO+k5VXe7/p3WQlyD2+Jri1JcvmOBgIWCSnFaVLt9zjRU84Bi73fv6TXORz4vyT9e6FH8zxwVZvf6fwkJkcBHg4JbAUyRWytVT6VveSPk+sACDThoyNpH0Pw
-DKIM-Signature: a=rsa-sha256; bh=8KfFFAoKmhgny0Xahus8mmM3hwf/kBdNddiKYKozUYw=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1778605103; v=1;
- b=bOfuk4FR2JTaHLZgp8QIR6klkJ+Ox4o2MQ9Aq6tIK7dYe9GzbYG/gF1czoHzScajkb4ptkoa
- 8eexy1rVLW1u1Fi5znIgm5y8PkpPO5rwAQq0TYEnd9u/ZQ7xQ36hFh9YaAc1V2Y2tyfMWcuYyK8
- TZzY2ai8dDrqN8oUhExixRNPEfrkf90JOD7UOSZOopnLl44mLO/r+BrjEDB5MVsu2s2qzI5uK4G
- O6p1801HzJR3HI9UQfAieCiST/6DXiD61DYkaNO2fLBL6WBxPfqPBgJ+RdXyFrFra4nqcyqlluK
- kihMlZ40nZK+lLmr+Iz2Tt9V61+6ykprxtbz04JFVsq8w==
-Received-SPF: pass client-ip=54.36.140.178; envelope-from=clg@kaod.org;
- helo=smtpout7.mo534.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-ORIG-GUID: sXwm7bTOUcQX5gAQtGPfCfx_SN16a_0a
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEyMDE3OCBTYWx0ZWRfX+SABwjOazdAy
+ kX5e5rSWnGq9vRsC4tDgO37IDs/YSOj9jWsOcyAiUgulIzvcAEkRXTg/eVvhRuO6L1XXoZBqFjX
+ Y+kRDZbHY+pM80KQOIWGtPXjSmmZ/6c7q8DAJvCoHXA3SLaB584ob8by1q0bnEx0CwH7NL3hhnn
+ EwL4i7ERuzL/pC3lx6kJMD7pdQRF1eOFtSPo5wWhV0PsWc4x+jM3W4Njhlg2oWoojgDrhcSN45B
+ FSjiizZYN8EcGLxOe06VhFIzaYxTpiDC2vYjk+u6y9hOSPLihJG7r8CA9w4rQpYdHwe0+945VoZ
+ W0hVakZcH+tAhWSI2O9SsQ64n0m6ZiQQuQxwrydfUHmAh1nOFrtNl6X9N6CRH1GSTQxbYsA6wO4
+ FfrdCNDop6Mc2Sn1uq0yzxnF7S9UWmFIV59FGKaR7Ma1ddUcbewpPLqgMVwyXgj8TzQ2fF/WTk8
+ A4BwgiHsaM+ZxdJf9IA==
+X-Proofpoint-GUID: sXwm7bTOUcQX5gAQtGPfCfx_SN16a_0a
+X-Authority-Analysis: v=2.4 cv=Ebn4hvmC c=1 sm=1 tr=0 ts=6a035ee5 cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=20KFwNOVAAAA:8 a=Kx05iHExQgTB-_tq8A0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=bBxd6f-gb0O0v-kibOvt:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-11_05,2026-05-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 malwarescore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
+ adultscore=0 clxscore=1015 impostorscore=0 phishscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605050000 definitions=main-2605120178
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -135,416 +163,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/12/26 12:20, Alexander Hansen wrote:
-> Product: [1]
-> Datasheet: [2]
+On 5/12/2026 9:53 AM, Daniel P. Berrangé wrote:
+> On Tue, May 12, 2026 at 09:47:12AM -0700, Pierrick Bouvier wrote:
+>> On 5/12/2026 9:36 AM, Daniel P. Berrangé wrote:
+>>> On Tue, May 12, 2026 at 09:19:45AM -0700, Pierrick Bouvier wrote:
+>>>> On 5/12/2026 9:06 AM, Daniel P. Berrangé wrote:
+>>>>> On Tue, May 12, 2026 at 08:56:54AM -0700, Pierrick Bouvier wrote:
+>>>>>> On 4/24/2026 8:42 AM, Daniel P. Berrangé wrote:
+>>>>>>> The nature of block I/O tests is such that there can be unexpected false
+>>>>>>> positive failures in certain scenarios that have not been encountered
+>>>>>>> before, and sometimes non-deterministic failures that are hard to
+>>>>>>> reproduce.
+>>>>>>>
+>>>>>>> Before enabling the I/O tests as gating jobs in CI, there needs to be a
+>>>>>>> mechanism to dynamically mark tests as skipped, without having to commit
+>>>>>>> code changes.
+>>>>>>>
+>>>>>>> This introduces the QEMU_TEST_IO_SKIP environment variable that is set
+>>>>>>> to a list of FORMAT-OR-PROTOCOL:NAME pairs. The intent is that this
+>>>>>>> variable can be set as a GitLab CI pipeline variable to temporarily
+>>>>>>> disable a test while problems are being debugged.
+>>>>>>>
+>>>>>>> Reviewed-by: Thomas Huth <thuth@redhat.com>
+>>>>>>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+>>>>>>> ---
+>>>>>>>  docs/devel/testing/main.rst      |  7 +++++++
+>>>>>>>  tests/qemu-iotests/testrunner.py | 16 ++++++++++++++++
+>>>>>>>  2 files changed, 23 insertions(+)
+>>>>>>>
+>>>>>>> diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
+>>>>>>> index 797111009a..f779a64415 100644
+>>>>>>> --- a/docs/devel/testing/main.rst
+>>>>>>> +++ b/docs/devel/testing/main.rst
+>>>>>>> @@ -284,6 +284,13 @@ that are specific to certain cache mode.
+>>>>>>>  More options are supported by the ``./check`` script, run ``./check -h`` for
+>>>>>>>  help.
+>>>>>>>  
+>>>>>>> +If a test program is known to be broken, it can be disabled by setting
+>>>>>>> +the ``QEMU_TEST_IO_SKIP`` environment variable with a list of tests to
+>>>>>>> +be skipped. The values are of the form FORMAT-OR-PROTOCOL:NAME, the
+>>>>>>> +leading component can be omitted to skip the test for all formats and
+>>>>>>> +protocols. For example ``export QEMU_TEST_IO_SKIP="luks:149 185 iov-padding``
+>>>>>>> +will skip ``149`` for LUKS only, and ``185`` and ``iov-padding`` for all.
+>>>>>>> +
+>>>>>>>  Writing a new test case
+>>>>>>>  ~~~~~~~~~~~~~~~~~~~~~~~
+>>>>>>>  
+>>>>>>> diff --git a/tests/qemu-iotests/testrunner.py b/tests/qemu-iotests/testrunner.py
+>>>>>>> index dbe2dddc32..ecb5d4529f 100644
+>>>>>>> --- a/tests/qemu-iotests/testrunner.py
+>>>>>>> +++ b/tests/qemu-iotests/testrunner.py
+>>>>>>> @@ -145,6 +145,18 @@ def __init__(self, env: TestEnv, tap: bool = False,
+>>>>>>>  
+>>>>>>>          self._stack: contextlib.ExitStack
+>>>>>>>  
+>>>>>>> +        self.skip = {}
+>>>>>>> +        for rule in os.environ.get("QEMU_TEST_IO_SKIP", "").split(" "):
+>>>>>>> +            rule = rule.strip()
+>>>>>>> +            if rule == "":
+>>>>>>> +                continue
+>>>>>>> +            if ":" in rule:
+>>>>>>> +                fmt, name = rule.split(":")
+>>>>>>> +                if fmt in ("", env.imgfmt, env.imgproto):
+>>>>>>> +                    self.skip[name] = True
+>>>>>>> +            else:
+>>>>>>> +                self.skip[rule] = True
+>>>>>>> +
+>>>>>>>      def __enter__(self) -> 'TestRunner':
+>>>>>>>          self._stack = contextlib.ExitStack()
+>>>>>>>          self._stack.enter_context(self.env)
+>>>>>>> @@ -251,6 +263,10 @@ def do_run_test(self, test: str) -> TestResult:
+>>>>>>>                                description='No qualified output '
+>>>>>>>                                            f'(expected {f_reference})')
+>>>>>>>  
+>>>>>>> +        if f_test.name in self.skip:
+>>>>>>> +            return TestResult(status='not run',
+>>>>>>> +                              description='Listed in QEMU_TEST_IO_SKIP')
+>>>>>>> +
+>>>>>>>          args = [str(f_test.resolve())]
+>>>>>>>          env = self.env.prepare_subprocess(args)
+>>>>>>>  
+>>>>>>
+>>>>>> Why not simply remove the broken tests, and create issues to add them
+>>>>>> again in the future?
+>>>>>
+>>>>> In theory that's what our policy today is, but in practice it is
+>>>>> too much of a burden on the release co-ordinator, to expect them
+>>>>> to create such a patch themselves, or wait on a subsys maintainer
+>>>>> todo it for them.
+>>>>>
+>>>>> They end up just ignoring brokenness in CI which is a bad practice,
+>>>>> and will prevent us ever making CI truely gating or switching to
+>>>>> using MRs for pull requests. This gives us a super-fast way to skip
+>>>>> flaky tests, while the subsystem maintainers figure out the right
+>>>>> permanent answer.
+>>>>>
+>>>>
+>>>> I disagree on this one, merging a single patch doing a git rm, and a git
+>>>> revert later is not more expensive than merging a variable modifying a
+>>>> variable in a yaml file.
+>>>
+>>> Any code changes like that need to be sent back to the subsystem
+>>> maintainer to be acked. IMHO the release manager should not be
+>>> unilaterally deleting tests without peer review.  So that's
+>>> got a non-negligible turn around time, during which CI is broken.
+>>>
+>>
+>> I accept the argument, but it seems like a workaround for a human
+>> process, more than a proper solution to the problem.
+>>
+>> It would be better to have a proper policy for build/test fixes, instead
+>> of implementing local overrides to this.
+>>
+>>> Setting an env variable to skip a problematic test is something
+>>> reasonable to do with zero oversight.
+>>>
+>>>> The issue with this approach is that people running tests locally will
+>>>> not see which tests are skipped, and will see false positives. So you
+>>>> just keep CI green, but not the test base itself.
+>>>
+>>> I would still expect the release manager to file a bug about any
+>>> flaky test they disable via the env var, and the subsystem maintainer
+>>> should still be fixing it or disabling it such that tests won't fail
+>>> more broadly, or deciding to remove it if terminally broken.
+>>>
+>>> We're just decoupling the process so that there is an immediate
+>>> workaround possible. It can also be used by people working in
+>>> their forks - often I've been testing stuff in my fork, but
+>>> see spurious failures because git master has a non-deterministic
+>>> test failure merged. I would like to easily skip those in my fork
+>>> too, without adding extra commits to me working branches, as that
+>>> would require the same commit to be duped into several in-progress
+>>> branches, vs setting the env var once.
+>>>
+>>>> The risk I see is that some tests will stay forever in this skip
+>>>> variable, so it will be dead code for CI, but still alive and failing
+>>>> for people running tests manually who hit the regression.
+>>>
+>>> Again, there should be a bug filed for any flaky test. Anyone can
+>>> do this, if they see it locally or in their fork CI, or in staging
+>>> CI. If no one can see an obvious fix, then anyone can also propose
+>>> to disable the test.
+>>>
+>>>> If you still want an alternative to removing test, implementing a
+>>>> skip_list in tests/qemu-iotests/meson.build is better than an env var
+>>>> IMHO, and achieves the exact same effect, for CI and for users.
+>>>>
+>>>> What do you think?
+>>>
+>>> IMHO there needs to be a way to skip flaky tests which does not
+>>> require code changes as the only available option. Code changes
+>>> are the permanent fix, env var is the immediate workaround.
+>>>
+>>
+>> I'm not sure all this answers to my question about How to ensure users
+>> who run tests and the CI both see the same skip list.
+>>
+>> I don't mind having an env var, a black list in meson or any other
+>> solution, but having different results on a dev machine and in CI is not
+>> a good design. So whatever the solution is, the CI yaml file is not the
+>> proper place to store this information.
 > 
-> Sensor readings can be provided upon creation of the device. In case no
-> readings are provided the ADC reads a pre-defined arbitrary value.
+> AFAICT the test 185 that is being skipped in the CI yaml file only
+> fails when run under gitlab. I've never seen a failure running it
+> locally.
 > 
-> root@yosemite4:~# cat /sys/bus/iio/devices/iio:device2/name
-> max11615
-> root@yosemite4:~# cat /sys/bus/iio/devices/iio:device2/in_voltage0_raw
-> 1922
-> root@yosemite4:~# cat /sys/bus/iio/devices/iio:device2/in_voltage_scale
-> 0.500000000
-> 
-> trace:
-> less /tmp/qemu-trace.log | grep -i max116
-> max11615_realize i2c_addr: 0x33
-> max11615_realize i2c_addr: 0x33
-> max11615_event i2c_addr: 0x33, event: 0x01
-> max11615_write_setup i2c_addr: 0x33, data: 0xd2
-> max11615_write_config i2c_addr: 0x33, data: 0x0f
-> max11615_event i2c_addr: 0x33, event: 0x03
-> max11615_event i2c_addr: 0x33, event: 0x01
-> max11615_write_setup i2c_addr: 0x33, data: 0xd2
-> max11615_write_config i2c_addr: 0x33, data: 0x0f
-> max11615_event i2c_addr: 0x33, event: 0x03
-> max11615_event i2c_addr: 0x33, event: 0x01
-> max11615_write_setup i2c_addr: 0x33, data: 0xd2
-> max11615_write_config i2c_addr: 0x33, data: 0x61
-> max11615_event i2c_addr: 0x33, event: 0x03
-> max11615_event i2c_addr: 0x33, event: 0x00
-> max11615_recv i2c_addr: 0x33, reg_addr: 0x00
-> max11615_recv_return i2c_addr: 0x33, returns: 0xfa
-> max11615_recv i2c_addr: 0x33, reg_addr: 0x00
-> max11615_recv_return i2c_addr: 0x33, returns: 0xd2
-> max11615_event i2c_addr: 0x33, event: 0x04
-> max11615_event i2c_addr: 0x33, event: 0x03
-> 
-> References:
-> [1] https://www.analog.com/en/products/MAX11615.html
-> [2] https://www.analog.com/media/en/technical-documentation/data-sheets/MAX11612-MAX11617.pdf
-> 
-> Cc: Titus Rwantare <titusr@google.com>
-> Cc: "Cédric Le Goater" <clg@kaod.org> (maintainer:ASPEED BMCs)
-> Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org> (odd fixer:Overall sensors)
-> Cc: Paolo Bonzini <pbonzini@redhat.com> (maintainer:Kconfig)
-> Cc: Peter Maydell <peter.maydell@linaro.org> (supporter:ARM TCG CPUs)
-> Cc: qemu-devel@nongnu.org (open list:All patches CC here)
-> Cc: qemu-arm@nongnu.org (open list:ARM TCG CPUs)
-> Signed-off-by: Alexander Hansen <alexander.hansen@9elements.com>
-> ---
->   MAINTAINERS                              |   1 +
->   hw/arm/Kconfig                           |   1 +
->   hw/arm/aspeed_ast2600_fby4.c             |   8 +-
->   hw/sensor/Kconfig                        |   4 +
->   hw/sensor/max11615.c                     | 202 +++++++++++++++++++++++
->   hw/sensor/meson.build                    |   1 +
->   hw/sensor/trace-events                   |   8 +
->   include/hw/sensor/max11615.h             |  20 +++
->   tests/functional/arm/test_aspeed_fby4.py |   8 +
->   9 files changed, 252 insertions(+), 1 deletion(-)
->   create mode 100644 hw/sensor/max11615.c
->   create mode 100644 include/hw/sensor/max11615.h
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 9c991f8e70..a9c88996a2 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3981,6 +3981,7 @@ S: Maintained
->   F: hw/i2c/pmbus_device.c
->   F: hw/sensor/adm1272.c
->   F: hw/sensor/isl_pmbus_vr.c
-> +F: hw/sensor/max11615.c
->   F: hw/sensor/max31790.c
->   F: hw/sensor/max34451.c
->   F: include/hw/i2c/pmbus_device.h
-> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-> index 99864eb878..76a7d327a9 100644
-> --- a/hw/arm/Kconfig
-> +++ b/hw/arm/Kconfig
-> @@ -553,6 +553,7 @@ config ASPEED_SOC
->       select PMBUS
->       select MAX31785
->       select MAX31790
-> +    select MAX11615
->       select FSI_APB2OPB_ASPEED
->       select AT24C
->       select PCI_EXPRESS
-> diff --git a/hw/arm/aspeed_ast2600_fby4.c b/hw/arm/aspeed_ast2600_fby4.c
-> index a7c2dc09ea..036f5b9e38 100644
-> --- a/hw/arm/aspeed_ast2600_fby4.c
-> +++ b/hw/arm/aspeed_ast2600_fby4.c
-> @@ -12,6 +12,7 @@
->   #include "hw/arm/aspeed_soc.h"
->   #include "hw/nvram/eeprom_at24c.h"
->   #include "hw/sensor/max31790.h"
-> +#include "hw/sensor/max11615.h"
->   #include "hw/i2c/i2c_mux_pca954x.h"
->   #include "hw/gpio/pca9552.h"
->   
-> @@ -186,7 +187,12 @@ static void fby4_i2c_init_fanboard(I2CSlave *fan_mux, size_t eepromSize)
->           i2c_slave_create_simple(bus, TYPE_MAX31790, 0x2f);
->   
->           /* maxim,max11615 @ 0x33   (adc) */
-> -        /* TODO */
-> +        static const uint16_t adc_values[8] = {
-> +            0b011110000010, 0b010100011000,
-> +            0b001000110100, 0b100000101001,
-> +            0b011110000010, 0b010100011000,
-> +            0b001000110100, 0b100000101001};
-> +        max11615_init_with_values(bus, 0x33, adc_values, 8);
->   
->           at24c_eeprom_init_rom(
->               bus, 0x52, eepromSize,
-> diff --git a/hw/sensor/Kconfig b/hw/sensor/Kconfig
-> index ece2f2b167..84eede9d84 100644
-> --- a/hw/sensor/Kconfig
-> +++ b/hw/sensor/Kconfig
-> @@ -47,3 +47,7 @@ config MAX31785
->   config MAX31790
->       bool
->       depends on PMBUS
-> +
-> +config MAX11615
-> +    bool
-> +    depends on I2C
-> diff --git a/hw/sensor/max11615.c b/hw/sensor/max11615.c
-> new file mode 100644
-> index 0000000000..7950e00e33
-> --- /dev/null
-> +++ b/hw/sensor/max11615.c
-> @@ -0,0 +1,202 @@
-> +/*
-> + * Maxim MAX11615 Low-Power 12 bit ADC
-> + * Models MAX11612,MAX11613,MAX11614,MAX11615,MAX11616,MAX11617
-> + *
-> + * Datasheet:
-> + * https://www.analog.com/media/en/technical-documentation/data-sheets/MAX11612-MAX11617.pdf
-> + *
-> + * Copyright 2026 9elements
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "hw/i2c/i2c.h"
-> +#include "migration/vmstate.h"
-> +#include "qapi/error.h"
-> +#include "qapi/visitor.h"
-> +#include "qemu/log.h"
-> +#include "qemu/module.h"
-> +#include "trace.h"
-> +#include "hw/sensor/max11615.h"
-> +
-> +#define MAX11615_NUM_CHANNELS 8
-> +
-> +struct MAX11615State {
-> +    I2CSlave i2c;
-> +
-> +    uint16_t channels[MAX11615_NUM_CHANNELS];
-> +
-> +    /* output buffer */
-> +    uint8_t outlen;
-> +    uint8_t outbuf[2];
-> +
-> +    /* selected channel for read/write operation */
-> +    uint8_t pointer;
-> +};
-> +
-> +struct MAX11615Class {
-> +    I2CSlaveClass parent_class;
-> +};
-> +
-> +OBJECT_DECLARE_TYPE(MAX11615State, MAX11615Class, MAX11615)
-> +
-> +static void max11615_read(MAX11615State *s)
-> +{
-> +    /* read an ADC channel, first 4 bits must be high */
-> +    uint8_t msb = s->channels[s->pointer] >> 8;
-> +    uint8_t lsb = s->channels[s->pointer] & 0xff;
-> +    s->outbuf[0] = 0b11110000 | (msb & 0b00001111);
-> +    s->outbuf[1] = lsb;
-> +}
-> +
-> +static void max11615_write_config_byte(MAX11615State *s, uint8_t data)
-> +{
-> +    trace_max11615_write_config(s->i2c.address, data);
-> +
-> +    uint8_t channelSelect = (data >> 1) & 0b1111;
-> +
-> +    /* Table 3. Channel Selection (AIN0 ... AIN11) */
-> +    if (channelSelect > 11) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid channel select", __func__);
-> +        channelSelect = 11;
-> +    }
-> +    s->pointer = channelSelect;
-> +}
-> +
-> +static void max11615_write_setup_byte(MAX11615State *s, uint8_t data)
-> +{
-> +    trace_max11615_write_setup(s->i2c.address, data);
-> +    /* we ignore the setup byte, not implemented */
-> +}
-> +
-> +static int max11615_send(I2CSlave *i2c, uint8_t data)
-> +{
-> +    MAX11615State *s = MAX11615(i2c);
-> +    const uint8_t msb = (data >> 7) & 0b1;
-> +
-> +    if (msb) {
-> +        max11615_write_setup_byte(s, data);
-> +    } else {
-> +        max11615_write_config_byte(s, data);
-> +    }
-> +
-> +    s->outlen = 0;
-> +    return 0;
-> +}
-> +
-> +static uint8_t max11615_recv(I2CSlave *i2c)
-> +{
-> +    MAX11615State *s = MAX11615(i2c);
-> +    trace_max11615_recv(s->i2c.address, s->pointer);
-> +
-> +    max11615_read(s);
-> +
-> +    if (s->outlen >= 2) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: too many bytes read", __func__);
-> +        s->outlen = 0;
-> +    }
-> +
-> +    const uint8_t data =  s->outbuf[s->outlen++];
-> +
-> +    trace_max11615_recv_return(s->i2c.address, data);
-> +    return data;
-> +}
-> +
-> +static int max11615_event(I2CSlave *i2c, enum i2c_event event)
-> +{
-> +    MAX11615State *s = MAX11615(i2c);
-> +
-> +    trace_max11615_event(s->i2c.address, event);
-> +
-> +    switch (event) {
-> +    case I2C_START_RECV:
-> +        s->outlen = 0;
-> +        break;
-> +    default:
-> +        break;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static const VMStateDescription vmstate_max11615 = {
-> +    .name = TYPE_MAX11615,
-> +    .version_id = 0,
-> +    .minimum_version_id = 0,
-> +    .fields = (const VMStateField[]){
-> +        VMSTATE_UINT16_ARRAY(channels, MAX11615State, MAX11615_NUM_CHANNELS),
-> +        VMSTATE_UINT8(outlen, MAX11615State),
-> +        VMSTATE_UINT8_ARRAY(outbuf, MAX11615State, 2),
-> +        VMSTATE_UINT8(pointer, MAX11615State),
-> +        VMSTATE_I2C_SLAVE(i2c, MAX11615State),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
-> +static void max11615_init(Object *obj)
-> +{
-> +    /* Nothing to do */
-> +}
-> +
-> +I2CSlave *max11615_init_with_values(I2CBus *bus, uint8_t address,
-> +    const uint16_t *init_values, uint32_t init_values_size)
-> +{
-> +    MAX11615State *s;
-> +
-> +    s = MAX11615(i2c_slave_new(TYPE_MAX11615, address));
-> +
-> +    for (int i = 0; i < MAX11615_NUM_CHANNELS && i < init_values_size; i++) {
-> +
-> +        /* arbitrary value */
-> +        uint16_t value = 0b0000101011010010;
-> +
-> +        if (i < init_values_size) {
-> +            value = init_values[i];
-> +        }
-> +        s->channels[i] = value;
-> +    }
-> +
-> +    i2c_slave_realize_and_unref(I2C_SLAVE(s), bus, &error_abort);
-> +
-> +    return I2C_SLAVE(s);
-> +}
-> +
-> +static void max11615_realize(DeviceState *dev, Error **errp)
-> +{
-> +    MAX11615State *s = MAX11615(dev);
-> +
-> +    trace_max11615_realize(s->i2c.address);
-> +
-> +    s->pointer = 0;
-> +    s->outlen = 0;
+> If it failed locally too, then I'd agree that it should not be
+> skipped in the CI yaml, but universally skipped in all scenarios.
+>
 
-These should be in a reset handler.
+If I get all this correctly, we add a generic mechanic to be able to
+gate CI with block tests just because there is a single test failing
+with a single driver. Is that the right approach?
 
-Thanks,
+In the future, do we expect to merge code breaking tests?
 
-C.
-
-> +}
-> +
-> +static void max11615_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
-> +
-> +    dc->realize = max11615_realize;
-> +    dc->desc = "Maxim MAX11615 12-bit ADC";
-> +    dc->vmsd = &vmstate_max11615;
-> +    k->event = max11615_event;
-> +    k->recv = max11615_recv;
-> +    k->send = max11615_send;
-> +}
-> +
-> +static const TypeInfo max31790_info = {
-> +    .name = TYPE_MAX11615,
-> +    .parent = TYPE_I2C_SLAVE,
-> +    .instance_size = sizeof(MAX11615State),
-> +    .class_size = sizeof(MAX11615Class),
-> +    .instance_init = max11615_init,
-> +    .class_init = max11615_class_init,
-> +};
-> +
-> +static void max31790_register_types(void)
-> +{
-> +    type_register_static(&max31790_info);
-> +}
-> +
-> +type_init(max31790_register_types)
-> diff --git a/hw/sensor/meson.build b/hw/sensor/meson.build
-> index 4987c3b253..a1e26604fa 100644
-> --- a/hw/sensor/meson.build
-> +++ b/hw/sensor/meson.build
-> @@ -9,3 +9,4 @@ system_ss.add(when: 'CONFIG_LSM303DLHC_MAG', if_true: files('lsm303dlhc_mag.c'))
->   system_ss.add(when: 'CONFIG_ISL_PMBUS_VR', if_true: files('isl_pmbus_vr.c'))
->   system_ss.add(when: 'CONFIG_MAX31785', if_true: files('max31785.c'))
->   system_ss.add(when: 'CONFIG_MAX31790', if_true: files('max31790.c'))
-> +system_ss.add(when: 'CONFIG_MAX11615', if_true: files('max11615.c'))
-> diff --git a/hw/sensor/trace-events b/hw/sensor/trace-events
-> index c15c0a7e93..3fed979e85 100644
-> --- a/hw/sensor/trace-events
-> +++ b/hw/sensor/trace-events
-> @@ -12,3 +12,11 @@ max31790_recv_return(uint8_t i2c_addr, uint8_t data) "i2c_addr: 0x%02x, returns:
->   max31790_event(uint8_t i2c_addr, uint8_t event) "i2c_addr: 0x%02x, event: 0x%02x"
->   max31790_realize(uint8_t i2c_addr) "i2c_addr: 0x%02x"
->   max31790_pwm_write(uint8_t i2c_addr, size_t index, uint16_t value) "i2c_addr: 0x%02x, index: %zu, value: 0x%04x"
-> +
-> +# max11615.c
-> +max11615_write_setup(uint8_t i2c_addr, uint8_t send) "i2c_addr: 0x%02x, data: 0x%02x"
-> +max11615_write_config(uint8_t i2c_addr, uint8_t send) "i2c_addr: 0x%02x, data: 0x%02x"
-> +max11615_recv(uint8_t i2c_addr, uint8_t reg_addr) "i2c_addr: 0x%02x, reg_addr: 0x%02x"
-> +max11615_recv_return(uint8_t i2c_addr, uint8_t data) "i2c_addr: 0x%02x, returns: 0x%02x"
-> +max11615_event(uint8_t i2c_addr, uint8_t event) "i2c_addr: 0x%02x, event: 0x%02x"
-> +max11615_realize(uint8_t i2c_addr) "i2c_addr: 0x%02x"
-> diff --git a/include/hw/sensor/max11615.h b/include/hw/sensor/max11615.h
-> new file mode 100644
-> index 0000000000..ccc0c9bc2e
-> --- /dev/null
-> +++ b/include/hw/sensor/max11615.h
-> @@ -0,0 +1,20 @@
-> +// SPDX-License-Identifier: GPL-2.0-or-later
-> +#ifndef QEMU_MAX11615_H
-> +#define QEMU_MAX11615_H
-> +
-> +#include <stdint.h>
-> +#include "hw/i2c/i2c.h"
-> +
-> +#define TYPE_MAX11615 "max11615"
-> +
-> +/*
-> + * Create and realize a MAX11615 ADC with constant caller-supplied readings
-> + * @bus: I2C bus to put it on
-> + * @address: I2C address
-> + * @init_values: array of readings for each ADC channel
-> + * @init_values_size: Size of @init_values, can be less than the number of channels
-> + */
-> +I2CSlave *max11615_init_with_values(I2CBus *bus, uint8_t address,
-> +                                    const uint16_t *init_values, uint32_t init_values_size);
-> +
-> +#endif
-> diff --git a/tests/functional/arm/test_aspeed_fby4.py b/tests/functional/arm/test_aspeed_fby4.py
-> index d29423add7..319f1a7672 100755
-> --- a/tests/functional/arm/test_aspeed_fby4.py
-> +++ b/tests/functional/arm/test_aspeed_fby4.py
-> @@ -51,6 +51,14 @@ def do_test_arm_aspeed_openbmc_no_network(self, machine, image, uboot,
->           exec_command_and_wait_for_pattern(self,
->               "cat /sys/class/hwmon/hwmon2/fan1_fault", "0");
->   
-> +        # MAX11615 test
-> +        exec_command_and_wait_for_pattern(self,
-> +            "cat /sys/bus/iio/devices/iio:device2/name", "max11615");
-> +        exec_command_and_wait_for_pattern(self,
-> +            "cat /sys/bus/iio/devices/iio:device2/in_voltage0_raw", "1922");
-> +        exec_command_and_wait_for_pattern(self,
-> +            "cat /sys/bus/iio/devices/iio:device2/in_voltage_scale", "0.500000000");
-> +
->       def test_arm_ast2600_yosemitev4_openbmc(self):
->           image_path = self.uncompress(self.ASSET_YOSEMITE_V4_FLASH)
->   
+It really seem there is just one failure, and we won't have more in the
+future.
+> With regards,
+> Daniel
 
 
