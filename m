@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 841CFCD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:41:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E31BCD4F24
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:41:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMulF-0001D0-3D; Tue, 12 May 2026 17:35:29 -0400
+	id 1wMuk9-0006XN-Ra; Tue, 12 May 2026 17:34:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuky-0000c9-AA; Tue, 12 May 2026 17:35:12 -0400
+ id 1wMuj7-0005KP-Bz; Tue, 12 May 2026 17:33:17 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMukq-0003dD-RO; Tue, 12 May 2026 17:35:11 -0400
+ id 1wMuiq-0002k4-U3; Tue, 12 May 2026 17:33:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619501; bh=LY0TJ+s2kr/iIXJIunpGAvKJ7pHGKcccos8a298YuYA=;
+ t=1778619500; bh=kN+vRBn/OLwmEbR2rmlF5FYYrIr0wj4Oa9rSHAR4hyI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=u48iDz4lO+CvQqSTtIuGIfZguZClwWWo+X+WBLlrxSoN2U49jjxqC1436gOK7QEOd
- lAOX0ty9jkwcg701pS4s/Qmq/TOmBfGN+0nSVWq3XcTbJZIT+K/J+1/hQf+yiNDW7m
- lXzOUBJslZzpWhsWUW+lrS8hye7BrZtE8WKEMfyXLgtW4louIp2dkj7cKgDZ+a9vDb
- nH7/pXShoMXyiWQgH1s+3X2Z0bjOUtwBkOvSI1uS3niZyq8gEHjMfI4uZkf7SgaKTB
- 3hb62Ac7dapmNtbCelGdpE0kV+2yEIX3lcerrg7TQzKBGDlbhpcNjb2cWMELBUXDn9
- 26rNo6HQf3ToQ==
+ b=PKaT0Weepgtd1VTMtKcvC0+vdjir4vBD0i25MZ47PoMa/ucDG+bxOJyBjvMnEVU8R
+ gI1GtkLkfs0SF2PZc4bdYFznu5KvtABxjn81CfYh2g1VNrHhvwLiEfykRUDPqe40SR
+ u4bgCvz4pLokYE75KHpDjiYrOjvuxX4HY937H1AwFRXeKPM3qSDGTFr2RF24pppHNv
+ T6Nfa6223IqwK+91qIGl5nHmpLw76ggeOttUoPVR/8JgrV0LY/FMvO7tz317nH7NDC
+ yfKzifkhLyxntD/fjRjyoO4aRZagEer+fi0J1fTZXP5ZKOYZbZ9TFMjB1XH+C5038u
+ TM1eJrxPAvaJw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 04D9E1AA406;
- Tue, 12 May 2026 23:58:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5B9ED1AA3FD;
+ Tue, 12 May 2026 23:58:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0F5C33ABD5D;
- Tue, 12 May 2026 23:58:25 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 676B03ABD55;
+ Tue, 12 May 2026 23:58:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Thomas Huth <thuth@redhat.com>, Peter Xu <peterx@redhat.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 58/58] tests/functional: Make socat wait longer in
- migration exec test
-Date: Tue, 12 May 2026 23:58:19 +0300
-Message-ID: <20260512205820.361821-58-mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 50/58] target/arm: Report IL=0 for Thumb 16-bit BKPT
+ insn
+Date: Tue, 12 May 2026 23:58:11 +0300
+Message-ID: <20260512205820.361821-50-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
@@ -72,41 +73,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The migration_with_exec test is failing sporadically for all
-architectures due to a race when the destination socat process takes
-too long to start listening while the source process is already
-issuing connect().
+The Thumb BKPT insn is 16-bit, and the ESR_ELx syndrome register
+definition requires that we set the IL bit to 0 for this, and 1 for
+the 32-bit A32 and A64 BKPT/BRK.
 
-The race is inherent because the exec: migration spawns the
-to-be-exec'ed command asynchronously and returns from the
-migrate-incoming command. The localhost-only testcase is not
-representative of the majority of migrations. In a real scenario
-between two different hosts that race wouldn't happen.
+We used to do this correctly, but accidentally lost it in the
+conversion to decodetree, because we converted the A32 BKPT first,
+and then when we converted the T16 BKPT we forgot that trans_BKPT()
+was unconditionally setting IL=1.
 
-Fix the testcase by configuring the source socat command to wait
-indefinitely while trying to connect.
+Pass the right value for syn_aa32_bkpt()'s is_16bit argument.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3474
+Fixes: 43f7e42c7d515f ("target/arm: Convert T16, Miscellaneous 16-bit instructions")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260422230001.3168-1-farosas@suse.de
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-(cherry picked from commit b4ec2e8dae4da74498068536a336fd7424f8446e)
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260505103726.419195-1-peter.maydell@linaro.org
+(cherry picked from commit f443b687636205b7f70029692b244f1f90532cf2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/functional/migration.py b/tests/functional/migration.py
-index 144f091ba8..3b7674af3b 100644
---- a/tests/functional/migration.py
-+++ b/tests/functional/migration.py
-@@ -85,5 +85,5 @@ def migration_with_exec(self):
-         with Ports() as ports:
-             free_port = self._get_free_port(ports)
-             dst_uri = 'exec:socat TCP-LISTEN:%u -' % free_port
--            src_uri = 'exec:socat - TCP:localhost:%u' % free_port
-+            src_uri = 'exec:socat - TCP:localhost:%u,forever' % free_port
-             self.migrate(dst_uri, src_uri)
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index fe89131d34..c57d1a6e73 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -3578,7 +3578,7 @@ static bool trans_BKPT(DisasContext *s, arg_BKPT *a)
+         (a->imm == 0xab)) {
+         gen_exception_internal_insn(s, EXCP_SEMIHOST);
+     } else {
+-        gen_exception_bkpt_insn(s, syn_aa32_bkpt(a->imm, false));
++        gen_exception_bkpt_insn(s, syn_aa32_bkpt(a->imm, curr_insn_len(s) == 2));
+     }
+     return true;
+ }
 -- 
 2.47.3
 
