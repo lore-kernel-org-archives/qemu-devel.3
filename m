@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50594CD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 13:52:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3A2ACD4851
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 13:52:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMnWz-0005RO-CN; Tue, 12 May 2026 09:52:18 -0400
+	id 1wMnWU-0004jb-K0; Tue, 12 May 2026 09:51:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maqianga@uniontech.com>)
- id 1wMm6D-0006rV-E9
- for qemu-devel@nongnu.org; Tue, 12 May 2026 08:20:33 -0400
-Received: from smtpbguseast1.qq.com ([54.204.34.129])
+ id 1wMmti-0003wH-Ji
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 09:11:42 -0400
+Received: from smtpbgau1.qq.com ([54.206.16.166])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maqianga@uniontech.com>)
- id 1wMm60-0005Dk-Pa
- for qemu-devel@nongnu.org; Tue, 12 May 2026 08:20:28 -0400
+ id 1wMmtf-0002r0-UO
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 09:11:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
- s=onoh2408; t=1778588412;
- bh=QqlykIlcWLPxgRNMM67eP4vjhwzPrhUTf5XFMZHhXV4=;
+ s=onoh2408; t=1778591487;
+ bh=XdedY9/4K+g9ouAI2ogDYxg+WYweP8r7IddZI4bkkq4=;
  h=From:To:Subject:Date:Message-Id:MIME-Version;
- b=pXtrhIAHUpEbYK7TmEgoCFznMJZF2jlJzKUB77F131ztPsSZlKMqBJ2NPQ0taNmzH
- /62wT8OsBEc6D8Qq60jVSfkvvkHY9FKmlejUHzR6hG8n+ayUxeq5Wsxe4WyTnN0ckE
- 0lvMQT6H5lcgv8WA2as/7NVLBWi5D2engQvx0Rw4=
-X-QQ-mid: esmtpgz10t1778588409t0ea5c1b4
-X-QQ-Originating-IP: 7eBvXFIH3JwhguSa+rrVQkOhWvyAbQfYP8J43FmQS5M=
+ b=lImrvuUe2r1oydlX1mKzE8+CbQaeXIQBj+7bJQeFOrLsUW6pP/XJk5VAvEsH0xms/
+ PCQPqp398DhkyP3BuqyUFwVyjXnojVjppVYKfC8f2gJJ+tMRLMnnxx13b719vMgdT7
+ Se4EtEO9XykHRnSL6wEqvpCZeMRtLK9GINcVCfCA=
+X-QQ-mid: zesmtpgz3t1778591484t98565ccb
+X-QQ-Originating-IP: QZLymt65pmwqEWIoIjLi8RhOYo9kDebUgAfcnggfk9Y=
 Received: from localhost.localdomain ( [123.114.60.34])
  by bizesmtp.qq.com (ESMTP) with 
- id ; Tue, 12 May 2026 20:20:08 +0800 (CST)
+ id ; Tue, 12 May 2026 21:11:23 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 6184390343546687435
-EX-QQ-RecipientCnt: 3
+X-BIZMAIL-ID: 17855069848752927182
+EX-QQ-RecipientCnt: 5
 From: Qiang Ma <maqianga@uniontech.com>
 To: gaosong@loongson.cn
-Cc: qemu-devel@nongnu.org,
-	Qiang Ma <maqianga@uniontech.com>
-Subject: [PATCH] target/loongarch/kvm: Include missing exec/cpu-defs.h header
-Date: Tue, 12 May 2026 20:19:54 +0800
-Message-Id: <20260512121954.2248026-1-maqianga@uniontech.com>
+Cc: maobibo@loongson.cn, philmd@linaro.org, qemu-devel@nongnu.org,
+ Qiang Ma <maqianga@uniontech.com>
+Subject: [PATCH v2] target/loongarch/kvm: Include missing exec/cpu-defs.h
+ header
+Date: Tue, 12 May 2026 21:11:07 +0800
+Message-Id: <20260512131107.2388663-1-maqianga@uniontech.com>
 X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:uniontech.com:qybglogicsvrsz:qybglogicsvrsz3b-0
-X-QQ-XMAILINFO: M4I3MZG5ZyeogJYhSv47ttUc5m2SlPr2vsFAp8pxRiNDzScZlVuGP2/q
- VTtyEMME+MWKThVHoK40EtaK8vynCaqzmISwHF1ralNuUNSOM4NTEjrbcgFnqdZ8EIAMGcX
- sSo9XFwJgOIxGXZA22bvrNNVp2FqWcD0unGPbKbstdXhNO1GCV5DlIKlQMttiPZ3XFR1wNM
- gxO5cryAL1qBXJhP8EL9Ubr4yIAPj2ZSSSj3Xfbf4PPcgKjcp2YqZ7MCKWiJD6g3u5NzK6o
- VY+693a3gRmqqXnwR48ezxoPPhyfh2pL4MOo0MtgeEJWnPf3P9D/hbYCvByhyrXYz8rTvNY
- O2V8/A7S95vZ1jjsoo8CkuXmnzLEfnyQ1ZdJ3WsrpLWLDNLTsecxYRaaLMe1u3CbYUkjczK
- TekJgUuzRVB+ghFgvxmYsSIj/T5cfHkYRE/wWlhUVqfcTqHLeA3sun9NpQX4OtIjU1Xnblg
- +xUA2MJE4nzhE5f//tMfX3bdheDIf4T2eNywYNbJ3Cf0ueV6kL+9YEBH11wyTj3U/ne5tce
- I3DbYnOxF29Qhu8et0SH4g6HcNDUTQ6Z/SARR3cP6Gm7p3z+ieoazJWuIxawRw759bR8q9M
- aPSLmKuInEmN1glmtgInV4+66UJGPiqjzwOFCXukHoCplmksZVYHqjKZtSiA7p+4mUHwUIm
- 7QtGF7MF+q5iuvzfrwqa8m+83CJWkIPEJYvGrFTZgPvkYBrZOg/3e2MMn69TaMoI0nDQC6b
- nbt9oa11zi6FDIMLbsm5l+a6mSaDAYQBzkZr9eDWpneQryckigQ0VZ4EsEAicUQiAWOGrTz
- Xbdw52qAlufD9Mj9IIIMLxJ9fn0Zildio4rQ4/KWDWADAuPIBtHr9BkYhfUIB4lYlAM8/Pe
- 7abAXTwBtc3hdPE/vUH8hSlRmuSqfc9GaJZo6Mt7Lj/takHm+dseBR20YQZMID+O+4brWVW
- bbAWiR2nToejkzlIVTSQ4IHTSPZ9w5Ys4NNCXPCby9v/2N8Bq2PfVdghX7GLRjoxe+RkKmw
- BAFvnKM5VxITF082H+rEAmiHhEymw=
-X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
+Feedback-ID: zesmtpgz:uniontech.com:qybglogicsvrsz:qybglogicsvrsz3b-0
+X-QQ-XMAILINFO: OFwwhOVq6f4xq28EIeYNjJoDLafTU+R289nnVfaERRP3k1GySUdO/Qcs
+ kqj/33RVmiWCal90w7O6QM2w0w9CbozlU93Lpuw9sGYkkjp7Yvh8oZX3qPxhQQJuDyfXnWc
+ Pa38z8CI0f2kkPwkmwjqLfXDiI8ZUzX0ugCvmIUazYFuq3ADIXq55Ym3PaB1jdWaBKxD5XC
+ S5X9jwfcXKDRkhMWBKDH0lkQuyel2ZUF8OJWdwjm68/bVuUiptxTv6ks1dlag5e7xM840A2
+ U11rzcDQmNFEt2/1BziZesZhyVgQFXpVFW8FeYZKKavhgpxMF4fthFSZZ/JIekc0qZiLesQ
+ nthR/ZXsl/MgUmJJfy6VOpfnNxDCZ8fG//9SAnHsltONJhN0feFB3/HK5fdrO5jTCj+WmWi
+ Gh3XZ6UhJFlSMRbM5hBH2qAMpzHayS+41aF818mGhDHTRS3I4JG/4UWwNbtlMtcLHQI7Pfg
+ PghzFbr0qOuB7bUeRKMbG8AE34CHA2aIu7sNZOJZqN+u0rVBLhLncYWQW9Jq08IMPgombCu
+ VFRU5NSCIkPl3jscxEz/6EPjn9xaY3L8DqIsND4D2ruaweGGlisYFzcKMeTCWPHY454LxwN
+ kT4HOmJz7q8M2V3/vSACKuZJ78hfTxwKnSkILHciuo6DLFwFg4M6HWflRVSm5r+872klNYG
+ SebV9+ZXhJloQqXpyvwFwnnI5yPLHTSfPMzVJZZrCwI1aryJZu/4CRbDqAj0/acg2QdxvGK
+ Tng6WTcPu6iz/2sT2f568XAoaVERY6fgMivjxX7xen2ClLUlUJcLFiumW2Yrquy60I6KsPh
+ sLOS3PP0XO1tN94xJkAsLhCNJDl8IL/Hpv4BCIfq3U9x2CVKExnvwYcDrz77ojxDF9NIb0i
+ EUs2lOBrz2yZAFrrpULlIYf2/ekAtVahOjMR4ymGJGg6+p77AGDhvzRwBKvQxWxEDpw7iwm
+ jgfA2B2xzGCKm0iPIHlEPIy/IBoNVEllvbx3mw1LCUrKa4nplEXBwdlY8KZroxYII1PmaEb
+ SM2+SJTOwyWYKS3ayuUo6GMmro6kbWJXmwDHYazzF6TWzGmr7gZ6/kXPblDP/PeUeZkHCI8
+ GgtQdp7aZjFcY1GjrJJByg=
+X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
 X-QQ-RECHKSPAM: 0
-Received-SPF: pass client-ip=54.204.34.129;
- envelope-from=maqianga@uniontech.com; helo=smtpbguseast1.qq.com
+Received-SPF: pass client-ip=54.206.16.166;
+ envelope-from=maqianga@uniontech.com; helo=smtpbgau1.qq.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 12 May 2026 09:50:51 -0400
+X-Mailman-Approved-At: Tue, 12 May 2026 09:50:53 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -106,18 +108,18 @@ Signed-off-by: Qiang Ma <maqianga@uniontech.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index 9d844c4905..7989aec7c7 100644
+index 9d844c4905..4af4ab2ed0 100644
 --- a/target/loongarch/kvm/kvm.c
 +++ b/target/loongarch/kvm/kvm.c
 @@ -6,6 +6,7 @@
   */
  
  #include "qemu/osdep.h"
-+#include "exec/cpu-defs.h"
++#include "exec/target_long.h"
  #include <sys/ioctl.h>
  #include <linux/kvm.h>
  #include "asm-loongarch/kvm_para.h"
 -- 
-2.51.0
+2.20.1
 
 
