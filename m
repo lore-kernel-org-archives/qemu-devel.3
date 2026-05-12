@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE6E2CD4F39
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:17:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD552CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:17:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuQo-0003Dk-NO; Tue, 12 May 2026 17:14:22 -0400
+	id 1wMuOP-000250-0l; Tue, 12 May 2026 17:11:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuQa-00021K-02; Tue, 12 May 2026 17:14:08 -0400
+ id 1wMuOD-0000IQ-Lh; Tue, 12 May 2026 17:11:41 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuQY-0005gt-8P; Tue, 12 May 2026 17:14:07 -0400
+ id 1wMuOA-0004fI-Oa; Tue, 12 May 2026 17:11:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619305; bh=nW+QjqzugVx5zltjTAhVg+YQpKEuym/TQXd55CGi+TU=;
+ t=1778619303; bh=U45kgYAj+2v7iIaX8tYnrSLqsn7a9J3SNZbV3Nk05YM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=PjV4rROAHe0iXQNsfurO7W5iZhtA54s8H/NxcC6jU+f3x3rXTz+Ut291rcgzb9CiH
- oSIY3dKiMLpBEg4LDjhBNFXnaa56+5XPhsEmGm7Oql2H229PT/LuHkOs2yqVnkJY4n
- 2O/biDqJD0/x5dpOZk/ModmoRJCPpKJtYrChT4JcqXkpk/xbIc5uhXPikjFlYMIcgK
- fWZTSa/GH702H7xUbwbbAuYHg94enEhMIcNyDCBVdynq5XX1uSMik6XzjSdrdm9+NX
- 62usksHFcMqNJ/lEhYseHoJQL58KyiEpND93diTe01L89qEW+10Jiz+aAMpgz3bwDo
- rGMJQGfCHyn5Q==
+ b=DX6Mk9yWjvwJF8n8SnIrg9xjRhBITThmhgHEGu4qX1rddNp3qoQtfVIRj6VpIj2Lg
+ +fsCGH6YBZMPfPm2U03XQkbwNHX2pqdB7OOicmAbcgfsMWFZSLb2nZ+Kak5QP14edV
+ GAhA2Ud1yzxcuIIpxfxdTDvfX7mLeQmkqh8uzsKkDkQ57c51H4nXBlYri5C3GnrDzS
+ UW//7BBPeE5/JO5Ghl5CAOffk57PCmFKmPyUDWeuRlS/7dTGh6YGULX1MjismuOdcc
+ RwsTVkHzPkm2Lij28JXIOrTKdvXH/GYtxdP8AOhKUdHoLRSgCnqYvUOSNYhlXjGtap
+ MVDyNN5egJP8w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3E3151AA38F;
- Tue, 12 May 2026 23:55:05 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7F03B1AA377;
+ Tue, 12 May 2026 23:55:03 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 485933ABCFE;
- Tue, 12 May 2026 23:55:09 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8A1D43ABCE6;
+ Tue, 12 May 2026 23:55:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gyorgy Tamasi <gyorgy.tamasi@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Helge Deller <deller@gmx.de>,
+Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Warner Losh <imp@bsdimp.com>, Peter Maydell <peter.maydell@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 081/117] linux-user: Don't define target_stat64 struct
- for loongarch64
-Date: Tue, 12 May 2026 23:54:23 +0300
-Message-ID: <20260512205503.361097-81-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 057/117] bsd-user,
+ linux-user: signal: recursive signal delivery fix
+Date: Tue, 12 May 2026 23:53:59 +0300
+Message-ID: <20260512205503.361097-57-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
@@ -71,59 +70,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-The kernel defines 'struct stat64' only if
-__BITS_PER_LONG != 64 || defined(__ARCH_WANT_STAT64).
-loongarch64 doesn't set __ARCH_WANT_STAT64, and it isn't 32-bit,
-so it won't get this struct.
+Synchronous signals must accommodate a synchronous signal being
+raised during delivery, as asynchronous ones do. For example
+badframe errors during delivery will cause SIGSEGV to be raised.
 
-QEMU incorrectly does define a target_stat64 struct. However this
-isn't causing any guest-visible problems, because defining the
-target_stat64 struct and TARGET_HAS_STRUCT_STAT64 affects these
-syscalls:
- TARGET_NR_stat64
- TARGET_NR_lstat64
- TARGET_NR_fstat64
- TARGET_NR_fstatat64
- TARGET_NR_newfstatat
+Without this fix, cpu_loop() runs process_pending_signals() which
+delivers the first synchronous signal (e.g., SIGILL) which fails
+to set the handler and forces SIGSEGV, but that is not picked up.
+process_pending_signals() returns. Then cpu_loop() runs cpu_exec()
+again, which attempts to execute the same instruction, another
+SIGILL.
 
-For loongarch64 the only one of those we provide is newfstatat,
-and that is actually a separate QEMU bug, because the kernel does
-not provide that syscall for this architecture. No real guest
-code will be using a syscall that doesn't exist in the ABI.
-
-(Some of these syscalls are present in the loongarch64 "ABI1.0",
-but that ABI was never accepted in the upstream kernel, and
-QEMU does not model that ABI, only the "ABI2.0".)
-
-Stop defining TARGET_HAS_STRUCT_STAT64 anyway, for consistency
-with the kernel and to avoid confusion.
-
-Note:
-Commit message suggested by Peter Maydell <peter.maydell@linaro.org>
-
-Signed-off-by: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
-Tested-by: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Warner Losh <imp@bsdimp.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 93484c768f2b66947a91d6372f408ae01c83e8c6)
+Message-id: 20260321135624.581398-3-npiggin@gmail.com
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 7e966ef38f58f91e05a46fdfda4ba63a9a1567d6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index a2470856be..55443ff965 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -2005,7 +2005,7 @@ struct target_stat {
-     abi_uint __unused5;
- };
+diff --git a/bsd-user/signal.c b/bsd-user/signal.c
+index dadcc037dc..3e5e41e1b1 100644
+--- a/bsd-user/signal.c
++++ b/bsd-user/signal.c
+@@ -998,7 +998,12 @@ void process_pending_signals(CPUArchState *env)
+                 sigdelset(&ts->signal_mask, target_to_host_signal(sig));
+                 sigact_table[sig - 1]._sa_handler = TARGET_SIG_DFL;
+             }
++            /*
++             * Restart scan from the beginning, as handle_pending_signal
++             * might have resulted in a new synchronous signal (eg SIGSEGV).
++             */
+             handle_pending_signal(env, sig, &ts->sync_signal);
++            goto restart_scan;
+         }
  
--#if !defined(TARGET_RISCV64)
-+#if !defined(TARGET_RISCV64) && !defined(TARGET_LOONGARCH64)
- #define TARGET_HAS_STRUCT_STAT64
- struct target_stat64 {
-     abi_ullong st_dev;
+         k = ts->sigtab;
+@@ -1008,10 +1013,7 @@ void process_pending_signals(CPUArchState *env)
+             if (k->pending &&
+                 !sigismember(blocked_set, target_to_host_signal(sig))) {
+                 handle_pending_signal(env, sig, k);
+-                /*
+-                 * Restart scan from the beginning, as handle_pending_signal
+-                 * might have resulted in a new synchronous signal (eg SIGSEGV).
+-                 */
++                /* Restart scan, explained above. */
+                 goto restart_scan;
+             }
+         }
+diff --git a/linux-user/signal.c b/linux-user/signal.c
+index 804096bd44..f0a22577e5 100644
+--- a/linux-user/signal.c
++++ b/linux-user/signal.c
+@@ -1384,6 +1384,11 @@ void process_pending_signals(CPUArchState *cpu_env)
+             }
+ 
+             handle_pending_signal(cpu_env, sig, &ts->sync_signal);
++            /*
++             * Restart scan from the beginning, as handle_pending_signal
++             * might have resulted in a new synchronous signal (eg SIGSEGV).
++             */
++            goto restart_scan;
+         }
+ 
+         for (sig = 1; sig <= TARGET_NSIG; sig++) {
+@@ -1394,9 +1399,7 @@ void process_pending_signals(CPUArchState *cpu_env)
+                 (!sigismember(blocked_set,
+                               target_to_host_signal_table[sig]))) {
+                 handle_pending_signal(cpu_env, sig, &ts->sigtab[sig - 1]);
+-                /* Restart scan from the beginning, as handle_pending_signal
+-                 * might have resulted in a new synchronous signal (eg SIGSEGV).
+-                 */
++                /* Restart scan, explained above. */
+                 goto restart_scan;
+             }
+         }
 -- 
 2.47.3
 
