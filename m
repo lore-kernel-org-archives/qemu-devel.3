@@ -4,68 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D0D3CD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:06:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 469A6CD4F24
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:22:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMgFb-00032x-LA; Tue, 12 May 2026 02:05:51 -0400
+	id 1wMgVK-0000cW-Bj; Tue, 12 May 2026 02:22:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wMgFV-0002zr-AF
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:05:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wMgFS-0001iX-CV
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:05:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778565933;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=lSRzAVXjgS0y1HIg4tO8zUh4ieqhsfxj8YuaBQZl3SM=;
- b=IWfMXZ2w3ZmXZgmIjgKh2szYMV/DO65UV2nF2BeAcekqcEAneTFuBFopCvgKvTBCYVNq1Z
- sDqvNs5NDsF9qbWYdINOdT3a8FSbLvayqAbYK9yn6MWYVieHxUvzCtlhyslhnzwWbAE5wo
- UJDorsk+vGmYFG2vI8LCI7HnL4vVZQE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-75-mZcCwZfyMFSL2T63DBIDTg-1; Tue,
- 12 May 2026 02:05:31 -0400
-X-MC-Unique: mZcCwZfyMFSL2T63DBIDTg-1
-X-Mimecast-MFC-AGG-ID: mZcCwZfyMFSL2T63DBIDTg_1778565930
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B2C5B19560B0; Tue, 12 May 2026 06:05:30 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.44.32.107])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E017718004A3; Tue, 12 May 2026 06:05:29 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 9ADD318000A7; Tue, 12 May 2026 08:05:23 +0200 (CEST)
-From: Gerd Hoffmann <kraxel@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgVC-0000bL-CF
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:22:00 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgV9-0003ov-Ml
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:21:58 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-44b052142e1so2804155f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 23:21:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778566912; x=1779171712; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=CzFrN52xeD/rKozWspEAMehNfHxgV2xjJ/hvz+/wxcg=;
+ b=QTo0X7ppc1AfXfj4wESNqXglwnBa6l0UgNK/XLu6IHgpDbgUjvDJjXIxZ/wQ64LXUH
+ nyta0guKX8iUDzSFmMoDDnq43LMMYGzDA+C5h70y/gW/HjUkB5dEjVeGCa4MTdKR/yZE
+ 2dLJPoAtRwYOP7Ak3XruMWn6txBcO4SCg1s8D7/8MU5C/GY2+t3Pz/yduOM0hOqcJxN1
+ MV0zSnIeR1Xu2kSDELo8SMwnZciLLjvnEs40BfX6OBvA2Qx4p7Bg0oubKAAyLMFmYKLo
+ ViFPP6MgB8jVvLptgh+P0dWm9Zpfa+rPhYtN/PkCB7wCHHfi2gs50gSQMZV2Ty+tW+q0
+ /SlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778566912; x=1779171712;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=CzFrN52xeD/rKozWspEAMehNfHxgV2xjJ/hvz+/wxcg=;
+ b=ohEpppT3ekXrgo1VeCRV0mW+HDF2RZjVsdP6jkdEv45LifqC9QfVbw55QZA3JC+Sfs
+ +qzpGKeLudk1OtfUnek229ikT8CuVTlLOGAPIHQYerGtSXfBDNeQzYN0tGYGC4uiQ+r4
+ UN7lP/JHe3yQt3FvSjYrt5LlfA0AcczYBfXxIz/U3CYn7V+bGtyKpGDrSeieBhanVv2R
+ tjaCFHV7rC9YiGk901eVovN1aSUhm3vxVhMWA9V836gVoxqRA3HoZV/+C4ll1lvRAntl
+ Qd2NRyOMhlCsL0weN/XYP6j1LjGHHNSsAY0EDt44ELCIBT/B10XXzW55kui3HAmziinB
+ 20wg==
+X-Gm-Message-State: AOJu0YwzoVLrqsc8wdp1k5876yoGclrt+YKh4rvbknij72xs/mnviRzA
+ 3C2m/N39IN1kmzVQj/aqJ64o6oGoFo0mVN//2w9+9hUs3cq1eDj9i0HgWykBaF+9VeR3EqTbTN3
+ N6rfogp8=
+X-Gm-Gg: Acq92OEd7eQFL3s3jkrS5spxCdRKMOoAEe2Z2CTSUWhgqyqTbgsptEvYyJwwkb9GtoL
+ lqdf3Dcr+bNjcs4jL4kMiUKYuq7Ry17N1d5A+TEiaKYvQ5C7tmJy+88FQ/vyBI0OKh44+EqdsHL
+ 75E2hBM8x5klFnNgu5VL4KFWxDMu3mcLUZPN3QquEPlRihB4d4evj5HWsUrwzSgOKJvN42mnEnI
+ LF3OfBRxXL7yGVGh6PgstBtly3tk/kE3zQT07KINQZpHsmBjTsXxqDWdizPBQEnf14LEgeZ6mqW
+ 5c3KiIURMyaQkI2H1LXD18wHkLLebIcqzYgi7zUPxb+LmDotEEoX3ywmkOmDx33pEJWDlQYbTKJ
+ +PYRMZ37vTNqZ5fXz+Hxt+4OEmK/xzhlO2UAVj02PLPZu3JlEZ9nWpfltvaEOuFZMRn9IEEkVhG
+ Cr+i8arLPtw4YqKr5I09xiENuLiQAfL3BDKg8UsxR8LNuMXMjWzwF58cTuocBUy1wTBWZAGa/Y
+X-Received: by 2002:a05:6000:310e:b0:43e:aa88:f1a1 with SMTP id
+ ffacd0b85a97d-4568ca51624mr18282841f8f.30.1778566912236; 
+ Mon, 11 May 2026 23:21:52 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4549120eb95sm29569044f8f.20.2026.05.11.23.21.51
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 11 May 2026 23:21:51 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, Feifan Qian <bea1e@proton.me>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] hw/uefi: check auth.hdr_length minimum size
-Date: Tue, 12 May 2026 08:05:23 +0200
-Message-ID: <20260512060523.17493-1-kraxel@redhat.com>
+Subject: [PULL 01/41] hw/display/cirrus_vga: Fix packed-24 color-expansion
+ transparent pattern fills
+Date: Tue, 12 May 2026 08:21:02 +0200
+Message-ID: <20260512062142.67998-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260512062142.67998-1-philmd@linaro.org>
+References: <20260512062142.67998-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,64 +99,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-auth.hdr_length maximum is already checked (against buffer size).  The
-header has some fixed fields which are included in the header length, so
-there also is a minimum size which must be verified.  Add a check for
-that.  Fixes possible integer underflow.
+From: Peter Maydell <peter.maydell@linaro.org>
 
-While being at it replace the magic number '24' with sizeof calculations
-for better code documentation.
+The Cirrus Logic VGA card has "pattern fill" blit modes where it
+repeatedly copies an 8x8 source pattern to the display.  For the
+"color expansion" subtype of these, the source pixel format is an 8x8
+monochrome bitmap, and the destination can be any of 8, 16, 24 or
+32bpp.  We implemented these wrong for the 24bpp case, in a way that
+results in a complaint from the undefined-behavior sanitizer about a
+shift by a negative value.
 
-Fixes: CVE-2026-8341
-Fixes: f1488fac0584 ("hw/uefi: add var-service-auth.c")
-Reported-by: Feifan Qian <bea1e@proton.me>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+For these pattern fills, the GR2F register includes a field which
+specifies how much to skip at the start of each scanline.  In the 8,
+16 and 32 bit cases, this field is 3 bits and is a count of pixels to
+skip.  We get this case right.  However, for the 24 bit case, the
+field is 5 bits and is a count of destination bytes to skip.  We
+tried to add support for 24-bits in commit ad81218e40e27 ("depth=24
+write mask fix (Volker Ruppert)") in 2005.  However we got this
+wrong, because when we need to skip, for example, 30 bytes in the
+destination, this is 10 input pixels but the whole pattern is only 8
+pixels wide, and we ended up with a negative bitpos for the first bit
+to use in the pattern.
+
+Fix the bug by masking srcskipleft in the 24-bit case so that it
+correctly gives the first pixel to use in the pattern even if we skip
+so many pixels that we have wrapped around to what would have been
+the second copy of the pattern to the destination.
+
+This patch was produced based on the information in the CL-GD5446
+Technical Reference Manual, specifically sections 5.8 "GR2F: BLT
+Destination Left-Side Clipping" and 9.4.8 "Pattern Fills".
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3377
+Fixes: ad81218e40e27 ("depth=24 write mask fix (Volker Ruppert)")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Junjie Cao <junjie.cao@intel.com>
+Tested-by: Junjie Cao <junjie.cao@intel.com>
+Message-ID: <20260410183249.4046456-2-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/uefi/var-service-auth.c  | 5 ++++-
- hw/uefi/var-service-pkcs7.c | 4 ++--
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ hw/display/cirrus_vga_rop2.h | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/hw/uefi/var-service-auth.c b/hw/uefi/var-service-auth.c
-index 795f2f54e4ab..f3dc9c6ca608 100644
---- a/hw/uefi/var-service-auth.c
-+++ b/hw/uefi/var-service-auth.c
-@@ -194,7 +194,7 @@ static efi_status uefi_vars_check_auth_2_sb(uefi_vars_state *uv,
-         return EFI_SUCCESS;
-     }
- 
--    if (auth.hdr_length == 24) {
-+    if (auth.hdr_length == (sizeof(auth) - sizeof(auth.timestamp))) {
-         /* no signature (auth->cert_data is empty) */
-         return EFI_SECURITY_VIOLATION;
-     }
-@@ -228,6 +228,9 @@ efi_status uefi_vars_check_auth_2(uefi_vars_state *uv, uefi_variable *var,
-     }
-     memcpy(&auth, data, sizeof(auth));
- 
-+    if (auth.hdr_length < (sizeof(auth) - sizeof(auth.timestamp))) {
-+        return EFI_SECURITY_VIOLATION;
-+    }
-     if (uadd64_overflow(sizeof(efi_time), auth.hdr_length, &data_offset)) {
-         return EFI_SECURITY_VIOLATION;
-     }
-diff --git a/hw/uefi/var-service-pkcs7.c b/hw/uefi/var-service-pkcs7.c
-index c859743e8677..8a1f1395a2fb 100644
---- a/hw/uefi/var-service-pkcs7.c
-+++ b/hw/uefi/var-service-pkcs7.c
-@@ -113,9 +113,9 @@ static gnutls_datum_t *build_pkcs7(void *data)
- 
-     memcpy(&auth, data, sizeof(auth));
-     pkcs7 = g_new(gnutls_datum_t, 1);
--    pkcs7->size = auth.hdr_length - 24;
-+    pkcs7->size = auth.hdr_length - (sizeof(auth) - sizeof(auth.timestamp));
-     pkcs7->data = g_malloc(pkcs7->size);
--    memcpy(pkcs7->data, data + 16 + 24, pkcs7->size);
-+    memcpy(pkcs7->data, data + sizeof(auth), pkcs7->size);
- 
-     wrap_pkcs7(pkcs7);
- 
+diff --git a/hw/display/cirrus_vga_rop2.h b/hw/display/cirrus_vga_rop2.h
+index b208b7348ad..8be35ec6e20 100644
+--- a/hw/display/cirrus_vga_rop2.h
++++ b/hw/display/cirrus_vga_rop2.h
+@@ -191,10 +191,29 @@ glue(glue(glue(cirrus_colorexpand_pattern_transp_, ROP_NAME), _),DEPTH)
+     int x, y, bitpos, pattern_y;
+     unsigned int bits, bits_xor;
+     unsigned int col;
++
++    /*
++     * Copy from an 8x8 monochrome pattern with color expansion.
++     */
++
+ #if DEPTH == 24
++    /*
++     * For packed-24 modes, GR2F bits [4:0] are a count of destination
++     * bytes to be suppressed for each scanline, which we keep in
++     * dstskipleft. Our srcskipleft is the number of pixels to skip
++     * within the 8x8 source pattern to match up with that number
++     * of suppressed bytes. As the pattern repeats every 8 bits we
++     * take the number of pixels mod 8.
++     */
+     int dstskipleft = s->vga.gr[0x2f] & 0x1f;
+-    int srcskipleft = dstskipleft / 3;
++    int srcskipleft = (dstskipleft / 3) & 0x7;
+ #else
++    /*
++     * In all other modes, GR2F bits [2:0] are a count of how many
++     * destination pixels to suppress for each scanline, which is our
++     * srcskipleft. We get dstskipleft, the number of bytes to skip,
++     * by multiplying this by the bytes-per-pixel.
++     */
+     int srcskipleft = s->vga.gr[0x2f] & 0x07;
+     int dstskipleft = srcskipleft * (DEPTH / 8);
+ #endif
 -- 
-2.54.0
+2.53.0
 
 
