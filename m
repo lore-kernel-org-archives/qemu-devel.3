@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9C9DCD4F24
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:10:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82356CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:10:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuHM-0006Ms-2t; Tue, 12 May 2026 17:04:36 -0400
+	id 1wMuL5-0001Fy-CD; Tue, 12 May 2026 17:08:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuGH-0001f2-NC; Tue, 12 May 2026 17:03:31 -0400
+ id 1wMuJc-00080N-Ec; Tue, 12 May 2026 17:06:56 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuGE-0007sI-6H; Tue, 12 May 2026 17:03:29 -0400
+ id 1wMuJa-0001jn-2K; Tue, 12 May 2026 17:06:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619279; bh=QuwoT57byzYi7Qen6aQQJBdiy2CgG9IKvDtAL+D2tBo=;
+ t=1778619300; bh=OjwXyTZuy6DkkkOKWZ4e6baCmCmLueh8Cg5MvuPgeR0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=PF0kvWE3xIyJsv66Hwv9rGIlmp9rJns0V3ZVYgHXqRsogdWo4IcgSglsXFRYmCtZZ
- vMxHfSiL+e59NX6ttdMui5F1CdvPjHdjncUJ4BuSnZ2XhuQEKFpZYwGKvZba82gAIm
- 0bLpeWtAEhMNBAgrq8rxoKzUj3rPoqvZiqaEQdUMvpT38Qr36h8P+UQT7xtbErmi+e
- /JVqR9bECxbM9Gblqjxbjb9rVfR1wrL5lyMvkx0t0iyBC/r0MxH0a0RASzJhZHrZMl
- pbsA4o//ejaS7AfcuMj5no/kgEwhtXwsvKARSuXI1/ZV/0lQKs1tCyNAKMG4T+eMqt
- +8CGlI9WYHNFQ==
+ b=lkYnMUBljpYygi5pI0ufcvPykysnpWKqHbPVfj8M3GuQmBGVjpi6X/UjCTlZ88Bzy
+ oDJ5Eob8P2J2Txa5ZTE+JH3odtanQhEhmFWKNd7/HNhBvmitaCLd1K8ZG9ooGLIGGs
+ HnkmaOcHNw/8T4UJQgueOBKEYzKQnjgFUS/QO/RhfFtjqGxOowCbCyMP4pn6pZEbji
+ 3hPYap716PIxjVgoHXhGkQOk5FAGmgi/QIfYalqzztHAYaRz+GPyLR6aLRObvxi1gQ
+ tGrhODOk0J6QoC5F+e/HWATRKqQ8SMORYsCLydK1yFdx1VhQ8e0RI0DLKFAAnOJjxX
+ eXAP90ggreqhA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0DC7E1AA322;
- Tue, 12 May 2026 23:54:39 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 737041AA347;
+ Tue, 12 May 2026 23:55:00 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1940B3ABC93;
- Tue, 12 May 2026 23:54:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7C3033ABCB8;
+ Tue, 12 May 2026 23:55:04 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 086/107] target/riscv: Generate access fault if sc
- comparison fails
-Date: Tue, 12 May 2026 23:54:13 +0300
-Message-ID: <20260512205437.360850-86-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Shivang Upadhyay <shivangu@linux.ibm.com>,
+ Aditya Gupta <adityag@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 011/117] ppc/pnv: fix dumpdtb option
+Date: Tue, 12 May 2026 23:53:13 +0300
+Message-ID: <20260512205503.361097-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
-References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -70,80 +71,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair.francis@wdc.com>
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
 
-The RISC-V spec states:
+The '-machine dumpdtb' command line option stopped working on
+PowerPC/pnv systems after recent design change [1].
 
-"For the purposes of memory protection, a failed SC.W may be treated
-like a store."
+Fixing this by generating fdt blob in `pnv_init`.
 
-So if the comparison in sc.w fails we should still check for alignment
-and do a probe access to check permissions.
+[1] https://lore.kernel.org/qemu-devel/20250206151214.2947842-1-peter.maydell@linaro.org/
 
+Cc: Aditya Gupta <adityag@linux.ibm.com>
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Cc: BALATON Zoltan <balaton@eik.bme.hu>
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3323
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3136
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Message-ID: <20260415233740.3027321-2-alistair.francis@wdc.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit d107b748072cea3f86089a4a7b2e83f1a62745f2)
+Fixes: 8fd2518ef2f8d34 ("hw: Centralize handling of -machine dumpdtb option")
+Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260311143549.118720-1-shivangu@linux.ibm.com
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+(cherry picked from commit a16d4c2f162a86db1f84ef0836d42eabaf57fe69)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index ddb07ca3d1..68e76a3c28 100644
---- a/target/riscv/helper.h
-+++ b/target/riscv/helper.h
-@@ -1289,3 +1289,6 @@ DEF_HELPER_4(vsm4r_vs, void, ptr, ptr, env, i32)
- #ifndef CONFIG_USER_ONLY
- DEF_HELPER_1(ssamoswap_disabled, void, env)
- #endif
-+
-+/* Zalrsc SC write probe */
-+DEF_HELPER_FLAGS_3(sc_probe_write, TCG_CALL_NO_WG, void, env, tl, tl)
-diff --git a/target/riscv/insn_trans/trans_rva.c.inc b/target/riscv/insn_trans/trans_rva.c.inc
-index 9cf3ae8019..a1b45cbd2c 100644
---- a/target/riscv/insn_trans/trans_rva.c.inc
-+++ b/target/riscv/insn_trans/trans_rva.c.inc
-@@ -84,6 +84,12 @@ static bool gen_sc(DisasContext *ctx, arg_atomic *a, MemOp mop)
-      */
-     TCGBar bar_strl = (ctx->ztso || a->rl) ? TCG_BAR_STRL : 0;
-     tcg_gen_mb(TCG_MO_ALL + a->aq * TCG_BAR_LDAQ + bar_strl);
-+    /*
-+     * "For the purposes of memory protection, a failed SC.W may be treated
-+     * like a store." so let's check the write access permissions
-+     */
-+    gen_helper_sc_probe_write(tcg_env, src1,
-+                              tcg_constant_tl(memop_size(mop)));
-     gen_set_gpr(ctx, a->rd, tcg_constant_tl(1));
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 895132da91..e8a12d87c4 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -772,26 +772,8 @@ static void pnv_reset(MachineState *machine, ResetType type)
+         }
+     }
  
-     gen_set_label(l2);
-diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-index c34d8a4a9c..0cdbb0138c 100644
---- a/target/riscv/op_helper.c
-+++ b/target/riscv/op_helper.c
-@@ -265,6 +265,20 @@ void helper_cbo_inval(CPURISCVState *env, target_ulong address)
-     /* We don't emulate the cache-hierarchy, so we're done. */
+-    if (machine->fdt) {
+-        fdt = machine->fdt;
+-    } else {
+-        fdt = pnv_dt_create(machine);
+-        /* Pack resulting tree */
+-        _FDT((fdt_pack(fdt)));
+-    }
+-
++    fdt = machine->fdt;
+     cpu_physical_memory_write(PNV_FDT_ADDR, fdt, fdt_totalsize(fdt));
+-
+-    /* Update machine->fdt with latest fdt */
+-    if (machine->fdt != fdt) {
+-        /*
+-         * Set machine->fdt for 'dumpdtb' QMP/HMP command. Free
+-         * the existing machine->fdt to avoid leaking it during
+-         * a reset.
+-         */
+-        g_free(machine->fdt);
+-        machine->fdt = fdt;
+-    }
  }
  
-+void helper_sc_probe_write(CPURISCVState *env, target_ulong addr,
-+                           target_ulong size)
-+{
-+    uintptr_t ra = GETPC();
-+    int mmu_idx = riscv_env_mmu_index(env, false);
+ static ISABus *pnv_chip_power8_isa_create(PnvChip *chip, Error **errp)
+@@ -1260,6 +1242,11 @@ static void pnv_init(MachineState *machine)
+     if (pmc->i2c_init) {
+         pmc->i2c_init(pnv);
+     }
 +
-+    if (addr & (size - 1)) {
-+        env->badaddr = addr;
-+        riscv_raise_exception(env, RISCV_EXCP_STORE_AMO_ADDR_MIS, ra);
++    if (!machine->fdt) {
++        machine->fdt = pnv_dt_create(machine);
++        _FDT((fdt_pack(machine->fdt)));
 +    }
-+
-+    probe_write(env, addr, size, mmu_idx, ra);
-+}
-+
- #ifndef CONFIG_USER_ONLY
+ }
  
- target_ulong helper_sret(CPURISCVState *env)
+ /*
 -- 
 2.47.3
 
