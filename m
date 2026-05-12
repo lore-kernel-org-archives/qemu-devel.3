@@ -4,47 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7728DCD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 20:56:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFE66CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 20:56:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMu95-0004py-Lp; Tue, 12 May 2026 16:56:03 -0400
+	id 1wMu9n-0006MG-M5; Tue, 12 May 2026 16:56:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMu8U-00044A-Um; Tue, 12 May 2026 16:55:34 -0400
+ id 1wMu9l-0006DD-2R; Tue, 12 May 2026 16:56:45 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMu8Q-00034R-4W; Tue, 12 May 2026 16:55:26 -0400
+ id 1wMu9i-0003SG-HI; Tue, 12 May 2026 16:56:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619273; bh=zIFKA1gK2QxIQt9X5V1nHTN2R3ohlFdjcYEgFfNWMDA=;
+ t=1778619274; bh=JWSIGopsTg74D630j7pITK+QLGjVKq8rwPYDSMe/ysc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=DMAToGBlpz0dyEo2J0JOxNqkF+W+lgwNEnxnI9Ot/+XGhOGAmb0cVNWuf7jRj4DY8
- FdeC2s1BujIs21njxieOYEnhQfz6P4UYBY9Vb6xHYXnJonZWnshYV6FtbW0kbgQcMq
- IAohEUPjkitiQMCPHWE7BiBgXQ0kbykOUSwIsaebPxYUuJYpsxs0vAfn0ioF0EY8+O
- 5JHxAOlOkkLhrLLU1y38sa+ulxkS51TwiacmY2iitiy6A3dBNBmSvxcXefPHH2wvX3
- PzLZEl3Drjym3hJmNNNPHt6IKOapvoXjJXelHCRNv56eTOlm1ow8VusOrRwDfAvtTh
- mFaylLzecI4yw==
+ b=goldvgpW9Ie35dcils+rnNw+vbWmV8zp5J5YI+hob7t9VeyO/heizsbSzEK+2UMsy
+ IRW+G32haqcSRGKSCHof1wDEX8FgcYCgdGT5G/HZHnRcBCHqdmpYStKpiS8gRixdhe
+ fxI/nT8jDxhAKfTl0/dHA+oHe/q7FYqdpQvzwi2SMKT52mR0B+/ckCx9KQM32pXgop
+ tvzHAdtxAE5TkV8zQ30K/8+7VNTVI088x0kESN2pAUEuwzuQygeVGKSEZJg85BnSaO
+ d54LRqs7SD4mjDrK8Dj1v5gnT3yE6Ggkj5v3m7T4abJVXECT7Qh0PFsTLEQYNbZNHt
+ 4vnFnlSdAMdQw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E4F891AA2D5;
- Tue, 12 May 2026 23:54:33 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AF8501AA2E1;
+ Tue, 12 May 2026 23:54:34 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id F28D43ABC46;
- Tue, 12 May 2026 23:54:37 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id BC2D43ABC52;
+ Tue, 12 May 2026 23:54:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
- Hanna Czenczek <hreitz@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 009/107] block/mirror: fix assertion failure upon
- duplicate complete for job using 'replaces'
-Date: Tue, 12 May 2026 23:52:56 +0300
-Message-ID: <20260512205437.360850-9-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 021/107] hw/ssi/aspeed_smc: Convert mem ops to
+ read/write_with_attrs for error handling
+Date: Tue, 12 May 2026 23:53:08 +0300
+Message-ID: <20260512205437.360850-21-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,63 +71,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fiona Ebner <f.ebner@proxmox.com>
+From: Cédric Le Goater <clg@redhat.com>
 
-If s->replace_blocker was already set by an earlier invocation of
-mirror_complete(), then there will be an assertion failure when
-error_setg() is called for it a second time. The bdrv_op_block_all()
-and bdrv_ref() operations should only be done a single time too.
+Error conditions (invalid flash mode, unwritable flash) now return
+MEMTX_ERROR instead of silently succeeding or returning undefined
+values.
 
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Message-Id: <20260311145717.668492-2-f.ebner@proxmox.com>
-Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-(cherry picked from commit 9ac85f4cc7995217db8f736733b990d6addcb036)
+This allows the memory subsystem to properly propagate transaction
+errors to the guest, improving QEMU reliability.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3335
+Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Link: https://lore.kernel.org/qemu-devel/20260323125545.577653-2-clg@redhat.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit 80c5be945877ea3f258679c6042df8f0efd77202)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/mirror.c b/block/mirror.c
-index db2af08050..09d2c9017d 100644
---- a/block/mirror.c
-+++ b/block/mirror.c
-@@ -1185,23 +1185,25 @@ static void mirror_complete(Job *job, Error **errp)
-         return;
+diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
+index b4a17a52a3..edb83716ed 100644
+--- a/hw/ssi/aspeed_smc.c
++++ b/hw/ssi/aspeed_smc.c
+@@ -493,17 +493,18 @@ static void aspeed_smc_flash_setup(AspeedSMCFlash *fl, uint32_t addr)
      }
+ }
  
--    /* block all operations on to_replace bs */
--    if (s->replaces) {
--        s->to_replace = bdrv_find_node(s->replaces);
--        if (!s->to_replace) {
--            error_setg(errp, "Node name '%s' not found", s->replaces);
--            return;
-+    if (!s->should_complete) {
-+        /* block all operations on to_replace bs */
-+        if (s->replaces) {
-+            s->to_replace = bdrv_find_node(s->replaces);
-+            if (!s->to_replace) {
-+                error_setg(errp, "Node name '%s' not found", s->replaces);
-+                return;
-+            }
-+
-+            /* TODO Translate this into child freeze system. */
-+            error_setg(&s->replace_blocker,
-+                       "block device is in use by block-job-complete");
-+            bdrv_op_block_all(s->to_replace, s->replace_blocker);
-+            bdrv_ref(s->to_replace);
+-static uint64_t aspeed_smc_flash_read(void *opaque, hwaddr addr, unsigned size)
++static MemTxResult aspeed_smc_flash_read(void *opaque, hwaddr addr,
++                                 uint64_t *data, unsigned size, MemTxAttrs attrs)
+ {
+     AspeedSMCFlash *fl = opaque;
+     AspeedSMCState *s = fl->controller;
+-    uint64_t ret = 0;
+     int i;
+ 
++    *data = 0;
+     switch (aspeed_smc_flash_mode(fl)) {
+     case CTRL_USERMODE:
+         for (i = 0; i < size; i++) {
+-            ret |= (uint64_t) ssi_transfer(s->spi, 0x0) << (8 * i);
++            *data |= (uint64_t) ssi_transfer(s->spi, 0x0) << (8 * i);
+         }
+         break;
+     case CTRL_READMODE:
+@@ -512,18 +513,19 @@ static uint64_t aspeed_smc_flash_read(void *opaque, hwaddr addr, unsigned size)
+         aspeed_smc_flash_setup(fl, addr);
+ 
+         for (i = 0; i < size; i++) {
+-            ret |= (uint64_t) ssi_transfer(s->spi, 0x0) << (8 * i);
++            *data |= (uint64_t) ssi_transfer(s->spi, 0x0) << (8 * i);
          }
  
--        /* TODO Translate this into child freeze system. */
--        error_setg(&s->replace_blocker,
--                   "block device is in use by block-job-complete");
--        bdrv_op_block_all(s->to_replace, s->replace_blocker);
--        bdrv_ref(s->to_replace);
-+        s->should_complete = true;
+         aspeed_smc_flash_unselect(fl);
+         break;
+     default:
+         aspeed_smc_error("invalid flash mode %d", aspeed_smc_flash_mode(fl));
++        return MEMTX_ERROR;
      }
  
--    s->should_complete = true;
--
-     /* If the job is paused, it will be re-entered when it is resumed */
-     WITH_JOB_LOCK_GUARD() {
-         if (!job->paused) {
+-    trace_aspeed_smc_flash_read(fl->cs, addr, size, ret,
++    trace_aspeed_smc_flash_read(fl->cs, addr, size, *data,
+                                 aspeed_smc_flash_mode(fl));
+-    return ret;
++    return MEMTX_OK;
+ }
+ 
+ /*
+@@ -624,8 +626,8 @@ static bool aspeed_smc_do_snoop(AspeedSMCFlash *fl,  uint64_t data,
+     return false;
+ }
+ 
+-static void aspeed_smc_flash_write(void *opaque, hwaddr addr, uint64_t data,
+-                                   unsigned size)
++static MemTxResult aspeed_smc_flash_write(void *opaque, hwaddr addr,
++                                   uint64_t data, unsigned size, MemTxAttrs attrs)
+ {
+     AspeedSMCFlash *fl = opaque;
+     AspeedSMCState *s = fl->controller;
+@@ -636,7 +638,7 @@ static void aspeed_smc_flash_write(void *opaque, hwaddr addr, uint64_t data,
+ 
+     if (!aspeed_smc_is_writable(fl)) {
+         aspeed_smc_error("flash is not writable at 0x%" HWADDR_PRIx, addr);
+-        return;
++        return MEMTX_ERROR;
+     }
+ 
+     switch (aspeed_smc_flash_mode(fl)) {
+@@ -661,12 +663,15 @@ static void aspeed_smc_flash_write(void *opaque, hwaddr addr, uint64_t data,
+         break;
+     default:
+         aspeed_smc_error("invalid flash mode %d", aspeed_smc_flash_mode(fl));
++        return MEMTX_ERROR;
+     }
++
++    return MEMTX_OK;
+ }
+ 
+ static const MemoryRegionOps aspeed_smc_flash_ops = {
+-    .read = aspeed_smc_flash_read,
+-    .write = aspeed_smc_flash_write,
++    .read_with_attrs = aspeed_smc_flash_read,
++    .write_with_attrs = aspeed_smc_flash_write,
+     .endianness = DEVICE_LITTLE_ENDIAN,
+     .valid = {
+         .min_access_size = 1,
+@@ -754,7 +759,8 @@ static void aspeed_smc_reset(DeviceState *d)
+     s->snoop_dummies = 0;
+ }
+ 
+-static uint64_t aspeed_smc_read(void *opaque, hwaddr addr, unsigned int size)
++static MemTxResult aspeed_smc_read(void *opaque, hwaddr addr, uint64_t *data,
++                                   unsigned int size, MemTxAttrs attrs)
+ {
+     AspeedSMCState *s = ASPEED_SMC(opaque);
+     AspeedSMCClass *asc = ASPEED_SMC_GET_CLASS(opaque);
+@@ -782,12 +788,13 @@ static uint64_t aspeed_smc_read(void *opaque, hwaddr addr, unsigned int size)
+ 
+         trace_aspeed_smc_read(addr << 2, size, s->regs[addr]);
+ 
+-        return s->regs[addr];
++        *data = s->regs[addr];
+     } else {
+         qemu_log_mask(LOG_UNIMP, "%s: not implemented: 0x%" HWADDR_PRIx "\n",
+                       __func__, addr);
+-        return -1;
++        *data = -1;
+     }
++    return MEMTX_OK;
+ }
+ 
+ static uint8_t aspeed_smc_hclk_divisor(uint8_t hclk_mask)
+@@ -1108,8 +1115,8 @@ static void aspeed_2600_smc_dma_ctrl(AspeedSMCState *s, uint32_t dma_ctrl)
+     s->regs[R_DMA_CTRL] &= ~(DMA_CTRL_REQUEST | DMA_CTRL_GRANT);
+ }
+ 
+-static void aspeed_smc_write(void *opaque, hwaddr addr, uint64_t data,
+-                             unsigned int size)
++static MemTxResult aspeed_smc_write(void *opaque, hwaddr addr, uint64_t data,
++                                    unsigned int size, MemTxAttrs attrs)
+ {
+     AspeedSMCState *s = ASPEED_SMC(opaque);
+     AspeedSMCClass *asc = ASPEED_SMC_GET_CLASS(s);
+@@ -1159,13 +1166,13 @@ static void aspeed_smc_write(void *opaque, hwaddr addr, uint64_t data,
+     } else {
+         qemu_log_mask(LOG_UNIMP, "%s: not implemented: 0x%" HWADDR_PRIx "\n",
+                       __func__, addr);
+-        return;
+     }
++    return MEMTX_OK;
+ }
+ 
+ static const MemoryRegionOps aspeed_smc_ops = {
+-    .read = aspeed_smc_read,
+-    .write = aspeed_smc_write,
++    .read_with_attrs = aspeed_smc_read,
++    .write_with_attrs = aspeed_smc_write,
+     .endianness = DEVICE_LITTLE_ENDIAN,
+ };
+ 
+@@ -2007,8 +2014,8 @@ static const uint32_t aspeed_2700_fmc_resets[ASPEED_SMC_R_MAX] = {
+ };
+ 
+ static const MemoryRegionOps aspeed_2700_smc_flash_ops = {
+-    .read = aspeed_smc_flash_read,
+-    .write = aspeed_smc_flash_write,
++    .read_with_attrs = aspeed_smc_flash_read,
++    .write_with_attrs = aspeed_smc_flash_write,
+     .endianness = DEVICE_LITTLE_ENDIAN,
+     .valid = {
+         .min_access_size = 1,
 -- 
 2.47.3
 
