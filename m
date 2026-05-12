@@ -4,47 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C3A9CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:19:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8863ACD4F39
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:19:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuTh-0004DI-De; Tue, 12 May 2026 17:17:21 -0400
+	id 1wMuVy-00049P-8O; Tue, 12 May 2026 17:19:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuT7-000224-3k; Tue, 12 May 2026 17:16:47 -0400
+ id 1wMuVv-0003ya-W8; Tue, 12 May 2026 17:19:40 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuT5-0006jH-7Y; Tue, 12 May 2026 17:16:44 -0400
+ id 1wMuVu-00085g-1Z; Tue, 12 May 2026 17:19:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619306; bh=wiIxSKLWjGp/hnmDgWgykvj99Y/kdybHqbX062AqeJ8=;
+ t=1778619497; bh=2Auq4ZShcHPhyzVP1lYtU+rdqjbXwUZ5HXuQ4o789do=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=HL5IOjYk5JWTdsanmZm9kooVbt1Po2U4Cv5Y5ODc8MQZpsv/aijDNDEJChWK6EGhO
- B9ff1JqIM51fJvGR2Jwapv2kcJhwkfauKlqG84CGQU1Wh5bshcogg/UdGpJyjHekFM
- mw86/5JJQIxDQ3PNCJ6W27PSIFLiR0Df6FcpgZNyjEVwVKNS2O4T50ML9HuMS5dBBw
- UVm0JmKp3XSWLdLRGNDKb9jGJO2vf1tneLvh874M7/CC9t14fpkNMUGW4u3kq7bqo1
- c/kdxt6oQCGapXY/Z+5KfIEe+eojPKI2LEwvdwElHd7j2BGCU+869Zlocnljst35oj
- HP34E98aF0btg==
+ b=AJuH4lx7o+w4m7qbXjtw8j5uFnVIaW/iyKZp9Yvrz/s7xKzUrl9pzTZuXv9O4JHxP
+ mqT8Egb0w+0sNFzUGBAhCdHDj0vGBpP4/ppV1kFBVxTsbK2fAjRB925svmlVmlVdBH
+ g9rJmghkwNZsBDtqVcIpIM8YZamqxQSFZRuSDWbeTVRU0cT9r4EhrWTsc1Y/RShIwQ
+ VDxbRcge2olDyQE2YGxIVBTpzjF1fSDCzNtIMocqXCXpfkeGZo7Qb/YBZQBgGpKovC
+ B1WEDV6akWgUNP07uLHKBpOc805LDUbgP/6u89/4u3BSU6PTpDTPc6tVs3YMGcFmUg
+ nUA9rmyWg63LA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E82511AA3A9;
- Tue, 12 May 2026 23:55:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E03A91AA3DA;
+ Tue, 12 May 2026 23:58:17 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id F3E3D3ABD18;
- Tue, 12 May 2026 23:55:10 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id EC7C43ABD32;
+ Tue, 12 May 2026 23:58:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, liugan1 <liugan1@lixiang.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 107/117] hw/intc/arm_gicv3: Fix NS write to
- ICC_AP1Rn_EL1 when prebits < 7
-Date: Tue, 12 May 2026 23:54:49 +0300
-Message-ID: <20260512205503.361097-107-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 15/58] hw/misc: Fix the valid access size to the
+ avr-power device
+Date: Tue, 12 May 2026 23:57:36 +0300
+Message-ID: <20260512205820.361821-15-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
-References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,100 +72,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: liugan1 <liugan1@lixiang.com>
+From: Thomas Huth <thuth@redhat.com>
 
-The existing code uses a blanket `regno < 2` check to make
-ICC_AP1R0_EL1 and ICC_AP1R1_EL1 writes from Non-secure code WI
-(Write Ignore) when EL3 is present. This is intended to prevent
-NS code from claiming active interrupts in the Secure priority
-range, which could block Secure interrupt delivery.
+Accessing the device with in non-single byte mode currently causes
+QEMU to abort:
 
-However, that check assumes prebits=7 (4 APR registers), where the
-NS priority range (128..255) maps entirely to AP1R2/AP1R3. Since
-commit 39f29e599355 ("hw/intc/arm_gicv3: Use correct number of
-priority bits for the CPU", first in 7.1), all QEMU AArch64 CPUs
-are initialised with gic_pribits=5 (one APR register), so NS
-priorities map to AP1R0 bits [16:31]. Blanket WI of the entire
-AP1R0 register prevents NS code from clearing its own NS active
-priority bits. Machines using hw_compat_7_0 (e.g. virt-7.0) still
-force pribits=8 via force-8-bit-prio and are therefore unaffected.
+ $ echo "writew 0x800064 0x4142" | \
+   ./qemu-system-avr -M mega2560 -display none -qtest stdio -accel qtest
+ [I 0.000000] OPENED
+ [R +0.001784] writew 0x800064 0x4142
+ qemu-system-avr: ../../devel/qemu/hw/misc/avr_power.c:58: avr_mask_write:
+  Assertion `offset == 0' failed.
+ Aborted                    (core dumped)
 
-A concrete consequence observed in virtualisation scenarios: when
-a guest VM acknowledges an SPI interrupt but does not perform EOI,
-is force-killed and restarted, the new guest's attempt to clear
-the residual active state by writing ICC_AP1R0_EL1=0 is silently
-ignored. The running priority (RPR) remains stuck at the old
-interrupt's priority, preventing all equal-or-lower priority
-interrupts (including timer interrupts) from being delivered, and
-hanging the guest.
+Set the valid max access size to 1 to fix the problem.
 
-Fix this by computing the exact Secure/NS boundary within the APR
-bank based on prebits. For registers entirely in the Secure range,
-keep the WI behaviour. For the register that straddles the
-boundary, preserve only the Secure bits while allowing NS bits to
-be modified. For registers entirely in the NS range, allow full
-write access.
-
-The new logic produces identical behaviour to the old code when
-prebits=7, preserving existing behaviour for machines that use
-force-8-bit-prio.
-
-Fixes: 39f29e599355 ("hw/intc/arm_gicv3: Use correct number of priority bits for the CPU")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: liugan1 <liugan1@lixiang.com>
-Message-id: 20260428083119.1400110-1-gs_liugan@163.com
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3393
+Signed-off-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit f35f0f1ca121fb4931fe98570cda3aeb06b7a87f)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260421082935.85995-1-thuth@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit c0306d2b8f45a708f7ab45c846bb24851d6e17f2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
-index 2e6c1f778a..5b15e4ff1e 100644
---- a/hw/intc/arm_gicv3_cpuif.c
-+++ b/hw/intc/arm_gicv3_cpuif.c
-@@ -1869,9 +1869,40 @@ static void icc_ap_write(CPUARMState *env, const ARMCPRegInfo *ri,
-      * at a priority outside the Non-secure range (128..255), since this
-      * would otherwise allow malicious NS code to block delivery of S interrupts
-      * by writing a bad value to these registers.
-+     *
-+     * The NS priority range (128..255) maps to APR bits starting at
-+     * aprbit = 0x80 >> (8 - prebits). Depending on prebits, this boundary
-+     * may fall within AP1R0 or AP1R1, so we cannot simply WI the entire
-+     * register. Instead we calculate which bits within each register
-+     * correspond to the Secure range and preserve those, while allowing
-+     * NS code to modify only the NS range bits.
-+     *
-+     *   prebits=4: num_aprs=1, NS starts at AP1R0[8]
-+     *   prebits=5: num_aprs=1, NS starts at AP1R0[16]
-+     *   prebits=6: num_aprs=2, NS starts at AP1R1[0]
-+     *   prebits=7: num_aprs=4, NS starts at AP1R2[0]
-      */
--    if (grp == GICV3_G1NS && regno < 2 && arm_feature(env, ARM_FEATURE_EL3)) {
--        return;
-+    if (grp == GICV3_G1NS && arm_feature(env, ARM_FEATURE_EL3)) {
-+        int ns_start_bit = 0x80 >> (8 - cs->prebits);
-+        int ns_start_regno = ns_start_bit / 32;
-+        int ns_start_regbit = ns_start_bit % 32;
-+
-+        if (regno < ns_start_regno) {
-+            /* This entire register is in the Secure range: WI */
-+            return;
-+        } else if (regno == ns_start_regno && ns_start_regbit > 0) {
-+            /*
-+             * This register is split: low bits are Secure, high bits are NS.
-+             * Preserve the Secure bits (below ns_start_regbit) from the
-+             * current value, and take the NS bits (at and above
-+             * ns_start_regbit) from the written value.
-+             */
-+            uint32_t secure_mask = MAKE_64BIT_MASK(0, ns_start_regbit);
-+
-+            value = (cs->icc_apr[grp][regno] & secure_mask) |
-+                    (value & ~secure_mask);
-+        }
-+        /* else: regno > ns_start_regno, entire register is NS: allow write */
-     }
+diff --git a/hw/misc/avr_power.c b/hw/misc/avr_power.c
+index f42cf4fd90..42be265691 100644
+--- a/hw/misc/avr_power.c
++++ b/hw/misc/avr_power.c
+@@ -73,6 +73,9 @@ static const MemoryRegionOps avr_mask_ops = {
+     .impl = {
+         .max_access_size = 1,
+     },
++    .valid = {
++        .max_access_size = 1,
++    },
+ };
  
-     if (cs->nmi_support) {
+ static void avr_mask_init(Object *dev)
 -- 
 2.47.3
 
