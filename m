@@ -4,51 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18BA3CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:08:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D3F1CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:08:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuHP-0006i2-I5; Tue, 12 May 2026 17:04:39 -0400
+	id 1wMuHO-0006XF-4B; Tue, 12 May 2026 17:04:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuGC-0001cR-AG; Tue, 12 May 2026 17:03:29 -0400
+ id 1wMuGP-0001sF-Cn; Tue, 12 May 2026 17:03:39 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuG8-0007iz-8S; Tue, 12 May 2026 17:03:22 -0400
+ id 1wMuGN-0007yP-He; Tue, 12 May 2026 17:03:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619278; bh=fCNCBMnBBK8+ZfC0tn3wIGwaiNYfxPk/ThzrHDtsMbQ=;
+ t=1778619279; bh=eCM7vXILxrJ1WoMGxOFmd/DjA6B0QwwTpBYgsE7b4/A=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fkVxa/vzuVKD7Du6FvyZuOuj2Lfc4vGu5bTeiP3x60COOr2tcFboUqg1f/0rajhoj
- xYUOTTRoohujieWdNuZiEgrxzgksAH7NkbQneZ80QYXQcXlphFMPCrUiJHighht6I0
- 1eCSUJHoQXCNeI7A7n173G/GoSzq8ocffb+gPFFBah8Bi/awU4nD8YhbGOmVczjMiW
- cQI6yCE1/xpJnfkB3RG0H52GAaHgP+nwOCnNlFu1chFzQuzEPdvKH+9nP00zckpu+v
- orGlROlKIkJNwW2ljjYT2XdlYoNgAGhSGJSnf2deiHRdk3vH9OwYNm2gEA+hU+N8+w
- pthMk6I43AwCQ==
+ b=U0jUOnxVp0qmQjU0e+N0Q+pJGTC7PDs70OXFgTczLwdVjLuUCW0cMqHG1m6jRHWA8
+ dhJgQYb+AJ9BoWRENFTh/oliJhxPXFKExSyrJ84M8M7KjGcEuFGmZOYB1lGFV2ovre
+ LJZo/GFPguvKSjZ54qGwEM7P6vSYzYILBQXHDe3QVX7hQxLYgyDlZGkGhLPNqpWazE
+ 5/Jvw92xzX3XINOH/lNs7TzdaMbe36XrTVxL7IeUov8/XaueO5L/DbwxQReSwynhKI
+ 6d6VjHBz09Bo/KBKle9g+e+NnCWw4Fv/3Q2LdJnJKlCepw0n4UnygJgx6awSVuz2hN
+ Ek3LDzJhSyMQg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F26011AA321;
- Tue, 12 May 2026 23:54:38 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3C9271AA325;
+ Tue, 12 May 2026 23:54:39 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 06C653ABC92;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4A9083ABC96;
  Tue, 12 May 2026 23:54:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Tao Tang <tangtao1634@phytium.com.cn>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 085/107] riscv_htif: reject invalid signature ranges
- (end <= begin)
-Date: Tue, 12 May 2026 23:54:12 +0300
-Message-ID: <20260512205437.360850-85-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 089/107] linux-user: Add missing CDROM ioctls
+Date: Tue, 12 May 2026 23:54:16 +0300
+Message-ID: <20260512205437.360850-89-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -56,8 +51,8 @@ X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
 X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UPPERCASE_75_100=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,45 +68,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>
+From: Helge Deller <deller@gmx.de>
 
-Prevents huge allocations and crashes caused by malformed HTIF signature
-addresses.
+Add the missing CDROM ioctls and bring them in same order as
+documentation.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3205
-Signed-off-by: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20251209085349.61510-1-munkhuu0825@gmail.com>
-[ Squashed with following commit to fix build failures
-    hw/char/riscv_htif: Fix format specifier for uint64_t
-
-    Message-ID: <20260415134826.1742308-1-chao.liu.zevorn@gmail.com>
-    Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
-]
-Tested-by: Tao Tang <tangtao1634@phytium.com.cn>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 14808578ccbcd17d474c98bb53b60452888f8529)
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit dcb6e96257eea926aef16854bed0871b0605a8b9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/char/riscv_htif.c b/hw/char/riscv_htif.c
-index ec5db5a597..e7328a596f 100644
---- a/hw/char/riscv_htif.c
-+++ b/hw/char/riscv_htif.c
-@@ -171,6 +171,12 @@ static void htif_handle_tohost_write(HTIFState *s, uint64_t val_written)
-                  * begin/end_signature symbols exist.
-                  */
-                 if (sig_file && begin_sig_addr && end_sig_addr) {
-+                    if (end_sig_addr <= begin_sig_addr) {
-+                        error_report("Invalid HTIF signature range:"
-+                                     " begin=0x%" PRIx64 " end=0x%" PRIx64,
-+                                     begin_sig_addr, end_sig_addr);
-+                        return;
-+                    }
-                     uint64_t sig_len = end_sig_addr - begin_sig_addr;
-                     char *sig_data = g_malloc(sig_len);
-                     dma_memory_read(&address_space_memory, begin_sig_addr,
+diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
+index 5b7d00e92f..aa485ee6e5 100644
+--- a/linux-user/ioctls.h
++++ b/linux-user/ioctls.h
+@@ -416,19 +416,18 @@
+ #endif
+ 
+   IOCTL(CDROMPAUSE, 0, TYPE_NULL)
+-  IOCTL(CDROMSTART, 0, TYPE_NULL)
+-  IOCTL(CDROMSTOP, 0, TYPE_NULL)
+   IOCTL(CDROMRESUME, 0, TYPE_NULL)
+-  IOCTL(CDROMEJECT, 0, TYPE_NULL)
+-  IOCTL(CDROMEJECT_SW, 0, TYPE_INT)
+-  IOCTL(CDROMCLOSETRAY, 0, TYPE_NULL)
+-  IOCTL(CDROMRESET, 0, TYPE_NULL)
+   IOCTL(CDROMPLAYMSF, IOC_W, MK_PTR(TYPE_INT))
+   IOCTL(CDROMPLAYTRKIND, IOC_W, MK_PTR(TYPE_INT))
+   IOCTL(CDROMREADTOCHDR, IOC_R, MK_PTR(TYPE_INT))
+   IOCTL(CDROMREADTOCENTRY, IOC_RW, MK_PTR(TYPE_INT))
++  IOCTL(CDROMSTOP, 0, TYPE_NULL)
++  IOCTL(CDROMSTART, 0, TYPE_NULL)
++  IOCTL(CDROMEJECT, 0, TYPE_NULL)
+   IOCTL(CDROMVOLCTRL, IOC_W, MK_PTR(TYPE_INT))
+   IOCTL(CDROMSUBCHNL, IOC_RW, MK_PTR(TYPE_INT))
++  IOCTL(CDROMEJECT_SW, IOC_W, TYPE_INT)
++  IOCTL(CDROMRESET, 0, TYPE_NULL)
+   /* XXX: incorrect (need specific handling) */
+   IOCTL(CDROMREADAUDIO, IOC_W, MK_PTR(MK_STRUCT(STRUCT_cdrom_read_audio)))
+   IOCTL(CDROMREADCOOKED, IOC_RW, MK_PTR(TYPE_INT))
+@@ -438,16 +437,22 @@
+   IOCTL(CDROMREADALL, IOC_RW, MK_PTR(TYPE_INT))
+   IOCTL(CDROMMULTISESSION, IOC_RW, MK_PTR(TYPE_INT))
+   IOCTL(CDROM_GET_UPC, IOC_R, MK_PTR(TYPE_INT))
++  IOCTL(CDROM_LAST_WRITTEN, IOC_R, MK_PTR(TYPE_LONG))
+   IOCTL(CDROMVOLREAD, IOC_R, MK_PTR(TYPE_INT))
+   IOCTL(CDROMSEEK, IOC_W, MK_PTR(TYPE_INT))
+   IOCTL(CDROMPLAYBLK, IOC_W, MK_PTR(TYPE_INT))
+-  IOCTL(CDROM_MEDIA_CHANGED, 0, TYPE_NULL)
+-  IOCTL(CDROM_SET_OPTIONS, 0, TYPE_INT)
+-  IOCTL(CDROM_CLEAR_OPTIONS, 0, TYPE_INT)
+-  IOCTL(CDROM_SELECT_SPEED, 0, TYPE_INT)
+-  IOCTL(CDROM_SELECT_DISC, 0, TYPE_INT)
+-  IOCTL(CDROM_DRIVE_STATUS, 0, TYPE_NULL)
++  IOCTL(CDROMCLOSETRAY, 0, TYPE_NULL)
++  IOCTL(CDROM_SET_OPTIONS, IOC_W, TYPE_INT)
++  IOCTL(CDROM_CLEAR_OPTIONS, IOC_W, TYPE_INT)
++  IOCTL(CDROM_SELECT_SPEED, IOC_W, TYPE_INT)
++  IOCTL(CDROM_SELECT_DISC, IOC_W, TYPE_INT)
++  IOCTL(CDROM_MEDIA_CHANGED, IOC_W, TYPE_INT)
++  IOCTL(CDROM_DRIVE_STATUS, IOC_W, TYPE_INT)
+   IOCTL(CDROM_DISC_STATUS, 0, TYPE_NULL)
++  IOCTL(CDROM_CHANGER_NSLOTS, 0, TYPE_NULL)
++  IOCTL(CDROM_LOCKDOOR, IOC_W, TYPE_INT)
++  IOCTL(CDROM_DEBUG, IOC_W, TYPE_INT)
++  IOCTL(CDROM_GET_CAPABILITY, 0, TYPE_NULL)
+   IOCTL(CDROMAUDIOBUFSIZ, 0, TYPE_INT)
+ 
+ #if 0
 -- 
 2.47.3
 
