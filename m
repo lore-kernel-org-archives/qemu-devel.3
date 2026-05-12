@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FE0FCD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 20:55:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B68F7CD4F24
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 20:55:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMu8k-00047p-2y; Tue, 12 May 2026 16:55:43 -0400
+	id 1wMu8r-0004Gx-Pt; Tue, 12 May 2026 16:55:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMu89-0003uB-2n; Tue, 12 May 2026 16:55:05 -0400
+ id 1wMu8A-0003uO-0I; Tue, 12 May 2026 16:55:06 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMu86-0002mt-SD; Tue, 12 May 2026 16:55:04 -0400
+ id 1wMu87-0002mu-D6; Tue, 12 May 2026 16:55:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619273; bh=2UUgR8FXm+KpvO3CMsyF0r3dDsABIBfClWVOSx0Yxl8=;
+ t=1778619273; bh=oVpMHYrOe1hVRsgnmvIQkNX6E8D9+i02immjOp//NHw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=FTBdBAuqdV4qwvoTMdKRvxVxMamiSAcAuE0gzvB07Mol/Tk/v60iDlG4aUOF+2JI4
- bdHNP4wqjzcflSKP7pmy40th0BD0yZMEtCqPWOmgoiYzKbSB6iu43HxuKlcC9o+4SV
- pp3MYOtDP+aSxNhOxRD40RzwvMav1zw9ORixGAbpDtDlT9R1JwYz7Cww5mbQhMuahR
- jVnPbd0DD8rI9dwyGDVuxGGXjww6G2pFlrZb37sFgw4/Ov575RA8XHrpL4itGEVYcn
- VtW8oSevub/toWnQsrGBke0dwUXxz9/ja/ptEC8ISJuTYMdo4354QgoLxSqdfxAIPX
- RBhntCB1y4AJQ==
+ b=g9g/gS1e3A3x40d5LuX8m7TJ6GhAhIsMXPLe2iC+LQaR7WpLg/HeFbHIk6ctcy0dS
+ iVGYUZRp90sLCr82wbU2TLjQommuh37ZRStP2k9Jv9LQ3EfmWrM3/7Y0f09+hhahLg
+ PCsLqQr+BqM60a6D8VzqLzgbSzwic5yq5jlrgW4cHQ8+MgnfFfaFn3OdcEu8KGs59G
+ WnB1jMsBVxP1Eps9hmVa/zCUtC1VJbCAxq4G+IsUXJm0YssHURqC4GOWnYEqYtqmHF
+ Kucj4l5mh5eJAmMq3houUvWgTdee+dciuYTGR7GlmkZa5DmZHTtiSxKX1GUzXxwFUm
+ PGPz4QGc4yrow==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8881C1AA2CF;
+ by isrv.corpit.ru (Postfix) with ESMTP id 77F5B1AA2CE;
  Tue, 12 May 2026 23:54:33 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 93F4D3ABC40;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8369A3ABC3F;
  Tue, 12 May 2026 23:54:37 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Razvan Ghiorghe <razvanghiorghe16@gmail.com>,
  Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 003/107] linux-user: fix mremap with old_size=0 for
- shared mappings
-Date: Tue, 12 May 2026 23:52:50 +0300
-Message-ID: <20260512205437.360850-3-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 002/107] linux-user: Fix zero_bss for RX PT_LOAD
+ segments
+Date: Tue, 12 May 2026 23:52:49 +0300
+Message-ID: <20260512205437.360850-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
@@ -71,98 +71,82 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Razvan Ghiorghe <razvanghiorghe16@gmail.com>
 
-When old_size is zero and old_address refers to a shareable mapping,
-mremap() should create a new mapping of the same pages according to the
-mremap(2) man page. The MREMAP_MAYMOVE flag must be specified in this case.
+zero_bss() incorrectly assumed that any PT_LOAD containing .bss must be
+writable, rejecting valid ELF binaries where .bss overlaps the tail of
+an RX file-backed page.
 
-Previously, QEMU's target_mremap() rejected this valid case with EFAULT
-during the initial validation, before checking for the special
-old_size == 0 behaviour.
+Instead of failing, temporarily enable write access on the overlapping
+page to zero the fractional bss range, then restore the original page
+permissions once initialization is complete.
 
-This patch adds proper handling for old_size == 0:
-- Validates that MREMAP_MAYMOVE flag is set (required by man spec)
-- Passes the call through to the host mremap()
-- Creates a new mapping without invalidating the original, with both
-  being valid and sharing the same physical memory frames.
-- Ensures the new mapping address falls within the valid guest address
-  region before returning it to the guest.
-
-Tested with the reproducer from the issue on qemu-riscv64, qemu-hppa,
-and qemu-aarch64.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3105
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3179
 Signed-off-by: Razvan Ghiorghe <razvanghiorghe16@gmail.com>
-Tested-by: Helge Deller <deller@gmx.de>
 Reviewed-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 5e5b278d2b1b81fc2b5ca09dba4848f81cd3a718)
-(mjt, rth: backport to pre-f55fc1c092
- "accel/tcg: Add clear_flags argument to page_set_flags")
+(cherry picked from commit 2ff529c6f64b706213339d4bbce76c7788243ddb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-index 5622a01123..230bc2c094 100644
---- a/linux-user/mmap.c
-+++ b/linux-user/mmap.c
-@@ -1118,6 +1118,58 @@ abi_long target_mremap(abi_ulong old_addr, abi_ulong old_size,
-         errno = EINVAL;
-         return -1;
-     }
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index fa83d78667..0f05db4715 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -2377,12 +2377,6 @@ static bool zero_bss(abi_ulong start_bss, abi_ulong end_bss,
+ {
+     abi_ulong align_bss;
+ 
+-    /* We only expect writable bss; the code segment shouldn't need this. */
+-    if (!(prot & PROT_WRITE)) {
+-        error_setg(errp, "PT_LOAD with non-writable bss");
+-        return false;
+-    }
+-
+     align_bss = TARGET_PAGE_ALIGN(start_bss);
+     end_bss = TARGET_PAGE_ALIGN(end_bss);
+ 
+@@ -2400,20 +2394,35 @@ static bool zero_bss(abi_ulong start_bss, abi_ulong end_bss,
+              */
+             align_bss -= TARGET_PAGE_SIZE;
+         } else {
++            abi_ulong start_page_aligned = start_bss & TARGET_PAGE_MASK;
+             /*
+-             * The start of the bss shares a page with something.
+-             * The only thing that we expect is the data section,
+-             * which would already be marked writable.
+-             * Overlapping the RX code segment seems malformed.
++             * The logical OR between flags and PAGE_WRITE works because
++             * in include/exec/page-protection.h they are defined as PROT_*
++             * values, matching mprotect().
++             * Temporarily enable write access to zero the fractional bss.
++             * target_mprotect() handles TB invalidation if needed.
+              */
+             if (!(flags & PAGE_WRITE)) {
+-                error_setg(errp, "PT_LOAD with bss overlapping "
+-                           "non-writable page");
+-                return false;
++                if (target_mprotect(start_page_aligned,
++                                    TARGET_PAGE_SIZE,
++                                    prot | PAGE_WRITE) == -1) {
++                    error_setg_errno(errp, errno,
++                                    "Error enabling write access for bss");
++                    return false;
++                }
+             }
+ 
+-            /* The page is already mapped and writable. */
++            /* The page is already mapped and now guaranteed writable. */
+             memset(g2h_untagged(start_bss), 0, align_bss - start_bss);
 +
-+    if (!old_size) {
-+        if (!(flags & MREMAP_MAYMOVE)) {
-+            errno = EINVAL;
-+            return -1;
-+        }
-+        mmap_lock();
-+        if (flags & MREMAP_FIXED) {
-+            host_addr = mremap(g2h_untagged(old_addr), old_size, new_size,
-+                             flags, g2h_untagged(new_addr));
-+        } else {
-+            /*
-+             * We ensure that the new mapping stands in the
-+             * region of guest mappable addresses.
-+             */
-+            abi_ulong mmap_start;
-+
-+            mmap_start = mmap_find_vma(0, new_size, TARGET_PAGE_SIZE);
-+
-+            if (mmap_start == -1) {
-+                errno = ENOMEM;
-+                mmap_unlock();
-+                return -1;
++            if (!(flags & PAGE_WRITE)) {
++                if (target_mprotect(start_page_aligned,
++                                    TARGET_PAGE_SIZE, prot) == -1) {
++                    error_setg_errno(errp, errno,
++                                    "Error restoring bss first permissions");
++                    return false;
++                }
 +            }
-+
-+            host_addr = mremap(g2h_untagged(old_addr), old_size, new_size,
-+                             flags | MREMAP_FIXED, g2h_untagged(mmap_start));
-+
-+            new_addr = mmap_start;
-+        }
-+
-+        if (host_addr == MAP_FAILED) {
-+            mmap_unlock();
-+            return -1;
-+        }
-+
-+        if (flags & MREMAP_FIXED) {
-+            new_addr = h2g(host_addr);
-+        }
-+
-+        prot = page_get_flags(old_addr);
-+        /*
-+         * For old_size zero, there is nothing to clear at old_addr.
-+         * Only set the flags for the new mapping. They both are valid.
-+         */
-+        page_set_flags(new_addr, new_addr + new_size - 1,
-+                       prot | PAGE_VALID | PAGE_RESET);
-+        shm_region_rm_complete(new_addr, new_addr + new_size - 1);
-+        mmap_unlock();
-+        return new_addr;
-+    }
-+
-     if (!guest_range_valid_untagged(old_addr, old_size)) {
-         errno = EFAULT;
-         return -1;
+         }
+     }
+ 
 -- 
 2.47.3
 
