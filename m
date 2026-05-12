@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7372CD4F24
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:37:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBAD1CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:38:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuk7-0006LK-Io; Tue, 12 May 2026 17:34:19 -0400
+	id 1wMuXi-0001a0-9I; Tue, 12 May 2026 17:21:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMujs-00063Y-GV; Tue, 12 May 2026 17:34:08 -0400
+ id 1wMuXV-0001Jb-Bj; Tue, 12 May 2026 17:21:19 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMujC-0002rM-Fw; Tue, 12 May 2026 17:34:03 -0400
+ id 1wMuXK-0000VQ-9E; Tue, 12 May 2026 17:21:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619500; bh=GmszARVt7TPtIOh6I9oJ+mseqA72Tyv+NZcbJ25pw2E=;
+ t=1778619498; bh=6iBCX3m90W+n7ynirIoE5e+d9cL60E7Odafty5zebwo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=RXH6tjBvm3vZCx3CcbyH26k9pDyUqEuX4IRBSAyOqA5ClyKCQz0at6w4du+G5YcyI
- eubskGOi1O3HuijVYcROGfo0AXJ/NsgjlWc/4woufzxrgzbLde/+eYEeZcB8MH+hxI
- bjh1+K2sV/BzMEEeWFGLURAgsE9ChEJYA5mo+m3enmIxobgbRy/XHIOnTc7qc9c0+h
- 8ruoK70UD77VskmBDV71a3owRLiEQERpxmpnXEp0zFKtQuyEV/o/FkjZDLCxmAulsg
- 4p6K8FHhIQQV4RN1awveAT0rhQuNAnC8RZB1GyWD6kwdMRvbgRkNmO2TLtdVvP3cHD
- zSe/3wQSMm+dA==
+ b=bdXPmbl5WiEFSId3yH1RcmWMalGwDXEFGVW0V0s8wpedyQ5lhxNnGb5LIeNrwbNsJ
+ ta8tzNrJ0O78W/mq7Z+g+ZuK5Vu4oThZxU5eV6AFjs/7UAxp+H/RxS04uC1hPcJ2iG
+ RlArlQTX58CIWLqK076SE7Dxxu+g76i82bbp6xmpot5Y+CNIVm+0TGm5o2Cniojv20
+ 7b8//JdQt+NItuFICetVXFKgE1GgLHnqv/v2rkZtfeAxl3GGWYpuHHzMFKMG+ge0kD
+ ef6axaSsljCtqSC6M5D2vY04eLesTOenYGIYao6La3MyfZUqN8cVA4YmbTHLjStWS/
+ //3F+D1+vJZew==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9A1C41AA400;
- Tue, 12 May 2026 23:58:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id DB1E11AA3E9;
+ Tue, 12 May 2026 23:58:18 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9E2843ABD58;
- Tue, 12 May 2026 23:58:24 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E7A183ABD41;
+ Tue, 12 May 2026 23:58:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Katherine Leaver <katherine.j.leaver@gmail.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 53/58] hw/uefi: verify pio_xfer_offset before
- calculating buffer checksum
-Date: Tue, 12 May 2026 23:58:14 +0300
-Message-ID: <20260512205820.361821-53-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 30/58] util: fix use of pthread_get_name_np on OpenBSD
+Date: Tue, 12 May 2026 23:57:51 +0300
+Message-ID: <20260512205820.361821-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,35 +71,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Without that it is possible to do trigger OOB reads by first
-advancing offset, then making the buffer smaller, finally
-asking for a checksum.
+The pthread_get_name_np function is present on FreeBSD and OpenBSD
+and has 'void' return not 'int'. We didn't notice this build problem
+on FreeBSD since it also has pthread_getname_np which does return
+int like Linux and we use the latter preferentially.
 
-Fixes: CVE-2026-41436
-Fixes: 90ca4e03c27d ("hw/uefi: add var-service-core.c")
-Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260422092910.444997-3-kraxel@redhat.com>
-(cherry picked from commit 94d9a8b2c9e6962aa7f7673229d2db7b110cfac6)
+Fixes: 215235d365e49c72a85ea2940751e45419676031
+Closes: https://gitlab.com/qemu-project/qemu/-/work_items/3399
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260417120531.2215549-1-berrange@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit b8c2426157f51391b74251a830371beda43358c9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/uefi/var-service-core.c b/hw/uefi/var-service-core.c
-index 68d7594c0d..828d760073 100644
---- a/hw/uefi/var-service-core.c
-+++ b/hw/uefi/var-service-core.c
-@@ -235,6 +235,10 @@ static uint64_t uefi_vars_read(void *opaque, hwaddr addr, unsigned size)
-         uv->pio_xfer_offset += size;
-         break;
-     case UEFI_VARS_REG_PIO_BUFFER_CRC32C:
-+        if (uv->pio_xfer_offset > uv->buf_size) {
-+            retval = 0;
-+            break;
-+        }
-         retval = crc32c(0xffffffff, uv->pio_xfer_buffer, uv->pio_xfer_offset);
-         break;
-     case UEFI_VARS_REG_FLAGS:
+diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
+index bd1c2ad2a5..089606c93f 100644
+--- a/util/qemu-thread-posix.c
++++ b/util/qemu-thread-posix.c
+@@ -568,7 +568,8 @@ const char *qemu_thread_get_name(void)
+ # if defined(CONFIG_PTHREAD_GETNAME_NP)
+     rv = pthread_getname_np(pthread_self(), namebuf, sizeof(namebuf));
+ # elif defined(CONFIG_PTHREAD_GET_NAME_NP)
+-    rv = pthread_get_name_np(pthread_self(), namebuf, sizeof(namebuf));
++    pthread_get_name_np(pthread_self(), namebuf, sizeof(namebuf));
++    rv = 0;
+ # else
+     rv = -1;
+ # endif
 -- 
 2.47.3
 
