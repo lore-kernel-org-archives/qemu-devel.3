@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ADF1CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:48:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12C2CCD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:48:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuXX-0001CP-J7; Tue, 12 May 2026 17:21:19 -0400
+	id 1wMuTV-0002sV-AS; Tue, 12 May 2026 17:17:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuWx-0000bF-UL; Tue, 12 May 2026 17:20:48 -0400
+ id 1wMuSa-0001Tn-IR; Tue, 12 May 2026 17:16:16 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuWw-0000Ur-8Q; Tue, 12 May 2026 17:20:43 -0400
+ id 1wMuSX-0006Sw-Vu; Tue, 12 May 2026 17:16:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619498; bh=fqYpsT4ubFrnlohTyKLplTtZln56K3nZqjlhxDef+bI=;
+ t=1778619306; bh=F1ZjrKYiZq3Jun8XhqtVGKKyZHugcUCPVem+L/R0zQ4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=PJE/3ZaB8LHt0AStzwgegDKM3l3gjHM6ODjZ7zqeqedHqVWV2tp+h+vpVnsOM6q+d
- 4+Ma5zNXYx8a7zr1tYJ0/lw4YR4r8O52qfQEcWJ1JByaXU4Y0Bf8PqqvMOz/vWFNeV
- sUzMqH32wD96MhW35DMc+GfkGk7sEszre12+lrTjcsDBNOlfk3MvJQ8KcTXeFuVbjz
- 7xlWA8aefHygJCEtizU4MTcivbv/Vk3xioSieyfWEBuvD1jmoES4Yj3/Kxuc7XOhzB
- J3HCR2qMO+4lkWktW+G2rWyuNbapFECYDdFWDWG2h8OfDkBTPUEVelVfyTPvUIOcGj
- hrtp/DW/+Lc5g==
+ b=jtd7rAsJtPZpYTNu/rmxrrAN/8Lz0hdHZFPEibOBOyHth8i8E7QPq6ZO7XTVIAsA5
+ ECvuERSP8h2u9TxQhgywzvCOF7ZdJwSAQi7DbNeZNZ/3Wele9mSGuYUq5ip2i9Th/D
+ w6h9KcX+i0HYtVGUIbKmpFFvnS6tFOj4qplt3oMPoEVvcgvxg/Y+bLbYvv7W2XcOn7
+ aZfDlQjzujI5qxGpJhZ1QKZa6Hhz1sX/puaABy85eKimjN1iw93tajVqiAu3ZAF7aj
+ nKpDGpFH+ZzAQzJPkZOIyMk8HYIqHL/NxGe1qSEK3vet7fw2NKgCUWkgYe1Ao+yvb9
+ BVUn1SHSPDnbQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B40971AA3E7;
- Tue, 12 May 2026 23:58:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 813141AA3A2;
+ Tue, 12 May 2026 23:55:06 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C18B63ABD3F;
- Tue, 12 May 2026 23:58:22 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 841743ABD11;
+ Tue, 12 May 2026 23:55:10 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
- Peter Hartley <peter@talesfromthearmchair.net>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 28/58] linux-user: Use abi_int for imr_ifindex in
- ip_mreqn struct
-Date: Tue, 12 May 2026 23:57:49 +0300
-Message-ID: <20260512205820.361821-28-mjt@tls.msk.ru>
+ Warner Losh <imp@bsdimp.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 100/117] linux-user: Flush errors by using exit()
+ instead of _exit() in error path
+Date: Tue, 12 May 2026 23:54:42 +0300
+Message-ID: <20260512205503.361097-100-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
-References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -72,48 +71,29 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Peter Hartley noticed, that in the qemu code the imr_ifindex member of
-struct target_ip_mreq needs to be of type "int" instead of "long", which
-is what the Linux kernel uses on all architectures.
+Similiar to previous patch - ensure that we always flush I/O by using
+exit() instead of _exit().
 
-Adjust the type accordingly, and add a QEMU_BUILD_BUG_ON() checker to
-prevent such issues in the future.
-
-This change should fix multicast issues when using hosts and guests with
-different endianess or bit size.
-
-Reported-by: Peter Hartley <peter@talesfromthearmchair.net>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2553
+Reported by: Tobias Bergkvist <tobias@bergkv.ist>
+Reviewed-by: Warner Losh <imp@bsdimp.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2544
 Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit e2af3eadc09b3672017c650e0abfd29a08521921)
+(cherry picked from commit 9fb681792d65fa570cb3e1a769945c10bf276d25)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 910a4da0a6..4594909242 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -2161,6 +2161,8 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
+diff --git a/linux-user/main.c b/linux-user/main.c
+index 84e110dfe9..86d04cca3c 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -975,7 +975,7 @@ int main(int argc, char **argv, char **envp)
+                       info, &bprm);
+     if (ret != 0) {
+         printf("Error while loading %s: %s\n", exec_path, strerror(-ret));
+-        _exit(EXIT_FAILURE);
++        exit(EXIT_FAILURE);
+     }
  
-             QEMU_BUILD_BUG_ON(sizeof(struct ip_mreq) !=
-                               sizeof(struct target_ip_mreq));
-+            QEMU_BUILD_BUG_ON(sizeof(struct ip_mreqn) !=
-+                              sizeof(struct target_ip_mreqn));
- 
-             if (optname == IP_MULTICAST_IF) {
-                 min_size = sizeof(struct in_addr);
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index 6967306be4..5799769f83 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -210,7 +210,7 @@ struct target_ip_mreq {
- struct target_ip_mreqn {
-     struct target_in_addr imr_multiaddr;
-     struct target_in_addr imr_address;
--    abi_long imr_ifindex;
-+    abi_int imr_ifindex;
- };
- 
- struct target_ip_mreq_source {
+     for (wrk = target_environ; *wrk; wrk++) {
 -- 
 2.47.3
 
