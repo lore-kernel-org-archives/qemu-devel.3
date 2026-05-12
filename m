@@ -4,43 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF1C0CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:02:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87F3CCD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:03:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuCu-0003ik-Mc; Tue, 12 May 2026 17:00:01 -0400
+	id 1wMu8x-0004T0-7a; Tue, 12 May 2026 16:55:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuBm-0002Nr-UF; Tue, 12 May 2026 16:58:51 -0400
+ id 1wMu8Y-000465-Q7; Tue, 12 May 2026 16:55:34 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuBl-0004t3-6s; Tue, 12 May 2026 16:58:50 -0400
+ id 1wMu8V-00036a-RC; Tue, 12 May 2026 16:55:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619276; bh=gjFyd651RWy0F6xlDfP/SdobmZuQcY+OKU1rjZMzzV0=;
+ t=1778619274; bh=YMZrUYsIlbBqCWStEj4HLXZ9OHaM8mNn1Z68T//7P1I=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=xoxL5U5/a/Tz/jx32ZOmvlAtlvb/FFbqilP6fXLkpCeEJTGkNusCa9BxKeeeZ6TBt
- 14cmyhHsriaRY8fQTI5mRYfynutwwK/orsWE73HZTgm7BpVfcz92xnBxEg1QHj4UmJ
- +lqvebyEPvR6ZNqitm9PTN/oSCthOqj1T96LHUHk1ik5HB6jroTSCIg+G/BlexCLYd
- b1HV62vr31p7WXw3y83eJt1EGZYUbGxQBK5bJGBRInOGUphfP1QdmiWKKLDcJl/7zW
- fKd4CEN/Z4r11z9HOws+gnzpH8Aeoal1LheVzT8nYIxgFYitxTw37ABEtZw6RVOpHg
- dBTwRGT1mXJsw==
+ b=V4ha8WbBFJutd79MEV7og4XqYsEN4Oux0MQJRmqUkfcXipyHAuFLZI1Jcv4io5oyk
+ 82oOs+7IkpzWx1NOk/dEyQs84XOqAIU40iT0TX9D4y82sPPo0YCZ7yXHlI+L0ThP8W
+ sf1tY7/z9KmS14ffDjkH1YxmEBedtOE5PaQ5n4MRxjcbtSZ6dFakwLV5zvmMwZIw6E
+ XScpfVK5u4eAaIJ+O28omoT/dbxWoJ4ob5EdYc7oii/xt1XrQ8w1byz7e6v5M/WDi9
+ NhaJcc+tzNWEXop1LtzI/yXBtN3YkHeLJeVY/Q+BF0M0MlyeJxxK5o39CxruEZ1D1g
+ Dux342/gVvjpQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 179A01AA2F7;
- Tue, 12 May 2026 23:54:36 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 01AE01AA2D6;
+ Tue, 12 May 2026 23:54:34 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 21C7E3ABC68;
- Tue, 12 May 2026 23:54:40 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0B4F13ABC47;
+ Tue, 12 May 2026 23:54:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, hongmianquan <hongmianquan@bytedance.com>,
- Kevin Wolf <kwolf@redhat.com>, "wubo.bob" <wubo.bob@bytedance.com>,
- Markus Armbruster <armbru@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 043/107] monitor: Fix deadlock in monitor_cleanup
-Date: Tue, 12 May 2026 23:53:30 +0300
-Message-ID: <20260512205437.360850-43-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Shivang Upadhyay <shivangu@linux.ibm.com>,
+ Aditya Gupta <adityag@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 010/107] ppc/pnv: fix dumpdtb option
+Date: Tue, 12 May 2026 23:52:57 +0300
+Message-ID: <20260512205437.360850-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
@@ -69,90 +71,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: hongmianquan <hongmianquan@bytedance.com>
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
 
-During qemu_cleanup, if a non-coroutine QMP command (e.g.,
-query-commands) is concurrently received and processed by the
-mon_iothread, it can lead to a deadlock in monitor_cleanup.
+The '-machine dumpdtb' command line option stopped working on
+PowerPC/pnv systems after recent design change [1].
 
-The root cause is a race condition between the main thread's shutdown
-sequence and the coroutine's dispatching mechanism. When handling a
-non-coroutine QMP command, qmp_dispatcher_co schedules the actual
-command execution as a bottom half in iohandler_ctx and then yields. At
-this suspended point, qmp_dispatcher_co_busy remains true.
+Fixing this by generating fdt blob in `pnv_init`.
 
-Subsequently, the main thread in monitor_cleanup(), sets
-qmp_dispatcher_co_shutdown, and calls qmp_dispatcher_co_wake(). Since
-qmp_dispatcher_co_busy is already true, the aio_co_wake is skipped. The
-main thread then enters the AIO_WAIT_WHILE_UNLOCKED loop, it executes
-the scheduled BH (do_qmp_dispatch_bh) via aio_poll(iohandler_ctx,
-false), which attempts to wake up the coroutine, aio_co_wake schedules a
-new wake-up BH in iohandler_ctx. The main thread then blocks
-indefinitely in aio_poll(qemu_aio_context, true), while the coroutine's
-wake-up BH is starved in iohandler_ctx, qmp_dispatcher_co never reaches
-termination, resulting in a deadlock.
+[1] https://lore.kernel.org/qemu-devel/20250206151214.2947842-1-peter.maydell@linaro.org/
 
-The execution sequence is illustrated below:
-
- IO Thread                 Main Thread (qemu_aio_context)        qmp_dispatcher_co (iohandler_ctx)
-    |                                 |                                        |
-    |-- query-commands                |                                        |
-    |-- qmp_dispatcher_co_wake()      |                                        |
-    |    (sets busy = true)           |                                        |
-    |                                 |   <-- Wakes up in iohandler_ctx -->    |
-    |                                 |                                        |-- qmp_dispatch()
-    |                                 |                                        |-- Schedules BH (do_qmp_dispatch_bh)
-    |                                 |                                        |-- qemu_coroutine_yield()
-    |                                 |                                            [State: Suspended, busy=true]
-    |   [ quit triggered ]            |
-    |                                 |-- monitor_cleanup()
-    |                                 |-- qmp_dispatcher_co_shutdown = true
-    |                                 |-- qmp_dispatcher_co_wake()
-    |                                 |    -> Checks busy flag. It's TRUE!
-    |                                 |    -> Skips aio_co_wake().
-    |                                 |
-    |                                 |-- AIO_WAIT_WHILE_UNLOCKED:
-    |                                 |   |-- aio_poll(iohandler_ctx, false)
-    |                                 |   |    -> Executes do_qmp_dispatch_bh
-    |                                 |   |    -> Schedules 'co_schedule_bh' in iohandler_ctx
-    |                                 |   |
-    |                                 |   |-- aio_poll(qemu_aio_context, true)
-    |                                 |   |    -> Blocks indefinitely! (Deadlock)
-    |                                 |
-    |                                 X (Main thread sleeping)                 X (Waiting for next iohandler_ctx poll)
-
-To fix this, we add an explicit aio_wait_kick() in do_qmp_dispatch_bh()
-to break the main loop out of its blocking poll, allowing it to evaluate
-the loop condition and poll iohandler_ctx.
-
-Suggested-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: hongmianquan <hongmianquan@bytedance.com>
-Signed-off-by: wubo.bob <wubo.bob@bytedance.com>
-Message-ID: <20260327131024.51947-1-hongmianquan@bytedance.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit fc1a2ec7da531223b3473185dc2584f8a7c6c659)
+Cc: Aditya Gupta <adityag@linux.ibm.com>
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Cc: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-stable@nongnu.org
+Fixes: 8fd2518ef2f8d34 ("hw: Centralize handling of -machine dumpdtb option")
+Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260311143549.118720-1-shivangu@linux.ibm.com
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+(cherry picked from commit a16d4c2f162a86db1f84ef0836d42eabaf57fe69)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/qapi/qmp-dispatch.c b/qapi/qmp-dispatch.c
-index e569224eae..50eae4f082 100644
---- a/qapi/qmp-dispatch.c
-+++ b/qapi/qmp-dispatch.c
-@@ -128,6 +128,16 @@ static void do_qmp_dispatch_bh(void *opaque)
-     data->cmd->fn(data->args, data->ret, data->errp);
-     monitor_set_cur(qemu_coroutine_self(), NULL);
-     aio_co_wake(data->co);
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 07a44ccd4c..9f9f3ce4ac 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -741,26 +741,8 @@ static void pnv_reset(MachineState *machine, ResetType type)
+         }
+     }
+ 
+-    if (machine->fdt) {
+-        fdt = machine->fdt;
+-    } else {
+-        fdt = pnv_dt_create(machine);
+-        /* Pack resulting tree */
+-        _FDT((fdt_pack(fdt)));
+-    }
+-
++    fdt = machine->fdt;
+     cpu_physical_memory_write(PNV_FDT_ADDR, fdt, fdt_totalsize(fdt));
+-
+-    /* Update machine->fdt with latest fdt */
+-    if (machine->fdt != fdt) {
+-        /*
+-         * Set machine->fdt for 'dumpdtb' QMP/HMP command. Free
+-         * the existing machine->fdt to avoid leaking it during
+-         * a reset.
+-         */
+-        g_free(machine->fdt);
+-        machine->fdt = fdt;
+-    }
+ }
+ 
+ static ISABus *pnv_chip_power8_isa_create(PnvChip *chip, Error **errp)
+@@ -1208,6 +1190,11 @@ static void pnv_init(MachineState *machine)
+     if (pmc->i2c_init) {
+         pmc->i2c_init(pnv);
+     }
 +
-+    /*
-+     * If the QMP dispatcher coroutine is waiting to be scheduled
-+     * in iohandler_ctx, we must kick the main loop. This ensures
-+     * that AIO_WAIT_WHILE_UNLOCKED() in monitor_cleanup() doesn't
-+     * block indefinitely waiting for an event in qemu_aio_context,
-+     * but actually gets the chance to poll iohandler_ctx and resume
-+     * the coroutine.
-+     */
-+    aio_wait_kick();
++    if (!machine->fdt) {
++        machine->fdt = pnv_dt_create(machine);
++        _FDT((fdt_pack(machine->fdt)));
++    }
  }
  
  /*
