@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72AD6CD4F24
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89C2FCD4F39
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:04:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuEm-0007yc-E8; Tue, 12 May 2026 17:01:56 -0400
+	id 1wMuGw-0004xD-Oh; Tue, 12 May 2026 17:04:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuDK-0005eS-3y; Tue, 12 May 2026 17:00:26 -0400
+ id 1wMuF2-0000JD-DZ; Tue, 12 May 2026 17:02:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuDI-0005de-34; Tue, 12 May 2026 17:00:25 -0400
+ id 1wMuEy-0007Da-LU; Tue, 12 May 2026 17:02:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619276; bh=xcmbAb679+u1NHzSjARVhUGbo4dVqE2enyKyDONBdjA=;
+ t=1778619278; bh=wjKFdBI2hTktfmkYGQ1QHrVajNpvah9EuFHX1c2i0+s=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=lisVrl9e2FFV5/7OmyiOIK4TLyyf4WYa7vwiWjLrlC6jD9zUKrbxnI4fonjF2yDGV
- W7r9mFdEs/Nw6tKIqzY8UwsW0x9PUrfax4jYjNwXlltkwzYnm7QIbqwzoaTcRa29n9
- sphSbZ9rRjXTApPBLT2pfqIYc/h74dcabwhjv1jIR4nDAivNgV97ujD23NdD2EddRL
- PDiBj8dEE1L8mbyrfZY2NWynhIAK8JcSQP024tIftmzDJ4LruRDNtKnenlA/DHRBYe
- Z0uu9iXjUkZ1RPSF6Y5e3W/0XodcoIWDiWD8NUxdJEmGY8zFc9ijss4drFWlWAf9WA
- vwIvU+JjVJIUw==
+ b=w+tb3EyPW5e6o6HamfPEy31xzzf1GfGUxd+02mfFJk3KgDB3kklj+4xPnnnIxB/nY
+ eGWdPNrkC15Y4s4SqZJc8O4Xlo42DIf8YQNVR30naV1UCxXb06tWkXHPMw9g5rlj1P
+ Z9nlaehOZHHeVExD5W061Ou1MooB+J3wUhFjgOScQOGjBTx1tpyzgAG0bTolu1CnL/
+ WBpdKhYan1k4wg1OC3inWzx7U7BlM4wxhWF8kPtgmpAFOBSamRpwNjZQvRkGPaSREE
+ 8ef+spgqfcjfyyvdLaPKxx+Ff9oDceIFdeOf2xqa9Mn2yKz8aT20zCtVKGKi7miJNx
+ 4xpNpOBUPfjxw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id ECF521AA304;
- Tue, 12 May 2026 23:54:36 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5BE7C1AA317;
+ Tue, 12 May 2026 23:54:38 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 035673ABC75;
- Tue, 12 May 2026 23:54:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 672363ABC88;
+ Tue, 12 May 2026 23:54:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 056/107] util/cutils: Fix heap corruption under
- Windows
-Date: Tue, 12 May 2026 23:53:43 +0300
-Message-ID: <20260512205437.360850-56-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, James Hilliard <james.hilliard1@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 075/107] linux-user/mips: sync k0 TLS for
+ EF_MIPS_MACH_OCTEON userlands
+Date: Tue, 12 May 2026 23:54:02 +0300
+Message-ID: <20260512205437.360850-75-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,49 +70,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: James Hilliard <james.hilliard1@gmail.com>
 
-Under Windows, QEMU would only sporadically start successfully. In the
-G_OS_WIN32 case, get_relocated_path() first determines a cursor
-to the end of the "result" string and then increases its size with
-g_string_set_size(). Since g_string_set_size() may reallocate, the
-cursor may become dangling. Windows may detect this and crash the QEMU
-process with the following message:
+Cavium Octeon userspace is not following a generic MIPS Linux TLS
+ABI rule here. Older Octeon glibc uses the k0 register as the fast
+thread pointer, while newer Octeon2 and Octeon3 glibc variants use
+the normal rdhwr $29 path.
 
-  HEAP: Free Heap block 000000000499B640 modified at 000000000499B684 after it was freed
+linux-user already updates CP0_UserLocal for cpu_set_tls() and
+TARGET_NR_set_thread_area, but it does not keep gpr[26]
+synchronized. That leaves EF_MIPS_MACH_OCTEON userlands able to
+complete set_thread_area() and still reach pthread startup or
+pthread_self() with a stale k0 value.
 
-Furthermore, QEMU crashes spontaneously, even long after the guest has
-booted. For example, it presumably crashes due to the guest setting a
-new cursor icon which may be a result of the heap corruption.
+Use the existing MIPS ELF machine flags from linux-user/elfload.c and
+mirror CP0_UserLocal into gpr[26] only for EF_MIPS_MACH_OCTEON.
 
-Fix this by determining the cursor on the resized string.
-
-Fixes: cf60ccc3306c ("cutils: Introduce bundle mechanism")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Message-id: 20260414114033.2360-1-shentey@gmail.com
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit f1b1db98cc3b7212d7efffab516d38d0a913f432)
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 4c681ba3b82d9a9f00a3f361399a1bb7612f3535)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/util/cutils.c b/util/cutils.c
-index 9803f11a59..76a9442085 100644
---- a/util/cutils.c
-+++ b/util/cutils.c
-@@ -1165,9 +1165,10 @@ char *get_relocated_path(const char *dir)
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 0f05db4715..a791396ead 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -3405,6 +3405,9 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
+     /* Usual start for brk is after all sections of the main executable. */
+     info->brk = TARGET_PAGE_ALIGN(hiaddr + load_bias);
+     info->elf_flags = ehdr->e_flags;
++#ifdef TARGET_MIPS
++    info->use_k0_tls = (ehdr->e_flags & EF_MIPS_MACH) == EF_MIPS_MACH_OCTEON;
++#endif
  
-         PCWSTR wdir_skipped_root;
-         if (PathCchSkipRoot(wdir, &wdir_skipped_root) == S_OK) {
-+            char *cursor;
-             size = wcsrtombs(NULL, &wdir_skipped_root, 0, &(mbstate_t){0});
--            char *cursor = result->str + result->len;
-             g_string_set_size(result, result->len + size);
-+            cursor = result->str + result->len - size;
-             wcsrtombs(cursor, &wdir_skipped_root, size + 1, &(mbstate_t){0});
-         } else {
-             g_string_append(result, dir);
+     prot_exec = PROT_EXEC;
+ #ifdef TARGET_AARCH64
+diff --git a/linux-user/mips/target_cpu.h b/linux-user/mips/target_cpu.h
+index c375616c55..2bbd0a81c5 100644
+--- a/linux-user/mips/target_cpu.h
++++ b/linux-user/mips/target_cpu.h
+@@ -35,7 +35,12 @@ static inline void cpu_clone_regs_parent(CPUMIPSState *env, unsigned flags)
+ 
+ static inline void cpu_set_tls(CPUMIPSState *env, target_ulong newtls)
+ {
++    TaskState *ts = get_task_state(env_cpu(env));
++
+     env->active_tc.CP0_UserLocal = newtls;
++    if (ts->info->use_k0_tls) {
++        env->active_tc.gpr[26] = newtls;
++    }
+ }
+ 
+ static inline abi_ulong get_sp_from_cpustate(CPUMIPSState *state)
+diff --git a/linux-user/qemu.h b/linux-user/qemu.h
+index 5f00750151..f2b16ef54b 100644
+--- a/linux-user/qemu.h
++++ b/linux-user/qemu.h
+@@ -64,6 +64,7 @@ struct image_info {
+         uint32_t        note_flags;
+ 
+ #ifdef TARGET_MIPS
++        bool            use_k0_tls;
+         int             fp_abi;
+         int             interp_fp_abi;
+ #endif
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index f2c8037356..ea1711ff95 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -12972,7 +12972,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+ #ifdef TARGET_NR_set_thread_area
+     case TARGET_NR_set_thread_area:
+ #if defined(TARGET_MIPS)
+-      cpu_env->active_tc.CP0_UserLocal = arg1;
++      cpu_set_tls(cpu_env, arg1);
+       return 0;
+ #elif defined(TARGET_I386) && defined(TARGET_ABI32)
+       return do_set_thread_area(cpu_env, arg1);
 -- 
 2.47.3
 
