@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABE35CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:20:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86673CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:20:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuQi-0002XS-Vh; Tue, 12 May 2026 17:14:17 -0400
+	id 1wMuT2-0001nQ-3t; Tue, 12 May 2026 17:16:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuQE-0001MD-PX; Tue, 12 May 2026 17:13:49 -0400
+ id 1wMuS9-0001Mv-3v; Tue, 12 May 2026 17:15:45 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuQA-0005NF-Lt; Tue, 12 May 2026 17:13:45 -0400
+ id 1wMuS7-00069P-DZ; Tue, 12 May 2026 17:15:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619305; bh=663adPU+m3mgRjg9rPiLj3BMr5p2hNhKt3lFk86PrCU=;
+ t=1778619306; bh=NXvvGB+sQX3oEtbuQZJ7RswhfKOeUtLNpmBZ1vb3LXs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=kV4Ldj7+MX6SWRTFHwxnxnWeBIJSFc4CBPLGJJ21N/jaJ647SlIfgPn0dk/WjKMQp
- 7JW7vdoJp8YJCi3Yo+jkLt8M+e4oHUY5XBeAfm3yGL4e1JcLpV35UxgWFdjvPVRPAe
- 5MvccUUkP3+3G/BWRHlz/28usD/PDQhT6YQ+VMjf/pFT+e5JsuPbH+cn2n60ssozuL
- UIs36YuGVKodpWBDmH04AuYHtnaqAsmv+kEoNqmhcyivLZlrxZAxhsVhcvQt50b20e
- Y9i8DV+CYt7VB/OMlva/AiVBbp1qhQ+9oSQlZNJDmU/8iNhh0jwe9lGKuv6zzL02Ej
- +Yoka3i3FbsmQ==
+ b=NNdzjrlxhj/LtKsCvB93RU5PTsb4NH9PeqFNg+0fS0a5g0xBpOckq/czZGhBNGhwq
+ 79Ck8ybLabTrA+1slCQtSJDeA/lGvLLvRngBrNx93cBpcJD3F1WMB5DoStqmz1O6be
+ DdYR9jD5gycyZ+9LZ2UQcK0oSowx9/9tdo6llo2whus8jPs3dcu7H4JMjntw8CVKbG
+ /RSctLbZ4G0ev7ulC3IuvOaZsWLsJRxFPNszv7AWFTyaVeD715Q0jEYo4XCUv4ltKE
+ Pl3+eyh4mQbguGZt0hp4svizFLUXHaVU7hYXiGic9wTeuAd+FSa00dN6CyOrETqIuI
+ XnLrLS4lwtPbw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0DFBF1AA38C;
- Tue, 12 May 2026 23:55:05 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 159191AA39C;
+ Tue, 12 May 2026 23:55:06 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1B21D3ABCFB;
- Tue, 12 May 2026 23:55:09 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 205423ABD0B;
+ Tue, 12 May 2026 23:55:10 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Sebasti=C3=A1n=20Alba=20Vives?= <sebasjosue84@gmail.com>,
+ qemu-security@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 078/117] hw/sh4/sh7750: Remove forgotten abort() in
- the MM_ITLB_DATA handler
-Date: Tue, 12 May 2026 23:54:20 +0300
-Message-ID: <20260512205503.361097-78-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 094/117] hw/intc: fix heap OOB in ACLINT MTIMER
+ multi-socket
+Date: Tue, 12 May 2026 23:54:36 +0300
+Message-ID: <20260512205503.361097-94-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
@@ -71,44 +72,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Sebastián Alba Vives <sebasjosue84@gmail.com>
 
-QEMU currently aborts when the guest writes to the MM_ITLB_DATA register:
+The MMIO read/write handlers index timecmp[] with the absolute hartid
+(hartid_base + offset) but the array is allocated with num_harts
+elements. In multi-socket configurations with hartid_base > 0 this
+causes heap OOB access in the QEMU process.
 
- echo "writel 0xf3000000 0x11223344" | \
-  ./qemu-system-sh4 -M r2d -display none -accel qtest -qtest stdio
- [I 0.000000] OPENED
- [R +0.004476] writel 0xf3000000 0x11223344
- Aborted                    (core dumped)
+Fix by using the relative offset for array indexing.
 
-Looking at the history of the code, the abort() here has likely just
-been forgotten when the register handler had been implemented (it used
-to be a reminder about unimplemented functionality initially):
-
- https://gitlab.com/qemu-project/qemu/-/commit/9f97309a70f12df5f9104f1f
-
-Thus simply remove the abort() now to get rid of the problem.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3420
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260422075429.341409-1-thuth@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 3ab47a47d716f8f2b7686cc06c8312db2e6fc2d4)
+Cc: qemu-security@nongnu.org
+Signed-off-by: Sebastián Alba Vives <sebasjosue84@gmail.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260401053853.10473-2-sebasjosue84@gmail.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit d5b33fc180f557ee3574cef9c64650174d0ef5dd)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/sh4/sh7750.c b/hw/sh4/sh7750.c
-index 300eabc595..ba75392e11 100644
---- a/hw/sh4/sh7750.c
-+++ b/hw/sh4/sh7750.c
-@@ -687,7 +687,6 @@ static void sh7750_mmct_write(void *opaque, hwaddr addr,
-         break;
-     case MM_ITLB_DATA:
-         cpu_sh4_write_mmaped_itlb_data(&s->cpu->env, addr, mem_value);
--        abort();
-         break;
-     case MM_OCACHE_ADDR:
-     case MM_OCACHE_DATA:
+diff --git a/hw/intc/riscv_aclint.c b/hw/intc/riscv_aclint.c
+index c6f13f647e..bd6b9ae586 100644
+--- a/hw/intc/riscv_aclint.c
++++ b/hw/intc/riscv_aclint.c
+@@ -131,6 +131,7 @@ static uint64_t riscv_aclint_mtimer_read(void *opaque, hwaddr addr,
+         addr < (mtimer->timecmp_base + (mtimer->num_harts << 3))) {
+         size_t hartid = mtimer->hartid_base +
+                         ((addr - mtimer->timecmp_base) >> 3);
++        size_t hartid_offset = hartid - mtimer->hartid_base;
+         CPUState *cpu = cpu_by_arch_id(hartid);
+         CPURISCVState *env = cpu ? cpu_env(cpu) : NULL;
+         if (!env) {
+@@ -138,11 +139,11 @@ static uint64_t riscv_aclint_mtimer_read(void *opaque, hwaddr addr,
+                           "aclint-mtimer: invalid hartid: %zu", hartid);
+         } else if ((addr & 0x7) == 0) {
+             /* timecmp_lo for RV32/RV64 or timecmp for RV64 */
+-            uint64_t timecmp = mtimer->timecmp[hartid];
++            uint64_t timecmp = mtimer->timecmp[hartid_offset];
+             return (size == 4) ? (timecmp & 0xFFFFFFFF) : timecmp;
+         } else if ((addr & 0x7) == 4) {
+             /* timecmp_hi */
+-            uint64_t timecmp = mtimer->timecmp[hartid];
++            uint64_t timecmp = mtimer->timecmp[hartid_offset];
+             return (timecmp >> 32) & 0xFFFFFFFF;
+         } else {
+             qemu_log_mask(LOG_UNIMP,
+@@ -174,6 +175,7 @@ static void riscv_aclint_mtimer_write(void *opaque, hwaddr addr,
+         addr < (mtimer->timecmp_base + (mtimer->num_harts << 3))) {
+         size_t hartid = mtimer->hartid_base +
+                         ((addr - mtimer->timecmp_base) >> 3);
++        size_t hartid_offset = hartid - mtimer->hartid_base;
+         CPUState *cpu = cpu_by_arch_id(hartid);
+         CPURISCVState *env = cpu ? cpu_env(cpu) : NULL;
+         if (!env) {
+@@ -182,7 +184,7 @@ static void riscv_aclint_mtimer_write(void *opaque, hwaddr addr,
+         } else if ((addr & 0x7) == 0) {
+             if (size == 4) {
+                 /* timecmp_lo for RV32/RV64 */
+-                uint64_t timecmp_hi = mtimer->timecmp[hartid] >> 32;
++                uint64_t timecmp_hi = mtimer->timecmp[hartid_offset] >> 32;
+                 riscv_aclint_mtimer_write_timecmp(mtimer, RISCV_CPU(cpu), hartid,
+                     timecmp_hi << 32 | (value & 0xFFFFFFFF));
+             } else {
+@@ -193,7 +195,7 @@ static void riscv_aclint_mtimer_write(void *opaque, hwaddr addr,
+         } else if ((addr & 0x7) == 4) {
+             if (size == 4) {
+                 /* timecmp_hi for RV32/RV64 */
+-                uint64_t timecmp_lo = mtimer->timecmp[hartid];
++                uint64_t timecmp_lo = mtimer->timecmp[hartid_offset];
+                 riscv_aclint_mtimer_write_timecmp(mtimer, RISCV_CPU(cpu), hartid,
+                     value << 32 | (timecmp_lo & 0xFFFFFFFF));
+             } else {
 -- 
 2.47.3
 
