@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26349CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:44:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A116BCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:44:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMujk-000600-NJ; Tue, 12 May 2026 17:34:00 -0400
+	id 1wMuTU-0002nq-8I; Tue, 12 May 2026 17:17:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuir-0004ka-9W; Tue, 12 May 2026 17:33:02 -0400
+ id 1wMuSB-0001Qm-MI; Tue, 12 May 2026 17:15:53 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuin-0002ji-FF; Tue, 12 May 2026 17:33:00 -0400
+ id 1wMuS9-0006S6-Nv; Tue, 12 May 2026 17:15:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619500; bh=v25+bAzOfkjLEgub1Lg6dfuq/a49WinZ9dGMAo86v5A=;
+ t=1778619306; bh=cqb/dYWWMYJNM5jnC+pv404BZqGgkuEXn+lMJ8YMD+A=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=URTa9H4l/V2btrOOcidKZVRIUxpIhO29NGacFNgM5HS4yHvpxt/pMHpJILP0GyX7z
- J2h8DTHvem6DaC52qiln0JyEHKTBYZiHq3AaGh+5JW0kZw87hGtdzWHWpT6cmcTyQG
- AYLzCWJ0aN/VWfsLpqj6rSBImQbclq7Dsi/mmExzckjDWwLCy6N2N7I9q1U5RDsUoI
- +VeDANrd+Tak6hFpUALSc/tH4MM7eLYoxt3/Gt9N3XPRQ37rVt8QXVlkoMpbowUH7L
- WsWiO6slwXiSl5AjWHbsowPB8ou5brxi2ksCyVXzYQemaHz2rD6ocibT0KHNxmUx2d
- CeCY2+C+evKlw==
+ b=S9GiwiL2sic6ol21ifyrInw9d0dxzaqov5i67JUqGQDs6u5935zZ8nkW5D6dsr4yJ
+ uWjOcPcrLV+jW8NGHVqGDqQ34W2fud6N7QF50jiAlCZUqwl4O7KLb2LDctTj699vp1
+ fvPVOxs2QiWgrLAhx7dfpUfWwuOodhj373Y6JzkoAyRz8ttdl8qOMnPJ6YNKoViPTR
+ VUp75DSzh3LAmCcCasRT+vfOuOpakWD3OX82YiPrYyWx1wpiw/DRPWmgQBz3HwmTG1
+ /IvNir+Dh/WonZXmhY1a9l1nb9CEF9nILDaC3ogyNSZUU2KxIeqezjS5f/VJHFi667
+ n2KlyWbmz7Asg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4B1F61AA3FC;
- Tue, 12 May 2026 23:58:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4A2971AA39F;
+ Tue, 12 May 2026 23:55:06 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 57B5F3ABD54;
- Tue, 12 May 2026 23:58:24 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5464F3ABD0E;
+ Tue, 12 May 2026 23:55:10 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Nutty Liu <nutty.liu@hotmail.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 49/58] target/microblaze: Fix endianness used to
- disassemble
-Date: Tue, 12 May 2026 23:58:10 +0300
-Message-ID: <20260512205820.361821-49-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 097/117] target/riscv: Don't OR mip.SEIP when mvien is
+ one
+Date: Tue, 12 May 2026 23:54:39 +0300
+Message-ID: <20260512205503.361097-97-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
-References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,44 +71,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Alistair Francis <alistair.francis@wdc.com>
 
-MicroBlaze CPU model has a "little-endian" property, pointing to
-the @endi internal field. Commit c36ec3a9655 ("hw/microblaze:
-Explicit CPU endianness") took care of having all MicroBlaze
-boards with an explicit default endianness (similarly with
-commit 91fc6d8101d for linux-user binaries), so later commit
-415aae543ed ("target/microblaze: Consider endianness while
-translating code") could infer the endianness at runtime from
-the @endi field, and not a compile time via the TARGET_BIG_ENDIAN
-definition. Doing so, we forgot to propagate that runtime change
-to the disassemble_info structure. Do it now to display the
-opcodes in correct endianness order.
+The RISC-V spec states that
+
+"""
+But when bit 9 of mvien is one, bit SEIP in mip is read-only and does
+not include the value of bit 9 of mvip. Rather, the value of mip.SEIP
+is simply the supervisor external interrupt signal from the hart’s
+external interrupt controller (APLIC or IMSIC).
+"""
+
+As such let's mark the mip.SEIP in rmw_mip64().
 
 Cc: qemu-stable@nongnu.org
-Fixes: 415aae543ed ("target/microblaze: Consider endianness while translating code")
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-Id: <20260423100612.27278-3-philmd@linaro.org>
-(cherry picked from commit 41c417290df91c31a70adeb8f5271896a8c5f802)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2828
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Message-ID: <20260415233740.3027321-4-alistair.francis@wdc.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 175afdb0d155a7429e2ac0c568c1c807953444a4)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
-index ec513ae82d..639f46b525 100644
---- a/target/microblaze/cpu.c
-+++ b/target/microblaze/cpu.c
-@@ -237,8 +237,8 @@ static void mb_disas_set_info(const CPUState *cpu, disassemble_info *info)
- {
-     info->mach = bfd_arch_microblaze;
-     info->print_insn = print_insn_microblaze;
--    info->endian = TARGET_BIG_ENDIAN ? BFD_ENDIAN_BIG
--                                     : BFD_ENDIAN_LITTLE;
-+    info->endian = MICROBLAZE_CPU(cpu)->cfg.endi ? BFD_ENDIAN_LITTLE
-+                                                 : BFD_ENDIAN_BIG;
- }
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 5c91658c3d..6da5aa47da 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -3695,6 +3695,14 @@ static RISCVException rmw_mip64(CPURISCVState *env, int csrno,
+     uint64_t old_mip, mask = wr_mask & delegable_ints;
+     uint32_t gin;
  
- static void mb_cpu_realizefn(DeviceState *dev, Error **errp)
++    /*
++     * When mvien[9]=1, mip.SEIP is read-only and reflects only
++     * the external interrupt signal from the interrupt controller.
++     */
++    if (env->mvien & MIP_SEIP) {
++        mask &= ~MIP_SEIP;
++    }
++
+     if (mask & MIP_SEIP) {
+         env->software_seip = new_val & MIP_SEIP;
+         new_val |= env->external_seip * MIP_SEIP;
 -- 
 2.47.3
 
