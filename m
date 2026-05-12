@@ -4,46 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 162F1CD4F39
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:10:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16B48CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:10:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuLy-0005fk-0g; Tue, 12 May 2026 17:09:22 -0400
+	id 1wMuMv-0002HL-Oh; Tue, 12 May 2026 17:10:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuLJ-00029B-07; Tue, 12 May 2026 17:08:41 -0400
+ id 1wMuMp-0001ep-Me; Tue, 12 May 2026 17:10:15 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuLF-00032w-No; Tue, 12 May 2026 17:08:40 -0400
+ id 1wMuMn-0003jm-BN; Tue, 12 May 2026 17:10:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619301; bh=u/aQEnXvJd942q4TtFh3EQUiuKe07qXlNsZJXiGvIJI=;
+ t=1778619302; bh=CMIISKtAozRrOZfl7oljL6zvYJNdXvkzoubSwfP4jS0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=msvs7rZYtVwU8Hv2PXoi9BHGoxfNLGGADIrNdgJdncz9WYt8K3mSPdBPunJIsFFX6
- VW+CtCFCtyjqCMhxXebj7apgs3CK0teVY5eXCzkbLEIt0wHCnhnipjNn7UKjLojtL+
- V8VhMUU69/WDtS4OgyK7C0lvOmx+TgJpx9TJbuE85Z6PF+HzWIMvPV0tvbk/IhLc6/
- IIpmRP7ue3ndL8i9HOMbJe/GWdjOlDFnZdbCHrXt+BV96FZY5m3xvTuTMZsRGu4Nlr
- n3qn5fKTuvY0qERdJjtVAXDG8f9XI2VmCKs5TTbmd+qvb+ZliVxmyclcDYrCr0nm97
- p03ecq3v9tUgA==
+ b=VfWG1TZo/wBepagU1IzP9cZ7OCUqhOECJC62xEElVzemt6hAqlR3f2o2X4i0/f6CK
+ COWy2FWmqOzuNs3tRZiOtoddaTZ6m3ogQgBHbk1QfIOwtPrkkgbN5PQAZPCN+zqW9P
+ Ae4lTXBvQeBFcI7S893nx1T8KPj91V0QlKOgzgUwuwLNSEjlYJhVX/H00Zll/kVi2c
+ CLpv/y98CxwgpS8jtvJ+weeMzfMyr4LkCeZyackEiqSIUJgLqh23H2UF5Gr8jbijfH
+ mvqXyXNph8GMlb+O+vYnl8ykZT/APTvytrQNsu1643rh8zXmnbSCxOwaP+Y+E17SH3
+ rUOu2ItiL3JMQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 801691AA358;
- Tue, 12 May 2026 23:55:01 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9B62A1AA369;
+ Tue, 12 May 2026 23:55:02 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8C97D3ABCC8;
- Tue, 12 May 2026 23:55:05 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id A8A8F3ABCD9;
+ Tue, 12 May 2026 23:55:06 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 027/117] linux-aio: Put all parameters into qemu_laiocb
-Date: Tue, 12 May 2026 23:53:29 +0300
-Message-ID: <20260512205503.361097-27-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 044/117] hw/net/rocker: Avoid double-free of
+ l2_flood.group_ids
+Date: Tue, 12 May 2026 23:53:46 +0300
+Message-ID: <20260512205503.361097-44-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -68,117 +71,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hanna Czenczek <hreitz@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Put all request parameters into the qemu_laiocb struct, which will allow
-re-submitting the tail of short reads/writes.
+In of_dpa_cmd_add_l2_flood(), we allocate memory for the
+group->l2_flood.group_ids array, freeing any previous array.
+However, in the error-exit path we free the group_ids memory but do
+not clear the pointer to NULL.  This means that if the guest causes
+us to take the error-exit path and then later call the function
+again, we will try again to free the memory we already freed.
 
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-ID: <20260324084338.37453-2-hreitz@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit cc03b62df47a09c507e199cc043f57bdc941cc67)
+Fix this by clearing the group_ids pointer in the error exit
+path, so we maintain the invariant of "either it points at
+allocated memory, or it is NULL" (both being valid to g_free()).
+
+Cc: qemu-stable@nongnu.org
+Fixes: dc488f88806 ("rocker: add new rocker switch device")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3253
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20260324193530.375628-1-peter.maydell@linaro.org
+(cherry picked from commit a0721c099b71f7bdfafa2675daee331d884163d2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/linux-aio.c b/block/linux-aio.c
-index c200e7ad20..c2c5e11946 100644
---- a/block/linux-aio.c
-+++ b/block/linux-aio.c
-@@ -41,9 +41,15 @@ struct qemu_laiocb {
-     LinuxAioState *ctx;
-     struct iocb iocb;
-     ssize_t ret;
-+    off_t offset;
-     size_t nbytes;
-     QEMUIOVector *qiov;
--    bool is_read;
-+
-+    int fd;
-+    int type;
-+    BdrvRequestFlags flags;
-+
-+    uint64_t dev_max_batch;
-     QSIMPLEQ_ENTRY(qemu_laiocb) next;
- };
+diff --git a/hw/net/rocker/rocker_of_dpa.c b/hw/net/rocker/rocker_of_dpa.c
+index 16b9bc7a4b..262ceb35f6 100644
+--- a/hw/net/rocker/rocker_of_dpa.c
++++ b/hw/net/rocker/rocker_of_dpa.c
+@@ -2054,6 +2054,7 @@ static int of_dpa_cmd_add_l2_flood(OfDpa *of_dpa, OfDpaGroup *group,
+ err_out:
+     group->l2_flood.group_count = 0;
+     g_free(group->l2_flood.group_ids);
++    group->l2_flood.group_ids = NULL;
+     g_free(tlvs);
  
-@@ -87,7 +93,7 @@ static void qemu_laio_process_completion(struct qemu_laiocb *laiocb)
-             ret = 0;
-         } else if (ret >= 0) {
-             /* Short reads mean EOF, pad with zeros. */
--            if (laiocb->is_read) {
-+            if (laiocb->type == QEMU_AIO_READ) {
-                 qemu_iovec_memset(laiocb->qiov, ret, 0,
-                     laiocb->qiov->size - ret);
-             } else {
-@@ -367,23 +373,23 @@ static void laio_deferred_fn(void *opaque)
-     }
- }
- 
--static int laio_do_submit(int fd, struct qemu_laiocb *laiocb, off_t offset,
--                          int type, BdrvRequestFlags flags,
--                          uint64_t dev_max_batch)
-+static int laio_do_submit(struct qemu_laiocb *laiocb)
- {
-     LinuxAioState *s = laiocb->ctx;
-     struct iocb *iocbs = &laiocb->iocb;
-     QEMUIOVector *qiov = laiocb->qiov;
-+    int fd = laiocb->fd;
-+    off_t offset = laiocb->offset;
- 
--    switch (type) {
-+    switch (laiocb->type) {
-     case QEMU_AIO_WRITE:
- #ifdef HAVE_IO_PREP_PWRITEV2
-     {
--        int laio_flags = (flags & BDRV_REQ_FUA) ? RWF_DSYNC : 0;
-+        int laio_flags = (laiocb->flags & BDRV_REQ_FUA) ? RWF_DSYNC : 0;
-         io_prep_pwritev2(iocbs, fd, qiov->iov, qiov->niov, offset, laio_flags);
-     }
- #else
--        assert(flags == 0);
-+        assert(laiocb->flags == 0);
-         io_prep_pwritev(iocbs, fd, qiov->iov, qiov->niov, offset);
- #endif
-         break;
-@@ -399,7 +405,7 @@ static int laio_do_submit(int fd, struct qemu_laiocb *laiocb, off_t offset,
-     /* Currently Linux kernel does not support other operations */
-     default:
-         fprintf(stderr, "%s: invalid AIO request type 0x%x.\n",
--                        __func__, type);
-+                        __func__, laiocb->type);
-         return -EIO;
-     }
-     io_set_eventfd(&laiocb->iocb, event_notifier_get_fd(&s->e));
-@@ -407,7 +413,7 @@ static int laio_do_submit(int fd, struct qemu_laiocb *laiocb, off_t offset,
-     QSIMPLEQ_INSERT_TAIL(&s->io_q.pending, laiocb, next);
-     s->io_q.in_queue++;
-     if (!s->io_q.blocked) {
--        if (s->io_q.in_queue >= laio_max_batch(s, dev_max_batch)) {
-+        if (s->io_q.in_queue >= laio_max_batch(s, laiocb->dev_max_batch)) {
-             ioq_submit(s);
-         } else {
-             defer_call(laio_deferred_fn, s);
-@@ -425,14 +431,18 @@ int coroutine_fn laio_co_submit(int fd, uint64_t offset, QEMUIOVector *qiov,
-     AioContext *ctx = qemu_get_current_aio_context();
-     struct qemu_laiocb laiocb = {
-         .co         = qemu_coroutine_self(),
-+        .offset     = offset,
-         .nbytes     = qiov ? qiov->size : 0,
-         .ctx        = aio_get_linux_aio(ctx),
-         .ret        = -EINPROGRESS,
--        .is_read    = (type == QEMU_AIO_READ),
-         .qiov       = qiov,
-+        .fd         = fd,
-+        .type       = type,
-+        .flags      = flags,
-+        .dev_max_batch = dev_max_batch,
-     };
- 
--    ret = laio_do_submit(fd, &laiocb, offset, type, flags, dev_max_batch);
-+    ret = laio_do_submit(&laiocb);
-     if (ret < 0) {
-         return ret;
-     }
+     return err;
 -- 
 2.47.3
 
