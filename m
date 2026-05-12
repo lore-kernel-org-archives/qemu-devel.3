@@ -4,46 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66690CD343F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 666D2CD4F39
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:11:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuIg-0004m2-Ul; Tue, 12 May 2026 17:05:59 -0400
+	id 1wMuKy-00013c-Bp; Tue, 12 May 2026 17:08:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuId-0004Xh-SV; Tue, 12 May 2026 17:05:55 -0400
+ id 1wMuJe-000870-7e; Tue, 12 May 2026 17:07:00 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuIb-0000vy-7u; Tue, 12 May 2026 17:05:55 -0400
+ id 1wMuJb-0001xI-Vg; Tue, 12 May 2026 17:06:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619299; bh=C5ExII9Zg+qHbyhArwD1N2xdyn7wDizAHICldTj3iGg=;
+ t=1778619300; bh=MvMxfg/awm4QKSSpC+nVhMXM7Vz8ngt1ifX4OKpmZ7w=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=VZ1ButC9/wUkpOxI3aqjSzOOKEKDgYVaibwo9qpzk5+EMJLDB4u+LWa+CBoFurmCp
- 4cqIlHpPfGMAul71lfCc0mnCJjxlJFCJpfS6bFJgMrt7iIRMIfO8zbO34TmzlRPDAK
- 3gt6TDAIJV/1oTlEIB7nTBd5tqClzJLGcFPMMY/i5mJHrvQfH/RnGqVESoS5BY1Nyi
- DsLdNClynyyaVHmjwHB/DskLYPT2Iu30/gnz65n4QwD0KlZjllZ/w3kLlXxyb4Tye0
- ccAm1px/fU6MR/ThglaGI/y5ouMWWMb8Q7iMp4Rc2KPOLUJ/qouCMFpiWoL25a/7RT
- oCN3oPFB9C+fg==
+ b=UgUsAXj+WkIz8nSjvR210XajqneWehmyWhVHI7+EJoc/6l5XgeDkiYMNdjaQ97d3C
+ 7Lsg53nubezdQJTtDuGBNbpjliIoEbvf+63iMgpwXzuPOnjXtdzTHWT9KnKOQ3NbJ1
+ vjqc/KnZvpJJ5MRRU2heJvSk9+LSUZXQC4ylaxXfRGBOPrzCYwCLTDVlgBy4zAoYqw
+ 7JZeylz9rFM2wRN+1O+ZXzJ1DQ6N1tn+YyBy5AEMLz2iBU7FaKx/c1ODgITno3L1dG
+ F2vE9fpU3rD84hkGKiWqM1ryY5c5wEl4rmb9u15T+VHLFpoY3+3l+SW/J40jqYbRvJ
+ wYeJ9cTfBy7pw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CAA311AA33C;
- Tue, 12 May 2026 23:54:59 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 89CD11AA348;
+ Tue, 12 May 2026 23:55:00 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D29043ABCAE;
- Tue, 12 May 2026 23:55:03 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8F0003ABCB9;
+ Tue, 12 May 2026 23:55:04 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Yodel Eldar <yodel.eldar@yodel.dev>, Thomas Huth <thuth@redhat.com>,
+Cc: qemu-stable@nongnu.org, Shivang Upadhyay <shivangu@linux.ibm.com>,
+ Aditya Gupta <adityag@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Nathan Chancellor <nathan@kernel.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 001/117] hw/net/rtl8319: Work around GCC sanitizer /
- -Wstringop-overflow bug
-Date: Tue, 12 May 2026 23:53:03 +0300
-Message-ID: <20260512205503.361097-1-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 012/117] ppc/pnv: generate dtb after machine
+ initialization is complete
+Date: Tue, 12 May 2026 23:53:14 +0300
+Message-ID: <20260512205503.361097-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
@@ -73,116 +75,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
 
-If you compile QEMU with GCC with -fsanitize=address and
--Wstringop-overflow, this causes GCC to produce a false-positive
-warning which it does not produce when the sanitizer is not enabled
-(and which makes compilation fail if you're using -Werror, as we do
-by default for builds from git):
+Currently, the machine dtb is generated in pnv_init(), before all devices
+are fully initialized. This can result in an incomplete dtb for the system,
+as seen in bug [1].
 
-../../hw/net/rtl8139.c: In function ‘rtl8139_io_writeb’:
-../../hw/net/rtl8139.c:2264:17: error: writing 8 bytes into a region of size 0 [-Werror=stringop-overflow=]
- 2264 |                 memcpy(data_to_checksum, saved_ip_header + 12, 8);
-      |                 ^
-In file included from ../../hw/net/rtl8139.c:62:
-/home/pm215/qemu/include/net/eth.h:50:14: note: at offset [8, 48] into destination object ‘ip_ver_len’ of size 1
-   50 |     uint8_t  ip_ver_len;     /* version and header length */
-      |              ^~~~~~~~~~
-../../hw/net/rtl8139.c:2192:21: error: writing 8 bytes into a region of size 0 [-Werror=stringop-overflow=]
- 2192 |                     memcpy(data_to_checksum, saved_ip_header + 12, 8);
-      |                     ^
-/home/pm215/qemu/include/net/eth.h:50:14: note: at offset [8, 48] into destination object ‘ip_ver_len’ of size 1
-   50 |     uint8_t  ip_ver_len;     /* version and header length */
-      |              ^~~~~~~~~~
-../../hw/net/rtl8139.c:2192:21: error: writing 8 bytes into a region of size 0 [-Werror=stringop-overflow=]
- 2192 |                     memcpy(data_to_checksum, saved_ip_header + 12, 8);
-      |                     ^
-/home/pm215/qemu/include/net/eth.h:50:14: note: at offset [8, 48] into destination object ‘ip_ver_len’ of size 1
-   50 |     uint8_t  ip_ver_len;     /* version and header length */
-      |              ^~~~~~~~~~
-In file included from /home/pm215/qemu/include/system/memory.h:21,
-                 from /home/pm215/qemu/include/hw/pci/pci.h:4,
-                 from /home/pm215/qemu/include/hw/pci/pci_device.h:4,
-                 from ../../hw/net/rtl8139.c:54:
-In function ‘stl_he_p’,
-    inlined from ‘stl_be_p’ at /home/pm215/qemu/include/qemu/bswap.h:371:5,
-    inlined from ‘rtl8139_cplus_transmit_one’ at ../../hw/net/rtl8139.c:2244:21,
-    inlined from ‘rtl8139_cplus_transmit’ at ../../hw/net/rtl8139.c:2345:28,
-    inlined from ‘rtl8139_io_writeb’ at ../../hw/net/rtl8139.c:2728:17:
-/home/pm215/qemu/include/qemu/bswap.h:284:5: error: writing 4 bytes into a region of size 0 [-Werror=stringop-overflow=]
-  284 |     __builtin_memcpy(ptr, &v, sizeof(v));
-      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-/home/pm215/qemu/include/net/eth.h: In function ‘rtl8139_io_writeb’:
-/home/pm215/qemu/include/net/eth.h:50:14: note: at offset [24, 64] into destination object ‘ip_ver_len’ of size 1
-   50 |     uint8_t  ip_ver_len;     /* version and header length */
-      |              ^~~~~~~~~~
+Fix this by deferring dtb generation until machine initialization is complete,
+using the machine_init_done_notifier hook.
 
-This has been triaged as a bug in GCC:
- https://gcc.gnu.org/bugzilla/show_bug.cgi?id=114494
- https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99673
-(the sanitizer pass rewrites the IR in a way that conflicts with its
-use by the warning pass that runs afterwards).
+[1] https://lore.kernel.org/all/20260323231612.GA2637687@ax162/
 
-Since this is the only place in our code where we hit this, work
-around it by disabling the -Wstringop-overflow in the part of
-the function that hits it. We do this only when using the
-address sanitizer on GCC, so that we still get the benefit
-of the warning in most compilation scenarios.
-
+Cc: Aditya Gupta <adityag@linux.ibm.com>
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: BALATON Zoltan <balaton@eik.bme.hu>
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3006
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Tested-by: Yodel Eldar <yodel.eldar@yodel.dev>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-id: 20260305140512.1330691-1-peter.maydell@linaro.org
-(cherry picked from commit b83a42dc779a36b454ce6eeade4584018491faf4)
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Fixes: a16d4c2f162a86d ("ppc/pnv: fix dumpdtb option")
+Fixes: 43ed0362d0b2c4c ("ppc/pnv: fix dumpdtb option") in 10.2.x series
+Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-ID: <20260327124136.983955-1-shivangu@linux.ibm.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit ba48bff09fa1fea8030eb26f2bc0add8c3549bb7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
-index 324fb932aa..eb0bc782bf 100644
---- a/hw/net/rtl8139.c
-+++ b/hw/net/rtl8139.c
-@@ -2132,6 +2132,26 @@ static int rtl8139_cplus_transmit_one(RTL8139State *s)
-                     hlen, ip->ip_sum);
-             }
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index e8a12d87c4..090716b1ff 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -747,31 +747,10 @@ static void pnv_powerdown_notify(Notifier *n, void *opaque)
  
-+            /*
-+             * The code in this function triggers a GCC bug where an
-+             * interaction between -fsanitize=address and -Wstringop-overflow
-+             * results in a false-positive stringop-overflow warning that is
-+             * only emitted when the address sanitizer is enabled:
-+             *     https://gcc.gnu.org/bugzilla/show_bug.cgi?id=114494
-+             *     https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99673
-+             * GCC incorrectly thinks that the eth_payload_data buffer has
-+             * the type and size of the first field in 'struct ip_header', i.e.
-+             * one byte, and then complains about all other attempts to access
-+             * data in the buffer.
-+             *
-+             * Work around this by disabling the warning when building with
-+             * GCC and the address sanitizer is enabled.
-+             */
-+#pragma GCC diagnostic push
-+#if !defined(__clang__) && defined(QEMU_SANITIZE_ADDRESS)
-+#pragma GCC diagnostic ignored "-Wstringop-overflow"
-+#endif
-+
-             if ((txdw0 & CP_TX_LGSEN) && ip_protocol == IP_PROTO_TCP)
-             {
-                 /* Large enough for the TCP header? */
-@@ -2315,6 +2335,9 @@ static int rtl8139_cplus_transmit_one(RTL8139State *s)
-                 /* restore IP header */
-                 memcpy(eth_payload_data, saved_ip_header, hlen);
-             }
-+
-+#pragma GCC diagnostic pop
-+
-         }
+ static void pnv_reset(MachineState *machine, ResetType type)
+ {
+-    PnvMachineState *pnv = PNV_MACHINE(machine);
+-    IPMIBmc *bmc;
+     void *fdt;
  
- skip_offload:
+     qemu_devices_reset(type);
+ 
+-    /*
+-     * The machine should provide by default an internal BMC simulator.
+-     * If not, try to use the BMC device that was provided on the command
+-     * line.
+-     */
+-    bmc = pnv_bmc_find(&error_fatal);
+-    if (!pnv->bmc) {
+-        if (!bmc) {
+-            if (!qtest_enabled()) {
+-                warn_report("machine has no BMC device. Use '-device "
+-                            "ipmi-bmc-sim,id=bmc0 -device isa-ipmi-bt,bmc=bmc0,irq=10' "
+-                            "to define one");
+-            }
+-        } else {
+-            pnv_bmc_set_pnor(bmc, pnv->pnor);
+-            pnv->bmc = bmc;
+-        }
+-    }
+-
+     fdt = machine->fdt;
+     cpu_physical_memory_write(PNV_FDT_ADDR, fdt, fdt_totalsize(fdt));
+ }
+@@ -983,6 +962,37 @@ static uint64_t pnv_chip_get_ram_size(PnvMachineState *pnv, int chip_id)
+     return chip_id == 0 ? 1 * GiB : QEMU_ALIGN_DOWN(ram_per_chip, 1 * MiB);
+ }
+ 
++static void pnv_machine_init_done(Notifier *notifier, void *data)
++{
++    PnvMachineState *pnv = container_of(notifier, PnvMachineState, machine_init_done);
++    MachineState *machine = MACHINE(pnv);
++    IPMIBmc *bmc;
++
++    /*
++     * The machine should provide by default an internal BMC simulator.
++     * If not, try to use the BMC device that was provided on the command
++     * line.
++     */
++    bmc = pnv_bmc_find(&error_fatal);
++    if (!pnv->bmc) {
++        if (!bmc) {
++            if (!qtest_enabled()) {
++                warn_report("machine has no BMC device. Use '-device "
++                            "ipmi-bmc-sim,id=bmc0 -device isa-ipmi-bt,bmc=bmc0,irq=10' "
++                            "to define one");
++            }
++        } else {
++            pnv_bmc_set_pnor(bmc, pnv->pnor);
++            pnv->bmc = bmc;
++        }
++    }
++
++    if (!machine->fdt) {
++        machine->fdt = pnv_dt_create(machine);
++        _FDT((fdt_pack(machine->fdt)));
++    }
++}
++
+ static void pnv_init(MachineState *machine)
+ {
+     const char *bios_name = machine->firmware ?: FW_FILE_NAME;
+@@ -1243,10 +1253,8 @@ static void pnv_init(MachineState *machine)
+         pmc->i2c_init(pnv);
+     }
+ 
+-    if (!machine->fdt) {
+-        machine->fdt = pnv_dt_create(machine);
+-        _FDT((fdt_pack(machine->fdt)));
+-    }
++    pnv->machine_init_done.notify = pnv_machine_init_done;
++    qemu_add_machine_init_done_notifier(&pnv->machine_init_done);
+ }
+ 
+ /*
+diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
+index cbdddfc73c..574861ce03 100644
+--- a/include/hw/ppc/pnv.h
++++ b/include/hw/ppc/pnv.h
+@@ -111,6 +111,8 @@ struct PnvMachineState {
+ 
+     bool         big_core;
+     bool         lpar_per_core;
++
++    Notifier     machine_init_done;
+ };
+ 
+ PnvChip *pnv_get_chip(PnvMachineState *pnv, uint32_t chip_id);
 -- 
 2.47.3
 
