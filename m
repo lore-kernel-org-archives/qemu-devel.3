@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86B72CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:00:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9503CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:00:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMu9D-0005J6-3p; Tue, 12 May 2026 16:56:11 -0400
+	id 1wMuBY-0002Eg-RL; Tue, 12 May 2026 16:58:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMu97-0004ve-SS; Tue, 12 May 2026 16:56:06 -0400
+ id 1wMuBB-0001jH-4s; Tue, 12 May 2026 16:58:16 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMu96-0003EV-8i; Tue, 12 May 2026 16:56:05 -0400
+ id 1wMuB9-00047J-7K; Tue, 12 May 2026 16:58:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619274; bh=NMkFYwibZSAnXyjUBzo7xcUvZcRHG4q5gOWZ0CoJuts=;
+ t=1778619275; bh=rrsMWBSCBlP4xo04jzXt7cgD2zLYfLebOS4p3YGM7BU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=T2l3qikX+w4k0/sG1y/qSiOwQvGXHWa0nlPmyhGq2CZB+51PllxwRYHmaevijtsw4
- gMq4UbUvIl8tKhpTuCnZFl3wd60AH4QuvpTp8VzysOua8l1RAPoHz1M24ceSSt914K
- 64k+iBq2YEIife6sD7fi6Q96ZDXaMadgkKhMbddPK7d+BMNlFbhb3Dt9SR52sbSt9R
- pPtEUr4WGylSK3hKDbAklfKC1EznsOuLnNSFIfeujoKdbntqG+e1DRDwpRziH7cylw
- fMIYF6iuIiCy9eIcTL2sclwFyBRuJntQIkQDfBIMBvvM5aC1gA46ejixesdx4JQOTy
- Y6Qy5k0bK4TaA==
+ b=fRn6yKUOQ/oLnrGgDEaqYIstHCTeoxySz4rjbRO3rRN0jyIB2BqqHCGzdTPaqEGx4
+ NxFmvTaSFyZeJ0oQeXlzewilryzy5HaSMDONG+VU2eBOFaXTINBHHZmv7rNd/g73eN
+ VKQofCx4N/8VchjMoQh4JPEjSY/qHF658hVuhkBVJs3yPS5z6kwBUVs2KvQrcA0phN
+ IlnW1CLADBg3KCFEc7E54cSgBbI8uBPFVQwdpyClTGBdUspQWytFmJs/ybh0BMC2aV
+ jrfIYOBeakWI2w8ri6i6XY2pX+/ERDJfIqeSzb6nUlfVr3OKfyvc3agti2brzODsjF
+ nh1eIuKmrdFVw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 72AAB1AA2DD;
- Tue, 12 May 2026 23:54:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 935EB1AA2F0;
+ Tue, 12 May 2026 23:54:35 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7FBB33ABC4E;
- Tue, 12 May 2026 23:54:38 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id A11273ABC61;
+ Tue, 12 May 2026 23:54:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 017/107] target/riscv: rvv: Fix page probe issues in
- vext_ldff
-Date: Tue, 12 May 2026 23:53:04 +0300
-Message-ID: <20260512205437.360850-17-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 036/107] lsi53c895a: keep lsi_request and SCSIRequest
+ in local variables
+Date: Tue, 12 May 2026 23:53:23 +0300
+Message-ID: <20260512205437.360850-36-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
@@ -70,74 +69,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Commit 17288e38bebf ("optimize the memory probing for vector
-fault-only-first loads") introduced an optimization that moved from
-per-element probing to a fast-path broad probe. Unfortunately it
-introduced following bugs in cross-page handling:
+Protect against changes from reentrant device MMIO during DMA, by always
+operating on the same request.
 
-- Wrong condition for second page probing: checked "env->vl > elems"
-  instead of "env->vl > elems + env->vstart", failing to account for
-  the vstart offset.
-
-- Incorrect second page address calculation: used
-  "addr + (elems << log2_esz)" instead of "addr + page_split".
-  For segment loads (nf > 1), this would probe the wrong address,not
-  at the page boundary.
-
-- Wrong second page probe size: used "elems * msize" (the first page
-  size) instead of calculating the remaining size as
-  "(env->vl - env->vstart) * msize - page_split". This would probe
-  too little memory and could miss faults.
-
-This commit fixes these bugs by leveraging the probe_pages helper
-which automatically handles cross-page memory accesses correctly.
-
-Fixes: 17288e38bebf ("optimize the memory probing for vector fault-only-first loads.")
-
-Signed-off-by: Max Chou <max.chou@sifive.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260318013805.1920377-3-max.chou@sifive.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 0e8ad6a8460fe070ecdde4625e4ed6d791550e3d)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 1ca38f84e19427c462f077390492f971f9eb11eb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 6489800416..466fe4d10c 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -646,9 +646,9 @@ vext_ldff(void *vd, void *v0, target_ulong base, CPURISCVState *env,
-     uint32_t esz = 1 << log2_esz;
-     uint32_t msize = nf * esz;
-     uint32_t vma = vext_vma(desc);
--    target_ulong addr, addr_probe, addr_i, offset, remain, page_split, elems;
-+    target_ulong addr, addr_i, offset, remain, page_split, elems;
-     int mmu_index = riscv_env_mmu_index(env, false);
--    int flags, probe_flags;
-+    int flags;
-     void *host;
+diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
+index a5598931f9..be9bff02b0 100644
+--- a/hw/scsi/lsi53c895a.c
++++ b/hw/scsi/lsi53c895a.c
+@@ -626,6 +626,8 @@ static void lsi_do_dma(LSIState *s, int out)
+     uint32_t count;
+     dma_addr_t addr;
+     SCSIDevice *dev;
++    SCSIRequest *req;
++    lsi_request *p;
  
-     VSTART_CHECK_EARLY_EXIT(env, env->vl);
-@@ -662,16 +662,8 @@ vext_ldff(void *vd, void *v0, target_ulong base, CPURISCVState *env,
+     if (!s->current || !s->current->dma_len) {
+         /* Wait until data is available.  */
+@@ -633,12 +635,14 @@ static void lsi_do_dma(LSIState *s, int out)
+         return;
      }
  
-     /* Check page permission/pmp/watchpoint/etc. */
--    probe_pages(env, addr, elems * msize, ra, MMU_DATA_LOAD, mmu_index, &host,
--                &flags, true);
--
--    /* If we are crossing a page check also the second page. */
--    if (env->vl > elems) {
--        addr_probe = addr + (elems << log2_esz);
--        probe_pages(env, addr_probe, elems * msize, ra, MMU_DATA_LOAD,
--                    mmu_index, &host, &probe_flags, true);
--        flags |= probe_flags;
--    }
-+    probe_pages(env, addr, (env->vl - env->vstart) * msize, ra, MMU_DATA_LOAD,
-+                mmu_index, &host, &flags, true);
+-    dev = s->current->req->dev;
++    p = s->current;
++    req = s->current->req;
++    dev = req->dev;
+     assert(dev);
  
-     if (flags & ~TLB_WATCHPOINT) {
-         /* probe every access */
+     count = s->dbc;
+-    if (count > s->current->dma_len)
+-        count = s->current->dma_len;
++    if (count > p->dma_len)
++        count = p->dma_len;
+ 
+     addr = s->dnad;
+     /* both 40 and Table Indirect 64-bit DMAs store upper bits in dnad64 */
+@@ -653,21 +657,22 @@ static void lsi_do_dma(LSIState *s, int out)
+     s->csbc += count;
+     s->dnad += count;
+     s->dbc -= count;
+-     if (s->current->dma_buf == NULL) {
+-        s->current->dma_buf = scsi_req_get_buf(s->current->req);
++    if (p->dma_buf == NULL) {
++        p->dma_buf = scsi_req_get_buf(req);
+     }
+     /* ??? Set SFBR to first data byte.  */
+     if (out) {
+-        lsi_mem_read(s, addr, s->current->dma_buf, count);
++        lsi_mem_read(s, addr, p->dma_buf, count);
+     } else {
+-        lsi_mem_write(s, addr, s->current->dma_buf, count);
++        lsi_mem_write(s, addr, p->dma_buf, count);
+     }
+-    s->current->dma_len -= count;
+-    if (s->current->dma_len == 0) {
+-        s->current->dma_buf = NULL;
+-        scsi_req_continue(s->current->req);
++
++    p->dma_len -= count;
++    if (p->dma_len == 0) {
++        p->dma_buf = NULL;
++        scsi_req_continue(req);
+     } else {
+-        s->current->dma_buf += count;
++        p->dma_buf += count;
+         lsi_resume_script(s);
+     }
+ }
 -- 
 2.47.3
 
