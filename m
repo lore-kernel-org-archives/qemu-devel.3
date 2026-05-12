@@ -4,141 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7848CD37BE
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 02:27:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 686C1CD37BE
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 02:32:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMcpm-0001qZ-96; Mon, 11 May 2026 22:26:58 -0400
+	id 1wMcuE-0003g0-SL; Mon, 11 May 2026 22:31:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wMcpk-0001q7-Rf
- for qemu-devel@nongnu.org; Mon, 11 May 2026 22:26:56 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wMcpi-0008GZ-RI
- for qemu-devel@nongnu.org; Mon, 11 May 2026 22:26:56 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64BK6ohV2519168
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 02:26:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- yEG8tnR/O+KrGP8X6UFAGmF3q4HymcoSJUb70qgLq9U=; b=VQzGvzw0NQkT6wRx
- Kv5dFQq/FcJLsppLgON7OBoW/ZPUhcjeVi5ld2kigTMbdz3WHNHGuCQSgBiDTIyx
- 4Fs6RMVer+ktkZHRA0axSbsyIJ4U0ZqE6cvA69BkX+VWopxgkE7MWznsbs5MXEsN
- tCkKu9XQN/X/ZepNG+c3MKgXWxZqzaCeMeJwcilhGcfNwTBBh+fG0FXZYgqsjHIY
- B73cAX99ry81h4HBt4C+pxhM3pp+pNQj/KjJFTLQoXZvIrWJJFy8nkkc4WUxGzjK
- 13+SdM/gpIIK7LEDvRsfi4arFo1jD7maoLfgQ+xznzIpx0TBRWtnwRjN6zaeetul
- IhO8XQ==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e3nv1h359-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 02:26:53 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-2bda35eab74so4102579eec.0
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 19:26:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wMcuC-0003f3-BK
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 22:31:32 -0400
+Received: from mail-qk1-x741.google.com ([2607:f8b0:4864:20::741])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wMcuA-0003Ci-TB
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 22:31:32 -0400
+Received: by mail-qk1-x741.google.com with SMTP id
+ af79cd13be357-90d2acb9936so11493085a.0
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 19:31:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778552812; x=1779157612; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=yEG8tnR/O+KrGP8X6UFAGmF3q4HymcoSJUb70qgLq9U=;
- b=AMPBFDSXJZVT8F6WYNNYn/bNuuJbhda+ZKJEOsC/KwNERUbDfnsmHB9UwV8DxUbQIl
- LxSrPW6Ovt8OJjuEda00q5TWnqjAcfpcZ8+NN6uNXLyosWteaEflNg+EXZYlLfxQ14wU
- uKUuq2sVyHg7wInXcRw+MgsqkraxfCAxB+qNTWZOoqOJIV8y9P2J+K3DX91D7+LEUJzP
- 9hu+fERkezg4UfwsIDGUuBuCkFKDiSQRfDS8gSxJkzuTJjgBoPCJMaf4ZMjyQGZTPvf9
- B+O7nye4bx4fg2Eyjc86erPGbv2A0QamnKiRBcIUqzz21UQZOhdMpR2D1SvZyZaGoi6X
- nzkA==
+ d=gmail.com; s=20251104; t=1778553088; x=1779157888; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=nhFP7hGs8ICqYOUqMML+hYb8Pw/MUz+qcAnPdAAtg8s=;
+ b=PGOHDUdPRAhbc156rrc73Mh/ps2f3PMEpWh1vtvC9yQv8DZwu+Hy7sDXjK7oQOFblr
+ K3Asg+F40zCHEzKnN2/VZngNL/KghxdIj086Slm5s/dYqlGALcSw9JZKZwZy4jPIx89e
+ T2JfyWri4CD59qBm/5ao1uRLt5LZOaleRc3RtxUcFyN/T42w0UivVOGt44C0GWwtD0Mk
+ CkhWQtWu+2bYaOL/kGqSb8e7znjBjLiRFxgK2YytBDVmamwHEN9A2l1liWkmyLRqRisx
+ 0xc48aHMEv+JnheH9MA3twVqSPRenvEgHh/x/WMqV6V3InwxkM50YNxOqOzSlCW7Dirz
+ uULQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778552812; x=1779157612;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=yEG8tnR/O+KrGP8X6UFAGmF3q4HymcoSJUb70qgLq9U=;
- b=cHHCZDgKAx1FIatrI+oiTk+peY/Kq6brwBMzfhbzLuKYEmURfoIvQJeIjbuIODfT0h
- c8sx1VCMoSc0qnYHMLe6Da4F2aNPDf0pCsInoywgR4DCkTAj7slH7JgEoOhX7WfE1cux
- +1Uv7+yt2OMpnJZUXn2VI9+iAGeUFpBW57MwfEx4azVOFh8mDSinzvtK0zWjA3Kcb9eQ
- XQUS+eBpIM7jbKmzajdEsuI1YTaK61uvqJWrd5xpapf7xMMWBzrvfCRSszs9TyLoKpCH
- QRC/sLlia9GLaKGcknDorZsyawNstkDmU86ykluFJBsAcJoZYE1C/L/2lJmraPtE8+dK
- ErvQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9o3nNgcENgf7cmNXlrRQiZJ9g8XDftpwLsS731d4Ngt+vvopcpJlwsUZcoAE6+ryhdAGHY08ERZWiK@nongnu.org
-X-Gm-Message-State: AOJu0YxKhCxeFGX3q3WOb0eIXx2+QPXmAXd7i5A8LqiETddjxoXYwTnP
- I6+wRkPdEX9CStgZnQrJOMwK/22TYbEcArlAJ6z4rliJjjUVnbaEBc4gu7ImYFzKNbM0JYZ3oxu
- qMNXearLEppo92avvoIOufXobnEG6MA1A2lJi1JvoGm4GjxJ778FBW4M2Y4bdrgDRbw==
-X-Gm-Gg: Acq92OF4KKEaUAa9KdSDuv9EqZAJvqGT3x8TlE5jmAHx6e3COvuEj6BgNpk3/28VL/y
- V2EGIM5ANzOMBgFHvDXAKPw0AZc1jzDAv/k3O3hBf/TILA8mrBSteYAERcMBAj7yzTkC8FdgJtz
- 81683t0V4SxERibRUbtaFBNqZwCs8yB7gFaIoboh+SiVf8KSP5uu6rtEVAgCCRYNEAXVU3Y37cp
- IFFCBkMveQSy3smPH6iHvsB+AJ++y4L+eMXc4nbnScQJ1V6Fu/4ltItJCFYq8kNdjSgIkp02oVG
- f9xFrA+bFRPgn7PAJMS4PPVTyWwlTsXy3jBZWtEw6y6LymCOqCv3i8NIaJYa1LNjMLs3gPNYppa
- fp8o11F2H5Ajc1mFY5N4Nywm9OFEGw+u4EE7f+u6IULpzqhlZFjTwDjLH2vXTkQ7JgWzRaMipO/
- ab2dOUeYL10MyJFw==
-X-Received: by 2002:a05:7301:1698:b0:2f0:c593:986a with SMTP id
- 5a478bee46e88-2ff906d92fbmr1073878eec.0.1778552812056; 
- Mon, 11 May 2026 19:26:52 -0700 (PDT)
-X-Received: by 2002:a05:7301:1698:b0:2f0:c593:986a with SMTP id
- 5a478bee46e88-2ff906d92fbmr1073856eec.0.1778552811439; 
- Mon, 11 May 2026 19:26:51 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2f8859eafc2sm20308438eec.4.2026.05.11.19.26.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 May 2026 19:26:50 -0700 (PDT)
-Message-ID: <afe841af-f6be-489e-9deb-260c46d4a43a@oss.qualcomm.com>
-Date: Mon, 11 May 2026 19:26:50 -0700
+ d=1e100.net; s=20251104; t=1778553088; x=1779157888;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nhFP7hGs8ICqYOUqMML+hYb8Pw/MUz+qcAnPdAAtg8s=;
+ b=gN2nyWzjzxLz/O9p4jjcNeog9XzKdMtzCTj66j4uwZNBKyvoTDXwMjcoKE0phVNrW9
+ 6IVf3A37LD+T20gwwkyIhTCm8A5AYLY2SC8tDjMoon9OrDJEane5htlJMm8uQJX4GcSB
+ eTk4v9gGaPkVblN9l6qc/oH1P+fA0LYDNPnZ4S04UhX6D5Nz8andEv0tDsCfylXRQB+Y
+ Lk9JVpfTJrDvr57aIXCRffJiXgSdS/rGO4qJPUmNkeEPefoGQmRkrnBJtAaEhxQr/ulz
+ 42v9UM2cBsPX05VG+dq+9CsO7TAgpvo8xViC2V3vjUzEeTmwTmo8CumLN98WkhDSh+jT
+ tkzA==
+X-Gm-Message-State: AOJu0Yxo3cMs2yNwsCjKbAMI6UftZ8Mrifj3aEYnDRvO4irU1h9EoNlw
+ D7G/CQo5t4sOyjfnc5Sf6cBDhljv9bYReQ80C3oMXsMDqYP1KiTqobbn
+X-Gm-Gg: Acq92OEyZ6WhLN6Y/LMxwSUykPmL7cUg4xnqI9sgOZNCJ7ZFu1QbmhwVCc/B4fZXEjJ
+ 5drc5Du+pE9eyRM+y7VCIFNXqTFZLTTSVCYoL1CwQYN47Qeoy8Yd+i/jXSDqEMxcIURX+rvjbGj
+ 1wkmZVX4S4rFYVaN46Toki94GTQVeCozheSG5yOIP+JjTbvUMzTJtxO44SOUtcLxVsGuWVPot/q
+ PwYvJ52BYi7r6CIjR6MnlCoimKFMgj/C9HKpUuDoAdcP0XVpb4Is0bm2HhCRTJ97UL2CBAwrbD4
+ 3z7qkLceXWitmZTEY6PWqdDlcoFEQQRxdPKg2YT5Dud2KdRLROa6NcyQqRze2HqIFBDTTPUbQ3P
+ 9l72Hq7XIoz7YtKx+myJrmvR3wBXZnGDET9B/7qYZStu4p17+qNJNfKPGGScXLw1co4BR/E9HoH
+ mTrFKgLUTPS4JAVvxJPrgH2Z4OIHU9WUrB4dGktFperyxstsdDHFo+7hBVIFiyahrnYY8HPwrm
+X-Received: by 2002:a05:620a:470c:b0:8f8:7765:27da with SMTP id
+ af79cd13be357-904d66e27f4mr3853897885a.42.1778553088171; 
+ Mon, 11 May 2026 19:31:28 -0700 (PDT)
+Received: from ZEVORN-PC.localdomain ([162.244.208.119])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8fc2c91e11fsm3186453285a.40.2026.05.11.19.31.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 11 May 2026 19:31:27 -0700 (PDT)
+Date: Tue, 12 May 2026 10:31:12 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "cfu@mips.com" <cfu@mips.com>,
+ "mst@redhat.com" <mst@redhat.com>, 
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>, 
+ "philmd@linaro.org" <philmd@linaro.org>,
+ "alistair23@gmail.com" <alistair23@gmail.com>, 
+ "thuth@redhat.com" <thuth@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: Re: [PATCH v9 1/7] target/riscv: Define MSTATUS_SBE and MSTATUS_MBE
+ bit masks
+Message-ID: <agKQ4Gbo1nJNMxs4@ZEVORN-PC.localdomain>
+References: <20260511083819.206216-1-djordje.todorovic@htecgroup.com>
+ <20260511083819.206216-2-djordje.todorovic@htecgroup.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] target-info: Inline accessors
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: philmd@linaro.org
-References: <20260511190634.472174-1-richard.henderson@linaro.org>
- <20260511190634.472174-6-richard.henderson@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260511190634.472174-6-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: hXkMQ1HL6Cg4bM-G-2YrVZJ9ZOoKcQoo
-X-Proofpoint-ORIG-GUID: hXkMQ1HL6Cg4bM-G-2YrVZJ9ZOoKcQoo
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEyMDAyMSBTYWx0ZWRfXyvT/SPbk3TFd
- ZhYRuZwCMEedtkAKbbu8oyo1oihubH4ypCgOGXLrl4ozlerao+okSPHJBaVwOU0PvOtvExL7QEm
- Zm5sL35JtETOrwFRpxtwzTntY35hkmSWz1Dy3rmtus9DSgw2THzqCcjoVFxT+SfjDy1OIrLwtt6
- NwlHxovOdRy3q2XzgelneO2M+PReiCXVKH3HnK3tF4irVQs6NVS9FNIH9BB+ZcLEZBD+1tmhpWj
- 4OGynYxWUBfNQgrs9FaGBbfFUBlxdO/eRaTyV03CisTdvJJ2doBVCLWwMdG7FqMd65G3suaHtB4
- cuyP2rn3xpmxwKmPmRlSI6Ruy8hOO6AR3XaovHOB5W8X8I2sJtKGdpFenf5iex06nfLUy4X4Ij8
- vILHszJfJ/9eVEooQfKYT0LsktmZvfs9q28b1coGUTkUW9gv4IFzPj92cAg4xo7CLhvNPItkQKq
- CPJJ8d1EUeeBumwpRlw==
-X-Authority-Analysis: v=2.4 cv=c6ebhx9l c=1 sm=1 tr=0 ts=6a028fed cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=KKAkSRfTAAAA:8 a=NbRwuLGaaJczqkI6BuYA:9 a=QEXdDO2ut3YA:10
- a=PxkB5W3o20Ba91AHUih5:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-11_05,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0 lowpriorityscore=0 priorityscore=1501
- impostorscore=0 bulkscore=0 malwarescore=0 spamscore=0 suspectscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605050000
- definitions=main-2605120021
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260511083819.206216-2-djordje.todorovic@htecgroup.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::741;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-qk1-x741.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,306 +110,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/11/2026 12:06 PM, Richard Henderson wrote:
-> Move the entire contents of target-info.c into target-info.h,
-> marking each function inline.
+On Mon, May 11, 2026 at 08:38:27AM +0000, Djordje Todorovic wrote:
+> Add the RISC-V privileged ISA defined bit positions for the Supervisor
+> Big-Endian (SBE, bit 36) and Machine Big-Endian (MBE, bit 37) fields
+> in the mstatus register. These are used alongside the existing
+> MSTATUS_UBE (bit 6) to control data endianness at each privilege level.
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> The MSTATUS_UBE definition was already present, but SBE and MBE were
+> missing.
+> 
+> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+
+Thanks,
+Chao
 > ---
->  include/qemu/target-info.h | 82 +++++++++++++++++++++++++++------
->  target-info.c              | 93 --------------------------------------
->  meson.build                |  1 -
->  3 files changed, 68 insertions(+), 108 deletions(-)
->  delete mode 100644 target-info.c
+>  target/riscv/cpu_bits.h | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
-> diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
-> index d8d2194d9b..2c9f5c78fb 100644
-> --- a/include/qemu/target-info.h
-> +++ b/include/qemu/target-info.h
-> @@ -45,14 +45,20 @@ TargetInfo target_info;
->   *
->   * Returns: Canonical target name (i.e. "i386").
->   */
-> -const char *target_name(void);
-> +static inline const char *target_name(void)
-> +{
-> +    return target_info.target_name;
-> +}
->  
->  /**
->   * target_long_bits:
->   *
->   * Returns: number of bits in a long type for this target (i.e. 64).
->   */
-> -unsigned target_long_bits(void);
-> +static inline unsigned target_long_bits(void)
-> +{
-> +    return target_info.long_bits;
-> +}
->  
->  /**
->   * target_machine_typename:
-> @@ -60,21 +66,30 @@ unsigned target_long_bits(void);
->   * Returns: Name of the QOM interface implemented by machines
->   *          usable on this target binary.
->   */
-> -const char *target_machine_typename(void);
-> +static inline const char *target_machine_typename(void)
-> +{
-> +    return target_info.machine_typename;
-> +}
->  
->  /**
->   * target_cpu_type:
->   *
->   * Returns: target CPU base QOM type name (i.e. TYPE_X86_CPU).
->   */
-> -const char *target_cpu_type(void);
-> +static inline const char *target_cpu_type(void)
-> +{
-> +    return target_info.cpu_type;
-> +}
->  
->  /**
->   * target_endian_mode:
->   *
->   * Returns: QAPI EndianMode enum (e.g. ENDIAN_MODE_LITTLE).
->   */
-> -EndianMode target_endian_mode(void);
-> +static inline EndianMode target_endian_mode(void)
-> +{
-> +    return target_info.endianness;
-> +}
->  
->  /**
->   * target_big_endian:
-> @@ -86,62 +101,101 @@ EndianMode target_endian_mode(void);
->   * the target, so please do *not* use this function unless you  know very
->   * well what you are doing!
->   */
-> -bool target_big_endian(void);
-> +static inline bool target_big_endian(void)
-> +{
-> +    return target_endian_mode() == ENDIAN_MODE_BIG;
-> +}
->  
->  /**
->   * target_arch:
->   *
->   * Returns: QAPI SysEmuTarget enum (e.g. SYS_EMU_TARGET_X86_64).
->   */
-> -SysEmuTarget target_arch(void);
-> +static inline SysEmuTarget target_arch(void)
-> +{
-> +    return target_info.target_arch;
-> +}
->  
->  /**
->   * target_base_arm:
->   *
->   * Returns whether the target architecture is ARM or Aarch64.
->   */
-> -bool target_base_arm(void);
-> +static inline bool target_base_arm(void)
-> +{
-> +    switch (target_arch()) {
-> +    case SYS_EMU_TARGET_ARM:
-> +    case SYS_EMU_TARGET_AARCH64:
-> +        return true;
-> +    default:
-> +        return false;
-> +    }
-> +}
->  
->  /**
->   * target_arm:
->   *
->   * Returns whether the target architecture is ARM (32-bit, not Aarch64).
->   */
-> -bool target_arm(void);
-> +static inline bool target_arm(void)
-> +{
-> +    return target_arch() == SYS_EMU_TARGET_ARM;
-> +}
->  
->  /**
->   * target_aarch64:
->   *
->   * Returns whether the target architecture is Aarch64.
->   */
-> -bool target_aarch64(void);
-> +static inline bool target_aarch64(void)
-> +{
-> +    return target_arch() == SYS_EMU_TARGET_AARCH64;
-> +}
->  
->  /**
->   * target_base_ppc:
->   *
->   * Returns whether the target architecture is PowerPC 32-bit or 64-bit.
->   */
-> -bool target_base_ppc(void);
-> +static inline bool target_base_ppc(void)
-> +{
-> +    switch (target_arch()) {
-> +    case SYS_EMU_TARGET_PPC:
-> +    case SYS_EMU_TARGET_PPC64:
-> +        return true;
-> +    default:
-> +        return false;
-> +    }
-> +}
->  
->  /**
->   * target_ppc:
->   *
->   * Returns whether the target architecture is PowerPC 32-bit.
->   */
-> -bool target_ppc(void);
-> +static inline bool target_ppc(void)
-> +{
-> +    return target_arch() == SYS_EMU_TARGET_PPC;
-> +}
->  
->  /**
->   * target_ppc64:
->   *
->   * Returns whether the target architecture is PowerPC 64-bit.
->   */
-> -bool target_ppc64(void);
-> +static inline bool target_ppc64(void)
-> +{
-> +    return target_arch() == SYS_EMU_TARGET_PPC64;
-> +}
->  
->  /**
->   * target_s390x:
->   *
->   * Returns whether the target architecture is S390x.
->   */
-> -bool target_s390x(void);
-> +static inline bool target_s390x(void)
-> +{
-> +    return target_arch() == SYS_EMU_TARGET_S390X;
-> +}
->  
->  #endif
-> diff --git a/target-info.c b/target-info.c
-> deleted file mode 100644
-> index f02a033584..0000000000
-> --- a/target-info.c
-> +++ /dev/null
-> @@ -1,93 +0,0 @@
-> -/*
-> - * QEMU target info helpers
-> - *
-> - *  Copyright (c) Linaro
-> - *
-> - * SPDX-License-Identifier: GPL-2.0-or-later
-> - */
-> -
-> -#include "qemu/osdep.h"
-> -#include "qemu/target-info.h"
-> -#include "qapi/error.h"
-> -
-> -const char *target_name(void)
-> -{
-> -    return target_info.target_name;
-> -}
-> -
-> -unsigned target_long_bits(void)
-> -{
-> -    return target_info.long_bits;
-> -}
-> -
-> -SysEmuTarget target_arch(void)
-> -{
-> -    return target_info.target_arch;
-> -}
-> -
-> -const char *target_cpu_type(void)
-> -{
-> -    return target_info.cpu_type;
-> -}
-> -
-> -const char *target_machine_typename(void)
-> -{
-> -    return target_info.machine_typename;
-> -}
-> -
-> -EndianMode target_endian_mode(void)
-> -{
-> -    return target_info.endianness;
-> -}
-> -
-> -bool target_big_endian(void)
-> -{
-> -    return target_endian_mode() == ENDIAN_MODE_BIG;
-> -}
-> -
-> -bool target_base_arm(void)
-> -{
-> -    switch (target_arch()) {
-> -    case SYS_EMU_TARGET_ARM:
-> -    case SYS_EMU_TARGET_AARCH64:
-> -        return true;
-> -    default:
-> -        return false;
-> -    }
-> -}
-> -
-> -bool target_arm(void)
-> -{
-> -    return target_arch() == SYS_EMU_TARGET_ARM;
-> -}
-> -
-> -bool target_aarch64(void)
-> -{
-> -    return target_arch() == SYS_EMU_TARGET_AARCH64;
-> -}
-> -
-> -bool target_base_ppc(void)
-> -{
-> -    switch (target_arch()) {
-> -    case SYS_EMU_TARGET_PPC:
-> -    case SYS_EMU_TARGET_PPC64:
-> -        return true;
-> -    default:
-> -        return false;
-> -    }
-> -}
-> -
-> -bool target_ppc(void)
-> -{
-> -    return target_arch() == SYS_EMU_TARGET_PPC;
-> -}
-> -
-> -bool target_ppc64(void)
-> -{
-> -    return target_arch() == SYS_EMU_TARGET_PPC64;
-> -}
-> -
-> -bool target_s390x(void)
-> -{
-> -    return target_arch() == SYS_EMU_TARGET_S390X;
-> -}
-> diff --git a/meson.build b/meson.build
-> index 9a804dc810..aad149cdb4 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -3868,7 +3868,6 @@ endif
->  common_ss.add(pagevary)
->  system_ss.add(files('page-vary-system.c'))
->  
-> -common_ss.add(files('target-info.c'))
->  system_ss.add(tinfoqom)
->  
->  subdir('backends')
-
-We could evaluate the added performance of this, once we have a
-benchmark, with/without target_info being an indirect function call or a
-structure access.
-
-Regards,
-Pierrick
+> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+> index b62dd82fe7..c2a3ee4bf3 100644
+> --- a/target/riscv/cpu_bits.h
+> +++ b/target/riscv/cpu_bits.h
+> @@ -628,6 +628,8 @@
+>  #define MSTATUS_TSR         0x00400000 /* since: priv-1.10 */
+>  #define MSTATUS_SPELP       0x00800000 /* zicfilp */
+>  #define MSTATUS_SDT         0x01000000
+> +#define MSTATUS_SBE         0x1000000000ULL
+> +#define MSTATUS_MBE         0x2000000000ULL
+>  #define MSTATUS_MPELP       0x020000000000 /* zicfilp */
+>  #define MSTATUS_GVA         0x4000000000ULL
+>  #define MSTATUS_MPV         0x8000000000ULL
+> -- 
+> 2.34.1
 
