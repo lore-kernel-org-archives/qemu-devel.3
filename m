@@ -4,72 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59E9CCD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 18:08:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B005CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 18:09:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMrVu-00052G-9D; Tue, 12 May 2026 14:07:26 -0400
+	id 1wMrXP-0005R6-F1; Tue, 12 May 2026 14:08:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMrVs-000524-1w
- for qemu-devel@nongnu.org; Tue, 12 May 2026 14:07:24 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMrXN-0005QN-E8
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 14:08:57 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMrVp-0007Ef-9Z
- for qemu-devel@nongnu.org; Tue, 12 May 2026 14:07:23 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4891c0620bcso41505965e9.1
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 11:07:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMrXK-0008FG-8W
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 14:08:57 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-488ba840146so52726545e9.1
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 11:08:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778609239; x=1779214039; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1778609328; x=1779214128; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=rbOFuFxP8WbhsSvwRRvkcHK0EP3UCaNJINhXLrzrhtA=;
- b=lvlCxLJfUPLlhvyu6Z4Reml3jWHbu4TrAX9o88bckNXiGyguvv3F7rTMLUkkxs5kAK
- TAazyMMTjLlFyLHbBgdKbTceYygBNjt+6JlRHujq40Nn26Y4uD9L9fGaSObo4+ITFKdi
- 2UZAcidP0RFCFpuGxXvlYW6/zHtGiA+T7kOfaCvZmdcObM4PgnPzzrOAAo6l0ZA6v4sN
- po5NlVdVbIICsAzmGedIVRsHBLyKvxR3pUM258+GaVnj6FvoA5in3Mkgghgwp9Qp/TQj
- rm9vHCHO8hQoFlxinlTVz4YE6OjjxB7aHROGAuXMVOrGe4o9kXrOTsXYoBHX3mm2ugp6
- oMaA==
+ bh=0YroQDR6Pinai/uwnuVEC/mgvlb6ysDbxDAJlpN/dgs=;
+ b=W9PudCEiZsyYRxxwVCPBlYZw/8CYa7GiWHSitGhFjAouU7x+C/bE3M3YzQ0YjNpNcx
+ yxxUUdUNk6zecxeXkEUPUl7usy8jp8PHA8Li4UyqzTGSnLkZP1uApdwxFb3FwvfL8b5F
+ MB8dgx4RIbSXlbdfTSVil6Or+C5V8u3hyKhS6s0tWz3SozK3Zf1+7N3CCcWUBAIa+BEP
+ WiADOyyZludGQmduw3e6o5K73JN9+7geWsj6pkVMezhmcPnOyHwrBdEoEl6qMlCR80Oz
+ 9ECKaPN/CnanGICdMzPWFHquoSUJpGflIJhH//4SA+wAjPMPjw1lJ/22nJ1/muiqP54e
+ 9fdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778609239; x=1779214039;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1778609328; x=1779214128;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=rbOFuFxP8WbhsSvwRRvkcHK0EP3UCaNJINhXLrzrhtA=;
- b=pe2zyBFn3cVdkPOI8QBpq7VBX3Xt4L4pQRRIHEWvzPjzh9Dj6OIJCFMVtr6Bvsuxni
- wh9sZhuk91Y9D6mDbbzJ4wNpoAE7AMK9G513SHa+yddFKE/84CfZNuMRqkpjWfr+9m6T
- 9nf16/3JiQLWOi3G9ROUNvl6V7lvZdTeEAwqtii+6Kj29vuvVAaE8KJajbldBeaCLC/n
- +OaP5OWnEKiep7WmH5o+kcr1ToJ3GlV3vs6np+xTsG0VXG+DpLb3Gr44eGieJE2HKqkA
- 4iDKs0QoMALYO+JpvafhiscgK7mD0u3OVg/UnHFBp1/dqnk3f2tLEGTb40UzlrKxBV3X
- RDig==
+ bh=0YroQDR6Pinai/uwnuVEC/mgvlb6ysDbxDAJlpN/dgs=;
+ b=M7mwFtdKKCbJ0JlYTB61oFy+lF+9JDDZBXN0+Kebilp3zPhn6AVRbKzBsK3rlH+OIn
+ RnvEzywBiwBylu/8BP4QIfkk7sLU4xZZ02WTJufHuWEkgr5AZ+2DA1jT1DsXxGFzKRd8
+ ioEozwLU8+WDxI9zwqUWNmXfrAitQrLV68s0lVtH+2QvoxVesNn2lTxZX+EEZ1vuRE8d
+ NqmoE1Innx4g9mL4x7gQgwYEJdWFb6m3SMga4DMns3BxbnU23MwnMC3jO1B/MRkyHea2
+ 9qMqPgCKWRubK8GOgNDw9NmbeWUmJKa+5nJSd23H8s6LuuKBTZSvpOIeTgda6dOSClcL
+ O+pA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+vrQwcGz+E7Cu3Ugtl6Iyvr6/9moPI/qyfc8fFFfWwQJQZ7PlPvD0Uro+NeFwUUG/p6E4TaBR4dSXV@nongnu.org
-X-Gm-Message-State: AOJu0Yw9NByO4qTxoMO9YH92fcssqy7pOTmflbDajvb2u1r+Mump+46l
- hC5CmKq89WVZKAfPEeR2+61zIBYHI2RO5qCzxqwityn46Co1KJe2mVx97Yu+WP5LV84=
-X-Gm-Gg: Acq92OE0rN+6Qe+1OYCCxneQG/GUR0WRagtZXaM5sqqXvYnbn06l7N+JqACSpl6LyyC
- 4yeBgeUYfWQApyFNm9CAdBTLkA9urXhp4AN+rNAtElZixgLfYDBBrNvvqBbzoR/W+Ec51texBrn
- u2PgMMPjcM7DoJLIBIvCA66T5QXnIuL1+N272rgyAz8TJYs4sfP+100or/5RkddVyWfdbQ8WcAl
- olUkezjPZcqsT3K7EC7j+W4UQJLGV+JAX1ggYuNWKlbBlYpnVXxmFx38d1HrqNSK9wJ5fhY7S+n
- +V90ZhZBvTKFUPty8Z02RNushqafE5GcOsU54Ylzgcn5XInAzwDv1W9xe8zTh1uUhRU3YzcX03A
- y+rDK+FoLUjchH/QDmfNC/ItdsDLu3nMlx68fH0wsj4KvFMwTAPYhFwYUbDC3wSaLuF2nxJNG7C
- 0h5csCWIBmHj1K8jtFjawBVw9XCO4a5NlQcNfnqqtdk5O/YCZyBCOX0FagKx22zIkG+g==
-X-Received: by 2002:a05:600c:350a:b0:48a:5565:ec3d with SMTP id
- 5b1f17b1804b1-48e676ac38fmr311321095e9.22.1778609238555; 
- Tue, 12 May 2026 11:07:18 -0700 (PDT)
+ AFNElJ/plEelfV9JL1a7GLzD9CpNsoNh76vbM9bIv96T6X81q6M/9jx3icg7llaSJV+KQUrpL7dPwUMwZkPE@nongnu.org
+X-Gm-Message-State: AOJu0YyfKPcmLoVEQlzUcJrv9OuJzUbCtPhoCdrwsJq18JO7pXj2+QeA
+ qyuEoWN5QRA4UWj/OYojnDcnv19rteutkBXMfTp8hgyU4+fcf+xG3NF54v1wgTWVr45fVNM0l13
+ Wmy2GRF0=
+X-Gm-Gg: Acq92OE9NJGeV4BfHwJujfIkRyXasC+BbusG+50cKpNY+4eAACZjAx0GixB0y5idhkB
+ cbxf9IpwlvzpIO5mHJFdG9qDeXL1Qv0ldJFkWOWejVjPLaHt6Adtow+XGy/gbShTpz35ML+pZIu
+ 8JW8pTyPXJL2RNdDkL9MJx8d0zrWS11igbRSTx4LaXB5GXHIQAS+Gfb4vfRjDQURPJmmjrm4VpQ
+ 3FshOjW2cRh1+VgJ9wdM0KnzuKHKeb/+COkcIQ7pB57/rBlOT3iIjK9uxQ7grEGu1HAfvRf1EcX
+ vALLfz9RPAZHVPCNGXyWRm4DYSs/YVmH2wv1AImyMmYThpAAa8YJ8CYpAHg2/O0c5L7EYfXQLZX
+ n3vvw225Jiz5iik6yNT1J50sMaIxAPI4xmPwRDuji6c6zvQuf2yYZHs58IoPY/aRDbW/mzNxqnI
+ 8KCtJsQiDrHSEyXj5G93q3TFKxZxey7hO9DTyFLoNCYUlqcxEoXNznvQhyxDSZKW8CmQ==
+X-Received: by 2002:a05:600c:6388:b0:48a:6fd4:d3d4 with SMTP id
+ 5b1f17b1804b1-48e8fe8049bmr61176335e9.29.1778609328523; 
+ Tue, 12 May 2026 11:08:48 -0700 (PDT)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fc8d15e09sm14389185e9.3.2026.05.12.11.07.17
+ 5b1f17b1804b1-48fc8d625basm11346735e9.9.2026.05.12.11.08.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 May 2026 11:07:17 -0700 (PDT)
-Message-ID: <3d039c50-88f6-4599-967f-cdf9c0e944c2@linaro.org>
-Date: Tue, 12 May 2026 20:07:16 +0200
+ Tue, 12 May 2026 11:08:47 -0700 (PDT)
+Message-ID: <6fb5ef6f-9c7d-442c-8f03-e25d2121c1f3@linaro.org>
+Date: Tue, 12 May 2026 20:08:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 3/5] target-info: introduce TargetInfo in QOM
+Subject: Re: [PATCH v6 4/5] target-info-qom: detect target from QOM
+Content-Language: en-US
 To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
 Cc: Max Filippov <jcmvbkbc@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -77,14 +79,13 @@ Cc: Max Filippov <jcmvbkbc@gmail.com>,
  marcandre.lureau@redhat.com, Markus Armbruster <armbru@redhat.com>,
  Anton Johansson <anjo@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>
 References: <20260512150208.1167711-1-pierrick.bouvier@oss.qualcomm.com>
- <20260512150208.1167711-4-pierrick.bouvier@oss.qualcomm.com>
+ <20260512150208.1167711-5-pierrick.bouvier@oss.qualcomm.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260512150208.1167711-4-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20260512150208.1167711-5-pierrick.bouvier@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,38 +109,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/5/26 17:02, Pierrick Bouvier wrote:
-> For the single-binary, we want to be able to retrieve at runtime the
-> current target among the different ones available.
-> A consequence is that we can't rely on existing target_info() definition
-> since it will create a conflict once more than one target is available.
+> For now, we expect only one target to be available at runtime. This will
+> change with the single-binary and we'll detect which one to use
+> dynamically.
 > 
-> To solve this, we add TargetInfo in QOM, with this hierarchy.
-> We define one class "target-info-X" per target, that inherits from
-> abstract class "target-info". Using concrete vs abstract class ensure we
-> can easily filter "target-info-X" from all QOM types.
-> Associated TargetInfo is directly set through class initialization,
-> without relying on any instance.
-> 
-> For user mode, we simply define target_info() like it was done
-> previously. In this patch, we keep the same definition for system-mode
-> also, and it will be replaced in next commits.
-> 
-> We will introduce detection of target from QOM, so we need to make sure
-> those types are registered early.
-> 
+> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 > ---
->   configs/targets/aarch64-softmmu.c |  6 ++--
->   configs/targets/arm-softmmu.c     |  6 ++--
->   include/qemu/module.h             |  1 +
->   include/qemu/target-info-init.h   | 58 +++++++++++++++++++++++++++++++
->   include/qemu/target-info-qom.h    | 28 +++++++++++++++
->   system/vl.c                       |  2 ++
->   target-info-qom.c                 | 24 +++++++++++++
->   target-info-stub.c                |  6 ++--
->   8 files changed, 119 insertions(+), 12 deletions(-)
->   create mode 100644 include/qemu/target-info-init.h
->   create mode 100644 include/qemu/target-info-qom.h
+>   include/qemu/target-info-qom.h |  2 ++
+>   system/vl.c                    |  2 ++
+>   target-info-qom.c              | 16 ++++++++++++++++
+>   3 files changed, 20 insertions(+)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
