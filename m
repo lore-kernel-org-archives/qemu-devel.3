@@ -4,87 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F180CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 20:39:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A4B3CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 20:52:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMtsZ-00010i-IZ; Tue, 12 May 2026 16:38:59 -0400
+	id 1wMu4i-00038Z-CQ; Tue, 12 May 2026 16:51:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMtsW-0000vW-ML
- for qemu-devel@nongnu.org; Tue, 12 May 2026 16:38:56 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMtsU-00047m-Fl
- for qemu-devel@nongnu.org; Tue, 12 May 2026 16:38:56 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-4526a8170ceso3305244f8f.2
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 13:38:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778618332; x=1779223132; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=KcQUrQr865krc/yCxduaFxVQNrpnDX8A523V3gV3rLI=;
- b=UA5YqojL1yZ+WUq1P0cslWat4GoaP/+tKFRR5kx9xwrWTc60zow438fX8esUbC/HFv
- wck5RAKfz27MjBgNltHffrvqgmINXy2eXEk4CwdsJqubwzPB/oaEklkd/kfHFqxevKMr
- A16ybRsobBHUzhfGMDvNxA6XDPQuHvZRZ/B2EAtq0Cq3JofMzkHhlvRE5cKmW+naZ6qe
- FpiyswGYP2SNtJA7xY4JcNMrDaL1nTgG5w84pxowbIThGn/bnQCs9mZ9ivyp3jbwxUNp
- rVZgeQwMs4SshP2sBw0sfTmb5QXYIOM3Ei0o6QiGkSrUUuBj1xfMBvEActIfUaZNNmXs
- Ek2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778618332; x=1779223132;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=KcQUrQr865krc/yCxduaFxVQNrpnDX8A523V3gV3rLI=;
- b=QINJCvzp60LdccDVdzjdELhsBfOerVdz3kiV0GuNO6rXzKT9RBlI3b2wyQ7lSvYI0y
- Ffhd3fO+k77/DRQPjKQzOB5nxyyLlOBk8ePNWJazd2hVB6fhbC5kQsBhQdakMw8cysYA
- 0tWba2cIEl0Ahz6pkX6OTIGT2wjD52vqabSJ7O3yKxj8lAEtRp0OioMHNCluLOUCoLNR
- BY7685MD0Cwbn9R53Va67Tf/oArvCrC4tdunHZ0cx2+JEB0PRXVRTqcbVVQLTV2Oi8tV
- xFj5MNaAbbsw66bUIIUWjxf7FUfbRFGpbEDgcXnFl3t8y/TCSNZDZYoSXbfl+ViXTJkE
- wXTw==
-X-Gm-Message-State: AOJu0YyMRu786ITxPT+3lfG5FuOklavAYL3yTik8zxdP/PpiABFts4ob
- JvFYhT3dwuPszL6Ddh1s7+b0GELGVmNWODR9W5dmdVV8UHz7Dq/YrkT6pdPB0WSlygS0Uf2xIPQ
- uPTL9gA0=
-X-Gm-Gg: Acq92OFmE230+AEVBKkv30wdIcSRrwgLLgFNK5fylbPiWcdMTzZoGdhXOR1aRHtfeVY
- y7hFu9x8DU78NcRdJLjBhDCfDt/jDBnW63UYpUNcumU8Oo9HWdRPCDSBP6VbuedNeXkYtmFJrDQ
- cN2rO3zf1NDLH/doUd3f7ekKBNKmoK+7/fHDwVdqTywsqwIoQoMi7QHp7HrctDRhi5jwofJIfAo
- q2K2ertchlKtKbI3BeX8UcnIFVyw+mq9+vyiqcQmti5CQgeNOyqFoN0/XnW68EsMgZCajCNvBBA
- jTud1ix8QxzGqPEg0gfXgfpMjOkHigizMWD7io6r47FNsRVaPdCJV/jr35UA2WSB6pLQuwbk0+X
- sig46pptLwqBdUgVpZN6UUyGokiFgw9zMg4e2f23LXt0o7f112w6k+hMvkjKC1tBKFX0xIB9DH8
- LOFEUdb/ytBt7O2rDCPtZC19qhTLamdsusBQaelVIoNHj5CkuCxjzRffTyFB41wmwGVx63j6v7S
- gplWzBdH40=
-X-Received: by 2002:a05:6000:288c:b0:456:ba09:3e64 with SMTP id
- ffacd0b85a97d-45c5762d2e1mr463397f8f.1.1778618332032; 
- Tue, 12 May 2026 13:38:52 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45491cab9c2sm37071914f8f.31.2026.05.12.13.38.51
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 12 May 2026 13:38:51 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL v2 06/41] hw/sd/sd: Allow multi-byte read/write for generic
- paths
-Date: Tue, 12 May 2026 22:38:42 +0200
-Message-ID: <20260512203842.4863-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260512203842.4863-1-philmd@linaro.org>
-References: <20260512203842.4863-1-philmd@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wMu4g-00037r-J8
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 16:51:30 -0400
+Received: from qs-2007d-snip4-3.eps.apple.com ([57.103.84.164]
+ helo=outbound.qs.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wMu4c-00016N-UR
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 16:51:30 -0400
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-60-percent-11 (Postfix) with ESMTPS id
+ 6A8C918000AD; Tue, 12 May 2026 20:51:20 +0000 (UTC)
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRAEwVSB11NVg1HD1geXBQXCUBDXgheH0wcHQ5YBhIATQoONgZZBV4JVgNDBTYSFF1FRgNHGVcUUBtHDFUHV15fChMAXg8PTAtBBS8OUnNCFEkKKXJGBkUPQB4sA1kLXQBABykAWQZJfE8FWHceXABLHVcEVB9TElUdHQtFVRIEQAhWUFQeQQRWFWwJWAZTGVc=
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1778619083; x=1781211083;
+ bh=dowCJmv0YyQe/HYja0aiB9YSlxqwGMSaD9jzrNcVu7U=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=Kqj7sSjCid+JukTbL+ITHC9BgtZZOlC/l1aokDYAmBql6TdIA4OfvZADNflVQ+ACFMhdfHFr3F4zZZh8Zd165ECXsDT6aBxM2HxHTNDS16iyiXHXoIQZyD4IHR0cEIBgxjCMsJ5Oc3kqGHNLjkEAtNTkY1GFki7Htad79jLROsqgi7R6gWTVeUiFejNkW6p2TMGEHKahczRhzx9oJUsP/Iy4F+FBEocvmBConOMxBteTidVBQ86rYjr/v/b4nqcuVTgVSa9V+P2kQuvlF25cPKSmwIf0xmSjhTEZ/IZaFT8IrtjFufMtxW8491fhoK914REnxPQFuOWTpsI/8jygNg==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-60-percent-11 (Postfix) with ESMTPSA id
+ A496918000A0; Tue, 12 May 2026 20:51:18 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: [PATCH v3] target/arm/hvf: Fix WFI halting to stop idle vCPU
+ spinning
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <DIGZJ3V3TPDK.3LY9W3NAULWWA@gmail.com>
+Date: Tue, 12 May 2026 22:51:06 +0200
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <296B99A2-19DE-4568-A429-984D7249E765@unpredictable.fr>
+References: <20260410055045.63001-1-scottjgo@gmail.com>
+ <20260427195516.46256-1-scottjgo@gmail.com>
+ <794CB795-9462-4299-B7EC-528B0E4F1923@unpredictable.fr>
+ <DIGZJ3V3TPDK.3LY9W3NAULWWA@gmail.com>
+To: "Scott J. Goldman" <scottjgo@gmail.com>
+X-Mailer: Apple Mail (2.3864.500.181)
+X-Proofpoint-ORIG-GUID: iH1Xj6mGbit2X58s7RzFs4CGg5Dxdfz1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEyMDIxNCBTYWx0ZWRfXzg+lOXFNnPvG
+ 03acgZDzdcT82tBnYrSbEIW/XHatVm3Q/hjHVBcyMo+3lUFDzFObEsXR1+n1CS6bgcWjozhLQIu
+ hblXjMFDJRva+vQ/RVL0j5wT+7ympS7TXm1eC63FBf/ra/0hJbyTi39IDmzkYBLySUEm1ELgnkQ
+ kHAhYvGuqwSbkHC0QmroBjTwKICVMLJxNUrzn6fct2nhNVl6q7utO0loHXng3WNxk8q0HveL/Ys
+ EhFCrT3fi9C3++b/FSypBFQPlQpPm5ETkniVi0VHzxphPQ0KDEJ9p6v7kIfAbKsBeXDr2MGAf26
+ WTkrsxi+8u5kbfB206sq3iDrqFuEy9rY6k0fkgNv51AUDrz22hXh/mUUltCQLU=
+X-Proofpoint-GUID: iH1Xj6mGbit2X58s7RzFs4CGg5Dxdfz1
+X-Authority-Info-Out: v=2.4 cv=fMA0HJae c=1 sm=1 tr=0 ts=6a0392c9
+ cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
+ a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=pGLkceISAAAA:8 a=dMFe32L-kBhxwVrZe4QA:9
+ a=QEXdDO2ut3YA:10 a=O8hF6Hzn-FEA:10
+Received-SPF: pass client-ip=57.103.84.164;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,190 +92,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Speich <c.speich@avm.de>
 
-Paths that use sd_generic_write/read_data can now write/read multiple
-bytes with one call.
 
-Signed-off-by: Christian Speich <c.speich@avm.de>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260417-sdcard-performance-b4-v4-2-119e66be10c2@avm.de>
-[PMD: Access &sd->data[sd->data_offset] in sd_generic_read/write_data]
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/sd/sd.c | 62 ++++++++++++++++++++++++++++++------------------------
- 1 file changed, 35 insertions(+), 27 deletions(-)
+> On 12. May 2026, at 22:36, Scott J. Goldman <scottjgo@gmail.com> =
+wrote:
+>=20
+> On Tue May 12, 2026 at 1:54 PM EDT, Mohamed Mediouni wrote:
+>>=20
+>>=20
+>>> On 27. Apr 2026, at 21:55, Scott J. Goldman <scottjgo@gmail.com> =
+wrote:
+>>>=20
+>>> Commit b5f8f77271 ("accel/hvf: Implement WFI without using =
+pselect()")
+>>> changed hvf_wfi() from blocking the vCPU thread with pselect() to
+>>> returning EXCP_HLT, intending QEMU's main event loop to handle the
+>>> idle wait. However, cpu->halted was never set, so =
+cpu_thread_is_idle()
+>>> always returns false and the vCPU thread spins at 100% CPU per core
+>>> while the guest is idle.
+>>>=20
+>>> Fix this by:
+>>>=20
+>>> 1. Setting cpu->halted =3D 1 in hvf_wfi() so the vCPU thread sleeps =
+on
+>>>  halt_cond in qemu_process_cpu_events().
+>>>=20
+>>> 2. Arming a per-vCPU QEMU_CLOCK_VIRTUAL timer to fire when the =
+guest's
+>>>  virtual timer (CNTV_CVAL_EL0) would expire. This is necessary
+>>>  because HVF only delivers HV_EXIT_REASON_VTIMER_ACTIVATED during
+>>>  hv_vcpu_run(), which is not called while the CPU is halted. The
+>>>  timer callback mirrors the VTIMER_ACTIVATED handler: it raises the
+>>>  vtimer IRQ through the GIC and marks vtimer_masked, causing the
+>>>  interrupt delivery chain to wake the vCPU via qemu_cpu_kick().
+>>>=20
+>>> 3. Clearing cpu->halted in hvf_arch_vcpu_exec() when cpu_has_work()
+>>>  indicates a pending interrupt, and cancelling the WFI timer.
+>>>=20
+>>> 4. Re-arming the WFI timer from hvf_vm_state_change() on the resume
+>>>  transition for any halted vCPU, since the QEMUTimer is per-instance
+>>>  state and is not migrated. After cpu_synchronize_all_states() the
+>>>  migrated vtimer state is mirrored in env, so we can read CNTV_CTL
+>>>  and CNTV_CVAL from there. If the vtimer has already expired by the
+>>>  time the destination resumes, hvf_wfi_timer_cb() is invoked
+>>>  directly so the halted vCPU is woken up.
+>>>=20
+>>> Fixes: b5f8f77271 ("accel/hvf: Implement WFI without using =
+pselect()")
+>>> Signed-off-by: Scott J. Goldman <scottjgo@gmail.com>
+>>=20
+>> Hi,
+>>=20
+>> A bit of a side note for reproducing this:
+>>=20
+>> To reproduce this on current master, as far as I can tell you need =
+either=20
+>> -M kernel-irqchip=3Doff or -M virt-11.0 or earlier. -M virt(-11.1) on =
+master uses=20
+>> the HVF vGIC path.
+>=20
+> Just wanted to confirm that I re-tested and it seems like you are
+> correct. This must have changed semi recently?
 
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index c0b89735f69..11f6b91576a 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -1610,7 +1610,7 @@ static sd_rsp_type_t sd_cmd_optional(SDState *sd, SDRequest req)
-     return sd_illegal;
- }
- 
--/* Configure fields for following sd_generic_write_byte() calls */
-+/* Configure fields for following sd_generic_write_data() calls */
- static sd_rsp_type_t sd_cmd_to_receivingdata(SDState *sd, SDRequest req,
-                                              uint64_t start, size_t size)
- {
-@@ -1625,7 +1625,7 @@ static sd_rsp_type_t sd_cmd_to_receivingdata(SDState *sd, SDRequest req,
-     return sd_r1;
- }
- 
--/* Configure fields for following sd_generic_read_byte() calls */
-+/* Configure fields for following sd_generic_read_data() calls */
- static sd_rsp_type_t sd_cmd_to_sendingdata(SDState *sd, SDRequest req,
-                                            uint64_t start,
-                                            const void *data, size_t size)
-@@ -2615,11 +2615,15 @@ send_response:
- }
- 
- /* Return true if buffer is consumed. Configured by sd_cmd_to_receivingdata() */
--static bool sd_generic_write_byte(SDState *sd, uint8_t value)
-+static bool sd_generic_write_data(SDState *sd, const void *buf, size_t *len)
- {
--    sd->data[sd->data_offset] = value;
-+    size_t to_write = MIN(sd->data_size - sd->data_offset, *len);
- 
--    if (++sd->data_offset >= sd->data_size) {
-+    memcpy(&sd->data[sd->data_offset], buf, to_write);
-+    sd->data_offset += to_write;
-+    *len = to_write;
-+
-+    if (sd->data_offset >= sd->data_size) {
-         sd->state = sd_transfer_state;
-         return true;
-     }
-@@ -2627,11 +2631,15 @@ static bool sd_generic_write_byte(SDState *sd, uint8_t value)
- }
- 
- /* Return true when buffer is consumed. Configured by sd_cmd_to_sendingdata() */
--static bool sd_generic_read_byte(SDState *sd, uint8_t *value)
-+static bool sd_generic_read_data(SDState *sd, void *buf, size_t *len)
- {
--    *value = sd->data[sd->data_offset];
-+    size_t to_read = MIN(sd->data_size - sd->data_offset, *len);
- 
--    if (++sd->data_offset >= sd->data_size) {
-+    memcpy(buf, &sd->data[sd->data_offset], to_read);
-+    sd->data_offset += to_read;
-+    *len = to_read;
-+
-+    if (sd->data_offset >= sd->data_size) {
-         sd->state = sd_transfer_state;
-         return true;
-     }
-@@ -2658,18 +2666,12 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
-     if (sd->card_status & (ADDRESS_ERROR | WP_VIOLATION))
-         return length;
- 
--    /*
--     * Only read one byte at a time. We will be called again with the
--     * remaining.
--     */
--    length = 1;
--
-     trace_sdcard_write_data(sd->proto->name,
-                             sd->last_cmd_name,
-                             sd->current_cmd, sd->data_offset, value[0]);
-     switch (sd->current_cmd) {
-     case 24:  /* CMD24:  WRITE_SINGLE_BLOCK */
--        if (sd_generic_write_byte(sd, value[0])) {
-+        if (sd_generic_write_data(sd, buf, &length)) {
-             /* TODO: Check CRC before committing */
-             sd->state = sd_programming_state;
-             sd_blk_write(sd, sd->data_start, sd->data_offset);
-@@ -2681,6 +2683,12 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
-         break;
- 
-     case 25:  /* CMD25:  WRITE_MULTIPLE_BLOCK */
-+        /*
-+         * Only read one byte at a time. We will be called again with the
-+         * remaining.
-+         */
-+        length = 1;
-+
-         if (sd->data_offset == 0) {
-             /* Start of the block - let's check the address is valid */
-             if (!address_in_range(sd, "WRITE_MULTIPLE_BLOCK",
-@@ -2724,7 +2732,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
-         break;
- 
-     case 26:  /* CMD26:  PROGRAM_CID */
--        if (sd_generic_write_byte(sd, value[0])) {
-+        if (sd_generic_write_data(sd, buf, &length)) {
-             /* TODO: Check CRC before committing */
-             sd->state = sd_programming_state;
-             for (i = 0; i < sizeof(sd->cid); i ++)
-@@ -2742,7 +2750,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
-         break;
- 
-     case 27:  /* CMD27:  PROGRAM_CSD */
--        if (sd_generic_write_byte(sd, value[0])) {
-+        if (sd_generic_write_data(sd, buf, &length)) {
-             /* TODO: Check CRC before committing */
-             sd->state = sd_programming_state;
-             for (i = 0; i < sizeof(sd->csd); i ++)
-@@ -2765,7 +2773,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
-         break;
- 
-     case 42:  /* CMD42:  LOCK_UNLOCK */
--        if (sd_generic_write_byte(sd, value[0])) {
-+        if (sd_generic_write_data(sd, buf, &length)) {
-             /* TODO: Check CRC before committing */
-             sd->state = sd_programming_state;
-             sd_lock_command(sd);
-@@ -2775,7 +2783,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
-         break;
- 
-     case 56:  /* CMD56:  GEN_CMD */
--        sd_generic_write_byte(sd, value[0]);
-+        sd_generic_write_data(sd, buf, &length);
-         break;
- 
-     default:
-@@ -2810,12 +2818,6 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
-         return length;
-     }
- 
--    /*
--     * We will only read one byte at a time. We will be called again with the
--     * remaining buffer.
--     */
--    length = 1;
--
-     io_len = sd_blk_len(sd);
- 
-     trace_sdcard_read_data(sd->proto->name,
-@@ -2833,10 +2835,16 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
-     case 30: /* CMD30:  SEND_WRITE_PROT */
-     case 51: /* ACMD51: SEND_SCR */
-     case 56: /* CMD56:  GEN_CMD */
--        sd_generic_read_byte(sd, value);
-+        sd_generic_read_data(sd, buf, &length);
-         break;
- 
-     case 18:  /* CMD18:  READ_MULTIPLE_BLOCK */
-+        /*
-+         * We will only read one byte at a time. We will be called again with
-+         * the remaining buffer.
-+         */
-+        length = 1;
-+
-         if (sd->data_offset == 0) {
-             if (!address_in_range(sd, "READ_MULTIPLE_BLOCK",
-                                   sd->data_start, io_len)) {
-@@ -2869,7 +2877,7 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
-     default:
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: DAT read illegal for command %s\n",
-                                        __func__, sd->last_cmd_name);
--        *value = dummy_byte;
-+        memset(buf, dummy_byte, length);
-     }
- 
-     return length;
--- 
-2.53.0
+Hi,
+
+It finally got merged last week.
+
+> I was just running with `-M virt` before. Either way, it's good that =
+the defaults seem to work
+> better now. Either way, I guess the fix still needs to go in for the
+> non vGIC path?
+>=20
+
+Yes. I=E2=80=99ll do a review. This patch is also a qemu-stable =
+candidate.
+
+
 
 
