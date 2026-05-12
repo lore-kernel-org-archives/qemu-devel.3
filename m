@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E373CD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 12:17:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79FB3CD4851
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 12:24:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMm2Z-0005iv-VJ; Tue, 12 May 2026 08:17:02 -0400
+	id 1wMm9E-0007Og-Nx; Tue, 12 May 2026 08:23:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wMm2L-0005d0-HI
- for qemu-devel@nongnu.org; Tue, 12 May 2026 08:16:41 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wMm8i-0007NN-VJ
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 08:23:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wMm2G-0003Hk-LF
- for qemu-devel@nongnu.org; Tue, 12 May 2026 08:16:31 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wMm8b-0006w4-5y
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 08:23:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778588187;
+ s=mimecast20190719; t=1778588578;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=jouFl0ktyIp1zPMNuXHPL52qpTt77BkTvjJUL36fWNw=;
- b=ONG8HOL5hnMhnn6/gVHSGCWRotL/leeS95cLXATuBngiHcwaqMKz3o6Ja6ycO4nTvP0e9f
- xeDFPRdAgQPZgkMfm8x9mWh1eCbgd00jmTLw0ssig9zFRxbpjmBX5z5ZujO2bX5+TqWvpo
- WjJXnFyMTYJBqs5CtF3F1eO5H1WGz6o=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=rmUszY8Ay3e5iEQfb45OQFt940K5N8zmKwgSlWjYZCM=;
+ b=WFFbrWVrzLz3pCuppMhsGl6QlxJn3ypSyWLk3P4pBNGtTcMP8rKs1rizJURZbWKgV/HHOp
+ XqEs3UDIU91S4ceJBrSU4/y5oiGwU51s4cqRC/MMb9Fjht2g33NkMM7XvpwL8EwzfkWBC2
+ hJGre/E7AG+WeGDennK6bTbdtv/O3XA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-357-Hj5sF-9sNZeKoVXMBX0R3Q-1; Tue,
- 12 May 2026 08:16:24 -0400
-X-MC-Unique: Hj5sF-9sNZeKoVXMBX0R3Q-1
-X-Mimecast-MFC-AGG-ID: Hj5sF-9sNZeKoVXMBX0R3Q_1778588183
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-277-vWhkNvv5Nvmrs_h9Vaemjg-1; Tue,
+ 12 May 2026 08:22:56 -0400
+X-MC-Unique: vWhkNvv5Nvmrs_h9Vaemjg-1
+X-Mimecast-MFC-AGG-ID: vWhkNvv5Nvmrs_h9Vaemjg_1778588575
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0A1C2180060F; Tue, 12 May 2026 12:16:23 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4EB361956095; Tue, 12 May 2026 12:22:55 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.49.152])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BA27E19560A2; Tue, 12 May 2026 12:16:20 +0000 (UTC)
-Date: Tue, 12 May 2026 14:16:17 +0200
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8CE1118004A3; Tue, 12 May 2026 12:22:52 +0000 (UTC)
+Date: Tue, 12 May 2026 14:22:49 +0200
 From: Kevin Wolf <kwolf@redhat.com>
 To: Fiona Ebner <f.ebner@proxmox.com>
 Cc: qemu-block@nongnu.org, hreitz@redhat.com, den@openvz.org,
  stefanha@redhat.com, qemu-stable@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH 1/4] commit: Drain nodes across all of bdrv_commit()
-Message-ID: <agMaEZFmV5WlU5Y6@redhat.com>
+Subject: Re: [PATCH 3/4] qcow2: Fix corruption on discard during write with COW
+Message-ID: <agMbmZvW3MCSX3BF@redhat.com>
 References: <20260427170520.101242-1-kwolf@redhat.com>
- <20260427170520.101242-2-kwolf@redhat.com>
- <c0e3fe09-6491-4a36-ae81-41c0de0befd2@proxmox.com>
+ <20260427170520.101242-4-kwolf@redhat.com>
+ <76eb4371-8cfe-4d9f-870f-56c9a6dda334@proxmox.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <c0e3fe09-6491-4a36-ae81-41c0de0befd2@proxmox.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+In-Reply-To: <76eb4371-8cfe-4d9f-870f-56c9a6dda334@proxmox.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -83,58 +83,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 29.04.2026 um 17:06 hat Fiona Ebner geschrieben:
-> Am 27.04.26 um 7:43 PM schrieb Kevin Wolf:
-> > The whole implementation of bdrv_commit() is only correct if no new
-> > writes come in while it's running: It has only a single loop checking
-> > the allocation status for each block and finally calls bdrv_make_empty()
-> > without checking if that throws away any new changes.
-> > 
-> > We already have to drain while taking the graph write lock. Just extend
-> > the drained section to all of bdrv_commit() to make sure that we don't
-> > get any inconsistencies.
-> > 
-> > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> > ---
-> >  block/commit.c | 10 ++++++++--
-> >  1 file changed, 8 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/block/commit.c b/block/commit.c
-> > index 0d9e1a16d7a..c5e3ef03a21 100644
-> > --- a/block/commit.c
-> > +++ b/block/commit.c
-> > @@ -518,6 +518,7 @@ int bdrv_commit(BlockDriverState *bs)
-> >      if (!drv)
-> >          return -ENOMEDIUM;
+Am 29.04.2026 um 17:28 hat Fiona Ebner geschrieben:
+> Am 27.04.26 um 7:04 PM schrieb Kevin Wolf:
+> > @@ -2000,6 +2028,15 @@ int qcow2_cluster_discard(BlockDriverState *bs, uint64_t offset,
+> >      int64_t cleared;
+> >      int ret;
 > >  
-> > +    bdrv_drain_all_begin();
+> > +    /*
+> > +     * If we're touching a cluster for which allocating writes are in flight,
+> > +     * wait for them to complete to avoid conflicting metadata updates.
+> > +     *
+> > +     * We don't need to allocate a QCowL2Meta for the discard operation because
+> > +     * s->lock is held for the duration of the whole operation.
 > 
-> I suppose we could instead drain only the affected BDSs? Blocking all
-> for the whole duration of the blk_pread+blk_pwrite loop seems a bit much.
+> The caller in qcow2_make_empty() does not acquire s->lock AFAICS. Can
+> that be a problem?
 
-Possible, but I'm not completely sure. Basically what I did here is just
-moving the drain part of bdrv_graph_wrlock_drained() earlier, which also
-drains all nodes.
+This is the case the comment inside wait_for_dependencies() is about:
 
-I think when you introduced it, the idea was that just draining
-everything is acceptable and easier to verify. Which means that it might
-not be strictly necessary, but I don't want to prove that now either.
+    /*
+     * Discard has some non-coroutine callers (creating internal snapshots and
+     * make empty). They are calling from qemu-img or in a drained section, so
+     * we know that no writes can be in progress.
+     */
 
-Ultimately this drain_all goes back to commit 91ba0e1, in which you
-stated:
-
-    More granular draining is not trivially possible, because
-    bdrv_change_aio_context() can recursively call itself e.g. via
-    bdrv_child_change_aio_context().
-
-> Independently of that, I wonder if blk_commit_all() should drain all?
-> I'm not familiar with it, but it seems that the intent is to have a
-> point-in-time state which is consistent between different BDSs? That
-> intent could be made explicit by draining all.
-
-Hm, I suppose that would make sense, yes. Do you want to send a patch on
-top of this? Bonus points for a test case that shows the inconsistency.
+So it should be fine in practice because we know a bigger hammer is
+already in use for synchronisation.
 
 Kevin
+
+> > +     */
+> > +    wait_for_dependencies(bs, offset, bytes);
+> > +
+> >      /* Caller must pass aligned values, except at image end */
+> >      assert(QEMU_IS_ALIGNED(offset, s->cluster_size));
+> >      assert(QEMU_IS_ALIGNED(end_offset, s->cluster_size) ||
 
 
