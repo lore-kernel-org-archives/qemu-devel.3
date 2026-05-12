@@ -4,43 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9513CD4F24
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:14:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 201A7CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:14:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuME-0007lg-Pr; Tue, 12 May 2026 17:09:38 -0400
+	id 1wMuM8-0006ys-Cr; Tue, 12 May 2026 17:09:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuLq-0004d4-8h; Tue, 12 May 2026 17:09:14 -0400
+ id 1wMuLO-000303-Ny; Tue, 12 May 2026 17:08:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuLo-0003KO-BU; Tue, 12 May 2026 17:09:13 -0400
+ id 1wMuLN-00038b-0Y; Tue, 12 May 2026 17:08:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619301; bh=09zurXupjYuZK4BUVShjpn/N1B1fEWiUNtddFMGFa7w=;
+ t=1778619301; bh=FeMR9GM9i6SwKGLVhcJuzNQK7do177MIgrQ3yktR+ZE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=RtcRsyv9LoX44bOBwK7VhmOBubzBAkxAp5KHizRual9ZTg27NRfN8NpbqVsz6bhUs
- /eiT558RV1unleKmGqcM9UT89eIe/OL43wPD4jbbNFWvRgFl1ys/Y7YgJyU0JryNeK
- GBZUpTALheZqHwrsfwuuvRofUP7LbvlIujr5jS3ar84CzzO2c/PVkOaLoKAKc471CO
- 1igAwXgqQR5Sin+RSXe8lBQdYARbs3Odfu5p8/PdnnjCAO31prTLu0szduK+XjLtG4
- ahFdoxkheHRn02eRXVHLcUwgfWJHu1CrCF41UdVoPszMzXZ8USoye/8pWSgX7e4cLW
- pWiYUCVeIoC+Q==
+ b=of5nw8OR4QwYtKxwMksy+ZEt+NoHtoEfJCONxE4mNx0ZZxb+SNFL+o9N/l3levAhs
+ +jYkP4LMYoeK7q3ZnCn8HWMZcnanNBB01RHmImvyYOFBz+zVz7OBw0+910ViRxgtVC
+ m8mojCDjHg2gfPrHXwga5TaiE5rqtDtXvlRbr4EfucdfymzEuklCyVmPFkbweG0NWA
+ N4cecZfsgXHnDfd263xFAWU37d4ve5KFjK4mYGMexiWo+P9QBPggs+201CLL6hJTjM
+ HFrKHgzCLh76Z2F7bbt0amKDkASf4Ta87n49lt2rL2FwCXaVJ24zQmdVdKAVpEqsAT
+ QmMp/ujFbSujA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F0D651AA35F;
+ by isrv.corpit.ru (Postfix) with ESMTP id B6A5F1AA35B;
  Tue, 12 May 2026 23:55:01 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 095F43ABCCF;
- Tue, 12 May 2026 23:55:06 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B8D753ABCCB;
+ Tue, 12 May 2026 23:55:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kaixuan Li <kaixuanli@ntu.edu.sg>,
- Klaus Jensen <k.jensen@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 034/117] hw/nvme: fix heap-buffer-overflow in
- nvme_abort
-Date: Tue, 12 May 2026 23:53:36 +0300
-Message-ID: <20260512205503.361097-34-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Stefan Weil <sw@weilnetz.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 030/117] tdx: fix use-after-free in tdx_fetch_cpuid
+Date: Tue, 12 May 2026 23:53:32 +0300
+Message-ID: <20260512205503.361097-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
@@ -69,53 +68,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kaixuan Li <kaixuanli@ntu.edu.sg>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-In nvme_abort(), the submission queue pointer is dereferenced from the
-guest-controlled sqid before validating it with nvme_check_sqid():
+This is mostly harmless right now because the "if" is never
+hit, but the code as written makes no sense.
 
-    NvmeSQueue *sq = n->sq[sqid];
-
-Since sqid is a 16-bit value (range 0-65535) taken directly from CDW10,
-and n->sq[] is typically only max_ioqpairs+1 (65) entries, a malicious
-guest can trigger an out-of-bounds heap read by sending an Abort command
-with a large sqid.
-
-ASan reports this as heap-buffer-overflow in nvme_abort.
-
-Fix this by moving the array dereference to after the nvme_check_sqid()
-bounds validation.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3348
-Fixes: 75209c071a ("hw/nvme: actually implement abort")
+Reported-by: Stefan Weil <sw@weilnetz.de>
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Kaixuan Li <kaixuanli@ntu.edu.sg>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit eb5cc99aff17cbfdad16b18d3503c6f22233eeb5)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit f093ee7ac3af06e4ed7c86663717cf571b42241e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index cc4593cd42..be6c7028cb 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -6111,7 +6111,7 @@ static uint16_t nvme_abort(NvmeCtrl *n, NvmeRequest *req)
- {
-     uint16_t sqid = le32_to_cpu(req->cmd.cdw10) & 0xffff;
-     uint16_t cid  = (le32_to_cpu(req->cmd.cdw10) >> 16) & 0xffff;
--    NvmeSQueue *sq = n->sq[sqid];
-+    NvmeSQueue *sq;
-     NvmeRequest *r, *next;
-     int i;
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index dbf0fa2c91..7dcf5b4e4e 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -799,7 +799,7 @@ static struct kvm_cpuid2 *tdx_fetch_cpuid(CPUState *cpu, int *ret)
+         r = tdx_vcpu_ioctl(cpu, KVM_TDX_GET_CPUID, 0, fetch_cpuid, &local_err);
+         if (r == -E2BIG) {
+             g_free(fetch_cpuid);
+-            size = fetch_cpuid->nent;
++            size *= 2;
+         }
+     } while (r == -E2BIG);
  
-@@ -6120,6 +6120,8 @@ static uint16_t nvme_abort(NvmeCtrl *n, NvmeRequest *req)
-         return NVME_INVALID_FIELD | NVME_DNR;
-     }
- 
-+    sq = n->sq[sqid];
-+
-     if (sqid == 0) {
-         for (i = 0; i < n->outstanding_aers; i++) {
-             NvmeRequest *re = n->aer_reqs[i];
 -- 
 2.47.3
 
