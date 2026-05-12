@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68318CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:08:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18BA3CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:08:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuGf-0002nP-Sa; Tue, 12 May 2026 17:03:54 -0400
+	id 1wMuHP-0006i2-I5; Tue, 12 May 2026 17:04:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuEJ-0007DB-D6; Tue, 12 May 2026 17:01:31 -0400
+ id 1wMuGC-0001cR-AG; Tue, 12 May 2026 17:03:29 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuEG-0006Q4-8d; Tue, 12 May 2026 17:01:26 -0400
+ id 1wMuG8-0007iz-8S; Tue, 12 May 2026 17:03:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619277; bh=HBbppBk0F1Eq2yDKj74u9HuKV/1aqIdP6hioL/w2gdc=;
+ t=1778619278; bh=fCNCBMnBBK8+ZfC0tn3wIGwaiNYfxPk/ThzrHDtsMbQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ZtKogPtj+zvggF1vGPyjDvfILf43E7i+CsTVf4i8NRwe40bfPtgH6kH+AjKf1Quah
- czhvhZd+mZCMK6JHjnXW9IhDVlh1MCbyDOizT0qS0Ni14qFDyLk5FCaqneqHwqJUHr
- 9QhkcqS2KEY1RR/MY/nC4rxagA5vqKow9n0PjpBiEtcCfRVKkZyZySlb91lY9jmaZb
- A8PqbOEPR8O6YAZgta72NJgMK7RTGAthl0allLyHvmruAlO9xeIp9IoAaTOXGGTHHG
- UE2115ehsc6/jdHjc01QgRlh1N9zmSybHa17WdwRUL1/q/ssZE8/GUYihWwjASvwst
- xUhUlbqfsmSzA==
+ b=fkVxa/vzuVKD7Du6FvyZuOuj2Lfc4vGu5bTeiP3x60COOr2tcFboUqg1f/0rajhoj
+ xYUOTTRoohujieWdNuZiEgrxzgksAH7NkbQneZ80QYXQcXlphFMPCrUiJHighht6I0
+ 1eCSUJHoQXCNeI7A7n173G/GoSzq8ocffb+gPFFBah8Bi/awU4nD8YhbGOmVczjMiW
+ cQI6yCE1/xpJnfkB3RG0H52GAaHgP+nwOCnNlFu1chFzQuzEPdvKH+9nP00zckpu+v
+ orGlROlKIkJNwW2ljjYT2XdlYoNgAGhSGJSnf2deiHRdk3vH9OwYNm2gEA+hU+N8+w
+ pthMk6I43AwCQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CE19A1AA30F;
- Tue, 12 May 2026 23:54:37 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id F26011AA321;
+ Tue, 12 May 2026 23:54:38 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D8C453ABC80;
- Tue, 12 May 2026 23:54:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 06C653ABC92;
+ Tue, 12 May 2026 23:54:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
+Cc: qemu-stable@nongnu.org, Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Tao Tang <tangtao1634@phytium.com.cn>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 067/107] hw/misc: Fix the valid access size to the
- avr-power device
-Date: Tue, 12 May 2026 23:53:54 +0300
-Message-ID: <20260512205437.360850-67-mjt@tls.msk.ru>
+ Chao Liu <chao.liu.zevorn@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 085/107] riscv_htif: reject invalid signature ranges
+ (end <= begin)
+Date: Tue, 12 May 2026 23:54:12 +0300
+Message-ID: <20260512205437.360850-85-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
@@ -72,44 +73,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>
 
-Accessing the device with in non-single byte mode currently causes
-QEMU to abort:
+Prevents huge allocations and crashes caused by malformed HTIF signature
+addresses.
 
- $ echo "writew 0x800064 0x4142" | \
-   ./qemu-system-avr -M mega2560 -display none -qtest stdio -accel qtest
- [I 0.000000] OPENED
- [R +0.001784] writew 0x800064 0x4142
- qemu-system-avr: ../../devel/qemu/hw/misc/avr_power.c:58: avr_mask_write:
-  Assertion `offset == 0' failed.
- Aborted                    (core dumped)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3205
+Signed-off-by: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20251209085349.61510-1-munkhuu0825@gmail.com>
+[ Squashed with following commit to fix build failures
+    hw/char/riscv_htif: Fix format specifier for uint64_t
 
-Set the valid max access size to 1 to fix the problem.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3393
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+    Message-ID: <20260415134826.1742308-1-chao.liu.zevorn@gmail.com>
+    Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+]
+Tested-by: Tao Tang <tangtao1634@phytium.com.cn>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260421082935.85995-1-thuth@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit c0306d2b8f45a708f7ab45c846bb24851d6e17f2)
+Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 14808578ccbcd17d474c98bb53b60452888f8529)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/misc/avr_power.c b/hw/misc/avr_power.c
-index ac7b96f53e..1495ec5de4 100644
---- a/hw/misc/avr_power.c
-+++ b/hw/misc/avr_power.c
-@@ -73,6 +73,9 @@ static const MemoryRegionOps avr_mask_ops = {
-     .impl = {
-         .max_access_size = 1,
-     },
-+    .valid = {
-+        .max_access_size = 1,
-+    },
- };
- 
- static void avr_mask_init(Object *dev)
+diff --git a/hw/char/riscv_htif.c b/hw/char/riscv_htif.c
+index ec5db5a597..e7328a596f 100644
+--- a/hw/char/riscv_htif.c
++++ b/hw/char/riscv_htif.c
+@@ -171,6 +171,12 @@ static void htif_handle_tohost_write(HTIFState *s, uint64_t val_written)
+                  * begin/end_signature symbols exist.
+                  */
+                 if (sig_file && begin_sig_addr && end_sig_addr) {
++                    if (end_sig_addr <= begin_sig_addr) {
++                        error_report("Invalid HTIF signature range:"
++                                     " begin=0x%" PRIx64 " end=0x%" PRIx64,
++                                     begin_sig_addr, end_sig_addr);
++                        return;
++                    }
+                     uint64_t sig_len = end_sig_addr - begin_sig_addr;
+                     char *sig_data = g_malloc(sig_len);
+                     dma_memory_read(&address_space_memory, begin_sig_addr,
 -- 
 2.47.3
 
