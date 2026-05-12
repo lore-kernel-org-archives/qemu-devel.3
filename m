@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1BA1CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:41:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34317CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:41:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuUZ-0007cf-25; Tue, 12 May 2026 17:18:15 -0400
+	id 1wMuQg-0002GE-IX; Tue, 12 May 2026 17:14:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuTz-0006Zx-IR; Tue, 12 May 2026 17:17:39 -0400
+ id 1wMuQ9-0001Kf-6c; Tue, 12 May 2026 17:13:45 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuTx-0006tP-63; Tue, 12 May 2026 17:17:39 -0400
+ id 1wMuQ7-0005IC-2n; Tue, 12 May 2026 17:13:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619307; bh=JIKFRlQIwK1/FxLkJ2ppK44nheMtdlfIIxo/AMV79x0=;
+ t=1778619304; bh=6bpVwPgBT8xb2Rf00Ig1uckenO4aE6GImxQGwKbTjS8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=GQON7rJPH4EOiVf74zdcz9TYg57weScU7xlBtJKu2sou/H5PIqP+M1cjkhKxqUODK
- ZuMMt4xq53wC6P4XTILn4zjpMrTvWtC4uMZBEmOFpsTxy1fPuW2ah2yDcWeMXljtiK
- 2KAtGQRl49c2K9625A8cPLCc2dbe9I6KI/tHrn8a3s2b9MymwNqkTMXTAE7en+f7SU
- zypL/1MCNxWsu3G6psK2Bp5OPIHA3PQ97F6QmvouHGfNu+PTZVepFbItS3DzLN7Ax/
- xzmAELqmQRqOkKsvbU/WYiNih3+an0KpV1D4TTNmIZPZJcZ4+7IGmsKx3mYWnPJDpx
- nDqiaKtCgF5Fg==
+ b=O0/vFy19AOW1Y7NI9yGNfhBjjmpmabYY+HxwRHc4lDdFJTaUCitBYYav12VN8+m2T
+ fC4jyi7q+2HZ/NKbQLrYPUwsAZ55mxXtQDvgtyXgEs4zyz0uYyiQtMZzFe+0Sjv4KU
+ Se04N0Wb/2JLu9LD7x7j+s4ojPQJJWhw/m7ewOHu0iKqbkmdNrXlSpgA8LDa3ukziE
+ UgY4QlrK49rfeF+dJ/z6MEzXUEEI+igS6916DLIWkcyhd06JlXGqNkM67N7AIrrq2p
+ wViyYyWeDZu1Khy8AG7hDu90bdSIZ7aMu0oDVXMXhLoGZOoCvGWtIgZNaiEvtIx2NH
+ HO1xKtCTkEUUg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8BE091AA3B1;
- Tue, 12 May 2026 23:55:07 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E63191AA38A;
+ Tue, 12 May 2026 23:55:04 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8D2003ABD20;
- Tue, 12 May 2026 23:55:11 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id F18583ABCF9;
+ Tue, 12 May 2026 23:55:08 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Katherine Leaver <katherine.j.leaver@gmail.com>,
+Cc: qemu-stable@nongnu.org,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 115/117] hw/uefi: add name_size check to
- uefi_vars_mm_lock_variable()
-Date: Tue, 12 May 2026 23:54:57 +0300
-Message-ID: <20260512205503.361097-115-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 076/117] migration: vmstate_save_state_v: fix double
+ error_setg
+Date: Tue, 12 May 2026 23:54:18 +0300
+Message-ID: <20260512205503.361097-76-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
@@ -70,33 +71,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-Make sure the total variable_policy_entry size stays below
-64k so the (16-bit) size field can not wrap.
+We may call error_setg twice on same errp if inner
+vmstate_save_state_v() or vmstate_save_state() call fails. Next we will
+crash on assertion in error_setv().
 
-Fixes: CVE-2026-41438
-Fixes: db1ecfb473ac ("hw/uefi: add var-service-vars.c")
-Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260422092910.444997-5-kraxel@redhat.com>
-(cherry picked from commit c45b460d16f991ff3f753623f3423e1adc4077a2)
+Fixes: 848a0503422d043 "migration: Update error description outside migration.c"
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260304212303.667141-2-vsementsov@yandex-team.ru
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+(cherry picked from commit d41ce10d0f5a3d6e497e4b75807a8e675033c597)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
-index 922f6dd963..d7187e006d 100644
---- a/hw/uefi/var-service-vars.c
-+++ b/hw/uefi/var-service-vars.c
-@@ -629,6 +629,9 @@ uefi_vars_mm_lock_variable(uefi_vars_state *uv, mm_header *mhdr,
-     if (mhdr->length < length) {
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
-+    if (sizeof(*pe) + lv->name_size > UINT16_MAX) {
-+        return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-+    }
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index 4d28364f7b..fccd030dfd 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -539,6 +539,9 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+                 } else {
+                     ret = inner_field->info->put(f, curr_elem, size,
+                                                  inner_field, vmdesc_loop);
++                    if (ret < 0) {
++                        error_setg(errp, "put failed");
++                    }
+                 }
  
-     uefi_trace_variable(__func__, lv->guid, name, lv->name_size);
+                 written_bytes = qemu_file_transferred(f) - old_offset;
+@@ -551,8 +554,8 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+                 }
  
+                 if (ret) {
+-                    error_setg(errp, "Save of field %s/%s failed",
+-                                vmsd->name, field->name);
++                    error_prepend(errp, "Save of field %s/%s failed: ",
++                                  vmsd->name, field->name);
+                     if (vmsd->post_save) {
+                         vmsd->post_save(opaque);
+                     }
 -- 
 2.47.3
 
