@@ -4,49 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 835D0CD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 15:15:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B6BCCD4851
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 15:29:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMopE-0006EU-5x; Tue, 12 May 2026 11:15:12 -0400
+	id 1wMp2H-0000j0-Gc; Tue, 12 May 2026 11:28:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1wMop8-00063E-S1; Tue, 12 May 2026 11:15:07 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wMp2F-0000iX-VS
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 11:28:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1wMop4-000785-M3; Tue, 12 May 2026 11:15:06 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 99FC3A1279;
- Tue, 12 May 2026 17:14:46 +0200 (CEST)
-Message-ID: <9be52b33-9a28-41ca-896c-a41b5558864c@proxmox.com>
-Date: Tue, 12 May 2026 17:14:45 +0200
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wMp2E-0005to-05
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 11:28:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778599716;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=8pQF14ofNAcwxkve/3UOvGTfXI+c/lfYQNMueaHZfw4=;
+ b=O/Vtvs2HsULXCBkIEkrHn1AXzgUS6a7JxTywcP66hNAgRuwadqVpEDRUBCv5Ix75spK0L4
+ utw2nsAJoE+MvGKH1BeMXPp+2UiodAu2GST+V/mJdciX5lgiUF5MfUXeVtEumaV+5A5ijx
+ tJPmETwktl/pei3rUwnk8dF1jjPVqh8=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-90-uVMlcukxO5uiy1fgt_ImAQ-1; Tue, 12 May 2026 11:28:34 -0400
+X-MC-Unique: uVMlcukxO5uiy1fgt_ImAQ-1
+X-Mimecast-MFC-AGG-ID: uVMlcukxO5uiy1fgt_ImAQ_1778599714
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-8b55b5aa8c7so132070656d6.0
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 08:28:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1778599714; x=1779204514; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=8pQF14ofNAcwxkve/3UOvGTfXI+c/lfYQNMueaHZfw4=;
+ b=B8dG7MYG8DQJKJsWEU0t8AYi2I0wdMNxciTkVew3bi0nDMvvXdgIznOA0iFh940NX1
+ fYsdj5WWCuO9e2DU8t9oMrNQW+1i/KxQGVBn1Wf7C9inw+dwmKfZ8mXf6P9WHb8L4qKF
+ M2CnCgmRYZ4SuPaUSvkxJKfUsYiGaXVhEHzctW/j1kxNS8J8fgql+Y02vHvb7anxZttX
+ QeMJpvTcsecj5Y65RGStPUompPIxTAo4bEUnLLYGSN3YbU2XNiV8yAeCY//3NslGD44Y
+ OxCbqCuyTCcFj6hBk3ZQly0/3gu1hO8mazk5NxKRs3Cu9jZJeTfZ2pxl6cenvxcB4Nv2
+ bL7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778599714; x=1779204514;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8pQF14ofNAcwxkve/3UOvGTfXI+c/lfYQNMueaHZfw4=;
+ b=PGMvlkSKqbY4smvZKVI6nUswDdjgue+7tfLcMjLI6cCtoU+qiHP66JD8X/S9d7OT5E
+ mBdYvpjXu36jFEuhaAGtpE4gPFMP527Poe1KrLMOcCLs3s2/yk5BuAFuYQ/EjXfz48eO
+ GChlKPh+8j/y4TnLaMnVxGiTZC3wFoomdTSZsXUUQIrgTvGOrYBEgn9RtxAofcTiqRXW
+ cjuH/6CVb/2XPv2M9zQ5FeP1mae0ksJ7ddScYzFgRBFhVv89C9d6IjRF7WyPymTW1XEY
+ H8Jsqq6z+MoioPSNQHTRij6wo6cB/ax76CNxwxhaNCCLMchTl6XdZpOmUZwdzhJmG1Iq
+ QOYw==
+X-Gm-Message-State: AOJu0YyRwMm0GyFbq0s6UQTPSrZo9nSxntR3DYLaYRuEawRSPcIgXhbX
+ 1hjfK8pkrJOGYVI278d7EuEJot6mxglhx5qbhW6p5Vsq1sn06UDyUDkvQyFU5cP1pURHJr5qwxv
+ fONStGVLRy8ngAlLDHKsf4EzlCZlTnZz+RfoMXEhDL8x2cPvCcUtne9GP
+X-Gm-Gg: Acq92OFz2L+MMDhvRZ/35M05u57LvVDH6m3PYwBnp5WcGWdIIROd2C73LkZlJMreB05
+ eEroA2ZBmomZiMT1yE+gwy+h+lVfRrLKRvZWDr3T3BBHyUsOKD/Y2AaPNIjD/d9wznK4Aody3Sy
+ oONScTPW/+o6MR7wKi9yL3Ezu+6GCgM397NS+kG9BwsVAScW71o5D4/m/39U467HoRXnPCeIxnC
+ RJbtiSXMn/pAAobfKNZV6WiD+5BQfdkiiqlBPmjOOAgBI+PWwCROIQrWKMQOr9CRN+JoNQiaA7U
+ YrgStjkrovQLIE6dlWExbM/mavmN8s6qYvh6bAFLE/7diXFT/9T59Q4/rpZK4pffGZWMSLI7bhQ
+ hQG9L0EHVAutrhFhskF4HpFx5gb6pukULaeSJJTFxP7zWU4k=
+X-Received: by 2002:a0c:f105:0:b0:8ae:6835:11a2 with SMTP id
+ 6a1803df08f44-8c660f0a847mr41637616d6.9.1778599714068; 
+ Tue, 12 May 2026 08:28:34 -0700 (PDT)
+X-Received: by 2002:a0c:f105:0:b0:8ae:6835:11a2 with SMTP id
+ 6a1803df08f44-8c660f0a847mr41637186d6.9.1778599713613; 
+ Tue, 12 May 2026 08:28:33 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8bf88247a3csm122696016d6.11.2026.05.12.08.28.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 May 2026 08:28:33 -0700 (PDT)
+Date: Tue, 12 May 2026 11:28:31 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Aadeshveer Singh <aadeshveer07@gmail.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de
+Subject: Re: [PATCH] [migration] Replace current_migration with
+ migrate_get_current()
+Message-ID: <agNHH9p8oYp4g97Y@x1.local>
+References: <20260512095959.736285-2-aadeshveer07@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 17/28] fuse: Manually process requests (without libfuse)
-To: Hanna Czenczek <hreitz@redhat.com>, qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>
-References: <20260310162622.333137-1-kwolf@redhat.com>
- <20260310162622.333137-18-kwolf@redhat.com>
- <2493d422-d58a-4409-aee4-e932a4e0a73c@proxmox.com>
- <8ec42109-4123-4cc7-a55e-9aa2576a791c@redhat.com>
- <d5c3d3da-5102-4bdc-87bc-9733fb0cbf09@redhat.com>
-Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <d5c3d3da-5102-4bdc-87bc-9733fb0cbf09@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1778598773306
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260512095959.736285-2-aadeshveer07@gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,124 +114,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Hanna,
+On Tue, May 12, 2026 at 03:30:00PM +0530, Aadeshveer Singh wrote:
 
-Am 08.05.26 um 3:11 PM schrieb Hanna Czenczek:
-> On 08.05.26 15:06, Hanna Czenczek wrote:
->> On 08.05.26 13:55, Fiona Ebner wrote:
->>> Dear maintainers,
->>>
->>> Am 10.03.26 um 6:37 PM schrieb Kevin Wolf:
->>>> From: Hanna Czenczek <hreitz@redhat.com>
->>>>
->>>> Manually read requests from the /dev/fuse FD and process them, without
->>>> using libfuse.  This allows us to safely add parallel request
->>>> processing
->>>> in coroutines later, without having to worry about libfuse internals.
->>>> (Technically, we already have exactly that problem with
->>>> read_from_fuse_export()/read_from_fuse_fd() nesting.)
->>>>
->>>> We will continue to use libfuse for mounting the filesystem;
->>>> fusermount3
->>>> is a effectively a helper program of libfuse, so it should know best
->>>> how
->>>> to interact with it.  (Doing it manually without libfuse, while doable,
->>>> is a bit of a pain, and it is not clear to me how stable the "protocol"
->>>> actually is.)
->>>>
->>>> Take this opportunity of quite a major rewrite to update the Copyright
->>>> line with corrected information that has surfaced in the meantime.
->>>
->>> a colleague ran into another issue with a fuse export, this time in
->>> combination with virt-fw-vars and bisecting points to this patch.
->>> Before commit a94a1d7699 ("fuse: Manually process requests (without
->>> libfuse)") the reproducer [0] completes successfully, after that
->>> commit it hangs at [1]. The issue is still present with current
->>> master. I can dig into the details next week.
->>
->> On my system, virt-fw-vars opens the file with O_TRUNC (after “INFO:
->> writing raw edk2 varstore...”). It then tries to write to the file,
->> but this returns a short write because the export is not marked as
->> growable, and for some reason, the write is infinitely retried instead
->> of aborting on ret=0 (which should indicate ENOSPC for writes).
->>
->> Using growable=true makes it work.  (For me :))
->>
->> For some reason, before said commit, libfuse just did not pass that
->> truncate on. I’ll look into why exactly, but so far I would say the
->> FUSE export behavior is as I would expect it.
+For subject, please use "migration: " as prefix.
+
+> Replaces the direct accesses to global variable `current_migration`
+> with `migrate_get_current()` to ensure safety and
+> consistency across systems.
+
+Safety shouldn't be a major concern, but maybe it helps consistency.
+
 > 
-> Ah, I see. libfuse sets FUSE_CAP_ATOMIC_O_TRUNC, which has O_TRUNC be
-> passed on as an open option, but the old export code just ignored all
-> open options.
+> Note: Following this only direct access to `current_migration` will be
+> * `migrate_get_current()` itself
+> * `migration_object_init()` initializes `current_migration`
+> * `migration_is_running()`, as there might be a case where this function
+>   is called by a thread before object initialization
 > 
-> The new code does not set that option, so O_TRUNC is executed as an
-> explicit truncate by the kernel, which then *is* executed.
-
-thank you for digging into it!
-
-> I’m not entirely sure how we should handle it. There is a case to be
-> made that with growable=off, it may make sense to ignore O_TRUNC (which
-> requires turning on FUSE_CAP_ATOMIC_O_TRUNC again and then continue to
-> ignore it). But on the other hand, O_TRUNC is O_TRUNC, and growable=off
-> does not explicitly mean “please behave as much as a block device as
-> possible”.
+> Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
+> ---
+>  migration/migration.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
 > 
-> What do you suggest?
+> diff --git a/migration/migration.c b/migration/migration.c
+> index ecc69dc4d2..f3a96b1949 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -321,7 +321,7 @@ void migration_object_init(void)
+>  
+>      current_incoming->exit_on_error = INMIGRATE_DEFAULT_EXIT_ON_ERROR;
+>  
+> -    migration_object_check(current_migration, &error_fatal);
+> +    migration_object_check(migrate_get_current(), &error_fatal);
 
-It turns out that the missing FUSE_ATOMIC_O_TRUNC flag also regresses
-exports from block devices, making open() with O_TRUNC fail with
-EOPNOTSUPP [0], which worked before. Intuitively to me, growable=off
-feels like it should imply "shrinkable=off" as well.
+IMHO we can still keep this one as-is, when in obj init path.
 
-My suggestions would be one of the following, with a preference for 2.:
+>  
+>      ram_mig_init();
+>      dirty_bitmap_mig_init();
+> @@ -385,7 +385,7 @@ void migration_shutdown(void)
+>       * stop the migration using this structure
+>       */
+>      migration_cancel();
+> -    object_unref(OBJECT(current_migration));
+> +    object_unref(OBJECT(migrate_get_current()));
 
-1. Always set FUSE_ATOMIC_O_TRUNC
+Maybe keep this one too?  Just to pair with the init function.
 
-  Most backwards compatible. There is the issue that O_TRUNC does not
-  apply when it's actually a file, which is surprising.
-
-2. Set FUSE_ATOMIC_O_TRUNC if growable=off
-
-  Feels natural to me. People using growable=on with block device based
-  exports are still affected by the change in behavior.
-
-3. Set FUSE_ATOMIC_O_TRUNC if driver not file-based
-
-  What should be the exact condition to consider the driver
-  not file-based? Here, O_TRUNC for a growable=off file-based export
-  does apply, which feels surprising to me. Continues breaking the use
-  I reported this issue for, requiring using growable=on in such cases.
-
-4. Set FUSE_ATOMIC_O_TRUNC if growable=off or if driver not file-based
-
-  Similar to 2., but reduces cases affected by the change in behavior.
-
-Best Regards,
-Fiona
-
-[0]:
-
-> #!/bin/bash
+>  
+>      /*
+>       * Cancel outgoing migration of dirty bitmaps. It should
+> @@ -1029,7 +1029,7 @@ bool migration_is_running(void)
+>  
+>  static bool migration_is_active(void)
+>  {
+> -    MigrationState *s = current_migration;
+> +    MigrationState *s = migrate_get_current();
+>  
+>      return (s->state == MIGRATION_STATUS_ACTIVE ||
+>              s->state == MIGRATION_STATUS_POSTCOPY_DEVICE ||
+> @@ -1634,7 +1634,7 @@ bool migration_in_bg_snapshot(void)
+>  
+>  bool migration_thread_is_self(void)
+>  {
+> -    MigrationState *s = current_migration;
+> +    MigrationState *s = migrate_get_current();
+>  
+>      return qemu_thread_is_self(&s->thread);
+>  }
+> @@ -3062,7 +3062,7 @@ static MigThrError postcopy_pause(MigrationState *s)
+>  
+>  void migration_file_set_error(int ret, Error *err)
+>  {
+> -    MigrationState *s = current_migration;
+> +    MigrationState *s = migrate_get_current();
+>  
+>      WITH_QEMU_LOCK_GUARD(&s->qemu_file_lock) {
+>          if (s->to_dst_file) {
+> -- 
+> 2.54.0
 > 
-> rm /tmp/export.fuse
-> lvremove lvm/test
-> 
-> touch /tmp/export.fuse
-> lvcreate -n test --size 1M lvm
-> 
-> (
-> ./storage-daemon/qemu-storage-daemon \
->     --blockdev raw,node-name=node0,file.driver=host_device,file.filename=/dev/lvm/test \
->     --export fuse,id=exp0,mountpoint=/tmp/export.fuse,node-name=node0,writable=true \
->     --chardev socket,id=qmp,path=/run/qsd.qmp,server=on,wait=off \
->     --monitor chardev=qmp,mode=control
-> ) &
-> 
-> sleep 1 # too lazy to do proper synchronization for the reproducer here
-> 
-> python3 -c 'open("/tmp/export.fuse", "wb")'
-> echo '{"execute": "qmp_capabilities"}{"execute": "quit"}' | socat - /run/qsd.qmp
 
+-- 
+Peter Xu
 
 
