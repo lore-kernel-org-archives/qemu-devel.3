@@ -4,137 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AE63CD37BE
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 03:04:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DA80CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 03:08:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMdP9-0001po-JZ; Mon, 11 May 2026 23:03:31 -0400
+	id 1wMdTI-0002cP-LP; Mon, 11 May 2026 23:07:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wMdP8-0001pU-32
- for qemu-devel@nongnu.org; Mon, 11 May 2026 23:03:30 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wMdP6-0005OT-4s
- for qemu-devel@nongnu.org; Mon, 11 May 2026 23:03:29 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64BK6mCG2519102
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 03:03:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- z+XsWQ7nko0Af8QGLq9Mlr5ixuicRmUTn5hD6akSd6Y=; b=Oet3SJuK1pMK4//7
- lzu2D37kK1AgXoNaXIaHGcEkdVXKObL4sdYsVK+ynEVGal9Bm9M8/F57Z8WRd5wl
- 1goLuW+/k9IybnGZkxCh56SncBx/NBQlD9FXWwvuxwQXkmo0gzjF256m5eIMBsEG
- BrYtftc4414xA0Vy+8M0eLkGAaN1feWOWdkE0vLkOxoOPPqxcpD+8dKeJ45hd9fV
- HNw1/8i9a+ZhVkoS7HVv9wnC+2a5gC/g5cJ4VAArjXPthXxvYR9bWffVmTP0cfNh
- bec14E6XIr+XH7aDeN2JseNckWVjGMqNC/2ZW/SIYk47piPV3P9q0k2RXFvZ+dW3
- d/eBFw==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e3nv1h6te-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 03:03:26 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-2f485961555so9131615eec.1
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 20:03:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wMdTH-0002c1-1M
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 23:07:47 -0400
+Received: from mail-qt1-x844.google.com ([2607:f8b0:4864:20::844])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wMdTE-0007ZF-RR
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 23:07:46 -0400
+Received: by mail-qt1-x844.google.com with SMTP id
+ d75a77b69052e-50fbd79350dso47108971cf.3
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 20:07:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778555005; x=1779159805; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=z+XsWQ7nko0Af8QGLq9Mlr5ixuicRmUTn5hD6akSd6Y=;
- b=gStEZjrWZav2k22BQBOy5mOV/Rt3F42XXgZ0wLuAFsaWx8RxGbLL5uH4gf6vkcxfE4
- Z4vQbzR9J946pazDBtpv7+JpeJUHOiEH+qjSgvC/Dk0xj0eVHDX7XLDz2x1WTCp6a1ng
- CM9HFUkHuAQWDJAZFQEbHGaC9cNh+WT+U0Dk8dL16vXGlWDINUwJUoNsigt9AgftMf8D
- NRTI8OccOJv2yJq+j303yjGx2QwOSCAs+VYbuhmIWS8vJz1Ab1khIL/jUNDZwVCrzkS3
- Mb3BqZEP3rE9eifnLQmqqGZ0LENyzc2B7h0XvQd6LkuBa3WNNR/3ZS6+F6aOCb7Fsjqe
- ySsw==
+ d=gmail.com; s=20251104; t=1778555264; x=1779160064; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=WxQtEpqi73DG/9KEsGNu1/q6QbGQO2MxaHaPEf6FI2I=;
+ b=klOxJKGeevAK+wWPNMK1FgYAWVgzHvQQiskCjcYbLGVHVzVOrvTPJ6gXeZIKwcmHOJ
+ 6RgtmxB+YQ0McDNc5IfjEG0DObNc4Olfzfku0amKBK4IJ6wUcIkYWHfI+VG1SBtIl7m8
+ TeaN9T3yFQVv3i1bFMSCBy/O/ICoAHV7WuBrI6CbskHh6gCe3gA2DUYYFglqhIrWeQR3
+ YNStyAEWDymmiQET0OmIu06KIt1PP/7mYUD4wbLbg7lduQHcwhmqZQ62HNo2Izs7neVV
+ /aGX10P+ZKPnRkpBsDsnC5ItAStDKZU1+zFj7rELkMm39tPwLDoy1Yxju4pAjS403FRu
+ 5FFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778555005; x=1779159805;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=z+XsWQ7nko0Af8QGLq9Mlr5ixuicRmUTn5hD6akSd6Y=;
- b=NxlDpL6oGQcI6GvLs5X+pBBEvHb0fSYhncIXE6ayGUqO4CXQfsCUgUkApTE0enoE/h
- BHFVPUqAKMPfi6h1L8hBM5UT8iEagaia2mZBX9SVHHyRcveHWctdwb4TFJ+yziYn0Ar6
- JKFwIWPAy2JwolG+KeZi50IPSkOFanFVO5Vk3TruJIl/2tt5puoxZTkVEdbAAWR9VjU/
- r2qMU3LIGMIeTLr8Vnr8WlYp2OuGCj/kBt2P1y6Hiy4sQat/L7Vz1ixdU6lms914O/SU
- p+WaR29srnq+hLvN2b+Lchd73VrWjArXq/jl5TvIkUlCBPn5nO4bevZ9WMz84SW8oyLz
- sXZw==
-X-Gm-Message-State: AOJu0YwY/kI/wUAMx7JHx3ecq54adbHqMciVU9VP61ifP6z0F+uzqSUf
- fQQh4CotLActhsl0UAS9SsUOmtPJPw0mdkrwkeYkiOmbW+Pa9lAt2n89wZrEbWaPS1T4RcGhWEG
- wUoBV8pkeodB4cXee3VQaU9rVqXdiefZi83MV22V+UJtdQgIsYkwZHRKfKg==
-X-Gm-Gg: Acq92OGjoieOUVBMmaEU3o8rZAabfWUvtxfpTsvqf2ho8o7MnA0Yirx+wOVdg/zCyKU
- +nMCemb5ZXTD6xEgZxrrXLZiyQ45VR/Hm8gsXfSDp7Yh/gWHRNLQEp4077IcUNl8i5lm62rYmaO
- FZ3UqtcyriKZxxkC95GmukOSLWQSuw8g4vcE527FbayWwtVkRknoVGaIrZCDOCylRouu1ANt5Bw
- 04htf80U1Zr1qR4xyGl3l7RJWcUnzFULIzctFRZWyJndxEbD2rRhlm6uRsPy1R/r1lP8pDDpBE2
- Tb4ifCH7VjYoPNsQCU0nvfd1xUwGRoc4O+WqNwI3Nv8BpEA+VtmSB7mKC2MKUekQjV/Jz8l6Abw
- XrVb9rrGERSPTggo8bp7ntaJ+ahbf8dVObCRtPS9KT+seBGG20sJfD6BlQKA=
-X-Received: by 2002:a05:7300:724b:b0:2e2:a64b:63b5 with SMTP id
- 5a478bee46e88-2fb4b733e77mr5738205eec.18.1778555004653; 
- Mon, 11 May 2026 20:03:24 -0700 (PDT)
-X-Received: by 2002:a05:7300:724b:b0:2e2:a64b:63b5 with SMTP id
- 5a478bee46e88-2fb4b733e77mr5738190eec.18.1778555004065; 
- Mon, 11 May 2026 20:03:24 -0700 (PDT)
-Received: from [192.168.68.106] ([191.202.238.222])
+ d=1e100.net; s=20251104; t=1778555264; x=1779160064;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=WxQtEpqi73DG/9KEsGNu1/q6QbGQO2MxaHaPEf6FI2I=;
+ b=huhglep7McpOokfmbRWJ+vhMiLuY51Uy4YrC1IBIB2K1gZeHCnxeTSIXYzlcewfI1g
+ aUwtEF45TjVMPTYw4snKDiAbKg51uAl5peT2ZZgj0qUkZU1pfenyJoveG5sy/1Ah3mic
+ VkvvQmUH7NPoPas/4cLMIDI6YSPLkC8JCerNi3PdrR+T/uoF9+zqSr2h9F/298Ji+KIB
+ ymEJjv0y/47WLyb7apo7U0OVkzPbcLQzCYJCv7P1cjwRhqaJ5I7ARROuoluaW/gIE3HE
+ SFvXSu1EQnF63ZQVDN+24Vm/KzsZossVqYKyJGRC/MGE9e/ueZxJ6pQJVqPkJjiJXBaQ
+ n5Ag==
+X-Gm-Message-State: AOJu0YzKVWAGLA/i1dEBB2JgODaDWV3cwovGGYu7A+AfRVCGT1rNvXA2
+ f8vM4efuUT69blxHnxHhFoqxhoCizXLSXXBoor2ABIZ+sixKgd4Famxf
+X-Gm-Gg: Acq92OFjuV+l2XrCQ6Bbqed4HjPy0TiD+e6ZQdE78ODbN8Xem/rVfk/J+RvGpPNHHAp
+ 9gxGwgKO9cAiLD/MhUI/GqpcwqCYZjh7l4FNsZpQ7MV5x0ijJBELITdbzOsaN18Gp9T9mLwkuFr
+ P7xpbvjF4yhcTxIAPQ0YTBBLAykCeRFyN1xENJnoyqIhskULQM0xBcFbyoPns6H1n7s7GIgTHTY
+ i4PUuzyY9qEu4vv/0olM4wSfSgZIpJuccPa5y3HLnbkWH6WIfmUNUKW7nGRqsiRXtZy3PIhwYDo
+ G0IuCxZfmCypePTpaWbzAwhkoYx7cDPxAMjs2Vfgu7AHB3fnRQUmjLMe3EqTEQ0xjxbVPHb6qGi
+ PXaD2zRH0lJedFifBfFK0F69lptcTVpQvdGKhzTzW2QvqIBXGicvstUMcRBvZGwHkaS3bxVbCZS
+ dPPnBa0fWkXTgwcNockt/2ZRwwBsEJmnghVz3arbVqFXUv2/tl0RoybkhjA110S48yYxa+c1gE
+X-Received: by 2002:a05:622a:130e:b0:4ff:c08a:52c4 with SMTP id
+ d75a77b69052e-514a0a60df0mr189084301cf.18.1778555263399; 
+ Mon, 11 May 2026 20:07:43 -0700 (PDT)
+Received: from ZEVORN-PC.localdomain ([162.244.208.119])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2f8893441absm21571258eec.31.2026.05.11.20.03.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 May 2026 20:03:23 -0700 (PDT)
-Message-ID: <652e680f-d623-47dc-9964-4e258213f571@oss.qualcomm.com>
-Date: Tue, 12 May 2026 00:03:20 -0300
+ d75a77b69052e-5148e830ddfsm106489541cf.27.2026.05.11.20.07.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 11 May 2026 20:07:43 -0700 (PDT)
+Date: Tue, 12 May 2026 11:07:30 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>, 
+ Cleber Rosa <crosa@redhat.com>
+Subject: Re: [RFC PATCH v2 07/10] .agents/skills: add qemu-mail-thread skill
+Message-ID: <agKYkWa_SUp0Zo0F@ZEVORN-PC.localdomain>
+References: <20260511170500.124211-1-alex.bennee@linaro.org>
+ <20260511170500.124211-8-alex.bennee@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/13] target/riscv: remove riscv_cpu_* arrays
-To: Chao Liu <chao.liu.zevorn@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com
-References: <20260511132910.1738069-1-daniel.barboza@oss.qualcomm.com>
- <agKIuzJdhI6P4dmt@ZEVORN-PC.localdomain>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <agKIuzJdhI6P4dmt@ZEVORN-PC.localdomain>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: OYgLboCy9YnelQv46y9UwZXIqTSCUcbE
-X-Proofpoint-ORIG-GUID: OYgLboCy9YnelQv46y9UwZXIqTSCUcbE
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEyMDAyNiBTYWx0ZWRfXwX5OdE8eeaGy
- oDNfPreo+wg5cac3fo0pIhCiLWyxhKEiwk2pWmAcUwCgU9pOapeDPNLCcVpm3z8b5+cgRRWTtqG
- wshrcFUFvfxlUH+UbY/FCdFBDelNR13C0A01Q9rFSx18w3x0EE2tAtUyLeY+68+DSq8PWd+qHXK
- pCajV7X35UST2xoFczCnv0qVJokzk0ldOoSoNGguvsvbcsz/9JlGJwTA8geaIqXOavNliBbK8v+
- zSEJ4HLfQGlzr/p6nO4iCspJlt35N5y4UX68z3TwIO1iX+FDj4CAyF70t3UAdWQrANcd/tGXusu
- oouqi7YrUs9+s2OjRqXQEF1CE9K7nmkV2SqI/+BT3p1+sG5WsuJkVj9UZ8mdqJdiJCrS9XrETa2
- QeebtypyMv2+7uHa/SvtgvJnSE+rbge4V0yqy5jNKTSmuLndsnz3ViezAgIc81/sJAgyRBS97LM
- LX4pyQ51jyyJBspF7gQ==
-X-Authority-Analysis: v=2.4 cv=c6ebhx9l c=1 sm=1 tr=0 ts=6a02987e cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=etEqFfc6qwXwpI8uT8rzbw==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=Ab8Id7SuDGbAHyMYYi8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PxkB5W3o20Ba91AHUih5:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-11_05,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0 lowpriorityscore=0 priorityscore=1501
- impostorscore=0 bulkscore=0 malwarescore=0 spamscore=0 suspectscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605050000
- definitions=main-2605120026
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+In-Reply-To: <20260511170500.124211-8-alex.bennee@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::844;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-qt1-x844.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -151,104 +102,199 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 5/11/2026 11:07 PM, Chao Liu wrote:
-> Hi Daniel,
-> On Mon, May 11, 2026 at 10:28:57AM -0300, Daniel Henrique Barboza wrote:
->> Hi everyone,
->>
->> We have been dealing with two sources of extensions information in
->> target/riscv/cpu.c:
->>
->> - isa_edata_arr[]: an array that we must keep in riscv,isa ordering that
->>    also has priv_spec info;
->> - riscv_cpu_* arrays: used to set user properties and set defaults for
->>    rv32/rv64, among other users across the code.
->>
->> The main issue here is the info being duplicated across arrays.  When
->> adding new extensions we go through a ritual of adding basically the
->> same stuff in both isa_edata_arr[] and riscv_cpu_extensions[].  We can
->> eventually forget to do all steps of that dance, resulting in patch 1.
->>
->> The second issue is a desire for less abstractions.  An extension is
->> something that we report in riscv,isa, that might be exposed to users or
->> not, that might be a vendor or an experimental ext.  All these
->> distinctions don't require multiple distinct arrays.
->>
->> I also made an effort to start moving away from the 'named features'
->> stuff we have going on.  A 'named feature' is just an extension that
->> most of the time isn't exposed to users, most of the time represents
->> innate TCG behavior, and sometimes have a different enable mechanism
->> aside from setting a flag to 'true'.  None of that is exclusive to this
->> class of extensions therefore I believe we should move away from it
->> over time.
->>
->> There are more design simplifications I want to do in cpu.c and with CPUs
->> in general, but for now we can enjoy less lines to maintain.
->>
->> Patches based on alistair/riscv-to-apply.next.
->>
-> I’m seeing some compile errors after applying these patches on top of commit
-> 0844c21f24ca (target/riscv: Update MISA.X for non-standard extensions) from
-> alistair/riscv-to-apply.next.
+Hi Alex,
+On Mon, May 11, 2026 at 06:04:56PM +0100, Alex Bennée wrote:
+> Teach agents how to fetch and deal with archives of mail threads.
+> 
+> Just YOLO'ing the entire mail thread into an LLM context is quite
+> expensive especially if reviewing a thread against your current tree
+> state. This skill allows the agent to extract just the comments and
+> tags saving tokens.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > 
 > ---
-> ../target/riscv/tcg/tcg-cpu.c: In function ‘riscv_cpu_update_misa_x’:
-> ../target/riscv/tcg/tcg-cpu.c:1158:11: error: unknown type name ‘RISCVCPUMultiExtConfig’; did you mean ‘RISCVCPUConfig’?
->   1158 |     const RISCVCPUMultiExtConfig *arr = riscv_cpu_vendor_exts;
->        |           ^~~~~~~~~~~~~~~~~~~~~~
->        |           RISCVCPUConfig
-> ../target/riscv/tcg/tcg-cpu.c:1158:41: error: ‘riscv_cpu_vendor_exts’ undeclared (first use in this function)
->   1158 |     const RISCVCPUMultiExtConfig *arr = riscv_cpu_vendor_exts;
->        |                                         ^~~~~~~~~~~~~~~~~~~~~
-> ../target/riscv/tcg/tcg-cpu.c:1158:41: note: each undeclared identifier is reported only once for each function it appears in
-> ../target/riscv/tcg/tcg-cpu.c:1160:27: error: request for member ‘name’ in something not a structure or union
->   1160 |     for (int i = 0; arr[i].name != NULL; i++) {
->        |                           ^
-> ../target/riscv/tcg/tcg-cpu.c:1161:43: error: request for member ‘offset’ in something not a structure or union
->   1161 |         if (isa_ext_is_enabled(cpu, arr[i].offset)) {
->        |                                           ^
-> [1658/2250] Compiling C object libqemu-riscv64-softmmu.a.p/target_riscv_vector_helper.c.o
-> ninja: build stopped: subcommand failed.
+> v2
+>   - rename to qemu-mail-thread
+>   - add instructions on fetching threads via b4
+>   - refactor the metadata handling in the script
+>   - mention in AGENTS skill list
 > ---
+>  .agents/skills/qemu-mail-thread/SKILL.md      | 34 +++++++
+>  .../scripts/qemu_mail_parser.py               | 98 +++++++++++++++++++
+>  AGENTS.md                                     |  1 +
+>  3 files changed, 133 insertions(+)
+>  create mode 100644 .agents/skills/qemu-mail-thread/SKILL.md
+>  create mode 100644 .agents/skills/qemu-mail-thread/scripts/qemu_mail_parser.py
 > 
-> Maybe try rebasing again and fixing it.
+> diff --git a/.agents/skills/qemu-mail-thread/SKILL.md b/.agents/skills/qemu-mail-thread/SKILL.md
+> new file mode 100644
+> index 00000000000..58e7c833a27
+> --- /dev/null
+> +++ b/.agents/skills/qemu-mail-thread/SKILL.md
+> @@ -0,0 +1,34 @@
+> +# QEMU Mail Thread
+> +
+> +This skill helps you fetch and extract reviewer comments from QEMU mailing list threads. It can handle standard `mbox` files (e.g., from `b4 mbox`) or raw text dumps from the user.
+> +
+OpenAI Codex (v0.129.0-alpha.2) shows a warning when loading this skill:
 
-Thanks for catching this up!  Guess I somehow missed this change from
-Alistair's branch.
+⚠ Skipped loading 1 skill(s) due to invalid SKILL.md files.
 
-I'll send a v2.  Thanks,
-Daniel
+⚠ /home/zevorn/qemu/.agents/skills/qemu-mail-thread/SKILL.md: missing YAML frontmatter delimited by ---
 
+I suggest adding a check-skill script that validates skill format.
+
+Thanks,
+Chao
+> +## How to fetch a mail thread
+> +
+> +If you have a Message-ID (e.g., from a patch series), use `b4` to fetch the entire thread:
+> +
+> +```bash
+> +b4 mbox <message-id>
+> +```
+> +
+> +This will typically save an `.mbx` file in your current directory.
+> +
+> +## How to parse comments
+> +
+> +Use the included Python script to extract feedback, filtering out quoted text and diffs.
+> +
+> +```bash
+> +python .agents/skills/qemu-mail-thread/scripts/qemu_mail_parser.py <path_to_mail_thread_file>
+> +```
+> +
+> +The script automatically detects whether the input is a standard mbox or a raw text dump.
+> +
+> +## Expected Output
+> +The script generates `parsed_comments.txt` in the current working directory:
+> +```
+> +--- REPLY FROM Reviewer Name <email@example.com> ---
+> +Subject: Re: [PATCH 01/10] ...
+> +Comment text here...
+> +============================================================
+> +```
+> +
+> +Use this structured text to efficiently analyze the feedback and identify outstanding suggestions.
+> diff --git a/.agents/skills/qemu-mail-thread/scripts/qemu_mail_parser.py b/.agents/skills/qemu-mail-thread/scripts/qemu_mail_parser.py
+> new file mode 100644
+> index 00000000000..fdaac57ac15
+> --- /dev/null
+> +++ b/.agents/skills/qemu-mail-thread/scripts/qemu_mail_parser.py
+> @@ -0,0 +1,98 @@
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +import sys
+> +import os
+> +import mailbox
+> +
+> +
+> +def is_metadata_line(line):
+> +    """Check if a line is metadata (quotes, diff, etc.)"""
+> +    return (line.startswith(">") or
+> +            line.startswith("---") or
+> +            line.startswith("diff "))
+> +
+> +
+> +def parse_raw_text(text, output_f):
+> +    # Split by the separator used in lore.kernel.org / b4 dumps
+> +    messages = text.split("----------------------------------------")
+> +    for msg in messages:
+> +        if not msg.strip(): continue
+> +
+> +        lines = msg.strip().split('\n')
+> +        author = ""
+> +        subject = ""
+> +        body_start = 0
+> +        for i, line in enumerate(lines):
+> +            if line.startswith("From: "): author = line[6:]
+> +            if line.startswith("Subject: "): subject = line[9:]
+> +            if not line.strip() and body_start == 0:
+> +                body_start = i + 1
+> +                break
+> +
+> +        is_reply = subject and ("Re: " in subject or subject.startswith("Re:"))
+> +
+> +        if is_reply and author != "" and not author.startswith("qemu-devel"):
+> +            output_f.write(f"--- REPLY FROM {author} ---\nSubject: {subject}\n")
+> +
+> +            for line in lines[body_start:]:
+> +                if not is_metadata_line(line):
+> +                    output_f.write(line + "\n")
+> +            output_f.write("="*60 + "\n\n")
+> +
+> +
+> +def parse_mbox(mbox_path, output_f):
+> +    mbox = mailbox.mbox(mbox_path)
+> +    for message in mbox:
+> +        subject = message['subject']
+> +        if subject and 'Re: ' in subject:
+> +            author = message['from']
+> +            output_f.write(f"--- REPLY FROM {author} ---\nSubject: {subject}\n")
+> +
+> +            payload = message.get_payload()
+> +            body = ""
+> +            if isinstance(payload, list):
+> +                # Handle multipart
+> +                for part in payload:
+> +                    if part.get_content_type() == 'text/plain':
+> +                        body = part.get_payload(decode=True).decode('utf-8', errors='ignore')
+> +                        break
+> +            else:
+> +                body = message.get_payload(decode=True).decode('utf-8', errors='ignore')
+> +
+> +            # Simple heuristic to extract comments
+> +            for line in body.split('\n'):
+> +                if line.strip() and not is_metadata_line(line.strip()):
+> +                    output_f.write(line + "\n")
+> +            output_f.write("="*60 + "\n\n")
+> +
+> +
+> +def main():
+> +    if len(sys.argv) < 2:
+> +        print("Usage: python qemu_mail_parser.py <mail_thread_file>")
+> +        sys.exit(1)
+> +
+> +    input_file = sys.argv[1]
+> +    output_file = "parsed_comments.txt"
+> +
+> +    if not os.path.exists(input_file):
+> +        print(f"Error: File not found - {input_file}")
+> +        sys.exit(1)
+> +
+> +    with open(output_file, "w", encoding="utf-8") as out_f:
+> +        # Detect if it's an mbox or raw text
+> +        with open(input_file, 'rb') as f:
+> +            header = f.read(15)
+> +            is_mbox = header.startswith(b'From mboxrd@z ')
+> +
+> +        if is_mbox:
+> +            print(f"Parsing {input_file} as mbox...")
+> +            parse_mbox(input_file, out_f)
+> +        else:
+> +            print(f"Parsing {input_file} as raw text dump...")
+> +            with open(input_file, "r", encoding="utf-8", errors='ignore') as f:
+> +                text = f.read()
+> +            parse_raw_text(text, out_f)
+> +
+> +    print(f"Done. Extracted comments saved to {output_file}")
+> +
+> +if __name__ == "__main__":
+> +    main()
+> diff --git a/AGENTS.md b/AGENTS.md
+> index fbbc3b65ed0..d99d3078378 100644
+> --- a/AGENTS.md
+> +++ b/AGENTS.md
+> @@ -28,6 +28,7 @@ You should use the following specialized skills for common tasks:
+>  - `qemu-build`: For configuring and building QEMU (including debug and sanitizer builds).
+>  - `qemu-testing`: For finding, listing, and running individual tests (Unit, QTest, Functional, TCG).
+>  - `qemu-code-reviewer`: For pulling and applying patch series from mailing lists.
+> +- `qemu-mail-thread`: For analyzing and parsing mailing list threads.
+>  
+>  ## Source Code Layout (see `docs/devel/codebase.rst`)
+>  - **`accel/`**: Hardware accelerators (KVM, TCG, HVF, Xen, etc.) and architecture-agnostic acceleration code.
+> -- 
+> 2.47.3
 > 
-> Thanks,
-> Chao
->> Daniel Henrique Barboza (13):
->>    target/riscv/cpu.c: add xlrbr isa_edata_arr[] entry
->>    target/riscv/cpu.c: fix smctr/ssctr isa_edata_arr[] order
->>    target/riscv: make riscv-qmp-cmds use isa_data_arr[]
->>    target/riscv/tcg: treat all exts equally in
->>      cpu_disable_priv_spec_isa_exts
->>    target/riscv/tcg: use only isa_edata_arr[] in cpu_cfg_ext_get_name()
->>    target/riscv/cpu.c: remove riscv_cpu_enable_named_feat()
->>    target/riscv: remove riscv_cpu_named_features[]
->>    target/riscv/kvm: use isa_edata_arr[] for unavailable props
->>    target/riscv/tcg: use isa_edata_arr[] to enable max exts
->>    target/riscv/tcg: use cfg_offset as cpu_set_multi_ext cb opaque
->>    target/riscv: do not set defaults in cpu prop callback
->>    target/riscv/tcg: use isa_edata_arr[] to create user props
->>    target/riscv/cpu: remove riscv_cpu_* arrays
->>
->>   target/riscv/cpu.c            | 315 ++++++++++++----------------------
->>   target/riscv/cpu.h            |  12 +-
->>   target/riscv/kvm/kvm-cpu.c    |  25 ++-
->>   target/riscv/riscv-qmp-cmds.c |  30 +---
->>   target/riscv/tcg/tcg-cpu.c    | 137 ++++-----------
->>   5 files changed, 153 insertions(+), 366 deletions(-)
->>
->> -- 
->> 2.43.0
->>
-
+> 
 
