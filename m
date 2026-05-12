@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 112C4CD37AC
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 04:44:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52FEFCD37BE
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 04:44:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMeyG-0006Mx-1e; Tue, 12 May 2026 00:43:53 -0400
+	id 1wMeyG-0006My-1O; Tue, 12 May 2026 00:43:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1wMexp-0006He-Jr
- for qemu-devel@nongnu.org; Tue, 12 May 2026 00:43:26 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1wMexq-0006Ht-Th
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 00:43:27 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1wMexm-00076K-Az
- for qemu-devel@nongnu.org; Tue, 12 May 2026 00:43:25 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2ba4a1a0325so35875125ad.0
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 21:43:21 -0700 (PDT)
+ id 1wMexo-00076n-01
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 00:43:26 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2ba928852a5so33270005ad.1
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 21:43:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778561000; x=1779165800; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778561002; x=1779165802; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=konCHW8lvM+pkBpHalqNVGWKkcAXDmRlJyrbHkVFMjo=;
- b=R9k1vz1MDICwPrIl8YkqxvSu0r8aLe7HyoTbxfdYf3L2ann05kxY8GteUs96/8XWhk
- glSQhC4SKxnMrJF4a8iEsKkP3Wx57b/qeGmFAkQjf8ydCBLlZn+D0+e8Ht4HVYgnuiAp
- MYQqhYO1YHIDQWMJ6JiSxNpYTyGa5V5hODbCcZN0NEAA2UIDUsEAAiG6chY7RHXrFyso
- vW/rPK2esemA/+qcvaHb5BkOI94kLRmA+psMnupl+6c+sqbqga6XypRw0SGsfWTCFMRR
- QUnOtyY4SGamWe+l+yxAstwpGP5QEnDH+X+sQ0xBuFlu8o5x7RDLTlNvukTvSxJIuF8T
- oFfw==
+ bh=uenl0enR9nzgcOfC5e4ACNKv62NFjpchkb2UC2eCaLo=;
+ b=jmCM2x8EE1cnePqD0xRqfPVx8jgaFclB2DS/O9vYgnNzIl4M6VQQIrCpqToHt/Toa+
+ vNLRSd7s/LHNchexImYKGBzwEDKQp+eXerXxlVod0urTR+ofMef4MzBO2b8d7ebw5RkA
+ YNEAHuIL5zBAE7P33omyasV09nk5uUr02zT6T2btxgZp34e31RwdfNdq2Jt+JGTx6y+D
+ CROflfNvqz98RUnELK5vIz/y5zCPLfWgZaRLEvVhAI/5I15/h/utFpxedxhaxdR5sF1/
+ TO86lcNH56ewkUsiKKPu0+ThAPrsosi/LNGbcfCFLziGv15tv6+GN4BWyvvrLnH3rNNg
+ 4Izg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778561000; x=1779165800;
+ d=1e100.net; s=20251104; t=1778561002; x=1779165802;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=konCHW8lvM+pkBpHalqNVGWKkcAXDmRlJyrbHkVFMjo=;
- b=QlW8n4m8MixRJ6kqD0rWQLj4pkYX7Pdshy21DJqkXms8IoXh2WB2WnOanPYKn/hB9v
- Y/oTd10+EIcHvy8AQs83oKJ64qkwxHIaWkr+Z6nfCwriGmKrY4shj2ZsoE3NAwO1H7Hv
- bpCit8jHa30z2FGBHE6USJwQJNqZzZrHr3aSr1wJfq3e4lRWyEgVmwUCfpYKs1InsrGE
- g3Qo+dEvgggxLCnHj2ZAg/OdWh0Bh/bLNyWyJFuBr/jBUwd4SHtj6YtNZ8FjeiqE2HDe
- +/Z+LoKQPtkWZnMhBFvm05XOuseWTtDJQwU4J27/8D2Jwf0vBQRIac2gGV4ytfH2I/ks
- jgyA==
-X-Gm-Message-State: AOJu0Yxs3XH1vMX1WEkgd0l1MyjUG6j8lmZuoGAHE+4lgD1/yTlFnMye
- pef8C25Nho+q+gwSfgeJF9hjxnr6sctRj/0VMJENMy8bg7ydDhBHoX2fSK3bRA==
-X-Gm-Gg: Acq92OEU2jrjP99G5bjEZl+GU4cEpFtHqb4/Gu2ywYZsbF6taAabRo2+Bp2J8l37nGd
- 4lrwvE9gioHxGp9GhE3Xp3A941NcWHCXYGXim7VQ4xB+CYs2H+NVtKZslt7wtpV+d3tSb/TUhrg
- raSOvqw+oJvghKSiedVoB0Hnu48kOBtohRSL+kGlX5WWVvGyqcm/KwM8ovNzWGJJJWMn1uN/57k
- s3nmtbwOa/UDY7tRdB1LVPqLBXMd9uCB6AchzsuRy6twf12wLhthD4ws3MCU6hoDjGetci6vsk6
- 4eNlLLduUXAA0GNNNkyPvRrL3JKOQDhO2etnUzeuHQaUE/TLoABR3QDyHtpI8yrBqVjahe+2z1Z
- Djpl5jasC56arcZqhPu9iO4JXjm+yv+6O23kN20OW6/6N7Sbih2a6aXRiWJegdzOrPzE1CGIJXN
- iUMYxyUThh0MNNNJHa4C4lGrRYiu7p
-X-Received: by 2002:a17:902:b187:b0:2bc:cf07:9244 with SMTP id
- d9443c01a7336-2bccf079339mr50852375ad.2.1778560999730; 
- Mon, 11 May 2026 21:43:19 -0700 (PDT)
+ bh=uenl0enR9nzgcOfC5e4ACNKv62NFjpchkb2UC2eCaLo=;
+ b=oMrYvS6yuuMbtXt2nSE0SGWO6V7xpMds13MFKyf3y8oykecTR4Y1R0yW7lDGNWMVpG
+ DAjT76098LQm/EURm4konzM6sI/AR8WfsjGF9JdyzQ1tenJ3BeeshMuiIoXIqFNHtRKg
+ TwDUdaYX9x4FoDtv0g1ypGkuv4x8ZQZEN3iq1tLoY5C4SWXkpW+ovigZoLHgi6PbFiDN
+ kIYcTA+Dg9EY61k0LTgsROqMeWXMDkU+VYPL5Vdb2vmDzKN/huAqHvqpmmHC/49LyOCf
+ vJerZSPd11v83Z/XMfLqSXzqLLOLJ1aEp9Zee+oY/NTVS+q3ECRfunpHxtzd/fws21V5
+ b3zA==
+X-Gm-Message-State: AOJu0YyVVKNMYgZ5OYsp1xcOwrpzYT9rj4M3JAxjyjhKtc8pAdAaZt+9
+ QIVJYYnG1B7g5pOgH7QK+um5bpCwGhhWntmYCbl7yhWYNX9l8YeXZ3B/dztKuw==
+X-Gm-Gg: Acq92OHDY1t9AyooPr3U/Vfcm/fXgF387kijUY2G+WZGQiPfXIDFebiXtr9c4j7TUuj
+ bG0VOCFtsDJTHvtVJrYbVa81CTYGTZak/IsviTHqru7NpO2P9Fbu+dXraM2vl8CKwj25XxdkJZj
+ vdBBRl45O9VUGlVgMMo81v8y9XCBM3HatuNSbvV9eWf+AX1Y/vg9splcvdg+PbQWOkqw1zaf9nm
+ qk8NwIk8G7F1nOP0YsVehcuxIjQ0BZQfrGqczz9ivCrr8Rf3p9Y7ESi4NXXRohFEgqSx/V5GkE5
+ f9ZUBA/B0d6grigjDXo+bgOTACQtqPPYtZW6nLxUA+HlakXYwxGHTbzEWplWLOaDpGKVbYawJ3j
+ KSt74Jho+615Ii9nW9OIiSU0cKeb45fXJuXpB2lKMi5xuUQdadL3UshajgYcEY2KavAAtGFitfW
+ 9dtl8M07J3ykoLzGTAs8jtioUi945U
+X-Received: by 2002:a17:903:1ab0:b0:2b2:a267:784a with SMTP id
+ d9443c01a7336-2bc7aa20417mr132376525ad.24.1778561001570; 
+ Mon, 11 May 2026 21:43:21 -0700 (PDT)
 Received: from jeuk-MS-7D42.. ([211.226.54.223])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2baf1ebe7f1sm108938215ad.78.2026.05.11.21.43.17
+ d9443c01a7336-2baf1ebe7f1sm108938215ad.78.2026.05.11.21.43.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 May 2026 21:43:19 -0700 (PDT)
+ Mon, 11 May 2026 21:43:21 -0700 (PDT)
 From: Jeuk Kim <jeuk20.kim@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com, qemu-block@nongnu.org, qemu-stable@nongnu.org,
  jeuk20.kim@samsung.com, j-young.choi@samsung.com
-Subject: [PULL 3/5] hw/ufs: Reject zero-depth MCQ queues
-Date: Tue, 12 May 2026 13:42:53 +0900
-Message-ID: <4a909c00b9e18478e67a792c7f7cfae62cb6c865.1778560533.git.jeuk20.kim@samsung.com>
+Subject: [PULL 4/5] hw/ufs: Keep MCQ SQs alive while requests are outstanding
+Date: Tue, 12 May 2026 13:42:54 +0900
+Message-ID: <619c2da19a05668dabe7912afb789e50b8635c4d.1778560533.git.jeuk20.kim@samsung.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1778560533.git.jeuk20.kim@samsung.com>
 References: <cover.1778560533.git.jeuk20.kim@samsung.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,94 +102,125 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jeuk Kim <jeuk20.kim@samsung.com>
 
-Reject SQATTR.SIZE and CQATTR.SIZE values that produce zero-entry MCQ
-queues. Such queues can later trigger a divide-by-zero while advancing
-queue pointers.
+MCQ requests are allocated with their SQ, but can remain in flight on the
+CQ list or in the SCSI layer after leaving the SQ free list.
+
+Reject runtime SQ deletion while any request is still outstanding, and
+use separate teardown helpers so device exit can still release MCQ
+queues after child devices have been unrealized.
 
 Fixes: 5c079578d2e ("hw/ufs: Add support MCQ of UFSHCI 4.0")
 Cc: qemu-stable@nongnu.org
 Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
 ---
- hw/ufs/trace-events |  2 ++
- hw/ufs/ufs.c        | 18 ++++++++++++++++--
- 2 files changed, 18 insertions(+), 2 deletions(-)
+ hw/ufs/trace-events |  1 +
+ hw/ufs/ufs.c        | 49 ++++++++++++++++++++++++++++++++++++++-------
+ 2 files changed, 43 insertions(+), 7 deletions(-)
 
 diff --git a/hw/ufs/trace-events b/hw/ufs/trace-events
-index 531dcfc686..7734b35f08 100644
+index 7734b35f08..6f7ea9c95f 100644
 --- a/hw/ufs/trace-events
 +++ b/hw/ufs/trace-events
-@@ -40,10 +40,12 @@ ufs_err_mcq_db_wr_invalid_sqid(uint8_t qid) "invalid mcq sqid %"PRIu8""
- ufs_err_mcq_db_wr_invalid_db(uint8_t qid, uint32_t db) "invalid mcq doorbell sqid %"PRIu8", db %"PRIu32""
- ufs_err_mcq_create_sq_invalid_sqid(uint8_t qid) "invalid mcq sqid %"PRIu8""
- ufs_err_mcq_create_sq_invalid_cqid(uint8_t qid) "invalid mcq cqid %"PRIu8""
-+ufs_err_mcq_create_sq_invalid_size(uint8_t qid) "invalid mcq sq size for sqid %"PRIu8""
+@@ -44,6 +44,7 @@ ufs_err_mcq_create_sq_invalid_size(uint8_t qid) "invalid mcq sq size for sqid %"
  ufs_err_mcq_create_sq_already_exists(uint8_t qid) "mcq sqid %"PRIu8 "already exists"
  ufs_err_mcq_delete_sq_invalid_sqid(uint8_t qid) "invalid mcq sqid %"PRIu8""
  ufs_err_mcq_delete_sq_not_exists(uint8_t qid) "mcq sqid %"PRIu8 "not exists"
++ufs_err_mcq_delete_sq_busy(uint8_t qid) "mcq sqid %"PRIu8" has outstanding requests"
  ufs_err_mcq_create_cq_invalid_cqid(uint8_t qid) "invalid mcq cqid %"PRIu8""
-+ufs_err_mcq_create_cq_invalid_size(uint8_t qid) "invalid mcq cq size for cqid %"PRIu8""
+ ufs_err_mcq_create_cq_invalid_size(uint8_t qid) "invalid mcq cq size for cqid %"PRIu8""
  ufs_err_mcq_create_cq_already_exists(uint8_t qid) "mcq cqid %"PRIu8 "already exists"
- ufs_err_mcq_delete_cq_invalid_cqid(uint8_t qid) "invalid mcq cqid %"PRIu8""
- ufs_err_mcq_delete_cq_not_exists(uint8_t qid) "mcq cqid %"PRIu8 "not exists"
 diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index 1819ba2e8a..4ccd7aa64d 100644
+index 4ccd7aa64d..6548f0f637 100644
 --- a/hw/ufs/ufs.c
 +++ b/hw/ufs/ufs.c
-@@ -506,6 +506,8 @@ static bool ufs_mcq_create_sq(UfsHc *u, uint8_t qid, uint32_t attr)
-     UfsMcqReg *reg = &u->mcq_reg[qid];
-     UfsSq *sq;
-     uint8_t cqid = FIELD_EX32(attr, SQATTR, CQID);
-+    uint16_t qsize =
-+        ((FIELD_EX32(attr, SQATTR, SIZE) + 1) << 2) / sizeof(UfsSqEntry);
+@@ -556,6 +556,31 @@ static bool ufs_mcq_create_sq(UfsHc *u, uint8_t qid, uint32_t attr)
+     return true;
+ }
  
-     if (qid >= u->params.mcq_maxq) {
-         trace_ufs_err_mcq_create_sq_invalid_sqid(qid);
-@@ -527,12 +529,17 @@ static bool ufs_mcq_create_sq(UfsHc *u, uint8_t qid, uint32_t attr)
-         return false;
-     }
- 
-+    if (!qsize) {
-+        trace_ufs_err_mcq_create_sq_invalid_size(qid);
-+        return false;
++static bool ufs_mcq_sq_has_outstanding_req(UfsSq *sq)
++{
++    UfsRequest *req;
++    uint16_t free_reqs = 0;
++
++    QTAILQ_FOREACH(req, &sq->req_list, entry)
++    {
++        free_reqs++;
 +    }
 +
-     sq = g_malloc0(sizeof(*sq));
-     sq->u = u;
-     sq->sqid = qid;
-     sq->cq = u->cq[cqid];
-     sq->addr = ((uint64_t)reg->squba << 32) | reg->sqlba;
--    sq->size = ((FIELD_EX32(attr, SQATTR, SIZE) + 1) << 2) / sizeof(UfsSqEntry);
-+    sq->size = qsize;
- 
-     sq->bh = qemu_bh_new_guarded(ufs_mcq_process_sq, sq,
-                                  &DEVICE(u)->mem_reentrancy_guard);
-@@ -576,6 +583,8 @@ static bool ufs_mcq_create_cq(UfsHc *u, uint8_t qid, uint32_t attr)
++    return free_reqs != sq->size;
++}
++
++static void ufs_mcq_free_sq(UfsSq *sq)
++{
++    qemu_bh_delete(sq->bh);
++
++    for (int i = 0; i < sq->size; i++) {
++        ufs_clear_req(&sq->req[i]);
++    }
++
++    g_free(sq->req);
++    g_free(sq);
++}
++
+ static bool ufs_mcq_delete_sq(UfsHc *u, uint8_t qid)
  {
-     UfsMcqReg *reg = &u->mcq_reg[qid];
-     UfsCq *cq;
-+    uint16_t qsize =
-+        ((FIELD_EX32(attr, CQATTR, SIZE) + 1) << 2) / sizeof(UfsCqEntry);
+     UfsSq *sq;
+@@ -572,9 +597,12 @@ static bool ufs_mcq_delete_sq(UfsHc *u, uint8_t qid)
  
-     if (qid >= u->params.mcq_maxq) {
-         trace_ufs_err_mcq_create_cq_invalid_cqid(qid);
-@@ -587,11 +596,16 @@ static bool ufs_mcq_create_cq(UfsHc *u, uint8_t qid, uint32_t attr)
-         return false;
-     }
+     sq = u->sq[qid];
  
-+    if (!qsize) {
-+        trace_ufs_err_mcq_create_cq_invalid_size(qid);
+-    qemu_bh_delete(sq->bh);
+-    g_free(sq->req);
+-    g_free(sq);
++    if (ufs_mcq_sq_has_outstanding_req(sq)) {
++        trace_ufs_err_mcq_delete_sq_busy(qid);
 +        return false;
 +    }
 +
-     cq = g_malloc0(sizeof(*cq));
-     cq->u = u;
-     cq->cqid = qid;
-     cq->addr = ((uint64_t)reg->cquba << 32) | reg->cqlba;
--    cq->size = ((FIELD_EX32(attr, CQATTR, SIZE) + 1) << 2) / sizeof(UfsCqEntry);
-+    cq->size = qsize;
++    ufs_mcq_free_sq(sq);
+     u->sq[qid] = NULL;
+     return true;
+ }
+@@ -617,6 +645,12 @@ static bool ufs_mcq_create_cq(UfsHc *u, uint8_t qid, uint32_t attr)
+     return true;
+ }
  
-     cq->bh = qemu_bh_new_guarded(ufs_mcq_process_cq, cq,
-                                  &DEVICE(u)->mem_reentrancy_guard);
++static void ufs_mcq_free_cq(UfsCq *cq)
++{
++    qemu_bh_delete(cq->bh);
++    g_free(cq);
++}
++
+ static bool ufs_mcq_delete_cq(UfsHc *u, uint8_t qid)
+ {
+     UfsCq *cq;
+@@ -640,8 +674,7 @@ static bool ufs_mcq_delete_cq(UfsHc *u, uint8_t qid)
+ 
+     cq = u->cq[qid];
+ 
+-    qemu_bh_delete(cq->bh);
+-    g_free(cq);
++    ufs_mcq_free_cq(cq);
+     u->cq[qid] = NULL;
+     return true;
+ }
+@@ -1884,12 +1917,14 @@ static void ufs_exit(PCIDevice *pci_dev)
+ 
+     for (int i = 0; i < ARRAY_SIZE(u->sq); i++) {
+         if (u->sq[i]) {
+-            ufs_mcq_delete_sq(u, i);
++            ufs_mcq_free_sq(u->sq[i]);
++            u->sq[i] = NULL;
+         }
+     }
+     for (int i = 0; i < ARRAY_SIZE(u->cq); i++) {
+         if (u->cq[i]) {
+-            ufs_mcq_delete_cq(u, i);
++            ufs_mcq_free_cq(u->cq[i]);
++            u->cq[i] = NULL;
+         }
+     }
+ }
 -- 
 2.43.0
 
