@@ -4,47 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C160CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:06:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19DCECD4F24
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:06:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuHz-0008Rk-2z; Tue, 12 May 2026 17:05:16 -0400
+	id 1wMuI9-0001Fb-OR; Tue, 12 May 2026 17:05:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuHl-0007lV-9E; Tue, 12 May 2026 17:05:01 -0400
+ id 1wMuHI-0005x9-0J; Tue, 12 May 2026 17:04:32 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuHi-0000ca-Op; Tue, 12 May 2026 17:05:00 -0400
+ id 1wMuHG-0000KM-D2; Tue, 12 May 2026 17:04:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619280; bh=NcJd8nN8udITBb8kuubjKg36rc3x3Tj18jI98dI1A5o=;
+ t=1778619279; bh=YQmwLk+vRBI6splGcyyvXUTSOTFLsL68b5MyI8XXBH8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=luZkXaLOh2NsSqC6gh+9G67uXSTzsuU9AXOqbTxXyh1Y6+ORtmXqyXmoTBvgN0NBS
- lQcFBxjiAxfnCSjqCcP/jlZJO926W2jNJVdLmBIdEsV/uB+wrzXB6YaclGgeCUKxVL
- QmCqxe9EzxhX2PzI6Uhld2PKh/mIphPhW8NkhmOkfyjFZtjyzOcmRWNE6p1HuejMWi
- S3mWCpExmpsWK0pWlTCVim/3WFHruSDESsbmRfq/ZLqKRLIrmFte6ydJPnN60wFYS/
- b+fc3x6W7ZP2uPldjpiVSfJiXdY/961XL0vmYyRMQwYmpuPB9UKDvCKFB47kpUtNH+
- D9igGeuFPvi6g==
+ b=vhwHwb85bbmNtcVBO57tVDvzrJdsDR52xR0aESzZyEaHo/VWujsyrHSa8aROIOo+u
+ KnlmCxxq02q6XYHr2DisFcWF5q7XqWUtR5tkq0nqXwKNDv7z7PhO/AxzDFaswFHpfF
+ sshhw9KmalWdI7queP0tvikq4KREKkrBjSunjVARPU94lUMOo192rrC6BVmND8NKqn
+ dkCaL2DJSd+bcKlVD8dolKiKn03WW/Esg8pguSQs80u1u4fKB078LTMJ35fg6KC7G0
+ EDumZj0kGZ817xhWky1lv/SvHEhvLwqu+ME7e3c/+hN9NaclYglXnHRoRbDWpNcKja
+ PySW5jkX1E3lQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1D4D61AA332;
- Tue, 12 May 2026 23:54:40 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id BA9271AA32D;
+ Tue, 12 May 2026 23:54:39 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2912B3ABCA3;
- Tue, 12 May 2026 23:54:44 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C7E783ABC9E;
+ Tue, 12 May 2026 23:54:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Katherine Leaver <katherine.j.leaver@gmail.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 102/107] hw/uefi: fix buffer overruns
-Date: Tue, 12 May 2026 23:54:29 +0300
-Message-ID: <20260512205437.360850-102-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?=E5=AE=8B=E6=96=87=E6=AD=A6?= <iyzsong@member.fsf.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 097/107] hw/net/allwinner-sun8i-emac: Flush queued
+ packets when rx is enabled
+Date: Tue, 12 May 2026 23:54:24 +0300
+Message-ID: <20260512205437.360850-97-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -53,7 +55,7 @@ X-Spam_score: -2.0
 X-Spam_bar: --
 X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,78 +71,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: 宋文武 <iyzsong@member.fsf.org>
 
-The buffer size checks do not consider the mm_header size, simliar to
-CVE-2026-5744.  Factor out the repeated size check to a small helper
-function, fix the check, update all places to use the new helper.
+The RX_CTL_0 register includes the RX_EN receive-enable bit,
+which allwinner_sun8i_emac_can_receive() checks. That means that
+if the guest sets it we need to call qemu_flush_queued_packets()
+as we might now be able to handle them.
 
-Fixes: CVE-2026-41435
-Fixes: db1ecfb473ac ("hw/uefi: add var-service-vars.c")
-Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260422092910.444997-2-kraxel@redhat.com>
-(cherry picked from commit f252769a23e67765f9b95d8944ca3da6c9edf58b)
+This fixes a bug where networking didn't work in u-boot on the
+orangepi-pc machine.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3459
+Signed-off-by: 宋文武 <iyzsong@member.fsf.org>
+Message-id: 20260430040753.3337-1-iyzsong@envs.net
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+[PMM: expanded commit message, removed unneeded RX_EN test]
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit a7f27d6903b30bcea21c46986cb7507edcbc970c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
-index 27421c6e2d..82ff4e429a 100644
---- a/hw/uefi/var-service-vars.c
-+++ b/hw/uefi/var-service-vars.c
-@@ -260,6 +260,17 @@ static size_t uefi_vars_mm_error(mm_header *mhdr, mm_variable *mvar,
-     return sizeof(*mvar);
- }
- 
-+static bool check_buffer_size(uefi_vars_state *uv, uint64_t length)
-+{
-+    /* uefi_vars_cmd_mm() checks that */
-+    g_assert(uv->buf_size >= sizeof(mm_header));
-+
-+    if (uv->buf_size - sizeof(mm_header) < length) {
-+        return false;
-+    }
-+    return true;
-+}
-+
- static size_t uefi_vars_mm_get_variable(uefi_vars_state *uv, mm_header *mhdr,
-                                         mm_variable *mvar, void *func)
- {
-@@ -307,7 +318,7 @@ static size_t uefi_vars_mm_get_variable(uefi_vars_state *uv, mm_header *mhdr,
-     if (uadd64_overflow(length, va->data_size, &length)) {
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
--    if (uv->buf_size < length) {
-+    if (!check_buffer_size(uv, length)) {
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
- 
-@@ -377,7 +388,7 @@ uefi_vars_mm_get_next_variable(uefi_vars_state *uv, mm_header *mhdr,
-     }
- 
-     length = sizeof(*mvar) + sizeof(*nv) + var->name_size;
--    if (uv->buf_size < length) {
-+    if (!check_buffer_size(uv, length)) {
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
- 
-@@ -567,7 +578,7 @@ static size_t uefi_vars_mm_variable_info(uefi_vars_state *uv, mm_header *mhdr,
-     uint64_t length;
- 
-     length = sizeof(*mvar) + sizeof(*vi);
--    if (uv->buf_size < length) {
-+    if (!check_buffer_size(uv, length)) {
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
- 
-@@ -588,7 +599,7 @@ uefi_vars_mm_get_payload_size(uefi_vars_state *uv, mm_header *mhdr,
-     uint64_t length;
- 
-     length = sizeof(*mvar) + sizeof(*ps);
--    if (uv->buf_size < length) {
-+    if (!check_buffer_size(uv, length)) {
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
- 
+diff --git a/hw/net/allwinner-sun8i-emac.c b/hw/net/allwinner-sun8i-emac.c
+index 5adb41dc46..5c1b75897d 100644
+--- a/hw/net/allwinner-sun8i-emac.c
++++ b/hw/net/allwinner-sun8i-emac.c
+@@ -727,6 +727,9 @@ static void allwinner_sun8i_emac_write(void *opaque, hwaddr offset,
+         break;
+     case REG_RX_CTL_0:          /* Receive Control 0 */
+         s->rx_ctl0 = value;
++        if (allwinner_sun8i_emac_can_receive(nc)) {
++            qemu_flush_queued_packets(nc);
++        }
+         break;
+     case REG_RX_CTL_1:          /* Receive Control 1 */
+         s->rx_ctl1 = value | RX_CTL1_RX_MD;
 -- 
 2.47.3
 
