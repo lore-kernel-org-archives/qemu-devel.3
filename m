@@ -4,48 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68A6CCD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:05:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFC20CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:05:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuD7-0004lO-TI; Tue, 12 May 2026 17:00:14 -0400
+	id 1wMuGA-0001UL-5y; Tue, 12 May 2026 17:03:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuCG-0002dl-9k; Tue, 12 May 2026 16:59:21 -0400
+ id 1wMuDu-0006vg-Nx; Tue, 12 May 2026 17:01:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuC8-0004u0-KD; Tue, 12 May 2026 16:59:16 -0400
+ id 1wMuDs-0006M4-OR; Tue, 12 May 2026 17:01:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619276; bh=spMSY34vA7lTKqGmhvsZ7COBnm2jw9smcsjabY4pbwQ=;
+ t=1778619277; bh=v3SUpINWlqo+e3uyV/6RfKqswv5vmvgIs7RRwaHysZo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=w90I72TY2Ydd+Noxil8q0NZBNdBnbqkhw3Git17yVZrdy/Y1vq7wTZXJ1K28Uamoe
- bwvy9aZ7QC+fa9uvtg1HTSWNbkEyoUn1t1C3ILOxUVeT3UQkT71ble0WdkYgonH8c9
- z/LkEFvqfjeGj9tgGRmh4ILMy1hcPsgvSZG32CYhYDKIDI1hlZbDHnywGxiu8+t/GS
- 9T+tyb+43kq6jl+ZkT53FqlnitUOXX4AXZqnEmWtTgI4yrfdXRJMc6UTT7tSW2mjtb
- z4rLMO0a7DlcJtnV17wzNc0maitAeE/NbZEkzYX8p62ivi55/4leWiKwUzQgKFxDL7
- tMONtiqqp9lGQ==
+ b=OXzLhxrnOCnG+AZtUKo0FAO7sQeBInByWyKPA37+7ei5d/0rB1V7imB5PMpnhRCq4
+ uH15rIAZg2aKyuzEJq3v2Ckqo3rDO0Ujpwqn4a3ITMv2RhztmXp1xm0mw2micC9Msi
+ YFWhucq0syr9cw6E+sLvx/myFwHNqkWleCeTosHHPoFj+7Sqt22/OVmsg314NKyFyy
+ skYVvsyRWpdWEnLAZ5HC3rM4KaScJ9atML37CP3ZrO4lm6wbIc48zd8ESu2QJLjg1Z
+ +RxQ6k84OQc85564ZxId1EMmnqmRUXmYIDJM5k09NnR5ETH6sERfeMvI3zAF7P/it2
+ oOZW7QDKZlQNQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 32FFD1AA2F9;
- Tue, 12 May 2026 23:54:36 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AD4951AA30D;
+ Tue, 12 May 2026 23:54:37 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3F5C73ABC6A;
- Tue, 12 May 2026 23:54:40 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B831C3ABC7E;
+ Tue, 12 May 2026 23:54:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Clayton Craft <craftyguy@postmarketos.org>,
- Helge Deller <deller@gmx.de>, Peter Maydell <peter.maydell@linaro.org>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 045/107] linux-user: fix name_to_handle_at when
- AT_HANDLE_MNT_ID_UNIQUE flag is set
-Date: Tue, 12 May 2026 23:53:32 +0300
-Message-ID: <20260512205437.360850-45-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 065/107] hw/display: don't accidentally autofree
+ existing virgl resources
+Date: Tue, 12 May 2026 23:53:52 +0300
+Message-ID: <20260512205437.360850-65-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,78 +73,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Clayton Craft <craftyguy@postmarketos.org>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-Linux 6.12 added AT_HANDLE_MNT_ID_UNIQUE, which indicates that mount_id
-is 64-bits. If name_to_handle_at is called with this flag set then qemu
-passes a 4 byte int to the kernel, which then tries to store 8 bytes in
-a 4 byte variable, causing a SIGSEGV[1][2].
+While sanity checking a create blob operation the use of the auto
+freed res variable could lead to inadvertently freeing an existing
+blob.
 
-This stores mount_id in a 64-bit var if the flag is set.
+Avoid this by in-lining the virtio_gpu_virgl_find_resource() check as
+the value is not needed anyway.
 
-1. https://gitlab.postmarketos.org/postmarketOS/pmaports/-/work_items/4431
-2. https://github.com/systemd/systemd/issues/41279
+While at it add a comment to the end and use g_steal_pointer to make
+it clearer the object lifetime exceeds the function bounds if we pass
+all the checks.
 
-Signed-off-by: Clayton Craft <craftyguy@postmarketos.org>
-Reviewed-by: Helge Deller <deller@gmx.de>
-Message-id: 20260325-fix-name-to-handle-at-v1-1-49fb922e6fd3@craftyguy.net
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 22966937f4130278259a79d6462d1a0887e22c6e)
+Fixes: CVE-2026-6502
+Fixes: 7c092f17cce (virtio-gpu: Handle resource blob commands)
+Message-ID: 20260417094443.785462-1-alex.bennee@linaro.org
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-stable@nongnu.org
+Message-ID: <20260417122703.845442-1-alex.bennee@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+(cherry picked from commit 30fad722ce68316d22b926ba0e6017f0440465df)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index e6dd35d2a1..3f61dd732c 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -8040,6 +8040,9 @@ static int do_futex(CPUState *cpu, bool time64, target_ulong uaddr,
- #endif
- 
- #if defined(TARGET_NR_name_to_handle_at) && defined(CONFIG_OPEN_BY_HANDLE)
-+#ifndef AT_HANDLE_MNT_ID_UNIQUE
-+#define AT_HANDLE_MNT_ID_UNIQUE 0x001
-+#endif
- static abi_long do_name_to_handle_at(abi_long dirfd, abi_long pathname,
-                                      abi_long handle, abi_long mount_id,
-                                      abi_long flags)
-@@ -8047,6 +8050,7 @@ static abi_long do_name_to_handle_at(abi_long dirfd, abi_long pathname,
-     struct file_handle *target_fh;
-     struct file_handle *fh;
-     int mid = 0;
-+    uint64_t mid64 = 0;
-     abi_long ret;
-     char *name;
-     unsigned int size, total_size;
-@@ -8070,7 +8074,12 @@ static abi_long do_name_to_handle_at(abi_long dirfd, abi_long pathname,
-     fh = g_malloc0(total_size);
-     fh->handle_bytes = size;
- 
--    ret = get_errno(name_to_handle_at(dirfd, path(name), fh, &mid, flags));
-+    if (flags & AT_HANDLE_MNT_ID_UNIQUE) {
-+        ret = get_errno(name_to_handle_at(dirfd, path(name), fh,
-+                                          (int *)&mid64, flags));
-+    } else {
-+        ret = get_errno(name_to_handle_at(dirfd, path(name), fh, &mid, flags));
-+    }
-     unlock_user(name, pathname, 0);
- 
-     /* man name_to_handle_at(2):
-@@ -8084,8 +8093,14 @@ static abi_long do_name_to_handle_at(abi_long dirfd, abi_long pathname,
-     g_free(fh);
-     unlock_user(target_fh, handle, total_size);
- 
--    if (put_user_s32(mid, mount_id)) {
--        return -TARGET_EFAULT;
-+    if (flags & AT_HANDLE_MNT_ID_UNIQUE) {
-+        if (put_user_u64(mid64, mount_id)) {
-+            return -TARGET_EFAULT;
-+        }
-+    } else {
-+        if (put_user_s32(mid, mount_id)) {
-+            return -TARGET_EFAULT;
-+        }
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index a65fca9c62..030b329d5a 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -708,8 +708,7 @@ static void virgl_cmd_resource_create_blob(VirtIOGPU *g,
+         return;
      }
  
-     return ret;
+-    res = virtio_gpu_virgl_find_resource(g, cblob.resource_id);
+-    if (res) {
++    if (virtio_gpu_virgl_find_resource(g, cblob.resource_id)) {
+         qemu_log_mask(LOG_GUEST_ERROR, "%s: resource already exists %d\n",
+                       __func__, cblob.resource_id);
+         cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
+@@ -762,8 +761,9 @@ static void virgl_cmd_resource_create_blob(VirtIOGPU *g,
+ 
+     res->base.dmabuf_fd = info.fd;
+ 
++    /* Now live, cleaned up in virtio_gpu_virgl_resource_unref */
+     QTAILQ_INSERT_HEAD(&g->reslist, &res->base, next);
+-    res = NULL;
++    g_steal_pointer(&res);
+ }
+ 
+ static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
 -- 
 2.47.3
 
