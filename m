@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12C2CCD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:48:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3CD9CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:48:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuTV-0002sV-AS; Tue, 12 May 2026 17:17:09 -0400
+	id 1wMuRJ-0005Yl-Cf; Tue, 12 May 2026 17:14:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuSa-0001Tn-IR; Tue, 12 May 2026 17:16:16 -0400
+ id 1wMuR1-0005Ar-Sz; Tue, 12 May 2026 17:14:38 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuSX-0006Sw-Vu; Tue, 12 May 2026 17:16:12 -0400
+ id 1wMuR0-0005iD-AW; Tue, 12 May 2026 17:14:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619306; bh=F1ZjrKYiZq3Jun8XhqtVGKKyZHugcUCPVem+L/R0zQ4=;
+ t=1778619305; bh=xQ0tfYZJImVR/Vx9+Xggt87X5l9btilef0bKAkoTapc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=jtd7rAsJtPZpYTNu/rmxrrAN/8Lz0hdHZFPEibOBOyHth8i8E7QPq6ZO7XTVIAsA5
- ECvuERSP8h2u9TxQhgywzvCOF7ZdJwSAQi7DbNeZNZ/3Wele9mSGuYUq5ip2i9Th/D
- w6h9KcX+i0HYtVGUIbKmpFFvnS6tFOj4qplt3oMPoEVvcgvxg/Y+bLbYvv7W2XcOn7
- aZfDlQjzujI5qxGpJhZ1QKZa6Hhz1sX/puaABy85eKimjN1iw93tajVqiAu3ZAF7aj
- nKpDGpFH+ZzAQzJPkZOIyMk8HYIqHL/NxGe1qSEK3vet7fw2NKgCUWkgYe1Ao+yvb9
- BVUn1SHSPDnbQ==
+ b=m8C5R675P7Tz/j1IoUgS0SNsqGvPG5b5Eo9F6TOplkEfhXoIJ+1uMCz5DaOoIQqvq
+ r1UeAoPqRMg3gahVpPeaTLegf10Oxi4tH7s2Q4HhYcLgfYGDfXqBP6Xpa7dnlGkIBv
+ kwwVdtNNVsmIoW4EiNQhVBRNQiUZN2afTLRWBaqp0/TqlL3Qb8gLbhRz0yE0dqoN+r
+ pJ8H51fA0Vc7Zia+GQYK05382BCO7zFlVlpkXowizLYV0XlO2oeLYBzdXWTx+JO75W
+ uVD9lne9AyHQMy+p6HbsjJb3nLndqIkXJqACiP0qLQtzMBzXDCTp20PrPcrOK3tcuD
+ V+uK7kud0VjSg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 813141AA3A2;
- Tue, 12 May 2026 23:55:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6E84A1AA392;
+ Tue, 12 May 2026 23:55:05 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 841743ABD11;
- Tue, 12 May 2026 23:55:10 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 79B5C3ABD01;
+ Tue, 12 May 2026 23:55:09 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
- Warner Losh <imp@bsdimp.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 100/117] linux-user: Flush errors by using exit()
- instead of _exit() in error path
-Date: Tue, 12 May 2026 23:54:42 +0300
-Message-ID: <20260512205503.361097-100-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
+ Nutty Liu <nutty.liu@hotmail.com>, Helge Deller <deller@gmx.de>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 084/117] linux-user/strace: Use pointer type for read
+ and write values
+Date: Tue, 12 May 2026 23:54:26 +0300
+Message-ID: <20260512205503.361097-84-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
@@ -69,31 +70,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Alistair Francis <alistair.francis@wdc.com>
 
-Similiar to previous patch - ensure that we always flush I/O by using
-exit() instead of _exit().
+The stack pointer is being truncated as 32-bits for qemu-riscv64, so
+let's use %p to print the syscall pointer argument.
 
-Reported by: Tobias Bergkvist <tobias@bergkv.ist>
-Reviewed-by: Warner Losh <imp@bsdimp.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2544
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3238
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 9fb681792d65fa570cb3e1a769945c10bf276d25)
+(cherry picked from commit 1730e6f33f9732658b88c2e4eda257f50531ef0e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/main.c b/linux-user/main.c
-index 84e110dfe9..86d04cca3c 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -975,7 +975,7 @@ int main(int argc, char **argv, char **envp)
-                       info, &bprm);
-     if (ret != 0) {
-         printf("Error while loading %s: %s\n", exec_path, strerror(-ret));
--        _exit(EXIT_FAILURE);
-+        exit(EXIT_FAILURE);
-     }
- 
-     for (wrk = target_environ; *wrk; wrk++) {
+diff --git a/linux-user/strace.list b/linux-user/strace.list
+index 51b5ead969..eb1a414004 100644
+--- a/linux-user/strace.list
++++ b/linux-user/strace.list
+@@ -1114,7 +1114,7 @@
+ { TARGET_NR_quotactl, "quotactl" , NULL, NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_read
+-{ TARGET_NR_read, "read" , "%s(%d,%#x,%d)", NULL, NULL },
++{ TARGET_NR_read, "read" , "%s(%d,%p,%d)", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_readahead
+ { TARGET_NR_readahead, "readahead" , NULL, NULL, NULL },
+@@ -1674,7 +1674,7 @@
+                      print_syscall_ret_waitpid },
+ #endif
+ #ifdef TARGET_NR_write
+-{ TARGET_NR_write, "write" , "%s(%d,%#x,%d)", NULL, NULL },
++{ TARGET_NR_write, "write" , "%s(%d,%p,%d)", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_writev
+ { TARGET_NR_writev, "writev" , "%s(%d,%p,%#x)", NULL, NULL },
 -- 
 2.47.3
 
