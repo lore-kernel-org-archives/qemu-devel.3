@@ -4,95 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EDB8CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 10:24:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C67BCD4851
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 10:36:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMkGP-0003Xb-3m; Tue, 12 May 2026 06:22:57 -0400
+	id 1wMkSU-0007Q8-IU; Tue, 12 May 2026 06:35:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander.hansen@9elements.com>)
- id 1wMkGB-0003T1-9A
- for qemu-devel@nongnu.org; Tue, 12 May 2026 06:22:50 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wMkSQ-0007Mt-AL
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 06:35:23 -0400
+Received: from mail-dy1-x1332.google.com ([2607:f8b0:4864:20::1332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander.hansen@9elements.com>)
- id 1wMkG9-0001tQ-3r
- for qemu-devel@nongnu.org; Tue, 12 May 2026 06:22:42 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-43d77f6092eso3302821f8f.2
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 03:22:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wMkSO-00081t-4v
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 06:35:21 -0400
+Received: by mail-dy1-x1332.google.com with SMTP id
+ 5a478bee46e88-2c156c4a9efso7148082eec.1
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 03:35:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778582117; cv=none;
+ d=google.com; s=arc-20240605;
+ b=lv7LNcszxE55u/a5layhcm01GViVWo376QRNE1Nz6zMFoO48jrv1n8JCOg2fk7/+WO
+ KcnzwS2SoaVUaXHfL1Iu3+6Wt0cLgLL7RuOonSA7UeQPVMSQTjvUwi3klGyC8T7DGE4p
+ 4t8hi1PUFFsJOn/WaIMmb0G1K6hhjf4Tp6khjpWaZrBsWJtWjnCVOnYreavO0WnVbUM9
+ dblPTmvHDFJyq+iyNQMVYTXhqxiEVApLUelfLXRB1Vdug6qFYVnIAW/HnmtONlsE/bEd
+ z7XbYWJoDTglAECTlKMdTjsySVFE+yFx5jbppT7CqMBb9qPSXZFM9aZ8l7pbnbLYW1Gr
+ tvcQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=1jSO5sUdtbhpGfeikIbf6FOp9bfR3ui7oOo/GbtAWZw=;
+ fh=uGvLNvSDeW2j9plmhwgtPGPeDjgXdPgNgOS3dEsn9S4=;
+ b=iob1BUZr9NWF+Ph0W0bvZNUNEBHjY4yZPnVX2xWOPj40dgD6Dy8Cwyb2a78LExiY6c
+ WOc5HkoutVmok2pkJT4fxeIAOKr/ru+r7LBbj5KNyHp15/2gYhOKLtC1bJVmhhc7HdTf
+ gVilWhszItBHYkVYLDosyzTp0z0SwqF4JbwosEnp92OL4EBcuY9eH3Nus1TrOl7V4ysl
+ 4eS1hIdIcqFxYKfOs4Yk6wZ1pvAKSTjUS5JuiAh/81lwNhJvLbgBIgs59RVu1Z8OwGuP
+ tRNHSVgkVLwAxhbX+F2VcbwwwqdRiFnBWk/6Elp5CedfF/6eGvzYqfn4Z9PnYlBKVBi2
+ jTPw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=9elements.com; s=google; t=1778581358; x=1779186158; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1778582117; x=1779186917; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dAWrwRNP92wZKGCcLcaijfgOVAvYms7a9ZNp7Ocxxqc=;
- b=IJQmCfwHNApKYRWRp9eRePZ0KsOgYCgQ/Vc3WAywB4t1jmTgxTXU5lfvhi8/lsTVR7
- mW60ujMG25HuJbF4g6SSwr7O9HrMhOI74kH8c2rJbLHhk9J8LFj4qXzsVQ2y1pO5+vqE
- rWU0Q1Ji9RATTv42lVZSFDtcPE6Mu2bXpudVg7mqoSYh5jhTEzLudXOen2sMnOAnFG+B
- QuKq3mbStbFhT1I6jyH/0g+to1vbG+wIlnf7TgYAQXPAqbpi0ZKwjyMdK2OK0jlx0CfH
- Gv7ny9J/Y42HLJEPXccT82BE5sy7RRRYJuMi6DBzft5Lw1GIg9X1KxPea5RcnM+hg/o0
- M4Xg==
+ bh=1jSO5sUdtbhpGfeikIbf6FOp9bfR3ui7oOo/GbtAWZw=;
+ b=mdrNSNA+qVC5pOM1yyu/puVnTe7uHhL0OO/tDkve7+3U8HktSmzFHoVnh19R1VEmp/
+ XstbTYH+atSFonchqrhm0thyC2U+QxH4WG132o0KMNW4fscdpO//cvGINJQL+jxGijB+
+ VaB2u2bS0NUV1bCRKdmgpYZvUewaiaElTfH9emOVJjVVycvtkDITRcV7osKJ+213j0tj
+ F17XYoaKM229xJtRdvPkfv7vj4hzhl7dN4he1WIXOtkltU1wJRjPyu5iCy/5FVuNwQS9
+ M/idv5bRlwoIkeX3uCKmu6CxND3wi0SBK2T8XcuDBmgs2P2Y6Bd+Qil/cXNEe/gcBN3L
+ Izaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778581358; x=1779186158;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20251104; t=1778582117; x=1779186917;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=dAWrwRNP92wZKGCcLcaijfgOVAvYms7a9ZNp7Ocxxqc=;
- b=Q22xfTg4Z2hofBCiQ2haAECs12/yLhxQ/mBdU0fW+1wbhfL2JAKyTkiuUS7Yr8n1rS
- 8S//vFsRO4ZRiH31zBsi8OdmO+tymmcFHjAvv8HdeVGVMEPPGLmmTKajKEOkyjd4Flkz
- EKqFVBYjQVfykr2n7nIarQkFT9nllyRtBg0WQ2OcldaGhb6RZo9Z5lBRL4Xn2W5do/6w
- QYM8vJG3aeMA3LRn28UATQtDzcDp8WNbJIy4NiVSZ/PDi8ow6UVGU4cJWx+mqqmDh7V+
- m5STc+iguSeqOhsL0ixO0Ku3t9ZsGVnMYbbt115+sOH9TqWESLtrRI9cfuGHj8KFA2JH
- o+fQ==
-X-Gm-Message-State: AOJu0Yzr17w+ZyxjzOXxJoczWsJZ48PbZ3znuPsvBoiNMYT2760H0CuX
- CAMzNUck241OPpfdzuk2X3EkFjkuCx7DAM1/RMcB/VBm8X56SXjJjCfOToEdDGhn5h1oUfbhUtC
- hWMnVKkY=
-X-Gm-Gg: Acq92OEroo22lL5K4ssgrO1B5JkRLExXsZoQZOJ6eXuPTHGcnIoaVclbpz5niw11HpE
- 0hp60MaBjWWbm2R8QIlUajVs33VBBpAQeBncoIdiaIKHM7yc7uhYRqGpDKjqsD9pQfHoYHrroUG
- wL6QdKWMY/UyHXbp9t2oHHINsY1QToILgUnznU45XbxC8LR94zkPXis4fQeDRcisJ9nj5p6k7k1
- B34FlyRbhLse3NS9Z1JzMeeOEqjyhKQFwcEt+cti+XgLP7TqZIVb4rUjw9qmUaQDJCJyHTRFAA4
- 4iBOX1HJPOsQv/ZTun5hQo6F3QuEr1nH1/IKPyeaAfG38hdKZw2/nvkRFF2COmhtn77T+7NjaqA
- lw4ctCvzZO32ZTF0M/LZqx7zMcYS7Bci4rM463pOEfHjHk+sEj4NdqUjWREb+K2jL5YcvmsDGnU
- LGYSEmbM0G23fijxdZ89nu1DgtDV6b2+xSgxd0fRLFd6S0
-X-Received: by 2002:a05:6000:2401:b0:448:8db5:410b with SMTP id
- ffacd0b85a97d-45b14adc080mr3386647f8f.20.1778581358528; 
- Tue, 12 May 2026 03:22:38 -0700 (PDT)
-Received: from alexanderarchlinux ([188.111.3.154])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4548e6a68ebsm29991198f8f.1.2026.05.12.03.22.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 May 2026 03:22:38 -0700 (PDT)
-From: Alexander Hansen <alexander.hansen@9elements.com>
-To: qemu-devel@nongnu.org
-Cc: Alexander Hansen <alexander.hansen@9elements.com>,
- Titus Rwantare <titusr@google.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, qemu-arm@nongnu.org
-Subject: [PATCH v3 2/5] ast2600: yosemite4 functional test
-Date: Tue, 12 May 2026 12:20:37 +0200
-Message-ID: <20260512102157.176511-3-alexander.hansen@9elements.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260512102157.176511-1-alexander.hansen@9elements.com>
-References: <20260512102157.176511-1-alexander.hansen@9elements.com>
+ bh=1jSO5sUdtbhpGfeikIbf6FOp9bfR3ui7oOo/GbtAWZw=;
+ b=bpibzqJOqntRG5HFWMb8DWB8SnbhzkiHqGcDLWCYMsbDau9AQtUQtdeioVvpw27X6+
+ pEKIjg6WfhXlxaoS0amhdWLWJelUyuiYqS1AnbKr+SHJqczGpw0LltV9uJXplu3dS8pD
+ ujL1nbjOeTfbvbhiC/xNWGTSWh+1KpKbYHHgq6FloHPMpaSHCOVYESRab69dOQjveHOf
+ rSzOJkbcOsnUgbo+dbBmnIRU7c/SEGQgjTPTp5EqSrL6Pn41Bz004etnyeXsTjek2udI
+ mP7YGKOcVca9ipgYLoPsNLR+ZQ6OZRz4Jn/OP8NrWr6iFjAjdTE111HZjuoTL8O5D7R6
+ 2Feg==
+X-Gm-Message-State: AOJu0YzP1/x95s+Xi/lfLqrB8rQyojZcDrfxH2/D1JzQqP48e8qIuAAv
+ 8WkJVBOr+tqMvmOJDtgBkVDIXI3oyvutU1jpm3hFx7+CFU6HsetT3mTsj487f020BcGnwHLyRbV
+ /kE2/yvwfbqBSfXeNMOs/J+xXUexOQ4w=
+X-Gm-Gg: Acq92OGr0ahftCfEgdqwB8FAybt2Pfezh3l7nlWVvY+ZWGBpxqQETlM9D+yErp5sS7n
+ y7YLXt7YbksV82IkBtRChTekAUJlKG2tBWMYmREczccvkUNH7dZD7S3Fs5we8Gaa7mBwcYqV2gj
+ JGOetCfbJHrS+otNrRA2diwLTG9opayvJ45RcHr/HUunwC4cDoD/ayXP+sPuKLFj5bsBZ1OzWWg
+ IGk1vilc8EdqAbOjOGZQNppFlY/frUv4vOQpurhadQkrpDyCqXsNB+taJb8q1NTKUdyoVKaKD97
+ BcDZaHTimUcDImQMBDup1A7VZeha1MQVZ1VckEw=
+X-Received: by 2002:a05:693c:2c01:b0:2de:c5ca:c1e8 with SMTP id
+ 5a478bee46e88-2f54d696d50mr13406287eec.4.1778582116981; Tue, 12 May 2026
+ 03:35:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=alexander.hansen@9elements.com; helo=mail-wr1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+References: <20260512095543.459949-1-berrange@redhat.com>
+In-Reply-To: <20260512095543.459949-1-berrange@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 12 May 2026 14:35:04 +0400
+X-Gm-Features: AVHnY4Iazosim9Buv204B5tL5Q1XwSZWI7_Bl7DxtHvh3V8wQQsMP1F2oJDr1Zw
+Message-ID: <CAJ+F1CJcoOegJ6xyCztHKH31y7hnEXKE2b8r=GZi3cz7P8_mGg@mail.gmail.com>
+Subject: Re: [PATCH] ui: fix validation of VNC extended clipboard data length
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Feifan Qian <bea1e@proton.me>, 
+ Heechan Kang <gganji11@naver.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1332;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1332.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,103 +117,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tested: functional test passed.
+On Tue, May 12, 2026 at 1:57=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+>
+> From: Heechan Kang <gganji11@naver.com>
+>
+> QEMU's VNC extended clipboard handler inflates a client-controlled
+> compressed clipboard payload. The code checks the declared text size
+> against the total inflated buffer size:
+>
+>     if (tsize < size)
+>
+> but then copies from:
+>
+>     tbuf =3D buf + 4;
+>     qemu_clipboard_set_data(..., tsize, tbuf, true);
+>
+> The correct bound is the remaining data length after the 4-byte length
+> field, not the total inflated buffer length.
+>
+> As a result, a VNC client can make QEMU copy up to 3 bytes past the end
+> of the inflated heap buffer. With a second VNC client, those copied
+> bytes are observable through the normal VNC extended clipboard PROVIDE
+> path.
+>
+> Fixes: CVE-2026-8343
+> Reported-by: Heechan Kang <gganji11@naver.com>
+> Reported-by: Feifan Qian <bea1e@proton.me>
+> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Signed-off-by: Heechan Kang <gganji11@naver.com>
+> [DB: added #include and 'return' statements]
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
-export QEMU_TEST_QEMU_BINARY=qemu-system-arm
-./build/run tests/functional/arm/test_aspeed_fby4.py
-TAP version 13
-ok 1 test_aspeed_fby4.YosemiteV4Machine.test_arm_ast2600_yosemitev4_openbmc
-1..1
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-Cc: Titus Rwantare <titusr@google.com>
-Cc: "Cédric Le Goater" <clg@kaod.org> (maintainer:ASPEED BMCs)
-Cc: Peter Maydell <peter.maydell@linaro.org> (maintainer:ASPEED BMCs)
-Cc: Steven Lee <steven_lee@aspeedtech.com> (reviewer:ASPEED BMCs)
-Cc: Troy Lee <leetroy@gmail.com> (reviewer:ASPEED BMCs)
-Cc: Jamin Lin <jamin_lin@aspeedtech.com> (reviewer:ASPEED BMCs)
-Cc: Kane Chen <kane_chen@aspeedtech.com> (reviewer:ASPEED BMCs)
-Cc: Andrew Jeffery <andrew@codeconstruct.com.au> (reviewer:ASPEED BMCs)
-Cc: Joel Stanley <joel@jms.id.au> (reviewer:ASPEED BMCs)
-Cc: qemu-arm@nongnu.org (open list:ASPEED BMCs)
-Cc: qemu-devel@nongnu.org (open list:All patches CC here)
-Signed-off-by: Alexander Hansen <alexander.hansen@9elements.com>
----
- tests/functional/arm/meson.build         |  2 ++
- tests/functional/arm/test_aspeed_fby4.py | 44 ++++++++++++++++++++++++
- 2 files changed, 46 insertions(+)
- create mode 100755 tests/functional/arm/test_aspeed_fby4.py
-
-diff --git a/tests/functional/arm/meson.build b/tests/functional/arm/meson.build
-index 2f538f29a2..10c0006f22 100644
---- a/tests/functional/arm/meson.build
-+++ b/tests/functional/arm/meson.build
-@@ -14,6 +14,7 @@ test_arm_timeouts = {
-   'aspeed_ast2600_sdk_otp' : 720,
-   'aspeed_bletchley' : 480,
-   'aspeed_catalina' : 480,
-+  'aspeed_fby4': 480,
-   'aspeed_gb200nvl_bmc' : 480,
-   'aspeed_rainier' : 480,
-   'bpim2u' : 500,
-@@ -47,6 +48,7 @@ tests_arm_system_thorough = [
-   'aspeed_ast2600_sdk_otp',
-   'aspeed_bletchley',
-   'aspeed_catalina',
-+  'aspeed_fby4',
-   'aspeed_gb200nvl_bmc',
-   'aspeed_rainier',
-   'bpim2u',
-diff --git a/tests/functional/arm/test_aspeed_fby4.py b/tests/functional/arm/test_aspeed_fby4.py
-new file mode 100755
-index 0000000000..a3124c240f
---- /dev/null
-+++ b/tests/functional/arm/test_aspeed_fby4.py
-@@ -0,0 +1,44 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots the ASPEED machines
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+from qemu_test import Asset
-+from aspeed import AspeedTest
-+
-+
-+class YosemiteV4Machine(AspeedTest):
-+
-+    ASSET_YOSEMITE_V4_FLASH = Asset(
-+        'https://github.com/legoater/qemu-aspeed-boot/raw/refs/heads/master/images/yosemite4-bmc/openbmc-20260505132843/obmc-phosphor-image-yosemite4-20260505132843.static.mtd.xz',
-+        'dff6946363b41f952b15cfc3156482b89fcfc1b0ecfc3ec8b3ed496a5f001ef9')
-+
-+    def do_test_arm_aspeed_openbmc_no_network(self, machine, image, uboot,
-+                                   cpu_id, soc):
-+
-+        self.set_machine(machine)
-+        self.vm.set_console()
-+        self.vm.add_args('-drive', f'file={image},if=mtd,format=raw',
-+                         '-snapshot')
-+        self.vm.launch()
-+
-+        self.wait_for_console_pattern(f'U-Boot {uboot}')
-+        self.wait_for_console_pattern('## Loading kernel from FIT Image')
-+        self.wait_for_console_pattern('Starting kernel ...')
-+        self.wait_for_console_pattern(f'Booting Linux on physical CPU {cpu_id}')
-+        self.wait_for_console_pattern(f'ASPEED {soc}')
-+        self.wait_for_console_pattern('/init as init process')
-+        # yosemite v4 does not emit the hostname log which is
-+        # different from the other machines.
-+        self.wait_for_console_pattern('yosemite4 login:')
-+
-+    def test_arm_ast2600_yosemitev4_openbmc(self):
-+        image_path = self.uncompress(self.ASSET_YOSEMITE_V4_FLASH)
-+
-+        self.do_test_arm_aspeed_openbmc_no_network('fby4-bmc', image=image_path,
-+                                        uboot='2019.04', cpu_id='0xf00',
-+                                        soc='AST2600 rev A3')
-+
-+if __name__ == '__main__':
-+    AspeedTest.main()
--- 
-2.54.0
-
+> ---
+>  ui/vnc-clipboard.c | 9 ++++++++-
+>  1 file changed, 8 insertions(+), 1 deletion(-)
+>
+> diff --git a/ui/vnc-clipboard.c b/ui/vnc-clipboard.c
+> index 124b6fbd9c..fa05d86f42 100644
+> --- a/ui/vnc-clipboard.c
+> +++ b/ui/vnc-clipboard.c
+> @@ -23,6 +23,7 @@
+>   */
+>
+>  #include "qemu/osdep.h"
+> +#include "qemu/error-report.h"
+>  #include "vnc.h"
+>  #include "vnc-jobs.h"
+>
+> @@ -282,10 +283,16 @@ void vnc_client_cut_text_ext(VncState *vs, int32_t =
+len, uint32_t flags, uint8_t
+>              buf && size >=3D 4) {
+>              uint32_t tsize =3D read_u32(buf, 0);
+>              uint8_t *tbuf =3D buf + 4;
+> -            if (tsize < size) {
+> +            if (tsize <=3D size - 4) {
+>                  qemu_clipboard_set_data(&vs->cbpeer, vs->cbinfo,
+>                                          QEMU_CLIPBOARD_TYPE_TEXT,
+>                                          tsize, tbuf, true);
+> +            } else {
+> +                error_report("vnc: malformed extended clipboard payload =
+"
+> +                             "with text length %u exceeding available %u=
+",
+> +                             tsize, size - 4);
+> +                vnc_client_error(vs);
+> +                return;
+>              }
+>          }
+>      }
+> --
+> 2.54.0
+>
+>
 
