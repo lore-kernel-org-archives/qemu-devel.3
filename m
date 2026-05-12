@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC7D0CD4F24
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:13:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B868BCD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:13:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuOQ-0002Io-9R; Tue, 12 May 2026 17:11:54 -0400
+	id 1wMuIK-0002Vn-RC; Tue, 12 May 2026 17:05:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuOD-0000Id-Om; Tue, 12 May 2026 17:11:41 -0400
+ id 1wMuIF-0001ux-EM; Tue, 12 May 2026 17:05:31 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuOB-0004fY-Cn; Tue, 12 May 2026 17:11:41 -0400
+ id 1wMuID-0000up-D2; Tue, 12 May 2026 17:05:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619303; bh=aandxFzjyN5rMbH5L7FWFE20+iDH+W1KfzlGilX/Frc=;
+ t=1778619280; bh=qG6ii2l7hCb7dAKBoB+JAL6Fy6hY5WJKV7Caap/hyCY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Tkr2oGrSaGMMgGKwLo6LZJYhXIL7LbT5QJoilYP43M2NRw3QseEbPRMOeIVxgIDD9
- A5EAbaiP0nwo9LmJFGuRmIIUimgi1jGz2kKtmfuUxqduQbzkpwflAi5JdfSVdGdGiP
- 82Slxl0/TDxCGJwsth4EdGcKyA/8QVnKEt2A7qDNyNXAJqulshRhWdiF930wi1+KWj
- MR3GX4xFVHly906xiAyI5gQtXB0Zmee1QoKs95IR8tzm7LKUF5GUmc3Dku5S4ntB+2
- U18Ks/Bmnhlk5SgK3MvATVljdjZyKV2fVEdKn0Ogo1dlkURk2nljp+AozjHxvaxIzC
- GMX3FQOi3aXvQ==
+ b=Pf4jwpKt4DGouGlOzpC4SawgJzZqJuKyPaZZ55go3yl/DHW2dJ1k5SAaeTx4waDzi
+ j/i31hSVYTvGktK1ELDXTkZpE5eOJqDNKy5hNWjXEMHZYJYJsYi6GnDKi/B2GsJZ4K
+ ve/NiqQoIK0S1f7GL4gDUOFzP2UvytRyzVYx2z34ecBAcNanyuBAghxEfurO6BI1+d
+ x95R6SzjVrhbH0Inb2M9Imk3krIwNL24SjY845QFLRsTfkD/E8VT/0w81VEvT7Zv7g
+ FGcQDALpFNN13kZYdVq1XQR7LyuJLX6LtH5gzrIr2CVJnaAzHfSHm5x6CY4MogQGy8
+ A8EAOSP2OY/og==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8F44B1AA378;
- Tue, 12 May 2026 23:55:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8A5851AA337;
+ Tue, 12 May 2026 23:54:40 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9A8983ABCE7;
- Tue, 12 May 2026 23:55:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 96D953ABCA8;
+ Tue, 12 May 2026 23:54:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Katherine Leaver <katherine.j.leaver@gmail.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 058/117] target/arm: do_ats_write(): avoid assertion
- when ptw failed
-Date: Tue, 12 May 2026 23:54:00 +0300
-Message-ID: <20260512205503.361097-58-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 107/107] hw/uefi: avoid possibly unaligned
+ variable_auth_2 struct field access
+Date: Tue, 12 May 2026 23:54:34 +0300
+Message-ID: <20260512205437.360850-107-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
-References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
+References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,56 +70,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-In do_ats_write() we try to assert that the cacheattrs from
-get_phys_addr_for_at() are in the form we expect:
+Copy data to stack-allocated struct before accessing it
+to make sure it is properly aligned.
 
-    /*
-     * ATS operations only do S1 or S1+S2 translations, so we never
-     * have to deal with the ARMCacheAttrs format for S2 only.
-     */
-    assert(!res.cacheattrs.is_s2_format);
-
-However, the GetPhysAddrResult struct documents that its fields are
-only valid when the page table walk succeeded.  For a two stage page
-table walk which fails during stage two, we will return early from
-get_phys_addr_twostage() and depending on the fault type the
-res.cacheattrs may have been initialized with the stage 2 cache attr
-information in stage 2 format.  In this case we will incorrectly
-assert here.
-
-Fix the assertion to not look at the res fields if the lookup failed.
-
-Note for stable backports: the do_ats_write() function is in
-target/arm/helper.c in older QEMU versions, but the change to the
-assert line is the same.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3328
-Fixes: 9f225e607f21 ("target/arm: Postpone interpretation of stage 2 descriptor attribute bits")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260331092305.2062580-1-peter.maydell@linaro.org
-(cherry picked from commit 84771c64a5ae0f28d4bacc3f85a1f852a70c6edc)
+Fixes: CVE-2026-41440
+Fixes: f1488fac0584 ("hw/uefi: add var-service-auth.c")
+Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20260422092910.444997-7-kraxel@redhat.com>
+(cherry picked from commit b4680c02b8e838c75691656ee2c4450b454d1ca7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/cpregs-at.c b/target/arm/tcg/cpregs-at.c
-index 0e8f229aa7..53dd67375d 100644
---- a/target/arm/tcg/cpregs-at.c
-+++ b/target/arm/tcg/cpregs-at.c
-@@ -37,8 +37,9 @@ static uint64_t do_ats_write(CPUARMState *env, uint64_t value,
-     /*
-      * ATS operations only do S1 or S1+S2 translations, so we never
-      * have to deal with the ARMCacheAttrs format for S2 only.
-+     * (Note that res fields are only valid on ptw success.)
-      */
--    assert(!res.cacheattrs.is_s2_format);
-+    assert(ret || !res.cacheattrs.is_s2_format);
+diff --git a/hw/uefi/var-service-auth.c b/hw/uefi/var-service-auth.c
+index fba5a0956a..795f2f54e4 100644
+--- a/hw/uefi/var-service-auth.c
++++ b/hw/uefi/var-service-auth.c
+@@ -180,9 +180,10 @@ static efi_status uefi_vars_check_auth_2_sb(uefi_vars_state *uv,
+                                             void *data,
+                                             uint64_t data_offset)
+ {
+-    variable_auth_2 *auth = data;
++    variable_auth_2 auth;
+     uefi_variable *siglist;
  
-     if (ret) {
-         /*
++    memcpy(&auth, data, sizeof(auth));
+     if (custom_mode_is_active(uv)) {
+         /* no authentication in custom mode */
+         return EFI_SUCCESS;
+@@ -193,7 +194,7 @@ static efi_status uefi_vars_check_auth_2_sb(uefi_vars_state *uv,
+         return EFI_SUCCESS;
+     }
+ 
+-    if (auth->hdr_length == 24) {
++    if (auth.hdr_length == 24) {
+         /* no signature (auth->cert_data is empty) */
+         return EFI_SECURITY_VIOLATION;
+     }
+@@ -218,23 +219,25 @@ static efi_status uefi_vars_check_auth_2_sb(uefi_vars_state *uv,
+ efi_status uefi_vars_check_auth_2(uefi_vars_state *uv, uefi_variable *var,
+                                   mm_variable_access *va, void *data)
+ {
+-    variable_auth_2 *auth = data;
++    variable_auth_2 auth;
+     uint64_t data_offset;
+     efi_status status;
+ 
+-    if (va->data_size < sizeof(*auth)) {
++    if (va->data_size < sizeof(auth)) {
+         return EFI_SECURITY_VIOLATION;
+     }
+-    if (uadd64_overflow(sizeof(efi_time), auth->hdr_length, &data_offset)) {
++    memcpy(&auth, data, sizeof(auth));
++
++    if (uadd64_overflow(sizeof(efi_time), auth.hdr_length, &data_offset)) {
+         return EFI_SECURITY_VIOLATION;
+     }
+     if (va->data_size < data_offset) {
+         return EFI_SECURITY_VIOLATION;
+     }
+ 
+-    if (auth->hdr_revision != 0x0200 ||
+-        auth->hdr_cert_type != WIN_CERT_TYPE_EFI_GUID ||
+-        !qemu_uuid_is_equal(&auth->guid_cert_type, &EfiCertTypePkcs7Guid)) {
++    if (auth.hdr_revision != 0x0200 ||
++        auth.hdr_cert_type != WIN_CERT_TYPE_EFI_GUID ||
++        !qemu_uuid_is_equal(&auth.guid_cert_type, &EfiCertTypePkcs7Guid)) {
+         return EFI_UNSUPPORTED;
+     }
+ 
+@@ -255,7 +258,7 @@ efi_status uefi_vars_check_auth_2(uefi_vars_state *uv, uefi_variable *var,
+     }
+ 
+     /* checks passed, set variable data */
+-    var->time = auth->timestamp;
++    var->time = auth.timestamp;
+     if (va->data_size - data_offset > 0) {
+         var->data = g_malloc(va->data_size - data_offset);
+         memcpy(var->data, data + data_offset, va->data_size - data_offset);
+diff --git a/hw/uefi/var-service-pkcs7.c b/hw/uefi/var-service-pkcs7.c
+index f17ad6872f..c859743e86 100644
+--- a/hw/uefi/var-service-pkcs7.c
++++ b/hw/uefi/var-service-pkcs7.c
+@@ -21,17 +21,20 @@
+  */
+ static gnutls_datum_t *build_signed_data(mm_variable_access *va, void *data)
+ {
+-    variable_auth_2 *auth = data;
+-    uint64_t data_offset = sizeof(efi_time) + auth->hdr_length;
++    variable_auth_2 auth;
++    uint64_t data_offset;
+     uint16_t *name = (void *)va + sizeof(mm_variable_access);
+     gnutls_datum_t *sdata;
+     uint64_t pos = 0;
+ 
++    memcpy(&auth, data, sizeof(auth));
++    data_offset = sizeof(efi_time) + auth.hdr_length;
++
+     sdata = g_new(gnutls_datum_t, 1);
+     sdata->size = (va->name_size - 2
+                    + sizeof(QemuUUID)
+                    + sizeof(va->attributes)
+-                   + sizeof(auth->timestamp)
++                   + sizeof(auth.timestamp)
+                    + va->data_size - data_offset);
+     sdata->data = g_malloc(sdata->size);
+ 
+@@ -48,8 +51,8 @@ static gnutls_datum_t *build_signed_data(mm_variable_access *va, void *data)
+     pos += sizeof(va->attributes);
+ 
+     /* TimeStamp */
+-    memcpy(sdata->data + pos, &auth->timestamp, sizeof(auth->timestamp));
+-    pos += sizeof(auth->timestamp);
++    memcpy(sdata->data + pos, &auth.timestamp, sizeof(auth.timestamp));
++    pos += sizeof(auth.timestamp);
+ 
+     /* Variable Content */
+     memcpy(sdata->data + pos, data + data_offset, va->data_size - data_offset);
+@@ -105,11 +108,12 @@ static void wrap_pkcs7(gnutls_datum_t *pkcs7)
+ 
+ static gnutls_datum_t *build_pkcs7(void *data)
+ {
+-    variable_auth_2 *auth = data;
++    variable_auth_2 auth;
+     gnutls_datum_t *pkcs7;
+ 
++    memcpy(&auth, data, sizeof(auth));
+     pkcs7 = g_new(gnutls_datum_t, 1);
+-    pkcs7->size = auth->hdr_length - 24;
++    pkcs7->size = auth.hdr_length - 24;
+     pkcs7->data = g_malloc(pkcs7->size);
+     memcpy(pkcs7->data, data + 16 + 24, pkcs7->size);
+ 
 -- 
 2.47.3
 
