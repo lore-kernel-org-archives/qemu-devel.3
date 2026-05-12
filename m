@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61741CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:34:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79C52CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:34:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuhK-0003Hh-Lo; Tue, 12 May 2026 17:31:28 -0400
+	id 1wMuiM-00043R-VD; Tue, 12 May 2026 17:32:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuXc-0001oL-IN; Tue, 12 May 2026 17:21:28 -0400
+ id 1wMuY8-0002I4-Oc; Tue, 12 May 2026 17:21:58 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuXY-0000co-Aa; Tue, 12 May 2026 17:21:23 -0400
+ id 1wMuXg-0000gU-6Y; Tue, 12 May 2026 17:21:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619499; bh=dm3H42c1x7JUzSv5Jkh42Fx0cbWalHn8RfvTCoAk7zE=;
+ t=1778619499; bh=kzBsfPBxJ9OsHGCfVDNm5liRopNuWtvBtbwcG4sITvQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=lnPKR/XAMbaI521Xfi0hzvihvySMt5yXx810k8FApMDhkrtb3rMm53zjaUMpdAP49
- 280dcaU380KsvCJ7k7yoUJptWpc+2OBQ343Z64rNV5GrhXJEq0+lrcEGbl6MSHtB/j
- fJocl+3unp42O53Le0QYhVEkrJgRW4gcCOPSgv7yUqI91Zek9VGhprf3hPZ1BppR0z
- RXzPWQFcJX2WzsOoIyH6uOjXjRdE2aowBcW6r2WhNH4lxe/3IFACWXpqH4nhIscfQi
- pM/M7GshNTfVRlSAC1d46MuIjDonUmk1qI0yS9/SI6Yx5vJPDfjv3UVMPTBtD2vT3Q
- Uy9xTCKbM8Qgw==
+ b=k94KpupD/SRn14j3dDnK9gQIYipfigJNK9fBR//BG7oGr1Bk04zu15p9ZlSoc7Go6
+ hNfPuE9MPlPMql31iic2klKRVpbguWiEJJWzf7IbsIpufa+1kif7HK8mKrCUG21iOL
+ yYG0nm7RmUkxW8dTfmfp9fdS9gxwAGKBqxzPi5gCpO8+D0JK8gzFFxdbDNvl7srAo7
+ /LLyaVEMLSpG9f4kxq8kkCR09a9sCKaIGubsvG9TgsEDFiR2JpTcLi6bIc7kuFNLDy
+ de0799oA3R0qIco4UODnwUPW9h6wrz/EufTnTf6oop7X1iojK4NsHpTGtYS0QPma5g
+ YwUTVnaBWqklQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 099501AA3EB;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2ACEC1AA3ED;
  Tue, 12 May 2026 23:58:19 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 15B2F3ABD43;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 36D093ABD45;
  Tue, 12 May 2026 23:58:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Yicong Yang <yang.yicong@picoheart.com>,
- Andrew Jones <andrew.jones@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Sebasti=C3=A1n=20Alba=20Vives?= <sebasjosue84@gmail.com>,
+ qemu-security@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 32/58] hw/riscv/virt-acpi-build.c: Use kvm timer
- frequency when kvm enabled
-Date: Tue, 12 May 2026 23:57:53 +0300
-Message-ID: <20260512205820.361821-32-mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 34/58] hw/intc: fix heap OOB in ACLINT MTIMER
+ multi-socket
+Date: Tue, 12 May 2026 23:57:55 +0300
+Message-ID: <20260512205820.361821-34-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,49 +72,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yicong Yang <yang.yicong@picoheart.com>
+From: Sebastián Alba Vives <sebasjosue84@gmail.com>
 
-The timer frequency is decided by the host(kvm) rather than a fixed
-RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ on kvm accelerated VM. So build
-RCHT with KVM provided timer frequency if KVM is enabled, just like
-how we build the timer node on DT based VM.
+The MMIO read/write handlers index timecmp[] with the absolute hartid
+(hartid_base + offset) but the array is allocated with num_harts
+elements. In multi-socket configurations with hartid_base > 0 this
+causes heap OOB access in the QEMU process.
 
-Fixes: ebfd39289370 ("hw/riscv/virt: virt-acpi-build.c: Add RHCT Table")
-Signed-off-by: Yicong Yang <yang.yicong@picoheart.com>
-Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
-Message-ID: <20260325081314.57089-1-yang.yicong@picoheart.com>
+Fix by using the relative offset for array indexing.
+
+Cc: qemu-security@nongnu.org
+Signed-off-by: Sebastián Alba Vives <sebasjosue84@gmail.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260401053853.10473-2-sebasjosue84@gmail.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 4cb2f91773e8ec9511002de851734820f7ba64fe)
+(cherry picked from commit d5b33fc180f557ee3574cef9c64650174d0ef5dd)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-index f1406cb683..fd6ca5dbc4 100644
---- a/hw/riscv/virt-acpi-build.c
-+++ b/hw/riscv/virt-acpi-build.c
-@@ -35,9 +35,11 @@
- #include "hw/riscv/virt.h"
- #include "hw/riscv/numa.h"
- #include "hw/virtio/virtio-acpi.h"
-+#include "kvm/kvm_riscv.h"
- #include "migration/vmstate.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
-+#include "system/kvm.h"
- #include "system/reset.h"
- 
- #define ACPI_BUILD_TABLE_SIZE             0x20000
-@@ -296,7 +298,10 @@ static void build_rhct(GArray *table_data,
- 
-     /* Time Base Frequency */
-     build_append_int_noprefix(table_data,
--                              RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ, 8);
-+                              kvm_enabled() ?
-+                              kvm_riscv_get_timebase_frequency(&s->soc->harts[0]) :
-+                              RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ,
-+                              8);
- 
-     /* ISA + N hart info */
-     num_rhct_nodes = 1 + ms->smp.cpus;
+diff --git a/hw/intc/riscv_aclint.c b/hw/intc/riscv_aclint.c
+index 9c1491bd04..e27e5fb394 100644
+--- a/hw/intc/riscv_aclint.c
++++ b/hw/intc/riscv_aclint.c
+@@ -131,6 +131,7 @@ static uint64_t riscv_aclint_mtimer_read(void *opaque, hwaddr addr,
+         addr < (mtimer->timecmp_base + (mtimer->num_harts << 3))) {
+         size_t hartid = mtimer->hartid_base +
+                         ((addr - mtimer->timecmp_base) >> 3);
++        size_t hartid_offset = hartid - mtimer->hartid_base;
+         CPUState *cpu = cpu_by_arch_id(hartid);
+         CPURISCVState *env = cpu ? cpu_env(cpu) : NULL;
+         if (!env) {
+@@ -138,11 +139,11 @@ static uint64_t riscv_aclint_mtimer_read(void *opaque, hwaddr addr,
+                           "aclint-mtimer: invalid hartid: %zu", hartid);
+         } else if ((addr & 0x7) == 0) {
+             /* timecmp_lo for RV32/RV64 or timecmp for RV64 */
+-            uint64_t timecmp = mtimer->timecmp[hartid];
++            uint64_t timecmp = mtimer->timecmp[hartid_offset];
+             return (size == 4) ? (timecmp & 0xFFFFFFFF) : timecmp;
+         } else if ((addr & 0x7) == 4) {
+             /* timecmp_hi */
+-            uint64_t timecmp = mtimer->timecmp[hartid];
++            uint64_t timecmp = mtimer->timecmp[hartid_offset];
+             return (timecmp >> 32) & 0xFFFFFFFF;
+         } else {
+             qemu_log_mask(LOG_UNIMP,
+@@ -174,6 +175,7 @@ static void riscv_aclint_mtimer_write(void *opaque, hwaddr addr,
+         addr < (mtimer->timecmp_base + (mtimer->num_harts << 3))) {
+         size_t hartid = mtimer->hartid_base +
+                         ((addr - mtimer->timecmp_base) >> 3);
++        size_t hartid_offset = hartid - mtimer->hartid_base;
+         CPUState *cpu = cpu_by_arch_id(hartid);
+         CPURISCVState *env = cpu ? cpu_env(cpu) : NULL;
+         if (!env) {
+@@ -182,7 +184,7 @@ static void riscv_aclint_mtimer_write(void *opaque, hwaddr addr,
+         } else if ((addr & 0x7) == 0) {
+             if (size == 4) {
+                 /* timecmp_lo for RV32/RV64 */
+-                uint64_t timecmp_hi = mtimer->timecmp[hartid] >> 32;
++                uint64_t timecmp_hi = mtimer->timecmp[hartid_offset] >> 32;
+                 riscv_aclint_mtimer_write_timecmp(mtimer, RISCV_CPU(cpu), hartid,
+                     timecmp_hi << 32 | (value & 0xFFFFFFFF));
+             } else {
+@@ -193,7 +195,7 @@ static void riscv_aclint_mtimer_write(void *opaque, hwaddr addr,
+         } else if ((addr & 0x7) == 4) {
+             if (size == 4) {
+                 /* timecmp_hi for RV32/RV64 */
+-                uint64_t timecmp_lo = mtimer->timecmp[hartid];
++                uint64_t timecmp_lo = mtimer->timecmp[hartid_offset];
+                 riscv_aclint_mtimer_write_timecmp(mtimer, RISCV_CPU(cpu), hartid,
+                     value << 32 | (timecmp_lo & 0xFFFFFFFF));
+             } else {
 -- 
 2.47.3
 
