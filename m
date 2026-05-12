@@ -4,92 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E274CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 03:37:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FDBECD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 03:42:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMdvK-0004jX-SD; Mon, 11 May 2026 23:36:46 -0400
+	id 1wMe0Y-0005jJ-Is; Mon, 11 May 2026 23:42:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMdvI-0004is-44
- for qemu-devel@nongnu.org; Mon, 11 May 2026 23:36:45 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMe0X-0005iw-0j
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 23:42:09 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMdvD-0004ap-FQ
- for qemu-devel@nongnu.org; Mon, 11 May 2026 23:36:43 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-488b3f8fa2bso57196825e9.1
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 20:36:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMe0V-0007Jk-AQ
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 23:42:08 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-45297094718so3979489f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 20:42:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778556995; x=1779161795; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=linaro.org; s=google; t=1778557325; x=1779162125; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=wXsxfuaOUblnbZsXIm56pA6hishhSFvyCAfhvItsa2c=;
- b=IAralr6fC9Aec0XKqqpwqk5x4MgsDObh+N9vLW7dOBIRwyv2MiqYOzW0wRfF7W7HtX
- 8MixXZrwFEc+x6IsOMN5gCnZOO6ntJMhSfaiKrvy4jGIWPhlhaXpycJ6Bfrx4T5RuZXC
- V10XVHbEvw1fFJND2jyL/VAa+dcijMjQTVybJ0z7IEBxPQawULfUypabSAmbM+ey2YEQ
- IOsfwuFf9iOvHkF9BdLyAfc8DB5EfvpOtZlo8qVra8ZSROsM29AQ3G2gLHQwnyj9ScFC
- 8alWJy6EtxKO8OD1rusruQmpOtsw1tdTGAdgadDt0vSoBM0rOsjet1Dlc54UUxAjWXwj
- PxHQ==
+ bh=fMVmnHgCwSMvKC4AadpHd88uFaK7gXkr9Go+ow59TF0=;
+ b=yURX6UoxENOll1F85/Iqy5VvajSpo+WMkkEB1iYnildAZa+B3dEG5zc6XvtpwH57ym
+ GR9NWUkGaAT+qOUXkZ6bWJBEepfuC0LhyQharQ7WzM8+LPLIZPPlNynN2JbM/dmudwqj
+ 3Z/J9pIQRZIuUONWdX3aGzR8GbNXw+DmCXCDyA6jF3m7vs4uS5VisW6Vm8e0V75swGnq
+ Dc0HgqQKYP+c70GCUn+HeaI1jsY2qu1gz+cml/4KFBKW1tyzZPK8rr9Jzma2Cg/ipAtp
+ 9WiG2Q+cPHsetuSsu54qwaUQTte2b6ota9K4Y8jRtZlGgAvWEzteBdzS7UAOcKMXp96r
+ kY9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778556995; x=1779161795;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=1e100.net; s=20251104; t=1778557325; x=1779162125;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=wXsxfuaOUblnbZsXIm56pA6hishhSFvyCAfhvItsa2c=;
- b=YZgt6ktTkAkEY+Oj5G/q2K4iR5Z5T8s55mOfndUcPWwr0TYXJWyuh+BM/JJV3MsjSg
- xEfTtNbN6rh12CouupIx92XvT9w62CwWzXhELMy61AinBcSBpnA//oAQMna/Ewhf0+9O
- xNK4SvMBuDz+GnPDRImuR3HEoWrM6iBus4McMck8J8SEnHUfnYry3u7NE8JoiuU8Sw28
- lGFTYAd2d19v0ejqSMVTmzALpoKkjBeSKVl8Wbhgyu9Whg+qHDSYa93PNESLfVRV+tnL
- /qEDG6wrVQozmKLSH0V6ChwoCI4TtJHIX0X7rlWQKMbp2JwkH1f4ungVaTKzrSk9frOc
- 8ZGQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+OLBFi/WYsGa3VUfPKX2WM9AQC6XDpx10GItg/I9sVcwXUVQ5ysXxLfM0ogLWWODxf/I3uik5dCaQk@nongnu.org
-X-Gm-Message-State: AOJu0Yzmbu3w4dUPERIDBsdKXbIOOgExnYZ5ggNEHaxghplqyeQPUWTO
- FjAMtsKz8PIKBL/SlXnw70gDtzyaYIjVKpdGRnu678z1g5IYKAN/wbktwkvzOT00XVo=
-X-Gm-Gg: Acq92OELLk6krpCDX41jGiIawSfvqd8RddG8XQNY9+X+h+SM/hMU/Nw+FQvcx7plUq3
- ur3LM52vT3xrLiy6/BNVcMDqfppM+WKtyGSh5gt7EtRVA8L034vgZrpKj8bRMYp98t6rGztMZPW
- 5Ub6H3docfpFn0A8qj5ACXyItpFO4aMRxqcJyiCJjXshWNQCgsUdQFulPsiARPjGoVvP7r0Z2+U
- GBCcjX/JxeOoeRGjNh6ZdPuxER6MFco2GDJ+9/3E45Yj5odvtyHsNmDLI7U8gzj3tv/9uOFnAKJ
- IbkTutLOAxv1knFuipcCY41Y/f6Ejmfnljql/q+kTSlg6al5M+BVZwRofw6EWAi9yQfw6sY6eAw
- ljNJZU40TtnkJtPiFSyNJrUkPS5/h3KPlMCpu9qAkDxvQJpRGpbC5WyY7zdHhjXmfjWktoMZDmd
- /ddzhK1PDeNq4fIygpNYkrbATZGIQRMtXeplf5LgZGetIaazdUy5E3c5c1Lirq62l7PQ==
-X-Received: by 2002:a05:600c:4ba3:b0:48a:5ee0:7781 with SMTP id
- 5b1f17b1804b1-48e8e2195b0mr16488455e9.16.1778556995427; 
- Mon, 11 May 2026 20:36:35 -0700 (PDT)
+ bh=fMVmnHgCwSMvKC4AadpHd88uFaK7gXkr9Go+ow59TF0=;
+ b=C4c0fQobtk0QZ0JRI/cAwYgVn/y0K8pfRUPQDalM2gNc5WSW5TpTv3nOC3A5PbILPB
+ 0YbbInLa59HnFCKbzzUHjizeirUA2FQ9RIDoNhLxxxMR/mj11OQx6mjz/zQ4RkmFxoT+
+ yuhUoQX9ekBsKT8c4JHZAloY7XCF64+MVcx4uaYrBhG5Hil3uhJc4Pji/KUzUOqPWU/D
+ 3scRToWxaj4S3w4fj5U8QLicQq5tjKaMatGKa0ND+u2+w752evushU/neQEH403Qrssb
+ 4AACUczknlh2q9KEWfRsVhyFbVca5z7gAOmXJ6xG4SwYXyEkaFp/fptdI12nmULj77fy
+ z8oA==
+X-Gm-Message-State: AOJu0YyyZ62qq6oG/WrbPZJqNUHHLeMsubjTn+pAPSaCCuGQt00NxwZu
+ gPkwp4EiRxBYRCklrJJqnexEUot94b9me+/fyJLXEXo0eE27m0KxuQoLh0pOqbWN9yI=
+X-Gm-Gg: Acq92OHQlxzbd+82MGZNUYFCssCsKys6aok/HRowYIUdIImps8sRWrpYMfMWo0qs59j
+ F7ySMe3oEt6z+aCEbQejC+CR5/Xt4VCpeEFGcC1LnsEqL8UNJDO7SRMADyOe8I1Z9G2y4/LiQ6F
+ 52GpGeZoP5MFyaH+oeExbqoHgisb2gTnXFwIUSM49iq3EU8zD1zTNT/seK4JnqWGyHRouwl0j1q
+ Mr7bcKTTzwkkSmauv+14HTMppJaLuIPLhSToROKv6TYle8FvmLa32AMZSgm2s5tW+jbQmx1QkPs
+ VmD5Er8n4fGjj1cYF2HqTx1m/JKE4td2f2WhgAn7UNGbGVYU0JYPkJlI4wC02JeYeavnncV0tMC
+ kBwvFGQkkjK+TUXv0I90rRDJ4EJUJDVXSxZ8YBVLFrjxbm1f8iOFv3RfJ9cWlurotQm9u+w36Bh
+ w+Zs9vYwzBqSy2nRCOEwYnXVawp5igbugzd84ZjEGa7hRgaC//6Ryb6jcnOASNaYetSjxkltBu/
+ CHx
+X-Received: by 2002:a05:6000:2308:b0:43e:a70d:7622 with SMTP id
+ ffacd0b85a97d-45b137909famr1334836f8f.22.1778557325342; 
+ Mon, 11 May 2026 20:42:05 -0700 (PDT)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45491ca383asm28980429f8f.28.2026.05.11.20.36.34
+ ffacd0b85a97d-4549120f1f9sm29873609f8f.24.2026.05.11.20.42.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 May 2026 20:36:34 -0700 (PDT)
-Message-ID: <c4ba13b3-6e7f-45f0-9f4a-ebe2f7415f34@linaro.org>
-Date: Tue, 12 May 2026 05:36:33 +0200
+ Mon, 11 May 2026 20:42:04 -0700 (PDT)
+Message-ID: <9a6f4a8a-9917-4384-b36e-9eafe2461725@linaro.org>
+Date: Tue, 12 May 2026 05:42:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 089/110] target/s390x: Introduce common system/user meson
- source set
+Subject: Re: target/riscv: rdcycleh problem
 Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org,
- Cornelia Huck <cohuck@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Farhan Ali <alifm@linux.ibm.com>
-References: <20260506135524.20617-1-philmd@linaro.org>
- <20260506135524.20617-90-philmd@linaro.org>
- <5b1fd1f6-00ec-4575-9609-845218405403@redhat.com>
- <a57d5120-dabf-4953-a680-a9c875ecf238@linaro.org>
- <49384318-3050-46fd-af06-4b5c0a14699b@oss.qualcomm.com>
- <dbd55bb5-392b-4a8e-b332-bc009b99014d@redhat.com>
- <5c5e992b-e093-462c-999b-47ff0e5c07ef@oss.qualcomm.com>
+To: Antony Pavlov <antonynpavlov@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Cc: QEMU Developers <qemu-devel@nongnu.org>,
+ qemu-riscv <qemu-riscv@nongnu.org>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+References: <CAA4bVAFS4aRjW7On7C0Y5MQH94TmLfXMwcD+8dWzKBD4JZL3Fg@mail.gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <5c5e992b-e093-462c-999b-47ff0e5c07ef@oss.qualcomm.com>
+In-Reply-To: <CAA4bVAFS4aRjW7On7C0Y5MQH94TmLfXMwcD+8dWzKBD4JZL3Fg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,46 +104,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/5/26 23:07, Pierrick Bouvier wrote:
-> On 5/11/2026 1:46 PM, Cédric Le Goater wrote:
->> On 5/11/26 19:59, Pierrick Bouvier wrote:
->>> On 5/11/2026 10:48 AM, Philippe Mathieu-Daudé wrote:
->>>> On 11/5/26 17:48, Cédric Le Goater wrote:
->>>>> Hello,
->>>>>
->>>>> On 5/6/26 15:55, Philippe Mathieu-Daudé wrote:
->>>>>> Introduce a source set common to system / user. Start it
->>>>>> with the files built in both sets: 'cpu_models_user.c'
->>>>>> and 'gdbstub.c' No logical change intended.
->>>>>>
->>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>>> Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
->>>>>> Message-Id: <20260423135035.50126-4-philmd@linaro.org>
->>>>>
->>>>> This change introduced a regression with PCI passthrough which
->>>>> stopped working. Guest kernel reports :
->>>>>
->>>>>      [    0.156501] zpci: PCI is not supported because CPU facilities 69
->>>>> or 71 are not available
->>>>>
->>>>> and other devices (ap, ccw) are impacted too I think.
->>>>
->>>> Is it something we could test with the mainstream CI, or does this
->>>> requires specific hardware?
->>>>
->>>
->>> It could be tested with a tcg arm vm + nested VM with PCI passthrough.
->>
->> Yes, adding VFIO tests to the QEMU upstream CI would be great.
->>
->>> However, the problem is that you need to cross-compile QEMU in CI to
->>> test current version to launch the nested VM.
+Cc'ing qemu-riscv@ list
 
-I guess remember one of your scripts close to that setup, mounting
-the same directory in nested guest with:
+On 12/5/26 02:50, Antony Pavlov wrote:
+> Hi!
+> 
+> I use qemu-system-riscv32 v11.0.0 for running this code:
+> 
+>      15258:    c80025f3    rdcycleh a1
+>      1525c:    c0002573    rdcycle  a0
+>      15260:    c80027f3    rdcycleh a5
+>      15264:    fef59ae3    bne      a1,a5,15258
+> 
+> The code is recommended by riscv specification for reading 64-bit
+> cycle counter on 32-bit system (see
+> https://docs.riscv.org/reference/isa/unpriv/counters.html#7-1-1-zicntr-extension-for-base-counters-and-timers
+> for details).
+> 
+> When running on qemu-system-riscv32 both the rdcycle and the rdcycleh
+> instructions read low 32-bit of the cycle counter so the branch
+> instruction always go to 15258.
 
-   -virtfs \
-    local,path=$(pwd),mount_tag=host,security_model=mapped,readonly=off
+Interestingly I'm having similar 32/64 bit conversion issue with
+the set of CSR functions in my single binary prototype due to this
+target_ulong use.
 
-Same could be used with s390x / x86 I suppose.
+> 
+> This quick and dirty patch fixes my problem:
+> 
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -1389,8 +1389,11 @@ RISCVException riscv_pmu_read_ctr(CPURISCVState
+> *env, target_ulong *val,
+>        */
+>       if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
+>           riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
+> -        *val = riscv_pmu_ctr_get_fixed_counters_val(env, ctr_idx) -
+> +        uint64_t t;
+> +
+> +        t = riscv_pmu_ctr_get_fixed_counters_val(env, ctr_idx) -
+>                                                       ctr_prev + ctr_val;
+> +        *val = extract64(t, start, length);
+>       } else {
+>           *val = ctr_val;
+>       }
+> 
+> Have you any suggestion?
+> 
+
 
