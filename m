@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 048EBCD4F26
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 08:59:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FC31CD4F26
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 08:59:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMiwK-0000rn-1x; Tue, 12 May 2026 04:58:08 -0400
+	id 1wMiwK-0000s8-Fb; Tue, 12 May 2026 04:58:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1wMiwH-0000qA-QO
- for qemu-devel@nongnu.org; Tue, 12 May 2026 04:58:05 -0400
+ id 1wMiwI-0000qP-7q
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 04:58:06 -0400
 Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1wMiwE-0007Qz-Qc
+ id 1wMiwG-0007SD-OG
  for qemu-devel@nongnu.org; Tue, 12 May 2026 04:58:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1778576283; x=1810112283;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=QloAWZCgGtjUbFDAb9OoG/a5TBb4uqzcnccSxMzJzJM=;
- b=I0qGftvGSUa5GF/w0OwbvYR9AXuSh50ohI6ig3GLVMCAcm8pYAF67EVR
- PSo/qB6r+1i5oPKuBlzp43buVukEwn+aymlz+tdPq8Aj5WviTDStOSkKF
- ab/xRZ2B30fm765PnZ3gfAB2Fez4vhVKnpw1k4Dc7rR1J99qDgG6Y77zx
- phZ5Ae14uT/HuEbjzlp0tUgkdWHarGSAKcTx7miXu433Aqti0Su9rcRXX
- 82Axv16eghBP6q8rcp/lx6C92XH9ACP733AXoEepULt42oLF6ZWUQZBJv
- BrntqkmIIDmCOEb8y1xgiFWxuqIhPI7kGKumXdDUfjygzZnj/9LfPqvvR g==;
-X-CSE-ConnectionGUID: SULtBIIfTuuGqXFavFLZEQ==
-X-CSE-MsgGUID: donFTuQpSHSb1ju8xkazNQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11783"; a="78510916"
-X-IronPort-AV: E=Sophos;i="6.23,230,1770624000"; d="scan'208";a="78510916"
+ t=1778576285; x=1810112285;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=e3vqDuzn5CebKXoD/rL/+POqcwdYe7Qne4/lWzZcVGk=;
+ b=IRBXkImqCemO8Eebc3/h+KkyWvWveMpcAH29lOe7vZxKiFJfiuiGUKrt
+ 8nFeJkeQXHmuqCnAqCOOBvOrLA+4SGD3XjntHYu826X9hFGoh47475yZy
+ nkWxjjMnAol+Kl6I5IT5/5H4b/bFKG/u80riQS+lOK9h6FXBx7H9GUmJa
+ nxWLxyDUPb99V13fciSQq0Rj7BxxM4XfNh8b0OuaKJc8S7w9ikX4+hAyC
+ jqX6zIDzjUc0uwmsCEHhIksx7UnVAsFY5q1Wfc6jN5w5aNgNx2xxdZNIj
+ ibhoZWEb33CI3u77vXrGj/RFShsjpqKYyZ9SP6k4hwh7xqmehc41NJSqJ Q==;
+X-CSE-ConnectionGUID: w+CxC1AnSTiZrdlw3GrD3g==
+X-CSE-MsgGUID: PqrWfA3kS8ycS1LgBJ38wQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11783"; a="78510925"
+X-IronPort-AV: E=Sophos;i="6.23,230,1770624000"; d="scan'208";a="78510925"
 Received: from orviesa004.jf.intel.com ([10.64.159.144])
  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 May 2026 01:58:00 -0700
-X-CSE-ConnectionGUID: vpuoiowlSNGfqq+uWG9vAw==
-X-CSE-MsgGUID: pOYLaTjzTJCBTbW5uN4E7A==
+ 12 May 2026 01:58:03 -0700
+X-CSE-ConnectionGUID: 98H/RvNqQpSpmZjDKe/now==
+X-CSE-MsgGUID: mLd74FrjSdKEiBrhQlzKYQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,230,1770624000"; d="scan'208";a="242065446"
+X-IronPort-AV: E=Sophos;i="6.23,230,1770624000"; d="scan'208";a="242065530"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.22])
- by orviesa004.jf.intel.com with ESMTP; 12 May 2026 01:57:58 -0700
+ by orviesa004.jf.intel.com with ESMTP; 12 May 2026 01:58:01 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
@@ -52,10 +52,13 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  xiaoyao.li@intel.com
-Subject: [PATCH v2 0/5] qemu-options cleanup and deprecate memory-encryption
-Date: Tue, 12 May 2026 16:44:53 +0800
-Message-ID: <20260512084458.622465-1-xiaoyao.li@intel.com>
+Subject: [PATCH v2 2/5] qemu-options: Change memory-encryption to
+ confidential-guest-support in the example
+Date: Tue, 12 May 2026 16:44:55 +0800
+Message-ID: <20260512084458.622465-3-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260512084458.622465-1-xiaoyao.li@intel.com>
+References: <20260512084458.622465-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,33 +86,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is the v2 of previous "[PATCH 0/5] qemu-optios: Fix, cleanup and
-add description of tdx-guest"[1] (Sorry that long time went)
+"confidential-guest-support" is the recommended property instead of
+"memory-encryption". Switch to "confidential-guest-support" in the
+example of sev-guest.
 
-Patch 1 in previous v1 is dropped because a similar patch has been
-merged already.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+---
+ qemu-options.hx | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Patch 5 to deprecate memory-encryption is added in this v2, following
-Daniel's suggestion.
-
-
-- v1 [1]
-https://lore.kernel.org/qemu-devel/20250714091953.448226-1-xiaoyao.li@intel.com/
-
-Xiaoyao Li (5):
-  i386/sev: Remove the example that references memory-encryption
-  qemu-options: Change memory-encryption to confidential-guest-support
-    in the example
-  qemu-options: Add confidential-guest-support to machine options
-  qemu-options: Add description of tdx-guest object
-  machine: Deprecate memory-encryption
-
- docs/about/deprecated.rst |  7 ++++++
- hw/core/machine.c         |  2 ++
- qemu-options.hx           | 52 ++++++++++++++++++++++++++++++++++++---
- target/i386/sev.c         |  4 ---
- 4 files changed, 58 insertions(+), 7 deletions(-)
-
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 96ae41f787ba..25ed486ff5d2 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -6343,7 +6343,7 @@ SRST
+              # |qemu_system_x86| \\
+                  ...... \\
+                  -object sev-guest,id=sev0,cbitpos=47,reduced-phys-bits=1 \\
+-                 -machine ...,memory-encryption=sev0 \\
++                 -machine ...,confidential-guest-support=sev0 \\
+                  .....
+ 
+     ``-object igvm-cfg,file=file``
 -- 
 2.43.0
 
