@@ -4,92 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91C64CD4F24
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 14:44:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68CD3CD4F24
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 14:47:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMoKt-0002gO-Lt; Tue, 12 May 2026 10:43:55 -0400
+	id 1wMoNY-0003R1-6m; Tue, 12 May 2026 10:46:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wMoKe-0002fP-UT
- for qemu-devel@nongnu.org; Tue, 12 May 2026 10:43:37 -0400
-Received: from mail-qk1-x743.google.com ([2607:f8b0:4864:20::743])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wMoKS-0006ta-Gr
- for qemu-devel@nongnu.org; Tue, 12 May 2026 10:43:29 -0400
-Received: by mail-qk1-x743.google.com with SMTP id
- af79cd13be357-8d560ede296so615932685a.0
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 07:43:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wMoNS-0003PK-I2
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 10:46:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wMoNP-0000Do-5U
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 10:46:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778597180;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+sz1D8FB0DY7piXNhjmP858LGUGVUSa94FPd7NONQZg=;
+ b=CAJaxq0Pkyx+t2X1N3kGMvXfqh84wMTirNij+gjExbM6d8WrTp7y0NssxrFA5Sgu5mVcZi
+ lPQR7avKTjQaDDM3zpDO3FjM7PnWuWMY2DPIYMkdXsaqZ3ktUg+J3ri1oSn0KDEN4gPhLV
+ 0K2nMwtBVuW+q1xNh8nX7DOlOS3p0eA=
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
+ [209.85.210.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-505-FPq5QuNHO8-Fz9-SSsIylg-1; Tue, 12 May 2026 10:46:17 -0400
+X-MC-Unique: FPq5QuNHO8-Fz9-SSsIylg-1
+X-Mimecast-MFC-AGG-ID: FPq5QuNHO8-Fz9-SSsIylg_1778597176
+Received: by mail-pf1-f199.google.com with SMTP id
+ d2e1a72fcca58-82f6b984b3aso2940866b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 07:46:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778597000; x=1779201800; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=HwtUNakYE28znt01Rid3P59f+R0AxanON/UBL0pqjMM=;
- b=YNkL9UNwbnJIdxLBBBDCVQELIc285QtUu1YuoStaHQ0k7mRWHiCmrjSvcIGGc7yTTf
- JVf+G6McT3pIUgvSkdWisLG4FQQ/FjsgwH0O+O2xf/Ml4Gvme7TNA3Vh2xvPV8Oh8zgj
- hc7yyGbFVY7jQmwJQNmCFeck8h2xTa4Qzh+69CZrP/8u7XHpZbJ4ht9qiYYTLvt+tlgW
- 7og/9DQl+VIChKfyp3Tc+4rmxlsTVqZvd2Q3sa116ji3mMHTff6tftL1ltJJ/9StEtcp
- ynI/Ge63zSdpDzAJGT8ImJil8Dt3bcsqISKk02iX+xbJJaM3ZyCnPrvTWt+CCG8neQoD
- rOdA==
+ d=redhat.com; s=google; t=1778597176; x=1779201976; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+sz1D8FB0DY7piXNhjmP858LGUGVUSa94FPd7NONQZg=;
+ b=iERaYv7yjZF7uBpQ/QZYnGcetm8LEb76WP1kqi3ZgsWZ57DYCAfqhRR8h4OGFkP/yC
+ m1WKNBH9vKhC00ICWs08DqnkAlJhYaBGsNaiijucCEB+mGPDjCxztEx/zeqE8nZPyASh
+ 0CneNP0RLuBvpQfFBM3XyiHwSO3GZouXJqrPalf7RGd/c01pCBL/VT/aEIa5+scZ6NhI
+ qQYwDpOIoLp83PHy5gKB4C1NsMzzNRaWv+IXwsMy2M4ZFfzegvIQJA1I3HZFZCR6ERLi
+ xehkzPuAEJiyJOM3+aO8wG94sBGOUFRGoUOhLHdHPegmgcOm8heFZdECEvxcWMagc/vz
+ i9zQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778597000; x=1779201800;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HwtUNakYE28znt01Rid3P59f+R0AxanON/UBL0pqjMM=;
- b=ipuycyjic62ZLleuCB7dI3u3Sw9CKQaxEkcJtwnEXQUZrOB/ue1x/sxh6Z8sB84gjq
- tynZzniu3mZ9DybaaviLCcGcSInLfrC/eEIbHTp597397ymtg4voG+6oILbrvGAVAlJF
- AUwPbf313F0YS5j0fI9Ifi0HBVdUjimSlO/K9TeH/ceN2dQ2gDY5bQU1afZU5sE5qclT
- tSHgO9RBct/NNlIVexNYBe1lmL98mWXc35hfL2ifzv+nBodQrW6seDA7Q/QbvqiSlQ5j
- Knw+c4kC6VkFrYXvQmghzqYb2HP3APb1Lf9nTKF2qqNqPwrHe9//p922iJdevg5fBrEc
- qb9A==
-X-Gm-Message-State: AOJu0YySyLVzRbyYiSKbXqK9hA9Cb2F9Rv+VYrhdIUiH1epTn+vczAxq
- GJ/KIWMci373R7uC9JngaU8hWAMOy4m98A20MtTAaNGB70DkdGZSJYKT
-X-Gm-Gg: Acq92OErue/wik0sJkxjwbjlXZHrdah4EkZ/hlvFgqYZNPlwciPXEG2XKZHJh5BtzBb
- rc6CpZtCqPMNsERDc7kJLw+ZU1T8oEmWA1m4aVP/2SOEz8t3GaGlq/2nDlEC3X7FtVWN+FB0ru0
- oc8KnIVNPQjM9/IpWaLHLXsx5QYiFd6AzDyFDi3mKejKzS8uihyI3/NyQYRY345XP4Lkj5VKfTx
- QX/Raoch6cDxz0A4ufnsFLBgiizVinl2gOIcFY2bWZP8bx4biDxUENMyRao51KuQ2Q9nMM5HYoz
- /ekOI5DhiEYpTEiAFOpMFVwUSVAfJ0ggXJO9BMq3TDrEiBvQ/DtrWhRY0udRMENx+k/gGstjVOx
- 6GCBM3j2B5pYLhB4wpn73V5LglEnvzvl52/z7lITlD+gRv4i3sPsiCY78RkV1oQERmsgLjfyb/W
- 1fB4s0rvxGRwj9gz65hLnTbPyCeMwhxniNwZMD1ym/Xd8N5j9FwfoitPF4OtclRSK1YEOvV1oHg
- uLdgm7nDCk=
-X-Received: by 2002:a0c:e017:0:b0:8be:3c37:5e6a with SMTP id
- 6a1803df08f44-8bf42951790mr250354086d6.21.1778597000263; 
- Tue, 12 May 2026 07:43:20 -0700 (PDT)
-Received: from ZEVORN-PC.localdomain ([162.244.208.119])
+ d=1e100.net; s=20251104; t=1778597176; x=1779201976;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+sz1D8FB0DY7piXNhjmP858LGUGVUSa94FPd7NONQZg=;
+ b=hNKtWBAhkQ3XA6wVJrqgMhqIImhaFQ4ebxOD/D24goEq5gJTQ9WKrHwrwWxR8h/yG8
+ tCb5fnRdbPk46zEDxsQtme8bAnN6WVd+kcuAJks7kO7vt5wP/2XVKl5N1ejxy2Z+GIRE
+ oO99ziGYLiiXlR0DfHz1/DPYeKrP6AcPRF/se/VRnse3kk9f1mlKkShFmb++Zesm1WtQ
+ QR0pwLgxwZj1UFkV9qFkNh17rSSVniSKUStbWg2Fh0YFMoMtQIEC0r3QREWJOuTi+vNd
+ uneZ1PtiieAri+bOJmOgbGSQLDe19omeAZZQ15PFYErJxrkBtLhPkj7k7bFw4Pe/VhG9
+ qNcA==
+X-Gm-Message-State: AOJu0YyG0CxXbW8ES7uMj8cIagkoIGx7Qda7D7iib882V8fh6bDy8EZ7
+ x9j8xJ0n5zWZRcTw2ZM66wcYlXY0TQNjqEIqa58kjGTbGJZIQXspNa+BAfCUQoxNvOEUhw4BBNF
+ PAFOYpFm7oPnf3F4VV/Y2hnZ5xSWHzsml8iYXYQan+Kp7zAfJpbB4/X0M
+X-Gm-Gg: Acq92OGMkFSFSDbl4tDu7YtoEvml4Pk9dhPyTtNuSO62Wn9PnlKFJPrS+RZKkI3/qz3
+ NOerFX5XqI+/rke3daTE5LlmK2inLR+qZT212h5ntxQfCwv/GqI22OvrdikM7jaKL6R14EBI83K
+ 0+3FZemwdCsaRVJwKNuNf+bA0G6xx5u8zgMdw+42txMac2JHF2uxj2sYiJZX0JMrSb9IlktLfG3
+ XLG6HZ1XduczxTxcEaWtDdIRzTndpoJiVzYS34iMurvpbAMRRFKHYloEMAhLJomGahPoHlila6b
+ Wp/YbVYlaom9kHY0w7my6F1m72X3YHp6SIHcIRxbDhoROoRNKTE5Kojl/CDhKegmz50lqMlu0z9
+ aOVyZ6UkHGzc5bN4qh+QKET1U6GT2JZZSzf3NYdQ5SzHLfMYcD4fCdpTdK8IASXTthDKVrDp5c4
+ A=
+X-Received: by 2002:a05:6a00:2e83:b0:83b:b0c2:17ea with SMTP id
+ d2e1a72fcca58-83eebd6e52cmr3692392b3a.37.1778597176280; 
+ Tue, 12 May 2026 07:46:16 -0700 (PDT)
+X-Received: by 2002:a05:6a00:2e83:b0:83b:b0c2:17ea with SMTP id
+ d2e1a72fcca58-83eebd6e52cmr3692350b3a.37.1778597175763; 
+ Tue, 12 May 2026 07:46:15 -0700 (PDT)
+Received: from smtpclient.apple ([122.163.114.34])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b53d0702aasm364022836d6.43.2026.05.12.07.43.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 May 2026 07:43:19 -0700 (PDT)
-Date: Tue, 12 May 2026 22:43:10 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>, 
- Cleber Rosa <crosa@redhat.com>
-Subject: Re: [RFC PATCH v2 06/10] .agents/skills: add qemu-code-reviewer skill
-Message-ID: <agM8BL_RRMtw6E4M@ZEVORN-PC.localdomain>
-References: <20260511170500.124211-1-alex.bennee@linaro.org>
- <20260511170500.124211-7-alex.bennee@linaro.org>
- <agKZ1Pd0KskNZdtd@ZEVORN-PC.localdomain>
- <87h5odc7eh.fsf@draig.linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87h5odc7eh.fsf@draig.linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::743;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-qk1-x743.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ d2e1a72fcca58-8396563f03bsm24450070b3a.9.2026.05.12.07.46.12
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 12 May 2026 07:46:15 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: [PATCH v2 00/21] Introduce ACPI watchdog for Q35 and arm/virt
+ boards
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <20260512153057.1a353c3e@imammedo>
+Date: Tue, 12 May 2026 20:15:59 +0530
+Cc: qemu-devel@nongnu.org, mst@redhat.com, pbonzini@redhat.com,
+ peter.maydell@linaro.org, shannon.zhaosl@gmail.com, philmd@linaro.org,
+ zhao1.liu@intel.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com,
+ qemu-arm@nongnu.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <9E96C22B-D035-4CA8-8127-96D8A8E5E4AA@redhat.com>
+References: <20260303092532.2410177-1-imammedo@redhat.com>
+ <20260428161215.49cc1c0f@imammedo> <20260512153057.1a353c3e@imammedo>
+To: Igor Mammedov <imammedo@redhat.com>
+X-Mailer: Apple Mail (2.3864.500.181)
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,178 +126,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 12, 2026 at 10:19:02AM +0100, Alex Bennée wrote:
-> Chao Liu <chao.liu.zevorn@gmail.com> writes:
-> 
-> > On Mon, May 11, 2026 at 06:04:55PM +0100, Alex Bennée wrote:
-> >> This provides basic instructions for how to download and apply a
-> >> patch series from the mailing list.
-> >> 
-> >> Currently it is only taught about checkpatch but we could consider
-> >> adding common code smells and review comments that come up frequently.
-> >> 
-> >> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> >> 
-> >> ---
-> >> v2
-> >>   - merge checkpatch skill
-> >>   - moved later in series to leverage build and test skills
-> >>   - properly reference qemu-build and qemu-tester skills
-> >>   - mention the qemu-code-explorer skill for navigation
-> >> ---
-> >>  .agents/skills/qemu-code-reviewer/SKILL.md | 93 ++++++++++++++++++++++
-> >>  AGENTS.md                                  |  1 +
-> >>  2 files changed, 94 insertions(+)
-> >>  create mode 100644 .agents/skills/qemu-code-reviewer/SKILL.md
-> >> 
-> >> diff --git a/.agents/skills/qemu-code-reviewer/SKILL.md b/.agents/skills/qemu-code-reviewer/SKILL.md
-> >> new file mode 100644
-> >> index 00000000000..48ec6b07520
-> >> --- /dev/null
-> >> +++ b/.agents/skills/qemu-code-reviewer/SKILL.md
-> >> @@ -0,0 +1,93 @@
-> >> +---
-> >> +name: qemu-code-reviewer
-> >> +description: Pull and apply patch series from mailing lists for review and testing in QEMU, including style and build validation.
-> >> +license: GPL-2.0-or-later
-> >> +---
-> >> +
-> >> +# QEMU Code Reviewer Skill
-> >> +
-> >> +This skill provides instructions on how to retrieve patch series submitted to the QEMU mailing list (`qemu-devel@nongnu.org`) using `b4` or manual methods.
-> >> +
-> >> +## Using b4 (Recommended)
-> >> +
-> >> +`b4` is the preferred tool for working with patch series from public-inbox instances like `lore.kernel.org`.
-> >> +
-> >> +### 1. Fetching a series
-> >> +To download a series and prepare it for `git am`:
-> >> +```bash
-> >> +b4 am <message-id-or-url>
-> >> +```
-> >> +This creates a `.mbx` file containing the entire series, properly ordered.
-> >> +
-> >> +### 2. Applying a series directly
-> >> +To apply a series directly to your current branch:
-> >> +```bash
-> >> +b4 shazam <message-id-or-url>
-> >> +```
-> >> +This is often the fastest way to get a series ready for testing.
-> >> +
-> >> +### 3. Creating a local branch for the series
-> >> +```bash
-> >> +b4 am -t <message-id-or-url>
-> >> +git am ./*.mbx
-> >> +```
-> >> +The `-t` flag (or `--trust-all`) can be useful if you know the source.
-> > I suggest using the git worktree command for workspace isolation before
-> > applying patches.
-> 
-> I don't know if this gets too much into the weeds of per-developer
-> preference. Everyone has slightly different ways of working but they do
-> want confidence that when they hand the wheel to their agent it isn't go
-> to mess up their nice flow.
-> 
-You’re right. It looks like keeping it as it is now is good enough.
 
-Thanks,
-Chao
-> >
-> >> +
-> >> +## Manual mbox Retrieval (Alternative)
-> >> +
-> >> +If `b4` is unavailable, you can fetch the mbox manually from `lore.kernel.org`.
-> >> +
-> >> +### 1. Locate the thread
-> >> +Find the patch series on [lore.kernel.org/qemu-devel/](https://lore.kernel.org/qemu-devel/).
-> >> +
-> >> +### 2. Download the mbox
-> >> +Every thread on lore has an `mbox.gz` link. You can use `curl` or `wget`:
-> >> +```bash
-> >> +curl -L "https://lore.kernel.org/qemu-devel/<message-id>/raw" -o series.mbox
-> >> +```
-> >> +*Note: Appending `/raw` to the message URL usually provides the mbox format.*
-> >> +
-> >> +### 3. Apply with git am
-> >> +```bash
-> >> +git am series.mbox
-> >> +```
-> >> +
-> >> +## Post-Application Steps
-> >> +
-> >> +Once the patches are applied, you should perform initial validation:
-> >> +
-> >> +### 1. Style Check
-> >> +Run the QEMU checkpatch script to ensure the patches follow the project's coding style.
-> >> +
-> >> +- **Check applied patches**:
-> >> +  ```bash
-> >> +  ./scripts/checkpatch.pl master..HEAD
-> >> +  ```
-> >> +- **Check a specific commit**:
-> >> +  ```bash
-> >> +  ./scripts/checkpatch.pl <commit-hash>^..
-> >> +  ```
-> >> +- **Check a specific file**:
-> >> +  ```bash
-> >> +  ./scripts/checkpatch.pl -f <file-path>
-> >> +  ```
-> >> +- **Strict mode** (often required for new code or specific subsystems):
-> >> +  ```bash
-> >> +  ./scripts/checkpatch.pl --strict <commit-range>
-> >> +  ```
-> >> +
-> >> +### 2. Build and Test
-> >> +Refer to the `AGENTS.md` or the `qemu-build` and `qemu-testing` skills for build and test instructions.
-> >> +- Ensure you are in a clean build directory.
-> >> +- Run `ninja` or `make`.
-> >> +- Run relevant tests (e.g., `make check-qtest`).
-> >> +
-> >> +### 3. Reviewing Patches
-> >> +Refer to the `qemu-code-explorer` skill for navigating the code base and resolving functions and where they are called from.
-> >> +
-> > If the patches have multiple versions, should we ask the agent to summarize
-> > the review history of the previous versions, as well as briefly summarize
-> > the discussion across the current patch thread? This can be easy to miss
-> > during manual review, but an agent can handle it well.
-> 
-> That's a good idea. I've had good success in getting agents to review
-> threads and summarise what was asked for. I have even had them apply the
-> changes for me to review before committing.
-> 
-> >
-> > However, this seems better suited as a new skill.
-> 
-> The qemu-mail-thread skill is a general purpose thread handling skill we
-> could teach about versioning?
-> 
-> >
-> > Thanks,
-> > Chao
-> >> +
-> >> +
-> >> +## Common Troubleshooting
-> >> +
-> >> +- **Applying fails**: If `git am` fails due to conflicts, you may need to use `git am --3way` or manually resolve conflicts.
-> >> +- **Missing dependencies**: Ensure your tree is up to date with the base branch the patches were intended for (usually `master`).
-> >> diff --git a/AGENTS.md b/AGENTS.md
-> >> index d9d1964d45a..fbbc3b65ed0 100644
-> >> --- a/AGENTS.md
-> >> +++ b/AGENTS.md
-> >> @@ -27,6 +27,7 @@ You should use the following specialized skills for common tasks:
-> >>  - `qemu-code-explorer`: For finding where things are defined, how they're used, or understanding a specific subsystem.
-> >>  - `qemu-build`: For configuring and building QEMU (including debug and sanitizer builds).
-> >>  - `qemu-testing`: For finding, listing, and running individual tests (Unit, QTest, Functional, TCG).
-> >> +- `qemu-code-reviewer`: For pulling and applying patch series from mailing lists.
-> >>  
-> >>  ## Source Code Layout (see `docs/devel/codebase.rst`)
-> >>  - **`accel/`**: Hardware accelerators (KVM, TCG, HVF, Xen, etc.) and architecture-agnostic acceleration code.
-> >> -- 
-> >> 2.47.3
-> >> 
-> >> 
-> 
-> -- 
-> Alex Bennée
-> Virtualisation Tech Lead @ Linaro
+
+> On 12 May 2026, at 7:00=E2=80=AFPM, Igor Mammedov =
+<imammedo@redhat.com> wrote:
+>=20
+> On Tue, 28 Apr 2026 16:12:15 +0200
+> Igor Mammedov <imammedo@redhat.com> wrote:
+>=20
+>> On Tue,  3 Mar 2026 10:25:11 +0100
+>> Igor Mammedov <imammedo@redhat.com> wrote:
+>>=20
+>>> Changelog:
+>>>  v2:
+>>>     * ditch generic '-machine acpi-watchdog' option in favor of
+>>>       board specific variants:
+>>>           x86/q35:  -machine wdat=3D{on|off}
+>>>           arm/virt: -device sbsa_gwdt,wdat=3D{on|off}
+>>>     * arm/virt: add FDT and GTDT ACPI entries for GWDT when it's =
+present
+>>>       and hide GDTD one when WDAT is enabled.
+>>>     * arm/virt: add test case for GTDT=20
+>>>     * [18-21] optional GWDT cleanup/fixes in handling WCV register =
+update,
+>>>       make QEMU behave according to spec (at least the way I read it =
+and
+>>>       it appears MS also read it that way). It fixes Windows 11 =
+reboots when
+>>>       GWDT is present (without WDAT). With that fixed it's up to MS =
+to fix
+>>>       their driver to set sane timeout as with the current one =
+wdatchdog
+>>>       will never trigger. =20
+>>=20
+>> given merge window should be open by now,
+>> gentle ping
+>=20
+> 2 weeks later,
+> yet another ping
+
+I have this in my queue for review.
+
+
 
