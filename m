@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2A40CD343F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9619CD4F24
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:15:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuND-0004l9-BB; Tue, 12 May 2026 17:10:39 -0400
+	id 1wMuPU-00065G-Sr; Tue, 12 May 2026 17:13:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuN9-0004Hb-Gx; Tue, 12 May 2026 17:10:36 -0400
+ id 1wMuPD-0004nO-Qr; Tue, 12 May 2026 17:12:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuN7-0003k2-PJ; Tue, 12 May 2026 17:10:35 -0400
+ id 1wMuPB-0004sa-7J; Tue, 12 May 2026 17:12:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619302; bh=D5ZIIGAf0zEiOYuz/dz/8pp7vesqXIxrnPBW8ysDI9I=;
+ t=1778619304; bh=wYWtEK1tjqFchx33AehVsXTtD+HQnhFPDEG1tvss9jA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=rX3N7HY7a+IhOxHSsk6YJAuNfq7uWnl3xYrPAywgnVGy7B83UDIGSZ13/2wOa3CWY
- JuW/Nq83ZFDsKb1J7GHVUE0gbhVAL+9Ddyw14yZfJm8iP2RfLHjni7MIQlvgiSwq2U
- rckXGqo2mtMEzpv+76FSBoOAymzsHWzBdDgdGyrLQ/4pYyhQTP3IABYY7N0Ke644rI
- yqC/Z5DhVEceoQn0nQ05wKTeh9iSBJnySLfS0f5kgxsJxweOIhg2L0X1oiFkOOXQpa
- zGH3D9clG6mkW2+Jg9XVTwQhVfObJbLRL/kDJau6kaMc3r0a8dufM9lVCmkE5UFpVA
- MbDTA5FzKTfaA==
+ b=e6LyK7xw5yWC39RVFHLStkdX+p1501ztsPX8ZIbHd7W9t6OTiAqnUGGIaJCjo2OKm
+ z96RFx424S0Wwqee7I7VhLbj7xnvP0CkGo7bwHUQXhlvqFQ4SZPo2fF+82WEe8OVE/
+ JtV5aqGS2F/GrwgFBBdDMT/H6o7aqDtu9mQyVjmigmyNlcKNR41pLEfpeBs0sDXpjL
+ xsQU3fQInvBzQbVJX2b9WKGBZipfAR7Crg4JhQZLxq67tKyDBEPAvSxKMaAiDsw3vZ
+ /omTraO/F4iVumPu0I+FiAuCWGqI09lECJYM5sLP+8ZKJsUGqH+ZAU9O0xoXwEXnC2
+ 1ZS3zHHawK7Ig==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AA8171AA36A;
- Tue, 12 May 2026 23:55:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 45B331AA382;
+ Tue, 12 May 2026 23:55:04 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B698F3ABCDA;
- Tue, 12 May 2026 23:55:06 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5314C3ABCF1;
+ Tue, 12 May 2026 23:55:08 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
+Cc: qemu-stable@nongnu.org, GuoHan Zhao <zhaoguohan@kylinos.cn>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 045/117] ui/vnc-jobs: fix VncRectEntry leak on job
- cleanup
-Date: Tue, 12 May 2026 23:53:47 +0300
-Message-ID: <20260512205503.361097-45-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 068/117] ui/spice-app: detect runtime directory
+ creation failures
+Date: Tue, 12 May 2026 23:54:10 +0300
+Message-ID: <20260512205503.361097-68-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
@@ -72,75 +71,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: GuoHan Zhao <zhaoguohan@kylinos.cn>
 
-When a VncJob is freed, its associated VncRectEntry list must also be
-freed. Previously, vnc_job_push() and the disconnected path in
-vnc_worker_thread_loop() called g_free(job) directly, leaking all
-VncRectEntry allocations.
+spice_app_display_early_init() creates the per-VM runtime directory
+with g_mkdir_with_parents() before setting up the Spice socket. The
+code checks for "< -1", but g_mkdir_with_parents() returns -1 on
+failure, so the error path is never taken.
 
-Introduce vnc_job_free() which iterates and frees the rectangle entries
-before freeing the job itself, and use it in both paths.
+This lets spice-app continue after a directory creation failure and
+defers the problem to later setup steps.
 
-Also add QLIST_REMOVE() in the worker loop before g_free(entry), so
-that entries processed during normal operation are properly unlinked.
-Without this, vnc_job_free() would iterate dangling pointers to
-already-freed entries, causing use-after-free.
+Check for "< 0" instead so the failure is reported immediately and
+spice-app exits before using an invalid runtime directory.
 
-Fixes: bd023f953e5e ("vnc: threaded VNC server")
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-(cherry picked from commit 3cae0b46be5416b26039df5259ffc8fcf2989516)
+Fixes: d8aec9d9f129 ("display: add -display spice-app launching a Spice client")
+Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260408031725.641417-1-zhaoguohan@kylinos.cn>
+(cherry picked from commit 52cf667ed2285aa2d08db6abed46cdba5c14f9aa)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/vnc-jobs.c b/ui/vnc-jobs.c
-index bed33950a8..d2a3c676b0 100644
---- a/ui/vnc-jobs.c
-+++ b/ui/vnc-jobs.c
-@@ -108,11 +108,25 @@ int vnc_job_add_rect(VncJob *job, int x, int y, int w, int h)
-     return 1;
- }
- 
-+static void vnc_job_free(VncJob *job)
-+{
-+    VncRectEntry *entry, *tmp;
-+
-+    if (!job) {
-+        return;
-+    }
-+    QLIST_FOREACH_SAFE(entry, &job->rectangles, next, tmp) {
-+        /* no need for QLIST_REMOVE(entry, next) */
-+        g_free(entry);
-+    }
-+    g_free(job);
-+}
-+
- void vnc_job_push(VncJob *job)
- {
-     vnc_lock_queue(queue);
-     if (queue->exit || QLIST_EMPTY(&job->rectangles)) {
--        g_free(job);
-+        vnc_job_free(job);
-     } else {
-         QTAILQ_INSERT_TAIL(&queue->jobs, job, next);
-         qemu_cond_broadcast(&queue->cond);
-@@ -297,6 +311,7 @@ static int vnc_worker_thread_loop(VncJobQueue *queue)
-                 n_rectangles += n;
-             }
-         }
-+        QLIST_REMOVE(entry, next);
-         g_free(entry);
-     }
-     trace_vnc_job_nrects(&vs, job, n_rectangles);
-@@ -325,7 +340,7 @@ disconnected:
-     QTAILQ_REMOVE(&queue->jobs, job, next);
-     vnc_unlock_queue(queue);
-     qemu_cond_broadcast(&queue->cond);
--    g_free(job);
-+    vnc_job_free(job);
-     vs.magic = 0;
-     return 0;
- }
+diff --git a/ui/spice-app.c b/ui/spice-app.c
+index 24f78f305c..6abea0d5b6 100644
+--- a/ui/spice-app.c
++++ b/ui/spice-app.c
+@@ -153,7 +153,7 @@ static void spice_app_display_early_init(DisplayOptions *opts)
+     if (qemu_name) {
+         app_dir = g_build_filename(g_get_user_runtime_dir(),
+                                    "qemu", qemu_name, NULL);
+-        if (g_mkdir_with_parents(app_dir, S_IRWXU) < -1) {
++        if (g_mkdir_with_parents(app_dir, S_IRWXU) < 0) {
+             error_report("Failed to create directory %s: %s",
+                          app_dir, strerror(errno));
+             exit(1);
 -- 
 2.47.3
 
