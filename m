@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A125CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:11:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC1A9CD4F24
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:11:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuLN-0002kn-Ey; Tue, 12 May 2026 17:08:45 -0400
+	id 1wMuGq-0004AZ-Du; Tue, 12 May 2026 17:04:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuKl-0000xd-27; Tue, 12 May 2026 17:08:11 -0400
+ id 1wMuEQ-0007HD-Bk; Tue, 12 May 2026 17:01:42 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuKh-0002d5-Rd; Tue, 12 May 2026 17:08:06 -0400
+ id 1wMuEN-0006dB-33; Tue, 12 May 2026 17:01:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619301; bh=Cz/lC/i69N912HtNUvC2jJsnfey8s5BgllzY8+Cbnco=;
+ t=1778619278; bh=Q5smFhmGfV1eJoYo0hYO8uCEZYCYBG7+b+hXPxKbpaY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=oS3F4G5CCarlvEAqmtvJWKk5z4VpWog9t2tXt9PYnvPFLIYYm5hCoswvO1bZDPZIG
- n8GpGMlsSimq49XAgZ5IQ751PeX361ViI2DxRnnrQ6ZoKjYyaHVm2Ivxx8XIs8K1a0
- YbzZnmnJoMwdDFcLGUF7Jn+qawuvLz/o+92LvOdSdFXPsLcptbJ7+oUGoyR3CMuiFv
- axY87QZ9AgWo9TRo0/nR5YigEKyo7f4+hnJv3EHQ2GYbszMmayZ+S14S8yyBD9UPxr
- dv0U07RX2Xx4DVl9FfPdHwyoS4iyZis/bOZMlJdSvlKMGC69/7ucjUBKIkPRdW6eHZ
- x0vNrs1jGSEJQ==
+ b=me3rDllJbGCQ++8eJivwE3ORwROdjVJQ6HRIYqjaxR4aBWYvJMT0DK7dJrG2RBMJM
+ RyJqvsFtMH42Q70BpyntJd4aqggQjIj6Qo/7tuMvTcDNfHc2JWTiVsUtmpv129pf1m
+ QoNfWsq0Z+m/QxxH/gTyJY+hBer64Nr3dIE4ZPzm/9CMHif6/CsYin9wi9B3sNkTxD
+ JoUDe2vxRAbUcmFKfgCFN2MxIzSiSV5zz3DXvFeFhnaVxrAcpo4ukH63ZAcwSZpTwG
+ ZqSp6oLGcMkWM4VPPf/gX58wVPQJMnLTwu0Vd6druzLVLqc43ky9eUf+RE+bskriOR
+ AHDt1xRYF4HHQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 373901AA353;
- Tue, 12 May 2026 23:55:01 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0BA4A1AA312;
+ Tue, 12 May 2026 23:54:38 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 425E93ABCC3;
- Tue, 12 May 2026 23:55:05 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 14C2D3ABC83;
+ Tue, 12 May 2026 23:54:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
+Cc: qemu-stable@nongnu.org, Yixin Wei <easonwei1998@gmail.com>,
+ Yixin Wei <yixinwei@meta.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 022/117] hw/net/ftgmac100: Improve DMA error handling
-Date: Tue, 12 May 2026 23:53:24 +0300
-Message-ID: <20260512205503.361097-22-mjt@tls.msk.ru>
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 070/107] linux-user: fix off-by-one in
+ host_to_target_for_each_rtattr()
+Date: Tue, 12 May 2026 23:53:57 +0300
+Message-ID: <20260512205437.360850-70-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
-References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
+References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,59 +72,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+From: Yixin Wei <easonwei1998@gmail.com>
 
-Currently, DMA memory operation errors in the ftgmac100 model are not
-all tested and this can lead to a guest-triggerable denial of service
-as described in https://gitlab.com/qemu-project/qemu/-/work_items/3335.
+host_to_target_for_each_rtattr() uses "len > sizeof(struct rtattr)"
+as its loop condition. When the last rtattr in a netlink message has
+exactly sizeof(struct rtattr) (4) bytes remaining, the loop exits
+without byte-swapping its rta_len and rta_type. A big-endian guest
+then reads rta_len in the wrong byte order and fails validation.
 
-To fix this, check the return value of ftgmac100_write_bd() in the TX
-path and exit the TX loop on error to prevent further processing. In
-the event of a DMA error, also set FTGMAC100_INT_AHB_ERR interrupt
-flag as appropriate.
+The companion function target_to_host_for_each_rtattr() correctly
+uses ">=" (added in commit fa2229dbf8). The kernel's RTA_OK macro
+also uses ">=". Fix the host_to_target direction to match.
 
-The FTGMAC100_INT_AHB_ERR interrupt status bit only applies to the
-AST2400 SoC; on newer Aspeed SoCs, it is a reserved bit.
-Nevertheless, since it is supported by the Linux driver and it should
-be safe to use in the QEMU implementation across all SoCs.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3335
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2485
+Signed-off-by: Yixin Wei <yixinwei@meta.com>
+Fixes: 6c5b5645ae0 ("linux-user: add rtnetlink(7) support")
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260322215732.387383-3-clg@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit fa4a759fc1e19b2185becfadb00c6d8e57462849)
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: qemu-stable@nongnu.org
+(cherry picked from commit 029f10e852780da846d3e7f1691c495474683b73)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/ftgmac100.c b/hw/net/ftgmac100.c
-index c41ce889cf..8d57adb03f 100644
---- a/hw/net/ftgmac100.c
-+++ b/hw/net/ftgmac100.c
-@@ -624,7 +624,10 @@ static void ftgmac100_do_tx(FTGMAC100State *s, uint64_t tx_ring,
-         bd.des0 &= ~FTGMAC100_TXDES0_TXDMA_OWN;
+diff --git a/linux-user/fd-trans.c b/linux-user/fd-trans.c
+index f83d1f79d5..1045ae7b1a 100644
+--- a/linux-user/fd-trans.c
++++ b/linux-user/fd-trans.c
+@@ -482,7 +482,7 @@ static abi_long host_to_target_for_each_rtattr(struct rtattr *rtattr,
+     unsigned short aligned_rta_len;
+     abi_long ret;
  
-         /* Write back the modified descriptor.  */
--        ftgmac100_write_bd(&bd, addr);
-+        if (ftgmac100_write_bd(&bd, addr)) {
-+            s->isr |= FTGMAC100_INT_AHB_ERR;
-+            break;
-+        }
-         /* Advance to the next descriptor.  */
-         if (bd.des0 & s->txdes0_edotr) {
-             addr = tx_ring;
-@@ -1134,7 +1137,10 @@ static ssize_t ftgmac100_receive(NetClientState *nc, const uint8_t *buf,
-             bd.des0 |= flags | FTGMAC100_RXDES0_LRS;
-             s->isr |= FTGMAC100_INT_RPKT_BUF;
-         }
--        ftgmac100_write_bd(&bd, addr);
-+        if (ftgmac100_write_bd(&bd, addr)) {
-+            s->isr |= FTGMAC100_INT_AHB_ERR;
-+            break;
-+        }
-         if (bd.des0 & s->rxdes0_edorr) {
-             addr = s->rx_ring;
-         } else {
+-    while (len > sizeof(struct rtattr)) {
++    while (len >= sizeof(struct rtattr)) {
+         rta_len = rtattr->rta_len;
+         if (rta_len < sizeof(struct rtattr) ||
+             rta_len > len) {
 -- 
 2.47.3
 
