@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08592CD4855
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 09:47:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7A5BCD4F35
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 09:47:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMjhb-0004QD-LJ; Tue, 12 May 2026 05:47:00 -0400
+	id 1wMjhe-0004RW-Ue; Tue, 12 May 2026 05:47:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
- id 1wMjhH-0004NO-V5
- for qemu-devel@nongnu.org; Tue, 12 May 2026 05:46:43 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1wMjhS-0004Om-7J
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 05:46:50 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
- id 1wMjhF-00013i-SM
- for qemu-devel@nongnu.org; Tue, 12 May 2026 05:46:39 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-8353fd1cb5fso2552028b3a.0
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 02:46:37 -0700 (PDT)
+ id 1wMjhP-00015o-NB
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 05:46:49 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-82fbf5d4dc2so3738724b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 02:46:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778579196; x=1779183996; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778579206; x=1779184006; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Z5BzUMBXjy8xyRUea0sn7GSJCN51E1yGbpBU/KilmCU=;
- b=TrOH+gRUhGeV80LSGSULExAdKEu02ENVtf0KtwFpIUj1M/909rYD9A3IeXPGb720Cx
- xyPBDIBaeyOW6ltnsqUnmk0XXTa3A+kski9TMREW1rmIgfU6W58CxG7LL3dw/irznJbT
- ZgqK9QYxnj2NcS5/h7lxmz2IQ6uelaM327UdVfn39RpB7GIePUrxc887MJl6JFQ6Ganu
- RcRobtCb9quVbxkMWG5Vy9o5mHiOufx3K5Cv5ujBsWiuArninOCd01/I6uitihqXM0eI
- Rp8TW+lLFfhskYAVIhqC9lkAeDyEIvTMaZ3hFMrnX6r8J8l50Etxuh7d7VhqHAjdjzTc
- tkqA==
+ bh=glcjIMxZZysIE7r/mnimuPjUh4Szz2MUKvKWN/XEWCQ=;
+ b=EmNSFPl8807NL3m6wqGzsAzndcganR6c65p9xYmDrAuJKKmvtm35S9c9z0VcAHemYN
+ Y9GqrpXq7mgx3wCW2LrWos1m//3s7Df4t+73HkY+KDH7ARTfGBgu+iV8ui+GdPvLxnZA
+ yHuA3JvAMXP5gHTEmalX0SXXvFGDt09Lw5CFCpDuJbfanOF+N85TfE4411+0R13uLGu2
+ 38okbwxqcKVIKC09y1UhzD1KeO5dmBKYpdim9eNz8ksepwRe93P1qQJ8Va3sH8mLU6Yd
+ q5lQFdjbetol83anyIaHVXnf5mKGg2HAQwk2YGhyV6H4lGOHGJ2xy1/19jNMaIs4P0a7
+ k4Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778579196; x=1779183996;
+ d=1e100.net; s=20251104; t=1778579206; x=1779184006;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Z5BzUMBXjy8xyRUea0sn7GSJCN51E1yGbpBU/KilmCU=;
- b=INjTAMJDj9LRE3UMKq4iQ0RWsbaBLgmkwbkhXwO9elIr5OqxKs0HwtjWdzwdwS5jTz
- VWz9Ahs6xhYGUte1gHlemyCsv3ZTCG/782lsKoFs6GXyXG4BOGz3OEbUyh18+oor9IuP
- IiJ9rjOJZJml8QozvLZs7DvC0X2OOAcrn0xSLjm8sAmlV0bdofd46b7VBnXvtxaV2xst
- sO0qBlBw+G0t6fA6+4MxjPwjH0pLdwfEH2fnBHyY7rIzBfBLgBIm62k3SERJI9stNsDV
- /5Sv3XZFrOVw+gGRQvv/9kx6I16XEVN6Y36pPiL1+DyByyE5BbQgiVasPlVSdmsAI5e6
- owmw==
+ bh=glcjIMxZZysIE7r/mnimuPjUh4Szz2MUKvKWN/XEWCQ=;
+ b=c+GdKITOByotVsECDVBUCPB34jZenIq7xBIcV9TsFltmHWAZZR7KTkF8TbllcNfThF
+ 7q1VrlWTr0eJo3vNTx6E6Aj15sNFgjr7kWUAykmgOo3hHBNP7bOLpTDgnJx5KZ5gklmX
+ sKEK6alMN+e39qjily0Jumdm1q2Hp+xvHdBedDXMTxpZtNP8Gq3ia0nRcqx3ifuL3VMp
+ e8G9zxlNP9f41InusMyaZDqWepVG8JN0XxLAoSaLj4QjKdRGN7JwhHhbdgeO3PZge7Ad
+ bpzVWgiCKZ+JXv4VPjDNSuIlcOiy3IG9I1BOX980qHmHSAGVWkhzPJDIJx7C5o4TZksS
+ xl4Q==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/7CbN2YxuoRiVC4Hsj0vPJPHVbFo+7SbQAI9xY6b73y8L5TP1naRh3tFXMVXB7gWt8YCRFS2zDrg5C@nongnu.org
-X-Gm-Message-State: AOJu0YymRMEiFieEgO9lMi7msirlEbpgN6TNjzbf9nmYsYygysguynKB
- UzXM//R8jmw9lRP7cDH7WvRQL361sCQmgzcQGhEqMp7Z1nczRvRCfTajxWKk4g==
-X-Gm-Gg: Acq92OHGt1YrijwQQqgChRk2xmBLoPNwm/4XLNCV+4pZC92WkOUC1GCqDk4Tg8qOaFR
- DTQrEm4Nw4Z9XuTkN1TsjuPJQkENC5ysZ7dk8HDAMz+MzLER0fByVHI6v9yPXqD9YfXOjKYWgu9
- jD8f9//I15HXVRgwsWixoh4tpOg875TeThCU92mUzI0OrVPF0xIec12RpQbuk3M4IMNsy84Lgix
- Y6iLsUEi/dK6nYjTYhB1qHMH8Z5hpKvLgwEwH0gb8bFBF2+NOzslIQarc/dIaABk2Yz7nU50ahh
- MFnZ7SJ2npJE5fWE7cO1J98abZpg4R2fpltyRyP/C6HUZNL9+P32hsC4IjOprxUw9C9o+napMZy
- 5OZcV1nP9EX1Kjxmllm5yPUs/ta3WnraRbeLYiHkkydADIFJWPZgbVsdC+haRIxDMge9UtDWazB
- r7aCyNI7moFqoaxQjvNkjdkoygbRnym1tXxssdzyV7osJiBhrdVBTOOJ2uj/V01g94SDJ1jyQFI
- 6yaj+noLayTv+1Fh2njXliZCwDXSAAXtQ==
-X-Received: by 2002:aa7:8896:0:b0:827:33cb:c7a3 with SMTP id
- d2e1a72fcca58-83ee8308f84mr2797004b3a.10.1778579196418; 
- Tue, 12 May 2026 02:46:36 -0700 (PDT)
+ AFNElJ916phX9JrlVM7XXo7Jv4aIKPdkzKcn2orRh/SgwfWed8IMOZlApM2rj1Cj1rOo9f+Z5kYS5ezqWYHG@nongnu.org
+X-Gm-Message-State: AOJu0Ywda3Mfzfkl3qDengM4U02hsESB8HLPxsmmlvVnXHIjSxNnMDYo
+ SIO2GwX0o+FIMfp6IwVH7nehbuV9mm5NnlzrM2dCfttGLVK8sJ9Ne6kv
+X-Gm-Gg: Acq92OGfYwVp89fJHxQIh6sBxb8XHjNICVWodzJoB7QO/KJOzQ+klAmnwWNO9/1WjqJ
+ CRZ4pOWRQAyAC3N4xwrSx22GMbgs9m6EKGYvYqv0FsbanQS4gO6wKmYbRJnzAZ5TxEfJLG421UR
+ itq8MVI65H2WntdgI6xQw7BMHnRp4XIT3Bzc5oWy3CPSmE7v7ICYvu/chmsp++sRY8HXaXVeNJR
+ MIFVw7jRymhz/bPAfBHRjjf8nldFxYLyVC6dcqKAfZPvH73jHxIAaEazyadCpy183HDv1dnQcvS
+ gQxl4ZJDg8y/cAwAShcu5Ia9zfS9LbkyThGhtIo773jdAoewmFwFXNnSDPgCD2wvHPYbQTlKgWx
+ tIZJPzq+hBIvY4NAHv4n1aNle4e6PDBJhduF5Gmp6WPDi9IUywug46KikHrfBvwnLI76BbSSl2F
+ apCZsNIakKIU0QuPlQfpLKjyT45GKZ8QnhKsBoqCO3hrmpdS92YmICKnh1Sq7TYLTGJF240+s1M
+ m9Lc1VG8RBYFD6cScvfXzxg2VZVWLAYGS6h2BDe2W+s
+X-Received: by 2002:a05:6a00:3e13:b0:82d:603f:f3a with SMTP id
+ d2e1a72fcca58-83eebc3bef4mr2640556b3a.24.1778579206070; 
+ Tue, 12 May 2026 02:46:46 -0700 (PDT)
 Received: from visitorckw-work01.c.googlers.com.com
  (32.237.80.34.bc.googleusercontent.com. [34.80.237.32])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-839682aba01sm22960593b3a.55.2026.05.12.02.46.32
+ d2e1a72fcca58-839682aba01sm22960593b3a.55.2026.05.12.02.46.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 May 2026 02:46:36 -0700 (PDT)
+ Tue, 12 May 2026 02:46:45 -0700 (PDT)
 From: Kuan-Wei Chiu <visitorckw@gmail.com>
 To: pbonzini@redhat.com, marcandre.lureau@redhat.com, palmer@dabbelt.com,
  alistair.francis@wdc.com, christoph.muellner@vrull.eu
@@ -75,23 +75,23 @@ Cc: liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
  zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
  jserv@ccns.ncku.edu.tw, eleanor15x@gmail.com, qemu-devel@nongnu.org,
  qemu-riscv@nongnu.org, Kuan-Wei Chiu <visitorckw@gmail.com>
-Subject: [PATCH RFC 2/5] hw/char: Add dw8250 UART
-Date: Tue, 12 May 2026 09:46:10 +0000
-Message-ID: <20260512094614.3464388-3-visitorckw@gmail.com>
+Subject: [PATCH RFC 4/5] hw/riscv: Add Sophgo CV1800B SoC support
+Date: Tue, 12 May 2026 09:46:12 +0000
+Message-ID: <20260512094614.3464388-5-visitorckw@gmail.com>
 X-Mailer: git-send-email 2.54.0.563.g4f69b47b94-goog
 In-Reply-To: <20260512094614.3464388-1-visitorckw@gmail.com>
 References: <20260512094614.3464388-1-visitorckw@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=visitorckw@gmail.com; helo=mail-pf1-x435.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=visitorckw@gmail.com; helo=mail-pf1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,244 +107,284 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the dw8250 uart support. This hardware is a widely used 16550A
-derivative that includes additional registers.
+Add the Sophgo CV1800B SoC, which is the heart of the Milk-V Duo board.
 
-Without this specific device support, the Linux 8250_dw driver fails to
-probe the extended registers (UCV, CPR, etc.), which are essential for
-correct feature detection:
+The SoC features a T-Head C906 CPU along with integrated PLIC, CLINT,
+and dw8250 UART. The memory map and interrupts are configured according
+to the CV1800B datasheet. [1]
 
-[    0.293566] Serial: 8250/16550 driver, 4 ports, IRQ sharing disabled
-[    0.306929] Oops - store (or AMO) access fault [#1]
-[    0.307020] Modules linked in:
-[    0.307192] CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 7.0.0 #1 PREEMPTLAZY
-[    0.307250] Hardware name: Milk-V Duo (DT)
-[    0.307294] epc : dw8250_setup_port+0x22/0x520
-[    0.307504]  ra : dw8250_probe+0x57e/0x5b8
-[    0.307518] epc : ffffffff80708dd6 ra : ffffffff8070a49e sp : ffffffc60000b820
-[    0.307525]  gp : ffffffff81a32ba8 tp : ffffffd602180cc0 t0 : 0000000000000073
-[    0.307533]  t1 : 000000000000006c t2 : 0000000000000000 s0 : ffffffc60000b830
-[    0.307539]  s1 : ffffffd6028c8640 a0 : ffffffc60000b848 a1 : ffffffff813162c1
-[    0.307546]  a2 : ffffffff813162c0 a3 : ffffffd6028c8640 a4 : ffffffc60002d0b4
-[    0.307552]  a5 : 0000000000000001 a6 : 0000000000000094 a7 : 0000000000000060
-[    0.307558]  s2 : ffffffd60225d410 s3 : ffffffd60225d400 s4 : 0000000000000000
-[    0.307573]  s5 : ffffffff80e31a48 s6 : 0000000000000008 s7 : 0000000000000000
-[    0.307584]  s8 : 0000000000000149 s9 : 0000000000000000 s10: 0000000000000000
-[    0.307590]  s11: 0000000000000000 t3 : ffffffd602007c00 t4 : ffffffff81601540
-[    0.307604]  t5 : 0000000000000003 t6 : ffffffd602a42f82 ssp : 0000000000000000
-[    0.307611] status: 0000000200000120 badaddr: ffffffc60002d0b4 cause: 0000000000000007
-[    0.307652] [<ffffffff80708dd6>] dw8250_setup_port+0x22/0x520
-[    0.307695] [<ffffffff8070a49e>] dw8250_probe+0x57e/0x5b8
-[    0.307702] [<ffffffff80731f0e>] platform_probe+0x46/0x80
-[    0.307708] [<ffffffff8072f67c>] really_probe+0x84/0x22c
-[    0.307715] [<ffffffff8072f880>] __driver_probe_device+0x5c/0xd4
-[    0.307721] [<ffffffff8072f9be>] driver_probe_device+0x2e/0xf4
-[    0.307727] [<ffffffff8072fbe6>] __driver_attach+0x6e/0x14c
-[    0.307734] [<ffffffff8072d5f0>] bus_for_each_dev+0x60/0xb0
-[    0.307740] [<ffffffff8072f1b2>] driver_attach+0x1a/0x24
-[    0.307746] [<ffffffff8072e8da>] bus_add_driver+0xca/0x1d8
-[    0.307752] [<ffffffff80730aaa>] driver_register+0x3e/0xdc
-[    0.307757] [<ffffffff80731c54>] __platform_driver_register+0x1c/0x24
-[    0.307779] [<ffffffff80c334f6>] dw8250_platform_driver_init+0x1a/0x24
-[    0.307793] [<ffffffff80011992>] do_one_initcall+0x4e/0x2a4
-[    0.307800] [<ffffffff80c01362>] kernel_init_freeable+0x226/0x2b0
-[    0.307807] [<ffffffff80bc3798>] kernel_init+0x1c/0x144
-[    0.307813] [<ffffffff8001361c>] ret_from_fork_kernel+0x18/0x164
-[    0.307820] [<ffffffff80bcefb6>] ret_from_fork_kernel_asm+0x16/0x18
-[    0.307914] Code: 3683 2085 0b63 32f7 000f 0140 6918 4785 0713 0b47 (c31c) 2583
-[    0.308041] ---[ end trace 0000000000000000 ]---
-[    0.308180] Kernel panic - not syncing: Fatal exception in interrupt
-[    0.315760] ---[ end Kernel panic - not syncing: Fatal exception in interrupt ]---
+Several peripheral blocks are included as unimplemented devices to
+ensure that drivers can probe successfully without causing errors
+during boot.
 
+Link: https://github.com/milkv-duo/duo-files/tree/main/duo/datasheet [1]
 Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
 ---
- hw/char/Kconfig          |   4 ++
- hw/char/dw8250.c         | 118 +++++++++++++++++++++++++++++++++++++++
- hw/char/meson.build      |   1 +
- include/hw/char/dw8250.h |  27 +++++++++
- 4 files changed, 150 insertions(+)
- create mode 100644 hw/char/dw8250.c
- create mode 100644 include/hw/char/dw8250.h
+ hw/riscv/Kconfig           |   8 ++
+ hw/riscv/cv1800b.c         | 168 +++++++++++++++++++++++++++++++++++++
+ hw/riscv/meson.build       |   2 +
+ include/hw/riscv/cv1800b.h |  52 ++++++++++++
+ 4 files changed, 230 insertions(+)
+ create mode 100644 hw/riscv/cv1800b.c
+ create mode 100644 include/hw/riscv/cv1800b.h
 
-diff --git a/hw/char/Kconfig b/hw/char/Kconfig
-index 020c0a84bb..418d99b757 100644
---- a/hw/char/Kconfig
-+++ b/hw/char/Kconfig
-@@ -95,3 +95,7 @@ config IP_OCTAL_232
-     bool
-     default y
-     depends on IPACK
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index 2518b04175..5b68991edb 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -138,3 +138,11 @@ config MIPS_BOSTON_AIA
+     select RISCV_MIPS_CMGCR
+     select RISCV_MIPS_CPC
+     select RISCV_MIPS_CPS
 +
-+config DW8250
++config SOPHGO_CV1800B
 +    bool
-+    select SERIAL
-diff --git a/hw/char/dw8250.c b/hw/char/dw8250.c
++    depends on RISCV64
++    select RISCV_ACLINT
++    select SIFIVE_PLIC
++    select SOPHGO_CV1800B_CLK
++    select DW8250
+diff --git a/hw/riscv/cv1800b.c b/hw/riscv/cv1800b.c
 new file mode 100644
-index 0000000000..4ec829ceaf
+index 0000000000..c6749e1202
 --- /dev/null
-+++ b/hw/char/dw8250.c
-@@ -0,0 +1,118 @@
++++ b/hw/riscv/cv1800b.c
+@@ -0,0 +1,168 @@
 +/* SPDX-License-Identifier: GPL-2.0-or-later */
 +/*
-+ * Synopsys DesignWare APB UART (DW 8250)
++ * Sophgo CV1800B SoC
 + *
 + * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
 + */
 +
 +#include "qemu/osdep.h"
 +#include "qapi/error.h"
-+#include "hw/char/dw8250.h"
++#include "hw/riscv/cv1800b.h"
 +#include "hw/core/qdev-properties.h"
-+#include "hw/core/qdev-properties-system.h"
++#include "target/riscv/cpu-qom.h"
++#include "system/system.h"
++#include "hw/char/serial.h"
++#include "hw/intc/riscv_aclint.h"
++#include "system/address-spaces.h"
++#include "hw/intc/sifive_plic.h"
++#include "target/riscv/cpu.h"
++#include "hw/riscv/boot.h"
++#include "hw/sd/sdhci.h"
++#include "hw/misc/unimp.h"
 +
-+#define DW_UART_REGION_SIZE 0x100
-+
-+#define DW_UART_RE_EN 0xB4 /* Receiver Output Enable Register */
-+#define DW_UART_DLF   0xC0 /* Divisor Latch Fraction Register */
-+#define DW_UART_CPR   0xF4 /* Component Parameter Register */
-+#define DW_UART_UCV   0xF8 /* UART Component Version */
-+#define DW_UART_CTR   0xFC /* Component Type Register */
-+
-+#define DW_UART_UCV_VALUE 0x3332332A /* "323*" -> v3.23a */
-+#define DW_UART_CTR_VALUE 0x44570110 /* "DW" */
-+
-+static uint64_t dw8250_ext_read(void *opaque, hwaddr addr, unsigned int size)
-+{
-+    switch (addr) {
-+    case DW_UART_UCV:
-+        return DW_UART_UCV_VALUE;
-+    case DW_UART_CPR:
-+        return 0x00000000; /* No advanced features (DMA, extra FIFOs) */
-+    case DW_UART_CTR:
-+        return DW_UART_CTR_VALUE;
-+
-+    case DW_UART_RE_EN:
-+    case DW_UART_DLF:
-+        /*
-+         * Return 0 to indicate these optional features
-+         * (RS485 and Fractional Divisor) are not implemented.
-+         */
-+        return 0x00000000;
-+
-+    default:
-+        return 0;
-+    }
-+}
-+
-+static void dw8250_ext_write(void *opaque, hwaddr addr, uint64_t val, unsigned int size)
-+{
-+}
-+
-+static const MemoryRegionOps dw8250_ext_ops = {
-+    .read = dw8250_ext_read,
-+    .write = dw8250_ext_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid.min_access_size = 4,
-+    .valid.max_access_size = 4,
++const MemMapEntry cv1800b_memmap[] = {
++    [CV1800B_DEV_TOP_MISC]     = { 0x03000000,      0x1000 },
++    [CV1800B_DEV_PINMUX]       = { 0x03001000,      0x1000 },
++    [CV1800B_DEV_CLK]          = { 0x03002000,      0x1000 },
++    [CV1800B_DEV_RST]          = { 0x03003000,      0x1000 },
++    [CV1800B_DEV_WDT]          = { 0x03010000,      0x1000 },
++    [CV1800B_DEV_GPIO]         = { 0x03020000,      0x4000 },
++    [CV1800B_DEV_UART0]        = { 0x04140000,     0x10000 },
++    [CV1800B_DEV_SD0]          = { 0x04310000,     0x10000 },
++    [CV1800B_DEV_ROM]          = { 0x04400000,     0x10000 },
++    [CV1800B_DEV_RTC_GPIO]     = { 0x05021000,      0x1000 },
++    [CV1800B_DEV_RTC_IO]       = { 0x05027000,      0x1000 },
++    [CV1800B_DEV_PLIC]         = { 0x70000000,   0x4000000 },
++    [CV1800B_DEV_CLINT]        = { 0x74000000,     0x10000 },
++    [CV1800B_DEV_DRAM]         = { 0x80000000,         0x0 },
 +};
 +
-+static void dw8250_instance_init(Object *obj)
++static void cv1800b_soc_instance_init(Object *obj)
 +{
-+    DW8250State *s = DW8250(obj);
++    CV1800BSoCState *s = CV1800B_SOC(obj);
 +
-+    s->serial_mm = qdev_new("serial-mm");
-+    object_property_add_child(obj, "serial-mm", OBJECT(s->serial_mm));
-+    object_property_add_alias(obj, "chardev", OBJECT(s->serial_mm), "chardev");
++    object_initialize_child(obj, "cpus", &s->cpus, TYPE_RISCV_HART_ARRAY);
++    object_initialize_child(obj, "clk", &s->clk, TYPE_CV1800B_CLK);
 +}
 +
-+static void dw8250_realize(DeviceState *dev, Error **errp)
++static void cv1800b_soc_realize(DeviceState *dev, Error **errp)
 +{
-+    DW8250State *s = DW8250(dev);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+    SysBusDevice *serial_sbd = SYS_BUS_DEVICE(s->serial_mm);
++    CV1800BSoCState *s = CV1800B_SOC(dev);
++    MachineState *ms = MACHINE(qdev_get_machine());
++    uint32_t num_harts = ms->smp.cpus;
++    MemoryRegion *system_memory = get_system_memory();
++    char *plic_hart_config;
++    DeviceState *uart, *sdhci;
 +
-+    memory_region_init(&s->container, OBJECT(dev), "dw8250-container",
-+                       DW_UART_REGION_SIZE);
-+    sysbus_init_mmio(sbd, &s->container);
++    qdev_prop_set_uint32(DEVICE(&s->cpus), "num-harts", num_harts);
++    qdev_prop_set_uint32(DEVICE(&s->cpus), "hartid-base", 0);
++    qdev_prop_set_string(DEVICE(&s->cpus), "cpu-type", TYPE_RISCV_CPU_THEAD_C906);
 +
-+    qdev_prop_set_uint8(s->serial_mm, "regshift", s->regshift);
-+    qdev_prop_set_uint8(s->serial_mm, "endianness", DEVICE_LITTLE_ENDIAN);
-+    sysbus_realize(serial_sbd, errp);
++    qdev_prop_set_uint64(DEVICE(&s->cpus), "resetvec",
++                         cv1800b_memmap[CV1800B_DEV_ROM].base);
 +
-+    memory_region_init_io(&s->ext_iomem, OBJECT(dev), &dw8250_ext_ops, s,
-+                          "dw8250-ext", DW_UART_REGION_SIZE);
-+    memory_region_add_subregion(&s->container, 0, &s->ext_iomem);
++    sysbus_realize(SYS_BUS_DEVICE(&s->cpus), &error_fatal);
 +
-+    memory_region_add_subregion_overlap(&s->container, 0,
-+                                        sysbus_mmio_get_region(serial_sbd, 0), 1);
++    memory_region_init_rom(&s->rom, OBJECT(dev), "cv1800b.rom",
++                           cv1800b_memmap[CV1800B_DEV_ROM].size, &error_fatal);
++    memory_region_add_subregion(system_memory,
++                                cv1800b_memmap[CV1800B_DEV_ROM].base, &s->rom);
 +
-+    sysbus_pass_irq(sbd, serial_sbd);
++    riscv_aclint_swi_create(cv1800b_memmap[CV1800B_DEV_CLINT].base,
++                            0, num_harts, false);
++    riscv_aclint_mtimer_create(cv1800b_memmap[CV1800B_DEV_CLINT].base +
++                               RISCV_ACLINT_SWI_SIZE,
++                               RISCV_ACLINT_DEFAULT_MTIMER_SIZE,
++                               0, num_harts, RISCV_ACLINT_DEFAULT_MTIMECMP,
++                               RISCV_ACLINT_DEFAULT_MTIME,
++                               RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ, true);
++
++    plic_hart_config = riscv_plic_hart_config_string(num_harts);
++    s->plic = sifive_plic_create(
++        cv1800b_memmap[CV1800B_DEV_PLIC].base,
++        plic_hart_config,
++        num_harts,
++        0,
++        CV1800B_PLIC_NUM_SOURCES,
++        CV1800B_PLIC_NUM_PRIORITIES,
++        0x0,
++        0x1000,
++        0x2000,
++        0x80,
++        0x200000,
++        0x1000,
++        cv1800b_memmap[CV1800B_DEV_PLIC].size);
++
++    g_free(plic_hart_config);
++
++    uart = qdev_new("dw8250");
++    qdev_prop_set_uint8(uart, "regshift", 2);
++    qdev_prop_set_chr(uart, "chardev", serial_hd(0));
++    sysbus_realize(SYS_BUS_DEVICE(uart), errp);
++    sysbus_mmio_map(SYS_BUS_DEVICE(uart), 0, cv1800b_memmap[CV1800B_DEV_UART0].base);
++    sysbus_connect_irq(SYS_BUS_DEVICE(uart), 0,
++                       qdev_get_gpio_in(DEVICE(s->plic), CV1800B_UART0_IRQ));
++
++    sdhci = qdev_new(TYPE_SYSBUS_SDHCI);
++    qdev_prop_set_uint8(sdhci, "sd-spec-version", 3);
++    qdev_prop_set_uint64(sdhci, "capareg", 0x056900b9);
++    sysbus_realize(SYS_BUS_DEVICE(sdhci), &error_fatal);
++    sysbus_mmio_map(SYS_BUS_DEVICE(sdhci), 0, cv1800b_memmap[CV1800B_DEV_SD0].base);
++    sysbus_connect_irq(SYS_BUS_DEVICE(sdhci), 0,
++                       qdev_get_gpio_in(DEVICE(s->plic), CV1800B_SD0_IRQ));
++
++    sysbus_realize(SYS_BUS_DEVICE(&s->clk), &error_fatal);
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->clk), 0,
++                    cv1800b_memmap[CV1800B_DEV_CLK].base);
++
++    create_unimplemented_device("cv1800b.top_misc",
++                                cv1800b_memmap[CV1800B_DEV_TOP_MISC].base,
++                                cv1800b_memmap[CV1800B_DEV_TOP_MISC].size);
++
++    create_unimplemented_device("cv1800b.pinmux",
++                                cv1800b_memmap[CV1800B_DEV_PINMUX].base,
++                                cv1800b_memmap[CV1800B_DEV_PINMUX].size);
++
++    create_unimplemented_device("cv1800b.rst",
++                                cv1800b_memmap[CV1800B_DEV_RST].base,
++                                cv1800b_memmap[CV1800B_DEV_RST].size);
++
++    create_unimplemented_device("cv1800b.wdt",
++                                cv1800b_memmap[CV1800B_DEV_WDT].base,
++                                cv1800b_memmap[CV1800B_DEV_WDT].size);
++
++    create_unimplemented_device("cv1800b.gpio0_3",
++                                cv1800b_memmap[CV1800B_DEV_GPIO].base,
++                                cv1800b_memmap[CV1800B_DEV_GPIO].size);
++
++    create_unimplemented_device("cv1800b.rtc_gpio",
++                                cv1800b_memmap[CV1800B_DEV_RTC_GPIO].base,
++                                cv1800b_memmap[CV1800B_DEV_RTC_GPIO].size);
++
++    create_unimplemented_device("cv1800b.rtc_io",
++                                cv1800b_memmap[CV1800B_DEV_RTC_IO].base,
++                                cv1800b_memmap[CV1800B_DEV_RTC_IO].size);
 +}
 +
-+static const Property dw8250_properties[] = {
-+    DEFINE_PROP_UINT8("regshift", DW8250State, regshift, 2),
++static void cv1800b_soc_class_init(ObjectClass *oc, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(oc);
++
++    dc->realize = cv1800b_soc_realize;
++    dc->user_creatable = false;
++}
++
++static const TypeInfo cv1800b_soc_type_info = {
++    .name = TYPE_CV1800B_SOC,
++    .parent = TYPE_DEVICE,
++    .instance_size = sizeof(CV1800BSoCState),
++    .instance_init = cv1800b_soc_instance_init,
++    .class_init = cv1800b_soc_class_init,
 +};
 +
-+static void dw8250_class_init(ObjectClass *klass, const void *data)
++static void cv1800b_soc_register_types(void)
 +{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->realize = dw8250_realize;
-+    device_class_set_props(dc, dw8250_properties);
++    type_register_static(&cv1800b_soc_type_info);
 +}
 +
-+static const TypeInfo dw8250_info = {
-+    .name          = TYPE_DW8250,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(DW8250State),
-+    .instance_init = dw8250_instance_init,
-+    .class_init    = dw8250_class_init,
-+};
-+
-+static void dw8250_register_types(void)
-+{
-+    type_register_static(&dw8250_info);
-+}
-+
-+type_init(dw8250_register_types)
-diff --git a/hw/char/meson.build b/hw/char/meson.build
-index fc3d7ee506..b2250ee6ae 100644
---- a/hw/char/meson.build
-+++ b/hw/char/meson.build
-@@ -38,6 +38,7 @@ system_ss.add(when: 'CONFIG_STM32L4X5_USART', if_true: files('stm32l4x5_usart.c'
- system_ss.add(when: 'CONFIG_MCHP_PFSOC_MMUART', if_true: files('mchp_pfsoc_mmuart.c'))
- system_ss.add(when: 'CONFIG_HTIF', if_true: files('riscv_htif.c'))
- system_ss.add(when: 'CONFIG_GOLDFISH_TTY', if_true: files('goldfish_tty.c'))
-+system_ss.add(when: 'CONFIG_DW8250', if_true: files('dw8250.c'))
++type_init(cv1800b_soc_register_types)
+diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+index 533472e22a..04e25eeece 100644
+--- a/hw/riscv/meson.build
++++ b/hw/riscv/meson.build
+@@ -18,4 +18,6 @@ riscv_ss.add(when: 'CONFIG_XIANGSHAN_KUNMINGHU', if_true: files('xiangshan_kmh.c
+ riscv_ss.add(when: 'CONFIG_RISCV_MIPS_CPS', if_true: files('cps.c'))
+ riscv_ss.add(when: 'CONFIG_MIPS_BOSTON_AIA', if_true: files('boston-aia.c'))
  
- specific_ss.add(when: 'CONFIG_TERMINAL3270', if_true: files('terminal3270.c'))
- specific_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr_vty.c'))
-diff --git a/include/hw/char/dw8250.h b/include/hw/char/dw8250.h
++riscv_ss.add(when: 'CONFIG_SOPHGO_CV1800B', if_true: files('cv1800b.c'))
++
+ hw_arch += {'riscv': riscv_ss}
+diff --git a/include/hw/riscv/cv1800b.h b/include/hw/riscv/cv1800b.h
 new file mode 100644
-index 0000000000..59396ad202
+index 0000000000..a214f7a9f6
 --- /dev/null
-+++ b/include/hw/char/dw8250.h
-@@ -0,0 +1,27 @@
++++ b/include/hw/riscv/cv1800b.h
+@@ -0,0 +1,52 @@
 +/* SPDX-License-Identifier: GPL-2.0-or-later */
 +/*
-+ * Synopsys DesignWare APB UART (DW 8250)
++ * Sophgo CV1800B SoC
 + *
 + * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
 + */
 +
-+#ifndef HW_CHAR_DW8250_H
-+#define HW_CHAR_DW8250_H
++#ifndef HW_RISCV_CV1800B_H
++#define HW_RISCV_CV1800B_H
 +
-+#include "hw/core/sysbus.h"
-+#include "qom/object.h"
++#include "hw/core/boards.h"
++#include "hw/riscv/riscv_hart.h"
++#include "hw/misc/cv1800b_clk.h"
 +
-+#define TYPE_DW8250 "dw8250"
-+OBJECT_DECLARE_SIMPLE_TYPE(DW8250State, DW8250)
++#define TYPE_CV1800B_SOC "cv1800b-soc"
++OBJECT_DECLARE_SIMPLE_TYPE(CV1800BSoCState, CV1800B_SOC)
 +
-+struct DW8250State {
-+    SysBusDevice parent_obj;
++struct CV1800BSoCState {
++    DeviceState parent_obj;
 +
-+    MemoryRegion container;
-+    MemoryRegion ext_iomem;
-+    DeviceState *serial_mm;
-+
-+    uint8_t regshift;
++    RISCVHartArrayState cpus;
++    MemoryRegion rom;
++    DeviceState *plic;
++    CV1800BClkState clk;
 +};
++
++#define CV1800B_PLIC_NUM_SOURCES 136
++#define CV1800B_PLIC_NUM_PRIORITIES 31
++
++#define CV1800B_UART0_IRQ 44
++#define CV1800B_SD0_IRQ   36
++
++enum {
++    CV1800B_DEV_TOP_MISC,
++    CV1800B_DEV_PINMUX,
++    CV1800B_DEV_CLK,
++    CV1800B_DEV_RST,
++    CV1800B_DEV_WDT,
++    CV1800B_DEV_GPIO,
++    CV1800B_DEV_UART0,
++    CV1800B_DEV_SD0,
++    CV1800B_DEV_ROM,
++    CV1800B_DEV_RTC_GPIO,
++    CV1800B_DEV_RTC_IO,
++    CV1800B_DEV_PLIC,
++    CV1800B_DEV_CLINT,
++    CV1800B_DEV_DRAM,
++};
++
++extern const MemMapEntry cv1800b_memmap[];
 +
 +#endif
 -- 
