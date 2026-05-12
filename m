@@ -4,48 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68287CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:00:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81B7DCD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:00:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMu92-0004aG-7o; Tue, 12 May 2026 16:56:00 -0400
+	id 1wMuDR-0006BZ-9l; Tue, 12 May 2026 17:00:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMu8a-00046F-7W; Tue, 12 May 2026 16:55:38 -0400
+ id 1wMuCn-00037o-S0; Tue, 12 May 2026 16:59:53 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMu8X-00036u-FP; Tue, 12 May 2026 16:55:31 -0400
+ id 1wMuCl-0005Dn-KT; Tue, 12 May 2026 16:59:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619274; bh=aBVQ7bdYlNm++Hb0XXYw8W9HWcrYieYw3MIh8jY1fLs=;
+ t=1778619276; bh=KOc/DiAKjrRpadbwE3U+gOpNg38f5fy9LqaRl7wyL5Q=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=dh1QXwNfZxwCIVFSWbWVpc5n+UZ8V95FMFNjUVMvzwiHAJN3NSE9v3VEc862cuTRi
- NEbKToO/NZHKBWRN3O7RYQMz7dgZW1Kt+w3577+WkZRhUEB7cJqP7fkgMgI2RSffdt
- QluGe/cDJhK0yBG0AiVMxrBtTqTQ1eytB8DKbWPv2sIc4DI0vY91NepjpIKNjmXQ31
- /9Txt0qqBkDgPafb0Tt77PI1mj02Q6sQsxbRtMSCnE+J/FjyEGWHT0HkbO9e3sOn33
- aIOjCxBcobcorZguJaR+Pu/ujNN1ws/Bj/ObFGO4Rq1Tg+UMmCnDBTMV4dIfXCq1J9
- ORh01QWHpE6VA==
+ b=IZW2D//cqzpBbzNli/ugWD/4xIp1jus+n/w6E0RBxi9+yAvxEqg7HFS377VvY2bCd
+ Cu2SYp1MR8olrRSxw0/BBMNl8u6XE3Wtkvmeha4xSjWIhXfn0euHdya2/cRClLNEoH
+ r3fc+Ik8y4tEsTl5/4pGv8H7GjbUnqJJeVyb+5O0HxuXXU/BqQ3ftVYkZYGmN7IweP
+ NwxACxtUbsUPodhdPQmwq4UtaIzM1Ktd4SvxZtpacwSdwxAGR1luMzI+7gjsflQOrm
+ mPRGxuDSe3QbL0HtmOsNxBCZsqpbAdyD5qhhozK8gDeianTgZHydMkejB1W/YNQAqD
+ HJQggRlWAT7Lg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 17E781AA2D7;
- Tue, 12 May 2026 23:54:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8DE081AA2FF;
+ Tue, 12 May 2026 23:54:36 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1CEF23ABC48;
- Tue, 12 May 2026 23:54:38 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 991FC3ABC70;
+ Tue, 12 May 2026 23:54:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Shivang Upadhyay <shivangu@linux.ibm.com>,
- Aditya Gupta <adityag@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Nathan Chancellor <nathan@kernel.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 011/107] ppc/pnv: generate dtb after machine
- initialization is complete
-Date: Tue, 12 May 2026 23:52:58 +0300
-Message-ID: <20260512205437.360850-11-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Nguyen Dinh Phi <phind.uet@gmail.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 051/107] util/readline: Fix out-of-bounds access in
+ readline_insert_char().
+Date: Tue, 12 May 2026 23:53:38 +0300
+Message-ID: <20260512205437.360850-51-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
@@ -75,134 +71,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
+From: Nguyen Dinh Phi <phind.uet@gmail.com>
 
-Currently, the machine dtb is generated in pnv_init(), before all devices
-are fully initialized. This can result in an incomplete dtb for the system,
-as seen in bug [1].
+Currently, the readline_insert_char() function is guarded by the cursor
+position (cmd_buf_index) rather than the actual buffer fill level(cmd_buf_size).
+The current check is:
+	if (rs->cmd_buf_index < READLINE_CMD_BUF_SIZE)
 
-Fix this by deferring dtb generation until machine initialization is complete,
-using the machine_init_done_notifier hook.
+This logic is flawed because if the command buffer is full and a user moves the
+cursor backward (e.g. by sending left arrow key), cmd_buf_index can be
+decreased without descreasing of buffer size.
+This allow subsequent insertions to increase cmd_buf_size past its maximum
+limit of rs->cmd_buf.
 
-[1] https://lore.kernel.org/all/20260323231612.GA2637687@ax162/
+Because in the ReadLineState struct, cmd_buf[READLINE_CMD_BUF_SIZE + 1] is
+immediately followed by the cmd_buf_index integer, once the buffer size is
+sufficiently inflated, the memmove() operation inside readline_insert_char()
+can write past the end of cmd_buf[] and overwrites cmd_buf_index itself.
 
-Cc: Aditya Gupta <adityag@linux.ibm.com>
-Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: BALATON Zoltan <balaton@eik.bme.hu>
+The subsequent line:
+	rs->cmd_buf[rs->cmd_buf_index] = ch;
+
+then writes the input character to an address determined by the now-corrupted
+index.
+
+By providing a specifically crafted input sequence via HMP, this flaw can be
+used to redirect the write operation to overwrite any field within the
+ReadLineState structure, which can lead to unpredictable behavior or
+application crashes.
+
+Fix this by adding the guard to check for buffer fullness.
+
 Cc: qemu-stable@nongnu.org
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Fixes: a16d4c2f162a86d ("ppc/pnv: fix dumpdtb option")
-Fixes: b7460b0d546ec0e ("ppc/pnv: fix dumpdtb option") in 10.0.x series
-Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-ID: <20260327124136.983955-1-shivangu@linux.ibm.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit ba48bff09fa1fea8030eb26f2bc0add8c3549bb7)
+Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
+Message-id: 20260406050454.284873-2-phind.uet@gmail.com
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 4e4832dd72db59cf9348a5cb787fe65b738d7601)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 9f9f3ce4ac..e510a1cae1 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -716,31 +716,10 @@ static void pnv_powerdown_notify(Notifier *n, void *opaque)
+diff --git a/util/readline.c b/util/readline.c
+index 0f19674f52..e2664e48ca 100644
+--- a/util/readline.c
++++ b/util/readline.c
+@@ -84,7 +84,9 @@ static void readline_update(ReadLineState *rs)
  
- static void pnv_reset(MachineState *machine, ResetType type)
+ static void readline_insert_char(ReadLineState *rs, int ch)
  {
--    PnvMachineState *pnv = PNV_MACHINE(machine);
--    IPMIBmc *bmc;
-     void *fdt;
- 
-     qemu_devices_reset(type);
- 
--    /*
--     * The machine should provide by default an internal BMC simulator.
--     * If not, try to use the BMC device that was provided on the command
--     * line.
--     */
--    bmc = pnv_bmc_find(&error_fatal);
--    if (!pnv->bmc) {
--        if (!bmc) {
--            if (!qtest_enabled()) {
--                warn_report("machine has no BMC device. Use '-device "
--                            "ipmi-bmc-sim,id=bmc0 -device isa-ipmi-bt,bmc=bmc0,irq=10' "
--                            "to define one");
--            }
--        } else {
--            pnv_bmc_set_pnor(bmc, pnv->pnor);
--            pnv->bmc = bmc;
--        }
--    }
--
-     fdt = machine->fdt;
-     cpu_physical_memory_write(PNV_FDT_ADDR, fdt, fdt_totalsize(fdt));
- }
-@@ -916,6 +895,37 @@ static uint64_t pnv_chip_get_ram_size(PnvMachineState *pnv, int chip_id)
-     return chip_id == 0 ? 1 * GiB : QEMU_ALIGN_DOWN(ram_per_chip, 1 * MiB);
- }
- 
-+static void pnv_machine_init_done(Notifier *notifier, void *data)
-+{
-+    PnvMachineState *pnv = container_of(notifier, PnvMachineState, machine_init_done);
-+    MachineState *machine = MACHINE(pnv);
-+    IPMIBmc *bmc;
+-    if (rs->cmd_buf_index < READLINE_CMD_BUF_SIZE) {
++    assert(rs->cmd_buf_index <= rs->cmd_buf_size);
 +
-+    /*
-+     * The machine should provide by default an internal BMC simulator.
-+     * If not, try to use the BMC device that was provided on the command
-+     * line.
-+     */
-+    bmc = pnv_bmc_find(&error_fatal);
-+    if (!pnv->bmc) {
-+        if (!bmc) {
-+            if (!qtest_enabled()) {
-+                warn_report("machine has no BMC device. Use '-device "
-+                            "ipmi-bmc-sim,id=bmc0 -device isa-ipmi-bt,bmc=bmc0,irq=10' "
-+                            "to define one");
-+            }
-+        } else {
-+            pnv_bmc_set_pnor(bmc, pnv->pnor);
-+            pnv->bmc = bmc;
-+        }
-+    }
-+
-+    if (!machine->fdt) {
-+        machine->fdt = pnv_dt_create(machine);
-+        _FDT((fdt_pack(machine->fdt)));
-+    }
-+}
-+
- static void pnv_init(MachineState *machine)
- {
-     const char *bios_name = machine->firmware ?: FW_FILE_NAME;
-@@ -1191,10 +1201,8 @@ static void pnv_init(MachineState *machine)
-         pmc->i2c_init(pnv);
-     }
- 
--    if (!machine->fdt) {
--        machine->fdt = pnv_dt_create(machine);
--        _FDT((fdt_pack(machine->fdt)));
--    }
-+    pnv->machine_init_done.notify = pnv_machine_init_done;
-+    qemu_add_machine_init_done_notifier(&pnv->machine_init_done);
- }
- 
- /*
-diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
-index d8fca079f2..cf3bb46693 100644
---- a/include/hw/ppc/pnv.h
-+++ b/include/hw/ppc/pnv.h
-@@ -106,6 +106,8 @@ struct PnvMachineState {
- 
-     bool         big_core;
-     bool         lpar_per_core;
-+
-+    Notifier     machine_init_done;
- };
- 
- PnvChip *pnv_get_chip(PnvMachineState *pnv, uint32_t chip_id);
++    if (rs->cmd_buf_size < READLINE_CMD_BUF_SIZE) {
+         memmove(rs->cmd_buf + rs->cmd_buf_index + 1,
+                 rs->cmd_buf + rs->cmd_buf_index,
+                 rs->cmd_buf_size - rs->cmd_buf_index);
 -- 
 2.47.3
 
