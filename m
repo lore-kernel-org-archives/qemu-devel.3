@@ -4,50 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79C52CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:34:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7160CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:34:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuiM-00043R-VD; Tue, 12 May 2026 17:32:32 -0400
+	id 1wMuVc-0002AR-0O; Tue, 12 May 2026 17:19:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuY8-0002I4-Oc; Tue, 12 May 2026 17:21:58 -0400
+ id 1wMuV0-0001TO-CV; Tue, 12 May 2026 17:18:43 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuXg-0000gU-6Y; Tue, 12 May 2026 17:21:55 -0400
+ id 1wMuUs-0007nl-Bk; Tue, 12 May 2026 17:18:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619499; bh=kzBsfPBxJ9OsHGCfVDNm5liRopNuWtvBtbwcG4sITvQ=;
+ t=1778619497; bh=/0ZbzGfGskioYwQBMDo73Gh48u/hAR/dwCyinBY+ttk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=k94KpupD/SRn14j3dDnK9gQIYipfigJNK9fBR//BG7oGr1Bk04zu15p9ZlSoc7Go6
- hNfPuE9MPlPMql31iic2klKRVpbguWiEJJWzf7IbsIpufa+1kif7HK8mKrCUG21iOL
- yYG0nm7RmUkxW8dTfmfp9fdS9gxwAGKBqxzPi5gCpO8+D0JK8gzFFxdbDNvl7srAo7
- /LLyaVEMLSpG9f4kxq8kkCR09a9sCKaIGubsvG9TgsEDFiR2JpTcLi6bIc7kuFNLDy
- de0799oA3R0qIco4UODnwUPW9h6wrz/EufTnTf6oop7X1iojK4NsHpTGtYS0QPma5g
- YwUTVnaBWqklQ==
+ b=Omfbq5xezaoUX4pGX4VlWT5i0qj0ebGY0fxrecG/EjD3v2YakY3rJQ2/royr4q9ge
+ 9W59pM/k0ndsQ1op/OW/GbEAOIlKZ4ZVsb2fUJ0zseFLD7IMxjX7DrwpCDpQLYYanQ
+ zREMfdeTiXgimuofT57l2nzP5J2sERVUEcdZTklY/7a+p7RlqS5qEH4X1uPkeTd3qV
+ 4HL2uxif6ac66DRM8uW9qaoDCDOxY6mlIxoO1l3afqT9gX6NBD7+ZpOsK09y7j+DjI
+ K8iekfMOboGcYEI9g09m1aXWQzFx4Ex/slxXT6p5fczTt7+RPhPR/6hGohaRdHlTai
+ apPk5qJIuokqQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2ACEC1AA3ED;
- Tue, 12 May 2026 23:58:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 56FA81AA3D2;
+ Tue, 12 May 2026 23:58:17 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 36D093ABD45;
- Tue, 12 May 2026 23:58:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 656D93ABD2A;
+ Tue, 12 May 2026 23:58:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Sebasti=C3=A1n=20Alba=20Vives?= <sebasjosue84@gmail.com>,
- qemu-security@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 34/58] hw/intc: fix heap OOB in ACLINT MTIMER
- multi-socket
-Date: Tue, 12 May 2026 23:57:55 +0300
-Message-ID: <20260512205820.361821-34-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, rickgcn <rickgcn@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 07/58] hw: i386: vapic: restore IRQ polling for
+ non-kernel irqchip backends
+Date: Tue, 12 May 2026 23:57:28 +0300
+Message-ID: <20260512205820.361821-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,75 +69,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sebastián Alba Vives <sebasjosue84@gmail.com>
+From: rickgcn <rickgcn@gmail.com>
 
-The MMIO read/write handlers index timecmp[] with the absolute hartid
-(hartid_base + offset) but the array is allocated with num_harts
-elements. In multi-socket configurations with hartid_base > 0 this
-causes heap OOB access in the QEMU process.
+69dfc078 extended vAPIC handling for WHPX with user-mode irqchip, but it
+also changed vapic_write() case 4 in a way that excludes TCG from
+apic_poll_irq().
 
-Fix by using the relative offset for array indexing.
+Before that change, IRQ polling happened whenever no in-kernel irqchip
+was active. After the change, it only happened for KVM or WHPX with a
+user-mode irqchip. Under TCG, both kvm_enabled() and whpx_enabled() are
+false, so the poll never happens.
 
-Cc: qemu-security@nongnu.org
-Signed-off-by: Sebastián Alba Vives <sebasjosue84@gmail.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260401053853.10473-2-sebasjosue84@gmail.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit d5b33fc180f557ee3574cef9c64650174d0ef5dd)
+This regresses 32-bit Windows XP guests on a Windows host with
+-machine pc-i440fx-10.0,accel=tcg, causing a STOP 0x0000000A during boot.
+
+Fix it by making the decision depend on whether KVM or WHPX is using an
+in-kernel irqchip, instead of whether either accelerator is enabled.
+
+Fixes: 69dfc078a6f0 ("hw: i386: vapic: enable on WHPX with user-mode irqchip")
+
+Signed-off-by: rickgcn <rickgcn@gmail.com>
+Link: https://lore.kernel.org/r/20260418061429.16898-1-rickgcn@gmail.com
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit c906c2337058bd467e6ac0176c2966d1eeb6f8f5)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/riscv_aclint.c b/hw/intc/riscv_aclint.c
-index 9c1491bd04..e27e5fb394 100644
---- a/hw/intc/riscv_aclint.c
-+++ b/hw/intc/riscv_aclint.c
-@@ -131,6 +131,7 @@ static uint64_t riscv_aclint_mtimer_read(void *opaque, hwaddr addr,
-         addr < (mtimer->timecmp_base + (mtimer->num_harts << 3))) {
-         size_t hartid = mtimer->hartid_base +
-                         ((addr - mtimer->timecmp_base) >> 3);
-+        size_t hartid_offset = hartid - mtimer->hartid_base;
-         CPUState *cpu = cpu_by_arch_id(hartid);
-         CPURISCVState *env = cpu ? cpu_env(cpu) : NULL;
-         if (!env) {
-@@ -138,11 +139,11 @@ static uint64_t riscv_aclint_mtimer_read(void *opaque, hwaddr addr,
-                           "aclint-mtimer: invalid hartid: %zu", hartid);
-         } else if ((addr & 0x7) == 0) {
-             /* timecmp_lo for RV32/RV64 or timecmp for RV64 */
--            uint64_t timecmp = mtimer->timecmp[hartid];
-+            uint64_t timecmp = mtimer->timecmp[hartid_offset];
-             return (size == 4) ? (timecmp & 0xFFFFFFFF) : timecmp;
-         } else if ((addr & 0x7) == 4) {
-             /* timecmp_hi */
--            uint64_t timecmp = mtimer->timecmp[hartid];
-+            uint64_t timecmp = mtimer->timecmp[hartid_offset];
-             return (timecmp >> 32) & 0xFFFFFFFF;
-         } else {
-             qemu_log_mask(LOG_UNIMP,
-@@ -174,6 +175,7 @@ static void riscv_aclint_mtimer_write(void *opaque, hwaddr addr,
-         addr < (mtimer->timecmp_base + (mtimer->num_harts << 3))) {
-         size_t hartid = mtimer->hartid_base +
-                         ((addr - mtimer->timecmp_base) >> 3);
-+        size_t hartid_offset = hartid - mtimer->hartid_base;
-         CPUState *cpu = cpu_by_arch_id(hartid);
-         CPURISCVState *env = cpu ? cpu_env(cpu) : NULL;
-         if (!env) {
-@@ -182,7 +184,7 @@ static void riscv_aclint_mtimer_write(void *opaque, hwaddr addr,
-         } else if ((addr & 0x7) == 0) {
-             if (size == 4) {
-                 /* timecmp_lo for RV32/RV64 */
--                uint64_t timecmp_hi = mtimer->timecmp[hartid] >> 32;
-+                uint64_t timecmp_hi = mtimer->timecmp[hartid_offset] >> 32;
-                 riscv_aclint_mtimer_write_timecmp(mtimer, RISCV_CPU(cpu), hartid,
-                     timecmp_hi << 32 | (value & 0xFFFFFFFF));
-             } else {
-@@ -193,7 +195,7 @@ static void riscv_aclint_mtimer_write(void *opaque, hwaddr addr,
-         } else if ((addr & 0x7) == 4) {
-             if (size == 4) {
-                 /* timecmp_hi for RV32/RV64 */
--                uint64_t timecmp_lo = mtimer->timecmp[hartid];
-+                uint64_t timecmp_lo = mtimer->timecmp[hartid_offset];
-                 riscv_aclint_mtimer_write_timecmp(mtimer, RISCV_CPU(cpu), hartid,
-                     value << 32 | (timecmp_lo & 0xFFFFFFFF));
-             } else {
+diff --git a/hw/i386/vapic.c b/hw/i386/vapic.c
+index 41e5ca26df..1acb9f91b2 100644
+--- a/hw/i386/vapic.c
++++ b/hw/i386/vapic.c
+@@ -716,8 +716,7 @@ static void vapic_write(void *opaque, hwaddr addr, uint64_t data,
+         break;
+     default:
+     case 4:
+-        if ((kvm_enabled() && !kvm_irqchip_in_kernel())
+-          || (whpx_enabled() && !whpx_irqchip_in_kernel())) {
++        if (!kvm_irqchip_in_kernel() && !whpx_irqchip_in_kernel()) {
+             apic_poll_irq(cpu->apic_state);
+         }
+         break;
 -- 
 2.47.3
 
