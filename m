@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3327ACD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:47:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6895DCD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:47:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuWg-0006wd-23; Tue, 12 May 2026 17:20:26 -0400
+	id 1wMuNH-0005IU-C0; Tue, 12 May 2026 17:10:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuWW-0006Bd-Vs; Tue, 12 May 2026 17:20:19 -0400
+ id 1wMuNE-0004tv-6p; Tue, 12 May 2026 17:10:40 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuWU-00007K-Qp; Tue, 12 May 2026 17:20:16 -0400
+ id 1wMuNB-0003yM-AV; Tue, 12 May 2026 17:10:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619498; bh=3SPDU/MzEED/in/FPcMMdlRMZaMC11Nee7F0BCRqMtM=;
+ t=1778619302; bh=r51wgXVRgwo47tV9JqOsKPpvDm7+AmKogHeS5cVH7zc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=T4bCyna7lFO8Xb9ams/FxMNJWCNrQETdN+jVjCEhVD1WKe9Vh4soYsy2APAJaKnvM
- E9yhCAM4SpRrGgG62mVWd/4NqEbgHy+YH9v6wAppDEx2mxnf6S7RPRqoZCMgC5e781
- CLKXhIFUbQssB9M4r9O2g7KQCPxdiNDcclPzjnb3NZ7w0jBuZzGRWObvdIoHSBOExS
- pZqP1OcvmKuz7jgCoGyRFAs755UA6diYsOfv5McYi221LnG56NkxrhSPnI1BC8fZLe
- ApF0sLd3Byc3CFnGZSi1LypKbRRi7FiCtIH9ecIGGK7bjOBNEtnN9iU7sO+Qwmpwcn
- NjQGO3a/kGljA==
+ b=uv7a68+G7VMRY/qJr6g/lDt60Ct1TeBwusdgDSJpqb3R7DNEitsXwqRhYNFKEhIxx
+ oGRcISqKFVSJth0ymhUVtrQBva25c9EvKtJFFM9x+2ipsTzZDVQG6Sj1MJ1e1ecVU2
+ ZoKWWsURasjreO32aAkPv1rBhSRi5Lt8uOtOxYnCPdaEuEAOqiGNDHYLOCPhE/H/K7
+ QoWfsdxhhDfEVlBym51ujr9JUHlXcGHzWPpGGznISJY38gzf7YUJGi0dV5/GQmiecL
+ knOFLMsHfJc8mr0rvLQKtH0J+SSWJSNS5RTj11CCiKchPmlX6HDOP9/r+uC0BIZvN9
+ 3ao/0HPiuV/Ow==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7D54E1AA3E3;
- Tue, 12 May 2026 23:58:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C903B1AA36C;
+ Tue, 12 May 2026 23:55:02 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8C08E3ABD3B;
- Tue, 12 May 2026 23:58:22 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D43703ABCDC;
+ Tue, 12 May 2026 23:55:06 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 24/58] linux-user: Define SO_TIMESTAMP*_NEW and
- SO_RCVTIMEIO_NEW
-Date: Tue, 12 May 2026 23:57:45 +0300
-Message-ID: <20260512205820.361821-24-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 047/117] scsi: Don't consider LOGICAL UNIT NOT
+ SUPPORTED guest recoverable
+Date: Tue, 12 May 2026 23:53:49 +0300
+Message-ID: <20260512205503.361097-47-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
-References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -69,103 +70,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Kevin Wolf <kwolf@redhat.com>
 
-Define the entries which always use the 64-bit timestamps.
+When commit bdf9613b introduced scsi_sense_buf_is_guest_recoverable(),
+it included LOGICAL UNIT NOT SUPPORTED in the list of guest recoverable
+sense codes. It doesn't really explain how the codes to be in the list
+were selected.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 8b60ed835478a787dd60e0f7308a65f6d35b0268)
+As the LUN doesn't come from the guest, but from the block backend
+(usually the SCSI device on the host that was opened with host_device,
+but it could also be the iscsi block driver), there is really no way the
+guest could influence this.
+
+It seems that on some storage arrays, LOGICAL UNIT NOT SUPPORTED can
+happen during failover operations. When combined with multipath, the
+request should be retried on another path instead of being reported to
+the guest, which would offline the filesystem in response.
+
+Simply returning false in scsi_sense_buf_is_guest_recoverable() will
+enable the retry logic in file-posix, and will also make sure that if
+the error persists, the configured error policy is respected so that the
+VM can be stopped.
+
+Buglink: https://redhat.atlassian.net/browse/RHEL-158212
+Fixes: bdf9613b7f87 ('scsi: explicitly list guest-recoverable sense codes')
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20260330121635.49205-1-kwolf@redhat.com>
+Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit ccc613f96c66eb5401185ff6eeba18143892055d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/alpha/sockbits.h b/linux-user/alpha/sockbits.h
-index d54dc98c09..0201ab9374 100644
---- a/linux-user/alpha/sockbits.h
-+++ b/linux-user/alpha/sockbits.h
-@@ -75,6 +75,13 @@
- /* Instruct lower device to use last 4-bytes of skb data as FCS */
- #define TARGET_SO_NOFCS     43
+diff --git a/scsi/utils.c b/scsi/utils.c
+index 545956f4f9..daee90ecf0 100644
+--- a/scsi/utils.c
++++ b/scsi/utils.c
+@@ -373,7 +373,6 @@ static bool scsi_sense_is_guest_recoverable(int key, int asc, int ascq)
+     case 0x1a00: /* PARAMETER LIST LENGTH ERROR */
+     case 0x2000: /* INVALID OPERATION CODE */
+     case 0x2400: /* INVALID FIELD IN CDB */
+-    case 0x2500: /* LOGICAL UNIT NOT SUPPORTED */
+     case 0x2600: /* INVALID FIELD IN PARAMETER LIST */
  
-+#define TARGET_SO_TIMESTAMP_NEW        63
-+#define TARGET_SO_TIMESTAMPNS_NEW      64
-+#define TARGET_SO_TIMESTAMPING_NEW     65
-+
-+#define TARGET_SO_RCVTIMEO_NEW         66
-+#define TARGET_SO_SNDTIMEO_NEW         67
-+
- /* TARGET_O_NONBLOCK clashes with the bits used for socket types.  Therefore we
-  * have to define SOCK_NONBLOCK to a different value here.
-  */
-diff --git a/linux-user/generic/sockbits.h b/linux-user/generic/sockbits.h
-index b3b4a8e44c..33e6c3a572 100644
---- a/linux-user/generic/sockbits.h
-+++ b/linux-user/generic/sockbits.h
-@@ -58,4 +58,12 @@
- 
- #define TARGET_SO_PROTOCOL             38
- #define TARGET_SO_DOMAIN               39
-+
-+#define TARGET_SO_TIMESTAMP_NEW        63
-+#define TARGET_SO_TIMESTAMPNS_NEW      64
-+#define TARGET_SO_TIMESTAMPING_NEW     65
-+
-+#define TARGET_SO_RCVTIMEO_NEW         66
-+#define TARGET_SO_SNDTIMEO_NEW         67
-+
- #endif
-diff --git a/linux-user/hppa/sockbits.h b/linux-user/hppa/sockbits.h
-index 23f69a3293..2304dbbf79 100644
---- a/linux-user/hppa/sockbits.h
-+++ b/linux-user/hppa/sockbits.h
-@@ -67,6 +67,13 @@
- 
- #define TARGET_SO_CNX_ADVICE           0x402E
- 
-+#define TARGET_SO_TIMESTAMP_NEW        0x4038
-+#define TARGET_SO_TIMESTAMPNS_NEW      0x4039
-+#define TARGET_SO_TIMESTAMPING_NEW     0x403A
-+
-+#define TARGET_SO_RCVTIMEO_NEW         0x4040
-+#define TARGET_SO_SNDTIMEO_NEW         0x4041
-+
- /* TARGET_O_NONBLOCK clashes with the bits used for socket types.  Therefore we
-  * have to define SOCK_NONBLOCK to a different value here.
-  */
-diff --git a/linux-user/mips/sockbits.h b/linux-user/mips/sockbits.h
-index 562cad88e2..1f479d54aa 100644
---- a/linux-user/mips/sockbits.h
-+++ b/linux-user/mips/sockbits.h
-@@ -71,6 +71,13 @@
- #define TARGET_SO_RCVBUFFORCE          33
- #define TARGET_SO_PASSSEC              34
- 
-+#define TARGET_SO_TIMESTAMP_NEW        63
-+#define TARGET_SO_TIMESTAMPNS_NEW      64
-+#define TARGET_SO_TIMESTAMPING_NEW     65
-+
-+#define TARGET_SO_RCVTIMEO_NEW         66
-+#define TARGET_SO_SNDTIMEO_NEW         67
-+
- /** sock_type - Socket types
-  *
-  * Please notice that for binary compat reasons MIPS has to
-diff --git a/linux-user/sparc/sockbits.h b/linux-user/sparc/sockbits.h
-index 0a822e3e1f..42ecfdc8f9 100644
---- a/linux-user/sparc/sockbits.h
-+++ b/linux-user/sparc/sockbits.h
-@@ -61,6 +61,13 @@
- #define TARGET_SO_TIMESTAMPING         0x0023
- #define TARGET_SCM_TIMESTAMPING        TARGET_SO_TIMESTAMPING
- 
-+#define TARGET_SO_TIMESTAMP_NEW        0x0046
-+#define TARGET_SO_TIMESTAMPNS_NEW      0x0042
-+#define TARGET_SO_TIMESTAMPING_NEW     0x0043
-+
-+#define TARGET_SO_RCVTIMEO_NEW         0x0044
-+#define TARGET_SO_SNDTIMEO_NEW         0x0045
-+
- #define TARGET_SO_RXQ_OVFL             0x0024
- 
- #define TARGET_SO_WIFI_STATUS          0x0025
+     case 0x2104: /* UNALIGNED WRITE COMMAND */
 -- 
 2.47.3
 
