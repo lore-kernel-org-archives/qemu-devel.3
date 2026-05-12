@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5B81CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 20:58:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CF58CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 20:59:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMu9C-0005Hf-Tc; Tue, 12 May 2026 16:56:11 -0400
+	id 1wMuAp-0000cW-Ty; Tue, 12 May 2026 16:57:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMu9A-000562-6g; Tue, 12 May 2026 16:56:08 -0400
+ id 1wMuAf-00087t-MA; Tue, 12 May 2026 16:57:42 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMu98-0003Eq-93; Tue, 12 May 2026 16:56:07 -0400
+ id 1wMuAd-0003dS-Q3; Tue, 12 May 2026 16:57:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619274; bh=hHx/6MVcdTwYFjek/vYMKEkcpRNm8c9zWAEQmvWI/Dw=;
+ t=1778619275; bh=8UNfDJdHb+yrzOTJNdqGfFYwGI+KsYdynfiB9eZpL4w=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=oOtrSvSwKolaP7KYovb/XMLzBS0McOB+T5zzHnv4E0HHJ9tpfWNeFZ5inteF7RRJn
- gpT0w6VUIHB62rFTY9Yjz6WfpM5J9gVs6iPHOtVvEuYMpNGhEs8QMGPcz9RpZH8gpT
- em35ZiaokWz8ML7dM+b0ZxrS0nMDk7oOSbQGGvIr38LXS67/Ed4Uuc7nXO6XET41Pq
- j9+QNeK01cNpGd2IzVcBd462jrz9/OJRp6MRD49BRqauJUnKYuZC/GMP2DBm2dZmBw
- WPbKv05c3qvUbKKAxG6lfmLgeseeahJu4wnkpGexiOcYRd8OBCKYclz0nf98d26Ys6
- 8L/2stK6tMx4A==
+ b=wasoQNPF9dwGewKcyOr4piBVic9IBnZu74SniQRlc0KIY0Udn+JJkNhdIuLlRxyhI
+ O9HKYE8hzJ3EwpCpmCF480K5To52RU4zpH0PRHMw64O+ra1Wr9FblygfD4JDv4+WQ0
+ u43idFoNYxN0dT8om0vAXm1ICDLVpAVjiCbufT+1UmsG+/xwCBZ9qvS0b2BG5Jj6/k
+ Rfk4BqYCWbhzkDUL1u2+0UnRI0KNBwsS3skEcYdkDCX7FNoOk0tPOBk95FEbrh52x7
+ 0yI+6Hmt3IOZvjGb4Aie9PyVsmGLEPoBMg/mO/Rv7D8loGWKNiKj4hFIbAXyHi4Sx/
+ cUeHY2J/RFKhg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8263B1AA2DE;
- Tue, 12 May 2026 23:54:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3AD311AA2EA;
+ Tue, 12 May 2026 23:54:35 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8DCEA3ABC4F;
- Tue, 12 May 2026 23:54:38 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 483E03ABC5B;
+ Tue, 12 May 2026 23:54:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 018/107] rust: suggest passing --locked to "cargo
- install"
-Date: Tue, 12 May 2026 23:53:05 +0300
-Message-ID: <20260512205437.360850-18-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Kaixuan Li <kaixuanli@ntu.edu.sg>,
+ Klaus Jensen <k.jensen@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 030/107] hw/nvme: fix heap-buffer-overflow in
+ nvme_abort
+Date: Tue, 12 May 2026 23:53:17 +0300
+Message-ID: <20260512205437.360850-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,94 +69,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Kaixuan Li <kaixuanli@ntu.edu.sg>
 
-Without the option, cargo will try using the latest version of the
-dependencies of bindgen-cli. While it will obviously respect the
-constraints in Cargo.toml, old versions of Cargo do not have
-version-constrained resolution and will choke on dependencies
-that need Rust 2024.
+In nvme_abort(), the submission queue pointer is dereferenced from the
+guest-controlled sqid before validating it with nvme_check_sqid():
 
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 6257754bb9b00b52018951096a9fba28b98a5b0d)
+    NvmeSQueue *sq = n->sq[sqid];
+
+Since sqid is a 16-bit value (range 0-65535) taken directly from CDW10,
+and n->sq[] is typically only max_ioqpairs+1 (65) entries, a malicious
+guest can trigger an out-of-bounds heap read by sending an Abort command
+with a large sqid.
+
+ASan reports this as heap-buffer-overflow in nvme_abort.
+
+Fix this by moving the array dereference to after the nvme_check_sqid()
+bounds validation.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3348
+Fixes: 75209c071a ("hw/nvme: actually implement abort")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Kaixuan Li <kaixuanli@ntu.edu.sg>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+(cherry picked from commit eb5cc99aff17cbfdad16b18d3503c6f22233eeb5)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
-index 52521552c8..42787ac0b6 100644
---- a/docs/about/build-platforms.rst
-+++ b/docs/about/build-platforms.rst
-@@ -116,7 +116,7 @@ Rust build dependencies
-   bindgen tool, which is too big to package and distribute.  The minimum
-   supported version of bindgen is 0.60.x.  For distributions that do not
-   include bindgen or have an older version, it is recommended to install
--  a newer version using ``cargo install bindgen-cli``.
-+  a newer version using ``cargo install --locked bindgen-cli``.
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index c93039ba23..60738e3466 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -6109,7 +6109,7 @@ static uint16_t nvme_abort(NvmeCtrl *n, NvmeRequest *req)
+ {
+     uint16_t sqid = le32_to_cpu(req->cmd.cdw10) & 0xffff;
+     uint16_t cid  = (le32_to_cpu(req->cmd.cdw10) >> 16) & 0xffff;
+-    NvmeSQueue *sq = n->sq[sqid];
++    NvmeSQueue *sq;
+     NvmeRequest *r, *next;
+     int i;
  
-   Developers may want to use Cargo-based tools in the QEMU source tree;
-   this requires Cargo 1.74.0.  Note that Cargo is not required in order
-diff --git a/meson.build b/meson.build
-index 8ec796d835..327c1e19f8 100644
---- a/meson.build
-+++ b/meson.build
-@@ -109,7 +109,7 @@ if have_rust
-   bindgen = find_program('bindgen', required: get_option('rust'))
-   if not bindgen.found() or bindgen.version().version_compare('<0.60.0')
-     if get_option('rust').enabled()
--      error('bindgen version ' + bindgen.version() + ' is unsupported. You can install a new version with "cargo install bindgen-cli"')
-+      error('bindgen version ' + bindgen.version() + ' is unsupported. You can install a new version with "cargo install --locked bindgen-cli"')
-     else
-       if bindgen.found()
-         warning('bindgen version ' + bindgen.version() + ' is unsupported, disabling Rust compilation.')
-diff --git a/tests/docker/dockerfiles/fedora-rust-nightly.docker b/tests/docker/dockerfiles/fedora-rust-nightly.docker
-index fe4a6ed48d..cf16205ebf 100644
---- a/tests/docker/dockerfiles/fedora-rust-nightly.docker
-+++ b/tests/docker/dockerfiles/fedora-rust-nightly.docker
-@@ -172,7 +172,7 @@ RUN set -eux && \
-   test "$CARGO" = "$(/usr/local/cargo/bin/rustup +nightly which cargo)" && \
-   test "$RUSTC" = "$(/usr/local/cargo/bin/rustup +nightly which rustc)"
- ENV PATH=$CARGO_HOME/bin:$PATH
--RUN /usr/local/cargo/bin/rustup run nightly cargo install bindgen-cli
-+RUN /usr/local/cargo/bin/rustup run nightly cargo install --locked bindgen-cli
- RUN $CARGO --list
- # As a final step configure the user (if env is defined)
- ARG USER
-diff --git a/tests/docker/dockerfiles/ubuntu2204.docker b/tests/docker/dockerfiles/ubuntu2204.docker
-index 88ce4ef9a9..ace5a4b1ef 100644
---- a/tests/docker/dockerfiles/ubuntu2204.docker
-+++ b/tests/docker/dockerfiles/ubuntu2204.docker
-@@ -154,7 +154,7 @@ ENV CARGO_HOME=/usr/local/cargo
- ENV PATH=$CARGO_HOME/bin:$PATH
- RUN DEBIAN_FRONTEND=noninteractive eatmydata \
-   apt install -y --no-install-recommends cargo
--RUN cargo install bindgen-cli
-+RUN cargo install --locked bindgen-cli
- # As a final step configure the user (if env is defined)
- ARG USER
- ARG UID
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index aa551aca9b..7f36a09450 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -137,7 +137,7 @@ fedora_rustup_nightly_extras = [
-     '  test "$CARGO" = "$(/usr/local/cargo/bin/rustup +nightly which cargo)" && \\\n',
-     '  test "$RUSTC" = "$(/usr/local/cargo/bin/rustup +nightly which rustc)"\n',
-     'ENV PATH=$CARGO_HOME/bin:$PATH\n',
--    'RUN /usr/local/cargo/bin/rustup run nightly cargo install bindgen-cli\n',
-+    'RUN /usr/local/cargo/bin/rustup run nightly cargo install --locked bindgen-cli\n',
-     'RUN $CARGO --list\n',
- ]
+@@ -6118,6 +6118,8 @@ static uint16_t nvme_abort(NvmeCtrl *n, NvmeRequest *req)
+         return NVME_INVALID_FIELD | NVME_DNR;
+     }
  
-@@ -146,7 +146,7 @@ ubuntu2204_bindgen_extras = [
-     'ENV PATH=$CARGO_HOME/bin:$PATH\n',
-     "RUN DEBIAN_FRONTEND=noninteractive eatmydata \\\n",
-     "  apt install -y --no-install-recommends cargo\n",
--    'RUN cargo install bindgen-cli\n',
-+    'RUN cargo install --locked bindgen-cli\n',
- ]
- 
- def cross_build(prefix, targets):
++    sq = n->sq[sqid];
++
+     if (sqid == 0) {
+         for (i = 0; i < n->outstanding_aers; i++) {
+             NvmeRequest *re = n->aer_reqs[i];
 -- 
 2.47.3
 
