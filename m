@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D935CD4F35
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 08:35:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F189CD4855
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 08:35:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMiZL-00023E-7Q; Tue, 12 May 2026 04:34:23 -0400
+	id 1wMiZO-00024W-QU; Tue, 12 May 2026 04:34:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1wMiZK-00022Y-0y
- for qemu-devel@nongnu.org; Tue, 12 May 2026 04:34:22 -0400
+ id 1wMiZN-00023t-3a
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 04:34:25 -0400
 Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1wMiZH-00005i-5A
- for qemu-devel@nongnu.org; Tue, 12 May 2026 04:34:21 -0400
+ id 1wMiZK-000055-7J
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 04:34:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1778574859; x=1810110859;
+ t=1778574862; x=1810110862;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=FqMTFJZhhczXckszP0/dw7hvWNcTDTeX6slbhhoplXs=;
- b=FG7uXUUg8b+lKcmJu8GvYMAM/guPxAbQjYAXT/He1e5E0GBXgGcj8m2h
- L9bmTkGY1nVk5Qgb9bpYrNTN2ZgVcFz9X7OCac1W+WMg2pQ0jd+84QV0s
- iy/oO+L9O6AxV5J6p9OHOibvQ5PZLObdaIMIPPrpnsbbefBWnDscEUSLW
- vF4EPqlkV1xc6LWgO3L7o6pHxVP/LQrHfKd1HKUgw2LZUN24jvf07vRz+
- vs0lPCsw02qacuIpdxsniJ0fetvMMrSNR7dPeMZwJxpc0AYlHWpXBPFW3
- DwZXK4sKj8PKmd4zTZT/b+5yz8aiyCfFqX9lpBCzJvUyCVfGn/KsWPqYO Q==;
-X-CSE-ConnectionGUID: t/d5c5swSQytRGOp0imclg==
-X-CSE-MsgGUID: ETIzc2uURwuXEqe0yuoE4w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11783"; a="90060005"
-X-IronPort-AV: E=Sophos;i="6.23,230,1770624000"; d="scan'208";a="90060005"
+ bh=T262GeUkgJ9n1t/2mqAHvvUTp3s6sBxxPF2cFuudCeU=;
+ b=YTrY/xjwwIqHg+G7td8ij0REOfN03k/TAa8thPEacjTS34pXzqokvbe9
+ pP8qGL198PqydwRIodlVQW8nPNRkQIqjugbHAsXsyKmsaub9PyyOJro77
+ a29UvpHVjergYHQUOYdUzyGgK9nawwQlBIiED5xAorkm9nTXT0e4MKkky
+ OP1pbR79jWHS/0Ra6zxC2RNIrlpYWoIry6gennsuz+vI4jymNXWjvywq2
+ fl7nDg8uhDzzshuhvCo1aoyU5lXUFkKh7qKRWiZ+7LfaAJvd9hG6N9xtJ
+ dA0LdjM4/usYjKePNTuMqu3mBL+FGqUCRtrvTClI9WCCvsGXtuvMpq1Np w==;
+X-CSE-ConnectionGUID: C3HalHuXTtSNM0cHqb9OLQ==
+X-CSE-MsgGUID: fawhNhGQRgGsCMU7tKzi7w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11783"; a="90060007"
+X-IronPort-AV: E=Sophos;i="6.23,230,1770624000"; d="scan'208";a="90060007"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 May 2026 01:34:18 -0700
-X-CSE-ConnectionGUID: u6DhdmH9QIac95HEJuQq8Q==
-X-CSE-MsgGUID: axzOspCCQ5KnMRPkC9rBfQ==
+ 12 May 2026 01:34:19 -0700
+X-CSE-ConnectionGUID: 1GtA795FSLmt63R32VOrVA==
+X-CSE-MsgGUID: pETO5cfbRKmC3ga1VaFhNg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,230,1770624000"; d="scan'208";a="237947186"
+X-IronPort-AV: E=Sophos;i="6.23,230,1770624000"; d="scan'208";a="237947190"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.22])
- by orviesa007.jf.intel.com with ESMTP; 12 May 2026 01:34:15 -0700
+ by orviesa007.jf.intel.com with ESMTP; 12 May 2026 01:34:16 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Chenyi Qiang <chenyi.qiang@intel.com>, xiaoyao.li@intel.com
-Subject: [PATCH 2/3] i386/tdx: Make AMX alias bits supported
-Date: Tue, 12 May 2026 16:21:07 +0800
-Message-ID: <20260512082108.621596-3-xiaoyao.li@intel.com>
+Subject: [PATCH 3/3] i386/tdx: Add CPUID_24_0_EBX_AVX10_VL_MASK as supported
+Date: Tue, 12 May 2026 16:21:08 +0800
+Message-ID: <20260512082108.621596-4-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260512082108.621596-1-xiaoyao.li@intel.com>
 References: <20260512082108.621596-1-xiaoyao.li@intel.com>
@@ -82,72 +82,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When booting a TD guest on a platform that supports AMX alias bits, QEMU
-emits the warning such as:
+AVX10 depends on CPUID_24_0_EBX_AVX10_VL_MASK as defined in
+feature_dependencies[]. Currently CPUID_24_0_EBX_AVX10_VL_MASK is always
+not supported for TDX, so AVX10 cannot be exposed to TD guest.
 
-  qemu-system-x86_64: warning: TDX forcibly sets the feature: CPUID[eax=1Eh,ecx=01h].EAX.amx-int8-alias [bit 0]
-  ...
+The TDX virtualization type of these bits is "XFAM & CPUID_Enabled &
+Native": their value is determined by XFAM[5:7], the AVX10 CPUID bit,
+and the native hardware value.
 
-Bit[3:0] of CPUID(0x1e,1).EAX alias the AMX CPUID bits from leaf 7.
-Their TDX virtualization type is "CPUID_Enabled & Native": the value is
-determined by the leaf-7 AMX bit they are aliased to and the native
-hardware value.
-
-These bits must be added to the TDX supported bits list so that they can
-be enabled without triggering the forced-set warning. For simplicity,
-mark them as supported whenever the corresponding AMX XFAM bit is
-supported, rather than checking each aliased leaf-7 bit individually.
-This reduces code complexity. Any platform that supports the AMX XFAM bit
-but not these alias bits will still be handled correctly, since the TDX
-module provides the real value via tdx_check_features().
+For simplicity, add CPUID_24_0_EBX_AVX10_VL_MASK to tdx_xfam_deps[]
+under the AVX512/XFAM dependency, without separately checking the AVX10
+bit. It's safe because any invalid combination supplied by the user will
+be caught by tdx_check_features().
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Tested-by: Chenyi Qiang <chenyi.qiang@intel.com>
 ---
- target/i386/kvm/tdx.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ target/i386/kvm/tdx.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 6f93997d62db..6c80f6e7dcbe 100644
+index 6c80f6e7dcbe..b1bc4ffd950f 100644
 --- a/target/i386/kvm/tdx.c
 +++ b/target/i386/kvm/tdx.c
-@@ -560,13 +560,19 @@ typedef struct TdxXFAMDep {
- } TdxXFAMDep;
- 
- /*
-- * Note, only the CPUID bits whose virtualization type are "XFAM & Native" are
-- * defiend here.
-+ * Note, usually the CPUID bits whose virtualization type are "XFAM & Native"
-+ * are defined here while "XFAM & Configured & Native" are not. Because the
-+ * latter are reported as configurable bits by KVM when they are supported.
-+ * And they are not supported when not in the configurable bits list from KVM
-+ * even if the corresponding XFAM bit is supported.
+@@ -571,6 +571,9 @@ typedef struct TdxXFAMDep {
+  * - AMX alias bits, their type is "CPUID_Enabled & Native" which means their
+  * value is determined by the CPUID bit they are aliased to.
   *
-- * For those whose virtualization type are "XFAM & Configured & Native", they
-- * are reported as configurable bits. And they are not supported if not in the
-- * configureable bits list from KVM even if the corresponding XFAM bit is
-- * supported.
-+ * Special cases:
++ * - AVX10_VL_MASK, their type is "XFAM & CPUID_Enabled & Native" which means
++ * their value is determined by both the corresponding XFAM bit and CPUID bit.
 + *
-+ * - AMX alias bits, their type is "CPUID_Enabled & Native" which means their
-+ * value is determined by the CPUID bit they are aliased to.
-+ *
-+ * For simplicity, relax the dependency to related XFAM bit.
-+ * tdx_check_features() will eventually catch the unsupported configurations.
+  * For simplicity, relax the dependency to related XFAM bit.
+  * tdx_check_features() will eventually catch the unsupported configurations.
   */
- TdxXFAMDep tdx_xfam_deps[] = {
-     { XSTATE_YMM_BIT,       { FEAT_1_ECX, CPUID_EXT_FMA } },
-@@ -580,6 +586,10 @@ TdxXFAMDep tdx_xfam_deps[] = {
-     { XSTATE_XTILE_CFG_BIT, { FEAT_7_0_EDX, CPUID_7_0_EDX_AMX_BF16 } },
-     { XSTATE_XTILE_CFG_BIT, { FEAT_7_0_EDX, CPUID_7_0_EDX_AMX_TILE } },
-     { XSTATE_XTILE_CFG_BIT, { FEAT_7_0_EDX, CPUID_7_0_EDX_AMX_INT8 } },
-+    { XSTATE_XTILE_CFG_BIT, { FEAT_1E_1_EAX, CPUID_1E_1_EAX_AMX_INT8_ALIAS } },
-+    { XSTATE_XTILE_CFG_BIT, { FEAT_1E_1_EAX, CPUID_1E_1_EAX_AMX_BF16_ALIAS } },
-+    { XSTATE_XTILE_CFG_BIT, { FEAT_1E_1_EAX, CPUID_1E_1_EAX_AMX_COMPLEX_ALIAS } },
-+    { XSTATE_XTILE_CFG_BIT, { FEAT_1E_1_EAX, CPUID_1E_1_EAX_AMX_FP16_ALIAS } },
- };
- 
- static struct kvm_cpuid_entry2 *find_in_supported_entry(uint32_t function,
+@@ -579,6 +582,7 @@ TdxXFAMDep tdx_xfam_deps[] = {
+     { XSTATE_YMM_BIT,       { FEAT_7_0_EBX, CPUID_7_0_EBX_AVX2 } },
+     { XSTATE_OPMASK_BIT,    { FEAT_7_0_ECX, CPUID_7_0_ECX_AVX512_VBMI } },
+     { XSTATE_OPMASK_BIT,    { FEAT_7_0_EDX, CPUID_7_0_EDX_AVX512_FP16 } },
++    { XSTATE_OPMASK_BIT,    { FEAT_24_0_EBX, CPUID_24_0_EBX_AVX10_VL_MASK } },
+     { XSTATE_PT_BIT,        { FEAT_7_0_EBX, CPUID_7_0_EBX_INTEL_PT } },
+     { XSTATE_PKRU_BIT,      { FEAT_7_0_ECX, CPUID_7_0_ECX_PKU } },
+     { XSTATE_CET_U_BIT,     { FEAT_7_0_ECX, CPUID_7_0_ECX_CET_SHSTK } },
 -- 
 2.43.0
 
