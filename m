@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08F5DCD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:13:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0714ECD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:13:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuFI-0000pJ-Ru; Tue, 12 May 2026 17:02:33 -0400
+	id 1wMuO9-000054-A2; Tue, 12 May 2026 17:11:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuDN-0005rl-Gx; Tue, 12 May 2026 17:00:29 -0400
+ id 1wMuNg-0007p3-AH; Tue, 12 May 2026 17:11:10 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuDL-0006Dn-NS; Tue, 12 May 2026 17:00:29 -0400
+ id 1wMuNe-00040h-Lg; Tue, 12 May 2026 17:11:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619277; bh=NKASA8j8e/Rz3S+oKweDj6mSgKRTbS9+ieSzwNzV7Hk=;
+ t=1778619303; bh=ulGqDMg7rJbIj1wEVL1WQE/D5E4y5lKp07H1knBt8+I=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=i1zeYV0oWTGEiQdwCKbtwPgHycW/eAazO5k6OZqrwpEQB84OA5tsBLcBIA5AS/pZ9
- 64G+tsrr4cKoWac8kZ6/WyCf3lbNCDAhb5dmXQC50pX6d2uulVXSP8SPQCExgw4JMR
- d8Cc8FagPlJZDGOtlV84O1I8iLppt7xqwi7BWlRK9JLIUJo5PLZDOjjPYqSuF1CoZ8
- mTZuxrjX4Iufh9a9A8qYpeYIIDCoWg2mLfrwkZsu1d0TGaNf4LU0adNu3DIfUiYMnI
- y6GIrU95TkKUrMxoMl0ZuNWm83iUzk2Kw5Mhig8AYmhreycD9b+2Kbr2/8uojUUJLe
- kkMP95xPtIhig==
+ b=ex9x/OBOs5cVhPCPgOOcZXGF3dHCI9KSiR8VZw76NfS0t0pY+u8GxYOv6vdz3Ap2y
+ jgbYqQwe2rq7pb4Q7YhWM+nfiscRPnR0k91k11IQGFYGbblRGBSfRxT9PjSLaG19gf
+ y0HwG5UK/kVyiOlqhvFgukse4EnhzISc6mAmoSQuIXkHAAwWIrbpgUIl0dxLDNLJbN
+ RUujLht1WwhWalIrih9ntatelfAXtOLh3ng3+X3NpPkJ7NSgOvyld0QUC55JbLSGMm
+ uT/X2MUsee8zBCsEHzZypWPKXAu8VoHMMMVynNJHSl9Av31fM6aFzI9sv+Mbn3Htrn
+ O3/4m7/QQCtKw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 16A3F1AA306;
- Tue, 12 May 2026 23:54:37 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1CC5E1AA370;
+ Tue, 12 May 2026 23:55:03 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 22F953ABC77;
- Tue, 12 May 2026 23:54:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 27C243ABCE0;
+ Tue, 12 May 2026 23:55:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, GuoHan Zhao <zhaoguohan@kylinos.cn>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Panda Jiang <3160104094@zju.edu.cn>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 058/107] ui/spice-app: detect runtime directory
- creation failures
-Date: Tue, 12 May 2026 23:53:45 +0300
-Message-ID: <20260512205437.360850-58-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 051/117] accel/tcg: Fix uninitialized hostp in
+ get_page_addr_code_hostp
+Date: Tue, 12 May 2026 23:53:53 +0300
+Message-ID: <20260512205503.361097-51-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
-References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,39 +72,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: GuoHan Zhao <zhaoguohan@kylinos.cn>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-spice_app_display_early_init() creates the per-VM runtime directory
-with g_mkdir_with_parents() before setting up the Spice socket. The
-code checks for "< -1", but g_mkdir_with_parents() returns -1 on
-failure, so the error path is never taken.
+This uninitialized value violates the contract in the
+documentation comment, and may lead to a SEGV during
+translaton with -d in_asm.
 
-This lets spice-app continue after a directory creation failure and
-defers the problem to later setup steps.
+Change the documentation to disallow hostp NULL.
+Pass hostp to probe_access_internal directly.
 
-Check for "< 0" instead so the failure is reported immediately and
-spice-app exits before using an invalid runtime directory.
-
-Fixes: d8aec9d9f129 ("display: add -display spice-app launching a Spice client")
-Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260408031725.641417-1-zhaoguohan@kylinos.cn>
-(cherry picked from commit 52cf667ed2285aa2d08db6abed46cdba5c14f9aa)
+Reported-by: Panda Jiang <3160104094@zju.edu.cn>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit 0039e5fd22344fec664c980d7a27443568834264)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/spice-app.c b/ui/spice-app.c
-index 91e258a621..f6d494fddd 100644
---- a/ui/spice-app.c
-+++ b/ui/spice-app.c
-@@ -153,7 +153,7 @@ static void spice_app_display_early_init(DisplayOptions *opts)
-     if (qemu_name) {
-         app_dir = g_build_filename(g_get_user_runtime_dir(),
-                                    "qemu", qemu_name, NULL);
--        if (g_mkdir_with_parents(app_dir, S_IRWXU) < -1) {
-+        if (g_mkdir_with_parents(app_dir, S_IRWXU) < 0) {
-             error_report("Failed to create directory %s: %s",
-                          app_dir, strerror(errno));
-             exit(1);
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index fd1606c856..2d6f51b68c 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -1544,18 +1544,18 @@ tb_page_addr_t get_page_addr_code_hostp(CPUArchState *env, vaddr addr,
+ 
+     (void)probe_access_internal(env_cpu(env), addr, 1, MMU_INST_FETCH,
+                                 cpu_mmu_index(env_cpu(env), true), false,
+-                                &p, &full, 0, false);
++                                hostp, &full, 0, false);
++
++    p = *hostp;
+     if (p == NULL) {
+         return -1;
+     }
+ 
+     if (full->lg_page_size < TARGET_PAGE_BITS) {
++        *hostp = NULL;
+         return -1;
+     }
+ 
+-    if (hostp) {
+-        *hostp = p;
+-    }
+     return qemu_ram_addr_from_host_nofail(p);
+ }
+ 
+diff --git a/accel/tcg/internal-common.h b/accel/tcg/internal-common.h
+index 0ca13750f9..9e7be2d78d 100644
+--- a/accel/tcg/internal-common.h
++++ b/accel/tcg/internal-common.h
+@@ -82,7 +82,7 @@ void tb_check_watchpoint(CPUState *cpu, uintptr_t retaddr);
+  * See get_page_addr_code() (full-system version) for documentation on the
+  * return value.
+  *
+- * Sets *@hostp (when @hostp is non-NULL) as follows.
++ * Sets *@hostp as follows.
+  * If the return value is -1, sets *@hostp to NULL. Otherwise, sets *@hostp
+  * to the host address where @addr's content is kept.
+  *
+diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+index 1800dffa63..f15bdefb1a 100644
+--- a/accel/tcg/user-exec.c
++++ b/accel/tcg/user-exec.c
+@@ -822,9 +822,7 @@ tb_page_addr_t get_page_addr_code_hostp(CPUArchState *env, vaddr addr,
+     flags = probe_access_internal(env, addr, 1, MMU_INST_FETCH, false, 0);
+     g_assert(flags == 0);
+ 
+-    if (hostp) {
+-        *hostp = g2h_untagged(addr);
+-    }
++    *hostp = g2h_untagged(addr);
+     return addr;
+ }
+ 
 -- 
 2.47.3
 
