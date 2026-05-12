@@ -4,76 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36B35CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 17:55:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59E9CCD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 18:08:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMrJw-0002gK-MV; Tue, 12 May 2026 13:55:05 -0400
+	id 1wMrVu-00052G-9D; Tue, 12 May 2026 14:07:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wMrJq-0002fZ-3L
- for qemu-devel@nongnu.org; Tue, 12 May 2026 13:54:58 -0400
-Received: from ci-2001l-snip4-3.eps.apple.com ([57.103.91.116]
- helo=outbound.ci.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wMrJl-0007ZM-8N
- for qemu-devel@nongnu.org; Tue, 12 May 2026 13:54:55 -0400
-Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-central-1k-100-percent-8 (Postfix) with ESMTPS id
- 946A71800392; Tue, 12 May 2026 17:54:47 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRAEwVSB11NVg1HD1geXBQXG1pDXgheH0wcHQ5YBhIATQoONgZZBV4JVgNDBTYSFF1FRgNHGVcUUBtHDFUHV15fChMAXg8PTA5BBy51XAtFFEEHWwVGBkIAQR4vAC5xXQxKCy8HLgY2CEEBXnceXABLHVcEVB9TElUdHQtFVRIEQAhWUFQeQQRWFWwJWAZTGVc=
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1778608488; x=1781200488;
- bh=HZ/K3hvHOKnJzBcCuI+ghfBNNMFIC0SzfBrUufY2EIc=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=LSJ3jWXaTX9nOmM1+pBSzuzMdOSIrAabQdn6EZZcxyWqe+GV1Pky1FhcOkICKdnpa6G7adAguL5Tut86A4LBSifxIgwNM2VMNdyYjavWXOob7m2q0M3lF+hy+iF1yPiCOvymWFQcn4yLsauMfZvOsoJA8KQG6oiaxTQZpilbRp7PbnbrSmRFSgN+feFZjk3PYF5lO5k0p/G4DsdnYjZSk7mOViW6tNbutW8l4I8dLZyf3CXTgk/MbEdd7dPpbkavFCMAUYkfKqS601A6etzQVpqMoYl7m95FUkkzoF3cERGtEBz0iCRcW2s2WwX+B+GGULdaf5bXpRxisToRZlpXLA==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.156.36])
- by p00-icloudmta-asmtp-us-central-1k-100-percent-8 (Postfix) with ESMTPSA id
- D6D0318003BF; Tue, 12 May 2026 17:54:45 +0000 (UTC)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [PATCH v3] target/arm/hvf: Fix WFI halting to stop idle vCPU
- spinning
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20260427195516.46256-1-scottjgo@gmail.com>
-Date: Tue, 12 May 2026 19:54:33 +0200
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <794CB795-9462-4299-B7EC-528B0E4F1923@unpredictable.fr>
-References: <20260410055045.63001-1-scottjgo@gmail.com>
- <20260427195516.46256-1-scottjgo@gmail.com>
-To: "Scott J. Goldman" <scottjgo@gmail.com>
-X-Mailer: Apple Mail (2.3864.500.181)
-X-Proofpoint-GUID: dk9vUSONVVtR_vkcGtqTZdBHekSXoD2d
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEyMDE4NiBTYWx0ZWRfX193P2IsyPPq8
- ejq25+r/mBAtWWJMFm4cpbJ8NDVz7Q8UQMacSou7ciqGewW2jBLz7kRQnd+g6ur4IiM2o6tNnJR
- oXTrGRti7WSzmbyYMbkX1x7eiaAbtLpHvKawHqyCMwi+SutGP3lunevILKWmLH5SxsdnsZODagC
- KuKa3At5hAKKIibwjY8gZzngV4r0tI37C1lgRF2+kv7imEsGuUGdFdTxe2/vFbGw+Lsay+TDBgC
- 23vijPol2DLxB7jtPfweNXjU2b8A6GLF9dmnNv4FeY5VbSZm8r8AQa90G7JL3O+pjYlk1fDYvPz
- WLE5Ue9ko4sv68zglKBusRZ/xzNkLp7ZLs+6z/Tz969JgFzaNSObVm3QzPfslE=
-X-Authority-Info-Out: v=2.4 cv=YcOwJgRf c=1 sm=1 tr=0 ts=6a036968
- cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
- a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=kj9zAlcOel0A:10 a=NGcC8JguVDcA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=pGLkceISAAAA:8 a=Rd0dBYZo9EqFB7wkWVAA:9
- a=CjuIK1q_8ugA:10 a=O8hF6Hzn-FEA:10
-X-Proofpoint-ORIG-GUID: dk9vUSONVVtR_vkcGtqTZdBHekSXoD2d
-Received-SPF: pass client-ip=57.103.91.116;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMrVs-000524-1w
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 14:07:24 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMrVp-0007Ef-9Z
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 14:07:23 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4891c0620bcso41505965e9.1
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 11:07:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778609239; x=1779214039; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rbOFuFxP8WbhsSvwRRvkcHK0EP3UCaNJINhXLrzrhtA=;
+ b=lvlCxLJfUPLlhvyu6Z4Reml3jWHbu4TrAX9o88bckNXiGyguvv3F7rTMLUkkxs5kAK
+ TAazyMMTjLlFyLHbBgdKbTceYygBNjt+6JlRHujq40Nn26Y4uD9L9fGaSObo4+ITFKdi
+ 2UZAcidP0RFCFpuGxXvlYW6/zHtGiA+T7kOfaCvZmdcObM4PgnPzzrOAAo6l0ZA6v4sN
+ po5NlVdVbIICsAzmGedIVRsHBLyKvxR3pUM258+GaVnj6FvoA5in3Mkgghgwp9Qp/TQj
+ rm9vHCHO8hQoFlxinlTVz4YE6OjjxB7aHROGAuXMVOrGe4o9kXrOTsXYoBHX3mm2ugp6
+ oMaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778609239; x=1779214039;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rbOFuFxP8WbhsSvwRRvkcHK0EP3UCaNJINhXLrzrhtA=;
+ b=pe2zyBFn3cVdkPOI8QBpq7VBX3Xt4L4pQRRIHEWvzPjzh9Dj6OIJCFMVtr6Bvsuxni
+ wh9sZhuk91Y9D6mDbbzJ4wNpoAE7AMK9G513SHa+yddFKE/84CfZNuMRqkpjWfr+9m6T
+ 9nf16/3JiQLWOi3G9ROUNvl6V7lvZdTeEAwqtii+6Kj29vuvVAaE8KJajbldBeaCLC/n
+ +OaP5OWnEKiep7WmH5o+kcr1ToJ3GlV3vs6np+xTsG0VXG+DpLb3Gr44eGieJE2HKqkA
+ 4iDKs0QoMALYO+JpvafhiscgK7mD0u3OVg/UnHFBp1/dqnk3f2tLEGTb40UzlrKxBV3X
+ RDig==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+vrQwcGz+E7Cu3Ugtl6Iyvr6/9moPI/qyfc8fFFfWwQJQZ7PlPvD0Uro+NeFwUUG/p6E4TaBR4dSXV@nongnu.org
+X-Gm-Message-State: AOJu0Yw9NByO4qTxoMO9YH92fcssqy7pOTmflbDajvb2u1r+Mump+46l
+ hC5CmKq89WVZKAfPEeR2+61zIBYHI2RO5qCzxqwityn46Co1KJe2mVx97Yu+WP5LV84=
+X-Gm-Gg: Acq92OE0rN+6Qe+1OYCCxneQG/GUR0WRagtZXaM5sqqXvYnbn06l7N+JqACSpl6LyyC
+ 4yeBgeUYfWQApyFNm9CAdBTLkA9urXhp4AN+rNAtElZixgLfYDBBrNvvqBbzoR/W+Ec51texBrn
+ u2PgMMPjcM7DoJLIBIvCA66T5QXnIuL1+N272rgyAz8TJYs4sfP+100or/5RkddVyWfdbQ8WcAl
+ olUkezjPZcqsT3K7EC7j+W4UQJLGV+JAX1ggYuNWKlbBlYpnVXxmFx38d1HrqNSK9wJ5fhY7S+n
+ +V90ZhZBvTKFUPty8Z02RNushqafE5GcOsU54Ylzgcn5XInAzwDv1W9xe8zTh1uUhRU3YzcX03A
+ y+rDK+FoLUjchH/QDmfNC/ItdsDLu3nMlx68fH0wsj4KvFMwTAPYhFwYUbDC3wSaLuF2nxJNG7C
+ 0h5csCWIBmHj1K8jtFjawBVw9XCO4a5NlQcNfnqqtdk5O/YCZyBCOX0FagKx22zIkG+g==
+X-Received: by 2002:a05:600c:350a:b0:48a:5565:ec3d with SMTP id
+ 5b1f17b1804b1-48e676ac38fmr311321095e9.22.1778609238555; 
+ Tue, 12 May 2026 11:07:18 -0700 (PDT)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48fc8d15e09sm14389185e9.3.2026.05.12.11.07.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 12 May 2026 11:07:17 -0700 (PDT)
+Message-ID: <3d039c50-88f6-4599-967f-cdf9c0e944c2@linaro.org>
+Date: Tue, 12 May 2026 20:07:16 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 3/5] target-info: introduce TargetInfo in QOM
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Max Filippov <jcmvbkbc@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ marcandre.lureau@redhat.com, Markus Armbruster <armbru@redhat.com>,
+ Anton Johansson <anjo@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20260512150208.1167711-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260512150208.1167711-4-pierrick.bouvier@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260512150208.1167711-4-pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,55 +107,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 12/5/26 17:02, Pierrick Bouvier wrote:
+> For the single-binary, we want to be able to retrieve at runtime the
+> current target among the different ones available.
+> A consequence is that we can't rely on existing target_info() definition
+> since it will create a conflict once more than one target is available.
+> 
+> To solve this, we add TargetInfo in QOM, with this hierarchy.
+> We define one class "target-info-X" per target, that inherits from
+> abstract class "target-info". Using concrete vs abstract class ensure we
+> can easily filter "target-info-X" from all QOM types.
+> Associated TargetInfo is directly set through class initialization,
+> without relying on any instance.
+> 
+> For user mode, we simply define target_info() like it was done
+> previously. In this patch, we keep the same definition for system-mode
+> also, and it will be replaced in next commits.
+> 
+> We will introduce detection of target from QOM, so we need to make sure
+> those types are registered early.
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+>   configs/targets/aarch64-softmmu.c |  6 ++--
+>   configs/targets/arm-softmmu.c     |  6 ++--
+>   include/qemu/module.h             |  1 +
+>   include/qemu/target-info-init.h   | 58 +++++++++++++++++++++++++++++++
+>   include/qemu/target-info-qom.h    | 28 +++++++++++++++
+>   system/vl.c                       |  2 ++
+>   target-info-qom.c                 | 24 +++++++++++++
+>   target-info-stub.c                |  6 ++--
+>   8 files changed, 119 insertions(+), 12 deletions(-)
+>   create mode 100644 include/qemu/target-info-init.h
+>   create mode 100644 include/qemu/target-info-qom.h
 
-
-> On 27. Apr 2026, at 21:55, Scott J. Goldman <scottjgo@gmail.com> =
-wrote:
->=20
-> Commit b5f8f77271 ("accel/hvf: Implement WFI without using pselect()")
-> changed hvf_wfi() from blocking the vCPU thread with pselect() to
-> returning EXCP_HLT, intending QEMU's main event loop to handle the
-> idle wait. However, cpu->halted was never set, so cpu_thread_is_idle()
-> always returns false and the vCPU thread spins at 100% CPU per core
-> while the guest is idle.
->=20
-> Fix this by:
->=20
-> 1. Setting cpu->halted =3D 1 in hvf_wfi() so the vCPU thread sleeps on
->   halt_cond in qemu_process_cpu_events().
->=20
-> 2. Arming a per-vCPU QEMU_CLOCK_VIRTUAL timer to fire when the guest's
->   virtual timer (CNTV_CVAL_EL0) would expire. This is necessary
->   because HVF only delivers HV_EXIT_REASON_VTIMER_ACTIVATED during
->   hv_vcpu_run(), which is not called while the CPU is halted. The
->   timer callback mirrors the VTIMER_ACTIVATED handler: it raises the
->   vtimer IRQ through the GIC and marks vtimer_masked, causing the
->   interrupt delivery chain to wake the vCPU via qemu_cpu_kick().
->=20
-> 3. Clearing cpu->halted in hvf_arch_vcpu_exec() when cpu_has_work()
->   indicates a pending interrupt, and cancelling the WFI timer.
->=20
-> 4. Re-arming the WFI timer from hvf_vm_state_change() on the resume
->   transition for any halted vCPU, since the QEMUTimer is per-instance
->   state and is not migrated. After cpu_synchronize_all_states() the
->   migrated vtimer state is mirrored in env, so we can read CNTV_CTL
->   and CNTV_CVAL from there. If the vtimer has already expired by the
->   time the destination resumes, hvf_wfi_timer_cb() is invoked
->   directly so the halted vCPU is woken up.
->=20
-> Fixes: b5f8f77271 ("accel/hvf: Implement WFI without using pselect()")
-> Signed-off-by: Scott J. Goldman <scottjgo@gmail.com>
-
-Hi,
-
-A bit of a side note for reproducing this:
-
-To reproduce this on current master, as far as I can tell you need =
-either=20
--M kernel-irqchip=3Doff or -M virt-11.0 or earlier. -M virt(-11.1) on =
-master uses=20
-the HVF vGIC path.
-
-
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
