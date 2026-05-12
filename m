@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E022CCD4F3E
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:09:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 503F7CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:09:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuJv-00005O-5v; Tue, 12 May 2026 17:07:15 -0400
+	id 1wMuIT-0003VG-R1; Tue, 12 May 2026 17:05:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuJE-0007CC-IR; Tue, 12 May 2026 17:06:35 -0400
+ id 1wMuIE-0001oZ-JF; Tue, 12 May 2026 17:05:30 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuJC-0001jA-7F; Tue, 12 May 2026 17:06:32 -0400
+ id 1wMuIC-0000uL-OB; Tue, 12 May 2026 17:05:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619300; bh=0LVjgUCvNCJJfSlu6OGSkQ1Ty4gO4qNymXYjjVcmpok=;
+ t=1778619280; bh=6yNTHyY4n+czwCDJOviiZkYDpnz4dMyJaeqmCz/8sP8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Atnjua/GPT5GiE9G2P7iJzUXkhhdQU0JQt3T6qR6Y1ZrLZiKWlIw0UOpgBqlvWuX1
- /UBwGCKYnPp1alqmHxGOBQHx6Q+9ZAUBZZhxYrK9vDjD0znz4i5Dw/7UiHO8NpwHQr
- 90MtogIS59XtOszkwlsDGM91qyMnXFhkMGWX9mJR7PfogPHOk6IhQKqRHCz0BEj5PK
- tflsst/c0QNoLvoIsXAu/vmdCiCUfXzU2uhpNtqdZWikSgGTJH6VaZLbjwnUX607PR
- vQVKCNv8mR9JU+KZkT9J3AdOh7URG+/zGAm5zkMk2Y4TSbsbOCU+l/cj7Vq5qmdCgI
- k0bFIicOf5vOw==
+ b=th1enPlCGj7WKrKTEOLcDRsgb4Jp59yqtVdDQY0oe6n4lMPxv4NQTf1DDmSWoqZ3s
+ lnijZcqj2T+lzOx/1pVJxTViWuCMp+SkmxYkBW4PvYyqoSCC8FsbZObJsYxxMtRlzQ
+ iRHobmSUnkgSepCshgjX6RoyF3x4YslQun6IQodsI7bBdloM1oSbT3RkMlTXAjaXWn
+ EvhFZ+zMaPXNtS3Fg4oCfTR5E/Wz0yK4pYzKKxgocN8ikg1OKILH8ewx0hEN/wI4PW
+ SlhNHIqff3iB/4R+g/qadGnJ55xbh8M44fvr9Uu47LwWAbHEC709qGHvhWN+bvqKaX
+ Sbbxb3MkgdtuA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 53E911AA345;
- Tue, 12 May 2026 23:55:00 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7C1741AA336;
+ Tue, 12 May 2026 23:54:40 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 61C2C3ABCB6;
- Tue, 12 May 2026 23:55:04 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7CEB33ABCA7;
+ Tue, 12 May 2026 23:54:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alberto Garcia <berto@igalia.com>,
- Hanna Czenczek <hreitz@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 009/117] throttle-group: Fix race condition in
- throttle_group_restart_queue()
-Date: Tue, 12 May 2026 23:53:11 +0300
-Message-ID: <20260512205503.361097-9-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Katherine Leaver <katherine.j.leaver@gmail.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 106/107] hw/uefi: verify data size before accessing
+ it in wrap_pkcs7
+Date: Tue, 12 May 2026 23:54:33 +0300
+Message-ID: <20260512205437.360850-106-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
-References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
+References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -69,167 +70,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alberto Garcia <berto@igalia.com>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-When a timer is fired a pending I/O request is restarted and
-tg->any_timer_armed is reset so other requests can be scheduled.
-
-However we're resetting any_timer_armed first in timer_cb() before
-the request is actually restarted, and there's a window between both
-moments in which another thread can arm the same timer, hitting an
-assertion in throttle_group_restart_queue().
-
-This can be solved by deferring the reset of tg->any_timer_armed to
-the moment when the queue is actually restarted, which is protected by
-tg->lock, preventing other threads from arming the timer before that.
-
-In addition to that, throttle_group_restart_tgm() is also updated to
-hold tg->lock while the timer is being inspected. Here we consider
-three different scenarios:
-
-- If the tgm has a timer set, fire it immediately
-- If another tgm has a timer set, restart the queue anyway
-- If there is no timer set in this group then simulate a timer that
-  fires immediately, by setting tg->any_timer_armed in order to
-  prevent other threads from arming a timer in the meantime.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3194
-Signed-off-by: Alberto Garcia <berto@igalia.com>
-Message-Id: <825598ef34ad384d936da19d634eda75598508f7.1773316842.git.berto@igalia.com>
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-(cherry picked from commit 9c8430f5d65144b85ad76433369288182a1c7baa)
+Fixes: CVE-2026-41439
+Fixes: 3e33af2cb306 ("hw/uefi: add var-service-pkcs7.c")
+Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20260422092910.444997-6-kraxel@redhat.com>
+(cherry picked from commit 22b7b222d8f5428be8b5d4787f36efd0a0b75292)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/throttle-groups.c b/block/throttle-groups.c
-index 5329ff1fdb..4b1b1944c2 100644
---- a/block/throttle-groups.c
-+++ b/block/throttle-groups.c
-@@ -391,6 +391,7 @@ void coroutine_fn throttle_group_co_io_limits_intercept(ThrottleGroupMember *tgm
- typedef struct {
-     ThrottleGroupMember *tgm;
-     ThrottleDirection direction;
-+    bool reset_timer_armed;
- } RestartData;
+diff --git a/hw/uefi/var-service-pkcs7.c b/hw/uefi/var-service-pkcs7.c
+index 32accf4e44..f17ad6872f 100644
+--- a/hw/uefi/var-service-pkcs7.c
++++ b/hw/uefi/var-service-pkcs7.c
+@@ -73,7 +73,8 @@ static void wrap_pkcs7(gnutls_datum_t *pkcs7)
+     };
+     gnutls_datum_t wrap;
  
- static void coroutine_fn throttle_group_restart_queue_entry(void *opaque)
-@@ -403,6 +404,9 @@ static void coroutine_fn throttle_group_restart_queue_entry(void *opaque)
-     bool empty_queue;
- 
-     qemu_mutex_lock(&tg->lock);
-+    if (data->reset_timer_armed) {
-+        tg->any_timer_armed[direction] = false;
-+    }
-     empty_queue = !throttle_group_co_restart_queue(tgm, direction);
- 
-     /* If the request queue was empty then we have to take care of
-@@ -419,18 +423,23 @@ static void coroutine_fn throttle_group_restart_queue_entry(void *opaque)
- }
- 
- static void throttle_group_restart_queue(ThrottleGroupMember *tgm,
--                                        ThrottleDirection direction)
-+                                         ThrottleDirection direction,
-+                                         bool reset_timer_armed)
- {
-     Coroutine *co;
-     RestartData *rd = g_new0(RestartData, 1);
- 
-     rd->tgm = tgm;
-     rd->direction = direction;
-+    rd->reset_timer_armed = reset_timer_armed;
- 
--    /* This function is called when a timer is fired or when
--     * throttle_group_restart_tgm() is called. Either way, there can
-+    /* If reset_timer_armed is set then this means that this function
-+     * was called when a timer was fired (either from timer_cb() or
-+     * from throttle_group_restart_tgm()). In this case there can
-      * be no timer pending on this tgm at this point */
--    assert(!timer_pending(tgm->throttle_timers.timers[direction]));
-+    if (reset_timer_armed) {
-+        assert(!timer_pending(tgm->throttle_timers.timers[direction]));
-+    }
- 
-     qatomic_inc(&tgm->restart_pending);
- 
-@@ -444,15 +453,50 @@ void throttle_group_restart_tgm(ThrottleGroupMember *tgm)
- 
-     if (tgm->throttle_state) {
-         for (dir = THROTTLE_READ; dir < THROTTLE_MAX; dir++) {
--            QEMUTimer *t = tgm->throttle_timers.timers[dir];
-+            QEMUTimer *t;
-+            ThrottleState *ts = tgm->throttle_state;
-+            ThrottleGroup *tg = container_of(ts, ThrottleGroup, ts);
-+            bool reset_timer_armed;
-+
-+            /*
-+             * This function restarts the tgm's queue immediately.
-+             * This is used for example for callers to drain all requests.
-+             * There are three different scenarios depending on whether
-+             * a timer is armed for this tg and which tgm owns the timer.
-+             */
-+
-+            qemu_mutex_lock(&tg->lock);
-+
-+            t = tgm->throttle_timers.timers[dir];
-             if (timer_pending(t)) {
--                /* If there's a pending timer on this tgm, fire it now */
-+                /*
-+                 * Case 1: this tgm has a pending timer.
-+                 * We can fire the timer immediately.
-+                 */
-                 timer_del(t);
--                timer_cb(tgm, dir);
-+                reset_timer_armed = true;
-+            } else if (tg->any_timer_armed[dir]) {
-+                /*
-+                 * Case 2: another tgm has a pending timer.
-+                 * In this case we can still restart the queue but we
-+                 * have to leave any_timer_armed untouched so the
-+                 * other tgm's timer is not disrupted.
-+                 */
-+                reset_timer_armed = false;
-             } else {
--                /* Else run the next request from the queue manually */
--                throttle_group_restart_queue(tgm, dir);
-+                /*
-+                 * Case 3: there is no timer set for this group.
-+                 * Here we can simulate a timer that fires immediately,
-+                 * so the queue is restarted but no other thread
-+                 * can arm a timer in the meantime.
-+                 */
-+                tg->any_timer_armed[dir] = true;
-+                reset_timer_armed = true;
-             }
-+
-+            qemu_mutex_unlock(&tg->lock);
-+
-+            throttle_group_restart_queue(tgm, dir, reset_timer_armed);
-         }
-     }
- }
-@@ -499,16 +543,13 @@ void throttle_group_get_config(ThrottleGroupMember *tgm, ThrottleConfig *cfg)
-  */
- static void timer_cb(ThrottleGroupMember *tgm, ThrottleDirection direction)
- {
--    ThrottleState *ts = tgm->throttle_state;
--    ThrottleGroup *tg = container_of(ts, ThrottleGroup, ts);
--
--    /* The timer has just been fired, so we can update the flag */
--    qemu_mutex_lock(&tg->lock);
--    tg->any_timer_armed[direction] = false;
--    qemu_mutex_unlock(&tg->lock);
--
--    /* Run the request that was waiting for this timer */
--    throttle_group_restart_queue(tgm, direction);
-+    /*
-+     * Run the request that was waiting for this timer.
-+     * tg->any_timer_armed needs to be cleared, but we'll do it later
-+     * when the queue is restarted in order to prevent another thread
-+     * from arming the timer before that.
-+     */
-+    throttle_group_restart_queue(tgm, direction, true);
- }
- 
- static void read_timer_cb(void *opaque)
+-    if (pkcs7->data[4] == 0x06 &&
++    if (pkcs7->size > 16 &&
++        pkcs7->data[4] == 0x06 &&
+         pkcs7->data[5] == 0x09 &&
+         memcmp(pkcs7->data + 6, signed_data_oid, sizeof(signed_data_oid)) == 0 &&
+         pkcs7->data[15] == 0x0a &&
 -- 
 2.47.3
 
