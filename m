@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF096CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:15:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05B2FCD4F24
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:15:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuGu-0004iZ-OO; Tue, 12 May 2026 17:04:09 -0400
+	id 1wMuMk-00014D-F1; Tue, 12 May 2026 17:10:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuEw-00009M-0v; Tue, 12 May 2026 17:02:07 -0400
+ id 1wMuMH-00080U-M7; Tue, 12 May 2026 17:09:42 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuEq-0006df-BS; Tue, 12 May 2026 17:02:02 -0400
+ id 1wMuMG-0003SK-0E; Tue, 12 May 2026 17:09:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619278; bh=4W0OyaGK6ZdguvnQ/kLnQO8AjuYIwk2zwEG402Qz6bs=;
+ t=1778619302; bh=4dB7J9um+urWj0qd77ycHYeU9OrcYP3RFNylth6087Q=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=PP92gBqU1aC2y/AAllFS+rO1dmhSPpl+JP5jKVLB1gxWPnCMseIN30iYenb2BdeUf
- X0VVLTvA5Rn8FLGTrhH6Ou8rIcZY+w/Ukx3FRRsHyq834lyggWnwrh6hudnckTY1sr
- EoEReKXEGxLbpYSjWXe/nFJGYKFbDc43Ysc7mrODuHwLcdtFrCmzuUmK5/jbz0uXC6
- I8lx5HklEPxqMpnqItm8X441Q4q1q1YUUCglzMCQsmmzkCqPf7FidO/j8HtD/nX0P1
- Z7BVUUhjjwvzBr/pWbHT5nVBrzTGjBsZOIJVcZ4XqirMtcHMpnIA+rDFqFmIKe6Fjt
- bu3V//l9FmacA==
+ b=c46CCjE0CPw+skXtlzo8or0yw1uCO9Lw1tK3mo8WK8kNBc0g0RzXi1SKQDHPn7gwz
+ s7aaml77/+U/a/75ozCBs2+H2/6pOvLc6YhFO+r3Eq8H2hYO/Y714+g+OBvxGkBd2M
+ Z9/WjfJo+rfy00bym/aLSpQqoAvcWiIDo9SyorDLS4huRjNRl18obbxxeNSuh5PXZf
+ hOSnPM8fgqs4R9VKpRgZCPU5TIyILhkEyKlGgcqAZ24MZ6URc7qf2EQfkZ1AbPV+TC
+ k0dHsv5aQf2ZcUd8uR/RMW9GQFudFA3yTi4ZyXcICEqveZ+pezHLQyAbYlkpJ7oZnw
+ he/8dJKfyI3ig==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2C8FF1AA314;
- Tue, 12 May 2026 23:54:38 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3F61B1AA363;
+ Tue, 12 May 2026 23:55:02 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3801A3ABC85;
- Tue, 12 May 2026 23:54:42 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4354E3ABCD3;
+ Tue, 12 May 2026 23:55:06 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 072/107] linux-user/arm/nwfpe: Replace user_registers
- with current_cpu
-Date: Tue, 12 May 2026 23:53:59 +0300
-Message-ID: <20260512205437.360850-72-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 038/117] lsi53c895a: keep a reference to the device
+ while SCRIPTS execute
+Date: Tue, 12 May 2026 23:53:40 +0300
+Message-ID: <20260512205503.361097-38-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
-References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,118 +69,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Use the thread-local variable current_cpu instead of
-a global variable to access the general registers.
-This also means we don't need to pass env to EmulateAll.
+SCRIPTS execution can trigger PCI device unplug and consequently
+a use-after-free after the unplug returns.  Avoid this by keeping
+the device alive.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit c8ea1759009a248cf331b275854d8b272e0f7d8a)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3090
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 4862d2c95104d9fd0430cc003c205094f8ada1f9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/arm/cpu_loop.c b/linux-user/arm/cpu_loop.c
-index 098b54d10e..af01869620 100644
---- a/linux-user/arm/cpu_loop.c
-+++ b/linux-user/arm/cpu_loop.c
-@@ -231,7 +231,7 @@ static bool insn_is_linux_bkpt(uint32_t opcode, bool is_thumb)
- static bool emulate_arm_fpa11(CPUARMState *env, uint32_t opcode)
- {
-     TaskState *ts = get_task_state(env_cpu(env));
--    int rc = EmulateAll(opcode, &ts->fpa, env);
-+    int rc = EmulateAll(opcode, &ts->fpa);
-     int raise, enabled;
+diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
+index 9ea4aa0a85..2cc7e945e1 100644
+--- a/hw/scsi/lsi53c895a.c
++++ b/hw/scsi/lsi53c895a.c
+@@ -1163,6 +1163,7 @@ static void lsi_execute_script(LSIState *s)
+         s->waiting = LSI_NOWAIT;
+     }
  
-     if (rc == 0) {
-diff --git a/linux-user/arm/nwfpe/fpa11.c b/linux-user/arm/nwfpe/fpa11.c
-index 0f1afbd91d..44783934b2 100644
---- a/linux-user/arm/nwfpe/fpa11.c
-+++ b/linux-user/arm/nwfpe/fpa11.c
-@@ -30,7 +30,6 @@
++    object_ref(s);
+     reentrancy_level++;
  
+     s->istat1 |= LSI_ISTAT1_SRUN;
+@@ -1182,6 +1183,7 @@ again:
+         s->waiting = LSI_WAIT_SCRIPTS;
+         lsi_scripts_timer_start(s);
+         reentrancy_level--;
++        object_unref(s);
+         return;
+     }
+     insn = read_dword(s, s->dsp);
+@@ -1630,6 +1632,7 @@ again:
+     trace_lsi_execute_script_stop();
  
- FPA11* qemufpa = NULL;
--CPUARMState* user_registers;
- 
- /* Reset the FPA11 chip.  Called to initialize and reset the emulator. */
- void resetFPA11(void)
-@@ -156,7 +155,7 @@ void SetRoundingPrecision(const unsigned int opcode)
- 
- /* Emulate the instruction in the opcode. */
- /* ??? This is not thread safe.  */
--unsigned int EmulateAll(unsigned int opcode, FPA11* qfpa, CPUARMState* qregs)
-+unsigned int EmulateAll(unsigned int opcode, FPA11* qfpa)
- {
-   unsigned int nRc = 0;
- //  unsigned long flags;
-@@ -173,12 +172,6 @@ unsigned int EmulateAll(unsigned int opcode, FPA11* qfpa, CPUARMState* qregs)
-   }
- 
-   qemufpa=qfpa;
--  user_registers=qregs;
--
--#if 0
--  fprintf(stderr,"emulating FP insn 0x%08x, PC=0x%08x\n",
--          opcode, qregs[ARM_REG_PC]);
--#endif
-   fpa11 = GET_FPA11();
- 
-   if (fpa11->initflag == 0)		/* good place for __builtin_expect */
-diff --git a/linux-user/arm/nwfpe/fpa11.h b/linux-user/arm/nwfpe/fpa11.h
-index d459c5da02..20f9d2eb81 100644
---- a/linux-user/arm/nwfpe/fpa11.h
-+++ b/linux-user/arm/nwfpe/fpa11.h
-@@ -25,15 +25,6 @@
- 
- #define GET_FPA11() (qemufpa)
- 
--/*
-- * The processes registers are always at the very top of the 8K
-- * stack+task struct.  Use the same method as 'current' uses to
-- * reach them.
-- */
--extern CPUARMState *user_registers;
--
--#define GET_USERREG() (user_registers)
--
- /* Need task_struct */
- //#include <linux/sched.h>
- 
-@@ -91,25 +82,25 @@ void SetRoundingPrecision(const unsigned int);
- 
- static inline unsigned int readRegister(unsigned int reg)
- {
--    return (user_registers->regs[(reg)]);
-+    CPUARMState *env = cpu_env(current_cpu);
-+    return env->regs[reg];
+     reentrancy_level--;
++    object_unref(s);
  }
  
- static inline void writeRegister(unsigned int x, unsigned int y)
- {
--#if 0
--	printf("writing %d to r%d\n",y,x);
--#endif
--        user_registers->regs[(x)]=(y);
-+    CPUARMState *env = cpu_env(current_cpu);
-+    env->regs[x] = y;
- }
- 
- static inline void writeConditionCodes(unsigned int x)
- {
--    cpsr_write(user_registers, x, CPSR_NZCV, CPSRWriteByInstr);
-+    CPUARMState *env = cpu_env(current_cpu);
-+    cpsr_write(env, x, CPSR_NZCV, CPSRWriteByInstr);
- }
- 
- #define ARM_REG_PC 15
- 
--unsigned int EmulateAll(unsigned int opcode, FPA11* qfpa, CPUARMState* qregs);
-+unsigned int EmulateAll(unsigned int opcode, FPA11* qfpa);
- 
- unsigned int EmulateCPDO(const unsigned int);
- unsigned int EmulateCPDT(const unsigned int);
+ static uint8_t lsi_reg_readb(LSIState *s, int offset)
 -- 
 2.47.3
 
