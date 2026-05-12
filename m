@@ -4,48 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFECDCD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:19:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A5FBCD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:19:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuUT-0006yQ-N0; Tue, 12 May 2026 17:18:09 -0400
+	id 1wMuTe-0003wg-Dv; Tue, 12 May 2026 17:17:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuU0-0006dI-5O; Tue, 12 May 2026 17:17:45 -0400
+ id 1wMuT3-00021L-NE; Tue, 12 May 2026 17:16:44 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuTy-0006tg-Fo; Tue, 12 May 2026 17:17:39 -0400
+ id 1wMuT1-0006hR-VT; Tue, 12 May 2026 17:16:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619307; bh=6yNTHyY4n+czwCDJOviiZkYDpnz4dMyJaeqmCz/8sP8=;
+ t=1778619306; bh=7TgTBGNirwcAKQHMK9QxyC+hBOJhJrnx/tbrLDGi1W0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=paRdmg182GFEhNbOsCPsyd8OaW1H9X5eYKIghYcYtD/pNhdXD6/zXhY5tFldAp3hz
- QcpY0Jrha+KYnIRgoOU83LgUoucL5U/4E0sEQsORNCOlpK9hGD5mM6NSk3wINWMg4r
- SvEm2ywooBetC2mJx9Aq58GhG5anYkzGdnAsVv5nFJuksLmFU41tuJ924nvMET8FGA
- WGOWmzo8ofAHxMjz6z+NZLXiB8sqjMiRQ1z3tjs1I7ZxOxf3DlfcZKY5xjC3uo13+s
- VOlfNpoaqTurOj6sqgJpmhQYq7gI2lTNLWzspLoPnsnioJ92UvpT28cbwCTYatRhZy
- HiYZxv7PVU2rg==
+ b=sZr7J3dK7jb5bBPhmDwIrobdNdALjU10ZJhaT4RbwZjG4Mf39SRZknUc9Bcbe5jiT
+ OcVfQIfTRre8SkzXTNfUYv8jspZQcekl1ejcXU8UUtQf40yYESk7V6lkHs2SHyS6Td
+ 1ndhYJtRUG6jciSQjGqLaJYXQYZ5t3hPusT1Exqo5Iy3rWm1EpwLqqo6I3HYQIAMvu
+ m0n/U1K2PdN/w1VrSJsXmKMsgQZjj5Uru66PjnL+c8xCbJeblGtJmG8794f1TAvNvy
+ Q7u2WrnS98MtO0SzIOvtgUVaswvIw0QdtFN6tcicXfDcRJMwRUv0drSvD58IACbmAF
+ 4FR04jGrT0OCQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A510A1AA3B2;
- Tue, 12 May 2026 23:55:07 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CA8F51AA3A7;
+ Tue, 12 May 2026 23:55:06 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A70293ABD21;
- Tue, 12 May 2026 23:55:11 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D5D0B3ABD16;
+ Tue, 12 May 2026 23:55:10 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Katherine Leaver <katherine.j.leaver@gmail.com>,
+Cc: qemu-stable@nongnu.org, Vivien LEGER <vivien.leger@gmail.com>,
+ Bernhard Beschow <shentey@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 116/117] hw/uefi: verify data size before accessing it
- in wrap_pkcs7
-Date: Tue, 12 May 2026 23:54:58 +0300
-Message-ID: <20260512205503.361097-116-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 105/117] hw/ppc/e500: fix bus-frequency property
+ hardcoded to zero in CPU FDT node
+Date: Tue, 12 May 2026 23:54:47 +0300
+Message-ID: <20260512205503.361097-105-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,30 +72,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: Vivien LEGER <vivien.leger@gmail.com>
 
-Fixes: CVE-2026-41439
-Fixes: 3e33af2cb306 ("hw/uefi: add var-service-pkcs7.c")
-Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260422092910.444997-6-kraxel@redhat.com>
-(cherry picked from commit 22b7b222d8f5428be8b5d4787f36efd0a0b75292)
+The bus-frequency property in the CPU FDT node was hardcoded to 0.
+This is incorrect - it should reflect the actual platform bus clock
+frequency, as firmware and RTOSes use it to derive peripheral clock
+rates.
+
+Notably, the RTEMS QorIQ BSP uses bus-frequency to program the MPIC
+global timer interval. With bus-frequency=0, the timer interval
+overflows to ~85 seconds, preventing any clock interrupts from firing.
+
+Fix by adding a bus_freq field to PPCE500MachineClass and using it in
+the FDT generator. Set bus_freq = PLATFORM_CLK_FREQ_HZ (400MHz) for
+existing machines, matching the existing clock_freq value.
+
+Signed-off-by: Vivien LEGER <vivien.leger@gmail.com>
+Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+Message-ID: <20260411154535.1451361-1-vivien.leger@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit 774e6f5c1533aba9e04f95cb8cfba64d8329fcb0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/uefi/var-service-pkcs7.c b/hw/uefi/var-service-pkcs7.c
-index 32accf4e44..f17ad6872f 100644
---- a/hw/uefi/var-service-pkcs7.c
-+++ b/hw/uefi/var-service-pkcs7.c
-@@ -73,7 +73,8 @@ static void wrap_pkcs7(gnutls_datum_t *pkcs7)
-     };
-     gnutls_datum_t wrap;
+diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+index 8842f7f6b8..bde8a928f9 100644
+--- a/hw/ppc/e500.c
++++ b/hw/ppc/e500.c
+@@ -517,7 +517,7 @@ static int ppce500_load_device_tree(PPCE500MachineState *pms,
+                               env->icache_line_size);
+         qemu_fdt_setprop_cell(fdt, cpu_name, "d-cache-size", 0x8000);
+         qemu_fdt_setprop_cell(fdt, cpu_name, "i-cache-size", 0x8000);
+-        qemu_fdt_setprop_cell(fdt, cpu_name, "bus-frequency", 0);
++        qemu_fdt_setprop_cell(fdt, cpu_name, "bus-frequency", pmc->bus_freq);
+         if (cpu->cpu_index) {
+             qemu_fdt_setprop_string(fdt, cpu_name, "status", "disabled");
+             qemu_fdt_setprop_string(fdt, cpu_name, "enable-method",
+diff --git a/hw/ppc/e500.h b/hw/ppc/e500.h
+index 00f490519c..858684d569 100644
+--- a/hw/ppc/e500.h
++++ b/hw/ppc/e500.h
+@@ -40,6 +40,7 @@ struct PPCE500MachineClass {
+     hwaddr pci_mmio_bus_base;
+     hwaddr spin_base;
+     uint32_t clock_freq;
++    uint32_t bus_freq;
+     uint32_t tb_freq;
+ };
  
--    if (pkcs7->data[4] == 0x06 &&
-+    if (pkcs7->size > 16 &&
-+        pkcs7->data[4] == 0x06 &&
-         pkcs7->data[5] == 0x09 &&
-         memcmp(pkcs7->data + 6, signed_data_oid, sizeof(signed_data_oid)) == 0 &&
-         pkcs7->data[15] == 0x0a &&
+diff --git a/hw/ppc/e500plat.c b/hw/ppc/e500plat.c
+index 4f1d659e72..dab9e32b96 100644
+--- a/hw/ppc/e500plat.c
++++ b/hw/ppc/e500plat.c
+@@ -94,6 +94,7 @@ static void e500plat_machine_class_init(ObjectClass *oc, const void *data)
+     pmc->pci_mmio_bus_base = 0xE0000000ULL;
+     pmc->spin_base = 0xFEF000000ULL;
+     pmc->clock_freq = PLATFORM_CLK_FREQ_HZ;
++    pmc->bus_freq = PLATFORM_CLK_FREQ_HZ;
+     pmc->tb_freq = PLATFORM_CLK_FREQ_HZ;
+ 
+     mc->desc = "generic paravirt e500 platform";
+diff --git a/hw/ppc/mpc8544ds.c b/hw/ppc/mpc8544ds.c
+index 582698559d..d022761cb6 100644
+--- a/hw/ppc/mpc8544ds.c
++++ b/hw/ppc/mpc8544ds.c
+@@ -56,6 +56,7 @@ static void mpc8544ds_machine_class_init(ObjectClass *oc, const void *data)
+     pmc->pci_pio_base = 0xE1000000ULL;
+     pmc->spin_base = 0xEF000000ULL;
+     pmc->clock_freq = PLATFORM_CLK_FREQ_HZ;
++    pmc->bus_freq = PLATFORM_CLK_FREQ_HZ;
+     pmc->tb_freq = PLATFORM_CLK_FREQ_HZ;
+ 
+     mc->desc = "mpc8544ds";
 -- 
 2.47.3
 
