@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 453F4CD4F3D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68A6CCD4F21
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:05:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuHS-0006ti-Lx; Tue, 12 May 2026 17:04:43 -0400
+	id 1wMuD7-0004lO-TI; Tue, 12 May 2026 17:00:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuHJ-00063s-5b; Tue, 12 May 2026 17:04:33 -0400
+ id 1wMuCG-0002dl-9k; Tue, 12 May 2026 16:59:21 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuHH-0000KU-8O; Tue, 12 May 2026 17:04:32 -0400
+ id 1wMuC8-0004u0-KD; Tue, 12 May 2026 16:59:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619279; bh=ZpvhcFTgDOJ58EjibxnNPFQRXpWbyZBOdYXSzIq1qlg=;
+ t=1778619276; bh=spMSY34vA7lTKqGmhvsZ7COBnm2jw9smcsjabY4pbwQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=JCAm7nEUyN8sdDXdKxkExA+NLRcT4zE00qjklFQCK0inEGquQfRQTam65mZ7zHFOh
- Rz3hpaiRJGdmEG2D8lqgEIsWFNOKKZ7D/8N+a8h57L3UTP1SrtE8gZg+gjq2Npfr4u
- hrviBM2XhwBJXZoRTZ3nTvC0D5oqDOd/qkywofuOYgssGhbuAddRosqPytUUHsd76I
- MwWOriVpK1bL692xPwshFGDJPPDzKOlotqgqcJnCXnrllOYGSB5MUuQe2fbam5bzLQ
- H0qM0DtdT4X3scM4LX9VulGqF2Otj+Jl0I7CuczBakzCq9jxI/RZWurtC6DZ0YUz2M
- aukXYG1UHKzSQ==
+ b=w90I72TY2Ydd+Noxil8q0NZBNdBnbqkhw3Git17yVZrdy/Y1vq7wTZXJ1K28Uamoe
+ bwvy9aZ7QC+fa9uvtg1HTSWNbkEyoUn1t1C3ILOxUVeT3UQkT71ble0WdkYgonH8c9
+ z/LkEFvqfjeGj9tgGRmh4ILMy1hcPsgvSZG32CYhYDKIDI1hlZbDHnywGxiu8+t/GS
+ 9T+tyb+43kq6jl+ZkT53FqlnitUOXX4AXZqnEmWtTgI4yrfdXRJMc6UTT7tSW2mjtb
+ z4rLMO0a7DlcJtnV17wzNc0maitAeE/NbZEkzYX8p62ivi55/4leWiKwUzQgKFxDL7
+ tMONtiqqp9lGQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C72C21AA32E;
- Tue, 12 May 2026 23:54:39 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 32FFD1AA2F9;
+ Tue, 12 May 2026 23:54:36 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D4C183ABC9F;
- Tue, 12 May 2026 23:54:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3F5C73ABC6A;
+ Tue, 12 May 2026 23:54:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, liugan1 <liugan1@lixiang.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 098/107] hw/intc/arm_gicv3: Fix NS write to
- ICC_AP1Rn_EL1 when prebits < 7
-Date: Tue, 12 May 2026 23:54:25 +0300
-Message-ID: <20260512205437.360850-98-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Clayton Craft <craftyguy@postmarketos.org>,
+ Helge Deller <deller@gmx.de>, Peter Maydell <peter.maydell@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 045/107] linux-user: fix name_to_handle_at when
+ AT_HANDLE_MNT_ID_UNIQUE flag is set
+Date: Tue, 12 May 2026 23:53:32 +0300
+Message-ID: <20260512205437.360850-45-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
@@ -69,100 +70,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: liugan1 <liugan1@lixiang.com>
+From: Clayton Craft <craftyguy@postmarketos.org>
 
-The existing code uses a blanket `regno < 2` check to make
-ICC_AP1R0_EL1 and ICC_AP1R1_EL1 writes from Non-secure code WI
-(Write Ignore) when EL3 is present. This is intended to prevent
-NS code from claiming active interrupts in the Secure priority
-range, which could block Secure interrupt delivery.
+Linux 6.12 added AT_HANDLE_MNT_ID_UNIQUE, which indicates that mount_id
+is 64-bits. If name_to_handle_at is called with this flag set then qemu
+passes a 4 byte int to the kernel, which then tries to store 8 bytes in
+a 4 byte variable, causing a SIGSEGV[1][2].
 
-However, that check assumes prebits=7 (4 APR registers), where the
-NS priority range (128..255) maps entirely to AP1R2/AP1R3. Since
-commit 39f29e599355 ("hw/intc/arm_gicv3: Use correct number of
-priority bits for the CPU", first in 7.1), all QEMU AArch64 CPUs
-are initialised with gic_pribits=5 (one APR register), so NS
-priorities map to AP1R0 bits [16:31]. Blanket WI of the entire
-AP1R0 register prevents NS code from clearing its own NS active
-priority bits. Machines using hw_compat_7_0 (e.g. virt-7.0) still
-force pribits=8 via force-8-bit-prio and are therefore unaffected.
+This stores mount_id in a 64-bit var if the flag is set.
 
-A concrete consequence observed in virtualisation scenarios: when
-a guest VM acknowledges an SPI interrupt but does not perform EOI,
-is force-killed and restarted, the new guest's attempt to clear
-the residual active state by writing ICC_AP1R0_EL1=0 is silently
-ignored. The running priority (RPR) remains stuck at the old
-interrupt's priority, preventing all equal-or-lower priority
-interrupts (including timer interrupts) from being delivered, and
-hanging the guest.
+1. https://gitlab.postmarketos.org/postmarketOS/pmaports/-/work_items/4431
+2. https://github.com/systemd/systemd/issues/41279
 
-Fix this by computing the exact Secure/NS boundary within the APR
-bank based on prebits. For registers entirely in the Secure range,
-keep the WI behaviour. For the register that straddles the
-boundary, preserve only the Secure bits while allowing NS bits to
-be modified. For registers entirely in the NS range, allow full
-write access.
-
-The new logic produces identical behaviour to the old code when
-prebits=7, preserving existing behaviour for machines that use
-force-8-bit-prio.
-
-Fixes: 39f29e599355 ("hw/intc/arm_gicv3: Use correct number of priority bits for the CPU")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: liugan1 <liugan1@lixiang.com>
-Message-id: 20260428083119.1400110-1-gs_liugan@163.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Clayton Craft <craftyguy@postmarketos.org>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Message-id: 20260325-fix-name-to-handle-at-v1-1-49fb922e6fd3@craftyguy.net
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit f35f0f1ca121fb4931fe98570cda3aeb06b7a87f)
+(cherry picked from commit 22966937f4130278259a79d6462d1a0887e22c6e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
-index de37465bc8..43831cb9a4 100644
---- a/hw/intc/arm_gicv3_cpuif.c
-+++ b/hw/intc/arm_gicv3_cpuif.c
-@@ -1870,9 +1870,40 @@ static void icc_ap_write(CPUARMState *env, const ARMCPRegInfo *ri,
-      * at a priority outside the Non-secure range (128..255), since this
-      * would otherwise allow malicious NS code to block delivery of S interrupts
-      * by writing a bad value to these registers.
-+     *
-+     * The NS priority range (128..255) maps to APR bits starting at
-+     * aprbit = 0x80 >> (8 - prebits). Depending on prebits, this boundary
-+     * may fall within AP1R0 or AP1R1, so we cannot simply WI the entire
-+     * register. Instead we calculate which bits within each register
-+     * correspond to the Secure range and preserve those, while allowing
-+     * NS code to modify only the NS range bits.
-+     *
-+     *   prebits=4: num_aprs=1, NS starts at AP1R0[8]
-+     *   prebits=5: num_aprs=1, NS starts at AP1R0[16]
-+     *   prebits=6: num_aprs=2, NS starts at AP1R1[0]
-+     *   prebits=7: num_aprs=4, NS starts at AP1R2[0]
-      */
--    if (grp == GICV3_G1NS && regno < 2 && arm_feature(env, ARM_FEATURE_EL3)) {
--        return;
-+    if (grp == GICV3_G1NS && arm_feature(env, ARM_FEATURE_EL3)) {
-+        int ns_start_bit = 0x80 >> (8 - cs->prebits);
-+        int ns_start_regno = ns_start_bit / 32;
-+        int ns_start_regbit = ns_start_bit % 32;
-+
-+        if (regno < ns_start_regno) {
-+            /* This entire register is in the Secure range: WI */
-+            return;
-+        } else if (regno == ns_start_regno && ns_start_regbit > 0) {
-+            /*
-+             * This register is split: low bits are Secure, high bits are NS.
-+             * Preserve the Secure bits (below ns_start_regbit) from the
-+             * current value, and take the NS bits (at and above
-+             * ns_start_regbit) from the written value.
-+             */
-+            uint32_t secure_mask = MAKE_64BIT_MASK(0, ns_start_regbit);
-+
-+            value = (cs->icc_apr[grp][regno] & secure_mask) |
-+                    (value & ~secure_mask);
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index e6dd35d2a1..3f61dd732c 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -8040,6 +8040,9 @@ static int do_futex(CPUState *cpu, bool time64, target_ulong uaddr,
+ #endif
+ 
+ #if defined(TARGET_NR_name_to_handle_at) && defined(CONFIG_OPEN_BY_HANDLE)
++#ifndef AT_HANDLE_MNT_ID_UNIQUE
++#define AT_HANDLE_MNT_ID_UNIQUE 0x001
++#endif
+ static abi_long do_name_to_handle_at(abi_long dirfd, abi_long pathname,
+                                      abi_long handle, abi_long mount_id,
+                                      abi_long flags)
+@@ -8047,6 +8050,7 @@ static abi_long do_name_to_handle_at(abi_long dirfd, abi_long pathname,
+     struct file_handle *target_fh;
+     struct file_handle *fh;
+     int mid = 0;
++    uint64_t mid64 = 0;
+     abi_long ret;
+     char *name;
+     unsigned int size, total_size;
+@@ -8070,7 +8074,12 @@ static abi_long do_name_to_handle_at(abi_long dirfd, abi_long pathname,
+     fh = g_malloc0(total_size);
+     fh->handle_bytes = size;
+ 
+-    ret = get_errno(name_to_handle_at(dirfd, path(name), fh, &mid, flags));
++    if (flags & AT_HANDLE_MNT_ID_UNIQUE) {
++        ret = get_errno(name_to_handle_at(dirfd, path(name), fh,
++                                          (int *)&mid64, flags));
++    } else {
++        ret = get_errno(name_to_handle_at(dirfd, path(name), fh, &mid, flags));
++    }
+     unlock_user(name, pathname, 0);
+ 
+     /* man name_to_handle_at(2):
+@@ -8084,8 +8093,14 @@ static abi_long do_name_to_handle_at(abi_long dirfd, abi_long pathname,
+     g_free(fh);
+     unlock_user(target_fh, handle, total_size);
+ 
+-    if (put_user_s32(mid, mount_id)) {
+-        return -TARGET_EFAULT;
++    if (flags & AT_HANDLE_MNT_ID_UNIQUE) {
++        if (put_user_u64(mid64, mount_id)) {
++            return -TARGET_EFAULT;
 +        }
-+        /* else: regno > ns_start_regno, entire register is NS: allow write */
++    } else {
++        if (put_user_s32(mid, mount_id)) {
++            return -TARGET_EFAULT;
++        }
      }
  
-     if (cs->nmi_support) {
+     return ret;
 -- 
 2.47.3
 
