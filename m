@@ -4,47 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DBADCD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 20:58:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5B81CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 20:58:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMu94-0004lC-29; Tue, 12 May 2026 16:56:02 -0400
+	id 1wMu9C-0005Hf-Tc; Tue, 12 May 2026 16:56:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMu8U-000445-1t; Tue, 12 May 2026 16:55:30 -0400
+ id 1wMu9A-000562-6g; Tue, 12 May 2026 16:56:08 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMu8M-00032G-Eh; Tue, 12 May 2026 16:55:21 -0400
+ id 1wMu98-0003Eq-93; Tue, 12 May 2026 16:56:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619273; bh=YEZQ/7VgyxT0BFyGkOjZ34gF6pss1UwWAxqee8IKMyQ=;
+ t=1778619274; bh=hHx/6MVcdTwYFjek/vYMKEkcpRNm8c9zWAEQmvWI/Dw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Y6V6sRp/YPFoVcmXOUwN1giTXmfpoDKiRWk4v+NtrxAMnW28YtlFm5cuarr8ccscQ
- 4CWwWgljkfW//xvWep+d0SFItQlUj08tYwdjFVs/B1XX18luvahZKx2d9u7ZgpyIG0
- B2D1+6BGzsx+fOL4X8ktqNN9xP+92bGE6kqbhTTCG8Es1G7A5zYjvw/x55uHm+EfiO
- A2en5TC9WlYzYIQ+sgBjY+k/njRI58bgHZ9nGU2P4ikJc4vA2AK9m3tOoU/r06XPTe
- rmVYCGcj4Fot8JtTQFnt0DbeB18Yy+Hi0RhfFFIC4CsKOd1Fu3FHGCIhgmcOghHEg/
- wOJCBbWOdHd9Q==
+ b=oOtrSvSwKolaP7KYovb/XMLzBS0McOB+T5zzHnv4E0HHJ9tpfWNeFZ5inteF7RRJn
+ gpT0w6VUIHB62rFTY9Yjz6WfpM5J9gVs6iPHOtVvEuYMpNGhEs8QMGPcz9RpZH8gpT
+ em35ZiaokWz8ML7dM+b0ZxrS0nMDk7oOSbQGGvIr38LXS67/Ed4Uuc7nXO6XET41Pq
+ j9+QNeK01cNpGd2IzVcBd462jrz9/OJRp6MRD49BRqauJUnKYuZC/GMP2DBm2dZmBw
+ WPbKv05c3qvUbKKAxG6lfmLgeseeahJu4wnkpGexiOcYRd8OBCKYclz0nf98d26Ys6
+ 8L/2stK6tMx4A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D86231AA2D4;
- Tue, 12 May 2026 23:54:33 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8263B1AA2DE;
+ Tue, 12 May 2026 23:54:34 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E3E713ABC45;
- Tue, 12 May 2026 23:54:37 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8DCEA3ABC4F;
+ Tue, 12 May 2026 23:54:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alberto Garcia <berto@igalia.com>,
- Hanna Czenczek <hreitz@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 008/107] throttle-group: Fix race condition in
- throttle_group_restart_queue()
-Date: Tue, 12 May 2026 23:52:55 +0300
-Message-ID: <20260512205437.360850-8-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 018/107] rust: suggest passing --locked to "cargo
+ install"
+Date: Tue, 12 May 2026 23:53:05 +0300
+Message-ID: <20260512205437.360850-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,167 +71,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alberto Garcia <berto@igalia.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-When a timer is fired a pending I/O request is restarted and
-tg->any_timer_armed is reset so other requests can be scheduled.
+Without the option, cargo will try using the latest version of the
+dependencies of bindgen-cli. While it will obviously respect the
+constraints in Cargo.toml, old versions of Cargo do not have
+version-constrained resolution and will choke on dependencies
+that need Rust 2024.
 
-However we're resetting any_timer_armed first in timer_cb() before
-the request is actually restarted, and there's a window between both
-moments in which another thread can arm the same timer, hitting an
-assertion in throttle_group_restart_queue().
-
-This can be solved by deferring the reset of tg->any_timer_armed to
-the moment when the queue is actually restarted, which is protected by
-tg->lock, preventing other threads from arming the timer before that.
-
-In addition to that, throttle_group_restart_tgm() is also updated to
-hold tg->lock while the timer is being inspected. Here we consider
-three different scenarios:
-
-- If the tgm has a timer set, fire it immediately
-- If another tgm has a timer set, restart the queue anyway
-- If there is no timer set in this group then simulate a timer that
-  fires immediately, by setting tg->any_timer_armed in order to
-  prevent other threads from arming a timer in the meantime.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3194
-Signed-off-by: Alberto Garcia <berto@igalia.com>
-Message-Id: <825598ef34ad384d936da19d634eda75598508f7.1773316842.git.berto@igalia.com>
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-(cherry picked from commit 9c8430f5d65144b85ad76433369288182a1c7baa)
+Cc: Daniel P. Berrangé <berrange@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 6257754bb9b00b52018951096a9fba28b98a5b0d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/throttle-groups.c b/block/throttle-groups.c
-index 4385748bbf..ee5dea9621 100644
---- a/block/throttle-groups.c
-+++ b/block/throttle-groups.c
-@@ -391,6 +391,7 @@ void coroutine_fn throttle_group_co_io_limits_intercept(ThrottleGroupMember *tgm
- typedef struct {
-     ThrottleGroupMember *tgm;
-     ThrottleDirection direction;
-+    bool reset_timer_armed;
- } RestartData;
+diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
+index 52521552c8..42787ac0b6 100644
+--- a/docs/about/build-platforms.rst
++++ b/docs/about/build-platforms.rst
+@@ -116,7 +116,7 @@ Rust build dependencies
+   bindgen tool, which is too big to package and distribute.  The minimum
+   supported version of bindgen is 0.60.x.  For distributions that do not
+   include bindgen or have an older version, it is recommended to install
+-  a newer version using ``cargo install bindgen-cli``.
++  a newer version using ``cargo install --locked bindgen-cli``.
  
- static void coroutine_fn throttle_group_restart_queue_entry(void *opaque)
-@@ -403,6 +404,9 @@ static void coroutine_fn throttle_group_restart_queue_entry(void *opaque)
-     bool empty_queue;
+   Developers may want to use Cargo-based tools in the QEMU source tree;
+   this requires Cargo 1.74.0.  Note that Cargo is not required in order
+diff --git a/meson.build b/meson.build
+index 8ec796d835..327c1e19f8 100644
+--- a/meson.build
++++ b/meson.build
+@@ -109,7 +109,7 @@ if have_rust
+   bindgen = find_program('bindgen', required: get_option('rust'))
+   if not bindgen.found() or bindgen.version().version_compare('<0.60.0')
+     if get_option('rust').enabled()
+-      error('bindgen version ' + bindgen.version() + ' is unsupported. You can install a new version with "cargo install bindgen-cli"')
++      error('bindgen version ' + bindgen.version() + ' is unsupported. You can install a new version with "cargo install --locked bindgen-cli"')
+     else
+       if bindgen.found()
+         warning('bindgen version ' + bindgen.version() + ' is unsupported, disabling Rust compilation.')
+diff --git a/tests/docker/dockerfiles/fedora-rust-nightly.docker b/tests/docker/dockerfiles/fedora-rust-nightly.docker
+index fe4a6ed48d..cf16205ebf 100644
+--- a/tests/docker/dockerfiles/fedora-rust-nightly.docker
++++ b/tests/docker/dockerfiles/fedora-rust-nightly.docker
+@@ -172,7 +172,7 @@ RUN set -eux && \
+   test "$CARGO" = "$(/usr/local/cargo/bin/rustup +nightly which cargo)" && \
+   test "$RUSTC" = "$(/usr/local/cargo/bin/rustup +nightly which rustc)"
+ ENV PATH=$CARGO_HOME/bin:$PATH
+-RUN /usr/local/cargo/bin/rustup run nightly cargo install bindgen-cli
++RUN /usr/local/cargo/bin/rustup run nightly cargo install --locked bindgen-cli
+ RUN $CARGO --list
+ # As a final step configure the user (if env is defined)
+ ARG USER
+diff --git a/tests/docker/dockerfiles/ubuntu2204.docker b/tests/docker/dockerfiles/ubuntu2204.docker
+index 88ce4ef9a9..ace5a4b1ef 100644
+--- a/tests/docker/dockerfiles/ubuntu2204.docker
++++ b/tests/docker/dockerfiles/ubuntu2204.docker
+@@ -154,7 +154,7 @@ ENV CARGO_HOME=/usr/local/cargo
+ ENV PATH=$CARGO_HOME/bin:$PATH
+ RUN DEBIAN_FRONTEND=noninteractive eatmydata \
+   apt install -y --no-install-recommends cargo
+-RUN cargo install bindgen-cli
++RUN cargo install --locked bindgen-cli
+ # As a final step configure the user (if env is defined)
+ ARG USER
+ ARG UID
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index aa551aca9b..7f36a09450 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -137,7 +137,7 @@ fedora_rustup_nightly_extras = [
+     '  test "$CARGO" = "$(/usr/local/cargo/bin/rustup +nightly which cargo)" && \\\n',
+     '  test "$RUSTC" = "$(/usr/local/cargo/bin/rustup +nightly which rustc)"\n',
+     'ENV PATH=$CARGO_HOME/bin:$PATH\n',
+-    'RUN /usr/local/cargo/bin/rustup run nightly cargo install bindgen-cli\n',
++    'RUN /usr/local/cargo/bin/rustup run nightly cargo install --locked bindgen-cli\n',
+     'RUN $CARGO --list\n',
+ ]
  
-     qemu_mutex_lock(&tg->lock);
-+    if (data->reset_timer_armed) {
-+        tg->any_timer_armed[direction] = false;
-+    }
-     empty_queue = !throttle_group_co_restart_queue(tgm, direction);
+@@ -146,7 +146,7 @@ ubuntu2204_bindgen_extras = [
+     'ENV PATH=$CARGO_HOME/bin:$PATH\n',
+     "RUN DEBIAN_FRONTEND=noninteractive eatmydata \\\n",
+     "  apt install -y --no-install-recommends cargo\n",
+-    'RUN cargo install bindgen-cli\n',
++    'RUN cargo install --locked bindgen-cli\n',
+ ]
  
-     /* If the request queue was empty then we have to take care of
-@@ -419,18 +423,23 @@ static void coroutine_fn throttle_group_restart_queue_entry(void *opaque)
- }
- 
- static void throttle_group_restart_queue(ThrottleGroupMember *tgm,
--                                        ThrottleDirection direction)
-+                                         ThrottleDirection direction,
-+                                         bool reset_timer_armed)
- {
-     Coroutine *co;
-     RestartData *rd = g_new0(RestartData, 1);
- 
-     rd->tgm = tgm;
-     rd->direction = direction;
-+    rd->reset_timer_armed = reset_timer_armed;
- 
--    /* This function is called when a timer is fired or when
--     * throttle_group_restart_tgm() is called. Either way, there can
-+    /* If reset_timer_armed is set then this means that this function
-+     * was called when a timer was fired (either from timer_cb() or
-+     * from throttle_group_restart_tgm()). In this case there can
-      * be no timer pending on this tgm at this point */
--    assert(!timer_pending(tgm->throttle_timers.timers[direction]));
-+    if (reset_timer_armed) {
-+        assert(!timer_pending(tgm->throttle_timers.timers[direction]));
-+    }
- 
-     qatomic_inc(&tgm->restart_pending);
- 
-@@ -444,15 +453,50 @@ void throttle_group_restart_tgm(ThrottleGroupMember *tgm)
- 
-     if (tgm->throttle_state) {
-         for (dir = THROTTLE_READ; dir < THROTTLE_MAX; dir++) {
--            QEMUTimer *t = tgm->throttle_timers.timers[dir];
-+            QEMUTimer *t;
-+            ThrottleState *ts = tgm->throttle_state;
-+            ThrottleGroup *tg = container_of(ts, ThrottleGroup, ts);
-+            bool reset_timer_armed;
-+
-+            /*
-+             * This function restarts the tgm's queue immediately.
-+             * This is used for example for callers to drain all requests.
-+             * There are three different scenarios depending on whether
-+             * a timer is armed for this tg and which tgm owns the timer.
-+             */
-+
-+            qemu_mutex_lock(&tg->lock);
-+
-+            t = tgm->throttle_timers.timers[dir];
-             if (timer_pending(t)) {
--                /* If there's a pending timer on this tgm, fire it now */
-+                /*
-+                 * Case 1: this tgm has a pending timer.
-+                 * We can fire the timer immediately.
-+                 */
-                 timer_del(t);
--                timer_cb(tgm, dir);
-+                reset_timer_armed = true;
-+            } else if (tg->any_timer_armed[dir]) {
-+                /*
-+                 * Case 2: another tgm has a pending timer.
-+                 * In this case we can still restart the queue but we
-+                 * have to leave any_timer_armed untouched so the
-+                 * other tgm's timer is not disrupted.
-+                 */
-+                reset_timer_armed = false;
-             } else {
--                /* Else run the next request from the queue manually */
--                throttle_group_restart_queue(tgm, dir);
-+                /*
-+                 * Case 3: there is no timer set for this group.
-+                 * Here we can simulate a timer that fires immediately,
-+                 * so the queue is restarted but no other thread
-+                 * can arm a timer in the meantime.
-+                 */
-+                tg->any_timer_armed[dir] = true;
-+                reset_timer_armed = true;
-             }
-+
-+            qemu_mutex_unlock(&tg->lock);
-+
-+            throttle_group_restart_queue(tgm, dir, reset_timer_armed);
-         }
-     }
- }
-@@ -499,16 +543,13 @@ void throttle_group_get_config(ThrottleGroupMember *tgm, ThrottleConfig *cfg)
-  */
- static void timer_cb(ThrottleGroupMember *tgm, ThrottleDirection direction)
- {
--    ThrottleState *ts = tgm->throttle_state;
--    ThrottleGroup *tg = container_of(ts, ThrottleGroup, ts);
--
--    /* The timer has just been fired, so we can update the flag */
--    qemu_mutex_lock(&tg->lock);
--    tg->any_timer_armed[direction] = false;
--    qemu_mutex_unlock(&tg->lock);
--
--    /* Run the request that was waiting for this timer */
--    throttle_group_restart_queue(tgm, direction);
-+    /*
-+     * Run the request that was waiting for this timer.
-+     * tg->any_timer_armed needs to be cleared, but we'll do it later
-+     * when the queue is restarted in order to prevent another thread
-+     * from arming the timer before that.
-+     */
-+    throttle_group_restart_queue(tgm, direction, true);
- }
- 
- static void read_timer_cb(void *opaque)
+ def cross_build(prefix, targets):
 -- 
 2.47.3
 
