@@ -4,43 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 246A2CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:17:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE6E2CD4F39
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:17:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuOG-0000fH-Df; Tue, 12 May 2026 17:11:44 -0400
+	id 1wMuQo-0003Dk-NO; Tue, 12 May 2026 17:14:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuO9-0000BK-Ts; Tue, 12 May 2026 17:11:39 -0400
+ id 1wMuQa-00021K-02; Tue, 12 May 2026 17:14:08 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuO8-0004Th-7y; Tue, 12 May 2026 17:11:37 -0400
+ id 1wMuQY-0005gt-8P; Tue, 12 May 2026 17:14:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619303; bh=M6mOKWnj2BDxXSkSMiqlrYyDKPcn9+kmgMq7O1jtvS4=;
+ t=1778619305; bh=nW+QjqzugVx5zltjTAhVg+YQpKEuym/TQXd55CGi+TU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=b2pNZTomPiPzsfiw9lU5tisXyxGMAUup6tThKPmGZ0XCR2srluzRuwL+qY2GaOj6I
- H2X6Nq7KG2HgZaSH6UyCAMyvke200s9sb/EaHHUZ3Y8hI2P1ms7KFkO0kPmBn7GKMI
- l97bT3hHfAJx5MGdAwpXeVfEI9J//yGcpKCJpluXUi/EuMAnbv5QTmFiNXCVIuj8JM
- LPDncU4XFhlWfOwmr5iCBdxyixudjlsYAFRVmInHydKFYy426/TpMAdnkkifzFUekX
- zxlTM7MIFgyfuOrFv8KQd62XbQCCbXdqPlAefzr1TsVQOG/8sfQ6S6VpDyMIk23+WQ
- hURFZcbTZY76Q==
+ b=PjV4rROAHe0iXQNsfurO7W5iZhtA54s8H/NxcC6jU+f3x3rXTz+Ut291rcgzb9CiH
+ oSIY3dKiMLpBEg4LDjhBNFXnaa56+5XPhsEmGm7Oql2H229PT/LuHkOs2yqVnkJY4n
+ 2O/biDqJD0/x5dpOZk/ModmoRJCPpKJtYrChT4JcqXkpk/xbIc5uhXPikjFlYMIcgK
+ fWZTSa/GH702H7xUbwbbAuYHg94enEhMIcNyDCBVdynq5XX1uSMik6XzjSdrdm9+NX
+ 62usksHFcMqNJ/lEhYseHoJQL58KyiEpND93diTe01L89qEW+10Jiz+aAMpgz3bwDo
+ rGMJQGfCHyn5Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6EB671AA375;
- Tue, 12 May 2026 23:55:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3E3151AA38F;
+ Tue, 12 May 2026 23:55:05 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7BB0F3ABCE5;
- Tue, 12 May 2026 23:55:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 485933ABCFE;
+ Tue, 12 May 2026 23:55:09 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Sun Haoyu <shyliuli@aosc.io>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 056/117] linux-user: Make openat2() use -L for
- absolute paths
-Date: Tue, 12 May 2026 23:53:58 +0300
-Message-ID: <20260512205503.361097-56-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Gyorgy Tamasi <gyorgy.tamasi@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Helge Deller <deller@gmx.de>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 081/117] linux-user: Don't define target_stat64 struct
+ for loongarch64
+Date: Tue, 12 May 2026 23:54:23 +0300
+Message-ID: <20260512205503.361097-81-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
@@ -69,68 +71,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sun Haoyu <shyliuli@aosc.io>
+From: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
 
-openat2() ignored the -L prefix and opened host files directly.
-For example, openat2("/tmp/file") opened /tmp/file on the host, not
-QEMU_LD_PREFIX/tmp/file like openat() does.
+The kernel defines 'struct stat64' only if
+__BITS_PER_LONG != 64 || defined(__ARCH_WANT_STAT64).
+loongarch64 doesn't set __ARCH_WANT_STAT64, and it isn't 32-bit,
+so it won't get this struct.
 
-Fix this by using path() to rewrite absolute paths. Skip this
-when RESOLVE_BENEATH or RESOLVE_IN_ROOT is set:
-- RESOLVE_BENEATH rejects absolute paths anyway
-- RESOLVE_IN_ROOT resolves relative to dirfd
+QEMU incorrectly does define a target_stat64 struct. However this
+isn't causing any guest-visible problems, because defining the
+target_stat64 struct and TARGET_HAS_STRUCT_STAT64 affects these
+syscalls:
+ TARGET_NR_stat64
+ TARGET_NR_lstat64
+ TARGET_NR_fstat64
+ TARGET_NR_fstatat64
+ TARGET_NR_newfstatat
 
-Now openat() and openat2() work in the same way.
+For loongarch64 the only one of those we provide is newfstatat,
+and that is actually a separate QEMU bug, because the kernel does
+not provide that syscall for this architecture. No real guest
+code will be using a syscall that doesn't exist in the ABI.
 
-Link: https://gitlab.com/qemu-project/qemu/-/work_items/3341
+(Some of these syscalls are present in the loongarch64 "ABI1.0",
+but that ABI was never accepted in the upstream kernel, and
+QEMU does not model that ABI, only the "ABI2.0".)
 
-Signed-off-by: Sun Haoyu <shyliuli@aosc.io>
+Stop defining TARGET_HAS_STRUCT_STAT64 anyway, for consistency
+with the kernel and to avoid confusion.
+
+Note:
+Commit message suggested by Peter Maydell <peter.maydell@linaro.org>
+
+Signed-off-by: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
+Tested-by: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260317053827.25051-1-shyliuli@aosc.io
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit fa6dfcc373c244a767be04d236e0cdd075b80e69)
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 93484c768f2b66947a91d6372f408ae01c83e8c6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 5441ae6cb5..0261f2fc5c 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -8861,7 +8861,16 @@ static int do_openat2(CPUArchState *cpu_env, abi_long dirfd,
-     if (fd > -2) {
-         ret = get_errno(fd);
-     } else {
--        ret = get_errno(safe_openat2(dirfd, pathname, &how,
-+        const char *host_pathname = pathname;
-+        if (pathname[0] == '/' &&
-+            !(how.resolve & (RESOLVE_IN_ROOT | RESOLVE_BENEATH))) {
-+            /*
-+             * RESOLVE_BENEATH rejects absolute paths; RESOLVE_IN_ROOT
-+             * resolves them relative to dirfd.
-+             */
-+            host_pathname = path(pathname);
-+        }
-+        ret = get_errno(safe_openat2(dirfd, host_pathname, &how,
-                                      sizeof(struct open_how_ver0)));
-     }
- 
 diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index cd9ff709b8..a2470856be 100644
+index a2470856be..55443ff965 100644
 --- a/linux-user/syscall_defs.h
 +++ b/linux-user/syscall_defs.h
-@@ -2773,7 +2773,12 @@ struct target_open_how_ver0 {
- #ifndef RESOLVE_NO_SYMLINKS
- #define RESOLVE_NO_SYMLINKS     0x04
- #endif
--
-+#ifndef RESOLVE_BENEATH
-+#define RESOLVE_BENEATH         0x08
-+#endif
-+#ifndef RESOLVE_IN_ROOT
-+#define RESOLVE_IN_ROOT         0x10
-+#endif
- #if (defined(TARGET_I386) && defined(TARGET_ABI32)) || \
-     (defined(TARGET_ARM) && defined(TARGET_ABI32)) || \
-     defined(TARGET_M68K) || defined(TARGET_MICROBLAZE) || \
+@@ -2005,7 +2005,7 @@ struct target_stat {
+     abi_uint __unused5;
+ };
+ 
+-#if !defined(TARGET_RISCV64)
++#if !defined(TARGET_RISCV64) && !defined(TARGET_LOONGARCH64)
+ #define TARGET_HAS_STRUCT_STAT64
+ struct target_stat64 {
+     abi_ullong st_dev;
 -- 
 2.47.3
 
