@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDF08CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:34:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FCF2CD4F24
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:34:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuWb-0006Pq-G2; Tue, 12 May 2026 17:20:21 -0400
+	id 1wMuiM-00043Q-VT; Tue, 12 May 2026 17:32:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuWU-00069D-8G; Tue, 12 May 2026 17:20:18 -0400
+ id 1wMuhI-0003Tu-Sz; Tue, 12 May 2026 17:31:27 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuWR-00006R-M9; Tue, 12 May 2026 17:20:13 -0400
+ id 1wMuYB-0000uu-0U; Tue, 12 May 2026 17:24:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619498; bh=CvQZJ/8svD+JUCqfi8IyJTZ5JVuoX+mlctKHWLzUa2I=;
+ t=1778619499; bh=QtZMv/eUNp00lZGF+Ax8EVZrxLcKxZLVCasWZm66xAY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=R72kfku55Tp6BcCJ0oHpcHEuK1sFYiXq1r63juFLjbfdg0rWKwOysB9K5KWNPeZ2C
- RWi6xqMi2ffdJVCUE4QkHL59rID0iJxKvfgscju0wz2+p00a1Y4T0+crKt6Z2NBE/T
- CRYYY25In4kXxl34U1eFwPazBPzKfvI9Zn8Pj2bteB6fXJYxVO02dXcnW8cpvD5oZ6
- dTLaUSAtCIs/oGj3Ou7mTS0uLPcvV5WFlbYDwrUKxSg7fnLAkIPMCgGkfOwM6gPZhC
- +QTAYDq5+iUti+sfj8GzLPYxZUbSMgm5vq0lBJFJuUQuHaNdz2ju7arLt/JlTIAPFb
- wR7vdPH+Wc7cw==
+ b=C3D9A16nLwbFzv7/7P3R2/NaOGN73DfYaqmRP4huvMnrLMi7TbR0NUDMi/wZEDLwB
+ uo7to2WKr+C5a6o8nAXLx+yov5+wv5QnNPcnMqcUaCTU3plEhhlQnHjUA65WaxNpB5
+ 26/R8CPuNDvvQM550wOHbqI14N6WHVNA8v7BzPTpbEVAwuB80Uuizyle16oRr1wR4p
+ 7E/vImWilJQlbYHaGc40eivTOrTpbv0A7i66yFVAWd5w/v+k5PQnxG243W0iaZh7nH
+ km4/DD050pWeVJf5z7WpnMUyScmGPpBdMtWE62g+nzxv7gYNtvZE1sXoeIHoNemJzF
+ +3oppXhddrh1A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7040F1AA3E2;
- Tue, 12 May 2026 23:58:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4F13D1AA3EF;
+ Tue, 12 May 2026 23:58:19 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7CE043ABD3A;
- Tue, 12 May 2026 23:58:22 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5AFA33ABD47;
+ Tue, 12 May 2026 23:58:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, James Hilliard <james.hilliard1@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 23/58] linux-user/mips: sync k0 TLS for
- EF_MIPS_MACH_OCTEON userlands
-Date: Tue, 12 May 2026 23:57:44 +0300
-Message-ID: <20260512205820.361821-23-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 36/58] target/riscv: Generate access fault if sc
+ comparison fails
+Date: Tue, 12 May 2026 23:57:57 +0300
+Message-ID: <20260512205820.361821-36-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
@@ -49,13 +49,6 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
-X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,84 +63,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: James Hilliard <james.hilliard1@gmail.com>
+From: Alistair Francis <alistair.francis@wdc.com>
 
-Cavium Octeon userspace is not following a generic MIPS Linux TLS
-ABI rule here. Older Octeon glibc uses the k0 register as the fast
-thread pointer, while newer Octeon2 and Octeon3 glibc variants use
-the normal rdhwr $29 path.
+The RISC-V spec states:
 
-linux-user already updates CP0_UserLocal for cpu_set_tls() and
-TARGET_NR_set_thread_area, but it does not keep gpr[26]
-synchronized. That leaves EF_MIPS_MACH_OCTEON userlands able to
-complete set_thread_area() and still reach pthread startup or
-pthread_self() with a stale k0 value.
+"For the purposes of memory protection, a failed SC.W may be treated
+like a store."
 
-Use the existing MIPS ELF machine flags from linux-user/elfload.c and
-mirror CP0_UserLocal into gpr[26] only for EF_MIPS_MACH_OCTEON.
+So if the comparison in sc.w fails we should still check for alignment
+and do a probe access to check permissions.
 
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 4c681ba3b82d9a9f00a3f361399a1bb7612f3535)
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3323
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3136
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Message-ID: <20260415233740.3027321-2-alistair.francis@wdc.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit d107b748072cea3f86089a4a7b2e83f1a62745f2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 59b543f740..0e757787d2 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -1476,6 +1476,9 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
-     /* Usual start for brk is after all sections of the main executable. */
-     info->brk = TARGET_PAGE_ALIGN(hiaddr + load_bias);
-     info->elf_flags = ehdr->e_flags;
-+#ifdef TARGET_MIPS
-+    info->use_k0_tls = (ehdr->e_flags & EF_MIPS_MACH) == EF_MIPS_MACH_OCTEON;
-+#endif
- 
-     prot_exec = PROT_EXEC;
- #ifdef TARGET_AARCH64
-diff --git a/linux-user/mips/target_cpu.h b/linux-user/mips/target_cpu.h
-index c375616c55..2bbd0a81c5 100644
---- a/linux-user/mips/target_cpu.h
-+++ b/linux-user/mips/target_cpu.h
-@@ -35,7 +35,12 @@ static inline void cpu_clone_regs_parent(CPUMIPSState *env, unsigned flags)
- 
- static inline void cpu_set_tls(CPUMIPSState *env, target_ulong newtls)
- {
-+    TaskState *ts = get_task_state(env_cpu(env));
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index b785456ee0..fa16ab2b82 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -1289,3 +1289,6 @@ DEF_HELPER_4(vsm4r_vs, void, ptr, ptr, env, i32)
+ #ifndef CONFIG_USER_ONLY
+ DEF_HELPER_1(ssamoswap_disabled, void, env)
+ #endif
 +
-     env->active_tc.CP0_UserLocal = newtls;
-+    if (ts->info->use_k0_tls) {
-+        env->active_tc.gpr[26] = newtls;
-+    }
++/* Zalrsc SC write probe */
++DEF_HELPER_FLAGS_3(sc_probe_write, TCG_CALL_NO_WG, void, env, tl, tl)
+diff --git a/target/riscv/insn_trans/trans_rva.c.inc b/target/riscv/insn_trans/trans_rva.c.inc
+index a7a3278d24..62c0fe673d 100644
+--- a/target/riscv/insn_trans/trans_rva.c.inc
++++ b/target/riscv/insn_trans/trans_rva.c.inc
+@@ -90,6 +90,12 @@ static bool gen_sc(DisasContext *ctx, arg_atomic *a, MemOp mop)
+      */
+     TCGBar bar_strl = (ctx->ztso || a->rl) ? TCG_BAR_STRL : 0;
+     tcg_gen_mb(TCG_MO_ALL + a->aq * TCG_BAR_LDAQ + bar_strl);
++    /*
++     * "For the purposes of memory protection, a failed SC.W may be treated
++     * like a store." so let's check the write access permissions
++     */
++    gen_helper_sc_probe_write(tcg_env, src1,
++                              tcg_constant_tl(memop_size(mop)));
+     gen_set_gpr(ctx, a->rd, tcg_constant_tl(1));
+ 
+     gen_set_label(l2);
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index 6ccc127c30..b569366369 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -281,6 +281,20 @@ void helper_cbo_inval(CPURISCVState *env, target_ulong address)
+     /* We don't emulate the cache-hierarchy, so we're done. */
  }
  
- static inline abi_ulong get_sp_from_cpustate(CPUMIPSState *state)
-diff --git a/linux-user/qemu.h b/linux-user/qemu.h
-index cfe5f45fc4..7f98fb2607 100644
---- a/linux-user/qemu.h
-+++ b/linux-user/qemu.h
-@@ -65,6 +65,7 @@ struct image_info {
-         uint32_t        note_flags;
++void helper_sc_probe_write(CPURISCVState *env, target_ulong addr,
++                           target_ulong size)
++{
++    uintptr_t ra = GETPC();
++    int mmu_idx = riscv_env_mmu_index(env, false);
++
++    if (addr & (size - 1)) {
++        env->badaddr = addr;
++        riscv_raise_exception(env, RISCV_EXCP_STORE_AMO_ADDR_MIS, ra);
++    }
++
++    probe_write(env, addr, size, mmu_idx, ra);
++}
++
+ #ifndef CONFIG_USER_ONLY
  
- #ifdef TARGET_MIPS
-+        bool            use_k0_tls;
-         int             fp_abi;
-         int             interp_fp_abi;
- #endif
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index f4b74ad350..8e96cc26db 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -13216,7 +13216,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
- #ifdef TARGET_NR_set_thread_area
-     case TARGET_NR_set_thread_area:
- #if defined(TARGET_MIPS)
--      cpu_env->active_tc.CP0_UserLocal = arg1;
-+      cpu_set_tls(cpu_env, arg1);
-       return 0;
- #elif defined(TARGET_I386) && defined(TARGET_ABI32)
-       return do_set_thread_area(cpu_env, arg1);
+ target_ulong helper_sret(CPURISCVState *env)
 -- 
 2.47.3
 
