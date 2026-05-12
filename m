@@ -4,79 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A4B3CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 20:52:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0032CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 20:55:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMu4i-00038Z-CQ; Tue, 12 May 2026 16:51:32 -0400
+	id 1wMu8F-0003xO-Qv; Tue, 12 May 2026 16:55:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wMu4g-00037r-J8
- for qemu-devel@nongnu.org; Tue, 12 May 2026 16:51:30 -0400
-Received: from qs-2007d-snip4-3.eps.apple.com ([57.103.84.164]
- helo=outbound.qs.icloud.com)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wMu85-0003sh-4n; Tue, 12 May 2026 16:55:03 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wMu4c-00016N-UR
- for qemu-devel@nongnu.org; Tue, 12 May 2026 16:51:30 -0400
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-60-percent-11 (Postfix) with ESMTPS id
- 6A8C918000AD; Tue, 12 May 2026 20:51:20 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRAEwVSB11NVg1HD1geXBQXCUBDXgheH0wcHQ5YBhIATQoONgZZBV4JVgNDBTYSFF1FRgNHGVcUUBtHDFUHV15fChMAXg8PTAtBBS8OUnNCFEkKKXJGBkUPQB4sA1kLXQBABykAWQZJfE8FWHceXABLHVcEVB9TElUdHQtFVRIEQAhWUFQeQQRWFWwJWAZTGVc=
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1778619083; x=1781211083;
- bh=dowCJmv0YyQe/HYja0aiB9YSlxqwGMSaD9jzrNcVu7U=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=Kqj7sSjCid+JukTbL+ITHC9BgtZZOlC/l1aokDYAmBql6TdIA4OfvZADNflVQ+ACFMhdfHFr3F4zZZh8Zd165ECXsDT6aBxM2HxHTNDS16iyiXHXoIQZyD4IHR0cEIBgxjCMsJ5Oc3kqGHNLjkEAtNTkY1GFki7Htad79jLROsqgi7R6gWTVeUiFejNkW6p2TMGEHKahczRhzx9oJUsP/Iy4F+FBEocvmBConOMxBteTidVBQ86rYjr/v/b4nqcuVTgVSa9V+P2kQuvlF25cPKSmwIf0xmSjhTEZ/IZaFT8IrtjFufMtxW8491fhoK914REnxPQFuOWTpsI/8jygNg==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-60-percent-11 (Postfix) with ESMTPSA id
- A496918000A0; Tue, 12 May 2026 20:51:18 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [PATCH v3] target/arm/hvf: Fix WFI halting to stop idle vCPU
- spinning
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <DIGZJ3V3TPDK.3LY9W3NAULWWA@gmail.com>
-Date: Tue, 12 May 2026 22:51:06 +0200
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <296B99A2-19DE-4568-A429-984D7249E765@unpredictable.fr>
-References: <20260410055045.63001-1-scottjgo@gmail.com>
- <20260427195516.46256-1-scottjgo@gmail.com>
- <794CB795-9462-4299-B7EC-528B0E4F1923@unpredictable.fr>
- <DIGZJ3V3TPDK.3LY9W3NAULWWA@gmail.com>
-To: "Scott J. Goldman" <scottjgo@gmail.com>
-X-Mailer: Apple Mail (2.3864.500.181)
-X-Proofpoint-ORIG-GUID: iH1Xj6mGbit2X58s7RzFs4CGg5Dxdfz1
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEyMDIxNCBTYWx0ZWRfXzg+lOXFNnPvG
- 03acgZDzdcT82tBnYrSbEIW/XHatVm3Q/hjHVBcyMo+3lUFDzFObEsXR1+n1CS6bgcWjozhLQIu
- hblXjMFDJRva+vQ/RVL0j5wT+7ympS7TXm1eC63FBf/ra/0hJbyTi39IDmzkYBLySUEm1ELgnkQ
- kHAhYvGuqwSbkHC0QmroBjTwKICVMLJxNUrzn6fct2nhNVl6q7utO0loHXng3WNxk8q0HveL/Ys
- EhFCrT3fi9C3++b/FSypBFQPlQpPm5ETkniVi0VHzxphPQ0KDEJ9p6v7kIfAbKsBeXDr2MGAf26
- WTkrsxi+8u5kbfB206sq3iDrqFuEy9rY6k0fkgNv51AUDrz22hXh/mUUltCQLU=
-X-Proofpoint-GUID: iH1Xj6mGbit2X58s7RzFs4CGg5Dxdfz1
-X-Authority-Info-Out: v=2.4 cv=fMA0HJae c=1 sm=1 tr=0 ts=6a0392c9
- cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
- a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=pGLkceISAAAA:8 a=dMFe32L-kBhxwVrZe4QA:9
- a=QEXdDO2ut3YA:10 a=O8hF6Hzn-FEA:10
-Received-SPF: pass client-ip=57.103.84.164;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wMu81-0002bN-Ra; Tue, 12 May 2026 16:55:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1778619273; bh=s7EcSwO6NdZNoeJZ8alhR5BEWxbxZ01fkpBzNjt0LYk=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=ua1G/dn0OzwWvrKxelkaOiwF44QtH+9/4dusDv8gJMvzdLFzysDHvzYuY/5AmRO/Q
+ 8HgwSJG1dotadoHbKo+jWVEoH7HaOpmPeitnuXgtdc1LxAkfebYt68bg9c1tK/CVpA
+ +Yjj2i++qJCzxYYraqnsFY0/8iGxKvVtTirdP1Fh4CUUAX2q3NjkunjjgvQtHms3E2
+ lciOuP5c1UGeMIhKOhHlEGxfd3dagXvatT6Fn1RFgQEfL3SoAc2yHnFYtAhUMoa/C8
+ y+OvUlrMXvljmZW+Ef/bsOTS7AzGuaRxNpSepvlWV7ELGeRRmXTc6A/vwQouh8ySwH
+ yRlohsneQGutw==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 67DDE1AA2CD;
+ Tue, 12 May 2026 23:54:33 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6E8293ABC3E;
+ Tue, 12 May 2026 23:54:37 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Yodel Eldar <yodel.eldar@yodel.dev>, Thomas Huth <thuth@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 001/107] hw/net/rtl8319: Work around GCC sanitizer /
+ -Wstringop-overflow bug
+Date: Tue, 12 May 2026 23:52:48 +0300
+Message-ID: <20260512205437.360850-1-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
+References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,82 +73,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Peter Maydell <peter.maydell@linaro.org>
 
+If you compile QEMU with GCC with -fsanitize=address and
+-Wstringop-overflow, this causes GCC to produce a false-positive
+warning which it does not produce when the sanitizer is not enabled
+(and which makes compilation fail if you're using -Werror, as we do
+by default for builds from git):
 
-> On 12. May 2026, at 22:36, Scott J. Goldman <scottjgo@gmail.com> =
-wrote:
->=20
-> On Tue May 12, 2026 at 1:54 PM EDT, Mohamed Mediouni wrote:
->>=20
->>=20
->>> On 27. Apr 2026, at 21:55, Scott J. Goldman <scottjgo@gmail.com> =
-wrote:
->>>=20
->>> Commit b5f8f77271 ("accel/hvf: Implement WFI without using =
-pselect()")
->>> changed hvf_wfi() from blocking the vCPU thread with pselect() to
->>> returning EXCP_HLT, intending QEMU's main event loop to handle the
->>> idle wait. However, cpu->halted was never set, so =
-cpu_thread_is_idle()
->>> always returns false and the vCPU thread spins at 100% CPU per core
->>> while the guest is idle.
->>>=20
->>> Fix this by:
->>>=20
->>> 1. Setting cpu->halted =3D 1 in hvf_wfi() so the vCPU thread sleeps =
-on
->>>  halt_cond in qemu_process_cpu_events().
->>>=20
->>> 2. Arming a per-vCPU QEMU_CLOCK_VIRTUAL timer to fire when the =
-guest's
->>>  virtual timer (CNTV_CVAL_EL0) would expire. This is necessary
->>>  because HVF only delivers HV_EXIT_REASON_VTIMER_ACTIVATED during
->>>  hv_vcpu_run(), which is not called while the CPU is halted. The
->>>  timer callback mirrors the VTIMER_ACTIVATED handler: it raises the
->>>  vtimer IRQ through the GIC and marks vtimer_masked, causing the
->>>  interrupt delivery chain to wake the vCPU via qemu_cpu_kick().
->>>=20
->>> 3. Clearing cpu->halted in hvf_arch_vcpu_exec() when cpu_has_work()
->>>  indicates a pending interrupt, and cancelling the WFI timer.
->>>=20
->>> 4. Re-arming the WFI timer from hvf_vm_state_change() on the resume
->>>  transition for any halted vCPU, since the QEMUTimer is per-instance
->>>  state and is not migrated. After cpu_synchronize_all_states() the
->>>  migrated vtimer state is mirrored in env, so we can read CNTV_CTL
->>>  and CNTV_CVAL from there. If the vtimer has already expired by the
->>>  time the destination resumes, hvf_wfi_timer_cb() is invoked
->>>  directly so the halted vCPU is woken up.
->>>=20
->>> Fixes: b5f8f77271 ("accel/hvf: Implement WFI without using =
-pselect()")
->>> Signed-off-by: Scott J. Goldman <scottjgo@gmail.com>
->>=20
->> Hi,
->>=20
->> A bit of a side note for reproducing this:
->>=20
->> To reproduce this on current master, as far as I can tell you need =
-either=20
->> -M kernel-irqchip=3Doff or -M virt-11.0 or earlier. -M virt(-11.1) on =
-master uses=20
->> the HVF vGIC path.
->=20
-> Just wanted to confirm that I re-tested and it seems like you are
-> correct. This must have changed semi recently?
+../../hw/net/rtl8139.c: In function ‘rtl8139_io_writeb’:
+../../hw/net/rtl8139.c:2264:17: error: writing 8 bytes into a region of size 0 [-Werror=stringop-overflow=]
+ 2264 |                 memcpy(data_to_checksum, saved_ip_header + 12, 8);
+      |                 ^
+In file included from ../../hw/net/rtl8139.c:62:
+/home/pm215/qemu/include/net/eth.h:50:14: note: at offset [8, 48] into destination object ‘ip_ver_len’ of size 1
+   50 |     uint8_t  ip_ver_len;     /* version and header length */
+      |              ^~~~~~~~~~
+../../hw/net/rtl8139.c:2192:21: error: writing 8 bytes into a region of size 0 [-Werror=stringop-overflow=]
+ 2192 |                     memcpy(data_to_checksum, saved_ip_header + 12, 8);
+      |                     ^
+/home/pm215/qemu/include/net/eth.h:50:14: note: at offset [8, 48] into destination object ‘ip_ver_len’ of size 1
+   50 |     uint8_t  ip_ver_len;     /* version and header length */
+      |              ^~~~~~~~~~
+../../hw/net/rtl8139.c:2192:21: error: writing 8 bytes into a region of size 0 [-Werror=stringop-overflow=]
+ 2192 |                     memcpy(data_to_checksum, saved_ip_header + 12, 8);
+      |                     ^
+/home/pm215/qemu/include/net/eth.h:50:14: note: at offset [8, 48] into destination object ‘ip_ver_len’ of size 1
+   50 |     uint8_t  ip_ver_len;     /* version and header length */
+      |              ^~~~~~~~~~
+In file included from /home/pm215/qemu/include/system/memory.h:21,
+                 from /home/pm215/qemu/include/hw/pci/pci.h:4,
+                 from /home/pm215/qemu/include/hw/pci/pci_device.h:4,
+                 from ../../hw/net/rtl8139.c:54:
+In function ‘stl_he_p’,
+    inlined from ‘stl_be_p’ at /home/pm215/qemu/include/qemu/bswap.h:371:5,
+    inlined from ‘rtl8139_cplus_transmit_one’ at ../../hw/net/rtl8139.c:2244:21,
+    inlined from ‘rtl8139_cplus_transmit’ at ../../hw/net/rtl8139.c:2345:28,
+    inlined from ‘rtl8139_io_writeb’ at ../../hw/net/rtl8139.c:2728:17:
+/home/pm215/qemu/include/qemu/bswap.h:284:5: error: writing 4 bytes into a region of size 0 [-Werror=stringop-overflow=]
+  284 |     __builtin_memcpy(ptr, &v, sizeof(v));
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/pm215/qemu/include/net/eth.h: In function ‘rtl8139_io_writeb’:
+/home/pm215/qemu/include/net/eth.h:50:14: note: at offset [24, 64] into destination object ‘ip_ver_len’ of size 1
+   50 |     uint8_t  ip_ver_len;     /* version and header length */
+      |              ^~~~~~~~~~
 
-Hi,
+This has been triaged as a bug in GCC:
+ https://gcc.gnu.org/bugzilla/show_bug.cgi?id=114494
+ https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99673
+(the sanitizer pass rewrites the IR in a way that conflicts with its
+use by the warning pass that runs afterwards).
 
-It finally got merged last week.
+Since this is the only place in our code where we hit this, work
+around it by disabling the -Wstringop-overflow in the part of
+the function that hits it. We do this only when using the
+address sanitizer on GCC, so that we still get the benefit
+of the warning in most compilation scenarios.
 
-> I was just running with `-M virt` before. Either way, it's good that =
-the defaults seem to work
-> better now. Either way, I guess the fix still needs to go in for the
-> non vGIC path?
->=20
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3006
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Tested-by: Yodel Eldar <yodel.eldar@yodel.dev>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-id: 20260305140512.1330691-1-peter.maydell@linaro.org
+(cherry picked from commit b83a42dc779a36b454ce6eeade4584018491faf4)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-Yes. I=E2=80=99ll do a review. This patch is also a qemu-stable =
-candidate.
-
-
+diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
+index 135ab57160..fb78b1184f 100644
+--- a/hw/net/rtl8139.c
++++ b/hw/net/rtl8139.c
+@@ -2131,6 +2131,26 @@ static int rtl8139_cplus_transmit_one(RTL8139State *s)
+                     hlen, ip->ip_sum);
+             }
+ 
++            /*
++             * The code in this function triggers a GCC bug where an
++             * interaction between -fsanitize=address and -Wstringop-overflow
++             * results in a false-positive stringop-overflow warning that is
++             * only emitted when the address sanitizer is enabled:
++             *     https://gcc.gnu.org/bugzilla/show_bug.cgi?id=114494
++             *     https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99673
++             * GCC incorrectly thinks that the eth_payload_data buffer has
++             * the type and size of the first field in 'struct ip_header', i.e.
++             * one byte, and then complains about all other attempts to access
++             * data in the buffer.
++             *
++             * Work around this by disabling the warning when building with
++             * GCC and the address sanitizer is enabled.
++             */
++#pragma GCC diagnostic push
++#if !defined(__clang__) && defined(QEMU_SANITIZE_ADDRESS)
++#pragma GCC diagnostic ignored "-Wstringop-overflow"
++#endif
++
+             if ((txdw0 & CP_TX_LGSEN) && ip_protocol == IP_PROTO_TCP)
+             {
+                 /* Large enough for the TCP header? */
+@@ -2314,6 +2334,9 @@ static int rtl8139_cplus_transmit_one(RTL8139State *s)
+                 /* restore IP header */
+                 memcpy(eth_payload_data, saved_ip_header, hlen);
+             }
++
++#pragma GCC diagnostic pop
++
+         }
+ 
+ skip_offload:
+-- 
+2.47.3
 
 
