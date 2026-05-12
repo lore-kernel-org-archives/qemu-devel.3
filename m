@@ -4,48 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D795CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:18:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DB3DCD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:18:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuRF-0005Kt-LK; Tue, 12 May 2026 17:14:51 -0400
+	id 1wMuUd-000896-Be; Tue, 12 May 2026 17:18:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuR3-0005BS-Sk; Tue, 12 May 2026 17:14:39 -0400
+ id 1wMuUT-0006yu-Jr; Tue, 12 May 2026 17:18:09 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuR2-0005iT-30; Tue, 12 May 2026 17:14:37 -0400
+ id 1wMuUR-000787-Sn; Tue, 12 May 2026 17:18:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619305; bh=Re9h9iKEengeEyzIXX22uCpUR2K67K75BdjmELrCjnA=;
+ t=1778619497; bh=SzhnecTGMLKADIL0bXg2IKkkugTTFzlX9B/O24H7RrY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=W852sIafW1Kze/bixXe71YQQ3gL19XGF5AcdV+6c/G7nd7O2C6+OVkx1Q8tsum2dW
- ENz57ig6jUqfuSPFftfyDmkKln2J6nl1qTbzZy27YItDOH+h+oLpXRHzYcGm2N2Zkp
- 2xH8Tng2FfxNFo09HvpxnVUMxJQZ4QMpbkYVoA4SnSAVfj935hNPWDgrKKf63+gWcN
- Hcxn6M7Q/nanS5AXdNkGFp0RNGmdnfbuNBfaSUuywIJrI5gUMFeX+NN/Xlr9MG0NrO
- ppjSeghAVL8MaOzrWnLKWUR8iIphzErXvkqN9fLybT/oDmpL9DvEeUF6y/Ry/KH9Wn
- A3UnQP0zoIXtA==
+ b=GbpXpI0Ib48DIIR+denf+iJVNWvScuNF6b88B7xeZe2wk2rT/291fz1a6n5prPW0j
+ X0NRsYVCWyppybPDUQyiWCnYzpD1Ygwnbtr4V52vdkXwD8hweJ/kUbzlVDCFSeyUUh
+ 7NkOVS9joY6Wb+unM1DNfVwBhHbRg/3XxWSMabn8rxXUAVjB49uREt44N8FYbDVmhJ
+ EO9F1ra5mk2MMl6Aqr7E8r1JcZrqkioCmhYFNWkjVEhQZWa+AeQa3kZwiWOs2vt8Fw
+ AqyeVdaIlVJ+ifqbtyTXPEzDaTpjdGl8Fh7ybgN3CC0j7xVpwiLflr2dKY9YYTiNL6
+ VrEEOeAx8GlOQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7E98D1AA393;
- Tue, 12 May 2026 23:55:05 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 031C81AA3CE;
+ Tue, 12 May 2026 23:58:17 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 89CF73ABD02;
- Tue, 12 May 2026 23:55:09 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 054783ABD26;
+ Tue, 12 May 2026 23:58:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, James Hilliard <james.hilliard1@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 085/117] linux-user/mips: sync k0 TLS for
- EF_MIPS_MACH_OCTEON userlands
-Date: Tue, 12 May 2026 23:54:27 +0300
-Message-ID: <20260512205503.361097-85-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 03/58] ui/console-vc: fix off-by-one in CSI J 2 (clear
+ entire screen)
+Date: Tue, 12 May 2026 23:57:24 +0300
+Message-ID: <20260512205820.361821-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
-References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,84 +73,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: James Hilliard <james.hilliard1@gmail.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Cavium Octeon userspace is not following a generic MIPS Linux TLS
-ABI rule here. Older Octeon glibc uses the k0 register as the fast
-thread pointer, while newer Octeon2 and Octeon3 glibc variants use
-the normal rdhwr $29 path.
+The loop condition used `y <= s->height` instead of `y < s->height`,
+causing vc_clear_xy() to be called with y == s->height. This clears
+a row in the scrollback buffer beyond the visible screen.
 
-linux-user already updates CP0_UserLocal for cpu_set_tls() and
-TARGET_NR_set_thread_area, but it does not keep gpr[26]
-synchronized. That leaves EF_MIPS_MACH_OCTEON userlands able to
-complete set_thread_area() and still reach pthread startup or
-pthread_self() with a stale k0 value.
-
-Use the existing MIPS ELF machine flags from linux-user/elfload.c and
-mirror CP0_UserLocal into gpr[26] only for EF_MIPS_MACH_OCTEON.
-
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 4c681ba3b82d9a9f00a3f361399a1bb7612f3535)
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+(cherry picked from commit 181fdf8a7e13c0460a26777ff9301e0ecdca3784)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 59b543f740..0e757787d2 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -1476,6 +1476,9 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
-     /* Usual start for brk is after all sections of the main executable. */
-     info->brk = TARGET_PAGE_ALIGN(hiaddr + load_bias);
-     info->elf_flags = ehdr->e_flags;
-+#ifdef TARGET_MIPS
-+    info->use_k0_tls = (ehdr->e_flags & EF_MIPS_MACH) == EF_MIPS_MACH_OCTEON;
-+#endif
- 
-     prot_exec = PROT_EXEC;
- #ifdef TARGET_AARCH64
-diff --git a/linux-user/mips/target_cpu.h b/linux-user/mips/target_cpu.h
-index c375616c55..2bbd0a81c5 100644
---- a/linux-user/mips/target_cpu.h
-+++ b/linux-user/mips/target_cpu.h
-@@ -35,7 +35,12 @@ static inline void cpu_clone_regs_parent(CPUMIPSState *env, unsigned flags)
- 
- static inline void cpu_set_tls(CPUMIPSState *env, target_ulong newtls)
- {
-+    TaskState *ts = get_task_state(env_cpu(env));
-+
-     env->active_tc.CP0_UserLocal = newtls;
-+    if (ts->info->use_k0_tls) {
-+        env->active_tc.gpr[26] = newtls;
-+    }
- }
- 
- static inline abi_ulong get_sp_from_cpustate(CPUMIPSState *state)
-diff --git a/linux-user/qemu.h b/linux-user/qemu.h
-index cfe5f45fc4..7f98fb2607 100644
---- a/linux-user/qemu.h
-+++ b/linux-user/qemu.h
-@@ -65,6 +65,7 @@ struct image_info {
-         uint32_t        note_flags;
- 
- #ifdef TARGET_MIPS
-+        bool            use_k0_tls;
-         int             fp_abi;
-         int             interp_fp_abi;
- #endif
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 0261f2fc5c..7b6343deba 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -13205,7 +13205,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
- #ifdef TARGET_NR_set_thread_area
-     case TARGET_NR_set_thread_area:
- #if defined(TARGET_MIPS)
--      cpu_env->active_tc.CP0_UserLocal = arg1;
-+      cpu_set_tls(cpu_env, arg1);
-       return 0;
- #elif defined(TARGET_I386) && defined(TARGET_ABI32)
-       return do_set_thread_area(cpu_env, arg1);
+diff --git a/ui/console-vc.c b/ui/console-vc.c
+index f22806fed7..8dee1f9bd0 100644
+--- a/ui/console-vc.c
++++ b/ui/console-vc.c
+@@ -899,7 +899,7 @@ static void vc_putchar(VCChardev *vc, int ch)
+                     break;
+                 case 2:
+                     /* clear entire screen */
+-                    for (y = 0; y <= s->height; y++) {
++                    for (y = 0; y < s->height; y++) {
+                         for (x = 0; x < s->width; x++) {
+                             vc_clear_xy(vc, x, y);
+                         }
 -- 
 2.47.3
 
