@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8670BCD484E
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:28:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95F5FCD4851
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:28:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMgZh-0000ui-IU; Tue, 12 May 2026 02:26:38 -0400
+	id 1wMgZY-0008Ae-JB; Tue, 12 May 2026 02:26:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgZ7-0007ca-4O
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:26:06 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgZT-0007pO-ND
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:26:25 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgZ4-0007O5-3Z
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:26:00 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-48e82c23840so15275535e9.3
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 23:25:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgZP-0007ec-2B
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:26:22 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-44a74032ff8so3769175f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 23:26:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778567155; x=1779171955; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778567175; x=1779171975; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=p9Ko2u3O1LfqUME1hczQ+CYZalMxuJgnkK238faISOk=;
- b=ICzDOjvNfCmUQDJK9udo3bi8L/hLwPDoq86DyXpWaAyF71idRGd9jobUfZjSClAe6k
- wGWHDk/9GRsNcLxvaYNd0DlvNLbJ36dVwh+oe5rAXQuDyVSfMqRnJP20X2f98GSYxacw
- sXVoSLXoZVmVTY6nKDej4BgBEVMmi7ACQ+GG4FqU2+rGTinzVWLXRwRCqDH0mNs0ezAs
- N7+f2k/0G+b9GzSdhC0qnnSMkuWzhHEOiiGtbKoZ4lZoIzOPFfF4ziT3Yk74Tw6q15qt
- pFfKBaX8PzF55G3/esvOdZ9DEiBawkU5wATAc84+bupS2PjBbb9IAMvWzjQOzjLOnZxM
- +HRA==
+ :reply-to; bh=YEwsHCgWEkYua89nPUV5fuOYHoZwg1lrZGYXkIuVzmM=;
+ b=aJmGM2pqKi1uHjxH9onuHmfYs/0Sc/JTwcWz5SxqTv94RGZhg/bOtoBChAYkYd+p4J
+ kuTzMz01gUn/KAePvdxFqzQxwt1kq8VBk9tMdtS3B8CoP4oPge5bAzHmnQyHXLEgAN7r
+ E8MHFMB88Lfg06ijFomzvdCsaZckTL18iZS7rWdzMz0S6GQnEM30hEardcaPN4AMad5S
+ CcxGXFwBgQ+4ZcFSiIhnvzYrS1pAiGO5tl3VULKA+vPKVxl1OczPw5X2ym85iVLsUSnc
+ +NT1hz+EUU1KIb3+4kbT9QV4bkeYi8Bo/ZA/E/IRWcArzh+SETJi+ipwx9+Jnrg2c5HR
+ ee8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778567155; x=1779171955;
+ d=1e100.net; s=20251104; t=1778567175; x=1779171975;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=p9Ko2u3O1LfqUME1hczQ+CYZalMxuJgnkK238faISOk=;
- b=jvDaCDlBCih/UUuc4wQYOtkVidC0uhj5F4RNQTqt99EqXtOantjP1hBX+tuV8EOixR
- Mt67WcCMk+59EwWrbUTj40UR47TwkJ7k6EOlBbjUq1l7m9t26uWP61xQ79lqf/6TOIbg
- G2XzJUtZDvqsWuy5k/TFJ03hzpBc0Pa3LsnDx+P1HFXD3ltHENR4Tg5rpej6qvu8ZaSZ
- MbDL5JQ4byli2mzMrlGiBHReyk1ywgxtEmnFUOxTvFqoysRtp74XTKt1sSv7L80HauVB
- +3U5uSokZ9SH7knLl+R+NCWRUQ+Ts5oxkuIWtQqJBCteG6UV+iU9llHzLjbKSCE4Mqdy
- TYqA==
-X-Gm-Message-State: AOJu0Yz6AmhLG6ow4xqdTcrtWus/HmGsfUI8QCRZPMFsjOA+cOftVzp1
- LQqfr3xTMUNqus5GijN6xCHKdZ0DT3HGheFwqH0iRX5R8oDDZrhwAqowfvcKQPkMSChjfzlzui4
- FjPeqwYM=
-X-Gm-Gg: Acq92OFVqQXs5QvN3VVqCoQcvAVY6y6vunvPKv2TZl0dyvRBki+FL0VNRzH2XOgj7VH
- tyqJTrpI1C178FbkjsMbXCjI4zRbj70oZKKBm+J4NOvPMBdeS3UcKBMaVa5tT2zasgPseCEFish
- 33dUWo6OLPVIGVO6j/tUhh9ZIMzjg5gOLUhGyoqJIVEThdAXZ+bCVkeRnBC5qBwHoqby3eC6WTk
- uKDpyjDYv1NSrUiXOdX6nIikmcKAglr7UXz07EHb4roF651zh4P4XM3DGaGVZGBQIzgOdaWg2ly
- oEdHzSrrr0BSU6ibJlRJ8Cbuoj9hrU3XMoVO2YADBo9ilyL4gaLq+mOLGNLOidJa3BZryOI2T6/
- FVWBqSGs5tXs4yCMSl1L2k3Y99p7KS72ZkONSTjmRPI5M6s5+iHeoBLL7qV9WykgPBSN0ydesKz
- CkY2uOUScCR3XJiVc+NWj/1xJgVdlR1oZdWkjXKorLEsqwxGHxHwIrajHHnkURzkgSOqZsLkcBG
- kQIqAkagv0=
-X-Received: by 2002:a05:600c:1f85:b0:489:1f08:91b with SMTP id
- 5b1f17b1804b1-48e8fe71bfemr21533615e9.16.1778567154949; 
- Mon, 11 May 2026 23:25:54 -0700 (PDT)
+ bh=YEwsHCgWEkYua89nPUV5fuOYHoZwg1lrZGYXkIuVzmM=;
+ b=IEXNiPwxYblkjYszKOv/h/2EKaGh6+ukKJctEunNWJaCL8IAr0tlFV1uVie46Pg/k/
+ sPJa104pW/a0OfJDnbRhbpHcU4669QS9ijBmwT/ZNLtQqqDrSv7YatFKnbVzanHgKzbf
+ fXsKKXI5VN6axG4iUBngOiW9hifVlPOSzTzd/XU1OS957sgxhO/r5fnNmUP+SKXkm1HK
+ 4emTBepzcuoJemF+OBclBjVqQ79AwgDiN4gzD92ZnN1B0aNVlb/R1RFCZudpXyJpUKnQ
+ YuJZ540ZB35xfb896huPBwBHb11f8Ma2koBSkBwexzX1sRkwA5mUsw/LrKTuiMusKqFn
+ 9CIg==
+X-Gm-Message-State: AOJu0Yw22GYoY31eIKUhQb31OlUo2f4tSjH3GWgjbmJVQyfQcsGvww5R
+ OsK5OhXYujcnsY4MgO6jCo4oDtS0LH/x2IjQiU94z+nMlzuvQKtKx1LnYLWepCeaYQNz785KrRf
+ Rrx1yjdE=
+X-Gm-Gg: Acq92OEsspScNA2V3xu95xUyd9T+wYdFRvOILuhr0WvII/5t1Oxo2z+Esw0ssFr/FIW
+ RqJr1SrtysFhnhh064B4OoTG+scAjsFcMUFXX62qkPrY+SvfMl2Ch87g35Rm8tUJJ3t1Q5VXkiJ
+ 5m5nY5Jk/i5vS9JwLy1BarvRotYLQ88sSi45HlY16ezwuF2yu/7t2/TGq0PcMNfJFWfQCoduEup
+ 0iQffaORhYOq30OfnY7RFcA+XFSKumlIeMOK28m/MY5PZsmkbj09ZFQsZc3mw1Zd/9lPZZ95Nco
+ iiBopHMbKJNeXtDZ55/aJXLAdCOZbf4FLMEwuH/5PjsGMQEaQ/bOdEQKYLKSboZQAuetwEYRcKP
+ o28Zj3gaUsmrXjRLiGYt686P3aDY+xoBQRr0K5Ao0w3Jp0URZrvP5jtK2X0XzRmYhEvEmdUm2YE
+ qs58+MZ0HR+6f4UCv0qUOlDk9Q8gmozpYhW8ky7ielG4T9aYMLus1hmmvFAHzNzMHZ4mWjZucI
+X-Received: by 2002:a05:6000:1a8f:b0:43b:9c73:2933 with SMTP id
+ ffacd0b85a97d-4515b525503mr42182901f8f.15.1778567175292; 
+ Mon, 11 May 2026 23:26:15 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e8f435a76sm11437075e9.21.2026.05.11.23.25.54
+ ffacd0b85a97d-4548e6a6a64sm31706729f8f.6.2026.05.11.23.26.14
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 11 May 2026 23:25:54 -0700 (PDT)
+ Mon, 11 May 2026 23:26:14 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 35/41] hw/i2c/microbit_i2c: Don't index off end of
- twi_read_sequence[]
-Date: Tue, 12 May 2026 08:21:36 +0200
-Message-ID: <20260512062142.67998-36-philmd@linaro.org>
+Subject: [PULL 38/41] =?UTF-8?q?MAINTAINERS:=20Add=20Doru=20Bl=C3=A2nzeanu?=
+ =?UTF-8?q?=20as=20MSHV=20reviewer?=
+Date: Tue, 12 May 2026 08:21:39 +0200
+Message-ID: <20260512062142.67998-39-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260512062142.67998-1-philmd@linaro.org>
 References: <20260512062142.67998-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,43 +99,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
-If the guest tries to read more bytes from our fake stub I2C device
-than we have provided, we incorrectly read one byte beyond the end of
-this array. Avoid this, and instead keep reporting the RXD register
-as containing the last byte of the "data transfer".
-
-Cc: qemu-stable@nongnu.org
-Fixes: 9d68bf564ec ("arm: Stub out NRF51 TWI magnetometer/accelerometer detection")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3408
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260501162634.4092394-1-peter.maydell@linaro.org>
+Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Reviewed-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+Message-ID: <20260506102156.501805-1-magnuskulke@linux.microsoft.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/i2c/microbit_i2c.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ MAINTAINERS | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/hw/i2c/microbit_i2c.c b/hw/i2c/microbit_i2c.c
-index 2291d6370e2..d9689b6f1ae 100644
---- a/hw/i2c/microbit_i2c.c
-+++ b/hw/i2c/microbit_i2c.c
-@@ -41,8 +41,13 @@ static uint64_t microbit_i2c_read(void *opaque, hwaddr addr, unsigned int size)
-         data = 0x01;
-         break;
-     case NRF51_TWI_REG_RXD:
-+        /*
-+         * Return the next byte from our fake data sequence. If
-+         * the guest keeps reading the register after that, keep
-+         * returning the same last byte value.
-+         */
-         data = twi_read_sequence[s->read_idx];
--        if (s->read_idx < G_N_ELEMENTS(twi_read_sequence)) {
-+        if (s->read_idx + 1 < G_N_ELEMENTS(twi_read_sequence)) {
-             s->read_idx++;
-         }
-         break;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 488d194a41e..e5d58d58646 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -596,6 +596,7 @@ F: docs/system/whpx.rst
+ MSHV
+ M: Magnus Kulke <magnuskulke@linux.microsoft.com>
+ R: Wei Liu <wei.liu@kernel.org>
++R: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+ S: Supported
+ F: accel/mshv/
+ F: include/system/mshv.h
+@@ -611,6 +612,7 @@ F: include/system/nitro-accel.h
+ X86 MSHV CPUs
+ M: Magnus Kulke <magnuskulke@linux.microsoft.com>
+ R: Wei Liu <wei.liu@kernel.org>
++R: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+ S: Supported
+ F: target/i386/mshv/
+ 
 -- 
 2.53.0
 
