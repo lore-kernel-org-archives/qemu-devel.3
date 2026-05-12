@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09105CD4846
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 02:35:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E72CCD37BE
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 02:36:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMcxc-00055Z-6E; Mon, 11 May 2026 22:35:04 -0400
+	id 1wMcyX-0005fo-6O; Mon, 11 May 2026 22:36:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1wMcxa-00054o-5H; Mon, 11 May 2026 22:35:02 -0400
-Received: from out30-98.freemail.mail.aliyun.com ([115.124.30.98])
+ id 1wMcyV-0005fa-NM; Mon, 11 May 2026 22:35:59 -0400
+Received: from out30-99.freemail.mail.aliyun.com ([115.124.30.99])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1wMcxW-0004eh-VF; Mon, 11 May 2026 22:35:01 -0400
+ id 1wMcyT-0005jz-9p; Mon, 11 May 2026 22:35:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1778553293; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=2NBQSnr/vRs8EHgE52FUwTu+v0RGTF7V/hm/6lE4IeM=;
- b=HcvnnIF4VuqkgWsykfPABVM0k889CaKcI7Xs/9bBpKDulrvb6AyBW8sYeIXZ/1QF92D7pvbymPeApLG6qv3z/mjiGLcqSkbeI5D3m75bZTZKLaKibR1WsovmQaKOiqYe3DxZGL+/nLHdEIxo2qJhb1sLyMdQn2j1tgrBv9nsIt0=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R131e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045133197;
+ t=1778553350; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=BSaZ5LCSP7KGgGyAqTiB0yXgQsCSRDk2IIFTsVZqB8Q=;
+ b=O2mLdyUChr05WubS/CbqLpFRL8avfev5vDn+zqrQFp8mURdbTZ386ICOu9Y1LK0qTiQvmwgorNaZUTFUy4sFYM94RY/joFcfbA0I3g7HUyf+DMPYitNPZMNJIUNofSO8ZX2g6ahgiciy0U5r9mHkQGtY7e6BL9BqXZrnW30P/08=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R291e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037033178;
  MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=10; SR=0;
- TI=SMTPD_---0X2ooMfn_1778553292; 
+ TI=SMTPD_---0X2op7Vx_1778553349; 
 Received: from 30.166.64.212(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0X2ooMfn_1778553292 cluster:ay36) by smtp.aliyun-inc.com;
- Tue, 12 May 2026 10:34:52 +0800
-Message-ID: <d97eb9de-2e35-4e80-a53a-0f50c6e04a32@linux.alibaba.com>
-Date: Tue, 12 May 2026 10:34:51 +0800
+ fp:SMTPD_---0X2op7Vx_1778553349 cluster:ay36) by smtp.aliyun-inc.com;
+ Tue, 12 May 2026 10:35:50 +0800
+Message-ID: <e63a3a55-7492-43e5-93c1-1b2fcbb77ec5@linux.alibaba.com>
+Date: Tue, 12 May 2026 10:35:49 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v5 6/6] target/riscv: Enable SMMPT extension
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, chao.liu.zevorn@gmail.com,
- palmer@dabbelt.com, daniel.barboza@oss.qualcomm.com, liwei1518@gmail.com,
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, chao.liu.zevorn@gmail.com, palmer@dabbelt.com,
+ alistair23@gmail.com, liwei1518@gmail.com,
  Huang Tao <eric.huang@linux.alibaba.com>,
  TANG Tiancheng <lyndra@linux.alibaba.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 References: <20260408140635.42546-1-zhiwei_liu@linux.alibaba.com>
  <20260408140635.42546-7-zhiwei_liu@linux.alibaba.com>
- <CAKmqyKMryrNgfo8bp-FOj1F0B63WLv1Shsjwj=euptjVr7auVQ@mail.gmail.com>
+ <44bde277-c357-4507-9456-7cc8f6dcdbdb@oss.qualcomm.com>
 Content-Language: en-US
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <CAKmqyKMryrNgfo8bp-FOj1F0B63WLv1Shsjwj=euptjVr7auVQ@mail.gmail.com>
+In-Reply-To: <44bde277-c357-4507-9456-7cc8f6dcdbdb@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.98;
+Received-SPF: pass client-ip=115.124.30.99;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-98.freemail.mail.aliyun.com
+ helo=out30-99.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -75,54 +76,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alistaire
+Hi Daniel,
 
-On 4/10/26 9:46 AM, Alistair Francis wrote:
-> On Thu, Apr 9, 2026 at 12:09 AM LIU Zhiwei <zhiwei_liu@linux.alibaba.com> wrote:
+On 4/30/26 5:32 PM, Daniel Henrique Barboza wrote:
+> Hi Zhiwei,
 >
-> Can we add a link in this commit to the spec version please?
+>
+> It was brought to my attention that, as per spec 0.49, smmpt is dependent
+> on smsdid.  In other words, using our current implicit rules framework,
+> enabling smmpt would also enable smsdid.  I checked myself, and on
+> doc version 0.49, start of Chapter 4:
+>
+> https://github.com/riscv/riscv-smmtt/releases/tag/v0.49
+>
+> "The following MPT extensions are defined:
+>
+> • Smmpt34 - Page-based 34-bit memory protection system (RV32 only)
+> • Smmpt43 - Page-based 43-bit memory protection system (RV64 only)
+> • Smmpt52 - Page-based 52-bit memory protection system (RV64 only)
+> • Smmpt64 - Page-based 64-bit memory protection system (RV64 only)
+>
+> These MPT extensions depend on Smsdid. "
+>
+>
+> Given that a v6 is going to happen anyway might as well change this patch
+> to add this implicit rule too.
 
-OK. Done in v6 patch set.
+Yes. I have added this implicit rule in v6 patch set.
 
 Thanks,
 Zhiwei
 
 >
-> Alistair
 >
+> Cheers,
+> Daniel
+>
+>
+> On 4/8/2026 11:06 AM, LIU Zhiwei wrote:
 >> Co-authored-by: Huang Tao <eric.huang@linux.alibaba.com>
 >> Co-authored-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 >> Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 >> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 >> ---
->>   target/riscv/cpu.c | 4 ++++
->>   1 file changed, 4 insertions(+)
+>>   target/riscv/cpu.c | 4 ++++
+>>   1 file changed, 4 insertions(+)
 >>
 >> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
 >> index cb4ccd001d..1e49465eeb 100644
 >> --- a/target/riscv/cpu.c
 >> +++ b/target/riscv/cpu.c
 >> @@ -225,8 +225,10 @@ const RISCVIsaExtData isa_edata_arr[] = {
->>       ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
->>       ISA_EXT_DATA_ENTRY(smpmpmt, PRIV_VERSION_1_12_0, ext_smpmpmt),
->>       ISA_EXT_DATA_ENTRY(smmpm, PRIV_VERSION_1_13_0, ext_smmpm),
->> +    ISA_EXT_DATA_ENTRY(smmpt, PRIV_VERSION_1_13_0, ext_smmpt),
->>       ISA_EXT_DATA_ENTRY(smnpm, PRIV_VERSION_1_13_0, ext_smnpm),
->>       ISA_EXT_DATA_ENTRY(smrnmi, PRIV_VERSION_1_12_0, ext_smrnmi),
->> +    ISA_EXT_DATA_ENTRY(smsdid, PRIV_VERSION_1_13_0, ext_smsdid),
->>       ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
->>       ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
->>       ISA_EXT_DATA_ENTRY(ssccfg, PRIV_VERSION_1_13_0, ext_ssccfg),
->> @@ -1379,6 +1381,8 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[] = {
->>
->>   /* These are experimental so mark with 'x-' */
->>   const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
->> +    MULTI_EXT_CFG_BOOL("x-smmpt", ext_smmpt, false),
->> +    MULTI_EXT_CFG_BOOL("x-smsdid", ext_smsdid, false),
->>       MULTI_EXT_CFG_BOOL("x-svukte", ext_svukte, false),
->>
->>       { },
->> --
->> 2.43.0
->>
+>>       ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
+>>       ISA_EXT_DATA_ENTRY(smpmpmt, PRIV_VERSION_1_12_0, ext_smpmpmt),
+>>       ISA_EXT_DATA_ENTRY(smmpm, PRIV_VERSION_1_13_0, ext_smmpm),
+>> +    ISA_EXT_DATA_ENTRY(smmpt, PRIV_VERSION_1_13_0, ext_smmpt),
+>>       ISA_EXT_DATA_ENTRY(smnpm, PRIV_VERSION_1_13_0, ext_smnpm),
+>>       ISA_EXT_DATA_ENTRY(smrnmi, PRIV_VERSION_1_12_0, ext_smrnmi),
+>> +    ISA_EXT_DATA_ENTRY(smsdid, PRIV_VERSION_1_13_0, ext_smsdid),
+>>       ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
+>>       ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
+>>       ISA_EXT_DATA_ENTRY(ssccfg, PRIV_VERSION_1_13_0, ext_ssccfg),
+>> @@ -1379,6 +1381,8 @@ const RISCVCPUMultiExtConfig 
+>> riscv_cpu_vendor_exts[] = {
+>>     /* These are experimental so mark with 'x-' */
+>>   const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
+>> +    MULTI_EXT_CFG_BOOL("x-smmpt", ext_smmpt, false),
+>> +    MULTI_EXT_CFG_BOOL("x-smsdid", ext_smsdid, false),
+>>       MULTI_EXT_CFG_BOOL("x-svukte", ext_svukte, false),
+>>         { },
+>
 
