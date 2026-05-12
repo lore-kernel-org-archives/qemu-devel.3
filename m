@@ -4,89 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E668CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 20:36:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8788BCD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 20:37:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMtoT-0002Vb-N8; Tue, 12 May 2026 16:34:45 -0400
+	id 1wMtqs-0007A5-E2; Tue, 12 May 2026 16:37:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wMtoP-0002Rv-BS
- for qemu-devel@nongnu.org; Tue, 12 May 2026 16:34:41 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <scottjgo@gmail.com>)
+ id 1wMtqQ-0006lq-Kt
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 16:36:52 -0400
+Received: from mail-qv1-xf36.google.com ([2607:f8b0:4864:20::f36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wMtoG-0002UA-Ta
- for qemu-devel@nongnu.org; Tue, 12 May 2026 16:34:37 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-48a563e4ef7so54149335e9.0
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 13:34:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <scottjgo@gmail.com>)
+ id 1wMtqK-0003Sk-RN
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 16:36:43 -0400
+Received: by mail-qv1-xf36.google.com with SMTP id
+ 6a1803df08f44-8be236ce888so47952166d6.3
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 13:36:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778618070; x=1779222870; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=q0ezEWD89kSd2U78SG8CWQUtQB+DX/bs8Y9jX+srHFU=;
- b=tnOS/vfvf87wPFJcPfIPiK2RjAKLf+/PoJTLoywxCXap2occindC+xjE6iThXbZeUp
- TP6uR1yWwvxToJjCD/xmViCTd8eurNVJWQAdoBvg1mXuIhliwT+G6y6KGlZauRYX8t+k
- /AyYXOq+LoYpgwJhg/w+TLe/D4isqUgqsug2VNedphGcMy6kNkA58UbUUA60FNdjP+4v
- MHSGIv91YY3pCgNAe9RN6gIlhQ/TdbA1bhUjy/PfZhxbdIz9rPTyFTxIzc4iViGItLd6
- iq92fbeznWPgsdFBunb8Jp4fjgqbhN1w8JB12UGPRvpCcf7bIbME2Ur+Dd146rTFWtRb
- W9Gg==
+ d=gmail.com; s=20251104; t=1778618199; x=1779222999; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EpsAZCSR7wni07d+1v7k4fHD1x0csRe7cXk1TEskBac=;
+ b=aMFznEoaQpZDXqdw83c0FYEv3tHIf2aQXQr5W9Gz6aYfoFqcSUJLzJRdvOWlLGIILp
+ KFupwjaNbRpKyV2E/78wULRPr4cCM7VYoMNkk0LQaEAGSV5RGnTNlHvt2BE0sIzQj3o4
+ DXK9ls/ELCokBY5xhFIh7eAzYNpqCj0uIua+Z6thKIuessFb3uLVkIdcYW5VHGeC9e1S
+ BHsKXwTfMlJfMJHKKFhQT9OQdCA1lJ3DM74AzxbzQESZ7xivj0ZjNFoTpRVJTzpfswVg
+ GxykSZKpV5FzUlvX/K2NEFdJTKagKisx6hkboAdydi0UgvPIwXsPMb0JN7ONwEJt7uMZ
+ OvQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778618070; x=1779222870;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=q0ezEWD89kSd2U78SG8CWQUtQB+DX/bs8Y9jX+srHFU=;
- b=BXv6CDMwTcnpUfToGNoYALVisi4FvGIJrAAIBTBvGYVlVfJFUF8ZP/0MoXffv3PQXC
- 8QB9Ozw9Vtwm3GFxQ2vFJWKNM9WgRS87kbf1udZMAURMRdXoQvYki63Z18aYrctozg/W
- eau7QHL6bgI73efhBTjt9C2tDEBvxpxtYsEOovcTPGdtNw4fkynrE/MEK6O7HS3nhnhb
- I27rKUZUb3/RB2lHndkBPf8wJxe4VGlA50HgteUgzJddjd/VYh+6AerBcpyALmQofaYV
- WQ3CMJixMehCk8UTffy1/i976DC3gXsd/SnvGzQSSzOxO2vnEnv68/rSZR0htQf9yV2t
- cQzw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+eYxKUlq6sUPuTS7JQIduLGkF7NUtuEbveS/v73VL/f31cA+QNH3uayMXHCjuCr47STBuXUyz8UL1/@nongnu.org
-X-Gm-Message-State: AOJu0YzPy+TSXtnrat1S84CXf1+2Qt18O7q+7O/fdhuUJxatGGyJq7IA
- QLNEQE+r/+GOBS4A0Gpz1yxjrRiqeHZ73WWqU0RVGyMTNYHF71diaeKjRgdEp9T6lffV+gJ9gtI
- tGgy+
-X-Gm-Gg: Acq92OEfV0+YV2dcHvPMtahalEw/2q+YWUiIsg38Cl7Df1lIfqndsGl0OHWJP17ALOu
- i74MRmwWQiV5N7Fl7HTylTDAXvl9S0eF5rQSkVe3JOgZt9nqR3oexVt2wLwP1JihaYxSc/QGNgs
- Mm+s0zC/eOIw4Q2K5isfnrBnuRlgFWAeBiMFh0BhqoSJ8hX6/Z3RPM4TX90RsJa6aymwyGHUkvW
- t/LFWjidjTvNcOavbjDlrtdVTtdCoWNmybj9ui3VyEwX8XCpbUo2cPMlU6tY2l0POTizNZHUUti
- VtmqB1INsnS7HRfpSH5wR+75GrH3u/wuXawGxnW68/yd+oIQLqxoh33+ZitU+iYbDwGEWTWUaT0
- imHE+bFJJFSa241452orR8Eqamldopzf/g+OFdY61i+fJo24qvYSau3L4JzLmF3SS4u7Ttmrixn
- 6Lx/L0Eb5V6HJbOEPxwaliWYIV9HEdvWC79oT9fi5UDthvvvhBVhx1Q1NG8DKf/hQwu0AD+OpPX
- Qvy1pQbQzdF5OlP6G54/IXWhkJc0oqBixSC9NG/AA==
-X-Received: by 2002:a05:600c:190f:b0:486:fbd1:9dc0 with SMTP id
- 5b1f17b1804b1-48fc9a44021mr5170825e9.22.1778618070342; 
- Tue, 12 May 2026 13:34:30 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ d=1e100.net; s=20251104; t=1778618199; x=1779222999;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=EpsAZCSR7wni07d+1v7k4fHD1x0csRe7cXk1TEskBac=;
+ b=C5eUqKvGsKavv5PGAn0sPS+w/0ADycB+91sWxEG0PLpcRhQQ5D9dtlBebtERy7f0W8
+ Qiqd/pC4qNHrjTOdj39jX3l88Las+IX4LAvw5Xm4UqYmA433vwcwA256tjYr2lMgHEoQ
+ eUpsvNd3Eo2uxswj1n0W7u29thZz7gd5B94c9nZ3ngKlTAT9k0VIFeZxgkNj8gleFoqq
+ r1i8QjEOwlg9hg1KF7D6+NeAxDTZr2Vi/DpuGRL1V5UL1K8oWjz7x61TyM6nRZrESblg
+ wMoYemcObtqVS8c4J/FvPprVDy9W5NORZglywDyGjmUGXylZ44c4dCqcUtNGVcBGxkTJ
+ cWBg==
+X-Gm-Message-State: AOJu0YxXf3jObkHfAl8hfzIU62Mif1I8rd0ibfjXOMHycpf7LjjtGGj2
+ /2IwnfoaBfE4UkROxv3KVkRGCY5UyUTwZ2BM7WSmpCvjSXB1ippiXT5B
+X-Gm-Gg: Acq92OF4lgDWMXbKPBn4GkzCSJGscxvQ6IDKQ0Uqx+7fnXf1U+3TX02vZmhCRY5DlQu
+ vvz76+81NMG2oNydb2l3y51Y8JRqWTi1XF7ArQAfhR13GRwIQdVLY1cEd6b2+YcBVM6sgLd9xOX
+ K6xmVSBRNzCxSHiiX7ijOMfpeeQC88NaVenoBm6iTOBtQQ3iUYjf+DSMiqtO15CtJUucc2HLpZb
+ RS6N4BMIs/HJPqEgHC9zxOEUgDG2eRYoaGh0n03Gh2x9+wbMbV8LaFyafz7knTuFvb1PH6Az8OZ
+ wjmDNbucos51FqPniVFnpHlLM1adcg2gHPeIGovr6Y3MO2ia/0N66sXYg2dNtgiCJr6YKVT4N5A
+ gWCX5NAZywHmFMRhehQczfAbNlHcpU+zHolrVmwteJewuU18l3TzKWmqa0wTfLnmlXo12XKl6wy
+ CLk+jMpdG0E/hl4j2Zww+H+cyvaNP3AppEuucUgmNGOSKkdy37iGFGCcAMbDNibRKIS4+4XVRVM
+ lqyn5SNKL75IwQ=
+X-Received: by 2002:a05:6214:403:b0:89c:4f67:8d17 with SMTP id
+ 6a1803df08f44-8c7b8cf5673mr9828956d6.8.1778618198896; 
+ Tue, 12 May 2026 13:36:38 -0700 (PDT)
+Received: from localhost ([2603:7000:4df0:8300:fdb5:4a2a:97d0:addf])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fc8d69d0bsm16350635e9.13.2026.05.12.13.34.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 May 2026 13:34:29 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Subject: [PATCH 12/12] hw/dma/omap_dma: Drop model argument to omap_dma_init()
-Date: Tue, 12 May 2026 21:34:14 +0100
-Message-ID: <20260512203414.3633237-13-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260512203414.3633237-1-peter.maydell@linaro.org>
-References: <20260512203414.3633237-1-peter.maydell@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
+ 6a1803df08f44-8c642e0d75asm34848786d6.41.2026.05.12.13.36.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 12 May 2026 13:36:38 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 12 May 2026 16:36:37 -0400
+Message-Id: <DIGZJ3V3TPDK.3LY9W3NAULWWA@gmail.com>
+Cc: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, "Peter Maydell"
+ <peter.maydell@linaro.org>, "Alexander Graf" <agraf@csgraf.de>, "Phil
+ Dennis-Jordan" <phil@philjordan.eu>, "Roman Bolshakov"
+ <rbolshakov@ddn.com>, =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+Subject: Re: [PATCH v3] target/arm/hvf: Fix WFI halting to stop idle vCPU
+ spinning
+From: "Scott J. Goldman" <scottjgo@gmail.com>
+To: "Mohamed Mediouni" <mohamed@unpredictable.fr>, "Scott J. Goldman"
+ <scottjgo@gmail.com>
+X-Mailer: aerc 0.21.0
+References: <20260410055045.63001-1-scottjgo@gmail.com>
+ <20260427195516.46256-1-scottjgo@gmail.com>
+ <794CB795-9462-4299-B7EC-528B0E4F1923@unpredictable.fr>
+In-Reply-To: <794CB795-9462-4299-B7EC-528B0E4F1923@unpredictable.fr>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f36;
+ envelope-from=scottjgo@gmail.com; helo=mail-qv1-xf36.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,78 +109,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The model argument to omap_dma_init() is always omap_dma_3_1, and all
-we do with it now is assert this; drop the argument and the enum.
+On Tue May 12, 2026 at 1:54 PM EDT, Mohamed Mediouni wrote:
+>
+>
+>> On 27. Apr 2026, at 21:55, Scott J. Goldman <scottjgo@gmail.com> wrote:
+>>=20
+>> Commit b5f8f77271 ("accel/hvf: Implement WFI without using pselect()")
+>> changed hvf_wfi() from blocking the vCPU thread with pselect() to
+>> returning EXCP_HLT, intending QEMU's main event loop to handle the
+>> idle wait. However, cpu->halted was never set, so cpu_thread_is_idle()
+>> always returns false and the vCPU thread spins at 100% CPU per core
+>> while the guest is idle.
+>>=20
+>> Fix this by:
+>>=20
+>> 1. Setting cpu->halted =3D 1 in hvf_wfi() so the vCPU thread sleeps on
+>>   halt_cond in qemu_process_cpu_events().
+>>=20
+>> 2. Arming a per-vCPU QEMU_CLOCK_VIRTUAL timer to fire when the guest's
+>>   virtual timer (CNTV_CVAL_EL0) would expire. This is necessary
+>>   because HVF only delivers HV_EXIT_REASON_VTIMER_ACTIVATED during
+>>   hv_vcpu_run(), which is not called while the CPU is halted. The
+>>   timer callback mirrors the VTIMER_ACTIVATED handler: it raises the
+>>   vtimer IRQ through the GIC and marks vtimer_masked, causing the
+>>   interrupt delivery chain to wake the vCPU via qemu_cpu_kick().
+>>=20
+>> 3. Clearing cpu->halted in hvf_arch_vcpu_exec() when cpu_has_work()
+>>   indicates a pending interrupt, and cancelling the WFI timer.
+>>=20
+>> 4. Re-arming the WFI timer from hvf_vm_state_change() on the resume
+>>   transition for any halted vCPU, since the QEMUTimer is per-instance
+>>   state and is not migrated. After cpu_synchronize_all_states() the
+>>   migrated vtimer state is mirrored in env, so we can read CNTV_CTL
+>>   and CNTV_CVAL from there. If the vtimer has already expired by the
+>>   time the destination resumes, hvf_wfi_timer_cb() is invoked
+>>   directly so the halted vCPU is woken up.
+>>=20
+>> Fixes: b5f8f77271 ("accel/hvf: Implement WFI without using pselect()")
+>> Signed-off-by: Scott J. Goldman <scottjgo@gmail.com>
+>
+> Hi,
+>
+> A bit of a side note for reproducing this:
+>
+> To reproduce this on current master, as far as I can tell you need either=
+=20
+> -M kernel-irqchip=3Doff or -M virt-11.0 or earlier. -M virt(-11.1) on mas=
+ter uses=20
+> the HVF vGIC path.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/arm/omap1.c        |  2 +-
- hw/dma/omap_dma.c     |  8 +++-----
- include/hw/arm/omap.h | 12 +++---------
- 3 files changed, 7 insertions(+), 15 deletions(-)
-
-diff --git a/hw/arm/omap1.c b/hw/arm/omap1.c
-index 80168644ce..44f9dd67c3 100644
---- a/hw/arm/omap1.c
-+++ b/hw/arm/omap1.c
-@@ -3789,7 +3789,7 @@ struct omap_mpu_state_s *omap310_mpu_init(MemoryRegion *dram,
-     }
-     s->dma = omap_dma_init(0xfffed800, dma_irqs, system_memory,
-                            qdev_get_gpio_in(s->ih[0], OMAP_INT_DMA_LCD),
--                           s, omap_findclk(s, "dma_ck"), omap_dma_3_1);
-+                           s, omap_findclk(s, "dma_ck"));
- 
-     s->port[emiff    ].addr_valid = omap_validate_emiff_addr;
-     s->port[emifs    ].addr_valid = omap_validate_emifs_addr;
-diff --git a/hw/dma/omap_dma.c b/hw/dma/omap_dma.c
-index dea251afbc..a93d9ad196 100644
---- a/hw/dma/omap_dma.c
-+++ b/hw/dma/omap_dma.c
-@@ -1075,15 +1075,13 @@ static void omap_dma_clk_update(void *opaque, int line, int on)
- }
- 
- struct soc_dma_s *omap_dma_init(hwaddr base, qemu_irq *irqs,
--                MemoryRegion *sysmem,
--                qemu_irq lcd_irq, struct omap_mpu_state_s *mpu, omap_clk clk,
--                enum omap_dma_model model)
-+                                MemoryRegion *sysmem,
-+                                qemu_irq lcd_irq,
-+                                struct omap_mpu_state_s *mpu, omap_clk clk)
- {
-     int num_irqs, memsize, i;
-     struct omap_dma_s *s = g_new0(struct omap_dma_s, 1);
- 
--    assert(model == omap_dma_3_1);
--
-     num_irqs = 6;
-     memsize = 0x800;
-     s->mpu = mpu;
-diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
-index 36569815e8..2675d064f2 100644
---- a/include/hw/arm/omap.h
-+++ b/include/hw/arm/omap.h
-@@ -172,17 +172,11 @@ void omap_gpio_set_clk(Omap1GpioState *gpio, omap_clk clk);
- #define OMAP_INT_310_McBSP2RX_OF       31
- 
- /* omap_dma.c */
--enum omap_dma_model {
--    omap_dma_3_0,
--    omap_dma_3_1,
--    omap_dma_3_2,
--};
--
- struct soc_dma_s;
- struct soc_dma_s *omap_dma_init(hwaddr base, qemu_irq *irqs,
--                MemoryRegion *sysmem,
--                qemu_irq lcd_irq, struct omap_mpu_state_s *mpu, omap_clk clk,
--                enum omap_dma_model model);
-+                                MemoryRegion *sysmem,
-+                                qemu_irq lcd_irq,
-+                                struct omap_mpu_state_s *mpu, omap_clk clk);
- void omap_dma_reset(struct soc_dma_s *s);
- 
- struct dma_irq_map {
--- 
-2.43.0
-
+Just wanted to confirm that I re-tested and it seems like you are
+correct. This must have changed semi recently? I was just running with
+`-M virt` before. Either way, it's good that the defaults seem to work
+better now. Either way, I guess the fix still needs to go in for the
+non vGIC path?
 
