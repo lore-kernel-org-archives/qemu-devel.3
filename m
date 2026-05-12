@@ -4,85 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64F7ECD4F25
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67098CD4F27
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:25:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMgYA-0004LJ-9C; Tue, 12 May 2026 02:25:02 -0400
+	id 1wMgXL-00032A-P3; Tue, 12 May 2026 02:24:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgXX-0003Fh-Co
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:24:28 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgXR-0005sw-CS
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:24:19 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-488ab2db91aso55777355e9.3
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 23:24:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778567053; x=1779171853; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=+RyBTcXhGSgLGCVPmzWdJm9D7f8yrjL4XCYOfxRcoaQ=;
- b=opnQIFHKwKgO5wmc+jIVj7H25Mn3jS7MOi2maALY+JLbyv5+/05UKTsc0yIDJpBDIA
- 1ATWDbVlxvwWJ1miVlZIUrKqIzjfMlc61+og5uov++F5mMl6Hgmu4DZp22sPXGcEnYd8
- XiXGONId9Pd+IuWeTC7Ncj8M9ODPwJph6sW86u1I3lRyQEnmaVwr78aAlf+7LHA/asik
- epqOieZuozsumEm6uuWnPL95fvZ+S2/paDPGCyBlMU56TYDjIydqSPMAEjPchxL+RuJa
- MDiVavaTzJHzSWOnAG62suPx9Hde2hHsDeZFuFwIU8iwXVn+0lQWTISUED9qVtjRpN8x
- DJ6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778567053; x=1779171853;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=+RyBTcXhGSgLGCVPmzWdJm9D7f8yrjL4XCYOfxRcoaQ=;
- b=ifX3zEoM8n8wDQdF0+LJJeh0PtWU1FNpG4hhegbNmXLCLwpeIQkviwMvkroKqqTGTO
- BCwvXEQCgbPngu3D7oq3URRfxhXvArlXBuWeSX3o2GZowsvZ9XiitSx+gyyCLfbQPyKC
- zmDP5yiaRchV9Fakz1Pa5KIfRWCeZ40RoJco9kGdEr0ySOxzDZk4iOoJSr1Shni3nVvl
- AcQIz4ilogrJQ9sEz1jwxcQiiC2TN9IyWwp+z32NTJ9wr+d12cvFZQ9ZIPAC15hXJi8O
- 3hTR6BTl6NVf8hlPPbXMK+RyFbjzY0z/1MOgHjNPeEiFC/NLQbN7YNM/cEhrSzeGXoO9
- laOQ==
-X-Gm-Message-State: AOJu0Yx8cxcY98ThG/GIVxS5qWp4U4mPsNYuMhLCFHiCzs17NAAj3eG9
- uRq/PhjhIc3KOLuXwoXL729kvztyi9FhT2nAMsH3rJq8HTPyct94lf/01tu4kqy+TWf4jiCl5ul
- DFPq5Yn8=
-X-Gm-Gg: Acq92OGbmbO4W6+s53llpBtJbxLSnQKdrBrGbbdcX3wG7z1moL9SI3oGNYSqFhff2CB
- dMpXKz70iP39+JNKXMrlJpR7jQG6jTU7hIWtlCnPjqXGn/5O5MGusR563SgTqA/eHvbLtZqHd+F
- iyqlURNrbMbQfqlugsRuM5OTrhrJUhrciUemcBgXiVew3ZiJOGp4qDMyz3M3PaO/DItwk/il2pD
- yZPAx4b42S+bypPlGynGpgsP/dAKCeoT/Y2qEwmA5XWHnTfyeRggsnasvspRfOorATC7egXZg54
- vB3gCi5S89qUPd6XdrEhblq2iPyelpPV9xN2o+2v4M22xn/KyO1ZwXlfcmj4lE8bEoPZLK6jWJS
- Gp5T6W5KEW251t/rPrF3qGYiYaS4hBbjDu/ziZRKIlNv4VPnWEU4mhdUs+DWzHk9dvsCa36j4Hi
- 60qzBX+SmP4Aa2QQmpSfRA35yHAmE6UXylq/VTTgbfLUnHXQtKbM9wVLsiC4udzK+DVxMnbdGV
-X-Received: by 2002:a05:600c:3151:b0:48a:7605:751e with SMTP id
- 5b1f17b1804b1-48e51e0837amr411315585e9.4.1778567053218; 
- Mon, 11 May 2026 23:24:13 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e8e62a2desm12246395e9.9.2026.05.11.23.24.11
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 11 May 2026 23:24:12 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 21/41] target/arm: Rename arm_cpu_get_phys_page()
-Date: Tue, 12 May 2026 08:21:22 +0200
-Message-ID: <20260512062142.67998-22-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260512062142.67998-1-philmd@linaro.org>
-References: <20260512062142.67998-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <vulab@iscas.ac.cn>)
+ id 1wMgWf-0001jF-3P; Tue, 12 May 2026 02:23:39 -0400
+Received: from smtp81.cstnet.cn ([159.226.251.81] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <vulab@iscas.ac.cn>)
+ id 1wMgWY-0004tW-6O; Tue, 12 May 2026 02:23:28 -0400
+Received: from yzs (unknown [122.231.43.248])
+ by APP-03 (Coremail) with SMTP id rQCowAB3XONPxwJqhZ7CEA--.13122S2;
+ Tue, 12 May 2026 14:23:11 +0800 (CST)
+From: Zishun Yi <vulab@iscas.ac.cn>
+To: Sunil V L <sunilvl@ventanamicro.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Cc: Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org, Zishun Yi <vulab@iscas.ac.cn>
+Subject: [PATCH] hw/riscv/virt-acpi-build: Fix off-by-one error in RIMT ID
+ mapping
+Date: Tue, 12 May 2026 14:23:10 +0800
+Message-ID: <20260512062310.348208-1-vulab@iscas.ac.cn>
+X-Mailer: git-send-email 2.51.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: rQCowAB3XONPxwJqhZ7CEA--.13122S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7Zry8Xw1UJw45CFWftr17trb_yoW8AF1kpr
+ W3KrWayry8Xws7A3W3tF1UWF15t34v9a4Y9r15Crs8Aws0kFW5XF4rKFWrKrnIyF48Xa9I
+ kr1Yv3s3ur1YvFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUU9C14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+ rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+ 1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
+ 6F4UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
+ 0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
+ jxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr
+ 1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxa
+ n2IY04v7MxkF7I0En4kS14v26r1q6r43MxkIecxEwVAFwVW8AwCF04k20xvY0x0EwIxGrw
+ CFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE
+ 14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2
+ IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxK
+ x2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI
+ 0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x0JU-6pPUUUUU=
+X-Originating-IP: [122.231.43.248]
+X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiCREFA2oCsEUZtQABsu
+Received-SPF: pass client-ip=159.226.251.81; envelope-from=vulab@iscas.ac.cn;
+ helo=cstnet.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,58 +77,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+In build_rimt(), the calculation of `num_ids` for the ID mapping array
+incorrectly uses the same formula (`0xffff - s->pci_iommu_bdf`) for both
+System IOMMU and PCI IOMMU topologies.
 
-The internal helper function arm_cpu_get_phys_page() is named that
-way because of its use in the get_phys_page_attrs_debug method.  Now
-we've renamed the method, rename the helper to match, since it can
-handle non-page-aligned addresses.
+For a System IOMMU, `s->pci_iommu_bdf` is 0. This results in a `num_ids`
+value of 0xffff. Since the source ID base starts at 0, the mapping only
+covers Requester IDs from 0 to 0xfffe. The final valid PCI Requester ID
+(0xffff) is erroneously omitted from the RIMT table.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260417173105.1648172-12-peter.maydell@linaro.org
-Message-ID: <20260430093810.2762539-13-peter.maydell@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Fix this by decoupling the `num_ids` calculation. For System IOMMUs,
+explicitly set `num_ids` to 0x10000 to cover the entire PCI Requester ID
+space.
+
+This issue was discovered and reported by SpecHunter, an AI-driven
+architecture specification analysis tool.
+
+Link: https://github.com/yizishun/rv-isa-sec/blob/c78dacf66c8acd677b3538c837fde310bb71a97b/output/riscv-server-platform/pr-102/qemu.txt#L32
+Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
 ---
- target/arm/ptw.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ hw/riscv/virt-acpi-build.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 7dd3a7a3ede..24656b1a062 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -3942,7 +3942,7 @@ bool get_phys_addr(CPUARMState *env, vaddr address,
-                              memop, result, fi);
- }
- 
--static hwaddr arm_cpu_get_phys_page(CPUARMState *env, vaddr addr,
-+static hwaddr arm_cpu_get_phys_addr(CPUARMState *env, vaddr addr,
-                                     MemTxAttrs *attrs, ARMMMUIdx mmu_idx)
- {
-     S1Translate ptw = {
-@@ -3970,7 +3970,7 @@ hwaddr arm_cpu_get_phys_addr_attrs_debug(CPUState *cs, vaddr addr,
-     CPUARMState *env = &cpu->env;
-     ARMMMUIdx mmu_idx = arm_mmu_idx(env);
- 
--    hwaddr res = arm_cpu_get_phys_page(env, addr, attrs, mmu_idx);
-+    hwaddr res = arm_cpu_get_phys_addr(env, addr, attrs, mmu_idx);
- 
-     if (res != -1) {
-         return res;
-@@ -3984,10 +3984,10 @@ hwaddr arm_cpu_get_phys_addr_attrs_debug(CPUState *cs, vaddr addr,
-     switch (mmu_idx) {
-     case ARMMMUIdx_E10_1:
-     case ARMMMUIdx_E10_1_PAN:
--        return arm_cpu_get_phys_page(env, addr, attrs, ARMMMUIdx_E10_0);
-+        return arm_cpu_get_phys_addr(env, addr, attrs, ARMMMUIdx_E10_0);
-     case ARMMMUIdx_E20_2:
-     case ARMMMUIdx_E20_2_PAN:
--        return arm_cpu_get_phys_page(env, addr, attrs, ARMMMUIdx_E20_0);
-+        return arm_cpu_get_phys_addr(env, addr, attrs, ARMMMUIdx_E20_0);
-     default:
-         return -1;
+diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+index fd6ca5dbc4ff..413d47d70ef1 100644
+--- a/hw/riscv/virt-acpi-build.c
++++ b/hw/riscv/virt-acpi-build.c
+@@ -802,10 +802,11 @@ static void build_rimt(GArray *table_data, BIOSLinker *linker,
+         range = &g_array_index(iommu_idmaps, AcpiRimtIdMapping, i);
+         if (virt_is_iommu_sys_enabled(s)) {
+             range->source_id_base = 0;
++            range->num_ids = 0x10000;
+         } else {
+             range->source_id_base = s->pci_iommu_bdf + 1;
++            range->num_ids = 0xffff - s->pci_iommu_bdf;
+         }
+-        range->num_ids = 0xffff - s->pci_iommu_bdf;
+         build_rimt_id_mapping(table_data, range->source_id_base,
+                               range->num_ids, iommu_offset);
      }
 -- 
-2.53.0
+2.51.2
 
 
