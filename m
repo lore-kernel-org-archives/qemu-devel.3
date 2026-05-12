@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 014C9CD4846
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 02:18:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81E41CD4846
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 02:19:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMch5-0005F8-5m; Mon, 11 May 2026 22:17:59 -0400
+	id 1wMcht-0005hm-F6; Mon, 11 May 2026 22:18:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1wMch0-0005Ef-Jd; Mon, 11 May 2026 22:17:55 -0400
-Received: from out30-110.freemail.mail.aliyun.com ([115.124.30.110])
+ id 1wMchs-0005hA-30; Mon, 11 May 2026 22:18:48 -0400
+Received: from out30-99.freemail.mail.aliyun.com ([115.124.30.99])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1wMcgv-0002bD-3V; Mon, 11 May 2026 22:17:54 -0400
+ id 1wMchn-0003Cd-SS; Mon, 11 May 2026 22:18:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1778552253; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=gzlxTxUEJVCM2smrZKhukYVpRToxanBnpMDL/T96W0I=;
- b=j+Xt2ZnMQL1RWjk4CsYQBPv3Rv3Jv3edyZu+5SKk9LR2fur68nehWZlAjWfLaqCKfAooGxPiHdaPjDnXrvJRiDw/SVqN9KvOM4rtzcDHLSXhcebG2Q4EzJK9luLx5C4LBVcjjan0z3RFZ8smwIJFSpaeVagaKP6ejZ4ihTJqEsM=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R551e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=10; SR=0;
- TI=SMTPD_---0X2ofL5x_1778552251; 
+ t=1778552319; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=fPDYVmYai2R7H+12yPtGQgcWWb9WQ3m9gXZKbA0C7bI=;
+ b=m+ParKLKxOTo0cUfF33jb5Bt5FZalE5xlX2iFuviWv63yQoyHvkkQeFS0orBEPgGd0ZV/ylWls6rbLj+/vYBJxVkE6I8EuhA71T41DmJUTjdERrO0PyMu3Pri37W19k7WC40LM2ugiMgj5bb4aR+ehL7G40DXwC6kEdi2v2MMcE=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R301e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045133197;
+ MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=11; SR=0;
+ TI=SMTPD_---0X2oldtu_1778552317; 
 Received: from 30.166.64.212(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0X2ofL5x_1778552251 cluster:ay36) by smtp.aliyun-inc.com;
- Tue, 12 May 2026 10:17:32 +0800
-Message-ID: <987c2615-b023-41b1-b7d0-572c7f74b373@linux.alibaba.com>
-Date: Tue, 12 May 2026 10:17:30 +0800
+ fp:SMTPD_---0X2oldtu_1778552317 cluster:ay36) by smtp.aliyun-inc.com;
+ Tue, 12 May 2026 10:18:38 +0800
+Message-ID: <fd4f1a8f-0cc3-4e4a-aaae-4fb03fedb777@linux.alibaba.com>
+Date: Tue, 12 May 2026 10:18:37 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v5 2/6] target/riscv: Implement core SMMPT lookup logic
-To: Alistair Francis <alistair23@gmail.com>
+To: Frank Chang <frank.chang@sifive.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, chao.liu.zevorn@gmail.com,
- palmer@dabbelt.com, daniel.barboza@oss.qualcomm.com, liwei1518@gmail.com,
- Huang Tao <eric.huang@linux.alibaba.com>,
+ palmer@dabbelt.com, alistair23@gmail.com, daniel.barboza@oss.qualcomm.com,
+ liwei1518@gmail.com, Huang Tao <eric.huang@linux.alibaba.com>,
  TANG Tiancheng <lyndra@linux.alibaba.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 References: <20260408140635.42546-1-zhiwei_liu@linux.alibaba.com>
  <20260408140635.42546-3-zhiwei_liu@linux.alibaba.com>
- <CAKmqyKOCRdD5cUvux6W9Z_9fMXiZ0g5s1n6iWp7RkTmZBGvHXw@mail.gmail.com>
+ <CANzO1D35+m_cPDmj7vDsSxfU0Z6=dC7ch_vsJw0K1hNzrqHRKw@mail.gmail.com>
 Content-Language: en-US
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <CAKmqyKOCRdD5cUvux6W9Z_9fMXiZ0g5s1n6iWp7RkTmZBGvHXw@mail.gmail.com>
+In-Reply-To: <CANzO1D35+m_cPDmj7vDsSxfU0Z6=dC7ch_vsJw0K1hNzrqHRKw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.110;
+Received-SPF: pass client-ip=115.124.30.99;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-110.freemail.mail.aliyun.com
+ helo=out30-99.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
 X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
  USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,10 +75,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alistair,
+Hi Frank,
 
-On 4/10/26 9:36 AM, Alistair Francis wrote:
-> On Thu, Apr 9, 2026 at 12:07 AM LIU Zhiwei <zhiwei_liu@linux.alibaba.com> wrote:
+On 4/13/26 4:02 PM, Frank Chang wrote:
+> Hi Zhiwei,
+>
+> LIU Zhiwei <zhiwei_liu@linux.alibaba.com> 於 2026年4月9日週四 上午3:24寫道：
 >> This patch introduces the core implementation for the Memory Protection Table
 >> (MPT) walk, which is the central mechanism of the SMMPT extension.
 >>
@@ -214,14 +216,6 @@ On 4/10/26 9:36 AM, Alistair Francis wrote:
 >> +        uint64_t n:1;
 >> +    } nonleaf64;
 >> +} mpte_union_t;
-> There is no guarantee in C that these bit fields are packed and laid
-> out like you are expecting
-Good catch! Thanks for pointing it out. I have used the explicit 
-extraction method for bit fields in mpte in v6 patch set.
-
-Thanks,
-Zhiwei
->
 >> +
 >> +static inline bool mpte_is_leaf(uint64_t mpte)
 >> +{
@@ -238,18 +232,252 @@ Zhiwei
 >> +    RISCVMXL mxl = riscv_cpu_mxl(env);
 >> +    bool leaf = mpte_is_leaf(mpte);
 >> +    mpte_union_t *u = (mpte_union_t *)&mpte;
-> So this cast
->
 >> +
 >> +    if (mxl == MXL_RV32) {
 >> +        return leaf ? u->leaf32.rsv1 : u->nonleaf32.rsv1;
-> and these accesses are not valid.
+>> +    }
+>> +    return leaf ? (u->leaf64.rsv1 << 5) | u->leaf64.rsv2
+>> +                : (u->nonleaf64.rsv1 << 1) | u->nonleaf64.rsv2;
+>> +}
+>> +
+>> +static uint64_t mpte_get_perms(CPURISCVState *env, uint64_t mpte)
+>> +{
+>> +    RISCVMXL mxl = riscv_cpu_mxl(env);
+>> +    mpte_union_t *u = (mpte_union_t *)&mpte;
+>> +
+>> +    return (mxl == MXL_RV32) ? u->leaf32.perms : u->leaf64.perms;
+>> +}
+>> +
+>> +static bool mpte_check_nlnapot(CPURISCVState *env, uint64_t mpte, bool *nlnapot)
+>> +{
+>> +    RISCVMXL mxl = riscv_cpu_mxl(env);
+>> +    mpte_union_t *u = (mpte_union_t *)&mpte;
+>> +    if (mxl == MXL_RV32) {
+>> +        *nlnapot = false;
+>> +        return true;
+>> +    }
+>> +    *nlnapot = u->nonleaf64.n;
+>> +    return u->nonleaf64.n ? (u->nonleaf64.ppn & 0x1ff) == 0x100 : true;
+>> +}
+>> +
+>> +static uint64_t mpte_get_ppn(CPURISCVState *env, uint64_t mpte, int pn,
+>> +                             bool nlnapot)
+>> +{
+>> +    RISCVMXL mxl = riscv_cpu_mxl(env);
+>> +    mpte_union_t *u = (mpte_union_t *)&mpte;
+>> +
+>> +    if (nlnapot) {
+>> +        return deposit64(u->nonleaf64.ppn, 0, 9, pn & 0x1ff);
+>> +    }
+>> +    return (mxl == MXL_RV32) ? u->nonleaf32.ppn : u->nonleaf64.ppn;
+>> +}
+>> +
+>> +/* Caller should assert i before call this interface */
+>> +static int mpt_get_pn(hwaddr addr, int i, mpt_mode_t mode)
+>> +{
+>> +    if (mode == SMMPT34) {
+>> +        return i == 0
+>> +            ? extract64(addr, 15, 10)
+>> +            : extract64(addr, 25, 9);
+>> +    } else {
+>> +        int offset = 16 + i * 9;
+>> +        if ((mode == SMMPT64) && (i == 4)) {
+>> +            return extract64(addr, offset, 12);
+>> +        } else {
+>> +            return extract64(addr, offset, 9);
+>> +        }
+>> +    }
+>> +}
+>> +
+>> +/* Caller should assert i before call this interface */
+>> +static int mpt_get_pi(hwaddr addr, int i, mpt_mode_t mode)
+>> +{
+>> +    if (mode == SMMPT34) {
+>> +        return i == 0
+>> +            ? extract64(addr, 12, 3)
+>> +            : extract64(addr, 22, 3);
+>> +    } else {
+>> +        int offset = 16 + i * 9;
+>> +        return extract64(addr, offset - 4, 4);
+>> +    }
+>> +}
+>> +
+>> +static bool smmpt_lookup(CPURISCVState *env, hwaddr addr, mpt_mode_t mode,
+>> +                         mpt_access_t *allowed_access,
+>> +                         MMUAccessType access_type)
+>> +{
+>> +    MemTxResult res;
+>> +    MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
+>> +    CPUState *cs = env_cpu(env);
+>> +    hwaddr mpte_addr, base = (hwaddr)env->mptppn << PGSHIFT;
+>> +    load_entry_fn *load_entry;
+>> +    uint32_t mptesize, levels, xwr;
+>> +    int pn, pi, pmp_prot, pmp_ret;
+>> +    uint64_t mpte, perms;
+>> +
+>> +    switch (mode) {
+>> +    case SMMPT34:
+>> +        load_entry = &load_entry_32; levels = 2; mptesize = 4; break;
+>> +    case SMMPT43:
+>> +        load_entry = &load_entry_64; levels = 3; mptesize = 8; break;
+>> +        break;
+>> +    case SMMPT52:
+>> +        load_entry = &load_entry_64; levels = 4; mptesize = 8; break;
+>> +    case SMMPT64:
+>> +        load_entry = &load_entry_64; levels = 5; mptesize = 8; break;
+>> +    case SMMPTBARE:
+>> +        *allowed_access = ACCESS_ALLOW_RWX;
+>> +        return true;
+>> +    default:
+>> +        g_assert_not_reached();
+>> +        break;
+>> +    }
+>> +    for (int i = levels - 1; i >= 0 ; i--) {
+>> +        /* 1. Get pn[i] as the mpt index */
+>> +        pn = mpt_get_pn(addr, i, mode);
+>> +        /* 2. Get mpte address and get mpte */
+>> +        mpte_addr = base + pn * mptesize;
+>> +        pmp_ret = get_physical_address_pmp(env, &pmp_prot, mpte_addr,
+>> +                                           mptesize, MMU_DATA_LOAD, PRV_M);
+>> +        if (pmp_ret != TRANSLATE_SUCCESS) {
+>> +            return false;
+>> +        }
+>> +        mpte = load_entry(cs->as, mpte_addr, attrs, &res);
+>> +        /* 3. Check valid bit and reserve bits of mpte */
+>> +        if (!mpte_is_valid(mpte) || mpte_get_rsv(env, mpte)) {
+>> +            return false;
+>> +        }
+>> +
+>> +        /* 4. Process non-leaf node */
+>> +        if (!mpte_is_leaf(mpte)) {
+>> +            bool nlnapot = false;
+>> +            if (i == 0) {
+>> +                return false;
+>> +            }
+>> +            if (!mpte_check_nlnapot(env, mpte, &nlnapot)) {
+>> +                return false;
+>> +            }
+>> +            base = mpte_get_ppn(env, mpte, pn, nlnapot) << PGSHIFT;
+>> +            continue;
+>> +        }
+>> +
+>> +        /* 5. Process leaf node */
+>> +        pi = mpt_get_pi(addr, i, mode);
+>> +        perms = mpte_get_perms(env, mpte);
+>> +        xwr = (perms >> (pi * 3)) & 0x7;
+>> +        switch (xwr) {
+>> +        case ACCESS_ALLOW_R:
+>> +            *allowed_access = ACCESS_ALLOW_R;
+>> +            return access_type == MMU_DATA_LOAD;
+>> +        case ACCESS_ALLOW_X:
+>> +            *allowed_access = ACCESS_ALLOW_X;
+>> +            return access_type == MMU_INST_FETCH;
+>> +        case ACCESS_ALLOW_RX:
+>> +            *allowed_access = ACCESS_ALLOW_R;
+>> +            return (access_type == MMU_DATA_LOAD ||
+>> +                    access_type == MMU_INST_FETCH);
+>> +        case ACCESS_ALLOW_RW:
+>> +            *allowed_access = ACCESS_ALLOW_RW;
+>> +            return (access_type == MMU_DATA_LOAD ||
+>> +                    access_type == MMU_DATA_STORE);
+>> +        case ACCESS_ALLOW_RWX:
+>> +            *allowed_access = ACCESS_ALLOW_RWX;
+>> +            return true;
+>> +        default:
+>> +            return false;
+>> +        }
+>> +    }
+>> +    return false;
+>> +}
+>> +
+>> +bool smmpt_check_access(CPURISCVState *env, hwaddr addr,
+>> +                        mpt_access_t *allowed_access, MMUAccessType access_type)
+>> +{
+>> +    bool mpt_has_access;
+>> +    mpt_mode_t mode = env->mptmode;
+>> +
+>> +    mpt_has_access = smmpt_lookup(env, addr, mode,
+>> +                                  allowed_access, access_type);
+>> +    return mpt_has_access;
+>> +}
+>> +
+>> +/*
+>> + * Convert MPT access to TLB page privilege.
+>> + */
+>> +int smmpt_access_to_page_prot(mpt_access_t mpt_access)
+>> +{
+>> +    int prot;
+>> +    switch (mpt_access) {
+>> +    case ACCESS_ALLOW_R:
+>> +        prot = PAGE_READ;
+>> +        break;
+>> +    case ACCESS_ALLOW_X:
+>> +        prot = PAGE_EXEC;
+>> +        break;
+>> +    case ACCESS_ALLOW_RX:
+>> +        prot = PAGE_READ | PAGE_EXEC;
+>> +        break;
+>> +    case ACCESS_ALLOW_RW:
+>> +        prot = PAGE_READ | PAGE_WRITE;
+>> +        break;
+>> +    case ACCESS_ALLOW_RWX:
+>> +        prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+>> +        break;
+>> +    default:
+>> +        prot = 0;
+>> +        break;
+>> +    }
+>> +
+>> +    return prot;
+>> +}
+>> diff --git a/target/riscv/riscv_smmpt.h b/target/riscv/riscv_smmpt.h
+>> index 74dcccf4be..0d0597f8eb 100644
+>> --- a/target/riscv/riscv_smmpt.h
+>> +++ b/target/riscv/riscv_smmpt.h
+>> @@ -9,6 +9,9 @@
+>>   #ifndef RISCV_SMMPT_H
+>>   #define RISCV_SMMPT_H
+>>
+>> +#include "cpu.h"
+>> +#include "exec/mmu-access-type.h"
+>> +
+>>   typedef enum {
+>>       SMMPTBARE = 0,
+>>       SMMPT34   = 1,
+>> @@ -18,4 +21,16 @@ typedef enum {
+>>       SMMPTMAX
+>>   } mpt_mode_t;
+>>
+>> +typedef enum {
+>> +    ACCESS_ALLOW_R = 0b001,
+>> +    ACCESS_ALLOW_X = 0b100,
+>> +    ACCESS_ALLOW_RX = 0b101 ,
+>> +    ACCESS_ALLOW_RW = 0b011,
+>> +    ACCESS_ALLOW_RWX = 0b111,
+>> +} mpt_access_t;
+> The definitions of ACCESS_ALLOW_R and ACCESS_ALLOW_X are identical to
+> PAGE_READ and PAGE_EXEC.
+> I wonder if we really need to define an additional access type of mpt_access_t.
 >
-> On some platforms this will work, but on others it won't
+> We can also save smmpt_access_to_page_prot() call if
+> smmpt_check_access() returns
+> PAGE_READ, PAGE_WRITE, and PAGE_EXEC.
+Good catch! Done as you advise in v6 patch set.
+
+Thanks,
+Zhiwei
 >
-> See the notes here
-> https://en.cppreference.com/w/cpp/language/bit_field.html for more
-> details
+> Regards,
+> Frank Chang
 >
-> Alistair
+>> +
+>> +int smmpt_access_to_page_prot(mpt_access_t mpt_access);
+>> +bool smmpt_check_access(CPURISCVState *env, hwaddr addr,
+>> +                        mpt_access_t *allowed_access,
+>> +                        MMUAccessType access_type);
+>>   #endif
+>> --
+>> 2.43.0
+>>
+>>
 
