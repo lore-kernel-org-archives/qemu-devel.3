@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7231CD4F24
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD0BBCD343F
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 20:36:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMtoW-0002Xh-CH; Tue, 12 May 2026 16:34:48 -0400
+	id 1wMtoV-0002Wd-Aa; Tue, 12 May 2026 16:34:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wMtoF-0002Nv-JS
+ id 1wMtoF-0002Nx-JC
  for qemu-devel@nongnu.org; Tue, 12 May 2026 16:34:35 -0400
 Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wMtoA-0002P6-QA
- for qemu-devel@nongnu.org; Tue, 12 May 2026 16:34:29 -0400
+ id 1wMtoC-0002RY-5x
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 16:34:31 -0400
 Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-488b8bc6bc9so37565275e9.3
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 13:34:23 -0700 (PDT)
+ 5b1f17b1804b1-488b0046078so49969695e9.1
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 13:34:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778618063; x=1779222863; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778618066; x=1779222866; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=9aaDQ12UBCrB15ahgAwdguXL2xkiRYB5Sw8BTXsTekM=;
- b=DiQnqx4QhK0I2/heXoQfhEAlGPmg+XVGm/thpMiEQ5u6iBQ0nkhXmTpBpicKMcHfaQ
- dLA6EmUBF122OWkgti8XLhqxu9yYpWmJA3ayrPcKu5EkYRb8kPrPUuka/+7yOla4wO2+
- wcKYFCaB+jBcCFZ/H/vRknRO4FHblKQ+GDD8UwMycQl+EQHKnqQhFeQct8jD+WJCQRZo
- 6TBI4Jukt7uAHLGPVqXFrbHhfy6HvokowPyTU3aIy07ozXf5cQcB8fA8i+nL0vQ5dETw
- az2u6FPDG/4oIj0vuYWWb4NvnDDw3MbANzDf+XmCGlx8VKXsOGu+brZ6sHSqGwmTTBX7
- 3ZLw==
+ :reply-to; bh=oMRIz1cYEobW+mCeavjxs++vW/jWBy8/z7iwSk26Nxs=;
+ b=FxhFpBwgH+/1w/a/A8Wa+tI8PG+BZ208d7r8695oBwL2xr7DbkeMwovysQuBJTQ+Je
+ jT+Qe8pweM4KJyHf4T8CGAhlXSv6zUw44f2ITD7jbImRxz0dm8jy6dmEsc4Pq99w5/So
+ fR5szfjaE79lSnVLpyOhmUTNo70uNP226Oiuh6pYMt5iGJdRqRhVfsctveRqTPmqI7/4
+ 07R63gXNfdLVB8jDMbFpz2GBi/yLiQ4G07mg64JDt4xDhvsR5klhn/KnlcH9arm5g8AO
+ XHWA+rrJ9A4b4qzNxu3RZHvrwQlwfaWaKTValc7JvpmHwlHMVIhGzjrSMIg8rqUYLuMs
+ 4pzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778618063; x=1779222863;
+ d=1e100.net; s=20251104; t=1778618066; x=1779222866;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=9aaDQ12UBCrB15ahgAwdguXL2xkiRYB5Sw8BTXsTekM=;
- b=byjOgwcGqGpOsmBj67gvBotZU0XPK0kQdDQEJRfiFjAgtmBO8AYj0qfkW2IgXOko7a
- TxO/hTNzfbVydjWbeZUh4yWiKBAAbS7aoJ6UGLdIsKDk4Q02YDzAEJwzbddAbdvKDmFT
- HaraWPXY+vm6BWSt6JykFtYVIWll+SeBdPrJqC0SfUAaCtHOZETlMFC4yrvLb2XeTyQ6
- G8NN0d0+fvck3LrgCR+W8dcxGQlR4IC0BKRYSCaGDVH4XcLiS7x7lh9zgi8yOyE2HX4w
- 6LVy5GtNw/Ccz2hNCB4PrAav+69tA6plW2jcJWWJcP6kd7zM0KgcMAeJ3BfvTwbBpB2C
- 3B2g==
+ bh=oMRIz1cYEobW+mCeavjxs++vW/jWBy8/z7iwSk26Nxs=;
+ b=W1zK1o8hfY75BxOQjt1NX2clG493Ms64F1I0NzzMkMGxZy9pYolrvHNRo49whqIiFg
+ O2C7tKXCFT8OqH59aukkpx5xWZgP+3DizQP/VScTlgBC5bc8zQastDdi29r/1IHYpvPM
+ TMMy5QedUxiUjtZAH9hmhY5bXw99JBslk8CMb8UAOmzfJY9Z5vblJo3ZOlLv8R1sBswK
+ JunQ7/UkdNYvb+hk9rRGJ0W2gk+d7QCPKZ9p/buTyE6v7xJIu5zz8nsQWhKUKAEfokm8
+ UgnVGle36nkxC8rMoA0koyBTbU63SVqnq95+cq6qHeEecAB0573KrrSX6bLIAAmdgZfk
+ XC7w==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9qMg0EG95Bu7s4+o0LsVkx0IKh4d1+hNOHbHZ0R89xeXtZwkHV027TBHQoBAQuA6omoV2NfjtTLN15@nongnu.org
-X-Gm-Message-State: AOJu0YzlEZ8mu/uXmezUaVGjk7NlygwcgZA486XnP0gj7HKkc0vKyjZN
- so86akqdkwxf2Le/80mqhXsjcUNVRnG3bZPWZzUPNZulsenYPxnSSvnKgg1EI5Owqng=
-X-Gm-Gg: Acq92OHBY7TQq+ZjFrMAxxX3Ed85WrpJqzC9uAPZUSAweYGH/ahPETpWCBYGcyzVh+r
- GpRfDu1QKcS+voh2uD6n1DGmk1dRoTUUr4UVK7bDHeT3h/YhWgg/9L65Xb9RduE0LqoVAJeR9QO
- Pm0jS/+bkz1Hh7qjp3ukYWJ2VsNNIKyJQ3q4kPT0VYM+r1CPUNSLc2MdPKHHWUmRMBbUXfJsWns
- cuMBWU40QMqtuoOqHvrpIdUMyB+PBp2kC0SEmIGZ9ZByldvL1pLGXy6aBUNf9k4DI06TBjZqEtz
- CkZWW1KP+UXnjjppq68POYAW7X6fmpznukb7AADSrFFEEmJmsDNcmp16sWMl5sa8U2u9aYVkWC5
- FF+g13mJBxFdMXFO+Lqad4UXZWZdYV/b7yd/rLdahAAtmmVxPnXAPHvsdu14UdnyBEhAxnxYkRk
- tvZFj6/LETKba5uygERX3MZLo8lqwGKxKyvlJZz4jkqM5WjD09n6tcwiCbt0CAcABii6wBwgaF0
- ++TYRmE1E7YztOO1GBMuyfpwaXT4QA=
-X-Received: by 2002:a05:600c:3107:b0:48e:635a:18d2 with SMTP id
- 5b1f17b1804b1-48fc9a08e2dmr4891255e9.2.1778618062648; 
- Tue, 12 May 2026 13:34:22 -0700 (PDT)
+ AFNElJ9nKgNOUAFpBr/mj9u0wjPv1z1bXmtFN+m2RT9VNbgzYfQ+UYi6MrGQnKdQdPeZk2URfi0/QzX5bHbb@nongnu.org
+X-Gm-Message-State: AOJu0Yw/51fwhf/18JKTpumj+6YC5twaXVenhzyZrN7Udgzcgh8ELwyR
+ JRB4OVBG4yP+PJqQqDi+UaShiFokdo+MXEFIzGU7n83c4wB4gifD5B6czFROLRxcUV4=
+X-Gm-Gg: Acq92OHKlgVwq3wQOr3dW2xX18M1XuGagYdObqYVU+d7TmlxnRd0Ek2Qp+3doT/8wm+
+ ZiYnb1XzxMGf9T3i8Y9bdEQEdrvHz+JOrjLblTyvrFoFQQoyZc55O6xR5whJyrUTZf4TvcQhnqA
+ DMEMVip/FZdFfi9BdQeeHWrqE4lZ7kqwDZ/d2shZME5d9yrHqk5qWn9iuOdjm5lQU10pwlmA9TD
+ OS8SeI6pBCPEDIGNYDeUIFQIvZtfm+6d3H04KNZOKT6blfjClkDNRbEBkNvPo3ftCPVrkAyK66b
+ r8rtA0t9fWS7HRwLbmyl9+pG0a1bl/VMADP884c8JVLmOovdvpSIYBwoBlErSG62D96vy5D9Gca
+ aEmHloYe3hqLgu3Gkep/UgJtmNeq2To8MCYm1YLdit+ykxBhv1rCcp9+1tKp1tis7ytpZvh/a4i
+ uFGQYLnQWcLIBpg5EgbwxgiNpFdNiAeSpXv58PbP/IQ1CbArVBZy0KdzWz4WnDweLQXNOIba6zl
+ qUCA+cWJ6A+xbOFcb/IV0/Gu1t2YGk=
+X-Received: by 2002:a05:600c:19ce:b0:48a:76a3:2b9b with SMTP id
+ 5b1f17b1804b1-48fc9a34866mr4834385e9.17.1778618065812; 
+ Tue, 12 May 2026 13:34:25 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fc8d69d0bsm16350635e9.13.2026.05.12.13.34.21
+ 5b1f17b1804b1-48fc8d69d0bsm16350635e9.13.2026.05.12.13.34.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 May 2026 13:34:22 -0700 (PDT)
+ Tue, 12 May 2026 13:34:24 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 05/12] hw/arm/omap: Delete unused #defines
-Date: Tue, 12 May 2026 21:34:07 +0100
-Message-ID: <20260512203414.3633237-6-peter.maydell@linaro.org>
+Subject: [PATCH 08/12] hw/dma/omap_dma: Fold omap_dma_sys_read() and
+ omap_dma_sys_write() into callers
+Date: Tue, 12 May 2026 21:34:10 +0100
+Message-ID: <20260512203414.3633237-9-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260512203414.3633237-1-peter.maydell@linaro.org>
 References: <20260512203414.3633237-1-peter.maydell@linaro.org>
@@ -85,7 +86,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,253 +102,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Delete some #defines which we no longer use because they are
-for OMAP SoCs which we dropped support for.
+Now we have removed the DMA 3.2 support, we call omap_dma_sys_read()
+only for the single address offset 0x400, and similarly for
+omap_dma_sys_write().  The other cases in those functions are DMA
+3.2-only and now dead code.  Fold the 0x400 register directly into
+the callers, and remove the rest.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/arm/omap.h | 185 ------------------------------------------
- 1 file changed, 185 deletions(-)
+ hw/dma/omap_dma.c | 121 ++--------------------------------------------
+ 1 file changed, 5 insertions(+), 116 deletions(-)
 
-diff --git a/include/hw/arm/omap.h b/include/hw/arm/omap.h
-index 96a52d280c..14d6e9d214 100644
---- a/include/hw/arm/omap.h
-+++ b/include/hw/arm/omap.h
-@@ -35,10 +35,7 @@
- #define OMAP_LOCALBUS_BASE 0x30000000
- #define OMAP_MPUI_BASE     0xe1000000
+diff --git a/hw/dma/omap_dma.c b/hw/dma/omap_dma.c
+index 9a86d90b4e..49348f40c5 100644
+--- a/hw/dma/omap_dma.c
++++ b/hw/dma/omap_dma.c
+@@ -317,16 +317,6 @@ static void omap_dma_interrupts_3_1_update(struct omap_dma_s *s)
+         qemu_irq_raise(ch[5].irq);
+ }
  
--#define OMAP730_SRAM_SIZE  0x00032000
- #define OMAP15XX_SRAM_SIZE 0x00030000
--#define OMAP16XX_SRAM_SIZE 0x00004000
--#define OMAP1611_SRAM_SIZE 0x0003e800
- #define OMAP_CS0_SIZE      0x04000000
- #define OMAP_CS1_SIZE      0x04000000
- #define OMAP_CS2_SIZE      0x04000000
-@@ -130,16 +127,6 @@ void omap_gpio_set_clk(Omap1GpioState *gpio, omap_clk clk);
-  * Common OMAP-15xx IRQ numbers for level 1 interrupt handler
-  */
- #define OMAP_INT_15XX_IH2_IRQ      0
--#define OMAP_INT_15XX_LB_MMU       17
--#define OMAP_INT_15XX_LOCAL_BUS    29
+-static void omap_dma_interrupts_3_2_update(struct omap_dma_s *s)
+-{
+-    struct omap_dma_channel_s *ch = s->ch;
+-    int i;
 -
--/*
-- * OMAP-1510 specific IRQ numbers for level 1 interrupt handler
-- */
--#define OMAP_INT_1510_SPI_TX       4
--#define OMAP_INT_1510_SPI_RX       5
--#define OMAP_INT_1510_DSP_MAILBOX1 10
--#define OMAP_INT_1510_DSP_MAILBOX2 11
+-    for (i = s->chans; i; ch ++, i --)
+-        if (ch->status)
+-            qemu_irq_raise(ch->irq);
+-}
+-
+ static void omap_dma_enable_3_1_mapping(struct omap_dma_s *s)
+ {
+     s->omap_3_1_mapping_disabled = 0;
+@@ -334,13 +324,6 @@ static void omap_dma_enable_3_1_mapping(struct omap_dma_s *s)
+     s->intr_update = omap_dma_interrupts_3_1_update;
+ }
  
- /*
-  * OMAP-310 specific IRQ numbers for level 1 interrupt handler
-@@ -149,42 +136,6 @@ void omap_gpio_set_clk(Omap1GpioState *gpio, omap_clk clk);
- #define OMAP_INT_310_HSB_MAILBOX1  12
- #define OMAP_INT_310_HSAB_MMU      18
+-static void omap_dma_disable_3_1_mapping(struct omap_dma_s *s)
+-{
+-    s->omap_3_1_mapping_disabled = 1;
+-    s->chans = 16;
+-    s->intr_update = omap_dma_interrupts_3_2_update;
+-}
+-
+ static void omap_dma_process_request(struct omap_dma_s *s, int request)
+ {
+     int channel;
+@@ -1106,98 +1089,6 @@ static int omap_dma_3_1_lcd_read(struct omap_dma_lcd_channel_s *s, int offset,
+     return 0;
+ }
  
--/*
-- * OMAP-1610 specific IRQ numbers for level 1 interrupt handler
-- */
--#define OMAP_INT_1610_IH2_IRQ      0
--#define OMAP_INT_1610_IH2_FIQ      2
--#define OMAP_INT_1610_McBSP2_TX    4
--#define OMAP_INT_1610_McBSP2_RX    5
--#define OMAP_INT_1610_DSP_MAILBOX1 10
--#define OMAP_INT_1610_DSP_MAILBOX2 11
--#define OMAP_INT_1610_LCD_LINE     12
--#define OMAP_INT_1610_GPTIMER1     17
--#define OMAP_INT_1610_GPTIMER2     18
--#define OMAP_INT_1610_SSR_FIFO_0   29
+-static int omap_dma_sys_write(struct omap_dma_s *s, int offset, uint16_t value)
+-{
+-    switch (offset) {
+-    case 0x400: /* SYS_DMA_GCR */
+-        s->gcr = value;
+-        break;
 -
--/*
-- * OMAP-730 specific IRQ numbers for level 1 interrupt handler
-- */
--#define OMAP_INT_730_IH2_FIQ       0
--#define OMAP_INT_730_IH2_IRQ       1
--#define OMAP_INT_730_USB_NON_ISO   2
--#define OMAP_INT_730_USB_ISO       3
--#define OMAP_INT_730_ICR           4
--#define OMAP_INT_730_EAC           5
--#define OMAP_INT_730_GPIO_BANK1    6
--#define OMAP_INT_730_GPIO_BANK2    7
--#define OMAP_INT_730_GPIO_BANK3    8
--#define OMAP_INT_730_McBSP2TX      10
--#define OMAP_INT_730_McBSP2RX      11
--#define OMAP_INT_730_McBSP2RX_OVF  12
--#define OMAP_INT_730_LCD_LINE      14
--#define OMAP_INT_730_GSM_PROTECT   15
--#define OMAP_INT_730_TIMER3        16
--#define OMAP_INT_730_GPIO_BANK5    17
--#define OMAP_INT_730_GPIO_BANK6    18
--#define OMAP_INT_730_SPGIO_WR      29
+-    case 0x404: /* DMA_GSCR */
+-        if (value & 0x8)
+-            omap_dma_disable_3_1_mapping(s);
+-        else
+-            omap_dma_enable_3_1_mapping(s);
+-        break;
 -
- /*
-  * Common IRQ numbers for level 2 interrupt handler
-  */
-@@ -209,15 +160,6 @@ void omap_gpio_set_clk(Omap1GpioState *gpio, omap_clk clk);
- #define OMAP_INT_RTC_ALARM     26
- #define OMAP_INT_DSP_MMU       28
+-    case 0x408: /* DMA_GRST */
+-        if (value & 0x1)
+-            omap_dma_reset(s->dma);
+-        break;
+-
+-    default:
+-        return 1;
+-    }
+-    return 0;
+-}
+-
+-static int omap_dma_sys_read(struct omap_dma_s *s, int offset,
+-                uint16_t *ret)
+-{
+-    switch (offset) {
+-    case 0x400: /* SYS_DMA_GCR */
+-        *ret = s->gcr;
+-        break;
+-
+-    case 0x404: /* DMA_GSCR */
+-        *ret = s->omap_3_1_mapping_disabled << 3;
+-        break;
+-
+-    case 0x408: /* DMA_GRST */
+-        *ret = 0;
+-        break;
+-
+-    case 0x442: /* DMA_HW_ID */
+-    case 0x444: /* DMA_PCh2_ID */
+-    case 0x446: /* DMA_PCh0_ID */
+-    case 0x448: /* DMA_PCh1_ID */
+-    case 0x44a: /* DMA_PChG_ID */
+-    case 0x44c: /* DMA_PChD_ID */
+-        *ret = 1;
+-        break;
+-
+-    case 0x44e: /* DMA_CAPS_0_U */
+-        *ret = (s->caps[0] >> 16) & 0xffff;
+-        break;
+-    case 0x450: /* DMA_CAPS_0_L */
+-        *ret = (s->caps[0] >>  0) & 0xffff;
+-        break;
+-
+-    case 0x452: /* DMA_CAPS_1_U */
+-        *ret = (s->caps[1] >> 16) & 0xffff;
+-        break;
+-    case 0x454: /* DMA_CAPS_1_L */
+-        *ret = (s->caps[1] >>  0) & 0xffff;
+-        break;
+-
+-    case 0x456: /* DMA_CAPS_2 */
+-        *ret = s->caps[2];
+-        break;
+-
+-    case 0x458: /* DMA_CAPS_3 */
+-        *ret = s->caps[3];
+-        break;
+-
+-    case 0x45a: /* DMA_CAPS_4 */
+-        *ret = s->caps[4];
+-        break;
+-
+-    case 0x460: /* DMA_PCh2_SR */
+-    case 0x480: /* DMA_PCh0_SR */
+-    case 0x482: /* DMA_PCh1_SR */
+-    case 0x4c0: /* DMA_PChD_SR_0 */
+-        qemu_log_mask(LOG_UNIMP,
+-                      "%s: Physical Channel Status Registers not implemented\n",
+-                      __func__);
+-        *ret = 0xff;
+-        break;
+-
+-    default:
+-        return 1;
+-    }
+-    return 0;
+-}
+-
+ static uint64_t omap_dma_read(void *opaque, hwaddr addr, unsigned size)
+ {
+     struct omap_dma_s *s = opaque;
+@@ -1225,10 +1116,9 @@ static uint64_t omap_dma_read(void *opaque, hwaddr addr, unsigned size)
  
--/*
-- * OMAP-1510 specific IRQ numbers for level 2 interrupt handler
-- */
--#define OMAP_INT_1510_BT_MCSI1TX   16
--#define OMAP_INT_1510_BT_MCSI1RX   17
--#define OMAP_INT_1510_SoSSI_MATCH  19
--#define OMAP_INT_1510_MEM_STICK    27
--#define OMAP_INT_1510_COM_SPI_RO   31
--
- /*
-  * OMAP-310 specific IRQ numbers for level 2 interrupt handler
-  */
-@@ -229,103 +171,6 @@ void omap_gpio_set_clk(Omap1GpioState *gpio, omap_clk clk);
- #define OMAP_INT_310_USB_W2FC_NON_ISO  30
- #define OMAP_INT_310_McBSP2RX_OF       31
+     case 0x404 ... 0x4fe:
+         break;
+-    case 0x400:
+-        if (omap_dma_sys_read(s, addr, &ret))
+-            break;
+-        return ret;
++    case 0x400: /* SYS_DMA_GCR */
++        return s->gcr;
++        break;
  
--/*
-- * OMAP-1610 specific IRQ numbers for level 2 interrupt handler
-- */
--#define OMAP_INT_1610_FAC          0
--#define OMAP_INT_1610_USB_HHC_2    7
--#define OMAP_INT_1610_USB_OTG      8
--#define OMAP_INT_1610_SoSSI        9
--#define OMAP_INT_1610_BT_MCSI1TX   16
--#define OMAP_INT_1610_BT_MCSI1RX   17
--#define OMAP_INT_1610_SoSSI_MATCH  19
--#define OMAP_INT_1610_MEM_STICK    27
--#define OMAP_INT_1610_McBSP2RX_OF  31
--#define OMAP_INT_1610_STI          32
--#define OMAP_INT_1610_STI_WAKEUP   33
--#define OMAP_INT_1610_GPTIMER3     34
--#define OMAP_INT_1610_GPTIMER4     35
--#define OMAP_INT_1610_GPTIMER5     36
--#define OMAP_INT_1610_GPTIMER6     37
--#define OMAP_INT_1610_GPTIMER7     38
--#define OMAP_INT_1610_GPTIMER8     39
--#define OMAP_INT_1610_GPIO_BANK2   40
--#define OMAP_INT_1610_GPIO_BANK3   41
--#define OMAP_INT_1610_MMC2         42
--#define OMAP_INT_1610_CF           43
--#define OMAP_INT_1610_WAKE_UP_REQ  46
--#define OMAP_INT_1610_GPIO_BANK4   48
--#define OMAP_INT_1610_SPI          49
--#define OMAP_INT_1610_DMA_CH6      53
--#define OMAP_INT_1610_DMA_CH7      54
--#define OMAP_INT_1610_DMA_CH8      55
--#define OMAP_INT_1610_DMA_CH9      56
--#define OMAP_INT_1610_DMA_CH10     57
--#define OMAP_INT_1610_DMA_CH11     58
--#define OMAP_INT_1610_DMA_CH12     59
--#define OMAP_INT_1610_DMA_CH13     60
--#define OMAP_INT_1610_DMA_CH14     61
--#define OMAP_INT_1610_DMA_CH15     62
--#define OMAP_INT_1610_NAND         63
--
--/*
-- * OMAP-730 specific IRQ numbers for level 2 interrupt handler
-- */
--#define OMAP_INT_730_HW_ERRORS         0
--#define OMAP_INT_730_NFIQ_PWR_FAIL     1
--#define OMAP_INT_730_CFCD              2
--#define OMAP_INT_730_CFIREQ            3
--#define OMAP_INT_730_I2C               4
--#define OMAP_INT_730_PCC               5
--#define OMAP_INT_730_MPU_EXT_NIRQ      6
--#define OMAP_INT_730_SPI_100K_1        7
--#define OMAP_INT_730_SYREN_SPI         8
--#define OMAP_INT_730_VLYNQ             9
--#define OMAP_INT_730_GPIO_BANK4        10
--#define OMAP_INT_730_McBSP1TX          11
--#define OMAP_INT_730_McBSP1RX          12
--#define OMAP_INT_730_McBSP1RX_OF       13
--#define OMAP_INT_730_UART_MODEM_IRDA_2 14
--#define OMAP_INT_730_UART_MODEM_1      15
--#define OMAP_INT_730_MCSI              16
--#define OMAP_INT_730_uWireTX           17
--#define OMAP_INT_730_uWireRX           18
--#define OMAP_INT_730_SMC_CD            19
--#define OMAP_INT_730_SMC_IREQ          20
--#define OMAP_INT_730_HDQ_1WIRE         21
--#define OMAP_INT_730_TIMER32K          22
--#define OMAP_INT_730_MMC_SDIO          23
--#define OMAP_INT_730_UPLD              24
--#define OMAP_INT_730_USB_HHC_1         27
--#define OMAP_INT_730_USB_HHC_2         28
--#define OMAP_INT_730_USB_GENI          29
--#define OMAP_INT_730_USB_OTG           30
--#define OMAP_INT_730_CAMERA_IF         31
--#define OMAP_INT_730_RNG               32
--#define OMAP_INT_730_DUAL_MODE_TIMER   33
--#define OMAP_INT_730_DBB_RF_EN         34
--#define OMAP_INT_730_MPUIO_KEYPAD      35
--#define OMAP_INT_730_SHA1_MD5          36
--#define OMAP_INT_730_SPI_100K_2        37
--#define OMAP_INT_730_RNG_IDLE          38
--#define OMAP_INT_730_MPUIO             39
--#define OMAP_INT_730_LLPC_LCD_CTRL_OFF 40
--#define OMAP_INT_730_LLPC_OE_FALLING   41
--#define OMAP_INT_730_LLPC_OE_RISING    42
--#define OMAP_INT_730_LLPC_VSYNC        43
--#define OMAP_INT_730_WAKE_UP_REQ       46
--#define OMAP_INT_730_DMA_CH6           53
--#define OMAP_INT_730_DMA_CH7           54
--#define OMAP_INT_730_DMA_CH8           55
--#define OMAP_INT_730_DMA_CH9           56
--#define OMAP_INT_730_DMA_CH10          57
--#define OMAP_INT_730_DMA_CH11          58
--#define OMAP_INT_730_DMA_CH12          59
--#define OMAP_INT_730_DMA_CH13          60
--#define OMAP_INT_730_DMA_CH14          61
--#define OMAP_INT_730_DMA_CH15          62
--#define OMAP_INT_730_NAND              63
--
- /* omap_dma.c */
- enum omap_dma_model {
-     omap_dma_3_0,
-@@ -437,9 +282,6 @@ struct omap_dma_lcd_channel_s {
- #define OMAP_DMA_CAMERA_IF_RX      20
- #define OMAP_DMA_MMC_TX            21
- #define OMAP_DMA_MMC_RX            22
--#define OMAP_DMA_NAND              23  /* Not in OMAP310 */
--#define OMAP_DMA_IRQ_LCD_LINE      24  /* Not in OMAP310 */
--#define OMAP_DMA_MEMORY_STICK      25  /* Not in OMAP310 */
- #define OMAP_DMA_USB_W2FC_RX0      26
- #define OMAP_DMA_USB_W2FC_RX1      27
- #define OMAP_DMA_USB_W2FC_RX2      28
-@@ -447,33 +289,6 @@ struct omap_dma_lcd_channel_s {
- #define OMAP_DMA_USB_W2FC_TX1      30
- #define OMAP_DMA_USB_W2FC_TX2      31
+     case 0xb00 ... 0xbfe:
+         break;
+@@ -1265,9 +1155,8 @@ static void omap_dma_write(void *opaque, hwaddr addr,
  
--/* These are only for 1610 */
--#define OMAP_DMA_CRYPTO_DES_IN         32
--#define OMAP_DMA_SPI_TX                33
--#define OMAP_DMA_SPI_RX                34
--#define OMAP_DMA_CRYPTO_HASH           35
--#define OMAP_DMA_CCP_ATTN              36
--#define OMAP_DMA_CCP_FIFO_NOT_EMPTY    37
--#define OMAP_DMA_CMT_APE_TX_CHAN_0     38
--#define OMAP_DMA_CMT_APE_RV_CHAN_0     39
--#define OMAP_DMA_CMT_APE_TX_CHAN_1     40
--#define OMAP_DMA_CMT_APE_RV_CHAN_1     41
--#define OMAP_DMA_CMT_APE_TX_CHAN_2     42
--#define OMAP_DMA_CMT_APE_RV_CHAN_2     43
--#define OMAP_DMA_CMT_APE_TX_CHAN_3     44
--#define OMAP_DMA_CMT_APE_RV_CHAN_3     45
--#define OMAP_DMA_CMT_APE_TX_CHAN_4     46
--#define OMAP_DMA_CMT_APE_RV_CHAN_4     47
--#define OMAP_DMA_CMT_APE_TX_CHAN_5     48
--#define OMAP_DMA_CMT_APE_RV_CHAN_5     49
--#define OMAP_DMA_CMT_APE_TX_CHAN_6     50
--#define OMAP_DMA_CMT_APE_RV_CHAN_6     51
--#define OMAP_DMA_CMT_APE_TX_CHAN_7     52
--#define OMAP_DMA_CMT_APE_RV_CHAN_7     53
--#define OMAP_DMA_MMC2_TX               54
--#define OMAP_DMA_MMC2_RX               55
--#define OMAP_DMA_CRYPTO_DES_OUT        56
--
- struct omap_uart_s;
- struct omap_uart_s *omap_uart_init(hwaddr base,
-                 qemu_irq irq, omap_clk fclk, omap_clk iclk,
+     case 0x404 ... 0x4fe:
+         break;
+-    case 0x400:
+-        if (omap_dma_sys_write(s, addr, value))
+-            break;
++    case 0x400: /* SYS_DMA_GCR */
++        s->gcr = value;
+         return;
+ 
+     case 0xb00 ... 0xbfe:
 -- 
 2.43.0
 
