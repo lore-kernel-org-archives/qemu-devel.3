@@ -4,92 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E064ECD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 13:51:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDCEACD4F24
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 13:51:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMnVk-0004LM-Fb; Tue, 12 May 2026 09:51:02 -0400
+	id 1wMnVm-0004Lx-0z; Tue, 12 May 2026 09:51:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liuhongchao006@gmail.com>)
- id 1wMdJh-0001Iz-0J
- for qemu-devel@nongnu.org; Mon, 11 May 2026 22:57:54 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ (Exim 4.90_1) (envelope-from <fatihsenerr@gmail.com>)
+ id 1wMi4r-0005sQ-RA
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 04:02:53 -0400
+Received: from mail-oo1-xc2d.google.com ([2607:f8b0:4864:20::c2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <liuhongchao006@gmail.com>)
- id 1wMdJe-0002nq-GJ
- for qemu-devel@nongnu.org; Mon, 11 May 2026 22:57:52 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2bc85eda6b6so11588325ad.1
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 19:57:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <fatihsenerr@gmail.com>)
+ id 1wMi4p-0006Y1-Bp
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 04:02:53 -0400
+Received: by mail-oo1-xc2d.google.com with SMTP id
+ 006d021491bc7-691de293326so3113103eaf.3
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 01:02:49 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778572968; cv=none;
+ d=google.com; s=arc-20240605;
+ b=LH2b9tSjlEL5WYROKvoNTzS1u8GtBSxxRJs42SJHpQu4hBJBStXoyT2DeB7xe2S7Tf
+ XRiAD7WzNN1WoEnR1P2SdR2UWqjVDzSA/Wlup4ih6XDzAWUQLCtwdS+qhZQAib7wGWce
+ IpHiRJSMBsm4R040RpxAd/gvae8Etbnc1nMVDUsPcP5ZPl2q7/Jpdeuk4HSLEFYQ6A8X
+ gwRmWBdoVYiKIVT4G/UY8GRklOgCSP6Onmj2y+JMnz1yI8Yhrtz9WeHHOapKn7HIcy8b
+ ZymRq5c9QtHFpY+qPtfeXDk2YofP6r3sBidp4/xms3nZBN+yTsDJdEB15I82FRH7ljim
+ dpdA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=eUtbQVc3kzc972liDjaFTI7YjYlU6i874GWY/X4ctw4=;
+ fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
+ b=eIIzOEKv2cBiI7VNqoGDglUqSi1wx3CXxYV0NmHkwMvAumsaQDA50h91l99SK3LTcc
+ nV9SjOEJmVpDwmBbWyRVE5HqyrsKsLf8opdDrcxN1xMr8CSD0KLar3iRRessxPRuMaaA
+ 7tOkw+rzwdj1rLNMGGjq8A1CCesJHcfm4cxSq1hKcddWExJkEnXYaF4p7dZAXnmRR38u
+ 7cyIHb6A0stWgrUu138geWWwagoePXpSk2wJSjDuQ648D6tX0O7S9+5w5oiFqf6cyXQw
+ wLlIeS/iK9LS2oh1h2c+PMKGlPP0pmFzpuFj0JEr1BsyDEyRDgxSXofUhMJjQ/5U44lN
+ puaw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778554668; x=1779159468; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1ehxRJJAIOpui0vhKNEMat8JaWyk8jgamyn+T8c4WrI=;
- b=h20afirnpJNUX7+D+eM0pG5oFD4/SIXMZuHAWT/V1iEb6yu4ksLNTyMnbzczbfB0ed
- 3WcdgmEgcpa73RKNNukdUHx4IwpxhO1qmT5CuTTqXpiQZE6A9dKuJQyFgmXwt7gezJPV
- YhUmXcQmItO5g2TRpkvClFNhMun5xFNiQHjnkteaBkgrhh/5baaAfp1HqmG+/3nrN+j2
- so8VismIKvUicSmIx1A3+zp9Zn6+2Mu+8bB7ORy6UAamDuRARsfWkTEI4CoPhuivaCQt
- lbHawfniVQWGQzb7/ugVRBFlspmMiP0aziiQ0GaAUqnxHycgtGeuZlt9Prsr56BbHVU+
- rfYw==
+ d=gmail.com; s=20251104; t=1778572968; x=1779177768; darn=nongnu.org;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=eUtbQVc3kzc972liDjaFTI7YjYlU6i874GWY/X4ctw4=;
+ b=V4gZUu6dZDTZBjeby7AdJxanxA52/o4knQLq15HEOvve8D1FjZv4xE/LZGofLNrhuY
+ AL/azNaiOX2iI5zYB516VaY12VOVP/9wZduhKnBKCHtkjMJhogKo3smG3ry70A+FilAM
+ fUDlD+MscmSSEm7uI4Fyh862Lti1aASX0+3vm8in/cN2LFWKSuT26hthYACYDXNylKr5
+ HFRh2ghIj0oVXa6jxOmGHKkvobIC/uy09A7pnClLlc/Hyb+MnjfobMJu2MvKj6WNyZ7/
+ XQlFmVxIMP7QI5KA1Jve6hQK0qG/rRfEDD1PpI9M8inttix+YafiUa+FErXMYNa4HRD2
+ xqEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778554668; x=1779159468;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=1ehxRJJAIOpui0vhKNEMat8JaWyk8jgamyn+T8c4WrI=;
- b=kBp1RG4kda5ZoITCfNOqBds0EhcPyF60ARBGI64T1zcEnHgZKB43e8aZQ8oui6t2EB
- rM6oUpu3x3gZzfakCNwtgbkk3fK3ILm2bnqznZuUcuCq3Ul8Oqxha/ItaKqnPvPE/GJn
- x01DDaFuy1CDCYGHBp+DHwF8AG+qMZC94jw3orunoq6C2ty1//XCrrj3QGhp8DMwFxDb
- 5XXfAYctTkoYSOyG+hC+x1PHT6nG/F5hFak48sBpGZusksnD574G1QHFSLbu4LQeLKrR
- Eo5SpZuNPWhz+YtNNOzoQrFkud4R5ZQarT3QOgKWMPuPgHUCVyeJTIBWb9nVC8sbpVgM
- YULw==
-X-Gm-Message-State: AOJu0YzGKps1Ri6TrL9+O+ssqwsCy479Afot6UCDlqbvaxoy/TV9iGr0
- PekoxaRdUifgWsX6Yg6pWOCURNLSSN6AHTwmDs7tZmkhUPxDkvMaiH5ap4tVgQ==
-X-Gm-Gg: Acq92OHl/unySvDKBDrrf8eRDI4FFg+AgCI2AhF/ju72+q1Ky6IDtSGOshsVTEoEFPV
- 1JtkLAMLTh7qtyjmfehiS8zIWRrzERH/qp4APajznWm4QwVGPw0za4DYvw5z88tFH1q75ZEmu1R
- Cqu6kG99EmLw5RAbqB3rycmyDYiADu1rk9MmcMD7TqspVX/qsCBi/E+0J5JBIBLtJzNO9JDT5rL
- XdamZWewmP/0k7usFekXLUP1qCpAQc2PrFAT09kCw41vM1Dg4rbQB0TXLgTpZl9BMoZu30XVj4r
- FIiYveyaUq/wsew9q82eVAL8pJjp1wt/PQ5azfm6S891z0ywlW7DisKjeq+O7he/pe2r+zGW4jx
- g6qbprs/nGEWB3GWMayx4idA2wiGQu5yi7JOTfCxWOocp/CKvDESVbX+OO7umY3Yq/cigaJwC/Y
- Y7GkDHsZeVrcHxkhgvhbL2VPzriqZJuILLHe2aQjFQNT1R
-X-Received: by 2002:a17:902:bf49:b0:2b0:ac1e:9737 with SMTP id
- d9443c01a7336-2baf0d23ef6mr130848945ad.12.1778554667922; 
- Mon, 11 May 2026 19:57:47 -0700 (PDT)
-Received: from lhc-Computer.mioffice.cn
- ([2408:8607:1b00:c:f202:a9a3:a60a:7ccd])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2baf1eac3afsm126905855ad.71.2026.05.11.19.57.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 May 2026 19:57:47 -0700 (PDT)
-From: Hongchao Liu <liuhongchao006@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com,
-	Hongchao Liu <liuhongchao@xiaomi.com>
-Subject: [RFC PATCH v2 1/1] ui/sdl2: replace SDL relative mouse mode with
- manual warp-to-center
-Date: Tue, 12 May 2026 10:57:26 +0800
-Message-Id: <20260512025726.1842622-2-liuhongchao006@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <3d86e8cfc12040eca14364739b0a35db@xiaomi.com>
-References: <3d86e8cfc12040eca14364739b0a35db@xiaomi.com>
+ d=1e100.net; s=20251104; t=1778572968; x=1779177768;
+ h=to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=eUtbQVc3kzc972liDjaFTI7YjYlU6i874GWY/X4ctw4=;
+ b=l42ZahMBnsyW1uF+10mHupu41IgGTiUn2kQNsuX64OEqAcWQgbqMYH3noHrQ2zKPwW
+ c8OTZ6BnjISoXBoztmXlAOPXpo/2iXsB180x5gA1NfOJRe74VOzYe44cW1V9u8D2W6//
+ rSfp0xdCtiRhOSbLXxJ65d1R/TA7pQsSAGhiYiu8jxWbBZxMDEbyYG2ivugvuDqpQ442
+ AV3x+/l4rocHAwhZgPd5LldgSNDnbgY0z4GRr0bXbomEInWXccpTXkQU0Z0LHtjZrlbw
+ H3ga8EGEEMasn5iCt6oibvXs4J3Pj8zO1u5Y5zrg9Gi2tMXsmxgSUXSymq7JcSUiyaFK
+ 96Jw==
+X-Gm-Message-State: AOJu0YzqMpQ1U1mDeo15BUfdvWBWD7EpqgFhYAb1G8ViZ7BH8H6kUJmr
+ F8soCsncg0I+zNOeeCMwRblvNlcbYUlZRlAyHHKmWIxG9DibILZ+8N6ekhvqmyIp+JxYk1xQEpx
+ me3JdexNDwwBDMQRJ8mbufBauJ7A3KOMZMHaKv1s=
+X-Gm-Gg: Acq92OFHdh+4SXRT4kZ5ykXETHrxeGgIbUpO1OHi1oGZjqOAou/QmMooZA6potiEWdC
+ wtH9cM8nXlkev7YvqCtXXoR/5bdezSVKHc/go+ZpHIy7ogmdRaA2U/FWtc461LSlL0OFycJDznF
+ LtVLYMrN5zneyw5utjKfQBGYOaGZ1sqqYUbx23Lb8/X42gc7vklbZD/nqDT28OG0o/jsY3Zk7uz
+ NJAhVahoW7+M30Y6Qt79soWe6Q1jLm8lkUM/wWBbp/Ygv8t2P7JKiUwdwhHa8Dq1VaO/dp1K4JD
+ HUBV+GErTUAmWFTliqOVXq5+j8L5f5aAtlx1ruibJNqejgT7PIiv7aS/2qcRbx/g/Qo=
+X-Received: by 2002:a05:6820:220b:b0:69b:544f:b2df with SMTP id
+ 006d021491bc7-69b544fb409mr4548717eaf.17.1778572968157; Tue, 12 May 2026
+ 01:02:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=liuhongchao006@gmail.com; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+From: =?UTF-8?B?ZmF0aWggxZ9lbmVy?= <fatihsenerr@gmail.com>
+Date: Tue, 12 May 2026 11:02:37 +0300
+X-Gm-Features: AVHnY4JGSDM72NfWv3J7JpTpAM3MmG3SJyarTnro_nA53mlCo2ZL8FwBGc_b5oo
+Message-ID: <CAA1wZPc_RPc5NpN6Bg+4fW+PtbFSmR5uXGg4-bcvK4khOANUWQ@mail.gmail.com>
+Subject: [PATCH] target/i386/kvm: Fix Live Migration failure on Intel Ice Lake
+ after OS upgrade (Ubuntu 20.04 to 22.04)
+To: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000f9671206519a49f7"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2d;
+ envelope-from=fatihsenerr@gmail.com; helo=mail-oo1-xc2d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 12 May 2026 09:50:48 -0400
+X-Mailman-Approved-At: Tue, 12 May 2026 09:50:49 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,155 +110,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hongchao Liu <liuhongchao@xiaomi.com>
+--000000000000f9671206519a49f7
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-SDL2's SDL_SetRelativeMouseMode(SDL_TRUE) is the standard way to handle
-relative pointing devices in grab mode: SDL itself warps the host pointer
-back to the window center every frame, so xrel/yrel values in
-SDL_MOUSEMOTION events always remain meaningful and the guest cursor
-never gets stuck at an edge.
+Dear QEMU Developers,
 
-However, under X11 with XInput2 (the default on most Linux desktops) this
-relative mode switches SDL to consume only XI_RawMotion events.
-Pointer-injection servers such as VNC (via XTestFakeMotionEvent), nested
-X servers and some remote desktop setups never produce XI_RawMotion, so
-mouse input breaks completely under those environments as soon as the
-guest enters relative-input grab mode. SDL does not expose a way to
-detect this at runtime (both local X11 and a VNC-forwarded X session
-report "x11" from SDL_GetCurrentVideoDriver), and upstream SDL issues
-tracking this (libsdl-org/SDL#1116, #4206) have stayed open for years.
+We have identified a critical live migration failure on Intel Ice Lake
+platforms when using *CPU host-passthrough* in OpenStack environments. The
+issue specifically surfaced after upgrading compute nodes from *Ubuntu
+20.04 to 22.04*.
 
-Stop enabling SDL_SetRelativeMouseMode on the grab paths and replace
-the automatic warping it provides with the approach already used by
-the GTK backend (ui/gtk.c gd_motion_event): when the host pointer
-reaches the window edge, warp it back to the window center explicitly,
-letting subsequent motion events again produce non-zero xrel/yrel.
+*Technical Analysis:* The migration fails with KVM_SET_MSRS error while
+restoring MSR_IA32_PERF_GLOBAL_CTRL (0x38f). On Ice Lake CPUs, this
+register reports 0xf000000ff due to the 4th fixed-function counter (Perf
+Mon v5).
 
-Specifically:
+We observed that while the source host (20.04) allows this value, the
+target host (22.04 with a newer Kernel/KVM) enforces a stricter mask of
+0x7000000ff. Even with identical hardware, the migration is rejected
+because the target KVM treats the 4th bit as reserved/invalid.
 
- - sdl_hide_cursor() is no longer called from sdl_grab_start() or
-   sdl_mouse_warp(); both paths open-code the cursor hide so we never
-   enter SDL_SetRelativeMouseMode(SDL_TRUE). sdl_hide_cursor() is
-   retained as the counterpart of sdl_show_cursor() and marked
-   G_GNUC_UNUSED.
+*Proposed Fix:* We propose intercepting the MSR write in
+target/i386/kvm/kvm.c to mask the value back to 0x7000000ff if 0xf000000ff
+is detected. This ensures backward compatibility across different kernel
+versions and stabilizes migration on Ice Lake hardware.
 
- - In handle_mousemotion(), when we are in a grab for a relative
-   pointing device, detect edge contact using the window coordinates
-   (ev->motion.x/y vs scr_w/h) and SDL_WarpMouseInWindow() the pointer
-   to the window center. Window coordinates are used regardless of
-   the window-to-surface scaling applied to the sent event, because
-   we need to detect the host pointer hitting the SDL window edge.
+/* target/i386/kvm/kvm.c */
+for (i =3D 0; i < cpu->kvm_msr_buf->nmsrs; i++) {
+    if (cpu->kvm_msr_buf->entries[i].index =3D=3D 0x38f &&
+        cpu->kvm_msr_buf->entries[i].data =3D=3D 0xf000000ffULL) {
+        cpu->kvm_msr_buf->entries[i].data =3D 0x7000000ffULL;
+    }
+}
 
- - Absolute pointing devices and absolute_enabled paths are untouched.
+We have verified that this fix stabilizes our production environment and
+allows successful live migration between hosts with different kernel
+versions on Ice Lake hardware. We are looking forward to your technical
+feedback on this implementation. If there is a more architectural way to
+handle these MSR bitmasks upstream, we would be happy to discuss it. Best
+regards,
+--=20
+=E2=97=8F Fatih =C5=9Eener - fatihsenerr@gmail.com
 
-Tested on Linux/X11 with a relative virtio-mouse: the guest cursor can
-be pushed in every direction after repeatedly entering and exiting
-grab, and quick drags to the window edge remain responsive. Behavior
-for absolute pointing devices (virtio-tablet, qemu-keymap kbd) is
-unchanged.
+--000000000000f9671206519a49f7
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Hongchao Liu <liuhongchao@xiaomi.com>
----
- ui/sdl2.c | 64 ++++++++++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 61 insertions(+), 3 deletions(-)
+<div dir=3D"ltr"><div><p>Dear QEMU Developers,</p><p>We have identified a c=
+ritical live migration failure on Intel Ice Lake platforms when using <b>CP=
+U host-passthrough</b> in OpenStack environments. The issue specifically su=
+rfaced after upgrading compute nodes from <b>Ubuntu 20.04 to 22.04</b>.</p>=
+<p><b>Technical Analysis:</b>
+The migration fails with <code>KVM_SET_MSRS</code> error while restoring <c=
+ode>MSR_IA32_PERF_GLOBAL_CTRL</code> (0x38f). On Ice Lake CPUs, this regist=
+er reports <code>0xf000000ff</code> due to the 4th fixed-function counter (=
+Perf Mon v5).</p><p>We observed that while the source host (20.04) allows t=
+his value, the target host (22.04 with a newer Kernel/KVM) enforces a stric=
+ter mask of <code>0x7000000ff</code>. Even with identical hardware, the mig=
+ration is rejected because the target KVM treats the 4th bit as reserved/in=
+valid.</p><p><b>Proposed Fix:</b>
+We propose intercepting the MSR write in <code>target/i386/kvm/kvm.c</code>=
+ to mask the value back to <code>0x7000000ff</code> if <code>0xf000000ff</c=
+ode> is detected. This ensures backward compatibility across different kern=
+el versions and stabilizes migration on Ice Lake hardware.<br><br>/* target=
+/i386/kvm/kvm.c */<br>for (i =3D 0; i &lt; cpu-&gt;kvm_msr_buf-&gt;nmsrs; i=
+++) {<br>=C2=A0 =C2=A0 if (cpu-&gt;kvm_msr_buf-&gt;entries[i].index =3D=3D =
+0x38f &amp;&amp;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu-&gt;kvm_msr_buf-&gt;ent=
+ries[i].data =3D=3D 0xf000000ffULL) {<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu-&g=
+t;kvm_msr_buf-&gt;entries[i].data =3D 0x7000000ffULL;<br>=C2=A0 =C2=A0 }<br=
+>}<br><br>We have verified that this fix stabilizes our production environm=
+ent and allows successful live migration between hosts with different kerne=
+l versions on Ice Lake hardware.=20
 
-diff --git a/ui/sdl2.c b/ui/sdl2.c
-index 5dd612d9a6..faf610281c 100644
---- a/ui/sdl2.c
-+++ b/ui/sdl2.c
-@@ -212,7 +212,19 @@ static void sdl_update_caption(struct sdl2_console *scon)
-     }
- }
- 
--static void sdl_hide_cursor(struct sdl2_console *scon)
-+/*
-+ * sdl_hide_cursor - hide cursor and optionally enable SDL relative mouse mode.
-+ *
-+ * NOTE: This function is intentionally NOT called from sdl_grab_start() or
-+ * sdl_mouse_warp() because SDL_SetRelativeMouseMode(SDL_TRUE) switches SDL2
-+ * on XI2-based X servers to consume only XI_RawMotion events. Pointer-
-+ * injection servers (VNC via XTestFakeMotionEvent, nested X, some remote
-+ * desktop setups) never produce XI_RawMotion, so mouse input would break
-+ * under those servers. Those call sites set the cursor state inline
-+ * instead. This function is retained as the counterpart of
-+ * sdl_show_cursor() and for potential future use.
-+ */
-+static void G_GNUC_UNUSED sdl_hide_cursor(struct sdl2_console *scon)
- {
-     if (scon->opts->has_show_cursor && scon->opts->show_cursor) {
-         return;
-@@ -267,7 +279,16 @@ static void sdl_grab_start(struct sdl2_console *scon)
-             SDL_WarpMouseInWindow(scon->real_window, guest_x, guest_y);
-         }
-     } else {
--        sdl_hide_cursor(scon);
-+        /*
-+         * Directly set cursor state, avoid calling sdl_hide_cursor
-+         * which would enable SDL_SetRelativeMouseMode(SDL_TRUE) and
-+         * break mouse input under XI2-based pointer-injection X servers
-+         * (see the note on sdl_hide_cursor).
-+         */
-+        if (!(scon->opts->has_show_cursor && scon->opts->show_cursor)) {
-+            SDL_ShowCursor(SDL_DISABLE);
-+            SDL_SetCursor(sdl_cursor_hidden);
-+        }
-     }
-     SDL_SetWindowGrab(scon->real_window, SDL_TRUE);
-     gui_grab = 1;
-@@ -526,6 +547,34 @@ static void handle_mousemotion(SDL_Event *ev)
-     dy = (int64_t)ev->motion.yrel * surf_h / scr_h;
-     if (gui_grab || qemu_input_is_absolute(scon->dcl.con) || absolute_enabled) {
-         sdl_send_mouse_event(scon, dx, dy, x, y, ev->motion.state);
-+
-+        /*
-+         * For relative pointing devices in grab mode we do not enable
-+         * SDL_SetRelativeMouseMode, because under XI2-based X servers
-+         * that switches SDL to consume only XI_RawMotion events, which
-+         * some pointer-injection servers (VNC via XTestFakeMotionEvent,
-+         * nested X, ...) never produce.
-+         *
-+         * Without relative mode, SDL_SetWindowGrab clamps the host
-+         * pointer at the window edge without wrapping, so xrel/yrel
-+         * become zero once the pointer hits a side and the guest
-+         * cursor gets stuck in that direction.
-+         *
-+         * Mirror the approach used by the GTK backend (ui/gtk.c):
-+         * when the pointer reaches any window edge, warp it back to
-+         * the window center so subsequent motion can generate deltas
-+         * in every direction again. Edge detection uses window
-+         * coordinates (ev->motion.x/y, scr_w/h) regardless of the
-+         * window-to-surface scaling applied above.
-+         */
-+        if (!qemu_input_is_absolute(scon->dcl.con) && !absolute_enabled
-+            && gui_grab) {
-+            if (ev->motion.x <= 0 || ev->motion.x >= scr_w - 1 ||
-+                ev->motion.y <= 0 || ev->motion.y >= scr_h - 1) {
-+                SDL_WarpMouseInWindow(scon->real_window,
-+                                      scr_w / 2, scr_h / 2);
-+            }
-+        }
-     }
- }
- 
-@@ -748,7 +797,16 @@ static void sdl_mouse_warp(DisplayChangeListener *dcl,
-             }
-         }
-     } else if (gui_grab) {
--        sdl_hide_cursor(scon);
-+        /*
-+         * Directly set cursor state, avoid calling sdl_hide_cursor
-+         * which would enable SDL_SetRelativeMouseMode(SDL_TRUE) and
-+         * break mouse input under XI2-based pointer-injection X servers
-+         * (see the note on sdl_hide_cursor).
-+         */
-+        if (!(scon->opts->has_show_cursor && scon->opts->show_cursor)) {
-+            SDL_ShowCursor(SDL_DISABLE);
-+            SDL_SetCursor(sdl_cursor_hidden);
-+        }
-     }
-     guest_cursor = on;
-     guest_x = x, guest_y = y;
--- 
-2.34.1
+We are looking forward to your technical feedback on this implementation. I=
+f there is a more architectural way to handle these MSR bitmasks upstream, =
+we would be happy to discuss it.
 
+Best regards,</p></div><span class=3D"gmail_signature_prefix">-- </span><br=
+><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signatu=
+re">=E2=97=8F Fatih =C5=9Eener - <a href=3D"mailto:fatihsenerr@gmail.com" t=
+arget=3D"_blank">fatihsenerr@gmail.com</a><br></div></div>
+
+--000000000000f9671206519a49f7--
 
