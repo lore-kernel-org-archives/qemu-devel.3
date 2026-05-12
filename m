@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFBABCD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:38:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D210CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:39:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuj9-0005N0-G4; Tue, 12 May 2026 17:33:19 -0400
+	id 1wMuPn-0007de-DV; Tue, 12 May 2026 17:13:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuih-0004Z4-Ds; Tue, 12 May 2026 17:32:51 -0400
+ id 1wMuPf-0006kn-Df; Tue, 12 May 2026 17:13:11 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuib-0002dY-Ed; Tue, 12 May 2026 17:32:50 -0400
+ id 1wMuPd-0004xC-K1; Tue, 12 May 2026 17:13:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619499; bh=twiQ6dve30+HtVBJ4b/QtkQ0XVNEemfxY0ciTJYJ+d4=;
+ t=1778619304; bh=7jJ2/RUb1fCDP3vT7vKEJ0UUdHp/sz3gvcscPlJxDN4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ror0EQ1AvBiOfWnZNSCztBRny35Zlmc6TbWtvrQtTwHX9eTP92H09oLWiXCCpxdy6
- wzzAja1UZswn0rXzH1s2UT1bZ2qoTpxVu0AEO6TZXSEkcWfmdqRTmCCOc/jj1urFiF
- 0ziUeHhf5037Mhac1nou1pvMqBjoAzUEVXftKinWnDNHfNaowdE+LtYaueZBYYk3KA
- Vg5ayah/UO+Rvhpj2J+cZdzq5XeERAY0V4NKzKvxy/vrxNsos/FYFk6HbZUGejv7lG
- BCJFE2QDmpjGnnZr3JePFajSJRLcWB+mt8qRL0GubzUPn6V0KYJxZgjf1RWBRr7uyG
- r0lCoYyBStdQw==
+ b=PpKlmDNOqqHcyQ9D16UbuGDVylbQz3wOWQEkmwXFCt0FfqGq7fKHlsa9KAXARJ5F9
+ /Pmcla9kkyu5cO2TdrLhrCr+4jhG2aCv6BU/b08Z+fY7pWyzS1X267Iw9pQiaJowd8
+ AlKPt9Rqe7r9/Yvr+l7K1iX2yqyDzASvVIUZWrxuFbzwibo802L2LAUkqaA3FBiW7B
+ YjGcXC2m6ML7tE1Z4tjYcGDsiql+I3Ad0ImfkUmNvymsY1IX0veyfM+J8zowhF+v6t
+ 8w16Su9silm2dzO/tSsfU3FCZDxIP3EwAJPJUlRktqfX3gp0lUrxtCpqsfBqda5ckw
+ znxpmpRFBo/oA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F21CA1AA3F7;
- Tue, 12 May 2026 23:58:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AC6221AA387;
+ Tue, 12 May 2026 23:55:04 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0983D3ABD4F;
- Tue, 12 May 2026 23:58:24 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B9B5E3ABCF6;
+ Tue, 12 May 2026 23:55:08 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Vivien LEGER <vivien.leger@gmail.com>,
- Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 44/58] hw/ppc/e500: fix bus-frequency property
- hardcoded to zero in CPU FDT node
-Date: Tue, 12 May 2026 23:58:05 +0300
-Message-ID: <20260512205820.361821-44-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 073/117] target/i386/tcg: fix decoding of MOVBE and
+ CRC32 in 16-bit mode
+Date: Tue, 12 May 2026 23:54:15 +0300
+Message-ID: <20260512205503.361097-73-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
-References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,77 +70,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vivien LEGER <vivien.leger@gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-The bus-frequency property in the CPU FDT node was hardcoded to 0.
-This is incorrect - it should reflect the actual platform bus clock
-frequency, as firmware and RTOSes use it to derive peripheral clock
-rates.
+Table A-4 of the SDM shows
 
-Notably, the RTEMS QorIQ BSP uses bus-frequency to program the MPIC
-global timer interval. With bus-frequency=0, the timer interval
-overflows to ~85 seconds, preventing any clock interrupts from firing.
+                    F0                     F1
+--------------------------------------------------------
+     NP           MOVBE Gy,My           MOVBE My,Gy
+     66           MOVBE Gw,Mw           MOVBW Mw,Gw
+     F2           CRC32 Gd,Eb           CRC32 Gd,Ey
+  66+F2           CRC32 Gd,Eb           CRC32 Gd,Ew
 
-Fix by adding a bus_freq field to PPCE500MachineClass and using it in
-the FDT generator. Set bus_freq = PLATFORM_CLK_FREQ_HZ (400MHz) for
-existing machines, matching the existing clock_freq value.
+However, this is incorrect.  Both MOVBE and (for 0xF1) CRC32
+take Gv, Ev or Mv operands.  In 16-bit mode therefore the
+operand is of 16-bit size without prefix and 32-bit mode
+with 0x66 (the data size override).
 
-Signed-off-by: Vivien LEGER <vivien.leger@gmail.com>
-Reviewed-by: Bernhard Beschow <shentey@gmail.com>
-Message-ID: <20260411154535.1451361-1-vivien.leger@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 774e6f5c1533aba9e04f95cb8cfba64d8329fcb0)
+For example, with NASM you get:
+
+                                 bits 16
+   67 0F 38 F0 02                movbe ax, [edx]
+   66 67 0F 38 F0 02             movbe eax, [edx]
+
+   67 F2 0F 38 F1 02             crc32 ax, word [edx]
+   66 67 F2 0F 38 F1 02          crc32 eax, dword [edx]
+
+versus
+
+                                 bits 32
+   66 0F 38 F0 02                movbe ax, [edx]
+   0F 38 F0 02                   movbe eax, [edx]
+
+   66 F2 0F 38 F1 02             crc32 eax, word [edx]
+   F2 0F 38 F1 02                crc32 eax, dword [edx]
+
+The instruction is listed correctly in the APX documentation
+as "SCALABLE" (which means it has v-size operands).
+
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 76ad26dd172d27aae9f1e76d1165b497167c36c2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
-index d6ca2e8563..5be2f2095f 100644
---- a/hw/ppc/e500.c
-+++ b/hw/ppc/e500.c
-@@ -518,7 +518,7 @@ static int ppce500_load_device_tree(PPCE500MachineState *pms,
-                               env->icache_line_size);
-         qemu_fdt_setprop_cell(fdt, cpu_name, "d-cache-size", 0x8000);
-         qemu_fdt_setprop_cell(fdt, cpu_name, "i-cache-size", 0x8000);
--        qemu_fdt_setprop_cell(fdt, cpu_name, "bus-frequency", 0);
-+        qemu_fdt_setprop_cell(fdt, cpu_name, "bus-frequency", pmc->bus_freq);
-         if (cpu->cpu_index) {
-             qemu_fdt_setprop_string(fdt, cpu_name, "status", "disabled");
-             qemu_fdt_setprop_string(fdt, cpu_name, "enable-method",
-diff --git a/hw/ppc/e500.h b/hw/ppc/e500.h
-index 11f8ae5317..6d56c7b4cb 100644
---- a/hw/ppc/e500.h
-+++ b/hw/ppc/e500.h
-@@ -40,6 +40,7 @@ struct PPCE500MachineClass {
-     hwaddr pci_mmio_bus_base;
-     hwaddr spin_base;
-     uint32_t clock_freq;
-+    uint32_t bus_freq;
-     uint32_t tb_freq;
- };
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 0462429cf1..999362f213 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -751,19 +751,23 @@ static const X86OpEntry opcodes_0F38_00toEF[240] = {
  
-diff --git a/hw/ppc/e500plat.c b/hw/ppc/e500plat.c
-index ca5647284d..85cec810d9 100644
---- a/hw/ppc/e500plat.c
-+++ b/hw/ppc/e500plat.c
-@@ -94,6 +94,7 @@ static void e500plat_machine_class_init(ObjectClass *oc, const void *data)
-     pmc->pci_mmio_bus_base = 0xE0000000ULL;
-     pmc->spin_base = 0xFEF000000ULL;
-     pmc->clock_freq = PLATFORM_CLK_FREQ_HZ;
-+    pmc->bus_freq = PLATFORM_CLK_FREQ_HZ;
-     pmc->tb_freq = PLATFORM_CLK_FREQ_HZ;
- 
-     mc->desc = "generic paravirt e500 platform";
-diff --git a/hw/ppc/mpc8544ds.c b/hw/ppc/mpc8544ds.c
-index 582698559d..d022761cb6 100644
---- a/hw/ppc/mpc8544ds.c
-+++ b/hw/ppc/mpc8544ds.c
-@@ -56,6 +56,7 @@ static void mpc8544ds_machine_class_init(ObjectClass *oc, const void *data)
-     pmc->pci_pio_base = 0xE1000000ULL;
-     pmc->spin_base = 0xEF000000ULL;
-     pmc->clock_freq = PLATFORM_CLK_FREQ_HZ;
-+    pmc->bus_freq = PLATFORM_CLK_FREQ_HZ;
-     pmc->tb_freq = PLATFORM_CLK_FREQ_HZ;
- 
-     mc->desc = "mpc8544ds";
+ /* five rows for no prefix, 66, F3, F2, 66+F2  */
+ static const X86OpEntry opcodes_0F38_F0toFF[16][5] = {
++    /*
++     * MOVBE and CRC32 are incorrectly listed as always doing 32-bit operation
++     * without prefix and 16-bit operation with 0x66.
++     */
+     [0] = {
+-        X86_OP_ENTRYwr(MOVBE, G,y, M,y, cpuid(MOVBE)),
+-        X86_OP_ENTRYwr(MOVBE, G,w, M,w, cpuid(MOVBE)),
++        X86_OP_ENTRYwr(MOVBE, G,v, M,v, cpuid(MOVBE)),
++        X86_OP_ENTRYwr(MOVBE, G,v, M,v, cpuid(MOVBE)),
+         {},
+         X86_OP_ENTRY2(CRC32, G,d, E,b, cpuid(SSE42)),
+         X86_OP_ENTRY2(CRC32, G,d, E,b, cpuid(SSE42)),
+     },
+     [1] = {
+-        X86_OP_ENTRYwr(MOVBE, M,y, G,y, cpuid(MOVBE)),
+-        X86_OP_ENTRYwr(MOVBE, M,w, G,w, cpuid(MOVBE)),
++        X86_OP_ENTRYwr(MOVBE, M,v, G,v, cpuid(MOVBE)),
++        X86_OP_ENTRYwr(MOVBE, M,v, G,v, cpuid(MOVBE)),
+         {},
+-        X86_OP_ENTRY2(CRC32, G,d, E,y, cpuid(SSE42)),
+-        X86_OP_ENTRY2(CRC32, G,d, E,w, cpuid(SSE42)),
++        X86_OP_ENTRY2(CRC32, G,d, E,v, cpuid(SSE42)),
++        X86_OP_ENTRY2(CRC32, G,d, E,v, cpuid(SSE42)),
+     },
+     [2] = {
+         X86_OP_ENTRY3(ANDN, G,y, B,y, E,y, vex13 cpuid(BMI1)),
 -- 
 2.47.3
 
