@@ -4,47 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C647ECD4F3D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:13:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9895CD4F39
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:13:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuMA-0007Fd-8x; Tue, 12 May 2026 17:09:34 -0400
+	id 1wMuGu-0004g5-Ll; Tue, 12 May 2026 17:04:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuLn-0004HP-9p; Tue, 12 May 2026 17:09:11 -0400
+ id 1wMuEw-00009L-19; Tue, 12 May 2026 17:02:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuLl-0003Jg-Gh; Tue, 12 May 2026 17:09:11 -0400
+ id 1wMuEq-00073O-TV; Tue, 12 May 2026 17:02:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619301; bh=BKMSOWmf0KHPyVvGjY3UKLoevtS5Cggtbz/1YanthO0=;
+ t=1778619278; bh=IV1KOOsP62EAMhURr/iHTfOhWJ/M086I5KB7WEGlK5c=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Ja7PbFCfyezrZ8JRfvduamrhOa6/UK/2Q4cLKA8VmTVVByV4yiTjGNNdMdmmuWjjj
- qqmIhF6GuDyCQPNRDJkt5lkW9yC6P1WpoZoN+MQgH05Q6Hy/ioGIHPft58tktc6x5T
- HrzY2ldGggg1pVt0Q5ocpKUCa0AlFkaBB+HURKJlaG8c8y5kmj/VQUdlxosGlsZAwS
- BmHJDuCIbIbY3hO4uEnwbFkBFmtWdLjKW7phGwVQpAlIpgQQF5msI5I9YCBdmyr1rL
- qNL8/dr6K2X3niwUdnZbK5U4F/kqjrenvpEGDu4SMKvRGh5Z7XLF+megTGvd0oCVtK
- hjd4e+QosVqfQ==
+ b=LnIgyYzPHl/2KrQofrNAQqa2omYePzTJgRS85+raSS81R8WsIHV2+AQwPaEu5+sP1
+ 1SY1LyKWDCjvEA6rh2Nm5MGIldk1yHYCqODuLddVNb4wsxpQjDarInTBoVf85voXFF
+ WcN5p21euUPADDK+87567EJy/jELl4VJ6MOI8XmgrYs7SKunI1EWE1AARSZ5g4+rl+
+ l3uhhZKif8kezkBDqnhfedZfNBT1dcdl+XtOhgFNli3bADxG7GqIWMuGR+fSbYyVjC
+ 7dlVzYPONlNDzCO0KdMYh8HpWsgfPvT3OcSySsxNNsjdzWlsvD2j4oK/vi8k5K7M+4
+ wAu2dZZon/+Pw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E28E31AA35E;
- Tue, 12 May 2026 23:55:01 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3BECD1AA315;
+ Tue, 12 May 2026 23:54:38 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id EF1783ABCCE;
- Tue, 12 May 2026 23:55:05 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 479A73ABC86;
+ Tue, 12 May 2026 23:54:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Pankaj Raghav <p.raghav@samsung.com>,
- Klaus Jensen <k.jensen@samsung.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 033/117] hw/nvme: re-enable wzds bit in namespace
- dlfeat
-Date: Tue, 12 May 2026 23:53:35 +0300
-Message-ID: <20260512205503.361097-33-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 073/107] linux-user/arm/nwfpe: Use thread-local
+ storage for qemufpa
+Date: Tue, 12 May 2026 23:54:00 +0300
+Message-ID: <20260512205437.360850-73-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
-References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
+References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,48 +71,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pankaj Raghav <p.raghav@samsung.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-dlfeat was changed from 0x9 to 0x1 when PI support was added.
-It was removed because we can't rely on unmap and have to physically
-clear it to get the checksums right but that doesnt mean that we do not
-support the bit.
+Fix the thread safety of the emulation by not storing a
+pointer in global storage.
 
-The spec says that if wzds is enabled, then the controller supports
-deallocate (DEAC) on write zeroes. But DEAC bit in write zeroes command
-is only a hint, the controller might choose to physically write zeroes in
-those areas.
-
-As we are sending write zeroes command with BDRV_REQ_MAY_UNMAP to the
-underlying block device anyway (if the unmap operation is supported),
-change the dlfeat value back to 0x9.
-
-A new flag FALLOC_FL_WRITE_ZEROES has been introduced in linux for
-fallocate which will use the wzds bit in dlfeat to quickly zeroout extents
-using unmap operation whenever possible[1].
-
-[1] https://lore.kernel.org/linux-fsdevel/20250619111806.3546162-1-yi.zhang@huaweicloud.com/
-
-Fixes: 146f720c55 ("hw/block/nvme: end-to-end data protection")
-Suggested-by: Klaus Jensen <k.jensen@samsung.com>
-Signed-off-by: Pankaj Raghav <p.raghav@samsung.com>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-(cherry picked from commit 55720ba97d2164796215c983255f009993e24432)
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 784f1dde90df1ed57de0697adcd8ebfe7c342f58)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
-index 38f86a1726..b0106eaa5c 100644
---- a/hw/nvme/ns.c
-+++ b/hw/nvme/ns.c
-@@ -75,7 +75,7 @@ static int nvme_ns_init(NvmeNamespace *ns, Error **errp)
-     ns->csi = NVME_CSI_NVM;
-     ns->status = 0x0;
+diff --git a/linux-user/arm/nwfpe/fpa11.c b/linux-user/arm/nwfpe/fpa11.c
+index 44783934b2..15888463f7 100644
+--- a/linux-user/arm/nwfpe/fpa11.c
++++ b/linux-user/arm/nwfpe/fpa11.c
+@@ -29,7 +29,7 @@
+ //#include <asm/system.h>
  
--    ns->id_ns.dlfeat = 0x1;
-+    ns->id_ns.dlfeat = 0x9;
  
-     /* support DULBE and I/O optimization fields */
-     id_ns->nsfeat |= (NVME_ID_NS_NSFEAT_DAE | NVME_ID_NS_NSFEAT_OPTPERF_ALL);
+-FPA11* qemufpa = NULL;
++__thread FPA11* qemufpa = NULL;
+ 
+ /* Reset the FPA11 chip.  Called to initialize and reset the emulator. */
+ void resetFPA11(void)
+@@ -154,7 +154,6 @@ void SetRoundingPrecision(const unsigned int opcode)
+ }
+ 
+ /* Emulate the instruction in the opcode. */
+-/* ??? This is not thread safe.  */
+ unsigned int EmulateAll(unsigned int opcode, FPA11* qfpa)
+ {
+   unsigned int nRc = 0;
+diff --git a/linux-user/arm/nwfpe/fpa11.h b/linux-user/arm/nwfpe/fpa11.h
+index 20f9d2eb81..659d38ae3a 100644
+--- a/linux-user/arm/nwfpe/fpa11.h
++++ b/linux-user/arm/nwfpe/fpa11.h
+@@ -74,7 +74,7 @@ typedef struct tagFPA11 {
+     float_status fp_status;      /* QEMU float emulator status */
+ } FPA11;
+ 
+-extern FPA11* qemufpa;
++extern __thread FPA11* qemufpa;
+ 
+ void resetFPA11(void);
+ void SetRoundingMode(const unsigned int);
 -- 
 2.47.3
 
