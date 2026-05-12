@@ -4,52 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 253E6CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:34:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3C07CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:34:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuTd-0003mR-Lt; Tue, 12 May 2026 17:17:18 -0400
+	id 1wMuXE-0000uw-8B; Tue, 12 May 2026 17:21:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuSg-0001WR-G8; Tue, 12 May 2026 17:16:19 -0400
+ id 1wMuWv-0000XT-2N; Tue, 12 May 2026 17:20:42 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuSe-0006gq-Hx; Tue, 12 May 2026 17:16:18 -0400
+ id 1wMuWt-0000UN-61; Tue, 12 May 2026 17:20:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619306; bh=/18hG5HPoAxJTkndAlIldyOwxO4KKwlIeNPw3UW0GrU=;
+ t=1778619498; bh=EKDXPMM5eNFJy7bXcObWvwLGsgkjWoQWqnzi+izuIps=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Bb+UqGfhfmNGj8bUNoVobwuMwuupGLTHh61liotrwfUnFYocczbNhcKqjPTmQDUOL
- yGNQOlMW1FuGkYjvQ/9qbBoVugXfSGhttkK9s8SCBjjimIk4XS9GeNONnMVR53Q6Q2
- bi6Z66bs7qyxV+4i60bsvFi0DOvdfRudLPGtVYH9GaniR5rUpXKS1GocDG5CyqXl+i
- TuH2tt8YscdhieFt7ZJPzLwSHh1A3i2TSK1uaPVTchZDO2fIyI5P3TCeeeRDE2Dccu
- ibeSKLLIqL5CSUZZlRUhBKZNXme5u1kBXI82L0lzdig0+NL/eeMN5rE9WXKPBV8B/H
- +WvWMo9ecMLKg==
+ b=R/1Wr2iaJKW2FgpY4ehALlzno5759KWXzn7D7PmzzELhyeVPuAHLtmwQk4BcFkwAU
+ InHJDn2UfFgJZM/OjdfVfkgm8RHSgIl+KaIVfNSRtDlvY5DRHwRFMuVrC2SnzkrW73
+ fo2cxVXh4DyqYtQYvgVYLgsKD3FspSuiPDywkewUEHzGYOyNREx2AaOh09I3GsbCXd
+ BAzDayyORNIcZ/KTsDmx3mBg7LpJAoE92JckrvS/yBE7PCcHIGdm9LlYvbCiABcIhH
+ kKzt/6iVUYBo52H//oOL0VnpviTeTVdsYVV7UnoNvkg42zetRY1ylZYKX4zn8YABv+
+ GNgGeuw3A18sg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id ADAF41AA3A5;
- Tue, 12 May 2026 23:55:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A5C321AA3E6;
+ Tue, 12 May 2026 23:58:18 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B79C13ABD14;
- Tue, 12 May 2026 23:55:10 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B3FC73ABD3E;
+ Tue, 12 May 2026 23:58:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, kiki <Chan9Yan9@gmail.com>,
- Zexiang Zhang <chan9yan9@gmail.com>,
- Gautam Menghani <gautam@linux.ibm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 103/117] hw/intc/xics: Add a check for an invalid
- server id
-Date: Tue, 12 May 2026 23:54:45 +0300
-Message-ID: <20260512205503.361097-103-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 27/58] linux-user: Fix CLONE_PARENT_SETTID when using
+ fork-like clone
+Date: Tue, 12 May 2026 23:57:48 +0300
+Message-ID: <20260512205820.361821-27-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
-References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,51 +69,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: kiki <Chan9Yan9@gmail.com>
+From: Helge Deller <deller@gmx.de>
 
-A malformed IVE value can result in an invalid server field being
-passed to icp_irq(). The function assumes the server id is valid and
-may access invalid state otherwise, potentially leading to a crash.
+The CLONE_PARENT_SETTID option requires the implementation to store the
+child thread ID at the location pointed to by parent_tid in the parent's
+memory.
 
-Fix this by validating the server id before using it and ignoring
-invalid values.
+Fix our implementation and move the code from the client side (where
+fork returned 0), to the parent side and store the return value from the
+fork call (which is the client TID) in the parent_tid pointer.
 
-Reported-by: Zexiang Zhang <chan9yan9@gmail.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3324
-Signed-off-by: Zexiang Zhang <chan9yan9@gmail.com>
-Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260428103645.50617-1-Gautam.Menghani@ibm.com
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-(cherry picked from commit 1aee8067fce95d15061eca8fbb6772d8a90ea699)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3340
+Signed-off-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit b03a6ac6fa5d7775b9f912fa5c39f7b92388c6a2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/xics.c b/hw/intc/xics.c
-index 200710eb6c..c7312d166f 100644
---- a/hw/intc/xics.c
-+++ b/hw/intc/xics.c
-@@ -26,6 +26,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/log.h"
- #include "qapi/error.h"
- #include "trace.h"
- #include "qemu/timer.h"
-@@ -222,6 +223,13 @@ void icp_irq(ICSState *ics, int server, int nr, uint8_t priority)
- 
-     trace_xics_icp_irq(server, nr, priority);
- 
-+    if (!icp) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "XICS: invalid server %d for IRQ 0x%x\n",
-+                      server, nr);
-+        ics_reject(ics, nr);
-+        return;
-+    }
-+
-     if ((priority >= CPPR(icp))
-         || (XISR(icp) && (icp->pending_priority <= priority))) {
-         ics_reject(ics, nr);
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index d0390e04b4..910a4da0a6 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -7050,8 +7050,6 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
+                the child process gets its own copy of the lock.  */
+             if (flags & CLONE_CHILD_SETTID)
+                 put_user_u32(sys_gettid(), child_tidptr);
+-            if (flags & CLONE_PARENT_SETTID)
+-                put_user_u32(sys_gettid(), parent_tidptr);
+             ts = get_task_state(cpu);
+             if (flags & CLONE_SETTLS)
+                 cpu_set_tls (env, newtls);
+@@ -7059,6 +7057,8 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
+                 ts->child_tidptr = child_tidptr;
+         } else {
+             cpu_clone_regs_parent(env, flags);
++            if (flags & CLONE_PARENT_SETTID)
++                put_user_u32(ret, parent_tidptr);
+             if (flags & CLONE_PIDFD) {
+                 int pid_fd = 0;
+ #if defined(__NR_pidfd_open) && defined(TARGET_NR_pidfd_open)
 -- 
 2.47.3
 
