@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9668BCD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:07:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00918CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:07:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuIY-0003y2-Dk; Tue, 12 May 2026 17:05:50 -0400
+	id 1wMuCr-0003Vp-8g; Tue, 12 May 2026 16:59:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuIB-0001Va-Pn; Tue, 12 May 2026 17:05:27 -0400
+ id 1wMuBm-0002Nq-TU; Tue, 12 May 2026 16:58:51 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuI9-0000mC-VS; Tue, 12 May 2026 17:05:27 -0400
+ id 1wMuBl-0004t4-6w; Tue, 12 May 2026 16:58:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619280; bh=vKBvvgfYaWo7Ae6DKuGvnLAh6yOso0d5PFdAZLgvEj0=;
+ t=1778619276; bh=sHoIBRPTuAcrkSlVDY9jAqJpgsRsIidUwG8UYfWBmdk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=IyeQSy3IXH6Ky9FrNY/lUmWzbjBmPvIbrYNJpky3mz8m1crwcbvwyiL/IZdFIYYBG
- Daqo0AKNArqjJQgL31ZxB75zC7B5GIwpsR5civqfkPbj44Q3SBnhLaDxAQFsPg/cxq
- Jzj+WcMls5MX3++pgBORwoZYuldAGLl1pjfbQjQZnp9HUtb3P68yru1hf6SCM/Ho4Y
- ql4NgItcLiY5bKA+HbwFkBjP4Q+pKJ5JyQd2tlF3xHzYF74aMlaqdMv7hkTFvo7t+c
- DFFUklVpFtfn/w0jCgI/TfENuWTIUTsPpnFa7i4zOcdpTMFq6nuetw2l9xTfsotY8S
- HBomBU7FlScfw==
+ b=RyD0/xAZBgw1Famd9ptljuWIgAJIwS8lVRqehhK4cmEUECG/4SzLcKz+n7nX89Kx2
+ VMdw35//fmjvrCSC1vqIYjc+BbjJHEkR+qgIwfr0INIV/HZiJgKe4ADRg2UGAdetpn
+ 81gjP7KZD4+QEPLvKGhxAfdctZyyVq290f6V61cnDoHs+dXuTn50xJ8ZbXQ6JV5oli
+ Fuq8IEf7twDQkRoUBSt2VSGJCiGEbp3lRQojS8Ai7EWpDUySxgwosi27pS8OZngf3w
+ MEKSEuc4llCiAMq1R222IIWuAb0Bw1EXb27/LclSmEyevBMLDXRIeo5JX7/VR3T6nL
+ XgbE2g0tvOosg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 61F961AA335;
- Tue, 12 May 2026 23:54:40 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 24DE61AA2F8;
+ Tue, 12 May 2026 23:54:36 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 630EF3ABCA6;
- Tue, 12 May 2026 23:54:44 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 32E913ABC69;
+ Tue, 12 May 2026 23:54:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Katherine Leaver <katherine.j.leaver@gmail.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 105/107] hw/uefi: add name_size check to
- uefi_vars_mm_lock_variable()
-Date: Tue, 12 May 2026 23:54:32 +0300
-Message-ID: <20260512205437.360850-105-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 044/107] util: fix missing aio_wait sym in qemu guest
+ agent only build
+Date: Tue, 12 May 2026 23:53:31 +0300
+Message-ID: <20260512205437.360850-44-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,33 +71,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Make sure the total variable_policy_entry size stays below
-64k so the (16-bit) size field can not wrap.
+Configure QEMU with
 
-Fixes: CVE-2026-41438
-Fixes: db1ecfb473ac ("hw/uefi: add var-service-vars.c")
-Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260422092910.444997-5-kraxel@redhat.com>
-(cherry picked from commit c45b460d16f991ff3f753623f3423e1adc4077a2)
+ --disable-system --disable-user --disable-tools --enable-guest-agent
+
+and the build with fail with
+
+  FAILED: [code=1] qga/qemu-ga
+  ld: libqemuutil.a.p/qapi_qmp-dispatch.c.o: in function `do_qmp_dispatch_bh':
+  qapi/qmp-dispatch.c:140:(.text+0x5c): undefined reference to `aio_wait_kick'
+
+This aio_kick() usage was recently introduced in qmp-dispatch.c
+without updating the build logic.
+
+Fixes commit fc1a2ec7da531223b3473185dc2584f8a7c6c659
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(cherry picked from commit 17fbf3e18c3dbc32ec07cfc24853d6654a813e90)
+Fixes: a229ea19c7bf "monitor: Fix deadlock in monitor_cleanup" in 10.0.x
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
-index 82ff4e429a..ef8a3db873 100644
---- a/hw/uefi/var-service-vars.c
-+++ b/hw/uefi/var-service-vars.c
-@@ -629,6 +629,9 @@ uefi_vars_mm_lock_variable(uefi_vars_state *uv, mm_header *mhdr,
-     if (mhdr->length < length) {
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
-+    if (sizeof(*pe) + lv->name_size > UINT16_MAX) {
-+        return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-+    }
+diff --git a/util/meson.build b/util/meson.build
+index 780b5977a8..595d13543c 100644
+--- a/util/meson.build
++++ b/util/meson.build
+@@ -79,6 +79,7 @@ endif
  
-     uefi_trace_variable(__func__, lv->guid, name, lv->name_size);
- 
+ if have_block or have_ga
+   util_ss.add(files('aiocb.c', 'async.c'))
++  util_ss.add(files('aio-wait.c'))
+   util_ss.add(files('base64.c'))
+   util_ss.add(files('main-loop.c'))
+   util_ss.add(files('qemu-coroutine.c', 'qemu-coroutine-lock.c', 'qemu-coroutine-io.c'))
+@@ -89,7 +90,6 @@ if have_block or have_ga or have_user
+   util_ss.add(files('qemu-sockets.c'))
+ endif
+ if have_block
+-  util_ss.add(files('aio-wait.c'))
+   util_ss.add(files('buffer.c'))
+   util_ss.add(files('bufferiszero.c'))
+   util_ss.add(files('hbitmap.c'))
 -- 
 2.47.3
 
