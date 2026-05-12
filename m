@@ -4,60 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43A53CD484E
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 02:26:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B46BCCD37BE
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 02:26:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMcoy-0000ao-0P; Mon, 11 May 2026 22:26:08 -0400
+	id 1wMcpY-0001cl-Pf; Mon, 11 May 2026 22:26:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <min_halo@163.com>)
- id 1wMcov-0000WP-I0; Mon, 11 May 2026 22:26:06 -0400
-Received: from m16.mail.163.com ([220.197.31.5])
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1wMcpV-0001XV-8V; Mon, 11 May 2026 22:26:42 -0400
+Received: from out30-132.freemail.mail.aliyun.com ([115.124.30.132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <min_halo@163.com>)
- id 1wMcor-0007gX-Qy; Mon, 11 May 2026 22:26:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=tN
- vZjkPLtWPgkon/io+FpFV+gie2PZXSVNPlw/SVBsE=; b=Cua6r8oWV6cWiDGjMi
- 6RBDOafnI4fKm3RvnBAMuL+HJHedKxXEWS3H6C+vlMTp+HbNfVs8HgKC60Q4m8Pr
- 9LcX8AkhvHD+LErH3gIe4F8w6ntpnHA6//Zb9+rbmUHIz1hCMcvEVW9JH9H8WSBF
- XrxRnyb1m3LI8AKWYcyaxlfd8=
-Received: from thinkpadx13gen2i.. (unknown [])
- by gzga-smtp-mtada-g1-3 (Coremail) with SMTP id
- _____wCntZKfjwJqqjd+Aw--.60433S3; 
- Tue, 12 May 2026 10:25:48 +0800 (CST)
-From: Zongmin Zhou <min_halo@163.com>
-To: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
- chao.liu.zevorn@gmail.com
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
- Zongmin Zhou <zhouzongmin@kylinos.cn>
-Subject: [PATCH 1/2] target/riscv/kvm: add KVM support for Zicbop extension
-Date: Tue, 12 May 2026 10:25:19 +0800
-Message-Id: <bb6271546f870f3ee3cbeafdf0eb065925bb384d.1778551633.git.zhouzongmin@kylinos.cn>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <cover.1778551633.git.zhouzongmin@kylinos.cn>
-References: <cover.1778551633.git.zhouzongmin@kylinos.cn>
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1wMcpR-0008Di-TY; Mon, 11 May 2026 22:26:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1778552793; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=s5JG7ui2jK+mL3/5r61AORY0+9XqkG8FGYWZaezJnZg=;
+ b=h7UrE+4MahuYhEqKqUv7xoX93khHl7bJ5ZWt9q0Yr40+27H6lZFPZ7erBm99uyTAm5e1Rs96zNJArx/f88ktlDDs/oTSvMLQJr5+CmoyeDHmFgQqWNRq5Yu7egKfUJ5/w5wbKBpqt7n7ruFyo9m92zj0GrkeuHv6Gcp7t0AHZRk=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R111e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037009110;
+ MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=11; SR=0;
+ TI=SMTPD_---0X2ooJ.e_1778552792; 
+Received: from 30.166.64.212(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0X2ooJ.e_1778552792 cluster:ay36) by smtp.aliyun-inc.com;
+ Tue, 12 May 2026 10:26:32 +0800
+Message-ID: <ea0f80e9-6a0b-4c31-9be1-e136d34818a0@linux.alibaba.com>
+Date: Tue, 12 May 2026 10:26:32 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 3/6] target/riscv: Integrate SMMPT checks into MMU and
+ TLB fill
+To: Frank Chang <frank.chang@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, chao.liu.zevorn@gmail.com,
+ palmer@dabbelt.com, alistair23@gmail.com, daniel.barboza@oss.qualcomm.com,
+ liwei1518@gmail.com, Huang Tao <eric.huang@linux.alibaba.com>,
+ TANG Tiancheng <lyndra@linux.alibaba.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+References: <20260408140635.42546-1-zhiwei_liu@linux.alibaba.com>
+ <20260408140635.42546-4-zhiwei_liu@linux.alibaba.com>
+ <CANzO1D27b_t1D=WxOTJQ9_iMfCSWqVeZ6CRuDDz-U4aTQ2ioOA@mail.gmail.com>
+Content-Language: en-US
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <CANzO1D27b_t1D=WxOTJQ9_iMfCSWqVeZ6CRuDDz-U4aTQ2ioOA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wCntZKfjwJqqjd+Aw--.60433S3
-X-Coremail-Antispam: 1Uf129KBjvJXoWxXw17Wr4xZryUtFyrGr13CFg_yoW5trWUpr
- 47Cw45CFy5Zr17C3y3Xr1kXF1Sgw4kCa1kG39ag3W7XFW7KryIgryvka45AF4UtF1xZrs8
- ZF1vgr4UCF4UJaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jzOJ5UUUUU=
-X-Originating-IP: [116.128.244.169]
-X-CM-SenderInfo: pplqsxxdorqiywtou0bp/xtbC8w0q1WoCj60f8wAA3n
-Received-SPF: pass client-ip=220.197.31.5; envelope-from=min_halo@163.com;
- helo=m16.mail.163.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=115.124.30.132;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-132.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,101 +76,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zongmin Zhou <zhouzongmin@kylinos.cn>
+Hi Frank,
 
-When the Zicbop extension is available expose it to the KVM guest.
-Also read and validate cbop_blocksize from the host via KVM interface.
+On 4/13/26 5:02 PM, Frank Chang wrote:
+> Hi Zhiwei,
+>
+> LIU Zhiwei <zhiwei_liu@linux.alibaba.com> 於 2026年4月9日週四 上午3:12寫道：
+>> With the core MPT lookup logic in place, this patch integrates the
+>> permission checks into QEMU's main MMU processing functions.
+>>
+>> A new helper, `get_physical_address_mpt`, is introduced to check the
+>> permissions for a given physical address against the MPT. This helper
+>> is then called at two critical points:
+>>
+>> 1. During page table walks (`get_physical_address`): The physical
+>>     address of the Page Table Entry (PTE) itself is checked to ensure
+>>     the supervisor has permission to read it.
+>>
+>> 2. After successful address translation (`riscv_cpu_tlb_fill`): The final
+>>     guest-physical address is checked against the MPT before the access
+>>     is allowed to proceed.
+>>
+>> This ensures that SMMPT protection is enforced for both the translation
+>> process and the final memory access, as required by the specification.
+>>
+>> Co-authored-by: Huang Tao <eric.huang@linux.alibaba.com>
+>> Co-authored-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+>> Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+>> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>> ---
+>>   target/riscv/cpu_helper.c | 76 ++++++++++++++++++++++++++++++++++++++-
+>>   1 file changed, 75 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+>> index e3361fadae..2fab00e9b4 100644
+>> --- a/target/riscv/cpu_helper.c
+>> +++ b/target/riscv/cpu_helper.c
+>> @@ -1161,6 +1161,60 @@ static bool check_svukte_addr(CPURISCVState *env, vaddr addr)
+>>       return !high_bit;
+>>   }
+>>
+>> +/*
+>> + * get_physical_address_mpt - check mpt permission for this physical address
+>> + *
+>> + * Lookup the Memory Protection Table and check permission for this
+>> + * physical address. Returns 0 if the permission checking was successful
+>> + *
+>> + * @env: CPURISCVState
+>> + * @prot: The returned protection attributes
+>> + * @addr: The physical address to be checked permission
+>> + * @access_type: The type of MMU access
+>> + * @mode: Indicates current privilege level.
+>> + */
+>> +static int get_physical_address_mpt(CPURISCVState *env, int *prot, hwaddr addr,
+>> +                                    MMUAccessType access_type, int mode)
+>> +{
+>> +    mpt_access_t mpt_access;
+>> +    bool mpt_has_access;
+>> +
+>> +    /*
+>> +     * If the extension is not supported or the mmpt.mode is Bare,
+>> +     * there is no protection, return success.
+>> +     */
+>> +    if (!riscv_cpu_cfg(env)->ext_smmpt || env->mptmode == 0) {
+> Nit: env->mptmode == SMMPTBARE
+Done.
+>
+>> +        *prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+>> +        return TRANSLATE_SUCCESS;
+>> +    }
+>> +
+>> +    /*
+>> +     * MPT is checked for all accesses to physical memory, unless the
+>> +     * effective privilege mode is M.
+>> +     *
+>> +     * Data accesses in M-mode when the MPRV bit in mstatus is set and
+>> +     * the MPP field in mstatus contains S or U are subject to MPT checks.
+>> +     *
+>> +     * In riscv_env_mmu_index, The MPRV and MPP bits are already checked and
+>> +     * encoded to mmu_idx, So we do not need to check it here.
+>> +     */
+>> +    if (mode == PRV_M) {
+>> +        *prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+>> +        return TRANSLATE_SUCCESS;
+>> +    }
+>> +
+>> +    mpt_has_access = smmpt_check_access(env, addr,
+>> +                                      &mpt_access, access_type);
+>> +    if (!mpt_has_access) {
+>> +        *prot = 0;
+>> +        return TRANSLATE_MPT_FAIL;
+>> +    }
+>> +
+>> +    *prot = smmpt_access_to_page_prot(mpt_access);
+>> +
+>> +    return TRANSLATE_SUCCESS;
+>> +}
+>> +
+>>   /*
+>>    * get_physical_address - get the physical address for this virtual address
+>>    *
+>> @@ -1355,6 +1409,13 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+>>               pte_addr = base + idx * ptesize;
+>>           }
+>>
+>> +        int mpt_prot;
+>> +        int mpt_ret = get_physical_address_mpt(env, &mpt_prot, pte_addr,
+>> +                                               MMU_DATA_LOAD, PRV_S);
+>> +        if (mpt_ret != TRANSLATE_SUCCESS) {
+>> +            return TRANSLATE_MPT_FAIL;
+> Nit: Just return mpt_ret;
+Done.
+>
+>> +        }
+>> +
+>>           int pmp_prot;
+>>           int pmp_ret = get_physical_address_pmp(env, &pmp_prot, pte_addr,
+>>                                                  sxlen_bytes,
+>> @@ -1765,7 +1826,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>>       CPURISCVState *env = &cpu->env;
+>>       vaddr im_address;
+>>       hwaddr pa = 0;
+>> -    int prot, prot2, prot_pmp;
+>> +    int prot, prot2, prot_pmp, mpt_prot;
+>>       bool pmp_violation = false;
+>>       bool first_stage_error = true;
+>>       bool two_stage_lookup = mmuidx_2stage(mmu_idx);
+>> @@ -1819,6 +1880,13 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>>               prot &= prot2;
+>>
+>>               if (ret == TRANSLATE_SUCCESS) {
+>> +                ret = get_physical_address_mpt(env, &mpt_prot, pa,
+>> +                                               access_type, mode);
+>> +                qemu_log_mask(CPU_LOG_MMU,
+>> +                              "%s MPT address=" HWADDR_FMT_plx " ret %d prot"
+>> +                              " %d\n",
+>> +                              __func__, pa, ret, mpt_prot);
+>> +                prot &= mpt_prot;
+> We didn't check the return value of get_physical_address_mpt().
+> So it might that get_physical_address_mpt() returns TRANSLATE_MPT_FAIL,
+> but get_physical_address_pmp() returns TRANSLATE_SUCCESS.
+> The final ret will become: TRANSLATE_SUCCESS.
+Good catch!  Besides this, I found there are other places that we should 
+handle TRANSLATE_MPT_FAIL as TRANSLATE_PMP_FAIL in the same way for 
+exceptions. I fix them togather in v6 patch set.
 
-Signed-off-by: Zongmin Zhou <zhouzongmin@kylinos.cn>
----
- target/riscv/kvm/kvm-cpu.c | 38 ++++++++++++++++++++++++++++++++++++--
- 1 file changed, 36 insertions(+), 2 deletions(-)
-
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index b047ffa9c0..a46737f934 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -293,6 +293,7 @@ static void kvm_cpu_csr_set_u64(RISCVCPU *cpu, KVMCPUConfig *csr_cfg,
- 
- static KVMCPUConfig kvm_multi_ext_cfgs[] = {
-     KVM_EXT_CFG("zicbom", ext_zicbom, KVM_RISCV_ISA_EXT_ZICBOM),
-+    KVM_EXT_CFG("zicbop", ext_zicbop, KVM_RISCV_ISA_EXT_ZICBOP),
-     KVM_EXT_CFG("zicboz", ext_zicboz, KVM_RISCV_ISA_EXT_ZICBOZ),
-     KVM_EXT_CFG("ziccrse", ext_ziccrse, KVM_RISCV_ISA_EXT_ZICCRSE),
-     KVM_EXT_CFG("zicntr", ext_zicntr, KVM_RISCV_ISA_EXT_ZICNTR),
-@@ -439,6 +440,12 @@ static KVMCPUConfig kvm_cboz_blocksize = {
-     .kvm_reg_id = KVM_REG_RISCV_CONFIG_REG(zicboz_block_size)
- };
- 
-+static KVMCPUConfig kvm_cbop_blocksize = {
-+    .name = "cbop_blocksize",
-+    .offset = CPU_CFG_OFFSET(cbop_blocksize),
-+    .kvm_reg_id = KVM_REG_RISCV_CONFIG_REG(zicbop_block_size)
-+};
-+
- static KVMCPUConfig kvm_v_vlenb = {
-     .name = "vlenb",
-     .offset = CPU_CFG_OFFSET(vlenb),
-@@ -1114,6 +1121,10 @@ static void kvm_riscv_read_multiext_legacy(RISCVCPU *cpu,
-         kvm_riscv_read_cbomz_blksize(cpu, kvmcpu, &kvm_cbom_blocksize);
-     }
- 
-+    if (cpu->cfg.ext_zicbop) {
-+        kvm_riscv_read_cbomz_blksize(cpu, kvmcpu, &kvm_cbop_blocksize);
-+    }
-+
-     if (cpu->cfg.ext_zicboz) {
-         kvm_riscv_read_cbomz_blksize(cpu, kvmcpu, &kvm_cboz_blocksize);
-     }
-@@ -1293,6 +1304,10 @@ static void kvm_riscv_init_cfg(RISCVCPU *cpu, KVMScratchCPU *kvmcpu)
-         kvm_riscv_read_cbomz_blksize(cpu, kvmcpu, &kvm_cbom_blocksize);
-     }
- 
-+    if (cpu->cfg.ext_zicbop) {
-+        kvm_riscv_read_cbomz_blksize(cpu, kvmcpu, &kvm_cbop_blocksize);
-+    }
-+
-     if (cpu->cfg.ext_zicboz) {
-         kvm_riscv_read_cbomz_blksize(cpu, kvmcpu, &kvm_cboz_blocksize);
-     }
-@@ -2014,8 +2029,8 @@ void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
-     int ret;
- 
-     /* short-circuit without spinning the scratch CPU */
--    if (!cpu->cfg.ext_zicbom && !cpu->cfg.ext_zicboz &&
--        !riscv_has_ext(env, RVV)) {
-+    if (!cpu->cfg.ext_zicbom && !cpu->cfg.ext_zicbop &&
-+        !cpu->cfg.ext_zicboz && !riscv_has_ext(env, RVV)) {
-         return;
-     }
- 
-@@ -2062,6 +2077,25 @@ void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
-         }
-     }
- 
-+    if (cpu->cfg.ext_zicbop &&
-+        riscv_cpu_option_set(kvm_cbop_blocksize.name)) {
-+
-+        reg.id = KVM_RISCV_REG_ID_ULONG(KVM_REG_RISCV_CONFIG,
-+                                        kvm_cbop_blocksize.kvm_reg_id);
-+        reg.addr = (uint64_t)&val;
-+        ret = ioctl(kvmcpu.cpufd, KVM_GET_ONE_REG, &reg);
-+        if (ret != 0) {
-+            error_setg_errno(errp, errno, "Unable to read cbop_blocksize");
-+            return;
-+        }
-+
-+        if (cpu->cfg.cbop_blocksize != val) {
-+            error_setg(errp, "Unable to set cbop_blocksize to a different "
-+                       "value than the host (%lu)", val);
-+            return;
-+        }
-+    }
-+
-     /* Users are setting vlen, not vlenb */
-     if (riscv_has_ext(env, RVV) && riscv_cpu_option_set("vlen")) {
-         if (!kvm_v_vlenb.supported) {
--- 
-2.43.0
-
+Thanks,
+Zhiwei
+>
+>>                   ret = get_physical_address_pmp(env, &prot_pmp, pa,
+>>                                                  size, access_type, mode);
+>>                   tlb_size = pmp_get_tlb_size(env, pa);
+>> @@ -1854,6 +1922,12 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>>                         __func__, address, ret, pa, prot);
+>>
+>>           if (ret == TRANSLATE_SUCCESS) {
+>> +            ret = get_physical_address_mpt(env, &mpt_prot, pa,
+>> +                                           access_type, mode);
+>> +            qemu_log_mask(CPU_LOG_MMU,
+>> +                          "%s MPT address=" HWADDR_FMT_plx " ret %d prot %d\n",
+>> +                          __func__, pa, ret, mpt_prot);
+>> +            prot &= mpt_prot;
+>>               ret = get_physical_address_pmp(env, &prot_pmp, pa,
+>>                                              size, access_type, mode);
+>>               tlb_size = pmp_get_tlb_size(env, pa);
+>> --
+>> 2.43.0
+>>
+>>
 
