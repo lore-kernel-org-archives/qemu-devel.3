@@ -4,146 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32F9ACD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 15:59:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D05DCD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 16:03:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMpVv-0003T4-Cv; Tue, 12 May 2026 11:59:19 -0400
+	id 1wMpYd-0004wO-8A; Tue, 12 May 2026 12:02:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wMpVt-0003S8-Hb
- for qemu-devel@nongnu.org; Tue, 12 May 2026 11:59:17 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wMpYC-0004lW-Jn
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 12:01:55 -0400
+Received: from 10.mo533.mail-out.ovh.net ([46.105.72.194])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wMpVr-0000Qi-7i
- for qemu-devel@nongnu.org; Tue, 12 May 2026 11:59:16 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64CAkdXB740351
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 15:59:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- DjwqEz+H0NYZAlT+8JCAf6E9WAUja7TU16Gn7AzA558=; b=iCPAGeOwJJ55C2lW
- s219ndGMYzE+R+QBUjJlRZkeEy3bmUpB3cQmLY7OoE1MOyx3O88ddYSyIpIJaYXJ
- WArwAiwNESKaMa4Ren0n3uAFV8SeGWnMVHToHw+rN0Q8d7f7AxQEVwBbVmwsCGWt
- afa2ZOlK6bAA9wqcZz/eWMCTzvUy9DxDIuIssFaIIO7uSzOQHc/EktVF/BaBKVKY
- AyBtED5M6ptMd/RdH4twJT3by+PrFa+uB/ppOAqoQCbx6mTi5Ru2dZ7Z22F1WgnG
- /TOPVwgZsDRoWNozV/6ghHoprk9RwNvM1mKS9hLQUjacKVIqPg4Q7RBmoD6Cr2BS
- B6hHlQ==
-Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e42rhs9q7-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 15:59:13 +0000 (GMT)
-Received: by mail-dl1-f71.google.com with SMTP id
- a92af1059eb24-12dd33dc337so3806186c88.0
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 08:59:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778601553; x=1779206353; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=DjwqEz+H0NYZAlT+8JCAf6E9WAUja7TU16Gn7AzA558=;
- b=G9ealkBgVwgxXEUSZ+CwlUvbGjL6hGAo/xs9F7a/7gVQUwNcS5hEdMJXVjkFnfjkNY
- uxxhmmY/UvoKVuSRSQ9rnt/ED1wrg74im66yaurdzAjGTt2C1Fy9PFTnSAqAu/qnp83w
- 2QJprXhHGaoUq7ZO1TJW9PpiGnzQ8xMH4430+QKLPS0fEzogL2lsMFAbO46+NHCHEJ+e
- EecVB4GmAYj7rRftc2+M19XeVwgXNPOqLegKvSlWQql+JyPH2OhNS7fIsZXzrMbakNO/
- /qm4lbqRNofaJmIUlbkdZ71GDYlTA7pUm+ujvwgPwfNRX+vXjccA5RcyDmkr/X4qBI5k
- GICw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778601553; x=1779206353;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DjwqEz+H0NYZAlT+8JCAf6E9WAUja7TU16Gn7AzA558=;
- b=b5x4Ud6jZlJikog+0+m9mrSQfrpFiPaUA4r+h27BFMymORY7QRZFQ7ysJd42ao0cmF
- laFyDsbJZy1ryqrynZrdHTqpLM6touIMrhfQZ1ALxxcqmRL7B4xjbRgsyeCZx27ERqoy
- o84v1HG1csnarUheHodV+vxki4gaogp4aZem1/fwkruMkBBHPiTmFQpx8XrXTn8B1Ckx
- Pj84rS3Fc0Uv9tF5aFNFCnb2PLEutb/Us/+LJAOYJkds5tOZjeeNaYePR+s722A8m9dl
- /oOYo6nA5Nkaa38fBf4I52FiAp6HJS9FIJGM2d2dyazJYeJ0e1J0R4I/JzFSbOJ4403K
- 3m7Q==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9yLQvGIqjHOCNEFEuw5fK+2CF/MC2mqQ/B6XTiaFak1sNWOagtXLCiCe/+heQ8SCQGt6BYNMNUAfIa@nongnu.org
-X-Gm-Message-State: AOJu0YyFkOFTjs1KTBRFWpqZkPy2xqXwWkm9O680/8t8mdQInms4Xuv2
- FGbmRe6xELBc/2T5MG1fkhyG58Ah5p4SkY57BaJO1kGF+yvY8SbfwQvFIh0wAFZsB/BImgOZp/L
- 0/cmUOusYGKkJjG9ggA9rJWRCPUZdfNsp8UAlHaHHcHUTSrBInjg2kfxVIw==
-X-Gm-Gg: Acq92OEkdXYtM1D621RfIM4VlE9eGHIDl6lzwAoMC1IflxqRJ2OaGZUa1bcLRUpS+/4
- ychiHsMLEk+WiGWglK+9Hu25Vx/yjjU9oPS8Ms3eyP1Xsn3d+xSjw+2ti5Aj5qcc1O6csCwUpfI
- FFmdxLIDlripz0Ir5rdw+6Z5X4L5f90D/cxqQOgNQunapUgOKSLt38KUChqyPQ2gViDXS5G3TA3
- n3VNmIY8vZB0EVMlFC0n5FAUBi68BywxYFlEy4WHkGfx+7jwCjA3G78tgJggtooGbJiV10wWjoP
- 2fOo/VsTEuGhjPVyISiwFdTDQWg8TVljo9GM19NNIc5As9islNyDzWbuLQ9deD1kDsAziM6FUoI
- oCfCFyT25gKi+TXlyJGcX1YxT2ph1mRMwi/ZyIIlotmafgBJXVK7iHJjA+Ow+MFjlA2vdXj27I5
- FyhB4o0XVheqNLzg==
-X-Received: by 2002:a05:7022:423:b0:128:d396:f2ea with SMTP id
- a92af1059eb24-1333b0b1fb4mr2665991c88.11.1778601552747; 
- Tue, 12 May 2026 08:59:12 -0700 (PDT)
-X-Received: by 2002:a05:7022:423:b0:128:d396:f2ea with SMTP id
- a92af1059eb24-1333b0b1fb4mr2665953c88.11.1778601552059; 
- Tue, 12 May 2026 08:59:12 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13278210ff2sm19741438c88.6.2026.05.12.08.59.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 May 2026 08:59:11 -0700 (PDT)
-Message-ID: <ee6cd468-3212-4050-9482-896ea8f916d6@oss.qualcomm.com>
-Date: Tue, 12 May 2026 08:59:10 -0700
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wMpY9-0001F0-LM
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 12:01:40 -0400
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net [51.68.80.175])
+ by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4gFLtk03cSz613s;
+ Tue, 12 May 2026 16:01:33 +0000 (UTC)
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net. [127.0.0.1])
+ by director1.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <alexander.hansen@9elements.com>; Tue, 12 May 2026 16:01:33 +0000 (UTC)
+Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.168.184])
+ by director1.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4gFLtj4f8jz5w9Y; Tue, 12 May 2026 16:01:33 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.5])
+ (Authenticated sender: clg@kaod.org)
+ by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id EBEC11B43591;
+ Tue, 12 May 2026 16:01:31 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-95G001e58bd7d4-4e0a-45dd-8ed6-0a240e2513bd,
+ 39874C6F3F9F68F15966500C6FBBDB0B53A96BD7) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <90c17098-c8d9-41a4-b988-8657fe84926d@kaod.org>
+Date: Tue, 12 May 2026 18:01:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 15/16] gitlab: add jobs for thorough block tests
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Hanna Reitz <hreitz@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- qemu-block@nongnu.org, Cleber Rosa <crosa@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, John Snow <jsnow@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20260424154205.364268-1-berrange@redhat.com>
- <20260424154205.364268-16-berrange@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260424154205.364268-16-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEyMDE2NiBTYWx0ZWRfX3nIVsM9fKXV5
- paWJBEcb8UeAHN9dawrQCXVWBub8jxsizTO+eFgdUafMCnLDHhNMSduduWBXSdMmJyRoG0siBAx
- CshfqB26er3Pw6BJVOR+2P7YUIpglVT6SRxVesLrcBk0c3nEXjRysgaADXTuDMEbF8cynyhgFIg
- +WynZVsRfXwlMUrB6KPET96/8Z2FGivI4/VK1Vnm9UU65cE9hdEF2c4MPP2N8hyVsWgy31vUnGK
- aH6a7hLNYvP1Kd/gSggTASJMxVvnVz5s4fSv0O1TwwBkmzuIIZ24ZOJm570lSb+NXt+wgtL95bN
- A2sQGw0Tafd+IwKAS4FyoDK1GFGLfXsQvNo2A2n9V+IJe/BIn+cVTGVsTBR1jub2ndxAi5Y3cM2
- v5tpMKlueZT/vNYq+uPgA8BF9F9JbKzXX//Vufi4H+tEJoaMK+0q4BJv0cQD3ICxKYgXmT/wamW
- f5GZJcL+i80CpG/Z/HQ==
-X-Proofpoint-GUID: tL39t5zDdWYZ4aIsuiW-HV-6IUj26Is3
-X-Authority-Analysis: v=2.4 cv=GbMnWwXL c=1 sm=1 tr=0 ts=6a034e51 cx=c_pps
- a=JYo30EpNSr/tUYqK9jHPoA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=p0WdMEafAAAA:8 a=20KFwNOVAAAA:8 a=YKFVMrpXtpmcPPOEZukA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=Fk4IpSoW4aLDllm1B1p-:22
-X-Proofpoint-ORIG-GUID: tL39t5zDdWYZ4aIsuiW-HV-6IUj26Is3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-11_05,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 bulkscore=0 adultscore=0 clxscore=1015
- priorityscore=1501 suspectscore=0 lowpriorityscore=0 impostorscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605050000
- definitions=main-2605120166
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Subject: Re: [PATCH v2 4/4] ast2600: yosemite4 initial support
+To: Alexander Hansen <alexander.hansen@9elements.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ qemu-arm@nongnu.org, titusr@google.com
+References: <20260505154410.230969-1-alexander.hansen@9elements.com>
+ <20260505154410.230969-5-alexander.hansen@9elements.com>
+ <78ded35c-18d9-4469-a20d-6974646e4557@kaod.org>
+ <1fec82cd-33ff-4cbf-9f8b-c14a5cf622a5@9elements.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <1fec82cd-33ff-4cbf-9f8b-c14a5cf622a5@9elements.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+x-ovh-tracer-id: 5682698307035966475
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTFrXGij6xEoILIO68TlpBxfC7cigd34mIYVX0KTo1/WZe8Fx6tpnAXwfgi9FukATrze8jEEE5BXNF6GxPENDX6D+sTsVI6qTvLu3oD9QX3ZArPj1666YYDkFHCteU03NxdxY4/PwBGSjNhcSFwLYwb53uNyf05SmSI96L5tdStmHQ7D50d3qyu5NCUqi/DC5VIjy8Y03St7J3H+wPhJIv3I3PBtB6b0CdOKJJPynWNT9hMBQtMD1PiJRL7mGFZvh3+9TnDdhOsQvJ6qOBVuIGcNnocxaVbM+hztmrQFgfVTzT9kcsCfssSF7JH+pauLQt1wcG6KNaYw0XaG5QAghe9pt66PTkpaZB1xn0yELGpCZ+3k0zrifCwyyGhSQylhecBtnvChbu9iOPBbZedZ6O8TPCrRkpC/xKPwqwzb/33vatMthX4nddHG70RavPfrGKLsaFvEsxj5Uu4bGB9bJvCIQ3iFr8D5doXeHYFMocsNQboCZupot/JyhnP1FIrfBfyo/lIJEmQ4pTiu6AVZHtScRxBrS7d+yKRBXl1Hc4c63Ga585OcjXH7X96KnipfnhTFzxIh/0twEecqwekbyMmMqetYJmi9yP0XyD0F/QmVBsCZF3i7htDnFSCmQbx5sg9dzNjXGlvChNY4IltzpVdlsBqPNP3qbg3KnNf5Mysy2g
+DKIM-Signature: a=rsa-sha256; bh=WP3qwgeatGs7hK9isQtYQzJvr9o01yFxZwkD9rc4G68=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1778601694; v=1;
+ b=KWvshc1hSeUnhheFy4QrwmqwJHo77zouv2S+xtX0KTFBQak88BS5GPWmPpBwochaSGXZIhyk
+ wpc32oJdMm1fkWZY+aZ7g/tJnN5ewMReQaphkK0wtMo2tgKdp93PLJ17RaFTd0y1WdwFivyRIhx
+ c/FMisVTTNR6bMT8mp+RejDz10EEzko7bRd33iA4Ou6U35OIdFBoGnRGawcnI09RaToUAghjPdT
+ eVPMdOi2vRdRSHk+sVJSBVowWYN6FpUBEMo7JQD6hki7+py3F45vZNdbW1Mt6xhMVrk4k+H5NHy
+ 2OTjAwBACtAJ7eGmUUKjI6IqX4iI0zs039aoq6c0XQW4g==
+Received-SPF: pass client-ip=46.105.72.194; envelope-from=clg@kaod.org;
+ helo=10.mo533.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,147 +135,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/24/2026 8:42 AM, Daniel P. Berrangé wrote:
-> CI is only exercising the qcow2 'auto' tests currently. As a result we
-> get no exposure of changes which cause regressions in other block format
-> drivers.
-> 
-> This adds new CI jobs for each block format, that will run the target
-> 'make check-block-$FORMAT'. The jobs are separate so that we have the
-> ability to make each format gating or not, depending on their level
-> of reliability.
-> 
-> The 'centos' image is used to run the I/O tests since several tests
-> have an implicit dependency on x86_64-softmmu, and thus break with
-> other architecture targets. The 'centos' build job is the only one
-> that creates the x86_64-softmmu target in CI. Ideally this target
-> portability in I/O tests would be fixed to avoid this limitation.
-> 
-> There is currently an undiagnosed failure of job 185 with the qcow2
-> when run in CI that is marked to be skipped, reported at:
-> 
->   https://gitlab.com/qemu-project/qemu/-/issues/3270
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->  .gitlab-ci.d/buildtest.yml | 98 ++++++++++++++++++++++++++++++++++++++
->  1 file changed, 98 insertions(+)
-> 
-> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-> index 4b1949a3a5..d4591d30e9 100644
-> --- a/.gitlab-ci.d/buildtest.yml
-> +++ b/.gitlab-ci.d/buildtest.yml
-> @@ -174,6 +174,104 @@ build-system-centos:
->        x86_64-softmmu rx-softmmu sh4-softmmu
->      MAKE_CHECK_ARGS: check-build
->  
-> +
-> +# NB: block-XXX jobs use 'centos' since that is the build
-> +# job that provides the x86_64-softmmu.  Some I/O tests
-> +# are currently buggy and blindly assume characteristics
-> +# of x86 (such as PCIe) causing failures with other arches
-> +
-> +block-luks:
-> +  extends: .native_test_job_template
-> +  needs:
-> +    - job: build-system-centos
-> +      artifacts: true
-> +  variables:
-> +    IMAGE: centos9
-> +    MAKE_CHECK_ARGS: check-block-luks
-> +
-> +block-nbd:
-> +  extends: .native_test_job_template
-> +  needs:
-> +    - job: build-system-centos
-> +      artifacts: true
-> +  variables:
-> +    IMAGE: centos9
-> +    MAKE_CHECK_ARGS: check-block-nbd
-> +
-> +block-parallels:
-> +  extends: .native_test_job_template
-> +  needs:
-> +    - job: build-system-centos
-> +      artifacts: true
-> +  variables:
-> +    IMAGE: centos9
-> +    MAKE_CHECK_ARGS: check-block-parallels
-> +
-> +block-qcow2:
-> +  extends: .native_test_job_template
-> +  needs:
-> +    - job: build-system-centos
-> +      artifacts: true
-> +  variables:
-> +    IMAGE: centos9
-> +    MAKE_CHECK_ARGS: check-block-qcow2
-> +    # https://gitlab.com/qemu-project/qemu/-/issues/3270
-> +    QEMU_TEST_IO_SKIP: qcow2:185
-> +
-> +block-qed:
-> +  extends: .native_test_job_template
-> +  needs:
-> +    - job: build-system-centos
-> +      artifacts: true
-> +  variables:
-> +    IMAGE: centos9
-> +    MAKE_CHECK_ARGS: check-block-qed
-> +
-> +block-raw:
-> +  extends: .native_test_job_template
-> +  needs:
-> +    - job: build-system-centos
-> +      artifacts: true
-> +  variables:
-> +    IMAGE: centos9
-> +    MAKE_CHECK_ARGS: check-block-raw
-> +
-> +block-vdi:
-> +  extends: .native_test_job_template
-> +  needs:
-> +    - job: build-system-centos
-> +      artifacts: true
-> +  variables:
-> +    IMAGE: centos9
-> +    MAKE_CHECK_ARGS: check-block-vdi
-> +
-> +block-vhdx:
-> +  extends: .native_test_job_template
-> +  needs:
-> +    - job: build-system-centos
-> +      artifacts: true
-> +  variables:
-> +    IMAGE: centos9
-> +    MAKE_CHECK_ARGS: check-block-vhdx
-> +
-> +block-vmdk:
-> +  extends: .native_test_job_template
-> +  needs:
-> +    - job: build-system-centos
-> +      artifacts: true
-> +  variables:
-> +    IMAGE: centos9
-> +    MAKE_CHECK_ARGS: check-block-vmdk
-> +
-> +block-vpc:
-> +  extends: .native_test_job_template
-> +  needs:
-> +    - job: build-system-centos
-> +      artifacts: true
-> +  variables:
-> +    IMAGE: centos9
-> +    MAKE_CHECK_ARGS: check-block-vpc
-> +
->  # Previous QEMU release. Used for cross-version migration tests.
->  build-previous-qemu:
->    extends: .native_build_job_template
+Hello,
 
-You may want to use a gitlab parallel matrix here, since it's basically
-a copy paste with driver name changed.
-And either you can set QEMU_TEST_IO_SKIP for all of them, or simply
-remove the broken test from tree.
+On 5/12/26 12:39, Alexander Hansen wrote:
+> Hi Cedric,
+> 
+> thanks for your ongoing review :)
 
-Regards,
-Pierrick
+yeah. It takes a few respins.
+
+> I sent v5, summary of changes:
+
+I see a v3.
+
+What's below would have been great in a cover letter ;)
+
+> - I CCd you and Titus on all the patches now.
+> - removed the backticks (markdown syntax) from my patches. I was used to this workflow since some other projects use commit linters which get tripped up by log outputs.
+> - restructured the series as you suggested (board, then functional test, then sensors)
+> - removed some unused includes on the machine file
+> - removed some unnecessary variables from the machine file
+> - linked to your github tree for the fw image for the functional test, since the image is now available there
+> - added new section for each sensor to the functional test with some command sequences and expected outputs
+> - added new entries in MAINTAINERS file for Titus for the individual sensors. Your maintenance of the fby4 seems to already be covered by existing regex.
+> 
+> Let me know in case there is extra tests i should write for the sensors other than the functional test.
+> 
+> I saw the tests/qtest/tmp105-test.c , would that be helpful for the new sensors as well to write a test like that?
+
+It is always useful to have, especially for covering corner cases
+in the model that are harder to exercise when running a full OS
+image. Some MMIO sequences are much easier to test in qtest than
+by building custom firmware for them. It really depends on the
+complexity and criticality of the model.
+
+Thanks,
+
+C.
+
 
