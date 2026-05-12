@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCFF4CD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 09:47:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14838CD4855
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 09:47:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMjhO-0004Nv-KZ; Tue, 12 May 2026 05:46:46 -0400
+	id 1wMjhd-0004Qk-H5; Tue, 12 May 2026 05:47:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
- id 1wMjhC-0004Mq-Kv
- for qemu-devel@nongnu.org; Tue, 12 May 2026 05:46:34 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1wMjhM-0004Ni-Eo
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 05:46:45 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
- id 1wMjhB-00010V-4b
- for qemu-devel@nongnu.org; Tue, 12 May 2026 05:46:34 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-82f8b60e54dso4203594b3a.2
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 02:46:32 -0700 (PDT)
+ id 1wMjhK-000155-M9
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 05:46:44 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-8353ca0f1f1so2707201b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 02:46:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778579192; x=1779183992; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778579201; x=1779184001; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ie/CRX9HgxQJIe7EyQji6JVrxvq1hEXjzqYVVL6RmW8=;
- b=UMyugTcTFzpVGiGvpAdvx4ri21gSyahhPwJ/mR4EznoPReXjY6QxRHlzz+XweLIEtG
- EjF/8+N1n4aB4kaGC8nEF7CrOxDYm6ft0RKvbLiTUr85Xe6WrFUPZyYem6xWhw72Zm5Z
- 1M1rr6Gjo2tmvJ/ei4GWWqDOoOucRwT9UVj0/LdjN6gbzdvj16HIcr9bLRjoLrrVzwDD
- +eYuPwcAmsBZQ+BI42O/zspcf+43OlE7Q4FuHcSVLqmV0+dcoql5Hz3B4X3wbsjQJ+Kt
- Z1BgO1UZJC9Ttmuvtl6sd9rscX8q5ucAY09a4/ZwTdAU11FY+ES3JiCHwjs8w6giA7AZ
- ziug==
+ bh=mLC10TUX2AfE6MDdbm1gzs+WcsKVviC2Px435/4TdUU=;
+ b=CfL6p6GSnP6FBHtrj+qz2XZ9NgH4ajqIq8wFwI33r6QEALIlXPryKsLvthVXLQI6eK
+ 8Tt1PGfp72zftOOs30Ia/Pu+YCaPi7nwm4wY7gml+WoqA2hkTiIggkBkz7zpEH/t8zYm
+ bJWwfRmjgsnk4o4ItmoQy1itwrcRg0OwrTk0BcUZCHq6WLa6zQEyxtCcAOVEHwxP+Rj7
+ FSceuP+E7DqwMlJShOfyWruv5yx3jOVduY9sNzuy5CbhQOfkGUOMADw+2c/t6p4m+Fca
+ IsfgWEZJIwiPK7SMjUFi0TI/DUaDSZ9Vq7hSgYe5/R6pSud64KmsXUe4hQEFCGQ8IkXj
+ /jOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778579192; x=1779183992;
+ d=1e100.net; s=20251104; t=1778579201; x=1779184001;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Ie/CRX9HgxQJIe7EyQji6JVrxvq1hEXjzqYVVL6RmW8=;
- b=Dd9p9UWpgyvogwd4O2/x+UnFFs6iaa9fwKJ/lsj86iv7kZCxZSn38350dVDN1d7fm9
- moYBcA1NzIkTBXGhwsm02Wil0x4exMV8jg9LEJQe52soJTBLLnbjUceE66lqbotPydGD
- rvdZxDS3ATpIK5Jh78mX+0/gFvRIfNZnDuIjbYzBrbJPqAZvckN/ABSFhhojBkciSTE9
- GqyGaxfSda1DU1BJ/+HGlPPAVjEeCXgRDN5dVjLYFGUsbFu5g+xfhfyx0UvadVQxJycj
- 638QPzUeDZgVHhS1KeRRqSRZDwlIbJDxdgUS43eZjxFi50upzxbiaMe4ZpUein02Pn3w
- Yfbg==
+ bh=mLC10TUX2AfE6MDdbm1gzs+WcsKVviC2Px435/4TdUU=;
+ b=S0tMve2Ae3ykjwYM/GYBCY2aBn7dBBbIpFTER2uXIqePevm6f2Hl2xhkMugMVjBXrf
+ Dnnbrm+EdIHH8MH/74I/IznCNAVQM9owtLknbDN6LZJTJfJiahe14uCEbxoHx7L3kr0L
+ BoCwTNvOL39BtLA3std31uxYULENIQCy/pjDqpARIGjkgFmjqM3Xfd7wr0vJqqvc5LLr
+ LlCzGZwSUoAHjloH1T09/i4E/Hm7+UKEkxj28uWRdz2mLgaqyIvYkgY1h6kIJN9VN0f3
+ VP4cY+WGcWb62XEkRyaP2+l2m2yths7JzqWwG8HN+EKiXhfA5hBEfc2pHg03/ukrK1tv
+ c1sA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/ZXcbTbg6vyNOK37meGdxjUWkEwxf21L1J5Yu9vgp45CHh56bHlPmfInH8R7vYJSGCfJdxrF/BZ46J@nongnu.org
-X-Gm-Message-State: AOJu0YxWXYU3DFL/QSoqppTV65fNZ+kqmxJbgmSHKUIQrogFpKs1mege
- vlCzHB/RaLnoFzMOG9gX5i0/TYoLCtb6f28uhs1p7/dSaL1PQ3DdkiEG
-X-Gm-Gg: Acq92OFPf75ckn5M0qID2iQXuoiGXrcEBFptg5uRmqdWeWelCAI8kcLZxPxfUHwo/SO
- SQb/SKm/kntfaodhzP1+dBHpPdB0tDwS4XHjmEsKB0Tpvcsph/2pEQAfhbUUpgWwwtPENH1ePNu
- 3WDbQgkynqGL3wd/vYM4hRWau406IMYAnGngkQ+lleN+Z3H6rp2NTlw16KnPgEmKzn9PKm7sOOT
- Gyz2qSeUBRJ7it+4l/mz5AGTMYQrqSD8E2xFXR6QW8cq2dn6wDlW96x3vSVlH+ZKoDX77o4xQZ+
- 7+vDo8lHuDU5RQaNvLMbmK1nxDSY1oiFJ2knZJwS4MwydViLvyezJp1M+aozCnB8LvyNF+ANvHj
- jbMCfFNcQ7tQ7PoCfwqp4cQX0AdvBwxZfavJWrP3BmXWk+1t8QkBHYpe7OgtyDaFWT0VUgmZlC1
- yO2ITU+mJFm2AEYmN5UV5Znd7vim0zQH7Du07GMbtj8p7XMsp0aRgjVd8lbCmI+r9z1jifXDOCQ
- 6Q7B9uFQXBCKvbQ6/k7pS05/OAIrZTSsg==
-X-Received: by 2002:a05:6a00:bb8d:b0:82c:6683:b866 with SMTP id
- d2e1a72fcca58-83e39150f30mr13472303b3a.4.1778579191725; 
- Tue, 12 May 2026 02:46:31 -0700 (PDT)
+ AFNElJ9jty3iAZgoQ99BPl7dMx8H2DSCp8fWOL+4AzMBtm9hPdzQ0SaHxULTZ0BVqaoEP8bZ/1dGKGIfR8iU@nongnu.org
+X-Gm-Message-State: AOJu0YwkMLZ5bFvUXcEu3WEwezzx7RqamKjKo9pj3HEy39xOhn8+oJLY
+ t9kRNw7KtW/1kBJhhRaHr0dfmbyCsIshY6jL7Q9xrIOvl/6+t15KFhao
+X-Gm-Gg: Acq92OH0vdUpBkT5i/iQI0RiTOD9ZVR5Bax7WKolM50+cqnk5Cj8V0m3bzkv17HI/NQ
+ FnI3a0G3uw9sc+YFYVJT9pP9xCP2TbJAE6alGXQrulHtllYsVsfqfQNBZxrVvsgkOfywdziqqO4
+ n2kr1ljaTkJpNKlLWx6Y93fLROuCOZz47gwNmV4F5m0UF13EJxttR3+WX0+l3QkFbHhwmUE92JS
+ SPSXSdasmteL2k10ONGx/Psp+8zx+G9CN+yDO/zD7RWh6fsUOsP6EoMtTN0nWBs6vh54B8A96To
+ 51oWQ+0BsemaCHns+1+Yto0EW70oRVykwBuyK5uxASz6QwvvNmOjK43nFEb1iwKPqSDXEWtp8Co
+ you8JXI1ERbSjHJBm1VWHONU8cpDOq3sVI2mOBmIFb73fqcfpd5yvCntoIgPAcNaGXOgaFk/HAE
+ cI3PiLmWKo0erY3Aa4XqLPeOMPG34+RWFw0WAxVSox48kSZ99C6u5+KxC0AR2Ba9x9Aj0mnF9VF
+ XHX2uLSJbh4oy/79bKhaFypFer43yoDvw==
+X-Received: by 2002:a05:6a00:4484:b0:82f:6cb3:645a with SMTP id
+ d2e1a72fcca58-83ee840bc04mr3308773b3a.31.1778579201282; 
+ Tue, 12 May 2026 02:46:41 -0700 (PDT)
 Received: from visitorckw-work01.c.googlers.com.com
  (32.237.80.34.bc.googleusercontent.com. [34.80.237.32])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-839682aba01sm22960593b3a.55.2026.05.12.02.46.28
+ d2e1a72fcca58-839682aba01sm22960593b3a.55.2026.05.12.02.46.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 May 2026 02:46:31 -0700 (PDT)
+ Tue, 12 May 2026 02:46:40 -0700 (PDT)
 From: Kuan-Wei Chiu <visitorckw@gmail.com>
 To: pbonzini@redhat.com, marcandre.lureau@redhat.com, palmer@dabbelt.com,
  alistair.francis@wdc.com, christoph.muellner@vrull.eu
@@ -75,23 +75,23 @@ Cc: liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
  zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
  jserv@ccns.ncku.edu.tw, eleanor15x@gmail.com, qemu-devel@nongnu.org,
  qemu-riscv@nongnu.org, Kuan-Wei Chiu <visitorckw@gmail.com>
-Subject: [PATCH RFC 1/5] target/riscv: Add stubs for T-Head PMU CSRs
-Date: Tue, 12 May 2026 09:46:09 +0000
-Message-ID: <20260512094614.3464388-2-visitorckw@gmail.com>
+Subject: [PATCH RFC 3/5] hw/misc: Add Sophgo CV1800B clock controller
+Date: Tue, 12 May 2026 09:46:11 +0000
+Message-ID: <20260512094614.3464388-4-visitorckw@gmail.com>
 X-Mailer: git-send-email 2.54.0.563.g4f69b47b94-goog
 In-Reply-To: <20260512094614.3464388-1-visitorckw@gmail.com>
 References: <20260512094614.3464388-1-visitorckw@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=visitorckw@gmail.com; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=visitorckw@gmail.com; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,83 +107,197 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T-Head CPUs use custom CSRs for performance monitoring, specifically
-mcounterinten (0x7ca) and mcounterof (0x7cb).
+Add a stub for the CV1800B clock controller. This is specifically
+required for the SDHCI controller to function correctly under Linux.
 
-Since we don't implement these custom PMU registers yet, the system
-crashes with an illegal instruction trap when OpenSBI like this:
+The Linux 'sophgo,cv1800-clk' driver probes this device to determine
+the clock tree configuration. This implementation sets the bypass
+registers (CLK_BYP_0 and CLK_BYP_1) to 0xFFFFFFFF during reset,
+matching the POR default state. This bypasses the PLLs and allows the
+SDHCI and other peripherals to operate using the 25MHz reference clock.
 
-system_opcode_insn: Failed to access CSR 0x7ca from M-mode
-sbi_trap_error: hart0: trap1: illegal instruction handler failed (error -1)
+Without this device, the SD card driver fails to initialize, preventing
+the system from mounting the root filesystem from the SD card:
 
-Add simple read/write stubs for these two CSRs. By silently ignoring
-writes and returning 0 on reads, we prevent the fatal exceptions and
-allow to continue normally.
+[    0.888739] Waiting for root device /dev/mmcblk0...
+[   10.727739] mmc0: Timeout waiting for hardware cmd interrupt.
+[   10.728042] mmc0: sdhci: ============ SDHCI REGISTER DUMP ===========
+[   10.728356] mmc0: sdhci: Sys addr:  0x00000002 | Version:  0x00002402
+[   10.728618] mmc0: sdhci: Blk size:  0x00000000 | Blk cnt:  0x00000000
+[   10.728919] mmc0: sdhci: Argument:  0x00000000 | Trn mode: 0x00000000
+[   10.729271] mmc0: sdhci: Present:   0x01ff0000 | Host ctl: 0x00000001
+[   10.729591] mmc0: sdhci: Power:     0x0000000f | Blk gap:  0x00000000
+[   10.729903] mmc0: sdhci: Wake-up:   0x00000000 | Clock:    0x00000000
+[   10.730223] mmc0: sdhci: Timeout:   0x00000000 | Int stat: 0x00000000
+[   10.730537] mmc0: sdhci: Int enab:  0x00ff0083 | Sig enab: 0x00ff0083
+[   10.730795] mmc0: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
+[   10.731005] mmc0: sdhci: Caps:      0x056900b9 | Caps_1:   0x00000000
+[   10.731211] mmc0: sdhci: Cmd:       0x00000000 | Max curr: 0x00000000
+[   10.731415] mmc0: sdhci: Resp[0]:   0x00000000 | Resp[1]:  0x00000000
+[   10.731636] mmc0: sdhci: Resp[2]:   0x00000000 | Resp[3]:  0x00000000
+[   10.731851] mmc0: sdhci: Host ctl2: 0x00000000
+[   10.732018] mmc0: sdhci: ADMA Err:  0x00000000 | ADMA Ptr: 0x00000000
+[   10.732229] mmc0: sdhci: ============================================
 
 Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
 ---
- target/riscv/th_csr.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ hw/misc/Kconfig               |  3 ++
+ hw/misc/cv1800b_clk.c         | 89 +++++++++++++++++++++++++++++++++++
+ hw/misc/meson.build           |  1 +
+ include/hw/misc/cv1800b_clk.h | 24 ++++++++++
+ 4 files changed, 117 insertions(+)
+ create mode 100644 hw/misc/cv1800b_clk.c
+ create mode 100644 include/hw/misc/cv1800b_clk.h
 
-diff --git a/target/riscv/th_csr.c b/target/riscv/th_csr.c
-index 49eb7bbab5..b095364c31 100644
---- a/target/riscv/th_csr.c
-+++ b/target/riscv/th_csr.c
-@@ -21,12 +21,19 @@
- #include "cpu_vendorid.h"
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index 99bdf09219..42cdf771a4 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -254,4 +254,7 @@ config IOSB
+ config XLNX_VERSAL_TRNG
+     bool
  
- #define CSR_TH_SXSTATUS 0x5c0
-+#define CSR_TH_MCOUNTERINTEN 0x7ca
-+#define CSR_TH_MCOUNTEROF    0x7cb
- 
- /* TH_SXSTATUS bits */
- #define TH_SXSTATUS_UCME        BIT(16)
- #define TH_SXSTATUS_MAEE        BIT(21)
- #define TH_SXSTATUS_THEADISAEE  BIT(22)
- 
-+static RISCVException mmode(CPURISCVState *env, int csrno)
++config SOPHGO_CV1800B_CLK
++    bool
++
+ source macio/Kconfig
+diff --git a/hw/misc/cv1800b_clk.c b/hw/misc/cv1800b_clk.c
+new file mode 100644
+index 0000000000..738f0910db
+--- /dev/null
++++ b/hw/misc/cv1800b_clk.c
+@@ -0,0 +1,89 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * Sophgo CV1800B Clock Controller
++ *
++ * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "hw/misc/cv1800b_clk.h"
++
++#define REG_CLK_BYP_0  (0x030 / 4)
++#define REG_CLK_BYP_1  (0x034 / 4)
++
++static uint64_t cv1800b_clk_read(void *opaque, hwaddr addr, unsigned int size)
 +{
-+    return RISCV_EXCP_NONE;
++    CV1800BClkState *s = opaque;
++    uint32_t val = 0;
++
++    if ((addr / 4) < ARRAY_SIZE(s->regs)) {
++        val = s->regs[addr / 4];
++    }
++
++    return val;
 +}
 +
- static RISCVException smode(CPURISCVState *env, int csrno)
- {
-     if (riscv_has_ext(env, RVS)) {
-@@ -49,11 +56,34 @@ static RISCVException read_th_sxstatus(CPURISCVState *env, int csrno,
-     return RISCV_EXCP_NONE;
- }
- 
-+static RISCVException read_th_pmu(CPURISCVState *env, int csrno,
-+                                  target_ulong *val)
++static void cv1800b_clk_write(void *opaque, hwaddr addr, uint64_t val, unsigned int size)
 +{
-+    *val = 0;
-+    return RISCV_EXCP_NONE;
++    CV1800BClkState *s = opaque;
++
++    if ((addr / 4) < ARRAY_SIZE(s->regs)) {
++        s->regs[addr / 4] = val;
++    }
 +}
 +
-+static RISCVException write_th_pmu(CPURISCVState *env, int csrno,
-+                                   target_ulong val, uintptr_t retaddr)
-+{
-+    return RISCV_EXCP_NONE;
-+}
-+
- const RISCVCSR th_csr_list[] = {
-     {
-         .csrno = CSR_TH_SXSTATUS,
-         .insertion_test = test_thead_mvendorid,
-         .csr_ops = { "th.sxstatus", smode, read_th_sxstatus }
-     },
-+    {
-+        .csrno = CSR_TH_MCOUNTERINTEN,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcounterinten", mmode, read_th_pmu, write_th_pmu }
++static const MemoryRegionOps cv1800b_clk_ops = {
++    .read = cv1800b_clk_read,
++    .write = cv1800b_clk_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 4,
 +    },
-+    {
-+        .csrno = CSR_TH_MCOUNTEROF,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcounterof", mmode, read_th_pmu, write_th_pmu }
-+    },
-     { }
- };
++};
++
++static void cv1800b_clk_reset_hold(Object *obj, ResetType type)
++{
++    CV1800BClkState *s = CV1800B_CLK(obj);
++
++    memset(s->regs, 0, sizeof(s->regs));
++
++    /*
++     * TODO: Implement proper PLL state machines.
++     * For now, use POR default to bypass PLLs and boot via 25MHz XTAL.
++     */
++    s->regs[REG_CLK_BYP_0] = 0xFFFFFFFF;
++    s->regs[REG_CLK_BYP_1] = 0xFFFFFFFF;
++}
++
++static void cv1800b_clk_init(Object *obj)
++{
++    CV1800BClkState *s = CV1800B_CLK(obj);
++
++    memory_region_init_io(&s->iomem, obj, &cv1800b_clk_ops, s,
++                            TYPE_CV1800B_CLK, 0x1000);
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->iomem);
++}
++
++static void cv1800b_clk_class_init(ObjectClass *klass, const void *data)
++{
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    rc->phases.hold = cv1800b_clk_reset_hold;
++}
++
++static const TypeInfo cv1800b_clk_info = {
++    .name = TYPE_CV1800B_CLK,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(CV1800BClkState),
++    .instance_init = cv1800b_clk_init,
++    .class_init = cv1800b_clk_class_init,
++};
++
++static void cv1800b_clk_register_types(void)
++{
++    type_register_static(&cv1800b_clk_info);
++}
++
++type_init(cv1800b_clk_register_types)
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 245ab9b98c..a4c5f90cd8 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -35,6 +35,7 @@ system_ss.add(when: 'CONFIG_SIFIVE_E_PRCI', if_true: files('sifive_e_prci.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_E_AON', if_true: files('sifive_e_aon.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_U_OTP', if_true: files('sifive_u_otp.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_U_PRCI', if_true: files('sifive_u_prci.c'))
++system_ss.add(when: 'CONFIG_SOPHGO_CV1800B_CLK', if_true: files('cv1800b_clk.c'))
+ 
+ subdir('macio')
+ 
+diff --git a/include/hw/misc/cv1800b_clk.h b/include/hw/misc/cv1800b_clk.h
+new file mode 100644
+index 0000000000..05c0d1ca1b
+--- /dev/null
++++ b/include/hw/misc/cv1800b_clk.h
+@@ -0,0 +1,24 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * Sophgo CV1800B Clock Controller
++ *
++ * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
++ */
++
++#ifndef HW_MISC_CV1800B_CLK_H
++#define HW_MISC_CV1800B_CLK_H
++
++#include "hw/core/sysbus.h"
++#include "qom/object.h"
++
++#define TYPE_CV1800B_CLK "cv1800b-clk"
++OBJECT_DECLARE_SIMPLE_TYPE(CV1800BClkState, CV1800B_CLK)
++
++struct CV1800BClkState {
++    SysBusDevice parent_obj;
++
++    MemoryRegion iomem;
++    uint32_t regs[0x1000 / 4];
++};
++
++#endif
 -- 
 2.54.0.563.g4f69b47b94-goog
 
