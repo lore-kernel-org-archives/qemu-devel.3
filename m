@@ -4,51 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A04ACD343F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 857AACD4F21
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:31:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuVl-0002T2-T5; Tue, 12 May 2026 17:19:30 -0400
+	id 1wMuRh-0000Vm-S5; Tue, 12 May 2026 17:15:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuVT-0001xi-1E; Tue, 12 May 2026 17:19:11 -0400
+ id 1wMuRb-0008Mt-Br; Tue, 12 May 2026 17:15:11 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuVL-0007w9-Df; Tue, 12 May 2026 17:19:08 -0400
+ id 1wMuRZ-00067K-9P; Tue, 12 May 2026 17:15:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619497; bh=0Ltl0SagAImtq57f08x0TRCYzKEAteLzaVQ/6BXHgWo=;
+ t=1778619305; bh=dm3H42c1x7JUzSv5Jkh42Fx0cbWalHn8RfvTCoAk7zE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=LxDc5mfijk1+tiQHHLq4lcYz8G80+D7SYvjHNdPUCS/WFlQCqoMAc6IQFpSIdp+B3
- SNpr8CRnPIIomJjY/g7ffB+Xy4ANF7pZqPg9LVe6Iqf524DJgUosVfMQhrkNt7nupb
- wFPI4hdLQcCN+PNMndBhRyw+ahjK0WVidPi4Mc8+nA9ZjvF3COLLsCx+tlH3Yz22Ij
- 9EkvuscH2zp5UTpWvvFQ3IW73NtWhi2wCQncfXD7dVLlifuL7/CC6d53rPXomPwEoQ
- q6vFBAiWETgb0FDzx2uDEiTmXXrj1PJx5snXCIRJLgADeoPFesu6NJbsmSLAQDGzjL
- wSp/KQVrKQhLQ==
+ b=erj9h2HgcEyRiSCIHdYo6gN1Ith3/XZHcRkPGiyAbf4CVuopxWMmZm3S3AjAFtqGR
+ q9zPSa6+sw/ZWNvL4ZXWHxelbFcE9Mmsatl54h9yykU8tzbtgglES74u1P24ChSYET
+ kuKo0COXVINNZ1VSrGHgwQG76ZglNyJzR5g3zh8W1iqUIqt3e3fBFXXHM11AlVqizm
+ yepy7tdzlGOGfzSCHXwHXgA43tKGj0wobUh608GahOWvrXTRQakYc01X1pxOo1o07o
+ 9ctIH6ELLIbr3sv4B5vPj8GQ9vWoMQVCcgXOtpQm1crEWHWWkPB3vx5kgOzyEG/CJb
+ SO02VjJs1K85w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B04131AA3D7;
- Tue, 12 May 2026 23:58:17 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id ECF7B1AA39A;
+ Tue, 12 May 2026 23:55:05 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id BB67B3ABD2F;
- Tue, 12 May 2026 23:58:21 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0228E3ABD09;
+ Tue, 12 May 2026 23:55:10 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+Cc: qemu-stable@nongnu.org, Yicong Yang <yang.yicong@picoheart.com>,
+ Andrew Jones <andrew.jones@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 12/58] hw/display: don't accidentally autofree
- existing virgl resources
-Date: Tue, 12 May 2026 23:57:33 +0300
-Message-ID: <20260512205820.361821-12-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 092/117] hw/riscv/virt-acpi-build.c: Use kvm timer
+ frequency when kvm enabled
+Date: Tue, 12 May 2026 23:54:34 +0300
+Message-ID: <20260512205503.361097-92-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
-References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,55 +71,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Yicong Yang <yang.yicong@picoheart.com>
 
-While sanity checking a create blob operation the use of the auto
-freed res variable could lead to inadvertently freeing an existing
-blob.
+The timer frequency is decided by the host(kvm) rather than a fixed
+RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ on kvm accelerated VM. So build
+RCHT with KVM provided timer frequency if KVM is enabled, just like
+how we build the timer node on DT based VM.
 
-Avoid this by in-lining the virtio_gpu_virgl_find_resource() check as
-the value is not needed anyway.
-
-While at it add a comment to the end and use g_steal_pointer to make
-it clearer the object lifetime exceeds the function bounds if we pass
-all the checks.
-
-Fixes: CVE-2026-6502
-Fixes: 7c092f17cce (virtio-gpu: Handle resource blob commands)
-Message-ID: 20260417094443.785462-1-alex.bennee@linaro.org
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-stable@nongnu.org
-Message-ID: <20260417122703.845442-1-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-(cherry picked from commit 30fad722ce68316d22b926ba0e6017f0440465df)
+Fixes: ebfd39289370 ("hw/riscv/virt: virt-acpi-build.c: Add RHCT Table")
+Signed-off-by: Yicong Yang <yang.yicong@picoheart.com>
+Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
+Message-ID: <20260325081314.57089-1-yang.yicong@picoheart.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 4cb2f91773e8ec9511002de851734820f7ba64fe)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index b7a2d160dd..add85bd4e6 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -830,8 +830,7 @@ static void virgl_cmd_resource_create_blob(VirtIOGPU *g,
-         return;
-     }
+diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+index f1406cb683..fd6ca5dbc4 100644
+--- a/hw/riscv/virt-acpi-build.c
++++ b/hw/riscv/virt-acpi-build.c
+@@ -35,9 +35,11 @@
+ #include "hw/riscv/virt.h"
+ #include "hw/riscv/numa.h"
+ #include "hw/virtio/virtio-acpi.h"
++#include "kvm/kvm_riscv.h"
+ #include "migration/vmstate.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
++#include "system/kvm.h"
+ #include "system/reset.h"
  
--    res = virtio_gpu_virgl_find_resource(g, cblob.resource_id);
--    if (res) {
-+    if (virtio_gpu_virgl_find_resource(g, cblob.resource_id)) {
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: resource already exists %d\n",
-                       __func__, cblob.resource_id);
-         cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
-@@ -884,8 +883,9 @@ static void virgl_cmd_resource_create_blob(VirtIOGPU *g,
+ #define ACPI_BUILD_TABLE_SIZE             0x20000
+@@ -296,7 +298,10 @@ static void build_rhct(GArray *table_data,
  
-     res->base.dmabuf_fd = info.fd;
+     /* Time Base Frequency */
+     build_append_int_noprefix(table_data,
+-                              RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ, 8);
++                              kvm_enabled() ?
++                              kvm_riscv_get_timebase_frequency(&s->soc->harts[0]) :
++                              RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ,
++                              8);
  
-+    /* Now live, cleaned up in virtio_gpu_virgl_resource_unref */
-     QTAILQ_INSERT_HEAD(&g->reslist, &res->base, next);
--    res = NULL;
-+    g_steal_pointer(&res);
- }
- 
- static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
+     /* ISA + N hart info */
+     num_rhct_nodes = 1 + ms->smp.cpus;
 -- 
 2.47.3
 
