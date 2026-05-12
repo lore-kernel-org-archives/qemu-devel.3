@@ -4,118 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 539BCCD4F24
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 15:12:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4DEBCD4851
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 15:14:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMomo-0004yj-8U; Tue, 12 May 2026 11:12:42 -0400
+	id 1wMooR-0005gF-JE; Tue, 12 May 2026 11:14:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wMomm-0004yJ-Om
- for qemu-devel@nongnu.org; Tue, 12 May 2026 11:12:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1wMooO-0005fj-Qp
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 11:14:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wMomk-00066a-VU
- for qemu-devel@nongnu.org; Tue, 12 May 2026 11:12:40 -0400
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1wMooN-0006xU-1h
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 11:14:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778598757;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xHAgB6HV5/4LAPiF6vh00PMIU5wdo+azoQixOlaMg7A=;
- b=VMbtqDpZprd/EPO6PXsZMlcTQKNeOCwoW4I1876L1xEHhPDRxtaAgiaerQfIzPAGWVN+Ey
- cPUQPda/IqlhQJPOckXHt5RQSwAswTihC1tMlwWCEgxf//B5X0SJYqCGaelm7Vmxl7nThQ
- XXSzydgV2b+MoaJD8YHLytfd2Qxw0dE=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ s=mimecast20190719; t=1778598857;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=4ipTl8SxHF2BtSH0nCWnuSQlDSFAuLUpgjGujTX8sr4=;
+ b=Pxn6ClV4Z/RfE8qCcQ2Ce2m3LMErQLo7YaE9Q/hnNPYVEjeWgxluYrymvb1JgnSKOksZpb
+ /bZ63LpQHJKavMUPj/+oweafBGGC/Dx8WazBy8CDJckxofz3Ee87ttzEHKWL3aG8+sh7Ww
+ +YoE2Zj0jqy1azunszc+ln48N0q4VKs=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-13-p4r5YNk2MDCwn2OwLgaivA-1; Tue, 12 May 2026 11:12:35 -0400
-X-MC-Unique: p4r5YNk2MDCwn2OwLgaivA-1
-X-Mimecast-MFC-AGG-ID: p4r5YNk2MDCwn2OwLgaivA_1778598754
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-441243ba35fso4561552f8f.0
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 08:12:35 -0700 (PDT)
+ us-mta-594-IqKO9NxRMFCpe1Ye5SDrhA-1; Tue, 12 May 2026 11:14:16 -0400
+X-MC-Unique: IqKO9NxRMFCpe1Ye5SDrhA-1
+X-Mimecast-MFC-AGG-ID: IqKO9NxRMFCpe1Ye5SDrhA_1778598855
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-48d0677b5f7so31983895e9.1
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 08:14:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1778598855; x=1779203655; darn=nongnu.org;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=4ipTl8SxHF2BtSH0nCWnuSQlDSFAuLUpgjGujTX8sr4=;
+ b=ktdAiNGPWa1jiRr/HheEeB/6fztKl0olKuvzmENWt+uHEZ3wEPO3GLV2+1+uGZvT9x
+ dXagsg7rwzUj4p/ODm1S8SVGD/ni3tlpCUWfFZyDaDt0Ctp0dPtflgXWCG1w3ONaO8HA
+ l2TdeTdWinsSUo09sZ/A6kj0qSkH3wCGaufNUwb02bxS6LwRQQeJ+Ddnvv1PryGmu9f7
+ nhztaegpCDxbYbtIvCuaksbs4bhOjcIbp0YZCWo6iaZos49pAD6bPM628sMK1BQxPJ1t
+ R6IEM6dVjbtdosWGr9UN5d6ZgqBkwaZLEAHAGsbFlCU/UIWcsfcmaWWYe4W1WWBLr+33
+ GJqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778598754; x=1779203554;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1778598855; x=1779203655;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xHAgB6HV5/4LAPiF6vh00PMIU5wdo+azoQixOlaMg7A=;
- b=TwFCuCEDq1hYN24KOZ4wzo7Ie8C+0bCQP4igRk//vQIjUhSjAXYRTjw40EI5aPdR8C
- MG6STYB3Z8dqR9q/geXSMLbfXTyKRoeWE+auh4qrPM764tFcVi5SZhdha76DvfTuWMP9
- SlR3aBJjgMo90eADpzYxCjjew2f0mYhP/XJhNxJwVC91nR/MUMOJNK96rGzj0RtysgAe
- B8+ZvEGSIKmDphrtDQUpxqU8JRqpb/ceaGbizHYxMDsDZFcc0eswDl0yCsJvJ7EEiWM5
- N5Rk/5aC1IZXdkG2km2pvwziH72eiDwl2ZxaHbFBPLVdq1CRkGbWGhzWkFvM779j7hpq
- 6wgw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9ZSq6/D3CvGz/M8XAeFOwLow6cDge/ugPAa7S0JxmF5YLORh2nBoIaQiShTt/siqyzuRhgokCDCaFC@nongnu.org
-X-Gm-Message-State: AOJu0YxCQbM0a36LMyIVMFW23n+FzqVoh/R6Dud07wDrHAk3ZvAOg6Kv
- aWvWhWFCgCzdI021S3/9dJSSsfGZhX5hVTANcZDfOK+OukEsT4UNP/LpH2HggG2ORpl1bMYTiuC
- vSL7m2YTZsLW+inqLtfaEZmQ8TY5NkCE/Y9vBjGNs9YKuRUfBeQ9TuzH4
-X-Gm-Gg: Acq92OGc4NrV7I+khsukpyrjPKxAH4PDc40TZ+K+GIUbT9tZlffG3KUhM1WCuI9lAy+
- 4hNB5cMSKJuedrhE8lfuZ/5XfJ9QLkcb2lLnukCoUPHC5YVAhloDygDoKb2PGXDJ/Uexn6Iq+zR
- PoSudXNV1g87Pled0YhJtLqAqXAccs0tYV38txDMm/4gAKMv3TqoC2br0V4VaIHchbs7Sgr+4TY
- jR3nZLRO9wBXgi0m5WLCMg0gtyR7NPSF6pFtlUqZRhvTigorLcXHdEjYgvqyfaAi3Cyy8zc2VGo
- oQOk0qlimFOrO4W02pUTMm9tETHti10p8HQFgyEZRmPYP/gNJBoHDV+mlgept9zFPR0TKtMDROm
- l6MtD+NJCrrQyVHLhjsZesAaFO7QWaTlzfkVL0VMty3AXOE2cBAM+iND1kLDRHUSt7YkLaA==
-X-Received: by 2002:a05:600c:8214:b0:48a:6268:18a9 with SMTP id
- 5b1f17b1804b1-48e706b262amr240043375e9.13.1778598754004; 
- Tue, 12 May 2026 08:12:34 -0700 (PDT)
-X-Received: by 2002:a05:600c:8214:b0:48a:6268:18a9 with SMTP id
- 5b1f17b1804b1-48e706b262amr240042675e9.13.1778598753531; 
- Tue, 12 May 2026 08:12:33 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ bh=4ipTl8SxHF2BtSH0nCWnuSQlDSFAuLUpgjGujTX8sr4=;
+ b=HFikL0I59pGRY5Mfr3xIIONW6DedIp/S66lzrfFWz4K9anKmaVaqHjPhbj05tID/3+
+ xNDLaY3XXaWQ/xqTVgUlvSq2M5JHzXmnO8x9cR+3J0t5zQ1bo2szoksImXiQbIH+YS4X
+ nAXgZvGaM3BKqSdVQOgj1E4BLeYjhBohgJjSic01/5DEekRjkhY/aeN7UgfyrWZgl6Jq
+ aM16zac4/qIydRXwFdGf8YablFs+D6zVk8tk+/vlrVjzd/XEMtlAvQRXP6N/7z83nPzd
+ BxxjQXHxg4AC2B8hBN2c8areUtsrvrQ3GCuKknvzFboUYfZZ+NOQ67qvGHBUoy8gJ03M
+ f0Wg==
+X-Gm-Message-State: AOJu0Yy/QKXvK0IgB7tbiXL6NMwm1HRPRBaDXDEc/7TFeuXhXMDZ8/U5
+ PIXJnxVVxk5pcPAqMFbEbVsPKuvOoL4iTUPogeAp014IyUZBM6WLI+LyB5bNCayWH4Ay/247unb
+ 1daLUaE4nJVWmFz00MuQUh74JLE7JdSf3aKoxW+ImXItZXhwp4Y6K2Nh3
+X-Gm-Gg: Acq92OHkMT4Dws381W42s7wh93ARJTljHnogLa62JNdPp7lU8w8cF1qG0A4DdZpFz1w
+ psQGjDHGFJSxPN9trUjFn67nQuV3AA5ZTTLHIaG9B401woV2SxJL6YKXsWPGq7HUgjfZ7sNohCh
+ AyecQU4r51ZsekoGhFPvNVO4EdhFo0dWCFDMZbRqqpr58Y3X/ZzWNOg4pfT2ANI3FS9f2B6et5H
+ EghasTomxARtnSuyyL1jOaNOnzSkfrWosA7BcgKeo8/ctTcwpVdvgePOFYGsloyr6zdlnhfZ7j6
+ FVJcI5DBcBP1NUCPPaQbKTCWVXLX8VaT/W/bdJvOhVYHMpyyK28Tm0yWUByEVs5BI9EAN13B6Me
+ C8qCdfpaEE9hbc7UKvnARfImKmziQXkFhlEK5MWTUZlKPfK4RRHRG4TSkQRI5o0HSAZgD9yA2KF
+ A9HtlTWggcGKpUyDdE
+X-Received: by 2002:a05:600c:c166:b0:48a:93f8:dd02 with SMTP id
+ 5b1f17b1804b1-48e8fe7227cmr54459615e9.14.1778598854800; 
+ Tue, 12 May 2026 08:14:14 -0700 (PDT)
+X-Received: by 2002:a05:600c:c166:b0:48a:93f8:dd02 with SMTP id
+ 5b1f17b1804b1-48e8fe7227cmr54459065e9.14.1778598854441; 
+ Tue, 12 May 2026 08:14:14 -0700 (PDT)
+Received: from lleonard-thinkpadx1carbongen13.rmtit.csb ([176.206.19.176])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45491f8d4c3sm33029374f8f.34.2026.05.12.08.12.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 May 2026 08:12:33 -0700 (PDT)
-Message-ID: <7678a671-db5e-43dc-b38f-1376bb0459e9@redhat.com>
-Date: Tue, 12 May 2026 17:12:30 +0200
+ 5b1f17b1804b1-48e8f410558sm39968055e9.5.2026.05.12.08.14.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 May 2026 08:14:13 -0700 (PDT)
+From: Luigi Leonardi <leonardi@redhat.com>
+Date: Tue, 12 May 2026 17:14:12 +0200
+Subject: [PATCH] hw/i386/microvm: Add IGVM support
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 08/17] target/arm/kvm: Introduce
- kvm_get_writable_id_regs
-Content-Language: en-US
-To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
- "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "cohuck@redhat.com" <cohuck@redhat.com>,
- "sebott@redhat.com" <sebott@redhat.com>,
- "philmd@linaro.org" <philmd@linaro.org>
-Cc: "maz@kernel.org" <maz@kernel.org>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>,
- "abologna@redhat.com" <abologna@redhat.com>,
- "jdenemar@redhat.com" <jdenemar@redhat.com>
-References: <20260503073541.790215-1-eric.auger@redhat.com>
- <20260503073541.790215-9-eric.auger@redhat.com>
- <CH3PR12MB75488AAC8601BD74D6095FA6AB3C2@CH3PR12MB7548.namprd12.prod.outlook.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <CH3PR12MB75488AAC8601BD74D6095FA6AB3C2@CH3PR12MB7548.namprd12.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Message-Id: <20260512-microvm_igvm-v1-1-8b1fd8861235@redhat.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3MQQqAIBBA0avIrBOcASO6SkSIjTULMxQkkO6et
+ HyL/xsUzsIFZtUgc5Ui6erAQYE/3XWwlr0byNBoLJKO4nOqcZOjRu0o2GlE9B4N9OTOHOT5d8v
+ 6vh9X2UWRXgAAAA==
+X-Change-ID: 20260512-microvm_igvm-a2f58611cc10
+To: qemu-devel@nongnu.org
+Cc: Sergio Lopez <slp@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Gerd Hoffmann <kraxel@redhat.com>, Oliver Steffen <osteffen@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, 
+ Luigi Leonardi <leonardi@redhat.com>
+X-Mailer: b4 0.14.3
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=leonardi@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,174 +122,74 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The IGVM infrastructure operates on X86MachineState and is already
+machine-type-agnostic, but the "igvm-cfg" QOM property is only
+registered on the PC machine type. Register it on microvm as well.
 
+When an IGVM file is configured, the firmware image is provided as
+a payload of the IGVM file so skip loading the default BIOS.
 
-On 5/7/26 12:07 PM, Shameer Kolothum Thodi wrote:
->
->> -----Original Message-----
->> From: Eric Auger <eric.auger@redhat.com>
->> Sent: 03 May 2026 08:33
->> To: eric.auger.pro@gmail.com; eric.auger@redhat.com; qemu-
->> devel@nongnu.org; qemu-arm@nongnu.org; kvmarm@lists.linux.dev;
->> peter.maydell@linaro.org; richard.henderson@linaro.org;
->> cohuck@redhat.com; sebott@redhat.com; Shameer Kolothum Thodi
->> <skolothumtho@nvidia.com>; philmd@linaro.org
->> Cc: maz@kernel.org; oliver.upton@linux.dev; pbonzini@redhat.com;
->> armbru@redhat.com; berrange@redhat.com; abologna@redhat.com;
->> jdenemar@redhat.com
->> Subject: [PATCH v4 08/17] target/arm/kvm: Introduce
->> kvm_get_writable_id_regs
->>
->> External email: Use caution opening links or attachments
->>
->>
->> From: Cornelia Huck <cohuck@redhat.com>
->>
->> Add an helper to retrieve the writable id reg bitmask. The
->> status of the query is stored in the CPU struct so that an
->> an error, if any, can be reported on vcpu realize().
->>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
->> ---
->>  target/arm/cpu.h     | 26 ++++++++++++++++++++++++++
->>  target/arm/kvm.c     | 32 ++++++++++++++++++++++++++++++++
->>  target/arm/kvm_arm.h |  3 +++
->>  3 files changed, 61 insertions(+)
->>
->> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
->> index be14a47c35..2aa22360d2 100644
->> --- a/target/arm/cpu.h
->> +++ b/target/arm/cpu.h
->> @@ -866,6 +866,26 @@ typedef struct {
->>      uint32_t map, init, supported;
->>  } ARMVQMap;
->>
->> +typedef enum ARMIdRegsState {
->> +    WRITABLE_ID_REGS_UNKNOWN,
->> +    WRITABLE_ID_REGS_NOT_DISCOVERABLE,
->> +    WRITABLE_ID_REGS_FAILED,
->> +    WRITABLE_ID_REGS_AVAIL,
->> +} ARMIdRegsState;
->> +
->> +/*
->> + * The following structures are for the purpose of mapping the output of
->> + * KVM_ARM_GET_REG_WRITABLE_MASKS that also may cover id registers
->> we do
->> + * not support in QEMU
->> + * ID registers in op0==3, op1=={0,1,3}, crn=0, crm=={0-7}, op2=={0-7},
->> + * as used by the KVM_ARM_GET_REG_WRITABLE_MASKS ioctl call.
->> + */
->> +#define NR_ID_REG_MASKS (3 * 8 * 8)
-> Probably can re-use KVM_ARM_FEATURE_ID_RANGE_SIZE here.
-> Looks like used for the same purpose in:
-> tools/testing/selftests/kvm/arm64/set_id_regs.c
+Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+---
+ hw/i386/microvm.c | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-removed. The writable_map array is now dynamically allocated in
-kvm_arch_init_vcpu()
+diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
+index 5a7889f21b..779741ec76 100644
+--- a/hw/i386/microvm.c
++++ b/hw/i386/microvm.c
+@@ -159,7 +159,6 @@ static int microvm_ioapics(MicrovmMachineState *mms)
+ 
+ static void microvm_devices_init(MicrovmMachineState *mms)
+ {
+-    const char *default_firmware;
+     X86MachineState *x86ms = X86_MACHINE(mms);
+     ISABus *isa_bus;
+     GSIState *gsi_state;
+@@ -276,10 +275,12 @@ static void microvm_devices_init(MicrovmMachineState *mms)
+         serial_hds_isa_init(isa_bus, 0, 1);
+     }
+ 
+-    default_firmware = x86_machine_is_acpi_enabled(x86ms)
+-            ? MICROVM_BIOS_FILENAME
+-            : MICROVM_QBOOT_FILENAME;
+-    x86_bios_rom_init(x86ms, default_firmware, get_system_memory(), true);
++    if (!x86ms->igvm) {
++        const char *default_firmware = x86_machine_is_acpi_enabled(x86ms)
++                ? MICROVM_BIOS_FILENAME
++                : MICROVM_QBOOT_FILENAME;
++        x86_bios_rom_init(x86ms, default_firmware, get_system_memory(), true);
++    }
+ }
+ 
+ static void microvm_memory_init(MicrovmMachineState *mms)
+@@ -717,6 +718,16 @@ static void microvm_class_init(ObjectClass *oc, const void *data)
+ 
+     compat_props_add(mc->compat_props, microvm_properties,
+                      G_N_ELEMENTS(microvm_properties));
++
++#if defined(CONFIG_IGVM)
++    object_class_property_add_link(oc, "igvm-cfg",
++                                   TYPE_IGVM_CFG,
++                                   offsetof(X86MachineState, igvm),
++                                   object_property_allow_set_link,
++                                   OBJ_PROP_LINK_STRONG);
++    object_class_property_set_description(oc, "igvm-cfg",
++                                          "Set IGVM configuration");
++#endif
+ }
+ 
+ static const TypeInfo microvm_machine_info = {
 
-Thanks
+---
+base-commit: 5e61afe211e82a9af15a8794a0bd29bb574e953b
+change-id: 20260512-microvm_igvm-a2f58611cc10
 
-Eric
->
-> Thanks,
-> Shameer
->> +
->> +typedef struct IdRegMap {
->> +    uint64_t regs[NR_ID_REG_MASKS]; /* writable masks for registers */
->> +} IdRegMap;
->> +
->>  /* REG is ID_XXX */
->>  #define FIELD_DP64_IDREG(ISAR, REG, FIELD, VALUE)                       \
->>      ({                                                                  \
->> @@ -1054,6 +1074,12 @@ struct ArchCPU {
->>       */
->>      bool host_cpu_probe_failed;
->>
->> +    /*
->> +     * state of writable id regs query used to report an error, if any,
->> +     * on vcpu model realize
->> +     */
->> +    ARMIdRegsState writable_id_regs_status;
->> +
->>      /* QOM property to indicate we should use the back-compat CNTFRQ
->> default */
->>      bool backcompat_cntfrq;
->>
->> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
->> index d4a68874b8..f06a60804d 100644
->> --- a/target/arm/kvm.c
->> +++ b/target/arm/kvm.c
->> @@ -51,6 +51,7 @@ const KVMCapabilityInfo
->> kvm_arch_required_capabilities[] = {
->>  static bool cap_has_mp_state;
->>  static bool cap_has_inject_serror_esr;
->>  static bool cap_has_inject_ext_dabt;
->> +static int cap_writable_id_regs;
->>
->>  /**
->>   * ARMHostCPUFeatures: information about the host CPU (identified
->> @@ -499,6 +500,37 @@ void
->> kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
->>      env->features = arm_host_cpu_features.features;
->>  }
->>
->> +int kvm_arm_get_writable_id_regs(ARMCPU *cpu, IdRegMap *idregmap)
->> +{
->> +    struct reg_mask_range range = {
->> +        .range = 0, /* up to now only a single range is supported */
->> +        .addr = (uint64_t)idregmap,
->> +    };
->> +    int ret;
->> +
->> +    if (!kvm_enabled()) {
->> +        cpu->writable_id_regs_status =
->> WRITABLE_ID_REGS_NOT_DISCOVERABLE;
->> +        return -ENOSYS;
->> +    }
->> +
->> +    cap_writable_id_regs =
->> +        kvm_check_extension(kvm_state,
->> KVM_CAP_ARM_SUPPORTED_REG_MASK_RANGES);
->> +
->> +    if (!cap_writable_id_regs ||
->> +        !(cap_writable_id_regs & (1 << KVM_ARM_FEATURE_ID_RANGE))) {
->> +        cpu->writable_id_regs_status =
->> WRITABLE_ID_REGS_NOT_DISCOVERABLE;
->> +        return -ENOSYS;
->> +    }
->> +
->> +    ret = kvm_vm_ioctl(kvm_state, KVM_ARM_GET_REG_WRITABLE_MASKS,
->> &range);
->> +    if (ret) {
->> +        cpu->writable_id_regs_status = WRITABLE_ID_REGS_FAILED;
->> +        return ret;
->> +     }
->> +    cpu->writable_id_regs_status = WRITABLE_ID_REGS_AVAIL;
->> +    return ret;
->> +}
->> +
->>  static bool kvm_no_adjvtime_get(Object *obj, Error **errp)
->>  {
->>      return !ARM_CPU(obj)->kvm_adjvtime;
->> diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
->> index e7c40fb003..b22a56fc17 100644
->> --- a/target/arm/kvm_arm.h
->> +++ b/target/arm/kvm_arm.h
->> @@ -240,4 +240,7 @@ void arm_gic_cap_kvm_probe(GICCapability *v2,
->> GICCapability *v3);
->>   */
->>  char *kvm_print_register_name(uint64_t regidx);
->>
->> +typedef struct IdRegMap IdRegMap;
->> +int kvm_arm_get_writable_id_regs(ARMCPU *cpu, IdRegMap *idregmap);
->> +
->>  #endif
->> --
->> 2.53.0
+Best regards,
+-- 
+Luigi Leonardi <leonardi@redhat.com>
 
 
