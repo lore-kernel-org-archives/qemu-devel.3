@@ -4,45 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 357C3CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:17:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6B79CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:17:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuM3-0006Na-HZ; Tue, 12 May 2026 17:09:27 -0400
+	id 1wMuHI-0005qx-En; Tue, 12 May 2026 17:04:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuLM-0002h8-Jk; Tue, 12 May 2026 17:08:44 -0400
+ id 1wMuFi-0001RK-VU; Tue, 12 May 2026 17:03:02 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuLK-00037C-Hd; Tue, 12 May 2026 17:08:44 -0400
+ id 1wMuFg-0007hG-Sa; Tue, 12 May 2026 17:02:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619301; bh=Ndy1JinN+8dDOV0pkJ/kHNaf9TUEdkRaTYOyEzpMu4Q=;
+ t=1778619278; bh=52jW1o5cTK1eBP4U9ksmYyUiRueyfsgrbtC3bQ945eg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=tqivsErfdN7YwfYtd46Lzn9uhvUKO7zsGAU4o1PM4bE91Ia1pEq1POwSSBUljpYPr
- wpvldqxluqAYX8kSz6Ta3us/xgKWVQNELGx1nRh2XIG1PADy8GLclfLDkDHji8Y+3I
- BHcoYl0oBvVJB7vB1oVj+DsjZqzvoLwCZvedW0TYw5cmDSsUzMdkZN/oFafVa9fKc5
- dRp1SRp3K1t9vBzv7lqAPipyZHA9m2lNKPcxDwDw0hNqyxtNrYXFrEj/NP+m4jm+mh
- vASv9FJbqeUohSWcF0J5yoU9oxxpH0JIWv3RS/CDScuOqAXnfqYBuH+TwnQqtfTuXh
- n6L5PszFtc6cA==
+ b=cyADw254LxGNCpQZjySo38m/Rm1zQVUyMNb/jPC1FNZN4yyoYmvafrnLZZLpXA/tE
+ PcN5vWG5XJ8P/bQmtBJqPZWGdLFl3fxq6GzqG83F+apKc5b7xAZ1oRmUm4pS35harJ
+ a2XITI2ml9cPoMxK9b81RzIOiuKQSYyq61NJ6/nA7HVy9DBHrN0tGk5eBtgI1Ry4nJ
+ Y33kr9qtE+xedm7GAlePgaVbjtUv2HQ4FKxUXwZC5X68tefEY/Nf/BI9kHIQC2HSnU
+ ohPvWfG7GXqxcK0HLiz8PWg4sN+AGXBKAunYlCt3nVzaaJZkDBNLFVgiJl81oJ0e+F
+ 6vK/VeymnN2cA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9D4FA1AA35A;
- Tue, 12 May 2026 23:55:01 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C2A201AA31E;
+ Tue, 12 May 2026 23:54:38 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A9F023ABCCA;
- Tue, 12 May 2026 23:55:05 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id CD4593ABC8F;
+ Tue, 12 May 2026 23:54:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, GuoHan Zhao <zhaoguohan@kylinos.cn>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 029/117] block/curl: free s->password in cleanup paths
-Date: Tue, 12 May 2026 23:53:31 +0300
-Message-ID: <20260512205503.361097-29-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Yicong Yang <yang.yicong@picoheart.com>,
+ Andrew Jones <andrew.jones@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 082/107] hw/riscv/virt-acpi-build.c: Use kvm timer
+ frequency when kvm enabled
+Date: Tue, 12 May 2026 23:54:09 +0300
+Message-ID: <20260512205437.360850-82-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
-References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
+References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -68,46 +71,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: GuoHan Zhao <zhaoguohan@kylinos.cn>
+From: Yicong Yang <yang.yicong@picoheart.com>
 
-When password-secret is used, curl_open() resolves it with
-qcrypto_secret_lookup_as_utf8() and stores the returned buffer in
-s->password.
+The timer frequency is decided by the host(kvm) rather than a fixed
+RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ on kvm accelerated VM. So build
+RCHT with KVM provided timer frequency if KVM is enabled, just like
+how we build the timer node on DT based VM.
 
-Unlike s->proxypassword, s->password is not freed either in the open
-failure path or in curl_close(), so the resolved secret leaks once it
-has been allocated.
-
-Free s->password in both cleanup paths.
-
-Fixes: 1bff96064290 ('curl: add support for HTTP authentication parameters')
-Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
-Message-ID: <20260320063016.262954-1-zhaoguohan_salmon@163.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 51fc8443c122fedf4d4891bbc3a1ff25dd8bacdf)
+Fixes: ebfd39289370 ("hw/riscv/virt: virt-acpi-build.c: Add RHCT Table")
+Signed-off-by: Yicong Yang <yang.yicong@picoheart.com>
+Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
+Message-ID: <20260325081314.57089-1-yang.yicong@picoheart.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 4cb2f91773e8ec9511002de851734820f7ba64fe)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/curl.c b/block/curl.c
-index 6dccf00256..a249811ed1 100644
---- a/block/curl.c
-+++ b/block/curl.c
-@@ -865,6 +865,7 @@ out_noclean:
-     g_free(s->cookie);
-     g_free(s->url);
-     g_free(s->username);
-+    g_free(s->password);
-     g_free(s->proxyusername);
-     g_free(s->proxypassword);
-     if (s->sockets) {
-@@ -976,6 +977,7 @@ static void curl_close(BlockDriverState *bs)
-     g_free(s->cookie);
-     g_free(s->url);
-     g_free(s->username);
-+    g_free(s->password);
-     g_free(s->proxyusername);
-     g_free(s->proxypassword);
- }
+diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+index 1ad6800508..e2b8229168 100644
+--- a/hw/riscv/virt-acpi-build.c
++++ b/hw/riscv/virt-acpi-build.c
+@@ -35,9 +35,11 @@
+ #include "hw/riscv/virt.h"
+ #include "hw/riscv/numa.h"
+ #include "hw/virtio/virtio-acpi.h"
++#include "kvm/kvm_riscv.h"
+ #include "migration/vmstate.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
++#include "system/kvm.h"
+ #include "system/reset.h"
+ 
+ #define ACPI_BUILD_TABLE_SIZE             0x20000
+@@ -273,7 +275,10 @@ static void build_rhct(GArray *table_data,
+ 
+     /* Time Base Frequency */
+     build_append_int_noprefix(table_data,
+-                              RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ, 8);
++                              kvm_enabled() ?
++                              kvm_riscv_get_timebase_frequency(&s->soc->harts[0]) :
++                              RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ,
++                              8);
+ 
+     /* ISA + N hart info */
+     num_rhct_nodes = 1 + ms->smp.cpus;
 -- 
 2.47.3
 
