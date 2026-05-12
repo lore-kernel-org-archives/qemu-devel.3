@@ -4,110 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 244EBCD4F35
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 159D3CD4855
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 08:40:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMie6-0004XR-5Q; Tue, 12 May 2026 04:39:18 -0400
+	id 1wMieT-0004aB-Qt; Tue, 12 May 2026 04:39:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wMie5-0004XD-1K; Tue, 12 May 2026 04:39:17 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wMidP-0002lB-Uq; Tue, 12 May 2026 04:39:16 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64BK75AO3187033; Tue, 12 May 2026 08:38:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=5sxv/0
- Ch6PR0mG5AQ8JlBNTIDLRquw0yy14xGIrhaUo=; b=syMrMo26fTm+jZgrO/ZfA/
- w+ksIAm8KCLDMZ+8iM98SOjF8h9g2FCipqK09jKrd6+FipU4hVmwAiYYZiujYoq/
- nEya9HtEssyi+NPEMM1DtJgt4ncRGhqqI3b4ksd6OhoFNTHvoGYecFshbT8r9bGe
- wLKZJZnfM55CgYdgyZd8bbWdsLuzz5LrqmTHa9iuVuobKY2iufEMRsSmcdw2VnDU
- KyJuxfCI0UI4ollKOwBH1bEbUHoH+JqG/WniCqrnkycMnwl/zLXk3CsRwjkzEY+6
- t1Do6QhBqMWcVpRPD8icRWBZKbuZR1XrhageQuqAAExOdV+QycLhV/s3XtrSAKYA
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e3nv5a69v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 May 2026 08:38:22 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64C8OOqj030234;
- Tue, 12 May 2026 08:38:21 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e3nfgjbcf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 May 2026 08:38:21 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64C8cKD029426324
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 12 May 2026 08:38:21 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9EA0958055;
- Tue, 12 May 2026 08:38:20 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0C5C358054;
- Tue, 12 May 2026 08:38:17 +0000 (GMT)
-Received: from [9.123.0.169] (unknown [9.123.0.169])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 12 May 2026 08:38:16 +0000 (GMT)
-Message-ID: <75769ad1-5aab-48da-9dd7-7646d50b24bf@linux.ibm.com>
-Date: Tue, 12 May 2026 14:08:15 +0530
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wMieS-0004Zh-Du
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 04:39:40 -0400
+Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wMieC-0003MG-NT
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 04:39:40 -0400
+Received: by mail-yx1-xb129.google.com with SMTP id
+ 956f58d0204a3-65d071aac6eso4753782d50.0
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 01:39:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778575163; cv=none;
+ d=google.com; s=arc-20240605;
+ b=HK7aOZfHwZ+GlzBq+uQJZhhp+ZOfW/twa4ccaIySpShwSwyIq1LONcGJPUon2SJddL
+ iG5l6QA5RSJvPWlUj6ML8mat7srIOwWzuY91OHALA6LAtP4wijKaDs8RMCB8nBWcvvoT
+ JIjK6nSajLTDx8QIylkv9VwMFxRMJEpZXrjstA2JyYEXqXsmDx2mfYTuCJFUeEBjhvIS
+ V7UJF9ohmZ8jEf3WICvqkjCO4JlaTEEzjVTBzZ19I/QBv7svZS4toR0flhQDMKbPzp7o
+ /uL9k7n4kTYIYLxmEGNjSHVybYE2t/M4LZya8oTnisG9OjBgftaqbwnj0sbXcFrvPwOi
+ uglQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=IlCmIxH4VWslKKHrA3V11wDCzRMZna3Vn5Zjnz0Lto4=;
+ fh=C0d6MoelyxnyEnZgqQ38cA+Tdf2UUaAoHDpAxiJFa0o=;
+ b=MXGjkYo150+NC6br/LtRjuyMql8nVLXoy162MI/IsFzR3h1xc0RxvLdn64fhQOD2uC
+ HkDbUZr/nGT8Ejg8CzXFX2sZ5brNFo5F7ntJTMCRsORqkAEP5l7CXxl3urTl5WWdGOv6
+ jp6pEZEjp6pIJz5gYBQD75KYJgCTj6qkzqMcL/YTpyGm2A+O9Wo1+8Y4pTOxioaiNPRq
+ aNTvlKkYvYp2volvgmzxvwc+oBnXO9t/jIRgExDjUj1N/CmIfiU0mQkVTZhC8D+m0EFp
+ eouwdxvMtlCs1b2+VTPtck0lF6lA4/FByAjjqNv/zcfOSBnqAfaLK6GIG0nBk9/hDTmw
+ wrIg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778575163; x=1779179963; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IlCmIxH4VWslKKHrA3V11wDCzRMZna3Vn5Zjnz0Lto4=;
+ b=SEbt/IGXgj9FeiYeuzcpTtu1YvaPo12oZJQhsUy1q7m7oT1M2EjHhzByZRWli+0VEm
+ V6v7OFjLlgMeApK19FxG9wqlTPDhMkiDezXj15aqarnjBPAnSxqocCe/BqHdVyOgQqfu
+ d+oKcFMFLbgk6gP+kzsWuAf/bYBWG1k/XydmZzhz+esRI2m2EyfgZ+2GRtV0vJn4Pojz
+ xddl09nOfDTa1H79BU3Bx6n0yNEfoobHMaSV9ApbxgKj0lRt00wHoeYiUGuJLmRKErhB
+ hTf4pt8nvxPjhWkHrREHfhqI4nur99hE13Urh/0MbR7M9edoHaWY7tu3mujEHNFtQGze
+ 8a/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778575163; x=1779179963;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=IlCmIxH4VWslKKHrA3V11wDCzRMZna3Vn5Zjnz0Lto4=;
+ b=k/1YlzhUVPJrpXjglkmRMiX/pieZy6s7P/YCY4J0zCqFD/sf4LvKQaIcP2XJdom9VT
+ 4hqwTnpRP+tGdYr+xNV0f2kCnx8LeO3QrGsqOZNYHgFiiNo/zGTe+IGvcyFIsUgped13
+ 9/f8kaAAVQqtjJsePFjvTsi4FIRmP7MBKFSUNrxxHimnjc+6mjFyrF2YVzGxPcEtdC83
+ QZddtmgYtm1FrzK1vbhVUQcM9BEdDRmLLnDGRXbilOZakLzyqMMPxA4NEcGp38btp1sX
+ Ze0DF4WS+muZ0POLsoq31EclKQ2vkiOirwViANxFZiJu9CNgVv8m/f8kwrv34NF5GTcy
+ e7Zw==
+X-Gm-Message-State: AOJu0YyEhOLqgbMW9u08z+CMRAz06zrJa47IYghM+E2V6C/2xWzAMDeA
+ opmEOE6XyIIbye9waHEhVeA7+IlmWQ1eEex1xlcZNLVQIvUgDYeEziqz0Vs2TefkhHBbbj6HLyM
+ /32foOGP+62Jl1/o0V4Rd5QMLlIuVrcCny6B4DbXxgQ==
+X-Gm-Gg: Acq92OEensKcwSo/j+CnBrKS8PQyoEUG75LKZQEJR30kbhJGHeFpUGqdBRz3RX5ECYs
+ EG4NH8bHGfbA31gS4ro+8mQCax70Q7Iaqhwh9yWC3j93NE1DXyFHlQr1EnDV/79vfJFvIbulLkf
+ wP7NCkSGXmLdlHB5kPplQcDtqV/1cheApkmgwS8IebDmOhXHK/zAjy1W0lbXSrVevFyOvZLEqSO
+ fRqYJAy+DW3JLBnEulQ1AUSh98hfA2zsVLJ4wut2SQnvPuMvnYJiMXb7Iax2TyRxChfOoi2JTVi
+ ks12f+39SpSOSSUh2QSpG3KrviTLcWmoe12CRmAE+E0IJCUvQVr4nqN26CAwXNFT048=
+X-Received: by 2002:a05:690e:2592:b0:654:45be:85ad with SMTP id
+ 956f58d0204a3-65c79d2b354mr18325712d50.52.1778575163394; Tue, 12 May 2026
+ 01:39:23 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/ppc/kvm: Fix const violation when trimming CPU
- alias suffix
-Content-Language: en-GB
-To: Vaibhav Jain <vaibhav@linux.ibm.com>, qemu-devel@nongnu.org,
- kvm-ppc@vger.kernel.org, qemu-ppc@nongnu.org
-Cc: Amit Machhiwal <amachhiw@linux.ibm.com>,
- Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Shivaprasad G Bhat
- <sbhat@linux.ibm.com>, Gautam Menghani <gautam@linux.ibm.com>
-References: <20260511131018.102168-1-vaibhav@linux.ibm.com>
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20260511131018.102168-1-vaibhav@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=cPHQdFeN c=1 sm=1 tr=0 ts=6a02e6fe cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22
- a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=Qj0HYR67M3tMq7YF4SsA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: Rzmuu_Onr7BMyxuE7m1L7Pzskp7sUWyK
-X-Proofpoint-GUID: Rzmuu_Onr7BMyxuE7m1L7Pzskp7sUWyK
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEyMDA4NiBTYWx0ZWRfX+yzViU6imD/s
- im05NWOauvS0OU2S5oJTcL9ZBDnh+NuKyj+dXoLSGsTiIn7wlIjfERcOFhjYztTajMKedfWR1zf
- yjaA5JcDzwUZ+Nbzos6c2fIZVMSRBEArBflEyFv4WJWf+e24fJXjs53KrEzJlqlPK/anzBnAMBo
- uJiif6lu+EDqJzmipi00dGIw0hRAIdodBsNIpb5l/EeXpVnxfRilQaF+BV+4OIJ/RXaAULiyus5
- 7fXsmOk9fJ2kSl0HCY9PBQQ2w8Wbdg89mEIHA9kPiq3PrmUwogCaHNyqqVyZlFHqgXCDE9FlrTg
- S5x+c2zQK8jif+U7PyXs+oe+pplh3hqVpBsgSfEu7Fxo+5m9x7TibWjogV6eD5WOflMvXFZon0x
- nhmaZOg1eRlXmPfrdmVuRf4/MqomJt9GYctw2i5grYmRJSHEmjdwfqbRxUoLgli7w/HH6qbOuA3
- x9002G9zX2dNdYhTUnQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-11_05,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 phishscore=0 clxscore=1011 spamscore=0
- impostorscore=0 lowpriorityscore=0 adultscore=0 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605050000 definitions=main-2605120086
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260511170500.124211-1-alex.bennee@linaro.org>
+ <20260511170500.124211-2-alex.bennee@linaro.org>
+ <CAFEAcA_tTR0dXKGp2y3YanS3wASrMSgcNQAiET3ff-c7HfBLBw@mail.gmail.com>
+ <87mry5daod.fsf@draig.linaro.org>
+In-Reply-To: <87mry5daod.fsf@draig.linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 12 May 2026 09:39:09 +0100
+X-Gm-Features: AVHnY4JpsZGK7GSB7z9hWzel8xE1F_6gUl7CTG5zswDVo8L4_HJHudwSST-iocI
+Message-ID: <CAFEAcA8SGHfAqhzd=3b4AdyPVBr1gFJ-Hr3XtgWEPNdYDg65-g@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 01/10] AGENTS.md: add basic AGENTS.md for QEMU
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,98 +119,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Vaibhav,
+On Mon, 11 May 2026 at 20:10, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
+>
+> Peter Maydell <peter.maydell@linaro.org> writes:
+>
+> > On Mon, 11 May 2026 at 18:06, Alex Benn=C3=A9e <alex.bennee@linaro.org>=
+ wrote:
+> >>
+> >> This was written initially written by ECA based on its understanding o=
+f the
+> >> code base. I then expanded it with links to the various documents and
+> >> the general coding style.
+> >>
+> >> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> >
+> >> +## Security Policy
+> >> +You MUST NOT report potential security vulnerabilities in public trac=
+kers
+> >> +(like GitLab issues). Refer to `docs/system/security.rst` for the pro=
+ject's
+> >> +security stance. In brief:
+> >> +- **Virtualization Use Case**: (with KVM/HVF and specific machine typ=
+es) is
+> >> +  the focus of security support.
+> >> +- **Non-virtualization Use Case**: (TCG) does not currently provide g=
+uest
+> >> +  isolation guarantees.
+> >> +- **Reporting**: Report vulnerabilities privately to `qemu-security@n=
+ongnu.org`.
+> >
+> > I feel like the important thing we want to point out to agents is
+> > that not all "this crashes / asserts / overruns a buffer" bugs
+> > are security issues. As it stands I feel like this text is
+> > going to steer them pretty strongly towards throwing anything
+> > and everything at qemu-security@, including bugs which we
+> > don't consider security issues. What we want ideally is to
+> > give instructions that will make the LLM itself do the
+> > initial "is this covered by the security policy" triage.
+>
+> I think for that we should augment the triage skill itself.
 
-Thanks for taking a look ...
+I still think we have a few things we definitely want to communicate
+to an LLM ("don't generate code for upstream", "these aren't
+security issues") and those should go in the top level agents.MD
+and go in sooner rather than later. All the other stuff about
+skills I'm much less sure about and tend to feel we should
+add them slowly as and when multiple people say they're useful.
+So I'd rather see the two or three key messages go in AGENTS.md.
 
-On 11/05/26 6:40 pm, Vaibhav Jain wrote:
-> GCC 16 tightens diagnostics around const correctness and now correctly
-> rejects attempts to modify strings referenced through const-qualified
-> pointers. In kvm_ppc_register_host_cpu_type(), ppc_cpu_aliases[i].model
-> is defined as const char *, but the code was using strstr() on it and
-> then modifying the returned pointer in-place to strip
-> POWERPC_CPU_TYPE_SUFFIX.
-> 
-> This results in a write through a pointer derived from const data,
-> triggering a build failure with GCC 16:
-> 
->    error: assignment discards 'const' qualifier from pointer target type [-Werror=discarded-qualifiers]
->          suffix = strstr(ppc_cpu_aliases[i].model, POWERPC_CPU_TYPE_SUFFIX);
->                 ^
-> Fix this by copying only the needed suffix from the object class-name to
-> 'ppc_cpu_aliases.model' using g_strdup and g_strndup, which maintains the
-> constness of the allocated buffer assigned to 'ppc_cpu_aliases.model'
-> member of the 'ppc_cpu_aliases' struct array.
-> 
-> The patch also adds error handling for possible memory allocation failure
-> while calling g_str{n}dup functions so that the error is properly
-> propogated back from kvm_arch_init().
-> 
-> Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-> Signed-off-by: Vaibhav Jain (IBM) <vaibhav@linux.ibm.com>
-> 
-> ---
-> Change-log:
-> 
-> v1->v2:
-> https://lore.kernel.org/all/20260504134344.38958-1-amachhiw@linux.ibm.com
-> * Avoid pointer aliasing
-> * Handle memory allocation failure error
-> ---
->   target/ppc/kvm.c | 18 ++++++++++--------
->   1 file changed, 10 insertions(+), 8 deletions(-)
-> 
-> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-> index 25c28ad089..42cd4f4fff 100644
-> --- a/target/ppc/kvm.c
-> +++ b/target/ppc/kvm.c
-> @@ -170,9 +170,8 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
->   
->       cap_rpt_invalidate = kvm_vm_check_extension(s, KVM_CAP_PPC_RPT_INVALIDATE);
->       cap_ail_mode_3 = kvm_vm_check_extension(s, KVM_CAP_PPC_AIL_MODE_3);
-> -    kvm_ppc_register_host_cpu_type();
->   
-> -    return 0;
-> +    return kvm_ppc_register_host_cpu_type();
->   }
->   
->   int kvm_arch_irqchip_create(KVMState *s)
-> @@ -2654,14 +2653,17 @@ static int kvm_ppc_register_host_cpu_type(void)
->       dc = DEVICE_CLASS(ppc_cpu_get_family_class(pvr_pcc));
->       for (i = 0; ppc_cpu_aliases[i].alias != NULL; i++) {
->           if (g_ascii_strcasecmp(ppc_cpu_aliases[i].alias, dc->desc) == 0) {
-> -            char *suffix;
-> +            const gchar *suffix, *cname = object_class_get_name(oc);
-> +
-> +            suffix = g_strstr_len(cname, -1, POWERPC_CPU_TYPE_SUFFIX);
-> +            ppc_cpu_aliases[i].model = unlikely(suffix) ?
-> +                g_strndup(cname, suffix - cname) : g_strdup(cname);
->   
-> -            ppc_cpu_aliases[i].model = g_strdup(object_class_get_name(oc));
-> -            suffix = strstr(ppc_cpu_aliases[i].model, POWERPC_CPU_TYPE_SUFFIX);
-> -            if (suffix) {
-> -                *suffix = 0;
-> +            if (!ppc_cpu_aliases[i].model) {
-> +                return -ENOMEM;
+Also, even if you have a triage skill, if you say
+"Report vulnerabilities privately to `qemu-security@nongnu.org`"
+and "You MUST NOT report potential security vulnerabilities in
+public trackers" then you're really strongly steering everything
+to that security email. We should get this text right, not
+have it say the wrong thing and hope that the triage skill
+overrides it.
 
-IIUC, g_strndup will abort the program in case of OOM eventually making
-it a dead code. We may consider using g_try_strndup at all if needed.
-Also, not sure if we really need unlikely() and a typecast may be needed 
-for (suffix - cname).
-
-However, can we keep OOM related changes in a separate patch and keep 
-only GCC16 build breakage fix in this patch retaining the original patch 
-authorship with delta changes attributed alongside respective SoB?
-
-Thanks
-Harsh
-
-> +            } else {
-> +                return 0;
->               }
-> -            break;
->           }
->       }
->   
-
+thanks
+-- PMM
 
