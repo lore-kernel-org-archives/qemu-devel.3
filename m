@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E870BCD4F21
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9C9DCD4F24
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:10:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuHl-0007hi-Is; Tue, 12 May 2026 17:05:01 -0400
+	id 1wMuHM-0006Ms-2t; Tue, 12 May 2026 17:04:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuGM-0001o8-8Y; Tue, 12 May 2026 17:03:35 -0400
+ id 1wMuGH-0001f2-NC; Tue, 12 May 2026 17:03:31 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuGK-0007uu-8S; Tue, 12 May 2026 17:03:33 -0400
+ id 1wMuGE-0007sI-6H; Tue, 12 May 2026 17:03:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619279; bh=PB4u+XmKjWYxlifJ9ZAPe5qLq6Km8O5AkJn0KxIN3p4=;
+ t=1778619279; bh=QuwoT57byzYi7Qen6aQQJBdiy2CgG9IKvDtAL+D2tBo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=LOa1rL7KnTJVvir64RlB5fs/41UqsjT2x1+YrgIg5DJgEK+p33t5fSQf3wzw2GgAU
- FOuiZE2faanpwaojI7bGcDV6n/s28CsBwzTJu6cJcSLSxEUltxT6zrhuA1R2O17h9n
- vErCspNRPbiEhbyvtjOUT5B/MP/JaNchmv+EYcpWtlGFhna2bd7rPvwilVif85tuku
- LCiLCzW/oLkERW6M3HPzdyqq6H9HLeNB0ZAg3AP9ycHjGgaUk5qoi4luJ3OKhtKTHa
- hZf3SYFwe4mIL9jSB8DtjvcuG7hB2U/8kc3yvWw9+cXp4XO/YrkFyHUKIQSnrVmDoh
- GpJMXgQWh0RAw==
+ b=PF0kvWE3xIyJsv66Hwv9rGIlmp9rJns0V3ZVYgHXqRsogdWo4IcgSglsXFRYmCtZZ
+ vMxHfSiL+e59NX6ttdMui5F1CdvPjHdjncUJ4BuSnZ2XhuQEKFpZYwGKvZba82gAIm
+ 0bLpeWtAEhMNBAgrq8rxoKzUj3rPoqvZiqaEQdUMvpT38Qr36h8P+UQT7xtbErmi+e
+ /JVqR9bECxbM9Gblqjxbjb9rVfR1wrL5lyMvkx0t0iyBC/r0MxH0a0RASzJhZHrZMl
+ pbsA4o//ejaS7AfcuMj5no/kgEwhtXwsvKARSuXI1/ZV/0lQKs1tCyNAKMG4T+eMqt
+ +8CGlI9WYHNFQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1DB031AA323;
+ by isrv.corpit.ru (Postfix) with ESMTP id 0DC7E1AA322;
  Tue, 12 May 2026 23:54:39 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 287D23ABC94;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1940B3ABC93;
  Tue, 12 May 2026 23:54:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Nutty Liu <nutty.liu@hotmail.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 087/107] target/riscv: Don't OR mip.SEIP when mvien
- is one
-Date: Tue, 12 May 2026 23:54:14 +0300
-Message-ID: <20260512205437.360850-87-mjt@tls.msk.ru>
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 086/107] target/riscv: Generate access fault if sc
+ comparison fails
+Date: Tue, 12 May 2026 23:54:13 +0300
+Message-ID: <20260512205437.360850-86-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,46 +72,78 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alistair Francis <alistair.francis@wdc.com>
 
-The RISC-V spec states that
+The RISC-V spec states:
 
-"""
-But when bit 9 of mvien is one, bit SEIP in mip is read-only and does
-not include the value of bit 9 of mvip. Rather, the value of mip.SEIP
-is simply the supervisor external interrupt signal from the hart’s
-external interrupt controller (APLIC or IMSIC).
-"""
+"For the purposes of memory protection, a failed SC.W may be treated
+like a store."
 
-As such let's mark the mip.SEIP in rmw_mip64().
+So if the comparison in sc.w fails we should still check for alignment
+and do a probe access to check permissions.
 
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2828
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3323
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3136
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Message-ID: <20260415233740.3027321-4-alistair.francis@wdc.com>
+Message-ID: <20260415233740.3027321-2-alistair.francis@wdc.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 175afdb0d155a7429e2ac0c568c1c807953444a4)
+(cherry picked from commit d107b748072cea3f86089a4a7b2e83f1a62745f2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 76e77ae2d1..7d4191c792 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -3633,6 +3633,14 @@ static RISCVException rmw_mip64(CPURISCVState *env, int csrno,
-     uint64_t old_mip, mask = wr_mask & delegable_ints;
-     uint32_t gin;
- 
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index ddb07ca3d1..68e76a3c28 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -1289,3 +1289,6 @@ DEF_HELPER_4(vsm4r_vs, void, ptr, ptr, env, i32)
+ #ifndef CONFIG_USER_ONLY
+ DEF_HELPER_1(ssamoswap_disabled, void, env)
+ #endif
++
++/* Zalrsc SC write probe */
++DEF_HELPER_FLAGS_3(sc_probe_write, TCG_CALL_NO_WG, void, env, tl, tl)
+diff --git a/target/riscv/insn_trans/trans_rva.c.inc b/target/riscv/insn_trans/trans_rva.c.inc
+index 9cf3ae8019..a1b45cbd2c 100644
+--- a/target/riscv/insn_trans/trans_rva.c.inc
++++ b/target/riscv/insn_trans/trans_rva.c.inc
+@@ -84,6 +84,12 @@ static bool gen_sc(DisasContext *ctx, arg_atomic *a, MemOp mop)
+      */
+     TCGBar bar_strl = (ctx->ztso || a->rl) ? TCG_BAR_STRL : 0;
+     tcg_gen_mb(TCG_MO_ALL + a->aq * TCG_BAR_LDAQ + bar_strl);
 +    /*
-+     * When mvien[9]=1, mip.SEIP is read-only and reflects only
-+     * the external interrupt signal from the interrupt controller.
++     * "For the purposes of memory protection, a failed SC.W may be treated
++     * like a store." so let's check the write access permissions
 +     */
-+    if (env->mvien & MIP_SEIP) {
-+        mask &= ~MIP_SEIP;
++    gen_helper_sc_probe_write(tcg_env, src1,
++                              tcg_constant_tl(memop_size(mop)));
+     gen_set_gpr(ctx, a->rd, tcg_constant_tl(1));
+ 
+     gen_set_label(l2);
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index c34d8a4a9c..0cdbb0138c 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -265,6 +265,20 @@ void helper_cbo_inval(CPURISCVState *env, target_ulong address)
+     /* We don't emulate the cache-hierarchy, so we're done. */
+ }
+ 
++void helper_sc_probe_write(CPURISCVState *env, target_ulong addr,
++                           target_ulong size)
++{
++    uintptr_t ra = GETPC();
++    int mmu_idx = riscv_env_mmu_index(env, false);
++
++    if (addr & (size - 1)) {
++        env->badaddr = addr;
++        riscv_raise_exception(env, RISCV_EXCP_STORE_AMO_ADDR_MIS, ra);
 +    }
 +
-     if (mask & MIP_SEIP) {
-         env->software_seip = new_val & MIP_SEIP;
-         new_val |= env->external_seip * MIP_SEIP;
++    probe_write(env, addr, size, mmu_idx, ra);
++}
++
+ #ifndef CONFIG_USER_ONLY
+ 
+ target_ulong helper_sret(CPURISCVState *env)
 -- 
 2.47.3
 
