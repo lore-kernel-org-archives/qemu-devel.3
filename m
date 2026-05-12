@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84E0FCD4F24
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:26:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39F00CD4F24
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:27:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMgZc-0000Jc-R5; Tue, 12 May 2026 02:26:33 -0400
+	id 1wMgZY-0008Bx-Q8; Tue, 12 May 2026 02:26:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgZ1-0007bI-JO
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:26:04 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgZV-0007sT-H9
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:26:25 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgYx-0007MN-7I
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:25:53 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-48984d29fe3so54044595e9.0
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 23:25:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgZT-0007fG-Tj
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:26:25 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-488b0046078so42222825e9.1
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 23:26:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778567148; x=1779171948; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778567182; x=1779171982; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=C+xxVR8pXwXMffQeINHKMkFw5XP/nHWRIy9zl0uo9xU=;
- b=slVHwqsWUmj9THh/l39HZgO1WEjmOooggFSpFjGpJzrIE0GwTFP1OuKpmq2B3eGB5k
- rAkEw9329esXPxAbau/6DztjC7GygBZZndnZ3rbJ+JwBESqjglOgZCyYTvMcR1tATQpL
- lnMR9vx2GRHy1465KCj1Ht0VRj5+P4lfaR50Kf9MIpvZZZ2OGa3QM+ILWq1VlbNdTFcU
- Xj7PBcKkhXxJakTKDrfcWcjRJ6+e2DrtKdbjCijImJ9MAgomADb9VBhf/MsJrDX5xDSH
- 4OTLRpwbQBnWbu8CRLSDCtEzS9tAV889zv3+O03i8obMpWgAz7LAfBqhU7GJtP9qhnDJ
- IFew==
+ :reply-to; bh=XA6XU+mWL7el+eRZO54pQpgH1NRB+GKgyK982sGAvAk=;
+ b=cHqUbN36VzdQ60PMXASTUE0EjVmeLf6L44IFJDi+vky2YQnAghCu0QzP9IRxiMwOhi
+ 7CY4ikWnNVoH2ag7eBtm1lXgvsfHASQxeQj6fYZWu180DqBe0+5XO994Jw6c1S9rt4SX
+ K0tGgTbbE/x9wuxPDBowlWNgjNU1FuGzIVDr7HEHk8dwMV5WelQnSq/oWjaevf03WvFu
+ 9bqiOMbZll2d2WTcC2rTv0Ugm/XFCE4guvYfTX6gdByLus6seaEy1a3ueC5oVDT7LoHN
+ 6ur2IDiEfSbbpMwbw8pjjP9eJk/K+I5E0jv4GuIjgoRdXWUV4DCOdgRsDF00L8yRMOpy
+ fOVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778567148; x=1779171948;
+ d=1e100.net; s=20251104; t=1778567182; x=1779171982;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=C+xxVR8pXwXMffQeINHKMkFw5XP/nHWRIy9zl0uo9xU=;
- b=kzlsAdHiwlkPx1swlHsuuWElC2zqf/HwKSpjxY2G742gWO1hMvUzvrJB1tPzwXprXi
- nn1ULy6Oc/Zl5ObBZDztKHHRjlpNu9xT6Vem+6ISkwTOZwEIs8c0qNwjHSbIhw9apz8x
- crbX5RbiI3r2RhTW0kwwyDGE3nhrdn+4l8EIE9iR7UMN/pQ7/POVdrr09szL3bpfKpBP
- 9Vc1g+QHeebVbjJMyrGa/181+/speHphhd1iq8tsJO82P6yBAO7aQM9R1RYIV4Qsvo+y
- 6EvUcFXMApD90BjtgYH20qPon+ChZ6m5b4Gifh2gKOptOK5QM2WK/yVQJKyPWyz0gn+i
- roYg==
-X-Gm-Message-State: AOJu0YwHPmNO3kgwiBYWgllQTva3xSk7/Q6Le5Sdo4UAeo22pOGjvEts
- I5uKskOMRjHBZw9xt5m0hH31Z1+cGUrLWu1u2ay2BCPfgagHJ+JcovvKMtNXxYdhyxdTaXdrqvh
- k13a4hF4=
-X-Gm-Gg: Acq92OG4oD0K8v7agubZ9ijnyEdMQx+MRte2f+4ksqbSOnB10EmO/N148INt6lBmTFQ
- X2DCE1RbaLBSU+c8wRU9NGLRS9MJD3LCbv3yjWAWGAcofL/o5ClpIDP39M+KdVlbPh1MishctX9
- D5AE8I/AfxyGygH+MSPY8hVcCNNqUyDS82JYRHLmXVE53M1gqce8m7mFAa0Q2sQkLbX1q7efmdb
- pgNxBWpo0mgkt9/A4iKdyL8xkZtu4Z6d3z/huS8s69rDBBVh5DOnCYN7IZHEWvG0y/61B6korS/
- qGGpLbFmK6QDdhOga3opPKkk2FOqWsk+g7hRFgn7MJZpm+EULOusU5jEGZ3Tk3Q5wF+p8xfqGKF
- yaSS3c9hBXXOCZtj6uZD61PxWWPPmb3vWEeqVaVqW5nPiBzvsn16aaS+dKMiCFd+bgObtbM6q/9
- umcHUpw0SOP1YX8200N8I0d/p/B9EKJs87e2aAi30nxuPTefeNp8+e1erF2dUk+40Dt44l8lqU
-X-Received: by 2002:a05:600c:b99:b0:48a:7a10:4f17 with SMTP id
- 5b1f17b1804b1-48e8fe4b10amr19557615e9.6.1778567148262; 
- Mon, 11 May 2026 23:25:48 -0700 (PDT)
+ bh=XA6XU+mWL7el+eRZO54pQpgH1NRB+GKgyK982sGAvAk=;
+ b=j15LQNP2MdZ3UbbIGw44YznRL+3qk4ZNPUg8Nw01N5hdXhqCMtWFVlWN0lbEGfuV2b
+ NT2Du/iSbZ+2vIHEo48e7Q1FGJmqv2gMTaS4KQFf/zRj5uzqyopjHWW8OeS1ZbPM0/9H
+ 0N3ZhqyzyxT7XjS+wDCdsdx6S9E+6KqO+y9R5hWgCb56RbheuU5+NaAGqyubAtp4bg8f
+ jI2fFvVachnhReIFV8SkBA09sFxn9Vbz/VKsKPvqIYFkmNHx362SISJF03gM3aB+A0fI
+ SGUGYA2B8HpIwc5oc7/Ked9J7djJq05L7LKxU1FWnr6O3NOH2QNR/USgf32xGzEyaut0
+ 3OCg==
+X-Gm-Message-State: AOJu0YyoYfNBdMuFyJZyj6A5R6xUy9XAbei3e0DL9L1Etxo6qF+Ce61Q
+ JIsqNd7dlmGRutj7FqyrvaDHz/b4/7pqR2pGKK1Aiwt64SoDPGnwIUmW4AaIFh90fWvdv6QWyFS
+ +/n+zRMI=
+X-Gm-Gg: Acq92OG5SlMGYlVsxsZEBYLFT2wJ5Bkm9XfbLmchhir5QDhhGxocyTIWNooHS7cmOjH
+ UWFXuULhyQ1iHML5xZTacZBMLLYhDVajPHDrejPHnfZn0vtBVvTNaojtg8etLmLp8v9GRDPeGuK
+ uWPXQdBcXoCQuXZs8LWiCf2JDdrnGGrU5g7Yp1RhQeRyygmfDNKI/Gpbw8RQcwKL15uC+/8b0HZ
+ r/MI94ElSeoWcncvkhDtO3Bibil+K1Ka8RgdN7/DGDZSKFeLTfZS6Ha1ES/EmT3bWUE0oJE6by/
+ QXjculbgv9FJgxmlnU3raXszZV7SxgwFhIhb7KhE1xphRUdIwvJkLC8O/mXalVW00IUazmY+tj6
+ v8qJSBsPwkC51dBm4sanfCrAMa1+ZED42Lvahn/8BYJNoxHjtzGrXMlL36b9nQPJFbieOjDG0VS
+ ycfylUdsVUrijSXiO6PajrVLcmG7PxOLXADZOrs0zuIPAnnmWXNJ8rIVkR2CVF1g32AVBDcWxl
+X-Received: by 2002:a05:600c:628b:b0:48a:557e:6b4f with SMTP id
+ 5b1f17b1804b1-48e706cd77dmr214216525e9.23.1778567181857; 
+ Mon, 11 May 2026 23:26:21 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e908d2c0esm21086865e9.13.2026.05.11.23.25.47
+ 5b1f17b1804b1-48e908d2c77sm23730785e9.12.2026.05.11.23.26.21
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 11 May 2026 23:25:47 -0700 (PDT)
+ Mon, 11 May 2026 23:26:21 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 34/41] Remove cpu_get_phys_addr_debug() and
- cpu_get_phys_addr_attrs_debug()
-Date: Tue, 12 May 2026 08:21:35 +0200
-Message-ID: <20260512062142.67998-35-philmd@linaro.org>
+Subject: [PULL 39/41] MAINTAINERS: update HEST maintainership entries
+Date: Tue, 12 May 2026 08:21:40 +0200
+Message-ID: <20260512062142.67998-40-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260512062142.67998-1-philmd@linaro.org>
 References: <20260512062142.67998-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,98 +98,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-All the callers of cpu_get_phys_addr_debug() and
-cpu_get_phys_addr_attrs_debug() have now been updated to use
-cpu_translate_for_debug(), so we can remove them.
+Mark HEST code as maintained and assign them to me.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260430093810.2762539-26-peter.maydell@linaro.org>
+While here, add a "L" entry to EDAC ML as RAS discussions
+usually happen there.
+
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Acked-by: Markus Armbruster <armbru@redhat.com>
+Message-ID: <6316f5b788cdc6b63e808606649dc5862271b22e.1778075257.git.mchehab+huawei@kernel.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/core/cpu.h | 34 ----------------------------------
- hw/core/cpu-system.c  | 20 --------------------
- 2 files changed, 54 deletions(-)
+ MAINTAINERS | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index a7256aeb9dc..59d601465b4 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -738,40 +738,6 @@ enum CPUDumpFlags {
-  */
- void cpu_dump_state(CPUState *cpu, FILE *f, int flags);
+diff --git a/MAINTAINERS b/MAINTAINERS
+index e5d58d58646..0790d13505c 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2236,14 +2236,17 @@ F: tests/functional/x86_64/test_acpi_bits.py
+ F: docs/devel/testing/acpi-bits.rst
  
--/**
-- * cpu_get_phys_addr_attrs_debug:
-- * @cpu: The CPU to use for the virtual-to-physical translation
-- * @addr: The virtual address.
-- * @attrs: Updated on return with the memory transaction attributes to use
-- *         for this access.
-- *
-- * Obtains the physical address corresponding to a virtual one, together
-- * with the corresponding memory transaction attributes to use for the access.
-- * Use it only for debugging because no protection checks are done.
-- *
-- * The address need not be page-aligned; the returned address will
-- * be the physical address corresponding to that virtual address.
-- *
-- * Returns: Corresponding physical page address or -1 if no page found.
-- */
--hwaddr cpu_get_phys_addr_attrs_debug(CPUState *cpu, vaddr addr,
--                                     MemTxAttrs *attrs);
--
--/**
-- * cpu_get_phys_addr_debug:
-- * @cpu: The CPU to use for the virtual-to-physical translation
-- * @addr: The virtual address.
-- *
-- * Obtains the physical address corresponding to a virtual one.
-- * Use it only for debugging because no protection checks are done.
-- *
-- * The address need not be page-aligned; the returned address will
-- * be the physical address corresponding to that virtual address.
-- *
-- * Returns: Corresponding physical address, or -1 if no page found.
-- */
--hwaddr cpu_get_phys_addr_debug(CPUState *cpu, vaddr addr);
--
- /**
-  * TranslateForDebugResult: gives result of cpu_translate_for_debug()
-  *
-diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
-index 954b81931d8..16f048c9565 100644
---- a/hw/core/cpu-system.c
-+++ b/hw/core/cpu-system.c
-@@ -87,26 +87,6 @@ bool cpu_translate_for_debug(CPUState *cpu, vaddr addr,
-     }
- }
+ ACPI/HEST/GHES
++M: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
++L: linux-edac@vger.kernel.org
+ L: qemu-arm@nongnu.org
+-S: Orphan
++S: Maintained
+ F: hw/acpi/ghes.c
+ F: include/hw/acpi/ghes.h
+ F: docs/specs/acpi_hest_ghes.rst
  
--hwaddr cpu_get_phys_addr_attrs_debug(CPUState *cpu, vaddr addr,
--                                     MemTxAttrs *attrs)
--{
--    TranslateForDebugResult result;
--
--    if (!cpu_translate_for_debug(cpu, addr, &result)) {
--        return -1;
--    }
--
--    *attrs = result.attrs;
--    return result.physaddr;
--}
--
--hwaddr cpu_get_phys_addr_debug(CPUState *cpu, vaddr addr)
--{
--    MemTxAttrs attrs = {};
--
--    return cpu_get_phys_addr_attrs_debug(cpu, addr, &attrs);
--}
--
- int cpu_asidx_from_attrs(CPUState *cpu, MemTxAttrs attrs)
- {
-     int ret = 0;
+ ACPI/HEST/GHES/ARM processor CPER
+-R: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
++M: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
++L: linux-edac@vger.kernel.org
+ S: Maintained
+ F: hw/arm/ghes_cper.c
+ F: hw/acpi/ghes_cper_stub.c
 -- 
 2.53.0
 
