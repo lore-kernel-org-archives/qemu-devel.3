@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC855CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:47:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A407ECD4F24
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:47:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuPL-0004tu-3f; Tue, 12 May 2026 17:12:53 -0400
+	id 1wMuif-0004R4-6p; Tue, 12 May 2026 17:32:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuP3-0004ZA-5E; Tue, 12 May 2026 17:12:35 -0400
+ id 1wMuiJ-00044U-RZ; Tue, 12 May 2026 17:32:30 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuP0-0004lT-LB; Tue, 12 May 2026 17:12:32 -0400
+ id 1wMuhb-0002EN-GU; Tue, 12 May 2026 17:32:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619304; bh=DJe7hKOYwXUs3gk0qN5S/UXT47d6/+7rjTaDwt9g5+M=;
+ t=1778619499; bh=F1ZjrKYiZq3Jun8XhqtVGKKyZHugcUCPVem+L/R0zQ4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=NyGSGqjyKGsksGKMx/MwdNILNLdap8oDsf9+oLD2p/XItZCZxp84SE71fKS2L7wmb
- g9ispeZbA2NFA09P4vtbEijlOVKa3D2kfhzbHSn0EA4Mh4Y2iYAjlkwvZlzosfYLmm
- Rfi+ZNDbGW7u3hSX5hAUM1etLPYv2A5VdnfYE9ejQrAuT/DI+hAG1krylpF78mGE9A
- O2DKBEDP0kSSsMktXBLuzX91fLweNqFdzOI4uj0om4tCK5ZM9dfFGZcFZXImC1K7ey
- wJMGV2k3KEkTrbXH3uNkOq88ZUEucPb0ByzAVCc+IcIaqohjWhVjIDOkaOLPLFkb3Z
- M+KshCPk+t+Ig==
+ b=XSxPa5DGMDpYoQM6f/2XQtu1i7KvvLSngKHAijY+Cyj1fnoGXTmn0Hrz920g9kNvo
+ NAkAUCbFxhRMlP6Ub2oTs0W6/x4UyLbwoQC0O9lsbW/9+m5WgoMZjYyH+ZytUbyGGF
+ sA6S7sEYhag5/OLU+Lesq/DwgUNKTw0Fvx+tZIlJOwb8xD6avWfdgB7JBlM3ElwLGn
+ gUc0SmczYgJ3hv/M5pUf6oAvfsb3qWmQYb7vtmLOc/fEs+bVJBEVpoUMXDlyx6VnTq
+ /WW6BXaDpe5reprVqdIH9b6yTMOYnPrlgoGvGTe1mwGu6GRmyCtpFz+/Y0ZSQyHWSs
+ 0l72lPz3Qpz1g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 05ADA1AA37E;
- Tue, 12 May 2026 23:55:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 983D81AA3F3;
+ Tue, 12 May 2026 23:58:19 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 078113ABCED;
- Tue, 12 May 2026 23:55:08 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9C47F3ABD4B;
+ Tue, 12 May 2026 23:58:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Dietmar Maurer <dietmar@proxmox.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 064/117] qemu-keymap: fix altgr modifier lookup for
- newer xkeyboard-config
-Date: Tue, 12 May 2026 23:54:06 +0300
-Message-ID: <20260512205503.361097-64-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
+ Warner Losh <imp@bsdimp.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 40/58] linux-user: Flush errors by using exit()
+ instead of _exit() in error path
+Date: Tue, 12 May 2026 23:58:01 +0300
+Message-ID: <20260512205820.361821-40-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
-References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,39 +69,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dietmar Maurer <dietmar@proxmox.com>
+From: Helge Deller <deller@gmx.de>
 
-xkeyboard-config 2.37 removed the "AltGr" virtual modifier in favor
-of mapping upper groups directly to Mod5. Since then,
-xkb_keymap_mod_get_index(map, "AltGr") returns XKB_MOD_INVALID, so
-AltGr-based keysyms were never generated.
+Similiar to previous patch - ensure that we always flush I/O by using
+exit() instead of _exit().
 
-See: https://gitlab.freedesktop.org/xkeyboard-config/xkeyboard-config/-/commit/473f9bc32f9ba869829cc0d06a75cd1f2560aa60
-
-Try "AltGr" first, and fall back to "Mod5" for compatibility with
-both old and new xkeyboard-config versions.
-
-Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260408091459.4001711-1-dietmar@proxmox.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 4e6fb62fb0f33c815b089d0b59e1313b768c55d0)
+Reported by: Tobias Bergkvist <tobias@bergkv.ist>
+Reviewed-by: Warner Losh <imp@bsdimp.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2544
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 9fb681792d65fa570cb3e1a769945c10bf276d25)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/qemu-keymap.c b/qemu-keymap.c
-index 1c081db287..d4dccf456e 100644
---- a/qemu-keymap.c
-+++ b/qemu-keymap.c
-@@ -230,6 +230,9 @@ int main(int argc, char *argv[])
-     shift = get_mod(map, "Shift");
-     ctrl = get_mod(map, "Control");
-     altgr = get_mod(map, "AltGr");
-+    if (!altgr) {
-+        altgr = get_mod(map, "Mod5");
-+    }
-     numlock = get_mod(map, "NumLock");
+diff --git a/linux-user/main.c b/linux-user/main.c
+index 84e110dfe9..86d04cca3c 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -975,7 +975,7 @@ int main(int argc, char **argv, char **envp)
+                       info, &bprm);
+     if (ret != 0) {
+         printf("Error while loading %s: %s\n", exec_path, strerror(-ret));
+-        _exit(EXIT_FAILURE);
++        exit(EXIT_FAILURE);
+     }
  
-     state = xkb_state_new(map);
+     for (wrk = target_environ; *wrk; wrk++) {
 -- 
 2.47.3
 
