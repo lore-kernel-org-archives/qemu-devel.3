@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 005E7CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:10:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F427CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:10:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuMU-0008Nx-6W; Tue, 12 May 2026 17:09:57 -0400
+	id 1wMuLK-0002FJ-Db; Tue, 12 May 2026 17:08:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuME-0007n6-LL; Tue, 12 May 2026 17:09:38 -0400
+ id 1wMuKc-0000r5-N6; Tue, 12 May 2026 17:08:02 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuMC-0003Ru-Nt; Tue, 12 May 2026 17:09:38 -0400
+ id 1wMuKR-0002b4-Hp; Tue, 12 May 2026 17:07:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619302; bh=opGEO7diMnZcMSLx88mGJUbb/S7qf0ZqVr0UjX8gEhA=;
+ t=1778619301; bh=mLv7YkPc6Sqv4eClWLRJuRY7qEEqRekg8Jd0GQxv6us=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=rhsPb6bX+njf8F+yoZlN3VKeYTyV1uSCXhWkzpqBwhFuQ8kWCm+WVlJjZ4O/qZM8T
- G9oRc6VLB3wHDxbTU3XCm+WH34rih2MskR26pyPOLBVJy2LkLgbzC9Tr15tcO+fu3v
- Ektq75f/SV7NH8Ft/W5H2RsIpg+UibSPRnr4bLjIZ7V/sv38SKt9GSOfHlhR+ZzDQC
- EfFS2v31PdErSKvYPBZI2jhJu4kgz7P18+2S2Tf2/UBFnpPQ3oGfAdDcPTVW0M+sdT
- K24Yigno9sTk7kFz6gL6Ek0YSBJ81gCyuGq79/s27mEbPpM31QmWgW8o0vzZoRWFyX
- +sHmG8y6p7Pcg==
+ b=fWmSOkWWlQczjrkEbA513vf5b/eGiaJlB+VN3mj2g0N/VrR7et5RD1xCgiEFs2SWi
+ P6xndq7DMmKp/aR2KRQe1yMvji06FO7c22BwELPWr439guBHKLkaVwUYtu7PVcBFaw
+ YdD1+BSngtvObvUyuhwaJQ78PmEEb1PnUo8/NDyz/Uz6E1JwSAFkeU0rYo2LT1Fr0x
+ C1SjIH7X3BCF3d1by1+Jn53p19obZjH8mkZH4tTb89Jsrp9fVJmUUAauvS6DMWJzkF
+ MQ3s0CsWP57iq089kZFd2OOJgXnD2YZ2mqsHRG1BP/TxOFftRwL5i/cxfr8LEYy0Xz
+ R1llk3FX9lLJQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2765C1AA362;
- Tue, 12 May 2026 23:55:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 15F341AA350;
+ Tue, 12 May 2026 23:55:01 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 32F6E3ABCD2;
- Tue, 12 May 2026 23:55:06 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 20BE83ABCC1;
+ Tue, 12 May 2026 23:55:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>,
+Cc: qemu-stable@nongnu.org, Davidlohr Bueso <dave@stgolabs.net>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 037/117] scripts/qemu-guest-agent/fsfreeze-hook: Fix
- syslog-fallback logic
-Date: Tue, 12 May 2026 23:53:39 +0300
-Message-ID: <20260512205503.361097-37-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 020/117] hw/cxl: Respect Media Operation max ops
+ discovery semantics
+Date: Tue, 12 May 2026 23:53:22 +0300
+Message-ID: <20260512205503.361097-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
@@ -72,59 +72,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Davidlohr Bueso <dave@stgolabs.net>
 
-In the fsfreeze script we attempt to implement "log to a file if we
-can, and fall back to syslog if we cannot".  We do this with:
+The Discovery rejects requests where start_index + num_ops
+exceeds the total number of supported operations. Per CXL 4.0
+Table 8-332, num_ops is the "Maximum number of Media Operation to
+return" - a maximum, not an exact count. The device should return
+up to that many entries, not reject the request.
 
-  [ ! -w "$LOGFILE" ] && USE_SYSLOG=1
-  touch "$LOGFILE" >/dev/null 2>&1 || USE_SYSLOG=1
+Cap num_ops to the available entries from start_index instead of
+erroring the command.
 
-This has a weird behaviour if it is run in a setup where we have
-permissions that would allow us to write to $LOGFILE but it does not
-currently exist.  On the first execution, the '-w' fails and so we
-set USE_SYSLOG=1.  But since we also do the "touch $LOGFILE" step we
-create an empty logfile.  Then on the second time the script is
-executed, we see a writeable logfile and will use it.  The effect is
-"log to syslog once, then to the logfile thereafter", which is not
-likely to be what anybody wants.
-
-Update the condition of the first check to only pick syslog if
-the logfile exists but is not writable. This means that:
- * if the logfile doesn't exist but we are able to create it,
-   we will create it and use it
- * if the logfile already exists and we can write to it,
-   we will use it
- * if the logfile already exists but we can't write to it,
-   we will fall back to syslog
- * if the logfile doesn't exist and we can't create it,
-   we will fall back to syslog
-
-Cc: qemu-stable@nongnu.org
-Fixes: 85978dfb6b1c133 ("qemu-ga: Optimize freeze-hook script logic of logging error")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260317094806.1944053-4-peter.maydell@linaro.org
-Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-(cherry picked from commit 08497afcb2a737794991f17a37f0a0971fca411e)
+Fixes: 77a8e9fe0ecb ("hw/cxl/cxl-mailbox-utils: Add support for Media operations discovery commands cxl r3.2 (8.2.10.9.5.3)")
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+Message-ID: <20260319184256.3762391-2-dave@stgolabs.net>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit bc72b2996c0b3f46d422c612b5093500c468fd6c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/scripts/qemu-guest-agent/fsfreeze-hook b/scripts/qemu-guest-agent/fsfreeze-hook
-index 21eb5c5145..76669f5caf 100755
---- a/scripts/qemu-guest-agent/fsfreeze-hook
-+++ b/scripts/qemu-guest-agent/fsfreeze-hook
-@@ -21,8 +21,8 @@ is_ignored_file() {
- }
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 9b99d44a80..02c198c5e3 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -1995,6 +1995,7 @@ static CXLRetCode media_operations_discovery(uint8_t *payload_in,
+     } QEMU_PACKED *media_op_in_disc_pl = (void *)payload_in;
+     struct media_op_discovery_out_pl *media_out_pl =
+         (struct media_op_discovery_out_pl *)payload_out;
++    int total = ARRAY_SIZE(media_op_matrix);
+     int num_ops, start_index, i;
+     int count = 0;
  
- USE_SYSLOG=0
--# if log file is not writable, fallback to syslog
--[ ! -w "$LOGFILE" ] && USE_SYSLOG=1
-+# if log file exists but is not writable, fallback to syslog
-+[ -e "$LOGFILE" ] && [ ! -w "$LOGFILE" ] && USE_SYSLOG=1
- # try to update log file and fallback to syslog if it fails
- touch "$LOGFILE" >/dev/null 2>&1 || USE_SYSLOG=1
+@@ -2011,24 +2012,20 @@ static CXLRetCode media_operations_discovery(uint8_t *payload_in,
+      * sub class command.
+      */
+     if (media_op_in_disc_pl->dpa_range_count ||
+-        start_index + num_ops > ARRAY_SIZE(media_op_matrix)) {
++        start_index >= total) {
+         return CXL_MBOX_INVALID_INPUT;
+     }
  
+     media_out_pl->dpa_range_granularity = CXL_CACHE_LINE_SIZE;
+-    media_out_pl->total_supported_operations =
+-                                     ARRAY_SIZE(media_op_matrix);
+-    if (num_ops > 0) {
+-        for (i = start_index; i < start_index + num_ops; i++) {
+-            media_out_pl->entry[count].media_op_class =
+-                    media_op_matrix[i].media_op_class;
+-            media_out_pl->entry[count].media_op_subclass =
+-                        media_op_matrix[i].media_op_subclass;
+-            count++;
+-            if (count == num_ops) {
+-                break;
+-            }
+-        }
++    media_out_pl->total_supported_operations = total;
++
++    num_ops = MIN(num_ops, total - start_index);
++    for (i = 0; i < num_ops; i++) {
++        media_out_pl->entry[count].media_op_class =
++                media_op_matrix[start_index + i].media_op_class;
++        media_out_pl->entry[count].media_op_subclass =
++                media_op_matrix[start_index + i].media_op_subclass;
++        count++;
+     }
+ 
+     media_out_pl->num_of_supported_operations = count;
 -- 
 2.47.3
 
