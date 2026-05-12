@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B145CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:09:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62B76CD4F39
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:09:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuFF-0000nE-4p; Tue, 12 May 2026 17:02:25 -0400
+	id 1wMuLG-0001ew-6V; Tue, 12 May 2026 17:08:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuDr-0006u1-Q5; Tue, 12 May 2026 17:01:04 -0400
+ id 1wMuJf-00089F-Up; Tue, 12 May 2026 17:07:02 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuDo-0006Kp-Lz; Tue, 12 May 2026 17:00:58 -0400
+ id 1wMuJe-00021W-49; Tue, 12 May 2026 17:06:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619277; bh=Qo7kYxkZn0wfyJNicK4URkwuAV21Bh94qqzwMeeJlk8=;
+ t=1778619300; bh=kk+SO4uv5rSjnRmkoUIyX9LBBG3a88CKMhUn5WxzZ6Y=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=U0hprS+hIMcwA4RpEMHVzRB7WIKduct0KLFHFlXwpfpd7BbzDW7qViILueLGDu1TC
- gcfU2AqAvaHrXwe3Yp4L5G3dII47ppeqglEYXBmP/WRkmDoXfnca0xite1GZNLetDg
- 8sIfDBXVmdGBfhrpWLHHbkJbAo9RTbVJk2c9SKabYkI9QQ9IRi2+7bSSr0ZMW8ayIy
- ezYXt4FCGKi2UFWqMivyyF4Lmy9Ydf3SO/nxD0sK19wKqf3MyAqdObNXkMm9w72rIY
- lMg2S4E09c//Zv1fbfAyotahFTh/mdgBLIBtN6MvfGFAaDl54FxvpcKvUJyY8xUOY3
- Ncq3ZVXy0Ti3Q==
+ b=PuTzGBJZH6wxe506Bg5l8e+9ZG14/wrvYBFqdGNMT6iPQGZ0X4OXEZF/dMRc8AURm
+ SermeQcd5gd1jJhZuR5oESpfyLZmS/8MS3/a4q/3NWA24eYBUPzr1YlWjZLAaLR+tR
+ EoGl7HpBCuIPtvG8HNvm7mWfdY6Dc6Bl00hg4SxC/Ul4TbU+c4yjbl6vUqMWvDWkeJ
+ GBkhee2sej8wST/CHDwu8WW+w4XAstORR+HgxyJ1GIOXI0HdsimT2WkoPzfo2bY3Yv
+ YAmHXWsmCxNjX6RCU0sCjOttmqn/8vyPG/OSkIY5qJZntSQStnG3ItvXqWfTZhoNLb
+ S9n2oDUhCdb/Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 82FCD1AA30B;
- Tue, 12 May 2026 23:54:37 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 98ED51AA349;
+ Tue, 12 May 2026 23:55:00 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8FC663ABC7C;
- Tue, 12 May 2026 23:54:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id A51A23ABCBA;
+ Tue, 12 May 2026 23:55:04 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 063/107] target/i386/tcg: fix decoding of MOVBE and
- CRC32 in 16-bit mode
-Date: Tue, 12 May 2026 23:53:50 +0300
-Message-ID: <20260512205437.360850-63-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 013/117] io: Fix TLS bye task leak
+Date: Tue, 12 May 2026 23:53:15 +0300
+Message-ID: <20260512205503.361097-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
-References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,83 +70,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Fabiano Rosas <farosas@suse.de>
 
-Table A-4 of the SDM shows
+Recent fixes to TLS tasks memory handling have left the TLS bye task
+uncovered. Fix by freeing the task in the same way the handshake task
+is freed.
 
-                    F0                     F1
---------------------------------------------------------
-     NP           MOVBE Gy,My           MOVBE My,Gy
-     66           MOVBE Gw,Mw           MOVBW Mw,Gw
-     F2           CRC32 Gd,Eb           CRC32 Gd,Ey
-  66+F2           CRC32 Gd,Eb           CRC32 Gd,Ew
+Direct leak of 704 byte(s) in 4 object(s) allocated from:
+    #1 0x7f5909b1d6a0 in g_malloc0 ../glib/gmem.c:163
+    #2 0x557650496d61 in qio_task_new ../io/task.c:58:12
+    #3 0x557650475d7f in qio_channel_tls_bye ../io/channel-tls.c:352:12
+    #4 0x55764f7a1bb4 in migration_tls_channel_end ../migration/tls.c:159:5
+    #5 0x55764f709750 in migration_ioc_shutdown_gracefully ../migration/multifd.c:462:9
+    #6 0x55764f6fcf53 in multifd_send_terminate_threads ../migration/multifd.c:493:13
+    #7 0x55764f6fcafb in multifd_send_shutdown ../migration/multifd.c:580:5
+    #8 0x55764f6e1b14 in migration_cleanup ../migration/migration.c:1323:9
+    #9 0x55764f6f5bac in migration_cleanup_bh ../migration/migration.c:1350:5
 
-However, this is incorrect.  Both MOVBE and (for 0xF1) CRC32
-take Gv, Ev or Mv operands.  In 16-bit mode therefore the
-operand is of 16-bit size without prefix and 32-bit mode
-with 0x66 (the data size override).
-
-For example, with NASM you get:
-
-                                 bits 16
-   67 0F 38 F0 02                movbe ax, [edx]
-   66 67 0F 38 F0 02             movbe eax, [edx]
-
-   67 F2 0F 38 F1 02             crc32 ax, word [edx]
-   66 67 F2 0F 38 F1 02          crc32 eax, dword [edx]
-
-versus
-
-                                 bits 32
-   66 0F 38 F0 02                movbe ax, [edx]
-   0F 38 F0 02                   movbe eax, [edx]
-
-   66 F2 0F 38 F1 02             crc32 eax, word [edx]
-   F2 0F 38 F1 02                crc32 eax, dword [edx]
-
-The instruction is listed correctly in the APX documentation
-as "SCALABLE" (which means it has v-size operands).
-
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 76ad26dd172d27aae9f1e76d1165b497167c36c2)
+Fixes: d39d0f3acd ("io: fix cleanup for TLS I/O source data on cancellation")
+Fixes: f8943633a9 ("io: fix cleanup for TLS I/O source data on cancellation") in 10.2.x series
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Acked-by: Daniel P. Berrangé <berrange@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260311213418.16951-3-farosas@suse.de
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+(cherry picked from commit c20f143cc9fb9b1c79627d9f2ecb8daf771bdb4a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index a3dffec692..ea03b18b9e 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -751,19 +751,23 @@ static const X86OpEntry opcodes_0F38_00toEF[240] = {
+diff --git a/io/channel-tls.c b/io/channel-tls.c
+index 940fc3c6d1..31ec4d236d 100644
+--- a/io/channel-tls.c
++++ b/io/channel-tls.c
+@@ -352,7 +352,9 @@ void qio_channel_tls_bye(QIOChannelTLS *ioc, Error **errp)
+     task = qio_task_new(OBJECT(ioc), propagate_error, errp, NULL);
  
- /* five rows for no prefix, 66, F3, F2, 66+F2  */
- static const X86OpEntry opcodes_0F38_F0toFF[16][5] = {
-+    /*
-+     * MOVBE and CRC32 are incorrectly listed as always doing 32-bit operation
-+     * without prefix and 16-bit operation with 0x66.
-+     */
-     [0] = {
--        X86_OP_ENTRYwr(MOVBE, G,y, M,y, cpuid(MOVBE)),
--        X86_OP_ENTRYwr(MOVBE, G,w, M,w, cpuid(MOVBE)),
-+        X86_OP_ENTRYwr(MOVBE, G,v, M,v, cpuid(MOVBE)),
-+        X86_OP_ENTRYwr(MOVBE, G,v, M,v, cpuid(MOVBE)),
-         {},
-         X86_OP_ENTRY2(CRC32, G,d, E,b, cpuid(SSE42)),
-         X86_OP_ENTRY2(CRC32, G,d, E,b, cpuid(SSE42)),
-     },
-     [1] = {
--        X86_OP_ENTRYwr(MOVBE, M,y, G,y, cpuid(MOVBE)),
--        X86_OP_ENTRYwr(MOVBE, M,w, G,w, cpuid(MOVBE)),
-+        X86_OP_ENTRYwr(MOVBE, M,v, G,v, cpuid(MOVBE)),
-+        X86_OP_ENTRYwr(MOVBE, M,v, G,v, cpuid(MOVBE)),
-         {},
--        X86_OP_ENTRY2(CRC32, G,d, E,y, cpuid(SSE42)),
--        X86_OP_ENTRY2(CRC32, G,d, E,w, cpuid(SSE42)),
-+        X86_OP_ENTRY2(CRC32, G,d, E,v, cpuid(SSE42)),
-+        X86_OP_ENTRY2(CRC32, G,d, E,v, cpuid(SSE42)),
-     },
-     [2] = {
-         X86_OP_ENTRY3(ANDN, G,y, B,y, E,y, vex13 cpuid(BMI1)),
+     trace_qio_channel_tls_bye_start(ioc);
+-    qio_channel_tls_bye_task(ioc, task, NULL);
++    if (qio_channel_tls_bye_task(ioc, task, NULL)) {
++        qio_task_free(task);
++    }
+ }
+ 
+ static void qio_channel_tls_init(Object *obj G_GNUC_UNUSED)
 -- 
 2.47.3
 
