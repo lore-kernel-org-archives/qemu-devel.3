@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C99B0CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 17:16:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FCEECD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 17:16:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMqhl-0007jp-7U; Tue, 12 May 2026 13:15:37 -0400
+	id 1wMqhm-0007xj-M7; Tue, 12 May 2026 13:15:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wMqgd-0006oP-JX
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wMqgf-0006p9-JY
  for qemu-devel@nongnu.org; Tue, 12 May 2026 13:14:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wMqgZ-00011W-6d
- for qemu-devel@nongnu.org; Tue, 12 May 2026 13:14:27 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wMqgb-00011r-Kf
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 13:14:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778606060;
+ s=mimecast20190719; t=1778606063;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aFnWtS7fHX6DQP30aCJnQ/b6Ebdav+Ca95dFN+mixKE=;
- b=ElpQz+gNb9xwE0L3OxaIraTLKTqfwN0LJFqC9QxP8qVpAWGQIGF4Zczg70MVVFlwpAvDHP
- ku4928nm/h+3FXr0Tde3zJQVIXqsdBGbmVUTNxaADKq6iEP+jWWIavY8+LhQlEN7S66ffp
- iJSAmeskbaFNrPR/nmiScNjWtkCGWxQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=v9ykP7jfFb11PT8krRVFcMmjBsX/sC3umQNq9cH46G0=;
+ b=B05chAaCPWpWUHdl/JrhlcgmZxtMboCizPbYCs6dzLUWG907GIbpKY+uK1+HuG9DiOIfUF
+ SgJ5li+Fc0wMO81ThHu+Lwoxsa51ZQnWOQaPtJIY0Pv7USg+/vScNhhgq1zdV1M4qLN67c
+ rPYsDilKnADLmqdb8ta0tA2iZ1lk128=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-385-RPBEWfg3OvW6ZSpJwCv_8A-1; Tue,
- 12 May 2026 13:14:17 -0400
-X-MC-Unique: RPBEWfg3OvW6ZSpJwCv_8A-1
-X-Mimecast-MFC-AGG-ID: RPBEWfg3OvW6ZSpJwCv_8A_1778606056
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-424-dWQR3lZfNZK9B3ybnmSuTA-1; Tue,
+ 12 May 2026 13:14:20 -0400
+X-MC-Unique: dWQR3lZfNZK9B3ybnmSuTA-1
+X-Mimecast-MFC-AGG-ID: dWQR3lZfNZK9B3ybnmSuTA_1778606058
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9242519560A1; Tue, 12 May 2026 17:14:16 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B5A441800451; Tue, 12 May 2026 17:14:18 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.49.156])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D1DAC1955D84; Tue, 12 May 2026 17:14:14 +0000 (UTC)
+ id ED2271953947; Tue, 12 May 2026 17:14:16 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Peter Delevoryas <peter@pjd.dev>
-Subject: [PULL 8/9] hw/arm: Remove fby35 machine
-Date: Tue, 12 May 2026 19:13:53 +0200
-Message-ID: <20260512171354.4183887-9-clg@redhat.com>
+Cc: Ashish Anand <ashish.a6@samsung.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 9/9] hw/i3c/dw-i3c: Fix BCR/DCR extraction and PID assembly
+ during ENTDAA
+Date: Tue, 12 May 2026 19:13:54 +0200
+Message-ID: <20260512171354.4183887-10-clg@redhat.com>
 In-Reply-To: <20260512171354.4183887-1-clg@redhat.com>
 References: <20260512171354.4183887-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,382 +84,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The fby35 machine was deprecated in QEMU 10.2 and is now removed in
-QEMU 11.1.
+From: Ashish Anand <ashish.a6@samsung.com>
 
-This multi-SoC machine was added as an example of heterogeneous
-systems, but the models never evolved and no public firmware is
-available to boot it. Users needing multi-SoC emulation should use the
-ast2700fc machine instead, which is based on newer AST2700 SoCs with
-better support.
+The target_info union in dw_i3c_addr_assign_cmd() declares pid, bcr,
+and dcr as separate union members, causing them to all alias b[0]
+rather than their correct positions in the ENTDAA response buffer.
+This results in dw_i3c_update_char_table() being called with BCR and
+DCR both read from b[0] instead of b[6] and b[7] respectively,
+corrupting the device characteristics table on every ENTDAA operation.
+Fix by replacing the broken members with uint64_t d and extracting fields
+per the I3C spec ENTDAA wire format.
 
-Link: https://lore.kernel.org/qemu-devel/20260510165704.2935316-5-clg@redhat.com
-Acked-by: Peter Delevoryas <peter@pjd.dev>
+Additionally, dw_i3c_update_char_table() incorrectly splits PID across
+LOC1 and LOC2 at bit 32. Per the Linux kernel HCI driver
+(drivers/i3c/master/mipi-i3c-hci/dct_v1.c), the DCT layout requires
+LOC1 to hold pid[47:16] and LOC2 to hold pid[15:0]. Fix the split
+accordingly.
+
+Signed-off-by: Ashish Anand <ashish.a6@samsung.com>
+Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Link: https://lore.kernel.org/qemu-devel/20260505134002.509037-1-ashish.a6@samsung.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- MAINTAINERS                     |   2 -
- docs/about/deprecated.rst       |  10 --
- docs/about/removed-features.rst |  10 ++
- docs/system/arm/fby35.rst       |  52 --------
- docs/system/target-arm.rst      |   1 -
- hw/arm/fby35.c                  | 203 --------------------------------
- hw/arm/meson.build              |   3 +-
- 7 files changed, 11 insertions(+), 270 deletions(-)
- delete mode 100644 docs/system/arm/fby35.rst
- delete mode 100644 hw/arm/fby35.c
+ include/hw/i3c/i3c.h |  7 +++++++
+ hw/i3c/dw-i3c.c      | 16 +++++++---------
+ 2 files changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 93a1e4e4822e..06788fde5acd 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1276,12 +1276,10 @@ F: include/hw/*/*aspeed*
- F: hw/net/ftgmac100.c
- F: include/hw/net/ftgmac100.h
- F: docs/system/arm/aspeed.rst
--F: docs/system/arm/fby35.rst
- F: docs/specs/aspeed*
- F: tests/functional/*/*aspeed*
- F: tests/*/*aspeed*
- F: tests/*/*ast2700*
--F: hw/arm/fby35.c
- F: pc-bios/ast27x0_bootrom.bin
- F: roms/vbootrom
+diff --git a/include/hw/i3c/i3c.h b/include/hw/i3c/i3c.h
+index 6ba90793ad01..dcf8d9b1435b 100644
+--- a/include/hw/i3c/i3c.h
++++ b/include/hw/i3c/i3c.h
+@@ -138,6 +138,13 @@ struct I3CTarget {
+     uint8_t static_address;
+     uint8_t dcr;
+     uint8_t bcr;
++    /*
++     * Provisioned ID. Since core.c sends this LSB-first during ENTDAA
++     * via (pid >> (offset * 8)) & 0xff, targets must store it
++     * pre-reversed so that pid[47:40] goes on the wire first, as
++     * required by the I3C spec.
++     *  e.g. for a device with pid 0xAABBCCDDEEFF, store 0xFFEEDDCCBBAA.
++     */
+     uint64_t pid;
  
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index e416f3d8a74b..bf6182d61c6e 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -250,16 +250,6 @@ deprecated; use the new name ``dtb-randomness`` instead. The new name
- better reflects the way this property affects all random data within
- the device tree blob, not just the ``kaslr-seed`` node.
+     /* CCC State tracking. */
+diff --git a/hw/i3c/dw-i3c.c b/hw/i3c/dw-i3c.c
+index d87d42be8914..17ff484c5df1 100644
+--- a/hw/i3c/dw-i3c.c
++++ b/hw/i3c/dw-i3c.c
+@@ -1459,11 +1459,10 @@ static void dw_i3c_update_char_table(DWI3C *s, uint8_t offset, uint64_t pid,
+                                           P_DEV_CHAR_TABLE_START_ADDR) /
+                                           sizeof(uint32_t)) +
+                                           (offset * sizeof(uint32_t));
+-    s->regs[dev_index] = pid & 0xffffffff;
+-    pid >>= 32;
++    s->regs[dev_index] = (pid >> 16) & 0xffffffff;
+     s->regs[dev_index + 1] = FIELD_DP32(s->regs[dev_index + 1],
+                                         DEVICE_CHARACTERISTIC_TABLE_LOC2,
+-                                        MSB_PID, pid);
++                                        MSB_PID, pid & 0xffff);
+     s->regs[dev_index + 2] = FIELD_DP32(s->regs[dev_index + 2],
+                                         DEVICE_CHARACTERISTIC_TABLE_LOC3, DCR,
+                                         dcr);
+@@ -1507,10 +1506,9 @@ static void dw_i3c_addr_assign_cmd(DWI3C *s, DWI3CAddrAssignCmd cmd)
+     for (i = 0; i < cmd.dev_count; i++) {
+         uint8_t addr = dw_i3c_target_addr(s, cmd.dev_index + i);
+         union {
+-            uint64_t pid:48;
+-            uint8_t bcr;
+-            uint8_t dcr;
++            uint64_t d;
+             uint32_t w[2];
++            /* Per I3C spec: b[0]=PID MSB, b[5]=PID LSB, b[6]=BCR, b[7]=DCR */
+             uint8_t b[8];
+         } target_info;
  
--Arm ``fby35`` machine (since 10.2)
--''''''''''''''''''''''''''''''''''
--
--The ``fby35`` machine was originally added as an example of a
--multi-SoC system, with the expectation the models would evolve over
--time in an heterogeneous system. This hasn't happened and no public
--firmware is available to boot it. It can be replaced by the
--``ast2700fc``, another multi-SoC machine based on the newer AST2700
--SoCs which are excepted to receive better support in the future.
--
+@@ -1544,9 +1542,9 @@ static void dw_i3c_addr_assign_cmd(DWI3C *s, DWI3CAddrAssignCmd cmd)
+             err = DW_I3C_RESP_QUEUE_ERR_DAA_NACK;
+             break;
+         }
+-        dw_i3c_update_char_table(s, cmd.dev_index + i,
+-                                            target_info.pid, target_info.bcr,
+-                                            target_info.dcr, addr);
++        uint64_t pid = be64_to_cpu(target_info.d) >> 16;
++        dw_i3c_update_char_table(s, cmd.dev_index + i, pid, target_info.b[6],
++                                 target_info.b[7], addr);
  
- RISC-V default machine option (since 10.0)
- ''''''''''''''''''''''''''''''''''''''''''
-diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index 2da8283d0e1e..9bd83b183f46 100644
---- a/docs/about/removed-features.rst
-+++ b/docs/about/removed-features.rst
-@@ -1213,6 +1213,16 @@ models, it can be replaced by the ``ast2500-evb`` machine using the
- ``fmc-model`` option to specify the flash type. The I2C devices
- connected to the board can be defined via the QEMU command line.
- 
-+Arm ``fby35`` machine (removed in 11.1)
-+'''''''''''''''''''''''''''''''''''''''
-+
-+The ``fby35`` machine was originally added as an example of a
-+multi-SoC system, with the expectation the models would evolve over
-+time in an heterogeneous system. This hasn't happened and no public
-+firmware is available to boot it. It can be replaced by the
-+``ast2700fc``, another multi-SoC machine based on the newer AST2700
-+SoCs which are excepted to receive better support in the future.
-+
- linux-user mode CPUs
- --------------------
- 
-diff --git a/docs/system/arm/fby35.rst b/docs/system/arm/fby35.rst
-deleted file mode 100644
-index e19274e75c81..000000000000
---- a/docs/system/arm/fby35.rst
-+++ /dev/null
-@@ -1,52 +0,0 @@
--Facebook Yosemite v3.5 Platform and CraterLake Server (``fby35``)
--==================================================================
--
--Facebook has a series of multi-node compute server designs named
--Yosemite. The most recent version released was
--`Yosemite v3 <https://www.opencompute.org/documents/ocp-yosemite-v3-platform-design-specification-1v16-pdf>`__.
--
--Yosemite v3.5 is an iteration on this design, and is very similar: there's a
--baseboard with a BMC, and 4 server slots. The new server board design termed
--"CraterLake" includes a Bridge IC (BIC), with room for expansion boards to
--include various compute accelerators (video, inferencing, etc). At the moment,
--only the first server slot's BIC is included.
--
--Yosemite v3.5 is itself a sled which fits into a 40U chassis, and 3 sleds
--can be fit into a chassis. See `here <https://www.opencompute.org/products-chiplets/237/wiwynn-yosemite-v3-server>`__
--for an example.
--
--In this generation, the BMC is an AST2600 and each BIC is an AST1030. The BMC
--runs `OpenBMC <https://github.com/facebook/openbmc>`__, and the BIC runs
--`OpenBIC <https://github.com/facebook/openbic>`__.
--
--Firmware images can be retrieved from the Github releases or built from the
--source code, see the README's for instructions on that. This image uses the
--"fby35" machine recipe from OpenBMC, and the "yv35-cl" target from OpenBIC.
--Some reference images can also be found here:
--
--.. code-block:: bash
--
--    $ wget https://github.com/facebook/openbmc/releases/download/openbmc-e2294ff5d31d/fby35.mtd
--    $ wget https://github.com/peterdelevoryas/OpenBIC/releases/download/oby35-cl-2022.13.01/Y35BCL.elf
--
--Since this machine has multiple SoC's, each with their own serial console, the
--recommended way to run it is to allocate a pseudoterminal for each serial
--console and let the monitor use stdio. Also, starting in a paused state is
--useful because it allows you to attach to the pseudoterminals before the boot
--process starts.
--
--.. code-block:: bash
--
--    $ qemu-system-arm -machine fby35 \
--        -drive file=fby35.mtd,format=raw,if=mtd \
--        -device loader,file=Y35BCL.elf,addr=0,cpu-num=2 \
--        -serial pty -serial pty -serial mon:stdio \
--        -display none -S
--    $ screen /dev/tty0 # In a separate TMUX pane, terminal window, etc.
--    $ screen /dev/tty1
--    $ (qemu) c		   # Start the boot process once screen is setup.
--
--This machine model supports emulation of the boot from the CE0 flash device by
--setting option ``execute-in-place``. When using this option, the CPU fetches
--instructions to execute by reading CE0 and not from a preloaded ROM
--initialized at machine init time. As a result, execution will be slower.
-diff --git a/docs/system/target-arm.rst b/docs/system/target-arm.rst
-index c57102a4149f..e34492402f0a 100644
---- a/docs/system/target-arm.rst
-+++ b/docs/system/target-arm.rst
-@@ -87,7 +87,6 @@ Board-specific documentation
-    arm/cubieboard
-    arm/emcraft-sf2
-    arm/exynos
--   arm/fby35
-    arm/musicpal
-    arm/kzm
-    arm/nrf
-diff --git a/hw/arm/fby35.c b/hw/arm/fby35.c
-deleted file mode 100644
-index d3bfd2c7d26a..000000000000
---- a/hw/arm/fby35.c
-+++ /dev/null
-@@ -1,203 +0,0 @@
--/*
-- * Copyright (c) Meta Platforms, Inc. and affiliates. (http://www.meta.com)
-- *
-- * This code is licensed under the GPL version 2 or later. See the COPYING
-- * file in the top-level directory.
-- */
--
--#include "qemu/osdep.h"
--#include "qemu/units.h"
--#include "qapi/error.h"
--#include "system/system.h"
--#include "system/block-backend.h"
--#include "hw/core/boards.h"
--#include "hw/core/qdev-clock.h"
--#include "hw/arm/aspeed_soc.h"
--#include "hw/arm/boot.h"
--#include "hw/arm/machines-qom.h"
--
--#define TYPE_FBY35 MACHINE_TYPE_NAME("fby35")
--OBJECT_DECLARE_SIMPLE_TYPE(Fby35State, FBY35);
--
--struct Fby35State {
--    MachineState parent_obj;
--
--    MemoryRegion bmc_memory;
--    MemoryRegion bmc_dram;
--    MemoryRegion bmc_boot_rom;
--    MemoryRegion bic_memory;
--    Clock *bic_sysclk;
--
--    Aspeed2600SoCState bmc;
--    Aspeed10x0SoCState bic;
--
--    bool mmio_exec;
--};
--
--#define FBY35_BMC_RAM_SIZE (2 * GiB)
--#define FBY35_BMC_FIRMWARE_ADDR 0x0
--
--static void fby35_bmc_write_boot_rom(DriveInfo *dinfo, MemoryRegion *mr,
--                                     hwaddr offset, size_t rom_size,
--                                     Error **errp)
--{
--    BlockBackend *blk = blk_by_legacy_dinfo(dinfo);
--    g_autofree void *storage = NULL;
--    int64_t size;
--
--    /*
--     * The block backend size should have already been 'validated' by
--     * the creation of the m25p80 object.
--     */
--    size = blk_getlength(blk);
--    if (size <= 0) {
--        error_setg(errp, "failed to get flash size");
--        return;
--    }
--
--    if (rom_size > size) {
--        rom_size = size;
--    }
--
--    storage = g_malloc0(rom_size);
--    if (blk_pread(blk, 0, rom_size, storage, 0) < 0) {
--        error_setg(errp, "failed to read the initial flash content");
--        return;
--    }
--
--    /* TODO: find a better way to install the ROM */
--    memcpy(memory_region_get_ram_ptr(mr) + offset, storage, rom_size);
--}
--
--static void fby35_bmc_init(Fby35State *s)
--{
--    AspeedSoCState *soc;
--    AspeedSoCClass *sc;
--
--    object_initialize_child(OBJECT(s), "bmc", &s->bmc, "ast2600-a3");
--    soc = ASPEED_SOC(&s->bmc);
--    sc = ASPEED_SOC_GET_CLASS(soc);
--
--    memory_region_init(&s->bmc_memory, OBJECT(&s->bmc), "bmc-memory",
--                       UINT64_MAX);
--    memory_region_add_subregion(get_system_memory(), 0, &s->bmc_memory);
--    memory_region_init_ram(&s->bmc_dram, OBJECT(&s->bmc), "bmc-dram",
--                           FBY35_BMC_RAM_SIZE, &error_abort);
--
--    object_property_set_int(OBJECT(&s->bmc), "ram-size", FBY35_BMC_RAM_SIZE,
--                            &error_abort);
--    object_property_set_link(OBJECT(&s->bmc), "memory", OBJECT(&s->bmc_memory),
--                             &error_abort);
--    object_property_set_link(OBJECT(&s->bmc), "dram", OBJECT(&s->bmc_dram),
--                             &error_abort);
--    object_property_set_int(OBJECT(&s->bmc), "hw-strap1", 0x000000C0,
--                            &error_abort);
--    object_property_set_int(OBJECT(&s->bmc), "hw-strap2", 0x00000003,
--                            &error_abort);
--    aspeed_soc_uart_set_chr(soc->uart, ASPEED_DEV_UART5, sc->uarts_base,
--                            sc->uarts_num, serial_hd(0));
--    qdev_realize(DEVICE(&s->bmc), NULL, &error_abort);
--
--    aspeed_board_init_flashes(&soc->fmc, "n25q00", 2, 0);
--
--    /* Install first FMC flash content as a boot rom. */
--    if (!s->mmio_exec) {
--        DriveInfo *mtd0 = drive_get(IF_MTD, 0, 0);
--
--        if (mtd0) {
--            uint64_t rom_size = memory_region_size(&soc->spi_boot);
--
--            memory_region_init_rom(&s->bmc_boot_rom, NULL, "aspeed.boot_rom",
--                                   rom_size, &error_abort);
--            memory_region_add_subregion_overlap(&soc->spi_boot_container, 0,
--                                                &s->bmc_boot_rom, 1);
--
--            fby35_bmc_write_boot_rom(mtd0, &s->bmc_boot_rom,
--                                     FBY35_BMC_FIRMWARE_ADDR,
--                                     rom_size, &error_abort);
--        }
--    }
--}
--
--static void fby35_bic_init(Fby35State *s)
--{
--    AspeedSoCState *soc;
--    AspeedSoCClass *sc;
--
--    s->bic_sysclk = clock_new(OBJECT(s), "SYSCLK");
--    clock_set_hz(s->bic_sysclk, 200000000ULL);
--
--    object_initialize_child(OBJECT(s), "bic", &s->bic, "ast1030-a1");
--    soc = ASPEED_SOC(&s->bic);
--    sc = ASPEED_SOC_GET_CLASS(soc);
--
--    memory_region_init(&s->bic_memory, OBJECT(&s->bic), "bic-memory",
--                       UINT64_MAX);
--
--    qdev_connect_clock_in(DEVICE(&s->bic), "sysclk", s->bic_sysclk);
--    object_property_set_link(OBJECT(&s->bic), "memory", OBJECT(&s->bic_memory),
--                             &error_abort);
--    aspeed_soc_uart_set_chr(soc->uart, ASPEED_DEV_UART5, sc->uarts_base,
--                            sc->uarts_num, serial_hd(1));
--    qdev_realize(DEVICE(&s->bic), NULL, &error_abort);
--
--    aspeed_board_init_flashes(&soc->fmc, "sst25vf032b", 2, 2);
--    aspeed_board_init_flashes(&soc->spi[0], "sst25vf032b", 2, 4);
--    aspeed_board_init_flashes(&soc->spi[1], "sst25vf032b", 2, 6);
--}
--
--static void fby35_init(MachineState *machine)
--{
--    Fby35State *s = FBY35(machine);
--
--    fby35_bmc_init(s);
--    fby35_bic_init(s);
--}
--
--
--static bool fby35_get_mmio_exec(Object *obj, Error **errp)
--{
--    return FBY35(obj)->mmio_exec;
--}
--
--static void fby35_set_mmio_exec(Object *obj, bool value, Error **errp)
--{
--    FBY35(obj)->mmio_exec = value;
--}
--
--static void fby35_instance_init(Object *obj)
--{
--    FBY35(obj)->mmio_exec = false;
--}
--
--static void fby35_class_init(ObjectClass *oc, const void *data)
--{
--    MachineClass *mc = MACHINE_CLASS(oc);
--
--    mc->desc = "Meta Platforms fby35";
--    mc->deprecation_reason = "For a multi-soc machine, use 'ast2700fc' instead";
--    mc->init = fby35_init;
--    mc->no_floppy = 1;
--    mc->no_cdrom = 1;
--    mc->auto_create_sdcard = true;
--    mc->min_cpus = mc->max_cpus = mc->default_cpus = 3;
--
--    object_class_property_add_bool(oc, "execute-in-place",
--                                   fby35_get_mmio_exec,
--                                   fby35_set_mmio_exec);
--    object_class_property_set_description(oc, "execute-in-place",
--                           "boot directly from CE0 flash device");
--}
--
--static const TypeInfo fby35_types[] = {
--    {
--        .name = MACHINE_TYPE_NAME("fby35"),
--        .parent = TYPE_MACHINE,
--        .class_init = fby35_class_init,
--        .instance_size = sizeof(Fby35State),
--        .instance_init = fby35_instance_init,
--        .interfaces = arm_machine_interfaces,
--    },
--};
--
--DEFINE_TYPES(fby35_types);
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 063abf2cf654..80068f70bb9c 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -62,8 +62,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_ast2600_gb200nvl.c',
-   'aspeed_ast2600_rainier.c',
-   'aspeed_ast10x0.c',
--  'aspeed_ast10x0_evb.c',
--  'fby35.c'))
-+  'aspeed_ast10x0_evb.c'))
- arm_common_ss.add(when: ['CONFIG_ASPEED_SOC', 'TARGET_AARCH64'], if_true: files(
-   'aspeed_ast1700.c',
-   'aspeed_ast27x0.c',
+         /* Push the PID, BCR, and DCR to the RX queue. */
+         dw_i3c_push_rx(s, target_info.w[0]);
 -- 
 2.54.0
 
