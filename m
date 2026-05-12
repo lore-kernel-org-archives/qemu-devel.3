@@ -4,122 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFD3FCD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 11:03:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12E24CD4851
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 11:06:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMksL-0006Hm-Hw; Tue, 12 May 2026 07:02:09 -0400
+	id 1wMkwK-00084v-5W; Tue, 12 May 2026 07:06:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wMks8-0006CW-T9
- for qemu-devel@nongnu.org; Tue, 12 May 2026 07:01:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1wMkvt-00080W-2Y; Tue, 12 May 2026 07:05:49 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wMks4-0003Xw-CW
- for qemu-devel@nongnu.org; Tue, 12 May 2026 07:01:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778583709;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GmHPuEn/7Gry1RvBW/FMQh8n+qcPkS49sE/ehIWO008=;
- b=Rg8cZbhmvXJXom/LceJ9Ix2gVUSkVHqoPRt1wgq2SHSwGD8nJcpkQAM/Q63WEmbGHfXkY3
- jd3EXQjeMn9+6DdwHYjTWRcbkECamCI8cDy/a0J3EuAXGJib6pveJYuMPWd91uzYGEqaeT
- 2rSAoEZ9uMkmeQPnz6yukYT3QdYX/Wk=
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
- [209.85.210.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-488-QOXWXyWeN5OqfwhTtFZeow-1; Tue, 12 May 2026 07:01:47 -0400
-X-MC-Unique: QOXWXyWeN5OqfwhTtFZeow-1
-X-Mimecast-MFC-AGG-ID: QOXWXyWeN5OqfwhTtFZeow_1778583707
-Received: by mail-pf1-f199.google.com with SMTP id
- d2e1a72fcca58-83536dc3be5so5724996b3a.1
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 04:01:47 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778583706; cv=none;
- d=google.com; s=arc-20240605;
- b=EwlAiXRtmToEtmRFPz9XikWbmrOfaEN9aHGyrgQTuX5QF/IR3ws+qFrox8Yh7s3nCR
- cFt/JlW5/KF5wNk2YlW6Qt1UD6EGwJtwp2qQqwpjsXS4TtV88aio1PMJF1nrMJfaUwIf
- Xl5vfnvVwh8YUq3waaWtbL0RmHv0h376ccFL6QCYhUUfDLmIho5h8CZbxIGetUOpH1KI
- jf1k/xCgZo/XdcYEcpG+fuEFEbVuDZ6w4FYhiU6XacKCUnTo8y0V0/fEbxOA4QI5jrQy
- UxF2pPRiEuIJ9e7mlCmCEwQbbjnAy+ljet2ob0g3qD3T0AQ9bk/ANfykhBcbCMR2y2F5
- cnCw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=GmHPuEn/7Gry1RvBW/FMQh8n+qcPkS49sE/ehIWO008=;
- fh=DkcsS+wDAht8mg8Un44vEXzEP9PftsclVxpMktWLF+E=;
- b=CmZkCt74Ainz+Ozr6ndRz0PTdBAEOl/ajpcL0dQRQG9tt2TAjUJNXActUnAMsf3PIO
- wy57czb6XKQIgZ7hpbLUXA2pwAhd9pKq1eArUXDw9p7gQK5ixt+aMrTl9p4wAY9cnC9E
- ezkIS8sVjVpPBGvfzKJYc7zbHFyU+5wKhB3U0pHX6GoUVNGOxs2b5tW1GP6xtcIa6AYE
- +UVR/LSNo93rmhFrCYPJ20YFrMZXB8wymefobJB6KL9kKOy+Q/7jPVj+ICifMqOX+a52
- 6zVlXFHIUDRPkz1zKnTo2YiYTLgX9yNv3ZUMWCCajIHUF5GOsLo4nkhIxa1L9/oznUPv
- 0W8g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778583706; x=1779188506; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GmHPuEn/7Gry1RvBW/FMQh8n+qcPkS49sE/ehIWO008=;
- b=aLgFblNlI+alibC3DKtTLxp4/Y2voA87XpPTBufg87UOFA9yYOQGbUicEO7QXgTHIz
- 3nTe9RQSy8TIym1a7Wzb31FdWINro5g4KyDXTWWe72J6mbZB1zgHVBso5YzF65OKp0nF
- OInmj59oLdbU1kMdAwnpbqZiVjjo0c8GZ5wVS3xdzj2b0KORu/tYv23WTSMDAy8lvXce
- siYeSm65eUzD3m/uBVmwYnaa9nE1ZmTNl9NoTdmNqnnJm8QouwqOWNca8PelE6rTKcn6
- nHssxJtGeKjTeWBWJhXNwVWSkMGIpU9M4bGGT3HCqrd8nVbCQW/gr6bIEXNC4MM1Onsi
- 35eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778583706; x=1779188506;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=GmHPuEn/7Gry1RvBW/FMQh8n+qcPkS49sE/ehIWO008=;
- b=Z0VYZEpr8HpfSZKQaFh3QSBkj+RxCsXK6mkF8ez5XQho7IirTdZ/uflis7KDwp3rsy
- oJ+AoTAQssTocZ9tTo0b8pukYorIo95RTyaHjild6XWUiBzvUPIWIqQKU7vVrwo602Ch
- fOLjttS17P/T5B+KZEyCWEqya+sCy76QFUj1El3OmFHD8zmhE/ziavqVCJOs/O3Z+0Mv
- of20kByBupawFZCb1MMhrIX+SayCna6cIusXlNjit8Fo1nVIBxzHr0xRtzCOQqpgVJM4
- vWwQu/pT/djsDVwht2ZUnjnQxVV7E1Q2BPmc3v4wgqYyfGq/ZNIQzwy6KyXj1kJQLKR+
- plZA==
-X-Gm-Message-State: AOJu0YxF3B1Nmbnu5llBdD0DavfR/x9mSPOliRXVr4UGdobXOGd1J8nV
- ZM7xr4fB2yrnRE+mPlT8hhryxUhEhMTAyTUF4ae6NJqQlke5dFVGuJCRz0nkf/MyWn4lF/6FOmS
- bGSLJdt9FGR0J0RfLlCXakobWPVCbLyud06qkn2QzVLE0Fs8eLoHsA7wrtUcAfkUZsxL0+BW+IM
- zTGHVIzpbK7D3O8rBgmkaHkUb8L2BvKTg=
-X-Gm-Gg: Acq92OExwdhr47aXn/9NtgxDHDsE+44a2LSBnUEp6fbgYKv0YP7j6L8paaKCYQcr4K1
- bbJljUcis+20kTXXljS37nz6ak6ZPTQzIa9WcHImUPKK96AUZ+OorsCLytJ7llN/X0n0mhDznJm
- 7lHXr5PBmf+UAXBxDm0q/0v5avmdwxek4zCu4loub6uh/WJEMe2KFxqWciziNmOvt6nHU4yFWHZ
- Z4nbGhWI8uXRrKy2nhgp4sCoMqV6AUCy2jEP89d9Id9jqA29El9Hq7+2CS5MqhFz2ClYN3dVv3m
- Ic2H7450YyVBGludK6LatIw=
-X-Received: by 2002:a05:6a00:2d12:b0:82f:4a4d:377e with SMTP id
- d2e1a72fcca58-83a5d873344mr28498781b3a.28.1778583706169; 
- Tue, 12 May 2026 04:01:46 -0700 (PDT)
-X-Received: by 2002:a05:6a00:2d12:b0:82f:4a4d:377e with SMTP id
- d2e1a72fcca58-83a5d873344mr28498727b3a.28.1778583705645; Tue, 12 May 2026
- 04:01:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1wMkvq-0006Zt-0M; Tue, 12 May 2026 07:05:48 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64BK7JET3179891; Tue, 12 May 2026 11:05:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=ITfouI
+ TeYSZkPpZg/HVipL1YmINOFfb9dk4nOja119E=; b=PUSyEjQc66O+2CHRDKux4q
+ PfiugIBcwqFLMaj+wKm9Z+RVu2AuleLyFhOtooB9APx4K87FipN9+vcOBQyo1Isa
+ ERwH7oPUsuAWBNYXQkatoZ2lDoTb+kZKdUpL9HU2mMLJABL6a2bb6iK9BwPTiK4v
+ 8Ze8/FG5EC4vMlxEIK3EPH9emgZx0S/IBEZP6Jn2w9q1whSur7lDvjQZXy0clMpZ
+ eB6yc979Gnw3Er8kNgqMMNGgEXu/71269DvN78q+QCiWfkxd0eLumiMqmD0vrWSr
+ V+cbOKd15B4iXtGQQvfequKAxwB6+1wn1u5frckelZiEf89+n44LkWIs/fsL9eBg
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e3nv6jjb4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 May 2026 11:05:39 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64CAdTk2007015;
+ Tue, 12 May 2026 11:05:39 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e3nfgjua4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 May 2026 11:05:39 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64CB5ZYU62456192
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 12 May 2026 11:05:35 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 505CF2004B;
+ Tue, 12 May 2026 11:05:35 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0123420043;
+ Tue, 12 May 2026 11:05:35 +0000 (GMT)
+Received: from [9.52.200.39] (unknown [9.52.200.39])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 12 May 2026 11:05:34 +0000 (GMT)
+Message-ID: <9308b8e8-f2f8-4cd7-b25d-6f1f9573c6da@linux.ibm.com>
+Date: Tue, 12 May 2026 13:05:34 +0200
 MIME-Version: 1.0
-References: <20260512104210.3330835-1-peter.maydell@linaro.org>
-In-Reply-To: <20260512104210.3330835-1-peter.maydell@linaro.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 12 May 2026 15:01:33 +0400
-X-Gm-Features: AVHnY4JLlpqhoFu4ac54wBkw9HGUUTbbNXiOV6Sl_t1PdmlDQNvl08QSSD8_mlk
-Message-ID: <CAMxuvawNHwQjJ3JUU=Z=jni=5mo24fbqMXx5mWkhhnAPzoORYA@mail.gmail.com>
-Subject: Re: [PATCH 0/2] ui/vt100: Use uint8_t for byte data
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/s390x: Make container ids in SysIB_15x 1-based
+To: Alexandra Winter <wintera@linux.ibm.com>,
+ Heiko Carstens <hca@linux.ibm.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>
+Cc: Halil Pasic <pasic@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
+ Alexander Gordeev <agordeev@linux.ibm.com>,
+ Sven Schnelle <svens@linux.ibm.com>, Gautam Gala <ggala@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Richter
+ <tmricht@linux.ibm.com>, Shrikanth Hegde <sshegde@linux.ibm.com>,
+ Mete Durlu <meted@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@kernel.org>,
+ Cornelia Huck <cohuck@redhat.com>, qemu-stable@nongnu.org,
+ qemu-devel@nongnu.org, qemu-trivial@nongnu.org, qemu-s390x@nongnu.org
+References: <20260511134909.43802-1-wintera@linux.ibm.com>
+Content-Language: en-US
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
+In-Reply-To: <20260511134909.43802-1-wintera@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=Us1T8ewB c=1 sm=1 tr=0 ts=6a030983 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=TaAaJw8h5JJKTkFOHx0A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: zoVrcjjxwH9OnhKcK4IWSr0l2KhwvfAG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEyMDEwOSBTYWx0ZWRfX9Rf7xjw/nOcp
+ p/l7shzICuikqr8ighhmD5K012iDTBjIaE3sdnvG3bjSWVUAxYPBI4jTKaQsU5luh0tsdeJuI7B
+ uI5LUQ1z8JPtOc73jiJ2lXxuiqAJNglEJd1wErghYA6SWLloUpLR+MnVh/dEEBrcCjBtDe66Cgg
+ avInNM2UUAwW8VxRVu/ds//i/8OFgFnQgFfM/CsIS1/OG6Ige6KlTClJpC06DxgBlnXRWnUib7K
+ fXxQjXuLuoF2qvwVndBBLNV5Ob94ZfbNve8jgLcCKNZbcpS1o1U/QVvA9dtaL6tZKKwQBxJFpjv
+ jHjuxYdl/rEL6NUE9BjFQ/1oEIsmFutT7xm7p6U8//tWn5KaE8OUI/dubDJaKSdV+XJrZH2vRQJ
+ AQCkm7KLncu8/dQ4XJEpgRqgTvwuneFnShzcOQ9iXh54t9PB8XkuOLS7qIsPRMYdMQIz7DPftv6
+ PXDv+DSfZNKHegyTGvw==
+X-Proofpoint-ORIG-GUID: zoVrcjjxwH9OnhKcK4IWSr0l2KhwvfAG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-11_05,2026-05-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0
+ bulkscore=0 suspectscore=0 spamscore=0 malwarescore=0 clxscore=1011
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605050000
+ definitions=main-2605120109
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=borntraeger@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,32 +133,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 12, 2026 at 2:42=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
-.org> wrote:
->
-> This patchset is prompted by a Coverity issue CID 1659590,
-> where it thinks that we use tainted data from the guest to
-> index an array in bh_utf8_decode() without bounds-checking.
-> In fact I think this is a false positive because the array
-> is 256 bytes and the data from the guest is always a byte,
-> but both Coverity and I get confused because the chain
-> of functions operating on this data switch between "uint8_t",
-> "int" and "uint32_t" types to hold it as it passes down.
->
-> The patchset standardizes this all to uint8_t.
+Am 11.05.26 um 15:49 schrieb Alexandra Winter:
+> The Container Id in a container-type TLE of SysIB_15x is defined as 8-bit
+> unsigned nonzero integer. Make stsi fc 15 emulation architecture compliant,
+> by starting the container ids at 1 for the lowest numbered container.
+> 
+> The qemu misbehaviour without this patch becomes obvious due to a recently
+> proposed kernel fix. Older linux kernels pass the container ids from stsi
+> fc15 unchanged to sysfs, i.e. starting at 1 on s390 hardware. This resulted
+> in off-by-one values when compared to the values from HMC. A Linux kernel
+> fix is being proposed to correct the sysfs topology ids by -1, so they
+> start at 0, e.g. when displayed by 'lscpu -ye'. In case a KVM guest with a
+> fixed kernel runs on a host with a qemu without this fix, this can result
+> in container ids erroneously being shown as 255.
+> Example (Fixed guest on unfixed qemu):
+> $ lscpu -ye
+> CPU NODE DRAWER BOOK SOCKET CORE L1d:L1i:L2 ONLINE CONFIGURED POLARIZATION ADDRESS
+>    0    0    255  255    255    0 0:0:0         yes yes        vert-medium  0
+>    1    0    255  255      0    1 1:1:1         yes yes        vert-medium  1
+> After this fix:
+> $ lscpu -ye
+> CPU NODE DRAWER BOOK SOCKET CORE L1d:L1i:L2 ONLINE CONFIGURED POLARIZATION ADDRESS
+>    0    0      0    0      0    0 0:0:0         yes yes        vert-medium  0
+>    1    0      0    0      1    1 1:1:1         yes yes        vert-medium  1
+> 
+> Fixes: f4f54b582f ("target/s390x/cpu topology: handle STSI(15) and build the SYSIB")
+> Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 
->
-> Peter Maydell (2):
->   ui/vt100: Standardize on uint8_t for "ch" byte variables
->   ui/vt100: Take byte as uint8_t in bh_utf8_decode()
->
->  ui/vt100.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->
-> --
-> 2.43.0
->
+I guess this should go via Connys s390 tree.
+
+
+> ---
+>   target/s390x/kvm/stsi-topology.c | 10 +++++-----
+>   1 file changed, 5 insertions(+), 5 deletions(-)
+> 
+> diff --git a/target/s390x/kvm/stsi-topology.c b/target/s390x/kvm/stsi-topology.c
+> index 301d41b68d..afd00da0e6 100644
+> --- a/target/s390x/kvm/stsi-topology.c
+> +++ b/target/s390x/kvm/stsi-topology.c
+> @@ -90,9 +90,9 @@ static int stsi_topology_fill_sysib(S390TopologyList *topology_list,
+>       int last_drawer = -1;
+>       int last_book = -1;
+>       int last_socket = -1;
+> -    int drawer_id = 0;
+> -    int book_id = 0;
+> -    int socket_id = 0;
+> +    int drawer_id = 1;
+> +    int book_id = 1;
+> +    int socket_id = 1;
+>       int n = sizeof(SysIB_151x);
+>   
+>       QTAILQ_FOREACH(entry, topology_list, next) {
+> @@ -103,12 +103,12 @@ static int stsi_topology_fill_sysib(S390TopologyList *topology_list,
+>           if (level > 3 && drawer_change) {
+>               SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
+>               p = fill_container(p, 3, drawer_id++);
+> -            book_id = 0;
+> +            book_id = 1;
+>           }
+>           if (level > 2 && book_change) {
+>               SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
+>               p = fill_container(p, 2, book_id++);
+> -            socket_id = 0;
+> +            socket_id = 1;
+>           }
+>           if (socket_change) {
+>               SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
 
 
