@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EEB3CD4F24
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:12:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FA1ECD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:12:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuNQ-0006Jz-Iz; Tue, 12 May 2026 17:10:52 -0400
+	id 1wMuIQ-0003AJ-LO; Tue, 12 May 2026 17:05:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuNJ-0005bJ-2B; Tue, 12 May 2026 17:10:45 -0400
+ id 1wMuIB-0001QZ-2R; Tue, 12 May 2026 17:05:27 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuNF-0003zK-PR; Tue, 12 May 2026 17:10:44 -0400
+ id 1wMuI6-0000dm-U7; Tue, 12 May 2026 17:05:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619302; bh=UQq/eDZEE7tEklYos+iMXpSYI3dn5wNFk46I9CQFGBA=;
+ t=1778619280; bh=4rkkLGqTdBX+oCD8jRNrc2w3UKNXIdoSZtlA4EO+SVY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=PZh99KugWTlhB9HpJb8FWLrDlOadia7+ETHAOrjjsFBy4KUW7XhvwlWquX3Twvz6M
- zduXJVLeVDFQsyLpHb38M8XDZuUuBBYXWYqKzY9Q4ON2GHFk5YfkWcFsoCdeWJNmMw
- u2nL+p+tDBLEscYGHcbpbCUsU29juwVOTon/K7DQTR6Wtbu0LHCvBa2n7TLrRQ1+gg
- TmioM23MVNWu7GCsgbo0ch7mBmA+jU9txd5ZWiMc2qeC2tyi1gBi4WAz8m4uvG4s1A
- K8AV4+/6aGLeTY4iW//QcLRhZXeQhlQ407/7M3LDbKgZtoPa2Y7nT5/Jv2DWqnaiiV
- AfmJiDwQjW/lA==
+ b=lL0KyROcKhvdq2flGlI8r3vbgelnJUpiZDpzYaPufeTFnivS+KL/GmlJvBFXG0FCb
+ bU/rnETqnKBhXsoHylJJbrxomQBCgKMZj6HtLetaYCiLKpJaL6u6Bj+wM2zHmRB/jM
+ GtGyfcRsspz/fgcBjcVIKX79jPaQkIcCvKpqzAnUE64qpIV7+I/O82BPqjC8uO3WmS
+ iPVW7xgP7j7w70Qf0XhsXABbPb0ckzPSIKQSAQzeH4+QJXuyyo3Bhmb02aaHSY4xrQ
+ OlJNK2UF/dxYKt1WAxf/+ln7u186Ww6ntZohiTtHCpv+Yx1lfZbOf8B704UJcYuCMH
+ dksXMExNMfdBQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E834C1AA36E;
- Tue, 12 May 2026 23:55:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 471CA1AA334;
+ Tue, 12 May 2026 23:54:40 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 026533ABCDE;
- Tue, 12 May 2026 23:55:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 52A193ABCA5;
+ Tue, 12 May 2026 23:54:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Katherine Leaver <katherine.j.leaver@gmail.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 049/117] util: fix missing aio_wait sym in qemu guest
- agent only build
-Date: Tue, 12 May 2026 23:53:51 +0300
-Message-ID: <20260512205503.361097-49-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 104/107] hw/uefi: fix ucs2 string helper functions
+Date: Tue, 12 May 2026 23:54:31 +0300
+Message-ID: <20260512205437.360850-104-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
-References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
+References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,50 +69,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-Configure QEMU with
+The length passed in is in bytes not characters.  Rename the
+parameters to make that clear.  Calculate the number of chars
+if needed.  Fix length checks to use the number of chars not
+bytes to avoid OOB reads.
 
- --disable-system --disable-user --disable-tools --enable-guest-agent
-
-and the build with fail with
-
-  FAILED: [code=1] qga/qemu-ga
-  ld: libqemuutil.a.p/qapi_qmp-dispatch.c.o: in function `do_qmp_dispatch_bh':
-  qapi/qmp-dispatch.c:140:(.text+0x5c): undefined reference to `aio_wait_kick'
-
-This aio_kick() usage was recently introduced in qmp-dispatch.c
-without updating the build logic.
-
-Fixes commit fc1a2ec7da531223b3473185dc2584f8a7c6c659
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit 17fbf3e18c3dbc32ec07cfc24853d6654a813e90)
-Fixes: 1275e6abfe82 "monitor: Fix deadlock in monitor_cleanup" in 10.2.x
+Fixes: CVE-2026-41437
+Fixes: 1ebc319c8ca7 ("hw/uefi: add var-service-utils.c")
+Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20260422092910.444997-4-kraxel@redhat.com>
+(cherry picked from commit 5247b3034c23bdfd91a7f78587c3b3e37f90568c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/util/meson.build b/util/meson.build
-index 35029380a3..d0465e413d 100644
---- a/util/meson.build
-+++ b/util/meson.build
-@@ -82,6 +82,7 @@ endif
+diff --git a/hw/uefi/var-service-utils.c b/hw/uefi/var-service-utils.c
+index c9ef46570f..71631e9f3c 100644
+--- a/hw/uefi/var-service-utils.c
++++ b/hw/uefi/var-service-utils.c
+@@ -19,13 +19,18 @@
+  * sometimes when they are not (for example in variable policies).
+  */
  
- if have_block or have_ga
-   util_ss.add(files('aiocb.c', 'async.c'))
-+  util_ss.add(files('aio-wait.c'))
-   util_ss.add(files('base64.c'))
-   util_ss.add(files('main-loop.c'))
-   util_ss.add(files('qemu-coroutine.c', 'qemu-coroutine-lock.c', 'qemu-coroutine-io.c'))
-@@ -92,7 +93,6 @@ if have_block or have_ga or have_user
-   util_ss.add(files('qemu-sockets.c'))
- endif
- if have_block
--  util_ss.add(files('aio-wait.c'))
-   util_ss.add(files('buffer.c'))
-   util_ss.add(files('bufferiszero.c'))
-   util_ss.add(files('hbitmap.c'))
+-gboolean uefi_str_is_valid(const uint16_t *str, size_t len,
++gboolean uefi_str_is_valid(const uint16_t *str, size_t bytes,
+                            gboolean must_be_null_terminated)
+ {
++    size_t chars = bytes / 2;
+     size_t pos = 0;
+ 
++    if ((bytes % 2) != 0) {
++        return false;
++    }
++
+     for (;;) {
+-        if (pos == len) {
++        if (pos == chars) {
+             if (must_be_null_terminated) {
+                 return false;
+             } else {
+@@ -47,12 +52,13 @@ gboolean uefi_str_is_valid(const uint16_t *str, size_t len,
+     }
+ }
+ 
+-size_t uefi_strlen(const uint16_t *str, size_t len)
++size_t uefi_strlen(const uint16_t *str, size_t bytes)
+ {
++    size_t chars = bytes / 2;
+     size_t pos = 0;
+ 
+     for (;;) {
+-        if (pos == len) {
++        if (pos == chars) {
+             return pos;
+         }
+         if (str[pos] == 0) {
+@@ -62,25 +68,25 @@ size_t uefi_strlen(const uint16_t *str, size_t len)
+     }
+ }
+ 
+-gboolean uefi_str_equal_ex(const uint16_t *a, size_t alen,
+-                           const uint16_t *b, size_t blen,
++gboolean uefi_str_equal_ex(const uint16_t *a, size_t a_bytes,
++                           const uint16_t *b, size_t b_bytes,
+                            gboolean wildcards_in_a)
+ {
++    size_t a_chars = a_bytes / 2;
++    size_t b_chars = b_bytes / 2;
+     size_t pos = 0;
+ 
+-    alen = alen / 2;
+-    blen = blen / 2;
+     for (;;) {
+-        if (pos == alen && pos == blen) {
++        if (pos == a_chars && pos == b_chars) {
+             return true;
+         }
+-        if (pos == alen && b[pos] == 0) {
++        if (pos == a_chars && b[pos] == 0) {
+             return true;
+         }
+-        if (pos == blen && a[pos] == 0) {
++        if (pos == b_chars && a[pos] == 0) {
+             return true;
+         }
+-        if (pos == alen || pos == blen) {
++        if (pos == a_chars || pos == b_chars) {
+             return false;
+         }
+         if (a[pos] == 0 && b[pos] == 0) {
+@@ -100,18 +106,18 @@ gboolean uefi_str_equal_ex(const uint16_t *a, size_t alen,
+     }
+ }
+ 
+-gboolean uefi_str_equal(const uint16_t *a, size_t alen,
+-                        const uint16_t *b, size_t blen)
++gboolean uefi_str_equal(const uint16_t *a, size_t a_bytes,
++                        const uint16_t *b, size_t b_bytes)
+ {
+-    return uefi_str_equal_ex(a, alen, b, blen, false);
++    return uefi_str_equal_ex(a, a_bytes, b, b_bytes, false);
+ }
+ 
+-char *uefi_ucs2_to_ascii(const uint16_t *ucs2, uint64_t ucs2_size)
++char *uefi_ucs2_to_ascii(const uint16_t *ucs2, uint64_t ucs2_bytes)
+ {
+-    char *str = g_malloc0(ucs2_size / 2 + 1);
++    char *str = g_malloc0(ucs2_bytes / 2 + 1);
+     int i;
+ 
+-    for (i = 0; i * 2 < ucs2_size; i++) {
++    for (i = 0; i * 2 < ucs2_bytes; i++) {
+         if (ucs2[i] == 0) {
+             break;
+         }
 -- 
 2.47.3
 
