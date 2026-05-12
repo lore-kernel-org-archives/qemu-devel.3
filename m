@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21834CD484E
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:23:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62252CD4851
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:23:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMgWA-0000xU-A5; Tue, 12 May 2026 02:23:00 -0400
+	id 1wMgVz-0000qS-FL; Tue, 12 May 2026 02:22:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgW5-0000uL-1P
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:22:54 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgVk-0000gA-B6
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:22:32 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgW3-0004dR-5F
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:22:52 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-48e6db3ff7eso17230515e9.0
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 23:22:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgVh-00049x-VG
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:22:31 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-44b330c5cc6so3704846f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 23:22:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778566968; x=1779171768; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778566947; x=1779171747; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=QJ4OaOCleUomCfnEQePhfE9b7I0kuoQqmAJfKtFe8LA=;
- b=v5Hgcv/TcuklyuANxPEOfncWi9GQeLP8WRb4+Lyne04Rnt7A3mpFhvbAcH5z/JFI/e
- sJFSn4hgAn2uoA1IXYOFGOVxrcBM1urFLY5J1TbEnF55kQviTyvdrm1XFI+f9ggYGg0e
- IasISirGZrn6PcKzseEAOx7+E5UgoaVADBsfTCwAEqkinr6l2gTclC+r792FrZh5RDOj
- 9WQXICGaCvXkgYC9b4k0htTCoWF59eYN1BhjW1eVkEo5sywB6Q3eayIClroMCJgnyJb+
- ErUvAdJhVKJA1tNfg39WMd4WNFuB5mekerkEN67eiYGGBw7wmjJ0brjgvx9Sn59zNPS0
- 9nNw==
+ :reply-to; bh=EQnBp7Gj5TcacccipAB/n9mwbGRUt4USwHdRZECWo90=;
+ b=j8Om0IbxselFUDMQTowKTxHgsRuE9LAt9cj517PsMOaSR5ob6kfwTX4LZ7G5ekgqG6
+ Kb9Y1tLR3u0cW2B900LkYcTKkmE/dGs6/gREdxvKP8AxzJsky5RzWUFwjwZCtoDOym5Q
+ +ipK9j+gbCGiksuj/wJN6I6PbnZUFO08Z/W9geVlN8+9V/+fDfihqLjBMdEPBd1zUscy
+ noqXR6X0ToSWEFI0hwSRuZr1xTaM8V3VJ++xWM0mINwHFRqh9/K/M61vMT1muUtYu+QH
+ DXogtcMn5ZvNlpz7DwiTotBWWtN0tO9wi09T5W+CqcJbjsEfYWZsoChKWv7OnWB7d3II
+ YM+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778566968; x=1779171768;
+ d=1e100.net; s=20251104; t=1778566947; x=1779171747;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=QJ4OaOCleUomCfnEQePhfE9b7I0kuoQqmAJfKtFe8LA=;
- b=MqX8kI7dSCVdqicom/K7R7Q8wdDxbsic5/h+holgHJe2XOxYX/2tUz4VC3et1Tldk/
- dpzx7LyQERPxcpoHUo0cAyg5cwk9kOWjurzfYnMDUXNjLv4Ckjrta3CgYaX1WgA6gwkf
- jGmC2bWttrT0USrw5FnuintfGRRIZ3SlzX6PO+dEZ2J64JSHTusEtfbpSn7W3wEstwlK
- VyJ8Nt/sITfFYs3R+wSNE5OjdTNkdS0CabHi108C9MRCxoz4I0OayNhH2WIAF5ob/T+h
- A19+4dEMpmgyejGyYV51i59rvdMj4IAtxr3h8GpjtNbh8t3hyiv7rAtvHcx6GDosTbKb
- 8pGg==
-X-Gm-Message-State: AOJu0Yw3l1He54Ww9fDOBmNruEUdtfbMtJbD8aL1XeS4CAgvbJZX4QmX
- 1Dgkjj0i+OL2Q5A5ngw/i6u+g+f87t4y+7Z3g/mDps081GLvzvfX2JgxNPEXsIdaEBHUj2XQLCY
- nagz8afQ=
-X-Gm-Gg: Acq92OFpIq5gdKUJ+i+O/M7MJTkSGGpF9dWh3Ghh+GsDzZrmQynLZOzc+Kin7qq8cjG
- /l9GME33512LiTdzAbrUyEhcccnh5ajnh5m4Q7L5EFxD+66E7PTImXLCOFuuXNpzxVkhjrACahx
- W7I0dF4RN4dhv+/XdLZRyXVP1QXYuWkM1F9jRqxBpG23uNysB6dhuvb3pGysabjjKXDmTi0hOOr
- aq+C8IzOO+EMht7HPsf22eCfU0rnQgVlCdODvSB3et79ekJTLD2KZyTxWJAuFLS6U7Zp82AIJjM
- hqVnlXgMLEYiYpZnRzI7m+xM9WxzEx/NJjUhPpw6RRDJpv9WuQLUTCm4/XJ3ptN3cX9ZjnBvoYE
- txSn9E6ZbmUXgdW1bzjSdcN/v68HnUPUCn31511WshD3v1gThQUXuDmf7y1Ik8Jpve5FDNvZ0bl
- nR5jP+2ZsBJtiJTk26TFCT/rD0+32vbW06g6RLMqHg+4xgcnouV0vdRdcnwBLHOKW80wRk9EtR
-X-Received: by 2002:a05:600c:3111:b0:488:a723:ea53 with SMTP id
- 5b1f17b1804b1-48e8fe509f1mr20910895e9.7.1778566968195; 
- Mon, 11 May 2026 23:22:48 -0700 (PDT)
+ bh=EQnBp7Gj5TcacccipAB/n9mwbGRUt4USwHdRZECWo90=;
+ b=NSoc6w7bv+a51glkSTsCCFaTXUYAGFwxRnUuEb2KeWspt1NHHWnUiOy5OGcDi63E5G
+ ZYPXWHBG7Edvm8LlUmxTYfYSS1c2TnRhiElZ44KL9JgUy2PQYpqNZYC3/HPBQrqRMQPS
+ jg+y3Je5Bu9z4BV5mIyD8SK1YahWPgo4MaUkVJfPaVHRolZ58DVizfTa/V0I8ZpdNWtT
+ xqWs+N4JNs/gwHZB3cGHSF9bi7win9pu+HlIZ+RCpkIZWJo1aNqneav5qWYIJhLbbnCk
+ xY62H3hUewaAEAzfnaaQ+isZ4sbON8XTLv0LAwlMwuRM1MbDP7zqi3alD9Du1UQa0qy3
+ h0zw==
+X-Gm-Message-State: AOJu0YzwAFUD9Wqi33eks31YPBUam1IjQ/gDEW+/6EAduTYe7h45K8Ds
+ /Na1Dxvj0O0rZ7vp90qDK+vOYM/jK4VwUAYUVN2SzBBK/q2yT0amC9WNQ0yk5ooDhkcVCJYSiuc
+ fgNltjfA=
+X-Gm-Gg: Acq92OGI6+4Cp1j3pvMv7c8vyQcVFLsm16/t/m6JE8mcFMEoEBxGMdksQg0y8dbqf7Y
+ LnEda/wji8nUUV66WEObioT4ml2kilBcdU/3hd4P6OuSa75D3zCDuTgulbMRYpQaj/rk4URVycK
+ 6RWa811tU1SK6ZoHv74t4K5FcyhDPg4h4kW3SuJv1E87nr3Jusk2a+ys0lkARx67rfCFa5LnAyj
+ HPlhUmEqtfZSNR2b3TvntmGxs3VZlYEY8TeLJy6PP1yGGMCX5hChK4bEDILFaakB7cwGHqJnaJo
+ 5M1PwDDfFNFDQ6+lUPpJ9u24lAwT/NL4Ovo++h2hx1UiAPC4PUmrpfkPBEBH2XJ1MCVq6lQn6EM
+ gn/rK+1zhwnIs4mGgcLSruKkX2GQ4DYZHpGvLQrSP+nJ2hEVvqux3CrAzdDo1iPWzKJVj5m6w0T
+ 9zfCqkvcTopaFeLdqpjrHkC7axBv9Dy4SL5TptYYprS0xphv9D9f1CYlAw7NOZlJ/aFbxUAvhS
+X-Received: by 2002:a05:6000:2386:b0:43f:e938:1e67 with SMTP id
+ ffacd0b85a97d-4515d99fff7mr42996127f8f.38.1778566947377; 
+ Mon, 11 May 2026 23:22:27 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e8f540aecsm10188135e9.33.2026.05.11.23.22.47
+ ffacd0b85a97d-4549120eb95sm29571592f8f.20.2026.05.11.23.22.26
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 11 May 2026 23:22:47 -0700 (PDT)
+ Mon, 11 May 2026 23:22:26 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/41] vdpa: Allow VDPA to work on big-endian machine
-Date: Tue, 12 May 2026 08:21:10 +0200
-Message-ID: <20260512062142.67998-10-philmd@linaro.org>
+Subject: [PULL 06/41] hw/sd/sd: Allow multi-byte read/write for generic paths
+Date: Tue, 12 May 2026 08:21:07 +0200
+Message-ID: <20260512062142.67998-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260512062142.67998-1-philmd@linaro.org>
 References: <20260512062142.67998-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,46 +98,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Konstantin Shkolnyy <kshk@linux.ibm.com>
+From: Christian Speich <c.speich@avm.de>
 
-After commit 0caed25cd171 vhost_vdpa_net_load_vlan() started seeing
-VIRTIO_NET_F_CTRL_VLAN flag and making 4096 calls to the kernel with
-VIRTIO_NET_CTRL_VLAN_ADD command. However, it forgot to convert the
-16-bit VLAN IDs to LE format. On BE machine, the kernel calls failed
-when they saw "VLAN IDs" greater than 4095, and QEMU then said:
-"unable to start vhost net: 5: falling back on userspace virtio", and
-VDPA became disabled.
+Paths that use sd_generic_write/read_data can now write/read multiple
+bytes with one call.
 
-Convert the VLAN ID to LE before putting it into virtio queue.
-
-Fixes: 8f7e9967484d ("vdpa: Restore vlan filtering state")
-Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Message-ID: <20260427144746.1498-1-kshk@linux.ibm.com>
+Signed-off-by: Christian Speich <c.speich@avm.de>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260417-sdcard-performance-b4-v4-2-119e66be10c2@avm.de>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- net/vhost-vdpa.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ hw/sd/sd.c | 62 ++++++++++++++++++++++++++++++------------------------
+ 1 file changed, 35 insertions(+), 27 deletions(-)
 
-diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-index 3df6091274e..f1523697e20 100644
---- a/net/vhost-vdpa.c
-+++ b/net/vhost-vdpa.c
-@@ -1200,9 +1200,10 @@ static int vhost_vdpa_net_load_single_vlan(VhostVDPAState *s,
-                                            struct iovec *in_cursor,
-                                            uint16_t vid)
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index c0b89735f69..b49b83b96e8 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -1610,7 +1610,7 @@ static sd_rsp_type_t sd_cmd_optional(SDState *sd, SDRequest req)
+     return sd_illegal;
+ }
+ 
+-/* Configure fields for following sd_generic_write_byte() calls */
++/* Configure fields for following sd_generic_write_data() calls */
+ static sd_rsp_type_t sd_cmd_to_receivingdata(SDState *sd, SDRequest req,
+                                              uint64_t start, size_t size)
  {
-+    uint16_t vid_le = cpu_to_le16(vid);
-     const struct iovec data = {
--        .iov_base = &vid,
--        .iov_len = sizeof(vid),
-+        .iov_base = &vid_le,
-+        .iov_len = sizeof(vid_le),
-     };
-     ssize_t r = vhost_vdpa_net_load_cmd(s, out_cursor, in_cursor,
-                                         VIRTIO_NET_CTRL_VLAN,
+@@ -1625,7 +1625,7 @@ static sd_rsp_type_t sd_cmd_to_receivingdata(SDState *sd, SDRequest req,
+     return sd_r1;
+ }
+ 
+-/* Configure fields for following sd_generic_read_byte() calls */
++/* Configure fields for following sd_generic_read_data() calls */
+ static sd_rsp_type_t sd_cmd_to_sendingdata(SDState *sd, SDRequest req,
+                                            uint64_t start,
+                                            const void *data, size_t size)
+@@ -2615,11 +2615,15 @@ send_response:
+ }
+ 
+ /* Return true if buffer is consumed. Configured by sd_cmd_to_receivingdata() */
+-static bool sd_generic_write_byte(SDState *sd, uint8_t value)
++static bool sd_generic_write_data(SDState *sd, const void *buf, size_t *len)
+ {
+-    sd->data[sd->data_offset] = value;
++    size_t to_write = MIN(sd->data_size - sd->data_offset, *len);
+ 
+-    if (++sd->data_offset >= sd->data_size) {
++    memcpy(sd->data, buf, to_write);
++    sd->data_offset += to_write;
++    *len = to_write;
++
++    if (sd->data_offset >= sd->data_size) {
+         sd->state = sd_transfer_state;
+         return true;
+     }
+@@ -2627,11 +2631,15 @@ static bool sd_generic_write_byte(SDState *sd, uint8_t value)
+ }
+ 
+ /* Return true when buffer is consumed. Configured by sd_cmd_to_sendingdata() */
+-static bool sd_generic_read_byte(SDState *sd, uint8_t *value)
++static bool sd_generic_read_data(SDState *sd, void *buf, size_t *len)
+ {
+-    *value = sd->data[sd->data_offset];
++    size_t to_read = MIN(sd->data_size - sd->data_offset, *len);
+ 
+-    if (++sd->data_offset >= sd->data_size) {
++    memcpy(buf, sd->data, to_read);
++    sd->data_offset += to_read;
++    *len = to_read;
++
++    if (sd->data_offset >= sd->data_size) {
+         sd->state = sd_transfer_state;
+         return true;
+     }
+@@ -2658,18 +2666,12 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+     if (sd->card_status & (ADDRESS_ERROR | WP_VIOLATION))
+         return length;
+ 
+-    /*
+-     * Only read one byte at a time. We will be called again with the
+-     * remaining.
+-     */
+-    length = 1;
+-
+     trace_sdcard_write_data(sd->proto->name,
+                             sd->last_cmd_name,
+                             sd->current_cmd, sd->data_offset, value[0]);
+     switch (sd->current_cmd) {
+     case 24:  /* CMD24:  WRITE_SINGLE_BLOCK */
+-        if (sd_generic_write_byte(sd, value[0])) {
++        if (sd_generic_write_data(sd, buf, &length)) {
+             /* TODO: Check CRC before committing */
+             sd->state = sd_programming_state;
+             sd_blk_write(sd, sd->data_start, sd->data_offset);
+@@ -2681,6 +2683,12 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+         break;
+ 
+     case 25:  /* CMD25:  WRITE_MULTIPLE_BLOCK */
++        /*
++         * Only read one byte at a time. We will be called again with the
++         * remaining.
++         */
++        length = 1;
++
+         if (sd->data_offset == 0) {
+             /* Start of the block - let's check the address is valid */
+             if (!address_in_range(sd, "WRITE_MULTIPLE_BLOCK",
+@@ -2724,7 +2732,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+         break;
+ 
+     case 26:  /* CMD26:  PROGRAM_CID */
+-        if (sd_generic_write_byte(sd, value[0])) {
++        if (sd_generic_write_data(sd, buf, &length)) {
+             /* TODO: Check CRC before committing */
+             sd->state = sd_programming_state;
+             for (i = 0; i < sizeof(sd->cid); i ++)
+@@ -2742,7 +2750,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+         break;
+ 
+     case 27:  /* CMD27:  PROGRAM_CSD */
+-        if (sd_generic_write_byte(sd, value[0])) {
++        if (sd_generic_write_data(sd, buf, &length)) {
+             /* TODO: Check CRC before committing */
+             sd->state = sd_programming_state;
+             for (i = 0; i < sizeof(sd->csd); i ++)
+@@ -2765,7 +2773,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+         break;
+ 
+     case 42:  /* CMD42:  LOCK_UNLOCK */
+-        if (sd_generic_write_byte(sd, value[0])) {
++        if (sd_generic_write_data(sd, buf, &length)) {
+             /* TODO: Check CRC before committing */
+             sd->state = sd_programming_state;
+             sd_lock_command(sd);
+@@ -2775,7 +2783,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
+         break;
+ 
+     case 56:  /* CMD56:  GEN_CMD */
+-        sd_generic_write_byte(sd, value[0]);
++        sd_generic_write_data(sd, buf, &length);
+         break;
+ 
+     default:
+@@ -2810,12 +2818,6 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
+         return length;
+     }
+ 
+-    /*
+-     * We will only read one byte at a time. We will be called again with the
+-     * remaining buffer.
+-     */
+-    length = 1;
+-
+     io_len = sd_blk_len(sd);
+ 
+     trace_sdcard_read_data(sd->proto->name,
+@@ -2833,10 +2835,16 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
+     case 30: /* CMD30:  SEND_WRITE_PROT */
+     case 51: /* ACMD51: SEND_SCR */
+     case 56: /* CMD56:  GEN_CMD */
+-        sd_generic_read_byte(sd, value);
++        sd_generic_read_data(sd, buf, &length);
+         break;
+ 
+     case 18:  /* CMD18:  READ_MULTIPLE_BLOCK */
++        /*
++         * We will only read one byte at a time. We will be called again with
++         * the remaining buffer.
++         */
++        length = 1;
++
+         if (sd->data_offset == 0) {
+             if (!address_in_range(sd, "READ_MULTIPLE_BLOCK",
+                                   sd->data_start, io_len)) {
+@@ -2869,7 +2877,7 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR, "%s: DAT read illegal for command %s\n",
+                                        __func__, sd->last_cmd_name);
+-        *value = dummy_byte;
++        memset(buf, dummy_byte, length);
+     }
+ 
+     return length;
 -- 
 2.53.0
 
