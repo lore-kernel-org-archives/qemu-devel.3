@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFE66CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 20:56:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22B39CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 20:57:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMu9n-0006MG-M5; Tue, 12 May 2026 16:56:47 -0400
+	id 1wMu9k-00067R-25; Tue, 12 May 2026 16:56:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMu9l-0006DD-2R; Tue, 12 May 2026 16:56:45 -0400
+ id 1wMu9e-0005xo-Mz; Tue, 12 May 2026 16:56:41 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMu9i-0003SG-HI; Tue, 12 May 2026 16:56:44 -0400
+ id 1wMu9V-0003Fc-Lb; Tue, 12 May 2026 16:56:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619274; bh=JWSIGopsTg74D630j7pITK+QLGjVKq8rwPYDSMe/ysc=;
+ t=1778619274; bh=acKlxLEDYl/rGWwOoSEJZsTAkfqrcjA+SI0dYYGI7p0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=goldvgpW9Ie35dcils+rnNw+vbWmV8zp5J5YI+hob7t9VeyO/heizsbSzEK+2UMsy
- IRW+G32haqcSRGKSCHof1wDEX8FgcYCgdGT5G/HZHnRcBCHqdmpYStKpiS8gRixdhe
- fxI/nT8jDxhAKfTl0/dHA+oHe/q7FYqdpQvzwi2SMKT52mR0B+/ckCx9KQM32pXgop
- tvzHAdtxAE5TkV8zQ30K/8+7VNTVI088x0kESN2pAUEuwzuQygeVGKSEZJg85BnSaO
- d54LRqs7SD4mjDrK8Dj1v5gnT3yE6Ggkj5v3m7T4abJVXECT7Qh0PFsTLEQYNbZNHt
- 4vnFnlSdAMdQw==
+ b=fc32KqJOih4dtK8BKE4P1aG13PeVMl93n6LuFacM8Rot3hOEoKoetQzytKgKSFnlA
+ 7yQiWgW0EF39tNdhhtT3RW/WgyyYbdhE4QYbtoiUey7nbfxbT2HjQYKia+gKoeECEn
+ HXI8WF3mEYezBsX0bbXd7Vu2dRY/Nkjq1b6QyWW8gTrBq7kmn6qFJ1iQgMILG7+/0b
+ 4B8RtBMKVhPWiql/ovwBOUXrSI9kOr/zKylqr8CkzighI5r+DRLMxL84y6VCWoaxS3
+ 83o6zeX8354ScZSFf5O8RUXIp/Z/R7/b4SQi7CwBCnNgIRgdY3uVEmzdm93pY3hyNn
+ vzXBL3G4Y6j/Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AF8501AA2E1;
+ by isrv.corpit.ru (Postfix) with ESMTP id A205F1AA2E0;
  Tue, 12 May 2026 23:54:34 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id BC2D43ABC52;
+ by tsrv.corpit.ru (Postfix) with ESMTP id AD6A93ABC51;
  Tue, 12 May 2026 23:54:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 021/107] hw/ssi/aspeed_smc: Convert mem ops to
- read/write_with_attrs for error handling
-Date: Tue, 12 May 2026 23:53:08 +0300
-Message-ID: <20260512205437.360850-21-mjt@tls.msk.ru>
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 020/107] hw/net/ftgmac100: Improve DMA error handling
+Date: Tue, 12 May 2026 23:53:07 +0300
+Message-ID: <20260512205437.360850-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
@@ -73,172 +74,57 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Cédric Le Goater <clg@redhat.com>
 
-Error conditions (invalid flash mode, unwritable flash) now return
-MEMTX_ERROR instead of silently succeeding or returning undefined
-values.
+Currently, DMA memory operation errors in the ftgmac100 model are not
+all tested and this can lead to a guest-triggerable denial of service
+as described in https://gitlab.com/qemu-project/qemu/-/work_items/3335.
 
-This allows the memory subsystem to properly propagate transaction
-errors to the guest, improving QEMU reliability.
+To fix this, check the return value of ftgmac100_write_bd() in the TX
+path and exit the TX loop on error to prevent further processing. In
+the event of a DMA error, also set FTGMAC100_INT_AHB_ERR interrupt
+flag as appropriate.
+
+The FTGMAC100_INT_AHB_ERR interrupt status bit only applies to the
+AST2400 SoC; on newer Aspeed SoCs, it is a reserved bit.
+Nevertheless, since it is supported by the Linux driver and it should
+be safe to use in the QEMU implementation across all SoCs.
 
 Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3335
-Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Link: https://lore.kernel.org/qemu-devel/20260323125545.577653-2-clg@redhat.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit 80c5be945877ea3f258679c6042df8f0efd77202)
+Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260322215732.387383-3-clg@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit fa4a759fc1e19b2185becfadb00c6d8e57462849)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
-index b4a17a52a3..edb83716ed 100644
---- a/hw/ssi/aspeed_smc.c
-+++ b/hw/ssi/aspeed_smc.c
-@@ -493,17 +493,18 @@ static void aspeed_smc_flash_setup(AspeedSMCFlash *fl, uint32_t addr)
-     }
- }
+diff --git a/hw/net/ftgmac100.c b/hw/net/ftgmac100.c
+index 1f524d7a01..abfb47a824 100644
+--- a/hw/net/ftgmac100.c
++++ b/hw/net/ftgmac100.c
+@@ -624,7 +624,10 @@ static void ftgmac100_do_tx(FTGMAC100State *s, uint64_t tx_ring,
+         bd.des0 &= ~FTGMAC100_TXDES0_TXDMA_OWN;
  
--static uint64_t aspeed_smc_flash_read(void *opaque, hwaddr addr, unsigned size)
-+static MemTxResult aspeed_smc_flash_read(void *opaque, hwaddr addr,
-+                                 uint64_t *data, unsigned size, MemTxAttrs attrs)
- {
-     AspeedSMCFlash *fl = opaque;
-     AspeedSMCState *s = fl->controller;
--    uint64_t ret = 0;
-     int i;
- 
-+    *data = 0;
-     switch (aspeed_smc_flash_mode(fl)) {
-     case CTRL_USERMODE:
-         for (i = 0; i < size; i++) {
--            ret |= (uint64_t) ssi_transfer(s->spi, 0x0) << (8 * i);
-+            *data |= (uint64_t) ssi_transfer(s->spi, 0x0) << (8 * i);
+         /* Write back the modified descriptor.  */
+-        ftgmac100_write_bd(&bd, addr);
++        if (ftgmac100_write_bd(&bd, addr)) {
++            s->isr |= FTGMAC100_INT_AHB_ERR;
++            break;
++        }
+         /* Advance to the next descriptor.  */
+         if (bd.des0 & s->txdes0_edotr) {
+             addr = tx_ring;
+@@ -1134,7 +1137,10 @@ static ssize_t ftgmac100_receive(NetClientState *nc, const uint8_t *buf,
+             bd.des0 |= flags | FTGMAC100_RXDES0_LRS;
+             s->isr |= FTGMAC100_INT_RPKT_BUF;
          }
-         break;
-     case CTRL_READMODE:
-@@ -512,18 +513,19 @@ static uint64_t aspeed_smc_flash_read(void *opaque, hwaddr addr, unsigned size)
-         aspeed_smc_flash_setup(fl, addr);
- 
-         for (i = 0; i < size; i++) {
--            ret |= (uint64_t) ssi_transfer(s->spi, 0x0) << (8 * i);
-+            *data |= (uint64_t) ssi_transfer(s->spi, 0x0) << (8 * i);
-         }
- 
-         aspeed_smc_flash_unselect(fl);
-         break;
-     default:
-         aspeed_smc_error("invalid flash mode %d", aspeed_smc_flash_mode(fl));
-+        return MEMTX_ERROR;
-     }
- 
--    trace_aspeed_smc_flash_read(fl->cs, addr, size, ret,
-+    trace_aspeed_smc_flash_read(fl->cs, addr, size, *data,
-                                 aspeed_smc_flash_mode(fl));
--    return ret;
-+    return MEMTX_OK;
- }
- 
- /*
-@@ -624,8 +626,8 @@ static bool aspeed_smc_do_snoop(AspeedSMCFlash *fl,  uint64_t data,
-     return false;
- }
- 
--static void aspeed_smc_flash_write(void *opaque, hwaddr addr, uint64_t data,
--                                   unsigned size)
-+static MemTxResult aspeed_smc_flash_write(void *opaque, hwaddr addr,
-+                                   uint64_t data, unsigned size, MemTxAttrs attrs)
- {
-     AspeedSMCFlash *fl = opaque;
-     AspeedSMCState *s = fl->controller;
-@@ -636,7 +638,7 @@ static void aspeed_smc_flash_write(void *opaque, hwaddr addr, uint64_t data,
- 
-     if (!aspeed_smc_is_writable(fl)) {
-         aspeed_smc_error("flash is not writable at 0x%" HWADDR_PRIx, addr);
--        return;
-+        return MEMTX_ERROR;
-     }
- 
-     switch (aspeed_smc_flash_mode(fl)) {
-@@ -661,12 +663,15 @@ static void aspeed_smc_flash_write(void *opaque, hwaddr addr, uint64_t data,
-         break;
-     default:
-         aspeed_smc_error("invalid flash mode %d", aspeed_smc_flash_mode(fl));
-+        return MEMTX_ERROR;
-     }
-+
-+    return MEMTX_OK;
- }
- 
- static const MemoryRegionOps aspeed_smc_flash_ops = {
--    .read = aspeed_smc_flash_read,
--    .write = aspeed_smc_flash_write,
-+    .read_with_attrs = aspeed_smc_flash_read,
-+    .write_with_attrs = aspeed_smc_flash_write,
-     .endianness = DEVICE_LITTLE_ENDIAN,
-     .valid = {
-         .min_access_size = 1,
-@@ -754,7 +759,8 @@ static void aspeed_smc_reset(DeviceState *d)
-     s->snoop_dummies = 0;
- }
- 
--static uint64_t aspeed_smc_read(void *opaque, hwaddr addr, unsigned int size)
-+static MemTxResult aspeed_smc_read(void *opaque, hwaddr addr, uint64_t *data,
-+                                   unsigned int size, MemTxAttrs attrs)
- {
-     AspeedSMCState *s = ASPEED_SMC(opaque);
-     AspeedSMCClass *asc = ASPEED_SMC_GET_CLASS(opaque);
-@@ -782,12 +788,13 @@ static uint64_t aspeed_smc_read(void *opaque, hwaddr addr, unsigned int size)
- 
-         trace_aspeed_smc_read(addr << 2, size, s->regs[addr]);
- 
--        return s->regs[addr];
-+        *data = s->regs[addr];
-     } else {
-         qemu_log_mask(LOG_UNIMP, "%s: not implemented: 0x%" HWADDR_PRIx "\n",
-                       __func__, addr);
--        return -1;
-+        *data = -1;
-     }
-+    return MEMTX_OK;
- }
- 
- static uint8_t aspeed_smc_hclk_divisor(uint8_t hclk_mask)
-@@ -1108,8 +1115,8 @@ static void aspeed_2600_smc_dma_ctrl(AspeedSMCState *s, uint32_t dma_ctrl)
-     s->regs[R_DMA_CTRL] &= ~(DMA_CTRL_REQUEST | DMA_CTRL_GRANT);
- }
- 
--static void aspeed_smc_write(void *opaque, hwaddr addr, uint64_t data,
--                             unsigned int size)
-+static MemTxResult aspeed_smc_write(void *opaque, hwaddr addr, uint64_t data,
-+                                    unsigned int size, MemTxAttrs attrs)
- {
-     AspeedSMCState *s = ASPEED_SMC(opaque);
-     AspeedSMCClass *asc = ASPEED_SMC_GET_CLASS(s);
-@@ -1159,13 +1166,13 @@ static void aspeed_smc_write(void *opaque, hwaddr addr, uint64_t data,
-     } else {
-         qemu_log_mask(LOG_UNIMP, "%s: not implemented: 0x%" HWADDR_PRIx "\n",
-                       __func__, addr);
--        return;
-     }
-+    return MEMTX_OK;
- }
- 
- static const MemoryRegionOps aspeed_smc_ops = {
--    .read = aspeed_smc_read,
--    .write = aspeed_smc_write,
-+    .read_with_attrs = aspeed_smc_read,
-+    .write_with_attrs = aspeed_smc_write,
-     .endianness = DEVICE_LITTLE_ENDIAN,
- };
- 
-@@ -2007,8 +2014,8 @@ static const uint32_t aspeed_2700_fmc_resets[ASPEED_SMC_R_MAX] = {
- };
- 
- static const MemoryRegionOps aspeed_2700_smc_flash_ops = {
--    .read = aspeed_smc_flash_read,
--    .write = aspeed_smc_flash_write,
-+    .read_with_attrs = aspeed_smc_flash_read,
-+    .write_with_attrs = aspeed_smc_flash_write,
-     .endianness = DEVICE_LITTLE_ENDIAN,
-     .valid = {
-         .min_access_size = 1,
+-        ftgmac100_write_bd(&bd, addr);
++        if (ftgmac100_write_bd(&bd, addr)) {
++            s->isr |= FTGMAC100_INT_AHB_ERR;
++            break;
++        }
+         if (bd.des0 & s->rxdes0_edorr) {
+             addr = s->rx_ring;
+         } else {
 -- 
 2.47.3
 
