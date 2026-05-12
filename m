@@ -4,47 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36CC3CD4F24
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:38:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64BB0CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:38:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMukF-0006tX-7L; Tue, 12 May 2026 17:34:27 -0400
+	id 1wMuTn-0005CV-0w; Tue, 12 May 2026 17:17:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMujq-00063E-Uy; Tue, 12 May 2026 17:34:04 -0400
+ id 1wMuTU-0002t6-VJ; Tue, 12 May 2026 17:17:09 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuj8-0002pj-UY; Tue, 12 May 2026 17:34:01 -0400
+ id 1wMuTS-0006k7-K6; Tue, 12 May 2026 17:17:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619500; bh=dUrLKmTkUndyoYa9d6dzbEjuSzCN702BPMF0XP3yVOQ=;
+ t=1778619307; bh=6ttS+OBwVuSJGHZkrgJNbxyeLpBThZnjePJjP1+Z0zg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=uhIY4Lenowqcwhfa1Qbh8d9Cb3ZlEOdyXGnC3/6mtV6IhEj6w5QzWpmUmCLLlUVgr
- fHDKQJ6QxUYR/pZduDm1rER6txv4eq4oN5lAg3UTP3GN0bghvLeaFj3BmC6y1tKOaR
- Ujlg3z5+A+5j+fyK3yFAR89B3KOxqgEIG6qoOf3OXCPq/elz6fr18B4PRbZwOfwlLE
- PS2gAWj3h964sbozqAsheVWy01aNTrrsh9b1qvb73crpeK9phG0m5ZAeme1DKxYAKX
- XHWnSV2gLQxvMhV/iMJo9z9qVNi8Ib3YNzS5lZ1g/dLs/NfSvw8q5vsYQipUwRh/9f
- pdtHkHMM7KLRA==
+ b=xYQQdMhAVmJ1y6jPYK6aA6USiumBjR4uK2gyhsJr2CosZsDlU0rpQSvl3l8Wa5jv6
+ vJx++gK6old589OtSxQ/QSbFD+FMgpGNvti7mAuXJCSlVfVu6IlUYRCR/8Xu5xEw7j
+ e8tCgXkfaGma5Poq4QiIdmwCSqDIQoxu4rxZwb+ZZes1/78P+DyAn3nHmFirPrcMvb
+ usOs8K6/OADXzn2U3rJwGRBBXEEvEPLhkvqkI6wDlp4PpBiRr7DnpS8QI4kWPsktaz
+ Ef6a5pCCGr6YQff2wKx8RF4CMkUiUdmJJ/is2hQai6ygMhh3JN5KXzbjm9lE94MO+s
+ M+u8nRBb929kw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 82A2C1AA3FF;
- Tue, 12 May 2026 23:58:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 11BF11AA3AB;
+ Tue, 12 May 2026 23:55:07 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 905313ABD57;
- Tue, 12 May 2026 23:58:24 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1D9D03ABD1A;
+ Tue, 12 May 2026 23:55:11 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Katherine Leaver <katherine.j.leaver@gmail.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 52/58] hw/uefi: fix buffer overruns
-Date: Tue, 12 May 2026 23:58:13 +0300
-Message-ID: <20260512205820.361821-52-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 109/117] target/microblaze: Fix endianness used to
+ disassemble
+Date: Tue, 12 May 2026 23:54:51 +0300
+Message-ID: <20260512205503.361097-109-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
-References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,78 +73,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The buffer size checks do not consider the mm_header size, simliar to
-CVE-2026-5744.  Factor out the repeated size check to a small helper
-function, fix the check, update all places to use the new helper.
+MicroBlaze CPU model has a "little-endian" property, pointing to
+the @endi internal field. Commit c36ec3a9655 ("hw/microblaze:
+Explicit CPU endianness") took care of having all MicroBlaze
+boards with an explicit default endianness (similarly with
+commit 91fc6d8101d for linux-user binaries), so later commit
+415aae543ed ("target/microblaze: Consider endianness while
+translating code") could infer the endianness at runtime from
+the @endi field, and not a compile time via the TARGET_BIG_ENDIAN
+definition. Doing so, we forgot to propagate that runtime change
+to the disassemble_info structure. Do it now to display the
+opcodes in correct endianness order.
 
-Fixes: CVE-2026-41435
-Fixes: db1ecfb473ac ("hw/uefi: add var-service-vars.c")
-Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260422092910.444997-2-kraxel@redhat.com>
-(cherry picked from commit f252769a23e67765f9b95d8944ca3da6c9edf58b)
+Cc: qemu-stable@nongnu.org
+Fixes: 415aae543ed ("target/microblaze: Consider endianness while translating code")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-Id: <20260423100612.27278-3-philmd@linaro.org>
+(cherry picked from commit 41c417290df91c31a70adeb8f5271896a8c5f802)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/uefi/var-service-vars.c b/hw/uefi/var-service-vars.c
-index 5e3907118d..24e6516a9c 100644
---- a/hw/uefi/var-service-vars.c
-+++ b/hw/uefi/var-service-vars.c
-@@ -297,6 +297,17 @@ static size_t uefi_vars_mm_error(mm_header *mhdr, mm_variable *mvar,
-     return sizeof(*mvar);
+diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
+index 22231f09e6..965eedbfaf 100644
+--- a/target/microblaze/cpu.c
++++ b/target/microblaze/cpu.c
+@@ -237,8 +237,8 @@ static void mb_disas_set_info(CPUState *cpu, disassemble_info *info)
+ {
+     info->mach = bfd_arch_microblaze;
+     info->print_insn = print_insn_microblaze;
+-    info->endian = TARGET_BIG_ENDIAN ? BFD_ENDIAN_BIG
+-                                     : BFD_ENDIAN_LITTLE;
++    info->endian = MICROBLAZE_CPU(cpu)->cfg.endi ? BFD_ENDIAN_LITTLE
++                                                 : BFD_ENDIAN_BIG;
  }
  
-+static bool check_buffer_size(uefi_vars_state *uv, uint64_t length)
-+{
-+    /* uefi_vars_cmd_mm() checks that */
-+    g_assert(uv->buf_size >= sizeof(mm_header));
-+
-+    if (uv->buf_size - sizeof(mm_header) < length) {
-+        return false;
-+    }
-+    return true;
-+}
-+
- static size_t uefi_vars_mm_get_variable(uefi_vars_state *uv, mm_header *mhdr,
-                                         mm_variable *mvar, void *func)
- {
-@@ -344,7 +355,7 @@ static size_t uefi_vars_mm_get_variable(uefi_vars_state *uv, mm_header *mhdr,
-     if (uadd64_overflow(length, va->data_size, &length)) {
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
--    if (uv->buf_size < length) {
-+    if (!check_buffer_size(uv, length)) {
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
- 
-@@ -414,7 +425,7 @@ uefi_vars_mm_get_next_variable(uefi_vars_state *uv, mm_header *mhdr,
-     }
- 
-     length = sizeof(*mvar) + sizeof(*nv) + var->name_size;
--    if (uv->buf_size < length) {
-+    if (!check_buffer_size(uv, length)) {
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
- 
-@@ -605,7 +616,7 @@ static size_t uefi_vars_mm_variable_info(uefi_vars_state *uv, mm_header *mhdr,
-     uint64_t length;
- 
-     length = sizeof(*mvar) + sizeof(*vi);
--    if (uv->buf_size < length) {
-+    if (!check_buffer_size(uv, length)) {
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
- 
-@@ -626,7 +637,7 @@ uefi_vars_mm_get_payload_size(uefi_vars_state *uv, mm_header *mhdr,
-     uint64_t length;
- 
-     length = sizeof(*mvar) + sizeof(*ps);
--    if (uv->buf_size < length) {
-+    if (!check_buffer_size(uv, length)) {
-         return uefi_vars_mm_error(mhdr, mvar, EFI_BAD_BUFFER_SIZE);
-     }
- 
+ static void mb_cpu_realizefn(DeviceState *dev, Error **errp)
 -- 
 2.47.3
 
