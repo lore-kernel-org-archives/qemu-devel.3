@@ -4,96 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88C10CD4F24
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 15:43:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA7AFCD4851
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 15:46:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMpG0-0005Px-J4; Tue, 12 May 2026 11:42:52 -0400
+	id 1wMpJI-0006Mq-GF; Tue, 12 May 2026 11:46:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wMpFz-0005Pc-9J
- for qemu-devel@nongnu.org; Tue, 12 May 2026 11:42:51 -0400
+ id 1wMpIs-0006Gc-G7
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 11:45:50 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wMpFw-0005pB-AL
- for qemu-devel@nongnu.org; Tue, 12 May 2026 11:42:51 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1wMpIp-0000GH-Vy
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 11:45:50 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64CC4Pvk3320941
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 15:42:46 GMT
+ 64CChP5b1410916
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 15:45:46 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- eXn5lo8VTG6pz4itW10lS0zq+DfZaB5Zfbe/p13C0tE=; b=Yyw/drlUAXH+wwev
- zW2Ylz5V21QZPMlk3GIjUdafS7j4WM+uv2ylyVZdhyBF0uLzzXJZwlkRKZMgUce9
- jjYKA5Lwsyag9g+4dkVgq17eICrofwNQap+zknUWKZgXulKa+YGWE793FGmtOjpE
- IH5VuLWPVVm0cd3XjN8HxkgV9X/WEyn3zOO9mwzMNQWsVkdRqilqPoqnmgTjFeXd
- UGaOrzCers6WHnZfJY5b8hNHyRJnYEUzGOqad27uO8T9WrYucJCRuI50wAolfWYE
- 1+npBp8818s7IuYjrcvTMVook3H2lttAxwNsnEe18//qGytwQCdDuSM4i9cYlkdT
- z3gXYw==
-Received: from mail-dl1-f70.google.com (mail-dl1-f70.google.com [74.125.82.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e43w1rtd0-1
+ gsUVGw6tVv82+Saw/3gCCIZm8cSovGohEr0ixLvY6cU=; b=F5pTTkzITnQiYGkT
+ k/GWqscLQb+NEJYhvcgXxwOSudqHvOmoIeOF2uCks3qMGv3wB2bbfrxqKhdFQ//Q
+ e9vWBrots5KXd+qMbIOE/3OObv7gZGWquRrhtNPcyKAlGWMFHGQ48eKWyT1GwI9y
+ 93nbzijHDkqFwYcbpTiAaQtgWPT3pFDJeEGu+R3+RAbZ8gsqqeiSXaY3ww9mSobX
+ AyQpNqKr55T+cPw3aN0dV+mvy3m39K1ti9Ekb2Ww3Zb1DbC3ELBUltWd2vBdWUv4
+ o5n8G5T5jMuwJ1YqWLQ8HVDiQ15g578UXgVxEYiXHoTqvQRKd42427A1R+zIfiDt
+ o3tu1g==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e44f30pmv-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 15:42:46 +0000 (GMT)
-Received: by mail-dl1-f70.google.com with SMTP id
- a92af1059eb24-1334825df27so1909428c88.1
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 08:42:46 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 15:45:46 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-2ba9a744f7dso4431715eec.0
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 08:45:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778600565; x=1779205365; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1778600746; x=1779205546; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=eXn5lo8VTG6pz4itW10lS0zq+DfZaB5Zfbe/p13C0tE=;
- b=kNwm+DtAROuZqbXSYZUdwrB8YBliEFp7725QnSOPd+zoilP/kgZSyhc+BY2iRrwi1+
- JLwvI/YNn1iBap7UwikXoSQeFtkccx6NpWTQwGjS5ATIsLxdOsOpMWfSFnMn7yuvnF3s
- JtZICswEupFbHXuUeHpXL6IAl97XeacJDFOhc6Dy8EXzdxu1XIfk903tjS1Mrx6diVxg
- wXnjRS++AbTp8l7KPoOGI/O14wWkDGGK/ouH8eJQRnsOiI7cLGbbNI7/o5nsVlRnZg6f
- oaGl9p9LfQL6CYRfe7iwQ5RHW59Uzc3OPxYT83EpYIhoJTO3KNfwAS86gq9UwLE/mO3X
- LjmA==
+ bh=gsUVGw6tVv82+Saw/3gCCIZm8cSovGohEr0ixLvY6cU=;
+ b=Qzq953m4O5pJHxTu6IJeJmiY5zgAJled84JQf9yvCFGvrO1naakrMxkSGvOVxPWX/n
+ R3DDRIu/jBWGGGNXYqSzgd82KGnFKmbJOBTXvg6Z2lhptCZpA2yDY4oJ4HJPayHxyKlu
+ 86Hfwx5vkGFW6ZjOAJGR7GjiO0Yx1O8G9D5lfzzD225d2QNnqZudd9z0RVVMVlzsVjqZ
+ l/8mi5voNG+db1m3+aJZUtyptNfr4RVDcuJSXrQvEcswPdU632QHH+3rplqwLRm1sx6q
+ JX3CH9g4/6IBnohCG1skY3AnKHOgmkSwBofxNpPq0RL17L/oA3T33dH7+/v6WBPM5nz/
+ o8TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778600565; x=1779205365;
+ d=1e100.net; s=20251104; t=1778600746; x=1779205546;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=eXn5lo8VTG6pz4itW10lS0zq+DfZaB5Zfbe/p13C0tE=;
- b=sSaaE1QeZxuOwmraifcQz5nhJvWgxKrSiUv2zVJHKtfPChjvURcwYfcgB4312PkEUJ
- mXaNuQsRIXGa5y346Px9mxav9LRzWU9Ffke+Edaaekr/0ZI0+gSHVS417TXdoJpzY6VN
- TFUIdVyCz8fNMRJ02t419lSANHWSeUehF/cGTxeKCw2XQOPfhke5zWoGYZNCMjWPA3qB
- DaUEgm6r8+cVhR+AZRGgVTzNH5oN0DZJNmLdjlkA7duKe5XoYPYTf9Lez426T5m4YE6a
- PG6eyhBp3J01rDMUXliqJHqcPVdEhZk7PkQn5jG29zIDBk+ap3DWB8P8hh4iBrQkjj/9
- Dabg==
+ bh=gsUVGw6tVv82+Saw/3gCCIZm8cSovGohEr0ixLvY6cU=;
+ b=PMGBhljic9+BkfUQNIsO4cuWxtHM1cvqjiUqmxGlzyiNJp/+cV2DaoRNwmJ42IJmfQ
+ I+0Wxx58UQfcYFzi1WZwKgf1pOA8Ojv1XoD2r0tW4sbx3Q4uLvAYoP20mWvZrBMmeqNd
+ hf8fbpbTpufktrSPvb3sxggPeu2LHb26TfaVHPs+vfvIyjKlRTCR+UGWE3bIXrkIxyqB
+ tdVj/QIspiL+FbFxATfKqJiUcpx7xPdUhNsW3r2xqYzD3q4KFiUtvrh9UkKd6S2o8S+3
+ SCkwhZxxpq8nYjReO3pwOMMSO3BHa+VGLhkLHhPxLzZBbBHOM+Eu09JWINvJZ6n/za84
+ vIFQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9uu8j2FMhgbmSu0kcRpv06luH2mhHISZspipYJ4xl7SQmTWWyPCML0n4Awuy3Dm/ppbJBQCCJSEPR1@nongnu.org
-X-Gm-Message-State: AOJu0Ywtm7thDV3sVqf2wUoJAko/i2atF6t57xS5xkbjSJT07hzZeaHe
- QABkSsSr3dzpYkvOFtqL65j9GD7hh+VA3XLFRArnMibPNMyu1/4tF3P5DDwxzpi7fRN9X87CV9R
- 9htXNxWF9BSOBauQNVLL2twQS4SsSU5AczXTK6bCq4KA4mBnRYNKNejaffQ==
-X-Gm-Gg: Acq92OHYVudMNee9I85p3Nf3ibKF5l3i1CrRXBcns84LjxmOmc+NOd81EI6p42WxTrq
- is35bdJcCEQb86DaroT0F2o5jG07+jGZeIjF9CRJBbQQgc+JrZaZzKifzjh61iowbL3YuMC3c5q
- GFu7GO6Wwnx5QiO491s4tMvk77D5SzFl/thIn+bxkoVMyZ3kI7m/m0ie2VgP5lR0iLcrpyJCx7j
- W1KYhBR5titfC60PzZMhFziCwHn58vRtwcIEBpo32K97FJrv6jkk3zscElQIX/42+d3U5356/B9
- 5x4O39x6M2ThcBfEnNN3XQ8qFdxS1jlHGPK6GMqRHkvPAa1Ol4uttHsOeVmaBpAIARwRr73yver
- axmUF8OtxEMlZ6uTjKoERq/LX59k3QQYOBJkshQptdvRRFGIAOoGpKWW59r6nJd5XjklsmK7ka8
- NWXS9vP3Dfv10WjA==
-X-Received: by 2002:a05:7023:b09:b0:130:6904:e81f with SMTP id
- a92af1059eb24-13344fa5719mr2088602c88.30.1778600565419; 
- Tue, 12 May 2026 08:42:45 -0700 (PDT)
-X-Received: by 2002:a05:7023:b09:b0:130:6904:e81f with SMTP id
- a92af1059eb24-13344fa5719mr2088572c88.30.1778600564834; 
- Tue, 12 May 2026 08:42:44 -0700 (PDT)
+ AFNElJ9inON0eG96P52GMXETPJuverUsURbs7cD162pr2pLDwU8mMvLvXYs1apARfCF5ADj/2iWLXxhtfnlc@nongnu.org
+X-Gm-Message-State: AOJu0Yw+jAya0vkibuWTKB7Ch0tTxX9COL+Yiv+WhkdIL8mu5jBJQgyN
+ JNPs5voXpl6dNMqeHkJgoj8WeKiTh7mK3We6ceOOPWp7CS0a9914htb0jZkx2G2cApbrkWFQaqX
+ h7nDzVyXdXMlzi0SYXh9hmm0ycQw8PmW3yhGEPn1O9OKTuXMQyTDwgpO8YA==
+X-Gm-Gg: Acq92OEo7XSjx9s5mahDs9RheNhPJqAjbyBQCVFTWqBfbAuzrCVj1ipdHLopImw0XxC
+ 7ROqgsqr8p+v83Crn+d/DFH54HfyD8QTuG58OdV3zVCVInojXh27ceGnFSD++jn8/4YjVK5XA+c
+ i1HoywxLgZcWmHXNVqhfSEPdMYC3jzlH+lydlHcDxgaJ0AAgVtqI92dIksBlroSeFJKjZPMl4wK
+ W/DTWDwwWQFeVGWhJNFiCDf7rkAkrGQHtka/9eCkBWNk7BKMEOSnBTQASJeRuAl5fiGoMzSHK2a
+ BrcR+eNn96D6eDA0iJf0gi50z9LiAONLM1A2VUqXMEvYDABe3UppLVO62UrCKltuEcsu8Q+aC0d
+ EPBfagIYRrrqw4xTnfj+kXYILkwCJ2bsJ2j5oQ8QeK1SNagvY8/FKtFhekhenP2goR5bIcI1qOQ
+ Fa6dwMaQwL8AlguA==
+X-Received: by 2002:a05:7022:523:b0:12d:b8e5:5d6 with SMTP id
+ a92af1059eb24-132a83f76f2mr7242313c88.24.1778600745535; 
+ Tue, 12 May 2026 08:45:45 -0700 (PDT)
+X-Received: by 2002:a05:7022:523:b0:12d:b8e5:5d6 with SMTP id
+ a92af1059eb24-132a83f76f2mr7242287c88.24.1778600744862; 
+ Tue, 12 May 2026 08:45:44 -0700 (PDT)
 Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-132787673ffsm24969545c88.15.2026.05.12.08.42.43
+ a92af1059eb24-13278210ff2sm19692791c88.6.2026.05.12.08.45.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 May 2026 08:42:44 -0700 (PDT)
-Message-ID: <e4ecb998-1940-4f54-afa6-fbe9c45d167c@oss.qualcomm.com>
-Date: Tue, 12 May 2026 08:42:43 -0700
+ Tue, 12 May 2026 08:45:44 -0700 (PDT)
+Message-ID: <170b791e-ee66-4d7a-80d0-5c959c9ff359@oss.qualcomm.com>
+Date: Tue, 12 May 2026 08:45:42 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/16] tests: remove redundant meson suite for iotests
+Subject: Re: [PATCH 07/16] scripts/mtest2make: support optional tests grouping
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
@@ -101,37 +102,36 @@ Cc: Hanna Reitz <hreitz@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  qemu-block@nongnu.org, Cleber Rosa <crosa@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, John Snow <jsnow@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 References: <20260424154205.364268-1-berrange@redhat.com>
- <20260424154205.364268-5-berrange@redhat.com>
+ <20260424154205.364268-8-berrange@redhat.com>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20260424154205.364268-5-berrange@redhat.com>
+In-Reply-To: <20260424154205.364268-8-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 4kmpOFx3ybiSpxXHIjY5g5MnnGmzg5B9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEyMDE2MyBTYWx0ZWRfXyQxGEoRdbWzS
- WeT8AZu9ko9gkbWKTWgGgfo3gtNkHXCI6hvP7vnMloftQLOsFKQ5yuHWwxFKg6VFmYPnjVtRJUu
- LQr2w3k7OMIeG2nggPTuZhU8/SKDScMcaOhdSp9bsIeaafzxcjnewZdJTM3S05rYRzECWEbvEkk
- oFtKgvT0bfgXxiJBs91OZKNvyWA4dfxGm4fzL/mm3y3Z4809lMs7qjI3BW4NhB7gzTbZuNPDX7u
- ccZuao+GBlMSwEYUhQGxWAPAozcFE0wWv/UTAHD27rhGfNLPgPLjt/f56nwDLrRpvg7fuP82/ZN
- H+oOxwBQ1VmMReFqWyEUK18NXcy5sChWjiOW4zf3FLYAhtvLidBTNIdOR+0yr55OxlosjJfPZc/
- 6FT1emTMCicZg3WZMLsgAsauU0w1etBjYR3p1vIGUx5wrSjTucwBNaJXB0uIBYqyCLC5vGpmwOR
- zTfFJk1urb3N7V1peug==
-X-Proofpoint-ORIG-GUID: 4kmpOFx3ybiSpxXHIjY5g5MnnGmzg5B9
-X-Authority-Analysis: v=2.4 cv=BoGtB4X5 c=1 sm=1 tr=0 ts=6a034a76 cx=c_pps
- a=SvEPeNj+VMjHSW//kvnxuw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-ORIG-GUID: TUwCuYE80FoiwouOq2O_ywEgmX7jollW
+X-Authority-Analysis: v=2.4 cv=SpSgLvO0 c=1 sm=1 tr=0 ts=6a034b2a cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=du9JezkGabr_sqfEBDUA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=Kq8ClHjjuc5pcCNDwlU0:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=oFKfEV3VOaf3XY432p0A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=scEy_gLbYbu1JhEsrz4S:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEyMDE2MyBTYWx0ZWRfX9uLC+Qk5p7Yz
+ jstBWeNm30HAsZWXGNkuvyoewPvfTUR1VZt/nVi4FKxKCJrpHgR/P8DIyVHXECuSCrPkjzJH5Zv
+ 902IJxOEi682bV+ldQd/WcHSc0JZw6m1IEwJgWA+PpcTC7FfelsCyXk7CNJi0cy9N/Kihu+XRBs
+ +E7aviLOMuseBhWulNEMawnINblTEV7EkhZlwuwf3RA1G2tQvfWO/6DFD4HI0SBepmsgcbgfUEM
+ yl1C9gi6Lr3ihQfCDD4Zgo9CgZInYIEQ+LIbN9jZpXxju3a+QHxNg6DgqayI/Kn+UfuNB6XwMix
+ TQjBFum17Q690WoCMj+6IcJKdCZauBMP9oSotht/i5qR03EMKcd0zRwclI1TnmCpZgvh3h/dEuG
+ uu3Y6/p4POayZdFvlguKoSnDgfRsEDfzB3WsXTJaMKTjiH2e+xB0SQXf5FJeauQQhBGRitvvebA
+ Vu8ltqfGwgKb6H30hHA==
+X-Proofpoint-GUID: TUwCuYE80FoiwouOq2O_ywEgmX7jollW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-11_05,2026-05-08_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 bulkscore=0 adultscore=0 clxscore=1015
- impostorscore=0 phishscore=0 spamscore=0 suspectscore=0 malwarescore=0
+ clxscore=1015 malwarescore=0 suspectscore=0 impostorscore=0 bulkscore=0
+ spamscore=0 phishscore=0 priorityscore=1501 adultscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2605050000 definitions=main-2605120163
 Received-SPF: pass client-ip=205.220.168.131;
@@ -160,15 +160,102 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/24/2026 8:41 AM, Daniel P. Berrangé wrote:
-> If a test is in the 'block-slow' or 'block-thorough' suite, there is no
-> need to also add it to the 'slow' or 'thorough' suites.
+> Currently tests can be classified into three speed groups depending on
+> whether the meson suite name ends in '-slow' or '-thorough' or neither.
 > 
-> Tested-by: Thomas Huth <thuth@redhat.com>
+> This gets turned into make targets that match the name of the meson
+> suite, with the speed suffix stripped. e.g.
+> 
+>  * suite=block ->  'make check-block'
+>  * suite=block-slow -> 'make check-block SPEED=slow'
+>  * suite=block-thorough -> 'make check-block SPEED=thorough'
+> 
+> The set of tests under the "thorough" speed, however, can get rather
+> large and it would be useful to have a way to expose further make
+> targets for directly running a particular subset of tests.
+> 
+> This needs a way to run a target without requiring the SPEED variable,
+> while also not having them enabled by default as if they were 'quick'
+> tests.
+> 
+> This modifies mtest2make.py to support this idea by allowing for a new
+> suffix '-optional' on a suite. When this is present, a correspondingly
+> named make target will be created without the '-optional' suffix which
+> will never be run automatically.
+> 
+> This is intended to be combined with use of other suites. For example,
+> a single NBD test might be added to two suites, 'block-thorough' and
+> 'block-nbd-optional'.
+> 
+> This would allow running it as part of all the block tests with
+> 'make check-block SPEED=thorough', and as part of a standalone target
+> 'make check-block-nbd'.
+> 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->  tests/qemu-iotests/meson.build | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  scripts/mtest2make.py | 22 +++++++++++++++-------
+>  1 file changed, 15 insertions(+), 7 deletions(-)
 > 
+> diff --git a/scripts/mtest2make.py b/scripts/mtest2make.py
+> index 915f02d600..383ea68b16 100644
+> --- a/scripts/mtest2make.py
+> +++ b/scripts/mtest2make.py
+> @@ -22,7 +22,7 @@ def names(self, base):
+>  print(r'''
+>  SPEED = quick
+>  
+> -.speed.quick = $(sort $(filter-out %-slow %-thorough, $1))
+> +.speed.quick = $(sort $(filter-out %-slow %-thorough %-optional, $1))
+>  .speed.slow = $(sort $(filter-out %-thorough, $1))
+>  .speed.thorough = $(sort $1)
+>  
+> @@ -66,10 +66,15 @@ def process_tests(test, targets, suites):
+>              s = s[:-9]
+>              suites[s].speeds.add('thorough')
+>  
+> +def target_name(suite):
+> +    if suite.endswith('-optional'):
+> +        return suite[0:-9]
+> +    return suite
+> +
+>  def emit_prolog(suites, prefix):
+> -    all_targets = ' '.join((f'{prefix}-{k}'
+> +    all_targets = ' '.join((f'{prefix}-{target_name(k)}'
+>                              for k in sorted(suites.keys())))
+> -    all_xml = ' '.join((f'{prefix}-report-{k}.junit.xml'
+> +    all_xml = ' '.join((f'{prefix}-report-{target_name(k)}.junit.xml'
+>                          for k in sorted(suites.keys())))
+>      print()
+>      print(f'all-{prefix}-targets = {all_targets}')
+> @@ -83,14 +88,17 @@ def emit_prolog(suites, prefix):
+>      print(f'\t$(MAKE) {prefix}$* MTESTARGS="$(MTESTARGS) --logbase {prefix}-report$*" && ln -f meson-logs/$@ .')
+>  
+>  def emit_suite(name, suite, prefix):
+> +    tgtname = target_name(name)
+>      deps = ' '.join(sorted(suite.deps))
+>      print()
+> -    print(f'.{prefix}-{name}.deps = {deps}')
+> -    print(f'.ninja-goals.check-build += $(.{prefix}-{name}.deps)')
+> +    print(f'.{prefix}-{tgtname}.deps = {deps}')
+> +    print(f'.ninja-goals.check-build += $(.{prefix}-{tgtname}.deps)')
+>  
+>      names = ' '.join(sorted(suite.names(name)))
+> -    targets = f'{prefix}-{name} {prefix}-report-{name}.junit.xml'
+> -    if not name.endswith('-slow') and not name.endswith('-thorough'):
+> +    targets = f'{prefix}-{tgtname} {prefix}-report-{tgtname}.junit.xml'
+> +    if not name.endswith('-slow') and \
+> +       not name.endswith('-thorough') and \
+> +       not name.endswith('-optional'):
+>          targets += f' {prefix} {prefix}-report.junit.xml'
+>      print(f'ifneq ($(filter {targets}, $(MAKECMDGOALS)),)')
+>      # for the "base" suite possibly add FOO-slow and FOO-thorough
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+
+Not blocking this patch, thus reviewed, but I think it would be a better
+abstraction to use meson suites for this (a test can be added in
+multiple suites), instead of adding more clunk to makefile layer.
+
+Regards,
+Pierrick
 
