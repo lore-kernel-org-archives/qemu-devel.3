@@ -4,112 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4DEBCD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 15:14:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 835D0CD4851
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 15:15:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMooR-0005gF-JE; Tue, 12 May 2026 11:14:23 -0400
+	id 1wMopE-0006EU-5x; Tue, 12 May 2026 11:15:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1wMooO-0005fj-Qp
- for qemu-devel@nongnu.org; Tue, 12 May 2026 11:14:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1wMop8-00063E-S1; Tue, 12 May 2026 11:15:07 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1wMooN-0006xU-1h
- for qemu-devel@nongnu.org; Tue, 12 May 2026 11:14:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778598857;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=4ipTl8SxHF2BtSH0nCWnuSQlDSFAuLUpgjGujTX8sr4=;
- b=Pxn6ClV4Z/RfE8qCcQ2Ce2m3LMErQLo7YaE9Q/hnNPYVEjeWgxluYrymvb1JgnSKOksZpb
- /bZ63LpQHJKavMUPj/+oweafBGGC/Dx8WazBy8CDJckxofz3Ee87ttzEHKWL3aG8+sh7Ww
- +YoE2Zj0jqy1azunszc+ln48N0q4VKs=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-594-IqKO9NxRMFCpe1Ye5SDrhA-1; Tue, 12 May 2026 11:14:16 -0400
-X-MC-Unique: IqKO9NxRMFCpe1Ye5SDrhA-1
-X-Mimecast-MFC-AGG-ID: IqKO9NxRMFCpe1Ye5SDrhA_1778598855
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-48d0677b5f7so31983895e9.1
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 08:14:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778598855; x=1779203655; darn=nongnu.org;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=4ipTl8SxHF2BtSH0nCWnuSQlDSFAuLUpgjGujTX8sr4=;
- b=ktdAiNGPWa1jiRr/HheEeB/6fztKl0olKuvzmENWt+uHEZ3wEPO3GLV2+1+uGZvT9x
- dXagsg7rwzUj4p/ODm1S8SVGD/ni3tlpCUWfFZyDaDt0Ctp0dPtflgXWCG1w3ONaO8HA
- l2TdeTdWinsSUo09sZ/A6kj0qSkH3wCGaufNUwb02bxS6LwRQQeJ+Ddnvv1PryGmu9f7
- nhztaegpCDxbYbtIvCuaksbs4bhOjcIbp0YZCWo6iaZos49pAD6bPM628sMK1BQxPJ1t
- R6IEM6dVjbtdosWGr9UN5d6ZgqBkwaZLEAHAGsbFlCU/UIWcsfcmaWWYe4W1WWBLr+33
- GJqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778598855; x=1779203655;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4ipTl8SxHF2BtSH0nCWnuSQlDSFAuLUpgjGujTX8sr4=;
- b=HFikL0I59pGRY5Mfr3xIIONW6DedIp/S66lzrfFWz4K9anKmaVaqHjPhbj05tID/3+
- xNDLaY3XXaWQ/xqTVgUlvSq2M5JHzXmnO8x9cR+3J0t5zQ1bo2szoksImXiQbIH+YS4X
- nAXgZvGaM3BKqSdVQOgj1E4BLeYjhBohgJjSic01/5DEekRjkhY/aeN7UgfyrWZgl6Jq
- aM16zac4/qIydRXwFdGf8YablFs+D6zVk8tk+/vlrVjzd/XEMtlAvQRXP6N/7z83nPzd
- BxxjQXHxg4AC2B8hBN2c8areUtsrvrQ3GCuKknvzFboUYfZZ+NOQ67qvGHBUoy8gJ03M
- f0Wg==
-X-Gm-Message-State: AOJu0Yy/QKXvK0IgB7tbiXL6NMwm1HRPRBaDXDEc/7TFeuXhXMDZ8/U5
- PIXJnxVVxk5pcPAqMFbEbVsPKuvOoL4iTUPogeAp014IyUZBM6WLI+LyB5bNCayWH4Ay/247unb
- 1daLUaE4nJVWmFz00MuQUh74JLE7JdSf3aKoxW+ImXItZXhwp4Y6K2Nh3
-X-Gm-Gg: Acq92OHkMT4Dws381W42s7wh93ARJTljHnogLa62JNdPp7lU8w8cF1qG0A4DdZpFz1w
- psQGjDHGFJSxPN9trUjFn67nQuV3AA5ZTTLHIaG9B401woV2SxJL6YKXsWPGq7HUgjfZ7sNohCh
- AyecQU4r51ZsekoGhFPvNVO4EdhFo0dWCFDMZbRqqpr58Y3X/ZzWNOg4pfT2ANI3FS9f2B6et5H
- EghasTomxARtnSuyyL1jOaNOnzSkfrWosA7BcgKeo8/ctTcwpVdvgePOFYGsloyr6zdlnhfZ7j6
- FVJcI5DBcBP1NUCPPaQbKTCWVXLX8VaT/W/bdJvOhVYHMpyyK28Tm0yWUByEVs5BI9EAN13B6Me
- C8qCdfpaEE9hbc7UKvnARfImKmziQXkFhlEK5MWTUZlKPfK4RRHRG4TSkQRI5o0HSAZgD9yA2KF
- A9HtlTWggcGKpUyDdE
-X-Received: by 2002:a05:600c:c166:b0:48a:93f8:dd02 with SMTP id
- 5b1f17b1804b1-48e8fe7227cmr54459615e9.14.1778598854800; 
- Tue, 12 May 2026 08:14:14 -0700 (PDT)
-X-Received: by 2002:a05:600c:c166:b0:48a:93f8:dd02 with SMTP id
- 5b1f17b1804b1-48e8fe7227cmr54459065e9.14.1778598854441; 
- Tue, 12 May 2026 08:14:14 -0700 (PDT)
-Received: from lleonard-thinkpadx1carbongen13.rmtit.csb ([176.206.19.176])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e8f410558sm39968055e9.5.2026.05.12.08.14.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 May 2026 08:14:13 -0700 (PDT)
-From: Luigi Leonardi <leonardi@redhat.com>
-Date: Tue, 12 May 2026 17:14:12 +0200
-Subject: [PATCH] hw/i386/microvm: Add IGVM support
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1wMop4-000785-M3; Tue, 12 May 2026 11:15:06 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 99FC3A1279;
+ Tue, 12 May 2026 17:14:46 +0200 (CEST)
+Message-ID: <9be52b33-9a28-41ca-896c-a41b5558864c@proxmox.com>
+Date: Tue, 12 May 2026 17:14:45 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260512-microvm_igvm-v1-1-8b1fd8861235@redhat.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3MQQqAIBBA0avIrBOcASO6SkSIjTULMxQkkO6et
- HyL/xsUzsIFZtUgc5Ui6erAQYE/3XWwlr0byNBoLJKO4nOqcZOjRu0o2GlE9B4N9OTOHOT5d8v
- 6vh9X2UWRXgAAAA==
-X-Change-ID: 20260512-microvm_igvm-a2f58611cc10
-To: qemu-devel@nongnu.org
-Cc: Sergio Lopez <slp@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Gerd Hoffmann <kraxel@redhat.com>, Oliver Steffen <osteffen@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, 
- Luigi Leonardi <leonardi@redhat.com>
-X-Mailer: b4 0.14.3
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=leonardi@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 17/28] fuse: Manually process requests (without libfuse)
+To: Hanna Czenczek <hreitz@redhat.com>, qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>
+References: <20260310162622.333137-1-kwolf@redhat.com>
+ <20260310162622.333137-18-kwolf@redhat.com>
+ <2493d422-d58a-4409-aee4-e932a4e0a73c@proxmox.com>
+ <8ec42109-4123-4cc7-a55e-9aa2576a791c@redhat.com>
+ <d5c3d3da-5102-4bdc-87bc-9733fb0cbf09@redhat.com>
+Content-Language: en-US
+From: Fiona Ebner <f.ebner@proxmox.com>
+In-Reply-To: <d5c3d3da-5102-4bdc-87bc-9733fb0cbf09@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1778598773306
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,71 +62,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The IGVM infrastructure operates on X86MachineState and is already
-machine-type-agnostic, but the "igvm-cfg" QOM property is only
-registered on the PC machine type. Register it on microvm as well.
+Hi Hanna,
 
-When an IGVM file is configured, the firmware image is provided as
-a payload of the IGVM file so skip loading the default BIOS.
+Am 08.05.26 um 3:11 PM schrieb Hanna Czenczek:
+> On 08.05.26 15:06, Hanna Czenczek wrote:
+>> On 08.05.26 13:55, Fiona Ebner wrote:
+>>> Dear maintainers,
+>>>
+>>> Am 10.03.26 um 6:37 PM schrieb Kevin Wolf:
+>>>> From: Hanna Czenczek <hreitz@redhat.com>
+>>>>
+>>>> Manually read requests from the /dev/fuse FD and process them, without
+>>>> using libfuse.  This allows us to safely add parallel request
+>>>> processing
+>>>> in coroutines later, without having to worry about libfuse internals.
+>>>> (Technically, we already have exactly that problem with
+>>>> read_from_fuse_export()/read_from_fuse_fd() nesting.)
+>>>>
+>>>> We will continue to use libfuse for mounting the filesystem;
+>>>> fusermount3
+>>>> is a effectively a helper program of libfuse, so it should know best
+>>>> how
+>>>> to interact with it.  (Doing it manually without libfuse, while doable,
+>>>> is a bit of a pain, and it is not clear to me how stable the "protocol"
+>>>> actually is.)
+>>>>
+>>>> Take this opportunity of quite a major rewrite to update the Copyright
+>>>> line with corrected information that has surfaced in the meantime.
+>>>
+>>> a colleague ran into another issue with a fuse export, this time in
+>>> combination with virt-fw-vars and bisecting points to this patch.
+>>> Before commit a94a1d7699 ("fuse: Manually process requests (without
+>>> libfuse)") the reproducer [0] completes successfully, after that
+>>> commit it hangs at [1]. The issue is still present with current
+>>> master. I can dig into the details next week.
+>>
+>> On my system, virt-fw-vars opens the file with O_TRUNC (after “INFO:
+>> writing raw edk2 varstore...”). It then tries to write to the file,
+>> but this returns a short write because the export is not marked as
+>> growable, and for some reason, the write is infinitely retried instead
+>> of aborting on ret=0 (which should indicate ENOSPC for writes).
+>>
+>> Using growable=true makes it work.  (For me :))
+>>
+>> For some reason, before said commit, libfuse just did not pass that
+>> truncate on. I’ll look into why exactly, but so far I would say the
+>> FUSE export behavior is as I would expect it.
+> 
+> Ah, I see. libfuse sets FUSE_CAP_ATOMIC_O_TRUNC, which has O_TRUNC be
+> passed on as an open option, but the old export code just ignored all
+> open options.
+> 
+> The new code does not set that option, so O_TRUNC is executed as an
+> explicit truncate by the kernel, which then *is* executed.
 
-Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
----
- hw/i386/microvm.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+thank you for digging into it!
 
-diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
-index 5a7889f21b..779741ec76 100644
---- a/hw/i386/microvm.c
-+++ b/hw/i386/microvm.c
-@@ -159,7 +159,6 @@ static int microvm_ioapics(MicrovmMachineState *mms)
- 
- static void microvm_devices_init(MicrovmMachineState *mms)
- {
--    const char *default_firmware;
-     X86MachineState *x86ms = X86_MACHINE(mms);
-     ISABus *isa_bus;
-     GSIState *gsi_state;
-@@ -276,10 +275,12 @@ static void microvm_devices_init(MicrovmMachineState *mms)
-         serial_hds_isa_init(isa_bus, 0, 1);
-     }
- 
--    default_firmware = x86_machine_is_acpi_enabled(x86ms)
--            ? MICROVM_BIOS_FILENAME
--            : MICROVM_QBOOT_FILENAME;
--    x86_bios_rom_init(x86ms, default_firmware, get_system_memory(), true);
-+    if (!x86ms->igvm) {
-+        const char *default_firmware = x86_machine_is_acpi_enabled(x86ms)
-+                ? MICROVM_BIOS_FILENAME
-+                : MICROVM_QBOOT_FILENAME;
-+        x86_bios_rom_init(x86ms, default_firmware, get_system_memory(), true);
-+    }
- }
- 
- static void microvm_memory_init(MicrovmMachineState *mms)
-@@ -717,6 +718,16 @@ static void microvm_class_init(ObjectClass *oc, const void *data)
- 
-     compat_props_add(mc->compat_props, microvm_properties,
-                      G_N_ELEMENTS(microvm_properties));
-+
-+#if defined(CONFIG_IGVM)
-+    object_class_property_add_link(oc, "igvm-cfg",
-+                                   TYPE_IGVM_CFG,
-+                                   offsetof(X86MachineState, igvm),
-+                                   object_property_allow_set_link,
-+                                   OBJ_PROP_LINK_STRONG);
-+    object_class_property_set_description(oc, "igvm-cfg",
-+                                          "Set IGVM configuration");
-+#endif
- }
- 
- static const TypeInfo microvm_machine_info = {
+> I’m not entirely sure how we should handle it. There is a case to be
+> made that with growable=off, it may make sense to ignore O_TRUNC (which
+> requires turning on FUSE_CAP_ATOMIC_O_TRUNC again and then continue to
+> ignore it). But on the other hand, O_TRUNC is O_TRUNC, and growable=off
+> does not explicitly mean “please behave as much as a block device as
+> possible”.
+> 
+> What do you suggest?
 
----
-base-commit: 5e61afe211e82a9af15a8794a0bd29bb574e953b
-change-id: 20260512-microvm_igvm-a2f58611cc10
+It turns out that the missing FUSE_ATOMIC_O_TRUNC flag also regresses
+exports from block devices, making open() with O_TRUNC fail with
+EOPNOTSUPP [0], which worked before. Intuitively to me, growable=off
+feels like it should imply "shrinkable=off" as well.
 
-Best regards,
--- 
-Luigi Leonardi <leonardi@redhat.com>
+My suggestions would be one of the following, with a preference for 2.:
+
+1. Always set FUSE_ATOMIC_O_TRUNC
+
+  Most backwards compatible. There is the issue that O_TRUNC does not
+  apply when it's actually a file, which is surprising.
+
+2. Set FUSE_ATOMIC_O_TRUNC if growable=off
+
+  Feels natural to me. People using growable=on with block device based
+  exports are still affected by the change in behavior.
+
+3. Set FUSE_ATOMIC_O_TRUNC if driver not file-based
+
+  What should be the exact condition to consider the driver
+  not file-based? Here, O_TRUNC for a growable=off file-based export
+  does apply, which feels surprising to me. Continues breaking the use
+  I reported this issue for, requiring using growable=on in such cases.
+
+4. Set FUSE_ATOMIC_O_TRUNC if growable=off or if driver not file-based
+
+  Similar to 2., but reduces cases affected by the change in behavior.
+
+Best Regards,
+Fiona
+
+[0]:
+
+> #!/bin/bash
+> 
+> rm /tmp/export.fuse
+> lvremove lvm/test
+> 
+> touch /tmp/export.fuse
+> lvcreate -n test --size 1M lvm
+> 
+> (
+> ./storage-daemon/qemu-storage-daemon \
+>     --blockdev raw,node-name=node0,file.driver=host_device,file.filename=/dev/lvm/test \
+>     --export fuse,id=exp0,mountpoint=/tmp/export.fuse,node-name=node0,writable=true \
+>     --chardev socket,id=qmp,path=/run/qsd.qmp,server=on,wait=off \
+>     --monitor chardev=qmp,mode=control
+> ) &
+> 
+> sleep 1 # too lazy to do proper synchronization for the reproducer here
+> 
+> python3 -c 'open("/tmp/export.fuse", "wb")'
+> echo '{"execute": "qmp_capabilities"}{"execute": "quit"}' | socat - /run/qsd.qmp
+
 
 
