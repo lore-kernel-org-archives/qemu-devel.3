@@ -4,145 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB23BCD4F24
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 16:20:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 763C6CD4F24
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 16:21:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMppv-0003Nm-6z; Tue, 12 May 2026 12:19:59 -0400
+	id 1wMprc-0004Mp-4e; Tue, 12 May 2026 12:21:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wMppq-0003Mi-60
- for qemu-devel@nongnu.org; Tue, 12 May 2026 12:19:55 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1wMpra-0004MJ-Ip; Tue, 12 May 2026 12:21:42 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wMppm-0008Ox-QW
- for qemu-devel@nongnu.org; Tue, 12 May 2026 12:19:52 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64CB5N5Z591937
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 16:19:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 1+VBAzdK5VZ9l0emB2VyWn6IxnHcmWQFf+RYrtwi09c=; b=TSi52WzoKLal3L/i
- N3YR5VhFvqsCs3nUKiIANtQzK3VrfuYG/X0mubLO42UeQE6Ndf5eUQ1677aEiJju
- 30VmejfDWR9EL2m7IrTrnteXx4FhuX/zIOBzWMTfnmBMXnEPtVW17pYCudTdURRz
- 4Rh8lr7MDM9VzhGgG3VZixWl8rHmTXLZ+xs0unQzI9sgChESzGO0U5xNkZJ/U+Dp
- 9dSzdQGSSgAQyYKKO4tj6+PoF/ObJKal16LktImmO6tk2+6o5Ojk1WwnBvvFjckW
- dLt6juIBOs3iEW9ekSf/KW7Cpb5PdZTK91Yr4flIC5cIcEWK6zp3bP/huS/eVeYV
- 17onYQ==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
- [74.125.82.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e4319s9e2-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 16:19:49 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id
- 5a478bee46e88-2bda35eab74so4609403eec.0
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 09:19:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778602788; x=1779207588; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1+VBAzdK5VZ9l0emB2VyWn6IxnHcmWQFf+RYrtwi09c=;
- b=GI2NDecMx4SubS4M8e08TNLsPnmN6d/kJU7D2cwijJCmgn4q2NeTOC2DZCCIkIh5Td
- bPVKcC0klRKgRQBdFFHcUjJpupUqqQS+OYwSz6KbjWLW9BZw0w70RzolbvujnVKtwr56
- iCZOaGBsHUWsGgVOqUoaxYJ5FhU2HZv/hg4fSl3nQn/ys0Te5KHy2c+ivKVSYVbrNR+i
- R3E+5Br43eyvx9y9BF3tHlHmtgy0DxVfnnM2jt5EwKI2ix/XsGlsxU51DgzP2wL1Upjp
- b0QBtxQA8fH62fj2PUbWUiHeRcggU/QaFvkUIItITvg1oDloAKCJJVH8HAgOaLLqawAo
- UiJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778602788; x=1779207588;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1+VBAzdK5VZ9l0emB2VyWn6IxnHcmWQFf+RYrtwi09c=;
- b=iI9Nm6ljo46GPPXpED1NJRxsKQ4lUYv5hZuy4k3uoH8JF5Q3EmryozKzoNhKp5mt6P
- 2ovq31+QeDSaVriWv6z6Xge4xBzmhqT8j4qdGJDp3o5I/yXeYJlVrtroiVLCiEJaldLi
- oy4q9x+XZjtKWczQP7z4KBQakodtJodb4xBO1N7VxJSWg3xPaGRn0amxm7rS2uWPWZgX
- WEfoxtPfG5XqWub9Bz/+UxrKW8nd0ZtOz//35AgGKyv++bQbtnAFZvZhf6JG4+sN/6Gx
- QiSk5n36S31bCIvZiH/+FQNKMkvRkhTlp6fqasksH6aZBrBuzjNOqGe/7s7jd+DyBIcn
- IxSQ==
-X-Gm-Message-State: AOJu0YxVJm0ZHpaEHgmBnZvSiwwHfSyN4qAmcPuR8OKGP52718sLKOFl
- E3SKxQ2nc6UHC+MJZPmcMV/4/3o+dkbbND/YT2yBUOJ+YfbwWqN4aDMg8FBY6Xa/oQxMQRr6bKX
- H6/7kUBeBolFsNtdqIL4bMIJ1LGJn9l7wE/iklX/UTbdUlPKrMAn0pYU14Q==
-X-Gm-Gg: Acq92OHCnwjoR/rhQdlsYXmMZQhPHQOuYGrwASxhoGb+ScDniRZw1Kt22mLtyJnkKUk
- pV6jJh6tjsziHaigR13JHrVDVQhy6iaheiYvethMTFacnxk+YeAASLunnfrXfOsmgjPXvN7NsPG
- ZXfBDqOY3BFFecKqyx9f5UxJQj+c7dzwXUhZmRk/RhUw2j71GbxtuNy8qoUNQUIUuizIVbylAQ6
- HzCmccg2yafI60HMvM4pAVeiaoCu8WSnECEivr9HOaVCCAJIpWKYX0Ona9nfVLx/br++eaTK+4Q
- Ivd0rt/NgzpSWVfrsYrtxAmNB510mZrdIQNfICjuApvBX/pJA8gifB1+DwPS4DcTyhXyT05YObv
- BpmKezjQKIJP8XQm/qXvfSAg8lBnUQQnIbNeJKRwlf3MwzxDTn2HWG2KfsiffJE2jj7hG3nnQlw
- qVsPw/A4w/rIZyNQ==
-X-Received: by 2002:a05:7300:748e:b0:2ed:e16:6b37 with SMTP id
- 5a478bee46e88-2ff943ed315mr2593420eec.15.1778602788043; 
- Tue, 12 May 2026 09:19:48 -0700 (PDT)
-X-Received: by 2002:a05:7300:748e:b0:2ed:e16:6b37 with SMTP id
- 5a478bee46e88-2ff943ed315mr2593392eec.15.1778602787446; 
- Tue, 12 May 2026 09:19:47 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2f888e381c9sm18129955eec.26.2026.05.12.09.19.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 May 2026 09:19:46 -0700 (PDT)
-Message-ID: <cc8714c3-143d-4f63-a608-d301e8ba023b@oss.qualcomm.com>
-Date: Tue, 12 May 2026 09:19:45 -0700
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1wMprY-0001CG-Cw; Tue, 12 May 2026 12:21:42 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64CCD1fm2611862; Tue, 12 May 2026 16:21:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=nNnrv4
+ cKeFdLY5+Kdm3ymwkSp5FCLijaTeIRzw/QcFY=; b=CkifxV2+JwC7gbrYS0MXI4
+ 1QQ4DhUVM9mHnBNx+UoFW0JQaxy+JnUvjBqMD/PUmqAGkeT0wh2DqqBEhzz/6ALO
+ LOUxgnOKreLUHqWGFciKhSFA6VqdU/Qto94jNRDdcz3o0t/0BG7jRaPiSwDL3alF
+ hHHh+WjUZ+ktXaRYSyKXu1ae2KB9cCZUH9GO9IUSYTlQfAbuA2rhZV3M4zC6OR8X
+ 01iYN2vXNSoKOPVrRjKWHTw14/sBn+AXJXqejZ4bqpyIAE7pf8cXv70HI7Kl531d
+ 2aYdpg34AfRqrVKKrxS/+ChN4ifSZjHW99CRZUFFHOr85jC+hbur9SIDK9egXRMQ
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e3nvduyp7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 May 2026 16:21:38 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64CG9QU2022251;
+ Tue, 12 May 2026 16:21:37 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e3nfgkvd1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 May 2026 16:21:37 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64CGLZbH29688566
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 12 May 2026 16:21:35 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8C97658065;
+ Tue, 12 May 2026 16:21:35 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C8EC85804B;
+ Tue, 12 May 2026 16:21:34 +0000 (GMT)
+Received: from [9.61.119.68] (unknown [9.61.119.68])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 12 May 2026 16:21:34 +0000 (GMT)
+Message-ID: <68913812-4bdd-414d-b255-f24431fbaf12@linux.ibm.com>
+Date: Tue, 12 May 2026 12:21:33 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/16] tests: add QEMU_TEST_IO_SKIP for skipping I/O tests
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-block@nongnu.org, Cleber Rosa <crosa@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, John Snow <jsnow@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-References: <20260424154205.364268-1-berrange@redhat.com>
- <20260424154205.364268-15-berrange@redhat.com>
- <fa8be3d8-6d76-4811-83ab-69c256e8e44f@oss.qualcomm.com>
- <agNPkLRe0Rf4NYcU@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH 2/5] pc-bios/s390-ccw: Add per-queue notification offset
+ for multi-queue virtio configurations
+To: Eric Farman <farman@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org, cohuck@redhat.com
+Cc: jjherne@linux.ibm.com, mjrosato@linux.ibm.com, zycai@linux.ibm.com
+References: <20260504221613.826825-1-jrossi@linux.ibm.com>
+ <20260504221613.826825-3-jrossi@linux.ibm.com>
+ <0f872fd5ae16db2dac3239f9b1820f4d3f2127db.camel@linux.ibm.com>
 Content-Language: en-US
-In-Reply-To: <agNPkLRe0Rf4NYcU@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <0f872fd5ae16db2dac3239f9b1820f4d3f2127db.camel@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEyMDE2OSBTYWx0ZWRfX5TnKlph+2oJB
- Abx1VAcE91JiNlmqAc/XOsnyGZaRwCQ4U4Fly0nOBRZwkKDMb0K/h//MClRmvumIDgAHmVqVJU2
- OcytPvhxnEYtDnPVo8XAOLY4nSxK61JJy1CE06bfH+E/FVL3Af+uod8SgUK7gznoxAZBRQPtpN9
- M+9c5s2pA4Ujx1Yp2Ehm5qSYNAaGJzNVkwDZcmw84sdJbj0CUvit2zQ5+2TQ3llW5STcGMX++4h
- /ZG4op39lCTF6+Qa+1+Va8Dvu1GU2Bw8MUtNh7Qs3Jigr6vHHD1ZVmKSpZ9b3Dn9huJ0kvKOKih
- NjW9HE37Jp/hOkDBwBWFG6d13vYPyOdNYWZx8hQ1ucYIL3Tie8hTi16Yk9ASLkRauOv5dmTsyJ8
- EkFbHwedO97sikaOUmv4wup2GYNDeutM1LW1pvL2QHV8XgrhxDUb1PxLeJIAcVS5njVoZAxdwDF
- TD6hMpzq/QoW9W/87aA==
-X-Proofpoint-GUID: Ww0jK0iv6N8QMHAaLQIfIJB1vLjsseAd
-X-Authority-Analysis: v=2.4 cv=bp98wkai c=1 sm=1 tr=0 ts=6a035325 cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=20KFwNOVAAAA:8 a=ERjs-R0v0R5jnaaS1A4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=scEy_gLbYbu1JhEsrz4S:22
-X-Proofpoint-ORIG-GUID: Ww0jK0iv6N8QMHAaLQIfIJB1vLjsseAd
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=Y/XIdBeN c=1 sm=1 tr=0 ts=6a035392 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=ISLiNHwi8i67TzYMgxoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: 8K63vzBinMuzdFtgLIQ7PIvJY9mnPhjW
+X-Proofpoint-ORIG-GUID: 8K63vzBinMuzdFtgLIQ7PIvJY9mnPhjW
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEyMDE2OCBTYWx0ZWRfX8wZhhAlTvWON
+ IlMYtOeXq4YeNHzS3WEXzOcaRHDIq44E3Hl2pueALNFPaAzdVy9Z9yMh/Oaf3vWuFkg0sCzwiYu
+ mIOhrhiI8vACILSGRGkaSFF7E9zvTYS0FYbaALYkoIkcJrfnTJz8Ov9S3lyx1EUX4foqt+oY4Ah
+ QblQrljX0iJO+oSERtvnmoU8HGmAkU3pe3F13XV/ltY0MgNuA0IIRkH/PEE6ALUgz1/0MfhSqT/
+ MhQ3ABLSBmN8J4vxVGnUgAPr1zufsLSWZsX1zfHIQzitaQCSkzGUqp3a4rQ0cq3uhb77S3vbc7F
+ K7c+4QXAjK/oAMnzQNUwKCm7R69nxN5iLWorr20C7CIY/Ms46iHf8j879ww4xrQ4+q5s362jtpI
+ fNkVrXwyWU2poBCD92xsUVJyHK4v9KchvRM/MM529vh5jnzX2xK3v874g0tqOobLdZuF5yJZJkY
+ WSbtWQxqXl9rmIwwIWQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-11_05,2026-05-08_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 adultscore=0 clxscore=1015 bulkscore=0 malwarescore=0
- lowpriorityscore=0 suspectscore=0 phishscore=0 spamscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605050000 definitions=main-2605120169
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ clxscore=1015 priorityscore=1501 lowpriorityscore=0 phishscore=0
+ malwarescore=0 suspectscore=0 bulkscore=0 spamscore=0 adultscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605050000
+ definitions=main-2605120168
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,133 +124,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/12/2026 9:06 AM, Daniel P. Berrangé wrote:
-> On Tue, May 12, 2026 at 08:56:54AM -0700, Pierrick Bouvier wrote:
->> On 4/24/2026 8:42 AM, Daniel P. Berrangé wrote:
->>> The nature of block I/O tests is such that there can be unexpected false
->>> positive failures in certain scenarios that have not been encountered
->>> before, and sometimes non-deterministic failures that are hard to
->>> reproduce.
->>>
->>> Before enabling the I/O tests as gating jobs in CI, there needs to be a
->>> mechanism to dynamically mark tests as skipped, without having to commit
->>> code changes.
->>>
->>> This introduces the QEMU_TEST_IO_SKIP environment variable that is set
->>> to a list of FORMAT-OR-PROTOCOL:NAME pairs. The intent is that this
->>> variable can be set as a GitLab CI pipeline variable to temporarily
->>> disable a test while problems are being debugged.
->>>
->>> Reviewed-by: Thomas Huth <thuth@redhat.com>
->>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
->>> ---
->>>  docs/devel/testing/main.rst      |  7 +++++++
->>>  tests/qemu-iotests/testrunner.py | 16 ++++++++++++++++
->>>  2 files changed, 23 insertions(+)
->>>
->>> diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
->>> index 797111009a..f779a64415 100644
->>> --- a/docs/devel/testing/main.rst
->>> +++ b/docs/devel/testing/main.rst
->>> @@ -284,6 +284,13 @@ that are specific to certain cache mode.
->>>  More options are supported by the ``./check`` script, run ``./check -h`` for
->>>  help.
->>>  
->>> +If a test program is known to be broken, it can be disabled by setting
->>> +the ``QEMU_TEST_IO_SKIP`` environment variable with a list of tests to
->>> +be skipped. The values are of the form FORMAT-OR-PROTOCOL:NAME, the
->>> +leading component can be omitted to skip the test for all formats and
->>> +protocols. For example ``export QEMU_TEST_IO_SKIP="luks:149 185 iov-padding``
->>> +will skip ``149`` for LUKS only, and ``185`` and ``iov-padding`` for all.
->>> +
->>>  Writing a new test case
->>>  ~~~~~~~~~~~~~~~~~~~~~~~
->>>  
->>> diff --git a/tests/qemu-iotests/testrunner.py b/tests/qemu-iotests/testrunner.py
->>> index dbe2dddc32..ecb5d4529f 100644
->>> --- a/tests/qemu-iotests/testrunner.py
->>> +++ b/tests/qemu-iotests/testrunner.py
->>> @@ -145,6 +145,18 @@ def __init__(self, env: TestEnv, tap: bool = False,
->>>  
->>>          self._stack: contextlib.ExitStack
->>>  
->>> +        self.skip = {}
->>> +        for rule in os.environ.get("QEMU_TEST_IO_SKIP", "").split(" "):
->>> +            rule = rule.strip()
->>> +            if rule == "":
->>> +                continue
->>> +            if ":" in rule:
->>> +                fmt, name = rule.split(":")
->>> +                if fmt in ("", env.imgfmt, env.imgproto):
->>> +                    self.skip[name] = True
->>> +            else:
->>> +                self.skip[rule] = True
->>> +
->>>      def __enter__(self) -> 'TestRunner':
->>>          self._stack = contextlib.ExitStack()
->>>          self._stack.enter_context(self.env)
->>> @@ -251,6 +263,10 @@ def do_run_test(self, test: str) -> TestResult:
->>>                                description='No qualified output '
->>>                                            f'(expected {f_reference})')
->>>  
->>> +        if f_test.name in self.skip:
->>> +            return TestResult(status='not run',
->>> +                              description='Listed in QEMU_TEST_IO_SKIP')
->>> +
->>>          args = [str(f_test.resolve())]
->>>          env = self.env.prepare_subprocess(args)
->>>  
+
+
+On 5/8/26 1:23 PM, Eric Farman wrote:
+> On Mon, 2026-05-04 at 18:16 -0400, jrossi@linux.ibm.com wrote:
+>> From: Jared Rossi <jrossi@linux.ibm.com>
 >>
->> Why not simply remove the broken tests, and create issues to add them
->> again in the future?
-> 
-> In theory that's what our policy today is, but in practice it is
-> too much of a burden on the release co-ordinator, to expect them
-> to create such a patch themselves, or wait on a subsys maintainer
-> todo it for them.
-> 
-> They end up just ignoring brokenness in CI which is a bad practice,
-> and will prevent us ever making CI truely gating or switching to
-> using MRs for pull requests. This gives us a super-fast way to skip
-> flaky tests, while the subsystem maintainers figure out the right
-> permanent answer.
+>> The initial support for virtio-blk-pci IPL devices used a single virt-queue, but
+>> other device types require multiple queues, and for PCI device types this also
+>> requires a per-queue notification offset.
+>>
+>> Add a PCI notify field to the VRing struct so that each queue has a unique
+>> notify offset.  Also re-select the target queue before writing buffers to
+>> ensure the proper queue is active.
+> Why is this patch 2/5, when the series is n/6?
+The short answer is I goofed it up.  The contents of the patch are as 
+intended.
+It should be 2/6.
+
 >
-
-I disagree on this one, merging a single patch doing a git rm, and a git
-revert later is not more expensive than merging a variable modifying a
-variable in a yaml file.
-
-The issue with this approach is that people running tests locally will
-not see which tests are skipped, and will see false positives. So you
-just keep CI green, but not the test base itself.
-
-The risk I see is that some tests will stay forever in this skip
-variable, so it will be dead code for CI, but still alive and failing
-for people running tests manually who hit the regression.
-
-If you still want an alternative to removing test, implementing a
-skip_list in tests/qemu-iotests/meson.build is better than an env var
-IMHO, and achieves the exact same effect, for CI and for users.
-
-What do you think?
-
->> Once it's green, in theory, code breaking existing tests should not be
->> merged, right? So what would be the usage of this variable?
-> 
-> We have had a pretty decent chunk of non-deterministic test failures,
-> so there is high likelihood we can merge stuff that passes once and
-> then subsequently fails some subset of the time. This non-determinism
-> is one of the key reasons that we currently only have a hand picked
-> selection of block I/O tests run by meson.
-> 
-> While I've tested this series and haven't see any non-determinstic
-> failures in what I'm proposing to enable thus far, I think there is
-> still a pretty high chance we'll uncover some more.
+>> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+>> ---
+>>   pc-bios/s390-ccw/virtio-pci.c | 36 ++++++++++++++++++++++-------------
+>>   pc-bios/s390-ccw/virtio-pci.h |  3 ++-
+>>   pc-bios/s390-ccw/virtio.c     |  4 +++-
+>>   pc-bios/s390-ccw/virtio.h     |  1 +
+>>   4 files changed, 29 insertions(+), 15 deletions(-)
+>>
+>> diff --git a/pc-bios/s390-ccw/virtio-pci.c b/pc-bios/s390-ccw/virtio-pci.c
+>> index 53bdb52e76..736869f4f5 100644
+>> --- a/pc-bios/s390-ccw/virtio-pci.c
+>> +++ b/pc-bios/s390-ccw/virtio-pci.c
+>> @@ -74,10 +74,10 @@ int virtio_pci_reset(VDev *vdev)
+>>       return 0;
+>>   }
+>>   
+>> -long virtio_pci_notify(int vq_id)
+>> +long virtio_pci_notify(VRing *vr)
+>>   {
+>> -    uint32_t offset = n_cap.off + notify_mult * q_notify_offset;
+>> -    return vpci_bswap16_write(offset, n_cap.bar, (uint16_t) vq_id);
+>> +    uint32_t offset = n_cap.off + notify_mult * vr->pci_notify;
+>> +    return vpci_bswap16_write(offset, n_cap.bar, (uint16_t) vr->id);
+> You no longer need the q_notify_offset variable nor the read into it.
+> (Ah, Joy already pointed this out; nice!)
 >
+>>   }
+>>   
+>>   /*
+>> @@ -166,7 +166,7 @@ int vpci_read_flex(uint64_t offset, uint8_t pcias, void *buf, int len)
+>>       return 0;
+>>   }
+>>   
+>> -static int vpci_set_selected_vq(uint16_t queue_num)
+>> +int vpci_set_selected_vq(uint16_t queue_num)
+>>   {
+>>       return vpci_bswap16_write(c_cap.off + VPCI_C_OFFSET_Q_SELECT, c_cap.bar, queue_num);
+>>   }
+>> @@ -332,7 +332,6 @@ int virtio_pci_setup(VDev *vdev)
+>>       VRing *vr;
+>>       int rc;
+>>       uint8_t status;
+>> -    uint16_t vq_size;
+>>       int i = 0;
+>>   
+>>       vdev->guessed_disk_nature = VIRTIO_GDN_NONE;
+>> @@ -380,28 +379,39 @@ int virtio_pci_setup(VDev *vdev)
+>>           return -EIO;
+>>       }
+>>   
+>> -    if (vpci_read_bswap16(VPCI_C_OFFSET_Q_SIZE, c_cap.bar, &vq_size)) {
+>> -        puts("Failed to read virt-queue configuration");
+>> -        return -EIO;
+>> -    }
+>> -
+>>       /* Configure virt-queues for pci */
+>>       for (i = 0; i < vdev->nr_vqs; i++) {
+>> +        uint16_t vq_size;
+>> +        uint16_t vq_notify;
+>>           VqInfo info = {
+>>               .queue = (unsigned long long) virtio_get_ring_area(i),
+>>               .align = KVM_S390_VIRTIO_RING_ALIGN,
+>>               .index = i,
+>> -            .num = vq_size,
+>> +            .num = 0,
+>>           };
+>>   
+>>           vr = &vdev->vrings[i];
+>> -        vring_init(vr, &info);
+>>   
+>> -        if (vpci_set_selected_vq(vr->id)) {
+>> +        if (vpci_set_selected_vq(i)) {
+>>               puts("Failed to set selected virt-queue");
+>>               return -EIO;
+>>           }
+>>   
+>> +        if (vpci_read_bswap16(VPCI_C_OFFSET_Q_SIZE, c_cap.bar, &vq_size)) {
+>> +            puts("Failed to read virt-queue configuration");
+>> +            return -EIO;
+>> +        }
+>> +
+>> +        info.num = vq_size;
+>> +
+>> +        if (vpci_read_bswap16(c_cap.off + VPCI_C_OFFSET_Q_NOFF, c_cap.bar, &vq_notify)) {
+>> +            puts("Failed to read virt-queue configuration");
+>> +            return -EIO;
+>> +        }
+> For either of these error exits, do you need an identifier logged as to -which- virtqueue failed, as
+> you're in a loop?
+Yes, that would certainly be useful information to have.  I'll add it.
 
-Fair point.
+>
+>> +
+>> +        vr->pci_notify = vq_notify;
+>> +        vring_init(vr, &info);
+>> +
+>>           rc = set_pci_vq_addr(VPCI_C_OFFSET_Q_DESCLO, vr->desc);
+>>           rc |= set_pci_vq_addr(VPCI_C_OFFSET_Q_AVAILLO, vr->avail);
+>>           rc |= set_pci_vq_addr(VPCI_C_OFFSET_Q_USEDLO, vr->used);
+>> diff --git a/pc-bios/s390-ccw/virtio-pci.h b/pc-bios/s390-ccw/virtio-pci.h
+>> index 90d07cb9a7..993fc285ac 100644
+>> --- a/pc-bios/s390-ccw/virtio-pci.h
+>> +++ b/pc-bios/s390-ccw/virtio-pci.h
+>> @@ -62,9 +62,10 @@ struct VirtioPciCap {
+>>   };
+>>   typedef struct VirtioPciCap  VirtioPciCap;
+>>   
+>> +int vpci_set_selected_vq(uint16_t queue_num);
+>>   void virtio_pci_id2type(VDev *vdev, uint16_t device_id);
+>>   int virtio_pci_reset(VDev *vdev);
+>> -long virtio_pci_notify(int vq_id);
+>> +long virtio_pci_notify(VRing *vr);
+>>   int virtio_pci_setup(VDev *vdev);
+>>   int virtio_pci_setup_device(void);
+>>   
+>> diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
+>> index 30e6b2bc16..00850acc2f 100644
+>> --- a/pc-bios/s390-ccw/virtio.c
+>> +++ b/pc-bios/s390-ccw/virtio.c
+>> @@ -114,7 +114,8 @@ bool vring_notify(VRing *vr)
+>>           vr->cookie = virtio_ccw_notify(vdev.schid, vr->id, vr->cookie);
+>>           break;
+>>       case S390_IPL_TYPE_PCI:
+>> -        vr->cookie = virtio_pci_notify(vr->id);
+>> +        vr->cookie = virtio_pci_notify(vr);
+>> +        break;
+>>       default:
+>>           return 1;
+>>       }
+>> @@ -154,6 +155,7 @@ static void vr_bswap_descriptor(VRingDesc *desc)
+>>   void vring_send_buf(VRing *vr, void *p, int len, int flags)
+>>   {
+>>       if (!be_ipl()) {
+>> +        vpci_set_selected_vq(vr->id);
+>>           vr->avail->idx = bswap16(vr->avail->idx);
+>>       }
+>>   
+>> diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
+>> index d32a4830ca..75ae5bdbc2 100644
+>> --- a/pc-bios/s390-ccw/virtio.h
+>> +++ b/pc-bios/s390-ccw/virtio.h
+>> @@ -107,6 +107,7 @@ struct VRing {
+>>       VRingUsed *used;
+>>       long cookie;
+>>       int id;
+>> +    uint16_t pci_notify;
+>>   };
+>>   typedef struct VRing VRing;
+>>   
+Thank you for the review comments.
 
-> With regards,
-> Daniel
-
+Regards,
+Jared Rossi
 
