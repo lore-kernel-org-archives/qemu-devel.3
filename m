@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD552CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:17:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F9E2CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:17:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuOP-000250-0l; Tue, 12 May 2026 17:11:53 -0400
+	id 1wMuPQ-0005c0-Sm; Tue, 12 May 2026 17:12:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuOD-0000IQ-Lh; Tue, 12 May 2026 17:11:41 -0400
+ id 1wMuPB-0004kQ-84; Tue, 12 May 2026 17:12:42 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuOA-0004fI-Oa; Tue, 12 May 2026 17:11:41 -0400
+ id 1wMuP7-0004ru-DD; Tue, 12 May 2026 17:12:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619303; bh=U45kgYAj+2v7iIaX8tYnrSLqsn7a9J3SNZbV3Nk05YM=;
+ t=1778619304; bh=/DhOdDmo58kzaSVRgr6oIR5Y2kl4p3blSN2ouY54oXU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=DX6Mk9yWjvwJF8n8SnIrg9xjRhBITThmhgHEGu4qX1rddNp3qoQtfVIRj6VpIj2Lg
- +fsCGH6YBZMPfPm2U03XQkbwNHX2pqdB7OOicmAbcgfsMWFZSLb2nZ+Kak5QP14edV
- GAhA2Ud1yzxcuIIpxfxdTDvfX7mLeQmkqh8uzsKkDkQ57c51H4nXBlYri5C3GnrDzS
- UW//7BBPeE5/JO5Ghl5CAOffk57PCmFKmPyUDWeuRlS/7dTGh6YGULX1MjismuOdcc
- RwsTVkHzPkm2Lij28JXIOrTKdvXH/GYtxdP8AOhKUdHoLRSgCnqYvUOSNYhlXjGtap
- MVDyNN5egJP8w==
+ b=p644LW0XUW4PSQxk6q/D89CkU5ddZwdqsce32pCTIl05e/O5KOLaOJX5JLRbeQlN8
+ pyOD+3XUr9bo8s3vqvTSVjv0QAUK4XWV68BryR+IH19ZZSukF/53Sj4uxU/7OLz2xE
+ si+veRQR+TgGfca2esQxFHLclTK+cfUAlGjHmx3ZqxY1rOKhvsgOVAuaINlhfpUaR8
+ rQ123GsSe2aNPHM7fdUGEUVEybM9H4pGxYpV7Mfe/KKJJdgLAivlgbMYjUyJeEEQCK
+ uY57gjTlG38v6t+TRmSEcihjLAm3gejMi5I/4Pr3JmHN3v7DuT0Zcb8NNBwXhCXg/T
+ 1WCgpiBxgA4Rw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7F03B1AA377;
- Tue, 12 May 2026 23:55:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 382821AA381;
+ Tue, 12 May 2026 23:55:04 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8A1D43ABCE6;
- Tue, 12 May 2026 23:55:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4512D3ABCF0;
+ Tue, 12 May 2026 23:55:08 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Warner Losh <imp@bsdimp.com>, Peter Maydell <peter.maydell@linaro.org>,
+Cc: qemu-stable@nongnu.org, Werner de Carne <werner@carne.de>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 057/117] bsd-user,
- linux-user: signal: recursive signal delivery fix
-Date: Tue, 12 May 2026 23:53:59 +0300
-Message-ID: <20260512205503.361097-57-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 067/117] serial COM: windows serial COM PollingFunc
+ don't sleep
+Date: Tue, 12 May 2026 23:54:09 +0300
+Message-ID: <20260512205503.361097-67-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,83 +71,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Werner de Carne <werner@carne.de>
 
-Synchronous signals must accommodate a synchronous signal being
-raised during delivery, as asynchronous ones do. For example
-badframe errors during delivery will cause SIGSEGV to be raised.
-
-Without this fix, cpu_loop() runs process_pending_signals() which
-delivers the first synchronous signal (e.g., SIGILL) which fails
-to set the handler and forces SIGSEGV, but that is not picked up.
-process_pending_signals() returns. Then cpu_loop() runs cpu_exec()
-again, which attempts to execute the same instruction, another
-SIGILL.
-
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Reviewed-by: Warner Losh <imp@bsdimp.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260321135624.581398-3-npiggin@gmail.com
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 7e966ef38f58f91e05a46fdfda4ba63a9a1567d6)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1802
+Signed-off-by: Werner de Carne <werner@carne.de>
+[ Marc-André - indentation fixes ]
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20230807201443.2668-1-werner@carne.de>
+(cherry picked from commit 7437b3eab6af1d31bb7fdfb3ac4e0a4de6ada50b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/bsd-user/signal.c b/bsd-user/signal.c
-index dadcc037dc..3e5e41e1b1 100644
---- a/bsd-user/signal.c
-+++ b/bsd-user/signal.c
-@@ -998,7 +998,12 @@ void process_pending_signals(CPUArchState *env)
-                 sigdelset(&ts->signal_mask, target_to_host_signal(sig));
-                 sigact_table[sig - 1]._sa_handler = TARGET_SIG_DFL;
-             }
-+            /*
-+             * Restart scan from the beginning, as handle_pending_signal
-+             * might have resulted in a new synchronous signal (eg SIGSEGV).
-+             */
-             handle_pending_signal(env, sig, &ts->sync_signal);
-+            goto restart_scan;
-         }
+diff --git a/chardev/char-win.c b/chardev/char-win.c
+index fef45e83aa..e194242c9f 100644
+--- a/chardev/char-win.c
++++ b/chardev/char-win.c
+@@ -28,7 +28,7 @@
+ #include "qapi/error.h"
+ #include "chardev/char-win.h"
  
-         k = ts->sigtab;
-@@ -1008,10 +1013,7 @@ void process_pending_signals(CPUArchState *env)
-             if (k->pending &&
-                 !sigismember(blocked_set, target_to_host_signal(sig))) {
-                 handle_pending_signal(env, sig, k);
--                /*
--                 * Restart scan from the beginning, as handle_pending_signal
--                 * might have resulted in a new synchronous signal (eg SIGSEGV).
--                 */
-+                /* Restart scan, explained above. */
-                 goto restart_scan;
-             }
-         }
-diff --git a/linux-user/signal.c b/linux-user/signal.c
-index 804096bd44..f0a22577e5 100644
---- a/linux-user/signal.c
-+++ b/linux-user/signal.c
-@@ -1384,6 +1384,11 @@ void process_pending_signals(CPUArchState *cpu_env)
-             }
+-static void win_chr_read(Chardev *chr, DWORD len)
++static int win_chr_read(Chardev *chr, DWORD len)
+ {
+     WinChardev *s = WIN_CHARDEV(chr);
+     int max_size = qemu_chr_be_can_write(chr);
+@@ -40,7 +40,7 @@ static void win_chr_read(Chardev *chr, DWORD len)
+         len = max_size;
+     }
+     if (len == 0) {
+-        return;
++        return 0;
+     }
  
-             handle_pending_signal(cpu_env, sig, &ts->sync_signal);
-+            /*
-+             * Restart scan from the beginning, as handle_pending_signal
-+             * might have resulted in a new synchronous signal (eg SIGSEGV).
-+             */
-+            goto restart_scan;
-         }
+     ZeroMemory(&s->orecv, sizeof(s->orecv));
+@@ -56,6 +56,8 @@ static void win_chr_read(Chardev *chr, DWORD len)
+     if (size > 0) {
+         qemu_chr_be_write(chr, buf, size);
+     }
++
++    return size > 0 ? 1 : 0;
+ }
  
-         for (sig = 1; sig <= TARGET_NSIG; sig++) {
-@@ -1394,9 +1399,7 @@ void process_pending_signals(CPUArchState *cpu_env)
-                 (!sigismember(blocked_set,
-                               target_to_host_signal_table[sig]))) {
-                 handle_pending_signal(cpu_env, sig, &ts->sigtab[sig - 1]);
--                /* Restart scan from the beginning, as handle_pending_signal
--                 * might have resulted in a new synchronous signal (eg SIGSEGV).
--                 */
-+                /* Restart scan, explained above. */
-                 goto restart_scan;
-             }
-         }
+ static int win_chr_serial_poll(void *opaque)
+@@ -67,8 +69,9 @@ static int win_chr_serial_poll(void *opaque)
+ 
+     ClearCommError(s->file, &comerr, &status);
+     if (status.cbInQue > 0) {
+-        win_chr_read(chr, status.cbInQue);
+-        return 1;
++        if (win_chr_read(chr, status.cbInQue)) {
++            return 1;
++        }
+     }
+     return 0;
+ }
+@@ -147,8 +150,9 @@ int win_chr_pipe_poll(void *opaque)
+ 
+     PeekNamedPipe(s->file, NULL, 0, NULL, &size, NULL);
+     if (size > 0) {
+-        win_chr_read(chr, size);
+-        return 1;
++        if (win_chr_read(chr, size)) {
++            return 1;
++        }
+     }
+     return 0;
+ }
 -- 
 2.47.3
 
