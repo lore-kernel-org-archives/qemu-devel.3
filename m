@@ -4,55 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAA60CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:50:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A1E7CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 22:30:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMukX-0007e8-6p; Tue, 12 May 2026 17:34:45 -0400
+	id 1wMvc6-0006iS-0F; Tue, 12 May 2026 18:30:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMukM-0007Rl-Gc; Tue, 12 May 2026 17:34:36 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1wMvc3-0006gd-EN; Tue, 12 May 2026 18:30:03 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMujs-00038Z-FZ; Tue, 12 May 2026 17:34:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619500; bh=tGCFPzas1hHKzOl+cALrD/N2SyuwGyZAQXj2RFisqsM=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=A1mLYXRFTl/x5lpwEtHNsdFvvd9Y0+2COPbFW2GGEBBAF9R53O/GyKWBHiAN7BuCD
- KW6Oel0xLj0gCRQ8IhGQ75KlSDaxOJH0InhG9i4hISbILRCzlJAXpvvqGeGv0DyLCN
- F/35PZqXHkJV/GrOoxBj/kt8ahq+CLP23r5IhfY5B7Dhaajn+rTlCfWkKcUJTh/AEF
- fMIgtRG891Je6i8ajflUcgf1VepmGchX2WyShH3OsJ3UY84WrhIxHV+qOpm2cno8dw
- 5DZ0nnvcuBhI0XfVFEBkuURsKe4dFoThMJGXVRXTedi4cVn2fLPRZMvMX2xUa4KIRy
- anwdYb96k214Q==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A79F21AA401;
- Tue, 12 May 2026 23:58:20 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B5F113ABD59;
- Tue, 12 May 2026 23:58:24 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Katherine Leaver <katherine.j.leaver@gmail.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 54/58] hw/uefi: fix ucs2 string helper functions
-Date: Tue, 12 May 2026 23:58:15 +0300
-Message-ID: <20260512205820.361821-54-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1wMvc0-0006QC-Sy; Tue, 12 May 2026 18:30:03 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 8796A596968;
+ Wed, 13 May 2026 00:29:53 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id 7whA131R2ZnL; Wed, 13 May 2026 00:29:48 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 6804A596964; Wed, 13 May 2026 00:29:48 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 62C265968DC;
+ Wed, 13 May 2026 00:29:48 +0200 (CEST)
+Date: Wed, 13 May 2026 00:29:48 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Michael Tokarev <mjt@tls.msk.ru>
+cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Subject: Re: [Stable-11.0.1 00/58] Patch Round-up for stable 11.0.1, freeze
+ on 2026-05-22
 In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+Message-ID: <b9c4df60-8b75-cf1a-7cb5-c32a31dbf5b8@eik.bme.hu>
 References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,122 +63,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+On Tue, 12 May 2026, Michael Tokarev wrote:
+> The following patches are queued for QEMU stable v11.0.1:
+>
+>  https://gitlab.com/qemu-project/qemu/-/commits/staging-11.0
+>
+> Patch freeze is 2026-05-22, and the release is planned for 2026-05-24:
+>
+>  https://wiki.qemu.org/Planning/11.0
+>
+> Please respond here or CC qemu-stable@nongnu.org on any additional patches
+> you think should (or shouldn't) be included in the release.
 
-The length passed in is in bytes not characters.  Rename the
-parameters to make that clear.  Calculate the number of chars
-if needed.  Fix length checks to use the number of chars not
-bytes to avoid OOB reads.
+I also hoped to include the ati-vga: fix ati_set_dirty address calculation 
+patch that is currently in the v2 Misc HW patches for 2026-05-12 PULL 
+request from Philippe that will hopefully be merged in master in time for 
+11.0.1 too.
 
-Fixes: CVE-2026-41437
-Fixes: 1ebc319c8ca7 ("hw/uefi: add var-service-utils.c")
-Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260422092910.444997-4-kraxel@redhat.com>
-(cherry picked from commit 5247b3034c23bdfd91a7f78587c3b3e37f90568c)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/hw/uefi/var-service-utils.c b/hw/uefi/var-service-utils.c
-index 258013f436..489321a26c 100644
---- a/hw/uefi/var-service-utils.c
-+++ b/hw/uefi/var-service-utils.c
-@@ -19,13 +19,18 @@
-  * sometimes when they are not (for example in variable policies).
-  */
- 
--gboolean uefi_str_is_valid(const uint16_t *str, size_t len,
-+gboolean uefi_str_is_valid(const uint16_t *str, size_t bytes,
-                            gboolean must_be_null_terminated)
- {
-+    size_t chars = bytes / 2;
-     size_t pos = 0;
- 
-+    if ((bytes % 2) != 0) {
-+        return false;
-+    }
-+
-     for (;;) {
--        if (pos == len) {
-+        if (pos == chars) {
-             if (must_be_null_terminated) {
-                 return false;
-             } else {
-@@ -47,12 +52,13 @@ gboolean uefi_str_is_valid(const uint16_t *str, size_t len,
-     }
- }
- 
--size_t uefi_strlen(const uint16_t *str, size_t len)
-+size_t uefi_strlen(const uint16_t *str, size_t bytes)
- {
-+    size_t chars = bytes / 2;
-     size_t pos = 0;
- 
-     for (;;) {
--        if (pos == len) {
-+        if (pos == chars) {
-             return pos;
-         }
-         if (str[pos] == 0) {
-@@ -62,25 +68,25 @@ size_t uefi_strlen(const uint16_t *str, size_t len)
-     }
- }
- 
--gboolean uefi_str_equal_ex(const uint16_t *a, size_t alen,
--                           const uint16_t *b, size_t blen,
-+gboolean uefi_str_equal_ex(const uint16_t *a, size_t a_bytes,
-+                           const uint16_t *b, size_t b_bytes,
-                            gboolean wildcards_in_a)
- {
-+    size_t a_chars = a_bytes / 2;
-+    size_t b_chars = b_bytes / 2;
-     size_t pos = 0;
- 
--    alen = alen / 2;
--    blen = blen / 2;
-     for (;;) {
--        if (pos == alen && pos == blen) {
-+        if (pos == a_chars && pos == b_chars) {
-             return true;
-         }
--        if (pos == alen && b[pos] == 0) {
-+        if (pos == a_chars && b[pos] == 0) {
-             return true;
-         }
--        if (pos == blen && a[pos] == 0) {
-+        if (pos == b_chars && a[pos] == 0) {
-             return true;
-         }
--        if (pos == alen || pos == blen) {
-+        if (pos == a_chars || pos == b_chars) {
-             return false;
-         }
-         if (a[pos] == 0 && b[pos] == 0) {
-@@ -100,18 +106,18 @@ gboolean uefi_str_equal_ex(const uint16_t *a, size_t alen,
-     }
- }
- 
--gboolean uefi_str_equal(const uint16_t *a, size_t alen,
--                        const uint16_t *b, size_t blen)
-+gboolean uefi_str_equal(const uint16_t *a, size_t a_bytes,
-+                        const uint16_t *b, size_t b_bytes)
- {
--    return uefi_str_equal_ex(a, alen, b, blen, false);
-+    return uefi_str_equal_ex(a, a_bytes, b, b_bytes, false);
- }
- 
--char *uefi_ucs2_to_ascii(const uint16_t *ucs2, uint64_t ucs2_size)
-+char *uefi_ucs2_to_ascii(const uint16_t *ucs2, uint64_t ucs2_bytes)
- {
--    char *str = g_malloc0(ucs2_size / 2 + 1);
-+    char *str = g_malloc0(ucs2_bytes / 2 + 1);
-     int i;
- 
--    for (i = 0; i * 2 < ucs2_size; i++) {
-+    for (i = 0; i * 2 < ucs2_bytes; i++) {
-         if (ucs2[i] == 0) {
-             break;
-         }
--- 
-2.47.3
-
+Regards,
+BALATON Zoltan
 
