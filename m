@@ -4,47 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D93E2CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:38:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15163CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:38:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuTj-0004U8-7g; Tue, 12 May 2026 17:17:23 -0400
+	id 1wMuj5-0005FB-Vj; Tue, 12 May 2026 17:33:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuTS-0002kw-05; Tue, 12 May 2026 17:17:07 -0400
+ id 1wMuia-0004NT-Ej; Tue, 12 May 2026 17:32:45 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuTP-0006jc-Vh; Tue, 12 May 2026 17:17:05 -0400
+ id 1wMuiQ-0002a7-9N; Tue, 12 May 2026 17:32:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619307; bh=t1J8WMNyiECT8S8oMriALLHVngmgly+xsrMf1JZklI0=;
+ t=1778619499; bh=BnyGBCl2tDmEhHgXBXYxgINhnh2BQvH3VrIdaBHXsMg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=rFiVnNyql0U+K9BaodyB4lyy2WlrLGAB11+6qfGLQgMVdKmBzp9nv11e+HOw12/7J
- Te4YhNZinIqv7RwHy8yvLzY459nNsA0yQXYwiTNrYw5MOLmCi3TqeXWQLhf/WeS3B4
- TOSazT7AzHwhvHwP4AgqKWy0XnkgYhP1qDhEUGtyQGTMdXK7ScpFWHgM5K4aigVlDy
- lkk+/xkoUCf25PiK+cEjOrHWwXTP554AULC8j50gINe47mgog/ZWap211SqIedQe7p
- vNDZF6EcHCB0FHGdGqcpGp8KUmipVDB52DdRpijxQr0p/Yda8U8kIGBVxbjWWs0Q1C
- akAVdB6o13mpw==
+ b=sjMktoFQHDIAS++H60JdTJ3Ul+OH7su1wi4j9sMhLUxjpgk3WFdq7ShFAxeQbATyB
+ Sns4+vXNrg8mW2WPBNwz6+x+eUTIw6N9dtZ9pXiWVw5K27LtwhdqiQflvkHGrKXDYe
+ 8Ah3cibwgPtmcOeDUmJnTbFf8x9JC8mCKLRwMSHt8GKWAx3EYS5Y7W5Qqm5WgtVyZ0
+ ZjSR/7UlTmbeWJkJfie/KUfiQayijIZN7RgEaV4FEMtBb3jAvn/p0UBQwhyaa9BkF6
+ duPLqS5BNoG/Ccw76gCjkMamkjZ1hrV+KnOX6ASlTaA+6azZtnwLG0ytCMHpAnmazn
+ jE3pa5qajK4xg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0257D1AA3AA;
- Tue, 12 May 2026 23:55:07 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E124E1AA3F6;
+ Tue, 12 May 2026 23:58:19 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0F4923ABD19;
- Tue, 12 May 2026 23:55:11 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id EA9DD3ABD4E;
+ Tue, 12 May 2026 23:58:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Xu <peterx@redhat.com>,
- Juraj Marcin <jmarcin@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 108/117] migration: Fix low possibility downtime
- violation
-Date: Tue, 12 May 2026 23:54:50 +0300
-Message-ID: <20260512205503.361097-108-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, kiki <Chan9Yan9@gmail.com>,
+ Zexiang Zhang <chan9yan9@gmail.com>,
+ Gautam Menghani <gautam@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 43/58] hw/intc/xics: Add a check for an invalid server
+ id
+Date: Tue, 12 May 2026 23:58:04 +0300
+Message-ID: <20260512205820.361821-43-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
-References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,46 +74,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+From: kiki <Chan9Yan9@gmail.com>
 
-When QEMU queried the estimated version of pending data and thinks it's
-ready to converge, it'll send another accurate query to make sure of it.
-It is needed to make sure we collect the latest reports and that equation
-still holds true.
+A malformed IVE value can result in an invalid server field being
+passed to icp_irq(). The function assumes the server id is valid and
+may access invalid state otherwise, potentially leading to a crash.
 
-However we missed one tiny little difference here on "<" v.s. "<=" when
-comparing pending_size (A) to threshold_size (B)..
+Fix this by validating the server id before using it and ignoring
+invalid values.
 
-QEMU src only re-query if A<B, but will kickoff switchover if A<=B.
-
-I think it means it is possible to happen if A (as an estimate only so far)
-accidentally equals to B, then re-query won't happen and switchover will
-proceed without considering new dirtied data.
-
-It turns out it was an accident in my commit 7aaa1fc072 when refactoring
-the code around.  Fix this by using the same equation in both places.
-
-Fixes: 7aaa1fc072 ("migration: Rewrite the migration complete detect logic")
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
-Link: https://lore.kernel.org/r/20260421202110.306051-3-peterx@redhat.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
-(cherry picked from commit 455a6167f25416ce97ea966d6e8301df9fda9a47)
+Reported-by: Zexiang Zhang <chan9yan9@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3324
+Signed-off-by: Zexiang Zhang <chan9yan9@gmail.com>
+Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20260428103645.50617-1-Gautam.Menghani@ibm.com
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+(cherry picked from commit 1aee8067fce95d15061eca8fbb6772d8a90ea699)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/migration/migration.c b/migration/migration.c
-index b316ee01ab..5daf0d84e4 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -3510,7 +3510,7 @@ static MigIterateState migration_iteration_run(MigrationState *s)
-          * postcopy started, so ESTIMATE should always match with EXACT
-          * during postcopy phase.
-          */
--        if (pending_size < s->threshold_size) {
-+        if (pending_size <= s->threshold_size) {
-             qemu_savevm_state_pending_exact(&must_precopy, &can_postcopy);
-             pending_size = must_precopy + can_postcopy;
-             trace_migrate_pending_exact(pending_size, must_precopy,
+diff --git a/hw/intc/xics.c b/hw/intc/xics.c
+index 1d40c4386d..2e68ac8b96 100644
+--- a/hw/intc/xics.c
++++ b/hw/intc/xics.c
+@@ -26,6 +26,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/log.h"
+ #include "qapi/error.h"
+ #include "trace.h"
+ #include "qemu/timer.h"
+@@ -222,6 +223,13 @@ void icp_irq(ICSState *ics, int server, int nr, uint8_t priority)
+ 
+     trace_xics_icp_irq(server, nr, priority);
+ 
++    if (!icp) {
++        qemu_log_mask(LOG_GUEST_ERROR, "XICS: invalid server %d for IRQ 0x%x\n",
++                      server, nr);
++        ics_reject(ics, nr);
++        return;
++    }
++
+     if ((priority >= CPPR(icp))
+         || (XISR(icp) && (icp->pending_priority <= priority))) {
+         ics_reject(ics, nr);
 -- 
 2.47.3
 
