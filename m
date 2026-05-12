@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 201A7CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:14:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9473CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:15:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuM8-0006ys-Cr; Tue, 12 May 2026 17:09:32 -0400
+	id 1wMuMD-0007eF-He; Tue, 12 May 2026 17:09:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuLO-000303-Ny; Tue, 12 May 2026 17:08:46 -0400
+ id 1wMuMB-0007Qt-4t; Tue, 12 May 2026 17:09:35 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuLN-00038b-0Y; Tue, 12 May 2026 17:08:46 -0400
+ id 1wMuM9-0003Ln-10; Tue, 12 May 2026 17:09:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619301; bh=FeMR9GM9i6SwKGLVhcJuzNQK7do177MIgrQ3yktR+ZE=;
+ t=1778619302; bh=MTXhZdUjhIEYWnwZZmspysqWDV7PKPgiFTrPw5Ta2sk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=of5nw8OR4QwYtKxwMksy+ZEt+NoHtoEfJCONxE4mNx0ZZxb+SNFL+o9N/l3levAhs
- +jYkP4LMYoeK7q3ZnCn8HWMZcnanNBB01RHmImvyYOFBz+zVz7OBw0+910ViRxgtVC
- m8mojCDjHg2gfPrHXwga5TaiE5rqtDtXvlRbr4EfucdfymzEuklCyVmPFkbweG0NWA
- N4cecZfsgXHnDfd263xFAWU37d4ve5KFjK4mYGMexiWo+P9QBPggs+201CLL6hJTjM
- HFrKHgzCLh76Z2F7bbt0amKDkASf4Ta87n49lt2rL2FwCXaVJ24zQmdVdKAVpEqsAT
- QmMp/ujFbSujA==
+ b=eOOSAVRxYp3fuSe7dVAj4fP8ZYEnuF42ygXx7Pgwigd3UpglkoPLLPFRwi+T0ol/N
+ SjiRn4q2aNWErlcN3wcK9t1Pgl9Udz6e7ydAo8TahHvwc1nYiNygp+iVH2e9sc+Slr
+ z8s3VoiiMgy4BliMaKobznmUVPvBzF2hFNnL/MU2hFpp1zyUOL5cbz1jg3HZajqB76
+ kHuwd8Aa6qGq6xlp/e6HOX6leXtZntVmWaNkJ2N095747zZHIiOEwwemYomYXL/1Cx
+ jeukKNOhDZrjWto3KH2rqjyAYA1idixIJuzh+3H+v+k9DLn5OGhtBDWG6mHAYTnokc
+ 9DGa9Ko7M5TGg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B6A5F1AA35B;
- Tue, 12 May 2026 23:55:01 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0A3961AA360;
+ Tue, 12 May 2026 23:55:02 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B8D753ABCCB;
- Tue, 12 May 2026 23:55:05 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1744A3ABCD0;
+ Tue, 12 May 2026 23:55:06 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Stefan Weil <sw@weilnetz.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 030/117] tdx: fix use-after-free in tdx_fetch_cpuid
-Date: Tue, 12 May 2026 23:53:32 +0300
-Message-ID: <20260512205503.361097-30-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 035/117] scripts/qemu-guest-agent/fsfreeze-hook: Avoid
+ bash-isms
+Date: Tue, 12 May 2026 23:53:37 +0300
+Message-ID: <20260512205503.361097-35-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
@@ -68,30 +69,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-This is mostly harmless right now because the "if" is never
-hit, but the code as written makes no sense.
+The fsfreeze-hook script starts with #!/bin/sh, but it uses
+several bash-specific constructs, resulting in misbehaviour
+on guest systems where /bin/sh is some other POSIX shell.
 
-Reported-by: Stefan Weil <sw@weilnetz.de>
+Fix the simple ones reported by shellcheck:
+
+In scripts/qemu-guest-agent/fsfreeze-hook line 27:
+touch "$LOGFILE" &>/dev/null || USE_SYSLOG=1
+                 ^---------^ SC3020 (warning): In POSIX sh, &> is undefined.
+
+In scripts/qemu-guest-agent/fsfreeze-hook line 31:
+    local message="$1"
+    ^-----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.
+
+In scripts/qemu-guest-agent/fsfreeze-hook line 46:
+    log_message "Executing $file $@"
+                                 ^-- SC2145 (error): Argument mixes string and array. Use * or separate argument.
+
+In scripts/qemu-guest-agent/fsfreeze-hook line 55:
+    if [ $STATUS -ne 0 ]; then
+         ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.
+
+There is also a use of PIPESTATUS that is more complex to fix;
+that will be dealt with in a separate commit.
+
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit f093ee7ac3af06e4ed7c86663717cf571b42241e)
+Fixes: 85978dfb6b1c133 ("qemu-ga: Optimize freeze-hook script logic of logging error")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260317094806.1944053-2-peter.maydell@linaro.org
+Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+(cherry picked from commit b5abb655fab6145ff3728d4bdaea3648468590fc)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index dbf0fa2c91..7dcf5b4e4e 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -799,7 +799,7 @@ static struct kvm_cpuid2 *tdx_fetch_cpuid(CPUState *cpu, int *ret)
-         r = tdx_vcpu_ioctl(cpu, KVM_TDX_GET_CPUID, 0, fetch_cpuid, &local_err);
-         if (r == -E2BIG) {
-             g_free(fetch_cpuid);
--            size = fetch_cpuid->nent;
-+            size *= 2;
-         }
-     } while (r == -E2BIG);
+diff --git a/scripts/qemu-guest-agent/fsfreeze-hook b/scripts/qemu-guest-agent/fsfreeze-hook
+index 5b915af017..6e2d7588af 100755
+--- a/scripts/qemu-guest-agent/fsfreeze-hook
++++ b/scripts/qemu-guest-agent/fsfreeze-hook
+@@ -24,15 +24,14 @@ USE_SYSLOG=0
+ # if log file is not writable, fallback to syslog
+ [ ! -w "$LOGFILE" ] && USE_SYSLOG=1
+ # try to update log file and fallback to syslog if it fails
+-touch "$LOGFILE" &>/dev/null || USE_SYSLOG=1
++touch "$LOGFILE" >/dev/null 2>&1 || USE_SYSLOG=1
  
+ # Ensure the log file is writable, fallback to syslog if not
+ log_message() {
+-    local message="$1"
+     if [ "$USE_SYSLOG" -eq 0 ]; then
+-        printf "%s: %s\n" "$(date)" "$message" >>"$LOGFILE"
++        printf "%s: %s\n" "$(date)" "$1" >>"$LOGFILE"
+     else
+-        logger -t qemu-ga-freeze-hook "$message"
++        logger -t qemu-ga-freeze-hook "$1"
+     fi
+ }
+ 
+@@ -43,7 +42,7 @@ for file in "$FSFREEZE_D"/* ; do
+     is_ignored_file "$file" && continue
+     [ -x "$file" ] || continue
+ 
+-    log_message "Executing $file $@"
++    log_message "Executing $file $*"
+     if [ "$USE_SYSLOG" -eq 0 ]; then
+         "$file" "$@" >>"$LOGFILE" 2>&1
+         STATUS=$?
+@@ -52,7 +51,7 @@ for file in "$FSFREEZE_D"/* ; do
+         STATUS=${PIPESTATUS[0]}
+     fi
+ 
+-    if [ $STATUS -ne 0 ]; then
++    if [ "$STATUS" -ne 0 ]; then
+         log_message "Error: $file finished with status=$STATUS"
+     else
+         log_message "$file finished successfully"
 -- 
 2.47.3
 
