@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BB6DCD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:50:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAA60CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:50:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuUX-0007OS-6Z; Tue, 12 May 2026 17:18:13 -0400
+	id 1wMukX-0007e8-6p; Tue, 12 May 2026 17:34:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuUN-0006rz-0l; Tue, 12 May 2026 17:18:06 -0400
+ id 1wMukM-0007Rl-Gc; Tue, 12 May 2026 17:34:36 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuUL-0006ut-56; Tue, 12 May 2026 17:18:02 -0400
+ id 1wMujs-00038Z-FZ; Tue, 12 May 2026 17:34:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619307; bh=qG6ii2l7hCb7dAKBoB+JAL6Fy6hY5WJKV7Caap/hyCY=;
+ t=1778619500; bh=tGCFPzas1hHKzOl+cALrD/N2SyuwGyZAQXj2RFisqsM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Qqz1MRYAV9JuZxVKn7XfWNPG8j4UXq88+EgJm7xd8cYG+jZ2EQ+FKlV7v/nCKQSxr
- lt6UaHq89ZP9nRBGsHorY2suGZNsFWRSJgdg2DhSRTSvFfxByCsEveA5PnvB96E342
- TBJTG6AFuXTwyLEPU8aCowpZVq0UNf6vHhulQcbqJPkWoLSrnilQNquY6G0TYBRKfW
- /PefZH8yzSzVaMJjs+AzKR2O7/ILlOuQWR3lNoG+F8hc24JcaB2VguvAZx01upHtdX
- /EkgpnTdn5zX41ieJwWUQ1zh27hgOpTw//fcfe7vIuGeHdCG4gqv9phtjPb/qbTrVL
- umyn3YJoZDwlA==
+ b=A1mLYXRFTl/x5lpwEtHNsdFvvd9Y0+2COPbFW2GGEBBAF9R53O/GyKWBHiAN7BuCD
+ KW6Oel0xLj0gCRQ8IhGQ75KlSDaxOJH0InhG9i4hISbILRCzlJAXpvvqGeGv0DyLCN
+ F/35PZqXHkJV/GrOoxBj/kt8ahq+CLP23r5IhfY5B7Dhaajn+rTlCfWkKcUJTh/AEF
+ fMIgtRG891Je6i8ajflUcgf1VepmGchX2WyShH3OsJ3UY84WrhIxHV+qOpm2cno8dw
+ 5DZ0nnvcuBhI0XfVFEBkuURsKe4dFoThMJGXVRXTedi4cVn2fLPRZMvMX2xUa4KIRy
+ anwdYb96k214Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B38911AA3B3;
- Tue, 12 May 2026 23:55:07 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A79F21AA401;
+ Tue, 12 May 2026 23:58:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C00843ABD22;
- Tue, 12 May 2026 23:55:11 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B5F113ABD59;
+ Tue, 12 May 2026 23:58:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
  Katherine Leaver <katherine.j.leaver@gmail.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 117/117] hw/uefi: avoid possibly unaligned
- variable_auth_2 struct field access
-Date: Tue, 12 May 2026 23:54:59 +0300
-Message-ID: <20260512205503.361097-117-mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 54/58] hw/uefi: fix ucs2 string helper functions
+Date: Tue, 12 May 2026 23:58:15 +0300
+Message-ID: <20260512205820.361821-54-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
-References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -72,137 +71,119 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Gerd Hoffmann <kraxel@redhat.com>
 
-Copy data to stack-allocated struct before accessing it
-to make sure it is properly aligned.
+The length passed in is in bytes not characters.  Rename the
+parameters to make that clear.  Calculate the number of chars
+if needed.  Fix length checks to use the number of chars not
+bytes to avoid OOB reads.
 
-Fixes: CVE-2026-41440
-Fixes: f1488fac0584 ("hw/uefi: add var-service-auth.c")
+Fixes: CVE-2026-41437
+Fixes: 1ebc319c8ca7 ("hw/uefi: add var-service-utils.c")
 Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260422092910.444997-7-kraxel@redhat.com>
-(cherry picked from commit b4680c02b8e838c75691656ee2c4450b454d1ca7)
+Message-ID: <20260422092910.444997-4-kraxel@redhat.com>
+(cherry picked from commit 5247b3034c23bdfd91a7f78587c3b3e37f90568c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/uefi/var-service-auth.c b/hw/uefi/var-service-auth.c
-index fba5a0956a..795f2f54e4 100644
---- a/hw/uefi/var-service-auth.c
-+++ b/hw/uefi/var-service-auth.c
-@@ -180,9 +180,10 @@ static efi_status uefi_vars_check_auth_2_sb(uefi_vars_state *uv,
-                                             void *data,
-                                             uint64_t data_offset)
- {
--    variable_auth_2 *auth = data;
-+    variable_auth_2 auth;
-     uefi_variable *siglist;
- 
-+    memcpy(&auth, data, sizeof(auth));
-     if (custom_mode_is_active(uv)) {
-         /* no authentication in custom mode */
-         return EFI_SUCCESS;
-@@ -193,7 +194,7 @@ static efi_status uefi_vars_check_auth_2_sb(uefi_vars_state *uv,
-         return EFI_SUCCESS;
-     }
- 
--    if (auth->hdr_length == 24) {
-+    if (auth.hdr_length == 24) {
-         /* no signature (auth->cert_data is empty) */
-         return EFI_SECURITY_VIOLATION;
-     }
-@@ -218,23 +219,25 @@ static efi_status uefi_vars_check_auth_2_sb(uefi_vars_state *uv,
- efi_status uefi_vars_check_auth_2(uefi_vars_state *uv, uefi_variable *var,
-                                   mm_variable_access *va, void *data)
- {
--    variable_auth_2 *auth = data;
-+    variable_auth_2 auth;
-     uint64_t data_offset;
-     efi_status status;
- 
--    if (va->data_size < sizeof(*auth)) {
-+    if (va->data_size < sizeof(auth)) {
-         return EFI_SECURITY_VIOLATION;
-     }
--    if (uadd64_overflow(sizeof(efi_time), auth->hdr_length, &data_offset)) {
-+    memcpy(&auth, data, sizeof(auth));
-+
-+    if (uadd64_overflow(sizeof(efi_time), auth.hdr_length, &data_offset)) {
-         return EFI_SECURITY_VIOLATION;
-     }
-     if (va->data_size < data_offset) {
-         return EFI_SECURITY_VIOLATION;
-     }
- 
--    if (auth->hdr_revision != 0x0200 ||
--        auth->hdr_cert_type != WIN_CERT_TYPE_EFI_GUID ||
--        !qemu_uuid_is_equal(&auth->guid_cert_type, &EfiCertTypePkcs7Guid)) {
-+    if (auth.hdr_revision != 0x0200 ||
-+        auth.hdr_cert_type != WIN_CERT_TYPE_EFI_GUID ||
-+        !qemu_uuid_is_equal(&auth.guid_cert_type, &EfiCertTypePkcs7Guid)) {
-         return EFI_UNSUPPORTED;
-     }
- 
-@@ -255,7 +258,7 @@ efi_status uefi_vars_check_auth_2(uefi_vars_state *uv, uefi_variable *var,
-     }
- 
-     /* checks passed, set variable data */
--    var->time = auth->timestamp;
-+    var->time = auth.timestamp;
-     if (va->data_size - data_offset > 0) {
-         var->data = g_malloc(va->data_size - data_offset);
-         memcpy(var->data, data + data_offset, va->data_size - data_offset);
-diff --git a/hw/uefi/var-service-pkcs7.c b/hw/uefi/var-service-pkcs7.c
-index f17ad6872f..c859743e86 100644
---- a/hw/uefi/var-service-pkcs7.c
-+++ b/hw/uefi/var-service-pkcs7.c
-@@ -21,17 +21,20 @@
+diff --git a/hw/uefi/var-service-utils.c b/hw/uefi/var-service-utils.c
+index 258013f436..489321a26c 100644
+--- a/hw/uefi/var-service-utils.c
++++ b/hw/uefi/var-service-utils.c
+@@ -19,13 +19,18 @@
+  * sometimes when they are not (for example in variable policies).
   */
- static gnutls_datum_t *build_signed_data(mm_variable_access *va, void *data)
- {
--    variable_auth_2 *auth = data;
--    uint64_t data_offset = sizeof(efi_time) + auth->hdr_length;
-+    variable_auth_2 auth;
-+    uint64_t data_offset;
-     uint16_t *name = (void *)va + sizeof(mm_variable_access);
-     gnutls_datum_t *sdata;
-     uint64_t pos = 0;
  
-+    memcpy(&auth, data, sizeof(auth));
-+    data_offset = sizeof(efi_time) + auth.hdr_length;
+-gboolean uefi_str_is_valid(const uint16_t *str, size_t len,
++gboolean uefi_str_is_valid(const uint16_t *str, size_t bytes,
+                            gboolean must_be_null_terminated)
+ {
++    size_t chars = bytes / 2;
+     size_t pos = 0;
+ 
++    if ((bytes % 2) != 0) {
++        return false;
++    }
 +
-     sdata = g_new(gnutls_datum_t, 1);
-     sdata->size = (va->name_size - 2
-                    + sizeof(QemuUUID)
-                    + sizeof(va->attributes)
--                   + sizeof(auth->timestamp)
-+                   + sizeof(auth.timestamp)
-                    + va->data_size - data_offset);
-     sdata->data = g_malloc(sdata->size);
+     for (;;) {
+-        if (pos == len) {
++        if (pos == chars) {
+             if (must_be_null_terminated) {
+                 return false;
+             } else {
+@@ -47,12 +52,13 @@ gboolean uefi_str_is_valid(const uint16_t *str, size_t len,
+     }
+ }
  
-@@ -48,8 +51,8 @@ static gnutls_datum_t *build_signed_data(mm_variable_access *va, void *data)
-     pos += sizeof(va->attributes);
- 
-     /* TimeStamp */
--    memcpy(sdata->data + pos, &auth->timestamp, sizeof(auth->timestamp));
--    pos += sizeof(auth->timestamp);
-+    memcpy(sdata->data + pos, &auth.timestamp, sizeof(auth.timestamp));
-+    pos += sizeof(auth.timestamp);
- 
-     /* Variable Content */
-     memcpy(sdata->data + pos, data + data_offset, va->data_size - data_offset);
-@@ -105,11 +108,12 @@ static void wrap_pkcs7(gnutls_datum_t *pkcs7)
- 
- static gnutls_datum_t *build_pkcs7(void *data)
+-size_t uefi_strlen(const uint16_t *str, size_t len)
++size_t uefi_strlen(const uint16_t *str, size_t bytes)
  {
--    variable_auth_2 *auth = data;
-+    variable_auth_2 auth;
-     gnutls_datum_t *pkcs7;
++    size_t chars = bytes / 2;
+     size_t pos = 0;
  
-+    memcpy(&auth, data, sizeof(auth));
-     pkcs7 = g_new(gnutls_datum_t, 1);
--    pkcs7->size = auth->hdr_length - 24;
-+    pkcs7->size = auth.hdr_length - 24;
-     pkcs7->data = g_malloc(pkcs7->size);
-     memcpy(pkcs7->data, data + 16 + 24, pkcs7->size);
+     for (;;) {
+-        if (pos == len) {
++        if (pos == chars) {
+             return pos;
+         }
+         if (str[pos] == 0) {
+@@ -62,25 +68,25 @@ size_t uefi_strlen(const uint16_t *str, size_t len)
+     }
+ }
  
+-gboolean uefi_str_equal_ex(const uint16_t *a, size_t alen,
+-                           const uint16_t *b, size_t blen,
++gboolean uefi_str_equal_ex(const uint16_t *a, size_t a_bytes,
++                           const uint16_t *b, size_t b_bytes,
+                            gboolean wildcards_in_a)
+ {
++    size_t a_chars = a_bytes / 2;
++    size_t b_chars = b_bytes / 2;
+     size_t pos = 0;
+ 
+-    alen = alen / 2;
+-    blen = blen / 2;
+     for (;;) {
+-        if (pos == alen && pos == blen) {
++        if (pos == a_chars && pos == b_chars) {
+             return true;
+         }
+-        if (pos == alen && b[pos] == 0) {
++        if (pos == a_chars && b[pos] == 0) {
+             return true;
+         }
+-        if (pos == blen && a[pos] == 0) {
++        if (pos == b_chars && a[pos] == 0) {
+             return true;
+         }
+-        if (pos == alen || pos == blen) {
++        if (pos == a_chars || pos == b_chars) {
+             return false;
+         }
+         if (a[pos] == 0 && b[pos] == 0) {
+@@ -100,18 +106,18 @@ gboolean uefi_str_equal_ex(const uint16_t *a, size_t alen,
+     }
+ }
+ 
+-gboolean uefi_str_equal(const uint16_t *a, size_t alen,
+-                        const uint16_t *b, size_t blen)
++gboolean uefi_str_equal(const uint16_t *a, size_t a_bytes,
++                        const uint16_t *b, size_t b_bytes)
+ {
+-    return uefi_str_equal_ex(a, alen, b, blen, false);
++    return uefi_str_equal_ex(a, a_bytes, b, b_bytes, false);
+ }
+ 
+-char *uefi_ucs2_to_ascii(const uint16_t *ucs2, uint64_t ucs2_size)
++char *uefi_ucs2_to_ascii(const uint16_t *ucs2, uint64_t ucs2_bytes)
+ {
+-    char *str = g_malloc0(ucs2_size / 2 + 1);
++    char *str = g_malloc0(ucs2_bytes / 2 + 1);
+     int i;
+ 
+-    for (i = 0; i * 2 < ucs2_size; i++) {
++    for (i = 0; i * 2 < ucs2_bytes; i++) {
+         if (ucs2[i] == 0) {
+             break;
+         }
 -- 
 2.47.3
 
