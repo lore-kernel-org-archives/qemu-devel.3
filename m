@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3A2ACD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 13:52:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1466CD4F24
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 13:54:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMnWU-0004jb-K0; Tue, 12 May 2026 09:51:48 -0400
+	id 1wMnZ7-0007xS-7B; Tue, 12 May 2026 09:54:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maqianga@uniontech.com>)
- id 1wMmti-0003wH-Ji
- for qemu-devel@nongnu.org; Tue, 12 May 2026 09:11:42 -0400
-Received: from smtpbgau1.qq.com ([54.206.16.166])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wMnYQ-0006kX-1v
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 09:53:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maqianga@uniontech.com>)
- id 1wMmtf-0002r0-UO
- for qemu-devel@nongnu.org; Tue, 12 May 2026 09:11:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
- s=onoh2408; t=1778591487;
- bh=XdedY9/4K+g9ouAI2ogDYxg+WYweP8r7IddZI4bkkq4=;
- h=From:To:Subject:Date:Message-Id:MIME-Version;
- b=lImrvuUe2r1oydlX1mKzE8+CbQaeXIQBj+7bJQeFOrLsUW6pP/XJk5VAvEsH0xms/
- PCQPqp398DhkyP3BuqyUFwVyjXnojVjppVYKfC8f2gJJ+tMRLMnnxx13b719vMgdT7
- Se4EtEO9XykHRnSL6wEqvpCZeMRtLK9GINcVCfCA=
-X-QQ-mid: zesmtpgz3t1778591484t98565ccb
-X-QQ-Originating-IP: QZLymt65pmwqEWIoIjLi8RhOYo9kDebUgAfcnggfk9Y=
-Received: from localhost.localdomain ( [123.114.60.34])
- by bizesmtp.qq.com (ESMTP) with 
- id ; Tue, 12 May 2026 21:11:23 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 17855069848752927182
-EX-QQ-RecipientCnt: 5
-From: Qiang Ma <maqianga@uniontech.com>
-To: gaosong@loongson.cn
-Cc: maobibo@loongson.cn, philmd@linaro.org, qemu-devel@nongnu.org,
- Qiang Ma <maqianga@uniontech.com>
-Subject: [PATCH v2] target/loongarch/kvm: Include missing exec/cpu-defs.h
- header
-Date: Tue, 12 May 2026 21:11:07 +0800
-Message-Id: <20260512131107.2388663-1-maqianga@uniontech.com>
-X-Mailer: git-send-email 2.20.1
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wMnY6-0003IC-Sq
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 09:53:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778594005;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=E4IqHjXVkVDbhO+NYEvCSW0n+EPiCaAl3N+v2pE4U8Y=;
+ b=Z0f1XT4BKiGnJKzmPboOpdCH7+TEUhNpIUrlA72QRf+n4sETeBYBs63xUZsvtau1pEZWeI
+ pp9Qki2bOYo13OlhgKf1hhbq/BJ0w/RP5lq5ioL8SHRimB0kl/2F9w7na4ambjOPw+wGeN
+ RBKMHkazQm7UazSVIv9FLlYx+8NX8To=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-333-WliClPLNOUC6XIdUmpUbbQ-1; Tue,
+ 12 May 2026 09:53:19 -0400
+X-MC-Unique: WliClPLNOUC6XIdUmpUbbQ-1
+X-Mimecast-MFC-AGG-ID: WliClPLNOUC6XIdUmpUbbQ_1778593998
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1FF431955EAB; Tue, 12 May 2026 13:53:14 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.49.244])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 907B11800352; Tue, 12 May 2026 13:53:10 +0000 (UTC)
+Date: Tue, 12 May 2026 14:53:06 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Hanna Reitz <hreitz@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-block@nongnu.org, Cleber Rosa <crosa@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, John Snow <jsnow@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH 00/16] tests: do more testing of block drivers
+Message-ID: <agMwwti_xIHPNjEu@redhat.com>
+References: <20260424154205.364268-1-berrange@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:uniontech.com:qybglogicsvrsz:qybglogicsvrsz3b-0
-X-QQ-XMAILINFO: OFwwhOVq6f4xq28EIeYNjJoDLafTU+R289nnVfaERRP3k1GySUdO/Qcs
- kqj/33RVmiWCal90w7O6QM2w0w9CbozlU93Lpuw9sGYkkjp7Yvh8oZX3qPxhQQJuDyfXnWc
- Pa38z8CI0f2kkPwkmwjqLfXDiI8ZUzX0ugCvmIUazYFuq3ADIXq55Ym3PaB1jdWaBKxD5XC
- S5X9jwfcXKDRkhMWBKDH0lkQuyel2ZUF8OJWdwjm68/bVuUiptxTv6ks1dlag5e7xM840A2
- U11rzcDQmNFEt2/1BziZesZhyVgQFXpVFW8FeYZKKavhgpxMF4fthFSZZ/JIekc0qZiLesQ
- nthR/ZXsl/MgUmJJfy6VOpfnNxDCZ8fG//9SAnHsltONJhN0feFB3/HK5fdrO5jTCj+WmWi
- Gh3XZ6UhJFlSMRbM5hBH2qAMpzHayS+41aF818mGhDHTRS3I4JG/4UWwNbtlMtcLHQI7Pfg
- PghzFbr0qOuB7bUeRKMbG8AE34CHA2aIu7sNZOJZqN+u0rVBLhLncYWQW9Jq08IMPgombCu
- VFRU5NSCIkPl3jscxEz/6EPjn9xaY3L8DqIsND4D2ruaweGGlisYFzcKMeTCWPHY454LxwN
- kT4HOmJz7q8M2V3/vSACKuZJ78hfTxwKnSkILHciuo6DLFwFg4M6HWflRVSm5r+872klNYG
- SebV9+ZXhJloQqXpyvwFwnnI5yPLHTSfPMzVJZZrCwI1aryJZu/4CRbDqAj0/acg2QdxvGK
- Tng6WTcPu6iz/2sT2f568XAoaVERY6fgMivjxX7xen2ClLUlUJcLFiumW2Yrquy60I6KsPh
- sLOS3PP0XO1tN94xJkAsLhCNJDl8IL/Hpv4BCIfq3U9x2CVKExnvwYcDrz77ojxDF9NIb0i
- EUs2lOBrz2yZAFrrpULlIYf2/ekAtVahOjMR4ymGJGg6+p77AGDhvzRwBKvQxWxEDpw7iwm
- jgfA2B2xzGCKm0iPIHlEPIy/IBoNVEllvbx3mw1LCUrKa4nplEXBwdlY8KZroxYII1PmaEb
- SM2+SJTOwyWYKS3ayuUo6GMmro6kbWJXmwDHYazzF6TWzGmr7gZ6/kXPblDP/PeUeZkHCI8
- GgtQdp7aZjFcY1GjrJJByg=
-X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
-X-QQ-RECHKSPAM: 0
-Received-SPF: pass client-ip=54.206.16.166;
- envelope-from=maqianga@uniontech.com; helo=smtpbgau1.qq.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <20260424154205.364268-1-berrange@redhat.com>
+User-Agent: Mutt/2.3.1 (2026-03-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 12 May 2026 09:50:53 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,36 +89,142 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-After commit 71cab1a42d2 removed the indirect include of
-exec/cpu-defs.h from target/loongarch/cpu.h, the TARGET_FMT_lx
-macro is no longer visible in kvm.c, causing build failures:
+ping: is there any more feedback on series ?
 
-  error: expected ')' before TARGET_FMT_lx
+I'd really like to get the block driver CI coverage improved
+to prevent further regressions in currently untested drivers.
 
-Add the missing #include exec/cpu-defs.h to restore the
-TARGET_FMT_lx definition.
+On Fri, Apr 24, 2026 at 04:41:48PM +0100, Daniel P. Berrangé wrote:
+>  v1: https://lists.nongnu.org/archive/html/qemu-devel/2025-10/msg01650.html
+>  v2: https://lists.nongnu.org/archive/html/qemu-devel/2026-01/msg02083.html
+>  v3: https://lists.nongnu.org/archive/html/qemu-devel/2026-01/msg02939.html
+>  v4: https://lists.nongnu.org/archive/html/qemu-devel/2026-02/msg03245.html
+>  v5: https://lists.nongnu.org/archive/html/qemu-devel/2026-03/msg01252.html
+> 
+> The recent (at the time of v1) set of regressions identified in the LUKS
+> block driver re-inforced that despite having a hugely useful set of I/O
+> tests, our CI coverage is still letting through too many bugs.
+> 
+> The core goals of this series were/are:
+> 
+>  * Add LUKS and NBD to the tested formats/protocols
+>    integrated into "make check-block SPEED=thorough"
+> 
+>  * Ensure that all qcow2 tests can be run with "SPEED=slow",
+>    not staying limited to only the 'auto' group used by the
+>    'make check-block' target in its default 'quick' mode
+> 
+>  * Add  'make check-block-$FORMAT' to expose a standalone
+>    target for running all tests for a given format (or
+>    equivalently a protocol)
+> 
+>  * Add GitLab CI jobs for exercising tests for all formats
+> 
+> A sample pipeline for this is
+> 
+>   https://gitlab.com/berrange/qemu/-/pipelines/2258731804/
+> 
+> Showing the 'block-FORMAT' jobs which test the 10 block formats/protocols
+> currently enabled.
+> 
+> This series fixes a couple of bugs
+> 
+>  * Test 128 check for device mapper usage doesn't work
+>    sufficiently well to detect gitlab's containe env
+>    can't do dynamic devfs
+> 
+>  * Test 185 is reliably failing on gitlab
+> 
+>  * Two tests fail when run on CentOS 9 because they trigger
+>    python deprecation warnings. This will be fixed when the
+>    python-qemu-qmp module is next released.
+> 
+> Testing of pipelines throughout development of v1-v5 postings does not
+> exhibit any non-deterministic failures with the shared runners. Hopefully
+> that will apply to QEMU's private runners used forthe staging tree too.
+> 
+> At this point it is a chicken & egg problem though.
+> 
+> If we don't bite the bullet and enable block I/O tests in GitLab CI for
+> everyone, we'll never find out if they're truely stable enough to rely
+> on.
+> 
+> As a mitigation against instability a patch in this series adds a new
+> QEMU_TEST_IO_SKIP env variable that we are able to set as a GitLab CI
+> env variable. This lets us skip broken tests dynamically without waiting
+> for a git commit to disable them in the buildtest.yml config that we
+> use for disabling the 3 known broken tests currently.
+> 
+> Changed in v6:
+> 
+>   - Drop redundant change from gitlab yml config
+>   - Pull in rebase for qemu.qmp to 0.6.0 to fix two tests
+>     by avoiding deprecation warnings
+> 
+> Changed in v5:
+> 
+>   - Adapt for python-qemu-qmp being spun off, by temp disabling
+>     tests that are broken by it, that we formerly fixed in-tree.
+> 
+> Changed in v4:
+> 
+>   - Remove tests from build-tcg-disabled job
+> 
+> Changed in v3:
+> 
+>   - Test whether dmsetup create device appeared or not, instead
+>     of unconditionally skipping test 128 in GitLab
+>   - Use 'driver' term instead of 'format' or 'protocol'
+>   - Fix misc typos & rephrasing
+> 
+> Daniel P. Berrangé (15):
+>   gitlab: ensure all meson jobs capture build/meson-logs by default
+>   tests: print reason when I/O test is skipped in TAP mode
+>   tests: remove redundant meson suite for iotests
+>   tests: ensure all qcow2 I/O tests are able to be run via make
+>   scripts/mtest2make: ensure output has stable sorting
+>   scripts/mtest2make: support optional tests grouping
+>   tests: add a meson suite / make target per block I/O tests format
+>   docs/devel/testing: expand documentation for 'make check-block'
+>   tests: add nbd and luks to the I/O test suites
+>   tests: use 'driver' as collective term for either format or protocol
+>   tests: validate dmsetup result in test 128
+>   tests: fix check for sudo access in LUKS I/O test
+>   tests: add QEMU_TEST_IO_SKIP for skipping I/O tests
+>   gitlab: add jobs for thorough block tests
+>   gitlab: remove I/O tests from build-tcg-disabled job
+> 
+> John Snow (1):
+>   python: bump qemu.qmp to v0.0.6
+> 
+>  .gitlab-ci.d/buildtest-template.yml           |  30 +++--
+>  .gitlab-ci.d/buildtest.yml                    | 107 ++++++++++++++++--
+>  docs/devel/testing/main.rst                   |  33 +++++-
+>  python/scripts/vendor.py                      |   4 +-
+>  ...ny.whl => qemu_qmp-0.0.6-py3-none-any.whl} | Bin 72263 -> 72379 bytes
+>  pythondeps.toml                               |   2 +-
+>  scripts/mtest2make.py                         |  30 +++--
+>  tests/Makefile.include                        |   3 +-
+>  tests/qemu-iotests/128                        |   6 +
+>  tests/qemu-iotests/149                        |  13 ++-
+>  tests/qemu-iotests/meson.build                |  59 ++++++++--
+>  tests/qemu-iotests/testrunner.py              |  18 ++-
+>  12 files changed, 254 insertions(+), 51 deletions(-)
+>  rename python/wheels/{qemu_qmp-0.0.5-py3-none-any.whl => qemu_qmp-0.0.6-py3-none-any.whl} (64%)
+> 
+> -- 
+> 2.53.0
+> 
 
-Signed-off-by: Qiang Ma <maqianga@uniontech.com>
----
- target/loongarch/kvm/kvm.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index 9d844c4905..4af4ab2ed0 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -6,6 +6,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "exec/target_long.h"
- #include <sys/ioctl.h>
- #include <linux/kvm.h>
- #include "asm-loongarch/kvm_para.h"
+With regards,
+Daniel
 -- 
-2.20.1
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
