@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49724CD4F24
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:47:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FD26CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:47:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuQL-0001Uw-AZ; Tue, 12 May 2026 17:13:53 -0400
+	id 1wMukC-0006iq-Q1; Tue, 12 May 2026 17:34:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuQ3-0001IZ-Cs; Tue, 12 May 2026 17:13:44 -0400
+ id 1wMujA-0005Ri-Ta; Tue, 12 May 2026 17:33:21 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuQ1-00052r-0H; Tue, 12 May 2026 17:13:35 -0400
+ id 1wMuis-0002ke-Pk; Tue, 12 May 2026 17:33:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619304; bh=bFrGBlkmH6aFbgNTbb9BiSuyGa48vPJ6QbTexp53UaQ=;
+ t=1778619500; bh=xmHfeUJz0ZcDqeB1vL/AXC1QJ6Wf1Lm11pgd52X7R5w=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=E49jRWHjGO2ZOt42H43AU4GtGZtg2WRhgQGGvwj8gO43HqffOOV2nEml027BiD6UA
- KpPu+YrzW04Z+wTV3fSZBuT+G24u943d9s9ORJx+G3FFPsEb6aZtUXd7i+L/P3RKmo
- Sc9G4DLPdlkXVvjYcmLT06r5kUfvKwBsbPrRmfz5Jk+phFwa638QgzIxWaAauPnQvn
- wGw33nPz8nyMnkyy1i8GpPti5RpuuB6il1rxw6BKyM4WXN6ttuPG7dmGLfrnCVrU+d
- mmpGvekJF0qLdE+9FEdqyrKtPVZKK1aJLY5EQoKZlr5JtBL8FP2rX+JaTmQruit2QE
- sBwsfJzQKTUDA==
+ b=NYUDQDHPZcUH0d0wlRzkx3yYSABIu3Wxbug1yinYSX6p3WExF1hQ2ZozMoCIY8zGG
+ Le3X7K+9NF9B/FHpOQ3QdN1FAhC0SO1lsbhatiP5W/LJbIEDrF8m22DjOUCFA+5NzD
+ nt2QFjhAwpjYHFY0cPm3N4Z4klHsFLKBF6X6ofZ2GDwvUXa/k8bErA+Xp8a9ZNbFcD
+ YuRbkMOuQud7qdSqwfw4GEr+cd/X+qb9W6jsYmKh4Py6WOQMTuQ+oBsK7kOZuDv0KE
+ XARjwUeojcbA/AqUSkk/XOd4Yr6CzZwTbYQoq3nRD246g7NlSdMZ4a/AstPSj7wjZ3
+ XG2vt8Gzk/Q+w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D713A1AA389;
- Tue, 12 May 2026 23:55:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 743231AA3FE;
+ Tue, 12 May 2026 23:58:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E240B3ABCF8;
- Tue, 12 May 2026 23:55:08 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 77A283ABD56;
+ Tue, 12 May 2026 23:58:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 075/117] hw/display: don't accidentally autofree
- existing virgl resources
-Date: Tue, 12 May 2026 23:54:17 +0300
-Message-ID: <20260512205503.361097-75-mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 51/58] hw/misc/bcm2835_rng: Specify valid memory
+ access sizes
+Date: Tue, 12 May 2026 23:58:12 +0300
+Message-ID: <20260512205820.361821-51-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
-References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,55 +71,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-While sanity checking a create blob operation the use of the auto
-freed res variable could lead to inadvertently freeing an existing
-blob.
+The BCM2835 RNG has 32-bit registers only; specify this in
+the MemoryRegionOps so wrong-sized accesses are rejected rather
+than getting to the assertions in the read and write functions,
+and for clarity add the matching .impl constraints.
 
-Avoid this by in-lining the virtio_gpu_virgl_find_resource() check as
-the value is not needed anyway.
-
-While at it add a comment to the end and use g_steal_pointer to make
-it clearer the object lifetime exceeds the function bounds if we pass
-all the checks.
-
-Fixes: CVE-2026-6502
-Fixes: 7c092f17cce (virtio-gpu: Handle resource blob commands)
-Message-ID: 20260417094443.785462-1-alex.bennee@linaro.org
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Cc: qemu-stable@nongnu.org
-Message-ID: <20260417122703.845442-1-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-(cherry picked from commit 30fad722ce68316d22b926ba0e6017f0440465df)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3394
+Fixes: 54a5ba13a9f ("target-arm: Implement BCM2835 hardware RNG")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20260501162700.4092512-1-peter.maydell@linaro.org
+(cherry picked from commit 18b664c90085b0d2be9c2ad8c747e00a7a733402)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 1129301d91..03f3235d14 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -712,8 +712,7 @@ static void virgl_cmd_resource_create_blob(VirtIOGPU *g,
-         return;
-     }
+diff --git a/hw/misc/bcm2835_rng.c b/hw/misc/bcm2835_rng.c
+index e4d2c224c8..4492e325b4 100644
+--- a/hw/misc/bcm2835_rng.c
++++ b/hw/misc/bcm2835_rng.c
+@@ -93,6 +93,10 @@ static const MemoryRegionOps bcm2835_rng_ops = {
+     .read = bcm2835_rng_read,
+     .write = bcm2835_rng_write,
+     .endianness = DEVICE_NATIVE_ENDIAN,
++    .impl.min_access_size = 4,
++    .impl.max_access_size = 4,
++    .valid.min_access_size = 4,
++    .valid.max_access_size = 4,
+ };
  
--    res = virtio_gpu_virgl_find_resource(g, cblob.resource_id);
--    if (res) {
-+    if (virtio_gpu_virgl_find_resource(g, cblob.resource_id)) {
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: resource already exists %d\n",
-                       __func__, cblob.resource_id);
-         cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
-@@ -766,8 +765,9 @@ static void virgl_cmd_resource_create_blob(VirtIOGPU *g,
- 
-     res->base.dmabuf_fd = info.fd;
- 
-+    /* Now live, cleaned up in virtio_gpu_virgl_resource_unref */
-     QTAILQ_INSERT_HEAD(&g->reslist, &res->base, next);
--    res = NULL;
-+    g_steal_pointer(&res);
- }
- 
- static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
+ static const VMStateDescription vmstate_bcm2835_rng = {
 -- 
 2.47.3
 
