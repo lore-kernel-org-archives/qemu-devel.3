@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC1A9CD4F24
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDF57CD4F21
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:11:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuGq-0004AZ-Du; Tue, 12 May 2026 17:04:04 -0400
+	id 1wMuI6-0000tv-95; Tue, 12 May 2026 17:05:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuEQ-0007HD-Bk; Tue, 12 May 2026 17:01:42 -0400
+ id 1wMuHF-0005uo-Qh; Tue, 12 May 2026 17:04:30 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuEN-0006dB-33; Tue, 12 May 2026 17:01:32 -0400
+ id 1wMuHD-0000HW-VQ; Tue, 12 May 2026 17:04:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619278; bh=Q5smFhmGfV1eJoYo0hYO8uCEZYCYBG7+b+hXPxKbpaY=;
+ t=1778619279; bh=nhWXsxNrPYLu3VKB1DCONPNIdY0rFdWqzYGRO6zAFTM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=me3rDllJbGCQ++8eJivwE3ORwROdjVJQ6HRIYqjaxR4aBWYvJMT0DK7dJrG2RBMJM
- RyJqvsFtMH42Q70BpyntJd4aqggQjIj6Qo/7tuMvTcDNfHc2JWTiVsUtmpv129pf1m
- QoNfWsq0Z+m/QxxH/gTyJY+hBer64Nr3dIE4ZPzm/9CMHif6/CsYin9wi9B3sNkTxD
- JoUDe2vxRAbUcmFKfgCFN2MxIzSiSV5zz3DXvFeFhnaVxrAcpo4ukH63ZAcwSZpTwG
- ZqSp6oLGcMkWM4VPPf/gX58wVPQJMnLTwu0Vd6druzLVLqc43ky9eUf+RE+bskriOR
- AHDt1xRYF4HHQ==
+ b=OVYU2hBFHpYzeGkzPEoa+B3VTT1uirwr7TsmXni3jdJ7j+G9SpdTWBvgp3m0WZadx
+ ebLTW2WPFsbb0j5URQqy+i3I34oqEri89vHSHsYuAiolJSl9zCL6MN2/7ggE5IZbxo
+ ZMJslPSg/t9+FLqi4gEVkzliDa85Xq/V0ymNtjbJFMfYX9wv6jY+2E++zkM7mtHYwJ
+ GUYjcyjfb+YhihI1LpdN0U+VGTJbXm1maL6/k6SQB5zmeCP8phuKozTJxny00M53MC
+ tL+jhPh3BtTdIu05B5pEC84NGgonHpdzPP0QtdS4u8Rrmp/efdpC7fNnqnP/GRXAfp
+ UOCFPGGYfVOZQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0BA4A1AA312;
- Tue, 12 May 2026 23:54:38 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AD8461AA32C;
+ Tue, 12 May 2026 23:54:39 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 14C2D3ABC83;
- Tue, 12 May 2026 23:54:42 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B99853ABC9D;
+ Tue, 12 May 2026 23:54:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Yixin Wei <easonwei1998@gmail.com>,
- Yixin Wei <yixinwei@meta.com>,
+Cc: qemu-stable@nongnu.org, Vivien LEGER <vivien.leger@gmail.com>,
+ Bernhard Beschow <shentey@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 070/107] linux-user: fix off-by-one in
- host_to_target_for_each_rtattr()
-Date: Tue, 12 May 2026 23:53:57 +0300
-Message-ID: <20260512205437.360850-70-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 096/107] hw/ppc/e500: fix bus-frequency property
+ hardcoded to zero in CPU FDT node
+Date: Tue, 12 May 2026 23:54:23 +0300
+Message-ID: <20260512205437.360850-96-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
@@ -72,40 +72,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yixin Wei <easonwei1998@gmail.com>
+From: Vivien LEGER <vivien.leger@gmail.com>
 
-host_to_target_for_each_rtattr() uses "len > sizeof(struct rtattr)"
-as its loop condition. When the last rtattr in a netlink message has
-exactly sizeof(struct rtattr) (4) bytes remaining, the loop exits
-without byte-swapping its rta_len and rta_type. A big-endian guest
-then reads rta_len in the wrong byte order and fails validation.
+The bus-frequency property in the CPU FDT node was hardcoded to 0.
+This is incorrect - it should reflect the actual platform bus clock
+frequency, as firmware and RTOSes use it to derive peripheral clock
+rates.
 
-The companion function target_to_host_for_each_rtattr() correctly
-uses ">=" (added in commit fa2229dbf8). The kernel's RTA_OK macro
-also uses ">=". Fix the host_to_target direction to match.
+Notably, the RTEMS QorIQ BSP uses bus-frequency to program the MPIC
+global timer interval. With bus-frequency=0, the timer interval
+overflows to ~85 seconds, preventing any clock interrupts from firing.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2485
-Signed-off-by: Yixin Wei <yixinwei@meta.com>
-Fixes: 6c5b5645ae0 ("linux-user: add rtnetlink(7) support")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: qemu-stable@nongnu.org
-(cherry picked from commit 029f10e852780da846d3e7f1691c495474683b73)
+Fix by adding a bus_freq field to PPCE500MachineClass and using it in
+the FDT generator. Set bus_freq = PLATFORM_CLK_FREQ_HZ (400MHz) for
+existing machines, matching the existing clock_freq value.
+
+Signed-off-by: Vivien LEGER <vivien.leger@gmail.com>
+Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+Message-ID: <20260411154535.1451361-1-vivien.leger@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit 774e6f5c1533aba9e04f95cb8cfba64d8329fcb0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/fd-trans.c b/linux-user/fd-trans.c
-index f83d1f79d5..1045ae7b1a 100644
---- a/linux-user/fd-trans.c
-+++ b/linux-user/fd-trans.c
-@@ -482,7 +482,7 @@ static abi_long host_to_target_for_each_rtattr(struct rtattr *rtattr,
-     unsigned short aligned_rta_len;
-     abi_long ret;
+diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+index de99c9381f..7fb0bbebee 100644
+--- a/hw/ppc/e500.c
++++ b/hw/ppc/e500.c
+@@ -516,7 +516,7 @@ static int ppce500_load_device_tree(PPCE500MachineState *pms,
+                               env->icache_line_size);
+         qemu_fdt_setprop_cell(fdt, cpu_name, "d-cache-size", 0x8000);
+         qemu_fdt_setprop_cell(fdt, cpu_name, "i-cache-size", 0x8000);
+-        qemu_fdt_setprop_cell(fdt, cpu_name, "bus-frequency", 0);
++        qemu_fdt_setprop_cell(fdt, cpu_name, "bus-frequency", pmc->bus_freq);
+         if (cpu->cpu_index) {
+             qemu_fdt_setprop_string(fdt, cpu_name, "status", "disabled");
+             qemu_fdt_setprop_string(fdt, cpu_name, "enable-method",
+diff --git a/hw/ppc/e500.h b/hw/ppc/e500.h
+index 00f490519c..858684d569 100644
+--- a/hw/ppc/e500.h
++++ b/hw/ppc/e500.h
+@@ -40,6 +40,7 @@ struct PPCE500MachineClass {
+     hwaddr pci_mmio_bus_base;
+     hwaddr spin_base;
+     uint32_t clock_freq;
++    uint32_t bus_freq;
+     uint32_t tb_freq;
+ };
  
--    while (len > sizeof(struct rtattr)) {
-+    while (len >= sizeof(struct rtattr)) {
-         rta_len = rtattr->rta_len;
-         if (rta_len < sizeof(struct rtattr) ||
-             rta_len > len) {
+diff --git a/hw/ppc/e500plat.c b/hw/ppc/e500plat.c
+index a68a54db9e..1fff5b55d0 100644
+--- a/hw/ppc/e500plat.c
++++ b/hw/ppc/e500plat.c
+@@ -94,6 +94,7 @@ static void e500plat_machine_class_init(ObjectClass *oc, void *data)
+     pmc->pci_mmio_bus_base = 0xE0000000ULL;
+     pmc->spin_base = 0xFEF000000ULL;
+     pmc->clock_freq = PLATFORM_CLK_FREQ_HZ;
++    pmc->bus_freq = PLATFORM_CLK_FREQ_HZ;
+     pmc->tb_freq = PLATFORM_CLK_FREQ_HZ;
+ 
+     mc->desc = "generic paravirt e500 platform";
+diff --git a/hw/ppc/mpc8544ds.c b/hw/ppc/mpc8544ds.c
+index fa891d5c6c..c0a1075625 100644
+--- a/hw/ppc/mpc8544ds.c
++++ b/hw/ppc/mpc8544ds.c
+@@ -56,6 +56,7 @@ static void mpc8544ds_machine_class_init(ObjectClass *oc, void *data)
+     pmc->pci_pio_base = 0xE1000000ULL;
+     pmc->spin_base = 0xEF000000ULL;
+     pmc->clock_freq = PLATFORM_CLK_FREQ_HZ;
++    pmc->bus_freq = PLATFORM_CLK_FREQ_HZ;
+     pmc->tb_freq = PLATFORM_CLK_FREQ_HZ;
+ 
+     mc->desc = "mpc8544ds";
 -- 
 2.47.3
 
