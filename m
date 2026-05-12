@@ -4,120 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2627ACD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 14:12:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 716D8CD4851
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 14:14:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMnpR-00030h-P7; Tue, 12 May 2026 10:11:21 -0400
+	id 1wMns8-0003Vg-FJ; Tue, 12 May 2026 10:14:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wMnpJ-0002zm-QG
- for qemu-devel@nongnu.org; Tue, 12 May 2026 10:11:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wMnpE-0004MP-8W
- for qemu-devel@nongnu.org; Tue, 12 May 2026 10:11:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778595066;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=uUE9BrfvgANCe3PYuItXPVWdLqAc8hiA/X97MqevMTg=;
- b=FNwbG783JeqzXkFusH34m6206S/d1eJtm1Gh8CPZm886UP7IJXDo+wqlDZ9r6BJqtbZPEY
- /o4xAzXzX8GDCYq0BgWsoFk7hatSB45DTCnCSQd+Wu/51MSFq9FvUk0UyQB41cUVMBo7+J
- e8/OXWbSrqzDCzJcBCrOTKBX9n7XBUo=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-636-Zi36SRUUOQq5MYY9HdP9OA-1; Tue, 12 May 2026 10:11:04 -0400
-X-MC-Unique: Zi36SRUUOQq5MYY9HdP9OA-1
-X-Mimecast-MFC-AGG-ID: Zi36SRUUOQq5MYY9HdP9OA_1778595064
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-48e51dc35a3so43931135e9.1
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 07:11:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778595063; x=1779199863;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uUE9BrfvgANCe3PYuItXPVWdLqAc8hiA/X97MqevMTg=;
- b=PDwkm32PwvP+Ob7bBjx530/InZGVYiaUWsWv0F8WFGJWybdRb34Bsa9tHKvlEtC+IB
- 4ju3TQq0nH3vdpKv+vpD1EC3ufSUV/AuCeAuO5xiqog3mHeZTYWwOP+TEeVjoDiASyhv
- rUnGstNm9gV9hvncp5q1PfJWjFfH6yxgPJzhAq+9AD51iOPAjRKH/PoIsCJnbXz+UHxQ
- HrMmu6anGw27/CWZFhRvxIonfFNkStBLpOrevybi38ypqtpqQtyyP+W0o3MELfAkh5m2
- +VTLEFaJMUshYVGypY//T4G9+sKgFzqeBEEovxY4LDMbNshA7mnvQU1Q2VUHgRHskycY
- /OLg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9Mg8OsvhoSFWfTgYtvAFdWfYhRhPoK/62QyPWrn/4F96NiZ4smYRqZL6pvQ6nbSVvkuFnJtkL0+wzN@nongnu.org
-X-Gm-Message-State: AOJu0Yx7zgqkyqURfXbUwf0DpKy2dOX7jp4KeIip9vSsyrS5lSnBVSBq
- aIEuAN4CJObUKoNSLHivW4ANHaVx+1sVioAERi5eXXb8cCET4ZvVExRCd7uT9HI7UwR5q/jQpyY
- 87jaAB9dH4IoZM/NDj2kC8xzGV3BgdNRWA8w+m6nF9hmM0P9Ijm7nQJL+w7yANsXl
-X-Gm-Gg: Acq92OHV/hSWXPyfAg6kzuRE6jGo5vWBGA92MMTz9CIsOMGvZetueTSRJi/VjyaR9wW
- OvufWLSr1JLaO6hsCpRanyZ9dWvI44XM2xsKBX+ORFcNvWrlEyFlB4Qvr3hXojnFzbRoznefVP5
- r4/PP/2z95dxg+IRZO2sr2IioA3265oHNG0UUgQLMzBPb4Gt5Ltg9ZgvHLnk390TOoXFC0AARr0
- 6jTV7BO3UrKwcqC+iAXUWepZ01Q9cKSADfRNV8WzCRVahdC3ksuWa+2SlZKd9KNEW02zHzn5mva
- KBV11khXd1hYgyi/WMllQqf31iiKLHFpKuZrTdJK63rbrIoJNKTwY/HeCsZxR61JEqDs8ze8Qzk
- s7BJAc8r8EdIoIo+6+A2gGjQI/eex6GL9a/zYl3qWHwab0kX3tOsBct0MQAt46sNp0CBJ8A==
-X-Received: by 2002:a05:600c:5250:b0:48f:99a9:bbed with SMTP id
- 5b1f17b1804b1-48f99a9be7cmr9306075e9.22.1778595063416; 
- Tue, 12 May 2026 07:11:03 -0700 (PDT)
-X-Received: by 2002:a05:600c:5250:b0:48f:99a9:bbed with SMTP id
- 5b1f17b1804b1-48f99a9be7cmr9305505e9.22.1778595062933; 
- Tue, 12 May 2026 07:11:02 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e8f3e7829sm29426115e9.4.2026.05.12.07.11.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 May 2026 07:11:02 -0700 (PDT)
-Message-ID: <5101bb04-8acf-4d3b-8db6-701d7c41d5c2@redhat.com>
-Date: Tue, 12 May 2026 16:11:00 +0200
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wMnru-0003VA-J5
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 10:13:55 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wMnro-0005XE-4K
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 10:13:54 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 31737758B1;
+ Tue, 12 May 2026 14:13:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1778595226; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=mJoAs3KxRfdHs9dGWiTHQaMVMpxy4wyLPN3qTuBpOdY=;
+ b=HQAqW82el6dUxvxgVo3oqGgs0OITZRru6tn+PfFAMyW6ginS/QztWprIRRpyHNgC+PHugz
+ 61QLWwh2BF6rm6GeGRZeyBBZHBF9oBydKcZ468zGpYnUh7L2froEmQU21I11LyOBQIMqZv
+ StXMVEtECvVHTewawWPz7w6XnUX9vpw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1778595226;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=mJoAs3KxRfdHs9dGWiTHQaMVMpxy4wyLPN3qTuBpOdY=;
+ b=0554hbPSNlj1cYbZg5kgEEQWIOXFPrEC+253HqAmMdyJjEbrPHSv/vblOAI4XorDTGdeAs
+ 7o6+4Btdg3m0DCCg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1778595226; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=mJoAs3KxRfdHs9dGWiTHQaMVMpxy4wyLPN3qTuBpOdY=;
+ b=HQAqW82el6dUxvxgVo3oqGgs0OITZRru6tn+PfFAMyW6ginS/QztWprIRRpyHNgC+PHugz
+ 61QLWwh2BF6rm6GeGRZeyBBZHBF9oBydKcZ468zGpYnUh7L2froEmQU21I11LyOBQIMqZv
+ StXMVEtECvVHTewawWPz7w6XnUX9vpw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1778595226;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=mJoAs3KxRfdHs9dGWiTHQaMVMpxy4wyLPN3qTuBpOdY=;
+ b=0554hbPSNlj1cYbZg5kgEEQWIOXFPrEC+253HqAmMdyJjEbrPHSv/vblOAI4XorDTGdeAs
+ 7o6+4Btdg3m0DCCg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 13385593A9;
+ Tue, 12 May 2026 14:13:44 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id V/9pNZg1A2o+BAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 12 May 2026 14:13:44 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v1] tests/qtest/migration: Fix auto-converge test
+Date: Tue, 12 May 2026 11:13:38 -0300
+Message-ID: <20260512141338.10089-1-farosas@suse.de>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 03/17] target/arm/cpu-sysregs.h.inc: Update with
- automatic generation
-Content-Language: en-US
-To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
- "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "cohuck@redhat.com" <cohuck@redhat.com>,
- "sebott@redhat.com" <sebott@redhat.com>,
- "philmd@linaro.org" <philmd@linaro.org>
-Cc: "maz@kernel.org" <maz@kernel.org>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>,
- "abologna@redhat.com" <abologna@redhat.com>,
- "jdenemar@redhat.com" <jdenemar@redhat.com>
-References: <20260503073541.790215-1-eric.auger@redhat.com>
- <20260503073541.790215-4-eric.auger@redhat.com>
- <CH3PR12MB7548C2AB4989FEF96C247D47AB3C2@CH3PR12MB7548.namprd12.prod.outlook.com>
- <c7bfd8f7-3e3f-49fe-a8f4-ac0212a1762b@redhat.com>
- <CH3PR12MB7548FB661824C44F18C72A01AB392@CH3PR12MB7548.namprd12.prod.outlook.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <CH3PR12MB7548FB661824C44F18C72A01AB392@CH3PR12MB7548.namprd12.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MIME_TRACE(0.00)[0:+]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ TO_DN_SOME(0.00)[]; ARC_NA(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ URIBL_BLOCKED(0.00)[suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
+ RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,52 +107,124 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
+We fixed the cpu throttling sync thread affecting the
+dirty-sync-count, but the test still relies on it to gauge for
+progress. Remove that block from the test with no replacement.
 
-On 5/12/26 11:41 AM, Shameer Kolothum Thodi wrote:
->
->> -----Original Message-----
->> From: Eric Auger <eric.auger@redhat.com>
->> Sent: 12 May 2026 07:39
->> To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>;
->> eric.auger.pro@gmail.com; qemu-devel@nongnu.org; qemu-
->> arm@nongnu.org; kvmarm@lists.linux.dev; peter.maydell@linaro.org;
->> richard.henderson@linaro.org; cohuck@redhat.com; sebott@redhat.com;
->> philmd@linaro.org
->> Cc: maz@kernel.org; oliver.upton@linux.dev; pbonzini@redhat.com;
->> armbru@redhat.com; berrange@redhat.com; abologna@redhat.com;
->> jdenemar@redhat.com
->> Subject: Re: [PATCH v4 03/17] target/arm/cpu-sysregs.h.inc: Update with
->> automatic generation
->>
-> [...]
->
->>>> +DEF(MPIDR_EL1, 3, 0, 0, 0, 5)
->>> Do we need MPIDR_EL1 as well? Is this considered as a feature ID
->>> register and is writable? I don't think so.
->> MPIDR_EL1 is part of the ID regs range defined in the kernel doc
->>
->> op0 = 3, op1 = {0,1,3}, crn = 0, crm within [0, 7], op2 within [0, 7]
->>
->> That's why the python script extracts it. Effectively it is not writable yet.
->>
->> I can exclude it from the automatic generation but do we really need to? Any
->> specific reason?
-> No specific reason. The only thing is it's not really a feature ID register but
-> a topology register and is not writable now.  I leave that to you.
+While here remove several incorrect or redundant comments.
 
-noted. I leave it as is for now and we will decide upon further reviews.
+Fixes: 9519d3667a ("migration: Move iteration counter out of RAM")
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ tests/qtest/migration/precopy-tests.c | 62 ++-------------------------
+ 1 file changed, 3 insertions(+), 59 deletions(-)
 
-Thanks
-
-Eric
->
-> Thanks,
-> Shameer
->
+diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
+index a0e3ff0547..c4ead906c1 100644
+--- a/tests/qtest/migration/precopy-tests.c
++++ b/tests/qtest/migration/precopy-tests.c
+@@ -291,35 +291,12 @@ static void test_precopy_fd_socket(char *name, MigrateCommon *args)
+ }
+ #endif /* _WIN32 */
+ 
+-/*
+- * The way auto_converge works, we need to do too many passes to
+- * run this test.  Auto_converge logic is only run once every
+- * three iterations, so:
+- *
+- * - 3 iterations without auto_converge enabled
+- * - 3 iterations with pct = 5
+- * - 3 iterations with pct = 30
+- * - 3 iterations with pct = 55
+- * - 3 iterations with pct = 80
+- * - 3 iterations with pct = 95 (max(95, 80 + 25))
+- *
+- * To make things even worse, we need to run the initial stage at
+- * 3MB/s so we enter autoconverge even when host is (over)loaded.
+- */
+ static void test_auto_converge(char *name, MigrateCommon *args)
+ {
+     g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
+     QTestState *from, *to;
+     int64_t percentage;
+-
+-    /*
+-     * We want the test to be stable and as fast as possible.
+-     * E.g., with 1Gb/s bandwidth migration may pass without throttling,
+-     * so we need to decrease a bandwidth.
+-     */
+     const int64_t init_pct = 5, inc_pct = 25, max_pct = 95;
+-    uint64_t prev_dirty_sync_cnt, dirty_sync_cnt;
+-    int max_try_count, hit = 0;
+ 
+     if (migrate_start(&from, &to, uri, &args->start)) {
+         return;
+@@ -330,21 +307,16 @@ static void test_auto_converge(char *name, MigrateCommon *args)
+     migrate_set_parameter_int(from, "cpu-throttle-increment", inc_pct);
+     migrate_set_parameter_int(from, "max-cpu-throttle", max_pct);
+ 
+-    /*
+-     * Set the initial parameters so that the migration could not converge
+-     * without throttling.
+-     */
+     migrate_ensure_non_converge(from);
+ 
+     /* To check remaining size after precopy */
+     migrate_set_capability(from, "pause-before-switchover", true);
+ 
+-    /* Wait for the first serial output from the source */
+     wait_for_serial("src_serial");
+ 
+     migrate_qmp(from, to, uri, NULL, "{}");
+ 
+-    /* Wait for throttling begins */
++    /* Wait until throttling begins */
+     percentage = 0;
+     do {
+         percentage = read_migrate_property_int(from, "cpu-throttle-percentage");
+@@ -357,36 +329,8 @@ static void test_auto_converge(char *name, MigrateCommon *args)
+     /* The first percentage of throttling should be at least init_pct */
+     g_assert_cmpint(percentage, >=, init_pct);
+ 
+-    /*
+-     * End the loop when the dirty sync count greater than 1.
+-     */
+-    while ((dirty_sync_cnt = get_migration_pass(from)) < 2) {
+-        usleep(1000 * 1000);
+-    }
+-
+-    prev_dirty_sync_cnt = dirty_sync_cnt;
+-
+-    /*
+-     * The RAMBlock dirty sync count must changes in 5 seconds, here we set
+-     * the timeout to 10 seconds to ensure it changes.
+-     *
+-     * Note that migrate_ensure_non_converge set the max-bandwidth to 3MB/s,
+-     * while the qtest mem is >= 100MB, one iteration takes at least 33s (100/3)
+-     * to complete; this ensures that the RAMBlock dirty sync occurs.
+-     */
+-    max_try_count = 10;
+-    while (--max_try_count) {
+-        dirty_sync_cnt = get_migration_pass(from);
+-        if (dirty_sync_cnt != prev_dirty_sync_cnt) {
+-            hit = 1;
+-            break;
+-        }
+-        prev_dirty_sync_cnt = dirty_sync_cnt;
+-        sleep(1);
+-    }
+-    g_assert_cmpint(hit, ==, 1);
+-
+-    /* Now, when we tested that throttling works, let it converge */
++    /* throttling always ignores the first pass */
++    assert(get_migration_pass(from) == 2);
+     migrate_ensure_converge(from);
+ 
+     /*
+-- 
+2.51.0
 
 
