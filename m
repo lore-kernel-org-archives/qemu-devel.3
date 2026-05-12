@@ -4,57 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D64A4CD4F24
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 17:15:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ACC7CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 17:15:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMqgl-0006p6-U3; Tue, 12 May 2026 13:14:37 -0400
+	id 1wMqhK-00074c-Al; Tue, 12 May 2026 13:15:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wMqgK-0006lw-8N
- for qemu-devel@nongnu.org; Tue, 12 May 2026 13:14:09 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wMqgV-0006n4-LX
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 13:14:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wMqgI-0000Wg-Lm
- for qemu-devel@nongnu.org; Tue, 12 May 2026 13:14:08 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wMqgO-0000iU-Q9
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 13:14:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778606046;
+ s=mimecast20190719; t=1778606050;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4nnQ+167Es5iiTjdWMQe264cnGv+oMNfn1MihRhaMM0=;
- b=IFjDKFSAliX8ImfQTdG0OjlnmGgga0Mm8v+Q3lwr0x7Mq+TH0vrZaIrb29K/ownz6kXWSS
- QG+fIJv1NfAs6VS3fmmtFB2NTWpOa/+Lrk5MKJe7UxMbKRplS5arpFScCgiVosN51L8nj/
- YY/nvwCtAeVFkI/1mrwPDnkl0Bu/znE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=3FECxusx0MidqsN3aGBxWxbLHCe132kVJIBHB1EIJRo=;
+ b=Sfc38mTZtd2ODpeYi4BIIh5N6uBAG9gOA49cF2fDVAHxM82B6acxnSqY9D31AHGtm1AhOL
+ cWJkoXnD8U+Xve4TY4+xlxlZhj7ZKF3+dSQwAkQL3RxKzee4s/WWR8jowndcdkNog3jTxU
+ c/g7nWfJRQq/LVxQLF5Kj8a2YK1F6cE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-206--ugWvLIzOJCtJchfoYN8rg-1; Tue,
- 12 May 2026 13:14:02 -0400
-X-MC-Unique: -ugWvLIzOJCtJchfoYN8rg-1
-X-Mimecast-MFC-AGG-ID: -ugWvLIzOJCtJchfoYN8rg_1778606041
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-380-U5y6EH8COVCzYpVljo2dUQ-1; Tue,
+ 12 May 2026 13:14:04 -0400
+X-MC-Unique: U5y6EH8COVCzYpVljo2dUQ-1
+X-Mimecast-MFC-AGG-ID: U5y6EH8COVCzYpVljo2dUQ_1778606043
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DB92F18002DC; Tue, 12 May 2026 17:14:00 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4754118005BA; Tue, 12 May 2026 17:14:03 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.49.156])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C2BB01955D84; Tue, 12 May 2026 17:13:58 +0000 (UTC)
+ id 871681944B27; Tue, 12 May 2026 17:14:01 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Kane Chen <kane_chen@aspeedtech.com>, qemu-stable@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 1/9] hw/misc/aspeed_sbc: Add bounds checking for OTP write
- operations
-Date: Tue, 12 May 2026 19:13:46 +0200
-Message-ID: <20260512171354.4183887-2-clg@redhat.com>
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Katherine Leaver <katherine.j.leaver@gmail.com>, qemu-stable@nongnu.org
+Subject: [PULL 2/9] aspeed/hace: Fix out-of-bounds read in has_padding()
+Date: Tue, 12 May 2026 19:13:47 +0200
+Message-ID: <20260512171354.4183887-3-clg@redhat.com>
 In-Reply-To: <20260512171354.4183887-1-clg@redhat.com>
 References: <20260512171354.4183887-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -85,110 +83,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kane Chen <kane_chen@aspeedtech.com>
+The has_padding() function reads the last 8 bytes of a DMA buffer
+without validating req_len. req_len is guest-controlled (via
+R_HASH_SRC_LEN register or scatter-gather entries) and values less
+than 8 cause integer underflow. This can result in an out-of-bounds
+read of QEMU process memory.
 
-There is a mismatch between the Aspeed OTP model and the Aspeed SBC
-model in how the guest-provided address is handled.
-aspeed_sbc_otp_prog() passes a word-indexed address directly
-to address_space_write() without converting it to a byte offset,
-whereas aspeed_otp_write() expects a byte offset and applies an
-additional shift (otp_addr << 2). This double-shift confusion means
-that an out-of-range word address can lead to a write beyond the
-allocated storage.
+Add a check to ensure req_len >= 8 before accessing the buffer.
 
-Fix this by adding bounds checking on the word offset before
-converting to byte offset and passing to address_space_write().
-This matches the existing bounds check in aspeed_sbc_otp_read().
-
-Cc: Kane-Chen-AS <kane_chen@aspeedtech.com>
+Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
 Cc: qemu-stable@nongnu.org
-Fixes: 1a00754ccf15 ("hw/misc: Add Aspeed Secure Boot Controller model")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3436
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260428055254.76581-2-kane_chen@aspeedtech.com
-[ clg: Kept otp_addr in event logged in aspeed_sbc_otp_prog() ]
+Fixes: 5cd7d8564a8b ("aspeed/hace: Support AST2600 HACE")
+Link: https://lore.kernel.org/qemu-devel/20260504213421.710035-2-clg@redhat.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/misc/aspeed_sbc.c  | 12 ++++++++++--
- hw/nvram/aspeed_otp.c | 13 ++++++-------
- 2 files changed, 16 insertions(+), 9 deletions(-)
+ hw/misc/aspeed_hace.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/hw/misc/aspeed_sbc.c b/hw/misc/aspeed_sbc.c
-index 065e822e70d9..e5dab1c7bb7c 100644
---- a/hw/misc/aspeed_sbc.c
-+++ b/hw/misc/aspeed_sbc.c
-@@ -159,9 +159,17 @@ static bool aspeed_sbc_otp_prog(AspeedSBCState *s,
-     MemTxResult ret;
-     AspeedOTPState *otp = &s->otp;
-     uint32_t value = s->regs[R_CAMP1];
-+    uint32_t otp_offset = otp_addr << 2;
- 
--    ret = address_space_write(&otp->as, otp_addr, MEMTXATTRS_UNSPECIFIED,
--                        &value, sizeof(value));
-+    if (otp_addr >= OTP_TOTAL_DWORD_COUNT) {
+diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
+index 23e8030cd966..ef698b3ecb72 100644
+--- a/hw/misc/aspeed_hace.c
++++ b/hw/misc/aspeed_hace.c
+@@ -154,6 +154,14 @@ static bool has_padding(AspeedHACEState *s, struct iovec *iov,
+                         hwaddr req_len, uint32_t *total_msg_len,
+                         uint32_t *pad_offset)
+ {
++    /* Need at least 8 bytes to read the total message length field */
++    if (req_len < 8) {
 +        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "Invalid OTP addr 0x%x\n",
-+                      otp_addr);
++                      "%s: invalid request length=0x%" HWADDR_PRIx "\n",
++                      __func__, req_len);
 +        return false;
 +    }
 +
-+    ret = address_space_write(&otp->as, otp_offset, MEMTXATTRS_UNSPECIFIED,
-+                              &value, sizeof(value));
-     if (ret != MEMTX_OK) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "Failed to write OTP memory, addr = %x\n",
-diff --git a/hw/nvram/aspeed_otp.c b/hw/nvram/aspeed_otp.c
-index a60289000c37..1a9d3841b8d6 100644
---- a/hw/nvram/aspeed_otp.c
-+++ b/hw/nvram/aspeed_otp.c
-@@ -57,12 +57,12 @@ static bool valid_program_data(uint32_t otp_addr,
-     return has_programmable_bits != 0;
- }
- 
--static bool program_otpmem_data(void *opaque, uint32_t otp_addr,
-+static bool program_otpmem_data(void *opaque, hwaddr otp_offset,
-                              uint32_t prog_bit, uint32_t *value)
- {
-     AspeedOTPState *s = opaque;
-+    uint32_t otp_addr = otp_offset >> 2;
-     bool is_odd = otp_addr & 1;
--    uint32_t otp_offset = otp_addr << 2;
- 
-     memcpy(value, s->storage + otp_offset, sizeof(uint32_t));
- 
-@@ -79,26 +79,25 @@ static bool program_otpmem_data(void *opaque, uint32_t otp_addr,
-     return true;
- }
- 
--static void aspeed_otp_write(void *opaque, hwaddr otp_addr,
-+static void aspeed_otp_write(void *opaque, hwaddr otp_offset,
-                                 uint64_t val, unsigned size)
- {
-     AspeedOTPState *s = opaque;
--    uint32_t otp_offset, value;
-+    uint32_t value;
- 
--    if (!program_otpmem_data(s, otp_addr, val, &value)) {
-+    if (!program_otpmem_data(s, otp_offset, val, &value)) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "%s: Failed to program data, value = %x, bit = %"PRIx64"\n",
-                       __func__, value, val);
-         return;
-     }
- 
--    otp_offset = otp_addr << 2;
-     memcpy(s->storage + otp_offset, &value, size);
- 
-     if (s->blk) {
-         if (blk_pwrite(s->blk, otp_offset, size, &value, 0) < 0) {
-             qemu_log_mask(LOG_GUEST_ERROR,
--                          "%s: Failed to write %x to %x\n",
-+                          "%s: Failed to write %x to %"HWADDR_PRIx"\n",
-                           __func__, value, otp_offset);
- 
-             return;
+     *total_msg_len = (uint32_t)(ldq_be_p(iov->iov_base + req_len - 8) / 8);
+     /*
+      * SG_LIST_LEN_LAST asserted in the request length doesn't mean it is the
 -- 
 2.54.0
 
