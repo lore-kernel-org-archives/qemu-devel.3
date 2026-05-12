@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48CD0CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:36:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03713CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:36:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuTc-0003gJ-5V; Tue, 12 May 2026 17:17:16 -0400
+	id 1wMukv-0000Jj-QE; Tue, 12 May 2026 17:35:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuSd-0001U9-Iq; Tue, 12 May 2026 17:16:16 -0400
+ id 1wMukp-000097-1t; Tue, 12 May 2026 17:35:03 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuSc-0006gb-1G; Tue, 12 May 2026 17:16:15 -0400
+ id 1wMukO-0003Oj-8L; Tue, 12 May 2026 17:35:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619306; bh=VlZqLHHTvpomm2hntvJQOW5VrdmG1HeMDRNVrfzqF5M=;
+ t=1778619500; bh=6yNTHyY4n+czwCDJOviiZkYDpnz4dMyJaeqmCz/8sP8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=lY/HKamX8u+17cShEMgW5h9aKbSas3msMRGwaaOAJBm9taMjqRX08XfAhe3OHLbDV
- +096o/6gn+v36bdJQNTsUa6muIUoo8lQNOjNtBtfyhzHutrb8hdvHabrQFAYmHyKT7
- ZEGHcn3dT11MRLcD08yt11YPDKgCYURMxRyjhtjJ2FXZqeCA/dLXXYNuSiKvSn7kTW
- hAFmgTWPzwfHf9aUPAfv67UJpKQkAPKoVHrwIwRRZ+bxOU16zAoHqCC3cpBJWwtIyp
- PLRFEekNUnnM9A4UBGNHrPeQVZjnj2qlehejHr/CUwy5y5dkAvbWPH9WpMSWKJxaH7
- eLOHDzlRpGzlQ==
+ b=Qc5pTFzyS+wT3TKOkT3a6SYEJMo8S+Pi39QM3ED8vgZrbrSZNzgQvWYB2OLdXeSTR
+ 0OxpVPw8pyTo9ECGmNIYQFg38/NCFwBRwz+Xxj7tyvLR42l+qtrzduR3AGViJnHzCz
+ AGxO/5ZZsaQn7zeAiebbxHphedYovbf7lY7WD7FOK7UCOceYBJjJgQ8HDfyKM6BFHN
+ KbYk+NpLiPo7VxX0TlwgmeKajl1niDeu+xWRdWBC3a7flLjN7IjV7Rf1yNc4j/+3Kx
+ 0okE4dzQPdQb86M2V68Pwn2P+Hr1B8xwYZiaZoVa10VSy/z1JMw/395e3+RSCb64KZ
+ 8qbnTEVUiy6qA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9C2701AA3A4;
- Tue, 12 May 2026 23:55:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D8DCD1AA404;
+ Tue, 12 May 2026 23:58:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id AA6363ABD13;
- Tue, 12 May 2026 23:55:10 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id DC21C3ABD5B;
+ Tue, 12 May 2026 23:58:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
+Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Katherine Leaver <katherine.j.leaver@gmail.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 102/117] linux-user: Translate errno in IP_RECVERR and
- IPV6_RECVERR
-Date: Tue, 12 May 2026 23:54:44 +0300
-Message-ID: <20260512205503.361097-102-mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 56/58] hw/uefi: verify data size before accessing it
+ in wrap_pkcs7
+Date: Tue, 12 May 2026 23:58:17 +0300
+Message-ID: <20260512205820.361821-56-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
-References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -69,43 +70,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-Translate host error codes of IP_RECVERR and IPV6_RECVERR control messages to
-target error codes before returning to the caller.
-For example, this is important for architectures (e.g. hppa, alpha, sparc,
-mips) on which the value of ECONNREFUSED is different to the value on a x86_64
-host.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/602
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 9667bf3249256788245c6ca07bc12106f3e4fa22)
+Fixes: CVE-2026-41439
+Fixes: 3e33af2cb306 ("hw/uefi: add var-service-pkcs7.c")
+Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20260422092910.444997-6-kraxel@redhat.com>
+(cherry picked from commit 22b7b222d8f5428be8b5d4787f36efd0a0b75292)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 8934aa9514..bb818f35d9 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -2011,7 +2011,8 @@ static inline abi_long host_to_target_cmsg(struct target_msghdr *target_msgh,
-                     tgt_len != sizeof(struct errhdr_t)) {
-                     goto unimplemented;
-                 }
--                __put_user(errh->ee.ee_errno, &target_errh->ee.ee_errno);
-+                __put_user(host_to_target_errno(errh->ee.ee_errno),
-+                           &target_errh->ee.ee_errno);
-                 __put_user(errh->ee.ee_origin, &target_errh->ee.ee_origin);
-                 __put_user(errh->ee.ee_type,  &target_errh->ee.ee_type);
-                 __put_user(errh->ee.ee_code, &target_errh->ee.ee_code);
-@@ -2065,7 +2066,8 @@ static inline abi_long host_to_target_cmsg(struct target_msghdr *target_msgh,
-                     tgt_len != sizeof(struct errhdr6_t)) {
-                     goto unimplemented;
-                 }
--                __put_user(errh->ee.ee_errno, &target_errh->ee.ee_errno);
-+                __put_user(host_to_target_errno(errh->ee.ee_errno),
-+                           &target_errh->ee.ee_errno);
-                 __put_user(errh->ee.ee_origin, &target_errh->ee.ee_origin);
-                 __put_user(errh->ee.ee_type,  &target_errh->ee.ee_type);
-                 __put_user(errh->ee.ee_code, &target_errh->ee.ee_code);
+diff --git a/hw/uefi/var-service-pkcs7.c b/hw/uefi/var-service-pkcs7.c
+index 32accf4e44..f17ad6872f 100644
+--- a/hw/uefi/var-service-pkcs7.c
++++ b/hw/uefi/var-service-pkcs7.c
+@@ -73,7 +73,8 @@ static void wrap_pkcs7(gnutls_datum_t *pkcs7)
+     };
+     gnutls_datum_t wrap;
+ 
+-    if (pkcs7->data[4] == 0x06 &&
++    if (pkcs7->size > 16 &&
++        pkcs7->data[4] == 0x06 &&
+         pkcs7->data[5] == 0x09 &&
+         memcmp(pkcs7->data + 6, signed_data_oid, sizeof(signed_data_oid)) == 0 &&
+         pkcs7->data[15] == 0x0a &&
 -- 
 2.47.3
 
