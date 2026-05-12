@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5C25CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:39:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E2A6CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:39:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuVo-0002oW-HD; Tue, 12 May 2026 17:19:32 -0400
+	id 1wMuVP-0001u4-NZ; Tue, 12 May 2026 17:19:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuV9-0001ln-G7; Tue, 12 May 2026 17:18:53 -0400
+ id 1wMuV5-0001eF-03; Tue, 12 May 2026 17:18:51 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuV6-0007uB-Do; Tue, 12 May 2026 17:18:50 -0400
+ id 1wMuV3-0007pl-4G; Tue, 12 May 2026 17:18:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619497; bh=WzazOYJib6UYK1Lpk5NVX9UN/ML2FUg6X18bS+E6jgQ=;
+ t=1778619497; bh=1giFfvMgMnxgYPMVAPHx5Yo1DKNuX6HHKpB4lR9DQiU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=UB6bwHOBZEq6XsyRMFkG2LYC673VPnI7PaFIxIAvwiR/UNXqi2KFof4DDCjbV9TdK
- /SLhTXJQqX9GXqFnI4HKaiLjKHvYVUqtHRGsXqLsTmj0gYS0K9cX2nCTUeQg7Xvh2U
- oXloyyBRFf/zxKh1ruclBX53lwsyjmoo2bZrlox8dDSmmTd1rYwFf0eUVRGCY3WA93
- 9RN49eCbD4yz+ApPmSwzzd9j/ZVlism3Peyr6dPm2/xIK/MJpn3OpMPcAEtkfTXKh/
- ZadPV4kuZSbY24NLbhJu+0CtUGTDFgp0rSLniHyHepOo0SXQUMmP7IeZPQZpbvnVw1
- CLwC6JTeVDFKQ==
+ b=bUeVli613UQI20nY8bxCKumENDuG1e1DcF5wifqLxbmGkpiE9SdKNYIuON81ZP2aw
+ T5iBvla3sVr3JNs4+aZIbxJigPJNtk8sxWvIDlQRDmsriZ0y5ZFaK7ZMeVKf33Rcjo
+ 2sGsSZHozFsOqssFoLaF/TQggCEKtZoQz+eAWLmTSFCymjVteWOMugTwL4QTKo6yof
+ f4l1MpGkXscC1pGbgKc8PksHr6KhgmmakmyUXzZgSWITyoJZ1BpyKmsXMoM91JOZwk
+ pb1G3aJkzY16Fd0Sa8oy35bgaV5XwDI8pOmn01lEKzjSf5CFwxDnt5228l9xsOP1zS
+ HYP31bA/Ldupw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8FE091AA3D5;
+ by isrv.corpit.ru (Postfix) with ESMTP id 736E31AA3D4;
  Tue, 12 May 2026 23:58:17 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8F3273ABD2D;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8186C3ABD2C;
  Tue, 12 May 2026 23:58:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stepan Popov <Stepan.Popov@kaspersky.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 10/58] meson: add missing semicolon in
- pthread_condattr_setclock test
-Date: Tue, 12 May 2026 23:57:31 +0300
-Message-ID: <20260512205820.361821-10-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 09/58] target/i386/tcg: fix decoding of MOVBE and
+ CRC32 in 16-bit mode
+Date: Tue, 12 May 2026 23:57:30 +0300
+Message-ID: <20260512205820.361821-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,33 +70,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stepan Popov <Stepan.Popov@kaspersky.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-The test code was missing a semicolon after the pthread_condattr_t
-variable declaration.
+Table A-4 of the SDM shows
 
-Signed-off-by: Stepan Popov <Stepan.Popov@kaspersky.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Fixes: 657ac98b58c ("thread-posix: use monotonic clock for QemuCond and QemuSemaphore", 2022-02-22)
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Link: https://lore.kernel.org/r/20260330131406.87080-1-Stepan.Popov@kaspersky.com
+                    F0                     F1
+--------------------------------------------------------
+     NP           MOVBE Gy,My           MOVBE My,Gy
+     66           MOVBE Gw,Mw           MOVBW Mw,Gw
+     F2           CRC32 Gd,Eb           CRC32 Gd,Ey
+  66+F2           CRC32 Gd,Eb           CRC32 Gd,Ew
+
+However, this is incorrect.  Both MOVBE and (for 0xF1) CRC32
+take Gv, Ev or Mv operands.  In 16-bit mode therefore the
+operand is of 16-bit size without prefix and 32-bit mode
+with 0x66 (the data size override).
+
+For example, with NASM you get:
+
+                                 bits 16
+   67 0F 38 F0 02                movbe ax, [edx]
+   66 67 0F 38 F0 02             movbe eax, [edx]
+
+   67 F2 0F 38 F1 02             crc32 ax, word [edx]
+   66 67 F2 0F 38 F1 02          crc32 eax, dword [edx]
+
+versus
+
+                                 bits 32
+   66 0F 38 F0 02                movbe ax, [edx]
+   0F 38 F0 02                   movbe eax, [edx]
+
+   66 F2 0F 38 F1 02             crc32 eax, word [edx]
+   F2 0F 38 F1 02                crc32 eax, dword [edx]
+
+The instruction is listed correctly in the APX documentation
+as "SCALABLE" (which means it has v-size operands).
+
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 79bc1771867723cb70dac0fae8f2c26fda1a635d)
+(cherry picked from commit 76ad26dd172d27aae9f1e76d1165b497167c36c2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/meson.build b/meson.build
-index ab3e97eb9f..d7b03e4746 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2890,7 +2890,7 @@ config_host_data.set('CONFIG_PTHREAD_CONDATTR_SETCLOCK', cc.links(osdep_prefix +
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index bc105aab9e..c8b5bd6ad2 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -875,19 +875,23 @@ static const X86OpEntry opcodes_0F38_00toEF[240] = {
  
-   int main(void)
-   {
--    pthread_condattr_t attr
-+    pthread_condattr_t attr;
-     pthread_condattr_init(&attr);
-     pthread_condattr_setclock(&attr, CLOCK_MONOTONIC);
-     return 0;
+ /* five rows for no prefix, 66, F3, F2, 66+F2  */
+ static const X86OpEntry opcodes_0F38_F0toFF[16][5] = {
++    /*
++     * MOVBE and CRC32 are incorrectly listed as always doing 32-bit operation
++     * without prefix and 16-bit operation with 0x66.
++     */
+     [0] = {
+-        X86_OP_ENTRYwr(MOVBE, G,y, M,y, cpuid(MOVBE)),
+-        X86_OP_ENTRYwr(MOVBE, G,w, M,w, cpuid(MOVBE)),
++        X86_OP_ENTRYwr(MOVBE, G,v, M,v, cpuid(MOVBE)),
++        X86_OP_ENTRYwr(MOVBE, G,v, M,v, cpuid(MOVBE)),
+         {},
+         X86_OP_ENTRY2(CRC32, G,d, E,b, cpuid(SSE42)),
+         X86_OP_ENTRY2(CRC32, G,d, E,b, cpuid(SSE42)),
+     },
+     [1] = {
+-        X86_OP_ENTRYwr(MOVBE, M,y, G,y, cpuid(MOVBE)),
+-        X86_OP_ENTRYwr(MOVBE, M,w, G,w, cpuid(MOVBE)),
++        X86_OP_ENTRYwr(MOVBE, M,v, G,v, cpuid(MOVBE)),
++        X86_OP_ENTRYwr(MOVBE, M,v, G,v, cpuid(MOVBE)),
+         {},
+-        X86_OP_ENTRY2(CRC32, G,d, E,y, cpuid(SSE42)),
+-        X86_OP_ENTRY2(CRC32, G,d, E,w, cpuid(SSE42)),
++        X86_OP_ENTRY2(CRC32, G,d, E,v, cpuid(SSE42)),
++        X86_OP_ENTRY2(CRC32, G,d, E,v, cpuid(SSE42)),
+     },
+     [2] = {
+         X86_OP_ENTRY3(ANDN, G,y, B,y, E,y, vex13 cpuid(BMI1)),
 -- 
 2.47.3
 
