@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 462F8CD343F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A7C4CD4F21
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:48:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMujA-0005O7-51; Tue, 12 May 2026 17:33:20 -0400
+	id 1wMuNH-0005J8-91; Tue, 12 May 2026 17:10:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuih-0004ZD-DT; Tue, 12 May 2026 17:32:51 -0400
+ id 1wMuND-0004t4-Vl; Tue, 12 May 2026 17:10:40 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuie-0002ej-Cq; Tue, 12 May 2026 17:32:50 -0400
+ id 1wMuNB-0003mi-9M; Tue, 12 May 2026 17:10:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619500; bh=TJPoL99SCcRmYeBbngM5TxHXnKnsJdA5vW/twqNnpms=;
+ t=1778619302; bh=o+46Jlaubs6UpYpqgYgSsOiE+4f2A9TyiJGuiVNA7Uk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=w/gIv8qtRQWX514NocrC331SyxSRKlBYgJgCZ6+AtNgeWzD3vMUL6ay7E4PMS198u
- KHsVz+N50Cv8SNKLub5J9lZLSnFiGXnURZe9wE1fhd5YTR+kWwdxPsNmQja1AcHKro
- yF7kGMLz6umdomz6879yF1lOeXr2bEwJhg46wYF/hUBcG8BAwLjyqNL+1KLorCEA/q
- 6GH9+wqgsmRa2U2T89ba/MoXMJYm9U3yfDYjlsolnmHMUEQmIm4UbubtIj5NNjaL3o
- JGOdKhD1uhbNUq9biyVGWaTcoOaDSbRMK53cUv3Z5jeOD1ER6IfN7/3nNwsHx48bAp
- aIW/TmB8M0ReA==
+ b=TUdnKE7k+/REIqZ85UPRXX+ID0ddDuoHX9hsCoA/AhY+vfcR1Sy842D+Zj5+Zjo1J
+ NjTU1ViuWF21h/Bn34DDhbSe+YdPv0Kn5fwXrGRLmZzpPYUaw6DQNw1J+JWAipk0cw
+ mHfOwH3rdlM4wNZogUjPxkYLZ5PWt9dV0iTTiDrowhVxDTCsbp/RAAz9M6pOVt3Msm
+ D8wf5o2AUSo7D5EddS9Lk7tBIfOINQvWN1o23SKGS+sTSO226wd+ve0I6GCrqkpF9K
+ lrF6TWugCktjo8k+HNdO2Kt8X/03kCcI4m6atvnuWr/nH/NjAgBKNibu2wsxB4hyP+
+ B/mF8Lb0a/igg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0CBD81AA3F8;
- Tue, 12 May 2026 23:58:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B93691AA36B;
+ Tue, 12 May 2026 23:55:02 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 19E423ABD50;
- Tue, 12 May 2026 23:58:24 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C5B0F3ABCDB;
+ Tue, 12 May 2026 23:55:06 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?=E5=AE=8B=E6=96=87=E6=AD=A6?= <iyzsong@member.fsf.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 45/58] hw/net/allwinner-sun8i-emac: Flush queued
- packets when rx is enabled
-Date: Tue, 12 May 2026 23:58:06 +0300
-Message-ID: <20260512205820.361821-45-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Tingting Mao <timao@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 046/117] ide: Fix potential assertion failure on VM
+ stop for PIO read error
+Date: Tue, 12 May 2026 23:53:48 +0300
+Message-ID: <20260512205503.361097-46-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
-References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -55,7 +53,7 @@ X-Spam_score: -2.0
 X-Spam_bar: --
 X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,39 +69,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: 宋文武 <iyzsong@member.fsf.org>
+From: Kevin Wolf <kwolf@redhat.com>
 
-The RX_CTL_0 register includes the RX_EN receive-enable bit,
-which allwinner_sun8i_emac_can_receive() checks. That means that
-if the guest sets it we need to call qemu_flush_queued_packets()
-as we might now be able to handle them.
+ide_sector_read() as well as its callers neglect to call ide_set_retry()
+before starting I/O. If the I/O fails, this means that the retry
+information is stale. In particular, ide_handle_rw_error() has an
+assertion that s->bus->retry_unit == s->unit, which can fail if either
+there was no previous request or it came from another device on the bus.
+If the assertion weren't there, a wrong request would be retried after
+resuming the VM.
 
-This fixes a bug where networking didn't work in u-boot on the
-orangepi-pc machine.
+Fix this by adding a ide_set_retry() call to ide_sector_read().
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3459
-Signed-off-by: 宋文武 <iyzsong@member.fsf.org>
-Message-id: 20260430040753.3337-1-iyzsong@envs.net
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-[PMM: expanded commit message, removed unneeded RX_EN test]
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit a7f27d6903b30bcea21c46986cb7507edcbc970c)
+This affects only reads because ide_transfer_start() does call
+ide_set_retry(). For writes, the data transfer comes first and the I/O
+is only started when the data has been read into s->io_buffer, so by
+that time, ide_set_retry() has been called. For reads, however, the I/O
+comes first and only then the data is transferred to the guest, so the
+call in ide_transfer_start() is too late.
+
+Buglink: https://redhat.atlassian.net/browse/RHEL-153537
+Reported-by: Tingting Mao <timao@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20260326165124.138593-1-kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 59c1d31136688415e5d682a87942292dbb3caaeb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/allwinner-sun8i-emac.c b/hw/net/allwinner-sun8i-emac.c
-index 9b7c67ae8e..8ddaa6101f 100644
---- a/hw/net/allwinner-sun8i-emac.c
-+++ b/hw/net/allwinner-sun8i-emac.c
-@@ -727,6 +727,9 @@ static void allwinner_sun8i_emac_write(void *opaque, hwaddr offset,
-         break;
-     case REG_RX_CTL_0:          /* Receive Control 0 */
-         s->rx_ctl0 = value;
-+        if (allwinner_sun8i_emac_can_receive(nc)) {
-+            qemu_flush_queued_packets(nc);
-+        }
-         break;
-     case REG_RX_CTL_1:          /* Receive Control 1 */
-         s->rx_ctl1 = value | RX_CTL1_RX_MD;
+diff --git a/hw/ide/core.c b/hw/ide/core.c
+index 8c380abf7c..c66a9d8df0 100644
+--- a/hw/ide/core.c
++++ b/hw/ide/core.c
+@@ -799,6 +799,7 @@ static void ide_sector_read(IDEState *s)
+     s->error = 0; /* not needed by IDE spec, but needed by Windows */
+     sector_num = ide_get_sector(s);
+     n = s->nsector;
++    ide_set_retry(s);
+ 
+     if (n == 0) {
+         ide_transfer_stop(s);
 -- 
 2.47.3
 
