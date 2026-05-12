@@ -4,69 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6CB6CD4F35
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 12:31:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ED18CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 12:31:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMmFn-0000Ov-Bd; Tue, 12 May 2026 08:30:27 -0400
+	id 1wMmGL-0000UW-BA; Tue, 12 May 2026 08:31:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wMmFb-0000M6-8x
- for qemu-devel@nongnu.org; Tue, 12 May 2026 08:30:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wMmFl-0000Os-M4
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 08:30:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wMmFV-00028k-DI
- for qemu-devel@nongnu.org; Tue, 12 May 2026 08:30:13 -0400
+ id 1wMmFi-0002Gy-MF
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 08:30:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778589007;
+ s=mimecast20190719; t=1778589021;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=RCKuVa9Th1VXE9STTLzp2UOr9cxHr2IO/1g8sYpXVCg=;
- b=ePOG9EMeYmkbmr5sW0yDJmkv2mleH0AQK72YCe7ll2/n8KEs/xr3SZRMgxNnwVMiPajpSO
- PqD4YS6WsiI+OifMnTrLrKst/zNRi86j6psxgH8ioL6t8kS+ElVijq8ayX1R8Q/sOGLcwy
- ZqvWZk6a3T14JpUhAJkeddql6ixKbzc=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rzc8AWkwb0qd8O3CFJYB0nXakC3oVlw15sch7W5AUqs=;
+ b=FNf/oO+Y0bBUKLq7mUdMZG2kW3I5nSVMUoGP5ERdB1pILKyatLWh27LA/OuJrO65YHEE7L
+ r8Q8D+xmlWGarmsrw1+Qm7yf9xROk8yBeSm9cUtNTTBdKUdm1TVTJE4onpboUSUxBHM98v
+ 9XTIMFaQTniH/UDrEv4skOFtW33x7Jw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-674-iIRrdHBwOhyWMTcFrksbRg-1; Tue,
- 12 May 2026 08:30:03 -0400
-X-MC-Unique: iIRrdHBwOhyWMTcFrksbRg-1
-X-Mimecast-MFC-AGG-ID: iIRrdHBwOhyWMTcFrksbRg_1778589002
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-39-ve7qD_ZuMUCGBV0BZY1Rdw-1; Tue,
+ 12 May 2026 08:30:20 -0400
+X-MC-Unique: ve7qD_ZuMUCGBV0BZY1Rdw-1
+X-Mimecast-MFC-AGG-ID: ve7qD_ZuMUCGBV0BZY1Rdw_1778589019
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8E69718005BF; Tue, 12 May 2026 12:30:02 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 582BB195608D; Tue, 12 May 2026 12:30:19 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.49.244])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9FF4F30001BB; Tue, 12 May 2026 12:30:00 +0000 (UTC)
+ id 412A030001BB; Tue, 12 May 2026 12:30:17 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 00/10] qom: misc cleanups / fixes
-Date: Tue, 12 May 2026 13:29:48 +0100
-Message-ID: <20260512122958.788097-1-berrange@redhat.com>
+Subject: [PATCH v4 07/10] qom: add object_new_with_props_from_qdict
+Date: Tue, 12 May 2026 13:29:55 +0100
+Message-ID: <20260512122958.788097-8-berrange@redhat.com>
+In-Reply-To: <20260512122958.788097-1-berrange@redhat.com>
+References: <20260512122958.788097-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,49 +86,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The overall theme of this patch is to move some logic out of
-object_interfaces.c into object.c, since it is not tied to
-the user creatable interface.
+This will be used to replace user_creatable_add_type with an impl
+that shares most code with object_new_with_props, and is not tied
+to the user creatable interface.
 
-Changed in v4:
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ include/qom/object.h | 19 +++++++++++
+ qom/object.c         | 75 ++++++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 88 insertions(+), 6 deletions(-)
 
- - Invoke  va_end on the correct variable
- - Fix commit message typo
-
-Changed in v3:
-
- - Fix parent/child mixup in trace event param names
- - Make QDict const in new constructors
-
-Changed in v2:
-
- - Ensure object creation always triggers module loading
- - Remove redundant NULL check in trace event
- - Remove double #include line
-
-Daniel P. Berrangé (10):
-  qom: add trace events for object/property lifecycle
-  qom: validate ID format when creating objects
-  qom: make errp last param in methods taking va_list
-  qom: shorten name of object_set_properties_from_keyval
-  qom: have object_set_props_keyval return bool
-  qom: move object_set_prop_keyval into object.c
-  qom: add object_new_with_props_from_qdict
-  qom: fix ability to create objects without a parent
-  qom: allow object_new_with_prop* to trigger module loading
-  qom: drop user_creatable_add_type method
-
- authz/listfile.c                |   4 +-
- include/qom/object.h            | 121 ++++++++++++++---
- include/qom/object_interfaces.h |  18 ---
- qom/object.c                    | 230 ++++++++++++++++++++++++++++----
- qom/object_interfaces.c         | 101 +-------------
- qom/trace-events                |  12 +-
- system/qdev-monitor.c           |   4 +-
- system/vl.c                     |   7 +-
- tests/unit/check-qom-proplist.c |  97 +++++++++++---
- 9 files changed, 409 insertions(+), 185 deletions(-)
-
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 1b2b2702fc..f33d512b19 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -700,6 +700,25 @@ Object *object_new_with_propv(const char *typename,
+                               va_list vargs,
+                               Error **errp);
+ 
++/**
++ * object_new_with_props_from_qdict:
++ * @typename:  The name of the type of the object to instantiate.
++ * @parent: the parent object
++ * @id: The unique ID of the object
++ * @props: dictionary of property names and values
++ * @v: visitor to iterate over @props
++ * @errp: pointer to error object
++ *
++ * A variant of object_new_with_props() which accepts the
++ * properties in a QDict.
++ */
++Object *object_new_with_props_from_qdict(const char *typename,
++                                         Object *parent,
++                                         const char *id,
++                                         const QDict *props,
++                                         Visitor *v,
++                                         Error **errp);
++
+ /**
+  * object_set_props:
+  * @obj: the object instance to set properties on
+diff --git a/qom/object.c b/qom/object.c
+index d8083dc318..0c13e5ee1c 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -757,11 +757,14 @@ Object *object_new_with_props(const char *typename,
+ }
+ 
+ 
+-Object *object_new_with_propv(const char *typename,
+-                              Object *parent,
+-                              const char *id,
+-                              va_list vargs,
+-                              Error **errp)
++static Object *
++object_new_with_props_helper(const char *typename,
++                             Object *parent,
++                             const char *id,
++                             void *props,
++                             bool (set_props)(Object *obj, void *props,
++                                              Error **errp),
++                             Error **errp)
+ {
+     Object *obj;
+     ObjectClass *klass;
+@@ -786,7 +789,7 @@ Object *object_new_with_propv(const char *typename,
+     }
+     obj = object_new_with_type(klass->type);
+ 
+-    if (!object_set_propv(obj, vargs, errp)) {
++    if (!set_props(obj, props, errp)) {
+         goto error;
+     }
+ 
+@@ -812,6 +815,66 @@ Object *object_new_with_propv(const char *typename,
+     return NULL;
+ }
+ 
++struct ObjectNewVargsData {
++    va_list vargs;
++};
++
++static bool object_new_with_propv_setter(Object *obj,
++                                         void *props,
++                                         Error **errp)
++{
++    struct ObjectNewVargsData *data = props;
++    return object_set_propv(obj, data->vargs, errp);
++}
++
++Object *object_new_with_propv(const char *typename,
++                              Object *parent,
++                              const char *id,
++                              va_list vargs,
++                              Error **errp)
++{
++    Object *obj;
++    struct ObjectNewVargsData data;
++
++    va_copy(data.vargs, vargs);
++    obj = object_new_with_props_helper(typename,
++                                       parent,
++                                       id,
++                                       &data,
++                                       object_new_with_propv_setter,
++                                       errp);
++    va_end(data.vargs);
++    return obj;
++}
++
++struct ObjectNewQDictData {
++    const QDict *props;
++    Visitor *v;
++};
++
++static bool object_new_with_qdict_setter(Object *obj,
++                                         void *props,
++                                         Error **errp)
++{
++    struct ObjectNewQDictData *data = props;
++    return object_set_props_from_qdict(obj, data->props, data->v, errp);
++}
++
++Object *object_new_with_props_from_qdict(const char *typename,
++                                         Object *parent,
++                                         const char *id,
++                                         const QDict *props,
++                                         Visitor *v,
++                                         Error **errp)
++{
++    struct ObjectNewQDictData data = { props, v };
++    return object_new_with_props_helper(typename,
++                                        parent,
++                                        id,
++                                        &data,
++                                        object_new_with_qdict_setter,
++                                        errp);
++}
+ 
+ bool object_set_props(Object *obj,
+                       Error **errp,
 -- 
 2.54.0
 
