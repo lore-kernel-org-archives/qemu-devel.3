@@ -4,118 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2EB6CD4F24
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 14:52:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87EFDCD4F24
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 15:01:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMoT8-0005T2-RO; Tue, 12 May 2026 10:52:22 -0400
+	id 1wMobZ-0007Nf-GM; Tue, 12 May 2026 11:01:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wMoT3-0005SW-Ms
- for qemu-devel@nongnu.org; Tue, 12 May 2026 10:52:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1wMobR-0007Kp-Mn
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 11:01:00 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wMoT0-0002lA-Ci
- for qemu-devel@nongnu.org; Tue, 12 May 2026 10:52:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778597532;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9sxtl+GdLK5NvMOI7xxInAx13XkVbqDs2a0iwKfW4fk=;
- b=HDbgbHC0EYjtnFrGTCb+tqiQwxZqxjWCQiqbn/sLgGOlA+CHxs+plzgmHyMQTEtxH4fnM/
- n68XkQUbphSR3U3TGc9QIjDEOAb4gZ1hsFs9sFBO2Qug1bM8gMNFsIimSDh1afhjXebPEN
- Isvbf2kOMVg9zdJBxVGo4sQMhTU1Qy0=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-76-FB7kqrnlNVmzsUWlbKqrUg-1; Tue, 12 May 2026 10:52:09 -0400
-X-MC-Unique: FB7kqrnlNVmzsUWlbKqrUg-1
-X-Mimecast-MFC-AGG-ID: FB7kqrnlNVmzsUWlbKqrUg_1778597528
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-bcdbb46dce2so316391766b.1
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 07:52:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778597528; x=1779202328;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9sxtl+GdLK5NvMOI7xxInAx13XkVbqDs2a0iwKfW4fk=;
- b=n5d72h87EKp6Rtwlr0t+5L3/Xlc7bOliIwfrWPhoQ2xsMa8QGMqNowPdj7YrEUr2t0
- KnCj/58hRcCFdCINRnI2RhcoaBzFjQdfPMRPvlHmFovqhuRGOl0JtpVE6Ie1T4bcP4ly
- W4AywdLprvcm99s+yxB4+udPkGBqKAN9OjiQPyWUPQQHsz0qZZjYUfn9AYG/ehmzH2rG
- D/5QaqEOyD6mKcmIYouernXTP1cM5DV/V42qyVIOzMoXo2+LwjNdagIKueqfRAL5A0qW
- eGsDE3qJ0ySWyZ23iOEb3tkIU6YSOhbBnfRCUwgbsXFGvgjMK5b54tmxPsp2aodBtdSU
- 8aMA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9zw61lSMVX/W5lJiC9LrOYchjhRsI+nPcKt1T5NNLsOpSTP6dcxoKZsOZuz/jFnL4ba3lf5iw8YGiS@nongnu.org
-X-Gm-Message-State: AOJu0YxnQ8sksTLHDmacW0l/DYUyZFaunx/LH5Eq7+T0YuxJZpznji8m
- 7FPO/ep8XLVtOCNIBys5AxIxdNR8aTPSF9UB2VnpSSN2UKYBUEgKXU3LqMK62xHS4lqBjplbf7B
- W/KDWMJNWIHghA9x9ZihDfINmUzFTGA/8qLuZW7Knkkr+IhV24cT5uw9+
-X-Gm-Gg: Acq92OH99u1FPF/RQHqv+lxCmOwWFmZ8IixMZmP+nUYMiywktj04eJbNLTUB7FCM2/q
- Mm3nOZKIV7FZInVCvMgeIjhSDwyJ/lSwiGbuLddM1lXY9P6Xink1q9OCuOopBopDcX4rI4spCQq
- b2BYZJnihqitLRj1kx3H5HJ/iYZa/fJ8AOgrCZBlkhZqjOwIErH3LPGJlbHiKWPGCVFnC9lm/69
- +KF9mECSieSOZ3TAefnRS2pjwcCjkEAAKzPGlK9XoFxOXbOiD0lXuoMJV6ETuEiRxP2/clvr7xr
- Uq2cWgN/J12nZtAYR3gobuyNnIaAh4pt0g9BA3CMfVg9jGs+9ZSUNCzrQmmbxEICoxrorTz0yfp
- S2CRUoXypDE9Mt28nKit2HS0xeLAo9XumvRWVewXbrKG4xUxopOgMMNhCEszWBbYNPlZUMw==
-X-Received: by 2002:a17:907:d388:b0:bd3:8192:c8ed with SMTP id
- a640c23a62f3a-bd38192d0camr8428466b.34.1778597528127; 
- Tue, 12 May 2026 07:52:08 -0700 (PDT)
-X-Received: by 2002:a17:907:d388:b0:bd3:8192:c8ed with SMTP id
- a640c23a62f3a-bd38192d0camr8424866b.34.1778597527658; 
- Tue, 12 May 2026 07:52:07 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-67ef0dfd367sm5202207a12.17.2026.05.12.07.52.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 May 2026 07:52:06 -0700 (PDT)
-Message-ID: <9e1ef1c6-3ae1-4952-a295-147c1dfe82de@redhat.com>
-Date: Tue, 12 May 2026 16:52:05 +0200
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1wMobN-0007zU-Hn
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 11:00:57 -0400
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64CAfYQb563418; Tue, 12 May 2026 15:00:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=corp-2025-04-25; bh=Bp3JWvn1TnZy2izBm5V2Qsc/QDF5r
+ 9jqNKyngkSzXPY=; b=ZbDIjEQAn+QFnyUoy1yfujgtfM/OozH50ozEPSPGCA1hl
+ zn5/kw18ktu/gFrWAoP/QVEa2KgCdX65Rk13BZKG7Wya4kwIEFCwv0T1t4DeO3Wd
+ cOv/v18eNPWntd3CIWnpSA8P9ZF/vJTVHi14nnvbXJo58O8jgHBrFFwZbsQjXUt7
+ nVh+UdrdJudrSGlxrDr4bN2WO6215T/7Vj/FmBBNt5ReCWgdMh4Gyd/OLqGoDTN2
+ j9uEX3tCA0L7pV+0VtPrhloEI9DiLjGxur6QOqfra4OP04TPwIDEACdud22U3Oib
+ 0zMrvILQ5ru8yCMidnwyG9wT8u0OL7YzaP756N9NA==
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4e3nv01dk6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 12 May 2026 15:00:47 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
+ with ESMTP id 64CEuMve020643; Tue, 12 May 2026 15:00:46 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 4e3nebb087-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 12 May 2026 15:00:46 +0000 (GMT)
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 64CF0jEb001769;
+ Tue, 12 May 2026 15:00:45 GMT
+Received: from alaljime-e5-test-20240903-1847.osdevelopmeniad.oraclevcn.com
+ (alaljime-e5-test-20240903-1847.allregionaliads.osdevelopmeniad.oraclevcn.com
+ [100.100.250.206])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
+ 4e3nebb06u-1; Tue, 12 May 2026 15:00:45 +0000 (GMT)
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: sarunkod@amd.com, pbonzini@redhat.com, mst@redhat.com,
+ boris.ostrovsky@oracle.com, alejandro.j.jimenez@oracle.com
+Subject: [PATCH 1/1] amd_iommu: Update command buffer head ptr in MMIO region
+ after wraparound
+Date: Tue, 12 May 2026 15:00:44 +0000
+Message-ID: <20260512150044.334867-1-alejandro.j.jimenez@oracle.com>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 04/17] arm/cpu: Add infra to handle generated ID
- register definitions
-Content-Language: en-US
-To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
- "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "cohuck@redhat.com" <cohuck@redhat.com>,
- "sebott@redhat.com" <sebott@redhat.com>,
- "philmd@linaro.org" <philmd@linaro.org>
-Cc: "maz@kernel.org" <maz@kernel.org>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>,
- "abologna@redhat.com" <abologna@redhat.com>,
- "jdenemar@redhat.com" <jdenemar@redhat.com>
-References: <20260503073541.790215-1-eric.auger@redhat.com>
- <20260503073541.790215-5-eric.auger@redhat.com>
- <CH3PR12MB7548456E92BB5137C5B5846FAB3C2@CH3PR12MB7548.namprd12.prod.outlook.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <CH3PR12MB7548456E92BB5137C5B5846FAB3C2@CH3PR12MB7548.namprd12.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-11_05,2026-05-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ lowpriorityscore=0 spamscore=0 bulkscore=0
+ malwarescore=0 mlxlogscore=999
+ adultscore=0 mlxscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2605050000 definitions=main-2605120156
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEyMDE1NiBTYWx0ZWRfXwE1Qkl/Y1Pl+
+ AibFybX6T097e7SAiZ3ygsE68YXIKWffWz3HWN42L8MSSTfse1CdtaClRYreakDPKdKPxuvAEjg
+ BwS7/OVyLZEvn5+adRXIpbp27E2JmwzNyKJpKINC7Arxtn7kYPEopIWHvTPouTDJXasRRZ1Q7WD
+ SE57doZWPIIgFZ4eX+9yuTpAMS+vFsD/ZELx8W7oKq5+fhsCaCpVowRUYGD9EtSFN/G5JP5gDOH
+ p+inpxU3BHPuDKiUzooFDP5z0bAr0IPTgICyH3xh2GiljaiSNwekBDaj3IsMXyqXGbWwpHLjR0Y
+ tKAxLGodPnX7ZGziDT5FMYi+vELp43XiMn1ck4AKEW+lCHvrpk/zvkO00LVGU0beKZ53iZjYB4h
+ r3VSIo7xWjKE7jw+M6/GG/MnAi0+Wut2HO30y01IoK7OWb3Sk1Qz4Uv7LIGoD96Bt3bBT56ou2s
+ 6MjcAF37bj36bJOu8FtRgTInMI5S64r6BW7TpdB8=
+X-Proofpoint-ORIG-GUID: ug1X7epNw7Ar0WhFa6QUtLSxfixhZuJB
+X-Proofpoint-GUID: ug1X7epNw7Ar0WhFa6QUtLSxfixhZuJB
+X-Authority-Analysis: v=2.4 cv=OMoXGyaB c=1 sm=1 tr=0 ts=6a03409f b=1 cx=c_pps
+ a=e1sVV491RgrpLwSTMOnk8w==:117
+ a=e1sVV491RgrpLwSTMOnk8w==:17
+ a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
+ a=x0eKOSpe3m1H3M0S9YoZ:22 a=69wJf7TsAAAA:8 a=yPCof4ZbAAAA:8
+ a=nVvs5_CVLXPfDsJYVQUA:9 a=O8hF6Hzn-FEA:10 a=Fg1AiH1G6rFz08G2ETeA:22
+ a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf awl=host:13839
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,213 +112,51 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+When processing a command, amdvi_cmdbuf_run() increments cmdbuf_head and
+writes it to the emulated MMIO register space before checking whether it
+has reached the end of the command buffer.
 
+If the incremented value reaches the end of the buffer and the tail pointer
+is zero, the loop exits and the COMMAND_HEAD offset still contains an
+unwrapped value. There are no errors in command processing since internal
+cmdbuf_head state is always correctly updated, but the spec defines the
+CmdHeadPtr field in MMIO Offset 2000h Command Buffer Head Pointer Register
+as RW i.e. guest-visible, so it should be kept consistent.
 
-On 5/7/26 10:58 AM, Shameer Kolothum Thodi wrote:
->
->> -----Original Message-----
->> From: Eric Auger <eric.auger@redhat.com>
->> Sent: 03 May 2026 08:33
->> To: eric.auger.pro@gmail.com; eric.auger@redhat.com; qemu-
->> devel@nongnu.org; qemu-arm@nongnu.org; kvmarm@lists.linux.dev;
->> peter.maydell@linaro.org; richard.henderson@linaro.org;
->> cohuck@redhat.com; sebott@redhat.com; Shameer Kolothum Thodi
->> <skolothumtho@nvidia.com>; philmd@linaro.org
->> Cc: maz@kernel.org; oliver.upton@linux.dev; pbonzini@redhat.com;
->> armbru@redhat.com; berrange@redhat.com; abologna@redhat.com;
->> jdenemar@redhat.com
->> Subject: [PATCH v4 04/17] arm/cpu: Add infra to handle generated ID register
->> definitions
->>
->> External email: Use caution opening links or attachments
->>
->>
->> The known ID regs are populated in a new initialization function
->> named initialize_cpu_sysreg_properties(). That code will be
->> automatically generated from AARCHMRS Registers.json. For the
->> time being let's just describe a single id reg, CTR_EL0. In this
->> description we only care about non RES/RAZ fields, ie. named fields.
->>
->> The registers are populated in an array indexed by ARMIDRegisterIdx
->> and their fields are added in a sorted list.
->>
->> [CH: adapted to reworked register storage]
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
->> ---
->>  target/arm/cpu-idregs.h            | 59 ++++++++++++++++++++++++++++++
->>  target/arm/cpu-sysreg-properties.c | 30 +++++++++++++++
->>  target/arm/cpu64.c                 |  3 ++
->>  target/arm/meson.build             |  3 +-
->>  4 files changed, 94 insertions(+), 1 deletion(-)
->>  create mode 100644 target/arm/cpu-idregs.h
->>  create mode 100644 target/arm/cpu-sysreg-properties.c
->>
->> diff --git a/target/arm/cpu-idregs.h b/target/arm/cpu-idregs.h
->> new file mode 100644
->> index 0000000000..4a9034594d
->> --- /dev/null
->> +++ b/target/arm/cpu-idregs.h
->> @@ -0,0 +1,59 @@
->> +/*
->> + * handle ID registers and their fields
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +#ifndef ARM_CPU_CUSTOM_H
->> +#define ARM_CPU_CUSTOM_H
-> ARM_CPU_IDREGS_H ?
-indeed: TARGET_ARM_CPU_IDREGS__H
->
->> +
->> +#include "qemu/osdep.h"
->> +#include "qemu/error-report.h"
->> +#include "cpu.h"
->> +#include "cpu-sysregs.h"
->> +
->> +typedef struct ARM64SysRegField {
->> +    const char *name; /* name of the field, for instance CTR_EL0_IDC */
->> +    ARMIDRegisterIdx index; /* parent register, e.g. CTR_EL0_IDX */
->> +    int lower; /* lowest bit number of the field in the register */
->> +    int upper; /* highest bit number */
->> +} ARM64SysRegField;
->> +
->> +typedef struct ARM64SysReg {
->> +    const char *name;   /* name of the sysreg, for instance CTR_EL0 */
->> +    ARMSysRegs sysreg;
->> +    ARMIDRegisterIdx index; /* register index, e.g. CTR_EL0_IDX */
->> +    GList *fields; /* list of named fields, excluding RES* */
->> +} ARM64SysReg;
->> +
->> +void initialize_cpu_sysreg_properties(void);
->> +
->> +/*
->> + * List of exposed ID regs (automatically populated from AARCHMRS
->> Registers.json)
->> + */
->> +extern ARM64SysReg arm64_id_regs[NUM_ID_IDX];
->> +
->> +/* Allocate a new field and insert it at the head of the @reg list */
-> It says insert at the head...
->
->> +static inline GList *arm64_sysreg_add_field(ARM64SysReg *reg, const char
->> *name,
->> +                                     uint8_t min, uint8_t max) {
->> +
->> +     ARM64SysRegField *field = g_new0(ARM64SysRegField, 1);
->> +
->> +     field->name = name;
->> +     field->lower = min;
->> +     field->upper = max;
->> +     field->index = reg->index;
->> +
->> +     reg->fields = g_list_append(reg->fields, field);
-> But this is adding to the tail, right?
-indeed use prepend instead
->
->> +     return reg->fields;
-> Don't think the return is used anywhere.
-now becoming static inline void 
+Wrap cmdbuf_head before updating COMMAND_HEAD so the MMIO-visible register
+always matches the internal command buffer head pointer position.
 
-arm64_sysreg_add_field()
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+---
+ hw/i386/amd_iommu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 197e452e3c..5d6a405263 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -1475,12 +1475,12 @@ static void amdvi_cmdbuf_run(AMDVIState *s)
+         trace_amdvi_command_exec(s->cmdbuf_head, s->cmdbuf_tail, s->cmdbuf);
+         amdvi_cmdbuf_exec(s);
+         s->cmdbuf_head += AMDVI_COMMAND_SIZE;
+-        amdvi_writeq_raw(s, AMDVI_MMIO_COMMAND_HEAD, s->cmdbuf_head);
+ 
+         /* wrap head pointer */
+         if (s->cmdbuf_head >= s->cmdbuf_len * AMDVI_COMMAND_SIZE) {
+             s->cmdbuf_head = 0;
+         }
++        amdvi_writeq_raw(s, AMDVI_MMIO_COMMAND_HEAD, s->cmdbuf_head);
+     }
+ }
+ 
 
-Eric
-
->
-> Thanks,
-> Shameer
->
->> +}
->> +
->> +static inline ARM64SysReg *arm64_sysreg_get(ARMIDRegisterIdx index)
->> +{
->> +        ARM64SysReg *reg = &arm64_id_regs[index];
->> +
->> +        reg->index = index;
->> +        reg->sysreg = id_register_sysreg[index];
->> +        return reg;
->> +}
->> +
->> +#endif
->> diff --git a/target/arm/cpu-sysreg-properties.c b/target/arm/cpu-sysreg-
->> properties.c
->> new file mode 100644
->> index 0000000000..5cc06c8f24
->> --- /dev/null
->> +++ b/target/arm/cpu-sysreg-properties.c
->> @@ -0,0 +1,30 @@
->> +/*
->> + * QEMU ARM CPU SYSREG PROPERTIES
->> + * will be automatically generated
->> + *
->> + * Copyright (c) Red Hat, Inc. 2026
->> + *
->> + */
->> +
->> + /* SPDX-License-Identifier: GPL-2.0-or-later */
->> +
->> +#include "cpu-idregs.h"
->> +
->> +ARM64SysReg arm64_id_regs[NUM_ID_IDX];
->> +
->> +void initialize_cpu_sysreg_properties(void)
->> +{
->> +    memset(arm64_id_regs, 0, sizeof(ARM64SysReg) * NUM_ID_IDX);
->> +    /* CTR_EL0 */
->> +    ARM64SysReg *CTR_EL0 = arm64_sysreg_get(CTR_EL0_IDX);
->> +    CTR_EL0->name = "CTR_EL0";
->> +    arm64_sysreg_add_field(CTR_EL0, "TminLine", 32, 37);
->> +    arm64_sysreg_add_field(CTR_EL0, "DIC", 29, 29);
->> +    arm64_sysreg_add_field(CTR_EL0, "IDC", 28, 28);
->> +    arm64_sysreg_add_field(CTR_EL0, "CWG", 24, 27);
->> +    arm64_sysreg_add_field(CTR_EL0, "ERG", 20, 23);
->> +    arm64_sysreg_add_field(CTR_EL0, "DminLine", 16, 19);
->> +    arm64_sysreg_add_field(CTR_EL0, "L1Ip", 14, 15);
->> +    arm64_sysreg_add_field(CTR_EL0, "IminLine", 0, 3);
->> +}
->> +
->> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
->> index a93ad2da5a..b940842d9e 100644
->> --- a/target/arm/cpu64.c
->> +++ b/target/arm/cpu64.c
->> @@ -37,6 +37,7 @@
->>  #include "hw/core/qdev-properties.h"
->>  #include "internals.h"
->>  #include "cpu-features.h"
->> +#include "cpu-idregs.h"
->>
->>  /* convert between <register>_IDX and SYS_<register> */
->>  #define DEF(NAME, OP0, OP1, CRN, CRM, OP2)      \
->> @@ -906,6 +907,8 @@ static void aarch64_cpu_register_types(void)
->>  {
->>      size_t i;
->>
->> +    initialize_cpu_sysreg_properties();
->> +
->>      for (i = 0; i < ARRAY_SIZE(aarch64_cpus); ++i) {
->>          arm_cpu_register(&aarch64_cpus[i]);
->>      }
->> diff --git a/target/arm/meson.build b/target/arm/meson.build
->> index 192ac7c31e..e2f740e48f 100644
->> --- a/target/arm/meson.build
->> +++ b/target/arm/meson.build
->> @@ -9,7 +9,8 @@ arm_user_ss.add(files('gdbstub.c'))
->>
->>  arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
->>    'cpu64.c',
->> -  'gdbstub64.c'
->> +  'gdbstub64.c',
->> +  'cpu-sysreg-properties.c',
->>  ))
->>
->>  arm_common_ss.add(files(
->> --
->> 2.53.0
+base-commit: 8333dba7326d89ce180221c4d0c6d34826a9a4a3
+prerequisite-patch-id: df656299f90e928acad39d99e3701c5641e972d5
+-- 
+2.47.3
 
 
