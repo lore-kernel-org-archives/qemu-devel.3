@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A273FCD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:14:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1497ACD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:14:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuMt-00022x-Ka; Tue, 12 May 2026 17:10:20 -0400
+	id 1wMuMA-0007Ef-0F; Tue, 12 May 2026 17:09:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuMh-0000mR-1h; Tue, 12 May 2026 17:10:07 -0400
+ id 1wMuLm-0004F6-75; Tue, 12 May 2026 17:09:11 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuMd-0003Tb-FI; Tue, 12 May 2026 17:10:06 -0400
+ id 1wMuLk-000399-5D; Tue, 12 May 2026 17:09:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619302; bh=J4Ed4TRf/MsnbFidNRrCCai81Gr6gAV6UQrEHVbJdlQ=;
+ t=1778619301; bh=lO/xH7F2XwYwmnWfiZMLGCxPffnBX5YPHn1p7EpmG9s=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=asafWBQjKI3+7d+TB+WQWopH71R1QwktPAAuqCuoLaBEjJDzxY5mqppmkgUClgDJz
- SsZK8EUygrzgJJB5DEL3RGM2KcNt1/kspHtWE3tDeL1mjxV2ts2Qflszq7Qb4NH2Ou
- csSIxydLTV+dz0qZF6ENOL4JeVgIujO9SxgyIf7NYZoy8nU4va4NSxdC/O3YhZAviU
- 5/s3ijWJAy6enSkJwhG+Q9KJBwiJN+gjlJOHdGwFdJSCrSXumvAMUFk9bmU52vK+Uj
- I0X5B76HZBi5khKu6WeFbcvE5pTdLZydyhxqei2K/W+A7z/pGoI1UdS2FxxqEGkGtc
- A8T9kKraIBNtw==
+ b=fHq9U2HGSRiSH4it/rDlCi7kKEjqexWNYEZ6lU0EH0O4mrXa7pDhKIC9KC81lILuQ
+ lq7ojYLBEtLgaoJC09j8V52BWZ8NE2G7QG/u/CiE8U+gryC8V5vgCOpnp8Osd56YgF
+ HWs92Xb08wOk1sezcKtTOz4s1U57GuanhdajiFI0bI+SapE7qV2wiUWKobWrPcnF7L
+ OWyMcpkgRTKzh6Qs195ke8KoC+hIQfL0Amzl7w5KUCHp1/cvhUdGAQ3fRaN2oftCyU
+ kX9f8hqT8/74fSqLLSw1iBJVFmmCv7CeeWrDqmKTuadczjWwJzKTvtdJwTrx7c0DAf
+ vERGlYbDHGDXA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 59ABA1AA365;
- Tue, 12 May 2026 23:55:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D36AE1AA35D;
+ Tue, 12 May 2026 23:55:01 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 67B573ABCD5;
- Tue, 12 May 2026 23:55:06 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E00A23ABCCD;
+ Tue, 12 May 2026 23:55:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 040/117] lsi53c895a: keep lsi_request and SCSIRequest
- in local variables
-Date: Tue, 12 May 2026 23:53:42 +0300
-Message-ID: <20260512205503.361097-40-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 032/117] tcg: Pass host-endian values to
+ plugin_gen_mem_callbacks_*
+Date: Tue, 12 May 2026 23:53:34 +0300
+Message-ID: <20260512205503.361097-32-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
@@ -69,79 +70,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Protect against changes from reentrant device MMIO during DMA, by always
-operating on the same request.
+If the host does not support swapped-endian loads and stores,
+then we emulate those within the tcg expanders with explicit
+bswap operations.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 1ca38f84e19427c462f077390492f971f9eb11eb)
+However, we were passing values to the plugin interface in
+the middle of those bswap operations, which meant that we
+would pass values of the wrong endianness to plugins when
+running on hosts without swapped-endian loads and stores.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3351
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20260325024252.3369186-2-pierrick.bouvier@linaro.org
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+(cherry picked from commit 539421a428fd4b8231d9be042143f2d09c719e2a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
-index 651f562d82..3f8d7a071c 100644
---- a/hw/scsi/lsi53c895a.c
-+++ b/hw/scsi/lsi53c895a.c
-@@ -626,6 +626,8 @@ static void lsi_do_dma(LSIState *s, int out)
-     uint32_t count;
-     dma_addr_t addr;
-     SCSIDevice *dev;
-+    SCSIRequest *req;
-+    lsi_request *p;
+diff --git a/tcg/tcg-op-ldst.c b/tcg/tcg-op-ldst.c
+index 7716c3ad7c..c77e394f6c 100644
+--- a/tcg/tcg-op-ldst.c
++++ b/tcg/tcg-op-ldst.c
+@@ -274,9 +274,6 @@ static void tcg_gen_qemu_ld_i32_int(TCGv_i32 val, TCGTemp *addr,
+     addr_new = tci_extend_addr(addr);
+     copy_addr = plugin_maybe_preserve_addr(addr);
+     gen_ldst1(INDEX_op_qemu_ld, TCG_TYPE_I32, tcgv_i32_temp(val), addr_new, oi);
+-    plugin_gen_mem_callbacks_i32(val, copy_addr, addr, orig_oi,
+-                                 QEMU_PLUGIN_MEM_R);
+-    maybe_free_addr(addr, addr_new);
  
-     if (!s->current || !s->current->dma_len) {
-         /* Wait until data is available.  */
-@@ -633,12 +635,14 @@ static void lsi_do_dma(LSIState *s, int out)
-         return;
+     if ((orig_memop ^ memop) & MO_BSWAP) {
+         switch (orig_memop & MO_SIZE) {
+@@ -292,6 +289,10 @@ static void tcg_gen_qemu_ld_i32_int(TCGv_i32 val, TCGTemp *addr,
+             g_assert_not_reached();
+         }
      }
- 
--    dev = s->current->req->dev;
-+    p = s->current;
-+    req = s->current->req;
-+    dev = req->dev;
-     assert(dev);
- 
-     count = s->dbc;
--    if (count > s->current->dma_len)
--        count = s->current->dma_len;
-+    if (count > p->dma_len)
-+        count = p->dma_len;
- 
-     addr = s->dnad;
-     /* both 40 and Table Indirect 64-bit DMAs store upper bits in dnad64 */
-@@ -653,21 +657,22 @@ static void lsi_do_dma(LSIState *s, int out)
-     s->csbc += count;
-     s->dnad += count;
-     s->dbc -= count;
--     if (s->current->dma_buf == NULL) {
--        s->current->dma_buf = scsi_req_get_buf(s->current->req);
-+    if (p->dma_buf == NULL) {
-+        p->dma_buf = scsi_req_get_buf(req);
-     }
-     /* ??? Set SFBR to first data byte.  */
-     if (out) {
--        lsi_mem_read(s, addr, s->current->dma_buf, count);
-+        lsi_mem_read(s, addr, p->dma_buf, count);
-     } else {
--        lsi_mem_write(s, addr, s->current->dma_buf, count);
-+        lsi_mem_write(s, addr, p->dma_buf, count);
-     }
--    s->current->dma_len -= count;
--    if (s->current->dma_len == 0) {
--        s->current->dma_buf = NULL;
--        scsi_req_continue(s->current->req);
 +
-+    p->dma_len -= count;
-+    if (p->dma_len == 0) {
-+        p->dma_buf = NULL;
-+        scsi_req_continue(req);
-     } else {
--        s->current->dma_buf += count;
-+        p->dma_buf += count;
-         lsi_resume_script(s);
++    plugin_gen_mem_callbacks_i32(val, copy_addr, addr, orig_oi,
++                                 QEMU_PLUGIN_MEM_R);
++    maybe_free_addr(addr, addr_new);
+ }
+ 
+ void tcg_gen_qemu_ld_i32_chk(TCGv_i32 val, TCGTemp *addr, TCGArg idx,
+@@ -302,10 +303,10 @@ void tcg_gen_qemu_ld_i32_chk(TCGv_i32 val, TCGTemp *addr, TCGArg idx,
+     tcg_gen_qemu_ld_i32_int(val, addr, idx, memop);
+ }
+ 
+-static void tcg_gen_qemu_st_i32_int(TCGv_i32 val, TCGTemp *addr,
++static void tcg_gen_qemu_st_i32_int(TCGv_i32 orig_val, TCGTemp *addr,
+                                     TCGArg idx, MemOp memop)
+ {
+-    TCGv_i32 swap = NULL;
++    TCGv_i32 val = orig_val;
+     MemOpIdx orig_oi, oi;
+     TCGTemp *addr_new;
+ 
+@@ -314,29 +315,29 @@ static void tcg_gen_qemu_st_i32_int(TCGv_i32 val, TCGTemp *addr,
+     orig_oi = oi = make_memop_idx(memop, idx);
+ 
+     if ((memop & MO_BSWAP) && !tcg_target_has_memory_bswap(memop)) {
+-        swap = tcg_temp_ebb_new_i32();
++        val = tcg_temp_ebb_new_i32();
+         switch (memop & MO_SIZE) {
+         case MO_16:
+-            tcg_gen_bswap16_i32(swap, val, 0);
++            tcg_gen_bswap16_i32(val, orig_val, 0);
+             break;
+         case MO_32:
+-            tcg_gen_bswap32_i32(swap, val);
++            tcg_gen_bswap32_i32(val, orig_val);
+             break;
+         default:
+             g_assert_not_reached();
+         }
+-        val = swap;
+         memop &= ~MO_BSWAP;
+         oi = make_memop_idx(memop, idx);
+     }
+ 
+     addr_new = tci_extend_addr(addr);
+     gen_ldst1(INDEX_op_qemu_st, TCG_TYPE_I32, tcgv_i32_temp(val), addr_new, oi);
+-    plugin_gen_mem_callbacks_i32(val, NULL, addr, orig_oi, QEMU_PLUGIN_MEM_W);
++    plugin_gen_mem_callbacks_i32(orig_val, NULL, addr, orig_oi,
++                                 QEMU_PLUGIN_MEM_W);
+     maybe_free_addr(addr, addr_new);
+ 
+-    if (swap) {
+-        tcg_temp_free_i32(swap);
++    if (val != orig_val) {
++        tcg_temp_free_i32(val);
      }
  }
+ 
+@@ -382,9 +383,6 @@ static void tcg_gen_qemu_ld_i64_int(TCGv_i64 val, TCGTemp *addr,
+     addr_new = tci_extend_addr(addr);
+     copy_addr = plugin_maybe_preserve_addr(addr);
+     gen_ld_i64(val, addr_new, oi);
+-    plugin_gen_mem_callbacks_i64(val, copy_addr, addr, orig_oi,
+-                                 QEMU_PLUGIN_MEM_R);
+-    maybe_free_addr(addr, addr_new);
+ 
+     if ((orig_memop ^ memop) & MO_BSWAP) {
+         int flags = (orig_memop & MO_SIGN
+@@ -404,6 +402,10 @@ static void tcg_gen_qemu_ld_i64_int(TCGv_i64 val, TCGTemp *addr,
+             g_assert_not_reached();
+         }
+     }
++
++    plugin_gen_mem_callbacks_i64(val, copy_addr, addr, orig_oi,
++                                 QEMU_PLUGIN_MEM_R);
++    maybe_free_addr(addr, addr_new);
+ }
+ 
+ void tcg_gen_qemu_ld_i64_chk(TCGv_i64 val, TCGTemp *addr, TCGArg idx,
+@@ -414,10 +416,10 @@ void tcg_gen_qemu_ld_i64_chk(TCGv_i64 val, TCGTemp *addr, TCGArg idx,
+     tcg_gen_qemu_ld_i64_int(val, addr, idx, memop);
+ }
+ 
+-static void tcg_gen_qemu_st_i64_int(TCGv_i64 val, TCGTemp *addr,
++static void tcg_gen_qemu_st_i64_int(TCGv_i64 orig_val, TCGTemp *addr,
+                                     TCGArg idx, MemOp memop)
+ {
+-    TCGv_i64 swap = NULL;
++    TCGv_i64 val = orig_val;
+     MemOpIdx orig_oi, oi;
+     TCGTemp *addr_new;
+ 
+@@ -431,32 +433,32 @@ static void tcg_gen_qemu_st_i64_int(TCGv_i64 val, TCGTemp *addr,
+     orig_oi = oi = make_memop_idx(memop, idx);
+ 
+     if ((memop & MO_BSWAP) && !tcg_target_has_memory_bswap(memop)) {
+-        swap = tcg_temp_ebb_new_i64();
++        val = tcg_temp_ebb_new_i64();
+         switch (memop & MO_SIZE) {
+         case MO_16:
+-            tcg_gen_bswap16_i64(swap, val, 0);
++            tcg_gen_bswap16_i64(val, orig_val, 0);
+             break;
+         case MO_32:
+-            tcg_gen_bswap32_i64(swap, val, 0);
++            tcg_gen_bswap32_i64(val, orig_val, 0);
+             break;
+         case MO_64:
+-            tcg_gen_bswap64_i64(swap, val);
++            tcg_gen_bswap64_i64(val, orig_val);
+             break;
+         default:
+             g_assert_not_reached();
+         }
+-        val = swap;
+         memop &= ~MO_BSWAP;
+         oi = make_memop_idx(memop, idx);
+     }
+ 
+     addr_new = tci_extend_addr(addr);
+     gen_st_i64(val, addr_new, oi);
+-    plugin_gen_mem_callbacks_i64(val, NULL, addr, orig_oi, QEMU_PLUGIN_MEM_W);
++    plugin_gen_mem_callbacks_i64(orig_val, NULL, addr, orig_oi,
++                                 QEMU_PLUGIN_MEM_W);
+     maybe_free_addr(addr, addr_new);
+ 
+-    if (swap) {
+-        tcg_temp_free_i64(swap);
++    if (val != orig_val) {
++        tcg_temp_free_i64(val);
+     }
+ }
+ 
 -- 
 2.47.3
 
