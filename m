@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19DCECD4F24
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:06:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A92BCD4F24
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:06:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuI9-0001Fb-OR; Tue, 12 May 2026 17:05:26 -0400
+	id 1wMuCp-0003DD-9x; Tue, 12 May 2026 16:59:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuHI-0005x9-0J; Tue, 12 May 2026 17:04:32 -0400
+ id 1wMuBd-0002J6-9b; Tue, 12 May 2026 16:58:49 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuHG-0000KM-D2; Tue, 12 May 2026 17:04:31 -0400
+ id 1wMuBb-0004hg-31; Tue, 12 May 2026 16:58:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619279; bh=YQmwLk+vRBI6splGcyyvXUTSOTFLsL68b5MyI8XXBH8=;
+ t=1778619275; bh=OLAauy1smyOkvWIcldltajH0DhAapC3fpOR51fDXTAU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=vhwHwb85bbmNtcVBO57tVDvzrJdsDR52xR0aESzZyEaHo/VWujsyrHSa8aROIOo+u
- KnlmCxxq02q6XYHr2DisFcWF5q7XqWUtR5tkq0nqXwKNDv7z7PhO/AxzDFaswFHpfF
- sshhw9KmalWdI7queP0tvikq4KREKkrBjSunjVARPU94lUMOo192rrC6BVmND8NKqn
- dkCaL2DJSd+bcKlVD8dolKiKn03WW/Esg8pguSQs80u1u4fKB078LTMJ35fg6KC7G0
- EDumZj0kGZ817xhWky1lv/SvHEhvLwqu+ME7e3c/+hN9NaclYglXnHRoRbDWpNcKja
- PySW5jkX1E3lQ==
+ b=bb6eGG6PUqJJRjAee4U62VzQdRWq/zkEfOl3l6UFVv9GxRPBIiOEcSphdyezS+g1a
+ jXZ1mGShp21IReEkR9b4mj1pYUVx213snlXtSAGxhIa30tRGcGBBpgr7qjHuqcACh/
+ l7MyO/Fu5n2aZuTntOLF8UG41EUg7qXzxdA8M2PI+gM25hjfCueiXmM6xga5eq3Hzs
+ 9cNl/FSGGrd+r7doeOVl/G9KuLRTZy6l4EBnUrBJ7P7AOIkexNbV2BNjHB6U6en95M
+ t8szSH/Ge4VGZTAR1gYPl1QdaHeJWVLD7e1wC4VAm+E4rTa4NdZvuygWJC9KMHlvf4
+ UpHwXTGHpnDoA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BA9271AA32D;
- Tue, 12 May 2026 23:54:39 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id DAA4A1AA2F4;
+ Tue, 12 May 2026 23:54:35 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C7E783ABC9E;
- Tue, 12 May 2026 23:54:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E60683ABC65;
+ Tue, 12 May 2026 23:54:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?=E5=AE=8B=E6=96=87=E6=AD=A6?= <iyzsong@member.fsf.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 097/107] hw/net/allwinner-sun8i-emac: Flush queued
- packets when rx is enabled
-Date: Tue, 12 May 2026 23:54:24 +0300
-Message-ID: <20260512205437.360850-97-mjt@tls.msk.ru>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 040/107] ui/vnc-jobs: fix VncRectEntry leak on job
+ cleanup
+Date: Tue, 12 May 2026 23:53:27 +0300
+Message-ID: <20260512205437.360850-40-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
@@ -55,7 +56,7 @@ X-Spam_score: -2.0
 X-Spam_bar: --
 X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,39 +72,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: 宋文武 <iyzsong@member.fsf.org>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The RX_CTL_0 register includes the RX_EN receive-enable bit,
-which allwinner_sun8i_emac_can_receive() checks. That means that
-if the guest sets it we need to call qemu_flush_queued_packets()
-as we might now be able to handle them.
+When a VncJob is freed, its associated VncRectEntry list must also be
+freed. Previously, vnc_job_push() and the disconnected path in
+vnc_worker_thread_loop() called g_free(job) directly, leaking all
+VncRectEntry allocations.
 
-This fixes a bug where networking didn't work in u-boot on the
-orangepi-pc machine.
+Introduce vnc_job_free() which iterates and frees the rectangle entries
+before freeing the job itself, and use it in both paths.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3459
-Signed-off-by: 宋文武 <iyzsong@member.fsf.org>
-Message-id: 20260430040753.3337-1-iyzsong@envs.net
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-[PMM: expanded commit message, removed unneeded RX_EN test]
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit a7f27d6903b30bcea21c46986cb7507edcbc970c)
+Also add QLIST_REMOVE() in the worker loop before g_free(entry), so
+that entries processed during normal operation are properly unlinked.
+Without this, vnc_job_free() would iterate dangling pointers to
+already-freed entries, causing use-after-free.
+
+Fixes: bd023f953e5e ("vnc: threaded VNC server")
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+(cherry picked from commit 3cae0b46be5416b26039df5259ffc8fcf2989516)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/allwinner-sun8i-emac.c b/hw/net/allwinner-sun8i-emac.c
-index 5adb41dc46..5c1b75897d 100644
---- a/hw/net/allwinner-sun8i-emac.c
-+++ b/hw/net/allwinner-sun8i-emac.c
-@@ -727,6 +727,9 @@ static void allwinner_sun8i_emac_write(void *opaque, hwaddr offset,
-         break;
-     case REG_RX_CTL_0:          /* Receive Control 0 */
-         s->rx_ctl0 = value;
-+        if (allwinner_sun8i_emac_can_receive(nc)) {
-+            qemu_flush_queued_packets(nc);
-+        }
-         break;
-     case REG_RX_CTL_1:          /* Receive Control 1 */
-         s->rx_ctl1 = value | RX_CTL1_RX_MD;
+diff --git a/ui/vnc-jobs.c b/ui/vnc-jobs.c
+index d3486af9e2..dd811bf658 100644
+--- a/ui/vnc-jobs.c
++++ b/ui/vnc-jobs.c
+@@ -108,11 +108,25 @@ int vnc_job_add_rect(VncJob *job, int x, int y, int w, int h)
+     return 1;
+ }
+ 
++static void vnc_job_free(VncJob *job)
++{
++    VncRectEntry *entry, *tmp;
++
++    if (!job) {
++        return;
++    }
++    QLIST_FOREACH_SAFE(entry, &job->rectangles, next, tmp) {
++        /* no need for QLIST_REMOVE(entry, next) */
++        g_free(entry);
++    }
++    g_free(job);
++}
++
+ void vnc_job_push(VncJob *job)
+ {
+     vnc_lock_queue(queue);
+     if (queue->exit || QLIST_EMPTY(&job->rectangles)) {
+-        g_free(job);
++        vnc_job_free(job);
+     } else {
+         QTAILQ_INSERT_TAIL(&queue->jobs, job, next);
+         qemu_cond_broadcast(&queue->cond);
+@@ -302,6 +316,7 @@ static int vnc_worker_thread_loop(VncJobQueue *queue)
+                 n_rectangles += n;
+             }
+         }
++        QLIST_REMOVE(entry, next);
+         g_free(entry);
+     }
+     trace_vnc_job_nrects(&vs, job, n_rectangles);
+@@ -330,7 +345,7 @@ disconnected:
+     QTAILQ_REMOVE(&queue->jobs, job, next);
+     vnc_unlock_queue(queue);
+     qemu_cond_broadcast(&queue->cond);
+-    g_free(job);
++    vnc_job_free(job);
+     vs.magic = 0;
+     return 0;
+ }
 -- 
 2.47.3
 
