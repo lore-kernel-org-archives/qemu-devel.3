@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD62CD343F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8443BCD4F21
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:10:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuLf-0003q5-TG; Tue, 12 May 2026 17:09:04 -0400
+	id 1wMuIM-0002iw-9K; Tue, 12 May 2026 17:05:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuKs-00013s-9H; Tue, 12 May 2026 17:08:16 -0400
+ id 1wMuHE-0005rh-Rc; Tue, 12 May 2026 17:04:30 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuKo-0002gE-Gn; Tue, 12 May 2026 17:08:12 -0400
+ id 1wMuHC-0008W2-HU; Tue, 12 May 2026 17:04:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619301; bh=6YQO22w3Zwbye/yy8vSPsyzOejOaTOYJPzkrPIetztY=;
+ t=1778619279; bh=OerGX+5xDnr3duzGefULOnLdS4RvrTLOQ1p4qTB/1Q4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=kXDjNdGTbUcHV9qZuIzbUFtc5UNum4UtTkfgXQ8om4lLs1iEw2EzgtW01yjyL4Fcz
- Vdn5tGUbshoFhy1VxEcxLKjmaKVfPrBBwhZM4+UPZNj2QoWHXkS8oqqsoNvBqCTGiL
- eUMSIscCzlaLCZKRQaFXL5R1Zz+gK7wrE4TiX7X7R45rEFtJ93aOBZRL8d/Jj82xOS
- gUGglybBHAay7y3hzOf/EDxOO/OtORU4l7lInJVEUAabUUpwPLnfn9j3xEMaOmm9VM
- hf50EIcJkThirSpmlrzHByWZhyckm+tHZxyusbYlBPgu/22CeySLQLxBQ7ZvYY9ErW
- qEfceXcu2b9Ng==
+ b=VewuWkfK+GUiVPWwNwg58aPXitLOyLdng1zlBC+uOsdhS4bBAhPVxXdCxk/JBaMau
+ HDOAM5v/SnfLXGBNs929g/09j2mAbSTyazkVvVjCbhqSlrqveeISS/dUrgzikHKOWb
+ ffWgJlsOsG4fY7wskq1FsybgReMZ3Hs9TECgGB0djT4EKDf3vlH7pTfVH3aapyu88a
+ H3xkFPhh4/BfHKDvb64457OxM8l9BrA9wwxiFLSRgsSAA7exxQzkLZjruX4Us+3VTg
+ NJLNM40+GwOzMThpSXPp2A4ABkos8RD/sX+QQk9GdFEGWMM0z9+byyFTjbHY4JNJYe
+ Sz4BIHenM3nVA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 54A731AA355;
- Tue, 12 May 2026 23:55:01 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A001C1AA32B;
+ Tue, 12 May 2026 23:54:39 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 60CCA3ABCC5;
- Tue, 12 May 2026 23:55:05 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id AA1DF3ABC9C;
+ Tue, 12 May 2026 23:54:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jose Martins <josemartins90@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>,
+Cc: qemu-stable@nongnu.org, BALATON Zoltan <balaton@eik.bme.hu>,
+ Bernhard Beschow <shentey@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 024/117] target/arm: fix s2prot not set for two-stage
- PMSA translations
-Date: Tue, 12 May 2026 23:53:26 +0300
-Message-ID: <20260512205503.361097-24-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 095/107] hw/ppc/e500: Move clock and TB frequency to
+ machine class
+Date: Tue, 12 May 2026 23:54:22 +0300
+Message-ID: <20260512205437.360850-95-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
-References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
+References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,53 +72,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jose Martins <josemartins90@gmail.com>
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-Commit a811c5dafb7 ("target/arm: Implement get_S2prot_indirect")
-changed get_phys_addr_twostage() to combine stage 1 and stage 2
-permissions using the new s2prot field:
+Different machines have different frequencies so make this
+configurable in machine class instead of using a hard coded constant.
 
-  result->f.prot = s1_prot & result->s2prot;
-
-The LPAE stage 2 path sets result->s2prot explicitly, but the PMSA
-stage 2 path (get_phys_addr_pmsav8) only sets result->f.prot, leaving
-s2prot at zero. This causes the combined permission to be zero,
-resulting in addr_read being set to -1 in the TLB entry and triggering
-an assertion in atomic_mmu_lookup() when the guest executes an atomic
-instruction on a two-stage PMSA platform (e.g. Cortex-R52 with EL2).
-
-Set s2prot from f.prot after the PMSA stage 2 lookup, consistent with
-what the LPAE path does.
-
-Cc: qemu-stable@nongnu.org
-Fixes: a811c5dafb7 ("target/arm: Implement get_S2prot_indirect")
-Signed-off-by: Jose Martins <josemartins90@gmail.com>
-[PMM: refer to the right commit in the commit message]
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260321231916.2852653-1-josemartins90@gmail.com
-Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 32ebd6c09c18f860671030060cfedabd94c846fb)
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Acked-by: Bernhard Beschow <shentey@gmail.com>
+Message-ID: <431166f96ff12ff3dbc670d40544974415f11305.1748012109.git.balaton@eik.bme.hu>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit ea585b1022f7c1ac6e465aa1fe869de4c20ca943)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 2e6b149b2d..b2ae00b89e 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -3210,6 +3210,13 @@ static bool get_phys_addr_pmsav8(CPUARMState *env,
+diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+index 7cc988b2be..de99c9381f 100644
+--- a/hw/ppc/e500.c
++++ b/hw/ppc/e500.c
+@@ -79,8 +79,6 @@
+ #define MPC85XX_ESDHC_IRQ          72
+ #define RTC_REGS_OFFSET            0x68
  
-     ret = pmsav8_mpu_lookup(env, address, access_type, ptw->in_prot_check,
-                             mmu_idx, secure, result, fi, NULL);
-+    /*
-+     * For two-stage PMSA translations, s2prot holds the stage 2
-+     * permissions to be combined with stage 1 in get_phys_addr_twostage().
-+     */
-+    if (regime_is_stage2(mmu_idx)) {
-+        result->s2prot = result->f.prot;
-+    }
-     if (sattrs.subpage) {
-         result->f.lg_page_size = 0;
+-#define PLATFORM_CLK_FREQ_HZ       (400 * 1000 * 1000)
+-
+ struct boot_info
+ {
+     uint32_t dt_base;
+@@ -120,7 +118,7 @@ static uint32_t *pci_map_create(void *fdt, uint32_t mpic, int first_slot,
+ }
+ 
+ static void dt_serial_create(void *fdt, unsigned long long offset,
+-                             const char *soc, const char *mpic,
++                             const char *soc, uint32_t freq, const char *mpic,
+                              const char *alias, int idx, bool defcon)
+ {
+     char *ser;
+@@ -131,7 +129,7 @@ static void dt_serial_create(void *fdt, unsigned long long offset,
+     qemu_fdt_setprop_string(fdt, ser, "compatible", "ns16550");
+     qemu_fdt_setprop_cells(fdt, ser, "reg", offset, 0x100);
+     qemu_fdt_setprop_cell(fdt, ser, "cell-index", idx);
+-    qemu_fdt_setprop_cell(fdt, ser, "clock-frequency", PLATFORM_CLK_FREQ_HZ);
++    qemu_fdt_setprop_cell(fdt, ser, "clock-frequency", freq);
+     qemu_fdt_setprop_cells(fdt, ser, "interrupts", 42, 2);
+     qemu_fdt_setprop_phandle(fdt, ser, "interrupt-parent", mpic);
+     qemu_fdt_setprop_string(fdt, "/aliases", alias, ser);
+@@ -382,8 +380,7 @@ static int ppce500_load_device_tree(PPCE500MachineState *pms,
+     int fdt_size;
+     void *fdt;
+     uint8_t hypercall[16];
+-    uint32_t clock_freq = PLATFORM_CLK_FREQ_HZ;
+-    uint32_t tb_freq = PLATFORM_CLK_FREQ_HZ;
++    uint32_t clock_freq, tb_freq;
+     int i;
+     char compatible_sb[] = "fsl,mpc8544-immr\0simple-bus";
+     char *soc;
+@@ -484,6 +481,9 @@ static int ppce500_load_device_tree(PPCE500MachineState *pms,
+         if (kvmppc_get_hasidle(env)) {
+             qemu_fdt_setprop(fdt, "/hypervisor", "has-idle", NULL, 0);
+         }
++    } else {
++        clock_freq = pmc->clock_freq;
++        tb_freq = pmc->tb_freq;
      }
+ 
+     /* Create CPU nodes */
+@@ -564,12 +564,12 @@ static int ppce500_load_device_tree(PPCE500MachineState *pms,
+      */
+     if (serial_hd(1)) {
+         dt_serial_create(fdt, MPC8544_SERIAL1_REGS_OFFSET,
+-                         soc, mpic, "serial1", 1, false);
++                         soc, pmc->clock_freq, mpic, "serial1", 1, false);
+     }
+ 
+     if (serial_hd(0)) {
+         dt_serial_create(fdt, MPC8544_SERIAL0_REGS_OFFSET,
+-                         soc, mpic, "serial0", 0, true);
++                         soc, pmc->clock_freq, mpic, "serial0", 0, true);
+     }
+ 
+     /* i2c */
+@@ -967,7 +967,7 @@ void ppce500_init(MachineState *machine)
+         env->spr_cb[SPR_BOOKE_PIR].default_value = cs->cpu_index = i;
+         env->mpic_iack = pmc->ccsrbar_base + MPC8544_MPIC_REGS_OFFSET + 0xa0;
+ 
+-        ppc_booke_timers_init(cpu, PLATFORM_CLK_FREQ_HZ, PPC_TIMER_E500);
++        ppc_booke_timers_init(cpu, pmc->tb_freq, PPC_TIMER_E500);
+ 
+         /* Register reset handler */
+         if (!i) {
+diff --git a/hw/ppc/e500.h b/hw/ppc/e500.h
+index 01db102625..00f490519c 100644
+--- a/hw/ppc/e500.h
++++ b/hw/ppc/e500.h
+@@ -5,6 +5,8 @@
+ #include "hw/platform-bus.h"
+ #include "qom/object.h"
+ 
++#define PLATFORM_CLK_FREQ_HZ (400 * 1000 * 1000)
++
+ struct PPCE500MachineState {
+     /*< private >*/
+     MachineState parent_obj;
+@@ -37,6 +39,8 @@ struct PPCE500MachineClass {
+     hwaddr pci_mmio_base;
+     hwaddr pci_mmio_bus_base;
+     hwaddr spin_base;
++    uint32_t clock_freq;
++    uint32_t tb_freq;
+ };
+ 
+ void ppce500_init(MachineState *machine);
+diff --git a/hw/ppc/e500plat.c b/hw/ppc/e500plat.c
+index 70a8033373..a68a54db9e 100644
+--- a/hw/ppc/e500plat.c
++++ b/hw/ppc/e500plat.c
+@@ -93,6 +93,8 @@ static void e500plat_machine_class_init(ObjectClass *oc, void *data)
+     pmc->pci_mmio_base = 0xC00000000ULL;
+     pmc->pci_mmio_bus_base = 0xE0000000ULL;
+     pmc->spin_base = 0xFEF000000ULL;
++    pmc->clock_freq = PLATFORM_CLK_FREQ_HZ;
++    pmc->tb_freq = PLATFORM_CLK_FREQ_HZ;
+ 
+     mc->desc = "generic paravirt e500 platform";
+     mc->init = e500plat_init;
+diff --git a/hw/ppc/mpc8544ds.c b/hw/ppc/mpc8544ds.c
+index d74af766ee..fa891d5c6c 100644
+--- a/hw/ppc/mpc8544ds.c
++++ b/hw/ppc/mpc8544ds.c
+@@ -55,6 +55,8 @@ static void mpc8544ds_machine_class_init(ObjectClass *oc, void *data)
+     pmc->pci_mmio_bus_base = 0xC0000000ULL;
+     pmc->pci_pio_base = 0xE1000000ULL;
+     pmc->spin_base = 0xEF000000ULL;
++    pmc->clock_freq = PLATFORM_CLK_FREQ_HZ;
++    pmc->tb_freq = PLATFORM_CLK_FREQ_HZ;
+ 
+     mc->desc = "mpc8544ds";
+     mc->init = mpc8544ds_init;
 -- 
 2.47.3
 
