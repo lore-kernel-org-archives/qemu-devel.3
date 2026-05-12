@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62252CD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:23:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4310FCD4F24
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 06:23:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMgVz-0000qS-FL; Tue, 12 May 2026 02:22:47 -0400
+	id 1wMgWL-00017z-BS; Tue, 12 May 2026 02:23:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgVk-0000gA-B6
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:22:32 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgWJ-00014e-Pj
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:23:08 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgVh-00049x-VG
- for qemu-devel@nongnu.org; Tue, 12 May 2026 02:22:31 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-44b330c5cc6so3704846f8f.1
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 23:22:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMgWH-0004nq-Jt
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 02:23:07 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-48e56c1bf5dso31029505e9.3
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 23:23:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778566947; x=1779171747; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778566982; x=1779171782; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=EQnBp7Gj5TcacccipAB/n9mwbGRUt4USwHdRZECWo90=;
- b=j8Om0IbxselFUDMQTowKTxHgsRuE9LAt9cj517PsMOaSR5ob6kfwTX4LZ7G5ekgqG6
- Kb9Y1tLR3u0cW2B900LkYcTKkmE/dGs6/gREdxvKP8AxzJsky5RzWUFwjwZCtoDOym5Q
- +ipK9j+gbCGiksuj/wJN6I6PbnZUFO08Z/W9geVlN8+9V/+fDfihqLjBMdEPBd1zUscy
- noqXR6X0ToSWEFI0hwSRuZr1xTaM8V3VJ++xWM0mINwHFRqh9/K/M61vMT1muUtYu+QH
- DXogtcMn5ZvNlpz7DwiTotBWWtN0tO9wi09T5W+CqcJbjsEfYWZsoChKWv7OnWB7d3II
- YM+w==
+ :reply-to; bh=fG2F23ViZCDQaV13ekvtxg89EgiB1GeZgfbNuM5RSM4=;
+ b=wlVLjQNGXt3a/KaIzo5unnWw615+lHR8Cf2B6z+qlJvXMoGb2tlH8SjzalP+s9A/5P
+ 6TjxxLevglvtPGNkMu+zPXqx/Q+hlOJVAMPZKc37mqyULuKddmeD2csCwNCnbO1Lf7Pp
+ hd3wmjxBrpLa56snUq3vC7B4L2e0gnOgSFai+E7ZsYFnr4R0DZawWbFJ3ffqLFvy32oh
+ shskQDSUCr2+QgUzrcX2fvrsCt/BMFEpQVF+gV4Eq+v+2qNWD61ibGVv4hNiS4NcxPTK
+ aHFvlh77DRBhfiZXYwy44cOhM+Bet097tCAk+qBkMOMuiD4nSpuhmkMP0888gYJT2C/O
+ 8hzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778566947; x=1779171747;
+ d=1e100.net; s=20251104; t=1778566982; x=1779171782;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=EQnBp7Gj5TcacccipAB/n9mwbGRUt4USwHdRZECWo90=;
- b=NSoc6w7bv+a51glkSTsCCFaTXUYAGFwxRnUuEb2KeWspt1NHHWnUiOy5OGcDi63E5G
- ZYPXWHBG7Edvm8LlUmxTYfYSS1c2TnRhiElZ44KL9JgUy2PQYpqNZYC3/HPBQrqRMQPS
- jg+y3Je5Bu9z4BV5mIyD8SK1YahWPgo4MaUkVJfPaVHRolZ58DVizfTa/V0I8ZpdNWtT
- xqWs+N4JNs/gwHZB3cGHSF9bi7win9pu+HlIZ+RCpkIZWJo1aNqneav5qWYIJhLbbnCk
- xY62H3hUewaAEAzfnaaQ+isZ4sbON8XTLv0LAwlMwuRM1MbDP7zqi3alD9Du1UQa0qy3
- h0zw==
-X-Gm-Message-State: AOJu0YzwAFUD9Wqi33eks31YPBUam1IjQ/gDEW+/6EAduTYe7h45K8Ds
- /Na1Dxvj0O0rZ7vp90qDK+vOYM/jK4VwUAYUVN2SzBBK/q2yT0amC9WNQ0yk5ooDhkcVCJYSiuc
- fgNltjfA=
-X-Gm-Gg: Acq92OGI6+4Cp1j3pvMv7c8vyQcVFLsm16/t/m6JE8mcFMEoEBxGMdksQg0y8dbqf7Y
- LnEda/wji8nUUV66WEObioT4ml2kilBcdU/3hd4P6OuSa75D3zCDuTgulbMRYpQaj/rk4URVycK
- 6RWa811tU1SK6ZoHv74t4K5FcyhDPg4h4kW3SuJv1E87nr3Jusk2a+ys0lkARx67rfCFa5LnAyj
- HPlhUmEqtfZSNR2b3TvntmGxs3VZlYEY8TeLJy6PP1yGGMCX5hChK4bEDILFaakB7cwGHqJnaJo
- 5M1PwDDfFNFDQ6+lUPpJ9u24lAwT/NL4Ovo++h2hx1UiAPC4PUmrpfkPBEBH2XJ1MCVq6lQn6EM
- gn/rK+1zhwnIs4mGgcLSruKkX2GQ4DYZHpGvLQrSP+nJ2hEVvqux3CrAzdDo1iPWzKJVj5m6w0T
- 9zfCqkvcTopaFeLdqpjrHkC7axBv9Dy4SL5TptYYprS0xphv9D9f1CYlAw7NOZlJ/aFbxUAvhS
-X-Received: by 2002:a05:6000:2386:b0:43f:e938:1e67 with SMTP id
- ffacd0b85a97d-4515d99fff7mr42996127f8f.38.1778566947377; 
- Mon, 11 May 2026 23:22:27 -0700 (PDT)
+ bh=fG2F23ViZCDQaV13ekvtxg89EgiB1GeZgfbNuM5RSM4=;
+ b=b2zwMU16GpJUsUuELl6jb4gAOka2uevo5iozKh9lUfUsQoCmzdMAtcUEWQvd6rVJlQ
+ mc+mKnKNGV+x5+QKcV7Vj8XJb6I74RddHFc0oV5B+t61PMC82iBxPpzE8ghJvcfsMHsy
+ 4LoOJI32pQgwL/9e0RY0dW8T1pNDVO43aNuvbrMDKCT0CAyF+qbIs5NPh5nBTc9KoV8m
+ hl7efH+jeqFnychdj3be/p/0oJwloRtXvD3FP9ACbY5Mk1iXo5MY3mgSPl1rXg/DMMg0
+ 92AsjwyOyhFJGZrQRmukumG3tn/EzvSBZ2dvTPYA8o1/MirSQ3m/IJNrQbXNCFeqOgMu
+ P/bg==
+X-Gm-Message-State: AOJu0YwST/tQ7z5B8IQi/9+fBcvfeUlsYmcllzR4Vo2LvI2hTXM0/CXa
+ /uP/tHPj/OLgqQHudHhjihL9NKoPkLD2/UD4sQhHr6jRs/1V43h0KGSq3fs5gTEy4L7FKIQDRSy
+ bsB9kXt4=
+X-Gm-Gg: Acq92OH6f8oCn0vDYNsNaP5UjZCJALaCJ/oIqREcC4+j2DAEu0dUXTgRBiiGmW56da3
+ zzFvgueJKKuGusYVDdZVNVyPOhz0u99AdezAWtQ9+6pIzyBR/yqlZaFOQLrjzsdQFifFrEEfnOi
+ QSWEy/GVuhzpLEla9rEAaZfvmr14EN3ER4W+9SX9TvbN9dNBiVWFBckGABuVgQ/NiJNkplGrY6l
+ iFs+tG8Nr7+B3fZOLGZ/9FkC78f5G5jhpC0crPnACseWPJzWKyq2PJOUDqJet8/kG4WzUp1gouh
+ fSDHAZeha8elLK7S4qEA1ZI7DlPU2kw6r4rMpTkr0Un2HVQZyEHOAMqDFSqqvef/73BYcF91466
+ IwEes9xR7Qf+sPrp7GJMXp+gzvEdgmb8zvYzAhu/Iuie77Tzv2Jdi0I00N5/Bcwq3cB54jkcpYz
+ 4J2/lKgszdoyhlm4aDbocVv2s84z+IItyeP1OBLxaRP6oIPlwxY6Zkq6OMKfRG4ZGNgw6WRl0+E
+ u5KsK4x6ro=
+X-Received: by 2002:a05:600c:4fc4:b0:48a:5342:36b5 with SMTP id
+ 5b1f17b1804b1-48e706c48d5mr191982315e9.21.1778566982240; 
+ Mon, 11 May 2026 23:23:02 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4549120eb95sm29571592f8f.20.2026.05.11.23.22.26
+ ffacd0b85a97d-4548e4bb87bsm29283576f8f.2.2026.05.11.23.23.00
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 11 May 2026 23:22:26 -0700 (PDT)
+ Mon, 11 May 2026 23:23:00 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/41] hw/sd/sd: Allow multi-byte read/write for generic paths
-Date: Tue, 12 May 2026 08:21:07 +0200
-Message-ID: <20260512062142.67998-7-philmd@linaro.org>
+Subject: [PULL 11/41] target/riscv: Make get_phys_page_debug handle
+ non-page-aligned addrs
+Date: Tue, 12 May 2026 08:21:12 +0200
+Message-ID: <20260512062142.67998-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260512062142.67998-1-philmd@linaro.org>
 References: <20260512062142.67998-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,188 +100,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Speich <c.speich@avm.de>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Paths that use sd_generic_write/read_data can now write/read multiple
-bytes with one call.
+Currently our implementations of SysemuCPUOps::get_phys_page_debug
+and SysemuCPUOps::get_phys_page_attrs_debug are a mix of "accepts a
+non-page-aligned virtual address and returns the corresponding
+non-page-aligned physical address" and "only returns a page-aligned
+physical address".  This is awkward for callsites, which in practice
+all want the physical address for an arbitrary virtual address and
+have to work around the possibility of getting a page-aligned
+address, and it doesn't account for protection being possibly on a
+sub-page-sized granularity.  We want to standardize on the
+implementation having to handle non-page-aligned addresses.
 
-Signed-off-by: Christian Speich <c.speich@avm.de>
+The only thing in the riscv implementation that we need to fix
+is the place where we explicitly round the return value down to
+a page boundary before returning it. Drop that.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260417-sdcard-performance-b4-v4-2-119e66be10c2@avm.de>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260417173105.1648172-2-peter.maydell@linaro.org
+Message-ID: <20260430093810.2762539-3-peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/sd/sd.c | 62 ++++++++++++++++++++++++++++++------------------------
- 1 file changed, 35 insertions(+), 27 deletions(-)
+ target/riscv/cpu_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index c0b89735f69..b49b83b96e8 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -1610,7 +1610,7 @@ static sd_rsp_type_t sd_cmd_optional(SDState *sd, SDRequest req)
-     return sd_illegal;
- }
- 
--/* Configure fields for following sd_generic_write_byte() calls */
-+/* Configure fields for following sd_generic_write_data() calls */
- static sd_rsp_type_t sd_cmd_to_receivingdata(SDState *sd, SDRequest req,
-                                              uint64_t start, size_t size)
- {
-@@ -1625,7 +1625,7 @@ static sd_rsp_type_t sd_cmd_to_receivingdata(SDState *sd, SDRequest req,
-     return sd_r1;
- }
- 
--/* Configure fields for following sd_generic_read_byte() calls */
-+/* Configure fields for following sd_generic_read_data() calls */
- static sd_rsp_type_t sd_cmd_to_sendingdata(SDState *sd, SDRequest req,
-                                            uint64_t start,
-                                            const void *data, size_t size)
-@@ -2615,11 +2615,15 @@ send_response:
- }
- 
- /* Return true if buffer is consumed. Configured by sd_cmd_to_receivingdata() */
--static bool sd_generic_write_byte(SDState *sd, uint8_t value)
-+static bool sd_generic_write_data(SDState *sd, const void *buf, size_t *len)
- {
--    sd->data[sd->data_offset] = value;
-+    size_t to_write = MIN(sd->data_size - sd->data_offset, *len);
- 
--    if (++sd->data_offset >= sd->data_size) {
-+    memcpy(sd->data, buf, to_write);
-+    sd->data_offset += to_write;
-+    *len = to_write;
-+
-+    if (sd->data_offset >= sd->data_size) {
-         sd->state = sd_transfer_state;
-         return true;
-     }
-@@ -2627,11 +2631,15 @@ static bool sd_generic_write_byte(SDState *sd, uint8_t value)
- }
- 
- /* Return true when buffer is consumed. Configured by sd_cmd_to_sendingdata() */
--static bool sd_generic_read_byte(SDState *sd, uint8_t *value)
-+static bool sd_generic_read_data(SDState *sd, void *buf, size_t *len)
- {
--    *value = sd->data[sd->data_offset];
-+    size_t to_read = MIN(sd->data_size - sd->data_offset, *len);
- 
--    if (++sd->data_offset >= sd->data_size) {
-+    memcpy(buf, sd->data, to_read);
-+    sd->data_offset += to_read;
-+    *len = to_read;
-+
-+    if (sd->data_offset >= sd->data_size) {
-         sd->state = sd_transfer_state;
-         return true;
-     }
-@@ -2658,18 +2666,12 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
-     if (sd->card_status & (ADDRESS_ERROR | WP_VIOLATION))
-         return length;
- 
--    /*
--     * Only read one byte at a time. We will be called again with the
--     * remaining.
--     */
--    length = 1;
--
-     trace_sdcard_write_data(sd->proto->name,
-                             sd->last_cmd_name,
-                             sd->current_cmd, sd->data_offset, value[0]);
-     switch (sd->current_cmd) {
-     case 24:  /* CMD24:  WRITE_SINGLE_BLOCK */
--        if (sd_generic_write_byte(sd, value[0])) {
-+        if (sd_generic_write_data(sd, buf, &length)) {
-             /* TODO: Check CRC before committing */
-             sd->state = sd_programming_state;
-             sd_blk_write(sd, sd->data_start, sd->data_offset);
-@@ -2681,6 +2683,12 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
-         break;
- 
-     case 25:  /* CMD25:  WRITE_MULTIPLE_BLOCK */
-+        /*
-+         * Only read one byte at a time. We will be called again with the
-+         * remaining.
-+         */
-+        length = 1;
-+
-         if (sd->data_offset == 0) {
-             /* Start of the block - let's check the address is valid */
-             if (!address_in_range(sd, "WRITE_MULTIPLE_BLOCK",
-@@ -2724,7 +2732,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
-         break;
- 
-     case 26:  /* CMD26:  PROGRAM_CID */
--        if (sd_generic_write_byte(sd, value[0])) {
-+        if (sd_generic_write_data(sd, buf, &length)) {
-             /* TODO: Check CRC before committing */
-             sd->state = sd_programming_state;
-             for (i = 0; i < sizeof(sd->cid); i ++)
-@@ -2742,7 +2750,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
-         break;
- 
-     case 27:  /* CMD27:  PROGRAM_CSD */
--        if (sd_generic_write_byte(sd, value[0])) {
-+        if (sd_generic_write_data(sd, buf, &length)) {
-             /* TODO: Check CRC before committing */
-             sd->state = sd_programming_state;
-             for (i = 0; i < sizeof(sd->csd); i ++)
-@@ -2765,7 +2773,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
-         break;
- 
-     case 42:  /* CMD42:  LOCK_UNLOCK */
--        if (sd_generic_write_byte(sd, value[0])) {
-+        if (sd_generic_write_data(sd, buf, &length)) {
-             /* TODO: Check CRC before committing */
-             sd->state = sd_programming_state;
-             sd_lock_command(sd);
-@@ -2775,7 +2783,7 @@ static size_t sd_write_data(SDState *sd, const void *buf, size_t length)
-         break;
- 
-     case 56:  /* CMD56:  GEN_CMD */
--        sd_generic_write_byte(sd, value[0]);
-+        sd_generic_write_data(sd, buf, &length);
-         break;
- 
-     default:
-@@ -2810,12 +2818,6 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
-         return length;
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 39c3486ae0f..f786b1ebcd3 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1730,7 +1730,7 @@ hwaddr riscv_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+         }
      }
  
--    /*
--     * We will only read one byte at a time. We will be called again with the
--     * remaining buffer.
--     */
--    length = 1;
--
-     io_len = sd_blk_len(sd);
+-    return phys_addr & TARGET_PAGE_MASK;
++    return phys_addr;
+ }
  
-     trace_sdcard_read_data(sd->proto->name,
-@@ -2833,10 +2835,16 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
-     case 30: /* CMD30:  SEND_WRITE_PROT */
-     case 51: /* ACMD51: SEND_SCR */
-     case 56: /* CMD56:  GEN_CMD */
--        sd_generic_read_byte(sd, value);
-+        sd_generic_read_data(sd, buf, &length);
-         break;
- 
-     case 18:  /* CMD18:  READ_MULTIPLE_BLOCK */
-+        /*
-+         * We will only read one byte at a time. We will be called again with
-+         * the remaining buffer.
-+         */
-+        length = 1;
-+
-         if (sd->data_offset == 0) {
-             if (!address_in_range(sd, "READ_MULTIPLE_BLOCK",
-                                   sd->data_start, io_len)) {
-@@ -2869,7 +2877,7 @@ static size_t sd_read_data(SDState *sd, void *buf, size_t length)
-     default:
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: DAT read illegal for command %s\n",
-                                        __func__, sd->last_cmd_name);
--        *value = dummy_byte;
-+        memset(buf, dummy_byte, length);
-     }
- 
-     return length;
+ void riscv_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
 -- 
 2.53.0
 
