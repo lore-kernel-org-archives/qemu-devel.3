@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30D37CD4F35
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 08:58:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1B41CD4F26
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 08:59:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMiwO-0000tO-PX; Tue, 12 May 2026 04:58:12 -0400
+	id 1wMiwM-0000sv-RZ; Tue, 12 May 2026 04:58:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1wMiwN-0000t8-1X
- for qemu-devel@nongnu.org; Tue, 12 May 2026 04:58:11 -0400
+ id 1wMiwJ-0000rq-Ja
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 04:58:07 -0400
 Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1wMiwL-0007UU-G5
- for qemu-devel@nongnu.org; Tue, 12 May 2026 04:58:10 -0400
+ id 1wMiwI-0007RW-0A
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 04:58:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1778576289; x=1810112289;
+ t=1778576286; x=1810112286;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=2jrOHcNmmoeG8OYa4BUw32tOAHy5w3m8RmqkoBb0zUo=;
- b=Zlr4C9SSzzgyGIpLQLc557rHj5nCzID7Uo7vJ3Ix/ofWznm3ciuZBDg/
- 3+F71cAluGQ3q+UY2m7sclpcPnGEU4e1G6svETAZVCcbnDErmit0Wafd9
- ad8sD3pQVKRRJ40d0OvsXFrIpKClTeBYlkX9wV7WdctbLrKmBDk58LDXb
- liN+lDNsDoHH46RxsN6NdPfyGapIo6nLUdc+Xshzk6NVKcyZpbllGjoYj
- XxAaDAtfXuMdrKOBoGhAApX4+pRLJ2ZBiqjL5Pu24+1SkCxhutfYtc9Gr
- 4hnk3+Vl9fyaLYiA1QOxOIoiO3J7YShoLNzcp93FE4tiF/TNN/lXsiv2T g==;
-X-CSE-ConnectionGUID: YrFIOY73QGKi5QyXjbA4Gw==
-X-CSE-MsgGUID: tjPccyNRQtavzF2BVF85Qg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11783"; a="78510938"
-X-IronPort-AV: E=Sophos;i="6.23,230,1770624000"; d="scan'208";a="78510938"
+ bh=GrJus0A4zvxhjKK+Vj0V4r2iRoInyrdrtEk8Go8i9cY=;
+ b=O+3iNw2rXbvy1rh993A90daIEoEMQP/ovVHzvI9TVOtb38NnyTOz+4Ni
+ aw/ZrQLX4yVzshSboAjYdqroVBQQ3h6UluXwO2ProZPdpZZbOsk62d3HP
+ H1VUl53lYhIpUmQy5cA1QYqFlgzXvDUhL7k00r6yR/a7dik10nFw2dVW+
+ Li1v8ScDBlxEFH8p5xHsHyl/pT6ulB2waj5YAMJH8sKkgIYxIm0h966Xi
+ Rd8YrusqWbecrlrkHMMKvLNIy0J2yuWsgBc5Zhsm0BSBY1m0ITG1lWHrY
+ Vt3A4acXP+ljb8w1kWO78I5AzFzyx1NZn4Sl8+7BKhHA+1eDp/Buz2uqr w==;
+X-CSE-ConnectionGUID: EUyua/4DTQOur9jlbMfO8Q==
+X-CSE-MsgGUID: c3aXfmYNSaSYWnLbnP0Z1Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11783"; a="78510929"
+X-IronPort-AV: E=Sophos;i="6.23,230,1770624000"; d="scan'208";a="78510929"
 Received: from orviesa004.jf.intel.com ([10.64.159.144])
  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 May 2026 01:58:09 -0700
-X-CSE-ConnectionGUID: I5ZNqitCSOGs0h4p6z7yAw==
-X-CSE-MsgGUID: ZoIDPVepTg+N+iWc63EU+Q==
+ 12 May 2026 01:58:05 -0700
+X-CSE-ConnectionGUID: gATt+gYTS3ekOKS4y4UQvg==
+X-CSE-MsgGUID: OLjcu8x7TtmIvrpCjVL4Rw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,230,1770624000"; d="scan'208";a="242065557"
+X-IronPort-AV: E=Sophos;i="6.23,230,1770624000"; d="scan'208";a="242065539"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.22])
- by orviesa004.jf.intel.com with ESMTP; 12 May 2026 01:58:07 -0700
+ by orviesa004.jf.intel.com with ESMTP; 12 May 2026 01:58:03 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
@@ -52,9 +52,10 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  xiaoyao.li@intel.com
-Subject: [PATCH v2 5/5] machine: Deprecate memory-encryption
-Date: Tue, 12 May 2026 16:44:58 +0800
-Message-ID: <20260512084458.622465-6-xiaoyao.li@intel.com>
+Subject: [PATCH v2 3/5] qemu-options: Add confidential-guest-support to
+ machine options
+Date: Tue, 12 May 2026 16:44:56 +0800
+Message-ID: <20260512084458.622465-4-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260512084458.622465-1-xiaoyao.li@intel.com>
 References: <20260512084458.622465-1-xiaoyao.li@intel.com>
@@ -85,51 +86,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We've had 'confidential-guest-support' for long enough that no one should
-be using 'memory-encryption' anymore.
+"confidential-guest-support" is the recommended property to configure
+machine with confidential computing technology instead of
+"memory-encryption".
 
-Deprecate 'memory-encryption' by adding notes in docs/about/deprecated.rst
-and print a warning when 'memory-encryptio' is used.
+Add "confidential-guest-support" to machine options and call out
+explicitly "memory-encryption" is the alias of it and not recommended.
 
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Link: https://lore.kernel.org/qemu-devel/aMPYkUsytGxLPIM7@redhat.com/
 ---
- docs/about/deprecated.rst | 7 +++++++
- hw/core/machine.c         | 2 ++
- 2 files changed, 9 insertions(+)
+ qemu-options.hx | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 5551bd12ad83..d60c7206ec4d 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -305,6 +305,13 @@ they want to use and avoids confusion.  Existing users of the ``spike``
- machine must ensure that they're setting the ``spike`` machine in the
- command line (``-M spike``).
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 25ed486ff5d2..ea4ae26b8d72 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -36,7 +36,8 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
+     "                dea-key-wrap=on|off controls support for DEA key wrapping (default=on)\n"
+     "                suppress-vmdesc=on|off disables self-describing migration (default=off)\n"
+     "                nvdimm=on|off controls NVDIMM support (default=off)\n"
+-    "                memory-encryption=<id> memory encryption object to use (default=none)\n"
++    "                confidential-guest-support=<id> specifies confidential guest support object (default=none)\n"
++    "                memory-encryption=<id> (memory-encryption is the alias of confidential-guest-support, recommend to use confidential-guest-support)\n"
+     "                hmat=on|off controls ACPI HMAT support (default=off)\n"
+     "                spcr=on|off controls ACPI SPCR support (default=on)\n"
+ #ifdef CONFIG_POSIX
+@@ -100,8 +101,12 @@ SRST
+     ``nvdimm=on|off``
+         Enables or disables NVDIMM support. The default is off.
  
-+``memory-encryption`` machine property (since 11.1)
-+'''''''''''''''''''''''''''''''''''''''''''''''''''
++    ``confidential-guest-support=<id>``
++        confidential guest support object to use. The default is none.
 +
-+Use ``confidential-guest-support`` instead. The ``memory-encryption`` object
-+was an early implementation of memory encryption support in QEMU, but it has
-+been superseded by the more comprehensive ``confidential-guest-support``
-+object.
+     ``memory-encryption=<id>``
+-        Memory encryption object to use. The default is none.
++        The alias of ``confidential-guest-support``. Recommend to use
++        confidential-guest-support.
  
- Backend options
- ---------------
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 63baff859f3d..baa275b87dcc 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -490,6 +490,8 @@ static void machine_set_memory_encryption(Object *obj, const char *value,
-     Object *cgs =
-         object_resolve_path_component(object_get_objects_root(), value);
- 
-+    warn_report("memory-encryption is deprecated, use confidential-guest-support instead");
-+
-     if (!cgs) {
-         error_setg(errp, "No such memory encryption object '%s'", value);
-         return;
+     ``hmat=on|off``
+         Enables or disables ACPI Heterogeneous Memory Attribute Table
 -- 
 2.43.0
 
