@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DFD6CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:04:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD174CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:04:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuGl-0003Wq-Hh; Tue, 12 May 2026 17:03:59 -0400
+	id 1wMuE7-0006yH-T7; Tue, 12 May 2026 17:01:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuEO-0007FI-M5; Tue, 12 May 2026 17:01:39 -0400
+ id 1wMuCt-0003hS-9f; Tue, 12 May 2026 16:59:59 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuEL-0006ca-MH; Tue, 12 May 2026 17:01:32 -0400
+ id 1wMuCp-0005aT-MP; Tue, 12 May 2026 16:59:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619277; bh=RI10+5zPGhJ/aOzuzHvVJ9FNHtrl/IeqoVNJcNULtVs=;
+ t=1778619276; bh=rJL1iSZupBtbEXDSlv7iUJmz8SeU3kNlkyt8hqBdeNg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=BndFA9Fm0HBwyBMwkNLLZznFAODHXqJv0c6xeQnLWLyt43tHptLaMxYulhAfIkpUo
- KlpAgjxGFQVBTzYaiTiQtw98fyu2LP5l8KjFHM6VZwI2uk5NkKYiG3mswO4ebnnYSV
- tIGcKLDrhFk20mgg9TFrrDTqKxnK9WFQe0NGSxsmgWX79kpDrQ7qHnVwRU8NwrkP5v
- sYzwbtfQYZS5vWPaKVg4OI0hkof4Q63NgYR+ixnl8GJJ1fEEn61C9QU4MajL+MmhK3
- DWh2abS0+ZKMcPpBGOosKOVYDLauiHL4C38c55Px3RHKSWedIRc7qxwGu3jAo8qDRb
- UnZio+LUc46PA==
+ b=EwLM+c2x5y/FIif1wj7lKnm/5MHYPVlsXp5YSarS3Dzp8NHt2If/cpf4DSJzCVf3n
+ H/Efv911MncqZrC44uII0F/WQRRC5K59YY1zjuNssQ13JA6QQMoLCpYlepPlTScW/C
+ tLwNSAfn24WGFES0PFgkFA/lYKIBk3KFlCYWbKfbC8gbVygSyld6K+ZJFgis+J8sgE
+ 4oixNMv83Jv5wAbIQvHanQRa10io154Z68aCpWSFEY35zY1eNw5oRTmEtQORQORKQz
+ tFGje/WOJwVVCd1MkQRYNrCYE8JxCrJJlWjpu11qlbxAxcep5tTi2/szQgOGcG2p9k
+ jVAioKH89YfxQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id ED53C1AA311;
- Tue, 12 May 2026 23:54:37 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AF4451AA301;
+ Tue, 12 May 2026 23:54:36 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0391B3ABC82;
- Tue, 12 May 2026 23:54:42 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B93CD3ABC72;
+ Tue, 12 May 2026 23:54:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Helge Deller <deller@gmx.de>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 069/107] linux-user/ppc: Fix ppc64 rt_sigframe stack
- offset
-Date: Tue, 12 May 2026 23:53:56 +0300
-Message-ID: <20260512205437.360850-69-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Yuma Kurogome <yumak@ricsec.co.jp>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 053/107] hw/uefi: fix heap overflow (CVE-2026-5744)
+Date: Tue, 12 May 2026 23:53:40 +0300
+Message-ID: <20260512205437.360850-53-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,87 +71,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-The kernel's 64-bit signal delivery (signal_64.c) uses:
+When copying the request response into the pio transfer buffer the code
+skips the 'struct mm_header' but does not consider that when calculating
+transfer size, so it will copy 24 (== sizeof(struct mm_header)) extra
+bytes, which can overflow uv->pio_xfer_buffer.
 
-    newsp = frame - __SIGNAL_FRAMESIZE
+Fix that by copying the complete buffer, including the header, which
+also makes the pio code path consistent with the (unaffected) dma code
+path.
 
-while the 32-bit path (signal_32.c) uses:
-
-    newsp = frame - (__SIGNAL_FRAMESIZE + 16)
-
-The extra 16 bytes in the 32-bit case is to place siginfo and ucontext
-at the same offsets as older kernels (see the comment in signal_32.c).
-The 64-bit rt_sigframe starts with ucontext directly and does not need
-this adjustment.
-
-QEMU's setup_rt_frame() unconditionally used (SIGNAL_FRAMESIZE + 16)
-for both 32-bit and 64-bit, placing the handler's SP 16 bytes too low
-on ppc64. Signal delivery and return still worked because do_rt_sigreturn
-had the matching wrong offset, but the vDSO DWARF unwind info encodes
-the correct kernel offset. This caused any DWARF unwinder (libunwind,
-libgcc, etc.) to compute a CFA that is 16 bytes off, reading garbage
-register values from the signal frame.
-
-Define RT_SIGFRAME_ADJUST (0 on ppc64, 16 on ppc32) and use it in both
-setup_rt_frame and do_rt_sigreturn to match the kernel.
-
-This was verified by A/B testing with libunwind's test suite:
-
-  ppc64le: Gtest-bt, Ltest-bt, Gtest-concurrent, Ltest-concurrent,
-           and Ltest-sig-context all change from FAIL to PASS.
-  ppc64be: Gtest-bt, Ltest-bt, and Ltest-sig-context all change
-           from FAIL to PASS.
-
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: qemu-stable@nongnu.org
-(cherry picked from commit 654dce6c523612d38e8d53818dbc7c03cbe535a3)
+Fixes: CVE-2026-5744
+Fixes: 90ca4e03c27d ("hw/uefi: add var-service-core.c")
+Reported-by: Yuma Kurogome <yumak@ricsec.co.jp>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-id: 20260408073403.3410541-1-kraxel@redhat.com
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit af74c9e46bb55e2da042315a0c65666f59c61686)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/ppc/signal.c b/linux-user/ppc/signal.c
-index 24e5a02a78..a9c10e0987 100644
---- a/linux-user/ppc/signal.c
-+++ b/linux-user/ppc/signal.c
-@@ -210,6 +210,18 @@ QEMU_BUILD_BUG_ON(offsetof(struct target_rt_sigframe, uc.tuc_mcontext)
+diff --git a/hw/uefi/var-service-core.c b/hw/uefi/var-service-core.c
+index 92fc121fe7..0a05ec4c9c 100644
+--- a/hw/uefi/var-service-core.c
++++ b/hw/uefi/var-service-core.c
+@@ -133,9 +133,8 @@ static uint32_t uefi_vars_cmd_mm(uefi_vars_state *uv, bool dma_mode)
+                          uv->buffer, sizeof(*mhdr) + mhdr->length,
+                          MEMTXATTRS_UNSPECIFIED);
+     } else {
+-        memcpy(uv->pio_xfer_buffer + sizeof(*mhdr),
+-               uv->buffer + sizeof(*mhdr),
+-               sizeof(*mhdr) + mhdr->length);
++        memcpy(uv->pio_xfer_buffer,
++               uv->buffer, sizeof(*mhdr) + mhdr->length);
+     }
  
- #endif
- 
-+#ifdef TARGET_PPC64
-+#define RT_SIGFRAME_ADJUST 0
-+#else
-+/*
-+ * For 32-bit rt sigframes we have an extra 16 bytes of gap
-+ * on top of __SIGNAL_FRAMESIZE; this is to get the siginfo
-+ * and ucontext in the same positions as in older kernels.
-+ * See Linux's arch/powerpc/kernel/signal_32.c.
-+ */
-+#define RT_SIGFRAME_ADJUST 16
-+#endif
-+
- #if defined(TARGET_PPC64)
- 
- struct target_func_ptr {
-@@ -525,7 +537,7 @@ void setup_rt_frame(int sig, struct target_sigaction *ka,
-     env->fpscr = 0;
- 
-     /* Create a stack frame for the caller of the handler.  */
--    newsp = rt_sf_addr - (SIGNAL_FRAMESIZE + 16);
-+    newsp = rt_sf_addr - (SIGNAL_FRAMESIZE + RT_SIGFRAME_ADJUST);
-     err |= put_user(env->gpr[1], newsp, target_ulong);
- 
-     if (err)
-@@ -641,7 +653,7 @@ long do_rt_sigreturn(CPUPPCState *env)
-     struct target_rt_sigframe *rt_sf = NULL;
-     target_ulong rt_sf_addr;
- 
--    rt_sf_addr = env->gpr[1] + SIGNAL_FRAMESIZE + 16;
-+    rt_sf_addr = env->gpr[1] + SIGNAL_FRAMESIZE + RT_SIGFRAME_ADJUST;
-     if (!lock_user_struct(VERIFY_READ, rt_sf, rt_sf_addr, 1))
-         goto sigsegv;
- 
+     return retval;
 -- 
 2.47.3
 
