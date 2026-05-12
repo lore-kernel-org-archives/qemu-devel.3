@@ -4,145 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FB4ACD4846
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 02:56:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AE63CD37BE
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 03:04:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMdHd-0000dY-8y; Mon, 11 May 2026 22:55:45 -0400
+	id 1wMdP9-0001po-JZ; Mon, 11 May 2026 23:03:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wMdHI-0000ad-Hu; Mon, 11 May 2026 22:55:28 -0400
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wMdP8-0001pU-32
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 23:03:30 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wMdH8-00014B-Bu; Mon, 11 May 2026 22:55:18 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ysOMmRjK1h97zIdBxyDmIvMb+0XfntD857iJvpWewk+46U1+3l9d85bC3VUOTYv3eikg8pLdBNE9P/5PnuGb0KtLQm+bVmFFWNaLjkvAviYue1MeLOtMCIMAaLOYlaxREx29CNlTTCqUfcjsgI1J/xGuYZfXt5w8st2EPkSIAH3IfNlbFqYCMT/pm0d52fcjNZrTXgK7ZIiHLLOnSbVpQO47IGnE6s8r7knwmAEuK30c22gnn/ZN9yt4aIfWM0YQBVl3RgO6r7uQs6VZFoPOEUYxJkF+m3quYI6EM2pyt4mlrQ7UQ2WdS5nrW4gw4Q/bFHQ3h9we+bAjKts48LYYgQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HzDshNCE9IPt5zoIT8naXJ47OBaoVwSo/+MGCjK6/Ns=;
- b=HhHCirRSSKN1UFNPQWqdiozgsd0ZD+gPNd+z83XHkhUW1P5eJ6aqjhxaTZ+OrskT3+YdKM/qAwgbbKt9gHUnUwImQKSDqLYSNbml44bjtaNItNpW+JwVMofyOiCJm0K6t33oef8OHHpiKMHkpBfp0OMm1fKeLUptWX3yDbNdeoFz/YzczUeCoQgC8VYe1ot9AbwAVih4Mv7qBCIJf2YDolnlp3+bCJAo64G2F92kI5XfI96QxUnEGNGva2+xvAhglp1RstfKV/O5gmQWrVaw9pyJRPNtpcFg8ytMNAXhX1RDQsLkRlxx/JOXG1UtoHX/ycHO6fWbE1TZ6qbZNoq40A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=HzDshNCE9IPt5zoIT8naXJ47OBaoVwSo/+MGCjK6/Ns=;
- b=NK9NkTWkl5rXeO7bUuLcp9rSaTyVT5hOroyovsui43NQgSvLuu3SXb8MMe8zPEO9deKoUumG+Qkt8yZw7ER9+Iv/kMijVDPD7gLDpEXXqb6E7xG8adirH+Tg3TuMdwMoW4VP5cJeX9dw6ogYydEU0WBJ498uq113qUr/LpPHSJ039fMmmJ8xLgKSfzi6RUOVLFzpb3CvyvwpGWyi9IvF1QUQqd9nb+jcNcmmAHEa37+DnY0iRkvxe8fu4GfWukAVxfIr3W++EJ5Q6VxlzPmOw/tGoxlcZR/RcnDMEVQsLc2uX1IYm6vyEJK0uMmwgKvyzmI3QUjA5q421GnKbUj+Iw==
-Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
- by KL1PR06MB6519.apcprd06.prod.outlook.com (2603:1096:820:f3::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.23; Tue, 12 May
- 2026 02:55:07 +0000
-Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
- ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
- ([fe80::e659:1ead:77cb:f6d3%2]) with mapi id 15.20.9913.009; Tue, 12 May 2026
- 02:55:06 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Kane Chen
- <kane_chen@aspeedtech.com>, Peter Maydell <peter.maydell@linaro.org>, Steven
- Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>
-Subject: RE: [PATCH v1 0/1] aspeed/hace: Fix mapped address may not be
- unmapped issue
-Thread-Topic: [PATCH v1 0/1] aspeed/hace: Fix mapped address may not be
- unmapped issue
-Thread-Index: AQHc3qnODjnafroHF0aYs2O+Fxx0jrYF3NaAgAPbETA=
-Date: Tue, 12 May 2026 02:55:06 +0000
-Message-ID: <TYPPR06MB8206B38ED6B333B5B7DBCC0AFC392@TYPPR06MB8206.apcprd06.prod.outlook.com>
-References: <20260508051619.3887383-1-kane_chen@aspeedtech.com>
- <885688b7-5d54-4466-8dcd-e7c0bcbd05c3@kaod.org>
-In-Reply-To: <885688b7-5d54-4466-8dcd-e7c0bcbd05c3@kaod.org>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|KL1PR06MB6519:EE_
-x-ms-office365-filtering-correlation-id: 5db07e20-b6d9-4826-6120-08deafd1df64
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|376014|366016|38070700021|56012099003|18002099003|22082099003;
-x-microsoft-antispam-message-info: B50TPt29OBW5pgiIe7bV9WFNQoMYwthAMhtcMXvwDRqfGo57hViXLqnZ6Shqv2QXecAY6M3eZRaI1nAk9SiaIXGLful55J7UPuoa32I4ev7Ot0NWrA9VaqpA+jqFhgUxS69W6qeMyFh2FbW5a1iooeQKS+Q1R4tsyQ8cvtg9YDuBuqmcJy9LqcdzPgBX8W7M2hejuvrhcEKGvRagQUYItYT42RsXi87Kz9uu1terrTBegIG63Vf2cyHkI7v7N3v89Wv0iXcc4WbkXeu95VQQH0Z3CxLO9CBUPF8H4k1JPZLU54ZrVDgqNej29PKsiosibntPNosxykIsgC9790aQH4CCqSAIrWr+eF1S1cfTJFU4UxIZ6HHiqQjjXnjGPbUun0yxASMkRmn4FXVGqDdXNT4rzAwbVEU8xMrSn11HaJvA0IAGGfpCaYeBpr+qEHziOyXO3Wn+RE2VdGJkSTpNu3l9WRKKCxdL5ntVkhYhUT48K5firLhmcJdtuVKP3as7KK061BhyCiSU1eOKW52GbAYWtwoosNKE8faqT3BYjZNPPiEGAspgsMYme8us9kE/1MajrDqY0URrpbaLr3D8jxo2mbOrc29T3IAJJVmAeACm1zdmsRgp5CVh8UmDrq+HMwp8OqIrdQzSJofOYMX/lYRJzmiuYDEEQL9mGQEqDFTLUbIa9Zlbfq5aHlAc8LdYxo4GRk7NVhoDJjJ0w1ZNdw==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016)(38070700021)(56012099003)(18002099003)(22082099003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?MGhocS9EcW01bkROaVhUK0xJbGZKWnVPNjdTMUtLRm1CZGdrZE9tbVF5Z2o4?=
- =?utf-8?B?eWljOUxUalU4UmFxcjVWRm1aR1Z1MXI1ODVMRmE0UHBSMkRibVYxRjhPNHlo?=
- =?utf-8?B?U2N4WjEydDBKZkt3TmdBdG1uQnJiZVpnNmxKQXlMbk9la2RNd0tScVN6UXVl?=
- =?utf-8?B?RjdVU0RkdVBSVGFJMU1kWG5UZjhJWFNYd2FrNmJCUnJiTmgwdWNLbzdlSkRv?=
- =?utf-8?B?WW9tRm1DSlhqZEN3dlBkcjhsNEd0MWNlb2VuVFVkS2YwK1BYcFlKbnQyN3BP?=
- =?utf-8?B?VU1peFNDMEFBWTZudXdNaGk2eUVDUlZCUjJseVl2enFDKzg1cXg5aTZDWVdG?=
- =?utf-8?B?SFdzL3lLWmdsbXI5Y0RtS2FzZE94UU1Ja0RVZkVBZ1JxNWEvcEN1SG5OcnhH?=
- =?utf-8?B?cGpHVVBBQjRmNFdocXJ0RnVKR08rMUwvdmhBN3gweklLaHBVbzJjSE5HMTlG?=
- =?utf-8?B?cVRWc1AzOXZrVDRCWDNsSVFWSVpVdVVjTzRTZThVNlRlL2RjRytUanBEM2xO?=
- =?utf-8?B?bGlYR05DM1Z6NnpscnNnWVlkbVZsTkIyb25MMmhYckpFNTlpQ0VDOGNZWXJO?=
- =?utf-8?B?VGJaUlR3cWxBUi9sZkZiM0NzQ1E3T2NSdTZicGJqMU1qcEsxaElQWG5oR3JG?=
- =?utf-8?B?Y01sVXpreW1YQ3RtRmY3S0M5RTEzek1yK3RFTHQ4aE5oOERmdzdXWUMwSldw?=
- =?utf-8?B?SVRVcVJaWldQVi9jbU84RlVEZGVqS1Q4ckNvRFZSQ0ZrWHNVSmduaGtWQnRv?=
- =?utf-8?B?SjZidlNtQ0Yrc2k4OHJ5c0hqQ3BoR0c2UWJwNUJaQUxPcldVeWYrVUFqYnh5?=
- =?utf-8?B?ajNqbDB2NnJtR1dab2IvVmRyTnBKMGVpWit2STFGUkhLc2FsbVF0TW1FbmJu?=
- =?utf-8?B?U2xLbE0rRWlnd3RKVFZFMXkzWUNwNWkwZkM3Q25OQWxSSjNhT1llaGxiQyto?=
- =?utf-8?B?WjhPRlM2WmpxdFloeDFpUHhwbWo0MlBvQXdZUm9EMTV6QVhLVGx0S1A1ZDFL?=
- =?utf-8?B?QUxhZGt2QXJ6d2l6eDRHajVKbjBIdStiR29wdUtnUWRkZ3cxU2VPa3hKanoz?=
- =?utf-8?B?OUNleVNERHhwak9yUnJnTUxaMUczeVVNVFZhTkJjc0pseGVjSTYrRUdEUnl3?=
- =?utf-8?B?b3BmcFNvdG9WcFFNeDFWeDQ4ZU45YmY0RU9tQWd5dlpzeTFScGI1V01OZy84?=
- =?utf-8?B?ZkxUb2N1dGM3QXlxVVhsa2h5VHlnaWtEMmN2VDdPblp2OWU1VGcwcHYzU2l2?=
- =?utf-8?B?OWxwNlBydHd0SGlrd1hoaGdXWExLalYrMzdKSEl5N00wbkQzVUZOb0VyNTJl?=
- =?utf-8?B?WTdlVWJZSzVlOGh0V2V4UGV1LzdXWkg2M1BjbXpwMW5oWEYyaDlvbnlkcWZ6?=
- =?utf-8?B?VUQ0NDNIQWRzcHliamo5S3dyTTU5dEx2d3VZRUFTa2xzK0RoWWx0S1hBYXhC?=
- =?utf-8?B?eUNEQktmdUEzOXBoVVY1Um1nNFQ3UkRrYlYzbzZHemtHcjNGYjVMSjMxTXBT?=
- =?utf-8?B?Q3pEb0kyakFWdU84TWxBNnJZbHRIYmxUTDVnTVlVYXc3LzJWMmVLWFBmZDhr?=
- =?utf-8?B?TVVEejBUOTF0dkxPT3M5WW41Y1QydHBuOUVWaXdscTVNbGZhUlV6YmY0RGdD?=
- =?utf-8?B?Sk9nZm1sZ0ExV1lBbjA0eHBURSt4U1VROFI0bzBXR0M3MnJ3aEhmdHNVak12?=
- =?utf-8?B?bDlSYjZSNy9CRHBnRUFqV3Z0MDhyVTlGN0tHdllXd1JUbTJRZ0s0WDgwOTNP?=
- =?utf-8?B?am5HTUtpbE8vNnB2cXpub0tXcHY3UFNoZGg0a21EdGFTdk5CcURHNjJvSW1a?=
- =?utf-8?B?d1JrdS9iWEt4WEpOMzM1ZzFac2tKMmlxQ3FBdzZkOCtEZGtOeWdDOFVOeHRU?=
- =?utf-8?B?VUE3V3M5SmhOUE1uZFZ0aEwyN1VCS24vK200N1JhdUFDWmZXTytwRDUxMitG?=
- =?utf-8?B?WjQvd2lBeUp3MWFGeWZZQTQyOFlqZGVDZEpBRDVLR09NemZtUlEvQmdhbW1u?=
- =?utf-8?B?aDc1WC9ZMllYY3ZFa3haRUdHME1ETjRndGZRMjhpWHhTa1pQUzVHdE1Xc3BP?=
- =?utf-8?B?ZG01OGliUDJ3OTdTWCtjZGEvUE1jNStHS3owNEVDckNFWG1XMDUyd0J5V2l1?=
- =?utf-8?B?SWxDZnVNa29uK0tLQ3ZHcERqd0ZYZEg3V0Q3ckUyKys2L3RIVDlYL0VpL25o?=
- =?utf-8?B?eGMySi9SdTNETjQ2dE9HZGlqZkZjdUlZUjFwaWh4dzFkd1R4VDFtUUlvc0Qw?=
- =?utf-8?B?OWVrOEhjRVo0dVZ0YzhWaTI4cS8wL3JMdHBLYW9YazFEZHR6OTBaRFhVd25Q?=
- =?utf-8?B?ZytudVhoaHNvM2M0NVMwU0tLei9jbE5oaFB2UVJzdGlSUThNVmFOZz09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wMdP6-0005OT-4s
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 23:03:29 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64BK6mCG2519102
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 03:03:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ z+XsWQ7nko0Af8QGLq9Mlr5ixuicRmUTn5hD6akSd6Y=; b=Oet3SJuK1pMK4//7
+ lzu2D37kK1AgXoNaXIaHGcEkdVXKObL4sdYsVK+ynEVGal9Bm9M8/F57Z8WRd5wl
+ 1goLuW+/k9IybnGZkxCh56SncBx/NBQlD9FXWwvuxwQXkmo0gzjF256m5eIMBsEG
+ BrYtftc4414xA0Vy+8M0eLkGAaN1feWOWdkE0vLkOxoOPPqxcpD+8dKeJ45hd9fV
+ HNw1/8i9a+ZhVkoS7HVv9wnC+2a5gC/g5cJ4VAArjXPthXxvYR9bWffVmTP0cfNh
+ bec14E6XIr+XH7aDeN2JseNckWVjGMqNC/2ZW/SIYk47piPV3P9q0k2RXFvZ+dW3
+ d/eBFw==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e3nv1h6te-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 03:03:26 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-2f485961555so9131615eec.1
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 20:03:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1778555005; x=1779159805; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=z+XsWQ7nko0Af8QGLq9Mlr5ixuicRmUTn5hD6akSd6Y=;
+ b=gStEZjrWZav2k22BQBOy5mOV/Rt3F42XXgZ0wLuAFsaWx8RxGbLL5uH4gf6vkcxfE4
+ Z4vQbzR9J946pazDBtpv7+JpeJUHOiEH+qjSgvC/Dk0xj0eVHDX7XLDz2x1WTCp6a1ng
+ CM9HFUkHuAQWDJAZFQEbHGaC9cNh+WT+U0Dk8dL16vXGlWDINUwJUoNsigt9AgftMf8D
+ NRTI8OccOJv2yJq+j303yjGx2QwOSCAs+VYbuhmIWS8vJz1Ab1khIL/jUNDZwVCrzkS3
+ Mb3BqZEP3rE9eifnLQmqqGZ0LENyzc2B7h0XvQd6LkuBa3WNNR/3ZS6+F6aOCb7Fsjqe
+ ySsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778555005; x=1779159805;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=z+XsWQ7nko0Af8QGLq9Mlr5ixuicRmUTn5hD6akSd6Y=;
+ b=NxlDpL6oGQcI6GvLs5X+pBBEvHb0fSYhncIXE6ayGUqO4CXQfsCUgUkApTE0enoE/h
+ BHFVPUqAKMPfi6h1L8hBM5UT8iEagaia2mZBX9SVHHyRcveHWctdwb4TFJ+yziYn0Ar6
+ JKFwIWPAy2JwolG+KeZi50IPSkOFanFVO5Vk3TruJIl/2tt5puoxZTkVEdbAAWR9VjU/
+ r2qMU3LIGMIeTLr8Vnr8WlYp2OuGCj/kBt2P1y6Hiy4sQat/L7Vz1ixdU6lms914O/SU
+ p+WaR29srnq+hLvN2b+Lchd73VrWjArXq/jl5TvIkUlCBPn5nO4bevZ9WMz84SW8oyLz
+ sXZw==
+X-Gm-Message-State: AOJu0YwY/kI/wUAMx7JHx3ecq54adbHqMciVU9VP61ifP6z0F+uzqSUf
+ fQQh4CotLActhsl0UAS9SsUOmtPJPw0mdkrwkeYkiOmbW+Pa9lAt2n89wZrEbWaPS1T4RcGhWEG
+ wUoBV8pkeodB4cXee3VQaU9rVqXdiefZi83MV22V+UJtdQgIsYkwZHRKfKg==
+X-Gm-Gg: Acq92OGjoieOUVBMmaEU3o8rZAabfWUvtxfpTsvqf2ho8o7MnA0Yirx+wOVdg/zCyKU
+ +nMCemb5ZXTD6xEgZxrrXLZiyQ45VR/Hm8gsXfSDp7Yh/gWHRNLQEp4077IcUNl8i5lm62rYmaO
+ FZ3UqtcyriKZxxkC95GmukOSLWQSuw8g4vcE527FbayWwtVkRknoVGaIrZCDOCylRouu1ANt5Bw
+ 04htf80U1Zr1qR4xyGl3l7RJWcUnzFULIzctFRZWyJndxEbD2rRhlm6uRsPy1R/r1lP8pDDpBE2
+ Tb4ifCH7VjYoPNsQCU0nvfd1xUwGRoc4O+WqNwI3Nv8BpEA+VtmSB7mKC2MKUekQjV/Jz8l6Abw
+ XrVb9rrGERSPTggo8bp7ntaJ+ahbf8dVObCRtPS9KT+seBGG20sJfD6BlQKA=
+X-Received: by 2002:a05:7300:724b:b0:2e2:a64b:63b5 with SMTP id
+ 5a478bee46e88-2fb4b733e77mr5738205eec.18.1778555004653; 
+ Mon, 11 May 2026 20:03:24 -0700 (PDT)
+X-Received: by 2002:a05:7300:724b:b0:2e2:a64b:63b5 with SMTP id
+ 5a478bee46e88-2fb4b733e77mr5738190eec.18.1778555004065; 
+ Mon, 11 May 2026 20:03:24 -0700 (PDT)
+Received: from [192.168.68.106] ([191.202.238.222])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2f8893441absm21571258eec.31.2026.05.11.20.03.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 11 May 2026 20:03:23 -0700 (PDT)
+Message-ID: <652e680f-d623-47dc-9964-4e258213f571@oss.qualcomm.com>
+Date: Tue, 12 May 2026 00:03:20 -0300
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: NavMC5VujkmNnhHhsVlnwL3Rkuf1NAu5xL1JkohGjGUCAbOVcKWq/KoP9Hid+epEiECRhS5LeRX8iDOByi2D+42ijsmF8zVTal0/Z6mSIQPVj6WcqqVdlzJAANzh033jkkhOTMt/TwgbWsApbRFkIZnJ2QbsEzb5CHiD/nxfjCsxzjcP8A5DnUchsGbQTS1JDASQeX+xC9XGSKyO7mCcwPVav/RspH2SOMPNzs41N5sQt0qc8DiB8PofRto34UVsQLK7mUn0EqnWYSgUmQpoVq4IU82qSGGbEMtKgA5G0Bfjc7gTu4+JQt7LYodAGq3z7yGd1zGW2uFEEiUln0auBQ==
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5db07e20-b6d9-4826-6120-08deafd1df64
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 May 2026 02:55:06.3604 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: s+CxiWPREODfcm6MYSgmYLLLveX1fcIRWWtpx3Ngd8p+7MbfcpoOEYkfKMwzubY6V4q6bL+Y1M1QPjjqbRyl8O0UI2i5vVQOwqmNOqtaKks=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR06MB6519
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/13] target/riscv: remove riscv_cpu_* arrays
+To: Chao Liu <chao.liu.zevorn@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com
+References: <20260511132910.1738069-1-daniel.barboza@oss.qualcomm.com>
+ <agKIuzJdhI6P4dmt@ZEVORN-PC.localdomain>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <agKIuzJdhI6P4dmt@ZEVORN-PC.localdomain>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: OYgLboCy9YnelQv46y9UwZXIqTSCUcbE
+X-Proofpoint-ORIG-GUID: OYgLboCy9YnelQv46y9UwZXIqTSCUcbE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEyMDAyNiBTYWx0ZWRfXwX5OdE8eeaGy
+ oDNfPreo+wg5cac3fo0pIhCiLWyxhKEiwk2pWmAcUwCgU9pOapeDPNLCcVpm3z8b5+cgRRWTtqG
+ wshrcFUFvfxlUH+UbY/FCdFBDelNR13C0A01Q9rFSx18w3x0EE2tAtUyLeY+68+DSq8PWd+qHXK
+ pCajV7X35UST2xoFczCnv0qVJokzk0ldOoSoNGguvsvbcsz/9JlGJwTA8geaIqXOavNliBbK8v+
+ zSEJ4HLfQGlzr/p6nO4iCspJlt35N5y4UX68z3TwIO1iX+FDj4CAyF70t3UAdWQrANcd/tGXusu
+ oouqi7YrUs9+s2OjRqXQEF1CE9K7nmkV2SqI/+BT3p1+sG5WsuJkVj9UZ8mdqJdiJCrS9XrETa2
+ QeebtypyMv2+7uHa/SvtgvJnSE+rbge4V0yqy5jNKTSmuLndsnz3ViezAgIc81/sJAgyRBS97LM
+ LX4pyQ51jyyJBspF7gQ==
+X-Authority-Analysis: v=2.4 cv=c6ebhx9l c=1 sm=1 tr=0 ts=6a02987e cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=etEqFfc6qwXwpI8uT8rzbw==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=Ab8Id7SuDGbAHyMYYi8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-11_05,2026-05-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 adultscore=0 lowpriorityscore=0 priorityscore=1501
+ impostorscore=0 bulkscore=0 malwarescore=0 spamscore=0 suspectscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605050000
+ definitions=main-2605120026
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,27 +151,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQ8OpZHJpYywNCg0KPiBTdWJqZWN0OiBSZTogW1BBVENIIHYxIDAvMV0gYXNwZWVkL2hhY2U6
-IEZpeCBtYXBwZWQgYWRkcmVzcyBtYXkgbm90IGJlDQo+IHVubWFwcGVkIGlzc3VlDQo+IA0KPiBP
-biA1LzgvMjYgMDc6MTYsIEthbmUgQ2hlbiB3cm90ZToNCj4gPiBEZWFyIHJldmlld2VyLA0KPiA+
-DQo+ID4gVGhlIEFzcGVlZCBIQUNFIGhhc2ggZmxvdyBtYXkgbGVhdmUgRE1BIG1hcHBpbmdzIGFj
-dGl2ZSB3aGVuIGFuIGVycm9yDQo+ID4gb2NjdXJzIGFmdGVyIGd1ZXN0IGJ1ZmZlcnMgaGF2ZSBh
-bHJlYWR5IGJlZW4gbWFwcGVkLg0KPiA+DQo+ID4gU2V2ZXJhbCBmYWlsdXJlIHBhdGhzIHJldHVy
-biBlYXJseSB3aXRob3V0IHVubWFwcGluZyBwcmV2aW91c2x5IG1hcHBlZA0KPiA+IGlvdiBlbnRy
-aWVzLiBUaGlzIGNhbiBsZWFkIHRvIHN0YWxlIG1hcHBpbmdzIGFuZCByZXNvdXJjZSBsZWFrcy4N
-Cj4gPg0KPiA+IEZpeCB0aGlzIGJ5IGludHJvZHVjaW5nIGEgY29tbW9uIGNsZWFudXAgaGVscGVy
-IHRoYXQgdW5tYXBzIGFsbA0KPiA+IHByZXZpb3VzbHkgbWFwcGVkIGlvdiBlbnRyaWVzIGJlZm9y
-ZSByZXR1cm5pbmcgZnJvbSBlcnJvciBwYXRocy4NCj4gPg0KPiA+IEFkZGl0aW9uYWxseSwgdHJh
-Y2sgdGhlIGFjdHVhbCBtYXBwZWQgbGVuZ3RoIG9mIGVhY2ggaW92IGVudHJ5DQo+ID4gZXhwbGlj
-aXRseS4gVGhpcyBpcyBuZWNlc3NhcnkgYmVjYXVzZSBzb21lIGhhc2hpbmcgZmxvd3MgbWF5IGFw
-cGx5DQo+ID4gcGFkZGluZyBkdXJpbmcgcHJvY2Vzc2luZywgYW5kIHRoZSByZXN1bHRpbmcgYnVm
-ZmVyIGxlbmd0aCB1c2VkIGxhdGVyDQo+ID4gaW4gdGhlIGZsb3cgY2FuIGRpZmZlciBmcm9tIHRo
-ZSBvcmlnaW5hbCBETUEgbWFwcGVkIGxlbmd0aC4gVXNpbmcgdGhlDQo+ID4gbW9kaWZpZWQgbGVu
-Z3RoIGR1cmluZyBkbWFfbWVtb3J5X3VubWFwKCkgbWF5IHJlc3VsdCBpbiBhbiBpbmNvcnJlY3QN
-Cj4gPiB1bm1hcCBzaXplLg0KPiA+DQo+ID4gTm90ZTogdGhpcyBwYXRjaCBzZXJpZXMgaXMgYmFz
-ZWQgb24NCj4gPiBodHRwczovL3BhdGNoZXcub3JnL1FFTVUvMjAyNjA1MDQyMTM0MjEuNzEwMDM1
-LTEtY2xnQHJlZGhhdC5jb20vLg0KPiA+DQo+ID4gQmVzdCBSZWdhcmRzLA0KPiA+IEthbmUNCj4g
-SmFtaW4sIEkgbmVlZCB5b3VyIGhlbHAgaGVyZSB0b28uDQo+IA0KTG9va3MgZ29vZCB0byBtZS4N
-CkFkZGVkIHJldmlldy10YWcuDQoNClRoYW5rcywNCkphbWluDQoNCj4gVGhhbmtzLA0KPiANCj4g
-Qy4NCj4gDQoNCg==
+
+
+On 5/11/2026 11:07 PM, Chao Liu wrote:
+> Hi Daniel,
+> On Mon, May 11, 2026 at 10:28:57AM -0300, Daniel Henrique Barboza wrote:
+>> Hi everyone,
+>>
+>> We have been dealing with two sources of extensions information in
+>> target/riscv/cpu.c:
+>>
+>> - isa_edata_arr[]: an array that we must keep in riscv,isa ordering that
+>>    also has priv_spec info;
+>> - riscv_cpu_* arrays: used to set user properties and set defaults for
+>>    rv32/rv64, among other users across the code.
+>>
+>> The main issue here is the info being duplicated across arrays.  When
+>> adding new extensions we go through a ritual of adding basically the
+>> same stuff in both isa_edata_arr[] and riscv_cpu_extensions[].  We can
+>> eventually forget to do all steps of that dance, resulting in patch 1.
+>>
+>> The second issue is a desire for less abstractions.  An extension is
+>> something that we report in riscv,isa, that might be exposed to users or
+>> not, that might be a vendor or an experimental ext.  All these
+>> distinctions don't require multiple distinct arrays.
+>>
+>> I also made an effort to start moving away from the 'named features'
+>> stuff we have going on.  A 'named feature' is just an extension that
+>> most of the time isn't exposed to users, most of the time represents
+>> innate TCG behavior, and sometimes have a different enable mechanism
+>> aside from setting a flag to 'true'.  None of that is exclusive to this
+>> class of extensions therefore I believe we should move away from it
+>> over time.
+>>
+>> There are more design simplifications I want to do in cpu.c and with CPUs
+>> in general, but for now we can enjoy less lines to maintain.
+>>
+>> Patches based on alistair/riscv-to-apply.next.
+>>
+> I’m seeing some compile errors after applying these patches on top of commit
+> 0844c21f24ca (target/riscv: Update MISA.X for non-standard extensions) from
+> alistair/riscv-to-apply.next.
+> 
+> ---
+> ../target/riscv/tcg/tcg-cpu.c: In function ‘riscv_cpu_update_misa_x’:
+> ../target/riscv/tcg/tcg-cpu.c:1158:11: error: unknown type name ‘RISCVCPUMultiExtConfig’; did you mean ‘RISCVCPUConfig’?
+>   1158 |     const RISCVCPUMultiExtConfig *arr = riscv_cpu_vendor_exts;
+>        |           ^~~~~~~~~~~~~~~~~~~~~~
+>        |           RISCVCPUConfig
+> ../target/riscv/tcg/tcg-cpu.c:1158:41: error: ‘riscv_cpu_vendor_exts’ undeclared (first use in this function)
+>   1158 |     const RISCVCPUMultiExtConfig *arr = riscv_cpu_vendor_exts;
+>        |                                         ^~~~~~~~~~~~~~~~~~~~~
+> ../target/riscv/tcg/tcg-cpu.c:1158:41: note: each undeclared identifier is reported only once for each function it appears in
+> ../target/riscv/tcg/tcg-cpu.c:1160:27: error: request for member ‘name’ in something not a structure or union
+>   1160 |     for (int i = 0; arr[i].name != NULL; i++) {
+>        |                           ^
+> ../target/riscv/tcg/tcg-cpu.c:1161:43: error: request for member ‘offset’ in something not a structure or union
+>   1161 |         if (isa_ext_is_enabled(cpu, arr[i].offset)) {
+>        |                                           ^
+> [1658/2250] Compiling C object libqemu-riscv64-softmmu.a.p/target_riscv_vector_helper.c.o
+> ninja: build stopped: subcommand failed.
+> ---
+> 
+> Maybe try rebasing again and fixing it.
+
+Thanks for catching this up!  Guess I somehow missed this change from
+Alistair's branch.
+
+I'll send a v2.  Thanks,
+Daniel
+
+> 
+> Thanks,
+> Chao
+>> Daniel Henrique Barboza (13):
+>>    target/riscv/cpu.c: add xlrbr isa_edata_arr[] entry
+>>    target/riscv/cpu.c: fix smctr/ssctr isa_edata_arr[] order
+>>    target/riscv: make riscv-qmp-cmds use isa_data_arr[]
+>>    target/riscv/tcg: treat all exts equally in
+>>      cpu_disable_priv_spec_isa_exts
+>>    target/riscv/tcg: use only isa_edata_arr[] in cpu_cfg_ext_get_name()
+>>    target/riscv/cpu.c: remove riscv_cpu_enable_named_feat()
+>>    target/riscv: remove riscv_cpu_named_features[]
+>>    target/riscv/kvm: use isa_edata_arr[] for unavailable props
+>>    target/riscv/tcg: use isa_edata_arr[] to enable max exts
+>>    target/riscv/tcg: use cfg_offset as cpu_set_multi_ext cb opaque
+>>    target/riscv: do not set defaults in cpu prop callback
+>>    target/riscv/tcg: use isa_edata_arr[] to create user props
+>>    target/riscv/cpu: remove riscv_cpu_* arrays
+>>
+>>   target/riscv/cpu.c            | 315 ++++++++++++----------------------
+>>   target/riscv/cpu.h            |  12 +-
+>>   target/riscv/kvm/kvm-cpu.c    |  25 ++-
+>>   target/riscv/riscv-qmp-cmds.c |  30 +---
+>>   target/riscv/tcg/tcg-cpu.c    | 137 ++++-----------
+>>   5 files changed, 153 insertions(+), 366 deletions(-)
+>>
+>> -- 
+>> 2.43.0
+>>
+
 
