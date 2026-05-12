@@ -4,132 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5EAACD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 03:31:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E274CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 03:37:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMdoY-0005RV-H1; Mon, 11 May 2026 23:29:46 -0400
+	id 1wMdvK-0004jX-SD; Mon, 11 May 2026 23:36:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wMdoX-0005Qp-Jg
- for qemu-devel@nongnu.org; Mon, 11 May 2026 23:29:45 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wMdoV-0000Fx-Qp
- for qemu-devel@nongnu.org; Mon, 11 May 2026 23:29:45 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64BK8DHn2173016
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 03:29:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=w3nJOb31vcO
- +Ssifc149/3r8ODfugZ0qFwL7U92JD+k=; b=BuhzgWUZsEt9/A5HjGOXJxboV9O
- C796Ztr9d7rd/1+wPaTdA+5b6CbJMPzqpkGn9YnNJMJr5yiKQAliBQWB08raaESX
- 8PDosJHqJ3SeD+am49Qfy3zGDsMYpQTSpXZsMV4IS6HYXw7ibboNXvtyBfAxAheN
- SlL1Lv7b0oOArmhUmQ66dBG16I2UxX++eal47Ch+9vjmQDt/iAEo9uc5ZTx/PYOJ
- RmFLNU0hXguzoeRR/mstK73Xu+0r44hfiowWd59mcbIkV+z0GR6pnVjycj+znUSm
- oQ/eWm24THqMBBTTyt2cvk+aCldcIR0zrn/xNuaVe+ktWvuOpeqDog7A3DA==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e3nvj993g-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 03:29:42 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-2ee1da7a13fso6635550eec.1
- for <qemu-devel@nongnu.org>; Mon, 11 May 2026 20:29:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMdvI-0004is-44
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 23:36:45 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMdvD-0004ap-FQ
+ for qemu-devel@nongnu.org; Mon, 11 May 2026 23:36:43 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-488b3f8fa2bso57196825e9.1
+ for <qemu-devel@nongnu.org>; Mon, 11 May 2026 20:36:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778556582; x=1779161382; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=w3nJOb31vcO+Ssifc149/3r8ODfugZ0qFwL7U92JD+k=;
- b=OjJyvZHbnDQb8bQuPUwdhQCOfokg0NXVViZFT4bdQE4w83V6XVkctlqX1ttL9aPZO6
- ldZqlM13ZW2wElbNN6a/GDHY6ZEXyeDrl6F8RcjvK4xHnx6q1q1CNKiiJC/DGvfQg6Pd
- Sad+U+QRpR0Ozb5waRBEg/Ccm8CBrPJGpohTdHwaWdTu81qcg4+uSVbzqlnbc2twPiEz
- Y/QCwL6xgcKPVoT4aIWjXK3LCDwegfwyd+1pKL2I9dCHAZkI5W0oBnASF8uARND22zQj
- ZyYO1faTEIfEVZlgKnbVDTyqAdjFl1MBd8HRGVvL/2PflzR/sePda4yNRhf+WClxOCB+
- 23Mw==
+ d=linaro.org; s=google; t=1778556995; x=1779161795; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=wXsxfuaOUblnbZsXIm56pA6hishhSFvyCAfhvItsa2c=;
+ b=IAralr6fC9Aec0XKqqpwqk5x4MgsDObh+N9vLW7dOBIRwyv2MiqYOzW0wRfF7W7HtX
+ 8MixXZrwFEc+x6IsOMN5gCnZOO6ntJMhSfaiKrvy4jGIWPhlhaXpycJ6Bfrx4T5RuZXC
+ V10XVHbEvw1fFJND2jyL/VAa+dcijMjQTVybJ0z7IEBxPQawULfUypabSAmbM+ey2YEQ
+ IOsfwuFf9iOvHkF9BdLyAfc8DB5EfvpOtZlo8qVra8ZSROsM29AQ3G2gLHQwnyj9ScFC
+ 8alWJy6EtxKO8OD1rusruQmpOtsw1tdTGAdgadDt0vSoBM0rOsjet1Dlc54UUxAjWXwj
+ PxHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778556582; x=1779161382;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=w3nJOb31vcO+Ssifc149/3r8ODfugZ0qFwL7U92JD+k=;
- b=oMbvfTJwtZ+GXRtlem8tNvkKZhT4AhbfjayEfQQ4GHQJ2H9UUPU/AqzS1L/BOWbV8U
- cKlh7YFCOivC8ekAph4im3SXbLTEho2iRschOEQI14Jo4awha3JNsGm4fqnA4Lh0fhBO
- Ete6b48cZwi9HDudtt7xCSt1gp3BBb6rhZoJWVOgqtik4koGQXpYVeVJlJ5qGz3Y8frA
- 4wpbV5JldpwQxSvRwgmrY/Vmx4GTF4QOcCAlggDgawIkp9dBgR4T+ZrhjVIadwg+269Y
- NShRYRZo/ODePjw9gx1LSgFAfNhc4Ynku+3/8vERycw1J6jZ1OJGTEwy0OKuvy0saZBE
- eZbQ==
-X-Gm-Message-State: AOJu0Yy86/i90iQIgNHhbbthCgFBUW/X7vfvoEllnsOvZ13YvJBhz7B3
- Dp1J+ovwopQPxF1XiB7E8nMZxb8mfmJ111Y5EQAkqiAX7bYy0AvSe3KdKIFPPmmrJsd2qdpaPho
- L+D6fdDFCnVPGPgxw5IYISWK/4kNzBa6YxT9URlg9Kzsb8VIV9zuRZIdpXFxpTci6vg==
-X-Gm-Gg: Acq92OFrRo6DujXcQce3kWfglaB6e3Fs0C3wSz4LEF5RYk53b+QdorSCALJVIX5hhPL
- Ro9vcHUyEHD4F95+3t8HuMoP5aJ7CmTAhohDHS2WThkS19MA12JcTjwmFjffWdqZ+GGqsob83v6
- YBV16UZuedzWGbxyaSu3M7PNOiCSg29ezg1p+omneP/yzIs1H2sAiGzluQNkZ0Sb6iErAp7X49b
- ZwPen1rKuhiCQWklf1jzPmpOWUT/HuUzPlxWCXam/mGf0ydfwCME/UxB7id11WWxlaNSIIAiZmt
- uDTbKgb7AbEvEmguzUnmbKaO+Cs/3O9RV1diROCR49Kfr2s/JTnPO96qybP4WGAJXfQvNElZtWh
- QFzMOL1BVCeAXaiqAsST6oV23Rm6tE+sGm3AmfRwE6jKNf68IT4gmIyAoKUvp
-X-Received: by 2002:a05:7300:2146:b0:2e6:e77d:7bcf with SMTP id
- 5a478bee46e88-2f54f9442edmr13956628eec.22.1778556581410; 
- Mon, 11 May 2026 20:29:41 -0700 (PDT)
-X-Received: by 2002:a05:7300:2146:b0:2e6:e77d:7bcf with SMTP id
- 5a478bee46e88-2f54f9442edmr13956614eec.22.1778556580854; 
- Mon, 11 May 2026 20:29:40 -0700 (PDT)
-Received: from QCOM-UWl2o8bcGT.qualcomm.com ([191.202.238.222])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2f8884750ffsm16054317eec.19.2026.05.11.20.29.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 May 2026 20:29:40 -0700 (PDT)
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Subject: [PATCH v2 04/14] target/riscv/tcg: treat all exts equally in
- cpu_disable_priv_spec_isa_exts
-Date: Tue, 12 May 2026 00:29:16 -0300
-Message-ID: <20260512032926.1978818-5-daniel.barboza@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260512032926.1978818-1-daniel.barboza@oss.qualcomm.com>
-References: <20260512032926.1978818-1-daniel.barboza@oss.qualcomm.com>
+ d=1e100.net; s=20251104; t=1778556995; x=1779161795;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wXsxfuaOUblnbZsXIm56pA6hishhSFvyCAfhvItsa2c=;
+ b=YZgt6ktTkAkEY+Oj5G/q2K4iR5Z5T8s55mOfndUcPWwr0TYXJWyuh+BM/JJV3MsjSg
+ xEfTtNbN6rh12CouupIx92XvT9w62CwWzXhELMy61AinBcSBpnA//oAQMna/Ewhf0+9O
+ xNK4SvMBuDz+GnPDRImuR3HEoWrM6iBus4McMck8J8SEnHUfnYry3u7NE8JoiuU8Sw28
+ lGFTYAd2d19v0ejqSMVTmzALpoKkjBeSKVl8Wbhgyu9Whg+qHDSYa93PNESLfVRV+tnL
+ /qEDG6wrVQozmKLSH0V6ChwoCI4TtJHIX0X7rlWQKMbp2JwkH1f4ungVaTKzrSk9frOc
+ 8ZGQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+OLBFi/WYsGa3VUfPKX2WM9AQC6XDpx10GItg/I9sVcwXUVQ5ysXxLfM0ogLWWODxf/I3uik5dCaQk@nongnu.org
+X-Gm-Message-State: AOJu0Yzmbu3w4dUPERIDBsdKXbIOOgExnYZ5ggNEHaxghplqyeQPUWTO
+ FjAMtsKz8PIKBL/SlXnw70gDtzyaYIjVKpdGRnu678z1g5IYKAN/wbktwkvzOT00XVo=
+X-Gm-Gg: Acq92OELLk6krpCDX41jGiIawSfvqd8RddG8XQNY9+X+h+SM/hMU/Nw+FQvcx7plUq3
+ ur3LM52vT3xrLiy6/BNVcMDqfppM+WKtyGSh5gt7EtRVA8L034vgZrpKj8bRMYp98t6rGztMZPW
+ 5Ub6H3docfpFn0A8qj5ACXyItpFO4aMRxqcJyiCJjXshWNQCgsUdQFulPsiARPjGoVvP7r0Z2+U
+ GBCcjX/JxeOoeRGjNh6ZdPuxER6MFco2GDJ+9/3E45Yj5odvtyHsNmDLI7U8gzj3tv/9uOFnAKJ
+ IbkTutLOAxv1knFuipcCY41Y/f6Ejmfnljql/q+kTSlg6al5M+BVZwRofw6EWAi9yQfw6sY6eAw
+ ljNJZU40TtnkJtPiFSyNJrUkPS5/h3KPlMCpu9qAkDxvQJpRGpbC5WyY7zdHhjXmfjWktoMZDmd
+ /ddzhK1PDeNq4fIygpNYkrbATZGIQRMtXeplf5LgZGetIaazdUy5E3c5c1Lirq62l7PQ==
+X-Received: by 2002:a05:600c:4ba3:b0:48a:5ee0:7781 with SMTP id
+ 5b1f17b1804b1-48e8e2195b0mr16488455e9.16.1778556995427; 
+ Mon, 11 May 2026 20:36:35 -0700 (PDT)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45491ca383asm28980429f8f.28.2026.05.11.20.36.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 11 May 2026 20:36:34 -0700 (PDT)
+Message-ID: <c4ba13b3-6e7f-45f0-9f4a-ebe2f7415f34@linaro.org>
+Date: Tue, 12 May 2026 05:36:33 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 089/110] target/s390x: Introduce common system/user meson
+ source set
+Content-Language: en-US
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org,
+ Cornelia Huck <cohuck@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Farhan Ali <alifm@linux.ibm.com>
+References: <20260506135524.20617-1-philmd@linaro.org>
+ <20260506135524.20617-90-philmd@linaro.org>
+ <5b1fd1f6-00ec-4575-9609-845218405403@redhat.com>
+ <a57d5120-dabf-4953-a680-a9c875ecf238@linaro.org>
+ <49384318-3050-46fd-af06-4b5c0a14699b@oss.qualcomm.com>
+ <dbd55bb5-392b-4a8e-b332-bc009b99014d@redhat.com>
+ <5c5e992b-e093-462c-999b-47ff0e5c07ef@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <5c5e992b-e093-462c-999b-47ff0e5c07ef@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: xIlwbvfuThR5is_yZeH0O1tTR2rDIbcZ
-X-Proofpoint-GUID: xIlwbvfuThR5is_yZeH0O1tTR2rDIbcZ
-X-Authority-Analysis: v=2.4 cv=H8brBeYi c=1 sm=1 tr=0 ts=6a029ea6 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=etEqFfc6qwXwpI8uT8rzbw==:17
- a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=EUspDBNiAAAA:8
- a=y3KnQKAffZ0f_Lxsw64A:9 a=PxkB5W3o20Ba91AHUih5:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEyMDAyOCBTYWx0ZWRfX32haaCCl3P/i
- a8XGzzWUXl9a3rWsWjhfZFylqR//E86yAe1yQTa/KbxDJx/9+nhFboBztZbsWHNCM7UgpsHZxdL
- +Rp1NDvvF6zUWTzvjr6uHU7jZvQxOU+lPBmIYlhf2zTyO+vWDO8MHObfHjjvV5dKOlVgm9im4My
- BQBpyT4L7XouG0fox6OUHx+XlyzWg3BOIb8Rg90hU7oUdvraiSdNBkQaB6fdlAW6PEsJBqXQyH/
- tpVBACfGCq17N/kR72oY8DbWCupbN6cGnoJYTpPg/4ydj/2HkQQZAXq39Jez2TLUz918q5wEATa
- Vt331+k2h2Xo6aoMEf7Gu8pdoLI/2iVeQpOja3uoIaUwOh1TIcEY+hktBylcrCXDai+oHZo/Aht
- IWAw7o8ywpj8tzwwutG6myRKNwfnoyOjPlviGeSYpDpKbPLAums3aMEQnIPdgPLcW18ynGxzNuA
- x55/yjiy17kSPnCjrqg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-11_05,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 clxscore=1015 impostorscore=0 malwarescore=0 phishscore=0
- spamscore=0 bulkscore=0 suspectscore=0 priorityscore=1501 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605050000 definitions=main-2605120028
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -146,71 +112,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 7e4f75cadf ("target/riscv/tcg: hide warn for named feats when
-disabling via priv_ver") changed the design of
-disable_priv_spec_isa_exts to not warn when disabling what we were
-calling "named features" at that time.
+On 11/5/26 23:07, Pierrick Bouvier wrote:
+> On 5/11/2026 1:46 PM, Cédric Le Goater wrote:
+>> On 5/11/26 19:59, Pierrick Bouvier wrote:
+>>> On 5/11/2026 10:48 AM, Philippe Mathieu-Daudé wrote:
+>>>> On 11/5/26 17:48, Cédric Le Goater wrote:
+>>>>> Hello,
+>>>>>
+>>>>> On 5/6/26 15:55, Philippe Mathieu-Daudé wrote:
+>>>>>> Introduce a source set common to system / user. Start it
+>>>>>> with the files built in both sets: 'cpu_models_user.c'
+>>>>>> and 'gdbstub.c' No logical change intended.
+>>>>>>
+>>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>>>> Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+>>>>>> Message-Id: <20260423135035.50126-4-philmd@linaro.org>
+>>>>>
+>>>>> This change introduced a regression with PCI passthrough which
+>>>>> stopped working. Guest kernel reports :
+>>>>>
+>>>>>      [    0.156501] zpci: PCI is not supported because CPU facilities 69
+>>>>> or 71 are not available
+>>>>>
+>>>>> and other devices (ap, ccw) are impacted too I think.
+>>>>
+>>>> Is it something we could test with the mainstream CI, or does this
+>>>> requires specific hardware?
+>>>>
+>>>
+>>> It could be tested with a tcg arm vm + nested VM with PCI passthrough.
+>>
+>> Yes, adding VFIO tests to the QEMU upstream CI would be great.
+>>
+>>> However, the problem is that you need to cross-compile QEMU in CI to
+>>> test current version to launch the nested VM.
 
-Back in that time we were adding RVA22 profile support and we were dealing
-with a RVI innovation: named features.  These can be define as cute
-names for pre-existing behavior/parameters, e.g. 'zic64b' means all
-cache blocks must have 64 bytes.  They do get inserted in the riscv,isa
-but they are not "real" extensions because users shouldn't be setting
-them in the command line, or so we thought back then, and we attempted
-to model that by calling it "named features".
+I guess remember one of your scripts close to that setup, mounting
+the same directory in nested guest with:
 
-This didn't age that well: ziccrse is a so called named feature as far as
-TCG goes, but then KVM had to treat it as a regular extension that can be
-user set and we made an exception: ziccrse is a named feature that is
-user set by KVM.
+   -virtfs \
+    local,path=$(pwd),mount_tag=host,security_model=mapped,readonly=off
 
-"Named features" are regular extensions that might or might not be user
-set, and might or might not warrant special handling during realize()
-by setting other parameters.  And we'll being treating them as such,
-which will culminate in the end of riscv_cpu_named_features[] array in
-the end.
-
-This reverts commit 7e4f75cadf44ee67809c7ca82645a289a5268966.
-
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
----
- target/riscv/tcg/tcg-cpu.c | 13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
-
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index a358d91ca5..92406bf41f 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -484,15 +484,6 @@ static void riscv_cpu_disable_priv_spec_isa_exts(RISCVCPU *cpu)
-             }
- 
-             isa_ext_update_enabled(cpu, edata->ext_enable_offset, false);
--
--            /*
--             * Do not show user warnings for named features that users
--             * can't enable/disable in the command line. See commit
--             * 68c9e54bea for more info.
--             */
--            if (cpu_cfg_offset_is_named_feat(edata->ext_enable_offset)) {
--                continue;
--            }
- #ifndef CONFIG_USER_ONLY
-             warn_report("disabling %s extension for hart 0x%" PRIx64
-                         " because privilege spec version does not match",
-@@ -520,9 +511,11 @@ static void riscv_cpu_update_named_features(RISCVCPU *cpu)
-         cpu->cfg.has_priv_1_13 = true;
-     }
- 
-+    /* zic64b is 1.12 or later */
-     cpu->cfg.ext_zic64b = cpu->cfg.cbom_blocksize == 64 &&
-                           cpu->cfg.cbop_blocksize == 64 &&
--                          cpu->cfg.cboz_blocksize == 64;
-+                          cpu->cfg.cboz_blocksize == 64 &&
-+                          cpu->cfg.has_priv_1_12;
- 
-     cpu->cfg.ext_ssstateen = cpu->cfg.ext_smstateen;
- 
--- 
-2.43.0
-
+Same could be used with s390x / x86 I suppose.
 
