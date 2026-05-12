@@ -4,56 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6770BCD4F35
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 11:28:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FA0BCD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 11:59:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMlHe-0005hL-QD; Tue, 12 May 2026 07:28:22 -0400
+	id 1wMllF-0001Jc-Am; Tue, 12 May 2026 07:58:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wMlHb-0005gq-0n
- for qemu-devel@nongnu.org; Tue, 12 May 2026 07:28:15 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wMllC-0001In-0K
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 07:58:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wMlHY-0002ye-0f
- for qemu-devel@nongnu.org; Tue, 12 May 2026 07:28:14 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wMllA-0005PA-BF
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 07:58:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778585289;
+ s=mimecast20190719; t=1778587122;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=IuunzOxcvqoscpQv7BWbzJDNqkon4nrrXraD1s60S/g=;
- b=KzkVMzvns5w4VUE+7VYUXYvn3SyNjey+E39PlCgRSeYfcy3WcbGUCGitx8Gh3YFptIkTyf
- sULrSBb4WufYMkHLJo7ANUd7zVHXLZA/f3m5CdZCKc5t0fa35J75ygdXJNA+fTB6v9c0tA
- aNgGi7fcsEj4ZfT80FFADoYKYxhZ/+I=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=nrrWx4FGULrR2I1Ew3PrWpUUZMkz76/dJB4OwPA7KLA=;
+ b=FUM0Ya5PzC8BJIw8N2+hFdTGdvaakTyCo+7CODi+x+T27yKuYzEhoS+q8vnBLtpQHdy6Ca
+ QkzgyKAZWtx4Qr5tRvtVAw3VP7GqzhAiC0KWgOhmMbuBheUcJGnGA78Qi9dHS+JqI1JQP3
+ TUMU2PWza3PYaZLhzV2aiVZcy7dPmSY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-447-VEiARozrMS2n88rmV59wrA-1; Tue,
- 12 May 2026 07:28:07 -0400
-X-MC-Unique: VEiARozrMS2n88rmV59wrA-1
-X-Mimecast-MFC-AGG-ID: VEiARozrMS2n88rmV59wrA_1778585286
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-499-pVJr_ApKMheAR_IuEtU5OQ-1; Tue,
+ 12 May 2026 07:58:38 -0400
+X-MC-Unique: pVJr_ApKMheAR_IuEtU5OQ-1
+X-Mimecast-MFC-AGG-ID: pVJr_ApKMheAR_IuEtU5OQ_1778587116
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 62F901956089; Tue, 12 May 2026 11:28:06 +0000 (UTC)
-Received: from merkur.fritz.box (unknown [10.44.49.152])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0BBE930001BB; Tue, 12 May 2026 11:28:04 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1EC6318005BF; Tue, 12 May 2026 11:58:36 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.49.152])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 034DC30001BE; Tue, 12 May 2026 11:58:32 +0000 (UTC)
+Date: Tue, 12 May 2026 13:58:30 +0200
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com,
-	hreitz@redhat.com,
-	qemu-devel@nongnu.org
-Subject: [PATCH] block: Improve readability in HMP 'info blockstats' output
-Date: Tue, 12 May 2026 13:27:59 +0200
-Message-ID: <20260512112759.66038-1-kwolf@redhat.com>
+Cc: hreitz@redhat.com, jsnow@redhat.com, qemu-devel@nongnu.org,
+ qemu-stable@nongnu.org
+Subject: Re: [PATCH 0/7] ide: Fix deadlock between TRIM and drain
+Message-ID: <agMV5rhQxIfEmumH@redhat.com>
+References: <20260421161132.99878-1-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260421161132.99878-1-kwolf@redhat.com>
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -79,69 +81,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instead of a long line with key=value pairs for each block device,
-switch to a tabular form with aligned values. This makes it much easier
-to find the relevant information in the output.
+Am 21.04.2026 um 18:11 hat Kevin Wolf geschrieben:
+> Patches 2 and 4 are the core of the fix, see their commit message for
+> details.
+> 
+> Kevin Wolf (7):
+>   blkdebug: Add 'delay-ns' option
+>   block: Add blk_co_start/end_request() and BDRV_REQ_NO_QUEUE
+>   block: Add flags parameter to blk_*_pdiscard()
+>   ide: Minimal fix for deadlock between TRIM and drain
+>   ide: Clean up ide_trim_co_entry() to be idiomatic coroutine code
+>   ide-test: Factor out wait_dma_completion()
+>   ide-test: Test reset during TRIM
 
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- block/monitor/block-hmp-cmds.c | 38 ++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 20 deletions(-)
+Applied to the block branch.
 
-diff --git a/block/monitor/block-hmp-cmds.c b/block/monitor/block-hmp-cmds.c
-index 1fd28d59eb1..69ade0534f1 100644
---- a/block/monitor/block-hmp-cmds.c
-+++ b/block/monitor/block-hmp-cmds.c
-@@ -794,30 +794,28 @@ void hmp_info_blockstats(Monitor *mon, const QDict *qdict)
-             continue;
-         }
- 
--        monitor_printf(mon, "%s:", stats->value->device);
--        monitor_printf(mon, " rd_bytes=%" PRId64
--                       " wr_bytes=%" PRId64
--                       " rd_operations=%" PRId64
--                       " wr_operations=%" PRId64
--                       " flush_operations=%" PRId64
--                       " wr_total_time_ns=%" PRId64
--                       " rd_total_time_ns=%" PRId64
--                       " flush_total_time_ns=%" PRId64
--                       " rd_merged=%" PRId64
--                       " wr_merged=%" PRId64
--                       " idle_time_ns=%" PRId64
--                       "\n",
-+        monitor_printf(mon, "%s%s: idle_time_ns=%" PRId64 "\n",
-+                       stats != stats_list ? "\n" : "",
-+                       stats->value->device,
-+                       stats->value->stats->idle_time_ns);
-+        monitor_printf(mon, "       %24s %16s %24s %10s\n", "bytes",
-+                       "operations", "total_time_ns", "merged");
-+        monitor_printf(mon, "Read:  %24" PRId64 " %16" PRId64 " %24" PRId64
-+                       " %10" PRId64 "\n",
-                        stats->value->stats->rd_bytes,
--                       stats->value->stats->wr_bytes,
-                        stats->value->stats->rd_operations,
-+                       stats->value->stats->rd_total_time_ns,
-+                       stats->value->stats->rd_merged);
-+        monitor_printf(mon, "Write: %24" PRId64 " %16" PRId64 " %24" PRId64
-+                       " %10" PRId64 "\n",
-+                       stats->value->stats->wr_bytes,
-                        stats->value->stats->wr_operations,
--                       stats->value->stats->flush_operations,
-                        stats->value->stats->wr_total_time_ns,
--                       stats->value->stats->rd_total_time_ns,
--                       stats->value->stats->flush_total_time_ns,
--                       stats->value->stats->rd_merged,
--                       stats->value->stats->wr_merged,
--                       stats->value->stats->idle_time_ns);
-+                       stats->value->stats->wr_merged);
-+        monitor_printf(mon, "Flush: %24s %16" PRId64 " %24" PRId64 "\n",
-+                       "",
-+                       stats->value->stats->flush_operations,
-+                       stats->value->stats->flush_total_time_ns);
-     }
- 
-     qapi_free_BlockStatsList(stats_list);
--- 
-2.54.0
+Kevin
 
 
