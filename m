@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E90E1CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:08:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68318CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:08:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuFc-0001Ci-I4; Tue, 12 May 2026 17:02:51 -0400
+	id 1wMuGf-0002nP-Sa; Tue, 12 May 2026 17:03:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuDO-0005xr-Pt; Tue, 12 May 2026 17:00:30 -0400
+ id 1wMuEJ-0007DB-D6; Tue, 12 May 2026 17:01:31 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuDM-0006E6-Uu; Tue, 12 May 2026 17:00:30 -0400
+ id 1wMuEG-0006Q4-8d; Tue, 12 May 2026 17:01:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619277; bh=Py7NJzypQwz5h80LC3W5+B+gYtnyfPaJkbxftS0PS+c=;
+ t=1778619277; bh=HBbppBk0F1Eq2yDKj74u9HuKV/1aqIdP6hioL/w2gdc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fOf7WqtPHekoJVoCA68G0IFL1vutrPv8S8yFouPanONT7P7Rm/+IEuyP2oAAOAI//
- gDB0Q+nwC5vrMbCw/saSZ7ExastQORF//PVi0zpdrEDpI/q3bhwrRivDbnVJ95Vgnt
- bwHEDGzHn8Q3FCf1g/HRrvIapbkj74VYehd5w+ugHSNX3v3QJupfCsfJYf7nQBuzJk
- lnDpSoWZOzOjCf3+v6dPkxEaPrMxB9k5E9ynHEocRoW9jrhsDb8cRAKaVyRxAOH5DE
- 7DP5y5cUq0wBSXtzs3cdZXcYrV6SfjaRWdzItbV1fqzHxvElJ+OniyU+wTVfbNpInu
- 28LHEbnb8r4iw==
+ b=ZtKogPtj+zvggF1vGPyjDvfILf43E7i+CsTVf4i8NRwe40bfPtgH6kH+AjKf1Quah
+ czhvhZd+mZCMK6JHjnXW9IhDVlh1MCbyDOizT0qS0Ni14qFDyLk5FCaqneqHwqJUHr
+ 9QhkcqS2KEY1RR/MY/nC4rxagA5vqKow9n0PjpBiEtcCfRVKkZyZySlb91lY9jmaZb
+ A8PqbOEPR8O6YAZgta72NJgMK7RTGAthl0allLyHvmruAlO9xeIp9IoAaTOXGGTHHG
+ UE2115ehsc6/jdHjc01QgRlh1N9zmSybHa17WdwRUL1/q/ssZE8/GUYihWwjASvwst
+ xUhUlbqfsmSzA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 30CD31AA307;
+ by isrv.corpit.ru (Postfix) with ESMTP id CE19A1AA30F;
  Tue, 12 May 2026 23:54:37 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 31A743ABC78;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D8C453ABC80;
  Tue, 12 May 2026 23:54:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 059/107] ui/console-vc: fix off-by-one in CSI J 2
- (clear entire screen)
-Date: Tue, 12 May 2026 23:53:46 +0300
-Message-ID: <20260512205437.360850-59-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 067/107] hw/misc: Fix the valid access size to the
+ avr-power device
+Date: Tue, 12 May 2026 23:53:54 +0300
+Message-ID: <20260512205437.360850-67-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
@@ -73,31 +72,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 
-The loop condition used `y <= s->height` instead of `y < s->height`,
-causing vc_clear_xy() to be called with y == s->height. This clears
-a row in the scrollback buffer beyond the visible screen.
+Accessing the device with in non-single byte mode currently causes
+QEMU to abort:
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+ $ echo "writew 0x800064 0x4142" | \
+   ./qemu-system-avr -M mega2560 -display none -qtest stdio -accel qtest
+ [I 0.000000] OPENED
+ [R +0.001784] writew 0x800064 0x4142
+ qemu-system-avr: ../../devel/qemu/hw/misc/avr_power.c:58: avr_mask_write:
+  Assertion `offset == 0' failed.
+ Aborted                    (core dumped)
+
+Set the valid max access size to 1 to fix the problem.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3393
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-(cherry picked from commit 181fdf8a7e13c0460a26777ff9301e0ecdca3784)
+Message-ID: <20260421082935.85995-1-thuth@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit c0306d2b8f45a708f7ab45c846bb24851d6e17f2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/console-vc.c b/ui/console-vc.c
-index df1341513d..f4aaf6950d 100644
---- a/ui/console-vc.c
-+++ b/ui/console-vc.c
-@@ -899,7 +899,7 @@ static void vc_putchar(VCChardev *vc, int ch)
-                     break;
-                 case 2:
-                     /* clear entire screen */
--                    for (y = 0; y <= s->height; y++) {
-+                    for (y = 0; y < s->height; y++) {
-                         for (x = 0; x < s->width; x++) {
-                             vc_clear_xy(vc, x, y);
-                         }
+diff --git a/hw/misc/avr_power.c b/hw/misc/avr_power.c
+index ac7b96f53e..1495ec5de4 100644
+--- a/hw/misc/avr_power.c
++++ b/hw/misc/avr_power.c
+@@ -73,6 +73,9 @@ static const MemoryRegionOps avr_mask_ops = {
+     .impl = {
+         .max_access_size = 1,
+     },
++    .valid = {
++        .max_access_size = 1,
++    },
+ };
+ 
+ static void avr_mask_init(Object *dev)
 -- 
 2.47.3
 
