@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8863ACD4F39
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:19:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D099BCD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:20:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuVy-00049P-8O; Tue, 12 May 2026 17:19:42 -0400
+	id 1wMuV2-0001TM-Qg; Tue, 12 May 2026 17:18:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuVv-0003ya-W8; Tue, 12 May 2026 17:19:40 -0400
+ id 1wMuUq-0001Od-V9; Tue, 12 May 2026 17:18:32 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuVu-00085g-1Z; Tue, 12 May 2026 17:19:39 -0400
+ id 1wMuUp-0007Cl-4z; Tue, 12 May 2026 17:18:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619497; bh=2Auq4ZShcHPhyzVP1lYtU+rdqjbXwUZ5HXuQ4o789do=;
+ t=1778619497; bh=3Dgouw/Be4emkib1kDzVyM9ntYJ2bumwMnhhCb3hOvk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=AJuH4lx7o+w4m7qbXjtw8j5uFnVIaW/iyKZp9Yvrz/s7xKzUrl9pzTZuXv9O4JHxP
- mqT8Egb0w+0sNFzUGBAhCdHDj0vGBpP4/ppV1kFBVxTsbK2fAjRB925svmlVmlVdBH
- g9rJmghkwNZsBDtqVcIpIM8YZamqxQSFZRuSDWbeTVRU0cT9r4EhrWTsc1Y/RShIwQ
- VDxbRcge2olDyQE2YGxIVBTpzjF1fSDCzNtIMocqXCXpfkeGZo7Qb/YBZQBgGpKovC
- B1WEDV6akWgUNP07uLHKBpOc805LDUbgP/6u89/4u3BSU6PTpDTPc6tVs3YMGcFmUg
- nUA9rmyWg63LA==
+ b=pt+1NJ6Vlo2P/ktO/U3FY6tRROo1iP8BqVwLQ40yQxg0aRFWqoW3mIsHL88elodlG
+ 3GaLymDznjiJXlAUsGLySTCBejdWcS2DuWIKYQthCyLaXNkCDZjAt8w1hD4slnDvbd
+ Asyl6e0ABTAqFilY7pGf1NRonPTcQjX5b2dGlW1Z2SJrxMz3+OdmMoa+f6xrD8aCth
+ bkGJzKBgKQSnYVTu3uw3PEc+ZcNiHMreiTEpxUHr7LGd+bVvINRgQ9Ge4aWjCHjxeA
+ 4JcyfHT+K3Uu2/1usgigZhYDxz+GNPimJYD51Cbwp6hKiVbxed/ddesjUv1BoJLB/3
+ qzwZa/pCWMPTw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E03A91AA3DA;
+ by isrv.corpit.ru (Postfix) with ESMTP id 3A92E1AA3D0;
  Tue, 12 May 2026 23:58:17 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id EC7C43ABD32;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3C1B73ABD28;
  Tue, 12 May 2026 23:58:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 15/58] hw/misc: Fix the valid access size to the
- avr-power device
-Date: Tue, 12 May 2026 23:57:36 +0300
-Message-ID: <20260512205820.361821-15-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 05/58] target/i386: fix strList leak in
+ x86_cpu_get_unavailable_features
+Date: Tue, 12 May 2026 23:57:26 +0300
+Message-ID: <20260512205820.361821-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
@@ -72,44 +71,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Accessing the device with in non-single byte mode currently causes
-QEMU to abort:
+The result list built by x86_cpu_list_feature_names() was never freed
+after being visited, causing a memory leak detected by ASan.
+(the getter visitor is VISITOR_OUTPUT kind and doesn't own data)
 
- $ echo "writew 0x800064 0x4142" | \
-   ./qemu-system-avr -M mega2560 -display none -qtest stdio -accel qtest
- [I 0.000000] OPENED
- [R +0.001784] writew 0x800064 0x4142
- qemu-system-avr: ../../devel/qemu/hw/misc/avr_power.c:58: avr_mask_write:
-  Assertion `offset == 0' failed.
- Aborted                    (core dumped)
-
-Set the valid max access size to 1 to fix the problem.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3393
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260421082935.85995-1-thuth@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit c0306d2b8f45a708f7ab45c846bb24851d6e17f2)
+Fixes: 506174bf8219 ("i386: "unavailable-features" QOM property")
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Link: https://lore.kernel.org/r/20260413125040.3842686-1-marcandre.lureau@redhat.com
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 87e1226e6f6844845ac407d50198d84205e7ed7f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/misc/avr_power.c b/hw/misc/avr_power.c
-index f42cf4fd90..42be265691 100644
---- a/hw/misc/avr_power.c
-+++ b/hw/misc/avr_power.c
-@@ -73,6 +73,9 @@ static const MemoryRegionOps avr_mask_ops = {
-     .impl = {
-         .max_access_size = 1,
-     },
-+    .valid = {
-+        .max_access_size = 1,
-+    },
- };
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index c6fd1dc00e..9d126600c0 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -7842,6 +7842,7 @@ static void x86_cpu_get_unavailable_features(Object *obj, Visitor *v,
  
- static void avr_mask_init(Object *dev)
+     x86_cpu_list_feature_names(xc->filtered_features, &result);
+     visit_type_strList(v, "unavailable-features", &result, errp);
++    qapi_free_strList(result);
+ }
+ 
+ /* Print all cpuid feature names in featureset
 -- 
 2.47.3
 
