@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A6E2CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 17:16:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C99B0CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 17:16:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMqhm-0007tU-6O; Tue, 12 May 2026 13:15:38 -0400
+	id 1wMqhl-0007jp-7U; Tue, 12 May 2026 13:15:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wMqgb-0006nk-ML
- for qemu-devel@nongnu.org; Tue, 12 May 2026 13:14:27 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wMqgd-0006oP-JX
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 13:14:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wMqgV-00010q-Dx
- for qemu-devel@nongnu.org; Tue, 12 May 2026 13:14:22 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wMqgZ-00011W-6d
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 13:14:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778606058;
+ s=mimecast20190719; t=1778606060;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mJSWxrK/DsrWExYq5kDHhvcdyrwDNbnw2tsgw3hDlWA=;
- b=NU2P/Z45vWSD/sTVv04FaqwwhebCVDa6VMqukjZu4VO+9auHQfAvOOmmm+Yd9uNsIlrXx5
- hc/LRAOr6utq4VHbtl4fAJmCPzMiDtH0tffEp4XYbfy1PsPKwV+htUBghPA020x/WFpx/v
- 39rzyeWmYdeaEcoyrPRSVmF8AYPd6DU=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=aFnWtS7fHX6DQP30aCJnQ/b6Ebdav+Ca95dFN+mixKE=;
+ b=ElpQz+gNb9xwE0L3OxaIraTLKTqfwN0LJFqC9QxP8qVpAWGQIGF4Zczg70MVVFlwpAvDHP
+ ku4928nm/h+3FXr0Tde3zJQVIXqsdBGbmVUTNxaADKq6iEP+jWWIavY8+LhQlEN7S66ffp
+ iJSAmeskbaFNrPR/nmiScNjWtkCGWxQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-451-_q_2rmsvPiqF_DPl4-keCQ-1; Tue,
- 12 May 2026 13:14:15 -0400
-X-MC-Unique: _q_2rmsvPiqF_DPl4-keCQ-1
-X-Mimecast-MFC-AGG-ID: _q_2rmsvPiqF_DPl4-keCQ_1778606054
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-385-RPBEWfg3OvW6ZSpJwCv_8A-1; Tue,
+ 12 May 2026 13:14:17 -0400
+X-MC-Unique: RPBEWfg3OvW6ZSpJwCv_8A-1
+X-Mimecast-MFC-AGG-ID: RPBEWfg3OvW6ZSpJwCv_8A_1778606056
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5F19E180034E; Tue, 12 May 2026 17:14:14 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9242519560A1; Tue, 12 May 2026 17:14:16 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.49.156])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B00D61955D84; Tue, 12 May 2026 17:14:12 +0000 (UTC)
+ id D1DAC1955D84; Tue, 12 May 2026 17:14:14 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 7/9] hw/arm: Remove fp5280g2-bmc machine
-Date: Tue, 12 May 2026 19:13:52 +0200
-Message-ID: <20260512171354.4183887-8-clg@redhat.com>
+ Peter Delevoryas <peter@pjd.dev>
+Subject: [PULL 8/9] hw/arm: Remove fby35 machine
+Date: Tue, 12 May 2026 19:13:53 +0200
+Message-ID: <20260512171354.4183887-9-clg@redhat.com>
 In-Reply-To: <20260512171354.4183887-1-clg@redhat.com>
 References: <20260512171354.4183887-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -67,7 +67,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,189 +83,382 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The fp5280g2-bmc machine was deprecated in QEMU 10.2 and is now
-removed in QEMU 11.1.
+The fby35 machine was deprecated in QEMU 10.2 and is now removed in
+QEMU 11.1.
 
-This Inspur FP5280G2 BMC board does not rely on specific device models
-and can be replaced by the ast2500-evb machine with appropriate
-fmc-model and I2C device configuration via command line.
+This multi-SoC machine was added as an example of heterogeneous
+systems, but the models never evolved and no public firmware is
+available to boot it. Users needing multi-SoC emulation should use the
+ast2700fc machine instead, which is based on newer AST2700 SoCs with
+better support.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260510165704.2935316-4-clg@redhat.com
+Link: https://lore.kernel.org/qemu-devel/20260510165704.2935316-5-clg@redhat.com
+Acked-by: Peter Delevoryas <peter@pjd.dev>
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- docs/about/deprecated.rst        |  8 ---
- docs/about/removed-features.rst  |  8 +++
- docs/system/arm/aspeed.rst       |  5 +-
- hw/arm/aspeed_ast2500_fp5280g2.c | 88 --------------------------------
- hw/arm/meson.build               |  1 -
- 5 files changed, 10 insertions(+), 100 deletions(-)
- delete mode 100644 hw/arm/aspeed_ast2500_fp5280g2.c
+ MAINTAINERS                     |   2 -
+ docs/about/deprecated.rst       |  10 --
+ docs/about/removed-features.rst |  10 ++
+ docs/system/arm/fby35.rst       |  52 --------
+ docs/system/target-arm.rst      |   1 -
+ hw/arm/fby35.c                  | 203 --------------------------------
+ hw/arm/meson.build              |   3 +-
+ 7 files changed, 11 insertions(+), 270 deletions(-)
+ delete mode 100644 docs/system/arm/fby35.rst
+ delete mode 100644 hw/arm/fby35.c
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 93a1e4e4822e..06788fde5acd 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1276,12 +1276,10 @@ F: include/hw/*/*aspeed*
+ F: hw/net/ftgmac100.c
+ F: include/hw/net/ftgmac100.h
+ F: docs/system/arm/aspeed.rst
+-F: docs/system/arm/fby35.rst
+ F: docs/specs/aspeed*
+ F: tests/functional/*/*aspeed*
+ F: tests/*/*aspeed*
+ F: tests/*/*ast2700*
+-F: hw/arm/fby35.c
+ F: pc-bios/ast27x0_bootrom.bin
+ F: roms/vbootrom
+ 
 diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index bbb4a9886fbc..e416f3d8a74b 100644
+index e416f3d8a74b..bf6182d61c6e 100644
 --- a/docs/about/deprecated.rst
 +++ b/docs/about/deprecated.rst
-@@ -250,14 +250,6 @@ deprecated; use the new name ``dtb-randomness`` instead. The new name
+@@ -250,16 +250,6 @@ deprecated; use the new name ``dtb-randomness`` instead. The new name
  better reflects the way this property affects all random data within
  the device tree blob, not just the ``kaslr-seed`` node.
  
--Arm ``fp5280g2-bmc`` machine (since 10.2)
--'''''''''''''''''''''''''''''''''''''''''
+-Arm ``fby35`` machine (since 10.2)
+-''''''''''''''''''''''''''''''''''
 -
--The ``fp5280g2-bmc`` machine does not rely on any specific device
--models, it can be replaced by the ``ast2500-evb`` machine using the
--``fmc-model`` option to specify the flash type. The I2C devices
--connected to the board can be defined via the QEMU command line.
+-The ``fby35`` machine was originally added as an example of a
+-multi-SoC system, with the expectation the models would evolve over
+-time in an heterogeneous system. This hasn't happened and no public
+-firmware is available to boot it. It can be replaced by the
+-``ast2700fc``, another multi-SoC machine based on the newer AST2700
+-SoCs which are excepted to receive better support in the future.
 -
- Arm ``fby35`` machine (since 10.2)
- ''''''''''''''''''''''''''''''''''
  
+ RISC-V default machine option (since 10.0)
+ ''''''''''''''''''''''''''''''''''''''''''
 diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index b9e9d43dada3..2da8283d0e1e 100644
+index 2da8283d0e1e..9bd83b183f46 100644
 --- a/docs/about/removed-features.rst
 +++ b/docs/about/removed-features.rst
-@@ -1205,6 +1205,14 @@ machine using the ``fmc-model`` option to specify the flash type. The
- I2C devices connected to the board can be defined via the QEMU command
- line.
+@@ -1213,6 +1213,16 @@ models, it can be replaced by the ``ast2500-evb`` machine using the
+ ``fmc-model`` option to specify the flash type. The I2C devices
+ connected to the board can be defined via the QEMU command line.
  
-+Arm ``fp5280g2-bmc`` machine (removed in 11.1)
-+''''''''''''''''''''''''''''''''''''''''''''''
++Arm ``fby35`` machine (removed in 11.1)
++'''''''''''''''''''''''''''''''''''''''
 +
-+The ``fp5280g2-bmc`` machine does not rely on any specific device
-+models, it can be replaced by the ``ast2500-evb`` machine using the
-+``fmc-model`` option to specify the flash type. The I2C devices
-+connected to the board can be defined via the QEMU command line.
++The ``fby35`` machine was originally added as an example of a
++multi-SoC system, with the expectation the models would evolve over
++time in an heterogeneous system. This hasn't happened and no public
++firmware is available to boot it. It can be replaced by the
++``ast2700fc``, another multi-SoC machine based on the newer AST2700
++SoCs which are excepted to receive better support in the future.
 +
  linux-user mode CPUs
  --------------------
  
-diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
-index cbaab5edd65c..df2f539b0257 100644
---- a/docs/system/arm/aspeed.rst
-+++ b/docs/system/arm/aspeed.rst
-@@ -1,5 +1,5 @@
--Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``gb200nvl-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
--================================================================================================================================================================================================================================================================================================================================================
-+Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``gb200nvl-bmc``, ``fby35-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
-+==============================================================================================================================================================================================================================================================================================================================
- 
- The QEMU Aspeed machines model BMCs of various OpenPOWER systems and
- Aspeed evaluation boards. They are based on different releases of the
-@@ -22,7 +22,6 @@ AST2500 SoC based machines :
- - ``ast2500-evb``          Aspeed AST2500 Evaluation board
- - ``romulus-bmc``          OpenPOWER Romulus POWER9 BMC
- - ``witherspoon-bmc``      OpenPOWER Witherspoon POWER9 BMC
--- ``fp5280g2-bmc``         Inspur FP5280G2 BMC
- - ``g220a-bmc``            Bytedance G220A BMC
- - ``yosemitev2-bmc``       Facebook YosemiteV2 BMC
- - ``tiogapass-bmc``        Facebook Tiogapass BMC
-diff --git a/hw/arm/aspeed_ast2500_fp5280g2.c b/hw/arm/aspeed_ast2500_fp5280g2.c
+diff --git a/docs/system/arm/fby35.rst b/docs/system/arm/fby35.rst
 deleted file mode 100644
-index 858e0388714b..000000000000
---- a/hw/arm/aspeed_ast2500_fp5280g2.c
+index e19274e75c81..000000000000
+--- a/docs/system/arm/fby35.rst
 +++ /dev/null
-@@ -1,88 +0,0 @@
+@@ -1,52 +0,0 @@
+-Facebook Yosemite v3.5 Platform and CraterLake Server (``fby35``)
+-==================================================================
+-
+-Facebook has a series of multi-node compute server designs named
+-Yosemite. The most recent version released was
+-`Yosemite v3 <https://www.opencompute.org/documents/ocp-yosemite-v3-platform-design-specification-1v16-pdf>`__.
+-
+-Yosemite v3.5 is an iteration on this design, and is very similar: there's a
+-baseboard with a BMC, and 4 server slots. The new server board design termed
+-"CraterLake" includes a Bridge IC (BIC), with room for expansion boards to
+-include various compute accelerators (video, inferencing, etc). At the moment,
+-only the first server slot's BIC is included.
+-
+-Yosemite v3.5 is itself a sled which fits into a 40U chassis, and 3 sleds
+-can be fit into a chassis. See `here <https://www.opencompute.org/products-chiplets/237/wiwynn-yosemite-v3-server>`__
+-for an example.
+-
+-In this generation, the BMC is an AST2600 and each BIC is an AST1030. The BMC
+-runs `OpenBMC <https://github.com/facebook/openbmc>`__, and the BIC runs
+-`OpenBIC <https://github.com/facebook/openbic>`__.
+-
+-Firmware images can be retrieved from the Github releases or built from the
+-source code, see the README's for instructions on that. This image uses the
+-"fby35" machine recipe from OpenBMC, and the "yv35-cl" target from OpenBIC.
+-Some reference images can also be found here:
+-
+-.. code-block:: bash
+-
+-    $ wget https://github.com/facebook/openbmc/releases/download/openbmc-e2294ff5d31d/fby35.mtd
+-    $ wget https://github.com/peterdelevoryas/OpenBIC/releases/download/oby35-cl-2022.13.01/Y35BCL.elf
+-
+-Since this machine has multiple SoC's, each with their own serial console, the
+-recommended way to run it is to allocate a pseudoterminal for each serial
+-console and let the monitor use stdio. Also, starting in a paused state is
+-useful because it allows you to attach to the pseudoterminals before the boot
+-process starts.
+-
+-.. code-block:: bash
+-
+-    $ qemu-system-arm -machine fby35 \
+-        -drive file=fby35.mtd,format=raw,if=mtd \
+-        -device loader,file=Y35BCL.elf,addr=0,cpu-num=2 \
+-        -serial pty -serial pty -serial mon:stdio \
+-        -display none -S
+-    $ screen /dev/tty0 # In a separate TMUX pane, terminal window, etc.
+-    $ screen /dev/tty1
+-    $ (qemu) c		   # Start the boot process once screen is setup.
+-
+-This machine model supports emulation of the boot from the CE0 flash device by
+-setting option ``execute-in-place``. When using this option, the CPU fetches
+-instructions to execute by reading CE0 and not from a preloaded ROM
+-initialized at machine init time. As a result, execution will be slower.
+diff --git a/docs/system/target-arm.rst b/docs/system/target-arm.rst
+index c57102a4149f..e34492402f0a 100644
+--- a/docs/system/target-arm.rst
++++ b/docs/system/target-arm.rst
+@@ -87,7 +87,6 @@ Board-specific documentation
+    arm/cubieboard
+    arm/emcraft-sf2
+    arm/exynos
+-   arm/fby35
+    arm/musicpal
+    arm/kzm
+    arm/nrf
+diff --git a/hw/arm/fby35.c b/hw/arm/fby35.c
+deleted file mode 100644
+index d3bfd2c7d26a..000000000000
+--- a/hw/arm/fby35.c
++++ /dev/null
+@@ -1,203 +0,0 @@
 -/*
-- * Inspur FP5280G2
+- * Copyright (c) Meta Platforms, Inc. and affiliates. (http://www.meta.com)
 - *
-- * Copyright 2016 IBM Corp.
-- *
-- * SPDX-License-Identifier: GPL-2.0-or-later
+- * This code is licensed under the GPL version 2 or later. See the COPYING
+- * file in the top-level directory.
 - */
 -
 -#include "qemu/osdep.h"
+-#include "qemu/units.h"
 -#include "qapi/error.h"
--#include "hw/arm/machines-qom.h"
--#include "hw/arm/aspeed.h"
+-#include "system/system.h"
+-#include "system/block-backend.h"
+-#include "hw/core/boards.h"
+-#include "hw/core/qdev-clock.h"
 -#include "hw/arm/aspeed_soc.h"
--#include "hw/nvram/eeprom_at24c.h"
--#include "hw/i2c/i2c_mux_pca954x.h"
--#include "hw/sensor/tmp105.h"
+-#include "hw/arm/boot.h"
+-#include "hw/arm/machines-qom.h"
 -
--/* FP5280G2 hardware value: 0XF100D286 */
--#define FP5280G2_BMC_HW_STRAP1 (                                      \
--        SCU_AST2500_HW_STRAP_SPI_AUTOFETCH_ENABLE |                     \
--        SCU_AST2500_HW_STRAP_GPIO_STRAP_ENABLE |                        \
--        SCU_AST2500_HW_STRAP_UART_DEBUG |                               \
--        SCU_AST2500_HW_STRAP_RESERVED28 |                               \
--        SCU_AST2500_HW_STRAP_DDR4_ENABLE |                              \
--        SCU_HW_STRAP_VGA_CLASS_CODE |                                   \
--        SCU_HW_STRAP_LPC_RESET_PIN |                                    \
--        SCU_HW_STRAP_SPI_MODE(SCU_HW_STRAP_SPI_MASTER) |                \
--        SCU_AST2500_HW_STRAP_SET_AXI_AHB_RATIO(AXI_AHB_RATIO_2_1) |     \
--        SCU_HW_STRAP_MAC1_RGMII |                                       \
--        SCU_HW_STRAP_VGA_SIZE_SET(VGA_16M_DRAM) |                       \
--        SCU_AST2500_HW_STRAP_RESERVED1)
+-#define TYPE_FBY35 MACHINE_TYPE_NAME("fby35")
+-OBJECT_DECLARE_SIMPLE_TYPE(Fby35State, FBY35);
 -
--static void fp5280g2_bmc_i2c_init(AspeedMachineState *bmc)
+-struct Fby35State {
+-    MachineState parent_obj;
+-
+-    MemoryRegion bmc_memory;
+-    MemoryRegion bmc_dram;
+-    MemoryRegion bmc_boot_rom;
+-    MemoryRegion bic_memory;
+-    Clock *bic_sysclk;
+-
+-    Aspeed2600SoCState bmc;
+-    Aspeed10x0SoCState bic;
+-
+-    bool mmio_exec;
+-};
+-
+-#define FBY35_BMC_RAM_SIZE (2 * GiB)
+-#define FBY35_BMC_FIRMWARE_ADDR 0x0
+-
+-static void fby35_bmc_write_boot_rom(DriveInfo *dinfo, MemoryRegion *mr,
+-                                     hwaddr offset, size_t rom_size,
+-                                     Error **errp)
 -{
--    AspeedSoCState *soc = bmc->soc;
--    I2CSlave *i2c_mux;
+-    BlockBackend *blk = blk_by_legacy_dinfo(dinfo);
+-    g_autofree void *storage = NULL;
+-    int64_t size;
 -
--    /* The at24c256 */
--    at24c_eeprom_init(aspeed_i2c_get_bus(&soc->i2c, 1), 0x50, 32768);
+-    /*
+-     * The block backend size should have already been 'validated' by
+-     * the creation of the m25p80 object.
+-     */
+-    size = blk_getlength(blk);
+-    if (size <= 0) {
+-        error_setg(errp, "failed to get flash size");
+-        return;
+-    }
 -
--    /* The fp5280g2 expects a TMP112 but a TMP105 is compatible */
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), TYPE_TMP105,
--                     0x48);
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2), TYPE_TMP105,
--                     0x49);
+-    if (rom_size > size) {
+-        rom_size = size;
+-    }
 -
--    i2c_mux = i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 2),
--                     "pca9546", 0x70);
--    /* It expects a TMP112 but a TMP105 is compatible */
--    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 0), TYPE_TMP105,
--                     0x4a);
+-    storage = g_malloc0(rom_size);
+-    if (blk_pread(blk, 0, rom_size, storage, 0) < 0) {
+-        error_setg(errp, "failed to read the initial flash content");
+-        return;
+-    }
 -
--    /* It expects a ds3232 but a ds1338 is good enough */
--    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 4), "ds1338", 0x68);
--
--    /* It expects a pca9555 but a pca9552 is compatible */
--    aspeed_create_pca9552(soc, 8, 0x30);
+-    /* TODO: find a better way to install the ROM */
+-    memcpy(memory_region_get_ram_ptr(mr) + offset, storage, rom_size);
 -}
 -
--static void aspeed_machine_fp5280g2_class_init(ObjectClass *oc,
--                                               const void *data)
+-static void fby35_bmc_init(Fby35State *s)
+-{
+-    AspeedSoCState *soc;
+-    AspeedSoCClass *sc;
+-
+-    object_initialize_child(OBJECT(s), "bmc", &s->bmc, "ast2600-a3");
+-    soc = ASPEED_SOC(&s->bmc);
+-    sc = ASPEED_SOC_GET_CLASS(soc);
+-
+-    memory_region_init(&s->bmc_memory, OBJECT(&s->bmc), "bmc-memory",
+-                       UINT64_MAX);
+-    memory_region_add_subregion(get_system_memory(), 0, &s->bmc_memory);
+-    memory_region_init_ram(&s->bmc_dram, OBJECT(&s->bmc), "bmc-dram",
+-                           FBY35_BMC_RAM_SIZE, &error_abort);
+-
+-    object_property_set_int(OBJECT(&s->bmc), "ram-size", FBY35_BMC_RAM_SIZE,
+-                            &error_abort);
+-    object_property_set_link(OBJECT(&s->bmc), "memory", OBJECT(&s->bmc_memory),
+-                             &error_abort);
+-    object_property_set_link(OBJECT(&s->bmc), "dram", OBJECT(&s->bmc_dram),
+-                             &error_abort);
+-    object_property_set_int(OBJECT(&s->bmc), "hw-strap1", 0x000000C0,
+-                            &error_abort);
+-    object_property_set_int(OBJECT(&s->bmc), "hw-strap2", 0x00000003,
+-                            &error_abort);
+-    aspeed_soc_uart_set_chr(soc->uart, ASPEED_DEV_UART5, sc->uarts_base,
+-                            sc->uarts_num, serial_hd(0));
+-    qdev_realize(DEVICE(&s->bmc), NULL, &error_abort);
+-
+-    aspeed_board_init_flashes(&soc->fmc, "n25q00", 2, 0);
+-
+-    /* Install first FMC flash content as a boot rom. */
+-    if (!s->mmio_exec) {
+-        DriveInfo *mtd0 = drive_get(IF_MTD, 0, 0);
+-
+-        if (mtd0) {
+-            uint64_t rom_size = memory_region_size(&soc->spi_boot);
+-
+-            memory_region_init_rom(&s->bmc_boot_rom, NULL, "aspeed.boot_rom",
+-                                   rom_size, &error_abort);
+-            memory_region_add_subregion_overlap(&soc->spi_boot_container, 0,
+-                                                &s->bmc_boot_rom, 1);
+-
+-            fby35_bmc_write_boot_rom(mtd0, &s->bmc_boot_rom,
+-                                     FBY35_BMC_FIRMWARE_ADDR,
+-                                     rom_size, &error_abort);
+-        }
+-    }
+-}
+-
+-static void fby35_bic_init(Fby35State *s)
+-{
+-    AspeedSoCState *soc;
+-    AspeedSoCClass *sc;
+-
+-    s->bic_sysclk = clock_new(OBJECT(s), "SYSCLK");
+-    clock_set_hz(s->bic_sysclk, 200000000ULL);
+-
+-    object_initialize_child(OBJECT(s), "bic", &s->bic, "ast1030-a1");
+-    soc = ASPEED_SOC(&s->bic);
+-    sc = ASPEED_SOC_GET_CLASS(soc);
+-
+-    memory_region_init(&s->bic_memory, OBJECT(&s->bic), "bic-memory",
+-                       UINT64_MAX);
+-
+-    qdev_connect_clock_in(DEVICE(&s->bic), "sysclk", s->bic_sysclk);
+-    object_property_set_link(OBJECT(&s->bic), "memory", OBJECT(&s->bic_memory),
+-                             &error_abort);
+-    aspeed_soc_uart_set_chr(soc->uart, ASPEED_DEV_UART5, sc->uarts_base,
+-                            sc->uarts_num, serial_hd(1));
+-    qdev_realize(DEVICE(&s->bic), NULL, &error_abort);
+-
+-    aspeed_board_init_flashes(&soc->fmc, "sst25vf032b", 2, 2);
+-    aspeed_board_init_flashes(&soc->spi[0], "sst25vf032b", 2, 4);
+-    aspeed_board_init_flashes(&soc->spi[1], "sst25vf032b", 2, 6);
+-}
+-
+-static void fby35_init(MachineState *machine)
+-{
+-    Fby35State *s = FBY35(machine);
+-
+-    fby35_bmc_init(s);
+-    fby35_bic_init(s);
+-}
+-
+-
+-static bool fby35_get_mmio_exec(Object *obj, Error **errp)
+-{
+-    return FBY35(obj)->mmio_exec;
+-}
+-
+-static void fby35_set_mmio_exec(Object *obj, bool value, Error **errp)
+-{
+-    FBY35(obj)->mmio_exec = value;
+-}
+-
+-static void fby35_instance_init(Object *obj)
+-{
+-    FBY35(obj)->mmio_exec = false;
+-}
+-
+-static void fby35_class_init(ObjectClass *oc, const void *data)
 -{
 -    MachineClass *mc = MACHINE_CLASS(oc);
--    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
 -
--    mc->desc       = "Inspur FP5280G2 BMC (ARM1176)";
--    mc->deprecation_reason = "use 'ast2500-evb' instead";
--    amc->soc_name  = "ast2500-a1";
--    amc->hw_strap1 = FP5280G2_BMC_HW_STRAP1;
--    amc->fmc_model = "n25q512a";
--    amc->spi_model = "mx25l25635e";
--    amc->num_cs    = 2;
--    amc->macs_mask  = ASPEED_MAC0_ON | ASPEED_MAC1_ON;
--    amc->i2c_init  = fp5280g2_bmc_i2c_init;
--    mc->default_ram_size = 512 * MiB;
--    aspeed_machine_class_init_cpus_defaults(mc);
--};
+-    mc->desc = "Meta Platforms fby35";
+-    mc->deprecation_reason = "For a multi-soc machine, use 'ast2700fc' instead";
+-    mc->init = fby35_init;
+-    mc->no_floppy = 1;
+-    mc->no_cdrom = 1;
+-    mc->auto_create_sdcard = true;
+-    mc->min_cpus = mc->max_cpus = mc->default_cpus = 3;
 -
--static const TypeInfo aspeed_ast2500_fp5280g2_types[] = {
+-    object_class_property_add_bool(oc, "execute-in-place",
+-                                   fby35_get_mmio_exec,
+-                                   fby35_set_mmio_exec);
+-    object_class_property_set_description(oc, "execute-in-place",
+-                           "boot directly from CE0 flash device");
+-}
+-
+-static const TypeInfo fby35_types[] = {
 -    {
--        .name          = MACHINE_TYPE_NAME("fp5280g2-bmc"),
--        .parent        = TYPE_ASPEED_MACHINE,
--        .class_init    = aspeed_machine_fp5280g2_class_init,
--        .interfaces    = arm_machine_interfaces,
--    }
+-        .name = MACHINE_TYPE_NAME("fby35"),
+-        .parent = TYPE_MACHINE,
+-        .class_init = fby35_class_init,
+-        .instance_size = sizeof(Fby35State),
+-        .instance_init = fby35_instance_init,
+-        .interfaces = arm_machine_interfaces,
+-    },
 -};
 -
--DEFINE_TYPES(aspeed_ast2500_fp5280g2_types)
+-DEFINE_TYPES(fby35_types);
 diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 2be74b575efc..063abf2cf654 100644
+index 063abf2cf654..80068f70bb9c 100644
 --- a/hw/arm/meson.build
 +++ b/hw/arm/meson.build
-@@ -47,7 +47,6 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_ast2400_quanta-q71l.c',
-   'aspeed_ast2400_supermicrox11.c',
-   'aspeed_ast2500_evb.c',
--  'aspeed_ast2500_fp5280g2.c',
-   'aspeed_ast2500_g220a.c',
-   'aspeed_ast2500_romulus.c',
-   'aspeed_ast2500_supermicro-x11spi.c',
+@@ -62,8 +62,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+   'aspeed_ast2600_gb200nvl.c',
+   'aspeed_ast2600_rainier.c',
+   'aspeed_ast10x0.c',
+-  'aspeed_ast10x0_evb.c',
+-  'fby35.c'))
++  'aspeed_ast10x0_evb.c'))
+ arm_common_ss.add(when: ['CONFIG_ASPEED_SOC', 'TARGET_AARCH64'], if_true: files(
+   'aspeed_ast1700.c',
+   'aspeed_ast27x0.c',
 -- 
 2.54.0
 
