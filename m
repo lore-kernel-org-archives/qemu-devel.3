@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6B79CD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:17:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4235CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:17:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuHI-0005qx-En; Tue, 12 May 2026 17:04:32 -0400
+	id 1wMuSe-0001Tl-IR; Tue, 12 May 2026 17:16:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuFi-0001RK-VU; Tue, 12 May 2026 17:03:02 -0400
+ id 1wMuS1-0001MJ-7z; Tue, 12 May 2026 17:15:41 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuFg-0007hG-Sa; Tue, 12 May 2026 17:02:54 -0400
+ id 1wMuRw-00069I-OE; Tue, 12 May 2026 17:15:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619278; bh=52jW1o5cTK1eBP4U9ksmYyUiRueyfsgrbtC3bQ945eg=;
+ t=1778619306; bh=Kug+ZyqorJpJ8ZFK0wFL9pstQdA9KMyT4IH4axrv41s=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=cyADw254LxGNCpQZjySo38m/Rm1zQVUyMNb/jPC1FNZN4yyoYmvafrnLZZLpXA/tE
- PcN5vWG5XJ8P/bQmtBJqPZWGdLFl3fxq6GzqG83F+apKc5b7xAZ1oRmUm4pS35harJ
- a2XITI2ml9cPoMxK9b81RzIOiuKQSYyq61NJ6/nA7HVy9DBHrN0tGk5eBtgI1Ry4nJ
- Y33kr9qtE+xedm7GAlePgaVbjtUv2HQ4FKxUXwZC5X68tefEY/Nf/BI9kHIQC2HSnU
- ohPvWfG7GXqxcK0HLiz8PWg4sN+AGXBKAunYlCt3nVzaaJZkDBNLFVgiJl81oJ0e+F
- 6vK/VeymnN2cA==
+ b=jEcqCZkeSlNAdUCHBGfeEQopgYts4V3BiSRA+YFmuqxjsX6W0QGucyeTkvMZ931cw
+ +uXkWugZXuZvTe2RcykftiiLAYkRNipx7o8/507mj08MZlOu0OpCoY9WR7KSzJgLPv
+ OnZjh9KEyhOb5bTpNwV5r5vPtTtlRS8oLQGC5siE781ZDO1HnI3SQ/2BZZ0llNE3CV
+ gVlsMBl6rnESX56nN2DSntVBKEGp4Wu3u5wjELNUnC3MktaE+Xs5G324gorAFlreyP
+ y0RSJzGX8wMU+vLrbJpD29j3ckBq2bweGBE5ZcYHnbFOeTP3yD0cJ39cejSj76BtE7
+ rpi73iTX/SfjA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C2A201AA31E;
- Tue, 12 May 2026 23:54:38 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 04D771AA39B;
+ Tue, 12 May 2026 23:55:06 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id CD4593ABC8F;
- Tue, 12 May 2026 23:54:42 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 11CDC3ABD0A;
+ Tue, 12 May 2026 23:55:10 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Yicong Yang <yang.yicong@picoheart.com>,
- Andrew Jones <andrew.jones@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Sebasti=C3=A1n=20Alba=20Vives?= <sebasjosue84@gmail.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 082/107] hw/riscv/virt-acpi-build.c: Use kvm timer
- frequency when kvm enabled
-Date: Tue, 12 May 2026 23:54:09 +0300
-Message-ID: <20260512205437.360850-82-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 093/117] target/riscv: fix stale ptshift and base on
+ page walk restart
+Date: Tue, 12 May 2026 23:54:35 +0300
+Message-ID: <20260512205503.361097-93-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
-References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,49 +72,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yicong Yang <yang.yicong@picoheart.com>
+From: Sebastián Alba Vives <sebasjosue84@gmail.com>
 
-The timer frequency is decided by the host(kvm) rather than a fixed
-RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ on kvm accelerated VM. So build
-RCHT with KVM provided timer frequency if KVM is enabled, just like
-how we build the timer node on DT based VM.
+When the atomic compare-and-swap for updating A/D bits in the page
+table entry fails due to a concurrent PTE modification by another
+vCPU, get_physical_address() jumps to the 'restart' label to re-walk
+the page table from the root.
 
-Fixes: ebfd39289370 ("hw/riscv/virt: virt-acpi-build.c: Add RHCT Table")
-Signed-off-by: Yicong Yang <yang.yicong@picoheart.com>
-Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
-Message-ID: <20260325081314.57089-1-yang.yicong@picoheart.com>
+However, neither 'ptshift' nor 'base' are re-initialized before the
+restart. After the walk completes, ptshift has been decremented to
+its final value and base has been overwritten with an inner PTE PPN.
+On goto restart, the for loop resets i=0 but ptshift and base remain
+stale, causing the restarted walk to compute incorrect PTE addresses.
+
+In an SMP guest with MTTCG and Svadu active, this can result in
+incorrect physical address mappings or guest crashes.
+
+Fix by saving the root base address and re-initializing both ptshift
+and base on each restart.
+
+Fixes: 0c3e702aca ("RISC-V CPU Helpers")
+Signed-off-by: Sebastián Alba Vives <sebasjosue84@gmail.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260401053853.10473-1-sebasjosue84@gmail.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 4cb2f91773e8ec9511002de851734820f7ba64fe)
+(cherry picked from commit b2e874bfec59f6150b49a70df0529458efa0726b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-index 1ad6800508..e2b8229168 100644
---- a/hw/riscv/virt-acpi-build.c
-+++ b/hw/riscv/virt-acpi-build.c
-@@ -35,9 +35,11 @@
- #include "hw/riscv/virt.h"
- #include "hw/riscv/numa.h"
- #include "hw/virtio/virtio-acpi.h"
-+#include "kvm/kvm_riscv.h"
- #include "migration/vmstate.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
-+#include "system/kvm.h"
- #include "system/reset.h"
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index c4fb68b5de..024213fb4b 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1316,12 +1316,15 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+         adue = adue && (env->henvcfg & HENVCFG_ADUE);
+     }
  
- #define ACPI_BUILD_TABLE_SIZE             0x20000
-@@ -273,7 +275,10 @@ static void build_rhct(GArray *table_data,
+-    int ptshift = (levels - 1) * ptidxbits;
++    int ptshift;
+     target_ulong pte;
+     hwaddr pte_addr;
++    const hwaddr base_root = base;
+     int i;
  
-     /* Time Base Frequency */
-     build_append_int_noprefix(table_data,
--                              RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ, 8);
-+                              kvm_enabled() ?
-+                              kvm_riscv_get_timebase_frequency(&s->soc->harts[0]) :
-+                              RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ,
-+                              8);
- 
-     /* ISA + N hart info */
-     num_rhct_nodes = 1 + ms->smp.cpus;
+  restart:
++    ptshift = (levels - 1) * ptidxbits;
++    base = base_root;
+     for (i = 0; i < levels; i++, ptshift -= ptidxbits) {
+         target_ulong idx;
+         if (i == 0) {
 -- 
 2.47.3
 
