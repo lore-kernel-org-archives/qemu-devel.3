@@ -4,51 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A87ECD4F39
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:10:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD62CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:10:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuIQ-00039M-Gj; Tue, 12 May 2026 17:05:42 -0400
+	id 1wMuLf-0003q5-TG; Tue, 12 May 2026 17:09:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuHh-0007Xh-5e; Tue, 12 May 2026 17:04:58 -0400
+ id 1wMuKs-00013s-9H; Tue, 12 May 2026 17:08:16 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuHd-0000Kn-OI; Tue, 12 May 2026 17:04:56 -0400
+ id 1wMuKo-0002gE-Gn; Tue, 12 May 2026 17:08:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619279; bh=ts+MNMwf78Jow+SqL35Rvtf4EaxowBVDzGBkQTpwObE=;
+ t=1778619301; bh=6YQO22w3Zwbye/yy8vSPsyzOejOaTOYJPzkrPIetztY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=VoWEsLj9s4zlqundERzzDIPl1pYOYkygWq0EuEp6o0SmC4+BTsRlJusgH/mnb8Fom
- 3ECRR3GBhz/s/oFiZdVH7mJ2hw5s4eYNllkDDXdidqndrmzLOsRVAZ/boWLw2due4M
- 8Oy37ngwAyRScfKluzx55oOnCtZZdVCzO6cf6QxLPlJsNWnIuR8dDoqFHN5VKCoumL
- qy24yDwM7TvJIQi2uc3oFVKyIohJKomL2q7Kglg2Xa8GrfZiXALoQ5xy9vmMNHdPH0
- //qO2N32gaHdbt/PejA7GhwDuvCRTcPGadyF+mCU8SUfCQUaczN2GumaC9wGZzi4Ma
- 34031ZwxKtVhQ==
+ b=kXDjNdGTbUcHV9qZuIzbUFtc5UNum4UtTkfgXQ8om4lLs1iEw2EzgtW01yjyL4Fcz
+ Vdn5tGUbshoFhy1VxEcxLKjmaKVfPrBBwhZM4+UPZNj2QoWHXkS8oqqsoNvBqCTGiL
+ eUMSIscCzlaLCZKRQaFXL5R1Zz+gK7wrE4TiX7X7R45rEFtJ93aOBZRL8d/Jj82xOS
+ gUGglybBHAay7y3hzOf/EDxOO/OtORU4l7lInJVEUAabUUpwPLnfn9j3xEMaOmm9VM
+ hf50EIcJkThirSpmlrzHByWZhyckm+tHZxyusbYlBPgu/22CeySLQLxBQ7ZvYY9ErW
+ qEfceXcu2b9Ng==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D5D701AA32F;
- Tue, 12 May 2026 23:54:39 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 54A731AA355;
+ Tue, 12 May 2026 23:55:01 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E217F3ABCA0;
- Tue, 12 May 2026 23:54:43 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 60CCA3ABCC5;
+ Tue, 12 May 2026 23:55:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Jose Martins <josemartins90@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.10 099/107] target/microblaze: Fix endianness used to
- disassemble
-Date: Tue, 12 May 2026 23:54:26 +0300
-Message-ID: <20260512205437.360850-99-mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 024/117] target/arm: fix s2prot not set for two-stage
+ PMSA translations
+Date: Tue, 12 May 2026 23:53:26 +0300
+Message-ID: <20260512205503.361097-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
-References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,44 +71,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Jose Martins <josemartins90@gmail.com>
 
-MicroBlaze CPU model has a "little-endian" property, pointing to
-the @endi internal field. Commit c36ec3a9655 ("hw/microblaze:
-Explicit CPU endianness") took care of having all MicroBlaze
-boards with an explicit default endianness (similarly with
-commit 91fc6d8101d for linux-user binaries), so later commit
-415aae543ed ("target/microblaze: Consider endianness while
-translating code") could infer the endianness at runtime from
-the @endi field, and not a compile time via the TARGET_BIG_ENDIAN
-definition. Doing so, we forgot to propagate that runtime change
-to the disassemble_info structure. Do it now to display the
-opcodes in correct endianness order.
+Commit a811c5dafb7 ("target/arm: Implement get_S2prot_indirect")
+changed get_phys_addr_twostage() to combine stage 1 and stage 2
+permissions using the new s2prot field:
+
+  result->f.prot = s1_prot & result->s2prot;
+
+The LPAE stage 2 path sets result->s2prot explicitly, but the PMSA
+stage 2 path (get_phys_addr_pmsav8) only sets result->f.prot, leaving
+s2prot at zero. This causes the combined permission to be zero,
+resulting in addr_read being set to -1 in the TLB entry and triggering
+an assertion in atomic_mmu_lookup() when the guest executes an atomic
+instruction on a two-stage PMSA platform (e.g. Cortex-R52 with EL2).
+
+Set s2prot from f.prot after the PMSA stage 2 lookup, consistent with
+what the LPAE path does.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 415aae543ed ("target/microblaze: Consider endianness while translating code")
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-Id: <20260423100612.27278-3-philmd@linaro.org>
-(cherry picked from commit 41c417290df91c31a70adeb8f5271896a8c5f802)
+Fixes: a811c5dafb7 ("target/arm: Implement get_S2prot_indirect")
+Signed-off-by: Jose Martins <josemartins90@gmail.com>
+[PMM: refer to the right commit in the commit message]
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260321231916.2852653-1-josemartins90@gmail.com
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 32ebd6c09c18f860671030060cfedabd94c846fb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
-index f3bebea856..5fec3819dc 100644
---- a/target/microblaze/cpu.c
-+++ b/target/microblaze/cpu.c
-@@ -226,8 +226,8 @@ static void mb_disas_set_info(CPUState *cpu, disassemble_info *info)
- {
-     info->mach = bfd_arch_microblaze;
-     info->print_insn = print_insn_microblaze;
--    info->endian = TARGET_BIG_ENDIAN ? BFD_ENDIAN_BIG
--                                     : BFD_ENDIAN_LITTLE;
-+    info->endian = MICROBLAZE_CPU(cpu)->cfg.endi ? BFD_ENDIAN_LITTLE
-+                                                 : BFD_ENDIAN_BIG;
- }
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 2e6b149b2d..b2ae00b89e 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -3210,6 +3210,13 @@ static bool get_phys_addr_pmsav8(CPUARMState *env,
  
- static void mb_cpu_realizefn(DeviceState *dev, Error **errp)
+     ret = pmsav8_mpu_lookup(env, address, access_type, ptw->in_prot_check,
+                             mmu_idx, secure, result, fi, NULL);
++    /*
++     * For two-stage PMSA translations, s2prot holds the stage 2
++     * permissions to be combined with stage 1 in get_phys_addr_twostage().
++     */
++    if (regime_is_stage2(mmu_idx)) {
++        result->s2prot = result->f.prot;
++    }
+     if (sattrs.subpage) {
+         result->f.lg_page_size = 0;
+     }
 -- 
 2.47.3
 
