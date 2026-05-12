@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DE2FCD4F24
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:38:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 677B2CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:38:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuii-0004V8-0G; Tue, 12 May 2026 17:32:52 -0400
+	id 1wMuVo-0002lg-0X; Tue, 12 May 2026 17:19:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuhG-0003TJ-EI; Tue, 12 May 2026 17:31:26 -0400
+ id 1wMuVZ-0002Aa-TO; Tue, 12 May 2026 17:19:18 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuYB-0000uw-5f; Tue, 12 May 2026 17:24:13 -0400
+ id 1wMuVY-00085L-18; Tue, 12 May 2026 17:19:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619499; bh=/6JwHIiWOaqsyYTTl/tshHbNobFM37fOo4/dYaRhKic=;
+ t=1778619497; bh=KmapxmHYpr6NMoLQ9AopXcpAvWN4EbWfaEYKTPZEfao=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=VUyGVrO3CJ3gPrbTVmzF7mq6rfA+062xj9tOxUAt+u2qgCrdfDM0qsGqlANBOLb2r
- uXkwGhML++BZivykL5ptC4SaH3zacOHE2hGcahvWup0F1H3teiLW+thpFUQ6RYeKkm
- DlWlmDrBrRaN28HmwkptDfc2G3pNmZEHLR/xYvazCuVb79DTRsNuNo6JaF8BxCtwU7
- PXVEPh+r/+ekC9yF+9IbRuYkgPdiFqO5zj6W7oWKQPhd0FFFg9Eq80gIPD6F/8z0Ne
- QNDL6T7P4ZVnn6l8UA+9+EhuW91GV+MwjuMG0nJKnzl7FeG/NS4jzeayVkNk2JNHlQ
- rXIi9Cmy6fziQ==
+ b=haqZF4t6swvvQXR2Lecs2rr03ogpODIUMJ5eHxoU9hMEua5PxpsXbGT0I6b1dx6Qj
+ w3bMYShiVGG+2965BCy1Z/Pgch3sPvJLYYiXQnWg1x0SHtjyO5QXRnZoNiW+UZ7g6C
+ Iixr84Ntw2VD6puPBT6xplGEs2h1isiaK7AW6yZ/obiZ99YGODI6zE2qj1yioHEf6n
+ bDOQhLVtaMjYjOkR8DhBmyelhcCL4/KMU2OUQg7hk5NPmHBY5jZ4yO1q/CYBXPtMc3
+ a1Sosrvjj8YeF26IWvYkFdiqDsjng+hIQELJM5pscax1FqFjJ9tkD3rUV1dvtoq14I
+ aNfmhH/flEdMQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5EF491AA3F0;
- Tue, 12 May 2026 23:58:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D0E201AA3D9;
+ Tue, 12 May 2026 23:58:17 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6B8523ABD48;
- Tue, 12 May 2026 23:58:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id DCF863ABD31;
+ Tue, 12 May 2026 23:58:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Nutty Liu <nutty.liu@hotmail.com>,
+Cc: qemu-stable@nongnu.org, Junjie Cao <junjie.cao@intel.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 37/58] target/riscv: Don't OR mip.SEIP when mvien is
- one
-Date: Tue, 12 May 2026 23:57:58 +0300
-Message-ID: <20260512205820.361821-37-mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 14/58] ati-vga: fix unsigned integer overflow in
+ cursor bounds checks
+Date: Tue, 12 May 2026 23:57:35 +0300
+Message-ID: <20260512205820.361821-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
@@ -50,6 +51,13 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,48 +72,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair.francis@wdc.com>
+From: Junjie Cao <junjie.cao@intel.com>
 
-The RISC-V spec states that
+The cursor bounds checks compare (srcoff + N) against vram_size, but
+both sides are uint32_t so the addition can wrap past UINT32_MAX when
+srcoff underflows from the cur_hv_offs subtraction, causing the check
+to be bypassed.
 
-"""
-But when bit 9 of mvien is one, bit SEIP in mip is read-only and does
-not include the value of bit 9 of mvip. Rather, the value of mip.SEIP
-is simply the supervisor external interrupt signal from the hart’s
-external interrupt controller (APLIC or IMSIC).
-"""
-
-As such let's mark the mip.SEIP in rmw_mip64().
+Rewrite the checks as (srcoff > vram_size - N) to avoid the
+overflow-prone addition, matching the style already used in
+ati_mm_read() and ati_mm_write().
 
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2828
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Message-ID: <20260415233740.3027321-4-alistair.francis@wdc.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 175afdb0d155a7429e2ac0c568c1c807953444a4)
+Fixes: 2f1fbe6ee9b5 ("ati-vga: Make sure hardware cursor data is within vram")
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Message-ID: <20260414141458.1076014-1-junjie.cao@intel.com>
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit 0990cc8b286b9981b2548c3d591584d22c7bf2f1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index a75281539b..29dd596ae4 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -3671,6 +3671,14 @@ static RISCVException rmw_mip64(CPURISCVState *env, int csrno,
-     uint64_t old_mip, mask = wr_mask & delegable_ints;
-     uint32_t gin;
- 
-+    /*
-+     * When mvien[9]=1, mip.SEIP is read-only and reflects only
-+     * the external interrupt signal from the interrupt controller.
-+     */
-+    if (env->mvien & MIP_SEIP) {
-+        mask &= ~MIP_SEIP;
-+    }
-+
-     if (mask & MIP_SEIP) {
-         env->software_seip = new_val & MIP_SEIP;
-         new_val |= env->external_seip * MIP_SEIP;
+diff --git a/hw/display/ati.c b/hw/display/ati.c
+index 88a5bbbf07..0489995d00 100644
+--- a/hw/display/ati.c
++++ b/hw/display/ati.c
+@@ -149,7 +149,7 @@ static void ati_cursor_define(ATIVGAState *s)
+     /* FIXME handle cur_hv_offs correctly */
+     srcoff = s->regs.cur_offset - (s->regs.cur_hv_offs >> 16) -
+              (s->regs.cur_hv_offs & 0xffff) * 16;
+-    if (srcoff + 64 * 16 > s->vga.vram_size) {
++    if (srcoff > s->vga.vram_size - 64 * 16) {
+         return;
+     }
+     for (int i = 0; i < 64; i++, srcoff += 16) {
+@@ -206,7 +206,7 @@ static void ati_cursor_draw_line(VGACommonState *vga, uint8_t *d, int scr_y)
+     }
+     /* FIXME handle cur_hv_offs correctly */
+     srcoff = s->cursor_offset + (scr_y - vga->hw_cursor_y) * 16;
+-    if (srcoff + 16 > s->vga.vram_size) {
++    if (srcoff > s->vga.vram_size - 16) {
+         return;
+     }
+     dp = &dp[vga->hw_cursor_x];
 -- 
 2.47.3
 
