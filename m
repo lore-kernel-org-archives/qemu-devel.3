@@ -4,47 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 163CFCD343F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A125CD4F21
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:11:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuJ1-0005iM-BU; Tue, 12 May 2026 17:06:19 -0400
+	id 1wMuLN-0002kn-Ey; Tue, 12 May 2026 17:08:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuIj-00055D-Ne; Tue, 12 May 2026 17:06:04 -0400
+ id 1wMuKl-0000xd-27; Tue, 12 May 2026 17:08:11 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuIg-0000wz-4F; Tue, 12 May 2026 17:06:01 -0400
+ id 1wMuKh-0002d5-Rd; Tue, 12 May 2026 17:08:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619299; bh=wKBCypXp1HQfvmuaKMS70Qh0AHVEyfZLIzqR2UKu/YI=;
+ t=1778619301; bh=Cz/lC/i69N912HtNUvC2jJsnfey8s5BgllzY8+Cbnco=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=DwhzBi3JJC3Z99HMOsekgttnWSTyb5ZWN6s90KIwwGHojqS/sVy7FVq3hrJ4LlyBd
- oBBq2g4RNeK1yVLPLd+XFMjWQ2XqGekWgqkkIGBrPdY9+pYh0KWKYvAvpD6rTk14lW
- 04tSHukL22hs4Yb3R3cO9UHt+rCTjFSevmK50p44HfYxI5qSQ3AwTIsh2P4NwIc8L9
- LsMfhuXCMdHHWj10/Y+Uflwq6q69R6FrTRh5Q/AdO1aABCr9s9qgspfel1rcnPozU4
- uQA1UzQzgS9R37PXAUh94OHwCuz7U7CajsyDqPWOslCFEUNBRlmimyzOxzfxW6Rdja
- lEHAXhtTc22ZA==
+ b=oS3F4G5CCarlvEAqmtvJWKk5z4VpWog9t2tXt9PYnvPFLIYYm5hCoswvO1bZDPZIG
+ n8GpGMlsSimq49XAgZ5IQ751PeX361ViI2DxRnnrQ6ZoKjYyaHVm2Ivxx8XIs8K1a0
+ YbzZnmnJoMwdDFcLGUF7Jn+qawuvLz/o+92LvOdSdFXPsLcptbJ7+oUGoyR3CMuiFv
+ axY87QZ9AgWo9TRo0/nR5YigEKyo7f4+hnJv3EHQ2GYbszMmayZ+S14S8yyBD9UPxr
+ dv0U07RX2Xx4DVl9FfPdHwyoS4iyZis/bOZMlJdSvlKMGC69/7ucjUBKIkPRdW6eHZ
+ x0vNrs1jGSEJQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D91621AA33D;
- Tue, 12 May 2026 23:54:59 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 373901AA353;
+ Tue, 12 May 2026 23:55:01 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E61133ABCAF;
- Tue, 12 May 2026 23:55:03 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 425E93ABCC3;
+ Tue, 12 May 2026 23:55:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Razvan Ghiorghe <razvanghiorghe16@gmail.com>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 002/117] linux-user: Fix zero_bss for RX PT_LOAD
- segments
-Date: Tue, 12 May 2026 23:53:04 +0300
-Message-ID: <20260512205503.361097-2-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 022/117] hw/net/ftgmac100: Improve DMA error handling
+Date: Tue, 12 May 2026 23:53:24 +0300
+Message-ID: <20260512205503.361097-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,84 +72,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Razvan Ghiorghe <razvanghiorghe16@gmail.com>
+From: Cédric Le Goater <clg@redhat.com>
 
-zero_bss() incorrectly assumed that any PT_LOAD containing .bss must be
-writable, rejecting valid ELF binaries where .bss overlaps the tail of
-an RX file-backed page.
+Currently, DMA memory operation errors in the ftgmac100 model are not
+all tested and this can lead to a guest-triggerable denial of service
+as described in https://gitlab.com/qemu-project/qemu/-/work_items/3335.
 
-Instead of failing, temporarily enable write access on the overlapping
-page to zero the fractional bss range, then restore the original page
-permissions once initialization is complete.
+To fix this, check the return value of ftgmac100_write_bd() in the TX
+path and exit the TX loop on error to prevent further processing. In
+the event of a DMA error, also set FTGMAC100_INT_AHB_ERR interrupt
+flag as appropriate.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3179
-Signed-off-by: Razvan Ghiorghe <razvanghiorghe16@gmail.com>
-Reviewed-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 2ff529c6f64b706213339d4bbce76c7788243ddb)
+The FTGMAC100_INT_AHB_ERR interrupt status bit only applies to the
+AST2400 SoC; on newer Aspeed SoCs, it is a reserved bit.
+Nevertheless, since it is supported by the Linux driver and it should
+be safe to use in the QEMU implementation across all SoCs.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3335
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260322215732.387383-3-clg@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit fa4a759fc1e19b2185becfadb00c6d8e57462849)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 35471c0c9a..59b543f740 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -449,12 +449,6 @@ static bool zero_bss(abi_ulong start_bss, abi_ulong end_bss,
- {
-     abi_ulong align_bss;
+diff --git a/hw/net/ftgmac100.c b/hw/net/ftgmac100.c
+index c41ce889cf..8d57adb03f 100644
+--- a/hw/net/ftgmac100.c
++++ b/hw/net/ftgmac100.c
+@@ -624,7 +624,10 @@ static void ftgmac100_do_tx(FTGMAC100State *s, uint64_t tx_ring,
+         bd.des0 &= ~FTGMAC100_TXDES0_TXDMA_OWN;
  
--    /* We only expect writable bss; the code segment shouldn't need this. */
--    if (!(prot & PROT_WRITE)) {
--        error_setg(errp, "PT_LOAD with non-writable bss");
--        return false;
--    }
--
-     align_bss = TARGET_PAGE_ALIGN(start_bss);
-     end_bss = TARGET_PAGE_ALIGN(end_bss);
- 
-@@ -472,20 +466,35 @@ static bool zero_bss(abi_ulong start_bss, abi_ulong end_bss,
-              */
-             align_bss -= TARGET_PAGE_SIZE;
-         } else {
-+            abi_ulong start_page_aligned = start_bss & TARGET_PAGE_MASK;
-             /*
--             * The start of the bss shares a page with something.
--             * The only thing that we expect is the data section,
--             * which would already be marked writable.
--             * Overlapping the RX code segment seems malformed.
-+             * The logical OR between flags and PAGE_WRITE works because
-+             * in include/exec/page-protection.h they are defined as PROT_*
-+             * values, matching mprotect().
-+             * Temporarily enable write access to zero the fractional bss.
-+             * target_mprotect() handles TB invalidation if needed.
-              */
-             if (!(flags & PAGE_WRITE)) {
--                error_setg(errp, "PT_LOAD with bss overlapping "
--                           "non-writable page");
--                return false;
-+                if (target_mprotect(start_page_aligned,
-+                                    TARGET_PAGE_SIZE,
-+                                    prot | PAGE_WRITE) == -1) {
-+                    error_setg_errno(errp, errno,
-+                                    "Error enabling write access for bss");
-+                    return false;
-+                }
-             }
- 
--            /* The page is already mapped and writable. */
-+            /* The page is already mapped and now guaranteed writable. */
-             memset(g2h_untagged(start_bss), 0, align_bss - start_bss);
-+
-+            if (!(flags & PAGE_WRITE)) {
-+                if (target_mprotect(start_page_aligned,
-+                                    TARGET_PAGE_SIZE, prot) == -1) {
-+                    error_setg_errno(errp, errno,
-+                                    "Error restoring bss first permissions");
-+                    return false;
-+                }
-+            }
+         /* Write back the modified descriptor.  */
+-        ftgmac100_write_bd(&bd, addr);
++        if (ftgmac100_write_bd(&bd, addr)) {
++            s->isr |= FTGMAC100_INT_AHB_ERR;
++            break;
++        }
+         /* Advance to the next descriptor.  */
+         if (bd.des0 & s->txdes0_edotr) {
+             addr = tx_ring;
+@@ -1134,7 +1137,10 @@ static ssize_t ftgmac100_receive(NetClientState *nc, const uint8_t *buf,
+             bd.des0 |= flags | FTGMAC100_RXDES0_LRS;
+             s->isr |= FTGMAC100_INT_RPKT_BUF;
          }
-     }
- 
+-        ftgmac100_write_bd(&bd, addr);
++        if (ftgmac100_write_bd(&bd, addr)) {
++            s->isr |= FTGMAC100_INT_AHB_ERR;
++            break;
++        }
+         if (bd.des0 & s->rxdes0_edorr) {
+             addr = s->rx_ring;
+         } else {
 -- 
 2.47.3
 
