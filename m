@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 759ECCD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 10:50:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DB3BCD4851
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 10:51:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMkgW-0002Gd-9w; Tue, 12 May 2026 06:49:56 -0400
+	id 1wMkhu-0003rn-PN; Tue, 12 May 2026 06:51:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMkgV-0002DJ-H9
- for qemu-devel@nongnu.org; Tue, 12 May 2026 06:49:55 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMkht-0003rJ-Ad
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 06:51:21 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMkgT-0008N4-Qi
- for qemu-devel@nongnu.org; Tue, 12 May 2026 06:49:55 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-488b0e1b870so90786755e9.2
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 03:49:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wMkhr-0000YC-V5
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 06:51:21 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4891c0620bcso37814765e9.1
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 03:51:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778582992; x=1779187792; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778583078; x=1779187878; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=w/rAUHy5Q47gybSESJJWoqR13PpzsY8CoUQJphBxxo8=;
- b=ORFk5XHRelXRXc0DwSSZ42/VfG2jcsl+VtMrSZpwyK733wbsJquBr/pV6ar2G+Vgp0
- PkguiL54bV+cGFX/3z5cPP/gtB5SxUoz65sscf3FecGB3EkOfp8Yd0eQlMqFdd+Rwfsb
- oQ3mpmlHrQxCuE/ikaD8TuMqiIdydgmVcbu/xhVJwfsNnHcj6W1+Jqv8dRnk3mf8kivr
- 1B1wo61v5S7zop+9QTjLWtECKOcmIR9PIndSaRFNNVoJxjzzrAB4rjgGdhT9xbDKvzYw
- T9rTqXXzyEecUmTlfo8XxqVaOz1/GFyxi0NNMIm+PXeau9l1teWzVTBqblpJ8nxUN/uY
- 0oBA==
+ bh=ZPbG27XBlYc6lQH65/69OCmIYvEee6QUFCLVhoOLQVQ=;
+ b=Avuoa0WR2prtr2MVaRP5A8kNgUH+ERFNFbgjQ8XweG+EQZf6IOZO9/q8ufFlMooCSe
+ 6oZX+mktJPy5UoUjG2GrZWcvrye033reRHb8/iH6Z6dCG2NNaTpX+OxsnkSfFc1DkQq+
+ JB/fOAHtb45lGzA8+78G5upj4wHoyhLxKpSW1CYmGfnrl0+PsLH5d/qrhkrBzTlFyytv
+ gaBald585tQJK1/O+5q7P70OBrTPrdo9szgL4ZkJKBXT/3c9Vh6gwV9OjR9Q4u0wkmQQ
+ qMgXS1ZkuYZDQNPLuKxr4ckc8M+lcFrm0I2inFe8dmqeHVivC4PfkT4uSAfqPwkc8heq
+ PZUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778582992; x=1779187792;
+ d=1e100.net; s=20251104; t=1778583078; x=1779187878;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=w/rAUHy5Q47gybSESJJWoqR13PpzsY8CoUQJphBxxo8=;
- b=HvmGHGpoYfVHLr3PR66TrhQCOK2wm4ckpj672uE0PIaf70CoOvZC2QFW/ZLtAfq2Fz
- KEd5fuXY+mLhVaMsuHhHd+2asQ+DwJ1r3Ew4YRylkwD0vsUHQWl4kg/iFY5O46O7CA+b
- tvyY/LL65FLbn38vtoeagy5ztVKobBh2x0wpVuPH/1BsAAAznzK6SUOuUW0oXTBNCXWO
- 2PvVPm2WfjN1WvmYlR7SU/xIaGz9j/EDpSDYSM3x1BzFGMjzRC/gUnrgkX9lh+NbiPRA
- wQFElp7cHPhOC3uck/iQQS8lnVAetFIC9f0yT9jFmePa/0WbD/mmaqHleG/g5mF85yYD
- 40+Q==
+ bh=ZPbG27XBlYc6lQH65/69OCmIYvEee6QUFCLVhoOLQVQ=;
+ b=qcr89fqBZlBc8Tn3HdJPu6HMkUjOM+QJ8Xd+xSlHpuagjQdNcdIr0Z0W4z0aITJbDL
+ vhUvmcXWzKWQOChNX01112EDhyVwCxfLGYUfQT1+Nw9n+g1H3O4ObLtdpLU79cLx0m5s
+ CFmlV6Pi1ycHmoKhZaA3w+JagP9behUscuuyQhhcTqeT0Rjpia0a4XZN4GJT0kyphta+
+ Ib6OaqqdyM2orV80OWJfe0VglV0KjN7SgI2cj+NuTXe5Zj8UThWaNoqTmmzWA848zvPF
+ OABiSN40pXtfo237qBMSzl7GsNxjp0HKkGs310sRn9cnKnPdbgdMjj+2PMFRz7aCh1c4
+ M36g==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+qa8UTEXP5q/q8c3uBeB0kS3EDPUgKl7eWycnlW6hjZp1dQ1l1PgA/WJ4TPk0bd1YOj0Ym3A9omqCf@nongnu.org
-X-Gm-Message-State: AOJu0YxktD6vZWnv6n8DjQgIsDNKbKSeT6cBXH+vG/4GfvO2b38l7vHl
- WwxO/VUoH7mRLUsHF1tN6ekm1oNXr2TRN5QbeDuIqcMJkckbfuZiYaERuqz/y2Y2eTg=
-X-Gm-Gg: Acq92OEm4zZ8MhGcvR9MtrO99+bw8x7lfxNsOjdzwS6wPhbtE87XdSgNIX962QqHaMi
- Lxltf9NdL/v7nYx5NG6ngkd6l/cPNvw1RoUXkAboJ+fTOT1Beyh4k8OE2+rB40Q7i8pYvA3uoc3
- JzbbHA58FOb9hFb5vNsGljS3tuYJDSIexzGOWwcaCMuAoKj5EtC7pz8siaWFuX4P6QKccEtBCXt
- mx71EPueHxOtnCqAnoht+AQV7GS/yui0wtFkb+vN1C4p/fKR6y7xL0BQLe26ZWUfHSjFQY56+AO
- m4Mk4btkgd945b8vY4gJvuwFx0Xa+ACkrBfOZ1aRZkbsyD6daZA0OIdo6SYoLkoqJ8OpTVyiULH
- 638I6Dn8xSEap8P+XGsTwA31N88pV6F8/Iqht2PuKqWDFwaprKpu233l7l5xW0yMCUvFiUMlFDS
- vqgHEWyOGRdS/Wzv5oXE5oBB/hYKUujHY6s4oYJgFttGTNKUptE/TZwww3EzUpUVeLgQ==
-X-Received: by 2002:a05:600c:37c6:b0:48e:7f22:d90 with SMTP id
- 5b1f17b1804b1-48e7f7de432mr155431275e9.4.1778582992160; 
- Tue, 12 May 2026 03:49:52 -0700 (PDT)
+ AFNElJ9oqPTksp9iEJ3PcFJvfYMzw7TeX6E3n0S55BGt6RtSbIg5CF9PLOhA+ZVm7GwmQ8r/0hadWIJhV0c5@nongnu.org
+X-Gm-Message-State: AOJu0YyhGn5iC0oRhkT9yZ1IrtIR4+7uujbonUSUhh643lIQYTw9zp4h
+ Ci+QQwQLXyqxQMBmpf5W7oAla1PfjoPZ90kJE2T2lTiV4midwyzFYxEYHRwLBGKd0Go=
+X-Gm-Gg: Acq92OHve/P3/ihMoTqJNz62oZ+S0lFxUG3uaNzqIWc52V9+CZwTpVwBbeRZH/M5l5I
+ mv0Of3e0aw+gRhxx4hh+XGSWsAdkq/fZiI+E140RqolsnClV0VRWp8azu9rCViR7MBPTWodhzzq
+ SMvxRvePy53amqJ0y5deiyTFXe+RQAnecxvviK85ldQcPAeBceYKwRzZbzwWeDIXVQJBc1rdq5/
+ 8OK+dsrXg/08woJSVfFdl/ZW0LH1dq2mx8G7pxYoaXSyvBhMjqoipEczbBLft1j2IK9VfMWlFqZ
+ tuSk6EnYhhGfDiVOIzKAR7dbwqUcJjg4JHiTdhEez/zSNBdLhZTaq6yQh+6mKZeEXYrb93qxpmF
+ sdY7vOZn/mbqt6l6jHvA8Q1SKpIE/9Prw73n6GdaqMqp7VL01PuPe6NvZOEbZ+AFMpmFT8KeGT5
+ 6kS71DfsBZE02H7lrUjipJ5pNgtcaZOv31yhMS1CQQmvgUnDtiSeTAVEyBqg0tS1hCqw==
+X-Received: by 2002:a05:600c:a30d:b0:48e:5d91:cfe3 with SMTP id
+ 5b1f17b1804b1-48e6748a72fmr191586555e9.1.1778583078128; 
+ Tue, 12 May 2026 03:51:18 -0700 (PDT)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e8e62a2desm17111615e9.9.2026.05.12.03.49.51
+ 5b1f17b1804b1-48e90536e18sm37357905e9.5.2026.05.12.03.51.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 May 2026 03:49:51 -0700 (PDT)
-Message-ID: <719b50e1-40e4-4e56-9837-9f205912bd18@linaro.org>
-Date: Tue, 12 May 2026 12:49:50 +0200
+ Tue, 12 May 2026 03:51:17 -0700 (PDT)
+Message-ID: <ea9a6a72-5ffa-46a1-b200-0c7c26944019@linaro.org>
+Date: Tue, 12 May 2026 12:51:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] hw/intc/arm_gicv5: Avoid NULL dereference in trace
- line
+Subject: Re: [PATCH 2/4] target/arm: GICv5 cpuif: Don't set HPPIV bit in
+ GICv5PendingIrq::intid
 Content-Language: en-US
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 References: <20260512093856.3197700-1-peter.maydell@linaro.org>
- <20260512093856.3197700-4-peter.maydell@linaro.org>
+ <20260512093856.3197700-3-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260512093856.3197700-4-peter.maydell@linaro.org>
+In-Reply-To: <20260512093856.3197700-3-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,20 +105,23 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/5/26 11:38, Peter Maydell wrote:
-> In the handling of writes to the IRS_SPI_RESAMPLER register,
-> we call a trace function, passing it information about the SPI
-> being resampled. However, spi could be NULL if the guest tried
-> to resample a nonexistent SPI or one configured for a different
-> domain. Move the trace statement inside the "if (spi)" block,
-> as it's only interesting trace if we actually did a resample
-> and potentially changed the state of the SPI.
+> In gic_hppi() we return the current highest priority pending
+> interrupt in a GICv5PendingIrq struct.  We try to set up the intid
+> field of that struct to be the form that is used by the ICC_HPPIR
+> register, which has a "valid" bit in bit 33.  Unfortunately the
+> GICv5PendingIrq defines the intid field as a uint32_t, so Coverity
+> points out that the bit doesn't actually fit.  Move the handling of
+> the valid bit to the callsite, and make this function report "no
+> pending interrupt" with GICv5PendingIrq::prio == PRIO_IDLE,
+> consistently with how we use this struct in other places.
 > 
-> CID: 1959593
-> Fixes: 33185e1d64e ("hw/intc/arm_gicv5: Update SPI state for CLEAR/SET events")
+> CID: 1659594
+> Fixes: 9edad4ff3 ("target/arm: GICv5 cpuif: Implement ICC_HPPIR_EL1")
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   hw/intc/arm_gicv5.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   include/hw/intc/arm_gicv5_types.h |  2 ++
+>   target/arm/tcg/gicv5-cpuif.c      | 18 ++++++++++--------
+>   2 files changed, 12 insertions(+), 8 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
