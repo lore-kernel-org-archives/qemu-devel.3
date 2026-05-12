@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6895DCD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:47:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CF83CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:47:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuNH-0005IU-C0; Tue, 12 May 2026 17:10:43 -0400
+	id 1wMuWb-0006Rw-MC; Tue, 12 May 2026 17:20:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuNE-0004tv-6p; Tue, 12 May 2026 17:10:40 -0400
+ id 1wMuWT-000690-1a; Tue, 12 May 2026 17:20:14 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuNB-0003yM-AV; Tue, 12 May 2026 17:10:39 -0400
+ id 1wMuWQ-00005m-QL; Tue, 12 May 2026 17:20:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619302; bh=r51wgXVRgwo47tV9JqOsKPpvDm7+AmKogHeS5cVH7zc=;
+ t=1778619498; bh=5LbqDUa8CKllKEbzNGdcmbAjIF3ZXTiLPAm5pXG/k9Y=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=uv7a68+G7VMRY/qJr6g/lDt60Ct1TeBwusdgDSJpqb3R7DNEitsXwqRhYNFKEhIxx
- oGRcISqKFVSJth0ymhUVtrQBva25c9EvKtJFFM9x+2ipsTzZDVQG6Sj1MJ1e1ecVU2
- ZoKWWsURasjreO32aAkPv1rBhSRi5Lt8uOtOxYnCPdaEuEAOqiGNDHYLOCPhE/H/K7
- QoWfsdxhhDfEVlBym51ujr9JUHlXcGHzWPpGGznISJY38gzf7YUJGi0dV5/GQmiecL
- knOFLMsHfJc8mr0rvLQKtH0J+SSWJSNS5RTj11CCiKchPmlX6HDOP9/r+uC0BIZvN9
- 3ao/0HPiuV/Ow==
+ b=AclizC4sfp1Wqx8vRUCuzxwI8BR+4T8WZwQppKhuakRGFnh5cwdQtTqNcgVG6ZySy
+ EkEEWCWEJHr2Kk8bgwgJWb2SPZ09ykTnCPiPqWYggpFpdoeJNCnnaMQswYqCHlJLRg
+ AKCm9My52V5J2KvKCxNbqn/FJhyxG4lAVmZ0yNmJKBtNT7REfSkZP4HW7D6v5QMlP9
+ bycaCAlIZQ8yH3JALnPERugqyqwREEi1c7bOoIfGP7NmfivY9eHlkITaWqAWKPbpVS
+ /M1jIZfBCRCcn6Lpjfu55s9Rwi8wb2xC0Eh8/rbvDhRc1XRxspCfuQ3ARgqdARkoYV
+ Lmj2XHEiudHbQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C903B1AA36C;
- Tue, 12 May 2026 23:55:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 60A171AA3E1;
+ Tue, 12 May 2026 23:58:18 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D43703ABCDC;
- Tue, 12 May 2026 23:55:06 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6C8333ABD39;
+ Tue, 12 May 2026 23:58:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+Cc: qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
+ Nutty Liu <nutty.liu@hotmail.com>, Helge Deller <deller@gmx.de>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 047/117] scsi: Don't consider LOGICAL UNIT NOT
- SUPPORTED guest recoverable
-Date: Tue, 12 May 2026 23:53:49 +0300
-Message-ID: <20260512205503.361097-47-mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 22/58] linux-user/strace: Use pointer type for read
+ and write values
+Date: Tue, 12 May 2026 23:57:43 +0300
+Message-ID: <20260512205820.361821-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
-References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
+References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -70,50 +70,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Alistair Francis <alistair.francis@wdc.com>
 
-When commit bdf9613b introduced scsi_sense_buf_is_guest_recoverable(),
-it included LOGICAL UNIT NOT SUPPORTED in the list of guest recoverable
-sense codes. It doesn't really explain how the codes to be in the list
-were selected.
+The stack pointer is being truncated as 32-bits for qemu-riscv64, so
+let's use %p to print the syscall pointer argument.
 
-As the LUN doesn't come from the guest, but from the block backend
-(usually the SCSI device on the host that was opened with host_device,
-but it could also be the iscsi block driver), there is really no way the
-guest could influence this.
-
-It seems that on some storage arrays, LOGICAL UNIT NOT SUPPORTED can
-happen during failover operations. When combined with multipath, the
-request should be retried on another path instead of being reported to
-the guest, which would offline the filesystem in response.
-
-Simply returning false in scsi_sense_buf_is_guest_recoverable() will
-enable the retry logic in file-posix, and will also make sure that if
-the error persists, the configured error policy is respected so that the
-VM can be stopped.
-
-Buglink: https://redhat.atlassian.net/browse/RHEL-158212
-Fixes: bdf9613b7f87 ('scsi: explicitly list guest-recoverable sense codes')
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260330121635.49205-1-kwolf@redhat.com>
-Reviewed-by: Paolo Bonzini <pbonzini@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit ccc613f96c66eb5401185ff6eeba18143892055d)
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3238
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 1730e6f33f9732658b88c2e4eda257f50531ef0e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/scsi/utils.c b/scsi/utils.c
-index 545956f4f9..daee90ecf0 100644
---- a/scsi/utils.c
-+++ b/scsi/utils.c
-@@ -373,7 +373,6 @@ static bool scsi_sense_is_guest_recoverable(int key, int asc, int ascq)
-     case 0x1a00: /* PARAMETER LIST LENGTH ERROR */
-     case 0x2000: /* INVALID OPERATION CODE */
-     case 0x2400: /* INVALID FIELD IN CDB */
--    case 0x2500: /* LOGICAL UNIT NOT SUPPORTED */
-     case 0x2600: /* INVALID FIELD IN PARAMETER LIST */
- 
-     case 0x2104: /* UNALIGNED WRITE COMMAND */
+diff --git a/linux-user/strace.list b/linux-user/strace.list
+index 35f001fecd..6162a407f9 100644
+--- a/linux-user/strace.list
++++ b/linux-user/strace.list
+@@ -1114,7 +1114,7 @@
+ { TARGET_NR_quotactl, "quotactl" , NULL, NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_read
+-{ TARGET_NR_read, "read" , "%s(%d,%#x,%d)", NULL, NULL },
++{ TARGET_NR_read, "read" , "%s(%d,%p,%d)", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_readahead
+ { TARGET_NR_readahead, "readahead" , NULL, NULL, NULL },
+@@ -1674,7 +1674,7 @@
+                      print_syscall_ret_waitpid },
+ #endif
+ #ifdef TARGET_NR_write
+-{ TARGET_NR_write, "write" , "%s(%d,%#x,%d)", NULL, NULL },
++{ TARGET_NR_write, "write" , "%s(%d,%p,%d)", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_writev
+ { TARGET_NR_writev, "writev" , "%s(%d,%p,%#x)", NULL, NULL },
 -- 
 2.47.3
 
