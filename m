@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27E25CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:39:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D22DACD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:39:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuit-0004mJ-Ce; Tue, 12 May 2026 17:33:03 -0400
+	id 1wMuWt-0000FO-4t; Tue, 12 May 2026 17:20:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuiN-00047M-Dn; Tue, 12 May 2026 17:32:32 -0400
+ id 1wMuWr-000056-Ix; Tue, 12 May 2026 17:20:37 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuhd-0002Fo-GK; Tue, 12 May 2026 17:32:28 -0400
+ id 1wMuWp-00007l-Ms; Tue, 12 May 2026 17:20:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619499; bh=gbm8nkzIZb3/sWf7kA6zr4NLx2XSe3RZeKjcEw48UgA=;
+ t=1778619498; bh=favLerJjkR8u+IyO/lTJe1+072vjucbVd6lRH37CS3g=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=a6xMyPE+PlaXBz/4U7SZ3oR7Fw7X8jTPt4cWtbO9PHTAciaRNqZaDM9lnDHETZDjs
- se5IgB7u+X8WfNgIC7juz0sLUB97CGcwf3SXvoLJ1ueUKAhzEJR5lks4TijyoeTmvX
- ItcvQ2naE02DEdriEF+o7eqRplVeIbXd9Te/18arl3cGD+mhfPyD8sUnBWPXQ929Xf
- bpQ+iGfaPjp9XM32cfCFcRjWw++ze8B45qtQga8ILD0KFE/nmR8KZy1I/2spasDIx3
- JDYLXKXoEEwr7EyCFQYU8c1h2x/yDm1FXhucMBL43MRf3HzRlxQIXLGNd1yOZgKa7E
- 6ACGW6LRAV0BQ==
+ b=BnwyEBQgITOrIPoUacjPPudMEtVB94B84GECWJR50N7AtbyRbiLFpS2VfY1d0L8uE
+ fIDUSjMq5ZSFm/uu/xzDH6ifov2wOMOCPisessddCKYgX59jxHtzuFTppd+TF+FZWu
+ WSpOVyOh/9DCS1PzTvPFnWHnmshZmHnCaKkHdXduIqATpyeI6DMge/yiDqVtWZrZfW
+ veUkwb1mT9e6QpC+rhQTPV/vTVxC7jHibl6w5ZWNsVOjeVxGoAChXD29iIvDYh3Gmz
+ YVUKyjOaUUU8cvy9IBQvuQbSBj5e9e4XuR6hbBpf+/MYYspVP/wgcLLxtsMQzclQRu
+ ySc2lh5tQlnZQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C23E71AA3F4;
- Tue, 12 May 2026 23:58:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8AB881AA3E4;
+ Tue, 12 May 2026 23:58:18 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B36BF3ABD4C;
- Tue, 12 May 2026 23:58:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 993B83ABD3C;
+ Tue, 12 May 2026 23:58:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.1 41/58] linux-user: Allow getsockopt() with NULL optval
- address
-Date: Tue, 12 May 2026 23:58:02 +0300
-Message-ID: <20260512205820.361821-41-mjt@tls.msk.ru>
+Subject: [Stable-11.0.1 25/58] linux-user: Add setsockopt() for
+ SO_RCVTIMEO_NEW and SO_SNDTIMEO_NEW
+Date: Tue, 12 May 2026 23:57:46 +0300
+Message-ID: <20260512205820.361821-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
 References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
@@ -72,113 +71,59 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Some programs test availability of socket options by asking for the
-value with an NULL optval address, which currenrly always trigger an
-EFAULT in qemu.  Fix it by allowing a NULL address, in the same manner
-as the Linux kernel on physical machines.
+Add handlers for both sockopts which use 64-bit time_t from userspace.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2390
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/885
 Signed-off-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-(cherry picked from commit 08dc3e240fc00213c0eb29b71569dc0ca9301337)
+(cherry picked from commit edb4588309a753dea40f338fb8e02e3cfc2eed70)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 4594909242..d68edb7afd 100644
+index 8e96cc26db..751e6eabe5 100644
 --- a/linux-user/syscall.c
 +++ b/linux-user/syscall.c
-@@ -2644,6 +2644,10 @@ get_timeout:
-             if (ret < 0) {
+@@ -1143,7 +1143,6 @@ static inline abi_long copy_to_user_timeval(abi_ulong target_tv_addr,
+     return 0;
+ }
+ 
+-#if defined(TARGET_NR_clock_adjtime64) && defined(CONFIG_CLOCK_ADJTIME)
+ static inline abi_long copy_from_user_timeval64(struct timeval *tv,
+                                                 abi_ulong target_tv_addr)
+ {
+@@ -1160,7 +1159,6 @@ static inline abi_long copy_from_user_timeval64(struct timeval *tv,
+ 
+     return 0;
+ }
+-#endif
+ 
+ static inline abi_long copy_to_user_timeval64(abi_ulong target_tv_addr,
+                                               const struct timeval *tv)
+@@ -2391,6 +2389,25 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
+                                 &tv, sizeof(tv)));
                  return ret;
-             }
-+            /* special case: destination address is NULL, return 0 */
-+            if (optval_addr) {
-+                len = 0;
-+            }
-             if (len == sizeof(struct target__kernel_sock_timeval)) {
-                 if (copy_to_user_timeval64(optval_addr, &tv)) {
-                     return -TARGET_EFAULT;
-@@ -2844,7 +2848,10 @@ get_timeout:
          }
-         if (len > lv)
-             len = lv;
--        if (len == 4) {
-+        if (!optval_addr) {
-+            /* writing to NULL does not give error */
-+            len = 0;
-+        } else if (len == 4) {
-             if (put_user_u32(val, optval_addr))
-                 return -TARGET_EFAULT;
-         } else {
-@@ -2877,18 +2884,24 @@ get_timeout:
-                 return -TARGET_EINVAL;
-             lv = sizeof(lv);
-             ret = get_errno(getsockopt(sockfd, level, optname, &val, &lv));
-+write_ret:
-             if (ret < 0)
-                 return ret;
--            if (len < sizeof(int) && len > 0 && val >= 0 && val < 255) {
-+            if (!optval_addr) {
-+                len = 0;
-+            } else if (len < sizeof(int) && len > 0 && val >= 0 && val < 255) {
-                 len = 1;
--                if (put_user_u32(len, optlen)
--                    || put_user_u8(val, optval_addr))
-+                if (put_user_u8(val, optval_addr)) {
-                     return -TARGET_EFAULT;
++        case TARGET_SO_RCVTIMEO_NEW:
++        case TARGET_SO_SNDTIMEO_NEW:
++        {
++                struct timeval tv;
++
++                if (optlen != sizeof(struct target__kernel_sock_timeval)) {
++                    return -TARGET_EINVAL;
 +                }
-             } else {
-                 if (len > sizeof(int))
-                     len = sizeof(int);
--                if (put_user_u32(len, optlen)
--                    || put_user_u32(val, optval_addr))
-+                if (put_user_u32(val, optval_addr)) {
++
++                if (copy_from_user_timeval64(&tv, optval_addr)) {
 +                    return -TARGET_EFAULT;
 +                }
-+            }
-+            if (put_user_u32(len, optlen)) {
-                     return -TARGET_EFAULT;
-             }
-             break;
-@@ -2939,20 +2952,7 @@ get_timeout:
-                 return -TARGET_EINVAL;
-             lv = sizeof(lv);
-             ret = get_errno(getsockopt(sockfd, level, optname, &val, &lv));
--            if (ret < 0)
--                return ret;
--            if (len < sizeof(int) && len > 0 && val >= 0 && val < 255) {
--                len = 1;
--                if (put_user_u32(len, optlen)
--                    || put_user_u8(val, optval_addr))
--                    return -TARGET_EFAULT;
--            } else {
--                if (len > sizeof(int))
--                    len = sizeof(int);
--                if (put_user_u32(len, optlen)
--                    || put_user_u32(val, optval_addr))
--                    return -TARGET_EFAULT;
--            }
-+            goto write_ret;
-             break;
-         default:
-             ret = -TARGET_ENOPROTOOPT;
-@@ -2986,8 +2986,14 @@ get_timeout:
-             if (ret < 0) {
-                 return ret;
-             }
--            if (put_user_u32(lv, optlen)
--                || put_user_u32(val, optval_addr)) {
-+            if (optval_addr) {
-+                if (put_user_u32(val, optval_addr)) {
-+                    return -TARGET_EFAULT;
-+                }
-+            } else {
-+                lv = 0;
-+            }
-+            if (put_user_u32(lv, optlen)) {
-                 return -TARGET_EFAULT;
-             }
-             break;
++
++                ret = get_errno(setsockopt(sockfd, SOL_SOCKET,
++                                optname == TARGET_SO_RCVTIMEO_NEW ?
++                                    SO_RCVTIMEO : SO_SNDTIMEO,
++                                &tv, sizeof(tv)));
++                return ret;
++        }
+         case TARGET_SO_ATTACH_FILTER:
+         {
+                 struct target_sock_fprog *tfprog;
 -- 
 2.47.3
 
