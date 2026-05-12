@@ -4,48 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F7AFCD4F21
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:10:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E34A4CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:10:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuLn-00046M-AG; Tue, 12 May 2026 17:09:12 -0400
+	id 1wMuIJ-0002I6-Gt; Tue, 12 May 2026 17:05:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuKI-0000fO-R6; Tue, 12 May 2026 17:07:39 -0400
+ id 1wMuGq-0004Ht-SO; Tue, 12 May 2026 17:04:04 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuKA-0002JH-WC; Tue, 12 May 2026 17:07:38 -0400
+ id 1wMuGo-0008P6-NR; Tue, 12 May 2026 17:04:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619300; bh=1cMgbIY13ULemBslmPeGp/ARCsWAexobttnF1QvSKHM=;
+ t=1778619279; bh=Vut12cKrYEMDYJI0A2fmodC3YuLClaDx8d3dnGQh++w=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Q6E/A6HMLVHutJs4VGxYV/9kMKXKEO+tCGwgiDdET7S9cBdPcWw84FQ1r2ibepoEW
- OydX1G+ABX338/uHxlVoyOx4WYbvB9NTZ6e/GnSSShs/3ezqmglvtAfHaDQCNTE17O
- YoCo0sNEsB8qbgP7363pgUYe3L5hysvpHIPLpPxqN4V9cr8k8jyO+jF0vxYWANOrgk
- EXJAYM4F6CD2Ld9nqV9Hn3Z0JoTjIUX5yR78k1uH7PsTxkTATrZOWBJAcLaccUz9nh
- jhzShFrJQMLeLjXncyeuqR3evvVHOh1SFHCu96tV8f169G6Ko1FPNbQhV+OqEN6MHy
- CDirLFVpBugbA==
+ b=Z/9WhT3+XR7Y+6hwsPBBo8C/WnSMsSZVMhtaecB6VIQx86wHLSDDtUqnjZBn0bJrO
+ Iic6/QLm56k5MD9doTtNPtDBUyvVkdHAll+I63MV4Xmimo2rUUB2E+Ti5tg+G68L9b
+ HyyrvQfLqY3jMAtJAPmYJBt5jVN/r3DBNQhgJHJdLbPbgcPqkq82i8cclhr6mQnvPQ
+ 55G1xkhFUvpydwbklpTNpWDQeDHCjQBag81Q2IXH2zkjqGlBvhlu3R99BffCt2+OlS
+ c5ixj5V0s7/uPvYMAJZ/cffSb9yr+VmpiJ57OpJt0C+qb7EBXlwespB5ksb+yMvJnV
+ 72tyR2oC6t+UA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CBE501AA34C;
- Tue, 12 May 2026 23:55:00 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 819301AA329;
+ Tue, 12 May 2026 23:54:39 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D836B3ABCBD;
- Tue, 12 May 2026 23:55:04 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 89D473ABC9A;
+ Tue, 12 May 2026 23:54:43 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, kiki <Chan9Yan9@gmail.com>,
+ Zexiang Zhang <chan9yan9@gmail.com>,
+ Gautam Menghani <gautam@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 016/117] target/riscv: rvv: Fix missing flags merge in
- probe_pages for cross-page accesses
-Date: Tue, 12 May 2026 23:53:18 +0300
-Message-ID: <20260512205503.361097-16-mjt@tls.msk.ru>
+Subject: [Stable-10.0.10 093/107] hw/intc/xics: Add a check for an invalid
+ server id
+Date: Tue, 12 May 2026 23:54:20 +0300
+Message-ID: <20260512205437.360850-93-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
-References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
+References: <qemu-stable-10.0.10-20260512103844@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,45 +74,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: kiki <Chan9Yan9@gmail.com>
 
-When probe_pages probes a memory region that spans two pages, it calls
-probe_access_flags twice - once for each page. However, the flags from
-the second page probe were overwriting the flags from the first page
-instead of being merged together.
+A malformed IVE value can result in an invalid server field being
+passed to icp_irq(). The function assumes the server id is valid and
+may access invalid state otherwise, potentially leading to a crash.
 
-Signed-off-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260318013805.1920377-2-max.chou@sifive.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 556817773849f7ed6709672759e406217261db97)
+Fix this by validating the server id before using it and ignoring
+invalid values.
+
+Reported-by: Zexiang Zhang <chan9yan9@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3324
+Signed-off-by: Zexiang Zhang <chan9yan9@gmail.com>
+Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20260428103645.50617-1-Gautam.Menghani@ibm.com
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+(cherry picked from commit 1aee8067fce95d15061eca8fbb6772d8a90ea699)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 2de3358ee8..2d0e4e4d33 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -151,9 +151,9 @@ static void probe_pages(CPURISCVState *env, target_ulong addr, target_ulong len,
-         addr += curlen;
-         curlen = len - curlen;
-         if (flags != NULL) {
--            *flags = probe_access_flags(env, adjust_addr(env, addr), curlen,
--                                        access_type, mmu_index, nonfault,
--                                        host, ra);
-+            *flags |= probe_access_flags(env, adjust_addr(env, addr), curlen,
-+                                         access_type, mmu_index, nonfault,
-+                                         host, ra);
-         } else {
-             probe_access(env, adjust_addr(env, addr), curlen, access_type,
-                          mmu_index, ra);
-@@ -161,7 +161,6 @@ static void probe_pages(CPURISCVState *env, target_ulong addr, target_ulong len,
-     }
- }
+diff --git a/hw/intc/xics.c b/hw/intc/xics.c
+index bb8504f53d..bb328eb0df 100644
+--- a/hw/intc/xics.c
++++ b/hw/intc/xics.c
+@@ -26,6 +26,7 @@
+  */
  
--
- static inline void vext_set_elem_mask(void *v0, int index,
-                                       uint8_t value)
- {
+ #include "qemu/osdep.h"
++#include "qemu/log.h"
+ #include "qapi/error.h"
+ #include "trace.h"
+ #include "qemu/timer.h"
+@@ -222,6 +223,13 @@ void icp_irq(ICSState *ics, int server, int nr, uint8_t priority)
+ 
+     trace_xics_icp_irq(server, nr, priority);
+ 
++    if (!icp) {
++        qemu_log_mask(LOG_GUEST_ERROR, "XICS: invalid server %d for IRQ 0x%x\n",
++                      server, nr);
++        ics_reject(ics, nr);
++        return;
++    }
++
+     if ((priority >= CPPR(icp))
+         || (XISR(icp) && (icp->pending_priority <= priority))) {
+         ics_reject(ics, nr);
 -- 
 2.47.3
 
