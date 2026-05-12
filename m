@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48938CD4F24
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:38:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D93E2CD4F21
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 21:38:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMuQq-0003af-SV; Tue, 12 May 2026 17:14:25 -0400
+	id 1wMuTj-0004U8-7g; Tue, 12 May 2026 17:17:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuQg-0002N0-GB; Tue, 12 May 2026 17:14:14 -0400
+ id 1wMuTS-0002kw-05; Tue, 12 May 2026 17:17:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wMuQe-0005hX-Qf; Tue, 12 May 2026 17:14:14 -0400
+ id 1wMuTP-0006jc-Vh; Tue, 12 May 2026 17:17:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778619305; bh=IV1KOOsP62EAMhURr/iHTfOhWJ/M086I5KB7WEGlK5c=;
+ t=1778619307; bh=t1J8WMNyiECT8S8oMriALLHVngmgly+xsrMf1JZklI0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=YrFQXiAk244r3Imnc2sB1Vvr7kcXQFNI14yIc004aoSJFVSJtpWaj5xhBFFTF21o+
- 9G8qCRtRvJ6g325mjHZCTWCJVigwVPNlk2zyvFxAqlJ8RG3OvyYx64aWE8QZe3s9qT
- UNNVm40kcfYMzFqRUZSHY5ge72iqJaHYS9h/7lvoyurXnk/eV140EYIbqLcUKrCmnW
- HHyt/DCalJsl63LR6a2khDy+9x3TJclX+NiZYGPojEcvenf0xzUSpffTy/AwmbN6jG
- 75B7luANPRnbWun+j2S0ahQi/AJTLOjSCDFWUh3TOwJCfGMe+uSws5A9Mtiegythbi
- JscdPN/EIemrQ==
+ b=rFiVnNyql0U+K9BaodyB4lyy2WlrLGAB11+6qfGLQgMVdKmBzp9nv11e+HOw12/7J
+ Te4YhNZinIqv7RwHy8yvLzY459nNsA0yQXYwiTNrYw5MOLmCi3TqeXWQLhf/WeS3B4
+ TOSazT7AzHwhvHwP4AgqKWy0XnkgYhP1qDhEUGtyQGTMdXK7ScpFWHgM5K4aigVlDy
+ lkk+/xkoUCf25PiK+cEjOrHWwXTP554AULC8j50gINe47mgog/ZWap211SqIedQe7p
+ vNDZF6EcHCB0FHGdGqcpGp8KUmipVDB52DdRpijxQr0p/Yda8U8kIGBVxbjWWs0Q1C
+ akAVdB6o13mpw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5E5D31AA391;
- Tue, 12 May 2026 23:55:05 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0257D1AA3AA;
+ Tue, 12 May 2026 23:55:07 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 693BB3ABD00;
- Tue, 12 May 2026 23:55:09 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0F4923ABD19;
+ Tue, 12 May 2026 23:55:11 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.3 083/117] linux-user/arm/nwfpe: Use thread-local
- storage for qemufpa
-Date: Tue, 12 May 2026 23:54:25 +0300
-Message-ID: <20260512205503.361097-83-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Juraj Marcin <jmarcin@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.3 108/117] migration: Fix low possibility downtime
+ violation
+Date: Tue, 12 May 2026 23:54:50 +0300
+Message-ID: <20260512205503.361097-108-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 References: <qemu-stable-10.2.3-20260512103849@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,51 +69,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Peter Xu <peterx@redhat.com>
 
-Fix the thread safety of the emulation by not storing a
-pointer in global storage.
+When QEMU queried the estimated version of pending data and thinks it's
+ready to converge, it'll send another accurate query to make sure of it.
+It is needed to make sure we collect the latest reports and that equation
+still holds true.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 784f1dde90df1ed57de0697adcd8ebfe7c342f58)
+However we missed one tiny little difference here on "<" v.s. "<=" when
+comparing pending_size (A) to threshold_size (B)..
+
+QEMU src only re-query if A<B, but will kickoff switchover if A<=B.
+
+I think it means it is possible to happen if A (as an estimate only so far)
+accidentally equals to B, then re-query won't happen and switchover will
+proceed without considering new dirtied data.
+
+It turns out it was an accident in my commit 7aaa1fc072 when refactoring
+the code around.  Fix this by using the same equation in both places.
+
+Fixes: 7aaa1fc072 ("migration: Rewrite the migration complete detect logic")
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+Link: https://lore.kernel.org/r/20260421202110.306051-3-peterx@redhat.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+(cherry picked from commit 455a6167f25416ce97ea966d6e8301df9fda9a47)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/arm/nwfpe/fpa11.c b/linux-user/arm/nwfpe/fpa11.c
-index 44783934b2..15888463f7 100644
---- a/linux-user/arm/nwfpe/fpa11.c
-+++ b/linux-user/arm/nwfpe/fpa11.c
-@@ -29,7 +29,7 @@
- //#include <asm/system.h>
- 
- 
--FPA11* qemufpa = NULL;
-+__thread FPA11* qemufpa = NULL;
- 
- /* Reset the FPA11 chip.  Called to initialize and reset the emulator. */
- void resetFPA11(void)
-@@ -154,7 +154,6 @@ void SetRoundingPrecision(const unsigned int opcode)
- }
- 
- /* Emulate the instruction in the opcode. */
--/* ??? This is not thread safe.  */
- unsigned int EmulateAll(unsigned int opcode, FPA11* qfpa)
- {
-   unsigned int nRc = 0;
-diff --git a/linux-user/arm/nwfpe/fpa11.h b/linux-user/arm/nwfpe/fpa11.h
-index 20f9d2eb81..659d38ae3a 100644
---- a/linux-user/arm/nwfpe/fpa11.h
-+++ b/linux-user/arm/nwfpe/fpa11.h
-@@ -74,7 +74,7 @@ typedef struct tagFPA11 {
-     float_status fp_status;      /* QEMU float emulator status */
- } FPA11;
- 
--extern FPA11* qemufpa;
-+extern __thread FPA11* qemufpa;
- 
- void resetFPA11(void);
- void SetRoundingMode(const unsigned int);
+diff --git a/migration/migration.c b/migration/migration.c
+index b316ee01ab..5daf0d84e4 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -3510,7 +3510,7 @@ static MigIterateState migration_iteration_run(MigrationState *s)
+          * postcopy started, so ESTIMATE should always match with EXACT
+          * during postcopy phase.
+          */
+-        if (pending_size < s->threshold_size) {
++        if (pending_size <= s->threshold_size) {
+             qemu_savevm_state_pending_exact(&must_precopy, &can_postcopy);
+             pending_size = must_precopy + can_postcopy;
+             trace_migrate_pending_exact(pending_size, must_precopy,
 -- 
 2.47.3
 
