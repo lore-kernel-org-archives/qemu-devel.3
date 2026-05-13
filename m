@@ -4,43 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C814ECD4851
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 06:36:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAFF8CD37B6
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 06:37:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN3Ci-0004ft-HF; Wed, 13 May 2026 02:36:29 -0400
+	id 1wN3DU-00057P-Ff; Wed, 13 May 2026 02:37:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wN3C7-0004bR-CN; Wed, 13 May 2026 02:35:51 -0400
+ id 1wN3DF-0004tT-IL; Wed, 13 May 2026 02:36:59 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wN3Bw-0004Hr-Kf; Wed, 13 May 2026 02:35:47 -0400
+ id 1wN3D9-0004gh-1y; Wed, 13 May 2026 02:36:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778654128; bh=g+j3sD3ENV3gAe5FGO5FSALaoPamBRNSka2Y+E55b7w=;
+ t=1778654199; bh=5zLiLHRb5EDWbPUCo+AoE1FWb580mhDWxUMQV6DYhS8=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=LVIpaFY8DHrI62S8IPE9jZawaDFOCBipGo+zZms+uwCVmgnyhZOthiuEFcc0tQimh
- hlkTMZH3sp3c50s9hoJhR8QZIPFUdjh/sVQt+48pAROb4gRCwViTmcj6t26r0RKbn7
- hLg4tTPMAyO99/QefdOscbTmcV9BIo9NER6sVIuCIPhOLR+4mjxNCvMcsbb9wYnFJ5
- 3oyLRS5F09OsUY5zaXdTvfi1iRKrgMx9wV1aYX0iSHE6d3vAUMeNugrbN1R9/gdTUn
- ip0nkacxmN3mlb5o8OD/Kdx55kgycZZ0bDmc30eU61PHn+Ak1j/j+EQqiqO8EzKRkS
- WcJpfPnD7Vt+Q==
+ b=SOSNVqPxGJ5gmoGwzh4SofePuTkUI3D3y1nHEXGkMN5JNdK3zx0Z7s2/74phjAI0k
+ mOufK2k5cM7pAd/2zSNfsQgdZzXxf8s9nj/BJV3ci8SkY9T+0SDl3tWDE7CRRPLP7A
+ zL/rBoP4abQ6m15WY8SDSl1/Yr8N/c10Ibo9RXuZrgAEARoC+Zw5vYKoE3dYnoQq4t
+ jbRY4yi3PeqVUswnEUH4dghEKJoLPmQNFBshXuYDTe9wLOzg/XxmwLD3TNdtcoqJuX
+ dNWJt3D46nWaQ1F4uLb/kSLaPruhNjXcherIEvLuo+XNmZuidSC2K8y/eZ/soA7J6T
+ oD22CItckzNgA==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id DC7031AA6C6;
- Wed, 13 May 2026 09:35:28 +0300 (MSK)
-Message-ID: <c18a3fa5-4474-42db-b8be-95f164d1b184@tls.msk.ru>
-Date: Wed, 13 May 2026 09:35:33 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id BF2871AA6CA;
+ Wed, 13 May 2026 09:36:39 +0300 (MSK)
+Message-ID: <e0cc7bf4-beca-4b08-bda6-ff2b97942db3@tls.msk.ru>
+Date: Wed, 13 May 2026 09:36:44 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] hw/cxl: fix OOB read in Get Log command due to
- incorrect pointer arithmetic
-To: Aaron Esau <aaron1esau@gmail.com>, qemu-devel@nongnu.org
-Cc: Jonathan.Cameron@huawei.com, jic23@kernel.org, berrange@redhat.com,
- qemu-stable@nongnu.org
-References: <20260416200702.2374709-1-git@aaronesau.com>
- <20260416200702.2374709-2-git@aaronesau.com>
+Subject: Re: [PATCH 0/2] scsi: Fix discard_granularity for -drive if=scsi
+To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Cc: hreitz@redhat.com, ivy@FreeBSD.org, pbonzini@redhat.com, fam@euphon.net,
+ qemu-devel@nongnu.org, qemu-stable@nongnu.org
+References: <20260410152314.86412-1-kwolf@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -86,7 +84,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260416200702.2374709-2-git@aaronesau.com>
+In-Reply-To: <20260410152314.86412-1-kwolf@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -112,28 +110,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16.04.2026 23:07, Aaron Esau wrote:
-> From: Aaron Esau <aaron1esau@gmail.com>
-> 
-> The memmove in cmd_logs_get_log() uses cci->cel_log + get_log->offset,
-> which performs pointer arithmetic in units of sizeof(struct cel_log)
-> (4 bytes per element). However, per CXL r3.1 Section 8.2.9.5.2, the
-> offset field is a byte offset into the log.
-> 
-> The existing bounds check correctly treats offset as a byte value:
-> 
->      (uint64_t)get_log->offset + get_log->length >= sizeof(cci->cel_log)
+On 10.04.2026 18:23, Kevin Wolf wrote:
+> This fixes the default for discard_granularity with -drive if=scsi,
+> which was unintentionally 0 (disable discard) instead of sharing the
+> default with the qdev property used for -device scsi-hd (usually 4096).
+> This was a regression in QEMU 9.0.
 
-...
-
-Ping?
+Hi!
 
 Has this patchset been forgotten, or is it not needed anymore?
+
 If it's needed, it would be nice if it lands in the master branch
-in the next 10 days.
+in the next 10 days, to be included in the next stable series.
 
 Thanks,
 
 /mjt
+
+> Kevin Wolf (2):
+>    block: Create DEFAULT_BLOCK_CONF macro
+>    block: Add more defaults to DEFAULT_BLOCK_CONF
+> 
+>   include/hw/block/block.h | 12 ++++++++++++
+>   hw/scsi/scsi-bus.c       |  7 +------
+>   2 files changed, 13 insertions(+), 6 deletions(-)
+> 
 
 
