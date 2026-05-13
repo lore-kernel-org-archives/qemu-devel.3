@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C42D6CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 16:36:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A76ECD37AC
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 16:36:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNCYo-0004Nf-8P; Wed, 13 May 2026 12:35:50 -0400
+	id 1wNCYt-0004zg-Vm; Wed, 13 May 2026 12:35:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shaju.abraham@nutanix.com>)
- id 1wNCXt-0003Mj-3r; Wed, 13 May 2026 12:34:53 -0400
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ id 1wNCXo-0003Ls-SO; Wed, 13 May 2026 12:34:51 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shaju.abraham@nutanix.com>)
- id 1wNCXo-0000mn-WB; Wed, 13 May 2026 12:34:52 -0400
-Received: from pps.filterd (m0127838.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64DGKXdo1855187; Wed, 13 May 2026 09:34:30 -0700
+ id 1wNCXj-0000kQ-D8; Wed, 13 May 2026 12:34:48 -0400
+Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64DGLWup4150443; Wed, 13 May 2026 09:34:12 -0700
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=90/K6T/F6An7yz81jap0t445Ld1IqL33IR5l1tThA
- fY=; b=OARFURDkgFUq8MAGIBDLp2wqnh6wwKacbnJDDTw0UR+GgTV+bJ0pYbgqA
- peW4DQZ02R0Y5OwbBnP68To85zD4bgqWZTtH/tc3aCPS9dIENT+FkTkDGWpEML8X
- w+gjVdmDjL0aZMdolW0fYFdg5wOhqAnz5HzM2BYwD8/69gQFzrZVJoICpHKo/Z2A
- 0+xDP6NGMNdLXZGNLtcLiinOV5zfBqHKrWnbjbcXT0IFzfhYhT2ic9gxd4Ryluel
- KcV0hgxvOd0Ud09NlzOhQk8+2VN7mp3IvJz+B+oaMWljFQXGUbBJFl0mmzcjB328
- mxfFSwbY+KnsY42hUto1k9Io2hEBg==
-Received: from sn4pr0501cu005.outbound.protection.outlook.com
- (mail-southcentralusazon11021116.outbound.protection.outlook.com
- [40.93.194.116])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4e3nvke98r-1
+ proofpoint20171006; bh=GXJ4TkC4GU3PilMmllwe61pRKZJq9E1JgZ0DWo8WI
+ v4=; b=kwgT3WjUhbafrV0hNfsiPE1Sog5xkUgUjpmDIjQGYxDF+Gi4PTyp/R+6z
+ i3vm0sCetD9aj9BiShoBpSEm5xX53o+iNd9hCjYGuZJqTZNn5UBPSs6I70O6FhQ1
+ tyt8ML+6raGzdHEOL4b83XUtnKzVv+c2lNF0tVSY416z54E9HdXAMCv09JtXNuM8
+ GXoFM8UqvnoL4LSzmP75W2mzvYxz97dlBVqREZZQh4ZpNP2rA0JBPeOgokVWp5EE
+ Zc/K541EQLSfZcSj3raEXtF0GA3ps/VO8OIQ8WO4o1minD52Sk0ARJMjOOHGtvSA
+ WTyTMu2HREFXSwXHIkUtBYrmo7Bhg==
+Received: from ch1pr05cu001.outbound.protection.outlook.com
+ (mail-northcentralusazon11020111.outbound.protection.outlook.com
+ [52.101.193.111])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4e3nva674u-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 13 May 2026 09:34:30 -0700 (PDT)
+ Wed, 13 May 2026 09:34:12 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=NSm5RQDdLECsJiKQ/zBt45QWwsFWvlJueCfug/prdrh2DGKIlDkXwon34YynbP4MP+mo5eG4sR47OAyjt9B75DCCqIXd4R5aC/V10KhlnQe/6wWqQaG2NVzWQlCIADD769P/UJ0rJMk18leCqEuiBTaiOrmupcCsmHf9YTbj9U+FJRcwDRx3k3xBdl3GCakUPCVM3Ya0REeM8GLa+BvcLIiJcNWd6bWyJ0yf+qctQtKviBfWDIIJRtylrBLGvU+C+oqdxx4lr+KNaoYQlk1enoBPmPxILW1VVR+Pc8ShzKSCQU7NUTPwEeWYIUBxuN59Gesln25/s37qQWKZT2xN1w==
+ b=avnlO3R515ET2wpnaeuUlNX71XQPk7keYseMXZhisFVxKwccQ8IPDpZ11UQ/MuqIjaK1vK02kl6euAXVF28MmMblgHcNHfOedNNAb68rJA4Sz/oLfqj52C0ae53rAZNODaj1sLCqRjKaRqrhKu2d8gq3FeDMzCpa/Vkli987+ZVzSRnoYKA+naqCRcnle/Lw3XOHGnNPTDopSK55Dn/vO485Q6KgTGL6FrH+OzhWgo116C5bzy7DwRS4J1797Cu8demxHZPIKPn2bmo41p3CLY+h5+uS5oEO4sjxEB9RYs/20/qattRU1DoB9/0Sc65d31uuIHFRFhSbvHc2bc80JQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=90/K6T/F6An7yz81jap0t445Ld1IqL33IR5l1tThAfY=;
- b=aIwQDX+NxW56geQp3O88ikmljGYwM8M3VCERjvIzAvCY03NiIFcBllRk8Dp5LxX8XBdr89scxAV46pQPyDKvXlF8YVp8sZlp6vk9kg5/JlmAYhUF1ig1K/VrUFKUcXoPY4qn2CvJ+Sx6Yaid8ru2uQ6kQksJ7JKDdGtwsiWTPHXqAwHzhBsp3GGSCKJ129uS/UOaY1yLp0r/cfioRwmjEoEj4GaOVn0w/zNWmeKzeSL5ajxhShV/OQWDPr9r9AvMctjo0mgU9uS/1exj0Phh7WuO/1A9WhcwDww/cR/77Kqh90gaMJojbPlEoyp/WKyBoXW4QrPsmaI4m1bOAsHAug==
+ bh=GXJ4TkC4GU3PilMmllwe61pRKZJq9E1JgZ0DWo8WIv4=;
+ b=BIfDSoJsI0L7petiKUECPzElUv4GVYpke+90v92Tx7dqWp0XrL2VUJ72VZ031xAngJveRx5UMWix2cXZhQ+GgZzT+Z/lpOgrzikM4YVV4O/u1xQ2TXcbNs1gGWPP/CwOj/uiGeTfZGbWhwIzczJS1vpVpfPxbnK2f2v1/ZYYZoasnReKlM5hHLTmjP40Cb8WNSFSctV6sxoS9a4ctRdMi5G9BuEUQk+WLSqR7EVVmVUKYsajE6yYW8OoVy0xygvB2AxCXi8PNiWk1Jah/wyIIpwaPe7XVyGEXNlljhiWSxc/hY6i1vpDJOUjuJwgfs9Nt+lC9rLrcuZB7B5TyYOkfg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
  dkim=pass header.d=nutanix.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=90/K6T/F6An7yz81jap0t445Ld1IqL33IR5l1tThAfY=;
- b=y98vnMZjepndOw/y+cqjWYmqMnBGlTkhmdy+qpmsPLwS8CoiF+HTQGTVQvEi+r56ODgm5b/kO16ORAjcpgqllbSOFjUwffQDo4Z7YdwEqX3kHb6seyLebT1pVNxYteBFaNCk8EnVQhp8G5JHOPnwolImzHI4tBi+yNMXqqd1qqwHQJc9nAjanC5/CvxSaQ+29WVN+4cogwI3hL5o2l5jop0O0FIBl6YfBI/TOoHOX67K5iQCDAxoFV/pIf9l5nVH5I6ZLLcyeRYK24KpKyewYSMF8r5SKkKu7U/K7voJh28VzJOGijW1lAfooFvqXCzJMojPsKf+TmogFlXVnA4bnQ==
+ bh=GXJ4TkC4GU3PilMmllwe61pRKZJq9E1JgZ0DWo8WIv4=;
+ b=oIJdQL1Mzep+eHRwVrrhMvtknY7c+9eY7llgPftHM/lJai3BPo98vqaIAdR0iKv1BF3tNj9ir8j72s5iG/vPo0koioVKATQaqh3lXs1YBORBY/3y6ExItxtqfBPRNIdIw9k0IhfYO72EWK/QpIuIi/dQRg4T5Pvqjyf3r5F8Bqx2tobX8Pii6NE+XPwtr1ZdVQnyU1zDt9Tsj2l2ctG4bKLvLbE0JtStLfEYsJnRHOdHH2rKIC0PNLEIiHWyGikHeBw13rpiIZ+hq56bJGVCwNA0OqmE4u3kJ5HlQ2rVznZihrAJ7jHCaha0yXLjiNFcm/tj1+THxw+2tjwoGq0zMw==
 Received: from PH7PR02MB10160.namprd02.prod.outlook.com
- (2603:10b6:510:2e7::19) by SJ0PR02MB8813.namprd02.prod.outlook.com
- (2603:10b6:a03:3d6::9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9913.11; Wed, 13 May
- 2026 16:34:28 +0000
+ (2603:10b6:510:2e7::19) by CH3PR02MB9564.namprd02.prod.outlook.com
+ (2603:10b6:610:120::21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.23; Wed, 13 May
+ 2026 16:34:10 +0000
 Received: from PH7PR02MB10160.namprd02.prod.outlook.com
  ([fe80::4ed7:5c74:48e0:ff23]) by PH7PR02MB10160.namprd02.prod.outlook.com
  ([fe80::4ed7:5c74:48e0:ff23%7]) with mapi id 15.20.9891.021; Wed, 13 May 2026
- 16:34:28 +0000
+ 16:34:09 +0000
 From: Shaju Abraham <shaju.abraham@nutanix.com>
 To: eric.auger@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  kvmarm@lists.linux.dev, peter.maydell@linaro.org,
@@ -70,10 +70,10 @@ Cc: maz@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
  prerna.saxena@nutanix.com, jon@nutanix.com, jond@nutanix.com,
  Shaju Abraham <shaju.abraham@nutanix.com>,
  Khushit Shah <khushit.shah@nutanix.com>
-Subject: [RFC PATCH v1 11/13] target/arm: named_cpu_model: introduce named CPU
- models for selected CPUs
-Date: Wed, 13 May 2026 16:33:54 +0000
-Message-ID: <20260513163356.3033159-12-shaju.abraham@nutanix.com>
+Subject: [RFC PATCH v1 02/13] target/arm: named_cpu_model: Add ID Register
+ Fields
+Date: Wed, 13 May 2026 16:33:45 +0000
+Message-ID: <20260513163356.3033159-3-shaju.abraham@nutanix.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260513163356.3033159-1-shaju.abraham@nutanix.com>
 References: <20260513163356.3033159-1-shaju.abraham@nutanix.com>
@@ -84,89 +84,89 @@ X-ClientProxiedBy: CY5PR10CA0003.namprd10.prod.outlook.com
  (2603:10b6:510:2e7::19)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH7PR02MB10160:EE_|SJ0PR02MB8813:EE_
-X-MS-Office365-Filtering-Correlation-Id: 094a4113-2449-4b99-2729-08deb10d804b
+X-MS-TrafficTypeDiagnostic: PH7PR02MB10160:EE_|CH3PR02MB9564:EE_
+X-MS-Office365-Filtering-Correlation-Id: d9b28a3b-e6fe-48e9-849d-08deb10d7572
 x-proofpoint-crosstenant: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|7416014|376014|366016|1800799024|921020|18002099003|22082099003|56012099003|3023799003;
-X-Microsoft-Antispam-Message-Info: 1L1xxN1VLvPgu31wQ11sIcf5ikRmwxidwrCAhig7x3BxnLufBYZmz/OpIYkpjCkQPtYbctpVLP8QAL/LOYOUdPpWg4VsLAKdBeKuYrHWfLn5amE+KNfCbV3+Z+GtoBCFzuOYVJOPM6HLJdxV5v9heFC5YWQbRp53p0/+auHXaPGU4rElV/pwFO5bVI4b6mtnaP1x52j3J94XB4hW69/tmE3Eg00gLkWRYlTteu7FGDK56eLJzQO1Z3QrH7s6U6e9/uEAoUtQswvEY/p+JMGl8g3mfjOWTcTe7gLAgU72+6P8R9XorIEdrKFkn1D0abXQE9DfFvI5KYmJ2ctAVRO3JgtUGI22wKMepFs+zXjsJzF/yBNMwKvkXm+YLO5agkEWrlzJ5/CRsQrDaNtoNzRKxK9yalv/2Ku7LaPsVVsvms3Wzb49zjdXnls+yvENAkjvp/j46yBKGTYyR/pj3IXI3JfDdvMIexvBvVPcl/ULsUzRxCaxBcJ1zTROzk2+34U1dHYvjHgGILN1q7YQPDzXaDIy7HqioF4MFwPHXzW1cKkj5w7qGvgwMM8PvgT96OSYgCggfrMcNCPl6LstIQj0K4D7cPAaxrPwIkLouq+n1LAq98OgDCnhwA0CQiQmIQBK5vLhqnhJ2GY12VjmP5vyvRVTJVS4W+5hQPSUzDfgimJzYVgdIdq30/05ptLqvBbqUhf0M5qhmzP6J1oXt8enFJ7XqL+mfHVffKjg/i3U57k=
+ ARA:13230040|7416014|376014|366016|1800799024|18002099003|22082099003|921020|56012099003;
+X-Microsoft-Antispam-Message-Info: h4Kcb6oG4ONJ2/V6FE11fxgoaxQ+dYoJefYCaOgfpbx58bs1TgG0a9ID91orViDVLEswIlSkGvh6WoJ6SWChkGAwkOjt3CkGsrc7yNvqjKa9bj7tDqKUeXdWZoGVxq9DXd+80anx67kXWdAdCeq9WmMNn/l2KudUC9FJ8jp9R7X1g/YJ2t9tgnpbyP62Thly9udZ1K7FUbKUqu9HEZINS6Y4NYH4Qn/FypyDfO/t6Yvr2pr9RcfY7TXaV8kYWqzLaXbuf11bGPyr5bHotKRUHIJur1tBbPppRJVsaF13jqhzxNzpqyXAGXeA78pbPA9bZ+IOi0BrRAXs2K5oadPn8OFRYf08jVusAWJViXWyN1lzijxoG/cnaVr3mNqWpXgEBDs0aDYxGJhpzsnbu1rUI2RZs/9Vdfk3YI5LM7JeEqndmgR8ebhlPTcWnQMj11kNwiXOC0lGjKUGLY/bT1X6Ad61F7JB8b4t7kx8SJ/9FV5v/5/tlDmaJB2AxNLLiCwrRdWBRYQlFJv7rMaMMdTCrIgC/88/Ynfvd9R6s7snDWWQqAiTZ79npB7vJ1uNX0AP0A+7/r/R0cmCQKeLf1XkUb+zNy8HsdOFB/jRG8cY+YvVJFtkwWgE0m1Mu0gWfcyUE6fh1wpAQLCTlsl+f8PUV1J8/b++UYpb2vvuVnaZzRGcGFrWa0UHqFP7/+IqwqKK8xDlpOy7tcJrHwHJzAavdoQrSJ+/cheUJOVGEsjUPDE=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:PH7PR02MB10160.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(366016)(1800799024)(921020)(18002099003)(22082099003)(56012099003)(3023799003);
+ SFS:(13230040)(7416014)(376014)(366016)(1800799024)(18002099003)(22082099003)(921020)(56012099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?AOs/nMMldNW7FzO506vbrPT+nP/TN9dYMlQoy/B5aVzVlQeXsabDl1bDEGiS?=
- =?us-ascii?Q?GZ4bkyMHJmOnrlVtKtE1u/GU55XTgo1DcPnAKBsGJgjNexhTMesDYRF6CTvW?=
- =?us-ascii?Q?sKM+Lu25gb3/8mK4BolGUXLPQZXcHN6dLJ1xbjFMo/0p8Bp1un6k/+QqGemw?=
- =?us-ascii?Q?W221zGidwjs2+YHkAdJwdlEhz1vutFnLxkahdmZT2axvJFGY4CTle5OGl7bE?=
- =?us-ascii?Q?NYFKMj3pzPcmEbhb+EWOZ+Fy4DztYeY/190zjc07c3ErcrTBDJzusRt6p9bl?=
- =?us-ascii?Q?9wNiwQzbSrdZumZXzhscO+HswyWMMhQovJn6OQn8tgwBTU9XWuIGvVl0yIkv?=
- =?us-ascii?Q?t4/2A/FqJJJJumXJRYjXG5yrI1KPslNts+4TOfO22vedWMwSCf5W/krBqHbd?=
- =?us-ascii?Q?12PZMHdGaRo87OijQncfYOiI1WEI/iFmHfIurIGQ78rre4DvIwGBjBnOhx9F?=
- =?us-ascii?Q?OYQ4A7hr/PF31vqfVKBWDn3DWMtfv/4W8fHkg0isnd824TAa+sIDPtUc577I?=
- =?us-ascii?Q?kllkG4T+cs9T7F0RPQmaN9EpbEqpz//M5ENw+jSxfUUESti0Run9pOmBeJ17?=
- =?us-ascii?Q?MvkVGkMan7jJw8N2TtgtNV+A2bpuHTouGW9akcpVxP9oWVrDmJweoP/7eRVo?=
- =?us-ascii?Q?dX7xdlm/Kkduca3Vm2k1cTQ6MdFPk9A41PZddsodDBFZENsBr2oPg9WD1oNJ?=
- =?us-ascii?Q?XR5toDegLdVS/m2dP0uDpz0uGwsHx9a09sd9Yjuo5O5+p1ilvQIeFKyqpaE/?=
- =?us-ascii?Q?kGpYGDnN463tWe9rnoZLQ43aOzJ4xIiNCO3/VvmejJXD9XaEa1ckOh25Vja0?=
- =?us-ascii?Q?D99gj4nSKlZ2hVVTlY/lwy6LXFUnoEC3tkVX/tTeB6U7v+yLDTwyv7g8JjE6?=
- =?us-ascii?Q?JSfB6Jbej6kMVDHrk8EPFyA5kzqjpJomwdadhJ/xS4ib+4mwML1LyN9PeWAr?=
- =?us-ascii?Q?NqO9tWBz8hzVQHQqPtX26pDh2cmBuX4/avYYfAT24C728ZUxmKUDCSaDq3jb?=
- =?us-ascii?Q?2We6EayObA96UP3XVeZtjxUraN6gO6Ow51Zjlx1ggqzRjKMRGoefVOKO3+sO?=
- =?us-ascii?Q?zzf85GyeDb7LYK4Ejqg2jyzE/dOHt3uE/lMOro3ypmOAQCJonau1X8dJbHib?=
- =?us-ascii?Q?Lc99Lmw0EbzvZepuCoCuYADB1p7BoRhVuTzA7luVSH7FiZAI4P6YG2UAYeJU?=
- =?us-ascii?Q?hevAy/l2myNY1njwU/YBwBH1m6Ut6O+91N4bKrJJzR3Ny0RFHqGXCsVD/6h2?=
- =?us-ascii?Q?w+L2LL43pdO8xYog26ynTgFz9j8KsELI7iHENqsiYXKN9vqgx4hmW2V+F9//?=
- =?us-ascii?Q?3fRP0hFtytewK1ylH1bdMdinXrPJDf4I4irxjXlqsByG4IoN65yzy2KxRvYF?=
- =?us-ascii?Q?WiL0n2o1mReGb6DWpV+ivaHnxof1gquz3cF0Ys2h2wXRC/0Hx1Os6larPfIp?=
- =?us-ascii?Q?14UDRn9GObgIZ5PS4QgRN6XghrhrLVPY/fR08mAhGJ9lsYCA6bx84XDHsvAU?=
- =?us-ascii?Q?dgZW+BJDc5G+CXVMv6Nk5soAfJJ4+9SoqXGx8SZE8p7NmJEucDw5kVf4aG/p?=
- =?us-ascii?Q?F0qIt9GOT1fOJC+YjxARxbdZ/tnE15IpxeYRYUTG1lMRG6qhoBbZQrl3GXgJ?=
- =?us-ascii?Q?JKIJacLW1oiCmZtQoaKTTF/AVRN4OXT+4+jyszlmukB6Oz3QNrcEsUdShp2g?=
- =?us-ascii?Q?pUec0CpIYguQdno4vPXNKsClcKU44vDheaDmFKkKCVsiTg8rMXmBa/EDmT86?=
- =?us-ascii?Q?mEmq4lIyK65RTmByz2uT0efhpOBX6bg=3D?=
-X-Exchange-RoutingPolicyChecked: o3U8IvQNyIyI9NPZ84y36WMplj/vYO75EAJk1pqRrNbDgjNCGTAeQBvf1OEVO16SuhWTtebCNP026G3TtfZwNRZjKqBP0oThJmn8YgFma82GeoFfCgQID8TY3fgxkclz+ePD3cKTXp8aTNPa1HNOHvkounbYkiySvaRJHT8wg+dLlOIH6/XwajAHnw9E/UJy2ObfLnWJExRFzGWUverDbrBjplZM2/LRFvlSuOZHlCiRDeIEKCxfBEwxJZginCebfRJDFbnFVYZqb8L7UrmWWF+2Nd99nlQtetVTSrY7SrKcgJELe8CcGnbnHvfEXDN7r519YklNgjpe92Ql/Q9Q1w==
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?pVdHhVTCMdlVWf4sphuZr6xs3rfTPfLbX8EXua6CyV9l0VTPZShBLAw6owoW?=
+ =?us-ascii?Q?SL3B34PaHL6lKUFCMt6vUPj0AZydcnnMoHSE0sSPotn450F89nqQp+uTDoLI?=
+ =?us-ascii?Q?GSOIqBQfx2hC/atnGLILi8dWmdibrnMKpFNI0Zs4Uwtxc8pHMKPz9XFzX4TT?=
+ =?us-ascii?Q?B+zTWF7bBm04QWP4MDa8Z5qBlaDaGv3qYnP4IDDLvgFXa/RsrSAgRn7EJebH?=
+ =?us-ascii?Q?E3jQpDCJllMdaJUnuiiok67nxLjLrWP6DZDNbU1JdsdvEkdxX+TstPfd5qEd?=
+ =?us-ascii?Q?PFF9fpNR+cCeCwDRm3CEaHlw+fLI30216Xm20Z5K2hqoWM5o3ok5ZTBXjroh?=
+ =?us-ascii?Q?4r+pU0C9EN28XC27HJVJfOo54Uqh4rAwzdMQ+rjXf5V+XgshY0j4PvXNUrzo?=
+ =?us-ascii?Q?YZWhEoRu5apRIFAsbdeo2PAnwyMCVZ6VeI8cvjHHokAJj6iBz7nuKxiA5Jbe?=
+ =?us-ascii?Q?/FbaJV4W5qlUlo2iB3NeTK6m9MNn2SqtgOtOJUYHZRf7ylPFGvrBT0LDlTsF?=
+ =?us-ascii?Q?aQ3SaU++IEE7/ZW6197/JuzwguWHPcdOD6NWUtEvxbkxS7BvLcIa6zzYm9kJ?=
+ =?us-ascii?Q?/fj0hmFbJeYh6LO4R5KTQZTyU+9xH6c7hm1HnFHTAeVBg063b9hC9ZRwkPGQ?=
+ =?us-ascii?Q?wGDOqK/w1Xxz5lyDnevdjHEW9QOZ7IhoQ+I1nipKAFimGAAdHYmai5+HigPL?=
+ =?us-ascii?Q?I0csMr6p4yIbfmIsooFZXMKZPmH0c9/zYOxjuAMgAgRjl/+VelZTuXXfQdKU?=
+ =?us-ascii?Q?j8tKgCeHFj7T6ZzVY7Yqr2CPOv6Aa61AIArIYftogdIG5C2DKM9LDoOTf3oL?=
+ =?us-ascii?Q?XZqeioYlXFy2HCYpRigjy93lYlXiqKsQ6zBAZOfjzHHAKidxtTafXiPQoqjM?=
+ =?us-ascii?Q?f+OzgF861EEwXwdAIEJkZFftUlPd1/PA1N3E6nKnGbPH89pH+qSAiNK3yiFv?=
+ =?us-ascii?Q?78l6MyJ4zqbHXLJ1mJdMumavRziXOwIdwuogc77Nqu14xsUeMtXQMSxfjG+8?=
+ =?us-ascii?Q?E8dWI1zbKkQCAGqhvGWEo1jELsEheQ0TMEawLx/FASfIWsol76tH65lY7Ct1?=
+ =?us-ascii?Q?AWKPmtH3gK5LDWaPHmFW2U89fxS5go6yFw3Ccg44FRJCaBF5dFWYdvkuSR34?=
+ =?us-ascii?Q?L3IuzhV22XW19Hm7p641sLBdoinpezxkhZEVw450E1yU0ZkXgA0p6ptovB44?=
+ =?us-ascii?Q?odJloIdmi1NxRVfamE4vmHEvY3KUvqEZFgma7PNR0EAWgCrRu/zvef9WSDOI?=
+ =?us-ascii?Q?xZRbj8taIKNCfloO4uc+5zej3rCOcrbmyZbT4OFJy0H1+w00VS/s/oG6tM/u?=
+ =?us-ascii?Q?728/6RHrwHsbRG+bzTaiwOwYzIKZFIm7wLLzV8KycJpCJYfyu2DRJRX6YbnE?=
+ =?us-ascii?Q?QTKg0Gk6ZBekhgtrM3iZRe5vQRYLZnl1u5CsMJHjNZAS/fXCPldpowRGE+IE?=
+ =?us-ascii?Q?zbbeYlHPumN3eYfWq9HOA24VaXspPjqwEgdq7vDvBOYlFvTcWA6bPAj1LRAx?=
+ =?us-ascii?Q?W2A4r3LnKHDxlpQuUzKbenvU5fEBfP4K36UUinY5dz7tqagDkpxqm0WKqVof?=
+ =?us-ascii?Q?CH5tTVvDqpjqUoWjLLS7FJHJheNIKg5b3UQtjqCy6uy3WUUxlRzmyOezt1yx?=
+ =?us-ascii?Q?KGDpJyw912GRkcf9j07m0cL770xznOauNz5JZUvqGMVq0XLUgDr4J+Q5oFUZ?=
+ =?us-ascii?Q?VwmF4RcyBfNnIeQfXxSPiU/MrRn8ZYUX7ql7F0idHHi1r19MlYSIR0Cu9mTs?=
+ =?us-ascii?Q?pPAHUb6qjWeMss+bwG945KeoZMy89JI=3D?=
+X-Exchange-RoutingPolicyChecked: F/Y+zbUNHnXRSG+2z8s1sL5q9IEqQiyDck4flEL1MfZ7NXsF5LOAPEwNyzBjg6yhrpknbZD9KbONHzE+CngB53+8L2E8N8y7MW0z72EL4bKniWyTTWwImgMz4IW+TKgdLbubsvMLYZ1SR/i2sfpur/qyk+jR6yr4ibAyVU0zR6v1pwF98UX/GL6j3c+akYpaYqKaHzwdu/+3IdUr28fq8sAH3ly89QEZKBpVqqTHADDURjVaNMuqbkBcSlEGf1DLlqBeyVBURbz9GgWpJTDQ/sSmR5nvnxowVkPhKTf2riB5MELMRgcVNZauKfvVV+RzHCyHSPLSXhlXRyIlP7/AqA==
 X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 094a4113-2449-4b99-2729-08deb10d804b
+X-MS-Exchange-CrossTenant-Network-Message-Id: d9b28a3b-e6fe-48e9-849d-08deb10d7572
 X-MS-Exchange-CrossTenant-AuthSource: PH7PR02MB10160.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 May 2026 16:34:28.0550 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 May 2026 16:34:09.9038 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: gr4MenAUqbXIQRnovQeENqttviHJbNSWg2hniFprf4qO76jwQTBVRMd/9ylIGfXGilK+RN7VuM3rKssJL4umt4dl2IGRZNo/EYumMvLpJZE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR02MB8813
-X-Proofpoint-GUID: HZ35R1swqmrLdcPCv5gfFH70FizbdPvV
-X-Authority-Analysis: v=2.4 cv=WcU8rUhX c=1 sm=1 tr=0 ts=6a04a816 cx=c_pps
- a=U/cWNT7cGANcmDM7K3LxiQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+X-MS-Exchange-CrossTenant-UserPrincipalName: AJY0LEo5dDyeE338lwPDCVKr7aMSCxjXlO/Om8U2AYA7a/0lUFQ9Eyq3X/YOptQggW+psW7JpuZANwKteqKtI2F3HajyNeCeMZ0r9rTIxLo=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR02MB9564
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEzMDE2OCBTYWx0ZWRfXy+gnJTyKHBPZ
+ QzH03yj6o5M9qks9R/6s0QjuwImrLKAsGsuq9AwgVwJcn6gDn7mvfj74D0aiUNqRlhZ+UzUfhoi
+ Sz7QUWOe81fl1ULf4Vcw2XECss/v3X33TYRGUFWpYlWtQMeG7yieft5mU/W6IWU3h+klkf6OjeY
+ L2RZ8gONUKZd99RgcZwPnUzTgCLs1aQPN+bH/7/5nfX38BvFUIhldgqMQyieK6Na4AD0OzYNQuf
+ EXz3BN9d8MS92X9FOozrRGyGTW+nJwZJu+rzDcQ18NUWhzAFm6rfJvHtlRWD6/HdYSSLmWumR6L
+ UqCpNjvply+JV5EOTdkG2zK5I2qoGdTwVGeq0HCS3YME0y3ysUagVmpxCaCAUjL9hcnW8a6CTCG
+ GomYT/Ka+DuO6rLpf2T+Peu62Pw5WBpZpTk7LtDnYCKEVzCmYi3rHlZ9seQDAfUqtPRdOBqzh/4
+ L84bw/S6VMtoTMpt86Q==
+X-Authority-Analysis: v=2.4 cv=evLvCIpX c=1 sm=1 tr=0 ts=6a04a804 cx=c_pps
+ a=ZUDVJbHKkZYoAWA4fONUdg==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
  a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
  a=xqWC_Br6kY4A:10 a=NGcC8JguVDcA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=1L6crL_YRTbalZ11mEUO:22
- a=64Cc0HZtAAAA:8 a=JU90o9GPsxMSsgw1v4MA:9
-X-Proofpoint-ORIG-GUID: HZ35R1swqmrLdcPCv5gfFH70FizbdPvV
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEzMDE2OCBTYWx0ZWRfX5efM/KQKlJWl
- AfxSSdiZetx8lhBghPuTVf8sdFuXlrZAQkmooTmHMeju9tONX8bH1LkKmf23CKSmR/awkdntepY
- aYn//Okz1cBohiywxhNSAZEQ28Dg7mVav1iQlXsUfhEyR86on91E0Mad6gl0nT0Q/Xr4xxG9suY
- GA2AUIxuODZ1WKjAe2OY3psMyJUKQsD9ER5RW+T20+dAJAQU+oKpDAbueigaznJ/z74aptDtKfY
- ekm6zbetcf2K1aHaRCV4BpLlrwNRg2RcTpIeOwJF5N1cDdU6Kb5/sYO4a/ekyAjprGgL3MYDwfu
- i0+odlNbZ8bkNt6/WLcwtd1jUV0xEOCCI3vzvDE3qG3fJEJOkNIZ23d6q9yXQMURw2/Db4GYk3f
- /J/Q+BdbhDViL0/kDado3eGDFSNIKmruLlKQRiwU8B1HSVHiHPox/tBqkmrGuTF6aACgEFK+6uz
- vJTFE8U8rFpYDedd9CA==
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=0LlEyIVc8U2lsR7dKhuH:22
+ a=64Cc0HZtAAAA:8 a=T-lFrMnA8onTQdNMNegA:9
+X-Proofpoint-ORIG-GUID: 2UGvCPndxxCSqnSZ_e6AGUT0X0DVDQA3
+X-Proofpoint-GUID: 2UGvCPndxxCSqnSZ_e6AGUT0X0DVDQA3
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-13_01,2026-05-13_01,2025-10-01_01
 X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=shaju.abraham@nutanix.com; helo=mx0a-002c1b01.pphosted.com
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=shaju.abraham@nutanix.com; helo=mx0b-002c1b01.pphosted.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
 X-Spam_bar: ---
 X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UPPERCASE_50_75=0.008 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -182,634 +182,1761 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a small named-CPU-model layer on top of the field-backed property
-infrastructure. Each model is a flat table of (name, value) overrides and a
-parent pointer. At instance-init, the parent chain is walked root-first and
-every level's properties are applied via QOM, so a child entry overrides
-its ancestors for the same name.
+Add a declarative description of every architecturally defined field in the
+Arm64 ID registers in cpu-idregs.h.inc file. This file will be included
+multiple times with different definitions to build the per-field arch values,
+per-register field descriptor arrays, arm-idregs table etc. The architecturely
+defined values for each ID register field is extracted from kernel's
+arch/arm64/tools/sysreg file. The safe-value tags and default values are
+derived from the kernel's ftr_bits array. Aarch32 ID registers are added
+with dummy field so they can be defaulted to 0 by later commits.
 
-For example, the grace-v1 named model hierarchy is:
-kvm-base-v1     KVM-imposed quirks (chain root)
-arm-v8_4-a-v1   ARMv8.4-A architectural mandate
-arm-v9_0-a-v1   ARMv9.0-A architectural deltas
-neoverse-v2-v1  Neoverse V2
-grace-v1        NVIDIA Grace
-
-arm-v8_4-a-v1, arm-v9_0-a-v1:
-Only features mandated by the corresponding ARM ARM
-revision. No optional features.
-
-neoverse-v[12]-v1:
-Referrence manual derived feature values for the reference core. Values
-differ from reference core values based on what was exposed to the guest
-with -cpu host.
-
-grace-v1:
-SoC integration choices (crypto pin, cache hints,
-PAuth alg).
-
-model realization logic:
-1. arm_idregs_reset_to_defaults(cpu): Reset cpu->isar.idregs[] to the
-   default values.
-2. Add all properties to the CPU Object
-3. arm_realize_model_chain(obj, model, &error_abort): Walk the parent chain
-   from root first and apply all the properties.
+X-macro structure:
+IDREG_START(REG)
+IDREG_FIELD_START(REG, FIELD, SHIFT, LENGTH, SAFE_RULE, DEFAULT_VAL)
+IDREG_FIELD_ARCH_VAL(VALUE, NAME)
+...
+IDREG_FIELD_END(REG, FIELD)
+...
+IDREG_END(REG)
 
 Co-authored-by: Khushit Shah <khushit.shah@nutanix.com>
 Signed-off-by: Shaju Abraham <shaju.abraham@nutanix.com>
 ---
- hw/arm/virt.c                   |   8 ++
- target/arm/arm-cpu-models.c     | 214 ++++++++++++++++++++++++++++++++
- target/arm/arm-cpu-models.h     |  43 +++++++
- target/arm/arm-v8_4-a-v1.inc.h  |  22 ++++
- target/arm/arm-v9_0-a-v1.inc.h  |  28 +++++
- target/arm/grace-v1.inc.h       |  17 +++
- target/arm/graviton3-v1.inc.h   |  16 +++
- target/arm/kvm-base-v1.inc.h    |  13 ++
- target/arm/meson.build          |   5 +-
- target/arm/neoverse-v1-v1.inc.h |  64 ++++++++++
- target/arm/neoverse-v2-v1.inc.h |  64 ++++++++++
- 11 files changed, 493 insertions(+), 1 deletion(-)
- create mode 100644 target/arm/arm-cpu-models.c
- create mode 100644 target/arm/arm-cpu-models.h
- create mode 100644 target/arm/arm-v8_4-a-v1.inc.h
- create mode 100644 target/arm/arm-v9_0-a-v1.inc.h
- create mode 100644 target/arm/grace-v1.inc.h
- create mode 100644 target/arm/graviton3-v1.inc.h
- create mode 100644 target/arm/kvm-base-v1.inc.h
- create mode 100644 target/arm/neoverse-v1-v1.inc.h
- create mode 100644 target/arm/neoverse-v2-v1.inc.h
+ target/arm/cpu-idregs.h.inc | 1724 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 1724 insertions(+)
+ create mode 100644 target/arm/cpu-idregs.h.inc
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 10b1954382..bbb5f0a241 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -4069,6 +4069,14 @@ static GPtrArray *virt_get_valid_cpu_types(const MachineState *ms)
-             g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("host")));
-         }
-     }
-+    if (kvm_enabled() && target_aarch64()) {
-+        g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("arm-v8_4-a-v1")));
-+        g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("arm-v9_0-a-v1")));
-+        g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("neoverse-v1-v1")));
-+        g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("neoverse-v2-v1")));
-+        g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("grace-v1")));
-+        g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("graviton3-v1")));
-+    }
-     g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("max")));
- 
-     return vct;
-diff --git a/target/arm/arm-cpu-models.c b/target/arm/arm-cpu-models.c
+diff --git a/target/arm/cpu-idregs.h.inc b/target/arm/cpu-idregs.h.inc
 new file mode 100644
-index 0000000000..fff7522a64
+index 0000000000..5a627631c9
 --- /dev/null
-+++ b/target/arm/arm-cpu-models.c
-@@ -0,0 +1,214 @@
-+/*
-+ * ARM named CPU model definitions.
-+ *
-+ * Each model is defined in its own .inc.h file using the ARM_PROP()
-+ * macro, listing only the properties that DIFFER from the parent
-+ * model.  At realisation the parent chain is walked root-first and
-+ * every level's props are applied via QOM, so the leaf's values
-+ * naturally override its ancestors.
-+ *
-+ * Hierarchy (single-parent inheritance):
-+ *
-+ *   kvm-base-v1                    KVM-imposed quirks (chain root)
-+ *     arm-v8_4-a-v1                ARMv8.4-A architectural mandate
-+ *       arm-v9_0-a-v1              ARMv9.0-A architectural deltas
-+ *         neoverse-v2-v1           Neoverse V2 (TRM 102375)
-+ *           grace-v1               NVIDIA Grace
-+ *       neoverse-v1-v1             Neoverse V1 (TRM 102649)
-+ *         graviton3-v1             AWS Graviton3
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qemu/error-report.h"
-+#include "system/kvm.h"
-+#include "cpu.h"
-+#include "internals.h"
-+#include "kvm_arm.h"
-+#include "arm-cpu-models.h"
-+#include "arm-cpu-props.h"
-+#include "cpu-idregs.h"
-+
-+static const ArmModelPropValue kvm_base_v1_props[] = {
-+#include "kvm-base-v1.inc.h"
-+};
-+
-+static const ArmModelPropValue armv8_4_a_v1_props[] = {
-+#include "arm-v8_4-a-v1.inc.h"
-+};
-+
-+static const ArmModelPropValue armv9_0_a_v1_props[] = {
-+#include "arm-v9_0-a-v1.inc.h"
-+};
-+
-+static const ArmModelPropValue neoverse_v1_v1_props[] = {
-+#include "neoverse-v1-v1.inc.h"
-+};
-+
-+static const ArmModelPropValue neoverse_v2_v1_props[] = {
-+#include "neoverse-v2-v1.inc.h"
-+};
-+
-+static const ArmModelPropValue grace_v1_props[] = {
-+#include "grace-v1.inc.h"
-+};
-+
-+static const ArmModelPropValue graviton3_v1_props[] = {
-+#include "graviton3-v1.inc.h"
-+};
-+
-+static const ArmNamedCpuModel arm_cpu_models[] = {
-+    {
-+        .name   = "kvm-base-v1",
-+        .parent = NULL,
-+        .props  = kvm_base_v1_props,
-+    },
-+    {
-+        .name   = "arm-v8_4-a-v1",
-+        .parent = "kvm-base-v1",
-+        .props  = armv8_4_a_v1_props,
-+    },
-+    {
-+        .name   = "neoverse-v1-v1",
-+        .parent = "arm-v8_4-a-v1",
-+        .props  = neoverse_v1_v1_props,
-+    },
-+    {
-+        .name   = "graviton3-v1",
-+        .parent = "neoverse-v1-v1",
-+        .props  = graviton3_v1_props,
-+    },
-+    {
-+        .name   = "arm-v9_0-a-v1",
-+        .parent = "arm-v8_4-a-v1",
-+        .props  = armv9_0_a_v1_props,
-+    },
-+    {
-+        .name   = "neoverse-v2-v1",
-+        .parent = "arm-v9_0-a-v1",
-+        .props  = neoverse_v2_v1_props,
-+    },
-+    {
-+        .name   = "grace-v1",
-+        .parent = "neoverse-v2-v1",
-+        .props  = grace_v1_props,
-+    },
-+};
-+
-+static ARMCPUInfo arm_named_cpu_infos[ARRAY_SIZE(arm_cpu_models)];
-+static const ArmNamedCpuModel *arm_find_model(const char *name)
-+{
-+    size_t i;
-+    for (i = 0; i < ARRAY_SIZE(arm_cpu_models); i++) {
-+        if (g_str_equal(arm_cpu_models[i].name, name)) {
-+            return &arm_cpu_models[i];
-+        }
-+    }
-+    return NULL;
-+}
-+
-+static void arm_apply_model_props(Object *obj, const ArmModelPropValue *props,
-+                                  Error **errp)
-+{
-+    const ArmModelPropValue *pv;
-+    ERRP_GUARD();
-+
-+    for (pv = props; pv->name; pv++) {
-+        switch (pv->type) {
-+        case ARM_MODEL_PROP_STR:
-+            object_property_set_str(obj, pv->name, pv->str, errp);
-+            break;
-+        case ARM_MODEL_PROP_BOOL:
-+            object_property_set_bool(obj, pv->name, pv->b, errp);
-+            break;
-+        case ARM_MODEL_PROP_NUM:
-+            object_property_set_uint(obj, pv->name, pv->num, errp);
-+            break;
-+        default:
-+            g_assert_not_reached();
-+        }
-+        if (*errp) {
-+            error_prepend(errp, "property '%s': ", pv->name);
-+            return;
-+        }
-+    }
-+}
-+
-+static void arm_realize_model_chain(Object *obj, const ArmNamedCpuModel *model,
-+                                    Error **errp)
-+{
-+    const ArmNamedCpuModel *cur, *parent;
-+    const ArmNamedCpuModel *chain[ARRAY_SIZE(arm_cpu_models)];
-+    size_t depth = 0;
-+    for (cur = model; cur; ) {
-+        if (depth >= ARRAY_SIZE(chain)) {
-+            error_setg(errp, "model '%s': parent chain too deep "
-+                       "(possible cycle)", model->name);
-+            return;
-+        }
-+        chain[depth++] = cur;
-+
-+        if (!cur->parent) {
-+            break;
-+        }
-+        parent = arm_find_model(cur->parent);
-+        if (!parent) {
-+            error_setg(errp, "model '%s': unknown parent '%s'",
-+                       cur->name, cur->parent);
-+            return;
-+        }
-+        cur = parent;
-+    }
-+
-+    while (depth--) {
-+        arm_apply_model_props(obj, chain[depth]->props, errp);
-+        if (*errp) {
-+            return;
-+        }
-+    }
-+}
-+
-+static void arm_named_cpu_initfn(Object *obj)
-+{
-+    ARMCPU *cpu = ARM_CPU(obj);
-+    ARMCPUClass *acc = ARM_CPU_GET_CLASS(obj);
-+    const ArmNamedCpuModel *model = arm_find_model(acc->info->name);
-+    if (!model) {
-+        error_report("'%s' CPU model entry not found)",
-+                     acc->info->name);
-+        return;
-+    }
-+
-+    if (!kvm_enabled()) {
-+        error_report("'%s' CPU model requires KVM (-accel kvm)",
-+                     acc->info->name);
-+        return;
-+    }
-+
-+    kvm_arm_set_cpu_features_from_host(cpu);
-+    if (!arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
-+        return;
-+    }
-+
-+    arm_idregs_reset_to_defaults(cpu);
-+
-+    aarch64_add_sve_properties(obj);
-+    aarch64_add_pauth_properties(obj);
-+    arm_add_cpu_props(obj);
-+
-+    arm_realize_model_chain(obj, model, &error_abort);
-+}
-+
-+void arm_register_named_cpu_models(void)
-+{
-+    size_t i;
-+    for (i = 0; i < ARRAY_SIZE(arm_cpu_models); i++) {
-+        arm_named_cpu_infos[i].name = arm_cpu_models[i].name;
-+        arm_named_cpu_infos[i].initfn = arm_named_cpu_initfn;
-+        arm_cpu_register(&arm_named_cpu_infos[i]);
-+    }
-+}
-+
-+type_init(arm_register_named_cpu_models)
-diff --git a/target/arm/arm-cpu-models.h b/target/arm/arm-cpu-models.h
-new file mode 100644
-index 0000000000..830a9bdc4a
---- /dev/null
-+++ b/target/arm/arm-cpu-models.h
-@@ -0,0 +1,43 @@
++++ b/target/arm/cpu-idregs.h.inc
+@@ -0,0 +1,1724 @@
 +/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * ARM named CPU model definitions - public API.
-+ */
-+#ifndef ARM_CPU_MODELS_H
-+#define ARM_CPU_MODELS_H
 +
-+#include "qapi/error.h"
-+#include "qom/object.h"
++/* ID_AA64ISAR0_EL1 */
++IDREG_START(ID_AA64ISAR0_EL1)
++IDREG_FIELD_START(ID_AA64ISAR0, RES0_0,   0,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_AA64ISAR0, RES0_0)
 +
-+typedef enum ArmModelPropType {
-+    ARM_MODEL_PROP_STR,
-+    ARM_MODEL_PROP_BOOL,
-+    ARM_MODEL_PROP_NUM,
-+} ArmModelPropType;
++IDREG_FIELD_START(ID_AA64ISAR0, AES,      4,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "aes")
++IDREG_FIELD_ARCH_VAL(0b0010, "pmull")
++IDREG_FIELD_END(ID_AA64ISAR0, AES)
 +
-+typedef struct ArmModelPropValue {
-+    const char     *name;
-+    ArmModelPropType type;
-+    bool            b;
-+    uint64_t        num;
-+    const char     *str;
-+} ArmModelPropValue;
++IDREG_FIELD_START(ID_AA64ISAR0, SHA1,     8,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR0, SHA1)
 +
-+typedef struct ArmNamedCpuModel {
-+    const char              *name;
-+    const char              *parent;
-+    const ArmModelPropValue *props;
-+} ArmNamedCpuModel;
++IDREG_FIELD_START(ID_AA64ISAR0, SHA2,    12,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "sha256")
++IDREG_FIELD_ARCH_VAL(0b0010, "sha512")
++IDREG_FIELD_END(ID_AA64ISAR0, SHA2)
 +
-+#define ARM_PROP_FIELD_STR  str
-+#define ARM_PROP_FIELD_BOOL b
-+#define ARM_PROP_FIELD_NUM  num
++IDREG_FIELD_START(ID_AA64ISAR0, CRC32,   16,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR0, CRC32)
 +
-+#define ARM_PROP(_name, _type, _value) \
-+    { .name = (_name), .type = ARM_MODEL_PROP_##_type, \
-+      .ARM_PROP_FIELD_##_type = (_value) }
++IDREG_FIELD_START(ID_AA64ISAR0, ATOMIC,  20,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0010, "on")
++IDREG_FIELD_ARCH_VAL(0b0011, "LSE128")
++IDREG_FIELD_END(ID_AA64ISAR0, ATOMIC)
 +
-+#define ARM_PROP_END  { .name = NULL }
++IDREG_FIELD_START(ID_AA64ISAR0, RES0_24, 24,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_AA64ISAR0, RES0_24)
 +
-+void arm_register_named_cpu_models(void);
++IDREG_FIELD_START(ID_AA64ISAR0, RDM,     28,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR0, RDM)
 +
-+#endif /* ARM_CPU_MODELS_H */
-diff --git a/target/arm/arm-v8_4-a-v1.inc.h b/target/arm/arm-v8_4-a-v1.inc.h
-new file mode 100644
-index 0000000000..1bad59ba2d
---- /dev/null
-+++ b/target/arm/arm-v8_4-a-v1.inc.h
-@@ -0,0 +1,22 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+ARM_PROP("feat_CRC32", STR,  "on"),
-+ARM_PROP("feat_ATOMIC", STR,  "on"),
-+ARM_PROP("feat_HPDS", STR,  "on"),
-+ARM_PROP("feat_LO", STR,  "on"),
++IDREG_FIELD_START(ID_AA64ISAR0, SHA3,    32,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR0, SHA3)
 +
-+ARM_PROP("feat_DPB", STR,  "on"),
-+ARM_PROP("feat_RAS", STR,  "1.0"),
-+ARM_PROP("feat_PAN", STR,  "pan2"),
-+ARM_PROP("feat_UAO", STR,  "on"),
-+ARM_PROP("feat_CNP", STR,  "on"),
-+ARM_PROP("feat_IESB", STR,  "on"),
++IDREG_FIELD_START(ID_AA64ISAR0, SM3,     36,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR0, SM3)
 +
-+ARM_PROP("feat_DIT", STR,  "on"),
-+ARM_PROP("feat_DBG", STR,  "v8p4"),
-+ARM_PROP("feat_PMU", STR,  "v3p4"),
-+ARM_PROP("feat_TS", STR,  "flagm"),
-+ARM_PROP("feat_LRCPC", STR,  "lrcpc2"),
-+ARM_PROP("feat_AT", STR,  "on"),
-+ARM_PROP("hw_prop_IDS", STR,  "0x18"),
++IDREG_FIELD_START(ID_AA64ISAR0, SM4,     40,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR0, SM4)
 +
-+ARM_PROP_END,
-diff --git a/target/arm/arm-v9_0-a-v1.inc.h b/target/arm/arm-v9_0-a-v1.inc.h
-new file mode 100644
-index 0000000000..5ebe728133
---- /dev/null
-+++ b/target/arm/arm-v9_0-a-v1.inc.h
-@@ -0,0 +1,28 @@
++IDREG_FIELD_START(ID_AA64ISAR0, DP,      44,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR0, DP)
 +
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+ARM_PROP("feat_BT", STR, "on"),
-+ARM_PROP("feat_CSV2", STR, "1.0"),
-+ARM_PROP("feat_CSV3", STR, "on"),
-+ARM_PROP("feat_DPB", STR, "dpb2"),
-+ARM_PROP("feat_E0PD", STR, "on"),
-+ARM_PROP("feat_SB", STR, "on"),
-+ARM_PROP("feat_SPECRES", STR, "on"),
-+ARM_PROP("feat_SSBS", STR, "ssbs2"),
++IDREG_FIELD_START(ID_AA64ISAR0, FHM,     48,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR0, FHM)
 +
-+ARM_PROP("feat_DoubleLock", STR, "off"),
-+ARM_PROP("feat_FP", STR, "on"),
-+ARM_PROP("feat_AdvSIMD", STR, "on"),
-+ARM_PROP("feat_TS", STR, "flagm2"),
-+ARM_PROP("feat_FRINTTS", STR, "on"),
-+ARM_PROP("feat_RDM", STR, "on"),
-+ARM_PROP("feat_DP", STR, "on"),
-+ARM_PROP("feat_FHM", STR, "on"),
-+ARM_PROP("feat_FCMA", STR, "on"),
-+ARM_PROP("feat_JSCVT", STR, "on"),
++IDREG_FIELD_START(ID_AA64ISAR0, TS,      52,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "flagm")
++IDREG_FIELD_ARCH_VAL(0b0010, "flagm2")
++IDREG_FIELD_END(ID_AA64ISAR0, TS)
 +
-+ARM_PROP("feat_SVE", STR, "on"),
-+ARM_PROP("feat_SEL2", STR, "on"),
-+ARM_PROP("feat_VH", STR, "on"),
-+ARM_PROP("feat_XNX", STR, "on"),
++IDREG_FIELD_START(ID_AA64ISAR0, TLB,     56,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "os")
++IDREG_FIELD_ARCH_VAL(0b0010, "range")
++IDREG_FIELD_END(ID_AA64ISAR0, TLB)
 +
-+ARM_PROP_END,
-diff --git a/target/arm/grace-v1.inc.h b/target/arm/grace-v1.inc.h
-new file mode 100644
-index 0000000000..048ebb993d
---- /dev/null
-+++ b/target/arm/grace-v1.inc.h
-@@ -0,0 +1,17 @@
++IDREG_FIELD_START(ID_AA64ISAR0, RNDR,    60,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR0, RNDR)
 +
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+ARM_PROP("cpu_revision", NUM, 0x0),
++IDREG_END(ID_AA64ISAR0_EL1)
 +
-+ARM_PROP("feat_AES", STR, "pmull"),
-+ARM_PROP("feat_SHA1", STR, "on"),
-+ARM_PROP("feat_SHA2", STR, "sha512"),
-+ARM_PROP("feat_SHA3", STR, "on"),
-+ARM_PROP("feat_SM3", STR, "on"),
-+ARM_PROP("feat_SM4", STR, "on"),
++/* ID_AA64ISAR1_EL1 */
++IDREG_START(ID_AA64ISAR1_EL1)
++IDREG_FIELD_START(ID_AA64ISAR1, DPB,      0,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "dpb2")
++IDREG_FIELD_END(ID_AA64ISAR1, DPB)
 +
-+ARM_PROP("hw_prop_IDC", BOOL, true),
-+ARM_PROP("hw_prop_DIC", BOOL, true),
++IDREG_FIELD_START(ID_AA64ISAR1, APA,      4,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "pauth")
++IDREG_FIELD_ARCH_VAL(0b0010, "epac")
++IDREG_FIELD_ARCH_VAL(0b0011, "pauth2")
++IDREG_FIELD_ARCH_VAL(0b0100, "fpac")
++IDREG_FIELD_ARCH_VAL(0b0101, "fpaccombine")
++IDREG_FIELD_ARCH_VAL(0b0110, "pauth_lr")
++IDREG_FIELD_END(ID_AA64ISAR1, APA)
 +
-+ARM_PROP("cpu_revidr", NUM, 1),
++IDREG_FIELD_START(ID_AA64ISAR1, API,      8,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "pauth")
++IDREG_FIELD_ARCH_VAL(0b0010, "epac")
++IDREG_FIELD_ARCH_VAL(0b0011, "pauth2")
++IDREG_FIELD_ARCH_VAL(0b0100, "fpac")
++IDREG_FIELD_ARCH_VAL(0b0101, "fpaccombine")
++IDREG_FIELD_ARCH_VAL(0b0110, "pauth_lr")
++IDREG_FIELD_END(ID_AA64ISAR1, API)
 +
-+ARM_PROP_END,
-diff --git a/target/arm/graviton3-v1.inc.h b/target/arm/graviton3-v1.inc.h
-new file mode 100644
-index 0000000000..9538c3e539
---- /dev/null
-+++ b/target/arm/graviton3-v1.inc.h
-@@ -0,0 +1,16 @@
++IDREG_FIELD_START(ID_AA64ISAR1, JSCVT,   12,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR1, JSCVT)
 +
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+ARM_PROP("feat_AES", STR, "pmull"),
-+ARM_PROP("feat_SHA1", STR, "on"),
-+ARM_PROP("feat_SHA2", STR, "sha512"),
-+ARM_PROP("feat_SHA3", STR, "on"),
-+ARM_PROP("feat_SM3", STR, "on"),
-+ARM_PROP("feat_SM4", STR, "on"),
-+ARM_PROP("feat_RNDR", STR, "on"),
++IDREG_FIELD_START(ID_AA64ISAR1, FCMA,    16,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR1, FCMA)
 +
-+ARM_PROP("hw_prop_IDC", BOOL, true),
-+ARM_PROP("hw_prop_DIC", BOOL, true),
++IDREG_FIELD_START(ID_AA64ISAR1, LRCPC,   20,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "lrcpc2")
++IDREG_FIELD_ARCH_VAL(0b0011, "lrcpc3")
++IDREG_FIELD_END(ID_AA64ISAR1, LRCPC)
 +
-+ARM_PROP("cpu_revidr", NUM, 1),
++IDREG_FIELD_START(ID_AA64ISAR1, GPA,     24,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR1, GPA)
 +
-+ARM_PROP_END,
-diff --git a/target/arm/kvm-base-v1.inc.h b/target/arm/kvm-base-v1.inc.h
-new file mode 100644
-index 0000000000..e0bae90629
---- /dev/null
-+++ b/target/arm/kvm-base-v1.inc.h
-@@ -0,0 +1,13 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+ARM_PROP("el0_mode", STR, "aarch64"),
-+ARM_PROP("el1_mode", STR, "aarch64"),
-+ARM_PROP("el2_mode", STR, "off"),
-+ARM_PROP("el3_mode", STR, "off"),
-+ARM_PROP("feat_GIC", STR, "on"),
-+ARM_PROP("feat_AMU", STR, "off"),
-+ARM_PROP("feat_MPAM", STR, "0.0"),
-+ARM_PROP("feat_NV", STR, "0.0"),
-+ARM_PROP("feat_MTE_FRAC", STR, "async"),
-+ARM_PROP("hw_prop_CCIDX", STR, "32"),
++IDREG_FIELD_START(ID_AA64ISAR1, GPI,     28,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR1, GPI)
 +
-+ARM_PROP_END,
-diff --git a/target/arm/meson.build b/target/arm/meson.build
-index 01b1e91a1c..79a22eec3f 100644
---- a/target/arm/meson.build
-+++ b/target/arm/meson.build
-@@ -22,7 +22,10 @@ arm_common_system_ss.add(files(
-   'arm-qmp-cmds.c',
-   'cpu-idregs.c',
- ))
--arm_system_ss.add(when: 'CONFIG_KVM', if_true: files('hyp_gdbstub.c', 'kvm.c'))
-+arm_system_ss.add(when: 'CONFIG_KVM',
-+                  if_true: files('arm-cpu-models.c',
-+                                 'hyp_gdbstub.c',
-+                                 'kvm.c'))
- arm_system_ss.add(when: 'CONFIG_HVF', if_true: files('hyp_gdbstub.c'))
- 
- arm_user_ss.add(files('cpu.c'))
-diff --git a/target/arm/neoverse-v1-v1.inc.h b/target/arm/neoverse-v1-v1.inc.h
-new file mode 100644
-index 0000000000..5ded208a5e
---- /dev/null
-+++ b/target/arm/neoverse-v1-v1.inc.h
-@@ -0,0 +1,64 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+ARM_PROP("cpu_implementer", NUM, 0x41),
-+ARM_PROP("cpu_variant", NUM, 0x1),
-+ARM_PROP("cpu_architecture", NUM, 0xF),
-+ARM_PROP("cpu_partnum", NUM, 0xD40),
-+ARM_PROP("cpu_revision", NUM, 0x1),
++IDREG_FIELD_START(ID_AA64ISAR1, FRINTTS, 32,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR1, FRINTTS)
 +
-+ARM_PROP("hw_prop_BRPS", NUM, 0x5),
-+ARM_PROP("hw_prop_WRPs", NUM, 0x3),
-+ARM_PROP("hw_prop_CTX_CMPs", NUM, 0x1),
-+ARM_PROP("feat_DoubleLock", STR, "off"),
++IDREG_FIELD_START(ID_AA64ISAR1, SB,      36,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR1, SB)
 +
-+ARM_PROP("feat_RDM", STR, "on"),
-+ARM_PROP("feat_DP", STR, "on"),
-+ARM_PROP("feat_FHM", STR, "on"),
++IDREG_FIELD_START(ID_AA64ISAR1, SPECRES, 40,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "cosp_rctx")
++IDREG_FIELD_END(ID_AA64ISAR1, SPECRES)
 +
-+ARM_PROP("feat_DPB", STR, "dpb2"),
-+ARM_PROP("feat_JSCVT", STR, "on"),
-+ARM_PROP("feat_FCMA", STR, "on"),
-+ARM_PROP("feat_BF16", STR, "on"),
-+ARM_PROP("feat_DGH", STR, "on"),
-+ARM_PROP("feat_I8MM", STR, "on"),
++IDREG_FIELD_START(ID_AA64ISAR1, BF16,    44,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "ebf16")
++IDREG_FIELD_END(ID_AA64ISAR1, BF16)
 +
-+ARM_PROP("feat_FP", STR, "fp16"),
-+ARM_PROP("feat_AdvSIMD", STR, "fp16"),
-+ARM_PROP("feat_RAS", STR, "1.1_base"),
-+ARM_PROP("feat_CSV2", STR, "1.0"),
-+ARM_PROP("feat_CSV3", STR, "on"),
++IDREG_FIELD_START(ID_AA64ISAR1, DGH,     48,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR1, DGH)
 +
-+ARM_PROP("feat_SSBS", STR, "ssbs2"),
++IDREG_FIELD_START(ID_AA64ISAR1, I8MM,    52,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR1, I8MM)
 +
-+ARM_PROP("hw_prop_PARANGE", STR, "48"),
-+ARM_PROP("hw_prop_ASIDBITS", STR, "16"),
-+ARM_PROP("feat_BIGEND", STR, "on"),
-+ARM_PROP("feat_SNSMEM", STR, "on"),
-+ARM_PROP("hw_prop_TGRAN4", STR, "on"),
-+ARM_PROP("hw_prop_TGRAN16", STR, "on"),
-+ARM_PROP("hw_prop_TGRAN64", STR, "on"),
-+ARM_PROP("hw_prop_TGRAN4_2", STR, "tgran4"),
-+ARM_PROP("hw_prop_TGRAN16_2", STR, "tgran16"),
-+ARM_PROP("hw_prop_TGRAN64_2", STR, "tgran64"),
++IDREG_FIELD_START(ID_AA64ISAR1, XS,      56,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR1, XS)
 +
-+ARM_PROP("feat_HAFDBS", STR, "dbm"),
-+ARM_PROP("hw_prop_VMIDBITS", STR, "16"),
-+ARM_PROP("feat_VH", STR, "on"),
-+ARM_PROP("feat_HPDS", STR, "hpds2"),
-+ARM_PROP("feat_XNX", STR, "on"),
-+ARM_PROP("feat_SpecSEI", STR, "off"),
++IDREG_FIELD_START(ID_AA64ISAR1, LS64,    60,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "ls64")
++IDREG_FIELD_ARCH_VAL(0b0010, "ls64_v")
++IDREG_FIELD_ARCH_VAL(0b0011, "ls64_accdata")
++IDREG_FIELD_ARCH_VAL(0b0100, "ls64wb")
++IDREG_FIELD_END(ID_AA64ISAR1, LS64)
 +
-+ARM_PROP("hw_prop_FWB", STR, "on"),
-+ARM_PROP("feat_BBM", STR, "2"),
-+ARM_PROP("feat_EVT", STR, "ttlbxs"),
++IDREG_END(ID_AA64ISAR1_EL1)
 +
-+ARM_PROP("feat_E2H0", STR, "on"),
++/*  ID_AA64ISAR2_EL1  */
++IDREG_START(ID_AA64ISAR2_EL1)
++IDREG_FIELD_START(ID_AA64ISAR2, WFXT,          0,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0010, "on")
++IDREG_FIELD_END(ID_AA64ISAR2, WFXT)
 +
-+ARM_PROP("hw_prop_IMInline", NUM, 4),
-+ARM_PROP("hw_prop_L1IP", STR, "pipt"),
-+ARM_PROP("hw_prop_DMInline", NUM, 4),
-+ARM_PROP("hw_prop_ERG", NUM, 4),
-+ARM_PROP("hw_prop_CWG", NUM, 4),
++IDREG_FIELD_START(ID_AA64ISAR2, RPRES,         4,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR2, RPRES)
 +
-+ARM_PROP("hw_prop_BS", NUM, 0x4),
++IDREG_FIELD_START(ID_AA64ISAR2, GPA3,          8,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR2, GPA3)
 +
-+ARM_PROP_END,
-diff --git a/target/arm/neoverse-v2-v1.inc.h b/target/arm/neoverse-v2-v1.inc.h
-new file mode 100644
-index 0000000000..a32f80cd55
---- /dev/null
-+++ b/target/arm/neoverse-v2-v1.inc.h
-@@ -0,0 +1,64 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+ARM_PROP("cpu_implementer", NUM, 0x41),
-+ARM_PROP("cpu_variant", NUM, 0x0),
-+ARM_PROP("cpu_architecture", NUM, 0xF),
-+ARM_PROP("cpu_partnum", NUM, 0xD4F),
-+ARM_PROP("cpu_revision", NUM, 0x2),
++IDREG_FIELD_START(ID_AA64ISAR2, APA3,         12,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "pauth")
++IDREG_FIELD_ARCH_VAL(0b0010, "epac")
++IDREG_FIELD_ARCH_VAL(0b0011, "pauth2")
++IDREG_FIELD_ARCH_VAL(0b0100, "fpac")
++IDREG_FIELD_ARCH_VAL(0b0101, "fpaccombine")
++IDREG_FIELD_ARCH_VAL(0b0110, "pauth_lr")
++IDREG_FIELD_END(ID_AA64ISAR2, APA3)
 +
-+ARM_PROP("hw_prop_BRPS", NUM, 0x5),
-+ARM_PROP("hw_prop_WRPs", NUM, 0x3),
-+ARM_PROP("hw_prop_CTX_CMPs", NUM, 0x1),
-+ARM_PROP("feat_PMU", STR, "v3p5"),
++IDREG_FIELD_START(ID_AA64ISAR2, MOPS,         16,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR2, MOPS)
 +
-+ARM_PROP("feat_TLB", STR, "range"),
++IDREG_FIELD_START(ID_AA64ISAR2, BC,           20,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR2, BC)
 +
-+ARM_PROP("feat_BF16", STR, "on"),
-+ARM_PROP("feat_DGH", STR, "on"),
-+ARM_PROP("feat_I8MM", STR, "on"),
++IDREG_FIELD_START(ID_AA64ISAR2, PAC_FRAC,     24,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR2, PAC_FRAC)
 +
-+ARM_PROP("feat_FP", STR, "fp16"),
-+ARM_PROP("feat_AdvSIMD", STR, "fp16"),
-+ARM_PROP("feat_RAS", STR, "1.1_base"),
++IDREG_FIELD_START(ID_AA64ISAR2, CLRBHB,       28,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR2, CLRBHB)
 +
-+/*
-+ * V2 silicon may report CSV2=2 (FEAT_CSV2_2) per TRM page 392, but
-+ * KVM clamps the guest-visible limit to 1.
-+ */
-+ARM_PROP("feat_CSV2", STR, "1.0"),
++IDREG_FIELD_START(ID_AA64ISAR2, SYSREG_128,   32,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR2, SYSREG_128)
++
++IDREG_FIELD_START(ID_AA64ISAR2, SYSINSTR_128, 36,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR2, SYSINSTR_128)
++
++IDREG_FIELD_START(ID_AA64ISAR2, PRFMSLC,      40,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR2, PRFMSLC)
++
++IDREG_FIELD_START(ID_AA64ISAR2, PCDPHINT,     44,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR2, PCDPHINT)
++
++IDREG_FIELD_START(ID_AA64ISAR2, RPRFM,        48,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR2, RPRFM)
++
++IDREG_FIELD_START(ID_AA64ISAR2, CSSC,         52,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "cmpbr")
++IDREG_FIELD_END(ID_AA64ISAR2, CSSC)
++
++IDREG_FIELD_START(ID_AA64ISAR2, LUT,          56,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR2, LUT)
++
++IDREG_FIELD_START(ID_AA64ISAR2, ATS1A,        60,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR2, ATS1A)
++
++IDREG_END(ID_AA64ISAR2_EL1)
++
++/*  ID_AA64PFR0_EL1  */
++IDREG_START(ID_AA64PFR0_EL1)
++IDREG_FIELD_START(ID_AA64PFR0, EL0,     0,  4, LOWER,  0b0001)
++IDREG_FIELD_ARCH_VAL(0b0001, "aarch64")
++IDREG_FIELD_ARCH_VAL(0b0010, "aarch32")
++IDREG_FIELD_END(ID_AA64PFR0, EL0)
++
++IDREG_FIELD_START(ID_AA64PFR0, EL1,     4,  4, LOWER,  0b0001)
++IDREG_FIELD_ARCH_VAL(0b0001, "aarch64")
++IDREG_FIELD_ARCH_VAL(0b0010, "aarch32")
++IDREG_FIELD_END(ID_AA64PFR0, EL1)
++
++IDREG_FIELD_START(ID_AA64PFR0, EL2,     8,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "aarch64")
++IDREG_FIELD_ARCH_VAL(0b0010, "aarch32")
++IDREG_FIELD_END(ID_AA64PFR0, EL2)
++
++IDREG_FIELD_START(ID_AA64PFR0, EL3,    12,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "aarch64")
++IDREG_FIELD_ARCH_VAL(0b0010, "aarch32")
++IDREG_FIELD_END(ID_AA64PFR0, EL3)
++
++IDREG_FIELD_START(ID_AA64PFR0, FP,     16,  4, SIGNED_LOWER,  0b1111)
++IDREG_FIELD_ARCH_VAL(0b0000, "on")
++IDREG_FIELD_ARCH_VAL(0b0001, "fp16")
++IDREG_FIELD_ARCH_VAL(0b1111, "off")
++IDREG_FIELD_END(ID_AA64PFR0, FP)
++
++IDREG_FIELD_START(ID_AA64PFR0, ADVSIMD,20,  4, SIGNED_LOWER,  0b1111)
++IDREG_FIELD_ARCH_VAL(0b0000, "on")
++IDREG_FIELD_ARCH_VAL(0b0001, "fp16")
++IDREG_FIELD_ARCH_VAL(0b1111, "off")
++IDREG_FIELD_END(ID_AA64PFR0, ADVSIMD)
++
++IDREG_FIELD_START(ID_AA64PFR0, GIC,    24,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0011, "v4p1")
++IDREG_FIELD_END(ID_AA64PFR0, GIC)
++
++IDREG_FIELD_START(ID_AA64PFR0, RAS,    28,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "v1p1")
++IDREG_FIELD_ARCH_VAL(0b0011, "v2")
++IDREG_FIELD_END(ID_AA64PFR0, RAS)
++
++IDREG_FIELD_START(ID_AA64PFR0, SVE,    32,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64PFR0, SVE)
++
++IDREG_FIELD_START(ID_AA64PFR0, SEL2,   36,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64PFR0, SEL2)
++
++IDREG_FIELD_START(ID_AA64PFR0, MPAM,   40,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "0")
++IDREG_FIELD_ARCH_VAL(0b0001, "1")
++IDREG_FIELD_END(ID_AA64PFR0, MPAM)
++
++IDREG_FIELD_START(ID_AA64PFR0, AMU,    44,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "v1p1")
++IDREG_FIELD_END(ID_AA64PFR0, AMU)
++
++IDREG_FIELD_START(ID_AA64PFR0, DIT,    48,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64PFR0, DIT)
++
++IDREG_FIELD_START(ID_AA64PFR0, RME,    52,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64PFR0, RME)
++
++IDREG_FIELD_START(ID_AA64PFR0, CSV2,   56,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "csv2_2")
++IDREG_FIELD_ARCH_VAL(0b0011, "csv2_3")
++IDREG_FIELD_END(ID_AA64PFR0, CSV2)
++
++IDREG_FIELD_START(ID_AA64PFR0, CSV3,   60,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64PFR0, CSV3)
++
++IDREG_END(ID_AA64PFR0_EL1)
++
++/*  ID_AA64PFR1_EL1  */
++IDREG_START(ID_AA64PFR1_EL1)
++IDREG_FIELD_START(ID_AA64PFR1, BT,        0,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64PFR1, BT)
++
++IDREG_FIELD_START(ID_AA64PFR1, SSBS,      4,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "ssbs2")
++IDREG_FIELD_END(ID_AA64PFR1, SSBS)
++
++IDREG_FIELD_START(ID_AA64PFR1, MTE,       8,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "mte2")
++IDREG_FIELD_ARCH_VAL(0b0011, "mte3")
++IDREG_FIELD_END(ID_AA64PFR1, MTE)
++
++IDREG_FIELD_START(ID_AA64PFR1, RAS_FRAC, 12,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "rasv1p1")
++IDREG_FIELD_END(ID_AA64PFR1, RAS_FRAC)
++
++IDREG_FIELD_START(ID_AA64PFR1, MPAM_FRAC,16,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "minor_0")
++IDREG_FIELD_ARCH_VAL(0b0001, "minor_1")
++IDREG_FIELD_END(ID_AA64PFR1, MPAM_FRAC)
++
++IDREG_FIELD_START(ID_AA64PFR1, RES0_20,  20,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_AA64PFR1, RES0_20)
++
++IDREG_FIELD_START(ID_AA64PFR1, SME,      24,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "sme2")
++IDREG_FIELD_END(ID_AA64PFR1, SME)
++
++IDREG_FIELD_START(ID_AA64PFR1, RNDR_TRAP,28,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64PFR1, RNDR_TRAP)
++
++IDREG_FIELD_START(ID_AA64PFR1, CSV2_FRAC,32,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "csv2_1p1")
++IDREG_FIELD_ARCH_VAL(0b0010, "csv2_1p2")
++IDREG_FIELD_END(ID_AA64PFR1, CSV2_FRAC)
++
++IDREG_FIELD_START(ID_AA64PFR1, NMI,      36,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64PFR1, NMI)
++
++IDREG_FIELD_START(ID_AA64PFR1, MTE_FRAC, 40,  4, SIGNED_LOWER,  0b1111)
++IDREG_FIELD_ARCH_VAL(0b0000, "async")
++IDREG_FIELD_ARCH_VAL(0b1111, "off")
++IDREG_FIELD_END(ID_AA64PFR1, MTE_FRAC)
++
++IDREG_FIELD_START(ID_AA64PFR1, GCS,      44,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64PFR1, GCS)
++
++IDREG_FIELD_START(ID_AA64PFR1, THE,      48,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64PFR1, THE)
++
++IDREG_FIELD_START(ID_AA64PFR1, MTEX,     52,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "mte")
++IDREG_FIELD_ARCH_VAL(0b0001, "mte4")
++IDREG_FIELD_END(ID_AA64PFR1, MTEX)
++
++IDREG_FIELD_START(ID_AA64PFR1, DF2,      56,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64PFR1, DF2)
++
++IDREG_FIELD_START(ID_AA64PFR1, PFAR,     60,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64PFR1, PFAR)
++
++IDREG_END(ID_AA64PFR1_EL1)
++
++/*  ID_AA64MMFR0_EL1 */
++IDREG_START(ID_AA64MMFR0_EL1)
++IDREG_FIELD_START(ID_AA64MMFR0, PARANGE,    0,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "32")
++IDREG_FIELD_ARCH_VAL(0b0001, "36")
++IDREG_FIELD_ARCH_VAL(0b0010, "40")
++IDREG_FIELD_ARCH_VAL(0b0011, "42")
++IDREG_FIELD_ARCH_VAL(0b0100, "44")
++IDREG_FIELD_ARCH_VAL(0b0101, "48")
++IDREG_FIELD_ARCH_VAL(0b0110, "52")
++IDREG_FIELD_ARCH_VAL(0b0111, "56")
++IDREG_FIELD_END(ID_AA64MMFR0, PARANGE)
++
++IDREG_FIELD_START(ID_AA64MMFR0, ASIDBITS,   4,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "8")
++IDREG_FIELD_ARCH_VAL(0b0010, "16")
++IDREG_FIELD_END(ID_AA64MMFR0, ASIDBITS)
++
++IDREG_FIELD_START(ID_AA64MMFR0, BIGEND,     8,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR0, BIGEND)
++
++IDREG_FIELD_START(ID_AA64MMFR0, SNSMEM,    12,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR0, SNSMEM)
++
++IDREG_FIELD_START(ID_AA64MMFR0, BIGENDEL0, 16,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR0, BIGENDEL0)
++
++IDREG_FIELD_START(ID_AA64MMFR0, TGRAN16,   20,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "52_bit")
++IDREG_FIELD_END(ID_AA64MMFR0, TGRAN16)
++
++IDREG_FIELD_START(ID_AA64MMFR0, TGRAN64,   24,  4, SIGNED_LOWER,  0b1111)
++IDREG_FIELD_ARCH_VAL(0b0000, "on")
++IDREG_FIELD_ARCH_VAL(0b1111, "off")
++IDREG_FIELD_END(ID_AA64MMFR0, TGRAN64)
++
++IDREG_FIELD_START(ID_AA64MMFR0, TGRAN4,    28,  4, SIGNED_LOWER,  0b1111)
++IDREG_FIELD_ARCH_VAL(0b0000, "on")
++IDREG_FIELD_ARCH_VAL(0b0001, "52_bit")
++IDREG_FIELD_ARCH_VAL(0b1111, "off")
++IDREG_FIELD_END(ID_AA64MMFR0, TGRAN4)
++
++IDREG_FIELD_START(ID_AA64MMFR0, TGRAN16_2, 32,  4, EXACT,  0b0001)
++IDREG_FIELD_ARCH_VAL(0b0000, "tgran16")
++IDREG_FIELD_ARCH_VAL(0b0001, "off")
++IDREG_FIELD_ARCH_VAL(0b0010, "on")
++IDREG_FIELD_ARCH_VAL(0b0011, "52_bit")
++IDREG_FIELD_END(ID_AA64MMFR0, TGRAN16_2)
++
++IDREG_FIELD_START(ID_AA64MMFR0, TGRAN64_2, 36,  4, EXACT,  0b0001)
++IDREG_FIELD_ARCH_VAL(0b0000, "tgran64")
++IDREG_FIELD_ARCH_VAL(0b0001, "off")
++IDREG_FIELD_ARCH_VAL(0b0010, "on")
++IDREG_FIELD_END(ID_AA64MMFR0, TGRAN64_2)
++
++IDREG_FIELD_START(ID_AA64MMFR0, TGRAN4_2,  40,  4, EXACT,  0b0001)
++IDREG_FIELD_ARCH_VAL(0b0000, "tgran4")
++IDREG_FIELD_ARCH_VAL(0b0001, "off")
++IDREG_FIELD_ARCH_VAL(0b0010, "on")
++IDREG_FIELD_ARCH_VAL(0b0011, "52_bit")
++IDREG_FIELD_END(ID_AA64MMFR0, TGRAN4_2)
++
++IDREG_FIELD_START(ID_AA64MMFR0, EXS,       44,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR0, EXS)
++
++IDREG_FIELD_START(ID_AA64MMFR0, RES0_48,   48,  8, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_AA64MMFR0, RES0_48)
++
++IDREG_FIELD_START(ID_AA64MMFR0, FGT,       56,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "fgt2")
++IDREG_FIELD_END(ID_AA64MMFR0, FGT)
++
++IDREG_FIELD_START(ID_AA64MMFR0, ECV,       60,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "cntpoff")
++IDREG_FIELD_END(ID_AA64MMFR0, ECV)
++
++IDREG_END(ID_AA64MMFR0_EL1)
++
++/*  ID_AA64MMFR1_EL1  */
++IDREG_START(ID_AA64MMFR1_EL1)
++IDREG_FIELD_START(ID_AA64MMFR1, HAFDBS,    0,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "af")
++IDREG_FIELD_ARCH_VAL(0b0010, "dbm")
++IDREG_FIELD_ARCH_VAL(0b0011, "haft")
++IDREG_FIELD_ARCH_VAL(0b0100, "hdbss")
++IDREG_FIELD_END(ID_AA64MMFR1, HAFDBS)
++
++IDREG_FIELD_START(ID_AA64MMFR1, VMIDBITS,  4,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "8")
++IDREG_FIELD_ARCH_VAL(0b0010, "16")
++IDREG_FIELD_END(ID_AA64MMFR1, VMIDBITS)
++
++IDREG_FIELD_START(ID_AA64MMFR1, VH,        8,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR1, VH)
++
++IDREG_FIELD_START(ID_AA64MMFR1, HPDS,     12,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "hpds2")
++IDREG_FIELD_END(ID_AA64MMFR1, HPDS)
++
++IDREG_FIELD_START(ID_AA64MMFR1, LO,       16,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR1, LO)
++
++IDREG_FIELD_START(ID_AA64MMFR1, PAN,      20,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "pan2")
++IDREG_FIELD_ARCH_VAL(0b0011, "pan3")
++IDREG_FIELD_END(ID_AA64MMFR1, PAN)
++
++IDREG_FIELD_START(ID_AA64MMFR1, SPECSEI,  24,  4, HIGHER, 0b0001)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR1, SPECSEI)
++
++IDREG_FIELD_START(ID_AA64MMFR1, XNX,      28,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR1, XNX)
++
++IDREG_FIELD_START(ID_AA64MMFR1, TWED,     32,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR1, TWED)
++
++IDREG_FIELD_START(ID_AA64MMFR1, ETS,      36,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "ets2")
++IDREG_FIELD_ARCH_VAL(0b0011, "ets3")
++IDREG_FIELD_END(ID_AA64MMFR1, ETS)
++
++IDREG_FIELD_START(ID_AA64MMFR1, HCX,      40,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR1, HCX)
++
++IDREG_FIELD_START(ID_AA64MMFR1, AFP,      44,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR1, AFP)
++
++IDREG_FIELD_START(ID_AA64MMFR1, NTLBPA,   48,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR1, NTLBPA)
++
++IDREG_FIELD_START(ID_AA64MMFR1, TIDCP1,   52,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR1, TIDCP1)
++
++IDREG_FIELD_START(ID_AA64MMFR1, CMOW,     56,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR1, CMOW)
++
++IDREG_FIELD_START(ID_AA64MMFR1, ECBHB,    60,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR1, ECBHB)
++
++IDREG_END(ID_AA64MMFR1_EL1)
++
++/*  ID_AA64MMFR2_EL1  */
++IDREG_START(ID_AA64MMFR2_EL1)
++IDREG_FIELD_START(ID_AA64MMFR2, CNP,      0,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR2, CNP)
++
++IDREG_FIELD_START(ID_AA64MMFR2, UAO,      4,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR2, UAO)
++
++IDREG_FIELD_START(ID_AA64MMFR2, LSM,      8,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR2, LSM)
++
++IDREG_FIELD_START(ID_AA64MMFR2, IESB,    12,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR2, IESB)
++
++IDREG_FIELD_START(ID_AA64MMFR2, VARANGE, 16,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "48")
++IDREG_FIELD_ARCH_VAL(0b0001, "52")
++IDREG_FIELD_END(ID_AA64MMFR2, VARANGE)
++
++IDREG_FIELD_START(ID_AA64MMFR2, CCIDX,   20,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "32")
++IDREG_FIELD_ARCH_VAL(0b0001, "64")
++IDREG_FIELD_END(ID_AA64MMFR2, CCIDX)
++
++IDREG_FIELD_START(ID_AA64MMFR2, NV,      24,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "nv2")
++IDREG_FIELD_END(ID_AA64MMFR2, NV)
++
++IDREG_FIELD_START(ID_AA64MMFR2, ST,      28,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "39")
++IDREG_FIELD_ARCH_VAL(0b0001, "48_47")
++IDREG_FIELD_END(ID_AA64MMFR2, ST)
++
++IDREG_FIELD_START(ID_AA64MMFR2, AT,      32,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR2, AT)
++
++IDREG_FIELD_START(ID_AA64MMFR2, IDS,     36,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "0x0")
++IDREG_FIELD_ARCH_VAL(0b0001, "0x18")
++IDREG_FIELD_END(ID_AA64MMFR2, IDS)
++
++IDREG_FIELD_START(ID_AA64MMFR2, FWB,     40,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR2, FWB)
++
++IDREG_FIELD_START(ID_AA64MMFR2, RES0_44, 44,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_AA64MMFR2, RES0_44)
++
++IDREG_FIELD_START(ID_AA64MMFR2, TTL,     48,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR2, TTL)
++
++IDREG_FIELD_START(ID_AA64MMFR2, BBM,     52,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "0")
++IDREG_FIELD_ARCH_VAL(0b0001, "1")
++IDREG_FIELD_ARCH_VAL(0b0010, "2")
++IDREG_FIELD_END(ID_AA64MMFR2, BBM)
++
++IDREG_FIELD_START(ID_AA64MMFR2, EVT,     56,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "ttlbxs")
++IDREG_FIELD_END(ID_AA64MMFR2, EVT)
++
++IDREG_FIELD_START(ID_AA64MMFR2, E0PD,    60,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR2, E0PD)
++
++IDREG_END(ID_AA64MMFR2_EL1)
++
++/* ID_AA64MMFR3_EL1  */
++IDREG_START(ID_AA64MMFR3_EL1)
++IDREG_FIELD_START(ID_AA64MMFR3, TCRX,       0,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR3, TCRX)
++
++IDREG_FIELD_START(ID_AA64MMFR3, SCTLRX,     4,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR3, SCTLRX)
++
++IDREG_FIELD_START(ID_AA64MMFR3, S1PIE,      8,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR3, S1PIE)
++
++IDREG_FIELD_START(ID_AA64MMFR3, S2PIE,     12,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR3, S2PIE)
++
++IDREG_FIELD_START(ID_AA64MMFR3, S1POE,     16,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR3, S1POE)
++
++IDREG_FIELD_START(ID_AA64MMFR3, S2POE,     20,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR3, S2POE)
++
++IDREG_FIELD_START(ID_AA64MMFR3, AIE,       24,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR3, AIE)
++
++IDREG_FIELD_START(ID_AA64MMFR3, MEC,       28,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR3, MEC)
++
++IDREG_FIELD_START(ID_AA64MMFR3, D128,      32,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR3, D128)
++
++IDREG_FIELD_START(ID_AA64MMFR3, D128_2,    36,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR3, D128_2)
++
++IDREG_FIELD_START(ID_AA64MMFR3, SNERR,     40,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "sync")
++IDREG_FIELD_ARCH_VAL(0b0010, "ANERR")
++IDREG_FIELD_ARCH_VAL(0b0011, "ANERR_IND")
++IDREG_FIELD_END(ID_AA64MMFR3, SNERR)
++
++IDREG_FIELD_START(ID_AA64MMFR3, ANERR,     44,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "async")
++IDREG_FIELD_ARCH_VAL(0b0010, "ANERR")
++IDREG_FIELD_ARCH_VAL(0b0011, "ANERR_IND")
++IDREG_FIELD_END(ID_AA64MMFR3, ANERR)
++
++IDREG_FIELD_START(ID_AA64MMFR3, RES0_48,   48,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_AA64MMFR3, RES0_48)
++
++IDREG_FIELD_START(ID_AA64MMFR3, SDERR,     52,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "dev_sync")
++IDREG_FIELD_ARCH_VAL(0b0010, "ADERR")
++IDREG_FIELD_ARCH_VAL(0b0011, "ADERR_IND")
++IDREG_FIELD_END(ID_AA64MMFR3, SDERR)
++
++IDREG_FIELD_START(ID_AA64MMFR3, ADERR,     56,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "dev_async")
++IDREG_FIELD_ARCH_VAL(0b0010, "ADERR")
++IDREG_FIELD_ARCH_VAL(0b0011, "ADERR_IND")
++IDREG_FIELD_END(ID_AA64MMFR3, ADERR)
++
++IDREG_FIELD_START(ID_AA64MMFR3, SPEC_FPACC,60,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR3, SPEC_FPACC)
++
++IDREG_END(ID_AA64MMFR3_EL1)
++
++/* ID_AA64DFR0_EL1 */
++IDREG_START(ID_AA64DFR0_EL1)
++IDREG_FIELD_START(ID_AA64DFR0, DEBUGVER,    0,  4, LOWER,  0x6)
++IDREG_FIELD_ARCH_VAL(0b0110, "on")
++IDREG_FIELD_ARCH_VAL(0b0111, "vhe")
++IDREG_FIELD_ARCH_VAL(0b1000, "v8p2")
++IDREG_FIELD_ARCH_VAL(0b1001, "v8p4")
++IDREG_FIELD_ARCH_VAL(0b1010, "v8p8")
++IDREG_FIELD_ARCH_VAL(0b1011, "v8p9")
++IDREG_FIELD_END(ID_AA64DFR0, DEBUGVER)
++
++IDREG_FIELD_START(ID_AA64DFR0, TRACEVER,    4,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64DFR0, TRACEVER)
++
++IDREG_FIELD_START(ID_AA64DFR0, PMUVER,      8,  4, SIGNED_LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0100, "v3p1")
++IDREG_FIELD_ARCH_VAL(0b0101, "v3p4")
++IDREG_FIELD_ARCH_VAL(0b0110, "v3p5")
++IDREG_FIELD_ARCH_VAL(0b0111, "v3p7")
++IDREG_FIELD_ARCH_VAL(0b1000, "v3p8")
++IDREG_FIELD_ARCH_VAL(0b1001, "v3p9")
++IDREG_FIELD_ARCH_VAL(0b1111, "imp_def")
++IDREG_FIELD_END(ID_AA64DFR0, PMUVER)
++
++IDREG_FIELD_START(ID_AA64DFR0, BRPS,       12,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL_ANY
++IDREG_FIELD_END(ID_AA64DFR0, BRPS)
++
++IDREG_FIELD_START(ID_AA64DFR0, PMSS,       16,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64DFR0, PMSS)
++
++IDREG_FIELD_START(ID_AA64DFR0, WRPS,       20,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL_ANY
++IDREG_FIELD_END(ID_AA64DFR0, WRPS)
++
++IDREG_FIELD_START(ID_AA64DFR0, SEBEP,      24,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64DFR0, SEBEP)
++
++IDREG_FIELD_START(ID_AA64DFR0, CTX_CMPS,   28,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL_ANY
++IDREG_FIELD_END(ID_AA64DFR0, CTX_CMPS)
++
++IDREG_FIELD_START(ID_AA64DFR0, PMSVER,     32,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "v1p1")
++IDREG_FIELD_ARCH_VAL(0b0011, "v1p2")
++IDREG_FIELD_ARCH_VAL(0b0100, "v1p3")
++IDREG_FIELD_ARCH_VAL(0b0101, "v1p4")
++IDREG_FIELD_ARCH_VAL(0b0110, "v1p5")
++IDREG_FIELD_END(ID_AA64DFR0, PMSVER)
++
++IDREG_FIELD_START(ID_AA64DFR0, DOUBLELOCK, 36,  4, SIGNED_LOWER,  0b1111)
++IDREG_FIELD_ARCH_VAL(0b0000, "on")
++IDREG_FIELD_ARCH_VAL(0b1111, "off")
++IDREG_FIELD_END(ID_AA64DFR0, DOUBLELOCK)
++
++IDREG_FIELD_START(ID_AA64DFR0, TRACEFILT,  40,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64DFR0, TRACEFILT)
++
++IDREG_FIELD_START(ID_AA64DFR0, TRACEBUFFER,44,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "trbe_v1p1")
++IDREG_FIELD_END(ID_AA64DFR0, TRACEBUFFER)
++
++IDREG_FIELD_START(ID_AA64DFR0, MTPMU,      48,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "ni_impdef")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b1111, "off")
++IDREG_FIELD_END(ID_AA64DFR0, MTPMU)
++
++IDREG_FIELD_START(ID_AA64DFR0, BRBE,       52,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "brbe_v1p1")
++IDREG_FIELD_END(ID_AA64DFR0, BRBE)
++
++IDREG_FIELD_START(ID_AA64DFR0, EXTTRCBUFF, 56,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64DFR0, EXTTRCBUFF)
++
++IDREG_FIELD_START(ID_AA64DFR0, HPMN0,      60,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "unpredictable")
++IDREG_FIELD_ARCH_VAL(0b0001, "def")
++IDREG_FIELD_END(ID_AA64DFR0, HPMN0)
++
++IDREG_END(ID_AA64DFR0_EL1)
++
++/*  ID_AA64ZFR0_EL1  */
++IDREG_START(ID_AA64ZFR0_EL1)
++IDREG_FIELD_START(ID_AA64ZFR0, SVEVER,      0,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "on")
++IDREG_FIELD_ARCH_VAL(0b0001, "sve2")
++IDREG_FIELD_ARCH_VAL(0b0010, "sve2p1")
++IDREG_FIELD_ARCH_VAL(0b0011, "sve2p2")
++IDREG_FIELD_END(ID_AA64ZFR0, SVEVER)
++
++IDREG_FIELD_START(ID_AA64ZFR0, AES,         4,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "pmull128")
++IDREG_FIELD_ARCH_VAL(0b0011, "aes2")
++IDREG_FIELD_END(ID_AA64ZFR0, AES)
++
++IDREG_FIELD_START(ID_AA64ZFR0, RES0_8,      8,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_AA64ZFR0, RES0_8)
++
++IDREG_FIELD_START(ID_AA64ZFR0, ELTPERM,    12,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ZFR0, ELTPERM)
++
++IDREG_FIELD_START(ID_AA64ZFR0, BITPERM,    16,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ZFR0, BITPERM)
++
++IDREG_FIELD_START(ID_AA64ZFR0, BFLOAT16,   20,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "ebf16")
++IDREG_FIELD_END(ID_AA64ZFR0, BFLOAT16)
++
++IDREG_FIELD_START(ID_AA64ZFR0, B16B16,     24,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "bfscale")
++IDREG_FIELD_END(ID_AA64ZFR0, B16B16)
++
++IDREG_FIELD_START(ID_AA64ZFR0, RES0_28,    28,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_AA64ZFR0, RES0_28)
++
++IDREG_FIELD_START(ID_AA64ZFR0, SHA3,       32,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ZFR0, SHA3)
++
++IDREG_FIELD_START(ID_AA64ZFR0, RES0_36,    36,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_AA64ZFR0, RES0_36)
++
++IDREG_FIELD_START(ID_AA64ZFR0, SM4,        40,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ZFR0, SM4)
++
++IDREG_FIELD_START(ID_AA64ZFR0, I8MM,       44,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ZFR0, I8MM)
++
++IDREG_FIELD_START(ID_AA64ZFR0, F16MM,      48,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ZFR0, F16MM)
++
++IDREG_FIELD_START(ID_AA64ZFR0, F32MM,      52,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ZFR0, F32MM)
++
++IDREG_FIELD_START(ID_AA64ZFR0, F64MM,      56,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ZFR0, F64MM)
++
++IDREG_FIELD_START(ID_AA64ZFR0, RES0_60,    60,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_AA64ZFR0, RES0_60)
++
++IDREG_END(ID_AA64ZFR0_EL1)
++
++/*  ID_AA64SMFR0_EL1  */
++IDREG_START(ID_AA64SMFR0_EL1)
++IDREG_FIELD_START(ID_AA64SMFR0, SMOP4,      0,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64SMFR0, SMOP4)
++
++IDREG_FIELD_START(ID_AA64SMFR0, RES0_1,     1, 15, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_AA64SMFR0, RES0_1)
++
++IDREG_FIELD_START(ID_AA64SMFR0, STMOP,     16,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64SMFR0, STMOP)
++
++IDREG_FIELD_START(ID_AA64SMFR0, RES0_17,   17,  6, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_AA64SMFR0, RES0_17)
++
++IDREG_FIELD_START(ID_AA64SMFR0, SFEXPA,    23,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64SMFR0, SFEXPA)
++
++IDREG_FIELD_START(ID_AA64SMFR0, AES,       24,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64SMFR0, AES)
++
++IDREG_FIELD_START(ID_AA64SMFR0, SBITPERM,  25,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64SMFR0, SBITPERM)
++
++IDREG_FIELD_START(ID_AA64SMFR0, RES0_26,   26,  2, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_AA64SMFR0, RES0_26)
++
++IDREG_FIELD_START(ID_AA64SMFR0, SF8DP2,    28,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64SMFR0, SF8DP2)
++
++IDREG_FIELD_START(ID_AA64SMFR0, SF8DP4,    29,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64SMFR0, SF8DP4)
++
++IDREG_FIELD_START(ID_AA64SMFR0, SF8FMA,    30,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64SMFR0, SF8FMA)
++
++IDREG_FIELD_START(ID_AA64SMFR0, RES0_31,   31,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_AA64SMFR0, RES0_31)
++
++IDREG_FIELD_START(ID_AA64SMFR0, F32F32,    32,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64SMFR0, F32F32)
++
++IDREG_FIELD_START(ID_AA64SMFR0, BI32I32,   33,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64SMFR0, BI32I32)
++
++IDREG_FIELD_START(ID_AA64SMFR0, B16F32,    34,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64SMFR0, B16F32)
++
++IDREG_FIELD_START(ID_AA64SMFR0, F16F32,    35,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64SMFR0, F16F32)
++
++IDREG_FIELD_START(ID_AA64SMFR0, I8I32,     36,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b1111, "on")
++IDREG_FIELD_END(ID_AA64SMFR0, I8I32)
++
++IDREG_FIELD_START(ID_AA64SMFR0, F8F32,     40,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64SMFR0, F8F32)
++
++IDREG_FIELD_START(ID_AA64SMFR0, F8F16,     41,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64SMFR0, F8F16)
++
++IDREG_FIELD_START(ID_AA64SMFR0, F16F16,    42,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64SMFR0, F16F16)
++
++IDREG_FIELD_START(ID_AA64SMFR0, B16B16,    43,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64SMFR0, B16B16)
++
++IDREG_FIELD_START(ID_AA64SMFR0, I16I32,    44,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0101, "on")
++IDREG_FIELD_END(ID_AA64SMFR0, I16I32)
++
++IDREG_FIELD_START(ID_AA64SMFR0, F64F64,    48,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64SMFR0, F64F64)
++
++IDREG_FIELD_START(ID_AA64SMFR0, RES0_49,   49,  3, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_AA64SMFR0, RES0_49)
++
++IDREG_FIELD_START(ID_AA64SMFR0, I16I64,    52,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b1111, "on")
++IDREG_FIELD_END(ID_AA64SMFR0, I16I64)
++
++IDREG_FIELD_START(ID_AA64SMFR0, SMEVER,    56,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "sme")
++IDREG_FIELD_ARCH_VAL(0b0001, "sme2")
++IDREG_FIELD_ARCH_VAL(0b0010, "sme2p1")
++IDREG_FIELD_ARCH_VAL(0b0011, "sme2p2")
++IDREG_FIELD_END(ID_AA64SMFR0, SMEVER)
++
++IDREG_FIELD_START(ID_AA64SMFR0, LUTV2,     60,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64SMFR0, LUTV2)
++
++IDREG_FIELD_START(ID_AA64SMFR0, RES0_61,   61,  2, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_AA64SMFR0, RES0_61)
++
++IDREG_FIELD_START(ID_AA64SMFR0, FA64,      63,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64SMFR0, FA64)
++
++IDREG_END(ID_AA64SMFR0_EL1)
++
++/* CTR_EL0 */
++IDREG_START(CTR_EL0)
++IDREG_FIELD_START(CTR_EL0, IMINLINE,    0,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL_ANY
++IDREG_FIELD_END(CTR_EL0, IMINLINE)
++
++IDREG_FIELD_START(CTR_EL0, RES0_4,      4, 10, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(CTR_EL0, RES0_4)
++
++IDREG_FIELD_START(CTR_EL0, L1IP,       14,  2, EXACT,  0b10)
++IDREG_FIELD_ARCH_VAL(0b00, "reserved_vpipt")
++IDREG_FIELD_ARCH_VAL(0b01, "reserved_aivivt")
++IDREG_FIELD_ARCH_VAL(0b10, "vipt")
++IDREG_FIELD_ARCH_VAL(0b11, "pipt")
++IDREG_FIELD_END(CTR_EL0, L1IP)
++
++IDREG_FIELD_START(CTR_EL0, DMINLINE,   16,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL_ANY
++IDREG_FIELD_END(CTR_EL0, DMINLINE)
++
++IDREG_FIELD_START(CTR_EL0, ERG,        20,  4, HIGHER_OR_ZERO,  0)
++IDREG_FIELD_ARCH_VAL_ANY
++IDREG_FIELD_END(CTR_EL0, ERG)
++
++IDREG_FIELD_START(CTR_EL0, CWG,        24,  4, HIGHER_OR_ZERO,  0)
++IDREG_FIELD_ARCH_VAL_ANY
++IDREG_FIELD_END(CTR_EL0, CWG)
++
++IDREG_FIELD_START(CTR_EL0, IDC,        28,  1, LOWER,  0b1)
++IDREG_FIELD_ARCH_VAL_ANY
++IDREG_FIELD_END(CTR_EL0, IDC)
++
++IDREG_FIELD_START(CTR_EL0, DIC,        29,  1, LOWER,  0b1)
++IDREG_FIELD_ARCH_VAL_ANY
++IDREG_FIELD_END(CTR_EL0, DIC)
++
++IDREG_FIELD_START(CTR_EL0, RES0_30,    30,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(CTR_EL0, RES0_30)
++
++IDREG_FIELD_START(CTR_EL0, RES1_31,    31,  1, EXACT,  1)
++IDREG_FIELD_ARCH_VAL(1, NULL)
++IDREG_FIELD_END(CTR_EL0, RES1_31)
++
++IDREG_FIELD_START(CTR_EL0, TMINLINE,   32,  6, EXACT,  0)
++IDREG_FIELD_ARCH_VAL_ANY
++IDREG_FIELD_END(CTR_EL0, TMINLINE)
++
++IDREG_FIELD_START(CTR_EL0, RES0_38,    38, 26, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(CTR_EL0, RES0_38)
++
++IDREG_END(CTR_EL0)
++
++/* ID_AA64ISAR3_EL1 */
++IDREG_START(ID_AA64ISAR3_EL1)
++IDREG_FIELD_START(ID_AA64ISAR3, CPA,       0,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "cpa2")
++IDREG_FIELD_END(ID_AA64ISAR3, CPA)
++
++IDREG_FIELD_START(ID_AA64ISAR3, FAMINMAX,  4,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR3, FAMINMAX)
++
++IDREG_FIELD_START(ID_AA64ISAR3, TLBIW,     8,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR3, TLBIW)
++
++IDREG_FIELD_START(ID_AA64ISAR3, PACM,     12,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "trivial_imp")
++IDREG_FIELD_ARCH_VAL(0b0010, "full_imp")
++IDREG_FIELD_END(ID_AA64ISAR3, PACM)
++
++IDREG_FIELD_START(ID_AA64ISAR3, LSFE,     16,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR3, LSFE)
++
++IDREG_FIELD_START(ID_AA64ISAR3, OCCMO,    20,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR3, OCCMO)
++
++IDREG_FIELD_START(ID_AA64ISAR3, LSUI,     24,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR3, LSUI)
++
++IDREG_FIELD_START(ID_AA64ISAR3, FPRCVT,   28,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64ISAR3, FPRCVT)
++
++IDREG_FIELD_START(ID_AA64ISAR3, RES0_32,  32, 32, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_AA64ISAR3, RES0_32)
++
++IDREG_END(ID_AA64ISAR3_EL1)
++
++/* ID_AA64PFR2_EL1 */
++IDREG_START(ID_AA64PFR2_EL1)
++IDREG_FIELD_START(ID_AA64PFR2, MTEPERM,       0,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64PFR2, MTEPERM)
++
++IDREG_FIELD_START(ID_AA64PFR2, MTESTOREONLY,  4,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64PFR2, MTESTOREONLY)
++
++IDREG_FIELD_START(ID_AA64PFR2, MTEFAR,        8,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64PFR2, MTEFAR)
++
++IDREG_FIELD_START(ID_AA64PFR2, GCIE,         12,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64PFR2, GCIE)
++
++IDREG_FIELD_START(ID_AA64PFR2, UINJ,         16,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64PFR2, UINJ)
++
++IDREG_FIELD_START(ID_AA64PFR2, RES0_20,      20, 12, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_AA64PFR2, RES0_20)
++
++IDREG_FIELD_START(ID_AA64PFR2, FPMR,         32,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64PFR2, FPMR)
++
++IDREG_FIELD_START(ID_AA64PFR2, RES0_36,      36, 28, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_AA64PFR2, RES0_36)
++
++IDREG_END(ID_AA64PFR2_EL1)
++
++/*  ID_AA64FPFR0_EL1  */
++IDREG_START(ID_AA64FPFR0_EL1)
++IDREG_FIELD_START(ID_AA64FPFR0, F8E5M2,    0,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64FPFR0, F8E5M2)
++
++IDREG_FIELD_START(ID_AA64FPFR0, F8E4M3,    1,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64FPFR0, F8E4M3)
++
++IDREG_FIELD_START(ID_AA64FPFR0, RES0_2,    2, 24, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_AA64FPFR0, RES0_2)
++
++IDREG_FIELD_START(ID_AA64FPFR0, F8MM4,    26,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64FPFR0, F8MM4)
++
++IDREG_FIELD_START(ID_AA64FPFR0, F8MM8,    27,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64FPFR0, F8MM8)
++
++IDREG_FIELD_START(ID_AA64FPFR0, F8DP2,    28,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64FPFR0, F8DP2)
++
++IDREG_FIELD_START(ID_AA64FPFR0, F8DP4,    29,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64FPFR0, F8DP4)
++
++IDREG_FIELD_START(ID_AA64FPFR0, F8FMA,    30,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64FPFR0, F8FMA)
++
++IDREG_FIELD_START(ID_AA64FPFR0, F8CVT,    31,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0, "off")
++IDREG_FIELD_ARCH_VAL(0b1, "on")
++IDREG_FIELD_END(ID_AA64FPFR0, F8CVT)
++
++IDREG_FIELD_START(ID_AA64FPFR0, RES0_32,  32, 32, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_AA64FPFR0, RES0_32)
++
++IDREG_END(ID_AA64FPFR0_EL1)
 +
 +
-+ARM_PROP("hw_prop_PARANGE", STR, "48"),
-+ARM_PROP("hw_prop_ASIDBITS", STR, "16"),
-+ARM_PROP("feat_BIGEND", STR, "on"),
-+ARM_PROP("feat_SNSMEM", STR, "on"),
-+ARM_PROP("hw_prop_TGRAN16", STR, "on"),
-+ARM_PROP("hw_prop_TGRAN64", STR, "on"),
-+ARM_PROP("hw_prop_TGRAN4", STR, "on"),
-+ARM_PROP("hw_prop_TGRAN16_2", STR, "on"),
-+ARM_PROP("hw_prop_TGRAN64_2", STR, "on"),
-+ARM_PROP("hw_prop_TGRAN4_2", STR, "on"),
++/*  ID_AA64MMFR4_EL1  */
++IDREG_START(ID_AA64MMFR4_EL1)
++IDREG_FIELD_START(ID_AA64MMFR4, POPS,      0,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR4, POPS)
 +
-+ARM_PROP("feat_HAFDBS", STR, "dbm"),
-+ARM_PROP("hw_prop_VMIDBITS", STR, "16"),
-+ARM_PROP("feat_HPDS", STR, "hpds2"),
-+ARM_PROP("feat_PAN", STR, "pan3"),
-+ARM_PROP("feat_ECBHB", STR, "off"),
-+ARM_PROP("feat_SpecSEI", STR, "off"),
++IDREG_FIELD_START(ID_AA64MMFR4, EIESB,     4,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "toel3")
++IDREG_FIELD_ARCH_VAL(0b0010, "toelx")
++IDREG_FIELD_ARCH_VAL(0b1111, "any")
++IDREG_FIELD_END(ID_AA64MMFR4, EIESB)
 +
-+ARM_PROP("hw_prop_FWB", STR, "on"),
-+ARM_PROP("hw_prop_ST", STR, "48_47"),
-+ARM_PROP("feat_TTL", STR, "on"),
-+ARM_PROP("feat_BBM", STR, "2"),
-+ARM_PROP("feat_EVT", STR, "ttlbxs"),
-+ARM_PROP("feat_E2H0", STR, "on"),
++IDREG_FIELD_START(ID_AA64MMFR4, ASID2,     8,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR4, ASID2)
++
++IDREG_FIELD_START(ID_AA64MMFR4, HACDBS,   12,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR4, HACDBS)
++
++IDREG_FIELD_START(ID_AA64MMFR4, FGWTE3,   16,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR4, FGWTE3)
++
++IDREG_FIELD_START(ID_AA64MMFR4, NV_FRAC,  20,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "nv_nv2")
++IDREG_FIELD_ARCH_VAL(0b0001, "nv2_only")
++IDREG_FIELD_ARCH_VAL(0b0010, "nv2p1")
++IDREG_FIELD_END(ID_AA64MMFR4, NV_FRAC)
++
++IDREG_FIELD_START(ID_AA64MMFR4, E2H0,     24,  4, SIGNED_LOWER,  0b1111)
++IDREG_FIELD_ARCH_VAL(0b0000, "on")
++IDREG_FIELD_ARCH_VAL(0b1110, "ni_nv1")
++IDREG_FIELD_ARCH_VAL(0b1111, "off")
++IDREG_FIELD_END(ID_AA64MMFR4, E2H0)
++
++IDREG_FIELD_START(ID_AA64MMFR4, RMEGDI,   28,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR4, RMEGDI)
++
++IDREG_FIELD_START(ID_AA64MMFR4, RES0_32,  32,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_AA64MMFR4, RES0_32)
++
++IDREG_FIELD_START(ID_AA64MMFR4, E3DSE,    36,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR4, E3DSE)
++
++IDREG_FIELD_START(ID_AA64MMFR4, RES0_40,  40,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_AA64MMFR4, RES0_40)
++
++IDREG_FIELD_START(ID_AA64MMFR4, SRMASK,   44,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64MMFR4, SRMASK)
++
++IDREG_FIELD_START(ID_AA64MMFR4, RES0_48,  48, 16, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_AA64MMFR4, RES0_48)
++
++IDREG_END(ID_AA64MMFR4_EL1)
++
++/*  ID_AA64DFR1_EL1  */
++IDREG_START(ID_AA64DFR1_EL1)
++IDREG_FIELD_START(ID_AA64DFR1, SYSPMUID,    0,  8, EXACT,  0)
++IDREG_FIELD_ARCH_VAL_ANY
++IDREG_FIELD_END(ID_AA64DFR1, SYSPMUID)
++
++IDREG_FIELD_START(ID_AA64DFR1, BRPS,        8,  8, EXACT,  0)
++IDREG_FIELD_ARCH_VAL_ANY
++IDREG_FIELD_END(ID_AA64DFR1, BRPS)
++
++IDREG_FIELD_START(ID_AA64DFR1, WRPS,       16,  8, EXACT,  0)
++IDREG_FIELD_ARCH_VAL_ANY
++IDREG_FIELD_END(ID_AA64DFR1, WRPS)
++
++IDREG_FIELD_START(ID_AA64DFR1, CTX_CMPS,   24,  8, EXACT,  0)
++IDREG_FIELD_ARCH_VAL_ANY
++IDREG_FIELD_END(ID_AA64DFR1, CTX_CMPS)
++
++IDREG_FIELD_START(ID_AA64DFR1, SPMU,       32,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_ARCH_VAL(0b0010, "imp_spmzr")
++IDREG_FIELD_END(ID_AA64DFR1, SPMU)
++
++IDREG_FIELD_START(ID_AA64DFR1, PMICNTR,    36,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64DFR1, PMICNTR)
++
++IDREG_FIELD_START(ID_AA64DFR1, ABLE,       40,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64DFR1, ABLE)
++
++IDREG_FIELD_START(ID_AA64DFR1, ITE,        44,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64DFR1, ITE)
++
++IDREG_FIELD_START(ID_AA64DFR1, EBEP,       48,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "on")
++IDREG_FIELD_END(ID_AA64DFR1, EBEP)
++
++IDREG_FIELD_START(ID_AA64DFR1, DPFZS,      52,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "ignr")
++IDREG_FIELD_ARCH_VAL(0b0001, "frzn")
++IDREG_FIELD_END(ID_AA64DFR1, DPFZS)
++
++IDREG_FIELD_START(ID_AA64DFR1, ABL_CMPS,   56,  8, EXACT,  0)
++IDREG_FIELD_ARCH_VAL_ANY
++IDREG_FIELD_END(ID_AA64DFR1, ABL_CMPS)
++
++IDREG_END(ID_AA64DFR1_EL1)
++
++/*  MIDR_EL1  */
++IDREG_START(MIDR_EL1)
++IDREG_FIELD_START(MIDR, REVISION,       0,  4, ANY,  0)
++IDREG_FIELD_END(MIDR, REVISION)
++
++IDREG_FIELD_START(MIDR, PARTNUM,        4, 12, ANY,  0)
++IDREG_FIELD_END(MIDR, PARTNUM)
++
++IDREG_FIELD_START(MIDR, ARCHITECTURE,  16,  4, ANY,  0)
++IDREG_FIELD_END(MIDR, ARCHITECTURE)
++
++IDREG_FIELD_START(MIDR, VARIANT,       20,  4, ANY,  0)
++IDREG_FIELD_END(MIDR, VARIANT)
++
++IDREG_FIELD_START(MIDR, IMPLEMENTER,   24,  8, ANY,  0)
++IDREG_FIELD_END(MIDR, IMPLEMENTER)
++
++IDREG_FIELD_START(MIDR, RES0_32,       32, 32, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(MIDR, RES0_32)
++
++IDREG_END(MIDR_EL1)
++
++/* REVIDR_EL1  */
++IDREG_START(REVIDR_EL1)
++IDREG_FIELD_START(REVIDR, VAL,  0, 64, ANY,  0)
++IDREG_FIELD_END(REVIDR, VAL)
++
++IDREG_END(REVIDR_EL1)
++
++/* AIDR_EL1  */
++IDREG_START(AIDR_EL1)
++IDREG_FIELD_START(AIDR, VAL,  0, 64, ANY,  0)
++IDREG_FIELD_END(AIDR, VAL)
++
++IDREG_END(AIDR_EL1)
++
++/* DCZID_EL0 */
++IDREG_START(DCZID_EL0)
++IDREG_FIELD_START(DCZID_EL0, BS,       0,  4, EXACT,  0)
++IDREG_FIELD_ARCH_VAL_ANY
++IDREG_FIELD_END(DCZID_EL0, BS)
++
++IDREG_FIELD_START(DCZID_EL0, DZP,      4,  1, EXACT,  0)
++IDREG_FIELD_ARCH_VAL_ANY
++IDREG_FIELD_END(DCZID_EL0, DZP)
++
++IDREG_FIELD_START(DCZID_EL0, RES0_5,   5, 59, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(DCZID_EL0, RES0_5)
++
++IDREG_END(DCZID_EL0)
 +
 +
-+ARM_PROP("hw_prop_IMInline", NUM, 4),
-+ARM_PROP("hw_prop_L1IP", STR, "pipt"),
-+ARM_PROP("hw_prop_DMInline", NUM, 4),
-+ARM_PROP("hw_prop_ERG", NUM, 4),
-+ARM_PROP("hw_prop_CWG", NUM, 4),
++/*  ID_AA64AFR0_EL1  */
++IDREG_START(ID_AA64AFR0_EL1)
++IDREG_FIELD_START(ID_AA64AFR0, VAL,  0, 64, EXACT,  0)
++IDREG_FIELD_END(ID_AA64AFR0, VAL)
 +
-+ARM_PROP("hw_prop_BS", NUM, 0x4),
++IDREG_END(ID_AA64AFR0_EL1)
 +
-+ARM_PROP_END,
++/*  ID_AA64AFR1_EL1  */
++IDREG_START(ID_AA64AFR1_EL1)
++IDREG_FIELD_START(ID_AA64AFR1, VAL,  0, 64, EXACT,  0)
++IDREG_FIELD_END(ID_AA64AFR1, VAL)
++
++IDREG_END(ID_AA64AFR1_EL1)
++
++ /* AArch32 ID registers */
++
++/*  ID_PFR0_EL1  */
++IDREG_START(ID_PFR0_EL1)
++IDREG_FIELD_START(ID_PFR0, VAL,  0, 64, EXACT,  0)
++IDREG_FIELD_END(ID_PFR0, VAL)
++
++IDREG_END(ID_PFR0_EL1)
++
++/*  ID_PFR1_EL1  */
++IDREG_START(ID_PFR1_EL1)
++IDREG_FIELD_START(ID_PFR1, VAL_LO,    0, 28, EXACT,  0)
++IDREG_FIELD_END(ID_PFR1, VAL_LO)
++
++IDREG_FIELD_START(ID_PFR1, GIC,      28,  4, LOWER,  0)
++IDREG_FIELD_ARCH_VAL(0b0000, "off")
++IDREG_FIELD_ARCH_VAL(0b0001, "gicv3")
++IDREG_FIELD_ARCH_VAL(0b0011, "gicv4p1")
++IDREG_FIELD_END(ID_PFR1, GIC)
++
++IDREG_FIELD_START(ID_PFR1, RES0_HI, 32, 32, EXACT,  0)
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_PFR1, RES0_HI)
++
++IDREG_END(ID_PFR1_EL1)
++
++/* ID_DFR0_EL1  */
++IDREG_START(ID_DFR0_EL1)
++IDREG_FIELD_START(ID_DFR0, VAL_LO,    0, 24, EXACT,  0 )
++IDREG_FIELD_END(ID_DFR0, VAL_LO)
++
++IDREG_FIELD_START(ID_DFR0, PMU,      24,  4, LOWER,  0 )
++IDREG_FIELD_END(ID_DFR0, PMU)
++
++IDREG_FIELD_START(ID_DFR0, VAL_HI,   28,  4, EXACT,  0 )
++IDREG_FIELD_END(ID_DFR0, VAL_HI)
++
++IDREG_FIELD_START(ID_DFR0, RES0_HI, 32, 32, EXACT,  0 )
++IDREG_FIELD_ARCH_VAL(0, NULL)
++IDREG_FIELD_END(ID_DFR0, RES0_HI)
++
++IDREG_END(ID_DFR0_EL1)
++
++/*  ID_AFR0_EL1  */
++IDREG_START(ID_AFR0_EL1)
++IDREG_FIELD_START(ID_AFR0, VAL,  0, 64, EXACT,  0 )
++IDREG_FIELD_END(ID_AFR0, VAL)
++
++IDREG_END(ID_AFR0_EL1)
++
++/* ID_MMFR0_EL1  */
++IDREG_START(ID_MMFR0_EL1)
++IDREG_FIELD_START(ID_MMFR0, VAL,  0, 64, EXACT,  0 )
++IDREG_FIELD_END(ID_MMFR0, VAL)
++
++IDREG_END(ID_MMFR0_EL1)
++
++/* ID_MMFR1_EL1  */
++IDREG_START(ID_MMFR1_EL1)
++IDREG_FIELD_START(ID_MMFR1, VAL,  0, 64, EXACT,  0 )
++IDREG_FIELD_END(ID_MMFR1, VAL)
++
++IDREG_END(ID_MMFR1_EL1)
++
++/* ID_MMFR2_EL1 */
++IDREG_START(ID_MMFR2_EL1)
++IDREG_FIELD_START(ID_MMFR2, VAL,  0, 64, EXACT,  0 )
++IDREG_FIELD_END(ID_MMFR2, VAL)
++
++IDREG_END(ID_MMFR2_EL1)
++
++/* ID_MMFR3_EL1  */
++IDREG_START(ID_MMFR3_EL1)
++IDREG_FIELD_START(ID_MMFR3, VAL,  0, 64, EXACT,  0 )
++IDREG_FIELD_END(ID_MMFR3, VAL)
++
++IDREG_END(ID_MMFR3_EL1)
++
++/*  ID_MMFR4_EL1  */
++IDREG_START(ID_MMFR4_EL1)
++IDREG_FIELD_START(ID_MMFR4, VAL,  0, 64, EXACT,  0 )
++IDREG_FIELD_END(ID_MMFR4, VAL)
++
++IDREG_END(ID_MMFR4_EL1)
++
++/* ID_MMFR5_EL1  */
++IDREG_START(ID_MMFR5_EL1)
++IDREG_FIELD_START(ID_MMFR5, VAL,  0, 64, EXACT,  0 )
++IDREG_FIELD_END(ID_MMFR5, VAL)
++
++IDREG_END(ID_MMFR5_EL1)
++
++/* ID_ISAR0_EL1  */
++IDREG_START(ID_ISAR0_EL1)
++IDREG_FIELD_START(ID_ISAR0, VAL,  0, 64, EXACT,  0 )
++IDREG_FIELD_END(ID_ISAR0, VAL)
++
++IDREG_END(ID_ISAR0_EL1)
++
++/*  ID_ISAR1_EL1  */
++IDREG_START(ID_ISAR1_EL1)
++IDREG_FIELD_START(ID_ISAR1, VAL,  0, 64, EXACT,  0 )
++IDREG_FIELD_END(ID_ISAR1, VAL)
++
++IDREG_END(ID_ISAR1_EL1)
++
++/*  ID_ISAR2_EL1  */
++IDREG_START(ID_ISAR2_EL1)
++IDREG_FIELD_START(ID_ISAR2, VAL,  0, 64, EXACT,  0 )
++IDREG_FIELD_END(ID_ISAR2, VAL)
++
++IDREG_END(ID_ISAR2_EL1)
++
++/*  ID_ISAR3_EL1  */
++IDREG_START(ID_ISAR3_EL1)
++IDREG_FIELD_START(ID_ISAR3, VAL,  0, 64, EXACT,  0 )
++IDREG_FIELD_END(ID_ISAR3, VAL)
++
++IDREG_END(ID_ISAR3_EL1)
++
++/*  ID_ISAR4_EL1  */
++IDREG_START(ID_ISAR4_EL1)
++IDREG_FIELD_START(ID_ISAR4, VAL,  0, 64, EXACT,  0 )
++IDREG_FIELD_END(ID_ISAR4, VAL)
++
++IDREG_END(ID_ISAR4_EL1)
++
++/* ID_ISAR5_EL1  */
++IDREG_START(ID_ISAR5_EL1)
++IDREG_FIELD_START(ID_ISAR5, VAL,  0, 64, EXACT,  0 )
++IDREG_FIELD_END(ID_ISAR5, VAL)
++
++IDREG_END(ID_ISAR5_EL1)
++
++/*  ID_ISAR6_EL1  */
++IDREG_START(ID_ISAR6_EL1)
++IDREG_FIELD_START(ID_ISAR6, VAL,  0, 64, EXACT,  0 )
++IDREG_FIELD_END(ID_ISAR6, VAL)
++
++IDREG_END(ID_ISAR6_EL1)
++
++/*  ID_PFR2_EL1  */
++IDREG_START(ID_PFR2_EL1)
++IDREG_FIELD_START(ID_PFR2, VAL,  0, 64, EXACT,  0 )
++IDREG_FIELD_END(ID_PFR2, VAL)
++
++IDREG_END(ID_PFR2_EL1)
++
++/*  ID_DFR1_EL1 */
++IDREG_START(ID_DFR1_EL1)
++IDREG_FIELD_START(ID_DFR1, VAL,  0, 64, EXACT,  0 )
++IDREG_FIELD_END(ID_DFR1, VAL)
++
++IDREG_END(ID_DFR1_EL1)
++
++/*  MVFR0_EL1  */
++IDREG_START(MVFR0_EL1)
++IDREG_FIELD_START(MVFR0, VAL,  0, 64, EXACT,  0)
++IDREG_FIELD_END(MVFR0, VAL)
++
++IDREG_END(MVFR0_EL1)
++
++/*  MVFR1_EL1  */
++IDREG_START(MVFR1_EL1)
++IDREG_FIELD_START(MVFR1, VAL,  0, 64, EXACT,  0 )
++IDREG_FIELD_END(MVFR1, VAL)
++
++IDREG_END(MVFR1_EL1)
++
++/* MVFR2_EL1  */
++IDREG_START(MVFR2_EL1)
++IDREG_FIELD_START(MVFR2, VAL,  0, 64, EXACT,  0)
++IDREG_FIELD_END(MVFR2, VAL)
++
++IDREG_END(MVFR2_EL1)
 -- 
 2.52.0
 
