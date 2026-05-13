@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA1FBCD37AC
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 02:05:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DF47CD37AC
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 02:06:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMyyb-0007L3-Ld; Tue, 12 May 2026 22:05:33 -0400
+	id 1wMyzc-0007hz-Pb; Tue, 12 May 2026 22:06:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wMyyV-0007JU-3b
- for qemu-devel@nongnu.org; Tue, 12 May 2026 22:05:27 -0400
+ id 1wMyzZ-0007eT-Ty
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 22:06:34 -0400
 Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wMyyS-0007GT-PK
- for qemu-devel@nongnu.org; Tue, 12 May 2026 22:05:26 -0400
+ id 1wMyzR-0007b7-Lo
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 22:06:28 -0400
 Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-bb91b426e40so1036358566b.0
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 19:05:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778637923; cv=none;
+ a640c23a62f3a-ba545100a13so1061744766b.2
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 19:06:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778637984; cv=none;
  d=google.com; s=arc-20240605;
- b=ihOtrNI0gHVofDzE0ZC5q3Y2IL/vAKasxS7t/oXjEklJ5Sckf7wJGXQWbBMVsIdofs
- 8HyNJ8fhZ0M/+ibs6H6Y1hUrGrZRnLHkigYLd+qzU92p5l6kD96r+RJsAjm11kNTCakV
- yAC3KW1dRAlun20skUoStnOZjwPpu6l3Z1qi/kSDeJaGK/0Hcc3opB4Gd19M5b/ilNzk
- K/9CGI7+q3MBTI+VQ0EXUHJR3KXGzfpk09P91C6H+3OoQ80BxjJH8R2BRtOPvR9yw3HK
- OxYUWr5dxbTbY9sjPfV6J2rQ2VK0jGtNJW+IuNPy+8oWWXok/4EnVb1TCtJEp5t6YJ/Z
- lRjQ==
+ b=UCmMcFHOuRQxmSIxrL82TYHvBZU6kp+h0z7CxPrhvEqdSXN9nqSoMVIBiFJ0zaZx1p
+ hw1iUNN1zb/IG0+qRvvrIzE08vp4XvgSXyWEuhehV0pp7/26nvn1cIwKTNOFSSxmiar0
+ cmI1WAeq20mVs4kXbwfcDWiJ9j9unWxfnpgtPFLSrUjPWoVQlm8KlmGgf+hU3qJQqT2E
+ P5RVjoHWBGcyPXUqLav4mAC4dV4WCsyaMmpXMGm3IYJflCrucCAEVoDBlbx9esx+6jRb
+ FnhZwHFw2G8rua+4OeHTa3VD8i7U8aDKhrlemsVT5ykt55TZr7TLhvYRsqRUfMpp7pjx
+ L0ng==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=JguOUOxTvkPMEtn0r6ePqJsnD5qgY+4w8XygDR3TLGg=;
+ bh=gAX02NUPc0aaBRoouBCKRWGzbNiAE0I8NoZ5OyMCp2k=;
  fh=GJpzZP0+Pf7IJLAkk7GGIc2jeyRGihtCPQbHClgK+cI=;
- b=C50xyCEk4mCO82ZA18iWfuMDjFwg78dATESfSD7q5HXZXEl1LNeAFp4udcgpCucMKS
- jP8cjNbdNCM4vIBQtcE7fOA1gAXdHmvUM5IDJ7h0pXgqRXF23gsbqS5T9NAyVhpbJPC9
- PG3ul1TNHt9P+2qew38+7VsMQkln2pqG7cRqro7cbRrlGI8O02Misf0ujjY5n/ylbjeM
- Aryb9mc2uPvIAPAXdTrZpzhpIWmaYSRMMhDw9/cfra/gcIHN071jtaYj5CfZLhoeWT5p
- mUZGRMKwTVEsDcNaWW5wKnizc5THsM/s8zWSODvwvpUXKf26vo82BF02+zwGntLA0g6f
- gxyA==; darn=nongnu.org
+ b=DpOS0jTArKeRtekWFq6sl85KBcSjrvbUAHsay08OkgczNTCQ6f6fw44yayNc6laYKo
+ 1UrqNsE/E8mpp0+bW1PenvaHwUexh8h17VtHayMROJRHe4Mltp3PByc1l0NFyQM9vanZ
+ PwSPGUTbDMbBdYUdYPB9L77hogxCzhs65fHMX37+IG3w9hZWj8+NUMMZ3YOnoxvV9xfb
+ ySlNZoY2y/jBzSK4q3nRWHrER3TIjCtI5iryMDW+VzECKVvDnzTrpZWBaFWa6R1lPj6g
+ D3173eXoGELn6EIZIzWxX9QhLO+e+QJaBRIaJuVx4hbCV0LvpkFtUdPd2o81sjRn/+W2
+ zpsQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778637923; x=1779242723; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778637984; x=1779242784; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JguOUOxTvkPMEtn0r6ePqJsnD5qgY+4w8XygDR3TLGg=;
- b=Gq4aeAntsIDZT9ry+4oFqkfQmu4vnX9WInsgoqUybZrgWvL62fqw2wMhmxG6I+bwQZ
- gFQCbeDkEkzDriMUPD74jYPFsUPuHuuCyd6/zhBL4CdOr/HOvJouT2uiyy8iI9dJQ18u
- 8wDp0D8OXoMtWHsClJ7MjUke6BTp0jND3NC+4deE/bk1qjrG8lO13PTItkUfSoW3daCi
- NzCWAZyexKlrgJB0YykD5xX8/khaD2aGQRf1Ifigrji+GlnzbrF74sNjbBOk/Y8w3WPG
- NAk9LG2JsPSVHL6Hc2YOGk5rc53RFvIdL3sHx1I9Yzny8k+c9HG/SvkWwUrvxTVSSA9+
- Vfyw==
+ bh=gAX02NUPc0aaBRoouBCKRWGzbNiAE0I8NoZ5OyMCp2k=;
+ b=gQFkQz+gErCl2taXvZGCil8nBoXwKbfmT969+IEj6FT4xmsWrQjlV0RyR1ZCf6gEl1
+ SjQdBdI6fF1R2E8tA8FdQG0dOTD6LGn9P+/9R0y9Kbn/LCuZ1alSJoNjxhoP79Pv2TSG
+ ko/ODOnzbUOOI3Eb5vtEn3Jaf20uVAvP3baUYP/0twcuoBMMGfI0IQo0svFx/1xPBiL0
+ fXLPAnABv4u7GokTkNcL+HFge9GgPVAEXXw4T6KRL49G4bYSiWvVGYzMM6pREM16hl4I
+ NN6m0EDTbTfp3ixUpSek/b0iBZr2rrtgq3MNgxBAy/S4TvUZCEiZn2aJLcA9G3iQbjc+
+ vyIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778637923; x=1779242723;
+ d=1e100.net; s=20251104; t=1778637984; x=1779242784;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=JguOUOxTvkPMEtn0r6ePqJsnD5qgY+4w8XygDR3TLGg=;
- b=Ku9iLCCcE2eTz89gX/Z6s7ZiveSztBJuFUFvYF6aQ/gkBw9TR5zUUjaais0CwNus4J
- Be5tY7ihqiS0bB96AKgBJ2WUEZmD7Yor9zQdoP8u0picDIdYjlPonUTV99yUBy8ew9uk
- TLcjmhZglQ/5/hZh8Qtgcamxnlk2m1ugR/pwlK4VVKhaLjCpdZz5iY8ZlqGRRTg3FYfv
- XNeC1LItO8k08ewxyPCW5D64JxHZfii7U37LQHZRF7bCf23+0tJhraBlMRpa+i63lcVt
- CBxcO4p4DV0uqkoQL7u4jFHla4yj+YXdzjmnnw4cz5hXRMOxfg020PQejpO/1LZL2TXW
- EIRw==
-X-Gm-Message-State: AOJu0YxUmzjDdnJtam0XRrkeOwxw+3LLkQhOzkRLheSg+Ge9dER4rLlo
- AxH74hj0cEK6O5JztylTCvQWwuKQYP2RszbaJVn8vULOFnq0jJLazCDhpohDgPJeSvMD6oJxXYB
- EL71S+RAbzwcD42bBA2giVlcuPTIdfjt0LQ==
-X-Gm-Gg: Acq92OE543oBRqXIJdbapaJaC69Xs3piTo484HQCELPh3ZrSWSm0gATzQhzBkb2Aers
- iMDa64mEZuX3GExvpKtI7bak5dxnUbWjIDit8CjpeMtt2bo6M9E/J6YbzaaHEF9IacJYYjzH6Tb
- k3tyFLINXZbmw58dlAqN+3lsUuEqdCi56FikIqO2Ttui7OWbIYASpnAY4JcstlAvPWy32DX5XOI
- XETuIoW/2BG6nEQNTSDO4HgZjGN/osDZEO5q63wsoxOADNZlAes6CPf1ulgD3Q2RYXZ/gTQZ+2Y
- gU4avJ/EOv0YNUFofPZK5B5LAJz1ePDLTTkJaA==
-X-Received: by 2002:a17:907:2da3:b0:bb8:b536:55dd with SMTP id
- a640c23a62f3a-bd3e30afdd8mr46577466b.41.1778637922849; Tue, 12 May 2026
- 19:05:22 -0700 (PDT)
+ bh=gAX02NUPc0aaBRoouBCKRWGzbNiAE0I8NoZ5OyMCp2k=;
+ b=eZYA4AHjosLQESnoHtaCtf4JPfKY924bOJezb4ekPZGCAss/Yzum6O/dq24dI9nsFD
+ /XGqVD9F67zVUHIUsdFL74wtj3MkFGZvAV10bIPBstrUx0TYsq0xR+JWLqz/HnhvEz0b
+ kgXCLo05dq+oxzAdz2ShKhTRypvsJn40r0uwWCD7Vz9Uqyor4bVXXWUSrXrTk8NQp8fD
+ H2uBa1qkDQzSHXSe6OF6YowDOiroGO7z+pAiKrBHmuOgPG9q80orkxflcTuxvBo3hlyu
+ 5LFHOWDH2qblW3Gj8Ik5pltpnqYYWVuP25S5tG5SkoJQgq6RbyKBLkgmE0B6NYJ4zle0
+ 4eLQ==
+X-Gm-Message-State: AOJu0YypXs4YomW9n2ZvxJ2JUfc/5RtxElZcw1CdinDOygNgdipsk9lO
+ v6bnmctYa6jbwW7Qz5eIB4puY8I2ZFDl1auYn35g0ytKIET0ECpyqGbK7lS80puUosaUu1ho93q
+ gv0RABFd2Cviym78ZjvaioXRMeqIcJxc=
+X-Gm-Gg: Acq92OF+4891D3VYaSpj+2B+Ehw74+Wzbkt5P3enKOmpsZJbpsT33dAIWED5cxKN/0G
+ ugzkXOtJweC60snhKiLAtUFxmjGzdHnkP+7B4P2s0oAy1jWZTnH6C7qUJM27x7SwBXhyrPGdEqH
+ IWnXpHYgCU1iuOIJnG5ADgOOTQdruAovkLoEGGZ/mzODmkBz+YbebGk2L+6VdimKDrXbYL4dCTL
+ wW6VifSRd4rXXOxdr1qwW1+EPS2NCu7W6RKR5PUqQF+dO/LqvVye8s+HOqlRlzFMKQLiN4hLBnR
+ nHe7w2+c91BhLxBQh0VE4zduvO6A4OgBOCNo1g==
+X-Received: by 2002:a17:906:c104:b0:bd3:23d6:acb7 with SMTP id
+ a640c23a62f3a-bd3bf98a9f2mr79501466b.14.1778637983820; Tue, 12 May 2026
+ 19:06:23 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
- <20260510-qom-qapi-v1-20-48ba6a1a1fa5@redhat.com>
-In-Reply-To: <20260510-qom-qapi-v1-20-48ba6a1a1fa5@redhat.com>
+ <20260510-qom-qapi-v1-46-48ba6a1a1fa5@redhat.com>
+In-Reply-To: <20260510-qom-qapi-v1-46-48ba6a1a1fa5@redhat.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 13 May 2026 12:04:55 +1000
-X-Gm-Features: AVHnY4I9IOY_HbtEeylc8aDTfQTNVoyeWX-Q_EdX_PdSzd3qPXKDdGytC4Fru-g
-Message-ID: <CAKmqyKNRiyUh07RiemEW6CvS-SDLOEwJb3NQ8ChRusP-0eGX3A@mail.gmail.com>
-Subject: Re: [PATCH 20/54] riscv/virt: convert OnOffAuto properties to
- QAPI-aware registration
+Date: Wed, 13 May 2026 12:05:56 +1000
+X-Gm-Features: AVHnY4KeaeSvtBUZkrh8dCxzas1uJJr-yXXRaBjCg5yVZzAcm_Du_I1IGTMavHk
+Message-ID: <CAKmqyKNrrGQikjbba0Be2uwQgOWFJ-TyW03RC9kjax865YRCPQ@mail.gmail.com>
+Subject: Re: [PATCH 46/54] target/riscv: fix incorrect QAPI types and u8
+ casting
 To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
 Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, 
  Paolo Bonzini <pbonzini@redhat.com>,
@@ -120,11 +120,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, May 10, 2026 at 11:49=E2=80=AFPM Marc-Andr=C3=A9 Lureau
+On Sun, May 10, 2026 at 11:53=E2=80=AFPM Marc-Andr=C3=A9 Lureau
 <marcandre.lureau@redhat.com> wrote:
 >
-> Convert the acpi and iommu-sys OnOffAuto properties from manual
-> visitor-based callbacks to property_add_qapi_enum().
+> "pmu_num" is u8, "pmu_mask" is u32, so is "pmp-granularity"
 >
 > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
@@ -133,113 +132,50 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  hw/riscv/virt.c | 54 ++++++++++++++++++++++++---------------------------=
----
->  1 file changed, 24 insertions(+), 30 deletions(-)
+>  target/riscv/cpu.c | 9 +++++----
+>  1 file changed, 5 insertions(+), 4 deletions(-)
 >
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index a1c323e66df..5148044df95 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -55,7 +55,7 @@
->  #include "hw/pci-host/gpex.h"
->  #include "hw/display/ramfb.h"
->  #include "hw/acpi/aml-build.h"
-> -#include "qapi/qapi-visit-common.h"
-> +#include "qapi/qapi-type-infos-common.h"
->  #include "hw/virtio/virtio-iommu.h"
->  #include "hw/uefi/var-service-api.h"
->
-> @@ -1832,21 +1832,16 @@ bool virt_is_iommu_sys_enabled(RISCVVirtState *s)
->      return s->iommu_sys =3D=3D ON_OFF_AUTO_ON;
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 7d0cf88d48d..235764462cb 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -1467,7 +1467,7 @@ static void prop_pmu_num_get(Object *obj, Visitor *=
+v, const char *name,
 >  }
 >
-> -static void virt_get_iommu_sys(Object *obj, Visitor *v, const char *name=
-,
-> -                               void *opaque, Error **errp)
-> +static int virt_get_iommu_sys(Object *obj, Error **errp)
+>  static const PropertyInfo prop_pmu_num =3D {
+> -    .type =3D "int8",
+> +    .type =3D "uint8",
+>      .description =3D "pmu-num",
+>      .get =3D prop_pmu_num_get,
+>      .set =3D prop_pmu_num_set,
+> @@ -1503,13 +1503,13 @@ static void prop_pmu_mask_set(Object *obj, Visito=
+r *v, const char *name,
+>  static void prop_pmu_mask_get(Object *obj, Visitor *v, const char *name,
+>                               void *opaque, Error **errp)
 >  {
->      RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
-> -    OnOffAuto iommu_sys =3D s->iommu_sys;
-> -
-> -    visit_type_OnOffAuto(v, name, &iommu_sys, errp);
-> +    return s->iommu_sys;
+> -    uint8_t pmu_mask =3D RISCV_CPU(obj)->cfg.pmu_mask;
+> +    uint32_t pmu_mask =3D RISCV_CPU(obj)->cfg.pmu_mask;
+>
+> -    visit_type_uint8(v, name, &pmu_mask, errp);
+> +    visit_type_uint32(v, name, &pmu_mask, errp);
 >  }
 >
-> -static void virt_set_iommu_sys(Object *obj, Visitor *v, const char *name=
-,
-> -                               void *opaque, Error **errp)
-> +static void virt_set_iommu_sys(Object *obj, int value, Error **errp)
->  {
->      RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
-> -
-> -    visit_type_OnOffAuto(v, name, &s->iommu_sys, errp);
-> +    s->iommu_sys =3D value;
+>  static const PropertyInfo prop_pmu_mask =3D {
+> -    .type =3D "int8",
+> +    .type =3D "uint32",
+>      .description =3D "pmu-mask",
+>      .get =3D prop_pmu_mask_get,
+>      .set =3D prop_pmu_mask_set,
+> @@ -1651,6 +1651,7 @@ static void prop_pmp_granularity_get(Object *obj, V=
+isitor *v, const char *name,
 >  }
 >
->  bool virt_is_acpi_enabled(RISCVVirtState *s)
-> @@ -1854,21 +1849,16 @@ bool virt_is_acpi_enabled(RISCVVirtState *s)
->      return s->acpi !=3D ON_OFF_AUTO_OFF;
->  }
->
-> -static void virt_get_acpi(Object *obj, Visitor *v, const char *name,
-> -                          void *opaque, Error **errp)
-> +static int virt_get_acpi(Object *obj, Error **errp)
->  {
->      RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
-> -    OnOffAuto acpi =3D s->acpi;
-> -
-> -    visit_type_OnOffAuto(v, name, &acpi, errp);
-> +    return s->acpi;
->  }
->
-> -static void virt_set_acpi(Object *obj, Visitor *v, const char *name,
-> -                          void *opaque, Error **errp)
-> +static void virt_set_acpi(Object *obj, int value, Error **errp)
->  {
->      RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
-> -
-> -    visit_type_OnOffAuto(v, name, &s->acpi, errp);
-> +    s->acpi =3D value;
->  }
->
->  static HotplugHandler *virt_machine_get_hotplug_handler(MachineState *ma=
-chine,
-> @@ -1966,17 +1956,21 @@ static void virt_machine_class_init(ObjectClass *=
-oc, const void *data)
->          object_class_property_set_description(oc, "aia-guests", str);
->      }
->
-> -    object_class_property_add(oc, "acpi", "OnOffAuto",
-> -                              virt_get_acpi, virt_set_acpi,
-> -                              NULL, NULL);
-> -    object_class_property_set_description(oc, "acpi",
-> -                                          "Enable ACPI");
-> -
-> -    object_class_property_add(oc, "iommu-sys", "OnOffAuto",
-> -                              virt_get_iommu_sys, virt_set_iommu_sys,
-> -                              NULL, NULL);
-> -    object_class_property_set_description(oc, "iommu-sys",
-> -                                          "Enable IOMMU platform device"=
-);
-> +    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-> +        .name =3D "acpi",
-> +        .description =3D "Enable ACPI",
-> +        .qapi_type =3D &OnOffAuto_type_info,
-> +        .get =3D virt_get_acpi,
-> +        .set =3D virt_set_acpi,
-> +    ));
-> +
-> +    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-> +        .name =3D "iommu-sys",
-> +        .description =3D "Enable IOMMU platform device",
-> +        .qapi_type =3D &OnOffAuto_type_info,
-> +        .get =3D virt_get_iommu_sys,
-> +        .set =3D virt_set_iommu_sys,
-> +    ));
->  }
->
->  static const TypeInfo virt_machine_typeinfo =3D {
+>  static const PropertyInfo prop_pmp_granularity =3D {
+> +    .type =3D "uint32",
+>      .description =3D "pmp-granularity",
+>      .get =3D prop_pmp_granularity_get,
+>      .set =3D prop_pmp_granularity_set,
 >
 > --
 > 2.54.0
