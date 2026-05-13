@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B9A6CD4F24
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 10:12:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BDACCD4F24
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 10:40:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN6Zc-0000QD-Mu; Wed, 13 May 2026 06:12:16 -0400
+	id 1wN700-0003q0-RB; Wed, 13 May 2026 06:39:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wN6ZV-0000P9-SM
- for qemu-devel@nongnu.org; Wed, 13 May 2026 06:12:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wN6zy-0003oD-7d; Wed, 13 May 2026 06:39:30 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wN6ZT-0001zj-QN
- for qemu-devel@nongnu.org; Wed, 13 May 2026 06:12:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778667126;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=57W4DyR6SVOmssopCRErCIiRao9NqkRbc0Iq8EGSZzE=;
- b=UTAWOqvUJsfJX45+OY6XFyEPH3B9rikt0pfjaj0fj5qZmG9G2MKRw0uoGWpADKhJahDuB7
- +SVOBko+vVPuE3g303JW9lvzic6Wz8/2S1et+yncWiGezoqxFOEeOSq/tQc7zmvL4Tt3mY
- rttMU2uo015XeidsmvNAxzI9afyMTIA=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-644-ucORkv8SO9uznXcvPJlrJA-1; Wed,
- 13 May 2026 06:11:59 -0400
-X-MC-Unique: ucORkv8SO9uznXcvPJlrJA-1
-X-Mimecast-MFC-AGG-ID: ucORkv8SO9uznXcvPJlrJA_1778667118
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2183F183064B; Wed, 13 May 2026 10:11:51 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.32.213])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2814A30001BE; Wed, 13 May 2026 10:11:44 +0000 (UTC)
-Date: Wed, 13 May 2026 11:11:41 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-block@nongnu.org, Cleber Rosa <crosa@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, John Snow <jsnow@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH 12/16] tests: validate dmsetup result in test 128
-Message-ID: <agROXRPbcxL5mmy-@redhat.com>
-References: <20260424154205.364268-1-berrange@redhat.com>
- <20260424154205.364268-13-berrange@redhat.com>
- <92e4dccd-5f0f-4268-b6d9-6236fa5ed219@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wN6zv-0002Py-8k; Wed, 13 May 2026 06:39:29 -0400
+Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.183]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64DAcPdW044648
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 13 May 2026 19:38:55 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=Jme2qak9fem7HpSyVrF+VPDNbYZN4gemYhEUzDKqhcQ=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-Id:To:Subject:Date;
+ s=rs20250326; t=1778668736; v=1;
+ b=CEK14OQxvDSl6LuCtMQuyZRUxX1vG2YJf7g0AUiUGON174g2HSjjlasAJFVSEd60
+ DhLI+8qyBkaVxGjdzwnOfuHVYZUwToGBZLWQnyMDpI6IYy7tiQ6jQFSXzW5GLgVg
+ z2CHsdZtBgBbgbOFSasuadFn1dScikcqPyTIpsXsLgaIwlyAecqlWKacWtWsZz+/
+ 1MIGCVZ1l6HS7E2cRjy92FIcvEvWHXceTLe6itMc+lqC+KWLLzAY4whD/dgaAauc
+ b07jUYXRpDItPaLHNNCtJX13Df8HpKPQ5og6hyTw6lb0hbIRuhuGppzOqZSpK9pS
+ Z2VWRfvNJL/zwg8rSsHdYA==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 13 May 2026 19:38:24 +0900
+Subject: [PATCH v2 08/29] hw/arm/musicpal: Use Linux key codes
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <92e4dccd-5f0f-4268-b6d9-6236fa5ed219@oss.qualcomm.com>
-User-Agent: Mutt/2.3.1 (2026-03-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260513-input-v2-8-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260513-input-v2-0-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260513-input-v2-0-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Jan Kiszka <jan.kiszka@web.de>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Thomas Huth <th.huth+qemu@posteo.eu>,
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-arm@nongnu.org, xen-devel@lists.xenproject.org, qemu-ppc@nongnu.org,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.16-dev-16047
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1974;
+ i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
+ bh=3QyoWo2AYgietZaPQHCqWKFFehZaWLCy1MMurbof3XA=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZLyNrAM48P1H15IXpx2aFZdlurvjKUvF0ktu3GvM8OD
+ AUHPVL1OkpZGMS4GGTFFFlSinZza0TXfipMiG+BmcPKBDKEgYtTACbiOYvhf7bsLaHtpWW3bCXs
+ wzY36G74+oDb8H+w20tboRLmqZLanIwMO3n/Fr/YsVM9bPt3BZ+wL41aYu/dDRK+FD586Zt79tt
+ dTgA=
+X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
+ fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,78 +87,82 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 12, 2026 at 08:53:47AM -0700, Pierrick Bouvier wrote:
-> On 4/24/2026 8:42 AM, Daniel P. Berrangé wrote:
-> > The I/O test 128 uses 'dmsetup create' to create a device, optionally
-> > using sudo to elevate privileges.
-> > 
-> > This dmsetup command works in GitLab CI, however, the test then fails
-> > with a missing device name:
-> > 
-> >   1..1
-> >   # running raw 128
-> >   not ok raw 128
-> >   ----------------------------------- stderr -----------------------------------
-> >   --- /builds/berrange/qemu/tests/qemu-iotests/128.out
-> >   +++ /builds/berrange/qemu/build/scratch/raw-file-128/128.out.bad
-> >   @@ -1,5 +1,5 @@
-> >    QA output created by 128
-> > 
-> >    == reading from error device ==
-> >   -read failed: Input/output error
-> >   +qemu-io: can't open device /dev/mapper/eiodev16546: Could not open '/dev/mapper/eiodev16546': No such file or directory
-> >    *** done
-> > 
-> >   (test program exited with status code 1)
-> > 
-> > It is believed that this is due to the build env using a manually
-> > populated /dev, such that the device mapper node won't ever appear.
-> > It is not a race, since a test adding a sleep did not result in the
-> > device appearing.
-> >
-> 
-> Could that be related to the fact it's running inside a container (if it
-> is). Maybe it's just missing exposing all /dev instead of a limited set
-> of devices.
+QemuInputEvent now stores Linux key codes for key events. Use those
+codes directly instead of translating between internal key code
+representations.
 
-We don't have any control over what's present in /dev in test environments,
-so we shouldn't assume /dev automatically exposes devices that we can
-create via device mapper, as it could be locked down.
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+ hw/arm/musicpal.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-> 
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> >  tests/qemu-iotests/128 | 6 ++++++
-> >  1 file changed, 6 insertions(+)
-> > 
-> > diff --git a/tests/qemu-iotests/128 b/tests/qemu-iotests/128
-> > index d0e00d24b1..d75b1a451a 100755
-> > --- a/tests/qemu-iotests/128
-> > +++ b/tests/qemu-iotests/128
-> > @@ -42,6 +42,12 @@ _setup_eiodev()
-> >  		echo "0 $((1024 * 1024 * 1024 / 512)) error" | \
-> >  			$cmd dmsetup create "$devname" 2>/dev/null
-> >  		if [ "$?" -eq 0 ]; then
-> > +			DEV="/dev/mapper/$devname"
-> > +			if ! -e $DEV
-> > +			then
-> > +				_notrun "Device $DEV not appearing"
-> > +			fi
-> > +
-> >  			sudo="$cmd"
-> >  			return
-> >  		fi
-> 
+diff --git a/hw/arm/musicpal.c b/hw/arm/musicpal.c
+index c8985a58f993..e2630243eb7f 100644
+--- a/hw/arm/musicpal.c
++++ b/hw/arm/musicpal.c
+@@ -24,6 +24,7 @@
+ #include "hw/core/ptimer.h"
+ #include "hw/core/qdev-properties.h"
+ #include "hw/block/flash.h"
++#include "standard-headers/linux/input-event-codes.h"
+ #include "ui/console.h"
+ #include "hw/i2c/i2c.h"
+ #include "hw/i2c/bitbang_i2c.h"
+@@ -1069,40 +1070,39 @@ static void musicpal_key_event(DeviceState *dev, QemuConsole *src,
+                                QemuInputEvent *evt)
+ {
+     musicpal_key_state *s = MUSICPAL_KEY(dev);
+-    int qcode = qemu_input_linux_to_qcode(evt->key.key);
+     uint32_t event = 0;
+     int i;
+ 
+-    switch (qcode) {
+-    case Q_KEY_CODE_UP:
++    switch (evt->key.key) {
++    case KEY_UP:
+         event = MP_KEY_WHEEL_NAV | MP_KEY_WHEEL_NAV_INV;
+         break;
+ 
+-    case Q_KEY_CODE_DOWN:
++    case KEY_DOWN:
+         event = MP_KEY_WHEEL_NAV;
+         break;
+ 
+-    case Q_KEY_CODE_LEFT:
++    case KEY_LEFT:
+         event = MP_KEY_WHEEL_VOL | MP_KEY_WHEEL_VOL_INV;
+         break;
+ 
+-    case Q_KEY_CODE_RIGHT:
++    case KEY_RIGHT:
+         event = MP_KEY_WHEEL_VOL;
+         break;
+ 
+-    case Q_KEY_CODE_F:
++    case KEY_F:
+         event = MP_KEY_BTN_FAVORITS;
+         break;
+ 
+-    case Q_KEY_CODE_TAB:
++    case KEY_TAB:
+         event = MP_KEY_BTN_VOLUME;
+         break;
+ 
+-    case Q_KEY_CODE_RET:
++    case KEY_ENTER:
+         event = MP_KEY_BTN_NAVIGATION;
+         break;
+ 
+-    case Q_KEY_CODE_M:
++    case KEY_M:
+         event = MP_KEY_BTN_MENU;
+         break;
+     }
 
-With regards,
-Daniel
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.54.0
 
 
