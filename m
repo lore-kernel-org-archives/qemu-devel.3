@@ -4,90 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5434ACD343F
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 03:06:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF071CD484C
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 03:09:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMzuW-0004TP-Jf; Tue, 12 May 2026 23:05:25 -0400
+	id 1wMzxl-0005Cv-Om; Tue, 12 May 2026 23:08:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1wMzuQ-0004Se-Lr
- for qemu-devel@nongnu.org; Tue, 12 May 2026 23:05:19 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1wMzuM-0003DH-8l
- for qemu-devel@nongnu.org; Tue, 12 May 2026 23:05:17 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-367c26471f5so2953149a91.1
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 20:05:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1778641509; x=1779246309; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Z5XFIq6Q0hGUO+bb8YYjlYOCB/gp8A/fOf4w/ZERmcY=;
- b=hrz/NAJ2RcciwStqO48LkkFLa8465VRbp1xHWoLhX8+hI1gm94M9LWl0jDLdWLarbo
- sqVVZ81jhVDaC0FAeY3BQMgaSMNGv+pdmmwfNTl9HAr8IoDVtkIH8EfFoyeqTpw16FAw
- /LaRvO/jATVRAFR0Ql5rVmB3zAqRlWRjGLdDFrLF9JFzbz83ltJJsq6DPjuEgXwsyM8J
- VtUPvDyXNU+LUIHoseO86ZU1uQAUaSaJY/NvidlgwOG8kNSrAdKwWG9vn5K7kRqhsQSc
- WEqO+H88/7Ms9mn/PtDa8ftmxtLKmJasBD1RwUny6NxNga6Sr9GkpDeHJFMILp2kzvja
- O6YA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778641509; x=1779246309;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Z5XFIq6Q0hGUO+bb8YYjlYOCB/gp8A/fOf4w/ZERmcY=;
- b=b7u7ZFo5jTIvu2ZJEw5qADhwRZAGIH9EIJl1hKnHuxRGrmvoMoGsGjkIPLUVI4JZgt
- CjLXlbNwSPzQxpDEsCujUSICknhW1O72ZtgzpIo3vzQNi5MQPuuf3VhmHpkuUEq7k3cz
- knb7I4nGxlfetcEOkoWA9dTHayyE53rAl1m4TtWKczv3JcNjtojSqYWWK4Y6rKch5VuJ
- db4LszUlzfOO7HW6oRq3kUCQPhR55McMAhlr54bArPArBIFI3qh+qPHKWYBkDCmCDWdT
- fEXb5/fP55+wcJpeHUltC2PZyNfX9HB4orxnJ2z2oHI/5hZ9KzRvjo8ekPbIewavzc/z
- FrJQ==
-X-Gm-Message-State: AOJu0YwCcp6rWplk6xei3Pr7Ls0ie7dNBMZeGBIZfqqRTKmvQGzATonn
- l9LBI+tvvUmXpN4TqgUGpsnD27ZAnfdMNLc2F8mq9e+V28usZEO1DdwQnECXKF5SsWMTrEH6lOz
- SKqpwX9g+PftGcf7GeRE+nY8pEGDT+FUv6ulr0qsu+Xg0JRxdlk13hA8iWPgj47AnjmPeBFg+pI
- QU1X0En7wpsaHCHIiCGx/r7T689bp+IwDOj5UkSyQ3y45xuoP/
-X-Gm-Gg: Acq92OGu4bb6jM89DGLaKSIhdQZsduHapN64dCBhgb6jlGjPxFVjCcqL72HzrBl8zUh
- Iueo1RJw6HTx4AqaltuPQUn9HCsp3w2Etzd7fjkuluD7aLCBzOKkNSNebZYvjkVm2zyQ5xFJArA
- 1tfQ/5q35VxGFq87tHaf2XA0li2xFqzYl9JKiqzYbBPbucfNN1RHNEM+YDNLcYN+ggqCd7IJBFn
- hsOwl1P1nbLgJsqs0FIuXm721gQYJ3d71U+FAf9gTG36gm++iyfPi7nXT7zA4t0cukYvNzm464O
- moGvavLHwVOGfjYYEVLS6SxrUF9GMwFGEU66rCYNrIoqt28XuLYA7h1Z0REbD4CDB9N6PG8M/Ku
- FYj758TckoJyf6izKkrZbttFoidZyLL9PYqqkwISNnVL4Ys2iCFdhat2Oh0zGAX8e1IAHPi7mC4
- 4hrSsloerNHKPaZLxCG9NRMFiutmjeXC1CclNYNKS4ZYDmCjGNkA==
-X-Received: by 2002:a17:903:1a8d:b0:2b7:86be:7673 with SMTP id
- d9443c01a7336-2bd2f4cc12dmr9773735ad.6.1778641508934; 
- Tue, 12 May 2026 20:05:08 -0700 (PDT)
-Received: from hsinchu16.internal.sifive.com ([210.176.154.34])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2baf1d4050dsm142474405ad.31.2026.05.12.20.05.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 May 2026 20:05:08 -0700 (PDT)
-From: frank.chang@sifive.com
-To: qemu-devel@nongnu.org
-Cc: Alistair Francis <Alistair.Francis@wdc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- qemu-riscv@nongnu.org (open list:SiFive Machines),
- Frank Chang <frank.chang@sifive.com>, Chao Liu <chao.liu.zevorn@gmail.com>,
- Jim Shu <jim.shu@sifive.com>
-Subject: [PATCH] hw/char: Check interrupt after txctrl register is written
-Date: Wed, 13 May 2026 11:05:03 +0800
-Message-ID: <20260513030503.3665414-1-frank.chang@sifive.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1wMzxk-0005Ce-7x; Tue, 12 May 2026 23:08:44 -0400
+Received: from dedi548.your-server.de ([85.10.215.148])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1wMzxe-0004Wt-CH; Tue, 12 May 2026 23:08:43 -0400
+Received: from sslproxy07.your-server.de ([78.47.199.104])
+ by dedi548.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.96.2) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1wMzxS-0004HF-2Q; Wed, 13 May 2026 05:08:26 +0200
+Received: from localhost ([127.0.0.1])
+ by sslproxy07.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.96) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1wMzxR-000Jnf-2x; Wed, 13 May 2026 05:08:25 +0200
+Received: from localhost (localhost.eb.localhost [127.0.0.1])
+ by mail.embedded-brains.de (Postfix) with ESMTP id 6C639480051;
+ Wed, 13 May 2026 05:08:25 +0200 (CEST)
+Received: from mail.embedded-brains.de ([127.0.0.1])
+ by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10032)
+ with ESMTP id POBWUh0nmyUV; Wed, 13 May 2026 05:08:24 +0200 (CEST)
+Received: from localhost (localhost.eb.localhost [127.0.0.1])
+ by mail.embedded-brains.de (Postfix) with ESMTP id 6E6E7480059;
+ Wed, 13 May 2026 05:08:24 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.embedded-brains.de 6E6E7480059
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=embedded-brains.de;
+ s=34EE5404-8E36-11F0-B577-2ECCAB4968F5; t=1778641704;
+ bh=zjBdNRQb9PBJ2IjAOCjt07hGGZoCCPNYt7jct0KoNCY=;
+ h=Date:From:To:Message-ID:MIME-Version;
+ b=TDA8dh2RxcpcQ4gbh4Z+V8BLgr3EPGCWQr6TUYLPDqd2CV0t3xWBOblz715VbTTT3
+ P0Sh0yviU4vzHZmY/adYMcLHtPAGwnjxMvGnBv+N/5OPQyJwnQJi+hWp7rn61INWF0
+ CDfiMnHgzrI43WMi6nHTmqkSrlTvjpzQ3ExnRCkNN+MgPcwPTD/xeGuMRwRTYdM/qI
+ q3JHs1lyTH4CL7KkHoI2ZM3CZw1HIl94GI9RYOMwCuswe6g6OtIPEfKFKoHg6cuAC/
+ AJ2MYL3lB9DhWrfbKL78PCS+Rro/fQHmJR++jp98/A+lMFHkRaUipN4zEvCbQj/3yn
+ Ny/vOQ05V+beg==
+X-Virus-Scanned: amavis at zimbra.eb.localhost
+Received: from mail.embedded-brains.de ([127.0.0.1])
+ by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10026)
+ with ESMTP id hAQGq-R2VBkC; Wed, 13 May 2026 05:08:24 +0200 (CEST)
+Received: from zimbra.eb.localhost (zimbra.eb.localhost [192.168.96.204])
+ by mail.embedded-brains.de (Postfix) with ESMTP id 299CA480051;
+ Wed, 13 May 2026 05:08:24 +0200 (CEST)
+Date: Wed, 13 May 2026 05:08:24 +0200 (CEST)
+From: Sebastian Huber <sebastian.huber@embedded-brains.de>
+To: Alistair Francis <alistair23@gmail.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>, liwei1518@gmail.com, 
+ daniel barboza <daniel.barboza@oss.qualcomm.com>, 
+ zhiwei liu <zhiwei_liu@linux.alibaba.com>, 
+ chao liu zevorn <chao.liu.zevorn@gmail.com>, 
+ qemu-riscv <qemu-riscv@nongnu.org>, 
+ qemu-devel <qemu-devel@nongnu.org>, Conor Dooley <conor@kernel.org>, 
+ alistair francis <alistair.francis@wdc.com>
+Message-ID: <1514447636.13520.1778641704122.JavaMail.zimbra@embedded-brains.de>
+In-Reply-To: <20260513023859.518484-1-alistair.francis@wdc.com>
+References: <20260513023859.518484-1-alistair.francis@wdc.com>
+Subject: Re: [PATCH] MAINTAINERS: Mark Microchip PolarFire SoC as Odd Fixes
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=frank.chang@sifive.com; helo=mail-pj1-x1030.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [192.168.96.204]
+X-Mailer: Zimbra 10.1.16_GA_4850 (ZimbraWebClient - FF140
+ (Linux)/10.1.16_GA_4863)
+Thread-Topic: MAINTAINERS: Mark Microchip PolarFire SoC as Odd Fixes
+Thread-Index: rD5E6Ijx1uKevwYPx7BJnaC6ja72gg==
+X-DKIM-Status: pass [(embedded-brains.de) - 78.47.199.104]
+X-Virus-Scanned: Clear (ClamAV 1.4.3/27998/Tue May 12 08:24:57 2026)
+Received-SPF: pass client-ip=85.10.215.148;
+ envelope-from=sebastian.huber@embedded-brains.de; helo=dedi548.your-server.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,36 +100,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
+----- Am 13. Mai 2026 um 4:38 schrieb Alistair Francis alistair23@gmail.com=
+:
 
-It's possible that the transmit watermark level (txctrl.txcnt) is
-updated when the user writes to txctrl register, which may decrease the
-transmit watermark level to less than the number of entries in the
-transmit FIFO. In such a case, the interrupt should be raised so we need to
-call sifive_uart_update_irq() to check and update interrupt when txctrl
-register is written. Otherwise, the interrupt will have to be delayed
-until next TX FIFO transmission is processed.
+> From: Alistair Francis <alistair.francis@wdc.com>
+>=20
+> Mark the "Microchip PolarFire SoC Icicle Kit" as Odd Fixes and enlist
+> Conor and Sebastian as people to help deal with the fixes.
+>=20
+> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 
-Suggested-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Jim Shu <jim.shu@sifive.com>
----
- hw/char/sifive_uart.c | 1 +
- 1 file changed, 1 insertion(+)
+Thanks, this is fine.
 
-diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
-index b4de662d616..b9bbaaef595 100644
---- a/hw/char/sifive_uart.c
-+++ b/hw/char/sifive_uart.c
-@@ -213,6 +213,7 @@ sifive_uart_write(void *opaque, hwaddr addr,
-         if (SIFIVE_UART_TXEN(s->txctrl) && !fifo8_is_empty(&s->tx_fifo)) {
-             sifive_uart_trigger_tx_fifo(s);
-         }
-+        sifive_uart_update_irq(s);
-         return;
-     case SIFIVE_UART_RXCTRL:
-         s->rxctrl = val64;
--- 
-2.43.0
+--=20
+VISIT US @ SATELLITE ASIA IN SINGAPORE 20-22 MAY (https://asiatechxsg.com/s=
+atelliteasia//): Hall 4, Booth 4K2-4
+--
+embedded brains GmbH & Co. KG
+Herr Sebastian HUBER
+Dornierstr. 4
+82178 Puchheim
+Germany
+email: sebastian.huber@embedded-brains.de
+phone: +49-89-18 94 741 - 16
+fax:   +49-89-18 94 741 - 08
 
+Registergericht: Amtsgericht M=C3=BCnchen
+Registernummer: HRB 157899
+Vertretungsberechtigte Gesch=C3=A4ftsf=C3=BChrer: Peter Rasmussen, Thomas D=
+=C3=B6rfler
+Unsere Datenschutzerkl=C3=A4rung finden Sie hier:
+https://embedded-brains.de/datenschutzerklaerung/
 
