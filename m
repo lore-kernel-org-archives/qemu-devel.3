@@ -4,61 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1EDDCD37AC
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 17:53:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B701CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 17:53:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNDki-0005VC-2R; Wed, 13 May 2026 13:52:12 -0400
+	id 1wNDki-0005VP-IG; Wed, 13 May 2026 13:52:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wNDke-0005Sg-0Y
- for qemu-devel@nongnu.org; Wed, 13 May 2026 13:52:08 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wNDkg-0005U9-1x
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 13:52:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wNDkc-0002nm-GD
- for qemu-devel@nongnu.org; Wed, 13 May 2026 13:52:07 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wNDke-0002p2-Hy
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 13:52:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778694725;
+ s=mimecast20190719; t=1778694727;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zmSdUWIr+b6CJ5tj7/DVYCfqvPza/y+BUbY3Bmv7cAk=;
- b=Q7IDEeVApPxRF4enDRc/FavQF2yrhb2NQKqs8RcV1eC6VtH8d54Fh731JU0myFIAxZfWfh
- ous1eEbSA6L5EzXmEVJCWUJIOHxLnzy/Q2+EBzlbsR8KTjvdl4vNQNPnZbeZ8GqYnkF0jR
- +/XvEjpiJAr6O485CFN+3r+CzAnK26Y=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=A76F+oRRIMJ8Ttwj3khe58YHaI/qhLLVIOMSuGp23wQ=;
+ b=K/tvtQGtTQwGu9x3uNOnx/3CeziPeUJMaGPBmgPQWk8hlkikXE1FcLQoWnon74CYXZl43W
+ a6J1GkUuPYk0tluIDBYgZ8PyKq6BX1M7b8DJWfCxEvc2xZsmjALmBRzmcuc7IsATZuh1iA
+ vyRZZUCfrZQ1/tpS98TjIGwvVcErj4E=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-595-rTTGXIS3NJSeH7OMWTSaXA-1; Wed,
- 13 May 2026 13:52:01 -0400
-X-MC-Unique: rTTGXIS3NJSeH7OMWTSaXA-1
-X-Mimecast-MFC-AGG-ID: rTTGXIS3NJSeH7OMWTSaXA_1778694720
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-353-b2yciccIO_uIu0QRiXJRUw-1; Wed,
+ 13 May 2026 13:52:04 -0400
+X-MC-Unique: b2yciccIO_uIu0QRiXJRUw-1
+X-Mimecast-MFC-AGG-ID: b2yciccIO_uIu0QRiXJRUw_1778694723
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 71E501800451; Wed, 13 May 2026 17:52:00 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 38450195609E; Wed, 13 May 2026 17:52:03 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 101E11953947; Wed, 13 May 2026 17:52:00 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E003819560A3; Wed, 13 May 2026 17:52:02 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id AD6B121E6A02; Wed, 13 May 2026 19:51:57 +0200 (CEST)
+ id C18EF21E6A09; Wed, 13 May 2026 19:51:57 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Chinmay Rath <rathc@linux.ibm.com>, Aditya Gupta <adityag@linux.ibm.com>
-Subject: [PULL 1/6] MAINTAINERS: add self as reviewer for PowerNV and PPC TCG
-Date: Wed, 13 May 2026 19:51:52 +0200
-Message-ID: <20260513175157.3765935-2-armbru@redhat.com>
+Cc: stefanha@redhat.com, Chao Liu <chao.liu.zevorn@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 6/6] MAINTAINERS: Add myself as a reviewer for Checkpatch
+Date: Wed, 13 May 2026 19:51:57 +0200
+Message-ID: <20260513175157.3765935-7-armbru@redhat.com>
 In-Reply-To: <20260513175157.3765935-1-armbru@redhat.com>
 References: <20260513175157.3765935-1-armbru@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -83,47 +84,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+From: Chao Liu <chao.liu.zevorn@gmail.com>
 
-Also remove the redundant entry for pseries.
+Add myself as a reviewer for the Checkpatch module, so I can help
+review related patches and continue maintaining it.
 
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Message-ID: <20260501144558.24491-1-harshpb@linux.ibm.com>
-Reviewed-by: Chinmay Rath <rathc@linux.ibm.com>
-Acked-by: Aditya Gupta <adityag@linux.ibm.com>
+Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Message-ID: <20260513070830.851842-1-chao.liu.zevorn@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- MAINTAINERS | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 93a1e4e482..2a39a53067 100644
+index 0d9c7146da..2fa0a77ac6 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -327,6 +327,7 @@ PowerPC TCG CPUs
- M: Nicholas Piggin <npiggin@gmail.com>
- R: Chinmay Rath <rathc@linux.ibm.com>
- R: Glenn Miles <milesg@linux.ibm.com>
-+R: Harsh Prateek Bora <harshpb@linux.ibm.com>
- L: qemu-ppc@nongnu.org
+@@ -3745,6 +3745,7 @@ F: hw/pci/pcie_doe.c
+ F: docs/specs/spdm.rst
+ 
+ Checkpatch
++R: Chao Liu <chao.liu.zevorn@gmail.com>
  S: Odd Fixes
- F: target/ppc/
-@@ -1634,7 +1635,6 @@ F: tests/functional/ppc/test_40p.py
- sPAPR (pseries)
- M: Nicholas Piggin <npiggin@gmail.com>
- M: Harsh Prateek Bora <harshpb@linux.ibm.com>
--R: Harsh Prateek Bora <harshpb@linux.ibm.com>
- L: qemu-ppc@nongnu.org
- S: Odd Fixes
- F: hw/*/spapr*
-@@ -1660,6 +1660,7 @@ PowerNV (Non-Virtualized)
- M: Nicholas Piggin <npiggin@gmail.com>
- R: Aditya Gupta <adityag@linux.ibm.com>
- R: Glenn Miles <milesg@linux.ibm.com>
-+R: Harsh Prateek Bora <harshpb@linux.ibm.com>
- L: qemu-ppc@nongnu.org
- S: Odd Fixes
- F: docs/system/ppc/powernv.rst
+ F: scripts/checkpatch.pl
+ 
 -- 
 2.54.0
 
