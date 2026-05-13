@@ -4,147 +4,168 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58DA1CD4851
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 16:17:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F815CD4F21
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 16:35:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNCGL-0006e5-9K; Wed, 13 May 2026 12:16:47 -0400
+	id 1wNCXf-0003JQ-As; Wed, 13 May 2026 12:34:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wNCFz-0006b1-I8
- for qemu-devel@nongnu.org; Wed, 13 May 2026 12:16:23 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <shaju.abraham@nutanix.com>)
+ id 1wNCXb-0003JE-M6; Wed, 13 May 2026 12:34:36 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wNCFw-0004OA-Vj
- for qemu-devel@nongnu.org; Wed, 13 May 2026 12:16:23 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64DBgxOO2965206
- for <qemu-devel@nongnu.org>; Wed, 13 May 2026 16:16:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ (Exim 4.90_1) (envelope-from <shaju.abraham@nutanix.com>)
+ id 1wNCXX-0000fx-Js; Wed, 13 May 2026 12:34:33 -0400
+Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64DGLHq84149088; Wed, 13 May 2026 09:34:17 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- WFoMnAzGzWCwisQKu139wnNmd7LsBaf21U6gTocY+CU=; b=CqlPy++itiuGLtva
- E2b18htOoAtZk1bti7szmVMS/lkvFTFXQfPSDHk/mer+GjNPHA1A5RYQjb0zDSU0
- TbnQcqduB4o+vVV3wOkN11yQ+Iwt3OFQYg6M+c1y2BghdjvvToD+/IZ00lcwRFCX
- UQGMkROdZIxcPEXDp5+51zWo1vgLmfy3ECAHvKCNh3Ez5LN8Li5FM3qM6e3T57/h
- ZxNt1m9YFwyGjsf/lsvvmg7tGA91Pwp8LYuIVpryVBEObprgaAQl7g92KEjGhCXj
- 9Xp46ZRHsfWKAsU8aAQbIoAJyNjVHoX+0SAT3kMzoWAsTLtKhVOXmgIDVqU68w8d
- bCN7bg==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e4ma5a97q-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 13 May 2026 16:16:18 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-2f3ec2e8d07so897469eec.1
- for <qemu-devel@nongnu.org>; Wed, 13 May 2026 09:16:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778688978; x=1779293778; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=WFoMnAzGzWCwisQKu139wnNmd7LsBaf21U6gTocY+CU=;
- b=Rhy3xirHxcjcM8pvsS23BSUXWs8HSdYIqexXEOdnRnO/LKupoMpLPfR06SEge7uyhD
- gvrYC7icOA3MBr8e8zD/1tly41oLqIpgnYW5iHRFAEqlBGkOp4+BO7dD3VNpyHrGnDij
- Y7NIBrVgTFhZKldMdZH1qliPMfuI/d7s+oXUgEbKKxUyC7QeVtbPX1SNsCxNqWMFhR+u
- aUVyCK8Vj4HlZeEN71NJJumh7kjcFGEpPfmYG1SRm9/kMYVjA9fArrVmKqW7MkhqwO7F
- xtwL3Kx4jy+iWQzwq6lKXmpJEhB1B9HEToHWhvMNItEtHXRMn1p4sz/+1LFZhzMXHvkh
- oyVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778688978; x=1779293778;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=WFoMnAzGzWCwisQKu139wnNmd7LsBaf21U6gTocY+CU=;
- b=UydE/IGgJ3dOmBmNH43LEAcsxWUtC8rSrBi+rpB/QJcXLri0JOH/0sChCvQBnvkqqc
- aSOxTp/A7j7O3zMMOln+1+o09grvEhdQyl9EfyovdbpGKqJ4Qa4gVkZQu551ov1L75c9
- jGn+UP8RqSTzh7zJ91AmmT5vMvpWj2JkEx8rBm0bqOr38d0KY6T6e1Ve6kzVR0Oj4Yfu
- 1SZNEKmCWZHDTxiypXoZniNL9xS+HCYAARdVEN6ROifC9vC5d5joLwWSSPtZxCz9CArt
- 5b4p09qzdxJZG33TIcgo1Npzn6jrpZZrT8ADfe+3fqfHi5jMZ4Wm2rxjX+eZ7dTiRvcH
- puwA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8dL5zb66FxrBlSJMqOniQs9r+CKeX7YXlnes0gNjjXY8bT3QKR2DcVirZUm0VkmTOJQFIkC1Zyo4oq@nongnu.org
-X-Gm-Message-State: AOJu0Yyi4fESaT9yEqUReI8Q+6i88xxD7ZHrRX6p80yanft4wbt08RYQ
- yD7pmiG5V9a/bkcog9gW/8zeT/rcdX0xLDyXXwgIVHyNaQ9YrknERktEhn+ntKBltQKDjJCaseX
- rgrHuQYtz9cQMlgNpANy2vLwD/wZpZm73oojmiMGNkvprCRof1/Hxt2l8Ag==
-X-Gm-Gg: Acq92OHX8MPyoVDUu7xpoQx7pqFqxRrC+0dDs2Qt+R6WYaXK8WaXqybDN69Yx7NBLdj
- HVZrg9tKs3NmSdYavR4+LCcQcl5/CVgWS5ZSR2Q0itSIrSHUvW1w+av44LsFAA25yH/aTxA5LJJ
- aD9H2a0hHbaCeuo7cPXgJc+sUbYwaxcbJBqwOpPwXWSz6wtkaXCyQgYkC5JGXrA2BI8RtZWMrQV
- UtVjEu1KNVon8QnS357o2WvHnzyWWjqmCs1CAlytRP0bO/e2L4L9omwv1XIXinqD1s1p7MBsl54
- 6NPVhkmYafzq9smdPpsPHI6FXVK3JXQ1xX1FMAPbXsG2b9umT7itjTUbBk7/niBkvRsxrozC9+y
- ikASVnh5WY2/Mm6WJsTZG162RFxwbLpON7UqVHnnbQp7UQ+Ocl6Gx3HZdKYbolMzvTq90LCIL37
- XY8nsScKGOEGx70Q==
-X-Received: by 2002:a05:7300:b586:b0:2ea:3370:6e51 with SMTP id
- 5a478bee46e88-30117085411mr2613496eec.4.1778688977599; 
- Wed, 13 May 2026 09:16:17 -0700 (PDT)
-X-Received: by 2002:a05:7300:b586:b0:2ea:3370:6e51 with SMTP id
- 5a478bee46e88-30117085411mr2613456eec.4.1778688977002; 
- Wed, 13 May 2026 09:16:17 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2f8862d43b4sm22332633eec.11.2026.05.13.09.16.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 13 May 2026 09:16:16 -0700 (PDT)
-Message-ID: <368f7343-f0a8-40c8-bbab-663831962660@oss.qualcomm.com>
-Date: Wed, 13 May 2026 09:16:14 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/6] hw/ppc: Rename spapr_pci_vfio.c to
- spapr_pci_vfio_eeh.c
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Narayana Murty N <nnmlinux@linux.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Cc: npiggin@gmail.com, harshpb@linux.ibm.com, mahesh@linux.ibm.com,
- ganeshgr@linux.ibm.com, sbhat@linux.ibm.com, vaibhav@linux.ibm.com,
- anushree.mathur@linux.vnet.ibm.com,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20260512071112.9675-1-nnmlinux@linux.ibm.com>
- <20260512071112.9675-6-nnmlinux@linux.ibm.com>
- <ebc9e323-6acb-4224-84a7-1fdcc0841205@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <ebc9e323-6acb-4224-84a7-1fdcc0841205@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=2xtzwM/gRiSPkKPySRKL3ywLvvQP3T0S77jRRNPLY
+ NQ=; b=ZStV4jxTNq4nqQKPYXRnnjXHV1wJ3Bjl/kcYDMNBkMi87Vgz9mtYXqJlA
+ SW+5aPPoRggZ+6Z4resCyH8KWQkcbM7a0Dg4usAWmyYD3s4QwukwP4o3ZGrfLbLd
+ w1fPmGdpkMncuR9RDFA5XZwRkOQyGVKRQnduQl16PUpODxFcEYmsTSqJKghqlJCs
+ Ptf5WPXTcibmv4d/kDo9qSohZlmuR5GymNdQ9t4q0CYOkpZT5H4RuQqPP1vyKvic
+ YHXdBhd+mDjhRk7Ah/g4QUX3PxdFFbZz9LIS7PAhf9FoApl7gOa3XHXIt0pe6Dne
+ 3l3bCUpkYuruI9dY5dvpM/syVRytg==
+Received: from bl2pr02cu003.outbound.protection.outlook.com
+ (mail-eastusazon11021098.outbound.protection.outlook.com [52.101.52.98])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4e3nva6757-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Wed, 13 May 2026 09:34:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=pT8M+qQ63ozM1TxKfLMFJGWecw6z3zYcEw7mhw70tSERG/SeM7BUD+0aRcxgFrBEiJUF5W6en3Lpl7ePXzsveQ9gg7rJEXDfB1V3DuvDIeN0ft06JV9aIMJEennfq+GicAq6/CZEz5OY1V+D9PGBucyAVGaJxf1XFhlbdAfD7slR2thEVUUFuRrVCOebnM7tm5IH393LA5YsasRnSJNeQtVdujUQ9OVKXCK5eV2R2NFjtaoUEv7hTat55V3aGouRVIkb7DDX3DDyPqhPICmxyP3q3CBTXPacWnx3A3Jh98am0WeEzfDuAo4WpPV5CHMfnevUvHLksjK2s0gsp1TSpg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2xtzwM/gRiSPkKPySRKL3ywLvvQP3T0S77jRRNPLYNQ=;
+ b=hKTytzSyYAiacTkuNAsZVTuEtHeazc/EEMnzu8+D3urLgZggliymeCmFWkCjwrj52F4LYPSF0IUILq0rdLAvbpmWMAMiF4sAK8+joK2FjSOeqQ+PmfM7O8RLYJuMa/4oEzpBtigcdF2noCHmt6yYtH1HXlfdQ2h8YIX6I0Pa87NwqUfrjMwVkEHl95oEieJy5bsXo3tiqye8zIhx0jI+kok5KvK/i1DOEYxxBOKxT4BrUs5R2Bj/PxxKSdn+QTJhh//6YEYlfKbeQaOQIYEMvEUxDJ1AEPUOD+swW+jIBFcrCnhARxRr/5Ha6HlT9NVHgyvV6IyQGgt1ZerA5dHAcQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=2xtzwM/gRiSPkKPySRKL3ywLvvQP3T0S77jRRNPLYNQ=;
+ b=l6YWOb2S3Z/L0GtqmMDZ9Vx+fXwPGcvsFXDtwiiUdQdBbxvo8tW0NIS4puTb+Ms7lW9lgX3M7m7CkVwJMbbIFOU1W60hnUXRgBgeenInDkUoH460UlQze+4cm16079ygrn3UAWXmAR7+1HuDLKptG65sMdz6qj1rF8khZ0E9/vfQtaJ8270Weci7RD4McF4nmzOYFj/MkJ1iP4T3j60ugjnMFj3nvWYE4Seh1uFaFje5SHRMLliRKKae/OtocvgurF4px9C999eZcqVfx6uk8vHQ9CByaDY1cyI+EEd4g9ysiPscT9HPa+7YTpIXegMBRe86ft1SfZ8c1EibmJoIQQ==
+Received: from PH7PR02MB10160.namprd02.prod.outlook.com
+ (2603:10b6:510:2e7::19) by CH3PR02MB9564.namprd02.prod.outlook.com
+ (2603:10b6:610:120::21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.23; Wed, 13 May
+ 2026 16:34:15 +0000
+Received: from PH7PR02MB10160.namprd02.prod.outlook.com
+ ([fe80::4ed7:5c74:48e0:ff23]) by PH7PR02MB10160.namprd02.prod.outlook.com
+ ([fe80::4ed7:5c74:48e0:ff23%7]) with mapi id 15.20.9891.021; Wed, 13 May 2026
+ 16:34:15 +0000
+From: Shaju Abraham <shaju.abraham@nutanix.com>
+To: eric.auger@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ kvmarm@lists.linux.dev, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, cohuck@redhat.com, sebott@redhat.com,
+ skolothumtho@nvidia.com, philmd@linaro.org
+Cc: maz@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
+ prerna.saxena@nutanix.com, jon@nutanix.com, jond@nutanix.com,
+ Shaju Abraham <shaju.abraham@nutanix.com>,
+ Khushit Shah <khushit.shah@nutanix.com>
+Subject: [RFC PATCH v1 05/13] target/arm: named_cpu_model: replace FIELD macro
+ with IDREG_FIELD
+Date: Wed, 13 May 2026 16:33:48 +0000
+Message-ID: <20260513163356.3033159-6-shaju.abraham@nutanix.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260513163356.3033159-1-shaju.abraham@nutanix.com>
+References: <20260513163356.3033159-1-shaju.abraham@nutanix.com>
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEzMDE2NSBTYWx0ZWRfXxb8AUvNm+hcI
- hd7k0DCqOiTOGcEx7uxvlK1SfeEcDBelsxOXRJFzrBCbDz8gvXeqqgoGVQJUvpusEDVPo8oAAyM
- PDawApA8AIJTAaW5gqVWpYjqb3h9MonSyhDZzVqNTtlYDuI8r4cqI9E/dXx4UMhR/Ea1ROuHU+7
- koLGNyxzafRj9tA/g6y7eWeJIfWT96hgsPIfhZWQi5sLqiFPBcsGGzxl5D8hQgRQDYRf2HYN6V7
- gqbemyMRgH+BRQOQiPu7Kkk+PPmeu9SwW1Jl7syjiQQyd0/xbYdQoj7bqDzI/o2bFF44qdGJYwp
- ekBoambaXxYC0OpI/7JJPH37mbnBklicbwl9xtcZAxF9pYvqZmCeo+m6nmcFPecjX7wvgI9vA2m
- hZGnrEQvoSW1Y1ArlQ0iHRHZDeBXwAjwH1TQPlY16KoJXqsgqJqbp46FCRW/CkBhVwa4ic6TkEG
- F3dLZ5P7SDPLp2O3vdA==
-X-Proofpoint-ORIG-GUID: bHOppNjNVjxy8_DvCVUav8j-EOKh-67N
-X-Authority-Analysis: v=2.4 cv=TJZ1jVla c=1 sm=1 tr=0 ts=6a04a3d2 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=VnNF1IyMAAAA:8 a=fIU2VSnNEEcB7yV1-LAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PxkB5W3o20Ba91AHUih5:22
-X-Proofpoint-GUID: bHOppNjNVjxy8_DvCVUav8j-EOKh-67N
+Content-Type: text/plain
+X-ClientProxiedBy: CY5PR10CA0003.namprd10.prod.outlook.com
+ (2603:10b6:930:1c::30) To PH7PR02MB10160.namprd02.prod.outlook.com
+ (2603:10b6:510:2e7::19)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH7PR02MB10160:EE_|CH3PR02MB9564:EE_
+X-MS-Office365-Filtering-Correlation-Id: 00293c69-2ac9-41da-d2db-08deb10d78d7
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|376014|366016|1800799024|18002099003|22082099003|921020|56012099003;
+X-Microsoft-Antispam-Message-Info: y/4iP6HwN6RzIkz62arKXPM42MQbWSJb5RQF6TWnjuCeNbs5rwgoseX/kH71em36oDd9+vDwSJxqaRaXFzRXyzSkXl+2IiJcYNngdSk1igSAZYwzmK6Zcw30XEUu91e/HfvOZbguft83XrxVFl9kOIi05I3ZyJXiRc6fy3ljbMxkR6RHYb2Nan10hqRzbAiyxYgYt8+UwhKEMT4qTfXzJ6XeBXkus8IEgICecLdvLnOa36IUYvv2E18ldik3WakuKQrEcgltUIbIbkigk87iJti7/685xfNRPb37WtSQvjZImmOS8KptnV1bSGXzlYIzkvUxVBQnpnyP/fmIsMJhQkcvBrYSJjfUWaiMs2phaLzF+CZNZqMsHLlmNi2n/eVLzZE6VRWsAdHnkYLJ9vmSu+1UDZo8wT2PCUHCGvfPqRNS0kuUZgRLHZCigLioKNC51ql9ZeTcG+ay9UCAA/Iva8yvZzTVbianubftWIjYLux8WZbPycMzRbKcqtsWPPeMVg9JQkrYKNMkam37Ij3Q/8Ry6JLFUgt+xuJja2zqnz1zL9sNiy95rtWL42Um1IspSgczLo3a/od0tSd1rNw/mZ0LqRcyFEx/hH0cHN/WPuNqEgpKhMsGolM9g8DciKkXEgZJ4l4ccPQa0k+0PK0sF1Qje2Rm7HMIddoGzXSlGfZDr68mAX2X9wLg6smfcq5DnqHeyxbUqfMtPpA7QEu75bRHoGdYmhnlS710I6NOUiM=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH7PR02MB10160.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(366016)(1800799024)(18002099003)(22082099003)(921020)(56012099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?YuGXMEkeGXGFskCTPncYnOieONs0hrZDoOChiNeauIyP8VpMyt2TvVKgi8/8?=
+ =?us-ascii?Q?OIkh68haiizVGotuVfJqPSG/HvJ9jlJfsCScT28LFLzsh4/1q+85QVdCnaWH?=
+ =?us-ascii?Q?HzzgxinjTHnQO3STFPS6zZahs4aKNk/067+78EpIhgoHOjQu6BYyaa02DdZ2?=
+ =?us-ascii?Q?b1g2cAxs0KQ5iX0+sr2iXNKKe2A6e5kSvw7E59gVZGYWrq2UJJrAcTE78xX8?=
+ =?us-ascii?Q?jj77SFsi+X5Ok3Mkk6Ybxh/QUdXQNlWZI3j4P3d3B90Vc16pJ840zNdib3uD?=
+ =?us-ascii?Q?iZsb+7Ia9xdhcW6gz6ZJha9ZOYBeMHRhzCjHgxwe04tM5ESKixCSKWYzuJes?=
+ =?us-ascii?Q?qbcG1U+Pz1GfXe7okdarpTAlynIV4v4gINk5/vRwzcEqpXM3xHY6X8hNm6NR?=
+ =?us-ascii?Q?br7YoNoPYZOpSOD7wcjhP29ATKM/sWUmHvAZ4VPMeTjFPU3XJIX+XiYcFSqO?=
+ =?us-ascii?Q?jOzXWQthvHR4Eg/xZNQHtjLBoVVfORTRNmZ/rCuRDp4Y1hPMqIQTDCMQpEJI?=
+ =?us-ascii?Q?sf0JlVnGPaMOwUUgr6DLIFr5AbmQpA+xcTAvC3GSgDffAGGTdw/CgUfxGfGF?=
+ =?us-ascii?Q?Sn2v6O9OMjcEFgsg2bgoklFtQM7Hk9Cs87JQ1gqFM1G3OeNxj/Ye92d0ijPS?=
+ =?us-ascii?Q?7HBPQK+n3d9B56u6se92YPQgpgjiVs8wH9xUvWMUBqsPyY3vUCGRirpEf8wN?=
+ =?us-ascii?Q?mH2RrwNQBodXAtpVmovm6c5rTUm6tE1D0obaUlF0gRxhbRXk7L7wVJewfAAz?=
+ =?us-ascii?Q?6uIGqlRckRrVhPh6H6RKE0dD8ErlP+rVu21MNukPDD6PQakcboMwVSpaaev/?=
+ =?us-ascii?Q?HxgjKET8Jc82jpVC7LQPWslTTnjF1SAhL6LpI1Yg1UtH3lP5q6R5ekl0KWjo?=
+ =?us-ascii?Q?9ETaEmDihJvKaYdSzaMam0LA0Bd/uqpkyaaxxM0ji/EPGEKXF2hTYTLZzUY1?=
+ =?us-ascii?Q?s3f9GSuagBqdRiphAqA+7Fm6Tk5LOxIrvWQ+80DAUFD5+r4oCT0KPAj/gbk6?=
+ =?us-ascii?Q?ygex48kUFcbSA0IZ3OihGv0T2bafES68Ac2VKMUhQggK85qaYyzQ+Fz82MNd?=
+ =?us-ascii?Q?7S2fDlX7ckmlFbohEOUM/bITC06hW5/aM1Qj0sl9R9UFdlCRonx7S1eeU1JN?=
+ =?us-ascii?Q?yv1nlK2iWF2YpcGYWIQnG3zkgmgeHdDDNpSjflM99aP/kDGrwCpDPoUNzDlU?=
+ =?us-ascii?Q?zRvJDSarKPlHNa9Dh5xg1uMwxO7z6jAODvoJMFVe3Y1XcDEvdwE1UwvZmN20?=
+ =?us-ascii?Q?JDUbKY+8jzhRJthdzbeoKa8gCnql8bmSG90usbVT+HZbx17cFFMMmfY54K1a?=
+ =?us-ascii?Q?2hyl2CtIbdbZ6hyYELLDTKKsYd0pJ4xdkV1U/5pdnbf95OWWVO3jpQoUGAOj?=
+ =?us-ascii?Q?zpYnKLXi5tAz2ECOjG8qr08fvGU15iiXbunF75e9NR+c2WdZASLYh9vIjdcp?=
+ =?us-ascii?Q?1nFfezYwNbgeywrD3z/kKZMICFErVDDeh4JV78lkpVxSgI9Zj58UoFIqubJu?=
+ =?us-ascii?Q?vCl5FPFKUmVCml6E0gtId4MyfJKLhUYhi4srwol4ZDqlRfKRG8csJFt0G8+c?=
+ =?us-ascii?Q?Omx9xbjrxhAVuWQI6YbkcGWWMgYFu+TD4icaJWsr2ek6hsja/mddiNH2OyNL?=
+ =?us-ascii?Q?nQ7RcLZSK50FGTf4MvyKogPFsOLYnowagBrfuZps7RpJwCRy9Qe0/jztiJga?=
+ =?us-ascii?Q?n2RgbIeEBGROMJAwSJr6sBBLImmpfelb3AHh/9Jl7uW82GrwLy620KhNvc4V?=
+ =?us-ascii?Q?EtE6F+K4ijxdabnWCnX9ivu6gLOiNAE=3D?=
+X-Exchange-RoutingPolicyChecked: GjgP9ywUguEihonC7JrfqPDQJZjNl5+36QqkurAHUzmNdXUp2YJPPq7Uh1vVJawyGRS/hPBCCBrWA3mOofqHLFaM29EyLHCkFpoPPmaSoc8QpRbuXuStBq5mFU6M+R5gFSp1q+rC2KYoadQVZl2uyyoaLlOku9RQewRUQRWBH0ZU5yOgx7ByH6o9x6yXXpDoadfmDe1/ug9TUCk0EqxOjK+ziC1YgyyiPKGy7nQHerI+f9jIsoWrGbp5MxFyOJ5BfJ9W3uTDUBlGwwDnyCE6ttYZ9jjo/hsjqxlcDsqiWrOpJpMiWaHQmho6l1TmxpPdUUpPiHdkxJvKcDENklFTpQ==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 00293c69-2ac9-41da-d2db-08deb10d78d7
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR02MB10160.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 May 2026 16:34:15.6638 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: zz1qMtdVo3YAwP+guBLDjumXopEBBMon7nBgPUlV20MzZiAf5EEutpHfpQNW9r2oeqnyh03JCXL1bofUBObip0DggmcZRrL3gp1DxUXvytw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR02MB9564
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEzMDE2OCBTYWx0ZWRfXw6rky+499oGk
+ TtW8V7I0KEEZsAz8bmchwsYZCJeZv/GhS59aH8hGZG1JhZeIlEZkNucicRdCU+I0Jdf0U/0LSI7
+ tfUkEZZuajWKsMLH0Cw75zcZoLSaQRT6B8tVAL96rSMWQkQwb8y6VvvqwbfI6qhXLvy+b7Cceoo
+ Snt1ASSsG5187LZBwvBGVkX3Tg8fe5+2JN3WWcVlSBr+dDb6qGc1qIdHElqUEf4VelVGLY5wjvK
+ lE65iPvXS3mjARbJfBl6mluMQe2XDffiDnXba2bB2pYRjQ1OFLoMdQAJ3NuevVYdk7qq5i1ncqb
+ 0ltKnABRXitmSPBIpKqWYR8s0zSI/JztKGA/O2WTP8kZHGbklZSFBwmfkQapiLEYU4jbt3+R+ES
+ kf9zsLtx9xti23WytGZnyHgByGu8/QMA9hCTIJ0Upwz6JoxJlvpj94f11Pfu5zMzkrHn+HB9nps
+ P76/Dg85HUKtKy4Ff5A==
+X-Authority-Analysis: v=2.4 cv=evLvCIpX c=1 sm=1 tr=0 ts=6a04a809 cx=c_pps
+ a=1GsU8nEb0rXVac2zXnn+jQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=NGcC8JguVDcA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=0LlEyIVc8U2lsR7dKhuH:22
+ a=64Cc0HZtAAAA:8 a=qagGDh9ZKt14fccB-tAA:9
+X-Proofpoint-ORIG-GUID: FjtCFhkx0ORZRYFOrFQ9DBhQXR4sq06G
+X-Proofpoint-GUID: FjtCFhkx0ORZRYFOrFQ9DBhQXR4sq06G
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-13_01,2026-05-13_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0
- impostorscore=0 spamscore=0 phishscore=0 priorityscore=1501 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605050000 definitions=main-2605130165
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=shaju.abraham@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UPPERCASE_50_75=0.008 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,45 +181,271 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/12/2026 12:54 AM, Cédric Le Goater wrote:
-> + Pierrick, Philippe
-> 
-> On 5/12/26 09:11, Narayana Murty N wrote:
->> The file spapr_pci_vfio.c contains exclusively EEH (Enhanced Error
->> Handling) related functions for VFIO devices on sPAPR platforms.
->> To better reflect its specific purpose and improve code organization,
->> this commit:
->>
->> 1. Renames spapr_pci_vfio.c to spapr_pci_vfio_eeh.c
->> 2. Moves spapr_phb_vfio_eeh_reenable() from spapr_pci_vfio_eeh.c to
->>     spapr_pci.c, as it's a general PHB operation not specific to
->>     VFIO EEH error injection/recovery
->>
->> After this change, spapr_pci_vfio_eeh.c contains only the core VFIO
->> EEH error handling functions, making the file's purpose more focused
->> and clear.
->>
->> This is a refactoring change with no functional impact.
->>
->> Signed-off-by: Narayana Murty N <nnmlinux@linux.ibm.com>
->> ---
->>   hw/ppc/Kconfig                                    |  2 +-
->>   hw/ppc/meson.build                                |  2 +-
->>   hw/ppc/spapr_pci.c                                | 14 ++++++++++++++
->>   hw/ppc/{spapr_pci_vfio.c => spapr_pci_vfio_eeh.c} | 12 +-----------
-> 
-> 
-> There is a CONFIG_VFIO_PCI in this file that could be replaced
-> with stub definitions.
->
+Replace the existing FIELD() macro with the newly introduced IDREG_FIELD()
+macro to remove deduplication. All definitions for TCG remains the same.
 
-Indeed, we didn't touch this yet because it hw/ppc, and it's not in the
-list of target where we are focused.
+Co-authored-by: Khushit Shah <khushit.shah@nutanix.com>
+Signed-off-by: Shaju Abraham <shaju.abraham@nutanix.com>
+---
+ target/arm/cpu-features.h | 232 +++-----------------------------------
+ 1 file changed, 18 insertions(+), 214 deletions(-)
 
-Indeed, the #include CONFIG_DEVICES and #ifdef CONFIG_VFIO_PCI can be
-removed, and stubs for spapr_phb_* functions be added in a new
-spapr_pci_vfio-stubs.c file, and added to stub_ss.
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index 4e44245a8b..782850ccec 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -50,14 +50,6 @@ FIELD(CCSIDR_EL1, LINESIZE, 0, 3)
+ FIELD(CCSIDR_EL1, ASSOCIATIVITY, 3, 10)
+ FIELD(CCSIDR_EL1, NUMSETS, 13, 15)
+ 
+-FIELD(CTR_EL0,  IMINLINE, 0, 4)
+-FIELD(CTR_EL0,  L1IP, 14, 2)
+-FIELD(CTR_EL0,  DMINLINE, 16, 4)
+-FIELD(CTR_EL0,  ERG, 20, 4)
+-FIELD(CTR_EL0,  CWG, 24, 4)
+-FIELD(CTR_EL0,  IDC, 28, 1)
+-FIELD(CTR_EL0,  DIC, 29, 1)
+-FIELD(CTR_EL0,  TMINLINE, 32, 6)
+ 
+ FIELD(MIDR_EL1, REVISION, 0, 4)
+ FIELD(MIDR_EL1, PARTNUM, 4, 12)
+@@ -189,217 +181,29 @@ FIELD(ID_PFR1, VIRTUALIZATION, 12, 4)
+ FIELD(ID_PFR1, GENTIMER, 16, 4)
+ FIELD(ID_PFR1, SEC_FRAC, 20, 4)
+ FIELD(ID_PFR1, VIRT_FRAC, 24, 4)
+-FIELD(ID_PFR1, GIC, 28, 4)
+ 
+ FIELD(ID_PFR2, CSV3, 0, 4)
+ FIELD(ID_PFR2, SSBS, 4, 4)
+ FIELD(ID_PFR2, RAS_FRAC, 8, 4)
+ 
+-FIELD(ID_AA64ISAR0, AES, 4, 4)
+-FIELD(ID_AA64ISAR0, SHA1, 8, 4)
+-FIELD(ID_AA64ISAR0, SHA2, 12, 4)
+-FIELD(ID_AA64ISAR0, CRC32, 16, 4)
+-FIELD(ID_AA64ISAR0, ATOMIC, 20, 4)
+-FIELD(ID_AA64ISAR0, TME, 24, 4)
+-FIELD(ID_AA64ISAR0, RDM, 28, 4)
+-FIELD(ID_AA64ISAR0, SHA3, 32, 4)
+-FIELD(ID_AA64ISAR0, SM3, 36, 4)
+-FIELD(ID_AA64ISAR0, SM4, 40, 4)
+-FIELD(ID_AA64ISAR0, DP, 44, 4)
+-FIELD(ID_AA64ISAR0, FHM, 48, 4)
+-FIELD(ID_AA64ISAR0, TS, 52, 4)
+-FIELD(ID_AA64ISAR0, TLB, 56, 4)
+-FIELD(ID_AA64ISAR0, RNDR, 60, 4)
+-
+-FIELD(ID_AA64ISAR1, DPB, 0, 4)
+-FIELD(ID_AA64ISAR1, APA, 4, 4)
+-FIELD(ID_AA64ISAR1, API, 8, 4)
+-FIELD(ID_AA64ISAR1, JSCVT, 12, 4)
+-FIELD(ID_AA64ISAR1, FCMA, 16, 4)
+-FIELD(ID_AA64ISAR1, LRCPC, 20, 4)
+-FIELD(ID_AA64ISAR1, GPA, 24, 4)
+-FIELD(ID_AA64ISAR1, GPI, 28, 4)
+-FIELD(ID_AA64ISAR1, FRINTTS, 32, 4)
+-FIELD(ID_AA64ISAR1, SB, 36, 4)
+-FIELD(ID_AA64ISAR1, SPECRES, 40, 4)
+-FIELD(ID_AA64ISAR1, BF16, 44, 4)
+-FIELD(ID_AA64ISAR1, DGH, 48, 4)
+-FIELD(ID_AA64ISAR1, I8MM, 52, 4)
+-FIELD(ID_AA64ISAR1, XS, 56, 4)
+-FIELD(ID_AA64ISAR1, LS64, 60, 4)
+-
+-FIELD(ID_AA64ISAR2, WFXT, 0, 4)
+-FIELD(ID_AA64ISAR2, RPRES, 4, 4)
+-FIELD(ID_AA64ISAR2, GPA3, 8, 4)
+-FIELD(ID_AA64ISAR2, APA3, 12, 4)
+-FIELD(ID_AA64ISAR2, MOPS, 16, 4)
+-FIELD(ID_AA64ISAR2, BC, 20, 4)
+-FIELD(ID_AA64ISAR2, PAC_FRAC, 24, 4)
+-FIELD(ID_AA64ISAR2, CLRBHB, 28, 4)
+-FIELD(ID_AA64ISAR2, SYSREG_128, 32, 4)
+-FIELD(ID_AA64ISAR2, SYSINSTR_128, 36, 4)
+-FIELD(ID_AA64ISAR2, PRFMSLC, 40, 4)
+-FIELD(ID_AA64ISAR2, RPRFM, 48, 4)
+-FIELD(ID_AA64ISAR2, CSSC, 52, 4)
+-FIELD(ID_AA64ISAR2, LUT, 56, 4)
+-FIELD(ID_AA64ISAR2, ATS1A, 60, 4)
+-
+-FIELD(ID_AA64PFR0, EL0, 0, 4)
+-FIELD(ID_AA64PFR0, EL1, 4, 4)
+-FIELD(ID_AA64PFR0, EL2, 8, 4)
+-FIELD(ID_AA64PFR0, EL3, 12, 4)
+-FIELD(ID_AA64PFR0, FP, 16, 4)
+-FIELD(ID_AA64PFR0, ADVSIMD, 20, 4)
+-FIELD(ID_AA64PFR0, GIC, 24, 4)
+-FIELD(ID_AA64PFR0, RAS, 28, 4)
+-FIELD(ID_AA64PFR0, SVE, 32, 4)
+-FIELD(ID_AA64PFR0, SEL2, 36, 4)
+-FIELD(ID_AA64PFR0, MPAM, 40, 4)
+-FIELD(ID_AA64PFR0, AMU, 44, 4)
+-FIELD(ID_AA64PFR0, DIT, 48, 4)
+-FIELD(ID_AA64PFR0, RME, 52, 4)
+-FIELD(ID_AA64PFR0, CSV2, 56, 4)
+-FIELD(ID_AA64PFR0, CSV3, 60, 4)
+-
+-FIELD(ID_AA64PFR1, BT, 0, 4)
+-FIELD(ID_AA64PFR1, SSBS, 4, 4)
+-FIELD(ID_AA64PFR1, MTE, 8, 4)
+-FIELD(ID_AA64PFR1, RAS_FRAC, 12, 4)
+-FIELD(ID_AA64PFR1, MPAM_FRAC, 16, 4)
+-FIELD(ID_AA64PFR1, SME, 24, 4)
+-FIELD(ID_AA64PFR1, RNDR_TRAP, 28, 4)
+-FIELD(ID_AA64PFR1, CSV2_FRAC, 32, 4)
+-FIELD(ID_AA64PFR1, NMI, 36, 4)
+-FIELD(ID_AA64PFR1, MTE_FRAC, 40, 4)
+-FIELD(ID_AA64PFR1, GCS, 44, 4)
+-FIELD(ID_AA64PFR1, THE, 48, 4)
+-FIELD(ID_AA64PFR1, MTEX, 52, 4)
+-FIELD(ID_AA64PFR1, DF2, 56, 4)
+-FIELD(ID_AA64PFR1, PFAR, 60, 4)
+-
+-FIELD(ID_AA64PFR2, MTEPERM, 0, 4)
+-FIELD(ID_AA64PFR2, MTESTOREONLY, 4, 4)
+-FIELD(ID_AA64PFR2, MTEFAR, 8, 4)
+-FIELD(ID_AA64PFR2, GCIE, 12, 4)
+-FIELD(ID_AA64PFR2, FPMR, 32, 4)
+-
+-FIELD(ID_AA64MMFR0, PARANGE, 0, 4)
+-FIELD(ID_AA64MMFR0, ASIDBITS, 4, 4)
+-FIELD(ID_AA64MMFR0, BIGEND, 8, 4)
+-FIELD(ID_AA64MMFR0, SNSMEM, 12, 4)
+-FIELD(ID_AA64MMFR0, BIGENDEL0, 16, 4)
+-FIELD(ID_AA64MMFR0, TGRAN16, 20, 4)
+-FIELD(ID_AA64MMFR0, TGRAN64, 24, 4)
+-FIELD(ID_AA64MMFR0, TGRAN4, 28, 4)
+-FIELD(ID_AA64MMFR0, TGRAN16_2, 32, 4)
+-FIELD(ID_AA64MMFR0, TGRAN64_2, 36, 4)
+-FIELD(ID_AA64MMFR0, TGRAN4_2, 40, 4)
+-FIELD(ID_AA64MMFR0, EXS, 44, 4)
+-FIELD(ID_AA64MMFR0, FGT, 56, 4)
+-FIELD(ID_AA64MMFR0, ECV, 60, 4)
+-
+-FIELD(ID_AA64MMFR1, HAFDBS, 0, 4)
+-FIELD(ID_AA64MMFR1, VMIDBITS, 4, 4)
+-FIELD(ID_AA64MMFR1, VH, 8, 4)
+-FIELD(ID_AA64MMFR1, HPDS, 12, 4)
+-FIELD(ID_AA64MMFR1, LO, 16, 4)
+-FIELD(ID_AA64MMFR1, PAN, 20, 4)
+-FIELD(ID_AA64MMFR1, SPECSEI, 24, 4)
+-FIELD(ID_AA64MMFR1, XNX, 28, 4)
+-FIELD(ID_AA64MMFR1, TWED, 32, 4)
+-FIELD(ID_AA64MMFR1, ETS, 36, 4)
+-FIELD(ID_AA64MMFR1, HCX, 40, 4)
+-FIELD(ID_AA64MMFR1, AFP, 44, 4)
+-FIELD(ID_AA64MMFR1, NTLBPA, 48, 4)
+-FIELD(ID_AA64MMFR1, TIDCP1, 52, 4)
+-FIELD(ID_AA64MMFR1, CMOW, 56, 4)
+-FIELD(ID_AA64MMFR1, ECBHB, 60, 4)
+-
+-FIELD(ID_AA64MMFR2, CNP, 0, 4)
+-FIELD(ID_AA64MMFR2, UAO, 4, 4)
+-FIELD(ID_AA64MMFR2, LSM, 8, 4)
+-FIELD(ID_AA64MMFR2, IESB, 12, 4)
+-FIELD(ID_AA64MMFR2, VARANGE, 16, 4)
+-FIELD(ID_AA64MMFR2, CCIDX, 20, 4)
+-FIELD(ID_AA64MMFR2, NV, 24, 4)
+-FIELD(ID_AA64MMFR2, ST, 28, 4)
+-FIELD(ID_AA64MMFR2, AT, 32, 4)
+-FIELD(ID_AA64MMFR2, IDS, 36, 4)
+-FIELD(ID_AA64MMFR2, FWB, 40, 4)
+-FIELD(ID_AA64MMFR2, TTL, 48, 4)
+-FIELD(ID_AA64MMFR2, BBM, 52, 4)
+-FIELD(ID_AA64MMFR2, EVT, 56, 4)
+-FIELD(ID_AA64MMFR2, E0PD, 60, 4)
+-
+-FIELD(ID_AA64MMFR3, TCRX, 0, 4)
+-FIELD(ID_AA64MMFR3, SCTLRX, 4, 4)
+-FIELD(ID_AA64MMFR3, S1PIE, 8, 4)
+-FIELD(ID_AA64MMFR3, S2PIE, 12, 4)
+-FIELD(ID_AA64MMFR3, S1POE, 16, 4)
+-FIELD(ID_AA64MMFR3, S2POE, 20, 4)
+-FIELD(ID_AA64MMFR3, AIE, 24, 4)
+-FIELD(ID_AA64MMFR3, MEC, 28, 4)
+-FIELD(ID_AA64MMFR3, D128, 32, 4)
+-FIELD(ID_AA64MMFR3, D128_2, 36, 4)
+-FIELD(ID_AA64MMFR3, SNERR, 40, 4)
+-FIELD(ID_AA64MMFR3, ANERR, 44, 4)
+-FIELD(ID_AA64MMFR3, SDERR, 52, 4)
+-FIELD(ID_AA64MMFR3, ADERR, 56, 4)
+-FIELD(ID_AA64MMFR3, SPEC_FPACC, 60, 4)
+-
+-FIELD(ID_AA64MMFR4, POPS, 0, 4)
+-FIELD(ID_AA64MMFR4, EIESB, 4, 4)
+-FIELD(ID_AA64MMFR4, ASID2, 8, 4)
+-FIELD(ID_AA64MMFR4, HACDBS, 12, 4)
+-FIELD(ID_AA64MMFR4, FGWTE3, 16, 4)
+-FIELD(ID_AA64MMFR4, NV_FRAC, 20, 4)
+-FIELD(ID_AA64MMFR4, E2H0, 24, 4)
+-FIELD(ID_AA64MMFR4, RMEGDI, 28, 4)
+-FIELD(ID_AA64MMFR4, E3DSE, 36, 4)
+-FIELD(ID_AA64MMFR4, SRMASK, 44, 4)
+-
+-FIELD(ID_AA64DFR0, DEBUGVER, 0, 4)
+-FIELD(ID_AA64DFR0, TRACEVER, 4, 4)
+-FIELD(ID_AA64DFR0, PMUVER, 8, 4)
+-FIELD(ID_AA64DFR0, BRPS, 12, 4)
+-FIELD(ID_AA64DFR0, PMSS, 16, 4)
+-FIELD(ID_AA64DFR0, WRPS, 20, 4)
+-FIELD(ID_AA64DFR0, SEBEP, 24, 4)
+-FIELD(ID_AA64DFR0, CTX_CMPS, 28, 4)
+-FIELD(ID_AA64DFR0, PMSVER, 32, 4)
+-FIELD(ID_AA64DFR0, DOUBLELOCK, 36, 4)
+-FIELD(ID_AA64DFR0, TRACEFILT, 40, 4)
+-FIELD(ID_AA64DFR0, TRACEBUFFER, 44, 4)
+-FIELD(ID_AA64DFR0, MTPMU, 48, 4)
+-FIELD(ID_AA64DFR0, BRBE, 52, 4)
+-FIELD(ID_AA64DFR0, EXTTRCBUFF, 56, 4)
+-FIELD(ID_AA64DFR0, HPMN0, 60, 4)
+-
+-FIELD(ID_AA64ZFR0, SVEVER, 0, 4)
+-FIELD(ID_AA64ZFR0, AES, 4, 4)
+-FIELD(ID_AA64ZFR0, ELTPERM, 12, 4)
+-FIELD(ID_AA64ZFR0, BITPERM, 16, 4)
+-FIELD(ID_AA64ZFR0, BFLOAT16, 20, 4)
+-FIELD(ID_AA64ZFR0, B16B16, 24, 4)
+-FIELD(ID_AA64ZFR0, SHA3, 32, 4)
+-FIELD(ID_AA64ZFR0, SM4, 40, 4)
+-FIELD(ID_AA64ZFR0, I8MM, 44, 4)
+-FIELD(ID_AA64ZFR0, F16MM, 48, 4)
+-FIELD(ID_AA64ZFR0, F32MM, 52, 4)
+-FIELD(ID_AA64ZFR0, F64MM, 56, 4)
+-
+-FIELD(ID_AA64SMFR0, F32F32, 32, 1)
+-FIELD(ID_AA64SMFR0, BI32I32, 33, 1)
+-FIELD(ID_AA64SMFR0, B16F32, 34, 1)
+-FIELD(ID_AA64SMFR0, F16F32, 35, 1)
+-FIELD(ID_AA64SMFR0, I8I32, 36, 4)
+-FIELD(ID_AA64SMFR0, F16F16, 42, 1)
+-FIELD(ID_AA64SMFR0, B16B16, 43, 1)
+-FIELD(ID_AA64SMFR0, I16I32, 44, 4)
+-FIELD(ID_AA64SMFR0, F64F64, 48, 1)
+-FIELD(ID_AA64SMFR0, I16I64, 52, 4)
+-FIELD(ID_AA64SMFR0, SMEVER, 56, 4)
+-FIELD(ID_AA64SMFR0, FA64, 63, 1)
++/*
++ * Expand FIELD() declarations for every ID register field listed in
++ * cpu-idregs.h.inc .
++ */
++#define IDREG_START(reg)
++#define IDREG_END(reg)
++#define IDREG_FIELD_ARCH_VAL(v, n)
++#define IDREG_FIELD_ARCH_VAL_ANY
++#define IDREG_FIELD_END(reg, field)
++#define IDREG_FIELD_START(reg, field, _shift, _length, safe, defval) \
++    FIELD(reg, field, _shift, _length)
++#include "cpu-idregs.h.inc"
++#undef IDREG_FIELD_START
++#undef IDREG_FIELD_END
++#undef IDREG_FIELD_ARCH_VAL_ANY
++#undef IDREG_FIELD_ARCH_VAL
++#undef IDREG_END
++#undef IDREG_START
+ 
+ FIELD(ID_DFR0, COPDBG, 0, 4)
+ FIELD(ID_DFR0, COPSDBG, 4, 4)
+-- 
+2.52.0
 
-Regards,
-Pierrick
 
