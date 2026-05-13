@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF1DDCD37B6
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 10:41:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F36A2CD4F24
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 10:41:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN709-0003xU-5R; Wed, 13 May 2026 06:39:41 -0400
+	id 1wN702-0003sW-1c; Wed, 13 May 2026 06:39:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wN6zy-0003oZ-Mk; Wed, 13 May 2026 06:39:30 -0400
+ id 1wN6zy-0003oF-Cu; Wed, 13 May 2026 06:39:30 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wN6zv-0002M5-Hw; Wed, 13 May 2026 06:39:30 -0400
+ id 1wN6zv-0002M0-Ir; Wed, 13 May 2026 06:39:30 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64DAcPdU044648
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64DAcPdc044648
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 13 May 2026 19:38:55 +0900 (JST)
+ Wed, 13 May 2026 19:38:57 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=Wa/39F+04wvk/3sw0LdWXu6e6UT6EMJxoHKpwqH3YnA=; 
+DKIM-Signature: a=rsa-sha256; bh=jYzmLTbWax8JogN3WJf0BurekwSvWMhETlPn4yFttW0=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1778668735; v=1;
- b=jV2wXUZ/ntOqoJkqlaM0T1VD/TAssgSkfB1AnmY8V+O29SvVaOeiTUig3Mx1fh9z
- vjH49dllhjJ51y1tz8I117n2/Ue8eRUW/f7+fzS4iZzUefFjr28B4HOMK1tqHoyp
- D50OGELyVmakF/wQ2+d0iE7vMz1YFLhQSn1wTsAvRsSG8w1rJ+51lwdtnewjn8Nb
- x+HsGC3lCSr1Fke/FWLGQXf0gt9AngfFALvE8nnUmDPclpmulhd4SdXv80RWWt1f
- I+ziitFEHyNd8mrPN3R6oLBxde5kfOdHEfn+OdasMamXOYblh9p47L0GunWrcq2A
- wNIecgpep7K8yTc23Ja22A==
+ s=rs20250326; t=1778668737; v=1;
+ b=QkKtR7qX8AO9ItMseAHnIDDcoqAXaqeSr1rrrVXOLmd8T+w6uamHIfwn9jRWxhjC
+ N1Kj2V25g+7JdpzSdccGxt2jmyEJHpLsQif0lWUOPN4ekZ/+rceEAzhAmzyOdLGE
+ gAZBP2kOUbEI63+w4IqQ6PDyhlBywmg49uO3udq+7eqNbCdmdLbUbQ0qT7sdJ3Iz
+ a/ZxeBNk/U3D2GOxrJETeJaxN3Hs/KMegUGiYwvdt9121pS8myczkdIFYcCsvovH
+ VnVjGoWIU9mANfk5m2hnMaNENILa34lWp8lycrXR4ji4vWQrn5z9iyaWT5h1XviI
+ VUKNRYJx7Aqk1vrNcDaxRw==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 13 May 2026 19:38:22 +0900
-Subject: [PATCH v2 06/29] ui/console: Add qemu_text_console_put_linux()
+Date: Wed, 13 May 2026 19:38:30 +0900
+Subject: [PATCH v2 14/29] hw/input/virtio-input: Use Linux key codes
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260513-input-v2-6-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260513-input-v2-14-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260513-input-v2-0-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260513-input-v2-0-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -58,13 +58,13 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.16-dev-16047
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4212;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3015;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=yBs2XkK8SdnlzUdhMyqUvaBx4FYfQGi2njirhdzzkbI=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZLyJq15/LXvlj6SMr8k63bdTP/D1PEdz5WESmW9FzMN
- Fv+XXlCRykLgxgXg6yYIktK0W5ujejaT4UJ8S0wc1iZQIYwcHEKwERCmxgZntc9nN7qHnlxqxPj
- Qwax8ieRMdqyb87fuTM/fq/E0UlWggz/y5zDT/3N9Mq/rvbR55FBboHrYfEnewNZI67suean83s
- HBwA=
+ bh=EmtPHZ4VrwnBl0E92Q8PvtguFqdBkezuol02LtNVvV0=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZLyMabJvE6JcwWry/d85eLXly/ZnGR7d/Ye53f+HzmT
+ V8VXfq4o5SFQYyLQVZMkSWlaDe3RnTtp8KE+BaYOaxMIEMYuDgFYCL/OxgZJl/3+e3UnV/DuXX7
+ 6d8iK3W+lF+w25Jm5Ob7QLmnyafjBcP/oo36U5MPbF7pd0zB+123xa5iUaOt9jy8eX7bT6n26ez
+ jAwA=
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -90,122 +90,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a text console helper that accepts Linux input key codes and use it
-as the common implementation for qemu_text_console_put_qcode(). This lets
-callers that already use Linux key codes avoid converting them back to
-QKeyCode.
+QemuInputEvent now stores Linux key codes for key events. Use those
+codes directly instead of translating between internal key code
+representations.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- include/ui/console.h |  2 ++
- ui/console.c         | 66 ++++++++++++++++++++++++++++++++++------------------
- 2 files changed, 46 insertions(+), 22 deletions(-)
+ hw/input/virtio-input-hid.c | 40 +++++++++++++++++++++++-----------------
+ 1 file changed, 23 insertions(+), 17 deletions(-)
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index cfa940d4c666..691040f5948d 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -109,6 +109,8 @@ bool qemu_mouse_set(int index, Error **errp);
+diff --git a/hw/input/virtio-input-hid.c b/hw/input/virtio-input-hid.c
+index 1d2e922567ab..75fe45d89a2a 100644
+--- a/hw/input/virtio-input-hid.c
++++ b/hw/input/virtio-input-hid.c
+@@ -83,23 +83,13 @@ static void virtio_input_handle_event(DeviceState *dev, QemuConsole *src,
+ {
+     VirtIOInput *vinput = VIRTIO_INPUT(dev);
+     virtio_input_event event;
+-    int qcode;
  
- void qemu_text_console_put_keysym(QemuTextConsole *s, int keysym);
- bool qemu_text_console_put_qcode(QemuTextConsole *s, int qcode, bool ctrl);
-+bool qemu_text_console_put_linux(QemuTextConsole *s, unsigned int lnx,
-+                                 bool ctrl);
- void qemu_text_console_put_string(QemuTextConsole *s, const char *str, int len);
+     switch (evt->type) {
+     case INPUT_EVENT_KIND_KEY:
+-        qcode = qemu_input_linux_to_qcode(evt->key.key);
+-        if (qcode < qemu_input_map_qcode_to_linux_len &&
+-            qemu_input_map_qcode_to_linux[qcode]) {
+-            event.type  = cpu_to_le16(EV_KEY);
+-            event.code  = cpu_to_le16(qemu_input_map_qcode_to_linux[qcode]);
+-            event.value = cpu_to_le32(evt->key.down ? 1 : 0);
+-            virtio_input_send(vinput, &event);
+-        } else {
+-            if (evt->key.down) {
+-                fprintf(stderr, "%s: unmapped key: %d [%s]\n", __func__,
+-                        qcode, QKeyCode_str(qcode));
+-            }
+-        }
++        event.type  = cpu_to_le16(EV_KEY);
++        event.code  = cpu_to_le16(evt->key.key);
++        event.value = cpu_to_le32(evt->key.down ? 1 : 0);
++        virtio_input_send(vinput, &event);
+         break;
+     case INPUT_EVENT_KIND_BTN:
+         if ((evt->btn.button == INPUT_BUTTON_WHEEL_UP ||
+@@ -293,12 +283,28 @@ static void virtio_keyboard_init(Object *obj)
+ {
+     VirtIOInputHID *vhid = VIRTIO_INPUT_HID(obj);
+     VirtIOInput *vinput = VIRTIO_INPUT(obj);
++    virtio_input_config ext = {
++        .select = VIRTIO_INPUT_CFG_EV_BITS,
++        .subsel = EV_KEY,
++        .size = DIV_ROUND_UP(KEY_REPLY, 8)
++    };
++    unsigned int i;
  
- /* consoles */
-diff --git a/ui/console.c b/ui/console.c
-index 6f6330d61f18..fd1038a22c0b 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -23,6 +23,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "standard-headers/linux/input-event-codes.h"
- #include "ui/console.h"
- #include "ui/vgafont.h"
- #include "hw/core/qdev.h"
-@@ -302,36 +303,57 @@ void qemu_text_console_put_keysym(QemuTextConsole *s, int keysym)
-     qemu_text_console_handle_keysym(s, keysym);
+     vhid->handler = &virtio_keyboard_handler;
+     virtio_input_init_config(vinput, virtio_keyboard_config);
+-    virtio_input_extend_config(vinput, qemu_input_map_qcode_to_linux,
+-                               qemu_input_map_qcode_to_linux_len,
+-                               VIRTIO_INPUT_CFG_EV_BITS, EV_KEY);
++
++    /*
++     * Cover as many keys as possible since we cannot tell what keys the host
++     * supports. This follows Linux xen-kbdfront's approach:
++     * https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/diff/drivers/input/xen-kbdfront.c?id=4ee36dc08e5c4d16d078f59acd6d9d536f9718dd
++     *
++     * Stop before KEY_REPLY for migration compatibility.
++     */
++    for (i = KEY_ESC; i < KEY_REPLY; i++) {
++        ext.u.bitmap[i / 8] |= (1 << (i % 8));
++    }
++
++    virtio_input_add_config(vinput, &ext);
  }
  
--static const int qcode_to_keysym[Q_KEY_CODE__MAX] = {
--    [Q_KEY_CODE_UP]     = QEMU_KEY_UP,
--    [Q_KEY_CODE_DOWN]   = QEMU_KEY_DOWN,
--    [Q_KEY_CODE_RIGHT]  = QEMU_KEY_RIGHT,
--    [Q_KEY_CODE_LEFT]   = QEMU_KEY_LEFT,
--    [Q_KEY_CODE_HOME]   = QEMU_KEY_HOME,
--    [Q_KEY_CODE_END]    = QEMU_KEY_END,
--    [Q_KEY_CODE_PGUP]   = QEMU_KEY_PAGEUP,
--    [Q_KEY_CODE_PGDN]   = QEMU_KEY_PAGEDOWN,
--    [Q_KEY_CODE_DELETE] = QEMU_KEY_DELETE,
--    [Q_KEY_CODE_TAB]    = QEMU_KEY_TAB,
--    [Q_KEY_CODE_BACKSPACE] = QEMU_KEY_BACKSPACE,
-+static const int linux_to_keysym[] = {
-+    [KEY_UP]     = QEMU_KEY_UP,
-+    [KEY_DOWN]   = QEMU_KEY_DOWN,
-+    [KEY_RIGHT]  = QEMU_KEY_RIGHT,
-+    [KEY_LEFT]   = QEMU_KEY_LEFT,
-+    [KEY_HOME]   = QEMU_KEY_HOME,
-+    [KEY_END]    = QEMU_KEY_END,
-+    [KEY_PAGEUP]   = QEMU_KEY_PAGEUP,
-+    [KEY_PAGEDOWN]   = QEMU_KEY_PAGEDOWN,
-+    [KEY_DELETE] = QEMU_KEY_DELETE,
-+    [KEY_TAB]    = QEMU_KEY_TAB,
-+    [KEY_BACKSPACE] = QEMU_KEY_BACKSPACE,
- };
- 
--static const int ctrl_qcode_to_keysym[Q_KEY_CODE__MAX] = {
--    [Q_KEY_CODE_UP]     = QEMU_KEY_CTRL_UP,
--    [Q_KEY_CODE_DOWN]   = QEMU_KEY_CTRL_DOWN,
--    [Q_KEY_CODE_RIGHT]  = QEMU_KEY_CTRL_RIGHT,
--    [Q_KEY_CODE_LEFT]   = QEMU_KEY_CTRL_LEFT,
--    [Q_KEY_CODE_HOME]   = QEMU_KEY_CTRL_HOME,
--    [Q_KEY_CODE_END]    = QEMU_KEY_CTRL_END,
--    [Q_KEY_CODE_PGUP]   = QEMU_KEY_CTRL_PAGEUP,
--    [Q_KEY_CODE_PGDN]   = QEMU_KEY_CTRL_PAGEDOWN,
-+static const int ctrl_linux_to_keysym[] = {
-+    [KEY_UP]     = QEMU_KEY_CTRL_UP,
-+    [KEY_DOWN]   = QEMU_KEY_CTRL_DOWN,
-+    [KEY_RIGHT]  = QEMU_KEY_CTRL_RIGHT,
-+    [KEY_LEFT]   = QEMU_KEY_CTRL_LEFT,
-+    [KEY_HOME]   = QEMU_KEY_CTRL_HOME,
-+    [KEY_END]    = QEMU_KEY_CTRL_END,
-+    [KEY_PAGEUP]   = QEMU_KEY_CTRL_PAGEUP,
-+    [KEY_PAGEDOWN]   = QEMU_KEY_CTRL_PAGEDOWN,
- };
- 
- bool qemu_text_console_put_qcode(QemuTextConsole *s, int qcode, bool ctrl)
- {
-+    unsigned int lnx = qemu_input_map_qcode_to_linux[qcode];
-+    return qemu_text_console_put_linux(s, lnx, ctrl);
-+}
-+
-+bool qemu_text_console_put_linux(QemuTextConsole *s, unsigned int lnx,
-+                                 bool ctrl)
-+{
-+    size_t maplen;
-+    const int *map;
-     int keysym;
- 
--    keysym = ctrl ? ctrl_qcode_to_keysym[qcode] : qcode_to_keysym[qcode];
-+    if (ctrl) {
-+        maplen = ARRAY_SIZE(ctrl_linux_to_keysym);
-+        map = ctrl_linux_to_keysym;
-+    } else {
-+        maplen = ARRAY_SIZE(linux_to_keysym);
-+        map = linux_to_keysym;
-+    }
-+
-+    if (lnx >= maplen) {
-+        return false;
-+    }
-+
-+    keysym = map[lnx];
-     if (keysym == 0) {
-         return false;
-     }
+ static const TypeInfo virtio_keyboard_info = {
 
 -- 
 2.54.0
