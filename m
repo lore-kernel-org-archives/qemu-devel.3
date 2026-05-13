@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C240CCD37AC
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 16:35:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABE76CD4F21
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 16:36:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNCYm-0004A6-3T; Wed, 13 May 2026 12:35:48 -0400
+	id 1wNCXn-0003Kw-6A; Wed, 13 May 2026 12:34:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shaju.abraham@nutanix.com>)
- id 1wNCXt-0003Mk-4M; Wed, 13 May 2026 12:34:53 -0400
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ id 1wNCXe-0003JV-Av; Wed, 13 May 2026 12:34:39 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shaju.abraham@nutanix.com>)
- id 1wNCXp-0000mp-0n; Wed, 13 May 2026 12:34:52 -0400
-Received: from pps.filterd (m0127838.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64DGKdnV1855322; Wed, 13 May 2026 09:34:22 -0700
+ id 1wNCXc-0000go-8G; Wed, 13 May 2026 12:34:38 -0400
+Received: from pps.filterd (m0127843.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64DGKfem738992; Wed, 13 May 2026 09:34:15 -0700
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=qQia2sTu14gaaSj1X2ihN36jAvHDyr7AuM5sfCilu
- 5U=; b=nrKUfEnFzk36WL4V2EglYekR2uvS0tg3uHaBWd9HfAsIpYPXlWGzOYeWf
- OL98gIPB0ADRFYwyfF1KBrAqsgk3VfW3ipDFgYh0P9jyLd9oadqw7oM6mVxIeOCK
- IXayeIX9LKo2sOOkp5tb2GBayZMK4AxDtqUdzRVo4uqFvTvz4ivYlz7DYar8R3D7
- i+G5T63BgpTJYHt/SBKD6i9aCIUe65LusmTfBH9vaXwK80lysK15TnA6VHPPBDg3
- JKJTMbqpkbwxtm5HwnJ829X6TD9HzjzecTgSUSmh6mAiNR6UL+e3Eh9EKOcs2ZhJ
- 1nIcUXIKDmQN+TJqbOhj5YIpG9LwQ==
-Received: from ch5pr02cu005.outbound.protection.outlook.com
- (mail-northcentralusazon11022087.outbound.protection.outlook.com
- [40.107.200.87])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4e3nvke988-1
+ proofpoint20171006; bh=MNinJibHwoWXGXhfMhUkYF30JTL8RYpn8K2IodxM6
+ /Y=; b=YsiK1ruwfSpXNEoo5M0uKcNVZI7+UeAhhFEc1K1JWql2ZGPfQy2jKk1ZN
+ YhlHj6g1hfCuBY2X/dOqRFaDjcCUlr2xVx0op5KGSTRBr6Nb6/0wEg3Hw6yypw/P
+ SkgnILZ8Q1EjPNYpHsBnyF32wj2Xu2tiZsSwRngXt7ApQBDEbKpemH8wO9z20Ji3
+ eD9OxLZOUzJhF2Z89qoiJ2Fj3uAAqu03eGyodfUTN0QQOObtx+VFERIumLS3flcd
+ 32cijh0AWOucEqHJyFWwZc9paoJpr5zs2qsDXdpNjfy7r9BpbhO8mdmdat2eKPCL
+ +SHdQFoxMaD8256iQKWDyN7ghwK+A==
+Received: from ch1pr05cu001.outbound.protection.outlook.com
+ (mail-northcentralusazon11020086.outbound.protection.outlook.com
+ [52.101.193.86])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4e3nvap78e-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 13 May 2026 09:34:22 -0700 (PDT)
+ Wed, 13 May 2026 09:34:15 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ycJ2i14kNxlRZVQlBWsLvWta7FZPDasorXLNJipoPCDv78VLGaQEIUWQz10tTu1+EH8O1DE6ntiGE0sX6HZgj696Isi8gY00yzAuTitGsLaalHGombgKHJE1sOr4i+X1+QNdvI/XHwbqIfTOh85laDptXTbwvO/NEjx5+q/xfJzmP6GfF4zp3Z2NeU6j85RsLP3AHASz/JqOaRkdclsdH77woe+JRh7L6kas9DOiH9FUgqJnKrC7MVJ7ybqKfuPF1TNIKqoUw7MBC16Ugc/Zn8zsf2ocsyW9ss6hmjx3QQhiNzyPSiwPNdUCpiiLqnxtsFCnfBC1KdFlJQLW1fjUwg==
+ b=g8+xhwOQe+ToKw+T1c9IPkL3sJemGRpYXsAoSzTu4ghUe8nlEOJzx6Pmqx96+WYPxVvtrodWbYck+xlbBYqz53zF7O+V4sK2cdZrfNcyzQvPtNRLAq9ZXlhQO5rfiUc3+HzSN1JQbX2cXjkDqYqVePDh75HzuvJATNQO123R4FB4ynqKQD1U2MogeCyShDigcSm0F5SeXsdovsa3QNRA7YwId0Nt+I/M/FGDuFUH9BnQCuU9uKFvhfiQiiHOHMZnbp5hnojS/L3ZwwrX2+D4HF+odRQF2rizjYYWbgZjco2CAP3k6GNha5caOzGauL0ZAo+4fWOZ+V4bzDK3Hu9gJQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qQia2sTu14gaaSj1X2ihN36jAvHDyr7AuM5sfCilu5U=;
- b=PN1m7MIVTsy2VfrU4aQWaix548tnFkYZuy5T09nwQXFXWXBugpTHgOoZsVohr2A3Dk8u8OXz5pxcGHH85uq2mqwFjgyr7Rs0NMPfhYmGdURHVoLtb1/1actKJhAzij9O8hBKo1hQi0WFhhbI8pZa+onCG13+k1X9/bDPPFcKpbDT+jApCKBmxwi6Q4YR9cI1CHKwdjJKaEv2n+iV7Dzganay/dpywSAdzTLNetzi76f751Es21kJBI/BpwbEGUQ2ehQgWn/4ldLZxCmeWriQM44y6i8XCwFF5YDCYYldIiR07Yc+nm21G5bma4EFur2IY1eIsvj2+ewwsYveXAf/WA==
+ bh=MNinJibHwoWXGXhfMhUkYF30JTL8RYpn8K2IodxM6/Y=;
+ b=XydovDjkgMxOcKhfQYGCWl/n1eEd6X+CChLHa0rwvJVz4c0BgzhHrzndI5flG2FkNNOLWRyvQUkjgixpz4gRZPqJ6eiAhCzqnMy7k1LnwT3W+7zpSwgZM2YHqJWnvQoqcsRC1mec4acyKmlWW9eWOLCUqyl2/1APLm0AO1lSiOStnr5fOXCmneC6aQqdyjhg6BWxLdksRhRPcev0BkT0IP/DfLYdNiN1X20kK7gKZEWgBU04NAkRlTB2SGSIw+e+zvU710T71Pi0ZtlVI2w7emMI8Y9qlo0+i3aEh+Ychg46OIwOh3nNqKC+wX+vQvMihbfRUYF/fOEUsRg4orqQNA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
  dkim=pass header.d=nutanix.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qQia2sTu14gaaSj1X2ihN36jAvHDyr7AuM5sfCilu5U=;
- b=v4Wo/Ed6oqGmbSxSm3nkLcu6LMnKvXFyszYnkgn5F134xk9XfEf6q5dH4I0cbXRw+8toMmOdXrTjbbHKch/pvAiwO9e8dQh6sHhn/Vtltyvb/H1N1G3dpcTL3caeO/hcTmoRuaxPHg2MCV4TfZ0x/Aatd05/mu717NHMwrhUUWhCnLaSiGtJmM30W4d2UyW2AqQAvapwGGbrQe/1Qf8Vm17MrwVi7TsuHIccJpN9VR0gSm3JLy40w7somqgAVwuPrVoAVl1TAUT78d8+RkpCL1t8W0LBseYbWiBpEQkpTr5qdjQtFnHZjxTQZD9WeARnPmzDhXGAPeIGQv7PvgT0WA==
+ bh=MNinJibHwoWXGXhfMhUkYF30JTL8RYpn8K2IodxM6/Y=;
+ b=HEWS1fhMMy5ZUIeUSheSh+z66rA7qSEXtVpinn/soru5ba7gEx6O/pyPeMCtcYgnb7UifP4YGQj8rrKP84lsUYDgosQqyUdaCv/ybj3iTczV0Mj7h1qtPhlmNLVXpW6toqrjGEZA8lKrBd2E6j+7T3J306Jg9YfZC56Vrf+GYrruI8+fFomWIJt0YTOQpc0AZiwF8ykgE39cr3avlDfFlYDCf3cqoR2n13FN71u715PyfxWFBarCFsozGu6tVwHARJrvaElbkTpSIVEvsEhlmzJTkZ5GAp9Xb29nJ23oJBmf1Uw4s90Rg5Z5CPE24YuLsndWiycTLqhA6zh4o4Kf9g==
 Received: from PH7PR02MB10160.namprd02.prod.outlook.com
- (2603:10b6:510:2e7::19) by SJ0PR02MB8813.namprd02.prod.outlook.com
- (2603:10b6:a03:3d6::9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9913.11; Wed, 13 May
- 2026 16:34:19 +0000
+ (2603:10b6:510:2e7::19) by CH3PR02MB9564.namprd02.prod.outlook.com
+ (2603:10b6:610:120::21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.23; Wed, 13 May
+ 2026 16:34:13 +0000
 Received: from PH7PR02MB10160.namprd02.prod.outlook.com
  ([fe80::4ed7:5c74:48e0:ff23]) by PH7PR02MB10160.namprd02.prod.outlook.com
  ([fe80::4ed7:5c74:48e0:ff23%7]) with mapi id 15.20.9891.021; Wed, 13 May 2026
- 16:34:19 +0000
+ 16:34:13 +0000
 From: Shaju Abraham <shaju.abraham@nutanix.com>
 To: eric.auger@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  kvmarm@lists.linux.dev, peter.maydell@linaro.org,
@@ -70,10 +70,10 @@ Cc: maz@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
  prerna.saxena@nutanix.com, jon@nutanix.com, jond@nutanix.com,
  Shaju Abraham <shaju.abraham@nutanix.com>,
  Khushit Shah <khushit.shah@nutanix.com>
-Subject: [RFC PATCH v1 07/13] target/arm: named_cpu_model: define ARM
- properties
-Date: Wed, 13 May 2026 16:33:50 +0000
-Message-ID: <20260513163356.3033159-8-shaju.abraham@nutanix.com>
+Subject: [RFC PATCH v1 04/13] target/arm: named_cpu_model: generate tables for
+ Arm64 ID registers and fields
+Date: Wed, 13 May 2026 16:33:47 +0000
+Message-ID: <20260513163356.3033159-5-shaju.abraham@nutanix.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260513163356.3033159-1-shaju.abraham@nutanix.com>
 References: <20260513163356.3033159-1-shaju.abraham@nutanix.com>
@@ -84,89 +84,89 @@ X-ClientProxiedBy: CY5PR10CA0003.namprd10.prod.outlook.com
  (2603:10b6:510:2e7::19)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH7PR02MB10160:EE_|SJ0PR02MB8813:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1cf236d0-0094-4b12-b8d8-08deb10d7b2f
+X-MS-TrafficTypeDiagnostic: PH7PR02MB10160:EE_|CH3PR02MB9564:EE_
+X-MS-Office365-Filtering-Correlation-Id: 824193c0-f4fa-4bb4-c23a-08deb10d77be
 x-proofpoint-crosstenant: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|7416014|376014|366016|1800799024|921020|18002099003|22082099003|56012099003;
-X-Microsoft-Antispam-Message-Info: FwDxsfcLl3UucvSleC7s77OFQEvZC/tJTv1c7xI20tzztSUXVknkU7jSyjdcvnnnS3fCwkdi6loE+w4TagaGMort3biSmWa8zchZl48a9YZAgOuZmHWfp5iBr6GRkKtbsP+YXSAiQzpdMr/5AEY1Iy6eBLcZ9mBvK1yHKxqd4JJfaPpG/RoAsjwxEwBoAPMGrgI7Levf5F9M9xxEc/8bL/WY3baTZCUk4+930OxlchomDexp9faIHPs6dqNFHIz8OMxxW2VkrlNKopzIfFNNH6C25okBQs5sKt9y7h0QHzB/kO0k46uP9B7stN8GjXfrWN6I0OX3WK0Gcth9hiIh0qa4lTpnShH8LSjEHanP7F9XLAubzTTajIflsTWm4aiZDNvpJamRE9CbZd0zwzCCKX3bpNFvQfulJT6NC+Sd7VIK88DoRBxX4ZH78ELm9qw+cgqvP/8FhEMR9gWQ1Z/QJq9nPbwTwp0Sxg8SNJE4fqMmyjp/Qv4Eea6xesBRW7wog/pJvom8DLfMd0eWMInTz8iAymtpX9p7yplMepdPDiF1z/owgqmQJW94Zi3NkMvlInyAosecpoImfbLBlBj8Xgj3Ngo1tb3WIXCQpJwU/mLeFIw/Dx1vWnoV/C4nSgS1pfsnqYxrVcxO3l07WUKJ1eiwpHsHb0uf5QHWSKa1FF7eNmyCQvTO/LA0SnZXAEX4mpLy7c/qFnGEffJy23Qb5WKfdNg+g/8zP3MuY0cPG/U=
+ ARA:13230040|7416014|376014|366016|1800799024|18002099003|22082099003|921020|56012099003;
+X-Microsoft-Antispam-Message-Info: 0Cz5yeqIey/hBlFuQiwZeBmHgRuzOfMEvYTsvaQJYPnjR4S6Ya44+pOCNsxFkM23kH0Gx/k0Oq+R8jo1fsQehY9S8XSpdZMzlWYD9dvfkZ0Ng8RZauhwxlQEed+bZ7tGLHKXht+KczQIgyXUmNgQOjzSVInREYgsSLpuBRU6ey7nYbh5Kvx075NjWalNGlyCwTRqv0bcJAX1WOzHb1mqgIkmVFAf+eLGRRqk92PtJjUWJClks8b+eoVHGNqfkeaRxfDvTnlxU73wjRzeHPvnGwLWhewMJTDt7fcWybKgaAkGZtDFlXyPcBgMfEVQY4YJe1qQn4eBySYulbcZjSaMQq907TXc9wMfUgg+6WxDywTXelz1jtvCHC/ro3mvJHKoP8iUvna3+MkZAHwPELKyYX87knEX2kSPVlry8JtPwvSH20Zz/UC385Tx0LmS82+LO1tRS7EGH3HmxkiehAmWmWNwssJlmSPtf2y+cYe0HYO5ty2DJoxHO9kPS4tVInM1AFKpS/QRYE0pYVXxw70dddwoeN17TCkkZI3LRS+h1yfwOyXdumS5KBl0GRP53pXR4uaqCKyUSMpV47oF5AXQ8BhJGAiw2cnyYqtolzCoHeZztJ0TSy5OAMf/pVvMLRWMYWGAqZveEWRf98W67sMc+7lCnUcoAx4vH4/uy2aJLcvgS3YX2feWAkxeVKXuj4KNLGjw22U5xH7pTbQRpCoMv1hdQgFuNLjBKC9oHT1R5Ko=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:PH7PR02MB10160.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(366016)(1800799024)(921020)(18002099003)(22082099003)(56012099003);
+ SFS:(13230040)(7416014)(376014)(366016)(1800799024)(18002099003)(22082099003)(921020)(56012099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?pjCteXg8ZUdSdVqHvymdf5zIR/OGGvYHYiOs6T6uSNR4Vi15wx89+exde+Ow?=
- =?us-ascii?Q?fRgaxmOJxkK3moQGAD2F0kSJjTgMqc0uN4OATpqyurnB7E17kk+l1CCmvqTT?=
- =?us-ascii?Q?QCrllHRIGlvwc2aITzRIf3Tww/vfviC5IYsz8vX0FSlokiQgr4ZMWHgV8gxA?=
- =?us-ascii?Q?SLSa7XHus22TaDSy5t2+03uto3zCaGktkmWDVVNIvW1ANO9X20eqMoPvOtCf?=
- =?us-ascii?Q?EWAXwmYPeXyN+4INbmfSI/lz3ASaJO4WPcHxjntFBV2TQOf46g4KnZyQt6bV?=
- =?us-ascii?Q?uwywOmOfDLCAH2+IuVX6tbS70UvlQKkl8apf01h442YaeNwwGIDvuxNMt7QS?=
- =?us-ascii?Q?dqEzGnPgQcifxN1cO4+wuOrlGJuof6gtOgCIyOyWN/kYNFj+m3tobT9lXDrn?=
- =?us-ascii?Q?iHCJBveBIbpWhqcpZu+gnnO3l6phN1Mjfuxn82gAeTuKTPGh76ueGUtw3ahq?=
- =?us-ascii?Q?HPAYJbG/2I3k3lAvBMceYeSZpDShqs4ydOR1CBWC+xT0QmMA8E6KVHAUZqD0?=
- =?us-ascii?Q?0o+zyuKQ2TzF63PgoywMJFXmB6utvWsxbFSnScsxxBvgYBtt5jlr+k+HhTHn?=
- =?us-ascii?Q?W4vPosuo59k2jdHb53M86itHi0Z3o3rHNpa9OTb3e50pJPPaXlOxChk20W33?=
- =?us-ascii?Q?NZnxjqe3NQITrEBZ0U5uIb04rqegfEheek48OxMYNryTN1Melxbh11b+HszL?=
- =?us-ascii?Q?quaPi0ZiyqRYUVHRJFOOHoKa+swWCp8hM6U9FQMFgWi7KflhSfs6iE6kzuWp?=
- =?us-ascii?Q?kk3elC6+IkYDaItgeDkO/2j33+x744JKrbnpp8kb0KAcR8fllraIGN8SFJJq?=
- =?us-ascii?Q?3SFe0czI+YrmzeiBc4QiWRBlBhNlwhn5Ka+xufN1iQFbwuRGB9WDmvZgZPZD?=
- =?us-ascii?Q?W6kOUsEt1PPhoq2C8CX58p/9n6eb2YpwU3fLgF1b4hCcU52Jc9lw5820SRGj?=
- =?us-ascii?Q?t9P8mPU2xMZR3bvSxSngLSnQRrXESgDSDRcHWVYouTTaGJz587FBoaXPLAbY?=
- =?us-ascii?Q?lo2j/Esm12XWwjvO+We4StYMeQvrVp/Uv9kiiYYoR2RrsmCJSfrUiNnkloNh?=
- =?us-ascii?Q?IjOsnlwcJ5wY1IpPq69woLGZQTd9QC+qxuXXQBM5QaBt+FiAfViU3EDypNxe?=
- =?us-ascii?Q?hZR4cb1qj5oAcyMlGqg//FO9trhfgLRULyxW02TFROjOnWrPWrfqiTlQVzYe?=
- =?us-ascii?Q?ymT3Z+gMi4h4s48x/IIyHsFCwHfdKM/3uSFh4mI9FUBV9dBuQPsXjgAIlhps?=
- =?us-ascii?Q?HD4PO3sAKFCT3ZmRe4EPY2806vo0E7sz8EhVImVPKDJSvooplkWIEdg8Ze++?=
- =?us-ascii?Q?msBitya1Hke1ltvX/1EGHR0XhEk4qFv04Vi3B/T4rj5iBdlL1Ie+muvPzWue?=
- =?us-ascii?Q?CQJNaRwS0YEVjD8VHlt+Y08q5g09TZ5phTE96N6rTI2PMUTg/MFJdoqzMAMC?=
- =?us-ascii?Q?M805h8Z6Ben2T8X6kXVVveeHo0r/YsxGX2cmOsmTz99OmiyBkRiIA8MEVh1W?=
- =?us-ascii?Q?aFqy3FCK8kTYwN1hMFrteUdyQD3E3P3lI6kLQCrDaOHMiba/sCrBRqxVyrh6?=
- =?us-ascii?Q?ltYH1zZzqH10e1MLaq7Ua3I7QAdrYDMa8SDKkzhSYO9j/58dfQZjs8ElUu3Z?=
- =?us-ascii?Q?zGVucHTsAbzbn8Sz6bXRpk47MyGJDinYm3bbddXE4CyAMZbgyicijQrnHroS?=
- =?us-ascii?Q?qDfqmZ9736/acE7yDSpx7yOaTQzoRYTBk6ROl8jg5LTru8Es9MuyXEeeyW2O?=
- =?us-ascii?Q?IeCR/5rsoqVzOdVe7AsdB3xzp2AS5qA=3D?=
-X-Exchange-RoutingPolicyChecked: WRMuTbgDEV9kWXgmKabePPO7JUUHcwFlIDhwYygzzuYs06Wf2krj6P3qdEj/+C0hpT3sVADeM/SzPUQpyf9yJzCLACCkVnP8BF9CkAcYURvwrPDJaMisy8WsBHLOZecCYXerSxjp8hcX1X2+PuQlhO+hrdv534dDndxn6dNBenHbWaa8YAKMSS2Xti1DAY004gbfYbjpSmbiIoR8J77d1qbaWiwsH51QfC7IjaR0aC/r9AmE3x3jshCXqnxM4Eb05fo5Up5xAHrlD9tPQH4Jj5pdi+xGZxiR0OxR5K+SiHWsXpC66cDKcpSeRdy5x/8B5rC51l2O1lRifAC4a+Uc+Q==
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?7stOUQ1bTMcu+8GA4KD/ii0Nx5GLUiii+xIOHyrFNItNDSbuKuHk/qPlcv3G?=
+ =?us-ascii?Q?1ypWx9acuWkOXR34aDOPTG0fTvkl4CWwFsrdTBku+U6wcOt+q6ruGDqGf+La?=
+ =?us-ascii?Q?zsJ9VzTNKLZGcSIqAB/FSEVQrUACVVIzQrz3f3HkZnvn5IXHNBVwLDqpgMeM?=
+ =?us-ascii?Q?ayygMtWPyWVAliOw2xb1tKO65mfODbHDRg7/ZO3v9Ich/4hdUG5mJyPx12GA?=
+ =?us-ascii?Q?1yDoFWdDl8K78+klIygDQAq6j47WUC1PqHmQAYuiSBOiMn/82qrOkk0gOg+v?=
+ =?us-ascii?Q?D/P8qMZcGE7eN2jgKAmdfTEXHRNfZYZ39dBYHDAnlrIQ7SgJIcflIt58+NMK?=
+ =?us-ascii?Q?O2wl2ZUCd6kOE/vKPe1gZdlFfpm0tjjtcYJJsx8LPuvcx7fyZSOJBEqo2K8j?=
+ =?us-ascii?Q?lHx03RUWbLwL6LJpGdqoPsbvgwaj73eAUCweJ3rGs1FZBOEjk0zCn6P7S+5m?=
+ =?us-ascii?Q?b/OXUHIzK6leykGiiChKf95D6T4V+Dpek8s/lAehkr8IhQ9CiOStJfPKDti3?=
+ =?us-ascii?Q?ISM5Fg0ZwBtTyVk8+VFmuOBQfpn99QeD3aKtRGGcwB0eotVs281/nCCm4wqy?=
+ =?us-ascii?Q?+P9jPsOGznkg3DVHYjB3r4WJyB8PlClzAUlwpMV6pfuY3XKWY5z8bGbovZP/?=
+ =?us-ascii?Q?zmwL5jUWjiP8quyjpanhSYPqfgTVJN0qVxzOR1ZYMu7m/KqRUzri2cKX1/XI?=
+ =?us-ascii?Q?n6h1596gSDtiXiVouBVv2YTvIr2JMnNNyirjoymZleXCXBNdK2P6A+JViHiX?=
+ =?us-ascii?Q?rCnOCBNOI2gjoJERVBkDwfvUMVKL81CcIPjxWDjiO7vPBVRNHy4ZXA7G3FY9?=
+ =?us-ascii?Q?LxusOsziEIC8GA9CtB+7dNzZy1dq0vw48oYt6fiG9UkmIbDK0/S9shuXY5Dl?=
+ =?us-ascii?Q?kX6lpaYOwMaLJJVHavQ/g+X/nnBJv37RjGQuarmY7Cewza6ZGd9aVJyWHAwb?=
+ =?us-ascii?Q?8clVGW1f0+ELf6MNokPPMIKTfem3nEE2QSljHxLAwf8qRnZXGTe7qQLJxbaB?=
+ =?us-ascii?Q?fX+IRBDkqFVL6MLDrvFNxstHauIBMFblJ5GFj4pnc0xCF1SLM5c9InemYYbU?=
+ =?us-ascii?Q?lL0mvJnCJLaCPzDEmMJ+1wHZ0+G/0sFS3O6Pco3trzMln1Ll0k6B/n4wGSPT?=
+ =?us-ascii?Q?ZxwzvOTfPla9NpU9qQhULszoULgn9xRU2oa2/q1BjKhT8BMAjVQQ+iX6xT34?=
+ =?us-ascii?Q?Hwrdt1BlAWWAc0t+ZSWxMEx7kMyYR+K+ydzAbcXwLuZwoSjMWXJbrsbxGhvC?=
+ =?us-ascii?Q?dEN+YCd9SZRbDdx53ZERtaAf4RfX73f+YaczSbyZqD7RshB48a6l304Rnh7d?=
+ =?us-ascii?Q?mc3T0U4HoQgfERkpS5GduX8xBBtSG4dG3v+9Y4zXGEgigDRar45IKngd1sQt?=
+ =?us-ascii?Q?NmNnXPuIGlrVTRSdAL8m5mK7XOuRAnTlyLfQwAadgJH7bQPJYR70FHJkWQha?=
+ =?us-ascii?Q?8HzafBRP2PhESU1QkNeG945iE8QKcWVXUunzjsdo9vE8xXaAAJovWfkFxcgO?=
+ =?us-ascii?Q?wrDbm4rrRGz5f/oeBozo82KIJl8OV4RsxgWi5yKu3s5GmpLUWB5FHp1+I44L?=
+ =?us-ascii?Q?PeJSEmvhvHDdE3Em2UgLq3tmu7U3Lk5HnzhNjLG+bTgjBxMWXecQvRdOPXpN?=
+ =?us-ascii?Q?cgmWknVxIf5O8LNHIWZ0isVRNtFMCFbMQY5yXJULqCznh53BZKNMZi5nlXwg?=
+ =?us-ascii?Q?6JKHERNut8m9dqIjIcgKntT0xRARtWsZjJQ8Qhda8Nget6+JhBxKyNxmbIFN?=
+ =?us-ascii?Q?0AmlA/7jGosqEcCnM7UNKcFHqAc0WdE=3D?=
+X-Exchange-RoutingPolicyChecked: DHO3kEKaU7tbs9mtx2F6K0XYJPi8ewHxxUqWCGhxYs8OPrQmQbOh6I2qdOGTRANbVp7pF/F7XqqrGE2aqL8WjbvnxCdKAB8akEATAKzoA7UC9i4t6pnfvWMnSOPmx/sA/S8PiT4cVI3Niui78PU6MTAcreaN+TfxbXnPHffcO59jIvtTmDi5vYTv2dcrnWgTwc/OYKE5v5OSCqxujGjz1owdM938TknqCf3HayWxzEeMaUqSz1AXwOmsWccNS7iYDQ63kxZAWAVZ4/tKyoNSK+pcxbK4YNTqdw92pjIPgDtBUbEZNfFfCqXmgOuUnQQGNZgz5MH8k0XtJoafjms5Eg==
 X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1cf236d0-0094-4b12-b8d8-08deb10d7b2f
+X-MS-Exchange-CrossTenant-Network-Message-Id: 824193c0-f4fa-4bb4-c23a-08deb10d77be
 X-MS-Exchange-CrossTenant-AuthSource: PH7PR02MB10160.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 May 2026 16:34:19.6141 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 May 2026 16:34:13.6572 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 71VLqTltxZCDMIDHQCekjRMkb7Pi9bwAorxkvtixsCgamxQC2kTbNppqULYEpDhAlFXz9j+LVMumjY5nLPgtkrssQQZuIBzbFo1HWQFna00=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR02MB8813
-X-Proofpoint-GUID: 6Q3erpIlI5hwl3Y89pM1FQneuNuJKgTZ
-X-Authority-Analysis: v=2.4 cv=WcU8rUhX c=1 sm=1 tr=0 ts=6a04a80e cx=c_pps
- a=sjA+6HJZU54iCSkNkQ7fig==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+X-MS-Exchange-CrossTenant-UserPrincipalName: LPXEZWtZ/lseOWXsJY9O1x+Ife5F2dqswdbwicgBVzz1RkKCAD7jRzK4InDBZ4WRCWuBLCtQ+Dede8XDoQgE0SCZXZa+mwsO/mp9ggnIHSA=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR02MB9564
+X-Proofpoint-GUID: WcYQlPoPtYk2FBTq5u6Kvj31mw5Tn9QL
+X-Proofpoint-ORIG-GUID: WcYQlPoPtYk2FBTq5u6Kvj31mw5Tn9QL
+X-Authority-Analysis: v=2.4 cv=apaCzyZV c=1 sm=1 tr=0 ts=6a04a807 cx=c_pps
+ a=Ju9Zey7g8YyQpP5MZaDBLg==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
  a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
  a=xqWC_Br6kY4A:10 a=NGcC8JguVDcA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=1L6crL_YRTbalZ11mEUO:22
- a=64Cc0HZtAAAA:8 a=lbUGho734beyiQ__YtEA:9
-X-Proofpoint-ORIG-GUID: 6Q3erpIlI5hwl3Y89pM1FQneuNuJKgTZ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEzMDE2OCBTYWx0ZWRfX1la9rHU7UPiR
- UmdBdP+MQY27SMnoxrbTK9fF2DJbttQxhGfAszS4a93ghRydY9bDYjM3oUJb33VrcVsFbtd2/dB
- bG8bcuriDMS0B8vBr1mV8SlbFZfkBQwIXkhVU+Rtq4KBHGqGY3rFuAyNxQH94+RkIArGkwNx/oJ
- Vzzk9aAji7myqVG1jxqupPw0ssvICohL+C7aHa5EGvPiNV8Mp86sKsjE/xxNRCxvdW4pt6Wj3Xl
- OY2VVg2fCcg/bY87abHrHbYlJ8MoBI+hs+WIhrESWeHHv2h/lPryxAx5t+UHYFxbTtfiST4brb4
- ggISkS5MfsXvCqPHzZ8dmHFXoF0+ajqCa/Kuj7Uo/Yaom+4jIj+kPHkM65BxR6c0jfcwQy2wDoY
- 26nnmf01FUmcdlB+wW/D6dqyZ8ydsuH4zKEegr+Xlo5C28iW6mK+L5JGUG3WALtEoI9xTp2Ya9h
- NoUHB0LxlG9d51VYlWw==
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=dEe9Ve2bX-KnNSUMM2s9:22
+ a=64Cc0HZtAAAA:8 a=PaGUs5NhgPxOKxUa52MA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEzMDE2OCBTYWx0ZWRfX3em7pHyv0TDu
+ xkpRGfWT4Bmo8HOV2hVKiO5x+9Oa40JB1M94DAPyVuWO9CeTy2Rn7L8IRZ48a5lBMmFYHDcQ8Tv
+ DYuYlNoGY14qdgn92cz7Vc5NBUvqxECn+8flGBeUpqm+TGMQHm6dMTeX9q4lbG5nbRFSFSkaUI8
+ pYXRF6FQ6V3o+SBpISnmzokg//+zAbdvSzGZaL6vlhP3RaMo+QQdofE3QBA8qOfPrOOuo77vCqD
+ g2DYVGwHwUAK4066kTvVM+nVrQrTLVdh77rBjWFVyvT4jui39wLVQC3Rm2ptHg15M3cLMCk5zbs
+ DNuEeZwaQMOrklhThpbW69diO9kUaEOpw/e8+VgNrgvPQOTR3V9wZJIFYLBq5H8+A27BLKnrIpj
+ Fz0LqdFT85BfsUA5Lv2XMuN1+d8377zONqtsLOseEbTLwtNR4cPJTjkCInnxmrbMbKme7pqGhxt
+ 9euaR1SCz/UN3E05BJg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-13_01,2026-05-13_01,2025-10-01_01
 X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=shaju.abraham@nutanix.com; helo=mx0a-002c1b01.pphosted.com
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=shaju.abraham@nutanix.com; helo=mx0b-002c1b01.pphosted.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
 X-Spam_bar: ---
 X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -182,247 +182,261 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define X-macros to generate tables for all user-facing CPU properties,
-including fractional properties.
-
-Properties that map to fields that are not supported by the linux kernel
-(i.e. not in the ftr_bits array) are not included.
+Include cpu-idregs.h.inc multiple times with different definitions for the
+X-macros. This will generate tables for all Arm64 ID registers and their
+fields. Additionally, initialize the tables with all architecturally defined
+values. These tables will be consumed by the property layer in future
+patches.
 
 Co-authored-by: Khushit Shah <khushit.shah@nutanix.com>
 Signed-off-by: Shaju Abraham <shaju.abraham@nutanix.com>
 ---
- target/arm/arm-cpu-frac.inc.h  |  34 +++++++
- target/arm/arm-cpu-props.inc.h | 180 +++++++++++++++++++++++++++++++++
- 2 files changed, 214 insertions(+)
- create mode 100644 target/arm/arm-cpu-frac.inc.h
- create mode 100644 target/arm/arm-cpu-props.inc.h
+ target/arm/cpu-idregs.c | 124 ++++++++++++++++++++++++++++++++++++++++
+ target/arm/cpu-idregs.h |  81 ++++++++++++++++++++++++++
+ target/arm/meson.build  |   1 +
+ 3 files changed, 206 insertions(+)
+ create mode 100644 target/arm/cpu-idregs.c
 
-diff --git a/target/arm/arm-cpu-frac.inc.h b/target/arm/arm-cpu-frac.inc.h
+diff --git a/target/arm/cpu-idregs.c b/target/arm/cpu-idregs.c
 new file mode 100644
-index 0000000000..6c194daf7c
+index 0000000000..8fced7d8d7
 --- /dev/null
-+++ b/target/arm/arm-cpu-frac.inc.h
-@@ -0,0 +1,34 @@
++++ b/target/arm/cpu-idregs.c
+@@ -0,0 +1,124 @@
++/*
++ *   ARM ID register field table.
++ *
++ *   Builds the per-id-register field descriptor arrays and the global
++ *   arm_idregs[] table.
++ *
++ *  SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include "qemu/osdep.h"
++#include "qemu/error-report.h"
++#include "qapi/error.h"
++#include "cpu.h"
++#include "cpu-idregs.h"
 +
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* generate an array of architecturely defined values for bitfields
++ * in arch-value format*/
++#define IDREG_START(reg)
++#define IDREG_END(reg)
++#define IDREG_FIELD_START(reg, field, shift, length, safe, defval) \
++    static const ArmIdRegArchVal reg##_##field##_arch_vals[] = {
++#define IDREG_FIELD_ARCH_VAL(v, n) { (v), (n) },
++#define IDREG_FIELD_ARCH_VAL_ANY   { 0xffffffffUL, NULL },
++#define IDREG_FIELD_END(reg, field) \
++    };
++#include "cpu-idregs.h.inc"
++#undef IDREG_START
++#undef IDREG_END
++#undef IDREG_FIELD_START
++#undef IDREG_FIELD_ARCH_VAL
++#undef IDREG_FIELD_ARCH_VAL_ANY
++#undef IDREG_FIELD_END
++/* generate an array of per-register ArmIdRegField[] descriptors */
++#define IDREG_FIELD_ARCH_VAL(v, n)
++#define IDREG_FIELD_ARCH_VAL_ANY
++#define IDREG_FIELD_END(reg, field)
++#define IDREG_START(reg) \
++    static ArmIdRegField reg##_fields[] = {
 +
-+FRAC_TABLE_START(CSV2)
-+FRAC_VAL("0.0", 0, 0)
-+FRAC_VAL("1.0", 1, 0)
-+FRAC_VAL("1.1", 1, 1)
-+FRAC_VAL("1.2", 1, 2)
-+FRAC_VAL("2.0", 2, 0)
-+FRAC_VAL("3.0", 3, 0)
-+FRAC_TABLE_END(CSV2)
++#define IDREG_END(reg) \
++    };
 +
-+FRAC_TABLE_START(MPAM)
-+FRAC_VAL("0.0", 0, 0)
-+FRAC_VAL("0.1", 0, 1)
-+FRAC_VAL("1.0", 1, 0)
-+FRAC_VAL("1.1", 1, 1)
-+FRAC_TABLE_END(MPAM)
++#define IDREG_FIELD_START(reg, field, _shift, _length, safe, defval) \
++    { \
++        .name = #field, \
++        .shift = (_shift), \
++        .length = (_length), \
++        .safe_rule = IDREG_SAFE_##safe, \
++        .default_val = (defval), \
++        .arch_vals = (ArmIdRegArchVal *)reg##_##field##_arch_vals, \
++        .arch_vals_count = ARRAY_SIZE(reg##_##field##_arch_vals), \
++    },
++#include "cpu-idregs.h.inc"
++#undef IDREG_START
++#undef IDREG_END
++#undef IDREG_FIELD_START
++#undef IDREG_FIELD_ARCH_VAL
++#undef IDREG_FIELD_END
 +
-+FRAC_TABLE_START(RAS)
-+FRAC_VAL("0.0", 0, 0)
-+FRAC_VAL("1.0", 1, 0)
-+FRAC_VAL("1.1", 1, 1)
-+FRAC_VAL("1.1_base", 2, 0)
-+FRAC_VAL("2.0", 3, 0)
-+FRAC_TABLE_END(RAS)
++/* generate an array of top level ID registers */
++#define IDREG_END(reg)
++#define IDREG_FIELD_START(reg, field, shift, length, safe, defval)
++#define IDREG_FIELD_ARCH_VAL(v, n)
++#define IDREG_FIELD_ARCH_VAL_ANY
++#define IDREG_FIELD_END(reg, field)
 +
-+FRAC_TABLE_START(NV)
-+FRAC_VAL("0.0", 0, 0)
-+FRAC_VAL("1.0", 1, 0)
-+FRAC_VAL("2.0", 2, 0)
-+FRAC_VAL("2.0_only", 2, 1)
-+FRAC_VAL("2.1", 2, 2)
-+FRAC_TABLE_END(NV)
-diff --git a/target/arm/arm-cpu-props.inc.h b/target/arm/arm-cpu-props.inc.h
-new file mode 100644
-index 0000000000..13a82e5b22
---- /dev/null
-+++ b/target/arm/arm-cpu-props.inc.h
-@@ -0,0 +1,180 @@
++#define IDREG_START(reg) \
++    [reg##_IDX] = { \
++        .name = #reg, \
++        .fields = reg##_fields, \
++        .fields_count = ARRAY_SIZE(reg##_fields), \
++    },
 +
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
++ArmIdReg arm_idregs[NUM_ID_IDX] = {
++#include "cpu-idregs.h.inc"
++};
++#undef IDREG_START
++#undef IDREG_END
++#undef IDREG_FIELD_START
++#undef IDREG_FIELD_ARCH_VAL
++#undef IDREG_FIELD_END
 +
-+ARM_PROP("feat_AES",         STRING,  ID_AA64ISAR0, AES)
-+ARM_PROP("feat_SHA1",        STRING,  ID_AA64ISAR0, SHA1)
-+ARM_PROP("feat_SHA2",        STRING,  ID_AA64ISAR0, SHA2)
-+ARM_PROP("feat_CRC32",       STRING,  ID_AA64ISAR0, CRC32)
-+ARM_PROP("feat_ATOMIC",      STRING,  ID_AA64ISAR0, ATOMIC)
-+ARM_PROP("feat_RDM",         STRING,  ID_AA64ISAR0, RDM)
-+ARM_PROP("feat_SHA3",        STRING,  ID_AA64ISAR0, SHA3)
-+ARM_PROP("feat_SM3",         STRING,  ID_AA64ISAR0, SM3)
-+ARM_PROP("feat_SM4",         STRING,  ID_AA64ISAR0, SM4)
-+ARM_PROP("feat_DP",          STRING,  ID_AA64ISAR0, DP)
-+ARM_PROP("feat_FHM",         STRING,  ID_AA64ISAR0, FHM)
-+ARM_PROP("feat_TS",          STRING,  ID_AA64ISAR0, TS)
-+ARM_PROP("feat_TLB",         STRING,  ID_AA64ISAR0, TLB)
-+ARM_PROP("feat_RNDR",        STRING,  ID_AA64ISAR0, RNDR)
 +
-+ARM_PROP("feat_DPB",         STRING,  ID_AA64ISAR1, DPB)
-+ARM_PROP("hw_prop_APA",      STRING,  ID_AA64ISAR1, APA)
-+ARM_PROP("hw_prop_API",      STRING,  ID_AA64ISAR1, API)
-+ARM_PROP("feat_JSCVT",       STRING,  ID_AA64ISAR1, JSCVT)
-+ARM_PROP("feat_FCMA",        STRING,  ID_AA64ISAR1, FCMA)
-+ARM_PROP("feat_LRCPC",       STRING,  ID_AA64ISAR1, LRCPC)
-+ARM_PROP("hw_prop_GPA",      STRING,  ID_AA64ISAR1, GPA)
-+ARM_PROP("hw_prop_GPI",      STRING,  ID_AA64ISAR1, GPI)
-+ARM_PROP("feat_FRINTTS",     STRING,  ID_AA64ISAR1, FRINTTS)
-+ARM_PROP("feat_SB",          STRING,  ID_AA64ISAR1, SB)
-+ARM_PROP("feat_SPECRES",     STRING,  ID_AA64ISAR1, SPECRES)
-+ARM_PROP("feat_BF16",        STRING,  ID_AA64ISAR1, BF16)
-+ARM_PROP("feat_DGH",         STRING,  ID_AA64ISAR1, DGH)
-+ARM_PROP("feat_I8MM",        STRING,  ID_AA64ISAR1, I8MM)
-+ARM_PROP("feat_XS",          STRING,  ID_AA64ISAR1, XS)
-+ARM_PROP("feat_LS64",        STRING,  ID_AA64ISAR1, LS64)
++/* Per-register field position enums (0..N-1 inside each register). */
++#define IDREG_START(reg) enum {
++#define IDREG_END(reg)   reg##_FIELD_POS__MAX };
++#define IDREG_FIELD_START(reg, field, shift, length, safe, defval) \
++    reg##_FIELD_POS_##field,
++#define IDREG_FIELD_ARCH_VAL(v, n)
++#define IDREG_FIELD_ARCH_VAL_ANY
++#define IDREG_FIELD_END(reg, field)
 +
-+ARM_PROP("feat_WFXT",        STRING,  ID_AA64ISAR2, WFXT)
-+ARM_PROP("feat_RPRES",       STRING,  ID_AA64ISAR2, RPRES)
-+ARM_PROP("hw_prop_GPA3",     STRING,  ID_AA64ISAR2, GPA3)
-+ARM_PROP("hw_prop_APA3",     STRING,  ID_AA64ISAR2, APA3)
-+ARM_PROP("feat_MOPS",        STRING,  ID_AA64ISAR2, MOPS)
-+ARM_PROP("feat_BC",          STRING,  ID_AA64ISAR2, BC)
-+ARM_PROP("feat_CLRBHB",      STRING,  ID_AA64ISAR2, CLRBHB)
-+ARM_PROP("feat_RPRFM",       STRING,  ID_AA64ISAR2, RPRFM)
-+ARM_PROP("feat_CSSC",        STRING,  ID_AA64ISAR2, CSSC)
-+ARM_PROP("feat_LUT",         STRING,  ID_AA64ISAR2, LUT)
++#include "cpu-idregs.h.inc"
 +
-+ARM_PROP("feat_FAMINMAX",    STRING,  ID_AA64ISAR3, FAMINMAX)
-+ARM_PROP("feat_LSFE",        STRING,  ID_AA64ISAR3, LSFE)
-+ARM_PROP("feat_FPRCVT",      STRING,  ID_AA64ISAR3, FPRCVT)
++#undef IDREG_FIELD_END
++#undef IDREG_FIELD_ARCH_VAL_ANY
++#undef IDREG_FIELD_ARCH_VAL
++#undef IDREG_FIELD_START
++#undef IDREG_END
++#undef IDREG_START
 +
-+ARM_PROP("el0_mode",         STRING,  ID_AA64PFR0, EL0)
-+ARM_PROP("el1_mode",         STRING,  ID_AA64PFR0, EL1)
-+ARM_PROP("el2_mode",         STRING,  ID_AA64PFR0, EL2)
-+ARM_PROP("el3_mode",         STRING,  ID_AA64PFR0, EL3)
-+ARM_PROP("feat_FP",          STRING,  ID_AA64PFR0, FP)
-+ARM_PROP("feat_AdvSIMD",     STRING,  ID_AA64PFR0, ADVSIMD)
-+ARM_PROP("feat_GIC",         STRING,  ID_AA64PFR0, GIC)
-+ARM_PROP("feat_SVE",         STRING,  ID_AA64PFR0, SVE)
-+ARM_PROP("feat_SEL2",        STRING,  ID_AA64PFR0, SEL2)
-+ARM_PROP("feat_AMU",         STRING,  ID_AA64PFR0, AMU)
-+ARM_PROP("feat_DIT",         STRING,  ID_AA64PFR0, DIT)
-+ARM_PROP("feat_CSV3",        STRING,  ID_AA64PFR0, CSV3)
++/* Flat ArmFieldIdx -> {reg, field slot, shift, length}. */
++#define IDREG_START(reg)
++#define IDREG_END(reg)
++#define IDREG_FIELD_START(reg, field, _shift, _length, safe, defval) \
++    [ARM_FIELD_##reg##_##field] = {                                \
++        .reg_idx = reg##_IDX,                                  \
++        .field_idx = reg##_FIELD_POS_##field,                      \
++        .shift = (_shift),                                          \
++        .length = (_length),                                        \
++    },
++#define IDREG_FIELD_ARCH_VAL(v, n)
++#define IDREG_FIELD_ARCH_VAL_ANY
++#define IDREG_FIELD_END(reg, field)
 +
-+ARM_PROP("feat_BT",          STRING,  ID_AA64PFR1, BT)
-+ARM_PROP("feat_SSBS",        STRING,  ID_AA64PFR1, SSBS)
-+ARM_PROP("feat_MTE",         STRING,  ID_AA64PFR1, MTE)
-+ARM_PROP("feat_NMI",         STRING,  ID_AA64PFR1, NMI)
-+ARM_PROP("feat_MTE_FRAC",    STRING,  ID_AA64PFR1, MTE_FRAC)
-+ARM_PROP("feat_GCS",         STRING,  ID_AA64PFR1, GCS)
-+ARM_PROP("feat_DF2",         STRING,  ID_AA64PFR1, DF2)
++const ArmIdRegFieldLoc arm_field_locs[ARM_FIELD__MAX] = {
++#include "cpu-idregs.h.inc"
++};
 +
-+ARM_PROP("feat_MTESTOREONLY", STRING, ID_AA64PFR2, MTESTOREONLY)
-+ARM_PROP("feat_MTEFAR",      STRING,  ID_AA64PFR2, MTEFAR)
-+ARM_PROP("feat_FPMR",        STRING,  ID_AA64PFR2, FPMR)
++#undef IDREG_FIELD_END
++#undef IDREG_FIELD_ARCH_VAL_ANY
++#undef IDREG_FIELD_ARCH_VAL
++#undef IDREG_FIELD_START
++#undef IDREG_END
++#undef IDREG_START
+diff --git a/target/arm/cpu-idregs.h b/target/arm/cpu-idregs.h
+index 403190cbd7..4e568e877d 100644
+--- a/target/arm/cpu-idregs.h
++++ b/target/arm/cpu-idregs.h
+@@ -7,6 +7,8 @@
+ #ifndef CPU_IDREGS_H
+ #define CPU_IDREGS_H
+ 
++#include "cpu-sysregs.h"
 +
-+ARM_PROP("hw_prop_PARANGE",  STRING,  ID_AA64MMFR0, PARANGE)
-+ARM_PROP("hw_prop_ASIDBITS", STRING,  ID_AA64MMFR0, ASIDBITS)
-+ARM_PROP("feat_BIGEND",      STRING,  ID_AA64MMFR0, BIGEND)
-+ARM_PROP("feat_SNSMEM",      STRING,  ID_AA64MMFR0, SNSMEM)
-+ARM_PROP("feat_BIGENDEL0",   STRING,  ID_AA64MMFR0, BIGENDEL0)
-+ARM_PROP("hw_prop_TGRAN16",  STRING,  ID_AA64MMFR0, TGRAN16)
-+ARM_PROP("hw_prop_TGRAN64",  STRING,  ID_AA64MMFR0, TGRAN64)
-+ARM_PROP("hw_prop_TGRAN4",   STRING,  ID_AA64MMFR0, TGRAN4)
-+ARM_PROP("hw_prop_TGRAN16_2", STRING, ID_AA64MMFR0, TGRAN16_2)
-+ARM_PROP("hw_prop_TGRAN64_2", STRING, ID_AA64MMFR0, TGRAN64_2)
-+ARM_PROP("hw_prop_TGRAN4_2", STRING,  ID_AA64MMFR0, TGRAN4_2)
-+ARM_PROP("feat_EXS",         STRING,  ID_AA64MMFR0, EXS)
-+ARM_PROP("feat_FGT",         STRING,  ID_AA64MMFR0, FGT)
-+ARM_PROP("feat_ECV",         STRING,  ID_AA64MMFR0, ECV)
+ typedef enum ArmIdRegSafeRule {
+     IDREG_SAFE_LOWER,
+     IDREG_SAFE_HIGHER,
+@@ -37,5 +39,84 @@ typedef struct ArmIdReg {
+     uint32_t fields_count;
+ } ArmIdReg;
+ 
++/* Map short register names to canonical _EL1/_EL0 IDX values */
++#define ID_AA64ISAR0_IDX  ID_AA64ISAR0_EL1_IDX
++#define ID_AA64ISAR1_IDX  ID_AA64ISAR1_EL1_IDX
++#define ID_AA64ISAR2_IDX  ID_AA64ISAR2_EL1_IDX
++#define ID_AA64ISAR3_IDX  ID_AA64ISAR3_EL1_IDX
++#define ID_AA64PFR0_IDX   ID_AA64PFR0_EL1_IDX
++#define ID_AA64PFR1_IDX   ID_AA64PFR1_EL1_IDX
++#define ID_AA64PFR2_IDX   ID_AA64PFR2_EL1_IDX
++#define ID_AA64MMFR0_IDX  ID_AA64MMFR0_EL1_IDX
++#define ID_AA64MMFR1_IDX  ID_AA64MMFR1_EL1_IDX
++#define ID_AA64MMFR2_IDX  ID_AA64MMFR2_EL1_IDX
++#define ID_AA64MMFR3_IDX  ID_AA64MMFR3_EL1_IDX
++#define ID_AA64MMFR4_IDX  ID_AA64MMFR4_EL1_IDX
++#define ID_AA64DFR0_IDX   ID_AA64DFR0_EL1_IDX
++#define ID_AA64DFR1_IDX   ID_AA64DFR1_EL1_IDX
++#define ID_AA64ZFR0_IDX   ID_AA64ZFR0_EL1_IDX
++#define ID_AA64SMFR0_IDX  ID_AA64SMFR0_EL1_IDX
++#define ID_AA64AFR0_IDX   ID_AA64AFR0_EL1_IDX
++#define ID_AA64AFR1_IDX   ID_AA64AFR1_EL1_IDX
++#define ID_AA64FPFR0_IDX  ID_AA64FPFR0_EL1_IDX
++#define ID_PFR0_IDX       ID_PFR0_EL1_IDX
++#define ID_PFR1_IDX       ID_PFR1_EL1_IDX
++#define ID_PFR2_IDX       ID_PFR2_EL1_IDX
++#define ID_DFR0_IDX       ID_DFR0_EL1_IDX
++#define ID_DFR1_IDX       ID_DFR1_EL1_IDX
++#define ID_AFR0_IDX       ID_AFR0_EL1_IDX
++#define ID_MMFR0_IDX      ID_MMFR0_EL1_IDX
++#define ID_MMFR1_IDX      ID_MMFR1_EL1_IDX
++#define ID_MMFR2_IDX      ID_MMFR2_EL1_IDX
++#define ID_MMFR3_IDX      ID_MMFR3_EL1_IDX
++#define ID_MMFR4_IDX      ID_MMFR4_EL1_IDX
++#define ID_MMFR5_IDX      ID_MMFR5_EL1_IDX
++#define ID_ISAR0_IDX      ID_ISAR0_EL1_IDX
++#define ID_ISAR1_IDX      ID_ISAR1_EL1_IDX
++#define ID_ISAR2_IDX      ID_ISAR2_EL1_IDX
++#define ID_ISAR3_IDX      ID_ISAR3_EL1_IDX
++#define ID_ISAR4_IDX      ID_ISAR4_EL1_IDX
++#define ID_ISAR5_IDX      ID_ISAR5_EL1_IDX
++#define ID_ISAR6_IDX      ID_ISAR6_EL1_IDX
++#define MVFR0_IDX         MVFR0_EL1_IDX
++#define MVFR1_IDX         MVFR1_EL1_IDX
++#define MVFR2_IDX         MVFR2_EL1_IDX
++#define MIDR_IDX          MIDR_EL1_IDX
++#define REVIDR_IDX        REVIDR_EL1_IDX
++#define AIDR_IDX          AIDR_EL1_IDX
++#define DCZID_IDX         DCZID_EL0_IDX
 +
-+ARM_PROP("feat_HAFDBS",      STRING,  ID_AA64MMFR1, HAFDBS)
-+ARM_PROP("hw_prop_VMIDBITS", STRING,  ID_AA64MMFR1, VMIDBITS)
-+ARM_PROP("feat_VH",          STRING,  ID_AA64MMFR1, VH)
-+ARM_PROP("feat_HPDS",        STRING,  ID_AA64MMFR1, HPDS)
-+ARM_PROP("feat_LO",          STRING,  ID_AA64MMFR1, LO)
-+ARM_PROP("feat_PAN",         STRING,  ID_AA64MMFR1, PAN)
-+ARM_PROP("feat_SpecSEI",     STRING,  ID_AA64MMFR1, SPECSEI)
-+ARM_PROP("feat_XNX",         STRING,  ID_AA64MMFR1, XNX)
-+ARM_PROP("feat_TWED",        STRING,  ID_AA64MMFR1, TWED)
-+ARM_PROP("feat_ETS",         STRING,  ID_AA64MMFR1, ETS)
-+ARM_PROP("feat_HCX",         STRING,  ID_AA64MMFR1, HCX)
-+ARM_PROP("feat_AFP",         STRING,  ID_AA64MMFR1, AFP)
-+ARM_PROP("feat_TIDCP1",      STRING,  ID_AA64MMFR1, TIDCP1)
-+ARM_PROP("feat_ECBHB",       STRING,  ID_AA64MMFR1, ECBHB)
++/* ArmFieldIdx: per-field enum generated from cpu-idregs.h.inc */
++#define IDREG_START(reg)
++#define IDREG_END(reg)
++#define IDREG_FIELD_START(reg, field, shift, length, safe, defval) \
++    ARM_FIELD_##reg##_##field,
++#define IDREG_FIELD_ARCH_VAL(v, n)
++#define IDREG_FIELD_ARCH_VAL_ANY
++#define IDREG_FIELD_END(reg, field)
++typedef enum ArmFieldIdx {
++#include "cpu-idregs.h.inc"
++    ARM_FIELD__MAX,
++} ArmFieldIdx;
++#undef IDREG_FIELD_END
++#undef IDREG_FIELD_ARCH_VAL_ANY
++#undef IDREG_FIELD_ARCH_VAL
++#undef IDREG_FIELD_START
++#undef IDREG_END
++#undef IDREG_START
 +
-+ARM_PROP("feat_CNP",         STRING,  ID_AA64MMFR2, CNP)
-+ARM_PROP("feat_UAO",         STRING,  ID_AA64MMFR2, UAO)
-+ARM_PROP("feat_LSM",         STRING,  ID_AA64MMFR2, LSM)
-+ARM_PROP("feat_IESB",        STRING,  ID_AA64MMFR2, IESB)
-+ARM_PROP("hw_prop_VARANGE",  STRING,  ID_AA64MMFR2, VARANGE)
-+ARM_PROP("hw_prop_CCIDX",    STRING,  ID_AA64MMFR2, CCIDX)
-+ARM_PROP("hw_prop_ST",       STRING,  ID_AA64MMFR2, ST)
-+ARM_PROP("feat_AT",          STRING,  ID_AA64MMFR2, AT)
-+ARM_PROP("hw_prop_IDS",      STRING,  ID_AA64MMFR2, IDS)
-+ARM_PROP("hw_prop_FWB",      STRING,  ID_AA64MMFR2, FWB)
-+ARM_PROP("feat_TTL",         STRING,  ID_AA64MMFR2, TTL)
-+ARM_PROP("feat_BBM",         STRING,  ID_AA64MMFR2, BBM)
-+ARM_PROP("feat_EVT",         STRING,  ID_AA64MMFR2, EVT)
-+ARM_PROP("feat_E0PD",        STRING,  ID_AA64MMFR2, E0PD)
-+
-+ARM_PROP("feat_TCRX",        STRING,  ID_AA64MMFR3, TCRX)
-+ARM_PROP("feat_SCTLRX",      STRING,  ID_AA64MMFR3, SCTLRX)
-+ARM_PROP("feat_S1PIE",       STRING,  ID_AA64MMFR3, S1PIE)
-+ARM_PROP("feat_S1POE",       STRING,  ID_AA64MMFR3, S1POE)
-+
-+ARM_PROP("feat_E2H0",        STRING,  ID_AA64MMFR4, E2H0)
-+
-+ARM_PROP("feat_DBG",         STRING,  ID_AA64DFR0, DEBUGVER)
-+ARM_PROP("feat_PMU",         STRING,  ID_AA64DFR0, PMUVER)
-+ARM_PROP("hw_prop_BRPS",     NUMERIC, ID_AA64DFR0, BRPS)
-+ARM_PROP("hw_prop_WRPs",     NUMERIC, ID_AA64DFR0, WRPS)
-+ARM_PROP("hw_prop_CTX_CMPs", NUMERIC, ID_AA64DFR0, CTX_CMPS)
-+ARM_PROP("hw_prop_PMSVer",   STRING,  ID_AA64DFR0, PMSVER)
-+ARM_PROP("feat_DoubleLock",  STRING,  ID_AA64DFR0, DOUBLELOCK)
-+
-+ARM_PROP("hw_prop_SVEVer",   STRING,  ID_AA64ZFR0, SVEVER)
-+ARM_PROP("feat_SVE_AES",     STRING,  ID_AA64ZFR0, AES)
-+ARM_PROP("feat_SVE_ELTPERM", STRING,  ID_AA64ZFR0, ELTPERM)
-+ARM_PROP("feat_SVE_BITPERM", STRING,  ID_AA64ZFR0, BITPERM)
-+ARM_PROP("feat_SVE_BFLOAT16", STRING, ID_AA64ZFR0, BFLOAT16)
-+ARM_PROP("feat_SVE_B16B16",  STRING,  ID_AA64ZFR0, B16B16)
-+ARM_PROP("feat_SVE_SHA3",    STRING,  ID_AA64ZFR0, SHA3)
-+ARM_PROP("feat_SVE_SM4",     STRING,  ID_AA64ZFR0, SM4)
-+ARM_PROP("feat_SVE_I8MM",    STRING,  ID_AA64ZFR0, I8MM)
-+ARM_PROP("feat_SVE_F16MM",   STRING,  ID_AA64ZFR0, F16MM)
-+ARM_PROP("feat_SVE_F32MM",   STRING,  ID_AA64ZFR0, F32MM)
-+ARM_PROP("feat_SVE_F64MM",   STRING,  ID_AA64ZFR0, F64MM)
-+
-+ARM_PROP("feat_F8E5M2",      BOOLEAN, ID_AA64FPFR0, F8E5M2)
-+ARM_PROP("feat_F8E4M3",      BOOLEAN, ID_AA64FPFR0, F8E4M3)
-+ARM_PROP("feat_F8MM4",       BOOLEAN, ID_AA64FPFR0, F8MM4)
-+ARM_PROP("feat_F8MM8",       BOOLEAN, ID_AA64FPFR0, F8MM8)
-+ARM_PROP("feat_F8DP2",       BOOLEAN, ID_AA64FPFR0, F8DP2)
-+ARM_PROP("feat_F8DP4",       BOOLEAN, ID_AA64FPFR0, F8DP4)
-+ARM_PROP("feat_F8FMA",       BOOLEAN, ID_AA64FPFR0, F8FMA)
-+ARM_PROP("feat_F8CVT",       BOOLEAN, ID_AA64FPFR0, F8CVT)
-+
-+ARM_PROP("hw_prop_IMInline", NUMERIC, CTR_EL0, IMINLINE)
-+ARM_PROP("hw_prop_L1IP",     STRING,  CTR_EL0, L1IP)
-+ARM_PROP("hw_prop_DMInline", NUMERIC, CTR_EL0, DMINLINE)
-+ARM_PROP("hw_prop_ERG",      NUMERIC, CTR_EL0, ERG)
-+ARM_PROP("hw_prop_CWG",      NUMERIC, CTR_EL0, CWG)
-+ARM_PROP("hw_prop_IDC",      BOOLEAN, CTR_EL0, IDC)
-+ARM_PROP("hw_prop_DIC",      BOOLEAN, CTR_EL0, DIC)
-+ARM_PROP("hw_prop_BS",       NUMERIC, DCZID_EL0, BS)
-+ARM_PROP("hw_prop_DZP",      BOOLEAN, DCZID_EL0, DZP)
-+
-+ARM_PROP("cpu_revision",     NUMERIC, MIDR, REVISION)
-+ARM_PROP("cpu_partnum",      NUMERIC, MIDR, PARTNUM)
-+ARM_PROP("cpu_architecture", NUMERIC, MIDR, ARCHITECTURE)
-+ARM_PROP("cpu_variant",      NUMERIC, MIDR, VARIANT)
-+ARM_PROP("cpu_implementer",  NUMERIC, MIDR, IMPLEMENTER)
-+ARM_PROP("cpu_revidr",       NUMERIC, REVIDR, VAL)
-+ARM_PROP("cpu_aidr",         NUMERIC, AIDR, VAL)
-+
-+/* Fractional properties */
-+ARM_FRACTIONAL_PROP("feat_CSV2", ID_AA64PFR0, CSV2, ID_AA64PFR1, CSV2_FRAC)
-+ARM_FRACTIONAL_PROP("feat_MPAM", ID_AA64PFR0, MPAM, ID_AA64PFR1, MPAM_FRAC)
-+ARM_FRACTIONAL_PROP("feat_RAS",  ID_AA64PFR0, RAS,  ID_AA64PFR1, RAS_FRAC)
-+ARM_FRACTIONAL_PROP("feat_NV",   ID_AA64MMFR2, NV,  ID_AA64MMFR4, NV_FRAC)
++typedef struct ArmIdRegFieldLoc {
++    ARMIDRegisterIdx reg_idx;
++    uint16_t field_idx;
++    uint8_t shift;
++    uint8_t length;
++} ArmIdRegFieldLoc;
++extern const ArmIdRegFieldLoc arm_field_locs[ARM_FIELD__MAX];
++#define ARM_FIELD_REG(idx)       (arm_field_locs[(idx)].reg_idx)
++#define ARM_FIELD_REG_FIELD(idx) (arm_field_locs[(idx)].field_idx)
++#define ARM_FIELD_SHIFT(idx)     (arm_field_locs[(idx)].shift)
++#define ARM_FIELD_LENGTH(idx)    (arm_field_locs[(idx)].length)
++#define ARM_FIELD_IDX(reg, field) ARM_FIELD_##reg##_##field
+ 
++extern ArmIdReg arm_idregs[NUM_ID_IDX];
+ #endif /* CPU_IDREGS_H */
+diff --git a/target/arm/meson.build b/target/arm/meson.build
+index 4723f9f170..64d1ec63ab 100644
+--- a/target/arm/meson.build
++++ b/target/arm/meson.build
+@@ -19,6 +19,7 @@ arm_common_ss.add(files(
+ 
+ arm_common_system_ss.add(files(
+   'arm-qmp-cmds.c',
++  'cpu-idregs.c',
+ ))
+ arm_system_ss.add(when: 'CONFIG_KVM', if_true: files('hyp_gdbstub.c', 'kvm.c'))
+ arm_system_ss.add(when: 'CONFIG_HVF', if_true: files('hyp_gdbstub.c'))
 -- 
 2.52.0
 
