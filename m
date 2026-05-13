@@ -4,108 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33DBFCD37B6
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 10:01:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE658CD4F24
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 10:05:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN6Nv-0005tK-KY; Wed, 13 May 2026 06:00:13 -0400
+	id 1wN6Sl-000721-Ja; Wed, 13 May 2026 06:05:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wN6Nk-0005q8-1U
- for qemu-devel@nongnu.org; Wed, 13 May 2026 06:00:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wN6Ne-0005Ef-Ci
- for qemu-devel@nongnu.org; Wed, 13 May 2026 05:59:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778666392;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qUqW8p9+rFcb0BrXm7mCeMxCemBEz8wDpu9wCfKM5TQ=;
- b=NuUpokfa83LigJW/UlM08YOAPphr6PQm4F26K7R+qqu/v1O5rKlwc6aLDgK4ii205/XzMc
- 1/YRY0jYoH9lzxTxsGLTkdf/H8ohz9zqCbzaZezm7aoz2wji1UPgtMPXv5F4DqcbM0+eNB
- 339PYyQD3oU8fh1DaP0VEoVhohuKODA=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-690-ojSAELOaOAOfJPCmwv1MUQ-1; Wed, 13 May 2026 05:59:50 -0400
-X-MC-Unique: ojSAELOaOAOfJPCmwv1MUQ-1
-X-Mimecast-MFC-AGG-ID: ojSAELOaOAOfJPCmwv1MUQ_1778666390
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-43efc93e4f6so4305089f8f.3
- for <qemu-devel@nongnu.org>; Wed, 13 May 2026 02:59:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778666389; x=1779271189; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=qUqW8p9+rFcb0BrXm7mCeMxCemBEz8wDpu9wCfKM5TQ=;
- b=LbYyJ0IKhvOjlHo5ebqtxlVok5XLk9qwg8knm+Jjxk2ZRxi3HpY/Z7y29R7ck38yZX
- MSJ3owvjpPBll6hbYfMilfDD0BMrVCZDoUSovKVVKVMclrKORyIHuBKlZcZUmghV3b/2
- RA1aD8CYI2zL/iOQu36MKtJb4BBUzYIBE5Db6erx2PxzR36FPVatPlzUZdWGQ39/toa7
- rIq3CjW7SwlhT/CpPS2HBT319ONHDqYiUIzbec4DiSzdtEFTa4PSU2xobPp915m7S69k
- Em1CZFyyVBhER0E01Vmn8H4gierLu0UcwKkiDHbXt1t5Mj9Hx30VJFbkBK8ipMmlHhhT
- Se1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778666389; x=1779271189;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qUqW8p9+rFcb0BrXm7mCeMxCemBEz8wDpu9wCfKM5TQ=;
- b=LTIV5PuOnKKzO+XIPsKVjJyrH/ZckiNUwCHH5rZpe+dBf2E7F9sW4JUDRagxAJvJDN
- EJQ55KTftsgi0Gewzl7kWqePb4pmmfJspEMw/hp4k3EMKJTQ60ODSrmUHuamqOwQCNbv
- XezYNqtAJpEpPYESR6I1dDHzhMQu5jzZj8gpyVd2AIOQDVNLql5FVyasnyKoufzbZ6OI
- BrhP+5EpAIsdHxRuohO1pHhxxuyD2JzQj0oAGabYvXieHd2UbDY5H2uX25WvkJEL2ntm
- nXkH1jv4ImHsaZ0cEwoyhlF5kNQoOUvDWTaheMecpo6eLrHEb7Jj2THsYBDHgEc7x4l4
- AY+w==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/KcPyxPeeZRwvTsdyxzLGVvHD2DveYr4R3MmASEQ6/CmsitZGnTFLGPQ/zobhzDj2lo9BBOkgoVSHZ@nongnu.org
-X-Gm-Message-State: AOJu0YzF9cA4aRaHbRCoZ/YiE3so5uz8mA4ZKZdWwn3bjJoGW6sQ4Jbi
- laK1rr0BjCev4n2ux7pAc6imiO7fINcBvZoIdr0SZx2ZuOFLU6YyopS3hHF4z9A0K/ixzqfowSk
- M/pW/2opZ1ytmZllHmVlLWAz0eCa7jsfmItRKRNp+IxPSt9CvjI+hHajo
-X-Gm-Gg: Acq92OFXFt1DVfMevoOzZceDIuh8s1zuaRwsF+XBKBM6uP61iXX84n+yjSSYVPaPaD0
- +df6CAVnkjRN92XdJAPZsQaEch7G8H9v4sCSFgkxPcbNDGYcKYbXMa9EC5+Ub66nuwdjVEHXZ+v
- KnVNb4ZWr5rv6GwjkMWjg5i7nEL1RZQWuQ8ph10ya3evqASeFgtgKhXWKavX53gjwXkFzolAIQT
- gyFeMhP1tOD8TAcqsWRX5vf2ViLqqdE7JD+9TiUD4e62j9VOoVMEk/1dvBnGZ71brt9EsJlqXZY
- 65bGAIeQOZt8EwQ3i9IQj5pyEDnsMMrBE+JhCiS2EKD1RI/7XwdOarwkM+v8LCd0LIUtA0J7CvJ
- sdA+uBXcUo3NtdhFst/2RN0Jj3DbjU9OowkgnU+9+
-X-Received: by 2002:a05:6000:2481:b0:43c:f8b4:e58 with SMTP id
- ffacd0b85a97d-45c59cd02b9mr3725678f8f.41.1778666389461; 
- Wed, 13 May 2026 02:59:49 -0700 (PDT)
-X-Received: by 2002:a05:6000:2481:b0:43c:f8b4:e58 with SMTP id
- ffacd0b85a97d-45c59cd02b9mr3725602f8f.41.1778666388774; 
- Wed, 13 May 2026 02:59:48 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-48-7.inter.net.il. [80.230.48.7])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4548ec6aea4sm45592325f8f.10.2026.05.13.02.59.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 May 2026 02:59:48 -0700 (PDT)
-Date: Wed, 13 May 2026 05:59:45 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: Junjie Cao <junjie.cao@intel.com>, qemu-devel@nongnu.org,
- jasowang@redhat.com, yuri.benditovich@daynix.com,
- berrange@redhat.com, peter.maydell@linaro.org, qemu-stable@nongnu.org
-Subject: Re: [PATCH v2] virtio-net: validate RSS indirections_len in post_load
-Message-ID: <20260513055917-mutt-send-email-mst@kernel.org>
-References: <20260324060100.1997-1-junjie.cao@intel.com>
- <f4e8921d-d1fb-4ff6-95d2-de6b44a5941e@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <mengzhuo@iscas.ac.cn>)
+ id 1wN6Si-0006yY-Cd; Wed, 13 May 2026 06:05:08 -0400
+Received: from smtp25.cstnet.cn ([159.226.251.25] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <mengzhuo@iscas.ac.cn>)
+ id 1wN6Sf-0007bQ-7u; Wed, 13 May 2026 06:05:07 -0400
+Received: from iscas.ac.cn (unknown [113.16.146.186])
+ by APP-05 (Coremail) with SMTP id zQCowADXaw+_TARqE8gkEA--.50441S2;
+ Wed, 13 May 2026 18:04:48 +0800 (CST)
+From: Meng Zhuo <mengzhuo@iscas.ac.cn>
+To: qemu-riscv@nongnu.org
+Cc: qemu-devel@nongnu.org,
+	Meng Zhuo <mengzhuo@iscas.ac.cn>
+Subject: [PATCH] target/riscv/kvm: skip FP/Vector sync on KVM_PUT_RUNTIME_STATE
+Date: Wed, 13 May 2026 18:04:47 +0800
+Message-ID: <20260513100447.2167615-1-mengzhuo@iscas.ac.cn>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <f4e8921d-d1fb-4ff6-95d2-de6b44a5941e@tls.msk.ru>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-CM-TRANSID: zQCowADXaw+_TARqE8gkEA--.50441S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7Zr13urW7Wr1UCw4UKF1ftFb_yoW8Kr4xpr
+ 45Ca9xGr1xGrWxC3yIyF4kXF1rWFWxWrZrury2y3y7KF4YkrWYgr1ktFWF9F4DCrW8ur1a
+ 9F4jyF43u398AaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUUyq14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+ rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+ 1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
+ 6F4UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
+ 0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
+ jxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr
+ 1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxAIw28IcxkI7VAKI48J
+ MxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwV
+ AFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv2
+ 0xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4
+ v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AK
+ xVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjfU5WlkUUUUU
+X-Originating-IP: [113.16.146.186]
+X-CM-SenderInfo: pphqw6xkxrqxpvfd2hldfou0/1tbiBwsGEmoES64EdgAAsh
+Received-SPF: pass client-ip=159.226.251.25; envelope-from=mengzhuo@iscas.ac.cn;
+ helo=cstnet.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,60 +72,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 13, 2026 at 09:42:59AM +0300, Michael Tokarev wrote:
-> On 24.03.2026 09:01, Junjie Cao wrote:
-> > virtio_net_handle_rss() enforces that indirections_len is a non-zero
-> > power of two no larger than VIRTIO_NET_RSS_MAX_TABLE_LEN, but
-> > virtio_net_rss_post_load() applies none of these checks to values
-> > restored from the migration stream.
-> > 
-> > A corrupted save file or crafted migration stream can set
-> > indirections_len to 0.  Even if it also clears redirect,
-> > virtio_load() calls set_features_nocheck() after the device vmstate
-> > (including the RSS subsection and its post_load) has already been
-> > loaded, re-deriving redirect from the negotiated guest features.
-> > When VIRTIO_NET_F_RSS was negotiated, redirect is set back to true
-> > regardless of the migration stream value.  The receive path then
-> > computes
-> > 
-> >      hash & (indirections_len - 1)   /* wraps to 0xFFFFFFFF via int promotion */
-> > 
-> > and uses the result to index into indirections_table, which was not
-> > allocated by the VMState loader when the element count is zero (see
-> > vmstate_handle_alloc()), resulting in a NULL pointer dereference that
-> > crashes QEMU:
-> > 
-> >    #0  virtio_net_process_rss    ../hw/net/virtio-net.c:1901
-> >    #1  virtio_net_receive_rcu    ../hw/net/virtio-net.c:1921
-> >    #2  virtio_net_do_receive     ../hw/net/virtio-net.c:2061
-> >    #3  nc_sendv_compat           ../net/net.c:823
-> >    #4  qemu_deliver_packet_iov   ../net/net.c:870
-> > 
-> > The RSS subsection is only loaded when rss_data.enabled is true (via
-> > virtio_net_rss_needed()), and the command path always produces
-> > indirections_len in {1, 2, 4, …, 128}, so an unconditional check
-> > cannot reject a legitimate migration stream.
-> > 
-> > Factor the validation into virtio_net_rss_indirections_len_valid()
-> > and call it from both virtio_net_handle_rss() and
-> > virtio_net_rss_post_load().
-> > 
-> > Fixes: e41b711485e5 ("virtio-net: add migration support for RSS and hash report")
-> > Cc: qemu-stable@nongnu.org
-> > Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-> 
-> Hi!
-> 
-> Has this patch been forgotten, or is it not needed anymore?
-> 
-> I'm preparing next set of the stable qemu releases, if it's needed,
-> it would be nice if it lands in the master branch in the next 10
-> days.
-> 
-> Thanks,
-> 
-> /mjt
+During KVM exit processing (KVM_PUT_RUNTIME_STATE), QEMU never modifies
+FP or Vector registers — only core GPRs/PC and CSRs are potentially
+changed.  Re-syncing 32 FP and 32 Vector registers on every KVM exit
+wastes 36-68 individual KVM_SET_ONE_REG ioctls per vCPU exit.
 
-I'll pick it now, thanks.
+Follow the s390x pattern: early return on RUNTIME after syncing core
+registers and CSRs.  KVM_PUT_FULL_STATE and KVM_PUT_RESET_STATE continue
+to sync everything for correctness during migration and initialization.
+
+Signed-off-by: Meng Zhuo <mengzhuo@iscas.ac.cn>
+---
+ target/riscv/kvm/kvm-cpu.c | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
+
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index b047ffa9c0..12a440971e 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -1373,7 +1373,7 @@ int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu, int state)
+ 
+ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
+ {
+-    int ret = 0;
++    int ret;
+ 
+     ret = kvm_riscv_put_regs_core(cs);
+     if (ret) {
+@@ -1385,6 +1385,17 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
+         return ret;
+     }
+ 
++    /*
++     * For RUNTIME_STATE, KVM already has the correct FP and Vector state
++     * from the preceding KVM_RUN exit. QEMU never modifies these registers
++     * during exit handling, so re-syncing is unnecessary.  This saves ~68
++     * KVM_SET_ONE_REG ioctls per vCPU exit.  See also s390x which uses
++     * the same pattern.
++     */
++    if (level == KVM_PUT_RUNTIME_STATE) {
++        return 0;
++    }
++
+     ret = kvm_riscv_put_regs_fp(cs);
+     if (ret) {
+         return ret;
+@@ -1395,19 +1406,17 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
+         return ret;
+     }
+ 
+-    if (KVM_PUT_RESET_STATE == level) {
++    if (level == KVM_PUT_RESET_STATE) {
+         RISCVCPU *cpu = RISCV_CPU(cs);
+-        if (cs->cpu_index == 0) {
+-            ret = kvm_riscv_sync_mpstate_to_kvm(cpu, KVM_MP_STATE_RUNNABLE);
+-        } else {
+-            ret = kvm_riscv_sync_mpstate_to_kvm(cpu, KVM_MP_STATE_STOPPED);
+-        }
++        int state = cs->cpu_index == 0 ? KVM_MP_STATE_RUNNABLE
++                                       : KVM_MP_STATE_STOPPED;
++        ret = kvm_riscv_sync_mpstate_to_kvm(cpu, state);
+         if (ret) {
+             return ret;
+         }
+     }
+ 
+-    return ret;
++    return 0;
+ }
+ 
+ int kvm_arch_release_virq_post(int virq)
+-- 
+2.47.3
 
 
