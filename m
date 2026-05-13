@@ -4,49 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4E16CD4F21
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 15:35:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A86ACD4F21
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 15:47:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNBbm-00010l-RM; Wed, 13 May 2026 11:34:50 -0400
+	id 1wNBnG-0003lv-AU; Wed, 13 May 2026 11:46:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1wNBbj-0000za-OF; Wed, 13 May 2026 11:34:48 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wNBn8-0003kk-Go
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 11:46:36 -0400
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1wNBbh-0005TY-W9; Wed, 13 May 2026 11:34:47 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id E6D01A49A9;
- Wed, 13 May 2026 17:34:42 +0200 (CEST)
-Message-ID: <fbc8ee03-4e67-4e80-9717-612953a38d29@proxmox.com>
-Date: Wed, 13 May 2026 17:34:42 +0200
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wNBn6-0000Z9-O2
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 11:46:34 -0400
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wNBmq-000000018HD-3ir2; Wed, 13 May 2026 17:46:16 +0200
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+To: Peter Xu <peterx@redhat.com>,
+	Fabiano Rosas <farosas@suse.de>
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Mark Kanda <mark.kanda@oracle.com>,
+ Ben Chaney <bchaney@akamai.com>, qemu-devel@nongnu.org
+Subject: [PATCH] MAINTAINERS: Make Maciej CPR maintainer
+Date: Wed, 13 May 2026 17:46:10 +0200
+Message-ID: <ebe67053f4bdf92eedab1e5839603b7137e36970.1778687091.git.maciej.szmigiero@oracle.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] qcow2: Fix corruption on discard during write with COW
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, hreitz@redhat.com, den@openvz.org,
- stefanha@redhat.com, qemu-stable@nongnu.org, qemu-devel@nongnu.org
-References: <20260427170520.101242-1-kwolf@redhat.com>
- <20260427170520.101242-4-kwolf@redhat.com>
- <76eb4371-8cfe-4d9f-870f-56c9a6dda334@proxmox.com>
- <agMbmZvW3MCSX3BF@redhat.com>
-Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <agMbmZvW3MCSX3BF@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1778686478729
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,37 +59,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 12.05.26 um 2:21 PM schrieb Kevin Wolf:
-> Am 29.04.2026 um 17:28 hat Fiona Ebner geschrieben:
->> Am 27.04.26 um 7:04 PM schrieb Kevin Wolf:
->>> @@ -2000,6 +2028,15 @@ int qcow2_cluster_discard(BlockDriverState *bs, uint64_t offset,
->>>      int64_t cleared;
->>>      int ret;
->>>  
->>> +    /*
->>> +     * If we're touching a cluster for which allocating writes are in flight,
->>> +     * wait for them to complete to avoid conflicting metadata updates.
->>> +     *
->>> +     * We don't need to allocate a QCowL2Meta for the discard operation because
->>> +     * s->lock is held for the duration of the whole operation.
->>
->> The caller in qcow2_make_empty() does not acquire s->lock AFAICS. Can
->> that be a problem?
-> 
-> This is the case the comment inside wait_for_dependencies() is about:
-> 
->     /*
->      * Discard has some non-coroutine callers (creating internal snapshots and
->      * make empty). They are calling from qemu-img or in a drained section, so
->      * we know that no writes can be in progress.
->      */
-> 
-> So it should be fine in practice because we know a bigger hammer is
-> already in use for synchronisation.
+From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-Ah sorry, I missed that. Ignore me then.
+Since Steve has retired last year I will take the CPR maintainership - with
+kind help of Mark who remains a reviewer.
 
-Best Regards,
-Fiona
+Cc: Mark Kanda <mark.kanda@oracle.com>
+Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+---
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index ad215eced84d..dacb332bb65d 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3177,6 +3177,7 @@ T: git https://gitlab.com/jsnow/qemu.git jobs
+ T: git https://gitlab.com/vsementsov/qemu.git block
+ 
+ CheckPoint and Restart (CPR)
++M: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+ R: Peter Xu <peterx@redhat.com>
+ R: Fabiano Rosas <farosas@suse.de>
+ R: Mark Kanda <mark.kanda@oracle.com>
 
