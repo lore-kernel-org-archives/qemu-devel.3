@@ -4,69 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F2FBCD37B6
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 09:46:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33DBFCD37B6
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 10:01:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN6A1-0003vg-E8; Wed, 13 May 2026 05:45:49 -0400
+	id 1wN6Nv-0005tK-KY; Wed, 13 May 2026 06:00:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wN69r-0003vH-KM
- for qemu-devel@nongnu.org; Wed, 13 May 2026 05:45:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wN6Nk-0005q8-1U
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 06:00:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wN69l-0006XQ-Bj
- for qemu-devel@nongnu.org; Wed, 13 May 2026 05:45:39 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wN6Ne-0005Ef-Ci
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 05:59:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778665531;
+ s=mimecast20190719; t=1778666392;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=Px2dUMgeLu/5YimIXfBtjkKBUI/HSeRLcRmhywoNfS8=;
- b=Cu+v6Ox5trQNJbmqXQ+XUu8KnToC1WP5nlzSyIQ3QFPGV6dromOkE2Ww4MPCkdzsK0vhyN
- AcL1mDGLWdij4zRD0yRxyRVNVcWksiMys9S+HNy7ZaJolCmRAgaLUizli22ezXeuIal9Rs
- 8fXdrJgapCx4bKhkaLxSK8Ow+47Qn6w=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-445-XJ9XErwOOviqwXA5n-mSGw-1; Wed,
- 13 May 2026 05:45:28 -0400
-X-MC-Unique: XJ9XErwOOviqwXA5n-mSGw-1
-X-Mimecast-MFC-AGG-ID: XJ9XErwOOviqwXA5n-mSGw_1778665527
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D3DC8180059D; Wed, 13 May 2026 09:45:26 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.44.49.156])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 85B3B180058F; Wed, 13 May 2026 09:45:24 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex@shazbot.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Peter Xu <peterx@redhat.com>
-Subject: [PATCH] vfio/migration: Detect and report overflow in migration size
- queries
-Date: Wed, 13 May 2026 11:45:22 +0200
-Message-ID: <20260513094522.346314-1-clg@redhat.com>
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=qUqW8p9+rFcb0BrXm7mCeMxCemBEz8wDpu9wCfKM5TQ=;
+ b=NuUpokfa83LigJW/UlM08YOAPphr6PQm4F26K7R+qqu/v1O5rKlwc6aLDgK4ii205/XzMc
+ 1/YRY0jYoH9lzxTxsGLTkdf/H8ohz9zqCbzaZezm7aoz2wji1UPgtMPXv5F4DqcbM0+eNB
+ 339PYyQD3oU8fh1DaP0VEoVhohuKODA=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-690-ojSAELOaOAOfJPCmwv1MUQ-1; Wed, 13 May 2026 05:59:50 -0400
+X-MC-Unique: ojSAELOaOAOfJPCmwv1MUQ-1
+X-Mimecast-MFC-AGG-ID: ojSAELOaOAOfJPCmwv1MUQ_1778666390
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-43efc93e4f6so4305089f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 13 May 2026 02:59:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1778666389; x=1779271189; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=qUqW8p9+rFcb0BrXm7mCeMxCemBEz8wDpu9wCfKM5TQ=;
+ b=LbYyJ0IKhvOjlHo5ebqtxlVok5XLk9qwg8knm+Jjxk2ZRxi3HpY/Z7y29R7ck38yZX
+ MSJ3owvjpPBll6hbYfMilfDD0BMrVCZDoUSovKVVKVMclrKORyIHuBKlZcZUmghV3b/2
+ RA1aD8CYI2zL/iOQu36MKtJb4BBUzYIBE5Db6erx2PxzR36FPVatPlzUZdWGQ39/toa7
+ rIq3CjW7SwlhT/CpPS2HBT319ONHDqYiUIzbec4DiSzdtEFTa4PSU2xobPp915m7S69k
+ Em1CZFyyVBhER0E01Vmn8H4gierLu0UcwKkiDHbXt1t5Mj9Hx30VJFbkBK8ipMmlHhhT
+ Se1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778666389; x=1779271189;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qUqW8p9+rFcb0BrXm7mCeMxCemBEz8wDpu9wCfKM5TQ=;
+ b=LTIV5PuOnKKzO+XIPsKVjJyrH/ZckiNUwCHH5rZpe+dBf2E7F9sW4JUDRagxAJvJDN
+ EJQ55KTftsgi0Gewzl7kWqePb4pmmfJspEMw/hp4k3EMKJTQ60ODSrmUHuamqOwQCNbv
+ XezYNqtAJpEpPYESR6I1dDHzhMQu5jzZj8gpyVd2AIOQDVNLql5FVyasnyKoufzbZ6OI
+ BrhP+5EpAIsdHxRuohO1pHhxxuyD2JzQj0oAGabYvXieHd2UbDY5H2uX25WvkJEL2ntm
+ nXkH1jv4ImHsaZ0cEwoyhlF5kNQoOUvDWTaheMecpo6eLrHEb7Jj2THsYBDHgEc7x4l4
+ AY+w==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/KcPyxPeeZRwvTsdyxzLGVvHD2DveYr4R3MmASEQ6/CmsitZGnTFLGPQ/zobhzDj2lo9BBOkgoVSHZ@nongnu.org
+X-Gm-Message-State: AOJu0YzF9cA4aRaHbRCoZ/YiE3so5uz8mA4ZKZdWwn3bjJoGW6sQ4Jbi
+ laK1rr0BjCev4n2ux7pAc6imiO7fINcBvZoIdr0SZx2ZuOFLU6YyopS3hHF4z9A0K/ixzqfowSk
+ M/pW/2opZ1ytmZllHmVlLWAz0eCa7jsfmItRKRNp+IxPSt9CvjI+hHajo
+X-Gm-Gg: Acq92OFXFt1DVfMevoOzZceDIuh8s1zuaRwsF+XBKBM6uP61iXX84n+yjSSYVPaPaD0
+ +df6CAVnkjRN92XdJAPZsQaEch7G8H9v4sCSFgkxPcbNDGYcKYbXMa9EC5+Ub66nuwdjVEHXZ+v
+ KnVNb4ZWr5rv6GwjkMWjg5i7nEL1RZQWuQ8ph10ya3evqASeFgtgKhXWKavX53gjwXkFzolAIQT
+ gyFeMhP1tOD8TAcqsWRX5vf2ViLqqdE7JD+9TiUD4e62j9VOoVMEk/1dvBnGZ71brt9EsJlqXZY
+ 65bGAIeQOZt8EwQ3i9IQj5pyEDnsMMrBE+JhCiS2EKD1RI/7XwdOarwkM+v8LCd0LIUtA0J7CvJ
+ sdA+uBXcUo3NtdhFst/2RN0Jj3DbjU9OowkgnU+9+
+X-Received: by 2002:a05:6000:2481:b0:43c:f8b4:e58 with SMTP id
+ ffacd0b85a97d-45c59cd02b9mr3725678f8f.41.1778666389461; 
+ Wed, 13 May 2026 02:59:49 -0700 (PDT)
+X-Received: by 2002:a05:6000:2481:b0:43c:f8b4:e58 with SMTP id
+ ffacd0b85a97d-45c59cd02b9mr3725602f8f.41.1778666388774; 
+ Wed, 13 May 2026 02:59:48 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-48-7.inter.net.il. [80.230.48.7])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4548ec6aea4sm45592325f8f.10.2026.05.13.02.59.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 13 May 2026 02:59:48 -0700 (PDT)
+Date: Wed, 13 May 2026 05:59:45 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: Junjie Cao <junjie.cao@intel.com>, qemu-devel@nongnu.org,
+ jasowang@redhat.com, yuri.benditovich@daynix.com,
+ berrange@redhat.com, peter.maydell@linaro.org, qemu-stable@nongnu.org
+Subject: Re: [PATCH v2] virtio-net: validate RSS indirections_len in post_load
+Message-ID: <20260513055917-mutt-send-email-mst@kernel.org>
+References: <20260324060100.1997-1-junjie.cao@intel.com>
+ <f4e8921d-d1fb-4ff6-95d2-de6b44a5941e@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+In-Reply-To: <f4e8921d-d1fb-4ff6-95d2-de6b44a5941e@tls.msk.ru>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 1
-X-Spam_score: 0.1
-X-Spam_bar: /
-X-Spam_report: (0.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HEXHASH_WORD=2.602, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,127 +122,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VFIO migration ioctls (VFIO_DEVICE_FEATURE_MIG_DATA_SIZE and
-VFIO_MIG_GET_PRECOPY_INFO) return device-estimated migration sizes as
-uint64_t values. A misbehaving kernel driver could return values that
-are unreasonably large, which would corrupt the size accounting used
-to decide migration convergence.
+On Wed, May 13, 2026 at 09:42:59AM +0300, Michael Tokarev wrote:
+> On 24.03.2026 09:01, Junjie Cao wrote:
+> > virtio_net_handle_rss() enforces that indirections_len is a non-zero
+> > power of two no larger than VIRTIO_NET_RSS_MAX_TABLE_LEN, but
+> > virtio_net_rss_post_load() applies none of these checks to values
+> > restored from the migration stream.
+> > 
+> > A corrupted save file or crafted migration stream can set
+> > indirections_len to 0.  Even if it also clears redirect,
+> > virtio_load() calls set_features_nocheck() after the device vmstate
+> > (including the RSS subsection and its post_load) has already been
+> > loaded, re-deriving redirect from the negotiated guest features.
+> > When VIRTIO_NET_F_RSS was negotiated, redirect is set back to true
+> > regardless of the migration stream value.  The receive path then
+> > computes
+> > 
+> >      hash & (indirections_len - 1)   /* wraps to 0xFFFFFFFF via int promotion */
+> > 
+> > and uses the result to index into indirections_table, which was not
+> > allocated by the VMState loader when the element count is zero (see
+> > vmstate_handle_alloc()), resulting in a NULL pointer dereference that
+> > crashes QEMU:
+> > 
+> >    #0  virtio_net_process_rss    ../hw/net/virtio-net.c:1901
+> >    #1  virtio_net_receive_rcu    ../hw/net/virtio-net.c:1921
+> >    #2  virtio_net_do_receive     ../hw/net/virtio-net.c:2061
+> >    #3  nc_sendv_compat           ../net/net.c:823
+> >    #4  qemu_deliver_packet_iov   ../net/net.c:870
+> > 
+> > The RSS subsection is only loaded when rss_data.enabled is true (via
+> > virtio_net_rss_needed()), and the command path always produces
+> > indirections_len in {1, 2, 4, …, 128}, so an unconditional check
+> > cannot reject a legitimate migration stream.
+> > 
+> > Factor the validation into virtio_net_rss_indirections_len_valid()
+> > and call it from both virtio_net_handle_rss() and
+> > virtio_net_rss_post_load().
+> > 
+> > Fixes: e41b711485e5 ("virtio-net: add migration support for RSS and hash report")
+> > Cc: qemu-stable@nongnu.org
+> > Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+> 
+> Hi!
+> 
+> Has this patch been forgotten, or is it not needed anymore?
+> 
+> I'm preparing next set of the stable qemu releases, if it's needed,
+> it would be nice if it lands in the master branch in the next 10
+> days.
+> 
+> Thanks,
+> 
+> /mjt
 
-This misbehavior occurred a few times when testing migration of a VM
-with an assigned NVIDIA vGPU and an MLX5 VF. In some of the save
-iterations, the reported precopy and stopcopy sizes were unreasonably
-large (close to UINT64_MAX):
-
-  vfio_state_pending  (4fbce62c-8ce2-4cc9-b429-41635bc94f24) stopcopy size 0 precopy initial size 18446744073708667040 precopy dirty size 0
-  vfio_save_iterate   (4fbce62c-8ce2-4cc9-b429-41635bc94f24) precopy initial size 18446744073707618464 precopy dirty size 0
-  vfio_state_pending  (4fbce62c-8ce2-4cc9-b429-41635bc94f24) stopcopy size 18446744073708503040 precopy initial size 18446744073707618464 precopy dirty size 0
-  vfio_state_pending  (4fbce62c-8ce2-4cc9-b429-41635bc94f24) stopcopy size 0 precopy initial size 18446744073707618464 precopy dirty size 0
-  vfio_state_pending  (0000:b1:01.0) stopcopy size 18446744073709543408 precopy initial size 0 precopy dirty size 1008
-
-This had the effect of corrupting migration convergence, as reported
-by the HMP migrate command:
-
-  (qemu) info migrate
-  Status:                 active
-  Time (ms):              total=21140, setup=86, exp_down=152455434886355
-  Remaining:              16 EiB
-  RAM info:
-    Throughput (Mbps):    967.98
-    Sizes:                pagesize=4 KiB, total=4 GiB
-    Transfers:            transferred=2.29 GiB, remain=4.7 MiB
-      Channels:           precopy=1.91 GiB, multifd=0 B, postcopy=0 B, vfio=387 MiB
-      Page Types:         normal=499427, zero=559708
-    Page Rates (pps):     transfer=0, dirty=1892
-    Others:               dirty_syncs=3
-
-Add a helper to detect values that exceed INT64_MAX, which is far
-beyond any realistic device state size, and report them with an error
-message. Return -ERANGE from the query functions so callers can abort
-the migration rather than proceeding with corrupted estimates.
-However, the callers don't yet check the return value to actually stop
-the migration.
-
-Cc: Avihai Horon <avihaih@nvidia.com>
-Cc: Peter Xu <peterx@redhat.com>
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- hw/vfio/migration.c | 32 ++++++++++++++++++++++++++++----
- 1 file changed, 28 insertions(+), 4 deletions(-)
-
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 150e28656e97c5e8198541e5b6dfc4ed4102d143..fb12b9717f773fdde657911517de9d74c1eb3931 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -320,6 +320,18 @@ static void vfio_migration_cleanup(VFIODevice *vbasedev)
-     migration->data_fd = -1;
- }
- 
-+static bool vfio_migration_check_overflow(VFIODevice *vbasedev, uint64_t size,
-+                                          const char *name)
-+{
-+    if (size > INT64_MAX) {
-+        error_report("%s: Estimated %s size overflow: 0x%"PRIx64,
-+                     vbasedev->name, name, size);
-+        return true;
-+    }
-+
-+    return false;
-+}
-+
- static int vfio_query_stop_copy_size(VFIODevice *vbasedev)
- {
-     uint64_t buf[DIV_ROUND_UP(sizeof(struct vfio_device_feature) +
-@@ -329,7 +341,7 @@ static int vfio_query_stop_copy_size(VFIODevice *vbasedev)
-     struct vfio_device_feature_mig_data_size *mig_data_size =
-         (struct vfio_device_feature_mig_data_size *)feature->data;
-     VFIOMigration *migration = vbasedev->migration;
--    int ret;
-+    int ret = 0;
- 
-     feature->argsz = sizeof(buf);
-     feature->flags =
-@@ -347,7 +359,10 @@ static int vfio_query_stop_copy_size(VFIODevice *vbasedev)
-                          vbasedev->name, ret);
-     } else {
-         migration->stopcopy_size = mig_data_size->stop_copy_length;
--        ret = 0;
-+        if (vfio_migration_check_overflow(vbasedev, migration->stopcopy_size,
-+                                          "stop copy size")) {
-+            ret = -ERANGE;
-+        }
-     }
- 
-     trace_vfio_query_stop_copy_size(vbasedev->name,
-@@ -361,7 +376,7 @@ static int vfio_query_precopy_size(VFIOMigration *migration)
-     struct vfio_precopy_info precopy = {
-         .argsz = sizeof(precopy),
-     };
--    int ret;
-+    int ret = 0;
- 
-     if (ioctl(migration->data_fd, VFIO_MIG_GET_PRECOPY_INFO, &precopy)) {
-         migration->precopy_init_size = 0;
-@@ -370,9 +385,18 @@ static int vfio_query_precopy_size(VFIOMigration *migration)
-         warn_report_once("VFIO device %s ioctl(VFIO_MIG_GET_PRECOPY_INFO) "
-                          "failed (%d)", migration->vbasedev->name, ret);
-     } else {
-+        bool overflow;
-+
-         migration->precopy_init_size = precopy.initial_bytes;
-         migration->precopy_dirty_size = precopy.dirty_bytes;
--        ret = 0;
-+
-+        overflow  = vfio_migration_check_overflow(migration->vbasedev,
-+                         migration->precopy_init_size,  "precopy init size");
-+        overflow |= vfio_migration_check_overflow(migration->vbasedev,
-+                         migration->precopy_dirty_size, "precopy dirty size");
-+        if (overflow) {
-+            ret = -ERANGE;
-+        }
-     }
- 
-     trace_vfio_query_precopy_size(migration->vbasedev->name,
--- 
-2.54.0
+I'll pick it now, thanks.
 
 
