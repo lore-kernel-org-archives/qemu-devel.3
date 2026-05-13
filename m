@@ -4,94 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12E17CD37AC
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 18:35:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7364CD4F21
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 19:05:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNEPt-0002Px-5I; Wed, 13 May 2026 14:34:45 -0400
+	id 1wNEsj-0006po-9x; Wed, 13 May 2026 15:04:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1wNEPj-0002OJ-VI
- for qemu-devel@nongnu.org; Wed, 13 May 2026 14:34:37 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wNEsc-0006pU-UY
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 15:04:27 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1wNEPh-0007Er-Af
- for qemu-devel@nongnu.org; Wed, 13 May 2026 14:34:35 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2b4650d5f5cso28509585ad.0
- for <qemu-devel@nongnu.org>; Wed, 13 May 2026 11:34:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wNEsa-0001Bd-Uj
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 15:04:26 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-67c4aaf76ecso704283a12.3
+ for <qemu-devel@nongnu.org>; Wed, 13 May 2026 12:04:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778699063; cv=none;
+ d=google.com; s=arc-20240605;
+ b=KnrVFTwqk9NqCGfC0eP1sv/clXLGoD+zGdZaubRRbfA1d24FNFEm2Hdo5masP8ZHRH
+ 5bYNw3xE8Go+IoiWly3CKKRAMd/gm3OCL9dWQLD/o1kZqgdqFiEB7zhx402213cvnKeH
+ IDKD9ja/q6Q0AAdlmj/opU2cCAvTkuGaa1NC2yX3lyFUZYcqDlFQ7N9gvd+9PrmWtZki
+ SwP9hPB6R45dDAzEYVXgYVYReSzcwipJvdZ3GHE7AF9nIrXiVo87gwBFlBtXmL8CJBeJ
+ lXNmcobgklWmbvGba2PtbIQGyIIO40B1oDZ21k3YjZb4XLKWh44KSsPGtXVOQqPGCmhR
+ 6bNA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=CQCxF4oejo/BPt3zKjEa9oNaTXDZkLCA8k3cTamlkzE=;
+ fh=2JT3TBmF0Tc/p6Wfzw7XGdyOLg9FkenCG4d1TATE9mw=;
+ b=PYz4uzQqm2iKzRXNiMvEAP58Gfqo7i1sKNGN2x5l6BH3MUFGApPrLPy6WKkXtBAzTY
+ 7Byyb5QeY6aBN3Jr3zUmA1UORC11o9MmQNH9rwJ6l3pkHuokt+jVvfp39NfGriFOr+6J
+ gkTDdvDt2nq1AKXVd44dk9HYYpcNZNZIx68HWdW/nz2jnct0e8iJv1HwoxeMLGu4UsG8
+ OR+fsi5OMTkXTKcBGPqJUeJek5dUf2wUZIYZQv56Ea+IpVMlpinMfzQUDQATHj3eE0HV
+ +Ys7QuVI/n0a72BNUGfTkbQZ9ZcBsdH6FDUVWkd8mizGq3kHvo6HA0tj4Spmdm0oMUxX
+ +1VA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778697271; x=1779302071; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:sender
- :from:to:cc:subject:date:message-id:reply-to;
- bh=xuU+IB841m2ffNgmpLllBWpa9Uu+SAePg8yCzUdaE2A=;
- b=pmOS0vgefrUC1P2owYAKhb/kvQQLcbJiC51pf4LwsIwSsStjIj9Q4EsO7wf6qr7mNx
- py3la6wiIujKKO78fQxxaMYJbM4qQMp8VW0LOwDz6Jt71H8jET394fdQ2dNe6knevIqd
- qivjAuuFozcK15ZkZ9IFcVMzEvnvhA5xFyFfrAlZK+VsV7uKW8jsaxUnCo3ENi6vdKdy
- lbe15UMKL7uPW+XuaacvTRmlBEWCGWVbby3y8AKDpCu6nfXbpKNvmS6AVpTbGD7+d6PF
- RrQavJ2KuLFmSuaGCVvH3BBA2o8dBtf2tYmS/KbzvqGzE13kx2/VnW38WJDkcyoC+f4i
- xfQg==
+ d=gmail.com; s=20251104; t=1778699063; x=1779303863; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CQCxF4oejo/BPt3zKjEa9oNaTXDZkLCA8k3cTamlkzE=;
+ b=FVHFgCSgjNKj1G2i9XdM+g1hMmuAlWCSrx/gl5AKuMQG2g2B8eQolmaQZLPsJNBLf/
+ m8f12ama6gnW7yfhe1Jb86C2LSOte/2DppeW0LkeMWh0jHNhfGFOdRir1kXfEB+xlzRa
+ MeMJ5kiGVq1JvRJZpy1NEcg1b39zf1gxcvihMRoLPh1Ras2Xwqfe0o4E8bY950IIAid/
+ pyH5fXOVhAl9LkveNBihNVpvSXETaWUVmYsKa9Dx2480u3YX1PNrO+IDrC1u6QhFi5tm
+ Izo30wohjuFtvoUwj/amQwb5CCpHy110m8O1kWbb0ZUplvU09co6i9I0YROmW3fwhrzj
+ FOlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778697271; x=1779302071;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:sender
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xuU+IB841m2ffNgmpLllBWpa9Uu+SAePg8yCzUdaE2A=;
- b=jMwhnJom7eSBKfHTEu/Eeeerqz+66IEFGlAxljh7t1LOZPsdNKtZ5tp6euZfU5wIza
- CNx3E1Vz/bbkdyVTmFMhfE5s2nhVaekjtAixbWCCvOVF30bGBgCpaQTDEYbzw0mUCvgH
- xS7ws0Lvxy5LXOa1bX/kgVBUmcP8HWkoddLd05mN2g2RQdBq7/bRc9sT5ECdFUVznobr
- Ef0ig8zOG44Vm10bqLkO1rb+AElmGl9ItwoWa+297lWdJoCShR8oiCKWtSEJETWV1pVd
- O/IT6P4eIBOGA0mfBMdv9/VmLurqE8QXLDm2z4T3P+K74FkPck2/nKjSC4WMRYkqvnxd
- G62g==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/gRijTIA4C73GXQUxhs8ntIQ9bnY/tp2l3BUMt3StCjcLesJS0rMt/xQj2iGW0NZSrSYqP8EsPoVCe@nongnu.org
-X-Gm-Message-State: AOJu0YwSZ/UUqI3y4TjqfMRdDHFvQRVAyMqovrscKcF4fZNsSAOrQFPT
- G6/1KH3PHTh0Nzp5Q8NKhx4RFdwtylm767pSCM8bp2jKJ+uIyPt25R6q
-X-Gm-Gg: Acq92OF/Sn95SMM8Hp0iDb/wndNhssgDzf4sWfNPkSwf6pPxMHo9ef31px1zVFycYhd
- v+sbogmUz1tswYmR1q0k9ihgujxeWJe4PD2NMaSZ/gYWzQf6S4Pr0wsyeunfWO+9dMjj4DQ40QL
- lRWZnt5Wa6+3QGVPjyxUJxz55fFv053zdlDmfLRAjjribxrcKtCMXwGAyxlq5lqq2llZeldavDj
- DO6N0IuXXilIlkQEfoCNUOr7e4lqKmIRE+KbLuvPG833KuKY+6h++U+GBiuYLCJiMmmMPQMd1/G
- ydDDEXN1Ji/JFMpNTsu2JtQQHshjT/NMbIfIbaTIZWwpYV2kXD5pLu6JGqfRt5uThRHATWaeQTO
- JFR4/UdwIW0TvtW3doipAPc9UBcvn1XT61mrJZOnLRgKwe6TJvfJnXYpKDZlJfpLpt86GrL5BXY
- JUiEH+XAdDiy0wX9x85nYB76qrslSVri7bxJa5YCrqoSSwOi8=
-X-Received: by 2002:a17:903:1b28:b0:2bc:6784:525f with SMTP id
- d9443c01a7336-2bd2f4f863dmr43434035ad.15.1778697271385; 
- Wed, 13 May 2026 11:34:31 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2baf1e66970sm174724785ad.56.2026.05.13.11.34.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 May 2026 11:34:30 -0700 (PDT)
-Date: Wed, 13 May 2026 11:34:30 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Yoshinori Sato <yoshinori.sato@nifty.com>,
- qemu-stable@nongnu.org
-Subject: Re: [PATCH 1/3] target/sh4: Re-allow unaligned access on system
- emulation
-Message-ID: <11d2cf4d-303c-4778-abed-cf2bdef7804d@roeck-us.net>
-References: <20260513065438.8680-1-philmd@linaro.org>
- <20260513065438.8680-2-philmd@linaro.org>
- <d9bf52a2-f100-4bbf-b015-1bd303f5fe34@linaro.org>
+ d=1e100.net; s=20251104; t=1778699063; x=1779303863;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=CQCxF4oejo/BPt3zKjEa9oNaTXDZkLCA8k3cTamlkzE=;
+ b=RazZsAXIti6cHg3LOGAKFQ3LUMVSNAt4JehjM3wF4UD0NOd8ewALjU/Y+aIy2SzdJv
+ YtvcWYNUbyPyqEJ/716O25bTbwyJhGiM7wlIZa8avd/+j/REN8gXwoL1A+GwZTsdXjlK
+ 7pH/I3KHvvg8t8kM+PrswH7l8b0DWGxo8HjHfmu8YadB4KDzWDQYXVYMh2BznGhoKCAg
+ +BzvdTd5LJBB488BwC/j2sfzKHMyeWYNFRmpR8P1D36NqNE5yVbktCcoKumlmg8Rz/9f
+ IT/d/6jkmKkYWeQPy4kfU2tPfear7EVwBNSuXBSnAN+Ber7qgW1RttFs1qKq3jMb5kp/
+ mJdw==
+X-Gm-Message-State: AOJu0YxQTbBtaAEKqFisrCDx/f8II8qc0qVYaRssBLkhJIzGTDns+7gZ
+ ICIaueCIO9+HsxGAldZzelwsKmeTzdNhnOu72W27PvBuOYwR4N1mp3CEsEvDxY99BCqbXPGxs/0
+ xBkkxOmawWA0xJ2TIiexuV7XpM52ln3E=
+X-Gm-Gg: Acq92OGNLhZNvqaYbBKEXNuQrQjwsyEEkFtA1G4Aa78KC/l31L7wdknUIuA8vm56NWC
+ UrkH0k/oSjZjSAu/9K6FxOhwzazZxQCxy0YkOxl79q9B9HsMd2cT1/mb5uNJyf7jhMtylDeiqrC
+ ZpzYeXmVQWQeBUQN19qmJkgZnUJ6T3FgzZYpqTlJCN8t4yzCqTmO/G5MOqdDxuFTfvRyjBPNXP9
+ k0W/iIBTGF4lHNou4Z8BsPme1MSZdF02nYhtvq7/oiZR65E+P1CKqaeEX/qwee4wWCGQ/EApoyx
+ muHzJ9HRYKPeyxlTrvQM/Y4Ku7iLagRK2FSTZENt
+X-Received: by 2002:a05:6402:2742:b0:678:a507:e837 with SMTP id
+ 4fb4d7f45d1cf-682a6e037a2mr2542645a12.1.1778699063080; Wed, 13 May 2026
+ 12:04:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <d9bf52a2-f100-4bbf-b015-1bd303f5fe34@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=groeck7@gmail.com; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260511202111.3091440-1-marcandre.lureau@redhat.com>
+ <CAJSP0QVw+GHOC9_mOcn+V6BHZe5BR1jQyDJ1GocGaqiB_GSoBw@mail.gmail.com>
+ <CAJ+F1C+-cr+Sa557xLFcHhCEOsccUHAJSyjPF5E8sGULEKQPhA@mail.gmail.com>
+In-Reply-To: <CAJ+F1C+-cr+Sa557xLFcHhCEOsccUHAJSyjPF5E8sGULEKQPhA@mail.gmail.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Wed, 13 May 2026 15:04:10 -0400
+X-Gm-Features: AVHnY4IT0h0EhwPFxhZDJSlR0S5uZyIsKa0IgZCd7x8UL6te_C1zwCD2vG4Y4p8
+Message-ID: <CAJSP0QVgGW74x4o3EfY09g0ErgoGvwBhck4iNC7RDe+9CC9zOw@mail.gmail.com>
+Subject: Re: [PULL 00/24] Qom patches
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, stefanha@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,58 +117,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 13, 2026 at 11:24:27AM -0700, Richard Henderson wrote:
-> On 5/12/26 23:54, Philippe Mathieu-Daudé wrote:
-> > The change 0 -> MO_ALIGN in commit eb978e50e42 ("target/sh4: Use
-> > MO_ALIGN for system UNALIGN()") would have been correct if it was
-> > merged before commit 1fceff9c3ca ("tcg: Remove TARGET_ALIGNED_ONLY")
-> > which defined MO_UNALN -> 0. What we really want here now is
-> > MO_UNALN (MO_ALIGN is dealt with in commit 03a0d87e8dd "target/sh4:
-> > Use MO_ALIGN where required").
-> 
-> Not correct.  All system mode accesses are aligned, or trap.
-> 
-> All of the UNALIGN are unaligned for linux-user only, in that those are the
-> insns that the linux kernel emulates.  Since the linux kernel does not
-> emulate all insns, all other insns must be aligned -- that's what
-> 03a0d87e8dd is about.
-> 
-> > Use the correct definition, otherwise we get when booting Linux:
-> > 
-> >    ok 14 bitfields
-> >        KTAP version 1
-> >        # Subtest: blackholedev
-> >        # module: blackhole_dev_kunit
-> >        1..1
-> >    delay-slot-insn faulting in handle_unaligned_delayslot: 0000 [#1]
-> >    Modules linked in:
-> >    CPU: 0 UID: 0 PID: 298 Comm: kunit_try_catch Tainted: G                 N
-> >    6.17.0-12907-g8765f467912f #1 NONE
-> >    Tainted: [N]=TEST
-> >    PC is at test_blackholedev+0xc6/0x1c8
-> >    PR is at test_blackholedev+0xca/0x1c8
-> >    PC  : 8c228d16 SP  : 8d40bed0 SR  : 40008001 TEA : 8cce4026
-> >    R0  : 00000000 R1  : 00000000 R2  : 000000d2 R3  : 8cc77b80
-> >    R4  : 8cc77b40 R5  : 0000000e R6  : 8c228cea R7  : 8cce400e
-> >    R8  : 8cc77b40 R9  : 8cc77bbc R10 : 8cc77bbe R11 : 8c4b46b0
-> >    R12 : 8c78310c R13 : 8cc29cf4 R14 : 8c6e3a88
-> >    MACH: 0000d80d MACL: e554cb0f GBR : 00000000 PR  : 8c228d1a
-> >    Call trace:
-> >     [<8c05b378>] pick_next_task_fair+0x94/0x164
-> >     [<8c5c2bce>] __schedule+0x306/0x6ec
-> >     [<8c21fa68>] kunit_try_run_case+0x58/0x174
-> >    ...
-> 
-> That would be a kernel bug then.
+On Wed, May 13, 2026 at 3:49=E2=80=AFAM Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@redhat.com> wrote:
+>
+> Hi Stefan
+>
+> On Wed, May 13, 2026 at 3:20=E2=80=AFAM Stefan Hajnoczi <stefanha@gmail.c=
+om> wrote:
+> >
+> > On Mon, May 11, 2026 at 4:21=E2=80=AFPM <marcandre.lureau@redhat.com> w=
+rote:
+> > >
+> > > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > >
+> > > The following changes since commit 5e61afe211e82a9af15a8794a0bd29bb57=
+4e953b:
+> > >
+> > >   Merge tag 'ui-pull-request' of https://gitlab.com/marcandre.lureau/=
+qemu into staging (2026-05-11 10:49:53 -0400)
+> > >
+> > > are available in the Git repository at:
+> > >
+> > >   https://gitlab.com/marcandre.lureau/qemu.git tags/qom-pull-request
+> > >
+> > > for you to fetch changes up to bc61a3209bf064826481a5f8f2b4feb47c70b0=
+2f:
+> > >
+> > >   target/s390x: add gen-features.h dependency to s390x_system_ss (202=
+6-05-11 23:59:33 +0400)
+> > >
+> > > ----------------------------------------------------------------
+> > > QOM object lifecycle fixes
+> > >
+> > > ----------------------------------------------------------------
+> >
+> > Hi Marc-Andr=C3=A9,
+> > I'm not sure if this CI failure is related to this pull request, but
+> > there is a dbus-vnc issue:
+> >
+> > >>> ASAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=
+=3D1 QTEST_QEMU_VNC_BINARY=3D./tools/qemu-vnc/qemu-vnc MESON_TEST_ITERATION=
+=3D1 PYTHON=3D/home/gitlab-runner/builds/P3MFS4LUf/0/qemu-project/qemu/buil=
+d/pyvenv/bin/python3 QTEST_QEMU_STORAGE_DAEMON_BINARY=3D./storage-daemon/qe=
+mu-storage-daemon G_TEST_DBUS_DAEMON=3D/home/gitlab-runner/builds/P3MFS4LUf=
+/0/qemu-project/qemu/tests/dbus-daemon.sh QTEST_QEMU_IMG=3D./qemu-img QTEST=
+_QEMU_BINARY=3D./qemu-system-x86_64 UBSAN_OPTIONS=3Dhalt_on_error=3D1:abort=
+_on_error=3D1:print_summary=3D1:print_stacktrace=3D1 RUST_BACKTRACE=3D1 MAL=
+LOC_PERTURB_=3D211 MSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:prin=
+t_summary=3D1:print_stacktrace=3D1 /home/gitlab-runner/builds/P3MFS4LUf/0/q=
+emu-project/qemu/build/tests/qtest/dbus-vnc-test --tap -k
+> >
+> > 754/1075 /x86_64/dbus-vnc/password-auth -
+> > ERROR:../tests/qtest/dbus-vnc-test.c:621:test_dbus_vnc_password_auth:
+> > assertion failed (qemu_vnc1_server_get_auth(proxy) =3D=3D "vnc"): ("non=
+e"
+> > =3D=3D "vnc") FAIL
+> >
+> > https://gitlab.com/qemu-project/qemu/-/jobs/14337427774#L5512
+> >
+> > Any ideas?
+>
+> Embarrassingly, I have no idea. Before org.qemu.vnc is exposed by
+> qemu-vnc (and the auth is checked by the test), qemu-vnc must have
+> started a VNC server successfully (vnc_display_new)..
+>
+> Fwiw, the tests runs quite smoothly locally with meson test --repeat
+> 1000  (some time out sometime, due to heavy load).
+>
+> Let's mark/run it as QEMU_TEST_FLAKY_TESTS until I figure out?
 
-It is interesting that no one reported this against real hardware,
-but then who knows if anyone still runs that hardware and/or that set
-of tests.
+If it helps, your last ui pull request seems to be the first
+occurrence of this failure:
+https://gitlab.com/qemu-project/qemu/-/commit/5e61afe211e82a9af15a8794a0bd2=
+9bb574e953b
 
-If I recall correctly, there were other problems when running the sh4
-emulation with eb978e50e42f3 in the tree. I have reverted that patch in
-my downstream version of qemu, and I'll be happy to carry the revert
-along, so from my perspective it is ok to not address the problem in qemu.
+If you'd like me to run CI on a test branch, just let me know.
 
-Guenter
+Stefan
+
+>
+>
+> >
+> > Stefan
+> >
+> > >
+> > > Marc-Andr=C3=A9 Lureau (23):
+> > >   hw/remote: check visit return in vfu_object_set_socket
+> > >   qom/object: update doc about NULL values in link properties
+> > >   hw/remote: guard listener unregister in finalize
+> > >   io/net-listener: move mutex init to instance_init
+> > >   net/colo-compare: guard finalize against uninitialized state
+> > >   ui/console: remove console from global list on finalization
+> > >   hw/i386/x86: free oem_id and oem_table_id on finalization
+> > >   hw/core/resetcontainer: free children array on finalization
+> > >   net/can: free ifname on socketcan finalization
+> > >   backends/igvm-cfg: free filename on finalization
+> > >   scsi/pr-manager-helper: free path on finalization
+> > >   accel/kvm: free device path on finalization
+> > >   system/qtest: add missing qtest_finalize()
+> > >   hw/fsi: move OPBus address space init to realize
+> > >   hw/fsi: move OPBus qbus_init() to instance_init
+> > >   hw/gpio/pca9552: fix state_str leak in pca955x_set_led
+> > >   hw/arm/aspeed: free fmc_model and spi_model on finalization
+> > >   hw/arm/sbsa-ref: free unrealized flash devices on finalization
+> > >   hw/arm/virt: free flash devices and OEM strings on finalization
+> > >   hw/ppc/pnv: drop extra ref on PHB after adding as child
+> > >   hw/riscv/virt: free flash devices and OEM strings on finalization
+> > >   meson: drop sphinx-build < 1.7 compatiblity check
+> > >   target/s390x: add gen-features.h dependency to s390x_system_ss
+> > >
+> > > Peter Xu (1):
+> > >   system/ioport: Fix qom-list-properties crash on portio list obj
+> > >
+> > >  docs/meson.build          | 14 +-------------
+> > >  include/qom/object.h      |  8 ++++----
+> > >  accel/kvm/kvm-all.c       |  8 ++++++++
+> > >  backends/igvm-cfg.c       |  1 +
+> > >  hw/arm/aspeed.c           |  9 +++++++++
+> > >  hw/arm/sbsa-ref.c         | 12 ++++++++++++
+> > >  hw/arm/virt.c             | 14 ++++++++++++++
+> > >  hw/core/resetcontainer.c  |  3 +++
+> > >  hw/fsi/aspeed_apb2opb.c   | 37 ++++++++++++++++++++++++-------------
+> > >  hw/gpio/pca9552.c         |  2 +-
+> > >  hw/i386/x86.c             |  9 +++++++++
+> > >  hw/ppc/pnv.c              |  1 +
+> > >  hw/remote/remote-obj.c    |  4 +++-
+> > >  hw/remote/vfio-user-obj.c |  4 +++-
+> > >  hw/riscv/virt.c           | 14 ++++++++++++++
+> > >  io/net-listener.c         |  9 ++++++++-
+> > >  net/can/can_socketcan.c   |  8 ++++++++
+> > >  net/colo-compare.c        | 31 +++++++++++++++----------------
+> > >  scsi/pr-manager-helper.c  |  1 +
+> > >  system/ioport.c           | 11 +++++++++--
+> > >  system/qtest.c            | 10 ++++++++++
+> > >  ui/console.c              |  5 ++++-
+> > >  target/s390x/meson.build  |  1 +
+> > >  23 files changed, 163 insertions(+), 53 deletions(-)
+> > >
+> > > --
+> > > 2.54.0
+> > >
+> > >
+> >
 
