@@ -4,97 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 421B5CD4851
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88F8CCD37B6
 	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 06:43:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN3JF-0006cS-TM; Wed, 13 May 2026 02:43:10 -0400
+	id 1wN3JL-0006dr-T7; Wed, 13 May 2026 02:43:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wN3JD-0006c7-35; Wed, 13 May 2026 02:43:07 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1wN3JK-0006dG-5N
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 02:43:14 -0400
+Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wN3J9-00074C-Er; Wed, 13 May 2026 02:43:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778654574; bh=cFhn3dFsW7Ra+shGmjFHTtDCwll7qNy4vz4e4ECmU50=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=x7iC9mmCHl2clMd90yLMt5UoqmIhzGWkYNWJLOsoH2wtRsK7/2lpNp8W7c53849DO
- 617f1xrL9ZFNnxkyyfPGxCJi9h5d5Wdb10oe4QK0Fhfrg6H59JmCqC6snx19YVr4P7
- hRRA+jZb9iFoHiP6HczVmI2f6H38YFIPkjH4uUYsVF2pTTN3hRCfp86GDLLjdWh6gB
- dBnmJb1xYx17PY+E0vIsTLuLESOvxEs4O3GIM7WB8s6dmg3hWvFJEhgwepUTE8NpQS
- PPd2uYB50Ysd8GGcU13+h4SSd8SwIXPXwsMPRIfIXZf6MpOEoRiTOmr1g4W8E8fwJw
- m9YWlfLZIDOEA==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id AFB4F1AA6D1;
- Wed, 13 May 2026 09:42:54 +0300 (MSK)
-Message-ID: <f4e8921d-d1fb-4ff6-95d2-de6b44a5941e@tls.msk.ru>
-Date: Wed, 13 May 2026 09:42:59 +0300
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1wN3JF-0007Ax-KQ
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 02:43:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1778654590; x=1810190590;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=PTMH/4ANBKmow1t7dA8kVDSvahqWYBsa9VZCDOk+uiw=;
+ b=jxV3jtl+qSk5hcd5MzNDlAeniVoBIrbUJlEuxJWEmAd4wmPLDzYJFKGb
+ vDJEbkdPTsLMph/kRZr5N08uxca3cKSxD1L9WnbJCI0rvYTkWCn+csoVg
+ Vf+XHYRNKQfAXMB1A7xp7k0kOdun6uxVS6YRaF54OPMbUGam2bNjEboQE
+ NICru50EllrAqzXsoTtMvloUvgi6uWQOgRAux+7NxxoNFc+0rF56srGHI
+ ICYULXACSyVhdzQsxIz8EX/AU1zamMOWr5xaCVXoldVaB7avhJYWAOcWj
+ AtzKdjjqXInZhaAqBfmgMt9QLyXsWuNsxFZoQenm5E+MVfTo5WqDHTzf8 g==;
+X-CSE-ConnectionGUID: Iz4EOz1lR0OWLOKaxRU4cA==
+X-CSE-MsgGUID: 2RsiNZmKRhOezyLGKWhUYw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11784"; a="102240714"
+X-IronPort-AV: E=Sophos;i="6.23,232,1770624000"; d="scan'208";a="102240714"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 May 2026 23:43:08 -0700
+X-CSE-ConnectionGUID: o13ioLiPTwODeMP890TMjw==
+X-CSE-MsgGUID: 87FnEjelSJyQyCZIkUQ3VQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,232,1770624000"; d="scan'208";a="239809246"
+Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
+ by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 May 2026 23:43:05 -0700
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: mst@redhat.com, jasowang@redhat.com, berrange@redhat.com, clg@redhat.com,
+ clement.mathieu--drif@bull.com, philmd@linaro.org, yi.l.liu@intel.com,
+ zhenzhong.duan@intel.com, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v3 2/2] intel_iommu: Change 'flts' property naming to 'fsts'
+Date: Wed, 13 May 2026 02:42:26 -0400
+Message-ID: <20260513064227.2304854-3-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260513064227.2304854-1-zhenzhong.duan@intel.com>
+References: <20260513064227.2304854-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] virtio-net: validate RSS indirections_len in post_load
-To: Junjie Cao <junjie.cao@intel.com>, qemu-devel@nongnu.org
-Cc: jasowang@redhat.com, mst@redhat.com, yuri.benditovich@daynix.com,
- berrange@redhat.com, peter.maydell@linaro.org, qemu-stable@nongnu.org
-References: <20260324060100.1997-1-junjie.cao@intel.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260324060100.1997-1-junjie.cao@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=198.175.65.9;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,56 +83,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24.03.2026 09:01, Junjie Cao wrote:
-> virtio_net_handle_rss() enforces that indirections_len is a non-zero
-> power of two no larger than VIRTIO_NET_RSS_MAX_TABLE_LEN, but
-> virtio_net_rss_post_load() applies none of these checks to values
-> restored from the migration stream.
-> 
-> A corrupted save file or crafted migration stream can set
-> indirections_len to 0.  Even if it also clears redirect,
-> virtio_load() calls set_features_nocheck() after the device vmstate
-> (including the RSS subsection and its post_load) has already been
-> loaded, re-deriving redirect from the negotiated guest features.
-> When VIRTIO_NET_F_RSS was negotiated, redirect is set back to true
-> regardless of the migration stream value.  The receive path then
-> computes
-> 
->      hash & (indirections_len - 1)   /* wraps to 0xFFFFFFFF via int promotion */
-> 
-> and uses the result to index into indirections_table, which was not
-> allocated by the VMState loader when the element count is zero (see
-> vmstate_handle_alloc()), resulting in a NULL pointer dereference that
-> crashes QEMU:
-> 
->    #0  virtio_net_process_rss    ../hw/net/virtio-net.c:1901
->    #1  virtio_net_receive_rcu    ../hw/net/virtio-net.c:1921
->    #2  virtio_net_do_receive     ../hw/net/virtio-net.c:2061
->    #3  nc_sendv_compat           ../net/net.c:823
->    #4  qemu_deliver_packet_iov   ../net/net.c:870
-> 
-> The RSS subsection is only loaded when rss_data.enabled is true (via
-> virtio_net_rss_needed()), and the command path always produces
-> indirections_len in {1, 2, 4, …, 128}, so an unconditional check
-> cannot reject a legitimate migration stream.
-> 
-> Factor the validation into virtio_net_rss_indirections_len_valid()
-> and call it from both virtio_net_handle_rss() and
-> virtio_net_rss_post_load().
-> 
-> Fixes: e41b711485e5 ("virtio-net: add migration support for RSS and hash report")
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Previous patch Removed 'x-' prefix from 'x-flts' property.
+Opportunistically, this patch does s/flts/fsts for property name
+in order to better align with newer spec since revision 3.4 which
+changed terminology from "First-level" to "First-stage".
 
-Hi!
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+---
+ docs/devel/vfio-iommufd.rst    |  8 ++++----
+ hw/i386/intel_iommu.c          | 10 +++++-----
+ hw/i386/intel_iommu_accel.c    |  6 +++---
+ tests/qtest/intel-iommu-test.c |  2 +-
+ tests/qtest/iommu-intel-test.c |  2 +-
+ 5 files changed, 14 insertions(+), 14 deletions(-)
 
-Has this patch been forgotten, or is it not needed anymore?
+diff --git a/docs/devel/vfio-iommufd.rst b/docs/devel/vfio-iommufd.rst
+index 5755532443..d5538461ba 100644
+--- a/docs/devel/vfio-iommufd.rst
++++ b/docs/devel/vfio-iommufd.rst
+@@ -153,22 +153,22 @@ RAM discarding for mdev.
+ ``vfio-ap`` and ``vfio-ccw`` devices don't have same issue as their backend
+ devices are always mdev and RAM discarding is force enabled.
+ 
+-Usage with intel_iommu featuring flts=on
++Usage with intel_iommu featuring fsts=on
+ ------------------------------------------
+ 
+ Only IOMMUFD backed VFIO device is supported when intel_iommu is configured
+-with flts=on, for legacy container backed VFIO device, below error shows:
++with fsts=on, for legacy container backed VFIO device, below error shows:
+ 
+ .. code-block:: none
+ 
+-    qemu-system-x86_64: -device vfio-pci,host=0000:02:00.0: vfio 0000:02:00.0: Failed to set vIOMMU: Need IOMMUFD backend when flts=on
++    qemu-system-x86_64: -device vfio-pci,host=0000:02:00.0: vfio 0000:02:00.0: Failed to set vIOMMU: Need IOMMUFD backend when fsts=on
+ 
+ VFIO device under PCI bridge is unsupported, use PCIE bridge if necessary,
+ otherwise below error shows:
+ 
+ .. code-block:: none
+ 
+-    qemu-system-x86_64: -device vfio-pci,host=0000:02:00.0,bus=bridge1,iommufd=iommufd0: vfio 0000:02:00.0: Failed to set vIOMMU: Host device downstream to a PCI bridge is unsupported when flts=on
++    qemu-system-x86_64: -device vfio-pci,host=0000:02:00.0,bus=bridge1,iommufd=iommufd0: vfio 0000:02:00.0: Failed to set vIOMMU: Host device downstream to a PCI bridge is unsupported when fsts=on
+ 
+ If host IOMMU has ERRATA_772415_SPR17, running guest with "intel_iommu=on,sm_off"
+ is unsupported, kexec or reboot guest from "intel_iommu=on,sm_on" to
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index f09a87b50b..4f8302d200 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -4201,7 +4201,7 @@ static const Property vtd_properties[] = {
+                       VTD_HOST_ADDRESS_WIDTH),
+     DEFINE_PROP_BOOL("caching-mode", IntelIOMMUState, caching_mode, FALSE),
+     DEFINE_PROP_BOOL("scalable-mode", IntelIOMMUState, scalable_mode, FALSE),
+-    DEFINE_PROP_BOOL("flts", IntelIOMMUState, fsts, FALSE),
++    DEFINE_PROP_BOOL("fsts", IntelIOMMUState, fsts, FALSE),
+     DEFINE_PROP_BOOL("snoop-control", IntelIOMMUState, snoop_control, false),
+     DEFINE_PROP_BOOL("x-pasid-mode", IntelIOMMUState, pasid, false),
+     DEFINE_PROP_BOOL("svm", IntelIOMMUState, svm, false),
+@@ -5563,20 +5563,20 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
+     }
+ 
+     if (!s->scalable_mode && s->fsts) {
+-        error_setg(errp, "flts is only available in scalable mode");
++        error_setg(errp, "fsts is only available in scalable mode");
+         return false;
+     }
+ 
+     if (!s->fsts && s->aw_bits != VTD_HOST_AW_39BIT &&
+         s->aw_bits != VTD_HOST_AW_48BIT) {
+         error_setg(errp, "%s: supported values for aw-bits are: %d, %d",
+-                   s->scalable_mode ? "Scalable mode(flts=off)" : "Legacy mode",
++                   s->scalable_mode ? "Scalable mode(fsts=off)" : "Legacy mode",
+                    VTD_HOST_AW_39BIT, VTD_HOST_AW_48BIT);
+         return false;
+     }
+ 
+     if (s->fsts && s->aw_bits != VTD_HOST_AW_48BIT) {
+-        error_setg(errp, "Scalable mode(flts=on): supported value for "
++        error_setg(errp, "Scalable mode(fsts=on): supported value for "
+                    "aw-bits is: %d", VTD_HOST_AW_48BIT);
+         return false;
+     }
+@@ -5593,7 +5593,7 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
+         }
+ 
+         if (!s->fsts) {
+-            error_setg(errp, "Need to set flts for svm");
++            error_setg(errp, "Need to set fsts for svm");
+             return false;
+         }
+ 
+diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
+index 36dc5ac020..18ca5a801a 100644
+--- a/hw/i386/intel_iommu_accel.c
++++ b/hw/i386/intel_iommu_accel.c
+@@ -26,7 +26,7 @@ bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
+     PCIDevice *pdev = bus->devices[vtd_hiod->devfn];
+ 
+     if (!object_dynamic_cast(OBJECT(hiod), TYPE_HOST_IOMMU_DEVICE_IOMMUFD)) {
+-        error_setg(errp, "Need IOMMUFD backend when flts=on");
++        error_setg(errp, "Need IOMMUFD backend when fsts=on");
+         return false;
+     }
+ 
+@@ -44,7 +44,7 @@ bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
+ 
+     if (pci_device_get_iommu_bus_devfn(pdev, &bus, NULL, NULL)) {
+         error_setg(errp, "Host device downstream to a PCI bridge is "
+-                   "unsupported when flts=on");
++                   "unsupported when fsts=on");
+         return false;
+     }
+ 
+@@ -105,7 +105,7 @@ static bool vtd_device_attach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
+     bool ret;
+ 
+     /*
+-     * We can get here only if flts=on, the supported PGTT is FST or PT.
++     * We can get here only if fsts=on, the supported PGTT is FST or PT.
+      * Catch invalid PGTT when processing invalidation request to avoid
+      * attaching to wrong hwpt.
+      */
+diff --git a/tests/qtest/intel-iommu-test.c b/tests/qtest/intel-iommu-test.c
+index 4f12c56260..30ee6524df 100644
+--- a/tests/qtest/intel-iommu-test.c
++++ b/tests/qtest/intel-iommu-test.c
+@@ -29,7 +29,7 @@ static void test_intel_iommu_stage_1(void)
+     uint64_t cap, ecap, tmp;
+     QTestState *s;
+ 
+-    s = qtest_init("-M q35 -device intel-iommu,scalable-mode=on,flts=on");
++    s = qtest_init("-M q35 -device intel-iommu,scalable-mode=on,fsts=on");
+ 
+     cap = vtd_reg_readq(s, DMAR_CAP_REG);
+     g_assert((cap & CAP_STAGE_1_FIXED1) == CAP_STAGE_1_FIXED1);
+diff --git a/tests/qtest/iommu-intel-test.c b/tests/qtest/iommu-intel-test.c
+index 8125be9e28..703bbfef73 100644
+--- a/tests/qtest/iommu-intel-test.c
++++ b/tests/qtest/iommu-intel-test.c
+@@ -54,7 +54,7 @@ static const char *qvtd_iommu_args(QVTDTransMode mode)
+ {
+     switch (mode) {
+     case QVTD_TM_SCALABLE_FLT:
+-        return "-device intel-iommu,scalable-mode=on,flts=on ";
++        return "-device intel-iommu,scalable-mode=on,fsts=on ";
+     case QVTD_TM_SCALABLE_PT:
+     case QVTD_TM_SCALABLE_SLT:
+         return "-device intel-iommu,scalable-mode=on ";
+-- 
+2.47.3
 
-I'm preparing next set of the stable qemu releases, if it's needed,
-it would be nice if it lands in the master branch in the next 10
-days.
-
-Thanks,
-
-/mjt
 
