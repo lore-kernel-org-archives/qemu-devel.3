@@ -4,97 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DE5DCD484C
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 04:54:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60896CD4851
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 05:15:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN1bf-0007d3-RI; Wed, 13 May 2026 00:54:04 -0400
+	id 1wN1vt-00041d-Vu; Wed, 13 May 2026 01:14:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wN1be-0007cr-Pn; Wed, 13 May 2026 00:54:02 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wN1bb-0001hm-Uj; Wed, 13 May 2026 00:54:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778648030; bh=0Lwtc8mU3DCy1eIyAderX2eHyKJqvFRo1L83FggA2iY=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=D//zCB5s5NIABQRS6ubqTj5HTcVPetAaZ6uZIXkRZCjTx5ogg6zxtbL7sa82nJXy9
- WUpge7zGy/DeI4ZMMc5oMsUr1OHBHA+659ujKE97rzxEdQ3TWfLhY6H4fz7Rx+ZD9e
- /voMexupmqPKI//wuMDCbf/dSA8swjqgyzGtWP4wz3Zf9+XqTWapuxp5Zd+eLqn04b
- 5IAegaGVbHMCkKPBN8ki/XmH2Jhr/xTnIr6UpCMD8eBx9F7rXJPH0yyEa2dRpTwbHO
- QpDXccKYPQmh84hswoLYga7/D1r9zlvJNr8olVOLZXbywnZu/kY5U2Cjaz2mNw3Gud
- gRk9+hS7eO3mg==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 3845B1AA659;
- Wed, 13 May 2026 07:53:50 +0300 (MSK)
-Message-ID: <c0d67bca-944a-4c7f-94b6-0a460d1296fb@tls.msk.ru>
-Date: Wed, 13 May 2026 07:53:54 +0300
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wN1vh-0003zN-Sx
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 01:14:48 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wN1ve-0002vC-44
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 01:14:45 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-bd2087858c4so235163766b.0
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 22:14:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778649280; cv=none;
+ d=google.com; s=arc-20240605;
+ b=kHPEXyOAJlpRtAcdTK+TAE3MXMVUtxbn5nJBDONJlbXFGhGqwKdZ92RdiIUKE5yr9w
+ 1hhJs8x6r8F0sNp3+mgWjenFEtkXeSGDAEPPFyOnJuyD712t48/l2M4OcwNRTysor2iT
+ kiH3YxyCHFYPkeXPJSehRbrSbuEtwjS1cN8oKGOwaRKEW/3r0zMuBd47Q7n9jVGF+5os
+ SSwAucA4KhvzoNORNBigBxDjZoCsEMvFFhfTdOoknHJFasCfdqha/o0a9zZ29ti2x2Nn
+ MvXNoXhNmP5MPFtNAXslW2IllQKFwhfrtJSaVRN43LtkSaUajz42S2VfPv5bt1gQU9P8
+ 0Ksw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=5CF9uGkBl38oIdYHDG2lcNPSJxYAZNVKCCFrmO5Od3M=;
+ fh=CcR3C6UciAMzQsjP9eJH1hXnPzcf1tfpxRCDf0g8+j8=;
+ b=URbLbs4BSiMHYaHH4XgE5XwUGdSKanFMlQegvCw3x4h0Z3khsRLlrhxapp3sNbuE4u
+ kmuBKdLO3uUnKkrNxMdiCO/pMQL65MjREBOPmefuUsatR2qD2IzCnhbi/wnyz6NBvtAn
+ U198kuBtLg0ip0L5vBnSm81J7tVTTs2e7tPg7/MwHul6sMmcTqGD+X8a9G9fXP57VByo
+ nsSvVRoUpS0fnaXOUfA7ESp2t55OfvlsG8ATLW5Ac5HTFQEfowwxpnhshcFwEbOVkacO
+ KK/lMJwAa8f07e6aj+dqYg2XScc7H8F1I0gxXJTxTABAQRjS1Vc2PhIyy9zsY0TTkGEF
+ 161g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1778649280; x=1779254080; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5CF9uGkBl38oIdYHDG2lcNPSJxYAZNVKCCFrmO5Od3M=;
+ b=pAE/7Jq9GROwQM9Jl/CJ04/6qQyqS1vXyj+CtS3hPZZiTDKiQqKDSWyZJcHoFmq4Hs
+ Y9Rf5bv46KBm33K0/SMlV/Bct998ezBDsp3iA9BtE6kTKNlP+MeODN10qy5cOzsaihsR
+ z3xsDutPFfWnnRobq0ryQOAdURY9rKtwXswNxP52D19H2mGuCzCSHNjp1iNQ3dwSJ0d/
+ lVS6XcMYH3geONmRvHcCIXU7Qk4E9abZufZ2quW1RkG1aCr7dENmRyuxSaD0QWI1KScR
+ lpJoCbquoro0iX50qg0uum4tEZFLTon1QeKf48sjq0B0UI9D5dmCvsLPhNi2QcZg+DRq
+ E/Sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778649280; x=1779254080;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=5CF9uGkBl38oIdYHDG2lcNPSJxYAZNVKCCFrmO5Od3M=;
+ b=AI/DVj0TagHO1JX1dgU3F5d94ftvIa0a9vba0xlcwTsyqs+lTqdlC2xIkP3dhVDAKk
+ xRro/zXHEve91Pi1bLiAQl0izH4DcQCpMnq/cziWRE/ROk0YSzICRvl9POKx/NAZ4J5j
+ ZNYQq+VqEs9xbzW/7q1OaJOdS2uF3KsTBB9h5rfyfyLxgvc4J1DWEdTK7GgiwifZtrA7
+ Dia5kMdg5q8YTKKumF37tvd93S4GuU0r6xMlBlMXjVSU8Kwsyl+bETL87WoTPD4nqvBW
+ iqvCVexbojRAQ7+FDSlxsy8PJnDOU31/JyhXF4ROfj7tutT2dVp9EndWPIdSgLUnuePj
+ Vg9g==
+X-Gm-Message-State: AOJu0YylpP522qXbqdjDfjs9LeucX3jQcM/ntj4vMpdoq0zQH3Y5o08r
+ lAWznvUvk93/hIEd8bTwMFF4/xmnZWRtDnWzW7nzqM9j7pLtrzSLBIIQDb2pyFtBI8nWW6XAbPR
+ tpTj3ZBis85NCTZjRedKmxGw2euaOeMc=
+X-Gm-Gg: Acq92OG102FYJzczdeSqgx36lacvBg/Nj/sQ6hmsHris1d3r73TvL6+65LxQhjPOD2f
+ mwu9R3q5d+oFfJ6Km8EUrPtD1YycTX37KpcvjzMzlGTNIuyEXUWpEuu4kOV3lUQErAXEIZdSz3g
+ yHZWbjIKHKvCYWnbXmBTbhLP4S7/B5bOGBu5XdVOcFBwd/jZnHFx9IbCeG7N1nB4bmcf0TclhBP
+ XbC62EU0lwhNFq0zNQ/4cb5JZY5tlNHYdhGj0flnqiTMsW1DHpM/lfY9jeaG+XlDByhknOQI0az
+ 3hPyySz0RXS23j3jYGvrrphgBJmZjYYOyWA71Q==
+X-Received: by 2002:a17:907:86a2:b0:bc5:10ad:4a52 with SMTP id
+ a640c23a62f3a-bd3c11f77d0mr99881366b.26.1778649280090; Tue, 12 May 2026
+ 22:14:40 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Stable-11.0.1 00/58] Patch Round-up for stable 11.0.1, freeze on
- 2026-05-22
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org
-References: <qemu-stable-11.0.1-20260512235518@cover.tls.msk.ru>
- <b9c4df60-8b75-cf1a-7cb5-c32a31dbf5b8@eik.bme.hu>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <b9c4df60-8b75-cf1a-7cb5-c32a31dbf5b8@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+References: <20260417080328.31918-1-antonb@tenstorrent.com>
+In-Reply-To: <20260417080328.31918-1-antonb@tenstorrent.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 13 May 2026 15:14:13 +1000
+X-Gm-Features: AVHnY4KvWzyyBpF5oXX3iitAcjpIg5l6Y4znnGjhtnUmqkBgaTVj4nSDESHabpU
+Message-ID: <CAKmqyKMOd=hu+0u=QiqrOk2YfJM+EsETPFUG7Cyiivxuzmjpfg@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: rvv: Handle source overlap of vector
+ widening reduction instructions
+To: Anton Blanchard <antonb@tenstorrent.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, liwei1518@gmail.com, 
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com, 
+ liujingqi@lanxincomputing.com, max.chou@sifive.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x636.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,21 +120,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13.05.2026 01:29, BALATON Zoltan wrote:
+On Fri, Apr 17, 2026 at 6:06=E2=80=AFPM Anton Blanchard <antonb@tenstorrent=
+.com> wrote:
+>
+> Widening reductions read vs2 as a vector of SEW elements and vs1[0] as a
+> scalar of 2*SEW. The ISA does not allow the same vector register to be re=
+ad
+> with different EEWs, so they must not overlap.
+>
+> vs1 is read as a scalar from element 0, so it is treated as a single vect=
+or
+> register (independent of LMUL) when checking overlap.
 
-> I also hoped to include the ati-vga: fix ati_set_dirty address 
-> calculation patch that is currently in the v2 Misc HW patches for 
-> 2026-05-12 PULL request from Philippe that will hopefully be merged in 
-> master in time for 11.0.1 too.
+I assume this resolves https://gitlab.com/qemu-project/qemu/-/work_items/32=
+08
 
-Yeah, I hope too it will land in the master branch in time - I know
-about that one and am monitoring it.
+>
+> Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
 
-I can't delay stable releases longer, - it's been twice the usual
-schedule already (2 months instead of usual 1 month), and the amount
-of stuff accumulated so far is huge :)
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
-Thank you for caring about the stable series!
+Alistair
 
-/mjt
+> ---
+>  target/riscv/insn_trans/trans_rvv.c.inc | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_=
+trans/trans_rvv.c.inc
+> index 4df9a40b44..d9a0027e0b 100644
+> --- a/target/riscv/insn_trans/trans_rvv.c.inc
+> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
+> @@ -3062,6 +3062,7 @@ GEN_OPIVV_TRANS(vredxor_vs, reduction_check)
+>  static bool reduction_widen_check(DisasContext *s, arg_rmrr *a)
+>  {
+>      return reduction_check(s, a) && (s->sew < MO_64) &&
+> +           !is_overlapped(a->rs1, 1, a->rs2, 1 << MAX(s->lmul, 0)) &&
+>             ((s->sew + 1) <=3D (s->cfg_ptr->elen >> 4));
+>  }
+>
+> --
+> 2.34.1
+>
+>
 
