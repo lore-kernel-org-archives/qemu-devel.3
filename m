@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0530CCD4F24
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 12:02:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E228CD4F24
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 12:02:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN8Gz-0007nt-7p; Wed, 13 May 2026 08:01:09 -0400
+	id 1wN8Gx-0007mF-HC; Wed, 13 May 2026 08:01:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wN8Gn-0007cB-L2
+ id 1wN8Gr-0007eE-ED
  for qemu-devel@nongnu.org; Wed, 13 May 2026 08:01:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wN8Gg-00053R-BS
- for qemu-devel@nongnu.org; Wed, 13 May 2026 08:00:52 -0400
+ id 1wN8Gp-00055K-B4
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 08:01:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778673649;
+ s=mimecast20190719; t=1778673658;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qh3tF0R31LW4v5D4IWZ+YGR8h/44+GEjzuQjfrie9nY=;
- b=Bd7pyeHHy9P9x1IYz8QOqO2qfiuWgEfVARKAnSOVm6qTo37DZcasY8yh8Sd3ONSr93XuWG
- 7X9fZtIYxXfUBmzCHFoaaAXl2BLXkkjW+GAmBcr5LNfS1wRnvv1RGXDHOKPF1nT1rGhcBd
- t5DLkgkdvg1Ch4ogYEZtcEvUCAbhr8U=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=/Xw/nFw0Q17d8MoulWnbnWRtQ704uoEn/FsMh209j74=;
+ b=cg4wctmVn+L1i3TgzFTzOfRtFhwqvbzM9yEQPlFMAvp9bGDoa7ztspl1C5A9L62u0NXn9/
+ 34ZTy7LOqTSTHNHM3mWLZ3HUNXATTMHGgfGz1jkhoPVgsMJ18VffiQMyxoBqoiVZjiS1RP
+ /VaB7kZk7mMdJega8BTxy66pGCz/PMQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-615-xrOZn3UFNxWGjMgdFLbkww-1; Wed,
- 13 May 2026 08:00:41 -0400
-X-MC-Unique: xrOZn3UFNxWGjMgdFLbkww-1
-X-Mimecast-MFC-AGG-ID: xrOZn3UFNxWGjMgdFLbkww_1778673640
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-lypLTs-oMgiC8Gbkp2FZJA-1; Wed,
+ 13 May 2026 08:00:52 -0400
+X-MC-Unique: lypLTs-oMgiC8Gbkp2FZJA-1
+X-Mimecast-MFC-AGG-ID: lypLTs-oMgiC8Gbkp2FZJA_1778673650
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0B82118005BE; Wed, 13 May 2026 12:00:40 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A462319560AF; Wed, 13 May 2026 12:00:50 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.32.213])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1B0381800357; Wed, 13 May 2026 12:00:35 +0000 (UTC)
+ id 1D0771800349; Wed, 13 May 2026 12:00:45 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -59,9 +59,10 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Cleber Rosa <crosa@redhat.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v6 06/16] scripts/mtest2make: ensure output has stable sorting
-Date: Wed, 13 May 2026 12:59:53 +0100
-Message-ID: <20260513120003.226790-7-berrange@redhat.com>
+Subject: [PATCH v6 08/16] tests: add a meson suite / make target per block I/O
+ tests format
+Date: Wed, 13 May 2026 12:59:55 +0100
+Message-ID: <20260513120003.226790-9-berrange@redhat.com>
 In-Reply-To: <20260513120003.226790-1-berrange@redhat.com>
 References: <20260513120003.226790-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -92,48 +93,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When debugging mtest2make.py changes it is important to be able to
-compare the old and new output. This requires that any lists in the
-output have stable sort ordering.
+Currently each block format is classified as either 'quick', 'slow' or
+'thorough' and this controls whether its I/O tests are added to the meson
+suites 'block-quick', 'block-slow' or 'block-thorough'.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+This suites are exposed the 'check-block' make target, accepting the
+optional SPEED variable.
+
+As we add more formats to the 'thorough' group, however, it becomes
+increasingly large and time consuming to run. What is needed is a make
+target that can exercise all tests for an individual format, regardless
+of speed classification.
+
+This makes use of the previous enhancement to mtest2make.py to introduce
+new meson suites 'block-$FORMAT-optional', which translate to new top
+level make targets 'check-block-$FORMAT'. These new targets always run
+all tests and as such do not need the SPEED variable to be set, but are
+not triggered by 'make check' or 'make check-block'.
+
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- scripts/mtest2make.py | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ tests/Makefile.include         | 3 ++-
+ tests/qemu-iotests/meson.build | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/mtest2make.py b/scripts/mtest2make.py
-index 4b252defc3..915f02d600 100644
---- a/scripts/mtest2make.py
-+++ b/scripts/mtest2make.py
-@@ -67,8 +67,10 @@ def process_tests(test, targets, suites):
-             suites[s].speeds.add('thorough')
+diff --git a/tests/Makefile.include b/tests/Makefile.include
+index f257288194..a820980bbe 100644
+--- a/tests/Makefile.include
++++ b/tests/Makefile.include
+@@ -14,7 +14,8 @@ check-help:
+ 	@echo " $(MAKE) check-unit                    Run qobject tests"
+ 	@echo " $(MAKE) check-qapi-schema             Run QAPI schema tests"
+ 	@echo " $(MAKE) check-tracetool               Run tracetool generator tests"
+-	@echo " $(MAKE) check-block                   Run block tests"
++	@echo " $(MAKE) check-block                   Run block tests (all formats)"
++	@echo " $(MAKE) check-block-FORMAT            Run block tests (only for FORMAT)"
+ ifneq ($(filter $(all-check-targets), check-softfloat),)
+ 	@echo " $(MAKE) check-softfloat               Run FPU emulation tests"
+ 	@echo " $(MAKE) check-tcg                     Run TCG tests"
+diff --git a/tests/qemu-iotests/meson.build b/tests/qemu-iotests/meson.build
+index 1a24d801a3..16a5e39476 100644
+--- a/tests/qemu-iotests/meson.build
++++ b/tests/qemu-iotests/meson.build
+@@ -62,7 +62,8 @@ foreach format, speed: qemu_iotests_formats
+     endforeach
+   endif
  
- def emit_prolog(suites, prefix):
--    all_targets = ' '.join((f'{prefix}-{k}' for k in suites.keys()))
--    all_xml = ' '.join((f'{prefix}-report-{k}.junit.xml' for k in suites.keys()))
-+    all_targets = ' '.join((f'{prefix}-{k}'
-+                            for k in sorted(suites.keys())))
-+    all_xml = ' '.join((f'{prefix}-report-{k}.junit.xml'
-+                        for k in sorted(suites.keys())))
-     print()
-     print(f'all-{prefix}-targets = {all_targets}')
-     print(f'all-{prefix}-xml = {all_xml}')
-@@ -81,12 +83,12 @@ def emit_prolog(suites, prefix):
-     print(f'\t$(MAKE) {prefix}$* MTESTARGS="$(MTESTARGS) --logbase {prefix}-report$*" && ln -f meson-logs/$@ .')
- 
- def emit_suite(name, suite, prefix):
--    deps = ' '.join(suite.deps)
-+    deps = ' '.join(sorted(suite.deps))
-     print()
-     print(f'.{prefix}-{name}.deps = {deps}')
-     print(f'.ninja-goals.check-build += $(.{prefix}-{name}.deps)')
- 
--    names = ' '.join(suite.names(name))
-+    names = ' '.join(sorted(suite.names(name)))
-     targets = f'{prefix}-{name} {prefix}-report-{name}.junit.xml'
-     if not name.endswith('-slow') and not name.endswith('-thorough'):
-         targets += f' {prefix} {prefix}-report.junit.xml'
+-  suites = []
++  # Every format gets put in the format specific suite
++  suites = ['block-' + format + '-optional']
+   # Any format tagged quick or slow also gets added to slow
+   # otherwise its tagged thorough
+   if speed != 'thorough'
 -- 
 2.54.0
 
