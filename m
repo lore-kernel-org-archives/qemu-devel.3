@@ -4,91 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75BA7CD37AC
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 02:40:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2570CD37AC
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 02:53:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMzVW-0006fY-HU; Tue, 12 May 2026 22:39:34 -0400
+	id 1wMziI-0000o2-KD; Tue, 12 May 2026 22:52:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wMzVT-0006eW-JG
- for qemu-devel@nongnu.org; Tue, 12 May 2026 22:39:31 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <emmanuelugwu121@gmail.com>)
+ id 1wMziE-0000no-OU
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 22:52:42 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wMzVH-0001wl-6C
- for qemu-devel@nongnu.org; Tue, 12 May 2026 22:39:24 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-c80227b1f6cso2644065a12.1
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 19:39:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <emmanuelugwu121@gmail.com>)
+ id 1wMziA-0006W9-32
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 22:52:42 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-43d7645adbdso3349832f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 19:52:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778639957; x=1779244757; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778640751; x=1779245551; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=fgbHqzJ3pTtKAEFR4UcnLuP9LkaHgaAc8cLdnR1Ks0s=;
- b=OB1NnLOdNHttTy2G14bBLQHxCClXgprRSGWjxQ4EQYVp+ZmsscaXq+ihAgeQM5kilK
- uiB24oca0uz3DR3f/dBVlWJ36h53gfubK5Rt1UM+kRHOmV+IlIzwXQlKRSUi+VM6qr9d
- L2sEehrrplIq56cCtwojgwoesNVtUwD4n93rviQnjLqbO/w+DGlaB5EBHLUwUxi3kKLX
- 5Zg+A3YwYOAx675aWjX7RjzdAv91sd+1X8BUlHZonw91RxuCxHHek3sBQdO5DRCe8XxE
- ChOVtQHXw15JGhrOVUglB5QxrhW37dASELS40/V2wZdUncLp1LU9iAEtmsw5aI/X7xm2
- 7lVw==
+ bh=PYqqC/oOePA+SO/KeJa+xYia8fjUXGk7OpZD5J3F/cw=;
+ b=Lb1daY7q4g194ioTshorOJCTTHJq8RCXzwNFTSaKIuzmFyGNeusUohQparvPalEepk
+ 1XyG7LIbWBZ8iT2GeLWTmQ0mQwR/J34knWBf6r+6Hnd8YJNewDYwSIlkRmRFaKUFnrt+
+ 3xtGiYCdqCvi2HLJgyNMZobv10p5ZYh3zXpEzNcwByVQVAmNT641Bu1O1PAxEQC5nySm
+ 0BGpJkUJeX6mfIeqNUyFS57Zp6wopwWmixT9XXU49nkrRbArQL8R5S19gA8wmXe1Bo82
+ wBHAu6/T1oyRoP+YonkuTKgX3SzPZXbpdpnTkhmMcr0eQ+dSMR45Sl8sU01lLjv/LneG
+ dAsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778639957; x=1779244757;
+ d=1e100.net; s=20251104; t=1778640751; x=1779245551;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fgbHqzJ3pTtKAEFR4UcnLuP9LkaHgaAc8cLdnR1Ks0s=;
- b=GVgnGrl9FoMu6yU+P7f8x+FnW2m+lMYfCBpUtCnX3GmqP7PMNLZz7QL4EcDsuKUtj3
- MRQ/ibIQS2aUnadiB4I8B9d+fT9s4bn6xgBoMSGBEs6aNmtlxatwHBJr3pjn0frDTCZ4
- DD1HOnkm6uOX9wG6yPIHfQJmw1wjzCdWsl7BA2jGWblpTCZLSneERzabpJQa2WHls3tn
- AknhCkX7s7ySRG3yf9KppidX3aREg5ycsWqpbSe4LPfINodCMlm9hUi5CnPmjen5mxVV
- V/ey8BqjRe4T/GbVDbylymZKXvY63d5SOKuUT0ZXkIrwy0ar/Qjv06CK6lchjWe2q0A9
- lfAg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+Rr56uuFymiMD7pFdlp961YsXsK44VeET0SjVi0You1StPOVt5y1IHhG6EPKNmrURZucICu9y/z0oh@nongnu.org
-X-Gm-Message-State: AOJu0YwzpApo0g0ErTXvFFr3JItmUk9RJ48DFlQb/w7F2k0GwQlnhthA
- b9ojjllhldxUfVY92lbeEBG5xzogLeU8wLMT/ZT5fe5vtmg51osc+CHL
-X-Gm-Gg: Acq92OEtn89JwrIgcpqMoQ2eU44h7ZCQZu5P+nfsUcF0S83H0VqxKF2RVAJHktjjkGo
- UX5UWh0OKpUvqn2wJENdoTLvXgFrQBmLfzhUbO/C/oR2DcsThP5IA9Hqy5gZP4HB9rdvkYZiiV8
- vu43a5gB9+ENqWGLh9myK4Dn8S66joP1eQHjUZ8UjUqyWq/Ob+/ej9poeQozR44JDX5uU9pcFsY
- FKZjlM5HX/j4cyON+N7hDVI4vOlJDuZYKtGaH2V1cbGqPOJewjr5RsDkn+B2ARDkQfhei37YV6N
- 746hEQIsc25NR7budepNEmV2h1fxkb+CsCnfUKbo9lE8JK0bJsdTavOu9blMG/mzvqSPPieCeQQ
- euAlrP85xaAa+eNvQMe3Fr7JWRcrBGY9cbutMJ0VGAlwv0nlTVF3XXUJRz4LeqBypL76t35NxeX
- kt3OJbxqk/A/GAIiOjHXWzMHJsmaFFUbGV62GkUl9mug==
-X-Received: by 2002:a05:6a21:68b:b0:3a3:bb6:70a1 with SMTP id
- adf61e73a8af0-3af8068689cmr1290463637.20.1778639957532; 
- Tue, 12 May 2026 19:39:17 -0700 (PDT)
-Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2baf1d26968sm146725075ad.16.2026.05.12.19.39.12
+ bh=PYqqC/oOePA+SO/KeJa+xYia8fjUXGk7OpZD5J3F/cw=;
+ b=f61VY33xEgZ8+kSkpvXkpvuw56xLfsPPYHp2VMQtUknsr2M+8YMg6Sr57d7XTjcTq8
+ 8Ev5SmCs2dzsjOHWpIaL9VoERg1UuyQuftQRdRCgH/zr4iiARI7HEQUz0wwspS1AvpjV
+ YzBsF0pOZbSZCnM29tijqoLqM8y9SWda0VsVCgA3pJhB355uBF/Pu3r8ZWYguWGmHoka
+ N+qogD2WA2VxYWOBLxtSj224kU5LoCNYWNvWBOKJivIbZImV1BXR5xdT7eO0BGI6oqBX
+ AfHZk+nN4YGKcpv//qCb3glqUvo/ZdoJakMn+l1YjUgoKALIzXkziTHlbsIiNwQ1Kcg4
+ ODvw==
+X-Gm-Message-State: AOJu0YwdjnewiCth6LUIIwAt9nCNbkJ/DSwki0huVAxZHpD67++3LfJa
+ 0GUH8vsnbs9uuPSPYKc9yjLMIKV26T97HN6qS/L7NBuhKj/9mUvQkpmgrxhB71YqrhNeig==
+X-Gm-Gg: Acq92OHQXkM6EbUIKZ7jCZ5H32fAE+wzl0UKUuKWNvDwhanG7DfcoFLVPMaM7NeXhjD
+ Vd9blo2gmC4kfvSPUA3p0jmdMuMCAYJ5uotahNM1CDFAZdmH+2perTISaOFBsW2kccfXbnHOqOB
+ UtoE5T6GhspvoHDMqqtmPxZGoqsoYanbPQFXs7AmmtbwDQuNMzmty+cYjt/3m1YOMRPeji9fmaB
+ OrMEIdquW+OMdzKaW8PuPstKDYB61MAhB2nUphsQQOEMekSypGYoGLoHcHQQAMoFHiZTxmoUOPH
+ ytB6izQVqt4I7KyvAZyJiLotolYT69Y5Oet6umNAVwRhGbEbVJ5KqoycWQdtSFGFYm1X35Yibq4
+ ShkFoi6gzH/awo0S5UkuUCBg7PldWv6FgFbSSsWbf7au//PZP8QKWWqSplz3ZXNLRfHkZ1Nd6Cv
+ QXowfEcvi2LNwOfU5la4R9a/wgw9wADziHJmdGVg==
+X-Received: by 2002:a05:6000:1841:b0:451:2157:6291 with SMTP id
+ ffacd0b85a97d-45c5ad4b0e5mr1625479f8f.41.1778640750960; 
+ Tue, 12 May 2026 19:52:30 -0700 (PDT)
+Received: from fedora ([197.211.52.69]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45c7f27762csm1592380f8f.31.2026.05.12.19.52.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 May 2026 19:39:16 -0700 (PDT)
-From: alistair23@gmail.com
-X-Google-Original-From: alistair.francis@wdc.com
-To: palmer@dabbelt.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org, conor@kernel.org,
- sebastian.huber@embedded-brains.de
-Cc: alistair23@gmail.com,
-	Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH] MAINTAINERS: Mark Microchip PolarFire SoC as Odd Fixes
-Date: Wed, 13 May 2026 12:38:59 +1000
-Message-ID: <20260513023859.518484-1-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.53.0
+ Tue, 12 May 2026 19:52:29 -0700 (PDT)
+From: kantnero <emmanuelugwu121@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, fam@euphon.net, deller@gmx.de,
+ Emmanuel Ugwu <emmanuelugwu121@gmail.com>
+Subject: [PATCH 0/1] hw/scsi: add initial SCSI tape device emulation
+Date: Wed, 13 May 2026 03:44:53 +0100
+Message-ID: <20260513024454.75840-1-emmanuelugwu121@gmail.com>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x52f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=emmanuelugwu121@gmail.com; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL=0.141, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,35 +97,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair.francis@wdc.com>
+From: Emmanuel Ugwu <emmanuelugwu121@gmail.com>
 
-Mark the "Microchip PolarFire SoC Icicle Kit" as Odd Fixes and enlist
-Conor and Sebastian as people to help deal with the fixes.
+This RFC adds the foundation for SCSI tape emulation in QEMU. 
 
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
-Conor let me know if it should be a different address
+This patch implements realize and unrealize only. SCSI command
+handling will follow in subsequent patches.
 
- MAINTAINERS | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Feedback needed on the overall structure.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 952ed683bb..9626eb1ea9 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1751,8 +1751,10 @@ F: target/riscv/xlrbr.decode
- F: tests/tcg/riscv64/test-crc32.S
- 
- Microchip PolarFire SoC Icicle Kit
-+M: Conor Dooley <conor@kernel.org>
-+M: Sebastian Huber <sebastian.huber@embedded-brains.de>
- L: qemu-riscv@nongnu.org
--S: Supported
-+S: Odd Fixes
- F: docs/system/riscv/microchip-icicle-kit.rst
- F: hw/riscv/microchip_pfsoc.c
- F: hw/char/mchp_pfsoc_mmuart.c
+Emmanuel Ugwu (1):
+  hw/scsi: add initial SCSI tape device emulation
+
+ hw/scsi/meson.build |   1 +
+ hw/scsi/scsi-tape.c | 221 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 222 insertions(+)
+ create mode 100644 hw/scsi/scsi-tape.c
+
 -- 
-2.53.0
+2.54.0
 
 
