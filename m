@@ -4,98 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1E87CD37B6
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 06:47:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6084CD37B6
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 06:55:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN3Mp-0000Vv-31; Wed, 13 May 2026 02:46:51 -0400
+	id 1wN3Uh-0002SO-Um; Wed, 13 May 2026 02:54:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wN3Mb-0000EN-FK; Wed, 13 May 2026 02:46:44 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wN3MZ-0008LF-Mu; Wed, 13 May 2026 02:46:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778654787; bh=yLA7cWNU7AorPOYBSUEiJV1OO+1LOs9DtFu7AKSWr7A=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=Ymqu9TEPRHcEa/nH6SIEalrDorwGVrXFQTznSvvo2ax6QixAF4pI0PG8HH3lr8UcH
- tnFxQuey+LWZNd/UZS02mJp8wdtoYMenhuLoNwYOMIak8UIA2Xi3x4r3mDv9WtwbZm
- sDeCTydKabFWifRIOAMVa3tlqYSLz5EHkcImpocoqesQJLWLPvTC5ui1GC7K37ILr3
- 4QGXG1x34Z0r/dG0cncM18Fk7zQgIBBJjHjluTNWoKtgkuFgSVLM74ccNbP2TNH/PC
- yE74GFUrmETiKajHwqaJdKJ387WAio66JAz3abocr0uW6DxtAX/4n5nFk0e2NF8E7Q
- aV6d+tzPQdr2g==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 67D651AA6E0;
- Wed, 13 May 2026 09:46:27 +0300 (MSK)
-Message-ID: <5133d3f1-e664-4c40-8bd7-127f6fd7b629@tls.msk.ru>
-Date: Wed, 13 May 2026 09:46:32 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wN3Ug-0002S6-6o
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 02:54:58 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wN3Ue-0003Aq-MX
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 02:54:57 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4891e5b9c1fso58602515e9.2
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 23:54:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778655295; x=1779260095; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/4bOQuqHp18KRI9+SeXYv9W+Vz0oAIFVkyuXucZjK/s=;
+ b=mGcB7BW1Fu9Ek9+sknr0qOYsHqLFte5GeuyN46qd87tI9+uCJH8Z2l9hwXqH4vjSL4
+ L3u4aR6gwAUPOBjzd01dNc1uZvNaER1RPSIMPCB0n+NZh9OWv92y+LUOk0/Ad4XkRHT7
+ pTBaoLVcxC30uZoYMv1vy3cmmAG63WVQx7SEQy82RfDK9qjZWincn7XkLtOY5sC1YnQz
+ zcES0MbtkKpEB2FsZeAo2L4H+v87L91RfgzYE168nO+pu4IzwbyLJoA03y/p0pJBxDvq
+ vbQbxOf9mFU+qzy116MKh5slhPVAGs5eO3FVbYSlKsi9Gf1Jde48xKjYGlKXQwwUeUSS
+ YZTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778655295; x=1779260095;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=/4bOQuqHp18KRI9+SeXYv9W+Vz0oAIFVkyuXucZjK/s=;
+ b=rzpa66onvlhj1yfz924GAE8y7P03Lu7mRoIYYcY/lKNKsWpbrtfjLI7yUrCOzzb+SY
+ Nc+r+By3tCNmlTxB3QF5CWRXDD1Bsn8thBZGavfeJGbhcmz5AON3J1yeWkxxJaR8hkzp
+ JzEPaG8nouqsnERELDtuFZyuIwhQRFiy/JgHwvF/uh/MVvvu1XGyLxAoTEyVkKFmyuCS
+ eIqBgNCkyx6u6J5YcmefTyFDnRKu4IEtELD6/Wzw7/OJqy0VH1YISyGMFtrK0cecKKzw
+ SqqX50laBoLhLfkHdxI82jRUPMwzWqbGpUyJSljMozVJmG2hj3yb628Wt4dMhXNshDR7
+ Uj6Q==
+X-Gm-Message-State: AOJu0Yynqwo4/c0yfcLQs/KfKDfPZh2aoqS85/c5ANQ80SQwz/42RsnC
+ GVkEZWmnklagJQFmtkfPbZyS9VEXO4ZEPVok2xXm4O8tOPZ0bDcAl2gGjHRPddTEjnc9EaCEPTR
+ FtJVBT7A=
+X-Gm-Gg: Acq92OE1EkpLGNAxiTLtaY9OuWxPxGku3PJXGgOyIp+zyhq4oEanJiIsjKjVnV17UAT
+ RcbksW0rGB9uADL99ilBpVRwAAuFIhS79Z06pm4qvd+PO3qCOFyop0tFpObpID8nhtHiavTDZJh
+ sNNsVcVbU5/4GtqKfCc9/l4JZCRGpZ24y8HjcuRkpotZAUN7dH7C3FEB5FnITJDdX4a//OPXSqQ
+ W9MPWdjT3IJZWO7dK68Os1lP7TCESg2QvisKkUP/bXoKoLGncVYshScLlVjx8P4Pd/AVUroUGVU
+ Y/sxT0zMWccysxvF8pbtRDY6yzzleomLjiqzFt6KanV8lizeIhVK7BRY6Ew6s1gAJ+0RlvB+ccF
+ hI26ozkS67UbsrAkqCYQz8pvvuuCIWxEZtfmu2oNh8XyuPkIcmNgUYtTy3IT3sYzCnFQKUg0sOi
+ 33Rl2QJB6Q8+vPyY2E48b0GSliKjBC4TXHxl7QebNo4UzImmKLhBP+DcHQT1Q0xS0uiOpTwrvpP
+ S1mMcE3xAY=
+X-Received: by 2002:a05:600c:4f54:b0:488:ab1d:dcc5 with SMTP id
+ 5b1f17b1804b1-48fc9a4b276mr26766155e9.27.1778655294567; 
+ Tue, 12 May 2026 23:54:54 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48fce06ca2csm23688085e9.8.2026.05.12.23.54.53
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 12 May 2026 23:54:54 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 2/3] target/sh4: Hold alignment as DisasContext::mo_align
+Date: Wed, 13 May 2026 08:54:36 +0200
+Message-ID: <20260513065438.8680-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260513065438.8680-1-philmd@linaro.org>
+References: <20260513065438.8680-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/nvme: fix admin cq msix setup
-To: Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org,
- Keith Busch <kbusch@kernel.org>, Jesper Devantier <foss@defmacro.it>,
- qemu-block@nongnu.org
-Cc: Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org,
- Andreas Hindborg <a.hindborg@samsung.com>
-References: <20260318-fix-adminq-msix-v1-1-404b7c27c378@samsung.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260318-fix-adminq-msix-v1-1-404b7c27c378@samsung.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,27 +102,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18.03.2026 12:26, Klaus Jensen wrote:
-> From: Klaus Jensen <k.jensen@samsung.com>
-> 
-> If MSI-X is not enabled when the admin completion queue is created,
-> msix_vector_use() is not called. But, if MSI-X is subsequently enabled,
-> msix_notify() will fail to fire the interrupt because the use count for
-> the vector remains at 0.
-> 
-> msix_vector_use/unuse should be called if MSI-X is *present*, not
-> *enabled*. Fix this.
-> 
-> Cc: qemu-stable@nongnu.org
-> Reported-by: Andreas Hindborg <a.hindborg@samsung.com>
-> Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+Hold the alignment in DisasContext::mo_align,
+initializing it once in TranslatorOps::init_disas_context().
 
-Hi!
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/sh4/translate.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-Can we have this fix in the master branch in the next 10 days, so it
-will be included in the next batch of qemu stable releases, please?
+diff --git a/target/sh4/translate.c b/target/sh4/translate.c
+index 3ddd4f612e4..5957f294c22 100644
+--- a/target/sh4/translate.c
++++ b/target/sh4/translate.c
+@@ -39,6 +39,7 @@ typedef struct DisasContext {
+     uint32_t tbflags;  /* should stay unmodified during the TB translation */
+     uint32_t envflags; /* should stay in sync with env->flags using TCG ops */
+     int memidx;
++    MemOp mo_align;
+     int gbank;
+     int fbank;
+     uint32_t delayed_pc;
+@@ -51,10 +52,10 @@ typedef struct DisasContext {
+ 
+ #if defined(CONFIG_USER_ONLY)
+ #define IS_USER(ctx) 1
+-#define UNALIGN(C)   (ctx->tbflags & TB_FLAG_UNALIGN ? MO_UNALN : MO_ALIGN)
++#define UNALIGN(C)   ctx->mo_align
+ #else
+ #define IS_USER(ctx) (!(ctx->tbflags & (1u << SR_MD)))
+-#define UNALIGN(C)   MO_UNALN
++#define UNALIGN(C)   ctx->mo_align
+ #endif
+ 
+ /* Target-specific values for ctx->base.is_jmp.  */
+@@ -2225,6 +2226,9 @@ static void sh4_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+             return;
+         }
+     }
++    ctx->mo_align = (ctx->tbflags & TB_FLAG_UNALIGN) ? MO_UNALN : MO_ALIGN;
++#else /* !CONFIG_USER_ONLY */
++    ctx->mo_align = MO_UNALN;
+ #endif
+ 
+     /* Since the ISA is fixed-width, we can bound by the number
+-- 
+2.53.0
 
-Thanks,
-
-/mjt
 
