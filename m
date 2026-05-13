@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A5B2CD4F24
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 10:58:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6EF3CD4F24
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 10:58:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN7Gq-0003WA-KF; Wed, 13 May 2026 06:56:56 -0400
+	id 1wN7Gx-0003ka-6q; Wed, 13 May 2026 06:57:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1wN7FX-000382-BX
- for qemu-devel@nongnu.org; Wed, 13 May 2026 06:55:39 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1wN7FZ-00038D-66
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 06:55:41 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1wN7FO-0001NZ-Ih
- for qemu-devel@nongnu.org; Wed, 13 May 2026 06:55:32 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-44c350a5b87so4147854f8f.3
- for <qemu-devel@nongnu.org>; Wed, 13 May 2026 03:55:24 -0700 (PDT)
+ id 1wN7FS-0001Od-Hr
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 06:55:36 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-48984d29fe3so70483625e9.0
+ for <qemu-devel@nongnu.org>; Wed, 13 May 2026 03:55:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778669723; x=1779274523; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778669727; x=1779274527; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bGVucTk00lHJOoHDxhxqBmDjYYXRIxmmMPGfNidYBio=;
- b=kkSgijcYM4DiZ6FTouIJdOQbD2xU9K7AXrrIQ1hzbUJ71CABOzzA37FI4cADfYBnJK
- RhND/qweTkj+Jqmvl0m34u6PlZj7/YBu/WyR9dj98h4170fHOj65F14DFji3NPqS4qic
- g95o+jJBAg/qmxPYvJYvnSoVbvEFvGRcB8DtGDJ7H7AppJCgI7NkaHZW2yZjdGloUrIS
- ldbUhMq5VSEzKFeOrimpStBztAc/0t69SBLpNhssu9NeM5SSK56IpnuryGA166/b9+o1
- KD1GwD4Hpj7SQG1AJTcV0TrLFecwhb840/Jt9CSuwDsuVxSIW8+H0RGAw5ICUCUDiNE/
- m93g==
+ bh=O2EpYJqPevmVbNmKK1CIfcbHlQchiIQzYHZXdo1sFgo=;
+ b=jYSb5phDyVZv/Szw0Pal1B5osvqNpPEckHi5SV7C9GM3BLAthJabDizSxwLZDE8wEZ
+ jUzO85NGn7bFHo4K/tqhWnpSRvsjyzmy24MZtP3u3h91wRMPTy3uQm1A2MyBVudwuaf/
+ v+ohy5hRPIVXXjtkpVGNKP5nkJmycO6jpOljEtUNEiHILIpJnusjXXKhGgnIG/DW2BNX
+ lPy5r7Qkjm8x567egNaewT//8senE8e9g5PZO0tijwDICNGr1ZqfXhHbxYxYNnY8o8nZ
+ wf/BWaV/GjRZeWWCWIrCGKfsKOgcsgSvHDWLzMnteSuoRBkWQ9F2LNB7CH6LVz8mbkDd
+ C+5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778669723; x=1779274523;
+ d=1e100.net; s=20251104; t=1778669727; x=1779274527;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=bGVucTk00lHJOoHDxhxqBmDjYYXRIxmmMPGfNidYBio=;
- b=Gdgfm3/8qn62ALjt8vYwUQ/1nV0/tcJwzwx0bCO0sWPRpXfERK7Ycn8DSZ6M8KiETp
- +SqK5Surem8GfLZqUPrXnClFI5toYbx2ERT+SSuIim92HcXuAAQTettTXoxZnWEhPXh6
- IyX13S4zZLMsjfXGNgSvI6kp8V98CfQSnEyOjsZlYeU+MOaUq5/dx3/kYcjvjzfQMgBr
- F2k1L3POdhiIhBsjansfEpIlTcs1+c6qdltICSr+NBFdw8/NzOZzuuhTiPNMSGfftouv
- 6QfWvgOhdwe3xkaVO/PC7p39ui67jxXCccDMDBaT/2lRUOw2PH1rScdl7FEo0ev/lGTA
- fy5A==
-X-Gm-Message-State: AOJu0YxudAK36i0HuIU9oDA4xZTEVE7+hze7cpBCyipK9CTnOsFnC0Rs
- b6Outh2omygSUVX+ow0L5zPYt1/6mqE/XuPXVgc6XvnVAj86tg8e1aQojXKSV6zT
-X-Gm-Gg: Acq92OE4SlDjdP5KjySSFF6de6gSjcsD6qNxM4+d430jlcjbozrwKGyLafGRzIoH+Ci
- MQfVztSdCD4XTWhv9353fyFKzzAIWpIOMX5xlLKKz9/nIEXAtvPlZKgpN9K/HRDEJjWKyQJom1n
- E0NVqXQD3+eqWgH+n51BTKDVx14TSM8r121A7v82slF2hTh0W6yqjbkPcZzFQ/HPLQNJPryRYrc
- DFyr3poErTc8nf6l/w2e9Vgx/veFTUQ3JgW2SJ2Uz49vOWX+X5jnZ7i75Iq/xlSqfBzmyhnmK6N
- AJBc6u7oNE5Y7hUbwiudEfplG/5F3Gx77V+RM7EgQVr623PvLzYCTyhB6lXwDGRAVNLZRYse4QL
- yHTSF9tB59bWfjAqc/PuuPF0RsIN0zr41PrYgseWZFBDIg80RuQVIMIHSfr0/ImcToX7MQz3Qe0
- HcM/9cXzr9IxsuLUONFzK2tMoOHoix0wo/56kgliCTlbmFkGYjoQsUhR8=
-X-Received: by 2002:a05:600c:45cd:b0:488:ffb1:494c with SMTP id
- 5b1f17b1804b1-48fc9a1bacbmr39171285e9.12.1778669723059; 
- Wed, 13 May 2026 03:55:23 -0700 (PDT)
+ bh=O2EpYJqPevmVbNmKK1CIfcbHlQchiIQzYHZXdo1sFgo=;
+ b=oNTnp95vcHAvJl4vj/qKR1p/EnvIPtBv+NxNerJeaWlT8fVxaguvmWVWB5xEw+NZIf
+ pIrrcJLK7C3t6aDLsNtc0oZoXdKZkg3IbH1kaysMFirv01WFipBi1c5gbOVVzSIbENU/
+ KInku25Wi6jAyKwltVZ6kk6DGB8y6rvSdEG0YOaey+viHmRxFT9ylpm35sgaJx4laBHu
+ cFtbsCHIY43v+aS6VgPltGoxHhz/XHlPkhztuwlBO4Z7/4Nfnsp+BJFWZJSi24AnyaK0
+ jZxe4ywy1VoPT8Dw5Mrmbe28cety1KGe0F58YmWvHuc8WlCrEPPhTtOoBEs/NZXprvGZ
+ DKnQ==
+X-Gm-Message-State: AOJu0YzRHd0YLjGJZB08nQaxz3aXR4DB6n0fH2SWzunFPfTap+4Vm6sS
+ a6EuaYeyUXDsnNIzjEUccXs26BE3m6iW4kNIMmqLhY9ngcq16SODhj4UXfNnMcvi
+X-Gm-Gg: Acq92OFpDNM10mtRtR9epUep4NLEaBw2RwoQwwDP/njBDN1SOMiHD4vyCMeVYq2GzjR
+ u+1WHfImM0eU5oumC/y598lkoxvdUq3/l6Gm0dciXRLh+7hldJfliWTZazVLddkAm8DWkb8nfWI
+ cEadOUZW+KY7I0uQmBV9HW6WcqauFrnOCC12jvuKamXI76FerKQdlePxL5nb9o2meXQF0+2bxPZ
+ l7fNpRys20cjzqVM1JTW8Z3KVimHM8yHq1gkZhrdMYJrrJrw6SFmUlt5Ow8EVshx5jvlmy0XNJl
+ mK8IDmTlKIcOKdIAdWw1+X4wXnjcL3ec2sgCKphYaLVHSMlwmy+xeBl0GQZWf2+WL2CiZ0u9y1Q
+ ZuBfKfXHCAk9LWrHJvli78kOZqXvljw6OZjeABUmO9K4WCfxENX3MfFMAKyfnxAbGJK8K0qqXcP
+ CnqSM4cIWAzdFO7iSrPtYEGdX1hiUVZAIlZVnme96zh/Pe
+X-Received: by 2002:a05:600c:8b12:b0:48e:978f:c45a with SMTP id
+ 5b1f17b1804b1-48fc9a3ba11mr43545795e9.19.1778669727341; 
+ Wed, 13 May 2026 03:55:27 -0700 (PDT)
 Received: from PC-DA2D10.beckhoff.com ([195.226.174.196])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e8f410d9fsm56062295e9.6.2026.05.13.03.55.21
+ 5b1f17b1804b1-48e8f410d9fsm56062295e9.6.2026.05.13.03.55.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 May 2026 03:55:22 -0700 (PDT)
+ Wed, 13 May 2026 03:55:26 -0700 (PDT)
 From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
@@ -77,24 +77,23 @@ Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  YannickV <Y.Vossen@beckhoff.com>,
  "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-Subject: [PATCH v6 03/15] hw/dma/zynq-devcfg: Handle bitstream loading via DMA
- to 0xffffffff
-Date: Wed, 13 May 2026 12:55:05 +0200
-Message-ID: <20260513105517.146706-4-corvin.koehne@gmail.com>
+Subject: [PATCH v6 06/15] hw/dma/zynq-devcfg: Simulate dummy PL reset
+Date: Wed, 13 May 2026 12:55:08 +0200
+Message-ID: <20260513105517.146706-7-corvin.koehne@gmail.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260513105517.146706-1-corvin.koehne@gmail.com>
 References: <20260513105517.146706-1-corvin.koehne@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=corvin.koehne@gmail.com; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=corvin.koehne@gmail.com; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,47 +111,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: YannickV <Y.Vossen@beckhoff.com>
 
-A DMA transfer to destination address `0xffffffff` should trigger a
-bitstream load via the PCAP interface. Currently, this case is not
-intercepted, causing loaders to enter an infinite loop when polling
-the status register.
+Setting PCFG_PROG_B should reset the PL. After a reset PCFG_INIT
+should indicate that the reset is finished successfully.
 
-This commit adds a check for `0xffffffff` as the destination address.
-If detected, the relevant status register bits (`DMA_DONE`,
-`DMA_P_DONE`, and `PCFG_DONE`) are set to indicate a successful
-bitstream load. If the address is different, the DMA transfer proceeds
-as usual. A successful load is indicated but nothing is actually
-done. Guests relying on FPGA functions are still known to fail.
-
-This feature is required for the integration of the Beckhoff
-CX7200 model.
+In order to add a MMIO-Device as part of the PL in the Zynq, the
+reset logic must succeed. The PCFG_INIT flag is now set when the
+PL reset is triggered by PCFG_PROG_B. Indicating the reset was
+successful.
 
 Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
 Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 ---
- hw/dma/xlnx-zynq-devcfg.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ hw/dma/xlnx-zynq-devcfg.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/hw/dma/xlnx-zynq-devcfg.c b/hw/dma/xlnx-zynq-devcfg.c
-index cf00aa863d..9708200760 100644
+index 7370ab941f..6b1d96ff80 100644
 --- a/hw/dma/xlnx-zynq-devcfg.c
 +++ b/hw/dma/xlnx-zynq-devcfg.c
-@@ -247,7 +247,14 @@ static uint64_t r_lock_pre_write(RegisterInfo *reg, uint64_t val)
- static void r_dma_dst_len_post_write(RegisterInfo *reg, uint64_t val)
- {
-     XlnxZynqDevcfg *s = XLNX_ZYNQ_DEVCFG(reg->opaque);
--
-+    if ((s->regs[R_DMA_DST_ADDR]) == 0xffffffff) {
-+        DB_PRINT("bitstream loading detected\n");
-+        s->regs[R_INT_STS] |= R_INT_STS_DMA_DONE_MASK |
-+                                R_INT_STS_DMA_P_DONE_MASK |
-+                                R_INT_STS_PCFG_DONE_MASK;
-+        xlnx_zynq_devcfg_update_ixr(s);
-+        return;
+@@ -49,6 +49,7 @@
+ 
+ REG32(CTRL, 0x00)
+     FIELD(CTRL,     FORCE_RST,          31,  1) /* Not supported, wr ignored */
++    FIELD(CTRL,     PCFG_PROG_B,        30,  1)
+     FIELD(CTRL,     PCAP_PR,            27,  1) /* Forced to 0 on bad unlock */
+     FIELD(CTRL,     PCAP_MODE,          26,  1)
+     FIELD(CTRL,     MULTIBOOT_EN,       24,  1)
+@@ -116,6 +117,7 @@ REG32(STATUS, 0x14)
+     FIELD(STATUS,   PSS_GTS_USR_B,      11,  1)
+     FIELD(STATUS,   PSS_FST_CFG_B,      10,  1)
+     FIELD(STATUS,   PSS_CFG_RESET_B,     5,  1)
++    FIELD(STATUS,   PCFG_INIT,           4,  1)
+ 
+ REG32(DMA_SRC_ADDR, 0x18)
+ REG32(DMA_DST_ADDR, 0x1C)
+@@ -204,6 +206,13 @@ static uint64_t r_ctrl_pre_write(RegisterInfo *reg, uint64_t val)
+             val |= lock_ctrl_map[i] & s->regs[R_CTRL];
+         }
+     }
++
++    if (FIELD_EX32(val, CTRL, PCFG_PROG_B)) {
++        s->regs[R_STATUS] |= R_STATUS_PCFG_INIT_MASK;
++    } else {
++        s->regs[R_STATUS] &= ~R_STATUS_PCFG_INIT_MASK;
 +    }
-     s->dma_cmd_fifo[s->dma_cmd_fifo_num] = (XlnxZynqDevcfgDMACmd) {
-             .src_addr = s->regs[R_DMA_SRC_ADDR] & ~0x3UL,
-             .dest_addr = s->regs[R_DMA_DST_ADDR] & ~0x3UL,
++
+     return val;
+ }
+ 
 -- 
 2.47.3
 
