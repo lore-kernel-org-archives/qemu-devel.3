@@ -4,136 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EBB6CD4F24
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 11:38:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B474CCD4F24
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 11:52:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN7u3-0001Tw-8c; Wed, 13 May 2026 07:37:27 -0400
+	id 1wN87u-0004xj-KW; Wed, 13 May 2026 07:51:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jgg@nvidia.com>)
- id 1wN7tY-0001Oo-NP; Wed, 13 May 2026 07:37:00 -0400
-Received: from mail-westus3azlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c107::3] helo=PH0PR06CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wN87t-0004xR-8f
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 07:51:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jgg@nvidia.com>)
- id 1wN7tW-0005HV-Nq; Wed, 13 May 2026 07:36:56 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=e53jCUf/g7CR/ir4jySFOcKcZHNfhlU9KFcEtGgM1dXiR+t8Q58eQ+hvlkpFXq3stsD5d7VFOPLD07j6K3EVJlyUjEGEvVau8C0t0Ylvicjpp8L8kfJREGoB6hV8vP/Ba5CwkPZ8Urk6weyzOFj3QXsaskoY7DnKE1rihMzADTigANKp+BfstWzZdJYOXOY9xVoYkSu/oFlYxlCq0+DgFJvz0NWz09DAcc8IYhiWKarHccCRYeGENEf2E9QUCge8D4tWlB2d+W+/aQxpGC86Nua6MJ1l1lXsyMPOhuB85I7EL798VKQZB12JRDnofW05MUftTBQt1vhEkWJV8+ukGw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=bPYRnbL5Qwc6rldSIrB2QPaJTyupM39YJBQiYdIvOpg=;
- b=m3gePp+f7RXopFE7Xe5vQYye27ibyYkzpBhOulpvO9jTjPeMzrWYabSK2Ffsc2ybx6CKFNgENJT2DVLLH9EQCXRSzE1M70XqVQgyNtFIfa8puWhgPbT8E2hbetgvp/eCDhxO4eJpo43CBF70ovyi2H45JDgrddf8QJ/2lH5mXNkEgPetLJoydzakgJXsZxTRyYzGm4LQ6jUepNMJbHltZczJhiLznylWlx8LH3BDTYHuykXc7s6IZVux0Q0OCptEDmj1/RjWH8Jkhq7qwibfpCBwe4WPbAT1L0VIq4njhLZ4oOzOTWy145OwLE9/ZOrXYRd97mQCYBSrbuoNxhS/7g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=bPYRnbL5Qwc6rldSIrB2QPaJTyupM39YJBQiYdIvOpg=;
- b=jftK39CxvlI+wV3XvgWwsve8Du6wwIsig7P/f5GXr6h6ftL0xDNBi+fKoTvL6Ox019y3MmbvRaKzkO4cX2PuGaBE2NdJ9aw7JEPcUjr2tx+wkeIfyolO8zXbzt9g0MzmLjSSbd3WGYRc14aDw3EBTHfcsJwmbkM0PN57H09Dx+9+NUGSXkz3hy2CfnCnv4avRh9o/CmTr1rR8NJgfjJKa7NIFWJ68hm0ieDmrgYsSwLjWBZJXnOqs5ZJOul9eM9VzE3AH5yDu9eemMYWy5nU516RaNAcUvQ3tBJ4saQoE2liu/kC9thjYjuvaKu/O6f7txXX5BDhk5ChUf8SFk5lHQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by DS0PR12MB8072.namprd12.prod.outlook.com (2603:10b6:8:dd::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9913.11; Wed, 13 May
- 2026 11:36:43 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9913.009; Wed, 13 May 2026
- 11:36:42 +0000
-Date: Wed, 13 May 2026 08:36:41 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Alex Williamson <alex@shazbot.org>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Alex Williamson <alex.williamson@nvidia.com>,
- Tushar Dave <tdave@nvidia.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Ard Biesheuvel <ardb@kernel.org>,
- "devel@edk2.groups.io" <devel@edk2.groups.io>,
- qemu-devel@nongnu.org, Shameer Kolothum <skolothumtho@nvidia.com>,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- marcel.apfelbaum@gmail.com
-Subject: Re: [edk2-devel] [RFC PATCH 0/8] hw/arm/virt, hw/pci: PCI
- pre-enumeration and fixed BAR allocation
-Message-ID: <20260513113641.GD7655@nvidia.com>
-References: <20260508183717.193630-1-tdave@nvidia.com>
- <22cf37c2-b2b1-40db-b8b7-393b6c36a921@app.fastmail.com>
- <db604efd-9c1f-44e0-9921-71e4d97a81b3@nvidia.com>
- <20260512170650.4551c9f6@nvidia.com>
- <20260512191140-mutt-send-email-mst@kernel.org>
- <382877be-edad-4eca-a646-a75e1654747f@app.fastmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <382877be-edad-4eca-a646-a75e1654747f@app.fastmail.com>
-X-ClientProxiedBy: YT4PR01CA0403.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:108::17) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wN87r-0006Qb-5W
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 07:51:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778673101;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ERw7ay+PnhwAUmUt6/ho5cu028Ir/y2whNm8lMrbmVY=;
+ b=al+CsDJToGHwcwt9uFb5KiLubVcQli7mZsvvXXedsH0m1XGqH0ItuiH/CX/mp9wg2qMgXk
+ 0t9GmuLt7k3pYckAAz9Dm83rH4dXJJQmcmJirjiMfCpU2jUEFunXmyO3DS/TvyIkkrBg+/
+ 0ScFY2UQ3HBbXHqSRBhH9Fu9F0muwiQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-490-HS1z8_CTP-OYC3c6l5EG6g-1; Wed,
+ 13 May 2026 07:51:37 -0400
+X-MC-Unique: HS1z8_CTP-OYC3c6l5EG6g-1
+X-Mimecast-MFC-AGG-ID: HS1z8_CTP-OYC3c6l5EG6g_1778673096
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7AB3D195608D; Wed, 13 May 2026 11:51:35 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5AEB630001BE; Wed, 13 May 2026 11:51:33 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id A4B1E21E6A01; Wed, 13 May 2026 13:51:31 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: "Dr. David Alan Gilbert" <dave@treblig.org>
+Cc: Mateusz Nowicki <mateusz.nowicki@posteo.net>,  qemu-devel@nongnu.org,
+ qemu-block@nongnu.org,  Keith Busch <kbusch@kernel.org>,  Klaus Jensen
+ <its@irrelevant.dk>,  Jesper Devantier <foss@defmacro.it>,  Eric Blake
+ <eblake@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH 1/2] hw/nvme: add 'info nvme' HMP command
+In-Reply-To: <agJuVpu7EwtRNcMU@gallifrey> (David Alan Gilbert's message of
+ "Tue, 12 May 2026 00:03:34 +0000")
+References: <cover.1778409416.git.mateusz.nowicki@posteo.net>
+ <f419a9cf97e79b5148c10cd0a3c138dccb5d36a0.1778409416.git.mateusz.nowicki@posteo.net>
+ <agJuVpu7EwtRNcMU@gallifrey>
+Date: Wed, 13 May 2026 13:51:31 +0200
+Message-ID: <87o6ijr0ho.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DS0PR12MB8072:EE_
-X-MS-Office365-Filtering-Correlation-Id: bc46fd39-c23c-4f88-f4cf-08deb0e3e7c8
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|376014|1800799024|56012099003|22082099003|18002099003|11063799003;
-X-Microsoft-Antispam-Message-Info: kHEKR0Wak9jT02RjraM+O8Z5u2gq2hujYOQE8hYrxzM+hsZOjO6dFOZ/AqTgrBDoZ6wTt5OVO4nPfiud7JfaYoh//qTyXBj8TNSOkdMbE3xANrLLYd1pT1dNtPium47eIfCdTDWGoFI3B0ossqLxHySM2kSYVlhrNUx8IBY0F4HeV6sSai8rkkIKjZ7QtF6qMnIxpBBL3BIe1cecbO1S+YgfjD16VEbnIg3ux33pjH2ML1yFTACui4DChoU6vm0IoFpBvBZB1N545k0ksiaeJtfLQU07D7ZXby34oc839POJl8iFGo6hQVb1AwHU3rkvjck41F/F9HmE7v5AkEN+BOZjQ5IAqPW5S+IuOxerObP90kmpAIs42TWDeTuG8GN6oYphA0DU6CjR5giXVTHoTIqGgL57SIxWCL5WOupT2jrc+XGqI3f1IAhRxx9x6BiEEbFjuxcyKOEwT3NTRh+/3yXPVbsBoFEYxEW75lpEIPmvANcs08Cd6C4Bv3tWVH9lN7ixJENlC3eG8OxjrhJgk2tjRyDNRYjY+sVll95Q/6wSdiUkMV0d+3TNFLXYeTgN/ImdAU75iJ3CPWW6Ez8ELJFFjrjLqQhEL99ZaDiJgxJAod6GT5/OsHInyUuHnYeGqCGLNiJfR31Yy5MdOcHpnooPQ5F5IACWzR64FcrUtC1lmep487z9zUR4ukUWGGyc
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:LV8PR12MB9620.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(56012099003)(22082099003)(18002099003)(11063799003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?1UnObaJQKdmMmSlEFDVIOCJ0A6017LHVAYI9fmyCBTAVE9G8DpKmdqvoK0Ag?=
- =?us-ascii?Q?SSaJ9XV7u6j4L0jby5B/vScdSmvYDoDmT7dG9+XxZkFxHKmmtVcUh7mxU5QA?=
- =?us-ascii?Q?sN3irqZx7l+Ad1xMfrgwaV32n20EMsMFn7/AyVliwHG1CAH2WdfaL2ZjKKLW?=
- =?us-ascii?Q?XJ2xjmhZNx+/c41hlc/QwKXOsjE/XPi6f+ZCAwjWnanwKNVU02FZpxyZmHL7?=
- =?us-ascii?Q?c6di+1241N+01AJDL1WPxgDHUo5tXm+qL5N4gHy9zOvL5QEomuCuqB5avpKJ?=
- =?us-ascii?Q?pQjcDcxughI3rqhAnC5WWWwADmNVO9J9GsBqrGBVO65iki61UkeOug/9spyn?=
- =?us-ascii?Q?AYEYP9E8gi9kH+gBY+SHNf2DTsA55ad3dwyfpyL+WN/nNDl6lttsLcd0C2Wl?=
- =?us-ascii?Q?OLu9aFpV9BYsElgK3hUJQ4tj4/woC4viBVgUMcuRZi7XJX3sxNyu3R8ymf/p?=
- =?us-ascii?Q?gmRzxmPRD26Xj2rybmCKk/UAJsurzJieQHj4qs1IxMjk5oERNG3j65ABaeU/?=
- =?us-ascii?Q?44+S/s0a1gRpLx/MORkfdiIBUxCJ5pctTq2oLSRnitSUtos8vDm8M+b5Q1DF?=
- =?us-ascii?Q?JK5zJLAjlyi/J5MtvaRAJCtuqVZcB9xHVKiDXJHTBPYEAG2D4Aed51hBkFEU?=
- =?us-ascii?Q?iQyU/b/q7gnWB5p00hHazF5mnV31VuMvysImYGOJ/s0179n40vBE3Ucr6Ai+?=
- =?us-ascii?Q?I9OU3cZuEHQinZ9djBj+VYdFvFwzdIkqQ3hB0dDJSroEicIjU8Q2Hjf/ihtd?=
- =?us-ascii?Q?QBSaXEfwDwMfXErTKy8ZtVGWjzC0ZKi6OlwQgYJDhTRX6mfib2U6egr5ejzV?=
- =?us-ascii?Q?ADCSeW6LGMgER78KAmWd7WrYSH/QRBJ3WA2dvzWZGdfiy6FpDnTvfVh9NY98?=
- =?us-ascii?Q?cXUXW2+BI7fwWt4ESBO+9I6Udtwk7wA+IImg0MKMaoi+E8xwW68hfDmGGU7f?=
- =?us-ascii?Q?oLmuDVeEhYP09k/qLab4dPZlk4ZV/trzzvbxX+zI7eNGf+AN/nPdVngKd2rh?=
- =?us-ascii?Q?FSOBmqsbYOKkmy1C0f1uPhBGsmDtez70S0Wv+gEJyyo8AKemaItSGBYwl4wU?=
- =?us-ascii?Q?5oYoSyACc+wc1m9CkuN30qVfuud1ru9WFxl9vXy2mdHsBn4SKXQdjBlcbrU/?=
- =?us-ascii?Q?mBsaWhN/xhX03zY81lK0zHTZRWpIRmmc+fjK/2GNr0bobyexjj4R6ozcocU3?=
- =?us-ascii?Q?+AwRbbREbJ21JnmakhK0SCPbNjAjH5hsaLcipkYM6qPVQ8fgpjOX/D/ugTw7?=
- =?us-ascii?Q?5WIE9MW/iVHiLpzmo7wUlTJJTNhrCTBsoAdZ2C9sQQJhT7oa/DvfUhuzLmSc?=
- =?us-ascii?Q?7Q/ByBzM6d5r21JQroyve2wlrM28QxVSEGqifmT4fDzVTE/ZW45d/BsFg1DL?=
- =?us-ascii?Q?UMjdSo0KKd/yqQB6GvtJlVQbdUx5nps7xR96TbJoiQo2yzu9seWwUkazU3ne?=
- =?us-ascii?Q?d39rnPfyJzlothDxcAD1mXldFAjKkLQ9FA5CgIS/3jZuJVgG1zpylrYngAhg?=
- =?us-ascii?Q?s7/2LBGwXLOnGxh0h90S2i8QDrktgxbUOYMwKXaSXi4/vklWlSLoZJy0+YLJ?=
- =?us-ascii?Q?PZuu2sKrT4SpGCGOlkSKYXHcwJldAV3Q1+xvG0VilMsNe4fmpRT/uARnjt6q?=
- =?us-ascii?Q?08VbaqUTk5RGMNzpsu7Oef4kNonAz3ly+QX9mVEC883gLIbp8R2EhjylD3R1?=
- =?us-ascii?Q?CTa3HiXAZlNq2H+kk7tIGdA25HcZq7VPdl4wrxk/rLwXnm7b?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bc46fd39-c23c-4f88-f4cf-08deb0e3e7c8
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 May 2026 11:36:42.7840 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 1dSa3U81dF1KVfXegh0S+qqVm2yqe5AwtgbXGWLUoQ+oI+gUtY8iFREf6n/13RGo
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8072
-Received-SPF: permerror client-ip=2a01:111:f403:c107::3;
- envelope-from=jgg@nvidia.com;
- helo=PH0PR06CU001.outbound.protection.outlook.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,43 +89,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 12, 2026 at 05:57:19PM -0600, Alex Williamson wrote:
-> On Tue, May 12, 2026, at 5:12 PM, Michael S. Tsirkin wrote:
-> > On Tue, May 12, 2026 at 05:06:50PM -0600, Alex Williamson wrote:
-> >> If we agree that homogeneous hierarchies (no mixing of EA and
-> >> programmable BARs) is a reasonable constraint, and possibly extend that
-> >> to homogeneous per host bridge to simplify the CRS mapping, we have the
-> >> following work items:
-> >> 
-> >>  * Extend Linux EA support to program bridge apertures for subordinate
-> >>    homogeneous EA hierarchies.
-> >> 
-> >>  * Develop options to virtualize programmable BARs as EA for vfio-pci
-> >>    devices, if not generically for the benefit of testing.
-> >> 
-> >>  * Implement a way to poke holes in the VM address space and plumb
-> >>    through to account for addresses used by EA devices.
-> >> 
-> >>  * Provide those same ranges to the guest via CRS (but not via DT to
-> >>    EDK2), or alternatively expose them through additional PXB host
-> >>    bridges.
-> >> 
-> >> Does that shape roughly seem accurate?  Are there additional gaps I've
-> >> missed?  Thanks,
-> >
-> > just one question why not do it in firmware so windows
-> > is thinkably also handled?
-> 
-> I suppose someone could chime in if they have a similar requirement
-> for Windows guests.  Otherwise, the incremental effort to extend
-> Linux EA support seems smaller, though I also don't know what, if
-> any support Windows has for EA to bother.  Regardless, improving
-> Linux EA support might help elsewhere and doesn't preclude edk2
-> support in the future.  Thanks,
+"Dr. David Alan Gilbert" <dave@treblig.org> writes:
 
-I think there are specific already deployed distros that need to work
-under qemu though - so I would discount anything that needs kernel
-changes to work
+> * Mateusz Nowicki (mateusz.nowicki@posteo.net) wrote:
+>> Add an 'info nvme' HMP command for inspecting emulated NVMe
+>> controllers from the QEMU monitor.
+>> 
+>> For each NVMe controller in the QOM tree the command prints:
+>> 
+>>   - PCI BDF, vendor/device ID and BAR0 base address;
+>>   - Identify Controller fields visible to the host driver: SN, MN, FR
+>>     and CNTLID;
+>>   - the CC, CSTS and AQA registers (raw 32-bit values);
+>>   - the number of admin and active I/O submission/completion queues.
+>> 
+>> Useful when debugging the Linux NVMe driver against the QEMU emulation
+>> without attaching gdb to the QEMU process.
+>> 
+>> Example:
+>> 
+>>   (qemu) info nvme
+>>   /machine/peripheral-anon/device[0]
+>>     PCI:    BDF 00:04.0  VID=8086 DID=5845  BAR0=0x00000000feb50000
+>>     ID:     SN=NVME0001  MN=QEMU NVMe Ctrl  FR=...  CNTLID=0x0000
+>>     CC:     0x00460001
+>>     CSTS:   0x00000001
+>>     AQA:    0x001f001f
+>>     Queues: 1 admin + 4 IO SQ / 4 IO CQ
+>
+> I won't claim to know what those NVMe magic numbers mean, but I'll
+> trust you they're useful.
+>
+>> Signed-off-by: Mateusz Nowicki <mateusz.nowicki@posteo.net>
+>> ---
+>>  hmp-commands-info.hx | 13 ++++++++
+>>  hw/nvme/meson.build  |  2 +-
+>>  hw/nvme/monitor.c    | 76 ++++++++++++++++++++++++++++++++++++++++++++
+>>  qapi/machine.json    | 17 ++++++++++
+>
+> So that lot looks OK from an HMP point of view, I wonder if
+> qapi/machine.json is the right place for it.  Markus?
 
-Jason
+qapi/machine.json has become a bit of a dumping ground, I'm afraid.
+
+Precedence for putting queries for the machine's device frontends of
+certain kinds there: x-query-irq, x-query-interrupt-controllers, and
+x-query-usb.
+
+All the other NVMe QAPI stuff is in qapi/block-core.json, but that's the
+block backend, not frontend.  Not a good home for x-query-nvme.
+
+Let's take the patch as is.
+
+One nitpick below.
+
+> Acked-by: Dr. David Alan Gilbert <dave@treblig.org>
+>
+>>  4 files changed, 107 insertions(+), 1 deletion(-)
+>>  create mode 100644 hw/nvme/monitor.c
+>> 
+>> diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+>> index 82134eb6c2..b984691c3c 100644
+>> --- a/hmp-commands-info.hx
+>> +++ b/hmp-commands-info.hx
+>> @@ -340,6 +340,19 @@ SRST
+>>      Show guest USB devices.
+>>  ERST
+>>  
+>> +    {
+>> +        .name       = "nvme",
+>> +        .args_type  = "",
+>> +        .params     = "",
+>> +        .help       = "show emulated NVMe controllers",
+>> +        .cmd_info_hrt = qmp_x_query_nvme,
+>> +    },
+>> +
+>> +SRST
+>> +  ``info nvme``
+>> +    Show emulated NVMe controllers.
+>> +ERST
+>> +
+>>      {
+>>          .name       = "usbhost",
+>>          .args_type  = "",
+>> diff --git a/hw/nvme/meson.build b/hw/nvme/meson.build
+>> index 7d5caa53c2..3017f058f9 100644
+>> --- a/hw/nvme/meson.build
+>> +++ b/hw/nvme/meson.build
+>> @@ -1 +1 @@
+>> -system_ss.add(when: 'CONFIG_NVME_PCI', if_true: files('ctrl.c', 'dif.c', 'ns.c', 'subsys.c', 'nguid.c'))
+>> \ No newline at end of file
+>> +system_ss.add(when: 'CONFIG_NVME_PCI', if_true: files('ctrl.c', 'dif.c', 'ns.c', 'subsys.c', 'nguid.c', 'monitor.c'))
+>> \ No newline at end of file
+
+Please use the opportunity to add the newline.
+
+[...]
+
+QAPI schema
+Acked-by: Markus Armbruster <armbru@redhat.com>
+
 
