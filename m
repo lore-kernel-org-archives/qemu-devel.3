@@ -4,47 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12FCBCD37B6
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 06:46:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1E87CD37B6
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 06:47:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN3Lm-0008Nm-NQ; Wed, 13 May 2026 02:45:46 -0400
+	id 1wN3Mp-0000Vv-31; Wed, 13 May 2026 02:46:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wN3Lg-0008NB-7V; Wed, 13 May 2026 02:45:40 -0400
+ id 1wN3Mb-0000EN-FK; Wed, 13 May 2026 02:46:44 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wN3Ld-00086a-EU; Wed, 13 May 2026 02:45:39 -0400
+ id 1wN3MZ-0008LF-Mu; Wed, 13 May 2026 02:46:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778654730; bh=c+CeBBNOtt3sLAQVPTJzwLOI3FcVky6aLYxSTAib0xA=;
+ t=1778654787; bh=yLA7cWNU7AorPOYBSUEiJV1OO+1LOs9DtFu7AKSWr7A=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=J3OkT11IhyCViM3qrnFEIFciju0N9+Z3fvSXmoFAs8+JdmZMNuj0o3YZnIIcizgTa
- eGZApcTwtlzki1bbbdmChyrW6lfIUuhDBtBQA4g+4PYsanVmShcxr2OH29C2y+LmPg
- lJfmEpfiQPFzUAncnHmlVb7x9n5spb4frCZUlj5iR8m5Jm1cucmlq7SZkmFzPIAeRM
- QETxCaC6R81JCIJw4vFuDUTcTj6IKBmKepeH/a7CV9mgNpDa9GLENSs2x8qBeA0OVA
- zShZm8xl15RVt8qew4fV1GQuG+xngXwy+xg+Y4Ww/iuSPHZzSek6rJE6gfAaXF2P6b
- gqYg7oUJ6Ubmg==
+ b=Ymqu9TEPRHcEa/nH6SIEalrDorwGVrXFQTznSvvo2ax6QixAF4pI0PG8HH3lr8UcH
+ tnFxQuey+LWZNd/UZS02mJp8wdtoYMenhuLoNwYOMIak8UIA2Xi3x4r3mDv9WtwbZm
+ sDeCTydKabFWifRIOAMVa3tlqYSLz5EHkcImpocoqesQJLWLPvTC5ui1GC7K37ILr3
+ 4QGXG1x34Z0r/dG0cncM18Fk7zQgIBBJjHjluTNWoKtgkuFgSVLM74ccNbP2TNH/PC
+ yE74GFUrmETiKajHwqaJdKJ387WAio66JAz3abocr0uW6DxtAX/4n5nFk0e2NF8E7Q
+ aV6d+tzPQdr2g==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id A9ABB1AA6DA;
- Wed, 13 May 2026 09:45:30 +0300 (MSK)
-Message-ID: <9c113c4a-0d91-4c66-9b60-88d652d7af5e@tls.msk.ru>
-Date: Wed, 13 May 2026 09:45:35 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id 67D651AA6E0;
+ Wed, 13 May 2026 09:46:27 +0300 (MSK)
+Message-ID: <5133d3f1-e664-4c40-8bd7-127f6fd7b629@tls.msk.ru>
+Date: Wed, 13 May 2026 09:46:32 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] Add VIRTIO_F_IN_ORDER support to vhost shadow
- virtqueue
-To: =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <lvivier@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Dragos Tatulea DE <dtatulea@nvidia.com>,
- Jonah Palmer <jonah.palmer@oracle.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Lei Yang <leiyang@redhat.com>,
- Koushik Dutta <kdutta@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
- qemu-stable@nongnu.org, Cindy Lu <lulu@redhat.com>,
- Maxime Coquelin <mcoqueli@redhat.com>
-References: <20260304173535.2702587-1-eperezma@redhat.com>
+Subject: Re: [PATCH] hw/nvme: fix admin cq msix setup
+To: Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org,
+ Keith Busch <kbusch@kernel.org>, Jesper Devantier <foss@defmacro.it>,
+ qemu-block@nongnu.org
+Cc: Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org,
+ Andreas Hindborg <a.hindborg@samsung.com>
+References: <20260318-fix-adminq-msix-v1-1-404b7c27c378@samsung.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -90,9 +86,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260304173535.2702587-1-eperezma@redhat.com>
+In-Reply-To: <20260318-fix-adminq-msix-v1-1-404b7c27c378@samsung.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -19
@@ -116,41 +112,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04.03.2026 20:35, Eugenio Pérez wrote:
-> This series adds support for the VIRTIO_F_IN_ORDER feature flag to vhost shadow
-> virtqueue (SVQ), enabling migration of vDPA devices that offer this feature.
-> As SVQ acts as a virtio driver, the series follows the Linux kernel
-> implementation for the feature by Jason Wang.  This enables the live migration
-> of vhost-vdpa devices that supports IN_ORDER.
+On 18.03.2026 12:26, Klaus Jensen wrote:
+> From: Klaus Jensen <k.jensen@samsung.com>
 > 
-> The IN_ORDER feature allows virtio devices to use many descriptors in batch,
-> just by marking the last one of the set as used.
+> If MSI-X is not enabled when the admin completion queue is created,
+> msix_vector_use() is not called. But, if MSI-X is subsequently enabled,
+> msix_notify() will fail to fire the interrupt because the use count for
+> the vector remains at 0.
 > 
-> The series is structured in three parts.  First, max_steps calculation in
-> virtqueue_ordered_fill is fixed to allow filling the entire virtqueue at once.
-> Otherwise, a full queue cannot be used with just one used entry.
+> msix_vector_use/unuse should be called if MSI-X is *present*, not
+> *enabled*. Fix this.
 > 
-> Afterwards, the series extracts helper functions for descriptor processing to
-> prepare for in order changes:
-> 
-> Finally, the series adds IN_ORDER support, first adding conditional logic for
-> in-order vs regular processing and whitelisting the feature flag in SVQ.
-> 
-> Eugenio Pérez (7):
->    virtio: Allow to fill a whole virtqueue in order
->    vhost: move svq next desc array to descs state struct
->    vhost: factor out the descriptor next fetching
->    vhost: factor out the get of last used desc in SVQ
->    vhost: factor out the detach buf logic in SVQ
->    vhost: add in_order feature to shadow virtqueue
->    vhost: accept in order feature flag
+> Cc: qemu-stable@nongnu.org
+> Reported-by: Andreas Hindborg <a.hindborg@samsung.com>
+> Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
 
 Hi!
 
-One of these patches has been marked as 'for-stable', but the
-patchset hasn't landed in the master branch yet.  I'm preparing
-the next set of qemu stable releases, it'd be nice if all important
-fixes landed in the master branch in the next 10 days.
+Can we have this fix in the master branch in the next 10 days, so it
+will be included in the next batch of qemu stable releases, please?
 
 Thanks,
 
