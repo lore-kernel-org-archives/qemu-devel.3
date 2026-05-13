@@ -4,89 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E590ACD37B6
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 07:09:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE0A2CD37B6
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 07:10:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN3i9-00079t-B9; Wed, 13 May 2026 03:08:53 -0400
+	id 1wN3jc-0007kr-0t; Wed, 13 May 2026 03:10:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wN3i7-00079c-Fe
- for qemu-devel@nongnu.org; Wed, 13 May 2026 03:08:51 -0400
-Received: from mail-dy1-x1342.google.com ([2607:f8b0:4864:20::1342])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wN3jY-0007jT-Kp
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 03:10:21 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wN3i5-0001jf-SR
- for qemu-devel@nongnu.org; Wed, 13 May 2026 03:08:51 -0400
-Received: by mail-dy1-x1342.google.com with SMTP id
- 5a478bee46e88-2f3c623322bso10757522eec.0
- for <qemu-devel@nongnu.org>; Wed, 13 May 2026 00:08:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wN3jU-0002cj-Ng
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 03:10:20 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-48374014a77so57555155e9.3
+ for <qemu-devel@nongnu.org>; Wed, 13 May 2026 00:10:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778656128; x=1779260928; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=W7RmiyqkufH8faptTWJNNDfEchSyFv6XKkn60TvC9DM=;
- b=R55a4x/lIK8EkSUfBh3m4v4FVdUfj5j0/qJQRF72DAEiKgpBn7qBPg9zRiBqM4hf8H
- LzqJV1IvKBM7bMeSIGffCUoxMrirAh1mcVz8B1coHKba1kO8CrLZD9ytJM7Kb/fr2uzs
- DWT286gZT49iUQeG0nwiE0VPhm2MShw3r4Kl6ITkTpiH5q/9omzT/YKFXSPX6RgnAV1V
- UlgnnU+yiQsPwEL5iQToGW1j8EJjMDG7xt6mKtw/BfsFHts2Qk4TBT4WaFk/LLRVLr++
- /YqxhtPRfhPQ+v+eiXlnAQHy2JXyeGdsVi8j1ivK5B61/oHdKatMW6Rrpgq5MwKTDG+N
- BsOg==
+ d=linaro.org; s=google; t=1778656215; x=1779261015; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=IRWC9NKkGHMyilLLpQJoe8yRrQVfAULorGrdogB7ZUY=;
+ b=qv//EkBr7POoysuF4MQPRg61a/nz0o5Q2j3/tDmg9ktByy/ONw/T94It6GM9/yEWtt
+ 3p6HgfFfqq/0F5OAYxGCE4bBIV/F30mbWc5mKBYjUerIrFqdw5U2RKsY+bLz4wsiuzdS
+ ZFAUOw2EXly7KmGBNzbN2kTYAebdtgxmBlY7vX/MRW7KlnaiTXc893P8HfaLgbCK9P7A
+ j8icRq9QNF7lJZFL+ieIG8uKgqzkrM+X2/f4DfhJEYR7O6Gv0mAGgxHK3eXyMskZUDY1
+ yPXTizumc7+8/OGKU0iuk/gmQP8c66Sfhbg7UI1emB3ThXqMIPzeCMxjyan4iMmftUc0
+ pPRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778656128; x=1779260928;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=W7RmiyqkufH8faptTWJNNDfEchSyFv6XKkn60TvC9DM=;
- b=F20o/nUYzekJwVWXLAxPWAdGGKsZkTlWdwUbzW5oGFCPM3XG+233g+eaqC2Weou0Bc
- 88W6etXp9J4FwsmnI4gqUSLrzWY+ZH5b90WYmmXVt0VnIvLGd3CDJksO4NwMSFC03qWZ
- tfq/QyRXYbWDHJ2Ep2Wn1pe1BMFj2cX1e3DjIcseNzUuxZsu4DIByp98mukJshhbavUl
- BoMDSveAukmUuqE6wURJfc+yTdgDdxFP8LL7iD6Dkn8guDFYQCyM4/sBKTJcFtUsbYFK
- ErD2YhueluJybzu3nY9nwbaYsata/3PMY8Ebarx4QeYh0/BTOYv3pVlG32UE37IVPeMm
- etzA==
-X-Gm-Message-State: AOJu0YxMR16tpmqe0UKr+vnj7yrxx2VeQxmIZLJHcJnIcniQShPgw734
- zzQBPG25ut+iQYGC9tq9Z4xAE5Int1idNH6CGUqHlyyGXU2O9GkCNEUN
-X-Gm-Gg: Acq92OEYSA7WmG/g0Kc8F3hifqYk54LQOVS6/8YfXOk/t2gpfhWisurnLnOowiNmruA
- HmrSY5VGWBtyLaLj54CK0PPI4ThdfcekuOUqiRSiggQWcrtD/vPI3phQzFjuSU2upddJ+OU4vtM
- 4W2wsBcaB+aSWm1pd7U+Lz71Gb/usmAPb8dJln6jDQCWunBsQ5UICd+zta1NLm3HRcvfFuZzqH1
- ylAeWdbs5G+4hGUXHqI0Ko2AHQYX1paLcr4eXiwLa/HpsnX8ppzhpvADnZOAuvYfrfybsHPBwxl
- vcDJRflUZvI9ZddNSL6vXt81Gis+VSJBe/38JeHGOdn7o6jIuSclg31khnkuA7Y0CKJe2axgr5R
- S+CyV5pEqCi3QTgMoBzm2BA3h/eO1oP6rOGJnzXyb+SxWMWwX2v2ZiY2EChJso1k8XUz4mNcJce
- rz2xhyFimYDQpzxcFnzB4G/fDmIMyftuXP5jzS7CIrU3TY1IJ0+IPWifoYAdwvFEh7O/lYG2nmS
- eaUyI03EVWxKScWD+HD4flJL8DVUjj9AnKiHnk=
-X-Received: by 2002:a05:693c:2b0f:b0:2ea:5057:a304 with SMTP id
- 5a478bee46e88-30153adf667mr848827eec.2.1778656128020; 
- Wed, 13 May 2026 00:08:48 -0700 (PDT)
-Received: from ZEVORN-PC.tail6b0429.ts.net ([38.95.120.198])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2f88885b820sm20744532eec.20.2026.05.13.00.08.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 May 2026 00:08:47 -0700 (PDT)
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: armbru@redhat.com,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ d=1e100.net; s=20251104; t=1778656215; x=1779261015;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=IRWC9NKkGHMyilLLpQJoe8yRrQVfAULorGrdogB7ZUY=;
+ b=BF7YTDq7+ScQNnrXyNnQBLr/7ePtwBGMsdJYMB+bvOBn5sSTZj0GrTQqoxdHbNh+4D
+ 8u+opJ4xDrGT1nJWanNUABkwhNU9VFHNgnpltxccm37IygFI3oXGL/GUEfh2fFObgOSC
+ gYvHE55OsugAVUe2I3un1vXsMFc8g0t/BhShHxFdhpvxw+aBoOgEWHKS6bTnwpwVQmwM
+ s5VNEv3XCWH/d12BvLq3sxbbXOezJsgKDE5yz38mdiRDc/eCWOAMo2Z97f2uXTyomQQL
+ 1SoZXERq5v2Q1fiq7xgCYsQ3C/FINHsNQBlIExpK/hc/eEFnpc/n4+LCr7zUR1VHIrJj
+ wXtA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+RbEJnxnAiVGhWF2+/b9fez9vDsoolqjZO6XXWrHtplsOAHM3hOq9M7hocx+M7HMT0Ssi7ghxUbnQf@nongnu.org
+X-Gm-Message-State: AOJu0YwyPVhUj01Z0TVCNGxE0j+k6BoEMnmdviT6/Y1qbuKIrFGS6/Lg
+ f027YlBAa9/c7tftkovEhGWYfhCHl8KmiBir/YjZpRGhCdWdxuDzImxQqZwokB+tmlo=
+X-Gm-Gg: Acq92OEJFz6i+J3yC/++NLnL+3egluksp6Cify8fF531rhUtiBSOAw7CqPY6qldCCtU
+ MZw3bF76L3UvVJGbYMHjDgRvsJ0ksYTR0SzcmIYx1mglkypZMBhy7rAArbl+baCVJh74C+n0Wut
+ vBNGDifHQHCtwHAvwv6ZCZewPi/7H4RCMiDsVcqSsfx3Ak8LwpIJvjQM8BejrhAc2kUE9zscWw7
+ kSt/ENE9QsXyp5D2nesX9dMWqqYKyXFkk8BbkHUjya4Pnl2HNZDxXB417jFt38xemhmUJ71k9YI
+ KYxeSPqeHBDCy0ldbuc+wsMLNbFDeNzwwbgku7G/ZNI/wlc0xcy+8ZzDS9fkP+sXsBFU7p2iG3E
+ R1bLMjyiRlMd5M9YXrAPyKlzRQFBkYMeCa08CqJpHxvbxTKUz8xAyI89VqBJ/UQE5Qo7S3f9zmi
+ 0Qdim6as5FMud6LRGBcP2M/2RwmFAcX+OF1fdO/zIqIdQb7ZyKU2LP2ahnuqbupsIRog==
+X-Received: by 2002:a05:600c:45cd:b0:489:1ff1:74d3 with SMTP id
+ 5b1f17b1804b1-48fc9a3abcdmr26529665e9.20.1778656214793; 
+ Wed, 13 May 2026 00:10:14 -0700 (PDT)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48fc8d68b14sm52597065e9.12.2026.05.13.00.10.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 13 May 2026 00:10:14 -0700 (PDT)
+Message-ID: <253ecaac-ac2e-43a8-97e8-9251f114df3f@linaro.org>
+Date: Wed, 13 May 2026 09:10:12 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: MAINTAINERS entries that aren't S: Orphan but maybe should be
+Content-Language: en-US
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, qemu-ppc@nongnu.org, qemu-block@nongnu.org,
+ integration@gluster.org, Zhao Liu <zhao1.liu@intel.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>, Peter Xu <peterx@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Milan Zamazal <mzamazal@redhat.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Mark Kanda <mark.kanda@oracle.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ Glenn Miles <milesg@linux.ibm.com>, Gautam Menghani <gautam@linux.ibm.com>,
+ Fabiano Rosas <farosas@suse.de>, Ben Chaney <bchaney@akamai.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,
-	Chao Liu <chao.liu.zevorn@gmail.com>
-Subject: [PATCH] MAINTAINERS: Add myself as a reviewer for Checkpatch
-Date: Wed, 13 May 2026 15:08:30 +0800
-Message-ID: <20260513070830.851842-1-chao.liu.zevorn@gmail.com>
-X-Mailer: git-send-email 2.54.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1342;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1342.google.com
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <87y0hwbvbp.fsf@pond.sub.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <87y0hwbvbp.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,24 +114,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add myself as a reviewer for the Checkpatch module, so I can help
-review related patches and continue maintaining it.
+On 6/5/26 14:01, Markus Armbruster wrote:
+> I'm cc'ing reviewers and lists mentioned below, and frequent
+> contributors to MAINTAINERS.
+> 
+> There are a number of MAINTAINERS entries with S: other than "Orphan"
+> without M:
 
-Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
----
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+...
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 93a1e4e482..4914fa02a3 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3739,6 +3739,7 @@ F: hw/pci/pcie_doe.c
- F: docs/specs/spdm.rst
- 
- Checkpatch
-+R: Chao Liu <chao.liu.zevorn@gmail.com>
- S: Odd Fixes
- F: scripts/checkpatch.pl
- 
+> Unless somebody steps up to server as M: or at least R:, we should
+> downgrade to S: Orphan.  Volunteers?
+
+'Network device backends' (net/), 'eBPF' (ebpf/) and 'Network devices'
+(hw/net/) patches are left unattented on the list since 6 weeks, all
+maintained by Jason (first 2 listed as 'Maintained', last one as 'Odd
+Fixes'). These sections don't have co-maintainers. Shoud we be worried?
 
