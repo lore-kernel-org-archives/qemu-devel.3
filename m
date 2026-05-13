@@ -4,106 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE482CD4F21
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 20:54:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FD44CD4F21
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 20:58:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNGas-0003JL-2h; Wed, 13 May 2026 16:54:14 -0400
+	id 1wNGeA-0004GC-MO; Wed, 13 May 2026 16:57:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wNGan-0003It-7r
- for qemu-devel@nongnu.org; Wed, 13 May 2026 16:54:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wNGdx-0004DF-FD
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 16:57:25 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wNGaj-0007pd-2T
- for qemu-devel@nongnu.org; Wed, 13 May 2026 16:54:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778705632;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xBsbTsQL+RdPv4rNwOcq5N/qO54s6H3PYvM8W6XdmOg=;
- b=LXXdYyKeu7JMQbiLcBUDLscfzv9jpJSsMwcUPhayaEuHLWTqqDLiiHT4vlknxXwPqcWlKj
- b47TuuZ3glkjdG3kxIWgnsnf+bVHisPDTZVG7Dejak+ZndNg/ZSclvvhd9eOj5AyvXHm/c
- Y5aQqMX+Y4Tco+uPajeiOwMOAltDi4Q=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-685-i0zklQP2NHikdP0DVgZwtg-1; Wed, 13 May 2026 16:53:50 -0400
-X-MC-Unique: i0zklQP2NHikdP0DVgZwtg-1
-X-Mimecast-MFC-AGG-ID: i0zklQP2NHikdP0DVgZwtg_1778705630
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-50faf575af4so166098361cf.0
- for <qemu-devel@nongnu.org>; Wed, 13 May 2026 13:53:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wNGdu-0001gC-OW
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 16:57:24 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64DINi5i2965293
+ for <qemu-devel@nongnu.org>; Wed, 13 May 2026 20:57:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ GdYnN6bUXAPKbyXF8mxSEpwkUIrJKzu4XTDQ3+dDJ+w=; b=CHAEOf1dq8ilKwvh
+ dBuWi83p0Y9h2xaJzezyhWganLSRN+9yC3oT/enwZI3/FL/ok1H7XREBqjm8zXgo
+ ov4e993bIIzysdXnOB3WhrtuaC+SnZVZ534YLDPhgZOtrS3RwWw+urwaQt1lqTXy
+ +4qfIKlrknrXXjnUUihRkpqg6+eLZPr3qGAolTTziZ4a1E3G39XkT98bSfkmGd8i
+ cn4+h0IAg88arz3hoQcqatGU3KC/1ssl5rjqMR8+bIv31AGrsmsnMMWQzoXC5wGB
+ efrM+JW31pRh0IruB6OI7aFYy5+QONwA7DewZ0OMnF0C0g5uKxpJUbvvs09UIkBm
+ znDxHQ==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e4ma5begq-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 13 May 2026 20:57:20 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-90f4bdebe77so312210085a.0
+ for <qemu-devel@nongnu.org>; Wed, 13 May 2026 13:57:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778705630; x=1779310430; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=xBsbTsQL+RdPv4rNwOcq5N/qO54s6H3PYvM8W6XdmOg=;
- b=fhz4WPULJ4Pgt+iTxAslHkw0IwzBW8QKRPjauzzgoISBGQxip7vFfu+GBB5Qy11lDl
- QPiZlnjTWopi7XzwhhY6MmbpcDKENa4VZey6UO7zQJItkG7fBvtBKEZdgZfNkdKLFZC5
- GQvPXToWkyrxel56Qw5LFYsr9Wevq/CM0QhokwADErc2bKVxZM1KQZ7MLfrBziIXUBPv
- dHQ25U/jtzgKUnF/H0WIXiDaIxUjVVfq5XF/OGc1j2B1E0oSZD3azCEEmqFo0ZaFqBLs
- naWBCsVC49eGP9hjmVyaMNSb23Fl5N6buCG4qGoKjbfoAEVEZqmzUu5s05QOHQqW8wdH
- U7YA==
+ d=oss.qualcomm.com; s=google; t=1778705840; x=1779310640; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=GdYnN6bUXAPKbyXF8mxSEpwkUIrJKzu4XTDQ3+dDJ+w=;
+ b=de08ltzwkIfqmIZl4sc/GnTGN4Xf2JOSm1MOdEPnbd+Rbf5IE0Fzc6vsQnYW516Z/V
+ U51TMKUwFElvsJOsneC6oKcPODpqDiCZ914KbYaypeb2Dki54Skys+1UUmdIx7UAgp1t
+ meej05aySizmICCXrZP4OSjwfuMBVMA2XloPePISuaytPzZR7W70o8lQJkaLKfy4Uxq8
+ NNnjj6S2ZcOE8j4ED5isF2iWVjfWlw1qRSLT84jtOkZ18jag80mSur6ihpF96l9zZP0z
+ wLrI3pkHX8yF5/7AYZaB08nRqbZUVlevsQKrdczbFp9UyAFlxWK3lHHH6eUymkaCXSc7
+ 49fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778705630; x=1779310430;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xBsbTsQL+RdPv4rNwOcq5N/qO54s6H3PYvM8W6XdmOg=;
- b=lJV90Pb79OZpPn3XbNuvaEKg5oLenQ6oG72f15Zzr4xs2GKNKxWrxKqBousnPqiI1c
- lbh1ht0yf3A9EZZr7Xx1PaRtoBJObREXi7BoEF4LUjFZCz4zP/2EE5ZanZ/vSU2NPVqv
- F2fFFY0s8cVNX5hH2xXcg96Ta2ozArm4JpkVA5qcOYwDrxdUPGIkeKKYpWF4IdJiOthW
- DqPJlsrus+/7cvgYYpgQaxgtsZzzEZRrcBWL/Gc732p68AHjCJ0blkK0A/F+xv9wLj9t
- iblREGB5FhKFwbqPZ5caUcfxEbiYWKnxhG0wVzHgXr8dXQoG7ndacsRwTHygsP5EL/ps
- ss6A==
-X-Gm-Message-State: AOJu0YyQDKnp0S/9PwdQcboA3lBGpbqMLIplMb1KqzEKnhfeSgjY5cwh
- hzgHusqyLm+MmZ6Y6IXxBiPVmxFwmHZNMZolwKuebMy+YtM6fzr3+b6Bo+MsEHZ15P1pw7MP4w0
- w+7fcAj+ldkVXOyISbHVW4LhPqXtCCgd1IM23BLNz9utV1emougRKp6nh
-X-Gm-Gg: Acq92OHNuSeNWFGksSimUUJCZnPucMHAQVuBfKl0E8Pz5J2+M6pxaC6vZi9gECIC9DY
- 4eghLjygFqIUrB1eYmEjcYcMm9VtVqc70rdNUVU3ifXGM3LD6e+w3UzPaDMwRDaJW/0yEmd1jt0
- GNOJSVk2jWe9+mE9LLFBK8IQv8g21L9WI/9prm0+M3UJamWIfFn7Atg20ASFQ5ZLiSHoDktOywd
- oGFN3v4dO163SxSKpEErrDlEfGgq9g1vpyhfTcoXNxaTSOxkfP85DkZ+uwIF8aqVCgV2u4jW39l
- EA6zu7KVU4EaCWVQNcCfIVSFidL2Otn+kDuN/OsHMP4aj1CpH02hD7Lk0f+ZQ+6pQAsx8nEFKgH
- jb3m9NglvuDvL0yobDw7d2W5fVzVwSkBo9xlUYHL6ZCcS/eQ=
-X-Received: by 2002:a05:622a:145:b0:50f:ba62:c328 with SMTP id
- d75a77b69052e-5162f4c4df5mr68808271cf.22.1778705630132; 
- Wed, 13 May 2026 13:53:50 -0700 (PDT)
-X-Received: by 2002:a05:622a:145:b0:50f:ba62:c328 with SMTP id
- d75a77b69052e-5162f4c4df5mr68807971cf.22.1778705629643; 
- Wed, 13 May 2026 13:53:49 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-5148e7bef56sm158300701cf.15.2026.05.13.13.53.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 May 2026 13:53:49 -0700 (PDT)
-Date: Wed, 13 May 2026 16:53:48 -0400
-From: Peter Xu <peterx@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- David Hildenbrand <david@kernel.org>,
- Chenyi Qiang <chenyi.qiang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v4 00/13] Make RamDiscardManager work with multiple
- sources & virtio-mem
-Message-ID: <agTk3NSZaI9IwlUs@x1.local>
-References: <20260504-rdm5-v4-0-bdf61e57c1e1@redhat.com>
+ d=1e100.net; s=20251104; t=1778705840; x=1779310640;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=GdYnN6bUXAPKbyXF8mxSEpwkUIrJKzu4XTDQ3+dDJ+w=;
+ b=QnVnjXTE95b5H0f+jbE48u3xWMtz9s1fE/7TMQpz5JbMgI5FNr584YfKSREaRABMsa
+ oaaTtTmGDMzrpLyVOu99GCZZHgxJlH65uIAPbpnu3bktJEEAg33h3o3XM0lQ5DYLpD1k
+ 1hscC/NNoNXzFAkBh4W86Tpc+DNmr2XnZ8rsMOO1PAmQ5bMG9HWMYAuGhCqRFC9jd5pb
+ JGauGzERGluXxTWl3X4fVyX6sai2Jg/O1/h1utokicEGENVzpNcLB4paf810X8WvYVpz
+ 1nliosxz9F6OxGcH5aIhasAVjNF+9uFH2CkcGk1HzRQS0s/7Ou1sIKutqOy6B5usSL0W
+ 4Y/A==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9o74LwYeIf1yQ/fI9U8WShALXfYDxGJyVWZUmEQrhcwhUNXOzGsvCuYRe4RD6J05LdRaVx5GjwtRGT@nongnu.org
+X-Gm-Message-State: AOJu0YxuqdBlknnIQqsnhn22NeRIA/zMzXmpxvQIZqVz4p+mJ+gvBeYk
+ +E5X6Bd3Nr/XNR0r758NekUKCRBLcE/KCw2irjzLtf4JG5b7eZyzrRiVYz4thiUZE62vZY+LPYp
+ kdFWLPz4ds4GuzhsB6/xv5CIRdqWk36GyAEu4LNtYAGwFWPtTFpPhg1q18g==
+X-Gm-Gg: Acq92OEqniIdirxnwdyhLH4GZrQyX4d38iwRsjIw7Bw/RiAuR0SIJXDnFjPiT7xak3p
+ HkIcw36QAl6Y8ire4v+KgvtyFTTNAKXG3CnVo0wDBT3HgsSmyypRUg/Tpr83lqSgrsJYJ6dCVSZ
+ PdYssxXcRCV0pIxsZozjMZUd/whcWQJg10iVxs7HfEwFuxUhYiRN/fm47JKx9VR5C5WThFwwnsH
+ N//+mSQSBQyiEmGJcjQ09g2ftkbY4jL+PgI/th9iSKRGMEOWd4htMSiyydWihwlEo+IuR8zzgwt
+ eOvwwZiQCQ3thI7qc3Pg4gLVFwIucmHUuMZRebVeSYf7HvmbLNL3u3g18y4jrnSmfyT65uIEd+q
+ HLxxrhKim0hARpo9Rk4e2HhozdeqHzLtv9SGBMw2vE+B3Y9TP4rSaievoC2Q=
+X-Received: by 2002:a05:620a:4403:b0:8cf:d717:c22e with SMTP id
+ af79cd13be357-90f8ac08841mr760967385a.28.1778705839831; 
+ Wed, 13 May 2026 13:57:19 -0700 (PDT)
+X-Received: by 2002:a05:620a:4403:b0:8cf:d717:c22e with SMTP id
+ af79cd13be357-90f8ac08841mr760963485a.28.1778705839209; 
+ Wed, 13 May 2026 13:57:19 -0700 (PDT)
+Received: from [192.168.68.105] ([191.202.238.222])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-910bab3ad15sm60761685a.16.2026.05.13.13.57.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 13 May 2026 13:57:18 -0700 (PDT)
+Message-ID: <c583c23f-c202-4ba8-b546-efcde10e6cce@oss.qualcomm.com>
+Date: Wed, 13 May 2026 17:57:15 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260504-rdm5-v4-0-bdf61e57c1e1@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/riscv/riscv-iommu: Fix IOCOUNTINH.CY toggle detection
+To: fangyu.yu@linux.alibaba.com, palmer@dabbelt.com, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu.zevorn@gmail.com, tjeznach@rivosinc.com
+Cc: guoren@kernel.org, qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+References: <20260509074941.99295-1-fangyu.yu@linux.alibaba.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260509074941.99295-1-fangyu.yu@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEzMDIwNyBTYWx0ZWRfX1bq/s0uxrbH6
+ Yoa9F9tf4a0RZ+kp1rN/os8CqBprJpGY8FcCb2p6r6o4FWBvBlpq4lwSWqwwS6g+7fVzUwQDT0k
+ KPQhDamxNt8cxlQAHkPq5AUNBnnsPUs5agKEp0FYWaIdHVxEPpHyTrdPdd5fgtMCNHpz6RpXb2F
+ 6McQSwGy/Qi9wlZRFJPcT8wSHnEnxv6Y6ro3fhc4dRqKCYAn6CDavTn0R1jV5VOAzUYJgN7a6Vf
+ 5spbGNAn7qtzPR6XWHeROF4+N1RiU1iU4iUUAgpT5pngPr2ddAyf/HaejCc71r759NwAETvCarZ
+ FzZmUBQdZX2gwomNBknDsSYsDCQzyLsF3CnYsVZxY2OP5kQ27O9u05OZn322VUzu7uN+hPmM8i/
+ P3e+pt7Ib1RkCtccAksLkd6xowdvwXd4vOX/Do3hmW3SlejUtM5xnnCQYPs3ToB0qiwrk5qXji2
+ /cGOOrQUpiSD3oRiFwg==
+X-Proofpoint-ORIG-GUID: ToO5CcQ2cAzkvLaKMNnUhx1hVCWSQw0a
+X-Authority-Analysis: v=2.4 cv=TJZ1jVla c=1 sm=1 tr=0 ts=6a04e5b0 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=etEqFfc6qwXwpI8uT8rzbw==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=SRrdq9N9AAAA:8 a=EUspDBNiAAAA:8 a=3D468XuweCyeP0HIuucA:9 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-GUID: ToO5CcQ2cAzkvLaKMNnUhx1hVCWSQw0a
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-13_02,2026-05-13_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0
+ impostorscore=0 spamscore=0 phishscore=0 priorityscore=1501 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605050000 definitions=main-2605130207
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,110 +152,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 04, 2026 at 04:30:06PM +0400, Marc-André Lureau wrote:
-> Hi,
-> 
-> This is an attempt to fix the incompatibility of virtio-mem with confidential
-> VMs. The solution implements what was discussed earlier with D. Hildenbrand:
-> https://patchwork.ozlabs.org/project/qemu-devel/patch/20250407074939.18657-5-chenyi.qiang@intel.com/#3502238
-> 
-> The first patches are misc cleanups. Then some code refactoring to have split a
-> manager/source. And finally, the manager learns to deal with multiple sources.
-> 
-> I haven't done thorough testing. I only launched a SEV guest with a virtio-mem
-> device. It would be nice to have more tests for those scenarios with
-> VFIO/virtio-mem/confvm.. In any case, review & testing needed!
-> 
-> (help fix https://issues.redhat.com/browse/RHEL-131968)
 
-Copy David for virtio-mem: David, please see if you're OK with virtio-mem
-side of things; if you have time look at everything it'll be even better.
 
-Copy Chenyi: would you please check with your environment on whether you
-still hit issue with this series?
-
-The whole series can be found here:
-
-https://lore.kernel.org/all/20260504-rdm5-v4-0-bdf61e57c1e1@redhat.com/
-
-Side note: this version still contain quite some "over 80 chars" checkpatch
-complains... please consider fixing them when repost.
-
-Thanks,
-
+On 5/9/2026 4:49 AM, fangyu.yu@linux.alibaba.com wrote:
+> From: Fangyu Yu <fangyu.yu@linux.alibaba.com>
 > 
-> v4:
->  - added "system/physmem: make ram_block_discard_range() handle guest_memfd"
->  - added "monitor: add 'info ramblock-attributes' command"
->  - added "RFC: hw/virtio: start virtio-mem guest_memfd regions as shared"
->  - skip calling source in notify_populate (it may not have updated its
->    internal state)
->  - rebased, collected trailer tags
+> Fix IOCOUNTINH.CY toggle detection by comparing normalized CY bit
+> rather than XORing whole register with boolean.
 > 
-> v3: issues found by Cédric
->  - fix assertion error on shutdown, due to rcu-defer cleanup
->  - fix API doc warnings
-> 
-> v2:
->  - drop replay_{populated,discarded} from source, suggested by Peter Xu
->  - add extra manager cleanup
->  - add r-b tags for preliminary patches
-> 
+> Fixes: 2cf2a6c027ba ("hw/riscv/riscv-iommu: add IOCOUNTINH mmio writes")
+> Signed-off-by: Fangyu Yu <fangyu.yu@linux.alibaba.com>
 > ---
-> Marc-André Lureau (13):
->       system/memory: split RamDiscardManager into source and manager
->       system/memory: move RamDiscardManager to separate compilation unit
->       system/memory: constify section arguments
->       system/ram-discard-manager: implement replay via is_populated iteration
->       virtio-mem: remove replay_populated/replay_discarded implementation
->       system/ram-discard-manager: drop replay from source interface
->       system/memory: implement RamDiscardManager multi-source aggregation
->       system/physmem: destroy ram block attributes before RCU-deferred reclaim
->       system/memory: add RamDiscardManager reference counting and cleanup
->       tests: add unit tests for RamDiscardManager multi-source aggregation
->       system/physmem: make ram_block_discard_range() handle guest_memfd
->       monitor: add 'info ramblock-attributes' command
->       RFC: hw/virtio: start virtio-mem guest_memfd regions as shared
-> 
->  MAINTAINERS                                 |    4 +
->  qapi/machine.json                           |   55 ++
->  include/hw/vfio/vfio-container.h            |    2 +-
->  include/hw/vfio/vfio-cpr.h                  |    2 +-
->  include/hw/virtio/virtio-mem.h              |    3 -
->  include/monitor/hmp.h                       |    1 +
->  include/system/memory.h                     |  283 +-----
->  include/system/ram-discard-manager.h        |  358 ++++++++
->  include/system/ramblock.h                   |    6 +-
->  accel/kvm/kvm-all.c                         |    5 +-
->  hw/core/machine-hmp-cmds.c                  |   32 +
->  hw/vfio/cpr-legacy.c                        |    4 +-
->  hw/vfio/listener.c                          |   10 +-
->  hw/virtio/virtio-mem.c                      |  286 ++-----
->  migration/ram.c                             |    6 +-
->  system/memory.c                             |   83 +-
->  system/memory_mapping.c                     |    4 +-
->  system/physmem.c                            |   27 +-
->  system/ram-block-attributes.c               |  329 +++----
->  system/ram-discard-manager.c                |  612 +++++++++++++
->  target/i386/kvm/tdx.c                       |    2 +-
->  tests/unit/test-ram-discard-manager-stubs.c |   48 ++
->  tests/unit/test-ram-discard-manager.c       | 1235 +++++++++++++++++++++++++++
->  hmp-commands-info.hx                        |   13 +
->  rust/bindings/system-sys/lib.rs             |    2 +-
->  system/meson.build                          |    1 +
->  system/trace-events                         |    2 +-
->  tests/unit/meson.build                      |    8 +-
->  28 files changed, 2597 insertions(+), 826 deletions(-)
-> ---
-> base-commit: ac0cc20ad2fe0b8df2e5d9458e90a095ac711ab1
-> change-id: 20260414-rdm5-b6df2366d603
-> 
-> Best regards,
-> --  
-> Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
 
--- 
-Peter Xu
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+
+>   hw/riscv/riscv-iommu-hpm.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/riscv/riscv-iommu-hpm.c b/hw/riscv/riscv-iommu-hpm.c
+> index e8d284ac8b..5bf80a8db9 100644
+> --- a/hw/riscv/riscv-iommu-hpm.c
+> +++ b/hw/riscv/riscv-iommu-hpm.c
+> @@ -245,7 +245,8 @@ void riscv_iommu_process_iocntinh_cy(RISCVIOMMUState *s, bool prev_cy_inh)
+>           s, RISCV_IOMMU_REG_IOCOUNTINH);
+>   
+>       /* We only need to process CY bit toggle. */
+> -    if (!(inhibit ^ prev_cy_inh)) {
+> +    bool cy_inh = !!(inhibit & RISCV_IOMMU_IOCOUNTINH_CY);
+> +    if (cy_inh == prev_cy_inh) {
+>           return;
+>       }
+>   
 
 
