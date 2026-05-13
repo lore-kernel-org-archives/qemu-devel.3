@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48287CD4F24
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6BC8CD4F35
 	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 10:45:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN70x-0004UX-7Z; Wed, 13 May 2026 06:40:31 -0400
+	id 1wN70v-0004Ow-8Q; Wed, 13 May 2026 06:40:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wN70T-00040p-4H; Wed, 13 May 2026 06:40:04 -0400
+ id 1wN70W-00041T-2N; Wed, 13 May 2026 06:40:04 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wN70P-0002Rn-M4; Wed, 13 May 2026 06:40:00 -0400
+ id 1wN70R-0002VW-JT; Wed, 13 May 2026 06:40:01 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64DAcPde044648
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64DAcPdX044648
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 13 May 2026 19:38:57 +0900 (JST)
+ Wed, 13 May 2026 19:38:56 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=uJTvyFxVV0KiKR88wATfRrbdCU5rpbZH8pTJ+9EpZgo=; 
+DKIM-Signature: a=rsa-sha256; bh=rjK8VdqZzGwrfnLNXD1G7rM6q+c/dHmZh6ojIHVBQdw=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1778668738; v=1;
- b=Ru3LnwGvn/r8yrMIKMxL6ADcxPWqvAlwUbCpJoevR8PFan+VSOHkIk7LwHrd7NiR
- ODvK/JGvCk8MerUdDmcq7k9fmbAIroGw5dhUpDiat1pA5qkeChXjiP7GxXtK3g13
- knds8Y7gOzXFxCXKJybF2QXo21FyOXDXhUGrFc5vMYbW7nPPXFY4MRtBuKcDS9iw
- YwyA+Ha1FXyGssPyJQJY3d2kh6HgXkm/F1jblnvye7kaukKFgzVuu2x5KaAVJAnY
- 91EGu7BnHykVPT+jRMQXj/ivD2+FTPKGCa5sfgdOB0dImt5GZAYrc/g3roegLAv+
- BKpHRZNvE4yptXpP9LIlRg==
+ s=rs20250326; t=1778668736; v=1;
+ b=IENMLS4g4HezFpdd9ImBlc/fT36I3s2vGqjdUUHyfR8BnGa/AhKKfGF4BMvI+6OF
+ U1eMkmGpLvchHaFVIeCfYZkIjZ4eyXhTXFYO2ToSLEYbbnVRRHKR99iyupFenZZV
+ fG8J7b/2i+oBiFVmgfVupuq5rNUtrShy9PWNqFNTJzEUmuy9x6sb6g7+kMJ+ytQi
+ /D5a84guoG6jnFf7DZZ+dvaAOdllM736k6C1xvXxXuaXaPRw3jKZ7pklKbBE/drl
+ NA4E+Bq4yDhTmVlzl1VBfbUKbsTOIo98BeKdP9mt/PZkDWFSOOufGGgzW1E0Z+6/
+ OqwTh4J8BNMJtlGqXR+0Cw==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 13 May 2026 19:38:32 +0900
-Subject: [PATCH v2 16/29] replay: Use Linux key codes
+Date: Wed, 13 May 2026 19:38:25 +0900
+Subject: [PATCH v2 09/29] hw/char/escc: Use Linux key codes
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260513-input-v2-16-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260513-input-v2-9-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260513-input-v2-0-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260513-input-v2-0-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -58,13 +58,13 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.16-dev-16047
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2453;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1806;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=VN8yQ5lgMxcp3qE4EJjzPaXZLmpoeQItNok0BraEMYc=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZLyGbdrVFxaYlhyXelZZ/9Slj7p4olc1PZuby1BdIP5
- MWOtTV3lLIwiHExyIopsqQU7ebWiK79VJgQ3wIzh5UJZAgDF6cATCRrGsP/4IBFnutvXHHK909a
- 8fT3pq+nBG72BPRcr30T7qnx6Fq5N8M//WUcBXbrlrwobfh/jmvujMDJIiuOfHljuPjo7VcVFVY
- MjAA=
+ bh=sl/mWODr9o1gArcAX6QS2hK8SRqnl+M7Q2UAxTmMU64=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZLyLrOK2yLBMQM/gS1nXs4Q3qK6K0jc8qP/1hqnifo9
+ /+vSMPtjlIWBjEuBlkxRZaUot3cGtG1nwoT4ltg5rAygQxh4OIUgInoVjD8rzv35Pt9z/d138Ls
+ Yku7XoVuLo4U2hcp++N5MmNltUL1Sob/tYtqbt3X6Hg7//TK0sl550KZVmk6PvjTUiairsBocEO
+ HCQA=
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -96,65 +96,53 @@ representations.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- replay/replay-input.c | 20 +++-----------------
- replay/replay.c       |  2 +-
- 2 files changed, 4 insertions(+), 18 deletions(-)
+ hw/char/escc.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/replay/replay-input.c b/replay/replay-input.c
-index acf0993c7285..c86e00af0efd 100644
---- a/replay/replay-input.c
-+++ b/replay/replay-input.c
-@@ -23,8 +23,7 @@ void replay_save_input_event(QemuInputEvent *evt)
+diff --git a/hw/char/escc.c b/hw/char/escc.c
+index 39483ca03bf2..7aae627fb48f 100644
+--- a/hw/char/escc.c
++++ b/hw/char/escc.c
+@@ -30,6 +30,7 @@
+ #include "migration/vmstate.h"
+ #include "qemu/module.h"
+ #include "hw/char/escc.h"
++#include "standard-headers/linux/input-event-codes.h"
+ #include "ui/console.h"
  
-     switch (evt->type) {
-     case INPUT_EVENT_KIND_KEY:
--        replay_put_dword(KEY_VALUE_KIND_QCODE);
--        replay_put_dword(qemu_input_linux_to_qcode(evt->key.key));
-+        replay_put_dword(evt->key.key);
-         replay_put_byte(evt->key.down);
-         break;
-     case INPUT_EVENT_KIND_BTN:
-@@ -55,25 +54,12 @@ void replay_save_input_event(QemuInputEvent *evt)
- QemuInputEvent *replay_read_input_event(void)
- {
-     QemuInputEvent *evt = g_new(QemuInputEvent, 1);
--    int qcode;
+ #include "qemu/cutils.h"
+@@ -804,7 +805,7 @@ static void sunkbd_handle_event(DeviceState *dev, QemuConsole *src,
+     trace_escc_sunkbd_event_in(qcode, QKeyCode_str(qcode),
+                                evt->key.down);
  
-     evt->type = replay_get_dword();
-     switch (evt->type) {
-     case INPUT_EVENT_KIND_KEY:
--        switch (replay_get_dword()) {
--        case KEY_VALUE_KIND_NUMBER:
--            qcode = qemu_input_key_number_to_qcode(replay_get_qword());
--            evt->key.down = replay_get_byte();
--            break;
--        case KEY_VALUE_KIND_QCODE:
--            qcode = (QKeyCode)replay_get_dword();
--            evt->key.down = replay_get_byte();
--            break;
--        default:
--            g_assert_not_reached();
--        }
--        evt->key.key = qcode < qemu_input_map_qcode_to_linux_len ?
--                       qemu_input_map_qcode_to_linux[qcode] : 0;
-+        evt->key.key = replay_get_dword();
-+        evt->key.down = replay_get_byte();
-         break;
-     case INPUT_EVENT_KIND_BTN:
-         evt->btn.button = (InputButton)replay_get_dword();
-diff --git a/replay/replay.c b/replay/replay.c
-index 2e5c6fa82eaa..14437b32566b 100644
---- a/replay/replay.c
-+++ b/replay/replay.c
-@@ -22,7 +22,7 @@
+-    if (qcode == Q_KEY_CODE_CAPS_LOCK) {
++    if (evt->key.key == KEY_CAPSLOCK) {
+         if (evt->key.down) {
+             s->caps_lock_mode ^= 1;
+             if (s->caps_lock_mode == 2) {
+@@ -818,7 +819,7 @@ static void sunkbd_handle_event(DeviceState *dev, QemuConsole *src,
+         }
+     }
  
- /* Current version of the replay mechanism.
-    Increase it when file format changes. */
--#define REPLAY_VERSION              0xe0200d
-+#define REPLAY_VERSION              0xe0200e
- /* Size of replay log header */
- #define HEADER_SIZE                 (sizeof(uint32_t) + sizeof(uint64_t))
+-    if (qcode == Q_KEY_CODE_NUM_LOCK) {
++    if (evt->key.key == KEY_NUMLOCK) {
+         if (evt->key.down) {
+             s->num_lock_mode ^= 1;
+             if (s->num_lock_mode == 2) {
+@@ -832,11 +833,11 @@ static void sunkbd_handle_event(DeviceState *dev, QemuConsole *src,
+         }
+     }
  
+-    if (qcode >= qemu_input_map_qcode_to_sun_len) {
++    if (evt->key.key >= qemu_input_map_linux_to_sun_len) {
+         return;
+     }
+ 
+-    keycode = qemu_input_map_qcode_to_sun[qcode];
++    keycode = qemu_input_map_linux_to_sun[evt->key.key];
+     if (!evt->key.down) {
+         keycode |= 0x80;
+     }
 
 -- 
 2.54.0
