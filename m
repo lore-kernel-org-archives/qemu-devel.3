@@ -4,78 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7F21CD4851
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA763CD4F35
 	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 07:44:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN4Fm-0006ch-RL; Wed, 13 May 2026 03:43:40 -0400
+	id 1wN4Ft-0006ds-AE; Wed, 13 May 2026 03:43:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wN4Fd-0006c9-US
- for qemu-devel@nongnu.org; Wed, 13 May 2026 03:43:30 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wN4Fo-0006dQ-9l
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 03:43:40 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wN4Fc-0001Qm-2N
- for qemu-devel@nongnu.org; Wed, 13 May 2026 03:43:29 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4891e86fabeso73491225e9.1
- for <qemu-devel@nongnu.org>; Wed, 13 May 2026 00:43:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wN4Fj-0001dk-Mq
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 03:43:37 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-488ab2db91aso69252415e9.3
+ for <qemu-devel@nongnu.org>; Wed, 13 May 2026 00:43:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778658206; x=1779263006; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=MTOcwSsn/cKIY3aptbGYmJ2IDLg8xfNiWjFyxhUzJ0o=;
- b=frVFkoZooq2tfKF3Q0XPeHTjdS4IFhlieKqdY2oKvmy2dpDG3pnwYk6RNA3mfLh/q+
- jZ2R2NgKtSeD1KhwSD0KrmTGfzU1ZPimr0AsC3zJhjOTx3pYtbl8sVpuomX/SSQWHw4z
- rK2nPg/S8NLEThch8FyfOVNRHoIwgV1gkUT3iu5YkjnF3qyb51JiwqxzDEPoYdqPY4Wt
- YOGtIvkpZvwEIgRlvKpUlI9jmOiZ8PlzNOFJb0DTSa14wMdnralgaQlLQTLr6ZkOIC5x
- 3M1No7lp9xj//GRaoPGHMhkkM35qilvRBh+CFshcoGpBIzrbNbmYujKpbngXkOzaoOjb
- Rgbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778658206; x=1779263006;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1778658212; x=1779263012; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MTOcwSsn/cKIY3aptbGYmJ2IDLg8xfNiWjFyxhUzJ0o=;
- b=seYrLBx4r8LgmSpOx+SxFLa7SrFAecnsYqiSVTayZW9CMwjSk/d2AgLXYa2w2Oiche
- /IHvoRmmoitv7TGGmS0YG+b/rWZcOEpXuR5cRtFT8RcIzdurl5i9zvF0C3nlc44nDuVk
- CA0DXmCYtWnJ2PSk9RfCIp9PK/n5AouCr+eu3DLC1QMCrmaKmGAa/xtIwRwOBLvuS1JP
- I0h6/Kkl366viHBln61knOnAWLYSHxwPI4oXM7Ek5VK9tvj59KvEUxWt9tt9Jg5x68J7
- kgRYkUDYomlmqIcNfDZEqAAkXUGpc6CNWAA/kxlgi4sNNLYhUBk9Wn9nAjOCGKzwq9uo
- K1oQ==
-X-Gm-Message-State: AOJu0YywEHKB7eJ1r2PnUDs0TlFghc+xgEgO9wuRsIryMNC4ktVjb6PK
- n/zNRT+X1LH9dUKw68eim/uCuo+vvKzSL1Viq9NJfCGBaY5kPW+oqjNYoHqlmKNwwc8Nmk8VQsd
- 3ImRsLpg=
-X-Gm-Gg: Acq92OGEXgSSn47KwJTaIECF1zykV+ybggoNmsplFutaN6+NdO2u3jzEPmpWMpwvL1V
- P0rUDTg8oOpQuOwWWZGCBnStFNo5tXvjb4NwUK1Rk8pVWdRD+3zhwNi2TYhz4zaK9fpGJ7wh8zr
- TTxBMv2w8tag4awFch6TXwwWJ/CBdEodtIugLIkT/RHZ8ZPj5cIHH4w7ifgEzr/rWA8quzKYYYO
- rwnxJd1WsLugzv2e+X0zSKf8JHfbFec0OdJZiYBoVQpS8gBAGtVnKp621Tz3sPZ7mY9FFXlbYNb
- CR//v2EEjUZQ1aKecldE2po6YxZpvC66iYvpOfDngpsY+4bRK/zdL3T5mFA8GSI3rCUTZFQA0Jh
- n8I48NpFET2NxmfOk0dOU112QAYkW4e1HtxpqFBhXWUI1pI8CzCtKySfn/R5Ge8l7cnILjiitS1
- ofWJC3K5LzI4PgnQ9ZgD4d/Nv6U//ZXLCN5DvEDTuFaR1/RbRYdk2yUtxIK+lWKxMEZT4FDSqx
-X-Received: by 2002:a05:600c:1792:b0:488:b811:51c4 with SMTP id
- 5b1f17b1804b1-48fcff534edmr8919495e9.25.1778658205351; 
- Wed, 13 May 2026 00:43:25 -0700 (PDT)
+ bh=3iOGX1/yVXUGiky37h9jQxUvbyutlaP7Ae4GonUwahs=;
+ b=jchb5kW+7xsw3JrJhtdwpww6SRu6HbvEdyRvKA9VX26nDpgVLfh4QO/2oev+WUyXAv
+ I/5nzFpWj4NPvqi8W+zeEN17KLG4iBmegRLalgYgtWtVBSHnySyn3Qa9KoTQu5I3oKrB
+ RF2OLGuyvydB584+mYj1Tjs7ds1NxYfAdLzqPC95rxXLelQ9Elan/RX9ogvo+5bh6h9/
+ qOZpi6oZ+OBYFk4krktkBg36YTNIY82ibOdIgn+y0xECJcb4N6e9ax6XzCLGWehRzMjQ
+ WEHBl+c3hJB+mZfwtQpo00Ohy5BuT9dRl2YGdbJskPKho9FbBBMzxHYJCL/rk0U3NueO
+ XaRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778658212; x=1779263012;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=3iOGX1/yVXUGiky37h9jQxUvbyutlaP7Ae4GonUwahs=;
+ b=gRRJELu+PdS5QNS+3eK153/9jWMJLlqBx0pgTPpX+mvgrgSsksBGgcMY7Py0Z5EuWQ
+ lndM1AfEqgWCLxuISIH2f8ATchdmigVSbbrhRold+dwcu35ji4MCK+VUBZ3J7UzJnBW4
+ W/ghc7zdV1JPoNb/HtL0/cVrhxMVR6w10d+PdmyAxGzmp65LyIWaGiLQc0M1URleBPFd
+ nf8+ubhbylgXq8pVorqRQwp5e+xvijYr/BM8TAOsIu2qC/TT0CKC7nK14/z3YeAuvMO7
+ CL+WM7hmyAUw5RdXq4oHFOQF89pG31YmDhvocsQoXMk/YMDf2Y6Pvxfd8PRcw26sNu5C
+ O3ZA==
+X-Gm-Message-State: AOJu0Ywm0/T/2TI7mQOExH6p+48GVqE1yZ2uUcnn+sbCHvB3WplvdWuo
+ cljmuyxyU8Bf5YASwklc5lsvMsfL0Xju4Cr4cHZszKBjUdDqIBm7UprEKsgv91+N+WkLSN3QB5y
+ 5nAOnge4=
+X-Gm-Gg: Acq92OFU+tcACsapGar5OYCOkAahOpzNEaTqFTZ4+jpnhXdcDQwnJ7EhK6542qHRj27
+ W0vyd2szddKfAtauAtFuOBj4Fy8pwxl9Z55UulL6orj+gsTg+lWqQkYuomTjpuOosslbbabKeVk
+ wPpgIzZc/vF9F9rXH6UG2vQn85cjFzYgzr6TEVN2zR+d2JI0N0RrCPs9NWXMIB5oUokrd5htaFh
+ k94YQ9ld7iQa22uWD2L88o6lEl4BzeOZdwovBrwjnJfW0VGHlyEimp8R/EbFZ8reQM6AeG+UHHK
+ JNmYQ7W8jCSJOihoBcRF2OlK481rDX5NluNIUcYoRhBpDoKPC3IT9GDUNp0ehwQIW04RF3LHmAw
+ /rC+wGNAik1z6LVA/xAEBN1OUgX6Hlh01VEGTIWkxntAroErozL1sknl2ETDrFI5NX6pcv3M+wK
+ NY9xSelRuW742dQFl9AU7o28Q3T1W/HNHOG8SCpW3pIGunsrGFtpp9MmNARhPKMkm3z2E3RwsB
+X-Received: by 2002:a05:600c:c87:b0:48a:58ae:992f with SMTP id
+ 5b1f17b1804b1-48fce9d92b0mr20565265e9.16.1778658211909; 
+ Wed, 13 May 2026 00:43:31 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fce066eeasm26789295e9.7.2026.05.13.00.43.24
+ 5b1f17b1804b1-48fc8d62422sm60249665e9.11.2026.05.13.00.43.31
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 13 May 2026 00:43:24 -0700 (PDT)
+ Wed, 13 May 2026 00:43:31 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 0/2] target/hppa: Inline UNALIGN() macro
-Date: Wed, 13 May 2026 09:43:21 +0200
-Message-ID: <20260513074323.10616-1-philmd@linaro.org>
+Subject: [PATCH 1/2] target/hppa: Use DisasContext::mo_align in system
+ emulation
+Date: Wed, 13 May 2026 09:43:22 +0200
+Message-ID: <20260513074323.10616-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260513074323.10616-1-philmd@linaro.org>
+References: <20260513074323.10616-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,16 +102,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename 'unalign' as 'mo_align' and use it in system
-emulation too, allowing to remove the UNALIGN() macro.
+Rename 'unalign' as 'mo_align' and use it in system emulation too.
 
-Philippe Mathieu-Daudé (2):
-  target/hppa: Use DisasContext::mo_align in system emulation
-  target/hppa: Inline UNALIGN() macro
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/hppa/translate.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
- target/hppa/translate.c | 23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
-
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index cf57ec518d4..c3d1027b4e2 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -91,16 +91,14 @@ typedef struct DisasContext {
+     bool is_pa20;
+     bool insn_start_updated;
+ 
+-#ifdef CONFIG_USER_ONLY
+-    MemOp unalign;
+-#endif
++    MemOp mo_align;
+ } DisasContext;
+ 
+ #ifdef CONFIG_USER_ONLY
+-#define UNALIGN(C)       (C)->unalign
++#define UNALIGN(C)       (C)->mo_align
+ #define MMU_DISABLED(C)  false
+ #else
+-#define UNALIGN(C)       MO_ALIGN
++#define UNALIGN(C)       (C)->mo_align
+ #define MMU_DISABLED(C)  MMU_IDX_MMU_DISABLED((C)->mmu_idx)
+ #endif
+ 
+@@ -4654,12 +4652,13 @@ static void hppa_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+ #ifdef CONFIG_USER_ONLY
+     ctx->privilege = PRIV_USER;
+     ctx->mmu_idx = MMU_USER_IDX;
+-    ctx->unalign = (ctx->tb_flags & TB_FLAG_UNALIGN ? MO_UNALN : MO_ALIGN);
++    ctx->mo_align = (ctx->tb_flags & TB_FLAG_UNALIGN) ? MO_UNALN : MO_ALIGN;
+ #else
+     ctx->privilege = (ctx->tb_flags >> TB_FLAG_PRIV_SHIFT) & 3;
+     ctx->mmu_idx = (ctx->tb_flags & PSW_D
+                     ? PRIV_P_TO_MMU_IDX(ctx->privilege, ctx->tb_flags & PSW_P)
+                     : ctx->tb_flags & PSW_W ? MMU_ABS_W_IDX : MMU_ABS_IDX);
++    ctx->mo_align = MO_ALIGN;
+ #endif
+ 
+     cs_base = ctx->base.tb->cs_base;
 -- 
 2.53.0
 
