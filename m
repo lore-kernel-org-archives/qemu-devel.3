@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3396BCD4F39
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 10:45:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 687FCCD4F35
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 10:45:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN70y-0004WA-EF; Wed, 13 May 2026 06:40:32 -0400
+	id 1wN711-0004b9-36; Wed, 13 May 2026 06:40:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wN70T-00040k-0T; Wed, 13 May 2026 06:40:04 -0400
+ id 1wN70d-0004DE-8A; Wed, 13 May 2026 06:40:11 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wN70N-0002Qr-Dz; Wed, 13 May 2026 06:39:59 -0400
+ id 1wN70X-0002ZA-6r; Wed, 13 May 2026 06:40:10 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64DAcPdb044648
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64DAcPdQ044648
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 13 May 2026 19:38:57 +0900 (JST)
+ Wed, 13 May 2026 19:38:54 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=np+DDHtPXccYUqkjVcTnB/XI0jqPO74kxFNXv7P7G5A=; 
+DKIM-Signature: a=rsa-sha256; bh=BpQW9AVRYkQ765Zs6xqZabFS3/BzVCHPEjaxd4rCcxQ=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1778668737; v=1;
- b=vT0JG0CpBPmnY9cdIzCwYXqXlPxp8WZkvD9sGKyKeGldZR0fPNHk5QFdQBh+fGVN
- F1VdUfZQ4SMFIIOsCzDOYJYWOeJWbibVoaqbgKrhu652I6kqZbU16stcpe+f50Wg
- H9fqO1IbQWMxXok/yD9Kpr5GNeZIOn3zcLGtD7Cr2LyTA9f8jhNhTPjiB2FOrNTY
- yOdT2NqrfIYwOUKXGVcpQxjtz4WlTehfYJyBN55dS2cWAwdSohengA7roziE5kDB
- 0D0RuFpAKdFwcTyL6AHmATqlU1iHn453AizjPdtV92V/E0b5c7jQTSSFoIStVlyE
- 3ubD2AdmmhCQmdziKB6z1A==
+ s=rs20250326; t=1778668734; v=1;
+ b=D/MFPc1rY3Wkw8t6ejpANC70vzpTYnU5jQHNyNUsjLbYmCW1DVOsiI8HMlwGO7K2
+ aq0I5mZO0xsBE2459PYKV4g8GKWGC9fjcA03ZNte/vsLVrzE8lmhu7Zyq/KYm+J/
+ rhr9I93r5fsMtl2iAoezsWT1nK1UetaNLgVEy6jQrPU1GHZqrh3w9a3s5oNjmqTm
+ 0e63BQ5dwZDbvJOLVHeO3wBd+NDMhpDcySm4H23+PQ2llPEJ2E1KT1tCeEuI+4oY
+ VHauhYMDJ63qF6FZxY9x6iYCQbi43myMUd8multBJgeVRcYRhnWH30y/swL27MBD
+ EKwDimnp8nk/LB3ZgVrXsA==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 13 May 2026 19:38:29 +0900
-Subject: [PATCH v2 13/29] hw/input/ps2: Use Linux key codes
+Date: Wed, 13 May 2026 19:38:18 +0900
+Subject: [PATCH v2 02/29] ui/input: Remove QAPI wrappers from
+ QemuInputEvent
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260513-input-v2-13-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260513-input-v2-2-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260513-input-v2-0-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260513-input-v2-0-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -58,13 +59,13 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.16-dev-16047
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7874;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=59087;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=Ae9vuWLzKV99hiDeipjG2FLc+ZAAXG2DeDzyFVZrokg=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZLyAbXjEe6yddUHupyKUZn8P9YVnZpj93Xc5f+hxsfe
- 3rCbMW1jlIWBjEuBlkxRZaUot3cGtG1nwoT4ltg5rAygQxh4OIUgInccWT4Z9Yunui6d53nnvh0
- ttonapNPC2oYli2ROhnPL7et4Oj3WkaGO8fE71zZt1HgxeJJL3ZVVhZOjvZ98qf+4rGje87GPJa
- z4gEA
+ bh=plYYaF/nozWhqTKACzzm98y1T+ByOBdyLyE34XFYMm4=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZLyCrW1zulMp7WZmgeNXueLPRO6uWpJI05DMvuP/9gl
+ iAcvaCgo5SFQYyLQVZMkSWlaDe3RnTtp8KE+BaYOaxMIEMYuDgFYCKGRgz/XeYIZ1w+Z2isy5pw
+ Kj1N/A7HoUlqq66Yc/e1zD4ZHfHYi5Fh712ZHWZO/n/E7Hyv35y2jjVWNXjH7aMT9hncEKh5s2I
+ BJwA=
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -90,188 +91,1515 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QemuInputEvent now stores Linux key codes for key events. Use those
-codes directly instead of translating between internal key code
-representations.
+QAPI represents union members with wrapper structs and pointer
+indirections. They are useful at the QMP boundary, but unnecessary for
+QEMU's internal input events and make handlers more verbose.
+
+Define QemuInputEvent as a plain internal tagged union and convert input
+handlers, queues, and replay code to access payloads directly.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/input/ps2.c        | 51 +++++++++++++++++++++++++--------------------------
- hw/input/trace-events |  2 +-
- 2 files changed, 26 insertions(+), 27 deletions(-)
+ include/qemu/typedefs.h      |   2 +-
+ include/ui/input.h           |  16 ++++
+ chardev/msmouse.c            |  10 +--
+ chardev/wctablet.c           |   8 +-
+ hw/arm/musicpal.c            |  11 ++-
+ hw/char/escc.c               |  32 ++++----
+ hw/display/xenfb.c           |  32 ++++----
+ hw/input/adb-kbd.c           |   4 +-
+ hw/input/adb-mouse.c         |  20 ++---
+ hw/input/hid.c               |  36 ++++-----
+ hw/input/ps2.c               |  67 ++++++++--------
+ hw/input/stellaris_gamepad.c |   9 +--
+ hw/input/virtio-input-hid.c  |  53 ++++++-------
+ hw/m68k/next-kbd.c           |   9 +--
+ replay/replay-events.c       |   2 +-
+ replay/replay-input.c        | 101 ++++++++++--------------
+ ui/input-legacy.c            |  23 +++---
+ ui/input.c                   | 177 +++++++++++++++++++++++++------------------
+ ui/vdagent.c                 |  18 ++---
+ 19 files changed, 299 insertions(+), 331 deletions(-)
 
-diff --git a/hw/input/ps2.c b/hw/input/ps2.c
-index 93c3c7372054..f2523ff4bc78 100644
---- a/hw/input/ps2.c
-+++ b/hw/input/ps2.c
-@@ -28,6 +28,7 @@
- #include "hw/core/sysbus.h"
- #include "hw/input/ps2.h"
- #include "migration/vmstate.h"
-+#include "standard-headers/linux/input-event-codes.h"
- #include "ui/console.h"
- #include "ui/input.h"
- #include "system/reset.h"
-@@ -123,20 +124,20 @@ static uint8_t translate_table[256] = {
-     0xf8, 0xf9, 0xfa, 0xfb, 0xfc, 0xfd, 0xfe, 0xff,
- };
+diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
+index da7097c54401..2344c92182ea 100644
+--- a/include/qemu/typedefs.h
++++ b/include/qemu/typedefs.h
+@@ -94,7 +94,7 @@ typedef struct QBool QBool;
+ typedef struct QDict QDict;
+ typedef struct QEMUBH QEMUBH;
+ typedef struct QemuConsole QemuConsole;
+-typedef struct InputEvent QemuInputEvent;
++typedef struct QemuInputEvent QemuInputEvent;
+ typedef struct QEMUCursor QEMUCursor;
+ typedef struct QEMUFile QEMUFile;
+ typedef struct QemuMutex QemuMutex;
+diff --git a/include/ui/input.h b/include/ui/input.h
+index c455abdec6af..0b8c439fca74 100644
+--- a/include/ui/input.h
++++ b/include/ui/input.h
+@@ -18,6 +18,22 @@
+ typedef struct QemuInputHandler QemuInputHandler;
+ typedef struct QemuInputHandlerState QemuInputHandlerState;
  
--static unsigned int ps2_modifier_bit(QKeyCode key)
-+static unsigned int ps2_modifier_bit(unsigned int key)
++typedef struct QemuInputKeyEvent {
++    KeyValue key;
++    bool down;
++} QemuInputKeyEvent;
++
++typedef struct QemuInputEvent {
++    InputEventKind type;
++    union {
++        QemuInputKeyEvent key;
++        InputBtnEvent btn;
++        InputMoveEvent rel;
++        InputMoveEvent abs;
++        InputMultiTouchEvent mtt;
++    };
++} QemuInputEvent;
++
+ typedef void (*QemuInputHandlerEvent)(DeviceState *dev, QemuConsole *src,
+                                       QemuInputEvent *evt);
+ typedef void (*QemuInputHandlerSync)(DeviceState *dev);
+diff --git a/chardev/msmouse.c b/chardev/msmouse.c
+index 146457661f9e..d72a16a28335 100644
+--- a/chardev/msmouse.c
++++ b/chardev/msmouse.c
+@@ -125,8 +125,6 @@ static void msmouse_input_event(DeviceState *dev, QemuConsole *src,
+                                 QemuInputEvent *evt)
  {
-     switch (key) {
--    case Q_KEY_CODE_CTRL:
-+    case KEY_LEFTCTRL:
-         return MOD_CTRL_L;
--    case Q_KEY_CODE_CTRL_R:
-+    case KEY_RIGHTCTRL:
-         return MOD_CTRL_R;
--    case Q_KEY_CODE_SHIFT:
-+    case KEY_LEFTSHIFT:
-         return MOD_SHIFT_L;
--    case Q_KEY_CODE_SHIFT_R:
-+    case KEY_RIGHTSHIFT:
-         return MOD_SHIFT_R;
--    case Q_KEY_CODE_ALT:
-+    case KEY_LEFTALT:
-         return MOD_ALT_L;
--    case Q_KEY_CODE_ALT_R:
-+    case KEY_RIGHTALT:
-         return MOD_ALT_R;
+     MouseChardev *mouse = MOUSE_CHARDEV(dev);
+-    InputMoveEvent *move;
+-    InputBtnEvent *btn;
+ 
+     /* Ignore events if serial mouse powered down. */
+     if (!MSMOUSE_PWR(mouse->tiocm)) {
+@@ -135,14 +133,12 @@ static void msmouse_input_event(DeviceState *dev, QemuConsole *src,
+ 
+     switch (evt->type) {
+     case INPUT_EVENT_KIND_REL:
+-        move = evt->u.rel.data;
+-        mouse->axis[move->axis] += move->value;
++        mouse->axis[evt->rel.axis] += evt->rel.value;
+         break;
+ 
+     case INPUT_EVENT_KIND_BTN:
+-        btn = evt->u.btn.data;
+-        mouse->btns[btn->button] = btn->down;
+-        mouse->btnc[btn->button] = true;
++        mouse->btns[evt->btn.button] = evt->btn.down;
++        mouse->btnc[evt->btn.button] = true;
+         break;
+ 
      default:
-         return 0;
-@@ -313,7 +314,6 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
+diff --git a/chardev/wctablet.c b/chardev/wctablet.c
+index 05d2333fb0c7..3ad24cce1752 100644
+--- a/chardev/wctablet.c
++++ b/chardev/wctablet.c
+@@ -149,18 +149,14 @@ static void wctablet_input_event(DeviceState *dev, QemuConsole *src,
+                                  QemuInputEvent *evt)
+ {
+     TabletChardev *tablet = (TabletChardev *)dev;
+-    InputMoveEvent *move;
+-    InputBtnEvent *btn;
+ 
+     switch (evt->type) {
+     case INPUT_EVENT_KIND_ABS:
+-        move = evt->u.abs.data;
+-        tablet->axis[move->axis] = move->value;
++        tablet->axis[evt->abs.axis] = evt->abs.value;
+         break;
+ 
+     case INPUT_EVENT_KIND_BTN:
+-        btn = evt->u.btn.data;
+-        tablet->btns[btn->button] = btn->down;
++        tablet->btns[evt->btn.button] = evt->btn.down;
+         break;
+ 
+     default:
+diff --git a/hw/arm/musicpal.c b/hw/arm/musicpal.c
+index ae171710e349..43c93cb72d75 100644
+--- a/hw/arm/musicpal.c
++++ b/hw/arm/musicpal.c
+@@ -1069,8 +1069,7 @@ static void musicpal_key_event(DeviceState *dev, QemuConsole *src,
                                 QemuInputEvent *evt)
  {
-     PS2KbdState *s = (PS2KbdState *)dev;
--    int qcode;
-     uint16_t keycode = 0;
-     int mod;
+     musicpal_key_state *s = MUSICPAL_KEY(dev);
+-    InputKeyEvent *key = evt->u.key.data;
+-    int qcode = qemu_input_key_value_to_qcode(key->key);
++    int qcode = qemu_input_key_value_to_qcode(&evt->key.key);
+     uint32_t event = 0;
+     int i;
  
-@@ -324,10 +324,9 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
- 
-     qemu_system_wakeup_request(QEMU_WAKEUP_REASON_OTHER, NULL);
-     assert(evt->type == INPUT_EVENT_KIND_KEY);
--    qcode = qemu_input_linux_to_qcode(evt->key.key);
- 
--    mod = ps2_modifier_bit(qcode);
--    trace_ps2_keyboard_event(s, qcode, evt->key.down, mod,
-+    mod = ps2_modifier_bit(evt->key.key);
-+    trace_ps2_keyboard_event(s, evt->key.key, evt->key.down, mod,
-                              s->modifiers, s->scancode_set, s->translate);
-     if (evt->key.down) {
-         s->modifiers |= mod;
-@@ -336,7 +335,7 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
+@@ -1113,14 +1112,14 @@ static void musicpal_key_event(DeviceState *dev, QemuConsole *src,
+      * but do not repeat already-pressed buttons for the other key inputs.
+      */
+     if (!(event & (MP_KEY_WHEEL_NAV | MP_KEY_WHEEL_VOL))) {
+-        if (key->down && (s->pressed_keys & event)) {
++        if (evt->key.down && (s->pressed_keys & event)) {
+             event = 0;
+         }
      }
  
-     if (s->scancode_set == 1) {
--        if (qcode == Q_KEY_CODE_PAUSE) {
-+        if (evt->key.key == KEY_PAUSE) {
-             if (s->modifiers & (MOD_CTRL_L | MOD_CTRL_R)) {
-                 if (evt->key.down) {
-                     ps2_put_keycode(s, 0xe0);
-@@ -354,7 +353,7 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
-                     ps2_put_keycode(s, 0xc5);
-                 }
+     if (event) {
+         /* Raise GPIO pin first if repeating a key */
+-        if (key->down && (s->pressed_keys & event)) {
++        if (evt->key.down && (s->pressed_keys & event)) {
+             for (i = 0; i <= 7; i++) {
+                 if (event & (1 << i)) {
+                     qemu_set_irq(s->out[i], 1);
+@@ -1129,10 +1128,10 @@ static void musicpal_key_event(DeviceState *dev, QemuConsole *src,
+         }
+         for (i = 0; i <= 7; i++) {
+             if (event & (1 << i)) {
+-                qemu_set_irq(s->out[i], !key->down);
++                qemu_set_irq(s->out[i], !evt->key.down);
              }
--        } else if (qcode == Q_KEY_CODE_PRINT) {
-+        } else if (evt->key.key == KEY_SYSRQ) {
-             if (s->modifiers & MOD_ALT_L) {
-                 if (evt->key.down) {
-                     ps2_put_keycode(s, 0xb8);
-@@ -401,12 +400,12 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
-                     ps2_put_keycode(s, 0xaa);
-                 }
-             }
--        } else if ((qcode == Q_KEY_CODE_LANG1 || qcode == Q_KEY_CODE_LANG2)
-+        } else if ((evt->key.key == KEY_HANGEUL || evt->key.key == KEY_HANJA)
-                    && !evt->key.down) {
-             /* Ignore release for these keys */
+         }
+-        if (key->down) {
++        if (evt->key.down) {
+             s->pressed_keys |= event;
          } else {
--            if (qcode < qemu_input_map_qcode_to_atset1_len) {
--                keycode = qemu_input_map_qcode_to_atset1[qcode];
-+            if (evt->key.key < qemu_input_map_linux_to_atset1_len) {
-+                keycode = qemu_input_map_linux_to_atset1[evt->key.key];
-             }
-             if (keycode) {
-                 if (keycode & 0xff00) {
-@@ -418,11 +417,11 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
-                 ps2_put_keycode(s, keycode & 0xff);
+             s->pressed_keys &= ~event;
+diff --git a/hw/char/escc.c b/hw/char/escc.c
+index 677c3a120e13..c88b2d54ebe0 100644
+--- a/hw/char/escc.c
++++ b/hw/char/escc.c
+@@ -798,16 +798,14 @@ static void sunkbd_handle_event(DeviceState *dev, QemuConsole *src,
+ {
+     ESCCChannelState *s = (ESCCChannelState *)dev;
+     int qcode, keycode;
+-    InputKeyEvent *key;
+ 
+     assert(evt->type == INPUT_EVENT_KIND_KEY);
+-    key = evt->u.key.data;
+-    qcode = qemu_input_key_value_to_qcode(key->key);
++    qcode = qemu_input_key_value_to_qcode(&evt->key.key);
+     trace_escc_sunkbd_event_in(qcode, QKeyCode_str(qcode),
+-                               key->down);
++                               evt->key.down);
+ 
+     if (qcode == Q_KEY_CODE_CAPS_LOCK) {
+-        if (key->down) {
++        if (evt->key.down) {
+             s->caps_lock_mode ^= 1;
+             if (s->caps_lock_mode == 2) {
+                 return; /* Drop second press */
+@@ -821,7 +819,7 @@ static void sunkbd_handle_event(DeviceState *dev, QemuConsole *src,
+     }
+ 
+     if (qcode == Q_KEY_CODE_NUM_LOCK) {
+-        if (key->down) {
++        if (evt->key.down) {
+             s->num_lock_mode ^= 1;
+             if (s->num_lock_mode == 2) {
+                 return; /* Drop second press */
+@@ -839,7 +837,7 @@ static void sunkbd_handle_event(DeviceState *dev, QemuConsole *src,
+     }
+ 
+     keycode = qemu_input_map_qcode_to_sun[qcode];
+-    if (!key->down) {
++    if (!evt->key.down) {
+         keycode |= 0x80;
+     }
+     trace_escc_sunkbd_event_out(keycode);
+@@ -957,8 +955,6 @@ static void sunmouse_handle_event(DeviceState *dev, QemuConsole *src,
+                                   QemuInputEvent *evt)
+ {
+     ESCCChannelState *s = (ESCCChannelState *)dev;
+-    InputMoveEvent *move;
+-    InputBtnEvent *btn;
+     static const int bmap[INPUT_BUTTON__MAX] = {
+         [INPUT_BUTTON_LEFT]   = 0x4,
+         [INPUT_BUTTON_MIDDLE] = 0x2,
+@@ -967,21 +963,19 @@ static void sunmouse_handle_event(DeviceState *dev, QemuConsole *src,
+ 
+     switch (evt->type) {
+     case INPUT_EVENT_KIND_REL:
+-        move = evt->u.rel.data;
+-        if (move->axis == INPUT_AXIS_X) {
+-            s->sunmouse_dx += move->value;
+-        } else if (move->axis == INPUT_AXIS_Y) {
+-            s->sunmouse_dy -= move->value;
++        if (evt->rel.axis == INPUT_AXIS_X) {
++            s->sunmouse_dx += evt->rel.value;
++        } else if (evt->rel.axis == INPUT_AXIS_Y) {
++            s->sunmouse_dy -= evt->rel.value;
+         }
+         break;
+ 
+     case INPUT_EVENT_KIND_BTN:
+-        btn = evt->u.btn.data;
+-        if (bmap[btn->button]) {
+-            if (btn->down) {
+-                s->sunmouse_buttons |= bmap[btn->button];
++        if (bmap[evt->btn.button]) {
++            if (evt->btn.down) {
++                s->sunmouse_buttons |= bmap[evt->btn.button];
              } else {
-                 qemu_log_mask(LOG_UNIMP,
--                              "ps2: ignoring key with qcode %d\n", qcode);
-+                              "ps2: ignoring key %u\n", evt->key.key);
+-                s->sunmouse_buttons &= ~bmap[btn->button];
++                s->sunmouse_buttons &= ~bmap[evt->btn.button];
              }
-         }
-     } else if (s->scancode_set == 2) {
--        if (qcode == Q_KEY_CODE_PAUSE) {
-+        if (evt->key.key == KEY_PAUSE) {
-             if (s->modifiers & (MOD_CTRL_L | MOD_CTRL_R)) {
-                 if (evt->key.down) {
-                     ps2_put_keycode(s, 0xe0);
-@@ -443,7 +442,7 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
-                     ps2_put_keycode(s, 0x77);
-                 }
-             }
--        } else if (qcode == Q_KEY_CODE_PRINT) {
-+        } else if (evt->key.key == KEY_SYSRQ) {
-             if (s->modifiers & MOD_ALT_L) {
-                 if (evt->key.down) {
-                     ps2_put_keycode(s, 0xf0);
-@@ -499,12 +498,12 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
-                     ps2_put_keycode(s, 0x12);
-                 }
-             }
--        } else if ((qcode == Q_KEY_CODE_LANG1 || qcode == Q_KEY_CODE_LANG2) &&
-+        } else if ((evt->key.key == KEY_HANGEUL || evt->key.key == KEY_HANJA) &&
-                    !evt->key.down) {
-             /* Ignore release for these keys */
-         } else {
--            if (qcode < qemu_input_map_qcode_to_atset2_len) {
--                keycode = qemu_input_map_qcode_to_atset2[qcode];
-+            if (evt->key.key < qemu_input_map_linux_to_atset2_len) {
-+                keycode = qemu_input_map_linux_to_atset2[evt->key.key];
-             }
-             if (keycode) {
-                 if (keycode & 0xff00) {
-@@ -516,12 +515,12 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
-                 ps2_put_keycode(s, keycode & 0xff);
-             } else {
-                 qemu_log_mask(LOG_UNIMP,
--                              "ps2: ignoring key with qcode %d\n", qcode);
-+                              "ps2: ignoring key %u\n", evt->key.key);
-             }
-         }
-     } else if (s->scancode_set == 3) {
--        if (qcode < qemu_input_map_qcode_to_atset3_len) {
--            keycode = qemu_input_map_qcode_to_atset3[qcode];
-+        if (evt->key.key < qemu_input_map_linux_to_atset3_len) {
-+            keycode = qemu_input_map_linux_to_atset3[evt->key.key];
-         }
-         if (keycode) {
-             /* FIXME: break code should be configured on a key by key basis */
-@@ -531,7 +530,7 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
-             ps2_put_keycode(s, keycode);
-         } else {
-             qemu_log_mask(LOG_UNIMP,
--                          "ps2: ignoring key with qcode %d\n", qcode);
-+                          "ps2: ignoring key %u\n", evt->key.key);
+             /* Indicate we have a supported button event */
+             s->sunmouse_buttons |= 0x80;
+diff --git a/hw/display/xenfb.c b/hw/display/xenfb.c
+index c71174e13762..82d2cbae7cc5 100644
+--- a/hw/display/xenfb.c
++++ b/hw/display/xenfb.c
+@@ -203,16 +203,15 @@ static void xenfb_key_event(DeviceState *dev, QemuConsole *src,
+                             QemuInputEvent *evt)
+ {
+     struct XenInput *xenfb = (struct XenInput *)dev;
+-    InputKeyEvent *key = evt->u.key.data;
+-    int qcode = qemu_input_key_value_to_qcode(key->key);
++    int qcode = qemu_input_key_value_to_qcode(&evt->key.key);
+     int lnx;
+ 
+     if (qcode < qemu_input_map_qcode_to_linux_len) {
+         lnx = qemu_input_map_qcode_to_linux[qcode];
+ 
+         if (lnx) {
+-            trace_xenfb_key_event(xenfb, lnx, key->down);
+-            xenfb_send_key(xenfb, key->down, lnx);
++            trace_xenfb_key_event(xenfb, lnx, evt->key.down);
++            xenfb_send_key(xenfb, evt->key.down, lnx);
          }
      }
  }
-diff --git a/hw/input/trace-events b/hw/input/trace-events
-index 1484625565b5..43900914be28 100644
---- a/hw/input/trace-events
-+++ b/hw/input/trace-events
-@@ -30,7 +30,7 @@ pckbd_kbd_write_data(uint64_t val) "0x%02"PRIx64
+@@ -230,32 +229,29 @@ static void xenfb_mouse_event(DeviceState *dev, QemuConsole *src,
+                               QemuInputEvent *evt)
+ {
+     struct XenInput *xenfb = (struct XenInput *)dev;
+-    InputBtnEvent *btn;
+-    InputMoveEvent *move;
+     QemuConsole *con;
+     DisplaySurface *surface;
+     int scale;
  
- # ps2.c
- ps2_put_keycode(void *opaque, int keycode) "%p keycode 0x%02x"
--ps2_keyboard_event(void *opaque, int qcode, int down, unsigned int modifier, unsigned int modifiers, int set, int xlate) "%p qcode %d down %d modifier 0x%x modifiers 0x%x set %d xlate %d"
-+ps2_keyboard_event(void *opaque, unsigned int lnx, int down, unsigned int modifier, unsigned int modifiers, int set, int xlate) "%p lnx %u down %d modifier 0x%x modifiers 0x%x set %d xlate %d"
- ps2_read_data(void *opaque) "%p"
- ps2_set_ledstate(void *s, int ledstate) "%p ledstate %d"
- ps2_reset_keyboard(void *s) "%p"
+     switch (evt->type) {
+     case INPUT_EVENT_KIND_BTN:
+-        btn = evt->u.btn.data;
+-        switch (btn->button) {
++        switch (evt->btn.button) {
+         case INPUT_BUTTON_LEFT:
+-            xenfb_send_key(xenfb, btn->down, BTN_LEFT);
++            xenfb_send_key(xenfb, evt->btn.down, BTN_LEFT);
+             break;
+         case INPUT_BUTTON_RIGHT:
+-            xenfb_send_key(xenfb, btn->down, BTN_LEFT + 1);
++            xenfb_send_key(xenfb, evt->btn.down, BTN_LEFT + 1);
+             break;
+         case INPUT_BUTTON_MIDDLE:
+-            xenfb_send_key(xenfb, btn->down, BTN_LEFT + 2);
++            xenfb_send_key(xenfb, evt->btn.down, BTN_LEFT + 2);
+             break;
+         case INPUT_BUTTON_WHEEL_UP:
+-            if (btn->down) {
++            if (evt->btn.down) {
+                 xenfb->wheel--;
+             }
+             break;
+         case INPUT_BUTTON_WHEEL_DOWN:
+-            if (btn->down) {
++            if (evt->btn.down) {
+                 xenfb->wheel++;
+             }
+             break;
+@@ -265,9 +261,8 @@ static void xenfb_mouse_event(DeviceState *dev, QemuConsole *src,
+         break;
+ 
+     case INPUT_EVENT_KIND_ABS:
+-        move = evt->u.abs.data;
+         if (xenfb->raw_pointer_wanted) {
+-            xenfb->axis[move->axis] = move->value;
++            xenfb->axis[evt->abs.axis] = evt->abs.value;
+         } else {
+             con = qemu_console_lookup_by_index(0);
+             if (!con) {
+@@ -275,7 +270,7 @@ static void xenfb_mouse_event(DeviceState *dev, QemuConsole *src,
+                 return;
+             }
+             surface = qemu_console_surface(con);
+-            switch (move->axis) {
++            switch (evt->abs.axis) {
+             case INPUT_AXIS_X:
+                 scale = surface_width(surface) - 1;
+                 break;
+@@ -285,13 +280,12 @@ static void xenfb_mouse_event(DeviceState *dev, QemuConsole *src,
+             default:
+                 g_assert_not_reached();
+             }
+-            xenfb->axis[move->axis] = move->value * scale / 0x7fff;
++            xenfb->axis[evt->abs.axis] = evt->abs.value * scale / 0x7fff;
+         }
+         break;
+ 
+     case INPUT_EVENT_KIND_REL:
+-        move = evt->u.rel.data;
+-        xenfb->axis[move->axis] += move->value;
++        xenfb->axis[evt->rel.axis] += evt->rel.value;
+         break;
+ 
+     default:
+diff --git a/hw/input/adb-kbd.c b/hw/input/adb-kbd.c
+index 5ba6c9a7b5df..5911e7139257 100644
+--- a/hw/input/adb-kbd.c
++++ b/hw/input/adb-kbd.c
+@@ -311,7 +311,7 @@ static void adb_keyboard_event(DeviceState *dev, QemuConsole *src,
+     KBDState *s = (KBDState *)dev;
+     int qcode, keycode;
+ 
+-    qcode = qemu_input_key_value_to_qcode(evt->u.key.data->key);
++    qcode = qemu_input_key_value_to_qcode(&evt->key.key);
+     if (qcode >= ARRAY_SIZE(qcode_to_adb_keycode)) {
+         return;
+     }
+@@ -321,7 +321,7 @@ static void adb_keyboard_event(DeviceState *dev, QemuConsole *src,
+         trace_adb_device_kbd_no_key();
+         return;
+     }
+-    if (evt->u.key.data->down == false) { /* if key release event */
++    if (evt->key.down == false) { /* if key release event */
+         keycode = keycode | 0x80;   /* create keyboard break code */
+     }
+ 
+diff --git a/hw/input/adb-mouse.c b/hw/input/adb-mouse.c
+index c37ccf26c169..5dcdc851fcdf 100644
+--- a/hw/input/adb-mouse.c
++++ b/hw/input/adb-mouse.c
+@@ -59,8 +59,6 @@ static void adb_mouse_handle_event(DeviceState *dev, QemuConsole *src,
+                                    QemuInputEvent *evt)
+ {
+     MouseState *s = (MouseState *)dev;
+-    InputMoveEvent *move;
+-    InputBtnEvent *btn;
+     static const int bmap[INPUT_BUTTON__MAX] = {
+         [INPUT_BUTTON_LEFT]   = ADB_MOUSE_BUTTON_LEFT,
+         [INPUT_BUTTON_RIGHT]  = ADB_MOUSE_BUTTON_RIGHT,
+@@ -68,21 +66,19 @@ static void adb_mouse_handle_event(DeviceState *dev, QemuConsole *src,
+ 
+     switch (evt->type) {
+     case INPUT_EVENT_KIND_REL:
+-        move = evt->u.rel.data;
+-        if (move->axis == INPUT_AXIS_X) {
+-            s->dx += move->value;
+-        } else if (move->axis == INPUT_AXIS_Y) {
+-            s->dy += move->value;
++        if (evt->rel.axis == INPUT_AXIS_X) {
++            s->dx += evt->rel.value;
++        } else if (evt->rel.axis == INPUT_AXIS_Y) {
++            s->dy += evt->rel.value;
+         }
+         break;
+ 
+     case INPUT_EVENT_KIND_BTN:
+-        btn = evt->u.btn.data;
+-        if (bmap[btn->button]) {
+-            if (btn->down) {
+-                s->buttons_state |= bmap[btn->button];
++        if (bmap[evt->btn.button]) {
++            if (evt->btn.down) {
++                s->buttons_state |= bmap[evt->btn.button];
+             } else {
+-                s->buttons_state &= ~bmap[btn->button];
++                s->buttons_state &= ~bmap[evt->btn.button];
+             }
+         }
+         break;
+diff --git a/hw/input/hid.c b/hw/input/hid.c
+index 53afb1d43405..90b29682a254 100644
+--- a/hw/input/hid.c
++++ b/hw/input/hid.c
+@@ -119,42 +119,37 @@ static void hid_pointer_event(DeviceState *dev, QemuConsole *src,
+     };
+     HIDState *hs = (HIDState *)dev;
+     HIDPointerEvent *e;
+-    InputMoveEvent *move;
+-    InputBtnEvent *btn;
+ 
+     assert(hs->n < QUEUE_LENGTH);
+     e = &hs->ptr.queue[(hs->head + hs->n) & QUEUE_MASK];
+ 
+     switch (evt->type) {
+     case INPUT_EVENT_KIND_REL:
+-        move = evt->u.rel.data;
+-        if (move->axis == INPUT_AXIS_X) {
+-            e->xdx += move->value;
+-        } else if (move->axis == INPUT_AXIS_Y) {
+-            e->ydy += move->value;
++        if (evt->rel.axis == INPUT_AXIS_X) {
++            e->xdx += evt->rel.value;
++        } else if (evt->rel.axis == INPUT_AXIS_Y) {
++            e->ydy += evt->rel.value;
+         }
+         break;
+ 
+     case INPUT_EVENT_KIND_ABS:
+-        move = evt->u.abs.data;
+-        if (move->axis == INPUT_AXIS_X) {
+-            e->xdx = move->value;
+-        } else if (move->axis == INPUT_AXIS_Y) {
+-            e->ydy = move->value;
++        if (evt->abs.axis == INPUT_AXIS_X) {
++            e->xdx = evt->abs.value;
++        } else if (evt->abs.axis == INPUT_AXIS_Y) {
++            e->ydy = evt->abs.value;
+         }
+         break;
+ 
+     case INPUT_EVENT_KIND_BTN:
+-        btn = evt->u.btn.data;
+-        if (btn->down) {
+-            e->buttons_state |= bmap[btn->button];
+-            if (btn->button == INPUT_BUTTON_WHEEL_UP) {
++        if (evt->btn.down) {
++            e->buttons_state |= bmap[evt->btn.button];
++            if (evt->btn.button == INPUT_BUTTON_WHEEL_UP) {
+                 e->dz--;
+-            } else if (btn->button == INPUT_BUTTON_WHEEL_DOWN) {
++            } else if (evt->btn.button == INPUT_BUTTON_WHEEL_DOWN) {
+                 e->dz++;
+             }
+         } else {
+-            e->buttons_state &= ~bmap[btn->button];
++            e->buttons_state &= ~bmap[evt->btn.button];
+         }
+         break;
+ 
+@@ -231,10 +226,9 @@ static void hid_keyboard_event(DeviceState *dev, QemuConsole *src,
+     HIDState *hs = (HIDState *)dev;
+     int scancodes[3], i, count;
+     int slot;
+-    InputKeyEvent *key = evt->u.key.data;
+ 
+-    count = qemu_input_key_value_to_scancode(key->key,
+-                                             key->down,
++    count = qemu_input_key_value_to_scancode(&evt->key.key,
++                                             evt->key.down,
+                                              scancodes);
+     if (hs->n + count > QUEUE_LENGTH) {
+         trace_hid_kbd_queue_full();
+diff --git a/hw/input/ps2.c b/hw/input/ps2.c
+index 90bcbcdff889..3e553176ef6e 100644
+--- a/hw/input/ps2.c
++++ b/hw/input/ps2.c
+@@ -313,7 +313,6 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
+                                QemuInputEvent *evt)
+ {
+     PS2KbdState *s = (PS2KbdState *)dev;
+-    InputKeyEvent *key = evt->u.key.data;
+     int qcode;
+     uint16_t keycode = 0;
+     int mod;
+@@ -325,12 +324,12 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
+ 
+     qemu_system_wakeup_request(QEMU_WAKEUP_REASON_OTHER, NULL);
+     assert(evt->type == INPUT_EVENT_KIND_KEY);
+-    qcode = qemu_input_key_value_to_qcode(key->key);
++    qcode = qemu_input_key_value_to_qcode(&evt->key.key);
+ 
+     mod = ps2_modifier_bit(qcode);
+-    trace_ps2_keyboard_event(s, qcode, key->down, mod,
++    trace_ps2_keyboard_event(s, qcode, evt->key.down, mod,
+                              s->modifiers, s->scancode_set, s->translate);
+-    if (key->down) {
++    if (evt->key.down) {
+         s->modifiers |= mod;
+     } else {
+         s->modifiers &= ~mod;
+@@ -339,14 +338,14 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
+     if (s->scancode_set == 1) {
+         if (qcode == Q_KEY_CODE_PAUSE) {
+             if (s->modifiers & (MOD_CTRL_L | MOD_CTRL_R)) {
+-                if (key->down) {
++                if (evt->key.down) {
+                     ps2_put_keycode(s, 0xe0);
+                     ps2_put_keycode(s, 0x46);
+                     ps2_put_keycode(s, 0xe0);
+                     ps2_put_keycode(s, 0xc6);
+                 }
+             } else {
+-                if (key->down) {
++                if (evt->key.down) {
+                     ps2_put_keycode(s, 0xe1);
+                     ps2_put_keycode(s, 0x1d);
+                     ps2_put_keycode(s, 0x45);
+@@ -357,7 +356,7 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
+             }
+         } else if (qcode == Q_KEY_CODE_PRINT) {
+             if (s->modifiers & MOD_ALT_L) {
+-                if (key->down) {
++                if (evt->key.down) {
+                     ps2_put_keycode(s, 0xb8);
+                     ps2_put_keycode(s, 0x38);
+                     ps2_put_keycode(s, 0x54);
+@@ -367,7 +366,7 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
+                     ps2_put_keycode(s, 0x38);
+                 }
+             } else if (s->modifiers & MOD_ALT_R) {
+-                if (key->down) {
++                if (evt->key.down) {
+                     ps2_put_keycode(s, 0xe0);
+                     ps2_put_keycode(s, 0xb8);
+                     ps2_put_keycode(s, 0xe0);
+@@ -382,7 +381,7 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
+                 }
+             } else if (s->modifiers & (MOD_SHIFT_L | MOD_CTRL_L |
+                                        MOD_SHIFT_R | MOD_CTRL_R)) {
+-                if (key->down) {
++                if (evt->key.down) {
+                     ps2_put_keycode(s, 0xe0);
+                     ps2_put_keycode(s, 0x37);
+                 } else {
+@@ -390,7 +389,7 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
+                     ps2_put_keycode(s, 0xb7);
+                 }
+             } else {
+-                if (key->down) {
++                if (evt->key.down) {
+                     ps2_put_keycode(s, 0xe0);
+                     ps2_put_keycode(s, 0x2a);
+                     ps2_put_keycode(s, 0xe0);
+@@ -403,7 +402,7 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
+                 }
+             }
+         } else if ((qcode == Q_KEY_CODE_LANG1 || qcode == Q_KEY_CODE_LANG2)
+-                   && !key->down) {
++                   && !evt->key.down) {
+             /* Ignore release for these keys */
+         } else {
+             if (qcode < qemu_input_map_qcode_to_atset1_len) {
+@@ -413,7 +412,7 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
+                 if (keycode & 0xff00) {
+                     ps2_put_keycode(s, keycode >> 8);
+                 }
+-                if (!key->down) {
++                if (!evt->key.down) {
+                     keycode |= 0x80;
+                 }
+                 ps2_put_keycode(s, keycode & 0xff);
+@@ -425,7 +424,7 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
+     } else if (s->scancode_set == 2) {
+         if (qcode == Q_KEY_CODE_PAUSE) {
+             if (s->modifiers & (MOD_CTRL_L | MOD_CTRL_R)) {
+-                if (key->down) {
++                if (evt->key.down) {
+                     ps2_put_keycode(s, 0xe0);
+                     ps2_put_keycode(s, 0x7e);
+                     ps2_put_keycode(s, 0xe0);
+@@ -433,7 +432,7 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
+                     ps2_put_keycode(s, 0x7e);
+                 }
+             } else {
+-                if (key->down) {
++                if (evt->key.down) {
+                     ps2_put_keycode(s, 0xe1);
+                     ps2_put_keycode(s, 0x14);
+                     ps2_put_keycode(s, 0x77);
+@@ -446,7 +445,7 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
+             }
+         } else if (qcode == Q_KEY_CODE_PRINT) {
+             if (s->modifiers & MOD_ALT_L) {
+-                if (key->down) {
++                if (evt->key.down) {
+                     ps2_put_keycode(s, 0xf0);
+                     ps2_put_keycode(s, 0x11);
+                     ps2_put_keycode(s, 0x11);
+@@ -459,7 +458,7 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
+                     ps2_put_keycode(s, 0x11);
+                 }
+             } else if (s->modifiers & MOD_ALT_R) {
+-                if (key->down) {
++                if (evt->key.down) {
+                     ps2_put_keycode(s, 0xe0);
+                     ps2_put_keycode(s, 0xf0);
+                     ps2_put_keycode(s, 0x11);
+@@ -477,7 +476,7 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
+                 }
+             } else if (s->modifiers & (MOD_SHIFT_L | MOD_CTRL_L |
+                                        MOD_SHIFT_R | MOD_CTRL_R)) {
+-                if (key->down) {
++                if (evt->key.down) {
+                     ps2_put_keycode(s, 0xe0);
+                     ps2_put_keycode(s, 0x7c);
+                 } else {
+@@ -486,7 +485,7 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
+                     ps2_put_keycode(s, 0x7c);
+                 }
+             } else {
+-                if (key->down) {
++                if (evt->key.down) {
+                     ps2_put_keycode(s, 0xe0);
+                     ps2_put_keycode(s, 0x12);
+                     ps2_put_keycode(s, 0xe0);
+@@ -501,7 +500,7 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
+                 }
+             }
+         } else if ((qcode == Q_KEY_CODE_LANG1 || qcode == Q_KEY_CODE_LANG2) &&
+-                   !key->down) {
++                   !evt->key.down) {
+             /* Ignore release for these keys */
+         } else {
+             if (qcode < qemu_input_map_qcode_to_atset2_len) {
+@@ -511,7 +510,7 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
+                 if (keycode & 0xff00) {
+                     ps2_put_keycode(s, keycode >> 8);
+                 }
+-                if (!key->down) {
++                if (!evt->key.down) {
+                     ps2_put_keycode(s, 0xf0);
+                 }
+                 ps2_put_keycode(s, keycode & 0xff);
+@@ -526,7 +525,7 @@ static void ps2_keyboard_event(DeviceState *dev, QemuConsole *src,
+         }
+         if (keycode) {
+             /* FIXME: break code should be configured on a key by key basis */
+-            if (!key->down) {
++            if (!evt->key.down) {
+                 ps2_put_keycode(s, 0xf0);
+             }
+             ps2_put_keycode(s, keycode);
+@@ -797,8 +796,6 @@ static void ps2_mouse_event(DeviceState *dev, QemuConsole *src,
+         [INPUT_BUTTON_EXTRA]  = PS2_MOUSE_BUTTON_EXTRA,
+     };
+     PS2MouseState *s = (PS2MouseState *)dev;
+-    InputMoveEvent *move;
+-    InputBtnEvent *btn;
+ 
+     /* check if deltas are recorded when disabled */
+     if (!(s->mouse_status & MOUSE_STATUS_ENABLED)) {
+@@ -807,31 +804,29 @@ static void ps2_mouse_event(DeviceState *dev, QemuConsole *src,
+ 
+     switch (evt->type) {
+     case INPUT_EVENT_KIND_REL:
+-        move = evt->u.rel.data;
+-        if (move->axis == INPUT_AXIS_X) {
+-            s->mouse_dx += move->value;
+-        } else if (move->axis == INPUT_AXIS_Y) {
+-            s->mouse_dy -= move->value;
++        if (evt->rel.axis == INPUT_AXIS_X) {
++            s->mouse_dx += evt->rel.value;
++        } else if (evt->rel.axis == INPUT_AXIS_Y) {
++            s->mouse_dy -= evt->rel.value;
+         }
+         break;
+ 
+     case INPUT_EVENT_KIND_BTN:
+-        btn = evt->u.btn.data;
+-        if (btn->down) {
+-            s->mouse_buttons |= bmap[btn->button];
+-            if (btn->button == INPUT_BUTTON_WHEEL_UP) {
++        if (evt->btn.down) {
++            s->mouse_buttons |= bmap[evt->btn.button];
++            if (evt->btn.button == INPUT_BUTTON_WHEEL_UP) {
+                 s->mouse_dz--;
+-            } else if (btn->button == INPUT_BUTTON_WHEEL_DOWN) {
++            } else if (evt->btn.button == INPUT_BUTTON_WHEEL_DOWN) {
+                 s->mouse_dz++;
+             }
+ 
+-            if (btn->button == INPUT_BUTTON_WHEEL_RIGHT) {
++            if (evt->btn.button == INPUT_BUTTON_WHEEL_RIGHT) {
+                 s->mouse_dw--;
+-            } else if (btn->button == INPUT_BUTTON_WHEEL_LEFT) {
++            } else if (evt->btn.button == INPUT_BUTTON_WHEEL_LEFT) {
+                 s->mouse_dw++;
+             }
+         } else {
+-            s->mouse_buttons &= ~bmap[btn->button];
++            s->mouse_buttons &= ~bmap[evt->btn.button];
+         }
+         break;
+ 
+diff --git a/hw/input/stellaris_gamepad.c b/hw/input/stellaris_gamepad.c
+index db35905554d5..7d8ec38e8885 100644
+--- a/hw/input/stellaris_gamepad.c
++++ b/hw/input/stellaris_gamepad.c
+@@ -19,14 +19,13 @@ static void stellaris_gamepad_event(DeviceState *dev, QemuConsole *src,
+                                     QemuInputEvent *evt)
+ {
+     StellarisGamepad *s = STELLARIS_GAMEPAD(dev);
+-    InputKeyEvent *key = evt->u.key.data;
+-    int qcode = qemu_input_key_value_to_qcode(key->key);
++    int qcode = qemu_input_key_value_to_qcode(&evt->key.key);
+     int i;
+ 
+     for (i = 0; i < s->num_buttons; i++) {
+-        if (s->keycodes[i] == qcode && s->pressed[i] != key->down) {
+-            s->pressed[i] = key->down;
+-            qemu_set_irq(s->irqs[i], key->down);
++        if (s->keycodes[i] == qcode && s->pressed[i] != evt->key.down) {
++            s->pressed[i] = evt->key.down;
++            qemu_set_irq(s->irqs[i], evt->key.down);
+         }
+     }
+ }
+diff --git a/hw/input/virtio-input-hid.c b/hw/input/virtio-input-hid.c
+index 5b9f407c546d..3f8a1bc249e0 100644
+--- a/hw/input/virtio-input-hid.c
++++ b/hw/input/virtio-input-hid.c
+@@ -84,80 +84,71 @@ static void virtio_input_handle_event(DeviceState *dev, QemuConsole *src,
+     VirtIOInput *vinput = VIRTIO_INPUT(dev);
+     virtio_input_event event;
+     int qcode;
+-    InputKeyEvent *key;
+-    InputMoveEvent *move;
+-    InputBtnEvent *btn;
+-    InputMultiTouchEvent *mtt;
+ 
+     switch (evt->type) {
+     case INPUT_EVENT_KIND_KEY:
+-        key = evt->u.key.data;
+-        qcode = qemu_input_key_value_to_qcode(key->key);
++        qcode = qemu_input_key_value_to_qcode(&evt->key.key);
+         if (qcode < qemu_input_map_qcode_to_linux_len &&
+             qemu_input_map_qcode_to_linux[qcode]) {
+             event.type  = cpu_to_le16(EV_KEY);
+             event.code  = cpu_to_le16(qemu_input_map_qcode_to_linux[qcode]);
+-            event.value = cpu_to_le32(key->down ? 1 : 0);
++            event.value = cpu_to_le32(evt->key.down ? 1 : 0);
+             virtio_input_send(vinput, &event);
+         } else {
+-            if (key->down) {
++            if (evt->key.down) {
+                 fprintf(stderr, "%s: unmapped key: %d [%s]\n", __func__,
+                         qcode, QKeyCode_str(qcode));
+             }
+         }
+         break;
+     case INPUT_EVENT_KIND_BTN:
+-        btn = evt->u.btn.data;
+-        if ((btn->button == INPUT_BUTTON_WHEEL_UP ||
+-             btn->button == INPUT_BUTTON_WHEEL_DOWN) &&
+-            btn->down) {
++        if ((evt->btn.button == INPUT_BUTTON_WHEEL_UP ||
++             evt->btn.button == INPUT_BUTTON_WHEEL_DOWN) &&
++            evt->btn.down) {
+             event.type  = cpu_to_le16(EV_REL);
+             event.code  = cpu_to_le16(REL_WHEEL);
+-            event.value = cpu_to_le32(btn->button == INPUT_BUTTON_WHEEL_UP
++            event.value = cpu_to_le32(evt->btn.button == INPUT_BUTTON_WHEEL_UP
+                                       ? 1 : -1);
+             virtio_input_send(vinput, &event);
+-        } else if (keymap_button[btn->button]) {
++        } else if (keymap_button[evt->btn.button]) {
+             event.type  = cpu_to_le16(EV_KEY);
+-            event.code  = cpu_to_le16(keymap_button[btn->button]);
+-            event.value = cpu_to_le32(btn->down ? 1 : 0);
++            event.code  = cpu_to_le16(keymap_button[evt->btn.button]);
++            event.value = cpu_to_le32(evt->btn.down ? 1 : 0);
+             virtio_input_send(vinput, &event);
+         } else {
+-            if (btn->down) {
++            if (evt->btn.down) {
+                 fprintf(stderr, "%s: unmapped button: %d [%s]\n", __func__,
+-                        btn->button,
+-                        InputButton_str(btn->button));
++                        evt->btn.button,
++                        InputButton_str(evt->btn.button));
+             }
+         }
+         break;
+     case INPUT_EVENT_KIND_REL:
+-        move = evt->u.rel.data;
+         event.type  = cpu_to_le16(EV_REL);
+-        event.code  = cpu_to_le16(axismap_rel[move->axis]);
+-        event.value = cpu_to_le32(move->value);
++        event.code  = cpu_to_le16(axismap_rel[evt->rel.axis]);
++        event.value = cpu_to_le32(evt->rel.value);
+         virtio_input_send(vinput, &event);
+         break;
+     case INPUT_EVENT_KIND_ABS:
+-        move = evt->u.abs.data;
+         event.type  = cpu_to_le16(EV_ABS);
+-        event.code  = cpu_to_le16(axismap_abs[move->axis]);
+-        event.value = cpu_to_le32(move->value);
++        event.code  = cpu_to_le16(axismap_abs[evt->abs.axis]);
++        event.value = cpu_to_le32(evt->abs.value);
+         virtio_input_send(vinput, &event);
+         break;
+     case INPUT_EVENT_KIND_MTT:
+-        mtt = evt->u.mtt.data;
+-        if (mtt->type == INPUT_MULTI_TOUCH_TYPE_DATA) {
++        if (evt->mtt.type == INPUT_MULTI_TOUCH_TYPE_DATA) {
+             event.type  = cpu_to_le16(EV_ABS);
+-            event.code  = cpu_to_le16(axismap_tch[mtt->axis]);
+-            event.value = cpu_to_le32(mtt->value);
++            event.code  = cpu_to_le16(axismap_tch[evt->mtt.axis]);
++            event.value = cpu_to_le32(evt->mtt.value);
+             virtio_input_send(vinput, &event);
+         } else {
+             event.type  = cpu_to_le16(EV_ABS);
+             event.code  = cpu_to_le16(ABS_MT_SLOT);
+-            event.value = cpu_to_le32(mtt->slot);
++            event.value = cpu_to_le32(evt->mtt.slot);
+             virtio_input_send(vinput, &event);
+             event.type  = cpu_to_le16(EV_ABS);
+             event.code  = cpu_to_le16(ABS_MT_TRACKING_ID);
+-            event.value = cpu_to_le32(mtt->tracking_id);
++            event.value = cpu_to_le32(evt->mtt.tracking_id);
+             virtio_input_send(vinput, &event);
+         }
+         break;
+diff --git a/hw/m68k/next-kbd.c b/hw/m68k/next-kbd.c
+index 9dbedac6479e..f3110ea0bca4 100644
+--- a/hw/m68k/next-kbd.c
++++ b/hw/m68k/next-kbd.c
+@@ -247,16 +247,15 @@ static void nextkbd_event(DeviceState *dev, QemuConsole *src,
+ {
+     NextKBDState *s = NEXTKBD(dev);
+     int qcode, keycode;
+-    bool key_down = evt->u.key.data->down;
+ 
+-    qcode = qemu_input_key_value_to_qcode(evt->u.key.data->key);
++    qcode = qemu_input_key_value_to_qcode(&evt->key.key);
+     if (qcode >= ARRAY_SIZE(qcode_to_nextkbd_keycode)) {
+         return;
+     }
+ 
+     /* Shift key currently has no keycode, so handle separately */
+     if (qcode == Q_KEY_CODE_SHIFT) {
+-        if (key_down) {
++        if (evt->key.down) {
+             s->shift |= KD_LSHIFT;
+         } else {
+             s->shift &= ~KD_LSHIFT;
+@@ -264,7 +263,7 @@ static void nextkbd_event(DeviceState *dev, QemuConsole *src,
+     }
+ 
+     if (qcode == Q_KEY_CODE_SHIFT_R) {
+-        if (key_down) {
++        if (evt->key.down) {
+             s->shift |= KD_RSHIFT;
+         } else {
+             s->shift &= ~KD_RSHIFT;
+@@ -277,7 +276,7 @@ static void nextkbd_event(DeviceState *dev, QemuConsole *src,
+     }
+ 
+     /* If key release event, create keyboard break code */
+-    if (!key_down) {
++    if (!evt->key.down) {
+         keycode |= 0x80;
+     }
+ 
+diff --git a/replay/replay-events.c b/replay/replay-events.c
+index 20df810279e2..3ff42acb06bf 100644
+--- a/replay/replay-events.c
++++ b/replay/replay-events.c
+@@ -42,7 +42,7 @@ static void replay_run_event(Event *event)
+         break;
+     case REPLAY_ASYNC_EVENT_INPUT:
+         qemu_input_event_send_impl(NULL, (QemuInputEvent *)event->opaque);
+-        qapi_free_InputEvent((InputEvent *)event->opaque);
++        g_free(event->opaque);
+         break;
+     case REPLAY_ASYNC_EVENT_INPUT_SYNC:
+         qemu_input_event_sync_impl();
+diff --git a/replay/replay-input.c b/replay/replay-input.c
+index 3f506f2338a3..0995b125f244 100644
+--- a/replay/replay-input.c
++++ b/replay/replay-input.c
+@@ -19,25 +19,20 @@
+ 
+ void replay_save_input_event(QemuInputEvent *evt)
+ {
+-    InputKeyEvent *key;
+-    InputBtnEvent *btn;
+-    InputMoveEvent *move;
+-    InputMultiTouchEvent *mtt;
+     replay_put_dword(evt->type);
+ 
+     switch (evt->type) {
+     case INPUT_EVENT_KIND_KEY:
+-        key = evt->u.key.data;
+-        replay_put_dword(key->key->type);
++        replay_put_dword(evt->key.key.type);
+ 
+-        switch (key->key->type) {
++        switch (evt->key.key.type) {
+         case KEY_VALUE_KIND_NUMBER:
+-            replay_put_qword(key->key->u.number.data);
+-            replay_put_byte(key->down);
++            replay_put_qword(evt->key.key.u.number.data);
++            replay_put_byte(evt->key.down);
+             break;
+         case KEY_VALUE_KIND_QCODE:
+-            replay_put_dword(key->key->u.qcode.data);
+-            replay_put_byte(key->down);
++            replay_put_dword(evt->key.key.u.qcode.data);
++            replay_put_byte(evt->key.down);
+             break;
+         case KEY_VALUE_KIND__MAX:
+             /* keep gcc happy */
+@@ -45,27 +40,23 @@ void replay_save_input_event(QemuInputEvent *evt)
+         }
+         break;
+     case INPUT_EVENT_KIND_BTN:
+-        btn = evt->u.btn.data;
+-        replay_put_dword(btn->button);
+-        replay_put_byte(btn->down);
++        replay_put_dword(evt->btn.button);
++        replay_put_byte(evt->btn.down);
+         break;
+     case INPUT_EVENT_KIND_REL:
+-        move = evt->u.rel.data;
+-        replay_put_dword(move->axis);
+-        replay_put_qword(move->value);
++        replay_put_dword(evt->rel.axis);
++        replay_put_qword(evt->rel.value);
+         break;
+     case INPUT_EVENT_KIND_ABS:
+-        move = evt->u.abs.data;
+-        replay_put_dword(move->axis);
+-        replay_put_qword(move->value);
++        replay_put_dword(evt->abs.axis);
++        replay_put_qword(evt->abs.value);
+         break;
+     case INPUT_EVENT_KIND_MTT:
+-        mtt = evt->u.mtt.data;
+-        replay_put_dword(mtt->type);
+-        replay_put_qword(mtt->slot);
+-        replay_put_qword(mtt->tracking_id);
+-        replay_put_dword(mtt->axis);
+-        replay_put_qword(mtt->value);
++        replay_put_dword(evt->mtt.type);
++        replay_put_qword(evt->mtt.slot);
++        replay_put_qword(evt->mtt.tracking_id);
++        replay_put_dword(evt->mtt.axis);
++        replay_put_qword(evt->mtt.value);
+         break;
+     case INPUT_EVENT_KIND__MAX:
+         /* keep gcc happy */
+@@ -75,29 +66,21 @@ void replay_save_input_event(QemuInputEvent *evt)
+ 
+ QemuInputEvent *replay_read_input_event(void)
+ {
+-    QemuInputEvent evt;
+-    KeyValue keyValue;
+-    InputKeyEvent key;
+-    key.key = &keyValue;
+-    InputBtnEvent btn;
+-    InputMoveEvent rel;
+-    InputMoveEvent abs;
+-    InputMultiTouchEvent mtt;
++    QemuInputEvent *evt = g_new(QemuInputEvent, 1);
+ 
+-    evt.type = replay_get_dword();
+-    switch (evt.type) {
++    evt->type = replay_get_dword();
++    switch (evt->type) {
+     case INPUT_EVENT_KIND_KEY:
+-        evt.u.key.data = &key;
+-        evt.u.key.data->key->type = replay_get_dword();
++        evt->key.key.type = replay_get_dword();
+ 
+-        switch (evt.u.key.data->key->type) {
++        switch (evt->key.key.type) {
+         case KEY_VALUE_KIND_NUMBER:
+-            evt.u.key.data->key->u.number.data = replay_get_qword();
+-            evt.u.key.data->down = replay_get_byte();
++            evt->key.key.u.number.data = replay_get_qword();
++            evt->key.down = replay_get_byte();
+             break;
+         case KEY_VALUE_KIND_QCODE:
+-            evt.u.key.data->key->u.qcode.data = (QKeyCode)replay_get_dword();
+-            evt.u.key.data->down = replay_get_byte();
++            evt->key.key.u.qcode.data = (QKeyCode)replay_get_dword();
++            evt->key.down = replay_get_byte();
+             break;
+         case KEY_VALUE_KIND__MAX:
+             /* keep gcc happy */
+@@ -105,34 +88,30 @@ QemuInputEvent *replay_read_input_event(void)
+         }
+         break;
+     case INPUT_EVENT_KIND_BTN:
+-        evt.u.btn.data = &btn;
+-        evt.u.btn.data->button = (InputButton)replay_get_dword();
+-        evt.u.btn.data->down = replay_get_byte();
++        evt->btn.button = (InputButton)replay_get_dword();
++        evt->btn.down = replay_get_byte();
+         break;
+     case INPUT_EVENT_KIND_REL:
+-        evt.u.rel.data = &rel;
+-        evt.u.rel.data->axis = (InputAxis)replay_get_dword();
+-        evt.u.rel.data->value = replay_get_qword();
++        evt->rel.axis = (InputAxis)replay_get_dword();
++        evt->rel.value = replay_get_qword();
+         break;
+     case INPUT_EVENT_KIND_ABS:
+-        evt.u.abs.data = &abs;
+-        evt.u.abs.data->axis = (InputAxis)replay_get_dword();
+-        evt.u.abs.data->value = replay_get_qword();
++        evt->abs.axis = (InputAxis)replay_get_dword();
++        evt->abs.value = replay_get_qword();
+         break;
+     case INPUT_EVENT_KIND_MTT:
+-        evt.u.mtt.data = &mtt;
+-        evt.u.mtt.data->type = (InputMultiTouchType)replay_get_dword();
+-        evt.u.mtt.data->slot = replay_get_qword();
+-        evt.u.mtt.data->tracking_id = replay_get_qword();
+-        evt.u.mtt.data->axis = (InputAxis)replay_get_dword();
+-        evt.u.mtt.data->value = replay_get_qword();
++        evt->mtt.type = (InputMultiTouchType)replay_get_dword();
++        evt->mtt.slot = replay_get_qword();
++        evt->mtt.tracking_id = replay_get_qword();
++        evt->mtt.axis = (InputAxis)replay_get_dword();
++        evt->mtt.value = replay_get_qword();
+         break;
+     case INPUT_EVENT_KIND__MAX:
+         /* keep gcc happy */
+         break;
+     }
+ 
+-    return QAPI_CLONE(InputEvent, &evt);
++    return evt;
+ }
+ 
+ void replay_input_event(QemuConsole *src, QemuInputEvent *evt)
+@@ -140,7 +119,9 @@ void replay_input_event(QemuConsole *src, QemuInputEvent *evt)
+     if (replay_mode == REPLAY_MODE_PLAY) {
+         /* Nothing */
+     } else if (replay_mode == REPLAY_MODE_RECORD) {
+-        replay_add_input_event(QAPI_CLONE(InputEvent, evt));
++        QemuInputEvent *clone = g_new(QemuInputEvent, 1);
++        *clone = *evt;
++        replay_add_input_event(clone);
+     } else {
+         qemu_input_event_send_impl(src, evt);
+     }
+diff --git a/ui/input-legacy.c b/ui/input-legacy.c
+index 5467010c3713..e2b48dd8f0aa 100644
+--- a/ui/input-legacy.c
++++ b/ui/input-legacy.c
+@@ -118,39 +118,36 @@ static void legacy_mouse_event(DeviceState *dev, QemuConsole *src,
+         [INPUT_BUTTON_RIGHT]  = MOUSE_EVENT_RBUTTON,
+     };
+     QEMUPutMouseEntry *s = (QEMUPutMouseEntry *)dev;
+-    InputBtnEvent *btn;
+-    InputMoveEvent *move;
+ 
+     switch (evt->type) {
+     case INPUT_EVENT_KIND_BTN:
+-        btn = evt->u.btn.data;
+-        if (btn->down) {
+-            s->buttons |= bmap[btn->button];
++        if (evt->btn.down) {
++            s->buttons |= bmap[evt->btn.button];
+         } else {
+-            s->buttons &= ~bmap[btn->button];
++            s->buttons &= ~bmap[evt->btn.button];
+         }
+-        if (btn->down && btn->button == INPUT_BUTTON_WHEEL_UP) {
++        if (evt->btn.down && evt->btn.button == INPUT_BUTTON_WHEEL_UP) {
+             s->qemu_put_mouse_event(s->qemu_put_mouse_event_opaque,
+                                     s->axis[INPUT_AXIS_X],
+                                     s->axis[INPUT_AXIS_Y],
+                                     -1,
+                                     s->buttons);
+         }
+-        if (btn->down && btn->button == INPUT_BUTTON_WHEEL_DOWN) {
++        if (evt->btn.down && evt->btn.button == INPUT_BUTTON_WHEEL_DOWN) {
+             s->qemu_put_mouse_event(s->qemu_put_mouse_event_opaque,
+                                     s->axis[INPUT_AXIS_X],
+                                     s->axis[INPUT_AXIS_Y],
+                                     1,
+                                     s->buttons);
+         }
+-        if (btn->down && btn->button == INPUT_BUTTON_WHEEL_RIGHT) {
++        if (evt->btn.down && evt->btn.button == INPUT_BUTTON_WHEEL_RIGHT) {
+             s->qemu_put_mouse_event(s->qemu_put_mouse_event_opaque,
+                                     s->axis[INPUT_AXIS_X],
+                                     s->axis[INPUT_AXIS_Y],
+                                     -2,
+                                     s->buttons);
+         }
+-        if (btn->down && btn->button == INPUT_BUTTON_WHEEL_LEFT) {
++        if (evt->btn.down && evt->btn.button == INPUT_BUTTON_WHEEL_LEFT) {
+             s->qemu_put_mouse_event(s->qemu_put_mouse_event_opaque,
+                                     s->axis[INPUT_AXIS_X],
+                                     s->axis[INPUT_AXIS_Y],
+@@ -159,12 +156,10 @@ static void legacy_mouse_event(DeviceState *dev, QemuConsole *src,
+         }
+         break;
+     case INPUT_EVENT_KIND_ABS:
+-        move = evt->u.abs.data;
+-        s->axis[move->axis] = move->value;
++        s->axis[evt->abs.axis] = evt->abs.value;
+         break;
+     case INPUT_EVENT_KIND_REL:
+-        move = evt->u.rel.data;
+-        s->axis[move->axis] += move->value;
++        s->axis[evt->rel.axis] += evt->rel.value;
+         break;
+     default:
+         break;
+diff --git a/ui/input.c b/ui/input.c
+index 759855c67e8a..97c473f40a2b 100644
+--- a/ui/input.c
++++ b/ui/input.c
+@@ -30,7 +30,7 @@ struct QemuInputEventQueue {
+     QEMUTimer *timer;
+     uint32_t delay_ms;
+     QemuConsole *src;
+-    QemuInputEvent *evt;
++    QemuInputEvent evt;
+     QTAILQ_ENTRY(QemuInputEventQueue) node;
+ };
+ 
+@@ -159,16 +159,54 @@ void qmp_input_send_event(const char *device,
+     }
+ 
+     for (e = events; e != NULL; e = e->next) {
+-        InputEvent *evt = e->value;
++        InputEvent *qapi = e->value;
++        QemuInputEvent evt;
++
++        evt.type = qapi->type;
++
++        switch (qapi->type) {
++        case INPUT_EVENT_KIND_KEY: {
++            KeyValue *key = qapi->u.key.data->key;
++            QKeyCode code;
++
++            switch (key->type) {
++            case KEY_VALUE_KIND_NUMBER:
++                code = qemu_input_key_number_to_qcode(key->u.number.data);
++                break;
++            case KEY_VALUE_KIND_QCODE:
++                code = key->u.qcode.data;
++                break;
++            default:
++                g_assert_not_reached();
++            }
++
++            evt.key.key.type = KEY_VALUE_KIND_QCODE;
++            evt.key.key.u.qcode.data = code;
++            evt.key.down = qapi->u.key.data->down;
++            break;
++        }
+ 
+-        if (evt->type == INPUT_EVENT_KIND_KEY &&
+-            evt->u.key.data->key->type == KEY_VALUE_KIND_NUMBER) {
+-            KeyValue *key = evt->u.key.data->key;
+-            QKeyCode code = qemu_input_key_number_to_qcode(key->u.number.data);
+-            qemu_input_event_send_key_qcode(con, code, evt->u.key.data->down);
+-        } else {
+-            qemu_input_event_send(con, evt);
++        case INPUT_EVENT_KIND_BTN:
++            evt.btn = *qapi->u.btn.data;
++            break;
++
++        case INPUT_EVENT_KIND_REL:
++            evt.rel = *qapi->u.rel.data;
++            break;
++
++        case INPUT_EVENT_KIND_ABS:
++            evt.abs = *qapi->u.abs.data;
++            break;
++
++        case INPUT_EVENT_KIND_MTT:
++            evt.mtt = *qapi->u.mtt.data;
++            break;
++
++        default:
++            g_assert_not_reached();
+         }
++
++        qemu_input_event_send(con, &evt);
+     }
+ 
+     qemu_input_event_sync();
+@@ -178,7 +216,7 @@ static void qemu_input_event_trace(QemuConsole *src, QemuInputEvent *evt)
+ {
+     const char *name;
+     int qcode, idx = -1;
+-    InputKeyEvent *key;
++    QemuInputKeyEvent *key;
+     InputBtnEvent *btn;
+     InputMoveEvent *move;
+     InputMultiTouchEvent *mtt;
+@@ -188,16 +226,16 @@ static void qemu_input_event_trace(QemuConsole *src, QemuInputEvent *evt)
+     }
+     switch (evt->type) {
+     case INPUT_EVENT_KIND_KEY:
+-        key = evt->u.key.data;
+-        switch (key->key->type) {
++        key = &evt->key;
++        switch (evt->key.key.type) {
+         case KEY_VALUE_KIND_NUMBER:
+-            qcode = qemu_input_key_number_to_qcode(key->key->u.number.data);
++            qcode = qemu_input_key_number_to_qcode(key->key.u.number.data);
+             name = QKeyCode_str(qcode);
+-            trace_input_event_key_number(idx, key->key->u.number.data,
++            trace_input_event_key_number(idx, key->key.u.number.data,
+                                          name, key->down);
+             break;
+         case KEY_VALUE_KIND_QCODE:
+-            name = QKeyCode_str(key->key->u.qcode.data);
++            name = QKeyCode_str(key->key.u.qcode.data);
+             trace_input_event_key_qcode(idx, name, key->down);
+             break;
+         case KEY_VALUE_KIND__MAX:
+@@ -206,22 +244,22 @@ static void qemu_input_event_trace(QemuConsole *src, QemuInputEvent *evt)
+         }
+         break;
+     case INPUT_EVENT_KIND_BTN:
+-        btn = evt->u.btn.data;
++        btn = &evt->btn;
+         name = btn->button < INPUT_BUTTON__MAX ? InputButton_str(btn->button) : "invalid";
+         trace_input_event_btn(idx, name, btn->down);
+         break;
+     case INPUT_EVENT_KIND_REL:
+-        move = evt->u.rel.data;
++        move = &evt->rel;
+         name = move->axis < INPUT_AXIS__MAX ? InputAxis_str(move->axis) : "invalid";
+         trace_input_event_rel(idx, name, move->value);
+         break;
+     case INPUT_EVENT_KIND_ABS:
+-        move = evt->u.abs.data;
++        move = &evt->abs;
+         name = move->axis < INPUT_AXIS__MAX ? InputAxis_str(move->axis) : "invalid";
+         trace_input_event_abs(idx, name, move->value);
+         break;
+     case INPUT_EVENT_KIND_MTT:
+-        mtt = evt->u.mtt.data;
++        mtt = &evt->mtt;
+         name = mtt->axis < INPUT_AXIS__MAX ? InputAxis_str(mtt->axis) : "invalid";
+         trace_input_event_mtt(idx, name, mtt->value);
+         break;
+@@ -251,8 +289,7 @@ static void qemu_input_queue_process(void *opaque)
+                       + item->delay_ms);
+             return;
+         case QEMU_INPUT_QUEUE_EVENT:
+-            qemu_input_event_send(item->src, item->evt);
+-            qapi_free_InputEvent(item->evt);
++            qemu_input_event_send(item->src, &item->evt);
+             break;
+         case QEMU_INPUT_QUEUE_SYNC:
+             qemu_input_event_sync();
+@@ -289,7 +326,7 @@ static void qemu_input_queue_event(QemuInputEventQueueHead *queue,
+ 
+     item->type = QEMU_INPUT_QUEUE_EVENT;
+     item->src = src;
+-    item->evt = evt;
++    item->evt = *evt;
+     QTAILQ_INSERT_TAIL(queue, item, node);
+     queue_count++;
+ }
+@@ -323,7 +360,7 @@ void qemu_input_event_send(QemuConsole *src, QemuInputEvent *evt)
+     /* Expect all parts of QEMU to send events with QCodes exclusively.
+      * Key numbers are only supported as end-user input via QMP */
+     assert(!(evt->type == INPUT_EVENT_KIND_KEY &&
+-             evt->u.key.data->key->type == KEY_VALUE_KIND_NUMBER));
++             evt->key.key.type == KEY_VALUE_KIND_NUMBER));
+ 
+ 
+     /*
+@@ -335,8 +372,8 @@ void qemu_input_event_send(QemuConsole *src, QemuInputEvent *evt)
+      * need to deal with this mistake
+      */
+     if (evt->type == INPUT_EVENT_KIND_KEY &&
+-        evt->u.key.data->key->u.qcode.data == Q_KEY_CODE_SYSRQ) {
+-        evt->u.key.data->key->u.qcode.data = Q_KEY_CODE_PRINT;
++        evt->key.key.u.qcode.data == Q_KEY_CODE_SYSRQ) {
++        evt->key.key.u.qcode.data = Q_KEY_CODE_PRINT;
+     }
+ 
+     if (!runstate_is_running() && !runstate_check(RUN_STATE_SUSPENDED)) {
+@@ -372,29 +409,24 @@ void qemu_input_event_sync(void)
+     replay_input_sync_event();
+ }
+ 
+-static QemuInputEvent *qemu_input_event_new_key(KeyValue *key, bool down)
+-{
+-    QemuInputEvent *evt = g_new0(QemuInputEvent, 1);
+-    evt->u.key.data = g_new0(InputKeyEvent, 1);
+-    evt->type = INPUT_EVENT_KIND_KEY;
+-    evt->u.key.data->key = key;
+-    evt->u.key.data->down = down;
+-    return evt;
+-}
+-
+ void qemu_input_event_send_key(QemuConsole *src, KeyValue *key, bool down)
+ {
+-    QemuInputEvent *evt;
+-    evt = qemu_input_event_new_key(key, down);
++    QemuInputEvent evt = {
++        .type = INPUT_EVENT_KIND_KEY,
++        .key = {
++            .key = *key,
++            .down = down,
++        },
++    };
++
++    g_free(key);
++
+     if (QTAILQ_EMPTY(&kbd_queue)) {
+-        qemu_input_event_send(src, evt);
++        qemu_input_event_send(src, &evt);
+         qemu_input_event_sync();
+-        qapi_free_InputEvent(evt);
+     } else if (queue_count < queue_limit) {
+-        qemu_input_queue_event(&kbd_queue, src, evt);
++        qemu_input_queue_event(&kbd_queue, src, &evt);
+         qemu_input_queue_sync(&kbd_queue);
+-    } else {
+-        qapi_free_InputEvent(evt);
+     }
+ }
+ 
+@@ -431,13 +463,12 @@ void qemu_input_event_send_key_delay(uint32_t delay_ms)
+ 
+ void qemu_input_queue_btn(QemuConsole *src, InputButton btn, bool down)
+ {
+-    InputBtnEvent bevt = {
+-        .button = btn,
+-        .down = down,
+-    };
+     QemuInputEvent evt = {
+         .type = INPUT_EVENT_KIND_BTN,
+-        .u.btn.data = &bevt,
++        .btn = {
++            .button = btn,
++            .down = down,
++        }
+     };
+ 
+     qemu_input_event_send(src, &evt);
+@@ -482,13 +513,12 @@ int qemu_input_scale_axis(int value,
+ 
+ void qemu_input_queue_rel(QemuConsole *src, InputAxis axis, int value)
+ {
+-    InputMoveEvent move = {
+-        .axis = axis,
+-        .value = value,
+-    };
+     QemuInputEvent evt = {
+         .type = INPUT_EVENT_KIND_REL,
+-        .u.rel.data = &move,
++        .rel = {
++            .axis = axis,
++            .value = value,
++        },
+     };
+ 
+     qemu_input_event_send(src, &evt);
+@@ -497,15 +527,14 @@ void qemu_input_queue_rel(QemuConsole *src, InputAxis axis, int value)
+ void qemu_input_queue_abs(QemuConsole *src, InputAxis axis, int value,
+                           int min_in, int max_in)
+ {
+-    InputMoveEvent move = {
+-        .axis = axis,
+-        .value = qemu_input_scale_axis(value, min_in, max_in,
+-                                       INPUT_EVENT_ABS_MIN,
+-                                       INPUT_EVENT_ABS_MAX),
+-    };
+     QemuInputEvent evt = {
+         .type = INPUT_EVENT_KIND_ABS,
+-        .u.abs.data = &move,
++        .abs = {
++            .axis = axis,
++            .value = qemu_input_scale_axis(value, min_in, max_in,
++                                           INPUT_EVENT_ABS_MIN,
++                                           INPUT_EVENT_ABS_MAX),
++        },
+     };
+ 
+     qemu_input_event_send(src, &evt);
+@@ -514,14 +543,13 @@ void qemu_input_queue_abs(QemuConsole *src, InputAxis axis, int value,
+ void qemu_input_queue_mtt(QemuConsole *src, InputMultiTouchType type,
+                           int slot, int tracking_id)
+ {
+-    InputMultiTouchEvent mtt = {
+-        .type = type,
+-        .slot = slot,
+-        .tracking_id = tracking_id,
+-    };
+     QemuInputEvent evt = {
+         .type = INPUT_EVENT_KIND_MTT,
+-        .u.mtt.data = &mtt,
++        .mtt = {
++            .type = type,
++            .slot = slot,
++            .tracking_id = tracking_id,
++        },
+     };
+ 
+     qemu_input_event_send(src, &evt);
+@@ -530,18 +558,17 @@ void qemu_input_queue_mtt(QemuConsole *src, InputMultiTouchType type,
+ void qemu_input_queue_mtt_abs(QemuConsole *src, InputAxis axis, int value,
+                               int min_in, int max_in, int slot, int tracking_id)
+ {
+-    InputMultiTouchEvent mtt = {
+-        .type = INPUT_MULTI_TOUCH_TYPE_DATA,
+-        .slot = slot,
+-        .tracking_id = tracking_id,
+-        .axis = axis,
+-        .value = qemu_input_scale_axis(value, min_in, max_in,
+-                                       INPUT_EVENT_ABS_MIN,
+-                                       INPUT_EVENT_ABS_MAX),
+-    };
+     QemuInputEvent evt = {
+         .type = INPUT_EVENT_KIND_MTT,
+-        .u.mtt.data = &mtt,
++        .mtt = {
++            .type = INPUT_MULTI_TOUCH_TYPE_DATA,
++            .slot = slot,
++            .tracking_id = tracking_id,
++            .axis = axis,
++            .value = qemu_input_scale_axis(value, min_in, max_in,
++                                           INPUT_EVENT_ABS_MIN,
++                                           INPUT_EVENT_ABS_MAX),
++        }
+     };
+ 
+     qemu_input_event_send(src, &evt);
+diff --git a/ui/vdagent.c b/ui/vdagent.c
+index 28a83c7c389c..8fa325bffa32 100644
+--- a/ui/vdagent.c
++++ b/ui/vdagent.c
+@@ -241,22 +241,19 @@ static void vdagent_pointer_event(DeviceState *dev, QemuConsole *src,
+     };
+ 
+     VDAgentChardev *vd = container_of(dev, struct VDAgentChardev, mouse_dev);
+-    InputMoveEvent *move;
+-    InputBtnEvent *btn;
+     uint32_t xres, yres;
+ 
+     switch (evt->type) {
+     case INPUT_EVENT_KIND_ABS:
+-        move = evt->u.abs.data;
+         xres = qemu_console_get_width(src, 1024);
+         yres = qemu_console_get_height(src, 768);
+-        if (move->axis == INPUT_AXIS_X) {
+-            vd->mouse_x = qemu_input_scale_axis(move->value,
++        if (evt->abs.axis == INPUT_AXIS_X) {
++            vd->mouse_x = qemu_input_scale_axis(evt->abs.value,
+                                                 INPUT_EVENT_ABS_MIN,
+                                                 INPUT_EVENT_ABS_MAX,
+                                                 0, xres);
+-        } else if (move->axis == INPUT_AXIS_Y) {
+-            vd->mouse_y = qemu_input_scale_axis(move->value,
++        } else if (evt->abs.axis == INPUT_AXIS_Y) {
++            vd->mouse_y = qemu_input_scale_axis(evt->abs.value,
+                                                 INPUT_EVENT_ABS_MIN,
+                                                 INPUT_EVENT_ABS_MAX,
+                                                 0, yres);
+@@ -265,11 +262,10 @@ static void vdagent_pointer_event(DeviceState *dev, QemuConsole *src,
+         break;
+ 
+     case INPUT_EVENT_KIND_BTN:
+-        btn = evt->u.btn.data;
+-        if (btn->down) {
+-            vd->mouse_btn |= bmap[btn->button];
++        if (evt->btn.down) {
++            vd->mouse_btn |= bmap[evt->btn.button];
+         } else {
+-            vd->mouse_btn &= ~bmap[btn->button];
++            vd->mouse_btn &= ~bmap[evt->btn.button];
+         }
+         break;
+ 
 
 -- 
 2.54.0
