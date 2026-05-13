@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F746CD37B6
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 07:49:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0655CD4851
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 07:49:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN4Kl-0000yK-Qs; Wed, 13 May 2026 03:48:47 -0400
+	id 1wN4Ks-0000z3-Kl; Wed, 13 May 2026 03:48:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wN4Kk-0000yB-KE
- for qemu-devel@nongnu.org; Wed, 13 May 2026 03:48:46 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wN4Kq-0000ym-Q2
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 03:48:52 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wN4Kj-0003bC-41
- for qemu-devel@nongnu.org; Wed, 13 May 2026 03:48:46 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-488e1a8ac40so62049985e9.2
- for <qemu-devel@nongnu.org>; Wed, 13 May 2026 00:48:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wN4Kp-0003cX-8B
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 03:48:52 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-44e1860558fso4128701f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 13 May 2026 00:48:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778658523; x=1779263323; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=6dXY+gbSoUgZi27t3mSmDJWweTy4cmaLlRxPCqpCU10=;
- b=ycpLAi40XgriJfuz+CfRt/en3zqZOlpzRuf2gREWX8JsFqwlGK/CuD9DJ9qI5y31W7
- g0u+6BIIZ29R24n9cQUlH/Q0Q8+clAqPrgyVNhKj6O+vqYFAdcxmettWqQwRhAaz7C7t
- 4DYdNt+F1S4F6MwMlKRf7mkV+FVP5Z2SG3QvlvOog/9+TXeu+4ZKMj/iNavRWZrpee4t
- H9i5wOvgcBpL2LLe24jOBu84aD0pUiJU8ud1R6F9LwwuPalVCp8qUGXXJ+RyQT0eVnej
- NQQOD9YoXGAHvXdkZbfn8xZlbbX/gbmNw/drmpDwot3qZSvhj9AF4oFuaQuqEtQSACVo
- gj5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778658523; x=1779263323;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1778658529; x=1779263329; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6dXY+gbSoUgZi27t3mSmDJWweTy4cmaLlRxPCqpCU10=;
- b=tIfnBSPcdKVz/GIVW8nc7Ao0k6Tq57h/+BvNbuOYXqT/R6+PLd6LL9gjEVmc9lPdMJ
- CGlPBosRhyUcVHblWs/+g+Yyf+oZtNKzhurnYqm49GC0+RRMkfh1+mgjX+kUVczKu43W
- pShRaZ18RDoyEZvk9uzFMB9kO9i2/eiKGW7Xn93X62WAxubLu/Pvk91G8QG28r7CDEJ/
- ARBoxEZGLPYt4ke0g9ag87DuV3G8cHQKyntijHYD3SvnpEC4ZRwdXSH38ixM4YtPvTsn
- ldlSpsjsgtRYwI5UIZFn2lgTVuq1O+wY2jkohx/DRvpn5lT5lMBimcj/xYj+QIY+2x6G
- PjVQ==
-X-Gm-Message-State: AOJu0YyZNDNh6MDKzTNwP3ymsDE/CbtgYNkIrqS/oul4SOeurOoRldUu
- AuhD/MthQUCFEZV0WBx9F65iPXw289yD4SJ0qd3mFWXs+4+rN8Y5FHOPc/dGsZlXT6Exfy7YdsG
- OUypIPzs=
-X-Gm-Gg: Acq92OHUJ248KXZfYLLSgTYdyJ/tLZ4JNBF0VGh8AHugRLdbeAebgFtkd5hY20mXdqi
- sjmuLzNcAoMxNPspK0R+dqHt0yl4Bm5gaIKomwrZF28q55LjC9TEXpSDdV8d8/oV+yz0qmjVx2M
- pkU1PcC2YXLGzHLrvTAc5DeX/h0annuMFm0n2Ncvmi5L1/CiTa3uuqgcsMG+xdIQF4j6NWnbvUs
- 18X8oc04c31BIIaEzMA5jgO9vYaP68GW8aT90R060KxT1OMixKaugb1SEC200CZCIQ6/O2kSl7I
- SHZO0hdvuDAyZZV0viFyHF+pezSltlnwB19m4rNqPG5BrdDwZX2x3QBCG4Jb3VB5XxHrktfFThq
- jcGemObOj27KrshB9aFX4adyV46g8kaqWMQe6IXV03K94H0BJQxW2C0VIlGEd7ySNfJShbazXiT
- SXuiDPGiQ7tA6mpHDz8Ki17E9s7aWTfiMcGc6NDWnTJdpckLSKEVw6qjn9EwhMyB5Q4Z/D/q26
-X-Received: by 2002:a05:600c:c4ab:b0:485:30d4:6b9e with SMTP id
- 5b1f17b1804b1-48fc9a3c1ffmr32778835e9.21.1778658522731; 
- Wed, 13 May 2026 00:48:42 -0700 (PDT)
+ bh=UerYm6b2Z3yY8W3Pc16lGAPFBiqbGIQwj+tuPPjT5qU=;
+ b=VOFpAoXT6+ZSLiaS2Ayim5GhD79Tc+IyqE63rD1U4QUangGw1kpfyzCEi5dP+ARAX6
+ /Slh+60xUn7EV+9rlIBnrWlC7cx2pXHpSnat/YHRm7QKh9ak+92CAuggVOKmQsi0Jtob
+ XGgfi5tD9GJPGuA+7e5DQ3CT9UoFr6FWS7xz0sx6hJfJaKJWvbHw2mUNYpiqUzGMm71t
+ D2b3D18wFhMBJjQ0dxb0M4JRjQFsXaLxLvgruqsoClEya3oqJru2W4Q2lo4gZ48j2mAE
+ LvsChDOJVTSN6IpCU9BBugLQN0gab3oEezIpAl4LaAHbTiB/mbl9QmJtlTzO77atBVUf
+ d9tA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778658529; x=1779263329;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=UerYm6b2Z3yY8W3Pc16lGAPFBiqbGIQwj+tuPPjT5qU=;
+ b=PGBTUd3n45jGgkVrlizkw7CStjRlGo99QIzhr0Wft0hMqXtC48AhLU8A7a4Uwo7sga
+ tqF6ub84yV8frxRYCUrH2H0nUTqVl2TFa82XYGQRjxWLUXQJxUdmw7iXajOYnyBF3Vvl
+ JpNs91arn5vqfC/W1G4NC6OevRgyiHfG2PIGs1oQY8fdMRF21xC5R89aBKwDIOoSbOKQ
+ /8urxYsVyUVf3E71mQcPQC8Pg1ZivvAawx6aXmqMI5F/SGECEnkt0ZyAmNP47ITjMd1B
+ XOdUBC7zFHIPB2CRzdrMp+H86rg/Ien58J0X9hZKlDm64qOgmFYuSBjcvHIGoJkHev0D
+ NW0w==
+X-Gm-Message-State: AOJu0YxOtnrww2KVc/x6xz4hGz2KSk1A81gnsHBcGKyKNfMFsF+Wtiue
+ PVqRlBuZ4LPDwpE30s4yQIwLWbJ7GslbzpxDOkSTh9H8PDQ6YBygBYKMyrN/ahrcxZj4DDrfrmn
+ he1WzMoE=
+X-Gm-Gg: Acq92OGFvEFfsko3SCR2wFUnRdibK8ql4ybEUE5dKO2cDMz7sd6pavc+Hhfj9Ipi8YI
+ tFSCSe1RPlBaCG5FHjq5UcXvuU36ZYcH0a0rDI5BUEssknqL7jw6cx+IfnK+T/Ul79aGpZtgcKD
+ 7+llSNAArbdVbjEa9R/7u1oGURqXG3xEuxan6B8VJ4b4l995UFPXH3KY/6ubRnzoWcpAtnGLm+O
+ 9VJoh21/0WmFMY73aDVevcqwZ1YjKreATS1L4Se1Mx02d8Lape+JYMTbGHvzFU07Ezg0mF6Y+5L
+ q9P2ToofD/ts2zO5EIinGkm/+oWzFqRbKTK2W++iTzu8e25qM+jRvJi2NkJOeLq2MeWWR4JQfuO
+ KeTA/raOyAthvSjBg31E0yWbR8C9VrFTTGsiCET9ZsjPZfQ/Fe4yi5KGOWtobAYOwDPpAtpgrZQ
+ EoW90g0DSJk5N+v5O+r0OQrMkk2RWeXBJ87KNfoaf9Wy2plpxviTudk5oRWDXI/cYEoqXWle6l
+X-Received: by 2002:a05:6000:26c2:b0:45a:1b61:9f9a with SMTP id
+ ffacd0b85a97d-45c580cdfccmr3079463f8f.1.1778658529387; 
+ Wed, 13 May 2026 00:48:49 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fcdf6408bsm33124995e9.3.2026.05.13.00.48.41
+ ffacd0b85a97d-45491bae13csm37249819f8f.29.2026.05.13.00.48.48
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 13 May 2026 00:48:42 -0700 (PDT)
+ Wed, 13 May 2026 00:48:48 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 0/2] target/alpha: Inline UNALIGN() macro
-Date: Wed, 13 May 2026 09:48:37 +0200
-Message-ID: <20260513074840.11398-1-philmd@linaro.org>
+Subject: [PATCH 1/2] target/alpha: Use DisasContext::mo_align in system
+ emulation
+Date: Wed, 13 May 2026 09:48:38 +0200
+Message-ID: <20260513074840.11398-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260513074840.11398-1-philmd@linaro.org>
+References: <20260513074840.11398-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,17 +101,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename 'unalign' as 'mo_align' and use it in system
-emulation too, allowing to remove the UNALIGN() macro.
-(No logical change, 'aligning' with other targets)
+Rename 'unalign' as 'mo_align' and use it in system emulation too.
 
-Philippe Mathieu-Daudé (2):
-  target/alpha: Use DisasContext::mo_align in system emulation
-  target/alpha: Inline UNALIGN() macro
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/alpha/translate.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
- target/alpha/translate.c | 33 +++++++++++++--------------------
- 1 file changed, 13 insertions(+), 20 deletions(-)
-
+diff --git a/target/alpha/translate.c b/target/alpha/translate.c
+index d2d1467a812..120ef5f8ab5 100644
+--- a/target/alpha/translate.c
++++ b/target/alpha/translate.c
+@@ -46,9 +46,7 @@ typedef struct DisasContext DisasContext;
+ struct DisasContext {
+     DisasContextBase base;
+ 
+-#ifdef CONFIG_USER_ONLY
+-    MemOp unalign;
+-#endif
++    MemOp mo_align;
+     uint32_t tbflags;
+     int mem_idx;
+ 
+@@ -73,9 +71,9 @@ struct DisasContext {
+ };
+ 
+ #ifdef CONFIG_USER_ONLY
+-#define UNALIGN(C)  (C)->unalign
++#define UNALIGN(C)  (C)->mo_align
+ #else
+-#define UNALIGN(C)  MO_ALIGN
++#define UNALIGN(C)  (C)->mo_align
+ #endif
+ 
+ /* Target-specific return values from translate_one, indicating the
+@@ -2867,9 +2865,10 @@ static void alpha_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cpu)
+ 
+ #ifdef CONFIG_USER_ONLY
+     ctx->ir = cpu_std_ir;
+-    ctx->unalign = (ctx->tbflags & TB_FLAG_UNALIGN ? MO_UNALN : MO_ALIGN);
++    ctx->mo_align = (ctx->tbflags & TB_FLAG_UNALIGN) ? MO_UNALN : MO_ALIGN;
+ #else
+     ctx->ir = (ctx->tbflags & ENV_FLAG_PAL_MODE ? cpu_pal_ir : cpu_std_ir);
++    ctx->mo_align = MO_ALIGN;
+ #endif
+ 
+     /* ??? Every TB begins with unset rounding mode, to be initialized on
 -- 
 2.53.0
 
