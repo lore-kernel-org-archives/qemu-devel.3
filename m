@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEF9ACD4F21
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 14:35:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4901FCD4851
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 14:36:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNAgA-0006rR-Sz; Wed, 13 May 2026 10:35:18 -0400
+	id 1wNAh0-0007C4-JC; Wed, 13 May 2026 10:36:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wNAg5-0006r1-9m
- for qemu-devel@nongnu.org; Wed, 13 May 2026 10:35:14 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wNAgc-00079p-6L
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 10:35:49 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wNAg0-0006gO-Hh
- for qemu-devel@nongnu.org; Wed, 13 May 2026 10:35:11 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-45ae6a0e523so1408334f8f.1
- for <qemu-devel@nongnu.org>; Wed, 13 May 2026 07:35:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wNAgW-0006uq-BB
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 10:35:43 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4891b0786beso43819035e9.1
+ for <qemu-devel@nongnu.org>; Wed, 13 May 2026 07:35:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778682906; x=1779287706; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778682935; x=1779287735; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=qO1n7RphMju9fZjwX/hUbU0/CzZWUlgxAPDLO8UYFO4=;
- b=Qtxtmt2gonS3MP9EU8c4nFw1SG1qulqkkpZFJCZDOIXmdi06uwhockqfgBPoT7Yuc0
- 3FVeuAGBBT/ItumPAZCDD+iXPJ/+leNGEONUHlIVjefdmJuSxoI1en7qKFReyNqODtYG
- VX9OqRXy+/0jy2ZaWOlvCfQlgK0/lxDpmmXzrh9ihvyHS1KmhkB7TlKTUhmVbkhwxr98
- M+7w1ZtKdVqF4mn+VxEoquFrwqa1I5a/kcgiv1U4JVUfx/5yPKfCkAPwCJSO+jHov/fn
- 6pQQPwlHchP3/rdxzKwGJGM02zygNRuPedi7E+VyP/hjoVy+BURAaf3fITPQSMJhmuj8
- H9ww==
+ bh=B0UjjOx1Mt1dCOGRyFA2ff32Jafwzgq9d/fHN/lvVtY=;
+ b=sHJOyRHMzg53lksZXoNXS+X/KzeRhpb3wu+n6OEcqn5Ydq1BxWoBqIl7E2whzl7jIP
+ DDnuw38F4WIvArcbqi/DLLwtA8JDKWw5Kj6Jn/BpaPh/zqPNG6Ms70zu2WFCmm4igDZu
+ 3LgdhbsQlikDcSs+c+VJ2GQQp+1hSEnvfmrdTqGTXngbiGBwvzFvrzmTGnsKhsZIg7pv
+ bCVl51teIzVAYp04LF0WGxG75iEZJLZ/12mviPhOUtykXEmNTJxNumeiJEIwflFS5wsX
+ U6jYektlHLReCiuooR1EX/bsDVjotQJdBRz3YtbldzjJq9MaRsckeZS2H8a7irfixufk
+ eWig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778682906; x=1779287706;
+ d=1e100.net; s=20251104; t=1778682935; x=1779287735;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=qO1n7RphMju9fZjwX/hUbU0/CzZWUlgxAPDLO8UYFO4=;
- b=D26y4j/KJNy7LXDI+XrHZQr9v4m9nNkICoXkFMCPk5nk0KuG4nXhO5+h+eW/WcbP6X
- 2bVoWYVAUfUoQQ4KiBbC91/kkJoF0trLZrQRU6etXc1vyAbTYbM0qzGDopEu3iRDXPc6
- OTlHuEHXsQaeA8ebvo0Yki5d72DN+9fB3gNYBU4e4BkUkuA0hVeP2yUem+AsUVg4Wl6t
- lq61jNVnNqxxPcHwDgbgglDmCM0U9u+MjIAP/ZfxoL9rO/DQmNT2qPHoj91aV6RNQdLs
- SlBZb2ugA9k0jKpzRB9N3kWlyiSgehaU40bXdcBFxNd3aVtiFlOziEvg9nk4PjKtosGj
- hH4g==
+ bh=B0UjjOx1Mt1dCOGRyFA2ff32Jafwzgq9d/fHN/lvVtY=;
+ b=RBm+TJcZMyuBL8hkai5U0FotUflTSZvpZGxozMomtntC7LzCjSjKg/4bEQV9ui7t8C
+ 130Bt+PADzyluy/hkbQlsHMMlDZeD2AZemenXBkplVmCG6l6/QQivndZ2Hu1sBTKHtuc
+ u36CWAjjSXZbvy7wk+d7JA9vaQLoYTKUpw3l2+E4mFhsjYWVj5c5Tj3OdKgoyXMdZ1rE
+ 1j+8IuDMRq1q2A+yOOLN1vwNUuBJQ5r49xLWOJ6cvwkIoF5P4OUdmFnV3hJyRbGjlK9u
+ 7+JIdba5Ls4wzOOPyrN4j1Mp/mJbAk91RiJtClMl+1rNIjMszlF8i0JwpB9hWNXK//TD
+ V2tA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/4OUfjLQJEjW6tvNMW9sT7hXKGLqLGmuO3djl1MvQFXLxZo6TiHi5332QwgcMTkgDBwl8Wnoh+DhJs@nongnu.org
-X-Gm-Message-State: AOJu0Yw+h8Z4/i7dPE41Nn38xnrqyWMjBPpc7461tXvW9ra6GAY4Fjb9
- ZBSIje56JGEDDU0mT1d9UMYLTvN9UalCfJbW6qaYxLaqautdDLtivd4dzzRtJfsD1z8=
-X-Gm-Gg: Acq92OFiFv1rneFKs9o7OLejc7vNdd3gqqiXMSZZvctkvyLt4+8UXk0pt1ECC+Zv7V2
- eDkQsVgHgTVZJqH//+uIEcAeXUTyt51XBhHtenHh6TdWQCdVClDgv1fZG783jPahSovpo+vSKio
- Xc4Z4e2QFt39+K1W4hbo/w6KGUWtrfsU05E4FW/VAJjsrtvAYNPWaGb7YhJlGhLc+nTqtxlOani
- jksMQxPecyUekRG7t+3lz0/CSx8vDn7jbHqqRNz6AB7572eLYea6thPXMCgh1+sJtSN6Pil9WG4
- p7TqLMBP0ZHuNwJ+iont1qLmC6q1LV9pVTej25FWaxokE/6nyISFL10zmcKmDWY/kdkXEqruLE7
- BYJqRjchaco7fNKuRchE+ZImcPHKsmKfxJRqfKm86hdycklFh2Gq2NUnP4yV2fnhzTVP+Vnyms6
- jzG6BmUUR12ZTH0SKFofX5Pq32cjugJxb51RIBYuLCgqXD6Wq4+B8lVRbb0RWcnOtpwg==
-X-Received: by 2002:a05:600c:48a2:b0:489:1c5f:3a9e with SMTP id
- 5b1f17b1804b1-48fcedbbd0dmr26073725e9.13.1778682905798; 
- Wed, 13 May 2026 07:35:05 -0700 (PDT)
+ AFNElJ/4LyH9oh2N0dZbWwFAwnzI2LDT5xOVraFhXJ/WLeIMDmxGT4lXs3t2YbDVaO+hU5PNy5CZ5hi9rUA7@nongnu.org
+X-Gm-Message-State: AOJu0YzluyP7eWtogOq+x1401UJM9lc3LulJi4aOLhSGaqapuLEuFD46
+ sFHN3xFxQlDKtVtKS59UWIjaKEw5V8HROliu+kbXky45HHF3/l6HNdor4j1skW1XSEE=
+X-Gm-Gg: Acq92OFoHJ0rXqPG261MVaV/MZck4pHaBTewRFP5HBGrTEu6oaqrbjR8OdXHIWESiW4
+ 2CXqtvBEAJRcS63j024daRQWDgr3AymdljALc53vUVQkOYZxQR9sqA6tJ79Xn+yktrMF1qP+2bI
+ PCVEMHhAAjiDr0H5PryI40yE+v018Mw3jFX3mEsxi185lKbQesMLmzXV8XcSdpSOnmC4WzwbCXY
+ msTg9j7iqym5KOexxJb5M4ExLiiAljBzr13GVW8hYPYg/mpfxP6Tx6YxSjnaEtbb37lix5O1s5u
+ KhSI82WZ36rNLWnywphws7hilLdVI8nrCESZkP7cLnC4xN8BFEe7V0RNw3UT2JbMl6xCDh44EAX
+ yw1sS6BtPfskJwuxbOd010QxC3Yd1F7LAkoAS9U/IdoNhi5KAn32s5gBIAf9AeQjRdgLFMSs2no
+ 4NiFyM+8WrlDMLVU519nCxdk08FENGITX31+ETmGcjYRdXA+dGDXbe+pUFFSmkxyQVgA==
+X-Received: by 2002:a05:600c:c171:b0:48e:7f22:d90 with SMTP id
+ 5b1f17b1804b1-48fce9b30fbmr47840865e9.4.1778682934704; 
+ Wed, 13 May 2026 07:35:34 -0700 (PDT)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e8f445f83sm41062745e9.29.2026.05.13.07.35.04
+ 5b1f17b1804b1-48e8f43c31dsm44377325e9.25.2026.05.13.07.35.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 13 May 2026 07:35:05 -0700 (PDT)
-Message-ID: <92c54e48-b580-497a-8fbf-0d2d4b6849d8@linaro.org>
-Date: Wed, 13 May 2026 16:35:04 +0200
+ Wed, 13 May 2026 07:35:34 -0700 (PDT)
+Message-ID: <0618a887-2727-4a76-a94d-73de52029950@linaro.org>
+Date: Wed, 13 May 2026 16:35:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 08/10] qom: fix ability to create objects without a
- parent
+Subject: Re: [PATCH v4 10/10] qom: drop user_creatable_add_type method
 Content-Language: en-US
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
 References: <20260512122958.788097-1-berrange@redhat.com>
- <20260512122958.788097-9-berrange@redhat.com>
+ <20260512122958.788097-11-berrange@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260512122958.788097-9-berrange@redhat.com>
+In-Reply-To: <20260512122958.788097-11-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,35 +106,20 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/5/26 14:29, Daniel P. Berrangé wrote:
-> object_new_with_propv allowed id/parent to be optional, in which case
-> the caller was expected to own the returned object. Unfortunately a
-> trailing object_unref() meant that the returned object was already
-> freed.
+> This can be replaced by object_new_with_props_from_qdict, which does
+> functionally the same job, but the caller does not own the returned
+> reference, instead the parent object owns it.
 > 
-> It is confusing to have a single method with two different ownership
-> scenarios for the returned object.
+> In one case we can use object_new_with_props_from_qdict_owned instead
+> since the object is not intended to have any parent.
 > 
-> Make id/parent mandatory in object_new_with_propv once more, and add
-> a new object_new_with_propv_parentless that does not accept id/parent
-> at all and lets the caller own the returned reference.
-> 
-> The helper method has abstracted the way properties are represented
-> and set in order to facilitate the subsequent commit.
-> 
-> Unit tests are added to address the root cause that allowed the bug
-> to slip through in commit 6134d752.
-> 
-> Fixes: 6134d7522e570a30d7f0d1e092ee37351c5183ed
-
-Fixes: 6134d7522e5 ("qom: don't require user creatable objects to be 
-registered")
-
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   include/qom/object.h            | 47 ++++++++++++++++++
->   qom/object.c                    | 74 +++++++++++++++++++++++----
->   tests/unit/check-qom-proplist.c | 88 ++++++++++++++++++++++++++++-----
->   3 files changed, 187 insertions(+), 22 deletions(-)
+>   authz/listfile.c                |  4 +-
+>   include/qom/object_interfaces.h | 18 ---------
+>   qom/object_interfaces.c         | 70 ++-------------------------------
+>   tests/unit/check-qom-proplist.c |  5 +--
+>   4 files changed, 7 insertions(+), 90 deletions(-)
+
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
