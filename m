@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B010CD4F24
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 10:43:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 416EBCD4F24
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 10:43:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN70A-0003yp-V2; Wed, 13 May 2026 06:39:43 -0400
+	id 1wN70e-0004Go-9U; Wed, 13 May 2026 06:40:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wN6zy-0003oY-LT; Wed, 13 May 2026 06:39:30 -0400
+ id 1wN70P-00040I-09; Wed, 13 May 2026 06:39:58 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wN6zv-0002NW-6W; Wed, 13 May 2026 06:39:30 -0400
+ id 1wN70M-0002Lx-Gy; Wed, 13 May 2026 06:39:56 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64DAcPdr044648
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64DAcPdi044648
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 13 May 2026 19:39:00 +0900 (JST)
+ Wed, 13 May 2026 19:38:58 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=wzSy7BhBV3753cSZvpxQXc4+x4lapLEdwQ5W839IvrM=; 
+DKIM-Signature: a=rsa-sha256; bh=/WoU4lGhfUf+Gwfd7jBdTN2SQsh5aEl/Q6cpkMQSwyE=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1778668741; v=1;
- b=rgY48oYYMkNv5I3456s0/8a7lBYZNznFLXbAHWKI1ugx5w4p+9NWNm8Xc0uTx50E
- i/ce11Qd46JIZE6Hnf932UDPS2i5G4HstyIf7xXwpTxlhvHPWTQvqFy1YeEIx2jl
- pDP6RuyLrK3IHWHuffwIXWoL8J6n7r26pVVPNiB6mGjC+pQyuty8pde8tf6PlUCC
- uoXGgN+QNsUK9+bqjrT2au5mfuD9GJyCt8jar+cm/yHkfJ3uSUDgBILUe83QtOfx
- UQr5WJ61or1uxiZanQCskJdSbelAMdHtFTkZsBIfq/xetk/k3HzxH5EhJJYdNOBW
- z11vol9x6hmDr23847Km9A==
+ s=rs20250326; t=1778668739; v=1;
+ b=VHdfqrGAF2QfKayYJSIMj843aj67MY4rFgRyWgyBYMDpQPZv2bnnjK8FPXO7EqqR
+ T4Wiry5mA44V30po9n/KQXDddIYNjaig+frXIu3fbuKZU+v5keuIlBMh/BV7hE6B
+ UBs60aU8tglfdXOei0l4+BvbKFErhJUMJwCysrl5tb/hc0z0RItHYf3VxD+izX+o
+ WUsmhR/KWCYM0SsXOTlNbwiBWizJcA3FPo51f+61qpvw7IFT+8Z0xXH/ILGF/44L
+ C+Mfh54fz8A+jx8C1Nflvfan0pXEqqKIXrho1aL8oVi4iouaqogvaPcobBgvksHQ
+ SZNCGlb5QaRqHY0/RrXvWQ==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 13 May 2026 19:38:45 +0900
-Subject: [PATCH v2 29/29] ui/input: Remove unused QKeyCode helpers and keymaps
+Date: Wed, 13 May 2026 19:38:36 +0900
+Subject: [PATCH v2 20/29] ui/input-barrier: Use Linux key codes
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260513-input-v2-29-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260513-input-v2-20-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260513-input-v2-0-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260513-input-v2-0-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -58,13 +58,13 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.16-dev-16047
-X-Developer-Signature: v=1; a=openpgp-sha256; l=10968;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3193;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=sRrToD8Du2Cra/tElMjYaRlW3gniuL0AU0Yg/Xk14Pw=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZLyN4lZbOlWYWk9hY870mXWvlK4JDcxFsRBbr7ilgqW
- TuPFDd0lLIwiHExyIopsqQU7ebWiK79VJgQ3wIzh5UJZAgDF6cATGRDKCPDVbGbjn5djxr13vRf
- Sni0UyJm48zm5E/BHK7pD2LbLB84M/wzZylcnGU48eHz390y5aqa982EH/mZZE98emTSkW3S17/
- wAgA=
+ bh=S1Kp78IZinQdzXxZR0DnhehmbKKrJ9FGVU6iaznbTls=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZLyDaWJSc3ckRqXj++4XSV6sXLly+0pf4Pv1RjeWFCj
+ +SzTWudOkpZGMS4GGTFFFlSinZza0TXfipMiG+BmcPKBDKEgYtTACZiYMLw35fr0BTVHHZnMy3t
+ +Zdunby88/mdSW4TqxddSrRvzS5lj2BkWBJfvZfzXPy8U4t27rORb1T9sYKjjk3OVk7fV1NsytR
+ ubgA=
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -90,297 +90,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Their users have migrated to Linux key codes.
+QemuInputEvent now stores Linux key codes for key events. Use those
+codes directly instead of translating between internal key code
+representations.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- include/ui/input.h | 50 --------------------------------------------------
- ui/input-keymap.c  | 39 ---------------------------------------
- ui/input.c         | 18 +-----------------
- ui/meson.build     | 15 ---------------
- 4 files changed, 1 insertion(+), 121 deletions(-)
+ ui/input-barrier.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/include/ui/input.h b/include/ui/input.h
-index e76dd4b172aa..ea2d944a7ed5 100644
---- a/include/ui/input.h
-+++ b/include/ui/input.h
-@@ -58,18 +58,13 @@ void qemu_input_event_send_impl(QemuConsole *src, QemuInputEvent *evt);
- void qemu_input_event_sync(void);
- void qemu_input_event_sync_impl(void);
+diff --git a/ui/input-barrier.c b/ui/input-barrier.c
+index 042f63cc5a18..4c2ff847131a 100644
+--- a/ui/input-barrier.c
++++ b/ui/input-barrier.c
+@@ -84,11 +84,11 @@ static const char *cmd_names[] = {
  
--void qemu_input_event_send_key(QemuConsole *src, KeyValue *key, bool down);
- void qemu_input_event_send_key_linux(QemuConsole *src, unsigned int lnx,
-                                      bool down);
- void qemu_input_event_send_key_number(QemuConsole *src, int num, bool down);
--void qemu_input_event_send_key_qcode(QemuConsole *src, QKeyCode q, bool down);
- void qemu_input_event_send_key_delay(uint32_t delay_ms);
- int qemu_input_key_number_to_qcode(unsigned int nr);
- unsigned int qemu_input_key_number_to_linux(unsigned int nr);
--int qemu_input_key_value_to_number(const KeyValue *value);
--int qemu_input_key_value_to_qcode(const KeyValue *value);
- unsigned int qemu_input_key_value_to_linux(const KeyValue *value);
--int qemu_input_qcode_to_scancode(QKeyCode qcode, bool down, int *codes);
- int qemu_input_linux_to_scancode(unsigned int lnx, bool down, int *codes);
- int qemu_input_linux_to_qcode(unsigned int lnx);
+ static kbd_layout_t *kbd_layout;
  
-@@ -109,96 +104,51 @@ void qemu_input_check_mode_change(void);
- void qemu_add_mouse_mode_change_notifier(Notifier *notify);
- void qemu_remove_mouse_mode_change_notifier(Notifier *notify);
- 
--extern const guint qemu_input_map_atset1_to_qcode_len;
--extern const guint16 qemu_input_map_atset1_to_qcode[];
--
- extern const guint qemu_input_map_atset1_to_linux_len;
- extern const guint16 qemu_input_map_atset1_to_linux[];
- 
- extern const guint qemu_input_map_linux_to_qcode_len;
- extern const guint16 qemu_input_map_linux_to_qcode[];
- 
--extern const guint qemu_input_map_qcode_to_atset1_len;
--extern const guint16 qemu_input_map_qcode_to_atset1[];
--
- extern const guint qemu_input_map_linux_to_atset1_len;
- extern const guint16 qemu_input_map_linux_to_atset1[];
- 
--extern const guint qemu_input_map_qcode_to_atset2_len;
--extern const guint16 qemu_input_map_qcode_to_atset2[];
--
- extern const guint qemu_input_map_linux_to_atset2_len;
- extern const guint16 qemu_input_map_linux_to_atset2[];
- 
--extern const guint qemu_input_map_qcode_to_atset3_len;
--extern const guint16 qemu_input_map_qcode_to_atset3[];
--
- extern const guint qemu_input_map_linux_to_atset3_len;
- extern const guint16 qemu_input_map_linux_to_atset3[];
- 
- extern const guint qemu_input_map_qcode_to_linux_len;
- extern const guint16 qemu_input_map_qcode_to_linux[];
- 
--extern const guint qemu_input_map_qcode_to_qnum_len;
--extern const guint16 qemu_input_map_qcode_to_qnum[];
--
- extern const guint qemu_input_map_linux_to_qnum_len;
- extern const guint16 qemu_input_map_linux_to_qnum[];
- 
--extern const guint qemu_input_map_qcode_to_sun_len;
--extern const guint16 qemu_input_map_qcode_to_sun[];
--
- extern const guint qemu_input_map_linux_to_sun_len;
- extern const guint16 qemu_input_map_linux_to_sun[];
- 
--extern const guint qemu_input_map_qnum_to_qcode_len;
--extern const guint16 qemu_input_map_qnum_to_qcode[];
--
- extern const guint qemu_input_map_qnum_to_linux_len;
- extern const guint16 qemu_input_map_qnum_to_linux[];
- 
--extern const guint qemu_input_map_usb_to_qcode_len;
--extern const guint16 qemu_input_map_usb_to_qcode[];
--
- extern const guint qemu_input_map_usb_to_linux_len;
- extern const guint16 qemu_input_map_usb_to_linux[];
- 
--extern const guint qemu_input_map_win32_to_qcode_len;
--extern const guint16 qemu_input_map_win32_to_qcode[];
--
- extern const guint qemu_input_map_win32_to_linux_len;
- extern const guint16 qemu_input_map_win32_to_linux[];
- 
--extern const guint qemu_input_map_x11_to_qcode_len;
--extern const guint16 qemu_input_map_x11_to_qcode[];
--
- extern const guint qemu_input_map_x11_to_linux_len;
- extern const guint16 qemu_input_map_x11_to_linux[];
- 
--extern const guint qemu_input_map_xorgevdev_to_qcode_len;
--extern const guint16 qemu_input_map_xorgevdev_to_qcode[];
--
--extern const guint qemu_input_map_xorgkbd_to_qcode_len;
--extern const guint16 qemu_input_map_xorgkbd_to_qcode[];
--
- extern const guint qemu_input_map_xorgkbd_to_linux_len;
- extern const guint16 qemu_input_map_xorgkbd_to_linux[];
- 
--extern const guint qemu_input_map_xorgxquartz_to_qcode_len;
--extern const guint16 qemu_input_map_xorgxquartz_to_qcode[];
--
- extern const guint qemu_input_map_xorgxquartz_to_linux_len;
- extern const guint16 qemu_input_map_xorgxquartz_to_linux[];
- 
--extern const guint qemu_input_map_xorgxwin_to_qcode_len;
--extern const guint16 qemu_input_map_xorgxwin_to_qcode[];
--
- extern const guint qemu_input_map_xorgxwin_to_linux_len;
- extern const guint16 qemu_input_map_xorgxwin_to_linux[];
- 
--extern const guint qemu_input_map_osx_to_qcode_len;
--extern const guint16 qemu_input_map_osx_to_qcode[];
--
- extern const guint qemu_input_map_osx_to_linux_len;
- extern const guint16 qemu_input_map_osx_to_linux[];
- 
-diff --git a/ui/input-keymap.c b/ui/input-keymap.c
-index 2b77ef09fd66..ec2a1fbc1a95 100644
---- a/ui/input-keymap.c
-+++ b/ui/input-keymap.c
-@@ -4,36 +4,21 @@
- 
- #include "standard-headers/linux/input.h"
- 
--#include "ui/input-keymap-atset1-to-qcode.c.inc"
- #include "ui/input-keymap-atset1-to-linux.c.inc"
- #include "ui/input-keymap-linux-to-qcode.c.inc"
--#include "ui/input-keymap-qcode-to-atset1.c.inc"
- #include "ui/input-keymap-linux-to-atset1.c.inc"
--#include "ui/input-keymap-qcode-to-atset2.c.inc"
- #include "ui/input-keymap-linux-to-atset2.c.inc"
--#include "ui/input-keymap-qcode-to-atset3.c.inc"
- #include "ui/input-keymap-linux-to-atset3.c.inc"
- #include "ui/input-keymap-qcode-to-linux.c.inc"
--#include "ui/input-keymap-qcode-to-qnum.c.inc"
- #include "ui/input-keymap-linux-to-qnum.c.inc"
--#include "ui/input-keymap-qcode-to-sun.c.inc"
- #include "ui/input-keymap-linux-to-sun.c.inc"
--#include "ui/input-keymap-qnum-to-qcode.c.inc"
- #include "ui/input-keymap-qnum-to-linux.c.inc"
--#include "ui/input-keymap-usb-to-qcode.c.inc"
- #include "ui/input-keymap-usb-to-linux.c.inc"
--#include "ui/input-keymap-win32-to-qcode.c.inc"
- #include "ui/input-keymap-win32-to-linux.c.inc"
--#include "ui/input-keymap-x11-to-qcode.c.inc"
- #include "ui/input-keymap-x11-to-linux.c.inc"
--#include "ui/input-keymap-xorgevdev-to-qcode.c.inc"
--#include "ui/input-keymap-xorgkbd-to-qcode.c.inc"
- #include "ui/input-keymap-xorgkbd-to-linux.c.inc"
--#include "ui/input-keymap-xorgxquartz-to-qcode.c.inc"
- #include "ui/input-keymap-xorgxquartz-to-linux.c.inc"
--#include "ui/input-keymap-xorgxwin-to-qcode.c.inc"
- #include "ui/input-keymap-xorgxwin-to-linux.c.inc"
--#include "ui/input-keymap-osx-to-qcode.c.inc"
- #include "ui/input-keymap-osx-to-linux.c.inc"
- 
- int qemu_input_linux_to_qcode(unsigned int lnx)
-@@ -44,19 +29,6 @@ int qemu_input_linux_to_qcode(unsigned int lnx)
-     return qemu_input_map_linux_to_qcode[lnx];
- }
- 
--int qemu_input_key_value_to_number(const KeyValue *value)
--{
--    if (value->type == KEY_VALUE_KIND_QCODE) {
--        if (value->u.qcode.data >= qemu_input_map_qcode_to_qnum_len) {
--            return 0;
--        }
--        return qemu_input_map_qcode_to_qnum[value->u.qcode.data];
--    } else {
--        assert(value->type == KEY_VALUE_KIND_NUMBER);
--        return value->u.number.data;
--    }
--}
--
- int qemu_input_key_number_to_qcode(unsigned int nr)
+-static int input_barrier_to_qcode(uint16_t keyid, uint16_t keycode)
++static int input_barrier_to_linux(uint16_t keyid, uint16_t keycode)
  {
-     return qemu_input_linux_to_qcode(qemu_input_key_number_to_linux(nr));
-@@ -70,11 +42,6 @@ unsigned int qemu_input_key_number_to_linux(unsigned int nr)
-     return qemu_input_map_qnum_to_linux[nr];
- }
- 
--int qemu_input_key_value_to_qcode(const KeyValue *value)
--{
--    return qemu_input_linux_to_qcode(qemu_input_key_value_to_linux(value));
--}
--
- unsigned int qemu_input_key_value_to_linux(const KeyValue *value)
- {
-     switch (value->type) {
-@@ -89,12 +56,6 @@ unsigned int qemu_input_key_value_to_linux(const KeyValue *value)
+     /* keycode is optional, if it is not provided use keyid */
+-    if (keycode && keycode <= qemu_input_map_xorgkbd_to_qcode_len) {
+-        return qemu_input_map_xorgkbd_to_qcode[keycode];
++    if (keycode && keycode <= qemu_input_map_xorgkbd_to_linux_len) {
++        return qemu_input_map_xorgkbd_to_linux[keycode];
      }
+ 
+     if (keyid >= 0xE000 && keyid <= 0xEFFF) {
+@@ -99,10 +99,10 @@ static int input_barrier_to_qcode(uint16_t keyid, uint16_t keycode)
+     if (kbd_layout) {
+         keycode = keysym2scancode(kbd_layout, keyid, NULL, false);
+ 
+-        return qemu_input_key_number_to_qcode(keycode);
++        return qemu_input_key_number_to_linux(keycode);
+     }
+ 
+-    return qemu_input_map_x11_to_qcode[keyid];
++    return qemu_input_map_x11_to_linux[keyid];
  }
  
--int qemu_input_qcode_to_scancode(QKeyCode qcode, bool down, int *codes)
--{
--    return qemu_input_linux_to_scancode(qemu_input_map_qcode_to_linux[qcode],
--                                        down, codes);
--}
--
- int qemu_input_linux_to_scancode(unsigned int lnx, bool down, int *codes)
- {
-     int keycode = lnx < qemu_input_map_linux_to_qnum_len ?
-diff --git a/ui/input.c b/ui/input.c
-index 8ed225591de1..c013cd9f7e04 100644
---- a/ui/input.c
-+++ b/ui/input.c
-@@ -365,14 +365,6 @@ void qemu_input_event_sync(void)
-     replay_input_sync_event();
- }
+ static int input_barrier_to_mouse(uint8_t buttonid)
+@@ -431,23 +431,23 @@ static gboolean writecmd(InputBarrier *ib, struct barrierMsg *msg)
  
--void qemu_input_event_send_key(QemuConsole *src, KeyValue *key, bool down)
--{
--    unsigned int lnx = qemu_input_key_value_to_linux(key);
--
--    g_free(key);
--    qemu_input_event_send_key_linux(src, lnx, down);
--}
--
- void qemu_input_event_send_key_linux(QemuConsole *src, unsigned int lnx,
-                                      bool down)
- {
-@@ -396,15 +388,7 @@ void qemu_input_event_send_key_linux(QemuConsole *src, unsigned int lnx,
- void qemu_input_event_send_key_number(QemuConsole *src, int num, bool down)
- {
-     unsigned int lnx = qemu_input_key_number_to_linux(num);
--    qemu_input_event_send_key_qcode(src, lnx, down);
--}
--
--void qemu_input_event_send_key_qcode(QemuConsole *src, QKeyCode q, bool down)
--{
--    KeyValue *key = g_new0(KeyValue, 1);
--    key->type = KEY_VALUE_KIND_QCODE;
--    key->u.qcode.data = q;
--    qemu_input_event_send_key(src, key, down);
-+    qemu_input_event_send_key_linux(src, lnx, down);
- }
- 
- void qemu_input_event_send_key_delay(uint32_t delay_ms)
-diff --git a/ui/meson.build b/ui/meson.build
-index 1504e27248f3..bb01f0728e28 100644
---- a/ui/meson.build
-+++ b/ui/meson.build
-@@ -1,34 +1,19 @@
- keymaps = [
--  ['atset1', 'qcode'],
-   ['atset1', 'linux'],
-   ['linux', 'qcode'],
--  ['qcode', 'atset1'],
-   ['linux', 'atset1'],
--  ['qcode', 'atset2'],
-   ['linux', 'atset2'],
--  ['qcode', 'atset3'],
-   ['linux', 'atset3'],
-   ['qcode', 'linux'],
--  ['qcode', 'qnum'],
-   ['linux', 'qnum'],
--  ['qcode', 'sun'],
-   ['linux', 'sun'],
--  ['qnum', 'qcode'],
-   ['qnum', 'linux'],
--  ['usb', 'qcode'],
-   ['usb', 'linux'],
--  ['win32', 'qcode'],
-   ['win32', 'linux'],
--  ['x11', 'qcode'],
-   ['x11', 'linux'],
--  ['xorgevdev', 'qcode'],
--  ['xorgkbd', 'qcode'],
-   ['xorgkbd', 'linux'],
--  ['xorgxquartz', 'qcode'],
-   ['xorgxquartz', 'linux'],
--  ['xorgxwin', 'qcode'],
-   ['xorgxwin', 'linux'],
--  ['osx', 'qcode'],
-   ['osx', 'linux'],
- ]
- 
+     /* keyboard */
+     case barrierCmdDKeyDown:
+-        qemu_input_event_send_key_qcode(NULL,
+-                        input_barrier_to_qcode(msg->key.keyid, msg->key.button),
++        qemu_input_event_send_key_linux(NULL,
++                        input_barrier_to_linux(msg->key.keyid, msg->key.button),
+                                         true);
+         break;
+     case barrierCmdDKeyRepeat:
+         for (i = 0; i < msg->repeat.repeat; i++) {
+-            qemu_input_event_send_key_qcode(NULL,
+-                  input_barrier_to_qcode(msg->repeat.keyid, msg->repeat.button),
++            qemu_input_event_send_key_linux(NULL,
++                  input_barrier_to_linux(msg->repeat.keyid, msg->repeat.button),
+                                             false);
+-            qemu_input_event_send_key_qcode(NULL,
+-                  input_barrier_to_qcode(msg->repeat.keyid, msg->repeat.button),
++            qemu_input_event_send_key_linux(NULL,
++                  input_barrier_to_linux(msg->repeat.keyid, msg->repeat.button),
+                                             true);
+         }
+         break;
+     case barrierCmdDKeyUp:
+-        qemu_input_event_send_key_qcode(NULL,
+-                        input_barrier_to_qcode(msg->key.keyid, msg->key.button),
++        qemu_input_event_send_key_linux(NULL,
++                        input_barrier_to_linux(msg->key.keyid, msg->key.button),
+                                         false);
+         break;
+     default:
 
 -- 
 2.54.0
