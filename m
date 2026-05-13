@@ -4,61 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2810CD4851
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 07:03:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E590ACD37B6
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 07:09:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN3ci-0004mv-RA; Wed, 13 May 2026 03:03:16 -0400
+	id 1wN3i9-00079t-B9; Wed, 13 May 2026 03:08:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <min_halo@163.com>)
- id 1wN3ch-0004mT-1E; Wed, 13 May 2026 03:03:15 -0400
-Received: from m16.mail.163.com ([117.135.210.4])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <min_halo@163.com>)
- id 1wN3ca-0006lt-SD; Wed, 13 May 2026 03:03:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=BH
- /Yr+TG6j/hB7YkphAQl0VNju0qXFtUgKtpbE7KB04=; b=TVnRNp5Euz0hPVOUxn
- JjOKrjsV4Nl8ye6PmHl7QO8rw1A7BgOdhMVL4s77/K4jT4X54yGBJFM8d4Em7Zxc
- TTMhohHLU7Wyg76/Bfii2QrAh5BAuy4fPRhAcUfU9NWFJAIxDPALGjqn+v9A1Zoi
- phF0FwXNI/fHdScwiEQ/c9OKc=
-Received: from thinkpadx13gen2i.. (unknown [])
- by gzga-smtp-mtada-g0-4 (Coremail) with SMTP id
- _____wDXD0f+IQRqW951BA--.20095S3; 
- Wed, 13 May 2026 15:02:34 +0800 (CST)
-From: Zongmin Zhou <min_halo@163.com>
-To: daniel.barboza@oss.qualcomm.com, alistair.francis@wdc.com,
- chao.liu.zevorn@gmail.com, liwei1518@gmail.com, palmer@dabbelt.com,
- zhiwei_liu@linux.alibaba.com
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- Zongmin Zhou <zhouzongmin@kylinos.cn>
-Subject: [PATCH v2 1/2] target/riscv/kvm: add KVM support for Zicbop extension
-Date: Wed, 13 May 2026 15:02:10 +0800
-Message-Id: <9e388aa9984ea9d3d0c85e1630c9195023938952.1778653159.git.zhouzongmin@kylinos.cn>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <cover.1778653159.git.zhouzongmin@kylinos.cn>
-References: <cover.1778653159.git.zhouzongmin@kylinos.cn>
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wN3i7-00079c-Fe
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 03:08:51 -0400
+Received: from mail-dy1-x1342.google.com ([2607:f8b0:4864:20::1342])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wN3i5-0001jf-SR
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 03:08:51 -0400
+Received: by mail-dy1-x1342.google.com with SMTP id
+ 5a478bee46e88-2f3c623322bso10757522eec.0
+ for <qemu-devel@nongnu.org>; Wed, 13 May 2026 00:08:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1778656128; x=1779260928; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=W7RmiyqkufH8faptTWJNNDfEchSyFv6XKkn60TvC9DM=;
+ b=R55a4x/lIK8EkSUfBh3m4v4FVdUfj5j0/qJQRF72DAEiKgpBn7qBPg9zRiBqM4hf8H
+ LzqJV1IvKBM7bMeSIGffCUoxMrirAh1mcVz8B1coHKba1kO8CrLZD9ytJM7Kb/fr2uzs
+ DWT286gZT49iUQeG0nwiE0VPhm2MShw3r4Kl6ITkTpiH5q/9omzT/YKFXSPX6RgnAV1V
+ UlgnnU+yiQsPwEL5iQToGW1j8EJjMDG7xt6mKtw/BfsFHts2Qk4TBT4WaFk/LLRVLr++
+ /YqxhtPRfhPQ+v+eiXlnAQHy2JXyeGdsVi8j1ivK5B61/oHdKatMW6Rrpgq5MwKTDG+N
+ BsOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778656128; x=1779260928;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=W7RmiyqkufH8faptTWJNNDfEchSyFv6XKkn60TvC9DM=;
+ b=F20o/nUYzekJwVWXLAxPWAdGGKsZkTlWdwUbzW5oGFCPM3XG+233g+eaqC2Weou0Bc
+ 88W6etXp9J4FwsmnI4gqUSLrzWY+ZH5b90WYmmXVt0VnIvLGd3CDJksO4NwMSFC03qWZ
+ tfq/QyRXYbWDHJ2Ep2Wn1pe1BMFj2cX1e3DjIcseNzUuxZsu4DIByp98mukJshhbavUl
+ BoMDSveAukmUuqE6wURJfc+yTdgDdxFP8LL7iD6Dkn8guDFYQCyM4/sBKTJcFtUsbYFK
+ ErD2YhueluJybzu3nY9nwbaYsata/3PMY8Ebarx4QeYh0/BTOYv3pVlG32UE37IVPeMm
+ etzA==
+X-Gm-Message-State: AOJu0YxMR16tpmqe0UKr+vnj7yrxx2VeQxmIZLJHcJnIcniQShPgw734
+ zzQBPG25ut+iQYGC9tq9Z4xAE5Int1idNH6CGUqHlyyGXU2O9GkCNEUN
+X-Gm-Gg: Acq92OEYSA7WmG/g0Kc8F3hifqYk54LQOVS6/8YfXOk/t2gpfhWisurnLnOowiNmruA
+ HmrSY5VGWBtyLaLj54CK0PPI4ThdfcekuOUqiRSiggQWcrtD/vPI3phQzFjuSU2upddJ+OU4vtM
+ 4W2wsBcaB+aSWm1pd7U+Lz71Gb/usmAPb8dJln6jDQCWunBsQ5UICd+zta1NLm3HRcvfFuZzqH1
+ ylAeWdbs5G+4hGUXHqI0Ko2AHQYX1paLcr4eXiwLa/HpsnX8ppzhpvADnZOAuvYfrfybsHPBwxl
+ vcDJRflUZvI9ZddNSL6vXt81Gis+VSJBe/38JeHGOdn7o6jIuSclg31khnkuA7Y0CKJe2axgr5R
+ S+CyV5pEqCi3QTgMoBzm2BA3h/eO1oP6rOGJnzXyb+SxWMWwX2v2ZiY2EChJso1k8XUz4mNcJce
+ rz2xhyFimYDQpzxcFnzB4G/fDmIMyftuXP5jzS7CIrU3TY1IJ0+IPWifoYAdwvFEh7O/lYG2nmS
+ eaUyI03EVWxKScWD+HD4flJL8DVUjj9AnKiHnk=
+X-Received: by 2002:a05:693c:2b0f:b0:2ea:5057:a304 with SMTP id
+ 5a478bee46e88-30153adf667mr848827eec.2.1778656128020; 
+ Wed, 13 May 2026 00:08:48 -0700 (PDT)
+Received: from ZEVORN-PC.tail6b0429.ts.net ([38.95.120.198])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2f88885b820sm20744532eec.20.2026.05.13.00.08.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 13 May 2026 00:08:47 -0700 (PDT)
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: armbru@redhat.com,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org,
+	Chao Liu <chao.liu.zevorn@gmail.com>
+Subject: [PATCH] MAINTAINERS: Add myself as a reviewer for Checkpatch
+Date: Wed, 13 May 2026 15:08:30 +0800
+Message-ID: <20260513070830.851842-1-chao.liu.zevorn@gmail.com>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wDXD0f+IQRqW951BA--.20095S3
-X-Coremail-Antispam: 1Uf129KBjvJXoWxXw17Wr43tFWDAw45Zr1UWrg_yoW5ZF1Upr
- 47Cw45CFyUZr13C3yfXr1kXF1Sgw4kCa1kG39293W7XF47CrWIgryvya45AF4UtF1fZrs8
- ZF1vgr48ur4UJFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07U_DGOUUUUU=
-X-Originating-IP: [116.128.244.169]
-X-CM-SenderInfo: pplqsxxdorqiywtou0bp/xtbC0gsm0WoEIgt0qwAA32
-Received-SPF: pass client-ip=117.135.210.4; envelope-from=min_halo@163.com;
- helo=m16.mail.163.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1342;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1342.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,94 +102,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zongmin Zhou <zhouzongmin@kylinos.cn>
+Add myself as a reviewer for the Checkpatch module, so I can help
+review related patches and continue maintaining it.
 
-When the Zicbop extension is available expose it to the KVM guest.
-Also read and validate cbop_blocksize from the host via KVM interface.
-
-Signed-off-by: Zongmin Zhou <zhouzongmin@kylinos.cn>
+Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
 ---
-Changes in v2:
-- Removed Zicbop from legacy KVM extension reading path since
-  the extension did not exist in older kernels. (Daniel Henrique Barboza)
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
- target/riscv/kvm/kvm-cpu.c | 34 ++++++++++++++++++++++++++++++++--
- 1 file changed, 32 insertions(+), 2 deletions(-)
-
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index b047ffa9c0..608495630f 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -293,6 +293,7 @@ static void kvm_cpu_csr_set_u64(RISCVCPU *cpu, KVMCPUConfig *csr_cfg,
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 93a1e4e482..4914fa02a3 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3739,6 +3739,7 @@ F: hw/pci/pcie_doe.c
+ F: docs/specs/spdm.rst
  
- static KVMCPUConfig kvm_multi_ext_cfgs[] = {
-     KVM_EXT_CFG("zicbom", ext_zicbom, KVM_RISCV_ISA_EXT_ZICBOM),
-+    KVM_EXT_CFG("zicbop", ext_zicbop, KVM_RISCV_ISA_EXT_ZICBOP),
-     KVM_EXT_CFG("zicboz", ext_zicboz, KVM_RISCV_ISA_EXT_ZICBOZ),
-     KVM_EXT_CFG("ziccrse", ext_ziccrse, KVM_RISCV_ISA_EXT_ZICCRSE),
-     KVM_EXT_CFG("zicntr", ext_zicntr, KVM_RISCV_ISA_EXT_ZICNTR),
-@@ -439,6 +440,12 @@ static KVMCPUConfig kvm_cboz_blocksize = {
-     .kvm_reg_id = KVM_REG_RISCV_CONFIG_REG(zicboz_block_size)
- };
+ Checkpatch
++R: Chao Liu <chao.liu.zevorn@gmail.com>
+ S: Odd Fixes
+ F: scripts/checkpatch.pl
  
-+static KVMCPUConfig kvm_cbop_blocksize = {
-+    .name = "cbop_blocksize",
-+    .offset = CPU_CFG_OFFSET(cbop_blocksize),
-+    .kvm_reg_id = KVM_REG_RISCV_CONFIG_REG(zicbop_block_size)
-+};
-+
- static KVMCPUConfig kvm_v_vlenb = {
-     .name = "vlenb",
-     .offset = CPU_CFG_OFFSET(vlenb),
-@@ -1293,6 +1300,10 @@ static void kvm_riscv_init_cfg(RISCVCPU *cpu, KVMScratchCPU *kvmcpu)
-         kvm_riscv_read_cbomz_blksize(cpu, kvmcpu, &kvm_cbom_blocksize);
-     }
- 
-+    if (cpu->cfg.ext_zicbop) {
-+        kvm_riscv_read_cbomz_blksize(cpu, kvmcpu, &kvm_cbop_blocksize);
-+    }
-+
-     if (cpu->cfg.ext_zicboz) {
-         kvm_riscv_read_cbomz_blksize(cpu, kvmcpu, &kvm_cboz_blocksize);
-     }
-@@ -2014,8 +2025,8 @@ void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
-     int ret;
- 
-     /* short-circuit without spinning the scratch CPU */
--    if (!cpu->cfg.ext_zicbom && !cpu->cfg.ext_zicboz &&
--        !riscv_has_ext(env, RVV)) {
-+    if (!cpu->cfg.ext_zicbom && !cpu->cfg.ext_zicbop &&
-+        !cpu->cfg.ext_zicboz && !riscv_has_ext(env, RVV)) {
-         return;
-     }
- 
-@@ -2062,6 +2073,25 @@ void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
-         }
-     }
- 
-+    if (cpu->cfg.ext_zicbop &&
-+        riscv_cpu_option_set(kvm_cbop_blocksize.name)) {
-+
-+        reg.id = KVM_RISCV_REG_ID_ULONG(KVM_REG_RISCV_CONFIG,
-+                                        kvm_cbop_blocksize.kvm_reg_id);
-+        reg.addr = (uint64_t)&val;
-+        ret = ioctl(kvmcpu.cpufd, KVM_GET_ONE_REG, &reg);
-+        if (ret != 0) {
-+            error_setg_errno(errp, errno, "Unable to read cbop_blocksize");
-+            return;
-+        }
-+
-+        if (cpu->cfg.cbop_blocksize != val) {
-+            error_setg(errp, "Unable to set cbop_blocksize to a different "
-+                       "value than the host (%lu)", val);
-+            return;
-+        }
-+    }
-+
-     /* Users are setting vlen, not vlenb */
-     if (riscv_has_ext(env, RVV) && riscv_cpu_option_set("vlen")) {
-         if (!kvm_v_vlenb.supported) {
--- 
-2.43.0
-
 
