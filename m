@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8003CD4F35
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 10:58:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D2BCCD4F39
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 10:59:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN7Ht-0004dt-N8; Wed, 13 May 2026 06:58:03 -0400
+	id 1wN7Hx-0004gR-Ty; Wed, 13 May 2026 06:58:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1wN7Fd-0003B0-S9
- for qemu-devel@nongnu.org; Wed, 13 May 2026 06:55:45 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1wN7Fi-0003BZ-6Z
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 06:55:47 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1wN7FW-0001Pn-ML
- for qemu-devel@nongnu.org; Wed, 13 May 2026 06:55:39 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4891b0786beso42148655e9.1
- for <qemu-devel@nongnu.org>; Wed, 13 May 2026 03:55:32 -0700 (PDT)
+ id 1wN7Fd-0001Ty-A9
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 06:55:45 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-488a88aeec9so73871015e9.2
+ for <qemu-devel@nongnu.org>; Wed, 13 May 2026 03:55:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778669731; x=1779274531; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778669737; x=1779274537; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GS/wUy7boJDog0agfUbFYttKDqh3+z3QUYK5SWkB2fc=;
- b=lGto6SktLl18uolYVhfQ6c6/GilVFND7Uypp54bhEIi6kwcnwepCKLeUBGDPP/pZkU
- vPU4HMZCKJGeJI86RGx1l3E0igPuQtBYuKuGvcVE4PgYs8kNHDgCbiYXy4AXeEbxzg1y
- 5x/jkoEA3RvtYGIkhXSaavNM0MGUAtpqLOpcrAIkJCKP/FojIhayjadd6gvmbEbnfT17
- 4DzRBxnOEpDj+3by8obPGjugHw9EI6Nv9hjRUA66thqRocA2z+mrJNmCn/JDDZNtPxc3
- ZTbZjP+KsPK4I4r7x+Smcyo+fnXKGH6zfJexO6rGoKDdVnDPCt07YjZ7jmvIAnur2F3e
- J76Q==
+ bh=bN8pCQefCtNsnBDpXB7hEGPTq2VEcqB0gokfyFY1mgk=;
+ b=cTdjvhpL9e+wMZGfwSoA1GiXt8hTDchNr0HtzgDPwnjxvDAXDs3qgqyZT+SV/CnSu3
+ mo39pdtgNcmhICb4ADpW24JPT2tfyXnSH8WrWN1OiHqC0Un4ZxBDGmBpu3Ntb8xdoqkm
+ DRcGAudtf8OVgL2zJu25HtqX7CjqA20IyVvtIc5L09npwd3WGwmYkteXQNCYRzl0m75E
+ qoLyPmuzzJKTo79SIzoyUUKW36nIbWhc7Nz4J3vby2kpip9TbrMvDjV5qWzaJBU8HUeC
+ N2b+pxh7cmK6nnikfvu1hlzmaRidbpYID05JnzjB/IrFZUQlqc4nzIcxIlqNInmtU7rA
+ vP+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778669731; x=1779274531;
+ d=1e100.net; s=20251104; t=1778669737; x=1779274537;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=GS/wUy7boJDog0agfUbFYttKDqh3+z3QUYK5SWkB2fc=;
- b=ER45I8+jr0T/A5rGPvBpa/yF5d3Jc1riItzemhy+wj/35c9v5Ohec10bSVUqOAatXy
- ZXClajUHFAWwKCeMLqykIZxc63zXznbOg8hX2vXLBf0FcasgG4GC7TmQPcvJVSBanjVZ
- KLC8TRwP6TbMR9TKYaxbI4UN7DwgM9Y30DvWYnn9eveWGegfzCBQRKjc9G4k7O+VUgUn
- VoTcMFYe80oqEfE7S4e4K2IBRYKAQoMpxJPGQ17RiHoeEXT1DVBB/9izd9pPYj/xG/wz
- DtMrKKkJWKxwLjZChUc60/RgAld+0gbelWVXLQcFLXEGSTRWQpR66IqXiO5Nyf5AyCBI
- EqHw==
-X-Gm-Message-State: AOJu0Yzok8JqAVLtmBBV1hqDJofCRyh1NL/W0dtw3/xYhA1UchJPa0Ul
- KoirBcEJHXu2ZYQDJW1WzDKgSGtXmg0qlL2+REtum/A6i4hCP+nnoH5jT8S5NL+R
-X-Gm-Gg: Acq92OGpOiEvN3J1at6JMnFq1oQvK2YelR5A9gPY8JCO4890GMRWMeC2LdLNTW5wYQI
- ZheNkol+33R5eqvkS2kcwf4FdjDl2VmjBSaTmK6DpQEJlFYmJmAUMTRiok3B5AcCXa7iN1GPOHL
- YWUXRexiBHxdOKC7oFgYATMsBV3sjDtxCFDrE2wv6oUWenrTzUdO7qbL1qZk5R1aAffFn23JtF4
- bteRY1g984sFy2bM5f+KGnuGus5/xI2/Icy6NUaL4QNNTECgfEtBjwpPfTislTFIvPiUAYkHFj/
- NNeK1RU3RSHz/JZxlrgoAbkLMBvmBkmVEkhz01n02gWSzoMA+g4yBVoMgKTVrwZjGCO+UetFguC
- Ry0c2mTv4w7om3jC8xHvPgWgJOmT2IhyKkaMXENidNk7Lfn02oT0PLJESsvwb0nlTRedKK9gZD+
- F2i02V3axGPhYOeD/UeVw5muSs7fEFf/667l+GwrK9fAiP
-X-Received: by 2002:a05:600c:474a:b0:48a:5501:7995 with SMTP id
- 5b1f17b1804b1-48fce9ef1c3mr30788205e9.18.1778669731330; 
- Wed, 13 May 2026 03:55:31 -0700 (PDT)
+ bh=bN8pCQefCtNsnBDpXB7hEGPTq2VEcqB0gokfyFY1mgk=;
+ b=ePknB5pG/aaf06ieW4yA2/BLMgEUevwmvbrSaEoW18S2JUmrlqNFEngiN205xUHXUp
+ rPFCo2AnuLgcDz4nNmHGHw2jggVZO13CE8JYeFIOuWMk7Z618i9qvRkRIOQfDDJvvI4d
+ S1d8RZ3jeNcWcMDoYpVU3lEuqmYgP1qlrm/yKdl9hbdIWgvb+uWPRrRVmccNDuw6exvu
+ gxAO7j0l557112i/CtSrwWhGtf6KZHyDawmsaal5RfMLB4CfMavLMuXGNTJAWk+MG3QS
+ ARmsrrlhb4yCm9ALqg8Qgcz2OW+iv7FOehc/gYePgIC83K0AKw36aXCIB40+jAWybAwm
+ jhzw==
+X-Gm-Message-State: AOJu0YzfaBejnlO+d9Mx6NY1B//xT63S2aSF5tF2izhArNiZXt3yWx4X
+ BMfp32F+u6Y64sIOE8f0i0f3XmzxzergzdjAMPS3dEzUy3v16GM+2hIFmqLDGRYr
+X-Gm-Gg: Acq92OGcclMpZQgQgNv5wKBKXeroLkCpg0+W4z2pwn79+ge1hUN/lmsw7XU4D/xQdVY
+ DhqQwgiqFzEC3Tt0xLKP2rWaYTmgpVv8O34iMPlx90JHZIMPedmZ+4FdvX5iKo2WqqhnYiPnmy4
+ CRmMLsGZTWHHwzAtyIWmdim8ei6AYfHhgmAbDEY2bYKI+ENyBrSj9kqVZCG8E+LJwo4/n/pPZ2r
+ isEh3IUXagwImPT03STOPZugt8+1Y7DxdBiOuxaLe1eMmCJzrL2u6PxKwmqZpsXydowqDxeXbtE
+ gtwtP/f7kl5BeE3ZLZzwnBsQiWkSFqH9znbl9cokfVXlk+H/nZ1SvQNTSVaGR5E+i6uMw27u56T
+ Tc43/+tlSC561ZzL7lX6scXq/7N5Q32ONHSbWCXnHTG/TLxzqomSvEliIsFPFqb3dGkiQYP/YIw
+ NUkqNVSQRo65n0iTZIOAFtK1eydQh8VhbcPQYo+nLAqzO1
+X-Received: by 2002:a05:600c:a48:b0:48a:52ee:5776 with SMTP id
+ 5b1f17b1804b1-48fc9a0ef80mr40843965e9.11.1778669737373; 
+ Wed, 13 May 2026 03:55:37 -0700 (PDT)
 Received: from PC-DA2D10.beckhoff.com ([195.226.174.196])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e8f410d9fsm56062295e9.6.2026.05.13.03.55.29
+ 5b1f17b1804b1-48e8f410d9fsm56062295e9.6.2026.05.13.03.55.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 May 2026 03:55:30 -0700 (PDT)
+ Wed, 13 May 2026 03:55:37 -0700 (PDT)
 From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
@@ -76,23 +76,23 @@ Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
  Alistair Francis <alistair@alistair23.me>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  YannickV <Y.Vossen@beckhoff.com>
-Subject: [PATCH v6 08/15] hw/misc: Add dummy ZYNQ DDR controller
-Date: Wed, 13 May 2026 12:55:10 +0200
-Message-ID: <20260513105517.146706-9-corvin.koehne@gmail.com>
+Subject: [PATCH v6 13/15] hw/arm/xilinx_zynq: Add flash-type property
+Date: Wed, 13 May 2026 12:55:15 +0200
+Message-ID: <20260513105517.146706-14-corvin.koehne@gmail.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260513105517.146706-1-corvin.koehne@gmail.com>
 References: <20260513105517.146706-1-corvin.koehne@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=corvin.koehne@gmail.com; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=corvin.koehne@gmail.com; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,660 +110,91 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: YannickV <Y.Vossen@beckhoff.com>
 
-A dummy DDR controller for ZYNQ has been added. While all registers are present,
-not all are functional. Read and write access is validated, and the user mode
-can be set. This provides a basic DDR controller initialization, preventing
-system hangs due to endless polling or similar issues.
+Read flash-type value as machine property and set the flash type
+accordingly.
 
 Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
 ---
- hw/arm/xilinx_zynq.c             |  16 +-
- hw/misc/Kconfig                  |   3 +
- hw/misc/meson.build              |   1 +
- hw/misc/xlnx-zynq-ddrc.c         | 413 +++++++++++++++++++++++++++++++
- include/hw/misc/xlnx-zynq-ddrc.h | 148 +++++++++++
- 5 files changed, 578 insertions(+), 3 deletions(-)
- create mode 100644 hw/misc/xlnx-zynq-ddrc.c
- create mode 100644 include/hw/misc/xlnx-zynq-ddrc.h
+ hw/arm/xilinx_zynq.c         | 25 ++++++++++++++++++++-----
+ include/hw/arm/xilinx_zynq.h |  1 +
+ 2 files changed, 21 insertions(+), 5 deletions(-)
 
 diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
-index 9dcded9219..66a4480cc8 100644
+index 6c83439017..41085a3127 100644
 --- a/hw/arm/xilinx_zynq.c
 +++ b/hw/arm/xilinx_zynq.c
-@@ -201,6 +201,17 @@ static void zynq_set_boot_mode(Object *obj, const char *str,
+@@ -120,7 +120,8 @@ static void gem_init(uint32_t base, qemu_irq irq)
+ }
+ 
+ static inline int zynq_init_spi_flashes(uint32_t base_addr, qemu_irq irq,
+-                                        bool is_qspi, int unit0)
++                                        bool is_qspi, int unit0,
++                                        const char *flash_type)
+ {
+     int unit = unit0;
+     DeviceState *dev;
+@@ -152,7 +153,7 @@ static inline int zynq_init_spi_flashes(uint32_t base_addr, qemu_irq irq,
+ 
+         for (j = 0; j < num_ss; ++j) {
+             DriveInfo *dinfo = drive_get(IF_MTD, 0, unit++);
+-            flash_dev = qdev_new("n25q128");
++            flash_dev = qdev_new(flash_type);
+             if (dinfo) {
+                 qdev_prop_set_drive_err(flash_dev, "drive",
+                                         blk_by_legacy_dinfo(dinfo),
+@@ -190,6 +191,14 @@ static void zynq_set_boot_mode(Object *obj, const char *str,
      m->boot_mode = mode;
  }
  
-+static void ddr_ctrl_init(uint32_t base)
++static void zynq_set_flash_type(Object *obj, const char *str,
++                                                Error **errp)
 +{
-+    DeviceState *dev;
-+    SysBusDevice *busdev;
-+
-+    dev = qdev_new("zynq.ddr-ctlr");
-+    busdev = SYS_BUS_DEVICE(dev);
-+    sysbus_realize_and_unref(busdev, &error_fatal);
-+    sysbus_mmio_map(busdev, 0, base);
++    ZynqMachineState *m = ZYNQ_MACHINE(obj);
++    g_free(m->flash_type);
++    m->flash_type = g_strdup(str);
 +}
 +
- static void zynq_init(MachineState *machine)
+ static void ddr_ctrl_init(uint32_t base)
  {
-     ZynqMachineState *zynq_machine = ZYNQ_MACHINE(machine);
-@@ -312,6 +323,8 @@ static void zynq_init(MachineState *machine)
-     sysbus_create_varargs("cadence_ttc", 0xF8002000,
-             pic[69-GIC_INTERNAL], pic[70-GIC_INTERNAL], pic[71-GIC_INTERNAL], NULL);
+     DeviceState *dev;
+@@ -283,9 +292,12 @@ static void zynq_init(MachineState *machine)
+         pic[n] = qdev_get_gpio_in(dev, n);
+     }
  
-+    ddr_ctrl_init(0xF8006000);
-+
-     gem_init(0xE000B000, pic[54 - GIC_INTERNAL]);
-     gem_init(0xE000C000, pic[77 - GIC_INTERNAL]);
+-    n = zynq_init_spi_flashes(0xE0006000, pic[58 - GIC_INTERNAL], false, 0);
+-    n = zynq_init_spi_flashes(0xE0007000, pic[81 - GIC_INTERNAL], false, n);
+-    n = zynq_init_spi_flashes(0xE000D000, pic[51 - GIC_INTERNAL], true, n);
++    n = zynq_init_spi_flashes(0xE0006000, pic[58 - GIC_INTERNAL], false, 0,
++                              zynq_machine->flash_type);
++    n = zynq_init_spi_flashes(0xE0007000, pic[81 - GIC_INTERNAL], false, n,
++                              zynq_machine->flash_type);
++    n = zynq_init_spi_flashes(0xE000D000, pic[51 - GIC_INTERNAL], true, n,
++                              zynq_machine->flash_type);
  
-@@ -393,9 +406,6 @@ static void zynq_init(MachineState *machine)
-     /* System Watchdog Timer Registers */
-     create_unimplemented_device("zynq.swdt", 0xF8005000, 4 * KiB);
+     sysbus_create_simple(TYPE_CHIPIDEA, 0xE0002000, pic[53 - GIC_INTERNAL]);
+     sysbus_create_simple(TYPE_CHIPIDEA, 0xE0003000, pic[76 - GIC_INTERNAL]);
+@@ -473,6 +485,9 @@ static void zynq_machine_class_init(ObjectClass *oc, const void *data)
+                                           "Supported boot modes:"
+                                           " jtag qspi sd nor");
+     object_property_set_default_str(prop, "qspi");
++
++    prop = object_class_property_add_str(oc, "flash-type", NULL, zynq_set_flash_type);
++    object_property_set_default_str(prop, "n25q128");
+ }
  
--    /* DDR memory controller */
--    create_unimplemented_device("zynq.ddrc", 0xF8006000, 4 * KiB);
--
-     /* AXI_HP Interface (AFI) */
-     create_unimplemented_device("zynq.axi_hp0", 0xF8008000, 0x28);
-     create_unimplemented_device("zynq.axi_hp1", 0xF8009000, 0x28);
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 99bdf09219..1543ee6653 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -254,4 +254,7 @@ config IOSB
- config XLNX_VERSAL_TRNG
-     bool
+ static const TypeInfo zynq_machine_type = {
+diff --git a/include/hw/arm/xilinx_zynq.h b/include/hw/arm/xilinx_zynq.h
+index 0337d238ea..1720ca0db7 100644
+--- a/include/hw/arm/xilinx_zynq.h
++++ b/include/hw/arm/xilinx_zynq.h
+@@ -31,6 +31,7 @@ struct ZynqMachineState {
+     Clock *ps_clk;
+     ARMCPU *cpu[ZYNQ_MAX_CPUS];
+     uint8_t boot_mode;
++    char *flash_type;
+ };
  
-+config XLNX_ZYNQ_DDRC
-+    bool
-+
- source macio/Kconfig
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index fa6a961ac9..3b7f908d9d 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -97,6 +97,7 @@ system_ss.add(when: 'CONFIG_RASPI', if_true: files(
- ))
- system_ss.add(when: 'CONFIG_SLAVIO', if_true: files('slavio_misc.c'))
- system_ss.add(when: 'CONFIG_ZYNQ', if_true: files('zynq_slcr.c'))
-+system_ss.add(when: 'CONFIG_ZYNQ', if_true: files('xlnx-zynq-ddrc.c'))
- system_ss.add(when: 'CONFIG_XLNX_ZYNQMP_ARM', if_true: files('xlnx-zynqmp-crf.c'))
- system_ss.add(when: 'CONFIG_XLNX_ZYNQMP_ARM', if_true: files('xlnx-zynqmp-apu-ctrl.c'))
- system_ss.add(when: 'CONFIG_XLNX_VERSAL', if_true: files(
-diff --git a/hw/misc/xlnx-zynq-ddrc.c b/hw/misc/xlnx-zynq-ddrc.c
-new file mode 100644
-index 0000000000..3a41180f5c
---- /dev/null
-+++ b/hw/misc/xlnx-zynq-ddrc.c
-@@ -0,0 +1,413 @@
-+/*
-+ * QEMU model of the Xilinx Zynq Double Data Rate Controller
-+ *
-+ * Copyright (c) Beckhoff Automation GmbH. & Co. KG
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/core/sysbus.h"
-+#include "hw/core/register.h"
-+#include "qemu/bitops.h"
-+#include "qemu/log.h"
-+#include "qapi/error.h"
-+#include "hw/core/registerfields.h"
-+#include "system/block-backend.h"
-+#include "system/address-spaces.h"
-+#include "system/memory.h"
-+#include "system/dma.h"
-+#include "hw/misc/xlnx-zynq-ddrc.h"
-+#include "migration/vmstate.h"
-+
-+#ifndef DDRCTRL_ERR_DEBUG
-+#define DDRCTRL_ERR_DEBUG 0
-+#endif
-+
-+static void zynq_ddrctrl_post_write(RegisterInfo *reg, uint64_t val)
-+{
-+    DDRCTRLState *s = DDRCTRL(reg->opaque);
-+    if (reg->access->addr == A_DDRC_CTRL) {
-+        if (val & 0x1) {
-+            s->reg[R_MODE_STS_REG] |=
-+                (R_MODE_STS_REG_DDR_REG_OPERATING_MODE_MASK & 0x1);
-+        } else {
-+            s->reg[R_MODE_STS_REG] &=
-+                ~R_MODE_STS_REG_DDR_REG_OPERATING_MODE_MASK;
-+        }
-+    }
-+}
-+
-+static const RegisterAccessInfo xlnx_zynq_ddrc_regs_info[] = {
-+    /* 0x00 - 0x3C: Basic DDRC control and config */
-+    { .name = "DDRC_CTRL",
-+      .addr = A_DDRC_CTRL,
-+      .reset = 0x00000200,
-+      .post_write = zynq_ddrctrl_post_write },
-+    { .name = "TWO_RANK_CFG",
-+      .addr = A_TWO_RANK_CFG,
-+      .reset = 0x000C1076 },
-+    { .name = "HPR_REG",
-+      .addr = A_HPR_REG,
-+      .reset = 0x03C0780F },
-+    { .name = "LPR_REG",
-+      .addr = A_LPR_REG,
-+      .reset = 0x03C0780F },
-+    { .name = "WR_REG",
-+      .addr = A_WR_REG,
-+      .reset = 0x0007F80F },
-+    { .name = "DRAM_PARAM_REG0",
-+      .addr = A_DRAM_PARAM_REG0,
-+      .reset = 0x00041016 },
-+    { .name = "DRAM_PARAM_REG1",
-+      .addr = A_DRAM_PARAM_REG1,
-+      .reset = 0x351B48D9 },
-+    { .name = "DRAM_PARAM_REG2",
-+      .addr = A_DRAM_PARAM_REG2,
-+      .reset = 0x83015904 },
-+    { .name = "DRAM_PARAM_REG3",
-+      .addr = A_DRAM_PARAM_REG3,
-+      .reset = 0x250882D0 },
-+    { .name = "DRAM_PARAM_REG4",
-+      .addr = A_DRAM_PARAM_REG4,
-+      .reset = 0x0000003C },
-+    { .name = "DRAM_INIT_PARAM",
-+      .addr = A_DRAM_INIT_PARAM,
-+      .reset = 0x00002007 },
-+    { .name = "DRAM_EMR_REG",
-+      .addr = A_DRAM_EMR_REG,
-+      .reset = 0x00000008 },
-+    { .name = "DRAM_EMR_MR_REG",
-+      .addr = A_DRAM_EMR_MR_REG,
-+      .reset = 0x00000940 },
-+    { .name = "DRAM_BURST8_RDWR",
-+      .addr = A_DRAM_BURST8_RDWR,
-+      .reset = 0x00020034 },
-+    { .name = "DRAM_DISABLE_DQ",
-+      .addr = A_DRAM_DISABLE_DQ },
-+    { .name = "DRAM_ADDR_MAP_BANK",
-+      .addr = A_DRAM_ADDR_MAP_BANK,
-+      .reset = 0x00000F77 },
-+    { .name = "DRAM_ADDR_MAP_COL",
-+      .addr = A_DRAM_ADDR_MAP_COL,
-+      .reset = 0xFFF00000 },
-+    { .name = "DRAM_ADDR_MAP_ROW",
-+      .addr = A_DRAM_ADDR_MAP_ROW,
-+      .reset = 0x0FF55555 },
-+    { .name = "DRAM_ODT_REG",
-+      .addr = A_DRAM_ODT_REG,
-+      .reset = 0x00000249 },
-+
-+    /* 0x4C - 0x5C: PHY and DLL */
-+    { .name = "PHY_DBG_REG",
-+      .addr = A_PHY_DBG_REG },
-+    { .name = "PHY_CMD_TIMEOUT_RDDATA_CPT",
-+      .addr = A_PHY_CMD_TIMEOUT_RDDATA_CPT,
-+      .reset = 0x00010200 },
-+    { .name = "MODE_STS_REG",
-+      .addr = A_MODE_STS_REG },
-+    { .name = "DLL_CALIB",
-+      .addr = A_DLL_CALIB,
-+      .reset = 0x00000101 },
-+    { .name = "ODT_DELAY_HOLD",
-+      .addr = A_ODT_DELAY_HOLD,
-+      .reset = 0x00000023 },
-+
-+    /* 0x60 - 0x7C: Control registers */
-+    { .name = "CTRL_REG1",
-+      .addr = A_CTRL_REG1,
-+      .reset = 0x0000003E },
-+    { .name = "CTRL_REG2",
-+      .addr = A_CTRL_REG2,
-+      .reset = 0x00020000 },
-+    { .name = "CTRL_REG3",
-+      .addr = A_CTRL_REG3,
-+      .reset = 0x00284027 },
-+    { .name = "CTRL_REG4",
-+      .addr = A_CTRL_REG4,
-+      .reset = 0x00001610 },
-+    { .name = "CTRL_REG5",
-+      .addr = A_CTRL_REG5,
-+      .reset = 0x00455111 },
-+    { .name = "CTRL_REG6",
-+      .addr = A_CTRL_REG6,
-+      .reset = 0x00032222 },
-+
-+    /* 0xA0 - 0xB4: Refresh, ZQ, powerdown, misc */
-+    { .name = "CHE_REFRESH_TIMER0",
-+      .addr = A_CHE_REFRESH_TIMER0,
-+      .reset = 0x00008000 },
-+    { .name = "CHE_T_ZQ",
-+      .addr = A_CHE_T_ZQ,
-+      .reset = 0x10300802 },
-+    { .name = "CHE_T_ZQ_SHORT_INTERVAL_REG",
-+      .addr = A_CHE_T_ZQ_SHORT_INTERVAL_REG,
-+      .reset = 0x0020003A },
-+    { .name = "DEEP_PWRDWN_REG",
-+      .addr = A_DEEP_PWRDWN_REG },
-+    { .name = "REG_2C",
-+      .addr = A_REG_2C },
-+    { .name = "REG_2D",
-+      .addr = A_REG_2D,
-+      .reset = 0x00000200 },
-+
-+    /* 0xB8 - 0xF8: ECC, DFI, etc. */
-+    { .name = "DFI_TIMING",
-+      .addr = A_DFI_TIMING,
-+      .reset = 0x00200067 },
-+    { .name = "CHE_ECC_CONTROL_REG_OFFSET",
-+      .addr = A_CHE_ECC_CONTROL_REG_OFFSET },
-+    { .name = "CHE_CORR_ECC_LOG_REG_OFFSET",
-+      .addr = A_CHE_CORR_ECC_LOG_REG_OFFSET },
-+    { .name = "CHE_CORR_ECC_ADDR_REG_OFFSET",
-+      .addr = A_CHE_CORR_ECC_ADDR_REG_OFFSET },
-+    { .name = "CHE_CORR_ECC_DATA_31_0_REG_OFFSET",
-+      .addr = A_CHE_CORR_ECC_DATA_31_0_REG_OFFSET },
-+    { .name = "CHE_CORR_ECC_DATA_63_32_REG_OFFSET",
-+      .addr = A_CHE_CORR_ECC_DATA_63_32_REG_OFFSET },
-+    { .name = "CHE_CORR_ECC_DATA_71_64_REG_OFFSET",
-+      .addr = A_CHE_CORR_ECC_DATA_71_64_REG_OFFSET },
-+    { .name = "CHE_UNCORR_ECC_LOG_REG_OFFSET",
-+      .addr = A_CHE_UNCORR_ECC_LOG_REG_OFFSET },
-+    { .name = "CHE_UNCORR_ECC_ADDR_REG_OFFSET",
-+      .addr = A_CHE_UNCORR_ECC_ADDR_REG_OFFSET },
-+    { .name = "CHE_UNCORR_ECC_DATA_31_0_REG_OFFSET",
-+      .addr = A_CHE_UNCORR_ECC_DATA_31_0_REG_OFFSET },
-+    { .name = "CHE_UNCORR_ECC_DATA_63_32_REG_OFFSET",
-+      .addr = A_CHE_UNCORR_ECC_DATA_63_32_REG_OFFSET },
-+    { .name = "CHE_UNCORR_ECC_DATA_71_64_REG_OFFSET",
-+      .addr = A_CHE_UNCORR_ECC_DATA_71_64_REG_OFFSET },
-+    { .name = "CHE_ECC_STATS_REG_OFFSET",
-+      .addr = A_CHE_ECC_STATS_REG_OFFSET },
-+    { .name = "ECC_SCRUB",
-+      .addr = A_ECC_SCRUB,
-+      .reset = 0x00000008 },
-+    { .name = "CHE_ECC_CORR_BIT_MASK_31_0_REG_OFFSET",
-+      .addr = A_CHE_ECC_CORR_BIT_MASK_31_0_REG_OFFSET },
-+    { .name = "CHE_ECC_CORR_BIT_MASK_63_32_REG_OFFSET",
-+      .addr = A_CHE_ECC_CORR_BIT_MASK_63_32_REG_OFFSET },
-+
-+    /* 0x114 - 0x174: PHY config, ratios, DQS, WE */
-+    { .name = "PHY_RCVER_ENABLE",
-+      .addr = A_PHY_RCVER_ENABLE },
-+    { .name = "PHY_CONFIG0",
-+      .addr = A_PHY_CONFIG0,
-+      .reset = 0x40000001 },
-+    { .name = "PHY_CONFIG1",
-+      .addr = A_PHY_CONFIG1,
-+      .reset = 0x40000001 },
-+    { .name = "PHY_CONFIG2",
-+      .addr = A_PHY_CONFIG2,
-+      .reset = 0x40000001 },
-+    { .name = "PHY_CONFIG3",
-+      .addr = A_PHY_CONFIG3,
-+      .reset = 0x40000001 },
-+    { .name = "PHY_INIT_RATIO0",
-+      .addr = A_PHY_INIT_RATIO0 },
-+    { .name = "PHY_INIT_RATIO1",
-+      .addr = A_PHY_INIT_RATIO1 },
-+    { .name = "PHY_INIT_RATIO2",
-+      .addr = A_PHY_INIT_RATIO2 },
-+    { .name = "PHY_INIT_RATIO3",
-+      .addr = A_PHY_INIT_RATIO3 },
-+    { .name = "PHY_RD_DQS_CFG0",
-+      .addr = A_PHY_RD_DQS_CFG0,
-+      .reset = 0x00000040 },
-+    { .name = "PHY_RD_DQS_CFG1",
-+      .addr = A_PHY_RD_DQS_CFG1,
-+      .reset = 0x00000040 },
-+    { .name = "PHY_RD_DQS_CFG2",
-+      .addr = A_PHY_RD_DQS_CFG2,
-+      .reset = 0x00000040 },
-+    { .name = "PHY_RD_DQS_CFG3",
-+      .addr = A_PHY_RD_DQS_CFG3,
-+      .reset = 0x00000040 },
-+    { .name = "PHY_WR_DQS_CFG0",
-+      .addr = A_PHY_WR_DQS_CFG0 },
-+    { .name = "PHY_WR_DQS_CFG1",
-+      .addr = A_PHY_WR_DQS_CFG1 },
-+    { .name = "PHY_WR_DQS_CFG2",
-+      .addr = A_PHY_WR_DQS_CFG2 },
-+    { .name = "PHY_WR_DQS_CFG3",
-+      .addr = A_PHY_WR_DQS_CFG3 },
-+    { .name = "PHY_WE_CFG0",
-+      .addr = A_PHY_WE_CFG0,
-+      .reset = 0x00000040 },
-+    { .name = "PHY_WE_CFG1",
-+      .addr = A_PHY_WE_CFG1,
-+      .reset = 0x00000040 },
-+    { .name = "PHY_WE_CFG2",
-+      .addr = A_PHY_WE_CFG2,
-+      .reset = 0x00000040 },
-+    { .name = "PHY_WE_CFG3",
-+      .addr = A_PHY_WE_CFG3,
-+      .reset = 0x00000040 },
-+
-+    /* 0x17C - 0x194: Write data slaves, misc */
-+    { .name = "WR_DATA_SLV0",
-+      .addr = A_WR_DATA_SLV0,
-+      .reset = 0x00000080 },
-+    { .name = "WR_DATA_SLV1",
-+      .addr = A_WR_DATA_SLV1,
-+      .reset = 0x00000080 },
-+    { .name = "WR_DATA_SLV2",
-+      .addr = A_WR_DATA_SLV2,
-+      .reset = 0x00000080 },
-+    { .name = "WR_DATA_SLV3",
-+      .addr = A_WR_DATA_SLV3,
-+      .reset = 0x00000080 },
-+    { .name = "REG_64",
-+      .addr = A_REG_64,
-+      .reset = 0x10020000 },
-+    { .name = "REG_65",
-+      .addr = A_REG_65 },
-+
-+    /* 0x1A4 - 0x1C4: Misc registers */
-+    { .name = "REG69_6A0",
-+      .addr = A_REG69_6A0 },
-+    { .name = "REG69_6A1",
-+      .addr = A_REG69_6A1 },
-+    { .name = "REG6C_6D2",
-+      .addr = A_REG6C_6D2 },
-+    { .name = "REG6C_6D3",
-+      .addr = A_REG6C_6D3 },
-+    { .name = "REG6E_710",
-+      .addr = A_REG6E_710 },
-+    { .name = "REG6E_711",
-+      .addr = A_REG6E_711 },
-+    { .name = "REG6E_712",
-+      .addr = A_REG6E_712 },
-+    { .name = "REG6E_713",
-+      .addr = A_REG6E_713 },
-+
-+    /* 0x1CC - 0x1E8: DLL, PHY status */
-+    { .name = "PHY_DLL_STS0",
-+      .addr = A_PHY_DLL_STS0 },
-+    { .name = "PHY_DLL_STS1",
-+      .addr = A_PHY_DLL_STS1 },
-+    { .name = "PHY_DLL_STS2",
-+      .addr = A_PHY_DLL_STS2 },
-+    { .name = "PHY_DLL_STS3",
-+      .addr = A_PHY_DLL_STS3 },
-+    { .name = "DLL_LOCK_STS",
-+      .addr = A_DLL_LOCK_STS },
-+    { .name = "PHY_CTRL_STS",
-+      .addr = A_PHY_CTRL_STS },
-+    { .name = "PHY_CTRL_STS_REG2",
-+      .addr = A_PHY_CTRL_STS_REG2 },
-+
-+    /* 0x200 - 0x2B4: AXI, LPDDR, misc */
-+    { .name = "AXI_ID",
-+      .addr = A_AXI_ID },
-+    { .name = "PAGE_MASK",
-+      .addr = A_PAGE_MASK },
-+    { .name = "AXI_PRIORITY_WR_PORT0",
-+      .addr = A_AXI_PRIORITY_WR_PORT0,
-+      .reset = 0x000803FF },
-+    { .name = "AXI_PRIORITY_WR_PORT1",
-+      .addr = A_AXI_PRIORITY_WR_PORT1,
-+      .reset = 0x000803FF },
-+    { .name = "AXI_PRIORITY_WR_PORT2",
-+      .addr = A_AXI_PRIORITY_WR_PORT2,
-+      .reset = 0x000803FF },
-+    { .name = "AXI_PRIORITY_WR_PORT3",
-+      .addr = A_AXI_PRIORITY_WR_PORT3,
-+      .reset = 0x000803FF },
-+    { .name = "AXI_PRIORITY_RD_PORT0",
-+      .addr = A_AXI_PRIORITY_RD_PORT0,
-+      .reset = 0x000003FF },
-+    { .name = "AXI_PRIORITY_RD_PORT1",
-+      .addr = A_AXI_PRIORITY_RD_PORT1,
-+      .reset = 0x000003FF },
-+    { .name = "AXI_PRIORITY_RD_PORT2",
-+      .addr = A_AXI_PRIORITY_RD_PORT2,
-+      .reset = 0x000003FF },
-+    { .name = "AXI_PRIORITY_RD_PORT3",
-+      .addr = A_AXI_PRIORITY_RD_PORT3,
-+      .reset = 0x000003FF },
-+    { .name = "EXCL_ACCESS_CFG0",
-+      .addr = A_EXCL_ACCESS_CFG0 },
-+    { .name = "EXCL_ACCESS_CFG1",
-+      .addr = A_EXCL_ACCESS_CFG1 },
-+    { .name = "EXCL_ACCESS_CFG2",
-+      .addr = A_EXCL_ACCESS_CFG2 },
-+    { .name = "EXCL_ACCESS_CFG3",
-+      .addr = A_EXCL_ACCESS_CFG3 },
-+    { .name = "MODE_REG_READ",
-+      .addr = A_MODE_REG_READ },
-+    { .name = "LPDDR_CTRL0",
-+      .addr = A_LPDDR_CTRL0 },
-+    { .name = "LPDDR_CTRL1",
-+      .addr = A_LPDDR_CTRL1 },
-+    { .name = "LPDDR_CTRL2",
-+      .addr = A_LPDDR_CTRL2,
-+      .reset = 0x003C0015 },
-+    { .name = "LPDDR_CTRL3",
-+      .addr = A_LPDDR_CTRL3,
-+      .reset = 0x00000601 },
-+};
-+
-+static void zynq_ddrctrl_reset(DeviceState *dev)
-+{
-+    DDRCTRLState *s = DDRCTRL(dev);
-+    int i;
-+
-+    for (i = 0; i < ZYNQ_DDRCTRL_NUM_REG; ++i) {
-+        register_reset(&s->regs_info[i]);
-+    }
-+}
-+
-+static const MemoryRegionOps ddrctrl_ops = {
-+    .read = register_read_memory,
-+    .write = register_write_memory,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+};
-+
-+static const VMStateDescription vmstate_zynq_ddrctrl = {
-+    .name = "zynq_ddrc",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32_ARRAY(reg, DDRCTRLState, ZYNQ_DDRCTRL_NUM_REG),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static void zynq_ddrctrl_init(Object *obj)
-+{
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
-+    DDRCTRLState *s = DDRCTRL(obj);
-+
-+    s->reg_array =
-+        register_init_block32(DEVICE(obj), xlnx_zynq_ddrc_regs_info,
-+                              ARRAY_SIZE(xlnx_zynq_ddrc_regs_info),
-+                              s->regs_info, s->reg,
-+                              &ddrctrl_ops,
-+                              DDRCTRL_ERR_DEBUG,
-+                              ZYNQ_DDRCTRL_MMIO_SIZE);
-+
-+    sysbus_init_mmio(sbd, &s->reg_array->mem);
-+}
-+
-+static void zynq_ddrctrl_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    device_class_set_legacy_reset(dc, zynq_ddrctrl_reset);
-+    dc->vmsd = &vmstate_zynq_ddrctrl;
-+}
-+
-+static const TypeInfo ddrctrl_info = {
-+    .name = TYPE_DDRCTRL,
-+    .parent = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(DDRCTRLState),
-+    .instance_init = zynq_ddrctrl_init,
-+    .class_init = zynq_ddrctrl_class_init,
-+};
-+
-+static void ddrctrl_register_types(void)
-+{
-+    type_register_static(&ddrctrl_info);
-+}
-+
-+type_init(ddrctrl_register_types)
-diff --git a/include/hw/misc/xlnx-zynq-ddrc.h b/include/hw/misc/xlnx-zynq-ddrc.h
-new file mode 100644
-index 0000000000..9f9bb31c69
---- /dev/null
-+++ b/include/hw/misc/xlnx-zynq-ddrc.h
-@@ -0,0 +1,148 @@
-+/*
-+ * QEMU model of the Xilinx Zynq Double Data Rate Controller
-+ *
-+ * Copyright (c) Beckhoff Automation GmbH. & Co. KG
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef XLNX_ZYNQ_DDRC_H
-+#define XLNX_ZYNQ_DDRC_H
-+
-+#include "hw/core/sysbus.h"
-+#include "hw/core/register.h"
-+
-+#define TYPE_DDRCTRL "zynq.ddr-ctlr"
-+#define DDRCTRL(obj) \
-+    OBJECT_CHECK(DDRCTRLState, (obj), TYPE_DDRCTRL)
-+
-+REG32(DDRC_CTRL, 0x00)
-+REG32(TWO_RANK_CFG, 0x04)
-+REG32(HPR_REG, 0x08)
-+REG32(LPR_REG, 0x0C)
-+REG32(WR_REG, 0x10)
-+REG32(DRAM_PARAM_REG0, 0x14)
-+REG32(DRAM_PARAM_REG1, 0x18)
-+REG32(DRAM_PARAM_REG2, 0x1C)
-+REG32(DRAM_PARAM_REG3, 0x20)
-+REG32(DRAM_PARAM_REG4, 0x24)
-+REG32(DRAM_INIT_PARAM, 0x28)
-+REG32(DRAM_EMR_REG, 0x2C)
-+REG32(DRAM_EMR_MR_REG, 0x30)
-+REG32(DRAM_BURST8_RDWR, 0x34)
-+REG32(DRAM_DISABLE_DQ, 0x38)
-+REG32(DRAM_ADDR_MAP_BANK, 0x3C)
-+REG32(DRAM_ADDR_MAP_COL, 0x40)
-+REG32(DRAM_ADDR_MAP_ROW, 0x44)
-+REG32(DRAM_ODT_REG, 0x48)
-+REG32(PHY_DBG_REG, 0x4C)
-+REG32(PHY_CMD_TIMEOUT_RDDATA_CPT, 0x50)
-+REG32(MODE_STS_REG, 0x54)
-+    FIELD(MODE_STS_REG, DDR_REG_DBG_STALL, 3, 3)
-+    FIELD(MODE_STS_REG, DDR_REG_OPERATING_MODE, 0, 2)
-+REG32(DLL_CALIB, 0x58)
-+REG32(ODT_DELAY_HOLD, 0x5C)
-+REG32(CTRL_REG1, 0x60)
-+REG32(CTRL_REG2, 0x64)
-+REG32(CTRL_REG3, 0x68)
-+REG32(CTRL_REG4, 0x6C)
-+REG32(CTRL_REG5, 0x78)
-+REG32(CTRL_REG6, 0x7C)
-+REG32(CHE_REFRESH_TIMER0, 0xA0)
-+REG32(CHE_T_ZQ, 0xA4)
-+REG32(CHE_T_ZQ_SHORT_INTERVAL_REG, 0xA8)
-+REG32(DEEP_PWRDWN_REG, 0xAC)
-+REG32(REG_2C, 0xB0)
-+REG32(REG_2D, 0xB4)
-+REG32(DFI_TIMING, 0xB8)
-+REG32(CHE_ECC_CONTROL_REG_OFFSET, 0xC4)
-+REG32(CHE_CORR_ECC_LOG_REG_OFFSET, 0xC8)
-+REG32(CHE_CORR_ECC_ADDR_REG_OFFSET, 0xCC)
-+REG32(CHE_CORR_ECC_DATA_31_0_REG_OFFSET, 0xD0)
-+REG32(CHE_CORR_ECC_DATA_63_32_REG_OFFSET, 0xD4)
-+REG32(CHE_CORR_ECC_DATA_71_64_REG_OFFSET, 0xD8)
-+REG32(CHE_UNCORR_ECC_LOG_REG_OFFSET, 0xDC)
-+REG32(CHE_UNCORR_ECC_ADDR_REG_OFFSET, 0xE0)
-+REG32(CHE_UNCORR_ECC_DATA_31_0_REG_OFFSET, 0xE4)
-+REG32(CHE_UNCORR_ECC_DATA_63_32_REG_OFFSET, 0xE8)
-+REG32(CHE_UNCORR_ECC_DATA_71_64_REG_OFFSET, 0xEC)
-+REG32(CHE_ECC_STATS_REG_OFFSET, 0xF0)
-+REG32(ECC_SCRUB, 0xF4)
-+REG32(CHE_ECC_CORR_BIT_MASK_31_0_REG_OFFSET, 0xF8)
-+REG32(CHE_ECC_CORR_BIT_MASK_63_32_REG_OFFSET, 0xFC)
-+REG32(PHY_RCVER_ENABLE, 0x114)
-+REG32(PHY_CONFIG0, 0x118)
-+REG32(PHY_CONFIG1, 0x11C)
-+REG32(PHY_CONFIG2, 0x120)
-+REG32(PHY_CONFIG3, 0x124)
-+REG32(PHY_INIT_RATIO0, 0x12C)
-+REG32(PHY_INIT_RATIO1, 0x130)
-+REG32(PHY_INIT_RATIO2, 0x134)
-+REG32(PHY_INIT_RATIO3, 0x138)
-+REG32(PHY_RD_DQS_CFG0, 0x140)
-+REG32(PHY_RD_DQS_CFG1, 0x144)
-+REG32(PHY_RD_DQS_CFG2, 0x148)
-+REG32(PHY_RD_DQS_CFG3, 0x14C)
-+REG32(PHY_WR_DQS_CFG0, 0x154)
-+REG32(PHY_WR_DQS_CFG1, 0x158)
-+REG32(PHY_WR_DQS_CFG2, 0x15C)
-+REG32(PHY_WR_DQS_CFG3, 0x160)
-+REG32(PHY_WE_CFG0, 0x168)
-+REG32(PHY_WE_CFG1, 0x16C)
-+REG32(PHY_WE_CFG2, 0x170)
-+REG32(PHY_WE_CFG3, 0x174)
-+REG32(WR_DATA_SLV0, 0x17C)
-+REG32(WR_DATA_SLV1, 0x180)
-+REG32(WR_DATA_SLV2, 0x184)
-+REG32(WR_DATA_SLV3, 0x188)
-+REG32(REG_64, 0x190)
-+REG32(REG_65, 0x194)
-+REG32(REG69_6A0, 0x1A4)
-+REG32(REG69_6A1, 0x1A8)
-+REG32(REG6C_6D2, 0x1B0)
-+REG32(REG6C_6D3, 0x1B4)
-+REG32(REG6E_710, 0x1B8)
-+REG32(REG6E_711, 0x1BC)
-+REG32(REG6E_712, 0x1C0)
-+REG32(REG6E_713, 0x1C4)
-+REG32(PHY_DLL_STS0, 0x1CC)
-+REG32(PHY_DLL_STS1, 0x1D0)
-+REG32(PHY_DLL_STS2, 0x1D4)
-+REG32(PHY_DLL_STS3, 0x1D8)
-+REG32(DLL_LOCK_STS, 0x1E0)
-+REG32(PHY_CTRL_STS, 0x1E4)
-+REG32(PHY_CTRL_STS_REG2, 0x1E8)
-+REG32(AXI_ID, 0x200)
-+REG32(PAGE_MASK, 0x204)
-+REG32(AXI_PRIORITY_WR_PORT0, 0x208)
-+REG32(AXI_PRIORITY_WR_PORT1, 0x20C)
-+REG32(AXI_PRIORITY_WR_PORT2, 0x210)
-+REG32(AXI_PRIORITY_WR_PORT3, 0x214)
-+REG32(AXI_PRIORITY_RD_PORT0, 0x218)
-+REG32(AXI_PRIORITY_RD_PORT1, 0x21C)
-+REG32(AXI_PRIORITY_RD_PORT2, 0x220)
-+REG32(AXI_PRIORITY_RD_PORT3, 0x224)
-+REG32(EXCL_ACCESS_CFG0, 0x294)
-+REG32(EXCL_ACCESS_CFG1, 0x298)
-+REG32(EXCL_ACCESS_CFG2, 0x29C)
-+REG32(EXCL_ACCESS_CFG3, 0x2A0)
-+REG32(MODE_REG_READ, 0x2A4)
-+REG32(LPDDR_CTRL0, 0x2A8)
-+REG32(LPDDR_CTRL1, 0x2AC)
-+REG32(LPDDR_CTRL2, 0x2B0)
-+REG32(LPDDR_CTRL3, 0x2B4)
-+
-+
-+#define ZYNQ_DDRCTRL_MMIO_SIZE      0x400
-+#define ZYNQ_DDRCTRL_NUM_REG        (ZYNQ_DDRCTRL_MMIO_SIZE / 4)
-+
-+typedef struct DDRCTRLState {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion iomem;
-+
-+    RegisterInfoArray *reg_array;
-+    uint32_t reg[ZYNQ_DDRCTRL_NUM_REG];
-+    RegisterInfo regs_info[ZYNQ_DDRCTRL_NUM_REG];
-+} DDRCTRLState;
-+#endif
+ #endif /* QEMU_ARM_ZYNQ_H */
 -- 
 2.47.3
 
