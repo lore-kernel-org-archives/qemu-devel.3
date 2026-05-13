@@ -4,86 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B8C4CD4F24
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 14:59:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 119D5CD4F24
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 15:20:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNB3V-0005mI-8h; Wed, 13 May 2026 10:59:25 -0400
+	id 1wNBNN-00028k-Fx; Wed, 13 May 2026 11:19:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wNB3K-0005jr-C4
- for qemu-devel@nongnu.org; Wed, 13 May 2026 10:59:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1wNBNA-00027w-OM; Wed, 13 May 2026 11:19:46 -0400
+Received: from mgamail.intel.com ([192.198.163.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wNB3F-0000qO-Tr
- for qemu-devel@nongnu.org; Wed, 13 May 2026 10:59:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778684348;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=VSjMpTGHGa+GmF2zn14Zfq27IoeGv188A4ustQ0DhdE=;
- b=Nm1MrZJBmY3N+d70DtEthXppcchPbq5uLj5CeAXxAA1f3IAV9Kis0piVp2Jgi/F9oqjyOp
- +uZcU3q2VxNbyTIjnnyr34nBoE6fR2CbrGkJzeOP7d9iql8TdWDOq89CXbI1jHYFUZf+rH
- rYVa7Km+CrjPiBRd8a7arf7K0cTcrIU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-314-zD8Fl_JTP62GIlrSdtkX-A-1; Wed,
- 13 May 2026 10:59:05 -0400
-X-MC-Unique: zD8Fl_JTP62GIlrSdtkX-A-1
-X-Mimecast-MFC-AGG-ID: zD8Fl_JTP62GIlrSdtkX-A_1778684344
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0491B19560B5; Wed, 13 May 2026 14:59:04 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.32.213])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EE46A1800576; Wed, 13 May 2026 14:58:59 +0000 (UTC)
-Date: Wed, 13 May 2026 15:58:56 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-block@nongnu.org, Cleber Rosa <crosa@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, John Snow <jsnow@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH 14/16] tests: add QEMU_TEST_IO_SKIP for skipping I/O tests
-Message-ID: <agSRsLFnD1Jp--lj@redhat.com>
-References: <55b66ce4-218c-462f-8e48-0775d5c36cba@oss.qualcomm.com>
- <agNbJS1WeWaxZ_Gx@redhat.com>
- <31eb8204-97bb-4f0e-b90a-048d1b5bf05d@oss.qualcomm.com>
- <agNiPRnoyxd7rBbz@redhat.com>
- <cd3c6a2a-96ad-4276-aa61-8d458d702ba5@oss.qualcomm.com>
- <agN1a8IULLnpAjUa@redhat.com>
- <d997f55b-2e27-478c-9135-a694b7aa8052@oss.qualcomm.com>
- <agN4xgx6Hh2FdYIq@redhat.com>
- <dd212ed3-8cde-4397-9585-9eb5439fe44e@oss.qualcomm.com>
- <87v7crwg9o.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1wNBN8-0000au-GQ; Wed, 13 May 2026 11:19:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1778685582; x=1810221582;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=hQ5dpmFu5yQGGUHLRP8DIecP71rjkOUWyvBqAvPXdtg=;
+ b=mcW8nEutfxKqdUqSl/8DDg0oi4spgmg0P9YkLvLKvVk7XmiJ/rCjvSUP
+ egdpU9H1onPixke9uW26KYHMjnGJ3Q5N+AAZIqRHaTbDu+pWdSHEijY6G
+ NXX9Z8cCiMRiIR8Z5NrKlu8t74ffeFl7PMTJn4k6dVZs67czUe2YZDDdL
+ gYgC8SaCMdi/cvXEyxZ9vNJnvhv8QbBlA03vtQLQtE6m8tgWmxofUlSRJ
+ fDWgLX/SvwFz6hbxbuPsJt7Zkx+APeTO7iJ9Cs9/sMLCn/y1eaRFWD6My
+ wTEFaIeCHDECqpzx8ZtuzdSipRdp+MMDLHkZZ4fL3LHtvOCoKub1Tvh7D w==;
+X-CSE-ConnectionGUID: IWOziauKTXuPcO70h6/fXw==
+X-CSE-MsgGUID: A5SCtyiBSoWC/2Kf55oOjg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11785"; a="83468642"
+X-IronPort-AV: E=Sophos;i="6.23,232,1770624000"; d="scan'208";a="83468642"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 May 2026 08:19:37 -0700
+X-CSE-ConnectionGUID: KqSS0+GXQH6eN+ZuV3177w==
+X-CSE-MsgGUID: v8fP/fECQaC6mdDDI4QStQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,232,1770624000"; d="scan'208";a="233667877"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa006.fm.intel.com with ESMTP; 13 May 2026 08:19:34 -0700
+Date: Wed, 13 May 2026 23:47:19 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, anisinha@redhat.com,
+ pbonzini@redhat.com, peter.maydell@linaro.org,
+ shannon.zhaosl@gmail.com, philmd@linaro.org, rad@semihalf.com,
+ leif.lindholm@oss.qualcomm.com, qemu-arm@nongnu.org
+Subject: Re: [PATCH v2 03/21] x86: q35: generate WDAT ACPI table
+Message-ID: <agSdBwKQh3C9UgdF@intel.com>
+References: <20260303092532.2410177-1-imammedo@redhat.com>
+ <20260303092532.2410177-4-imammedo@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <87v7crwg9o.fsf@suse.de>
-User-Agent: Mutt/2.3.1 (2026-03-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260303092532.2410177-4-imammedo@redhat.com>
+Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,91 +81,79 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 13, 2026 at 11:11:47AM -0300, Fabiano Rosas wrote:
-> In the case of an environment variable, it's possible to set it without
-> any code change (even to .yaml files), by setting "-o ci.variable=<val>"
-> at git push time and also by setting directly in GitLab's web interface
-> under "New Pipeline". So it allows anyone wanting to "just get work
-> done" to skip broken tests for the duration of a pipeline.
+On Tue, Mar 03, 2026 at 10:25:14AM +0100, Igor Mammedov wrote:
+> Date: Tue,  3 Mar 2026 10:25:14 +0100
+> From: Igor Mammedov <imammedo@redhat.com>
+> Subject: [PATCH v2 03/21] x86: q35: generate WDAT ACPI table
 > 
-> It also works when running locally and skipping some tests for the
-> single local run.
+> It will generate WDAT table [1] customized for TCO watchdog.
+> This allows Windows guests (Windows Server 2008/Vista+) to
+> use TCO watchdog using built-in generic driver, which
+> alleviates need to install vendor specific drivers.
 > 
-> All temporary changes, of course.
+> Given that enabling it might change guest behaviour
+> (both Windows/Linux) the feature is disabled by default.
 > 
-> For the case of a flaky test that will need to be disabled for longer
-> than a single run, could we standardize on a list committed to
-> meson.build, so it works for both CI and local?  I think so, and I think
-> it's a good idea. Having recently taking up maintainership of QTests I
-> sometimes stumble into disabled tests that have been there for years and
-> everyone forgot about them. Same with the migration subsystem. Having a
-> single place to check from time to time would be helpful.
-
-That was one of the reasons why when wwe introduced the "QEMU_TEST_FLAKY_TESTS"
-env in tests/functional, we mandated a gitlab issue URL is provided. This 
-gives us a record of why it was turned off both in the code and issue tracker.
-
-If we can keep all permanent test disablement behind QEMU_TEST_FLAKY_TESTS
-we avoid needing to add logic to meson.build too.
-
-
-> Migration, by the way, has been using the env variable approach in qtest
-> like this:
+> Users that need it can enable the feature with
+> following CLI option.
+>     -machine wdat=on
 > 
->     /*
->      * Our CI system has problems with shared memory.
->      * Don't run this test until we find a workaround.
->      */
->     if (getenv("QEMU_TEST_FLAKY_TESTS")) {
+> 1)
+>    "Hardware Watchdog Timers Design Specification"
+>     https://uefi.org/acpi 'Watchdog Action Table (WDAT)'
 > 
-> Which is a case in which a single list committed in meson.build wouldn't
-> help. We actually do want to skip this only for CI.
-> ("problems with shared memory" here means that CI environments simply
-> don't have enough shared memory space available to run all the tests
-> that make use of it)
-> 
-> A further complication is that in the migration case above, that skip
-> does not apply to the entire migration-test, it applies to a sub-test
-> (./migration-test -p /x86/migration/mode/reboot). Constructs in
-> meson.build would not be able to skip this, they can only skip the
-> entire migration-test. There is an -x option that gtester accepts, so
-> we'd need to write some meson-fu to invoke "./migration-test -x
-> /x86/migration/mode/reboot -x ..." if any subtest is to be skipped (note
-> that this is not migration-specific, all qtests that invoke
-> g_test_add_data* more than once are like this).
-> 
-> Maybe we could work on a proposal to improve this in a generic way for
-> all test frameworks.
+> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> Reviewed-by: Ani Sinha <anisinha@redhat.com>
+> ---
+>  include/hw/acpi/wdat-ich9.h | 15 +++++++
+>  hw/acpi/meson.build         |  3 +-
+>  hw/acpi/wdat-ich9-stub.c    | 15 +++++++
+>  hw/acpi/wdat-ich9.c         | 90 +++++++++++++++++++++++++++++++++++++
+>  hw/i386/acpi-build.c        | 12 +++++
+>  5 files changed, 134 insertions(+), 1 deletion(-)
+>  create mode 100644 include/hw/acpi/wdat-ich9.h
+>  create mode 100644 hw/acpi/wdat-ich9-stub.c
+>  create mode 100644 hw/acpi/wdat-ich9.c
 
-I have dropped this patch in my v6 posting, as it would indeed be
-much more useful if it worked across all the test subsystems.
+...
 
-My v6 has meanwhile introduced the QEMU_TEST_FLAKY_TESTS concept
-to the I/O tests (as suggested by Thomas), to skip the dodgy I/O
-test universally in all scenarios which satisfies Pierrick's
-request.
+> +void build_ich9_wdat(GArray *table_data, BIOSLinker *linker, const char *oem_id,
+> +                     const char *oem_table_id, uint64_t tco_base)
+> +{
+> +    AcpiTable table = { .sig = "WDAT", .rev = 1, .oem_id = oem_id,
+> +                        .oem_table_id = oem_table_id };
+> +    struct AcpiGenericAddress tco_rld =  TCO_REG(tco_base, 0x0, 16);
+> +    struct AcpiGenericAddress tco2_sts = TCO_REG(tco_base, 0x6, 16);
+> +    struct AcpiGenericAddress tco1_cnt = TCO_REG(tco_base, 0x8, 16);
+> +    struct AcpiGenericAddress tco_tmr =  TCO_REG(tco_base, 0x12, 16);
+> +
+> +    acpi_table_begin(&table, table_data);
+> +    build_append_int_noprefix(table_data, 0x20, 4); /* Watchdog Header Length */
+> +    build_append_int_noprefix(table_data, 0xff, 2); /* PCI Segment */
+> +    build_append_int_noprefix(table_data, 0xff, 1); /* PCI Bus Number */
+> +    build_append_int_noprefix(table_data, 0xff, 1); /* PCI Device Number */
+> +    build_append_int_noprefix(table_data, 0xff, 1); /* PCI Function Number */
+> +    build_append_int_noprefix(table_data, 0, 3);    /* Reserved */
+> +    /*
+> +     * limits/resolution are defined by ICH9 TCO spec
+> +     */
+> +    build_append_int_noprefix(table_data, 0x258, 4);/* Timer Period, ms */
+> +    build_append_int_noprefix(table_data, 0x3ff, 4);/* Maximum Count */
+> +    build_append_int_noprefix(table_data, 0x4, 4);  /* Minimum Count */
 
-> PS: I'd even say there's a lot we could make common between
-> frameworks. A bunch of what happens around running a test is generic
-> programming, not tied to a specific programming language or accelerator
-> (in case of qtest).
+Spec said: The time-out period before the WDT fires is recommended to be at
+least 5 minutes and is required to be less than 4,294,967,296 count
+intervals.
 
-Yeah, getting everything being represented as meson tests was one
-of the things we did to make the frameworks more common.
+Here we encode 0x4 * 0x258 = 2400ms, less than 5 minutes. But I
+understand because "5 minutes" is just "recommanded" by spec, so 2400ms is
+okay.
 
-I think there's scope for having more common env variable names
-too. eg we have different env variable names to specify the name
-of the QEMU emulator binary which is a bit silly.
+LGTM,
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
