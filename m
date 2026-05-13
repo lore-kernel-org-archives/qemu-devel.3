@@ -4,47 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A6BECD4F21
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 14:06:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D547CD4851
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 14:10:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNAD8-0006vr-08; Wed, 13 May 2026 10:05:18 -0400
+	id 1wNAIB-0007zl-Kk; Wed, 13 May 2026 10:10:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wNAD2-0006ur-3L
- for qemu-devel@nongnu.org; Wed, 13 May 2026 10:05:12 -0400
-Received: from mout.gmx.net ([212.227.15.15])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wNAI9-0007zZ-KX
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 10:10:29 -0400
+Received: from mout.gmx.net ([212.227.15.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wNACx-0003Dy-I6
- for qemu-devel@nongnu.org; Wed, 13 May 2026 10:05:11 -0400
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wNAI7-00067y-7f
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 10:10:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1778681101; x=1779285901; i=deller@gmx.de;
- bh=k/NgdOgAeFtdU6Ae2zxy3Klk5Q284H5DI7l163yuFfw=;
+ s=s31663417; t=1778681420; x=1779286220; i=deller@gmx.de;
+ bh=fKRjkGs42jF+ZvywTqHQbcquAquAw7AnEDv2amIcCkM=;
  h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
  References:From:In-Reply-To:Content-Type:
  Content-Transfer-Encoding:cc:content-transfer-encoding:
  content-type:date:from:message-id:mime-version:reply-to:subject:
  to;
- b=ouetjHrlfG+42CN30MugRCAQSnktGICs67Ey2kjXyFe7MemmiKaF7gYPHS4vOX2C
- JASzctdLYpg11efQT4x4cIseUvtuY6oZWS2UV192MYuLeMaiC0spGBGbK/irEUmUl
- YvVrovf1OAz644q1DQeBM4Bi22kI9fUXzmiVMv9Gaj2F2zxsmmHZBofqwMMqFGPyV
- VRxheQqZJfFXrHzaPQUPHKSjb+yKE71o2gHTmod25mUk8F0R3eMCqDEaQ9oUgook7
- fwq33J8yiwTmXJDSkx5t0M8iPFEeqTz2IrIf7FRCb3aWMZ3T9ooN8WPvPEwz+y7e+
- K8mqVANq52FZ+TSzAg==
+ b=rDnn0wshqC4ucanr/SNkQO7wtfXEhESk7GjE0neRGkmMZM/fBcTlnU3LdGUdDFkD
+ IzuAzfHxG+mL4EzmzIJ5R/PYqUQx3NbNjeK+rXCvR+2QGJNS8hE3tDQWIlhQewXFX
+ bcI2VORJuS++KO8tbRQu01KaiCHgmPUzBnbPiNdF3zPU76jV5SK03KsAUnAuRI4UI
+ XDgi05TWMwaQIN04F+BbFAaswogxjP4R7m8ODR+QuTqAau7yZB3IrAgr8TlEI9uyw
+ rHW7Xkv8x3v2OftBSoyD++pEdrwYnH4JgLVHoV+EnoJX3PMRwY8v+5gDYpTmlXm+/
+ LUSmWNCaDBCRk+cr3Q==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N63Ra-1xTLrZ1jx2-0136P6; Wed, 13
- May 2026 16:05:01 +0200
-Message-ID: <2538f422-a48e-45ad-91af-a2e395393109@gmx.de>
-Date: Wed, 13 May 2026 16:04:59 +0200
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MfpSl-1x37wr1oaX-00cxbk; Wed, 13
+ May 2026 16:10:20 +0200
+Message-ID: <b51c621f-534f-4eef-b72a-c2ad31dde41e@gmx.de>
+Date: Wed, 13 May 2026 16:10:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Limit USB 1.0 (UHCI/OCHI) and 2.0 (EHCI) to non-virt use cases
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+Subject: Re: [PATCH 1/2] target/hppa: Use DisasContext::mo_align in system
+ emulation
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: devel@lists.libvirt.org
-References: <agRC56rkfb4z6zSO@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+References: <20260513074323.10616-1-philmd@linaro.org>
+ <20260513074323.10616-2-philmd@linaro.org>
 Content-Language: en-US
 From: Helge Deller <deller@gmx.de>
 Autocrypt: addr=deller@gmx.de; keydata=
@@ -90,99 +92,99 @@ Autocrypt: addr=deller@gmx.de; keydata=
  FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
  4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
  ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <agRC56rkfb4z6zSO@redhat.com>
+In-Reply-To: <20260513074323.10616-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:vj1JYRuHpw5AY+UcpsRjLjgyyf1ZWqUy1R+HdUk3XG4Rbso8swX
- Nl+wahL1zAZhBFgtlvaHXbKMJ+YZZsaCU/OGobMrCr7Diloqx/qUlxk70kR1+4nHNEGQAI4
- CLy6cDAXJ9EZ7ikgpLWtZbP2UR+ZSAaIzBOvdKAlnRwntYaTv48H8eis3hvzBeRdpqYsZpz
- iMNRYNlM8fSO8WtYGlFCA==
-UI-OutboundReport: notjunk:1;M01:P0:I5alZMuicrI=;l9a85gvoveQX6Ugl0cIQD0ze3r/
- vzscxRdRtWixl4zYCwnN9FE/SkxNw/ozNApTpHAa3rv0h8ZcUAgFh9vdCFg/gBuI/bvNJrD6m
- gfXkIeKli4liP1WcBGBelNpvRKmAXCaU34UC0sVQ8ZLIPxBpvNgUmKynm1E/2dWadyZOvryOI
- iIRcLAFzUVsP3TNdk+x/p387Rqk3Xk0T75BHYZ2Tyhomf1qkBGz/DkCTavp8kQ/4B6U5B4yVA
- ImsGOdlG7qGZHJKF/BLD0xxxnysCrMWdn3NmHl/6j5PLvgGmQYlHqNUatKgkhbVFalEdEm9IS
- P5RC0ZJoidr5QgHiXO5O1HCQSvCSohHYwb/898AD0JIGg64QpHgLBaj0IiCP5Q6e1GecwxCI6
- dN8+jGjP6JeDLj5pcsyqy0tFAGU2NG1W1m25PxVgEHq8VzApHZW+ZtJ61eKD/xwXT0qjnT6ur
- HMJ7XBAa7cyoGG9QZbW9Sd1aNIIWdk1+gh+tZi6BodJdHMuL645xre9cReafU57LAZsIDb6nA
- gMAF6cgn8qY2pm+Sej1IPsmKfSXV2wfT02i6MWQTyvZLm1jb2wWmwBCPfF22d1yHWP6wGvraZ
- Y38QwyS0K8fT7fOb72fdn2cw3Qvlf0IhWsInAuZHodIeSMTo4zxGlREa3zyUtIZloo1r7LlO7
- Fo/EVLly+PrCTbay3aV8Nfxt2nsMRI0wNJ8hxChOeRLlVtDHPqRVgJTgWt1hFEUmi5oisLLeA
- 15GTT70cfVbJv7vbydsFTRnvRgXYXMgwhj5+IuB7jfV5WKSGU86OFjl3OhA9EeWxM2XK7CI0k
- T3nMqY28ronORtUkQNsx4SaDz4dAOXWa7UkyqMaJAKxSr9m4Bsj6guEZEMoOhx2FfHax0Vc1S
- bzV6RlTGoZ1ATmyk+3DBgcDJaZBYE0D83JGpvX17fffreUulzu9/ActOz/GLujpFVhWqB89cX
- W4ft17F/oNiaAhLOpAUsTx0xlwRg/XfY/SV7mCSXqRZeQzXYRexXmVgQNQ7oOgFWvY4BjizvH
- ZUOX8axFQher97Ak0ciOfz9auKIZxaX5ANZresHAcRTwhvN56zu8tWsHfabZAYh22WRMSp/mD
- Gbk7Bc7kYxs/zNpuQsRK9PacUbCJ+HDLI0BaLaYH76kRup8+JPfZjd76YLcirNHAG6NbaH7+U
- lngCQo+k7B1oJH+6QgJ9nNZB9kRPmNdmuJeVCJYZjrYS7biQ8Zl+/hOkOCvrUcAYeUKNthhS8
- REpwly6evh9sjJ0AB74LjtyiTXTqvb5Bv1JDOowCkb769bDvoG955F0sECugo9owaqoYp4kNt
- I58QFCGmf8Nj9DSKa3jqVP329051vytkObtyAgQoxii70CDfOzGmwoo/L8mK5/uPcPbB21Bcd
- 75c0LT+apJO9xgXZTf5aiG6laGBMWHosqzACM5LSn1ZWWtpoHJoWG6gQffUqUTr8OpA2bB6P3
- lHXxUbMHctGxo7QQgN1j/ZavcaVjsI0qVNqnUCm/MtT25iA/xiFia2xmvmbWPpbQ08mAyBi9d
- zfPo9vooaOzKdWt/nmjfRwmpD/RHVCN95KBBiX1Kdm6dglb5VlrqdPCUg1zLo+Cg4UF3b7VLl
- Bmui6bwpWyXIGvTXTTCvZjYq3ApzHSN9pcc2Pt7WJPJTayEQc05sMvm0DCZMcydjO53FKvQm8
- t8hPqZtnj62Zf/kWTTenMs/7i9PUaTH1As2X4cljDfifu5XuSg+QHZDRFjmTdY8LKIe0JylPy
- PWOv6D2uOvc9Eudtc8g8GvGFXzODvRkRs3OEyM9T6FfsU6AznNIasDvzqdKkQfVCy4QwC6LBY
- TwuCG6qZRtNhKGBH+p1qvlGIbvF9nyuSa1opKvh40jDInz3n2IONUM57aenLbHEd0AQs1Ybtb
- VOWsVedMxO84g7zvRKEffjz3k6zVcISHpZqsKa6UuKAlr90cmd2lfbxrFLTy0rBU5datkJyqx
- s+XXfSLGuL0c3Mhm5jD2We+E9ja5tSor5lMtx9R/7oJNQGsYNNthvlHe+xTe39Ju7aox1DvCA
- GxpUmHJzDPv9tXHemexfUuqHjkBo9HSiOFvGfHrdLFH2NMq/9qDd9SKYKOiDEipQpws2lr5zw
- WRL7bSmd65Ga9dl14d50Rt9gNCbJKfCkUa1LFEtziWfx4QBHVf8fmPsZo9oHF37tn4ZnTlUrR
- YJ+tFxwRk8rnrnStplJ5Tv+HFxb+yPEoSY5XFFN7vMlvMvhkWwMHdILnqOBUzZH4HPcnTXKhw
- rgTs7alQIq48mnuukzlHa5/A4nkcVZIRtbCwoVd7ZSAsC0dlrN0eXLq/Y4vVhZyu5L8GnHaI0
- 0WNSnv/Qj1uffruPW84rtO9VG9XE0RJw08eHpOf+x2ai5yFYMw4itS2qT/Gc4GNTpgQ9jpCOP
- Z+FnVS/sjQpnV0YD/VBp+7fNCXGHtL88H26RLbrk8GkXc+tJFQtp1IpdEW9OwlDcCujZVzAYs
- yHOpRfLt+im4w3BrzhX/q4Oe2TA6gI0nvhQShFVBA53QgaefupZc/Cjtxs7Jx92nLBxHavsuA
- PKCxq51qY4REb9Rcv9SetoEhh2wvY9sGFgQcCFjXxY2oOMsBKAdoM0YgJPw3uYlCEJOXsKt33
- RYdVD4W2u9zplPtJlZ3A8tF7jqG7zTFHy7k70FTsu7L+3MFpV4UdPb9gh5/fOxP52lZci+MQR
- CEr6PfmtMN5fHsBi+i42e4Ew7Xvds8DDY2j7NslG/+G9gu8K1chw521U3/BJbAhjAtDavUM5Z
- oWiZz8fbqRdUMjueVXM8aBt1EOdsOzbJ9tnOJekT/W2DQbQKWbpz5BCvjZOSW/j5E4nilJ7a3
- ZTJRoID3O/2gTTtop8iPCyqcVvs1TjCVynX+QCOIxxnxrsovhkorJXUoMN0f9/3oTem2NkNH2
- ZO1o0Wzsxpv6ppWMElty1LaKVWwk375ZKPOOueuWHrIws0LwoNWQyJKPDAB5NWbBlp59hM914
- vFI85wnGvU1JTYLY1Slpckc9CR4yEmW/njA3AhOpRUhzLYfOzx2hjElfnj+Ge/Hcak4wYOGUf
- I7ia5ye8JZjFyII2tg8SUuoWGJLyXBDBVuq+rLp9cK8jMmHMmr7QNtAkJYYA2gcijrR63pyPJ
- 0KGEuooWvCe9YnNngRSiiX+S/C5pVWVnJr+MtbML/aIP16XQBVNlpDbO9arqsmoK82vv6TP+U
- EYZg2nV1pP6KvjO3PfE23p2X+p6U+MkVLT47etYyi9azP5IOQ0jss6OmSuTyOfjT0IFdcwNv0
- xjCbF+v0FYf99V2xW14FT0iJ1i+VOnbGL88/DYQNokeu7A+jrsnp2bvIRaXF4lThzJFFl7OZp
- cYr4/MngP2PXyuFjssfLB2s7NGwonApgc4+DrcQ+IxPujor5EK2R9IeZ5ggpTBCgPHUi4bQwi
- JnGue7qaYqhCTaTHSKzq7gNuOcfEoUEqMD/OVkYqte4QODeCARlFayTAcxcqkVXVQyJ79MuPh
- g7XmdIicskSxT9D4xY6p3x9XM/5HW0RiX+THvDB2fcq3TPYoDrMbt10r/FN7nsT4yvo2vMnq+
- X8A/Q1aA/pnAGOgU6zwvEfsEgca7ZDPFQ9jhBAQ/q8wHaYJ0wtWt5g+uf1Q1JJVi3m+hqTvyt
- lZqvLtOadU0MFIYer1n0cxL2go4jzjYrX5FgRMAMINgAZExv6xPAVmNuCNNKawA5C0JREPrOB
- /qBbt2Q1Kw6aZZAKlibaZEgtOxsjYMC8elDhAqODCkHtSzg8v+CGkurZqb1jUIuZN0eEFz6az
- EjA+sdl62wgLfZetNc2TtXSZnhakVhJslQeAzF6MJqIOPY0ezTQo8H30BgaGudIEV0BtOO178
- 5WEk9enVBSuZjOMf/iw6kDtyNXHFhlI20/jzN+PUutt1Ij4lSj+0tx+DjFCLzM2uAmAfs5kJM
- uf3l6Qdg11anKmwGTtsLDpWUBztgzfzMMlFPO91YajfOrZGFTtK8Jfuc9fF6brD3eOaZRTkzE
- qWbW3YPGGY2uKMIZkmiDL692CzsvuKNCFv6ITCKuOPnRiFgMTJZfNanfTf17BOwWRnouqd5mu
- b1gRq+K8dXnfEUKEYcnfbdP0ca4ladkSpO5ZtShUTMs4HHHCJlJThrAev1Aan97KsY+DV9cGg
- wFDXNgnccCmzNDYE/FQFqfascn6uJzyUjtdHnnT3ZNe4ohivriaCftADa1JPoZpxOnni3Pjfk
- xDOnvI7VPMME1JwXl61u0Yd10ZcFQWOmanPjX/F0ckKHgrWHZxeysniUYjS1IpHBSjsJC3/uN
- 9tbXuQA0bIzCUEC85nXwkfQn/X+F44htlWEmLQD8LjLB4d/tA14bBFLu1rsNpABtQ9imcOO0V
- A6fjm5uwSGht/0S4azs9HQP4zQT98P2k7+tdQ947jCGlgRsTI2shzOg9Ie3TnmRyLBpUlHn2C
- 4218mdEdiEd5Yboeddjylanio6N+V6EEBSpD2AFmU+tpxUiCApVsmllYn9tFgrH1sz//00Yu8
- uJwSg8+7E+AO0tMjtwXtg/LQdasTTBJDNT/6Sf4EAQ9KuKE4i93UeVnie9Pe/mW5jvbT5rFBc
- B/4YYydCuuajZ18mJPdghMdW7/YtFh91wuuAunA9Qby/IAg3x3Fcy/CgtsqPH183uZgt7SolT
- OxoFTT8mQX6T1QX78d/xZDqZhJmWlWbfefbEXRe2CNhWm3DmFbjVDGqBHnNnOkVfi21Wh6dC5
- iOdwFJn0gr4WDjU5b0V1BTzsMkB9adaUyfyGLdwGBqqP40rbQmg5WZjGUrpAQGdmBUQu4p5r/
- z0yHHsS7PYcxM0fWHm5IUJkmMcZRH2tx+zNXR+8faSfLgD54iDUvOhlqd7fuVSLSGq7sZG1pt
- BgP92FdEcP2Ym5OPQUZaSZ/bsCa5znmGFjPFs7RQnqTreR0EG3H3p5FEE9zTG/3j5bEDe63tm
- HmF4ReaOGA7u1OKelprNmToc05Z/VaTHX17q6lm13SOONcV/LNTHbXjv4uhLp9POHN30skv8b
- bAPUFnY72d8yMdxDAYn2LbHwoZDlZxshvVsx1lmUQ12nR9dsTlOwLgRgKaaToVqoG37JA4UJJ
- +rxR8srwSGu8SQyQsIzvkWyrnVTb8zCxdSGXgvp89BcP0ww0xjDkrbs1gsyfS4Fyk/zmDm0lv
- fteJy0d4DiBmSTUt3vOFJzH9Tp1meJ6gaWNWRFN98w0y7mzaTaeoveJOFmwyzYie81dYI9aUK
- k74ru45HWyV4+THOYf6wOFnmUk7l76yK6d/5K+xbb3lDEmluGrtwqo0ET/ZkkPC0P2SEHPFw+
- 27BzNo55FJJE7b6rIpNCn4m8dJlnkWEw80lCI+ypO4UghwIKdb96j1xUTVnfvqKaq3YHUfJmo
- cYfAToj11IUgM8oP0ORB5iZLwd4AdgvIbI/AVOG3SDSiLgzqz4v5YK0xvGT+/xDa9DPzO6Lrp
- dpi8pJM4sVLwhK2VkbkKXrUR5SxMQ7KoLJ4XeTAwHT5I0=
-Received-SPF: pass client-ip=212.227.15.15; envelope-from=deller@gmx.de;
+X-Provags-ID: V03:K1:17Uv67+b2Uo4LkctF3blGerNd0h6ob2QAxfw5SKLRB5z/lAy+Um
+ VZc1jodQaSR3ih06xvJTDPtlytscCYtaVmElrQzN3xxyO5+me5CFlYnjRxYn1f1XIbGjcOl
+ vaF8J4lad/5j7HbY5w2041yzeIQv5gMGwRzcQbNS97Za6cT9Lgrkclqf5fv+wzsfU+xvTX4
+ JlhnGFOBjLbgGgDtqfEtg==
+UI-OutboundReport: notjunk:1;M01:P0:a3Q1JoUwabc=;bG1PJKZEhpNjRwHJMCrq3l4mTRU
+ 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
+Received-SPF: pass client-ip=212.227.15.19; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -198,87 +200,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/13/26 11:22, Daniel P. Berrang=C3=A9 wrote:
-> QEMU has implemented four generic USB controllers
+On 5/13/26 09:43, Philippe Mathieu-Daud=C3=A9 wrote:
+> Rename 'unalign' as 'mo_align' and use it in system emulation too.
 >=20
->   * UHCI - USB 1.0 only
->   * OHCI - USB 1.0 only
->   * EHCI - USB 2.0 only (must have UHCI companions for 1.0 compat)
->   * XHCI - All of USB 3.0, 2.0, 1.0 in one controller
->=20
-> We have two variants of XHCI, the generic one (hcd-xhci.c) and the
-> NEC one (hcd-xhci-nec.c)
->=20
-> Historically for security reports we have considered all of them in
-> scope of virtualization, since initially with KVM the XHCI impl was
-> not present in QEMU & thus KVM guests used UHCI/EHCI with USB tablet
-> for a period of time
->=20
-> All of the USB subsystem is currently orphaned, so we have no dedicated
-> maintainer available to deal with bug reports (volunteers welcome to
-> step up here...)
->=20
->=20
-> While the need for USB is reduced given the availability of virtio-input=
-,
-> not all guests have drivers out of the box, so at least USB tablet is
-> still interesting for KVM use cases with some modern OS.
->=20
-> It is also not that unusual for people to need USB host device assignmen=
-t
-> with KVM virt to make various pieces of specialized hardware (security
-> tokens, smart cards, custom dongles, etc) available directly to guests.
->=20
-> IOW, we can't entirely exclude USB from virtualization use cases IMHO.
->=20
->=20
-> In terms of virtualization, XHCI is the only impl that is sensible to
-> use. UHCI/OHCI/EHCI all impose an unreasonable CPU load on any guest
-> usage of USB.  XHCI should be supported by any guest OS  approx the
-> last 15 years, which should be sufficient for virtualization use cases
-> with OS that are not EOL by their vendor.
->=20
->=20
-> Thus to reduce our maint burden around security bug handling, it is
-> proposed henceforth to classify UHCI, OHCI and EHCI under the non-
-> virtualization use case and thus be excluded from security bug triage
-> processes. No CVEs would be assigned, bugs would be reported publically
-> in gitlab:
->=20
->    https://www.qemu.org/docs/master/system/security.html#non-virtualizat=
-ion-use-case
->=20
->=20
-> The XHCI controller (specifically the hcd-xhci.c variant) would remain
-> as our only option for the virtualization use case, with security proces=
-s
-> applied to bugs & eligible for CVE assignment:
->=20
->    https://www.qemu.org/docs/master/system/security.html#virtualization-=
-use-case
->=20
->=20
-> The other NEC XHCI variant (hcd-xhci-nec.c) would also be treated as
-> non-virtualization use case, since it needlessly duplicates hcd-xhci.c
-> impl and thus is only interesting for emulation of this specific HW
-> variant.
->=20
->=20
-> NB, there are no functional limitations / restrictions from this policy,
-> it is largely just a semantic exercise. From a management application
-> POV, however, it would strongly suggest that guests be configured with
-> XHCI as the default choice if the user asks for USB, and in turn also
-> imply that '-usb' not be used since that is UHCI/OHCI typically. CC'ing
-> libvirt, though it is really a matter for virt-install/virt-manager/
-> openstack/kubevirt etc above libvirt to pick their defaults for USB
-> controllers.
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>   target/hppa/translate.c | 11 +++++------
+>   1 file changed, 5 insertions(+), 6 deletions(-)
 
-I support this proposal.
-It keeps the "commercial side" of qemu ("KVM") more secure by defining
-which drivers (XHCI) are fully supported and should ideally be used,
-while still allowing to use the other USB drivers for the IMHO less-used a=
-nd
-less-critical use cases (e.g. foreign hardware emulation).
-
-Helge
+Reviewed-by: Helge Deller <deller@gmx.de>
 
