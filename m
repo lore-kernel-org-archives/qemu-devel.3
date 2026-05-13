@@ -4,104 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0F27CD37B6
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 07:50:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E890CD4F24
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 08:25:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN4M3-00020J-Fa; Wed, 13 May 2026 03:50:08 -0400
+	id 1wN4tX-0008GP-Ku; Wed, 13 May 2026 04:24:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wN4Lv-0001xl-5b
- for qemu-devel@nongnu.org; Wed, 13 May 2026 03:50:00 -0400
-Received: from mail-dy1-x1332.google.com ([2607:f8b0:4864:20::1332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wN4Ls-00046C-W9
- for qemu-devel@nongnu.org; Wed, 13 May 2026 03:49:58 -0400
-Received: by mail-dy1-x1332.google.com with SMTP id
- 5a478bee46e88-2bdcf5970cdso4609902eec.0
- for <qemu-devel@nongnu.org>; Wed, 13 May 2026 00:49:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778658594; cv=none;
- d=google.com; s=arc-20240605;
- b=jSnuYJmtoq0Q8JhebvG2j3DRXwdPJRVnTL2QRbg9e61GGwKojMzgCLJ7C5sY/Op+li
- tXjaOgFxmng/vaBIJxFSq5DmZmDyhDFLq5s5UTRaah2WHQrWbGpUXflMO552jIiTS+NT
- O6lI9PGyqQwHHBK2MFgrwh4pax4ML0vpru6dY6kX8JgWmuxLOKIH6NzD3DshAbyK5i1l
- Hu3B15jtuIAac2Fs9bIZ+3RdplXGc/5HxcAcEGzSKLPqG0N2O+vNogFEnTY1JDVZitwc
- 826vvoc4XxFROBvQQATebSTD5h7tLJluHDIBYR4dg9/cFJBSWD6XhYavga8YUznyhUCB
- o9xw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=/kFzL6D9qE9RNDpFQ+ZWN/C0mU/Tx12PGGFWuSCkpv8=;
- fh=pQfrUsPvuHwuGmXnByWlUoSLEsSGHDyjQSnThozXPak=;
- b=IzwinLyLcInS3i2+oiOGMFjpKEHWLJdsEg9Fy649m5miBLCnCDW1Nq1OHjSCipf+CC
- x++bpX9an2w8zFnuUfOcczNTwmiuX+urF8QDeMs/O49lUUEDuGbra3nfHoLVNwrSYY2p
- rUnHOZMjwGy8BXy4PsB72XkqlQSs0b3fWcrrOcBI0ZsF/+LYjF1FjZMlaB5vOz4c0T3Y
- ZNBZXILbPfIwn0/p4caf4NIDs9G13H9BsFPnUmBuIzu7AoiTeby+hlj0OQGPmnRdPCyk
- 78E8EIyJXdq9HXM1ep0frt9PVIjvLD4Hlao6LiXpiWV0fdOiALLTg8ct3ZoHiw+oKsT2
- xWew==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778658594; x=1779263394; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/kFzL6D9qE9RNDpFQ+ZWN/C0mU/Tx12PGGFWuSCkpv8=;
- b=WeBXJWjt2ijDwQRJa6SWBv7Py/vrC3QVEd7I897B+a0C8x7YlSCJJFlPIN/VTjwRgP
- BjXHrYNQe+U4kPUvPmDXutdUgO2JRZxsyQujWCmdn660oefFxz+uz1IxsIuIXbAtJZao
- girq8tMJ7o+Wg8wgCC2DvDgDd6648qf6/rFXRc2RWaEhSOMu6fSjLCBejPjKyK7bspsv
- +feeOyF9U3YdVQrWFP4oz38BL8wPY0X/E0uA/SOTnKcsabL+Itt/uoF9JklFlDpCBjOl
- mIhb5HNgBwn68r+ODlPbCV0ft9sMUt7tgXt22/cYvBOjev/2F3pV1H7vQb0MkYtGvwXL
- I8ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778658594; x=1779263394;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=/kFzL6D9qE9RNDpFQ+ZWN/C0mU/Tx12PGGFWuSCkpv8=;
- b=R35Ha9Hi9WQP/Wjh5NJqmpuioVwaEid6LRyqHAxPlHU3uSAIBI582hJkYILaPnn6y9
- j5Yt8nYa/azxRkLePlkH9cyoXBHX7iyMO56xmJFTGpICnQx6GXX5YFFU6w+FLZptByIA
- /ljo+bsubMPTFlI7/VulZ+6VQajeXUSbHR3UuSpg7WtnHaY9JGaul4AmzzXTVcuaUIe5
- zAMFvxfkNzrGDKJ1eAOLZHZ+4hs7v3RjLg1/oXUNC/K35korhuktUM1kexIUvibLNEpZ
- 4jxtK/JehXFJS02prHDZXvBC/rxPB7JtgO7hz3Kc5+1C3MRiYMxiFyK0oBxYt5mRxnkL
- cuKw==
-X-Gm-Message-State: AOJu0YxdjAlr2rz/QhWRzPgz0GhGXe/es4l14S7GdrDnK9m13BYVUrH/
- Fy+NMSKqSvDQLWZCcPrdp63cd2Fo49k1B2Zn1ZIC0wunahoi33O+9bRS16u7IynSy/XB3cdfe3j
- Dpa5dX2uISgOUWX5gRuoRiYkWWTi6E74=
-X-Gm-Gg: Acq92OEStgl1Q6jUNAQIluVXeVMBlkg9CnL7v4payxjA10RjKHfkIopptnYqK8NzHSR
- ZnuKVllmCyVMjXvbIda1yrQYDohuRBwGox9GJlaoR4g3+Y9ZhtuZrLNt6yuE0AYnzPLKETKKFIH
- h/4hqEwKrCvuhEF1KuZ9Qx1/phix1vDtzON7qaau5DSglk/xpbhlJ3MK8TTykC/lgxrGzVnrl/1
- v7M9NrLsedXwqaOtLr9JEyazU9x/4FaXBcLNbvowLxtipUOHOMU2/QHqlO7MLYlTKD23kroYARy
- EipRQkj7N3aUnV6LJKEw9braWutqtg7SXSnrRCw=
-X-Received: by 2002:a05:7300:5720:b0:2c1:7480:ff9b with SMTP id
- 5a478bee46e88-2ff95e5e1cemr3461089eec.18.1778658593880; Wed, 13 May 2026
- 00:49:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
+ id 1wN4tW-0008Fw-51; Wed, 13 May 2026 04:24:42 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nnmlinux@linux.ibm.com>)
+ id 1wN4tG-0003r6-QQ; Wed, 13 May 2026 04:24:41 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64D2ip4k3773759; Wed, 13 May 2026 08:24:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=y8Fqpb
+ A6xAsDFk32lEW7uNLXIE2AUEKDAW2SgT0De/A=; b=az/dbQh/RX0cpBIicKRcbS
+ F9TNvhTtAHy2UNDFVB8XSeLM3z7P1dX5QkQGacWgOQ9TFsmXzmpyBLiyNqo2ufTg
+ k6nje+DQbOL0vwS88qIFOTx9khSaSmOz6hWjnVHv58MTVhUGXTxHl4N5yaHIhi4u
+ GcymEB9uqEMZr+WHK1yA0J2OnbHg3WEr+nFLy/UL+NXRgFw2lgJUTQ+WxGK38MeH
+ V7MF4aIRcqv/wXmSP/Orkvq2dlRT1hR3DsrRyWGDVJBQjAB7M7w0fd7piQDWvGuw
+ Ryfi9B+n7ckBXbvNtwYs1b3ZwfdjrRV0hUDXAH7mRmy+OhH35Rc/boGughw/+esg
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e3nv6pfm4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 13 May 2026 08:24:22 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64D89Uee006532;
+ Wed, 13 May 2026 08:24:22 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e3nfgpvav-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 13 May 2026 08:24:22 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64D8OIIh45744454
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 13 May 2026 08:24:18 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 371732004B;
+ Wed, 13 May 2026 08:24:18 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 16FED20040;
+ Wed, 13 May 2026 08:24:16 +0000 (GMT)
+Received: from [9.123.10.31] (unknown [9.123.10.31])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 13 May 2026 08:24:15 +0000 (GMT)
+Message-ID: <26dfb1d3-e8b0-4315-842a-1bd62ec7bfd0@linux.ibm.com>
+Date: Wed, 13 May 2026 13:54:15 +0530
 MIME-Version: 1.0
-References: <20260511202111.3091440-1-marcandre.lureau@redhat.com>
- <CAJSP0QVw+GHOC9_mOcn+V6BHZe5BR1jQyDJ1GocGaqiB_GSoBw@mail.gmail.com>
-In-Reply-To: <CAJSP0QVw+GHOC9_mOcn+V6BHZe5BR1jQyDJ1GocGaqiB_GSoBw@mail.gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Wed, 13 May 2026 11:49:40 +0400
-X-Gm-Features: AVHnY4KDvppL1dCNrx6dNHWBiGNcpLBTKVx-bs_R9Tgn8cA_yj10GCQOwAEtKRg
-Message-ID: <CAJ+F1C+-cr+Sa557xLFcHhCEOsccUHAJSyjPF5E8sGULEKQPhA@mail.gmail.com>
-Subject: Re: [PULL 00/24] Qom patches
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-devel@nongnu.org, stefanha@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1332;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1332.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+From: Narayana Murty N <nnmlinux@linux.ibm.com>
+Subject: Re: [PATCH 5/6] hw/ppc: Rename spapr_pci_vfio.c to
+ spapr_pci_vfio_eeh.c
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: npiggin@gmail.com, harshpb@linux.ibm.com, mahesh@linux.ibm.com,
+ ganeshgr@linux.ibm.com, sbhat@linux.ibm.com, vaibhav@linux.ibm.com,
+ anushree.mathur@linux.vnet.ibm.com,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20260512071112.9675-1-nnmlinux@linux.ibm.com>
+ <20260512071112.9675-6-nnmlinux@linux.ibm.com>
+ <ebc9e323-6acb-4224-84a7-1fdcc0841205@redhat.com>
+Content-Language: en-US
+In-Reply-To: <ebc9e323-6acb-4224-84a7-1fdcc0841205@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=KbvidwYD c=1 sm=1 tr=0 ts=6a043537 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=6MIDTr5e4q5RNehgIOAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEzMDA4MiBTYWx0ZWRfXxkQNmgNDa+Oa
+ ChdwS+8BPrgY0aTdIp63kDrz4OYroNiMjDYpdB7extwBudwiqR5S84iED5ziPZrmRYxCI7sNV6l
+ ZVpvf+LwVfQLBpCuGGY0nhey2LYS9zyOppQ3f6tXw8U4K8b4nLwrqekfaWrfk+tk7h539+Djfs1
+ g2C3LiDXZTePfRSXBaKz0hqK2Bfv1uQJMAcGSFfaokGgk09vMYa7XqfR6AAIJQY8RkRKcqE0o1q
+ ZQgcYssir1JKQwDh24HhL4Mxe8Gub/gNwW1JJGGngtJ4/fn5GZIGj5cpIy9wJMUhoqT/LIJy/Fj
+ 4zJHw0Q1sPA3czJjbjTOUaSP+4svtkq+oT3EEo1g5Lx4mUi6PvL6sUV9SLMMyaLQBJY9swDREvL
+ GidWyt6tZ2rqYBKDaOztD5CwgqufLqzEmINrcrdIgR57sJAY3wNQASwUYYQdACOHNwN8bGi51BM
+ EZ60EgrxDVFT5/hi3Dg==
+X-Proofpoint-GUID: gabHXgBaVnQH2qq68k7LrKWW__x5E7FK
+X-Proofpoint-ORIG-GUID: hR9uiw_Dtg8UCNPGQSMovRlU6nRxq9so
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-11_05,2026-05-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 bulkscore=0 impostorscore=0 malwarescore=0
+ lowpriorityscore=0 phishscore=0 spamscore=0 suspectscore=0 clxscore=1011
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605050000
+ definitions=main-2605130082
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=nnmlinux@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,132 +129,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Stefan
-
-On Wed, May 13, 2026 at 3:20=E2=80=AFAM Stefan Hajnoczi <stefanha@gmail.com=
-> wrote:
->
-> On Mon, May 11, 2026 at 4:21=E2=80=AFPM <marcandre.lureau@redhat.com> wro=
-te:
-> >
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >
-> > The following changes since commit 5e61afe211e82a9af15a8794a0bd29bb574e=
-953b:
-> >
-> >   Merge tag 'ui-pull-request' of https://gitlab.com/marcandre.lureau/qe=
-mu into staging (2026-05-11 10:49:53 -0400)
-> >
-> > are available in the Git repository at:
-> >
-> >   https://gitlab.com/marcandre.lureau/qemu.git tags/qom-pull-request
-> >
-> > for you to fetch changes up to bc61a3209bf064826481a5f8f2b4feb47c70b02f=
-:
-> >
-> >   target/s390x: add gen-features.h dependency to s390x_system_ss (2026-=
-05-11 23:59:33 +0400)
-> >
-> > ----------------------------------------------------------------
-> > QOM object lifecycle fixes
-> >
-> > ----------------------------------------------------------------
->
-> Hi Marc-Andr=C3=A9,
-> I'm not sure if this CI failure is related to this pull request, but
-> there is a dbus-vnc issue:
->
-> >>> ASAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=3D1=
- QTEST_QEMU_VNC_BINARY=3D./tools/qemu-vnc/qemu-vnc MESON_TEST_ITERATION=3D1=
- PYTHON=3D/home/gitlab-runner/builds/P3MFS4LUf/0/qemu-project/qemu/build/py=
-venv/bin/python3 QTEST_QEMU_STORAGE_DAEMON_BINARY=3D./storage-daemon/qemu-s=
-torage-daemon G_TEST_DBUS_DAEMON=3D/home/gitlab-runner/builds/P3MFS4LUf/0/q=
-emu-project/qemu/tests/dbus-daemon.sh QTEST_QEMU_IMG=3D./qemu-img QTEST_QEM=
-U_BINARY=3D./qemu-system-x86_64 UBSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_=
-error=3D1:print_summary=3D1:print_stacktrace=3D1 RUST_BACKTRACE=3D1 MALLOC_=
-PERTURB_=3D211 MSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_su=
-mmary=3D1:print_stacktrace=3D1 /home/gitlab-runner/builds/P3MFS4LUf/0/qemu-=
-project/qemu/build/tests/qtest/dbus-vnc-test --tap -k
->
-> 754/1075 /x86_64/dbus-vnc/password-auth -
-> ERROR:../tests/qtest/dbus-vnc-test.c:621:test_dbus_vnc_password_auth:
-> assertion failed (qemu_vnc1_server_get_auth(proxy) =3D=3D "vnc"): ("none"
-> =3D=3D "vnc") FAIL
->
-> https://gitlab.com/qemu-project/qemu/-/jobs/14337427774#L5512
->
-> Any ideas?
-
-Embarrassingly, I have no idea. Before org.qemu.vnc is exposed by
-qemu-vnc (and the auth is checked by the test), qemu-vnc must have
-started a VNC server successfully (vnc_display_new)..
-
-Fwiw, the tests runs quite smoothly locally with meson test --repeat
-1000  (some time out sometime, due to heavy load).
-
-Let's mark/run it as QEMU_TEST_FLAKY_TESTS until I figure out?
 
 
+On 12/05/26 1:24 PM, Cédric Le Goater wrote:
+> + Pierrick, Philippe
 >
-> Stefan
+> On 5/12/26 09:11, Narayana Murty N wrote:
+>> The file spapr_pci_vfio.c contains exclusively EEH (Enhanced Error
+>> Handling) related functions for VFIO devices on sPAPR platforms.
+>> To better reflect its specific purpose and improve code organization,
+>> this commit:
+>>
+>> 1. Renames spapr_pci_vfio.c to spapr_pci_vfio_eeh.c
+>> 2. Moves spapr_phb_vfio_eeh_reenable() from spapr_pci_vfio_eeh.c to
+>>     spapr_pci.c, as it's a general PHB operation not specific to
+>>     VFIO EEH error injection/recovery
+>>
+>> After this change, spapr_pci_vfio_eeh.c contains only the core VFIO
+>> EEH error handling functions, making the file's purpose more focused
+>> and clear.
+>>
+>> This is a refactoring change with no functional impact.
+>>
+>> Signed-off-by: Narayana Murty N <nnmlinux@linux.ibm.com>
+>> ---
+>>   hw/ppc/Kconfig                                    |  2 +-
+>>   hw/ppc/meson.build                                |  2 +-
+>>   hw/ppc/spapr_pci.c                                | 14 ++++++++++++++
+>>   hw/ppc/{spapr_pci_vfio.c => spapr_pci_vfio_eeh.c} | 12 +-----------
 >
-> >
-> > Marc-Andr=C3=A9 Lureau (23):
-> >   hw/remote: check visit return in vfu_object_set_socket
-> >   qom/object: update doc about NULL values in link properties
-> >   hw/remote: guard listener unregister in finalize
-> >   io/net-listener: move mutex init to instance_init
-> >   net/colo-compare: guard finalize against uninitialized state
-> >   ui/console: remove console from global list on finalization
-> >   hw/i386/x86: free oem_id and oem_table_id on finalization
-> >   hw/core/resetcontainer: free children array on finalization
-> >   net/can: free ifname on socketcan finalization
-> >   backends/igvm-cfg: free filename on finalization
-> >   scsi/pr-manager-helper: free path on finalization
-> >   accel/kvm: free device path on finalization
-> >   system/qtest: add missing qtest_finalize()
-> >   hw/fsi: move OPBus address space init to realize
-> >   hw/fsi: move OPBus qbus_init() to instance_init
-> >   hw/gpio/pca9552: fix state_str leak in pca955x_set_led
-> >   hw/arm/aspeed: free fmc_model and spi_model on finalization
-> >   hw/arm/sbsa-ref: free unrealized flash devices on finalization
-> >   hw/arm/virt: free flash devices and OEM strings on finalization
-> >   hw/ppc/pnv: drop extra ref on PHB after adding as child
-> >   hw/riscv/virt: free flash devices and OEM strings on finalization
-> >   meson: drop sphinx-build < 1.7 compatiblity check
-> >   target/s390x: add gen-features.h dependency to s390x_system_ss
-> >
-> > Peter Xu (1):
-> >   system/ioport: Fix qom-list-properties crash on portio list obj
-> >
-> >  docs/meson.build          | 14 +-------------
-> >  include/qom/object.h      |  8 ++++----
-> >  accel/kvm/kvm-all.c       |  8 ++++++++
-> >  backends/igvm-cfg.c       |  1 +
-> >  hw/arm/aspeed.c           |  9 +++++++++
-> >  hw/arm/sbsa-ref.c         | 12 ++++++++++++
-> >  hw/arm/virt.c             | 14 ++++++++++++++
-> >  hw/core/resetcontainer.c  |  3 +++
-> >  hw/fsi/aspeed_apb2opb.c   | 37 ++++++++++++++++++++++++-------------
-> >  hw/gpio/pca9552.c         |  2 +-
-> >  hw/i386/x86.c             |  9 +++++++++
-> >  hw/ppc/pnv.c              |  1 +
-> >  hw/remote/remote-obj.c    |  4 +++-
-> >  hw/remote/vfio-user-obj.c |  4 +++-
-> >  hw/riscv/virt.c           | 14 ++++++++++++++
-> >  io/net-listener.c         |  9 ++++++++-
-> >  net/can/can_socketcan.c   |  8 ++++++++
-> >  net/colo-compare.c        | 31 +++++++++++++++----------------
-> >  scsi/pr-manager-helper.c  |  1 +
-> >  system/ioport.c           | 11 +++++++++--
-> >  system/qtest.c            | 10 ++++++++++
-> >  ui/console.c              |  5 ++++-
-> >  target/s390x/meson.build  |  1 +
-> >  23 files changed, 163 insertions(+), 53 deletions(-)
-> >
-> > --
-> > 2.54.0
-> >
-> >
 >
+> There is a CONFIG_VFIO_PCI in this file that could be replaced
+> with stub definitions.
+>
+Hi Cedric,
+We are using CONFIG_VFIO_PCI in the new eeh specific file as is for eeh 
+specific routines and stubs.
+Are you suggesting to retain spapr_pci_vfio.c with the remaining single 
+routine "spapr_phb_vfio_reset"
+and its stub?
+
+Regards,
+Narayana Murty
+
+> Thanks,
+>
+> C.
+>
+>
+>> include/hw/pci-host/spapr.h                       |  1 +
+>>   5 files changed, 18 insertions(+), 13 deletions(-)
+>>   rename hw/ppc/{spapr_pci_vfio.c => spapr_pci_vfio_eeh.c} (96%)
+>>
+>> diff --git a/hw/ppc/Kconfig b/hw/ppc/Kconfig
+>> index 347dcce690..886ce71ef8 100644
+>> --- a/hw/ppc/Kconfig
+>> +++ b/hw/ppc/Kconfig
+>> @@ -6,7 +6,7 @@ config PSERIES
+>>       imply PCI_DEVICES
+>>       imply TEST_DEVICES
+>>       imply VIRTIO_VGA
+>> -    imply VFIO_PCI if LINUX   # needed by spapr_pci_vfio.c
+>> +    imply VFIO_PCI if LINUX   # needed by spapr_pci_vfio_eeh.c
+>>       select NVDIMM
+>>       select DIMM
+>>       select PCI
+>> diff --git a/hw/ppc/meson.build b/hw/ppc/meson.build
+>> index 37aa535db2..7cf0226b5e 100644
+>> --- a/hw/ppc/meson.build
+>> +++ b/hw/ppc/meson.build
+>> @@ -35,7 +35,7 @@ ppc_ss.add(when: ['CONFIG_PSERIES', 'CONFIG_TCG'], 
+>> if_true: files(
+>>   ppc_ss.add(when: 'CONFIG_SPAPR_RNG', if_true: files('spapr_rng.c'))
+>>   if host_os == 'linux'
+>>     ppc_ss.add(when: 'CONFIG_PSERIES', if_true: files(
+>> -    'spapr_pci_vfio.c',
+>> +    'spapr_pci_vfio_eeh.c',
+>>     ))
+>>   endif
+>>   diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
+>> index b00f71d92a..fcb7b850c0 100644
+>> --- a/hw/ppc/spapr_pci.c
+>> +++ b/hw/ppc/spapr_pci.c
+>> @@ -2215,6 +2215,20 @@ void spapr_phb_dma_reset(SpaprPhbState *sphb)
+>>       tcet->def_win = true;
+>>   }
+>>   +void spapr_phb_vfio_reset(DeviceState *qdev)
+>> +{
+>> +    /*
+>> +     * The PE might be in frozen state. To reenable the EEH
+>> +     * functionality on it will clean the frozen state, which
+>> +     * ensures that the contained PCI devices will work properly
+>> +     * after reboot.
+>> +     */
+>> +    spapr_phb_vfio_eeh_reenable(SPAPR_PCI_HOST_BRIDGE(qdev));
+>> +}
+>> +
+>> +
+>> +
+>> +
+>>   static void spapr_phb_reset(DeviceState *qdev)
+>>   {
+>>       SpaprPhbState *sphb = SPAPR_PCI_HOST_BRIDGE(qdev);
+>> diff --git a/hw/ppc/spapr_pci_vfio.c b/hw/ppc/spapr_pci_vfio_eeh.c
+>> similarity index 96%
+>> rename from hw/ppc/spapr_pci_vfio.c
+>> rename to hw/ppc/spapr_pci_vfio_eeh.c
+>> index ed0b22a84a..c00cf1d24b 100644
+>> --- a/hw/ppc/spapr_pci_vfio.c
+>> +++ b/hw/ppc/spapr_pci_vfio_eeh.c
+>> @@ -131,21 +131,11 @@ bool spapr_phb_eeh_available(SpaprPhbState *sphb)
+>>       return vfio_eeh_as_ok(&sphb->iommu_as);
+>>   }
+>>   -static void spapr_phb_vfio_eeh_reenable(SpaprPhbState *sphb)
+>> +void spapr_phb_vfio_eeh_reenable(SpaprPhbState *sphb)
+>>   {
+>>       vfio_eeh_as_op(&sphb->iommu_as, VFIO_EEH_PE_ENABLE);
+>>   }
+>>   -void spapr_phb_vfio_reset(DeviceState *qdev)
+>> -{
+>> -    /*
+>> -     * The PE might be in frozen state. To reenable the EEH
+>> -     * functionality on it will clean the frozen state, which
+>> -     * ensures that the contained PCI devices will work properly
+>> -     * after reboot.
+>> -     */
+>> -    spapr_phb_vfio_eeh_reenable(SPAPR_PCI_HOST_BRIDGE(qdev));
+>> -}
+>>     static void spapr_eeh_pci_find_device(PCIBus *bus, PCIDevice *pdev,
+>>                                         void *opaque)
+>> diff --git a/include/hw/pci-host/spapr.h b/include/hw/pci-host/spapr.h
+>> index 417d1f6c31..5ca122a5f1 100644
+>> --- a/include/hw/pci-host/spapr.h
+>> +++ b/include/hw/pci-host/spapr.h
+>> @@ -125,6 +125,7 @@ int spapr_phb_vfio_eeh_get_state(SpaprPhbState 
+>> *sphb, int *state);
+>>   int spapr_phb_vfio_eeh_reset(SpaprPhbState *sphb, int option);
+>>   int spapr_phb_vfio_eeh_configure(SpaprPhbState *sphb);
+>>   void spapr_phb_vfio_reset(DeviceState *qdev);
+>> +void spapr_phb_vfio_eeh_reenable(SpaprPhbState *sphb);
+>>   int spapr_phb_vfio_errinjct(SpaprPhbState *sphb, uint32_t func,
+>>                               uint64_t addr, uint64_t mask, uint32_t 
+>> type);
+>>   #else
+>
+
 
