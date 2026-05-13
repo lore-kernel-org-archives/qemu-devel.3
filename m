@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAFF8CD37B6
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 06:37:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 421B5CD4851
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 06:43:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN3DU-00057P-Ff; Wed, 13 May 2026 02:37:12 -0400
+	id 1wN3JF-0006cS-TM; Wed, 13 May 2026 02:43:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wN3DF-0004tT-IL; Wed, 13 May 2026 02:36:59 -0400
+ id 1wN3JD-0006c7-35; Wed, 13 May 2026 02:43:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wN3D9-0004gh-1y; Wed, 13 May 2026 02:36:55 -0400
+ id 1wN3J9-00074C-Er; Wed, 13 May 2026 02:43:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778654199; bh=5zLiLHRb5EDWbPUCo+AoE1FWb580mhDWxUMQV6DYhS8=;
+ t=1778654574; bh=cFhn3dFsW7Ra+shGmjFHTtDCwll7qNy4vz4e4ECmU50=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=SOSNVqPxGJ5gmoGwzh4SofePuTkUI3D3y1nHEXGkMN5JNdK3zx0Z7s2/74phjAI0k
- mOufK2k5cM7pAd/2zSNfsQgdZzXxf8s9nj/BJV3ci8SkY9T+0SDl3tWDE7CRRPLP7A
- zL/rBoP4abQ6m15WY8SDSl1/Yr8N/c10Ibo9RXuZrgAEARoC+Zw5vYKoE3dYnoQq4t
- jbRY4yi3PeqVUswnEUH4dghEKJoLPmQNFBshXuYDTe9wLOzg/XxmwLD3TNdtcoqJuX
- dNWJt3D46nWaQ1F4uLb/kSLaPruhNjXcherIEvLuo+XNmZuidSC2K8y/eZ/soA7J6T
- oD22CItckzNgA==
+ b=x7iC9mmCHl2clMd90yLMt5UoqmIhzGWkYNWJLOsoH2wtRsK7/2lpNp8W7c53849DO
+ 617f1xrL9ZFNnxkyyfPGxCJi9h5d5Wdb10oe4QK0Fhfrg6H59JmCqC6snx19YVr4P7
+ hRRA+jZb9iFoHiP6HczVmI2f6H38YFIPkjH4uUYsVF2pTTN3hRCfp86GDLLjdWh6gB
+ dBnmJb1xYx17PY+E0vIsTLuLESOvxEs4O3GIM7WB8s6dmg3hWvFJEhgwepUTE8NpQS
+ PPd2uYB50Ysd8GGcU13+h4SSd8SwIXPXwsMPRIfIXZf6MpOEoRiTOmr1g4W8E8fwJw
+ m9YWlfLZIDOEA==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id BF2871AA6CA;
- Wed, 13 May 2026 09:36:39 +0300 (MSK)
-Message-ID: <e0cc7bf4-beca-4b08-bda6-ff2b97942db3@tls.msk.ru>
-Date: Wed, 13 May 2026 09:36:44 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id AFB4F1AA6D1;
+ Wed, 13 May 2026 09:42:54 +0300 (MSK)
+Message-ID: <f4e8921d-d1fb-4ff6-95d2-de6b44a5941e@tls.msk.ru>
+Date: Wed, 13 May 2026 09:42:59 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] scsi: Fix discard_granularity for -drive if=scsi
-To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Cc: hreitz@redhat.com, ivy@FreeBSD.org, pbonzini@redhat.com, fam@euphon.net,
- qemu-devel@nongnu.org, qemu-stable@nongnu.org
-References: <20260410152314.86412-1-kwolf@redhat.com>
+Subject: Re: [PATCH v2] virtio-net: validate RSS indirections_len in post_load
+To: Junjie Cao <junjie.cao@intel.com>, qemu-devel@nongnu.org
+Cc: jasowang@redhat.com, mst@redhat.com, yuri.benditovich@daynix.com,
+ berrange@redhat.com, peter.maydell@linaro.org, qemu-stable@nongnu.org
+References: <20260324060100.1997-1-junjie.cao@intel.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -84,9 +84,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260410152314.86412-1-kwolf@redhat.com>
+In-Reply-To: <20260324060100.1997-1-junjie.cao@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -19
@@ -110,30 +110,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10.04.2026 18:23, Kevin Wolf wrote:
-> This fixes the default for discard_granularity with -drive if=scsi,
-> which was unintentionally 0 (disable discard) instead of sharing the
-> default with the qdev property used for -device scsi-hd (usually 4096).
-> This was a regression in QEMU 9.0.
+On 24.03.2026 09:01, Junjie Cao wrote:
+> virtio_net_handle_rss() enforces that indirections_len is a non-zero
+> power of two no larger than VIRTIO_NET_RSS_MAX_TABLE_LEN, but
+> virtio_net_rss_post_load() applies none of these checks to values
+> restored from the migration stream.
+> 
+> A corrupted save file or crafted migration stream can set
+> indirections_len to 0.  Even if it also clears redirect,
+> virtio_load() calls set_features_nocheck() after the device vmstate
+> (including the RSS subsection and its post_load) has already been
+> loaded, re-deriving redirect from the negotiated guest features.
+> When VIRTIO_NET_F_RSS was negotiated, redirect is set back to true
+> regardless of the migration stream value.  The receive path then
+> computes
+> 
+>      hash & (indirections_len - 1)   /* wraps to 0xFFFFFFFF via int promotion */
+> 
+> and uses the result to index into indirections_table, which was not
+> allocated by the VMState loader when the element count is zero (see
+> vmstate_handle_alloc()), resulting in a NULL pointer dereference that
+> crashes QEMU:
+> 
+>    #0  virtio_net_process_rss    ../hw/net/virtio-net.c:1901
+>    #1  virtio_net_receive_rcu    ../hw/net/virtio-net.c:1921
+>    #2  virtio_net_do_receive     ../hw/net/virtio-net.c:2061
+>    #3  nc_sendv_compat           ../net/net.c:823
+>    #4  qemu_deliver_packet_iov   ../net/net.c:870
+> 
+> The RSS subsection is only loaded when rss_data.enabled is true (via
+> virtio_net_rss_needed()), and the command path always produces
+> indirections_len in {1, 2, 4, …, 128}, so an unconditional check
+> cannot reject a legitimate migration stream.
+> 
+> Factor the validation into virtio_net_rss_indirections_len_valid()
+> and call it from both virtio_net_handle_rss() and
+> virtio_net_rss_post_load().
+> 
+> Fixes: e41b711485e5 ("virtio-net: add migration support for RSS and hash report")
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Junjie Cao <junjie.cao@intel.com>
 
 Hi!
 
-Has this patchset been forgotten, or is it not needed anymore?
+Has this patch been forgotten, or is it not needed anymore?
 
-If it's needed, it would be nice if it lands in the master branch
-in the next 10 days, to be included in the next stable series.
+I'm preparing next set of the stable qemu releases, if it's needed,
+it would be nice if it lands in the master branch in the next 10
+days.
 
 Thanks,
 
 /mjt
-
-> Kevin Wolf (2):
->    block: Create DEFAULT_BLOCK_CONF macro
->    block: Add more defaults to DEFAULT_BLOCK_CONF
-> 
->   include/hw/block/block.h | 12 ++++++++++++
->   hw/scsi/scsi-bus.c       |  7 +------
->   2 files changed, 13 insertions(+), 6 deletions(-)
-> 
-
 
