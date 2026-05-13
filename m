@@ -4,88 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4C32CD37B6
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 07:49:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0F27CD37B6
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 07:50:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN4L0-00011s-0r; Wed, 13 May 2026 03:49:02 -0400
+	id 1wN4M3-00020J-Fa; Wed, 13 May 2026 03:50:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wN4Kx-0000zO-EV
- for qemu-devel@nongnu.org; Wed, 13 May 2026 03:48:59 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wN4Lv-0001xl-5b
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 03:50:00 -0400
+Received: from mail-dy1-x1332.google.com ([2607:f8b0:4864:20::1332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wN4Kv-0003dq-Sb
- for qemu-devel@nongnu.org; Wed, 13 May 2026 03:48:59 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-44985f4ab0fso3734940f8f.0
- for <qemu-devel@nongnu.org>; Wed, 13 May 2026 00:48:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wN4Ls-00046C-W9
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 03:49:58 -0400
+Received: by mail-dy1-x1332.google.com with SMTP id
+ 5a478bee46e88-2bdcf5970cdso4609902eec.0
+ for <qemu-devel@nongnu.org>; Wed, 13 May 2026 00:49:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778658594; cv=none;
+ d=google.com; s=arc-20240605;
+ b=jSnuYJmtoq0Q8JhebvG2j3DRXwdPJRVnTL2QRbg9e61GGwKojMzgCLJ7C5sY/Op+li
+ tXjaOgFxmng/vaBIJxFSq5DmZmDyhDFLq5s5UTRaah2WHQrWbGpUXflMO552jIiTS+NT
+ O6lI9PGyqQwHHBK2MFgrwh4pax4ML0vpru6dY6kX8JgWmuxLOKIH6NzD3DshAbyK5i1l
+ Hu3B15jtuIAac2Fs9bIZ+3RdplXGc/5HxcAcEGzSKLPqG0N2O+vNogFEnTY1JDVZitwc
+ 826vvoc4XxFROBvQQATebSTD5h7tLJluHDIBYR4dg9/cFJBSWD6XhYavga8YUznyhUCB
+ o9xw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=/kFzL6D9qE9RNDpFQ+ZWN/C0mU/Tx12PGGFWuSCkpv8=;
+ fh=pQfrUsPvuHwuGmXnByWlUoSLEsSGHDyjQSnThozXPak=;
+ b=IzwinLyLcInS3i2+oiOGMFjpKEHWLJdsEg9Fy649m5miBLCnCDW1Nq1OHjSCipf+CC
+ x++bpX9an2w8zFnuUfOcczNTwmiuX+urF8QDeMs/O49lUUEDuGbra3nfHoLVNwrSYY2p
+ rUnHOZMjwGy8BXy4PsB72XkqlQSs0b3fWcrrOcBI0ZsF/+LYjF1FjZMlaB5vOz4c0T3Y
+ ZNBZXILbPfIwn0/p4caf4NIDs9G13H9BsFPnUmBuIzu7AoiTeby+hlj0OQGPmnRdPCyk
+ 78E8EIyJXdq9HXM1ep0frt9PVIjvLD4Hlao6LiXpiWV0fdOiALLTg8ct3ZoHiw+oKsT2
+ xWew==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778658536; x=1779263336; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1778658594; x=1779263394; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ICzC7UGJjqGK/86IacnrTrurhebXutr2Ptur7vjdEP4=;
- b=sXWgrFSEKdoNz0a0ZCqLbiG8rF7uEzfUhxrnbsLdE4MuIJhuMihuyFPPffwss1NiLr
- Db8bJenmvQdfNDKCd37vCpFjpab2NNKgFLmPZSqxsmk2reeO5WxR98co6iqGsEuNj0mp
- kZQp5Di7+hXzWtMis5tpg6C5iqOjwqq8qvu4dai0S7+jG9m4PS4S512PFWxUTLUHcdxR
- nz26FPtTYibeg1Mvbi3Y6r2EQqfZWHQMwSHc4gLPkVy6qRiSAqAS/fr75gYdqycbjqWr
- /1UCvCsuV7gKL5MU5X6jNs6YaqLzdnbWeNsbxRcVgUkhcrXeVQBjahW7auD/R6ffrSeC
- +QDg==
+ bh=/kFzL6D9qE9RNDpFQ+ZWN/C0mU/Tx12PGGFWuSCkpv8=;
+ b=WeBXJWjt2ijDwQRJa6SWBv7Py/vrC3QVEd7I897B+a0C8x7YlSCJJFlPIN/VTjwRgP
+ BjXHrYNQe+U4kPUvPmDXutdUgO2JRZxsyQujWCmdn660oefFxz+uz1IxsIuIXbAtJZao
+ girq8tMJ7o+Wg8wgCC2DvDgDd6648qf6/rFXRc2RWaEhSOMu6fSjLCBejPjKyK7bspsv
+ +feeOyF9U3YdVQrWFP4oz38BL8wPY0X/E0uA/SOTnKcsabL+Itt/uoF9JklFlDpCBjOl
+ mIhb5HNgBwn68r+ODlPbCV0ft9sMUt7tgXt22/cYvBOjev/2F3pV1H7vQb0MkYtGvwXL
+ I8ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778658536; x=1779263336;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20251104; t=1778658594; x=1779263394;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ICzC7UGJjqGK/86IacnrTrurhebXutr2Ptur7vjdEP4=;
- b=pcjOoclZCH1Iw0JCQsdU8TzVbdKHSJ0zlX92dB6qN3/dKO/350y/0mVG89a7fAUdKS
- NxEMHnoPTnUq8Uup9QXDhcRV3v4CARH3auQHXFWgmoVoTV2pDlEAUIp1ieJiDzbvW/N/
- ISFU7g7HNV/QuRmVTY6zFNQV7Czz80+gQj/qk8hGYJP73r5f0fB0kfMLqVAimSk5sJpP
- SY9eC4BP4HDoV2MivKvmvzDjX44SqsOzoCBFFdHLavZYwT/3HnfFt4n9OmySYZekzgCt
- 5fzHqQd9/gNn6CZAIGnmwKzl5/2zSDUmrPIvw4glc3JLmfphkxbaGNZTUrTt/EMHRwYG
- Unag==
-X-Gm-Message-State: AOJu0YxSWoTA7rr/4Jo41QZVNtVFjjaxvDYsbTshMCIhx1i0KI6IyeP5
- h2xFVP9Sv9jAR78pSgpCPfvakqY4wzwWet2y63QYTmJ4lkL2VAiDiD2v2T9ucFJpThIxhZMUAo3
- Qz/8dDTc=
-X-Gm-Gg: Acq92OHsWhKtfFWmEA7k/JfptJXV4Qid9mYWWeRRTBaY9xTx0ENDa/W1ctJJbs3PVO/
- SijW0bsKRcwMJ5urGf4Dw7j7LNKkh3IkZwel8rpFvX10TszJAVOsjA3BBW3YNSJvdAVRsRhdEmQ
- y2JClxMn6n/zWepAO4gk7Jia0zjNZhj8w9vrX1/0mP20HTcgRcsLNtfcoBl1R/O+2XgfsO65I5g
- aC3R8UdtnyTOPj9uiT56H2kSp01lQcZremlpw5jxf8USqT4yaI3GpkiZ2bxXUwLB3cJPfHJpk5l
- THme780BEjVlzjA7D0RvDhT6IWBjlQgxYYFE7WesGUD7w9nRwcPhvgypOfoXtxQaBfG2t0X/jd2
- Dhh4gs5YnfFTabTP28un7EdkgAWfO8OA7lzAVajI41OxL4Y6D4+TW1veBWN5Gn40U1VQaghGFoz
- W51iQrXaWW0EVhE3qfG1NwARmxXyRnu+OXTuT6KmO2V7QhSzvfoRFFCDevkKzT9dbXDvWtwoegg
- l+bVCe0tPg=
-X-Received: by 2002:a05:6000:2203:b0:44a:aa3c:5927 with SMTP id
- ffacd0b85a97d-45c5a782750mr3180124f8f.29.1778658536090; 
- Wed, 13 May 2026 00:48:56 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45491f8d4c3sm38470516f8f.34.2026.05.13.00.48.55
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 13 May 2026 00:48:55 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 2/2] target/alpha: Inline UNALIGN() macro
-Date: Wed, 13 May 2026 09:48:39 +0200
-Message-ID: <20260513074840.11398-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260513074840.11398-1-philmd@linaro.org>
-References: <20260513074840.11398-1-philmd@linaro.org>
+ bh=/kFzL6D9qE9RNDpFQ+ZWN/C0mU/Tx12PGGFWuSCkpv8=;
+ b=R35Ha9Hi9WQP/Wjh5NJqmpuioVwaEid6LRyqHAxPlHU3uSAIBI582hJkYILaPnn6y9
+ j5Yt8nYa/azxRkLePlkH9cyoXBHX7iyMO56xmJFTGpICnQx6GXX5YFFU6w+FLZptByIA
+ /ljo+bsubMPTFlI7/VulZ+6VQajeXUSbHR3UuSpg7WtnHaY9JGaul4AmzzXTVcuaUIe5
+ zAMFvxfkNzrGDKJ1eAOLZHZ+4hs7v3RjLg1/oXUNC/K35korhuktUM1kexIUvibLNEpZ
+ 4jxtK/JehXFJS02prHDZXvBC/rxPB7JtgO7hz3Kc5+1C3MRiYMxiFyK0oBxYt5mRxnkL
+ cuKw==
+X-Gm-Message-State: AOJu0YxdjAlr2rz/QhWRzPgz0GhGXe/es4l14S7GdrDnK9m13BYVUrH/
+ Fy+NMSKqSvDQLWZCcPrdp63cd2Fo49k1B2Zn1ZIC0wunahoi33O+9bRS16u7IynSy/XB3cdfe3j
+ Dpa5dX2uISgOUWX5gRuoRiYkWWTi6E74=
+X-Gm-Gg: Acq92OEStgl1Q6jUNAQIluVXeVMBlkg9CnL7v4payxjA10RjKHfkIopptnYqK8NzHSR
+ ZnuKVllmCyVMjXvbIda1yrQYDohuRBwGox9GJlaoR4g3+Y9ZhtuZrLNt6yuE0AYnzPLKETKKFIH
+ h/4hqEwKrCvuhEF1KuZ9Qx1/phix1vDtzON7qaau5DSglk/xpbhlJ3MK8TTykC/lgxrGzVnrl/1
+ v7M9NrLsedXwqaOtLr9JEyazU9x/4FaXBcLNbvowLxtipUOHOMU2/QHqlO7MLYlTKD23kroYARy
+ EipRQkj7N3aUnV6LJKEw9braWutqtg7SXSnrRCw=
+X-Received: by 2002:a05:7300:5720:b0:2c1:7480:ff9b with SMTP id
+ 5a478bee46e88-2ff95e5e1cemr3461089eec.18.1778658593880; Wed, 13 May 2026
+ 00:49:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+References: <20260511202111.3091440-1-marcandre.lureau@redhat.com>
+ <CAJSP0QVw+GHOC9_mOcn+V6BHZe5BR1jQyDJ1GocGaqiB_GSoBw@mail.gmail.com>
+In-Reply-To: <CAJSP0QVw+GHOC9_mOcn+V6BHZe5BR1jQyDJ1GocGaqiB_GSoBw@mail.gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Wed, 13 May 2026 11:49:40 +0400
+X-Gm-Features: AVHnY4KDvppL1dCNrx6dNHWBiGNcpLBTKVx-bs_R9Tgn8cA_yj10GCQOwAEtKRg
+Message-ID: <CAJ+F1C+-cr+Sa557xLFcHhCEOsccUHAJSyjPF5E8sGULEKQPhA@mail.gmail.com>
+Subject: Re: [PULL 00/24] Qom patches
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: qemu-devel@nongnu.org, stefanha@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1332;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1332.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,112 +117,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Directly access DisasContext::mo_align in place.
+Hi Stefan
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/alpha/translate.c | 26 ++++++++++----------------
- 1 file changed, 10 insertions(+), 16 deletions(-)
+On Wed, May 13, 2026 at 3:20=E2=80=AFAM Stefan Hajnoczi <stefanha@gmail.com=
+> wrote:
+>
+> On Mon, May 11, 2026 at 4:21=E2=80=AFPM <marcandre.lureau@redhat.com> wro=
+te:
+> >
+> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> >
+> > The following changes since commit 5e61afe211e82a9af15a8794a0bd29bb574e=
+953b:
+> >
+> >   Merge tag 'ui-pull-request' of https://gitlab.com/marcandre.lureau/qe=
+mu into staging (2026-05-11 10:49:53 -0400)
+> >
+> > are available in the Git repository at:
+> >
+> >   https://gitlab.com/marcandre.lureau/qemu.git tags/qom-pull-request
+> >
+> > for you to fetch changes up to bc61a3209bf064826481a5f8f2b4feb47c70b02f=
+:
+> >
+> >   target/s390x: add gen-features.h dependency to s390x_system_ss (2026-=
+05-11 23:59:33 +0400)
+> >
+> > ----------------------------------------------------------------
+> > QOM object lifecycle fixes
+> >
+> > ----------------------------------------------------------------
+>
+> Hi Marc-Andr=C3=A9,
+> I'm not sure if this CI failure is related to this pull request, but
+> there is a dbus-vnc issue:
+>
+> >>> ASAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=3D1=
+ QTEST_QEMU_VNC_BINARY=3D./tools/qemu-vnc/qemu-vnc MESON_TEST_ITERATION=3D1=
+ PYTHON=3D/home/gitlab-runner/builds/P3MFS4LUf/0/qemu-project/qemu/build/py=
+venv/bin/python3 QTEST_QEMU_STORAGE_DAEMON_BINARY=3D./storage-daemon/qemu-s=
+torage-daemon G_TEST_DBUS_DAEMON=3D/home/gitlab-runner/builds/P3MFS4LUf/0/q=
+emu-project/qemu/tests/dbus-daemon.sh QTEST_QEMU_IMG=3D./qemu-img QTEST_QEM=
+U_BINARY=3D./qemu-system-x86_64 UBSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_=
+error=3D1:print_summary=3D1:print_stacktrace=3D1 RUST_BACKTRACE=3D1 MALLOC_=
+PERTURB_=3D211 MSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_su=
+mmary=3D1:print_stacktrace=3D1 /home/gitlab-runner/builds/P3MFS4LUf/0/qemu-=
+project/qemu/build/tests/qtest/dbus-vnc-test --tap -k
+>
+> 754/1075 /x86_64/dbus-vnc/password-auth -
+> ERROR:../tests/qtest/dbus-vnc-test.c:621:test_dbus_vnc_password_auth:
+> assertion failed (qemu_vnc1_server_get_auth(proxy) =3D=3D "vnc"): ("none"
+> =3D=3D "vnc") FAIL
+>
+> https://gitlab.com/qemu-project/qemu/-/jobs/14337427774#L5512
+>
+> Any ideas?
 
-diff --git a/target/alpha/translate.c b/target/alpha/translate.c
-index 120ef5f8ab5..d0c18e38765 100644
---- a/target/alpha/translate.c
-+++ b/target/alpha/translate.c
-@@ -70,12 +70,6 @@ struct DisasContext {
-     TCGv_i64 sink;
- };
- 
--#ifdef CONFIG_USER_ONLY
--#define UNALIGN(C)  (C)->mo_align
--#else
--#define UNALIGN(C)  (C)->mo_align
--#endif
--
- /* Target-specific return values from translate_one, indicating the
-    state of the TB.  Note that DISAS_NEXT indicates that we are not
-    exiting the TB.  */
-@@ -285,27 +279,27 @@ static inline DisasJumpType gen_invalid(DisasContext *ctx)
- static void gen_ldf(DisasContext *ctx, TCGv_i64 dest, TCGv_i64 addr)
- {
-     TCGv_i32 tmp32 = tcg_temp_new_i32();
--    tcg_gen_qemu_ld_i32(tmp32, addr, ctx->mem_idx, MO_LEUL | UNALIGN(ctx));
-+    tcg_gen_qemu_ld_i32(tmp32, addr, ctx->mem_idx, MO_LEUL | ctx->mo_align);
-     gen_helper_memory_to_f(dest, tmp32);
- }
- 
- static void gen_ldg(DisasContext *ctx, TCGv_i64 dest, TCGv_i64 addr)
- {
-     TCGv_i64 tmp = tcg_temp_new_i64();
--    tcg_gen_qemu_ld_i64(tmp, addr, ctx->mem_idx, MO_LEUQ | UNALIGN(ctx));
-+    tcg_gen_qemu_ld_i64(tmp, addr, ctx->mem_idx, MO_LEUQ | ctx->mo_align);
-     gen_helper_memory_to_g(dest, tmp);
- }
- 
- static void gen_lds(DisasContext *ctx, TCGv_i64 dest, TCGv_i64 addr)
- {
-     TCGv_i32 tmp32 = tcg_temp_new_i32();
--    tcg_gen_qemu_ld_i32(tmp32, addr, ctx->mem_idx, MO_LEUL | UNALIGN(ctx));
-+    tcg_gen_qemu_ld_i32(tmp32, addr, ctx->mem_idx, MO_LEUL | ctx->mo_align);
-     gen_helper_memory_to_s(dest, tmp32);
- }
- 
- static void gen_ldt(DisasContext *ctx, TCGv_i64 dest, TCGv_i64 addr)
- {
--    tcg_gen_qemu_ld_i64(dest, addr, ctx->mem_idx, MO_LEUQ | UNALIGN(ctx));
-+    tcg_gen_qemu_ld_i64(dest, addr, ctx->mem_idx, MO_LEUQ | ctx->mo_align);
- }
- 
- static void gen_load_fp(DisasContext *ctx, int ra, int rb, int32_t disp16,
-@@ -336,7 +330,7 @@ static void gen_load_int(DisasContext *ctx, int ra, int rb, int32_t disp16,
-     if (clear) {
-         tcg_gen_andi_i64(addr, addr, ~0x7);
-     } else if (!locked) {
--        op |= UNALIGN(ctx);
-+        op |= ctx->mo_align;
-     }
- 
-     dest = ctx->ir[ra];
-@@ -352,26 +346,26 @@ static void gen_stf(DisasContext *ctx, TCGv_i64 src, TCGv_i64 addr)
- {
-     TCGv_i32 tmp32 = tcg_temp_new_i32();
-     gen_helper_f_to_memory(tmp32, addr);
--    tcg_gen_qemu_st_i32(tmp32, addr, ctx->mem_idx, MO_LEUL | UNALIGN(ctx));
-+    tcg_gen_qemu_st_i32(tmp32, addr, ctx->mem_idx, MO_LEUL | ctx->mo_align);
- }
- 
- static void gen_stg(DisasContext *ctx, TCGv_i64 src, TCGv_i64 addr)
- {
-     TCGv_i64 tmp = tcg_temp_new_i64();
-     gen_helper_g_to_memory(tmp, src);
--    tcg_gen_qemu_st_i64(tmp, addr, ctx->mem_idx, MO_LEUQ | UNALIGN(ctx));
-+    tcg_gen_qemu_st_i64(tmp, addr, ctx->mem_idx, MO_LEUQ | ctx->mo_align);
- }
- 
- static void gen_sts(DisasContext *ctx, TCGv_i64 src, TCGv_i64 addr)
- {
-     TCGv_i32 tmp32 = tcg_temp_new_i32();
-     gen_helper_s_to_memory(tmp32, src);
--    tcg_gen_qemu_st_i32(tmp32, addr, ctx->mem_idx, MO_LEUL | UNALIGN(ctx));
-+    tcg_gen_qemu_st_i32(tmp32, addr, ctx->mem_idx, MO_LEUL | ctx->mo_align);
- }
- 
- static void gen_stt(DisasContext *ctx, TCGv_i64 src, TCGv_i64 addr)
- {
--    tcg_gen_qemu_st_i64(src, addr, ctx->mem_idx, MO_LEUQ | UNALIGN(ctx));
-+    tcg_gen_qemu_st_i64(src, addr, ctx->mem_idx, MO_LEUQ | ctx->mo_align);
- }
- 
- static void gen_store_fp(DisasContext *ctx, int ra, int rb, int32_t disp16,
-@@ -392,7 +386,7 @@ static void gen_store_int(DisasContext *ctx, int ra, int rb, int32_t disp16,
-     if (clear) {
-         tcg_gen_andi_i64(addr, addr, ~0x7);
-     } else {
--        op |= UNALIGN(ctx);
-+        op |= ctx->mo_align;
-     }
- 
-     src = load_gpr(ctx, ra);
--- 
-2.53.0
+Embarrassingly, I have no idea. Before org.qemu.vnc is exposed by
+qemu-vnc (and the auth is checked by the test), qemu-vnc must have
+started a VNC server successfully (vnc_display_new)..
 
+Fwiw, the tests runs quite smoothly locally with meson test --repeat
+1000  (some time out sometime, due to heavy load).
+
+Let's mark/run it as QEMU_TEST_FLAKY_TESTS until I figure out?
+
+
+>
+> Stefan
+>
+> >
+> > Marc-Andr=C3=A9 Lureau (23):
+> >   hw/remote: check visit return in vfu_object_set_socket
+> >   qom/object: update doc about NULL values in link properties
+> >   hw/remote: guard listener unregister in finalize
+> >   io/net-listener: move mutex init to instance_init
+> >   net/colo-compare: guard finalize against uninitialized state
+> >   ui/console: remove console from global list on finalization
+> >   hw/i386/x86: free oem_id and oem_table_id on finalization
+> >   hw/core/resetcontainer: free children array on finalization
+> >   net/can: free ifname on socketcan finalization
+> >   backends/igvm-cfg: free filename on finalization
+> >   scsi/pr-manager-helper: free path on finalization
+> >   accel/kvm: free device path on finalization
+> >   system/qtest: add missing qtest_finalize()
+> >   hw/fsi: move OPBus address space init to realize
+> >   hw/fsi: move OPBus qbus_init() to instance_init
+> >   hw/gpio/pca9552: fix state_str leak in pca955x_set_led
+> >   hw/arm/aspeed: free fmc_model and spi_model on finalization
+> >   hw/arm/sbsa-ref: free unrealized flash devices on finalization
+> >   hw/arm/virt: free flash devices and OEM strings on finalization
+> >   hw/ppc/pnv: drop extra ref on PHB after adding as child
+> >   hw/riscv/virt: free flash devices and OEM strings on finalization
+> >   meson: drop sphinx-build < 1.7 compatiblity check
+> >   target/s390x: add gen-features.h dependency to s390x_system_ss
+> >
+> > Peter Xu (1):
+> >   system/ioport: Fix qom-list-properties crash on portio list obj
+> >
+> >  docs/meson.build          | 14 +-------------
+> >  include/qom/object.h      |  8 ++++----
+> >  accel/kvm/kvm-all.c       |  8 ++++++++
+> >  backends/igvm-cfg.c       |  1 +
+> >  hw/arm/aspeed.c           |  9 +++++++++
+> >  hw/arm/sbsa-ref.c         | 12 ++++++++++++
+> >  hw/arm/virt.c             | 14 ++++++++++++++
+> >  hw/core/resetcontainer.c  |  3 +++
+> >  hw/fsi/aspeed_apb2opb.c   | 37 ++++++++++++++++++++++++-------------
+> >  hw/gpio/pca9552.c         |  2 +-
+> >  hw/i386/x86.c             |  9 +++++++++
+> >  hw/ppc/pnv.c              |  1 +
+> >  hw/remote/remote-obj.c    |  4 +++-
+> >  hw/remote/vfio-user-obj.c |  4 +++-
+> >  hw/riscv/virt.c           | 14 ++++++++++++++
+> >  io/net-listener.c         |  9 ++++++++-
+> >  net/can/can_socketcan.c   |  8 ++++++++
+> >  net/colo-compare.c        | 31 +++++++++++++++----------------
+> >  scsi/pr-manager-helper.c  |  1 +
+> >  system/ioport.c           | 11 +++++++++--
+> >  system/qtest.c            | 10 ++++++++++
+> >  ui/console.c              |  5 ++++-
+> >  target/s390x/meson.build  |  1 +
+> >  23 files changed, 163 insertions(+), 53 deletions(-)
+> >
+> > --
+> > 2.54.0
+> >
+> >
+>
 
