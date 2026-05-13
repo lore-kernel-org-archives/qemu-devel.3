@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3807ACD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 10:44:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05012CD4F24
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 10:44:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN705-0003vo-Pr; Wed, 13 May 2026 06:39:37 -0400
+	id 1wN70x-0004U2-4J; Wed, 13 May 2026 06:40:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wN6zz-0003pD-Bs; Wed, 13 May 2026 06:39:31 -0400
+ id 1wN70S-00040h-Qg; Wed, 13 May 2026 06:40:04 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wN6zv-0002P0-NE; Wed, 13 May 2026 06:39:31 -0400
+ id 1wN70M-0002QS-Rp; Wed, 13 May 2026 06:39:57 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64DAcPdY044648
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64DAcPdq044648
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 13 May 2026 19:38:56 +0900 (JST)
+ Wed, 13 May 2026 19:39:00 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=w+G4mYrT3E579hEsUmrs6jCM3wwxrAco3XtOrTTZDg4=; 
+DKIM-Signature: a=rsa-sha256; bh=RyTCIvwVaozeLTAhpbHAq66Za8rIDYOF4QelkPaMxcQ=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1778668736; v=1;
- b=pxfbA1V9MSpA+URvfP2D0sZR3oZPBGQtGyVjKql1G0Dv7Kjn7wYSigPL33726gNv
- G/tRjOEDpoWqQ+supKYbPtVM1wUztlGpPgE05EK8+c+i+UGn8gGGKrUgsvZ/2D4R
- vu1cf4fUvjorsrk0fS7A7Bh0IlJfF9I2/TQ4mV7/OhR4TDRFgbufA21I5Ps2U6N4
- ctruCUzXQHJKkGtCC8WBGcw/1DAEnXoKCDj14v1N10FCMSthdP68ZKhVJFcktwjb
- xVLFDzGbZS4B9ok+jF4yrbTEYZtYk115DCyBequ4lczBYRvUPu7EQ9dbxfp2j+hV
- 2YEYIBF/vQg30ESvA1Sctw==
+ s=rs20250326; t=1778668740; v=1;
+ b=Q3I4olhyAMBayNLNuhohUxb8Tu7GY037MXW5+AF9/LyzlI6gmqJDh7elh0044AIm
+ wBGZ/sQgOMwRFygVqI4QUaF5UuLuf/MZ7X04QtgWA5s0/LYBWU7ovSAejJPW+iYp
+ bcQO4BOuELVcPdK6nQdFnPje9vaFejxioqcdu4chpyOP8cTbVNQI2YmUpc9Ro+Yl
+ dUtBZ6tdkoflKC01tVFJcH68ub8etNsPfSB6BYvlpqIXzftcXgOqBWG4JGSPwvgp
+ b3LBQZEoVI1+1JJynAsAc9XqM65Gns1aWwl13m8LTdPHQeYiE0gsQaQt4p6y8jLI
+ KM7P0VnmIJld1iqh2GJp+w==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 13 May 2026 19:38:26 +0900
-Subject: [PATCH v2 10/29] hw/display/xenfb: Use Linux key codes
+Date: Wed, 13 May 2026 19:38:44 +0900
+Subject: [PATCH v2 28/29] ui/console: Remove qemu_text_console_put_qcode()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260513-input-v2-10-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260513-input-v2-28-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260513-input-v2-0-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260513-input-v2-0-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -58,13 +58,13 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.16-dev-16047
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1604;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1398;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=XcfBuuudisNZMFU+Lz64jMl2gKGv+YTeVpp7yLYFGCs=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZLyDpG48/zzm+ctJ2nvXZH5pt7Cu36a18bLTYzvjnre
- dWeec4rOkpZGMS4GGTFFFlSinZza0TXfipMiG+BmcPKBDKEgYtTACayIYWR4V7AR59Qg6uhUz5Z
- PNkvp7jp9G7nrFfv5Dm+L1zp9MCPP4/hf7mRyGbVadbhkvPm5K//Ldzz9F1u+GpuneyOdbuDzcI
- ZGQA=
+ bh=ThSU88la05KIjFwROp/cneKNiRlHnev55PgTZdXOqEg=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZLyJ7t1zs7Fu16Hb+R45t/mW9C7BrnTYFJduf3dqQbS
+ z9+UuTQUcrCIMbFICumyJJStJtbI7r2U2FCfAvMHFYmkCEMXJwCMBFnbYa/QgHSUqv3OU44zrqt
+ ua1Hc+qd6TPeSZROY3s7U+PG4gWZ0xgZFs7rrsqr3sT4n7u1Q3b52SixwgdZ3fqJmv9Y2BMNPFa
+ wAwA=
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -90,52 +90,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QemuInputEvent now stores Linux key codes for key events. Use those
-codes directly instead of translating between internal key code
-representations.
+It is no longer used.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/display/xenfb.c | 21 +++------------------
- 1 file changed, 3 insertions(+), 18 deletions(-)
+ include/ui/console.h | 1 -
+ ui/console.c         | 6 ------
+ 2 files changed, 7 deletions(-)
 
-diff --git a/hw/display/xenfb.c b/hw/display/xenfb.c
-index 218f37f07400..ae302b217fe9 100644
---- a/hw/display/xenfb.c
-+++ b/hw/display/xenfb.c
-@@ -191,29 +191,14 @@ static int xenfb_send_position(struct XenInput *xenfb,
-     return xenfb_kbd_event(xenfb, &event);
- }
+diff --git a/include/ui/console.h b/include/ui/console.h
+index 691040f5948d..a31c5a4995c6 100644
+--- a/include/ui/console.h
++++ b/include/ui/console.h
+@@ -108,7 +108,6 @@ bool qemu_mouse_set(int index, Error **errp);
+ #define QEMU_KEY_CTRL_PAGEDOWN   0xe407
  
--/*
-- * Send a key event from the client to the guest OS
-- * QEMU gives us a QCode.
-- * We have to turn this into a Linux Input layer keycode.
-- *
-- * Wish we could just send scancodes straight to the guest which
-- * already has code for dealing with this...
-- */
-+/* Send a key event from the client to the guest OS */
- static void xenfb_key_event(DeviceState *dev, QemuConsole *src,
-                             QemuInputEvent *evt)
- {
-     struct XenInput *xenfb = (struct XenInput *)dev;
--    int qcode = qemu_input_linux_to_qcode(evt->key.key);
--    int lnx;
+ void qemu_text_console_put_keysym(QemuTextConsole *s, int keysym);
+-bool qemu_text_console_put_qcode(QemuTextConsole *s, int qcode, bool ctrl);
+ bool qemu_text_console_put_linux(QemuTextConsole *s, unsigned int lnx,
+                                  bool ctrl);
+ void qemu_text_console_put_string(QemuTextConsole *s, const char *str, int len);
+diff --git a/ui/console.c b/ui/console.c
+index fd1038a22c0b..e8c1a4c97906 100644
+--- a/ui/console.c
++++ b/ui/console.c
+@@ -328,12 +328,6 @@ static const int ctrl_linux_to_keysym[] = {
+     [KEY_PAGEDOWN]   = QEMU_KEY_CTRL_PAGEDOWN,
+ };
  
--    if (qcode < qemu_input_map_qcode_to_linux_len) {
--        lnx = qemu_input_map_qcode_to_linux[qcode];
+-bool qemu_text_console_put_qcode(QemuTextConsole *s, int qcode, bool ctrl)
+-{
+-    unsigned int lnx = qemu_input_map_qcode_to_linux[qcode];
+-    return qemu_text_console_put_linux(s, lnx, ctrl);
+-}
 -
--        if (lnx) {
--            trace_xenfb_key_event(xenfb, lnx, evt->key.down);
--            xenfb_send_key(xenfb, evt->key.down, lnx);
--        }
--    }
-+    trace_xenfb_key_event(xenfb, evt->key.key, evt->key.down);
-+    xenfb_send_key(xenfb, evt->key.down, evt->key.key);
- }
- 
- /*
+ bool qemu_text_console_put_linux(QemuTextConsole *s, unsigned int lnx,
+                                  bool ctrl)
+ {
 
 -- 
 2.54.0
