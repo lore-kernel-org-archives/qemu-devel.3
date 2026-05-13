@@ -4,104 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83683CD37B6
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 08:56:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72F51CD37B6
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 09:23:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN5O3-0005DC-Mr; Wed, 13 May 2026 04:56:15 -0400
+	id 1wN5o4-0000YA-DP; Wed, 13 May 2026 05:23:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wN5Nt-00055V-74
- for qemu-devel@nongnu.org; Wed, 13 May 2026 04:56:06 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wN5Nn-0006Uo-Pd
- for qemu-devel@nongnu.org; Wed, 13 May 2026 04:56:02 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-488d2079582so68079375e9.2
- for <qemu-devel@nongnu.org>; Wed, 13 May 2026 01:55:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778662558; x=1779267358; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Ld4VK9mS6QSxZTRtwB228V+13Txvl727ahjr0Bu4EWg=;
- b=Ykj5wNpIrw0oaKuUPIEItl/kj8BQYQZiDJZ4kRhlkpK7Uz1DcsogideWtLMsg28JJ7
- ZwOR2TlA1bkO+x6nDHPshYrAE2LGVwhUQICtFWDTGOGUqw6q+gLiJpAEhY52qZm52+1n
- OyPibjSnbGv2OcrPrVbQwO8eYEDelJs/AL4jn70REavemXQeQf+VX9Eq1FBQ++ML9NUW
- rWro3eluWL9ymmZ9PUu1GCr1knMra/FBR7hkxZGPgrbWTRe+U35clp3qNEpKgzJxKG4p
- TIwTa8VE/20QUWGZViDkJG6S4zKOb4pRrQZqPV8rV+FO+TFbPDx5wdnDCLCu1/IPKJ7D
- l+iA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778662558; x=1779267358;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Ld4VK9mS6QSxZTRtwB228V+13Txvl727ahjr0Bu4EWg=;
- b=Rv4d/d5P+QvVdoB/N5a80U+GhmMpNTXWGhTW4xqXQYXKTgYFK01kEai0XKDWTCdzbq
- lDqdnaBOgydSRbEYuxDxgQX+WJSoXLNs3vx9GdWzmyWinZbJa7pInFJR+L+lIj1A40fA
- lmArCu0sEceqz0i7pHwz7Tb3O9QWfllt+aTgkLKCDSvp1EjnqCf9cjYEDIdBYgWKf0p3
- 37T7lX87RePIhKa+EFofSS2ZO9gPG0kAhju96BVErya/RQrGuzqkdZ5igjLUzLUKpunM
- 8P6oa6829grWe58+vc8ZhAhfagqfMadu7kp92Mutu5poZ05Nma9w3C22exM+14b0Zum/
- +YFQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8gWM1KJLu4vuqdlEm/pxgtU1mIxC4ACTMANZBu9OSsmqH7od41iMC3mL8yb2BuAphy/Esiy+rY9TJU@nongnu.org
-X-Gm-Message-State: AOJu0Ywc9S+1NPln81sbBxTLExHpL5GYih9i2A8+N8Hw936w2y3+82Bf
- kFbiC4aX2RiaByGT7pfn/UmwvOUahJBW3HXy5mkJp9CI/odTXKUd/IyXjKbabDXvkn0=
-X-Gm-Gg: Acq92OFtC8EXpmwJJhykeZFN0SE+FxSk7ULTxL/Eu9a4inHihqYtu7ignV3Kx3t2UoX
- aAa1m3PhLqNb9PbY/fL5Ex+T1PbAwkzEfXs1VUzmdnEj//AeUrgSGnkcj6W5UYkRSGq3B8fd3TZ
- p4vyheV7XgrZqRxiZ6Oj0eB4dmTuBJrpDLAuQv7iqY+Gix89gUPFhoMKyIxfigx+sHsFgnrV0zV
- moFS5o51D3elrHt+TXViNTdHsoXOEl+BrH9pcYCmadXMmo/NlNiOP4KJaCPQZBUbe4p/mJZ+PZp
- wHdmZZMLhKA2mNwhxcIfHaNw7mySkRdFhsH8neC1hf9seVF49nC4h00wKRhdPlkcwdgRtx4/9x+
- smqDyW/D80CrkAvWu8lFD3BYaHLR5mmwInI3OTsoZ+qVRmT70ZftNOL7ZCcka4XLWe7dzsf6v1R
- ebhxnS76xa+tmdom4+oojMFjYv1zuEfkjJpFtPID2yAoa1DujWe4k/CqSRWDUQf4exvg==
-X-Received: by 2002:a05:600c:4450:b0:48a:56de:d62a with SMTP id
- 5b1f17b1804b1-48fce9b3926mr23003505e9.11.1778662557839; 
- Wed, 13 May 2026 01:55:57 -0700 (PDT)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fc8d74536sm60874375e9.15.2026.05.13.01.55.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 13 May 2026 01:55:56 -0700 (PDT)
-Message-ID: <971d39fb-b570-4588-8bac-7e7924f91067@linaro.org>
-Date: Wed, 13 May 2026 10:55:55 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wN5nz-0000Xc-0e
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 05:23:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wN5nt-0007Fx-57
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 05:23:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778664175;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type; bh=n51xYA9hDj9aZQYKWQbCGAxsaB3VHUvMOt8zjEcDYcw=;
+ b=Ha4NNdRCWm/S8ZWih5kC4p+Ase2gUl396nI9ATiPaypap2CcsZ8ul4c2WchlAhcQ0xphBH
+ 2XiEP4b/+jsl1zM8bpVk2UJWpVYsDMlwUetcWFO4+Di9dj4U1W/gPw6i1+D95LpDUzCMXu
+ bfGy9M1J+JvLtraI/GgzUI7x1dH0XfY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-621-ZeaG033rNFmnJzrOVVfGxQ-1; Wed,
+ 13 May 2026 05:22:53 -0400
+X-MC-Unique: ZeaG033rNFmnJzrOVVfGxQ-1
+X-Mimecast-MFC-AGG-ID: ZeaG033rNFmnJzrOVVfGxQ_1778664172
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8472218005BB; Wed, 13 May 2026 09:22:52 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.32.213])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4F54118004A3; Wed, 13 May 2026 09:22:50 +0000 (UTC)
+Date: Wed, 13 May 2026 10:22:47 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: devel@lists.libvirt.org
+Subject: Limit USB 1.0 (UHCI/OCHI) and 2.0 (EHCI) to non-virt use cases
+Message-ID: <agRC56rkfb4z6zSO@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: MAINTAINERS entries that aren't S: Orphan but maybe should be
-Content-Language: en-US
-To: Jason Wang <jasowang@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, qemu-ppc@nongnu.org, qemu-block@nongnu.org,
- integration@gluster.org, Zhao Liu <zhao1.liu@intel.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>, Peter Xu <peterx@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Milan Zamazal <mzamazal@redhat.com>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Mark Kanda <mark.kanda@oracle.com>, Li Zhijian <lizhijian@fujitsu.com>,
- Glenn Miles <milesg@linux.ibm.com>, Gautam Menghani <gautam@linux.ibm.com>,
- Fabiano Rosas <farosas@suse.de>, Ben Chaney <bchaney@akamai.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <87y0hwbvbp.fsf@pond.sub.org>
- <253ecaac-ac2e-43a8-97e8-9251f114df3f@linaro.org>
- <CACGkMEsvtHiyNviz+vKL3SPZSU7xjWEK75y8js_bf+w6-WKdPA@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CACGkMEsvtHiyNviz+vKL3SPZSU7xjWEK75y8js_bf+w6-WKdPA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+User-Agent: Mutt/2.3.1 (2026-03-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,32 +77,88 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/5/26 10:38, Jason Wang wrote:
-> On Wed, May 13, 2026 at 3:11 PM Philippe Mathieu-Daudé
-> <philmd@linaro.org> wrote:
->>
->> On 6/5/26 14:01, Markus Armbruster wrote:
->>> I'm cc'ing reviewers and lists mentioned below, and frequent
->>> contributors to MAINTAINERS.
->>>
->>> There are a number of MAINTAINERS entries with S: other than "Orphan"
->>> without M:
->>
->> ...
->>
->>> Unless somebody steps up to server as M: or at least R:, we should
->>> downgrade to S: Orphan.  Volunteers?
->>
->> 'Network device backends' (net/), 'eBPF' (ebpf/) and 'Network devices'
->> (hw/net/) patches are left unattented on the list since 6 weeks, all
->> maintained by Jason (first 2 listed as 'Maintained', last one as 'Odd
->> Fixes'). These sections don't have co-maintainers. Shoud we be worried?
-> 
-> It should not be. I will wrap things up soon and will continue the
-> role as maintainer.
+QEMU has implemented four generic USB controllers
 
-Nice to hear you are well Jason! I'm reassured :)
+ * UHCI - USB 1.0 only
+ * OHCI - USB 1.0 only
+ * EHCI - USB 2.0 only (must have UHCI companions for 1.0 compat)
+ * XHCI - All of USB 3.0, 2.0, 1.0 in one controller
+
+We have two variants of XHCI, the generic one (hcd-xhci.c) and the
+NEC one (hcd-xhci-nec.c)
+
+Historically for security reports we have considered all of them in
+scope of virtualization, since initially with KVM the XHCI impl was
+not present in QEMU & thus KVM guests used UHCI/EHCI with USB tablet
+for a period of time
+
+All of the USB subsystem is currently orphaned, so we have no dedicated
+maintainer available to deal with bug reports (volunteers welcome to
+step up here...)
+
+
+While the need for USB is reduced given the availability of virtio-input,
+not all guests have drivers out of the box, so at least USB tablet is
+still interesting for KVM use cases with some modern OS.
+
+It is also not that unusual for people to need USB host device assignment
+with KVM virt to make various pieces of specialized hardware (security
+tokens, smart cards, custom dongles, etc) available directly to guests.
+
+IOW, we can't entirely exclude USB from virtualization use cases IMHO.
+
+
+In terms of virtualization, XHCI is the only impl that is sensible to
+use. UHCI/OHCI/EHCI all impose an unreasonable CPU load on any guest
+usage of USB.  XHCI should be supported by any guest OS  approx the
+last 15 years, which should be sufficient for virtualization use cases
+with OS that are not EOL by their vendor.
+
+
+Thus to reduce our maint burden around security bug handling, it is
+proposed henceforth to classify UHCI, OHCI and EHCI under the non-
+virtualization use case and thus be excluded from security bug triage
+processes. No CVEs would be assigned, bugs would be reported publically
+in gitlab:
+
+  https://www.qemu.org/docs/master/system/security.html#non-virtualization-use-case
+
+
+The XHCI controller (specifically the hcd-xhci.c variant) would remain
+as our only option for the virtualization use case, with security process
+applied to bugs & eligible for CVE assignment:
+
+  https://www.qemu.org/docs/master/system/security.html#virtualization-use-case
+
+
+The other NEC XHCI variant (hcd-xhci-nec.c) would also be treated as
+non-virtualization use case, since it needlessly duplicates hcd-xhci.c
+impl and thus is only interesting for emulation of this specific HW
+variant.
+
+
+NB, there are no functional limitations / restrictions from this policy,
+it is largely just a semantic exercise. From a management application
+POV, however, it would strongly suggest that guests be configured with
+XHCI as the default choice if the user asks for USB, and in turn also
+imply that '-usb' not be used since that is UHCI/OHCI typically. CC'ing
+libvirt, though it is really a matter for virt-install/virt-manager/
+openstack/kubevirt etc above libvirt to pick their defaults for USB
+controllers.
+
+
+None the less XHCI would still be in search of a maintainer to step
+forward and handle ongoing development and maint work.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
