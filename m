@@ -4,85 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21D3ECD37B6
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 06:36:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C814ECD4851
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 06:36:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN3CM-0004e2-5W; Wed, 13 May 2026 02:36:05 -0400
+	id 1wN3Ci-0004ft-HF; Wed, 13 May 2026 02:36:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wN3C5-0004b1-SJ
- for qemu-devel@nongnu.org; Wed, 13 May 2026 02:35:46 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wN3Bv-0004Hv-OI
- for qemu-devel@nongnu.org; Wed, 13 May 2026 02:35:44 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-c80148ae949so2786289a12.2
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 23:35:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778654133; x=1779258933; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=LO8l2nTywjfi36vUZCrXryumu63gdJ85hphWar88O3w=;
- b=UzmKzHnPI2T4Fs8b2Yt76cgxkvmDmNugWUnNfTnTa79gGFOL8Cb3l6rq4BDsUKmQ4a
- 22h8y8Yi7Xaml4kwLOKWvgaGyv3173nllY0S1wJnjw6AdXHP+kaoyPv+inzZUm9ISMLn
- RgTzVFTy9+Rfl0acOmRm9rT2M09mBLfntr42e/IzGOdWGA36v0KCVIyqeU4EAya6XHly
- sgHsOcvdIEPZS6FYpDm1RzuBawrRGl9oi3XgDr5FxAoHq1zm1jxdyv57PCWDKyAGzx3W
- HfqZ1s5ISTudVF9FVQomRHUX9jOGyS1O/SclNXt0iC7IGEmCs9bI0zoVJKfXlgNhH6sM
- ZbcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778654133; x=1779258933;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LO8l2nTywjfi36vUZCrXryumu63gdJ85hphWar88O3w=;
- b=PugGflr8igH/ioVfH3VikaywDRTtX0cOL2MlUP2yI+yts7rWPx75XMUjR7Z1oTw0Cw
- hRPoBkpWkTt40DUzU9w25cSZ0sJBD0xp3I97linoVTXAAhsfltYoK9eok9BKw89/5N4c
- tC3GDdhytfhV5CIfRDDHWQ5/glon611q5hgtZNfg7ecxbNmVJMX/MFTJh4AjodciMbWh
- vLK/t41RO3C28SxQbepqJ9+LSEsMFJpdF9/GNC3fRm6si+tso5SaHT9ObaO9cAzti4QG
- JfdvqMKT/JKkiJjEmRhwjanDYvBfnmy+Gm3ndu7gdaQatP8WlPsddw4F1l3BH/wiwqcH
- r8iA==
-X-Gm-Message-State: AOJu0Yz8Rj1nVWsBn6XejmGqlNJCYRwf8mmg+6jJcTffbtYvpPpBO3en
- O680dk0drtz09H+ZkEsggPl8rd2YUDB/zdUquc8rqLZxGuDbljDdGO1+bB4CUaNC
-X-Gm-Gg: Acq92OFnd+GPzTBjkVDT+sS8DuVq1NvnTWexYd4Pgvtx7N+Vz/bS6A8JKwwRW6Xo2ot
- mDjBxRs2wZBqLmBCUN1Uhs8bODxdqEG0EkYnof7Imd1t4C1k4lwh0WT++S2PG/qvyXinEWDZGCG
- ILPsnCh0AgfdPn4zfKRRiK6Z5JjbKXeNkySbo5ZkqeckcHGHLEAc+j08mpqlUoqBTyFqSV6AKLo
- 6pCIaRsXEVTW+7mE6ZIYpGzna2w4X8uvPZKp8l/IIfYbNKWeZzmpDG7Vq48F42TQAwl+j3d2Z0+
- A2xBR/jdbzzaoeYq+J1szKAF+4hoKTv5OEiRXhyJ/kBJB0W4aiHi7wg7PcSrnVZbs5bQkIHBtPO
- ORtFiD99BqT8kk2ZJIrd6tjExPqAJO6NkD3/dcUIUZX/TIHctmBwpzepF6LBPyyamtMzwGBV/zx
- aSL8fDUsr2xt6peZQEzHwl
-X-Received: by 2002:a05:6a20:748f:b0:398:6ea8:21f7 with SMTP id
- adf61e73a8af0-3af7f0713a0mr2102324637.15.1778654133051; 
- Tue, 12 May 2026 23:35:33 -0700 (PDT)
-Received: from setun ([2405:201:502b:380f:df10:4bc8:ea8:8d6d])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c82675fb236sm14166844a12.0.2026.05.12.23.35.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 May 2026 23:35:32 -0700 (PDT)
-From: Aadeshveer Singh <aadeshveer07@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, farosas@suse.de,
- Aadeshveer Singh <aadeshveer07@gmail.com>
-Subject: [PATCH v2] migration: Replace current_migration with
- migrate_get_current()
-Date: Wed, 13 May 2026 12:05:13 +0530
-Message-ID: <20260513063513.250911-1-aadeshveer07@gmail.com>
-X-Mailer: git-send-email 2.54.0
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wN3C7-0004bR-CN; Wed, 13 May 2026 02:35:51 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wN3Bw-0004Hr-Kf; Wed, 13 May 2026 02:35:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1778654128; bh=g+j3sD3ENV3gAe5FGO5FSALaoPamBRNSka2Y+E55b7w=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=LVIpaFY8DHrI62S8IPE9jZawaDFOCBipGo+zZms+uwCVmgnyhZOthiuEFcc0tQimh
+ hlkTMZH3sp3c50s9hoJhR8QZIPFUdjh/sVQt+48pAROb4gRCwViTmcj6t26r0RKbn7
+ hLg4tTPMAyO99/QefdOscbTmcV9BIo9NER6sVIuCIPhOLR+4mjxNCvMcsbb9wYnFJ5
+ 3oyLRS5F09OsUY5zaXdTvfi1iRKrgMx9wV1aYX0iSHE6d3vAUMeNugrbN1R9/gdTUn
+ ip0nkacxmN3mlb5o8OD/Kdx55kgycZZ0bDmc30eU61PHn+Ak1j/j+EQqiqO8EzKRkS
+ WcJpfPnD7Vt+Q==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id DC7031AA6C6;
+ Wed, 13 May 2026 09:35:28 +0300 (MSK)
+Message-ID: <c18a3fa5-4474-42db-b8be-95f164d1b184@tls.msk.ru>
+Date: Wed, 13 May 2026 09:35:33 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=aadeshveer07@gmail.com; helo=mail-pg1-x52d.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] hw/cxl: fix OOB read in Get Log command due to
+ incorrect pointer arithmetic
+To: Aaron Esau <aaron1esau@gmail.com>, qemu-devel@nongnu.org
+Cc: Jonathan.Cameron@huawei.com, jic23@kernel.org, berrange@redhat.com,
+ qemu-stable@nongnu.org
+References: <20260416200702.2374709-1-git@aaronesau.com>
+ <20260416200702.2374709-2-git@aaronesau.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260416200702.2374709-2-git@aaronesau.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,53 +112,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replaces the direct accesses to global variable `current_migration`
-with `migrate_get_current()` to ensure consistency across systems.
+On 16.04.2026 23:07, Aaron Esau wrote:
+> From: Aaron Esau <aaron1esau@gmail.com>
+> 
+> The memmove in cmd_logs_get_log() uses cci->cel_log + get_log->offset,
+> which performs pointer arithmetic in units of sizeof(struct cel_log)
+> (4 bytes per element). However, per CXL r3.1 Section 8.2.9.5.2, the
+> offset field is a byte offset into the log.
+> 
+> The existing bounds check correctly treats offset as a byte value:
+> 
+>      (uint64_t)get_log->offset + get_log->length >= sizeof(cci->cel_log)
 
-Note: Following this only direct access to `current_migration` will be
-* `migrate_get_current()` itself
-* `migration_object_init()` initializes `current_migration`
-* `migration_shutdown()` to pair up with initialization
-* `migration_is_running()`, as there might be a case where this function
-  is called by a thread before object initialization
+...
 
-Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
----
- migration/migration.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Ping?
 
-diff --git a/migration/migration.c b/migration/migration.c
-index ecc69dc4d2..0e142ff6f2 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -1029,7 +1029,7 @@ bool migration_is_running(void)
- 
- static bool migration_is_active(void)
- {
--    MigrationState *s = current_migration;
-+    MigrationState *s = migrate_get_current();
- 
-     return (s->state == MIGRATION_STATUS_ACTIVE ||
-             s->state == MIGRATION_STATUS_POSTCOPY_DEVICE ||
-@@ -1634,7 +1634,7 @@ bool migration_in_bg_snapshot(void)
- 
- bool migration_thread_is_self(void)
- {
--    MigrationState *s = current_migration;
-+    MigrationState *s = migrate_get_current();
- 
-     return qemu_thread_is_self(&s->thread);
- }
-@@ -3062,7 +3062,7 @@ static MigThrError postcopy_pause(MigrationState *s)
- 
- void migration_file_set_error(int ret, Error *err)
- {
--    MigrationState *s = current_migration;
-+    MigrationState *s = migrate_get_current();
- 
-     WITH_QEMU_LOCK_GUARD(&s->qemu_file_lock) {
-         if (s->to_dst_file) {
--- 
-2.54.0
+Has this patchset been forgotten, or is it not needed anymore?
+If it's needed, it would be nice if it lands in the master branch
+in the next 10 days.
+
+Thanks,
+
+/mjt
 
 
