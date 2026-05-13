@@ -4,118 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 102B5CD4F21
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 13:46:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17ED2CD4F21
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 13:55:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN9uB-0002Us-GS; Wed, 13 May 2026 09:45:43 -0400
+	id 1wNA2n-00044d-Pn; Wed, 13 May 2026 09:54:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wN9uA-0002UX-6l
- for qemu-devel@nongnu.org; Wed, 13 May 2026 09:45:42 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wN9u8-0000nC-9O
- for qemu-devel@nongnu.org; Wed, 13 May 2026 09:45:41 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id BA8AC626B6;
- Wed, 13 May 2026 13:45:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1778679937; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=izHCzQlzILbAd64BbCKvVAxnG4dYCehLX/EJtGeatd4=;
- b=CptYtbhjagWvCE2q1K/aM2cOsbactGP6OU3dkryjUvL/42uy9Za9dY0yGBNaTLiCh0sZ4A
- ziJkbMP2Efa3SLzhgF/lGn4q5IWmY8beSrgZzCxwrzznJr8tGoYz+IEzX/A0hnAO0v2tei
- HDLcyUJvvYsY7ZZw/J9mw1Y33NYmSeU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1778679937;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=izHCzQlzILbAd64BbCKvVAxnG4dYCehLX/EJtGeatd4=;
- b=ikyTfOpFRFaQXro3HDYZjBDcl/5PBRqogxTT2TV2g4v8B9gVprrJ47p+MVO5oW//fFLH+c
- yMb4eYbER04Cn4BQ==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=CptYtbhj;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ikyTfOpF
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1778679937; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=izHCzQlzILbAd64BbCKvVAxnG4dYCehLX/EJtGeatd4=;
- b=CptYtbhjagWvCE2q1K/aM2cOsbactGP6OU3dkryjUvL/42uy9Za9dY0yGBNaTLiCh0sZ4A
- ziJkbMP2Efa3SLzhgF/lGn4q5IWmY8beSrgZzCxwrzznJr8tGoYz+IEzX/A0hnAO0v2tei
- HDLcyUJvvYsY7ZZw/J9mw1Y33NYmSeU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1778679937;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=izHCzQlzILbAd64BbCKvVAxnG4dYCehLX/EJtGeatd4=;
- b=ikyTfOpFRFaQXro3HDYZjBDcl/5PBRqogxTT2TV2g4v8B9gVprrJ47p+MVO5oW//fFLH+c
- yMb4eYbER04Cn4BQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8E9FB593A9;
- Wed, 13 May 2026 13:45:36 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id JfvnF4CABGr1bgAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 13 May 2026 13:45:36 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] tests: tag slow tests with 'slow' suite for easy filtering
-In-Reply-To: <20260512065633.3542562-1-marcandre.lureau@redhat.com>
-References: <20260512065633.3542562-1-marcandre.lureau@redhat.com>
-Date: Wed, 13 May 2026 10:45:30 -0300
-Message-ID: <87y0hnwhhh.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <mateusz.nowicki@posteo.net>)
+ id 1wNA2g-00044D-Pc
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 09:54:31 -0400
+Received: from mout01.posteo.de ([185.67.36.65])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mateusz.nowicki@posteo.net>)
+ id 1wNA2e-0005hI-Ou
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 09:54:30 -0400
+Received: from submission (posteo.de [185.67.36.169]) 
+ by mout01.posteo.de (Postfix) with ESMTPS id B9D23240027
+ for <qemu-devel@nongnu.org>; Wed, 13 May 2026 15:54:23 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.net; s=2017;
+ t=1778680463; bh=syZLAxcjGGap8f6DZE9bB4VYVBS/CrHeqGgVrubXxHM=;
+ h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:
+ Content-Transfer-Encoding:From;
+ b=Oi3U8spgMbcVVBy7KZrSXR+WmqbhF9cE/cJGYIQwuFgMBngNHmxDDnGwTcd+dDCWA
+ Mpe1QVOHDvAiAxBXsd/ZGcQXZPuFDUhLWEys73+1oY76R6BDC3J5fHHOKYrFxgRntd
+ WL9irhY9H9HVwA756XAeVI7arhAZV9Fof4uF2xIfDB2yMr5IdWbxxlJOwlTVP2iuIU
+ HhonXJR4rC1qvuxnLowJyhERWmpTTk8SATveXOKQguNn4vf7Y9OE3WMmhpxzREnKXl
+ xs/6ZBJw4HfEKE08LKBKag1onqs6jPz11690lagan696o97wqoDBMVC+A0BGRlRuRi
+ Q7olP89dXHw7w==
+Received: from customer (localhost [127.0.0.1])
+ by submission (posteo.de) with ESMTPSA id 4gFw1W1w2lz9rxL;
+ Wed, 13 May 2026 15:54:23 +0200 (CEST)
+From: Mateusz Nowicki <mateusz.nowicki@posteo.net>
+To: qemu-devel@nongnu.org
+Cc: Mateusz Nowicki <mateusz.nowicki@posteo.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH] hw/pci: flap DLLLA across Secondary Bus Reset
+Date: Wed, 13 May 2026 13:54:23 +0000
+Message-ID: <20260513135412.4851-1-mateusz.nowicki@posteo.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
- FROM_HAS_DN(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:dkim, suse.de:mid,
- imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: BA8AC626B6
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=185.67.36.65;
+ envelope-from=mateusz.nowicki@posteo.net; helo=mout01.posteo.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
 X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,66 +69,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-marcandre.lureau@redhat.com writes:
+When guest software asserts Secondary Bus Reset on a PCIe bridge by
+setting PCI_BRIDGE_CTL_BUS_RESET, real hardware drops the data link
+for the duration of the reset.  Software typically observes this as
+the Data Link Layer Link Active (DLLLA) bit in the upstream port's
+LNKSTA register going 1 -> 0 while the reset is held and 0 -> 1 once
+the link retrains after de-assertion.
 
-> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> Add several RCU and thread-pool unit tests to the slow_tests dict,
-> and tag all slow tests (both qtest and unit) with a 'slow' suite so
-> they can be excluded or selected via meson test --suite/--no-suite.
->
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> ---
->  tests/qtest/meson.build | 3 ++-
->  tests/unit/meson.build  | 9 ++++++++-
->  2 files changed, 10 insertions(+), 2 deletions(-)
->
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index 728dde54b3f..2c5dcf2340f 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -493,6 +493,7 @@ foreach dir : target_dirs
->           protocol: 'tap',
->           timeout: slow_qtests.get(test, 60),
->           priority: slow_qtests.get(test, 60),
-> -         suite: ['qtest', 'qtest-' + target_base])
-> +         suite: ['qtest', 'qtest-' + target_base] +
-> +                (slow_qtests.has_key(test) ? ['slow'] : []))
+QEMU's pci_bridge_write_config() already triggers a cold reset of the
+secondary bus on the 0 -> 1 SBR transition but never updates LNKSTA,
+so DLLLA stays whatever it was before.  When the link advertises a
+speed above 5.0 GT/s, the Linux PCI core polls DLLLA after the reset
+(pci_bridge_wait_for_secondary_bus()) and logs
 
-The change looks ok.=20
+  pcieport 0000:00:03.0: pcie_failed_link_retrain: ...
+  pcieport 0000:00:03.0: Data Link Layer Link Active not set in 100 msec
 
-Acked-by: Fabiano Rosas <farosas@suse.de>
+before returning -ENOTTY to the caller of sysfs reset.
 
-And I'll not rant about meson output.
+Introduce pcie_cap_set_dllla() to toggle DLLLA on devices that report
+DLLLA reporting capability (LNKCAP DLLLARC, or the
+QEMU_PCIE_LNKSTA_DLLLA quirk), and call it from
+pci_bridge_write_config() on both SBR transitions: clear on assert,
+set on de-assert.
 
-qtest+qtest-s390x+slow - qemu:qtest-s390x/device-introspect-test
-^1x   ^2x   ^            ^why ^3x   ^
+Reproducer (with this patch reverted):
 
->    endforeach
->  endforeach
-> diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-> index 03d36748c73..ed1172a107c 100644
-> --- a/tests/unit/meson.build
-> +++ b/tests/unit/meson.build
-> @@ -176,6 +176,12 @@ slow_tests =3D {
->    'test-crypto-tlscredsx509': 90,
->    'test-crypto-tlssession': 90,
->    'test-replication': 60,
-> +  'rcutorture': 30,
-> +  'test-rcu-list': 30,
-> +  'test-rcu-simpleq': 30,
-> +  'test-rcu-tailq': 30,
-> +  'test-rcu-slist': 30,
-> +  'test-thread-pool': 30,
->  }
->=20=20
->  foreach test_name, extra: tests
-> @@ -197,5 +203,6 @@ foreach test_name, extra: tests
->         protocol: 'tap',
->         timeout: slow_tests.get(test_name, 30),
->         priority: slow_tests.get(test_name, 30),
-> -       suite: ['unit'])
-> +       suite: ['unit'] +
-> +              (slow_tests.has_key(test_name) ? ['slow'] : []))
->  endforeach
+  qemu-system-x86_64 -machine q35 ... \
+      -device pcie-root-port,id=rp0,chassis=1,slot=1,bus=pcie.0 \
+      -device nvme,bus=rp0,drive=nvm,serial=deadbeef ...
+
+  echo bus > /sys/bus/pci/devices/0000:01:00.0/reset_method
+  echo 1   > /sys/bus/pci/devices/0000:01:00.0/reset
+
+Without the patch the reset returns -ENOTTY and dmesg shows the
+"Data Link Layer Link Active not set in 100 msec" warning; with the
+patch the reset returns 0 and the warning is gone.
+
+Signed-off-by: Mateusz Nowicki <mateusz.nowicki@posteo.net>
+---
+ hw/pci/pci_bridge.c   | 16 +++++++++++++++-
+ hw/pci/pcie.c         | 31 +++++++++++++++++++++++++++++++
+ include/hw/pci/pcie.h |  1 +
+ 3 files changed, 47 insertions(+), 1 deletion(-)
+
+diff --git a/hw/pci/pci_bridge.c b/hw/pci/pci_bridge.c
+index e85932e41a9..3ddc572383d 100644
+--- a/hw/pci/pci_bridge.c
++++ b/hw/pci/pci_bridge.c
+@@ -33,6 +33,7 @@
+ #include "qemu/units.h"
+ #include "hw/pci/pci_bridge.h"
+ #include "hw/pci/pci_bus.h"
++#include "hw/pci/pcie.h"
+ #include "qemu/module.h"
+ #include "qemu/range.h"
+ #include "qapi/error.h"
+@@ -274,8 +275,21 @@ void pci_bridge_write_config(PCIDevice *d,
+ 
+     newctl = pci_get_word(d->config + PCI_BRIDGE_CONTROL);
+     if (~oldctl & newctl & PCI_BRIDGE_CTL_BUS_RESET) {
+-        /* Trigger hot reset on 0->1 transition. */
++        /*
++         * SBR asserted: drop the data link on PCIe.  Real hardware
++         * brings the link down for as long as Secondary Bus Reset is
++         * held, which clears DLLLA in the port's LNKSTA.
++         */
+         bus_cold_reset(BUS(&s->sec_bus));
++        pcie_cap_set_dllla(d, false);
++    } else if (oldctl & ~newctl & PCI_BRIDGE_CTL_BUS_RESET) {
++        /*
++         * SBR de-asserted: the link retrains and DLLLA goes back to 1.
++         * Software polling LNKSTA (e.g. Linux's
++         * pci_bridge_wait_for_secondary_bus) relies on this transition
++         * to declare the reset complete.
++         */
++        pcie_cap_set_dllla(d, true);
+     }
+ }
+ 
+diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
+index 4622c75e48c..fd81ac72873 100644
+--- a/hw/pci/pcie.c
++++ b/hw/pci/pcie.c
+@@ -396,6 +396,37 @@ void pcie_cap_lnkctl_reset(PCIDevice *dev)
+                                  PCI_EXP_LNKCTL_CCC | PCI_EXP_LNKCTL_ES);
+ }
+ 
++/*
++ * Toggle the Data Link Layer Link Active bit in LNKSTA.  Used to model
++ * the link-state transitions a real PCIe port exhibits around events
++ * such as Secondary Bus Reset.  No-op on devices that do not advertise
++ * DLLLA reporting.
++ */
++void pcie_cap_set_dllla(PCIDevice *dev, bool active)
++{
++    uint8_t *exp_cap;
++    uint32_t lnkcap;
++
++    if (!pci_is_express(dev) || !dev->exp.exp_cap) {
++        return;
++    }
++    exp_cap = dev->config + dev->exp.exp_cap;
++    lnkcap = pci_get_long(exp_cap + PCI_EXP_LNKCAP);
++
++    if (!(dev->cap_present & QEMU_PCIE_LNKSTA_DLLLA) &&
++        !(lnkcap & PCI_EXP_LNKCAP_DLLLARC)) {
++        return;
++    }
++
++    if (active) {
++        pci_word_test_and_set_mask(exp_cap + PCI_EXP_LNKSTA,
++                                   PCI_EXP_LNKSTA_DLLLA);
++    } else {
++        pci_word_test_and_clear_mask(exp_cap + PCI_EXP_LNKSTA,
++                                     PCI_EXP_LNKSTA_DLLLA);
++    }
++}
++
+ static void hotplug_event_update_event_status(PCIDevice *dev)
+ {
+     uint32_t pos = dev->exp.exp_cap;
+diff --git a/include/hw/pci/pcie.h b/include/hw/pci/pcie.h
+index 71ba94874b4..4d27c4eb835 100644
+--- a/include/hw/pci/pcie.h
++++ b/include/hw/pci/pcie.h
+@@ -105,6 +105,7 @@ void pcie_cap_deverr_reset(PCIDevice *dev);
+ 
+ void pcie_cap_lnkctl_init(PCIDevice *dev);
+ void pcie_cap_lnkctl_reset(PCIDevice *dev);
++void pcie_cap_set_dllla(PCIDevice *dev, bool active);
+ 
+ void pcie_cap_slot_init(PCIDevice *dev, PCIESlot *s);
+ void pcie_cap_slot_reset(PCIDevice *dev);
+-- 
+2.53.0
+
 
