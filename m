@@ -4,99 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DF47CD37AC
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 02:06:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5646CD343F
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 02:07:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMyzc-0007hz-Pb; Tue, 12 May 2026 22:06:36 -0400
+	id 1wMz0c-0008Dc-E4; Tue, 12 May 2026 22:07:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wMyzZ-0007eT-Ty
- for qemu-devel@nongnu.org; Tue, 12 May 2026 22:06:34 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ id 1wMz0a-0008DT-E2
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 22:07:36 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wMyzR-0007b7-Lo
- for qemu-devel@nongnu.org; Tue, 12 May 2026 22:06:28 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-ba545100a13so1061744766b.2
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 19:06:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778637984; cv=none;
+ id 1wMz0W-0007vD-8a
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 22:07:34 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-bccd251d622so566939966b.3
+ for <qemu-devel@nongnu.org>; Tue, 12 May 2026 19:07:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778638050; cv=none;
  d=google.com; s=arc-20240605;
- b=UCmMcFHOuRQxmSIxrL82TYHvBZU6kp+h0z7CxPrhvEqdSXN9nqSoMVIBiFJ0zaZx1p
- hw1iUNN1zb/IG0+qRvvrIzE08vp4XvgSXyWEuhehV0pp7/26nvn1cIwKTNOFSSxmiar0
- cmI1WAeq20mVs4kXbwfcDWiJ9j9unWxfnpgtPFLSrUjPWoVQlm8KlmGgf+hU3qJQqT2E
- P5RVjoHWBGcyPXUqLav4mAC4dV4WCsyaMmpXMGm3IYJflCrucCAEVoDBlbx9esx+6jRb
- FnhZwHFw2G8rua+4OeHTa3VD8i7U8aDKhrlemsVT5ykt55TZr7TLhvYRsqRUfMpp7pjx
- L0ng==
+ b=NDtWgVKpGnT8O/ANNif/xrEfnwy2sCzoP6GTg0LbjQ804uk6qMiJ7GMC3JwGYno7XX
+ hjhvG5mBvXbyzoH/WlpUjUVVzjdnO2AG9gisZMi045e59qc8smQH/IaCgzBOmhuNbpFu
+ Ab43u7II8ZOeqo7ukp0uMD5bh8SrqcFW+thm1sarxa9vmE4ti9oXkqma1unmZ8qFSFmb
+ I7geQ9fqoO4lCUClB85PzFlsLhSyglAu6fPKpU8cJjw2NICSLDJBML2wvI4HLzf56z1Z
+ hacqZkZZ5gZgk0cxAEl7mBbRp0xgZeO0gBpZ2LKOlsWlxRTNn0XNOBmSqbRsH6GFPVsW
+ 5YTA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=gAX02NUPc0aaBRoouBCKRWGzbNiAE0I8NoZ5OyMCp2k=;
+ bh=K8o1mLp0C0lp5dz61Mc/YxHcbbKbVzrwv9lux3SkrCo=;
  fh=GJpzZP0+Pf7IJLAkk7GGIc2jeyRGihtCPQbHClgK+cI=;
- b=DpOS0jTArKeRtekWFq6sl85KBcSjrvbUAHsay08OkgczNTCQ6f6fw44yayNc6laYKo
- 1UrqNsE/E8mpp0+bW1PenvaHwUexh8h17VtHayMROJRHe4Mltp3PByc1l0NFyQM9vanZ
- PwSPGUTbDMbBdYUdYPB9L77hogxCzhs65fHMX37+IG3w9hZWj8+NUMMZ3YOnoxvV9xfb
- ySlNZoY2y/jBzSK4q3nRWHrER3TIjCtI5iryMDW+VzECKVvDnzTrpZWBaFWa6R1lPj6g
- D3173eXoGELn6EIZIzWxX9QhLO+e+QJaBRIaJuVx4hbCV0LvpkFtUdPd2o81sjRn/+W2
- zpsQ==; darn=nongnu.org
+ b=UsL5MkW0oUyHUEj8yAd8pqQ8sWfGAuOFjx4/h3dgq1b2DwPVBVaVSq9uEjp9Bp3SPJ
+ CLLS2/gJroXksdDnpAhT6JD0KIl0bZTtFQDOyPDwKuDuYwiPPcVnUnzVxCNRmznZzvfb
+ YKlZJC/fW9gPOKjEAD44ssMhBRYJV0ijrxeuUXcdcS5avQySEMm4rXCDLJOyhVXG+t/S
+ TyUq6NvPtTr8InM0Jv95CCDyOmwxEZfCe0jryQ/eSpJSFNAwl9QR4Ans4TdmDinLZqkJ
+ HQfLlz5SG1garShXm9vFdQPbl8Bjl2iMffgh85s+x90a6p4Xj1WUvDtR1VFfdySsjlhv
+ oz6Q==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778637984; x=1779242784; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778638050; x=1779242850; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gAX02NUPc0aaBRoouBCKRWGzbNiAE0I8NoZ5OyMCp2k=;
- b=gQFkQz+gErCl2taXvZGCil8nBoXwKbfmT969+IEj6FT4xmsWrQjlV0RyR1ZCf6gEl1
- SjQdBdI6fF1R2E8tA8FdQG0dOTD6LGn9P+/9R0y9Kbn/LCuZ1alSJoNjxhoP79Pv2TSG
- ko/ODOnzbUOOI3Eb5vtEn3Jaf20uVAvP3baUYP/0twcuoBMMGfI0IQo0svFx/1xPBiL0
- fXLPAnABv4u7GokTkNcL+HFge9GgPVAEXXw4T6KRL49G4bYSiWvVGYzMM6pREM16hl4I
- NN6m0EDTbTfp3ixUpSek/b0iBZr2rrtgq3MNgxBAy/S4TvUZCEiZn2aJLcA9G3iQbjc+
- vyIQ==
+ bh=K8o1mLp0C0lp5dz61Mc/YxHcbbKbVzrwv9lux3SkrCo=;
+ b=Rstmvf/889W2CNzBQx4Q/LSwbfiUWSedmLXjOkW5KhydecQQThAgr1UR1rFrv/uW+4
+ tOvdHKepIo/qrCyjwsj0RIEEwsE6c0YXNKoUkxTY619T66Q3wII12MRXV0/4ovSyaOw6
+ ymVrhHYOcUNcbnEOR5BIDZXQHnW6+wMhwucGW9/X+064e9pM7Kc8aAyUX9b91xQ1AtA7
+ WyunxdKQKvvMO4Vai/f+otJsa3Alo+DqnzsrlILHl2X0UenwMY/c5mlj9DgFULkwZ6bx
+ f5n4e343kkAXKEFv3tIkSXy+nmmBcC5fFfFfZxkhfUpwTIeHt6n7TEBOhG19zvwVJyFp
+ OUJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778637984; x=1779242784;
+ d=1e100.net; s=20251104; t=1778638050; x=1779242850;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=gAX02NUPc0aaBRoouBCKRWGzbNiAE0I8NoZ5OyMCp2k=;
- b=eZYA4AHjosLQESnoHtaCtf4JPfKY924bOJezb4ekPZGCAss/Yzum6O/dq24dI9nsFD
- /XGqVD9F67zVUHIUsdFL74wtj3MkFGZvAV10bIPBstrUx0TYsq0xR+JWLqz/HnhvEz0b
- kgXCLo05dq+oxzAdz2ShKhTRypvsJn40r0uwWCD7Vz9Uqyor4bVXXWUSrXrTk8NQp8fD
- H2uBa1qkDQzSHXSe6OF6YowDOiroGO7z+pAiKrBHmuOgPG9q80orkxflcTuxvBo3hlyu
- 5LFHOWDH2qblW3Gj8Ik5pltpnqYYWVuP25S5tG5SkoJQgq6RbyKBLkgmE0B6NYJ4zle0
- 4eLQ==
-X-Gm-Message-State: AOJu0YypXs4YomW9n2ZvxJ2JUfc/5RtxElZcw1CdinDOygNgdipsk9lO
- v6bnmctYa6jbwW7Qz5eIB4puY8I2ZFDl1auYn35g0ytKIET0ECpyqGbK7lS80puUosaUu1ho93q
- gv0RABFd2Cviym78ZjvaioXRMeqIcJxc=
-X-Gm-Gg: Acq92OF+4891D3VYaSpj+2B+Ehw74+Wzbkt5P3enKOmpsZJbpsT33dAIWED5cxKN/0G
- ugzkXOtJweC60snhKiLAtUFxmjGzdHnkP+7B4P2s0oAy1jWZTnH6C7qUJM27x7SwBXhyrPGdEqH
- IWnXpHYgCU1iuOIJnG5ADgOOTQdruAovkLoEGGZ/mzODmkBz+YbebGk2L+6VdimKDrXbYL4dCTL
- wW6VifSRd4rXXOxdr1qwW1+EPS2NCu7W6RKR5PUqQF+dO/LqvVye8s+HOqlRlzFMKQLiN4hLBnR
- nHe7w2+c91BhLxBQh0VE4zduvO6A4OgBOCNo1g==
-X-Received: by 2002:a17:906:c104:b0:bd3:23d6:acb7 with SMTP id
- a640c23a62f3a-bd3bf98a9f2mr79501466b.14.1778637983820; Tue, 12 May 2026
- 19:06:23 -0700 (PDT)
+ bh=K8o1mLp0C0lp5dz61Mc/YxHcbbKbVzrwv9lux3SkrCo=;
+ b=gXTSqDQAHFC1AQ9LWWv2q8sa5UdYRZFmFxr70SY9j6u63FPLsDyjOMmfhYBZIohhIq
+ +aKc0p4xY2lvG2o5I8DQrxnMfCG0AmLQUDcS1/YUO6YY1xO0YoRPev19wVMpjKsBiudh
+ VOQBJFVaOeBiDXYn30Dyx/okeAHUIN0WNpRMJrSClxDJE12CY/4pkO26TrVqsvlIxVBV
+ rBljXx2rVDFU07n15HLprahVg5GdMBb6Ii6cuj+wZqb90dWKC64rR9szKf0swRiHf+YC
+ s5Enj0/a9KUelJyHGrNrEoQ4SsyyJScSrRZUorck4mCuEZ3ZjaAxY+lwnavBeUX/Q+6g
+ mdsw==
+X-Gm-Message-State: AOJu0Yxx5KrewMy0H8sxBfG3TB28m0BYUZ9Tk3Ezjw9CoV/zChDodBaZ
+ wD7dP1J+I6iMYwdvgmm48ZW5AsUaOIj5eHzx4BrYJhsAiokPXzOpFKvaxPckH7ALWhJk77JcFab
+ +tHyujqQw1Y4gsjG3GsGacmDemUJ5TQ2p9Q==
+X-Gm-Gg: Acq92OG1v9kBLnJcDF3ZRj5dQ0rxyNr8Lpi1N94pzT0Tb4lE7ucd3lBseaVvS9BIhGN
+ hqKj1VOyQD/kgi9MvKy1VkjYlftyqgNI/pWCMmEtC+xGztjHOjRwMGGfqC/++NdqFtkbqeigVxu
+ pSKu1eJ400e1vE2apHMsF4Sskm0+n5kI6wVaoBCb+x/69p7Z5xBO6nInr/U3aNmo0MjndOZlLhz
+ CBWwaBeDwrc/B0ZZD7Dq8OzMKDBlBKaEM3tgHWfLlkXsUUt0QIZI2zDY6g1IWJUhdb/w70Uhghl
+ jgJk0mL63JMFZ48JRjaNpQTIFoq8RaMeDP5FqQ==
+X-Received: by 2002:a17:907:f497:b0:bd3:2407:86bd with SMTP id
+ a640c23a62f3a-bd3c1403499mr61109866b.33.1778638050399; Tue, 12 May 2026
+ 19:07:30 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260510-qom-qapi-v1-0-48ba6a1a1fa5@redhat.com>
- <20260510-qom-qapi-v1-46-48ba6a1a1fa5@redhat.com>
-In-Reply-To: <20260510-qom-qapi-v1-46-48ba6a1a1fa5@redhat.com>
+ <20260510-qom-qapi-v1-47-48ba6a1a1fa5@redhat.com>
+In-Reply-To: <20260510-qom-qapi-v1-47-48ba6a1a1fa5@redhat.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 13 May 2026 12:05:56 +1000
-X-Gm-Features: AVHnY4KeaeSvtBUZkrh8dCxzas1uJJr-yXXRaBjCg5yVZzAcm_Du_I1IGTMavHk
-Message-ID: <CAKmqyKNrrGQikjbba0Be2uwQgOWFJ-TyW03RC9kjax865YRCPQ@mail.gmail.com>
-Subject: Re: [PATCH 46/54] target/riscv: fix incorrect QAPI types and u8
- casting
+Date: Wed, 13 May 2026 12:07:02 +1000
+X-Gm-Features: AVHnY4JRLmRNPdIDrsou9ty1w3FjKDD-Kr13DBcTdQStvVP10qJ1Q28UXVO2j7U
+Message-ID: <CAKmqyKOFhLhCtZG66-RS1NPuqMF5=icgRW80VwFNVkGyKP1ZVw@mail.gmail.com>
+Subject: Re: [PATCH 47/54] target/riscv: convert PropertyInfo definitions to
+ use qapi_type
 To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
 Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, 
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -123,7 +123,8 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Sun, May 10, 2026 at 11:53=E2=80=AFPM Marc-Andr=C3=A9 Lureau
 <marcandre.lureau@redhat.com> wrote:
 >
-> "pmu_num" is u8, "pmu_mask" is u32, so is "pmp-granularity"
+> Mechanical conversion of all local PropertyInfo definitions in
+> target/riscv/cpu.c
 >
 > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
@@ -132,11 +133,11 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  target/riscv/cpu.c | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
+>  target/riscv/cpu.c | 32 ++++++++++++++++----------------
+>  1 file changed, 16 insertions(+), 16 deletions(-)
 >
 > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 7d0cf88d48d..235764462cb 100644
+> index 235764462cb..bd01884fb30 100644
 > --- a/target/riscv/cpu.c
 > +++ b/target/riscv/cpu.c
 > @@ -1467,7 +1467,7 @@ static void prop_pmu_num_get(Object *obj, Visitor *=
@@ -144,38 +145,161 @@ v, const char *name,
 >  }
 >
 >  static const PropertyInfo prop_pmu_num =3D {
-> -    .type =3D "int8",
-> +    .type =3D "uint8",
+> -    .type =3D "uint8",
+> +    .qapi_type =3D &uint8_type_info,
 >      .description =3D "pmu-num",
 >      .get =3D prop_pmu_num_get,
 >      .set =3D prop_pmu_num_set,
-> @@ -1503,13 +1503,13 @@ static void prop_pmu_mask_set(Object *obj, Visito=
-r *v, const char *name,
->  static void prop_pmu_mask_get(Object *obj, Visitor *v, const char *name,
->                               void *opaque, Error **errp)
->  {
-> -    uint8_t pmu_mask =3D RISCV_CPU(obj)->cfg.pmu_mask;
-> +    uint32_t pmu_mask =3D RISCV_CPU(obj)->cfg.pmu_mask;
->
-> -    visit_type_uint8(v, name, &pmu_mask, errp);
-> +    visit_type_uint32(v, name, &pmu_mask, errp);
+> @@ -1509,7 +1509,7 @@ static void prop_pmu_mask_get(Object *obj, Visitor =
+*v, const char *name,
 >  }
 >
 >  static const PropertyInfo prop_pmu_mask =3D {
-> -    .type =3D "int8",
-> +    .type =3D "uint32",
+> -    .type =3D "uint32",
+> +    .qapi_type =3D &uint32_type_info,
 >      .description =3D "pmu-mask",
 >      .get =3D prop_pmu_mask_get,
 >      .set =3D prop_pmu_mask_set,
-> @@ -1651,6 +1651,7 @@ static void prop_pmp_granularity_get(Object *obj, V=
+> @@ -1541,7 +1541,7 @@ static void prop_mmu_get(Object *obj, Visitor *v, c=
+onst char *name,
+>  }
+>
+>  static const PropertyInfo prop_mmu =3D {
+> -    .type =3D "bool",
+> +    .qapi_type =3D &bool_type_info,
+>      .description =3D "mmu",
+>      .get =3D prop_mmu_get,
+>      .set =3D prop_mmu_set,
+> @@ -1573,7 +1573,7 @@ static void prop_pmp_get(Object *obj, Visitor *v, c=
+onst char *name,
+>  }
+>
+>  static const PropertyInfo prop_pmp =3D {
+> -    .type =3D "bool",
+> +    .qapi_type =3D &bool_type_info,
+>      .description =3D "pmp",
+>      .get =3D prop_pmp_get,
+>      .set =3D prop_pmp_set,
+> @@ -1613,7 +1613,7 @@ static void prop_num_pmp_regions_get(Object *obj, V=
+isitor *v, const char *name,
+>  }
+>
+>  static const PropertyInfo prop_num_pmp_regions =3D {
+> -    .type =3D "uint8",
+> +    .qapi_type =3D &uint8_type_info,
+>      .description =3D "num-pmp-regions",
+>      .get =3D prop_num_pmp_regions_get,
+>      .set =3D prop_num_pmp_regions_set,
+> @@ -1651,7 +1651,7 @@ static void prop_pmp_granularity_get(Object *obj, V=
 isitor *v, const char *name,
 >  }
 >
 >  static const PropertyInfo prop_pmp_granularity =3D {
-> +    .type =3D "uint32",
+> -    .type =3D "uint32",
+> +    .qapi_type =3D &uint32_type_info,
 >      .description =3D "pmp-granularity",
 >      .get =3D prop_pmp_granularity_get,
 >      .set =3D prop_pmp_granularity_set,
+> @@ -1726,7 +1726,7 @@ static void prop_priv_spec_get(Object *obj, Visitor=
+ *v, const char *name,
+>  }
+>
+>  static const PropertyInfo prop_priv_spec =3D {
+> -    .type =3D "str",
+> +    .qapi_type =3D &str_type_info,
+>      .description =3D "priv_spec",
+>      /* FIXME enum? */
+>      .get =3D prop_priv_spec_get,
+> @@ -1759,7 +1759,7 @@ static void prop_vext_spec_get(Object *obj, Visitor=
+ *v, const char *name,
+>  }
+>
+>  static const PropertyInfo prop_vext_spec =3D {
+> -    .type =3D "str",
+> +    .qapi_type =3D &str_type_info,
+>      .description =3D "vext_spec",
+>      /* FIXME enum? */
+>      .get =3D prop_vext_spec_get,
+> @@ -1802,7 +1802,7 @@ static void prop_vlen_get(Object *obj, Visitor *v, =
+const char *name,
+>  }
+>
+>  static const PropertyInfo prop_vlen =3D {
+> -    .type =3D "uint16",
+> +    .qapi_type =3D &uint16_type_info,
+>      .description =3D "vlen",
+>      .get =3D prop_vlen_get,
+>      .set =3D prop_vlen_set,
+> @@ -1843,7 +1843,7 @@ static void prop_elen_get(Object *obj, Visitor *v, =
+const char *name,
+>  }
+>
+>  static const PropertyInfo prop_elen =3D {
+> -    .type =3D "uint16",
+> +    .qapi_type =3D &uint16_type_info,
+>      .description =3D "elen",
+>      .get =3D prop_elen_get,
+>      .set =3D prop_elen_set,
+> @@ -1879,7 +1879,7 @@ static void prop_cbom_blksize_get(Object *obj, Visi=
+tor *v, const char *name,
+>  }
+>
+>  static const PropertyInfo prop_cbom_blksize =3D {
+> -    .type =3D "uint16",
+> +    .qapi_type =3D &uint16_type_info,
+>      .description =3D "cbom_blocksize",
+>      .get =3D prop_cbom_blksize_get,
+>      .set =3D prop_cbom_blksize_set,
+> @@ -1915,7 +1915,7 @@ static void prop_cbop_blksize_get(Object *obj, Visi=
+tor *v, const char *name,
+>  }
+>
+>  static const PropertyInfo prop_cbop_blksize =3D {
+> -    .type =3D "uint16",
+> +    .qapi_type =3D &uint16_type_info,
+>      .description =3D "cbop_blocksize",
+>      .get =3D prop_cbop_blksize_get,
+>      .set =3D prop_cbop_blksize_set,
+> @@ -1951,7 +1951,7 @@ static void prop_cboz_blksize_get(Object *obj, Visi=
+tor *v, const char *name,
+>  }
+>
+>  static const PropertyInfo prop_cboz_blksize =3D {
+> -    .type =3D "uint16",
+> +    .qapi_type =3D &uint16_type_info,
+>      .description =3D "cboz_blocksize",
+>      .get =3D prop_cboz_blksize_get,
+>      .set =3D prop_cboz_blksize_set,
+> @@ -1987,7 +1987,7 @@ static void prop_mvendorid_get(Object *obj, Visitor=
+ *v, const char *name,
+>  }
+>
+>  static const PropertyInfo prop_mvendorid =3D {
+> -    .type =3D "uint32",
+> +    .qapi_type =3D &uint32_type_info,
+>      .description =3D "mvendorid",
+>      .get =3D prop_mvendorid_get,
+>      .set =3D prop_mvendorid_set,
+> @@ -2023,7 +2023,7 @@ static void prop_mimpid_get(Object *obj, Visitor *v=
+, const char *name,
+>  }
+>
+>  static const PropertyInfo prop_mimpid =3D {
+> -    .type =3D "uint64",
+> +    .qapi_type =3D &uint64_type_info,
+>      .description =3D "mimpid",
+>      .get =3D prop_mimpid_get,
+>      .set =3D prop_mimpid_set,
+> @@ -2080,7 +2080,7 @@ static void prop_marchid_get(Object *obj, Visitor *=
+v, const char *name,
+>  }
+>
+>  static const PropertyInfo prop_marchid =3D {
+> -    .type =3D "uint64",
+> +    .qapi_type =3D &uint64_type_info,
+>      .description =3D "marchid",
+>      .get =3D prop_marchid_get,
+>      .set =3D prop_marchid_set,
 >
 > --
 > 2.54.0
