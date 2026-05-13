@@ -4,97 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D875ECD37AC
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 17:33:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F819CD4F21
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 17:37:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNDSi-0007Sc-N8; Wed, 13 May 2026 13:33:36 -0400
+	id 1wNDW1-0000Tl-LB; Wed, 13 May 2026 13:37:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wNDSg-0007Pp-Qf
- for qemu-devel@nongnu.org; Wed, 13 May 2026 13:33:34 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wNDW0-0000TT-7q
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 13:37:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wNDSe-0003bc-Sk
- for qemu-devel@nongnu.org; Wed, 13 May 2026 13:33:34 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wNDVy-0004ze-SQ
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 13:36:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778693609;
+ s=mimecast20190719; t=1778693817;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=qx+MCH1jOirGA1rg4svkjHSeydIKhVIQalsTR40fxdo=;
- b=TI77u2dDSJMl3fJ7zFNLXr5VD4jQWRLU0unO0xLUJwOknwFqcduMi5ZU9+L5tPnCXAXOsn
- MmIDyKq2TeJLhAsI8i2eyYkSuWdwSvvlJr3aJyKNnf3pStjrCZhc7mDABw6mfMpamLyWhO
- Ous6XzDhXYKOjWDmDvrXNxoq4gGp7BI=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=eMnec+/PTVtQzgIzWf9VTfYLvH5qz6Iu4SPk1cBOi1I=;
+ b=KnXE9kRt4JlgSrKhyFNANVXUfU22Lt426F7cBQOEkA9jDzJLRqkKy7d5KzVT8ucow5momM
+ Up2ZUtbmNB0C60Hw/exTfp1GeiHwuVZMH7vpIxs20rG1HFxoi+JTTiMHGwg/FWKKAmh1gi
+ fTKdtjKtlsmoQuQ4TisIe7Wu/iLnxag=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-348-waV5ZfLJNEiKMaKrOEYxxA-1; Wed, 13 May 2026 13:33:28 -0400
-X-MC-Unique: waV5ZfLJNEiKMaKrOEYxxA-1
-X-Mimecast-MFC-AGG-ID: waV5ZfLJNEiKMaKrOEYxxA_1778693608
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-90f74de8cbcso246126285a.3
- for <qemu-devel@nongnu.org>; Wed, 13 May 2026 10:33:28 -0700 (PDT)
+ us-mta-682-8amiIeQZMh27MKzrysstGA-1; Wed, 13 May 2026 13:36:56 -0400
+X-MC-Unique: 8amiIeQZMh27MKzrysstGA-1
+X-Mimecast-MFC-AGG-ID: 8amiIeQZMh27MKzrysstGA_1778693816
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8b597b14a22so107167866d6.0
+ for <qemu-devel@nongnu.org>; Wed, 13 May 2026 10:36:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778693608; x=1779298408; darn=nongnu.org;
+ d=redhat.com; s=google; t=1778693816; x=1779298616; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=qx+MCH1jOirGA1rg4svkjHSeydIKhVIQalsTR40fxdo=;
- b=ABd3TrnWU0fu9785C4lrl/+ZPl/CEingmU7O6VYQbgchdMAdnB+vqnIfMEsjB464Gh
- thFIGMOtRE+6hSurbe3WJpupmVXHQ/2B/SBF5Q9M7YcUXgnr0zgDpM3e5mVOeWfjbOg9
- Y7eNCzLh2vLfZEMyai3JscYSjlCKbC7XkdMlAIJWxBtY09RxUre5QVLYng/wpusBQKHR
- ZkDScFRmLlPMfmjsD8HSU1IL0oOr2FkeBKcPl6TwIiYU+p8W5XPk12PBkmnBgv35LdwM
- iqqUgYXy8BGmVvLSaj5+ZGfTLAFhFRt+M5/WrIMAAKNvBS58LBxu+6dU6zocxvZqQhaK
- FBbQ==
+ bh=eMnec+/PTVtQzgIzWf9VTfYLvH5qz6Iu4SPk1cBOi1I=;
+ b=aDiXwzqE8fTfw/mZ2YvHjdAm3ecgSiD2sszV+aX+B17K2eK0Ru+5FPIC65Q2ko6OX6
+ 6MdTsGX5fxgqZKRsd+MIpWnkKjuKXVD01bfwvttPxMkzzCcvrr9KqdzAaEaH5a0uKpMM
+ jFUtCpieB0g8cj/XTqgm1cPiCef0mjQnhb78i0lv1ZyvAikud8rECDunNvTLDoG8XNJl
+ degt2xlDysRGWdFQwjuMk/+QfPvvdXa4u0lJXe0p1W4RlAxg7l4keIKFSKQ+BBnGLmhw
+ jr0xh2O5l1VxNh+JKMDJemUubuAtRj/h+MmT2H2tlPxh2H6YvyVzxsQJKebSiy2wO9zm
+ jlYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778693608; x=1779298408;
+ d=1e100.net; s=20251104; t=1778693816; x=1779298616;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qx+MCH1jOirGA1rg4svkjHSeydIKhVIQalsTR40fxdo=;
- b=BHRZpeXZRGSNzXuKv3fNUfhNJVdpeWex5tLQ3l5Mfr7u7ACHpC9dPYFzXYk0Ke1JZ1
- tQmmEaPgjVoODzg6fh2do5jZ3Y13YKOMOwcnwcg2n3jeEcuXHLDaOvbrmiPn68T69zks
- lTqcOjBKhUCs+AoQyF0H8W1gqvraKp1bgTnKex2lSq4CBd3TfiLtDOsUSB2GY8KIIMbB
- oQALQPQbFitGp7XuohXEG7ddHHulWDUhcWGlqqRX1Exwo0aZ3DatapdPIYZFkWPNorJk
- 147m4KQjbWOCE3O4qkZzKgqzDs4uu6ZyO8tfiupWsL0Hmx1gFflr+aLYlQ7uPjy2v3tC
- UrBw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+KIjRIXC35dtV02Jckt9XfXny5WQiUtlWQmlm5qKsM4d7ilFizzjJwjBHwfMwQ1PBE1nWpi2ha+I5t@nongnu.org
-X-Gm-Message-State: AOJu0YwkbztmvnK3kUgYXXMHrX3+W6Z0IiR59TVNh/2l7Jx2rXyeMz4/
- WsBOT1HkRy5vXpBKgQ995G7kUxEPYdbGEBVYYqfHvT78czz8trSftD13+kiua49b/gl+l1W7bMJ
- LXs2W9NPI5Lcr7RHecfI/fiY+ikPE7LIjE3EtgueOtn+ShyOM/2gBPFf1
-X-Gm-Gg: Acq92OFfl86B1uu9SJaJSwaERS8pO1rs7Rh2ULn0ivG3DvsykYaEN9bu7hW2k92/Is1
- EOZR6X4EnZ2m3wN6HNd04tOUdrTghQoC+DvtAithYH9o3kYJTJKPxpazmf7k3G+hdEfdNZFarDz
- PlBOWiMn19LvHM6/QrCAJSnt0RfMF/XEsxHgHT+kk0MeRygRIr/0Ujo/1SD/2ZUcMyX3tTDhZJ9
- YaujkZknxoh/rsioDaPR+kKT/+MrBqMqmaKrYBlYZPvX2pNvFpdumh9aNXyyFbEI6vAX39JoAuU
- mA/RBttjLs5vQpDJYQW95NC5Zql+oCuY87A8m9TLwj7FsHiIZzzH606xG07P/3+oA3ktv9TOuYV
- hWyu3Uz3yWCJf8KBMaASPPjgpaqV2R9k5t6lQBi8G+HMkGNM=
-X-Received: by 2002:a05:620a:1792:b0:8ec:9b8f:496a with SMTP id
- af79cd13be357-90f8ad0988cmr647812185a.51.1778693607784; 
- Wed, 13 May 2026 10:33:27 -0700 (PDT)
-X-Received: by 2002:a05:620a:1792:b0:8ec:9b8f:496a with SMTP id
- af79cd13be357-90f8ad0988cmr647806185a.51.1778693607244; 
- Wed, 13 May 2026 10:33:27 -0700 (PDT)
+ bh=eMnec+/PTVtQzgIzWf9VTfYLvH5qz6Iu4SPk1cBOi1I=;
+ b=AqSKwRQYHGnzNxNzTbhBipXvs3ATCigobrTlVz/sx4Vb4Trn0lwSr7LJ4E0ZLfJ23O
+ d4ZOgHBdBn1XdZllEELmhiRpmsiimXUZj0+TlggCZZzGm/zBhb3O/Q4IZ22FLbsyo+ul
+ mwcE5V9VUjbPo2lkFTWbDlVmVTs5MZpC2Qs9VRDiLHB0DbiS0MHV50PeHIekMUv8z985
+ BBgFhwJVnOxdgrXMyDOatSeql2viaSrAdYldgNuR/oSzgQSEuDiZEibqhjx0ZXcs4oJN
+ ZvWHlYQ6IOpJtI8R8zjRsGRtnp4kmSNouFRbZ7vKm9FO3QVP/uyXA1HYcvN37i6E5UCS
+ kTQg==
+X-Gm-Message-State: AOJu0Yx2maalxhwmLfeK+GqTpZQcSXAulLPR0Y+h2PSnaG6nMCxxlaLe
+ V8vPLhlDFwyo+HoW+ma1lTC6JTFTvsaJCMlLLseEcAw4feTcMMdpF3pvMCLNFfuM4LWSJ3qI+MW
+ 7XdWKiVfMX0S68oY1LCDjKOCAxZdz9+x2XjhIHfK2TrRD4x61/33voqxv
+X-Gm-Gg: Acq92OGm4G62XfsJPjkVtvIBJdxGtHmhAyZHObhWU6n6Qt82zHzXsjZ+lkCrcZqUogx
+ Qh9nSiKGtKexDZ1V3jwUv7ktLtc/aZOy5rLoj0wrUFXTgxL90+/M2YR07MLP+vwHj9+od8DVXQ5
+ kgNfxvO3/fPR3nxnbvQNLbxnUxZAfHW2bONBdD0r0NU0XQudMjdfZ40r+P0HiPZtHL47+i29l6e
+ X++QjhzlSPFryI9TKeRDT31AD5QuWNYhyVNMqDxObm5HcVXt7J6oO15144ZGSH530aeG/0YQFZn
+ s8qvaTd7l0/CEjGZZWHzkZQ4ZSOfwRG6eGI5sB1rgSZfiEQ01nC6zHUSTO5UjSlW5+N0BiY4MHE
+ OaZ0v8UtRDT5fSj4eE04Kt36d6MceH3L/+SmPPqV3Uv3Uo08=
+X-Received: by 2002:a0c:f005:0:b0:8ac:ac91:f421 with SMTP id
+ 6a1803df08f44-8c8fa0e676cmr6373026d6.1.1778693815808; 
+ Wed, 13 May 2026 10:36:55 -0700 (PDT)
+X-Received: by 2002:a0c:f005:0:b0:8ac:ac91:f421 with SMTP id
+ 6a1803df08f44-8c8fa0e676cmr6372626d6.1.1778693815176; 
+ Wed, 13 May 2026 10:36:55 -0700 (PDT)
 Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-910bd623819sm13190785a.43.2026.05.13.10.33.26
+ 6a1803df08f44-8c90b2dc41fsm1583976d6.25.2026.05.13.10.36.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 May 2026 10:33:26 -0700 (PDT)
-Date: Wed, 13 May 2026 13:33:25 -0400
+ Wed, 13 May 2026 10:36:54 -0700 (PDT)
+Date: Wed, 13 May 2026 13:36:53 -0400
 From: Peter Xu <peterx@redhat.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Fabiano Rosas <farosas@suse.de>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Mark Kanda <mark.kanda@oracle.com>, Ben Chaney <bchaney@akamai.com>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH] MAINTAINERS: Make Maciej CPR maintainer
-Message-ID: <agS15W8pjLObplLz@x1.local>
-References: <ebe67053f4bdf92eedab1e5839603b7137e36970.1778687091.git.maciej.szmigiero@oracle.com>
+To: Aadeshveer Singh <aadeshveer07@gmail.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de
+Subject: Re: [PATCH v2] migration: Replace current_migration with
+ migrate_get_current()
+Message-ID: <agS2tdTFINZHVUdx@x1.local>
+References: <20260513063513.250911-1-aadeshveer07@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ebe67053f4bdf92eedab1e5839603b7137e36970.1778687091.git.maciej.szmigiero@oracle.com>
+In-Reply-To: <20260513063513.250911-1-aadeshveer07@gmail.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -119,32 +114,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 13, 2026 at 05:46:10PM +0200, Maciej S. Szmigiero wrote:
-> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+On Wed, May 13, 2026 at 12:05:13PM +0530, Aadeshveer Singh wrote:
+> Replaces the direct accesses to global variable `current_migration`
+> with `migrate_get_current()` to ensure consistency across systems.
 > 
-> Since Steve has retired last year I will take the CPR maintainership - with
-> kind help of Mark who remains a reviewer.
+> Note: Following this only direct access to `current_migration` will be
+> * `migrate_get_current()` itself
+> * `migration_object_init()` initializes `current_migration`
+> * `migration_shutdown()` to pair up with initialization
+> * `migration_is_running()`, as there might be a case where this function
+>   is called by a thread before object initialization
 > 
-> Cc: Mark Kanda <mark.kanda@oracle.com>
-> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-> ---
->  MAINTAINERS | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index ad215eced84d..dacb332bb65d 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3177,6 +3177,7 @@ T: git https://gitlab.com/jsnow/qemu.git jobs
->  T: git https://gitlab.com/vsementsov/qemu.git block
->  
->  CheckPoint and Restart (CPR)
-> +M: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
->  R: Peter Xu <peterx@redhat.com>
->  R: Fabiano Rosas <farosas@suse.de>
->  R: Mark Kanda <mark.kanda@oracle.com>
+> Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
 
-queued, thanks Maciej.
+queued, thanks.
 
 -- 
 Peter Xu
