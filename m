@@ -4,48 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26D28CD4F24
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 10:43:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34EFECD4F24
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 10:43:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN70e-0004E8-23; Wed, 13 May 2026 06:40:12 -0400
+	id 1wN72P-0007tJ-8x; Wed, 13 May 2026 06:42:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wN70W-00041X-37; Wed, 13 May 2026 06:40:04 -0400
+ id 1wN725-0007bq-3Y; Wed, 13 May 2026 06:41:41 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wN70P-0002Rh-Mx; Wed, 13 May 2026 06:40:02 -0400
+ id 1wN722-0003pV-W6; Wed, 13 May 2026 06:41:40 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64DAcPdO044648
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64DAcPdd044648
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 13 May 2026 19:38:53 +0900 (JST)
+ Wed, 13 May 2026 19:38:57 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=mfPjVkCUs1yaCnbK97lJd/faAw8XJ0W9eO3OAB0dqBQ=; 
+DKIM-Signature: a=rsa-sha256; bh=f4nMAQnz85jIi6jdDFcVx4lxK79NORQbClAxHDODkiQ=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1778668734; v=1;
- b=i3k9TrEnrQp5stMu1OIouPgkXR0p59v++Rz+Kxb+no2CqLLE365zT/4pI4kwwCPk
- uXiKVZw1ZnJkwRpW+SZVQuEy3QEiW7ZV87ovs70otL5otjjvRYFoOpvB4HlFBuL4
- 9txT/YK4LsR4tjezrxUwG/Y9ZnA4eVVQMc7brXGq2HZ/DAxLqLFPSekWarbdLW5Z
- EaetktX+HELf355C1RLRLpUgZwPNJwKKcMUyuRifCOGSREQGY4lbW6dS1aaNWj6q
- sA0xQ0AvgMpNayDnQIbPJ5PdndcktFxboZ4L+wVozp358EWqWS9cHMg7R/xu2uJs
- bJiFVTd5E2r4bg0g/LIU4w==
+ s=rs20250326; t=1778668737; v=1;
+ b=bqjNUc1zuLft3jaenrHt4idaiDQVz6TDoRK2tNb3C0dWY+T0in+K8oojrc2rKacQ
+ NtCfK/vAfq9FnBpEv6kyZtjQaRTQFhFmHKQloUoI6y0Mh7weWgU7FJttpIVB8ytM
+ XSICwe0B23TS11clq/qMzDcyq13LBxp+JzHnByDueseJYMYYbTf68pEOTSdCHot+
+ ejQZwTpFY/kihTEEqdhuqPqoQ9LdlQMHuNixmy8Qz/hg8+YAqoOEPCgVJkgfTNLX
+ qZdcZvRFQhJSqO27BKArxc93xTyWVfOk7zUvBwvRLsbpeYglZUndR3hC69AF9Gvt
+ j2bQnJH6Yxt2sOAkBlgRJQ==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PATCH v2 00/29] ui/input: Decouple internal and QAPI input events
-Date: Wed, 13 May 2026 19:38:16 +0900
-Message-Id: <20260513-input-v2-0-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 13 May 2026 19:38:31 +0900
+Subject: [PATCH v2 15/29] hw/m68k/next-kbd: Use Linux key codes
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/y2Nyw6DIBBFf8XMuhCkSqQr/6NxoTDq2EQMoKkx/
- nt9dHmSc8/dIKAnDPBKNvC4UCA3HiAfCZi+HjtkZA8GKaQSmSwYjdMcmW501j4LjXWew+FOHlv
- 6Xp13dXOYmwFNPMen0VOIzq/X0ZKe3t3Mhf43l5QJplSbFlaitahKHzpuiBOfWXSf1fHa8GGCa
- t/3H1GVTTe5AAAA
-X-Change-ID: 20260428-input-9b94f389ea55
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260513-input-v2-15-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260513-input-v2-0-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260513-input-v2-0-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Jan Kiszka <jan.kiszka@web.de>,
@@ -61,13 +58,13 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.16-dev-16047
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6548;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5735;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=9htvVR85eGMfnRsPma6BtWeRRM12mzblAX6WlxQ0yGY=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZLyDIVbW1Pz833Z6reKbg+Ky+g+lL8PbbEwAMdIY7ff
- tfonQjtKGVhEONikBVTZEkp2s2tEV37qTAhvgVmDisTyBAGLk4BmMg6JkaGV6K71qV4ZZWYt/c+
- uxY19ezPvNoFbyU+uInNSwzMVnX6xcjwtcxgs512YGHdSumNpZ82REglvfbe8YNhR7oVz9ITEZo
- sAA==
+ bh=iyLiD2EoMRDRtaROtRWs8sE4KAkgfKNGzp5wMpy28GQ=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZLyKbubQc4Zx7VXiC2leF/N/PyugdJvkb/ZVZFz2vwn
+ zVBYMGrjlIWBjEuBlkxRZaUot3cGtG1nwoT4ltg5rAygQxh4OIUgIlM3cLIcHyN990vJ7QZl8qd
+ /JX6YHJjou/M1JfBj+SLT+cy6u6y2MnIcPn6JjOttocb0jc58dowroyfEMhmLLTt1wOpabO0uS1
+ /sgEA
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -93,153 +90,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The internal input event representation has different requirements from
-the QAPI representation. Using QAPI types directly spreads QAPI-specific
-constraints throughout the internal input code. Keep that impact
-localized by decoupling the two representations with a dedicated
-conversion layer. The decoupled internal representation has the
-following benefits:
-
-- It avoids wrapper structs and pointer indirections required by QAPI.
-  They are useful at the QMP boundary, but unnecessary for internal
-  input events and make handlers more verbose.
-
-- It enforces a single key code set while QAPI input events allow key
-  codes to be stored either as qnum or qcode. Having two code sets is
-  useful for QMP compatibility, but complicates internal input handling.
-  Commit af07e5ff02ae ("ui: convert key events to QKeyCodes
-  immediately") made qcode the only key code set used internally, but
-  the QAPI type does not enforce that and accessing the key code is
-  still tedious.
-
-- It uses Linux key codes. They cover all keys represented by qcodes,
-  include additional keys, and allow QEMU to pass codes through from
-  Linux hosts to Linux guests. This also simplifies the code by avoiding
-  qcode aliases and matches the approach used by virtio and Xen. Since
-  this is an internal representation, QEMU can extend the key code set
-  if a QEMU-specific need arises.
-
-Only the switch to Linux key codes is intended to change functional
-behavior. The interfaces that require QKeyCode are still preserved and
-QKeyCode_str() is still used to query key names. Changing QAPI to accept
-Linux key codes is possible, but out of scope for this series.
-
-This series is organized as follows:
-Patches 1-6 convert the internal interfaces.
-Patches 7-26 convert their users.
-Patches 27-28 remove the old internal interfaces.
+QemuInputEvent now stores Linux key codes for key events. Use those
+codes directly instead of translating between internal key code
+representations.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-
 ---
-Changes in v2:
-- Fixed an accidental overwrite of the key value in patch
-  "ui/input: Remove QAPI wrappers from QemuInputEvent".
-- Added patch "ui/input: Prohibit sending KEY_RESERVED".
-- Removed remaining unintended QKeyCode occurrences.
-- Link to v1: https://lore.kernel.org/qemu-devel/20260509-input-v1-0-66f18d2edde6@rsg.ci.i.u-tokyo.ac.jp
+ hw/m68k/next-kbd.c | 118 ++++++++++++++++++++++++++---------------------------
+ 1 file changed, 59 insertions(+), 59 deletions(-)
 
-To: qemu-devel@nongnu.org
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Jan Kiszka <jan.kiszka@web.de>
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Cc: Stefano Stabellini <sstabellini@kernel.org>
-Cc: Anthony PERARD <anthony@xenproject.org>
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Cc: Thomas Huth <th.huth+qemu@posteo.eu>
-Cc: Alex Bennée <alex.bennee@linaro.org>
-Cc: qemu-arm@nongnu.org
-Cc: xen-devel@lists.xenproject.org
-Cc: qemu-ppc@nongnu.org
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+diff --git a/hw/m68k/next-kbd.c b/hw/m68k/next-kbd.c
+index 7efbd806b7c8..7be5ab2fb798 100644
+--- a/hw/m68k/next-kbd.c
++++ b/hw/m68k/next-kbd.c
+@@ -31,6 +31,7 @@
+ #include "qemu/log.h"
+ #include "hw/core/sysbus.h"
+ #include "hw/m68k/next-cube.h"
++#include "standard-headers/linux/input-event-codes.h"
+ #include "ui/console.h"
+ #include "migration/vmstate.h"
+ #include "qom/object.h"
+@@ -165,59 +166,59 @@ static const MemoryRegionOps kbd_ops = {
+     .endianness = DEVICE_BIG_ENDIAN,
+ };
+ 
+-static const int qcode_to_nextkbd_keycode[] = {
+-    [Q_KEY_CODE_ESC]           = 0x49,
+-    [Q_KEY_CODE_1]             = 0x4a,
+-    [Q_KEY_CODE_2]             = 0x4b,
+-    [Q_KEY_CODE_3]             = 0x4c,
+-    [Q_KEY_CODE_4]             = 0x4d,
+-    [Q_KEY_CODE_5]             = 0x50,
+-    [Q_KEY_CODE_6]             = 0x4f,
+-    [Q_KEY_CODE_7]             = 0x4e,
+-    [Q_KEY_CODE_8]             = 0x1e,
+-    [Q_KEY_CODE_9]             = 0x1f,
+-    [Q_KEY_CODE_0]             = 0x20,
+-    [Q_KEY_CODE_MINUS]         = 0x1d,
+-    [Q_KEY_CODE_EQUAL]         = 0x1c,
+-    [Q_KEY_CODE_BACKSPACE]     = 0x1b,
+-
+-    [Q_KEY_CODE_Q]             = 0x42,
+-    [Q_KEY_CODE_W]             = 0x43,
+-    [Q_KEY_CODE_E]             = 0x44,
+-    [Q_KEY_CODE_R]             = 0x45,
+-    [Q_KEY_CODE_T]             = 0x48,
+-    [Q_KEY_CODE_Y]             = 0x47,
+-    [Q_KEY_CODE_U]             = 0x46,
+-    [Q_KEY_CODE_I]             = 0x06,
+-    [Q_KEY_CODE_O]             = 0x07,
+-    [Q_KEY_CODE_P]             = 0x08,
+-    [Q_KEY_CODE_RET]           = 0x2a,
+-    [Q_KEY_CODE_A]             = 0x39,
+-    [Q_KEY_CODE_S]             = 0x3a,
+-
+-    [Q_KEY_CODE_D]             = 0x3b,
+-    [Q_KEY_CODE_F]             = 0x3c,
+-    [Q_KEY_CODE_G]             = 0x3d,
+-    [Q_KEY_CODE_H]             = 0x40,
+-    [Q_KEY_CODE_J]             = 0x3f,
+-    [Q_KEY_CODE_K]             = 0x3e,
+-    [Q_KEY_CODE_L]             = 0x2d,
+-    [Q_KEY_CODE_SEMICOLON]     = 0x2c,
+-    [Q_KEY_CODE_APOSTROPHE]    = 0x2b,
+-    [Q_KEY_CODE_GRAVE_ACCENT]  = 0x26,
+-    [Q_KEY_CODE_Z]             = 0x31,
+-    [Q_KEY_CODE_X]             = 0x32,
+-    [Q_KEY_CODE_C]             = 0x33,
+-    [Q_KEY_CODE_V]             = 0x34,
+-
+-    [Q_KEY_CODE_B]             = 0x35,
+-    [Q_KEY_CODE_N]             = 0x37,
+-    [Q_KEY_CODE_M]             = 0x36,
+-    [Q_KEY_CODE_COMMA]         = 0x2e,
+-    [Q_KEY_CODE_DOT]           = 0x2f,
+-    [Q_KEY_CODE_SLASH]         = 0x30,
+-
+-    [Q_KEY_CODE_SPC]           = 0x38,
++static const int linux_to_nextkbd_keycode[] = {
++    [KEY_ESC]        = 0x49,
++    [KEY_1]          = 0x4a,
++    [KEY_2]          = 0x4b,
++    [KEY_3]          = 0x4c,
++    [KEY_4]          = 0x4d,
++    [KEY_5]          = 0x50,
++    [KEY_6]          = 0x4f,
++    [KEY_7]          = 0x4e,
++    [KEY_8]          = 0x1e,
++    [KEY_9]          = 0x1f,
++    [KEY_0]          = 0x20,
++    [KEY_MINUS]      = 0x1d,
++    [KEY_EQUAL]      = 0x1c,
++    [KEY_BACKSPACE]  = 0x1b,
++
++    [KEY_Q]          = 0x42,
++    [KEY_W]          = 0x43,
++    [KEY_E]          = 0x44,
++    [KEY_R]          = 0x45,
++    [KEY_T]          = 0x48,
++    [KEY_Y]          = 0x47,
++    [KEY_U]          = 0x46,
++    [KEY_I]          = 0x06,
++    [KEY_O]          = 0x07,
++    [KEY_P]          = 0x08,
++    [KEY_ENTER]      = 0x2a,
++    [KEY_A]          = 0x39,
++    [KEY_S]          = 0x3a,
++
++    [KEY_D]          = 0x3b,
++    [KEY_F]          = 0x3c,
++    [KEY_G]          = 0x3d,
++    [KEY_H]          = 0x40,
++    [KEY_J]          = 0x3f,
++    [KEY_K]          = 0x3e,
++    [KEY_L]          = 0x2d,
++    [KEY_SEMICOLON]  = 0x2c,
++    [KEY_APOSTROPHE] = 0x2b,
++    [KEY_GRAVE]      = 0x26,
++    [KEY_Z]          = 0x31,
++    [KEY_X]          = 0x32,
++    [KEY_C]          = 0x33,
++    [KEY_V]          = 0x34,
++
++    [KEY_B]          = 0x35,
++    [KEY_N]          = 0x37,
++    [KEY_M]          = 0x36,
++    [KEY_COMMA]      = 0x2e,
++    [KEY_DOT]        = 0x2f,
++    [KEY_SLASH]      = 0x30,
++
++    [KEY_SPACE]      = 0x38,
+ };
+ 
+ static void nextkbd_put_keycode(NextKBDState *s, int keycode)
+@@ -246,15 +247,14 @@ static void nextkbd_event(DeviceState *dev, QemuConsole *src,
+                           QemuInputEvent *evt)
+ {
+     NextKBDState *s = NEXTKBD(dev);
+-    int qcode, keycode;
++    int keycode;
+ 
+-    qcode = qemu_input_linux_to_qcode(evt->key.key);
+-    if (qcode >= ARRAY_SIZE(qcode_to_nextkbd_keycode)) {
++    if (evt->key.key >= ARRAY_SIZE(linux_to_nextkbd_keycode)) {
+         return;
+     }
+ 
+     /* Shift key currently has no keycode, so handle separately */
+-    if (qcode == Q_KEY_CODE_SHIFT) {
++    if (evt->key.key == KEY_LEFTSHIFT) {
+         if (evt->key.down) {
+             s->shift |= KD_LSHIFT;
+         } else {
+@@ -262,7 +262,7 @@ static void nextkbd_event(DeviceState *dev, QemuConsole *src,
+         }
+     }
+ 
+-    if (qcode == Q_KEY_CODE_SHIFT_R) {
++    if (evt->key.key == KEY_RIGHTSHIFT) {
+         if (evt->key.down) {
+             s->shift |= KD_RSHIFT;
+         } else {
+@@ -270,7 +270,7 @@ static void nextkbd_event(DeviceState *dev, QemuConsole *src,
+         }
+     }
+ 
+-    keycode = qcode_to_nextkbd_keycode[qcode];
++    keycode = linux_to_nextkbd_keycode[evt->key.key];
+     if (!keycode) {
+         return;
+     }
 
----
-Akihiko Odaki (29):
-      ui/input: Introduce QemuInputEvent typedef
-      ui/input: Remove QAPI wrappers from QemuInputEvent
-      ui/input: Store QKeyCode directly in QemuInputKeyEvent
-      ui/input: Use Linux key codes for internal key events
-      ui/input: Prohibit sending KEY_RESERVED
-      ui/console: Add qemu_text_console_put_linux()
-      ui/kbd-state: Use Linux key codes
-      hw/arm/musicpal: Use Linux key codes
-      hw/char/escc: Use Linux key codes
-      hw/display/xenfb: Use Linux key codes
-      hw/input/adb-kbd: Use Linux key codes
-      hw/input/hid: Use Linux key codes
-      hw/input/ps2: Use Linux key codes
-      hw/input/virtio-input: Use Linux key codes
-      hw/m68k/next-kbd: Use Linux key codes
-      replay: Use Linux key codes
-      ui/cocoa: Use Linux key codes
-      ui/dbus: Use Linux key codes
-      ui/gtk: Use Linux key codes
-      ui/input-barrier: Use Linux key codes
-      ui/input-legacy: Use Linux key codes
-      ui/input-linux: Use Linux key codes
-      ui/keymaps: Use Linux key codes
-      ui/sdl2: Use Linux key codes
-      ui/spice: Use Linux key codes
-      ui/vnc: Use Linux key codes
-      qemu-keymap: Use Linux key codes
-      ui/console: Remove qemu_text_console_put_qcode()
-      ui/input: Remove unused QKeyCode helpers and keymaps
-
- include/qemu/typedefs.h      |   1 +
- include/system/replay.h      |   2 +-
- include/ui/console.h         |   3 +-
- include/ui/input.h           |  92 ++++++++------
- include/ui/kbd-state.h       |   8 +-
- replay/replay-internal.h     |   6 +-
- ui/x_keymap.h                |   3 +-
- chardev/msmouse.c            |  12 +-
- chardev/wctablet.c           |  10 +-
- hw/arm/musicpal.c            |  31 +++--
- hw/char/escc.c               |  45 +++----
- hw/display/xenfb.c           |  51 +++-----
- hw/input/adb-kbd.c           | 246 ++++++++++++++++++-------------------
- hw/input/adb-mouse.c         |  22 ++--
- hw/input/hid.c               |  41 +++----
- hw/input/ps2.c               | 118 +++++++++---------
- hw/input/stellaris_gamepad.c |  11 +-
- hw/input/virtio-input-hid.c  |  89 +++++++-------
- hw/m68k/next-kbd.c           | 128 +++++++++----------
- qemu-keymap.c                |  41 +++----
- replay/replay-events.c       |   6 +-
- replay/replay-input.c        | 117 ++++++------------
- replay/replay.c              |   2 +-
- replay/stubs-system.c        |   2 +-
- ui/console.c                 |  62 ++++++----
- ui/dbus-console.c            |   8 +-
- ui/gtk.c                     |  49 ++++----
- ui/input-barrier.c           |  26 ++--
- ui/input-keymap.c            |  74 +++++------
- ui/input-legacy.c            |  47 +++----
- ui/input-linux.c             |   3 +-
- ui/input.c                   | 214 ++++++++++++++------------------
- ui/kbd-state.c               |  55 +++++----
- ui/keymaps.c                 |   4 +-
- ui/sdl2-input.c              |  17 +--
- ui/spice-input.c             |   3 +-
- ui/vdagent.c                 |  20 ++-
- ui/vnc.c                     |  25 ++--
- ui/x_keymap.c                |  24 ++--
- hw/input/trace-events        |   2 +-
- ui/cocoa.m                   | 287 ++++++++++++++++++++++---------------------
- ui/meson.build               |  29 +++--
- ui/trace-events              |   3 +-
- 43 files changed, 962 insertions(+), 1077 deletions(-)
----
-base-commit: 5e61afe211e82a9af15a8794a0bd29bb574e953b
-change-id: 20260428-input-9b94f389ea55
-
-Best regards,
---  
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+-- 
+2.54.0
 
 
