@@ -4,109 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B70ACD343F
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 May 2026 23:59:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEA02CD343F
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 01:03:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wMx0G-0004kY-Ag; Tue, 12 May 2026 19:59:08 -0400
+	id 1wMy07-0007cR-P3; Tue, 12 May 2026 21:03:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>)
- id 1wMx0E-0004kJ-Ct; Tue, 12 May 2026 19:59:06 -0400
-Received: from fhigh-a8-smtp.messagingengine.com ([103.168.172.159])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>)
- id 1wMx0C-0005N1-Gp; Tue, 12 May 2026 19:59:06 -0400
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 6D5241400228;
- Tue, 12 May 2026 19:59:01 -0400 (EDT)
-Received: from phl-imap-18 ([10.202.2.89])
- by phl-compute-02.internal (MEProxy); Tue, 12 May 2026 19:59:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm2; t=1778630341;
- x=1778716741; bh=dnYLEEi++0I2t0mw8re1OWQHBOYwuuFAt8U1tMu0gGI=; b=
- U1vLvUV4p3/UhAZb0JvrA6Wd7dNGRKgCQMubuKxDpVc/4VvHMIZgfQRBxkmQ4Taq
- 9uQNWfgBZhXjdXwFhN/Em2hBZ8X92kQSo9dppfe9dgQtUs1cHc8m3JqoTvkCJNw8
- txhMN2T6++CVJdwWQQttd6nebeqe4RAp3IQUP+Hszpy40rz1nfgXD5vjDSrEn2Wc
- lfPeL7N/76WEZFcBjvhmEpb6Qra/saDZ21KmklQ+yP4XIamJvqbEW6TKah0tTpgf
- XSvcOaY1C6z07TB9cxofJvpIkNYaPdrATwvK1jTfCtS1tbXd4MCYOoudm7csOQz0
- ulX1Dzrso7dIke/GnZMeAQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1778630341; x=
- 1778716741; bh=dnYLEEi++0I2t0mw8re1OWQHBOYwuuFAt8U1tMu0gGI=; b=p
- tVJ0WVPPZh4IJM8NPvErupKJ+c4Yutq0Cj/05OW8RIb7jFghQaCZhQp6zmLYQauK
- ejgCgwAexni8h6KJolXJTN9q+gWW5g/7AG2SGqVW77BUluypLwD1hyzU/5lhR5Wz
- nvtAlHbO/hYxDfLJH3KJGyfYSwd3CFvWNqivwR8vIMhJfkYQo/iPldvevcbjwI1A
- fHFX9D00sy6k4CjZcAI98WM/qcnig+JiXxFpha2N+9ju26yliVrGPH8acIq4DsP/
- wOivQzfqrWNzySnOQqjKYfq6mmSbRF0kaUZkFRALU1WS3Ng+hOihwMJm1c3s6vWe
- GEnk1YGGZax2j10IOOs+A==
-X-ME-Sender: <xms:xL4DanzEdfKbf-vV_hVWYyavnl8xlGIyyaWW3Ej_Cu9EpKNRDug1kw>
- <xme:xL4DaqHkipCTtFFlH3m7GQvOypC0l6i7_-m1azp1smUWDl-ZjqGUHA1OvMon1MGNL
- IIjxYNw32zc_WHZk2_omqhNqA8ZwO4k42FJZSCNiG9JHDhV-xiCdVc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdduvdefudejucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
- gurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedftehlvgig
- ucghihhllhhirghmshhonhdfuceorghlvgigsehshhgriigsohhtrdhorhhgqeenucggtf
- frrghtthgvrhhnpefgfeeflefggfffveffteetiedvtedtgfdvieevfeejfeefffevteej
- tedufffgveenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
- hmpegrlhgvgiesshhhrgiisghothdrohhrghdpnhgspghrtghpthhtohepuddvpdhmohgu
- vgepshhmthhpohhuthdprhgtphhtthhopeguvghvvghlsegvughkvddrghhrohhuphhsrd
- hiohdprhgtphhtthhopehmrghrtggvlhdrrghpfhgvlhgsrghumhesghhmrghilhdrtgho
- mhdprhgtphhtthhopegrrhgusgeskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvth
- gvrhdrmhgrhiguvghllheslhhinhgrrhhordhorhhgpdhrtghpthhtohepqhgvmhhuqdgr
- rhhmsehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonh
- hgnhhurdhorhhgpdhrtghpthhtoheprghlvgigrdifihhllhhirghmshhonhesnhhvihgu
- ihgrrdgtohhmpdhrtghpthhtohepjhhgghesnhhvihguihgrrdgtohhmpdhrtghpthhtoh
- epshhkohhlohhthhhumhhthhhosehnvhhiughirgdrtghomh
-X-ME-Proxy: <xmx:xL4DasVkhSO-P1r5tZm_MqpSxsbOC94_av62G6nxzohjw0qdp-L74w>
- <xmx:xL4DaiIjn-Y43XM_UBqavEwDEQR6_VZ2TRQRwrvli3XJnqzoDYrwIg>
- <xmx:xL4DavoXNVGCo_HBpmZcUruSu1KV_zTNGoya8z9FIZj4J3S4l1N_7Q>
- <xmx:xL4DahyjnFhmGCYWqhymsjYS7mbbE1qCnjgYv7JTM-u6x1oN1jo8lA>
- <xmx:xb4DagTxyDnYE-9ojlSj0S2rnYkX-_fJZCT-O_w9AW38nfTY6EZ6i0Iu>
-Feedback-ID: i03f14258:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
- id C174415C008C; Tue, 12 May 2026 19:59:00 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1wMy06-0007cI-6j
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 21:03:02 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1wMy02-0005Ep-Pm
+ for qemu-devel@nongnu.org; Tue, 12 May 2026 21:03:01 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8AxFem4zQNqeFUJAA--.22530S3;
+ Wed, 13 May 2026 09:02:49 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowJBx68GzzQNqErKAAA--.45714S3;
+ Wed, 13 May 2026 09:02:45 +0800 (CST)
+Subject: Re: [PATCH v2 2/4] linux-headers: Update to Linux v7.1-rc1
+To: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@redhat.com>, maobibo@loongson.cn
+Cc: qemu-devel@nongnu.org, lixianglai@loongson.cn, chenhuacai@loongson.cn,
+ Avihai Horon <avihaih@nvidia.com>
+References: <20260507092358.2479135-1-gaosong@loongson.cn>
+ <20260507092358.2479135-3-gaosong@loongson.cn>
+ <eb2f2af0-a510-4f0e-be00-9ed6bf7b4dca@redhat.com>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <3f989e89-9833-593c-7879-5f0575c358b5@loongson.cn>
+Date: Wed, 13 May 2026 09:04:46 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Date: Tue, 12 May 2026 17:57:19 -0600
-From: "Alex Williamson" <alex@shazbot.org>
-To: "Michael S. Tsirkin" <mst@redhat.com>,
- "Alex Williamson" <alex.williamson@nvidia.com>
-Cc: "Tushar Dave" <tdave@nvidia.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- "Ard Biesheuvel" <ardb@kernel.org>,
- "devel@edk2.groups.io" <devel@edk2.groups.io>, qemu-devel@nongnu.org,
- "Jason Gunthorpe" <jgg@nvidia.com>,
- "Shameer Kolothum" <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- "Peter Maydell" <peter.maydell@linaro.org>, marcel.apfelbaum@gmail.com
-Message-Id: <382877be-edad-4eca-a646-a75e1654747f@app.fastmail.com>
-In-Reply-To: <20260512191140-mutt-send-email-mst@kernel.org>
-References: <20260508183717.193630-1-tdave@nvidia.com>
- <22cf37c2-b2b1-40db-b8b7-393b6c36a921@app.fastmail.com>
- <db604efd-9c1f-44e0-9921-71e4d97a81b3@nvidia.com>
- <20260512170650.4551c9f6@nvidia.com>
- <20260512191140-mutt-send-email-mst@kernel.org>
-Subject: Re: [edk2-devel] [RFC PATCH 0/8] hw/arm/virt,
- hw/pci: PCI pre-enumeration and fixed BAR allocation
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=103.168.172.159; envelope-from=alex@shazbot.org;
- helo=fhigh-a8-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <eb2f2af0-a510-4f0e-be00-9ed6bf7b4dca@redhat.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowJBx68GzzQNqErKAAA--.45714S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxZr1UZFy8AF1DAF47AFy5Awc_yoWrAr1Upw
+ 1kJr15Gry5Gwn5Jr4UGF17try8XF45J3WjqryUZasrCrWYyr1jqr1Du34vgr1DJr48AF1U
+ Xr1xJr1DuFy7ArgCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWUJVW8JwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Jr0_Gr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUrNtxDUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.97,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,33 +83,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 12, 2026, at 5:12 PM, Michael S. Tsirkin wrote:
-> On Tue, May 12, 2026 at 05:06:50PM -0600, Alex Williamson wrote:
->> If we agree that homogeneous hierarchies (no mixing of EA and
->> programmable BARs) is a reasonable constraint, and possibly extend that
->> to homogeneous per host bridge to simplify the CRS mapping, we have the
->> following work items:
->> 
->>  * Extend Linux EA support to program bridge apertures for subordinate
->>    homogeneous EA hierarchies.
->> 
->>  * Develop options to virtualize programmable BARs as EA for vfio-pci
->>    devices, if not generically for the benefit of testing.
->> 
->>  * Implement a way to poke holes in the VM address space and plumb
->>    through to account for addresses used by EA devices.
->> 
->>  * Provide those same ranges to the guest via CRS (but not via DT to
->>    EDK2), or alternatively expose them through additional PXB host
->>    bridges.
->> 
->> Does that shape roughly seem accurate?  Are there additional gaps I've
->> missed?  Thanks,
+在 2026/5/13 上午5:30, Cédric Le Goater 写道:
+> Hello,
 >
-> just one question why not do it in firmware so windows
-> is thinkably also handled?
+>
+> On 5/7/26 11:23, Song Gao wrote:
+>> From: Avihai Horon<avihaih@nvidia.com>
+>>
+>> Update Linux headers to get VFIO_PRECOPY_INFO_REINIT feature of VFIO
+>> migration uAPI.
+>>
+>> The update was done by running `update-linux-headers.sh` on commit
+>> 254f49634ee1 ("Linux 7.1-rc1") in the Linux tree.
+>>
+>> Signed-off-by: Avihai Horon<avihaih@nvidia.com>
+>> Reviewed-by: Cédric Le Goater<clg@redhat.com>
+>> ---
+>>   include/standard-headers/drm/drm_fourcc.h     |  28 +-
+>>   include/standard-headers/linux/const.h        |  18 +
+>>   include/standard-headers/linux/ethtool.h      |  28 +-
+>>   .../linux/input-event-codes.h                 |  13 +
+>>   include/standard-headers/linux/pci_regs.h     |  71 ++-
+>>   include/standard-headers/linux/typelimits.h   |   8 +
+>>   include/standard-headers/linux/virtio_ring.h  |   3 +-
+>>   include/standard-headers/linux/virtio_rtc.h   | 237 ++++++++++
+>>   include/standard-headers/linux/vmclock-abi.h  |  20 +
+>>   linux-headers/asm-arm64/kvm.h                 |   1 +
+>>   linux-headers/asm-arm64/unistd_64.h           |   1 +
+>>   linux-headers/asm-generic/unistd.h            |   5 +-
+>>   linux-headers/asm-loongarch/kvm.h             |   5 +
+>>   linux-headers/asm-loongarch/kvm_para.h        |   1 +
+>>   linux-headers/asm-loongarch/unistd_64.h       |   2 +
+>>   linux-headers/asm-mips/unistd_n32.h           |   1 +
+>>   linux-headers/asm-mips/unistd_n64.h           |   1 +
+>>   linux-headers/asm-mips/unistd_o32.h           |   1 +
+>>   linux-headers/asm-powerpc/unistd_32.h         |   1 +
+>>   linux-headers/asm-powerpc/unistd_64.h         |   1 +
+>>   linux-headers/asm-riscv/kvm.h                 |  11 +-
+>>   linux-headers/asm-riscv/ptrace.h              |  37 ++
+>>   linux-headers/asm-riscv/unistd_32.h           |   1 +
+>>   linux-headers/asm-riscv/unistd_64.h           |   1 +
+>>   linux-headers/asm-s390/unistd_32.h            | 446 ------------------
+>>   linux-headers/asm-s390/unistd_64.h            |   1 +
+>>   linux-headers/asm-x86/kvm.h                   |  21 +-
+>>   linux-headers/asm-x86/unistd_32.h             |   1 +
+>>   linux-headers/asm-x86/unistd_64.h             |   1 +
+>>   linux-headers/asm-x86/unistd_x32.h            |   1 +
+>>   linux-headers/linux/const.h                   |  18 +
+>>   linux-headers/linux/iommufd.h                 |  48 ++
+>>   linux-headers/linux/kvm.h                     |  46 +-
+>>   linux-headers/linux/mshv.h                    |   4 +-
+>>   linux-headers/linux/psp-sev.h                 |   2 +-
+>>   linux-headers/linux/stddef.h                  |   4 +
+>>   linux-headers/linux/vduse.h                   |  85 +++-
+>>   linux-headers/linux/vfio.h                    |  30 +-
+>>   38 files changed, 711 insertions(+), 493 deletions(-)
+>>   create mode 100644 include/standard-headers/linux/typelimits.h
+>>   create mode 100644 include/standard-headers/linux/virtio_rtc.h
+>>   delete mode 100644 linux-headers/asm-s390/unistd_32.h
+>
+> The linux headers update needs to be regenerated with this fix :
+>
+> https://lore.kernel.org/qemu-devel/20260511111913.3327672-1-clg@redhat.com/
+>
+Got it , we will add this patch.
 
-I suppose someone could chime in if they have a similar requirement for Windows guests.  Otherwise, the incremental effort to extend Linux EA support seems smaller, though I also don't know what, if any support Windows has for EA to bother.  Regardless, improving Linux EA support might help elsewhere and doesn't preclude edk2 support in the future.  Thanks,
+Thanks.
+Song Gao
+> Thanks,
+>
+> C.
 
-Alex
 
