@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F36A2CD4F24
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 10:41:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D883BCD37B6
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 10:41:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN702-0003sW-1c; Wed, 13 May 2026 06:39:34 -0400
+	id 1wN70z-0004Xt-DC; Wed, 13 May 2026 06:40:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wN6zy-0003oF-Cu; Wed, 13 May 2026 06:39:30 -0400
+ id 1wN70W-00041V-2v; Wed, 13 May 2026 06:40:04 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wN6zv-0002M0-Ir; Wed, 13 May 2026 06:39:30 -0400
+ id 1wN70O-0002RG-6b; Wed, 13 May 2026 06:40:03 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64DAcPdc044648
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64DAcPdZ044648
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 13 May 2026 19:38:57 +0900 (JST)
+ Wed, 13 May 2026 19:38:56 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=jYzmLTbWax8JogN3WJf0BurekwSvWMhETlPn4yFttW0=; 
+DKIM-Signature: a=rsa-sha256; bh=ROUhaRxtDzPB8FJJRyCm0S9ppDBULPhLkvEBb93D+50=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1778668737; v=1;
- b=QkKtR7qX8AO9ItMseAHnIDDcoqAXaqeSr1rrrVXOLmd8T+w6uamHIfwn9jRWxhjC
- N1Kj2V25g+7JdpzSdccGxt2jmyEJHpLsQif0lWUOPN4ekZ/+rceEAzhAmzyOdLGE
- gAZBP2kOUbEI63+w4IqQ6PDyhlBywmg49uO3udq+7eqNbCdmdLbUbQ0qT7sdJ3Iz
- a/ZxeBNk/U3D2GOxrJETeJaxN3Hs/KMegUGiYwvdt9121pS8myczkdIFYcCsvovH
- VnVjGoWIU9mANfk5m2hnMaNENILa34lWp8lycrXR4ji4vWQrn5z9iyaWT5h1XviI
- VUKNRYJx7Aqk1vrNcDaxRw==
+ s=rs20250326; t=1778668736; v=1;
+ b=WgWTJZNHXy/UJQ1cp0Ud0o3j+q9u6En+dCrk98/Yy91QnoJTI3YjboxHZcmDJ5t5
+ fo0nOcdm57DSglwh5TYMrg7WpBSvaULWkHuR/IYqq2p5j59Uhk6JHPQzwf9HO2Cq
+ g6fYNT3O37gz+H00R7c/P7S6o+I9c3pcSpEGUQAZvz0SmiMOB8MLNJKUABGAbnN+
+ oWHBAZ1pXVAgQXTNexmgeZWGFl0KZwEJoQjNpKaTS2Lil6eKTI0rDb0cqqrhR/iw
+ 0WNLNV6E0+ftv/cOw8CtEBMsNr1qNLxXPFovBxuyY4Kw/meXblsjBRUY4Y4a9J9W
+ noIplkJ4IqEhY44ORDubZQ==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 13 May 2026 19:38:30 +0900
-Subject: [PATCH v2 14/29] hw/input/virtio-input: Use Linux key codes
+Date: Wed, 13 May 2026 19:38:27 +0900
+Subject: [PATCH v2 11/29] hw/input/adb-kbd: Use Linux key codes
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260513-input-v2-14-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260513-input-v2-11-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260513-input-v2-0-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260513-input-v2-0-b3cc0470308a@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -58,13 +58,13 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.16-dev-16047
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3015;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=11545;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=EmtPHZ4VrwnBl0E92Q8PvtguFqdBkezuol02LtNVvV0=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZLyMabJvE6JcwWry/d85eLXly/ZnGR7d/Ye53f+HzmT
- V8VXfq4o5SFQYyLQVZMkSWlaDe3RnTtp8KE+BaYOaxMIEMYuDgFYCL/OxgZJl/3+e3UnV/DuXX7
- 6d8iK3W+lF+w25Jm5Ob7QLmnyafjBcP/oo36U5MPbF7pd0zB+123xa5iUaOt9jy8eX7bT6n26ez
- jAwA=
+ bh=IuNc0nZq13Cfg85XfjaPn1/m1nF4glzSwdiuAeVhaoQ=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZLyPp+9l9KN3Seh699f+/hfrcSXv0Ny9NYfj8r1F6o9
+ SVy53vDjlIWBjEuBlkxRZaUot3cGtG1nwoT4ltg5rAygQxh4OIUgIn8m87wP7vb/HVkhMTM3uCO
+ 9nl+r8+auhWXOmuJPZu9fTLjm8aEaYwMfdsC0yq+qigln07n5y438+lOdNmYeTPfzdJq03uu7zN
+ 4AQ==
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -73,8 +73,8 @@ X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UPPERCASE_75_100=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,73 +96,280 @@ representations.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/input/virtio-input-hid.c | 40 +++++++++++++++++++++++-----------------
- 1 file changed, 23 insertions(+), 17 deletions(-)
+ hw/input/adb-kbd.c | 242 ++++++++++++++++++++++++++---------------------------
+ 1 file changed, 120 insertions(+), 122 deletions(-)
 
-diff --git a/hw/input/virtio-input-hid.c b/hw/input/virtio-input-hid.c
-index 1d2e922567ab..75fe45d89a2a 100644
---- a/hw/input/virtio-input-hid.c
-+++ b/hw/input/virtio-input-hid.c
-@@ -83,23 +83,13 @@ static void virtio_input_handle_event(DeviceState *dev, QemuConsole *src,
- {
-     VirtIOInput *vinput = VIRTIO_INPUT(dev);
-     virtio_input_event event;
--    int qcode;
+diff --git a/hw/input/adb-kbd.c b/hw/input/adb-kbd.c
+index 060481d0db6d..c4ef9ebb90c8 100644
+--- a/hw/input/adb-kbd.c
++++ b/hw/input/adb-kbd.c
+@@ -26,6 +26,7 @@
+ #include "hw/input/adb.h"
+ #include "migration/vmstate.h"
+ #include "qemu/module.h"
++#include "standard-headers/linux/input-event-codes.h"
+ #include "ui/input.h"
+ #include "hw/input/adb-keys.h"
+ #include "adb-internal.h"
+@@ -55,124 +56,122 @@ struct ADBKeyboardClass {
+ /* The adb keyboard doesn't have every key imaginable */
+ #define NO_KEY 0xff
  
-     switch (evt->type) {
-     case INPUT_EVENT_KIND_KEY:
--        qcode = qemu_input_linux_to_qcode(evt->key.key);
--        if (qcode < qemu_input_map_qcode_to_linux_len &&
--            qemu_input_map_qcode_to_linux[qcode]) {
--            event.type  = cpu_to_le16(EV_KEY);
--            event.code  = cpu_to_le16(qemu_input_map_qcode_to_linux[qcode]);
--            event.value = cpu_to_le32(evt->key.down ? 1 : 0);
--            virtio_input_send(vinput, &event);
--        } else {
--            if (evt->key.down) {
--                fprintf(stderr, "%s: unmapped key: %d [%s]\n", __func__,
--                        qcode, QKeyCode_str(qcode));
--            }
--        }
-+        event.type  = cpu_to_le16(EV_KEY);
-+        event.code  = cpu_to_le16(evt->key.key);
-+        event.value = cpu_to_le32(evt->key.down ? 1 : 0);
-+        virtio_input_send(vinput, &event);
-         break;
-     case INPUT_EVENT_KIND_BTN:
-         if ((evt->btn.button == INPUT_BUTTON_WHEEL_UP ||
-@@ -293,12 +283,28 @@ static void virtio_keyboard_init(Object *obj)
- {
-     VirtIOInputHID *vhid = VIRTIO_INPUT_HID(obj);
-     VirtIOInput *vinput = VIRTIO_INPUT(obj);
-+    virtio_input_config ext = {
-+        .select = VIRTIO_INPUT_CFG_EV_BITS,
-+        .subsel = EV_KEY,
-+        .size = DIV_ROUND_UP(KEY_REPLY, 8)
-+    };
-+    unsigned int i;
- 
-     vhid->handler = &virtio_keyboard_handler;
-     virtio_input_init_config(vinput, virtio_keyboard_config);
--    virtio_input_extend_config(vinput, qemu_input_map_qcode_to_linux,
--                               qemu_input_map_qcode_to_linux_len,
--                               VIRTIO_INPUT_CFG_EV_BITS, EV_KEY);
+-int qcode_to_adb_keycode[] = {
++int linux_to_adb_keycode[] = {
+      /* Make sure future additions are automatically set to NO_KEY */
+-    [0 ... 0xff]               = NO_KEY,
+-
+-    [Q_KEY_CODE_SHIFT]         = ADB_KEY_LEFT_SHIFT,
+-    [Q_KEY_CODE_SHIFT_R]       = ADB_KEY_RIGHT_SHIFT,
+-    [Q_KEY_CODE_ALT]           = ADB_KEY_LEFT_OPTION,
+-    [Q_KEY_CODE_ALT_R]         = ADB_KEY_RIGHT_OPTION,
+-    [Q_KEY_CODE_CTRL]          = ADB_KEY_LEFT_CONTROL,
+-    [Q_KEY_CODE_CTRL_R]        = ADB_KEY_RIGHT_CONTROL,
+-    [Q_KEY_CODE_META_L]        = ADB_KEY_COMMAND,
+-    [Q_KEY_CODE_META_R]        = ADB_KEY_COMMAND,
+-    [Q_KEY_CODE_SPC]           = ADB_KEY_SPACEBAR,
+-
+-    [Q_KEY_CODE_ESC]           = ADB_KEY_ESC,
+-    [Q_KEY_CODE_1]             = ADB_KEY_1,
+-    [Q_KEY_CODE_2]             = ADB_KEY_2,
+-    [Q_KEY_CODE_3]             = ADB_KEY_3,
+-    [Q_KEY_CODE_4]             = ADB_KEY_4,
+-    [Q_KEY_CODE_5]             = ADB_KEY_5,
+-    [Q_KEY_CODE_6]             = ADB_KEY_6,
+-    [Q_KEY_CODE_7]             = ADB_KEY_7,
+-    [Q_KEY_CODE_8]             = ADB_KEY_8,
+-    [Q_KEY_CODE_9]             = ADB_KEY_9,
+-    [Q_KEY_CODE_0]             = ADB_KEY_0,
+-    [Q_KEY_CODE_MINUS]         = ADB_KEY_MINUS,
+-    [Q_KEY_CODE_EQUAL]         = ADB_KEY_EQUAL,
+-    [Q_KEY_CODE_BACKSPACE]     = ADB_KEY_DELETE,
+-    [Q_KEY_CODE_TAB]           = ADB_KEY_TAB,
+-    [Q_KEY_CODE_Q]             = ADB_KEY_Q,
+-    [Q_KEY_CODE_W]             = ADB_KEY_W,
+-    [Q_KEY_CODE_E]             = ADB_KEY_E,
+-    [Q_KEY_CODE_R]             = ADB_KEY_R,
+-    [Q_KEY_CODE_T]             = ADB_KEY_T,
+-    [Q_KEY_CODE_Y]             = ADB_KEY_Y,
+-    [Q_KEY_CODE_U]             = ADB_KEY_U,
+-    [Q_KEY_CODE_I]             = ADB_KEY_I,
+-    [Q_KEY_CODE_O]             = ADB_KEY_O,
+-    [Q_KEY_CODE_P]             = ADB_KEY_P,
+-    [Q_KEY_CODE_BRACKET_LEFT]  = ADB_KEY_LEFT_BRACKET,
+-    [Q_KEY_CODE_BRACKET_RIGHT] = ADB_KEY_RIGHT_BRACKET,
+-    [Q_KEY_CODE_RET]           = ADB_KEY_RETURN,
+-    [Q_KEY_CODE_A]             = ADB_KEY_A,
+-    [Q_KEY_CODE_S]             = ADB_KEY_S,
+-    [Q_KEY_CODE_D]             = ADB_KEY_D,
+-    [Q_KEY_CODE_F]             = ADB_KEY_F,
+-    [Q_KEY_CODE_G]             = ADB_KEY_G,
+-    [Q_KEY_CODE_H]             = ADB_KEY_H,
+-    [Q_KEY_CODE_J]             = ADB_KEY_J,
+-    [Q_KEY_CODE_K]             = ADB_KEY_K,
+-    [Q_KEY_CODE_L]             = ADB_KEY_L,
+-    [Q_KEY_CODE_SEMICOLON]     = ADB_KEY_SEMICOLON,
+-    [Q_KEY_CODE_APOSTROPHE]    = ADB_KEY_APOSTROPHE,
+-    [Q_KEY_CODE_GRAVE_ACCENT]  = ADB_KEY_GRAVE_ACCENT,
+-    [Q_KEY_CODE_BACKSLASH]     = ADB_KEY_BACKSLASH,
+-    [Q_KEY_CODE_Z]             = ADB_KEY_Z,
+-    [Q_KEY_CODE_X]             = ADB_KEY_X,
+-    [Q_KEY_CODE_C]             = ADB_KEY_C,
+-    [Q_KEY_CODE_V]             = ADB_KEY_V,
+-    [Q_KEY_CODE_B]             = ADB_KEY_B,
+-    [Q_KEY_CODE_N]             = ADB_KEY_N,
+-    [Q_KEY_CODE_M]             = ADB_KEY_M,
+-    [Q_KEY_CODE_COMMA]         = ADB_KEY_COMMA,
+-    [Q_KEY_CODE_DOT]           = ADB_KEY_PERIOD,
+-    [Q_KEY_CODE_SLASH]         = ADB_KEY_FORWARD_SLASH,
+-    [Q_KEY_CODE_ASTERISK]      = ADB_KEY_KP_MULTIPLY,
+-    [Q_KEY_CODE_CAPS_LOCK]     = ADB_KEY_CAPS_LOCK,
+-
+-    [Q_KEY_CODE_F1]            = ADB_KEY_F1,
+-    [Q_KEY_CODE_F2]            = ADB_KEY_F2,
+-    [Q_KEY_CODE_F3]            = ADB_KEY_F3,
+-    [Q_KEY_CODE_F4]            = ADB_KEY_F4,
+-    [Q_KEY_CODE_F5]            = ADB_KEY_F5,
+-    [Q_KEY_CODE_F6]            = ADB_KEY_F6,
+-    [Q_KEY_CODE_F7]            = ADB_KEY_F7,
+-    [Q_KEY_CODE_F8]            = ADB_KEY_F8,
+-    [Q_KEY_CODE_F9]            = ADB_KEY_F9,
+-    [Q_KEY_CODE_F10]           = ADB_KEY_F10,
+-    [Q_KEY_CODE_F11]           = ADB_KEY_F11,
+-    [Q_KEY_CODE_F12]           = ADB_KEY_F12,
+-    [Q_KEY_CODE_PRINT]         = ADB_KEY_F13,
+-    [Q_KEY_CODE_SYSRQ]         = ADB_KEY_F13,
+-    [Q_KEY_CODE_SCROLL_LOCK]   = ADB_KEY_F14,
+-    [Q_KEY_CODE_PAUSE]         = ADB_KEY_F15,
+-
+-    [Q_KEY_CODE_NUM_LOCK]      = ADB_KEY_KP_CLEAR,
+-    [Q_KEY_CODE_KP_EQUALS]     = ADB_KEY_KP_EQUAL,
+-    [Q_KEY_CODE_KP_DIVIDE]     = ADB_KEY_KP_DIVIDE,
+-    [Q_KEY_CODE_KP_MULTIPLY]   = ADB_KEY_KP_MULTIPLY,
+-    [Q_KEY_CODE_KP_SUBTRACT]   = ADB_KEY_KP_SUBTRACT,
+-    [Q_KEY_CODE_KP_ADD]        = ADB_KEY_KP_PLUS,
+-    [Q_KEY_CODE_KP_ENTER]      = ADB_KEY_KP_ENTER,
+-    [Q_KEY_CODE_KP_DECIMAL]    = ADB_KEY_KP_PERIOD,
+-    [Q_KEY_CODE_KP_0]          = ADB_KEY_KP_0,
+-    [Q_KEY_CODE_KP_1]          = ADB_KEY_KP_1,
+-    [Q_KEY_CODE_KP_2]          = ADB_KEY_KP_2,
+-    [Q_KEY_CODE_KP_3]          = ADB_KEY_KP_3,
+-    [Q_KEY_CODE_KP_4]          = ADB_KEY_KP_4,
+-    [Q_KEY_CODE_KP_5]          = ADB_KEY_KP_5,
+-    [Q_KEY_CODE_KP_6]          = ADB_KEY_KP_6,
+-    [Q_KEY_CODE_KP_7]          = ADB_KEY_KP_7,
+-    [Q_KEY_CODE_KP_8]          = ADB_KEY_KP_8,
+-    [Q_KEY_CODE_KP_9]          = ADB_KEY_KP_9,
+-
+-    [Q_KEY_CODE_UP]            = ADB_KEY_UP,
+-    [Q_KEY_CODE_DOWN]          = ADB_KEY_DOWN,
+-    [Q_KEY_CODE_LEFT]          = ADB_KEY_LEFT,
+-    [Q_KEY_CODE_RIGHT]         = ADB_KEY_RIGHT,
+-
+-    [Q_KEY_CODE_HELP]          = ADB_KEY_HELP,
+-    [Q_KEY_CODE_INSERT]        = ADB_KEY_HELP,
+-    [Q_KEY_CODE_DELETE]        = ADB_KEY_FORWARD_DELETE,
+-    [Q_KEY_CODE_HOME]          = ADB_KEY_HOME,
+-    [Q_KEY_CODE_END]           = ADB_KEY_END,
+-    [Q_KEY_CODE_PGUP]          = ADB_KEY_PAGE_UP,
+-    [Q_KEY_CODE_PGDN]          = ADB_KEY_PAGE_DOWN,
+-
+-    [Q_KEY_CODE_POWER]         = ADB_KEY_POWER
++    [0 ... KEY_MAX]  = NO_KEY,
 +
-+    /*
-+     * Cover as many keys as possible since we cannot tell what keys the host
-+     * supports. This follows Linux xen-kbdfront's approach:
-+     * https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/diff/drivers/input/xen-kbdfront.c?id=4ee36dc08e5c4d16d078f59acd6d9d536f9718dd
-+     *
-+     * Stop before KEY_REPLY for migration compatibility.
-+     */
-+    for (i = KEY_ESC; i < KEY_REPLY; i++) {
-+        ext.u.bitmap[i / 8] |= (1 << (i % 8));
-+    }
++    [KEY_LEFTSHIFT]  = ADB_KEY_LEFT_SHIFT,
++    [KEY_RIGHTSHIFT] = ADB_KEY_RIGHT_SHIFT,
++    [KEY_LEFTALT]    = ADB_KEY_LEFT_OPTION,
++    [KEY_RIGHTALT]   = ADB_KEY_RIGHT_OPTION,
++    [KEY_LEFTCTRL]   = ADB_KEY_LEFT_CONTROL,
++    [KEY_RIGHTCTRL]  = ADB_KEY_RIGHT_CONTROL,
++    [KEY_LEFTMETA]   = ADB_KEY_COMMAND,
++    [KEY_RIGHTMETA]  = ADB_KEY_COMMAND,
++    [KEY_SPACE]      = ADB_KEY_SPACEBAR,
 +
-+    virtio_input_add_config(vinput, &ext);
- }
++    [KEY_ESC]        = ADB_KEY_ESC,
++    [KEY_1]          = ADB_KEY_1,
++    [KEY_2]          = ADB_KEY_2,
++    [KEY_3]          = ADB_KEY_3,
++    [KEY_4]          = ADB_KEY_4,
++    [KEY_5]          = ADB_KEY_5,
++    [KEY_6]          = ADB_KEY_6,
++    [KEY_7]          = ADB_KEY_7,
++    [KEY_8]          = ADB_KEY_8,
++    [KEY_9]          = ADB_KEY_9,
++    [KEY_0]          = ADB_KEY_0,
++    [KEY_MINUS]      = ADB_KEY_MINUS,
++    [KEY_EQUAL]      = ADB_KEY_EQUAL,
++    [KEY_BACKSPACE]  = ADB_KEY_DELETE,
++    [KEY_TAB]        = ADB_KEY_TAB,
++    [KEY_Q]          = ADB_KEY_Q,
++    [KEY_W]          = ADB_KEY_W,
++    [KEY_E]          = ADB_KEY_E,
++    [KEY_R]          = ADB_KEY_R,
++    [KEY_T]          = ADB_KEY_T,
++    [KEY_Y]          = ADB_KEY_Y,
++    [KEY_U]          = ADB_KEY_U,
++    [KEY_I]          = ADB_KEY_I,
++    [KEY_O]          = ADB_KEY_O,
++    [KEY_P]          = ADB_KEY_P,
++    [KEY_LEFTBRACE]  = ADB_KEY_LEFT_BRACKET,
++    [KEY_RIGHTBRACE] = ADB_KEY_RIGHT_BRACKET,
++    [KEY_ENTER]      = ADB_KEY_RETURN,
++    [KEY_A]          = ADB_KEY_A,
++    [KEY_S]          = ADB_KEY_S,
++    [KEY_D]          = ADB_KEY_D,
++    [KEY_F]          = ADB_KEY_F,
++    [KEY_G]          = ADB_KEY_G,
++    [KEY_H]          = ADB_KEY_H,
++    [KEY_J]          = ADB_KEY_J,
++    [KEY_K]          = ADB_KEY_K,
++    [KEY_L]          = ADB_KEY_L,
++    [KEY_SEMICOLON]  = ADB_KEY_SEMICOLON,
++    [KEY_APOSTROPHE] = ADB_KEY_APOSTROPHE,
++    [KEY_GRAVE]      = ADB_KEY_GRAVE_ACCENT,
++    [KEY_BACKSLASH]  = ADB_KEY_BACKSLASH,
++    [KEY_Z]          = ADB_KEY_Z,
++    [KEY_X]          = ADB_KEY_X,
++    [KEY_C]          = ADB_KEY_C,
++    [KEY_V]          = ADB_KEY_V,
++    [KEY_B]          = ADB_KEY_B,
++    [KEY_N]          = ADB_KEY_N,
++    [KEY_M]          = ADB_KEY_M,
++    [KEY_COMMA]      = ADB_KEY_COMMA,
++    [KEY_DOT]        = ADB_KEY_PERIOD,
++    [KEY_SLASH]      = ADB_KEY_FORWARD_SLASH,
++    [KEY_CAPSLOCK]   = ADB_KEY_CAPS_LOCK,
++
++    [KEY_F1]         = ADB_KEY_F1,
++    [KEY_F2]         = ADB_KEY_F2,
++    [KEY_F3]         = ADB_KEY_F3,
++    [KEY_F4]         = ADB_KEY_F4,
++    [KEY_F5]         = ADB_KEY_F5,
++    [KEY_F6]         = ADB_KEY_F6,
++    [KEY_F7]         = ADB_KEY_F7,
++    [KEY_F8]         = ADB_KEY_F8,
++    [KEY_F9]         = ADB_KEY_F9,
++    [KEY_F10]        = ADB_KEY_F10,
++    [KEY_F11]        = ADB_KEY_F11,
++    [KEY_F12]        = ADB_KEY_F12,
++    [KEY_SYSRQ]      = ADB_KEY_F13,
++    [KEY_SCROLLLOCK] = ADB_KEY_F14,
++    [KEY_PAUSE]      = ADB_KEY_F15,
++
++    [KEY_NUMLOCK]    = ADB_KEY_KP_CLEAR,
++    [KEY_KPEQUAL]    = ADB_KEY_KP_EQUAL,
++    [KEY_KPSLASH]    = ADB_KEY_KP_DIVIDE,
++    [KEY_KPASTERISK] = ADB_KEY_KP_MULTIPLY,
++    [KEY_KPMINUS]    = ADB_KEY_KP_SUBTRACT,
++    [KEY_KPPLUS]     = ADB_KEY_KP_PLUS,
++    [KEY_KPENTER]    = ADB_KEY_KP_ENTER,
++    [KEY_KPDOT]      = ADB_KEY_KP_PERIOD,
++    [KEY_KP0]        = ADB_KEY_KP_0,
++    [KEY_KP1]        = ADB_KEY_KP_1,
++    [KEY_KP2]        = ADB_KEY_KP_2,
++    [KEY_KP3]        = ADB_KEY_KP_3,
++    [KEY_KP4]        = ADB_KEY_KP_4,
++    [KEY_KP5]        = ADB_KEY_KP_5,
++    [KEY_KP6]        = ADB_KEY_KP_6,
++    [KEY_KP7]        = ADB_KEY_KP_7,
++    [KEY_KP8]        = ADB_KEY_KP_8,
++    [KEY_KP9]        = ADB_KEY_KP_9,
++
++    [KEY_UP]         = ADB_KEY_UP,
++    [KEY_DOWN]       = ADB_KEY_DOWN,
++    [KEY_LEFT]       = ADB_KEY_LEFT,
++    [KEY_RIGHT]      = ADB_KEY_RIGHT,
++
++    [KEY_HELP]       = ADB_KEY_HELP,
++    [KEY_INSERT]     = ADB_KEY_HELP,
++    [KEY_DELETE]     = ADB_KEY_FORWARD_DELETE,
++    [KEY_HOME]       = ADB_KEY_HOME,
++    [KEY_END]        = ADB_KEY_END,
++    [KEY_PAGEUP]     = ADB_KEY_PAGE_UP,
++    [KEY_PAGEDOWN]   = ADB_KEY_PAGE_DOWN,
++
++    [KEY_POWER]      = ADB_KEY_POWER
+ };
  
- static const TypeInfo virtio_keyboard_info = {
+ static void adb_kbd_put_keycode(void *opaque, int keycode)
+@@ -309,14 +308,13 @@ static void adb_keyboard_event(DeviceState *dev, QemuConsole *src,
+                                QemuInputEvent *evt)
+ {
+     KBDState *s = (KBDState *)dev;
+-    int qcode, keycode;
++    int keycode;
+ 
+-    qcode = qemu_input_linux_to_qcode(evt->key.key);
+-    if (qcode >= ARRAY_SIZE(qcode_to_adb_keycode)) {
++    if (evt->key.key >= ARRAY_SIZE(linux_to_adb_keycode)) {
+         return;
+     }
+-    /* FIXME: take handler into account when translating qcode */
+-    keycode = qcode_to_adb_keycode[qcode];
++    /* FIXME: take handler into account when translating evt->key.key */
++    keycode = linux_to_adb_keycode[evt->key.key];
+     if (keycode == NO_KEY) {  /* We don't want to send this to the guest */
+         trace_adb_device_kbd_no_key();
+         return;
 
 -- 
 2.54.0
