@@ -4,62 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84EC3CD37AC
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 17:52:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 406D9CD4F21
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 17:52:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNDkf-0005TS-6G; Wed, 13 May 2026 13:52:09 -0400
+	id 1wNDke-0005TI-L5; Wed, 13 May 2026 13:52:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wNDke-0005Sr-4z
- for qemu-devel@nongnu.org; Wed, 13 May 2026 13:52:08 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wNDkc-0005R9-Rt
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 13:52:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wNDkc-0002o3-GA
- for qemu-devel@nongnu.org; Wed, 13 May 2026 13:52:07 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wNDka-0002nI-7a
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 13:52:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778694725;
+ s=mimecast20190719; t=1778694723;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZQPdJCYMP04iC/+9IzqZArArbH+iZ855zkPwPvUgdjI=;
- b=M6aYS2AEt12i4JULMmQGDbe1qU2NJ3Cwq+xb6/kWdh2UphQDov6W8LNm40OIkdSOMdru4w
- 4zaOmxS1KFyIhIPikFK5/3xsscd0jbsXREs3WnQeTaurcR+C86C4h1Rf5TlfP1cTxa3Ti7
- Rcftyl4CCsctT1Rzbev6SG2b3eil8RI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=EWGhv3Mbp9iw1JpJ0c2fJAUutW9yB2qAjH96j/q3UaA=;
+ b=eLM294L8DRxp30TdM4Uk+7j443PmqUq685jDtlBMUkEJVMhXWZS1s9LLQ6OKAW0hW3CkTc
+ EYNsofSA++hUNGJ/KaLmA5GfcQjtXfReeB0PSj+LrBt1So/qUCNyO8NZljlnw02eq8CuiB
+ xCi3gxazpVEcSJ9ix1vINGf4cD99MC0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-627-bQ7BH5iAMt-t1jPMKpSOvg-1; Wed,
- 13 May 2026 13:52:04 -0400
-X-MC-Unique: bQ7BH5iAMt-t1jPMKpSOvg-1
-X-Mimecast-MFC-AGG-ID: bQ7BH5iAMt-t1jPMKpSOvg_1778694723
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-637-tnW11A6GMx-QQgWgDp0VUA-1; Wed,
+ 13 May 2026 13:52:01 -0400
+X-MC-Unique: tnW11A6GMx-QQgWgDp0VUA-1
+X-Mimecast-MFC-AGG-ID: tnW11A6GMx-QQgWgDp0VUA_1778694720
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5D45319560A2; Wed, 13 May 2026 17:52:03 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 94C231956067; Wed, 13 May 2026 17:52:00 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 007AB19560A2; Wed, 13 May 2026 17:52:02 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1EA2C180034E; Wed, 13 May 2026 17:52:00 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id BD99421E6A08; Wed, 13 May 2026 19:51:57 +0200 (CEST)
+ id B9A0121E6A07; Wed, 13 May 2026 19:51:57 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, Peter Xu <peterx@redhat.com>,
- "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: [PULL 5/6] MAINTAINERS: Update RDMA migration entry with M:
-Date: Wed, 13 May 2026 19:51:56 +0200
-Message-ID: <20260513175157.3765935-6-armbru@redhat.com>
+Cc: stefanha@redhat.com, Glenn Miles <milesg@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Caleb Schlossin <calebs@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PULL 4/6] MAINTAINERS: Add self as maintainer for XIVE
+Date: Wed, 13 May 2026 19:51:55 +0200
+Message-ID: <20260513175157.3765935-5-armbru@redhat.com>
 In-Reply-To: <20260513175157.3765935-1-armbru@redhat.com>
 References: <20260513175157.3765935-1-armbru@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -84,51 +86,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+From: Glenn Miles <milesg@linux.ibm.com>
 
-We wanted to remove RDMA migration once but that didn't go further.  In
-reality, with the help of Zhijian it's in Odd Fixes stage, even if we just
-merged one new parameter for it, for performance improvements.
+Adding self as maintainer for XIVE
 
-Markus pointed out we'd better have at least one M: for it to match
-anything that is not orphaned.
-
-Remove the X: for Migration entry for RDMA files, then it'll start to cover
-RDMA migration again. Keep the separate entry so Zhijian can keep getting
-copied, and copy the M:s over to say someone is collecting patches.
-Logically these M:s aren't needed after removing X:, but make it clearer.
-
-Link: https://lore.kernel.org/r/5326b854-fcea-4af6-a479-792888a94a4d@fujitsu.com
-Cc: Zhijian Li (Fujitsu) <lizhijian@fujitsu.com>
-Cc: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Message-ID: <20260511143026.1296485-1-peterx@redhat.com>
-Acked-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Acked-by: Li Zhijian <lizhijian@fujitsu.com>
+Signed-off-by: Glenn Miles (milesg@linux.ibm.com>
+Message-ID: <20260507154530.364296-1-milesg@linux.ibm.com>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Reviewed-by: Caleb Schlossin <calebs@linux.ibm.com>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- MAINTAINERS | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 6748c03928..0d9c7146da 100644
+index de1eb1869b..6748c03928 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -3769,11 +3769,11 @@ F: docs/devel/migration/
- F: qapi/migration.json
- F: tests/migration-stress/
- F: util/userfaultfd.c
--X: migration/rdma*
+@@ -2888,8 +2888,8 @@ F: tests/qtest/libqos/fw_cfg.c
+ F: tests/qtest/fw_cfg-test.c
  
- RDMA Migration
-+M: Peter Xu <peterx@redhat.com>
-+M: Fabiano Rosas <farosas@suse.de>
- R: Li Zhijian <lizhijian@fujitsu.com>
--R: Peter Xu <peterx@redhat.com>
+ XIVE
++M: Glenn Miles <milesg@linux.ibm.com>
+ R: Gautam Menghani <gautam@linux.ibm.com>
+-R: Glenn Miles <milesg@linux.ibm.com>
+ L: qemu-ppc@nongnu.org
  S: Odd Fixes
- F: migration/rdma*
- F: scripts/rdma-migration-helper.sh
+ F: hw/*/*xive*
 -- 
 2.54.0
 
