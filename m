@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7178CD4F39
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 10:59:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 603B1CD4F24
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 10:59:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN7Ik-000588-6G; Wed, 13 May 2026 06:58:54 -0400
+	id 1wN7J2-0006PP-7Q; Wed, 13 May 2026 06:59:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1wN7Fi-0003Ba-Id
+ id 1wN7Fd-0003B2-SH
  for qemu-devel@nongnu.org; Wed, 13 May 2026 06:55:47 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1wN7Fd-0001UD-Cc
- for qemu-devel@nongnu.org; Wed, 13 May 2026 06:55:46 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-48d102471a4so65831065e9.2
- for <qemu-devel@nongnu.org>; Wed, 13 May 2026 03:55:39 -0700 (PDT)
+ id 1wN7FX-0001QC-89
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 06:55:40 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-48e56c1bf5dso40004105e9.3
+ for <qemu-devel@nongnu.org>; Wed, 13 May 2026 03:55:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778669738; x=1779274538; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778669732; x=1779274532; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=o2t7PZDF9vUDOSmBWfSaV5aVfQQ9dcmhkK2nrRvQItQ=;
- b=BX57nFcXS+I7RUzA+MvABfbbBf0M+kpYyZtHlwTVbXp3gc3Om0/HeS2RttTxdMsmnj
- XCyOge1RmgL4bUsvBhbSKrZ1izPFl3EJ7m+nQ6VzSW9xmR1FF2pW1uzLh5Xb5ejhhkYV
- L2NeSta+L5+wIf0noSZHEkg4UjkUfziiFDB+a/gl7z8pKExmfsGWsGFMMLWvtchm1cIV
- 40qMTobQhyAAcKCM2N/ZzwQZ4w4IckWpAJ0YjfJPZCZQOpUD84cIYkN6BNsUo+/LS7FK
- myKFBmD+Vkkgm8RDdl4h3WW+PkGUvfLKMwahLwrNbEqnAFHDwgimz8FbDYC1eQexllJ1
- 7Isg==
+ bh=k6VI4nokCfZ+LKIGnO4eT2U19gP+31CsGFQKC59urGA=;
+ b=BPJEblvT00vyWHz5mhhlHbPWsskL0sM/jlFYPx/QIs9+mWe3VmjicMJpUlP7ny1eTI
+ WGPqR0cXcHzxSniovnnahHd5KnrIgeJDPauEDZNWjS3i1JKdZv5TsqPehGZR4TjkRP2K
+ 23wQEnwlmauWuk9LoPIbE8an81Q/LW7k3wSK/JtWC5vVLWUT/HzOBOZSIkkeWPW6fqKQ
+ 7uFGW/XgEpt5qJ93sw0bqOmisEN/kEDtA4k1aiIbpULoxDburA0nncq5Vu2QiaB1VNFm
+ JqM0YMvfc6PsfJY9a0qo7eLRaHKgzt7HMARP0DCRkqirnKAiMFr0ombaPvhUBIu7ho+v
+ NJug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778669738; x=1779274538;
+ d=1e100.net; s=20251104; t=1778669732; x=1779274532;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=o2t7PZDF9vUDOSmBWfSaV5aVfQQ9dcmhkK2nrRvQItQ=;
- b=XtwkEBRRj2z7wgCkD8jwlJIH6YKr5ukDxJi15cArXX8Nxbo4sTF4lwdw/2O6mepvbZ
- MTvTsj3MjqKInVvo1vcpj4/oCDV4MhTgMnA3QWeQni9msiK9UIYz5rgAR2/RnJi1J2YT
- yCzpAzgiq/n4GD5BRMQgLwl5JzaekepEhtsGVa4m/pOaRJFeZ27RTdQYe8FsNu3jKPkd
- 6M4Uirr8hhWa6ineWOo/C4DKqx/Ogd3b5x7scOSq6tWwdoCSUeQDsfgOjQKRC7BgPlYI
- rGn7B3ndA6giah2b+8NwtNROvxt5SLoE8Pev1HOT1Dx13ViE9+LHl8cfrKDigMnJl02U
- 0TwQ==
-X-Gm-Message-State: AOJu0Yy8YlYuAWjZliRd0cCX1f1wFG8o0wxskuqzo8orDlMgLO6EB7BR
- 3OM9EDzLdzeqp/H/VQJh23WXvz5YYe4/Wq6YbrWg8nLpT+rShYLoO2tDCXA4uX+c
-X-Gm-Gg: Acq92OF86Y4ZUyUviAF+qefGLjwHHL5FI6G7cW5T07xDMsKCEf4VT7vbfa5k1mFXApR
- C4/IA5pfVvyzF7oFC7cPtUq3GCna9GagXY6wIo/1EBIE54DIMgrpKr6xS/39YthWyQpHfgZKQ8J
- Am7taRzm+PsmLk5d97ZVAiGRKt/u0C66BQFacGMnno7X1iSMxpyJ4e/A+s6+f0VzAyFw+63qHnS
- BKHwlspZ2jHYPDZgCupvSLD4GQcRq6Vh/xd2X/FMSTqKaLrPKQRoQ9yVXDro8tsjKcuvN2In+BM
- z+KwK6+GFsMNesl5FkusBpdrNnN+wKLqWvd7VYxY4omnS6aA/obcr43VxRDpc1eOYQsjiYtMHrT
- 2VquNohYoYiO0MBzZb/KCG3UtnMranFSPD2fG1TDyV2I99ykaXSl3oVqa3gqtvyCpFHqs8mLmsE
- M9+iRLfMRN+WmweFyBgb6dA0K1dv7WBQaXrlASFNnO7pk8vWd5fnnszPs=
-X-Received: by 2002:a05:600c:c4ac:b0:488:936a:6220 with SMTP id
- 5b1f17b1804b1-48fc9a3a9c1mr39734435e9.21.1778669738403; 
- Wed, 13 May 2026 03:55:38 -0700 (PDT)
+ bh=k6VI4nokCfZ+LKIGnO4eT2U19gP+31CsGFQKC59urGA=;
+ b=kvzlltKONWA+HS/Ku++twVrDD2YLSmJUQ/1nTh3VK0KVMlyNuTznzH5L++U6oTOlu9
+ FiNnMQUZnBJ1eD+sBEaEF5jYtqq5K8V/dwQS/E2NlslQfQquZa/nEdNpfE4sPVZnhkrA
+ gErFvJrYv6aq8XOGnrc5W1HZtOcAx+d96EOtTbY3LzpMugFjioBsi+gwHo8PURbWCWuK
+ QtA44Qi9funvYvP9mjg5I2bTdBcz+zyRLy5zq7Ux5NHdcVHp23YVIAPl131HY4eGu7k4
+ zDA6Hc/X/Yj8IgUhj6MT2H/aiH3vgeVVQCSxokO7dOUDfv9LSii5uiNT05ReMSNj5KbH
+ c57g==
+X-Gm-Message-State: AOJu0Yz2lU3ER9x87u1abudty+5V4GVtJ8sL5HuKiLJlh+hYYwIG8Ixp
+ BkqRARQ0ZBXp1CJ2bPt7t2Or2ucDlanBvJq0twj+MB6ENug3mzEsq8D8uOBEbgQy
+X-Gm-Gg: Acq92OHPj3cN6apam9s849y9+3orfepqPEzDaTgmu9WO52+LGtNsHudkrtuoPUby1vw
+ 3kPOAJnipv0RqaF4RJIuC2IHKBKj34kL2kG/FW4NvB3N5rFoLzvlyQtJFROLGGHgdr41ko39AHH
+ 8c37HGNg3cYShcz5kMQyel/D3qxkUAlq6P35/iVL6CEh/md98Ip1fCAxNWJ7H+QlpFOCDu4U0aU
+ EAO7Nm0Y+W2y71VtvQV+WqUXNuNtLPXGx22l8FL8BfkleyVAtSiRVOfr/1wboNaSrFZAQcVjK/J
+ rtSfWcwW9BYJiQ9xbzWiC5yKypMLjcpD3sYBap7tdWgI3fHTP2cIqVfCqc7NAk+NEQQFL8NJyZu
+ 5h1NLNosvLS2LWwpRoYdo5eJ94C48xIodxhSolaNLr8zJSym6ssSSH4yIQmyjkTIuBytpsu0Uc0
+ qOu886oqwbhXw1l00Hlg3TuWtAdxTiz4MR6iNp56xQh5E3
+X-Received: by 2002:a05:600c:468e:b0:48a:6fd4:d3d3 with SMTP id
+ 5b1f17b1804b1-48fc9a3d8c5mr36985055e9.20.1778669732417; 
+ Wed, 13 May 2026 03:55:32 -0700 (PDT)
 Received: from PC-DA2D10.beckhoff.com ([195.226.174.196])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e8f410d9fsm56062295e9.6.2026.05.13.03.55.37
+ 5b1f17b1804b1-48e8f410d9fsm56062295e9.6.2026.05.13.03.55.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 May 2026 03:55:38 -0700 (PDT)
+ Wed, 13 May 2026 03:55:31 -0700 (PDT)
 From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
@@ -75,18 +75,18 @@ Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
  =?UTF-8?q?Yannick=20Vo=C3=9Fen?= <y.vossen@beckhoff.com>,
  Alistair Francis <alistair@alistair23.me>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- YannickV <Y.Vossen@beckhoff.com>
-Subject: [PATCH v6 14/15] hw/arm: Add new machine based on xilinx-zynq-a9 for
- Beckhoff CX7200
-Date: Wed, 13 May 2026 12:55:16 +0200
-Message-ID: <20260513105517.146706-15-corvin.koehne@gmail.com>
+ YannickV <Y.Vossen@beckhoff.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+Subject: [PATCH v6 09/15] hw/misc/zynq_slcr: Add logic for DCI configuration
+Date: Wed, 13 May 2026 12:55:11 +0200
+Message-ID: <20260513105517.146706-10-corvin.koehne@gmail.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260513105517.146706-1-corvin.koehne@gmail.com>
 References: <20260513105517.146706-1-corvin.koehne@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=corvin.koehne@gmail.com; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=corvin.koehne@gmail.com; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,161 +111,94 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: YannickV <Y.Vossen@beckhoff.com>
 
-Introduce a new machine type 'beckhoff-cx7200' that inherits from the
-xilinx-zynq-a9 machine. The CX7200 is an industrial PC based on the
-Xilinx Zynq-7000 SoC.
-The machine preserves all standard Zynq features (boot-mode selection,
-SPI, UART, Ethernet, etc.) while adding CX7200-specific hardware
-components.
+The registers for the digitally controlled impedance (DCI) clock are
+part of the system level control registers (SLCR). The DONE bit in
+the status register indicates a successfull DCI calibration. An
+description of the calibration process can be found here:
+https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/DDR-IOB-Impedance-Calibration
+
+The DCI control register and status register have been added. As soon
+as the ENABLE and RESET bit are set, the RESET bit has also been toggled
+to 0 before and the UPDATE_CONTROL is not set, the DONE bit in the status
+register is set. If these bits change the DONE bit is reset. Note that the
+option bits are not taken into consideration.
 
 Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 ---
- hw/arm/Kconfig           |   7 +++
- hw/arm/beckhoff_CX7200.c | 104 +++++++++++++++++++++++++++++++++++++++
- hw/arm/meson.build       |   1 +
- 3 files changed, 112 insertions(+)
- create mode 100644 hw/arm/beckhoff_CX7200.c
+ hw/misc/zynq_slcr.c | 31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 5b198402d5..ecb1729768 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -291,6 +291,13 @@ config ZYNQ
-     select XILINX_SPIPS
-     select ZYNQ_DEVCFG
+diff --git a/hw/misc/zynq_slcr.c b/hw/misc/zynq_slcr.c
+index faae98fa02..0ae5d607be 100644
+--- a/hw/misc/zynq_slcr.c
++++ b/hw/misc/zynq_slcr.c
+@@ -180,6 +180,12 @@ REG32(GPIOB_CFG_HSTL, 0xb14)
+ REG32(GPIOB_DRVR_BIAS_CTRL, 0xb18)
  
-+config BECKHOFF_CX7200
-+    bool
-+    default y
-+    depends on TCG && ARM
-+    select ZYNQ
-+    select BECKHOFF_CCAT
+ REG32(DDRIOB, 0xb40)
++REG32(DDRIOB_DCI_CTRL, 0xb70)
++    FIELD(DDRIOB_DCI_CTRL, RESET, 0, 1)
++    FIELD(DDRIOB_DCI_CTRL, ENABLE, 1, 1)
++    FIELD(DDRIOB_DCI_CTRL, UPDATE_CONTROL, 20, 1)
++REG32(DDRIOB_DCI_STATUS, 0xb74)
++    FIELD(DDRIOB_DCI_STATUS, DONE, 13, 1)
+ #define DDRIOB_LENGTH 14
+ 
+ #define ZYNQ_SLCR_MMIO_SIZE     0x1000
+@@ -193,6 +199,8 @@ struct ZynqSLCRState {
+ 
+     MemoryRegion iomem;
+ 
++    bool ddriob_dci_ctrl_reset_toggled;
 +
- config ARM_V7M
-     bool
-     # currently v7M must be included in a TCG build due to translate.c
-diff --git a/hw/arm/beckhoff_CX7200.c b/hw/arm/beckhoff_CX7200.c
-new file mode 100644
-index 0000000000..2edca63267
---- /dev/null
-+++ b/hw/arm/beckhoff_CX7200.c
-@@ -0,0 +1,104 @@
+     uint32_t regs[ZYNQ_SLCR_NUM_REGS];
+ 
+     Clock *ps_clk;
+@@ -331,6 +339,8 @@ static void zynq_slcr_reset_init(Object *obj, ResetType type)
+ 
+     DB_PRINT("RESET\n");
+ 
++    s->ddriob_dci_ctrl_reset_toggled = false;
 +
-+/*
-+ * Modified Xilinx Zynq Baseboard System emulation for Beckhoff CX7200.
-+ *
-+ * Copyright (c) 2024 Beckhoff Automation GmbH & Co. KG
-+ *
-+ * Based on /hw/arm/xilinx_zynq.c:
-+ * Copyright (c) 2010 Xilinx.
-+ * Copyright (c) 2012 Peter A.G. Crosthwaite (peter.croshtwaite@petalogix.com)
-+ * Copyright (c) 2012 Petalogix Pty Ltd.
-+ * Original code by Haibing Ma.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
+     s->regs[R_LOCKSTA] = 1;
+     /* 0x100 - 0x11C */
+     s->regs[R_ARM_PLL_CTRL]   = 0x0001A008;
+@@ -418,6 +428,8 @@ static void zynq_slcr_reset_init(Object *obj, ResetType type)
+     s->regs[R_DDRIOB + 4] = s->regs[R_DDRIOB + 5] = s->regs[R_DDRIOB + 6]
+                           = 0x00000e00;
+     s->regs[R_DDRIOB + 12] = 0x00000021;
 +
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "hw/core/boards.h"
-+#include "hw/block/block.h"
-+#include "hw/core/loader.h"
-+#include "qemu/error-report.h"
-+#include "hw/arm/xilinx_zynq.h"  /* For ZynqMachineState */
-+#include "hw/cpu/a9mpcore.h"
-+#include "qom/object.h"
++    s->regs[R_DDRIOB_DCI_CTRL] = 0x00000020;
+ }
+ 
+ static void zynq_slcr_reset_hold(Object *obj, ResetType type)
+@@ -554,6 +566,25 @@ static void zynq_slcr_write(void *opaque, hwaddr offset,
+                 (int)offset, (unsigned)val & 0xFFFF);
+         }
+         return;
 +
-+#define TYPE_CX7200_MACHINE MACHINE_TYPE_NAME("beckhoff-cx7200")
++    case R_DDRIOB_DCI_CTRL:
++        if (!FIELD_EX32(val, DDRIOB_DCI_CTRL, RESET) &&
++            FIELD_EX32(s->regs[R_DDRIOB_DCI_CTRL], DDRIOB_DCI_CTRL, RESET)) {
 +
-+#define CX7200_PERIPHCLK_DIVIDER 2
-+#define CX7200_PS7_CPU_CLK_FREQUENCY 720000000
++            s->ddriob_dci_ctrl_reset_toggled = true;
++            DB_PRINT("DDRIOB DCI CTRL RESET was toggled\n");
++        }
 +
-+static void ccat_init(uint32_t base, BlockBackend *eeprom_blk)
-+{
-+    DeviceState *dev;
-+    SysBusDevice *busdev;
++        if (FIELD_EX32(val, DDRIOB_DCI_CTRL, ENABLE) &&
++            FIELD_EX32(val, DDRIOB_DCI_CTRL, RESET) &&
++            !FIELD_EX32(val, DDRIOB_DCI_CTRL, UPDATE_CONTROL) &&
++            s->ddriob_dci_ctrl_reset_toggled) {
 +
-+    dev = qdev_new("beckhoff-ccat");
-+    if (eeprom_blk) {
-+        qdev_prop_set_drive_err(dev, "eeprom", eeprom_blk, &error_fatal);
-+    }
-+    busdev = SYS_BUS_DEVICE(dev);
-+    sysbus_realize_and_unref(busdev, &error_fatal);
-+    sysbus_mmio_map(busdev, 0, base);
-+}
-+
-+static void beckhoff_cx7200_init(MachineState *machine)
-+{
-+    DriveInfo *di;
-+    BlockBackend *blk;
-+    MachineClass *parent_mc;
-+    DeviceState *a9mpcore_dev;
-+    A9MPPrivState *a9mp_priv_state;
-+
-+    object_property_set_str(OBJECT(machine), "flash-type", "is25lp016d",
-+                            &error_fatal);
-+
-+    parent_mc = MACHINE_CLASS(object_class_get_parent(
-+                                  object_get_class(OBJECT(machine))));
-+    parent_mc->init(machine);
-+
-+    /* Find A9MPCore and set timer frequencies directly */
-+    a9mpcore_dev = DEVICE(object_resolve_path_type("", TYPE_A9MPCORE_PRIV,
-+                                                   NULL));
-+    if (a9mpcore_dev) {
-+        a9mp_priv_state = A9MPCORE_PRIV(a9mpcore_dev);
-+
-+        /* Direct struct access - devices are already realized */
-+        a9mp_priv_state->gtimer.freq_hz = CX7200_PS7_CPU_CLK_FREQUENCY;
-+        a9mp_priv_state->gtimer.periphclk_divider = CX7200_PERIPHCLK_DIVIDER;
-+        a9mp_priv_state->mptimer.freq_hz = CX7200_PS7_CPU_CLK_FREQUENCY;
-+        a9mp_priv_state->mptimer.periphclk_divider = CX7200_PERIPHCLK_DIVIDER;
-+        a9mp_priv_state->wdt.freq_hz = CX7200_PS7_CPU_CLK_FREQUENCY;
-+        a9mp_priv_state->wdt.periphclk_divider = CX7200_PERIPHCLK_DIVIDER;
-+    } else {
-+        error_setg(&error_fatal, "Could not find A9MPCore device "
-+                                 "for CX7200 timer configuration");
-+    }
-+
-+    di = drive_get(IF_NONE, 0, 0);
-+    blk = di ? blk_by_legacy_dinfo(di) : NULL;
-+    ccat_init(0x40000000, blk);
-+}
-+
-+static void beckhoff_cx7200_machine_class_init(ObjectClass *oc,
-+                                               const void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-+    mc->desc = "Beckhoff CX7200 Industrial PC (Zynq-based)";
-+    mc->init = beckhoff_cx7200_init;
-+}
-+
-+static const TypeInfo beckhoff_cx7200_machine_type = {
-+    .name = TYPE_CX7200_MACHINE,
-+    .parent = TYPE_ZYNQ_MACHINE,
-+    .class_init = beckhoff_cx7200_machine_class_init,
-+    .instance_size = sizeof(ZynqMachineState),
-+};
-+
-+static void beckhoff_cx7200_machine_register_types(void)
-+{
-+    type_register_static(&beckhoff_cx7200_machine_type);
-+}
-+
-+type_init(beckhoff_cx7200_machine_register_types)
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 84b8ec5fb5..cb51d8a484 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -2,6 +2,7 @@ arm_ss = ss.source_set()
- arm_common_ss = ss.source_set()
- arm_common_ss.add(when: 'CONFIG_ARM_VIRT', if_true: files('virt.c'))
- arm_common_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-acpi-build.c'))
-+arm_common_ss.add(when: 'CONFIG_BECKHOFF_CX7200', if_true: files('beckhoff_CX7200.c'))
- arm_common_ss.add(when: 'CONFIG_DIGIC', if_true: files('digic_boards.c'))
- arm_common_ss.add(when: 'CONFIG_EMCRAFT_SF2', if_true: files('msf2-som.c'))
- arm_common_ss.add(when: 'CONFIG_INTEGRATOR', if_true: files('integratorcp.c'))
++            s->regs[R_DDRIOB_DCI_STATUS] |= R_DDRIOB_DCI_STATUS_DONE_MASK;
++        } else {
++            s->regs[R_DDRIOB_DCI_STATUS] &= ~R_DDRIOB_DCI_STATUS_DONE_MASK;
++        }
++        break;
+     }
+ 
+     if (s->regs[R_LOCKSTA]) {
 -- 
 2.47.3
 
