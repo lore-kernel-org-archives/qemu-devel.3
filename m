@@ -4,100 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE0A2CD37B6
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 07:10:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48201CD37B6
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 07:15:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN3jc-0007kr-0t; Wed, 13 May 2026 03:10:24 -0400
+	id 1wN3oG-0000mZ-JV; Wed, 13 May 2026 03:15:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wN3jY-0007jT-Kp
- for qemu-devel@nongnu.org; Wed, 13 May 2026 03:10:21 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wN3jU-0002cj-Ng
- for qemu-devel@nongnu.org; Wed, 13 May 2026 03:10:20 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-48374014a77so57555155e9.3
- for <qemu-devel@nongnu.org>; Wed, 13 May 2026 00:10:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778656215; x=1779261015; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=IRWC9NKkGHMyilLLpQJoe8yRrQVfAULorGrdogB7ZUY=;
- b=qv//EkBr7POoysuF4MQPRg61a/nz0o5Q2j3/tDmg9ktByy/ONw/T94It6GM9/yEWtt
- 3p6HgfFfqq/0F5OAYxGCE4bBIV/F30mbWc5mKBYjUerIrFqdw5U2RKsY+bLz4wsiuzdS
- ZFAUOw2EXly7KmGBNzbN2kTYAebdtgxmBlY7vX/MRW7KlnaiTXc893P8HfaLgbCK9P7A
- j8icRq9QNF7lJZFL+ieIG8uKgqzkrM+X2/f4DfhJEYR7O6Gv0mAGgxHK3eXyMskZUDY1
- yPXTizumc7+8/OGKU0iuk/gmQP8c66Sfhbg7UI1emB3ThXqMIPzeCMxjyan4iMmftUc0
- pPRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778656215; x=1779261015;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=IRWC9NKkGHMyilLLpQJoe8yRrQVfAULorGrdogB7ZUY=;
- b=BF7YTDq7+ScQNnrXyNnQBLr/7ePtwBGMsdJYMB+bvOBn5sSTZj0GrTQqoxdHbNh+4D
- 8u+opJ4xDrGT1nJWanNUABkwhNU9VFHNgnpltxccm37IygFI3oXGL/GUEfh2fFObgOSC
- gYvHE55OsugAVUe2I3un1vXsMFc8g0t/BhShHxFdhpvxw+aBoOgEWHKS6bTnwpwVQmwM
- s5VNEv3XCWH/d12BvLq3sxbbXOezJsgKDE5yz38mdiRDc/eCWOAMo2Z97f2uXTyomQQL
- 1SoZXERq5v2Q1fiq7xgCYsQ3C/FINHsNQBlIExpK/hc/eEFnpc/n4+LCr7zUR1VHIrJj
- wXtA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+RbEJnxnAiVGhWF2+/b9fez9vDsoolqjZO6XXWrHtplsOAHM3hOq9M7hocx+M7HMT0Ssi7ghxUbnQf@nongnu.org
-X-Gm-Message-State: AOJu0YwyPVhUj01Z0TVCNGxE0j+k6BoEMnmdviT6/Y1qbuKIrFGS6/Lg
- f027YlBAa9/c7tftkovEhGWYfhCHl8KmiBir/YjZpRGhCdWdxuDzImxQqZwokB+tmlo=
-X-Gm-Gg: Acq92OEJFz6i+J3yC/++NLnL+3egluksp6Cify8fF531rhUtiBSOAw7CqPY6qldCCtU
- MZw3bF76L3UvVJGbYMHjDgRvsJ0ksYTR0SzcmIYx1mglkypZMBhy7rAArbl+baCVJh74C+n0Wut
- vBNGDifHQHCtwHAvwv6ZCZewPi/7H4RCMiDsVcqSsfx3Ak8LwpIJvjQM8BejrhAc2kUE9zscWw7
- kSt/ENE9QsXyp5D2nesX9dMWqqYKyXFkk8BbkHUjya4Pnl2HNZDxXB417jFt38xemhmUJ71k9YI
- KYxeSPqeHBDCy0ldbuc+wsMLNbFDeNzwwbgku7G/ZNI/wlc0xcy+8ZzDS9fkP+sXsBFU7p2iG3E
- R1bLMjyiRlMd5M9YXrAPyKlzRQFBkYMeCa08CqJpHxvbxTKUz8xAyI89VqBJ/UQE5Qo7S3f9zmi
- 0Qdim6as5FMud6LRGBcP2M/2RwmFAcX+OF1fdO/zIqIdQb7ZyKU2LP2ahnuqbupsIRog==
-X-Received: by 2002:a05:600c:45cd:b0:489:1ff1:74d3 with SMTP id
- 5b1f17b1804b1-48fc9a3abcdmr26529665e9.20.1778656214793; 
- Wed, 13 May 2026 00:10:14 -0700 (PDT)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fc8d68b14sm52597065e9.12.2026.05.13.00.10.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 13 May 2026 00:10:14 -0700 (PDT)
-Message-ID: <253ecaac-ac2e-43a8-97e8-9251f114df3f@linaro.org>
-Date: Wed, 13 May 2026 09:10:12 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: MAINTAINERS entries that aren't S: Orphan but maybe should be
-Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, qemu-ppc@nongnu.org, qemu-block@nongnu.org,
- integration@gluster.org, Zhao Liu <zhao1.liu@intel.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>, Peter Xu <peterx@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Milan Zamazal <mzamazal@redhat.com>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Mark Kanda <mark.kanda@oracle.com>, Li Zhijian <lizhijian@fujitsu.com>,
- Glenn Miles <milesg@linux.ibm.com>, Gautam Menghani <gautam@linux.ibm.com>,
- Fabiano Rosas <farosas@suse.de>, Ben Chaney <bchaney@akamai.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <87y0hwbvbp.fsf@pond.sub.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <87y0hwbvbp.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wN3o8-0000ln-U5
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 03:15:04 -0400
+Received: from mr-2006g-snip4-11.eps.apple.com ([57.103.70.53]
+ helo=outbound.mr.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wN3nz-0004Wv-FB
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 03:15:00 -0400
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-2a-10-percent-2 (Postfix) with ESMTPS id
+ 241A8180017E; Wed, 13 May 2026 07:14:47 +0000 (UTC)
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRBEwVSB11NVg1HD1geXBQXFUFDXgheH0wcHQ5YBhIATQoONgZZBV4JVgNDBTYSFF1FRgNHGVcUUBtHDFUHV15fChMAXg8PTAFMAlkHXwBFFD5xXnJGBkUPTx4sBFJzXQ1OBy52Lws1fzx3WXceXABLHVcEVB9TElUdHQtFVRIEQAhWUFQeQQRWFWwJWAZTGVc=
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1778656489; x=1781248489;
+ bh=+5Rak/NvONeNGSUZyuEaXyeLi0G3ivLlcIulIdCFBrg=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=B9X0xIbAy9LO1ArZoxr9vCU+S4tJONiRpB1X9bDHio085NDWIQqzfMVUUlR57CoC/FSfq1hrBDiFmiB65BUfvGMs4jFlqYGCzjCTBlvl1IfLqqJp7SUs10WknxEHqzp+tDlyGvwxHs9jy6QMGyYaNqOWMqVjE/o8kL5EhQcEeiKtVbDTnm5KY5bJCu3ZAZp7bMcGQV2GltbitSNlYCCrsGmZEyDzCKOyUI0nthae0zF+F5neSLPMGgWZXA+dq0FuerRG0+3SYCE8rh2p/CPZ9CoJU1NZoWlRUlZuGSW4mp6Hte0JZQb5VtF9AucbDb5nxNe5p74Vc1tAwdjEqVUerQ==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.152.38])
+ by p00-icloudmta-asmtp-us-west-2a-10-percent-2 (Postfix) with ESMTPSA id
+ 642F518001E7; Wed, 13 May 2026 07:14:45 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: [PATCH v3] target/arm/hvf: Fix WFI halting to stop idle vCPU
+ spinning
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <DIH6YGXVPFD4.2O7V71XKGBIB@gmail.com>
+Date: Wed, 13 May 2026 09:14:32 +0200
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>, Alexander Graf <agraf@csgraf.de>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-stable@nongnu.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <84140425-FB3E-4567-A39A-464CAD9EFDD4@unpredictable.fr>
+References: <20260410055045.63001-1-scottjgo@gmail.com>
+ <20260427195516.46256-1-scottjgo@gmail.com>
+ <E8468087-647B-45B5-AF4E-85DD15A6D35C@unpredictable.fr>
+ <DIH6YGXVPFD4.2O7V71XKGBIB@gmail.com>
+To: "Scott J. Goldman" <scottjgo@gmail.com>
+X-Mailer: Apple Mail (2.3864.500.181)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEzMDA3MyBTYWx0ZWRfX/cYdaOFXdatK
+ SxDIT1gnuPE2vMHbz5xnSZ8NkreQpPb2WGwFO2qag3/KpdMlBuBiDPvoJjmm0BdSRAe7VA8Coy0
+ Bv486OUywaQ6vYZ0M+SvuoKuTGDdjWX6LuF3UebdDffD+EoCIvnGg5UCjnRF7EpfflktSUimJ11
+ vdSsdklErKzIMoBAYIOLOPGt1LX37tlOilFZ2k3np2rGtBpfedEJZ7auuSxZw15Fht2gAt7wuCa
+ ri4ARuFXOz3gsvS6PZ8/nB5AuKxH9Ar0vlzI1Wgv9laxAdhROfA5ecln50HfDpObafKej5X9sEB
+ 5qZ4iXItdIdCINzbilUrJPwSi9vdZUrdE2OfLP677qGZKttga5Kh+9WhgjMX4g=
+X-Proofpoint-ORIG-GUID: 9NTaCIQ-ACvkdlEA4QmaYgFK60W3_bvn
+X-Proofpoint-GUID: 9NTaCIQ-ACvkdlEA4QmaYgFK60W3_bvn
+X-Authority-Info-Out: v=2.4 cv=aKH9aL9m c=1 sm=1 tr=0 ts=6a0424e8
+ cx=c_apl:c_pps:t_out a=9OgfyREA4BUYbbCgc0Y0oA==:117
+ a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8
+ a=JcIEX0jus5acmg8J3LQA:9 a=QEXdDO2ut3YA:10 a=O8hF6Hzn-FEA:10
+Received-SPF: pass client-ip=57.103.70.53;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,20 +93,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/5/26 14:01, Markus Armbruster wrote:
-> I'm cc'ing reviewers and lists mentioned below, and frequent
-> contributors to MAINTAINERS.
-> 
-> There are a number of MAINTAINERS entries with S: other than "Orphan"
-> without M:
 
-...
 
-> Unless somebody steps up to server as M: or at least R:, we should
-> downgrade to S: Orphan.  Volunteers?
+> On 13. May 2026, at 04:25, Scott J. Goldman <scottjgo@gmail.com> =
+wrote:
+>=20
+> On Tue May 12, 2026 at 9:21 PM EDT, Mohamed Mediouni wrote:
+>>=20
+>>> On 27. Apr 2026, at 21:55, Scott J. Goldman <scottjgo@gmail.com> =
+wrote:
+>>>=20
+>>> Commit b5f8f77271 ("accel/hvf: Implement WFI without using =
+pselect()")
+>>> changed hvf_wfi() from blocking the vCPU thread with pselect() to
+>>> returning EXCP_HLT, intending QEMU's main event loop to handle the
+>>> idle wait. However, cpu->halted was never set, so =
+cpu_thread_is_idle()
+>>> always returns false and the vCPU thread spins at 100% CPU per core
+>>> while the guest is idle.
+>>>=20
+>>> Fix this by:
+>>>=20
+>>> 1. Setting cpu->halted =3D 1 in hvf_wfi() so the vCPU thread sleeps =
+on
+>>> halt_cond in qemu_process_cpu_events().
+>>>=20
+>>> 2. Arming a per-vCPU QEMU_CLOCK_VIRTUAL timer to fire when the =
+guest's
+>>> virtual timer (CNTV_CVAL_EL0) would expire. This is necessary
+>>> because HVF only delivers HV_EXIT_REASON_VTIMER_ACTIVATED during
+>>> hv_vcpu_run(), which is not called while the CPU is halted. The
+>>> timer callback mirrors the VTIMER_ACTIVATED handler: it raises the
+>>> vtimer IRQ through the GIC and marks vtimer_masked, causing the
+>>> interrupt delivery chain to wake the vCPU via qemu_cpu_kick().
+>>>=20
+>>> 3. Clearing cpu->halted in hvf_arch_vcpu_exec() when cpu_has_work()
+>>> indicates a pending interrupt, and cancelling the WFI timer.
+>>>=20
+>>> 4. Re-arming the WFI timer from hvf_vm_state_change() on the resume
+>>> transition for any halted vCPU, since the QEMUTimer is per-instance
+>>> state and is not migrated. After cpu_synchronize_all_states() the
+>>> migrated vtimer state is mirrored in env, so we can read CNTV_CTL
+>>> and CNTV_CVAL from there. If the vtimer has already expired by the
+>>> time the destination resumes, hvf_wfi_timer_cb() is invoked
+>>> directly so the halted vCPU is woken up.
+>>>=20
+>>> Fixes: b5f8f77271 ("accel/hvf: Implement WFI without using =
+pselect()")
+>>> Signed-off-by: Scott J. Goldman <scottjgo@gmail.com>
+>>> ---
+>>> Changes since v2:
+>>> - Use QEMU_CLOCK_VIRTUAL instead of QEMU_CLOCK_HOST so the timer
+>>> pauses with the VM and a halted vCPU isn't woken (or its IRQ
+>>> raised) while the user has stopped the guest. (Peter)
+>>> - Convert vtimer ticks to nanoseconds with muldiv64() to avoid
+>>> intermediate overflow. (Peter)
+>>> - Re-arm the WFI timer from hvf_vm_state_change() on the resume
+>>> transition so a halted vCPU on the migration destination is
+>>> woken when its vtimer expires (the QEMUTimer is per-instance
+>>> state and isn't migrated). (Peter)
+>>> v2: =
+https://lore.kernel.org/qemu-devel/20260410055045.63001-1-scottjgo@gmail.c=
+om/
+>>> v1: =
+https://lore.kernel.org/qemu-devel/20260410044726.61853-1-scottjgo@gmail.c=
+om/
+>>=20
+>> For QEMU 11.0 (for backporting to stable):
+>>=20
+>> Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+>>=20
+>> For QEMU 11.1:
+>>=20
+>> Adding some checks for !hvf_irqchip_in_kernel() needed
+>> but can do them on my side if you prefer.
+>>=20
+>> Looks ready apart from that bit.
+>=20
+> Hi Mohamed,
+>=20
+> TFTR - I sent a follow-up patch that gates the wfi timer as you =
+requested.
+> For applying this v3 version to the stable tree, is there anyone else =
+I
+> should ping? I'm not very familiar with the process.
+>=20
+> Thanks!
+> -sjg
+>=20
+>=20
 
-'Network device backends' (net/), 'eBPF' (ebpf/) and 'Network devices'
-(hw/net/) patches are left unattented on the list since 6 weeks, all
-maintained by Jason (first 2 listed as 'Maintained', last one as 'Odd
-Fixes'). These sections don't have co-maintainers. Shoud we be worried?
+Hi,
+
+v3 of this patch is for QEMU 11.0 qemu-stable and v4 is for QEMU 11.1.
+
+A catch is that this isn=E2=80=99t in master yet though.
+
+This regression doesn=E2=80=99t apply to QEMU 10.2 or earlier.
+
+Could this regression fix be included into QEMU 11.0.1?
+
+(with qemu-stable@ in cc)
+
 
