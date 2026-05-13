@@ -4,90 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0EF1CD37B6
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 06:00:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7E61CD4851
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 06:08:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN2eC-00023z-AF; Wed, 13 May 2026 02:00:44 -0400
+	id 1wN2kv-0003f1-8o; Wed, 13 May 2026 02:07:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wN2du-0001xh-T3
- for qemu-devel@nongnu.org; Wed, 13 May 2026 02:00:28 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wN2dr-0008Rn-DH
- for qemu-devel@nongnu.org; Wed, 13 May 2026 02:00:25 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4891e5b9c1fso58168765e9.2
- for <qemu-devel@nongnu.org>; Tue, 12 May 2026 23:00:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778652021; x=1779256821; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Ns6MCtODmXZSYd8YBAUpxgBlpH5HhJGBU0DEIuO4yz0=;
- b=TShUU8L3lNZfgUoUEp1y74+j+fkxT1NaDC5dl0VCxmAG+PW/kpJHPjrA7GkEfs37n5
- 9V5BcGBNT9hq6wvKyljXLNI4ZCpjJ1uiPCTurusg6Zbjhti88XWHR0iZpQK14Qgldovl
- b5G7/e0T76IZdKtnAHin1JRXZg3AwVYsXB7RlvgV8c5v9xayue6popNblxSi3BPFipNq
- 5pOTU7Z3VyH4UG9ubjwpFfrg91EFv9XQ0mG/hKlHoV5zm5cVUN3mOIyMTGyemAiHjpwk
- TKMZ4a3jN//KhalR4ivltIjbdfKePODcibTja1ilcOZFak2dk0E0C9UUl9HckE4O+Pfg
- 1YJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778652021; x=1779256821;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Ns6MCtODmXZSYd8YBAUpxgBlpH5HhJGBU0DEIuO4yz0=;
- b=F7fsVW6GvQyyqTB7vxPZKmadX3F4ROX6a3Ncxa0XEfihH611RklTmp6DJ9bFtnsRn2
- UbXuel7bWDfQWm60RM7vPikzp3G6JpaaR7V7nqOk5VzvNqbKUZjEkoL7yoFtmtW+VDoW
- PHU6I8UkMYriexLgr43o1wZSwySVsnoDikdJtYb4g86kVlCV4vIo9qWp1ZIx0UEubsAq
- 1W46QHRNlWSGKV1l2ik19+1i63wgwfPPTmVyx+IxdDDA7cfiVRqDML9lAwSkVvI4iKsz
- Ac3h9p6brPDTEwunc0v6OTmZ3Y144Np1tBc3VcYS6v73F5GMPBwYxF51J5kqgpIQH4a9
- TaFw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/jJOzV2pxmNvdrtHCj6oDhf8AhNOAG8iiuo/0RZwTii+p9HCsInR2Dw4ZCWvvbSUJMuM2NEcciHS0s@nongnu.org
-X-Gm-Message-State: AOJu0Yw7LkBvIRwmM9luELhjfFw3t7jMiXc3V3sS3VdzOyW81Xjr6f0I
- KcHGhAamzQVt6HGDFZS8MupIIzTBEML2l9fx9ETTxwBbMmscZg6DoGERh2Fzflei6a4=
-X-Gm-Gg: Acq92OGO7LErBk6uKwoORAxbr7TquuLQ5MB02LEzoDmZ0vhhXRN3YLtF2UCsiZS2MLb
- yPggLL8eGS/qjS3hZ2836QmhOaCbT5mjFpZVDVbryPW3eEmXBnnog4RgBtO15ey8J2iKmT7NMyy
- qY5fkfM9EOCvMDCq8EFE9T0LAc6cIPRbSCOYEPWx+o6MGZ+A+pQ942fMH/aEzusNBio1W0L35os
- 8yXftWsFnwYvwY8cndTWIuRElCtHwGc2NYA4nD7Es8XKnlSjCgLlxFmkD9rG6AQmORQiy5okF6L
- I9jNtMLBgKx0zf1OWIR3+WnZTtkkODF/4s8Q+w+2Sm4VYFBU/88Gg9RFuCy1G7WfLsYCLNdOgO4
- RsOSNqf7h3lNdeiHIQB3tf5QeexVYFe+A9/RYcCmGMCBPBIdIl5volECfoPficVSvAemYJmsGk8
- VXppWrAbtDGkn2uABLmV538YYg6EPnOW1c3INuvrIIsWWWDj+hv0rOcxK8shsTr2k2Dw==
-X-Received: by 2002:a05:600c:45cd:b0:488:ffb1:494c with SMTP id
- 5b1f17b1804b1-48fc9a1bacbmr22414915e9.12.1778652021426; 
- Tue, 12 May 2026 23:00:21 -0700 (PDT)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e913469besm27160005e9.14.2026.05.12.23.00.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 May 2026 23:00:20 -0700 (PDT)
-Message-ID: <29c175bb-5ec6-4108-b6bb-04c8b7cf5c2c@linaro.org>
-Date: Wed, 13 May 2026 08:00:20 +0200
+ (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1wN2kj-0003dx-2Y; Wed, 13 May 2026 02:07:29 -0400
+Received: from dedi548.your-server.de ([85.10.215.148])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1wN2kf-0002WP-9r; Wed, 13 May 2026 02:07:28 -0400
+Received: from sslproxy07.your-server.de ([78.47.199.104])
+ by dedi548.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.96.2) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1wN2kU-000MXy-2z; Wed, 13 May 2026 08:07:14 +0200
+Received: from localhost ([127.0.0.1])
+ by sslproxy07.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
+ (Exim 4.96) (envelope-from <sebastian.huber@embedded-brains.de>)
+ id 1wN2kU-0003k1-2R; Wed, 13 May 2026 08:07:14 +0200
+Received: from localhost (localhost [127.0.0.1])
+ by mail.embedded-brains.de (Postfix) with ESMTP id 0AB63480051;
+ Wed, 13 May 2026 08:07:14 +0200 (CEST)
+Received: from mail.embedded-brains.de ([127.0.0.1])
+ by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10032)
+ with ESMTP id faMe_JtfmG7G; Wed, 13 May 2026 08:07:13 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by mail.embedded-brains.de (Postfix) with ESMTP id 177EC480061;
+ Wed, 13 May 2026 08:07:13 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.embedded-brains.de 177EC480061
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=embedded-brains.de;
+ s=34EE5404-8E36-11F0-B577-2ECCAB4968F5; t=1778652433;
+ bh=xnx1YDIwHeJYFz5i062OwXfkdYFLJzKfqBzLnblQ80M=;
+ h=Date:From:To:Message-ID:MIME-Version;
+ b=VyJqXXyxTS9oV87mrwsMWisTXyN7DUiTgCWrnVH8YBMvIdIvcfZQot+hdMqZXuobZ
+ WEwAnXuOl/HG+xI/JUSoM4wqGPFJ9DaafUkjP9LTUZsWg6XX++lxGVdh6tyrKZM1Pn
+ e8l4l8op9LL3ngV9hqJ9/JdYtqIa2mqPLw4ccI9IzRG+TgKaxNce92L2K7iP0avhdk
+ pxz3/PH6sd/x6pA/xhp/cyo9XIsxg6KaWPjjZjt/A4I5kmJy0dU/vfByaRINErxcND
+ vNgnsLH9nW9PHzZxF8ptjFTRKZBa97AwbFo3HpH10SjhO/8VnZg2+mW0EkcdYxSOlC
+ Lqjg7Incbwolw==
+X-Virus-Scanned: amavis at zimbra.eb.localhost
+Received: from mail.embedded-brains.de ([127.0.0.1])
+ by localhost (zimbra.eb.localhost [127.0.0.1]) (amavis, port 10026)
+ with ESMTP id DpbXAPSN4x4T; Wed, 13 May 2026 08:07:12 +0200 (CEST)
+Received: from zimbra.eb.localhost (zimbra.eb.localhost [192.168.96.204])
+ by mail.embedded-brains.de (Postfix) with ESMTP id D8F11480059;
+ Wed, 13 May 2026 08:07:12 +0200 (CEST)
+Date: Wed, 13 May 2026 08:07:12 +0200 (CEST)
+From: Sebastian Huber <sebastian.huber@embedded-brains.de>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Alistair Francis <alistair23@gmail.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, liwei1518 <liwei1518@gmail.com>, 
+ daniel barboza <daniel.barboza@oss.qualcomm.com>, 
+ zhiwei liu <zhiwei_liu@linux.alibaba.com>, 
+ chao liu zevorn <chao.liu.zevorn@gmail.com>, 
+ qemu-riscv <qemu-riscv@nongnu.org>, 
+ qemu-devel <qemu-devel@nongnu.org>, Conor Dooley <conor@kernel.org>, 
+ alistair francis <alistair.francis@wdc.com>
+Message-ID: <1898448862.14224.1778652432278.JavaMail.zimbra@embedded-brains.de>
+In-Reply-To: <87mry3vomd.fsf@pond.sub.org>
+References: <20260513023859.518484-1-alistair.francis@wdc.com>
+ <1514447636.13520.1778641704122.JavaMail.zimbra@embedded-brains.de>
+ <87mry3vomd.fsf@pond.sub.org>
+Subject: Re: [PATCH] MAINTAINERS: Mark Microchip PolarFire SoC as Odd Fixes
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/loongarch/kvm: Include missing exec/cpu-defs.h
- header
-Content-Language: en-US
-To: gaosong <gaosong@loongson.cn>, Qiang Ma <maqianga@uniontech.com>
-Cc: maobibo@loongson.cn, qemu-devel@nongnu.org
-References: <20260512131107.2388663-1-maqianga@uniontech.com>
- <24783c35-9a09-2f45-3ddf-0c743c13752a@loongson.cn>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <24783c35-9a09-2f45-3ddf-0c743c13752a@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [192.168.96.204]
+X-Mailer: Zimbra 10.1.16_GA_4850 (ZimbraWebClient - FF140
+ (Linux)/10.1.16_GA_4863)
+Thread-Topic: MAINTAINERS: Mark Microchip PolarFire SoC as Odd Fixes
+Thread-Index: fYCMhywhgUtHNy/NKq9cfBK8uPC4WQ==
+X-DKIM-Status: pass [(embedded-brains.de) - 78.47.199.104]
+X-Virus-Scanned: Clear (ClamAV 1.4.3/27998/Tue May 12 08:24:57 2026)
+Received-SPF: pass client-ip=85.10.215.148;
+ envelope-from=sebastian.huber@embedded-brains.de; helo=dedi548.your-server.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,42 +103,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/5/26 03:11, gaosong wrote:
-> 在 2026/5/12 下午9:11, Qiang Ma 写道:
->> After commit 71cab1a42d2 removed the indirect include of
->> exec/cpu-defs.h from target/loongarch/cpu.h, the TARGET_FMT_lx
->> macro is no longer visible in kvm.c, causing build failures:
->>
->>    error: expected ')' before TARGET_FMT_lx
->>
->> Add the missing #include exec/cpu-defs.h to restore the
->> TARGET_FMT_lx definition.
-> Hi,
-> The commit message does not match the changes.
+----- Am 13. Mai 2026 um 7:56 schrieb Markus Armbruster armbru@redhat.com:
 
-Otherwise:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
->> Signed-off-by: Qiang Ma <maqianga@uniontech.com>
->> ---
->>   target/loongarch/kvm/kvm.c | 1 +
->>   1 file changed, 1 insertion(+)
+> Sebastian Huber <sebastian.huber@embedded-brains.de> writes:
+>=20
+>> ----- Am 13. Mai 2026 um 4:38 schrieb Alistair Francis alistair23@gmail.=
+com:
 >>
->> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
->> index 9d844c4905..4af4ab2ed0 100644
->> --- a/target/loongarch/kvm/kvm.c
->> +++ b/target/loongarch/kvm/kvm.c
->> @@ -6,6 +6,7 @@
->>    */
->>   #include "qemu/osdep.h"
->> +#include "exec/target_long.h"
-> Reviewed-by: Song Gao <gaosong@loongson.cn>
-> 
-> Thanks.
-> Song Gao
->>   #include <sys/ioctl.h>
->>   #include <linux/kvm.h>
->>   #include "asm-loongarch/kvm_para.h"
-> 
+>>> From: Alistair Francis <alistair.francis@wdc.com>
+>>>=20
+>>> Mark the "Microchip PolarFire SoC Icicle Kit" as Odd Fixes and enlist
+>>> Conor and Sebastian as people to help deal with the fixes.
+>>>=20
+>>> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+>>
+>> Thanks, this is fine.
+>=20
+> Can you make it official?  Acked-by: ...
 
+Acked-by: Sebastian Huber <sebastian.huber@embedded-brains.de>
+
+--=20
+VISIT US @ SATELLITE ASIA IN SINGAPORE 20-22 MAY (https://asiatechxsg.com/s=
+atelliteasia//): Hall 4, Booth 4K2-4
+--
+embedded brains GmbH & Co. KG
+Herr Sebastian HUBER
+Dornierstr. 4
+82178 Puchheim
+Germany
+email: sebastian.huber@embedded-brains.de
+phone: +49-89-18 94 741 - 16
+fax:   +49-89-18 94 741 - 08
+
+Registergericht: Amtsgericht M=C3=BCnchen
+Registernummer: HRB 157899
+Vertretungsberechtigte Gesch=C3=A4ftsf=C3=BChrer: Peter Rasmussen, Thomas D=
+=C3=B6rfler
+Unsere Datenschutzerkl=C3=A4rung finden Sie hier:
+https://embedded-brains.de/datenschutzerklaerung/
 
