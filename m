@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9990ACD4F3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 10:59:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 241ADCD4F24
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 11:01:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wN7Iz-00065S-7j; Wed, 13 May 2026 06:59:09 -0400
+	id 1wN7Kp-00015f-Na; Wed, 13 May 2026 07:01:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1wN7Fd-0003Av-RS
- for qemu-devel@nongnu.org; Wed, 13 May 2026 06:55:45 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1wN7Fj-0003Bf-NS
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 06:55:48 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1wN7FW-0001Oy-NX
- for qemu-devel@nongnu.org; Wed, 13 May 2026 06:55:38 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-488af9fdaa7so37684665e9.1
- for <qemu-devel@nongnu.org>; Wed, 13 May 2026 03:55:30 -0700 (PDT)
+ id 1wN7Fd-0001Sx-Qn
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 06:55:47 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4891d7164ddso36632645e9.3
+ for <qemu-devel@nongnu.org>; Wed, 13 May 2026 03:55:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778669729; x=1779274529; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778669736; x=1779274536; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1JNG0WpLJF3nkTQNm/OVMSOxMuYSpcxBZJPbT2YaBCM=;
- b=qDNkY8LQSOSQnlU28PnQXbaeYQJpszEiJkDjX6P3jIlG27w5GOf6rnCJr52YZCowm6
- aofp8W9O24vec7bFUx3hFAtOQvyPou1ENzeZDqnmdgVNhMEKp1lI8g+k1z+EFNqz4wZW
- t0SUhXfqwL65Q2KGZsrPbAcjEPaffOYegZPNex0jJZtEgHrDDH8h9PeZZ6Od9cTFfKmM
- QhwYMyKVRSpCkY3FAvs1PVZhSpTY7shmmErd8U0IteCoLsnKKXojy9acCcd7NdAUE8ZH
- mOgNobqGXWAfiUn0VbbijNGP628qXvlUJNTsuUCy4qFTLOwMkYYRAfrEv60f5f+3ku9Y
- iIgg==
+ bh=31uAyBAt0YBaO7HX9hDUa25jYs4P+S8BQjl4K/ghWPQ=;
+ b=Uzvgmd58fkca9X8Xx8YWmnr53zy3pXKP8v+Oxt91a57ZYlZqPrIboAzKxbsMJOCQ6Y
+ o0B8WC659QVkLjCx3d1yMWpy9AK6yFsGpNRnWAUZtu2Ij93u3/q4UN7o8ewZW58RTRbm
+ xaBubAbmhyTmPDpfkluiixfLZ3pJYRqphrywBXSLPAMsaDRAWTs0858HoJKrEI5rUNwY
+ Kn57S1YLRg5dE3WrtqawSOn09AqCHwBHnnF8KdM8u2007amVWiIYAls9zVPLUaN9EjlY
+ 9H5NG1rltPzzWraovSo8djnKO5UKcjaA1PU/D3+qrj9dOjHNFbyHvlfyRhCDyPx8KxUx
+ Te8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778669729; x=1779274529;
+ d=1e100.net; s=20251104; t=1778669736; x=1779274536;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=1JNG0WpLJF3nkTQNm/OVMSOxMuYSpcxBZJPbT2YaBCM=;
- b=g5MJQ48QETrIBtK6gRNFc8UBFJkLuXg9sPyTRxkw7LL1x1vf9eHgbn0bgti0UwO0FC
- qs2iIwW5o8RfnXLAmo8u7W2Vy7qjGHESSZYzq7QB0osobKqYxU55OqEeZpiji5C7WFS7
- Ge2vT68ERk+4wte9MmTYp6dDrgk4ZLQhtR+vJh+u9UEw11bl/5ciTO17AAkVv0LEajyo
- dQ31IkHJ6I9d8A+/JE0hcFRCmuTg0E3WtPjV8aUaCBPRckR8HhuDnVQPSQqQyvASTCVw
- 28pqf8941D5Z7T/r3t55ji4wSvmaDO7Y9/5yLJJUGet5Y16hcobxwO3n/sVJ6RWMg+BF
- 2hkw==
-X-Gm-Message-State: AOJu0YysaUEYl//8nNG5wyljzmk4MH++YzKUAKjruQw4m7JbIRlx1hvo
- q0dK0aXXc5m9KQc6haTUQSXaQn9qvL82i4v0VbNLey7dqnjYtGIt2IY2PsRi9LTt
-X-Gm-Gg: Acq92OHMb7Lf26aKjzc8x8C5qj8FWfX8+x8Yz5pkVTij9SYdtgSc1vkzmLIo5dCgJuN
- vdSEDMFZFAAJDDv3F0wpwWuSGXuflH2tvVZcfSqlVVPG7A63/yNwD5JxA/sv5XmENS0xeoVNJIN
- 3SOuPW7xPwduU3VA85zt87oVjKwJ05idnbt+mB6xyWYT5eO6SP60SP7nRoRK7Tq89eKth2evTWq
- nXkEKvFS5TRePvdJRTtRI9rLbV3PQETCFeBIOiMnWaBwZnepZdzNgGZWLf6yXhtXAnXMyx9SvHa
- 5u9ewk4IcfgyvQ6WDUWBpTWLI4Yfaj9moBgD8NCpIuBGVts4MdyAZNZTM0BX2elXqdambrcGZbM
- sxXxQi8kYi0o7jA/BeSHuP6WHpxt2RsWVGmIBU2BbLC3KHU1rJ8bBvF7kVKZiUm4QD5rTfPYlMJ
- GTHdSkD6AyLlwYdzbaaJYdifGd4aUtjqqiDviklQuKQqF5
-X-Received: by 2002:a05:600c:4595:b0:48e:706b:53e8 with SMTP id
- 5b1f17b1804b1-48fc9a1b9famr39261065e9.11.1778669729442; 
- Wed, 13 May 2026 03:55:29 -0700 (PDT)
+ bh=31uAyBAt0YBaO7HX9hDUa25jYs4P+S8BQjl4K/ghWPQ=;
+ b=RiDY6P5FVo+xYVcnTzco2uRXBy0RSJs3EuE0jiNT89kU0Rnv9iAwhXRha4vmXHyFw3
+ AGZDgn2WGqQC1/KgJkfxE0AdEEqL1ucohcugL30sGlJlxV19tIhof9/fewwwV1UX3HgX
+ f1+TAdRbfs7GMvHDTHED/+LobiDVqF5wp+WqSNZ3qi5l9fnIPTOMeI/SAfjgCuuJp362
+ S+WLWK6i5t0sx0+HfsnWd5oc5JFnpS6B2IX0iDb1ObT0jWhFh8SckhXSPVmawl/KvQTF
+ Pb+6ItOC4rnRitKpykxZ9uLaETBbbQcfu5PZCoVOw8H9oGvkWRxLSX8WyoE9IA2AA4Ab
+ fr8g==
+X-Gm-Message-State: AOJu0YxbdBh2cC6voduXfrYYICHgzyUkOqZim+S3rFzpM6aRlYNIVR7u
+ CiesqGRjyqdRqRp6T2YxpxgzbotgejB9tVNWfDmNNIyxqGKQwIHO5hw5qUXV/3Qm
+X-Gm-Gg: Acq92OF1GaFFVxaollAosGnZwmpT9DjkO9VbHBAYom4bDf8eFWmEF9CKU2llDiPvHeK
+ WWEFUCAIxBKBJ40QYd8Fy8eBm3qaMkP41L+TquOvaoqto8Wyk1Q6G51lXthcy50bi7GUIyy7IYQ
+ OrEYStZrdV0TSyHHPjUCwdM9+gnWMGWSjD0BPoHe+vAvysoq+vjUFwyQ9bFUv+ewwfhj47X+8Ui
+ Wpl5aSmwrGpnJ6yBPCTSfqs4SyHnv6cIxDJGg2Y6tjbNDJMMigQAEpYg+dQ9DkCLO4gL0x3XCFs
+ KYkBggZEXxC8OYHSCa1EI8bxOi/MpCZPSeany/k9mkMhPmWc968KR3Q5lU0p7df24DWJbEI5V1h
+ qkYIr/BeVPSAWRNSfVNh3ktW3/piCLHt9PT140ACVgBrMCCqhyabFR0QLFkhiG0r9Rwis9Tyytd
+ M5ul3roWVfDeOm2Sxb5SUifrGhxzOY+DE7THiT3b5DhCxS
+X-Received: by 2002:a05:600c:3144:b0:48e:82af:d9 with SMTP id
+ 5b1f17b1804b1-48fcea18dfbmr31076885e9.29.1778669736002; 
+ Wed, 13 May 2026 03:55:36 -0700 (PDT)
 Received: from PC-DA2D10.beckhoff.com ([195.226.174.196])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e8f410d9fsm56062295e9.6.2026.05.13.03.55.27
+ 5b1f17b1804b1-48e8f410d9fsm56062295e9.6.2026.05.13.03.55.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 May 2026 03:55:28 -0700 (PDT)
+ Wed, 13 May 2026 03:55:35 -0700 (PDT)
 From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
@@ -75,18 +75,18 @@ Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
  =?UTF-8?q?Yannick=20Vo=C3=9Fen?= <y.vossen@beckhoff.com>,
  Alistair Francis <alistair@alistair23.me>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- YannickV <Y.Vossen@beckhoff.com>,
- "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-Subject: [PATCH v6 07/15] hw/dma/zynq-devcfg: Indicate power-up status of PL
-Date: Wed, 13 May 2026 12:55:09 +0200
-Message-ID: <20260513105517.146706-8-corvin.koehne@gmail.com>
+ YannickV <Y.Vossen@beckhoff.com>
+Subject: [PATCH v6 12/15] hw/arm/xilinx_zynq: Split xilinx_zynq into header
+ and implementation files
+Date: Wed, 13 May 2026 12:55:14 +0200
+Message-ID: <20260513105517.146706-13-corvin.koehne@gmail.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260513105517.146706-1-corvin.koehne@gmail.com>
 References: <20260513105517.146706-1-corvin.koehne@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=corvin.koehne@gmail.com; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=corvin.koehne@gmail.com; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,30 +111,90 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: YannickV <Y.Vossen@beckhoff.com>
 
-It is assumed, that the programmable logic (PL) is always powered
-during emulation. Therefor the PCFG_POR_B bit in the MCTRL register
-is set.
+Create xilinx_zynq.h header file to expose ZynqMachineState and
+related definitions for machine inheritance. This enables creation
+of derived machines based on the Zynq platform.
 
 Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 ---
- hw/dma/xlnx-zynq-devcfg.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/arm/xilinx_zynq.c         | 13 +------------
+ include/hw/arm/xilinx_zynq.h | 36 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 37 insertions(+), 12 deletions(-)
+ create mode 100644 include/hw/arm/xilinx_zynq.h
 
-diff --git a/hw/dma/xlnx-zynq-devcfg.c b/hw/dma/xlnx-zynq-devcfg.c
-index 6b1d96ff80..5608460dc7 100644
---- a/hw/dma/xlnx-zynq-devcfg.c
-+++ b/hw/dma/xlnx-zynq-devcfg.c
-@@ -333,7 +333,8 @@ static const RegisterAccessInfo xlnx_zynq_devcfg_regs_info[] = {
-        /* Silicon 3.0 for version field, the mysterious reserved bit 23
-         * and QEMU platform identifier.
-         */
--       .reset = 0x2 << R_MCTRL_PS_VERSION_SHIFT | 1 << 23 | R_MCTRL_QEMU_MASK,
-+       .reset = 0x2 << R_MCTRL_PS_VERSION_SHIFT | 1 << 23 |
-+                R_MCTRL_PCFG_POR_B_MASK | R_MCTRL_QEMU_MASK,
-        .ro = ~R_MCTRL_INT_PCAP_LPBK_MASK,
-        .rsvd = 0x00f00303,
-     },
+diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
+index 66a4480cc8..6c83439017 100644
+--- a/hw/arm/xilinx_zynq.c
++++ b/hw/arm/xilinx_zynq.c
+@@ -41,9 +41,7 @@
+ #include "exec/tswap.h"
+ #include "target/arm/cpu-qom.h"
+ #include "qapi/visitor.h"
+-
+-#define TYPE_ZYNQ_MACHINE MACHINE_TYPE_NAME("xilinx-zynq-a9")
+-OBJECT_DECLARE_SIMPLE_TYPE(ZynqMachineState, ZYNQ_MACHINE)
++#include "hw/arm/xilinx_zynq.h"
+ 
+ /* board base frequency: 33.333333 MHz */
+ #define PS_CLK_FREQUENCY (100 * 1000 * 1000 / 3)
+@@ -87,15 +85,6 @@ static const int dma_irqs[8] = {
+     0xe3401000 + ARMV7_IMM16(extract32((val), 16, 16)), /* movt r1 ... */ \
+     0xe5801000 + (addr)
+ 
+-#define ZYNQ_MAX_CPUS 2
+-
+-struct ZynqMachineState {
+-    MachineState parent;
+-    Clock *ps_clk;
+-    ARMCPU *cpu[ZYNQ_MAX_CPUS];
+-    uint8_t boot_mode;
+-};
+-
+ static void zynq_write_board_setup(ARMCPU *cpu,
+                                    const struct arm_boot_info *info)
+ {
+diff --git a/include/hw/arm/xilinx_zynq.h b/include/hw/arm/xilinx_zynq.h
+new file mode 100644
+index 0000000000..0337d238ea
+--- /dev/null
++++ b/include/hw/arm/xilinx_zynq.h
+@@ -0,0 +1,36 @@
++/*
++ * Xilinx Zynq Baseboard System emulation.
++ *
++ * Copyright (c) 2010 Xilinx.
++ * Copyright (c) 2012 Peter A.G. Crosthwaite (peter.croshtwaite@petalogix.com)
++ * Copyright (c) 2012 Petalogix Pty Ltd.
++ * Written by Haibing Ma
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License
++ * as published by the Free Software Foundation; either version
++ * 2 of the License, or (at your option) any later version.
++ *
++ * You should have received a copy of the GNU General Public License along
++ * with this program; if not, see <http://www.gnu.org/licenses/>.
++ */
++
++#ifndef QEMU_ARM_ZYNQ_H
++#define QEMU_ARM_ZYNQ_H
++
++#include "target/arm/cpu-qom.h"
++#include "hw/core/qdev-clock.h"
++
++#define TYPE_ZYNQ_MACHINE MACHINE_TYPE_NAME("xilinx-zynq-a9")
++OBJECT_DECLARE_SIMPLE_TYPE(ZynqMachineState, ZYNQ_MACHINE)
++
++#define ZYNQ_MAX_CPUS 2
++
++struct ZynqMachineState {
++    MachineState parent;
++    Clock *ps_clk;
++    ARMCPU *cpu[ZYNQ_MAX_CPUS];
++    uint8_t boot_mode;
++};
++
++#endif /* QEMU_ARM_ZYNQ_H */
 -- 
 2.47.3
 
