@@ -4,93 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DEE3CD4F25
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 17:08:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6504FCD37AC
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 17:24:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNZWz-0001Tq-P8; Thu, 14 May 2026 13:07:30 -0400
+	id 1wNZmN-0003c1-GJ; Thu, 14 May 2026 13:23:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wNZWx-0001TR-9D
- for qemu-devel@nongnu.org; Thu, 14 May 2026 13:07:27 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wNZWv-0005Wr-HB
- for qemu-devel@nongnu.org; Thu, 14 May 2026 13:07:27 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-48e8132c6d0so40720155e9.1
- for <qemu-devel@nongnu.org>; Thu, 14 May 2026 10:07:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wNZmK-0003bJ-0i
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 13:23:20 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wNZmH-0005iT-Fw
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 13:23:19 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64EBePCT1717706
+ for <qemu-devel@nongnu.org>; Thu, 14 May 2026 17:23:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ ulGAOE8HbLb/p8WT3p/HywicgLKOLlWLTHZNeMydSXg=; b=AoQaPHvhieiEeN7/
+ yEWBcJEM9Umiko/6qXpq5wETh0l+neq8sjNqN9Ezoj4RON8lGXdz1OxTrgKUyL62
+ E2rP4hQYjk+WrQsv0cZB3h3LMOn1AqBa1AtaWnhe2k/GKVDFJ9Cd9Wk72cCkvEFN
+ 3tyT9JcCRMQlIAJkrPC/Nghfr3F4Ue7dfWUtr4wAHZOjVlnIooXi6u99joCJ72be
+ qfxDUydNdyncmRb/FIEQmjSp/AJggE49W/j98XlJFUSW9/R3jJ6Y0aXpvv4dOG7X
+ +4tr/wKHM1g9BWzdMWNlpLCD3nfh5RL0gqB9Q1F30cQNoWdQPURMw8m23H2NVexS
+ 2JM1zQ==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e57y7jn3u-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 14 May 2026 17:23:13 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-2f485961555so25511007eec.1
+ for <qemu-devel@nongnu.org>; Thu, 14 May 2026 10:23:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778778444; x=1779383244; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ynJUxiwZMXDrlWHLMI16YRWGtkhDsFSH198QrhKCWpQ=;
- b=y6WqcypzCOHfdmpcCogOM/fSYABtTBbuyv99NneLInEH/lK/+QJ5/eAPXhxJAN2HwP
- eV8B38yLJTDrba0A3NhZs+yrEc6zqfuFYBmMFR585YyTbX4lB1Z4RpHOakhWrwwlWR9B
- v+Qtjhgh8Uj1Dvttumvv7wTQJgtpcCgax5CZmAJ1YONpkzGM+xtHVPotIIL/+Yp1aMJq
- SM3Z+f+B6o7PzPLlLCqrKF7ylYZLzDbJqXMQRFHgdMnYH+mDj/5nkZkpiGYg6IJ+aE53
- jsLuJ6egcuQtn5Wy1vBJCFswlZzbN9xdxdCfCPTqDzF4NCM2nUW5nA1Y1MNWpYBwlFMu
- jQwA==
+ d=oss.qualcomm.com; s=google; t=1778779393; x=1779384193; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ulGAOE8HbLb/p8WT3p/HywicgLKOLlWLTHZNeMydSXg=;
+ b=bIYl/YyJVxMcJU2Adcm0CxmCwmwjajsXBiwrx6Jei4HzsR7ik5Q8PLUlzQKLcm/EWm
+ qwy8kGdABebCc4lWweFNijs72hkgvrzjDi4TuX6jp7Wz2rbjvL3ggsX+bSZmK8L4w9Xn
+ WHer8j99Wl+vVdFmnWE96wn5YnGqCgoTEBtKMLbLyymSWbbI7n+CG9pkhgfYsxCxo1KV
+ bH0GwZlOKuHp9g1pHBsNoOfmcpm08yu1NZmAkWF7c7H2cBt4Vyp4WzYOwsReRNETkxPR
+ de3pd02KuWW0pT6VrNLzseLlxXhMwlEjp3njN1Q/C3eex6k8sgL/vjxGXbHiRkojloaP
+ QWfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778778444; x=1779383244;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ynJUxiwZMXDrlWHLMI16YRWGtkhDsFSH198QrhKCWpQ=;
- b=NzDBmzv+OiWs/1nkkQaXCbv4MkXDUNOfz6Q/3vSc2TA+mPjLeFj+Ov4gPJwv+wm/ch
- hogJKuIK+9rgnqRnK1ARRr3z62m26ea+M4NM8MuAgkNm8CO9jahLw/R87ziMbo0RkINp
- f9hC7lvexgM4SiCzf4f92aoCe7R7L/GLdysUfJosrRL3wHQhFPnLRjB9Cu11hqmnTY8R
- Wy2pcTkJqzgtsFUyPzbuFJprtOq0zkmY6xpsnVefzbu78HtVqZYve+tREzUw7xjGSR0W
- B7AWPpdc1sFkK5oW2xIiQjZOdetwCE5CG250S31fleBEsWtaHkoUiLMyyrW0INtiX95f
- Pfgw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ81Xu2JItBOsKqBBe+/37I6mE80SsgtoJ/n+1YUSqnKYJGrp5Tibfl/375hcKkzJId7U3zZorxBLbYz@nongnu.org
-X-Gm-Message-State: AOJu0Ywwjh8V69/1OLzPPANv6X9jUiisZWtkZZemyWnEbiuezENtmJ3l
- 8LB39xFknPrmR+EFPZQCgEQhhnMmNUOLw4EJ3/PtnfogR46dPapGRn2kf4Nrs5vuhuI=
-X-Gm-Gg: Acq92OF1TU6K6mBlem/N4wetz5Me/5JrA8QNwJ/4Y7tB6mZMt+IreEN2S6vPRnzOOin
- y+HVI4ZbTTEIXjQlg8Du4C25Rfsp8Rsh8jEfuAoRP6UFdJ2AGYUCKHldqvm1NVib6SaqpssyXXb
- lW7siSlFWL+me8qUtm5k2ElOCm/FAz88FkNE4eZVQL2zxonUmdEnu/nLqGqOZbgsqJWe1pmH+ju
- Ef4EQtDou75+sazLkEdL7egL1t+okrahSxhnUlTUEpqgQVlLfbyokxcgseTD45H1cIwMVnGLKlP
- JCegFLW9fCDBmSbHZlAPA8qUcrXcEQQDrAeHLXYHT95v5OEWA2IiujrxIdscFNxqoeD1P9hUbxV
- QnuOqMMWbRUyRXbwR+yaRKBeazIgl1acQRsJ6YmR4elkOXRyx0l2WTgWeF5UIJflzwy7geU4JDA
- gB+9Wg4RaukYluuNbalHBkQ7u14oSLOX3LWphtwD7uNiMV1BHSA6MmWMNx15ub0K65+KX7ZnIdw
- nH+
-X-Received: by 2002:a05:600c:a4f:b0:48f:e230:c3f9 with SMTP id
- 5b1f17b1804b1-48fe661df4dmr2519085e9.31.1778778443718; 
- Thu, 14 May 2026 10:07:23 -0700 (PDT)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fd76801f2sm29469375e9.7.2026.05.14.10.07.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 May 2026 10:07:23 -0700 (PDT)
-Message-ID: <98b867b8-a019-4fc3-be77-8320ae8c8737@linaro.org>
-Date: Thu, 14 May 2026 19:07:22 +0200
+ d=1e100.net; s=20251104; t=1778779393; x=1779384193;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ulGAOE8HbLb/p8WT3p/HywicgLKOLlWLTHZNeMydSXg=;
+ b=LsQe0nPDTHWRIlFR2mSCPttm40NlHlo1O5rpoAM3eYdEo/0zdZCrDl/ETEyAxPMfE4
+ eOwtKRwPbC+r6aw+XilHQs43QwaXeDdM2ID4lVn80kY+M5n+/VtKMPHa5YcNcXZ3X9Ga
+ 9llcYvNblnAWtSdJb7EQyXnK9niRb2F0RVYnwVvp62+VzbIWD+hYl0fy8TgwZbT3fmzv
+ lPSP/F35ElSlryjh9rn4Uef9YKp2gBAdQUsl00PNfAXLfyp7YXG3Txt9iiETi+507v6m
+ 3e/f8d81wNEjGNADmAKt2ZEB2mQLgVF2aBpfGy4i6zpm+mfTK1DApw/WgSuGqEOC4ZU6
+ XCxg==
+X-Gm-Message-State: AOJu0YymwA+bdJ71jn1FlZaDCbtBC3fW1hNvMchA6WAO8Q+WmOQH4OvG
+ CTBNw9yBP22NjOP4yIRDFLnEWuYQB5VGN++EfFLR+413rtUvQ3pzWAWYnuMlzREsx4fjne8XtYq
+ mBMZYOj1Qif6SQ2wlElyjXZ6ZxWXCxRlBrPNJpRbPep3CadCgZ0L2BI4yRj2PKztaPxOM
+X-Gm-Gg: Acq92OHqDhn2NaMUUChbQhINswtizRl64sfd3Kmrn+m4YW6zxqNlKIhc6/xCuefqedp
+ Bbq890uk+XjfPuKDXIAC9TamMjn4S7l5hdlADgJ9V2IpKQLMQY+st8bMDbdg5ssQcRNNjQXw2kh
+ ML595HvDLM3jw1HgHCTimHBAbeaCNJ14FHpwM1+NBKgq5EpZ9qYj0pRNgy2OXMhsJ21WhWGkf/K
+ XnDdZogT+rbY3ZgzYEGirQys3e+toEgQL+MRTBOnS2Zb43OYTsy7S1ipRpNcrLvgRKpgabO4Kbw
+ 1U/z6FU3UkoN7Jz1d4HqB0nXsHWZCEXYdGDufJt8ILvzwFYFS6P9QZMiaphxcEZ6BEt1CS7jK0w
+ nXV+TA8T7fOeDFx17+DjUM2H9UETCzI0Q2PvWllb9kJwL8rRIZqUHQjty/raSrZfUHvxmlajHeL
+ Bvt6XPeA==
+X-Received: by 2002:a05:7300:aacb:b0:2dd:5641:ef2 with SMTP id
+ 5a478bee46e88-30398642912mr203000eec.25.1778779392916; 
+ Thu, 14 May 2026 10:23:12 -0700 (PDT)
+X-Received: by 2002:a05:7300:aacb:b0:2dd:5641:ef2 with SMTP id
+ 5a478bee46e88-30398642912mr202973eec.25.1778779392347; 
+ Thu, 14 May 2026 10:23:12 -0700 (PDT)
+Received: from hu-pbouvier-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-302944ffdf0sm3828677eec.8.2026.05.14.10.23.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 14 May 2026 10:23:11 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ Anton Johansson <anjo@rev.ng>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Darren Kenny <darren.kenny@oracle.com>,
+ Alexander Bulekov <alxndr@bu.edu>
+Subject: [PATCH v7 2/5] qom/object: initialize type_table in static ctor with
+ fundamental QOM types
+Date: Thu, 14 May 2026 10:23:00 -0700
+Message-ID: <20260514172303.1484273-3-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260514172303.1484273-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20260514172303.1484273-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw: misc: Implement Microchip mpfs ioscb PLLs and sysreg
- clock dividers
-Content-Language: en-US
-To: Conor Dooley <conor@kernel.org>, qemu-riscv@nongnu.org
-Cc: Guenter Roeck <linux@roeck-us.net>,
- Conor Dooley <conor.dooley@microchip.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Sebastian Huber <sebastian.huber@embedded-brains.de>, qemu-devel@nongnu.org
-References: <20260514-reference-overhand-749149e36a88@spud>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260514-reference-overhand-749149e36a88@spud>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: _57w-I-ddkIg4R2nc5SvUHxzyU479xp2
+X-Authority-Analysis: v=2.4 cv=UY9hjqSN c=1 sm=1 tr=0 ts=6a060501 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=pDBHowQsxXgegazyqkAA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: _57w-I-ddkIg4R2nc5SvUHxzyU479xp2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE0MDE3NCBTYWx0ZWRfX3vDMyfNqiFBz
+ iYFfY6mj36bvAbSaSX75sz/INf6El35rcIsoL0l4LlWguUIt8OtbqkrgrrPY2vFiwGqa1NJo55M
+ iqx41NKw2nImw6J+ufMdDi+5Gk8fxVeNw4bkdVd9UJyH5KWFeMtdJ0sZtMJm67y4fcxUZv8Nutd
+ CjODf/THzqVpEXveV8pKtm/XvMnn6VOf+pHRsUmS9Yr06FgUu+aoIgJ2N+vEf1setKzrIedwhhk
+ a8WHs5Mzy0vZUKMHPEry2eiVL4wt6iOpdMpT5b6LHckq1PkJF65El85UDiuQRqHrtXdAwbvadQ0
+ oWpLgLqg50FA2BhVMVcLnk9e5sMnK27d7afNwPOu6+7LNE0DGd8l2T9CGIb2FnBidRPc856fxYs
+ uEugm/Lo9x082aT0lYQoSDO1M5G8UVXktUIQd6ReUADZ6/qMc58cvGIwccw6EWBFjRaWHUC8SK2
+ WYUT+GoexVnxJ5rbN/A==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-14_04,2026-05-13_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0
+ priorityscore=1501 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605050000
+ definitions=main-2605140174
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,104 +160,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/5/26 17:23, Conor Dooley wrote:
-> From: Guenter Roeck <linux@roeck-us.net>
-> 
-> Minimal clock register configuration required to boot Linux
-> without backtraces in the clock code.
-> 
-> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-> Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-> ---
-> I added two more cases to the switch in mchp_pfsoc_sysreg compared to
-> Guenter's patch, cos I still saw 2 backtraces with his patch applied.
-> 
-> CC: Conor Dooley <conor.dooley@microchip.com>
-> CC: Guenter Roeck <linux@roeck-us.net>
-> CC: Alistair Francis <alistair.francis@wdc.com>
-> CC: Sebastian Huber <sebastian.huber@embedded-brains.de>
-> CC: qemu-riscv@nongnu.org
-> CC: qemu-devel@nongnu.org
-> ---
->   hw/misc/mchp_pfsoc_ioscb.c         | 47 +++++++++++++++++++++++++++++-
->   hw/misc/mchp_pfsoc_sysreg.c        | 12 ++++++++
->   include/hw/misc/mchp_pfsoc_ioscb.h |  2 ++
->   3 files changed, 60 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/misc/mchp_pfsoc_ioscb.c b/hw/misc/mchp_pfsoc_ioscb.c
-> index 05538d012a..1267d6ba4a 100644
-> --- a/hw/misc/mchp_pfsoc_ioscb.c
-> +++ b/hw/misc/mchp_pfsoc_ioscb.c
-> @@ -53,6 +53,8 @@
->   #define IOSCB_MAILBOX_BASE          0x07020800
->   #define IOSCB_CFG_BASE              0x07080000
->   #define IOSCB_CCC_BASE              0x08000000
-> +#define IOSCB_PLL_NW0_BASE          0x08100000
-> +#define IOSCB_PLL_NW1_BASE          0x08200000
->   #define IOSCB_PLL_MSS_BASE          0x0E001000
->   #define IOSCB_CFM_MSS_BASE          0x0E002000
->   #define IOSCB_PLL_DDR_BASE          0x0E010000
-> @@ -92,6 +94,16 @@ static const MemoryRegionOps mchp_pfsoc_dummy_ops = {
->   /* All PLL modules in IOSCB have the same register layout */
->   
->   #define PLL_CTRL    0x04
-> +#define PLL_REF_FB  0x08
-> +#define PLL_DIV_0_1 0x10
-> +#define PLL_DIV_2_3 0x14
-> +#define PLL_CTRL2   0x18
-> +#define PLL_CAL     0x1c
-> +#define PLL_PHADJ   0x20
-> +#define SSCG_REG_0  0x24
-> +#define SSCG_REG_1  0x28
-> +#define SSCG_REG_2  0x2c
-> +#define SSCG_REG_3  0x30
->   
->   static uint64_t mchp_pfsoc_pll_read(void *opaque, hwaddr offset,
->                                       unsigned size)
-> @@ -103,6 +115,22 @@ static uint64_t mchp_pfsoc_pll_read(void *opaque, hwaddr offset,
->           /* PLL is locked */
->           val = BIT(25);
->           break;
-> +    case PLL_DIV_0_1:
-> +    case PLL_DIV_2_3:
-> +        val = 0x01000100; /* return valid post divider values */
-> +        break;
-> +    case PLL_CTRL2:
-> +        val = 0x00001110;
-> +	break;
-> +    case PLL_REF_FB:
-> +        val = 0x00000100; /* RFDIV := 1 */
-> +        break;
-> +    case SSCG_REG_2:
-> +        val = 0x00000001; /* INTIN := 1 */
-> +	break;
-> +    case PLL_PHADJ:
-> +        val = 0x00000401;
-> +	break;
->       default:
->           qemu_log_mask(LOG_UNIMP, "%s: unimplemented device read "
->                         "(size %d, offset 0x%" HWADDR_PRIx ")\n",
-> @@ -113,9 +141,18 @@ static uint64_t mchp_pfsoc_pll_read(void *opaque, hwaddr offset,
->       return val;
->   }
->   
-> +static void mchp_pfsoc_pll_write(void *opaque, hwaddr offset,
-> +                                 uint64_t value, unsigned size)
-> +{
-> +    qemu_log_mask(LOG_UNIMP, "%s: unimplemented device write "
-> +                       "(size %d, value 0x%" PRIx64
-> +                       ", offset 0x%" HWADDR_PRIx ")\n",
-> +                       __func__, size, value, offset);
-> +}
-> +
->   static const MemoryRegionOps mchp_pfsoc_pll_ops = {
->       .read = mchp_pfsoc_pll_read,
-> -    .write = mchp_pfsoc_dummy_write,
-> +    .write = mchp_pfsoc_pll_write,
->       .endianness = DEVICE_LITTLE_ENDIAN,
+This saves us having to check if it's initialized everytime we have to
+access it. No other QOM type should be initialized or accessed during
+static ctor calls, so we don't depend on their ordering.
 
-Unrelated to this patch, this device model seems to lack
-the .impl min/max = 4 fields initialized.
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ qom/object.c | 18 +++++-------------
+ 1 file changed, 5 insertions(+), 13 deletions(-)
 
->   };
+diff --git a/qom/object.c b/qom/object.c
+index b82b65a3a18..dfdc5c8e424 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -76,28 +76,19 @@ struct TypeImpl
+ 
+ static Type type_interface;
+ 
+-static GHashTable *type_table_get(void)
+-{
+-    static GHashTable *type_table;
+-
+-    if (type_table == NULL) {
+-        type_table = g_hash_table_new(g_str_hash, g_str_equal);
+-    }
+-
+-    return type_table;
+-}
++static GHashTable *type_table;
+ 
+ static bool enumerating_types;
+ 
+ static void type_table_add(TypeImpl *ti)
+ {
+     assert(!enumerating_types);
+-    g_hash_table_insert(type_table_get(), (void *)ti->name, ti);
++    g_hash_table_insert(type_table, (void *)ti->name, ti);
+ }
+ 
+ static TypeImpl *type_table_lookup(const char *name)
+ {
+-    return g_hash_table_lookup(type_table_get(), name);
++    return g_hash_table_lookup(type_table, name);
+ }
+ 
+ static TypeImpl *type_new(const TypeInfo *info)
+@@ -1069,7 +1060,7 @@ void object_class_foreach(void (*fn)(ObjectClass *klass, void *opaque),
+     OCFData data = { fn, implements_type, include_abstract, opaque };
+ 
+     enumerating_types = true;
+-    g_hash_table_foreach(type_table_get(), object_class_foreach_tramp, &data);
++    g_hash_table_foreach(type_table, object_class_foreach_tramp, &data);
+     enumerating_types = false;
+ }
+ 
+@@ -2859,6 +2850,7 @@ static void __attribute__((constructor)) register_types(void)
+         .abstract = true,
+     };
+ 
++    type_table = g_hash_table_new(g_str_hash, g_str_equal);
+     type_interface = type_register_internal(&interface_info);
+     type_register_internal(&object_info);
+ }
+-- 
+2.43.0
+
 
