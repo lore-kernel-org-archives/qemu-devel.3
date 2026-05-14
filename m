@@ -4,77 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 504D4CD4F25
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 08:11:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11839CD4F25
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 08:12:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNRA9-0004c7-RI; Thu, 14 May 2026 04:11:21 -0400
+	id 1wNRAF-0004ds-Uj; Thu, 14 May 2026 04:11:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ldc.jml@gmail.com>) id 1wNR9x-0004aE-Ov
- for qemu-devel@nongnu.org; Thu, 14 May 2026 04:11:09 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ (Exim 4.90_1) (envelope-from <ldc.jml@gmail.com>) id 1wNRA3-0004bB-Q5
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 04:11:17 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ldc.jml@gmail.com>) id 1wNR9v-0001bT-I8
- for qemu-devel@nongnu.org; Thu, 14 May 2026 04:11:09 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-367d88b9940so3969883a91.1
- for <qemu-devel@nongnu.org>; Thu, 14 May 2026 01:11:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ldc.jml@gmail.com>) id 1wNR9z-0001cE-OB
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 04:11:15 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2b788a98557so58087925ad.2
+ for <qemu-devel@nongnu.org>; Thu, 14 May 2026 01:11:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778746265; x=1779351065; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=DvQeMqraqCo3ctwgd/pZSUQXO0skjKcGUgMfPkwuMto=;
- b=AsHcbOXXyMiC+Q0mX2jtZ103bFe1FcU+edOUoURNg/L9xOd8lCA0S5IJXnEY+iRpNX
- Ky5cA9rH6e27GGI35/t5TCn/ikvp+aE/DW0EJgCHWYv7T5KZ+g7Vhc0P5CQXUe9bxzL9
- YVZBaTzfqoTm9usb5e670I2QdDh/zhTArLbnSolHequh64Z85qChXKQwrl649tbm1dKD
- hyXvYmowz75JLvV3TsevaaARsduMjpZnnkAemRL79aFI7y5K8B792VFR0pCHcJJRuGFf
- +XKTCJimL+qC1YHF3yBbrP4sT1AUzAXBaR0PYtGH2ETQfo4rK72MxdYtoXQesiYNN//b
- CZRA==
+ d=gmail.com; s=20251104; t=1778746269; x=1779351069; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=wp610CTuY5BtVJCvmliEvcgHSUgtMv4PTZfRqvUtBfw=;
+ b=ETukIjuVPauMCE75mkCTkYN9OinCmyhUSwQhkCzBss712pPa6J+uGVu5hpXUQrLRii
+ YzDCY51DnuyQ7WknssGY4FG422KNgLE7L2+IlCVHSJiKgOeOmZTeyI4uWC9NnJ4k4vvN
+ Pm6h1JPmfajJO0f5tkQz06fNUgGBkig3SYy49YZpzfrZ0Y6CyKPdB+84xM65l5k7r9TH
+ hNDV/W5RUS1q35dswi1odcLdR0n+/AzyUzYjY0sus2oL2ML+e3QY1uIB6dkzdNVJYPIG
+ almz7rDfW0+JtqiOn+/AIdc0UoOxscFXm2SOY+KfSLiWj/B/JtECjjM566HpefB9OgMt
+ xh4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778746265; x=1779351065;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DvQeMqraqCo3ctwgd/pZSUQXO0skjKcGUgMfPkwuMto=;
- b=JkBnLJNJqA3O8eKkxH1EMjegaUVt0xNPDE/+6yrWM7JdtnHwxPt+2WbXqKjuRHOFop
- 0R7BDgWg8YrOhODA3H0/zgxI796nF15U0J8znVBBadYM4eaiK21kncMJXoMQwC8ODDID
- npdL8wfWqXReq1txaycuw+JuvEkyhXWTm1Xie2+WGa3IDjTvEqMW9DKcYeMgBqbyuQ1S
- F/i8xzZbbI0nPzK6aTXVODLdydIbsIFRkRa+IIm1pCWtEMEz/LC6vZVYw7rE//b8ofmZ
- VGdIWUn/pDZLNoHbeWaKMcurcpSDkW+5va3/gQrCrcpIKay7grXOW/Zdw7Wo8tXFtgRK
- u6pg==
-X-Gm-Message-State: AOJu0YymkrqraJYc6RmzeDzwFYa2c26VPhCu5kJCrAE49w6syeyr2oOi
- opZ5xocM6kPkM4Sm0hyLx5lo9/gUxN+RipM3s+9UFSTvvji2tpSbRab2
-X-Gm-Gg: Acq92OGw8HFKnTeeMO12fyY/fsWtfPBOdJ5rHiZPRuRvRgPDUfYIABlh8GVltv/PeUZ
- RYUrEEf2Pr6OxnmFa4Xvz8GKWSbYHKnBs/A0vkF3qH9tFtYGHAfNXmc8Dld2io0574hsePaDQ/z
- zK8ejaamEKQHwWchfsYOd7lg56vpN72gNkgsIdYoDVGvJwzZf2XlRkp1GF5GfrELrFPBp1PtPkq
- c7Ru6clljyt93uammWCCpB8yVuVoCPrU7xm45lWVD/i6aZUF78s0dVzcbh+Qad1DWwUVsgILPNj
- PsIbu5nzCAQ/uZaKhNaQu3smFPf37+cX0hoxLqd3o1TVyz2Q5k2dUsr2oezF0x2CoA6xK+PjOjB
- NMOv60Eh0hscI0wPE3UFsZjEfUFVDU+VicW5YD5zFr1Ko3bqe/KSToE/nHnl/FAWQYXP4YTtErY
- JHtPvEtgRKEXHddb/SbOKxElQUwPuz6Q==
-X-Received: by 2002:a17:90a:fc44:b0:368:4cb2:17b8 with SMTP id
- 98e67ed59e1d1-368f40835b7mr7542232a91.21.1778746264749; 
- Thu, 14 May 2026 01:11:04 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1778746269; x=1779351069;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=wp610CTuY5BtVJCvmliEvcgHSUgtMv4PTZfRqvUtBfw=;
+ b=hwUwbT7YMVtBiNe+E8Rr1os1ZEhI51oz+LKvFFCOobOzGF16nX8vSKhX/YiGBHa8xy
+ Kq35KZ6PlXLict19dpj1KiELSvnMH1P7021YmpE8HFPWzNQBl8f3kPRGDtYMQQJHTJQ4
+ NQmyO0WBdBQPQac2PkzyA9jZkCfLP3OwAh2wk2LbGLN7Ej6+qsFFgAyBNiw3iBM0Ai0k
+ we2zhhHg+EKvRU89JjcDG4hMqyx0pY8UVVguLCxooWaXFqsZEvp5FnPO8aqxp826R5Sm
+ /4UMrXYJEkxkJ8xyZ2SbqrOsT/5lbYy08xJAAV+pO/ojKal65VA3cNQ/MsQ7OJoE6Xx0
+ 03ug==
+X-Gm-Message-State: AOJu0Yzz6PcjMZOl7insZA7U/Ll8tCjSmGwhhO3jIoC+gUq+BKcdNrjg
+ tSnEUEzQDflN1WCQ/OAGIGEwVpFOjrCO+7o281MgpHekg1k6JubY1/xm
+X-Gm-Gg: Acq92OFTZle6ZUs1vjKPcmAoaNVuEHxIC89GoEGVXZfJK3j+mFnoX91aSAOh9kMGe5M
+ 5r0i4Cixi5kXDvIL2fra5RVk+biXcRXthF2EXgy4KkIGZQgLM/vlTOwb6DufECdGfvmcVdh5nPC
+ wpuN+wGi+xOlXJurxQlF8YPu6WF24TrWhQp863a39aXQbMiYwWI0oQr4LcHCp0UBGd3h2FnDdGm
+ Efd92JIZsZ9P9SOo6yhx6PeXlN2V0I3H/mD/vlZ1AfomEzdmE5WbBGJmEkbRnaumltCQ9qF4Psd
+ 0+F5uIXQ8pVGNWMk/9TySKC7AWwT14ENyxvyRM9kMOGg6XlIRuZ3zluW2FojSIQjsY9jWu9xRiL
+ 37N9X42KGsm9wC/AvM+HYT07fstZOb533MPj6i5QPBos8hsJIXeadrDoyl8J9e/Ho4VbkfXcTDd
+ r2pU6n9hIF/h64lSnKuX5A14+tgnkjxQ==
+X-Received: by 2002:a17:903:4514:b0:2b9:ec37:2977 with SMTP id
+ d9443c01a7336-2bd275c6df7mr50400735ad.38.1778746268947; 
+ Thu, 14 May 2026 01:11:08 -0700 (PDT)
 Received: from [172.17.0.5] ([168.126.243.22])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2bd5c2631basm14480165ad.34.2026.05.14.01.11.02
+ d9443c01a7336-2bd5c2631basm14480165ad.34.2026.05.14.01.11.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 May 2026 01:11:04 -0700 (PDT)
+ Thu, 14 May 2026 01:11:08 -0700 (PDT)
 From: Jaemyung Lee <ldc.jml@gmail.com>
 X-Google-Original-From: Jaemyung Lee <jaemyung.lee@samsung.com>
-Subject: [PATCH v7 0/5] hw/ufs: Add Write Booster Support on UFS
-Date: Thu, 14 May 2026 17:10:43 +0900
-Message-Id: <20260514-write_booster-v7-0-c3ae3452980f@samsung.com>
+Date: Thu, 14 May 2026 17:10:45 +0900
+Subject: [PATCH v7 2/5] hw/ufs: Modify flag handling operation
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAIODBWoC/33PTWrDMBCG4asEraswkvXbVe9RQpClcaJFrCC5T
- kvw3SN7ZWzS5TfwvDBPUjBHLOTz8CQZx1hi6uvQHwfir66/II2hbsKBKxCg6SPHAc9tSmXATI2
- xDpR3wUtLqrln7OLv0vs+1X2NZUj5b8mPfL6+K42cAg1Ba962DTArvoq7lZ/+cvTpRubW2Ky93
- fpm8bxjHhiz3uy9WHkGWy9mL41TBqTRodt7+a+XsxcCmQNklvm9VyvPd15Vb7ywzrcOmrD5f5q
- mF51X/pqsAQAA
-X-Change-ID: 20260407-write_booster-889a06cadc59
+Message-Id: <20260514-write_booster-v7-2-c3ae3452980f@samsung.com>
+References: <20260514-write_booster-v7-0-c3ae3452980f@samsung.com>
+In-Reply-To: <20260514-write_booster-v7-0-c3ae3452980f@samsung.com>
 To: qemu-devel@nongnu.org
 Cc: Jeuk Kim <jeuk20.kim@samsung.com>, Kevin Wolf <kwolf@redhat.com>, 
  Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org, 
@@ -82,15 +78,15 @@ Cc: Jeuk Kim <jeuk20.kim@samsung.com>, Kevin Wolf <kwolf@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, 
  Jaemyung Lee <jaemyung.lee@samsung.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1778746262; l=2799;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1778746262; l=6656;
  i=jaemyung.lee@samsung.com; s=20260402; h=from:subject:message-id;
- bh=MD+iYTeaJi2vxaNQHaL7wWk5OHYtGqU0LLgiy6GnJyI=;
- b=vU1aZJc3pxpeCgbvOSv03BnvdxRHIJmKYLPdl+am4MhX3tct/WjwGO6kO0YIOZJj63bwdipRz
- BtV56Py2hcBDYgvfGfFedpK0YGOPj+D4y8iSRaIAfMLqqGyf5EDxDIp
+ bh=UwQldvutZu9HqLXksjdiAk3IKzXkRCngBaBlZ026a4E=;
+ b=AnhaQp2/PhH9GU/ydKRfgxenEr0M+0qBJrMuyOUBC1xE/KRVUQbZdNZHPq9cO8eUJRUgK1vm6
+ CO3RJ+7WFZXCY6MDOYJM+uYzp96NMmPwYhhBKcc9pixUei2p6Zkq+ab
 X-Developer-Key: i=jaemyung.lee@samsung.com; a=ed25519;
  pk=bZPd7A/kteUO62FfUM6IrI1LuBPe5QrcqfvsitM1ZjE=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=ldc.jml@gmail.com; helo=mail-pj1-x1036.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=ldc.jml@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,84 +109,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, the QEMU-UFS emulation is implemented based on the JEDEC UFS
-4.0 Specification and does not support the operation related to UFS Extended
-Features which is defined with latest UFS Specifications.
+Change internal flag handling operation same as attribute's
 
-This series modifies the UFS core implementation to align with the JEDEC
-UFS 4.1 Specification[1], and adds a Write Booster UFS Extended Feature
-supportability.
-
-Tested: x86-64 KVM, upstream QEMU with Debian GNU/Linux 10
-
-[1]
-https://jedec.org/standards-documents/focus/flash/universal-flash-storage-ufs
+In UFS device, some flag queries directly trigger specific device
+behaviour like attribute's, not only changes the internal values.
+So restructure flag query processing functions same as attribute
+processing, to facilitate linking detailed implementations based on
+individual flag value changes.
 
 Signed-off-by: Jaemyung Lee <jaemyung.lee@samsung.com>
 ---
-Changes in v7:
-- Added range check for dPinnedWriteBoosterBufferNumAllocUnits
-- Added range check for dNonPinnedWriteBoosterBufferMinNumAllocUnits
-- Added exception event status operation
-- Fixed minimum buffer size set in WB initialization
-- Fixed resize operation
-- Fixed Pinned WB buffer consumption
-- Fixed user_space_reduction related value
-- Fixed buffer size sync timing
-- Fixed flush operation
-- Removed unused DEFINE_PROP varialbles
+ hw/ufs/ufs.c | 152 ++++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 119 insertions(+), 33 deletions(-)
 
-Changes in v6:
-- Fix Pinned Total Written Size Calculation(2).
-- Added range check for dMaxFIFOSizeForWriteBoosterPartialFlushMode
-- Fix flush status check
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index b2b70c8b38ebecd8d49ecce288614d55efd90f2e..69f82ab462d135fe6cda479891f9d8f26d19be9a 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -1021,6 +1021,122 @@ static inline QueryRespCode ufs_flag_check_idn_valid(uint8_t idn, int op)
+     return UFS_QUERY_RESULT_SUCCESS;
+ }
+ 
++static uint32_t ufs_read_flag_value(UfsHc *u, uint8_t idn)
++{
++    switch (idn) {
++    case UFS_QUERY_FLAG_IDN_FDEVICEINIT:
++        return u->flags.device_init;
++    case UFS_QUERY_FLAG_IDN_PERMANENT_WPE:
++        return u->flags.permanent_wp_en;
++    case UFS_QUERY_FLAG_IDN_PWR_ON_WPE:
++        return u->flags.power_on_wp_en;
++    case UFS_QUERY_FLAG_IDN_BKOPS_EN:
++        return u->flags.background_ops_en;
++    case UFS_QUERY_FLAG_IDN_LIFE_SPAN_MODE_ENABLE:
++        return u->flags.device_life_span_mode_en;
++    case UFS_QUERY_FLAG_IDN_PURGE_ENABLE:
++        return u->flags.purge_enable;
++    case UFS_QUERY_FLAG_IDN_REFRESH_ENABLE:
++        return u->flags.refresh_enable;
++    case UFS_QUERY_FLAG_IDN_FPHYRESOURCEREMOVAL:
++        return u->flags.phy_resource_removal;
++    case UFS_QUERY_FLAG_IDN_BUSY_RTC:
++        return u->flags.busy_rtc;
++    case UFS_QUERY_FLAG_IDN_PERMANENTLY_DISABLE_FW_UPDATE:
++        return u->flags.permanently_disable_fw_update;
++    case UFS_QUERY_FLAG_IDN_WB_EN:
++        return u->flags.wb_en;
++    case UFS_QUERY_FLAG_IDN_WB_BUFF_FLUSH_EN:
++        return u->flags.wb_buffer_flush_en;
++    case UFS_QUERY_FLAG_IDN_WB_BUFF_FLUSH_DURING_HIBERN8:
++        return u->flags.wb_buffer_flush_during_hibernate;
++    case UFS_QUERY_FLAG_IDN_UNPIN_EN:
++        return u->flags.unpin_en;
++    default:
++        g_assert_not_reached();
++        return 0;
++    }
++}
++
++static QueryRespCode ufs_write_flag_value(UfsHc *u, uint8_t idn, uint8_t value)
++{
++    switch (idn) {
++    case UFS_QUERY_FLAG_IDN_FDEVICEINIT:
++        u->flags.device_init = 0;
++        break;
++    case UFS_QUERY_FLAG_IDN_PERMANENT_WPE:
++        u->flags.permanent_wp_en = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_PWR_ON_WPE:
++        u->flags.power_on_wp_en = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_BKOPS_EN:
++        u->flags.background_ops_en = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_LIFE_SPAN_MODE_ENABLE:
++        u->flags.device_life_span_mode_en = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_PURGE_ENABLE:
++        u->flags.purge_enable = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_REFRESH_ENABLE:
++        u->flags.refresh_enable = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_FPHYRESOURCEREMOVAL:
++        u->flags.phy_resource_removal = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_PERMANENTLY_DISABLE_FW_UPDATE:
++        u->flags.permanently_disable_fw_update = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_WB_EN:
++        u->flags.wb_en = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_WB_BUFF_FLUSH_EN:
++        u->flags.wb_buffer_flush_en = value;
++        break;
++    case UFS_QUERY_FLAG_IDN_WB_BUFF_FLUSH_DURING_HIBERN8:
++        u->flags.wb_buffer_flush_during_hibernate = value;
++        break;
++    default:
++        return UFS_QUERY_RESULT_INVALID_VALUE;
++    }
++
++    return UFS_QUERY_RESULT_SUCCESS;
++}
++
++static QueryRespCode ufs_exec_query_flag(UfsRequest *req, int op)
++{
++    UfsHc *u = req->hc;
++    uint8_t idn = req->req_upiu.qr.idn;
++    uint8_t value;
++    QueryRespCode ret;
++
++    ret = ufs_flag_check_idn_valid(idn, op);
++    if (ret) {
++        return ret;
++    }
++
++    if (op == UFS_QUERY_FLAG_READ) {
++        value = ufs_read_flag_value(u, idn);
++        ret = UFS_QUERY_RESULT_SUCCESS;
++    } else if (op == UFS_QUERY_FLAG_SET) {
++        value = 1;
++        ret = ufs_write_flag_value(u, idn, value);
++    } else if (op == UFS_QUERY_FLAG_CLEAR) {
++        value = 0;
++        ret = ufs_write_flag_value(u, idn, value);
++    } else if (op == UFS_QUERY_FLAG_TOGGLE) {
++        value = !(ufs_read_flag_value(u, idn));
++        ret = ufs_write_flag_value(u, idn, value);
++    } else {
++        trace_ufs_err_query_invalid_opcode(op);
++        return UFS_QUERY_RESULT_INVALID_OPCODE;
++    }
++
++    req->rsp_upiu.qr.value = cpu_to_be32(value);
++    return ret;
++}
++
+ static const int attr_permission[UFS_QUERY_ATTR_IDN_COUNT] = {
+     /* booting is not supported */
+     [UFS_QUERY_ATTR_IDN_BOOT_LU_EN] = UFS_QUERY_ATTR_READ,
+@@ -1103,39 +1219,6 @@ static inline QueryRespCode ufs_attr_check_idn_valid(uint8_t idn, int op)
+     return UFS_QUERY_RESULT_SUCCESS;
+ }
+ 
+-static QueryRespCode ufs_exec_query_flag(UfsRequest *req, int op)
+-{
+-    UfsHc *u = req->hc;
+-    uint8_t idn = req->req_upiu.qr.idn;
+-    uint32_t value;
+-    QueryRespCode ret;
+-
+-    ret = ufs_flag_check_idn_valid(idn, op);
+-    if (ret) {
+-        return ret;
+-    }
+-
+-    if (idn == UFS_QUERY_FLAG_IDN_FDEVICEINIT) {
+-        value = 0;
+-    } else if (op == UFS_QUERY_FLAG_READ) {
+-        value = *(((uint8_t *)&u->flags) + idn);
+-    } else if (op == UFS_QUERY_FLAG_SET) {
+-        value = 1;
+-    } else if (op == UFS_QUERY_FLAG_CLEAR) {
+-        value = 0;
+-    } else if (op == UFS_QUERY_FLAG_TOGGLE) {
+-        value = *(((uint8_t *)&u->flags) + idn);
+-        value = !value;
+-    } else {
+-        trace_ufs_err_query_invalid_opcode(op);
+-        return UFS_QUERY_RESULT_INVALID_OPCODE;
+-    }
+-
+-    *(((uint8_t *)&u->flags) + idn) = value;
+-    req->rsp_upiu.qr.value = cpu_to_be32(value);
+-    return UFS_QUERY_RESULT_SUCCESS;
+-}
+-
+ static inline uint8_t ufs_read_device_temp(UfsHc *u)
+ {
+     uint8_t feat_sup = u->device_desc.ufs_features_support;
+@@ -1300,6 +1383,9 @@ static QueryRespCode ufs_write_attr_value(UfsHc *u, uint8_t idn, uint32_t value)
+     case UFS_QUERY_ATTR_IDN_TIMESTAMP:
+         u->attributes.timestamp = cpu_to_be64(value);
+         break;
++    default:
++        g_assert_not_reached();
++        return 0;
+     }
+     return UFS_QUERY_RESULT_SUCCESS;
+ }
 
-Changes in v5:
-- Fix Pinned Total Written Size Calculation.
-- Fix WB related status reset timing
-- Link to v4: https://lore.kernel.org/qemu-devel/20260410-write_booster-v4-0-d58a680587df@samsung.com
-
-Changes in v4:
-- Fixed MCQ idle check: skip unallocated qid
-- Removed unused arguments from WB accounting functions
-- Added SCSI command status guard for WB accounting at completion
-
-Changes in v3:
-- Fixed constraint check return value
-- Fixed WB buffer consume amount with transfered_len
-- Fixed MCQ idle check:
- - Added NULL exception check
- - Added CQ pending request check
-- Link to v2: https://lore.kernel.org/qemu-devel/20260407-write_booster-v2-0-dd772bb30194@samsung.com
-
-Changes in v2:
-- Fixed MCQ idle check
-- Added WRITE_6/WRITE_16 handling
-- Fixed WB buffer consume timing
-- Added constraint check
-- Fixed uint64_t casting for unit calculation
----
-
----
-Jaemyung Lee (5):
-      hw/ufs: Apply UFS 4.1 Specification
-      hw/ufs: Modify flag handling operation
-      hw/ufs: Add idle operation
-      hw/ufs: Add UFS Write Booster Support
-      tests/qtest: Add UFS Write Booster QTest
-
- hw/ufs/lu.c            | 102 ++++++-
- hw/ufs/ufs.c           | 714 ++++++++++++++++++++++++++++++++++++++++++++++---
- hw/ufs/ufs.h           |  49 ++++
- include/block/ufs.h    | 114 +++++++-
- tests/qtest/ufs-test.c | 172 ++++++++++++
- 5 files changed, 1105 insertions(+), 46 deletions(-)
----
-base-commit: 5e61afe211e82a9af15a8794a0bd29bb574e953b
-change-id: 20260407-write_booster-889a06cadc59
-
-Best regards,
 -- 
-Jaemyung Lee <jaemyung.lee@samsung.com>
+2.48.1
 
 
