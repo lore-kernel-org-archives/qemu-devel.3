@@ -4,89 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 297EDCD4F21
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 02:58:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 440ABCD37AC
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 03:12:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNMHG-0003mo-NJ; Wed, 13 May 2026 22:58:22 -0400
+	id 1wNMUE-0006DY-2x; Wed, 13 May 2026 23:11:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wNMH8-0003mO-Vj
- for qemu-devel@nongnu.org; Wed, 13 May 2026 22:58:15 -0400
-Received: from mail-dl1-x1242.google.com ([2607:f8b0:4864:20::1242])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wNMH7-0004Av-2K
- for qemu-devel@nongnu.org; Wed, 13 May 2026 22:58:14 -0400
-Received: by mail-dl1-x1242.google.com with SMTP id
- a92af1059eb24-132830d8281so848457c88.1
- for <qemu-devel@nongnu.org>; Wed, 13 May 2026 19:58:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778727490; x=1779332290; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=I8CSTW8jWJI5NHyNodadRPPf+i+tOLgP7faxCevMkvw=;
- b=HHzjCo+I0rp/0Z4hxw+Dzr+0zSPiljdNcKvfbP/bDl0J8k9eMffoww25LE/ZVgbg9Z
- tFtrjNh9t9U30BKbNI/6+n+8xXpwMrT4r7mFl5d9GG/PdYB124GSgt8cWWfbpaxN0N7f
- A9vMwojsl6t9QP/DqjGKuZooz4WRBHfDBysyQFaWt8IWoVVec2BLBH3cR6j5YvaYvW8s
- kp9m3whCUCZRMyzf99TM7pCtcsaufdtpQsYSgAKuqx7FL2gn+IUC2uHRdU2hMEl1J+pW
- B9wbszJ6Cb7t3NBMGvaxwxVa8x7Cra/NbYelbzZNVXwHaVc/+P7aps9FwXbAEGI09QVb
- GKoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778727490; x=1779332290;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=I8CSTW8jWJI5NHyNodadRPPf+i+tOLgP7faxCevMkvw=;
- b=Ryun6QPo3gLCyk7smwCw92J1FvqKqisWc4FOcwB6SYFAUBbEX8MQLm1luMEB04bIsq
- /H7qXjGoLpireclPUkcMsew3HD5epmn43hjKXgmkrNQ5UEjaCeL7qf4DSQUfGIAvt6pa
- khNzu+H6F2tJwqXPS2nZlWxnU5tDWgFNUkQCmQv8ya5+zgG/Z3whGT1r82EkyDYi/3c5
- aal3wyrLOmXcW06dn20LhxtZxSFUcoyewschJqtNNfwGKjGXny2gowINXHk8yUT14PfU
- EhJ/lstpftz8QjUN/BLc5gzrql63LCe6Lx0fj3SPXd/61PhWlOvXQeYPmX1Ws7dyNBo/
- 4GnA==
-X-Gm-Message-State: AOJu0YzQRzdUH9MoNohh/C1upnHarySnqBbP52xWiRAdiX84nsejYHmW
- Bf4Fv/VrLGVH5sEvck5TkysSCg9dyHLbHMuE6u3bJlO3msAEtW+4vtCs
-X-Gm-Gg: Acq92OFch7HzmMO4dpD4VE2wt3+G8s9BK0vGbnnMbLsNFDaU+8/5ZJcffZNRtwCOrlY
- Us78uWc1bvLb4v5nN9JRFvIfjLGjYUq+otTE6ZduDbmVyUu8ZYlUyS4CpGuV9q7RohNtq93p6VA
- wNNYSw/J4+dx0gv/8SoaBYJQomFgoh/X7hIt4EZrEZF4h1SbimvXPD6lUpTqFzVocDdRddsUamN
- QgjduHqITxedQS/LtFrz03wLZis7vhtZU6pMa6Oqt6idyX0r7jr0l7fqXAngVnaN4i7UcfXKCE9
- GTZ12kR2JUg+wbJRqz/aBPmV8SMMXe/DS5mrOTHoDwYFOJ1bfnfN8iwy47bBArbWv2gPNM1u2cz
- xEs/++Oddsj+wswpyD8Ffr4UfIe67kaNcbTPIk/qFCizOGN7qwNayylMNzJa5K1eKm7pCJWOa7A
- WwuMfJhGJghJOEiaRG7iP8Uz+rasVyxMThgfseOfdDsH7MEils2vWeaeIwJmISE4Hb7GvICHZwP
- mL/t1fNJ1sRzQIqjVramn3DUVSqPM4=
-X-Received: by 2002:a05:7022:108:b0:12d:de3e:86aa with SMTP id
- a92af1059eb24-13439c5cc81mr3918800c88.40.1778727489975; 
- Wed, 13 May 2026 19:58:09 -0700 (PDT)
-Received: from ZEVORN-PC.localdomain ([38.95.120.198])
- by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-134cf44668asm1623633c88.6.2026.05.13.19.58.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 May 2026 19:58:09 -0700 (PDT)
-Date: Thu, 14 May 2026 10:58:03 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>, 
- Cleber Rosa <crosa@redhat.com>
-Subject: Re: [RFC PATCH v2 01/10] AGENTS.md: add basic AGENTS.md for QEMU
-Message-ID: <agU4-pUgXDvyA2dI@ZEVORN-PC.localdomain>
-References: <20260511170500.124211-1-alex.bennee@linaro.org>
- <20260511170500.124211-2-alex.bennee@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260511170500.124211-2-alex.bennee@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1242;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1242.google.com
+ (Exim 4.90_1) (envelope-from <yoshinori.sato@nifty.com>)
+ id 1wNMUC-0006DC-8A; Wed, 13 May 2026 23:11:44 -0400
+Received: from mta-snd-w10.mail.nifty.com ([106.153.227.42])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <yoshinori.sato@nifty.com>)
+ id 1wNMU9-0000sW-99; Wed, 13 May 2026 23:11:43 -0400
+Received: from sakura.ysato.name by mta-snd-w10.mail.nifty.com with ESMTP
+ id <20260514031130261.TBBA.44671.sakura.ysato.name@nifty.com>;
+ Thu, 14 May 2026 12:11:30 +0900
+Received: from SIOS1075.ysato.ml (ZM005235.ppp.dion.ne.jp [222.8.5.235])
+ by sakura.ysato.name (Postfix) with ESMTPSA id BAF401C0015;
+ Thu, 14 May 2026 12:11:29 +0900 (JST)
+Date: Thu, 14 May 2026 12:11:29 +0900
+Message-ID: <87lddmwuqm.wl-yoshinori.sato@nifty.com>
+From: yoshinori.sato@nifty.com
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: Richard Henderson <richard.henderson@linaro.org>,	Philippe
+ =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org,	qemu-stable@nongnu.org
+Subject: Re: [PATCH 1/3] target/sh4: Re-allow unaligned access on system
+ emulation
+In-Reply-To: <11d2cf4d-303c-4778-abed-cf2bdef7804d@roeck-us.net>
+References: <20260513065438.8680-1-philmd@linaro.org>
+ <20260513065438.8680-2-philmd@linaro.org>
+ <d9bf52a2-f100-4bbf-b015-1bd303f5fe34@linaro.org>
+ <11d2cf4d-303c-4778-abed-cf2bdef7804d@roeck-us.net>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
+ Emacs/30.1 (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nifty.com;
+ s=default-1th84yt82rvi; t=1778728290; 
+ bh=+URR10niK9tx8i4EPFBBPaGp89N/laA44ozHztMOr7U=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References;
+ b=OTnI1kc1tHsu/mkw9DBXmOuiGM7+wi0z3Ij0TWaxxRjK6uFcLXIfhdhUCZBkTEr79R/Vicfx
+ rqt7Xvhb+jqzns+f60jojRUcawZBtLH4pgZ60N/ObQaahD09XSwKWiWFgMbAp1IoS+XjcJ8cHV
+ nDOtJCVu3PKSwXeSqRTxXHH5M3LKzL5lJ+T6SsK2MYm2aEkPkC0+syFIswO6dL2tt0XvW0FiGH
+ RCF23lyvULwyKL90vckOsBE3uk4q87152nhfFgawRqXoiQiajhUEeITQMVHhwTzpSCns1sBMEw
+ zIcK465p9RknSurS6hXHZUMhwRLHehsHOEPAU3ZivG/txRug==
+Received-SPF: pass client-ip=106.153.227.42;
+ envelope-from=yoshinori.sato@nifty.com; helo=mta-snd-w10.mail.nifty.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,139 +76,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alex,
-On Mon, May 11, 2026 at 06:04:50PM +0100, Alex Bennée wrote:
-> This was written initially written by ECA based on its understanding of the
-> code base. I then expanded it with links to the various documents and
-> the general coding style.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> 
-> ---
-> v4
->   - will add AGENTS to list as we go
->   - moved QOM, QAPI and trace details into qemu-code-explorer skill
->   - add section on Security policy
-> v3
->   - More MUST
->   - Remove build and test in favour of agent reference
-> v2
->   - more build details and source overview
->   - more on commit style
->   - give plan files a place to live
->   - add Daniel's agent suggestion
-> ajb:
->   - I made a slight tweak to use pyenv to run single tests
-> ---
->  .gitignore |  1 +
->  AGENTS.md  | 78 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 79 insertions(+)
->  create mode 100644 AGENTS.md
-> 
-Do you think we should add CLAUDE.md, GEMINI.md, or other agent-specific
-prompt files that simply link to AGENTS.md, to better support different
-agent CLIs?
+On Thu, 14 May 2026 03:34:30 +0900,
+Guenter Roeck wrote:
+>=20
+> On Wed, May 13, 2026 at 11:24:27AM -0700, Richard Henderson wrote:
+> > On 5/12/26 23:54, Philippe Mathieu-Daud=C3=A9 wrote:
+> > > The change 0 -> MO_ALIGN in commit eb978e50e42 ("target/sh4: Use
+> > > MO_ALIGN for system UNALIGN()") would have been correct if it was
+> > > merged before commit 1fceff9c3ca ("tcg: Remove TARGET_ALIGNED_ONLY")
+> > > which defined MO_UNALN -> 0. What we really want here now is
+> > > MO_UNALN (MO_ALIGN is dealt with in commit 03a0d87e8dd "target/sh4:
+> > > Use MO_ALIGN where required").
+> >=20
+> > Not correct.  All system mode accesses are aligned, or trap.
+> >=20
+> > All of the UNALIGN are unaligned for linux-user only, in that those are=
+ the
+> > insns that the linux kernel emulates.  Since the linux kernel does not
+> > emulate all insns, all other insns must be aligned -- that's what
+> > 03a0d87e8dd is about.
+> >=20
+> > > Use the correct definition, otherwise we get when booting Linux:
+> > >=20
+> > >    ok 14 bitfields
+> > >        KTAP version 1
+> > >        # Subtest: blackholedev
+> > >        # module: blackhole_dev_kunit
+> > >        1..1
+> > >    delay-slot-insn faulting in handle_unaligned_delayslot: 0000 [#1]
+> > >    Modules linked in:
+> > >    CPU: 0 UID: 0 PID: 298 Comm: kunit_try_catch Tainted: G           =
+      N
+> > >    6.17.0-12907-g8765f467912f #1 NONE
+> > >    Tainted: [N]=3DTEST
+> > >    PC is at test_blackholedev+0xc6/0x1c8
+> > >    PR is at test_blackholedev+0xca/0x1c8
+> > >    PC  : 8c228d16 SP  : 8d40bed0 SR  : 40008001 TEA : 8cce4026
+> > >    R0  : 00000000 R1  : 00000000 R2  : 000000d2 R3  : 8cc77b80
+> > >    R4  : 8cc77b40 R5  : 0000000e R6  : 8c228cea R7  : 8cce400e
+> > >    R8  : 8cc77b40 R9  : 8cc77bbc R10 : 8cc77bbe R11 : 8c4b46b0
+> > >    R12 : 8c78310c R13 : 8cc29cf4 R14 : 8c6e3a88
+> > >    MACH: 0000d80d MACL: e554cb0f GBR : 00000000 PR  : 8c228d1a
+> > >    Call trace:
+> > >     [<8c05b378>] pick_next_task_fair+0x94/0x164
+> > >     [<8c5c2bce>] __schedule+0x306/0x6ec
+> > >     [<8c21fa68>] kunit_try_run_case+0x58/0x174
+> > >    ...
+> >=20
+> > That would be a kernel bug then.
+>=20
+> It is interesting that no one reported this against real hardware,
+> but then who knows if anyone still runs that hardware and/or that set
+> of tests.
+>=20
+> If I recall correctly, there were other problems when running the sh4
+> emulation with eb978e50e42f3 in the tree. I have reverted that patch in
+> my downstream version of qemu, and I'll be happy to carry the revert
+> along, so from my perspective it is ok to not address the problem in qemu.
+>=20
+> Guenter
 
-Thanks,
-Chao
-> diff --git a/.gitignore b/.gitignore
-> index 61fa39967b5..4ccba871d16 100644
-> --- a/.gitignore
-> +++ b/.gitignore
-> @@ -8,6 +8,7 @@
->  .git-submodule-status
->  .clang-format
->  .gdb_history
-> +.plan
->  cscope.*
->  tags
->  TAGS
-> diff --git a/AGENTS.md b/AGENTS.md
-> new file mode 100644
-> index 00000000000..a97b4df5f7f
-> --- /dev/null
-> +++ b/AGENTS.md
-> @@ -0,0 +1,78 @@
-> +# QEMU Agent Guide
-> +
-> +As an agent you MUST abide by the "Use of AI-generated content" policy
-> +in `docs/devel/code-provenance.rst` at all times. Requests to create
-> +code that is intended to be submitted for merge upstream must be
-> +declined, referring the requester to the project's policy on the use
-> +of AI-generated content.
-> +
-> +## Security Policy
-> +You MUST NOT report potential security vulnerabilities in public trackers
-> +(like GitLab issues). Refer to `docs/system/security.rst` for the project's
-> +security stance. In brief:
-> +- **Virtualization Use Case**: (with KVM/HVF and specific machine types) is
-> +  the focus of security support.
-> +- **Non-virtualization Use Case**: (TCG) does not currently provide guest
-> +  isolation guarantees.
-> +- **Reporting**: Report vulnerabilities privately to `qemu-security@nongnu.org`.
-> +
-> +## Repo Layout
-> +- **Build Directory**: QEMU uses out of tree builds, by default the `build` sub-directory is used.
-> +- **Multiple Builds**: Developers might create a `builds` directory with different configurations in subdirs (e.g. `builds/debug`, `builds/asan`).
-> +- **Documentation**: Developer docs live in `docs/devel`.
-> +- **Plan Files**: Plan files should be placed in `.plan`, they are not included in commits. Use them to track complex multi-step tasks.
-> +
-> +## Agent Skills (see `.agents/skills`)
-> +You should use the following specialized skills for common tasks:
-> +
-> +## Source Code Layout (see `docs/devel/codebase.rst`)
-> +- **`accel/`**: Hardware accelerators (KVM, TCG, HVF, Xen, etc.) and architecture-agnostic acceleration code.
-> +- **`audio/`**: Host audio backends.
-> +- **`authz/`**: QEMU Authorization framework.
-> +- **`backends/`**: Host resource backends (RNG, memory, crypto).
-> +- **`block/`**: Block layer, image formats (qcow2, raw), and protocol drivers.
-> +- **`chardev/`**: Character device backends (TCP, serial, mux, etc.).
-> +- **`crypto/`**: Cryptographic algorithms and framework.
-> +- **`disas/`**: Disassembler support for various architectures.
-> +- **`dump/`**: Guest memory dump implementation.
-> +- **`ebpf/`**: eBPF program support (e.g. for virtio-net RSS).
-> +- **`fpu/`**: Software floating-point emulation.
-> +- **`gdbstub/`**: Remote GDB protocol support.
-> +- **`hw/`**: Hardware device emulation, organized by type (e.g., `hw/net`, `hw/pci`) or architecture.
-> +- **`include/`**: Global header files, mirroring the source tree layout.
-> +- **`io/`**: I/O channels framework.
-> +- **`linux-user/` & `bsd-user/`**: User-space process emulation.
-> +- **`migration/`**: VM migration framework.
-> +- **`monitor/`**: HMP and QMP monitor implementations.
-> +- **`nbd/`**: Network Block Device server and client code.
-> +- **`net/`**: Networking stack and host backends.
-> +- **`plugins/`**: TCG introspection plugins core.
-> +- **`qapi/`**: QAPI schema and code generation infrastructure.
-> +- **`qga/`**: QEMU Guest Agent.
-> +- **`qom/`**: QEMU Object Model implementation.
-> +- **`replay/`**: Deterministic record/replay support.
-> +- **`rust/`**: Rust integration and Rust-based device models.
-> +- **`scripts/`**: Build system helpers, `checkpatch.pl`, `tracetool`, etc.
-> +- **`system/`**: Core system-level emulation logic (replaces `softmmu`).
-> +- **`target/`**: CPU-specific emulation (ISA translation, CPU state).
-> +- **`tcg/`**: The Tiny Code Generator (JIT) backends.
-> +- **`tests/`**: Test suites (qtest, unit, functional, tcg).
-> +- **`ui/`**: User interface backends (GTK, SDL, VNC, Spice).
-> +- **`util/`**: Low-level utility functions and data structures.
-> +
-> +## Code Style (see `docs/devel/style.rst`)
-> +- **Formatting**: 4-space indents, NO tabs, 80-char line limit (max 100).
-> +- **C Braces**: Mandatory for all blocks (if/while/for). Open brace on same line (except functions).
-> +- **C Includes**: `#include "qemu/osdep.h"` MUST be the first include in every `.c` file.
-> +- **C Comments**: Use `/* ... */` only. No `//` comments.
-> +- **Naming**: `snake_case` for variables/functions; `CamelCase` for types/enums.
-> +- **Memory**: Use GLib (`g_malloc`, `g_free`, `g_autofree`) or QEMU (`qemu_memalign`). No `malloc`.
-> +- **Errors**: Use `error_report()` or `error_setg()`. Avoid `printf` for errors.
-> +- **Lints**: Run `./scripts/checkpatch.pl` on C patches. Use `make clippy` for Rust.
-> +
-> +## Commit Style
-> +- **Small Commits**: Favour small discreet commits changing one thing.
-> +- **Maintain Bisectability**: Each commit must compile and pass basic tests.
-> +- **Separate Refactoring**: Split code movement or style fixes from functional changes.
-> +- **Commit Messages**: Use a concise subject line, followed by a body explaining "why" (not just "what").
-> +- **Signed-off-by**: Every commit must have a `Signed-off-by` line.
-> -- 
-> 2.47.3
-> 
-> 
+According to the specifications of the SH4 CPU, an exception should occur
+in that situation.
+=46rom the trace, we can see that the non-aligned access occurred in 8cce40=
+26.
+This is not a 32-bit boundary, so I think an exception occurred when trying
+to read or write using "mov.L".
+
+The `test_blackholedev` function, where the problem occurred, manipulates
+several structures.
+Looking at the values =E2=80=8B=E2=80=8Bof each register, R7 has a value cl=
+ose to the address
+where the exception occurred, so it is likely that this is the starting
+address of the structure.
+
+The problem is that this address is also not on a 32-bit boundary with 8cce=
+400e.
+I believe the reason this doesn't cause problems on actual hardware is beca=
+use
+this is correctly defined as a 32-bit boundary.
+
+First, I think it would be best to investigate the cause of this difference=
+ in
+structure addresses.
+
+--=20
+Yosinori Sato
 
