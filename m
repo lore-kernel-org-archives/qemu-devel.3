@@ -4,132 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C63E0CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 20:48:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D905CD4F39
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 22:33:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNcxh-00063B-2f; Thu, 14 May 2026 16:47:17 -0400
+	id 1wNeba-0004Uc-Lj; Thu, 14 May 2026 18:32:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wNcxZ-00060l-BL
- for qemu-devel@nongnu.org; Thu, 14 May 2026 16:47:09 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wNcxX-0000tM-Nm
- for qemu-devel@nongnu.org; Thu, 14 May 2026 16:47:09 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64EIpffm3200389
- for <qemu-devel@nongnu.org>; Thu, 14 May 2026 20:47:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=8Ma8FLyJv2g
- fFihjhwuE3uS0L+mHITodNY35IDXdFKc=; b=MMz5sB2/EK/h2aBVr7cd/6pBxdD
- ce5lEsqo9lzMn9b67oT1pjFn+CS0cOBUAwVwgNTEEdtN/aux5M56kkrm8KXkDICu
- J20NdWUNPhMZyCvxWjNQKC48c0GOxpSaEzuw+qSdKirweE41fAwlnbjUEoDxgRKv
- 7YkdUB2pMZU+a/3GR0bORZjmYKsxOxI2Awji/e6+CaqQuhpV1Lr1afDKKNNPL7U1
- EZvETH3t01C/T15JxS2q3dohQe8EyvQ4pgSmanutLOkoX9LsodfIb0X/sMAw9vIM
- T2b2DnC5GO5loQWtuGEeT5i5w9uFmcst8EGgXfhxvKYl62H/X5E4G+G8LCg==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e5m1qrbjk-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 14 May 2026 20:47:06 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-90d2d8dc97bso698816385a.2
- for <qemu-devel@nongnu.org>; Thu, 14 May 2026 13:47:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wNebW-0004UE-57
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 18:32:30 -0400
+Received: from mail-dl1-x1243.google.com ([2607:f8b0:4864:20::1243])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wNebT-00089A-FD
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 18:32:29 -0400
+Received: by mail-dl1-x1243.google.com with SMTP id
+ a92af1059eb24-13317450f83so3254853c88.0
+ for <qemu-devel@nongnu.org>; Thu, 14 May 2026 15:32:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778791625; x=1779396425; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8Ma8FLyJv2gfFihjhwuE3uS0L+mHITodNY35IDXdFKc=;
- b=b2i45LgQmJKWdkyJaJ7BorW5dKTmYS/MWRrG4drKT86obb1WawwOeH0pqbB5vy5C7o
- R/b2BKEoCvodAsQwqbIhXQRZtiYFodqe+7X1QV/mZ+Idj/cpPYhth1pwmTa8ovPEFDTz
- 0Y9BARlZGom3bQNSrvFHKNOmn00HdN9srdBIdcqAmhpfWcTBGoSUCOndOHzGNEiK8ir1
- ok1HUaWXGm2Ut+RU4r032gS1LLyTn173/lv66180+qP9lfsWu+Hjk1q2FrePKKki87RA
- 8qRNpggz/BYUJThh0DBQQGxj+pkgnDA60VmgMwnkik3TeBuWKLNWcihNIdFbP9WCr7jF
- QAuw==
+ d=gmail.com; s=20251104; t=1778797946; x=1779402746; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=I36iP4R7GB6PH+qUHoG9DyDbO4S27NkHwDlPIHqghqo=;
+ b=ZYaV2ah9l+EyF8kvv7HZu5PsyzQqQwZ2mrcIvDh5u7Ak24N/stZOCOqi/ItDHi3Upz
+ SBq/ytCc4TxlH/NNq3d+AhZVgIIWbOb/+e7c39LQ3+QPqN2L9KO7Xtd8bmSE809jMFD0
+ FG7PVstcF8rpIDswVcVK4CbJS1jxybbL7wceGrGxHkoflWBk+AC1JAXkSwU1mC+LNtHR
+ 587etGz0g83aPqljWJdXbmZ05XgFqyW03PIi8v8nqNgy/Dzxe0Cndbfek2yShhz3YDLy
+ EjoYqG4cKe3YMTk7eHGa7oCCO3F3S1n2agZzGkcc0i03LPOQNej30y3py0JXL5v0s55o
+ Fhog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778791625; x=1779396425;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=8Ma8FLyJv2gfFihjhwuE3uS0L+mHITodNY35IDXdFKc=;
- b=bB+3rtvNwO6o5qLI0GpG98tqLNIKgbZzodANUk1JRroSS5Yb2oscB1P1toh474fqkE
- MJ2roa3MHJaVY53QkiTyqJGSTDMUAYiJA/JSM8tdw5j8eFcegBMwKKRIH1W/EDfpnKfC
- /o5EyHQR7VZ7ohtvR+Rx0TMkWBlCkd7vQczqtRzMKAKoaPkD5TSJYkifPGnwfV69+70T
- 4ZS0LcijuBIo0Q4Lmsox4rWT/bsevxR61xuHRot7JjxNXtM1cBwpY1N2JXGVu6GVT9cv
- c1+HLmdoULv9ge7KTSlYqkrNc7PmMMNGydMOdh4tyqxO7o085wGxoCVznAO5lhOY/Kro
- qF8g==
-X-Gm-Message-State: AOJu0Ywa+glzsd3Mi1/L2R2CDnhs6oZV7kDyN6mJe9P3/QOMmGzA/UFS
- Oy9VmHCvDfi6nma4UTXXSBfKwe32YLIukyrKGDx/bas2bowF8ZNVe5PTlzebwpBYDU4JYgc1bFr
- Dbx7hCVhTdt8+Y+olEqmlRnwWDvc2nSreolexgibwQAyh0gkIKuGzm1wzRRUxVcdnMg==
-X-Gm-Gg: Acq92OHUEoGcSHd9IywHbn694/62gg3M9Y4RZetK1AU6TYAe/Ogeu1kRMkn1GaAeEWt
- 9actcgzkFdQWdmv+a+ieZY8V15QKg/KKjLw8Ry4k4eXvO8nbyZK36xi4ML7jq/Cci6DiTecLrPq
- SDmxa79Uzbag8v5WIFrVkswG/pSq1fFatm/6QFkrNvauujVyv+APEbSkKoTV+E9WPiofgqrbe+G
- JPOClD2rcLOdyv8n48U2EeuoOlcvq2ZdP3zyZ3r2/ohQxHxLUhPrENtCMN8Z9Z03xgHScx/4nr2
- k/aaqBNGUb8jJuwd1CvRtce1TqqPhHhBQhh+9uW3TIm40gzdqtG3lbTBnuyUm2cSMr2ZGauoKYX
- CZL8HkHdtHWoFe0UvGD7RGL4kmumoEKdWaamN8tXV4LVpbh6Bvqf84r2WtXM7
-X-Received: by 2002:a05:620a:4042:b0:8ee:30e:cb97 with SMTP id
- af79cd13be357-911cd75d3dbmr222745585a.21.1778791625061; 
- Thu, 14 May 2026 13:47:05 -0700 (PDT)
-X-Received: by 2002:a05:620a:4042:b0:8ee:30e:cb97 with SMTP id
- af79cd13be357-911cd75d3dbmr222738285a.21.1778791624529; 
- Thu, 14 May 2026 13:47:04 -0700 (PDT)
-Received: from QCOM-UWl2o8bcGT.qualcomm.com ([191.202.238.222])
+ d=1e100.net; s=20251104; t=1778797946; x=1779402746;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=I36iP4R7GB6PH+qUHoG9DyDbO4S27NkHwDlPIHqghqo=;
+ b=bUxmzTMVDqeUc7eSvvMHVmHXO2NNi1dZ2Ur2xIPgov7kXoP/iWGPnMS1TIrVTZ3tS1
+ 3klszVqwVX9/BzShOp/z4w44Wfe3kWhNcy78erylfmkrz6pyv7htix+dIcJDqRIUEowo
+ mBN2w6aYeXo/KcKc6yn48Y8VYyD/zSyeSSG9i/FHF6gT5oiohdHen5ptPs7OGR8H6eJR
+ z4bFXXl83dT0BTs3nBf8tr2vlmOPEb58Ug1MsgzdX7fqqjs4gyHVirCqImBHKYlF4/km
+ mjnWMqr9QWXR+SFC+U6z0+orw/SuqU3WyTzFKJBuPLOULf/tjm489LYL88u0tlnHnM8p
+ d0Yw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8kSAAssJNAurGxYvLLwY3qjdca7khXp9AchnbixL+gZvPCuBOwLK0qO/3wj/ewZIe+3ybxtSreEWrs@nongnu.org
+X-Gm-Message-State: AOJu0YwQx59yvlIxh/Gv0NAkGE5iP54+duhs2GksmdPWkLo9sj2SoQlQ
+ UUVNhiGK2Nr5YJBUs9dW1B6xsTrXJAvCMtaPijvMMaMVS7x0k/2U+fei
+X-Gm-Gg: Acq92OFu7GBkeraEdqzisQua9BB+qXaHMtIiDUbe7VaDBx2Ql1sJ/kWPLk2kIfo4c3I
+ /9+i1NRnD3EOunAsulmKOIjE++p3lhFDdjofw4hc6kYEHAFixhmTtWw8CeK6iIPJohV160Lf6ec
+ YLpJFJ3pBpNCKbW/lTemeBRl/RLIxHH0rnCZuSGE3ZiJAyEfhxBa7CsEV08wlRTGNX550J1Jfr0
+ t7CirDRCKlTVMU8lLQ7ZG1Dw20Z2lGLtWE3lnxhhnmvBp4IIbbMGP3lje/r/DaVfrTTnsGmWTI+
+ x6R17pfFeLcciKyBnAPV4fAsaMyci4aFmx5SzUnI7RQHk6RpydQCgg7xKn2YLH4JcX0+L0Z6nbP
+ 5lfA3Qem2ACjxjdrSHEr20xIq0Bii/A+TlEZHmjHmeMRgb25wX+8kqFpE6w9tcLVHEtFHr4Eu5T
+ CauSFLUkvwZhGzZAhsNHTIVWLy/cnfVhH9sW4L2LwznkIZisvv9eWBqqSoj7P8ab1OZaB81jsft
+ al3q/HekiUTFQRYomqOGitZ9ar4yOhrlGbQ/eZyjA==
+X-Received: by 2002:a05:7022:1a85:b0:12d:d972:b96e with SMTP id
+ a92af1059eb24-1350542e8e5mr487170c88.20.1778797945617; 
+ Thu, 14 May 2026 15:32:25 -0700 (PDT)
+Received: from ZEVORN-PC.localdomain ([38.95.120.198])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-910bad2dd8esm343022885a.19.2026.05.14.13.47.02
+ a92af1059eb24-134cc33aac9sm5218556c88.14.2026.05.14.15.32.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 May 2026 13:47:04 -0700 (PDT)
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- leif.lindholm@oss.qualcomm.com, andrew.jones@oss.qualcomm.com,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Subject: [PATCH v6 4/4] docs: add riscv-server-ref.rst
-Date: Thu, 14 May 2026 17:46:40 -0300
-Message-ID: <20260514204640.2540054-5-daniel.barboza@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260514204640.2540054-1-daniel.barboza@oss.qualcomm.com>
-References: <20260514204640.2540054-1-daniel.barboza@oss.qualcomm.com>
+ Thu, 14 May 2026 15:32:25 -0700 (PDT)
+Date: Fri, 15 May 2026 06:32:15 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Kuan-Wei Chiu <visitorckw@gmail.com>
+Cc: pbonzini@redhat.com, marcandre.lureau@redhat.com, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, christoph.muellner@vrull.eu, farosas@suse.de,
+ lvivier@redhat.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, 
+ jserv@ccns.ncku.edu.tw, eleanor15x@gmail.com, marscheng@google.com, 
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Subject: Re: [PATCH v2 1/6] target/riscv: Add stubs for T-Head PMU CSRs
+Message-ID: <agZFchak-jsc2moK@ZEVORN-PC.localdomain>
+References: <20260514011528.1263665-1-visitorckw@gmail.com>
+ <20260514011528.1263665-2-visitorckw@gmail.com>
+ <agU2IzvCDigXHSM5@ZEVORN-PC.localdomain>
+ <agYPVpDlY30lSD1Y@google.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=HbkkiCE8 c=1 sm=1 tr=0 ts=6a0634ca cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=etEqFfc6qwXwpI8uT8rzbw==:17
- a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=NEAV23lmAAAA:8
- a=EUspDBNiAAAA:8 a=bmbEedN3N7VIJUCuTIwA:9 a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-GUID: oeehHReIhU9iV-7Q2_46IywZ0jmYQhZJ
-X-Proofpoint-ORIG-GUID: oeehHReIhU9iV-7Q2_46IywZ0jmYQhZJ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE0MDIwNiBTYWx0ZWRfX3XLKImp/ljPx
- NhcQii8U6wK7e5VgcBcDn/ioMAICuhStOUay5Kp2z9YqpQQjfdhC1yDWkzSqLm0mJP51zCMAzrN
- 7aHFIydO0TPnuxXe3oLpSwUblFEpGjLpQ+7nn7ZDuleAUapUT1c2wlM1//rghvUcPYY/sLmOphf
- BKvPYZAJQoddKuYWu1hyf2ofRNxZOV5G9pJwD4woRXx45K2SDj09FRHLNTDk4RQGhVjAiUrCGfx
- Hf6hunIlWhWsFzHanvBuFVA23l8la4IFJVE0ZxFTl7L/xA+cPlA5Yu9CGf9Ql9fKTzPJHtE5XZC
- R9gmkveen81npxUCCATz16Dq32z7yJb+jdIl/xEBa2RzSFvt/IEy8PUQu2wQFNoe90er6fd2ZdO
- Io9mwJEOHeH+x/4fd69ozdOjlksPREOo3GAcPuweGgtc0tvd0sZvqO3pDmzLv7Y8XxwTrkAsvXS
- 7CqbLUqZsROPYyxCsSw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-14_05,2026-05-13_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 spamscore=0 adultscore=0 suspectscore=0
- bulkscore=0 clxscore=1015 impostorscore=0 malwarescore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605140206
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <agYPVpDlY30lSD1Y@google.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1243;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1243.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -146,71 +109,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add documentation for the new riscv-server-ref board.
+On Fri, May 15, 2026 at 02:07:18AM +0800, Kuan-Wei Chiu wrote:
+> Hi Chao,
+> 
+> On Thu, May 14, 2026 at 10:48:07AM +0800, Chao Liu wrote:
+> > On Thu, May 14, 2026 at 01:15:23AM +0000, Kuan-Wei Chiu wrote:
+> > > T-Head CPUs use custom CSRs for performance monitoring, specifically
+> > > mcounterinten (0x7ca) and mcounterof (0x7cb). [1]
+> > > 
+> > > Since we don't implement these custom PMU registers yet, the system
+> > > crashes with an illegal instruction trap when OpenSBI like this:
+> > > 
+> > > system_opcode_insn: Failed to access CSR 0x7ca from M-mode
+> > > sbi_trap_error: hart0: trap1: illegal instruction handler failed (error -1)
+> > > 
+> > > Add simple read/write stubs for these two CSRs. By silently ignoring
+> > > writes and returning 0 on reads, we prevent the fatal exceptions and
+> > > allow to continue normally.
+> > > 
+> > > Link: https://occ-intl-prod.oss-ap-southeast-1.aliyuncs.com/resource/XuanTie-OpenC906-UserManual.pdf [1]
+> > > Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+> > > ---
+> > >  target/riscv/th_csr.c | 30 ++++++++++++++++++++++++++++++
+> > >  1 file changed, 30 insertions(+)
+> > > 
+> > > diff --git a/target/riscv/th_csr.c b/target/riscv/th_csr.c
+> > > index 49eb7bbab5..b095364c31 100644
+> > > --- a/target/riscv/th_csr.c
+> > > +++ b/target/riscv/th_csr.c
+> > > @@ -21,12 +21,19 @@
+> > >  #include "cpu_vendorid.h"
+> > >  
+> > >  #define CSR_TH_SXSTATUS 0x5c0
+> > > +#define CSR_TH_MCOUNTERINTEN 0x7ca
+> > > +#define CSR_TH_MCOUNTEROF    0x7cb
+> > >  
+> > >  /* TH_SXSTATUS bits */
+> > >  #define TH_SXSTATUS_UCME        BIT(16)
+> > >  #define TH_SXSTATUS_MAEE        BIT(21)
+> > >  #define TH_SXSTATUS_THEADISAEE  BIT(22)
+> > >  
+> > > +static RISCVException mmode(CPURISCVState *env, int csrno)
+> > > +{
+> > > +    return RISCV_EXCP_NONE;
+> > > +}
+> > We can add an RVM extension check, similar in form to smode():
+> > 
+> > static RISCVException mmode(CPURISCVState *env, int csrno)
+> > {
+> >     if (riscv_has_ext(env, RVM)) {
+> 
+> Thanks for your review.
+> However, I think this might not be correct.
+> 
+> IIUC, RVM represents the standard M extension for integer
+> multiplication and division instructions, rather than indicating
+> whether M mode is implemented. Is it even possible for a riscv machine
+> implementation to not have M mode?
+> 
+> Looking at the misa csr description in the spec, the 'S' and 'U' bits
+> specifically denote the implementation of supervisor and user modes,
+> respectively, but there is no corresponding bit for M mode. I assume
+> this implies M mode is unconditionally required?
+> 
+Good catch, your analysis is correct. I will fix this in the next version.
 
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
----
- docs/system/riscv/riscv-server-ref.rst | 37 ++++++++++++++++++++++++++
- docs/system/target-riscv.rst           |  1 +
- 2 files changed, 38 insertions(+)
- create mode 100644 docs/system/riscv/riscv-server-ref.rst
+> >         return RISCV_EXCP_NONE;
+> >     }
+> > 
+> >     return RISCV_EXCP_ILLEGAL_INST;
+> > }
+> > 
+> > For your reference, I have added more T-Head CSR support in the
+> > K230 patchset.
+> > 
+> > https://lore.kernel.org/qemu-devel/1c7319cd00a50bffeb41f9cc13339a8cd0c07350.1778516731.git.chao.liu.zevorn@gmail.com/
+> 
+> It looks like your patch covers much more ground than mine and has
+> already received quite a few reviews. I assume once your series is
+> merged, I can simply drop my patch #1.
+> 
+> So I guess the most sensible workflow here is for me to wait until your
+> patchset is merged into the subsystem maintainer's tree (assuming it
+> will route through Alistair's tree [1] I guess?, please correct me if
+> I'm wrong!), and then I'll rebase my series on top of it and send out
+> v3?
+> 
+I think both are fine, we need to see what Alistair suggests.
 
-diff --git a/docs/system/riscv/riscv-server-ref.rst b/docs/system/riscv/riscv-server-ref.rst
-new file mode 100644
-index 0000000000..7803133b77
---- /dev/null
-+++ b/docs/system/riscv/riscv-server-ref.rst
-@@ -0,0 +1,37 @@
-+.. SPDX-License-Identifier: GPL-2.0-or-later
-+
-+RISC-V Server Platform Reference board (``riscv-server-ref``)
-+=============================================================
-+
-+The RISC-V Server Platform specification `spec`_ defines a standardized
-+set of hardware and software capabilities that portable system software,
-+such as OS and hypervisors, can rely on being present in a RISC-V server
-+platform.  This machine aims to emulate this specification, providing
-+an environment for firmware/OS development and testing.
-+
-+`spec`_ is version 1.0 at the introduction of this board.  New spec versions
-+might trigger a revision of the emulation itself, which will strive to always
-+match the latest version available.  In case the emulation changes aren't
-+backwards compatible we'll introduce a versioning scheme, probably via
-+a machine property, to allow older SW to run with older spec versions.
-+
-+The main features included in the riscv-server-ref board are:
-+
-+* IOMMU platform device (riscv-iommu-sys)
-+* AIA
-+* PCIe AHCI
-+* PCIe NIC
-+* No virtio mmio bus
-+* No fw_cfg device
-+* No ACPI table
-+* Minimal device tree nodes
-+
-+There are multiple ways of using this reference board, some of them being:
-+
-+* BIOS: u-boot-spl.bin; SD-CARD: <disk_containing_FIT>; NVME: <distro_disk>
-+* BIOS: fw_dynamic.bin; KERNEL: u-boot.bin; NVME: <distro_disk>
-+* BIOS: fw_dynamic.bin; KERNEL: EDK2.fd; NVME: <distro_disk>
-+* BIOS: fw_dynamic.bin; KERNEL: <linux_image>; INITRD: <busybox_initrd>
-+
-+
-+.. _spec: https://github.com/riscv-non-isa/riscv-server-platform
-diff --git a/docs/system/target-riscv.rst b/docs/system/target-riscv.rst
-index 3ad5d1ddaf..3f7690331b 100644
---- a/docs/system/target-riscv.rst
-+++ b/docs/system/target-riscv.rst
-@@ -73,6 +73,7 @@ undocumented; you can get a complete list by running
-    riscv/sifive_u
-    riscv/virt
-    riscv/xiangshan-kunminghu
-+   riscv/riscv-server-ref
- 
- RISC-V CPU firmware
- -------------------
--- 
-2.43.0
+Thanks,
+Chao
 
+> [1]: https://github.com/alistair23/qemu.git riscv-to-apply.next
+> 
+> Regards,
+> Kuan-Wei
+> 
+> > 
+> > As for this patch, I think the other changes look mostly fine.
+> > 
+> > Thanks,
+> > Chao
+> > > +
+> > >  static RISCVException smode(CPURISCVState *env, int csrno)
+> > >  {
+> > >      if (riscv_has_ext(env, RVS)) {
+> > > @@ -49,11 +56,34 @@ static RISCVException read_th_sxstatus(CPURISCVState *env, int csrno,
+> > >      return RISCV_EXCP_NONE;
+> > >  }
+> > >  
+> > > +static RISCVException read_th_pmu(CPURISCVState *env, int csrno,
+> > > +                                  target_ulong *val)
+> > > +{
+> > > +    *val = 0;
+> > > +    return RISCV_EXCP_NONE;
+> > > +}
+> > > +
+> > > +static RISCVException write_th_pmu(CPURISCVState *env, int csrno,
+> > > +                                   target_ulong val, uintptr_t retaddr)
+> > > +{
+> > > +    return RISCV_EXCP_NONE;
+> > > +}
+> > > +
+> > >  const RISCVCSR th_csr_list[] = {
+> > >      {
+> > >          .csrno = CSR_TH_SXSTATUS,
+> > >          .insertion_test = test_thead_mvendorid,
+> > >          .csr_ops = { "th.sxstatus", smode, read_th_sxstatus }
+> > >      },
+> > > +    {
+> > > +        .csrno = CSR_TH_MCOUNTERINTEN,
+> > > +        .insertion_test = test_thead_mvendorid,
+> > > +        .csr_ops = { "th.mcounterinten", mmode, read_th_pmu, write_th_pmu }
+> > > +    },
+> > > +    {
+> > > +        .csrno = CSR_TH_MCOUNTEROF,
+> > > +        .insertion_test = test_thead_mvendorid,
+> > > +        .csr_ops = { "th.mcounterof", mmode, read_th_pmu, write_th_pmu }
+> > > +    },
+> > >      { }
+> > >  };
+> > > -- 
+> > > 2.54.0.563.g4f69b47b94-goog
+> > > 
 
