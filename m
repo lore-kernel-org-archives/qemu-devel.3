@@ -4,90 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3D37CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 14:37:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99E81CD4F25
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 14:39:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNXBs-0000k6-1j; Thu, 14 May 2026 10:37:32 -0400
+	id 1wNXDE-0001TV-Uf; Thu, 14 May 2026 10:38:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wNXBi-0000jB-B1
- for qemu-devel@nongnu.org; Thu, 14 May 2026 10:37:24 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wNXDC-0001N0-8S
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 10:38:54 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wNXBe-0002o7-7C
- for qemu-devel@nongnu.org; Thu, 14 May 2026 10:37:19 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-488a14c31eeso54736925e9.0
- for <qemu-devel@nongnu.org>; Thu, 14 May 2026 07:37:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wNXCx-0003GK-F1
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 10:38:46 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-44dd5cb0f81so5827012f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 14 May 2026 07:38:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778769419; x=1779374219; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1778769510; x=1779374310; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=VV174m43BESca0JNxs/4ul3QGuc//qkAACAf3Xk56bM=;
- b=k/PGkA1P6VI1VVNiWyS5X8cFM2FdyxlGCffg7JuUq+S34hz/9htIbtuFXtB4O0BFpf
- 9cpZUYH4N9unRvzoBiQ5vDBi7kWkpkqMSxdGMbqCaISWhivP8UBJk5G1KajZSDwUrNsz
- lUK7L/0Ni9jDE3aDd/b2mPM9iclOzYG8CD/g5SPmfB/RnixL2oqTJINzkfySdJqxsbkT
- WaeT04vnw8qCy7NtRceJ/RHXvkAA4yGGDfEcS+0EX+wA8V9eNEOK72Ra8IUamKqJLLt+
- PMSx6R4lCYxTHty4lrHVuK06CuPdmTBizDZh8IfXSMjray7npXxVJsyalcmVF67FtqHw
- TdPA==
+ bh=g/iUShAJV0NrvgtG2Ho7xtC8TUIfiuegCyJXYtUhbmo=;
+ b=UeYiXSwot01nfS9JqxCx38RO65r8Foy75kSs9ybMlOrmsBI9RUHETU+FEwMXgEV5na
+ sjrF6sxphEPnlomQn8QfC4yvpUcZaQbRRtBL8AqAR1mwNhuFzgjqvhgqupoBLWy+q3xh
+ qQW2J75I9wNDViQ+1x8d/2Q2mpmOP/13gohBlCif3DtR+NHnax2DYtRHE0+jtdAyMXxo
+ nZzed5+MkES03rc0u/ZXFXG6JcvpfTsoE3sqpAAHJcIs8qbbJ6EH5/1HA3KVMMwKJFr6
+ JIKjBEsaOvslRsN9EUjgYjW82LS1PL/LV9MmwCa/zQ8Rq0DcPON3fH6xOAlvZf1eF9zO
+ Ry4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778769419; x=1779374219;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1778769510; x=1779374310;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=VV174m43BESca0JNxs/4ul3QGuc//qkAACAf3Xk56bM=;
- b=hWjIQuiuLKGFU6aps9RZN3rToSdL5bu6gx4yYJmGEzVESJgFe9ubtAjdtEFj5Q8JDs
- vjHzG04bPZdDVvfOuTyZbZw4MUtfKc+1Ijcolyjgwqr3pPN6VEWvJ2BmmKp0aq0al4gQ
- js20ZQdFWLpXVrMitsEh6lRi2COeb9N/17Hlu7BN2L2GXaTryTNbwuBBAQ9a5fNJBzR9
- /LJLbR4jSfaCImpq5JbqMF3XVwSIXdjqjKHD7okQ+HGdyF+SZIqFOZjF3ODTzJ5TCUPg
- Mc+01nWHBGAQ1BmN1TsaD2FCy++9fLvgm+mrQvIfKfHSj34VI5KoljiKRZ8IPYElIpiE
- X7Uw==
+ bh=g/iUShAJV0NrvgtG2Ho7xtC8TUIfiuegCyJXYtUhbmo=;
+ b=JnRgdCEzRrXf0rEoiyYcimxuQz9W9Qr4/hu7qwsLPNG72MyOezO80VLwcaRwuJQslE
+ Mgyki6I/QjPzroziL7LVXHWVj+lvsUlUb8cLxFEkt53UniYb+adI8bTPRX73T+F2eIar
+ SAEYymxZOSDwfbb1KzVvR42u+JQxG+ycZkTydvshgaPObotE/g6g1wJrpfgklWuiK6Co
+ +y4Y7k9yD1DJ558+tqzKWFNz/+mlqNj6E0GUhuQKP4QlLoCwUgxJUYx7AENHWzFj2WfM
+ p5niGmlJyF9F8otlqfzpfMh9BRvEo8fCQT1JTw8RrprUVomS9H8RzkGngWRAvES44iJh
+ k9Ug==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8kUAzSl0bTo5Cn7fsynHXXvo6JTL0V/cDhI5CH58oSByyPQkhPRR46RaycJ3t4y8gsruO7/q3Yi7ux@nongnu.org
-X-Gm-Message-State: AOJu0YzFXz6yRB4B+c9H3BAhex5vR31x5snF4AApTQOYddPTRJ/1UCYJ
- BuJQrEZ4VQ9YPazsMONuKTNOI8k3MwdzvPVF2QYrVHWw07HrvTR4s586mE2oNnmrMuk=
-X-Gm-Gg: Acq92OH6BOARoOY94QQdRXzGYxwa0F56guG/2D8RboAwqZ1gkUrGy/oV++P4vmRqrW0
- blEOa6G6xQZGySjFOCwdvam2rO2UrEzCi4WcBdTtObj84eeJA9jOeSaYUVgwapGMOnVxgdwDCAI
- tzRXLRHTRRXmufk7hD82wbtfUd6aQJNCNvi7HvXyjyvx6eKgcjrWXVXfrQeHAvZFnh4an/0g74Y
- Lbhl6bDA1zIyHPJV6k/4rOKTqn9GHaC5efTPewb9sY15LjOgV+6+l593ZmZvL/EZHKDBYpy4lvc
- F7IlGlNlBAg+4bNpFrgajfIOPDEGkUMyH5PGCltzxE5p7O7Z0fm4EVl/sPV5ImdDajCUS1i0owD
- Aa0twWsdsPecxrRlTF0L9LLxLPyQcgTXcyrUBT3hzyMf6RkygOvVki+JGa9BwOPuuczc6Tcp1Rm
- VvDUzpbY91HCbNYqqgQ9bHbGV93EppL3U4+CtnUcB524VoLy3im3Xf9tgoAQiQgeVr0SRt+Qmdq
- pfh
-X-Received: by 2002:a05:600c:1d03:b0:48f:e230:80a0 with SMTP id
- 5b1f17b1804b1-48fe23080bcmr20601645e9.30.1778769419157; 
- Thu, 14 May 2026 07:36:59 -0700 (PDT)
+ AFNElJ9IhpHfJY1VL5IgGL1+nXMVIyJg0x4X/cUqz/P2LZYUwZe/w8z8qY8vR5IlUhfa0WX7ygV34Tjo/sEd@nongnu.org
+X-Gm-Message-State: AOJu0Yy+cKk+CbodhIyx9WAKfU2n60DDgvO3gfysqv8q7du+nlpWUj6y
+ JDvYZtIiaSO+TZFN4BR9tQ4JbV2EGtM0UHHlU7+eZ+f/JwF0+gxqzM1PIWqd8ofpK1A=
+X-Gm-Gg: Acq92OEgq25lrdM5L2HaygIsAWtf5ocYG56gXHwTTpVVKLSscC2FlClD51/xgZqFq3Q
+ Wuq+vS9PRhYAfI+KpYCLOYyau9Li3yIsEuznf+oML9WWii7j7YjXS8fqTxbHG9wXg6v7bFtIUWJ
+ T8BtA8Hxs4DR4jIsjEEByawXxwZvLmQx+saMPjPuocooeD+FgGjWFwFIqbiXFYcpE4zaB2Viwxx
+ nbBTd2nxFu5L1WFGwoNf8CQ3UjwEJHWTzEOTMiT+ZgQwXrdgogIQ/9vWDEL4R6XHG+gf3ro4OU2
+ /byY+6SVyQcr/C69qhdXj8hkySE6YhTAODxqo6BwxJrkVqhedAfhF2nibDw0bOTbGiCVozzRfnC
+ 3AxPkfM/tEqJ/BMcp/nNufbsfjLENJLZpMaQGS5uAoyuieDzCZk5OAzqPUMCb51dfnP0+ISGnGK
+ zbLBQo7cfv3XnwmM2z9RWLDLcSfqlGMWgepNjrarGTheaiVzkIVIoVU4eYqmKrBKFMHQ==
+X-Received: by 2002:a05:600c:8887:b0:488:aa33:dc8f with SMTP id
+ 5b1f17b1804b1-48fe2308265mr13983105e9.0.1778769509975; 
+ Thu, 14 May 2026 07:38:29 -0700 (PDT)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fe46545c0sm2491525e9.4.2026.05.14.07.36.57
+ 5b1f17b1804b1-48fe4621932sm2994685e9.14.2026.05.14.07.38.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 May 2026 07:36:58 -0700 (PDT)
-Message-ID: <aaf78d3a-3297-4be6-8793-3297550af922@linaro.org>
-Date: Thu, 14 May 2026 16:36:57 +0200
+ Thu, 14 May 2026 07:38:29 -0700 (PDT)
+Message-ID: <d734ad13-b4d8-473a-b406-3d024099962f@linaro.org>
+Date: Thu, 14 May 2026 16:38:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 03/35] linux-user/mips, target/mips: honor MIPS_FIXADE
- for unaligned accesses
-To: James Hilliard <james.hilliard1@gmail.com>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang
- <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <arikalo@gmail.com>,
- Huacai Chen <chenhuacai@kernel.org>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20260511-mips-octeon-missing-insns-v2-v6-0-5062889c4d3c@gmail.com>
- <20260511-mips-octeon-missing-insns-v2-v6-3-5062889c4d3c@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v3 03/11] fpu: Hoist nan check in partsN_addsub
 Content-Language: en-US
-In-Reply-To: <20260511-mips-octeon-missing-insns-v2-v6-3-5062889c4d3c@gmail.com>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20260507160959.449170-1-richard.henderson@linaro.org>
+ <20260507160959.449170-4-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260507160959.449170-4-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,66 +102,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/5/26 20:22, James Hilliard wrote:
-> Linux/MIPS enables software fixups for user-mode unaligned scalar
-> accesses by default through MIPS_FIXADE/TIF_FIXADE.  QEMU linux-user did
-> not model that ABI, so MIPS guests took fatal AdEL/AdES exceptions unless
-> translation was forced to use unaligned host accesses.
+On 7/5/26 18:09, Richard Henderson wrote:
+> The nan test had been down below because it was unlikely.
+> But if we have to have one anyway because of denormals,
+> we might as well take care of them right away.
 > 
-> Key MIPS translation blocks on the linux-user unaligned policy, implement
-> sysmips(MIPS_FIXADE) to toggle that policy, and raise SIGBUS/BUS_ADRALN
-> when fixups are disabled.
-> 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
-> Changes v5 -> v6:
->    - Rename the TB flag from TB_FLAG_UNALIGN to TB_FLAG_MIPS_FIXADE
->      to match the MIPS_FIXADE ABI policy.
-> 
-> Changes v2 -> v3:
->    - Split MIPS_FLUSH_CACHE and MIPS_ATOMIC_SET into preparatory sysmips
->      patches.  (suggested by Richard Henderson)
-> ---
->   linux-user/mips/cpu_loop.c         | 5 +++++
->   linux-user/mips/target_syscall.h   | 1 +
->   linux-user/mips64/target_syscall.h | 1 +
->   linux-user/syscall.c               | 8 ++++++++
->   target/mips/cpu.c                  | 8 ++++++--
->   target/mips/cpu.h                  | 4 ++++
->   target/mips/tcg/translate.c        | 6 +++++-
->   7 files changed, 30 insertions(+), 3 deletions(-)
+>   fpu/softfloat-parts.c.inc | 19 +++++--------------
+>   1 file changed, 5 insertions(+), 14 deletions(-)
 
-
-> diff --git a/target/mips/cpu.c b/target/mips/cpu.c
-> index f803d47763..6e827c72de 100644
-> --- a/target/mips/cpu.c
-> +++ b/target/mips/cpu.c
-> @@ -565,11 +565,15 @@ static int mips_cpu_mmu_index(CPUState *cs, bool ifunc)
->   static TCGTBCPUState mips_get_tb_cpu_state(CPUState *cs)
->   {
->       CPUMIPSState *env = cpu_env(cs);
-> +    uint32_t flags = env->hflags & MIPS_HFLAG_TB_MASK;
-> +
-> +#ifdef CONFIG_USER_ONLY
-> +    flags |= TB_FLAG_MIPS_FIXADE * !cs->prctl_unalign_sigbus;
-
-I'm not a big fan of this optimized style where you need to think
-twice about what is being done. The following uses 3 lines but is
-a no-brainer:
-
-   if (!cs->prctl_unalign_sigbus) {
-       flags |= TB_FLAG_MIPS_FIXADE
-   }
-
-> +#endif
->   
->       return (TCGTBCPUState){
->           .pc = env->active_tc.PC,
-> -        .flags = env->hflags & (MIPS_HFLAG_TMASK | MIPS_HFLAG_BMASK |
-> -                                MIPS_HFLAG_HWRENA_ULR),
-> +        .flags = flags,
->       };
->   }
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
