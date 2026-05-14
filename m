@@ -4,77 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AAA7CD37AC
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 18:48:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13C82CD4F39
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 18:49:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNb6B-00042C-Eu; Thu, 14 May 2026 14:47:56 -0400
+	id 1wNb77-0004Pb-Dz; Thu, 14 May 2026 14:48:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wNb68-00041X-M3
- for qemu-devel@nongnu.org; Thu, 14 May 2026 14:47:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wNb6o-0004F1-Gb; Thu, 14 May 2026 14:48:34 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wNb66-00060D-By
- for qemu-devel@nongnu.org; Thu, 14 May 2026 14:47:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778784467;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=VZJmOeQsC071mapwrrdbWZRAS65akymoSHYffPxYsn8=;
- b=N96NTImHUtqwmqUFGuIDfQt1accoEPtYfWTfFC60y4Uz0OR5kKigXJRbC+RoBugVz14sIc
- AmZrblXq8J2QOFIks6ua5EHSKQN8+CohdXE9bMCxzv3T9W4QBdOH8CpudKzgiXsOM7F1kf
- kZREoslx4TM+pceyRfXWesJAS3BIsCE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-301-hBs6Hh3IPEyvN1a5NgKtxw-1; Thu,
- 14 May 2026 14:47:46 -0400
-X-MC-Unique: hBs6Hh3IPEyvN1a5NgKtxw-1
-X-Mimecast-MFC-AGG-ID: hBs6Hh3IPEyvN1a5NgKtxw_1778784465
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 971CD1956070; Thu, 14 May 2026 18:47:44 +0000 (UTC)
-Received: from localhost (unknown [10.2.17.3])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 844771956053; Thu, 14 May 2026 18:47:43 +0000 (UTC)
-Date: Thu, 14 May 2026 14:47:42 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Sam Li <faithilikerun@gmail.com>
-Cc: qemu-devel@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- dmitry.fomichev@wdc.com, Kevin Wolf <kwolf@redhat.com>,
- cassel@kernel.org, Markus Armbruster <armbru@redhat.com>,
- qemu-block@nongnu.org, dlemoal@kernel.org, Eric Blake <eblake@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, hare@suse.de,
- Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH v10 1/4] docs/qcow2: add the zoned format feature
-Message-ID: <20260514184742.GB1535937@fedora>
-References: <20260510175059.311814-1-faithilikerun@gmail.com>
- <20260510175059.311814-2-faithilikerun@gmail.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wNb6k-0006Y0-CN; Thu, 14 May 2026 14:48:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1778784487; bh=H33hHaJXEIYKFPTasnf4oGiAw5MDsr5/iRLHkbOPfVU=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=AUT7EYO+A3TGk0AqOKmmCy6QGDnNFenaH4cMoXpSExyVslH8BKMIRILzWQV7batF0
+ 0+BFnoVOzIuIN5ZWlmcMFTc78mEa1yX0pD13OnUsZLQLubrh2i/xq3L9XCOgwUQnnr
+ elqFOF4D1CP+DCdFBY3/AL3jQvTzDWUMpSMAPYaNs10X/qbOjmk1KUaKKx/Cfyqczs
+ MF5t7hZ0q4sLhL7kEKOQ6KJbMj46OtANS6Ala45RJjAcmf0EbcUxm1A08/BLWMlOMB
+ CERDSiornrvVkJvtDvV7xGkH7fDW2T2n8uI0Mi31IQYPri/Jq4eyTdrtkxGHKMjjI+
+ t9WkhMxnQgAPw==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id AE4661AB578;
+ Thu, 14 May 2026 21:48:07 +0300 (MSK)
+Message-ID: <c2b76041-81d8-43e0-b50b-af88c1c658b5@tls.msk.ru>
+Date: Thu, 14 May 2026 21:48:15 +0300
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="4Z/2vIya+qw6fpfR"
-Content-Disposition: inline
-In-Reply-To: <20260510175059.311814-2-faithilikerun@gmail.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/1] hw/misc/aspeed_sbc: Add bounds checking for OTP
+ write operations
+To: Kane Chen <kane_chen@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>,
+ "qemu-stable@nongnu.org" <qemu-stable@nongnu.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+References: <20260428055254.76581-1-kane_chen@aspeedtech.com>
+ <20260428055254.76581-2-kane_chen@aspeedtech.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260428055254.76581-2-kane_chen@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,125 +119,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 28.04.2026 08:52, Kane Chen wrote:
+> There is a mismatch between the Aspeed OTP model and the Aspeed SBC
+> model in how the guest-provided address is handled.
+> aspeed_sbc_otp_prog() passes a word-indexed address directly
+> to address_space_write() without converting it to a byte offset,
+> whereas aspeed_otp_write() expects a byte offset and applies an
+> additional shift (otp_addr << 2). This double-shift confusion means
+> that an out-of-range word address can lead to a write beyond the
+> allocated storage.
+> 
+> Fix this by adding bounds checking on the word offset before
+> converting to byte offset and passing to address_space_write().
+> This matches the existing bounds check in aspeed_sbc_otp_read().
+> 
+> Cc: Kane-Chen-AS <kane_chen@aspeedtech.com>
+> Cc: qemu-stable@nongnu.org
+> Fixes: 1a00754ccf15 ("hw/misc: Add Aspeed Secure Boot Controller model")
 
---4Z/2vIya+qw6fpfR
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Sun, May 10, 2026 at 07:50:56PM +0200, Sam Li wrote:
-> Add the specs for the zoned format feature of the qcow2 driver.
-> The qcow2 file then can emulate real zoned devices, either passed
-> through by virtio-blk device or NVMe ZNS drive to the guest
-> given zoned information.
->=20
-> Signed-off-by: Sam Li <faithilikerun@gmail.com>
-> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-> ---
->  docs/system/qemu-block-drivers.rst.inc | 42 ++++++++++++++++++++++++++
->  1 file changed, 42 insertions(+)
->=20
-> diff --git a/docs/system/qemu-block-drivers.rst.inc b/docs/system/qemu-bl=
-ock-drivers.rst.inc
-> index 384e95ba76..5066c943d5 100644
-> --- a/docs/system/qemu-block-drivers.rst.inc
-> +++ b/docs/system/qemu-block-drivers.rst.inc
-> @@ -172,6 +172,48 @@ This section describes each format and the options t=
-hat are supported for it.
->      filename`` to check if the NOCOW flag is set or not (Capital 'C' is
->      NOCOW flag).
-> =20
-> +  .. option:: zone.mode
-> +    If this is set to ``host-managed``, the image is an emulated zoned
-> +    block device. This option is only valid to emulated zoned device fil=
-es.
-> +
-> +  .. option:: zone.size
-> +
-> +    The size of a zone in bytes. The device is divided into zones of this
-> +    size with the exception of the last zone, which may be smaller.
+FWIW (this change has already landed in the master branch, so it's cast
+in stone), I can't find this commit in my git clone of qemu repository.
+Neither hash ID nor the name.
 
-This option is required when zone.mode=3Dhost-managed?
+Is it this one maybe? https://marc.info/?l=qemu-arm&m=164500409921734,
+which is commit e1acf581c9 in qemu?  It has a different commit message
+though.
 
-It would be useful to indicate whether each option listed here is
-required or has a default value when absent.
+And this patch does not apply to 10.0.x, - in there, there's no
+hw/nvram/aspeed_otp.c (688a3dae78 hw/nvram/aspeed_otp: Add ASPEED OTP
+memory device model).  I assume it's not needed for 10.0.x, but in
+that case, the Fixes: tag isn't even commit e1acf581c9.
 
-> +
-> +  .. option:: zone.capacity
-> +
-> +    The initial capacity value, in bytes, for all zones. The capacity mu=
-st
-> +    be less than or equal to zone size. If the last zone is smaller, then
-> +    its capacity is capped.
-> +
-> +    The zone capacity is per zone and may be different between zones in =
-real
-> +    devices. QCow2 sets all zones to the same capacity.
+Thanks,
 
-This defaults to zone.size?
-
-> +
-> +  .. option:: zone.conventional_zones
-> +
-> +    The number of conventional zones of the zoned device.
-
-This defaults to (size + size.size - 1) / zone.size?
-
-> +
-> +  .. option:: zone.max_active_zones
-> +
-> +    The limit of the zones with implicit open, explicit open or closed s=
-tate.
-> +
-> +    The max active zones must be less or equal to the number of SWR
-> +    (sequential write required) zones of the device.
-
-This defaults to (size + size.size - 1) / zone.size?
-
-> +
-> +  .. option:: zone.max_open_zones
-> +
-> +    The maximal allowed open zones. The max open zones must not be large=
-r than
-> +    the max active zones.
-> +
-> +    If the limits of open zones or active zones are equal to the number =
-of
-> +    SWR zones, then it is the same as having no limits.
-
-This defaults to max_active_zones?
-
-> +  .. option:: zone.max_append_bytes
-> +
-> +    The number of bytes in a zone append request that can be issued to t=
-he
-> +    device. It must be 512-byte aligned and less than the zone capacity.
-
-Is there a default?
-
-> +
->  .. program:: image-formats
->  .. option:: qed
-> =20
-> --=20
-> 2.43.0
->=20
-
---4Z/2vIya+qw6fpfR
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmoGGM4ACgkQnKSrs4Gr
-c8jPFwgAqiGHlzEIw3cHZo+rKOv4L4A4lEAHsHkvaFTu9bRloYqsA8mmYrGLD3X0
-d/8g7Fmpm8W9ojMI1hoQ4JOfShUe9mfT3UHqettXP6tET4qp6QNdhz3ZYaDuB7j6
-AzzaNi0jRzOm9GFxkTRUWXhSEQAiJmsGg2JF2peaw4Bhp0rgugIZhGZS8q1o+4rl
-KtWprfp++JWGa793cU8RwEQWjOFxL5Rx0lxOIumeLZ1F5eRw7e/Oobh72OfIzSvc
-IPOl3uIlmEUVTw4PTIY/Ij85/8o3Tcy9XvQ9PcsLDOB2+9sUuDX/QBV4ZHVAwgtq
-UtE5Xmivy504jSNqKsZ33Ek5PTFMmQ==
-=xwf5
------END PGP SIGNATURE-----
-
---4Z/2vIya+qw6fpfR--
-
+/mjt
 
