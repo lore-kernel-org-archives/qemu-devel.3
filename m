@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D86ACD4F25
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 768AECD4F3C
 	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 17:24:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNZmR-0003cj-Bn; Thu, 14 May 2026 13:23:27 -0400
+	id 1wNZmS-0003dM-PP; Thu, 14 May 2026 13:23:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wNZmK-0003bK-5m
+ id 1wNZmJ-0003bH-Ob
  for qemu-devel@nongnu.org; Thu, 14 May 2026 13:23:20 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wNZmH-0005iw-G1
- for qemu-devel@nongnu.org; Thu, 14 May 2026 13:23:19 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ id 1wNZmG-0005iN-Rm
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 13:23:18 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64EBeXAu2241739
- for <qemu-devel@nongnu.org>; Thu, 14 May 2026 17:23:15 GMT
+ 64EBeQJr3951586
+ for <qemu-devel@nongnu.org>; Thu, 14 May 2026 17:23:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- YT2tyTyZY3pjT45Atqj6B2IVwPHfvfmCb9TBLDMZRU4=; b=QFDbADXtaghiDdv0
- u8XGNmNte6mbb/zZDkZDHZoay3V6vh5+SzCeXnVTE4MAPY6lWqOdGk1onbZHwYiM
- isWoyvqv1IdSY1cSJmGH3WR0rovzRa244zsCm2LqaItCSUx0dgqhN7Px9paOftxu
- CFbPtKMqXBsHSruE9Dlm2HAhttkr84wFq2FSQsXlMWYzagLdNES1b1I0urlhlQgv
- 6Fo8DA+dGFnNriBXmWedb8kzhGQc1mjZBy7883A+gLsbaUR8rTpO/BA5LObwxMp4
- J0bxH1hxE8fG/887azOMrX8QdLlLVq6XZsCNPKXNwgZaFu4vAKTpkYQ+Cq67LZvf
- U/I5JA==
+ 1dUHUq2pSY7R6GNpMijZrY/mundsQGHsq4YZCZ/UTds=; b=XtaPd/zj8kEWsg7N
+ oFwPjk45QoGBwJkACQcJ5g+SZ06cKuBWK0/LKgMytx48wkxSR06CxL9t9Omk6rJV
+ TUTJvXpfv6+nDQLPlNXUthtk5sXvSwauLHS1WoZhIPUWpCSEbEqYiM4RQiJBx7G4
+ H9lHLLHahaMYjexIPUtE/L/eMtqKevgUd1jPkAXFpsmlyT70e7SBWYM4vLJCo/sN
+ 01/0a9HRgQ8AwVr/u61s0mejI2j4b3jDzDzVSOIxVWl/DIYUJLtoNFsIe8k30WFq
+ CL+nql7wtMlsNzTrYeWHU0hf4yzwxb2ubga4feJrl0m1hhSul/pdXq8g4qWmPIZ5
+ FsEMvA==
 Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
  [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e513gbtan-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e57kstpdw-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 14 May 2026 17:23:15 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Thu, 14 May 2026 17:23:12 +0000 (GMT)
 Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-30230e64087so1987466eec.0
- for <qemu-devel@nongnu.org>; Thu, 14 May 2026 10:23:15 -0700 (PDT)
+ 5a478bee46e88-2bdd327d970so39872eec.1
+ for <qemu-devel@nongnu.org>; Thu, 14 May 2026 10:23:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778779395; x=1779384195; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1778779392; x=1779384192; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YT2tyTyZY3pjT45Atqj6B2IVwPHfvfmCb9TBLDMZRU4=;
- b=RzLLf5or3TO+nJcKxCgMKZbcM8fflSosiZnouXhaayMAARDjNCXo0AHNhEyISFsvYA
- dOYU0z048jjYcQI6E231JPKFZHhm969/ei1FTIh87XUrMVsBv8wG5jmT6mgLYmXskBuU
- awf78+MGPe0YiK2X/9k3ud1R8a62Vj3qCAal+cOkxBPSGRApX4eFuZcJLvVUgBC5eGoh
- 36X8JkKbUU6wJUAk4glgynAimoQKj+casw9rbk+JL9Hsfs1jPxwSqIB0e8PyHPcvGyar
- hi1F124yhGIzSKUJ/FoLPQDG5D3Ps3WXMhAf4YvdqIK8jCyzh8Y08buse+4vyTAWnJ+Z
- Y+7Q==
+ bh=1dUHUq2pSY7R6GNpMijZrY/mundsQGHsq4YZCZ/UTds=;
+ b=gOru9nGowj5s61jwobySAYkSQgSoq4X+6/BbusslXPtCy04hx9721vjOvL+pr2WvXC
+ oB2asSWWlm1R0B6E68iTJm24coPGjvv+E/A3LWcdJOMLBEnDoJ0rYylXoIWPiwek7mx9
+ Fq0aKeHMvipLev9ek+urZriOdMVYnffr7mcYILcrtoU4SYbsFGkY1aAE9BfH+5biwoUl
+ /IIFulRC9VtdCM/1DeUMPjdws1yKR28MZEgcX7CmRYbOrFmAOU8BVywKe+VS2cutn17T
+ /sRo2KLZ8aQo1emNqnV6dpuD5GHl0eghfPr3O0AMhRMgvpxAVLwBB3HiY+xPYZq8awee
+ hykQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778779395; x=1779384195;
+ d=1e100.net; s=20251104; t=1778779392; x=1779384192;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=YT2tyTyZY3pjT45Atqj6B2IVwPHfvfmCb9TBLDMZRU4=;
- b=Rn+QXPUgikaiveAS621e3QWkKBcs1nVpEMB4MAbbpEE2E1wAPkWpaO/Hv7jcprsCUN
- Ye4WBjDHCVxm5scbpZLlsjViyn73bZ5mpPVKQXWOiRGGA/k4VPSFgtFZyRdVV2oiEy+f
- usEFUgkIMXA6gzgfC243y1DVO9cO+686e6wIxF7bE+7UWervazpTWT2FJiBtNrX16F1Q
- ysjqGsKXWO9A9vPSCqWyVS2D/kl1UIXgjc8m/q16KQ/m7p3jJUakJm59W2EwQurNwSoq
- 3lt2/H4rU/GKS594pS84hvqSM9wL3NwdJF6XXoiAHA8XwMMWGijR6WUgoyErwrttcIIJ
- gOdQ==
-X-Gm-Message-State: AOJu0YzcPOuROcT3/gM9LYqf6/+dLUG+2ObaSSkC4jfvvA3rFffguhdI
- wIEpvQpYc1WvxguNc5SsguBFDgk3fJ5A8kzPz043CdTI/qM0Z3Tosp7RRFzq/q8KPqHVGipDcqi
- B0NAQrHlTs2Ph/VBQDNz2VP8nbPImni3jAp3Si9TmDLSS8w8eSJy4uZttZUJWf8Vj9Q1F
-X-Gm-Gg: Acq92OG4aGj0C+HK7hjgoll/bzLjvz93jj2H4AJbxeH3gK9ggEAZuxW7suI3BMkC4nZ
- ugQR4dJzpQ5G1WomHs8wraz/iBYXCPUJFX62Jhf9eDQ7Bh20APXQAWsFxkCmiq8mDRLMThkJ+Cr
- TczHHCDjHnyCB4ZwzeSzcp1pCj7vzuvOevAUFgnsH3yqVllLDfn1zcs4HmzKy6jyGR9UgCZnc/h
- Zf56TPiyS2sZG5jQ8RImsPT99xwRe/J5eb8+RX1SXtdQMCjGi1P2GALEPHTWdpdJ1zBZqetXiTd
- PInXKjJ+P4DaeewmicFbtSUABbOt2245Bil0bRcjqoTuV+iQnwzsrJVgopDSMTaYMuxfq4MJM5g
- 41jveKa4hQIFxYm+CdVT6Jk5VE4sRof3+Np2yaWZlnca/Li1o7OrIL3zTI44zTgnIAJKpY3pxQ2
- mWwQ+E2Q==
-X-Received: by 2002:a05:7301:688:b0:2e2:5bc5:f8eb with SMTP id
- 5a478bee46e88-303982c04demr250744eec.9.1778779394989; 
- Thu, 14 May 2026 10:23:14 -0700 (PDT)
-X-Received: by 2002:a05:7301:688:b0:2e2:5bc5:f8eb with SMTP id
- 5a478bee46e88-303982c04demr250709eec.9.1778779394444; 
- Thu, 14 May 2026 10:23:14 -0700 (PDT)
+ bh=1dUHUq2pSY7R6GNpMijZrY/mundsQGHsq4YZCZ/UTds=;
+ b=HLQe/GfBehUhxQSXfnPB0EEGSTzX1DYokVeP8QxJf/08Bl5/GvGKK4k1+pCH+HTMbb
+ NHrLPzfi9iYH7Gusv+Kh+fBMPcTgNUMPfcS3oDR+9jEl0nuaTEJ4FVy9zFFs8Dc4jlKS
+ yozRsxGu9TY1eC1ShE13kmpohGJ1a922+SlLbJoL+O/v/2OXyIoQRTSyoUDW/coApyPC
+ iNyAACslX//DjgJmDBi3eBrQiEoHqCIWqv/4aFnOJs0oPnScE2ZClUVNWhJYf7J6EkX+
+ UcNBai3yBLG6vQKejI+GMJuYnRa7FHCnzgaxUE1a/3FGWPbsNG7ocGPsH6YECkEsI6+n
+ b76g==
+X-Gm-Message-State: AOJu0YyRGv2CXoapL1Ah+2BVLNiVJg4TXjIsFDLMGxuyKlh8kI2NWsGk
+ q2tbR08gXyMT7ogjRGWD1ulvLF1s2LSrPxGpq9UJ7bmGKTcE0QeVMAQ3ykSd1ou3JYuBRmMB5/j
+ YgDLlRgUDNxXvw1p17ZmVhP/4P42qBNaoBHQVk1Q57v13VqFlGhyPa79RSgQJQBEqazYe
+X-Gm-Gg: Acq92OFW/jZcx5tjq/rK0BdBGx6l/W+jWE6YIgvx6yU4xdH9DXovC3nvL0Rq/o3NHxX
+ /9rWjjyAWNWPQ7azZ3PqCkrYn3kbE5Sy4UdXW/epzrjOXgIM6urLQzzhQwPq/vFvsPCFPmqBdt4
+ SnFxVVIpXbDurDZN8S31fZf+vOE1oxuCMqKe3Fbh9iYUsNOqvlgSUO2FMNk85J6uZhqY85ggea5
+ /EaRKWwWjpuM7IuCnAcUmAYaGAXq2bsPh6t7/Hx6R/kjK07WusVdRG3H/5Z2mNUZ06R6cOtImFS
+ uSBwqgsvHzV7svZECn63a6NtHRnjQSKvBsio7tagt8NxNnJ7XJT29w1dlPUkHJTnKEIlf/Rg5jM
+ B9b/WqBuQ6Zeg8GvkIsNKuronDyVWV51gSxuLxFwW/+f12bG0a7kSnbVmDITE0dgvOTowgEEFe1
+ Re6z3bIA==
+X-Received: by 2002:a05:693c:2c8c:b0:2c0:df3b:ec1e with SMTP id
+ 5a478bee46e88-3026188af43mr2689685eec.11.1778779391903; 
+ Thu, 14 May 2026 10:23:11 -0700 (PDT)
+X-Received: by 2002:a05:693c:2c8c:b0:2c0:df3b:ec1e with SMTP id
+ 5a478bee46e88-3026188af43mr2689657eec.11.1778779391348; 
+ Thu, 14 May 2026 10:23:11 -0700 (PDT)
 Received: from hu-pbouvier-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-302944ffdf0sm3828677eec.8.2026.05.14.10.23.13
+ 5a478bee46e88-302944ffdf0sm3828677eec.8.2026.05.14.10.23.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 May 2026 10:23:13 -0700 (PDT)
+ Thu, 14 May 2026 10:23:10 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -100,38 +100,38 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Fabiano Rosas <farosas@suse.de>, Darren Kenny <darren.kenny@oracle.com>,
  Alexander Bulekov <alxndr@bu.edu>
-Subject: [PATCH v7 4/5] target-info-qom: detect target from QOM
-Date: Thu, 14 May 2026 10:23:02 -0700
-Message-ID: <20260514172303.1484273-5-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v7 1/5] qom/object: register OBJECT and INTERFACE QOM types
+ before main
+Date: Thu, 14 May 2026 10:22:59 -0700
+Message-ID: <20260514172303.1484273-2-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260514172303.1484273-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260514172303.1484273-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE0MDE3NCBTYWx0ZWRfX+kUv4wd39JR8
- psVSwW4XANOTse96L0y/wfhdhhraAFBMqadVuDYRfpbQKB6ASSffILjqQM4ZoIR9KYvjEuxyPKl
- GHW2j/4PIVoQJoa/ubMslmvBHok2um0gYGuRUXJDy3izjdBaGc7nevBf926JmgVmoeS//H+mhty
- Fj3lKW+yuRaONBL0scMC88bd7pshw3OBU0aLrQO8bQw53CtPwbidqGIKO5vtwoGFRTpKeoddEmx
- n3uqk4l4P86J80LvFMYTh0M88O5jBfpCAgPYK4ZCrUefuZtYae5TT+VmCwjXwCKJsI5Sf5OO6YJ
- YXLL+nvROVYdrO3ZEIKhUnzH5/9H0mWOs7e57FiA2/kbKC6sAGf8r1i1+c+/8HpO+pvWa1Fo46N
- 379jL8gF42UdS5q7oTAwi08OI94s30Kkze205H3HPIXsdRQI81a41zgloq16HGA3WrjBBeYuFtd
- yRSJ15u2XcU+njT2Cmw==
-X-Proofpoint-ORIG-GUID: RJP3l10lwrhzQnwesQkJbCTDKibkZakN
-X-Authority-Analysis: v=2.4 cv=Iba3n2qa c=1 sm=1 tr=0 ts=6a060503 cx=c_pps
+X-Proofpoint-GUID: VPVEwL1fUO_Q3FnG-AWCh0oZgW9wUiai
+X-Authority-Analysis: v=2.4 cv=KZbidwYD c=1 sm=1 tr=0 ts=6a060500 cx=c_pps
  a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=20KFwNOVAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=Ta8ybb0yH1EomjxcGswA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=bBxd6f-gb0O0v-kibOvt:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: RJP3l10lwrhzQnwesQkJbCTDKibkZakN
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=W37sF3GUcAVBL6lWIEgA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=bBxd6f-gb0O0v-kibOvt:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE0MDE3NCBTYWx0ZWRfX7BRahggT0RJs
+ S/6jiA7ASSbggRIfuLqMTqgerXIaUbB5MIP5KOD3k56H3LOCIIeNvusCk4NVjUrK1lF/p3kiwIz
+ 1iLqfVQ2vapQaxewLSUD48ZenKCSHuh9u4uND2vFu+4v3qEv10ST3GGqiX6atUw0eBXR9EUFNug
+ yZrcuxG09w7VsHf2g4dAv3/5fEnj52abNDdEeq4hw/QbuJnW15Ko/emNSaq3N+61n08CG+jiO7l
+ ehgiNLkpZhOfbyHJDS6hjXyY3qvPdYg3Gcp6Cks+3sN5b3t6aCtP2wJerKyu/rYMfrePMpsIOmy
+ ZYEgsKJVmmLiwWcO5ucyTj0irrSjjvivDYt/0Dj3vt4kmsYf67ZRMzhGJe4JwirH3k1AZxoj4yh
+ pGCzZTKHVyfxsitZa0H/4mQsRFShGF2kgxw9Oz5VNqc9zfZW6hsmUjW+RaYgFU0NnfyGvx3QuIp
+ Sprl9JLi4IPpPZ7qYjg==
+X-Proofpoint-ORIG-GUID: VPVEwL1fUO_Q3FnG-AWCh0oZgW9wUiai
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-14_04,2026-05-13_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0
- adultscore=0 malwarescore=0 suspectscore=0 priorityscore=1501 phishscore=0
+ clxscore=1015 bulkscore=0 impostorscore=0 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 adultscore=0 malwarescore=0 spamscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2605050000 definitions=main-2605140174
 Received-SPF: pass client-ip=205.220.168.131;
@@ -159,95 +159,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For now, we expect only one target to be available at runtime. This will
-change with the single-binary and we'll detect which one to use
-dynamically.
+Those types are special, as they are the base of all other QOM types. In
+next commit, we'll introduce an extra step in module initialization for
+target-info-* types.
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+However, those types depend on TYPE_OBJECT, which is only registered
+at MODULE_INIT_QOM step.
+
+To avoid having to introduce another step, and modify all code calling
+module_call_init(MODULE_INIT_QOM), we simply register those base types
+directly in the static constructor, before anything else.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- include/qemu/target-info-qom.h |  2 ++
- system/vl.c                    |  2 ++
- target-info-qom.c              | 16 ++++++++++++++++
- tests/qtest/fuzz/fuzz.c        |  2 ++
- 4 files changed, 22 insertions(+)
+ qom/object.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/include/qemu/target-info-qom.h b/include/qemu/target-info-qom.h
-index 585995c7ad0..91be415ed33 100644
---- a/include/qemu/target-info-qom.h
-+++ b/include/qemu/target-info-qom.h
-@@ -25,4 +25,6 @@ typedef struct TargetInfoQomClass {
+diff --git a/qom/object.c b/qom/object.c
+index 59fd79738d2..b82b65a3a18 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -2844,7 +2844,7 @@ static void object_class_init(ObjectClass *klass, const void *data)
+                                   NULL);
+ }
  
- OBJECT_DECLARE_TYPE(TargetInfoQom, TargetInfoQomClass, TARGET_INFO)
- 
-+void target_info_qom_set_target(void);
-+
- #endif /* QEMU_TARGET_INFO_QOM_H */
-diff --git a/system/vl.c b/system/vl.c
-index e44da0941d4..e690aa3ed8c 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -28,6 +28,7 @@
- #include "qemu/units.h"
- #include "qemu/module.h"
- #include "qemu/target-info.h"
-+#include "qemu/target-info-qom.h"
- #include "exec/cpu-common.h"
- #include "exec/page-vary.h"
- #include "hw/core/qdev-properties.h"
-@@ -2890,6 +2891,7 @@ void qemu_init(int argc, char **argv)
-     os_setup_limits();
- 
-     module_call_init(MODULE_INIT_TARGET_INFO);
-+    target_info_qom_set_target();
- 
-     module_init_info(qemu_modinfo);
-     module_allow_arch(target_name());
-diff --git a/target-info-qom.c b/target-info-qom.c
-index 79752366b61..9947fcc9922 100644
---- a/target-info-qom.c
-+++ b/target-info-qom.c
-@@ -46,3 +46,19 @@ static const TypeInfo target_info_parent_type = {
- };
- 
- DEFINE_TARGET_INFO_TYPE(target_info_parent_type)
-+
-+static const TargetInfo *target_info_ptr;
-+
-+void target_info_qom_set_target(void)
-+{
-+    g_autoptr(GSList) targets = object_class_get_list(TYPE_TARGET_INFO, false);
-+
-+    size_t num_found = g_slist_length(targets);
-+    if (num_found != 1) {
-+        error_setg(&error_fatal, num_found == 0 ?
-+                                 "no target-info is available" :
-+                                 "more than one target-info is available");
-+    }
-+
-+    target_info_ptr = TARGET_INFO_CLASS(targets->data)->target_info;
-+}
-diff --git a/tests/qtest/fuzz/fuzz.c b/tests/qtest/fuzz/fuzz.c
-index de230d20e0f..a3a131c80f8 100644
---- a/tests/qtest/fuzz/fuzz.c
-+++ b/tests/qtest/fuzz/fuzz.c
-@@ -22,6 +22,7 @@
- #include "system/runstate.h"
- #include "qemu/main-loop.h"
- #include "qemu/rcu.h"
-+#include "qemu/target-info-qom.h"
- #include "tests/qtest/libqtest.h"
- #include "tests/qtest/libqos/qgraph.h"
- #include "fuzz.h"
-@@ -173,6 +174,7 @@ int LLVMFuzzerInitialize(int *argc, char ***argv, char ***envp)
-     /* Initialize qgraph and modules */
-     qos_graph_init();
-     module_call_init(MODULE_INIT_TARGET_INFO);
-+    target_info_qom_set_target();
-     module_call_init(MODULE_INIT_FUZZ_TARGET);
-     module_call_init(MODULE_INIT_QOM);
-     module_call_init(MODULE_INIT_LIBQOS);
+-static void register_types(void)
++static void __attribute__((constructor)) register_types(void)
+ {
+     static const TypeInfo interface_info = {
+         .name = TYPE_INTERFACE,
+@@ -2862,5 +2862,3 @@ static void register_types(void)
+     type_interface = type_register_internal(&interface_info);
+     type_register_internal(&object_info);
+ }
+-
+-type_init(register_types)
 -- 
 2.43.0
 
