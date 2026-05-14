@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3151CD4F39
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 17:39:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FFDBCD4F39
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 17:39:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNa1T-0000vX-VV; Thu, 14 May 2026 13:39:06 -0400
+	id 1wNa1T-0000vq-V0; Thu, 14 May 2026 13:39:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wNa0x-0000qL-Ru
- for qemu-devel@nongnu.org; Thu, 14 May 2026 13:38:29 -0400
-Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
+ id 1wNa0h-0000og-VP
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 13:38:15 -0400
+Received: from mail-oa1-x32.google.com ([2001:4860:4864:20::32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wNa0q-00043k-NN
- for qemu-devel@nongnu.org; Thu, 14 May 2026 13:38:23 -0400
-Received: by mail-ot1-x331.google.com with SMTP id
- 46e09a7af769-7e4de538f83so70495a34.1
- for <qemu-devel@nongnu.org>; Thu, 14 May 2026 10:38:15 -0700 (PDT)
+ id 1wNa0S-0003nB-Rd
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 13:37:58 -0400
+Received: by mail-oa1-x32.google.com with SMTP id
+ 586e51a60fabf-439e43d16bdso1245080fac.2
+ for <qemu-devel@nongnu.org>; Thu, 14 May 2026 10:37:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778780295; x=1779385095; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778780273; x=1779385073; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=pc1Mn3o1jlOZY11iHx/ZhNEk+WZuH54xOhmJWC41Wdg=;
- b=lpGKi5jFng/sXVD138M7u80ulOOx15DKUN8Z7CYV0yINZRudu5OS8Ssmga9phVNW8t
- zvJCbI5ZY0lhlZqEjGSjTmVzQ+HnWDi8OnOzeslnATj1hypLaxIRT+epTlOhYl2qxx+9
- u5sCeWU6Ftn+dxju3QtcbGGjnGSLyZ5Nj27pJwEzVwCAlz5ULLn6mtai96cucgF6VE5f
- Q1NqeJSEPHj8GxolTTzV8qxAMXviIkG/2hw+w2TiNP4G+qRGnbBj8L+6q3LHVhSvZFk4
- 7+R8dIMF//WW8xKzKVSlOm5HR0A6xi0sOvrbrKfAnMYTi0Hf2QTmfG+M7673MHHWkoQi
- 9STg==
+ :reply-to; bh=7jM1jwUY6doQWw7cNzzrKAiwqt9SLepu9Iq35gPFd94=;
+ b=ljJTeREjlJs+cSqcPoUxI1mHBnTR+2SxJvOWCPDyrrd8SdgVU0QAG9nGKEGG55+1ZZ
+ b7fEiExzgJHxs/tAY2OBefHKvTo0QW/oR4NkcCGRRPRDA3Y7r6Odfu7hGAGoVsIsa3RS
+ ovSWU44OaCIHZ9bvxeglK5xHtW86SgeJXinqFnr2zlXb+RH0mj0HjF2lOnW7Q/qXW9WX
+ njT5FJIlfucrcfgDlc/oXPx34rNOXOLqlm+4OBGCUxihaD9Y1u17YxjvfljN7oabkSHG
+ ZEMjkNnsbu+M69lJpAqTvpZPKDbIJQqFtXfIqJCj507apXdvxxAeVeJyuK/X4GrjrtJh
+ s4Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778780295; x=1779385095;
+ d=1e100.net; s=20251104; t=1778780273; x=1779385073;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=pc1Mn3o1jlOZY11iHx/ZhNEk+WZuH54xOhmJWC41Wdg=;
- b=Zwm6n2/vUAbATqxIhkMmSGSECQi39kxjZdD8T0hDCo8pKsLgpDQRv369VyzhpafgHH
- cPjWLej8M19g9aj601oF4SE4UhgLssLD6rxPq4+dnHrQZyDy4CmlS9ETaUjKOXVnk3I3
- yGeVQOB/A7m14cMNZ7n23foJ6y/ywUsK4ldOAKAuQg5YDFIyM9ARYiKZzmiQ80KO7cVH
- kpWTHg8HW1HGvtTMcHv7NVcbo1GpQP2mHrUVKjSLo8+uOtJlKyygftYfMApwFWg7I5P0
- Nm6PYIcahHELIOznOzTz0wX4E9dtM+ClEZa8mkKtQtgPV+2QrpwyJYd2bHArXY5OHqyT
- NbFQ==
-X-Gm-Message-State: AOJu0YxW5NyL32L/zp8FC36e59tBk/Tsn0ad6Qvb8HG5pU+Zc/AqrBBf
- FPQXzlGtttFgeGv/ZkqUiYUEoWOCNo1G1Ue1TtZUrl2vfm8VH3uoTUNa
-X-Gm-Gg: Acq92OFLmlCROoTudpGAWWjF0qGiGX9ZHxlEG52oRnaY10i7Kr8Nyaz7HYSB+9QfHWw
- Z8SlDKKGKDGPsEIni2pegWLc+VCaP1+1IDgJnPNVOZeEGkpU/Czbjyirtr5ojc1sKUypfSbwmFr
- 4qz9A4W23Xpogg0C9uUwvSyJ9tjSpk4bwfs15RGmC5wyW9J0rUvDeFK2t4yP4PXOYSIgk3apigZ
- YSGuwhqLxk/3lEnnGd72BX6i30rAfvLPgpqxxdSfMMD12FqnvjZbHbcPI4zGK1Pc76YEVzNHXLF
- GYaBQaMMPAWxWoeAwawbpBvUSGPI6ebr5OHwD1d2k2IOPMjcBqlUMuKKth+nTINlfZTv3yQwkba
- V0DR7A7h77MR/NiLpRWl7RdB0Th+c4DCO/lMleAePcOozOTuViXJ4s58CHvSCwW1qIYmXnYsQBq
- bKdORYRmjinBS/UCLMpUloFO2a7cDPZlW17C+oQ7HcEGecdXVi/R3SN8+dI+ssB9BMX3TZFyolO
- 5tVdXjaIwEMWlAi8RsxYfeUq0uWsfPrl3Q4lVXQLEtvbWSvpcy+Ze4inoRuddUKtloxPmKQt1nP
- bBk=
-X-Received: by 2002:a05:6820:16a6:b0:69b:544f:c172 with SMTP id
- 006d021491bc7-69c943714e6mr275077eaf.25.1778780294675; 
- Thu, 14 May 2026 10:38:14 -0700 (PDT)
+ bh=7jM1jwUY6doQWw7cNzzrKAiwqt9SLepu9Iq35gPFd94=;
+ b=bOhbW5FkhPZpvdOiUQHC/kbCgSUHDaVHIWuiyZO1aiMmCKGNdVwilybQlT2X9WIjuJ
+ cr9gelb3iLqmgntODWdW2/2b+iXTi3zx6WEkyQ/RGQV/wuBKbSdImr0brmSnzkQGm2on
+ Q9/Ex4npKyhTZdIGTE0CYdVmDIkdghrXR9gQTdn06EhEcaoRqg5xmpyyvrrGOeQmgSJU
+ ixd7gN9OyxMnRTsoqru6K7M7jcu3iRjFU0wICUKGlMb83Y3xq8U130WsBFQFP/XHnv+G
+ glzYqcCZvVAdS7kAL6obxFir9yd1OM+jPjuWHYSSqFF145G1mOmcjS+lU3VtRrc7qssw
+ oPZg==
+X-Gm-Message-State: AOJu0YxJUDdj92oZeaoXYjDOhkE97RoGyd5CHaFHYGAnWAXtpY07qwe3
+ CHe8hp3vJMZGJHqqoldu0H0+BA1eADkWC/Ex78mnDdcZLoF+kbdvvbrW
+X-Gm-Gg: Acq92OEOwbsit9OpUULbTNV4+8G6tsEEvHlSpQGjYqKLEoIVfO1xCMXCaM/VE27Bk/z
+ vzZcbBNRwis105KKrL07LxsmjjRLOZVag7xisaWKj2ooa0DgdVGZPTXFr1wjhSxgTrs3I6WuJhL
+ nap24FQBFBhW0SjeeM1QJGaEl1AXbut3A09hTxcnvZijdrvA401fjYbLbNzi6MQyNxg56Zdz2Io
+ OCtoyrw6gBeTJPjAt/fgC6OmnQnbJhbgcipqmSB8VTsuCqtOrIeCCTk8vHVWvNuHg91dMscoxY/
+ QdFGBv0ffJsiyWraYUWIEUYaVNgWFzrd0buwkTuM/BlMLDEC8V9cccMEHTznmDV0gSvXoZdl5fj
+ Fh6uOScbHuf9R+sZNBBT304ITNQxUgWRz+FMqA6YEtZEkDgotrD/w5sVASt7ABwaOr1WE0dMGLc
+ SAFIbDjAU1S9sOBUzP70tdyPHB0Y0Y6OiXXv+kEfHlBdgziBc/kc84A+hVD357QDl5iCDZBTDJE
+ NblBuX1KpIUZLPXzBOV1/D4DHlT8FcC41XQUSkcyUXiFxOcLM3rRjkWiy/oKjfAe+d3SHiUqaQX
+ sGs=
+X-Received: by 2002:a05:6820:4b04:b0:68b:bc93:1de with SMTP id
+ 006d021491bc7-69c9436a14fmr270373eaf.35.1778780273585; 
+ Thu, 14 May 2026 10:37:53 -0700 (PDT)
 Received: from mac.localdomain (71-218-106-55.hlrn.qwest.net. [71.218.106.55])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-69b8ccdc74esm1687254eaf.13.2026.05.14.10.38.13
+ 006d021491bc7-69b8ccdc74esm1687254eaf.13.2026.05.14.10.37.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 May 2026 10:38:13 -0700 (PDT)
+ Thu, 14 May 2026 10:37:53 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Thu, 14 May 2026 11:37:10 -0600
-Subject: [PATCH v7 21/35] target/mips: add Octeon VMULU instruction
+Date: Thu, 14 May 2026 11:36:50 -0600
+Subject: [PATCH v7 01/35] linux-user/mips: implement sysmips(MIPS_FLUSH_CACHE)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260514-mips-octeon-missing-insns-v2-v7-21-226686be4ce1@gmail.com>
+Message-Id: <20260514-mips-octeon-missing-insns-v2-v7-1-226686be4ce1@gmail.com>
 References: <20260514-mips-octeon-missing-insns-v2-v7-0-226686be4ce1@gmail.com>
 In-Reply-To: <20260514-mips-octeon-missing-insns-v2-v7-0-226686be4ce1@gmail.com>
 To: qemu-devel@nongnu.org
@@ -81,10 +81,11 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Aurelien Jarno <aurelien@aurel32.net>, 
  Jiaxun Yang <jiaxun.yang@flygoat.com>, 
  Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>, 
- James Hilliard <james.hilliard1@gmail.com>
+ James Hilliard <james.hilliard1@gmail.com>, 
+ Richard Henderson <richard.henderson@linaro.org>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
- envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x331.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::32;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oa1-x32.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -108,135 +109,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VMULU multiplies the active Octeon multiplier state by rs, adds rt and
-queued partial products, returns the low result, and advances P[0]/P[1]
-with carry limbs.
+Add the target sysmips dispatcher and implement MIPS_FLUSH_CACHE as a
+successful no-op for linux-user.
 
-Add helper and translator support for the two-limb accumulator operation.
+Self-modifying code is handled by QEMU's normal user-mode translation
+invalidation machinery, so the target ABI only needs the syscall command
+to be accepted.
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
 Changes v2 -> v3:
-  - Split VMULU out of the combined Octeon arithmetic and memory
-    instruction patch.  (requested by Richard Henderson)
-  - Use uadd64_overflow() for multiplier limb carry accumulation.
+  - Split MIPS_FLUSH_CACHE out of the combined sysmips/MIPS_FIXADE patch.
     (suggested by Richard Henderson)
-
-Changes v5 -> v6:
-  - Rename the translator helper callback typedef for clarity.
 ---
- target/mips/helper.h               |  1 +
- target/mips/tcg/octeon.decode      |  1 +
- target/mips/tcg/octeon_translate.c | 17 +++++++++++++++++
- target/mips/tcg/op_helper.c        | 32 ++++++++++++++++++++++++++++++++
- 4 files changed, 51 insertions(+)
+ linux-user/mips/target_syscall.h   |  1 +
+ linux-user/mips64/target_syscall.h |  1 +
+ linux-user/syscall.c               | 17 +++++++++++++++++
+ 3 files changed, 19 insertions(+)
 
-diff --git a/target/mips/helper.h b/target/mips/helper.h
-index e2b83a1d19..f1e78ae329 100644
---- a/target/mips/helper.h
-+++ b/target/mips/helper.h
-@@ -24,6 +24,7 @@ DEF_HELPER_FLAGS_1(dbitswap, TCG_CALL_NO_RWG_SE, tl, tl)
- DEF_HELPER_3(crc32, tl, tl, tl, i32)
- DEF_HELPER_3(crc32c, tl, tl, tl, i32)
- DEF_HELPER_FLAGS_4(rotx, TCG_CALL_NO_RWG_SE, tl, tl, i32, i32, i32)
-+DEF_HELPER_3(octeon_vmulu, i64, env, i64, i64)
+diff --git a/linux-user/mips/target_syscall.h b/linux-user/mips/target_syscall.h
+index dfcdf320b7..3f36c1695a 100644
+--- a/linux-user/mips/target_syscall.h
++++ b/linux-user/mips/target_syscall.h
+@@ -10,6 +10,7 @@
+ #define TARGET_MCL_ONFAULT 4
  
- /* microMIPS functions */
- DEF_HELPER_4(lwm, void, env, tl, tl, i32)
-diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index 2279bf3eb5..74d24c18de 100644
---- a/target/mips/tcg/octeon.decode
-+++ b/target/mips/tcg/octeon.decode
-@@ -50,6 +50,7 @@ MTP1         011100 rs:5 rt:5 00000 00000 001010 &r2
- MTP2         011100 rs:5 rt:5 00000 00000 001011 &r2
- MTM1         011100 rs:5 rt:5 00000 00000 001100 &r2
- MTM2         011100 rs:5 rt:5 00000 00000 001101 &r2
-+VMULU        011100 ..... ..... ..... 00000 001111 @r3
+ #define TARGET_FORCE_SHMLBA
++#define TARGET_SYSMIPS_FLUSH_CACHE     3
  
- &saa         base rt
- @saa         ...... base:5 rt:5 ................ &saa
-diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index 365079cfb9..62cbbd3c82 100644
---- a/target/mips/tcg/octeon_translate.c
-+++ b/target/mips/tcg/octeon_translate.c
-@@ -13,6 +13,8 @@
- /* Include the auto-generated decoder.  */
- #include "decode-octeon.c.inc"
- 
-+typedef void gen_helper_octeon_vmul(TCGv_i64, TCGv_ptr, TCGv_i64, TCGv_i64);
-+
- static bool trans_BBIT(DisasContext *ctx, arg_BBIT *a)
+ static inline abi_ulong target_shmlba(CPUMIPSState *env)
  {
-     TCGv_i64 p;
-@@ -287,6 +289,20 @@ static bool trans_mtp(DisasContext *ctx, arg_r2 *a, unsigned int index)
-     return true;
+diff --git a/linux-user/mips64/target_syscall.h b/linux-user/mips64/target_syscall.h
+index 9135bf5e8b..20ea7c6ab9 100644
+--- a/linux-user/mips64/target_syscall.h
++++ b/linux-user/mips64/target_syscall.h
+@@ -10,6 +10,7 @@
+ #define TARGET_MCL_ONFAULT 4
+ 
+ #define TARGET_FORCE_SHMLBA
++#define TARGET_SYSMIPS_FLUSH_CACHE     3
+ 
+ static inline abi_ulong target_shmlba(CPUMIPSState *env)
+ {
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index d3d9fffb54..73f09bb775 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -6630,6 +6630,19 @@ static abi_long do_prctl_syscall_user_dispatch(CPUArchState *env,
+     }
  }
  
-+static bool trans_vmul(DisasContext *ctx, arg_decode_ext_octeon1 *a,
-+                       gen_helper_octeon_vmul *helper)
++#ifdef TARGET_NR_sysmips
++static abi_long do_sysmips(CPUArchState *env, abi_long cmd, abi_long arg1,
++                           abi_long arg2)
 +{
-+    TCGv_i64 rs = tcg_temp_new_i64();
-+    TCGv_i64 rt = tcg_temp_new_i64();
-+    TCGv_i64 rd = tcg_temp_new_i64();
-+
-+    gen_load_gpr(rs, a->rs);
-+    gen_load_gpr(rt, a->rt);
-+    helper(rd, tcg_env, rs, rt);
-+    gen_store_gpr(rd, a->rd);
-+    return true;
-+}
-+
- TRANS(LBX,  trans_lx, MO_SB);
- TRANS(LBUX, trans_lx, MO_UB);
- TRANS(LHX,  trans_lx, MO_SW);
-@@ -300,3 +316,4 @@ TRANS(MTM2, trans_mtm, 2);
- TRANS(MTP0, trans_mtp, 0);
- TRANS(MTP1, trans_mtp, 1);
- TRANS(MTP2, trans_mtp, 2);
-+TRANS(VMULU, trans_vmul, gen_helper_octeon_vmulu);
-diff --git a/target/mips/tcg/op_helper.c b/target/mips/tcg/op_helper.c
-index 4502ae2b5b..ab3fb06a16 100644
---- a/target/mips/tcg/op_helper.c
-+++ b/target/mips/tcg/op_helper.c
-@@ -144,6 +144,38 @@ target_ulong helper_rotx(target_ulong rs, uint32_t shift, uint32_t shiftx,
-     return (int64_t)(int32_t)(uint32_t)tmp5;
- }
- 
-+static void octeon_add_limb(uint64_t *sum, int limb_count,
-+                            uint64_t value, int limb)
-+{
-+    while (limb < limb_count &&
-+           uadd64_overflow(sum[limb], value, &sum[limb])) {
-+        value = 1;
-+        limb++;
++    switch (cmd) {
++    case TARGET_SYSMIPS_FLUSH_CACHE:
++        return 0;
++    default:
++        return -TARGET_EINVAL;
 +    }
 +}
++#endif
 +
-+uint64_t helper_octeon_vmulu(CPUMIPSState *env, uint64_t rs, uint64_t rt)
-+{
-+    uint64_t lo, hi;
-+    uint64_t sum[3] = {};
-+
-+    mulu64(&lo, &hi, env->active_tc.octeon.MPL[0], rs);
-+    sum[0] = lo;
-+    sum[1] = hi;
-+
-+    mulu64(&lo, &hi, env->active_tc.octeon.MPL[1], rs);
-+    octeon_add_limb(sum, 3, lo, 1);
-+    octeon_add_limb(sum, 3, hi, 2);
-+
-+    octeon_add_limb(sum, 3, rt, 0);
-+    octeon_add_limb(sum, 3, env->active_tc.octeon.P[0], 0);
-+    octeon_add_limb(sum, 3, env->active_tc.octeon.P[1], 1);
-+
-+    env->active_tc.octeon.P[0] = sum[1];
-+    env->active_tc.octeon.P[1] = sum[2];
-+    return sum[0];
-+}
-+
- /* these crc32 functions are based on target/loongarch/tcg/op_helper.c */
- target_ulong helper_crc32(target_ulong val, target_ulong m, uint32_t sz)
+ static abi_long do_prctl(CPUArchState *env, abi_long option, abi_long arg2,
+                          abi_long arg3, abi_long arg4, abi_long arg5)
  {
+@@ -12102,6 +12115,10 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+     case TARGET_NR_prctl:
+         return do_prctl(cpu_env, arg1, arg2, arg3, arg4, arg5);
+         break;
++#ifdef TARGET_NR_sysmips
++    case TARGET_NR_sysmips:
++        return do_sysmips(cpu_env, arg1, arg2, arg3);
++#endif
+ #ifdef TARGET_NR_arch_prctl
+     case TARGET_NR_arch_prctl:
+         return do_arch_prctl(cpu_env, arg1, arg2);
 
 -- 
 2.54.0
