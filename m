@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B918CD4F21
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 02:49:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD0F8CD4F21
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 02:52:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNM7Z-00027J-Kt; Wed, 13 May 2026 22:48:21 -0400
+	id 1wNMBD-0002vn-DI; Wed, 13 May 2026 22:52:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wNM7Y-000272-JK
- for qemu-devel@nongnu.org; Wed, 13 May 2026 22:48:20 -0400
-Received: from mail-dl1-x1242.google.com ([2607:f8b0:4864:20::1242])
+ id 1wNMAt-0002s9-QH
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 22:51:48 -0400
+Received: from mail-dy1-x1343.google.com ([2607:f8b0:4864:20::1343])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wNM7W-00011v-OQ
- for qemu-devel@nongnu.org; Wed, 13 May 2026 22:48:20 -0400
-Received: by mail-dl1-x1242.google.com with SMTP id
- a92af1059eb24-1330d6bb78dso4246521c88.1
- for <qemu-devel@nongnu.org>; Wed, 13 May 2026 19:48:17 -0700 (PDT)
+ id 1wNMAr-00027N-4D
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 22:51:47 -0400
+Received: by mail-dy1-x1343.google.com with SMTP id
+ 5a478bee46e88-2f36da5c8fbso7388610eec.0
+ for <qemu-devel@nongnu.org>; Wed, 13 May 2026 19:51:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778726897; x=1779331697; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=XSV3AzkOwb+Z189JLJf6lajkcTKjS28CSTIEjEbu+uE=;
- b=ROB5SNqju1l3Da8ZqrybSJM5rvayvJte14AeHvkOX9HsNzHdEtiu3jU4ylSnqkSKyz
- 0VTFwKgdISwI8PsvF+wtztdj5/B7xBw3mOBIo41w+LHpaR/qYEVBX/KFA/fE+XNPw/U0
- 3423VWarpBBdMRd86l6uFp8vR4S80gg3Jt/E4R8v3BdxNanYiQWspjFm6wILPjhm2M/g
- wIgwzzKNdbhmL7gq1/eWWaBwDlQIrLulOCHGbbizDAa9r7bJYBl9KBdiWHLpZURHDp2g
- 5pdMIs6qbq4cUcNAlMa0KNUZVtb13RPpjzb0SbJtjJC1eQmRK7VRuSH2g7QwNRclUZ1L
- wGaQ==
+ d=gmail.com; s=20251104; t=1778727103; x=1779331903; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=HA+UczhCJ5C+PKEVk6vbqvTyrtZEWM6NdrhXuMT/oMw=;
+ b=PlnM+fZJcic7+XW+m18q9C6elzLPaW4tQp/+eUglvhcXtOMdx2dmhevyGXyUkn6WUk
+ 0hWst3jpwuPJjMrSezLj4x2cgRypZ8h6HvDaMac1NST0q/kTYvGMLzK3XnveaevW2hDE
+ XRNw47eerAkcDJSb5fIWq46yOIvyCS4IRzs1O4yzGEIOD8uLuH1FM9zbcxmSSmOz5+hV
+ fWCWODjuKcdSUemKaG4Ol48TrXcqr395cJm1dFU6vPxXvETrH9xH8zSG6UFvYg8bUg4M
+ ABlcjaj5oNyKyy727iEe7tn8RWYK50537+qmfBQ0zq/WWEIqnKz1klHmQyHJkWqq+CTs
+ Ppww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778726897; x=1779331697;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=XSV3AzkOwb+Z189JLJf6lajkcTKjS28CSTIEjEbu+uE=;
- b=XvH4dUjOuQWgcFyZi9Ux72LUELCqJv96j+aaouy4dBdEnRnlOS/Mtm4pd52JAJrEPl
- n97/AVMpFNEPzH2RAXV6Y4NDsNeX2MUUZeceP2PmlveZAXHKRcuHF4bb2LxP+E/mdx5c
- kKNf24NCRJIussgaoLPdxQn6HZKfmJQqVMytj6Jo2BmcUMrdDnzf9WI6DToignPQMEKL
- U/p9QlL22VLP4qMVYfWKNtLJ5I0x3jCUAiUvGXh69L0YVsqj8rt8FSEYD7Ta3o5IKuLS
- oSQdL8rsaPy1P5Oh8OPoVeei1XTBnGKWgfaCkXU6UN+UsaDb3bGgs1VkO2J+DUpTRL5C
- mXcA==
+ d=1e100.net; s=20251104; t=1778727103; x=1779331903;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=HA+UczhCJ5C+PKEVk6vbqvTyrtZEWM6NdrhXuMT/oMw=;
+ b=HXqcS6Lt9jXmc+3aN7TUblaE6Zw7XuC3/GEcfmPPtiVfuEKhmniFz6KyJfZCNJcwsb
+ lELHWP/ygz6nW+n46O2EyavjEqyqieWY3chFkABrZ6KBwEfF9kqr3q8lAspWJgcYmLQA
+ Sbuwtic/WqNF63p2yLKsNCzJDwskC3KJLmG+RhkHSn3zCyE8dc8FaCTMDl1YMnztMZIZ
+ gDHJS3DQ86mt+L53que97ByN8KC1k9iX/n2Xvuonbq7Fre/RLt9p4Cijb9LaFT7QGPFS
+ 7TW0r645I+X5XV7e8ON7CcZecwMH/gVJeSZtEYudxvnPGBEcniRQPBX4tjfy+5fgjVhM
+ VtlA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/dJyyKK667TaQIISjbGexlI823QrjmrloJm1yGBRZb2uo1FZswCbaFj4cZxBz6v75hslykakm1rKzb@nongnu.org
-X-Gm-Message-State: AOJu0YxK/fS6XSYC31OwYw4g1Rcf9+XZ5LLeSVRfPGKPEbRs6l55GMiY
- Hwl80hJz+v4mfh7JEUWxI0C2cvOvXh9sdy1qios0wxOC4/p/gptTeK34
-X-Gm-Gg: Acq92OES/xgSEVqomXygigCkOsskXCNhSKY0Ph40sCiigLpKUM756ofOKqvXjfdqrj9
- mRKHERBulZ0RsY2F++Tf/KrvztTbgq49LRHWcAt67FPIXZVeDOYfRwrV8KzkL9ehGx9YniA1HdK
- 2/UJqzo4DqmvdC/7Kb28FBufWBHZKeeWdSwxtTi4MlFzwIW7a3YxB98wpT12TOFcf2eltSr8GlY
- BeIM6I5l/zsA5X6K3w3yMrsF53iWp1jRUvbbC3TDbbLJS5dwsYMM/BwcFc78VnbFFXR/lAN9F5f
- wtPRwBpIOa3HYir3Vn0Rx5dnRlgCv5uL0hgTF5ArOEmMFVQgH0NqM3/tnL4VALu0jSUL/sXfVWM
- Cr+lfvbfRlu8R4U/RWAIteWSHJZ6t1OLxGsh9Ka9nI4/Eaj86AuuBLzQAWDiaobiz7ojX98ar6J
- v20xJiKWQibX51GQnG78KduI8xrmVeddUgKpr5bqLBiGfbGBSRCIy791AIc/He3NzEC6Fc1ElBI
- gFGUKjsdEt+h5TdgkTtkK2qJkTqMVw=
-X-Received: by 2002:a05:7300:e7a4:b0:2d4:94cc:eebb with SMTP id
- 5a478bee46e88-30117480740mr3743644eec.13.1778726896481; 
- Wed, 13 May 2026 19:48:16 -0700 (PDT)
+ AFNElJ/X9SoRUwHxobJFOvvPiugXv4k6C6gPyQ+ifWFqJzKsIs9uQKMszMKkdCZF26bjQ9qL7ur/A9Yl52Vi@nongnu.org
+X-Gm-Message-State: AOJu0YyapAJr0usdWkfFrW2nUNXuEffjIRy/oHGP4DUcTmdgNC7NXPiu
+ or9nMSVtseGi3GRu5flEAYuH5JIcGpfeXnXcUkVv8Z5W3xJQRfAl/ezo
+X-Gm-Gg: Acq92OHyssRid/zq8Bjri8LkkN3JI6KlQxDhNxqwGDYeqv0K4GCaT+Dnc0PoN34B4/i
+ ugN1Tm2ysZV0+hfIlQN8qVqwfOb05fz3SWdD4Tg7Bf5L6aLzfGRMBAovXbPx9de3+vYaDG67tr+
+ i0Z0a4hN/hLID25+IL6MZ/b6k6DU2BmCMvS5i6wquoz6pJtmPsTzqZGwDw8+Olbbjkg8OYRt6HI
+ W0mntDZ+A5YCNONsy1BV5Els5WncsyHFpN/ifU7lrGG/LS0G6i614nlycmij0NU4jIZvpl/Wdle
+ yfyNPScxvorSZoXsN/bfOZibpvc1N9wWqcIbe9MNC+2Bg/y0hk0p+vwPTFiHmQQz9Ymk2euzmxP
+ GJJtV+pii5reBXQCKknETpMHO4HXSGqBsTAjNVjpHwRdAp4K25gSXyVs/9bIIcCgtWRlnEYvX0G
+ Yt/RZMwHLE82907lp51sEjuj3qRPOKp44SfyAYc5PWpWY5N5A97TDNb6P7bOLIx2+3OPMdz2Irk
+ 29RJj9myIhfX/10O+qi8KDpGmbK0VeOJfYVSHnDmA==
+X-Received: by 2002:a05:7022:608b:b0:132:5d42:55ba with SMTP id
+ a92af1059eb24-1343677c602mr3863224c88.16.1778727102508; 
+ Wed, 13 May 2026 19:51:42 -0700 (PDT)
 Received: from ZEVORN-PC.localdomain ([38.95.120.198])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30296dcb6c3sm1713001eec.19.2026.05.13.19.48.12
+ a92af1059eb24-134cc2351d9sm2186331c88.9.2026.05.13.19.51.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 May 2026 19:48:16 -0700 (PDT)
-Date: Thu, 14 May 2026 10:48:07 +0800
+ Wed, 13 May 2026 19:51:42 -0700 (PDT)
+Date: Thu, 14 May 2026 10:51:35 +0800
 From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Kuan-Wei Chiu <visitorckw@gmail.com>
-Cc: pbonzini@redhat.com, marcandre.lureau@redhat.com, palmer@dabbelt.com, 
- alistair.francis@wdc.com, christoph.muellner@vrull.eu, farosas@suse.de,
- lvivier@redhat.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com, 
- jserv@ccns.ncku.edu.tw, eleanor15x@gmail.com, marscheng@google.com, 
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Subject: Re: [PATCH v2 1/6] target/riscv: Add stubs for T-Head PMU CSRs
-Message-ID: <agU2IzvCDigXHSM5@ZEVORN-PC.localdomain>
-References: <20260514011528.1263665-1-visitorckw@gmail.com>
- <20260514011528.1263665-2-visitorckw@gmail.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: armbru@redhat.com, Thomas Huth <thuth@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH] MAINTAINERS: Add myself as a reviewer for Checkpatch
+Message-ID: <agU3-ZPw4Xhwhe3o@ZEVORN-PC.localdomain>
+References: <20260513070830.851842-1-chao.liu.zevorn@gmail.com>
+ <7d877cb8-f176-4442-9df8-776d9f511b4e@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260514011528.1263665-2-visitorckw@gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1242;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1242.google.com
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7d877cb8-f176-4442-9df8-776d9f511b4e@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1343;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1343.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,106 +109,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 14, 2026 at 01:15:23AM +0000, Kuan-Wei Chiu wrote:
-> T-Head CPUs use custom CSRs for performance monitoring, specifically
-> mcounterinten (0x7ca) and mcounterof (0x7cb). [1]
+On Wed, May 13, 2026 at 09:18:04AM +0200, Philippe Mathieu-Daudé wrote:
+> On 13/5/26 09:08, Chao Liu wrote:
+> > Add myself as a reviewer for the Checkpatch module, so I can help
+> > review related patches and continue maintaining it.
+> > 
+> > Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+> > ---
+> >   MAINTAINERS | 1 +
+> >   1 file changed, 1 insertion(+)
 > 
-> Since we don't implement these custom PMU registers yet, the system
-> crashes with an illegal instruction trap when OpenSBI like this:
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > 
-> system_opcode_insn: Failed to access CSR 0x7ca from M-mode
-> sbi_trap_error: hart0: trap1: illegal instruction handler failed (error -1)
-> 
-> Add simple read/write stubs for these two CSRs. By silently ignoring
-> writes and returning 0 on reads, we prevent the fatal exceptions and
-> allow to continue normally.
-> 
-> Link: https://occ-intl-prod.oss-ap-southeast-1.aliyuncs.com/resource/XuanTie-OpenC906-UserManual.pdf [1]
-> Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-> ---
->  target/riscv/th_csr.c | 30 ++++++++++++++++++++++++++++++
->  1 file changed, 30 insertions(+)
-> 
-> diff --git a/target/riscv/th_csr.c b/target/riscv/th_csr.c
-> index 49eb7bbab5..b095364c31 100644
-> --- a/target/riscv/th_csr.c
-> +++ b/target/riscv/th_csr.c
-> @@ -21,12 +21,19 @@
->  #include "cpu_vendorid.h"
->  
->  #define CSR_TH_SXSTATUS 0x5c0
-> +#define CSR_TH_MCOUNTERINTEN 0x7ca
-> +#define CSR_TH_MCOUNTEROF    0x7cb
->  
->  /* TH_SXSTATUS bits */
->  #define TH_SXSTATUS_UCME        BIT(16)
->  #define TH_SXSTATUS_MAEE        BIT(21)
->  #define TH_SXSTATUS_THEADISAEE  BIT(22)
->  
-> +static RISCVException mmode(CPURISCVState *env, int csrno)
-> +{
-> +    return RISCV_EXCP_NONE;
-> +}
-We can add an RVM extension check, similar in form to smode():
+> FYI: https://lore.kernel.org/qemu-devel/20250819-checkpatch-py-v1-1-99de8bb733db@linaro.org/
 
-static RISCVException mmode(CPURISCVState *env, int csrno)
-{
-    if (riscv_has_ext(env, RVM)) {
-        return RISCV_EXCP_NONE;
-    }
+Oh, nice! I have always had an idea to refactor checkpatch.pl by following
+the approach used in the kernel’s Python checkpatch script.
 
-    return RISCV_EXCP_ILLEGAL_INST;
-}
-
-For your reference, I have added more T-Head CSR support in the
-K230 patchset.
-
-https://lore.kernel.org/qemu-devel/1c7319cd00a50bffeb41f9cc13339a8cd0c07350.1778516731.git.chao.liu.zevorn@gmail.com/
-
-As for this patch, I think the other changes look mostly fine.
+I’ll take a close look at this patchset. Thanks for the reminder!
 
 Thanks,
 Chao
-> +
->  static RISCVException smode(CPURISCVState *env, int csrno)
->  {
->      if (riscv_has_ext(env, RVS)) {
-> @@ -49,11 +56,34 @@ static RISCVException read_th_sxstatus(CPURISCVState *env, int csrno,
->      return RISCV_EXCP_NONE;
->  }
->  
-> +static RISCVException read_th_pmu(CPURISCVState *env, int csrno,
-> +                                  target_ulong *val)
-> +{
-> +    *val = 0;
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
-> +static RISCVException write_th_pmu(CPURISCVState *env, int csrno,
-> +                                   target_ulong val, uintptr_t retaddr)
-> +{
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
->  const RISCVCSR th_csr_list[] = {
->      {
->          .csrno = CSR_TH_SXSTATUS,
->          .insertion_test = test_thead_mvendorid,
->          .csr_ops = { "th.sxstatus", smode, read_th_sxstatus }
->      },
-> +    {
-> +        .csrno = CSR_TH_MCOUNTERINTEN,
-> +        .insertion_test = test_thead_mvendorid,
-> +        .csr_ops = { "th.mcounterinten", mmode, read_th_pmu, write_th_pmu }
-> +    },
-> +    {
-> +        .csrno = CSR_TH_MCOUNTEROF,
-> +        .insertion_test = test_thead_mvendorid,
-> +        .csr_ops = { "th.mcounterof", mmode, read_th_pmu, write_th_pmu }
-> +    },
->      { }
->  };
-> -- 
-> 2.54.0.563.g4f69b47b94-goog
-> 
 
