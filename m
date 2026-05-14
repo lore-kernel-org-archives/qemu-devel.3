@@ -4,174 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB568CD4F39
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 06:51:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3919BCD4F25
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 07:18:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNPui-0004mZ-Dg; Thu, 14 May 2026 02:51:20 -0400
+	id 1wNQJl-0002P8-5f; Thu, 14 May 2026 03:17:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1wNPug-0004mG-T6
- for qemu-devel@nongnu.org; Thu, 14 May 2026 02:51:18 -0400
-Received: from mgamail.intel.com ([198.175.65.17])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wNQJB-0001wj-GX
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 03:16:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1wNPue-0007QL-Mz
- for qemu-devel@nongnu.org; Thu, 14 May 2026 02:51:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1778741477; x=1810277477;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=HSuhd9VAxbs3XMLYeHKoZ6oTUjMuZQrJpbefrWFkSHQ=;
- b=XJm2Wtd4IObbKCOcVdlbQgV3tuoUzH34s/4MnFZUGYUOkTvakm09Mrtn
- 7012ocRSDgO4K/ybqUjseBcGSorWr1g2foldtHJkQr5T5MjBSjtvVLV+b
- Fiia2AZeLp/lKB6oIp+tQFQbPApHdZ2PGGel8sP0SPqHlLi9tkWVw5K2X
- DEEfMZLOTIXon0FdiQqV0U/gG4JO0oaaTRBNppJLN+FcZMVT2vn+pWWXL
- mzzVdnY8sdyDEK6tWyBMoptyxLKih0tpjTTC/sVq5m3ZItYLYXi0nXXae
- h6vnLFhDaJONPthyCtvHIRJjwyyRTLlOv+TdZ2ElcWWVef4gyU5/FMGuM A==;
-X-CSE-ConnectionGUID: pGC36uLySOiaDBll9IuhvQ==
-X-CSE-MsgGUID: 4K4PIEF+Ty2zTO4W0l0PFw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11785"; a="79658584"
-X-IronPort-AV: E=Sophos;i="6.23,234,1770624000"; d="scan'208";a="79658584"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 May 2026 23:51:12 -0700
-X-CSE-ConnectionGUID: VCOVEX9GRiSZUHkXsBA1lA==
-X-CSE-MsgGUID: SZo12oYwSkW2xDd+H6X5ug==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,234,1770624000"; d="scan'208";a="242303278"
-Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
- by orviesa003.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 May 2026 23:51:11 -0700
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Wed, 13 May 2026 23:51:10 -0700
-Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Wed, 13 May 2026 23:51:10 -0700
-Received: from PH0PR06CU001.outbound.protection.outlook.com (40.107.208.33) by
- edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Wed, 13 May 2026 23:51:08 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=m/xbdXd6XF2lBSTp1v2DShT1E9E27+idD2VqoIU+jPXE/5OesCKSRsk2HeZHvG6TCL7VW10HcldkfQAYPHrced2i6n8igyab/y+lblWQ1TupRgxj18jIMqZUBEwIuJnHn4kH2xSb4KKrqm5tCPIhAJPnwybYaXs0rNMUNCygyt1VeUBFGJTJmcnJzO3q4EG0PoIQ64jVxlr84lx8nSMnEKb/n2aJPIi93WSwXIflvxxeIR6L1EvoeeDv9lCEBfwS2yGzjUabkATHvT/6oxUaPskQEN51zKpcok2f335n3aMuT/OouR8jC9+zmuTx1bgoaIs50+SxdRkU/luJLuNF9w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=7Df62rVljcwIeuhX2ZK3YTeMv8nbwzW5z9+xR0wqQ/g=;
- b=XooMRP3UHFHaznSaRuiw491J66DswlH1olophb/E30REmZC63SWa8CZKm1cEKyzRYIW0kqUfgFZQuV46ldfEkEeCyn+t0E7/j86kWlOH2rw316BfdyAFy19DFmOqjwnZbszhZhmgnPRHfHIZcfswAE+72YTJthce72c8u8iZsgVY3ijxMfbDOfBmpMZUGIDYFRx5z5n+shrHwCKsaklq47RMv6nbMFDadadl/0LALblrZUJee2FWvx8NMJBc/EXPwpxrZ7vYlbkp21y9/b9bY86UeWHJn7Sj2EcodzEIla2noZd+b4w+hOMlg7XbG1ziVkAZ0d1w1fUoak+bbX9wrw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from LV8PR11MB8509.namprd11.prod.outlook.com (2603:10b6:408:1e6::15)
- by SJ2PR11MB7501.namprd11.prod.outlook.com (2603:10b6:a03:4d2::8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9913.11; Thu, 14 May
- 2026 06:50:59 +0000
-Received: from LV8PR11MB8509.namprd11.prod.outlook.com
- ([fe80::f5bd:4dde:4f2f:20b7]) by LV8PR11MB8509.namprd11.prod.outlook.com
- ([fe80::f5bd:4dde:4f2f:20b7%5]) with mapi id 15.20.9913.009; Thu, 14 May 2026
- 06:50:59 +0000
-Message-ID: <04419328-e18e-45c9-9180-bb8750702502@intel.com>
-Date: Thu, 14 May 2026 14:59:06 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] intel_iommu: fix guest-triggerable abort on
- oversized MMIO access
-To: Junjie Cao <junjie.cao@intel.com>, <zhenzhong.duan@intel.com>
-CC: <qemu-devel@nongnu.org>, <philmd@linaro.org>, <mst@redhat.com>,
- <jasowang@redhat.com>, <clement.mathieu--drif@bull.com>,
- <marcel.apfelbaum@gmail.com>, <pbonzini@redhat.com>,
- <richard.henderson@linaro.org>, <farosas@suse.de>, <lvivier@redhat.com>
-References: <IA3PR11MB913608B2CB25D851EE72D35492382@IA3PR11MB9136.namprd11.prod.outlook.com>
- <20260514134211.48018-1-junjie.cao@intel.com>
-Content-Language: en-US
-From: Yi Liu <yi.l.liu@intel.com>
-In-Reply-To: <20260514134211.48018-1-junjie.cao@intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: KUZPR03CA0004.apcprd03.prod.outlook.com
- (2603:1096:d10:2a::19) To LV8PR11MB8509.namprd11.prod.outlook.com
- (2603:10b6:408:1e6::15)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR11MB8509:EE_|SJ2PR11MB7501:EE_
-X-MS-Office365-Filtering-Correlation-Id: 04bbfa8b-5ba2-4b54-3e9f-08deb18527b1
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|42112799006|376014|366016|7416014|22082099003|11063799003|4143699003|56012099003|3023799003|18002099003;
-X-Microsoft-Antispam-Message-Info: DB4lUGQfq+JvY+WpVS8zaF9cqK2QvSk1X3XNTMHDhJMNwv19XKOmYOqcRi8ZoirTbBfrsfaVA55OW4TzydVzY+aVYntsabTvK7CzG5rqvh4EDB2zR5Hll2KNGeyNWY8P8FEKxyhXWCBUeuANRPZUERBNWz+c6cJyicOmbw6JQL2KCygZMG1Y01DL6oHCPA67mMRW+fdvGIQGirEmWtvEHh6WiAacP65YLXZWyH2LYvHHpNIlGBXYKjMYR7csV+X6VbSi2hrqv6Ppa4alqtpFCl2pk/WNuWKSBzC0kOIlDd7aGEmO6xT2O2pAkciUntQgoukqvIMIt+pwuGqBTs6LYMjK3iKHLX2xqDLLfGGJnPVR28F+DNmhY7KnCW+2twjD2i7EyzYm7zbEfhca1B/r1bHEVA5OOvHSICRVOib3RlpQDn/0ogG0ur/aXBA1jrlEJA0MdtQkD02Rzgsq3CzX2Lvz6/JysBvb4o/0u8Gs83XjYhWrOIORw+3ff6pX18+8V5bRxpHeWvMxl+Dgi0/RWoDNk6dqiPVmY+6jfdjXdbz8XunUEZJdr5GYAZUhVwNP4tTbcTc6KkIIih9pCJM5RtH/MgNgtUKzSLVhCDOasgKI5GKCbRZP4iByeBdWByXoWl/22IeitMD+8qXBTdNTA85NS20wqQlwyr+JHE1rlxc/mdiP5fCTMnHXpkSaWD9N
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:LV8PR11MB8509.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(42112799006)(376014)(366016)(7416014)(22082099003)(11063799003)(4143699003)(56012099003)(3023799003)(18002099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?V2lidUJkZVduZVpub21SY2FOYnVpcEYvbU9wc2hhd096QlJYOXJya2JHc1V2?=
- =?utf-8?B?RFFmZngxY2pwTmptbGozY0pHOXRRc2ZSWGN2N24zOGxrU2NNTXV0TXFGRXZL?=
- =?utf-8?B?WnRxVnUzTUN4Nlc4YVExRjd0YXB0ZytKRHVmOVdoUlc3eGtVUmlCMWlJWTY5?=
- =?utf-8?B?ZGR4QkFLYUZ6RVFXNlI1emxTME84Q2V5Rm5VSDJvYzJ4OGtLeGgwOGc1QUt3?=
- =?utf-8?B?SGc0cXFhYlFDalpSbFo2WTlKMEdhcERaZTVqUDV1YjZMb2FkZTkwenNwTTBp?=
- =?utf-8?B?VDkwanJydFE4NHFmS2N5ekM1eGNTakFONWg0RzBLZzVBbzJleEpobjB5aThp?=
- =?utf-8?B?Mk5WaHpsa2NJQytTbHNRSEpHSWl5OFhYN0R1RElEQjR1ditacWRLK0kxWkww?=
- =?utf-8?B?bU1zRXZ3ZWxmOFIvakdwTEcyQUR0Wk9iZ0NyeGt0T3d4YjhBTFNSYldzNTlR?=
- =?utf-8?B?Ykg0ZXhWTzRPSklmL29sbjN6STdVNGczdWUzcDE1VHdkdjlRQjZ5L3ltL3lq?=
- =?utf-8?B?WTJuanA2US9Jdncyei83U3JmTjNmalkwMVNyOXc1VGFBMkRrVUxsM0RkZGFv?=
- =?utf-8?B?d1Jzb0VtUWNiNGw4ZnZEdXU0Uy9RRFdzK1AxNzdWdGlFQVFYUmZ0c1JFY3pT?=
- =?utf-8?B?RGxHanh3VjNRQ1EwcXllRUlYYXFVNjF4elFOOXZnTDhzanBqVXpISHdoZ0wy?=
- =?utf-8?B?Tk5ncXNFSk9kV1hkaU5HQTQ2ZnZHSUhzTVBNaHpZbEtPMkN4MHVIUCtCc2dy?=
- =?utf-8?B?T1c4QzZ1TmlnNUw0NUdpbDlBWDQ4WGNVcjZnL3JsNFpkNHVCZ044UGgxQWc1?=
- =?utf-8?B?RTl0M3lQb2JwOVJqUFovNGVlajFjY2oxWXJqakQ2cTFESy9PM1BLZFlIWG9v?=
- =?utf-8?B?MUFtenA1ZE5tci9jRFRWc3pkUzhQcTgrQldUVUtwWDJMbzYzenZTcWIrdkxu?=
- =?utf-8?B?Vi9qRnN1SE9BWEgvREM5RjNLOEhpRXU0aXRrUTVsaGFKSmp5VlNFOTQ0VzNZ?=
- =?utf-8?B?SVdJeWlLak9LNG8xcjBsK05YUm4wbTI2MWhEd3dCOXFWT0NjTEVsMUtneGZL?=
- =?utf-8?B?NHBieFZXVlFCSTdaS2RjbWU0Vk55Z0xoVUxLVVFvZ0NoMzNEcWVKdVN0d0VO?=
- =?utf-8?B?NzJpT3JXRW1FQmpZaHZJQklhOUwyejBJUXhYVnc0VGw1UjRheGlBWFZwM3dF?=
- =?utf-8?B?QjdMZ0w2UzdiQytrMERvVmcyc3FJaE9NRlhKMWU5L001eUxSL1ZDeXZEWVps?=
- =?utf-8?B?UXk5Z3poYlYrMEpSbVI3MEYvMy9XdzRmL2FvbkpPMXFzU3loZy81cFBUR1Ju?=
- =?utf-8?B?REQ4dHhYY1Q4Tm4wUnBMTkNNWlhQMDJ4eXJQQUJCb29yN3FYNUlhS2dXdHIv?=
- =?utf-8?B?NEZmRTgxNHFZVGZKSVdCWjBQTmRLN05JMHZtOVppTklhSHlUYUFCaDNkY1dG?=
- =?utf-8?B?QXRnQUpXWkRxQml3emRzWmZQdU5ZZ25WNmZnMm11WFkyalp2TEcwcVlUR0g5?=
- =?utf-8?B?RFhHWDBLVSt3VU9abVlBUEs5cnZDYTRUVmlsRHBDbkNNdXBCYmwyOUN1WlBq?=
- =?utf-8?B?OHlFdjYrY29nR2dOS1JjYTJsbFA1cE1XZVZmVHpUeldzdlFUNUVGT1U5L3N6?=
- =?utf-8?B?Wm1kRERPTnNMaWE5YXZBd2F6d3ZzQjNUaGh2ZGJNaUdGWXkxU2luRVZ1M0Y4?=
- =?utf-8?B?R2Q3MnJGaVczYWlKUUJ0TVNYREc0Y09MbzNHR1pmUm0weVZIYmYwK2VxTjkr?=
- =?utf-8?B?N1lweitWS05hVFliRDI5ZzhJdmRrdGRnZS9GenF5a0FmWHFRMmRBR2xYZVZ5?=
- =?utf-8?B?MmZuRCtqUXRJaU5iUk9BNHNLM0pnNW5tSCsyTWxkS2xmT2JCdlpzOE1UUmp6?=
- =?utf-8?B?eVBMM1BGUlNLTWNQREFKOVhLZ0MrTUtPY1U4WE5ER2hPMm9oeE9kRjlSSm5a?=
- =?utf-8?B?Nkt5ZGd1RVZjZ0tLcDhNWUlxSFU0UzRVN25Mb1hxcjFOMjRUN0NybWZhcmM5?=
- =?utf-8?B?TDdZOXhMaVBiN1VCSFpyTlhwQXZBbWQ3TVplN3VQUlQ4TWtBMWpFZElKdGVj?=
- =?utf-8?B?OHNiZFlXbUNMS0VtR0cySGlSSjg5TmsvSlUwZEpyRlJ4ejVONmk1bUJVS2d0?=
- =?utf-8?B?WnNFYW1YUzdyZ25UNWg4bEtYMTNoOEJua2NoNm9XVzliaTNlQXZaVE9RUHly?=
- =?utf-8?B?OVlkOTl1aGZDczNnSzVEd0t2aGRVcVQ1eUtKaWxmMkR4RW5ocy9PWDhtaFYr?=
- =?utf-8?B?MjV4aUJGUGo5U3lzUDJaSkMrY010ZytNT2tBNG9wYnpWYWxxbmZHbENRdHBa?=
- =?utf-8?B?aHo4dGtFUitEd0RaYWV1V2VFTlIvT1ZJUmc3RnNJWGE4dWMzVGFRQT09?=
-X-Exchange-RoutingPolicyChecked: L7uxeceARZe+y2bvPDTQfICyS4ZtvEZmMLFxsVSOAb4993TUSX6tOCBxtAblZZSpZiwnSo/jljPitCysAEVG5B5z4xscIwmI0a1dsHmib4JaM40MGcOdgj5S8Ef0MxJ0gEIkhgXpn7GCOG0s2LyYMN4jHfA5R6ndYQjaSIbTnPWA+dXMGhYxNRJKKQ8hs5k5cnY9Sm20+dIDJjpDBuljnUaH8I1dpQy6AwbLG59y3LUvLOcSCdRZZ7GTH3xxL9Xn9c2s6LsxNlskYn+1gyJ7p75jLuppxI/4ygUDjXizJ+dLM+j0A8kbOMlZZ4hXg7bi27mB91Rgc0hH4rRf8iadVA==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 04bbfa8b-5ba2-4b54-3e9f-08deb18527b1
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR11MB8509.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 May 2026 06:50:59.4943 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: zXRvv0vs8zCOqtBY8h/JpQAvO7xN7te71wCV58BfhSp+xdJ1kcWom0PqTdecCEh3gAaIZB0uYRf/DWi6FfIxYA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR11MB7501
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.17; envelope-from=yi.l.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wNQJ9-0003pC-Ma
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 03:16:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778742995;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2n5PKXMMa6HQJPVXHT479++rs5e+4Rx88zJ/sKc9nb4=;
+ b=aMPZo7E1tzEZ7Xli484nuDtW8KxyHsknp8NiENSSi41DvcXXffnuE6HU8U0JXRwgMFBS06
+ r/bF1WlWyDepbeKMaMVCyyX6fCRMVKSROP0GRI1t3/X743eCTvC6mNnGrfb1sFcOciq5uX
+ i4y5FeI+TUCFTrlrlv/uRlVVDCtMsOA=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-61-2rDzFn5mPZyHwBsLFNTIzQ-1; Thu, 14 May 2026 03:16:33 -0400
+X-MC-Unique: 2rDzFn5mPZyHwBsLFNTIzQ-1
+X-Mimecast-MFC-AGG-ID: 2rDzFn5mPZyHwBsLFNTIzQ_1778742992
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-366122e01fcso8720633a91.2
+ for <qemu-devel@nongnu.org>; Thu, 14 May 2026 00:16:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1778742992; x=1779347792; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2n5PKXMMa6HQJPVXHT479++rs5e+4Rx88zJ/sKc9nb4=;
+ b=jXtP/gXm3WZALGNb9ZPUtJeb7No73/Ox8SbuyMLnjtZUFFGFwYV5DCfjmVtxE+EX/O
+ TLOA1br3wSvZHpiAV4dnRQ+1ATcky6sAUHsPPCSf4GQknWxMvEp9k5b9Lr+yzFLaXxBX
+ 6vH2HBrDFX7hXT3Q7IX4Hz0Ct/0iTrLChb1Ig3DPyOAcoLQS2Qf8DWpmFTdJCXU7PuEk
+ /c99Tw/bmm61t1CMR18WE4KXtmpEbRFW4M1Hz0TJG9Vpb77BRiVwA33rFDqEC4SpkVxo
+ uTHIrvXqI7RGBA6moNTZjgBY6pcrREjuilzVPnJDdZsyJvc+CYxyqZK/GYbrjghfbUty
+ VIRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778742992; x=1779347792;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=2n5PKXMMa6HQJPVXHT479++rs5e+4Rx88zJ/sKc9nb4=;
+ b=BHZyde6H9f6UTX6JLdyba0Z0+v7+BbdUC/d/f2FjVkQYiAJKve958Z0+Movl5JF3cd
+ eyXlNH5dUWEj+Icyr84zYUpQMYdNC8zqXyD5bnR+VX8AB4VFiFojbujFKybKT+07RAWH
+ R7JXdf9L5Tih88n6CLV9icpagI+aLxo/xCUm5Ngv409Hk7X6zDm8RlIpK4qLwxJ/4zpF
+ aqJB0qZQcQC0FD58rEkc7hsWJYe0PA4USTTAijGRCOM8rjroRr2bX2xzDS4ou5z+zAMD
+ G0mFHSXpC3jRuLNU1w8eyDmqN7SyBT+rC/NUctwzVR7oZ+NrWfVpwM952fILzmWyvF4W
+ WrVQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8YZ9nxJn43DKPkFEyrIF+WH1RpDIcmyG8ki3b1tNMX8azKdcJU08HqVfDRjjXtGV9OKpSMmsLzM2+S@nongnu.org
+X-Gm-Message-State: AOJu0Ywjkc3itvh3i5bPPPe7Z/TbRf4h3D90QJFH3TqMSIQg4AIBE+Do
+ x6m9e0n1XKbKAeDZ3lE4ULiUWyBkIBo+OVJnwQKRzmQn4P8AKXReyclNKsjJdpyxcAMDmt0ls32
+ ooX5banp0kvO1mGK/sFti+4eKws6A59U5vfCnlkgJscdhKYHxZtVVVpEK
+X-Gm-Gg: Acq92OHmAUosCeos4i2Y8A3B7dzrcXNjr/DaqrB4VQFbKoiZ8Sui75kTVEsCn1jqwwI
+ D9+N87PWVynnB2kUZuyjpWA63g1t/kNLqglBL7jv4fUjTTZ2Cc+PISCD1jZsDw8kJ7hZt9jMVxH
+ PjBA3ECMCVzOJGuEi46vm5nhH9FyEHLxPHx7xyKNocAO/FypEKUxrV53t7+3xHzBkWxx55bd1ke
+ XOy63whtRbURrnJWn4ouegy3P3YaR/BYuBgdclpv5Gea56DZ8Ku/uZlxBdl4b8EPbpDqfXLu8F2
+ 0PlXwVkdPyVJsz8lwZmqHZjVwdyu1V23m2iGMpRmOuY5cf5aa42a73EZ1+oMvsHkHhC66UPzsZL
+ QCUahhZyIuvBgzQndHMSfgcAMRDn328l3NLQvf/iejDSEkegx1J0DQ1gd3kL+MfWpkMGtitDUNx
+ 0=
+X-Received: by 2002:a05:6a20:3945:b0:398:b95c:51f7 with SMTP id
+ adf61e73a8af0-3af82c8f5f2mr7700471637.37.1778742991726; 
+ Thu, 14 May 2026 00:16:31 -0700 (PDT)
+X-Received: by 2002:a05:6a20:3945:b0:398:b95c:51f7 with SMTP id
+ adf61e73a8af0-3af82c8f5f2mr7700402637.37.1778742991054; 
+ Thu, 14 May 2026 00:16:31 -0700 (PDT)
+Received: from smtpclient.apple ([122.163.114.34])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c82bb116832sm1300137a12.24.2026.05.14.00.16.27
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 14 May 2026 00:16:30 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: [PATCH v2 02/21] x86: q35: add 'wdat' property
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <agSRsqaRsGBBwewT@intel.com>
+Date: Thu, 14 May 2026 12:46:14 +0530
+Cc: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org, mst@redhat.com,
+ pbonzini@redhat.com, peter.maydell@linaro.org, shannon.zhaosl@gmail.com,
+ philmd@linaro.org, rad@semihalf.com, leif.lindholm@oss.qualcomm.com,
+ qemu-arm@nongnu.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <6743DA13-4C1D-47D2-ADE6-C87A2A073F28@redhat.com>
+References: <20260303092532.2410177-1-imammedo@redhat.com>
+ <20260303092532.2410177-3-imammedo@redhat.com> <agSRsqaRsGBBwewT@intel.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+X-Mailer: Apple Mail (2.3864.500.181)
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -187,51 +127,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/14/26 21:42, Junjie Cao wrote:
-> Hi Yi and Zhenzhong,
-> 
-> Thanks both.
-> 
-> On Yi's question -- I enumerated the 25 v2 assert sites and checked
-> offset & 7.  21 (3 reads + 18 writes) sit at non-8-aligned offsets
-> and are unreachable (memory_region_access_valid() rejects 8-byte
-> access there) -- just deleted.  The remaining 4, all writes at
-> 8-aligned offsets, are reachable: FECTL 0x38, IECTL 0xa0,
-> IEADDR 0xa8, PECTL 0xe0.
-> 
-> (FEADDR 0x40 is 8-aligned too but already takes 8-byte writes via
-> vtd_set_quad() for Xen; GCMD 0x18 and VER 0x0 never asserted on
-> size and their default/long paths already truncate.)
-> 
-> On the log -- Yi, fair point that the truncation is harmless from
-> QEMU's side.  The one thing I'd gently float: the VT-d spec is
-> silent on oversized accesses to 32-bit registers, so the guest is
-> in undefined territory, and Zhenzhong's LOG_GUEST_ERROR suggestion
-> is free unless -d guest_errors is passed.  If that reasoning works
-> for you, I'd combine both -- keep the log (with Zhenzhong's API)
-> and add the comment you asked for, so future maintainers don't
-> delete the block as "harmless":
-> 
->      /*
->       * 32-bit register at an 8-byte-aligned offset: a well-formed
->       * 8-byte guest access reaches this handler.  vtd_set_long()
->       * takes uint32_t and truncates the high half -- undefined
->       * per the VT-d spec but harmless here.  Flag it so
->       * -d guest_errors surfaces the guest-side bug.
->       */
->      if (size != 4) {
->          qemu_log_mask(LOG_GUEST_ERROR,
->                        "%s: invalid %u-byte access to 32-bit reg "
->                        "addr=0x%" PRIx64 "\n", __func__, size, addr);
->      }
->      vtd_set_long(s, addr, val);
->      vtd_handle_*_write(s);
-> 
-> Happy either way -- if you'd still rather drop the log, I'll do
-> that in v4.
 
-LGTM. Please go ahead. :)
 
-Regards,
-Yi Liu
+> On 13 May 2026, at 8:28=E2=80=AFPM, Zhao Liu <zhao1.liu@intel.com> =
+wrote:
+>=20
+> On Tue, Mar 03, 2026 at 10:25:13AM +0100, Igor Mammedov wrote:
+>> Date: Tue,  3 Mar 2026 10:25:13 +0100
+>> From: Igor Mammedov <imammedo@redhat.com>
+>> Subject: [PATCH v2 02/21] x86: q35: add 'wdat' property
+>>=20
+>> Used for enabling WDAT based watchdog for builtin iTCO watchdog.
+>> Usage:
+>>    -M q35,wdat=3D{on|off}
+>> By default it is disabled.
+>>=20
+>> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+>> ---
+>> include/hw/i386/pc.h |  1 +
+>> hw/i386/pc_q35.c     | 18 ++++++++++++++++++
+>> 2 files changed, 19 insertions(+)
+>=20
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
+
+
 
