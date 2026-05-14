@@ -4,94 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 292A0CD4F25
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 17:42:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F2CACD4F39
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 17:53:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNa2A-0002DM-H0; Thu, 14 May 2026 13:39:42 -0400
+	id 1wNaEE-0006z8-AW; Thu, 14 May 2026 13:52:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wNa12-0000rr-OQ
- for qemu-devel@nongnu.org; Thu, 14 May 2026 13:38:34 -0400
-Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wNa0z-000448-Pz
- for qemu-devel@nongnu.org; Thu, 14 May 2026 13:38:32 -0400
-Received: by mail-ot1-x32f.google.com with SMTP id
- 46e09a7af769-7dbe437b072so4850221a34.2
- for <qemu-devel@nongnu.org>; Thu, 14 May 2026 10:38:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778780295; x=1779385095; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=oeLEn0bt4fyJr23Y5IHppjNsOacLgHrIxZD0NLe2nvw=;
- b=dNVyz46eR7LwZ0BxkwrwW0YzBQJlJNXwmKn5s60AKrxC3w+1mIOxzDkef66y33DTjT
- 9YBDdiDPDqgUiIm4tJfbH7STuPh3nOrH6BULCiDfs8/J03Z7Z7Jvbg0O0vTe7hrM53De
- 36BGUr3bGdb+lZvgPWD2MMeZHwnWMLV8MdqYbgHBEiazafD0tFQsjpOhVwn38BIDM0kr
- K/Dfohr+9llj/GrVkQdslaIiyGjTCHc1v5pv39a97MPgxsxMZQGsGGtsxcTfvu8fDztH
- sVBprqYg3+ZX1hFRsnGMwZftY1JKJX8VPQ/R1ZHndz/ot+HR3WtS5iLuVSG6P3UU6ir1
- zeVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778780295; x=1779385095;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=oeLEn0bt4fyJr23Y5IHppjNsOacLgHrIxZD0NLe2nvw=;
- b=GlRUnnQFj9gR7EQvvjGcMnzmQAHeaK4c+SLaKsrYBm5SmYdOvHbKE2YmLsNds8dpw8
- A5hAxpZSzQbNGBo6sYLjTX4T7XWpRQvExJ10M8wFmSG8+UgvC5eKZY5Vhtm2yq3E0A0O
- ecvC9j73tX/xobwYD6Ke2OnhFxkY++IRb3MTVT4+QMGSxEJfRw6ZhYppwiElwM9nT0wV
- 5ZThJggQu8XWXPxPV2PVcotp6lanoxiWlmbynbrNQh1v/5VOcxk+MVeaSlxPbaFgDMyW
- mmjB7uGOkG5V70TOwGQqjSWgSJ1N69NaW6e2QgRFb9FMyKNnHcbvYP+R9ZQeQy6RA/t5
- Qnxg==
-X-Gm-Message-State: AOJu0Yw1G2v5UU2vvjpHNQzK51gj3B7F0er9Ze9WKQQLH9P4Lwpylurq
- kezcDD3gLK50AZVHTobbFH3TwkShvkyXXz6IbJmdDcr9Ct9z584PZAeS
-X-Gm-Gg: Acq92OG0cIShbpJ7qG5x/670883oSflbdStcElXykMJz3wYp+HFHAqqdm+bdye6Z3V+
- 0zAp1hxJmCbSKbWYlJpHuJ3uCAaY5JJXYqMC3Q3qppO4XTNyfgTlIfmPA8UYSkzZeYq03Py1EZA
- JHyqFHeONNbN54aNHOMVX2LgWCtZLgwoIAaPvSkslOzj8ckdgZP6jRGbPojv/kaU5XIiUbo/RYM
- c4Dw6lmnGGYh5d8nO4kluj2SVpJFFjKaebONjzkpgW1zMqK5XOw8LHmG0orSTjTmqf1rGRoOedc
- b/rv+Kdo+1zbgdmx9aMdQdrQbWhvRNIA65+xGdduHuA3GTfJWnuFMXCnb8Wj12T8Dot38qXCVVl
- xOo/Wbp1HpuEbJHR+iVFGAaoRQXw1X+9quyMKFsziVhAp0XRvaVtPi2kwmXGsZqq3qqwFL4mD5x
- pmnQs2Ux7ewXZQLkp1eat37ZDPz66RY6/GMRs1qnbMEROfv4AcMKH5XZn019aUhF6B/w6N1aNUC
- 9kHFIA2h1nHvLBnU7tyVWwWQ2z+EbLufsXJFRfR027F8n6vbNtwSg7+56mCvgGGyaoB
-X-Received: by 2002:a05:6820:820:b0:696:17a7:498c with SMTP id
- 006d021491bc7-69c9437a908mr235617eaf.30.1778780295565; 
- Thu, 14 May 2026 10:38:15 -0700 (PDT)
-Received: from mac.localdomain (71-218-106-55.hlrn.qwest.net. [71.218.106.55])
- by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-69b8ccdc74esm1687254eaf.13.2026.05.14.10.38.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 May 2026 10:38:15 -0700 (PDT)
-From: James Hilliard <james.hilliard1@gmail.com>
-Date: Thu, 14 May 2026 11:37:11 -0600
-Subject: [PATCH v7 22/35] target/mips: add Octeon VMM0 instruction
+ (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
+ id 1wNaEC-0006yo-5B; Thu, 14 May 2026 13:52:08 -0400
+Received: from mail-eastusazlp170120007.outbound.protection.outlook.com
+ ([2a01:111:f403:c101::7] helo=BL0PR03CU003.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
+ id 1wNaEA-0002kj-DG; Thu, 14 May 2026 13:52:07 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=dy8HW5RgjudlnBdnqrtIuv2eO2RHGigcBLVYn2geofnAcbnSCgVcW0Wo0lP8YEF58xM+KH1RBrnplTnmSk74X9atcMx1trOiFpmX+2MUKlUtV2zcTjhCjejLZQO5xPA2YyHDee0zXmSw95LIW9qB0HqT9V5AdpbyGg/D82BHTeGJOdinzsGygO8Ni7faxwcrARzRdR3/eFYa1xyc52GN7DKAB67ewl6bx49awArOUXN6JWpgfmbXBDjJMVYQN6tc3iBvnC0eBASGq6zQE8p+ZOVeY3qhJnJxHToi0RxvaJLrQ+ZhwSrAjGuQuX4L+2ljdf6ja276PsEkZI4STpU8TA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=r0Uz5iPk/NZDrbkF1DjdQELcnPQbpAqaLDKgR8Yn5YM=;
+ b=ewvVR3wx+rRYQGtzZ1cQIaiEP7IZVAht5qFwYwdDyurjOX6iyrlIPF+yU+cPBHc8mhzB46RTylTpAje1p67cjhme9Od6zCi9M8gEMlEq3FXE7SgLYjKJV0plOS1V2X7PDFyNu+U+JkrVYTmZVHOeHb8NaznGbVcKGRRyKzI8UpEQb4AFIgoAltRThnOCa39fcntVRlg4KpC866HhtvoDGBXewTKFVsuw/79tidYLFWVbB3HZ7gpioTaRo8pIdqRD6CpXEApZKXi62lVG2wNDxYcu/jZKAUX9icMUUQf9C5hMQeZBQjWJhtUdPzD3RSqXe1HQjtWYrfP06hSbDtFCQg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=r0Uz5iPk/NZDrbkF1DjdQELcnPQbpAqaLDKgR8Yn5YM=;
+ b=XYVCIJniDUcPkLhcalHsvsDJ3J9jc896TjIvmkBM6kEwJRUtM+qsFObWo64zWXRe02Tty8qRmJ882ixP8xHX7CTdzIYc0oJjeQG88CocQ8eDnMZ6HDRJMtENLTdrv/hu+z8D6mut8E5uxLY6DU3Jc+w6Zk0Q3cOBJsUKSqkjYXbmmEnJmTmeQeFNns9hO3zRse33nRmrqVQy617CcVTHdmq/j3KrvSxX4J/ILfjJiXohIF+km8RQ8AnoYa6xCY3PP98pZ5zlurbjmv5gkQ4KLpnJnjqwqAMcAScUy9EcdUS3N0ZozrgFy7dJAa2kfuUvl3xStq6g1e92NhHHWKVlxw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CY3PR12MB9555.namprd12.prod.outlook.com (2603:10b6:930:10a::14)
+ by PH0PR12MB8050.namprd12.prod.outlook.com (2603:10b6:510:26e::9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.25.18; Thu, 14 May
+ 2026 17:51:59 +0000
+Received: from CY3PR12MB9555.namprd12.prod.outlook.com
+ ([fe80::fdb2:266d:ee2b:8d1e]) by CY3PR12MB9555.namprd12.prod.outlook.com
+ ([fe80::fdb2:266d:ee2b:8d1e%6]) with mapi id 15.20.9913.009; Thu, 14 May 2026
+ 17:51:59 +0000
+Message-ID: <edda4830-bb64-49c5-b822-9f3871c3c8c0@nvidia.com>
+Date: Thu, 14 May 2026 10:51:57 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/7] hw/arm/smmuv3-accel: Resolve AUTO properties
+To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Matt Ochs <mochs@nvidia.com>,
+ Nicolin Chen <nicolinc@nvidia.com>
+References: <20260512193520.3109172-1-nathanc@nvidia.com>
+ <CH3PR12MB7548F7B7FE3A5FEAB2F4A836AB072@CH3PR12MB7548.namprd12.prod.outlook.com>
+Content-Language: en-US
+From: Nathan Chen <nathanc@nvidia.com>
+In-Reply-To: <CH3PR12MB7548F7B7FE3A5FEAB2F4A836AB072@CH3PR12MB7548.namprd12.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SJ0PR03CA0149.namprd03.prod.outlook.com
+ (2603:10b6:a03:33c::34) To CY3PR12MB9555.namprd12.prod.outlook.com
+ (2603:10b6:930:10a::14)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260514-mips-octeon-missing-insns-v2-v7-22-226686be4ce1@gmail.com>
-References: <20260514-mips-octeon-missing-insns-v2-v7-0-226686be4ce1@gmail.com>
-In-Reply-To: <20260514-mips-octeon-missing-insns-v2-v7-0-226686be4ce1@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Aurelien Jarno <aurelien@aurel32.net>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>, 
- James Hilliard <james.hilliard1@gmail.com>
-X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
- envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x32f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY3PR12MB9555:EE_|PH0PR12MB8050:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1c8e2ee6-06bb-4bcd-02b0-08deb1e17f02
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|376014|1800799024|22082099003|56012099003|18002099003|4143699003|11063799003;
+X-Microsoft-Antispam-Message-Info: oeo3LcO+xjJFKKb9W+Pcm9mELnx4abJz4hR7+BTYPsuU1lV2WqMrbfx/wSN0rFoobOwIN7YSMDe3whUD/FR1ocCJEXZhTKWd6OeRX3BmgAzWygQdyLvpJ9SX50IXHeujeCIvc03Y54t8weNt7PP6Uu/Rexjmnovg5GpLheq8/TXsF6eBzyt2wxun8WkOVxtrNNvHjRtdRy2Z6TbO6Hx+e1TAdYOIlbHgLiHYWvqE764BEcQSIEbpzYFMPAoC93iSzq0M/wfiSjWG//Rlx9P7pVCTM2dgE7bNjEXvHYxqei6mVIc9VP1nFpTEcpi/juzLw8lO1dpWe3ZH8ZTIVqmYqIrVzHh+8GQOK/uZT4swDLfxBk22pR1zBnv7qP868PNsi0MPZ8+KaWEIpf/LYFJOySnULuBkFwb15+hOG70jO9vIBwIGCRp224ZZh8j10SUj8j/TueAeem2qFvLR71rYRBbJG72l6BKRxsiy254W9R7pHF0F/jEDypI4QbpJoYdPmsLjtIlHqkjZh57/1ZdUXQ2X0bm3cv3QKJBor/au1pcXPpCmRq8JEpMrzj2x4CcS5bC/iyIX0OGD3UCFwlzpFx/FlropZM5Qky3OuHs41h2OVDLjNDJjGeCSj96l4TSZtN5Gogl9s8fdYqcWp0LCwQ==
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CY3PR12MB9555.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(1800799024)(22082099003)(56012099003)(18002099003)(4143699003)(11063799003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NHh5c2FMNGNPZkkvL3lIaGQyRnM4SFREeWIzaXFqc2dFOUNubitBZkFHVG4x?=
+ =?utf-8?B?cklabFFYOHoxb2NTcFdGMEhoazljT1BVMDBDV21ickVxdlNjWGQvenFMSnB5?=
+ =?utf-8?B?NHlyNURkUFF0M3QycG1ZTDV2M2FYeGRZOEFtODNSMlBuNmhibmYxUHpxbElD?=
+ =?utf-8?B?Z25GYU94US9kalNzVzFDUWFraFlqN1VDbTZFV2dkY2hZSUQ1dEJKdk4vWEpu?=
+ =?utf-8?B?RlNHWUk2MCtRK01ERlltaW9NZ1cySWdzWXR5Y0pPY2J2TTA0a2J1ei9hTmhG?=
+ =?utf-8?B?S0xWZi9HajBMYzZWSWNQQTlFbDZzZFlnZWtNaWtsM0Z5L2MrK3M4ZHlLeTFF?=
+ =?utf-8?B?UTNLNko0NmNVakdhZHJ1Q2ZUeGlyTzE0N1oraDV1L0NwTHN2WmxtOVdwVmZl?=
+ =?utf-8?B?QTZnWnZJM2VsWE0rMzRDcmwyRStabTIyKzdtL1ZyOWVnMk1qRmlvbmhLR1FF?=
+ =?utf-8?B?QU9HSGpESFgrRW92UFphUkpwdTQrNytjNDF3UDZsV01XWFduQlpXaG9hbHEx?=
+ =?utf-8?B?dy9pWERjeDRLcG0yc1lMVnhQQmZlRkcxZ3VZRHFmZ2lVbWdoOFAwbkZLVUZk?=
+ =?utf-8?B?K3lEaTFocmRkVGNOcE1na01Cck1Rd21XZGM3U253K0RVZWsyanYwbWhCSmtK?=
+ =?utf-8?B?NmpENnBwTzdUY0UyWkVPQncrUUdIZk9DZ0h2cGVZV3FVc1lMbjcwYTBWYTE0?=
+ =?utf-8?B?UEp6Y2w4MFBJd2FnVDFIM2R2bXIzZVMwTXlTdy8zcFlFUGx2TzQyald0SzN2?=
+ =?utf-8?B?a1JOTGcyZWIyMUpiYUlZME9zYlJkWUlpeFg0eUR0bHZzbDRaMTJmZjBWZHZ3?=
+ =?utf-8?B?R0lWU0dObUJobWpTdUIxeUlxUkxkV3hrZi9COFBKYXlybjRRczRKWG10eUgr?=
+ =?utf-8?B?RC82SFNKSVB3SUFOOTQxZXdodmpnbVlZdFYxTkk3R3hNdlUzd0ZDN2RpaHhH?=
+ =?utf-8?B?RzdnOGlVRG9FckxQTkNPRU51cVZ1WldoZU9ZYkNnb1EyZUsvbWp4bCt4b1hq?=
+ =?utf-8?B?TVF5SkFwSjczSm54Nk95U3V2Sk5yenpnWTBBZGx4cHZIUm5vVyt5Si9EY1BL?=
+ =?utf-8?B?Tm5kZDkxMnFUWDE3dWw0WU80UFN0OStRZlJmTmpUZ3lHK1pUL1RDdFR3SCto?=
+ =?utf-8?B?RndMUUs4OUFPek5BTW1yRkorTmJCZFYyS21vYW92MnVGNmphR2pIV0lGRTBP?=
+ =?utf-8?B?TTFETHFqdXBOOTRESVd5eVduT3B0NmlMV2VINTBIekhuM1RBVms3R3dyUWwy?=
+ =?utf-8?B?SDdEcWRBQWJoVWN1RXVtUys4V0RLZTl5YVFYVUpHd0xUNmtTMkhReHp5bUdu?=
+ =?utf-8?B?SXRPUG83SUN1aFF6SGhub3FrR08zY3gzWkNuV2lOek10bDV2K1laWWgzQ2ov?=
+ =?utf-8?B?UThLTDVUWXhlTGM1Q2Vqem9VMUFxMHNVV0FXN1VPOW1IKzNWdCtWUVJNYXBs?=
+ =?utf-8?B?dm5wYjNETnFFckFqRzlQTUg3RmIzSWtQcWxjczlOTGN6alRuUHNnYVB6dmd6?=
+ =?utf-8?B?TXZTNldIcDJmekV3b285NHZ1QWY1dVk0VitKN1JyeDVrMjJXZTYrMlBFWkJv?=
+ =?utf-8?B?Vi9Ra0ZwUkRQcEN3TGZpQzlPVm1nVktPR2d6M2lvNGRGZjg1S1JNdGxOSk00?=
+ =?utf-8?B?aXlJdlJDNko3VmpBVEJDeHc3ZGNQdU9MNmFHOVNza21FakUvOC9GVW5ESUNm?=
+ =?utf-8?B?UWF1T3VYK1FzWXRXNFYyaVo3eXc3aE1VZFN6eG0vR21Qb0lPa1FMOHFqRmJH?=
+ =?utf-8?B?dktRdk1oeGVLMUtvVzRqSDNOU3NYdE9wa0NXREdlQ0U4dm41bVpiZG9hOERa?=
+ =?utf-8?B?QTZjVnM2SlFpbzcra0Q2a2IxTldYYzU1VTNycGIrdThjMEdPWUVQWnpiRmtL?=
+ =?utf-8?B?ZTRVN2JGY1VvbDZKQm81MndIRUhYU3MwM1ZRYkZncWxhU0NFLzFlRzM0dWUy?=
+ =?utf-8?B?aDhyRlZ6Q2xVbWdRaHlNSzdEcXJYUGJWT0t2ellqVTEycWttMEpzWWJvcXZs?=
+ =?utf-8?B?OFhSdHhyRDhINVJTYm5MVXZKMjJTYkg3cUI2VTBaM2pmT3NOanRjajY1Rld2?=
+ =?utf-8?B?SGFxU0VCK0gxd3c1SmQ3cVp3ay82UHZyc3ZiUVQ5T09CbU1WcFgzZlVKYWQv?=
+ =?utf-8?B?MFhOYUZmYUdNZlVLMFljMDFLL2hDUmtrRWp6eXoyL2JEZXZjbnBmdFU0NE5C?=
+ =?utf-8?B?THBNZmZsQTViWThrdE1sNXZUaEtMUms0YnY1RkhUQ0dPUkRBY0krRzAvMEpn?=
+ =?utf-8?B?OUE3ZkxkME16WERMSk9WMnVIYktjMEpDYjFxUmgyMTRmMXdUaDlveUNySTg3?=
+ =?utf-8?B?eHlGcnVwKzgrZnlBNnlFdzZrNnZaSlFhRVJnbmMwaGRBNUEzbFBGdz09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1c8e2ee6-06bb-4bcd-02b0-08deb1e17f02
+X-MS-Exchange-CrossTenant-AuthSource: CY3PR12MB9555.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 May 2026 17:51:59.2014 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: GnJnl9mejv7uqQ4PAoNQm/AD1u1JOVP3N0XRM3Uer836aXX20rB49WvABiNPskewxoKr8Z5qGLWWBM7cf1Ua7Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB8050
+Received-SPF: permerror client-ip=2a01:111:f403:c101::7;
+ envelope-from=nathanc@nvidia.com;
+ helo=BL0PR03CU003.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,100 +155,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VMM0 performs the VMULU accumulation, returns the low result, then feeds
-that result back into the MTM0 multiplier state with a zero high operand.
-It sets MPL[1] to zero, clears partial products, and models the remaining
-architecturally unpredictable multiplier lanes as zero.
+Hi Shameer,
 
-Add helper and translator support for this multiplier chain-update
-operation.
+On 5/14/2026 9:37 AM, Shameer Kolothum Thodi wrote:
+> Hi Nathan,
+> 
+>> -----Original Message-----
+>> From: Nathan Chen<nathanc@nvidia.com>
+>> Sent: 12 May 2026 20:35
+>> To:qemu-arm@nongnu.org;qemu-devel@nongnu.org
+>> Cc: Eric Auger<eric.auger@redhat.com>; Peter Maydell
+>> <peter.maydell@linaro.org>; Philippe Mathieu-Daudé<philmd@linaro.org>;
+>> Zhao Liu<zhao1.liu@intel.com>; Matt Ochs<mochs@nvidia.com>; Nicolin
+>> Chen<nicolinc@nvidia.com>; Shameer Kolothum Thodi
+>> <skolothumtho@nvidia.com>; Nathan Chen<nathanc@nvidia.com>
+>> Subject: [PATCH v3 0/7] hw/arm/smmuv3-accel: Resolve AUTO properties
+>>
+> [..]
+> 
+>> Changes from v2:
+>> - Added R-by tags, thanks Eric, Shameer, Cédric for the feedback!
+>> - Re-worded descriptions in qemu-options.hx and smmu_validate_property()
+>> - Emphasize accel=off auto behavior in a comment for smmuv3_properties[]
+> Just in case you missed it, there was a query regarding the corresponding VFIO
+> ATS support patch here:
+> https://nam11.safelinks.protection.outlook.com/?
+> url=https%3A%2F%2Flore.kernel.org%2Fqemu-devel%2Fad0dac7a- 
+> cd60-4735-8ece-23fe526ca883%40redhat.com%2F&data=05%7C02%7Cnathanc%40nvidia.com%7C0a5c91b9729d461a53b208deb1d71a46%7C43083d157
 
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
----
-Changes v2 -> v3:
-  - Split VMM0 out of the combined Octeon arithmetic and memory
-    instruction patch.  (requested by Richard Henderson)
+Yes, thanks for jumping in on that thread while I was out. I am working 
+on a separate series for the VFIO ATS support.
 
-Changes v3 -> v4:
-  - Keep the Octeon3 MTM0-style high-lane update and set MPL[3] to zero
-    when feeding the low result back.
-
-Changes v5 -> v6:
-  - Zero MPL1 and deterministic-zero the remaining modeled MTM0 lanes after
-    checking the CN71XX VMM0 definition.
----
- target/mips/helper.h               |  1 +
- target/mips/tcg/octeon.decode      |  1 +
- target/mips/tcg/octeon_translate.c |  1 +
- target/mips/tcg/op_helper.c        | 20 ++++++++++++++++++++
- 4 files changed, 23 insertions(+)
-
-diff --git a/target/mips/helper.h b/target/mips/helper.h
-index f1e78ae329..46ccad95c3 100644
---- a/target/mips/helper.h
-+++ b/target/mips/helper.h
-@@ -25,6 +25,7 @@ DEF_HELPER_3(crc32, tl, tl, tl, i32)
- DEF_HELPER_3(crc32c, tl, tl, tl, i32)
- DEF_HELPER_FLAGS_4(rotx, TCG_CALL_NO_RWG_SE, tl, tl, i32, i32, i32)
- DEF_HELPER_3(octeon_vmulu, i64, env, i64, i64)
-+DEF_HELPER_3(octeon_vmm0, i64, env, i64, i64)
- 
- /* microMIPS functions */
- DEF_HELPER_4(lwm, void, env, tl, tl, i32)
-diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index 74d24c18de..c1c3506d20 100644
---- a/target/mips/tcg/octeon.decode
-+++ b/target/mips/tcg/octeon.decode
-@@ -51,6 +51,7 @@ MTP2         011100 rs:5 rt:5 00000 00000 001011 &r2
- MTM1         011100 rs:5 rt:5 00000 00000 001100 &r2
- MTM2         011100 rs:5 rt:5 00000 00000 001101 &r2
- VMULU        011100 ..... ..... ..... 00000 001111 @r3
-+VMM0         011100 ..... ..... ..... 00000 010000 @r3
- 
- &saa         base rt
- @saa         ...... base:5 rt:5 ................ &saa
-diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index 62cbbd3c82..304aa58065 100644
---- a/target/mips/tcg/octeon_translate.c
-+++ b/target/mips/tcg/octeon_translate.c
-@@ -317,3 +317,4 @@ TRANS(MTP0, trans_mtp, 0);
- TRANS(MTP1, trans_mtp, 1);
- TRANS(MTP2, trans_mtp, 2);
- TRANS(VMULU, trans_vmul, gen_helper_octeon_vmulu);
-+TRANS(VMM0, trans_vmul, gen_helper_octeon_vmm0);
-diff --git a/target/mips/tcg/op_helper.c b/target/mips/tcg/op_helper.c
-index ab3fb06a16..45e208ca43 100644
---- a/target/mips/tcg/op_helper.c
-+++ b/target/mips/tcg/op_helper.c
-@@ -176,6 +176,26 @@ uint64_t helper_octeon_vmulu(CPUMIPSState *env, uint64_t rs, uint64_t rt)
-     return sum[0];
- }
- 
-+uint64_t helper_octeon_vmm0(CPUMIPSState *env, uint64_t rs, uint64_t rt)
-+{
-+    uint64_t lo = helper_octeon_vmulu(env, rs, rt);
-+
-+    /*
-+     * VMM0 is architecturally equivalent to VMULU followed by MTM0 with
-+     * the low result and a zero high operand.
-+     */
-+    env->active_tc.octeon.MPL[0] = lo;
-+    env->active_tc.octeon.MPL[1] = 0;
-+    env->active_tc.octeon.MPL[2] = 0;
-+    env->active_tc.octeon.MPL[3] = 0;
-+    env->active_tc.octeon.MPL[4] = 0;
-+    env->active_tc.octeon.MPL[5] = 0;
-+    for (int i = 0; i < ARRAY_SIZE(env->active_tc.octeon.P); i++) {
-+        env->active_tc.octeon.P[i] = 0;
-+    }
-+    return lo;
-+}
-+
- /* these crc32 functions are based on target/loongarch/tcg/op_helper.c */
- target_ulong helper_crc32(target_ulong val, target_ulong m, uint32_t sz)
- {
-
--- 
-2.54.0
-
+Thanks,
+Nathan
 
