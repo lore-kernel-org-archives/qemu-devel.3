@@ -4,65 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2343DCD4851
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 15:25:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92B11CD4F25
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 15:26:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNXvn-00033u-Mn; Thu, 14 May 2026 11:24:59 -0400
+	id 1wNXwS-0003Fq-5Z; Thu, 14 May 2026 11:25:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <conor@kernel.org>)
- id 1wNXvl-00033Q-SV; Thu, 14 May 2026 11:24:57 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <conor@kernel.org>)
- id 1wNXvj-0001a4-Bo; Thu, 14 May 2026 11:24:57 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 3E76160172;
- Thu, 14 May 2026 15:24:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78EB1C2BCC7;
- Thu, 14 May 2026 15:24:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1778772291;
- bh=qPuh0AbgV7loQBaI01PCmwnEF0MV5AfC3XG2DLYCZhs=;
- h=From:To:Cc:Subject:Date:From;
- b=OgPJZ3omfJH8V5YpMkWP33AaQFBg0ra/5VypUj708Gijf/He0kS542cen+SQ7qdGR
- 3cEOzkZCDCs94udnbrV3NZu1SEYM2H+oB4KA0Vpgk2ZYDednKZnQymsqZutZ+81uE1
- XQyVIVmcv2IMSoCpPxi42XYutu2EE6GL+hhLO9S+nH3oGGH0jObiIeJ9/bXUXbHvj6
- zF6/DCMVODn5XHz36JxBb4CDYsxoiAjSin3Uyll+eMI2CIo+miiK6dPJVtVrhg03NM
- T+Y8AVvlLLs3t+bdPsHdEOT+KurhS+TjIU4QhajZshXnC+DadXQiSdNwprovCyFgtt
- p7J6w6z3xZsLA==
-From: Conor Dooley <conor@kernel.org>
-To: qemu-riscv@nongnu.org
-Cc: conor@kernel.org, Guenter Roeck <linux@roeck-us.net>,
- Conor Dooley <conor.dooley@microchip.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Sebastian Huber <sebastian.huber@embedded-brains.de>, qemu-devel@nongnu.org
-Subject: [PATCH] hw: misc: Implement Microchip mpfs ioscb PLLs and sysreg
- clock dividers
-Date: Thu, 14 May 2026 16:23:26 +0100
-Message-ID: <20260514-reference-overhand-749149e36a88@spud>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wNXwP-0003Eu-1q
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 11:25:37 -0400
+Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wNXwN-00022B-DT
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 11:25:36 -0400
+Received: by mail-yx1-xb133.google.com with SMTP id
+ 956f58d0204a3-65318dafbcbso9987900d50.2
+ for <qemu-devel@nongnu.org>; Thu, 14 May 2026 08:25:34 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778772334; cv=none;
+ d=google.com; s=arc-20240605;
+ b=cX+1SdfeMVbFHIHsPLmRylXMLK3pPWtbHrt6ATlqYftmYXE4XIf0dLTJ9OnS1YIUIi
+ +kxH9Fz1lkSLqSkE/e8eVsjbVOZhX7nxpd7BPWTHZLFODdsX7dvGrAPA3bFOcYnsxqDQ
+ KCrPoHYd1nqC2Ss/Ga4AkCEEYbt/znxhzsqq184c3G4EmVBkQ1jXqYFbGc7GdBzWb7zX
+ XK2vNUDGrcrVFJ0uMPj07yC2INtzfkkFLag4rCgQGKJ1S9va88Wo654HsxRIjdr1D23B
+ 95krl8I0TxSEu05xN00NAWyEFFdsOndaQV+yQnPu5AjBjNuSl4J4UjL2ZeE57ETZKgrH
+ myyg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=1fQE5GLYggpE8y4MRNom750CprjO5UapcY4825ccJ6s=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=d4QylZ+DUFULYFFoMC6JOjEkBOBtKL/UsQCm3SE9CUdPvkF0bD2uyEcqABDhEfWbGW
+ ifrSfDaChOYPS/OJPMrzf3hZEPj+UezyizKiUB5b6Lb0IcjUk0cM0clMlaYwXz0OQw+5
+ hSvgaSX7vJCUmGHwOriLZ1+yqNU8/S2aVi6D1rmWammFD4R8OLnZDIPVLINARR4AGcQQ
+ mXGzs14xkL1gfz0CWGqlPA/YQlH9oZo1HZKf+QMmWVirmWJcVx5nGDg97ExZrrJKHx2u
+ vuTFLS6IyaR8OyBsFPtpR4iwhPzCxcHH7iYLBaAp5FmU9MUJSKIpPo4Abj5o2Chtvf0C
+ VrYA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778772334; x=1779377134; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=1fQE5GLYggpE8y4MRNom750CprjO5UapcY4825ccJ6s=;
+ b=Le/NpPMtpkQRv8IXNTZdyCcE4ZcNkOPp2UJr3oc3RDqhwRBrFvlzKkUgDcg0CZzNY8
+ 3edayy5Xv9cxDokOZl/J/hrAJo6Z209wI20jWp8N9ti12T0JdE6H7e2Pz2dLU8ZNgDYq
+ 4j3FePd9lOR/XitSSTDkWjAzIwra5C0KYv8x6bTiuGRcoTOktQo9wXg7ARgZb2pnAfyG
+ QXKrF2B4yViH6Shs24YXskhdvfMmlqZQcFj5q65ckeMrKqpTad725O6GcUR5xk04HJz1
+ bva+hYE6CCiiDgjnnofB7NJiK+lryX2KlElhajX/orHP8Gxdqd8Fcc60LcpGcswAt4EF
+ B6SQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778772334; x=1779377134;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1fQE5GLYggpE8y4MRNom750CprjO5UapcY4825ccJ6s=;
+ b=lM4EqVLKZSlzpZBdh72KDv5M1+8R4tqBKLmcKSaxFQxT81N/l+Y6Mc9xgbIOQVYH5E
+ jE3cxU/rX+8ZTRlhlDLqEGYlW1TsFF1tT3VDIZbLnMQkLzSVLiDU8qpkh+XdqheJz3XP
+ sjrwRwoKeyqbRsRGCHJMPgJ71gLSHx3Gy9ZntsJjBSesXPLsvF9XN4l/U2L5hvU/vPQY
+ +vNWzeZazkTRc9VAg9bhOWA36LEkYzm+OvVEbp4vy7v6eIW+9e8KeSDLqDU0wp1J913a
+ +EGvai2aBL1F/2XXX1K2g7ZKIt2zfdProk0spg73NJFhGEYKBmFaaZ3jooUQ7AYjpebF
+ DEzA==
+X-Gm-Message-State: AOJu0Yz0VTV1E9J7xU/zWu0eH8r+m394hQGaor1Dt1s4XbBO81MNc0Wy
+ zCeZt6deMcMJvKOW7Eytz9y4DeW4DipoRqutHy177aU5A672dh4j7ALj7BTnE8F8V6g3PyBQgUX
+ 1y6I6pl8JgP1MJN5kN11VDwK0vSjW22+LB4WhQR70955g5fJp9563ZhQ=
+X-Gm-Gg: Acq92OFFguPQ89HoilQX/ZzBbm129SAMRJXDNzZr5l+F68Y3xieGsN8IClWYqW/I8ff
+ hS9SRvuWfnQiDJBujsFKUUybqGNIOANcZF1jtqfieXGxU9GcANBvR1JEaXM+vw8dbZFlLv4mt/Q
+ 6FPesIxM04HTa4RqXikvmwxv8f6AuzyY/K2dfJyOhgY99uaCUFz6LJGNbLACFBYk3UBsuVPV3yY
+ wBJMbRXGGfYtrdfRRFKgNFSyEIo7/5fGGI//ZllLaap+LpKuVC6iF1JVjPtEIKMzgUAozePmrFh
+ QX5MQwwYjxn0SB5BLnp9hZDwIgJPUKzgbBMB+HrXjlCwORCwkX157LkuSDnpoN0aWqrlTkvuRSs
+ I1A==
+X-Received: by 2002:a05:690e:1916:b0:651:b7e2:6835 with SMTP id
+ 956f58d0204a3-65df82acdb2mr7217535d50.35.1778772333721; Thu, 14 May 2026
+ 08:25:33 -0700 (PDT)
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5904;
- i=conor.dooley@microchip.com; h=from:subject:message-id;
- bh=OuyCOXrXofVwTCfXG2M3CTUPRGU17dFqlL39D9xLdo0=;
- b=owGbwMvMwCVWscWwfUFT0iXG02pJDFmsL966JqmtnqL0du3boOMsgS/mzj/T6R0oUKZnZ3u8X
- +bhW8G3HaUsDGJcDLJiiiyJt/tapNb/cdnh3PMWZg4rE8gQBi5OAZiI73KG/5G/OCKZPP+d1JPm
- FLEwPrzty36/ZWF/bou4vnV8M/Xy/IsM/0zOWbReE3FsF+E5svfy7tyklnlGs3cn5ixbe7S4puX
- XMkYA
-X-Developer-Key: i=conor.dooley@microchip.com; a=openpgp;
- fpr=F9ECA03CF54F12CD01F1655722E2C55B37CF380C
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=conor@kernel.org; helo=tor.source.kernel.org
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260507234413.643512-1-richard.henderson@linaro.org>
+ <20260507234413.643512-45-richard.henderson@linaro.org>
+In-Reply-To: <20260507234413.643512-45-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 14 May 2026 16:25:22 +0100
+X-Gm-Features: AVHnY4JTnCXd03DeiNVQI3JuZzcm101C4dpViVwLPzUpCFOqbGQ87_XgyWov2j0
+Message-ID: <CAFEAcA8U_h+L0XKPFVKF5-+pq0bpDhrh8ahhiec4NAEPwv2KVA@mail.gmail.com>
+Subject: Re: [PATCH v4 44/60] target/arm: Implement FMLALB, FMLALT for AdvSIMD
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,161 +115,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Guenter Roeck <linux@roeck-us.net>
+On Fri, 8 May 2026 at 00:49, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-Minimal clock register configuration required to boot Linux
-without backtraces in the clock code.
+> +static void fp8_finish_fpst(float_status *orig, float_status *tmp)
+> +{
+> +    int e = get_float_exception_flags(tmp);
+> +    float_raise(e & ~float_flag_input_denormal_used, orig);
+> +}
+> +
+>  static void fp8_finish(CPUARMState *env, FP8Context *c)
+>  {
+> -    int new_flags = get_float_exception_flags(&c->stat);
+> -
+> -    new_flags &= ~float_flag_input_denormal_used;
+> -    float_raise(new_flags, &env->vfp.fp_status[c->fpst]);
+> +    fp8_finish_fpst(&env->vfp.fp_status[c->fpst], &c->stat);
+>  }
 
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
----
-I added two more cases to the switch in mchp_pfsoc_sysreg compared to
-Guenter's patch, cos I still saw 2 backtraces with his patch applied.
+> +static void fp8_mul_finish(CPUARMState *env, FP8MulContext *c)
+> +{
+> +    fp8_finish_fpst(&env->vfp.fp_status[FPST_A64], &c->stat);
+> +}
 
-CC: Conor Dooley <conor.dooley@microchip.com>
-CC: Guenter Roeck <linux@roeck-us.net>
-CC: Alistair Francis <alistair.francis@wdc.com>
-CC: Sebastian Huber <sebastian.huber@embedded-brains.de>
-CC: qemu-riscv@nongnu.org
-CC: qemu-devel@nongnu.org
----
- hw/misc/mchp_pfsoc_ioscb.c         | 47 +++++++++++++++++++++++++++++-
- hw/misc/mchp_pfsoc_sysreg.c        | 12 ++++++++
- include/hw/misc/mchp_pfsoc_ioscb.h |  2 ++
- 3 files changed, 60 insertions(+), 1 deletion(-)
+The Arm ARM 1.5.5 says that FP8 convert insns and FP8 mul insns
+have slightly different fp exception flag behaviour:
+ * neither updates FPSR.IDC (input-denormal)
+ * convert insns do update FPSR.{IOC, IXC, UFC} for Invalid,
+   Inexact, Underflow
+ * mul insns do not update IOC, IXC, UFC
 
-diff --git a/hw/misc/mchp_pfsoc_ioscb.c b/hw/misc/mchp_pfsoc_ioscb.c
-index 05538d012a..1267d6ba4a 100644
---- a/hw/misc/mchp_pfsoc_ioscb.c
-+++ b/hw/misc/mchp_pfsoc_ioscb.c
-@@ -53,6 +53,8 @@
- #define IOSCB_MAILBOX_BASE          0x07020800
- #define IOSCB_CFG_BASE              0x07080000
- #define IOSCB_CCC_BASE              0x08000000
-+#define IOSCB_PLL_NW0_BASE          0x08100000
-+#define IOSCB_PLL_NW1_BASE          0x08200000
- #define IOSCB_PLL_MSS_BASE          0x0E001000
- #define IOSCB_CFM_MSS_BASE          0x0E002000
- #define IOSCB_PLL_DDR_BASE          0x0E010000
-@@ -92,6 +94,16 @@ static const MemoryRegionOps mchp_pfsoc_dummy_ops = {
- /* All PLL modules in IOSCB have the same register layout */
- 
- #define PLL_CTRL    0x04
-+#define PLL_REF_FB  0x08
-+#define PLL_DIV_0_1 0x10
-+#define PLL_DIV_2_3 0x14
-+#define PLL_CTRL2   0x18
-+#define PLL_CAL     0x1c
-+#define PLL_PHADJ   0x20
-+#define SSCG_REG_0  0x24
-+#define SSCG_REG_1  0x28
-+#define SSCG_REG_2  0x2c
-+#define SSCG_REG_3  0x30
- 
- static uint64_t mchp_pfsoc_pll_read(void *opaque, hwaddr offset,
-                                     unsigned size)
-@@ -103,6 +115,22 @@ static uint64_t mchp_pfsoc_pll_read(void *opaque, hwaddr offset,
-         /* PLL is locked */
-         val = BIT(25);
-         break;
-+    case PLL_DIV_0_1:
-+    case PLL_DIV_2_3:
-+        val = 0x01000100; /* return valid post divider values */
-+        break;
-+    case PLL_CTRL2:
-+        val = 0x00001110;
-+	break;
-+    case PLL_REF_FB:
-+        val = 0x00000100; /* RFDIV := 1 */
-+        break;
-+    case SSCG_REG_2:
-+        val = 0x00000001; /* INTIN := 1 */
-+	break;
-+    case PLL_PHADJ:
-+        val = 0x00000401;
-+	break;
-     default:
-         qemu_log_mask(LOG_UNIMP, "%s: unimplemented device read "
-                       "(size %d, offset 0x%" HWADDR_PRIx ")\n",
-@@ -113,9 +141,18 @@ static uint64_t mchp_pfsoc_pll_read(void *opaque, hwaddr offset,
-     return val;
+Perhaps squash in something like this ?
+
+--- a/target/arm/tcg/fp8_helper.c
++++ b/target/arm/tcg/fp8_helper.c
+@@ -55,15 +55,18 @@ static FP8Context fp8_start(CPUARMState *env, uint32_t desc,
+     return ret;
  }
- 
-+static void mchp_pfsoc_pll_write(void *opaque, hwaddr offset,
-+                                 uint64_t value, unsigned size)
-+{
-+    qemu_log_mask(LOG_UNIMP, "%s: unimplemented device write "
-+                       "(size %d, value 0x%" PRIx64
-+                       ", offset 0x%" HWADDR_PRIx ")\n",
-+                       __func__, size, value, offset);
-+}
-+
- static const MemoryRegionOps mchp_pfsoc_pll_ops = {
-     .read = mchp_pfsoc_pll_read,
--    .write = mchp_pfsoc_dummy_write,
-+    .write = mchp_pfsoc_pll_write,
-     .endianness = DEVICE_LITTLE_ENDIAN,
- };
- 
-@@ -240,6 +277,14 @@ static void mchp_pfsoc_ioscb_realize(DeviceState *dev, Error **errp)
-                           "mchp.pfsoc.ioscb.ccc", IOSCB_CCC_REG_SIZE);
-     memory_region_add_subregion(&s->container, IOSCB_CCC_BASE, &s->ccc);
- 
-+    memory_region_init_io(&s->pll_nw_0, OBJECT(s), &mchp_pfsoc_pll_ops, s,
-+                          "mchp.pfsoc.ioscb.pll_nw_0", IOSCB_SUBMOD_REG_SIZE);
-+    memory_region_add_subregion(&s->container, IOSCB_PLL_NW0_BASE, &s->pll_nw_0);
-+
-+    memory_region_init_io(&s->pll_nw_1, OBJECT(s), &mchp_pfsoc_pll_ops, s,
-+                          "mchp.pfsoc.ioscb.pll_nw_1", IOSCB_SUBMOD_REG_SIZE);
-+    memory_region_add_subregion(&s->container, IOSCB_PLL_NW1_BASE, &s->pll_nw_1);
-+
-     memory_region_init_io(&s->pll_mss, OBJECT(s), &mchp_pfsoc_pll_ops, s,
-                           "mchp.pfsoc.ioscb.pll_mss", IOSCB_SUBMOD_REG_SIZE);
-     memory_region_add_subregion(&s->container, IOSCB_PLL_MSS_BASE, &s->pll_mss);
-diff --git a/hw/misc/mchp_pfsoc_sysreg.c b/hw/misc/mchp_pfsoc_sysreg.c
-index f190ecc78e..09389d3b1f 100644
---- a/hw/misc/mchp_pfsoc_sysreg.c
-+++ b/hw/misc/mchp_pfsoc_sysreg.c
-@@ -29,6 +29,8 @@
- #include "hw/misc/mchp_pfsoc_sysreg.h"
- #include "system/runstate.h"
- 
-+#define CLOCK_CONFIG_CR 0x8
-+#define RTC_CLOCK_CR    0xc
- #define MSS_RESET_CR    0x18
- #define ENVM_CR         0xb8
- #define MESSAGE_INT     0x118c
-@@ -39,6 +41,16 @@ static uint64_t mchp_pfsoc_sysreg_read(void *opaque, hwaddr offset,
-     uint32_t val = 0;
- 
-     switch (offset) {
-+    case CLOCK_CONFIG_CR:
-+        /* Icicle kit reference design cpu/axi/ahb divider setting */
-+        val = 0x24;
-+        break;
-+    case RTC_CLOCK_CR:
-+        /* Bit 16 enables the RTC clock, 0x7d is the required divider
-+         * setting for a 125 MHz reference.
-+         */
-+        val = BIT(16) | 0x7d;
-+        break;
-     case ENVM_CR:
-         /* Indicate the eNVM is running at the configured divider rate */
-         val = BIT(6);
-diff --git a/include/hw/misc/mchp_pfsoc_ioscb.h b/include/hw/misc/mchp_pfsoc_ioscb.h
-index eaaa2ac5d9..9687ea25b1 100644
---- a/include/hw/misc/mchp_pfsoc_ioscb.h
-+++ b/include/hw/misc/mchp_pfsoc_ioscb.h
-@@ -35,6 +35,8 @@ typedef struct MchpPfSoCIoscbState {
-     MemoryRegion mailbox;
-     MemoryRegion cfg;
-     MemoryRegion ccc;
-+    MemoryRegion pll_nw_0;
-+    MemoryRegion pll_nw_1;
-     MemoryRegion pll_mss;
-     MemoryRegion cfm_mss;
-     MemoryRegion pll_ddr;
--- 
-2.53.0
 
+-static void fp8_finish_fpst(float_status *orig, float_status *tmp)
++static void fp8_finish_fpst(float_status *orig, float_status *tmp,
++                            uint16_t squash_flags)
+ {
+     int e = get_float_exception_flags(tmp);
+-    float_raise(e & ~float_flag_input_denormal_used, orig);
++    float_raise(e & ~squash_flags, orig);
+ }
+
+ static void fp8_finish(CPUARMState *env, FP8Context *c)
+ {
+-    fp8_finish_fpst(&env->vfp.fp_status[c->fpst], &c->stat);
++    /* FP8 convert insns don't update FPSR.IDC */
++    fp8_finish_fpst(&env->vfp.fp_status[c->fpst], &c->stat,
++                    float_flag_input_denormal_used);
+ }
+
+ static FP8Context fp8_src_start(CPUARMState *env, uint32_t desc, int
+scale_mask)
+@@ -597,7 +600,13 @@ static FP8MulContext fp8_mul_start(CPUARMState
+*env, int scale_mask)
+
+ static void fp8_mul_finish(CPUARMState *env, FP8MulContext *c)
+ {
+-    fp8_finish_fpst(&env->vfp.fp_status[FPST_A64], &c->stat);
++    /* FP8 multiplies don't update FPSR.{IDC,IOC,IXC,UFC} */
++    fp8_finish_fpst(&env->vfp.fp_status[FPST_A64], &c->stat,
++                    float_flag_input_denormal_used |
++                    float_flag_invalid |
++                    float_flag_inexact |
++                    float_flag_output_denormal_flushed |
++                    float_flag_underflow);
+ }
+
+ static FloatParts64 f8dot(uint64_t a, uint64_t b, int n, FP8MulContext *ctx)
+
+thanks
+-- PMM
 
