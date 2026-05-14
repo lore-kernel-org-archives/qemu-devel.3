@@ -4,102 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1C64CD4F39
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 12:22:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F3E9CD4F39
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 12:34:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNV4w-0002oQ-Bw; Thu, 14 May 2026 08:22:14 -0400
+	id 1wNVGE-0005C0-W8; Thu, 14 May 2026 08:33:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNV4r-0002nv-G0
- for qemu-devel@nongnu.org; Thu, 14 May 2026 08:22:09 -0400
-Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNV4o-0001ZU-Ai
- for qemu-devel@nongnu.org; Thu, 14 May 2026 08:22:08 -0400
-Received: by mail-yx1-xb12c.google.com with SMTP id
- 956f58d0204a3-65c21049dafso8305416d50.2
- for <qemu-devel@nongnu.org>; Thu, 14 May 2026 05:22:05 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778761325; cv=none;
- d=google.com; s=arc-20240605;
- b=TiI5L9SzREouOyHlZKSm0mc3B02+YvlMT1u6K12UoQZeoZHt94BzZTb/+UhyC29YFo
- rsNPWtwFvNsr/LdD0SChtIIw5D03X9G56WHGnQvy/st7a5u3dEZAsDk8IDazwrqO/Jif
- xeX9Ou72S14kmcpYBMQenKva4C96BjOE5LRzcj1aKMMAdqX9q/LZxr35ZoLY1drwvwRm
- pjC5NbKk18qpvUig+6PuSSd9bUJ7P57W1PhnfXvLhPYbfzLIIzBoOKrSEwyMMy7S2cVi
- 5EZ7J0zomVQVc6UqRA+bwPHRNJRf4bVRs/2jZOOT1ZFK56yaXViFN8O+gMBMV8rmuVe1
- XptA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=wh6ai9g47WzAI8+eG5IjwxJnfYvKEL9mm3nlod2ZRQU=;
- fh=GI2e/SBiq4MTIPc9mHou6R6WJe3VvhdDMWKbaXflkfU=;
- b=et/gbAtCBWKn6pA/RNGS6b/KDeF615hbO5UeMf+eAw6XC5CbQooJZs1giCryO4X5Z6
- W6vCdIXdvH3y3WMEJo5/HnFB+HnX2t7ETGLpvZzvxc91Qbt6EJnAqZqYddiGU+mOZDK4
- bmMQr3MgNpkjG+ETYzyyG+iSMg7ujOrVMALNc0vV2m24sxnxMk1XxyBg4+mHXLbikLyJ
- zKpjp+Bo0P6dabxaAJPnSr/IR89jW+BJnV9VmwJGxsRqVI0yLtBFjvBLipNSIlbyO5MW
- KwbNAhD4Wj0Vy+7U36tNWUfai0Jc4f9F6J//uO/fOBJDRdDndX/D5TyQHRzAufs8YbqQ
- G9QA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wNVGD-0005BQ-3b
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 08:33:53 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wNVGB-0004jq-3u
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 08:33:52 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64EBec3V1718027
+ for <qemu-devel@nongnu.org>; Thu, 14 May 2026 12:33:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=qcppdkim1; bh=Wctl4BwUPge1tJQU3XWTCVR5iC55iDPZiBc
+ +EacU26k=; b=PdEj0UvAQHZYYxqk2cp83ViAoFQm+gxvgtcqA8v+v2Ur91t3T5b
+ k1wop0Ojwe2EUriFZbFSsUb3ARNekI7I/eFIishv9OBS8g+lLBx5+fU7OP2q1SXY
+ lrZ+EPQ1OnyYLxdTYgDF2YMHORQfQaZv+xtSpR5T/MuEIVqo8JwMWrR6hdwwp/ph
+ ys0EliR824/ewwRlZ6bh+JN7XGOUSQQ6FRq6yUEYvHZpxHHpYorEO9p+z1FScb1y
+ KCvFU2t0FJi9+FtoHKi/yAhW4i1PqyFR8f3R7mDY3goQEe20tupwCfTr22YJaxgg
+ QzW376AAJAiguMxHz3xOgJ/Hnm0mDbHB+Yg==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e57y7hf5q-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 14 May 2026 12:33:48 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-8ba8a1f3dd7so94638986d6.3
+ for <qemu-devel@nongnu.org>; Thu, 14 May 2026 05:33:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778761325; x=1779366125; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=wh6ai9g47WzAI8+eG5IjwxJnfYvKEL9mm3nlod2ZRQU=;
- b=L6eCAYvB/w1A1vMUgR6EIsnOM731mAtEd6Z6UXVQQQbTO5C/lxsgfp+7fcSuTMfU9j
- C/X9nf8oAUjXxzhM5pfotUs43LHoDuEcxK5DbbCzPJF2br15hwcQHoTuubSboPLEKNk/
- YXvh80ybJnz7mjnjoXAx/F6rXx0UJ3edGVetj7bG4OCtGH/AJlioV2KMFEw9k1xQkm4U
- XUFT9YiJAWHzNQTJPPvfbIa9RGyscMVii8yTwn+DpJYlKEey57UY4kX0pTb0ORVWYaEV
- r4xJXbiqjeBOKEPe1Uy7uMdlepb7+jXCWS57uCTXkSrcqzP05JcpmKHslE1ka9FSpBNi
- C8vQ==
+ d=oss.qualcomm.com; s=google; t=1778762028; x=1779366828; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Wctl4BwUPge1tJQU3XWTCVR5iC55iDPZiBc+EacU26k=;
+ b=L4s3mdLi47qas8lxycYz5WHWu2//TglBdbbOQ+CLHiaGtosPzjweVeYdPXqBCtyQzO
+ S02cC56Cq/1bFhnG3y+OxEW2mvOhKYpCuwWosxGSJdM6zS4sFlB87tdXyfARHqZnp3An
+ /bgeKMeEls/yH1KBAkBOROsy+cMDBIkft2NjPBNjbc3MUkdlfmOzXPPzHgzWkxbJVS1Z
+ 4sE6wspLYzpRhmGex113aIvmlzuRKHk1GjOI97I0RR23mE56lptfOAn4rEjRi2Wbruj1
+ YD6zZI+oJYM2MPLRF5PMWHIpstXn08MtYOo9p6yEOrh1uIDlt/JeX1zdtfq9Fa3zxFOS
+ M40A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778761325; x=1779366125;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1778762028; x=1779366828;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wh6ai9g47WzAI8+eG5IjwxJnfYvKEL9mm3nlod2ZRQU=;
- b=TK9lAnP0yal9xZDfCGj+A80B41J5SQCCihV26POu0fQr87ydI2Stk2x/qGltmqpGJ/
- fyi97x7yeF3+U0Sk7vvXwh98Bp/i0HsBZsy/c+4RF0X5AP/u1PozUhly+pw9DefDE3UI
- 4IHwp5k2iSaMJBha93bknnCIgzxQwn85EvdgwNG+GRTBob6GQzHjRGyr3LwK0zfrj0XV
- N+rv3HpyNLjAQhZKD9PGrP/hZexKGq5vTjhZvAoEXnQ37YISvLssrgH5Q4N37fffna6A
- YNVaJuKXSwIpqpUoY3tWn2GwBkhb3O2LyX48Wz/5jaFcyVGSqJNFirXzp/bE/PUyLiak
- qP7w==
-X-Gm-Message-State: AOJu0Yyj8y6v5prRuFKtcS8S6d2GPzQxaCWoF6WK81YxQNdoQ2AkNwOm
- pO/+AB5WigGvR3zeOLVGTC35gmsuAKdEZMvcqfeQNyZFHBHYVBg0aGWfkskMa0gA+vsanQFh8GL
- dXnoIDtEA1TRCei9hdR8FQXoii9DReyIKWBA6pck2Zw==
-X-Gm-Gg: Acq92OGNncNBmxJznpjBOhilSPDqfBn/gZNvYX++ffWCjxeP7ISxgih2QwabOTZZua6
- ClPInTg2QeXa9o9a432jM+LwgSkIDHeQtCW043bPoIsddSmGKYjHDTm2ciuUBRsYB17kQxP/D6H
- g5owfvBzAkEtMLkrIbbUzVU1FmJHGouCPy86tCirB0tgqmCRH02yg//hGEY7na54Tbgu2zXlfq2
- sNHpBiOvIXi9Nm0muXGJpXGNItMjkP+0csAYTzAFU8lYbwUAkJjFOQf7JoqnzQSqdWX9vpyGDAY
- kt4eyUbNGaUWa+M9KEnvLNNhe24rmK3ozbrlz/UrDB8wsVC50T7891o3LNwY6HtFPFOBQegs5LW
- QVg==
-X-Received: by 2002:a53:d041:0:20b0:65c:67fa:b424 with SMTP id
- 956f58d0204a3-65df61fba56mr6043114d50.3.1778761324809; Thu, 14 May 2026
- 05:22:04 -0700 (PDT)
+ bh=Wctl4BwUPge1tJQU3XWTCVR5iC55iDPZiBc+EacU26k=;
+ b=cP9GERfo+ULRXWABHNl61lvILAzXd8HijwMOLM95a7Gych78nqsvg+6+3sKJMzhHAo
+ IEKZJcykCwXkBqcdSqai0X2QseWaGwLebLv8etr8CK9R3LL6kcESxA4LIFJkgyfRpM9Q
+ ZkP88hBtkKP3cT2qlzvjfnWiprXWOneqsChGvCYeLmbQnQ5/pIYXZA5rfLBZTQckTxcC
+ W9gBIfvuE22OYZrWcf0VnNE5VLs2aPO5iZOU7PMrQ4PQXrzXtLDTLFQUQLPEJDFZXmDx
+ wjtsxs8Pt/2ZRfP+6msPLK/NgCQ5wy1TAeucn3LCA6xuYTCosGgnDBqb//d7j03YGtdQ
+ iscQ==
+X-Gm-Message-State: AOJu0Yz0D8ntUIOJEEq+Jr3RKix6fSXrlHiUBNSVS9as1SX5zlGpG8E5
+ dKlK6o/u29v2LzjOdJatFPr6LxKB1GhUO/Bmwaz+vsSo6oQvWap4ifrdSM34ChaYn49NOTPD1p/
+ RRZsSAxj3KqSZt0umqCTmqeyLhz/iZ6HkPZg7L3zdgQlJdeQe1AMs4b14UCWk+Q4Qdg==
+X-Gm-Gg: Acq92OFqSpXU94fz50FaZcTSF/8tYT0BKkTeTdvVIQL3DhAAQhY5lgm8YhK+rSpMwwc
+ akQ3+SQJk5k8gRhkYKnBSoAMlplgW8WSKd7RtLoRFB+V5ld7S2JYM6kdK9D5KsbSQU1xSM0Y17A
+ h81PcKLRmt7q3vP7yH/uXW+by5pspfiFv5ivK/mhrqDAoXFfoGn+/MfBtqzK5uze1oMOHkEn+Mp
+ uwA10uND33fCUa4qGgkJCmMw66o/xFDAF7oyU1X9qCq3YmBEsxxoafQA7MgDjw7nKuqirPwEtKs
+ Dwl/sD3ODeDU5kHSA4QcRilr3PoRMUBHD45HVDoCageEiblaAD31Hg3NQO18jYLXs4VNFjwFBiZ
+ 21Op+Eu292LNSligMsh2pGmL4ztVkzHWZDbDUSKqJArcdx9hz0MtUZbVVQWgNOxnqqSQKEWju6C
+ Oa5GrQo3yGnVkZkiS/wULcKNQ=
+X-Received: by 2002:a05:6214:27ca:b0:8a5:104b:e37b with SMTP id
+ 6a1803df08f44-8c7bc43c53fmr125848836d6.42.1778762027839; 
+ Thu, 14 May 2026 05:33:47 -0700 (PDT)
+X-Received: by 2002:a05:6214:27ca:b0:8a5:104b:e37b with SMTP id
+ 6a1803df08f44-8c7bc43c53fmr125848196d6.42.1778762027347; 
+ Thu, 14 May 2026 05:33:47 -0700 (PDT)
+Received: from QCOM-UWl2o8bcGT.qualcomm.com
+ (177.206.20.52.dynamic.adsl.gvt.net.br. [177.206.20.52])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8c90bb82a92sm22162326d6.36.2026.05.14.05.33.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 14 May 2026 05:33:46 -0700 (PDT)
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: [PATCH] target/riscv/csr.c: fix read of pmpaddr(0-63) CSRs
+Date: Thu, 14 May 2026 09:33:42 -0300
+Message-ID: <20260514123342.2139464-1-daniel.barboza@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20260507160959.449170-1-richard.henderson@linaro.org>
- <20260507160959.449170-2-richard.henderson@linaro.org>
-In-Reply-To: <20260507160959.449170-2-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 14 May 2026 13:21:53 +0100
-X-Gm-Features: AVHnY4LJgNeSknIas9QaRSMt5iaMUQ2jijz97jpqzG0M3jRvNNp1WwD9V90L5mo
-Message-ID: <CAFEAcA-Pa=CPs7Jp=pzo13b5zpLT=4N_F84=SPryeBFQMHFE0A@mail.gmail.com>
-Subject: Re: [PATCH v3 01/11] fpu: Reorganize partsN(muladd)
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: kKC4cIdRvv9DvhyRrzJjNBlQ06VTNP25
+X-Authority-Analysis: v=2.4 cv=UY9hjqSN c=1 sm=1 tr=0 ts=6a05c12c cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=C35wqYyY/cHT4Uyl1WiZ6A==:17
+ a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=p0WdMEafAAAA:8
+ a=EUspDBNiAAAA:8 a=aJVLpm4QXBLpFYt03AsA:9 a=1HOtulTD9v-eNWfpl4qZ:22
+X-Proofpoint-GUID: kKC4cIdRvv9DvhyRrzJjNBlQ06VTNP25
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE0MDEyNSBTYWx0ZWRfX2oRXEeDD088K
+ zdXGDwPX8lsxcd0q1pZQDfJMb2erE2BSFmlrXyiSC2+V7DRU3FVLKl668WvtxiWdNIQp0xZWOVc
+ mzYPrBOlYfSrt8/1H9xTVH6wZijuScNvAhjTDFkGd3GQ/FcTKCIS/v/JTTHmzGX+1skXn823/n2
+ d0aPRL3Vu59aMHSr4cVcXpUF43hGDKZ1qn2IMfcYxPMzNM6MQIBULhQl0083YEJFYlGooCTAvJP
+ VJ46DaZVcVpxMXHKYw9LUNLCFI8asxwylSFw7gbaYw7FCq0+k+fk57wDDn3mu2NOlUXLIXb+S/Y
+ HPva8giEhXX0VAKFpzEersJkDSD7GBQqni6XycT5u9VYENO212os5bUpugM4ZIWAWauSVR+CXr7
+ 1lYHT8YJ3oRxq2laNS45uZsJZbXDANDhNP/OACXCMifGfKYf5XFPkHLOUxlV4JK0FEuPngH8owx
+ oyrP9QEitSsMq3sSR4Q==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-14_03,2026-05-13_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0
+ priorityscore=1501 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605050000
+ definitions=main-2605140125
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,187 +145,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 7 May 2026 at 17:10, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Check the likely case of normal product and normal or
-> zero addend first; shift NaN and infinity detection down;
-> end with zero product + addend.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  fpu/softfloat-parts.c.inc | 155 +++++++++++++++++---------------------
->  1 file changed, 70 insertions(+), 85 deletions(-)
->
-> diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-> index 3a9c2748cd..3d2606c07c 100644
-> --- a/fpu/softfloat-parts.c.inc
-> +++ b/fpu/softfloat-parts.c.inc
-> @@ -681,11 +681,47 @@ static FloatPartsN *partsN(muladd)(FloatPartsN *a, FloatPartsN *b,
->                                     FloatPartsN *c,
->                                     int flags, float_status *s)
->  {
-> -    int ab_mask, abc_mask;
-> -    FloatPartsW p_widen, c_widen;
-> +    int ab_mask = float_cmask(a->cls) | float_cmask(b->cls);
-> +    int c_mask = float_cmask(c->cls);
-> +    int abc_mask = ab_mask | c_mask;
-> +    bool c_sign = c->sign ^ !!(flags & float_muladd_negate_c);
-> +    bool p_sign = a->sign ^ b->sign ^ !!(flags & float_muladd_negate_product);
->
-> -    ab_mask = float_cmask(a->cls) | float_cmask(b->cls);
-> -    abc_mask = float_cmask(c->cls) | ab_mask;
-> +    /*
-> +     * The "likely" case is A and B normal, so that the product is normal,
-> +     * and C normal or zero so that the result is normal.
-> +     */
-> +    int likely_mask = ab_mask | (c_mask & ~float_cmask_zero);
-> +    if (likely(cmask_is_only_normals(likely_mask))) {
-> +        record_denormals_used(abc_mask, s);
-> +
-> +        /* Perform the multiplication step. */
-> +        FloatPartsW p_widen = { .sign = p_sign, .exp = a->exp + b->exp + 1 };
-> +        fracN(mulw)(&p_widen, a, b);
-> +        if (!(p_widen.frac_hi & DECOMPOSED_IMPLICIT_BIT)) {
-> +            fracW(add)(&p_widen, &p_widen, &p_widen);
-> +            p_widen.exp -= 1;
-> +        }
-> +
-> +        /* Perform the addition step. */
-> +        if (!(c_mask & float_cmask_zero)) {
-> +            /* Zero-extend C to less significant bits. */
-> +            FloatPartsW c_widen = { .sign = c_sign, .exp = c->exp };
-> +            fracN(widen)(&c_widen, c);
-> +
-> +            if (p_sign == c_sign) {
-> +                partsW(add_normal)(&p_widen, &c_widen);
-> +            } else if (!partsW(sub_normal)(&p_widen, &c_widen)) {
-> +                goto return_sub_zero;
-> +            }
-> +        }
-> +
-> +        /* Narrow with sticky bit, for proper rounding later. */
-> +        fracN(truncjam)(a, &p_widen);
-> +        a->sign = p_widen.sign;
-> +        a->exp = p_widen.exp;
-> +        return a;
-> +    }
->
->      /*
->       * It is implementation-defined whether the cases of (0,inf,qnan)
-> @@ -698,97 +734,46 @@ static FloatPartsN *partsN(muladd)(FloatPartsN *a, FloatPartsN *b,
->          return a;
->      }
->
-> -    if (flags & float_muladd_negate_c) {
-> -        c->sign ^= 1;
-> +    if (unlikely(ab_mask == float_cmask_infzero)) {
-> +        /* Inf * Zero == NaN */
-> +        float_raise(float_flag_invalid | float_flag_invalid_imz, s);
-> +        goto d_nan;
->      }
->
-> -    /* Compute the sign of the product into A. */
-> -    a->sign ^= b->sign;
-> -    if (flags & float_muladd_negate_product) {
-> -        a->sign ^= 1;
-> -    }
-> -
-> -    if (unlikely(!cmask_is_only_normals(ab_mask))) {
-> -        if (unlikely(ab_mask == float_cmask_infzero)) {
-> -            float_raise(float_flag_invalid | float_flag_invalid_imz, s);
-> +    if (unlikely(ab_mask & float_cmask_inf)) {
-> +        if ((c_mask & float_cmask_inf) && p_sign != c_sign) {
-> +            /* Inf - Inf == NaN */
-> +            float_raise(float_flag_invalid | float_flag_invalid_isi, s);
->              goto d_nan;
->          }
-> -
-> -        if (ab_mask & float_cmask_inf) {
-> -            if (c->cls == float_class_inf && a->sign != c->sign) {
-> -                float_raise(float_flag_invalid | float_flag_invalid_isi, s);
-> -                goto d_nan;
-> -            }
-> -            goto return_inf;
-> -        }
-> -
-> -        g_assert(ab_mask & float_cmask_zero);
-> -        if (is_anynorm(c->cls)) {
-> -            *a = *c;
-> -            goto finish_sign;
-> -        }
-> -        if (c->cls == float_class_zero) {
-> -            if (flags & float_muladd_suppress_add_product_zero) {
-> -                a->sign = c->sign;
-> -            } else if (a->sign != c->sign) {
-> -                goto return_sub_zero;
-> -            }
-> -            goto return_zero;
-> -        }
-> -        g_assert(c->cls == float_class_inf);
-> +        /* Inf + C == Inf */
-> +        record_denormals_used(abc_mask, s);
-> +        a->sign = p_sign;
-> +        a->cls = float_class_inf;
-> +        return a;
->      }
-> -
-> -    if (unlikely(c->cls == float_class_inf)) {
-> -        a->sign = c->sign;
-> -        goto return_inf;
-> -    }
-> -
-> -    /* Perform the multiplication step. */
-> -    p_widen.sign = a->sign;
-> -    p_widen.exp = a->exp + b->exp + 1;
-> -    fracN(mulw)(&p_widen, a, b);
-> -    if (!(p_widen.frac_hi & DECOMPOSED_IMPLICIT_BIT)) {
-> -        fracW(add)(&p_widen, &p_widen, &p_widen);
-> -        p_widen.exp -= 1;
-> -    }
-> -
-> -    /* Perform the addition step. */
-> -    if (c->cls != float_class_zero) {
-> -        /* Zero-extend C to less significant bits. */
-> -        fracN(widen)(&c_widen, c);
-> -        c_widen.exp = c->exp;
-> -
-> -        if (a->sign == c->sign) {
-> -            partsW(add_normal)(&p_widen, &c_widen);
-> -        } else if (!partsW(sub_normal)(&p_widen, &c_widen)) {
-> -            goto return_sub_zero;
-> -        }
-> -    }
-> -
-> -    /* Narrow with sticky bit, for proper rounding later. */
-> -    fracN(truncjam)(a, &p_widen);
-> -    a->sign = p_widen.sign;
-> -    a->exp = p_widen.exp;
-> -
-> - finish_sign:
-> -    /*
-> -     * All result types except for "return the default NaN
-> -     * because this is an Invalid Operation" go through here;
-> -     * this matches the set of cases where we consumed a
-> -     * denormal input.
-> -     */
->      record_denormals_used(abc_mask, s);
-> -    return a;
-> +
-> +    /* Only remaining case is zero product. */
-> +    assert(ab_mask & float_cmask_zero);
+The priv spec defines, for RV64, that the upper 10 bits of
+pmpaddr0-pmpaddr63 are WARL and are supposed to be cleared.
 
-The patch is a bit awkward to read, but looking at the
-code when the patch is applied, don't we trip this assert for
-the "normal * normal + Inf" case ? The rearranged function
-checks for:
- * A, B normal, C normal or zero
- * any of A,B,C are a NaN
- * A, B are Inf and 0 in some order
- * A or B are Inf
+After this patch, using the bug reproducer in [1], writing
+ffffffffffffffff in pmpaddr0 and reading it back now results in
+003fffffffffffff.  Here's the 'diff -cp' dump before and after
+this change:
 
-and (normal, normal, inf) gets past all those.
+*************** IN:
+*** 5272,5278 ****
+   pmpcfg10 0000000000000000
+   pmpcfg12 0000000000000000
+   pmpcfg14 0000000000000000
+!  pmpaddr0 ffffffffffffffff
+   pmpaddr1 0000000000000000
+   pmpaddr2 0000000000000000
+   pmpaddr3 0000000000000000
+--- 5545,5551 ----
+   pmpcfg10 0000000000000000
+   pmpcfg12 0000000000000000
+   pmpcfg14 0000000000000000
+!  pmpaddr0 003fffffffffffff
+   pmpaddr1 0000000000000000
+   pmpaddr2 0000000000000000
+   pmpaddr3 0000000000000000
 
-thnaks
--- PMM
+[1] https://gitlab.com/qemu-project/qemu/-/work_items/3362
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3362
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+---
+ target/riscv/csr.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index e1cd4a299c..476a620035 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -5362,6 +5362,23 @@ static RISCVException read_pmpaddr(CPURISCVState *env, int csrno,
+                                    target_ulong *val)
+ {
+     *val = pmpaddr_csr_read(env, csrno - CSR_PMPADDR0);
++
++    /*
++     * For RV64, bits 54-63 of the address registers
++     * PMPAADDR(0-63) is a WARL zero field (priv spec,
++     * section "Physical Memory Protection CSRs").
++     *
++     * We'll have to add an annoying TARGET_RISCV64 gate
++     * here to avoid complaints about masking bits 0-53
++     * of a potential 32 bit target_ulong '*var'.
++     */
++#ifdef TARGET_RISCV64
++    if (env->misa_mxl == MXL_RV64
++        && csrno >= CSR_PMPADDR0 && csrno <= CSR_PMPADDR63) {
++        target_ulong read_mask = MAKE_64BIT_MASK(0, 54);
++        *val &= read_mask;
++    }
++#endif
+     return RISCV_EXCP_NONE;
+ }
+ 
+-- 
+2.43.0
+
 
