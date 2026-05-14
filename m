@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C88B6CD4F39
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 17:39:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2FC4CD4F25
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 17:40:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNa22-0001pw-2I; Thu, 14 May 2026 13:39:34 -0400
+	id 1wNa20-0001hY-Hv; Thu, 14 May 2026 13:39:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wNa1A-0000tl-TF
- for qemu-devel@nongnu.org; Thu, 14 May 2026 13:38:45 -0400
-Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
+ id 1wNa18-0000tO-Qy
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 13:38:41 -0400
+Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wNa11-00044H-UG
+ id 1wNa11-00044N-Ef
  for qemu-devel@nongnu.org; Thu, 14 May 2026 13:38:38 -0400
-Received: by mail-ot1-x331.google.com with SMTP id
- 46e09a7af769-7dbcb467f2bso7374143a34.3
+Received: by mail-ot1-x32b.google.com with SMTP id
+ 46e09a7af769-7e36bb16a92so3543297a34.2
  for <qemu-devel@nongnu.org>; Thu, 14 May 2026 10:38:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778780296; x=1779385096; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778780297; x=1779385097; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=J0TVz6tP6rUprn0I+4uUdka/a4mu3oszNDiguZvi2rI=;
- b=SqT6CzAGZxarzcTPVFopOPt2QdDQkCX2JUPcAO/CKtPBa0JKDHHpsdAX2TfxrtPLJK
- qjvfY3sxCzJT0HgvgFzUnL2dk9G0+eAL27s5duGqYKSoapjJXkjqKT1tk/5n84veF9yz
- m3sCKb1Grb196uGM3WWvnI9dyaFFT6e4Cda/m7M+Z972Rpu9DZRH/nlmyxANVS7tFrfx
- 52xvjzmnAvyruFeD8TLbmjlMSvHi+3vvdSusLlEKxJdROH/WEDYGMnn310OP35/ksjla
- CIHq2SDhuSEBVUY+cbXBQjbIRBjYacuUvLAs4ml1AionQ0SSqPwpCfSOWyZdrjx3mdsE
- ZeWg==
+ :reply-to; bh=OOQNSVDXETD0OLv+e8ch0YmX2+eDo5mSilihDkBflZ8=;
+ b=gn0Rr21jV36QYafM+Z4KNMLErMrsHns302teK8gb9IYIRG2Ex4tb2CVCiuLvTbWNGE
+ 23Qa8LMI4t1h/Maoat6l7SfJU9qRB604d2x1x//NAnbmEaMcKSXG7hkkbuRIcnqLhh+u
+ k3mU86Z5q/urJjd99yzl9vBXyN8vH0HPcz9JNrA+gNguBYMrPJZ1tly1+NzdaS/NyrpO
+ l3qDitK1o5TZG156LcMroznC6T3pF8Xtx5rZc7m1NfyHSsHql1KfFC7zXgoDYiL2I6Lo
+ xFBZVjGXppBdgZZQuOChZs1P42m8koucGdQHepQhIzQuTZAfg7kDFr8ryIzN1KUHND4W
+ glHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778780296; x=1779385096;
+ d=1e100.net; s=20251104; t=1778780297; x=1779385097;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=J0TVz6tP6rUprn0I+4uUdka/a4mu3oszNDiguZvi2rI=;
- b=cklPU0EENaCSlHZMTpcvhcsCxWZAXL93W93yBzV83ZJwI5dtKoz54SrSezL1lUFk+6
- Hr+On/7xKz60ao7GTupyPl8UdTOt9Q4PP69zB7nsUFG8OKS37lEL+1g3Oo0XURdBROIT
- fa7RqRCj3n9tgr8YzWvwoRIn4Zug4XZovP1VPpVSkVHsVUMAz+s9Y/Y0xaJESeTEJ3Z4
- WgJvdcSh9Trq+6UVeOxYwJirFcSswDblXvorN6Y7ZTeRkRgMjV3elzOu0HUoG9ZsfqLz
- 6A+Vd7gMCx2z1D+n/vybGjrWanoOP7liY9wbkwnL/DL4KuaW8nVaVvmEoVGLj5k33Gmf
- 2fxA==
-X-Gm-Message-State: AOJu0YzLcVZn+NK9kgFPhPs1d0gFhga8Q6EVeH9K2ZQ+ddTkN65G79TP
- me+uQIDbmSm3iu/S04UYGDbRIFDbi6VhRiAkddWW/riqY4wcsUEOLghn
-X-Gm-Gg: Acq92OH92yUp1ZlZWtqui1nb5k74UlLThuejcKs0lewZLjP52NAmsCaTPgjwhcS4Mls
- RHK/BHbgGkaW73BrPKvmzrmx2qrrGzxQnmgsgTl2p5yEchVOm9BDzqeT2ju7hukLU8CGBUn5bBz
- soEr+6N003MimC/LtRakKORg7Uky04Z+1E46LOUQGiY9B/DIhG6tTCdy25WI5vdbvOzoxpUqYgS
- 0XQgIp2V8u4ZOysxE4YNxeOMhEVEsqbYmsVHcCEZk7ju7iEl9xFNUU01VRWwKKjNVAi+iec/9qo
- 7J40STOi0UoYLFyy9kksr16BXc9h+EPIfNjS7o35LzMzO2S4VwKcBmxJ+8qWDZIfN4kEVwkk82K
- ADxw6d2Zv972Evm6T5JggaBujJwj0Rywx8oUOtgPorG2TOjL2l5CAOuFrSbQSbCCQI1B+/U9mkt
- MyTKCnQRAm5RadQJzO/FlCPRy2SVYPR27JFj7Rj4WSLb+FgeGbsv7PN7xrOjr/OUgPYaj/vhiib
- Jih0xbISsvRLPEWN3RnqQYo06/x5gnywqAaKZWSKkNBt7tT+Wjodj0wdmyMER5kEKAQ1UT6p94C
- PAo=
-X-Received: by 2002:a05:6820:6ae3:b0:69b:b52c:c9b8 with SMTP id
- 006d021491bc7-69c9bfaf1bdmr232273eaf.47.1778780296385; 
- Thu, 14 May 2026 10:38:16 -0700 (PDT)
+ bh=OOQNSVDXETD0OLv+e8ch0YmX2+eDo5mSilihDkBflZ8=;
+ b=ML2t60qSYZZJ+Yus4Dl1v2UKktohJvkW7+4kuL6u1/3CFksweMAf1kwvKZWoLVgWcd
+ 3oyS3RoQrzUXc35kkjcT8aIbq/xucEACd/j2qxy8y3svmZEI/TgtxjDF7NRK5imo2GwW
+ OQqc8gClS3ikJ5bjVHDNF1zgU3HjJFKTXW+TAsfI7Ic9vC1E/HRLedk1fOPouUYKjeBQ
+ ZpvUb0e9WzcdtsvcASUcygKgA+I90CGiLD+itcVBcDa2O17hM56bUrxB4/MKJJ/c0mYR
+ E8cMiDXnFJLZRvZxBo8g+No/+cd5deyVeK47KO9vYnb1j2XgVgWIqf/gFVH8BNspNfFV
+ 2Etg==
+X-Gm-Message-State: AOJu0Yym4Uet5Qhach+FLzWIRdnFQH9h5bCzWTg27unB4lfe9D+oSYfP
+ Vn1JZr6IQmixxlOAjYBmCkpcpcXRjtzkOjFDeBF95+W8srwBgneUJVwR+6xkKQ==
+X-Gm-Gg: Acq92OH0rAjoXEWNDASVxK14w6bXdnAp6Pkf36C2+0Fa483JCV2ki+TOjFGILRDF6EG
+ yQQfkYduPTuHsGr9BsIvcP27m+qpRfPHvon9lN+pXAkx63uF12giQpLQh7Cc5cm2GKpmRrL7kML
+ u7Btz7PBeAiHhnLL8nTu9++tFKsMtinDRyb8qfOmRjPcKI3OJUL00zkBRJWoirA8F+dT/eZSPcN
+ T1+5KLcWyVZCCxYHkE0HpBrxo7TEUWMvB6rnbXCWgVFLCn+FMd1PVXQzeUtXQs5mhhVhP3m7UYE
+ yYBgOQG2OZaMQXF7cq0XDgQ8fqC3HEAWmdVaEKvG8lZgglT3C1hYEjDSCAzAnn1GXAwhbbNZfet
+ zz31khRTUGk4x6nX4KP2K2sZah9XplbOgF58UwDa23RNLgglvmBs/L+Fq4WcnL/K3iwd1tbHOK+
+ BCfOiDoTikQ0HWC2CltyjbXmM0Y0kRaV5tXALUZuj26aAVdd0ZMfm/UFh7gNTGe61mY+LeDoBAN
+ qHN1tQjcGzo5t50hE15IQ0mmSmgXvARW/4keBOVIRHrlK2iDR9jQEmzWBpZb+cuUHZ84qilUzV5
+ bX0=
+X-Received: by 2002:a05:6820:8c2:b0:67e:2fcc:fa99 with SMTP id
+ 006d021491bc7-69c9bfc7bf1mr243183eaf.55.1778780297217; 
+ Thu, 14 May 2026 10:38:17 -0700 (PDT)
 Received: from mac.localdomain (71-218-106-55.hlrn.qwest.net. [71.218.106.55])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-69b8ccdc74esm1687254eaf.13.2026.05.14.10.38.15
+ 006d021491bc7-69b8ccdc74esm1687254eaf.13.2026.05.14.10.38.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Thu, 14 May 2026 10:38:16 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Thu, 14 May 2026 11:37:12 -0600
-Subject: [PATCH v7 23/35] target/mips: add Octeon V3MULU instruction
+Date: Thu, 14 May 2026 11:37:13 -0600
+Subject: [PATCH v7 24/35] target/mips: add Octeon QMAC instructions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260514-mips-octeon-missing-insns-v2-v7-23-226686be4ce1@gmail.com>
+Message-Id: <20260514-mips-octeon-missing-insns-v2-v7-24-226686be4ce1@gmail.com>
 References: <20260514-mips-octeon-missing-insns-v2-v7-0-226686be4ce1@gmail.com>
 In-Reply-To: <20260514-mips-octeon-missing-insns-v2-v7-0-226686be4ce1@gmail.com>
 To: qemu-devel@nongnu.org
@@ -83,8 +83,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>, 
  James Hilliard <james.hilliard1@gmail.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
- envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x331.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32b;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x32b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -108,117 +108,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-V3MULU extends VMULU across the full Octeon3 multiplier state, adding rt
-and queued partial products.
+QMAC.0x and QMACS.0x multiply the selected signed Q15 halfword lane
+from rs by rt<15:0> and accumulate the Q31 product into the Octeon
+HI/LO accumulator state.
 
-Return the low result while shifting the remaining accumulated limbs back
-into P[0] through P[5].
+QMAC updates the full 64-bit HI/LO accumulator. QMACS saturates the
+32-bit Q31 result in LO and keeps HI<0> as the sticky saturation flag.
 
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
-Changes v2 -> v3:
-  - Split V3MULU out of the combined Octeon arithmetic and memory
-    instruction patch.  (requested by Richard Henderson)
-
-Changes v3 -> v4:
-  - Keep the Octeon3 MPL3-MPL5/P3-P5 high lanes used by the two-source
-    MTM/MTP forms and Cavium SDK/runtime code.
----
- target/mips/helper.h               |  1 +
- target/mips/tcg/octeon.decode      |  1 +
- target/mips/tcg/octeon_translate.c |  1 +
- target/mips/tcg/op_helper.c        | 46 ++++++++++++++++++++++++++++++++++++++
- 4 files changed, 49 insertions(+)
+ target/mips/helper.h               |  2 ++
+ target/mips/tcg/octeon.decode      |  5 ++++
+ target/mips/tcg/octeon_translate.c | 16 +++++++++++
+ target/mips/tcg/op_helper.c        | 59 ++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 82 insertions(+)
 
 diff --git a/target/mips/helper.h b/target/mips/helper.h
-index 46ccad95c3..08fda55ae1 100644
+index 08fda55ae1..e93bc37903 100644
 --- a/target/mips/helper.h
 +++ b/target/mips/helper.h
-@@ -26,6 +26,7 @@ DEF_HELPER_3(crc32c, tl, tl, tl, i32)
- DEF_HELPER_FLAGS_4(rotx, TCG_CALL_NO_RWG_SE, tl, tl, i32, i32, i32)
+@@ -27,6 +27,8 @@ DEF_HELPER_FLAGS_4(rotx, TCG_CALL_NO_RWG_SE, tl, tl, i32, i32, i32)
  DEF_HELPER_3(octeon_vmulu, i64, env, i64, i64)
  DEF_HELPER_3(octeon_vmm0, i64, env, i64, i64)
-+DEF_HELPER_3(octeon_v3mulu, i64, env, i64, i64)
+ DEF_HELPER_3(octeon_v3mulu, i64, env, i64, i64)
++DEF_HELPER_4(octeon_qmac, void, env, i64, i64, i32)
++DEF_HELPER_4(octeon_qmacs, void, env, i64, i64, i32)
  
  /* microMIPS functions */
  DEF_HELPER_4(lwm, void, env, tl, tl, i32)
 diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index c1c3506d20..2cdb7e4e76 100644
+index 2cdb7e4e76..989762fffc 100644
 --- a/target/mips/tcg/octeon.decode
 +++ b/target/mips/tcg/octeon.decode
-@@ -52,6 +52,7 @@ MTM1         011100 rs:5 rt:5 00000 00000 001100 &r2
- MTM2         011100 rs:5 rt:5 00000 00000 001101 &r2
- VMULU        011100 ..... ..... ..... 00000 001111 @r3
- VMM0         011100 ..... ..... ..... 00000 010000 @r3
-+V3MULU       011100 ..... ..... ..... 00000 010001 @r3
+@@ -28,9 +28,12 @@ BBIT         11 set:1 . 10 rs:5 ..... offset:s16 p=%bbit_p
+ # SEQI rt, rs, immediate
+ # SNE rd, rs, rt
+ # SNEI rt, rs, immediate
++# QMAC.0x rs, rt
++# QMACS.0x rs, rt
  
- &saa         base rt
- @saa         ...... base:5 rt:5 ................ &saa
+ @r3          ...... rs:5 rt:5 rd:5 ..... ......
+ &cmpi        rs rt imm
++&qmac        rs rt lane
+ %bitfield_p  0:1 6:5
+ @bitfield    ...... rs:5 rt:5 lenm1:5 ..... ..... . p=%bitfield_p
+ 
+@@ -43,6 +46,8 @@ SEQ          011100 ..... ..... ..... 00000 101010 @r3
+ SNE          011100 ..... ..... ..... 00000 101011 @r3
+ SEQI         011100 rs:5 rt:5 imm:s10 101110 &cmpi
+ SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
++QMACS        011100 rs:5 rt:5 00000 000 lane:2 010010 &qmac
++QMAC         011100 rs:5 rt:5 00000 100 lane:2 010010 &qmac
+ &r2          rs rt
+ MTM0         011100 rs:5 rt:5 00000 00000 001000 &r2
+ MTP0         011100 rs:5 rt:5 00000 00000 001001 &r2
 diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index 304aa58065..775f758369 100644
+index 775f758369..f5c976db0d 100644
 --- a/target/mips/tcg/octeon_translate.c
 +++ b/target/mips/tcg/octeon_translate.c
-@@ -318,3 +318,4 @@ TRANS(MTP1, trans_mtp, 1);
- TRANS(MTP2, trans_mtp, 2);
- TRANS(VMULU, trans_vmul, gen_helper_octeon_vmulu);
- TRANS(VMM0, trans_vmul, gen_helper_octeon_vmm0);
-+TRANS(V3MULU, trans_vmul, gen_helper_octeon_v3mulu);
-diff --git a/target/mips/tcg/op_helper.c b/target/mips/tcg/op_helper.c
-index 45e208ca43..740c181d27 100644
---- a/target/mips/tcg/op_helper.c
-+++ b/target/mips/tcg/op_helper.c
-@@ -196,6 +196,52 @@ uint64_t helper_octeon_vmm0(CPUMIPSState *env, uint64_t rs, uint64_t rt)
-     return lo;
+@@ -14,6 +14,8 @@
+ #include "decode-octeon.c.inc"
+ 
+ typedef void gen_helper_octeon_vmul(TCGv_i64, TCGv_ptr, TCGv_i64, TCGv_i64);
++typedef void gen_helper_octeon_qmac_fn(TCGv_ptr, TCGv_i64, TCGv_i64,
++                                       TCGv_i32);
+ 
+ static bool trans_BBIT(DisasContext *ctx, arg_BBIT *a)
+ {
+@@ -156,6 +158,18 @@ static bool trans_SNEI(DisasContext *ctx, arg_SNEI *a)
+     return do_seqi_snei(ctx, a, TCG_COND_NE);
  }
  
-+uint64_t helper_octeon_v3mulu(CPUMIPSState *env, uint64_t rs, uint64_t rt)
++static bool trans_qmac(DisasContext *ctx, arg_qmac *a,
++                       gen_helper_octeon_qmac_fn *helper)
 +{
-+    uint64_t lo, hi;
-+    uint64_t sum[OCTEON_MULTIPLIER_REGS + 1] = {};
++    TCGv_i64 rs = tcg_temp_new_i64();
++    TCGv_i64 rt = tcg_temp_new_i64();
 +
-+    mulu64(&lo, &hi, env->active_tc.octeon.MPL[0], rs);
-+    sum[0] = lo;
-+    sum[1] = hi;
-+
-+    mulu64(&lo, &hi, env->active_tc.octeon.MPL[1], rs);
-+    octeon_add_limb(sum, ARRAY_SIZE(sum), lo, 1);
-+    octeon_add_limb(sum, ARRAY_SIZE(sum), hi, 2);
-+
-+    mulu64(&lo, &hi, env->active_tc.octeon.MPL[2], rs);
-+    octeon_add_limb(sum, ARRAY_SIZE(sum), lo, 2);
-+    octeon_add_limb(sum, ARRAY_SIZE(sum), hi, 3);
-+
-+    mulu64(&lo, &hi, env->active_tc.octeon.MPL[3], rs);
-+    octeon_add_limb(sum, ARRAY_SIZE(sum), lo, 3);
-+    octeon_add_limb(sum, ARRAY_SIZE(sum), hi, 4);
-+
-+    mulu64(&lo, &hi, env->active_tc.octeon.MPL[4], rs);
-+    octeon_add_limb(sum, ARRAY_SIZE(sum), lo, 4);
-+    octeon_add_limb(sum, ARRAY_SIZE(sum), hi, 5);
-+
-+    mulu64(&lo, &hi, env->active_tc.octeon.MPL[5], rs);
-+    octeon_add_limb(sum, ARRAY_SIZE(sum), lo, 5);
-+    octeon_add_limb(sum, ARRAY_SIZE(sum), hi, 6);
-+
-+    octeon_add_limb(sum, ARRAY_SIZE(sum), rt, 0);
-+    octeon_add_limb(sum, ARRAY_SIZE(sum), env->active_tc.octeon.P[0], 0);
-+    octeon_add_limb(sum, ARRAY_SIZE(sum), env->active_tc.octeon.P[1], 1);
-+    octeon_add_limb(sum, ARRAY_SIZE(sum), env->active_tc.octeon.P[2], 2);
-+    octeon_add_limb(sum, ARRAY_SIZE(sum), env->active_tc.octeon.P[3], 3);
-+    octeon_add_limb(sum, ARRAY_SIZE(sum), env->active_tc.octeon.P[4], 4);
-+    octeon_add_limb(sum, ARRAY_SIZE(sum), env->active_tc.octeon.P[5], 5);
-+
-+    env->active_tc.octeon.P[0] = sum[1];
-+    env->active_tc.octeon.P[1] = sum[2];
-+    env->active_tc.octeon.P[2] = sum[3];
-+    env->active_tc.octeon.P[3] = sum[4];
-+    env->active_tc.octeon.P[4] = sum[5];
-+    env->active_tc.octeon.P[5] = sum[6];
-+    return sum[0];
++    gen_load_gpr(rs, a->rs);
++    gen_load_gpr(rt, a->rt);
++    helper(tcg_env, rs, rt, tcg_constant_i32(a->lane));
++    return true;
 +}
 +
- /* these crc32 functions are based on target/loongarch/tcg/op_helper.c */
- target_ulong helper_crc32(target_ulong val, target_ulong m, uint32_t sz)
+ static bool trans_lx(DisasContext *ctx, arg_lx *a, MemOp mop)
+ {
+     gen_lx(ctx, a->rd, a->base, a->index, mop);
+@@ -178,6 +192,8 @@ static bool trans_saa(DisasContext *ctx, arg_saa *a, MemOp mop)
+ 
+ TRANS(SAA,  trans_saa, MO_32);
+ TRANS(SAAD, trans_saa, MO_64);
++TRANS(QMAC,  trans_qmac, gen_helper_octeon_qmac);
++TRANS(QMACS, trans_qmac, gen_helper_octeon_qmacs);
+ 
+ static bool trans_ZCB(DisasContext *ctx, arg_ZCB *a)
+ {
+diff --git a/target/mips/tcg/op_helper.c b/target/mips/tcg/op_helper.c
+index 740c181d27..0a892e31a8 100644
+--- a/target/mips/tcg/op_helper.c
++++ b/target/mips/tcg/op_helper.c
+@@ -144,6 +144,65 @@ target_ulong helper_rotx(target_ulong rs, uint32_t shift, uint32_t shiftx,
+     return (int64_t)(int32_t)(uint32_t)tmp5;
+ }
+ 
++static int32_t octeon_mul_q15_q15(int16_t a, int16_t b, bool *overflow)
++{
++    if (a == INT16_MIN && b == INT16_MIN) {
++        *overflow = true;
++        return INT32_MAX;
++    }
++    return (int32_t)a * b * 2;
++}
++
++static int32_t octeon_sat32_acc_q31(int32_t acc, int32_t value,
++                                    bool *overflow)
++{
++    int64_t sum = (int64_t)acc + value;
++
++    if (sum > INT32_MAX) {
++        *overflow = true;
++        return INT32_MAX;
++    }
++    if (sum < INT32_MIN) {
++        *overflow = true;
++        return INT32_MIN;
++    }
++    return sum;
++}
++
++static int16_t octeon_qmac_lane(uint64_t rs, uint32_t lane)
++{
++    return (int16_t)(uint16_t)extract64(rs, lane * 16, 16);
++}
++
++void helper_octeon_qmac(CPUMIPSState *env, uint64_t rs, uint64_t rt,
++                        uint32_t lane)
++{
++    bool overflow = false;
++    int32_t product;
++    int64_t acc;
++
++    product = octeon_mul_q15_q15((int16_t)(uint16_t)rt,
++                                 octeon_qmac_lane(rs, lane), &overflow);
++    acc = deposit64(env->active_tc.LO[0], 32, 32, env->active_tc.HI[0]);
++    acc += product;
++
++    env->active_tc.LO[0] = (int64_t)(int32_t)acc;
++    env->active_tc.HI[0] = (int64_t)(int32_t)((uint64_t)acc >> 32);
++}
++
++void helper_octeon_qmacs(CPUMIPSState *env, uint64_t rs, uint64_t rt,
++                         uint32_t lane)
++{
++    bool overflow = env->active_tc.HI[0] & 1;
++    int32_t product;
++
++    product = octeon_mul_q15_q15((int16_t)(uint16_t)rt,
++                                 octeon_qmac_lane(rs, lane), &overflow);
++    env->active_tc.LO[0] = octeon_sat32_acc_q31(
++        (int32_t)(uint32_t)env->active_tc.LO[0], product, &overflow);
++    env->active_tc.HI[0] = overflow;
++}
++
+ static void octeon_add_limb(uint64_t *sum, int limb_count,
+                             uint64_t value, int limb)
  {
 
 -- 
