@@ -4,74 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE999CD4851
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 10:05:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D469CD4F25
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 10:08:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNSwP-00084M-CR; Thu, 14 May 2026 06:05:19 -0400
+	id 1wNSzG-0001CV-Iy; Thu, 14 May 2026 06:08:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wNSwC-0007sc-7J
- for qemu-devel@nongnu.org; Thu, 14 May 2026 06:05:06 -0400
-Received: from mgamail.intel.com ([198.175.65.13])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wNSw7-0004S9-RS
- for qemu-devel@nongnu.org; Thu, 14 May 2026 06:05:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1778753100; x=1810289100;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=wItBfHW6v9wsyjtAKVgJYEePhRBXmoutUyn+sJKbZ/w=;
- b=LikigXhNVY7D/7EmKwdOBVoDArn987dMDdvVh0NRL9RZFGPOdKq/HYC4
- WB6+A23aVuxvPrc+L6t6bHQyRbGOChApXvHI8FdrOrZy6n7kvWSQexO6e
- 0YgvAPA2zH+DrmU3vT/yDFA+zugyyy4uSalnARdbTVDDcnwbXcjyUPy+D
- hLxAR1NQUQDtiSW9YAUjBigt7tIeVYwhDWRrWBRVgEQ3AWnLTfFjsMloB
- uo4Dgs48PIyVUV/RDjU66pInjBuMy3GjmUQPD7ZcUrS5qR+m475WXojj+
- amveWcKjHJJehJUFNsRdw/z/spE00X6x3dg/3T8qbYi0qDgwjSVCSMD1U A==;
-X-CSE-ConnectionGUID: iRD0hALQSOm7Xo8smTQLAA==
-X-CSE-MsgGUID: RAnT/FrDSSS6xLtGZIkWOQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11785"; a="90796079"
-X-IronPort-AV: E=Sophos;i="6.23,234,1770624000"; d="scan'208";a="90796079"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 May 2026 03:05:00 -0700
-X-CSE-ConnectionGUID: vAMUAX5RQQC26QMHztz38g==
-X-CSE-MsgGUID: 1Tct7TkQSrulbDLcD1GKig==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,234,1770624000"; d="scan'208";a="243324929"
-Received: from junjie-optiplex-micro-plus-7010.bj.intel.com ([10.238.152.98])
- by orviesa005-auth.jf.intel.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 May 2026 03:04:55 -0700
-From: Junjie Cao <junjie.cao@intel.com>
-To: qemu-devel@nongnu.org
-Cc: zhenzhong.duan@intel.com, yi.l.liu@intel.com, philmd@linaro.org,
- mst@redhat.com, jasowang@redhat.com, clement.mathieu--drif@bull.com,
- marcel.apfelbaum@gmail.com, pbonzini@redhat.com,
- richard.henderson@linaro.org, farosas@suse.de, lvivier@redhat.com,
- Junjie Cao <junjie.cao@intel.com>
-Subject: [PATCH v4 2/2] tests/qtest: add 8-byte MMIO access sweep for
- intel-iommu
-Date: Fri, 15 May 2026 02:07:03 +0800
-Message-ID: <20260514180703.85686-3-junjie.cao@intel.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260514180703.85686-1-junjie.cao@intel.com>
-References: <20260514180703.85686-1-junjie.cao@intel.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wNSzC-00019W-6f
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 06:08:10 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wNSzA-0005Ih-0u
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 06:08:09 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-488ad135063so63301205e9.0
+ for <qemu-devel@nongnu.org>; Thu, 14 May 2026 03:08:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778753285; x=1779358085; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=hHYn8XZLB4es06Hxygy7Br+mGIdl5xl86oW4hO0Yd28=;
+ b=dw7AHo9y1cc4nK0TBX5sK+GDqhtEGN3i2eDfWlEojvQxcp+9a8a0q0QzcZL6nwlzJ6
+ O8l1UiVPYB1/IYP/79BzASLaexUGkjsOjzCqbqjACk77cduyBrb/fSij8AGwu6JfiRzb
+ 7ynnu5sACVkH5bPpZQPJmWb6XiWSHjYu7KhSFArWC6kgSCgnBXVnZup2p/eweiELB7sG
+ 4XaBTWhV+RZyuV3s6MxrSbdY8znnPOpl9vkGS32MFC6BP5kfLY9pcZ0GY/OXifSY7V/R
+ 2poWK45CZ0vLpk1PVPOoOquhoNNQX2StSyBEA1iU+OPOAEgxZ0kn31Vx/bTHwB1L+/Lq
+ B65w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778753285; x=1779358085;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=hHYn8XZLB4es06Hxygy7Br+mGIdl5xl86oW4hO0Yd28=;
+ b=GdS8eG4vRmqu5K2rjrxv1XSMvWWZvgbQNDZuwpquEcmsnubvn2bjoU4Trxn5bo5Q8b
+ Nx4R4itRzxsdnnEoPG1UttiEL54p02LkfglQKvPmY+z84nrR+SOSa+/DjNWFyPYV1lfL
+ +CmINznxSfh7juamewrRRz5qRlToOGotqZG/9/zb6HFb0DihtXa1YVMvdvKrMTzhuJ3w
+ 4SAVz+dkJGbwsqWSeCNE8SesKconmVLpmJljvynX+ofhObXUZnkbFyAZ+II8JtoZPmqw
+ iKGhuWoMQUpTixKnAzMyM/fTp3HdoEIuhmcfO300e2rzGkDalZ0UaQYyPMxDB9+KmxxE
+ xGzg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8PDz8jQKPD0ajdi+Mh7AvJG+TTQb+cfP3ahMocIQXX5p0jjbNLmzce4GWS5Vcwp/yqX+IUTg9fvljr@nongnu.org
+X-Gm-Message-State: AOJu0YwbEmL1fJNVe7R5nDo1mqMeo2b5ClJLnehaIirQqV0KnxJqy1Y6
+ MC678rGZe8w/fOKVh/hDz6sVUu7FMP4szMKLF3vefMeWZxY8FfuD5WOv21HBiLhlGQY=
+X-Gm-Gg: Acq92OGjkcg2VcuODcEV8P6EdpknHs6z7E8gW5VlfkcgaVrZ3MfJsb18mIIwxnbloho
+ a/3+80ERurfQQiWZZIU5asOHHLO7sEMftFrUOTVpF2jFFYKr1W9ycEAaPWEhl/4G8V7cv6Xocqv
+ HIPXA4nn4QWmAfMwpBOcBau68/uFmm3hsgvBEbyUo6/wlU/IgJsIqLNusUSs2wROifPo32NlDG9
+ CPxQ5idBmesK5WolubnoQNwRvoRMJKWAulXfPNSqbVkvfZv2gpsPhW0EG2HWafiYaWde8ptXmr3
+ h6rPMFxuQ+QN7NxxFeGPrZH51Ze8c/3z991q4RsnzoAdfEhPTWnWBv0qN3OZFN2XIj2JaGyEvTu
+ 39Z6Hpm0VlYYvgPfSVfV5Z4EqShuZ05jToNKq7NQpPtiJj9kHqMSV1qTXFppM09ZVfMy9y6bHxx
+ UsE1XWuwrrDJ+WEkT5SlE8LyUL+GhgZCsN77uzBgmFt7OnbW1kxdDGqjTGjn8Owgl5yGUIF/UZf
+ TqU
+X-Received: by 2002:a05:600c:4a09:b0:48f:d5b8:5b07 with SMTP id
+ 5b1f17b1804b1-48fd5b85ba6mr38833685e9.20.1778753284968; 
+ Thu, 14 May 2026 03:08:04 -0700 (PDT)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48fdb2c80f2sm36870145e9.9.2026.05.14.03.08.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 14 May 2026 03:08:04 -0700 (PDT)
+Message-ID: <035f2176-ed01-4013-9cdd-813cca355d9a@linaro.org>
+Date: Thu, 14 May 2026 12:08:03 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.13; envelope-from=junjie.cao@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 11/35] target/mips: add Octeon SAA instruction
+Content-Language: en-US
+To: James Hilliard <james.hilliard1@gmail.com>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang
+ <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <arikalo@gmail.com>,
+ Huacai Chen <chenhuacai@kernel.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20260511-mips-octeon-missing-insns-v2-v6-0-5062889c4d3c@gmail.com>
+ <20260511-mips-octeon-missing-insns-v2-v6-11-5062889c4d3c@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260511-mips-octeon-missing-insns-v2-v6-11-5062889c4d3c@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DATE_IN_FUTURE_06_12=1.947,
- DKIMWL_WL_HIGH=-0.445, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,70 +109,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sweep every 4-byte-aligned offset in the VT-d MMIO register space
-with 8-byte reads and writes to verify that no register handler
-aborts on an oversized access.
+On 11/5/26 20:22, James Hilliard wrote:
+> SAA atomically adds rt to the naturally aligned 32-bit word at base and
+> discards the old memory value.
+> 
+> Implement the common SAA/SAAD translator with TCG atomic_fetch_add_i64.
+> The MemOp selects the word or doubleword transaction size.  QEMU only has
+> one Octeon CPU model today, so keep SAA/SAAD under the existing Octeon
+> instruction feature bucket instead of adding a finer-grained Octeon+
+> feature bit.
+> 
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+> ---
+> Changes v2 -> v3:
+>    - Split SAA out of the combined Octeon arithmetic and memory
+>      instruction patch.  (requested by Richard Henderson)
+> 
+> Changes v3 -> v4:
+>    - Gate SAA/SAAD behind an Octeon+ feature bit.  (reported by Richard
+>      Henderson)
+>    - Use the i64 TCG atomic add path for both word and doubleword sizes.
+>      (suggested by Richard Henderson)
+> 
+> Changes v4 -> v5:
+>    - Drop the separate Octeon+ feature bit; QEMU only has one Octeon CPU
+>      model today.  (comment by Richard Henderson)
+> ---
+>   target/mips/tcg/octeon.decode      |  4 ++++
+>   target/mips/tcg/octeon_translate.c | 14 ++++++++++++++
+>   2 files changed, 18 insertions(+)
+> 
+> diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
+> index db7d5f55f0..d6b241de42 100644
+> --- a/target/mips/tcg/octeon.decode
+> +++ b/target/mips/tcg/octeon.decode
+> @@ -44,6 +44,10 @@ SNE          011100 ..... ..... ..... 00000 101011 @r3
+>   SEQI         011100 rs:5 rt:5 imm:s10 101110 &cmpi
+>   SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
+>   
+> +&saa         base rt
+> +@saa         ...... base:5 rt:5 ................ &saa
+> +SAA          011100 ..... ..... 00000 00000 011000 @saa
+> +
+>   &lx          base index rd
+>   @lx          ...... base:5 index:5 rd:5 ...... ..... &lx
+>   LWX          011111 ..... ..... ..... 00000 001010 @lx
+> diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
+> index 401c4bd14b..441d71d57b 100644
+> --- a/target/mips/tcg/octeon_translate.c
+> +++ b/target/mips/tcg/octeon_translate.c
+> @@ -161,6 +161,20 @@ static bool trans_lx(DisasContext *ctx, arg_lx *a, MemOp mop)
+>       return true;
+>   }
+>   
+> +static bool trans_saa(DisasContext *ctx, arg_saa *a, MemOp mop)
+> +{
+> +    TCGv_i64 addr = tcg_temp_new_i64();
+> +    TCGv_i64 value = tcg_temp_new_i64();
+> +    TCGv_i64 old = tcg_temp_new_i64();
+> +    MemOp amo = mo_endian(ctx) | mop | MO_ALIGN;
+> +
+> +    gen_base_offset_addr(ctx, addr, a->base, 0);
+> +    gen_load_gpr(value, a->rt);
+> +    tcg_gen_atomic_fetch_add_i64(old, addr, value, ctx->mem_idx, amo);
+> +    return true;
+> +}
+> +
+> +TRANS(SAA,  trans_saa, MO_UL);
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
----
- tests/qtest/intel-iommu-test.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+Sign doesn't seem relevant here, so -- although it is equivalent --
+I'd rather s/MO_UL/MO_32/. Can do when applying if you ack.
 
-diff --git a/tests/qtest/intel-iommu-test.c b/tests/qtest/intel-iommu-test.c
-index e5cc6acaf0..b1763ed294 100644
---- a/tests/qtest/intel-iommu-test.c
-+++ b/tests/qtest/intel-iommu-test.c
-@@ -17,11 +17,39 @@
- #define ECAP_STAGE_1_FIXED1   (VTD_ECAP_QI |  VTD_ECAP_IR | VTD_ECAP_IRO | \
-                               VTD_ECAP_MHMV | VTD_ECAP_SMTS | VTD_ECAP_FSTS)
- 
-+static inline uint32_t vtd_reg_readl(QTestState *s, uint64_t offset)
-+{
-+    return qtest_readl(s, Q35_HOST_BRIDGE_IOMMU_ADDR + offset);
-+}
-+
- static inline uint64_t vtd_reg_readq(QTestState *s, uint64_t offset)
- {
-     return qtest_readq(s, Q35_HOST_BRIDGE_IOMMU_ADDR + offset);
- }
- 
-+static inline void vtd_reg_writeq(QTestState *s, uint64_t offset,
-+                                  uint64_t value)
-+{
-+    qtest_writeq(s, Q35_HOST_BRIDGE_IOMMU_ADDR + offset, value);
-+}
-+
-+static void test_intel_iommu_8byte_access(void)
-+{
-+    QTestState *s;
-+    uint64_t off;
-+
-+    s = qtest_init("-M q35 -device intel-iommu");
-+
-+    for (off = 0; off < DMAR_REG_SIZE; off += 4) {
-+        vtd_reg_readq(s, off);
-+        vtd_reg_writeq(s, off, 0);
-+    }
-+
-+    g_assert_cmpuint(vtd_reg_readl(s, DMAR_VER_REG), !=, 0);
-+
-+    qtest_quit(s);
-+}
-+
- static void test_intel_iommu_stage_1(void)
- {
-     uint8_t init_csr[DMAR_REG_SIZE];     /* register values */
-@@ -58,6 +86,8 @@ static void test_intel_iommu_stage_1(void)
- int main(int argc, char **argv)
- {
-     g_test_init(&argc, &argv, NULL);
-+    qtest_add_func("/q35/intel-iommu/8byte-access",
-+                   test_intel_iommu_8byte_access);
-     qtest_add_func("/q35/intel-iommu/stage-1", test_intel_iommu_stage_1);
- 
-     return g_test_run();
--- 
-2.43.0
+>   TRANS(LBX,  trans_lx, MO_SB);
+>   TRANS(LBUX, trans_lx, MO_UB);
+>   TRANS(LHX,  trans_lx, MO_SW);
+> 
 
 
