@@ -4,110 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0492CD4F21
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 May 2026 23:56:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D1F4CD37AC
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 01:16:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNJQ5-0007qO-Mr; Wed, 13 May 2026 19:55:17 -0400
+	id 1wNKgB-0006qi-BI; Wed, 13 May 2026 21:15:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wNJQ3-0007pc-DK
- for qemu-devel@nongnu.org; Wed, 13 May 2026 19:55:15 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
+ id 1wNKg8-0006qR-Lu
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 21:15:56 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wNJQ1-0005nU-Ki
- for qemu-devel@nongnu.org; Wed, 13 May 2026 19:55:15 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-6815add87f0so2529668a12.3
- for <qemu-devel@nongnu.org>; Wed, 13 May 2026 16:55:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778716511; cv=none;
- d=google.com; s=arc-20240605;
- b=lNF/oWzIAd2XZ2mB64uWwbJQNLKa66c4dzLKslR2aUhwyGZoGXET+11TVBgp0AKzuW
- sOAqr+LU+vCMd0QPNpPrV37sAfjBeG4Lxad6oBQxk3I6H7v4Vb1y85/48BRiAKtjEWh5
- d5BKcNwwwwPtct+WmM9GENupHa3g5GiyM3ZRo0XbyD8elrRhDVbxR/mNoaXdCdSn6xIC
- U1mTKsmZd92pUK7K0BihtPe5LH0wjHn9DyaM1wxKNo84kLmwv3AthwuwOdoYDsI81wTN
- 1CkObpY62qO3jW3oF3AqL+Rp0w1W2lZM3zkCEYpac3jsc7/cgIsAwOqpO7/AY4DZ60QI
- xdmw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=kP3j2OV8y/tlpNusNGHv9RfGAkyYIpr8mU/BfcQSQhw=;
- fh=vrbxt5zITAJ3Cptgih9bqtbOHZVKxLLP4eLkL4pQLg8=;
- b=i0PP6iQ/A9s/NaPSO0nWi/bouXSPZtnLI0rXxgCbD864p8iUlh2JuuOJtuXzZMxu+/
- PVsy4BEhJRakH3jC5O9PZ8FFbNRFc7WzDFp76edjUqyD2T1eLbOfSesHPG4M8oIaqiPV
- tK+ZMgwBuyaB1v8A+dm8V9Y9EecZcM3bF/b+i+qf3Myzrv3OV7gsW+EZ3t0e+FThiLjV
- PqcCTU3IxlZ2I3JMh1BcYgcFE2//v/2f3V8dHp3kkWDxPLakiXvVxXDYQzBnfVxHp7Sk
- M/1BkPWEMQWdCerGMP3r1Bw2+ZKGCIOGOUm33bYa1eGPMnuWHnL/3KIOYLfBLA2euaCt
- 10CQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
+ id 1wNKg4-0000qf-Jj
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 21:15:54 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2bc7b311e77so20544825ad.0
+ for <qemu-devel@nongnu.org>; Wed, 13 May 2026 18:15:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778716511; x=1779321311; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1778721350; x=1779326150; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kP3j2OV8y/tlpNusNGHv9RfGAkyYIpr8mU/BfcQSQhw=;
- b=Eg79Kz7+FkCvQZGJoprfwmL9ttZW7h/JXgxN8ScMzMq+rIXBPX81fgRHj7DlGwpxl8
- Io0P5Yp1dPVz8jiReS9al6TEBmovatP8eYhTlxLfFr/fGres5oMDSDuNsMcq7flltLHG
- CvS26iyVMqqaRW56wzJ4HzxOzAMBeZzS9+ErE3JGrRpY3wkXYONo3jPMfGSfJ7idchtv
- Dg0jV7XazJfr6q40+P0ZcNNd85xSSmPSsyIYq5dtfZJD631VSZiQT8XXRpGG+vXZaSDS
- 0uXjZJytVs+P0xDUNCK2vUEBeKtjjdxMJtXGifznyMlju+N1+M2EmcW0x4oGFMXb9BFH
- 4XPw==
+ bh=0mxwCx4OeOMWpI5sBVWTxhTZlDA7w225FBpZAcqrcYk=;
+ b=A9yXhtqrYBDxr8267D5tdIiA8OM/cKDXNbnUMh8IB7GrVEHcau5P5m0USR/uTE3F7w
+ Ao304IHBHlK77gXtgxPK0FBY51/zJ8z3oyis5JQ1Xw0WtFIADjWtw79DaNlqdwUwHH+3
+ F24WVb698aybmaGjz/ODt/mzU2EuVaNvUJ0fXFtgYvVGux4gyB/j0wu6TSslOEXj0MRF
+ zoQEtXXrhJC7frh+YEWyNCov14rnDZsM+ymTUrzwVBq08bu6unRVwYVFXh1riyOTEcDu
+ 5STU/vwzpS74e6PPHwXwEDxRhylBsP+ajp3cJoJWp0TGpbYcVq+0oPJ+A9NNDC/Nr5VC
+ HFpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778716511; x=1779321311;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20251104; t=1778721350; x=1779326150;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=kP3j2OV8y/tlpNusNGHv9RfGAkyYIpr8mU/BfcQSQhw=;
- b=OmOx8GUwysdIgVkrPAVO8PyKXmaF9bHiqb8De/Gc3gm0/u9OMixIXXbds6YE2bqDXa
- 4jUi3XahvrukEU/vcNDHqoeR4+jjZoxhisHZ7SAIUqgS0Zt5VFCv71pDzVk+Iu+WqoKr
- gVSjyZYJwWMBTJbQTAE+H9Zu1JL29sH4Qac7o2JQTB8Uni6vDOlV9MqlXGpdMxXR2l7D
- y+Ondaq8ssyUiGuOIoK9tmNnATLg3vLx6jxvKE0zUuF+vPS0GMsfyDqQ2M43sQJBLMWZ
- kD0mP9SRsKNaxHM5LTQHmHuTMd5t1v1mIIsyQotGHncRIhgaxTd+eiLyEklSQT3H8Uj1
- VFIQ==
+ bh=0mxwCx4OeOMWpI5sBVWTxhTZlDA7w225FBpZAcqrcYk=;
+ b=hFl+t3xiVXB5LoVSVOQgwtcVycyfNXlzW9gr0ZtbWHuiYz6HCc1uItY4WRZcGO86+N
+ dGSDXvWXXnuXgKplifFi7+oy90F4Nvf/Ra5k/mwRswCrYeYGA9j1HdqXmQxj2zSvLHKB
+ 2PPxSkvBBSUDkB/49vTM2JDwJRF3SuQwx4c9U6X00/be4zwpp2eBa87LEpmLv/SPk7xU
+ iYheQxfl4qm21FRK+a4dnvertrU53+o/E2g4XFU/km2J7PH6/vrR2AjMvF1WA7h5KOTo
+ 3zn2Z0dJAqe9jjIYOTDcXnWURyknj4pu5keNQp/uJ3a2DY6YzqJhybwT1X7TsthZnqKK
+ 3PMw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+BVPHX0IFqlLgoPQgJgyYi83On5g6B8FiVmIaTfVm9XEiJkes/WUd/Qiq+7qMlLt6JQLRZcMNEopQw@nongnu.org
-X-Gm-Message-State: AOJu0YxBnjxKBnbGZkTToyhvXQAkiBnynCsvXgwWKPFhO+nr/tnHNUnB
- uAxFB0FEUut8VvP+DScJo47EiBGg3QrWI6NE1t7RwelAS32OI1v8ZKRIXY+a3tSFBoVgvU5YrTE
- wAdNJoWxGNs0EveBBn7PNnb1l3vM9Bio=
-X-Gm-Gg: Acq92OG7zqU14Zs47lovrbe8cwXAyf1UpWDncluVRZqibkI+TmrUMUa5iCLNs7aY5RI
- M5A5SlLmnhf63PbnmEIn8rOJibvBs2YXZPN/AqVHZm67/hm+zyxU+zobcbrqlsCGnPASYfpIBSh
- bWTGelXWCc+YVdg6IPgVdfTdqFbrkY1f3JuNT6/0M99f8pn7P8mPUK0Mm7dqoML3k27y+qSPzBb
- RNcjlflZRfta3CEXMTqhCWyLKDBuh3WnLeW7MXaL+1MgMbZqDRmLWCUaKoxSzf5T155P/+vozdf
- lkXkbEwOyRDvslvLEUConoLANchk6ChqMoLaBwYSwwPcEmnF
-X-Received: by 2002:a17:907:26c7:b0:ba8:e7b5:39ad with SMTP id
- a640c23a62f3a-bd3bc9d770bmr373225766b.0.1778716510311; Wed, 13 May 2026
- 16:55:10 -0700 (PDT)
+ AFNElJ8v0IQq2kjW7AxJiCJ4JEvC5ytJFcVwLYNnhk8TpXNMFH9k/MTP6pKWaN/b1WY+3EsdngNedK7vimyP@nongnu.org
+X-Gm-Message-State: AOJu0YyqInCE00gzasPzocc+/3+aEdeTWpx9mcSdBKKtqeaExdQuX85U
+ Fr1r2wCeyxaaDNLYwUpU7oajIzgSnm60SpCKcFAp52Cpc80cVqve+KZk
+X-Gm-Gg: Acq92OG53wxC7EYzHd9R/x+1Rqdsc3ju4eYchotsJX4cV5o6QXgD+Dc5pKTczJaysIS
+ cQysOweut4TCgtVbHJ8p8PZuvE689Oywc5tjNkrk30Dv3ybXCaEtvuyPAoo9wBOmaBtRsnZ4uK+
+ 3jAXrNZiNf3c+nhDRJrGMJUXzl5qpUSmm/9s6rf7NjiB+AQWIBy2WtJOwsphcyeY10DdMCoNaiC
+ YPPuSmNVwFarWuhXYpWLG+Le2k/sJzTGn5qKYzxm8OtrXIzKlbbCGOacn4XFBAELY3cu1TAAP5N
+ /cY4EVTkE+Qp1Vi1vFT4Zz6oMH3tL4D3IuZlrYSw/hPfhUK7BRLdDtB232pbU0wL0fgiBFNZwOo
+ kZObo5ojjAOI4iSHrYAnQRBtGMDawBAyXNRxk8H5hzGa38L4bJ+NdXZ8f/u4ejJw/HH9d2XjXw7
+ ukO1sVA158zqdQQNJ/ttQ7ctXkNWepMIdIH3rSlK8ts+DaJBTcl8Qfj6MetS61Jm0ZXMLJY9v6V
+ iHwSEFm7V5wvpGMXVRZb5QlTNH+Eh+aVflt3uVR5S3r
+X-Received: by 2002:a17:903:3d49:b0:2ba:5f24:caeb with SMTP id
+ d9443c01a7336-2bd5277b9d8mr9591255ad.19.1778721349469; 
+ Wed, 13 May 2026 18:15:49 -0700 (PDT)
+Received: from visitorckw-work01.c.googlers.com.com
+ (54.109.81.34.bc.googleusercontent.com. [34.81.109.54])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2bd5c0600c3sm4982575ad.29.2026.05.13.18.15.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 13 May 2026 18:15:49 -0700 (PDT)
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
+To: pbonzini@redhat.com, marcandre.lureau@redhat.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, christoph.muellner@vrull.eu, farosas@suse.de,
+ lvivier@redhat.com
+Cc: liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ jserv@ccns.ncku.edu.tw, eleanor15x@gmail.com, marscheng@google.com,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ Kuan-Wei Chiu <visitorckw@gmail.com>
+Subject: [PATCH v2 1/6] target/riscv: Add stubs for T-Head PMU CSRs
+Date: Thu, 14 May 2026 01:15:23 +0000
+Message-ID: <20260514011528.1263665-2-visitorckw@gmail.com>
+X-Mailer: git-send-email 2.54.0.563.g4f69b47b94-goog
+In-Reply-To: <20260514011528.1263665-1-visitorckw@gmail.com>
+References: <20260514011528.1263665-1-visitorckw@gmail.com>
 MIME-Version: 1.0
-References: <20260513023859.518484-1-alistair.francis@wdc.com>
- <82b83672-24b9-40d1-9a19-89fd64c0606f@linaro.org>
- <20260513-pampers-threaten-2a71df36e314@spud>
-In-Reply-To: <20260513-pampers-threaten-2a71df36e314@spud>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 14 May 2026 09:54:43 +1000
-X-Gm-Features: AVHnY4LxRcCplCwgrEXFIJ1wchhZRn_RB_J5uvUuA1SiDGmA0CDEXCscRnNiH1I
-Message-ID: <CAKmqyKN5Tjwuy+S+NzEN0Xpsv_U7rQSM=PtvAkNNuhgA_oaRXQ@mail.gmail.com>
-Subject: Re: [PATCH] MAINTAINERS: Mark Microchip PolarFire SoC as Odd Fixes
-To: Conor Dooley <conor@kernel.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- palmer@dabbelt.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com, 
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
- sebastian.huber@embedded-brains.de, 
- Alistair Francis <alistair.francis@wdc.com>, Guenter Roeck <linux@roeck-us.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=visitorckw@gmail.com; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -125,49 +109,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 14, 2026 at 7:26=E2=80=AFAM Conor Dooley <conor@kernel.org> wro=
-te:
->
-> On Wed, May 13, 2026 at 08:10:06AM +0200, Philippe Mathieu-Daud=C3=A9 wro=
-te:
-> > On 13/5/26 04:38, alistair23@gmail.com wrote:
-> > > From: Alistair Francis <alistair.francis@wdc.com>
-> > >
-> > > Mark the "Microchip PolarFire SoC Icicle Kit" as Odd Fixes and enlist
-> > > Conor and Sebastian as people to help deal with the fixes.
-> > >
-> > > Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-> > > ---
-> > > Conor let me know if it should be a different address
-> > >
-> > >   MAINTAINERS | 4 +++-
-> > >   1 file changed, 3 insertions(+), 1 deletion(-)
-> > >
-> > > diff --git a/MAINTAINERS b/MAINTAINERS
-> > > index 952ed683bb..9626eb1ea9 100644
-> > > --- a/MAINTAINERS
-> > > +++ b/MAINTAINERS
-> > > @@ -1751,8 +1751,10 @@ F: target/riscv/xlrbr.decode
-> > >   F: tests/tcg/riscv64/test-crc32.S
-> > >   Microchip PolarFire SoC Icicle Kit
-> > > +M: Conor Dooley <conor@kernel.org>
-> > > +M: Sebastian Huber <sebastian.huber@embedded-brains.de>
-> >
-> > Maybe worth having a look at Guenter's following patch for this
-> > machine:
-> > https://github.com/groeck/qemu/commit/1a66d5b4e5fe9
->
-> Ye, I can do that. It looks mostly pretty sane, but needs a bit of
-> cleanup I think before it is really applicable.
->
-> Does it matter if the rates the PLLs report are accurate btw? Since
+T-Head CPUs use custom CSRs for performance monitoring, specifically
+mcounterinten (0x7ca) and mcounterof (0x7cb). [1]
 
-You know the hardware better than us. Generally if it allows the guest
-boot and the values are sane then that's probably fine
+Since we don't implement these custom PMU registers yet, the system
+crashes with an illegal instruction trap when OpenSBI like this:
 
-Alistair
+system_opcode_insn: Failed to access CSR 0x7ca from M-mode
+sbi_trap_error: hart0: trap1: illegal instruction handler failed (error -1)
 
-> everything here is emulated, it shouldn't matter if the PLLs run say all
-> at 100 MHz instead of one at 100 and one at 40, right? They're just used
-> to clock things like i2c or pwm controllers.
+Add simple read/write stubs for these two CSRs. By silently ignoring
+writes and returning 0 on reads, we prevent the fatal exceptions and
+allow to continue normally.
+
+Link: https://occ-intl-prod.oss-ap-southeast-1.aliyuncs.com/resource/XuanTie-OpenC906-UserManual.pdf [1]
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+---
+ target/riscv/th_csr.c | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
+
+diff --git a/target/riscv/th_csr.c b/target/riscv/th_csr.c
+index 49eb7bbab5..b095364c31 100644
+--- a/target/riscv/th_csr.c
++++ b/target/riscv/th_csr.c
+@@ -21,12 +21,19 @@
+ #include "cpu_vendorid.h"
+ 
+ #define CSR_TH_SXSTATUS 0x5c0
++#define CSR_TH_MCOUNTERINTEN 0x7ca
++#define CSR_TH_MCOUNTEROF    0x7cb
+ 
+ /* TH_SXSTATUS bits */
+ #define TH_SXSTATUS_UCME        BIT(16)
+ #define TH_SXSTATUS_MAEE        BIT(21)
+ #define TH_SXSTATUS_THEADISAEE  BIT(22)
+ 
++static RISCVException mmode(CPURISCVState *env, int csrno)
++{
++    return RISCV_EXCP_NONE;
++}
++
+ static RISCVException smode(CPURISCVState *env, int csrno)
+ {
+     if (riscv_has_ext(env, RVS)) {
+@@ -49,11 +56,34 @@ static RISCVException read_th_sxstatus(CPURISCVState *env, int csrno,
+     return RISCV_EXCP_NONE;
+ }
+ 
++static RISCVException read_th_pmu(CPURISCVState *env, int csrno,
++                                  target_ulong *val)
++{
++    *val = 0;
++    return RISCV_EXCP_NONE;
++}
++
++static RISCVException write_th_pmu(CPURISCVState *env, int csrno,
++                                   target_ulong val, uintptr_t retaddr)
++{
++    return RISCV_EXCP_NONE;
++}
++
+ const RISCVCSR th_csr_list[] = {
+     {
+         .csrno = CSR_TH_SXSTATUS,
+         .insertion_test = test_thead_mvendorid,
+         .csr_ops = { "th.sxstatus", smode, read_th_sxstatus }
+     },
++    {
++        .csrno = CSR_TH_MCOUNTERINTEN,
++        .insertion_test = test_thead_mvendorid,
++        .csr_ops = { "th.mcounterinten", mmode, read_th_pmu, write_th_pmu }
++    },
++    {
++        .csrno = CSR_TH_MCOUNTEROF,
++        .insertion_test = test_thead_mvendorid,
++        .csr_ops = { "th.mcounterof", mmode, read_th_pmu, write_th_pmu }
++    },
+     { }
+ };
+-- 
+2.54.0.563.g4f69b47b94-goog
+
 
