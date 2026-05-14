@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E74DCD4851
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 10:04:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2FC3CD4F25
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 10:05:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNSvu-0007oH-Oz; Thu, 14 May 2026 06:04:47 -0400
+	id 1wNSwM-0007y9-S3; Thu, 14 May 2026 06:05:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wNSvs-0007nw-Mn
- for qemu-devel@nongnu.org; Thu, 14 May 2026 06:04:44 -0400
+ id 1wNSw7-0007s6-24
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 06:05:01 -0400
 Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wNSvq-0004R6-SU
- for qemu-devel@nongnu.org; Thu, 14 May 2026 06:04:44 -0400
+ id 1wNSw2-0004S9-Ey
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 06:04:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1778753083; x=1810289083;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=spfbICq9F1iwsyTEYXK/avZaHtL5lUyZ8ZC4bbOiwMI=;
- b=jDLOCxXfa0rXZHZLmgMLZaiZ+MusNK1gPcgjUZ9VB7eO1HXw4UqDDzLq
- M5v6/Cxr94Aj7wwzsL5jA5EaE5wqaBH5bjxUqd3HKMB3997dK7xT8DZMK
- zxK3kTIwHdsMUMFUmJVo3zTEY38Ut82JV9rSbf1mr9AakBmQH2sBTro0m
- 6rsJEZ29N5XCKxtEcm2vAwJT78sJvKT7iQsL7MaMRXqQ4BbZpb1H7fj7+
- Q9a5lFiDWvu6YJBRuPb3vZ478kMu4SUdIepIvuBRlf96gspp7Jic0VVC9
- /I2U5kJjTm+0A/NdjAjX7YDUS98iMPXFKJrnt16L7BZaFL0ImBLaLvrYC w==;
-X-CSE-ConnectionGUID: ag8BoZIRTg2NE4Sd+ndNwA==
-X-CSE-MsgGUID: UyT35Jn0RJ6ECG3cw4h23g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11785"; a="90796042"
-X-IronPort-AV: E=Sophos;i="6.23,234,1770624000"; d="scan'208";a="90796042"
+ t=1778753095; x=1810289095;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=+BLqURsj/4GVgeflQIwmatoKV0hGhqVWlZAtXVERMfY=;
+ b=LVNEGVBn2sk0tvmfhujV/pDs6bL6Fr1MD8ALdDS39wvEv27GQ+VW4mtQ
+ 1x7jYPG0WJAt8VrYkWL1J8CH0Y79rvj1U4Yvszyoe0nndHow0JwarQmi3
+ v7ed19hi7nbNIg8FdmrdGJfgkVEquiNOFS0Eejqb+VmYtI+xe7ZNx2q5k
+ IDRYtfK2RPlyvdG7d8XWIGc4sp0MizLY0xWO7+uMHOE/RG8IqLVrKyTE8
+ GTxM3/gNc09sbxdkfAOTtLgQYYRY1Ws+0u9S0ehlGP1iYyZNp3D8E01DH
+ e5FvikKlpiHadk9Y/JBFI/uu8DFHzr+en9ePxpTEu3lfKTjUDzM+yuPgn A==;
+X-CSE-ConnectionGUID: Uufdc/4bSrKYQtHm2PDffA==
+X-CSE-MsgGUID: g4XcuYGyRHas7rwo4jzCVQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11785"; a="90796076"
+X-IronPort-AV: E=Sophos;i="6.23,234,1770624000"; d="scan'208";a="90796076"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 May 2026 03:04:40 -0700
-X-CSE-ConnectionGUID: 2ObFpi2DStCkaFBG23Y9Gw==
-X-CSE-MsgGUID: Sp5D6MGsT6m2wOMnQzBJdg==
+ 14 May 2026 03:04:54 -0700
+X-CSE-ConnectionGUID: x7VEPXeITFOz9wDGSMfR3A==
+X-CSE-MsgGUID: ATc2XyCdQt6r1jo14lLPXg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,234,1770624000"; d="scan'208";a="243324913"
+X-IronPort-AV: E=Sophos;i="6.23,234,1770624000"; d="scan'208";a="243324922"
 Received: from junjie-optiplex-micro-plus-7010.bj.intel.com ([10.238.152.98])
  by orviesa005-auth.jf.intel.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 May 2026 03:04:35 -0700
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 May 2026 03:04:49 -0700
 From: Junjie Cao <junjie.cao@intel.com>
 To: qemu-devel@nongnu.org
 Cc: zhenzhong.duan@intel.com, yi.l.liu@intel.com, philmd@linaro.org,
@@ -53,13 +53,14 @@ Cc: zhenzhong.duan@intel.com, yi.l.liu@intel.com, philmd@linaro.org,
  marcel.apfelbaum@gmail.com, pbonzini@redhat.com,
  richard.henderson@linaro.org, farosas@suse.de, lvivier@redhat.com,
  Junjie Cao <junjie.cao@intel.com>
-Subject: [PATCH v4 0/2] intel_iommu: fix guest-triggerable assert in MMIO
- handlers
-Date: Fri, 15 May 2026 02:07:01 +0800
-Message-ID: <20260514180703.85686-1-junjie.cao@intel.com>
+Subject: [PATCH v4 1/2] intel_iommu: fix guest-triggerable abort on oversized
+ MMIO access
+Date: Fri, 15 May 2026 02:07:02 +0800
+Message-ID: <20260514180703.85686-2-junjie.cao@intel.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260514180703.85686-1-junjie.cao@intel.com>
+References: <20260514180703.85686-1-junjie.cao@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.13; envelope-from=junjie.cao@intel.com;
  helo=mgamail.intel.com
@@ -85,43 +86,266 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-An 8-byte guest access to a 32-bit-only VT-d register hits
-assert(size == 4) and aborts QEMU.  Found by generic-fuzz.
+An 8-byte guest access to a 32-bit-only VT-d register hit
+assert(size == 4) and aborted QEMU.  Remove all 25 asserts.
 
-v1: https://lore.kernel.org/all/20260420170523.17908-1-junjie.cao@intel.com/
-v2: https://lore.kernel.org/all/20260424201842.176953-1-junjie.cao@intel.com/
-v3: https://lore.kernel.org/all/20260506031942.251335-1-junjie.cao@intel.com/
+All 3 read-side and 18 of 22 write-side asserts are at
+non-8-aligned offsets (unreachable, rejected by
+memory_region_access_valid()) -- simply deleted.
 
-Changes in v4:
-  - Switch the guest-error log from error_report_once() to
-    qemu_log_mask(LOG_GUEST_ERROR, ...) so it is surfaced only
-    under -d guest_errors (Zhenzhong).
-  - Add a block comment at each of the 4 reachable sites
-    (FECTL 0x38, IECTL 0xa0, IEADDR 0xa8, PECTL 0xe0)
-    explaining why the check must stay, so future readers do
-    not delete it as "harmless" (Yi).
-  - No functional change beyond the logging-API swap.
+The remaining 4, all writes at 8-aligned offsets, are
+reachable: FECTL 0x38, IECTL 0xa0, IEADDR 0xa8, PECTL 0xe0.
+Truncating the high half via vtd_set_long() matches prior
+behavior; log under -d guest_errors since the VT-d spec is
+silent on oversized accesses to 32-bit registers, and add a
+comment so future maintainers don't delete the check as
+"harmless".  min_access_size stays 4, so all size-based
+branches on 64-bit register pairs are preserved.
 
-Changes in v3:
-  - Drop v2's min_access_size=8 approach: per Zhenzhong, it
-    silently zero-extends 4-byte guest writes, wiping upper
-    wmask bits of 64-bit registers and firing triggers gated
-    on size==8.
-  - Keep min_access_size=4.  Remove the 25 assert(size == 4)
-    sites: 21 are unreachable (non-8-aligned), the 4 reachable
-    (FECTL 0x38, IECTL 0xa0, IEADDR 0xa8, PECTL 0xe0) fall
-    through to vtd_set_long() and log a guest error.
+Found by generic-fuzz (24 distinct crash seeds, all fixed).
 
-Junjie Cao (2):
-  intel_iommu: fix guest-triggerable abort on oversized MMIO access
-  tests/qtest: add 8-byte MMIO access sweep for intel-iommu
+Suggested-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+---
+ hw/i386/intel_iommu.c | 74 ++++++++++++++++++++++++++++---------------
+ 1 file changed, 49 insertions(+), 25 deletions(-)
 
- hw/i386/intel_iommu.c          | 74 ++++++++++++++++++++++------------
- tests/qtest/intel-iommu-test.c | 30 ++++++++++++++
- 2 files changed, 79 insertions(+), 25 deletions(-)
-
-
-base-commit: 5e61afe211e82a9af15a8794a0bd29bb574e953b
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index b784c5f10a..17f897177d 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -21,6 +21,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/error-report.h"
++#include "qemu/log.h"
+ #include "qemu/main-loop.h"
+ #include "qapi/error.h"
+ #include "hw/core/sysbus.h"
+@@ -3713,7 +3714,6 @@ static uint64_t vtd_mem_read(void *opaque, hwaddr addr, unsigned size)
+         break;
+ 
+     case DMAR_RTADDR_REG_HI:
+-        assert(size == 4);
+         val = vtd_get_quad_raw(s, DMAR_RTADDR_REG) >> 32;
+         break;
+ 
+@@ -3728,12 +3728,10 @@ static uint64_t vtd_mem_read(void *opaque, hwaddr addr, unsigned size)
+         break;
+ 
+     case DMAR_IQA_REG_HI:
+-        assert(size == 4);
+         val = s->iq >> 32;
+         break;
+ 
+     case DMAR_PEUADDR_REG:
+-        assert(size == 4);
+         val = vtd_get_long_raw(s, DMAR_PEUADDR_REG);
+         break;
+ 
+@@ -3779,7 +3777,6 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_CCMD_REG_HI:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         vtd_handle_ccmd_write(s);
+         break;
+@@ -3795,13 +3792,11 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_IOTLB_REG_HI:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         vtd_handle_iotlb_write(s);
+         break;
+ 
+     case DMAR_PEUADDR_REG:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         break;
+ 
+@@ -3815,27 +3810,35 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_IVA_REG_HI:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         break;
+ 
+     /* Fault Status Register, 32-bit */
+     case DMAR_FSTS_REG:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         vtd_handle_fsts_write(s);
+         break;
+ 
+     /* Fault Event Control Register, 32-bit */
+     case DMAR_FECTL_REG:
+-        assert(size == 4);
++        /*
++         * 32-bit register at an 8-byte-aligned offset: a well-formed
++         * 8-byte guest access reaches this handler.  vtd_set_long()
++         * takes uint32_t and truncates the high half -- undefined per
++         * the VT-d spec but harmless here.  Flag it under
++         * -d guest_errors so the guest-side bug surfaces.
++         */
++        if (size != 4) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: invalid %u-byte access to 32-bit reg "
++                          "addr=0x%" PRIx64 "\n", __func__, size, addr);
++        }
+         vtd_set_long(s, addr, val);
+         vtd_handle_fectl_write(s);
+         break;
+ 
+     /* Fault Event Data Register, 32-bit */
+     case DMAR_FEDATA_REG:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         break;
+ 
+@@ -3854,13 +3857,11 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+ 
+     /* Fault Event Upper Address Register, 32-bit */
+     case DMAR_FEUADDR_REG:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         break;
+ 
+     /* Protected Memory Enable Register, 32-bit */
+     case DMAR_PMEN_REG:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         break;
+ 
+@@ -3874,7 +3875,6 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_RTADDR_REG_HI:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         break;
+ 
+@@ -3889,7 +3889,6 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_IQT_REG_HI:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         /* 19:63 of IQT_REG is RsvdZ, do nothing here */
+         break;
+@@ -3905,39 +3904,57 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_IQA_REG_HI:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         break;
+ 
+     /* Invalidation Completion Status Register, 32-bit */
+     case DMAR_ICS_REG:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         vtd_handle_ics_write(s);
+         break;
+ 
+     /* Invalidation Event Control Register, 32-bit */
+     case DMAR_IECTL_REG:
+-        assert(size == 4);
++        /*
++         * 32-bit register at an 8-byte-aligned offset: a well-formed
++         * 8-byte guest access reaches this handler.  vtd_set_long()
++         * takes uint32_t and truncates the high half -- undefined per
++         * the VT-d spec but harmless here.  Flag it under
++         * -d guest_errors so the guest-side bug surfaces.
++         */
++        if (size != 4) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: invalid %u-byte access to 32-bit reg "
++                          "addr=0x%" PRIx64 "\n", __func__, size, addr);
++        }
+         vtd_set_long(s, addr, val);
+         vtd_handle_iectl_write(s);
+         break;
+ 
+     /* Invalidation Event Data Register, 32-bit */
+     case DMAR_IEDATA_REG:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         break;
+ 
+     /* Invalidation Event Address Register, 32-bit */
+     case DMAR_IEADDR_REG:
+-        assert(size == 4);
++        /*
++         * 32-bit register at an 8-byte-aligned offset: a well-formed
++         * 8-byte guest access reaches this handler.  vtd_set_long()
++         * takes uint32_t and truncates the high half -- undefined per
++         * the VT-d spec but harmless here.  Flag it under
++         * -d guest_errors so the guest-side bug surfaces.
++         */
++        if (size != 4) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: invalid %u-byte access to 32-bit reg "
++                          "addr=0x%" PRIx64 "\n", __func__, size, addr);
++        }
+         vtd_set_long(s, addr, val);
+         break;
+ 
+     /* Invalidation Event Upper Address Register, 32-bit */
+     case DMAR_IEUADDR_REG:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         break;
+ 
+@@ -3951,7 +3968,6 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_FRCD_REG_0_1:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         break;
+ 
+@@ -3966,7 +3982,6 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_FRCD_REG_0_3:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         /* May clear bit 127 (Fault), update PPF */
+         vtd_update_fsts_ppf(s);
+@@ -3981,18 +3996,27 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_IRTA_REG_HI:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         break;
+ 
+     case DMAR_PRS_REG:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         vtd_handle_prs_write(s);
+         break;
+ 
+     case DMAR_PECTL_REG:
+-        assert(size == 4);
++        /*
++         * 32-bit register at an 8-byte-aligned offset: a well-formed
++         * 8-byte guest access reaches this handler.  vtd_set_long()
++         * takes uint32_t and truncates the high half -- undefined per
++         * the VT-d spec but harmless here.  Flag it under
++         * -d guest_errors so the guest-side bug surfaces.
++         */
++        if (size != 4) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: invalid %u-byte access to 32-bit reg "
++                          "addr=0x%" PRIx64 "\n", __func__, size, addr);
++        }
+         vtd_set_long(s, addr, val);
+         vtd_handle_pectl_write(s);
+         break;
 -- 
 2.43.0
 
