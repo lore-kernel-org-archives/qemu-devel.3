@@ -4,50 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13C82CD4F39
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 18:49:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14FE7CD37AC
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 19:15:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNb77-0004Pb-Dz; Thu, 14 May 2026 14:48:53 -0400
+	id 1wNbVZ-0001Gz-Qs; Thu, 14 May 2026 15:14:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wNb6o-0004F1-Gb; Thu, 14 May 2026 14:48:34 -0400
+ id 1wNbVX-0001Gi-TQ; Thu, 14 May 2026 15:14:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wNb6k-0006Y0-CN; Thu, 14 May 2026 14:48:33 -0400
+ id 1wNbVV-0002EI-4z; Thu, 14 May 2026 15:14:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778784487; bh=H33hHaJXEIYKFPTasnf4oGiAw5MDsr5/iRLHkbOPfVU=;
+ t=1778786031; bh=H4kzjOwp4EbLDVJAmmLrCgznIgyZlUpZoyHePplfyPs=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=AUT7EYO+A3TGk0AqOKmmCy6QGDnNFenaH4cMoXpSExyVslH8BKMIRILzWQV7batF0
- 0+BFnoVOzIuIN5ZWlmcMFTc78mEa1yX0pD13OnUsZLQLubrh2i/xq3L9XCOgwUQnnr
- elqFOF4D1CP+DCdFBY3/AL3jQvTzDWUMpSMAPYaNs10X/qbOjmk1KUaKKx/Cfyqczs
- MF5t7hZ0q4sLhL7kEKOQ6KJbMj46OtANS6Ala45RJjAcmf0EbcUxm1A08/BLWMlOMB
- CERDSiornrvVkJvtDvV7xGkH7fDW2T2n8uI0Mi31IQYPri/Jq4eyTdrtkxGHKMjjI+
- t9WkhMxnQgAPw==
+ b=YsCZzpJoRebyaJo9UqJjAQphPprOc4B83y6nhodQkbyAM6i+ozeIm2lf0sZTYms0l
+ 6EnyjUPs7MLCDcc9KrfSiaxucoDzsAzvM6861jbEv7ZaQFOUeFMq8ibdhKPvF2vZvm
+ +HBG0j3/2AU6V45j+/bkSQ7B8nN6uz7zA67WPyCemFNzuEsajI0X3DdaUmUjba1mVy
+ YQu3y18noBSq+i05RNliKyAiOowdtSJxEcyp6QBbNopoTxp2sg1/0luUUHsCF/1tNT
+ Y3zZljIixi58lKp6rAAXd5236KeLr/nYAsUkCsIgRqQ+0uQK8EnpSkXqoqtOsHz04V
+ YhAdHOjVNCXGg==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id AE4661AB578;
- Thu, 14 May 2026 21:48:07 +0300 (MSK)
-Message-ID: <c2b76041-81d8-43e0-b50b-af88c1c658b5@tls.msk.ru>
-Date: Thu, 14 May 2026 21:48:15 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id 1E6DC1AB594;
+ Thu, 14 May 2026 22:13:51 +0300 (MSK)
+Message-ID: <1df3c974-0e84-4801-9441-705d4241dfe8@tls.msk.ru>
+Date: Thu, 14 May 2026 22:13:58 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/1] hw/misc/aspeed_sbc: Add bounds checking for OTP
- write operations
-To: Kane Chen <kane_chen@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
+Subject: Re: [PATCH 2/2] aspeed/hace: Prevent total_req_len overflow
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>,
- "qemu-stable@nongnu.org" <qemu-stable@nongnu.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-References: <20260428055254.76581-1-kane_chen@aspeedtech.com>
- <20260428055254.76581-2-kane_chen@aspeedtech.com>
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
+ Katherine Leaver <katherine.j.leaver@gmail.com>, qemu-stable@nongnu.org
+References: <20260504213421.710035-1-clg@redhat.com>
+ <20260504213421.710035-3-clg@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -93,9 +88,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260428055254.76581-2-kane_chen@aspeedtech.com>
+In-Reply-To: <20260504213421.710035-3-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -19
@@ -119,37 +114,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28.04.2026 08:52, Kane Chen wrote:
-> There is a mismatch between the Aspeed OTP model and the Aspeed SBC
-> model in how the guest-provided address is handled.
-> aspeed_sbc_otp_prog() passes a word-indexed address directly
-> to address_space_write() without converting it to a byte offset,
-> whereas aspeed_otp_write() expects a byte offset and applies an
-> additional shift (otp_addr << 2). This double-shift confusion means
-> that an out-of-range word address can lead to a write beyond the
-> allocated storage.
+On 05.05.2026 00:34, Cédric Le Goater wrote:
+> In accumulate mode, total_req_len is incremented with plen (hwaddr)
+> for each hash request. Repeated additions can overflow total_req_len
+> (uint32_t) and potentially bypass validation checks in has_padding().
 > 
-> Fix this by adding bounds checking on the word offset before
-> converting to byte offset and passing to address_space_write().
-> This matches the existing bounds check in aspeed_sbc_otp_read().
+> Add a helper function to detect overflow before incrementing
+> total_req_len and reject the request if overflow would occur.
 > 
-> Cc: Kane-Chen-AS <kane_chen@aspeedtech.com>
+> Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
 > Cc: qemu-stable@nongnu.org
-> Fixes: 1a00754ccf15 ("hw/misc: Add Aspeed Secure Boot Controller model")
+> Fixes: 5cd7d8564a8b ("aspeed/hace: Support AST2600 HACE")
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 
-
-FWIW (this change has already landed in the master branch, so it's cast
-in stone), I can't find this commit in my git clone of qemu repository.
-Neither hash ID nor the name.
-
-Is it this one maybe? https://marc.info/?l=qemu-arm&m=164500409921734,
-which is commit e1acf581c9 in qemu?  It has a different commit message
-though.
-
-And this patch does not apply to 10.0.x, - in there, there's no
-hw/nvram/aspeed_otp.c (688a3dae78 hw/nvram/aspeed_otp: Add ASPEED OTP
-memory device model).  I assume it's not needed for 10.0.x, but in
-that case, the Fixes: tag isn't even commit e1acf581c9.
+This change does not apply to 10.0.x qemu-stable series, because,
+at least, it lacks v10.0.0-1171-g7328c48b57c9 "hw/misc/aspeed_hace:
+Extract direct mode hash buffer setup into helper function".
+This code in 10.0.x is slightly different, namely, there's no
+error return from the function in question.  Please take a look
+at 
+https://gitlab.com/mjt0k/qemu/-/commits/4a82112f40351e94f1b3af938782298abda1c810
+which is my attempt to fix this code for 10.0.x (not even compile-
+tested yet).
 
 Thanks,
 
