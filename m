@@ -4,135 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E1F6CD4F25
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 15:47:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5420ECD4851
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 15:56:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNYGq-0007Q1-Nz; Thu, 14 May 2026 11:46:44 -0400
+	id 1wNYPR-0001GC-Gq; Thu, 14 May 2026 11:55:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wNYGJ-000768-Rn; Thu, 14 May 2026 11:46:14 -0400
-Received: from mail-southcentralusazlp170130001.outbound.protection.outlook.com
- ([2a01:111:f403:c10c::1] helo=SA9PR02CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wNYPO-0001Fh-Q7
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 11:55:35 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wNYGH-0003uC-36; Thu, 14 May 2026 11:46:11 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JuO+DqVWYHbWdqCZ02u02FJI44Znlj8fRwfO0a3niljqOGfvK1nt2pDN+dMXFfCDyZ6OGqtsyuIrNvBO8GDjOqN2yICeRl8KFqhPZcb5QHLFNIriLXVIiKQ1o1u2fcGpWYoB4zOtoEmlcCsDYg8Wf6ETGgOgL17cctped6AXb0orNjQghp47gqeym0TI70W+UgsRR8YIjGToXwm+qvOf34KZ1CHIdp4N3JgyP4AYjSmyp64nSA2IhhfNsPS9VMWL4c2hBjwxtu8STlt89BbbGKVwFnxQ2gcxwSPDH4qw2p/1ofQafnb8p32rsS9G7/48L/F3hxNEeUBFm+KhQZbCag==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=yjrtBNMvwhIXI6ueUzoFsYBxt6+0DgOHXtI5Nvp9tJE=;
- b=Z6++IFkDnnzaYVr+f2SyZDX44zg/mMyfxiebIw9Lco6fFsZxIugHp2I6E8PU6itTBZ99GQeq+LwesbLT1ZMh4AzFrW9mJw8ZX1bmqEiS/ZBWVbTNSxH9b8gy5/JNiS2apAww6mfK8ON6BRrGEMbwlvojYlsdvfH568bbbR5OMsx22jx+gfKAE7w6o55dJZLNiLdN2i5zmRtJX/zS3JtUeHveJFlz199K6OI1NWTZFeV8HkuO7WYZuTEFSD04bJ8ao6yDRZ13Wy7OnvqiARJtJpnftsV2AZzD3lJvhdbSRfAZYkJczhwvNEq1AjRcYGSlouU8MX3jprI54lNLgg+U7w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yjrtBNMvwhIXI6ueUzoFsYBxt6+0DgOHXtI5Nvp9tJE=;
- b=L4KZA7zwCe/H4LKj3Eoc7VWrvJ0zUBXA+318eGMnQp0hGD9phXrPJ+LpSrt3HfeEUDxA9XhFoq/tx4hdQyJ30osLixk+vS0bhcF7SGtMp6FWSuNbYNZhZYwp+ilUETYIasSOzKHW9Rg5+vqrKWt9j1amBBNzSJfMIgd/wJ9IOKMGKiUo42QoOC67VyZoH2FcduE1J4gC3sZ8zmPFf6fS9VLJQ/USoHzlPpY88uLjjOxN8cDe55/rIMZifGmRpwUxIVmOhEzsOpHybO+uXlbm1GPFDOsz5qVzzm3iFbY60R3W/Y3IVlbZgn4kXVCtH3gaCAdT5zvMaDGo2Le0FBgpHw==
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
- by DM4PR12MB6085.namprd12.prod.outlook.com (2603:10b6:8:b3::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.25.19; Thu, 14 May
- 2026 15:45:56 +0000
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de%6]) with mapi id 15.20.9913.009; Thu, 14 May 2026
- 15:45:56 +0000
-From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-To: Nathan Chen <nathanc@nvidia.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: Eric Auger <eric.auger@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, =?iso-8859-1?Q?Philippe_Mathieu-Daud=E9?=
- <philmd@linaro.org>, Zhao Liu <zhao1.liu@intel.com>, Matt Ochs
- <mochs@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>
-Subject: RE: [PATCH v3 6/7] hw/arm/smmuv3: Set default ats, ril, ssidsize, oas
- to auto
-Thread-Topic: [PATCH v3 6/7] hw/arm/smmuv3: Set default ats, ril, ssidsize,
- oas to auto
-Thread-Index: AQHc4kaN+4XHgoTd5E2gQedpKngDSbYNrOJw
-Date: Thu, 14 May 2026 15:45:56 +0000
-Message-ID: <CH3PR12MB75481623DC20A03B6550C7DAAB072@CH3PR12MB7548.namprd12.prod.outlook.com>
-References: <20260512193520.3109172-1-nathanc@nvidia.com>
- <20260512193520.3109172-7-nathanc@nvidia.com>
-In-Reply-To: <20260512193520.3109172-7-nathanc@nvidia.com>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|DM4PR12MB6085:EE_
-x-ms-office365-filtering-correlation-id: dd06d767-41f3-49b2-5e2b-08deb1cfe354
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|1800799024|376014|22082099003|18002099003|56012099003|38070700021|11063799003|4143699003;
-x-microsoft-antispam-message-info: 8LPmnPckoFY/IQiZmyJUfb5WYJToWAOLcOBVSd237gPd04+5d1nwm4ge0eXMfBs8/J+mhsmDGWlxsCgAW0MAEcKAzYyxB7iYVAwLulD9rTF1OpUVj0eG6yHQY6Hz5TFtUgnxPkfzjcvoAAXqoBX+1q9j3k1Bp55Jlld7Mg2fUMSYSv5ewk+AYUxtkjntvYBBl4GSx0US1w/yNbPbzvfhzwbvb/wkdu6XEFzb6vqzxkVyMO4zIcLvDX0C3fKbQYVzTC/OjgZC2s7bT4HMLHXbguCX8eWccZlQn1x6m81fPjWszoN4UFnEnb1q9xysIIi/JogXYg19LOznTyr2Bfb1p3QV4zauJk4oXbylce7Yys2MG8tXdXjnx8cY8od2KokCELUe48q95A14NkrC3JpMSr3hy7WWl4G9DtIl/8KlTAQZMAu+Ux/3Nxm7ooMzJfcsjJCVk7nW4q1xU5RA/pibfvB+AEVSOF6ofGupJ7HQbk9uYibbEwKn+48d7sepsPPDvlbS0pVYh1TacIhaCRiBzXW1i2KL1tEEiylitk/jaM3R3xJ0D/HWJGZw2cXUmKqCv0LeEyrlN2PEeqlfTRewhouoPDl/pJWNzIUcnjzE9w/bUGnwOQjalgMFk+eR7/JrYspOYOJz6QJMSK+5qtAQbEQrHQQN7aWYp9FqxLvWIhs8i6QB4p0MneTfiXVzTkTvrNSJjNeqEWE12SEPiK9nkk32Bf9AiMxG7aRwTPm/TNtcIzrSLY9g74tfhGUeIyN9
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(22082099003)(18002099003)(56012099003)(38070700021)(11063799003)(4143699003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?fLBShDWXDDj2ihoqt+yk/LsJJNXnUtwInD2gx+ccG3idxOpik3U/k7KhFi?=
- =?iso-8859-1?Q?2eL3+JtSdabM9kQV5HAIHWb4cZ5RAq8/dCgu0izKRb/M5ji0mDBw0v++//?=
- =?iso-8859-1?Q?sYV+gCxBPTI1OZT0HR4i4R6j2ahfUQI0Ovozu37hVS4v7xXl4XGHDNJkzk?=
- =?iso-8859-1?Q?8/TGLwqe2vXBx+kg7b47cZYYmR12Zo9iO74SNoTtHshNUZxoyk4EhdUhY1?=
- =?iso-8859-1?Q?oLP2moz1NwzS/7HWc0UR0c70mbD7xy1shXnAJm85gF99ZJoiJ55rEK8jw+?=
- =?iso-8859-1?Q?eb3xy/hxR1gM2VDJG3emzexZP5ZWOLUtgGtpfQeCNppcLzHN3N+P/ODAer?=
- =?iso-8859-1?Q?WFZQ3pR3fCK4XLkWrwEs2r+hWeeCGHGG/S5pkGjYGY5RQbVBHa8T7+nlQk?=
- =?iso-8859-1?Q?0ZBIZAvN0c8wlSyScYVPZCqvFMsGKCFCJ4kZ7Mb2L+oAbklgCTaDcpTWer?=
- =?iso-8859-1?Q?RUevEtZeYvU5MtM/Ab84Rsv9wAXpJPIcOOOGo8Xd5yzFdZIA4UZfXU9UaZ?=
- =?iso-8859-1?Q?MbhyK2OaXJ1LytI5OKt8VuItPVBvw1PkFOExsZWrLObjkhtaS6creuGHGU?=
- =?iso-8859-1?Q?RcjskgZ/vdhZ2ffoY6G+RDUMYUj0EenwxnMPl/e4KmjMYDA4iAGvF2IeFn?=
- =?iso-8859-1?Q?PeJ1KtfOk3P46ZGq7jtA0keyIMx7IZVxdbCwy78pLe8O1s9RpEJlGam76X?=
- =?iso-8859-1?Q?UyVNakQF22V5HezBTBYzVwEuV8URUbaUKN64k8P8G5El/0yVZlVr3ceF4X?=
- =?iso-8859-1?Q?JW4JGtFZWVhbD9I8Iqa/7Xdvs30cwdTfgEG6cPBO/QIfxyh44tD3KWntiy?=
- =?iso-8859-1?Q?tlnl+8GKIdiQ6lAN2Yyf+f2fr+Ad9BvhwS6WYXbpzKvgRypyb9g9oxAY7r?=
- =?iso-8859-1?Q?3PtQyEUUa2RfT0kK3v6n5rJtQKuXjo6gvQN9HCLIb3L4cTc3E9i9jGQF1O?=
- =?iso-8859-1?Q?s488xCcJY5/qpE+6d/gdaDcyKQqIOAsRTYvg31YOR5ssXx1PJbNU83yZCh?=
- =?iso-8859-1?Q?HL3MAC+pOZLFZKPwH2LV/rfIvHJVxbjpXLw27OBtR/URN37FRL4ggsLSLj?=
- =?iso-8859-1?Q?Q4ArxTnTaciTfDm1NM5BLYoKnTXRIqN0iJJkkYadWP00KpvCKpqvpqCMDh?=
- =?iso-8859-1?Q?n1J/HXUlySiXC67mecWFVL/QKV1Ip3WHRlAWNU3eMvy5+bdeFDMMpkMfSd?=
- =?iso-8859-1?Q?yj0/WDttC3fEw4WMHDIFPd1D3VcdQ8AOxwaHWFMOWKU5O3YrkW1F8l5PAf?=
- =?iso-8859-1?Q?KnMLMtJHQgVYHD2WcrrXq0anDMpBU50wLeXiXesgBBfPkJzw+q8Z5YfDNN?=
- =?iso-8859-1?Q?uRjxR1xUlFcrIbL/Rh59eEKwu4yWi4/4s4JLCHtBI5sIBGz19re+pmAmvD?=
- =?iso-8859-1?Q?iIdmuYA/zeKdzkYTNumReW3i6C+vvovLBlWMzbLFvdQC/aLPG/arS7Hip3?=
- =?iso-8859-1?Q?MSgPjUkhVj3O69L1yXmZUTHFeDLkY2AikPlY+vFV/TVyOOPDd6NOwh/r+5?=
- =?iso-8859-1?Q?qXJauQ6a0e2QPkFR3uTYRwj5eTb8z1CVqlQU7qipKNB/XYmESJHD5VVTZU?=
- =?iso-8859-1?Q?sQOLBiiK98D33LNr0hRh2lWtr3AhTJxwIewfQxKgtujtJlj+5HtKiz5n45?=
- =?iso-8859-1?Q?pZuhBBYmauD8i2LOL3LHSbI/+0P86toLtXNecVP1hVGBDGg44/hBhoc7/L?=
- =?iso-8859-1?Q?ilM1qWpLBdggie6mTrMz4G21KZkwuz24cWk+8/49sJW+dvd/+cFai/ivf2?=
- =?iso-8859-1?Q?mzq3jEJpZjiFpmv+gn2ZshDKcr4OfgGo+82tHW75vx9P4CQXbbauU/BFQD?=
- =?iso-8859-1?Q?YBgJdx7v9A=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wNYPL-00077h-Vz
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 11:55:34 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64EBeYb72238425
+ for <qemu-devel@nongnu.org>; Thu, 14 May 2026 15:55:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ Tikmx5ESVToLo3wZAmEJ+g9HonWXIH+jbLKKWpz56zQ=; b=QEvFnN9FnMTGXoPk
+ X34sE8uG/S28xNYsiai+ZrE+C8okETBfhUVSIrRIMYrAe3QP0VHcz2eI84ctQSZd
+ 7rSle97Am/ULfMWpi4h6X5nQahbkU0rX6XRpjDXiBtiSBZqBC5xFjqIlP6ugSIB5
+ shfbhcIk6M5d5mBgGHYscs0MCxGaMlaF++MVnkoIgtkV1eYLkf82YbWhkV+wjASX
+ hpReJCHKmioqDUF+5hLN9aVe1RrO/iAJHVpbG0SOVMU0lalt0cZxyBElB/+KagFs
+ 5hexHmoa/E5cpeYWVfH5hvq1j+i4pMTCp16J7yNQcoRj+77lGi7D3aEgttK973z8
+ VOKokQ==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e566bjjc1-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 14 May 2026 15:55:29 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-2f5943ca81aso15997836eec.0
+ for <qemu-devel@nongnu.org>; Thu, 14 May 2026 08:55:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1778774129; x=1779378929; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Tikmx5ESVToLo3wZAmEJ+g9HonWXIH+jbLKKWpz56zQ=;
+ b=jgNB7cQ5b4RpIYtmck21waUfIsWOqdZM1LqrZ3pURw4vYLw7ZXgJkifvf0FCoYTUhV
+ 4DKLvQZnH+NmoMOm+X84lcD0icwpyX00CG+CW3h+BrCM+1lv/GmrdIMPDzGrE2krm0W2
+ /hlUwNP1rshdUuGKtI8jErmpsHJqAsPthBJd/ZIty9CRPQddBUb9fDnJpiwuQmCNT+T5
+ KpG5KR0ILgAdKTeN/gJodAyBMJ1XQwESVFELuMW5oRseaifc8YNU78SpdNzwyMBHgMA1
+ Xx6ZHzwRcQ4KJ7xaLoUYOkSMUv8AV+Va9oUw22Qggs6Lx3JRfvhQ1tiFSgAx16YjgsSV
+ 9trQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778774129; x=1779378929;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Tikmx5ESVToLo3wZAmEJ+g9HonWXIH+jbLKKWpz56zQ=;
+ b=GJ8dxYDttumXDMtiIvXF+dHt80BzmJOLSQdRTtMXENHTRdsUQmu1yny2+g/5VriaSe
+ Bew3jpGBK7DrTTHboclkltTAPyEyJUiZmmGTCHgdjKmztKCnPToMgXNI1ecuDDtNaCqP
+ iv9aimFQI6o8UjF9XR7dB5EdtFY52KHOgkxqM6sc0yJwAmxEZjtzgiDzaqieXXVxlzP5
+ eKfrlceIowTq5FtrY7DoIIWKO/9LSfsS+oEHzpDJsauhLWVP5uBNO5jG+jHZcsWTiNY8
+ BuScSg7mBOzTopXz6JKfQW3C/Yi+OQ4sSzejRJ90lhwtnHyeUKGtSdBW5C/hnjpFYJJ7
+ lVRw==
+X-Gm-Message-State: AOJu0YwLUYFsZdFYlrO5gXkNfKFl04fjtN7ZmKIo335/7Bv6RpbHITCm
+ ibg2dS6EKRisFZKV5+79gIFPDfKsJjyS+WuwvWBqgGEL6+Ez2LUagPNYZsdlg1t8xHb28MqsIwq
+ WCLyNuSvzYy5UKr86vRZWo8XmeE7q4Msg8lk/skcG/WhenY22lHox/4AAJQ==
+X-Gm-Gg: Acq92OHi/2cWhXdRvLDhJzY1X9fdEeh0oKfqOFo7W9GRFc5AF+CEfWrT1ugNmv047q2
+ wYKS79VJdiKKKwGf0zTFQKyz60AaBMtpqVlrzD0hukzJidjApmKlMwKoZBSOpfen7orJSAY3iPh
+ 56EHvT7n+Gz/y3A4ccfw3v7tLoXK3TPYfWjR1bEY/KnV0chEblMYylSN99bmAn4JtwS1030EGqs
+ TjQCPtKurChXgf34VxlGUGJMre55v+NUXtgiMa8lflSH1umwR6m0+qzkBnoIKhkE+jjY9FOVSQk
+ 8exrjiTKzd600iIrAC4Af/gsrUHhbm2tzs11tXEFJW7vrI6RO/ZT0JOuX0RmhanHxI689YS41Q1
+ 9w3YcrekN/E+SZBM4vOtIvFTQzHQGmDDqO1kPqmQez/vq1KhIfRlVcI+4c577m9UodWDMvru1KZ
+ IUozotA97Zo9BwKQ==
+X-Received: by 2002:a05:7300:ac90:b0:2ff:9d6b:4f31 with SMTP id
+ 5a478bee46e88-3039812b389mr20771eec.6.1778774128690; 
+ Thu, 14 May 2026 08:55:28 -0700 (PDT)
+X-Received: by 2002:a05:7300:ac90:b0:2ff:9d6b:4f31 with SMTP id
+ 5a478bee46e88-3039812b389mr20728eec.6.1778774127920; 
+ Thu, 14 May 2026 08:55:27 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-302973bbd50sm3291701eec.20.2026.05.14.08.55.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 14 May 2026 08:55:27 -0700 (PDT)
+Message-ID: <009a09cc-a017-4f19-b0e0-0df8149daa8b@oss.qualcomm.com>
+Date: Thu, 14 May 2026 08:55:25 -0700
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: dd06d767-41f3-49b2-5e2b-08deb1cfe354
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 May 2026 15:45:56.3260 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: lA4jBEJa5xksxPJoBaEal5LpfXX3f7s9zBuFDq5jo8okikdPsHgj/5cb1VTwh24mUvJaBR10J0ZObdYAq6JqJw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6085
-Received-SPF: permerror client-ip=2a01:111:f403:c10c::1;
- envelope-from=skolothumtho@nvidia.com;
- helo=SA9PR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/5] Target-info update for 2026-05-12
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefan Hajnoczi <stefanha@gmail.com>
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
+References: <20260512183030.1431103-1-pierrick.bouvier@oss.qualcomm.com>
+ <CAJSP0QXjoF0qPpNq==p1fqTHMWQdezzQLHKKwm6iUBXHdPr-fg@mail.gmail.com>
+ <953abafd-3dbd-4055-a500-d089ace35470@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <953abafd-3dbd-4055-a500-d089ace35470@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: lVkx0nk3nM8D-4uGSJ0PCFd5c5_g0E-e
+X-Authority-Analysis: v=2.4 cv=WsMb99fv c=1 sm=1 tr=0 ts=6a05f071 cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=p0WdMEafAAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=ISqSk_lbuIkOd-NZrP8A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE0MDE2MCBTYWx0ZWRfX4j5CAJXZk9/g
+ aViOhl8EXoSpj8nVigdnFD4WwDWEEzGzIn3/9S5CBR4VJRnN2DVjb4W2KVN9lEiIEjU1f/fl8Y9
+ C5IvLLMmL0wqMwX7J6q9DlO3v6qqF4qFUJMqEbXDn5+F1adsJfmGzE0rW+rzoqPpXkPMjn6qumk
+ BQmsbUZbANXFFoqw2+uGafLei9iz+RMD4qYEjKu9cRkFp38knn7OECpg2uJ6fVk72MIW2zCBct8
+ sl5Yb9TVdOhUUtURTqcWjMXgOMdPghUFYXI4+Fx3w6YtyAATctxMoemy+yha0wKZrnyUGEYUp78
+ N+H5sciDmK0W+p9gMhcS3heZwOvkpF3Ad+GPm9qV9ewwsN0jl5Z0WBr3GFYOOILcwq80J1iGerq
+ nXLsWOCQGpN5/zriifxNXc0u/O/eQZTRVkrTb/XJii1Cwr5kZGDPtSPX9l8ujLtVm3IhEDLRqLK
+ CyQ5ISI1nj5HdMm//Pw==
+X-Proofpoint-GUID: lVkx0nk3nM8D-4uGSJ0PCFd5c5_g0E-e
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-14_04,2026-05-13_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 priorityscore=1501 malwarescore=0 phishscore=0 bulkscore=0
+ impostorscore=0 lowpriorityscore=0 clxscore=1015 spamscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605050000 definitions=main-2605140160
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,37 +154,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 5/14/2026 7:46 AM, Philippe Mathieu-Daudé wrote:
+> On 14/5/26 16:16, Stefan Hajnoczi wrote:
+>> On Tue, May 12, 2026 at 2:32 PM Pierrick Bouvier
+>> <pierrick.bouvier@oss.qualcomm.com> wrote:
+>>>
+>>> The following changes since commit
+>>> 5e61afe211e82a9af15a8794a0bd29bb574e953b:
+>>>
+>>>    Merge tag 'ui-pull-request' of https://gitlab.com/
+>>> marcandre.lureau/qemu into staging (2026-05-11 10:49:53 -0400)
+>>>
+>>> are available in the Git repository at:
+>>>
+>>>    https://gitlab.com/p-b-o/qemu tags/pbouvier/pr/target_info-20260512
+>>>
+>>> for you to fetch changes up to 0fc2022c6331c5d5bdd9060c73d067abba3f5515:
+>>>
+>>>    target-info: replace target_info() in system-mode (2026-05-12
+>>> 11:29:18 -0700)
+>>>
+>>> ----------------------------------------------------------------
+>>> Changes:
+>>> - [PATCH v6 0/5] single-binary: deduplicate target_info() (Pierrick
+>>> Bouvier <pierrick.bouvier@oss.qualcomm.com>)
+>>>    Link: https://lore.kernel.org/qemu-devel/20260512150208.1167711-1-
+>>> pierrick.bouvier@oss.qualcomm.com
+>>>
+>>> ----------------------------------------------------------------
+>>> Pierrick Bouvier (5):
+>>>        qom/object: register OBJECT and INTERFACE QOM types before main
+>>>        qom/object: initialize type_table in static ctor with
+>>> fundamental QOM types
+>>>        target-info: introduce TargetInfo in QOM
+>>>        target-info-qom: detect target from QOM
+>>>        target-info: replace target_info() in system-mode
+>>
+>> Please take a look at this CI failure:
+>>
+>> Testing ./build-oss-fuzz/DEST_DIR/qemu-fuzz-i386-target-generic-fuzz-
+>> cirrus-vga
+>> ...
+>> AddressSanitizer:DEADLYSIGNAL
+>> =================================================================
+>> ==5334==ERROR: AddressSanitizer: SEGV on unknown address
+>> 0x000000000020 (pc 0x5bd0beb39ef4 bp 0x7ffe0ad764d0 sp 0x7ffe0ad764c0
+>> T0)
+>> ==5334==The signal is caused by a READ memory access.
+>> ==5334==Hint: address points to the zero page.
+>> #0 0x5bd0beb39ef4 in target_endian_mode
+>> /builds/qemu-project/qemu/build-oss-fuzz/../target-info.c:42:27
+>> #1 0x5bd0beb39ef4 in target_big_endian
+>> /builds/qemu-project/qemu/build-oss-fuzz/../target-info.c:47:12
+>> #2 0x5bd0bf4f1da1 in qtest_process_command
+>> /builds/qemu-project/qemu/build-oss-fuzz/../system/qtest.c:705:13
+>> #3 0x5bd0bf4f1da1 in qtest_process_inbuf
+>> /builds/qemu-project/qemu/build-oss-fuzz/../system/qtest.c:778:9
+>> #4 0x5bd0bf4eef54 in qtest_server_inproc_recv
+>> /builds/qemu-project/qemu/build-oss-fuzz/../system/qtest.c:910:9
+>> #5 0x5bd0bfe18f85 in qtest_sendf
+>> /builds/qemu-project/qemu/build-oss-fuzz/../tests/qtest/libqtest.c:715:5
+>> #6 0x5bd0bfe15294 in qtest_query_target_endianness
+>> /builds/qemu-project/qemu/build-oss-fuzz/../tests/qtest/libqtest.c:804:5
+>> #7 0x5bd0bfe1f2f3 in qtest_inproc_init
+>> /builds/qemu-project/qemu/build-oss-fuzz/../tests/qtest/
+>> libqtest.c:2043:23
+>> #8 0x5bd0bfe71778 in qtest_setup
+>> /builds/qemu-project/qemu/build-oss-fuzz/../tests/qtest/fuzz/fuzz.c:64:12
+>> #9 0x5bd0bfe71778 in LLVMFuzzerInitialize
+>> /builds/qemu-project/qemu/build-oss-fuzz/../tests/qtest/fuzz/
+>> fuzz.c:206:16
+>> #10 0x5bd0be9b3b56 in fuzzer::FuzzerDriver(int*, char***, int
+>> (*)(unsigned char const*, unsigned long)) fuzzer.o
+>> #11 0x5bd0be9e2166 in main
+> 
+> 
+> IIUC the fuzzer mode doesn't call main() -> qemu_init() but a distinct
+> one via LLVMFuzzerInitialize().
+> 
+> We'd need to squash something like:
+> 
+> -- >8 --
+> diff --git a/tests/qtest/fuzz/fuzz.c b/tests/qtest/fuzz/fuzz.c
+> index ca248a51a6c..90f07dcda3d 100644
+> --- a/tests/qtest/fuzz/fuzz.c
+> +++ b/tests/qtest/fuzz/fuzz.c
+> @@ -172,6 +172,7 @@ int LLVMFuzzerInitialize(int *argc, char ***argv,
+> char ***envp)
+>      /* Initialize qgraph and modules */
+>      qos_graph_init();
+>      module_call_init(MODULE_INIT_FUZZ_TARGET);
+> +    module_call_init(MODULE_INIT_TARGET_INFO);
+>      module_call_init(MODULE_INIT_QOM);
+>      module_call_init(MODULE_INIT_LIBQOS);
+>
 
+Yes, this looks like the issue.
+I'll reproduce, send a v7, and send PR once all tests are completed.
 
-> -----Original Message-----
-> From: Nathan Chen <nathanc@nvidia.com>
-> Sent: 12 May 2026 20:35
-> To: qemu-arm@nongnu.org; qemu-devel@nongnu.org
-> Cc: Eric Auger <eric.auger@redhat.com>; Peter Maydell
-> <peter.maydell@linaro.org>; Philippe Mathieu-Daud=E9 <philmd@linaro.org>;
-> Zhao Liu <zhao1.liu@intel.com>; Matt Ochs <mochs@nvidia.com>; Nicolin
-> Chen <nicolinc@nvidia.com>; Shameer Kolothum Thodi
-> <skolothumtho@nvidia.com>; Nathan Chen <nathanc@nvidia.com>
-> Subject: [PATCH v3 6/7] hw/arm/smmuv3: Set default ats, ril, ssidsize, oa=
-s to
-> auto
->=20
-> From: Nathan Chen <nathanc@nvidia.com>
->=20
-> Set the default value of ATS, RIL, SSIDSIZE, and OAS to auto, in order
-> to match the host IOMMU properties when accel=3Don.
->=20
-> If accel=3Doff and these property values are set to auto, the default
-> property values defined in smmuv3_init_id_regs() for OAS and RIL will
-> remain unchanged, while SSIDSIZE and ATS values will remain initialized
-> at 0.
->=20
-> Introduce a new compat for the changed defaults.
->=20
-> Signed-off-by: Nathan Chen <nathanc@nvidia.com>
+> ---
+> 
+>> (/builds/qemu-project/qemu/build-oss-fuzz/DEST_DIR/qemu-fuzz-i386-
+>> target-generic-fuzz-cirrus-vga+0x46166)
+>> (BuildId: 845b9265a3ae1439c62fb86e3bc4973f7ea7c960)
+>> #12 0x7f7fef9a65b4 in __libc_start_call_main (/lib64/libc.so.6+0x35b4)
+>> (BuildId: abd2a4d896fed122b3f7da571746f193feeb86a1)
+>> #13 0x7f7fef9a6667 in __libc_start_main@GLIBC_2.2.5
+>> (/lib64/libc.so.6+0x3667) (BuildId:
+>> abd2a4d896fed122b3f7da571746f193feeb86a1)
+>> #14 0x5bd0be9a8f34 in _start
+>> (/builds/qemu-project/qemu/build-oss-fuzz/DEST_DIR/qemu-fuzz-i386-
+>> target-generic-fuzz-cirrus-vga+0xcf34)
+>> (BuildId: 845b9265a3ae1439c62fb86e3bc4973f7ea7c960)
+>>
+>> https://gitlab.com/qemu-project/qemu/-/jobs/14371480130
+>>
+>> If this issue is caused by this pull request, please send a new
+>> revision that solves the issue.
+>>
+>> If this issue is not caused by this pull request, please let me know.
+>> Thanks!
+>>
 
-Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Seems like it's definitely related to this PR, I'll fix the series.
+
+>> Stefan
+>>
+>>>
+>>>   configs/targets/aarch64-softmmu.c |  6 ++---
+>>>   configs/targets/arm-softmmu.c     |  6 ++---
+>>>   include/qemu/module.h             |  1 +
+>>>   include/qemu/target-info-init.h   | 53 ++++++++++++++++++++++++++++
+>>> +++++++++++
+>>>   include/qemu/target-info-qom.h    | 30 ++++++++++++++++++++++
+>>>   qom/object.c                      | 22 +++++-----------
+>>>   system/vl.c                       |  4 +++
+>>>   target-info-qom.c                 | 45 ++++++++++++++++++++++++++++
+>>> +++++
+>>>   target-info-stub.c                |  6 ++---
+>>>   9 files changed, 145 insertions(+), 28 deletions(-)
+>>>   create mode 100644 include/qemu/target-info-init.h
+>>>   create mode 100644 include/qemu/target-info-qom.h
+>>>
+>>
+> 
 
 Thanks,
-Shameer
+Pierrick
 
