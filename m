@@ -4,102 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92B11CD4F25
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 15:26:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E1F6CD4F25
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 15:47:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNXwS-0003Fq-5Z; Thu, 14 May 2026 11:25:40 -0400
+	id 1wNYGq-0007Q1-Nz; Thu, 14 May 2026 11:46:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNXwP-0003Eu-1q
- for qemu-devel@nongnu.org; Thu, 14 May 2026 11:25:37 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNXwN-00022B-DT
- for qemu-devel@nongnu.org; Thu, 14 May 2026 11:25:36 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-65318dafbcbso9987900d50.2
- for <qemu-devel@nongnu.org>; Thu, 14 May 2026 08:25:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778772334; cv=none;
- d=google.com; s=arc-20240605;
- b=cX+1SdfeMVbFHIHsPLmRylXMLK3pPWtbHrt6ATlqYftmYXE4XIf0dLTJ9OnS1YIUIi
- +kxH9Fz1lkSLqSkE/e8eVsjbVOZhX7nxpd7BPWTHZLFODdsX7dvGrAPA3bFOcYnsxqDQ
- KCrPoHYd1nqC2Ss/Ga4AkCEEYbt/znxhzsqq184c3G4EmVBkQ1jXqYFbGc7GdBzWb7zX
- XK2vNUDGrcrVFJ0uMPj07yC2INtzfkkFLag4rCgQGKJ1S9va88Wo654HsxRIjdr1D23B
- 95krl8I0TxSEu05xN00NAWyEFFdsOndaQV+yQnPu5AjBjNuSl4J4UjL2ZeE57ETZKgrH
- myyg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=1fQE5GLYggpE8y4MRNom750CprjO5UapcY4825ccJ6s=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=d4QylZ+DUFULYFFoMC6JOjEkBOBtKL/UsQCm3SE9CUdPvkF0bD2uyEcqABDhEfWbGW
- ifrSfDaChOYPS/OJPMrzf3hZEPj+UezyizKiUB5b6Lb0IcjUk0cM0clMlaYwXz0OQw+5
- hSvgaSX7vJCUmGHwOriLZ1+yqNU8/S2aVi6D1rmWammFD4R8OLnZDIPVLINARR4AGcQQ
- mXGzs14xkL1gfz0CWGqlPA/YQlH9oZo1HZKf+QMmWVirmWJcVx5nGDg97ExZrrJKHx2u
- vuTFLS6IyaR8OyBsFPtpR4iwhPzCxcHH7iYLBaAp5FmU9MUJSKIpPo4Abj5o2Chtvf0C
- VrYA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778772334; x=1779377134; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=1fQE5GLYggpE8y4MRNom750CprjO5UapcY4825ccJ6s=;
- b=Le/NpPMtpkQRv8IXNTZdyCcE4ZcNkOPp2UJr3oc3RDqhwRBrFvlzKkUgDcg0CZzNY8
- 3edayy5Xv9cxDokOZl/J/hrAJo6Z209wI20jWp8N9ti12T0JdE6H7e2Pz2dLU8ZNgDYq
- 4j3FePd9lOR/XitSSTDkWjAzIwra5C0KYv8x6bTiuGRcoTOktQo9wXg7ARgZb2pnAfyG
- QXKrF2B4yViH6Shs24YXskhdvfMmlqZQcFj5q65ckeMrKqpTad725O6GcUR5xk04HJz1
- bva+hYE6CCiiDgjnnofB7NJiK+lryX2KlElhajX/orHP8Gxdqd8Fcc60LcpGcswAt4EF
- B6SQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778772334; x=1779377134;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1fQE5GLYggpE8y4MRNom750CprjO5UapcY4825ccJ6s=;
- b=lM4EqVLKZSlzpZBdh72KDv5M1+8R4tqBKLmcKSaxFQxT81N/l+Y6Mc9xgbIOQVYH5E
- jE3cxU/rX+8ZTRlhlDLqEGYlW1TsFF1tT3VDIZbLnMQkLzSVLiDU8qpkh+XdqheJz3XP
- sjrwRwoKeyqbRsRGCHJMPgJ71gLSHx3Gy9ZntsJjBSesXPLsvF9XN4l/U2L5hvU/vPQY
- +vNWzeZazkTRc9VAg9bhOWA36LEkYzm+OvVEbp4vy7v6eIW+9e8KeSDLqDU0wp1J913a
- +EGvai2aBL1F/2XXX1K2g7ZKIt2zfdProk0spg73NJFhGEYKBmFaaZ3jooUQ7AYjpebF
- DEzA==
-X-Gm-Message-State: AOJu0Yz0VTV1E9J7xU/zWu0eH8r+m394hQGaor1Dt1s4XbBO81MNc0Wy
- zCeZt6deMcMJvKOW7Eytz9y4DeW4DipoRqutHy177aU5A672dh4j7ALj7BTnE8F8V6g3PyBQgUX
- 1y6I6pl8JgP1MJN5kN11VDwK0vSjW22+LB4WhQR70955g5fJp9563ZhQ=
-X-Gm-Gg: Acq92OFFguPQ89HoilQX/ZzBbm129SAMRJXDNzZr5l+F68Y3xieGsN8IClWYqW/I8ff
- hS9SRvuWfnQiDJBujsFKUUybqGNIOANcZF1jtqfieXGxU9GcANBvR1JEaXM+vw8dbZFlLv4mt/Q
- 6FPesIxM04HTa4RqXikvmwxv8f6AuzyY/K2dfJyOhgY99uaCUFz6LJGNbLACFBYk3UBsuVPV3yY
- wBJMbRXGGfYtrdfRRFKgNFSyEIo7/5fGGI//ZllLaap+LpKuVC6iF1JVjPtEIKMzgUAozePmrFh
- QX5MQwwYjxn0SB5BLnp9hZDwIgJPUKzgbBMB+HrXjlCwORCwkX157LkuSDnpoN0aWqrlTkvuRSs
- I1A==
-X-Received: by 2002:a05:690e:1916:b0:651:b7e2:6835 with SMTP id
- 956f58d0204a3-65df82acdb2mr7217535d50.35.1778772333721; Thu, 14 May 2026
- 08:25:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wNYGJ-000768-Rn; Thu, 14 May 2026 11:46:14 -0400
+Received: from mail-southcentralusazlp170130001.outbound.protection.outlook.com
+ ([2a01:111:f403:c10c::1] helo=SA9PR02CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wNYGH-0003uC-36; Thu, 14 May 2026 11:46:11 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=JuO+DqVWYHbWdqCZ02u02FJI44Znlj8fRwfO0a3niljqOGfvK1nt2pDN+dMXFfCDyZ6OGqtsyuIrNvBO8GDjOqN2yICeRl8KFqhPZcb5QHLFNIriLXVIiKQ1o1u2fcGpWYoB4zOtoEmlcCsDYg8Wf6ETGgOgL17cctped6AXb0orNjQghp47gqeym0TI70W+UgsRR8YIjGToXwm+qvOf34KZ1CHIdp4N3JgyP4AYjSmyp64nSA2IhhfNsPS9VMWL4c2hBjwxtu8STlt89BbbGKVwFnxQ2gcxwSPDH4qw2p/1ofQafnb8p32rsS9G7/48L/F3hxNEeUBFm+KhQZbCag==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=yjrtBNMvwhIXI6ueUzoFsYBxt6+0DgOHXtI5Nvp9tJE=;
+ b=Z6++IFkDnnzaYVr+f2SyZDX44zg/mMyfxiebIw9Lco6fFsZxIugHp2I6E8PU6itTBZ99GQeq+LwesbLT1ZMh4AzFrW9mJw8ZX1bmqEiS/ZBWVbTNSxH9b8gy5/JNiS2apAww6mfK8ON6BRrGEMbwlvojYlsdvfH568bbbR5OMsx22jx+gfKAE7w6o55dJZLNiLdN2i5zmRtJX/zS3JtUeHveJFlz199K6OI1NWTZFeV8HkuO7WYZuTEFSD04bJ8ao6yDRZ13Wy7OnvqiARJtJpnftsV2AZzD3lJvhdbSRfAZYkJczhwvNEq1AjRcYGSlouU8MX3jprI54lNLgg+U7w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=yjrtBNMvwhIXI6ueUzoFsYBxt6+0DgOHXtI5Nvp9tJE=;
+ b=L4KZA7zwCe/H4LKj3Eoc7VWrvJ0zUBXA+318eGMnQp0hGD9phXrPJ+LpSrt3HfeEUDxA9XhFoq/tx4hdQyJ30osLixk+vS0bhcF7SGtMp6FWSuNbYNZhZYwp+ilUETYIasSOzKHW9Rg5+vqrKWt9j1amBBNzSJfMIgd/wJ9IOKMGKiUo42QoOC67VyZoH2FcduE1J4gC3sZ8zmPFf6fS9VLJQ/USoHzlPpY88uLjjOxN8cDe55/rIMZifGmRpwUxIVmOhEzsOpHybO+uXlbm1GPFDOsz5qVzzm3iFbY60R3W/Y3IVlbZgn4kXVCtH3gaCAdT5zvMaDGo2Le0FBgpHw==
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
+ by DM4PR12MB6085.namprd12.prod.outlook.com (2603:10b6:8:b3::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.25.19; Thu, 14 May
+ 2026 15:45:56 +0000
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de%6]) with mapi id 15.20.9913.009; Thu, 14 May 2026
+ 15:45:56 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: Nathan Chen <nathanc@nvidia.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: Eric Auger <eric.auger@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, =?iso-8859-1?Q?Philippe_Mathieu-Daud=E9?=
+ <philmd@linaro.org>, Zhao Liu <zhao1.liu@intel.com>, Matt Ochs
+ <mochs@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>
+Subject: RE: [PATCH v3 6/7] hw/arm/smmuv3: Set default ats, ril, ssidsize, oas
+ to auto
+Thread-Topic: [PATCH v3 6/7] hw/arm/smmuv3: Set default ats, ril, ssidsize,
+ oas to auto
+Thread-Index: AQHc4kaN+4XHgoTd5E2gQedpKngDSbYNrOJw
+Date: Thu, 14 May 2026 15:45:56 +0000
+Message-ID: <CH3PR12MB75481623DC20A03B6550C7DAAB072@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20260512193520.3109172-1-nathanc@nvidia.com>
+ <20260512193520.3109172-7-nathanc@nvidia.com>
+In-Reply-To: <20260512193520.3109172-7-nathanc@nvidia.com>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|DM4PR12MB6085:EE_
+x-ms-office365-filtering-correlation-id: dd06d767-41f3-49b2-5e2b-08deb1cfe354
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|1800799024|376014|22082099003|18002099003|56012099003|38070700021|11063799003|4143699003;
+x-microsoft-antispam-message-info: 8LPmnPckoFY/IQiZmyJUfb5WYJToWAOLcOBVSd237gPd04+5d1nwm4ge0eXMfBs8/J+mhsmDGWlxsCgAW0MAEcKAzYyxB7iYVAwLulD9rTF1OpUVj0eG6yHQY6Hz5TFtUgnxPkfzjcvoAAXqoBX+1q9j3k1Bp55Jlld7Mg2fUMSYSv5ewk+AYUxtkjntvYBBl4GSx0US1w/yNbPbzvfhzwbvb/wkdu6XEFzb6vqzxkVyMO4zIcLvDX0C3fKbQYVzTC/OjgZC2s7bT4HMLHXbguCX8eWccZlQn1x6m81fPjWszoN4UFnEnb1q9xysIIi/JogXYg19LOznTyr2Bfb1p3QV4zauJk4oXbylce7Yys2MG8tXdXjnx8cY8od2KokCELUe48q95A14NkrC3JpMSr3hy7WWl4G9DtIl/8KlTAQZMAu+Ux/3Nxm7ooMzJfcsjJCVk7nW4q1xU5RA/pibfvB+AEVSOF6ofGupJ7HQbk9uYibbEwKn+48d7sepsPPDvlbS0pVYh1TacIhaCRiBzXW1i2KL1tEEiylitk/jaM3R3xJ0D/HWJGZw2cXUmKqCv0LeEyrlN2PEeqlfTRewhouoPDl/pJWNzIUcnjzE9w/bUGnwOQjalgMFk+eR7/JrYspOYOJz6QJMSK+5qtAQbEQrHQQN7aWYp9FqxLvWIhs8i6QB4p0MneTfiXVzTkTvrNSJjNeqEWE12SEPiK9nkk32Bf9AiMxG7aRwTPm/TNtcIzrSLY9g74tfhGUeIyN9
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(22082099003)(18002099003)(56012099003)(38070700021)(11063799003)(4143699003);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?fLBShDWXDDj2ihoqt+yk/LsJJNXnUtwInD2gx+ccG3idxOpik3U/k7KhFi?=
+ =?iso-8859-1?Q?2eL3+JtSdabM9kQV5HAIHWb4cZ5RAq8/dCgu0izKRb/M5ji0mDBw0v++//?=
+ =?iso-8859-1?Q?sYV+gCxBPTI1OZT0HR4i4R6j2ahfUQI0Ovozu37hVS4v7xXl4XGHDNJkzk?=
+ =?iso-8859-1?Q?8/TGLwqe2vXBx+kg7b47cZYYmR12Zo9iO74SNoTtHshNUZxoyk4EhdUhY1?=
+ =?iso-8859-1?Q?oLP2moz1NwzS/7HWc0UR0c70mbD7xy1shXnAJm85gF99ZJoiJ55rEK8jw+?=
+ =?iso-8859-1?Q?eb3xy/hxR1gM2VDJG3emzexZP5ZWOLUtgGtpfQeCNppcLzHN3N+P/ODAer?=
+ =?iso-8859-1?Q?WFZQ3pR3fCK4XLkWrwEs2r+hWeeCGHGG/S5pkGjYGY5RQbVBHa8T7+nlQk?=
+ =?iso-8859-1?Q?0ZBIZAvN0c8wlSyScYVPZCqvFMsGKCFCJ4kZ7Mb2L+oAbklgCTaDcpTWer?=
+ =?iso-8859-1?Q?RUevEtZeYvU5MtM/Ab84Rsv9wAXpJPIcOOOGo8Xd5yzFdZIA4UZfXU9UaZ?=
+ =?iso-8859-1?Q?MbhyK2OaXJ1LytI5OKt8VuItPVBvw1PkFOExsZWrLObjkhtaS6creuGHGU?=
+ =?iso-8859-1?Q?RcjskgZ/vdhZ2ffoY6G+RDUMYUj0EenwxnMPl/e4KmjMYDA4iAGvF2IeFn?=
+ =?iso-8859-1?Q?PeJ1KtfOk3P46ZGq7jtA0keyIMx7IZVxdbCwy78pLe8O1s9RpEJlGam76X?=
+ =?iso-8859-1?Q?UyVNakQF22V5HezBTBYzVwEuV8URUbaUKN64k8P8G5El/0yVZlVr3ceF4X?=
+ =?iso-8859-1?Q?JW4JGtFZWVhbD9I8Iqa/7Xdvs30cwdTfgEG6cPBO/QIfxyh44tD3KWntiy?=
+ =?iso-8859-1?Q?tlnl+8GKIdiQ6lAN2Yyf+f2fr+Ad9BvhwS6WYXbpzKvgRypyb9g9oxAY7r?=
+ =?iso-8859-1?Q?3PtQyEUUa2RfT0kK3v6n5rJtQKuXjo6gvQN9HCLIb3L4cTc3E9i9jGQF1O?=
+ =?iso-8859-1?Q?s488xCcJY5/qpE+6d/gdaDcyKQqIOAsRTYvg31YOR5ssXx1PJbNU83yZCh?=
+ =?iso-8859-1?Q?HL3MAC+pOZLFZKPwH2LV/rfIvHJVxbjpXLw27OBtR/URN37FRL4ggsLSLj?=
+ =?iso-8859-1?Q?Q4ArxTnTaciTfDm1NM5BLYoKnTXRIqN0iJJkkYadWP00KpvCKpqvpqCMDh?=
+ =?iso-8859-1?Q?n1J/HXUlySiXC67mecWFVL/QKV1Ip3WHRlAWNU3eMvy5+bdeFDMMpkMfSd?=
+ =?iso-8859-1?Q?yj0/WDttC3fEw4WMHDIFPd1D3VcdQ8AOxwaHWFMOWKU5O3YrkW1F8l5PAf?=
+ =?iso-8859-1?Q?KnMLMtJHQgVYHD2WcrrXq0anDMpBU50wLeXiXesgBBfPkJzw+q8Z5YfDNN?=
+ =?iso-8859-1?Q?uRjxR1xUlFcrIbL/Rh59eEKwu4yWi4/4s4JLCHtBI5sIBGz19re+pmAmvD?=
+ =?iso-8859-1?Q?iIdmuYA/zeKdzkYTNumReW3i6C+vvovLBlWMzbLFvdQC/aLPG/arS7Hip3?=
+ =?iso-8859-1?Q?MSgPjUkhVj3O69L1yXmZUTHFeDLkY2AikPlY+vFV/TVyOOPDd6NOwh/r+5?=
+ =?iso-8859-1?Q?qXJauQ6a0e2QPkFR3uTYRwj5eTb8z1CVqlQU7qipKNB/XYmESJHD5VVTZU?=
+ =?iso-8859-1?Q?sQOLBiiK98D33LNr0hRh2lWtr3AhTJxwIewfQxKgtujtJlj+5HtKiz5n45?=
+ =?iso-8859-1?Q?pZuhBBYmauD8i2LOL3LHSbI/+0P86toLtXNecVP1hVGBDGg44/hBhoc7/L?=
+ =?iso-8859-1?Q?ilM1qWpLBdggie6mTrMz4G21KZkwuz24cWk+8/49sJW+dvd/+cFai/ivf2?=
+ =?iso-8859-1?Q?mzq3jEJpZjiFpmv+gn2ZshDKcr4OfgGo+82tHW75vx9P4CQXbbauU/BFQD?=
+ =?iso-8859-1?Q?YBgJdx7v9A=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-References: <20260507234413.643512-1-richard.henderson@linaro.org>
- <20260507234413.643512-45-richard.henderson@linaro.org>
-In-Reply-To: <20260507234413.643512-45-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 14 May 2026 16:25:22 +0100
-X-Gm-Features: AVHnY4JTnCXd03DeiNVQI3JuZzcm101C4dpViVwLPzUpCFOqbGQ87_XgyWov2j0
-Message-ID: <CAFEAcA8U_h+L0XKPFVKF5-+pq0bpDhrh8ahhiec4NAEPwv2KVA@mail.gmail.com>
-Subject: Re: [PATCH v4 44/60] target/arm: Implement FMLALB, FMLALT for AdvSIMD
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: dd06d767-41f3-49b2-5e2b-08deb1cfe354
+X-MS-Exchange-CrossTenant-originalarrivaltime: 14 May 2026 15:45:56.3260 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: lA4jBEJa5xksxPJoBaEal5LpfXX3f7s9zBuFDq5jo8okikdPsHgj/5cb1VTwh24mUvJaBR10J0ZObdYAq6JqJw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6085
+Received-SPF: permerror client-ip=2a01:111:f403:c10c::1;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=SA9PR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,82 +148,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 8 May 2026 at 00:49, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-> +static void fp8_finish_fpst(float_status *orig, float_status *tmp)
-> +{
-> +    int e = get_float_exception_flags(tmp);
-> +    float_raise(e & ~float_flag_input_denormal_used, orig);
-> +}
-> +
->  static void fp8_finish(CPUARMState *env, FP8Context *c)
->  {
-> -    int new_flags = get_float_exception_flags(&c->stat);
-> -
-> -    new_flags &= ~float_flag_input_denormal_used;
-> -    float_raise(new_flags, &env->vfp.fp_status[c->fpst]);
-> +    fp8_finish_fpst(&env->vfp.fp_status[c->fpst], &c->stat);
->  }
 
-> +static void fp8_mul_finish(CPUARMState *env, FP8MulContext *c)
-> +{
-> +    fp8_finish_fpst(&env->vfp.fp_status[FPST_A64], &c->stat);
-> +}
+> -----Original Message-----
+> From: Nathan Chen <nathanc@nvidia.com>
+> Sent: 12 May 2026 20:35
+> To: qemu-arm@nongnu.org; qemu-devel@nongnu.org
+> Cc: Eric Auger <eric.auger@redhat.com>; Peter Maydell
+> <peter.maydell@linaro.org>; Philippe Mathieu-Daud=E9 <philmd@linaro.org>;
+> Zhao Liu <zhao1.liu@intel.com>; Matt Ochs <mochs@nvidia.com>; Nicolin
+> Chen <nicolinc@nvidia.com>; Shameer Kolothum Thodi
+> <skolothumtho@nvidia.com>; Nathan Chen <nathanc@nvidia.com>
+> Subject: [PATCH v3 6/7] hw/arm/smmuv3: Set default ats, ril, ssidsize, oa=
+s to
+> auto
+>=20
+> From: Nathan Chen <nathanc@nvidia.com>
+>=20
+> Set the default value of ATS, RIL, SSIDSIZE, and OAS to auto, in order
+> to match the host IOMMU properties when accel=3Don.
+>=20
+> If accel=3Doff and these property values are set to auto, the default
+> property values defined in smmuv3_init_id_regs() for OAS and RIL will
+> remain unchanged, while SSIDSIZE and ATS values will remain initialized
+> at 0.
+>=20
+> Introduce a new compat for the changed defaults.
+>=20
+> Signed-off-by: Nathan Chen <nathanc@nvidia.com>
 
-The Arm ARM 1.5.5 says that FP8 convert insns and FP8 mul insns
-have slightly different fp exception flag behaviour:
- * neither updates FPSR.IDC (input-denormal)
- * convert insns do update FPSR.{IOC, IXC, UFC} for Invalid,
-   Inexact, Underflow
- * mul insns do not update IOC, IXC, UFC
+Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
 
-Perhaps squash in something like this ?
-
---- a/target/arm/tcg/fp8_helper.c
-+++ b/target/arm/tcg/fp8_helper.c
-@@ -55,15 +55,18 @@ static FP8Context fp8_start(CPUARMState *env, uint32_t desc,
-     return ret;
- }
-
--static void fp8_finish_fpst(float_status *orig, float_status *tmp)
-+static void fp8_finish_fpst(float_status *orig, float_status *tmp,
-+                            uint16_t squash_flags)
- {
-     int e = get_float_exception_flags(tmp);
--    float_raise(e & ~float_flag_input_denormal_used, orig);
-+    float_raise(e & ~squash_flags, orig);
- }
-
- static void fp8_finish(CPUARMState *env, FP8Context *c)
- {
--    fp8_finish_fpst(&env->vfp.fp_status[c->fpst], &c->stat);
-+    /* FP8 convert insns don't update FPSR.IDC */
-+    fp8_finish_fpst(&env->vfp.fp_status[c->fpst], &c->stat,
-+                    float_flag_input_denormal_used);
- }
-
- static FP8Context fp8_src_start(CPUARMState *env, uint32_t desc, int
-scale_mask)
-@@ -597,7 +600,13 @@ static FP8MulContext fp8_mul_start(CPUARMState
-*env, int scale_mask)
-
- static void fp8_mul_finish(CPUARMState *env, FP8MulContext *c)
- {
--    fp8_finish_fpst(&env->vfp.fp_status[FPST_A64], &c->stat);
-+    /* FP8 multiplies don't update FPSR.{IDC,IOC,IXC,UFC} */
-+    fp8_finish_fpst(&env->vfp.fp_status[FPST_A64], &c->stat,
-+                    float_flag_input_denormal_used |
-+                    float_flag_invalid |
-+                    float_flag_inexact |
-+                    float_flag_output_denormal_flushed |
-+                    float_flag_underflow);
- }
-
- static FloatParts64 f8dot(uint64_t a, uint64_t b, int n, FP8MulContext *ctx)
-
-thanks
--- PMM
+Thanks,
+Shameer
 
