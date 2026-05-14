@@ -4,103 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 784F7CD4F25
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 14:17:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF75CCD4F25
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 14:25:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNWry-00051Z-EV; Thu, 14 May 2026 10:16:59 -0400
+	id 1wNWzN-0006RL-2s; Thu, 14 May 2026 10:24:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wNWri-0004x0-65
- for qemu-devel@nongnu.org; Thu, 14 May 2026 10:16:44 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wNWrg-0002WA-86
- for qemu-devel@nongnu.org; Thu, 14 May 2026 10:16:41 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-67c4aaf76ecso2007839a12.3
- for <qemu-devel@nongnu.org>; Thu, 14 May 2026 07:16:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778768198; cv=none;
- d=google.com; s=arc-20240605;
- b=hNK4EWkrsna/fgOdLGWUaeIPhP2R22fLX6O4leDSrk4gQt73Ex6gPzP3WpvCPfL7sK
- X3Nmlv6iQk1PDaVi9z6pA94J/4HZIr3qwEMkSzGN1CipVAkUTmEaGu0Khdf0eTQ9zdvD
- +QbG9PSHXmsCvf0obbjQ6AHSnCKZYechW564BtD5+vayGhvklhM/9ilvzY4ZkVAnxEvB
- cpxQHJctqb1WysX8RFyJAXUX2HgN48L/MzszhrngzCvRNetBxtuNhkigZbvQMxWWl/Ok
- k0w6rMnBxnUejGP4XjioX/9RB2XgMJOEF5dvli6UvrWk5GTMSA8F6KO5xneI6uxNxm8w
- q05Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=PjXORPx5Peg6zIxSFMU+GqvyYI9kAzUSokiTLfFVI5g=;
- fh=ynMZpoLdc8EcguBEfEqlF67vL8jpBgF8ghejmEGS7cY=;
- b=cHkpzwBOJHBlOFH6HKDUDQtDETSFttUdYGZFarHHp5xVatjGr9sikveWXwH/y4Tp11
- j6j9CKEB0qCCCsoXFKZ4przz18kepQbBwVquCOj6RFwrLd8d5PntYI31xVwTHaJ6E+Bv
- UDfiikUkz0hZV0wQNAeRdpGqzuHMyYF+7qhC3qbyv0Og8fNfBif05FYXPUeP/WBdiPgY
- ez7EsyplIg5dzLgew5E6Ms3unfp9XOiQDwih6Cp0PKB+wlcxL7U5oo4AOhBdkqCldL6+
- SDdxVrQBs+NfFiz40jle9NzJ5yl9AlQIuDjufxh2jpNuDDwkNbVIL1WQHzOLKv1pdnUK
- k6UA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778768198; x=1779372998; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PjXORPx5Peg6zIxSFMU+GqvyYI9kAzUSokiTLfFVI5g=;
- b=JnMn7YUedHtQmTpwA4PAnPuRqtN7hyz64EMpwp06PRMfhBOKNcctt7jkhsq/Vv5mTf
- PsOqr0pUVQ6rRV3fE9wG2VGIGKbllLbpBJbClA1dCzgbnMFw927Xbte5UyIgTaHCNIBa
- h2WJ20ftKdPUOgWaM+DJTygPJho4q8GMBSqAUeNBqkRaQUEoFm7SEngAx0XmjlaBSU5w
- X9gTT1rc2Psx4sASD1BgcxPYHq4hScy1R1QplnSZacZrEJMXVi7Vj0zg6RU4Nrj05pmy
- LjyE6qvbVzxyMRnGSA7LqNXHz22TRv3pbPpRpi2ykfmf6gkr6UHLAisB/0/4YLtF60lE
- OaxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778768198; x=1779372998;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=PjXORPx5Peg6zIxSFMU+GqvyYI9kAzUSokiTLfFVI5g=;
- b=EVc0Cof//YEHj4k2/qRSaDx4JIcl06t7joYXYZlWESjtLDC7ZL7rE40L+n8uNttrjd
- m0F5NLoSrEKVAU4Auc7eVKKXc+nu5FYKOBkLiq/+zrsTweX1JPirLWVHfAetNUInmYFB
- Zf0jujYq9DiXeCK73aAbVedYXBZ+dSiptNoOv1sM4SPbcX/WLkNmBUafAPZAG1MRGhhd
- NLSvRpvR6uPvLLQ2usYf0PQHlkbHqx2qBqeT9h1/WxJ8Jbl9p6hHJWIjaNUPhOpqgVbu
- YTLe/OC/0M7y/BVEFofXZCb0YB5ngNB4StgVg7EU0ZOwmudXiowD2guOtpowfsQ2aV1o
- fkAw==
-X-Gm-Message-State: AOJu0Yy4d67zN9CJ0lkNtScDGRaSAClxBUE2P2nEUsINjfa2Q+QHxA9C
- DD7v1GTMIbaNTA6m3Lc0J4TXOqDq051LK5McIhRPxhRXDglkK0xMHYo8vTkanz0Xo4ugchuT9TK
- EUZAOeDurqECgbIJcvmaHGQaWmLD3oxw=
-X-Gm-Gg: Acq92OEPrbAuZktjD+CBN1iNwkiVHtdpjCCyVgGw93bwKly+mCVL1dbcTE0yFr43zX8
- SjPqrYDrCRxgBQPaq1l2jQ/hb4btx0RNexmardqAyGMSLWyEUYIIVQZ2ALV279w+KPrKQgH6pMv
- atkXonVgQtrncFjxjFZJAGgkzMUvm6Vr7BbKqf50m+F2nNWLur0RgZduRKb2KcnQozBFQUhghqh
- P/T0Xkf+vJ6NnomYmLwDbOBHhQdBsGwi/tdSM9GejKNCn/yj2ildMEJuTlfW5buOQ/4pDPT37Vg
- dVGY38SbD/mZpPiSXP/WgbunDzhPl//6Dsn9Ug==
-X-Received: by 2002:a05:6402:c42:b0:66d:d0c1:f87b with SMTP id
- 4fb4d7f45d1cf-682a700add2mr4110096a12.10.1778768197541; Thu, 14 May 2026
- 07:16:37 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260512183030.1431103-1-pierrick.bouvier@oss.qualcomm.com>
-In-Reply-To: <20260512183030.1431103-1-pierrick.bouvier@oss.qualcomm.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Thu, 14 May 2026 10:16:25 -0400
-X-Gm-Features: AVHnY4KQWSQKvW2YI-xPhDpdSHTnYSgQMe0X-izV9vwTZppyg5JTFBvVF-y4htM
-Message-ID: <CAJSP0QXjoF0qPpNq==p1fqTHMWQdezzQLHKKwm6iUBXHdPr-fg@mail.gmail.com>
-Subject: Re: [PULL 0/5] Target-info update for 2026-05-12
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, 
- richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wNWzH-0006Qo-Pz; Thu, 14 May 2026 10:24:32 -0400
+Received: from mail-eastusazlp17011000f.outbound.protection.outlook.com
+ ([2a01:111:f403:c100::f] helo=BL2PR02CU003.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wNWzD-0005Xi-Hl; Thu, 14 May 2026 10:24:29 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=n6PaliVFUiAdJO3qXc8RqStfbf3VCS5QaOPXSUkUZJ+w0pHIBcMKm9a5uMRHfYRagnmi3ggqoCmUC8PQfnj2+ppSING2NYc+nEX6xtp7YAjdWN1+ute53NwaGi8H+Z/fgXPC2m6eEP5C7TT4VHuHjl23m5tihw3cE/3BwSrnHsSkpfecWL6i37PUZt1EGrklhYrgm9zE5HNNWUDpKhB0paV5M+xVZoN23SfDB8AJvcUOTDaPP/YEH8NHQLoy5G38VXRy+v6oYMyGwFRG5cfszSH6oQ78VDZ6C2rCn/fhQFo86dRSRNsKvJ+2OgaC82aFOAZqXy1Ju9U7rtRV1OBfgQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=sKA6eW9tuAT33px3mqITlPG1UFyfm9WGd5ZEbb+BAas=;
+ b=EUgXy16bfKFQ+5tYB08UUXgWYOqxJ1uv+FPt/IEb07EMygAKeWW/JNbR3SAxT5MiXKYzcWrs+38I7R/0DlrQ9SWMJ/jIva8dvJ60u/NQ5XEp3xc7w+scuBwbWHgUlH6YJwOkGECHOSaDpNUbM8ov5BgTFGI/hHhYE0CiZStpJzn91pPGJAx194NpNnA6ZMmsp4/gGcze2pJWudC7Y05yj2t8J1CVbRvNMB0NFJm0arTOGcDXYMFMY4czKneLD2TmUOXxPGaDm4EDw89h5xXOpR4W9ofSkU6jWqTiy/GA7f32KgZk4iMtxY7uxwiwAHwuFi3OJn/j5dDXCTwxfrxJww==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=sKA6eW9tuAT33px3mqITlPG1UFyfm9WGd5ZEbb+BAas=;
+ b=c9YSras+yrehALAG8s+2qVy1Il8miOh+cvQZ44dkk7tRLF76v3I1LWUiJT8MffXWC/mONS9yTDSDlLU+E4X+UmqCJ4B0RTkN8KXmaxMYMVAQkQzqkNzJCWQ7hTI4nemAT99RAIxYB9hDCiX+1T0vqWsnq9M1i3KpO+a3tX0ZasHHqvoTts0Q4xP6ltwG+DURVUQdcCQUdzxAqxAXoz9ePivtBNCMPsUisXHvnWWAR4rYcOumNFC3O2lFMa9FS5W5+nG5ckWBHZFqUd9ZBH0dH3uaq6qFNs4V8FkQjV170OWMjFpZX9OyUz13lQVX9zBNkOuRSNj3GTDqF2yNq62OaQ==
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
+ by CH3PR12MB8756.namprd12.prod.outlook.com (2603:10b6:610:17f::8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9913.12; Thu, 14 May
+ 2026 14:24:18 +0000
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de%6]) with mapi id 15.20.9913.009; Thu, 14 May 2026
+ 14:24:18 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: Nathan Chen <nathanc@nvidia.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: Eric Auger <eric.auger@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, =?iso-8859-1?Q?Philippe_Mathieu-Daud=E9?=
+ <philmd@linaro.org>, Zhao Liu <zhao1.liu@intel.com>, Matt Ochs
+ <mochs@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>
+Subject: RE: [PATCH v3 4/7] hw/arm/smmuv3-accel: Implement "auto" value for
+ "ssidsize"
+Thread-Topic: [PATCH v3 4/7] hw/arm/smmuv3-accel: Implement "auto" value for
+ "ssidsize"
+Thread-Index: AQHc4kaKQw5twfxRDEWJCCb9Ajz/VbYNlDQA
+Date: Thu, 14 May 2026 14:24:18 +0000
+Message-ID: <CH3PR12MB7548125AB6137EF2D9954810AB072@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20260512193520.3109172-1-nathanc@nvidia.com>
+ <20260512193520.3109172-5-nathanc@nvidia.com>
+In-Reply-To: <20260512193520.3109172-5-nathanc@nvidia.com>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|CH3PR12MB8756:EE_
+x-ms-office365-filtering-correlation-id: 05d43211-c564-4d49-296a-08deb1c47be0
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|376014|366016|38070700021|11063799003|4143699003|56012099003|18002099003|22082099003;
+x-microsoft-antispam-message-info: KAbPF7MYH/5C7mQgrr8hNNO55Bwu4udoi/T7rHYkrY9Dt/mtFciRifciz8+PiGeieyZj39Wik/MjqCuDWf4gL9UwD/XS2zMOxuGlNpr7++Ei5rYV237fhS8epW97GvqgNHiF/28qj1YffuQGcP0w7AUq0s6rwJwabLj0Nadq78FZRPoaHEWQ81UaVbhAmFe3ewT+ohILms4rKCi0ZkySdJz+Kuuq6Um2GbgqA4xAo/WeDlWe+Ot306YYoa8wR5hHGjRD6kmXgSkHWrW03R81ALBpBZf6ii3bTyG7Q+gLZk6YfsWCuMiyExUUaOqXNbfJTKssPr4hKlTILFFGVnBR4nubXHAotIqBxllIFszKCNuYFz8utaoR4QcYL6upLEMyseINTdI+utb4hJjArXffc0q965omyqp+zmcxepec4m/RLbJdaztAVVXJ3+pMgEs2QiGlg1m+IuTw5GPvDb8KH6nViF+wbwkDYjhFjD/WKgaLWM9Fs05gubK0Dv5y2Eq0+etlkmZfSCvTvBlARGSYWmwHGt17HLfhRgGeqsYhXh/WJdYQ7OJUk6mxlsDlYZLhx/QX6Tpbg4rX6Ov4j9dRNe1O89v8Hw/GVBgwkaMv0gMf4B7Oh1N/Rgy5GvquDKfPw87gSKmTK1JSaKrCgVL1qRNaAbRYG9OJwKVgsWzmlXbNfYMDBE4tiYafhaMGa3GpwUwpVsDIxLQVz/Y8UufSjeKeJO+l+PbUQeaBOrCZePizae3ePAf1nowA/fYOckrU
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016)(38070700021)(11063799003)(4143699003)(56012099003)(18002099003)(22082099003);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?AZIl+LOYhiiIR1CblQqbwj5u8ZPuThchd3OM4R000t8fvzz461e4maxiTT?=
+ =?iso-8859-1?Q?iL6GZCDUw/ioEh6ePLmuTUVJ7yNp2MNuacKNxioQ0A3+eOtr2ax+OYoess?=
+ =?iso-8859-1?Q?eAJtnQpk1T2WvOMQ7ndQRLhO00Rprpn1tCznDi0WGVN1jSj2/CmNdZBeu/?=
+ =?iso-8859-1?Q?hSd0V4wP8U28A4uJxM6Mz2AMk5ay5vyTrd9HAeRN69cf+mJFFYIFydgWNa?=
+ =?iso-8859-1?Q?7zGmo2osByVQATwmKqWyrzVugCKe1xJgXHIBm0/9KKDSrqXD/W6ArDK3d6?=
+ =?iso-8859-1?Q?GLHehBkFhvkoxtwGeFMqM1fmupFMMIvcUojT6Ftse9gxxo8vSlHRkmYXbW?=
+ =?iso-8859-1?Q?GWt6H8H+QSHneBTafknHoHS9cTjNBa69jom/dR7oUEjBd6BqxDZdjRG5Wp?=
+ =?iso-8859-1?Q?QfLzk9VIUF638Ogy1dcvb1A3XC3dQjHJNZ+JPHXAEi2NPsrcWlD7QjobE/?=
+ =?iso-8859-1?Q?tcO3jG2RwKUvQbgN5ii1F/1iN0vxt/px3wuStHf38l3e48Je15gn16eTqE?=
+ =?iso-8859-1?Q?GXC+lU9WobA3iHf8r6c6tV37vfYI9SJ5vXujV84cKXywiwuHYLopkXA2g4?=
+ =?iso-8859-1?Q?xeDxQ4ain2OOStxOxRV48n3SwzCIishXXcrhSrsHMDKAg9um0kVRA3yBd0?=
+ =?iso-8859-1?Q?Ga6EEt2CrstE3QIESaTu/22mJy2i+yj5U78fmpoQmDXIsozfyjRyYQkbnv?=
+ =?iso-8859-1?Q?OnWiHXnNSuR4WPAeCWdRBjHhmgLj6AhjJgFZT0r9aNixesZS8/KjubJi6N?=
+ =?iso-8859-1?Q?mUN3oGiQiLREHNtwbzPko8J/mwo/h/5/ZPWWgK6uY0UfD2qpMBbTSL42YJ?=
+ =?iso-8859-1?Q?/3ouZzbDO/ENbhQHg+ua+1bb3k1AbvYohzgVLGKSnff0VndLosWAUQslHU?=
+ =?iso-8859-1?Q?Ni68nRbXyF3VNcCeaxlBhaT57PHFWMXZu1U8L+KyO32PEULJ9Hs5hVzpq2?=
+ =?iso-8859-1?Q?HKgvyfsMWHuXOiiq8A+tyl2yF9rs7+DC9eFycJgSCeRSdVI2SdsyNI+R9e?=
+ =?iso-8859-1?Q?G8gRY2vGmYs3w4E6/XXd1QBJsppC+H8nCeEM2rW2/aBeB3Jk7wsEGIgGlH?=
+ =?iso-8859-1?Q?ooHY3RRR3gYNuIipYW1Ra1sitWAsQZ6lE13pqt6Euqho2sH3VEsDV4BKw7?=
+ =?iso-8859-1?Q?q957V+o55x3qflOc5tAy8DKCRuaBqZLBL+w78mI+603R43DSZe5uBdxmJ1?=
+ =?iso-8859-1?Q?lR7JK9NG5UaB9itBlbxkGoWkdG0/+KENkNJWVivffHTW5RYBb3QpdILIhZ?=
+ =?iso-8859-1?Q?J1E8r5CHyPMINREdYxgewtrfJevt/bccljgUaIfcgPjuaLengIikD1liZD?=
+ =?iso-8859-1?Q?XiUi16TMFrI3jBDLCE+FlwUGeTXKTGbR3TU0KeWwaoVPIr817ZgmrftcWI?=
+ =?iso-8859-1?Q?zdZRvuN2chkjoZAOM/+GfsWT7HAYW6weBFno6uMhKehd0EGRM9sw1LhjbM?=
+ =?iso-8859-1?Q?RbrIbt4bFXoKmgnTa5Xh6ndZ+8h6lwChqPRY0rLkW0FxNFoeKfbwjcRbq5?=
+ =?iso-8859-1?Q?GHjpvsqcyO4PMORGdOqvQyNcr3cEaMe58FHTiA9H0chlv4GMzG2bd8yvNr?=
+ =?iso-8859-1?Q?GFer2GfCqRMhHtRlezaKrJCSHC/7eV51Nwy9lrpE0Wrwnoxq9cAm2xdKui?=
+ =?iso-8859-1?Q?mLBy7xAX+Lsu36s/DcwwaclRZ5uAdJK4NdYWHz3N1mA7JXOiwyNQSnt5fw?=
+ =?iso-8859-1?Q?JL2N6HcltlQjqHVAfx9mke9A16HtZXT11ZZB5GkjuU8o7BZc8I6BYxH9Ux?=
+ =?iso-8859-1?Q?kwJ5sUxiuxDzIi5bQVpEooMzr+baHhACL93osLpCKk9paeLZWLF1xwDQ/j?=
+ =?iso-8859-1?Q?plsEba7PgA=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+MIME-Version: 1.0
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 05d43211-c564-4d49-296a-08deb1c47be0
+X-MS-Exchange-CrossTenant-originalarrivaltime: 14 May 2026 14:24:18.3145 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Kbk9V1guu7tXfO83uwD1GPxlRoEL6ltnkWZPaz7SPw917gQ8wwm2jP65rGoXuqzUU/u/ZHMZTNhC1YUY9Dr6KQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8756
+Received-SPF: permerror client-ip=2a01:111:f403:c100::f;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=BL2PR02CU003.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,113 +148,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 12, 2026 at 2:32=E2=80=AFPM Pierrick Bouvier
-<pierrick.bouvier@oss.qualcomm.com> wrote:
->
-> The following changes since commit 5e61afe211e82a9af15a8794a0bd29bb574e95=
-3b:
->
->   Merge tag 'ui-pull-request' of https://gitlab.com/marcandre.lureau/qemu=
- into staging (2026-05-11 10:49:53 -0400)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/p-b-o/qemu tags/pbouvier/pr/target_info-20260512
->
-> for you to fetch changes up to 0fc2022c6331c5d5bdd9060c73d067abba3f5515:
->
->   target-info: replace target_info() in system-mode (2026-05-12 11:29:18 =
--0700)
->
-> ----------------------------------------------------------------
-> Changes:
-> - [PATCH v6 0/5] single-binary: deduplicate target_info() (Pierrick Bouvi=
-er <pierrick.bouvier@oss.qualcomm.com>)
->   Link: https://lore.kernel.org/qemu-devel/20260512150208.1167711-1-pierr=
-ick.bouvier@oss.qualcomm.com
->
-> ----------------------------------------------------------------
-> Pierrick Bouvier (5):
->       qom/object: register OBJECT and INTERFACE QOM types before main
->       qom/object: initialize type_table in static ctor with fundamental Q=
-OM types
->       target-info: introduce TargetInfo in QOM
->       target-info-qom: detect target from QOM
->       target-info: replace target_info() in system-mode
 
-Please take a look at this CI failure:
 
-Testing ./build-oss-fuzz/DEST_DIR/qemu-fuzz-i386-target-generic-fuzz-cirrus=
--vga
-...
-AddressSanitizer:DEADLYSIGNAL
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-=3D=3D5334=3D=3DERROR: AddressSanitizer: SEGV on unknown address
-0x000000000020 (pc 0x5bd0beb39ef4 bp 0x7ffe0ad764d0 sp 0x7ffe0ad764c0
-T0)
-=3D=3D5334=3D=3DThe signal is caused by a READ memory access.
-=3D=3D5334=3D=3DHint: address points to the zero page.
-#0 0x5bd0beb39ef4 in target_endian_mode
-/builds/qemu-project/qemu/build-oss-fuzz/../target-info.c:42:27
-#1 0x5bd0beb39ef4 in target_big_endian
-/builds/qemu-project/qemu/build-oss-fuzz/../target-info.c:47:12
-#2 0x5bd0bf4f1da1 in qtest_process_command
-/builds/qemu-project/qemu/build-oss-fuzz/../system/qtest.c:705:13
-#3 0x5bd0bf4f1da1 in qtest_process_inbuf
-/builds/qemu-project/qemu/build-oss-fuzz/../system/qtest.c:778:9
-#4 0x5bd0bf4eef54 in qtest_server_inproc_recv
-/builds/qemu-project/qemu/build-oss-fuzz/../system/qtest.c:910:9
-#5 0x5bd0bfe18f85 in qtest_sendf
-/builds/qemu-project/qemu/build-oss-fuzz/../tests/qtest/libqtest.c:715:5
-#6 0x5bd0bfe15294 in qtest_query_target_endianness
-/builds/qemu-project/qemu/build-oss-fuzz/../tests/qtest/libqtest.c:804:5
-#7 0x5bd0bfe1f2f3 in qtest_inproc_init
-/builds/qemu-project/qemu/build-oss-fuzz/../tests/qtest/libqtest.c:2043:23
-#8 0x5bd0bfe71778 in qtest_setup
-/builds/qemu-project/qemu/build-oss-fuzz/../tests/qtest/fuzz/fuzz.c:64:12
-#9 0x5bd0bfe71778 in LLVMFuzzerInitialize
-/builds/qemu-project/qemu/build-oss-fuzz/../tests/qtest/fuzz/fuzz.c:206:16
-#10 0x5bd0be9b3b56 in fuzzer::FuzzerDriver(int*, char***, int
-(*)(unsigned char const*, unsigned long)) fuzzer.o
-#11 0x5bd0be9e2166 in main
-(/builds/qemu-project/qemu/build-oss-fuzz/DEST_DIR/qemu-fuzz-i386-target-ge=
-neric-fuzz-cirrus-vga+0x46166)
-(BuildId: 845b9265a3ae1439c62fb86e3bc4973f7ea7c960)
-#12 0x7f7fef9a65b4 in __libc_start_call_main (/lib64/libc.so.6+0x35b4)
-(BuildId: abd2a4d896fed122b3f7da571746f193feeb86a1)
-#13 0x7f7fef9a6667 in __libc_start_main@GLIBC_2.2.5
-(/lib64/libc.so.6+0x3667) (BuildId:
-abd2a4d896fed122b3f7da571746f193feeb86a1)
-#14 0x5bd0be9a8f34 in _start
-(/builds/qemu-project/qemu/build-oss-fuzz/DEST_DIR/qemu-fuzz-i386-target-ge=
-neric-fuzz-cirrus-vga+0xcf34)
-(BuildId: 845b9265a3ae1439c62fb86e3bc4973f7ea7c960)
+> -----Original Message-----
+> From: Nathan Chen <nathanc@nvidia.com>
+> Sent: 12 May 2026 20:35
+> To: qemu-arm@nongnu.org; qemu-devel@nongnu.org
+> Cc: Eric Auger <eric.auger@redhat.com>; Peter Maydell
+> <peter.maydell@linaro.org>; Philippe Mathieu-Daud=E9 <philmd@linaro.org>;
+> Zhao Liu <zhao1.liu@intel.com>; Matt Ochs <mochs@nvidia.com>; Nicolin
+> Chen <nicolinc@nvidia.com>; Shameer Kolothum Thodi
+> <skolothumtho@nvidia.com>; Nathan Chen <nathanc@nvidia.com>
+> Subject: [PATCH v3 4/7] hw/arm/smmuv3-accel: Implement "auto" value for
+> "ssidsize"
+>=20
+> From: Nathan Chen <nathanc@nvidia.com>
+>=20
+> Allow accelerated SMMUv3 SSID size property to be derived from host
+> IOMMU capabilities. Derive host values using IOMMU_GET_HW_INFO,
+> retrieving SSID size from IDR1. When the auto SSID size is resolved
+> to a non-zero value, PASID capability is advertised to the vIOMMU
+> and accelerated use cases such as Shared Virtual Addressing (SVA)
+> are supported.
+>=20
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: Nathan Chen <nathanc@nvidia.com>
+> ---
+>  hw/arm/smmuv3-accel.c | 18 ++++++++++++++++--
+>  hw/arm/smmuv3.c       | 20 ++++++++++----------
+>  2 files changed, 26 insertions(+), 12 deletions(-)
+>=20
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> index a5973bd499..5b1af062ee 100644
+> --- a/hw/arm/smmuv3-accel.c
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -62,6 +62,12 @@ static void
+> smmuv3_accel_auto_finalise(SMMUv3State *s,
+>                                 FIELD_EX32(info->idr[3], IDR3, RIL));
+>      }
+>=20
+> +    if (s->ssidsize =3D=3D SSID_SIZE_MODE_AUTO) {
+> +        /* Store for get_viommu_flags() to determine PASID support */
+> +        s->idr[1] =3D FIELD_DP32(s->idr[1], IDR1, SSIDSIZE,
+> +                               FIELD_EX32(info->idr[1], IDR1, SSIDSIZE))=
+;
 
-https://gitlab.com/qemu-project/qemu/-/jobs/14371480130
+Nit: Not sure that comment makes sense. We need to update it
+anyway, right?
 
-If this issue is caused by this pull request, please send a new
-revision that solves the issue.
+> +    }
+> +
+>      accel->auto_finalised =3D true;
+>  }
+>=20
+> @@ -822,6 +828,13 @@ static AddressSpace
+> *smmuv3_accel_find_add_as(PCIBus *bus, void *opaque,
+>      }
+>  }
+>=20
+> +static inline bool smmuv3_pasid_supported(SMMUv3State *s)
+> +{
+> +    return s->ssidsize > SSID_SIZE_MODE_0 ||
+> +           (s->ssidsize =3D=3D SSID_SIZE_MODE_AUTO &&
+> +            FIELD_EX32(s->idr[1], IDR1, SSIDSIZE));
+> +}
+> +
+>  static uint64_t smmuv3_accel_get_viommu_flags(void *opaque)
+>  {
+>      /*
+> @@ -834,7 +847,7 @@ static uint64_t
+> smmuv3_accel_get_viommu_flags(void *opaque)
+>      SMMUState *bs =3D opaque;
+>      SMMUv3State *s =3D ARM_SMMUV3(bs);
+>=20
+> -    if (s->ssidsize > SSID_SIZE_MODE_0) {
+> +    if (smmuv3_pasid_supported(s)) {
+>          flags |=3D VIOMMU_FLAG_PASID_SUPPORTED;
+>      }
+>      return flags;
+> @@ -975,7 +988,8 @@ bool smmuv3_accel_init(SMMUv3State *s, Error
+> **errp)
+>      smmuv3_accel_as_init(s);
+>=20
+>      if (s->ats =3D=3D ON_OFF_AUTO_AUTO ||
+> -        s->ril =3D=3D ON_OFF_AUTO_AUTO) {
+> +        s->ril =3D=3D ON_OFF_AUTO_AUTO ||
+> +        s->ssidsize =3D=3D SSID_SIZE_MODE_AUTO) {
+>          s->s_accel->auto_mode =3D true;
+>      }
+>=20
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index 7ec4241ecf..cd30275717 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -626,7 +626,10 @@ static int decode_ste(SMMUv3State *s,
+> SMMUTransCfg *cfg,
+>      }
+>=20
+>      /* Multiple context descriptors require SubstreamID support */
+> -    if (s->ssidsize =3D=3D SSID_SIZE_MODE_0 && STE_S1CDMAX(ste) !=3D 0) =
+{
+> +    if ((s->ssidsize =3D=3D SSID_SIZE_MODE_0 ||
+> +         (s->ssidsize =3D=3D SSID_SIZE_MODE_AUTO &&
+> +          !FIELD_EX32(s->idr[1], IDR1, SSIDSIZE))) &&
+> +        STE_S1CDMAX(ste) !=3D 0) {
+>          qemu_log_mask(LOG_UNIMP,
+>                  "SMMUv3: multiple S1 context descriptors require Substre=
+amID
+> support. "
+>                  "Configure ssidsize > 0 (requires accel=3Don)\n");
+> @@ -1965,10 +1968,6 @@ static void smmu_reset_exit(Object *obj,
+> ResetType type)
+>=20
+>  static bool smmu_validate_property(SMMUv3State *s, Error **errp)
+>  {
+> -    if (s->ssidsize =3D=3D SSID_SIZE_MODE_AUTO) {
+> -        error_setg(errp, "ssidsize auto mode is not supported");
+> -        return false;
+> -    }
+>      if (s->oas !=3D OAS_MODE_44 && s->oas !=3D OAS_MODE_48) {
+>          error_setg(errp, "QEMU SMMUv3 model only implements 44 and 48 bi=
+t"
+>                     "OAS; other OasMode values are not supported");
+> @@ -1989,7 +1988,8 @@ static bool
+> smmu_validate_property(SMMUv3State *s, Error **errp)
+>              return false;
+>          }
+>          if (s->ssidsize > SSID_SIZE_MODE_0) {
+> -            error_setg(errp, "ssidsize can only be set if accel=3Don");
+> +            error_setg(errp, "ssidsize can only be greater than 0 "
+> +                       "bits if accel=3Don");
+>              return false;
+>          }
+>          return true;
+> @@ -2173,11 +2173,11 @@ static void smmuv3_class_init(ObjectClass
+> *klass, const void *data)
+>          "are 44 or 48 bits. Defaults to 44 bits. oas=3Dauto is not "
+>          "supported.");
+>      object_class_property_set_description(klass, "ssidsize",
+> -        "Number of bits used to represent SubstreamIDs (SSIDs). "
+> +        "Set number of bits used to represent SubstreamIDs (SSIDs). "
+> +        "Valid values are 0-20 and auto. Defaults to 0. "
+>          "A value of N allows SSIDs in the range [0 .. 2^N - 1]. "
+> -        "Valid range is 0-20, where 0 disables SubstreamID support. "
+> -        "Defaults to 0. A value greater than 0 is required to enable "
+> -        "PASID support. ssidsize=3Dauto is not supported.");
+> +        "A value of 0 disables SubstreamID support. A value greater "
+> +        "than 0 is required to enable PASID support.");
+>  }
+>=20
+>  static int smmuv3_notify_flag_changed(IOMMUMemoryRegion *iommu,
 
-If this issue is not caused by this pull request, please let me know. Thank=
-s!
+Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
 
-Stefan
+Thanks,
+Shameer
 
->
->  configs/targets/aarch64-softmmu.c |  6 ++---
->  configs/targets/arm-softmmu.c     |  6 ++---
->  include/qemu/module.h             |  1 +
->  include/qemu/target-info-init.h   | 53 +++++++++++++++++++++++++++++++++=
-++++++
->  include/qemu/target-info-qom.h    | 30 ++++++++++++++++++++++
->  qom/object.c                      | 22 +++++-----------
->  system/vl.c                       |  4 +++
->  target-info-qom.c                 | 45 +++++++++++++++++++++++++++++++++
->  target-info-stub.c                |  6 ++---
->  9 files changed, 145 insertions(+), 28 deletions(-)
->  create mode 100644 include/qemu/target-info-init.h
->  create mode 100644 include/qemu/target-info-qom.h
->
 
