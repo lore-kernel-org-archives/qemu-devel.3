@@ -4,172 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B32C6CD4851
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 07:33:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC420CD4851
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 07:53:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNQYm-0006VI-PN; Thu, 14 May 2026 03:32:49 -0400
+	id 1wNQrZ-0000lZ-NP; Thu, 14 May 2026 03:52:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1wNQYc-0006UY-SW
- for qemu-devel@nongnu.org; Thu, 14 May 2026 03:32:36 -0400
-Received: from mgamail.intel.com ([192.198.163.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1wNQYa-00036H-SF
- for qemu-devel@nongnu.org; Thu, 14 May 2026 03:32:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1778743953; x=1810279953;
- h=message-id:date:subject:to:references:from:cc:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=ntmT/JSnhHUhURgIORcnyqCOnncyygGf0lOu0QAQEVQ=;
- b=L90Cujba74s7OLAaY+McPIm+GF5q02xvJ5PTYDoUtyr9tX9edHkoeRUA
- D9po1Y5bhTmrcAueq8C1k3jJ1QeX+h+vpTmKNvtLHVsS3DHimkg5l75/a
- fyUP/mvJ6r5/1m3HtsHo/WG679i5IpNAWQl1DJIKNRKJb8G0KrNJZAN+f
- odbdtKxy+8zZvKglCAXiJoDitcQFapP8N611/NriLkmGbykLXGrNUP1jD
- YIAm7DRkOu+D1Y5zTmBopEl79KYncafahFaq0c+RCbYL+oPYKQtW99uto
- /xivAP3Nk6sjxAq+0YhDpmgk8WSXdlbc+ktgqBUBbDcSFYW3xZkeha2wg A==;
-X-CSE-ConnectionGUID: qREFoC1dQQefpmZDy5WIYA==
-X-CSE-MsgGUID: UsNW8u62S8W5bNv44twj3A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11785"; a="83531174"
-X-IronPort-AV: E=Sophos;i="6.23,234,1770624000"; d="scan'208";a="83531174"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 May 2026 00:32:29 -0700
-X-CSE-ConnectionGUID: LmVXX4ITQtOdsuJYootzLw==
-X-CSE-MsgGUID: GIbCXWRTSf2uV2QXtpTCZA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,234,1770624000"; d="scan'208";a="242646299"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
- by orviesa004.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 May 2026 00:32:29 -0700
-Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Thu, 14 May 2026 00:32:28 -0700
-Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Thu, 14 May 2026 00:32:28 -0700
-Received: from BN1PR04CU002.outbound.protection.outlook.com (52.101.56.50) by
- edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Thu, 14 May 2026 00:32:25 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=S2/mM7hDq98AXMXakDNZjjHZ55jvyIEF327/qmvtJypjywnUKNm98TNm9TSdUS/OXYFFOd4C4OoYy/X+mMZ02RHVPfTN3PwBwMSRtoniiK6DB0ScinyWbTou00paobTcLgJG+tXgSgEeW+iY/zQPNR7r2nJocspUxLDVOUDTYWntdqdsHt/wyNr4QUKhXkXMgosUtKV0j1jgqKSDHRhi/zcMbuj8oRMDrwlwJGLKMi/WwNbITXBpf/lPBzbYYHndvlIgEpkqi6g+HBfQJgQg9c1Hs2c4jvQReoU3YbJpMdWUUKG95+0N5ERDbvATvMVvE9tej8DrTqBu51Feq1S7FA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=92a9Qn+Zp/SpdAMvCZcEvl2IG2B/MigIWiPefNWqoDg=;
- b=iu5ZMLuP9jEv1a6DRK2CqQRb+lIhHX6dvJ4I85qHvdes2mg+cxPGi2IdUut8O4kGVOZK0SR1uIfOEcDH8lzWvF8SjBteXYUuL2vi7ftY+vzfl/AcT7nCxGsS+JBaauBejb1zjDrxp2ucQxVNZhlWDVBJ5+Fe2kcBZh3403/xsDJPSoRfG5ItPqWhYaDjV1g3mWKVfO5nT/VNXk9da7WEBGY7A1bs0lqc1HRZq7Jf4UG9ZkrgpYxamuc8CH/AgnfTLvLyeA7Ab2tDCQrJ3dK8Eu63QefiH1ISEYzE8HysXZeLtBz9+OJGCWELabutFrTDHOq2f90Fe1p/n0aUhDyRFA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20) by
- IA1PR11MB6291.namprd11.prod.outlook.com (2603:10b6:208:3e5::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9913.11; Thu, 14 May
- 2026 07:32:17 +0000
-Received: from DM3PR11MB8735.namprd11.prod.outlook.com
- ([fe80::8f1e:49f4:122c:c675]) by DM3PR11MB8735.namprd11.prod.outlook.com
- ([fe80::8f1e:49f4:122c:c675%7]) with mapi id 15.20.9913.009; Thu, 14 May 2026
- 07:32:17 +0000
-Message-ID: <bc976b85-1335-4f37-a704-129216625b30@intel.com>
-Date: Thu, 14 May 2026 15:32:11 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 13/13] RFC: hw/virtio: start virtio-mem guest_memfd
- regions as shared
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- <qemu-devel@nongnu.org>
-References: <20260504-rdm5-v4-0-bdf61e57c1e1@redhat.com>
- <20260504-rdm5-v4-13-bdf61e57c1e1@redhat.com>
-Content-Language: en-US
-From: Chenyi Qiang <chenyi.qiang@intel.com>
-CC: Peter Xu <peterx@redhat.com>
-In-Reply-To: <20260504-rdm5-v4-13-bdf61e57c1e1@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: TP0P295CA0006.TWNP295.PROD.OUTLOOK.COM (2603:1096:910:2::6)
- To DM3PR11MB8735.namprd11.prod.outlook.com
- (2603:10b6:0:4b::20)
+ (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
+ id 1wNQrY-0000lE-LW
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 03:52:08 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
+ id 1wNQrX-0001qW-3g
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 03:52:08 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-3692bf38290so332742a91.0
+ for <qemu-devel@nongnu.org>; Thu, 14 May 2026 00:52:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1778745124; x=1779349924; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Df1fBQImUBl+PdB0NJxwCFXZzQC+MVW+7lNLB+1P3UU=;
+ b=d55SN7wJwjJEoRDriaSEq+xayGE0UAxRfCbpHJo9f/xD/MgJaUCYjOQysMoKjNldIG
+ 9EugMOUumjuglM0zyUGb3D4SBQfancraQN0aVVuBjeZgnb/3dWc4M9FHxkJ074EZ0ybB
+ XTmGG8v76NLFR9TdI/av3tnxWwUo0qDXpHJ98NR7g7Rc5y9CnR+s1Y5n7vusxSJ5KFHA
+ +ZWVEnLDiPD79Mt0kagS3OEXb6n2dLIs+HAXlZErfOtDbJVq+pwliNQi2f14gtJdENjc
+ XmxI9ol9HSZtiCtD7jtR1u1AQs+Urv9frj72bfv1DMcrIUh5ZpYL1O4SiEST5X/Q2CX8
+ RvZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778745124; x=1779349924;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Df1fBQImUBl+PdB0NJxwCFXZzQC+MVW+7lNLB+1P3UU=;
+ b=ssZClfXXYGv9VkZ5tCN7KsedXeYUB0W/2WTqYYIl9maGMAlzctb3bTgIcopXyAphdE
+ YmHsOi0wQUf/sc4OgS3CifqEdT40B8CErUBYuWOv21SIH4BuXrApfsc9Kl2qeSw368PP
+ Pg7Jv9TNeJ13EMa3SoQLFR+kO0zCVSW+WXmhyMbZDkv5CjNXLymRpTLZHtgw4NPSszMI
+ M0UGh2glEGc76Wl3F6Kpthe+6fc1TQ7E9z1fjXaLZKTuI9fOljvFIpCdL9roEv275EQ0
+ w7shgEEr1BVmPIFk6pd6WHHSDjVcUUJeJJBHVn3lwn2MAIY9VgcrA/kZIl6W0Ggl7NEN
+ 6g+Q==
+X-Gm-Message-State: AOJu0YzAbA7Q1wOrQfctGEN3ztUueFXv59/o7BmpHUOa6p21hUkLZMKL
+ i2YfbsL8NRhVPPRxxVSy2vHfuUD+OZHjjoX1Y2xoRVM4XO3+sKckGykFNT3pphlu
+X-Gm-Gg: Acq92OEzs1A8xVtLGL2q8B0NiQVTZf0TQJfvzaOkwYXM/5k/7pzhev2xL2GxXMfb7rq
+ mCrhc3V7mJIiY6mmwcV+/A3ojYcZYDiYpmrX7kRHIYNCse35Wd085RaJuCfnQospDzVq52daBLG
+ kP25mlah7oJ429/3iqhk9bgEhtSr9H1EAG2QnHwlL7eMPaaGlHvfkfmrreTl1Xd3ok4jrFgO+6M
+ JuRwP7ev+pzgDjEzwRFMDhfO2xvDcNk/zYd5khTtMEP7nszOSNdwvLElZr/dVru9y7qoEeuvN7j
+ A1Nnxd1DwdBicMfc2TlfBoQyUOp9faxdNYZUemMnitIbVFIEaKnDMwqn+3skpSgzvxetwqdlqHJ
+ lZpCl1Mpa2r1QfYcn8HA5eOvdJcUe1zhvGIqgfEpYVLYXKj9CUXLHJpYN6zqAq71/B9U88+3U7z
+ hq1Uq4U3AioLiK5I4tn8U5
+X-Received: by 2002:a17:90a:2ce4:b0:369:73a:3266 with SMTP id
+ 98e67ed59e1d1-369073a36e6mr3558033a91.10.1778745124287; 
+ Thu, 14 May 2026 00:52:04 -0700 (PDT)
+Received: from setun ([2405:201:502b:380f:df10:4bc8:ea8:8d6d])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-368edf4d940sm5278624a91.7.2026.05.14.00.52.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 14 May 2026 00:52:03 -0700 (PDT)
+From: Aadeshveer Singh <aadeshveer07@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com, farosas@suse.de,
+ Aadeshveer Singh <aadeshveer07@gmail.com>
+Subject: [PATCH] migration: use eventfd functions instead of bare read/write
+Date: Thu, 14 May 2026 13:21:37 +0530
+Message-ID: <20260514075136.301706-2-aadeshveer07@gmail.com>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM3PR11MB8735:EE_|IA1PR11MB6291:EE_
-X-MS-Office365-Filtering-Correlation-Id: 47cbbe30-efaf-481f-c9f7-08deb18aecfb
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|366016|4143699003|22082099003|18002099003|56012099003|11063799003;
-X-Microsoft-Antispam-Message-Info: i57H5aUSMNhOgrC5uEuVeiR576CR4pz6QvvrUHEIxbaG9tQBwnBAytrW3LfAJmYDeXB8Xrxq7PIrSaTdhJxBO3d5vJZ2QBlJde335Q8+Qfnz3GVLVmb/27YxDPYsN7olQYXhAduhWevuWHYWpYGHRe0MkqlLLMYTlDd6/bU0RC9nWQOJd/ztgikTZ1QN2o1RN2xZHCSUHnq6xyxZ6qI69137Q8anwlXhicn2pbfQK2OVdUCjJNiBmvpY48e5i3nl7ueYNUWmA0eF79rJiGlIIzJrKIDHOkYlHXnkgBQSKBEH369RTgdGbcyvef/pp2WoLn4ZLUe8QVKWJleAU88tLY4IbVQU4roU0a5TgicJg2sjw8OOovDtgOqqMosBE93aPXfUw9A1y87v0qWDwwHSwzP/4QXqSXGvbaUWaaOmOUehlOu2Wxg16W/xmNdKVGrmS1p87BR515nNv5NR3fRWND9ugVKDFaY92vf17oEMhRYTUpT9lBMMNQ+ygSZFeN38Yl6Y8T0+POku2wzeS+M9k8dzD15PczMW8fbyHHUUBmjfj8UU8sTp0zvwFisdzJQoa2RUzHW4yq1JeuD9dHVocPph8Vz2EZVcKua03u+mKXc3hTLu+7LEhsk8rxrVdAylxwhqLaAjIiBzZRvfZHWYr2Z+AYppOG9C8dpUiUHBDn7CUzYCj1toRBsoneNCjhzH
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM3PR11MB8735.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016)(4143699003)(22082099003)(18002099003)(56012099003)(11063799003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YTNvc3hCVDh1RVArUE00ek04ZmgyM2VYRXhhSWNSVGVNRXgyL01zc1RITGlG?=
- =?utf-8?B?NG9oN1g5R2QvNmxZT3MwUFVRWVJ0OTVWaEtwbzhNcDQxNFhKTWcyMzFqZjVW?=
- =?utf-8?B?RjdvYnVoRDlpdHhib1FPL1ZMcU9lQTJHZ29BYVZuMkFiS21FZTJGcU9jMWRD?=
- =?utf-8?B?ZnZreUpqRDlKc0VZa3hObjVzMEx2TktIUVI1d1U3akR2NUtUM1BMbkRxRmVs?=
- =?utf-8?B?dmg2VHE2ZkVDVk12SStxOE91d1BPQ2hnQmRXbVFkajZBZkcxNWQ0WjhMem4z?=
- =?utf-8?B?L2dIOVk3ZnZyT1JVbEhNemEwUDJPVjhSSGdyVGlTRnp6Z3J0NlBPT1E5b2lt?=
- =?utf-8?B?NXR1SGExMHcrcXNiN2NSdEEzQkNzV0JPemJTUXh6NXF6bkcyNWpOTHhaOTFQ?=
- =?utf-8?B?YnVvemxYQThmT2FGS3NNZnp0RmNFdGwwTXVvK285WkNWdmZxL1Z5ei9jODFa?=
- =?utf-8?B?dXd3OW9mM3hFbmw0WjFjZ2Y3SFFvMGhlOCtTQ0x2WHZMaVFPYnpTZDZpNkc0?=
- =?utf-8?B?MEMwQThUWk4wQVFJMktmaHZDTGdyTnl2d2VKODk4emUyMERFYVBqeitqR25G?=
- =?utf-8?B?bkdRb0N6VHZBdFNmNnFrWWtVQWRZVmcvT0FPRlA4OE10WDNIa1ZnOGYxWjJS?=
- =?utf-8?B?bnJ4b1RrTUtKZFNXYlNWMnpHTzFpeGRWWFVHNU5XK3ptd1BGZ3JCcE1iV3RI?=
- =?utf-8?B?S0krRzQ4K1B3NmE1Qkt6Y1dRVmZENFBFTXh5eHlTaFpsSzdyTnA3RWxjcHFF?=
- =?utf-8?B?V3llOUNLeUtDc2E5djJPREJWMldlZ2FEQ29tRkVuU2p6YzArcVdVVXNlTlVq?=
- =?utf-8?B?bkpNOVM0aEJZUnNGTjZ1UGhOVzZMcW1FbSsrM0d0Vm1McmJGUkhRTCtqWWFl?=
- =?utf-8?B?TFVJRHJ4eXJrMGNDQkNKWUFMdHM5bHRqcGN6U1RpNGtBU2JEOVRFTkV6K1NJ?=
- =?utf-8?B?T0FVcTRwMWxSZ0lxMnFXaFhEdTFHZTNuZW9SZGFxeWdDY2RqYUlIN050UTBE?=
- =?utf-8?B?TDhsUTN1Z2RGM213QTBjWDZqSUhpdnBsTXhBYkw2L2VXeVI4UnJzVE5vakZ2?=
- =?utf-8?B?SHNIRHRWUmlIYWxwNFgxaW1ueVg0VWtmbFJJVUJMRjk3N1Aydy9Nd3JnOVhI?=
- =?utf-8?B?NFRYbXgyOVdwNTVpZWR0aVZFcWh4VjcrQnBxdzhEZndqWWVZdUFvUllaSkdn?=
- =?utf-8?B?aStTTkorclRDeFFnNVZzR2FLcjQwcVRVdkdGQXA5MTF6M2dLSGhVcU40Qlg4?=
- =?utf-8?B?czhmOVpBSWhmNXI3MCtoZ0Y4dDdEeXlMSUNPNHJKaG1VNnpOUHdoVHVtOWtQ?=
- =?utf-8?B?RTdZNnpWTXBETHlRWkdzcHBZYjJGZWp5c0xmZmhTMDFWQ2F4OUVyNDAzeXhC?=
- =?utf-8?B?bCs1azJhOHkySlRrWGdCanA1bnQwTjU3S0xMaVI0eUg2UURUa3JyR2JrVnRP?=
- =?utf-8?B?ZEFJU0NJemFJVW1FUGNnOE5yK2hNc3ptcE5HazRiOU50TEdhdkZHbWM2ejQr?=
- =?utf-8?B?b3B3SjljcTRUUVN3TjJvc2l0S3I5ZlNVL1lXdjFJWWI4V24vakRMZGwzUlVu?=
- =?utf-8?B?aS9KVXVLbGdTV3hlMTRsQTRkVXhCWG9TU2luWnpCN0h3UUhRay80cWpRaXp1?=
- =?utf-8?B?OFQ1V3QwWU1BbCtnVWN0TEdXazN1V0w2eDNMbktBZDJtWEsySFZKT2hXQVF0?=
- =?utf-8?B?empvL3oxR205Q0RDUGF0eW9mRk9taVdLUTBFcW5lNlh5c2tJSWRhYklVMjI4?=
- =?utf-8?B?elNSK1JtZGhWQjhIWVdPaFYvczd2Tkp1M2padFF4L0pDbG5HanpDNjN1ejZG?=
- =?utf-8?B?Yjdxc2ZEdlNBaWFxU0ZRSlZMMElzQ1RGWnRHYU56aVNSUUMrbTZyV0dkV1lJ?=
- =?utf-8?B?ckVTcFRBMDRYcUsrMS9Pc0xJV2NMWC9QeG9HTXRtM3ptNTZHY2VmeXkxZXc5?=
- =?utf-8?B?NnV3U1hZNENJK05RK3BYZnlOMmdjSkcxajRkWGhPZHFOZ3FKTmxXaUVkZWhY?=
- =?utf-8?B?UEJNbE5HaW4zS0lDOTczMHd2QVpORFF2b2UwS3g3Z2xVMGFwNVhLQzc0QmFG?=
- =?utf-8?B?WmtFb2VxdEVuYStJSkNKcGx5MTFnaXpMNmNKR0NVZ0VJSWZ3ZFFJaHhSdEM3?=
- =?utf-8?B?TzQrS1JmZGtNOUQ0ZGNIa0pqL1J2dG9MaWdzREthNjFGMVdaRjFVQ3k4MFcw?=
- =?utf-8?B?MWNLdDNsRU13R2phb05OeWozNHgra0xYZHBiWkNlcXZJQXBMM1NLQlhuNXhB?=
- =?utf-8?B?SzJZYW55azA4Vytkajl4bnZ3Z2xFam5QaFlGZS9BRTdWb1V1Z3hTeHpoYW9J?=
- =?utf-8?B?KzJOaExSOUlMWnhUQ1B5UXRIUUF5YmVDNnlMT2xXUUdQcjBwc1VMdz09?=
-X-Exchange-RoutingPolicyChecked: Q15EjX7ZxU8+//DQqGYE6ImmqjmZkZMlM5Iivny5zd2egGmmyPWHsUEkKNBanWSfN0nJM1GGWuZ6QNe8yTMLV+z9vVIYNHFw6M8Kug+QqgDKGRA1VAMrXZQAnZqz8sbpaodM7eQBkHbYh4OJwlzUDGBXJYggsKXbgmhRIVXYGPhHhJ+tMIVqSSTvXF3DhWbLj6HkvlC+DoN5VCZ6FSNCCW+CrFTAl/ekN5maAZQJv3dauyUpCUlDpilV+Xbff7fpZCxrUv0bg/+7y0xF/GgYHZmJm6esx/fFYoSyDJj+Rmte3x5XRW4lOF86X+l23llgzC7uNexU1lbTCY7DLrPtIw==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 47cbbe30-efaf-481f-c9f7-08deb18aecfb
-X-MS-Exchange-CrossTenant-AuthSource: DM3PR11MB8735.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 May 2026 07:32:17.5575 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: jsL9WYBuAcCQ1etCbwN3Xn/+PE4lCPZlQzt+Mb0cIQmQd0eFtsA+0NBhrRox1aPArOSZbtp7GEFzxDzm5u1Naw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR11MB6291
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.12;
- envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=aadeshveer07@gmail.com; helo=mail-pj1-x102b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -185,39 +98,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Replace read() and write() syscalls on eventfd with glibc wrappers
+eventfd_read() and eventfd_write(), to make code more robust, readable
+and future-proof.
 
+Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
+---
+ migration/postcopy-ram.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-On 5/4/2026 8:30 PM, Marc-André Lureau wrote:
-> In TDX guests, virtio-mem plug/unplug/re-plug fails because
-> kvm_set_phys_mem() unconditionally sets KVM memory attributes to
-> PRIVATE for all guest_memfd regions. On re-plug, the PRIVATE->PRIVATE
-> transition is a no-op, so KVM doesn't re-AUG pages and the guest's
-> TDG.MEM.PAGE.ACCEPT fails.
-
-I think private->private conversion is a no-op success, it will continue
-to do KVM_PRE_FAULT_MEMORY in kvm_handle_hc_map_gpa_range() and KVM will AUG pages.
-
-> 
-> Implement the "start-shared" approach: virtio-mem memory starts with
-> shared KVM attributes. The guest converts shared->private on plug (via
-> set_memory_encrypted -> MapGPA + ACCEPT), and back to shared on unplug
-> (via set_memory_decrypted). This ensures every plug triggers a real
-> SHARED->PRIVATE transition, causing KVM to AUG fresh pages.
-> 
-> Add RAM_GUEST_MEMFD_START_SHARED flag and set it during virtio-mem
-> realize for guest_memfd-backed regions. Use
-> ram_block_attributes_state_change() to properly update the attributes
-> bitmap through the API. Skip setting PRIVATE in kvm_set_phys_mem()
-> when the flag is set. On unplug, explicitly reset KVM attributes to
-> shared on the host side to handle the case where the guest skips
-> set_memory_decrypted().
-
-If we only want to support unplug the shared memory, should we restrict it to check the attribute
-instead of resetting to shared unconditionally?
-
-> 
-> See also virtio-comment "[PATCH RFC] virtio-mem: add shared/private memory property details".
-
-Maybe I missed some context, can you provide the link to this RFC patch?
+diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+index f5ef93f193..16113b166d 100644
+--- a/migration/postcopy-ram.c
++++ b/migration/postcopy-ram.c
+@@ -1330,12 +1330,12 @@ static void *postcopy_ram_fault_thread(void *opaque)
+         }
+ 
+         if (pfd[1].revents) {
+-            uint64_t tmp64 = 0;
++            eventfd_t tmp_event = 0;
+ 
+             /* Consume the signal */
+-            if (read(mis->userfault_event_fd, &tmp64, 8) != 8) {
++            if (eventfd_read(mis->userfault_event_fd, &tmp_event)) {
+                 /* Nothing obviously nicer than posting this error. */
+-                error_report("%s: read() failed", __func__);
++                error_report("%s: eventfd_read() failed", __func__);
+             }
+ 
+             if (qatomic_read(&mis->fault_thread_quit)) {
+@@ -1773,13 +1773,11 @@ void postcopy_temp_page_reset(PostcopyTmpPage *tmp_page)
+ 
+ void postcopy_fault_thread_notify(MigrationIncomingState *mis)
+ {
+-    uint64_t tmp64 = 1;
+-
+     /*
+      * Wakeup the fault_thread.  It's an eventfd that should currently
+      * be at 0, we're going to increment it to 1
+      */
+-    if (write(mis->userfault_event_fd, &tmp64, 8) != 8) {
++    if (eventfd_write(mis->userfault_event_fd, 1)) {
+         /* Not much we can do here, but may as well report it */
+         error_report("%s: incrementing failed: %s", __func__,
+                      strerror(errno));
+-- 
+2.54.0
 
 
