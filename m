@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5201DCD4F25
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 10:26:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 771D0CD4851
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 10:28:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNTFv-0003y7-9t; Thu, 14 May 2026 06:25:32 -0400
+	id 1wNTIA-0004Sf-2C; Thu, 14 May 2026 06:27:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wNTFf-0003xV-RB
- for qemu-devel@nongnu.org; Thu, 14 May 2026 06:25:15 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wNTI8-0004SX-G2
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 06:27:44 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wNTFc-0001xs-3H
- for qemu-devel@nongnu.org; Thu, 14 May 2026 06:25:10 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-488af9fdaa7so43505105e9.1
- for <qemu-devel@nongnu.org>; Thu, 14 May 2026 03:25:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wNTI6-0002yz-R3
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 06:27:44 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-44985f4ab0fso4564266f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 14 May 2026 03:27:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778754305; x=1779359105; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778754461; x=1779359261; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=i2xoIzxn4HbPg8QNtw/fojdTWGYSXjhQ7sb6oqC6TE8=;
- b=uacfkUOo1J9xydZhoYbg9WEmN4LVztzOJJmWs5r2Tn9/H4DcyI/Om/NxKTH5M9hWlV
- fzpct/jzy2Qef9Td1JPgR5+hipK49RiCWB3WfgGDF7x6miL41nQNXDCo+qMyqcSj8zzy
- nXkocfM0XYBWFwZClFl/KAvIGAxOQQ/GAU9McS5dODP20U/forDbyw2iDIOV9s/+wmBm
- orhXLcA6ZW6S+9yDukZaRdmvk8jXWcjrsWZ4M9GnrGM3AqEoU0347ZDT28CyhJXfM8ZU
- xFRvoUvYs36NzBWyg7XePDVDF4FJXs2N46U8PcFNL5FI+MQztvw74ZpGDfcGh15MgRJe
- Hn9A==
+ bh=zggFzJerIf0xBKSgQOcOG7F8TxL+bOqm30hJXi/FoHk=;
+ b=LhO3Hh6CCt69sd7eUAFTeM1ycmPIUR4HCdujV/q9QFLDpfN3sww3r7mWNrATpba1T1
+ 7/67pmijVv9jG/8XArp9Af+AjqhBs+njLeQTOuBcwlgW/3ln9gBpKaoPiSVQMUTm63wn
+ CWlS31d86U0J3UZr7h9zxELmaEhD5fmZQhIdtdOOCPW7bymV3zoNVqV3Ts3HPVxstLkA
+ HLUJ8kbQJJzS/RXYlmIGWGoZcUdadIsXyub9yi2X55JQe7ODGMbcVtPRNpnw5oXXmxuL
+ rgaDaNtTXqhqky0b49jpwnwKhUAVP7Nt68frnLGSpeftOcFZccCzNphBxTaHh3gjNC6a
+ vesQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778754305; x=1779359105;
+ d=1e100.net; s=20251104; t=1778754461; x=1779359261;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=i2xoIzxn4HbPg8QNtw/fojdTWGYSXjhQ7sb6oqC6TE8=;
- b=QZgEfuUGFR6HoWs/jB7EG+lN/XES1+5VHl17lBX7Clo1I0n9X51JmyUP86A+sSV3LG
- pswQ9WcS0OOFXxKITBHcGRkZAstbT1tGOtEusC+OzPU8KxbNgGv6bmvBV7IIuOEuZmLl
- ibi2hlyUByMfFKgGbJg+QOD1kU2m28pP8e112iuw0kH2rR8JcI3yhw/Ujl+YjZP2Xsj0
- 4zG2gsLlO7pAagOTHCTZW88VKSkRJ3DJnARItLOUtmAjByb77UwojTuYXTTaoMkrBRnP
- n4STTs+kfFKwFakCJ2wMeeI5QzcvkFOJroxnYFCkqa7gwVfLvC5BmfNBC5cWPzH27c44
- QfsQ==
+ bh=zggFzJerIf0xBKSgQOcOG7F8TxL+bOqm30hJXi/FoHk=;
+ b=dNwiHmj4LD9Szc021I4iE1nfFvzcLXwMBT8tc82YY2C0FRfc8SZdD0GbX2SPQQzDOl
+ rt9eNNKZwaW0DkJo50BeJBK4/z7BA8zWo2Ovcl0Rjf1d5+u4Ce/SJMAcSaLt+PJLC8u4
+ jgZb/znjXsuKvusGoJvd5RiC2xh9Ufj/bonU/d/AHlkyLlRmrB5rvbejWCh/amPI9b0k
+ H8yApaiRvemFGI2JenputgEDOToryf8ldXJhj/1Zv2W4P0cuFzqlwVfkHrW7N1vYmgvu
+ Tyk1IbnsWY6nlr/N9o11wCD5qLO0uGnWE4TOHl8xb6keSWHTrKCxjiVKHb6JShukEEAC
+ W20w==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+oMhLPiuekEHqgxZyPwXXbcQGBIddVW8zqpsATTl17l2Q1NDtu/L2GzwSqeD6tTcc48VMue7PXjil0@nongnu.org
-X-Gm-Message-State: AOJu0YwL3Lr15YeylHkGONBifd83ASQfnEBJUyDQ1enxYJkJ3yG0Tqqv
- Mpl2jq5RvkiLiIrSKyX+p7tOyvbKpdIZtJqF+1sN53OXdvYCeaaZstuN1F0GIoaidok=
-X-Gm-Gg: Acq92OHKyZaZ7s7HM/hMZqMVNVcKUmDcp+JF34cJvMDH4byg2VkdwCyu1iJ+SiGVae5
- Z891Scu0EdQgeUrauvOOoiINQ6FvIBFgdZyeufaMU9zCzrzF1hQU7msRIFpgefW8mHCtTiVPzZg
- fjhFfb1aLmYM2v1xjJ+cJU+s7t9l1To34KzHtZX5jhpjQt5oe1HCZzjWftWMt1DzksfoqIZSLoE
- 4nm7YSDvGFIHNV6ndscY95N8gMKAnWTwFjkFjtVnObifkiLKM4xYAQTCMvhalAZ1bdza3grE3HQ
- wMzqElxMCzOe67FXJFBwe/soLUSLbUYK2OugQC+IPpMudHYbVmteiYEZG0dxs16wn/GCxGPhf/O
- fM3qJop4BxsMTTEAyrk+Qc/dxSB017aqS2AHNTCpdm9t3JtQYrqhR38XZi9z2zekJR3vsOnJXBB
- ZPB7aZGuoPhVbM9d3E7VNpE5IUF5Dbjowi6EK9/YiI4C6EpcDmdTVUMtMsRrCRHFFbww==
-X-Received: by 2002:a05:600c:83c7:b0:48a:93f8:dd02 with SMTP id
- 5b1f17b1804b1-48fc9a31d69mr105138765e9.14.1778754304916; 
- Thu, 14 May 2026 03:25:04 -0700 (PDT)
+ AFNElJ+NjOGDkPj5pSrT7qsQf6GvHgw5miYCJmsJcyaKKYeeMH5t9t19F3n94EHD4XQrPt8e9RRDPPQm+pFE@nongnu.org
+X-Gm-Message-State: AOJu0YyL7+riVzI167Or6J+urlB8bsN7L1bYxDaEM0QuhrD9PEx4+wj7
+ qSq0Pw/t/oUCZ54o8ie6mUKGLNpCU8jlozbC55FK8qeV/kKH+YyOr20xG8dPFWwY2IE=
+X-Gm-Gg: Acq92OEatnx2+gMHMsQClDrK7Z1ja5eUGFVr4rvP9F2T5I5aBbU4q0n77+QTWPY/MeF
+ T3OspUyxnSEdJJkMfXqCKyH6nwzxnEdkIgqULsPnpqqV4c8UUMX8sxDA14ONxs0sJsmx68bOKLm
+ vkOvCXcWHR4U43+6ec+3cZJQjXZO5BJ4Ilog6Ia+CHTs57PYmEy/ra4DFukRAd1eLdH0CL+nXoI
+ 6c//wL/4fFvOCnRS54YfYwSStJBEsUFeX6PkwVYLqssv4HqxVQ4cCAYUuMqCTORbUY+zfPmfk/u
+ XCcc7DraZcAZnp9crd7xL0LM4hA9qydNmV8nybax7xDiTpTxjJvCcGzK5wuK5z68JuSpAbEgEzZ
+ 3ScpeuojJaKOo0EV6rQFNdAU3aKz3jICuk1zpZAwxz5XgXdrmSfRUCFeDANS0o315PvKDufaY3E
+ rfvZdtnSeyoBnF2utH3bu6+7aK6MZAlgdcEYvSQcs48GnlIP1KXvGanZtRBbnU5t2Rug==
+X-Received: by 2002:a05:6000:2882:b0:43f:ea91:63ff with SMTP id
+ ffacd0b85a97d-45c58a70c1emr11549096f8f.10.1778754460564; 
+ Thu, 14 May 2026 03:27:40 -0700 (PDT)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fd62b4e78sm17074825e9.1.2026.05.14.03.25.02
+ ffacd0b85a97d-45da0a178adsm6243750f8f.18.2026.05.14.03.27.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 May 2026 03:25:02 -0700 (PDT)
-Message-ID: <cc04ad5a-dc2b-4963-90ef-8b21ec264dba@linaro.org>
-Date: Thu, 14 May 2026 12:25:01 +0200
+ Thu, 14 May 2026 03:27:39 -0700 (PDT)
+Message-ID: <7c56afa9-711a-4807-bca3-2625a05fdc39@linaro.org>
+Date: Thu, 14 May 2026 12:27:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 13/35] target/mips: add Octeon ZCB instruction
+Subject: Re: [PATCH v6 07/35] target/mips: add Octeon multiplier state
 Content-Language: en-US
 To: James Hilliard <james.hilliard1@gmail.com>, qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang
  <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <arikalo@gmail.com>,
- Huacai Chen <chenhuacai@kernel.org>,
- Richard Henderson <richard.henderson@linaro.org>
+ Huacai Chen <chenhuacai@kernel.org>
 References: <20260511-mips-octeon-missing-insns-v2-v6-0-5062889c4d3c@gmail.com>
- <20260511-mips-octeon-missing-insns-v2-v6-13-5062889c4d3c@gmail.com>
+ <20260511-mips-octeon-missing-insns-v2-v6-7-5062889c4d3c@gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260511-mips-octeon-missing-insns-v2-v6-13-5062889c4d3c@gmail.com>
+In-Reply-To: <20260511-mips-octeon-missing-insns-v2-v6-7-5062889c4d3c@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,77 +108,47 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/5/26 20:22, James Hilliard wrote:
-> ZCB zeros the 128-byte cache block containing the base address.
+> Add per-thread Octeon multiplier state for the MPL and P limb banks used
+> by the VMULU/VMM0/V3MULU instruction family.
 > 
-> Model the user-mode-visible effect by aligning the address down to a
-> 128-byte line and storing sixteen zero doublewords to guest memory.
+> Octeon3 extends the older MPL0-MPL2/P0-P2 state with high lanes
+> MPL3-MPL5/P3-P5, programmed by the two-source MTM/MTP forms. Represent
+> both banks as uint64_t arrays so the TC state matches the architected
+> 64-bit limb layout used by Octeon68XX user-mode code.
 > 
-> Acked-by: Richard Henderson <richard.henderson@linaro.org>
+> Migrate the multiplier registers in an Octeon-only subsection so
+> non-Octeon CPU models do not grow migration state.
+> 
 > Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 > ---
 > Changes v2 -> v3:
->    - Split ZCB out of the combined Octeon arithmetic and memory
->      instruction patch.  (requested by Richard Henderson)
+>    - Split the multiplier state out of the combined Octeon arithmetic and
+>      memory instruction patch.  (requested by Richard Henderson)
+> 
+> Changes v3 -> v4:
+>    - Document and keep the Octeon3 MPL3-MPL5/P3-P5 high-lane state used by
+>      the two-source MTM/MTP forms.
 > ---
->   target/mips/tcg/octeon.decode      |  3 +++
->   target/mips/tcg/octeon_translate.c | 24 ++++++++++++++++++++++++
->   2 files changed, 27 insertions(+)
+>   target/mips/cpu.h            | 12 ++++++++++++
+>   target/mips/system/machine.c | 33 +++++++++++++++++++++++++++++++++
+>   2 files changed, 45 insertions(+)
 > 
-> diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-> index d77717cd50..d8a1bfce77 100644
-> --- a/target/mips/tcg/octeon.decode
-> +++ b/target/mips/tcg/octeon.decode
-> @@ -49,6 +49,9 @@ SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
->   SAA          011100 ..... ..... 00000 00000 011000 @saa
->   SAAD         011100 ..... ..... 00000 00000 011001 @saa
+> diff --git a/target/mips/cpu.h b/target/mips/cpu.h
+> index b478f834c1..346713705a 100644
+> --- a/target/mips/cpu.h
+> +++ b/target/mips/cpu.h
+> @@ -459,6 +459,14 @@ typedef struct mips_def_t mips_def_t;
 >   
-> +&zcb         base
-> +ZCB          011100 base:5 00000 00000 11100 011111 &zcb
-> +
->   &lx          base index rd
->   @lx          ...... base:5 index:5 rd:5 ...... ..... &lx
->   LWX          011111 ..... ..... ..... 00000 001010 @lx
-> diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-> index daeaf07072..75b28c4338 100644
-> --- a/target/mips/tcg/octeon_translate.c
-> +++ b/target/mips/tcg/octeon_translate.c
-> @@ -174,6 +174,30 @@ static bool trans_saa(DisasContext *ctx, arg_saa *a, MemOp mop)
->       return true;
->   }
 >   
-> +static bool trans_ZCB(DisasContext *ctx, arg_ZCB *a)
-> +{
-> +    TCGv_i64 addr = tcg_temp_new_i64();
-> +    TCGv_i64 line = tcg_temp_new_i64();
-> +    TCGv_i64 zero = tcg_constant_i64(0);
+>   typedef struct TCState TCState;
+> +
+> +/*
+> + * Octeon3 adds a second bank of multiplier/product limbs used by the
+> + * two-source MTM/MTP forms: MPL0..2/P0..2 from rs and MPL3..5/P3..5 from rt.
+> + */
 
-Could it be more effective to use TCGv_i128 zero?
+I'd reorder this patch just before adding these MT* instructions.
 
-> +
-> +    gen_base_offset_addr(ctx, addr, a->base, 0);
-> +
-> +    /*
-> +     * QEMU models ZCB/ZCBT as zeroing the containing 128-byte cache line
-> +     * in guest memory.
-> +     */
-> +    tcg_gen_andi_i64(line, addr, ~0x7fULL);
-> +
-> +    for (int i = 0; i < 16; i++) {
-> +        TCGv_i64 slot = tcg_temp_new_i64();
-> +
-> +        tcg_gen_addi_i64(slot, line, i * 8);
-> +        tcg_gen_qemu_st_i64(zero, slot, ctx->mem_idx, mo_endian(ctx) | MO_UQ);
-
-s/MO_UQ/MO_$bits/
-
-> +    }
-> +
-> +    return true;
-> +}
-> +
->   TRANS(SAA,  trans_saa, MO_UL);
->   TRANS(SAAD, trans_saa, MO_UQ);
->   TRANS(LBX,  trans_lx, MO_SB);
-> 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
