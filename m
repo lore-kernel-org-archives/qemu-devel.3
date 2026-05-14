@@ -4,100 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14FE7CD37AC
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 19:15:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28FA0CD37AC
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 19:20:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNbVZ-0001Gz-Qs; Thu, 14 May 2026 15:14:09 -0400
+	id 1wNbaz-0002Jg-7R; Thu, 14 May 2026 15:19:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wNbVX-0001Gi-TQ; Thu, 14 May 2026 15:14:07 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <matt@matthewpenney.net>)
+ id 1wNbas-0002IS-3f
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 15:19:40 -0400
+Received: from mail-4397.protonmail.ch ([185.70.43.97])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wNbVV-0002EI-4z; Thu, 14 May 2026 15:14:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1778786031; bh=H4kzjOwp4EbLDVJAmmLrCgznIgyZlUpZoyHePplfyPs=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=YsCZzpJoRebyaJo9UqJjAQphPprOc4B83y6nhodQkbyAM6i+ozeIm2lf0sZTYms0l
- 6EnyjUPs7MLCDcc9KrfSiaxucoDzsAzvM6861jbEv7ZaQFOUeFMq8ibdhKPvF2vZvm
- +HBG0j3/2AU6V45j+/bkSQ7B8nN6uz7zA67WPyCemFNzuEsajI0X3DdaUmUjba1mVy
- YQu3y18noBSq+i05RNliKyAiOowdtSJxEcyp6QBbNopoTxp2sg1/0luUUHsCF/1tNT
- Y3zZljIixi58lKp6rAAXd5236KeLr/nYAsUkCsIgRqQ+0uQK8EnpSkXqoqtOsHz04V
- YhAdHOjVNCXGg==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 1E6DC1AB594;
- Thu, 14 May 2026 22:13:51 +0300 (MSK)
-Message-ID: <1df3c974-0e84-4801-9441-705d4241dfe8@tls.msk.ru>
-Date: Thu, 14 May 2026 22:13:58 +0300
+ (Exim 4.90_1) (envelope-from <matt@matthewpenney.net>)
+ id 1wNbap-0004H7-Cd
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 15:19:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=matthewpenney.net;
+ s=protonmail; t=1778786364; x=1779045564;
+ bh=7FhMb7sBXDZ6CsSIZO7EzfJPesa87v+7jGOEe8Qr960=;
+ h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+ Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+ b=fq5NP0VkKLcKFP5eaEMoj7qy86oCgCVd6ilnNEwjo9xm1bMVL2XhV29vk2HC3IpPo
+ CZB7xVP/G0emEiEJ2INxMgTEXn2yBLbZYBUxV9vW7k4o6cC2KXDzfBXgyXC4VbMwq/
+ 8lbiM6OfhkzDURpQ0FHuyazB84mjt2goyqq72rdA3D8tU9BO60rQHt4Of2OzF5gjIs
+ hS7ftEOJn3lb9nW/o349V9LQAAN7JPbwbUoXCxINocxqew6J6mAzZTuQcH1M1d05MQ
+ Ba/Bq5Hyw++zOj/Nx4BjGxEdJ20zIXPw4HPRZ41DAJU0bsZVjCdB7bxvaOxMCMdy7f
+ 4wfyDRo37Nohg==
+Date: Thu, 14 May 2026 19:19:18 +0000
+To: qemu-devel@nongnu.org
+From: Matthew Penney <matt@matthewpenney.net>
+Cc: Matthew Penney <matt@matthewpenney.net>, farosas@suse.de,
+ lvivier@redhat.com, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH] tests/qtest: fix discarded const qualifier warning
+Message-ID: <20260514191844.105888-1-matt@matthewpenney.net>
+Feedback-ID: 185185778:user:proton
+X-Pm-Message-ID: 8e6596e175fdba6eb34262246ddf80a4957c6f68
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] aspeed/hace: Prevent total_req_len overflow
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
- Katherine Leaver <katherine.j.leaver@gmail.com>, qemu-stable@nongnu.org
-References: <20260504213421.710035-1-clg@redhat.com>
- <20260504213421.710035-3-clg@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260504213421.710035-3-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=185.70.43.97; envelope-from=matt@matthewpenney.net;
+ helo=mail-4397.protonmail.ch
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,30 +67,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05.05.2026 00:34, Cédric Le Goater wrote:
-> In accumulate mode, total_req_len is incremented with plen (hwaddr)
-> for each hash request. Repeated additions can overflow total_req_len
-> (uint32_t) and potentially bypass validation checks in has_padding().
-> 
-> Add a helper function to detect overflow before incrementing
-> total_req_len and reject the request if overflow would occur.
-> 
-> Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
-> Cc: qemu-stable@nongnu.org
-> Fixes: 5cd7d8564a8b ("aspeed/hace: Support AST2600 HACE")
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Modern compilers warn that the result of strstr() may discard
+const qualifiers when assigned to a non-const pointer.
 
-This change does not apply to 10.0.x qemu-stable series, because,
-at least, it lacks v10.0.0-1171-g7328c48b57c9 "hw/misc/aspeed_hace:
-Extract direct mode hash buffer setup into helper function".
-This code in 10.0.x is slightly different, namely, there's no
-error return from the function in question.  Please take a look
-at 
-https://gitlab.com/mjt0k/qemu/-/commits/4a82112f40351e94f1b3af938782298abda1c810
-which is my attempt to fix this code for 10.0.x (not even compile-
-tested yet).
+Make 'found' a const char * to fix the warning.
 
-Thanks,
+Signed-off-by: Matthew Penney <matt@matthewpenney.net>
+---
+ tests/qtest/libqtest.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-/mjt
+diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+index bf9284b9a1..b1e06ea364 100644
+--- a/tests/qtest/libqtest.c
++++ b/tests/qtest/libqtest.c
+@@ -2146,7 +2146,7 @@ bool mkimg(const char *file, const char *fmt, unsigne=
+d size_mb)
+ bool qtest_verbose(const char *domain)
+ {
+     const char *log =3D getenv("QTEST_LOG");
+-    char *found;
++    const char *found;
+=20
+     assert(domain);
+=20
+--=20
+2.54.0
+
+
 
