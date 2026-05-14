@@ -4,96 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4D9BCD4F25
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 10:04:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E74DCD4851
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 10:04:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNSui-0007PW-8K; Thu, 14 May 2026 06:03:32 -0400
+	id 1wNSvu-0007oH-Oz; Thu, 14 May 2026 06:04:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wNSuP-0007Ob-Th
- for qemu-devel@nongnu.org; Thu, 14 May 2026 06:03:18 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wNSuN-0003jY-SR
- for qemu-devel@nongnu.org; Thu, 14 May 2026 06:03:13 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-48e8132c6d0so37094205e9.1
- for <qemu-devel@nongnu.org>; Thu, 14 May 2026 03:03:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778752990; x=1779357790; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=hYBx7xq1OOCCZhh4RQ5mzEs9yVHN4TskbrIGHQJt5lU=;
- b=D+tUYV8CvEmLx3YjRHCnKjO5lhuYusA7l+S17UtNDJpmV/yf5YzgSce0VrIGHeN6Fv
- yzzmY8/69+E70yo9XTIMCenLJPdf92hH7NEENeq7TQ9/47ShI4Euz9LrL2gE/kZOypnW
- DiOVVuTmE7tUIUR8dBkLXrCB4yGasgDfXEn5z6ON7wtgOz4ifpbYPAV+7RLrHNQvstaN
- fQhfLkDed9TxDSdibiuVOYwoA217MtkZIBteBTrsDknPEEQfYcg/Cybe40C9M2yisCw9
- qn6V3nGRfzyvnxxu2yZjXCleoFmFE8TpSW8CLA+qx3opcU7eKs6E5XTgCypsxQvenEWZ
- j+jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778752990; x=1779357790;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hYBx7xq1OOCCZhh4RQ5mzEs9yVHN4TskbrIGHQJt5lU=;
- b=hXFilA3AaFsc8DXZHdrU5q9gd0iGmDD+4ITXQeDguL7xNgW+KoFRfkGaQwHlGycSrN
- HK7iuP3EnNXlPSAf/CA7OZfq4DAPvhNvP3tUW+b21+Eknnrh4pDjDhb9V8vakHdRbgOh
- uuAAZOHVVueenEs6ZUZaQz/LghOCoN6ZbPoYNOJHaGZOl2UUTaIAaeJfGnAU55BMSVNN
- jKc43gTrZxuARWkz6J9q4Trl92EqST9oJLvvNlVs6JUBlhNhKMbdnpaAfmq0kAoOvDBu
- aD9/yM/hCszQOhNYofmCMy9mkAVjFd8gxJD4rGVLH7RFWpoYrkYyEthO2gds2cQ02bdD
- hO4w==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+UyDTMkgGn7K1zIxM5crnIX6iGw7RGjxepOz6SQwL1/Vf21VEw5vsksxaoyOwnYkGtuF07ZAxs3KFo@nongnu.org
-X-Gm-Message-State: AOJu0YyistNR1jxBORRpeU4UN5gLuZm4ACpIH/Qul24G08cfC+DagetJ
- /o3gjsPM3wpS5OSfmqDQeFoSeuiTNI7VjS7RBl0EOJVfB2SyVEIy8MhKJDsXIS9QbC0=
-X-Gm-Gg: Acq92OEVp99OKI7xMQYfO4Vd7BQMiJg7S+j91yFFWo5x9whfkY4QBQxeCpP/1AZKvBF
- 6vL0rscv58oyK8apYa08MvDx6NZV/tiGzMa1Xn99kxm/CKLv4lP6nlnVWyANfnJRHDoXrnjQ7Vu
- 2gf5H4IT3KQ1EPb6soZd1afJGB29NDFiBjASZdTiS3TnK3oWyLGWSyyS45gc5iPSvD0sEgmJ9IP
- 44hqD9Eqcxo0KqKyTSdAO0FjquokJbhLiSKbCMRh5gd1LrX/48Wyfk5Zen8q6/fiOfEO69mBrVk
- HmlMYy0loecuiMSGwtYz5CsDN9n5PrnTbblRSQ35E8DZYA7nyEf/K8ZY6h6vYvybfDM4UebjWAk
- /gdZyp5tPldx2OiTgslMLxTrWoSBPpK10xRisAORUp5d4MwkjIir2v5rH4303QdfH9cIEZz8IvH
- pZ8uSYFtG8Qw9MA6Xhu93/iwfv7G0mkl3WK4aX7pxgMzww5nbkIVv40dFWyMahSQa598/4zbD2f
- U/w
-X-Received: by 2002:a05:600d:18:b0:48a:5574:3a5d with SMTP id
- 5b1f17b1804b1-48fce9bd5d1mr79674135e9.7.1778752990085; 
- Thu, 14 May 2026 03:03:10 -0700 (PDT)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fd6498a7esm51528105e9.4.2026.05.14.03.03.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 May 2026 03:03:09 -0700 (PDT)
-Message-ID: <19e89a7a-7156-4572-8951-c08061725f38@linaro.org>
-Date: Thu, 14 May 2026 12:03:08 +0200
+ (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
+ id 1wNSvs-0007nw-Mn
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 06:04:44 -0400
+Received: from mgamail.intel.com ([198.175.65.13])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
+ id 1wNSvq-0004R6-SU
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 06:04:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1778753083; x=1810289083;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=spfbICq9F1iwsyTEYXK/avZaHtL5lUyZ8ZC4bbOiwMI=;
+ b=jDLOCxXfa0rXZHZLmgMLZaiZ+MusNK1gPcgjUZ9VB7eO1HXw4UqDDzLq
+ M5v6/Cxr94Aj7wwzsL5jA5EaE5wqaBH5bjxUqd3HKMB3997dK7xT8DZMK
+ zxK3kTIwHdsMUMFUmJVo3zTEY38Ut82JV9rSbf1mr9AakBmQH2sBTro0m
+ 6rsJEZ29N5XCKxtEcm2vAwJT78sJvKT7iQsL7MaMRXqQ4BbZpb1H7fj7+
+ Q9a5lFiDWvu6YJBRuPb3vZ478kMu4SUdIepIvuBRlf96gspp7Jic0VVC9
+ /I2U5kJjTm+0A/NdjAjX7YDUS98iMPXFKJrnt16L7BZaFL0ImBLaLvrYC w==;
+X-CSE-ConnectionGUID: ag8BoZIRTg2NE4Sd+ndNwA==
+X-CSE-MsgGUID: UyT35Jn0RJ6ECG3cw4h23g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11785"; a="90796042"
+X-IronPort-AV: E=Sophos;i="6.23,234,1770624000"; d="scan'208";a="90796042"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 May 2026 03:04:40 -0700
+X-CSE-ConnectionGUID: 2ObFpi2DStCkaFBG23Y9Gw==
+X-CSE-MsgGUID: Sp5D6MGsT6m2wOMnQzBJdg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,234,1770624000"; d="scan'208";a="243324913"
+Received: from junjie-optiplex-micro-plus-7010.bj.intel.com ([10.238.152.98])
+ by orviesa005-auth.jf.intel.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 May 2026 03:04:35 -0700
+From: Junjie Cao <junjie.cao@intel.com>
+To: qemu-devel@nongnu.org
+Cc: zhenzhong.duan@intel.com, yi.l.liu@intel.com, philmd@linaro.org,
+ mst@redhat.com, jasowang@redhat.com, clement.mathieu--drif@bull.com,
+ marcel.apfelbaum@gmail.com, pbonzini@redhat.com,
+ richard.henderson@linaro.org, farosas@suse.de, lvivier@redhat.com,
+ Junjie Cao <junjie.cao@intel.com>
+Subject: [PATCH v4 0/2] intel_iommu: fix guest-triggerable assert in MMIO
+ handlers
+Date: Fri, 15 May 2026 02:07:01 +0800
+Message-ID: <20260514180703.85686-1-junjie.cao@intel.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 14/35] target/mips: add Octeon ZCBT instruction
-Content-Language: en-US
-To: James Hilliard <james.hilliard1@gmail.com>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang
- <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <arikalo@gmail.com>,
- Huacai Chen <chenhuacai@kernel.org>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20260511-mips-octeon-missing-insns-v2-v6-0-5062889c4d3c@gmail.com>
- <20260511-mips-octeon-missing-insns-v2-v6-14-5062889c4d3c@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260511-mips-octeon-missing-insns-v2-v6-14-5062889c4d3c@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.13; envelope-from=junjie.cao@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DATE_IN_FUTURE_06_12=1.947,
+ DKIMWL_WL_HIGH=-0.445, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,47 +85,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/5/26 20:22, James Hilliard wrote:
-> ZCBT has the same user-mode memory effect as ZCB for QEMU's purposes.
-> 
-> Reuse the ZCB translator so both cache-block-zero forms clear the
-> containing 128-byte line.
-> 
-> Acked-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-> ---
-> Changes v2 -> v3:
->    - Split ZCBT out of the combined Octeon arithmetic and memory
->      instruction patch.  (requested by Richard Henderson)
-> 
-> Changes v4 -> v5:
->    - Fold ZCBT into the ZCB decodetree entry with a selector comment
->      instead of adding a separate translator thunk.  (suggested by Richard
->      Henderson)
-> ---
->   target/mips/tcg/octeon.decode | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-> index d8a1bfce77..5377f7b3ef 100644
-> --- a/target/mips/tcg/octeon.decode
-> +++ b/target/mips/tcg/octeon.decode
-> @@ -51,6 +51,7 @@ SAAD         011100 ..... ..... 00000 00000 011001 @saa
->   
->   &zcb         base
->   ZCB          011100 base:5 00000 00000 11100 011111 &zcb
-> +ZCB          011100 base:5 00000 00000 11101 011111 &zcb  # ZCBT
+An 8-byte guest access to a 32-bit-only VT-d register hits
+assert(size == 4) and aborts QEMU.  Found by generic-fuzz.
 
-What about using '-' instead?
+v1: https://lore.kernel.org/all/20260420170523.17908-1-junjie.cao@intel.com/
+v2: https://lore.kernel.org/all/20260424201842.176953-1-junjie.cao@intel.com/
+v3: https://lore.kernel.org/all/20260506031942.251335-1-junjie.cao@intel.com/
 
-ZCB          011100 base:5 00000 00000 1110- 011111 &zcb
+Changes in v4:
+  - Switch the guest-error log from error_report_once() to
+    qemu_log_mask(LOG_GUEST_ERROR, ...) so it is surfaced only
+    under -d guest_errors (Zhenzhong).
+  - Add a block comment at each of the 4 reachable sites
+    (FECTL 0x38, IECTL 0xa0, IEADDR 0xa8, PECTL 0xe0)
+    explaining why the check must stay, so future readers do
+    not delete it as "harmless" (Yi).
+  - No functional change beyond the logging-API swap.
 
-Although if we were using decodetree for the disassembler
-output then ZCBT would be preferred.
+Changes in v3:
+  - Drop v2's min_access_size=8 approach: per Zhenzhong, it
+    silently zero-extends 4-byte guest writes, wiping upper
+    wmask bits of 64-bit registers and firing triggers gated
+    on size==8.
+  - Keep min_access_size=4.  Remove the 25 assert(size == 4)
+    sites: 21 are unreachable (non-8-aligned), the 4 reachable
+    (FECTL 0x38, IECTL 0xa0, IEADDR 0xa8, PECTL 0xe0) fall
+    through to vtd_set_long() and log a guest error.
 
->   
->   &lx          base index rd
->   @lx          ...... base:5 index:5 rd:5 ...... ..... &lx
-> 
+Junjie Cao (2):
+  intel_iommu: fix guest-triggerable abort on oversized MMIO access
+  tests/qtest: add 8-byte MMIO access sweep for intel-iommu
+
+ hw/i386/intel_iommu.c          | 74 ++++++++++++++++++++++------------
+ tests/qtest/intel-iommu-test.c | 30 ++++++++++++++
+ 2 files changed, 79 insertions(+), 25 deletions(-)
+
+
+base-commit: 5e61afe211e82a9af15a8794a0bd29bb574e953b
+-- 
+2.43.0
 
 
