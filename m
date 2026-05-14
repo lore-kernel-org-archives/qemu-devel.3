@@ -4,144 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F499CD4F39
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 17:59:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5CE9CD4F39
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 18:08:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNaKL-0000gf-FG; Thu, 14 May 2026 13:58:29 -0400
+	id 1wNaT5-0002Th-5b; Thu, 14 May 2026 14:07:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
- id 1wNaKJ-0000gL-TZ; Thu, 14 May 2026 13:58:27 -0400
-Received: from mail-eastusazlp170120007.outbound.protection.outlook.com
- ([2a01:111:f403:c101::7] helo=BL0PR03CU003.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
- id 1wNaKH-0005i1-U0; Thu, 14 May 2026 13:58:27 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=QGEaq8VRD6T9DSJoZXGWiV8k1b1jOh6nWKB/bJrokKXOFV8H7cc5etcCnsFel7qP38IG9oYgROGc9QY2NHNl1slxPPgXVem1kdJVMq6cTUx9SIqNFhpkOrrS09YeOcGXfDffw7lg07aV+Ck+AD88v1RJLsZUEGv37fVcdnod2GMRA0/YtcZNBsWIeK8Ej/ExACx/X+8+UOBAgo8+b4q28rwZCLfGGLE7y4LKLBwo4nk2W3I2MVAg6AzPGQmbALS62xphRMrV0XIx2slwR4045GPMxclqHAgAbkD5V6efuvOwOHtaUcN/BSltZ8PvLMf9uT/iFoFmmyk+3N3HCly2gg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=DMq9XWsDASNWm40nVZrK+m7ps5vKEuD3Ih9CExLrz/Y=;
- b=i173fyOoFYYUl/XXuXdqeWaTSxCYmLajlwJNkFVoTBV6xW0BfB4L5B/XfEtDxXDCP58DF76kTSlhja6S4snZniDgUhrWjpJF3PAXEV4EXuOnYfhp4tf7F8QXIDVSmBjaZ13we+JfTD9tLWcXc4w0nysT5lLeat4WQDGgWVDbsxF8K4b92f6VCGDSvLI3hKoUb43kfTuqYg/cgGqO9sLgoiXsY5JoTW3AOhTsPE0SXFgJOgCWhDLMn4yEzTMJq9GuSVbiQpaI96RG3XYcLWrH23ZJZOPCLpA5VZO8kTzLrUJgbgfVuRCfs5tlAP1CQqrq4RJbhmQ12aqj8/r0BKY/CQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DMq9XWsDASNWm40nVZrK+m7ps5vKEuD3Ih9CExLrz/Y=;
- b=dyR8h4ZqKrOA1CLTRA+sENfWBC3X36FcVv23txC6091eklv20LxDFNAr9OaYuEyyzmK+qGq7/nuCKaq2sBzdwtR0LJyd8jv0xh2OZJiXppzyjoc294fZv0J4a2Tk6eU3f2QjOjbnfSdO2urAm90WnG3SuuHcBdoOocpc+bnQVj0Y4qeQakTTgJbFPnxr4aXRRKJ1ibYfwwfi0OcbHKYl7tflHPOVt3DVycxlOk8LHMsIWcM0mtbtHLZGbKnUVX0OIllXkqGHpz5Hz4FEHYI0EvqdJCnPV7EuaY4YAGfhNenYaIri4FobhKFklj00rs8t7DKIaDO9IsEn5b+F0zaDBA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CY3PR12MB9555.namprd12.prod.outlook.com (2603:10b6:930:10a::14)
- by DS7PR12MB6333.namprd12.prod.outlook.com (2603:10b6:8:96::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.25.18; Thu, 14 May
- 2026 17:58:15 +0000
-Received: from CY3PR12MB9555.namprd12.prod.outlook.com
- ([fe80::fdb2:266d:ee2b:8d1e]) by CY3PR12MB9555.namprd12.prod.outlook.com
- ([fe80::fdb2:266d:ee2b:8d1e%6]) with mapi id 15.20.9913.009; Thu, 14 May 2026
- 17:58:15 +0000
-Message-ID: <7bc3907b-f170-4f86-bbc8-24acdc7f2970@nvidia.com>
-Date: Thu, 14 May 2026 10:58:12 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/7] hw/arm/smmuv3-accel: Add helper for resolving auto
- parameters
-To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Matt Ochs <mochs@nvidia.com>,
- Nicolin Chen <nicolinc@nvidia.com>
-References: <20260512193520.3109172-1-nathanc@nvidia.com>
- <20260512193520.3109172-2-nathanc@nvidia.com>
- <CH3PR12MB7548A1A5114A588B8FFB57CDAB072@CH3PR12MB7548.namprd12.prod.outlook.com>
-Content-Language: en-US
-From: Nathan Chen <nathanc@nvidia.com>
-In-Reply-To: <CH3PR12MB7548A1A5114A588B8FFB57CDAB072@CH3PR12MB7548.namprd12.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: BY1P220CA0011.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:a03:59d::11) To CY3PR12MB9555.namprd12.prod.outlook.com
- (2603:10b6:930:10a::14)
+ (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
+ id 1wNaT4-0002SV-3D
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 14:07:30 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
+ id 1wNaT0-0002ww-Tz
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 14:07:29 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-82f8b60e54dso6703739b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 14 May 2026 11:07:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1778782043; x=1779386843; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=80ZgKXKDVvOmJaYEAUBsg2rNRUfSuGYDY6q/0mAxEic=;
+ b=RVE9ibHm4XpCsOZlzxhd9kugVTRSaEYJRcRxAj2+5noWLYAKl84aAEq/kLRCf2YNed
+ iDMfAm7gMUMw0wlCtOGAtbfgb9kfOQsIqRif2wnxIdLhRx7QVIQEDOJ3mesCREqJG8po
+ dWGgoxXVEDSu4oXoGK1DFNKFwcaBpr6CAUpdrgRU4Gcjyck+Rd+ftQjqjjLAm/qUytak
+ xX8cffxEdHw5rQCg6xGKQ+AMoox9HsFy814ZBNOV6CMxJmlbXBIzfIwiIDlnhEtVc86o
+ uon2nGqWC6HvfPMBYumgEyj0K1rL2ln7fCzzHjAxr3jBnJRUBqUgmfNDIB3wb86azxH4
+ mZjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778782043; x=1779386843;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=80ZgKXKDVvOmJaYEAUBsg2rNRUfSuGYDY6q/0mAxEic=;
+ b=V0EfmWchCofXQ7KpT7BvyOV2ghsceyROaaVxOjfyuJXrZTStjFMLjJSc8AXvEqE87g
+ 2Tf4bvr8id2+oG5g9NJ9Qlz+OBs9Q642vtGrrzXCWA6S6iP/ZGGk25N1blfUOoQBF/ty
+ R5RAZVGB7SCVPHML0NMN/tYU4SZBg9N4u9jOHwmRmnrEJ15IniUO0X+iDB8U339Aw0tM
+ jl3TTK5OFw5nPbKUh0NWjwggs1r8qy+ifrNJNhaAa5sIMbKMsIDbee1YSk4e059qm75F
+ 3Z6s0DQ4UrmsWKFhxuOrVk5WgiUocUgy9EFOtkoXF0Qt835VgKFM58UwXCe8rET9Iz6Q
+ 18wg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/4cKTo9Wnd4jcoDCxKD/+kW2NAijrCIQ8SIf4kBiRI/QH7vAPNWT3mAx2Gu6RtNj1EjPAXZcChocYb@nongnu.org
+X-Gm-Message-State: AOJu0Yye4fiT8v2UO5EiKkJ6hwsgW8Gae9kVIGzjsFlH8AcvADf3xk82
+ ckQG3H/bx86fS47RyCXPl9AcWHfiKXt13c08RakfD+P2TZl1+BWdmmIX
+X-Gm-Gg: Acq92OFLQJO7iFP27qIrW5LpV3Uc9ZhXkJj6tkbli1J6F7VDOkhbXVuXLoM0nVm7yRH
+ NFBNAl/kYA4kNR+jnk7IvswO7PLYpWIho0Zz1QGJ2rfEjy0TqFuOEHvq2fvAibRQoof0Lu6Cjbs
+ 7mVEPf0ZESx0GHbg8jhrzcvZueYZmi3FxJc/XTwcp+XUs9dZaRiX9Mkn3Ir/chpYzDpU3uxiCHs
+ PZ9aiIvjfhvLGcI8u9np6pYKKyPaaLV9pfpizQrqoxK9Aft4BCDQSL8nBd8rcTYIjYhPpLGAG2E
+ lqy3xu2NlUzHxbCYW2M7WdVWpVynsFYo/ay0fbqTyB7yWsWS6Jf+v5eRai7t5KQCtlO4PSN92bR
+ GvlU2EDL4d4xo1d909bR0JbIg+MnaOZLHhQdpitC4OQ3nQiCma22d07E27BziLhidrwY+Y8PwZZ
+ xZALhPM7OOQeYP7yJmme1ZEpwjcKWY85BFOQ==
+X-Received: by 2002:a05:6a00:94f9:b0:835:45bf:9660 with SMTP id
+ d2e1a72fcca58-83f33df29e4mr655042b3a.42.1778782043358; 
+ Thu, 14 May 2026 11:07:23 -0700 (PDT)
+Received: from google.com ([118.150.148.19]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-83f19c7c74fsm4330143b3a.49.2026.05.14.11.07.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 14 May 2026 11:07:22 -0700 (PDT)
+Date: Fri, 15 May 2026 02:07:18 +0800
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
+To: Chao Liu <chao.liu.zevorn@gmail.com>
+Cc: pbonzini@redhat.com, marcandre.lureau@redhat.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, christoph.muellner@vrull.eu,
+ farosas@suse.de, lvivier@redhat.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ jserv@ccns.ncku.edu.tw, eleanor15x@gmail.com, marscheng@google.com,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Subject: Re: [PATCH v2 1/6] target/riscv: Add stubs for T-Head PMU CSRs
+Message-ID: <agYPVpDlY30lSD1Y@google.com>
+References: <20260514011528.1263665-1-visitorckw@gmail.com>
+ <20260514011528.1263665-2-visitorckw@gmail.com>
+ <agU2IzvCDigXHSM5@ZEVORN-PC.localdomain>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY3PR12MB9555:EE_|DS7PR12MB6333:EE_
-X-MS-Office365-Filtering-Correlation-Id: d0760cfb-31c6-479d-10d5-08deb1e25f01
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|376014|1800799024|4143699003|11063799003|3023799003|22082099003|18002099003|56012099003;
-X-Microsoft-Antispam-Message-Info: 8maF5hIBrJZPTjmtc0xfhqzLPEqTVwNwSruCYl1VUCOa0DpU0JRYfez3/n1NBkylBcRWztSJzFo0KPW6qEtLN8FkhUNHmVoCjwrWnQLftbQBm3jtF2y8+az/sfkXLMiiJMSVHTxn7DrBzEviShoDnSWvaMeghWp/RibJS2SMGYQxLHOqdCoamInrl5vkuEYCqn4qPzKz8VaMzSnR4CuZ+uT3rEvkJN55AqdFukADzrSf8lNKBvqpbExlKGFASGafZUDDYXCh0mbY/fgjUUB6+imZeXECq6S7RVOrnNUtA/SdkAwAabHkNrtjBXt53NtY1YSLARE3N53dG8KvWPSbGbJaKAS0YJYsooS7xhW2ooCzmQhSaVMt28GmSEA14FXe+UPbuMBUUasJIZktehpaDXHTqFSkhbn9LILbh8UOh91DjJdjyWKUvQ34wzZW/+SRZvx2zVjEv9LSQMwsmmnNPG4m+mOfV/seIwE3jOyW4cKEO1zEd/SubfyLdE2//pc8FDwhc5J9rKPGbhJwSjO5MoB7T6D5UF1VoGckh6rRxixtFrbl9b5Kpsf76+7VEdp60JRL++Tz5Q54sxbe5fjs+kkZ3actvbzs5/5DaunPCNjx6bNgRuzG1JYM8N0hnQfA2TlNWaYhHBfDhPfXDW6Cn0BNgbRdXUjYidwuE3AzVXIr9IlTl2N5x1CXplsq5yJc
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CY3PR12MB9555.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(4143699003)(11063799003)(3023799003)(22082099003)(18002099003)(56012099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YXhVNzk0NjBVMnBOMUJPdndiNi9YZ3h1a2lKblBHUldLV3ZwTHVyOWZMQTJT?=
- =?utf-8?B?SzJlUTZMWHhnaVZRYjh5Z3ZNaDMxTnNHUVdNT2pXc3BuRm1HTThTQVNLZW5a?=
- =?utf-8?B?dFVKVmhtYzUzTmlDekl0dEJMMkE2dWI3NmZvVHdNTnNKck1DaUNIblRLQTBm?=
- =?utf-8?B?TnpMT3pyc01ZVmdNUitDd1p0NXkvWTRycGFGRTdZTnBIcEUrK0NkblVPak1i?=
- =?utf-8?B?ai9PR2NyOXNCMUVPUFBlVXZuWE5Dcm5ZcnhMeUNONjlOSGFQVEJDdmtLV2p6?=
- =?utf-8?B?K0Q1MEtRZllrTUJneUthUC9mYzVGRmpZVkF2TUR6eXNFbk5sWnBhTzVrcGM4?=
- =?utf-8?B?amRHWGt5enZDSjFRKzJnb01yaXc5MTl0SGQ1YzRlMFFLaUhUaEhPV3pVNEFU?=
- =?utf-8?B?M1IzemFvLzdQaktaU05XbVEyVk1IUFp4VDZjSGl6SmRHVVMxUDR2U3JZWVFL?=
- =?utf-8?B?UWFsU2wzN1JFcUhWTUs5d04rbnN1NUVVS3hYYnlMcGsxMDFUTzhtYjhud0Q2?=
- =?utf-8?B?VmJOZ1JBSXdkT1BqalpoNE41SzBFM095WUhaclhYVjFiSHZLcG92NllNaWZ6?=
- =?utf-8?B?WFprWUdnVG9CNEx5TWhjSG1tdGw4akdTS3lBMDBLWlBOazMyZTNxVDM3NDVT?=
- =?utf-8?B?ejZmV2cxSXNtRDZYLzZhYm8wbXdGbkczQ2pPUjVMak9idzhBVzZFemQ4R2VO?=
- =?utf-8?B?aXV5L2xNSlpKUVFuRkR3VmlVbmJrMzgvdmlMb1JuY0xJK0VaaTI1SVA1bGUx?=
- =?utf-8?B?VzgvblF5Q1VHNTllNmVDbFhjckh4UHJrTm1MMmRwajlnbEI2WVkvS2x2bU5W?=
- =?utf-8?B?dElZTDVFcnNWU0YrWVRmay9BNDFXRmhjWWVxcUtZdVJ6SkE3SXdtclI4dzkz?=
- =?utf-8?B?dkNGWVRJcG9JVGNobzBURVc1NzZ0OWV3bVRxY1NhMDJrNWZDS0Fkeng2N3Zk?=
- =?utf-8?B?TTBpWGRnbllrT1o2a0RyTjVNTVliNDd6RFY5SVVRaWloMGcrMEx2djN0TVYv?=
- =?utf-8?B?QTNHaUZraUZvaitESUlLK0dSN1dadXVuU2xqMDJncTRpZkYxMWdkQ0hBZmtE?=
- =?utf-8?B?NnlYTnd5NUlOMzRVbEltaDNHUmlqNlNlaXkwREFLb0pIQ0pyQ0NwSnk2TXlO?=
- =?utf-8?B?Q0dSTEtDV3VOYXJ3L1dMMnc0a2hOUFFxU1Rvd2t3djEwdkhNWGJab2xoK3l3?=
- =?utf-8?B?NjZsNUFDb2JtcHVhS0NRdldkREJCa1NCZlIrSllCTTRweVJjSElnN2ZZbVpv?=
- =?utf-8?B?bGNNczIwd0hIY0NnN2tkbWI5QzRkR2JCNjlXVktvTGc5azVzQzJSeTNUZU15?=
- =?utf-8?B?R3dtclBEczBzMmNEUWU3eWhpdzQvdmFoOHExaGZhZTREZktWTjBGbmdyWENa?=
- =?utf-8?B?eDdicHAyZUljUzcrN2FyTWtDSjJHK2NNNmxJdmFoSW1hUjBwYmZScGhPblhu?=
- =?utf-8?B?UDhCM2RWblZwdm5PODZxZzNoUVRITkk2bDMxVzNWUC9aRnlNczRQeU1wck1l?=
- =?utf-8?B?ZUZaNklONmxDZ3dqanJUZ3Z2bnhvRkJEQnlVNkxuTHllU2pTU2htQU1EUHhh?=
- =?utf-8?B?NEtCbzYxazJZTTZKU2R3b1FFRVRDcHVvL2FGUU5UVlgyWFVUSmZ6RmZtdjFK?=
- =?utf-8?B?UjNia0dxWE9VY1NDVW9ZWE1vWHQ1bVNNM3RRdk5PVTJRa240b0NRN3FnT2xI?=
- =?utf-8?B?WnVVZko4cmt2VFpVZTVIRTVONzl0ZkpBNUUwUWdPUW43WGVVTStzOXNQRDBS?=
- =?utf-8?B?UEw5L1hobDBZb1g5eGpRYUZJRXBWT2g1bkhEdyswT3JJUStMaHFqVmtiZXZa?=
- =?utf-8?B?czFpWjFkNURWWmlBei90VEg5WGRuSjNRRVd0ZlNrZTNyQnFsQy95Mjc0YlRo?=
- =?utf-8?B?TmFueEJJWGkxekExWFZoNHNRTGs5amFkaVBVWU5WWk9uZXFGallXS0xWM3Bu?=
- =?utf-8?B?L1JKeG5RWThMcEdEUXhWL2w2a0kvQWVlemN2YnhhR2tUbXRKeFhOYkpFOHNT?=
- =?utf-8?B?T2E5RkNtMWxvU0xja3BwbmVDSUwyYVl5S2tGSld0ZUlubEtKaVR6QnR2bGNr?=
- =?utf-8?B?RzNKWENaVktSSitHWWdYVEtYV1drd0paSzVBcmtwOEoxTEIvWFIyay9Wd1Ry?=
- =?utf-8?B?dTVFaW1nam5VSXliK3M4cVYreGQvQ20rUTduMmhSOU1pNUt0cDM2N0VmeFpV?=
- =?utf-8?B?K3ozLzE4ajRJM3BOckVPNlU0anJVWk81T2V2ZmorTmQ3OFlrNzk0clBsTVQx?=
- =?utf-8?B?Qko3USs0di9Jc3FvRjRMajc1WGdVMVh5Rzk1YlRXdEl3ak9GS2k4N0t0emcr?=
- =?utf-8?B?VW1tZ0hOc2VRQjYyYXoyVjZORnJzZUV1dytGTWlNRVlINlNVWDRoQT09?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d0760cfb-31c6-479d-10d5-08deb1e25f01
-X-MS-Exchange-CrossTenant-AuthSource: CY3PR12MB9555.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 May 2026 17:58:14.9750 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: t4JSjl3Mby/e6b4b5cr8VL9sYf4bBPdN4kS9Nb3YF7gTAkJLX89HNbzWzp6QA4Yck7yFiE6z1xtTfyl0GcmR4w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB6333
-Received-SPF: permerror client-ip=2a01:111:f403:c101::7;
- envelope-from=nathanc@nvidia.com;
- helo=BL0PR03CU003.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <agU2IzvCDigXHSM5@ZEVORN-PC.localdomain>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=visitorckw@gmail.com; helo=mail-pf1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,169 +106,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Chao,
 
+On Thu, May 14, 2026 at 10:48:07AM +0800, Chao Liu wrote:
+> On Thu, May 14, 2026 at 01:15:23AM +0000, Kuan-Wei Chiu wrote:
+> > T-Head CPUs use custom CSRs for performance monitoring, specifically
+> > mcounterinten (0x7ca) and mcounterof (0x7cb). [1]
+> > 
+> > Since we don't implement these custom PMU registers yet, the system
+> > crashes with an illegal instruction trap when OpenSBI like this:
+> > 
+> > system_opcode_insn: Failed to access CSR 0x7ca from M-mode
+> > sbi_trap_error: hart0: trap1: illegal instruction handler failed (error -1)
+> > 
+> > Add simple read/write stubs for these two CSRs. By silently ignoring
+> > writes and returning 0 on reads, we prevent the fatal exceptions and
+> > allow to continue normally.
+> > 
+> > Link: https://occ-intl-prod.oss-ap-southeast-1.aliyuncs.com/resource/XuanTie-OpenC906-UserManual.pdf [1]
+> > Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+> > ---
+> >  target/riscv/th_csr.c | 30 ++++++++++++++++++++++++++++++
+> >  1 file changed, 30 insertions(+)
+> > 
+> > diff --git a/target/riscv/th_csr.c b/target/riscv/th_csr.c
+> > index 49eb7bbab5..b095364c31 100644
+> > --- a/target/riscv/th_csr.c
+> > +++ b/target/riscv/th_csr.c
+> > @@ -21,12 +21,19 @@
+> >  #include "cpu_vendorid.h"
+> >  
+> >  #define CSR_TH_SXSTATUS 0x5c0
+> > +#define CSR_TH_MCOUNTERINTEN 0x7ca
+> > +#define CSR_TH_MCOUNTEROF    0x7cb
+> >  
+> >  /* TH_SXSTATUS bits */
+> >  #define TH_SXSTATUS_UCME        BIT(16)
+> >  #define TH_SXSTATUS_MAEE        BIT(21)
+> >  #define TH_SXSTATUS_THEADISAEE  BIT(22)
+> >  
+> > +static RISCVException mmode(CPURISCVState *env, int csrno)
+> > +{
+> > +    return RISCV_EXCP_NONE;
+> > +}
+> We can add an RVM extension check, similar in form to smode():
+> 
+> static RISCVException mmode(CPURISCVState *env, int csrno)
+> {
+>     if (riscv_has_ext(env, RVM)) {
 
-On 5/14/2026 6:41 AM, Shameer Kolothum Thodi wrote:
-> 
->> -----Original Message-----
->> From: Nathan Chen<nathanc@nvidia.com>
->> Sent: 12 May 2026 20:35
->> To:qemu-arm@nongnu.org;qemu-devel@nongnu.org
->> Cc: Eric Auger<eric.auger@redhat.com>; Peter Maydell
->> <peter.maydell@linaro.org>; Philippe Mathieu-Daudé<philmd@linaro.org>;
->> Zhao Liu<zhao1.liu@intel.com>; Matt Ochs<mochs@nvidia.com>; Nicolin
->> Chen<nicolinc@nvidia.com>; Shameer Kolothum Thodi
->> <skolothumtho@nvidia.com>; Nathan Chen<nathanc@nvidia.com>
->> Subject: [PATCH v3 1/7] hw/arm/smmuv3-accel: Add helper for resolving auto
->> parameters
->>
->> From: Nathan Chen<nathanc@nvidia.com>
->>
->> Introduce smmuv3_accel_auto_finalise() to resolve properties that are
->> set to 'auto' for accelerated SMMUv3. This helper function allows
->> properties such as ats, ril, ssidsize, and oas support to be resolved
->> from host IOMMU capabilities via IOMMU_GET_HW_INFO.
->>
->> The later commits in this series set the auto_mode flag to true when
->> an accel SMMUv3 property value is explicitly set to 'auto', or if the
->> property value is not set and defaults to auto mode.
->>
->> Setting these property values to 'auto' requires at least one
->> cold-plugged device to retrieve and finalise these properties. If the
->> auto_mode flag is true, register a machine_init_done notifier to
->> verify this requirement and fail boot if it is not met.
->>
->> Hot-plugged devices into an accel SMMUv3-associated bus will re-use
->> the resolved host values from the initial cold-plug.
->>
->> Subsequent patches will make use of this helper to resolve 'auto' to
->> what is reported by host IOMMU capabilities.
->>
->> Suggested-by: Shameer Kolothum<skolothumtho@nvidia.com>
->> Reviewed-by: Eric Auger<eric.auger@redhat.com>
->> Signed-off-by: Nathan Chen<nathanc@nvidia.com>
->> ---
->>   hw/arm/smmuv3-accel.c   | 44
->> +++++++++++++++++++++++++++++++++++++++++
->>   hw/arm/smmuv3-accel.h   |  2 ++
->>   include/hw/arm/smmuv3.h |  2 ++
->>   3 files changed, 48 insertions(+)
->>
->> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
->> index 862be814a0..82c0800f4d 100644
->> --- a/hw/arm/smmuv3-accel.c
->> +++ b/hw/arm/smmuv3-accel.c
->> @@ -18,6 +18,7 @@
->>
->>   #include "smmuv3-internal.h"
->>   #include "smmuv3-accel.h"
->> +#include "system/system.h"
->>
->>   /*
->>    * The root region aliases the global system memory, and shared_as_sysmem
->> @@ -35,11 +36,32 @@ static int smmuv3_oas_bits(uint32_t oas)
->>       return map[oas];
->>   }
->>
->> +static void smmuv3_accel_auto_finalise(SMMUv3State *s,
->> +                                       struct iommu_hw_info_arm_smmuv3 *info) {
-> Nit: Move the opening brace to its own line.
-> 
->> +    SMMUv3AccelState *accel = s->s_accel;
->> +
->> +    /*
->> +     * Return if 'auto' was not set for any accel SMMUv3 property, or
->> +     * if property values were already resolved from a previous call
->> +     * to this function (e.g. if this function was called again after
->> +     * VM boot during device hot plug). We do not accept new property
->> +     * values in this case where auto_finalised == true, and we re-use
->> +     * the values determined from the initial cold plug.
->> +     */
->> +    if (!accel->auto_mode || accel->auto_finalised) {
->> +        return;
->> +    }
->> +
->> +    accel->auto_finalised = true;
->> +}
->> +
->>   static bool
->>   smmuv3_accel_check_hw_compatible(SMMUv3State *s,
->>                                    struct iommu_hw_info_arm_smmuv3 *info,
->>                                    Error **errp)
->>   {
->> +    smmuv3_accel_auto_finalise(s, info);
->> +
->>       /* QEMU SMMUv3 supports both linear and 2-level stream tables */
->>       if (FIELD_EX32(info->idr[0], IDR0, STLEVEL) !=
->>                   FIELD_EX32(s->idr[0], IDR0, STLEVEL)) {
->> @@ -918,6 +940,22 @@ static void smmuv3_accel_as_init(SMMUv3State *s)
->>       address_space_init(shared_as_sysmem, &root, "smmuv3-accel-as-
->> sysmem");
->>   }
->>
->> +static void smmuv3_machine_done(Notifier *notifier, void *data)
-> smmuv3_accel_machine_done() better.
-> 
->> +{
->> +    SMMUv3State *s = container_of(notifier, SMMUv3State, machine_done);
->> +    SMMUv3AccelState *accel = s->s_accel;
->> +
->> +    if (!s->accel) {
->> +        return;
-> Not sure we need this as we only register this for accel cases.
-> 
->> +    }
->> +
->> +    if (accel->auto_mode && !accel->auto_finalised) {
->> +        error_report("arm-smmuv3 accel=on with 'auto' properties requires "
->> +                     "at least one cold-plugged VFIO device");
->> +        exit(1);
->> +    }
->> +}
->> +
->>   bool smmuv3_accel_init(SMMUv3State *s, Error **errp)
->>   {
->>       SMMUState *bs = ARM_SMMU(s);
->> @@ -925,5 +963,11 @@ bool smmuv3_accel_init(SMMUv3State *s, Error
->> **errp)
->>       s->s_accel = g_new0(SMMUv3AccelState, 1);
->>       bs->iommu_ops = &smmuv3_accel_ops;
->>       smmuv3_accel_as_init(s);
->> +
->> +    if (s->s_accel->auto_mode) {
->> +        s->machine_done.notify = smmuv3_machine_done;
->> +        qemu_add_machine_init_done_notifier(&s->machine_done);
->> +    }
->> +
->>       return true;
->>   }
->> diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
->> index 407940616c..87fecb5c68 100644
->> --- a/hw/arm/smmuv3-accel.h
->> +++ b/hw/arm/smmuv3-accel.h
->> @@ -25,6 +25,8 @@ typedef struct SMMUv3AccelState {
->>       uint32_t bypass_hwpt_id;
->>       uint32_t abort_hwpt_id;
->>       QLIST_HEAD(, SMMUv3AccelDevice) device_list;
->> +    bool auto_mode;
->> +    bool auto_finalised;
->>   } SMMUv3AccelState;
->>
->>   typedef struct SMMUS1Hwpt {
->> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
->> index 82f18eb090..fe0493c1aa 100644
->> --- a/include/hw/arm/smmuv3.h
->> +++ b/include/hw/arm/smmuv3.h
->> @@ -74,6 +74,8 @@ struct SMMUv3State {
->>       OnOffAuto ats;
->>       OasMode oas;
->>       SsidSizeMode ssidsize;
->> +
->> +    Notifier machine_done;
-> Better to #include "qemu/notify.h" in this header.
-> It may be compiling through some indirect #include now.
-Ok, thanks for the feedback - I will update these in the next refresh.
+Thanks for your review.
+However, I think this might not be correct.
 
-Thanks,
-Nathan
+IIUC, RVM represents the standard M extension for integer
+multiplication and division instructions, rather than indicating
+whether M mode is implemented. Is it even possible for a riscv machine
+implementation to not have M mode?
+
+Looking at the misa csr description in the spec, the 'S' and 'U' bits
+specifically denote the implementation of supervisor and user modes,
+respectively, but there is no corresponding bit for M mode. I assume
+this implies M mode is unconditionally required?
+
+>         return RISCV_EXCP_NONE;
+>     }
+> 
+>     return RISCV_EXCP_ILLEGAL_INST;
+> }
+> 
+> For your reference, I have added more T-Head CSR support in the
+> K230 patchset.
+> 
+> https://lore.kernel.org/qemu-devel/1c7319cd00a50bffeb41f9cc13339a8cd0c07350.1778516731.git.chao.liu.zevorn@gmail.com/
+
+It looks like your patch covers much more ground than mine and has
+already received quite a few reviews. I assume once your series is
+merged, I can simply drop my patch #1.
+
+So I guess the most sensible workflow here is for me to wait until your
+patchset is merged into the subsystem maintainer's tree (assuming it
+will route through Alistair's tree [1] I guess?, please correct me if
+I'm wrong!), and then I'll rebase my series on top of it and send out
+v3?
+
+[1]: https://github.com/alistair23/qemu.git riscv-to-apply.next
+
+Regards,
+Kuan-Wei
+
+> 
+> As for this patch, I think the other changes look mostly fine.
+> 
+> Thanks,
+> Chao
+> > +
+> >  static RISCVException smode(CPURISCVState *env, int csrno)
+> >  {
+> >      if (riscv_has_ext(env, RVS)) {
+> > @@ -49,11 +56,34 @@ static RISCVException read_th_sxstatus(CPURISCVState *env, int csrno,
+> >      return RISCV_EXCP_NONE;
+> >  }
+> >  
+> > +static RISCVException read_th_pmu(CPURISCVState *env, int csrno,
+> > +                                  target_ulong *val)
+> > +{
+> > +    *val = 0;
+> > +    return RISCV_EXCP_NONE;
+> > +}
+> > +
+> > +static RISCVException write_th_pmu(CPURISCVState *env, int csrno,
+> > +                                   target_ulong val, uintptr_t retaddr)
+> > +{
+> > +    return RISCV_EXCP_NONE;
+> > +}
+> > +
+> >  const RISCVCSR th_csr_list[] = {
+> >      {
+> >          .csrno = CSR_TH_SXSTATUS,
+> >          .insertion_test = test_thead_mvendorid,
+> >          .csr_ops = { "th.sxstatus", smode, read_th_sxstatus }
+> >      },
+> > +    {
+> > +        .csrno = CSR_TH_MCOUNTERINTEN,
+> > +        .insertion_test = test_thead_mvendorid,
+> > +        .csr_ops = { "th.mcounterinten", mmode, read_th_pmu, write_th_pmu }
+> > +    },
+> > +    {
+> > +        .csrno = CSR_TH_MCOUNTEROF,
+> > +        .insertion_test = test_thead_mvendorid,
+> > +        .csr_ops = { "th.mcounterof", mmode, read_th_pmu, write_th_pmu }
+> > +    },
+> >      { }
+> >  };
+> > -- 
+> > 2.54.0.563.g4f69b47b94-goog
+> > 
 
