@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6504FCD37AC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A9B8CD4F39
 	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 17:24:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNZmN-0003c1-GJ; Thu, 14 May 2026 13:23:23 -0400
+	id 1wNZmS-0003d1-CE; Thu, 14 May 2026 13:23:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wNZmK-0003bJ-0i
- for qemu-devel@nongnu.org; Thu, 14 May 2026 13:23:20 -0400
+ id 1wNZmM-0003c2-TZ
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 13:23:23 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wNZmH-0005iT-Fw
- for qemu-devel@nongnu.org; Thu, 14 May 2026 13:23:19 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1wNZmL-0005jk-BV
+ for qemu-devel@nongnu.org; Thu, 14 May 2026 13:23:22 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64EBePCT1717706
- for <qemu-devel@nongnu.org>; Thu, 14 May 2026 17:23:14 GMT
+ 64EBeaop2241778
+ for <qemu-devel@nongnu.org>; Thu, 14 May 2026 17:23:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ulGAOE8HbLb/p8WT3p/HywicgLKOLlWLTHZNeMydSXg=; b=AoQaPHvhieiEeN7/
- yEWBcJEM9Umiko/6qXpq5wETh0l+neq8sjNqN9Ezoj4RON8lGXdz1OxTrgKUyL62
- E2rP4hQYjk+WrQsv0cZB3h3LMOn1AqBa1AtaWnhe2k/GKVDFJ9Cd9Wk72cCkvEFN
- 3tyT9JcCRMQlIAJkrPC/Nghfr3F4Ue7dfWUtr4wAHZOjVlnIooXi6u99joCJ72be
- qfxDUydNdyncmRb/FIEQmjSp/AJggE49W/j98XlJFUSW9/R3jJ6Y0aXpvv4dOG7X
- +4tr/wKHM1g9BWzdMWNlpLCD3nfh5RL0gqB9Q1F30cQNoWdQPURMw8m23H2NVexS
- 2JM1zQ==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e57y7jn3u-1
+ Uf/5jLZ/NET2/tvaeuFYNcja/q48puCNeH8wc3fMTqA=; b=e1beL7kijEWeXrZQ
+ sMqam16cl7A145HyMMAP2KSbi46c1snXeQgpOr6LHuS0aierDVr4XcKVl7+USEoB
+ tAcWRPcSK6pJRx67I1QsVgwhEFC+4EnUdzfpcuj+Ay70NjWOUsnTODDCU9wH55mJ
+ /e97KtFY8LdCEMX8lB2b3iSYyT4zafOcXDHNtC8JgBizYwCV21ctmiIvD+Tvyub4
+ 5PwZlr1BLEZe+EX8f8llrv/SAARh1WUAxvONrCwYx4ybHq5KrLtkguPp0yQzXpiI
+ gFy9TBCJe8pZ30pBzFDk7037bYkNnDkve07MNErSNPl75L5q9T4xhHbM+2xPV4xc
+ SwU/kw==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e513gbtb1-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 14 May 2026 17:23:13 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-2f485961555so25511007eec.1
- for <qemu-devel@nongnu.org>; Thu, 14 May 2026 10:23:13 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 14 May 2026 17:23:19 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-2f485961555so25511862eec.1
+ for <qemu-devel@nongnu.org>; Thu, 14 May 2026 10:23:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778779393; x=1779384193; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1778779399; x=1779384199; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ulGAOE8HbLb/p8WT3p/HywicgLKOLlWLTHZNeMydSXg=;
- b=bIYl/YyJVxMcJU2Adcm0CxmCwmwjajsXBiwrx6Jei4HzsR7ik5Q8PLUlzQKLcm/EWm
- qwy8kGdABebCc4lWweFNijs72hkgvrzjDi4TuX6jp7Wz2rbjvL3ggsX+bSZmK8L4w9Xn
- WHer8j99Wl+vVdFmnWE96wn5YnGqCgoTEBtKMLbLyymSWbbI7n+CG9pkhgfYsxCxo1KV
- bH0GwZlOKuHp9g1pHBsNoOfmcpm08yu1NZmAkWF7c7H2cBt4Vyp4WzYOwsReRNETkxPR
- de3pd02KuWW0pT6VrNLzseLlxXhMwlEjp3njN1Q/C3eex6k8sgL/vjxGXbHiRkojloaP
- QWfg==
+ bh=Uf/5jLZ/NET2/tvaeuFYNcja/q48puCNeH8wc3fMTqA=;
+ b=JaQYDVdmOtxLgthj4eFVdPopn3tO9fCgN9khO7lMjn4TLxvE6XGvnMi1j0ChDNrrb6
+ y2o/14I7PYTkNFr5Ht9VAui9jD/rY8uZfqARtbGiXhl00PXsLY0X+o2A51Yozs2R617m
+ KxSXsv9AKWzZHXmIO/lrjaUHVO8bRVPP7z9C+cvIiXcQdg4Op7v3jA5oeQ3VAfDRgx0L
+ cvOKv4D0SQzsKMJaU/O7f5rgkAFwaU+rf0nCW5OR97HMPrec7f0hAwrxFZdRABpCU0qU
+ PcNGGtSGBQ32rRw45mpwTksq5DFdbOpnSP4Ep9hs/LfAbAKGc0pdGZNn79WU3xeVkJf3
+ pESQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778779393; x=1779384193;
+ d=1e100.net; s=20251104; t=1778779399; x=1779384199;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ulGAOE8HbLb/p8WT3p/HywicgLKOLlWLTHZNeMydSXg=;
- b=LsQe0nPDTHWRIlFR2mSCPttm40NlHlo1O5rpoAM3eYdEo/0zdZCrDl/ETEyAxPMfE4
- eOwtKRwPbC+r6aw+XilHQs43QwaXeDdM2ID4lVn80kY+M5n+/VtKMPHa5YcNcXZ3X9Ga
- 9llcYvNblnAWtSdJb7EQyXnK9niRb2F0RVYnwVvp62+VzbIWD+hYl0fy8TgwZbT3fmzv
- lPSP/F35ElSlryjh9rn4Uef9YKp2gBAdQUsl00PNfAXLfyp7YXG3Txt9iiETi+507v6m
- 3e/f8d81wNEjGNADmAKt2ZEB2mQLgVF2aBpfGy4i6zpm+mfTK1DApw/WgSuGqEOC4ZU6
- XCxg==
-X-Gm-Message-State: AOJu0YymwA+bdJ71jn1FlZaDCbtBC3fW1hNvMchA6WAO8Q+WmOQH4OvG
- CTBNw9yBP22NjOP4yIRDFLnEWuYQB5VGN++EfFLR+413rtUvQ3pzWAWYnuMlzREsx4fjne8XtYq
- mBMZYOj1Qif6SQ2wlElyjXZ6ZxWXCxRlBrPNJpRbPep3CadCgZ0L2BI4yRj2PKztaPxOM
-X-Gm-Gg: Acq92OHqDhn2NaMUUChbQhINswtizRl64sfd3Kmrn+m4YW6zxqNlKIhc6/xCuefqedp
- Bbq890uk+XjfPuKDXIAC9TamMjn4S7l5hdlADgJ9V2IpKQLMQY+st8bMDbdg5ssQcRNNjQXw2kh
- ML595HvDLM3jw1HgHCTimHBAbeaCNJ14FHpwM1+NBKgq5EpZ9qYj0pRNgy2OXMhsJ21WhWGkf/K
- XnDdZogT+rbY3ZgzYEGirQys3e+toEgQL+MRTBOnS2Zb43OYTsy7S1ipRpNcrLvgRKpgabO4Kbw
- 1U/z6FU3UkoN7Jz1d4HqB0nXsHWZCEXYdGDufJt8ILvzwFYFS6P9QZMiaphxcEZ6BEt1CS7jK0w
- nXV+TA8T7fOeDFx17+DjUM2H9UETCzI0Q2PvWllb9kJwL8rRIZqUHQjty/raSrZfUHvxmlajHeL
- Bvt6XPeA==
-X-Received: by 2002:a05:7300:aacb:b0:2dd:5641:ef2 with SMTP id
- 5a478bee46e88-30398642912mr203000eec.25.1778779392916; 
- Thu, 14 May 2026 10:23:12 -0700 (PDT)
-X-Received: by 2002:a05:7300:aacb:b0:2dd:5641:ef2 with SMTP id
- 5a478bee46e88-30398642912mr202973eec.25.1778779392347; 
- Thu, 14 May 2026 10:23:12 -0700 (PDT)
+ bh=Uf/5jLZ/NET2/tvaeuFYNcja/q48puCNeH8wc3fMTqA=;
+ b=dA4noqldn1wzW99bk64auragr7AVhgDjjqxr9oYiA4cq34PUKEes4wEAQpzEf7gFcq
+ HK9TMJ32UCbchUg30l1i/VnvY4lTEIsfC43vW33UvpBgMAivRsDT5pNWZjVh/sH2UXqJ
+ kJJWXxK56FoQvxmQ4NCFRZEDLKjINHiNR5opzJb9i+A9OrNQ23CF/l9fqf9Swe6wv7kr
+ U6sR6A/N3Jd3pC9UBjPBJ0tX3ixGkLZkRodvRruHeZDac8S96Wl/h72/Kxw9MGs30qfr
+ 3xjSsaZFdMTn0TfLIug5hglApxxFeBdvWEufV1yh34FcJCrAB7TaNsljWPj6IAAMjsgj
+ s+Gg==
+X-Gm-Message-State: AOJu0YzNiLGl5u3Wvn9wTdgUEIaGQ36x1OvMtwOxc+GYPpxRn3IPde9D
+ 56tmPKRDdwXgLCyEYVHCVoHs1pk4vdsVbIYU/UpQRjvTGeQwd+PTVOrWJcQk4FlJe1VwlGtQfz0
+ 3atFa35x8+5Rm3+HG3ELUZUrOaUsnI0K+ywZZI7n67gh0Ing2aYJCsrG4EmVEpDWMOY1i
+X-Gm-Gg: Acq92OHf8qxlA5CHBcXSCwZcLIwNyLVFoAo2uClNxc/PtSlKuQnDrXObkJbzvHhJXSN
+ ScbHMXht38AaNGG/lMuqKFk+3zdmAIHWvCF5uXmOHsSxV5Hf2IL3BeBgnKF5r8d111nbPLyCDcR
+ PyTl/m0m6JHhZ4biE3ikCvPmn64FrPgN7dYxY4v6+WzG3zrgMj4F+a06zcYywl8KDCH+D4fHpe2
+ ClyFld36mH7VBqIS7V0v5jTGLCjGhfO77OWOenRwvXiwL8z/KF6uufJcgt+VcnKicjy3N9BbiY9
+ oOrs/tpx5Mgci+k+CioTpomfmxnY9HGDxrN6NJe+0qQp4E7RL8ghRM/koPltGfORfk2R9kOdly/
+ 0menlIlfiEDQFNA6Et1cfDVsf/g2e/U4xWTv7ymjk4cZG+EyYiFikkRMHNKU3MiPxiIa35J9WHO
+ kCp85yQVk+az67JUUp
+X-Received: by 2002:a05:7300:b586:b0:2e2:3381:2fba with SMTP id
+ 5a478bee46e88-3039812a5a6mr226719eec.3.1778779398800; 
+ Thu, 14 May 2026 10:23:18 -0700 (PDT)
+X-Received: by 2002:a05:7300:b586:b0:2e2:3381:2fba with SMTP id
+ 5a478bee46e88-3039812a5a6mr226681eec.3.1778779398232; 
+ Thu, 14 May 2026 10:23:18 -0700 (PDT)
 Received: from hu-pbouvier-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-302944ffdf0sm3828677eec.8.2026.05.14.10.23.11
+ 5a478bee46e88-302944ffdf0sm3828677eec.8.2026.05.14.10.23.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 May 2026 10:23:11 -0700 (PDT)
+ Thu, 14 May 2026 10:23:14 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -100,41 +100,40 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Fabiano Rosas <farosas@suse.de>, Darren Kenny <darren.kenny@oracle.com>,
  Alexander Bulekov <alxndr@bu.edu>
-Subject: [PATCH v7 2/5] qom/object: initialize type_table in static ctor with
- fundamental QOM types
-Date: Thu, 14 May 2026 10:23:00 -0700
-Message-ID: <20260514172303.1484273-3-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v7 5/5] target-info: replace target_info() in system-mode
+Date: Thu, 14 May 2026 10:23:03 -0700
+Message-ID: <20260514172303.1484273-6-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260514172303.1484273-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260514172303.1484273-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: _57w-I-ddkIg4R2nc5SvUHxzyU479xp2
-X-Authority-Analysis: v=2.4 cv=UY9hjqSN c=1 sm=1 tr=0 ts=6a060501 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE0MDE3NCBTYWx0ZWRfX3jsLkx83g+ST
+ +mUbD2RxuQ98lGtbam4jPozsoHXi3PhKZSaXTO4/XjE1wtJexUL8AzhnBSY9RZMSH/9SXR2gFeT
+ 7dcdL71F0WK/VGnEamrb5QQOBWvvneqAl1uEBJOAtvVVKqJInXpaiIVt8iQPvIrxRytpxiceTdD
+ unPSXQ90v7SwoBRXqOmLoKakbc2wNlHPenp6bEz/yAJgf8pnM/4dyuXuhZVzjF0iIFaImBfHE5D
+ 7ZzV7w1Fn8AMYw90bNqCNhoX+sfs8WguYhCEDKXbj3FJCSUlJ/bNsEre4/HwEzliwKSyKlE+GXx
+ tXBjkqT2TqzMU9Qn7AseLjhLmY8PImuQ7BpgXoHnhs0DDrw68fE9d7ucnoSPq9PDZOGlMwPFskM
+ aUWoc5E6j+pc3cwXXeba8yRCrFaYGBmbCrHX/OWzLPRWIb2Fu+XUFPbqNVCqjdeMXOiv380ssjg
+ 8kRzIttMnRcOD3Qrl2w==
+X-Proofpoint-ORIG-GUID: 0cV-XyRcdzcthjJ9p4SrT9iFXdgHHQOj
+X-Authority-Analysis: v=2.4 cv=Iba3n2qa c=1 sm=1 tr=0 ts=6a060507 cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=pDBHowQsxXgegazyqkAA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: _57w-I-ddkIg4R2nc5SvUHxzyU479xp2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE0MDE3NCBTYWx0ZWRfX3vDMyfNqiFBz
- iYFfY6mj36bvAbSaSX75sz/INf6El35rcIsoL0l4LlWguUIt8OtbqkrgrrPY2vFiwGqa1NJo55M
- iqx41NKw2nImw6J+ufMdDi+5Gk8fxVeNw4bkdVd9UJyH5KWFeMtdJ0sZtMJm67y4fcxUZv8Nutd
- CjODf/THzqVpEXveV8pKtm/XvMnn6VOf+pHRsUmS9Yr06FgUu+aoIgJ2N+vEf1setKzrIedwhhk
- a8WHs5Mzy0vZUKMHPEry2eiVL4wt6iOpdMpT5b6LHckq1PkJF65El85UDiuQRqHrtXdAwbvadQ0
- oWpLgLqg50FA2BhVMVcLnk9e5sMnK27d7afNwPOu6+7LNE0DGd8l2T9CGIb2FnBidRPc856fxYs
- uEugm/Lo9x082aT0lYQoSDO1M5G8UVXktUIQd6ReUADZ6/qMc58cvGIwccw6EWBFjRaWHUC8SK2
- WYUT+GoexVnxJ5rbN/A==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=20KFwNOVAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=W37sF3GUcAVBL6lWIEgA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: 0cV-XyRcdzcthjJ9p4SrT9iFXdgHHQOj
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-14_04,2026-05-13_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0
- priorityscore=1501 bulkscore=0 impostorscore=0 phishscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605050000
- definitions=main-2605140174
+ lowpriorityscore=0 impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0
+ adultscore=0 malwarescore=0 suspectscore=0 priorityscore=1501 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605050000 definitions=main-2605140174
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0a-0031df01.pphosted.com
@@ -160,71 +159,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This saves us having to check if it's initialized everytime we have to
-access it. No other QOM type should be initialized or accessed during
-static ctor calls, so we don't depend on their ordering.
+We now can use TargetInfo information available from QOM, and remove
+duplicated target_info() symbol.
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- qom/object.c | 18 +++++-------------
- 1 file changed, 5 insertions(+), 13 deletions(-)
+ include/qemu/target-info-init.h | 5 -----
+ target-info-qom.c               | 5 +++++
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/qom/object.c b/qom/object.c
-index b82b65a3a18..dfdc5c8e424 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -76,28 +76,19 @@ struct TypeImpl
+diff --git a/include/qemu/target-info-init.h b/include/qemu/target-info-init.h
+index 32c323a7ef9..b7024c9faef 100644
+--- a/include/qemu/target-info-init.h
++++ b/include/qemu/target-info-init.h
+@@ -38,11 +38,6 @@ const TargetInfo *target_info(void)     \
+ #include "qom/object.h"
  
- static Type type_interface;
+ #define target_info_init(ti_var)                                            \
+-const TargetInfo *target_info(void)                                         \
+-{                                                                           \
+-    return &ti_var;                                                         \
+-}                                                                           \
+-                                                                            \
+ static const TypeInfo target_info_qom_target_type_info = {                  \
+     .name =  TYPE_TARGET_INFO"-"TARGET_NAME,                                \
+     .parent = TYPE_TARGET_INFO,                                             \
+diff --git a/target-info-qom.c b/target-info-qom.c
+index 9947fcc9922..b48714cc77f 100644
+--- a/target-info-qom.c
++++ b/target-info-qom.c
+@@ -49,6 +49,11 @@ DEFINE_TARGET_INFO_TYPE(target_info_parent_type)
  
--static GHashTable *type_table_get(void)
--{
--    static GHashTable *type_table;
--
--    if (type_table == NULL) {
--        type_table = g_hash_table_new(g_str_hash, g_str_equal);
--    }
--
--    return type_table;
--}
-+static GHashTable *type_table;
+ static const TargetInfo *target_info_ptr;
  
- static bool enumerating_types;
- 
- static void type_table_add(TypeImpl *ti)
++const TargetInfo *target_info(void)
++{
++    return target_info_ptr;
++}
++
+ void target_info_qom_set_target(void)
  {
-     assert(!enumerating_types);
--    g_hash_table_insert(type_table_get(), (void *)ti->name, ti);
-+    g_hash_table_insert(type_table, (void *)ti->name, ti);
- }
- 
- static TypeImpl *type_table_lookup(const char *name)
- {
--    return g_hash_table_lookup(type_table_get(), name);
-+    return g_hash_table_lookup(type_table, name);
- }
- 
- static TypeImpl *type_new(const TypeInfo *info)
-@@ -1069,7 +1060,7 @@ void object_class_foreach(void (*fn)(ObjectClass *klass, void *opaque),
-     OCFData data = { fn, implements_type, include_abstract, opaque };
- 
-     enumerating_types = true;
--    g_hash_table_foreach(type_table_get(), object_class_foreach_tramp, &data);
-+    g_hash_table_foreach(type_table, object_class_foreach_tramp, &data);
-     enumerating_types = false;
- }
- 
-@@ -2859,6 +2850,7 @@ static void __attribute__((constructor)) register_types(void)
-         .abstract = true,
-     };
- 
-+    type_table = g_hash_table_new(g_str_hash, g_str_equal);
-     type_interface = type_register_internal(&interface_info);
-     type_register_internal(&object_info);
- }
+     g_autoptr(GSList) targets = object_class_get_list(TYPE_TARGET_INFO, false);
 -- 
 2.43.0
 
