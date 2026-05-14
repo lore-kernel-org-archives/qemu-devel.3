@@ -4,96 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05352CD4F21
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 01:17:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD9BBCD37AC
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 May 2026 02:08:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNKgU-0006vf-6f; Wed, 13 May 2026 21:16:18 -0400
+	id 1wNLU4-0006qA-Ls; Wed, 13 May 2026 22:07:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
- id 1wNKgS-0006vJ-6n
- for qemu-devel@nongnu.org; Wed, 13 May 2026 21:16:16 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
- id 1wNKgQ-0000zY-By
- for qemu-devel@nongnu.org; Wed, 13 May 2026 21:16:15 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-3665b67ed66so3834314a91.1
- for <qemu-devel@nongnu.org>; Wed, 13 May 2026 18:16:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778721373; x=1779326173; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=btACu44F7m2XyBw22Y9nh48m6qUD/VAzMvqfoWZCSYo=;
- b=UMXqU1cV5yJn+ySNFzcLkv/EFGzSg+h4th4IZWGoFiDa4qd0Mdo7NkQwAbdTh1brwg
- AaLMzCxZ+L7A8i8YjlZhIFJi+k0xcA6xY6j21Mmyf/ftFlwonVYstkLRvEFf5jwSJ3eX
- CisGyCKqTnoxb83FTaMUJ725Dy2umKEZkAN88X7TNrTeaHYNGofu0CS7v1OC44z6vpMX
- wgdtgAj3nF9/oMUd9+iRD9f+Fl0iBE3U3oQW+1J3/Vqj9DO5EIP+Miw5M6PVacAGDzpu
- D03+qOIKdFhbQCN734S2Q1a8ec5Y7NnJkW7pLcsXuD97ZNjL5sqlvYMzqYAHcb/f2UP/
- G7Uw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778721373; x=1779326173;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=btACu44F7m2XyBw22Y9nh48m6qUD/VAzMvqfoWZCSYo=;
- b=af66XhwRTeo5wQcuTuYoNX8wTwGh77cu+RToE+jGdhDVUxrylDbQDF0c7C3XM9M7Rz
- qEWp1sIGUX2tBKmMaMbB6aw24FcaJYrGibsk3FIoPK+twxU18au36SQ9tvCZltaq2vP9
- QjXuyCPM/ej8EI1bYctlZCOqtf93gaNFyaLIRwW/J8FVeFoai0GXmvjiv2lT5qvqnKgt
- 45JmRq3Z8KUQDqN7wUMctw1kmsfygawFK8yjvSaq9opgI1MlAo13a8465Mymfw0xoWmB
- vFwYHRf7zSoQovaY7PVLerpDKFNmIvHr6+rQx9ftec+Gp+HEs9lcwAiTy/sFbYTOpTtC
- E3dw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8vM8l9LHaeJ5D5/X2CSMQtmLge0JWTj/UOepwwpw4qrXSiHZLOmXz0cjojlrj/at43abXR7vu/IjnY@nongnu.org
-X-Gm-Message-State: AOJu0YyzTnES/hXCWkzrjNTxyH4goOHbaaGNASAQjhYe46AHXxdoSJdg
- BR0f6K7sX0O59qX3TZKZC/eMPydK3UaXpGYSSBtRmh1DH5SqlMsneWOC
-X-Gm-Gg: Acq92OGl8pBx4qFH8yyLPOyFNuz6LqNYQEw4T8+XnuFJ4sEgRE5IQUfYA4od2W3peBy
- KPim8hqeCyJ2rDbXmA+l18MQg/HlT1+YQVKWLvjKPscqhHRu03gzkfZ0gva7N5Lzcz0I8NltTcR
- kEahK2kecltrzdoG08IG0oPwos/gOcbAzHH4wM0QJmpLQERlMldbCb9JazA5mTL5w+e631ZifmA
- DdFmAT5HvdXLMfwNLPLr27AX8+9yboxRFLaC6ioyOd0x9LfE+Sv5YK4eJoI52MibP1Xf1IjoCah
- rwzudJr0Z0VxzEVXOblrblRQ+pa+srH4as/44TL4Ks/XGyPUkByRFpI0dcx96TydwJcFg61zhv/
- 2+dUAptSTrfYOg7YVzXmvNppY2amhECfPwV1Wu4gOQizh+S0Wgs8pDXsuB1fKnkEVeWK/wGW1tp
- LRyTj5lOwoRsOw2uJy2O7jexq28FeEzZXTk87u6fo5SCg4k+yFN5LTbO9whhgJ1dWylbd3fVvHN
- X4xRF982ijTIIPGgWGtYWdVo8JT7rS1eA==
-X-Received: by 2002:a17:902:a581:b0:2b9:f8e9:70e2 with SMTP id
- d9443c01a7336-2bd271455ffmr37928125ad.8.1778721372654; 
- Wed, 13 May 2026 18:16:12 -0700 (PDT)
-Received: from visitorckw-work01.c.googlers.com.com
- (54.109.81.34.bc.googleusercontent.com. [34.81.109.54])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2bd5c0600c3sm4982575ad.29.2026.05.13.18.16.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 May 2026 18:16:12 -0700 (PDT)
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
-To: pbonzini@redhat.com, marcandre.lureau@redhat.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, christoph.muellner@vrull.eu, farosas@suse.de,
- lvivier@redhat.com
-Cc: liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- jserv@ccns.ncku.edu.tw, eleanor15x@gmail.com, marscheng@google.com,
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- Kuan-Wei Chiu <visitorckw@gmail.com>
-Subject: [PATCH v2 5/6] hw/riscv: Add Milk-V Duo board support
-Date: Thu, 14 May 2026 01:15:27 +0000
-Message-ID: <20260514011528.1263665-6-visitorckw@gmail.com>
-X-Mailer: git-send-email 2.54.0.563.g4f69b47b94-goog
-In-Reply-To: <20260514011528.1263665-1-visitorckw@gmail.com>
-References: <20260514011528.1263665-1-visitorckw@gmail.com>
+ (Exim 4.90_1) (envelope-from <gaochengbo@bosc.ac.cn>)
+ id 1wNLTw-0006oU-AH
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 22:07:25 -0400
+Received: from out28-92.mail.aliyun.com ([115.124.28.92])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gaochengbo@bosc.ac.cn>)
+ id 1wNLTt-0006sz-1p
+ for qemu-devel@nongnu.org; Wed, 13 May 2026 22:07:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bosc.ac.cn; s=default;
+ t=1778724419; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=GMktV4XTnPON4W29gMFRYPo+MOSCIZjed8trymtP+tw=;
+ b=Nk54EgHXXF+eY8LxLg2gDe+8pZWdLNHDzIgVRzU+Kkj9AtkjhAfVAxnW0Q/gYVMGdcpAUHmjyMcdoW6lwNxjNaJa6zI7YZWEEC+G5A+5I5HUl33D590VJnFZooywMhW8YPbN7LqZipWwRvmJfhR6MdtaTGbooCnD++WrQBQmPgwwQrEtnr4crRw0h6CH4mHhdf85m12QJBEcDOteWNDZ2AVJhBX3i3u7mlLh1Shj2td6puP3hitKiXuTfxTXfMmdAWhOugEGYcCawAQdHmLXn/pI3d532HpyfAW5piNB2CMaAUSW403SAAOCo5dJ9E6LSbITCNZU/gztA0TsS4RFsg==
+X-Alimail-AntiSpam: AC=CONTINUE; BC=0.07436259|-1;
+ BR=01201311R121S34rulernew998_84748_2000303; CH=blue; DM=|CONTINUE|false|;
+ DS=CONTINUE|ham_alarm|0.00408917-8.41824e-05-0.995827;
+ FP=11545387188656563608|0|0|0|0|-1|-1|-1;
+ HT=maildocker-contentspam033040074035; MF=gaochengbo@bosc.ac.cn; NM=1; PH=DS;
+ RN=9; RT=9; SR=0; TI=SMTPD_---.hWcLmPV_1778724399; 
+Received: from gao-3680..(mailfrom:gaochengbo@bosc.ac.cn
+ fp:SMTPD_---.hWcLmPV_1778724399 cluster:ay29) by smtp.aliyun-inc.com;
+ Thu, 14 May 2026 10:06:58 +0800
+From: Chengbo Gao <gaochengbo@bosc.ac.cn>
+To: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu.zevorn@gmail.com, qemu-riscv@nongnu.org
+Cc: qemu-devel@nongnu.org,
+	Chengbo Gao <gaochengbo@bosc.ac.cn>
+Subject: [PATCH v1] hw/riscv/riscv-iommu: Avoid caching PCI device IDs
+Date: Thu, 14 May 2026 10:06:37 +0800
+Message-Id: <20260514020637.2819308-1-gaochengbo@bosc.ac.cn>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=visitorckw@gmail.com; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=115.124.28.92; envelope-from=gaochengbo@bosc.ac.cn;
+ helo=out28-92.mail.aliyun.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,210 +70,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for the Milk-V Duo development board, which is powered by
-the Sophgo CV1800B SoC.
+PCI bus numbers may still be unassigned when QEMU initializes a PCI
+device's bus-master address space.  For devices behind bridges,
+pci_bus_num() can return 0 at that point because the guest has not yet
+programmed the bridge Secondary Bus Number register.
 
-The implementation includes:
-- Board-level machine initialization with 64mb of default ram.
-- Integration of the CV1800B SoC.
-- Support for loading external FDT, kernel, and initrd images.
-- Proper setup of the reset vector to match the CV1800B's boot flow.
+The RISC-V IOMMU currently stores a fixed device_id in RISCVIOMMUSpace
+when the address space is created.  If the guest later enumerates the
+device on a non-zero bus, DMA translation still uses the stale device_id
+and may look up the wrong device context in the DDT.
 
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Store the stable PCIBus pointer and devfn in RISCVIOMMUSpace instead,
+and compute the device_id from the current bus number when it is needed.
+This keeps DMA translation and ATS invalidation in sync with guest PCI
+bus enumeration.
+
+Signed-off-by: Chengbo Gao <gaochengbo@bosc.ac.cn>
 ---
- MAINTAINERS                                 |  11 ++
- configs/devices/riscv64-softmmu/default.mak |   1 +
- hw/riscv/Kconfig                            |   6 +
- hw/riscv/meson.build                        |   1 +
- hw/riscv/milkv_duo.c                        | 122 ++++++++++++++++++++
- 5 files changed, 141 insertions(+)
- create mode 100644 hw/riscv/milkv_duo.c
+ hw/riscv/riscv-iommu.c | 40 +++++++++++++++++++++++++---------------
+ 1 file changed, 25 insertions(+), 15 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index afa178c5cc..a5649fd31f 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1780,6 +1780,17 @@ F: docs/system/riscv/xiangshan-kunminghu.rst
- F: hw/riscv/xiangshan_kmh.c
- F: include/hw/riscv/xiangshan_kmh.h
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 7ba3240552..9a75639549 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -49,7 +49,8 @@ struct RISCVIOMMUSpace {
+     IOMMUMemoryRegion iova_mr;  /* IOVA memory region for attached device */
+     AddressSpace iova_as;       /* IOVA address space for attached device */
+     RISCVIOMMUState *iommu;     /* Managing IOMMU device state */
+-    uint32_t devid;             /* Requester identifier, AKA device_id */
++    PCIBus *bus;                /* PCI bus of the requester */
++    uint8_t devfn;              /* Requester identifier, AKA device_id */
+     bool notifier;              /* IOMMU unmap notifier enabled */
+     QLIST_ENTRY(RISCVIOMMUSpace) list;
+ };
+@@ -74,6 +75,15 @@ struct RISCVIOMMUEntry {
+ /* IOMMU index for transactions without process_id specified. */
+ #define RISCV_IOMMU_NOPROCID 0
  
-+Milk-V Duo
-+M: Kuan-Wei Chiu <visitorckw@gmail.com>
-+S: Maintained
-+F: hw/char/dw8250.c
-+F: hw/misc/cv1800b_clk.c
-+F: hw/riscv/cv1800b.c
-+F: hw/riscv/milkv_duo.c
-+F: include/hw/char/dw8250.h
-+F: include/hw/misc/cv1800b_clk.h
-+F: include/hw/riscv/cv1800b.h
-+
- RX Machines
- -----------
- rx-gdbsim
-diff --git a/configs/devices/riscv64-softmmu/default.mak b/configs/devices/riscv64-softmmu/default.mak
-index a8e4d0ab33..2ba91b14d4 100644
---- a/configs/devices/riscv64-softmmu/default.mak
-+++ b/configs/devices/riscv64-softmmu/default.mak
-@@ -13,3 +13,4 @@
- # CONFIG_SHAKTI_C=n
- # CONFIG_XIANGSHAN_KUNMINGHU=n
- # CONFIG_MIPS_BOSTON_AIA=n
-+# CONFIG_MILKV_DUO=n
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index 5b68991edb..8615b1cc3e 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -146,3 +146,9 @@ config SOPHGO_CV1800B
-     select SIFIVE_PLIC
-     select SOPHGO_CV1800B_CLK
-     select DW8250
-+
-+config MILKV_DUO
-+    bool
-+    depends on RISCV64
-+    default y
-+    select SOPHGO_CV1800B
-diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
-index 04e25eeece..19a0bf8e5b 100644
---- a/hw/riscv/meson.build
-+++ b/hw/riscv/meson.build
-@@ -19,5 +19,6 @@ riscv_ss.add(when: 'CONFIG_RISCV_MIPS_CPS', if_true: files('cps.c'))
- riscv_ss.add(when: 'CONFIG_MIPS_BOSTON_AIA', if_true: files('boston-aia.c'))
- 
- riscv_ss.add(when: 'CONFIG_SOPHGO_CV1800B', if_true: files('cv1800b.c'))
-+riscv_ss.add(when: 'CONFIG_MILKV_DUO', if_true: files('milkv_duo.c'))
- 
- hw_arch += {'riscv': riscv_ss}
-diff --git a/hw/riscv/milkv_duo.c b/hw/riscv/milkv_duo.c
-new file mode 100644
-index 0000000000..5e8d5ea009
---- /dev/null
-+++ b/hw/riscv/milkv_duo.c
-@@ -0,0 +1,122 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Milk-V Duo board
-+ *
-+ * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/units.h"
-+#include "qapi/error.h"
-+#include "hw/core/boards.h"
-+#include "hw/riscv/cv1800b.h"
-+#include "hw/riscv/boot.h"
-+#include "target/riscv/cpu-qom.h"
-+#include "system/system.h"
-+#include "system/device_tree.h"
-+#include "qemu/error-report.h"
-+#include "hw/core/loader.h"
-+#include <libfdt.h>
-+
-+struct MilkVDuoState {
-+    MachineState parent_obj;
-+    CV1800BSoCState soc;
-+};
-+
-+#define TYPE_MILK_V_DUO MACHINE_TYPE_NAME("milkv-duo")
-+OBJECT_DECLARE_SIMPLE_TYPE(MilkVDuoState, MILK_V_DUO)
-+
-+static void milkv_duo_init(MachineState *machine)
++static uint32_t riscv_iommu_space_devid(RISCVIOMMUSpace *as)
 +{
-+    MilkVDuoState *s = MILK_V_DUO(machine);
-+    MemoryRegion *system_memory = get_system_memory();
-+    RISCVBootInfo boot_info;
-+    hwaddr firmware_load_addr, firmware_end_addr;
-+    hwaddr fdt_load_addr = 0;
-+    int fdt_size = 0;
-+    uint64_t kernel_entry = 0;
++    uint32_t devid = PCI_BUILD_BDF(pci_bus_num(as->bus), as->devfn);
 +
-+    object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_CV1800B_SOC);
-+    qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
-+
-+    memory_region_add_subregion(system_memory,
-+                                cv1800b_memmap[CV1800B_DEV_DRAM].base,
-+                                machine->ram);
-+
-+    riscv_boot_info_init(&boot_info, &s->soc.cpus);
-+
-+    firmware_load_addr = cv1800b_memmap[CV1800B_DEV_DRAM].base;
-+    firmware_end_addr = firmware_load_addr;
-+    if (machine->firmware) {
-+        firmware_end_addr = riscv_find_and_load_firmware(machine, machine->firmware,
-+                                                         &firmware_load_addr, NULL);
-+    }
-+
-+    if (machine->dtb) {
-+        machine->fdt = load_device_tree(machine->dtb, &fdt_size);
-+        if (!machine->fdt) {
-+            error_report("Failed to load device tree");
-+            exit(1);
-+        }
-+
-+        if (machine->kernel_cmdline && *machine->kernel_cmdline) {
-+            if (fdt_path_offset(machine->fdt, "/chosen") < 0) {
-+                qemu_fdt_add_subnode(machine->fdt, "/chosen");
-+            }
-+            qemu_fdt_setprop_string(machine->fdt, "/chosen", "bootargs",
-+                                    machine->kernel_cmdline);
-+        }
-+    }
-+
-+    if (machine->kernel_filename) {
-+        hwaddr kernel_start_addr = riscv_calc_kernel_start_addr(&boot_info,
-+                                                                firmware_end_addr);
-+        riscv_load_kernel(machine, &boot_info, kernel_start_addr, true, NULL);
-+        kernel_entry = boot_info.image_low_addr;
-+    }
-+
-+    if (machine->dtb) {
-+        fdt_load_addr = riscv_compute_fdt_addr(cv1800b_memmap[CV1800B_DEV_DRAM].base,
-+                                               machine->ram_size, machine, &boot_info);
-+        rom_add_blob_fixed_as("fdt", machine->fdt, fdt_size, fdt_load_addr,
-+                              &address_space_memory);
-+    }
-+
-+    riscv_setup_rom_reset_vec(machine, &s->soc.cpus,
-+                              firmware_load_addr,
-+                              cv1800b_memmap[CV1800B_DEV_ROM].base,
-+                              cv1800b_memmap[CV1800B_DEV_ROM].size,
-+                              kernel_entry,
-+                              fdt_load_addr);
++    /* FIXME: PCIe bus remapping for attached endpoints. */
++    devid |= as->iommu->bus << 8;
++    return devid;
 +}
 +
-+static void milkv_duo_machine_class_init(ObjectClass *oc, const void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+    static const char *const valid_cpu_types[] = {
-+        TYPE_RISCV_CPU_THEAD_C906,
-+        NULL
-+    };
-+
-+    mc->desc = "Milk-V Duo Board (CV1800B)";
-+    mc->init = milkv_duo_init;
-+    mc->max_cpus = 2;
-+    mc->default_cpu_type = TYPE_RISCV_CPU_THEAD_C906;
-+    mc->valid_cpu_types = valid_cpu_types;
-+    mc->default_ram_size = 64 * MiB;
-+    mc->default_ram_id = "riscv.milkv_duo.ram";
-+}
-+
-+static const TypeInfo milkv_duo_machine_type_info = {
-+    .name = TYPE_MILK_V_DUO,
-+    .parent = TYPE_MACHINE,
-+    .instance_size = sizeof(MilkVDuoState),
-+    .class_init = milkv_duo_machine_class_init,
-+};
-+
-+static void milkv_duo_machine_register_types(void)
-+{
-+    type_register_static(&milkv_duo_machine_type_info);
-+}
-+
-+type_init(milkv_duo_machine_register_types)
+ static uint8_t riscv_iommu_get_icvec_vector(uint32_t icvec, uint32_t vec_type)
+ {
+     switch (vec_type) {
+@@ -1343,15 +1353,13 @@ static void riscv_iommu_ctx_put(RISCVIOMMUState *s, void *ref)
+ }
+ 
+ /* Find or allocate address space for a given device */
+-static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, uint32_t devid)
++static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, PCIBus *bus,
++                                            int devfn)
+ {
+     RISCVIOMMUSpace *as;
+ 
+-    /* FIXME: PCIe bus remapping for attached endpoints. */
+-    devid |= s->bus << 8;
+-
+     QLIST_FOREACH(as, &s->spaces, list) {
+-        if (as->devid == devid) {
++        if (as->bus == bus && as->devfn == devfn) {
+             break;
+         }
+     }
+@@ -1361,10 +1369,11 @@ static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, uint32_t devid)
+         as = g_new0(RISCVIOMMUSpace, 1);
+ 
+         as->iommu = s;
+-        as->devid = devid;
++        as->bus = bus;
++        as->devfn = devfn;
+ 
+         snprintf(name, sizeof(name), "riscv-iommu-%04x:%02x.%d-iova",
+-            PCI_BUS_NUM(as->devid), PCI_SLOT(as->devid), PCI_FUNC(as->devid));
++            pci_bus_num(bus), PCI_SLOT(devfn), PCI_FUNC(devfn));
+ 
+         /* IOVA address space, untranslated addresses */
+         memory_region_init_iommu(&as->iova_mr, sizeof(as->iova_mr),
+@@ -1374,8 +1383,8 @@ static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, uint32_t devid)
+ 
+         QLIST_INSERT_HEAD(&s->spaces, as, list);
+ 
+-        trace_riscv_iommu_new(s->parent_obj.id, PCI_BUS_NUM(as->devid),
+-                PCI_SLOT(as->devid), PCI_FUNC(as->devid));
++        trace_riscv_iommu_new(s->parent_obj.id, pci_bus_num(bus),
++                PCI_SLOT(devfn), PCI_FUNC(devfn));
+     }
+     return &as->iova_as;
+ }
+@@ -1696,7 +1705,7 @@ static void riscv_iommu_ats(RISCVIOMMUState *s,
+     pid = get_field(cmd->dword0, RISCV_IOMMU_CMD_ATS_PID);
+ 
+     QLIST_FOREACH(as, &s->spaces, list) {
+-        if (as->devid == devid) {
++        if (riscv_iommu_space_devid(as) == devid) {
+             break;
+         }
+     }
+@@ -2710,8 +2719,9 @@ static IOMMUTLBEntry riscv_iommu_memory_region_translate(
+         .addr_mask = ~0ULL,
+         .perm = flag,
+     };
++    uint32_t devid = riscv_iommu_space_devid(as);
+ 
+-    ctx = riscv_iommu_ctx(as->iommu, as->devid, iommu_idx, &ref);
++    ctx = riscv_iommu_ctx(as->iommu, devid, iommu_idx, &ref);
+     if (ctx == NULL) {
+         /* Translation disabled or invalid. */
+         iotlb.addr_mask = 0;
+@@ -2723,8 +2733,8 @@ static IOMMUTLBEntry riscv_iommu_memory_region_translate(
+     }
+ 
+     /* Trace all dma translations with original access flags. */
+-    trace_riscv_iommu_dma(as->iommu->parent_obj.id, PCI_BUS_NUM(as->devid),
+-                          PCI_SLOT(as->devid), PCI_FUNC(as->devid), iommu_idx,
++    trace_riscv_iommu_dma(as->iommu->parent_obj.id, PCI_BUS_NUM(devid),
++                          PCI_SLOT(devid), PCI_FUNC(devid), iommu_idx,
+                           IOMMU_FLAG_STR[flag & IOMMU_RW], iotlb.iova,
+                           iotlb.translated_addr);
+ 
+@@ -2772,7 +2782,7 @@ static AddressSpace *riscv_iommu_find_as(PCIBus *bus, void *opaque, int devfn)
+ 
+     /* Find first matching IOMMU */
+     while (s != NULL && as == NULL) {
+-        as = riscv_iommu_space(s, PCI_BUILD_BDF(pci_bus_num(bus), devfn));
++        as = riscv_iommu_space(s, bus, devfn);
+         s = s->iommus.le_next;
+     }
+ 
 -- 
-2.54.0.563.g4f69b47b94-goog
+2.34.1
 
 
