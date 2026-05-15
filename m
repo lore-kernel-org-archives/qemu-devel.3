@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8738CCD343F
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 10:51:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37866CD4F25
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 10:51:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNq7T-0000lB-3D; Fri, 15 May 2026 06:50:15 -0400
+	id 1wNq7O-0000iM-Pe; Fri, 15 May 2026 06:50:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNq7J-0000dc-8p
- for qemu-devel@nongnu.org; Fri, 15 May 2026 06:50:06 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1wNq7H-0000dP-Gl
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 06:50:04 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNq7H-0001Qb-GX
- for qemu-devel@nongnu.org; Fri, 15 May 2026 06:50:04 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4891e5b9c1fso81019875e9.2
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 03:50:03 -0700 (PDT)
+ id 1wNq7F-0001JR-Ld
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 06:50:03 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-48896199cbaso77823275e9.1
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 03:50:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778842202; x=1779447002; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778842200; x=1779447000; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=lJdPzsovc1RF2E9JSUPkyz3oR5KshsBgZgAJ5TQAw8I=;
- b=QAlRk8Mq5nNxw2kFh8jBHX0/hMWJHVVUHUn25W6grqTqwoJwayA08gTOiCTcsgNUMp
- d5OKlN3P1uQlClcyCIlr+kZN1lJGNc95tcO3r9a1O4uAU6xsuypQHkANKLt1TdkAewaq
- zvpxEEC2AJpRRMwuxa2D4H0J+dCxNHv38Vclmjee8qZ2r7Lc4acQIuLbVoFah+fyUkn2
- r3+bb3Kf88jtaKBx59OwF87RU1C5XfuQqgRKZr9TWfl4rhYYWHKlw0vic0afTaptV/Sc
- m6mvRFpfVW8vUXniX/1MjEwpWMY1V0J3UlR0ngzEBCDheLMWLlSEJg/q5gVot704k0SU
- r43A==
+ :reply-to; bh=pRpRlYgzY5PaMz7MYuHPjzjxRVlI8PpTq6mbSsEg35o=;
+ b=n2TamNHEAI+G1N8UNLCquU7X/WU6+b3KUM/jwOMeH1YaEwspzvXl5oxY7tL8UtDGOf
+ +VjKioeBR8si2rqlnabucp5+fC0azL0TUaW8VaPDiVxh81OcWsY9lJuNpeaFwFzLKYSx
+ nSOcPDbut2u08l6ZprnsiIg0fKWxrjMmhejkXz4qARY32emWeqYp/lHyieDrtlzFVSGg
+ qnkNA924qsqb5OPRg3mNN7awsFYzG5QazH+1KCotl1GjTxJ8seuHhb1jYae6JtdPRTQw
+ yfJx1pa/KzxyDgudfctppMeopjo4HqoMoMd8N8qaSifIbTnfCPSp7GJ1UWW8AxQB+WPA
+ QBMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778842202; x=1779447002;
+ d=1e100.net; s=20251104; t=1778842200; x=1779447000;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=lJdPzsovc1RF2E9JSUPkyz3oR5KshsBgZgAJ5TQAw8I=;
- b=OMgnSlcXkVmA4kp3UYrJe2UIgZyT9JDe7DeULYBLAJcyZRbhnwM+9dfZn6KkHCzers
- d1uU0npaSITrd8FsUZgWqfMUpXBQ5S8kfzQSd2PHyJszy8xnotptdUjBQjS1sBF4RbsN
- v8n3rmsZa43xOqTzcLgDfC6N49TFb3ALal1ft6DFqVX1Mp8WgNrIRITsiGHF77M7yMxL
- BPyabMVoZT7zcfiNPvg3dDT+Pg+EZJIePq6lXfK8IMWJVgm1tgE4FHge6QNK6vNlT1gQ
- rfI0mUn+7PAaA3YfaChwmVgAJ+Twg2R5t3Hi8ecPC564srU1H+NofDfMfu9quPwd36Kv
- jhdQ==
-X-Gm-Message-State: AOJu0YwiNeHaYuro20MBIoeBjOJL6XtQosM0Od2TTtOlHMO1AywrC8Z6
- AnxoCwVUdWLti3R9mO5RsqSrdORrDSW5La9rLWg1Wr2mpIuat4YMQbBeizTq1XrtZaPNjMyT0TX
- Uc/1r
-X-Gm-Gg: Acq92OF/tKbb2xjdwBRxKdRH5PQ0Q/cO0c8UUt+/n+gw4TvDOTRoKIeM+V87W8jLonR
- vICya/ZUbnq/cXChQ/gT8+8srcdhcLZEz6aY/CDbUvNIfrYHy+lVdVMreXhBYiclrVI59JM46Vi
- RImeXw6z+mUnyxxnKQWfTC+nGU9j2OhkEYSVE1jiWX7NbdIcrNOx+nJiVY6UiMrYNsCERqtgKrA
- vTQ0KwRjXbPp+2U5/S98jrLdXku6Oj5EkqXNbuC84GvtxpA4+qQYaSAL9HkHh0gY7aKwUdzLyBn
- Uy17QYQw5t3XYlHkKk+zV8HH0cQ74Jq7U30nFU4FArfXnj6iILWTXx5Azpn8eUHFpxHZaAWVYsb
- cFPFT9dIs/6yLj+9Hg6Ipi8L9BubVfCzQNScs30STuIyDf6Bkaz+t7ZQmDMSkWbtix7bTAP1Z0G
- DofQUHVEfzkhZZk/Q58itbedKwzKMVEOhx52UuoHX4iE3MHhXcArs0h7zmrC/5aFRLV6qk9OI7Y
- ho8jUA5Uk54YNAgaCUnULw/wu3tSG0=
-X-Received: by 2002:a05:600c:5298:b0:48e:635a:18d2 with SMTP id
- 5b1f17b1804b1-48fe60e51d1mr46926645e9.2.1778842202057; 
- Fri, 15 May 2026 03:50:02 -0700 (PDT)
+ bh=pRpRlYgzY5PaMz7MYuHPjzjxRVlI8PpTq6mbSsEg35o=;
+ b=arh2WlnpQf/QZh9F/1uF0EfAORrimD6L3+knx5z6/DpwRn5qhxA5woEhzFmpTQVUnH
+ 2+olsPYD0n8XRrhMeVe4ZjKyBK8hjEqMfx+z5RyA/ULRMnpx8doJ5T2MAs3+0LpiOn+E
+ aOlsykKuyB8l1vSP9KHGU1qv+iDyAdET67L7DTnpWW1eVkZKnJaSVjtTO/F/sqSVpkT0
+ Ya5PciUdBPX1Yjm83HZvwTneYQ5sYiBjEgF3CMfayfcCIUH06QBiwuQpparONspkxxxE
+ DE9jCHoVk5p9gyMlU28FbX4RewEpDZYhpKzFDuFMKEMAWPU+Ygund1Vo9PvTM9755z3I
+ 3VRQ==
+X-Gm-Message-State: AOJu0Yyrcezb4yGaJjDqmlekjcPno7GOKdSjW7rbCgOnsSQuCowQBhqo
+ yqftq4H0tTfQO87nWl9mzYhTERBe64qrrJVBO5C+AzdQCokXRKutpgyT0VGnclq2aSHl8f9QnZ6
+ EZNwM
+X-Gm-Gg: Acq92OGzRfVViUmkjsQzkjnQkzhW+LCTvW58I5XTdurJgZ34M8oCQNKZVam3eH0DK5T
+ vqndYTPGHvcSg5J17Pl60eTnXEIdH4z0CLOeEE+rqGttCQnooDKSqxb8WPq3sb3nxTVlDGan9HO
+ S6/soIJalgeX076mEhlhRq1ZgcK1WjZB5tm9ZiXm67jcrShxE0XYxBs9too8oHtw1TYLNillchi
+ n2arj4ASprhCK9NOHSDc4d3yeU7wdCLNFdUOT4ROQZwRcJtwhsVdGnNUkOAQeD0jI96tdK49ExZ
+ BsUYmtTB/ETlCv7pr4YNBUnWUiQwl9DqUyX5YAvTzDJ3Zrs9IUzVzofahMJ6zVh6Fhf2X/v4Y6J
+ na87WuE2j41KgdmdbIAkh3GqJ3KpslI5hA2FA7TRMxF5oI2Ycg+gX4U0mdnvqjXYyo4NhNB28jv
+ ORXzgJMNJ64mSL1SHlY6dHRDxov/YSVQ1WrlfV23hS8D4is6Y8Z/Td2rDrCpdYg7vZ/ctnr3o8Q
+ X4l45UYOcFXRxv69EtzOTmqhktvwsg=
+X-Received: by 2002:a05:600c:3b07:b0:489:1a3a:9e45 with SMTP id
+ 5b1f17b1804b1-48fe651e127mr47027885e9.26.1778842199987; 
+ Fri, 15 May 2026 03:49:59 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48feaa2949asm18194355e9.1.2026.05.15.03.50.01
+ 5b1f17b1804b1-48feaa2949asm18194355e9.1.2026.05.15.03.49.58
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 03:50:01 -0700 (PDT)
+ Fri, 15 May 2026 03:49:58 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 12/23] hw/misc/bcm2835_control.c: Don't assert on local timer
- zero reload value
-Date: Fri, 15 May 2026 11:49:34 +0100
-Message-ID: <20260515104945.4145203-13-peter.maydell@linaro.org>
+Subject: [PULL 10/23] hw/intc/arm_gicv5: Add missing early return in
+ gicv5_set_handling()
+Date: Fri, 15 May 2026 11:49:32 +0100
+Message-ID: <20260515104945.4145203-11-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260515104945.4145203-1-peter.maydell@linaro.org>
 References: <20260515104945.4145203-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,55 +102,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The bcm2836 local timer has a basic "counts down, fires at zero,
-and reloads to programmed value to count down again" functionality,
-as documented in
-https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2836/QA7_rev3.4.pdf
+In gicv5_set_handling(), if the guest tried to set the handling mode
+on a nonexistent SPI then we print a GUEST_ERROR log message.
+However, we forgot to then return, so execution continues into a NULL
+pointer dereference.
 
-The documentation is very sparse and doesn't say what actually
-happens if the guest programs the reload value to zero.  Currently we
-trip an assert in this case.
+Add the missing "return", bringing the code structure in to line with
+the equivalent parts in other functions like gicv5_set_pending() and
+gicv5_set_target().
 
-Instead, log this as a guest error and disable the timer (which seems
-a reasonable guess -- effectively the timer will stop counting).
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3395
+CID: 1659596
+Fixes: 5beb48ab53d ("hw/intc/arm_gicv5: Make gicv5_set_* update SPI state")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260508162013.2751001-2-peter.maydell@linaro.org
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20260512093856.3197700-5-peter.maydell@linaro.org
 ---
- hw/intc/bcm2836_control.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ hw/intc/arm_gicv5.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/intc/bcm2836_control.c b/hw/intc/bcm2836_control.c
-index f1deafaf7a..d6c6057cd2 100644
---- a/hw/intc/bcm2836_control.c
-+++ b/hw/intc/bcm2836_control.c
-@@ -197,12 +197,21 @@ static void bcm2836_control_local_timer_set_next(void *opaque)
- {
-     BCM2836ControlState *s = opaque;
-     uint64_t next_event;
-+    uint64_t reload_value = LOCALTIMER_VALUE(s->local_timer_control);
+diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
+index 7ad274e369..6b1dd04991 100644
+--- a/hw/intc/arm_gicv5.c
++++ b/hw/intc/arm_gicv5.c
+@@ -926,6 +926,7 @@ void gicv5_set_handling(GICv5Common *cs, uint32_t id,
+         if (!spi) {
+             qemu_log_mask(LOG_GUEST_ERROR, "gicv5_set_handling: tried to set "
+                           "priority of unreachable SPI %d\n", id);
++            return;
+         }
  
--    assert(LOCALTIMER_VALUE(s->local_timer_control) > 0);
-+    if (reload_value == 0) {
-+        /*
-+         * Spec doesn't say what happens in this case; treat as a
-+         * guest error and stop the timer running.
-+         */
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: local timer reload value is 0\n",
-+                      __func__);
-+        timer_del(&s->timer);
-+        return;
-+    }
- 
-     next_event = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
--        muldiv64(LOCALTIMER_VALUE(s->local_timer_control),
--            NANOSECONDS_PER_SECOND, LOCALTIMER_FREQ);
-+        muldiv64(reload_value, NANOSECONDS_PER_SECOND, LOCALTIMER_FREQ);
-     timer_mod(&s->timer, next_event);
- }
- 
+         spi->hm = handling;
 -- 
 2.43.0
 
