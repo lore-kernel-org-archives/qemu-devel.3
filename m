@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 913FACD4F25
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 16:33:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C902CD4F25
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 16:33:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNvRd-0005r9-6V; Fri, 15 May 2026 12:31:25 -0400
+	id 1wNvRb-0005nR-80; Fri, 15 May 2026 12:31:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wNvRJ-0005dj-NJ
- for qemu-devel@nongnu.org; Fri, 15 May 2026 12:31:11 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1wNvRO-0005eN-5L
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 12:31:13 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wNvRF-00026x-CA
- for qemu-devel@nongnu.org; Fri, 15 May 2026 12:31:04 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-48a7fe4f40bso217625e9.0
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 09:31:00 -0700 (PDT)
+ id 1wNvRJ-000283-FW
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 12:31:09 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4891e86fabeso72215e9.1
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 09:31:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778862659; x=1779467459; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778862663; x=1779467463; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XEZBaEcyE1n/8bEIs4nZm/53UNkYauFmpvGiRK8l7YM=;
- b=xqkMN3XsAIDo3FaDwV0fQ/y2r3RTs18V9Kmf330fUD4ianHfnySgz47ZAs+A8HlzJg
- 4rrHzxnOEN5cdcINlB/nzsJ9D7nCLiRskvdsyiEmxmDBGojO8KGg3Au5I9oPDBbK6LM7
- 5F3JgBYbOcbr286JASf7dPSDmiswq8HR199C050qwFfTHbJ5BL15nGvu6bGxaH895zJO
- IhYdKs+xJoNR2ujmnY3rM03i+UzOoNN2qWLw1qyUJMj/H4wYiuXFcjQzHyCuxSh/+EBC
- xJDgsM5wDSPVHeN0HCdJZ09KjZ7uYLpOOMnxBdUu8poioMGnCFi+4Gc0idyASzaHywIB
- 6MSg==
+ bh=N/op9aBootCAGyOm5tNOz6YSFQ1I3Itu+6bFcS4ha8Y=;
+ b=IKsCLlGBWSjrZd5qVZEOaqoaGbg96cM72n7BnKmx6rIinThIYIF1YHpJAASgjTEJpL
+ 83Ba+g/drzXYMnWh8l692pp0O4QNndqUG1QLi5L609ew9P5vgmy9lFi1h0N7ZITc52wW
+ sEFWGsTujEP4ZWRMFwTQfa56L4msFUHCZeCzX8TYkJKTA92nowTl2PEAo9NyQYEpUOH1
+ TfBrxWek65JPv9bJlB7wnJKp9MiEC8EANepV8aMaRUkhQycG9fGLkT5+Fw2AB5MCYNGk
+ hymefTYWiKswH7MLd946F5ixAMPqpBVSqTjXPO/OpCiftLf7rNU3nAuDhj3xNmovWo+C
+ H0fQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778862659; x=1779467459;
+ d=1e100.net; s=20251104; t=1778862663; x=1779467463;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=XEZBaEcyE1n/8bEIs4nZm/53UNkYauFmpvGiRK8l7YM=;
- b=K8cP9ctA2xEh6Ke+G0JmEPSywTUGdhgJcOltW9pMwbdkXVULII+8Qfkb7ZyMlCGRUK
- ifN0UOwZjCkPZG+vvR7PWW64sSlE2c4u+bKHon5gG31U8NRsB68CiNo/N/R4bt+j5yxT
- SMxbaHZHzEigz8ZJh4XpudldGIPAebHEoETuLHCAIWgGIi3jg+o+5ZAoXquEmiNGu2KW
- uvrNhACBnCK4zKf01qdgoMgohk5HwYQyxCj7cYu4WE9qqadn/AwsncQQZbbjHKye0y2b
- +kdauf8MZFx4WyNmgmAwO+6lMkbpBfcpCopXvEvKtLdfyrzbSU5ml1DTBCfYfzdHW35T
- MFSQ==
-X-Gm-Message-State: AOJu0YyDwlZW6Gk0Eqy9F9V4IBzIKV67gIB3TaP9bV3O6IexDVHDcF9I
- 2jefHLx9wwMYXBtJ1/celIor20BZGjtkvm4oLS5r0MS7wxLbLT/xmdQtx6DC1odho2E=
-X-Gm-Gg: Acq92OGreznkhCZpD4OkGn6oMSu7K1kSuYnhvgks4oNSGTYRF+Gk1WgAWSXunLO1kPB
- 0WLNj2ul/J2oEJI6PNJqRNM6iykWvccsIDAhw7+hEhUTZmgvtm2A6buNtxr2hz9RJN1xGGQA+pf
- FIPeRK3g4bYCIgmNt6BxYGFxdFtJpSH3ZbDtaj+uIWLdgFiNf6pRAHqgMwgvsExpd+NQn5SQpg6
- McfG1YDqY+HzCaecp0tFdHwOdmN3A0FbByIhzPV5Uil4q6/BGgVMzt91ZaAqCUYvGE7LDJeI1lx
- us1vbYgcfdiIsQP6jJA+mY2d1/D+UiMEODbBjG/euVey9/dFcLZdGI+UdbZEyhJ9nqcQkGaE1gL
- 6fFDEHXxQJ5mw/OJBiCub+XOmS5Y5ZAqbTmwTHXsDaE/sKkdqNgJzzzleGUIOjtEKPst2LcXeZL
- 2GlgGvX2klfkVE9wm8UkGuiqWHGx4pNaGfeg==
-X-Received: by 2002:a05:600c:4fc9:b0:488:a2ac:a334 with SMTP id
- 5b1f17b1804b1-48fe60e4794mr65709335e9.3.1778862659416; 
- Fri, 15 May 2026 09:30:59 -0700 (PDT)
+ bh=N/op9aBootCAGyOm5tNOz6YSFQ1I3Itu+6bFcS4ha8Y=;
+ b=DZiJezloK2DnV9Do1OwFsq8ybeWHp2DmMXfSzVlfvuhhzwkYPRv2cqQfB/d7Oj12qB
+ A1sJUdLSUhn8cp9PyvBbvvi0b6YNuAoHEnPZw0Ry3ZLZ7G2CkSFNfGOULmNUD1GYHsvk
+ wrkHM0DzWlSjICYasUDHy4q7H417OZsJqh5kt9g538TlJzGf5ao5cogVtrluyltG2YiI
+ g3/bkiDcUuxoGiGo1HZzcmtl7SiGJ1gFcc6sU3JorFe8bqjYDZ/AFDDSLm0fRGp0IpQh
+ X3E2KTdE8DPFJeSNDfGFAxGiKNqTfVy/1dhUiMQ7ICMHUQCQ4HA5FtPzo/1M9txOp6pi
+ 1+KA==
+X-Gm-Message-State: AOJu0Yzrh0xmvNzsOlp7DKCmKKZPdOEb+23WmPyA3Y5ZBp7rS+unCCPN
+ Rsr5oZXca7K9hzJAURbfUvK7CwLGIGEWUC7UF9m9KTpbUJeMMQZ+W+TwFTx5fuccsM4=
+X-Gm-Gg: Acq92OHz40y29LO6l0wIqFDABBJs52oXQ/sGvIHKDy/dnp9V0gxo/jsW6eQey/5P8eG
+ jQj5r51NENxHwF5xVhNiFDDpWihsR77QQPUj150tsWGUlB3eTheDxunOxgN1q/v2Nc6ozX4vmym
+ lqu8LkuHuG4yGb8lzA3+raRLM4A14dc6055slVVhPsNFev4Dr7nz+htirw3W9JvN2nJIWU1pNGr
+ RHuZJGxeCGnTtoUvee6cHmGAtWxArQ+PKvk1jKlzcSMzXiOa3pgtOdVhVCj/x4jz6wSKhtL7T7Z
+ Eyl1L0TAsDaTM4p48UioSFzb/HQV3eXZDoRfrzBYM1obbILvyLoEHYkoi/JDoMCjAv8l6i1dHIs
+ 80Cfz4qSwO7tTO33jMhbQQ7zNHgdePtd0k4AuVvhbJFSEwynLbzEXQr7T+kTN61EIK9jj6jl/GW
+ ao3xEofduyLNXwyW3PgWg1ivLfXnlh0UKUAg==
+X-Received: by 2002:a05:600c:49a8:b0:48f:e230:d5ad with SMTP id
+ 5b1f17b1804b1-48fe6617012mr40477415e9.33.1778862663215; 
+ Fri, 15 May 2026 09:31:03 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48febe67688sm21716675e9.5.2026.05.15.09.30.56
+ 5b1f17b1804b1-48fe5694fcasm63467715e9.5.2026.05.15.09.30.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 09:30:56 -0700 (PDT)
+ Fri, 15 May 2026 09:30:59 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CF2B05F8C1;
- Fri, 15 May 2026 17:30:55 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 72E905FA6C;
+ Fri, 15 May 2026 17:30:56 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Cleber Rosa <crosa@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  John Snow <jsnow@redhat.com>
-Subject: [RFC PATCH v3 04/11] .agents/skills: add qemu-code-explorer skill
-Date: Fri, 15 May 2026 17:30:47 +0100
-Message-ID: <20260515163055.1792262-5-alex.bennee@linaro.org>
+Subject: [RFC PATCH v3 10/11] .agents/skills: add qemu-issue-triage agent skill
+Date: Fri, 15 May 2026 17:30:53 +0100
+Message-ID: <20260515163055.1792262-11-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260515163055.1792262-1-alex.bennee@linaro.org>
 References: <20260515163055.1792262-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,169 +104,364 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This provides a skill detailing how to deal with some of QEMU's more
-idiosyncratic coding conventions. Originally I had given instructions
-on using tags and git grep but once I'd installed the semcode
-MCP (https://github.com/facebookexperimental/semcode) it
-was able to handle most code navigation pretty efficiently. So now
-this skill just focuses on the things that are tricky for indexers to
-handle, namely generated code and fancy macros.
+While triaging the issue tracker I wondered if this would be a
+suitable job for an AI agent. Unfortunately the OSS program doesn't
+give any credits to run agents in gitlab. However I do have access to
+models from my editor and ECA so I built one and tested it on a few
+issues.
+
+We might want to consider adding some common "issue smells" for common
+problems in issues. For example triggering asserts that have been
+added to the code and other such annoyances.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
 ---
+v4
+  - fix a bunch of typos in SKILL
+  - update evals
+  - remove mentions of ECA
+  - fix typo referencing old skill name
+  - remove eca__spawn_agent reference
+  - clean-up authentication handling
+  - teach it about scoped labels
+  - make less chatty in the comments
+  - updated commit msg
+  - suggest running things in parallel (use agents)
+  - more pointers to incompleteness
 v3
-  - rewrote with a focus on generated code and macros for when code
-  search MCPs run into trouble.
+  - more imperative phrasing
 v2
-  - remove personal gtag skill references, add global stanzas directly
-  - moved macro information from AGENTS.md into code explorer
-  - more imperative language to trigger its use
-  - add section on using scripts/expand_macro.py
-  - remove eca reference from evals.json (maybe we should just drop this)
+  - prefer sub-agent
+  - mention parameters
+  - don't be over eager to tag host or target for generic bugs
+  - signoff comments as an agent on behalf of the user
+  - detect patch available and apply appropriate tags
 ---
- .agents/skills/qemu-code-explorer/SKILL.md    | 88 +++++++++++++++++++
- .../qemu-code-explorer/evals/evals.json       | 26 ++++++
- AGENTS.md                                     |  1 +
- 3 files changed, 115 insertions(+)
- create mode 100644 .agents/skills/qemu-code-explorer/SKILL.md
- create mode 100644 .agents/skills/qemu-code-explorer/evals/evals.json
+ .agents/skills/qemu-issue-triage/SKILL.md     | 112 +++++++++++++++
+ .../qemu-issue-triage/assets/labels.txt       | 133 ++++++++++++++++++
+ .../skills/qemu-issue-triage/evals/evals.json |  18 +++
+ .../scripts/update_labels.sh                  |  16 +++
+ AGENTS.md                                     |   1 +
+ 5 files changed, 280 insertions(+)
+ create mode 100644 .agents/skills/qemu-issue-triage/SKILL.md
+ create mode 100644 .agents/skills/qemu-issue-triage/assets/labels.txt
+ create mode 100644 .agents/skills/qemu-issue-triage/evals/evals.json
+ create mode 100755 .agents/skills/qemu-issue-triage/scripts/update_labels.sh
 
-diff --git a/.agents/skills/qemu-code-explorer/SKILL.md b/.agents/skills/qemu-code-explorer/SKILL.md
+diff --git a/.agents/skills/qemu-issue-triage/SKILL.md b/.agents/skills/qemu-issue-triage/SKILL.md
 new file mode 100644
-index 00000000000..7bca389b37d
+index 00000000000..a0802e24dd3
 --- /dev/null
-+++ b/.agents/skills/qemu-code-explorer/SKILL.md
-@@ -0,0 +1,88 @@
++++ b/.agents/skills/qemu-issue-triage/SKILL.md
+@@ -0,0 +1,112 @@
 +---
-+name: qemu-code-explorer
-+description: Advanced QEMU code exploration for special cases (generated code, complex macros, QOM) that are not easily handled by standard code exploration tools. Use this as a fallback strategy for build-time artifacts or hidden symbols.
++name: qemu-issue-triage
++description: Use this skill to triage and label GitLab issues for the QEMU project
 +license: GPL-2.0-or-later
 +---
 +
-+# QEMU Advanced Code Explorer
++# Instructions
 +
-+When standard code navigation tools fail to find a symbol, it is often because the code is generated at build time or hidden behind complex macros. This skill covers how to find and understand those special cases.
++This skill provides specialized instructions for triaging GitLab issues for the QEMU project.
 +
-+## 1. Searching Generated Code
++## Parameter Handling & Execution Strategy (CRITICAL)
++1. **Parameters**: If the user invokes this skill with multiple arguments or a list of IDs (e.g., `#3430, #3426`), treat each as an independent target.
++2. **Sub-Agent Mandate**: To prevent polluting the main conversation context, **you MUST ALWAYS spawn a sub-agent** to perform the actual triage.
++   - **Parallelization**: When multiple IDs are provided, spawn one sub-agent per issue in parallel to improve efficiency.
++   - Do NOT run `glab` commands or read the label cache directly in the main context.
++   - In the `task` parameter for the sub-agent, provide the target `<issue-id>` and explicitly instruct the sub-agent to follow the "Triage Workflow" and "Asset Management" rules defined below.
++   - Wait for the sub-agent to finish and simply report its summary to the user.
 +
-+Generated source files do not reside in the source tree but in the build directory. If a primary symbol search fails, the symbol is likely generated.
++## Goal
++Automate the initial triage of new bug reports and feature requests in the QEMU GitLab repository.
 +
-+### QAPI (QEMU Interface)
-+- **Source**: `qapi/*.json`
-+- **Generated**: `build/qapi/` (headers and C files)
-+- **Patterns**:
-+  - `qmp_marshal_...`: Command marshallers.
-+  - `qapi_free_...`: Type cleanup functions.
-+  - `visit_type_...`: Visitor functions.
-+- **Search**: Search the `build/` directory using standard text search tools.
++## Prerequisites
++- `glab` CLI tool installed.
++- An authentication method: Use `glab auth status` to check. You can pass a token by using `env GITLAB_TOKEN=<token>` in front of commands if you have it.
++- Target Repo: Use `-R qemu-project/qemu` if not in a clone, or ensure the remote is set correctly.
 +
-+### Tracing
-+- **Source**: `trace-events` files throughout the tree.
-+- **Generated**: `build/trace/` (e.g., `trace/trace-hw_block.h`)
-+- **Patterns**: `trace_...` functions.
-+- **Search**: Check the build directory or the generated headers.
-+
-+### Decodetree (Instruction Decoding)
-+- **Source**: `target/.../*.decode` files.
-+- **Generated**: Usually included into source files as `.c.inc` artifacts in the build tree.
-+- **Patterns**: `trans_...` functions are handwritten, but the decoder that calls them is generated.
-+
-+### Configuration
-+- `build/config-host.h`: Global host configuration.
-+- `build/config-target.h`: Target-specific configuration (e.g., `TARGET_X86_64`).
-+
-+## 2. Expanding Complex Macros
-+
-+QEMU uses deep macro nesting (especially in TCG and softfloat) which can be opaque to static analysis.
-+
-+### `scripts/expand-macro.py`
-+Use this tool to see the exact C code after preprocessing for a specific range in a file.
-+
-+- **Usage**:
++## Asset Management (Label Cache)
++This skill uses a cached list of labels to avoid unnecessary API calls and ensure consistent labeling.
++- **Cache Location:** `assets/labels.txt` relative to this skill.
++- **Updating the Cache:** If the user asks to update the labels, or if you suspect a label is missing, run the provided script:
 +  ```bash
-+  python3 ./scripts/expand-macro.py FILE --context CONTEXT_FILE --range START_LINE-END_LINE
++  cd .agents/skills/qemu-issue-triage/scripts && ./update_labels.sh
 +  ```
-+- **Example**:
-+  To see how TCG helpers or softfloat parts expand:
-+  ```bash
-+  python3 ./scripts/expand-macro.py fpu/softfloat-parts.c.inc --context fpu/softfloat.c --range 191-264
-+  ```
++- **Using the Cache:** Before applying labels, ALWAYS read `assets/labels.txt` (or use `grep` on it) to review the available labels and their descriptions. This ensures you use the exact spelling and understand the intent behind the label (e.g., `kind::Bug`, `Storage`). Do NOT guess label names.
 +
-+## 3. QEMU-Specific Symbol Patterns
++## Triage Workflow
 +
-+Some symbols are "hidden" from simple search tools because of boilerplate-reducing macros.
++### 1. Information Gathering
++Fetch the issue details:
++```bash
++glab issue view <issue-id> -R qemu-project/qemu --comments
++```
 +
-+### QOM (QEMU Object Model)
-+Macros like `OBJECT_DECLARE_SIMPLE_TYPE` or `OBJECT_DECLARE_TYPE` expand to multiple function declarations and casting macros.
-+- If you see `MY_DEVICE(obj)`, it is likely defined via `OBJECT_DECLARE_TYPE(...)`.
-+- Search for the type name string (e.g., `"my-device"`) to find the `TypeInfo` structure, which links everything together.
++### 2. Evaluate Completeness
++Analyze the issue against the bug template requirements:
++- **Host Arch/OS**: Is the host environment specified?
++- **Guest Arch/OS**: Is the guest environment specified?
++- **QEMU Version**: Is the version mentioned?
++- **Reproduction Steps**: Are there clear steps to reproduce?
++- **Expected vs Actual**: Is the bug clearly described?
 +
-+### TCG Helpers
-+- **Pattern**: `HELPER(foo)`
-+- Defined in `helper.h` or similar, implemented as `helper_foo`.
-+- If searching for `helper_foo` fails, search for the `HELPER(foo)` pattern in the source.
++**Workflow::Needs Info Triggers (CRITICAL):**
++Request more information and apply the `workflow::Needs Info` label if any of the following are true:
++- **Missing Command Line**: The full QEMU command line (`qemu-system-* ...`) used to reproduce the issue is missing.
++- **Old QEMU Version**: The reported version is older than the last two major releases. Ask the reporter to re-test with the current upstream master or the latest stable release.
++- **Distro Version**: The version string suggests a downstream/distro-specific package (e.g., contains suffixes like `.el9`, `.fc40`, `-ubuntu`, or long strings like `7.2.0-14.sc05...`). Ask the reporter to reproduce the issue using a clean build from the current upstream source to rule out distro-specific patches.
 +
-+### Error Handling
-+- `ERRP_GUARD()`: Used at the start of functions to handle `error_propagate`.
-+- `error_setg(errp, ...)`: Common pattern for reporting errors.
++**Actions:**
++- If information is missing based on the triggers above, add the `workflow::Needs Info` label and post a polite comment asking for the specific missing details. (Remember to sign the comment as "Issue Agent Bot on behalf of the user" per the Guidelines).
++- If the issue is well-defined and uses a recent upstream version, proceed to categorization.
 +
-+## Decision Matrix
++### 3. Categorization & Labelling
++Apply labels based on the issue content. **Crucially, consult `assets/labels.txt` to find the exact matching labels for the categories below.**
 +
-+| Scenario | Strategy |
-+|------|--------|
-+| Standard function/struct | Use primary code navigation tools. |
-+| Symbol not found in source | Search `build/` directory for generated code. |
-+| Macro expansion looks wrong | Use `scripts/expand-macro.py`. |
-+| QOM casting macro (`TYPE_...`) | Search for the `TypeInfo` or `OBJECT_DECLARE_...` usage. |
-+| TCG helper missing | Search for `HELPER(name)` pattern. |
-+| Instruction decoding | Check `.decode` files and corresponding `trans_...` functions. |
++#### Scoped Labels (Prefix::Label)
++QEMU uses scoped labels (e.g., `kind::Bug`, `workflow::Triaged`) to group related categories.
++- **Prefixes:** Common prefixes include `kind::`, `workflow::`, `Closed::`, `Audit Tooling::`, `GUI::`.
++- **Constraint:** Only one label from that scope can be active at a time. Applying a new scoped label of the same type (e.g `workflow::`) will remove the other.
 +
-+## Workflow Tips
-+1. **Locate the Build Directory**: QEMU developers often use `build/` but it could be named differently. Always check.
-+2. **Combine Tools**: Use primary tools first. If they fail, search the `build/` directory.
-+3. **Check the Context**: If a `.c.inc` file is confusing, find the `.c` file that includes it to understand the macro context.
-diff --git a/.agents/skills/qemu-code-explorer/evals/evals.json b/.agents/skills/qemu-code-explorer/evals/evals.json
++#### Kinds
++- `kind::Bug`: For unexpected behavior.
++- `kind::Feature Request`: For new functionality.
++- `kind::Task`: For research, investigations, and miscellaneous issues.
++
++#### Targets (target: *) and Hosts (host: *)
++Detect the guest architecture (`target: *`) or host environment (`host: *`).
++**IMPORTANT:** Be conservative when applying `target:` and `host:` labels. Many bugs (e.g., in generic devices like USB, PCI, or block controllers) apply to ANY guest that includes the device. The reproducer (like a `qtest` invocation) might just use a convenient target (e.g., `i386`) as an example. ONLY apply `target:` or `host:` labels if the bug is strictly architecture- or host-dependent (e.g., a bug in ARM CPU emulation, or a macOS-specific build failure).
++
++#### Accelerators (accel: *)
++Detect the accelerator mentioned (e.g., `accel: KVM`, `accel: TCG`, `accel: HVF`).
++
++#### Subsystems
++Identify the relevant subsystem (e.g., `Storage`, `Networking`, `device:virtio`, `Migration`).
++
++#### Testcases
++- If the issue provides a minimal C program, a shell script, or a specific disk image to reproduce the bug, apply the `TestCase` label.
++
++#### Patches and Fixes
++- If the issue description or comments contain a link to a patch on the mailing list (e.g., `lore.kernel.org`, `patchew.org`), or explicitly mention that a patch/fix has been submitted, apply the `workflow::Patch available` label.
++
++#### Workflow Management
++The `workflow::` labels track the lifecycle of an issue.
++- **Single Workflow Label:** An issue can only have one `workflow::` label at a time.
++- **Transitioning:** Adding a new workflow label will automatically remove the old one (e.g., adding `workflow::Patch available` will remove `workflow::Triaged`).
++
++#### Other comments
++- If other developers have commented see if those comments imply additional tags should be applied.
++
++### 4. Updating the Issue
++Apply the labels and optionally assign a priority if clear.
++**Transitioning Workflow Example:**
++```bash
++glab issue update <issue-id> -R qemu-project/qemu --label "workflow::Triaged,kind::Bug"
++```
++
++## Guidelines
++- Be polite and professional in comments.
++- **IMPORTANT:** Any comments added to the issue MUST include the phrase: "Issue Agent Bot on behalf of the user" (e.g., as a sign-off at the end of the message).
++- Avoid commenting unless additional information is needed, specifically a comment to acknowledge the report is superfluous.
++- Use `workflow::Triaged` once categorization is complete.
++- Avoid assigning issues to specific people unless they are explicitly mentioned or are the known maintainer for a very specific subsystem.
++- Use the `scripts/get_maintainer.pl` logic (via file paths mentioned in the issue) to identify potential subsystems.
+diff --git a/.agents/skills/qemu-issue-triage/assets/labels.txt b/.agents/skills/qemu-issue-triage/assets/labels.txt
 new file mode 100644
-index 00000000000..8eaa45b28b3
+index 00000000000..12d3cc7e6f0
 --- /dev/null
-+++ b/.agents/skills/qemu-code-explorer/evals/evals.json
-@@ -0,0 +1,26 @@
++++ b/.agents/skills/qemu-issue-triage/assets/labels.txt
+@@ -0,0 +1,133 @@
++ACPI                            Power Management related (ACPI / SMBIOS / HEST / GHES)
++Audio                           Audio devices; both backend (host audio) and frontend (guest audio)
++Audit Tooling::AI               For bugs found with AI assisted tools such as Mythos and other similar things
++Audit Tooling::Fuzzer           Issues found via fuzzing. For security issues, please consult https://www.qemu.org/contribute/security-process/
++Audit Tooling::Other            Some unknown/unclassified type of audit tooling.
++Audit Tooling::Sanitizer        For issues found using sanitizers such as asan, lsan and tsan
++Audit Tooling::Static Analysis  Static analysis such as Coverity or more modern compilers.
++Bite Sized                      Candidates for first contributions; see also https://wiki.qemu.org/Contribute/BiteSizedTasks
++Build System                    configure, make, Meson, ninja, gcc, clang, ccache, etc.
++CI                              Continuous Integration; gitlab, patchew, etc.
++CLI                             Command Line Interface
++Chardev                         Character device backends and related issues
++Closed::Duplicate               There is already another ticket that is about the same issue
++Closed::Fixed                   The issue was fixed. Yay!
++Closed::Invalid                 This issue was not really a problem
++Closed::NotOurBug               This is a bug, but not a bug in QEMU. Please report it and/or include a link to the report.
++Closed::NotReproducible         This issue was not reproducible
++Closed::UnbackedFeature         Nobody was willing to work on this feature request
++Closed::WontFix                 The issue was acknowledged, but the fix would be too complex, too expensive, or would introduce other problems.
++Cryptography                    
++Documentation                   Sphinx documentation, man pages, the wiki, --help output, etc.
++GDB                             Issues relating to using GDB via the gdbstub
++GUI                             Graphical User Interface (gtk, SDL, curses, VNC, spice, ...)
++GUI::Cocoa                      Cocoa
++GUI::DBus                       DBus
++GUI::GTK                        GTK
++GUI::SDL                        SDL
++GUI::SPICE                      SPICE
++GUI::VNC                        
++Guest Agent                     Issues related to the qemu-guest-agent binary. https://wiki.qemu.org/Features/GuestAgent
++Hard                            
++Launchpad                       Issues migrated from Launchpad
++Migration                       
++Modules                         
++Networking                      
++Python                          Python library issues (./python/)
++QAPI/QMP                        QEMU API / QEMU Machine Protocol, HMP and CLI, etc.
++QOM                             QEMU Object Model
++Regression                      This is a regression from previously working behaviour
++Security                        This is a security issue - see https://www.qemu.org/docs/master/system/security.html for guidance
++Semihosting                     Semihosting calls provide a simple ABI for early bring-up of embedded devices, see https://www.qemu.org/docs/master/about/emulation.html#semihosting
++Softfloat                       QEMU's FPU emulation code (TCG only)
++Stable::can't fix               The bug was reported on a stable branch but the fix is too invasive for backporting
++Stable::obsolete                The bug was reported on a stable branch that is not maintained anymore
++Stable::to backport             The bug was reported on a stable branch and needs to be backported on the next release from the branch
++Storage                         Block subsystem, Storage devices, etc.
++TCG plugins                     Anything related to the TCG plugins feature
++TestCase                        The report includes a testcase
++Tests                           qtests, iotests, acceptance tests, VM tests, docker tests, and more. See https://www.qemu.org/docs/master/devel/testing/index.html
++USB                             
++VFIO                            
++accel: HAX                      Intel's Hardware Accelerated Execution Manager (HAXM)
++accel: HVF                      Apple Hypervisor Framework
++accel: KVM                      Linux Kernel-based Virtual Machine
++accel: TCG                      QEMU Tiny Code Generator
++accel: WHPX                     Microsoft Windows Hypervisor Platform (WHPX)
++accel: Xen                      Xen Hypervisor
++block:9p                        The 9p network file system
++block:NVMe                      
++block:curl                      
++block:nbd                       
++block:nfs                       Issues related to the NFS backend
++block:qcow2                     
++block:ssh                       
++block:vmdk                      
++bsd-user                        
++device: PCI                     
++device: TPM                     Trusted Platform Module (TPM) devices
++device: iommu                   
++device: mmio                    mmio and other directly emulated devices
++device:graphics                 Issues relating to display device emulation, or rendering in general. See also "GUI".
++device:input                    Keyboards, Mice, Touchscreens, HIDs, etc.
++device:iommu                    IOMMU and SMMU
++device:pflash                   Parallel NOR flashes emulation
++device:sdmmc                    SD or (e)MMC cards emulation
++device:virtio                   virtio-related issues. https://www.linux-kvm.org/page/Virtio
++device:watchdog                 
++efi                             EFI firmware related issues
++flaky-ci                        For test cases that are flaky when run under our CI
++gitlab                          
++guest: AIX                      
++guest: BSD                      Guest OS is BSD (NetBSD/FreeBSD/OpenBSD/etc)
++guest: Linux                    Guest OS is Linux/Linux-based
++guest: Windows                  Microsoft Windows guest
++guest: macOS                    Apple macOS / Darwin as  guest OS
++guest: os2                      
++host: aarch64                   Bugs reproducible on AArch64 hosts
++host: arm                       Bugs reproducible on ARM hosts
++host: loongarch64               Bugs reproducible on LoongArch64 hosts.
++host: mips                      Bugs reproducible on MIPS hosts
++host: ppc                       Bugs reproducible on Power hosts
++host: riscv                     Bugs reproducible on RISC-V hosts
++host: s390                      Bugs reproducible on s390 hosts
++host: sparc64                   Bugs specific to Sparc64 hosts
++host: x86                       Bugs reproducible on x86 hosts
++host:32bit                      These are mostly TCG related bugs where we sometimes struggle with emulating larger guests, especially atomic and address space issues.
++hostos: BSD                     FreeBSD, OpenBSD, NetBSD, and derivatives as host OSes
++hostos: Linux                   Linux-based host operating systems (Fedora, RHEL/CentOS, Debian, Ubuntu, openSuSE et al)
++hostos: Windows                 Microsoft Windows host OS
++hostos: macOS                   Apple macOS / Darwin as a host OS
++icount                          issues relating to icount, deterministic execution and record/replay functionality
++kind::Bug                       Bug or defect in functionality.
++kind::Feature Request           Feature request or new functionality.
++kind::Task                      Research, investigations, and miscellaneous issues.
++libvfio-user                    
++linux-user                      issues with QEMU's lightweight user-mode emulator
++qemu-img                        
++sysadmin                        Issues related to QEMU project infrastructure. You should probably also check on the projects IRC channel if the issue is urgent - https://www.qemu.org/support/
++target: alpha                   DEC Alpha [alpha]
++target: arm                     Arm AArch32 or AArch64 [arm, aarch64]
++target: avr                     Atmel AVR [avr]
++target: hexagon                 Qualcomm Hexagon [hexagon]
++target: hppa                    Hewlett-Packard Precision Architecture; HP/HP, PA-RISC [hppa]
++target: i386                    Intel/AMD x86 [i386, x86_64]
++target: loongarch               loongarch64 target architecture
++target: m68k                    Motorola 68000 [m68k]
++target: microblaze              Xilinx MicroBlaze [microblaze, microblazeel]
++target: mips                    MIPS [mips, mipsel, mips64, mips64el]
++target: nios2                   Altera Nios II [nios2]
++target: openrisc                OpenRISC [or1k]
++target: ppc                     IBM Power Architecture, PowerPC [ppc, ppc64, ppc64le]
++target: riscv                   RISC-V [riscv32, riscv64]
++target: rx                      Renesas RX [rx]
++target: s390x                   IBM Z, SystemZ, zSeries [s390x]
++target: sh4                     Renesas SuperH [sh4, sh4eb]
++target: sparc                   Sun Microsystems SPARC [sparc, sparc64]
++target: tricore                 Infineon TriCore [tricore]
++target: xtensa                  Tensilica Xtensa [xtensa, xtensaeb]
++workflow::Confirmed             Bugs that have been confirmed and reproduced.
++workflow::In Progress           Someone is working on this issue.
++workflow::Needs Info            Issue has insufficient information to verify.
++workflow::Patch available       A patch is available
++workflow::Triaged               Issue has been triaged and given a topic label.
+diff --git a/.agents/skills/qemu-issue-triage/evals/evals.json b/.agents/skills/qemu-issue-triage/evals/evals.json
+new file mode 100644
+index 00000000000..572c0723fd4
+--- /dev/null
++++ b/.agents/skills/qemu-issue-triage/evals/evals.json
+@@ -0,0 +1,18 @@
 +# SPDX-License-Identifier: GPL-2.0-or-later
 +{
-+  "skill_name": "qemu-code-explorer",
++  "skill_name": "qemu-issue-triage",
 +  "evals": [
 +    {
-+      "id": 0,
-+      "prompt": "Where is the function 'qemu_mutex_lock' defined and where is it used in the block layer (block/)?",
-+      "expected_output": "The definition should be found (likely in util/qemu-thread-posix.c or similar) and usages in block/ should be listed using gtags."
-+    },
-+    {
 +      "id": 1,
-+      "prompt": "I'm seeing a reference to 'qmp_marshal_query_status' in some docs but I can't find it in the source tree. Can you find where it is defined?",
-+      "expected_output": "The agent should identify this as QAPI generated code and look in the build directory (e.g., build/qapi/qapi-commands-control.c)."
++      "prompt": "Update the cached list of GitLab labels for the QEMU project.",
++      "expected_output": "The skill should fetch the latest labels from GitLab and save them to the skill's assets directory.",
++      "files": []
 +    },
 +    {
 +      "id": 2,
-+      "prompt": "Find all implementations of trace points for 'virtio_net' in the generated code.",
-+      "expected_output": "The agent should search for 'trace_virtio_net_*' in the build directory, specifically in generated trace headers/sources."
-+    },
-+    {
-+      "id": 3,
-+      "prompt": "Find all occurrences of the string 'Could not open' in the 'hw/' directory.",
-+      "expected_output": "The agent should use git grep scoped to hw/ to find the string literals."
++      "prompt": "Triage issue #1234. Assume the user provided clear steps but no subsystem label is obvious.",
++      "expected_output": "The skill should read the cached label list (not fetch from GitLab) and apply relevant kind/target labels.",
++      "files": []
 +    }
 +  ]
 +}
+\ No newline at end of file
+diff --git a/.agents/skills/qemu-issue-triage/scripts/update_labels.sh b/.agents/skills/qemu-issue-triage/scripts/update_labels.sh
+new file mode 100755
+index 00000000000..1605eab4de5
+--- /dev/null
++++ b/.agents/skills/qemu-issue-triage/scripts/update_labels.sh
+@@ -0,0 +1,16 @@
++#!/usr/bin/env bash
++# SPDX-License-Identifier: GPL-2.0-or-later
++set -e
++
++if [ -z "$GITLAB_TOKEN" ]; then
++    echo "GITLAB_TOKEN is not set. Attempting to fetch via pass..."
++    export GITLAB_TOKEN=$(pass gitlab-api)
++fi
++
++echo "Fetching labels from qemu-project/qemu..."
++# Fetch labels using API and format as "Name        Description"
++glab api /projects/qemu-project%2Fqemu/labels --paginate | \
++    jq -r '.[] | [ .name, .description ] | @tsv' | \
++    column -t -s $'\t' > ../assets/labels.txt
++
++echo "Labels cached in assets/labels.txt"
 diff --git a/AGENTS.md b/AGENTS.md
-index 3fd56fe3309..a34a92244e5 100644
+index 6a91c39638e..97774176425 100644
 --- a/AGENTS.md
 +++ b/AGENTS.md
-@@ -30,6 +30,7 @@ If unsure read the linked document for guidance.
- 
- ## Agent Skills (see `.agents/skills`)
- You should use the following specialized skills for common tasks:
-+- `qemu-code-explorer`: For finding where things are defined, how they're used, or understanding a specific subsystem.
+@@ -36,6 +36,7 @@ You should use the following specialized skills for common tasks:
+ - `qemu-code-reviewer`: For pulling and applying patch series from mailing lists.
+ - `qemu-mail-thread`: For analyzing and parsing mailing list threads.
+ - `qemu-issue-helper`: For fetching and summarising issue details from the bug tracker.
++- `qemu-issue-triage`: For helping triage issues in the bug tracker.
  
  ## Source Code Layout (see `docs/devel/codebase.rst`)
  - **`accel/`**: Hardware accelerators (KVM, TCG, HVF, Xen, etc.) and architecture-agnostic acceleration code.
