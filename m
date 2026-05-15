@@ -4,113 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85B6ECD4851
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 08:13:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 718C0CD4851
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 08:32:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNnfx-0007Eo-48; Fri, 15 May 2026 04:13:41 -0400
+	id 1wNnxK-00039A-6o; Fri, 15 May 2026 04:31:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNnfs-000739-VF
- for qemu-devel@nongnu.org; Fri, 15 May 2026 04:13:36 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ id 1wNnxF-000382-ND
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 04:31:34 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNnfr-0004M6-1g
- for qemu-devel@nongnu.org; Fri, 15 May 2026 04:13:36 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-65c7492a2ceso10034693d50.3
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 01:13:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778832814; cv=none;
+ id 1wNnxE-0001SB-6n
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 04:31:33 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-651c7ddf514so11457251d50.1
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 01:31:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778833890; cv=none;
  d=google.com; s=arc-20240605;
- b=gmH0csR1JIQhsLJmTK/FpkaHzZb9zG+bpLZpUzRXhbJsUtcx4WO0RyOA+bVuS3xzNk
- UnqQPifm2LUCfR7gf/2FPNn3dXyf/+/bEBILhnGqQbw1y7EInsSxiC8Ia1ZCZM7uEcRZ
- 4m/iBkTFzc7OQGj9w3Z7ynhKZzdhTXxZllke+WRt//oiRWYO6zcdRCmWt6H4JGp8XwGI
- /W6bThQhTv8xKCofA+nKUvRJYeWrex+kum1dGer8NycvJ+dvfbV07ix9NTnRBUxouwRI
- TetB06lM3izARDG4tWL94BJ7ATeXJiT04YDbVT8JmYwqBTqXeBE3OYGX1taFJLYy1B0y
- YvnQ==
+ b=lpD+fg5ckeCutQ75DYaAr7KBmTUSkNcNZnpluZqO2R1V3Sh6/iwU9pllY2vewt7skt
+ b2fQ+HrmJSacQgZjRuXPpuJU2nUpQbM+UjosDUwT1RhWq+7DPEgfgdObMePp6fQtbVsM
+ ARZsNsdLu/r1Cvox6NbnKpudJwpG6siudag3TOqF3piPQFIwHVwxvDpnvG5EwXqbF2tu
+ m2O7Cs3uwpCFm0JtLY4eb8M27PIswdrwr4ETF8OpuzvAEEkBEDF4yfckLu/Mf7c7Zy5b
+ tTeTa2DsZQ5hbpu/5bz+OdW0TVlO3b3M0i+jpwU0o7pthyLiNYVaom4b1zTnY8pmnWb0
+ mTkw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=XyrErN7cbbGBASANmj3+ZttdGIYnI1ScJ2BwJK3w0nc=;
- fh=kvOOaizNZldvZrGcUk8ta2JEDnV4vPRBdkt8TLZf/QY=;
- b=eB97HM4hffcH7x2P1YLXjpixCI/HEgFOK8F3EUsfCdV3v5USTabsRNvG50f3yi74K8
- 9i3HwKxX7xauJMrJZR3NV8E0xj7LdzOR1frWd8LAqw/OwL8ytz2JCXCGGfLrGac98eMB
- tRgBiv0KRyNvUuc37vcUH9kR2ZRnzsgxeLiD/uSiITvN8B0v1fanoEONXjj32q8Qg4k2
- H9ltAIhzorQlMKUrx4O7E1x0F71zz4+x11I20/JvVaFpaJxD8tQoaip6CvPf9h75x1wz
- J3nKw5zDInc7CmTkMkQx1KvUPaz/N+M8vRWelQU6S+YP/HKlPjhvZgvoiiF0dNSsUE/1
- LA1w==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=alzfgz1aXCJLqugLm78Sp8WFGjGW5XBGx/1DQ0VOqWk=;
+ fh=4l4chI0ES9Xgn5V1tZIU8PeHlEtdzN/GjcmVFA6uuSw=;
+ b=HKg/wnlFGndFvGe9YpARENhaR+HPKUw7tgidqE2HR0qI4IFmsu0JJDSbOqZgvsAnc6
+ 0qhR19r4uaasZYcRWOxQea9qmSjkF9NfqZTfRy9H5ZpZDwNNyhpYPO7mAisJpvKZ/9KU
+ ZFRUykL+4mpT/S/ki9X9WU7RPLAJgF6tHQIBEMxXBx06b1srpTPCTsxxCMATyREvFAx3
+ LWCpsHKPacJQ52UK5nGizAswQpJOMDUqO1K8JFx6yqdTFHhSbVOE4N2hE1YYUu+4aPNA
+ 8w2CjcoUIV7qscMx/nR5zxAr1UsoBg4S2of649TcesWJi15RT+wRMNM+lUcvJOCGXfVw
+ 19rA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778832814; x=1779437614; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XyrErN7cbbGBASANmj3+ZttdGIYnI1ScJ2BwJK3w0nc=;
- b=RamBhCH1tzmVbUwSEkL1fKGaF7U/MjttqI8gZ7ftuzX/rZNZr/bzh796V4ZE+Yo0Xm
- dqVzFvJEiJ1sHYrIr3jQ5C2/H40ZLh3sYS1MuWGKmduP/5H/Aa/3+ZYClRSuu2RF1A1T
- P9LEGuk/V02dR0Ir3VHzVcVFl1sXOrJG+Y9JzXzEq65/Uu75TDQmGSpplfSv3AA2ToA0
- xFM7XCBBzhuAFoSR9FioqVTHRLqF+O884enmheW7Q8y9fvSZg7BJOxxd2JgmwPP2DIhx
- i5IP/HSU80ir8YWGGEQozJY7mZtNNPi9TEaFM8ipZeJXRd11yny0F/fAjbvAgTNmnl9H
- OnuQ==
+ d=linaro.org; s=google; t=1778833890; x=1779438690; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=alzfgz1aXCJLqugLm78Sp8WFGjGW5XBGx/1DQ0VOqWk=;
+ b=Oz/X7NK2olEnLkxOEP8Q+thSCOAQtu2W3hryNc5ZqYCVa/vLJIK3KmoIDjRAtxLKKI
+ JMeviMPPvKYdPjCv38jZSYKV1VJs2jPUbDllwq3rGOCpwv2L0dId4/iejrNVUaa6BV1T
+ 321dnA9ML+l1Mr9uguD74hOUJLutbPtsOJvGSfN/b8niX/+WTiHSOT5TqPSWiTcg9RU3
+ vCRZyT8kw91CNO9EBPybaNUMmudz1ZEv3RXip09WkHbI0mArULk5PmhDSskaPytzaFXy
+ /0HGfVkDFV4vLnLgq7ROnb+jgZdqcHrwFLT4ug+ndzeppw6PwxZkqHjMwsb7TH9JFRm4
+ oSAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778832814; x=1779437614;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=XyrErN7cbbGBASANmj3+ZttdGIYnI1ScJ2BwJK3w0nc=;
- b=FZfY4EDNQ0ss/9AbbGDYCS/tuSNX0ter2ZpcJvALKO4jVBmPxwtcwq98fDrWUuF/wT
- HRtklGxPRK+BVHHLgv9933cWhUlfmFU8Ftd0SS9vWIJH6niZt2uNlC3y9RpejjoXXT1y
- d/JRkOeejRuvmfgjykioahqiiJnHhE+X9zbagZqgIAsm/g+SwCUz17YjomJMYzmUzxyO
- ZFhQWISmyLRoUSU9X6BN00o98XL5hKwax89b3nuyg0oyLDMsEE6TyNYVbPqY8GHidr/o
- 2D5YmMUQ5iL08HL01hKE1f4ZEQkmwo3GSFaemUg9vfEYxlOO0OdqyfbDHWtRR3IhjaV+
- F1Eg==
-X-Gm-Message-State: AOJu0YwbCPcc+ymv51hl26awIO/+r9k4sULuNIm7wf2189x7Bf2zpQ4F
- BrvgR2Gsi0EKnvkR0BSC5xM20N1ATaJFQOkuG/esmrMim29Ccyiy7zDlw3VmgAJVWPd9/r1REYc
- uhUdikzqNYGD1HYRZYJx2rFs3IUZo97UCFO007AVgrQ==
-X-Gm-Gg: Acq92OHfTZNMNaY98GZmZ2/Ldg2QeEYnEX2cer6X7yTwsKbCQOLqDl59PF7WQO8huOp
- Z+Fm7Fe0xleeW9jmmlsQ6PGn+DNqVBkypGxGDo3QsIrmkvn3+wCSPxwDyoLF9qoURo+QMw07R+t
- u1JVR1SMrpit5MwxlRJkPlRMKp9yiHog1ehB/BRrs4I3CfuXnf0jGOOWtldBritDDd6R4ycFFP4
- +3jJDad1iZuDcKlY+snzXtsNHuxOFv1KaysuK/voLI9aPGDPOJb07vhjrc4tr95R0hoWJS6kosg
- X7kxveZswuVVQ6jDPp9SYqb2dAlKgcV5FD/ed8MUYH6AVIt9a5rSKq1w6qBGyTQzJGU6EjqO0mw
- gNw==
-X-Received: by 2002:a53:d005:0:b0:650:895a:19a6 with SMTP id
- 956f58d0204a3-65e22849a88mr2602687d50.56.1778832813786; Fri, 15 May 2026
- 01:13:33 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1778833890; x=1779438690;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=alzfgz1aXCJLqugLm78Sp8WFGjGW5XBGx/1DQ0VOqWk=;
+ b=bFcceqPq7ai4cEP3TCoAOKDMprelXnFNQDA4CHSHrVbShxlm1X+7txqDL+B/Nvh8SI
+ BNyXJ4sQSdWufOPSJJRwH7E0wD3jtCvCn7wikQMJKrme6Xp0aEBFr/DBUeCKO3hd+4vh
+ mStl9qbWaBQWKnHjw3uoj5VocrnWCGPpK6sElSgA0nKNJzovEa8PnDuFnLrxOr8hzK54
+ pnfU3/Y3V8UrpeyvZhhJ20gL9MLgelPK7paqnWSsDwdFt/6P8o9sg2BJYyj35+7khMbB
+ WH1SDGw64TMl86QX/fmCFcwp2TdJCoTc1xEu/sW3Lh7AvOTtI1HfvEIjnRBiV5Q+zkSh
+ maVw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9/DFzseQkl3TL/+XayxDsuXSbxfrZEac4+Wl6GfPbavYA7AZNWZyPzOWxZF91UnmKeA8/9AKVa0/eW@nongnu.org
+X-Gm-Message-State: AOJu0YwaOUL+JNXaz6JKHsRZchzIrQzmA+1Uv6I5sBzbBGInLt9CGJz4
+ uEH2ZLd7P663u2PC2rbp7UOqZ7w69S21wGeeQlbjtfz4eYzE96H3Ev5395a3zBDxqm/HxKW6dnX
+ PW2nrBCNcT+GfVwd6/uHCmNGxsPi66uyoHRTqYrus5w==
+X-Gm-Gg: Acq92OERnpZefvDXjILtBmx/q9svpyqbpv/5ZqFd6sFtbtbYwopvT3KZskakAbFCOuk
+ 57nt48m28X8oCP497Y8+hAYjuOzpRNA/VJro2g7G3r+PqMwjr9n47TaJufSRi6+Gv/zZhha/2hL
+ nH87G6FWZcLJGz9ewrWr9QpDHWj/6sMbIZTp+cRSU4PrhbRpK+6OGP6De8vvghnFl8/9/0g65M4
+ 5DyXdjAYZJMnrP9W11O7NXdd8OMaP9efo1bHsoMb6AQIGk/WHfDKg/Dl6K31x/p0mOi588eGQNn
+ pe67ELWGCs+v3C3Xdy3Qrj15lkBcGdgaAKtKRJmtBSfZbcPaYlE0XIgTBUSDJl5pAyQ=
+X-Received: by 2002:a05:690e:155c:10b0:651:c234:8204 with SMTP id
+ 956f58d0204a3-65e226bf7dbmr2437248d50.24.1778833890611; Fri, 15 May 2026
+ 01:31:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260513105517.146706-1-corvin.koehne@gmail.com>
- <20260513105517.146706-13-corvin.koehne@gmail.com>
-In-Reply-To: <20260513105517.146706-13-corvin.koehne@gmail.com>
+References: <20260503073541.790215-1-eric.auger@redhat.com>
+In-Reply-To: <20260503073541.790215-1-eric.auger@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 15 May 2026 09:13:21 +0100
-X-Gm-Features: AVHnY4LQ3dBhG_1d8HuEBIeuE3mVHoqQzC_EK7P5O08xXUreFyfHDisCexMMRMQ
-Message-ID: <CAFEAcA-7so97etPHqGa8RBCKTo1OjQKi0bQDXVm6MAK6XbV3aA@mail.gmail.com>
-Subject: Re: [PATCH v6 12/15] hw/arm/xilinx_zynq: Split xilinx_zynq into
- header and implementation files
-To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- qemu-arm@nongnu.org, 
- =?UTF-8?Q?Corvin_K=C3=B6hne?= <c.koehne@beckhoff.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?UTF-8?Q?Yannick_Vo=C3=9Fen?= <y.vossen@beckhoff.com>, 
- Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Date: Fri, 15 May 2026 09:31:19 +0100
+X-Gm-Features: AVHnY4JAVD4AJ5nfdtuw8hlYr0xUlyVi_OqdmNMtbkuR_uPHuC85swtfT1ALIAc
+Message-ID: <CAFEAcA-TE-8cj6fGOYJaChRVB5GE7E8ys87cxPP4Yw1kgjh9Dg@mail.gmail.com>
+Subject: Re: [PATCH v4 00/17] kvm/arm: Introduce a customizable aarch64 KVM
+ host model
+To: Eric Auger <eric.auger@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ kvmarm@lists.linux.dev, richard.henderson@linaro.org, cohuck@redhat.com, 
+ sebott@redhat.com, skolothumtho@nvidia.com, philmd@linaro.org, maz@kernel.org, 
+ oliver.upton@linux.dev, pbonzini@redhat.com, armbru@redhat.com, 
+ berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,21 +120,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 13 May 2026 at 11:55, Corvin K=C3=B6hne <corvin.koehne@gmail.com> w=
-rote:
+On Sun, 3 May 2026 at 08:35, Eric Auger <eric.auger@redhat.com> wrote:
 >
-> From: YannickV <Y.Vossen@beckhoff.com>
+> This series enhances the current host KVM model with capability to
+> set writable ID reg fields.
 >
-> Create xilinx_zynq.h header file to expose ZynqMachineState and
-> related definitions for machine inheritance. This enables creation
-> of derived machines based on the Zynq platform.
+> Since v6.7 kernel, KVM/arm allows the userspace to overwrite the values
+> of a subset of ID regs. The list of writable fields continues to grow.
+> The feature ID range is defined as the AArch64 System register space
+> with op0==3, op1=={0, 1, 3}, CRn==0, CRm=={0-7}, op2=={0-7}.
 >
-> Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
+> The end goal is to get more flexibility when migrating guests
+> between different host hardware.
+>
+> QEMU retrieves the writable ID fields from KVM UAPI [1] and
+> match them against a generated description of ID regs and their
+> named fields that stem from AARCHMRS Registers.json file.
+> Current description is based on latest 2026-03 edition.
+> The content of the generated files was compared against kernel
+> linux/arch/arm64/tools/sysreg file [3] . It is not straightforward
+> to have unit tests for python scripts as there are many cases for
+> field extraction.
+>
+> For each writable named field a uint64 property is created
+> following the "SYSREG_<REG>_<FIELD>" naming convention. REG and
+> FIELD names are those described in ARM ARM Reference manual.
 
-New file should have an SPDX tag, but otherwise
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-(as noted on v5)
+So if the user asks to set ID registers to an architecturally
+invalid combination (e.g. one that reports FEAT_X but not
+FEAT_Y even though FEAT_X is supposed to imply FEAT_Y, or
+one where one ID register says we have FEAT_X but a different
+ID register says we don't have FEAT_X), what happens ?
+Do we catch and reject that? Does the kernel reject that?
+Or do we just report to the guest what the user asked for,
+and if they asked for something broken they can keep both
+pieces ?
 
 thanks
 -- PMM
