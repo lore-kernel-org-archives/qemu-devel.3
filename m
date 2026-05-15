@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89E92CD4F25
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 10:50:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 942D8CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 10:51:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNq7T-0000le-UP; Fri, 15 May 2026 06:50:16 -0400
+	id 1wNq7T-0000lD-4p; Fri, 15 May 2026 06:50:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNq7F-0000dE-TD
- for qemu-devel@nongnu.org; Fri, 15 May 2026 06:50:04 -0400
+ id 1wNq7P-0000if-G6
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 06:50:11 -0400
 Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNq7E-0001IU-9a
- for qemu-devel@nongnu.org; Fri, 15 May 2026 06:50:01 -0400
+ id 1wNq7N-0001ic-NT
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 06:50:11 -0400
 Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-488af96f6b2so106123495e9.0
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 03:49:59 -0700 (PDT)
+ 5b1f17b1804b1-48e56c1bf5dso52697415e9.3
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 03:50:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778842198; x=1779446998; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778842208; x=1779447008; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=HIg4fufyA27oyV+iWJOXXBAtZGXMl6lrHdN7+OMOMDI=;
- b=Z/Xm6qGAUaa8P29E4sXBKflpk9ZVYVIXOGKquJ0v9cyrtfy5biPnP31A+js4YKlUv7
- CeVIJdGx5HVmSxTSDaKnK1IDQ73qcXI3Hz8kHo+G3FmoTIuew3CBEzZiy2/LQbQu0qNw
- pzdQxLE7raIvXzkNnOVBjS4BDgUNWmtUvEbG2eCbwN09i+sJkoXu92AvaRAH1Z8S/gk6
- Y4+L8eIPJ4L4xNPK90B8OvYOgWuaOSJUqhl/Kk9qZfOM8oxfsMJZTTmwoty6CsGd1ZD5
- SgeM4KipF+jUuBJF4y5myhKhc56jMPedCtPpjPVX4KK7NpSrKHAFQ+Am2HQ2CoOO0zdc
- sg+w==
+ :reply-to; bh=Dup29y+MxaZpk97qGhhclnB0cMFe7/wcvev0GZSAPHA=;
+ b=GU/y0Yps8XuIFdFQd6alyurrClcxNxGqitWzfVP15MN8tpgFC2dw3RU0I74ummRABC
+ kqflLPuVItseF5ZtO6N4W327TSCjlYWxfCp6jkiO5s3ZUwJAQ+qJryS1uTj7wew1uGbY
+ c9zGGn1B7w4aqS1KN6KfrVZwStTld92QQUDT2glxMRyD+7iFWserXeTPnGPopHJP7giK
+ zWPNz795JgHdQELpC+KBtKAi3Yemv9OA8h0pEJSkge1dFqAbxRfr02fsMD2nLw+HQDGq
+ FN1D9nJAne+au1tbNccnOaP0gw2jJiwKsDlq6AhxQEHYd7XK9uZC36aeDxg5KSYifzeL
+ r/Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778842198; x=1779446998;
+ d=1e100.net; s=20251104; t=1778842208; x=1779447008;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=HIg4fufyA27oyV+iWJOXXBAtZGXMl6lrHdN7+OMOMDI=;
- b=SKEPIVnwovw4GIeUcKAfOIn45jmm3elGPgikd5HKBJtea2SMJMJs1UjyxuxWhtI+GT
- AXlyoI6Uhg+slTXrOviBylUcHhpRydlhPp1PF4fJM2S0lYVYSmiPoiEdVfEszAV2rDzv
- MSO9obNh+lH5m2rQ29XaxJrCKyMwvkWBob1+0H8qr2r5YHZx6LPxhYgUOWpFVOddZUnX
- 0wXouW56TeRbQZpJAoCTY+LrNbyn7LvoetFTtZtryCyHPHZSUM7UM7Rc2pyayYZPMDW0
- wR1REbC3xX1jW6EteYHvItQr3bCq0bHOvQTIeOrI7yPTZwW3Acdpww7Ye10e2kqmtaEL
- y+Ng==
-X-Gm-Message-State: AOJu0YwEKqFsgMGS2sdqji+z2rclms1ttFGQhsxc1OEOIL+aVWqyWjgW
- MHxvosYpUCC5tZ4cNgWAaB5coth7DQ3v/+Y6a3AQC1JoO587pCTppjEx4+OZqLgSiFgmD0aJ8wc
- j4CwR
-X-Gm-Gg: Acq92OGD32Km1MnHRTzbijxH4mYsD/Jz5FcGilr2VbN+rFiu9Qhr0v8YeB3kRDG3Osu
- rGY5x27iG3H91g9WBndsWgukR3ecchs5tmiud45DJahJX8uKqxLEs+rbk8tHJTPO/jV1u7xdtr7
- L5lI/+3hJqlDBJ/SkiZVTkausTU1nZ/bUR8VwoZhM1arWikTxDOAO5kdcgSue+8PeFw4mBzgpQ+
- eskFEu52pUkhUEVYkhhNBbu/lXY/MpDXLtsUpgToDcQg7MkZUj1HDM10uIshMsIVUuSYPLA19j/
- MhspMOw6QtT1XubwiPM043Mx1pIH2mGkKQPqDtz27+neZtKDHF7v+ABFbvOR0aJyqzRoTR47HXc
- DLNTlV9i2hvqxGEIcqKCg6iTbmt1AY9oQgrmHT27UL2j9vL0IsGy87oMFVG6zW3DPlP2BnGNlVC
- +MYpeXEyjYL86dUVk7xSK9+tbYYpCEpbap216gW3t7U5PLUlLUD7WCNzIIOc/QRUJkYvBD0CHUS
- Bo5onGLkpZttewvo+uByd6xZ6T+H9c=
-X-Received: by 2002:a05:600c:3506:b0:485:40db:d40c with SMTP id
- 5b1f17b1804b1-48fe60e13d1mr47269685e9.3.1778842198441; 
- Fri, 15 May 2026 03:49:58 -0700 (PDT)
+ bh=Dup29y+MxaZpk97qGhhclnB0cMFe7/wcvev0GZSAPHA=;
+ b=Qw9eI909EjJU0/dinKW9NTTvn83il2JYe3AxgWAq1JH9D+Ies884VPEf79ql3RpxKO
+ aNF8hW36nU3AsIF+vhTyuFE3TEzE1nVQS/UISrf7pmCRHr2Qtlp8A5VB7XQdNxFH6LQw
+ /xRMH0S5JG98Iz/I1V+kB9XwfULtdI5BlC5tOEuvUC7lhQqfBzAkqdQ1vJNv6bVRtoxr
+ O0G2C7TYaXkreRwWug9lx5zTi4P/A/0CR3bquzQJH16313UxxULMPb2GEZj8wdXjGklE
+ P011BQfIsyBn/5JqWfgxjtAevKYI0nZjw9+U1thaW9IUrmXKZ2Z89hWAdxJkMj89O+Aa
+ MpZg==
+X-Gm-Message-State: AOJu0YwTSaKIZOJngSDVcgvV6H0NjM7Ey7AktDH3X8o9UpQ0WHiDs7ij
+ gkMOXeEQLB8WOYXOQcUYWfJjYiyILq9r6Dt8n4dCsHpXwduKb8uGkmBBuZTp7PVhyLhDkqHKTK+
+ kButH
+X-Gm-Gg: Acq92OGfdSoJLN5fn9emCJ02PlmORzJOkcMLfLZKy51fm9zkBFGKaoM0iQh8/4OZMCJ
+ 4Z3SCFtryt9xpI/JX1Jta+D5SLNbw1GTG/zPyOd96ZD1Z/4JQsx5BvytISe0eHYE7lj69XzTVMH
+ D8NrEemxgaUAkQ5RgT9CWTZ/ahECrlrf5l3V1P2R6v0eaJt0wMIumlFDV8YDXmvRgoDMRNo8fB3
+ zSuSnC1Lkm1pfa1aTqnNPNgxkPDDzSkiSEIYcdCRraSIqD2sU4E3UzZpCb3jGV+OzC8Enlm/kd3
+ 7V+Ddzk36nCplC2Z7cmtKzQmrm/j+6NU152lxUFj0vpyJwgnjb8N4iRAZ3NB581Clb5W/98kpXr
+ /RWDs776cvEFBMZH7wY3oscFh1l3TeL+oWDKTl+eDugfXKM88m/xrw0Jp5UZNzXFTY1UVo5nfx1
+ FnEGY/6nFA1U0CvIfb1Nkp95uwbJf9GBmJ8q9dXSenG2himydGyk/rCA3/J3ud/Gd5D3P0AO/Pf
+ ziRwu7neSn8XWlwXD3VES7b6f5/Pdo=
+X-Received: by 2002:a05:600c:c168:b0:48a:76a3:2b9b with SMTP id
+ 5b1f17b1804b1-48fe61ed360mr53301295e9.17.1778842208215; 
+ Fri, 15 May 2026 03:50:08 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48feaa2949asm18194355e9.1.2026.05.15.03.49.56
+ 5b1f17b1804b1-48feaa2949asm18194355e9.1.2026.05.15.03.50.07
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 03:49:56 -0700 (PDT)
+ Fri, 15 May 2026 03:50:07 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/23] hw/intc/arm_gicv5: Avoid NULL dereference in trace line
-Date: Fri, 15 May 2026 11:49:31 +0100
-Message-ID: <20260515104945.4145203-10-peter.maydell@linaro.org>
+Subject: [PULL 18/23] tests/functional/test_kvm.py: Use -cpu max,
+ not cortex-a72
+Date: Fri, 15 May 2026 11:49:40 +0100
+Message-ID: <20260515104945.4145203-19-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260515104945.4145203-1-peter.maydell@linaro.org>
 References: <20260515104945.4145203-1-peter.maydell@linaro.org>
@@ -101,37 +102,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the handling of writes to the IRS_SPI_RESAMPLER register,
-we call a trace function, passing it information about the SPI
-being resampled. However, spi could be NULL if the guest tried
-to resample a nonexistent SPI or one configured for a different
-domain. Move the trace statement inside the "if (spi)" block,
-as it's only interesting trace if we actually did a resample
-and potentially changed the state of the SPI.
+The test_kvm test claims to run on any accelerator supporting
+nested virtualization, but it specifies the cortex-a72 CPU.
+This doesn't exist for KVM-only builds. Use max instead.
 
-CID: 1959593
-Fixes: 33185e1d64e ("hw/intc/arm_gicv5: Update SPI state for CLEAR/SET events")
+This fixes a failure like
+  Output: qemu-system-aarch64: unable to find CPU model 'cortex-a72'
+
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260512093856.3197700-4-peter.maydell@linaro.org
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260507194728.2034696-4-peter.maydell@linaro.org
 ---
- hw/intc/arm_gicv5.c | 2 +-
+ tests/functional/aarch64/test_kvm.py | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
-index 493d664625..7ad274e369 100644
---- a/hw/intc/arm_gicv5.c
-+++ b/hw/intc/arm_gicv5.c
-@@ -1643,8 +1643,8 @@ static bool config_writel(GICv5 *s, GICv5Domain domain, hwaddr offset,
-         if (spi) {
-             spi_sample(spi);
-             irs_recalc_hppi(s, spi->domain, spi->iaffid);
-+            trace_gicv5_spi_state(id, spi->level, spi->pending, spi->active);
-         }
--        trace_gicv5_spi_state(id, spi->level, spi->pending, spi->active);
-         return true;
-     }
-     case A_IRS_CR0:
+diff --git a/tests/functional/aarch64/test_kvm.py b/tests/functional/aarch64/test_kvm.py
+index 7545f5ed55..fed18aba60 100755
+--- a/tests/functional/aarch64/test_kvm.py
++++ b/tests/functional/aarch64/test_kvm.py
+@@ -38,7 +38,7 @@ def _launch_guest(self, kvm_mode="nvhe"):
+         kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
+                                f"console=ttyAMA0 kvm-arm.mode={kvm_mode}")
+ 
+-        self.vm.add_args("-cpu", "cortex-a72")
++        self.vm.add_args("-cpu", "max")
+         self.vm.add_args("-machine", "virt,gic-version=3,virtualization=on",
+                          '-kernel', kernel_path,
+                          '-append', kernel_command_line)
 -- 
 2.43.0
 
