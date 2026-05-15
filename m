@@ -4,104 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8288CD4F25
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 14:32:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E4ECCD343F
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 14:32:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNtaD-0000FW-VN; Fri, 15 May 2026 10:32:11 -0400
+	id 1wNtaR-0000Hw-MQ; Fri, 15 May 2026 10:32:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wNta0-0000Ao-5W
- for qemu-devel@nongnu.org; Fri, 15 May 2026 10:31:58 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wNtaA-0000EW-Fp
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 10:32:07 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wNtZx-0003HC-Vm
- for qemu-devel@nongnu.org; Fri, 15 May 2026 10:31:55 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-449d6c68ed8so8166170f8f.0
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 07:31:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778855512; cv=none;
- d=google.com; s=arc-20240605;
- b=Q/Foc/SsTVl09ZrcnXxGdMxdCwmF+cxcTjknHIw+U3xzbaEw3s8nDOMWAFo7qsuAD9
- l1qIwSIojMM1dkPyJgz5EVkqcrmOStb5oXRtXxz/eH/iWDbNHKqH//NSPXMc87B6cpc+
- Ec8C+LbgeRRAhkN9JjXUR585JLh016rIeuopRtSmWio5wdDUT+a+nUUl1fa+A0Dh1nXK
- wrM5ClcaCsN8iQtlYm9VvX8+QYwX6BdBO1ZF3HBJDOFzykOHQLdM2oXp7iATWrnoeJ6/
- kZvdlAX1s47sIACn9g9uA4CWmjEzpKtr9tjVI8y62B7OEprL7PPL/bdJmPkRc24ncCIr
- 4V/Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=DF5qZalcfRa3geINGkCf2OMKt/clHmchD1zgEGnlxC0=;
- fh=G+JBw2Pu6hUZ8zKsXx/FXyHuhiws+/jrNByUetwlSSw=;
- b=F19Fmj8umaJ/pwB0tFoa56wh2jkl1XL8YxTkRoHIeGjZzGgyQmgWH7MvUsnkNuKxmF
- WNxkg74J7ZEALbAd6V5z2NP1knEmt/43H6oMrNlpk6U/74BeuFY80e1GWxi+izxNNGWM
- 4UcRTQwIBQ7IWA4JaauPn9uULSEAnh20gp7yBjDak6p2a1E6w+w8MMXVYTzhTq119kLi
- XRaYpAN+MV51ivxqMrlyHCq6sk1794E1S2FkJjaQxBDzxh6dyo2anVR0CCW6ngk721Iu
- umbX+dnaobsttRC+8fNxfEPeNq8MtAw2L/cHb78c1VJgq6wKebz0z/Kms/i8GMWlhKC5
- rO5g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wNta8-0003JN-Pl
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 10:32:06 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-48fde648a71so7927415e9.0
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 07:32:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778855512; x=1779460312; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DF5qZalcfRa3geINGkCf2OMKt/clHmchD1zgEGnlxC0=;
- b=I3p6M7Fu/OLieb9vU6V/JuAbdXxUPiBm6MPiX28Tx+lNGLKjGFQpQqHI/Vo7rxVyzM
- hlSAImOyCFXrXTjRph/konWpGmNeRGmfhMUCHjuJcOK3qhAoxW6X9PLCE0L3Dk5wgD0P
- 11OAyfOF8BioE4emAXHMvMaV8Bk5i4DChicWu7ffbBYrUAaK/nzP2QlX0qm4UyHVm8l1
- /JOgwwvEUsAVy+lp6p4RXJziITnXbDB0c4l8dz+aJl/WpF5FQibONBO/6GPpLsMPd2Z3
- uoi13BrPtckD67S3UpZb3oYsPEu8dryVwdDDJ7fWhWejh/OABh2j3a3UIje1mc+wbnEx
- mF1w==
+ d=linaro.org; s=google; t=1778855523; x=1779460323; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ZtyRfEg0ttR0bdwcOABvR/6hIat/MC3GjjR3PsW6nH0=;
+ b=yYwAwxMV5VAzcKPEOPk7UVH2TCLWeokpKTYdK9zXjlFugCzRIkoEog/f9PqwGqBh8m
+ 9uYqLiKGgk9CiSGLAwUD+wI1yHKmiMu9NkBLYHR02o6xrb0DwBsj91kwKaY+p8hTLw0S
+ f0Ha8bp0/Gi/LgXuRQ2i2TNLDXGj+sopHMuxhVh6LR1WWMxm2T9S8AC+s8a/ahn9Xkim
+ H2OcKHQZOY0Q2IxWG2DbOxB/jJ9GoQ7bz6q4/DYBywf7uQ1EK/e3WcDSYjKYq4uPpWPm
+ g3n2FbXeORM35u1ao4HUQ78oYzdyDzsdQgTQzily7Sc/+JbF/HKqUzu48j3Is1G2PTi3
+ pB4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778855512; x=1779460312;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=DF5qZalcfRa3geINGkCf2OMKt/clHmchD1zgEGnlxC0=;
- b=Z8nlB3bzDggDIeyvJeCdQI0D5rPkOIPMniVB6du4FKPWK0sNpUkrBDK0flmqpiuSef
- ZG8LLjkYLe2i83FpHrVrRL30d2RftUqs+DTdIpbUTBP3bhqtXfAQ+jSQlVNWRXJYy3A4
- IeiFZqUeGx7EMbU1k+n54CKtRxQcI+n+hL4oCg+X0IwdmxyBcT1x9+bd7H64zrNHzyQM
- sR3Za3klCGL64CrJsDOdzejyxtuP519roY0swyxdJZycEeXwEP9fQtQwTGAuLYXEmkCf
- udjUwpnIEZNG1NKG8NLbDH7ivexJN0gACFTEkr6JUuU/ZuY2KeWKaFN5oz/5OrQGJe9v
- j2dw==
-X-Gm-Message-State: AOJu0YznasR/eh/ijgaSAjk+bunfZuwHGCANB+x9Sqo04Jzi+6AB/aBx
- dkT0yJOXfV1Oz1CGLKYdzM9d2B9BpEIAV18uNJGYVNu2kldHA1h/czrjpl2MP2f2NNuq/4TTR33
- R5eXbyuqhQNbvlU+j1IzUSoQJ/pxls5IFNFvlTFKg1A==
-X-Gm-Gg: Acq92OEz7SK+BgfPKm9egujaM8+l9wTEwll9piMocSxrCvZR63kzORv7qbRW9E2v36E
- Ev9V5jJJRdsw1bqQiGsX7e3qkp3qRXmZ3WAo8yim+az4PXAN8EFKiYZBUzDGBHeK37MppC4akfb
- sVAQwo+KnSfo5YKpdtC98npVqkeCh3FNDAu5RS4Kx/mnB7rzpa3S7Y/4rR9nvL3/txU+WpPm1if
- geo2AoUPtAJkd8asABfOSBqjtD96YHy3SiJ10TWz3lKHcg39+aJxjseg9GDgdTuTuH5Y3TQGgiT
- ivb0ONgDzLChCE7w3vYdIvus88Uyv8Uv74JeFPJMl/iDQPaKNw==
-X-Received: by 2002:a05:6000:1447:b0:45d:3a93:d9cf with SMTP id
- ffacd0b85a97d-45e5c5872afmr5946782f8f.25.1778855512277; Fri, 15 May 2026
- 07:31:52 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1778855523; x=1779460323;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ZtyRfEg0ttR0bdwcOABvR/6hIat/MC3GjjR3PsW6nH0=;
+ b=KRiF2uFaNnNNRvgXkkR/YVVXGVrCcef4FXMRKLVNoME5RCghJH2vX7LiDkEQhzQS1T
+ AIU9c9b+aVnQqwIwjehBDiA6+tJDlhVAaGsz1qO1DjY1SP609SxV28HA1vHv/t+dppNA
+ UJTk/KadZMUuns+wMMZ0U9uAhIlYnAqFyL8/yz6WtF7VK6JqSy8CnVWSIdLMT9bHklAb
+ SlNpqLWLOzk23YAEF/ZSjancujhuHAfGJCmWNTcuOzfHSv6Z+gtMxF+sSzIqy9NTcHcj
+ 9yk4q9ZzRTwPI7rKO5Z39fupxWs34b71F1ytuYd1zC9WT1/kxTZ6KJeXAYS9kTUAB4TW
+ j2DA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+M9cOxaEsMolU1tXA6PpR53LKhRUetuCegEJ8NT1CD/WiOAbnuuoY8kdwcaYY7AYNJmDKNttKAHYli@nongnu.org
+X-Gm-Message-State: AOJu0YwUkc1R987DasNpv0cYaGRNhr9CFlQbZLy8C8mmR7OykCb2ZHBm
+ hdpKIxxDES8ldIz2moadJ3xq7gKDGVTyL4w+lfrXLQBkcPguewCOJEnLRnVWLTW1Pwc=
+X-Gm-Gg: Acq92OFbcb7xjR8VUIlfLwQeu2qlZc1vDKx2JubV6AV1xuKPQ2e9nvWjm2MhDrn7BRq
+ M0P8fMY5Kceu7ADQDyxX5722qdjtluaghtl+p7SnMBWbyMw1jE1B2wum5hbB+LhhHfmh7KjMELv
+ 1HY57onIvc38tj4rNoKq7kutpHRypAavBSHIEtqfzxRm0amVzQuyTpEaXUycILMElYiEdFQJQeU
+ 2WcRt/2w/SidHmhbrXpFlEYbJx8AitP2hwfbXkklQNgbMOmJW12z6DANJ8yEAocRimGi295dY/Y
+ g4ytAe1YMv0l/HMUJA1d0vtQEQEUD3A52TDcioZSnU3q2ylhblN96QNWEVS6gIU/1PzWcgli1Ep
+ HLZfH/wllMv1ebUTeHKJhP1ebwJVLNXcDLmZnDtEyDtRXinMdezCPVN/hoXLHTFPZNzpsgLmYY3
+ iDPz2nMkTZZZLqKzm1CeurkW64YX+8eSmewGTgm0XsVvzG1gSlE3xH8fxaKy8u0u8I8w==
+X-Received: by 2002:a05:600c:1914:b0:48f:d620:c27f with SMTP id
+ 5b1f17b1804b1-48fe4dac5efmr57126435e9.4.1778855522527; 
+ Fri, 15 May 2026 07:32:02 -0700 (PDT)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48febe5821fsm15087125e9.14.2026.05.15.07.32.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 15 May 2026 07:32:01 -0700 (PDT)
+Message-ID: <9da789f9-c06a-4551-99f4-891f8c28e87d@linaro.org>
+Date: Fri, 15 May 2026 16:32:01 +0200
 MIME-Version: 1.0
-References: <20260515141032.3271-1-philmd@linaro.org>
- <20260515141032.3271-21-philmd@linaro.org>
-In-Reply-To: <20260515141032.3271-21-philmd@linaro.org>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Fri, 15 May 2026 17:31:25 +0300
-X-Gm-Features: AVHnY4K5j0D1WNFNtj3H3DRpbF-RNOYsLTUFY6_wBXFIZrceV3ybyiupuK_RINU
-Message-ID: <CAAjaMXbncb7CON1KofLanOMQdWi3NK3xj=CdfieqV4sazZPkGQ@mail.gmail.com>
-Subject: Re: [PATCH v6 20/20] target/arm: Build cpu-max.c once
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org, 
- Joel Stanley <joel@jms.id.au>, Kane Chen <kane_chen@aspeedtech.com>,
- Troy Lee <leetroy@gmail.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, 
- Steven Lee <steven_lee@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x42e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 00/14] target/arm/ptw: Flip sense of get_phys_addr*
+ function return values
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260515142541.571911-1-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260515142541.571911-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -124,69 +103,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 15, 2026 at 5:13=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> Call TargetInfo::target_aarch64() at runtime, allowing to
-> remove the target-specific TARGET_AARCH64 definition and
-> build cpu-max.c once as common object.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
+On 15/5/26 16:25, Peter Maydell wrote:
+> This patchset changes all the get_phys_addr* functions in the arm
+> page-table-walk code so that instead of "return true on translation
+> failure, false on success" they are "return true on success, false on
+> failure". This convention seems more intuitive and it matches the
+> sense we use for the translate_for_debug and tlb_fill_align methods.
+> 
+> I've marked it RFC for two reasons:
+> (1) I'm on the fence about whether the upheaval is worth it; I
+> think on balance yes, especially now I've done the work, but
+> you could argue the other way
+> (2) I'm open to suggestions of whether the patchset could
+> be better structured for review
+> 
+> On point 2: I opted to convert one function at a time, on the theory
+> that you can then review each patch by checking (a) are all the
+> function's callsites updated to invert the sense of the return value
+> (b) do all the "return" statements in the function change.  It does
+> mean that the patchset has a lot of places where we add a "!" logical
+> NOT and then remove it again at a later point in the patchset.
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+FWIW this is exactly how I'd have structured it, to feel safe and be
+able to test each step (ensuring bisectability).
 
->  target/arm/cpu-max.c   | 8 ++------
->  target/arm/meson.build | 2 +-
->  2 files changed, 3 insertions(+), 7 deletions(-)
->
-> diff --git a/target/arm/cpu-max.c b/target/arm/cpu-max.c
-> index 8cf8edc6535..d38bdfcf811 100644
-> --- a/target/arm/cpu-max.c
-> +++ b/target/arm/cpu-max.c
-> @@ -8,6 +8,7 @@
->
->  #include "qemu/osdep.h"
->  #include "qemu/units.h"
-> +#include "qemu/target-info.h"
->  #include "system/hw_accel.h"
->  #include "system/kvm.h"
->  #include "system/qtest.h"
-> @@ -190,12 +191,7 @@ void aa32_max_features(ARMCPU *cpu)
->  static void cpu_max_initfn(Object *obj)
->  {
->      ARMCPU *cpu =3D ARM_CPU(obj);
-> -
-> -#ifdef TARGET_AARCH64
-> -    const bool aarch64_enabled =3D true;
-> -#else
-> -    const bool aarch64_enabled =3D false;
-> -#endif /* !TARGET_AARCH64 */
-> +    const bool aarch64_enabled =3D target_aarch64();
->
->      if (hwaccel_enabled()) {
->          assert(aarch64_enabled);
-> diff --git a/target/arm/meson.build b/target/arm/meson.build
-> index 3e02941d0d5..9408131d178 100644
-> --- a/target/arm/meson.build
-> +++ b/target/arm/meson.build
-> @@ -9,7 +9,6 @@ arm_user_ss =3D ss.source_set()
->  arm_common_system_ss.add(files('gdbstub.c'))
->  arm_user_ss.add(files('gdbstub.c'))
->
-> -arm_ss.add(files('cpu-max.c'))
->  arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
->    'cpu64.c',
->  ))
-> @@ -20,6 +19,7 @@ arm_common_ss.add(files(
->  arm_common_user_system_ss.add(files(
->    'cpregs-gcs.c',
->    'cpregs-pmu.c',
-> +  'cpu-max.c',
->    'debug_helper.c',
->    'helper.c',
->    'vfp_fpscr.c',
-> --
-> 2.53.0
->
+Series:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
