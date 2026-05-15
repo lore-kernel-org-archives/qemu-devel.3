@@ -4,100 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FE8ECD4F25
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 14:42:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DD29CD343F
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 14:48:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNtk7-0003i0-7L; Fri, 15 May 2026 10:42:23 -0400
+	id 1wNtps-0004lT-So; Fri, 15 May 2026 10:48:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wNtk5-0003hn-Mi
- for qemu-devel@nongnu.org; Fri, 15 May 2026 10:42:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wNtpr-0004l7-Ew
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 10:48:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wNtk1-0006Vm-KK
- for qemu-devel@nongnu.org; Fri, 15 May 2026 10:42:18 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wNtpp-0000NQ-25
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 10:48:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778856136;
+ s=mimecast20190719; t=1778856495;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kw134qv454wYj1vXFo830vSIdJ7nkK9og9zvffIwLGE=;
- b=H5W9pzGIrYJYMiurgQAqTC1EW3LpV721Hcf+lUfyFtjIHYu6/C09H6boa99Yiu/T7kdxJt
- Z5oC4/5vcKUxyKJfd48aQ7Im432LZ1nYCmwot2mr66tpCdwjE7iqSBpQqRdgIwPYGTtmL+
- Uf6aImjtTi+6kee0x9dnB4Rc0gfCRZU=
-Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
- [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-507--0dQAygIMO6AIoPBMadbPQ-1; Fri, 15 May 2026 10:42:14 -0400
-X-MC-Unique: -0dQAygIMO6AIoPBMadbPQ-1
-X-Mimecast-MFC-AGG-ID: -0dQAygIMO6AIoPBMadbPQ_1778856133
-Received: by mail-lj1-f200.google.com with SMTP id
- 38308e7fff4ca-393d72477bfso44562431fa.0
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 07:42:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778856133; x=1779460933; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=kw134qv454wYj1vXFo830vSIdJ7nkK9og9zvffIwLGE=;
- b=XLOMEds2dtacTAnjiEv0y3T7O6r6kPpn6JVWAQIdv+PnJyAwdt1IbEI1cq1c+0bzIK
- LjG4RWXY+p9yo0EX/JbW5+ASrbNpfRGR6XIviAf62P5qgMZsUFCIhVLEue/LqqamL00a
- Py/XKYsSr+qzXKtTBf9etzfe/D/RbmdYdDetTo7FjN56kSzG6EDmFt4Vzx8AmkDAeWjZ
- +z3xgu/LaUrIkx2/OtPhxSfCKbn7nPcoQ/8YShCTjrNjd0CLzujlxFcRaA00bt/ZO/xp
- U/x1KE4+fEmGK4/S0+EVSOeuo0vvpqis7iGhpEYnjmxlfhJsWFKGcq1qYcUjNxclFXUF
- JsRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778856133; x=1779460933;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kw134qv454wYj1vXFo830vSIdJ7nkK9og9zvffIwLGE=;
- b=jWFwlW+ljPHKw6YHnrhAAWnR49yb41ggJm5e7rN87Fklvqc9i51TPhDIMiCp5uzyC8
- tWV3F0PaMmw9uc1WL43qI3StAhYkasvIcXenu1lhJlmdyN4nPY6v1GYiXFY34ZglnqeI
- G/9//+M3UIY/Ay1DPQoJEsx7IKv11LVcufeDZyouc5JHpKlLwIhSZ9FKwi6Ch3L1F6lB
- jnhmWviPS5QetHd4PLK5hOFq0X71y2YNnxZoH/OZsxmWEgXaNYeS7zSVOymvaaM+7+gs
- f3xIa+JEaPbtjSvaeFg4rxQHwOURmKzui5pqnNkEaFz4wHtG2Kld670rd8L6nxc3sxff
- EZaw==
-X-Gm-Message-State: AOJu0YxX1HPfmYcNEaWhH087WpOjNTJ0y6e9l7snMDbVAs8EnU5OsLBC
- QxlvvgVecXoSVoGj5VKjbdEzrkZh0A/Hzr/QuiJ/TZsPFHtYcUIteMykWJMsxymvXOowe4k+Gm9
- lr2g0/nxOSxGo1lkPMhSLLO6+lrY/u+KuLiQxJNcb/G7U0ByXTEDzPPN8
-X-Gm-Gg: Acq92OHAXMiQKlOVdio4adcAVis/ZirZQWTeck5H7UZo0CQfOUsQXrMZngpi960bpDI
- o4rJThf/K/LCVeNzdMWQHBWJRDX/c8PEZEzB6W+p977BPZbR7zOyHxMWByCBelvt+fqpBY81rHx
- xgQFaB2cCr1VM4Bj2v5/GbaQKUPBUlvIe6mjAZuI9Wz72/jvs/jiZyrqIAH8v/E3xiSYGakcWUA
- Qu8jZwv0h65+NOUY5Fjp8XoZgAzxaStotOv1HOPrpGvj1uO6khDOGbVlVKBfn4vAdxIFTXCRMYu
- WB5cgIFp3ZxcFti3EQR9ViZZ2z5BU8UJgzTXB/RE8vBMY+o/6jxcZauPaLnwTzAjIBL4hrEvhFO
- Nb0yvsKu5h7HMvAWqzvemziFjMwVx/9Zga30VtBsu01oYShs=
-X-Received: by 2002:a05:651c:1141:b0:38e:2fcc:78fe with SMTP id
- 38308e7fff4ca-39561c05430mr13570721fa.3.1778856132889; 
- Fri, 15 May 2026 07:42:12 -0700 (PDT)
-X-Received: by 2002:a05:651c:1141:b0:38e:2fcc:78fe with SMTP id
- 38308e7fff4ca-39561c05430mr13570601fa.3.1778856132217; 
- Fri, 15 May 2026 07:42:12 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-3945cb015f9sm15690801fa.32.2026.05.15.07.42.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 07:42:11 -0700 (PDT)
-Date: Fri, 15 May 2026 10:42:08 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Aadeshveer Singh <aadeshveer07@gmail.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de
-Subject: Re: [PATCH] migration: use eventfd functions instead of bare
- read/write
-Message-ID: <agcwwAdQ7_F865PR@x1.local>
-References: <20260514075136.301706-2-aadeshveer07@gmail.com>
+ bh=cT9WgErXXyNjjWT//QnwQfcGCsY8KDdlyCMePCbWhhc=;
+ b=JVlq/N+2UznkThto3L9hfqHxzTu12SS0SFSpDjZAHszxShTMQ/bypzz+Pcvp1eHjp4NBVI
+ CeDqB958d9B1vHLl2q5/8Z57+5prtvljq9klxq/nTIv8qdj6yZCJ0mEz34wUD38vfexRJH
+ NtMvuNZgBbFXbZz0rcisOmionY3ceDE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-140-5ogrFIcsO5i71XZesvX4fA-1; Fri,
+ 15 May 2026 10:48:13 -0400
+X-MC-Unique: 5ogrFIcsO5i71XZesvX4fA-1
+X-Mimecast-MFC-AGG-ID: 5ogrFIcsO5i71XZesvX4fA_1778856492
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 264CB1800617; Fri, 15 May 2026 14:48:12 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.49.123])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ACEA1180034E; Fri, 15 May 2026 14:48:08 +0000 (UTC)
+Date: Fri, 15 May 2026 16:48:06 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Hanna Reitz <hreitz@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Cleber Rosa <crosa@redhat.com>, Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v6 11/16] tests: use 'driver' as collective term for
+ either format or protocol
+Message-ID: <agcyJl5_fCDJ78PG@redhat.com>
+References: <20260513120003.226790-1-berrange@redhat.com>
+ <20260513120003.226790-12-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20260514075136.301706-2-aadeshveer07@gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260513120003.226790-12-berrange@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,16 +91,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 14, 2026 at 01:21:37PM +0530, Aadeshveer Singh wrote:
-> Replace read() and write() syscalls on eventfd with glibc wrappers
-> eventfd_read() and eventfd_write(), to make code more robust, readable
-> and future-proof.
+Am 13.05.2026 um 13:59 hat Daniel P. Berrangé geschrieben:
+> The I/O tests integration previously exclusively tested block formats
+> and now also covers the NBD protocol. Replace references to 'format'
+> with 'driver', as a generic term to collectively apply to either a
+> format or protocol.
 > 
-> Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>  docs/devel/testing/main.rst    | 13 +++++++------
+>  tests/Makefile.include         |  4 ++--
+>  tests/qemu-iotests/meson.build |  6 +++---
+>  3 files changed, 12 insertions(+), 11 deletions(-)
+> 
+> diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
+> index 8067d0a3ed..797111009a 100644
+> --- a/docs/devel/testing/main.rst
+> +++ b/docs/devel/testing/main.rst
+> @@ -222,7 +222,8 @@ check-block
+>  ~~~~~~~~~~~
+>  
+>  There are a variety of ways to exercise the block layer I/O tests
+> -via make targets.
+> +via make targets for a selection of formats / protocols (collectively
+> +referred to as ``drivers`` below).
+>  
+>  A default ``make check`` or ``make check-block`` command will exercise
+>  the ``qcow2`` format, using the tests tagged into the ``auto`` group
+> @@ -231,14 +232,14 @@ only.
+>  These targets accept the ``SPEED`` variable to augment the set of tests
+>  to run. A slightly more comprehensive test plan can be run by defining
+>  ``SPEED=slow``, which enables all tests for the ``qcow2`` and ``raw``
+> -formats. The most comprehensive test plan can be run by defining
+> -``SPEED=thorough``, which enables all available tests for the formats
+> +drivers. The most comprehensive test plan can be run by defining
+> +``SPEED=thorough``, which enables all available tests for the drivers
+>  ``luks``, ``nbd``, ``parallels``, ``qcow2``, ``qed``, ``raw``, ``vdi``,
+>  ``vhdx``, ``vmdk``, and ``vpc``.
+>  
+> -Each of formats also has its own dedicated make target, named
+> -``make check-block-$FORMAT`` which will run all available tests for
+> -the designated format and does not require the ``SPEED`` variable
+> +Each of drivers also has its own dedicated make target, named
+> +``make check-block-$DRIVER`` which will run all available tests for
+> +the designated driver and does not require the ``SPEED`` variable
+>  to be set.
+>  
+>  See the "QEMU iotests" section below for more information on the
+> diff --git a/tests/Makefile.include b/tests/Makefile.include
+> index a820980bbe..a063a1d60f 100644
+> --- a/tests/Makefile.include
+> +++ b/tests/Makefile.include
+> @@ -14,8 +14,8 @@ check-help:
+>  	@echo " $(MAKE) check-unit                    Run qobject tests"
+>  	@echo " $(MAKE) check-qapi-schema             Run QAPI schema tests"
+>  	@echo " $(MAKE) check-tracetool               Run tracetool generator tests"
+> -	@echo " $(MAKE) check-block                   Run block tests (all formats)"
+> -	@echo " $(MAKE) check-block-FORMAT            Run block tests (only for FORMAT)"
+> +	@echo " $(MAKE) check-block                   Run block tests (all formats/protocols)"
+> +	@echo " $(MAKE) check-block-DRIVER            Run block tests (only for format/protocol 'DRIVER')"
+>  ifneq ($(filter $(all-check-targets), check-softfloat),)
+>  	@echo " $(MAKE) check-softfloat               Run FPU emulation tests"
+>  	@echo " $(MAKE) check-tcg                     Run TCG tests"
+> diff --git a/tests/qemu-iotests/meson.build b/tests/qemu-iotests/meson.build
+> index 744d0b6e88..5d6b0b5ed9 100644
+> --- a/tests/qemu-iotests/meson.build
+> +++ b/tests/qemu-iotests/meson.build
+> @@ -12,7 +12,7 @@ qemu_iotests_binaries = [qemu_img, qemu_io, qemu_nbd, qsd]
+>  qemu_iotests_env = {'PYTHON': python.full_path()}
+>  # If altering this definition, also update docs/devel/testing/main.rst
+>  # section on 'check-block' targets to reflect the changes
+> -qemu_iotests_formats = {
+> +qemu_iotests_drivers = {
+>    'qcow2': 'quick',
+>    'raw': 'slow',
+>    'luks': 'thorough',
+> @@ -33,8 +33,8 @@ endforeach
+>  
+>  qemu_iotests_check_cmd = files('check')
+>  
+> -foreach format, speed: qemu_iotests_formats
+> -  # Formats tagged 'quick' get the subset of tests in the 'auto'
+> +foreach format, speed: qemu_iotests_drivers
+> +  # Drivers tagged 'quick' get the subset of tests in the 'auto'
+>    # group, run by default with 'make check' / 'make check-block'
+>    seen = []
+>    if speed == 'quick'
 
-queued, thanks
+If we're updating code and comments internally, we should probably do
+so consistently.
 
--- 
-Peter Xu
+In the code, this foreach still uses a variable 'format', and in the
+comments below we still have:
+
+  # Every format gets put in the format specific suite
+  suites = ['block-' + format + '-optional']
+  # Any format tagged quick or slow also gets added to slow
+  # otherwise its tagged thorough
+  if speed != 'thorough'
+      ...
+
+Kevin
 
 
