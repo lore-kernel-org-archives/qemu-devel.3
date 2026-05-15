@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37866CD4F25
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 10:51:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 926BDCD343F
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 10:51:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNq7O-0000iM-Pe; Fri, 15 May 2026 06:50:10 -0400
+	id 1wNq7S-0000kc-90; Fri, 15 May 2026 06:50:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNq7H-0000dP-Gl
- for qemu-devel@nongnu.org; Fri, 15 May 2026 06:50:04 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1wNq7L-0000fK-TF
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 06:50:08 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNq7F-0001JR-Ld
- for qemu-devel@nongnu.org; Fri, 15 May 2026 06:50:03 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-48896199cbaso77823275e9.1
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 03:50:01 -0700 (PDT)
+ id 1wNq7I-0001Zk-Sg
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 06:50:07 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4891e86fabeso103721935e9.1
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 03:50:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778842200; x=1779447000; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778842203; x=1779447003; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=pRpRlYgzY5PaMz7MYuHPjzjxRVlI8PpTq6mbSsEg35o=;
- b=n2TamNHEAI+G1N8UNLCquU7X/WU6+b3KUM/jwOMeH1YaEwspzvXl5oxY7tL8UtDGOf
- +VjKioeBR8si2rqlnabucp5+fC0azL0TUaW8VaPDiVxh81OcWsY9lJuNpeaFwFzLKYSx
- nSOcPDbut2u08l6ZprnsiIg0fKWxrjMmhejkXz4qARY32emWeqYp/lHyieDrtlzFVSGg
- qnkNA924qsqb5OPRg3mNN7awsFYzG5QazH+1KCotl1GjTxJ8seuHhb1jYae6JtdPRTQw
- yfJx1pa/KzxyDgudfctppMeopjo4HqoMoMd8N8qaSifIbTnfCPSp7GJ1UWW8AxQB+WPA
- QBMw==
+ :reply-to; bh=CVNvm1I1sJtyDtBTJOjkPFwhPQX3HHSubyF1ffpDdds=;
+ b=AUiN1ntLvYAawyZyCraRQ02XGwel66q1K43jcE7rKO40OQ65IqAnYDs0RE/La7dq+A
+ PCMMnXVQyuiJqfJTZbyxoQ9f44f9S4ZHxaTWFAIHfauGH1K1/GPBemEZ9XAEoXpS/j9G
+ 1x2SwvFYQ1vJco/eIrv4Fi56LgPbwLEws7OhQcArT15pDPjD+zjOGmmSgVGzKcALA/M1
+ A4R1NOjlGeVpC5R7uV127NW81thU1aQLIu6eIJ7P5TXLlMDqOOh4RqdX0sobNVkmasvu
+ e7yLeC+GybalCcdHxKje84pJkos0TNfAj+zVjgUmAXuQViTtw4jAMq1hWwqh0Y8AXUJx
+ nhSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778842200; x=1779447000;
+ d=1e100.net; s=20251104; t=1778842203; x=1779447003;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=pRpRlYgzY5PaMz7MYuHPjzjxRVlI8PpTq6mbSsEg35o=;
- b=arh2WlnpQf/QZh9F/1uF0EfAORrimD6L3+knx5z6/DpwRn5qhxA5woEhzFmpTQVUnH
- 2+olsPYD0n8XRrhMeVe4ZjKyBK8hjEqMfx+z5RyA/ULRMnpx8doJ5T2MAs3+0LpiOn+E
- aOlsykKuyB8l1vSP9KHGU1qv+iDyAdET67L7DTnpWW1eVkZKnJaSVjtTO/F/sqSVpkT0
- Ya5PciUdBPX1Yjm83HZvwTneYQ5sYiBjEgF3CMfayfcCIUH06QBiwuQpparONspkxxxE
- DE9jCHoVk5p9gyMlU28FbX4RewEpDZYhpKzFDuFMKEMAWPU+Ygund1Vo9PvTM9755z3I
- 3VRQ==
-X-Gm-Message-State: AOJu0Yyrcezb4yGaJjDqmlekjcPno7GOKdSjW7rbCgOnsSQuCowQBhqo
- yqftq4H0tTfQO87nWl9mzYhTERBe64qrrJVBO5C+AzdQCokXRKutpgyT0VGnclq2aSHl8f9QnZ6
- EZNwM
-X-Gm-Gg: Acq92OGzRfVViUmkjsQzkjnQkzhW+LCTvW58I5XTdurJgZ34M8oCQNKZVam3eH0DK5T
- vqndYTPGHvcSg5J17Pl60eTnXEIdH4z0CLOeEE+rqGttCQnooDKSqxb8WPq3sb3nxTVlDGan9HO
- S6/soIJalgeX076mEhlhRq1ZgcK1WjZB5tm9ZiXm67jcrShxE0XYxBs9too8oHtw1TYLNillchi
- n2arj4ASprhCK9NOHSDc4d3yeU7wdCLNFdUOT4ROQZwRcJtwhsVdGnNUkOAQeD0jI96tdK49ExZ
- BsUYmtTB/ETlCv7pr4YNBUnWUiQwl9DqUyX5YAvTzDJ3Zrs9IUzVzofahMJ6zVh6Fhf2X/v4Y6J
- na87WuE2j41KgdmdbIAkh3GqJ3KpslI5hA2FA7TRMxF5oI2Ycg+gX4U0mdnvqjXYyo4NhNB28jv
- ORXzgJMNJ64mSL1SHlY6dHRDxov/YSVQ1WrlfV23hS8D4is6Y8Z/Td2rDrCpdYg7vZ/ctnr3o8Q
- X4l45UYOcFXRxv69EtzOTmqhktvwsg=
-X-Received: by 2002:a05:600c:3b07:b0:489:1a3a:9e45 with SMTP id
- 5b1f17b1804b1-48fe651e127mr47027885e9.26.1778842199987; 
- Fri, 15 May 2026 03:49:59 -0700 (PDT)
+ bh=CVNvm1I1sJtyDtBTJOjkPFwhPQX3HHSubyF1ffpDdds=;
+ b=MAXowtqUo7lRUHKDgkhm2wUSj0ooJbuixdHbVrz1knawOiGOhO4I9h8878taNOpQ4a
+ /vr3uZnZNP6U/ROczxslLX4ihtl2GNUi8oX344jR6BZSjvvj4weygFRHJIVQake/Zsya
+ WCJvH4CLlW9/3d5SLfh7SyHTfGzh3WHXeFbV48ZifMyjvn+Ihp194u34mSJEZP+kaIqJ
+ 5X6CEWa4K30wnTnHv8KX1gz7DxlVqnWO/7ARlFlg5ecxCXIN3803UyKO6aE7ko0x7HAv
+ OqsrXqS4CCIAp2POLlI6lRemk0qIlW+tS2ufyzSGj5KtyCbeLVvBwm0uysl5tP9hUHU9
+ VyFA==
+X-Gm-Message-State: AOJu0YyHZxSREFdfB5JL1Ctzc8ZsLJj4iaTcH0SdwgtNiEdIA09QyrdM
+ 6aZqYDmtkwzZ6tq0iUiDP1yhJ9c2StrVwMaox5EbTX2IBS5uVKjsWHquDySftyGTRODk97GPnTy
+ BpR7t
+X-Gm-Gg: Acq92OHpgq2BBtxa6SwGzDkx7C6vDClJTWvKetBtZttjaTaFniLRDW+/fiTmmuHNGxm
+ zpxFmvtoRy41V61o2zz89u9bi/wa0tC7jlzp1047KkxS1FpBKwOdDJuwl76FyoaAdhOf0vvOPFR
+ tNbbt0Xv67c+9CBJ6JRWYtNlEpX9KPKyzHdnVffYpg89gP/Kl4bXBVKby5OWlqJUEnA7/q6xPA9
+ LBFKc4YQiukrs1KCEd9gKrnBfR6v0xCKp11eSkoYZd/B1Ic4kjHWqSIwuLlsvGntZREcR5iZTWd
+ BjgLfLJhEyrrpjlGX7GumUB5xqW3CzhPqVi3zL+x660avO71h7604YVeRvcGVgqbNYh5wuBwDTR
+ /NhIukXPZllH/CKyB4EBu3kxao8JjlC54izxxZHI+N4dEp9RgSCzYFXa30DYpqGIy2bQVCX2vaj
+ e/B53Da1kP0beETWComPLCTPhmKgmBgZNtQs14wZamwTJYPSKX3fNRhouzXxz1f2s5hoCrT09Iy
+ omgr1CpNAgw7G/czbgT15S3/YWMQxheSGFHSx9mVTCVFvLobZDs
+X-Received: by 2002:a05:600c:8b18:b0:48f:de5a:4a6 with SMTP id
+ 5b1f17b1804b1-48fe6515806mr50415185e9.26.1778842203046; 
+ Fri, 15 May 2026 03:50:03 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48feaa2949asm18194355e9.1.2026.05.15.03.49.58
+ 5b1f17b1804b1-48feaa2949asm18194355e9.1.2026.05.15.03.50.02
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 03:49:58 -0700 (PDT)
+ Fri, 15 May 2026 03:50:02 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 10/23] hw/intc/arm_gicv5: Add missing early return in
- gicv5_set_handling()
-Date: Fri, 15 May 2026 11:49:32 +0100
-Message-ID: <20260515104945.4145203-11-peter.maydell@linaro.org>
+Subject: [PULL 13/23] hw/arm/integratorcp: Use LOG_UNIMP rather than hw_error()
+Date: Fri, 15 May 2026 11:49:35 +0100
+Message-ID: <20260515104945.4145203-14-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260515104945.4145203-1-peter.maydell@linaro.org>
 References: <20260515104945.4145203-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,36 +100,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In gicv5_set_handling(), if the guest tried to set the handling mode
-on a nonexistent SPI then we print a GUEST_ERROR log message.
-However, we forgot to then return, so execution continues into a NULL
-pointer dereference.
+The integratorcp board has some onboard registers which can be used
+to raise IRQ and FIQ to the CPU; these outputs are supposed to be
+ORed together with the main ones from the PIC.  We've never
+implemented this obscure bit of functionality, and instead call
+hw_error() if the guest does try to raise an interrupt this way.
 
-Add the missing "return", bringing the code structure in to line with
-the equivalent parts in other functions like gicv5_set_pending() and
-gicv5_set_target().
+Replace the hw_error() call with the more modern way to note
+unimplemented QEMU behaviour, a LOG_UNIMP log.
 
-CID: 1659596
-Fixes: 5beb48ab53d ("hw/intc/arm_gicv5: Make gicv5_set_* update SPI state")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3406
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260512093856.3197700-5-peter.maydell@linaro.org
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260508162013.2751001-3-peter.maydell@linaro.org
 ---
- hw/intc/arm_gicv5.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/arm/integratorcp.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
-index 7ad274e369..6b1dd04991 100644
---- a/hw/intc/arm_gicv5.c
-+++ b/hw/intc/arm_gicv5.c
-@@ -926,6 +926,7 @@ void gicv5_set_handling(GICv5Common *cs, uint32_t id,
-         if (!spi) {
-             qemu_log_mask(LOG_GUEST_ERROR, "gicv5_set_handling: tried to set "
-                           "priority of unreachable SPI %d\n", id);
-+            return;
-         }
+diff --git a/hw/arm/integratorcp.c b/hw/arm/integratorcp.c
+index 164af03f7b..c25bbf3c82 100644
+--- a/hw/arm/integratorcp.c
++++ b/hw/arm/integratorcp.c
+@@ -23,7 +23,6 @@
+ #include "qemu/log.h"
+ #include "qemu/error-report.h"
+ #include "hw/char/pl011.h"
+-#include "hw/core/hw-error.h"
+ #include "hw/core/irq.h"
+ #include "hw/sd/sd.h"
+ #include "qom/object.h"
+@@ -178,10 +177,17 @@ static void integratorcm_set_ctrl(IntegratorCMState *s, uint32_t value)
  
-         spi->hm = handling;
+ static void integratorcm_update(IntegratorCMState *s)
+ {
+-    /* ??? The CPU irq/fiq is raised when either the core module or base PIC
+-       are active.  */
+-    if (s->int_level & (s->irq_enabled | s->fiq_enabled))
+-        hw_error("Core module interrupt\n");
++    /*
++     * ??? The CPU irq/fiq is raised when either the core module or base PIC
++     * are active. To implement this we would need to run these signals
++     * through an OR gate with the PIC outputs. In practice guests don't
++     * use this, which is intended for an external debugger.
++     */
++    if (s->int_level & (s->irq_enabled | s->fiq_enabled)) {
++        qemu_log_mask(LOG_UNIMP,
++                      "%s: raising IRQ/FIQ via core module registers is not implemented\n",
++                      __func__);
++    }
+ }
+ 
+ static void integratorcm_write(void *opaque, hwaddr offset,
 -- 
 2.43.0
 
