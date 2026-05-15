@@ -4,139 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 357E6CD343F
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 11:26:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEB9CCD343F
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 12:46:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNqg5-0006va-3q; Fri, 15 May 2026 07:26:01 -0400
+	id 1wNrvg-0003z1-TS; Fri, 15 May 2026 08:46:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wNqg0-0006uo-0j
- for qemu-devel@nongnu.org; Fri, 15 May 2026 07:25:56 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <ryan.zhang@nxp.com>)
+ id 1wNrmh-0002fm-RO
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 08:36:56 -0400
+Received: from mail-westeuropeazon11013053.outbound.protection.outlook.com
+ ([52.101.72.53] helo=AM0PR02CU008.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wNqfy-00067L-0Z
- for qemu-devel@nongnu.org; Fri, 15 May 2026 07:25:55 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64FBF1pO3219672
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 11:25:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- CL1xSf9ptTIxSj7+unxG6pyDtdqcuY49OJA2sU//u0c=; b=Kmk/c65DWtM3Ww6w
- emsPj+jCqQFufK4xaTfkn9/8XoleIgwzJmPsBK5P+HIk2waqY+5x1jn3vLh2u0Cj
- hKPmuqqnbaPZbGuMRxD7Pvc+1jWVVTSJY2a39uZh0rIomH6bwAHzSfo1oblS129s
- Er+XOUiGLc1i9kK/Qa0d4HOi08vUJy4I0tqEbDZ8FIIVBq7reKakhW4foYiV7bSx
- wAWbI7rlBV5DC8HWKwuedtNwNCzOY5AriSafSi2VIdDrBiU2BnA0KB0iw3Jj6Lz2
- vEw5Pu4CYsNEPUCu7uh1s0zfXhL3qxCX0f8XvbNnAsAEaQXxTLF40p0fyYQCCa/6
- 6nEK0w==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e5m1s30qc-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 11:25:51 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-8b49260e3d5so133588296d6.2
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 04:25:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778844351; x=1779449151; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=CL1xSf9ptTIxSj7+unxG6pyDtdqcuY49OJA2sU//u0c=;
- b=fFMVwp20+d+cNaBhhWXmmXh6rQUzpPR4BwJ0oTpVq72vDdHW1GRFXl7f+bBLF90Lu1
- yB38q2PwxZPtyuvE0RLJo++nEE8Ed7itGhFCKu9dLbeaS1HgqQ1u+GxAvtXmFu9aWEqb
- SfaULmAzDZToQmklzXvQZTAmyBi392OQ6L6RQrs7+16EdLuYMGcu+0iCoSxhnFCUQjND
- 8smNU8I+I6P+1oNnAMAYOPL3shWiZgO9BcGDKvUVUwlAff3XygXH5vWSrafphecnzHS1
- UtmPyCERodJE14crG+fHqMG4oZwYtzC9qPfszb29bvtel2Dns6O0wj8hjhvJSMnqOKZ/
- 3fQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778844351; x=1779449151;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=CL1xSf9ptTIxSj7+unxG6pyDtdqcuY49OJA2sU//u0c=;
- b=DF5FIAFH5yZThnh/5Wh4LhZVHLlQVpbi+MGQj3Ppg0tssuChIa0yMok0Np0Ce6K8xQ
- iQohjxUfoDYi+bASKgrUpp3d3GxVmn19oXIoj2t75YquQbCFWZGVHsZy7klif4CE+rBC
- uk7ibADgaqEKEw0BJa4wMvxjthAqLXUQiotBwLe97WW8drta/2Reh7EAqKqYOLgFIgaQ
- nOS1DSpkmrKCXUxOG27x1BQzyrpL6OmuCyzLm+XnG4AGxWD+RFrcV+n0TLCGUZvy/uNO
- Gf2h/8xGygzUuLCC7PWAZxdHBw4kOTJ1bjYyms3/TYscm9WrasbCBVK92qFmKrJsD2PJ
- 27Lw==
-X-Gm-Message-State: AOJu0YxPlDGl6upbqB0n7pyJKvwZtvI6hWmuiCmcUuO1qnhcGKzGDh13
- LsPUP+KiXQtUvJepzcXrsd+bmDH1IVENqzV3ctC3oumjk1gbUOf/6+WcJg7Vj05HnqYi94jVOrU
- zb9zxK+DLLC9O0XtZGU2D1gV2oztflYGvzmM9/ZF9YXKM5jq/yJ6Dj02ovw==
-X-Gm-Gg: Acq92OESPF0YkVY0aZKnHHkT73lGekb4IHXRnnMZYKF1fjAbPEyeIkLCaLNkStErJEH
- u1tlmWvDgGnPKni5sCTH9uL10o45YdvEUyUSNaYwc5cAmmI9zbhhp110N0tDJXPj5qGkAjTMd/c
- TRzTi5d98Zkq3wAIiRIZiP4iEQEWfxUb6Ogfx31cbFdApy7gEYqP2RQFUG9vFUQDeYUm8QRdsr0
- uVZ8TWE1PkvMoFH0BnffIrxJtEYC+Rh3/5U376lComhNy7FWaJOSJRcWELSU3xGtDpSV7FyKP0f
- eTyJ1zMzQRDkzf6d8Qp3EvxCZlIrqiDibWng3+33ZCQLCGuVF9FtuHU/HXu3gZF/R8AGn3SUE2l
- k4eThZIUXcl8PpMdfbMj6Rq4V9vb96lot6UprYvfLKMQv5K0W5tWUofcDW1I=
-X-Received: by 2002:a05:6214:4a02:b0:8c9:bcd5:2856 with SMTP id
- 6a1803df08f44-8ca0f6f95d0mr57543756d6.46.1778844351296; 
- Fri, 15 May 2026 04:25:51 -0700 (PDT)
-X-Received: by 2002:a05:6214:4a02:b0:8c9:bcd5:2856 with SMTP id
- 6a1803df08f44-8ca0f6f95d0mr57543096d6.46.1778844350811; 
- Fri, 15 May 2026 04:25:50 -0700 (PDT)
-Received: from [192.168.68.106] ([191.202.238.222])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8c90c164b19sm48687546d6.38.2026.05.15.04.25.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 15 May 2026 04:25:50 -0700 (PDT)
-Message-ID: <d2f5af2d-57d8-43dd-b599-7b280eb0fb6d@oss.qualcomm.com>
-Date: Fri, 15 May 2026 08:25:46 -0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] hw/riscv/riscv-iommu: Avoid caching PCI device IDs
-To: Chengbo Gao <gaochengbo@bosc.ac.cn>, palmer@dabbelt.com,
- alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- qemu-riscv@nongnu.org
-Cc: qemu-devel@nongnu.org
-References: <20260514020637.2819308-1-gaochengbo@bosc.ac.cn>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <ryan.zhang@nxp.com>)
+ id 1wNrmf-000772-RW
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 08:36:55 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=u/FsuE2iR4A1GbKbMCv4jjXkAOgyzhTj6a7Y5nOpeOGqyO/WPs3RfJwh1Om1fC554mrr3wj12qaopoHuBS1EYRjat5tus9nyeUhrHapdFatyK+TYUDNB05oGSot8H75LDnGEhvKTsX87WY9fp8p+/+lx5IKxqf/JTRkM0YRc8tcPXIFQ8hOGjbpLtUEqiBVQl3f3BfI77Z0XDwSY7FqABx92iplCVPHsPQkv2In/7d1cwBOhR2KJpKVKjXw7vDTNkKgfXWpZP+INqPYcAbGweTjQvp65zbf7ZgWjxEmMuyha5IAzLcH6buygwpgo+I3lv+Iz76jmvtXl39c5JwLZYg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=6xXnPWDFptJyqbDUsorPuw7pyCdMVTPKIyTWtS/+r30=;
+ b=QD7wob9fJdJR+AMDJRcYRkw0kEzkNRh9m2wlvPYz6m2zhHVlVbYSm6BmdQyJQTRCaAajPIH1RaNiq0lVop1DqiPXtWsJX3+RXICKNZjkKQFoFYBIB8LJXKO8oU1ECT4dFY3OWs0O5Pm1uYsaqBUgct7dIsvRxR4Eqh9WncJQczjspRc09aeJu5VJ1OBJf/38u9/tUDfSW5dPntmoMhDzoCKs/R2LF7ShEqUuNxpAI/CZHzOIIS0Awm97aOo252BsinBBclGOIE3XMTd9FtNGy2FpNGPkCIGtniwRge+C+QTtV/0oWzKb8aBpjm5mJzLkrOo0Vr8Mt9woIXJJ2QrnQg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=6xXnPWDFptJyqbDUsorPuw7pyCdMVTPKIyTWtS/+r30=;
+ b=FKm3v5zqVwcYAhfSpHdko8ZLaZsn9yGTtB4+xQztU6sas9KkpoGf7wezG+Y5cU6nQLSsN3nWeAVw09YSsrEwodCw0Os9YbmknDV2LufQQI9jGdWozdVVoiy+8D6B4iEV0QM2cWk5xf2hcx6oxIvEUhyRnsxAmCnM6jCYCv3sPdqGZzgNj3jwVZIVx4v8IGGqCJk3ouo7VFdWhCp/X06RBIGIzDk5HeCyuUmX78DRwnYAmcA/IPeLFAQThYlLMw/INBS0m3dM6k8y9s8R9t/pWedmboyfyb8Vp9n/wDyABb5232XtvhLbSXz9wrKExCzwONEyi1O6KZ2CY34As/IOcw==
+Received: from DU2PR04MB9018.eurprd04.prod.outlook.com (2603:10a6:10:2d9::11)
+ by DB9PR04MB9723.eurprd04.prod.outlook.com (2603:10a6:10:4ce::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9913.12; Fri, 15 May
+ 2026 12:31:46 +0000
+Received: from DU2PR04MB9018.eurprd04.prod.outlook.com
+ ([fe80::c91e:9d3b:4c71:b39a]) by DU2PR04MB9018.eurprd04.prod.outlook.com
+ ([fe80::c91e:9d3b:4c71:b39a%6]) with mapi id 15.20.9913.009; Fri, 15 May 2026
+ 12:31:46 +0000
+From: Ryan Zhang <ryan.zhang@nxp.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "marcandre.lureau@redhat.com" <marcandre.lureau@redhat.com>
+Subject: [PATCH] ui/sdl2: Set GL ES profile before creating initial GL context
+Thread-Topic: [PATCH] ui/sdl2: Set GL ES profile before creating initial GL
+ context
+Thread-Index: AdzkZbmsTFRM938VTq2SUPkaSraPSQ==
+Date: Fri, 15 May 2026 12:31:46 +0000
+Message-ID: <DU2PR04MB9018BB3650BA218438C01F2A83042@DU2PR04MB9018.eurprd04.prod.outlook.com>
+Accept-Language: en-US
 Content-Language: en-US
-In-Reply-To: <20260514020637.2819308-1-gaochengbo@bosc.ac.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE1MDExNSBTYWx0ZWRfX0omK5ALLlqve
- 9VZx9Eu1JUfeXOh7zp/HOLn1Ra+qAi1SJ8lXxmN7Q3quZ6a5vDsPBxbRlrUiJYX0qcScNp1Ljdy
- VFTBOkeDg3bYpzGbhbExvnPOb105GSXVEe3cxWYnHug1Cpr1LN5ltAp6GNPkdWU9mVd1TzwDQgf
- Xz2PHejYoPnJ2PH70YqDmaGE7RMwmotuEpAMZHd45HnJ7iB0VB/XuYznZ+MW0/wB5cS8ffxrbc3
- ulksxGSgVPaMPJzOLGa6e/u61JUVBDGowF6R7q/Rw5nY6E/5sswTw3wfGie0zRz3nLiVOH77RSv
- RDp3lIO1uH0sGFBWxI9bQXEIzRXEqxdNvn9ckVwgbP3bSrwppqKXl2rCM8ooy6XWyZgZAK/97by
- R4CNJ0G/zP/frHjhV2ymtFYwC1XwOvtzua0zHICy7tya4ljcJmbaz1K9eJunOwxRkqiCQdf+a2l
- glxI9apKd/kcNl8T2eg==
-X-Proofpoint-GUID: zjl6uA6Oj_ZhETK0fEDBkIAT7-VbIrma
-X-Proofpoint-ORIG-GUID: zjl6uA6Oj_ZhETK0fEDBkIAT7-VbIrma
-X-Authority-Analysis: v=2.4 cv=HJ7z0Itv c=1 sm=1 tr=0 ts=6a0702bf cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=etEqFfc6qwXwpI8uT8rzbw==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=mHkEaqlKh9Ly4tyT5M0A:9 a=QEXdDO2ut3YA:10
- a=1HOtulTD9v-eNWfpl4qZ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-15_02,2026-05-13_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 suspectscore=0 phishscore=0 spamscore=0
- clxscore=1015 impostorscore=0 adultscore=0 bulkscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605150115
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DU2PR04MB9018:EE_|DB9PR04MB9723:EE_
+x-ms-office365-filtering-correlation-id: 5b306608-3696-42db-df46-08deb27deda6
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|366016|1800799024|19092799006|11063799003|56012099003|18002099003|38070700021;
+x-microsoft-antispam-message-info: nTtrCayJjJqo1XQcqfP0VNlbgAXv+cl/F1xtsbUHNUJlZ2cJyFq6sMe64Ggx1sJtFiogp8IwLyEltqVD/z0UbKYVWEr+zArLmqyUbMDB+tC9gNDjtyC0UVn5P8aus39AK4YM3m3gxu857NM1tBEO2KvDrysCWCA49QEysJLegR2oNCnON6A43qhok6L0g7PUid1C9TxbS/rNCQcA+AZi8gScItk8US21UqS3HJ/60MdFBz20UUFdyPkY75ZFCCnBIqiKs2Jv0rpG1RWps9eFEimEoWeZvQ6bE1+Gc0Ee3K99/3gKC3TERC+GU1lGDXZR3x0Oj+dI8vRF1NQplfy44lR1EQ+8+dOv5KHalSfwSd7fUaJP0paAXsL3t4QQWmt+typVSVmhwJaxkykTJlgZayQTqK7IN9245Eue5HbnyxR2dvGWsv4RL8nI48bjgvKReDfFFZPXP0FtONPsDwx8qiWrwqrauIIvR7SQBD8jwiYUGxxX3HpOrrCaGYfZW5DaUqBvC/vnZcP+I4KAPnspxZQHP3dh94JtpJYaS4qhcPJZGKIj/ccqu9l7a756078nh9fggt1lriidx+JevwTzJYfcLTBhqOXucFSRZ7yC7bp0EAZ+1WtZGg7kQxSA0gsI9n+feSdBbgNgOj2kiQgF9DTzHXzPl5FNxlD9UJPrG6xeKJeFDpXwywMRzApxuny+t9XnVp7ERD/oYLjf3uIYrCYilIzPZR6a172fsYKx4JUVAnXXoQ0DPIQ3dJy2FE51
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DU2PR04MB9018.eurprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(19092799006)(11063799003)(56012099003)(18002099003)(38070700021);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?F5iTQldO94dFJO0dmU9/hZzhkEav1SIZaJ1SVW914m/IafrwqVvyOArmEIpN?=
+ =?us-ascii?Q?IGheR4XY16lSZ42RRahxeBpoqDDjTgcvTSBa1yKyQCsNgcELg2BISJbwkEg+?=
+ =?us-ascii?Q?KFwgtS/QYkg/s+y70c2euhuY5vuqaBGLguzFkTXk9Dx6reYDH7g59QmQ8HqA?=
+ =?us-ascii?Q?UVmTBjOyLL9Vcoglq19xEGB3EKPgkjFSNplg3EK6AKxZFVeeATEwKX8IJk97?=
+ =?us-ascii?Q?e3OdFTb5kCW1Jh72i9llMcTF375lRVMrDZryBZKh0DqQ/RrRLlBKncWYmzt+?=
+ =?us-ascii?Q?EfHjYgCT3QVvbp42U7VgzHc7GT1eMVuIupUee/Xn5KxZja/rzoqoWGa+OUkA?=
+ =?us-ascii?Q?CT2fj7UNjTN3PvNPdG+4HqIEsdAex63gJBUopxl3TXVFaBnGg1pdFxcoftNg?=
+ =?us-ascii?Q?0o11S7taKS2XdUEuokarfbzjdhzXIaUSk0jYrwyVTAuZ+iSAIBMVcoD39OIR?=
+ =?us-ascii?Q?42Z9ZjocUq+pcSANpkRLWJ1aqsNmEuv9Pz/HCFolTDPpxTADD5kSr8S3RGfz?=
+ =?us-ascii?Q?XbTVOWVsvwsklLHP56SvIaRFxm5WFdV0TbWwYH0lFNN5VuKYBPJSKZC8xh/b?=
+ =?us-ascii?Q?WRnacutB3P9320XWAD1DALuAxaXMYSl7cwnizf+E0zWdxEBjDsZQ8ODs5ABG?=
+ =?us-ascii?Q?GcAa772lm+dxayuI2g7YfUiEBRpbOX6s2Py2HLrPF2Q24nTExqCVURfex5gG?=
+ =?us-ascii?Q?rqdDwlfz57ylH9Y8L2aifIp1Z3UxYCXTs+/qBlGrD8sDA8cdSF0FvKWmcMYu?=
+ =?us-ascii?Q?22WW1UMSpAvzKJUg8rzE9SmiU3xxJH0hHc0TJ5NxpRN0orTsTFgthUV0DQFu?=
+ =?us-ascii?Q?Khd44mm+WP8Xi5D0l2FDCCoyUT31KSDm4oZn6I1cYi9+zqZX074LN27puAth?=
+ =?us-ascii?Q?/gLQ8VSCM5lOqxjAqZFjDXo8W9qzek6e1Wab6/bcPBlTcbLWgfrqEHfMJe56?=
+ =?us-ascii?Q?c2aA34WaAmPfk6HSjH/PYsW1j51lwVDL8GfBsLMtCpw9S357hd5rVZYD26Hr?=
+ =?us-ascii?Q?gCK7pmJ8qAeQRpIB/8/0mMCeM6d2Joldd2Lq99LrFURgy/jHRvVIEDKaYIYI?=
+ =?us-ascii?Q?HlpNaq1dHZ/v2xkoQQr7tZ6Dkys3VhvA0AHjJuIjYo676mQbd880mKGlheJ+?=
+ =?us-ascii?Q?rtJ18BwgyjwqbiDbss+myP1AGC+i0w+gkiDvagLrx75DOusft2p5dfSvJSUj?=
+ =?us-ascii?Q?mEUnB59fsv4H3VEhutOvu87e5ynnBQDugWhLrYkdJu/TBjpkB2xQFlz/WBsY?=
+ =?us-ascii?Q?2uxvfkie+75ULLuGwGQSj3dem64y4hpfijNTP84b6WHb1uPzPrZeorQA6UpN?=
+ =?us-ascii?Q?2MVvjac4oZDo6Q4Zs0DVBh7uoyL49go9nlIqsX5AEzZSRfynLRYQMohJwULM?=
+ =?us-ascii?Q?GZxo+uuLN9RgI9zCLuCgwaGrVEZRCdd5BtgyW4/5zvCMN/4C9DkUj6yqLnFN?=
+ =?us-ascii?Q?DL3d4OClHUqp6e21U4WMV4MsM4wUGHg+Z+chrt500uEVAY7RFZh4wOR4dTin?=
+ =?us-ascii?Q?LPM3F1qZwUWsSGg//jTEb8A8OadOyJQeO2ssPuJr0X+KWxQ4oPgY1CIOMnSl?=
+ =?us-ascii?Q?LYOc4Iu5w4JPL8xmdWgBcSDsxCLsowHNMAUUhguYJl75iB+MQpd4o6C41i5M?=
+ =?us-ascii?Q?kBvKAwboOSTxz2DgjxbLU0MSXaNos5qn9pR7X3WUBIJpJouK9GdRoyQn+lIK?=
+ =?us-ascii?Q?xLC6xpGWr3SYYeG9vg9E1gCDgaOmfEJ2c5kNIAgd/SAtIPnO?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DU2PR04MB9018.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5b306608-3696-42db-df46-08deb27deda6
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 May 2026 12:31:46.0930 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: IxwHRAd1GoF3KQUDBzFnWkTQlVD3TJHhOQxTtffNc7TIdr9YSSzQp2rGfP9/v+Ib1h1Q1h8Tr4lynEVmAm0vOA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR04MB9723
+Received-SPF: pass client-ip=52.101.72.53; envelope-from=ryan.zhang@nxp.com;
+ helo=AM0PR02CU008.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 15 May 2026 08:45:41 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -151,145 +139,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From abfc1a95936dd832fc2ad9d64d4e3f3880c697e1 Mon Sep 17 00:00:00 2001
+From: Ryan Zhang mailto:ryan.zhang@nxp.com
+Date: Fri, 15 May 2026 19:21:55 +0800
+Subject: [PATCH] ui/sdl2: Set GL ES profile before creating initial GL cont=
+ext
 
+When the user selects GLES via '-display sdl,gl=3Des', we need to set
+SDL_GL_CONTEXT_PROFILE_MASK to SDL_GL_CONTEXT_PROFILE_ES before
+calling SDL_GL_CreateContext(). This ensures SDL_GL_LoadLibrary()
+loads the correct GLES driver instead of the desktop OpenGL driver.
 
-On 5/13/2026 11:06 PM, Chengbo Gao wrote:
-> PCI bus numbers may still be unassigned when QEMU initializes a PCI
-> device's bus-master address space.  For devices behind bridges,
-> pci_bus_num() can return 0 at that point because the guest has not yet
-> programmed the bridge Secondary Bus Number register.
-> 
-> The RISC-V IOMMU currently stores a fixed device_id in RISCVIOMMUSpace
-> when the address space is created.  If the guest later enumerates the
-> device on a non-zero bus, DMA translation still uses the stale device_id
-> and may look up the wrong device context in the DDT.
-> 
-> Store the stable PCIBus pointer and devfn in RISCVIOMMUSpace instead,
-> and compute the device_id from the current bus number when it is needed.
-> This keeps DMA translation and ATS invalidation in sync with guest PCI
-> bus enumeration.
-> 
-> Signed-off-by: Chengbo Gao <gaochengbo@bosc.ac.cn>
-> ---
+Fix the below issue: qemu-system-aarch64: /usr/src/debug/libepoxy
+/1.5.10/src/dispatch_common.c:872: epoxy_get_proc_address: Assertion
+`0 && "Couldn't find current GLX or EGL context.\n"' failed.
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+sdl2_gl_create_context() already sets the profile mask correctly for
+ES mode, but the initial context created in sdl2_window_create() is
+missing the same treatment.
 
->   hw/riscv/riscv-iommu.c | 40 +++++++++++++++++++++++++---------------
->   1 file changed, 25 insertions(+), 15 deletions(-)
-> 
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index 7ba3240552..9a75639549 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -49,7 +49,8 @@ struct RISCVIOMMUSpace {
->       IOMMUMemoryRegion iova_mr;  /* IOVA memory region for attached device */
->       AddressSpace iova_as;       /* IOVA address space for attached device */
->       RISCVIOMMUState *iommu;     /* Managing IOMMU device state */
-> -    uint32_t devid;             /* Requester identifier, AKA device_id */
-> +    PCIBus *bus;                /* PCI bus of the requester */
-> +    uint8_t devfn;              /* Requester identifier, AKA device_id */
->       bool notifier;              /* IOMMU unmap notifier enabled */
->       QLIST_ENTRY(RISCVIOMMUSpace) list;
->   };
-> @@ -74,6 +75,15 @@ struct RISCVIOMMUEntry {
->   /* IOMMU index for transactions without process_id specified. */
->   #define RISCV_IOMMU_NOPROCID 0
->   
-> +static uint32_t riscv_iommu_space_devid(RISCVIOMMUSpace *as)
-> +{
-> +    uint32_t devid = PCI_BUILD_BDF(pci_bus_num(as->bus), as->devfn);
-> +
-> +    /* FIXME: PCIe bus remapping for attached endpoints. */
-> +    devid |= as->iommu->bus << 8;
-> +    return devid;
-> +}
-> +
->   static uint8_t riscv_iommu_get_icvec_vector(uint32_t icvec, uint32_t vec_type)
->   {
->       switch (vec_type) {
-> @@ -1343,15 +1353,13 @@ static void riscv_iommu_ctx_put(RISCVIOMMUState *s, void *ref)
->   }
->   
->   /* Find or allocate address space for a given device */
-> -static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, uint32_t devid)
-> +static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, PCIBus *bus,
-> +                                            int devfn)
->   {
->       RISCVIOMMUSpace *as;
->   
-> -    /* FIXME: PCIe bus remapping for attached endpoints. */
-> -    devid |= s->bus << 8;
-> -
->       QLIST_FOREACH(as, &s->spaces, list) {
-> -        if (as->devid == devid) {
-> +        if (as->bus == bus && as->devfn == devfn) {
->               break;
->           }
->       }
-> @@ -1361,10 +1369,11 @@ static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, uint32_t devid)
->           as = g_new0(RISCVIOMMUSpace, 1);
->   
->           as->iommu = s;
-> -        as->devid = devid;
-> +        as->bus = bus;
-> +        as->devfn = devfn;
->   
->           snprintf(name, sizeof(name), "riscv-iommu-%04x:%02x.%d-iova",
-> -            PCI_BUS_NUM(as->devid), PCI_SLOT(as->devid), PCI_FUNC(as->devid));
-> +            pci_bus_num(bus), PCI_SLOT(devfn), PCI_FUNC(devfn));
->   
->           /* IOVA address space, untranslated addresses */
->           memory_region_init_iommu(&as->iova_mr, sizeof(as->iova_mr),
-> @@ -1374,8 +1383,8 @@ static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, uint32_t devid)
->   
->           QLIST_INSERT_HEAD(&s->spaces, as, list);
->   
-> -        trace_riscv_iommu_new(s->parent_obj.id, PCI_BUS_NUM(as->devid),
-> -                PCI_SLOT(as->devid), PCI_FUNC(as->devid));
-> +        trace_riscv_iommu_new(s->parent_obj.id, pci_bus_num(bus),
-> +                PCI_SLOT(devfn), PCI_FUNC(devfn));
->       }
->       return &as->iova_as;
->   }
-> @@ -1696,7 +1705,7 @@ static void riscv_iommu_ats(RISCVIOMMUState *s,
->       pid = get_field(cmd->dword0, RISCV_IOMMU_CMD_ATS_PID);
->   
->       QLIST_FOREACH(as, &s->spaces, list) {
-> -        if (as->devid == devid) {
-> +        if (riscv_iommu_space_devid(as) == devid) {
->               break;
->           }
->       }
-> @@ -2710,8 +2719,9 @@ static IOMMUTLBEntry riscv_iommu_memory_region_translate(
->           .addr_mask = ~0ULL,
->           .perm = flag,
->       };
-> +    uint32_t devid = riscv_iommu_space_devid(as);
->   
-> -    ctx = riscv_iommu_ctx(as->iommu, as->devid, iommu_idx, &ref);
-> +    ctx = riscv_iommu_ctx(as->iommu, devid, iommu_idx, &ref);
->       if (ctx == NULL) {
->           /* Translation disabled or invalid. */
->           iotlb.addr_mask = 0;
-> @@ -2723,8 +2733,8 @@ static IOMMUTLBEntry riscv_iommu_memory_region_translate(
->       }
->   
->       /* Trace all dma translations with original access flags. */
-> -    trace_riscv_iommu_dma(as->iommu->parent_obj.id, PCI_BUS_NUM(as->devid),
-> -                          PCI_SLOT(as->devid), PCI_FUNC(as->devid), iommu_idx,
-> +    trace_riscv_iommu_dma(as->iommu->parent_obj.id, PCI_BUS_NUM(devid),
-> +                          PCI_SLOT(devid), PCI_FUNC(devid), iommu_idx,
->                             IOMMU_FLAG_STR[flag & IOMMU_RW], iotlb.iova,
->                             iotlb.translated_addr);
->   
-> @@ -2772,7 +2782,7 @@ static AddressSpace *riscv_iommu_find_as(PCIBus *bus, void *opaque, int devfn)
->   
->       /* Find first matching IOMMU */
->       while (s != NULL && as == NULL) {
-> -        as = riscv_iommu_space(s, PCI_BUILD_BDF(pci_bus_num(bus), devfn));
-> +        as = riscv_iommu_space(s, bus, devfn);
->           s = s->iommus.le_next;
->       }
->   
+Fixes:da3f7a3ab9ea0091955b58f8909dfcee01f4043e ("ui/sdl: try to instantiate=
+ the matching opengl renderer")
+Signed-off-by: Ryan Zhang mailto:ryan.zhang@nxp.com
+---
+ ui/sdl2.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
+diff --git a/ui/sdl2.c b/ui/sdl2.c
+index 4fcdbd79d3..9f826afefb 100644
+--- a/ui/sdl2.c
++++ b/ui/sdl2.c
+@@ -113,6 +113,8 @@ void sdl2_window_create(struct sdl2_console *scon)
+
+         if (scon->opts->gl =3D=3D DISPLAY_GL_MODE_ES) {
+             driver =3D "opengles2";
++            SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
++                                SDL_GL_CONTEXT_PROFILE_ES);
+         }
+
+         SDL_SetHint(SDL_HINT_RENDER_DRIVER, driver);
+--
+2.43.0
 
