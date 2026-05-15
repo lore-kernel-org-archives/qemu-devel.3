@@ -4,90 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B90F1CD4F25
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 14:26:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7677CCD343F
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 14:26:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNtUE-0005oZ-0n; Fri, 15 May 2026 10:25:58 -0400
+	id 1wNtU9-0005hB-Kz; Fri, 15 May 2026 10:25:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNtU7-0005iL-6V
- for qemu-devel@nongnu.org; Fri, 15 May 2026 10:25:53 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1wNtU2-0005d5-6D
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 10:25:46 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNtU4-0000vH-Id
- for qemu-devel@nongnu.org; Fri, 15 May 2026 10:25:50 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-48a563e4ef7so83786825e9.0
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 07:25:47 -0700 (PDT)
+ id 1wNtU0-0000tu-Or
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 10:25:45 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4891b0786beso60422285e9.1
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 07:25:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778855147; x=1779459947; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=PhqHUhwfIQWqhESGZ3sqsj6+o6aM/A5Mqby6FRMskD4=;
- b=wwEJrwjDYoWAXYdcVhMhz4UHDnJ6v1+Aw5+Ql9q3IeGgI6xesyuYOZDImRzscHKnP6
- ikL9TOtz+HaGBQTHWW448Az6F+N4zoeQyzeT90WmDft/QNPA/IJDfr8NL3W3W85Ajcfw
- Zisqsxwu2rv6o8cDUrumca6RB1HWhfU3SlhZWJkU5OJL9d8OdgSiYKK+gtYTMuiBta/m
- SK74qgSa06BM+PsS+W+CD9AK5Wm+NAXOLmhLB8yNDPZEBdTy0AwF3/jKWHlLD3cr/a64
- 8Zyg2tudOUTlCFgQ8YClE/eCAx0Lf/7R94dOVWQza5QQ6if2dzsq7QWGJwJq4/INj+2P
- Uv8g==
+ d=linaro.org; s=google; t=1778855143; x=1779459943; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=q4fgK36sSo3TBVry93HVuy8ilXSmIn8bEO/5kIWJOSo=;
+ b=EJ6F1QcW7MeuisgOqsUkgDKNzjVnK9HsvPxIMc0sVtkfqO6LeirQlYekLld7S+MPSy
+ f9Z7UaFDfNIOJt9DvdOdBGWY+/nsTQ6nFYbWE4ozkpRRkczao7H2it46BjECCkUob59K
+ 6Sc6UjGeld6JOXdsLKuRy33JYD6Mt40vjTqJ3q9quqT7RVDGClakbhtpCm9oQ5Kp46/A
+ i1CXhkjVV7rs5pDNUgr3OOK7CIjjqNoxo4ndpI1qbzw4b+GF8tLljFJKiiomvYbB2qoT
+ dhoN1yIo/JItt/Rm/aZb+ZhiEmPX/b1F/DaqV2fLM/EHGduQ7Pvt0JVulj22aPG2uzxJ
+ h86g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778855147; x=1779459947;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=PhqHUhwfIQWqhESGZ3sqsj6+o6aM/A5Mqby6FRMskD4=;
- b=GTtNIaIXrfZj1D7UEUPyFO1PtiKLcrFoHi098jbhq56CT+GJLPVh7NgeiiOd76zNkj
- 2RdLMJt0h3e+87N385xv4KjE2XwL67vOdZvJJrKFJt54EKmYhX5Jn/C9fiR/p3XoO2FF
- Rns9l8pdgr46pb+qlNNh9+IJdHVOrWaIygtL8YlmbYYUAq+q2HYT/77r2axj+QxHnPxN
- MI0uYM7sWpol6ipYzNagA1pePlQHzLyMKnmOT2JF3B5SJ75qIS6hKO0sjcT0uldT9MNy
- NxK0ISI7G/lm0CKUzAol03u1SwCN1ICbaG0pumto+UwlbfnB3UNpWSWHgeBHac52Wiiu
- sRGA==
+ d=1e100.net; s=20251104; t=1778855143; x=1779459943;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=q4fgK36sSo3TBVry93HVuy8ilXSmIn8bEO/5kIWJOSo=;
+ b=ZemWEvtLLp2P8QgCNQsue9fGReHK1WXZ5mMdlS9teBNJsh1G6q69SQpnfz55Luc4NK
+ Bj8eYwNgyNv+0AhM+ADwRDoWEHlaQ5/tKRkH6SGLEvSNX78d/tzn7YMjuHy+4BE17gHN
+ RDFCSTrRnB6hc4qBAhmGMtntFdanx8njOFu34Jlrb8lnOUdDgpm9dkFOD4w3HQu4Sqyk
+ xFWVzdAShN6NAjAFUMSXstavugrimMr0a8Gj/gTvA4RY+IaquQjBFRaTSBWvEYMLl9KY
+ GPSTBgjz+u03uoldB/vjelFwhLC9ZHgj64gK/294T28ojP66UCdmLms/MKUFVkqKRxIy
+ EbJA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/qrii7Hjcens5iRvLhwR27EyIzV/ctTClKN8HmX0VRpaSGNlnDMOoLaFJTa4WpG7lAh/q2fvJ63azj@nongnu.org
-X-Gm-Message-State: AOJu0Yy77kaXM+VvXepnPnvQOifcTeSG6BmVWaxOUI3wzeepJUN3twUs
- CcNecD6P720yTUVm5WjvK4pY7DONnZ9719fEGcAnYsKzxu40NhyLeAQkVaqvOIsqccdziIRU68+
- DsXpV
-X-Gm-Gg: Acq92OESzzHno4OEU25kcksuG7k9pYW3VkxOZMSrlJM1cWTvssI9LPbL5iA8fm51yqv
- /OR6B0nx3BVjItvD1V1A1n6a4vOdIYFpxGvSJNb7qoSL6RdNhbT2gYFk6aPeD16oKuNgtTWZL6j
- SoqGUGpxQX5iMhiGXBfbCljlEcGbqUSETYYftdQPZlYk6pK2pERO+SOpjY66BVyjEiY8q3EEaPb
- wNjvZaaKl8dYQ9L0gItbznkYG8zJ2zkRP/V6MjqdE+MG7QBCm1SFDzNgPJP4PriDE9RC5MH1Ybq
- mY46UPy3l1WQPyonLkpsV5dnC+mvyDsx18F6WBCA2IEX/WMcVcCe/yram8RAyfaVGWZjlMgIKfn
- iW4IvqODswA8JQjLDBqhYM1IFTw8RJJmcxbivX/uiAekpR3bBYfTVl5iT/AUjtPsPMpUuvp7zfd
- gzJvwTmkmwc6tzLKHf/ClH9+SpCU/9OoiASjqjmZxEQM+NChvgmaWEEu0WYzPVKSquxcrXBXuZh
- dDEuox4xLMuQaYJzcvBNu8Ji3Y9ymBBgCluyJRKog==
-X-Received: by 2002:a05:600c:a00f:b0:48a:5301:bb5c with SMTP id
- 5b1f17b1804b1-48fe63263dfmr59705095e9.16.1778855146806; 
- Fri, 15 May 2026 07:25:46 -0700 (PDT)
+ AFNElJ+FucnX/9mGENwNTBnkkig54rkoyiu2GWmJPdfwcbmMXzMP9jX9BHyLIVOgNgLIc5xqJ8fE9FqLbEYv@nongnu.org
+X-Gm-Message-State: AOJu0Yy1cUBK02menTawlZffBIE3m3Nx3i2Vg6LdbotyGO2nI8dLXikP
+ 6HUWhzmfuiE1rXEYYZbKpQdvCg0mMgF4+E2Zjb6xLtEEU6DZjqezUhYdF+gERoDU6y1bkUMJmmq
+ WSfop
+X-Gm-Gg: Acq92OGZYG4fM6KReCGMCUHUWrDWgw6bJw3ltrWCffR+gzXvPvXpTBEN3F+oEZG2xr5
+ hvy8jESLwZSF554x0M2W3ulvOUSNAXJdEYaZHEm+VXRV47FO1fp0HmEp0BwErppbR961AGGjyiq
+ i0WG5BsGnT2L14HH07Nn94M3gf2E7Wk0d0zFCH3/whz6JFPQOlJyHN37U1lmqKSGaANKzGuqSJ8
+ oJCbRHqShhWgZAirKtbW6MZhHzjqgCAtNaMc06nq31aSvY8qzuAKBU8hyELHLx5olSoPntdLY/F
+ 6Tuovmu5+wAvcZynO/2olO7CY/jS1+NrBfLkFkqa+XbonV8Wc4UN5k+GgRU9JkHnsgFKQDkX2AG
+ dgxcJBgIC+eta5ieMj+8+RnxEGcRBF1uJRRoSUk8sW3Me57KG9hN7mZ6HZYmDo7q5gDOXrVmvHt
+ hX6Lt919LQORE0J63QQWIWrg4Y9+mNXm/qTozYPIQYQXxTs6aKHf3W9bw0oUA63OZb8b/GL28u5
+ vXXSikL6sUq2IA+ajy8KsAzp0+HR0CZ9Leypl/0uw==
+X-Received: by 2002:a05:600c:8b18:b0:485:3b9e:caa7 with SMTP id
+ 5b1f17b1804b1-48fe6515983mr64148455e9.23.1778855143144; 
+ Fri, 15 May 2026 07:25:43 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da15a666fsm13560603f8f.36.2026.05.15.07.25.45
+ ffacd0b85a97d-45da15a666fsm13560603f8f.36.2026.05.15.07.25.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 07:25:46 -0700 (PDT)
+ Fri, 15 May 2026 07:25:42 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [RFC PATCH 03/14] target/arm/ptw: Flip sense of get_phys_addr_v6
- return value
-Date: Fri, 15 May 2026 15:25:30 +0100
-Message-ID: <20260515142541.571911-4-peter.maydell@linaro.org>
+Subject: [RFC PATCH 00/14] target/arm/ptw: Flip sense of get_phys_addr*
+ function return values
+Date: Fri, 15 May 2026 15:25:27 +0100
+Message-ID: <20260515142541.571911-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260515142541.571911-1-peter.maydell@linaro.org>
-References: <20260515142541.571911-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,38 +101,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/ptw.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+This patchset changes all the get_phys_addr* functions in the arm
+page-table-walk code so that instead of "return true on translation
+failure, false on success" they are "return true on success, false on
+failure". This convention seems more intuitive and it matches the
+sense we use for the translate_for_debug and tlb_fill_align methods.
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 93e77b3eb6..fa251f5b5c 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -1326,11 +1326,11 @@ static bool get_phys_addr_v6(CPUARMState *env, S1Translate *ptw,
-     result->f.attrs.space = out_space;
-     result->f.attrs.secure = arm_space_is_secure(out_space);
-     result->f.phys_addr = phys_addr;
--    return false;
-+    return true;
- do_fault:
-     fi->domain = domain;
-     fi->level = level;
--    return true;
-+    return false;
- }
- 
- /*
-@@ -3791,7 +3791,7 @@ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
-                                   memop, result, fi);
-     } else if (arm_feature(env, ARM_FEATURE_V7) ||
-                regime_sctlr(env, mmu_idx) & SCTLR_XP) {
--        return get_phys_addr_v6(env, ptw, address, access_type, result, fi);
-+        return !get_phys_addr_v6(env, ptw, address, access_type, result, fi);
-     } else {
-         return get_phys_addr_v5(env, ptw, address, access_type, result, fi);
-     }
+I've marked it RFC for two reasons:
+(1) I'm on the fence about whether the upheaval is worth it; I
+think on balance yes, especially now I've done the work, but
+you could argue the other way
+(2) I'm open to suggestions of whether the patchset could
+be better structured for review
+
+On point 2: I opted to convert one function at a time, on the theory
+that you can then review each patch by checking (a) are all the
+function's callsites updated to invert the sense of the return value
+(b) do all the "return" statements in the function change.  It does
+mean that the patchset has a lot of places where we add a "!" logical
+NOT and then remove it again at a later point in the patchset.
+
+thanks
+-- PMM
+
+Peter Maydell (14):
+  target/arm/ptw: Flip sense of get_phys_addr_disabled return value
+  target/arm/ptw: Flip sense of get_phys_addr_lpae return value
+  target/arm/ptw: Flip sense of get_phys_addr_v6 return value
+  target/arm/ptw: Flip sense of get_phys_addr_v5 return value
+  target/arm/ptw: Flip sense of get_phys_addr_psmav5 return value
+  target/arm/ptw: Flip sense of get_phys_addr_pmsav7 return value
+  target/arm/ptw: Flip sense of get_phys_addr_pmsav8 return value
+  target/arm/ptw: Flip sense of pmsav8_mpu_lookup return value
+  target/arm/ptw: Flip sense of get_phys_addr_twostage return value
+  target/arm/ptw: Flip sense of get_phys_addr_nogpc return value
+  target/arm/ptw: Flip sense of get_phys_addr_gpc return value
+  target/arm/ptw: Flip sense of arm_cpu_get_phys_addr return value
+  target/arm/ptw: Flip sense of get_phys_addr_for_at return value
+  target/arm/ptw: Flip sense of get_phys_addr return value
+
+ target/arm/internals.h      |  4 +-
+ target/arm/ptw.c            | 82 ++++++++++++++++++-------------------
+ target/arm/tcg/cpregs-at.c  | 12 +++---
+ target/arm/tcg/m_helper.c   |  8 ++--
+ target/arm/tcg/tlb_helper.c |  6 +--
+ 5 files changed, 55 insertions(+), 57 deletions(-)
+
 -- 
 2.43.0
 
