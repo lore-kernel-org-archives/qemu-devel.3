@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABE5ECD343F
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 18:02:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4157CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 18:03:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNwqz-0007Yt-0z; Fri, 15 May 2026 14:01:41 -0400
+	id 1wNwqz-0007dV-SC; Fri, 15 May 2026 14:01:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwqa-0007Mw-RK
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwqb-0007Mx-ED
  for qemu-devel@nongnu.org; Fri, 15 May 2026 14:01:21 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwqR-0001Ra-I7
- for qemu-devel@nongnu.org; Fri, 15 May 2026 14:01:12 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwqN-0001O4-TB
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 14:01:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:
  In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=pZxZk/+CpFI8us1ErkL1NtnFWy7JjUbN7JM2vAM5v/0=; b=QuKJ1bSWumxq9M6
- +SrR5SCN4Gobop3m249aqPTygjk8fWSdTXzB8JDBXWeyPSmvVBVs6gyaGiOtFo79UHi6Fu+5G8oIX
- t8dQVMi1LLu6DLpQUmLwMFWvFYIyHuucXLPAG+8B1snAmmQGWtH5Tf0vCO2M+LzRfd+G0DJ1UOXjr
- HA=;
+ List-Help; bh=cIud+2/7n8B6qCEnkps3I5wAPwb0N413cjj3FZ11Jnk=; b=rHIIEKR14XDN+hO
+ CBK8Sz+2Bl04HQmLlW/5vTaW+x7AMGqg0HVIZmmnlFVYGFOoUiGRZgLR8tN8NNHiMLXFf7RB18iJz
+ i9Xp56tn4BnKot4SMRQ6RpfW8bJ5qZLBUAqUTZSKaVKZUbImrsRafIW5ZE9hXClDwb752VAe5xtyK
+ tw=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
  Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v6 25/27] target/riscv: Make pmp.h target_ulong agnostic
-Date: Fri, 15 May 2026 20:04:35 +0200
-Message-ID: <20260515180437.23620-26-anjo@rev.ng>
+Subject: [PATCH v6 20/27] target/riscv: Fix size of trigger data
+Date: Fri, 15 May 2026 20:04:30 +0200
+Message-ID: <20260515180437.23620-21-anjo@rev.ng>
 In-Reply-To: <20260515180437.23620-1-anjo@rev.ng>
 References: <20260515180437.23620-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -64,164 +64,73 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The pmp.h header is exposed through cpu.h.  pmp_table_t is also used in
-CPUArchState.  CSR declarations are only used in target/ and are moved to
-csr.h.  In pmp.h, addr_reg is widened to 64 bits and the privilege mode
-parameter is fixed to 8 bits, similar to previous commits.
+mcontext is at most 14 bits in size with the H extension, fix to 16
+bits. trigger_cur indexes into tdata*[RV_MAX_TRIGGERS] which holds 2
+elements, fix to 8 bits.
 
-Note, the cpu/pmp/entry and cpu/pmp VMSTATE versions are bumped, breaking
-migration from older versions.
+This patch also adds a migration entry for mcontext which is used in
+tandem with other debug data that is already migrated.
+
+Note, the cpu/debug VMSTATE version is bumped, breaking migration from
+older versions.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/csr.h     | 12 ++++++++++++
- target/riscv/pmp.h     | 19 +++++--------------
- target/riscv/machine.c | 10 +++++-----
- target/riscv/pmp.c     | 10 ++++++----
- 4 files changed, 28 insertions(+), 23 deletions(-)
+ target/riscv/cpu.h     | 10 +++++-----
+ target/riscv/machine.c | 13 +++++++------
+ 2 files changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/target/riscv/csr.h b/target/riscv/csr.h
-index 370da83a69..5ee3f38ac5 100644
---- a/target/riscv/csr.h
-+++ b/target/riscv/csr.h
-@@ -84,4 +84,16 @@ extern const RISCVCSR th_csr_list[];
- /* Implemented in mips_csr.c */
- extern const RISCVCSR mips_csr_list[];
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 032bcba025..f34b19470b 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -467,11 +467,11 @@ struct CPUArchState {
+     target_ulong mseccfg;
  
-+/* PMP CSRs, defined in pmp.c */
-+void pmpcfg_csr_write(CPURISCVState *env, uint32_t reg_index,
-+                      target_ulong val);
-+target_ulong pmpcfg_csr_read(CPURISCVState *env, uint32_t reg_index);
-+
-+void mseccfg_csr_write(CPURISCVState *env, uint64_t val);
-+uint64_t mseccfg_csr_read(CPURISCVState *env);
-+
-+void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
-+                       target_ulong val);
-+target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index);
-+
- #endif /* RISCV_CSR_H */
-diff --git a/target/riscv/pmp.h b/target/riscv/pmp.h
-index 91130289d8..eae305ac6f 100644
---- a/target/riscv/pmp.h
-+++ b/target/riscv/pmp.h
-@@ -22,7 +22,6 @@
- #ifndef RISCV_PMP_H
- #define RISCV_PMP_H
- 
--#include "exec/target_long.h"
- #include "cpu.h"
- 
- typedef enum {
-@@ -52,7 +51,7 @@ typedef enum {
- } mseccfg_field_t;
- 
- typedef struct {
--    target_ulong addr_reg;
-+    uint64_t addr_reg;
-     uint8_t  cfg_reg;
- } pmp_entry_t;
- 
-@@ -67,21 +66,13 @@ typedef struct {
-     uint32_t num_rules;
- } pmp_table_t;
- 
--void pmpcfg_csr_write(CPURISCVState *env, uint32_t reg_index,
--                      target_ulong val);
--target_ulong pmpcfg_csr_read(CPURISCVState *env, uint32_t reg_index);
-+typedef struct CPUArchState CPURISCVState;
- 
--void mseccfg_csr_write(CPURISCVState *env, uint64_t val);
--uint64_t mseccfg_csr_read(CPURISCVState *env);
--
--void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
--                       target_ulong val);
--target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index);
- bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
--                        target_ulong size, pmp_priv_t privs,
-+                        int size, pmp_priv_t privs,
-                         pmp_priv_t *allowed_privs,
--                        target_ulong mode);
--target_ulong pmp_get_tlb_size(CPURISCVState *env, hwaddr addr);
-+                        privilege_mode_t mode);
-+uint64_t pmp_get_tlb_size(CPURISCVState *env, hwaddr addr);
- void pmp_update_rule_addr(CPURISCVState *env, uint32_t pmp_index);
- void pmp_update_rule_nums(CPURISCVState *env);
- uint32_t pmp_get_num_rules(CPURISCVState *env);
+     /* trigger module */
+-    target_ulong trigger_cur;
+-    target_ulong tdata1[RV_MAX_TRIGGERS];
+-    target_ulong tdata2[RV_MAX_TRIGGERS];
+-    target_ulong tdata3[RV_MAX_TRIGGERS];
+-    target_ulong mcontext;
++    uint16_t mcontext;
++    uint8_t trigger_cur;
++    uint64_t tdata1[RV_MAX_TRIGGERS];
++    uint64_t tdata2[RV_MAX_TRIGGERS];
++    uint64_t tdata3[RV_MAX_TRIGGERS];
+     struct CPUBreakpoint *cpu_breakpoint[RV_MAX_TRIGGERS];
+     struct CPUWatchpoint *cpu_watchpoint[RV_MAX_TRIGGERS];
+     QEMUTimer *itrigger_timer[RV_MAX_TRIGGERS];
 diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 36f4c3251d..13eb292c4a 100644
+index 376075b2bd..c6ebb58882 100644
 --- a/target/riscv/machine.c
 +++ b/target/riscv/machine.c
-@@ -48,10 +48,10 @@ static int pmp_post_load(void *opaque, int version_id)
+@@ -239,15 +239,16 @@ static int debug_post_load(void *opaque, int version_id)
  
- static const VMStateDescription vmstate_pmp_entry = {
-     .name = "cpu/pmp/entry",
--    .version_id = 1,
--    .minimum_version_id = 1,
-+    .version_id = 2,
-+    .minimum_version_id = 2,
+ static const VMStateDescription vmstate_debug = {
+     .name = "cpu/debug",
+-    .version_id = 2,
+-    .minimum_version_id = 2,
++    .version_id = 3,
++    .minimum_version_id = 3,
+     .needed = debug_needed,
+     .post_load = debug_post_load,
      .fields = (const VMStateField[]) {
--        VMSTATE_UINTTL(addr_reg, pmp_entry_t),
-+        VMSTATE_UINT64(addr_reg, pmp_entry_t),
-         VMSTATE_UINT8(cfg_reg, pmp_entry_t),
+-        VMSTATE_UINTTL(env.trigger_cur, RISCVCPU),
+-        VMSTATE_UINTTL_ARRAY(env.tdata1, RISCVCPU, RV_MAX_TRIGGERS),
+-        VMSTATE_UINTTL_ARRAY(env.tdata2, RISCVCPU, RV_MAX_TRIGGERS),
+-        VMSTATE_UINTTL_ARRAY(env.tdata3, RISCVCPU, RV_MAX_TRIGGERS),
++        VMSTATE_UINT16(env.mcontext, RISCVCPU),
++        VMSTATE_UINT8(env.trigger_cur, RISCVCPU),
++        VMSTATE_UINT64_ARRAY(env.tdata1, RISCVCPU, RV_MAX_TRIGGERS),
++        VMSTATE_UINT64_ARRAY(env.tdata2, RISCVCPU, RV_MAX_TRIGGERS),
++        VMSTATE_UINT64_ARRAY(env.tdata3, RISCVCPU, RV_MAX_TRIGGERS),
          VMSTATE_END_OF_LIST()
      }
-@@ -59,8 +59,8 @@ static const VMStateDescription vmstate_pmp_entry = {
- 
- static const VMStateDescription vmstate_pmp = {
-     .name = "cpu/pmp",
--    .version_id = 1,
--    .minimum_version_id = 1,
-+    .version_id = 2,
-+    .minimum_version_id = 2,
-     .needed = pmp_needed,
-     .post_load = pmp_post_load,
-     .fields = (const VMStateField[]) {
-diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
-index bc4ab8ad15..9b26a3c1b4 100644
---- a/target/riscv/pmp.c
-+++ b/target/riscv/pmp.c
-@@ -23,6 +23,7 @@
- #include "qemu/log.h"
- #include "qapi/error.h"
- #include "cpu.h"
-+#include "target/riscv/csr.h"
- #include "trace.h"
- #include "exec/cputlb.h"
- #include "exec/page-protection.h"
-@@ -310,7 +311,7 @@ static int pmp_is_in_range(CPURISCVState *env, int pmp_index, hwaddr addr)
-  */
- static bool pmp_hart_has_privs_default(CPURISCVState *env, pmp_priv_t privs,
-                                        pmp_priv_t *allowed_privs,
--                                       target_ulong mode)
-+                                       privilege_mode_t mode)
- {
-     bool ret;
- 
-@@ -373,8 +374,9 @@ static bool pmp_hart_has_privs_default(CPURISCVState *env, pmp_priv_t privs,
-  * have no functional impact in QEMU emulation.
-  */
- bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
--                        target_ulong size, pmp_priv_t privs,
--                        pmp_priv_t *allowed_privs, target_ulong mode)
-+                        int size, pmp_priv_t privs,
-+                        pmp_priv_t *allowed_privs,
-+                        privilege_mode_t mode)
- {
-     int i = 0;
-     int pmp_size = 0;
-@@ -724,7 +726,7 @@ uint64_t mseccfg_csr_read(CPURISCVState *env)
-  * To avoid this we return a size of 1 (which means no caching) if the PMP
-  * region only covers partial of the TLB page.
-  */
--target_ulong pmp_get_tlb_size(CPURISCVState *env, hwaddr addr)
-+uint64_t pmp_get_tlb_size(CPURISCVState *env, hwaddr addr)
- {
-     hwaddr pmp_sa;
-     hwaddr pmp_ea;
+ };
 -- 
 2.52.0
 
