@@ -4,103 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AEE2CD343F
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 10:39:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FD7ECD343F
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 10:40:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNpwZ-0007Ik-8k; Fri, 15 May 2026 06:38:59 -0400
+	id 1wNpxE-0007Ng-Kf; Fri, 15 May 2026 06:39:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wNpwX-0007IN-SX
- for qemu-devel@nongnu.org; Fri, 15 May 2026 06:38:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wNpwV-000534-LG
- for qemu-devel@nongnu.org; Fri, 15 May 2026 06:38:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778841533;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=f8IbwfAXFBp2iEY9hDuNfWW//pX7bZYeZL494F0BYDI=;
- b=OUYE/6NrH7oiV6EEv3Wr75KRLN1QwKYkFMSpk9kqHmgHzb7Nb0UrY9i56mvq/2VOpPOi89
- sue/hgG5/tQhqoE68Kp87NCE8HwYys6hlmO6YFKzJYiTJ/cgTdVwGPIJISH4GxzU9t1kvs
- /EHQsQmHCFNlNGMLN3xbJzI3IvDZN4A=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-672-cywa73z4Pw2kRKI-cBV5ig-1; Fri, 15 May 2026 06:38:52 -0400
-X-MC-Unique: cywa73z4Pw2kRKI-cBV5ig-1
-X-Mimecast-MFC-AGG-ID: cywa73z4Pw2kRKI-cBV5ig_1778841531
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-44a71109b94so7127810f8f.3
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 03:38:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wNpxD-0007N8-30
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 06:39:39 -0400
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wNpxB-0005PX-QH
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 06:39:38 -0400
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-65c396d3b36so11791938d50.0
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 03:39:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778841576; cv=none;
+ d=google.com; s=arc-20240605;
+ b=YDAO+ZAMqjy8Vv0UjJJyJXsVaqCiZQEAzDViIt9/tOsAxRqyDCWWOJx6KnYcMQpO/D
+ qP8xVt37h6NtvZaWNM201kE7aO6y3Zcvlyheub0mB9dzaetj5+n6MJz8pyMSQkcnMlXs
+ t/lAgCQjWDRBkwiicIeRMBn+cRJfYipzF405KU0le3853p2IHOUc335fs9p+s5TaAUnw
+ z9z/S25lWnMngGO4DBfQi6AP0LJaAEPbKhxdqDehXgjvCv7aPc+E9Bgl4LTnO3rT0T7T
+ ghmiz/wdYviNSGPkAp13cvY+T8MyqOtNuyaDx2BGfn/oWfYWsqxFVnt4OWBr8yuejpeR
+ XOSg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=8V9MsRPAtrfGNpaBIrVqmbcRuCD4OEpbMZ0Gmq5IewI=;
+ fh=4YEFpNnPkA7CDFIH8AQnfynK3ALVwg08iwCq9o2iTYQ=;
+ b=HZBjG69i3lyZQY7EQW6qlIE+9eQFKycmtrQ2If8kqOjFWoVh23WtRywSy+bbwcM4FA
+ xcJ3ZQI+itGUAr+Il+3Hf/WIM/YOoUFhBZjSErfZHh0BX8GHxq9OH5pIIP5QqjWaeTtf
+ eFTRW5fJGk05MC7hJwSW5EWRfs6+8wNy254c/OmRYAf0Yy6697KqKSUmZNN6BJeBXIyD
+ eKiLzQOC2+/c80DLC+LbHpM8iUc/n27EjewvwQcB39LLhnCFjgKY3MFmoGHomVPan9Yt
+ NXm71vbaH9QqbmLQQweHQY4q19bVu31Sfcav47iE5eGZcp6H+pCccplsho9Bu6arAta6
+ ExjA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778841531; x=1779446331; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=f8IbwfAXFBp2iEY9hDuNfWW//pX7bZYeZL494F0BYDI=;
- b=Y1vkGu9urcJMfnI/NxaGxiC4eJ+VYNaaS6vaY3EttBNjls5DEJw77VCx/HtkUtpXCh
- CIXGfDmzde3ZOiVnTouKI//dswQG0iOrJOD4ibqaS6gWI/WIm187NRuPAEJI6ASrswMB
- VU7KgXfBF62LBBjONK+bMRrkZg22oY0TB4NemCychVV5RF6Y6233qMosinxsDWJvZu5P
- TH67KC/efXYE4Qwq0Jh+jGaw50vkMEgH/NiY9Bo3HpfxiWvUPRu1ATqBwV1ABYMPSzAp
- agOER0AJ/u/MP9V6BLuWxRsohiPuqkv6TydlEE+t4UWPN1NqAynkktsWqkG6kIz9dCgx
- E9/A==
+ d=linaro.org; s=google; t=1778841576; x=1779446376; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=8V9MsRPAtrfGNpaBIrVqmbcRuCD4OEpbMZ0Gmq5IewI=;
+ b=JspHA/jEZ0ALoB5rwNy5tsi97U0KNNwXpHUFXEti5JCVLpOs6uGQ9bWyJw0VrQ/CrG
+ My4+BEA4KaYBNlV6pxMJixPTIoM/tZsTINRekt/kOrNBvHQ+/0kJsevP2H0yXumS60u9
+ /ifnpGgj15iGKihr3sTBm18DlWowhz2dvGsI62yGtWiumED2IrZUCzlIaDftL+C4PG3b
+ U5w6j1Gd3t/A8Btlf/90BJJo8WT1v8T6XoPyPkqCZ7mAR/xjdhmSrASgLA0hE2nDc96N
+ b3gcQoVyHCfeNnD12C6q1xrsR6mJi1KxnkfOXXCmFxptCqYBSPR5bNcisJGDQTXm9aDa
+ k1DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778841531; x=1779446331;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1778841576; x=1779446376;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=f8IbwfAXFBp2iEY9hDuNfWW//pX7bZYeZL494F0BYDI=;
- b=JcvKic0jYsvJe0JvzGkD45EJ831oC/qe7D+0BVFtm7bxRyvmcRqytArtsW25KtDFZD
- CSyYVZHBQ10bdXy1zFAGZyKkviAWg7BnYQstp5nv4iRUVACReJrk+1iFziZp+AbFaUtW
- TvEYu+XwMac9S/NngFJWW8MJYo8hQA/nvRQmuuw8sOSE0PFDmgk+Qqek5KdSdL+T5hkQ
- vEK8AGFHB3e/y+jG6ryKav8IFvfPHOJOJ+rpQKeFBNt7Fvhdw6m3l6DDoClPXvfN0Fna
- qhTo1rAZsK9GQu/2T2rhbZPOg7GTZVaikwfO2dDCqMX/7Z4b7lSUUW1PSoZ0hDGrz5SO
- E21g==
-X-Gm-Message-State: AOJu0Yzo4cfs5PG1aA0mXhaJ8OpuH7AekJnLJBarRELoPdU1lvfcYStw
- YJXBii8oBM4VoSBHlPlxcXwjpbpDVxcZE3sTWb5iW4AwyhlyyW4vrpE8l2ll9mTxYD4o/vaff3u
- T7AR7KG/9dCSfhB6bgxYllY63OV/e5CRZjxLtdpruJOdVAcAaabIlD0xnELzQvxTq5VU1XInwV0
- s6PWZ+zMMnv3Do7oS9FlL3XHhQxNeoGehsIxW3Ncvk
-X-Gm-Gg: Acq92OE9+gwkVHJzGbo6kUd6M8fVCW4pH+NP4fJLAbhxOJ4XoAoHb9XlzlOHu2m70yg
- cp2I3LS80pS0Nk5rkGOpc/ovK+QUvjwIOcc6HJcOuJTc09owtTlYmogkWhj5nOj+6JCD/uGQQJA
- dqn5wyGc46cyZhlG4NP+s4rRoYTzkcwo48OZBT3nufVOYfOnDjpzNENmIVjDQmjZU6SrvEb2zPz
- AxQB9LXyYj/AGWW58bNlzzTEzNxIrhJtRlfwfMwhbL9X+EfUIF75mD5lxz6VYQoBK75fNWej4h5
- RGqYw99bQM5XFzCo7y9og465mCt7xsEc6OC2b4u1Mpky5WCGzArrWeWjiaGDsWaANHK5lMellIj
- dfdEVuECrfkN7X0RA1mA/ZqW2iyvRdk5MEqdNfTrTaBD04cTO+pk5yC34s7STL5h/RfuvZ32SbC
- vooLa/qBCj7s8AeFEsRClD89PxF0gB
-X-Received: by 2002:a05:6000:ccf:b0:44f:da54:da6c with SMTP id
- ffacd0b85a97d-45e5c5bed3amr3619395f8f.26.1778841530731; 
- Fri, 15 May 2026 03:38:50 -0700 (PDT)
-X-Received: by 2002:a05:6000:ccf:b0:44f:da54:da6c with SMTP id
- ffacd0b85a97d-45e5c5bed3amr3619357f8f.26.1778841530261; 
- Fri, 15 May 2026 03:38:50 -0700 (PDT)
-Received: from [192.168.10.48] ([176.206.106.181])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da0a19c2dsm13547800f8f.21.2026.05.15.03.38.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 03:38:49 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Wei Che Kao <skps96g313.cs10@gmail.com>
-Subject: [PATCH] apic: fix delivery bitmask with modified xAPIC ids
-Date: Fri, 15 May 2026 12:38:48 +0200
-Message-ID: <20260515103848.3883904-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.54.0
+ bh=8V9MsRPAtrfGNpaBIrVqmbcRuCD4OEpbMZ0Gmq5IewI=;
+ b=f8otZbwYcNTkQX1mh0YVW17iMbZAwWhyfDSV8M4r5D7RobHoTW6zbLDsTOrFG96k9g
+ AQd3UrSQWbfQL/nPgtYKSbGJzu8Tp4p0IXzudZSaVnE1YM5rBldvtjtI/3x2u7WhL3i0
+ x8uBVYOIEAvRl4ppHA29dGd3tZKwTitLQqn6f0gsQF2shkAk9wN4o3D7JH3o1kMAPLOf
+ 1fh0gurpH/RI221wohN6ZJM/jJsFl0qPIa1chLK0nGAV24+hRaI13KyWeBIU/KbY77Zz
+ KO8hSgOq3Xj5hv9M9cV9hstg25lAEPnWOQd/JUJQg9ufZRnpwJoTJVLWcOGrGScWM8FZ
+ vglA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9NeGFNbA+jDsE4GiqTeX0oRQX/o/d37rUnXPs3uDvG1di3r6WfO+KdmHRqxkrE2ze6CbUcIVecIaBs@nongnu.org
+X-Gm-Message-State: AOJu0YxS++KpD8OkNvinRkS/MHKI8waEg1RmTXOMAJP+EHN0fx0e7JEB
+ xvYpeJdB39VI6jtq99DuKnudlyN9Zcb7Dro2NvmlLu0d9fW78a879QRvxQRl0ElLtfkmL1T1K5e
+ HWkR2o15SHljzdxTRX6AkN6ByEBY0xOAIwQsbwLgKXg==
+X-Gm-Gg: Acq92OH430S/7KhbyOMlCMM+XmE78hoJECBWgXJ2lU1e9bO3JehQOBumvyr4LkFalCR
+ LwH1Q6/I3ZALbZbrwCH1kfGN8yQ+P7Zavs3F2lFIhBAWvT2++yW2YjlG4uWxK2TTlAwm0moC7n+
+ BadVZC+sMv5K2dzxNZXQlAnIF6ZCEZbwfbOkRYCRDkwe7wed/oitVb2PgGsashBNFBDhCGKwJxT
+ dPEOhjbXQl0j6V+aQIfUo3U9eSUw7HGQzq0MUjaDPhXEKciWbieXQDgjnWK8OWz/4C6jcrjKF5j
+ aeV8XIFrhdSCJn2ml1NSA5t9nPSmM7dKCwZyNOeymr5gfXsnMQT+XIeeD9sQAex80iU=
+X-Received: by 2002:a53:d047:0:20b0:65d:7e2c:cbe0 with SMTP id
+ 956f58d0204a3-65e228e63c6mr2588404d50.55.1778841576196; Fri, 15 May 2026
+ 03:39:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <E8468087-647B-45B5-AF4E-85DD15A6D35C@unpredictable.fr>
+ <20260513022109.14107-1-scottjgo@gmail.com>
+In-Reply-To: <20260513022109.14107-1-scottjgo@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 15 May 2026 11:39:24 +0100
+X-Gm-Features: AVHnY4IX_hjQfNJWNgwLl3fNZZjt4IBEdXLie5Ju8_mLEpWeWNg_39Y7NlmnxeY
+Message-ID: <CAFEAcA__VLg89_c3ZJMfN4BJs4sJ4KGFKnNVOW9AppoARRiMtw@mail.gmail.com>
+Subject: Re: [PATCH v11.1+ v4] target/arm/hvf: Fix WFI halting to stop idle
+ vCPU spinning
+To: "Scott J. Goldman" <scottjgo@gmail.com>
+Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Roman Bolshakov <rbolshakov@ddn.com>, 
+ Phil Dennis-Jordan <phil@philjordan.eu>, Alexander Graf <agraf@csgraf.de>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,62 +120,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Self-IPIs (or all-but-self IPIs) in QEMU can cause a out-of-bounds access
-to deliver_bitmask, because the access uses the APIC ID register which
-is writable by the guest.  However, foreach_apic uses the delivery
-bitmask indexes to look up the local_apics[] array, which is indexed
-by *initial* APIC id.  Using the right id fixes both a possible heap
-write overflow if the modified APIC id is too large for max_apic_words,
-and a mis-delivery of both self and all-but-self IPIs.
+On Wed, 13 May 2026 at 03:21, Scott J. Goldman <scottjgo@gmail.com> wrote:
+>
+> Commit b5f8f77271 ("accel/hvf: Implement WFI without using pselect()")
+> changed hvf_wfi() from blocking the vCPU thread with pselect() to
+> returning EXCP_HLT, intending QEMU's main event loop to handle the
+> idle wait. However, cpu->halted was never set, so cpu_thread_is_idle()
+> always returns false and the vCPU thread spins at 100% CPU per core
+> while the guest is idle.
 
-Reported-by: Wei Che Kao <skps96g313.cs10@gmail.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- hw/intc/apic.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+I've applied this to target-arm.next for 11.1; thanks.
 
-diff --git a/hw/intc/apic.c b/hw/intc/apic.c
-index e5ea8312617..0e8932005fa 100644
---- a/hw/intc/apic.c
-+++ b/hw/intc/apic.c
-@@ -648,13 +648,6 @@ static void apic_deliver(APICCommonState *s, uint32_t dest, uint8_t dest_mode,
-     APICCommonState *apic_iter;
-     uint32_t deliver_bitmask_size = max_apic_words * sizeof(uint32_t);
-     g_autofree uint32_t *deliver_bitmask = g_new(uint32_t, max_apic_words);
--    uint32_t current_apic_id;
--
--    if (is_x2apic_mode(s)) {
--        current_apic_id = s->initial_apic_id;
--    } else {
--        current_apic_id = s->id;
--    }
- 
-     switch (dest_shorthand) {
-     case 0:
-@@ -662,14 +655,20 @@ static void apic_deliver(APICCommonState *s, uint32_t dest, uint8_t dest_mode,
-         break;
-     case 1:
-         memset(deliver_bitmask, 0x00, deliver_bitmask_size);
--        apic_set_bit(deliver_bitmask, current_apic_id);
-+        /*
-+         * The self and all-but-self cases do not use apic_match_dest() and
-+         * directly fill in deliver_bitmask; the bitmask's indexes in turn
-+         * map to local_apics[] slots which are never changed even if the
-+         * xAPIC id is modified.  So use s->initial_apic_id instead of s->id.
-+         */
-+        apic_set_bit(deliver_bitmask, s->initial_apic_id);
-         break;
-     case 2:
-         memset(deliver_bitmask, 0xff, deliver_bitmask_size);
-         break;
-     case 3:
-         memset(deliver_bitmask, 0xff, deliver_bitmask_size);
--        apic_reset_bit(deliver_bitmask, current_apic_id);
-+        apic_reset_bit(deliver_bitmask, s->initial_apic_id);
-         break;
-     }
- 
--- 
-2.54.0
-
+-- PMM
 
