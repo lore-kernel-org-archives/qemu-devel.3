@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3A39CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 18:02:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0599CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 18:02:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNwqw-0007YE-T8; Fri, 15 May 2026 14:01:38 -0400
+	id 1wNwr6-0007ip-4V; Fri, 15 May 2026 14:01:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwqJ-0007KB-Vu
- for qemu-devel@nongnu.org; Fri, 15 May 2026 14:01:01 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwqb-0007My-F4
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 14:01:21 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwqI-0001JJ-6r
- for qemu-devel@nongnu.org; Fri, 15 May 2026 14:00:59 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwqR-0001SU-HL
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 14:01:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=Dif4F/JSwsFoirBfR0Og1xVgR07gWDZRmkt3nSiTV88=; b=Dae+XsDyOzUixdF
- DTuRSUw4a0s9CK2lwLKQ7/ZpL2KqwLzEblLF1vwftz2aoSRYxiBMwnsn3+Ztk7otCTvkVrfTH3nQT
- NGJNJRCizhZ9pDFQ5DEOA08WcVhXeFlJVl1LnRmYf3Z/XAyH44VbSENZO7XWpdp3eEjvWuh8uBuVz
- sE=;
+ List-Help; bh=4copfV3KOUSGQI/wq6tJqErp7sDw4BebeHasptGS1lM=; b=WGHEM3MhkP6TFf/
+ iBKJ1eYTaD7jnU7W0hM2/m1i/UjJBcmuxQlNm126Bcn3mKtMntYOG5QovAnLovQM2TaGZbs7pD79O
+ /eCIQyuYNThQgcW+JpP3xrgh5uphegVWuSTpw2znBQcX/tspkMnz1eXpDYqj9vuo0Hhai/t+ZeZy1
+ hA=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
  Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v6 08/27] target/riscv: Fix size of retxh
-Date: Fri, 15 May 2026 20:04:18 +0200
-Message-ID: <20260515180437.23620-9-anjo@rev.ng>
+Subject: [PATCH v6 27/27] target/riscv: Fix pmp.h/cpu.h circular inclusion
+Date: Fri, 15 May 2026 20:04:37 +0200
+Message-ID: <20260515180437.23620-28-anjo@rev.ng>
 In-Reply-To: <20260515180437.23620-1-anjo@rev.ng>
 References: <20260515180437.23620-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -63,119 +63,94 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-128-bit helpers only make sense for MXL_RV128, TARGET_RISCV64,
-and TCGv == TCGv_i64, therefore fix retxh to 64 bits.
+pmp.h is only needed and included for system mode, however relevant
+macros (MAX_RISCV_PMPS, OLD_MAX_RISCV_PMPS, MIN_RISCV_PMP_GRANULARITY)
+are required unconditionally by cpu.c, and so are defined in cpu.h.
+pmp.h then defines pmp_table_t depending on these macros and so requires
+cpu.h, and cpu.h in turn uses pmp_table_t resulting in circular
+inclusion.
 
-For the sake of being pedandic, update 128-bit instructions to access
-retxh via 64 bit TCG ops, even if they only make sense when TCGv ==
-TCGv_i64.
+Move PMP macros to pmp.h and only exose PMP properties in system mode.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h                      |  2 +-
- target/riscv/insn_trans/trans_rvi.c.inc |  8 ++++++--
- target/riscv/insn_trans/trans_rvm.c.inc | 16 ++++++++++++----
- 3 files changed, 19 insertions(+), 7 deletions(-)
+ target/riscv/cpu.h | 4 ----
+ target/riscv/pmp.h | 4 +++-
+ target/riscv/cpu.c | 6 ++++++
+ 3 files changed, 9 insertions(+), 5 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index feacf19a5e..5ecae9b339 100644
+index ad5d23ee6b..4bd24c15c5 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -249,7 +249,7 @@ struct CPUArchState {
-     uint32_t xl;            /* current xlen */
+@@ -180,10 +180,6 @@ extern RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[];
  
-     /* 128-bit helpers upper part return value */
--    target_ulong retxh;
-+    uint64_t retxh;
+ #define MMU_USER_IDX 3
  
-     uint64_t jvt;
+-#define MAX_RISCV_PMPS (64)
+-#define OLD_MAX_RISCV_PMPS (16)
+-#define MIN_RISCV_PMP_GRANULARITY 4
+-
+ #if !defined(CONFIG_USER_ONLY)
+ #include "pmp.h"
+ #endif
+diff --git a/target/riscv/pmp.h b/target/riscv/pmp.h
+index eae305ac6f..4c95c2767a 100644
+--- a/target/riscv/pmp.h
++++ b/target/riscv/pmp.h
+@@ -22,7 +22,9 @@
+ #ifndef RISCV_PMP_H
+ #define RISCV_PMP_H
  
-diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_trans/trans_rvi.c.inc
-index 2c82ae41a7..ff450d46f8 100644
---- a/target/riscv/insn_trans/trans_rvi.c.inc
-+++ b/target/riscv/insn_trans/trans_rvi.c.inc
-@@ -1030,10 +1030,12 @@ static bool do_csrr_i128(DisasContext *ctx, int rd, int rc)
-     TCGv destl = dest_gpr(ctx, rd);
-     TCGv desth = dest_gprh(ctx, rd);
-     TCGv_i32 csr = tcg_constant_i32(rc);
-+    TCGv_i64 wide_desth = tcg_temp_new_i64();
+-#include "cpu.h"
++#define MAX_RISCV_PMPS (64)
++#define OLD_MAX_RISCV_PMPS (16)
++#define MIN_RISCV_PMP_GRANULARITY 4
  
-     translator_io_start(&ctx->base);
-     gen_helper_csrr_i128(destl, tcg_env, csr);
--    tcg_gen_ld_tl(desth, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_ld_i64(wide_desth, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_trunc_i64_tl(desth, wide_desth);
-     gen_set_gpr128(ctx, rd, destl, desth);
-     return do_csr_post(ctx);
- }
-@@ -1053,10 +1055,12 @@ static bool do_csrrw_i128(DisasContext *ctx, int rd, int rc,
-     TCGv destl = dest_gpr(ctx, rd);
-     TCGv desth = dest_gprh(ctx, rd);
-     TCGv_i32 csr = tcg_constant_i32(rc);
-+    TCGv_i64 wide_desth = tcg_temp_new_i64();
+ typedef enum {
+     PMP_READ  = 1 << 0,
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 753f92307f..36f9570f2d 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1127,7 +1127,9 @@ static void riscv_cpu_init(Object *obj)
+     cpu->cfg.cbop_blocksize = 64;
+     cpu->cfg.cboz_blocksize = 64;
+     cpu->cfg.pmp_regions = 16;
++#ifndef CONFIG_USER_ONLY
+     cpu->cfg.pmp_granularity = MIN_RISCV_PMP_GRANULARITY;
++#endif
+     cpu->env.vext_ver = VEXT_VERSION_1_00_0;
+     cpu->cfg.max_satp_mode = -1;
  
-     translator_io_start(&ctx->base);
-     gen_helper_csrrw_i128(destl, tcg_env, csr, srcl, srch, maskl, maskh);
--    tcg_gen_ld_tl(desth, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_ld_i64(wide_desth, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_trunc_i64_tl(desth, wide_desth);
-     gen_set_gpr128(ctx, rd, destl, desth);
-     return do_csr_post(ctx);
- }
-diff --git a/target/riscv/insn_trans/trans_rvm.c.inc b/target/riscv/insn_trans/trans_rvm.c.inc
-index 795f0ccf14..0e2da5bed2 100644
---- a/target/riscv/insn_trans/trans_rvm.c.inc
-+++ b/target/riscv/insn_trans/trans_rvm.c.inc
-@@ -169,8 +169,10 @@ static bool trans_mulhu(DisasContext *ctx, arg_mulhu *a)
- static void gen_div_i128(TCGv rdl, TCGv rdh,
-                          TCGv rs1l, TCGv rs1h, TCGv rs2l, TCGv rs2h)
+@@ -1550,6 +1552,7 @@ static const PropertyInfo prop_mmu = {
+     .set = prop_mmu_set,
+ };
+ 
++#ifndef CONFIG_USER_ONLY
+ static void prop_pmp_set(Object *obj, Visitor *v, const char *name,
+                          void *opaque, Error **errp)
  {
-+    TCGv_i64 wide_rdh = tcg_temp_new_i64();
-     gen_helper_divs_i128(rdl, tcg_env, rs1l, rs1h, rs2l, rs2h);
--    tcg_gen_ld_tl(rdh, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_ld_i64(wide_rdh, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_trunc_i64_tl(rdh, wide_rdh);
- }
+@@ -1658,6 +1661,7 @@ static const PropertyInfo prop_pmp_granularity = {
+     .get = prop_pmp_granularity_get,
+     .set = prop_pmp_granularity_set,
+ };
++#endif /* !CONFIG_USER_ONLY */
  
- static void gen_div(TCGv ret, TCGv source1, TCGv source2)
-@@ -212,8 +214,10 @@ static bool trans_div(DisasContext *ctx, arg_div *a)
- static void gen_divu_i128(TCGv rdl, TCGv rdh,
-                           TCGv rs1l, TCGv rs1h, TCGv rs2l, TCGv rs2h)
+ static int priv_spec_from_str(const char *priv_spec_str)
  {
-+    TCGv_i64 wide_rdh = tcg_temp_new_i64();
-     gen_helper_divu_i128(rdl, tcg_env, rs1l, rs1h, rs2l, rs2h);
--    tcg_gen_ld_tl(rdh, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_ld_i64(wide_rdh, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_trunc_i64_tl(rdh, wide_rdh);
- }
+@@ -2666,9 +2670,11 @@ static const Property riscv_cpu_properties[] = {
+     {.name = "pmu-num", .info = &prop_pmu_num}, /* Deprecated */
  
- static void gen_divu(TCGv ret, TCGv source1, TCGv source2)
-@@ -244,8 +248,10 @@ static bool trans_divu(DisasContext *ctx, arg_divu *a)
- static void gen_rem_i128(TCGv rdl, TCGv rdh,
-                          TCGv rs1l, TCGv rs1h, TCGv rs2l, TCGv rs2h)
- {
-+    TCGv_i64 wide_rdh = tcg_temp_new_i64();
-     gen_helper_rems_i128(rdl, tcg_env, rs1l, rs1h, rs2l, rs2h);
--    tcg_gen_ld_tl(rdh, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_ld_i64(wide_rdh, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_trunc_i64_tl(rdh, wide_rdh);
- }
+     {.name = "mmu", .info = &prop_mmu},
++#ifndef CONFIG_USER_ONLY
+     {.name = "pmp", .info = &prop_pmp},
+     {.name = "num-pmp-regions", .info = &prop_num_pmp_regions},
+     {.name = "pmp-granularity", .info = &prop_pmp_granularity},
++#endif
  
- static void gen_rem(TCGv ret, TCGv source1, TCGv source2)
-@@ -289,8 +295,10 @@ static bool trans_rem(DisasContext *ctx, arg_rem *a)
- static void gen_remu_i128(TCGv rdl, TCGv rdh,
-                           TCGv rs1l, TCGv rs1h, TCGv rs2l, TCGv rs2h)
- {
-+    TCGv_i64 wide_rdh = tcg_temp_new_i64();
-     gen_helper_remu_i128(rdl, tcg_env, rs1l, rs1h, rs2l, rs2h);
--    tcg_gen_ld_tl(rdh, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_ld_i64(wide_rdh, tcg_env, offsetof(CPURISCVState, retxh));
-+    tcg_gen_trunc_i64_tl(rdh, wide_rdh);
- }
- 
- static void gen_remu(TCGv ret, TCGv source1, TCGv source2)
+     {.name = "priv_spec", .info = &prop_priv_spec},
+     {.name = "vext_spec", .info = &prop_vext_spec},
 -- 
 2.52.0
 
