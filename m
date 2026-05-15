@@ -4,95 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96A27CD343F
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 07:50:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 162C5CD4851
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 07:54:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNnIj-0002Zd-5j; Fri, 15 May 2026 03:49:41 -0400
+	id 1wNnMh-0003Nb-44; Fri, 15 May 2026 03:53:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNnIh-0002ZV-IY
- for qemu-devel@nongnu.org; Fri, 15 May 2026 03:49:39 -0400
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ id 1wNnMf-0003NJ-Uq
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 03:53:45 -0400
+Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNnIg-0004fQ-3u
- for qemu-devel@nongnu.org; Fri, 15 May 2026 03:49:39 -0400
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-65c7a459105so1501491d50.0
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 00:49:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778831376; cv=none;
+ id 1wNnMe-0006JS-9P
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 03:53:45 -0400
+Received: by mail-yx1-xb133.google.com with SMTP id
+ 956f58d0204a3-65db820588aso6548680d50.2
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 00:53:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778831623; cv=none;
  d=google.com; s=arc-20240605;
- b=GOAoWrJouoU6QD5sj2s/02FgnJLpY6fLNbBLvAbJ+bH+ptBNz0nelDbWq3bWyPl6mt
- /ZlThdz6vPPEjSpsiL8tWNeMIR3M788xsxgHEWobQA2znkI62SQ+NHfbVFJxnVtjHI6w
- 5UegTlbYUpuvVwlSeZq/XY7oHnE86+Wnm0Z7obn5yeFEhPRcYpTU7fC4ZtF3j00iKTxi
- /8Zf9X5EmKcmH2Ta1WflIToQagxVDCoyYCYU+uANyfmNwlNfT0B8ROW9WAlV3LqfHg/X
- cdmCwcq27UNcAjo/Z+MA9eDvfqEjxOLOeUAFAAMc9wUAttKQlKtyUxEiKxmPQg8AA4/L
- j7TQ==
+ b=ZgQB0tIPn/8EwYNMNBLUsZvn0ya6OOxh4ljIondankTAvH61LWFh5wVZB8Cq4qrEgs
+ rAvZWq5q7fgrrQe7d3lF5XrnqJGRbp7r/48BUygaCymFD26vCmrzRCtOUVpnduFeu5bX
+ I5wacZ+4kuhtgpdtjQB9XC3Ycu/PcNaqbGOOfkSDXE6MxMh3/BklBCrHc0bwuTaosOPM
+ FJeQUNCmaKvSuORZdcqVDHhm+P8glmFjQcVaYA0ti59y8k2bhkqywHAUot31uWYFsq35
+ jXEWXnYILvFZVvDcTo6o4BXaEaikdNSbi9jMaOSQak6e7adN81cxaHbEudY8kjMG6l+U
+ DwGg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=Kl7r+CxFQIu/AdB82SR5m36jXeSWsX3wG0LWBa4lbz8=;
- fh=e8nu1IjsldMjLOhkwTyl+Pk0dizS3lE7fiZnEkdMfPA=;
- b=LNC7OtEZ3sR5ByugZHalRh7mkmIl2z/mxE5aHvHDtZpfNJXDSdOT+ps6vA1QoweANU
- BMABkJbRd5ONrZexgoimSb1Fqsm83vLR245+AMQn/V3CB+6rjU3H69LwNyxHZgfsM/AL
- 3aeIk2usXlaEHGSXRElDc4pMvDQUqKMn5nu3G1zjk6R+uvdkoASoBb+VkZe/FoVql4DC
- julpXBmQDfqO32D2eU8pfnRx/aZDgklvJTi1xGD3aZ1SkDx15JgC4FMAjExGy6Qn8Q9g
- Xq93+Ov/aBR+dgd4gIuy4U5Av+cOKGDfX8XxZb99Y8+a7YNMu5+yZ7H9ql3NIvlVABJP
- ST0A==; darn=nongnu.org
+ bh=IJ+oUe8oGbEUKSRqECazEtaPL7QJvkcdQxXjOvM9upc=;
+ fh=dLwwt/6PJelAWMThWWIJ5d1nOog5XyB2a5wXLG5A9pE=;
+ b=SqhhqPzQL9zZ9zNTouAKttSCGdlJeBZRJ1MrVxrncBOlDBxSQkvbdiDd70Jk5GAIv5
+ sxU+fIItkOVtUDDu36adSuhuY+igZ62DxASHvXUjLqCG9b2MuHSj/7W3v/f86u/bz+AP
+ eUBmertI/oVdXnzSGo1LdYa7NOGRfCQ4HvN+YCLOWsX9BohWUqT7PShK2roJF8QvhvCV
+ 7RbLwnTjRGYhBn3wFYLkyzhRKDvfuCZgecykvFm2FVM8q6Id0iUyxuYVVvFy5Tu0HosT
+ twxbXaHacAGvSbktHLVBCZvD9fIFg2xTunfoT7IUA+k7a6BplLKRg7QNov7+5Oe10Y6Y
+ hupQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778831376; x=1779436176; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778831623; x=1779436423; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Kl7r+CxFQIu/AdB82SR5m36jXeSWsX3wG0LWBa4lbz8=;
- b=m+2LTdyTHoQL9Y6SGPu3x7+HIaLA4PBfyL/8OBThhw/GStu0YxsjlBl9pCU8eOtlE8
- CRyvY50TC6kXRCMIsSQeQyoUuQSh8MyUx8JXNHqlOMq6MVPlv+2gn5QJ8qBgSruSwvOF
- 5y8rwbEm+avRKBuYk7D3I1ZFb28Idaett49ULOa/Khh/ZnumHvNLjVSogRs3BCkPJ08Q
- 9lkJizFAEy3qyKFXY9X8MupriQpbvSQuLC4+UTVzdTPO5eob7csSbDW4zbtkOf+7J8xx
- KGkmcORoED7rF/N8JCPuNXacFOqz1dxLGiggUdfxFKFIlTFU7XnPhIkhfP14eOoV8xTu
- ad6w==
+ bh=IJ+oUe8oGbEUKSRqECazEtaPL7QJvkcdQxXjOvM9upc=;
+ b=px3Sa+geyvRd4RigBk4pQ+beDTaAbSHJ07/lfAA1YgqSUb3xwU+OtQE7AAOzo1+7l7
+ mfKm/b+faYxH5ERvJGoA50vVJD+943840H+htHODAMBLAgRo1tv0K3OWAOOcuK/iH0Wr
+ N0x3KSBxPYndVrIhuFs/DxmcKq5Si76mFp6gT6Nps3KvdrBL8WGL0Yj9IdNw+NcxdBbZ
+ +ceu96++fL3QltGLC3VzZT6rhmQLLssTr/+jIFoVp4ndu7QUWGlP3L+4YmpAsIvQHfH8
+ TBoP9yqRLqrFAdMIrCDsD/j7iZaHJfm/Wey2GGUdO2i1OTDbDJYGdulQ66BrqdvHRgFN
+ xN2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778831376; x=1779436176;
+ d=1e100.net; s=20251104; t=1778831623; x=1779436423;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Kl7r+CxFQIu/AdB82SR5m36jXeSWsX3wG0LWBa4lbz8=;
- b=N6HjGHxj2jO/0imShZPQ/41ErEv+FV/ZJG1GGFR4SLPgqW7eaQtpIfmZWxikguHdjy
- uWTa9nA/1G9U3L+GTIilXyxwy9P62YSnA3LkChW2UOUxcrQwr8iU3qItxAnmhyzzc+EH
- rsaRgBY3YzzvqPi/3PCY9qD/m0f8jiplCOlZOY+a1jRLzybgS/wdCKVojget7+xMMdvG
- uOb1JEbGAHvw9SSmJuCqa8XodDvRSIcPxplqb3xm8SK3Hj3AQXbGOJG3ndyBjBkqI0SG
- mpiVFoLUMW/zFR7n/HFXu40PnzYfCXThbS/XXZdUUPpXbR60pfRDFvclWih27K11xOLr
- 7gug==
-X-Gm-Message-State: AOJu0YxBCELE+O+WQP1FjUc3Z6BHvYbQh9pieyTiAzVCZFOu25l/489D
- PUEwcE72jv9CTCiK8ShUgCp4DL7b2t9NUkf9W9/QHvluRW0iAp+PTU1gd9ctjwsDkXrnJfTUEx9
- dZarzvF9W0jrNKlk6ZXXcdkPXnaFQNs/3zxojR/Qtaw==
-X-Gm-Gg: Acq92OG44dkU2VES0VRs+gJINXecgqURwIquyg5YpdN2KNh5GaPwuPTaOldluwgJT31
- mTbLcntg8snb1QcpcfTKK2OEbLT0oaZDvp1IkrC/PflgIGR0c3VGWZjE1LB4fWq7Hi3M5eo1jVY
- J8GBdUUG5f7UojQ5qUzn5qAEH0kO65QGeInf0B8wo4JXjYXqcH6wx4D7bPIgX2umCtfE7heQbaB
- 9s6RZthaadTfSV73PU0uuSOtKKGIJKFVMYRaeB7d8aIKTNlFOixYRbZhMZhF/4oxWWCRw/O6JJW
- UKYxX0lmiYxYf9tHCYZ8AaFgGrToDUViuNgPetFVUvsB4OomfxCS5upAx0cIX8/BNSk=
-X-Received: by 2002:a53:c05b:0:10b0:652:e1f6:2437 with SMTP id
- 956f58d0204a3-65e2148b752mr2045398d50.1.1778831376542; Fri, 15 May 2026
- 00:49:36 -0700 (PDT)
+ bh=IJ+oUe8oGbEUKSRqECazEtaPL7QJvkcdQxXjOvM9upc=;
+ b=NJFxVpUIsOKQpuv99h7ZiPRITg9JXyG0CNnu0bdfELwR/HoC9Kz5U7+yMyiuJl2+pL
+ E1mACfAuBeBLyIlQ/Cqwwb87p1JivuF+Ba/cLPuRULLFQCQD4j96eMHXQWZxfpAPa1iv
+ avZDn6PDpORihBuFuUjouxkiokdUPFKUh8MLkEO6u9tpikO69f1lgF4oWw3ttR60kpVf
+ M04lDgqSiUXoUj8YPfe3jGzhnHPG6FKaf7NMm+/B8DAvQ2Ct2rqOdG8UQYRkeozJ1AjU
+ hkvqaUyUp+BYR5WD4yFAvgz9048u11gNNs1DFU5PmMRVow1ZQBWHRIl1/Y2VYZM7NBfL
+ EdWw==
+X-Gm-Message-State: AOJu0YwWFMjyn24TkuLtIFQQodPvP6cQNsvjadwjFRiPM8PxgDVdGC59
+ urzRcHVfV8XpuL/XLRwVjVG/cIIpIzh34/wbD+P7lnK7wdCxK38opJSZuYbXuPiltPIP4DTavsI
+ KIpisqJusAqeWKcAEHyJJDMgmgwJ8RuTVw6fb4RJ3vhT4X9WnhkXu
+X-Gm-Gg: Acq92OHvVWdlgAt0JvZsRabWvOkrm2e3WmqFSZh7B/nEiZRhNKEo6Ur/qZnul+isJ8w
+ lfpetOt47TTbs1DxKSroAkgyF19K29TWCsn5D0Ep8j6XlRk/nyk96L4WIa+/BBup4V4iyWVlMGF
+ EjTReTvIZnHMqpiEcKC7mLknDDcMj4wTjV6xs4QB+Ri45tsAtYTjUOm8KYIJfQFTUz2nKm7qgrs
+ AP7sPyPrE0LSPopIYLJbJb4MaqC8krgo588zO4f/xJUvy2k87zOZQwGw+607FSN3Wf337DXIGAw
+ 7a/Nw7BNZjLpxQBZWPMnL7kmk+s9vnsW5FOwEUFbXEqtVj3l+5lh4XEPk6wc/s5HBio=
+X-Received: by 2002:a05:690e:1517:b0:64e:a335:95cd with SMTP id
+ 956f58d0204a3-65e227f64damr2592808d50.41.1778831623163; Fri, 15 May 2026
+ 00:53:43 -0700 (PDT)
 MIME-Version: 1.0
-References: <agRC56rkfb4z6zSO@redhat.com>
-In-Reply-To: <agRC56rkfb4z6zSO@redhat.com>
+References: <20260507134709.70507-1-philmd@linaro.org>
+In-Reply-To: <20260507134709.70507-1-philmd@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 15 May 2026 08:49:24 +0100
-X-Gm-Features: AVHnY4J61MQ27C0TVF1bkLLe1FkWtoTaf6fJmQFbfqWUZECjHxL85E97MH-3tGs
-Message-ID: <CAFEAcA9_Xmy8FukkMDGVzU8LvE9giSp9zgrpiGvbxn=wNjJp-g@mail.gmail.com>
-Subject: Re: Limit USB 1.0 (UHCI/OCHI) and 2.0 (EHCI) to non-virt use cases
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org
+Date: Fri, 15 May 2026 08:53:31 +0100
+X-Gm-Features: AVHnY4IIiEcqBsWj2187kbXMGwed8ZNnMBs-CBoxAoll8AKJ0fwo4HcjuIvbiLs
+Message-ID: <CAFEAcA9VrYhdqPU_Lao=OGOvtXt8KFyfj4Y5P_U1xek6C7x_RQ@mail.gmail.com>
+Subject: Re: [PATCH 0/2] target/arm: Extract IDAU interface to its own unit
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,36 +116,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 13 May 2026 at 10:23, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
+On Thu, 7 May 2026 at 14:47, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
 >
-> QEMU has implemented four generic USB controllers
+> Trivial series moving TYPE_IDAU_INTERFACE to its
+> own unit, and moving its header under the tcg/ namespace.
 >
->  * UHCI - USB 1.0 only
->  * OHCI - USB 1.0 only
->  * EHCI - USB 2.0 only (must have UHCI companions for 1.0 compat)
->  * XHCI - All of USB 3.0, 2.0, 1.0 in one controller
+> Philippe Mathieu-Daud=C3=A9 (2):
+>   target/arm: Rename Aarch64-specific methods
+>   target/arm: Extract IDAU interface to its own unit
 
-> Thus to reduce our maint burden around security bug handling, it is
-> proposed henceforth to classify UHCI, OHCI and EHCI under the non-
-> virtualization use case and thus be excluded from security bug triage
-> processes. No CVEs would be assigned, bugs would be reported publically
-> in gitlab:
 
-> The XHCI controller (specifically the hcd-xhci.c variant) would remain
-> as our only option for the virtualization use case, with security process
-> applied to bugs & eligible for CVE assignment:
 
-I support this; I don't think there's any reason to use anything
-except XHCI in a modern VM, and the others are useful now
-largely in the emulation and retrocomputing areas.
-
-I guess my question is how we communicate this to users, and
-whether there's some sort of timescale or if it's just
-"effective immediately". If we're fairly confident nobody's
-really using the old controllers in production then I guess
-we can just commit the policy update to security.rst and
-that then appears on the website ?
+Applied to target-arm.next, thanks.
 
 -- PMM
 
