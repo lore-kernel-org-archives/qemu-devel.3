@@ -4,89 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BB4CCD4851
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 08:04:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DE35CD4851
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 08:04:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNnWH-0006s1-G2; Fri, 15 May 2026 04:03:41 -0400
+	id 1wNnWw-00076T-EY; Fri, 15 May 2026 04:04:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNnWC-0006qP-S3
- for qemu-devel@nongnu.org; Fri, 15 May 2026 04:03:37 -0400
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ id 1wNnWm-000730-48
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 04:04:12 -0400
+Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNnWB-0001K3-Aj
- for qemu-devel@nongnu.org; Fri, 15 May 2026 04:03:36 -0400
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-65c7a459105so1524539d50.0
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 01:03:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778832214; cv=none;
+ id 1wNnWj-0001RU-Ct
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 04:04:11 -0400
+Received: by mail-yx1-xb12a.google.com with SMTP id
+ 956f58d0204a3-6530287803cso11121455d50.1
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 01:04:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778832248; cv=none;
  d=google.com; s=arc-20240605;
- b=ZHvvvkcXK+Avz5skbCga7vgwDlIC8NOxmS5G4hQyYxRi97ct1QuM+KK11GrUXi+3ZK
- Ywe3Jb5AsK5q2yw38cht1GGY+uIUa8PUo6tdJAm1zPpy+FVpOxNj8pSZ4oYzmnNFh0EZ
- NOz+yy0iBjt6dRBstVcPcj45IdeTxTTwCTi47PFE9gsrbYkB0iB7A4q9FqBYlkBpWZnO
- SmnQHKStz4b4dH7yQtPN2aIGrDdWAD4B9brFavWJSchBy5I5tgA29YlII5LAXWQU0BwG
- ryWatcJx1HcdOgYhH/5SNfy6T5tRXyJczMWI6+GDUxYLOrEbFWOupRY9ASOMtJPXB645
- uIpg==
+ b=h8mZrC3nSuLrvqfvzCN+T8kffj6aZmMRWo0Io1yVshnNmFlmBhDYVnuPUVE5IqauCD
+ 8By/U0zwB2kakntzKNRxOkbJ0escr9fTPwi10VJss9nQoKPOBwhMphSsWuZKK7eU1m5m
+ 2bX0Jmgi1z7Df2ZGXOCaJBn83TblBb+LdzTfJkgQJ0iCSc/PpKI6yc5OaUozUmwRMS4Y
+ 3K4Howd+c01YO3gVPAue0YXD3YW+0pS2rRmMTZh1ROQJm1JhkpJgfWCjc/F/iODePSUd
+ xLBjsin/a2/9m9msWxVrBVWJlvZ/AbmbtHVgoHJl11vbvYpqNGpLyiZ2lCV54cbnLjag
+ rmxw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=SCOyY7KDaMTThO3yLBJAEUbRwbm8BDSIF39YqyrR2Qo=;
+ bh=tAeko3QliCsjSnxHyD7hnmpxbGpB6r/G/Yu1W1e5c44=;
  fh=kvOOaizNZldvZrGcUk8ta2JEDnV4vPRBdkt8TLZf/QY=;
- b=eQsrdLkCHrt4vcbHiPXebIx/KD8ocn0GRhbgrsX8Cs8UG/M6lubpZ1mY6vp6zFibFx
- 3YM8HJSZv76zNAdKglLkyKp4ZaaWlLebIYtqxeDzs6p0BuqH3jNcQjHx1HDNNpfM9nBO
- RGLjfM0M5jidG8RJDLjDPX1JlErUpnkp/ztG5QjJtFDd2KfG5R7nf/YnVJR3MArlF8fn
- ZbxRRFnFBGBssSAcmKEd0mlFiFXbSiBF6hx8ixmjYQmK12lMSgUKc1W/Amz0pXoKJRrs
- vjvuOgIldOps/Wksn0osMFlEFAPK9ZnGT+ecvhbAOzdTM9ivT6e1GZipZJ1UVDfpTJ4j
- gL3g==; darn=nongnu.org
+ b=hJSbErqXVvd38e20ewyaBwehTR0r1noKrd1AQadzu2xP5SHcUKk9KDVZMzJYhCMe58
+ +Ab7kwmUY5vuIWzS8YV5P9nI21ugM0BSrzknLQLnOBmAHdU1X2r01Vz41c/fZ8vnbS+J
+ jD92WhXmLxpKYdtRdLOiteDxEBtHBtlXnA1SJXKlCA+NEjxTTIgZDLuYB1WMOYJcGb/2
+ PCa+taK8UgnZVNsAmL6c2+8isW2wBV6QmecWNqFJMhfK9KntGrJ/m93atukMxtLQnIVb
+ ogozjacKA5bNAP5I9/1LQd1Ac/9Um6HRD6bXkj0BVKW2pX6SRRg+ZDHjsA2MX7levGRr
+ DmhA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778832214; x=1779437014; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778832248; x=1779437048; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SCOyY7KDaMTThO3yLBJAEUbRwbm8BDSIF39YqyrR2Qo=;
- b=OD7QfoFkqwYTZx4cumwTTgeZ4aswjC7+3arD4OYkNk3FnUG5HRH8HgRck0g5iY8Mud
- XJz5JAiDQ1tRLPpXTPmICofQWcYjU+1Nvs/st75Ph/SyLucSuy7TAz3bR++ox0A4iC7a
- UMlgfUNIPgNQg529PV2kaQJIJ9fxI+nEN6nTJkSLSmc1UEzJEEsu3eUpMQgnKjiKPzk5
- jLA6r8hQuuTrlNrUZEB1Z7G/KELWpk0uJP80I/KewdBIRPNadK6IISZRyFp9/LH0cOR2
- S0e7NRIUuXeydJnFHUyPAOunNcBmYjMHvgOxkAcr/KeL492oJ7VTXz5zFXFtAdAWkG5Z
- Ghxg==
+ bh=tAeko3QliCsjSnxHyD7hnmpxbGpB6r/G/Yu1W1e5c44=;
+ b=F/kkitSEfcS6TUYOodXhaEh1FqF0GYOKzWcGK0ommTw26h0NIrVW9Wug6SjoXoSvAI
+ M4obzIg2HV/GSBCWoUx+AFMkIILgX6ouvohI9OU2RCILJssE+BrEVg8agvNEthzaok1K
+ fG8CC291ymOZWIRiXClURNYVKzE2uO5WR5ONYGu09lgfj+GiUGDlFLtAOzS1OL3h+AcX
+ gU9BhTT3lEEU3dMXaxT2t/R8ItXglX/nkU36+t4zBecclM9G+orW59WSb49qDNm4tPBC
+ w4dC2z7gQR6LLkys+/wJg2sJdzpECYooEf68Afq+dDkAn2hcURqa5jEFSCIv6WYLW8a7
+ /prw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778832214; x=1779437014;
+ d=1e100.net; s=20251104; t=1778832248; x=1779437048;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=SCOyY7KDaMTThO3yLBJAEUbRwbm8BDSIF39YqyrR2Qo=;
- b=OqzP4RlwAXctl1txoWD0tkDlwY6D2K3SD2OLYC6PGhrYRDnFbmbtQ5eQRioThcLy/l
- mjpLujmpBVdJtAgXDs3dePRBsuZbRXT0H+q3JKcZuyqA8GD42g4dUj2/8XUZ9z8pqONM
- J4CTcFxlSaCfnTCdMKhlnRDy+7hkCnxNl+NOvKu2EP+ALns57LCWujOKrsOex3Vx+ySz
- yavPVLih1kHSZAnRgxcNwnhHTpFZBMavBIxIdnaB98aoF8PyBX1LHvH7tYW5bj8O1ebi
- 7Rc+japQ1K6yNZfCdR5I+HT+Jd+6+24DsuVxRc055wxPqRvApo2Z6KorFMOKTvLa3AMd
- Zdtw==
-X-Gm-Message-State: AOJu0YzRtJdJbpJtchdS4XmDzQEYwS5Y9siSJJwvhvLg42/libZsMmFk
- kcbu958Lc6M9zLXso4xKS2myY2c8pAA29pMMVeUNGSLHpBo3f6SJGgIwifWFfdOlhS7jtqklEwy
- 5wZscFlKsHqPRNyzvowdelxcX5cWdMrVLbgtcW4XPSA==
-X-Gm-Gg: Acq92OEfbM+t259/ZHHjnkCKyezHvRP1UZhWebm8ZMZimjcnYbg6wrXlHxyuAZ8tGnA
- OK2vIEM1WgVYSMXeSjdpBcXkJK/WrkC7pmeO3NKhGghUqhevpb1Xz5n63F49N7Z+3LCvibbe9A9
- t4UO0ELiIXKIJs2ty2U6ZklY5Uf/Lsuj+U/CeJQ0m9q51VAGtcxkaoQAGQb7WTZwzAcQmhDrvAi
- iBsS/+V0vbQmsGrlJlZZSkEgkizZCWMN4r/OXhU2vbTW00pEY20ezbGWJT/JMlQBREScX+X7AoZ
- O02VOwYyO2Vr/m2mXYxt66g7UjdstiGpBzDZfLP2a1bJjxRgCSxuOV00fRyZjpHzGtU=
-X-Received: by 2002:a05:690e:150e:b0:65c:6220:5fd0 with SMTP id
- 956f58d0204a3-65e214cf2f5mr2180435d50.8.1778832214063; Fri, 15 May 2026
- 01:03:34 -0700 (PDT)
+ bh=tAeko3QliCsjSnxHyD7hnmpxbGpB6r/G/Yu1W1e5c44=;
+ b=bG8VFGH/1J69TLYtlpKHQPk9dp/ozBu308SoC4w9rGKv+VndJdi3LzuzvfdoWYZeZz
+ b35HsL0prJnm3l6x+nujbuFXHiISH7guvPbaC0O98UOIt1FRQxgXYuaC4BylRtNpC6LV
+ K6baI336NM1hN2DZMvqdg4h2YOJ0+eMUkm6qxQ6ymIfjO+Loc+EJlShuwQb4ZOqzbUF2
+ tURNahVFRa6wYOqE7GoGGXxJQz5znqY2AajlLVB1P3Fkn1jbBI2xH0Tq+K4k+Q9xPAFz
+ jis+PiuHaRgOo2WHF0x2Oq1hriFuh7haO1qQQQ8JfFWlynnXHqFgokgJa7nq+d8hNgII
+ YIZg==
+X-Gm-Message-State: AOJu0YyQ/t26ZGD65YxSyrxQtQf9kGFI6Bf0l/KMXy5rX8Y/YJYxnAKD
+ DAf0WwkG4DNKP0fozrWycCsl3/yGlhz09NxT6a0BilDczxea/bH4ifom86PtoaziK033JM0Yzwz
+ mTSYt+Eo9qCZ4Vgv/FXXgrgJBk7L8L9gcH5rZY7hRxw==
+X-Gm-Gg: Acq92OHqFr6DQaXrZB5wMTXF+z54REUyDUzeeQ8Rr5TwEPdPuvXOhkM3Mi7quEwi9bC
+ MebnVCJHuBZsJhMGvTzdyhgsUbqVEkoBkFMHmsqq6lKtc8X89D6lXgqaK0s5R4YFAPT8PaFAvRv
+ Hc4LM9WVRUS3AdolgFaY6/ncq4WrTXCBHccYkLsjz2/0rwRKs6N+8qpsvB06Kr//XnUpW9/9sqT
+ gCkH3+w3YSYKeJE4Bnqpbec/UJ1w10+wFg6tKzy3FyISbIMznT1y+58Y7TQbZa8LpoEZhEDOVuB
+ O3hD1yC9IdrLOSk4K/douEySaAmS/8esNzWyQlDA6+gzzKXSlu8wnjyv+mkW25Mo+lA=
+X-Received: by 2002:a53:d008:0:b0:65c:5329:788e with SMTP id
+ 956f58d0204a3-65e227bacc0mr2480805d50.32.1778832248002; Fri, 15 May 2026
+ 01:04:08 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260513105517.146706-1-corvin.koehne@gmail.com>
-In-Reply-To: <20260513105517.146706-1-corvin.koehne@gmail.com>
+ <20260513105517.146706-2-corvin.koehne@gmail.com>
+In-Reply-To: <20260513105517.146706-2-corvin.koehne@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 15 May 2026 09:03:21 +0100
-X-Gm-Features: AVHnY4IJGLtaKUKAAqETlMmv1N4v9lLsbYwbkqdBmbc9eYz-wD_Pxb5rfpoCaxg
-Message-ID: <CAFEAcA8KnmAONjnrzYRjeC5sFO+QLhgjgUx0n1apVk7CirzSxw@mail.gmail.com>
-Subject: Re: [PATCH v6 00/15] hw/arm: add Beckhoff CX7200 board
+Date: Fri, 15 May 2026 09:03:55 +0100
+X-Gm-Features: AVHnY4Ke-tAGlteQHWfYiv4ZYE-rSsNmuu97DIvTD-XkmqgM9rJgTsCezHgFryo
+Message-ID: <CAFEAcA92NRy1ePw2nHuGj7B4uzBOzGiPeMsAGjsF6viX+wQxnA@mail.gmail.com>
+Subject: Re: [PATCH v6 01/15] hw/timer: Make frequency configurable
 To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
  Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
@@ -99,8 +100,8 @@ Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -126,28 +127,26 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Wed, 13 May 2026 at 11:55, Corvin K=C3=B6hne <corvin.koehne@gmail.com> w=
 rote:
 >
-> From: Corvin K=C3=B6hne <c.koehne@beckhoff.com>
+> From: YannickV <Y.Vossen@beckhoff.com>
 >
-> Hi,
+> The a9 global timer and arm mp timers rely on the PERIPHCLK as
+> their clock source. The current implementation does not take
+> that into account. That causes problems for applications assuming
+> other frequencies than 1 GHz.
 >
-> Beckhoff has build a board, called CX7200, based on the Xilinx Zynq A9
-> platform. This commit series adds the Beckhoff CX7200 as new board varian=
-t to
-> QEMU.
+> We can now configure frequencies for the a9 global timer and
+> arm mp timer. By allowing these values to be set according to
+> the application's needs, we ensure that the timers behave
+> consistently with the expected system configuration. The SoC
+> configures the device correctly.
 >
-> The emulation is able to successfully boot an CX7200 image. The image inc=
-ludes
-> some self tests executed on every boot. Only the cache self test fails du=
-e to
-> QEMU emulating the cache as always being coherent. The self tests include=
- f.e.:
+> Information can be found in the Zynq 7000 SoC Technical
+> Reference Manual under Timers.
+> https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM
+>
+> Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
 
-I reviewed some of these patches in v5, and they haven't changed
-in v6, but you haven't carried across the Reviewed-by tags.
-Could you make sure you do that for any further respins, please?
-it makes it easier to see what still needs to be reviewed and what's new.
-
-For this version, I'll reply with the tags for the relevant patches.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
 -- PMM
