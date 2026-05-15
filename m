@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A84FCD4851
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 21:25:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BC61CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 21:25:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNzy3-0003Tv-VL; Fri, 15 May 2026 17:21:12 -0400
+	id 1wNzy4-0003WS-6v; Fri, 15 May 2026 17:21:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzy1-0003Fs-Nx
- for qemu-devel@nongnu.org; Fri, 15 May 2026 17:21:09 -0400
-Received: from mail-oi1-x231.google.com ([2607:f8b0:4864:20::231])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzxq-0002ym-QI
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 17:21:01 -0400
+Received: from mail-ot1-x336.google.com ([2607:f8b0:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzxz-0003Cp-Kp
- for qemu-devel@nongnu.org; Fri, 15 May 2026 17:21:08 -0400
-Received: by mail-oi1-x231.google.com with SMTP id
- 5614622812f47-479eb8bcacbso289833b6e.1
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 14:21:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzxp-0003AV-Ef
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 17:20:58 -0400
+Received: by mail-ot1-x336.google.com with SMTP id
+ 46e09a7af769-7de431da8fbso321506a34.1
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 14:20:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778880066; x=1779484866;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778880056; x=1779484856;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=xfIdAZa/61ftnRZpLmFUfpLUwk5YAIKg50gmXCXnAwk=;
- b=Ui8s7lHUsoSdupqTdfDhJlPvb7ozHgcjCsPh++sE1onHfdhqv7DsAUsx1X+qoYh+iR
- NsNEx+4Up/T6ZiafK9QpDgUYggMDpjaUna6EQG+8KLlwOMFKb2CO4EHDd65aZz+6OJEl
- CZ0bYfdyHdFhHglyQfsnvMPqpSuDVzyxivnK+yCRle85Hoh61TtXB50uXIH461MXKlxg
- KMK3qdj2bo4KAtKS/Rs9jtU7msaOmFOcQ/eSp2LnsgVA2eENVhUMZQA1KAbtJZPZk7yx
- AyftI2VrNIklT45aFxZNpjSdJzRLobOQL0OCZsH9AFIRYoQjOjSAbnjcqRmApyBK4Ygh
- 3N9w==
+ :reply-to; bh=yEnwcLeGpg8+Aatds6AxT6Eb+Y85spWjquA4JTnuWfQ=;
+ b=U/H/Lgs+0o4Gf9cKuGeNco8OAELVVIlL6dRlYBZUvhbHarhg9GUgh8htoDJ6Vf2JkS
+ yMocwKhc4KVF8c/NxMbK48DTCJ7LASsJmDNPq6FuLEYnTMfFExwjU5oIuUarvfxosSdb
+ EAdFzAHzSthnuJ2KvTu+IxHI3hU82ng+qo5hPXCyxKQVWgaYp3THTKgIxCO+A2S0U675
+ TkTLn9NsihrrN5rrmiS0u9CEfCKCBnwfGfZ6UE+1JBIWtSZz4c1+6fg52Oii2fWM4/hP
+ QQCy5Aihb4nDg4RzgDaaODtV4CtwVh5Ezvg+9QeuUubrIc1ry+2TME3E6NB9UHHKOr3N
+ HjvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778880066; x=1779484866;
+ d=1e100.net; s=20251104; t=1778880056; x=1779484856;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=xfIdAZa/61ftnRZpLmFUfpLUwk5YAIKg50gmXCXnAwk=;
- b=DFHVYQKQTPpJnZLBHJbpojXj145Z/nrzrLJ2rQntejzyAB1R4GC7QR4EAmykYik6G4
- xaeZNtGDqWaU9TuWnB16eocfOwl6YRkgMfywBwkNB5L8Kx/Vv5osb46yAjizjhx33iwe
- 5BBjHPF+Ie82WkiCPDYrVEb+0Gypabb0ZgIXQdJ5Vi7kwpf6gqIpdK/HRb3YYVaFXENo
- +uEbx0q4jqq6I15HUZbvkdU4bevNpmzlRuj4YS1sZn6gQGJD4jrHyHQO6IysrDo1NREI
- fUAXS2ouN8JaPb/K0/ZMPgh6VBv84r0gLzfhH4ErPHgH1MDKYQx3deKszBR/GHcjvtq9
- a5dw==
-X-Gm-Message-State: AOJu0YwMpBARr3WaEt6a+lvvJbF3np8bvnPUjIn98r88BFgYLoXG39RB
- RUHjmzXU6WXQh3bYBdmF+ZKTsCfu5kVBXqn3Cb2aTtH37WSZLxX9BQZ47SidTNM6wEvtWFTJpOM
- MOJ+qc20=
-X-Gm-Gg: Acq92OHp5NwKH2tb2CqKk69+o/I5IBnHeSjW5MODV3kjtwSTDIvAOZa5hFK2GQij9Aj
- owvKBzPKU/jb5YaHlVJqmayLoaGvBtzcrbtS8WpgtSym4lRUrEp9jGvNCey6DGtUZbrCeEBYLtf
- S3QBZpH0W4OhQVpKRtS2LKSgCJSYL9K2KX1yJYz1TNbet/ABRkh6mbxDv1YViMKAnO4y0zDIP9o
- CbHVkv9L1+x8ZiAi5vFQ3QDNnzC42ueYtP+MQceBfXLB0DnYkuU6W34zABKuVBt2XHYO/qsGOKg
- XUtbyr6z8LyoYLSblchPhO01m5BegEnWUn+Fg6rCsSF/51BplCKTkDgR0TUo4NGRr4Qm8TylF/H
- zBVUwMR+QHIkpYeVjyuw2FPLxZYIXkjEWIExoqLgk2GSzTCSv1SJS8qrdROpzgyMxoS8/bQ6iN/
- MvIb9UVJSTjo1nVz6NmprP
-X-Received: by 2002:a05:6808:d4f:b0:47a:4fd:9606 with SMTP id
- 5614622812f47-482e57c665dmr3943275b6e.23.1778880066475; 
- Fri, 15 May 2026 14:21:06 -0700 (PDT)
+ bh=yEnwcLeGpg8+Aatds6AxT6Eb+Y85spWjquA4JTnuWfQ=;
+ b=JS7vL3xGG9Q9h+1GqLNPS1aMKPU0PAsZWHGZzelut9teysM1eWdHwyogLy3hsBNSKp
+ M0pmE6npBxLMtW9XfLfuPFNSdKobKQo022QVbAqGTdvB5Vs2+B+m/+VznA+Dt+ksEL9x
+ h1zHuEzRFWBxiB2egW8UM3JFc5jWDFZCtOO4ukUFQHPPgbNYc54+/iNbKMpaq3uTdQL2
+ QWaBoimhF2f1zfGYnBJtxvRkdi2rle8FltHvP6zQrqgblSeqyJ0h6VTW3iTPkRazM5OX
+ xyLfcvkSzdcCH2xa3dUJBDhp5ObJceRXMK+Gw2wGDWl++N86SEXZEUHkktYoHQNPu6dJ
+ 8tHg==
+X-Gm-Message-State: AOJu0Ywbvsirmie8QM+H1XS5SXljQ+oMJcfRLQPUPbnxqm3VMgLYIP6P
+ vLH9jLn7FV0tPBGgsuoc/QdK9JXHtDfPOXb5cqiIiEoJbgYCmZfy8NiUgHDSXl3KcxA/oAfUT5m
+ dMo2l4gg=
+X-Gm-Gg: Acq92OGhFcFPj2zdW0LhJDkvFKHmKOMmpxbyK/LO8yAk+6qpfpuXGgpYWO55orMhGU1
+ 6YRCLdpEc7hySAhzfRZWNYVdEHLRCDGocyZxMm1khCYbyJ0XhBXwnbUNkK87LGKXyGTm01vg7ah
+ wX4TihhpJcDrYWxurkYcqTrUWtNB/Aj/18zUHddmzIUaV8iu4X0EprnewMtEakdOe1TsqIU+BR4
+ dKFH7wxURgkbXWYetvk66VqYDKiDTPhimmH4NdyYt4/ok61IKlq1rgenti+5S7mp8RkAPcjZ4XN
+ AafMiAl4DA2X+bADOTa6//ah8cCFYz20A/mbtX93g6d4kj6QrS5LNgAshIqPwsOxHqInF45qSfB
+ 9Agl0E5wQY0hySYiQlHhKtYbdKZ0p9LWRzn10DiJf2lGg1uuoOvWdj/ks5Z6lZyV4l3sJwEFKVs
+ Ilmh2jBKpg8w==
+X-Received: by 2002:a05:6830:81d7:b0:7dd:e032:3ce5 with SMTP id
+ 46e09a7af769-7e4f2bce60amr3752255a34.17.1778880055978; 
+ Fri, 15 May 2026 14:20:55 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55b7c6b29sm2185612a34.1.2026.05.15.14.21.05
+ 46e09a7af769-7e55b7c6b29sm2185612a34.1.2026.05.15.14.20.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 14:21:05 -0700 (PDT)
+ Fri, 15 May 2026 14:20:55 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Fri, 15 May 2026 15:20:00 -0600
-Subject: [PATCH 61/66] bsd-user: freebsd_rw_rdlock and freebsd_rw_wrlock
- fix missed decrement
+Date: Fri, 15 May 2026 15:19:51 -0600
+Subject: [PATCH 52/66] bsd-user: Return -TARGET_EINVAL rather than EINVAL
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260515-misc-2026q2-v1-61-5438ca41b27a@bsdimp.com>
+Message-Id: <20260515-misc-2026q2-v1-52-5438ca41b27a@bsdimp.com>
 References: <20260515-misc-2026q2-v1-0-5438ca41b27a@bsdimp.com>
 In-Reply-To: <20260515-misc-2026q2-v1-0-5438ca41b27a@bsdimp.com>
 To: qemu-devel@nongnu.org
@@ -78,24 +77,24 @@ Cc: Kyle Evans <kevans@freebsd.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3778; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=D53YgxUSSQOw0EYmx8h0jJgKb6MEpMryLTgDI8lySks=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqB43oC8PzfuJ8dsr8SOW6MsMA4y0bDXQ553b1L
- kfhrdcnfnmJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCageN6AAKCRBsHNEofbAR
- AL7ID/9iFtnzeN7O1onz8D7JCKcMlliuydaTS2tDC9mwEeECYeZioNY0vtU9zMjaW/ZiDICX4jM
- tmvG3AUq764r+/esWcWtAiFEFVNwCwEeQJ+w42rYnQWBk69rCdrTcu0Oy11V/yOVQGCrZGOWAZ2
- SVbVACMfty5Hv1MhGWtdjLbqdCfXiRUiy1JcP7kXlV1kqz4ndw4brDYDZZDgZeO69Pbp9aW0koA
- wKYyyya/bgzrF3/U6RlvNdk2DCtVYLfs7XtlBiH0QVBU03M1MVx5fLHEntNV/mXBEQVzMxStGpN
- ZbaY+EZc3KYpY5gRkF/CGhLU+Pz/VCrKKkCbmpx4aEQ9T1/atGDsM46xFjEH/NxneR7xAQ1KZ55
- n99VY4kjtbo0EIfjjBXVutbuZCtISAKJtPXX/kENjPFhbjM/SnwecZ8IUz2bib6cS5lVL2ICDkW
- Yn5luFgvfONaDt4bv+8hLqWH+FKB4p/1EsWaJ7PC5YC161BI/Gb+PgRc9fjAlOyODwwOUMgg1X6
- rdbjAcLSJD7hHGuoB2v7PFbAmxai1cES2lFKWgaJnPtbAeqpTp6YAd/g3L/dvgUEZ3Q3Z1Y5dE9
- V3sCvFfqDeCOkSIREkNjaXg17ZfLRYexMTFo10+DscihNZvXR1t5WIAqjAVN+ZT5HsYdKdSSNGI
- rkTRD6Lg94gOIxg==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1187; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=ZAOx7TZKzDpoWv9sI4ywL/Z4sDbvUZIM2czCevWXdMU=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqB43nZjWQhM5Zq+ViU269WZMKY50NbaN7oC1TS
+ tyUWJCku2mJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCageN5wAKCRBsHNEofbAR
+ AAxpD/9avKwc12mD7pmLumVBjEuxlSgsBYXqFnYP6gOC3zPqoyqv0JQJC23BJ4q60g3jH70+hZ1
+ BhaPzdbLCIg3VC+N47fEF1VzzIk3tCVtHvV0/bE7ITPtCP0SOb8BVeRhO+JbhbpTwAhwdZDveyo
+ 5yMcEceO/PlIOj7RaGJegmDAaXdCdWGyYrwW6qU3ot9NIGePq5nKXwCQVYvaRXTZTMo7UuyX91/
+ lgFa8M/HBjaywN77PaHKVZuIspV+XtlnCdDW0WWavA8+GHo9YJfWV3SsTiD2KDbtG+ndJ07bfYn
+ n8k8ot54rqsZ6vSFVqi94ybQVYdLbY25iecYvYxWWAnprzIj7V79iRT/Nzelq2Mb9PkKq7U81vh
+ OjCgOGJLy8/P0o9WIS5nYtGCgiq95rpwrO6rWI2+sLeAy/6pPvY9ERTSkpuP1S4JFfaM5FAUBy1
+ XjXRNqoHa2Tw2JDpsYC78xGH6f4tMBskIR6zZ6AbrR8hE8vcrBGptY0uXD14RCW22FTxc0PyAFj
+ yB4Tyh5//z1PGdr5nRVuX/k/34Hy5jp/7ikPBUL8sh/MA40gW7LWKsSwVkTLMODSXkCzPrwGjs5
+ I6jiNbpkfXRqM3ORSdkG1+RXQ1+M0PbNwqLPwDm5gdMcWGXWnCYmMavdeIGBrY39MZW6pPxJOdL
+ Gp2hAcZhUSEyHJQ==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::231;
- envelope-from=imp@bsdimp.com; helo=mail-oi1-x231.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::336;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x336.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -117,96 +116,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When we get an error from _umtx_wait_uint in the !_UMTX_OPTIMIZED case,
-relock the variable and do the decrement.
+The convention here is to return negative target errnos.
+Plus fix minor whitespace diffs.
 
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/os-thread.c | 22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ bsd-user/freebsd/os-syscall.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/bsd-user/freebsd/os-thread.c b/bsd-user/freebsd/os-thread.c
-index f90f13076f..a36c5ceccf 100644
---- a/bsd-user/freebsd/os-thread.c
-+++ b/bsd-user/freebsd/os-thread.c
-@@ -1264,6 +1264,7 @@ abi_long freebsd_rw_rdlock(abi_ulong target_addr, long fflag, size_t tsz,
-             __get_user(blocked_readers, &target_urwlock->rw_blocked_readers);
-         }
+diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
+index f1a49ae423..c8f88efc6f 100644
+--- a/bsd-user/freebsd/os-syscall.c
++++ b/bsd-user/freebsd/os-syscall.c
+@@ -1589,19 +1589,18 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
+         break;
+ #endif
+     case TARGET_FREEBSD_NR_kenv:
+-    ret = do_freebsd_kenv(arg1, arg2, arg3, arg4);
+-    break;
++        ret = do_freebsd_kenv(arg1, arg2, arg3, arg4);
++        break;
  
+     /* XXX */
+     case TARGET_FREEBSD_NR_cap_rights_limit:
+     case TARGET_FREEBSD_NR_cap_ioctls_limit:
+     case TARGET_FREEBSD_NR_cap_fcntls_limit:
+-    ret = EINVAL;
+-    break;
++        ret = -TARGET_EINVAL;
++        break;
+     case TARGET_FREEBSD_NR_cap_enter:
+-    ret = 0;
+-    break;
+-
 +        ret = 0;
-         while (state & wrflags) {
-             /* sleep/wait */
-             unlock_user_struct(target_urwlock, target_addr, 1);
-@@ -1274,7 +1275,11 @@ abi_long freebsd_rw_rdlock(abi_ulong target_addr, long fflag, size_t tsz,
-             ret = _umtx_wait_uint(&target_urwlock->rw_state, tswap32(state),
-                     tsz, t, __func__);
-             if (is_error(ret)) {
--                return ret;
-+                if (!lock_user_struct(VERIFY_WRITE, target_urwlock,
-+                                      target_addr, 0)) {
-+                    return ret;
-+                }
-+                goto rdlock_decrement;
-             }
-             if (!lock_user_struct(VERIFY_WRITE, target_urwlock, target_addr,
-                         0)) {
-@@ -1284,6 +1289,7 @@ abi_long freebsd_rw_rdlock(abi_ulong target_addr, long fflag, size_t tsz,
-         }
++        break;
  
-         /* decrease read waiter count */
-+rdlock_decrement:
-         __get_user(blocked_readers, &target_urwlock->rw_blocked_readers);
-         while (!tcmpset_32(&target_urwlock->rw_blocked_readers,
-                     blocked_readers, (blocked_readers - 1))) {
-@@ -1297,6 +1303,9 @@ abi_long freebsd_rw_rdlock(abi_ulong target_addr, long fflag, size_t tsz,
-                 __get_user(state, &target_urwlock->rw_state);
-             }
-         }
-+        if (is_error(ret)) {
-+            return ret;
-+        }
-     }
- #endif /* _UMTX_OPTIMIZED */
- }
-@@ -1365,6 +1374,7 @@ abi_long freebsd_rw_wrlock(abi_ulong target_addr, long fflag, size_t tsz,
-         }
- 
-         /* sleep */
-+        ret = 0;
-         while ((state & TARGET_URWLOCK_WRITE_OWNER) ||
-                 (TARGET_URWLOCK_READER_COUNT(state) != 0)) {
-             unlock_user_struct(target_urwlock, target_addr, 1);
-@@ -1375,7 +1385,11 @@ abi_long freebsd_rw_wrlock(abi_ulong target_addr, long fflag, size_t tsz,
-             ret = _umtx_wait_uint(&target_urwlock->rw_state,
-                         tswap32(state), tsz, t, __func__);
-             if (is_error(ret)) {
--                return ret;
-+                if (!lock_user_struct(VERIFY_WRITE, target_urwlock,
-+                                      target_addr, 0)) {
-+                    return ret;
-+                }
-+                goto wrlock_decrement;
-             }
-             if (!lock_user_struct(VERIFY_WRITE, target_urwlock, target_addr,
-                         0)) {
-@@ -1385,6 +1399,7 @@ abi_long freebsd_rw_wrlock(abi_ulong target_addr, long fflag, size_t tsz,
-         }
- 
-         /* decrease the write waiter count */
-+wrlock_decrement:
-         __get_user(blocked_writers, &target_urwlock->rw_blocked_writers);
-         while (!tcmpset_32(&target_urwlock->rw_blocked_writers,
-                     blocked_writers, (blocked_writers - 1))) {
-@@ -1401,6 +1416,9 @@ abi_long freebsd_rw_wrlock(abi_ulong target_addr, long fflag, size_t tsz,
-         } else {
-             blocked_readers = 0;
-         }
-+        if (is_error(ret)) {
-+            return ret;
-+        }
-     }
- #endif /* _UMTX_OPTIMIZED */
- }
+     default:
+         qemu_log_mask(LOG_UNIMP, "Unsupported syscall: %d\n", num);
 
 -- 
 2.52.0
