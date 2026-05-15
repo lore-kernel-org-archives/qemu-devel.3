@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 540F6CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 21:21:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BC17CD4851
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 21:21:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNzxl-0002rb-0c; Fri, 15 May 2026 17:20:54 -0400
+	id 1wNzy1-0003AS-OR; Fri, 15 May 2026 17:21:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzxh-0002jL-4e
- for qemu-devel@nongnu.org; Fri, 15 May 2026 17:20:49 -0400
-Received: from mail-oi1-x234.google.com ([2607:f8b0:4864:20::234])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzxi-0002tx-PI
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 17:20:52 -0400
+Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzxf-00036m-FJ
- for qemu-devel@nongnu.org; Fri, 15 May 2026 17:20:48 -0400
-Received: by mail-oi1-x234.google.com with SMTP id
- 5614622812f47-47cbd445021so260577b6e.1
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 14:20:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzxh-00038u-3y
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 17:20:50 -0400
+Received: by mail-ot1-x32c.google.com with SMTP id
+ 46e09a7af769-7dcd17e19b6so159590a34.1
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 14:20:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778880046; x=1779484846;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778880048; x=1779484848;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=huwi1I/ka0iZHPtPiOh93wv71GhTIIWhwbkGbSgPwjc=;
- b=GO401yidFkK7NlvhCA9pq3A7xh36J3rQbbjJf0WlKcWS5/mGcf3KibQBKrGAhdxiuU
- KipwlBJV5hn5ZWlkL2Y+y05flVjk55IEU93BS9SUxWMfCOSPR9i+AGyp8M2hjgL3j06z
- E7OKEAVxr1yDLTRKzC0KsXrKKQwmE8syp+7FRrgoKZMYeQzyySvsN9I1jgppkd/COVV+
- HSel1erGbLPL890xy9JjOw13dilPvAXHN82mDXgxEqKner+vYgwyt4XZn3hL2gZTwBYv
- gtAKI4YxmYLT6WtUlDbfYX7pgYY2p4q9WUlIJplSX6XDMeOaBNuxl6maOdhC0RIIyO52
- D98Q==
+ :reply-to; bh=AHuj+qCYqadp/YGZmDto4OnuQZ9s2XweTIlNAkwUkxQ=;
+ b=FrdHX/XLE2bt5Oij06baw+c6o3su5AXb1rO4q5H+mlx/X3T+zKSVzEP6oBIFUaZYwt
+ WY9oMh1l26xeubG58k3JClxP2+IDMG2Ib8VvGvFftMaIcxV9sXQ8IPTePV9EvSNZiwUH
+ QCvbKa8iDrhJTIWFjaeZ8J9Yp3kjGXrX4yU4979tmBi5LVlnDYkUfw2rqEAN9tSwYc5v
+ WDEb705eCssKumPJirJBivvSeNRDh6DZ5KOShJWigQtQhxovziSQwr6PieCfNVtKmg0m
+ Z0SJV4lRqY4b2FxqAc3dapLSmqOOhG7Zkbv4FSPI7Vxbm3TP0IG5x7MTUoL/8lS+KAKn
+ Zpig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778880046; x=1779484846;
+ d=1e100.net; s=20251104; t=1778880048; x=1779484848;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=huwi1I/ka0iZHPtPiOh93wv71GhTIIWhwbkGbSgPwjc=;
- b=BnPPI4pCh6G12TzH1adwy+SZhAM2kCfgJqHe5SRkLTkoakC0RGxC7hV2ViKbWgRDUA
- R5l3ikIb2Go4C+PPd62ErO1LdoP+TXfaJ6ju0ig9+zDbW3uTdQipDPuNuHq7WMB0R1rg
- JTSHdLO5+8/D3jTdXAqa0yeaPavHILEbLJAEd3UG8bI4Fmc59OGruWkcR8hZG6cmiIDW
- dfcUMYOilpnXC+kovJ8yaFiytddBT0to23PpmbYma6GMKZybh1QslcKtte78ghQxYw5d
- LgCdmMV6I0urOv0yEiBbzAGU8Bo1V6e3WrBQAdJkZt2OL1Saqd7ef/QgT7oVscS4wAZ5
- h4Og==
-X-Gm-Message-State: AOJu0Yyty+zKyL9wkav6saLKXtBb3lBTeqCqDEii3ROvc+Y/4m0Ih9yE
- FQQ8fMXpXzarBdU6WQEnWKMIexTVPLtXKVghi/ScSThfWI2QE95w4kXMlaz+bkqVbUdjBNy7ros
- irBIloK4=
-X-Gm-Gg: Acq92OGRQcmPlQ6ErbBjQvhy6E+wGb8dpvxMwwSiEaihUYE5vymgFGCGSrFZAjeVkMB
- kBMNLwPpP8j3qFyVdtw29Mm93OOHYtV0y8AtrsCH/XWdlS3UGJrwU9I6AveBwNORfQT5gMEAmp3
- /i39XVRlRrLAXE2o7NTvG3CkHNJQv3wu9AXaSqyvaIcPRvEly2RpDoMqXqz7E6IZKCf8w5Gp9L9
- DzMbq79RsurlNq5/05CRoh4vE5+AZmhTouma/B/GE0MH+lPE20iSecWwEy8tz19t0ljwFZT2auy
- Rb2fQLpIso+OykdJEt3D9skrvj1VzcHBHhH6R+T1JQ/4hm+MeNYKlownkl90sa5yPECNXZAgfGZ
- N2NHPGBdjXgiQydVczxuVU37eOHS6/NkMYqWj1koUj0ZAqdGRpC9f/F1Jf0WPEuDJ8WfTF4sUDf
- gNj8p5i8wLnw==
-X-Received: by 2002:a05:6808:5383:b0:45e:ecd9:652e with SMTP id
- 5614622812f47-482e55ae4c4mr4064717b6e.5.1778880045895; 
- Fri, 15 May 2026 14:20:45 -0700 (PDT)
+ bh=AHuj+qCYqadp/YGZmDto4OnuQZ9s2XweTIlNAkwUkxQ=;
+ b=cYywstts5QBpYbrPUJLXXhIzntr7sLVBX3WVHycfUObyL+qWvJtu+Qz2KchWqC9Amh
+ F4qybyJfthBH0ipQ/Vn5iXyasNa157rWgyXU5T/gBBw8w/DpGMjatPbZVgxxqK9POQA+
+ SO28GQ/e/Jf0rKn3CQSSUGjAnyVW7MI7G73XeU00Cd29JyrSxdAKCKxULPW6IkS1vorG
+ xXpOgv7zNk5o+KRWgNee9T+tU/8sL5/xVxrlHlvFbh6P4kV2J/n5dtWkKCgVMQAMaH4e
+ IDrJJ8hm8kyzhX/vcALQ8d4UrnxeH8HM7LqrdKfFRRnZBi1GYvGw8XoRqLgintgn2CLC
+ bAEA==
+X-Gm-Message-State: AOJu0Yy06vbwHzZAh+Be1ptdP7M6wzUiCafgY7uJEn1PqQmbS3k5AMwc
+ 8wDC8ortHELkF2B3C891cho/M127BazjOam03Ob0i5dCNPu/GAzLqM+PyNSyLU2dnQ8oZyvezcm
+ yGEvmeM4=
+X-Gm-Gg: Acq92OEfUyPj0cFJmlVL2EunB34bjAgHYldUhkqrDj2UFLaffGyvbBGE1mQxeE9Nqg+
+ a66xz52+Ouw4HWoGYYGAZdQvqF29aRIMsI70OjhDeuQagO/Kf7ZxSm/aMY9rOR9gcQQ5p+vk/NK
+ kciGKvGStFCOXfmMTUuJl9un9nXZPYwHHdVyvfhdHuuAWzGD98dekRYdS2hCffEAVgMuzmvqxZB
+ xH9YVmIwRW06M51dVjZXkweX2nO43j/F/QJz9P4d7ZpLPvnx1HCUsSb26fbPaFowPSkZDASh5ok
+ En8kDWqPmhp+UgKjTQ+oI6YFy8tW1OlnZoU9OQ+j+JCi0mB3Xp9wpOuDOx45q3nn53u0fNX/xfV
+ qqxlepFeyZTAFq3rFfOB4GPh4j1CYLP3jPTVDSxYPHEir7sMjcyS8KhXAIuwYFj9Ys9hO9Ym92g
+ brvXy/b6Y24Q==
+X-Received: by 2002:a05:6830:710e:b0:7e1:90a:97c2 with SMTP id
+ 46e09a7af769-7e4fa0a3502mr3884746a34.23.1778880047754; 
+ Fri, 15 May 2026 14:20:47 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55b7c6b29sm2185612a34.1.2026.05.15.14.20.45
+ 46e09a7af769-7e55b7c6b29sm2185612a34.1.2026.05.15.14.20.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 14:20:45 -0700 (PDT)
+ Fri, 15 May 2026 14:20:47 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Fri, 15 May 2026 15:19:41 -0600
-Subject: [PATCH 42/66] bsd-user: Fix freebsd_lock_umutex to re-read m_owner
- not m_count
+Date: Fri, 15 May 2026 15:19:43 -0600
+Subject: [PATCH 44/66] bsd-user: do_freebsd__acl_aclcheck_file pass type to
+ __acl_aclcheck_file
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260515-misc-2026q2-v1-42-5438ca41b27a@bsdimp.com>
+Message-Id: <20260515-misc-2026q2-v1-44-5438ca41b27a@bsdimp.com>
 References: <20260515-misc-2026q2-v1-0-5438ca41b27a@bsdimp.com>
 In-Reply-To: <20260515-misc-2026q2-v1-0-5438ca41b27a@bsdimp.com>
 To: qemu-devel@nongnu.org
@@ -78,24 +78,24 @@ Cc: Kyle Evans <kevans@freebsd.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=806; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=26DLjvIfcurHguoTpL1VROKTnCLKVIS1WBZAmmR48fc=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqB43m1XvIT0hxgB1wf1DJ9LJRfYps1SuLKNERW
- SLQfCS1fCuJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCageN5gAKCRBsHNEofbAR
- AEvHD/9Y8gvKVe+4wFS/zvVMXiX6hUuf8MMVn630NpMCj9lcqnSFs2qkd2nVwsp/ozHRXOxGLGe
- OkdzQlHwt8UL05weQvZAPA+h4qYMpcWmsVzRkBIooC8m+hTb2Qaw129s1EFaL8Rg28U0RAanNz9
- CK9M+SvJnKL8tsR7C+KGqRaKvAq+tohdjaw+vnz8454IiF73YOV1CvvXGQJ3wc4I2P0ksV25gc3
- z1jHYSFhuu7SyZgiaBRYhw1KmqGkLMSQ9dLNX5lRKR7QE21oU+XbcxX1pPs6wRAHVWNW/ZrgCU5
- +zHSL074J0PvsvgSedErcw3JU5Mk76gCjsL+cEwdYW34kRGfEVTxp0xMZGcXMKl22vYQSjRRdh4
- P5xkNPgNpMct/DMnwnO16o1Pj40716iyppT+3hxxzdholDbaJXugvZVqAw3BnOBMrTBZxurNABD
- 0N2FENVrjaFJahtYznRtE5ASWxZcS5zeRaopyI1yCo5BrkUHPexWtgX33HLH1WrZdljynl2A7Mw
- S4rA62kT6224gIGG6cl+OrdhCvilaJ2WOZcVVHQbR3rYk4q+TZkUA4wOVE8C/3zquN4pWWAwV7R
- f4/4aBqiTCuciqVDI/LG6iELc0Bc2dOpdul6Mj/EcBA1B7o840yfY3rUADBYI62fOd1FMbUHSwp
- vjtcF1Lv57rK6Cg==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=843; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=N75KZU3MHRQqN3yIHwU+t1Zd5+ya99JKhq/+3G3/YJQ=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqB43ms9rIuQx3EOyF7JKhPXCkGedMHBtzqLZKk
+ 4aZIa/ntm2JAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCageN5gAKCRBsHNEofbAR
+ AJjHD/9W1UpEFoYFTdRD9TXFukPq87ylMoprqa8yIHPtd9fftYo2J+ERDMiPKP/kGw9P+M8HUsi
+ 3ijclRIGbZrajAXRHJfevnLJpXQ06z3JMiFmTY7f4RvuHeelOz7WZMh6Ut8R0VAjkJiLFdC6T5p
+ DVbxHZrHEEL6NgmdOIbQX2qwoT5JlyaJ4AdSEkxsY0ea3UC6UgpAJpGOy31bXJMvkWCBjmfrXv9
+ I79Y/SoqdYMp+kbVevMeql2ISsP+ze+u8CrfwLaqAWCT1YlNG2NUKDyQCQ14qNTOmt7DkereVfG
+ xMOh7jDcdkJ8o+IPx0+i7W9cQ9bYt32G0rVb4lfK3nqJCPW++Di0mUMqCjZkHtGoAp+4P6FxEU1
+ X9QaXDcXKyMLafYCdJATiwPmxczi3Y+qoAA4dbDg7/g3qUu0VUecn103QDxtCil5yd7oWLQlGxI
+ s738uQg+70QPXiMMGSVkvVrkh7Zo4zuMRfM4TbIn+bQY9xZSkXwM2zLlX+CtjmgjmIsY1LuT9hl
+ QgKsJ5Hkwob/0xC5IpEZEleJPp9wS1yXCjzbVXFj5GoomNSL6plvOMN7MjVJCytEgY/VJjRXd8I
+ BrMU3sgktILtZ7rSAyhSBT2NfOcy123qOklsxM7ltPMepZYNsYxQD2y90zU+AR2Z1viNQtQgfJE
+ nvChY7bMuL8EkcA==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::234;
- envelope-from=imp@bsdimp.com; helo=mail-oi1-x234.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::32c;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x32c.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -117,27 +117,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When tcmpset_32 fails to set the contested bit on m_owner, the retry
-loop re-read the value from m_count instead of m_owner, causing the
-loop to operate on the wrong field.
+We convert arg2 to the right type, but then pass arg2. This a logical
+error only, since target and host types are encoded identically.
 
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/os-thread.c | 2 +-
+ bsd-user/freebsd/os-extattr.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/bsd-user/freebsd/os-thread.c b/bsd-user/freebsd/os-thread.c
-index 9e6055a040..b91e0d32b0 100644
---- a/bsd-user/freebsd/os-thread.c
-+++ b/bsd-user/freebsd/os-thread.c
-@@ -978,7 +978,7 @@ abi_long freebsd_lock_umutex(abi_ulong target_addr, uint32_t id,
- 
-                 break;
-             } else {
--                __get_user(owner, &target_umutex->m_count);
-+                __get_user(owner, &target_umutex->m_owner);
-             }
-         }
+diff --git a/bsd-user/freebsd/os-extattr.h b/bsd-user/freebsd/os-extattr.h
+index 70446f9a54..0414a2e479 100644
+--- a/bsd-user/freebsd/os-extattr.h
++++ b/bsd-user/freebsd/os-extattr.h
+@@ -413,7 +413,7 @@ static inline abi_long do_freebsd__acl_aclcheck_file(abi_ulong arg1,
+     }
+     ret = t2h_freebsd_acl(&host_acl, arg3);
+     if (!is_error(ret)) {
+-        ret = get_errno(__acl_aclcheck_file(path(p) , arg2, &host_acl));
++        ret = get_errno(__acl_aclcheck_file(path(p), type, &host_acl));
+     }
+     unlock_user(p, arg1, 0);
  
 
 -- 
