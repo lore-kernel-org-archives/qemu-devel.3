@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23ADCCD4851
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 08:10:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F436CD343F
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 08:12:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNncg-0006ce-6e; Fri, 15 May 2026 04:10:18 -0400
+	id 1wNneD-0002WG-L0; Fri, 15 May 2026 04:11:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNnce-0006XH-4B
- for qemu-devel@nongnu.org; Fri, 15 May 2026 04:10:16 -0400
-Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
+ id 1wNneC-0002SQ-51
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 04:11:52 -0400
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNncb-0003F5-13
- for qemu-devel@nongnu.org; Fri, 15 May 2026 04:10:15 -0400
-Received: by mail-yx1-xb12c.google.com with SMTP id
- 956f58d0204a3-651b4d09141so1467391d50.1
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 01:10:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778832612; cv=none;
+ id 1wNne9-0003sK-7i
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 04:11:51 -0400
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-65c5361142fso11569943d50.0
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 01:11:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778832708; cv=none;
  d=google.com; s=arc-20240605;
- b=hpvKotk1Meat5O+pdCs9RtADL/cwKZ2L3AgIq9SHl26rAwb9rO9KvmSdgJt3vJU7bc
- ZCll/MFCfw8smnxW8e3Tcn5zEdfVbPLeYQZ/kRk2aHs+JnUxPVtlrynQu5Ge/w5hDd9N
- mk7FfDklMJq1e05slQCNXwy3cPq0XkSP9x2ZHHmWxJ9d+3NY0pxx+ROjpCKCYReUDhP1
- hW8bzZfkG+gN3jf15Z6R5LRf++Wmeqx5qcsW08rPBCCYT88l1jI7my/mE7HuDQP/lMxG
- SMs6qa6IgqboMn6AXURQttU3Upczj9UsFlPI8XwkwrIYk5DEUvKFdwN1K2Qsd8nNCKqB
- qEwQ==
+ b=bQucT+i6ixHUX0ihtQfXqMRB9vNiBLkjEXhwOJN6y81VzJ3uN2ZHROzlkQeqJe5TFA
+ DoxChlmOnfhXrCPXhAeRv1MKxjJkOxkxHcTS9GLIEBnLOmLUfEMYfAkpHyQKTObQGpme
+ tsOoFWvbfdPG4XXx8kddjLZSaXgD2GzEge82f8Qb61GZjOKBmfuUHig89kYcerizjopV
+ gYizcxYgCM9jrBhVZEpCZikZTqL878+qcBObK4zz/M20M9T6Jsg4ma08k9xa2pefI8CC
+ qFKocajhmtcXUQY8rq3QTXUGnp5BmBkWc4sABgQ38BjMEahX+zgs5a7sLD2C6F8Xmgs2
+ KhVQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=d5k81WlaxgiwhjPZuLN9+Zyth4LlK2+5FnTxOpjqhA8=;
+ bh=ZDR/TctYAg7dyCpCTZzxSFUFUkHrHKvXimU1RucBfc4=;
  fh=kvOOaizNZldvZrGcUk8ta2JEDnV4vPRBdkt8TLZf/QY=;
- b=KmEoghLc6SAxF6CTYrHUEyP2JjeJ1V5aIhAUQi9VcZdSMJHd+EHZ8S58HD+hrsOG4h
- lvGJF324Yb3hPztxoinAjZa28U/J2N9nEp6EI2K+jdnG8Xh8H/AF57PBfQ59YCPYHXwn
- 19Hvyp7tiM3/Pd8xL1jgjTJWL3BlQk3cr6L2oORVdQzTjPK6/Tnx5CIoU2KEfuhNbVhs
- 1nZG4QrZwPT3xvOJhwGYCIrKFy4mGgEChWmHZAcb8dct18fyJVdvBXGHq0rUrv7kLp1G
- 43TO9WbzXn1CkqYqTr3SkQ4vJw+0S/oFxmMGjALcT9uQuqGNHNKaPKtNRXEosD1n6x4g
- LjpQ==; darn=nongnu.org
+ b=QIpPCx3XvC9hKMfJ78huVpf3QoeX9JkdBy1tWDsWWB7X09JyqUp4Zx1VzQJ0HMrs/W
+ VpgaBuD7jcKhauBla6K7QP6xSMJMvAX6IYsaQCCBQoQAzo+NLtYUSwQibqYzJMZoG/rb
+ jZXKYPcLEkOjwGMa56xi25BqUMGzGUOmycRyhADfu9zcfLGA8U2A01gRFnageePg6fvj
+ TngHp0xN/lmwqCrSowM5HvQBeDGwuJPweZs1Bi3pLKYgQSgtOyQl1kawTtAPeWRV4e3d
+ qbAZWBevCY+wVflf8R8koZuuQu7FHrkqIyAIomC3cLikZs1xrDL8MsNIu9Jbu4B/6It0
+ oX1g==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778832612; x=1779437412; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778832708; x=1779437508; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=d5k81WlaxgiwhjPZuLN9+Zyth4LlK2+5FnTxOpjqhA8=;
- b=WbAr9EWkd1VQFmGwQOMs+RGheSdz4TZz7Wnkj0X6/2HJIHCrF8jxjEFdQJIkszlvT3
- 99mRrDaDG5qEAKlFwath5TJjGWszAwY4AS+Dk4GChqf8Q44Nuh940zQN+d2qgYMjrFES
- cE+Zqm3VvpK6zkAI/MKJSLqg/H3WSz23Ut4YoD2frX0Y/j3yBrWoP+Jf4f4Ni3zoxssM
- t0LT6j1q0TSYSccgqLU2A2rEH4Eu1oNCeBBeEd27odlMYQuuU0n7Sh7OzMSbRwT5bvaG
- XVPNKrWFsG8INBu5+/KRuSknP7iI5r15UuChLX7Bhj9+evhncZJcDPWrAwP+7LuqN2EP
- EWTg==
+ bh=ZDR/TctYAg7dyCpCTZzxSFUFUkHrHKvXimU1RucBfc4=;
+ b=yKJUVe5buHJ6qj7hNfeLAg7qW0ES0MgltTSJG2KOUgKzX/y156ivJJtlbtktFKZwAm
+ AVZ3C2SmAYnB+Z0ODUvUpDYrsVIn5+4ZUet/2Wc/su+iLwXvDokQQzQ5lSQzqH7yR68V
+ MRP68A06V4mfh/vs/iDdsz5Om5a7itj4kRf6vIvUkfVYmIv2e1RH3a+oZYTqCPzowRPx
+ QMFbmznuBx5wpEXk0Qt5OB9yzZ8xkNQupb27Tbp5G2GvessWmNs3lQRxrHYeSt1OaE5b
+ iIZiAJ8pV9Pjv3I60vwby6jQ6w+/yFwd9fARzOj2ItyTcge0p6hoMje/Ux4+A2x9l49U
+ 66PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778832612; x=1779437412;
+ d=1e100.net; s=20251104; t=1778832708; x=1779437508;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=d5k81WlaxgiwhjPZuLN9+Zyth4LlK2+5FnTxOpjqhA8=;
- b=qLYD/KCJMgBTC2UIDqW3GG0rcHwL1QyzuhS596kqz2yEszh1sw5sThdnLGKOzHEvpG
- zpw4ie7jAtJ3VYvozdOsbfs7skzr86B2R0utVNlOUNwUrf4KkLC0wKTRf591Py3PHaBk
- B5mJz+XUd72Zv3SMJbtZTVjhZa/3b9jmHW+uHUaMVbPiFLqDYNzwAjX6Muk7GxDnWy99
- NNkECeb6RWHfYAoW4Z25lnOmDqNA7P1j0sQ6AzZFUABn/HAmpKkm2m72lwKOo18JHXuc
- PuUK598nrtYUmi8/ljlMRaeIdJJInzcsbUfSNtyUQkXsquG4qCCbrAgPNl3FtW8vLZBE
- 7I6A==
-X-Gm-Message-State: AOJu0YwGSI1z0sMcRZGhfzZHPqVwtDOsYku0NsFbE/lBhSUJv0xJJdiT
- MfBAojji5D+vloGlkYoaYYZ0UA2Nc3uDLhNqITbYPVRXLZ8YnG242iGXatRKMqVc2nY6rykvTp3
- RuQejFc0E8OKL/xNQ77NWjCQaAiDXtEstTMYMzlLg/Q==
-X-Gm-Gg: Acq92OG/gdOtIYuU8zbxYYUoNkye1i6gRVX+hoDCHeHCpEE34LuA/Wr+BgccKcESGA7
- RmR57/sDO7e0hT4NLF28gU1kU2JZE30j+OYKwRvAvbcAtcEqAqyWG7NO5A5LkksRbjFM9pZ+rZU
- 4gE2W5f1dOKphQAry+vtAOJK545XejSuuWWS12/iBE8q3DS/dz07OeC70n6LBofT0txO46zLT3n
- M69i8wU9bigZSGufSoKqpgy8+cRl52yHmOze3Yht9Ach5YSEuT42dMKE0DlUmsBGJJFw2ecpiY+
- tKFq4vc0VOax+xTv5HRv/14OEHpgSqIXx41WSmpbjBPsfGNITQjg4QcOwSnMBJgUtq0=
-X-Received: by 2002:a53:d005:0:b0:65c:6f05:ae25 with SMTP id
- 956f58d0204a3-65e216d83d6mr2228597d50.30.1778832611887; Fri, 15 May 2026
- 01:10:11 -0700 (PDT)
+ bh=ZDR/TctYAg7dyCpCTZzxSFUFUkHrHKvXimU1RucBfc4=;
+ b=gQu61U417zWNpMzy0yNX6O+iv7CX5UEtL+IVCXAvKeRbuoA5bMQuIhfmLPKy0oajjS
+ 4wvIwVFzrxFpaGMSbjCXKHN4B/q0jljGGsHob++E4tQNh6CWdSuV8Fo0DuPhv7xVvaFc
+ MA0yZ6N/4t+NbBs/9MLLPDWajZcnx9ZyKngJqoAPjUL7RY4al6Gn9BeQiaNT0nblR3AN
+ +Bi5OI5/OhgkcVQw4426FD/0jRaTiaVT5wnO69iQpQpqS5FhJX2P2kZ2XlmlAVSnJ6Jb
+ uNCyApU6zwTCG1odknIw4hkNGo8ySezHih/Q/wd7NEm52oD9O4L7o15lLIMBJHRR5wjx
+ 2G6g==
+X-Gm-Message-State: AOJu0YxX9u41jeQUsLh8oO3NZACPE/uUpBGCcFfhOY6jeeFkBZ1fb7wS
+ zs6qTrh+UPr+xnZ/ijbG5RFOsJs5rnHe5gGpyUwLRnkd4d/+xRw0g0qKosheIbocutuBxSTA9ZF
+ bKrkyNz9y/1+ndJkcOL+VBCTKIVIvbH7v8H7fFetYmg==
+X-Gm-Gg: Acq92OFcgSRJn4jWkn+X+O+PkCRYRVdGQscbWd4+8rusp6xT3+2DX5x1Kt4u5ERiyw1
+ 7oYRitgX9MzT/cPuSQR1XGednhV4l/H/2gg0+yGGqmGxCFIUkFnJowRqQOZDEPMd1+3vo/Hl5D8
+ 34wfHD3S4mLNNztxyjMUSx0VeXfU9lkIl3ztAIGt/YLnaN0C08KVCcnHtHNX6erreAcLbebH1xL
+ sgKv+zmZQuPTllwjgkb8upF1PuVfypymuJrs4Ec71rS2g+pE8fl5jTQ4Q5RMQQKBx7rSCaV0n0k
+ V7rQeCX1FjD5UQI8mHCqcTJKjXNmr9kZtAT3nj9SN70DuJ6MY79Y37+321rCo4bZ/hU=
+X-Received: by 2002:a05:690e:4409:10b0:650:18fc:f557 with SMTP id
+ 956f58d0204a3-65e2285bec6mr2437951d50.56.1778832707833; Fri, 15 May 2026
+ 01:11:47 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260513105517.146706-1-corvin.koehne@gmail.com>
- <20260513105517.146706-16-corvin.koehne@gmail.com>
-In-Reply-To: <20260513105517.146706-16-corvin.koehne@gmail.com>
+ <20260513105517.146706-9-corvin.koehne@gmail.com>
+In-Reply-To: <20260513105517.146706-9-corvin.koehne@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 15 May 2026 09:10:00 +0100
-X-Gm-Features: AVHnY4LhsCS6ErLIDSYFXTu_d6loJrxsEyIId2t14nGsemNciIMXY7n1NSdyhgs
-Message-ID: <CAFEAcA8aLT4LQZ1HaQtduZeWm9w+62bDaXmLetbnJQHN3xq3jg@mail.gmail.com>
-Subject: Re: [PATCH v6 15/15] docs/system/arm: Add support for Beckhoff CX7200
+Date: Fri, 15 May 2026 09:11:36 +0100
+X-Gm-Features: AVHnY4In3s5nVTtvcAWbR1qVW2DMDAag6GjZGnCWkp1a5--5BW6TB4a8zQLv4bw
+Message-ID: <CAFEAcA8mESUEDOOizjppQtODoF9fj4p6JXe6zAnTiyEMFhJpbQ@mail.gmail.com>
+Subject: Re: [PATCH v6 08/15] hw/misc: Add dummy ZYNQ DDR controller
 To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
  Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
@@ -100,8 +100,8 @@ Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -129,19 +129,21 @@ rote:
 >
 > From: YannickV <Y.Vossen@beckhoff.com>
 >
-> This commit offers some documentation on the Beckhoff CX7200
-> qemu emulation.
+> A dummy DDR controller for ZYNQ has been added. While all registers are p=
+resent,
+> not all are functional. Read and write access is validated, and the user =
+mode
+> can be set. This provides a basic DDR controller initialization, preventi=
+ng
+> system hangs due to endless polling or similar issues.
 >
 > Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
+> ---
 
-I had review comments on this patch too:
+Please address the code review comments from v5:
+
 https://patchew.org/QEMU/20251204093502.50582-1-corvin.koehne@gmail.com/202=
-51204093502.50582-16-corvin.koehne@gmail.com/
-
-Please don't just ignore code review and repost a series.
-If you disagree with the review or have a reason why you
-don't want to address it, that's fine -- we can have that
-discussion. But ignoring review silently is not a good idea.
+51204093502.50582-9-corvin.koehne@gmail.com/
 
 thanks
 -- PMM
