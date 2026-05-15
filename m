@@ -4,112 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70651CD4F49
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 14:18:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8288DCD343F
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 14:18:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNtMw-0006qU-5p; Fri, 15 May 2026 10:18:26 -0400
+	id 1wNtMe-0006AC-GR; Fri, 15 May 2026 10:18:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wNtMc-0006El-No
- for qemu-devel@nongnu.org; Fri, 15 May 2026 10:18:08 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wNtLp-0005ju-Cd
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 10:17:23 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wNtMa-0006JV-FQ
- for qemu-devel@nongnu.org; Fri, 15 May 2026 10:18:06 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4891d7164ddso50475955e9.3
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 07:18:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778854683; cv=none;
- d=google.com; s=arc-20240605;
- b=L46mDC44QDecB9w7pjqQl6xFp5ZpoUmYCXwlKEs08SkzvSTwLAiYinKxm8SmRPk05v
- 3x41OOQ7Up4xToPLpK5G3yFTXRT1tR9eUFWlvlAjTwOItrg3QJAN6wjiHzxMX9DpAnim
- 9l3EsmJT3/g/+XoaIOlLEBsO+YbTszIof9UOKhikEc29df/MLafRd1JXqbNlMkpDs2Q4
- zuIDHNb0ZOOyGW53xjke5YyAoeMGcERE6OV9ZBnmiVIT5bcqzQyVDcFJ/iOD2zOIwxWq
- ABmKdae1r3KIJtrOlnc3zyCjZTUJSEdKE7/034DW+10qhSLo2XW7spLxAAbp14yjH8xz
- J4gA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=AbQxVi9gMiMY502LQoaVxdBmf73hOT0iFzK3nVKBvZI=;
- fh=G+JBw2Pu6hUZ8zKsXx/FXyHuhiws+/jrNByUetwlSSw=;
- b=VXxNw6u1/b3VBQur43TfxR+GLVWyLUOH2s6ITzMYf1rY72RbxkLETkBN9u3y9MOU9B
- zhGxT9B9L0nZxzB3rIgfaJiyZh0G83jTFnwvnVMg7BQyG/yMYrhP8nwnsjlW8tFC904h
- ribemthT6F0wUunh9w7ej2320nxJTJLA7a21LXjAeyRjB/6HPupVfAVmLiFyAKH4Eb/W
- aWBj9Ahb7qOcMKQWCcfgJ7OZMO79eXeLQ+/lQbgA2D51YNki3a3/M5d1D2w3SIrstyGm
- ptU5W03EIvTAw148kjbGchPkossthcAalcxeZt2zlkEEJjBmEw01lffZYTGo442Ugucb
- GHUQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wNtLn-0005wH-I1
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 10:17:17 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-48d146705b4so109135155e9.3
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 07:17:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778854683; x=1779459483; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=AbQxVi9gMiMY502LQoaVxdBmf73hOT0iFzK3nVKBvZI=;
- b=QkkizBWFMt0gsm0nOjdlZcDFEcSmgofhKJ7nhmbgNIvz4Z1R7MRYF4iOeasNGjPoDF
- 4sFn28l2MRehAOOv3A7p9wLRQ5BnZrScDkZzv8qo1EX3xQ8hJFR5GdIFsYAcdre5Ie/R
- S90Oyjv07nrh4xXfB0p3BD6lRokxe31KfReJirS/9h/eSAQA3w80kBNmvNY/hfBrlRGD
- z9jVATMidVvjCBaRXMihVaEw2gf1iHit8sZfG2YGw5tU1EaInt53cBciTDeGcPkP0ZdI
- +wxDw9Dd+QZtjBMroiUcBGzY8ICCeHqjy4HIC3LYH+LQ3ioeek61fzQLOnCWpmZS+wB6
- QurA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778854683; x=1779459483;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ d=linaro.org; s=google; t=1778854631; x=1779459431; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=AbQxVi9gMiMY502LQoaVxdBmf73hOT0iFzK3nVKBvZI=;
- b=PJMI0BCWBSeebXCqj/xj6TN8Ao/SkcCPvPFhqiJ1Wv4V2i+qR+q6NsD3NdUXEPTeuk
- lKAle6C4Y35a5ottxOIH+bSLlHzAZCWX+sINEwPUNRr+J9bPB+Gk4a2iLY/qTwuhu7N7
- lB1LiXeDF73Fck9QjhQ1K+guxSiyXywec5yufbrYaW24vcr+Tqh8nxMCQG5SXFkRkPgw
- nslU+uJRvoAPKl0SLNp59AkDzgIvXhjTNT+4RRt8OVvbEbZe1FTU1bhy+rd/YpDlLoak
- JWe2NVMZw98XSKfvJk+fuWm0RfXajkmNpjLRS5aVcC2esUlI+EDPewffJKu8Dqm31ahn
- OodQ==
-X-Gm-Message-State: AOJu0YyQB6AyAp5CRHPWKpTb2TUi4/67CoY8L8+YWhJhtliH5GxsNlhy
- qvcsYJn28I9y4X9nI8rf5ph7/PmFG7Lz/GgieSUwxDBB9OwExbowjlqeSWpWPDZRcOn98zyK60+
- NRk9yep1t3ZpjUsB4puVXgqAyON+VfVRbj3V9cQMI6g==
-X-Gm-Gg: Acq92OEYJ1gI8HETBjMgRGuLvastjU7UW2BoGm5DISUV0tevW0mlEGmNb1suJmpuFxp
- l1QTkR6FPSWH6yC5FtBFihIR3nJ9GqqLjnoTuIifNwyNn7azLykPBXZFUzP0g7WzynecOAx8tb7
- jI1kGRfqR6aTVao7mOhM6ibefNv5TpzN/taEykfNpIS/vsu5e/8r0/l+nLi63+kqjhItC88nH+e
- unT/1pDKAAjRQAjS9PiW0gXxZfv9d1GgXhYGLOvwhIXt+3Jha3XFrkQhM2Uh97YR0ZKaHLziKtj
- ehIV79Xd5Crn+PgUHKob6/1undjE+o0pjFm47Wl+FzfcOKwLpQ==
-X-Received: by 2002:a05:600c:4fc9:b0:48a:5821:5ffc with SMTP id
- 5b1f17b1804b1-48fe60e473bmr55038915e9.2.1778854682658; Fri, 15 May 2026
- 07:18:02 -0700 (PDT)
+ bh=TZAy0iPWtEK+N/8YGdj5CCpPG9mfI8mA7mgKUeHvll0=;
+ b=vNM4To/wbeYRfUuhmRjwrk9tihavp8OdqeYbw+POd8CdQpJjuTLx/3TQDqerlbyAIz
+ OsysICrfVGOvPNKpd823O6/fWOuW6Jho8sX8eP33NlaZRywkqXxr3REpLiKo3uy6i77z
+ ExGc4ZzHlZfQMmjTlkoh7v8r0ktCyNa4YXT9Zh/dVyMNMXGT81eWK79xxUv/LmjAuZa3
+ ncT//8AjWUqB/0qOsRlQYt4l+Rgnk2xa93UbhDSKT0UXtgl5gKtS7L4beHzvS5HHNI4O
+ 8NxR4zotIzh5f9nPx7pboLmi01DkOK7Zis2rDA+nkj7dbXLr4MrKb+lao4D62GhO2rmd
+ amRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778854631; x=1779459431;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TZAy0iPWtEK+N/8YGdj5CCpPG9mfI8mA7mgKUeHvll0=;
+ b=DFwJtotWgJdgYd7BYKr189mc5p/LCJi9IAeqw/q/t/k711QF8yIy6S+WY77kfYRNTi
+ 7s4YazPO+bKX7okB/FzS6ScNP1pcTEVEHZTUdHhriiDDm5KZGOt58XN3bq5DAQujZuZE
+ XUUCb2PcoyA2GyYV38awUxcfyNq/U891XX9MGh0/hQsIYt1557biJe28sziek+aGM2+e
+ M8ymboW5b3O1pArxCq9Ghu8bQ7O+mm/Zr3S4S/wzpw7R7REgnEwZSpVbauJZ/tMomIvV
+ rYDBF441BPrCfXI477azTkeMLWphlrdGcA95sD66S9HFBudmZUgAmnU8tkC/eFQjNmKG
+ yLFQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8KCG+df2RWZuV12lPbF3rVd/37s1l/i151Aq5R9fjRzPGgyLQp97d62aOiwSwYnQQTxw0tgX2SNIZJ@nongnu.org
+X-Gm-Message-State: AOJu0YzjpNKZbml44L/OHqNjsjgO5p2N+gLCLa58SdMj7z9SW6tP1TCI
+ AggwUKvpYmpjEmRfPvuIfEdXnt7W/T7qiHZgd0FFLGHrfExwqsD7fScNifTfGvAcdVtgXe6mMUj
+ FbYwzhBY=
+X-Gm-Gg: Acq92OGLhqk8Yfodpt5v+F3Pq/7WgWTrcpeR6+00RTVHLB8ZWcZNw6Cf5SE+ngCYSqC
+ BSqhqDkUlOsmO3gaBswSCEtavMSjiSJqmp9REk3sh6JcnF7k3T8Zli1aqI4yTHXf3oJqNX67nRX
+ JdKF2MICxiybSfT1s+nD11gz7eSQQq7iduntUySd3UrOW9P8fxhy9LLRIudiW0kTVUoDU5C0lvC
+ pcro2NsFhNWigSn/00PVwqWNDXT4H6mV3C7g+DM60pL9k7pmzEiwTB2WDc6lsfJTTKbt8w3WYJ2
+ HIssdXsUcsaMv508J9JQ8eC8ctNQLd5q6qOvTWez/Ohpebi/n5Af8/AXA/oZlvbdztwvPBrejfC
+ VdaSaPNdB9o72NlVz0Yh71UoyEGkuC5nI/CjqCDqAbo/mttfr8Monu3kPeIIDOCac4/xCF+vLAz
+ vwfHyiuS2IDpcZSbwtaHQhDIp+prmBj3Zuq2yA82VM0uSz8cc3TbGiW3Vf8VU8wfmHpw==
+X-Received: by 2002:a05:600c:848c:b0:488:b749:8482 with SMTP id
+ 5b1f17b1804b1-48fe60e52c1mr64203245e9.4.1778854631523; 
+ Fri, 15 May 2026 07:17:11 -0700 (PDT)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48febe66544sm14680525e9.23.2026.05.15.07.17.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 15 May 2026 07:17:10 -0700 (PDT)
+Message-ID: <ecc4b7e9-aa28-4951-82e0-5eaa6e98e642@linaro.org>
+Date: Fri, 15 May 2026 16:17:09 +0200
 MIME-Version: 1.0
-References: <20260515141032.3271-1-philmd@linaro.org>
- <20260515141032.3271-8-philmd@linaro.org>
-In-Reply-To: <20260515141032.3271-8-philmd@linaro.org>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Fri, 15 May 2026 17:17:36 +0300
-X-Gm-Features: AVHnY4KkMK36SAgboBSnD4WqtwZyH5W-WW_KxyRic0kTolHb47xqz0jix2AGKHI
-Message-ID: <CAAjaMXbfiZUNWE51fSVDVV_f0=QO0bPG=3Te3qNOWkS2XcGxfQ@mail.gmail.com>
-Subject: Re: [PATCH v6 07/20] target/arm: Introduce common system/user meson
- source set
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org, 
- Joel Stanley <joel@jms.id.au>, Kane Chen <kane_chen@aspeedtech.com>,
- Troy Lee <leetroy@gmail.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, 
- Steven Lee <steven_lee@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/arm: Set debug in attrs in translate_for_debug()
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260515131245.366240-1-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260515131245.366240-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,167 +103,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 15, 2026 at 5:11=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> Introduce a source set common to system / user.
-> No logical change intended.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+On 15/5/26 15:12, Peter Maydell wrote:
+> The translate_for_debug method is supposed to return attributes
+> that include the debug flag being set. We forgot this when
+> implementing the method for Arm.
+> 
+> Fixes: abefca8e7f957 ("target/arm: Implement translate_for_debug")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
+>   target/arm/ptw.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+> index 8706dd59dd..0693d2867e 100644
+> --- a/target/arm/ptw.c
+> +++ b/target/arm/ptw.c
+> @@ -3961,6 +3961,7 @@ static bool arm_cpu_get_phys_addr(CPUARMState *env, vaddr addr,
+>           /* translation succeeded */
+>           result->physaddr = res.f.phys_addr;
+>           result->attrs = res.f.attrs;
+> +        result->attrs.debug = 1;
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+I missed that because thought we'd set it on success in
+cpu_translate_for_debug(), but we only do it for the fallback
+case. Shouldn't it be safer to set it there instead?
 
->  target/arm/meson.build     | 21 +++++++++--------
->  target/arm/tcg/meson.build | 48 ++++++++++++--------------------------
->  2 files changed, 26 insertions(+), 43 deletions(-)
->
-> diff --git a/target/arm/meson.build b/target/arm/meson.build
-> index 4723f9f170a..e56fc943bdf 100644
-> --- a/target/arm/meson.build
-> +++ b/target/arm/meson.build
-> @@ -1,6 +1,7 @@
->  arm_ss =3D ss.source_set()
->  arm_common_ss =3D ss.source_set()
->  arm_common_system_ss =3D ss.source_set()
-> +arm_common_user_system_ss =3D ss.source_set()
->  arm_system_ss =3D ss.source_set()
->  arm_stubs_ss =3D ss.source_set()
->  arm_user_ss =3D ss.source_set()
-> @@ -16,6 +17,13 @@ arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
->  arm_common_ss.add(files(
->    'mmuidx.c',
->  ))
-> +arm_common_user_system_ss.add(files(
-> +  'cpregs-gcs.c',
-> +  'cpregs-pmu.c',
-> +  'debug_helper.c',
-> +  'helper.c',
-> +  'vfp_fpscr.c',
-> +))
->
->  arm_common_system_ss.add(files(
->    'arm-qmp-cmds.c',
-> @@ -26,11 +34,6 @@ arm_system_ss.add(when: 'CONFIG_HVF', if_true: files('=
-hyp_gdbstub.c'))
->  arm_user_ss.add(files('cpu.c'))
->  arm_stubs_ss.add(files('cpu32-stubs.c'))
->  arm_user_ss.add(files(
-> -  'cpregs-gcs.c',
-> -  'cpregs-pmu.c',
-> -  'debug_helper.c',
-> -  'helper.c',
-> -  'vfp_fpscr.c',
->    'el2-stubs.c',
->    'cpregs-omap-stub.c',
->  ))
-> @@ -45,15 +48,10 @@ arm_common_system_ss.add(files(
->    'arch_dump.c',
->    'arm-powerctl.c',
->    'cortex-regs.c',
-> -  'cpregs-gcs.c',
->    'cpregs-omap.c',
-> -  'cpregs-pmu.c',
->    'cpu-irq.c',
-> -  'debug_helper.c',
-> -  'helper.c',
->    'machine.c',
->    'ptw.c',
-> -  'vfp_fpscr.c',
->  ))
->
->  subdir('hvf')
-> @@ -65,6 +63,9 @@ else
->      arm_common_system_ss.add(files('tcg-stubs.c'))
->  endif
->
-> +arm_user_ss.add_all(arm_common_user_system_ss)
-> +arm_common_system_ss.add_all(arm_common_user_system_ss)
-> +
->  target_arch +=3D {'arm': arm_ss}
->  target_system_arch +=3D {'arm': arm_system_ss}
->  target_user_arch +=3D {'arm': arm_user_ss}
-> diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
-> index 4fb2c15f7e0..9eeccb2adca 100644
-> --- a/target/arm/tcg/meson.build
-> +++ b/target/arm/tcg/meson.build
-> @@ -52,59 +52,41 @@ arm_common_system_ss.add(when: 'CONFIG_ARM_V7M', if_t=
-rue: files('cpu-v7m.c'))
->  arm_user_ss.add(when: 'TARGET_AARCH64', if_false: files('cpu-v7m.c'))
->
->  arm_common_ss.add(zlib)
-> -
->  arm_common_ss.add(files(
->    'arith_helper.c',
->    'crypto_helper.c',
->  ))
->
-> -arm_common_system_ss.add(
-> +arm_common_user_system_ss.add(
->    m_nocp_d,
->    mve_d,
->    neon_d,
->    translate32_d,
->    vfp_d,
->    files(
-> -  'cpregs-at.c',
->    'debug.c',
-> -  'gicv5-cpuif.c',
-> -  'hflags.c',
->    'gengvec.c',
-> +  'hflags.c',
->    'm_helper.c',
->    'mve_helper.c',
->    'neon_helper.c',
->    'op_helper.c',
-> +  'translate.c',
-> +  'translate-m-nocp.c',
-> +  'translate-mve.c',
-> +  'translate-neon.c',
-> +  'translate-vfp.c',
-> +  'vec_helper.c',
-> +  'vfp_helper.c',
-> +))
-> +
-> +arm_common_system_ss.add(files(
-> +  'cpregs-at.c',
-> +  'gicv5-cpuif.c',
->    'psci.c',
->    'tlb_helper.c',
->    'tlb-insns.c',
-> -  'translate.c',
-> -  'translate-m-nocp.c',
-> -  'translate-mve.c',
-> -  'translate-neon.c',
-> -  'translate-vfp.c',
-> -  'vec_helper.c',
-> -  'vfp_helper.c',
->  ))
-> -arm_user_ss.add(
-> -  m_nocp_d,
-> -  mve_d,
-> -  neon_d,
-> -  translate32_d,
-> -  vfp_d,
-> -  files(
-> -  'debug.c',
-> -  'gengvec.c',
-> -  'hflags.c',
-> -  'm_helper.c',
-> -  'mve_helper.c',
-> -  'neon_helper.c',
-> -  'op_helper.c',
-> +arm_user_ss.add(files(
->    'tlb_helper.c',
-> -  'translate.c',
-> -  'translate-m-nocp.c',
-> -  'translate-mve.c',
-> -  'translate-neon.c',
-> -  'translate-vfp.c',
-> -  'vec_helper.c',
-> -  'vfp_helper.c',
->  ))
-> --
-> 2.53.0
->
+Otherwise I'd expect the bit set in arm_cpu_translate_for_debug().
+not in arm_cpu_get_phys_addr(). WDYT?
+
+>           result->lg_page_size = res.f.lg_page_size;
+>       }
+>       return fault;
+
 
