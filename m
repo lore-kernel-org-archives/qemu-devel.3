@@ -4,98 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0752CD343F
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 21:21:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA27FCD343F
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 21:21:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNzxb-0002KH-1l; Fri, 15 May 2026 17:20:43 -0400
+	id 1wNzy2-0003O3-W4; Fri, 15 May 2026 17:21:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzxY-0002D1-NT
- for qemu-devel@nongnu.org; Fri, 15 May 2026 17:20:40 -0400
-Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzxp-0002we-AE
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 17:20:59 -0400
+Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzxW-00033U-Mb
- for qemu-devel@nongnu.org; Fri, 15 May 2026 17:20:40 -0400
-Received: by mail-ot1-x32c.google.com with SMTP id
- 46e09a7af769-7dbe437b072so150477a34.2
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 14:20:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzxn-0003A1-P1
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 17:20:57 -0400
+Received: by mail-ot1-x32a.google.com with SMTP id
+ 46e09a7af769-7dbd23bc684so161034a34.2
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 14:20:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778880037; x=1779484837;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778880053; x=1779484853;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=sSzVC6h9YW49+ZfM5l/6+Z7F9FLLQN1G4shYKdPjNRs=;
- b=OxkR31njgr6xxgLBy8uYSNl7lr+J/UWYY+2DTv9PX/Uo0vAYxkILPtYkOaShHP7o7+
- GJu+hkizaL6Eb/lbmjUzCVXgk8tEXqIIHLU+wfhpYPIWWFNWlUyfRvs9i0xA9ip3HTtO
- 9YxEXt0loHUvbPg/t0GpZstk2z2CJ9S+0GQj6x+d9HsYooztThV3tyBQVJdcAEdzArRD
- EjW/jIRqczBJ2Wf3q0lsgYfkXriy2QWfWIpfLwUoUgDR4vkvM3Lzbv+RuEjREl1C8BjH
- 2EP5k7cUO9LxagMEjxSpGMzFCjKuqkSaE4bTPzjy6ukK+J/8NPl8l67CAkJSKyLsi/Ir
- 3JXA==
+ :reply-to; bh=3OO0Hnh/zKjyFfYuyvc3qo8c9ME9eHPWV3ninOtzGOw=;
+ b=XKYRCKoFam52r2ue7IseqqLMV2dJICPj3SU44pj66jO8ODTUN9GWp4xD5E6lbb4s4M
+ F8aiy822yrWw0eXq5limixwQfvcC1ML34ApC2LTM89/zpyfnAcyIPLhj19druTFbfHan
+ fPAqlBJQAhGsvDWqChSLSiE9UT7TDaQ1ZV4Ch7/B+XBUUkU4sgOHS4GwbS3FXux4Zap5
+ Xm4xis6vREOYSAEuSIxGHHy8JaXUlnQZ5LEVJmbOhQkdtl/ogHSdLze0PBFlST5z8FPN
+ Dcbi2Enq/XFsP6Fu+tXXpfhixQLmD2YrWakq/DZlCgvKIZGVFsoqnAbu3niuR6UJjKPT
+ s7YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778880037; x=1779484837;
+ d=1e100.net; s=20251104; t=1778880053; x=1779484853;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=sSzVC6h9YW49+ZfM5l/6+Z7F9FLLQN1G4shYKdPjNRs=;
- b=DZhQnUKYztRopl8Oh6CCW3wdXuYk7YYFemm9Oe9MyFHTClgfxY6hKh+esv649LZ0Lm
- fWZutfv3L/uM6CrQQ3rhcyJ1cV0uLlnvoTeM0rGozQf+MX+CFkPOxMeQZHVusc0c1IbT
- d+FQNzuj8L8fNy1hHwziER7WThQPV/AtScEt1gecjtIo/eWUUOIiagQ60fSP5h5GCNLa
- 4fSYMEA5+6rZuYGLATkDLc8N7ntZPMQheLoXHDhCru9+TeFCEauSDHDd+fkSz1jEiJYQ
- idzCvJj7zN6LTVfYy7hvPIEQYiAtYwa0TZ/KZX0amtLKWiwzswhoSW+06hqeFiNhZhH5
- aL6A==
-X-Gm-Message-State: AOJu0Yw9P6+Imd4o7VV9XrnHF+qgHcVIp6XWvp11ob0kMOe4bdDh0zyb
- GhDsTZs9c8eSyMAdyB5U64ylj0YvjJWHFb3CmCkl7hWAfXd13R/z/hNyS9cucMqqY3+G8shADVJ
- 4TIaxtDw=
-X-Gm-Gg: Acq92OFWB6+Y5DaOYd3cA/HRo4w3sBnmzw+9gZtqF8ZhfoiyWYUwmIJPyLGgsGmufqs
- xSWjJjqNSol0yozX3LaTTei9Dj9pRcNUuviFxWRBDtHszL3NoFSOHGX9fwF5LaxXANCfjh/zn2b
- GIz9mfYD446kz4n+EbRGrlhMYPwSrTcBIK0xCM8clUxdQ6sWjC8cnRHxc2zrJUMrD9Gdp7ix2aM
- C320ZzUzA7JPg3iUU/vxrYOvCzzNTenpJHZyzaJ1hVRNQM4EZiMideGGczrGICHGNhkK+YbMl4f
- pNg6J8pGJMzQ2HLDm0fD+QcJiffTEdY6DIlLDkvkVJBcm0bfGZEETBjrR3ThAup/LThheBFUR36
- ePiDqdEarA18jpUPMgN1hiI2y4yc/mJLdlYOsIneEAAxebtjiyFnQDgy/HyJIo38XU5QFc9y+/6
- /PjFoS40PnGq6A4f0LKV1D
-X-Received: by 2002:a05:6830:6187:b0:7d7:e6cb:836f with SMTP id
- 46e09a7af769-7e4f2bad231mr3607094a34.19.1778880037546; 
- Fri, 15 May 2026 14:20:37 -0700 (PDT)
+ bh=3OO0Hnh/zKjyFfYuyvc3qo8c9ME9eHPWV3ninOtzGOw=;
+ b=XbCI3+YeuajFlFidC7LyuG33R3sSvAAM8Iqb6VuY09+6y8TIOgbTwOj22+ezcp2S5A
+ pYlnhsMbJR5rCpc9J4lhlMoTSak8ieRHPYIf/BX1ndxEnJ5mXTuSscZZMQQiUNIJOcLP
+ 6MSc6n2sMUZVF1Nz1Qmj8Vu4LVF3hV4RC5ns3IoyMC3PvZW85NZV7gObMtuwyiO5+tHp
+ ENLCipLHkstnFMxHTyun33LuivnknDENBu89ekz5eG5kpcgDbo60t+0322rx7IZ75xJm
+ l2tadIk4dVjzaTg6BWgkDdMsVN+axRE2G1ajhBF1EwLTdbfGdzLMIQU+2d4dF+9bw/5f
+ 1WHQ==
+X-Gm-Message-State: AOJu0Yw3+Yu65c56737wMGMqp5rtoGXZ9i1oUTqeJ2PHkB/7EWC0FUDp
+ oUGfRiZlwhfe9q0huJJVoM2B4sFz0zkH7Hg0bMNG33E8MaLhP7NpXLqmcRuzIVIWxYkALOTQfJV
+ TzUNqHA0=
+X-Gm-Gg: Acq92OG1IVzgmGESJzm4w4iinFfCunMMNWgbGR/boQWS78/DSMdJgWUU/axaw5Y6OMm
+ 4jJm0C0jpKDbVtWkAn8wUhSKiE2SYZaNxTbShSBCRzVgUJPiC4OT0Qn4FIWMhluJEgiIdb15yq5
+ aRxL0OA3bw1H3CQUl6wxSQXQR9yw8CtsBzNBUjO6fHn9NV5m1zKseTUKOIQa5/XajmWrJOCTY8V
+ rzi00ecCDyZBdlz3FKNIWIYag3k2tFlszI10fLwLaAMlCTnTwUVgEAWxkqslc0AYucbEiVQmkYl
+ aXEybbXC2fc5mdnrzFX9z8X16i+W2dr+pgEkCzCqS1ecR7eh/R7ybvGzmYFRIBgbovJovXCDxwi
+ b9XHlVFNbkC1EW8MidlsWfthN84JZuRoJBhn4I25TY2qUmUjKBv5fvdNcdnvwPMrdSR1jIo81ei
+ 53GO7joD5jmckqOHvTbRGJbmaBsnTBFcg=
+X-Received: by 2002:a05:6830:6d27:b0:7dd:5a21:2246 with SMTP id
+ 46e09a7af769-7e4fa0bdad4mr3976418a34.25.1778880053231; 
+ Fri, 15 May 2026 14:20:53 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55b7c6b29sm2185612a34.1.2026.05.15.14.20.36
+ 46e09a7af769-7e55b7c6b29sm2185612a34.1.2026.05.15.14.20.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 14:20:36 -0700 (PDT)
+ Fri, 15 May 2026 14:20:52 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Fri, 15 May 2026 15:19:33 -0600
-Subject: [PATCH 34/66] bsd-user: Add extended attribute and ACL system call
- dispatch
+Date: Fri, 15 May 2026 15:19:48 -0600
+Subject: [PATCH 49/66] bsd-user: sendto/recvfrom need + 1 too for addrlen
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260515-misc-2026q2-v1-34-5438ca41b27a@bsdimp.com>
+Message-Id: <20260515-misc-2026q2-v1-49-5438ca41b27a@bsdimp.com>
 References: <20260515-misc-2026q2-v1-0-5438ca41b27a@bsdimp.com>
 In-Reply-To: <20260515-misc-2026q2-v1-0-5438ca41b27a@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>
+ Warner Losh <imp@bsdimp.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5002; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=hz3iLr6GJQnPMw6JXtduOv2rNv9Bqx6Ov86pywyJ/KM=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqB43lGRR2fkxZdmMvitUnb1MOLegFRjMHCDP/f
- nM8jWVHKyaJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCageN5QAKCRBsHNEofbAR
- AO4KD/9Wkh1SzGrlfrMVV/NJAXuOHCxG69h1JoqD9o6FgYMboHQMMMy9IhRPqVxajGTaj40yU0/
- kBYoYNUwWdSxRoPGxyb512n7pSpXPvguteUNNEV1uZpvng2DCWUpzk3/xeTrpSM9F5l8cB1U5Fo
- JOR0V3bslXjtateuH3RX9kAD/tqkL2aHgd5tp0jelV+EqshKlaAhWP7MyBcr8ezPGRDzYzw0T/x
- KdMTQYc+rZVsCU8ZwYvNWi0tLzuj9Pm2QbyhdPq7jeNR4zvS/KGDIxOFdJ4WIJIIElJ8EdFOjCr
- XmIR6yn7NX3vvqyE7YrjkSGRSokeIp0YAtSU5ruJI/oJQX/BnZ0VONtbkSOccEPp6y2aCLdgOiL
- qsZnkB02PMxZyuAyo2vMBITIKA9BwJlxDc30RCytPhA2G2TVpRebgNYUOCpMG5DOvSGxVotPbN5
- PHW8cTeHZjo+MK/8hURqrFK4i5eA/1H6AugoobtlBka6rOvqyzWeeJ0dhjboNvjVAS4Ez09v56t
- OMjySmWR8NnascnX8ARq76X9cCDdo8DGXPAap5Fs9AE64BduD3M3zLhZaPI5X+1XLkA/8IcgPN1
- 04bT5IUxj0iPQS1YQyXe8znjSbYwF3IKJatb4EoEt3VV3wqIHcGz2dtiUQlZ8yTbq+wImE5R/2E
- FOuBJz+AVFfw3Gw==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1320; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=pbDXi5M7FeJTx8g/bOe21hJcf64XImhdah4CYd8ifz0=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqB43nL+I8U1WS4nxzHOSvJY9Qn5HY9C5BUK29V
+ StxZ3Ce2nmJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCageN5wAKCRBsHNEofbAR
+ APYVEAC9tRIrw7CIjCkIJb7Ly8LB1/asfEUjGXy8dPJiBfsh9DkS92UX1iJ3rkuyUsZvf5cji2a
+ EHk8HqnTFaLRqDKzog1Lhf1VHMeycxpQQLXYMKkilryajCn7nTtS+fzgoyZf+Hjh4GkkEmuQmAH
+ tAc/3WCmVclAW4VqIJt5+aTJkhj6qpjd1hmpF8UR8gNXPAekDwKZ3Y+WAbjIIbrRp8Y2+dHrkqB
+ ShM6R5AnBuKQaIk4LISfcZ6fJ+s6/B8uRtQYJDl/LSZd0jwAtJNYlSiBeQwRS/4WPma45gVFcr+
+ f3UYkETyhihvWJbeaRxnjho1Lf9lxqoS9GA4STQDb1i0amM/tMu0kBm0XI4CKthuYzZbcB/l/7B
+ jBeL6KiHr0l7vp9PodZF7YInLqw1zpO35rgo4oQUZ2JaVL2WjTmYn9WmUBS5c6Sz+FBtNVPulH5
+ yxpww9EcPz+LFWN3RWEHgyFbL81jhSkn8mh29dIegcFbs+cPbtg1XMYeYgZEXgCFW+6fDd6095I
+ T4zeuPXawNZquwZjSsvrOTp4iAepZdcGDmKkpeAtjmh9hDVJ61AlzQUlsCTCRnu3PMb4tNwRMNk
+ D6TvJ1kFyBJlr0b1O3cV3DrtZuY7Ut7A6tHIzB6uWWQ6i6A/s3y8Y6I5k9u/qsX+Pk6NHDZRwSk
+ 7c14beCYOC2MI7w==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::32c;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x32c.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::32a;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x32a.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -117,132 +116,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Wire up extended attribute and ACL system calls: extattrctl,
-extattr_set/get/delete for file, fd, and link variants,
-extattr_list for fd, file, and link, and all __acl_* operations
-(aclcheck, delete, get, set for fd, file, and link).
+Since we adjust the length of the addrlen by upto 1 to cope with the
+off-by-one errors that plague unix domain sockets, we need to add 1 to
+the length we alloc off the stack to account for this. It's not common
+to sendto/recvfrom a UNIX domain socket, but it is possible.
 
-Signed-off-by: Stacey Son <sson@FreeBSD.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
-Assisted-by: Claude Opus 4.6 (1M context)
 ---
- bsd-user/freebsd/os-syscall.c | 103 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 103 insertions(+)
+ bsd-user/bsd-socket.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
-index f385034a53..7825e042b0 100644
---- a/bsd-user/freebsd/os-syscall.c
-+++ b/bsd-user/freebsd/os-syscall.c
-@@ -1365,6 +1365,109 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
-         ret = do_freebsd_sysarch(env, arg1, arg2);
-         break;
- 
-+        /*
-+         * extended attributes and ACL system calls
-+         */
-+    case TARGET_FREEBSD_NR_extattrctl: /* extattrctl() */
-+        ret = do_freebsd_extattrctl(arg1, arg2, arg3, arg4, arg5);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_extattr_set_file: /* extattr_set_file(2) */
-+        ret = do_freebsd_extattr_set_file(arg1, arg2, arg3, arg4, arg4);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_extattr_get_file: /* extattr_get_file(2) */
-+        ret = do_freebsd_extattr_get_file(arg1, arg2, arg3, arg4, arg4);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_extattr_delete_file: /* extattr_delete_file(2) */
-+        ret = do_freebsd_extattr_delete_file(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_extattr_set_fd: /* extattr_set_fd(2) */
-+        ret = do_freebsd_extattr_set_fd(arg1, arg2, arg3, arg4, arg5);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_extattr_get_fd: /* extattr_get_fd(2) */
-+        ret = do_freebsd_extattr_get_fd(arg1, arg2, arg3, arg4, arg5);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_extattr_delete_fd: /* extattr_delete_fd(2) */
-+        ret = do_freebsd_extattr_delete_fd(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_extattr_get_link: /* extattr_get_link(2) */
-+        ret = do_freebsd_extattr_get_link(arg1, arg2, arg3, arg4, arg4);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_extattr_set_link: /* extattr_set_link(2) */
-+        ret = do_freebsd_extattr_set_link(arg1, arg2, arg3, arg4, arg4);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_extattr_delete_link: /* extattr_delete_link(2) */
-+        ret = do_freebsd_extattr_delete_link(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_extattr_list_fd: /* extattr_list_fd(2) */
-+        ret = do_freebsd_extattr_list_fd(arg1, arg2, arg3, arg4);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_extattr_list_file: /* extattr_list_file(2) */
-+        ret = do_freebsd_extattr_list_file(arg1, arg2, arg3,  arg4);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_extattr_list_link: /* extattr_list_link(2) */
-+        ret = do_freebsd_extattr_list_link(arg1, arg2, arg3, arg4);
-+        break;
-+
-+    case TARGET_FREEBSD_NR___acl_aclcheck_fd: /* __acl_aclcheck_fd() */
-+        ret = do_freebsd__acl_aclcheck_fd(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR___acl_aclcheck_file: /* __acl_aclcheck_file() */
-+        ret = do_freebsd__acl_aclcheck_file(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR___acl_aclcheck_link: /* __acl_aclcheck_link() */
-+        ret = do_freebsd__acl_aclcheck_link(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR___acl_delete_fd: /* __acl_delete_fd() */
-+        ret = do_freebsd__acl_delete_fd(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR___acl_delete_file: /* __acl_delete_file() */
-+        ret = do_freebsd__acl_delete_file(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR___acl_delete_link: /* __acl_delete_link() */
-+        ret = do_freebsd__acl_delete_link(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR___acl_get_fd: /* __acl_get_fd() */
-+        ret =  do_freebsd__acl_get_fd(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR___acl_get_file: /* __acl_get_file() */
-+        ret = do_freebsd__acl_get_file(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR___acl_get_link: /* __acl_get_link() */
-+        ret = do_freebsd__acl_get_link(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR___acl_set_fd: /* __acl_get_fd() */
-+        ret = do_freebsd__acl_set_fd(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR___acl_set_file: /* __acl_set_file() */
-+        ret = do_freebsd__acl_set_file(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR___acl_set_link: /* __acl_set_link() */
-+        ret = do_freebsd__acl_set_link(arg1, arg2, arg3);
-+        break;
-+
-     default:
-         qemu_log_mask(LOG_UNIMP, "Unsupported syscall: %d\n", num);
-         ret = -TARGET_ENOSYS;
+diff --git a/bsd-user/bsd-socket.h b/bsd-user/bsd-socket.h
+index 578cc3959d..d85dec59c0 100644
+--- a/bsd-user/bsd-socket.h
++++ b/bsd-user/bsd-socket.h
+@@ -198,7 +198,7 @@ static inline abi_long do_bsd_sendto(int fd, abi_ulong msg, size_t len,
+         host_msg = NULL;
+     }
+     if (target_addr) {
+-        saddr = alloca(addrlen);
++        saddr = alloca(addrlen + 1);
+         ret = target_to_host_sockaddr(saddr, target_addr, addrlen);
+         if (is_error(ret)) {
+             unlock_user(host_msg, msg, 0);
+@@ -235,7 +235,7 @@ static inline abi_long do_bsd_recvfrom(int fd, abi_ulong msg, size_t len,
+             ret = -TARGET_EINVAL;
+             goto fail;
+         }
+-        saddr = alloca(addrlen);
++        saddr = alloca(addrlen + 1);
+         ret = get_errno(safe_recvfrom(fd, host_msg, len, flags, saddr,
+                     &addrlen));
+     } else {
 
 -- 
 2.52.0
