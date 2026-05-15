@@ -4,97 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF205CD343F
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 21:23:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA5FCCD343F
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 21:23:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNzyC-0004b5-EW; Fri, 15 May 2026 17:21:20 -0400
+	id 1wNzx2-00018f-DY; Fri, 15 May 2026 17:20:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzy5-0003g1-9B
- for qemu-devel@nongnu.org; Fri, 15 May 2026 17:21:13 -0400
-Received: from mail-ot1-x330.google.com ([2607:f8b0:4864:20::330])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzx0-00017p-K3
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 17:20:06 -0400
+Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzy3-0003G1-M0
- for qemu-devel@nongnu.org; Fri, 15 May 2026 17:21:13 -0400
-Received: by mail-ot1-x330.google.com with SMTP id
- 46e09a7af769-7dcdaf06498so206182a34.2
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 14:21:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzwy-0002lF-Bf
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 17:20:06 -0400
+Received: by mail-ot1-x32b.google.com with SMTP id
+ 46e09a7af769-7de46b8e432so377125a34.1
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 14:20:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778880070; x=1779484870;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778880003; x=1779484803;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=aD3/gY2TQlala6Osa3hlpop/kKt6yv6iIOvXHix6Kvk=;
- b=06hJAyiP4c0bJt3VmB56jlV4RMD83neGO70AqRYvo08/c8Mb3/mYLXr7bFLGJvTF0U
- Z9lDTAIHSqjWIDIrQwPzsLqt1oYqvhNJnC/d4uEL/GqVUSdLDpRoA0EmPMWvcQ/Q3pSm
- jhozoKSo4nXaYxaL84pGz+91C4kQkL4k+CwVBQoE3sL38vLIhRKo2NBKFVbLgRcRl7hY
- /qqcvn0DVLVG/Maqo6jKbYlKhJNGGDnUCeWSyAc/o2c75er9F90dmg7adu18e7XprZZa
- ROSAYd2RTfUUhssUI748MIs1YFI6Y0JTi/0KNdGE9HWo2Fwq94bFK35bkferVCR8CYHx
- UR8A==
+ :reply-to; bh=a60hp1dWf4eFBFrwG12fEXtrHfuIhsG0O5ntFeHEAEI=;
+ b=DwuoUjAnBsAHZpaL3y1M5n6Z/Esdx1j7b+yi5J6DZthuDpdZl+gaPDWLg2SRlhP/L4
+ eCCaPVmym/nIJzIWUpbdzzo0bwJqoaGaFRSe0FuZy3eXDeYfNsGh/ba/P8u64LROfCZu
+ E7pSzbzIahUqdyjI+2QuvJwR9h7h/zBiOP73P7Nm+u4KiQ7RyZKK/8K9nXf2X14FrSm8
+ 4J60YRiFJAUG16F+7b/JoUjfiVgqAgdpdIkk1ogdn8ipzlNvz9AhTgpGavWrw46EMCwZ
+ sct+kaZhUwloyubsoRA5KWgogRr497tzxtVyfpLgR8m5I8r5uQGIQepf+9wJWTOORSUi
+ UvRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778880070; x=1779484870;
+ d=1e100.net; s=20251104; t=1778880003; x=1779484803;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=aD3/gY2TQlala6Osa3hlpop/kKt6yv6iIOvXHix6Kvk=;
- b=XyK46G6oTNUJtA2YVFMVfoz7Mcg4jhdvhSdAsQpsJJ4KX+POCNhaCU+8rwnavvXnfb
- Mu2Kmwp0yQ7YdapRfoGYqVai5I0eGMh8HTepDC3R3XpXkX74m0zxO7U48KCuKwani1ZL
- so0rl7nTc337+qgTuc2qQHppEDoT1XjhmzMbE8pX8u7RmE5I5OWEu9o28bMmniTHwsIT
- wosrL91pomRNGsa8joP6JdDTVtAdSy2DTX/FLeOF68dwY72AQ8wLD9hsEYVHhzMN9d6u
- ZfuKAC+D4O6msg98UpQoEue1Za2CZacKAEUNe+hCLWnfWiE3fHt6S3cQ4c/5511d5+nb
- MeGw==
-X-Gm-Message-State: AOJu0YwmNox4kCp5D3j/VNYChUraZTv13sFL4AC/LRNJzz45pH9Z2mur
- uvtb2mT90FKX1ifFE3/DArdUKFJ4WRho0PF3uyynPIMtawjPLZz7Q0GgOK1C2CBueJMaat9EPkh
- 042G+iN4=
-X-Gm-Gg: Acq92OEqgz61cTo3ebw+a1bZczJYvbWJv91sLwYihuW8jquF1XfONdR+LwfmZ3leaTT
- kg3/NaiV7FJx+iKVHXEUzrf14wV4TUxA16avw7AtnhuMsh+wc0C3Ok53W0Z0ByfLBUG2xoVDQQX
- bBaOH+OvwC5oNCx/EUszEBZan76Gbr9TG1fQXkF70EkjWCnmTsbu4PX1tSc4BmHw8Ncko1xZ0SF
- s1Y0VPY/8fR0/cs8JgykjjomvAGWGnW+xYfbVdAxQCepbVTv49OiVmXIP4yzpouZ2D28fhYDg/1
- xnjU0XR2XgfXHm9jCe7E3MsGez0WAcGK29tRpldQEL2i5CdNyaq7MdxKPVa9NL8yUZ8cXlhPa/J
- cP/yvpJEJJw5TWIuqJIGPwBOpoq6R5ZbCw/8X55JHpiYxkhmzsfdFkEagWIc8iHZDrPjJmcLsWh
- 8k2CtKDSf4aw==
-X-Received: by 2002:a05:6830:6017:b0:7de:c87f:53f4 with SMTP id
- 46e09a7af769-7e4f2b3e96fmr3791516a34.15.1778880070332; 
- Fri, 15 May 2026 14:21:10 -0700 (PDT)
+ bh=a60hp1dWf4eFBFrwG12fEXtrHfuIhsG0O5ntFeHEAEI=;
+ b=X/R28QZc9xXnubgLji4mAcRYQCPZ9fNR9p9Vcwkyyr7dTCL8pT5ta9KBE7JDxE9Dq4
+ xS9ORkDhIfYEQSRnK8rfp3q1HAezljOr335XJtF6hFWltVAuK/aC5W4vr6BUoPOlo3p3
+ vtCByiuFX4Ck785dX8aoHs/U0dyvVhR89mS+YhMRw8BsjxgNVAHrYrAn0BR0ZdQhJkJ0
+ RqArfY914KRvTqyJgs2BvrgpfOunY287B8GNol3WxRiQCi3V8gR7ij9GGIGuaCOoJKcA
+ vPwc0TjuKlyRjPH6vHCdG78V+0cJZjE1ZYgOpOZCzvUWEJwU7GSSMrHmqdukjaVWelG5
+ xrtg==
+X-Gm-Message-State: AOJu0Yy2nvHhVfud7TGr3NDJjnyVxHTqZZ61kQyumrN5X5njqILM+k29
+ 2rKNtnK38QI2O6Obcfjxp9AMx4spYbVvVf5qxVUWaHvbk3IDpQSYjRyQ9pedGPT6YWk=
+X-Gm-Gg: Acq92OEpAVdV5ttpqYQpJ/dKsIjvprilGp2vQORc4/dAnuCfjXsl8aXbRs+DwlrDVG4
+ daeXFCK+dsVxm+nZZBsk+x3wwjIe4ks0UltKNWhf49ENNaxB1ZYgHDYMvjiRGqEh+AfsT+XiNvb
+ SKH8yMKBPrhFZa5XwJ+0rbeZSEbY5VXyjgwty5npwDacwVWT8EYpFlxxxSsRAPUAjj1XwKyz+cI
+ LGnIZxvSzbWu6mCygLUx+X/YEfhuXoUw33biOJQrOftqE6DmiJO4fLdJJ4EimjBIUC0itXr+Mz2
+ PEyfvEmaBPj6kcnwDYP8NHb6vh+cVVsT/ci+zNUefm9q3kJJXCxNa/iL/uQ3MumS2vIv/zq8rwP
+ p2YRwtSqr5mfy54qja0FMh8S4bge5g70w5X435j0JOpCdpI83/as5GIdWM2EFSL+X0ejXr92SGF
+ pbqKVRmd6OoDBvTTS+eI5a
+X-Received: by 2002:a05:6830:928:b0:7dc:e08d:d9ec with SMTP id
+ 46e09a7af769-7e4f2b24e30mr4239780a34.15.1778880002797; 
+ Fri, 15 May 2026 14:20:02 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55b7c6b29sm2185612a34.1.2026.05.15.14.21.09
+ 46e09a7af769-7e55b7c6b29sm2185612a34.1.2026.05.15.14.20.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 14:21:09 -0700 (PDT)
+ Fri, 15 May 2026 14:20:02 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Fri, 15 May 2026 15:20:04 -0600
-Subject: [PATCH 65/66] bsd-user: In specialfd, we need to copyin target_eventfd
+Date: Fri, 15 May 2026 15:19:02 -0600
+Subject: [PATCH 03/66] bsd-user: Add bsd-signal.h with sigaction through
+ sigreturn
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260515-misc-2026q2-v1-65-5438ca41b27a@bsdimp.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260515-misc-2026q2-v1-3-5438ca41b27a@bsdimp.com>
 References: <20260515-misc-2026q2-v1-0-5438ca41b27a@bsdimp.com>
 In-Reply-To: <20260515-misc-2026q2-v1-0-5438ca41b27a@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Warner Losh <imp@bsdimp.com>
+ Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>, 
+ Kyle Evans <kevans@FreeBSD.org>, Jessica Clarke <jrtc27@jrtc27.com>, 
+ =?utf-8?q?Mika=C3=ABl_Urankar?= <mikael.urankar@gmail.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=717; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=tkRSEuvAKbcL4S51GHOcEnMrv89VGiUdfq+mIx3htAA=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqB43oYUaqZAvHhIjigHFuScMiSqM+v8io94a1a
- N6graQ1p6SJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCageN6AAKCRBsHNEofbAR
- AAedD/43nHGgTq7jJju2eAt4Z5hpsASW5FM1EZZMuYiAGh3Ms582lAsKSO0G7ZJ8YlizRoUaEmP
- Utg01ZawH/MBYd/bj01oB13dnNgO9S770LuhWFGCmp4CvhugzzKlLfz2xBWGsFQL4iPtrO2DkKe
- tVCsCWO6hcywVcGHRuCHiVuQhXUe6tNRsuh4y8Cpa5YGIAMS1DzqnK9jx2CoYOgd6ZBJwr99VCJ
- k7Qiu1HU4GAjzDeOy7BMw0nivpaUgXfTNXdkvQG86o0LRvu9sfOFh3SXw0p5eUonSHnPsYXn1Vt
- pobrfv7JsgXzKU8xBN+HeXzipoYKxuO7Oc+06WGV4SwyC6szml6HjUV4ssrwFmIRd8sIvbIQ5u5
- l52TtPZ4K57VMk52ztZXaaYqKHKBK+ntv6JnNBOcsRClAhUH5wgbmcXPRQVVGrLcQncWr32wrme
- u1cVem0W38TaGczgj75rZgamQABOR2v2sV1uwl/bfc8DsNix+lZJ4/fvIDJf4yXQ30dWrvN2SVv
- Et9T1ZGdbHFTedZl9xk0eXGmCrYqw9WxYjGgM9JxWFEXVKCmj1QA6670TOfviWeUGBMiTmjwpOs
- UA/yUatHCFTvFDy2oQ5d6Qep3nv8PwnIoG5cPKb7XuUruS2ye7ANgGUqLEOylu8fXUu27+CqQQ1
- GDUZb+BOMpasFQg==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=9451; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=eUrsSwz/1wp5sSzubNugfDrEiOHWJVZBMoyOulKj8eY=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqB43hky3oL9OyJENcyns0mztbZjbURUCvTZvTU
+ HZ1mdQ4CjWJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCageN4QAKCRBsHNEofbAR
+ ALvND/9LyXrLJZR+pXS2y44Dlfwp92J2aHQCuydji5Vx++xAMDo1VUrRPeyd3WXfgNmiqIVOiwZ
+ 6ZRRsnNUOmrZOM0BwBMWTkxXl6DBBNKworwnCoUw5tpFYcj9ez7rpAjI9smcRThwxJ8RK2B4Rxm
+ h/FfnfglLrNY43QLhW3JfIloIruv44APZHCYz9/Gi8eyhB2ozHJWTUSckR7o3jYasC2IblUEanI
+ qy7s2okwGiuQ20O7l2swutyoOjaXy1U0w593WlRx0wK2htbGfT9YD2nj9E9G8XoDPMGhx0YzSId
+ lkEZqZd8LFJGoRKyyf0Yf9ps+0t4bdKYQTGuXSH8GwFwuwBYIACmdEs/kha2Of0NQCUAF3kG29o
+ 9s6n93FAgZ1fTLvRPdgJT6LzMEF2l9vrTeyUg2v8KQjpf4JGRVMGOXjy6L/uFXxUJUTLsPUSi/P
+ Y8HA9UNOZoXCNDc8WXHwEo9qQqwvKP9jVdPWAA1cVnQWOSMefbmX+IVOvDdDp6TvY+o+BgpeTMA
+ eDWp9n4HrmjcCm7ixw29ZFVa8xNQeYIQLeP1wdwJyesTP5a/zGBa7JFjMJBZV7CNnsQg4P9WLI+
+ F+1WU1BpFKTIehkcbYpR+afyQ3iWGMgYxHybOjd0TEucjWRAYsDjWQ0ane7W1jyLveyyqhyuYXW
+ V5cnMLquTw8aFaA==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::330;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x330.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::32b;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x32b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -116,24 +118,300 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Warner Losh <imp@bsdimp.com>
----
- bsd-user/freebsd/os-file.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Add the first set of signal-related system call shims: sigaction,
+sigprocmask, sigpending, sigsuspend, and sigreturn. Also add the
+do_sigprocmask and target_to_host_sigevent helper functions to signal.c
+and their declarations to signal-common.h.
 
-diff --git a/bsd-user/freebsd/os-file.h b/bsd-user/freebsd/os-file.h
-index aa8d8bda74..ea15ab25a1 100644
---- a/bsd-user/freebsd/os-file.h
-+++ b/bsd-user/freebsd/os-file.h
-@@ -110,7 +110,7 @@ static inline abi_long do_freebsd___specialfd(int type, abi_ulong req,
-         struct specialfd_eventfd evfd;
-         struct target_specialfd_eventfd *target_eventfd;
+Signed-off-by: Stacey Son <sson@FreeBSD.org>
+Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
+Signed-off-by: Jessica Clarke <jrtc27@jrtc27.com>
+Signed-off-by: Mikaël Urankar <mikael.urankar@gmail.com>
+Signed-off-by: Warner Losh <imp@bsdimp.com>
+Assisted-by: Claude Opus 4.6 (1M context)
+---
+ bsd-user/bsd-signal.h         | 151 ++++++++++++++++++++++++++++++++++++++++++
+ bsd-user/freebsd/os-syscall.c |   1 +
+ bsd-user/signal-common.h      |   4 ++
+ bsd-user/signal.c             |  67 +++++++++++++++++++
+ 4 files changed, 223 insertions(+)
+
+diff --git a/bsd-user/bsd-signal.h b/bsd-user/bsd-signal.h
+new file mode 100644
+index 0000000000..49e58d7436
+--- /dev/null
++++ b/bsd-user/bsd-signal.h
+@@ -0,0 +1,151 @@
++/*
++ * signal related system call shims
++ *
++ * Copyright (c) 2013 Stacey D. Son
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#ifndef BSD_SIGNAL_H
++#define BSD_SIGNAL_H
++
++#include <signal.h>
++
++/* sigaction(2) */
++static inline abi_long do_bsd_sigaction(abi_long arg1, abi_long arg2,
++                                        abi_long arg3)
++{
++    abi_long ret;
++    struct target_sigaction *old_act, act, oact, *pact;
++
++    if (arg2) {
++        if (!lock_user_struct(VERIFY_READ, old_act, arg2, 1)) {
++            return -TARGET_EFAULT;
++        }
++        act._sa_handler = old_act->_sa_handler;
++        act.sa_flags = old_act->sa_flags;
++        memcpy(&act.sa_mask, &old_act->sa_mask, sizeof(target_sigset_t));
++        unlock_user_struct(old_act, arg2, 0);
++        pact = &act;
++    } else {
++        pact = NULL;
++    }
++    ret = get_errno(do_sigaction(arg1, pact, &oact));
++    if (!is_error(ret) && arg3) {
++        if (!lock_user_struct(VERIFY_WRITE, old_act, arg3, 0)) {
++            return -TARGET_EFAULT;
++        }
++        old_act->_sa_handler = oact._sa_handler;
++        old_act->sa_flags = oact.sa_flags;
++        memcpy(&old_act->sa_mask, &oact.sa_mask, sizeof(target_sigset_t));
++        unlock_user_struct(old_act, arg3, 1);
++    }
++    return ret;
++}
++
++
++/* sigprocmask(2) */
++static inline abi_long do_bsd_sigprocmask(abi_long arg1, abi_ulong arg2,
++                                          abi_ulong arg3)
++{
++    abi_long ret;
++    void *p;
++    sigset_t set, oldset, *set_ptr;
++    int how;
++
++    ret = 0;
++    if (arg2) {
++        p = lock_user(VERIFY_READ, arg2, sizeof(target_sigset_t), 1);
++        if (p == NULL) {
++            return -TARGET_EFAULT;
++        }
++        target_to_host_sigset(&set, p);
++        unlock_user(p, arg2, 0);
++        set_ptr = &set;
++        switch (arg1) {
++        case TARGET_SIG_BLOCK:
++            how = SIG_BLOCK;
++            break;
++        case TARGET_SIG_UNBLOCK:
++            how = SIG_UNBLOCK;
++            break;
++        case TARGET_SIG_SETMASK:
++            how = SIG_SETMASK;
++            break;
++        default:
++            return -TARGET_EINVAL;
++        }
++    } else {
++        how = 0;
++        set_ptr = NULL;
++    }
++    ret = do_sigprocmask(how, set_ptr, &oldset);
++    if (!is_error(ret) && arg3) {
++        p = lock_user(VERIFY_WRITE, arg3, sizeof(target_sigset_t), 0);
++        if (p == NULL) {
++            return -TARGET_EFAULT;
++        }
++        host_to_target_sigset(p, &oldset);
++        unlock_user(p, arg3, sizeof(target_sigset_t));
++    }
++    return ret;
++}
++
++/* sigpending(2) */
++static inline abi_long do_bsd_sigpending(abi_long arg1)
++{
++    abi_long ret;
++    void *p;
++    sigset_t set;
++
++    ret = get_errno(sigpending(&set));
++    if (!is_error(ret)) {
++        p = lock_user(VERIFY_WRITE, arg1, sizeof(target_sigset_t), 0);
++        if (p == NULL) {
++            return -TARGET_EFAULT;
++        }
++        host_to_target_sigset(p, &set);
++        unlock_user(p, arg1, sizeof(target_sigset_t));
++    }
++    return ret;
++}
++
++/* sigsuspend(2) */
++static inline abi_long do_bsd_sigsuspend(CPUArchState *env, abi_long arg1,
++                                         abi_long arg2)
++{
++    CPUState *cpu = env_cpu(env);
++    TaskState *ts = cpu->opaque;
++    void *p;
++    abi_long ret;
++
++    p = lock_user(VERIFY_READ, arg1, sizeof(target_sigset_t), 1);
++    if (p == NULL) {
++        return -TARGET_EFAULT;
++    }
++    target_to_host_sigset(&ts->sigsuspend_mask, p);
++    unlock_user(p, arg1, 0);
++
++    ret = get_errno(sigsuspend(&ts->sigsuspend_mask));
++    /* XXX Trivially true until safe_syscall */
++    if (ret != -TARGET_ERESTART) {
++        ts->in_sigsuspend = true;
++    }
++
++    return ret;
++}
++
++/* sigreturn(2) */
++static inline abi_long do_bsd_sigreturn(CPUArchState *env, abi_long arg1)
++{
++    if (block_signals()) {
++        return -TARGET_ERESTART;
++    }
++    return do_sigreturn(env, arg1);
++}
++
++/* sigvec(2) - not defined */
++/* sigblock(2) - not defined */
++/* sigsetmask(2) - not defined */
++/* sigstack(2) - not defined */
++
++#endif /* BSD_SIGNAL_H */
+diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
+index d402c64726..7fefdb569f 100644
+--- a/bsd-user/freebsd/os-syscall.c
++++ b/bsd-user/freebsd/os-syscall.c
+@@ -38,6 +38,7 @@
+ #include "bsd-mem.h"
+ #include "bsd-proc.h"
+ #include "bsd-misc.h"
++#include "bsd-signal.h"
  
--        if (!lock_user_struct(VERIFY_READ, target_eventfd, req, 0)) {
-+        if (!lock_user_struct(VERIFY_READ, target_eventfd, req, 1)) {
-             return -TARGET_EFAULT;
-         }
+ /* BSD dependent syscall shims */
+ #include "os-stat.h"
+diff --git a/bsd-user/signal-common.h b/bsd-user/signal-common.h
+index 4e634e04a3..9071757873 100644
+--- a/bsd-user/signal-common.h
++++ b/bsd-user/signal-common.h
+@@ -32,6 +32,7 @@ int block_signals(void); /* Returns non zero if signal pending */
+ long do_rt_sigreturn(CPUArchState *env);
+ int do_sigaction(int sig, const struct target_sigaction *act,
+                 struct target_sigaction *oact);
++int do_sigprocmask(int how, const sigset_t *set, sigset_t *oldset);
+ abi_long do_sigaltstack(abi_ulong uss_addr, abi_ulong uoss_addr, abi_ulong sp);
+ long do_sigreturn(CPUArchState *env, abi_ulong addr);
+ void force_sig_fault(int sig, int code, abi_ulong addr);
+@@ -42,6 +43,9 @@ void process_pending_signals(CPUArchState *env);
+ void queue_signal(CPUArchState *env, int sig, int si_type,
+                   target_siginfo_t *info);
+ void signal_init(void);
++abi_long target_to_host_sigevent(struct sigevent *host_sevp,
++                                 abi_ulong target_addr);
++int target_to_host_signal(int sig);
+ void target_to_host_sigset(sigset_t *d, const target_sigset_t *s);
  
+ /*
+diff --git a/bsd-user/signal.c b/bsd-user/signal.c
+index 3e5e41e1b1..8ec206256b 100644
+--- a/bsd-user/signal.c
++++ b/bsd-user/signal.c
+@@ -346,6 +346,33 @@ int block_signals(void)
+     return qatomic_xchg(&ts->signal_pending, 1);
+ }
+ 
++abi_long target_to_host_sigevent(struct sigevent *host_sevp,
++                                               abi_ulong target_addr)
++{
++    struct target_sigevent *target_sevp;
++
++    if (!lock_user_struct(VERIFY_READ, target_sevp, target_addr, 1)) {
++        return -TARGET_EFAULT;
++    }
++
++    /*
++     * This union is awkward on 64 bit systems because it has a 32 bit
++     * integer and a pointer in it; we follow the conversion approach
++     * used for handling sigval types in signal.c so the guest should get
++     * the correct value back even if we did a 64 bit byteswap and it's
++     * using the 32 bit integer.
++     */
++    host_sevp->sigev_value.sival_ptr =
++        (void *)(uintptr_t)target_sevp->sigev_value.sival_ptr;
++    host_sevp->sigev_signo =
++        target_to_host_signal(tswap32(target_sevp->sigev_signo));
++    host_sevp->sigev_notify = tswap32(target_sevp->sigev_notify);
++    host_sevp->_sigev_un._threadid = tswap32(target_sevp->_sigev_un._threadid);
++
++    unlock_user_struct(target_sevp, target_addr, 1);
++    return 0;
++}
++
+ /* Returns 1 if given signal should dump core if not handled. */
+ static int core_dump_signal(int sig)
+ {
+@@ -725,6 +752,46 @@ int do_sigaction(int sig, const struct target_sigaction *act,
+     return ret;
+ }
+ 
++int do_sigprocmask(int how, const sigset_t *set, sigset_t *oldset)
++{
++    TaskState *ts = get_task_state(thread_cpu);
++
++    if (oldset) {
++        *oldset = ts->signal_mask;
++    }
++
++    if (set) {
++        int i;
++
++        if (block_signals()) {
++            return -TARGET_ERESTART;
++        }
++
++        switch (how) {
++        case SIG_BLOCK:
++            sigorset(&ts->signal_mask, &ts->signal_mask, set);
++            break;
++        case SIG_UNBLOCK:
++            for (i = 1; i <= NSIG; ++i) {
++                if (sigismember(set, i)) {
++                    sigdelset(&ts->signal_mask, i);
++                }
++            }
++            break;
++        case SIG_SETMASK:
++            ts->signal_mask = *set;
++            break;
++        default:
++            g_assert_not_reached();
++        }
++
++        /* Silently ignore attempts to change blocking status of KILL or STOP */
++        sigdelset(&ts->signal_mask, SIGKILL);
++        sigdelset(&ts->signal_mask, SIGSTOP);
++    }
++    return 0;
++}
++
+ static inline abi_ulong get_sigframe(struct target_sigaction *ka,
+         CPUArchState *env, size_t frame_size)
+ {
 
 -- 
 2.52.0
