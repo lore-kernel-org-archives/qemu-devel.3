@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29EE2CD343F
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 21:22:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAB9CCD4F3C
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 21:22:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNzyJ-0004nH-Q0; Fri, 15 May 2026 17:21:27 -0400
+	id 1wNzy8-000482-Tm; Fri, 15 May 2026 17:21:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzxx-00039q-Pm
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzxy-0003AT-QH
  for qemu-devel@nongnu.org; Fri, 15 May 2026 17:21:07 -0400
-Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
+Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzxv-0003C8-Rk
- for qemu-devel@nongnu.org; Fri, 15 May 2026 17:21:05 -0400
-Received: by mail-ot1-x32f.google.com with SMTP id
- 46e09a7af769-7dbec19732eso372478a34.3
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 14:21:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzxx-0003CT-Ay
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 17:21:06 -0400
+Received: by mail-ot1-x32d.google.com with SMTP id
+ 46e09a7af769-7dea20cf21aso363765a34.1
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 14:21:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778880063; x=1779484863;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778880064; x=1779484864;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=MkDCvLx1YmIMhnQzW256KXrvrqxkaXCRad8HV/Ubdis=;
- b=OApDRZnIeGGl9uTUvuy/HDiCGMIz5RVeIV2bhItDov+iKmRg99r8Csd0nk7G/ST3Ds
- ZtDE8ifLcL6qrVDhex5To27VSXmGc6NPeIrT9FEJ3JhtDMeJCAxo/xUVPoFBHhLZRaKP
- ckSYRjNj3aRPBtYdJQ+5SIXDuiAfqgse+lHQhb+WtD5alyxy39OJ/Ti+9TGrBAPyiMuP
- 4JXiJPZbNSmPPFMry6q/IJElWO4z/VjUhIUDdfssowQd0KKLAYnSyyOnLqPnFjbZqLKv
- CHzEvVa8fTJCzLjSKq4mRVyKB1O32SOw6wghz04vnltNTGaCc/PsJFz05RObfFFmVMR4
- SfpQ==
+ :reply-to; bh=402MI+eMAC2JN+aTXLkZ84wCkhgwaRFbSZi0tBBQDsQ=;
+ b=ma/45IM1TgM8WMhRUyihsTgVjnCMSDTXYCBQ3FQ/V7hysxCS8GdZr/pczm/8ic0VNz
+ 5cK0k9GP1CGka7DkKwZuGjcMmp0owkADdxEf6lRQbxjC/jvCrM6vs6TKdUqy2OObWNcv
+ mC8jNUkqVb+fnGkt1V5hITvf7G6R44qZrNDp0msdT/8w94UsP7ufBM3XvFuHRaHuQU8Q
+ hq33ebbnj5gJ3a8wVl9YzwTQiT+0Htnck3bkMJ1TFa7npWVyJ58qSQ4WC4dOOpvN12BE
+ thQxgmZxZqPWDjuJ969ct9LukwgWrWS0YwA0DwiY+QrW418N6lWC9sDQM1GfDrxOjjBc
+ vAaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778880063; x=1779484863;
+ d=1e100.net; s=20251104; t=1778880064; x=1779484864;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=MkDCvLx1YmIMhnQzW256KXrvrqxkaXCRad8HV/Ubdis=;
- b=b/eGy0AeGHJiDRzbLr7it6Yb6kGivY9xJQGlq/amalyq25un9UiAzM/Z6VH0SYyJPl
- NPzkl0pMYaM8niGUN0sLPxtrYgbZhK438PLssdIeAoZ17wt9ng4narNb8vaUY/+qRvw6
- ExYvfg1q1IuEGhDIDunvL0BmwHfhXGQ/0dWxTonBadKwMqqYcetsM00F+hZeZdnC+am9
- u/3qJUh4DHtX/8dNY2ZMh+FdehQwYEmOMXF+XUBW5UK2EzYA/LyTE08olva8NTHVCpkM
- Fjf7Sga/WG/vZJ5M6Bi/PWhmjF8yqfUEgznwCNV1p1jhCVmN9O2bSLnAsVlOnALfa1Hg
- MH7g==
-X-Gm-Message-State: AOJu0YyUpTtmutNgVOgyfJUsUyS0qLweJXquL6uprB4JAUSO3t1Zwx5z
- 5TLFHFtBK+E6bMKN/s+pmpgCv4rJReKja1aRoJVaGRtuvJg19VXlsg3ceIvGGi2ZgHIgG1Cwu4z
- yDfh649M=
-X-Gm-Gg: Acq92OGg9VdfCGsavQMycU1e+vOACogtKlMTV5/1t/fph/lcgMO/C2eThSvJ7/eCNSr
- qu240ct3NknygU0/O/sYvdqN9aazC78D0x/t8FP39iqn35RSDgwN/sRL5CnrS0+s2M4LrQIL41D
- ZvVhPVB1BrV5JMHB9K0sz3teGSR7GuOT6ieIMlgcAossvHthHyWBuixz2XY4nIyB6I+peuC8mf+
- skvvJjC1nseBAlmbbJy82gtUcj+pZ1MEocRTYIshP4VRnk3N7rvaBumyPpkc0Eib/NWRtC7E5Aj
- Xcz0nbYSzxLyrb8aouKI8v+1e9UargE1ITX9uqtwwO67zpY76o0+ZJrqPo6lrb4OYo0FKhPZRpt
- o5OFlToyul2FUj8E/RgU65isnW3UuDZqqBx9XHzgvLPr6hORs/ujWr6fqtJVhMCyrYpdaJl+9Zr
- Jbd2ozJkkwtg==
-X-Received: by 2002:a05:6830:4990:b0:7dc:e37b:b5d3 with SMTP id
- 46e09a7af769-7e4ea057345mr4035114a34.7.1778880062726; 
- Fri, 15 May 2026 14:21:02 -0700 (PDT)
+ bh=402MI+eMAC2JN+aTXLkZ84wCkhgwaRFbSZi0tBBQDsQ=;
+ b=YpLfAVlf7o+329UVAKcv232haJy2gNd3XUf6OnUR4rvMAeBoTDq0tyBSoioB/IBiio
+ xr4t5wEv+KGk8sWQKX8NPqLKYQRo7Etps9ZbYxyqvASLnAkyBODRVyWQITITElawHva/
+ RQoGidmelfZEA6oHtnhFILG8oCRsysWsXAuOBPbpWWklaIhBPt1GGjxjXgn7Yzb3yLzk
+ Xya5Jchs1hHWaGi/BQsS7tATmuhth7jdeqzeEXwlKpg4laV5tNtnHMMUEtHy5X7Lm5Fz
+ onE5GB1cwgY7bLwH6mnMaxxmYWSRLkA98UIfLNHNG56OGfNuPJDyilzD6Do/3djrFPNb
+ i+eQ==
+X-Gm-Message-State: AOJu0YxCgvQWDBQfyAV/LJHMGIsr4ysui5W3jFgvswSEBxXDbW1OIaCz
+ bKCuDP+wdg8ONPleqenb342n3LWM+bjkx2y5ukgzZNy/8/vgR2Q2nta2ksT4LOOS8pSpIgjhkzB
+ lE45KblM=
+X-Gm-Gg: Acq92OEfO7Kq7a+xyzIlDX3ybHdWMTLZnFOl3pdhNXUJ0s3sAlyo+wQPTPIzjQqxyNQ
+ XkBihZJHUHMlxTygAC6v2/wh/jGRooXeERoRmkLuAIJsdF8jdkqzTMYgYcbVdQNd6cl6Dc0L9n2
+ neCMs8jxw9wZUZejlCJOygSfL/MgP7A/K/lwX4H0BvnEdPymKJevWvnb7dVFA76+GHOVRVOriFt
+ bXC1rawkS3IPWQcin1wfblZmP3IeP3LGZ1E/psRDAdcUlPvHuzeIJdLCEm5QjQMmofLGBL15pyc
+ jveWDE/DdVuEQDbSKejyfQzASAx/MdzKy57kiDocYfO2RyO3aqPfEXPYBk9z199bb2JU+/RXGOO
+ YZnlvCpvjyzUsxd3jiQlY+wRXEcGrhm7ZGsiD/yjDPJDtD+McBBxdUBdtaqGGLgqRkwd8tkxbom
+ 1zPg2vsRqVJg==
+X-Received: by 2002:a05:6830:4128:b0:7d9:b2b8:e06f with SMTP id
+ 46e09a7af769-7e4f2b6f1f6mr4036431a34.21.1778880063891; 
+ Fri, 15 May 2026 14:21:03 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55b7c6b29sm2185612a34.1.2026.05.15.14.21.01
+ 46e09a7af769-7e55b7c6b29sm2185612a34.1.2026.05.15.14.21.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 14:21:02 -0700 (PDT)
+ Fri, 15 May 2026 14:21:03 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Fri, 15 May 2026 15:19:57 -0600
-Subject: [PATCH 58/66] bsd-user: settimeofday should copy the data in, but
- not out
+Date: Fri, 15 May 2026 15:19:58 -0600
+Subject: [PATCH 59/66] bsd-user: unlock the start of the cmsg
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260515-misc-2026q2-v1-58-5438ca41b27a@bsdimp.com>
+Message-Id: <20260515-misc-2026q2-v1-59-5438ca41b27a@bsdimp.com>
 References: <20260515-misc-2026q2-v1-0-5438ca41b27a@bsdimp.com>
 In-Reply-To: <20260515-misc-2026q2-v1-0-5438ca41b27a@bsdimp.com>
 To: qemu-devel@nongnu.org
@@ -78,24 +77,24 @@ Cc: Kyle Evans <kevans@freebsd.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1080; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=hqBMQ4tUXP5fH65qKhCXQAlD1x+TbgD7xpnPUEQvdAU=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqB43oTSszvYrCcDoy5A6G1XaRh0krgL8xZjAM6
- BWYhEGMSISJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCageN6AAKCRBsHNEofbAR
- ALllEADcwMDccFeTUZg20NSSkxjIBtBbJPqDnJNFxYW2QthmSFlkSm5PkmVVEzdrHjLq/9/x9oL
- aIX7sg/XsHui39ehs6ZuAzULkBg1YAg5IrPglvePUWKiNm2qKONB4C+QxAhkA2ZIqcZf/1SroPi
- 8L9ledT7DU6blXPHmPEq8cn71SLlIhP9tZ7FK8P5GIF1IdluFUl+oBTdrRaSgLcRqIGR3fAwY8S
- HptbrIETbUU7RRgbwKYYZzJL4RHAGRyaJzfc1YkcuEidbWaYKoRasbBpxZDy3FCeZ4+3TBEuTtl
- TbVexNDZCKnay9ujGzCmshYwDD5Jr6ZFjV2PUyEpk90HoqaiR1VBM6/Q/0mLRs1+e5xXGJGWUMw
- zdnEHY1ARsC2YQDPZF8OvFENi4tPXWJFnM0QUJdOrRLhbcGOk9MSg7W6NxS3FR68DtZfOiFyXCW
- jQ3H6SyWv9cM8ZUt1gNvGni9GuvuARnR3xbitB9fKtOUDO4Hk7dhgKGL71K7NaQXlr/7ehqqX48
- UINR6/R3CKXd3SxOTnBzKi2oG2GKcuEtGAMdKzmclzHBiK1N27Wm/NCYEg73suBdpz8lti4NzJv
- FzOTOslcTIde3LSJsxTnUy1JdMk41qFeWxs58QEpMz3SzlZKsFbE3T6FsoBLTPzIJLhjL8CRQJt
- 3vgphBeDXowjIwA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1273; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=iHTiAs0eo+GfPoYHIYv7+/2ntDeMJMG9gZW+S3lWJyI=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqB43ozZyN/xMUaYHas5P9yaMfCyh4kUULClrIm
+ kRyvYmB9j2JAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCageN6AAKCRBsHNEofbAR
+ AIXKD/93FdpOPo1nROZqPraVZ/rpIQDsup2MEYtEYPd/UzK2le5hGSu1iN/YsCifqOtYYXpPyO4
+ wCeZ0DOz7rXOxNCPWdH3xflM94D506NbRuF0S2T4MxSo63tKAlvle8nP8vcY4LFZNZI2IqAHNZQ
+ 2mgnWumAs/IWA6vhDwAHo6nY0Yp78ryzkGuTorltSQ2Xh1ZIFPQItMRbR3iLnTD+pX/x8rFeZNN
+ XcfwUdt8g/khc8iqMhhhFE/Rs+NRWfODPO5LvdbzVUNZrLneDgtEfozbKHseS/JqvG1o7pBEi7z
+ OdMelYrok8IORm4E57lPpQOujuM1yjznwdztBercD8rpXUw3Q9udGoQ26ijv80bGGLUU2Kkf1X7
+ P0av2+qAF1bdq4+JmascbPA2uvKgAHcjJCd9bgjqhmcG5ZzUBy54xORkO0Cu9KEgJDHt34kBmUj
+ d1FG46rlKNIBkjsVowPzrOBwWuykfoMQ9EG+RD3QQmhPTxjBjxQC+aBXaCd+MMrlXYPBKSk7b7V
+ Qhh8QqW84QmczeC/YQEgIQ0AtaWAHD4hEQBveLR2+D+/WkGUYd1TumpXZBvW29lJAbSqAs7mt1u
+ mus910BvEnxQ02zNj6knEYAvE4gX7DEaEBFWmFPP9MCFci7c5qkBvcnIwFmg08pT2W/AiGaT3jt
+ GT3O4oDfRPIh3kQ==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::32f;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x32f.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::32d;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x32d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -117,32 +116,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make sure that we copy in on lock() and don't copy back out on unlock().
+We move target_cmsg, but save target_cmsg_start as the beginning
+point. We need to unlock that, not the moved pointer.
 
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/os-time.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ bsd-user/freebsd/os-socket.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/bsd-user/freebsd/os-time.h b/bsd-user/freebsd/os-time.h
-index 29436997ce..ec379b6927 100644
---- a/bsd-user/freebsd/os-time.h
-+++ b/bsd-user/freebsd/os-time.h
-@@ -149,12 +149,12 @@ static inline abi_long do_freebsd_settimeofday(abi_long arg1, abi_long arg2)
-     struct timezone tz, *target_tz; /* XXX */
- 
-     if (arg2 != 0) {
--        if (!lock_user_struct(VERIFY_READ, target_tz, arg2, 0)) {
-+        if (!lock_user_struct(VERIFY_READ, target_tz, arg2, 1)) {
-             return -TARGET_EFAULT;
-         }
-         __get_user(tz.tz_minuteswest, &target_tz->tz_minuteswest);
-         __get_user(tz.tz_dsttime, &target_tz->tz_dsttime);
--        unlock_user_struct(target_tz, arg2, 1);
-+        unlock_user_struct(target_tz, arg2, 0);
+diff --git a/bsd-user/freebsd/os-socket.c b/bsd-user/freebsd/os-socket.c
+index 968929c2fd..8eb728240d 100644
+--- a/bsd-user/freebsd/os-socket.c
++++ b/bsd-user/freebsd/os-socket.c
+@@ -91,7 +91,7 @@ abi_long t2h_freebsd_cmsg(struct msghdr *msgh,
+         target_cmsg = TARGET_CMSG_NXTHDR(target_msgh, target_cmsg,
+                                          target_cmsg_start);
      }
-     if (t2h_freebsd_timeval(&tv, arg1)) {
-         return -TARGET_EFAULT;
+-    unlock_user(target_cmsg, target_cmsg_addr, 0);
++    unlock_user(target_cmsg_start, target_cmsg_addr, 0);
+ the_end:
+     msgh->msg_controllen = space;
+     return 0;
+@@ -227,9 +227,8 @@ abi_long h2t_freebsd_cmsg(struct target_msghdr *target_msgh,
+         target_cmsg = TARGET_CMSG_NXTHDR(target_msgh, target_cmsg,
+                                          target_cmsg_start);
+     }
+-    unlock_user(target_cmsg, target_cmsg_addr, space);
++    unlock_user(target_cmsg_start, target_cmsg_addr, space);
+ the_end:
+     target_msgh->msg_controllen = tswap32(space);
+     return 0;
+ }
+-
 
 -- 
 2.52.0
