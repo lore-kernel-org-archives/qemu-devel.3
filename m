@@ -4,49 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA2D3CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 18:04:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A5F9CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 18:06:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNwqx-0007YT-Ay; Fri, 15 May 2026 14:01:39 -0400
+	id 1wNwvb-0001B3-ES; Fri, 15 May 2026 14:06:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwqb-0007N3-Hn
- for qemu-devel@nongnu.org; Fri, 15 May 2026 14:01:22 -0400
-Received: from rev.ng ([94.130.142.21])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wNwvX-0001A8-1i
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 14:06:24 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwqP-0001Pd-Qg
- for qemu-devel@nongnu.org; Fri, 15 May 2026 14:01:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:
- In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=W/DLWrRh5+Y4og+0LUFPAspmS8bfpYDPmYoWzEDDT+s=; b=f3O8NAV4SHM6ZM4
- CKxeEq0zZFm8iWh8w1vaGR2tHx7xhit4xh86Recgp8biES9q60uSNIG8hu9mYyHxpEz4E53NpXJst
- Uzaf/7TcQJ/lic+s+D7lI/ZDa6mSodLs5+jZJedJqEIM+HR72O4UDoCJLOIziEjnCikgtrX4q7p8U
- xU=;
-To: qemu-devel@nongnu.org
-Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
- Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v6 23/27] target/riscv: Move CSR declarations to separate
- csr.h header
-Date: Fri, 15 May 2026 20:04:33 +0200
-Message-ID: <20260515180437.23620-24-anjo@rev.ng>
-In-Reply-To: <20260515180437.23620-1-anjo@rev.ng>
-References: <20260515180437.23620-1-anjo@rev.ng>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wNwvV-0003gp-9J
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 14:06:22 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64FGkqMs1353908
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 18:06:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ u1dC2OU9rmEb5xEVrzLKEn6dVOEFExpzwFuOm7XTLZk=; b=oXhzPZc5cex2xhPG
+ Hn3Qb0A4xjBhiOQADCH4y+dEn/r4cgX10Y5lGov9RVrPSQj/KMJn1QT3E/+yGIK+
+ VHg31Y06gb3sYP5wdj/p8K5NEnYRg+FPQw/F4oF8DleqxTtLxkXPV2seef/x6SLr
+ B+MbmX2NETy6i8oUxhUIpI9E6lHuQnVEirG0s+I0WTPioa8EBtMTfM2zJ9Cs57RV
+ f/U6e6tzy90SjIJm6ci0IhzQUuVc6EBYJDv87kh9k+DnILQUE1EPxHlkNupvj5MR
+ HlA0OCDIFmawCyy1hC2X1xobB/tZyc+gRNeVOkrY1+Txr/JNfAAF5CUqWvmz4H8P
+ zrXrIQ==
+Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e67ac89yc-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 18:06:12 +0000 (GMT)
+Received: by mail-dl1-f72.google.com with SMTP id
+ a92af1059eb24-134cf343c58so61867c88.1
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 11:06:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1778868372; x=1779473172; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=u1dC2OU9rmEb5xEVrzLKEn6dVOEFExpzwFuOm7XTLZk=;
+ b=OXpG8Oz3Kj59FNV+t3X9NTxB1NArCz3nI6ZkveimfYakJiCRyB0BTYPm5/DZiqFCai
+ 4pULxPLfmSC35tEH6CDlRnvMDEM0+HGWX3MP8BhTnuiTXv0iNujroMCloTJXdxRV7WXB
+ 5xP+ofdN99Tqh7ybauwURXc7aRRisRczbXBmJkgFPUjENwURaSJNvtsilxULDin56AHG
+ p9AH/LBT+8Iq+N0Gj5EP3M7FPnl2X9rlJ4igdALQIvFwXinkS+hmiwohg7KDyaOSKjy0
+ 82XRt6v0TRDFj6Pg/sCY5Hz1Advcbifs2L52Gc+Ol7Jiw0ZmI1/D5UCS76TYaTfZVU3z
+ Py5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778868372; x=1779473172;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=u1dC2OU9rmEb5xEVrzLKEn6dVOEFExpzwFuOm7XTLZk=;
+ b=GX6VVoA1j21FBv/z0FHi0QAhe3Oj9gjuv/BL+i+RjTyufgEcSQL+uEXj7Bkj6fYFPr
+ glOlp/pS6Rtw8b2rwzGTGCQS9RmsVEeeLEuf5T0KzRq97fpGR3JkNnPo+1l+8UHB511Y
+ SuVDL5RddmmJT05fFCTmhVYSts/esUllkRGHJxamQq6DkN++x2aMxrcJam+jvsNbabz7
+ yqn19plX/iboLWEnjzCB0zhsCcl7ynvUxIZ5FPZG8/pfIloEEhyMPplBAPsq/XTRtDVH
+ OQoCylhBXRm/RkorKty0hpmOjISVDeaQwFmZQm6QldUIodgeV6cl98tiNBzQBWhAOOCa
+ 5xrQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/Dge5UTbdwyUr0VIHpjWS8ON1aCksrDPZAcTRoGdNBTwPI+2pjNl35zLUCxsBiUeqd2WKBmyp9wYui@nongnu.org
+X-Gm-Message-State: AOJu0Yzk6Qo/iLFCXp6n4T0hDLJWCAtjYpazJiPZbpDH3l9M4F0TLRDR
+ QGgFZGkWJjYnoyya/gAiujBT2apIgTiOzF0uOGH+g9lRTjYhtw9AuDpX2VVgayRaF48fN5SaBdZ
+ AnXAEz/5GPjYFHjucFQYeGi3xGcgZG4I8weNLTytZopYZQ/vVigVaVEVygA==
+X-Gm-Gg: Acq92OGmzDpFTvdgxCEYJTZCcneo11EIwohhZdq3yAgwF/4vBHz9OEPFN0p8ozymCYc
+ XzJA9NkyN3cjO/ZsyJh+zusjG9l/NdBbrbRgFotaX8KaQJJ4PIM53FtfBxqo9FR5jQM2k1of5hh
+ dtBlU3Mq1PAhvprnSTDSb6fG9utIzEg5piRk1tLzyixLJ2twktrn672vXPp3GN/pa6LG5j8Pog6
+ +2oCDJUPzhfYCJnYjUBr16z1K1ad36EzbHtuxWzfBr8N2N5Qxn5wIehyNVBrC5YfS+pQiv8Umxf
+ 7gLYu6m3hIQsiuIIaQq7w66HAMpf+9Hbo+quJhjCWQkGEYnV3vm7cpdseipTAwDsiY+u/RvKe5w
+ 5Vq1O6VnYWlk8DVIPEpNSpPcAmDmdQutESwABCwDS7C5EonZs/n2KMhBrYhH3t/Y25ZZLYbCZ2f
+ UyY8XHwsrfp8BZRw==
+X-Received: by 2002:a05:7022:688c:b0:12d:ce60:cb52 with SMTP id
+ a92af1059eb24-135045177e8mr2435814c88.18.1778868371571; 
+ Fri, 15 May 2026 11:06:11 -0700 (PDT)
+X-Received: by 2002:a05:7022:688c:b0:12d:ce60:cb52 with SMTP id
+ a92af1059eb24-135045177e8mr2435780c88.18.1778868370928; 
+ Fri, 15 May 2026 11:06:10 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-134cbed531esm10570306c88.8.2026.05.15.11.06.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 15 May 2026 11:06:10 -0700 (PDT)
+Message-ID: <8cbd526f-ec6c-4014-acc9-ac12657e0b5d@oss.qualcomm.com>
+Date: Fri, 15 May 2026 11:06:09 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 26/27] target/riscv: Pass address as uint64_t in
+ cpu_set_exception_base()
+To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com
+References: <20260515180437.23620-1-anjo@rev.ng>
+ <20260515180437.23620-27-anjo@rev.ng>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260515180437.23620-27-anjo@rev.ng>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
- helo=rev.ng
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: i08M-g0zfYdbXcGzqWiwNHBg7vJZbSan
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE1MDE4NCBTYWx0ZWRfXxP8TWcq7YyN6
+ pxHParfmmbk5Y1tvoz0o8Xqfs4W1Rwi7OUvjVH8tqzdKW3zHwmtFQpq3CXm5+Zprs8ey9jgchD6
+ H6vS/7IUZKT8IECs4gNBBEjZvdDQ9FZe30uCSbIOgeOWR6Fxbf4+y/KTRWo6xIPIvJ8fw9fnaW/
+ lccxZ+kClv3mwPiOuldsQ/sfsnga34KnqEr8PmhXOY17Aiat+Jzk7NT4WVplp1C4FHMSLxkFkYg
+ ZaGysyNflCsa/ZZMWHO0YjpSep2wyvd1gskEw5MSzHqtexr/pVVZGPA8i3/5G/luw8MKZ3G1ca3
+ CGgp32eafjw9nbyXJ2lT6fhIwwQgkvxc655uSEeAmcwIoiyqvlMDZGX0f5s1nCRCGsV161CHm7e
+ ABluwjF4yxsWoR0So945wP/nSlKcDgQFGUAzRAdYWUu5J+c5mji2xeDOn+oaqoHxUIjL8/hdxPp
+ y9TSljE/qii3KNZf3zw==
+X-Authority-Analysis: v=2.4 cv=SuWgLvO0 c=1 sm=1 tr=0 ts=6a076094 cx=c_pps
+ a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=EUspDBNiAAAA:8 a=SN4Way2Et2FXKZ94zD0A:9 a=QEXdDO2ut3YA:10
+ a=vBUdepa8ALXHeOFLBtFW:22
+X-Proofpoint-GUID: i08M-g0zfYdbXcGzqWiwNHBg7vJZbSan
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-15_04,2026-05-15_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 priorityscore=1501 lowpriorityscore=0 adultscore=0
+ impostorscore=0 clxscore=1015 suspectscore=0 phishscore=0 spamscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
+ definitions=main-2605150184
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -60,361 +151,19 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Most of these definitions save riscv_csrr, riscv_csrrw, riscv_csr_read,
-riscv_csr_write are only used in target/.  Move declarations to a
-separate headers which will soon be made internal to target/.
+On 5/15/2026 11:04 AM, Anton Johansson via qemu development wrote:
+> The corresponding field CPUArchState::resetvec is uint64_t anyway, no
+> need to use target_ulong.
+> 
+> Signed-off-by: Anton Johansson <anjo@rev.ng>
+> ---
+>  target/riscv/cpu.h | 2 +-
+>  target/riscv/cpu.c | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+> 
 
-csr.h is temporarily included from cpu.h to not break includes from
-outside target/, this include will be removed in the following commit.
-
-Signed-off-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/riscv/cpu.h            |  87 +----------------------------
- target/riscv/csr.h            | 100 ++++++++++++++++++++++++++++++++++
- target/riscv/cpu.c            |   1 +
- target/riscv/csr.c            |   1 +
- target/riscv/gdbstub.c        |   1 +
- target/riscv/kvm/kvm-cpu.c    |   1 +
- target/riscv/mips_csr.c       |   1 +
- target/riscv/monitor.c        |   1 +
- target/riscv/op_helper.c      |   1 +
- target/riscv/riscv-qmp-cmds.c |   1 +
- target/riscv/th_csr.c         |   1 +
- 11 files changed, 110 insertions(+), 86 deletions(-)
- create mode 100644 target/riscv/csr.h
-
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index d7a0b083d1..eb18e1f59f 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -903,75 +903,7 @@ RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env);
- RISCVPmPmm riscv_pm_get_vm_ldst_pmm(CPURISCVState *env);
- uint32_t riscv_pm_get_pmlen(RISCVPmPmm pmm);
- 
--RISCVException riscv_csrr(CPURISCVState *env, int csrno,
--                          target_ulong *ret_value);
--
--RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
--                           target_ulong *ret_value, target_ulong new_value,
--                           target_ulong write_mask, uintptr_t ra);
--RISCVException riscv_csrrw_debug(CPURISCVState *env, int csrno,
--                                 target_ulong *ret_value,
--                                 target_ulong new_value,
--                                 target_ulong write_mask);
--
--static inline void riscv_csr_write(CPURISCVState *env, int csrno,
--                                   target_ulong val)
--{
--    riscv_csrrw(env, csrno, NULL, val, MAKE_64BIT_MASK(0, TARGET_LONG_BITS), 0);
--}
--
--static inline target_ulong riscv_csr_read(CPURISCVState *env, int csrno)
--{
--    target_ulong val = 0;
--    riscv_csrr(env, csrno, &val);
--    return val;
--}
--
--typedef RISCVException (*riscv_csr_predicate_fn)(CPURISCVState *env,
--                                                 int csrno);
--typedef RISCVException (*riscv_csr_read_fn)(CPURISCVState *env, int csrno,
--                                            target_ulong *ret_value);
--typedef RISCVException (*riscv_csr_write_fn)(CPURISCVState *env, int csrno,
--                                             target_ulong new_value,
--                                             uintptr_t ra);
--typedef RISCVException (*riscv_csr_op_fn)(CPURISCVState *env, int csrno,
--                                          target_ulong *ret_value,
--                                          target_ulong new_value,
--                                          target_ulong write_mask);
--
--RISCVException riscv_csrr_i128(CPURISCVState *env, int csrno,
--                               Int128 *ret_value);
--RISCVException riscv_csrrw_i128(CPURISCVState *env, int csrno,
--                                Int128 *ret_value, Int128 new_value,
--                                Int128 write_mask, uintptr_t ra);
--
--typedef RISCVException (*riscv_csr_read128_fn)(CPURISCVState *env, int csrno,
--                                               Int128 *ret_value);
--typedef RISCVException (*riscv_csr_write128_fn)(CPURISCVState *env, int csrno,
--                                             Int128 new_value);
--
--typedef struct {
--    const char *name;
--    riscv_csr_predicate_fn predicate;
--    riscv_csr_read_fn read;
--    riscv_csr_write_fn write;
--    riscv_csr_op_fn op;
--    riscv_csr_read128_fn read128;
--    riscv_csr_write128_fn write128;
--    /* The default priv spec version should be PRIV_VERSION_1_10_0 (i.e 0) */
--    uint32_t min_priv_ver;
--} riscv_csr_operations;
--
--struct RISCVCSR {
--    int csrno;
--    bool (*insertion_test)(RISCVCPU *cpu);
--    riscv_csr_operations csr_ops;
--};
--
--/* CSR function table constants */
--enum {
--    CSR_TABLE_SIZE = 0x1000
--};
-+#include "target/riscv/csr.h"
- 
- /*
-  * The event id are encoded based on the encoding specified in the
-@@ -1015,28 +947,11 @@ void riscv_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
- void riscv_add_satp_mode_properties(Object *obj);
- bool riscv_cpu_accelerator_compatible(RISCVCPU *cpu);
- 
--/* CSR function table */
--extern riscv_csr_operations csr_ops[CSR_TABLE_SIZE];
--bool riscv_csr_is_fpu(int csrno);
--bool riscv_csr_is_vpu(int csrno);
--
- extern const bool valid_vm_1_10_32[], valid_vm_1_10_64[];
- 
--void riscv_get_csr_ops(int csrno, riscv_csr_operations *ops);
--void riscv_set_csr_ops(int csrno, const riscv_csr_operations *ops);
--
- void riscv_cpu_register_gdb_regs_for_features(CPUState *cs);
- 
--target_ulong riscv_new_csr_seed(target_ulong new_value,
--                                target_ulong write_mask);
--
- const char *satp_mode_str(uint8_t satp_mode, bool is_32_bit);
- 
--/* In th_csr.c */
--extern const RISCVCSR th_csr_list[];
--
--/* Implemented in mips_csr.c */
--extern const RISCVCSR mips_csr_list[];
--
- const char *priv_spec_to_str(int priv_version);
- #endif /* RISCV_CPU_H */
-diff --git a/target/riscv/csr.h b/target/riscv/csr.h
-new file mode 100644
-index 0000000000..fef3cd34cb
---- /dev/null
-+++ b/target/riscv/csr.h
-@@ -0,0 +1,100 @@
-+/*
-+ * QEMU RISC-V CSRs
-+ *
-+ * Copyright (c) 2016-2017 Sagar Karandikar, sagark@eecs.berkeley.edu
-+ * Copyright (c) 2017-2018 SiFive, Inc.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef RISCV_CSR_H
-+#define RISCV_CSR_H
-+
-+target_ulong riscv_new_csr_seed(target_ulong new_value,
-+                                target_ulong write_mask);
-+
-+RISCVException riscv_csrr(CPURISCVState *env, int csrno,
-+                          target_ulong *ret_value);
-+
-+RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
-+                           target_ulong *ret_value, target_ulong new_value,
-+                           target_ulong write_mask, uintptr_t ra);
-+RISCVException riscv_csrrw_debug(CPURISCVState *env, int csrno,
-+                                 target_ulong *ret_value,
-+                                 target_ulong new_value,
-+                                 target_ulong write_mask);
-+
-+static inline void riscv_csr_write(CPURISCVState *env, int csrno,
-+                                   target_ulong val)
-+{
-+    riscv_csrrw(env, csrno, NULL, val, MAKE_64BIT_MASK(0, TARGET_LONG_BITS), 0);
-+}
-+
-+static inline target_ulong riscv_csr_read(CPURISCVState *env, int csrno)
-+{
-+    target_ulong val = 0;
-+    riscv_csrr(env, csrno, &val);
-+    return val;
-+}
-+
-+typedef RISCVException (*riscv_csr_predicate_fn)(CPURISCVState *env,
-+                                                 int csrno);
-+typedef RISCVException (*riscv_csr_read_fn)(CPURISCVState *env, int csrno,
-+                                            target_ulong *ret_value);
-+typedef RISCVException (*riscv_csr_write_fn)(CPURISCVState *env, int csrno,
-+                                             target_ulong new_value,
-+                                             uintptr_t ra);
-+typedef RISCVException (*riscv_csr_op_fn)(CPURISCVState *env, int csrno,
-+                                          target_ulong *ret_value,
-+                                          target_ulong new_value,
-+                                          target_ulong write_mask);
-+
-+RISCVException riscv_csrr_i128(CPURISCVState *env, int csrno,
-+                               Int128 *ret_value);
-+RISCVException riscv_csrrw_i128(CPURISCVState *env, int csrno,
-+                                Int128 *ret_value, Int128 new_value,
-+                                Int128 write_mask, uintptr_t ra);
-+
-+typedef RISCVException (*riscv_csr_read128_fn)(CPURISCVState *env, int csrno,
-+                                               Int128 *ret_value);
-+typedef RISCVException (*riscv_csr_write128_fn)(CPURISCVState *env, int csrno,
-+                                             Int128 new_value);
-+
-+typedef struct {
-+    const char *name;
-+    riscv_csr_predicate_fn predicate;
-+    riscv_csr_read_fn read;
-+    riscv_csr_write_fn write;
-+    riscv_csr_op_fn op;
-+    riscv_csr_read128_fn read128;
-+    riscv_csr_write128_fn write128;
-+    /* The default priv spec version should be PRIV_VERSION_1_10_0 (i.e 0) */
-+    uint32_t min_priv_ver;
-+} riscv_csr_operations;
-+
-+struct RISCVCSR {
-+    int csrno;
-+    bool (*insertion_test)(RISCVCPU *cpu);
-+    riscv_csr_operations csr_ops;
-+};
-+
-+/* CSR function table constants */
-+enum {
-+    CSR_TABLE_SIZE = 0x1000
-+};
-+
-+/* CSR function table */
-+extern riscv_csr_operations csr_ops[CSR_TABLE_SIZE];
-+
-+bool riscv_csr_is_fpu(int csrno);
-+bool riscv_csr_is_vpu(int csrno);
-+
-+void riscv_get_csr_ops(int csrno, riscv_csr_operations *ops);
-+void riscv_set_csr_ops(int csrno, const riscv_csr_operations *ops);
-+
-+/* In th_csr.c */
-+extern const RISCVCSR th_csr_list[];
-+
-+/* Implemented in mips_csr.c */
-+extern const RISCVCSR mips_csr_list[];
-+
-+#endif /* RISCV_CSR_H */
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 133ec5cbc3..daad317381 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -23,6 +23,7 @@
- #include "qemu/log.h"
- #include "cpu.h"
- #include "cpu_vendorid.h"
-+#include "target/riscv/csr.h"
- #include "internals.h"
- #include "qapi/error.h"
- #include "qapi/visitor.h"
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 7908ea02a5..6cc3fcd4e3 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -21,6 +21,7 @@
- #include "qemu/log.h"
- #include "qemu/timer.h"
- #include "cpu.h"
-+#include "target/riscv/csr.h"
- #include "tcg/tcg-cpu.h"
- #include "pmu.h"
- #include "time_helper.h"
-diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
-index 7abacd0e11..a2bbaf7f07 100644
---- a/target/riscv/gdbstub.c
-+++ b/target/riscv/gdbstub.c
-@@ -21,6 +21,7 @@
- #include "gdbstub/helpers.h"
- #include "cpu.h"
- #include "internals.h"
-+#include "target/riscv/csr.h"
- 
- struct TypeSize {
-     const char *gdb_type;
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index b047ffa9c0..1f730f337e 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -31,6 +31,7 @@
- #include "system/kvm.h"
- #include "system/kvm_int.h"
- #include "cpu.h"
-+#include "target/riscv/csr.h"
- #include "trace.h"
- #include "accel/accel-cpu-target.h"
- #include "hw/pci/pci.h"
-diff --git a/target/riscv/mips_csr.c b/target/riscv/mips_csr.c
-index 822e25e346..609718f288 100644
---- a/target/riscv/mips_csr.c
-+++ b/target/riscv/mips_csr.c
-@@ -10,6 +10,7 @@
- #include "qemu/osdep.h"
- #include "cpu.h"
- #include "cpu_vendorid.h"
-+#include "target/riscv/csr.h"
- 
- /* Static MIPS CSR state storage */
- static struct {
-diff --git a/target/riscv/monitor.c b/target/riscv/monitor.c
-index 9edac0533c..3e89dcaf7c 100644
---- a/target/riscv/monitor.c
-+++ b/target/riscv/monitor.c
-@@ -22,6 +22,7 @@
- #include "qemu/ctype.h"
- #include "qemu/qemu-print.h"
- #include "cpu.h"
-+#include "target/riscv/csr.h"
- #include "cpu_bits.h"
- #include "monitor/monitor.h"
- #include "monitor/hmp.h"
-diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-index c074b24bc9..3dc8c4f6b3 100644
---- a/target/riscv/op_helper.c
-+++ b/target/riscv/op_helper.c
-@@ -20,6 +20,7 @@
- 
- #include "qemu/osdep.h"
- #include "cpu.h"
-+#include "target/riscv/csr.h"
- #include "internals.h"
- #include "exec/cputlb.h"
- #include "accel/tcg/cpu-ldst.h"
-diff --git a/target/riscv/riscv-qmp-cmds.c b/target/riscv/riscv-qmp-cmds.c
-index 8a1856c50e..d1c64c1e7f 100644
---- a/target/riscv/riscv-qmp-cmds.c
-+++ b/target/riscv/riscv-qmp-cmds.c
-@@ -35,6 +35,7 @@
- #include "system/tcg.h"
- #include "cpu-qom.h"
- #include "cpu.h"
-+#include "target/riscv/csr.h"
- 
- static void riscv_cpu_add_definition(gpointer data, gpointer user_data)
- {
-diff --git a/target/riscv/th_csr.c b/target/riscv/th_csr.c
-index 49eb7bbab5..a4ea4ce391 100644
---- a/target/riscv/th_csr.c
-+++ b/target/riscv/th_csr.c
-@@ -19,6 +19,7 @@
- #include "qemu/osdep.h"
- #include "cpu.h"
- #include "cpu_vendorid.h"
-+#include "target/riscv/csr.h"
- 
- #define CSR_TH_SXSTATUS 0x5c0
- 
--- 
-2.52.0
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
