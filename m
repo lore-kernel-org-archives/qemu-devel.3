@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CA5ECD343F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3A39CD4F3C
 	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 18:02:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNwqv-0007Uq-VJ; Fri, 15 May 2026 14:01:38 -0400
+	id 1wNwqw-0007YE-T8; Fri, 15 May 2026 14:01:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwqE-0007Ih-QT
- for qemu-devel@nongnu.org; Fri, 15 May 2026 14:00:55 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwqJ-0007KB-Vu
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 14:01:01 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwq8-0001H1-Md
- for qemu-devel@nongnu.org; Fri, 15 May 2026 14:00:52 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwqI-0001JJ-6r
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 14:00:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=2JICwj0wlF8zs/LeQRG6ti119Y7Tm2Wy6mCaaLd/K6Y=; b=UN3hhlYF33saOao
- feOr5KG2514AFrqx4hhMCSPmv3HWVFhmwYxgOQd8gTG5XedcWGarrP5YWWCob8c1qF7BWPVzq8M7V
- yYf4hZ2X9/vdHJWgnbMeFShPM6PNOjEXJzAXbxY2bygNguD/iaq/VziWsOwC3YOEHL8HphtmCjWL+
- us=;
+ List-Help; bh=Dif4F/JSwsFoirBfR0Og1xVgR07gWDZRmkt3nSiTV88=; b=Dae+XsDyOzUixdF
+ DTuRSUw4a0s9CK2lwLKQ7/ZpL2KqwLzEblLF1vwftz2aoSRYxiBMwnsn3+Ztk7otCTvkVrfTH3nQT
+ NGJNJRCizhZ9pDFQ5DEOA08WcVhXeFlJVl1LnRmYf3Z/XAyH44VbSENZO7XWpdp3eEjvWuh8uBuVz
+ sE=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
  Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v6 04/27] target/riscv: Fix size of frm and fflags
-Date: Fri, 15 May 2026 20:04:14 +0200
-Message-ID: <20260515180437.23620-5-anjo@rev.ng>
+Subject: [PATCH v6 08/27] target/riscv: Fix size of retxh
+Date: Fri, 15 May 2026 20:04:18 +0200
+Message-ID: <20260515180437.23620-9-anjo@rev.ng>
 In-Reply-To: <20260515180437.23620-1-anjo@rev.ng>
 References: <20260515180437.23620-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -63,141 +63,119 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to version 20250508 of the unprivileged specification the frm
-field of fcsr is 3-bits in size, fix it to 8-bits.  Similarly fflags is
-5 bits, fix to 8.  Uses of frm is restricted to uint8_t where sensible,
-helpers still need 32-bit arguments and the DisasContext field is kept
-as int to represent -1 for an unknown rm.
+128-bit helpers only make sense for MXL_RV128, TARGET_RISCV64,
+and TCGv == TCGv_i64, therefore fix retxh to 64 bits.
+
+For the sake of being pedandic, update 128-bit instructions to access
+retxh via 64 bit TCG ops, even if they only make sense when TCGv ==
+TCGv_i64.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h        |  6 +++---
- target/riscv/csr.c        |  4 ++++
- target/riscv/fpu_helper.c | 10 +++++-----
- target/riscv/machine.c    |  2 +-
- target/riscv/translate.c  |  4 ++--
- 5 files changed, 15 insertions(+), 11 deletions(-)
+ target/riscv/cpu.h                      |  2 +-
+ target/riscv/insn_trans/trans_rvi.c.inc |  8 ++++++--
+ target/riscv/insn_trans/trans_rvm.c.inc | 16 ++++++++++++----
+ 3 files changed, 19 insertions(+), 7 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 15c9f8b3a0..76c19902c6 100644
+index feacf19a5e..5ecae9b339 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -231,7 +231,7 @@ struct CPUArchState {
+@@ -249,7 +249,7 @@ struct CPUArchState {
+     uint32_t xl;            /* current xlen */
  
-     /* Floating-Point state */
-     uint64_t fpr[32]; /* assume both F and D extensions */
--    target_ulong frm;
-+    uint8_t frm;
-     float_status fp_status;
+     /* 128-bit helpers upper part return value */
+-    target_ulong retxh;
++    uint64_t retxh;
  
-     target_ulong badaddr;
-@@ -665,8 +665,8 @@ G_NORETURN void riscv_raise_exception(CPURISCVState *env,
-                                       RISCVException exception,
-                                       uintptr_t pc);
+     uint64_t jvt;
  
--target_ulong riscv_cpu_get_fflags(CPURISCVState *env);
--void riscv_cpu_set_fflags(CPURISCVState *env, target_ulong);
-+uint8_t riscv_cpu_get_fflags(CPURISCVState *env);
-+void riscv_cpu_set_fflags(CPURISCVState *env, uint8_t);
+diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_trans/trans_rvi.c.inc
+index 2c82ae41a7..ff450d46f8 100644
+--- a/target/riscv/insn_trans/trans_rvi.c.inc
++++ b/target/riscv/insn_trans/trans_rvi.c.inc
+@@ -1030,10 +1030,12 @@ static bool do_csrr_i128(DisasContext *ctx, int rd, int rc)
+     TCGv destl = dest_gpr(ctx, rd);
+     TCGv desth = dest_gprh(ctx, rd);
+     TCGv_i32 csr = tcg_constant_i32(rc);
++    TCGv_i64 wide_desth = tcg_temp_new_i64();
  
- #ifndef CONFIG_USER_ONLY
- void cpu_set_exception_base(int vp_index, target_ulong address);
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index da366cf562..4f18e3ff0c 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -907,6 +907,10 @@ static RISCVException write_frm(CPURISCVState *env, int csrno,
- static RISCVException read_fcsr(CPURISCVState *env, int csrno,
-                                 target_ulong *val)
+     translator_io_start(&ctx->base);
+     gen_helper_csrr_i128(destl, tcg_env, csr);
+-    tcg_gen_ld_tl(desth, tcg_env, offsetof(CPURISCVState, retxh));
++    tcg_gen_ld_i64(wide_desth, tcg_env, offsetof(CPURISCVState, retxh));
++    tcg_gen_trunc_i64_tl(desth, wide_desth);
+     gen_set_gpr128(ctx, rd, destl, desth);
+     return do_csr_post(ctx);
+ }
+@@ -1053,10 +1055,12 @@ static bool do_csrrw_i128(DisasContext *ctx, int rd, int rc,
+     TCGv destl = dest_gpr(ctx, rd);
+     TCGv desth = dest_gprh(ctx, rd);
+     TCGv_i32 csr = tcg_constant_i32(rc);
++    TCGv_i64 wide_desth = tcg_temp_new_i64();
+ 
+     translator_io_start(&ctx->base);
+     gen_helper_csrrw_i128(destl, tcg_env, csr, srcl, srch, maskl, maskh);
+-    tcg_gen_ld_tl(desth, tcg_env, offsetof(CPURISCVState, retxh));
++    tcg_gen_ld_i64(wide_desth, tcg_env, offsetof(CPURISCVState, retxh));
++    tcg_gen_trunc_i64_tl(desth, wide_desth);
+     gen_set_gpr128(ctx, rd, destl, desth);
+     return do_csr_post(ctx);
+ }
+diff --git a/target/riscv/insn_trans/trans_rvm.c.inc b/target/riscv/insn_trans/trans_rvm.c.inc
+index 795f0ccf14..0e2da5bed2 100644
+--- a/target/riscv/insn_trans/trans_rvm.c.inc
++++ b/target/riscv/insn_trans/trans_rvm.c.inc
+@@ -169,8 +169,10 @@ static bool trans_mulhu(DisasContext *ctx, arg_mulhu *a)
+ static void gen_div_i128(TCGv rdl, TCGv rdh,
+                          TCGv rs1l, TCGv rs1h, TCGv rs2l, TCGv rs2h)
  {
-+    /*
-+     * This is an 8-bit operation, fflags make up the lower 5 bits and
-+     * frm the upper 3 bits of fcsr.
-+     */
-     *val = (riscv_cpu_get_fflags(env) << FSR_AEXC_SHIFT)
-         | (env->frm << FSR_RD_SHIFT);
-     return RISCV_EXCP_NONE;
-diff --git a/target/riscv/fpu_helper.c b/target/riscv/fpu_helper.c
-index af40561b31..e6d1ffb1d6 100644
---- a/target/riscv/fpu_helper.c
-+++ b/target/riscv/fpu_helper.c
-@@ -23,10 +23,10 @@
- #include "fpu/softfloat.h"
- #include "internals.h"
- 
--target_ulong riscv_cpu_get_fflags(CPURISCVState *env)
-+uint8_t riscv_cpu_get_fflags(CPURISCVState *env)
- {
-     int soft = get_float_exception_flags(&env->fp_status);
--    target_ulong hard = 0;
-+    uint8_t hard = 0;
- 
-     hard |= (soft & float_flag_inexact) ? FPEXC_NX : 0;
-     hard |= (soft & float_flag_underflow) ? FPEXC_UF : 0;
-@@ -37,7 +37,7 @@ target_ulong riscv_cpu_get_fflags(CPURISCVState *env)
-     return hard;
++    TCGv_i64 wide_rdh = tcg_temp_new_i64();
+     gen_helper_divs_i128(rdl, tcg_env, rs1l, rs1h, rs2l, rs2h);
+-    tcg_gen_ld_tl(rdh, tcg_env, offsetof(CPURISCVState, retxh));
++    tcg_gen_ld_i64(wide_rdh, tcg_env, offsetof(CPURISCVState, retxh));
++    tcg_gen_trunc_i64_tl(rdh, wide_rdh);
  }
  
--void riscv_cpu_set_fflags(CPURISCVState *env, target_ulong hard)
-+void riscv_cpu_set_fflags(CPURISCVState *env, uint8_t hard)
+ static void gen_div(TCGv ret, TCGv source1, TCGv source2)
+@@ -212,8 +214,10 @@ static bool trans_div(DisasContext *ctx, arg_div *a)
+ static void gen_divu_i128(TCGv rdl, TCGv rdh,
+                           TCGv rs1l, TCGv rs1h, TCGv rs2l, TCGv rs2h)
  {
-     int soft = 0;
- 
-@@ -52,7 +52,7 @@ void riscv_cpu_set_fflags(CPURISCVState *env, target_ulong hard)
- 
- void helper_set_rounding_mode(CPURISCVState *env, uint32_t rm)
- {
--    int softrm;
-+    FloatRoundMode softrm;
- 
-     if (rm == RISCV_FRM_DYN) {
-         rm = env->frm;
-@@ -82,7 +82,7 @@ void helper_set_rounding_mode(CPURISCVState *env, uint32_t rm)
- 
- void helper_set_rounding_mode_chkfrm(CPURISCVState *env, uint32_t rm)
- {
--    int softrm;
-+    FloatRoundMode softrm;
- 
-     /* Always validate frm, even if rm != DYN. */
-     if (unlikely(env->frm >= 5)) {
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 66ed3f6504..07995fb303 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -436,7 +436,7 @@ const VMStateDescription vmstate_riscv_cpu = {
-         VMSTATE_UINT64(env.pc, RISCVCPU),
-         VMSTATE_UINT64(env.load_res, RISCVCPU),
-         VMSTATE_UINT64(env.load_val, RISCVCPU),
--        VMSTATE_UINTTL(env.frm, RISCVCPU),
-+        VMSTATE_UINT8(env.frm, RISCVCPU),
-         VMSTATE_UINTTL(env.badaddr, RISCVCPU),
-         VMSTATE_UINTTL(env.guest_phys_fault_addr, RISCVCPU),
-         VMSTATE_UINTTL(env.priv_ver, RISCVCPU),
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index b444fde3ef..7c23996271 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -753,7 +753,7 @@ static void finalize_rvv_inst(DisasContext *ctx)
-     ctx->vstart_eq_zero = true;
++    TCGv_i64 wide_rdh = tcg_temp_new_i64();
+     gen_helper_divu_i128(rdl, tcg_env, rs1l, rs1h, rs2l, rs2h);
+-    tcg_gen_ld_tl(rdh, tcg_env, offsetof(CPURISCVState, retxh));
++    tcg_gen_ld_i64(wide_rdh, tcg_env, offsetof(CPURISCVState, retxh));
++    tcg_gen_trunc_i64_tl(rdh, wide_rdh);
  }
  
--static void gen_set_rm(DisasContext *ctx, int rm)
-+static void gen_set_rm(DisasContext *ctx, uint8_t rm)
+ static void gen_divu(TCGv ret, TCGv source1, TCGv source2)
+@@ -244,8 +248,10 @@ static bool trans_divu(DisasContext *ctx, arg_divu *a)
+ static void gen_rem_i128(TCGv rdl, TCGv rdh,
+                          TCGv rs1l, TCGv rs1h, TCGv rs2l, TCGv rs2h)
  {
-     if (ctx->frm == rm) {
-         return;
-@@ -770,7 +770,7 @@ static void gen_set_rm(DisasContext *ctx, int rm)
-     gen_helper_set_rounding_mode(tcg_env, tcg_constant_i32(rm));
++    TCGv_i64 wide_rdh = tcg_temp_new_i64();
+     gen_helper_rems_i128(rdl, tcg_env, rs1l, rs1h, rs2l, rs2h);
+-    tcg_gen_ld_tl(rdh, tcg_env, offsetof(CPURISCVState, retxh));
++    tcg_gen_ld_i64(wide_rdh, tcg_env, offsetof(CPURISCVState, retxh));
++    tcg_gen_trunc_i64_tl(rdh, wide_rdh);
  }
  
--static void gen_set_rm_chkfrm(DisasContext *ctx, int rm)
-+static void gen_set_rm_chkfrm(DisasContext *ctx, uint8_t rm)
+ static void gen_rem(TCGv ret, TCGv source1, TCGv source2)
+@@ -289,8 +295,10 @@ static bool trans_rem(DisasContext *ctx, arg_rem *a)
+ static void gen_remu_i128(TCGv rdl, TCGv rdh,
+                           TCGv rs1l, TCGv rs1h, TCGv rs2l, TCGv rs2h)
  {
-     if (ctx->frm == rm && ctx->frm_valid) {
-         return;
++    TCGv_i64 wide_rdh = tcg_temp_new_i64();
+     gen_helper_remu_i128(rdl, tcg_env, rs1l, rs1h, rs2l, rs2h);
+-    tcg_gen_ld_tl(rdh, tcg_env, offsetof(CPURISCVState, retxh));
++    tcg_gen_ld_i64(wide_rdh, tcg_env, offsetof(CPURISCVState, retxh));
++    tcg_gen_trunc_i64_tl(rdh, wide_rdh);
+ }
+ 
+ static void gen_remu(TCGv ret, TCGv source1, TCGv source2)
 -- 
 2.52.0
 
