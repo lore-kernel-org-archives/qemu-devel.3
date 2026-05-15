@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D53FCD343F
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 10:52:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A78CCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 10:52:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNq7P-0000in-Ub; Fri, 15 May 2026 06:50:11 -0400
+	id 1wNq7O-0000i8-Ea; Fri, 15 May 2026 06:50:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNq7I-0000dT-Jj
- for qemu-devel@nongnu.org; Fri, 15 May 2026 06:50:05 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1wNq7N-0000gs-H2
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 06:50:09 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNq7G-0001Mp-NE
- for qemu-devel@nongnu.org; Fri, 15 May 2026 06:50:04 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-488ad135063so74859125e9.0
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 03:50:02 -0700 (PDT)
+ id 1wNq7L-0001es-4S
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 06:50:09 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-48e8132c6d0so45662025e9.1
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 03:50:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778842201; x=1779447001; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778842205; x=1779447005; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=uxh/ZJnTbJ/i9iznqwLY5pYbQutcRELBEauh7GY382E=;
- b=ufFNGzDBWMRomL/wHOF42/zaF8do/kDAPc9kU84fOwIBPkppDKVMTjKuPSd6bf/M8c
- 1LLmUkzLwQjYCWkjWGS6XB9OT0r1uIjb9V8tmzMeNKSQxOxCeiGGrk/pLX3aijcAhnTv
- Pb56la0ekXoOn2ckpx15EN2CYJD7nNUO9FlHaxg2IuUezpwAno2PGzkIBJl/wTVDhYe5
- qbnrEiD98TyyMgTI2QFznApq4+zUuZk4FTv39Ywg0pgfWSj6e4HrqoZ0OpWstGnkP7xQ
- 7wv3EopUTFjcy/xCSvN2R3tIZKHtVBtVXBSSpYzgpIGAJmuvfaK0YfalcSZPRqTf5aBZ
- WVTg==
+ :reply-to; bh=xJ+yo9Xpc/srgF3m90Tch2SAnTNWoA4B+R95BhJnzTs=;
+ b=vWfT3cgbbic2/dK4fRIuUWV6QonZMLsXUn5zxH3OL+ECQiEu8bMrYXZry6kUuDrC8G
+ Cb4m7Obf33DkxgWg7ZG10AhWsWYkz6AAvOIMsOERnL4vWDxSRGzM9NLdkeDJqkff+skp
+ EwH2VqLjrBBdgJIA/AE2yslhzqpqpeFcYdOUhGvNewr11d8TJ32NXCQvD/sRJjQFhjGr
+ uUGbpf8BqgmpLWolQcjtCWJz2QHqCp315MY1kgMAU/RqJDV+Z0E7QrP6Z5KVp5pagbWI
+ hoZByjpLHY2AUCqE2ZXvejJKcWZfIDkGihRWgU6qOixbeDVe+NGLbybJiDwjgEbxIqEZ
+ QfYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778842201; x=1779447001;
+ d=1e100.net; s=20251104; t=1778842205; x=1779447005;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=uxh/ZJnTbJ/i9iznqwLY5pYbQutcRELBEauh7GY382E=;
- b=J69HV0+8Ep2Y/fCweGcs7qW5falPtBudzYzZ0p7OyygbQvbwOxwM9ivk2gV9cRPxDK
- d2hIUT741Bz053PFlIw3HdRKe+Yts3UtpqZCAT9Pzft31aa9YGtiKtD/hb43FbP5VqXp
- 50SCN3nzxpg5sCGHgeslKC3LvzYI/lVbGs7voMWZ+CiA3/PTphxcPvE5iMzoKtrNLGu8
- vjaxCGqmXAlf+FzJJnHan79DVcZKY9xZ5A8gTWwjccSeQry/bP4q6tJrkMw3Rxt3dGtk
- 2qSyzBIu2HPcSzJ8UqLR0KXDxZ1512qqPl6VNsZfw6di3EF2Axkiu+2MP7eg77TEfg0D
- W1Yw==
-X-Gm-Message-State: AOJu0YwBbA/SUTlrLjVId7wm9jw/GayR1yBPIcBROybYduutEmujP5z1
- Z+53ZW7H98KZb5HBDVoVUcZaJ+Ww4g2x1GoNNnFasNEkjBFnr1DwntZc9V/Y2IdptRZJWkDd4Vc
- 8GOtH
-X-Gm-Gg: Acq92OGF4AVZF5IWCuS8XoR0TNPcUbPDpdgw9KqHPkW4zO9YOi3B0Db8BzvuWeP3Tzz
- BWlWGU3yCViectgx+Kayt+c7id5mAShpMvXU0+8egFchJIrt58MQbAhs3ClRemLkS3/cel5MpfL
- s1ycJueeFrzOxKDdEaHQeThIUueTQPPSAAo2YeSuZaFPHZZvOpaAV3mJXNx/33Nmmc1JG3Co40u
- ycM8qv09MgX1xGCxDCMDqHGs6ljfOwMqdzTHgiNiCQeUK98njPz44b9s2KN+tcuEqd57JGqLSRB
- 2lz2wzWOSKjDsCGSajPTq8SeNHvyhrhjGNwJs1+YYxnUoeFXpgNqzfkGEQEvzNE8vksVWgHZvZH
- mphBsq6SYAUN0Bnor55faVmYfEYzDBcL50+Bn6fwvmDx8uQ7ra1FXTbtQIqyVMOuXDkRemYKwrP
- QHzKqlol4gpdfd0uZ17poolHp3uGKarPBDcrezK+PAeLURxQ+QO0jJ6Nv10wi2QuwmHtuyfliST
- 94WZ1ot9RSH8HOdRqixvRmFApnkl20=
-X-Received: by 2002:a05:600c:848c:b0:48a:52d4:888c with SMTP id
- 5b1f17b1804b1-48fe60e5241mr47572305e9.3.1778842201060; 
- Fri, 15 May 2026 03:50:01 -0700 (PDT)
+ bh=xJ+yo9Xpc/srgF3m90Tch2SAnTNWoA4B+R95BhJnzTs=;
+ b=huXWlDNrsPqXL9SaZh8Qxwr9YPB58zcxHasJLPc4N+H/h8IyaTHlUwKQeWTpMIW099
+ Ad7J6qs3lY5iq6aqBXcpizkYbY6qnWEhsHMp2S5EMk/WLll0PJKl6M+2nmeKccojC4pv
+ +hK1vtCrvvHdL2Ozys+Vlki+l6lLoabMgIWHnuWTG5sKmVnfxpjwukHdOTHOUVid16ud
+ /EbB/65eWFmvOt8ffwv7uhZZUpoZPc13rd7AMY4zSb8+ivV+rx+/w0yQ3PnEoj7hpcCT
+ 1gRQRxZefJijHZ73HBtONoKTcwu3ve79ZYFIE3dxwmDVAE+2eKu01+0G0QVGsMRYbLqh
+ OflQ==
+X-Gm-Message-State: AOJu0Yys0CaPl1fm3KFgSQtII70wznhTN84zob0ms5A2Dgk9cHmw6+ZG
+ iul4FVjNziX5ivXwx8m/rT4UEmsIhUicX+lnx5uZssp8xvkKNToRGvDKAWXyftw8c+ZRO5Eh4S8
+ MohK/
+X-Gm-Gg: Acq92OGsrXOVDZTebWGQ+CylOGa04bzhXrCudproz7CeqVqD9ZUJuz9kk8BIX7QZEUC
+ 4pm4KtlmmcvDonV7aAZQw3gkCMOQLmXLhW2YBRFGWe3GSEWpMFRB4ytrnjjrfHJpMUgPyaIYT6X
+ X5QwORH+Uom50xZQPp9n/irxdRE3UYF5H1bn/BJU3ktKR9Ud7dMSN6TrjnpDtGc5EWhbC4oHVpw
+ tk9wpFksoTqXOxRI8QqAbN2lPAPh2gtq6sn4C9c0OZqmjXMOLQq8wDjWkCtWRvL+ZczpN0jdKaU
+ TozH54EhFVKBMOYIrVM1qFHUTOsbcGsLau+nSRSM1eYt53h7gu2laCQBFFSHnH+YgfTCiPZrCj+
+ RlxCMOg1r5ew9aHQN8/7ibyuqdlaAS6/I37Ue9ks+YcKtc2sc4LXAEN3opMI5m13D1LCm85Ha3n
+ wU8DBAqsSFcR5PzkneVgBx8OTUk1wdx8fXMvtwo/OOgg/eFvp7Lm01QDiBAImti52qQtsXTfDEg
+ 7DapM58yXRF5G9WplHQsJMYDEBnff0=
+X-Received: by 2002:a05:600d:2:b0:48d:112c:f582 with SMTP id
+ 5b1f17b1804b1-48fe60ecd1amr34676245e9.11.1778842205351; 
+ Fri, 15 May 2026 03:50:05 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48feaa2949asm18194355e9.1.2026.05.15.03.50.00
+ 5b1f17b1804b1-48feaa2949asm18194355e9.1.2026.05.15.03.50.04
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 03:50:00 -0700 (PDT)
+ Fri, 15 May 2026 03:50:04 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 11/23] meson.build: Add -fzero-init-padding-bits=all
-Date: Fri, 15 May 2026 11:49:33 +0100
-Message-ID: <20260515104945.4145203-12-peter.maydell@linaro.org>
+Subject: [PULL 15/23] hw/display/exynos4210_fimd: Assume display surface is
+ 32bpp
+Date: Fri, 15 May 2026 11:49:37 +0100
+Message-ID: <20260515104945.4145203-16-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260515104945.4145203-1-peter.maydell@linaro.org>
 References: <20260515104945.4145203-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,60 +101,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The C standard doesn't always guarantee that struct and union padding
-bits are zero initialized, even if the code initializes a struct.
-For QEMU, this is potentially problematic, because we often have
-structs that match data structures in guest memory, where we
-initialize them and then bulk copy them into the guest.  If the
-compiler didn't zero init the whole of the memory containing the
-struct, we could potentially leak random data from the host into the
-guest via the padding bytes.
+For a long time QEMU has guaranteed that the console surface is 32bpp
+and not anything else.  This old display device still has code
+assuming it might be something else.  Remove the code that made
+put_pixel_toqemu a function pointer indirection, and use
+put_to_qemufb_pixel32() directly.
 
-We already use -ftrivial-auto-var-init=zero, which will zero out
-padding in many of these cases, but -fzero-init-padding-bits=all
-closes some gaps, for example cases where we initialize a
-variable with a struct initializer, and cases involving unions.
+This removes the last hw_error() in this file.
 
-Follow the Linux kernel in using both options. Compare kernel
-commit dce4aab8441 ("kbuild: Use -fzero-init-padding-bits=all").
-
-This option exists in gcc-15 and above; it's not supported
-by clang, but clang documents that it guarantees zero init
-of these cases always:
-https://clang.llvm.org/docs/LanguageExtensions.html#union-and-aggregate-initialization-in-c
-Older gcc which don't have the option behave as if it were set.
-
-(These options are passed through the cc.get_supported_arguments()
-filter, so we don't need to do anything extra to avoid passing it to
-a compiler that doesn't recognize it.)
-
-Cc: qemu-stable@nongnu.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-id: 20260508104723.2144051-1-peter.maydell@linaro.org
+Message-id: 20260508162013.2751001-5-peter.maydell@linaro.org
 ---
- meson.build | 6 ++++++
- 1 file changed, 6 insertions(+)
+ hw/display/exynos4210_fimd.c | 62 ++----------------------------------
+ 1 file changed, 2 insertions(+), 60 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 90c149b10d..37060c030e 100644
---- a/meson.build
-+++ b/meson.build
-@@ -684,6 +684,12 @@ hardening_flags = [
-     # it harder to take advantage of uninitialized stack
-     # data to drive exploits
-     '-ftrivial-auto-var-init=zero',
-+    # Ensure GCC zero-initializes padding bits and trailing fields in
-+    # unions. This avoids potentially leaking host data into the guest
-+    # when we init a struct and copy it into guest memory.  GCC prior
-+    # to GCC 15 and clang don't have this, but they zero the padding
-+    # and trailing portions of a union by default.
-+    '-fzero-init-padding-bits=all',
- ]
+diff --git a/hw/display/exynos4210_fimd.c b/hw/display/exynos4210_fimd.c
+index aa94b29971..e715183ad5 100644
+--- a/hw/display/exynos4210_fimd.c
++++ b/hw/display/exynos4210_fimd.c
+@@ -24,7 +24,6 @@
  
- # Zero out registers used during a function call
+ #include "qemu/osdep.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/core/hw-error.h"
+ #include "hw/core/irq.h"
+ #include "hw/core/sysbus.h"
+ #include "exec/cpu-common.h"
+@@ -867,37 +866,6 @@ static void draw_line_mapcolor(Exynos4210fimdWindow *w, uint8_t *src,
+ }
+ 
+ /* Write RGB to QEMU's GraphicConsole framebuffer */
+-
+-static int put_to_qemufb_pixel8(const rgba p, uint8_t *d)
+-{
+-    uint32_t pixel = rgb_to_pixel8(p.r, p.g, p.b);
+-    *(uint8_t *)d = pixel;
+-    return 1;
+-}
+-
+-static int put_to_qemufb_pixel15(const rgba p, uint8_t *d)
+-{
+-    uint32_t pixel = rgb_to_pixel15(p.r, p.g, p.b);
+-    *(uint16_t *)d = pixel;
+-    return 2;
+-}
+-
+-static int put_to_qemufb_pixel16(const rgba p, uint8_t *d)
+-{
+-    uint32_t pixel = rgb_to_pixel16(p.r, p.g, p.b);
+-    *(uint16_t *)d = pixel;
+-    return 2;
+-}
+-
+-static int put_to_qemufb_pixel24(const rgba p, uint8_t *d)
+-{
+-    uint32_t pixel = rgb_to_pixel24(p.r, p.g, p.b);
+-    *(uint8_t *)d++ = (pixel >>  0) & 0xFF;
+-    *(uint8_t *)d++ = (pixel >>  8) & 0xFF;
+-    *(uint8_t *)d++ = (pixel >> 16) & 0xFF;
+-    return 3;
+-}
+-
+ static int put_to_qemufb_pixel32(const rgba p, uint8_t *d)
+ {
+     uint32_t pixel = rgb_to_pixel24(p.r, p.g, p.b);
+@@ -905,32 +873,6 @@ static int put_to_qemufb_pixel32(const rgba p, uint8_t *d)
+     return 4;
+ }
+ 
+-/* Routine to copy pixel from internal buffer to QEMU buffer */
+-static int (*put_pixel_toqemu)(const rgba p, uint8_t *pixel);
+-static inline void fimd_update_putpix_qemu(int bpp)
+-{
+-    switch (bpp) {
+-    case 8:
+-        put_pixel_toqemu = put_to_qemufb_pixel8;
+-        break;
+-    case 15:
+-        put_pixel_toqemu = put_to_qemufb_pixel15;
+-        break;
+-    case 16:
+-        put_pixel_toqemu = put_to_qemufb_pixel16;
+-        break;
+-    case 24:
+-        put_pixel_toqemu = put_to_qemufb_pixel24;
+-        break;
+-    case 32:
+-        put_pixel_toqemu = put_to_qemufb_pixel32;
+-        break;
+-    default:
+-        hw_error("exynos4210.fimd: unsupported BPP (%d)", bpp);
+-        break;
+-    }
+-}
+-
+ /* Routine to copy a line from internal frame buffer to QEMU display */
+ static void fimd_copy_line_toqemu(int width, uint8_t *src, uint8_t *dst)
+ {
+@@ -938,7 +880,7 @@ static void fimd_copy_line_toqemu(int width, uint8_t *src, uint8_t *dst)
+ 
+     do {
+         src += get_pixel_ifb(src, &p);
+-        dst += put_pixel_toqemu(p, dst);
++        dst += put_to_qemufb_pixel32(p, dst);
+     } while (--width);
+ }
+ 
+@@ -1336,7 +1278,7 @@ static bool exynos4210_fimd_update(void *opaque)
+         int bpp;
+ 
+         bpp = surface_bits_per_pixel(surface);
+-        fimd_update_putpix_qemu(bpp);
++        assert(bpp == 32);
+         bpp = (bpp + 1) >> 3;
+         d = surface_data(surface);
+         for (line = first_line; line <= last_line; line++) {
 -- 
 2.43.0
 
