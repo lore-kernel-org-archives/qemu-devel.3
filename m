@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85CD9CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 18:02:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 689CFCD343F
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 18:02:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNwqx-0007Yd-TH; Fri, 15 May 2026 14:01:39 -0400
+	id 1wNwr6-0007k4-MU; Fri, 15 May 2026 14:01:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwqG-0007Ip-2h
- for qemu-devel@nongnu.org; Fri, 15 May 2026 14:00:57 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwqb-0007N1-Hv
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 14:01:21 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwqD-0001HR-SL
- for qemu-devel@nongnu.org; Fri, 15 May 2026 14:00:55 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwqR-0001Rj-Gc
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 14:01:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=AMcqkz5A6CJzcdkas/7AWl9nwVdJve9KArgdY7RKNoE=; b=CulQySUyJu/LyIK
- 1Jwh0DXSF5scNyLu1sZ/UhYegsZKhQTrsuFqW81L5ckn2COqj/fAEgm1JrkKC6iRdVEZqlAFm6YhF
- uNH4CfPgYhcmWgxnDaHorIaphy3qcKtOHOt8eQn+4cVynxLKxTo3YvGP1W4h/GkwIxoAsb7IjlxPs
- cY=;
+ List-Help; bh=N1yXJpxnPJMPpRQ98LN0wif1tMcF3VH9jRzQY+9p8a0=; b=hNIRVIIfocyXxZY
+ DLtkjY1VhGWtcWXsRQhb/C56zOrL7y4Q+FPwn06rm55HWjrjGL7qoBOVQBOgEhKVyLbubAPIDnGm6
+ N59eyqJWgnlPqJe3YkiY5NCyaSqT3mPEvbqrfClNhdTh3yO/AVZy6v94nk00990+LQ00RroRH2/Re
+ wY=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
  Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v6 07/27] target/riscv: Fix size of priv_ver and vext_ver
-Date: Fri, 15 May 2026 20:04:17 +0200
-Message-ID: <20260515180437.23620-8-anjo@rev.ng>
+Subject: [PATCH v6 26/27] target/riscv: Pass address as uint64_t in
+ cpu_set_exception_base()
+Date: Fri, 15 May 2026 20:04:36 +0200
+Message-ID: <20260515180437.23620-27-anjo@rev.ng>
 In-Reply-To: <20260515180437.23620-1-anjo@rev.ng>
 References: <20260515180437.23620-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -63,72 +64,41 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix these fields to 32 bits, also update corresponding priv_ver field
-in DisasContext as well as function arguments. 32 bits was chosen
-since it's large enough to fit all stored values and int/int32_t is
-used in RISCVCPUDef and a few functions.
+The corresponding field CPUArchState::resetvec is uint64_t anyway, no
+need to use target_ulong.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h       | 6 +++---
- target/riscv/machine.c   | 4 ++--
- target/riscv/translate.c | 2 +-
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ target/riscv/cpu.h | 2 +-
+ target/riscv/cpu.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 21f3400cd5..feacf19a5e 100644
+index 3352409676..ad5d23ee6b 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -239,8 +239,8 @@ struct CPUArchState {
+@@ -679,7 +679,7 @@ uint8_t riscv_cpu_get_fflags(CPURISCVState *env);
+ void riscv_cpu_set_fflags(CPURISCVState *env, uint8_t);
  
-     uint64_t guest_phys_fault_addr;
+ #ifndef CONFIG_USER_ONLY
+-void cpu_set_exception_base(int vp_index, target_ulong address);
++void cpu_set_exception_base(int vp_index, uint64_t address);
+ #endif
  
--    target_ulong priv_ver;
--    target_ulong vext_ver;
-+    uint32_t priv_ver;
-+    uint32_t vext_ver;
+ FIELD(TB_FLAGS, MEM_IDX, 0, 3)
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index daad317381..753f92307f 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -79,7 +79,7 @@ bool riscv_cpu_option_set(const char *optname)
  
-     /* RISCVMXL, but uint32_t for vmstate migration */
-     uint32_t misa_mxl;      /* current mxl */
-@@ -844,7 +844,7 @@ bool riscv_cpu_eff_priv(CPURISCVState *env, int *priv, bool *virt)
- }
- 
- static inline bool riscv_cpu_allow_16bit_insn(const RISCVCPUConfig *cfg,
--                                              target_long priv_ver,
-+                                              uint32_t priv_ver,
-                                               uint32_t misa_ext)
+ #ifndef CONFIG_USER_ONLY
+ /* This is used in runtime only. */
+-void cpu_set_exception_base(int vp_index, target_ulong address)
++void cpu_set_exception_base(int vp_index, uint64_t address)
  {
-     /* In priv spec version 1.12 or newer, C always implies Zca */
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 27034180c4..1cf744c5f0 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -439,8 +439,8 @@ const VMStateDescription vmstate_riscv_cpu = {
-         VMSTATE_UINT8(env.frm, RISCVCPU),
-         VMSTATE_UINT64(env.badaddr, RISCVCPU),
-         VMSTATE_UINT64(env.guest_phys_fault_addr, RISCVCPU),
--        VMSTATE_UINTTL(env.priv_ver, RISCVCPU),
--        VMSTATE_UINTTL(env.vext_ver, RISCVCPU),
-+        VMSTATE_UINT32(env.priv_ver, RISCVCPU),
-+        VMSTATE_UINT32(env.vext_ver, RISCVCPU),
-         VMSTATE_UINT32(env.misa_mxl, RISCVCPU),
-         VMSTATE_UINT32(env.misa_ext, RISCVCPU),
-         VMSTATE_UNUSED(4),
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index 1ea7faea4c..18a1e0ae99 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -59,7 +59,7 @@ typedef struct DisasContext {
-     DisasContextBase base;
-     target_ulong cur_insn_len;
-     target_ulong pc_save;
--    target_ulong priv_ver;
-+    uint32_t priv_ver;
-     RISCVMXL misa_mxl_max;
-     RISCVMXL xl;
-     RISCVMXL address_xl;
+     RISCVCPU *cpu;
+     CPUState *cs = qemu_get_cpu(vp_index);
 -- 
 2.52.0
 
