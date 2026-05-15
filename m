@@ -4,96 +4,164 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7B5BCD4F25
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 15:08:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A442CD4F25
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 15:08:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNu7p-00037n-Cp; Fri, 15 May 2026 11:06:54 -0400
+	id 1wNu8b-0003QZ-KG; Fri, 15 May 2026 11:07:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander.hansen@9elements.com>)
- id 1wNu7a-00030l-7p
- for qemu-devel@nongnu.org; Fri, 15 May 2026 11:06:39 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander.hansen@9elements.com>)
- id 1wNu7W-0006Mc-B1
- for qemu-devel@nongnu.org; Fri, 15 May 2026 11:06:37 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-48e82c23840so51919635e9.3
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 08:06:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=9elements.com; s=google; t=1778857593; x=1779462393; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=c1wVAyZQkNlMITdnLpQiAoDM/GQTBZaFN9TS+FvVEYU=;
- b=FriHkQP1HWQy5EjDumn35AVXYY8lQcyJFvhgayEp/6hMOHw6pFHg0Hk82DUHxeCFCN
- lsItRr+iebcHO5aw6GLdFQysJbUgYEi8ipuLqQKXQyoOM+LFx1KlblUkWgPjLLB0HUZu
- o41A+wtSBuR9Y+ar+xnmA7LWNVlId6hZIT4Eu2h1J7ib34ts0V3qVNCBvz9Ut8y7m/BZ
- WwubD/lVppvc0u2vVSYuojy3Jl0BzGYLV6srGnJGJ4sN3GZ1K8twGQiMd6TwtE/fMT5x
- yVAclPNhrPFbbqMj17ic1q109LyU/dEDUs7kBrdZkYahmt6qrTONJPnjuY1KvAws1W9o
- km9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778857593; x=1779462393;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=c1wVAyZQkNlMITdnLpQiAoDM/GQTBZaFN9TS+FvVEYU=;
- b=J0JIIFdH993z9XhRnh0gwL+pRJv61vpzWnWiX+RqN7Vu60UUlxe+1dt0v8QqrC6tzs
- sCClyCZvKY0F/7J0rFXzPK6W4QtbV8HY26RvYcrY5U1TMzW7piqmY2JGU5FIk2lacQ5N
- TglwSxS63HwfYGBFTVlnDOtYLWrztCj+Ky6PxJpoKuRKXlgbJxmJn3ZI+X4a8C6tKlnf
- KeQoQKNSHkFPbltRQy96lyLGeo2cBStbkf+rLKcs98CpLwcw5XvSJ93oP8BMShhpH9uQ
- tYJu4evUBwyGkOCYOc4i/yrBuP7kc9ci3U4v0OKnaHkA3oqenzVr826zJ98YCx8JOoN/
- KEUA==
-X-Gm-Message-State: AOJu0YzXhmp48vVA9fCwUOUpL/bDZzelxFQTVc3vtCXDmcX0r1msK8xX
- V++FYlyQQRm0d8LzRFbORPpv3Gx2jMXCytquTC98wdDlAWmjZ/bfC1Fj8NKMFrl1ZO1hvczj2kb
- BXmU3nzI=
-X-Gm-Gg: Acq92OHq38mGardDjV1sTGpYcrsfvAnSqZv1/NTpZQs7lmsbZD/NcVaQhFWe+kwmWSl
- yBjPsGVVnLlozevWOcQEZc/FMaZke9vLuZIj9iqoyKvKLy6gKhXahJLzMf1g3MKsmGRtE9GeHtx
- sionZi/3TCm9B7PCXktH95Ou1O17UAzCDq+NaKYW0LzjlyKF3CqJ8P9MoscEiYYYqjPMqV1IWfq
- TIZHO6rkNUS2nzpmBMaOCbKfK7F0cW7t9miW0rERg7hglJDealHopBcab+mohf8KYAvUE6pciz4
- zN9dCIlYcYHho3dMaxklyB+REvbuIw5EU562croHva3VvuixPeNgRk9VP9xK1i4jmrJWNjPM5TK
- MEZfSWb2kZzvbwxbmvdFFsh+3h+nil19iSc/DB/gsorafRU2NnHMarYOtdn1oCQblKK0gQPmOOW
- RdWF4LqCFjzl6KEcFz4qpewgclP0l01g6zD+IEjQaj2pNM
-X-Received: by 2002:a05:600c:8189:b0:488:ac01:72b6 with SMTP id
- 5b1f17b1804b1-48fe6323addmr66870465e9.21.1778857592646; 
- Fri, 15 May 2026 08:06:32 -0700 (PDT)
-Received: from alexanderarchlinux ([188.111.3.154])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48feab290e1sm29444715e9.2.2026.05.15.08.06.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 08:06:32 -0700 (PDT)
-From: Alexander Hansen <alexander.hansen@9elements.com>
-To: qemu-devel@nongnu.org
-Cc: Alexander Hansen <alexander.hansen@9elements.com>,
- Titus Rwantare <titusr@google.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, Steven Lee <steven_lee@aspeedtech.com>,
- Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
-Subject: [PATCH v4 5/5] hw/sensor: support Texas Instruments ADC128D818
-Date: Fri, 15 May 2026 16:58:02 +0200
-Message-ID: <20260515150610.381066-6-alexander.hansen@9elements.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260515150610.381066-1-alexander.hansen@9elements.com>
-References: <20260515150610.381066-1-alexander.hansen@9elements.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1wNu7j-00035I-M9
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 11:06:48 -0400
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1wNu7h-0006XZ-E0
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 11:06:47 -0400
+Received: from pps.filterd (m0127840.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64F9VosW060336; Fri, 15 May 2026 08:06:44 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=AjoeTPLsKvG6E0Il8LRw+iVIVMOrTW4L31GgU38FU
+ OQ=; b=HXQAgFNiYwsHy5P5o8W3k3Va7yv1aIDtO/FM1v0i4/WmD7oN2c/Fg4Czt
+ x2N87Y9lztDey2EoTKkBR6YxR7QwLen8e0t4F37ORcVcN8G3FHKSpOzDLHlPEktv
+ LAcPNq1NQqH+7DXNa/KZNTdbo+GHLdxGV2ADjXRd/t/5HBy0Zawlg0JiQC6lg7Xu
+ YwyhYwsJD+bDjXqlrMZoJ5YkloQxY3WLUMcd+wXU4GF+r7CxtD6eZ+DTesZi96eZ
+ aOlnFgeTCiHyPezcE81Suz2g8nmkdJvKaqI5wS6nD2ZwyGegu+QeXeOBfHxT56KY
+ 9iEFHjPsvhm3qcFSzhINlbWOLuGcA==
+Received: from sa9pr02cu001.outbound.protection.outlook.com
+ (mail-southcentralusazon11023092.outbound.protection.outlook.com
+ [40.93.196.92])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4e5m22aa1q-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Fri, 15 May 2026 08:06:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=j8EBu1buY2a+Cr1jhkz5pkD2nQfjrWJHmlTuYXEAf7k8c4YdrCYwzDf5XROsl7GCjHZO9RGH1APrU8RggqrKLz25MfSz34vaGfSfIyy21Cbo4F7T1UQaFtc0OPkoQA23o2FAh4C2/KVK5vMFGpuMeD3nWnAISZhAHDknOpgpDCPLZM0MNomB3Z8NmovPzJEOSmjjWn41cqozDxX5vbzHDJimNUjv6R0yzI2Q21cYCqMgJ1QBpxZNSyAdZPlQDKsDwTcVLCqx4WxolAMROaD2x/1R20gQwj8SUXYcfbs4/FtbO/j5E1rzsOVsqjpIVl5KC4/QG4ml2Ke6o9CP5HZs1g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=AjoeTPLsKvG6E0Il8LRw+iVIVMOrTW4L31GgU38FUOQ=;
+ b=PdJVXcqc3hf21cMymEpBZXspKERFMD6+DNeSHss4s3oiBwFBX+op2nxVyfiMP7KsYiZriaMuZ+O8YABiHDVnFrslgjdCM7fDcba6EtX31OOdq5QC8w3wiugPQw92unLkgxUCVijs4wZcpVwAcimPVORxC8GnvDimItfVzl84ZrgaGOT9cB/c/mawfv2ZuCLhkONKafkOsAwPRdbomat4YRe/oJTVL08NdHC56fOCrQIAKJEkVCwkaklAYNqDjvI2MFayscTQJynLWwIvZKLHC5rBXSpeXLtT5v10udVYicf84HWEycwGwZqGRlIlf64Xw69VFQfNE6j2UhHkduDM/A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=AjoeTPLsKvG6E0Il8LRw+iVIVMOrTW4L31GgU38FUOQ=;
+ b=sQ1ZbBpzowzUWz130n2lidw9ey849hWE1jr7RFlxVA6c3FQmUI8DWTDybkE73/xEXNZ9IU2VtZNjC9PqEEArUrjmB+8zEGkKaUIH3pUvo8gIIgDDE3q8UpKiyKf730Zry8J5TGXZKrQSU8y1eeSWmlZvtCVVSI/8qh5jQv1ooW5z3jQ06zSOqxtXbM6LdTZKI8puB9fWer3y0BoSmT8YHy16Gl0UCefwXuTaN7yYq69Y6Ye6V0HSHpXEg8EkHauMvuxJ55CRcBhIBDKvg959p1UJs+nNICTH6Pc3tn69l1w0I4nOuLuqSeb4x258dWTTurOjuAplLyZk4gPniN2fDA==
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
+ by BY5PR02MB6517.namprd02.prod.outlook.com (2603:10b6:a03:1dc::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.25.18; Fri, 15 May
+ 2026 15:06:42 +0000
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250%6]) with mapi id 15.21.0025.016; Fri, 15 May 2026
+ 15:06:42 +0000
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+To: mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
+ pbonzini@redhat.com, marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Subject: [PATCH v4 1/4] hw/acpi/aml-build.c: add aml_irq() representing the
+ 3-byte IRQ descriptor
+Date: Fri, 15 May 2026 16:05:44 +0100
+Message-ID: <20260515150634.2637533-2-mark.caveayland@nutanix.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260515150634.2637533-1-mark.caveayland@nutanix.com>
+References: <20260515150634.2637533-1-mark.caveayland@nutanix.com>
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=alexander.hansen@9elements.com; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-ClientProxiedBy: CY5PR13CA0015.namprd13.prod.outlook.com (2603:10b6:930::24)
+ To PH0PR02MB7159.namprd02.prod.outlook.com
+ (2603:10b6:510:16::8)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|BY5PR02MB6517:EE_
+X-MS-Office365-Filtering-Correlation-Id: 799c3390-d89f-4d09-6278-08deb2939263
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|366016|1800799024|22082099003|56012099003|18002099003; 
+X-Microsoft-Antispam-Message-Info: mqQ4VdP+kluyFjZmtdb+xQLGBu5adXwsyc7xKvmXTYL27b3vERoYrPJ4vHDPBZyJdERN9fDXz68J0rOO0uMeyzIRb5RfqR1impviyI+/6Fo/pLanbbDua4NUZOz7k10umIamfIwRRz12uieSpmzLdleUSVw55wdtsS+PXtE9VKpgLtXs6YXkYFtqAlvYPtCu2+hye66P1RffgKQKwUwCSHliwqU1B4tQ5orHtZhg1RD9PZkC4RdoiYZ013nWguHDE/C9CHqw/gxq8QHUl1KFQzE4JhrnLZVTpg0WJmvDvJRntC+m7nzzSgp5WQdRJCqAUb7+h3SOTmtQwMIiTCzaMXpcpp6258j6BJE+Ov51/FKbIworklj9z+Ew/D22yMcbdwkHYC6oTZ0X+6LdedBXdw7k84qfBG269JLzY48wB1avJ/vnMtarSUTujdhk+1YwNtRYZeLK3HfMQagmmYqvIG0wlXT5C7IjWV+1AFrw4/MfdDbb2SW4JscEFM+onHm1gAZ3Nobeo4ZZtlt+bJbDZv86BXAEqM1uL1ag2em3n1NDtmYv9pn8IgPYgrLHV/Ayoon/gUsyHsedmD/U5b4IYKKunOvFzTekSKIV/aiUTNaAx6UEHxy1JNPprp3iGRnh1oeh1CymfwjKhqVnCQiilMkWEt7bmQ5W6pyQLoBYDhAmuA4kfcuUUZO6bqcGR3tQ
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(22082099003)(56012099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?kwFmxAZY3EHzuadChOQ8a5n+o1NeXYN378i5RtWaJ/2hxWBtq3kgCQLjq3s6?=
+ =?us-ascii?Q?IVV/xvjiuxEtH7KcPr9SDXm6OWbkd8IiyLttZKzD4KZjiTSxs0J3vhU+tRWe?=
+ =?us-ascii?Q?8qXxWTzpnVBIcDle+Lv+Ln19mZhA5p2ia7xN25SBPFbrOsdJOf0nqufoGvnh?=
+ =?us-ascii?Q?E/METQ7eC0o9nDs61RwcDHcZDjzPe1byspgNu+3g5izU5qgbR5RU+SOM4rfK?=
+ =?us-ascii?Q?KbUtcu8A2fDtMwDFTxzbhAhKqYCrSyAD6q3dLo+pNFjxADM/n87sUgZywDqw?=
+ =?us-ascii?Q?z/0NpsXnvwbYX4Rb2Bc5gsLTYMIs9Je9vErxz5nYwWakRtX3DeT/nDbx9fBL?=
+ =?us-ascii?Q?d3gHe/eEGOREjrZhvCO7lxKwsS4ApfeitMNgqF5CQJpVPk/p5BWRZT4qDF1q?=
+ =?us-ascii?Q?ea/AEUbIVxJr38+FTWB1UvpAaU9S+RKmm6H8uW0+mtFYMyvqRndasgoOrHUG?=
+ =?us-ascii?Q?oo3yduRT5z276964gll7WE+14jMdIkhmHWd0L5VBfpQkzKeUHXJRH1euR6a1?=
+ =?us-ascii?Q?PYoN9jGsT6aoAzlUevL5ZzRuVmKJ+Tldva+Z1oP8DaziwdJhsh9fwEvtVFEa?=
+ =?us-ascii?Q?PDBCpdHrK2ejVunEG2Q2gFqb8rYFz60AlAkMmRHO9q6afEGXIHMtkedSGJmS?=
+ =?us-ascii?Q?De2UeG36P/sowGW95LTt3LYqXbvxkbzoD/Sf6IIGkRVqnCPDa3elXbEqVYyF?=
+ =?us-ascii?Q?5c6GZiKS5UAe07A4+gahQdB4yUsECqvHi++8EPrzyEbjaBaDOO902a9cdf+E?=
+ =?us-ascii?Q?kvMYxeS+v/l7vIGc4anyhbdYDJqiPuP5DewqgHYngQiIDCjRNFdY4gaaiJRu?=
+ =?us-ascii?Q?6pdxpL0ckmXAftz3EhMqPTk8NJGHSkDZyNjAR7mSJDWXUqt3s/YgUI8L9m6n?=
+ =?us-ascii?Q?yxdNqv7a98Jj1t7XYw0PEe/+Ttx1OMGz1VTH/isMXnsKSR0AtS28xr5Twi6X?=
+ =?us-ascii?Q?bUb1VrHS9cAXaXdRKaX5QzgOYKdRknBLm+wVRr8QYe+PL452XpKllbH9vWKM?=
+ =?us-ascii?Q?6mNCUxpZMbn4pBSFijc81xHpXaVt7f/PROc95iYxkLaV8078mJb6PEaK+g7m?=
+ =?us-ascii?Q?M4my7TXH3RMgchw56iwkx+oDjY+l0C3TP08BMU+dM4//9BYQsMrw/xFVgOXT?=
+ =?us-ascii?Q?zHPl+eHNL+FsOvZJHJvTUF08ettlT27mxcvjZGXexfhPH839R4nmurbJKkbe?=
+ =?us-ascii?Q?+sPti2oQonETab46Mpt5heSx7dbeqYfD27qI2slLbSepEGFkeFiNL6kb99UI?=
+ =?us-ascii?Q?bKBBRW/CxRiLnl48zy8mWSz5sZKW+ZdyaXl9nlIrNXNEHUcXUBAXU3ZQEtfk?=
+ =?us-ascii?Q?o/4cmuoVvC2jfgdsRL7NDIdSxMu1tY/HcyE4vmB9jrh7D+ejzC+6f9McVW82?=
+ =?us-ascii?Q?W9mnhYyQ2R8n6Pa/C5d8GGnMQE2fy7c9bS9pnv3Ac8ikyCwSC62tcTx02mXP?=
+ =?us-ascii?Q?c5V3uYja5ZjwPhB2EwqQDFggJfyrPqpumG8WUXz5Q0a53JVTysA9a3lhnjrK?=
+ =?us-ascii?Q?trmiNcuIbHOeYmosSJbtWMGT7OocdxnmOUsNcHEYphfsVgcRulyvtbsPvZKn?=
+ =?us-ascii?Q?/KJxc3Iu5JKWqiG0pAJPDihASxIo4oko12ioj7iSHGEoErns74M/NdYQHsEC?=
+ =?us-ascii?Q?tygv0Y967YeDrfxrAMgnKs3WWzauj0BR/wi9HNJk7hoQQ3RplRrM6smTubmy?=
+ =?us-ascii?Q?7htyuljKeOd2SpbCXtYSO+z51yF+5Y2ddboaW7tWGGjhePv5L/OD2KeDa63v?=
+ =?us-ascii?Q?UPr0g5JEZ+CwK3zNY4s8IuhpjdIGnqU=3D?=
+X-Exchange-RoutingPolicyChecked: ezDNiz12o+d94LyJbHmwroHlRihOBH473SIteLHf7xi8wyzvwJ8WlBT6vKjxZ5lVUvjhqrKsln936heagShDR9IztA29IzcV/ZEFo5gBAIDqkTUApFNTJnsfbc0LpLLndAtu2SRPp+smCh0k6UpDZLpgo1PA8ewM4ssbJz2f7zq2fuIOVHFf94N+eZBf+0T2WlmPsruTBIZRHNS7OiaIRWJmoraCXui9Q+wnBb+N0tMWrycvvcmeWSUZk/OGZhzpnCtamKqyoYgi/F71AQnPoGSshVnXMkvTu3f3TcInWsyWF7/fuJYYLkZbaxe4YiUDr8ceyPiLr2lOxqMjHurk1Q==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 799c3390-d89f-4d09-6278-08deb2939263
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 May 2026 15:06:42.1573 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: C8BmZibJ0DBelS0lyC/0Fy1h+5bQLmilc1WkajG0FA7z97U1zYshVzl/ITyYifRpkwrK1GxEEMMavpC05zFHNzhQ19LAjlIO3o3gE6Ita7E=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR02MB6517
+X-Authority-Analysis: v=2.4 cv=Eff4hvmC c=1 sm=1 tr=0 ts=6a073684 cx=c_pps
+ a=GAsWKLoVs33bSFNQwaa9VQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=NGcC8JguVDcA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=_-M8LpHI31CeLmyZm6wg:22
+ a=64Cc0HZtAAAA:8 a=20KFwNOVAAAA:8 a=xNT4PeXsLruldGOZOHkA:9
+X-Proofpoint-ORIG-GUID: Of2cU6gdzMBM_sExn4o_F2b_EB7x9Nhn
+X-Proofpoint-GUID: Of2cU6gdzMBM_sExn4o_F2b_EB7x9Nhn
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE1MDE1NCBTYWx0ZWRfX4xEvm9Er4wR2
+ Z7ZAh+IdAV2PI06/6hVoTPIwTYOWmbaPWUjhPt4ZfxReqYXYjF8QALoTW6qQ5UbMc1P/YirEkzs
+ 0HNBWwD3WjJk7kreIK1T330z895RPBDzXvl24+vuGm/GVPd7mehxNOLltBbviba+NZSvxzWVdNO
+ 6S7+uZ6N1H7O23J6b8IpMp18IpubrkeYnSibvF2sv0J6q0Y3pBIwreIRcOmqky4t2hvaWPKYcFo
+ HCIbhxwvv3d/rdqRMi1Yd0xwTnBBmqknrn6yC+iQtA25MQ7GwxOJMguTGuIaaw+EsAlLy2geGdX
+ Er907pOzwzDULveaT66FWGAirv5kJ/hk5PQDRqITcY+eNF0YfzjcsE9TnnyQFyt6pACEKFxfD03
+ OgqVJb4uH5+K8qjFedhUSGjUo8gGEA5+IYEQumiKjA9WyiASF9DA7GxJbchlpV6eHmLFGf39SHc
+ NLOWbhdOhzJwH3mr5Sw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-15_03,2026-05-15_01,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.151.68;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,651 +178,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Product: [1]
-Datasheet: [2]
+The existing aml_interrupt() uses the Extended Interrupt Descriptor to store
+the interrupt information, however newer Windows will only parse the
+standard IRQ Descriptor when enumerating ISA serial ports.
 
-ADC128D818 Support:
-- channel readings from pre-set values
-- driver can read and write most configuration registers
-
-ADC128D818 currently unsupported:
-- slave address restriction
-- startup sequence and realistic busy register emulation
-- external VREF
-- conversion rate
-- interrupts
-- deep shutdown mode
-- individual channel shutdown
-- selection between Mode 0,1,2,3
-- pseudo-differential input
-
-Anyone could expand it in the future for more accurate emulation.
-
-The reason for adding this device is to support Yosemite V4 emulation.
-
-Tested: on yosemite v4 qemu
-
-initialize the device:
-// ti,adc128d818 @ 0x1f    (adc)
-// the driver will throw away the last 4 bits, set them 0
-uint16_t adc_values1[8] = {
-    0b011110000000, 0b010100010000,
-    0b001000110000, 0b100000100000,
-    0b011110000000, 0b010100010000,
-    0b001000110000, 0b100000100000};
-adc128d818_init_with_values(bus, 0x1f, adc_values1, 8);
-
-Trace outputs directly after initialization:
-adc128d818_realize i2c_addr: 0x1f
-adc128d818_realize i2c_addr: 0x1f
-adc128d818_event i2c_addr: 0x1f, event: 0x01
-adc128d818_send i2c_addr: 0x1f, data: 0x00
-adc128d818_send i2c_addr: 0x1f, data: 0x80
-adc128d818_write i2c_addr: 0x1f, reg: 0x00 data: 0x80
-adc128d818_event i2c_addr: 0x1f, event: 0x03
-adc128d818_event i2c_addr: 0x1f, event: 0x01
-...
-
-read the values
-root@yosemite4:/sys/bus/i2c/devices/30-001f# cat hwmon/hwmon0/in0_min
-0
-root@yosemite4:/sys/bus/i2c/devices/30-001f# cat hwmon/hwmon0/in0_max
-0
-root@yosemite4:/sys/bus/i2c/devices/30-001f# cat hwmon/hwmon0/in0_input
-75
-root@yosemite4:/sys/bus/i2c/devices/30-001f# cat hwmon/hwmon0/name
-adc128d818
-
-We initially configured 0b011110000000 for the first channel.
-The driver throws away the last 4 bits and does calculation similar to
-below:
-
-val = DIV_ROUND_CLOSEST(data->in[index][nr] * data->vref, 4095);
-
-We can check that the calculation is as expected given our configured
-value.
-
-((0b011110000000 >> 4) * 2560) / 4095
-75.01831501831502
-
-References:
-[1] https://www.ti.com/product/ADC128D818
-[2] https://www.ti.com/lit/gpn/adc128d818
-
-Cc: Titus Rwantare <titusr@google.com>
-Cc: "Cédric Le Goater" <clg@kaod.org> (maintainer:ASPEED BMCs)
-Cc: Paolo Bonzini <pbonzini@redhat.com> (maintainer:Kconfig)
-Cc: Peter Maydell <peter.maydell@linaro.org> (supporter:ARM TCG CPUs)
-Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org> (odd fixer:Overall sensors)
-Cc: qemu-arm@nongnu.org (open list:ARM TCG CPUs)
-Cc: qemu-devel@nongnu.org (open list:All patches CC here)
-Signed-off-by: Alexander Hansen <alexander.hansen@9elements.com>
+Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 ---
- MAINTAINERS                              |   1 +
- include/hw/sensor/adc128d818.h           |  20 ++
- hw/arm/aspeed_ast2600_fby4.c             |   9 +-
- hw/sensor/adc128d818.c                   | 410 +++++++++++++++++++++++
- hw/arm/Kconfig                           |   1 +
- hw/sensor/Kconfig                        |   4 +
- hw/sensor/meson.build                    |   1 +
- hw/sensor/trace-events                   |   8 +
- tests/functional/arm/test_aspeed_fby4.py |  10 +
- 9 files changed, 463 insertions(+), 1 deletion(-)
- create mode 100644 include/hw/sensor/adc128d818.h
- create mode 100644 hw/sensor/adc128d818.c
+ include/hw/acpi/aml-build.h |  2 ++
+ hw/acpi/aml-build-stub.c    |  6 ++++++
+ hw/acpi/aml-build.c         | 27 +++++++++++++++++++++++++++
+ 3 files changed, 35 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 669d6e8344..bf4d157781 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3984,6 +3984,7 @@ PMBus
- M: Titus Rwantare <titusr@google.com>
- S: Maintained
- F: hw/i2c/pmbus_device.c
-+F: hw/sensor/adc128d818.c
- F: hw/sensor/adm1272.c
- F: hw/sensor/isl_pmbus_vr.c
- F: hw/sensor/max11615.c
-diff --git a/include/hw/sensor/adc128d818.h b/include/hw/sensor/adc128d818.h
-new file mode 100644
-index 0000000000..e2bdc47590
---- /dev/null
-+++ b/include/hw/sensor/adc128d818.h
-@@ -0,0 +1,20 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+#ifndef QEMU_ADC128D818_H
-+#define QEMU_ADC128D818_H
+diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
+index e70e0643b1..eaff025d26 100644
+--- a/include/hw/acpi/aml-build.h
++++ b/include/hw/acpi/aml-build.h
+@@ -343,6 +343,8 @@ Aml *aml_io(AmlIODecode dec, uint16_t min_base, uint16_t max_base,
+ Aml *aml_operation_region(const char *name, AmlRegionSpace rs,
+                           Aml *offset, uint32_t len);
+ Aml *aml_irq_no_flags(uint8_t irq);
++Aml *aml_irq(uint8_t irq, AmlLevelAndEdge level_and_edge,
++             AmlActiveHighAndLow high_and_low, AmlShared shared);
+ Aml *aml_named_field(const char *name, unsigned length);
+ Aml *aml_reserved_field(unsigned length);
+ Aml *aml_local(int num);
+diff --git a/hw/acpi/aml-build-stub.c b/hw/acpi/aml-build-stub.c
+index 89a8fec4af..3180c7c962 100644
+--- a/hw/acpi/aml-build-stub.c
++++ b/hw/acpi/aml-build-stub.c
+@@ -67,6 +67,12 @@ Aml *aml_irq_no_flags(uint8_t irq)
+     return NULL;
+ }
+ 
++Aml *aml_irq(uint8_t irq, AmlLevelAndEdge level_and_edge,
++             AmlActiveHighAndLow high_and_low, AmlShared shared)
++{
++    return NULL;
++}
 +
-+#include <stdint.h>
-+#include "hw/i2c/i2c.h"
-+
-+#define TYPE_ADC128D818 "adc128d818"
-+
+ Aml *aml_interrupt(AmlConsumerAndProducer con_and_pro,
+                    AmlLevelAndEdge level_and_edge,
+                    AmlActiveHighAndLow high_and_low, AmlShared shared,
+diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+index 7edc8aed42..413d9b6240 100644
+--- a/hw/acpi/aml-build.c
++++ b/hw/acpi/aml-build.c
+@@ -1061,6 +1061,33 @@ Aml *aml_irq_no_flags(uint8_t irq)
+     return var;
+ }
+ 
 +/*
-+ * Create and realize a adc128d818 ADC with constant caller-supplied readings
-+ * @bus: I2C bus to put it on
-+ * @address: I2C address
-+ * @init_values: array of readings for each ADC channel
-+ * @init_values_size: Size of @init_values, can be less than the number of channels
++ * ACPI 1.0b: 6.4.2.1.1 ASL Macro for IRQ Descriptor
++ *
++ * More verbose description at:
++ * ACPI 5.0: 19.5.63 IRQ (Interrupt Resource Descriptor Macro)
++ *           6.4.2.1 IRQ Descriptor
 + */
-+I2CSlave *adc128d818_init_with_values(I2CBus *bus, uint8_t address,
-+                                    const uint16_t *init_values, uint32_t init_values_size);
-+
-+#endif
-diff --git a/hw/arm/aspeed_ast2600_fby4.c b/hw/arm/aspeed_ast2600_fby4.c
-index 45ed4a4c0f..c70ef43a61 100644
---- a/hw/arm/aspeed_ast2600_fby4.c
-+++ b/hw/arm/aspeed_ast2600_fby4.c
-@@ -12,6 +12,7 @@
- #include "hw/arm/aspeed_soc.h"
- #include "hw/nvram/eeprom_at24c.h"
- #include "hw/sensor/max11615.h"
-+#include "hw/sensor/adc128d818.h"
- #include "hw/i2c/i2c_mux_pca954x.h"
- #include "hw/gpio/pca9552.h"
- 
-@@ -162,7 +163,13 @@ static void fby4_i2c_init_fanboard(I2CSlave *fan_mux, size_t eepromSize)
-         I2CBus *bus = pca954x_i2c_get_bus(fan_mux, i);
- 
-         /* ti,adc128d818 @ 0x1f    (adc) */
--        /* TODO */
-+        /* the driver will throw away the last 4 bits, set them 0 */
-+        static const uint16_t adc_values1[8] = {
-+            0b011110000000, 0b010100010000,
-+            0b001000110000, 0b100000100000,
-+            0b011110000000, 0b010100010000,
-+            0b001000110000, 0b100000100000};
-+        adc128d818_init_with_values(bus, 0x1f, adc_values1, 8);
- 
-         /* maxim,max31790 @ 0x20   (pwm) */
-         i2c_slave_create_simple(bus, "max31790", 0x20);
-diff --git a/hw/sensor/adc128d818.c b/hw/sensor/adc128d818.c
-new file mode 100644
-index 0000000000..e362e41788
---- /dev/null
-+++ b/hw/sensor/adc128d818.c
-@@ -0,0 +1,410 @@
-+/*
-+ * Texas Instruments ADC128D818 12 bit ADC with temperature sensor
-+ * Models ADC128D818
-+ *
-+ * Product: https://www.ti.com/product/ADC128D818
-+ * Datasheet: https://www.ti.com/lit/gpn/adc128d818
-+ *
-+ * Copyright 2026 9elements
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/i2c/i2c.h"
-+#include "migration/vmstate.h"
-+#include "qapi/error.h"
-+#include "qapi/visitor.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "trace.h"
-+#include "hw/sensor/adc128d818.h"
-+
-+/* 8 bit, r/w */
-+#define REG_CONFIG 0x00
-+
-+/* 8 bit, readonly */
-+#define REG_INTERRUPT_STATUS 0x01
-+
-+/* 8 bit, r/w */
-+#define REG_INTERRUPT_MASK 0x03
-+
-+/* 8 bit, r/w */
-+#define REG_CONVERSION_RATE 0x07
-+
-+/* 8 bit, r/w */
-+#define REG_CHANNEL_DISABLE 0x08
-+
-+/* 8 bit, write-only */
-+#define REG_ONE_SHOT 0x09
-+
-+/* 8 bit, r/w */
-+#define REG_DEEP_SHUTDOWN 0x0a
-+
-+/* 8 bit, r/w */
-+#define REG_ADVANCED_CONFIG 0x0b
-+
-+/* 8 bit, readonly */
-+#define REG_BUSY_STATUS 0x0c
-+
-+/* 16 bit registers, N = 0..7, readonly */
-+#define REG_CHANNEL_READING(N) (0x20 + N)
-+
-+/* 8 bit registers N = 0..15, r/w */
-+#define REG_LIMIT(N) (0x2a + N)
-+
-+/* 8 bit register, readonly */
-+#define REG_MANUFACTURER_ID 0x3e
-+
-+/* 8 bit register, readonly */
-+#define REG_REVISION_ID 0x3f
-+
-+#define ADC128D818_NUM_CHANNELS 8
-+
-+struct ADC128D818State {
-+    I2CSlave i2c;
-+
-+    uint8_t config;
-+    uint8_t interrupt_mask;
-+    uint8_t conversion_rate;
-+    uint8_t channel_disable;
-+    bool deep_shutdown;
-+    uint8_t advanced_config;
-+
-+    /* channel reading registers, 2 bytes each */
-+    uint16_t channels[ADC128D818_NUM_CHANNELS];
-+
-+    /* high and low limit registers 0x2a - 0x39, one byte each */
-+    uint8_t limit[ADC128D818_NUM_CHANNELS * 2];
-+
-+    /* input buffer */
-+    uint8_t len;
-+    uint8_t buf[2];
-+
-+    /* output buffer */
-+    uint8_t outlen;
-+    uint8_t outbuf[2];
-+
-+    /* selected channel for read/write operation */
-+    uint8_t pointer;
-+};
-+
-+struct ADC128D818Class {
-+    I2CSlaveClass parent_class;
-+};
-+
-+OBJECT_DECLARE_TYPE(ADC128D818State, ADC128D818Class, ADC128D818)
-+
-+static void adc128d818_read(ADC128D818State *s)
++Aml *aml_irq(uint8_t irq, AmlLevelAndEdge level_and_edge,
++             AmlActiveHighAndLow high_and_low, AmlShared shared)
 +{
-+    uint8_t ch_num = 0;
-+    switch (s->pointer) {
-+    case REG_CONFIG:
-+        s->outbuf[0] = s->config;
-+        break;
-+    case REG_INTERRUPT_STATUS:
-+        s->outbuf[0] = 0x0; /* POR State */
-+        break;
-+    case REG_INTERRUPT_MASK:
-+        s->outbuf[0] = s->interrupt_mask;
-+        break;
-+    case REG_CONVERSION_RATE:
-+        s->outbuf[0] = s->conversion_rate;
-+        break;
-+    case REG_CHANNEL_DISABLE:
-+        s->outbuf[0] = s->channel_disable;
-+        break;
-+    case REG_ONE_SHOT:
-+        /* not marked as readable */
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: read of register 0x%02x\n",
-+                      __func__, s->pointer);
-+        s->outbuf[0] = 0x0;
-+        break;
-+    case REG_DEEP_SHUTDOWN:
-+        s->outbuf[0] = s->deep_shutdown ? 0x1 : 0x0;
-+        break;
-+    case REG_ADVANCED_CONFIG:
-+        s->outbuf[0] = s->advanced_config & 0b111;
-+        break;
-+    case REG_BUSY_STATUS:
-+        /* not implemented */
-+        s->outbuf[0] = 0b00000010; /* POR State */
-+        break;
-+    case REG_CHANNEL_READING(0):
-+    case REG_CHANNEL_READING(1):
-+    case REG_CHANNEL_READING(2):
-+    case REG_CHANNEL_READING(3):
-+    case REG_CHANNEL_READING(4):
-+    case REG_CHANNEL_READING(5):
-+    case REG_CHANNEL_READING(6):
-+    case REG_CHANNEL_READING(7):
-+        ch_num = s->pointer - REG_CHANNEL_READING(0);
-+        /* high byte comes first, driver reads swapped */
-+        s->outbuf[0] = (s->channels[ch_num] >> 8) & 0xff;
-+        s->outbuf[1] = s->channels[ch_num] & 0xff;
-+        break;
-+    case REG_LIMIT(0):
-+    case REG_LIMIT(1):
-+    case REG_LIMIT(2):
-+    case REG_LIMIT(3):
-+    case REG_LIMIT(4):
-+    case REG_LIMIT(5):
-+    case REG_LIMIT(6):
-+    case REG_LIMIT(7):
-+    case REG_LIMIT(8):
-+    case REG_LIMIT(9):
-+    case REG_LIMIT(10):
-+    case REG_LIMIT(11):
-+    case REG_LIMIT(12):
-+    case REG_LIMIT(13):
-+    case REG_LIMIT(14):
-+    case REG_LIMIT(15):
-+        s->outbuf[0] = s->limit[s->pointer - REG_LIMIT(0)];
-+        break;
-+    case REG_MANUFACTURER_ID:
-+        s->outbuf[0] = 0x1; /* readonly */
-+        break;
-+    case REG_REVISION_ID:
-+        s->outbuf[0] = 0b00001001; /* readonly */
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: read of register 0x%02x\n",
-+                      __func__, s->pointer);
-+        break;
-+    }
++    uint16_t irq_mask;
++    Aml *var = aml_alloc();
++    uint8_t irq_flags = level_and_edge | (high_and_low << 3) |
++                        (shared << 4);
++
++    assert((level_and_edge == AML_EDGE && high_and_low == AML_ACTIVE_HIGH) ||
++           (level_and_edge == AML_LEVEL && high_and_low == AML_ACTIVE_LOW));
++    assert(irq < 16);
++    build_append_byte(var->buf, 0x23); /* IRQ descriptor 3 byte form */
++
++    irq_mask = 1U << irq;
++    build_append_byte(var->buf, irq_mask & 0xFF); /* IRQ mask bits[7:0] */
++    build_append_byte(var->buf, irq_mask >> 8); /* IRQ mask bits[15:8] */
++    build_append_byte(var->buf, irq_flags); /* IRQ flags */
++    return var;
 +}
 +
-+static void adc128d818_write_advanced_config(ADC128D818State *s, uint8_t data)
-+{
-+    /*
-+     * Note: Whenever the Advanced Configuration Register is programmed,
-+     * all of the values in the Channel Reading Registers and
-+     * Interrupt Status Registers will return to their default values.
-+     */
-+
-+    s->advanced_config = (data & 0b111);
-+}
-+
-+static void adc128d818_write(ADC128D818State *s, uint8_t data)
-+{
-+    trace_adc128d818_write(s->i2c.address, s->pointer, data);
-+
-+    /* which bits in config register are writable */
-+    const uint8_t config_w_mask = 0b10001011;
-+    const uint8_t config_ro_mask = (uint8_t)~config_w_mask;
-+
-+    switch (s->pointer) {
-+    case REG_CONFIG:
-+        s->config = (s->config & config_ro_mask) | (data & config_w_mask);
-+        break;
-+    case REG_INTERRUPT_MASK:
-+        s->interrupt_mask = data;
-+        break;
-+    case REG_CONVERSION_RATE:
-+        s->conversion_rate = data;
-+        break;
-+    case REG_CHANNEL_DISABLE:
-+        s->channel_disable = data;
-+        break;
-+    case REG_ONE_SHOT:
-+        /*
-+         * Initiate a single conversion and comparison cycle when
-+         * the device is in shutdown mode or deep shutdown mode, after
-+         * which the device returns to the respective mode that it was in
-+         *
-+         */
-+        break;
-+    case REG_DEEP_SHUTDOWN:
-+        s->deep_shutdown = (data & 0x1) != 0;
-+        break;
-+    case REG_ADVANCED_CONFIG:
-+        adc128d818_write_advanced_config(s, data);
-+        break;
-+    case REG_LIMIT(0):
-+    case REG_LIMIT(1):
-+    case REG_LIMIT(2):
-+    case REG_LIMIT(3):
-+    case REG_LIMIT(4):
-+    case REG_LIMIT(5):
-+    case REG_LIMIT(6):
-+    case REG_LIMIT(7):
-+    case REG_LIMIT(8):
-+    case REG_LIMIT(9):
-+    case REG_LIMIT(10):
-+    case REG_LIMIT(11):
-+    case REG_LIMIT(12):
-+    case REG_LIMIT(13):
-+    case REG_LIMIT(14):
-+    case REG_LIMIT(15):
-+        s->limit[s->pointer - REG_LIMIT(0)] = data;
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: write of register 0x%02x\n",
-+                      __func__, s->pointer);
-+        break;
-+    }
-+}
-+
-+static int adc128d818_send(I2CSlave *i2c, uint8_t data)
-+{
-+    ADC128D818State *s = ADC128D818(i2c);
-+    trace_adc128d818_send(s->i2c.address, data);
-+
-+    s->outlen = 0;
-+    s->buf[s->len] = data;
-+
-+    if (s->len == 0) {
-+        s->pointer = data;
-+    } else if (s->len == 1) {
-+        adc128d818_write(s, data);
-+    }
-+
-+    s->len++;
-+    return 0;
-+}
-+
-+static uint8_t adc128d818_recv(I2CSlave *i2c)
-+{
-+    ADC128D818State *s = ADC128D818(i2c);
-+    trace_adc128d818_recv(s->i2c.address, s->pointer);
-+
-+    adc128d818_read(s);
-+
-+    if (s->outlen >= 2) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: too many bytes read\n", __func__);
-+        s->outlen = 0;
-+    }
-+
-+    const uint8_t data = s->outbuf[s->outlen++];
-+
-+    trace_adc128d818_recv_return(s->i2c.address, data);
-+    return data;
-+}
-+
-+static int adc128d818_event(I2CSlave *i2c, enum i2c_event event)
-+{
-+    ADC128D818State *s = ADC128D818(i2c);
-+
-+    trace_adc128d818_event(s->i2c.address, event);
-+
-+    switch (event) {
-+    case I2C_START_RECV:
-+        s->outlen = 0;
-+        break;
-+    case I2C_START_SEND:
-+        s->len = 0;
-+        break;
-+    default:
-+        break;
-+    }
-+
-+    return 0;
-+}
-+
-+static const VMStateDescription vmstate_adc128d818 = {
-+    .name = TYPE_ADC128D818,
-+    .version_id = 0,
-+    .minimum_version_id = 0,
-+    .fields =
-+        (const VMStateField[]){
-+            VMSTATE_UINT8(config, ADC128D818State),
-+            VMSTATE_UINT8(interrupt_mask, ADC128D818State),
-+            VMSTATE_UINT8(conversion_rate, ADC128D818State),
-+            VMSTATE_UINT8(channel_disable, ADC128D818State),
-+            VMSTATE_BOOL(deep_shutdown, ADC128D818State),
-+            VMSTATE_UINT8(advanced_config, ADC128D818State),
-+            VMSTATE_UINT16_ARRAY(channels, ADC128D818State,
-+                                 ADC128D818_NUM_CHANNELS),
-+            VMSTATE_UINT8_ARRAY(limit, ADC128D818State,
-+                                ADC128D818_NUM_CHANNELS * 2),
-+            VMSTATE_UINT8(len, ADC128D818State),
-+            VMSTATE_UINT8_ARRAY(buf, ADC128D818State, 2),
-+            VMSTATE_UINT8(outlen, ADC128D818State),
-+            VMSTATE_UINT8_ARRAY(outbuf, ADC128D818State, 2),
-+            VMSTATE_UINT8(pointer, ADC128D818State),
-+            VMSTATE_I2C_SLAVE(i2c, ADC128D818State), VMSTATE_END_OF_LIST() }
-+};
-+
-+static void adc128d818_init(Object *obj) { /* Nothing to do */ }
-+
-+I2CSlave *adc128d818_init_with_values(I2CBus *bus, uint8_t address,
-+                                      const uint16_t *init_values,
-+                                      uint32_t init_values_size)
-+{
-+    ADC128D818State *s;
-+
-+    s = ADC128D818(i2c_slave_new(TYPE_ADC128D818, address));
-+
-+    for (int i = 0; i < ADC128D818_NUM_CHANNELS; i++) {
-+
-+        /* arbitrary value */
-+        uint16_t value = 0b0000101011010010;
-+
-+        if (i < init_values_size) {
-+            value = init_values[i];
-+        }
-+        s->channels[i] = value;
-+    }
-+
-+    i2c_slave_realize_and_unref(I2C_SLAVE(s), bus, &error_abort);
-+
-+    return I2C_SLAVE(s);
-+}
-+
-+static void adc128d818_reset(DeviceState *dev)
-+{
-+    ADC128D818State *s = ADC128D818(dev);
-+
-+    s->pointer = 0;
-+    s->outlen = 0;
-+
-+    /* POR-State */
-+    s->config = 0b00001000;
-+    s->interrupt_mask = 0;
-+    s->conversion_rate = 0;
-+    s->channel_disable = 0;
-+    s->deep_shutdown = 0;
-+    s->advanced_config = 0;
-+
-+    /* No POR-State defined in datasheet */
-+    for (int i = 0; i < ADC128D818_NUM_CHANNELS * 2; i++) {
-+        s->limit[i] = 0;
-+    }
-+}
-+
-+static void adc128d818_realize(DeviceState *dev, Error **errp)
-+{
-+    ADC128D818State *s = ADC128D818(dev);
-+
-+    trace_adc128d818_realize(s->i2c.address);
-+}
-+
-+static void adc128d818_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
-+
-+    dc->realize = adc128d818_realize;
-+    dc->desc = "Texas Instruments ADC128D818 12-bit ADC with temp sensor";
-+    dc->vmsd = &vmstate_adc128d818;
-+    dc->legacy_reset = adc128d818_reset;
-+    k->event = adc128d818_event;
-+    k->recv = adc128d818_recv;
-+    k->send = adc128d818_send;
-+}
-+
-+static const TypeInfo adc128d818_info = {
-+    .name = TYPE_ADC128D818,
-+    .parent = TYPE_I2C_SLAVE,
-+    .instance_size = sizeof(ADC128D818State),
-+    .class_size = sizeof(ADC128D818Class),
-+    .instance_init = adc128d818_init,
-+    .class_init = adc128d818_class_init,
-+};
-+
-+static void adc128d818_register_types(void)
-+{
-+    type_register_static(&adc128d818_info);
-+}
-+
-+type_init(adc128d818_register_types)
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 76a7d327a9..cc89c65e3f 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -554,6 +554,7 @@ config ASPEED_SOC
-     select MAX31785
-     select MAX31790
-     select MAX11615
-+    select ADC128D818
-     select FSI_APB2OPB_ASPEED
-     select AT24C
-     select PCI_EXPRESS
-diff --git a/hw/sensor/Kconfig b/hw/sensor/Kconfig
-index 84eede9d84..c9190ff780 100644
---- a/hw/sensor/Kconfig
-+++ b/hw/sensor/Kconfig
-@@ -51,3 +51,7 @@ config MAX31790
- config MAX11615
-     bool
-     depends on I2C
-+
-+config ADC128D818
-+    bool
-+    depends on I2C
-diff --git a/hw/sensor/meson.build b/hw/sensor/meson.build
-index a1e26604fa..defd7647e7 100644
---- a/hw/sensor/meson.build
-+++ b/hw/sensor/meson.build
-@@ -10,3 +10,4 @@ system_ss.add(when: 'CONFIG_ISL_PMBUS_VR', if_true: files('isl_pmbus_vr.c'))
- system_ss.add(when: 'CONFIG_MAX31785', if_true: files('max31785.c'))
- system_ss.add(when: 'CONFIG_MAX31790', if_true: files('max31790.c'))
- system_ss.add(when: 'CONFIG_MAX11615', if_true: files('max11615.c'))
-+system_ss.add(when: 'CONFIG_ADC128D818', if_true: files('adc128d818.c'))
-diff --git a/hw/sensor/trace-events b/hw/sensor/trace-events
-index 3fed979e85..4853f1944d 100644
---- a/hw/sensor/trace-events
-+++ b/hw/sensor/trace-events
-@@ -20,3 +20,11 @@ max11615_recv(uint8_t i2c_addr, uint8_t reg_addr) "i2c_addr: 0x%02x, reg_addr: 0
- max11615_recv_return(uint8_t i2c_addr, uint8_t data) "i2c_addr: 0x%02x, returns: 0x%02x"
- max11615_event(uint8_t i2c_addr, uint8_t event) "i2c_addr: 0x%02x, event: 0x%02x"
- max11615_realize(uint8_t i2c_addr) "i2c_addr: 0x%02x"
-+
-+# adc128d818.c
-+adc128d818_send(uint8_t i2c_addr, uint8_t data) "i2c_addr: 0x%02x, data: 0x%02x"
-+adc128d818_write(uint8_t i2c_addr, uint8_t reg, uint8_t data) "i2c_addr: 0x%02x, reg: 0x%02x data: 0x%02x"
-+adc128d818_recv(uint8_t i2c_addr, uint8_t reg) "i2c_addr: 0x%02x, reg: 0x%02x"
-+adc128d818_recv_return(uint8_t i2c_addr, uint8_t data) "i2c_addr: 0x%02x, returns: 0x%02x"
-+adc128d818_event(uint8_t i2c_addr, uint8_t event) "i2c_addr: 0x%02x, event: 0x%02x"
-+adc128d818_realize(uint8_t i2c_addr) "i2c_addr: 0x%02x"
-diff --git a/tests/functional/arm/test_aspeed_fby4.py b/tests/functional/arm/test_aspeed_fby4.py
-index 319f1a7672..883e058832 100755
---- a/tests/functional/arm/test_aspeed_fby4.py
-+++ b/tests/functional/arm/test_aspeed_fby4.py
-@@ -59,6 +59,16 @@ def do_test_arm_aspeed_openbmc_no_network(self, machine, image, uboot,
-         exec_command_and_wait_for_pattern(self,
-             "cat /sys/bus/iio/devices/iio:device2/in_voltage_scale", "0.500000000");
- 
-+        # ADC128D818 test
-+        exec_command_and_wait_for_pattern(self,
-+            "cat /sys/bus/i2c/devices/30-001f/hwmon/hwmon0/name", "adc128d818");
-+        exec_command_and_wait_for_pattern(self,
-+            "cat /sys/bus/i2c/devices/30-001f/hwmon/hwmon0/in0_input", "75");
-+        exec_command_and_wait_for_pattern(self,
-+            "cat /sys/bus/i2c/devices/30-001f/hwmon/hwmon0/in0_min", "0");
-+        exec_command_and_wait_for_pattern(self,
-+            "cat /sys/bus/i2c/devices/30-001f/hwmon/hwmon0/in0_max", "0");
-+
-     def test_arm_ast2600_yosemitev4_openbmc(self):
-         image_path = self.uncompress(self.ASSET_YOSEMITE_V4_FLASH)
- 
+ /* ACPI 1.0b: 16.2.5.4 Type 2 Opcodes Encoding: DefLNot */
+ Aml *aml_lnot(Aml *arg)
+ {
 -- 
-2.54.0
+2.43.0
 
 
