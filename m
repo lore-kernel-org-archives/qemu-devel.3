@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BC20CD343F
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 21:24:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6867CD343F
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 21:24:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNzxQ-0001ii-8F; Fri, 15 May 2026 17:20:32 -0400
+	id 1wNzxD-0001L6-55; Fri, 15 May 2026 17:20:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzxM-0001Wl-GM
- for qemu-devel@nongnu.org; Fri, 15 May 2026 17:20:28 -0400
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzxB-0001Gk-8H
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 17:20:17 -0400
 Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzxJ-0002zV-Ns
- for qemu-devel@nongnu.org; Fri, 15 May 2026 17:20:28 -0400
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzx9-0002uw-A8
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 17:20:16 -0400
 Received: by mail-ot1-x334.google.com with SMTP id
- 46e09a7af769-7dca4debedaso351556a34.2
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 14:20:25 -0700 (PDT)
+ 46e09a7af769-7dcd9061b1aso291830a34.2
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 14:20:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778880025; x=1779484825;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778880014; x=1779484814;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=XA2VapCdTmhzDnbqx3LnG0YGhwZKj+LcwAtR9i2xat0=;
- b=kHikg3Agwhp871m6BxpcvmU3Fr7FU6rh4bYdjwjSxYWalKJPxZ5k/LGv86QHIZmKs+
- UY4iPXNU61kh5RxXYrc45IM3gbHe8F7T91my4m9zOXwQUriQXyApjR2Cuw2dsDMXB7g0
- d5BGhlx+iLQ/Zitd8spy/vrAyFyJCgNRjKvZvU8ypdH8+xeACCvoxu0qYvUdUOIgX47d
- BT5r9SkZEWPY63u2LFviquo6foVvxfm8//nf+jSnRmdGI1G+lNlIcLDxkz73aEnhsXh3
- aPzS4JGI/H7zUo39COE8Y7ifgMiawBTjHV/19zDliR91IG+MdeB/X1Ol1+cfRcP7jaY1
- fzpQ==
+ :reply-to; bh=IjWa9KPTIkQLy69DgKF7cEUtyBULk6XSvES0OTbPIbw=;
+ b=jFZkgFiilX2ISWSeWgoRuwapw8MFpAP/l/NjzDEqxdbF6/u8OxNrk5mzGKzgTsrFOk
+ rj3FCGXrExvR64Atzp8snoE/GsYkf4nFRima/oMagAX3UvyYmwVx4WCysWr/nMKIvLs6
+ Mm1PeMQLeidwvTPtXq9h/J77mYOH3jzFJD9ctAoHEdA9otXzZSpSUr/pLozH2p3/jHNN
+ idBF7Vudk1k338Suc95M1d8esfu48G41e7FfBGItHQBRYccB3RrBvkRKHdunF/NYmbro
+ 1E2PwPs/UII2GHdQHamGkDhlmofKyymz3OzyJ0La2EN5MP95MceqJSVYDgZaobZS00mt
+ MmiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778880025; x=1779484825;
+ d=1e100.net; s=20251104; t=1778880014; x=1779484814;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=XA2VapCdTmhzDnbqx3LnG0YGhwZKj+LcwAtR9i2xat0=;
- b=CFwDZYJA7YW/pUNLNby7RCCS9hLBsKXXJ76NZU+8LqC29PJ4gtMZWkghPLhWCWs+az
- wPkK2sa4hNcw/CJnYQjE0BsI2tc3EGItiKJBDYAQSRV1NmY/jfNuWXmn+lM2Nhv2SE4z
- 7VaOqYBzKcUn9mRFBmw0bKxGQdSV4Ebn6sIabmqdfH4/Mpr37awfKM1Qf8e4So70ICwV
- 3aiMmiFl4QeKiLPKGGHPRIWpO7wGcZQ1mm84dPI4Macu1Pporf88KtKmXvoivEbM6xBg
- cIKzfJBQF+KtFXkHzg5+WS9rDGlOH7h6szyrAljvFcVu0dyl53hUzcFAcLhPNx20yqq6
- Ps3w==
-X-Gm-Message-State: AOJu0Yy7SqSfwr2aL7qqem6Sk1s0hy/OZNycqdm+zDCUP1d2hzdsdu+4
- qUA/OocVRFMa4kEp/rq/gBm6FVsoUB7B3fTIYROcLjDoqsvjMtPXE/7v81k4hv9USzw=
-X-Gm-Gg: Acq92OFQhPkQoTM/yxPQQq9Xbn+E/mYUtV+avwv3NwVGSG3kauXdM0px95GNNpD8I+f
- KgAbyjh3mLa4Zyp3F+otiNA4yy6CSlGq84LtNe9y5dtwnNOmjuwFSTMyFLwXk9Y2k0kTu0KiSSl
- mbKJsmjx8taBWOI72ahDTKbU9emcwl0WW1fW/2NBlo2d1FaqmbhAeEBo3HgHXXxbIH9b38wPyxu
- uiY9YbTxHI1iQEfCibX+/TWSNzJtBJHog3Qf2QJo+cbGqOZnG7FmK5n+1H9gZlZR3PIfO+kGTvA
- /Sodw8u5VROgsc/2vJPhCbvO0Bfr5yY7sJQTZCWCGPSSZDRh0SgPgyHXNJUS3mKU8+jtAPGF18e
- s0AN3UdlJHaeC0bT5Jim2N/Cq/nQYA6iN8mnTCgaDNhzrBRSQmC3wgn0oOubf182Kpnz2isXaWs
- F4lW7Z1AlX3g==
-X-Received: by 2002:a05:6830:81d7:b0:7dd:e032:3ce5 with SMTP id
- 46e09a7af769-7e4f2bce60amr3751278a34.17.1778880024611; 
- Fri, 15 May 2026 14:20:24 -0700 (PDT)
+ bh=IjWa9KPTIkQLy69DgKF7cEUtyBULk6XSvES0OTbPIbw=;
+ b=MKxh8o4TzFgGqJ/bgyuskZQNdgyz4ARdlJAhf6j/fuay97/fjRU2EfAktOXQQNec68
+ mVzuVchRjjnKZ6uYatOoT2xHoSVyWG1iBQA7TuSH+KW9927q0NvE8tZ6MP4QjTmPy/O0
+ QmnYkeuRm01whCbGzY5w1PJhasvpip1i30a13LefY9uPxIElvn71QyKTbKCz1A80HlLj
+ GQywrPT3gjcMneQeeIX5/Wt+ac5AWZn+zamZaTDdmwenPVbxvmFRyXFeXpdg5kfNIUfc
+ hCGRBX4jbyqomGmG4FUU4iLsowJplyXfn3yfhhi+qoMc8FgTYFoSZC8IYC/BJpeMsB3n
+ M7nQ==
+X-Gm-Message-State: AOJu0YwqtaVKNxhPwyQr0jwcG1aawFDuE/lixt8OwfvFqu56zWIJywaa
+ JWIHPdBVWsbUxrUjSkA5yHRhXcm8+inZ16GP/9TIGEaSSZevOcoFxGJFRQmywxBRxKQ8a38ASgZ
+ 7n1t6Cwo=
+X-Gm-Gg: Acq92OEzaeFPzcjFuUvkYoiUupwoIuEgXY4iYip4RtHbhvPqrQ82rEE7D4Luj/p142P
+ bcx+l1hSubLsbyckId7dX46zS/Bn+GYSnRsKp8hWMwvv8drGJMr8JxGgW/LHIK5X0Z5g696+g4d
+ n2JTLc4penOlAOpQ+hIT/VTKl6gp0R/khPbu+ryZlCSy3DF+Tpftci9rA5J1wTO0EuyoHrYDJtP
+ c8qK32Av/EhprIwgwGOlQRGn/zJN4RQsr/Wqd8qfMFw2APUEQjw2FNS0WzdF/xeRhIQbQ7h+UTS
+ RMQHOYuhPm1gSW/ZkrMHUmQiOTDXmgvHfRLUjp5YrNCOP4pJmiwyQEKY/4h+4LNhBnqKYxw8/xy
+ mmk2wIDF/h7Jlgw7ULMKHUyhqeYeb1Omb6dnmnECBk2roGBmxcaFpOBkNmaDuryVJPXpYSXcYHJ
+ 6Tt/3UwvV0PQ==
+X-Received: by 2002:a05:6830:628a:b0:7e3:d199:3164 with SMTP id
+ 46e09a7af769-7e4f2aa4df0mr4018786a34.11.1778880014147; 
+ Fri, 15 May 2026 14:20:14 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55b7c6b29sm2185612a34.1.2026.05.15.14.20.23
+ 46e09a7af769-7e55b7c6b29sm2185612a34.1.2026.05.15.14.20.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 14:20:24 -0700 (PDT)
+ Fri, 15 May 2026 14:20:13 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Fri, 15 May 2026 15:19:21 -0600
-Subject: [PATCH 22/66] bsd-user: Add os-time.c and time-related type
- definitions
+Date: Fri, 15 May 2026 15:19:12 -0600
+Subject: [PATCH 13/66] bsd-user: Add do_bsd_getsockopt
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260515-misc-2026q2-v1-22-5438ca41b27a@bsdimp.com>
+Message-Id: <20260515-misc-2026q2-v1-13-5438ca41b27a@bsdimp.com>
 References: <20260515-misc-2026q2-v1-0-5438ca41b27a@bsdimp.com>
 In-Reply-To: <20260515-misc-2026q2-v1-0-5438ca41b27a@bsdimp.com>
 To: qemu-devel@nongnu.org
@@ -79,20 +79,20 @@ Cc: Kyle Evans <kevans@freebsd.org>,
  =?utf-8?q?Mika=C3=ABl_Urankar?= <mikael.urankar@gmail.com>, 
  Kyle Evans <kevans@FreeBSD.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=11185; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=8FJBhfUKzsQG676Z40f+0IZ90MIMLdq8HQ2JCFqGk4U=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqB43jQY/EaDZmhUj66oFmMdAUBy3ymXMMZhF1i
- IazlFA2D7OJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCageN4wAKCRBsHNEofbAR
- AOibEADXd7PzDvXWWsAxpbnt4LCqQ5/w9YFJ5m+UxqGV09bLi4wudRBvaXeIwoi/b7xP2BzryJk
- 2mhRJbNSVfaWXMe+PEC5357cRSd5r4DvaWS0JXN7whu05p44WRaKBq1WYL9TgmvigOBi5lo5vJK
- uXaC7MUJbSIt9rzRdhh9jcXOdCUJJNkA7us1C4tO96Gh7JpyhQpJ6YA/2FTB7pbRwTdP3QuYOO2
- kwC6a+EpWD1/Ltr8nsGzp6aX3yBw1k4eBrfUHR4M6GyBQAMm8bUIcagmq9UhyRe976GA0DcOucX
- oPtZPWp3pTNmHUs5BdK4l4YpkdfDtLM0QAmLofg7u6C5P15lj4x9/xltDCTifrZc5k9Xwl1M0WT
- 06gP4FGeMtkT7kHg0SY+IAsxzzLSzhohw9iWuT0P972+odJPjUS1UYEJHrBC1IEm/gGAw5KHb8I
- mPjcmyywmJXmyoI5SRp+ClhlFPou31fGS9rtNRkKYg1yhAP0ONb0eavDL8UJTPYTVawb+I86rH6
- KaIDgXYxjsHKqvRTbN5VPdMz0NIwdKxMtay5iEYsGV3meCdPfKfG4PYS+zs/YR1u11awnKHrqy3
- j+XG8KOyzwEnpHBencb4caFzMUDz8sXAIFD70PfZzwPIoQ8pRzU+KTzmXtuM++bS/dR944J4xhv
- nyd0m+lA8Vs/R9A==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=10985; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=xZNgyCHx7QOOdFDfCrGcBYGHPYpqPFE+b/19abC8Gss=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqB43iCL+alsgU/xvYm6u0dH+czKFghXeAPSCCI
+ ZJgiEIaq5uJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCageN4gAKCRBsHNEofbAR
+ AJB9D/4sUF/VGJNsO9iamSyrfFMP7EJ8sKF7ullEG+qKv4lxD+s6L0rPYkafEtLdOhT0KrRGz5F
+ ujqddg2QJf+scsfhxdgYyCRw7l/+7QUJY/tCTCRcJZYP0mrPxg+HBXQTXuKy8MZVIHI0h5SWUzc
+ Xc7YW1ttKx72d5PtVjeFG6iD+5i7OmgLQavUH5wwt08OoCbjlvKFq+fiMwiqxNZjcVMwlH08x76
+ rW5ocFgWr/KkJVQZdr3J7G1ZwWDxbTSwMFodiQl5BhMXIXjqZU9Z6yVnMYedAC7HG9m+uW3OCVw
+ xCohqLrzJQvetAQ48hTB8MEU9itKIRDn7H7k4buTIL1UTXZb6EfTuOd3UZV7D63DzjDCyQP8W7k
+ AJzJ7Do53+eZYCkc1WoaUaIY092cWwCul1vvBwQPztqIV8ut3R88wUkFhYpw/BVcYRPwfqU5t4r
+ oVGoN3dFBzgRIUiavhpH600h+Jiv1oGq0tsu5o/B4GDN1tqmfhs4gT4TiCpSMV9qab+9teeXHh/
+ GZKE+k3DYIDrendcqhS4d7rKuyVPIQ+0NVfI/JeClRviLXQtg3HIgu+R+XUyfFgY/wvYNEsrjg6
+ X0+TICTTLLsGnXaiZKnnil7SAXOtGxGF+Ju6/ilhSMv3qgzUMlEUwViOvOUzlDoiDNsB0i+ccpl
+ Znw8NanxHn65G9g==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
 Received-SPF: none client-ip=2607:f8b0:4864:20::334;
@@ -118,11 +118,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add os-time.c with time conversion helpers (t2h/h2t functions for
-timespec, timeval, timex, ntptimeval, itimerspec) and POSIX timer
-helper functions. Also add target_freebsd_timex, target_freebsd_ntptimeval,
-target_freebsd_itimerspec, kevent structures, and timer definitions
-to syscall_defs.h.
+Add the getsockopt(2) implementation handling SOL_SOCKET, IPPROTO_TCP,
+IPPROTO_IP, and IPPROTO_IPV6 levels with proper target-to-host option
+name translation.
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
 Signed-off-by: Mikaël Urankar <mikael.urankar@gmail.com>
@@ -130,344 +128,303 @@ Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 Assisted-by: Claude Opus 4.6 (1M context)
 ---
- bsd-user/freebsd/os-syscall.c |   2 +
- bsd-user/freebsd/os-time.c    | 315 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 317 insertions(+)
+ bsd-user/freebsd/os-socket.h | 284 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 284 insertions(+)
 
-diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
-index 6fbd2da261..020d16fda3 100644
---- a/bsd-user/freebsd/os-syscall.c
-+++ b/bsd-user/freebsd/os-syscall.c
-@@ -98,6 +98,8 @@ safe_syscall6(int, kevent, int, kq, const struct kevent *, changelist,
-     int, nchanges, struct kevent *, eventlist, int, nevents,
-     const struct timespec *, timeout);
+diff --git a/bsd-user/freebsd/os-socket.h b/bsd-user/freebsd/os-socket.h
+index c565170d09..cd85d9be8c 100644
+--- a/bsd-user/freebsd/os-socket.h
++++ b/bsd-user/freebsd/os-socket.h
+@@ -396,5 +396,289 @@ unimplemented:
+     return ret;
+ }
  
-+int g_posix_timers[32] = { 0, } ;
-+
- /* used in os-proc */
- safe_syscall4(pid_t, wait4, pid_t, wpid, int *, status, int, options,
-     struct rusage *, rusage);
-diff --git a/bsd-user/freebsd/os-time.c b/bsd-user/freebsd/os-time.c
-new file mode 100644
-index 0000000000..4333d7d30e
---- /dev/null
-+++ b/bsd-user/freebsd/os-time.c
-@@ -0,0 +1,315 @@
-+/*
-+ * FreeBSD time related system call helpers
-+ *
-+ * Copyright (c) 2013-2015 Stacey D. Son
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include "qemu/osdep.h"
-+
-+#include <errno.h>
-+#include <time.h>
-+#include <sys/timex.h>
-+#include <sys/types.h>
-+#include <sys/select.h>
-+#include <sys/umtx.h>
-+
-+#include "qemu.h"
-+#include "qemu-os.h"
-+
-+/*
-+ * FreeBSD time conversion functions
-+ */
-+abi_long t2h_freebsd_timeval(struct timeval *tv, abi_ulong target_tv_addr)
-+{
-+    struct target_freebsd_timeval *target_tv;
-+
-+    if (!lock_user_struct(VERIFY_READ, target_tv, target_tv_addr, 0)) {
-+        return -TARGET_EFAULT;
-+    }
-+    __get_user(tv->tv_sec, &target_tv->tv_sec);
-+    __get_user(tv->tv_usec, &target_tv->tv_usec);
-+    unlock_user_struct(target_tv, target_tv_addr, 1);
-+
-+    return 0;
-+}
-+
-+abi_long h2t_freebsd_timeval(struct timeval *tv, abi_ulong target_tv_addr)
-+{
-+    struct target_freebsd_timeval *target_tv;
-+
-+    if (!lock_user_struct(VERIFY_WRITE, target_tv, target_tv_addr, 0)) {
-+        return -TARGET_EFAULT;
-+    }
-+    __put_user(tv->tv_sec, &target_tv->tv_sec);
-+    __put_user(tv->tv_usec, &target_tv->tv_usec);
-+    unlock_user_struct(target_tv, target_tv_addr, 1);
-+
-+    return 0;
-+}
-+
-+abi_long t2h_freebsd_timespec(struct timespec *ts, abi_ulong target_ts_addr)
-+{
-+    struct target_freebsd_timespec *target_ts;
-+
-+    if (!lock_user_struct(VERIFY_READ, target_ts, target_ts_addr, 0)) {
-+        return -TARGET_EFAULT;
-+    }
-+    __get_user(ts->tv_sec, &target_ts->tv_sec);
-+    __get_user(ts->tv_nsec, &target_ts->tv_nsec);
-+    unlock_user_struct(target_ts, target_ts_addr, 1);
-+
-+    return 0;
-+}
-+
-+abi_long h2t_freebsd_timespec(abi_ulong target_ts_addr, struct timespec *ts)
-+{
-+    struct target_freebsd_timespec *target_ts;
-+
-+    if (!lock_user_struct(VERIFY_WRITE, target_ts, target_ts_addr, 0)) {
-+        return -TARGET_EFAULT;
-+    }
-+    __put_user(ts->tv_sec, &target_ts->tv_sec);
-+    __put_user(ts->tv_nsec, &target_ts->tv_nsec);
-+    unlock_user_struct(target_ts, target_ts_addr, 1);
-+
-+    return 0;
-+}
-+
-+abi_long t2h_freebsd_umtx_time(abi_ulong target_ut_addr,
-+        abi_ulong target_ut_size, void *host_t, size_t *host_tsz)
++/* getsockopt(2) */
++static inline abi_long do_bsd_getsockopt(int sockfd, int level, int optname,
++        abi_ulong optval_addr, abi_ulong optlen)
 +{
 +    abi_long ret;
++    int len, val;
++    socklen_t lv;
++    void *p;
 +
-+    if (target_ut_size <= sizeof(struct target_freebsd_timespec)) {
-+        ret = t2h_freebsd_timespec((struct timespec *)host_t, target_ut_addr);
-+        if (ret == 0) {
-+            *host_tsz = sizeof(struct timespec);
-+        }
-+        return ret;
-+    } else {
-+        struct target_freebsd__umtx_time *target_ut;
-+        struct _umtx_time *ut = (struct _umtx_time *)host_t;
++    switch (level) {
++    case TARGET_SOL_SOCKET:
++        level = SOL_SOCKET;
++        switch (optname) {
 +
-+        if (!lock_user_struct(VERIFY_READ, target_ut, target_ut_addr, 0)) {
-+            return -TARGET_EFAULT;
-+        }
-+        if (t2h_freebsd_timespec(&ut->_timeout, h2g(&target_ut->_timeout))) {
-+            return -TARGET_EFAULT;
-+        }
-+        __get_user(ut->_flags, &target_ut->_flags);
-+        __get_user(ut->_clockid, &target_ut->_clockid);
-+        unlock_user_struct(target_ut, target_ut_addr, 1);
++        /* These don't just return a single integer */
++        case TARGET_SO_LINGER:
++        case TARGET_SO_RCVTIMEO:
++        case TARGET_SO_SNDTIMEO:
++        case TARGET_SO_ACCEPTFILTER:
++            goto unimplemented;
 +
-+        if (target_ut_size > sizeof(struct target_freebsd__umtx_time)) {
-+            *host_tsz = sizeof(struct _umtx_time) + sizeof(struct timespec);
-+        } else {
-+            *host_tsz = sizeof(struct _umtx_time);
-+        }
++        /* Options with 'int' argument.  */
++        case TARGET_SO_DEBUG:
++            optname = SO_DEBUG;
++            goto int_case;
 +
-+        return 0;
-+    }
-+}
++        case TARGET_SO_REUSEADDR:
++            optname = SO_REUSEADDR;
++            goto int_case;
 +
-+abi_long t2h_freebsd_timex(struct timex *host_tx, abi_ulong target_tx_addr)
-+{
-+    struct target_freebsd_timex *target_tx;
++        case TARGET_SO_REUSEPORT:
++            optname = SO_REUSEPORT;
++            goto int_case;
 +
-+    if (!lock_user_struct(VERIFY_READ, target_tx, target_tx_addr, 0)) {
-+        return -TARGET_EFAULT;
-+    }
-+    __get_user(host_tx->modes, &target_tx->modes);
-+    __get_user(host_tx->offset, &target_tx->offset);
-+    __get_user(host_tx->freq, &target_tx->freq);
-+    __get_user(host_tx->maxerror, &target_tx->maxerror);
-+    __get_user(host_tx->esterror, &target_tx->esterror);
-+    __get_user(host_tx->status, &target_tx->status);
-+    __get_user(host_tx->constant, &target_tx->constant);
-+    __get_user(host_tx->precision, &target_tx->precision);
-+    __get_user(host_tx->ppsfreq, &target_tx->ppsfreq);
-+    __get_user(host_tx->jitter, &target_tx->jitter);
-+    __get_user(host_tx->shift, &target_tx->shift);
-+    __get_user(host_tx->stabil, &target_tx->stabil);
-+    __get_user(host_tx->jitcnt, &target_tx->jitcnt);
-+    __get_user(host_tx->calcnt, &target_tx->calcnt);
-+    __get_user(host_tx->errcnt, &target_tx->errcnt);
-+    __get_user(host_tx->stbcnt, &target_tx->stbcnt);
-+    unlock_user_struct(target_tx, target_tx_addr, 1);
++        case TARGET_SO_TYPE:
++            optname = SO_TYPE;
++            goto int_case;
 +
-+    return 0;
-+}
++        case TARGET_SO_ERROR:
++            optname = SO_ERROR;
++            goto int_case;
 +
-+abi_long h2t_freebsd_ntptimeval(abi_ulong target_ntv_addr,
-+        struct ntptimeval *ntv)
-+{
-+    struct target_freebsd_ntptimeval *target_ntv;
++        case TARGET_SO_DONTROUTE:
++            optname = SO_DONTROUTE;
++            goto int_case;
 +
-+    if (!lock_user_struct(VERIFY_WRITE, target_ntv, target_ntv_addr, 0)) {
-+        return -TARGET_EFAULT;
-+    }
-+    __put_user(ntv->time.tv_sec, &target_ntv->time.tv_sec);
-+    __put_user(ntv->time.tv_nsec, &target_ntv->time.tv_nsec);
-+    __put_user(ntv->maxerror, &target_ntv->maxerror);
-+    __put_user(ntv->esterror, &target_ntv->esterror);
-+    __put_user(ntv->tai, &target_ntv->tai);
-+    __put_user(ntv->time_state, &target_ntv->time_state);
++        case TARGET_SO_BROADCAST:
++            optname = SO_BROADCAST;
++            goto int_case;
 +
-+    return 0;
-+}
++        case TARGET_SO_SNDBUF:
++            optname = SO_SNDBUF;
++            goto int_case;
 +
-+/*
-+ * select(2) fdset copy functions
-+ */
-+abi_ulong copy_from_user_fdset(fd_set *fds, abi_ulong target_fds_addr, int n)
-+{
-+    int i, nw, j, k;
-+    abi_ulong b, *target_fds;
++        case TARGET_SO_RCVBUF:
++            optname = SO_RCVBUF;
++            goto int_case;
 +
-+    nw = (n + TARGET_ABI_BITS - 1) / TARGET_ABI_BITS;
-+    target_fds = lock_user(VERIFY_READ, target_fds_addr,
-+            sizeof(abi_ulong) * nw, 1);
-+    if (target_fds == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    FD_ZERO(fds);
-+    k = 0;
-+    for (i = 0; i < nw; i++) {
-+        /* grab the abi_ulong */
-+        __get_user(b, &target_fds[i]);
-+        for (j = 0; j < TARGET_ABI_BITS; j++) {
-+            /* check the bit inside the abi_ulong */
-+            if ((b >> j) & 1) {
-+                FD_SET(k, fds);
++        case TARGET_SO_KEEPALIVE:
++            optname = SO_KEEPALIVE;
++            goto int_case;
++
++        case TARGET_SO_OOBINLINE:
++            optname = SO_OOBINLINE;
++            goto int_case;
++
++        case TARGET_SO_TIMESTAMP:
++            optname = SO_TIMESTAMP;
++            goto int_case;
++
++        case TARGET_SO_RCVLOWAT:
++            optname = SO_RCVLOWAT;
++            goto int_case;
++
++        case TARGET_SO_LISTENINCQLEN:
++            optname = SO_LISTENINCQLEN;
++            goto int_case;
++
++        default:
++int_case:
++            if (get_user_u32(len, optlen)) {
++                return -TARGET_EFAULT;
 +            }
-+            k++;
++            if (len < 0) {
++                return -TARGET_EINVAL;
++            }
++            lv = sizeof(lv);
++            ret = get_errno(getsockopt(sockfd, level, optname, &val, &lv));
++            if (ret < 0) {
++                return ret;
++            }
++            if (len > lv) {
++                len = lv;
++            }
++            if (len == 4) {
++                if (put_user_u32(val, optval_addr)) {
++                    return -TARGET_EFAULT;
++                }
++            } else {
++                if (put_user_u8(val, optval_addr)) {
++                    return -TARGET_EFAULT;
++                }
++            }
++            if (put_user_u32(len, optlen)) {
++                return -TARGET_EFAULT;
++            }
++            break;
++
 +        }
-+    }
-+    unlock_user(target_fds, target_fds_addr, 0);
++        break;
 +
-+    return 0;
-+}
++    case IPPROTO_TCP:
++        /* TCP options all take an 'int' value. */
++        goto int_case;
 +
-+abi_ulong copy_from_user_fdset_ptr(fd_set *fds, fd_set **fds_ptr,
-+        abi_ulong target_fds_addr, int n)
-+{
++    case IPPROTO_IP:
++        switch (optname) {
++        case IP_OPTIONS:
++            if (get_user_u32(len, optlen)) {
++                return -TARGET_EFAULT;
++            }
++            lv = (socklen_t)len;
++            p = lock_user(VERIFY_WRITE, optval_addr, len, 0);
++            if (p == NULL) {
++                return -TARGET_EFAULT;
++            }
++            ret = get_errno(getsockopt(sockfd, level, optname, p, &lv));
++            unlock_user(p, optval_addr, len);
++            if (put_user_u32(lv, optlen)) {
++                return -TARGET_EFAULT;
++            }
++            break;
++        case IP_HDRINCL:
++        case IP_TOS:
++        case IP_TTL:
++        case IP_RECVOPTS:
++        case IP_RECVRETOPTS:
++        case IP_RECVDSTADDR:
 +
-+    if (target_fds_addr) {
-+        if (copy_from_user_fdset(fds, target_fds_addr, n)) {
-+            return -TARGET_EFAULT;
++        case IP_RETOPTS:
++#if defined(IP_RECVTOS)
++        case IP_RECVTOS:
++#endif
++        case IP_MULTICAST_TTL:
++        case IP_MULTICAST_LOOP:
++        case IP_PORTRANGE:
++        case IP_IPSEC_POLICY:
++        case IP_ONESBCAST:
++        case IP_BINDANY:
++            if (get_user_u32(len, optlen)) {
++                return -TARGET_EFAULT;
++            }
++            if (len < 0) {
++                return -TARGET_EINVAL;
++            }
++            lv = sizeof(lv);
++            ret = get_errno(getsockopt(sockfd, level, optname,
++                &val, &lv));
++            if (ret < 0) {
++                return ret;
++            }
++            if (len < sizeof(int) && len > 0 && val >= 0 &&
++                val < 255) {
++                len = 1;
++                if (put_user_u32(len, optlen) ||
++                        put_user_u8(val, optval_addr)) {
++                    return -TARGET_EFAULT;
++                }
++            } else {
++                if (len > sizeof(int)) {
++                    len = sizeof(int);
++                }
++                if (put_user_u32(len, optlen) ||
++                        put_user_u32(val, optval_addr)) {
++                    return -TARGET_EFAULT;
++                }
++            }
++            break;
++
++        default:
++            goto unimplemented;
 +        }
-+        *fds_ptr = fds;
-+    } else {
-+        *fds_ptr = NULL;
-+    }
++        break;
 +
-+    return 0;
-+}
++    case IPPROTO_IPV6:
++        switch (optname) {
++        case IPV6_UNICAST_HOPS:     /* int; IP6 hops */
++        case IPV6_MULTICAST_IF:     /* u_int; set/get IP6 multicast i/f  */
++        case IPV6_MULTICAST_HOPS:   /* int; set/get IP6 multicast hops */
++        case IPV6_MULTICAST_LOOP:   /* u_int; set/get IP6 multicast loopback */
++        case IPV6_PORTRANGE:        /* int; range to choose for unspec port */
++        case IPV6_CHECKSUM:         /* int; checksum offset for raw socket */
++        case IPV6_V6ONLY:           /* bool; make AF_INET6 sockets v6 only */
++        case IPV6_RECVPKTINFO:      /* bool; recv if, dst addr */
++        case IPV6_RECVHOPLIMIT:     /* bool; recv hop limit */
++        case IPV6_RECVRTHDR:        /* bool; recv routing header */
++        case IPV6_RECVHOPOPTS:      /* bool; recv hop-by-hop option */
++        case IPV6_RECVDSTOPTS:      /* bool; recv dst option after rthdr */
++        case IPV6_USE_MIN_MTU:      /* bool; send packets at the minimum MTU */
++        case IPV6_RECVPATHMTU:      /* bool; notify an according MTU */
++        case IPV6_HOPLIMIT:         /* int; send hop limit */
++        case IPV6_RECVTCLASS:       /* bool; recv traffic class values */
++        case IPV6_AUTOFLOWLABEL:    /* bool; attach flowlabel automagically */
++        case IPV6_TCLASS:           /* int; send traffic class value */
++        case IPV6_DONTFRAG:         /* bool; disable IPv6 fragmentation */
++        case IPV6_PREFER_TEMPADDR:  /* int; prefer temporary addresses */
++        case IPV6_BINDANY:          /* bool: allow bind to any address */
++#ifdef IPV6_BINDMULTI
++        case IPV6_BINDMULTI:        /* bool; allow multibind to same addr/port*/
++#endif /* IPV6_BINDMULTI */
++#ifdef IPV6_RSS_LISTEN_BUCKET
++        case IPV6_RSS_LISTEN_BUCKET: /* int; set RSS listen bucket */
++#endif /* IPV6_RSS_LISTEN_BUCKET */
++#ifdef IPV6_FLOWID
++        case IPV6_FLOWID:           /* int; flowid of given socket */
++#endif /* IPV6_FLOWID */
++#ifdef IPV6_FLOWTYPE
++        case IPV6_FLOWTYPE:         /* int; flowtype of given socket */
++#endif /* IPV6_FLOWTYPE */
++#ifdef IPV6_RSSBUCKETID
++        case IPV6_RSSBUCKETID:      /* int; RSS bucket ID of given socket */
++#endif /* IPV6_RSSBUCKETID */
++            if (get_user_u32(len, optlen)) {
++                return -TARGET_EFAULT;
++            }
++            if (len < 0) {
++                return -TARGET_EINVAL;
++            }
++            lv = sizeof(lv);
++            ret = get_errno(getsockopt(sockfd, level, optname,
++                &val, &lv));
++            if (ret < 0) {
++                return ret;
++            }
++            if (len < sizeof(int) && len > 0 && val >= 0 &&
++                val < 255) {
++                len = 1;
++                if (put_user_u32(len, optlen) ||
++                        put_user_u8(val, optval_addr)) {
++                    return -TARGET_EFAULT;
++                }
++            } else {
++                if (len > sizeof(int)) {
++                    len = sizeof(int);
++                }
++                if (put_user_u32(len, optlen) ||
++                        put_user_u32(val, optval_addr)) {
++                    return -TARGET_EFAULT;
++                }
++            }
++            break;
 +
-+abi_long copy_to_user_fdset(abi_ulong target_fds_addr, const fd_set *fds, int n)
-+{
-+    int i, nw, j, k;
-+    abi_long v;
-+    abi_ulong *target_fds;
-+
-+    nw = (n + TARGET_ABI_BITS - 1) / TARGET_ABI_BITS;
-+    target_fds = lock_user(VERIFY_WRITE, target_fds_addr,
-+            sizeof(abi_ulong) * nw, 0);
-+    if (target_fds == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    k = 0;
-+    for (i = 0; i < nw; i++) {
-+        v = 0;
-+        for (j = 0; j < TARGET_ABI_BITS; j++) {
-+            v |= ((FD_ISSET(k, fds) != 0) << j);
-+            k++;
++        case IPV6_JOIN_GROUP:   /* ipv6_mreq; join a group membership */
++        case IPV6_LEAVE_GROUP:  /* ipv6_mreq; leave a group membership */
++        case ICMP6_FILTER:      /* icmp6_filter; icmp6 filter */
++        case IPV6_IPSEC_POLICY: /* struct; get/set security policy */
++        case IPV6_FW_ADD:       /* add a firewall rule to chain */
++        case IPV6_FW_DEL:       /* delete a firewall rule from chain */
++        case IPV6_FW_FLUSH:     /* flush firewall rule chain */
++        case IPV6_FW_ZERO:      /* clear single/all firewall counter(s) */
++        case IPV6_FW_GET:       /* get entire firewall rule chain */
++        case IPV6_RTHDRDSTOPTS: /* ip6_dest; send dst option before rthdr */
++        case IPV6_PATHMTU:      /* mtuinfo; get the current path MTU */
++        case IPV6_PKTINFO:      /* in6_pktinfo; send if, src addr */
++        case IPV6_NEXTHOP:      /* sockaddr; next hop addr */
++        case IPV6_HOPOPTS:      /* ip6_hbh; send hop-by-hop option */
++        case IPV6_DSTOPTS:      /* ip6_dest; send dst option befor rthdr */
++        case IPV6_RTHDR:        /* ip6_rthdr; send routing header */
++        case IPV6_MSFILTER:     /* struct __msfilterreq; */
++        default:
++            goto unimplemented;
 +        }
-+        __put_user(v, &target_fds[i]);
-+    }
-+    unlock_user(target_fds, target_fds_addr, sizeof(abi_ulong) * nw);
++        break;
 +
-+    return 0;
++    default:
++unimplemented:
++        gemu_log("getsockopt level=%d optname=%d not yet supported\n",
++            level, optname);
++        ret = -TARGET_EOPNOTSUPP;
++        break;
++    }
++    return ret;
 +}
 +
-+abi_int next_free_host_timer(void)
-+{
-+    int k ;
-+    /* FIXME: Does finding the next free slot require a lock? */
-+    for (k = 0; k < ARRAY_SIZE(g_posix_timers); k++) {
-+        if (g_posix_timers[k] == 0) {
-+            g_posix_timers[k] = 1;
-+            return k;
-+        }
-+    }
-+    return -1;
-+}
-+
-+int host_to_target_timerid(int timerid)
-+{
-+    int k;
-+
-+    for (k = 0; k < ARRAY_SIZE(g_posix_timers); k++) {
-+        if (g_posix_timers[k] == timerid) {
-+            return TIMER_MAGIC | k;
-+        }
-+    }
-+
-+    return -1;
-+}
-+
-+abi_long target_to_host_itimerspec(struct itimerspec *host_itspec,
-+                                                 abi_ulong target_addr)
-+{
-+    struct target_freebsd_itimerspec *target_itspec;
-+
-+    if (!lock_user_struct(VERIFY_READ, target_itspec, target_addr, 1)) {
-+        return -TARGET_EFAULT;
-+    }
-+
-+    host_itspec->it_interval.tv_sec =
-+                            tswapal(target_itspec->it_interval.tv_sec);
-+    host_itspec->it_interval.tv_nsec =
-+                            tswapal(target_itspec->it_interval.tv_nsec);
-+    host_itspec->it_value.tv_sec = tswapal(target_itspec->it_value.tv_sec);
-+    host_itspec->it_value.tv_nsec = tswapal(target_itspec->it_value.tv_nsec);
-+
-+    unlock_user_struct(target_itspec, target_addr, 1);
-+    return 0;
-+}
-+
-+abi_long host_to_target_itimerspec(abi_ulong target_addr,
-+                                               struct itimerspec *host_its)
-+{
-+    struct target_freebsd_itimerspec *target_itspec;
-+
-+    if (!lock_user_struct(VERIFY_WRITE, target_itspec, target_addr, 0)) {
-+        return -TARGET_EFAULT;
-+    }
-+
-+    target_itspec->it_interval.tv_sec = tswapal(host_its->it_interval.tv_sec);
-+    target_itspec->it_interval.tv_nsec = tswapal(host_its->it_interval.tv_nsec);
-+
-+    target_itspec->it_value.tv_sec = tswapal(host_its->it_value.tv_sec);
-+    target_itspec->it_value.tv_nsec = tswapal(host_its->it_value.tv_nsec);
-+
-+    unlock_user_struct(target_itspec, target_addr, 0);
-+    return 0;
-+}
-+
-+/* Convert QEMU provided timer ID back to internal 16bit index format */
-+int get_timer_id(abi_long arg)
-+{
-+    int timerid = arg;
-+
-+    if ((timerid & TIMER_MAGIC_MASK) != TIMER_MAGIC) {
-+        return -TARGET_EINVAL;
-+    }
-+
-+    timerid &= 0xffff;
-+
-+    if (timerid >= ARRAY_SIZE(g_posix_timers)) {
-+        return -TARGET_EINVAL;
-+    }
-+
-+    return timerid;
-+}
+ 
+ #endif /* BSD_USER_FREEBSD_OS_SOCKET_H */
 
 -- 
 2.52.0
