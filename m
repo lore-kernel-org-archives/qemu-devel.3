@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3495CD4F25
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 10:52:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 764DCCD4F25
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 10:52:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNq7R-0000kM-Qx; Fri, 15 May 2026 06:50:13 -0400
+	id 1wNq7Q-0000k3-Vl; Fri, 15 May 2026 06:50:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNq7E-0000ci-CP
- for qemu-devel@nongnu.org; Fri, 15 May 2026 06:50:01 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1wNq78-0000bl-EA
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 06:49:59 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNq7C-0001GC-Ll
- for qemu-devel@nongnu.org; Fri, 15 May 2026 06:50:00 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-488a88aeec9so99961235e9.2
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 03:49:58 -0700 (PDT)
+ id 1wNq75-00018a-V4
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 06:49:54 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-488a8ca4aadso79897125e9.3
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 03:49:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778842197; x=1779446997; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Q7ib+7X+yNqrjRobYNQLodZUbFPa/X4O68Oeil12cXE=;
- b=wmZ1Ddh9Nm5njAp5rhdxPBfJjZ8eAMlxBWhTEjTFInPYgVi6PP0QACch9nW6oPErKu
- eTxI0pg0HrYO6Gu5FgAJHRX9tPX8PbQ4dxB1t1siMqWpq0BVIjzDbmOFvCZ0+9YTA+08
- VF+CUCIvE5QVWZK3bpaa+1m7lvthOE9n7Fm+7IZcRK/CKeJ4R0rXLcPpwbMW39Tgbh3c
- HmArYvcF4HGFMkDn5hvsNYgd1fIcaIcOORCeJ7rR2UWqWxFk/TMX+JEpGHL0Z7cetQut
- afRdiHKhFdMoebKV1V7DX6B8ns2A7JS8hobBm2GbXfCxgO2/LVJLl93FyjLQQwn5UUsS
- ziRg==
+ d=linaro.org; s=google; t=1778842190; x=1779446990; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=aywh+8eWAZV8dVW/RYgh9Q/ZBZROUSaciqxOFRFzbXs=;
+ b=McsHVS5dHP+Qf3CJQuUo3wZpl7Jkb5iJh4Y1aGzRapcXxJdD63Jb0knQox1mFEtbGF
+ 4Lscig0YH7j4PCg9Ek+Bfn0SqIpQz4UJqo1en1zwuN4O+zwpU3Qxt4bCp/UbDZ8xJ4j3
+ 2xcqD2T/vPLjFfyBelo9lJkKDfCzM8R5tDBie/e2UNqDSN8GovqQA9nOpkeQhzvmdIMO
+ 08yObbriEXtKvMNA0L2hDJIFWXobm5Y/yOFMCTk/eqgnmzVPUBBvYfoLkv2oR9UJwgXH
+ na53esyTFjo3LZM5GKtNUnSF1fV//m8N0jaH9rWxu6P2U0N/cLwSt8vvEXH/pMlEDmFE
+ Zsrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778842197; x=1779446997;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=Q7ib+7X+yNqrjRobYNQLodZUbFPa/X4O68Oeil12cXE=;
- b=PoDNLqTmMpfHRxxk7qlVPY16ZEGiAuahDNQOLmWVOv1S3XX5g+SpsJjY0O7k7H63Ug
- 5FqZ89MqqnlkSw63tQ+WnCrflM0rJjw40lD6/VhJXpdc8aVhbG2sGq0F/Ns4LdLpgT/+
- 3Gpo3+sdhEeqV98GHAqm4xIb+9hFfEq52UrtQ+vVNOQ9U9dh5GnTKS5M0RbV+VtzS6Q7
- ZyJAPbPAsyY8DNo/FYhwV+W0fRZSKZGLeTSn44mXduCzk7xa1xTDHceV6Wen3ewjQt4r
- FusBkVw/CJOjpx5AddK9upkbEmzMTyKyVu5WClrMZJ8ka6gYQNwY15bQGzbUCo5T9eFY
- 66ZQ==
-X-Gm-Message-State: AOJu0YzPCuDtNeuKOvZU9K4birGXtuX8CtzjnfTdXN/NSIdayvEZryBe
- mb/3splzx9jVOruwRlInK4c2q5/ED/rC/vlFOffBeF5avXb+AedK95pqALK9WO6kh05GSXhSF01
- KDO4h
-X-Gm-Gg: Acq92OHpaI8FJolVEiToPyVPwovlCU5+sVSyrq+nNDMj/nWVEqg8PgACxbcve7S8PJP
- hA8lX+lZjtUo+1zd6ppr7xouSppdJWH8is1fJHPqPGGz5mF7Xkh/W1kIcdpUYuq7ByWpo6XmzAE
- kXtxYlcAvD1W0vespp+XynNjOudkKdhTezc5IQRE8dG1uPTmEHapxvMixEhycJj7r8Fd0gl0+vQ
- FOTZ6bgJsO737KQimQmvt+nHUxLGD5ZJSdUqJblJSueuv5n/jW8/9O+Q/WweHe4+7+3Jb3nbV7F
- IXgoY6NudgQH+ONCIqSmv3LJFlfjaueHtNv2QIQIomDg54vF1p7gJlgMQwfeX45/C0C0TzaKvpP
- xw0x2dn6hxLmXElEpdGgMz4ZP4Q6zGDWtN1i+eQfCzcZew9jNvtcSvh1vcfAHYUR/1bCBpcjvfc
- v1mPGd650/V1a5aAEJskfbnOl5ceDYmg0CZmWy4/51agfrHoHh1B7aY1bh8mKnLxKOw7wU8jUjZ
- VThKaPWHtd8Zox+WN+wCjGLy99/xXGET/qgb0lmmA==
-X-Received: by 2002:a05:600c:1f89:b0:48e:526e:101a with SMTP id
- 5b1f17b1804b1-48fe60e7a13mr47075595e9.12.1778842196693; 
- Fri, 15 May 2026 03:49:56 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1778842190; x=1779446990;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=aywh+8eWAZV8dVW/RYgh9Q/ZBZROUSaciqxOFRFzbXs=;
+ b=TGDK5LYauFwLj0Gq1rzvP657daQ4xxcI941GUjKZcmLw5MDJB1yFzFCmk8uqTe3Ymw
+ YrOlFlb2GhVfAteLSGZm1EIjFW0x6230jHVsIzy604ZYEufa6MuSBCPwXmSH6XzZcmF6
+ xopurjsUNdGApLKMv2rsT+uWy6XkyCbf9ZQV9iE/ufYd9adybLU5op+b9HGFZ/Se4YIT
+ KTOhTvXwTAypaxjAug1lDKf3mJPFz/f5cSroEJF9Qv4VyvLwAX6NQSV1TuAwB3fijr2G
+ xTrGuheFDs14Sq1zrevoX8iqhzhH3FiwO9fUg2FyYKDz57V6P6domi1iQH3eEJdd49bB
+ ke7w==
+X-Gm-Message-State: AOJu0YyK6njegmf/10VbP+TFH0WUsHDr2uKzoi7O3IJ0c3eAPGn5aRjB
+ jR4izzRK3ceaxRvhEctWZM3/gXH7AYSQGBuSwx1OeKBRHvoRvCDLO2Aj48Vh0r8zse70ya/GB4S
+ 1DcWW
+X-Gm-Gg: Acq92OFA/mWMNdF0rrdOrXRB+t/HO+wurxuCGihKJdPr39VfEEEL3HhDM8mB24RoPl2
+ kWcowdM2HkVOeo0htFJMs7/X9MVx59laPeFDMTnh33qTVrkrQLuVSpO+qslalLP9FGnuCUKUTPC
+ eKh9bpewGAVwgS9WVz/FSe58rf+CVwxoGtu743EUJ3RCB0nMMix75q2FYZu5fgswdoioouCo6TY
+ PNkxKG17fXof/hTPwnOgeMLzeQGnnSuLqXtRU2LUP/sejZIHNKTin3nOT6H4Mp6RRPcxC06kAfk
+ Sk6+2DqGLZMTwHK1fdStkqj73lifdsyfucPoTa1JhNDh78T6O2vW+qMUYKx0bLvc7ig3x1SBtcA
+ 5NW1Rb6m4Nb1Fr71DxIrSKMH70mceEk1Q2leffGkxQkRpAMfZs7z//KY2TuJEZHPQkvMNX7yPqZ
+ hiPB7DnzORCCBrstxwZ00EAcsm1jL+2Iw2wX/88JwkTFp9CDnyFVFGkwTX41z+Mx1MkDDx0VYIE
+ 90M+9KwcvAlNGdXmBsJKa530rDyOJJs27eDwYTR7Q==
+X-Received: by 2002:a05:600c:c0db:b0:48e:8499:4be0 with SMTP id
+ 5b1f17b1804b1-48fe60ee481mr35371715e9.15.1778842187120; 
+ Fri, 15 May 2026 03:49:47 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48feaa2949asm18194355e9.1.2026.05.15.03.49.55
+ 5b1f17b1804b1-48feaa2949asm18194355e9.1.2026.05.15.03.49.45
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 03:49:55 -0700 (PDT)
+ Fri, 15 May 2026 03:49:46 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/23] target/arm: GICv5 cpuif: Don't set HPPIV bit in
- GICv5PendingIrq::intid
-Date: Fri, 15 May 2026 11:49:30 +0100
-Message-ID: <20260515104945.4145203-9-peter.maydell@linaro.org>
+Subject: [PULL 00/23] target-arm queue
+Date: Fri, 15 May 2026 11:49:22 +0100
+Message-ID: <20260515104945.4145203-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260515104945.4145203-1-peter.maydell@linaro.org>
-References: <20260515104945.4145203-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,95 +99,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In gic_hppi() we return the current highest priority pending
-interrupt in a GICv5PendingIrq struct.  We try to set up the intid
-field of that struct to be the form that is used by the ICC_HPPIR
-register, which has a "valid" bit in bit 33.  Unfortunately the
-GICv5PendingIrq defines the intid field as a uint32_t, so Coverity
-points out that the bit doesn't actually fit.  Move the handling of
-the valid bit to the callsite, and make this function report "no
-pending interrupt" with GICv5PendingIrq::prio == PRIO_IDLE,
-consistently with how we use this struct in other places.
+Hi; here's an arm pullreq. This is pretty much all bugfixes;
+it includes a few items not strictly arm-specific which I've
+put in here since I was rolling the pullreq anyway.
 
-CID: 1659594
-Fixes: 9edad4ff3 ("target/arm: GICv5 cpuif: Implement ICC_HPPIR_EL1")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260512093856.3197700-3-peter.maydell@linaro.org
----
- include/hw/intc/arm_gicv5_types.h |  2 ++
- target/arm/tcg/gicv5-cpuif.c      | 18 ++++++++++--------
- 2 files changed, 12 insertions(+), 8 deletions(-)
+thanks
+-- PMM
 
-diff --git a/include/hw/intc/arm_gicv5_types.h b/include/hw/intc/arm_gicv5_types.h
-index eaed42f49f..de4f78a149 100644
---- a/include/hw/intc/arm_gicv5_types.h
-+++ b/include/hw/intc/arm_gicv5_types.h
-@@ -97,6 +97,8 @@ typedef enum GICv5TriggerMode {
-  *
-  * In this struct the intid includes the interrupt type in bits
-  * [31:29] (i.e. it is in the form defined by R_TJPHS).
-+ *
-+ * "No pending interrupt" is represented by @prio == PRIO_IDLE.
-  */
- typedef struct GICv5PendingIrq {
-     uint32_t intid;
-diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
-index 98238ada19..dd2f696511 100644
---- a/target/arm/tcg/gicv5-cpuif.c
-+++ b/target/arm/tcg/gicv5-cpuif.c
-@@ -129,10 +129,9 @@ static GICv5PendingIrq gic_hppi(CPUARMState *env, GICv5Domain domain)
- {
-     /*
-      * Return the current highest priority pending interrupt for the
--     * specified domain, if it has sufficient priority to preempt. The
--     * intid field of the return value will be in the format of the
--     * ICC_HPPIR register (and will be zero if and only if there is no
--     * interrupt that can preempt).
-+     * specified domain, if it has sufficient priority to preempt.
-+     * If there is no interrupt that can preempt we signal this by
-+     * returning a struct with prio == PRIO_IDLE.
-      */
- 
-     GICv5Common *gic = gicv5_get_gic(env);
-@@ -166,7 +165,6 @@ static GICv5PendingIrq gic_hppi(CPUARMState *env, GICv5Domain domain)
-         best.prio >= gic_running_prio(env, domain)) {
-         return (GICv5PendingIrq) { .intid = 0, .prio = PRIO_IDLE };
-     }
--    best.intid |= R_ICC_HPPIR_EL1_HPPIV_MASK;
-     return best;
- }
- 
-@@ -575,7 +573,12 @@ static uint64_t gic_icc_hppir_el1_read(CPUARMState *env, const ARMCPRegInfo *ri)
- {
-     GICv5Domain domain = gicv5_logical_domain(env);
-     GICv5PendingIrq hppi = gic_hppi(env, domain);
--    return hppi.intid;
-+
-+    if (hppi.prio == PRIO_IDLE) {
-+        /* No valid interrupt */
-+        return 0;
-+    }
-+    return hppi.intid | R_ICC_HPPIR_EL1_HPPIV_MASK;
- }
- 
- static bool gic_hppi_is_nmi(CPUARMState *env, GICv5PendingIrq hppi,
-@@ -602,13 +605,12 @@ static uint64_t gicr_cdia_read(CPUARMState *env, const ARMCPRegInfo *ri)
- 
-     bool cdnmia = ri->opc2 == 1;
- 
--    if (!hppi.intid) {
-+    if (hppi.prio == PRIO_IDLE) {
-         /* No interrupt available to acknowledge */
-         trace_gicv5_gicr_cdia_fail(domain,
-                                    "no available interrupt to acknowledge");
-         return 0;
-     }
--    assert(hppi.prio != PRIO_IDLE);
- 
-     if (gic_hppi_is_nmi(env, hppi, domain) != cdnmia) {
-         /* GICR CDIA only acknowledges non-NMI; GICR CDNMIA only NMI */
--- 
-2.43.0
+The following changes since commit edcc429e9e41a8e0e415dcdab6aa52ad17ef8889:
 
+  Merge tag 'pbouvier/pr/docs-20260513' of https://gitlab.com/p-b-o/qemu into staging (2026-05-14 10:18:06 -0400)
+
+are available in the Git repository at:
+
+  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260515
+
+for you to fetch changes up to a86024eb2df56f7664cef16ec8e9a50a1dc3dd2f:
+
+  target/arm/hvf: Fix WFI halting to stop idle vCPU spinning (2026-05-15 09:55:25 +0100)
+
+----------------------------------------------------------------
+target-arm queue:
+ * docs: Document TIMEOUT_MULTIPLIER for raising test timeouts
+ * meson.build: Add -fzero-init-padding-bits=all
+ * hw/remote/machine.c: Mark x-remote machine as OK for AArch64 and AArch32
+ * tests/functional: Fix tests to not fail on a KVM-only aarch64 build
+ * target/arm: Rename Aarch64-specific methods
+ * target/arm: Extract IDAU interface to its own unit
+ * target/arm/hvf: Stop pre-allocating cpreg_vmstate arrays
+ * target/arm/hvf: Fix WFI halting to stop idle vCPU spinning
+ * GICv5: Fix minor bugs spotted by Coverity
+ * hw/arm: Build ARM/HVF GICv3 stub once
+ * hw/arm: fsl-imx8mm: Don't call qdev_get_machine in init
+ * hw/misc/bcm2835_control.c: Don't assert on local timer zero reload value
+ * hw/display/exynos4210_fimd: Assume display surface is 32bpp
+ * hw/display/exynos4210_fimd: Use LOG_GUEST_ERROR instead of hw_error()
+ * hw/arm/integratorcp: Use LOG_UNIMP rather than hw_error()
+ * tests/functional/qemu_test/asset.py: Don't use setxattr when it doesn't exist
+
+----------------------------------------------------------------
+Peter Maydell (17):
+      docs: Document TIMEOUT_MULTIPLIER for raising test timeouts
+      target/arm: GICv5 cpuif: Fix overflow in left shift
+      target/arm: GICv5 cpuif: Don't set HPPIV bit in GICv5PendingIrq::intid
+      hw/intc/arm_gicv5: Avoid NULL dereference in trace line
+      hw/intc/arm_gicv5: Add missing early return in gicv5_set_handling()
+      meson.build: Add -fzero-init-padding-bits=all
+      hw/misc/bcm2835_control.c: Don't assert on local timer zero reload value
+      hw/arm/integratorcp: Use LOG_UNIMP rather than hw_error()
+      hw/display/exynos4210_fimd: Use LOG_GUEST_ERROR instead of hw_error()
+      hw/display/exynos4210_fimd: Assume display surface is 32bpp
+      hw/remote/machine.c: Mark x-remote machine as OK for AArch64 and AArch32
+      tests/functional/test_virt_vbsa: Skip UEFI test if virtualization not supported
+      tests/functional/test_kvm.py: Use -cpu max, not cortex-a72
+      tests/functional/test_kvm.py: Skip if virtualization not supported
+      tests/functional/test_hotplug_pci.py: Require TCG
+      tests/functional/test_tuxrun: Restrict to TCG
+      tests/functional/qemu_test/asset.py: Don't use setxattr when it doesn't exist
+
+Philippe Mathieu-Daudé (3):
+      hw/arm: Build ARM/HVF GICv3 stub once
+      target/arm: Rename Aarch64-specific methods
+      target/arm: Extract IDAU interface to its own unit
+
+Scott J. Goldman (2):
+      target/arm/hvf: Stop pre-allocating cpreg_vmstate arrays
+      target/arm/hvf: Fix WFI halting to stop idle vCPU spinning
+
+Vineet Agarwal (1):
+      hw/arm: fsl-imx8mm: Don't call qdev_get_machine in init
+
+ docs/devel/testing/main.rst                  |  18 ++++
+ hw/arm/armv7m.c                              |   2 +-
+ hw/arm/fsl-imx8mm.c                          |  15 +--
+ hw/arm/integratorcp.c                        |  16 ++-
+ hw/display/exynos4210_fimd.c                 |  69 ++-----------
+ hw/intc/arm_gicv5.c                          |   3 +-
+ hw/intc/bcm2836_control.c                    |  15 ++-
+ hw/intc/meson.build                          |   2 +-
+ hw/remote/machine.c                          |   3 +
+ include/hw/arm/armv7m.h                      |   2 +-
+ include/hw/intc/arm_gicv5_types.h            |   2 +
+ include/hw/misc/tz-msc.h                     |   2 +-
+ include/system/hvf_int.h                     |   1 +
+ meson.build                                  |   6 ++
+ target/arm/cpu.c                             |  10 +-
+ target/arm/cpu32-stubs.c                     |   8 +-
+ target/arm/cpu64.c                           |  12 +--
+ target/arm/hvf/hvf.c                         | 147 +++++++++++++++++++++++++--
+ target/arm/internals.h                       |   8 +-
+ target/arm/ptw.c                             |   2 +-
+ target/arm/tcg/cpu32.c                       |   8 --
+ target/arm/tcg/gicv5-cpuif.c                 |  26 ++---
+ target/arm/tcg/idau.c                        |  20 ++++
+ target/arm/{ => tcg}/idau.h                  |   0
+ target/arm/tcg/meson.build                   |   1 +
+ tests/functional/aarch64/test_hotplug_pci.py |   1 +
+ tests/functional/aarch64/test_kvm.py         |  12 ++-
+ tests/functional/aarch64/test_tuxrun.py      |   2 +
+ tests/functional/aarch64/test_virt_vbsa.py   |  10 +-
+ tests/functional/qemu_test/asset.py          |  13 ++-
+ 30 files changed, 298 insertions(+), 138 deletions(-)
+ create mode 100644 target/arm/tcg/idau.c
+ rename target/arm/{ => tcg}/idau.h (100%)
 
