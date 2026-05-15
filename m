@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 764DCCD4F25
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 10:52:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52E87CD4F25
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 10:52:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNq7Q-0000k3-Vl; Fri, 15 May 2026 06:50:13 -0400
+	id 1wNq7P-0000iZ-Dz; Fri, 15 May 2026 06:50:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNq78-0000bl-EA
+ id 1wNq7C-0000c2-5v
  for qemu-devel@nongnu.org; Fri, 15 May 2026 06:49:59 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNq75-00018a-V4
- for qemu-devel@nongnu.org; Fri, 15 May 2026 06:49:54 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-488a8ca4aadso79897125e9.3
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 03:49:51 -0700 (PDT)
+ id 1wNq7A-0001E9-0i
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 06:49:57 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-488a9033b2cso78789395e9.2
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 03:49:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778842190; x=1779446990; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=aywh+8eWAZV8dVW/RYgh9Q/ZBZROUSaciqxOFRFzbXs=;
- b=McsHVS5dHP+Qf3CJQuUo3wZpl7Jkb5iJh4Y1aGzRapcXxJdD63Jb0knQox1mFEtbGF
- 4Lscig0YH7j4PCg9Ek+Bfn0SqIpQz4UJqo1en1zwuN4O+zwpU3Qxt4bCp/UbDZ8xJ4j3
- 2xcqD2T/vPLjFfyBelo9lJkKDfCzM8R5tDBie/e2UNqDSN8GovqQA9nOpkeQhzvmdIMO
- 08yObbriEXtKvMNA0L2hDJIFWXobm5Y/yOFMCTk/eqgnmzVPUBBvYfoLkv2oR9UJwgXH
- na53esyTFjo3LZM5GKtNUnSF1fV//m8N0jaH9rWxu6P2U0N/cLwSt8vvEXH/pMlEDmFE
- Zsrg==
+ d=linaro.org; s=google; t=1778842194; x=1779446994; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=ftWIhf0gBPz7p9Ru8niB7vMFl8ECdq16DZmRUgYJWoc=;
+ b=r6MyF3YKit/duIojXuqnr0hzjS9RSM4yf4zetBg0TGjjzNAmL89tfSPPzaKTEAMiKs
+ zz9Pa+YQuDLdanHpmCsjgbpiPgT/zEAFUH9aVplY4kPbE0IR9xtKN18c9OAt0XRzkMO6
+ VU7lOcN1mMQu3K/1oI2kfHiXdZSP6bHdLEdZKNfRYAJooCMB8rSeTUhPctx5nEY7ZXPV
+ 0JpXxCKAjCY6ZSRZi811YAxI5vO73dgB8BLuW9SIdx8Jz1RgwXvfWJnqtsQ9/tpeM0FT
+ 3MHv52KLXZPqrczATV5r1mXtXoANg0Sr5Z2wh1EIGUP4ZIRycJvEwbGbbJDgE5rZp7W9
+ kWdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778842190; x=1779446990;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=aywh+8eWAZV8dVW/RYgh9Q/ZBZROUSaciqxOFRFzbXs=;
- b=TGDK5LYauFwLj0Gq1rzvP657daQ4xxcI941GUjKZcmLw5MDJB1yFzFCmk8uqTe3Ymw
- YrOlFlb2GhVfAteLSGZm1EIjFW0x6230jHVsIzy604ZYEufa6MuSBCPwXmSH6XzZcmF6
- xopurjsUNdGApLKMv2rsT+uWy6XkyCbf9ZQV9iE/ufYd9adybLU5op+b9HGFZ/Se4YIT
- KTOhTvXwTAypaxjAug1lDKf3mJPFz/f5cSroEJF9Qv4VyvLwAX6NQSV1TuAwB3fijr2G
- xTrGuheFDs14Sq1zrevoX8iqhzhH3FiwO9fUg2FyYKDz57V6P6domi1iQH3eEJdd49bB
- ke7w==
-X-Gm-Message-State: AOJu0YyK6njegmf/10VbP+TFH0WUsHDr2uKzoi7O3IJ0c3eAPGn5aRjB
- jR4izzRK3ceaxRvhEctWZM3/gXH7AYSQGBuSwx1OeKBRHvoRvCDLO2Aj48Vh0r8zse70ya/GB4S
- 1DcWW
-X-Gm-Gg: Acq92OFA/mWMNdF0rrdOrXRB+t/HO+wurxuCGihKJdPr39VfEEEL3HhDM8mB24RoPl2
- kWcowdM2HkVOeo0htFJMs7/X9MVx59laPeFDMTnh33qTVrkrQLuVSpO+qslalLP9FGnuCUKUTPC
- eKh9bpewGAVwgS9WVz/FSe58rf+CVwxoGtu743EUJ3RCB0nMMix75q2FYZu5fgswdoioouCo6TY
- PNkxKG17fXof/hTPwnOgeMLzeQGnnSuLqXtRU2LUP/sejZIHNKTin3nOT6H4Mp6RRPcxC06kAfk
- Sk6+2DqGLZMTwHK1fdStkqj73lifdsyfucPoTa1JhNDh78T6O2vW+qMUYKx0bLvc7ig3x1SBtcA
- 5NW1Rb6m4Nb1Fr71DxIrSKMH70mceEk1Q2leffGkxQkRpAMfZs7z//KY2TuJEZHPQkvMNX7yPqZ
- hiPB7DnzORCCBrstxwZ00EAcsm1jL+2Iw2wX/88JwkTFp9CDnyFVFGkwTX41z+Mx1MkDDx0VYIE
- 90M+9KwcvAlNGdXmBsJKa530rDyOJJs27eDwYTR7Q==
-X-Received: by 2002:a05:600c:c0db:b0:48e:8499:4be0 with SMTP id
- 5b1f17b1804b1-48fe60ee481mr35371715e9.15.1778842187120; 
- Fri, 15 May 2026 03:49:47 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1778842194; x=1779446994;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=ftWIhf0gBPz7p9Ru8niB7vMFl8ECdq16DZmRUgYJWoc=;
+ b=rG7xpK3aLWdzSB5NojERw+DRGJLc83RZ4e3OTmWLjWEE+dxpqAq3cJlYdrcLuWkgoU
+ NhwJu//YhN0SGotbDUpEQPCKgvMb9pi0/dvNg+jj2JrVx9jOymy2Pwxaevg78I2nuZLA
+ uNRqZptNUv+CeW7HiumXQ3iI/V6WKH9Hjbmqdal4PlJkSohmsSqLtuspqyWVhEUt8rOW
+ cTQewL6U6Q+7+bzEfrXVcquSkiA2wKSUWw2wSRd2L7Z6WHGYwLkfepsat+uahz/6bmko
+ W4pdnEkPM0R+o0JwmCivZ+Gck1oCGQFqbEqTwbBDq1iq2SDeiHWs3fmI+e8OCsfHDG9v
+ p6tQ==
+X-Gm-Message-State: AOJu0Yw9ybkcXZsNHGC5Yggd6soPydoOCWWv+8AfUO7WmdG0zv01PauX
+ BkWazEr9Id9NBCTEGYwJoqYegrPeZqmbfp7E+phnF4v0HQk8vMjTpsRundMnqMVfjgws6dO8XpT
+ Du9as
+X-Gm-Gg: Acq92OEMB3LkRI86RriFaznQ66knkm++iD7nv7CxyiGhiuW8T2dhbO3dN9bjNtrj6hK
+ DvqzyALgZoqQTTMRBGRXWZgOQZ1BqibyKG1x0h4RdKLvy9OrJ58L0A9C6aWRiJB+/VjkonPAqIa
+ YJ+SEGQLqYh6ZMY42HZcSr7ss9nTcs2pGJjuztq2p/YMxo2vK7nlLQLbziv5GRYcC3JP0CZNW1Z
+ ZfBMAggZlmIUytGEvOC46IKCQmartNFrQSR/zxR+gbnk6sjzPAOalIP6B9ROQRmhpJoaw97C77t
+ +mOGUYCG11CUc/tY22icSzp9vrlmsfRTBjQh664DHLLtbYT5DZnw/3dUh5P8rPOMS4mLu0fpDCb
+ FXg+qycH3xiyMkyKq50D8q9aGUGlzjs0p4xs/mF/Gc1ZqmGHN0GrJtAOoEO+Em2kNUvECCOd3cW
+ 0D42Q6YPFq9tuMC0iEkLXycejfikQHIYDmGZiULrWar2KBgWQ0WqWaznyI9ndoTHxbjAcpcCslG
+ tOItIeF44hNtLIHjnXYZ0TF0WEHOQGV99ofGIst4A==
+X-Received: by 2002:a05:600c:4f8a:b0:489:ad:7b5b with SMTP id
+ 5b1f17b1804b1-48fe62f8c6bmr48019035e9.24.1778842194398; 
+ Fri, 15 May 2026 03:49:54 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48feaa2949asm18194355e9.1.2026.05.15.03.49.45
+ 5b1f17b1804b1-48feaa2949asm18194355e9.1.2026.05.15.03.49.53
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 03:49:46 -0700 (PDT)
+ Fri, 15 May 2026 03:49:53 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/23] target-arm queue
-Date: Fri, 15 May 2026 11:49:22 +0100
-Message-ID: <20260515104945.4145203-1-peter.maydell@linaro.org>
+Subject: [PULL 06/23] target/arm/hvf: Stop pre-allocating cpreg_vmstate arrays
+Date: Fri, 15 May 2026 11:49:28 +0100
+Message-ID: <20260515104945.4145203-7-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260515104945.4145203-1-peter.maydell@linaro.org>
+References: <20260515104945.4145203-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,107 +101,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi; here's an arm pullreq. This is pretty much all bugfixes;
-it includes a few items not strictly arm-specific which I've
-put in here since I was rolling the pullreq anyway.
+From: "Scott J. Goldman" <scottjgo@gmail.com>
 
-thanks
--- PMM
+Commit ab2ddc7b66 ("target/arm/machine: Use VMSTATE_VARRAY_INT32_ALLOC
+for cpreg arrays") moved cpreg_vmstate_indexes / cpreg_vmstate_values
+to be allocated by VMSTATE_VARRAY_INT32_ALLOC and added an assertion
+in cpu_pre_load() that they are NULL on entry. The same commit dropped
+the redundant g_renew()/array_len assignments from the kvm, whpx and
+helper.c cpu init paths, but the hvf cpu init path still pre-allocates
+them.
 
-The following changes since commit edcc429e9e41a8e0e415dcdab6aa52ad17ef8889:
+The result is that loading a snapshot or migration stream into an HVF
+guest immediately aborts:
 
-  Merge tag 'pbouvier/pr/docs-20260513' of https://gitlab.com/p-b-o/qemu into staging (2026-05-14 10:18:06 -0400)
+    ERROR:target/arm/machine.c:1043:cpu_pre_load:
+        assertion failed: (!cpu->cpreg_vmstate_indexes)
 
-are available in the Git repository at:
+Drop the leftover cpreg_vmstate_indexes / cpreg_vmstate_values
+allocations and the cpreg_vmstate_array_len assignment from
+hvf_arch_init_vcpu(), matching what was already done for the other
+arm accelerators.
 
-  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260515
+Signed-off-by: Scott J. Goldman <scottjgo@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/hvf/hvf.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-for you to fetch changes up to a86024eb2df56f7664cef16ec8e9a50a1dc3dd2f:
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 5a1718f7f9..9312607001 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -1412,12 +1412,6 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+                                      sregs_match_len);
+     arm_cpu->cpreg_values = g_renew(uint64_t, arm_cpu->cpreg_values,
+                                     sregs_match_len);
+-    arm_cpu->cpreg_vmstate_indexes = g_renew(uint64_t,
+-                                             arm_cpu->cpreg_vmstate_indexes,
+-                                             sregs_match_len);
+-    arm_cpu->cpreg_vmstate_values = g_renew(uint64_t,
+-                                            arm_cpu->cpreg_vmstate_values,
+-                                            sregs_match_len);
+ 
+     memset(arm_cpu->cpreg_values, 0, sregs_match_len * sizeof(uint64_t));
+ 
+@@ -1462,7 +1456,6 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+         }
+     }
+     arm_cpu->cpreg_array_len = sregs_cnt;
+-    arm_cpu->cpreg_vmstate_array_len = sregs_cnt;
+ 
+     /* cpreg tuples must be in strictly ascending order */
+     qsort(arm_cpu->cpreg_indexes, sregs_cnt, sizeof(uint64_t), compare_u64);
+-- 
+2.43.0
 
-  target/arm/hvf: Fix WFI halting to stop idle vCPU spinning (2026-05-15 09:55:25 +0100)
-
-----------------------------------------------------------------
-target-arm queue:
- * docs: Document TIMEOUT_MULTIPLIER for raising test timeouts
- * meson.build: Add -fzero-init-padding-bits=all
- * hw/remote/machine.c: Mark x-remote machine as OK for AArch64 and AArch32
- * tests/functional: Fix tests to not fail on a KVM-only aarch64 build
- * target/arm: Rename Aarch64-specific methods
- * target/arm: Extract IDAU interface to its own unit
- * target/arm/hvf: Stop pre-allocating cpreg_vmstate arrays
- * target/arm/hvf: Fix WFI halting to stop idle vCPU spinning
- * GICv5: Fix minor bugs spotted by Coverity
- * hw/arm: Build ARM/HVF GICv3 stub once
- * hw/arm: fsl-imx8mm: Don't call qdev_get_machine in init
- * hw/misc/bcm2835_control.c: Don't assert on local timer zero reload value
- * hw/display/exynos4210_fimd: Assume display surface is 32bpp
- * hw/display/exynos4210_fimd: Use LOG_GUEST_ERROR instead of hw_error()
- * hw/arm/integratorcp: Use LOG_UNIMP rather than hw_error()
- * tests/functional/qemu_test/asset.py: Don't use setxattr when it doesn't exist
-
-----------------------------------------------------------------
-Peter Maydell (17):
-      docs: Document TIMEOUT_MULTIPLIER for raising test timeouts
-      target/arm: GICv5 cpuif: Fix overflow in left shift
-      target/arm: GICv5 cpuif: Don't set HPPIV bit in GICv5PendingIrq::intid
-      hw/intc/arm_gicv5: Avoid NULL dereference in trace line
-      hw/intc/arm_gicv5: Add missing early return in gicv5_set_handling()
-      meson.build: Add -fzero-init-padding-bits=all
-      hw/misc/bcm2835_control.c: Don't assert on local timer zero reload value
-      hw/arm/integratorcp: Use LOG_UNIMP rather than hw_error()
-      hw/display/exynos4210_fimd: Use LOG_GUEST_ERROR instead of hw_error()
-      hw/display/exynos4210_fimd: Assume display surface is 32bpp
-      hw/remote/machine.c: Mark x-remote machine as OK for AArch64 and AArch32
-      tests/functional/test_virt_vbsa: Skip UEFI test if virtualization not supported
-      tests/functional/test_kvm.py: Use -cpu max, not cortex-a72
-      tests/functional/test_kvm.py: Skip if virtualization not supported
-      tests/functional/test_hotplug_pci.py: Require TCG
-      tests/functional/test_tuxrun: Restrict to TCG
-      tests/functional/qemu_test/asset.py: Don't use setxattr when it doesn't exist
-
-Philippe Mathieu-Daudé (3):
-      hw/arm: Build ARM/HVF GICv3 stub once
-      target/arm: Rename Aarch64-specific methods
-      target/arm: Extract IDAU interface to its own unit
-
-Scott J. Goldman (2):
-      target/arm/hvf: Stop pre-allocating cpreg_vmstate arrays
-      target/arm/hvf: Fix WFI halting to stop idle vCPU spinning
-
-Vineet Agarwal (1):
-      hw/arm: fsl-imx8mm: Don't call qdev_get_machine in init
-
- docs/devel/testing/main.rst                  |  18 ++++
- hw/arm/armv7m.c                              |   2 +-
- hw/arm/fsl-imx8mm.c                          |  15 +--
- hw/arm/integratorcp.c                        |  16 ++-
- hw/display/exynos4210_fimd.c                 |  69 ++-----------
- hw/intc/arm_gicv5.c                          |   3 +-
- hw/intc/bcm2836_control.c                    |  15 ++-
- hw/intc/meson.build                          |   2 +-
- hw/remote/machine.c                          |   3 +
- include/hw/arm/armv7m.h                      |   2 +-
- include/hw/intc/arm_gicv5_types.h            |   2 +
- include/hw/misc/tz-msc.h                     |   2 +-
- include/system/hvf_int.h                     |   1 +
- meson.build                                  |   6 ++
- target/arm/cpu.c                             |  10 +-
- target/arm/cpu32-stubs.c                     |   8 +-
- target/arm/cpu64.c                           |  12 +--
- target/arm/hvf/hvf.c                         | 147 +++++++++++++++++++++++++--
- target/arm/internals.h                       |   8 +-
- target/arm/ptw.c                             |   2 +-
- target/arm/tcg/cpu32.c                       |   8 --
- target/arm/tcg/gicv5-cpuif.c                 |  26 ++---
- target/arm/tcg/idau.c                        |  20 ++++
- target/arm/{ => tcg}/idau.h                  |   0
- target/arm/tcg/meson.build                   |   1 +
- tests/functional/aarch64/test_hotplug_pci.py |   1 +
- tests/functional/aarch64/test_kvm.py         |  12 ++-
- tests/functional/aarch64/test_tuxrun.py      |   2 +
- tests/functional/aarch64/test_virt_vbsa.py   |  10 +-
- tests/functional/qemu_test/asset.py          |  13 ++-
- 30 files changed, 298 insertions(+), 138 deletions(-)
- create mode 100644 target/arm/tcg/idau.c
- rename target/arm/{ => tcg}/idau.h (100%)
 
