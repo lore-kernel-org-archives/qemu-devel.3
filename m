@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E471CCD343F
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 18:01:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1029ACD4F48
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 18:01:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNwqj-0007Mq-ME; Fri, 15 May 2026 14:01:33 -0400
+	id 1wNwqw-0007Xt-Ir; Fri, 15 May 2026 14:01:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwqB-0007Hl-2d
- for qemu-devel@nongnu.org; Fri, 15 May 2026 14:00:52 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwqE-0007Ig-Ph
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 14:00:55 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwq8-0001KJ-4Y
- for qemu-devel@nongnu.org; Fri, 15 May 2026 14:00:50 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwq8-0001Gs-Ma
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 14:00:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
  Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=qKPf3HvIHXxfyIDjOPh6sqbGcYuK4t1NrcQzAHS+fUg=; b=WJAUxEmPduKXcXr
- 6Qjc7xFeIXoyjVSa+XAQtKxNnZ/gAJeWbPQNJPxCPEir5YeUoEEVd2toYOs9oy/c/53aSP/fde6yZ
- gldP1jvK3d4onW0jkpFHO0TtVJsk95OQ4k1eZLiFGJw8N4U+nRzpZLWNF1pLMx5dq08xy7gAXGQDL
- I8=;
+ List-Help; bh=v5a4+u2XH8MpedaQOwF0UdtpQh9MC619Ol/bTja7mtA=; b=VxNAFitiAhXWwKj
+ FLXDFOXk/7H3Q7D/+vYs4YTSgQVKSvTruHR6SG6eiXnrkMI3KdwM8s4QfEvCRQmunyBZZtKnhAi/I
+ 17ZBYFkTajg64vFRs61N5/v22z2HoBATVMld2NEZ0C+N3y6pRRJWotXxqQsd3IwwKvqXNlZ3WjDWv
+ UQ=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
  Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v6 09/27] target/riscv: Fix size of ssp
-Date: Fri, 15 May 2026 20:04:19 +0200
-Message-ID: <20260515180437.23620-10-anjo@rev.ng>
+Subject: [PATCH v6 03/27] target/riscv: Fix size of pc, load_[val|res]
+Date: Fri, 15 May 2026 20:04:13 +0200
+Message-ID: <20260515180437.23620-4-anjo@rev.ng>
 In-Reply-To: <20260515180437.23620-1-anjo@rev.ng>
 References: <20260515180437.23620-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -63,107 +63,116 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As ssp holds a pointer, fix to 64 bits in size and make sure stores from
-TCG use the correct size to avoid problems on big endian hosts.
-
-Note, the cpu/ssp VMSTATE version is bumped, breaking migration from
-older versions.
+Fix to 64 bits in size and as these are mapped to TCG globals, be
+careful with host endianness when allocating globals.  Casts are
+added to logging expressions to retain the correct size for
+TARGET_RISCV32.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h                            |  2 +-
- target/riscv/machine.c                        |  6 +++---
- target/riscv/insn_trans/trans_rvzicfiss.c.inc | 18 +++++++++++++-----
- 3 files changed, 17 insertions(+), 9 deletions(-)
+ target/riscv/cpu.h        |  6 +++---
+ target/riscv/cpu.c        |  2 +-
+ target/riscv/cpu_helper.c |  6 +++---
+ target/riscv/machine.c    |  6 +++---
+ target/riscv/translate.c  | 12 +++++++-----
+ 5 files changed, 17 insertions(+), 15 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 5ecae9b339..c93c8e3617 100644
+index d9771ef845..15c9f8b3a0 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -256,7 +256,7 @@ struct CPUArchState {
-     /* elp state for zicfilp extension */
-     bool      elp;
-     /* shadow stack register for zicfiss extension */
--    target_ulong ssp;
-+    uint64_t ssp;
-     /* env place holder for extra word 2 during unwind */
-     target_ulong excp_uw2;
-     /* sw check code for sw check exception */
+@@ -225,9 +225,9 @@ struct CPUArchState {
+     uint8_t vxsat;
+     bool vill;
+ 
+-    target_ulong pc;
+-    target_ulong load_res;
+-    target_ulong load_val;
++    uint64_t pc;
++    uint64_t load_res;
++    uint64_t load_val;
+ 
+     /* Floating-Point state */
+     uint64_t fpr[32]; /* assume both F and D extensions */
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index f9b57914ee..27310a95d1 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -569,7 +569,7 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+         qemu_fprintf(f, " %s %d\n", "V      =  ", env->virt_enabled);
+     }
+ #endif
+-    qemu_fprintf(f, " %s " TARGET_FMT_lx "\n", "pc      ", env->pc);
++    qemu_fprintf(f, " %s %" PRIx64 "\n", "pc      ", env->pc);
+ #ifndef CONFIG_USER_ONLY
+     for (i = 0; i < ARRAY_SIZE(csr_ops); i++) {
+         int csrno = i;
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 17305e1bb7..6236f65ff8 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -2334,9 +2334,9 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+ 
+     qemu_log_mask(CPU_LOG_INT,
+                   "%s: hart:%"PRIu64", async:%d, cause:"TARGET_FMT_lx", "
+-                  "epc:0x"TARGET_FMT_lx", tval:0x"TARGET_FMT_lx", desc=%s\n",
+-                  __func__, env->mhartid, async, cause, env->pc, tval,
+-                  riscv_cpu_get_trap_name(cause, async));
++                  "epc:0x%"PRIx64", tval:0x"TARGET_FMT_lx", desc=%s\n",
++                  __func__, env->mhartid, async, cause, env->pc,
++                  tval, riscv_cpu_get_trap_name(cause, async));
+ 
+     mode = env->priv <= PRV_S && cause < 64 &&
+         (((deleg >> cause) & 1) || s_injected || vs_injected) ? PRV_S : PRV_M;
 diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 1cf744c5f0..c55794c554 100644
+index 440b09fc32..66ed3f6504 100644
 --- a/target/riscv/machine.c
 +++ b/target/riscv/machine.c
-@@ -390,11 +390,11 @@ static bool ssp_needed(void *opaque)
+@@ -433,9 +433,9 @@ const VMStateDescription vmstate_riscv_cpu = {
+         VMSTATE_UINT64_ARRAY(env.fpr, RISCVCPU, 32),
+         VMSTATE_UINT8_ARRAY(env.miprio, RISCVCPU, 64),
+         VMSTATE_UINT8_ARRAY(env.siprio, RISCVCPU, 64),
+-        VMSTATE_UINTTL(env.pc, RISCVCPU),
+-        VMSTATE_UINTTL(env.load_res, RISCVCPU),
+-        VMSTATE_UINTTL(env.load_val, RISCVCPU),
++        VMSTATE_UINT64(env.pc, RISCVCPU),
++        VMSTATE_UINT64(env.load_res, RISCVCPU),
++        VMSTATE_UINT64(env.load_val, RISCVCPU),
+         VMSTATE_UINTTL(env.frm, RISCVCPU),
+         VMSTATE_UINTTL(env.badaddr, RISCVCPU),
+         VMSTATE_UINTTL(env.guest_phys_fault_addr, RISCVCPU),
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index 4a557b4907..b444fde3ef 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -1484,6 +1484,10 @@ void riscv_translate_init(void)
+     /* 32 bits in size, no offset needed */
+     size_t vl_offset = offsetof(CPURISCVState, vl);
+     size_t vstart_offset = offsetof(CPURISCVState, vstart);
++    /* 64 bits in size mapped to TCGv, needs offset */
++    size_t pc_offset     = offsetof(CPURISCVState, pc) + field_offset;
++    size_t res_offset    = offsetof(CPURISCVState, load_res) + field_offset;
++    size_t val_offset    = offsetof(CPURISCVState, load_val) + field_offset;
  
- static const VMStateDescription vmstate_ssp = {
-     .name = "cpu/ssp",
--    .version_id = 1,
--    .minimum_version_id = 1,
-+    .version_id = 2,
-+    .minimum_version_id = 2,
-     .needed = ssp_needed,
-     .fields = (const VMStateField[]) {
--        VMSTATE_UINTTL(env.ssp, RISCVCPU),
-+        VMSTATE_UINT64(env.ssp, RISCVCPU),
-         VMSTATE_END_OF_LIST()
-     }
- };
-diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-index 0b6ad57965..40e5a1b7df 100644
---- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-@@ -32,7 +32,9 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
-     TCGLabel *skip = gen_new_label();
-     uint32_t tmp = (get_xl(ctx) == MXL_RV64) ? 8 : 4;
-     TCGv data = tcg_temp_new();
--    tcg_gen_ld_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    TCGv_i64 wide_addr = tcg_temp_new_i64();
-+    tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_trunc_i64_tl(addr, wide_addr);
-     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
-     tcg_gen_qemu_ld_tl(data, addr, SS_MMU_INDEX(ctx),
-                        mxl_memop(ctx) | MO_ALIGN);
-@@ -45,7 +47,8 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
-                   tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-     gen_set_label(skip);
-     tcg_gen_addi_tl(addr, addr, tmp);
--    tcg_gen_st_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_ext_tl_i64(wide_addr, addr);
-+    tcg_gen_st_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
- 
-     return true;
- }
-@@ -59,12 +62,15 @@ static bool trans_sspush(DisasContext *ctx, arg_sspush *a)
-     TCGv addr = tcg_temp_new();
-     int tmp = (get_xl(ctx) == MXL_RV64) ? -8 : -4;
-     TCGv data = get_gpr(ctx, a->rs2, EXT_NONE);
-+    TCGv_i64 wide_addr = tcg_temp_new_i64();
-     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
--    tcg_gen_ld_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_trunc_i64_tl(addr, wide_addr);
-     tcg_gen_addi_tl(addr, addr, tmp);
-     tcg_gen_qemu_st_tl(data, addr, SS_MMU_INDEX(ctx),
-                        mxl_memop(ctx) | MO_ALIGN);
--    tcg_gen_st_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_ext_tl_i64(wide_addr, addr);
-+    tcg_gen_st_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
- 
-     return true;
- }
-@@ -76,7 +82,9 @@ static bool trans_ssrdp(DisasContext *ctx, arg_ssrdp *a)
+     for (i = 1; i < 32; i++) {
+         cpu_gpr[i] = tcg_global_mem_new(tcg_env,
+@@ -1499,11 +1503,9 @@ void riscv_translate_init(void)
+             offsetof(CPURISCVState, fpr[i]), riscv_fpr_regnames[i]);
      }
  
-     TCGv dest = dest_gpr(ctx, a->rd);
--    tcg_gen_ld_tl(dest, tcg_env, offsetof(CPURISCVState, ssp));
-+    TCGv_i64 wide_addr = tcg_temp_new_i64();
-+    tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
-+    tcg_gen_trunc_i64_tl(dest, wide_addr);
-     gen_set_gpr(ctx, a->rd, dest);
- 
-     return true;
+-    cpu_pc = tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, pc), "pc");
++    cpu_pc = tcg_global_mem_new(tcg_env, pc_offset, "pc");
+     cpu_vl = tcg_global_mem_new_i32(tcg_env, vl_offset, "vl");
+     cpu_vstart = tcg_global_mem_new_i32(tcg_env, vstart_offset, "vstart");
+-    load_res = tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, load_res),
+-                             "load_res");
+-    load_val = tcg_global_mem_new(tcg_env, offsetof(CPURISCVState, load_val),
+-                             "load_val");
++    load_res = tcg_global_mem_new(tcg_env, res_offset, "load_res");
++    load_val = tcg_global_mem_new(tcg_env, val_offset, "load_val");
+ }
 -- 
 2.52.0
 
