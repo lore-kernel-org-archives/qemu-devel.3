@@ -4,98 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E1A6CD4F25
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 17:13:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 359CDCD4F25
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 17:15:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNw5u-0004Xs-Le; Fri, 15 May 2026 13:13:02 -0400
+	id 1wNw6z-00053S-5Y; Fri, 15 May 2026 13:14:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wNw5s-0004XO-3c
- for qemu-devel@nongnu.org; Fri, 15 May 2026 13:13:00 -0400
+ id 1wNw6g-00051C-5P
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 13:13:51 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wNw5o-0004WC-3d
- for qemu-devel@nongnu.org; Fri, 15 May 2026 13:12:59 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ id 1wNw6d-0004v9-QI
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 13:13:49 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64FBI1pv655050
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 17:12:53 GMT
+ 64FBDRLn3671020
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 17:13:46 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Z4G45KNh5mtw3tCQnXrBJ09n+JWxPWHf+JyDhgCO5LU=; b=ZW8vWGgDqGqjEjiJ
- aQ8EyWg7mcPuKzlJuMiEfmCSfM+jHE/O0S/n5LIrhGkQa2I5po8wc+ucdPiNF4Rf
- OVPa4tjuDMlpPjvUM7ynEfx9ENmmrrjYhUFzz7zJgXaD27aLCQ+LW2Lmyvf0f8fP
- aCUk5G5c7o6Bp4n6a5PEx7MPRT1cgLyhzvOZ8xfgV1q9wzCG/xrOFxOvN0D+vsRR
- kIuk3fSbkraALONPeqtQAe6jyyi13r1wz8ndviU8EqBIBqYtrANyc1KPikStFpbZ
- CsQGtLWzyc4fs9Ef8tw+/5iUwfIdfdhiTr9wGZDEQwBh9NaHBueBWeslmbjCJcej
- SpyX1w==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e5m1pv7kq-1
+ zaAZsKwyExsTVuYnppXhfWmWphgFoAtj22CtUA+bqnE=; b=Ec/px3RUSLT29JEv
+ PHlZuMcxBvEHP121SIDIY+yvfm2gsKbn4kOj2VtJ1xK9HLr1NP8HRs/U5YmH6ebm
+ TGCIW3wjcssxS8s7QzWQ3whOnu7xlLe4lFAPnn2MO65619RJAQijeVz7UdC8e874
+ kGx2bGtXLqe10oCBXtPrfoHEJ1jMfWnJwS8WuVxQz9PsDrRgRXSWCueCkF3cmMlX
+ X6n9Qvh5BFuErX3gEXWVh8VZwPOsEhbWLdlbN9i4u/uKAb0b9rH6F1eyvoPGoX/u
+ wVjjK2WuOqLK+eVqXBlmyhRJ7JOTvzL0vr3T2q+WqTdjmzh4nvuCLkwyY/fapwK9
+ jEXRmw==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e5m1s47er-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 17:12:53 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-2fe1cf409a1so76192eec.1
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 10:12:53 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 17:13:46 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-2bda35eab74so990826eec.0
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 10:13:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778865172; x=1779469972; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Z4G45KNh5mtw3tCQnXrBJ09n+JWxPWHf+JyDhgCO5LU=;
- b=acC6PgVeJ9NzqB/j1g5U3TstguREdyQf6H5A+ygdluSnnyaecIgA2ABKUyRXrD3VR+
- yvlXNtXpkabUQnTWUNV7jimbGFT6J7CfNDqTdruYmhnyhIjGH/8Z4XRpZjkpnvBoG1eL
- 8QLZZSmJiuP8merhBeEMMq0taKXg0AKiGaMEo+9X/cQQ//CG/1ZjapNTmlEzGo/nmhGe
- vFlAqD6lCJm7RjR1nh+65kHC9qXl2MAhZr77FeGB8UufTCUdwT8MT/SYceZe4UggkCii
- xg/VBD4hUxmJ9MR1kdzzgkU/AomLnNoXezS0NzdWkIkqiRnEUy5nUl/J/vbcQe5PGoCM
- kXiQ==
+ d=oss.qualcomm.com; s=google; t=1778865226; x=1779470026; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=zaAZsKwyExsTVuYnppXhfWmWphgFoAtj22CtUA+bqnE=;
+ b=OLJsxIBDX6/xgmXbpDlSdqerStPoV0iaSN/YkhLEgbxoKqfKz43tRD1KZh0zBiX+ZL
+ XJtgrQ+ghuIak1hAG9M6unG4Bk8Uj+6FanZynC/texW3zqKnKN2Ge1ajjkbNGjk+oKBu
+ h9WhYk5iEBszLIlhOUNpNtKl4YtKUeWph27BZ7afeQgCdbEjSl3lkk5yQrJZFhhpvVVD
+ CJyK6+HAVWMY2jmkZxnyCqGwchWww1MalwTE5qixQCpFPO2WQVXtrDUtMh7Dmq+1UfF+
+ ESoCUnhtLL8wQ1Rjf7MSYZ/bRlhnenmKTyefKQnQ2940MVWeyta0TvsUBevKiUCTpLI9
+ pBRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778865172; x=1779469972;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Z4G45KNh5mtw3tCQnXrBJ09n+JWxPWHf+JyDhgCO5LU=;
- b=p9dRfbFAkajawtUvafj2ZmKpmy9tAdzdfaEJtd7Vuf1G7dtFdFB+tdlddnLHWrZ9DI
- +zK1CDpQA+gLh5kt0dSuuB/HvkIWnpGshDHTtC/gNXxxD6iwlYvqJodFFM/qwnoXHoGk
- jgA0XQyUdrIok1WfqTe7lsvIs3cojqFyiiPcCFB7YId0+faI6dVdXselYDrC0Y4cr0lE
- 7mgjozarFEZ/iQaLDd3sPR33Qpyw6W2l+T8NnxV5g8tW8J+RBEc/9rcXixiiqtx2PSO4
- TWPYmruvshA1AdQVKTM/YoVYqidSoVijc68xjg2cfprJOXuv9HopFZK1d5L013+fUwxw
- g1nQ==
+ d=1e100.net; s=20251104; t=1778865226; x=1779470026;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=zaAZsKwyExsTVuYnppXhfWmWphgFoAtj22CtUA+bqnE=;
+ b=nqIi740Pg/N+IjXJjVEONF45yDtVYMmyHftWA7PAdGSdiopAIhXvFTKxq6/qOzuTyo
+ a9qX9aOHbwkEqMwQ+uTgfiNr0sTVqnban3j7pl47hVn/PD2iTdBWrYD6EWtVXUMe1Rxa
+ AIP9R4ZWf+ZSlc4Man++26v1ggDd0Rqqt/hwZexRozCjIAvuDl+NCP92cuI+qsuOHqbf
+ W4qNIN20gIUMyMYeEB4JHyaF41PD/yx9ly6TKI+2rwPOBfQOu71Duzmr4WX+irrE0gQA
+ ih63Fjy9rxPMjuSyXyYAaajSBdDkIA6EJGFd3UBmmSSa7eOzIP8z8GyKFBjn/XeKWRAb
+ 6YpQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+R5G1s56nVU/X+bZ41qx/tdqBQ8K3Rrl+S6DwlL/YzVlFRm+PO5zCgMNKh/l2jUpTwbV0PWmS+xRKe@nongnu.org
-X-Gm-Message-State: AOJu0Yzg1Ppwxeg9opCRrbgYZZcIC2k4629oSzBKVecuuZIstYIjMOIP
- 82KmHAUGgTrvSU7Dz0Y9oEkdK2qUzW1OHG+7QGhSIqRfFNy6dny34ofdz/poJPnr79l+ladsMsO
- OuoSxkqla+TgJpF9ArvbMghTuYXG430+CIBI4WmJaamGPBQe9/hFoCx6SFg==
-X-Gm-Gg: Acq92OH9V4eXBVwV7tXogX1Wu+kW9EnO4k4tR9HGW7RrRkAZNcL9vdKk+6rArGzEcvt
- T+AQGYcRg5JCzAjJPoHJ9RpWK3GVqiVFnjIbHRIVTNJ0bAF0Y/GXYNuulIN+rc/u6O7V80ucPMM
- PwOlN/J8WbqNU72c+v00d0Q1S1lFl1r1YjxuI2EvjSKRgoX6bxl5KzWMT54JlHRAOve/aHHpYvN
- SXiY3MwBDXH2jsxrLIK9lub+v8LMt9NMC1O2iNSMov/3xj95ZiJuhsPwqtVcvtuGlsuZIxm/99S
- 2jZcwoW/jjL5zJfBXR9PcVdjqtoTkpwTyt6rfXHQR/2OIw4m1+v6WKxNUc1RtLB30dSXd0qnMUq
- EEjA4KDL0iYb2e//hwKQ99pX1+qtgLB+JzdnNPTJAYg/DpBNKp4tcJxb6BvX19Gxii05ph9/axk
- OSxH6xcmFRUi+QRiVeLLfN86K8
-X-Received: by 2002:a05:7300:7255:b0:2d0:239a:23c9 with SMTP id
- 5a478bee46e88-30398677161mr2544241eec.16.1778865172398; 
- Fri, 15 May 2026 10:12:52 -0700 (PDT)
-X-Received: by 2002:a05:7300:7255:b0:2d0:239a:23c9 with SMTP id
- 5a478bee46e88-30398677161mr2544204eec.16.1778865171735; 
- Fri, 15 May 2026 10:12:51 -0700 (PDT)
+ AFNElJ98F5uGf7K6twM8v21CAeYjJzGwYhHIQAY9cfvMa0ISO6cNRG//omkq+C80XZIkKcFvlTffQaFgx8T4@nongnu.org
+X-Gm-Message-State: AOJu0YybN3YqKg26jS9zbyEbKUGtxCPdA1MuJ/FGsRJgqBaJOzPOA9BR
+ pDqivhHu9XMJx6pOQkZWF3xf5kKd7aGD7q/gdnFx3mtnj5WOxIVfoZQDCdtVR3eQhTe3ce8bge7
+ f0pJ76czNNSCUSY3GdTeADcwj1givjILaxblFjRNFimDP8V/XOAKH3PqPtA==
+X-Gm-Gg: Acq92OGn7AOOs/Ueyi0jq+Du6gJ6QrmzqmCBPs9M2PEaJc+rNKLiV6Z1JrN4FHj3snz
+ 36N3ABFg3/Z8jD8CWWmPQBKjD8vIq2QNwsUSxafIxJVdy9bjmJnXurJi/EHW24DMQQ7+BxGrd/x
+ 5XmuAAtLFmUIRxU//01jywTBwoz1PsqKmu86oMffLf/8Xpn32l/ssxOc3zHse5P+0n8gHHIQNlm
+ 3ZYKk1qSIhuvpQzAPgCJtT2yapuUwpNMXkVNCn7z6T1mubUThjIJ9kSIcxZ6Yt/uweExp75kWQL
+ lcnAyWKvcJQWLuqT98AivXycdvgJagyjKvZI8WYU9CeKNNwrsZRNN6MS9Yk6/L3uMBIWVNiPnHd
+ Uxk10w1shaX8eZcm9WxAGuequgCzedLZvo/37s30eeBEV+lYSoOX9Cbvso0jHprXplkngcJIeIv
+ 6MGau2H3GxUYpFQg==
+X-Received: by 2002:a05:7300:dc8d:b0:2d9:1c9d:fc22 with SMTP id
+ 5a478bee46e88-3026302f90fmr4810943eec.21.1778865225383; 
+ Fri, 15 May 2026 10:13:45 -0700 (PDT)
+X-Received: by 2002:a05:7300:dc8d:b0:2d9:1c9d:fc22 with SMTP id
+ 5a478bee46e88-3026302f90fmr4810909eec.21.1778865224708; 
+ Fri, 15 May 2026 10:13:44 -0700 (PDT)
 Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30296dcb6adsm8548774eec.15.2026.05.15.10.12.50
+ 5a478bee46e88-302973bcd0csm7870799eec.24.2026.05.15.10.13.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 15 May 2026 10:12:51 -0700 (PDT)
-Message-ID: <1866da2b-774b-4c55-9ada-dbeff66f2d20@oss.qualcomm.com>
-Date: Fri, 15 May 2026 10:12:50 -0700
+ Fri, 15 May 2026 10:13:44 -0700 (PDT)
+Message-ID: <5556b33a-0405-4688-a20b-09e80fb18f07@oss.qualcomm.com>
+Date: Fri, 15 May 2026 10:13:43 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 17/20] target/arm: Re-use common
- aarch64_aa32_a57_init() helper
+Subject: Re: [PATCH v6 12/20] target/arm: Extract common code related to 'max'
+ CPU
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goate?=
@@ -107,37 +107,37 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goate?=
  Andrew Jeffery <andrew@codeconstruct.com.au>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 References: <20260515141032.3271-1-philmd@linaro.org>
- <20260515141032.3271-18-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+ <20260515141032.3271-13-philmd@linaro.org>
+ <e11a2547-8d2d-403a-94d2-3ab5e35dff77@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20260515141032.3271-18-philmd@linaro.org>
+In-Reply-To: <e11a2547-8d2d-403a-94d2-3ab5e35dff77@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: PlMXV_xs3twW7GyRy7kml0Jib8OHQo8k
-X-Proofpoint-ORIG-GUID: PlMXV_xs3twW7GyRy7kml0Jib8OHQo8k
-X-Authority-Analysis: v=2.4 cv=GrhyPE1C c=1 sm=1 tr=0 ts=6a075415 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE1MDE3NSBTYWx0ZWRfX+YtQPnCGg1E8
+ RQZkEGzzTj/fTj22Iw3mzNhGFdFeZQ1w7QuY1CRQWMwQX965uUQeO9ZBAgCCQuPWL40ycD9Qw2i
+ GkOsEbXiAEElt4ApPFELgdjAfzj/xAKK4BWr1LdH0MVLhgKVDTvnadBl09mP97RdpGJt1u1MFkX
+ aaxHw1xDhCDpyxQPZE/04k4LEVBlLmhtcc3olfftsQD1xpV4erb5dfGE/iJpqTv4bP8rGVAWEWG
+ flSQJKMe+XdL/5O+iIDpyXXEfcf/tKZRauNqBToa0VEmK3BdHZnJQOWgj8TGc9q9hJP/bmk7bVC
+ qkvy4R+1KD5JXCoBQTN652vmpg6mGHUxLpWF43AStB7+jy0mXnC0ckVY5v/1Er46JWeV5FswD9t
+ MnC3sLqxhGQHPknhS91XWc5snyjhnJDmVgVRdEiWbyrF2h8/sXSbpZKNEZ7etZwJC7ofAn3te1D
+ cGoLvq7mEf/7rdAUmTQ==
+X-Authority-Analysis: v=2.4 cv=Md5cfZ/f c=1 sm=1 tr=0 ts=6a07544a cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=yCTr-NPhZduzRAWXByIA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=ZXulRonScM0A:10 a=PxkB5W3o20Ba91AHUih5:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE1MDE3NSBTYWx0ZWRfX2pJ+rUmeDBND
- BB/Tz2YsZ3KDEjUIhe9SpOHNFt/sS5aQNB23cHQh4HuYB7kKAasT9C7wJcgwXFDizsucdIzRN40
- Ly82OcsNjfyj1hYDGkwGB3LgAFV9ihvjh6si9KUuQ8dD7E4R8mV0lABYLfNL/G2+Q6ug8jWGkof
- PEGuptx7so8O2SyDsMI9AzxsG+C1nkYHxGz8+fRU0Kc3lBXsYqLGD1acLdfIPCJknvg+XYRdjn5
- 3p6nOO4fdRdJzdGw2zqiSYZZBG3Stez4uxetqenp6PtgP06gkOhxHoktHstXhcrA6QvZNvq9Fzf
- yXkQ/61wSSuTYFCdo9gLig1Kt++Eowthk93N8ZEvCI8D3ulMQSvx19X5tNofM/VYW1jWL7yvsLh
- 1iwPGHxj2I+TXlIhUQX95354FTUIbe9s5iLX7xcpJpyz6ARX9/7BUoBxXLGNJxTjatJH9N8j+N/
- FfhoaUnMWhCoE5u+yXg==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=d78jJa_eLNz9I5sOdwwA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=scEy_gLbYbu1JhEsrz4S:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: kSxlORqmsMd7COZ7ta2LU13bvXMp3cm8
+X-Proofpoint-ORIG-GUID: kSxlORqmsMd7COZ7ta2LU13bvXMp3cm8
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-15_04,2026-05-15_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 lowpriorityscore=0 adultscore=0 bulkscore=0
- spamscore=0 suspectscore=0 impostorscore=0 phishscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605150175
+ suspectscore=0 lowpriorityscore=0 bulkscore=0 priorityscore=1501
+ impostorscore=0 malwarescore=0 adultscore=0 phishscore=0 spamscore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
+ definitions=main-2605150175
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0a-0031df01.pphosted.com
@@ -146,8 +146,8 @@ X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UPPERCASE_50_75=0.008 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,19 +163,257 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/15/2026 7:10 AM, Philippe Mathieu-Daudé wrote:
-> Make aarch64_aa32_a57_init() common by exposing its prototype
-> and defining it in cpu-max.c. Call it in arm_max_initfn()
-> restricted to AArch32.
+On 5/15/2026 10:10 AM, Pierrick Bouvier wrote:
+> On 5/15/2026 7:10 AM, Philippe Mathieu-Daudé wrote:
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>  target/arm/cpu-max.c   | 106 +++++++++++++++++++++++++++++++++++++++++
+>>  target/arm/tcg/cpu32.c |  96 -------------------------------------
+>>  target/arm/meson.build |   1 +
+>>  3 files changed, 107 insertions(+), 96 deletions(-)
+>>  create mode 100644 target/arm/cpu-max.c
+>>
+>> diff --git a/target/arm/cpu-max.c b/target/arm/cpu-max.c
+>> new file mode 100644
+>> index 00000000000..9fd48ce46e2
+>> --- /dev/null
+>> +++ b/target/arm/cpu-max.c
+>> @@ -0,0 +1,106 @@
+>> +/*
+>> + * QEMU ARM 'max' CPU
+>> + *
+>> + * Copyright (c) 2018 Linaro Ltd
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + */
+>> +
+>> +#include "qemu/osdep.h"
+>> +#include "target/arm/internals.h"
+>> +
+>> +/* Share AArch32 -cpu max features with AArch64. */
+>> +void aa32_max_features(ARMCPU *cpu)
+>> +{
+>> +    uint32_t t;
+>> +    ARMISARegisters *isar = &cpu->isar;
+>> +
+>> +    /* Add additional features supported by QEMU */
+>> +    t = GET_IDREG(isar, ID_ISAR5);
+>> +    t = FIELD_DP32(t, ID_ISAR5, AES, 2);          /* FEAT_PMULL */
+>> +    t = FIELD_DP32(t, ID_ISAR5, SHA1, 1);         /* FEAT_SHA1 */
+>> +    t = FIELD_DP32(t, ID_ISAR5, SHA2, 1);         /* FEAT_SHA256 */
+>> +    t = FIELD_DP32(t, ID_ISAR5, CRC32, 1);
+>> +    t = FIELD_DP32(t, ID_ISAR5, RDM, 1);          /* FEAT_RDM */
+>> +    t = FIELD_DP32(t, ID_ISAR5, VCMA, 1);         /* FEAT_FCMA */
+>> +    SET_IDREG(isar, ID_ISAR5, t);
+>> +
+>> +    t = GET_IDREG(isar, ID_ISAR6);
+>> +    t = FIELD_DP32(t, ID_ISAR6, JSCVT, 1);        /* FEAT_JSCVT */
+>> +    t = FIELD_DP32(t, ID_ISAR6, DP, 1);           /* Feat_DotProd */
+>> +    t = FIELD_DP32(t, ID_ISAR6, FHM, 1);          /* FEAT_FHM */
+>> +    t = FIELD_DP32(t, ID_ISAR6, SB, 1);           /* FEAT_SB */
+>> +    t = FIELD_DP32(t, ID_ISAR6, SPECRES, 1);      /* FEAT_SPECRES */
+>> +    t = FIELD_DP32(t, ID_ISAR6, BF16, 1);         /* FEAT_AA32BF16 */
+>> +    t = FIELD_DP32(t, ID_ISAR6, I8MM, 1);         /* FEAT_AA32I8MM */
+>> +    SET_IDREG(isar, ID_ISAR6, t);
+>> +
+>> +    t = cpu->isar.mvfr1;
+>> +    t = FIELD_DP32(t, MVFR1, FPHP, 3);            /* FEAT_FP16 */
+>> +    t = FIELD_DP32(t, MVFR1, SIMDHP, 2);          /* FEAT_FP16 */
+>> +    cpu->isar.mvfr1 = t;
+>> +
+>> +    t = cpu->isar.mvfr2;
+>> +    t = FIELD_DP32(t, MVFR2, SIMDMISC, 3);        /* SIMD MaxNum */
+>> +    t = FIELD_DP32(t, MVFR2, FPMISC, 4);          /* FP MaxNum */
+>> +    cpu->isar.mvfr2 = t;
+>> +
+>> +    FIELD_DP32_IDREG(isar, ID_MMFR3, PAN, 2);          /* FEAT_PAN2 */
+>> +
+>> +    t = GET_IDREG(isar, ID_MMFR4);
+>> +    t = FIELD_DP32(t, ID_MMFR4, HPDS, 2);         /* FEAT_HPDS2 */
+>> +    t = FIELD_DP32(t, ID_MMFR4, AC2, 1);          /* ACTLR2, HACTLR2 */
+>> +    t = FIELD_DP32(t, ID_MMFR4, CNP, 1);          /* FEAT_TTCNP */
+>> +    t = FIELD_DP32(t, ID_MMFR4, XNX, 1);          /* FEAT_XNX */
+>> +    t = FIELD_DP32(t, ID_MMFR4, EVT, 2);          /* FEAT_EVT */
+>> +    SET_IDREG(isar, ID_MMFR4, t);
+>> +
+>> +    FIELD_DP32_IDREG(isar, ID_MMFR5, ETS, 2);          /* FEAT_ETS2 */
+>> +
+>> +    t = GET_IDREG(isar, ID_PFR0);
+>> +    t = FIELD_DP32(t, ID_PFR0, CSV2, 2);          /* FEAT_CSV2 */
+>> +    t = FIELD_DP32(t, ID_PFR0, DIT, 1);           /* FEAT_DIT */
+>> +    t = FIELD_DP32(t, ID_PFR0, RAS, 1);           /* FEAT_RAS */
+>> +    SET_IDREG(isar, ID_PFR0, t);
+>> +
+>> +    t = GET_IDREG(isar, ID_PFR2);
+>> +    t = FIELD_DP32(t, ID_PFR2, CSV3, 1);          /* FEAT_CSV3 */
+>> +    t = FIELD_DP32(t, ID_PFR2, SSBS, 1);          /* FEAT_SSBS */
+>> +    SET_IDREG(isar, ID_PFR2, t);
+>> +
+>> +    t = GET_IDREG(isar, ID_DFR0);
+>> +    t = FIELD_DP32(t, ID_DFR0, COPDBG, 10);       /* FEAT_Debugv8p8 */
+>> +    t = FIELD_DP32(t, ID_DFR0, COPSDBG, 10);      /* FEAT_Debugv8p8 */
+>> +    t = FIELD_DP32(t, ID_DFR0, PERFMON, 6);       /* FEAT_PMUv3p5 */
+>> +    SET_IDREG(isar, ID_DFR0, t);
+>> +
+>> +    /* Debug ID registers. */
+>> +
+>> +    /* Bit[15] is RES1, Bit[13] and Bits[11:0] are RES0. */
+>> +    t = 0x00008000;
+>> +    t = FIELD_DP32(t, DBGDIDR, SE_IMP, 1);
+>> +    t = FIELD_DP32(t, DBGDIDR, NSUHD_IMP, 1);
+>> +    t = FIELD_DP32(t, DBGDIDR, VERSION, 10);      /* FEAT_Debugv8p8 */
+>> +    t = FIELD_DP32(t, DBGDIDR, CTX_CMPS, 1);
+>> +    t = FIELD_DP32(t, DBGDIDR, BRPS, 5);
+>> +    t = FIELD_DP32(t, DBGDIDR, WRPS, 3);
+>> +    cpu->isar.dbgdidr = t;
+>> +
+>> +    t = 0;
+>> +    t = FIELD_DP32(t, DBGDEVID, PCSAMPLE, 3);
+>> +    t = FIELD_DP32(t, DBGDEVID, WPADDRMASK, 1);
+>> +    t = FIELD_DP32(t, DBGDEVID, BPADDRMASK, 15);
+>> +    t = FIELD_DP32(t, DBGDEVID, VECTORCATCH, 0);
+>> +    t = FIELD_DP32(t, DBGDEVID, VIRTEXTNS, 1);
+>> +    t = FIELD_DP32(t, DBGDEVID, DOUBLELOCK, 1);
+>> +    t = FIELD_DP32(t, DBGDEVID, AUXREGS, 0);
+>> +    t = FIELD_DP32(t, DBGDEVID, CIDMASK, 0);
+>> +    cpu->isar.dbgdevid = t;
+>> +
+>> +    /* Bits[31:4] are RES0. */
+>> +    t = 0;
+>> +    t = FIELD_DP32(t, DBGDEVID1, PCSROFFSET, 2);
+>> +    cpu->isar.dbgdevid1 = t;
+>> +
+>> +    FIELD_DP32_IDREG(isar, ID_DFR1, HPMN0, 1);         /* FEAT_HPMN0 */
+>> +}
+>> diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
+>> index 73d21c6cf7d..919ed8a6cf8 100644
+>> --- a/target/arm/tcg/cpu32.c
+>> +++ b/target/arm/tcg/cpu32.c
+>> @@ -18,102 +18,6 @@
+>>  #include "cpregs.h"
+>>  
+>>  
+>> -/* Share AArch32 -cpu max features with AArch64. */
+>> -void aa32_max_features(ARMCPU *cpu)
+>> -{
+>> -    uint32_t t;
+>> -    ARMISARegisters *isar = &cpu->isar;
+>> -
+>> -    /* Add additional features supported by QEMU */
+>> -    t = GET_IDREG(isar, ID_ISAR5);
+>> -    t = FIELD_DP32(t, ID_ISAR5, AES, 2);          /* FEAT_PMULL */
+>> -    t = FIELD_DP32(t, ID_ISAR5, SHA1, 1);         /* FEAT_SHA1 */
+>> -    t = FIELD_DP32(t, ID_ISAR5, SHA2, 1);         /* FEAT_SHA256 */
+>> -    t = FIELD_DP32(t, ID_ISAR5, CRC32, 1);
+>> -    t = FIELD_DP32(t, ID_ISAR5, RDM, 1);          /* FEAT_RDM */
+>> -    t = FIELD_DP32(t, ID_ISAR5, VCMA, 1);         /* FEAT_FCMA */
+>> -    SET_IDREG(isar, ID_ISAR5, t);
+>> -
+>> -    t = GET_IDREG(isar, ID_ISAR6);
+>> -    t = FIELD_DP32(t, ID_ISAR6, JSCVT, 1);        /* FEAT_JSCVT */
+>> -    t = FIELD_DP32(t, ID_ISAR6, DP, 1);           /* Feat_DotProd */
+>> -    t = FIELD_DP32(t, ID_ISAR6, FHM, 1);          /* FEAT_FHM */
+>> -    t = FIELD_DP32(t, ID_ISAR6, SB, 1);           /* FEAT_SB */
+>> -    t = FIELD_DP32(t, ID_ISAR6, SPECRES, 1);      /* FEAT_SPECRES */
+>> -    t = FIELD_DP32(t, ID_ISAR6, BF16, 1);         /* FEAT_AA32BF16 */
+>> -    t = FIELD_DP32(t, ID_ISAR6, I8MM, 1);         /* FEAT_AA32I8MM */
+>> -    SET_IDREG(isar, ID_ISAR6, t);
+>> -
+>> -    t = cpu->isar.mvfr1;
+>> -    t = FIELD_DP32(t, MVFR1, FPHP, 3);            /* FEAT_FP16 */
+>> -    t = FIELD_DP32(t, MVFR1, SIMDHP, 2);          /* FEAT_FP16 */
+>> -    cpu->isar.mvfr1 = t;
+>> -
+>> -    t = cpu->isar.mvfr2;
+>> -    t = FIELD_DP32(t, MVFR2, SIMDMISC, 3);        /* SIMD MaxNum */
+>> -    t = FIELD_DP32(t, MVFR2, FPMISC, 4);          /* FP MaxNum */
+>> -    cpu->isar.mvfr2 = t;
+>> -
+>> -    FIELD_DP32_IDREG(isar, ID_MMFR3, PAN, 2);          /* FEAT_PAN2 */
+>> -
+>> -    t = GET_IDREG(isar, ID_MMFR4);
+>> -    t = FIELD_DP32(t, ID_MMFR4, HPDS, 2);         /* FEAT_HPDS2 */
+>> -    t = FIELD_DP32(t, ID_MMFR4, AC2, 1);          /* ACTLR2, HACTLR2 */
+>> -    t = FIELD_DP32(t, ID_MMFR4, CNP, 1);          /* FEAT_TTCNP */
+>> -    t = FIELD_DP32(t, ID_MMFR4, XNX, 1);          /* FEAT_XNX */
+>> -    t = FIELD_DP32(t, ID_MMFR4, EVT, 2);          /* FEAT_EVT */
+>> -    SET_IDREG(isar, ID_MMFR4, t);
+>> -
+>> -    FIELD_DP32_IDREG(isar, ID_MMFR5, ETS, 2);          /* FEAT_ETS2 */
+>> -
+>> -    t = GET_IDREG(isar, ID_PFR0);
+>> -    t = FIELD_DP32(t, ID_PFR0, CSV2, 2);          /* FEAT_CSV2 */
+>> -    t = FIELD_DP32(t, ID_PFR0, DIT, 1);           /* FEAT_DIT */
+>> -    t = FIELD_DP32(t, ID_PFR0, RAS, 1);           /* FEAT_RAS */
+>> -    SET_IDREG(isar, ID_PFR0, t);
+>> -
+>> -    t = GET_IDREG(isar, ID_PFR2);
+>> -    t = FIELD_DP32(t, ID_PFR2, CSV3, 1);          /* FEAT_CSV3 */
+>> -    t = FIELD_DP32(t, ID_PFR2, SSBS, 1);          /* FEAT_SSBS */
+>> -    SET_IDREG(isar, ID_PFR2, t);
+>> -
+>> -    t = GET_IDREG(isar, ID_DFR0);
+>> -    t = FIELD_DP32(t, ID_DFR0, COPDBG, 10);       /* FEAT_Debugv8p8 */
+>> -    t = FIELD_DP32(t, ID_DFR0, COPSDBG, 10);      /* FEAT_Debugv8p8 */
+>> -    t = FIELD_DP32(t, ID_DFR0, PERFMON, 6);       /* FEAT_PMUv3p5 */
+>> -    SET_IDREG(isar, ID_DFR0, t);
+>> -
+>> -    /* Debug ID registers. */
+>> -
+>> -    /* Bit[15] is RES1, Bit[13] and Bits[11:0] are RES0. */
+>> -    t = 0x00008000;
+>> -    t = FIELD_DP32(t, DBGDIDR, SE_IMP, 1);
+>> -    t = FIELD_DP32(t, DBGDIDR, NSUHD_IMP, 1);
+>> -    t = FIELD_DP32(t, DBGDIDR, VERSION, 10);      /* FEAT_Debugv8p8 */
+>> -    t = FIELD_DP32(t, DBGDIDR, CTX_CMPS, 1);
+>> -    t = FIELD_DP32(t, DBGDIDR, BRPS, 5);
+>> -    t = FIELD_DP32(t, DBGDIDR, WRPS, 3);
+>> -    cpu->isar.dbgdidr = t;
+>> -
+>> -    t = 0;
+>> -    t = FIELD_DP32(t, DBGDEVID, PCSAMPLE, 3);
+>> -    t = FIELD_DP32(t, DBGDEVID, WPADDRMASK, 1);
+>> -    t = FIELD_DP32(t, DBGDEVID, BPADDRMASK, 15);
+>> -    t = FIELD_DP32(t, DBGDEVID, VECTORCATCH, 0);
+>> -    t = FIELD_DP32(t, DBGDEVID, VIRTEXTNS, 1);
+>> -    t = FIELD_DP32(t, DBGDEVID, DOUBLELOCK, 1);
+>> -    t = FIELD_DP32(t, DBGDEVID, AUXREGS, 0);
+>> -    t = FIELD_DP32(t, DBGDEVID, CIDMASK, 0);
+>> -    cpu->isar.dbgdevid = t;
+>> -
+>> -    /* Bits[31:4] are RES0. */
+>> -    t = 0;
+>> -    t = FIELD_DP32(t, DBGDEVID1, PCSROFFSET, 2);
+>> -    cpu->isar.dbgdevid1 = t;
+>> -
+>> -    FIELD_DP32_IDREG(isar, ID_DFR1, HPMN0, 1);         /* FEAT_HPMN0 */
+>> -}
+>> -
+>>  /* CPU models. These are not needed for the AArch64 linux-user build. */
+>>  #if !defined(CONFIG_USER_ONLY) || !defined(TARGET_AARCH64)
+>>  
+>> diff --git a/target/arm/meson.build b/target/arm/meson.build
+>> index 5376be2e3bc..3e02941d0d5 100644
+>> --- a/target/arm/meson.build
+>> +++ b/target/arm/meson.build
+>> @@ -9,6 +9,7 @@ arm_user_ss = ss.source_set()
+>>  arm_common_system_ss.add(files('gdbstub.c'))
+>>  arm_user_ss.add(files('gdbstub.c'))
+>>  
+>> +arm_ss.add(files('cpu-max.c'))
+>>  arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
+>>    'cpu64.c',
+>>  ))
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->  target/arm/internals.h |  1 +
->  target/arm/cpu-max.c   | 74 ++++++++++++++++++++++++++++++++++++++++++
->  target/arm/cpu64.c     | 71 ----------------------------------------
->  target/arm/tcg/cpu32.c | 48 ++-------------------------
->  4 files changed, 77 insertions(+), 117 deletions(-)
-> 
+> Some bikeshedding: maybe name this cpu32-max.c for consistency?
+> No strong opinion though, just a feeling.
+>
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Seeing patch 16/17, forget my remark above.
+
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> 
+> Regards,
+> Pierrick
+
 
