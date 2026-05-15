@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59E58CD343F
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 21:23:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2289CD4851
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 21:23:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNzxh-0002lP-Hm; Fri, 15 May 2026 17:20:49 -0400
+	id 1wNzwz-00017V-Pd; Fri, 15 May 2026 17:20:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzxf-0002d1-Dq
- for qemu-devel@nongnu.org; Fri, 15 May 2026 17:20:47 -0400
-Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzwx-00016c-T9
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 17:20:03 -0400
+Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzxd-00036I-Q5
- for qemu-devel@nongnu.org; Fri, 15 May 2026 17:20:47 -0400
-Received: by mail-ot1-x333.google.com with SMTP id
- 46e09a7af769-7d4c383f2fcso323080a34.0
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 14:20:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzwv-0002cs-Od
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 17:20:03 -0400
+Received: by mail-ot1-x334.google.com with SMTP id
+ 46e09a7af769-7e4004a4a6fso336635a34.1
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 14:20:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778880044; x=1779484844;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778880000; x=1779484800;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ZZgub/ePDDWE5FkQuF8yjkRLktGlum9Bc8Z4CY9iTsc=;
- b=xIReD9bOXR6vSVUYN/a5tl+BI89TxYTQqO8KRyctNaUQHVi0PJZ3kzCaZoVVfAdLTp
- h5AYIAu4oGOH7fCav/BFPIlCOHmYku+Bs8xTG9vo/eeYHnn4bdMoxjSiJFBT+2UPX+16
- l9YPZV5Fai/Z1V7MX1t4vrxs801eErEvG2eRLZ7NuakV8jgxGpHBWVi6TAJpJUqjEG0n
- HCXnx7bslNW33DBd/ytTHfHmRhlN8fzVOSF9Q8dItxXAB+9Mf5ac1S5mCOrGoxg5O0TG
- f+4V7c8XGay0LowDBdhUqnApqFR6hPxAZCoWns0ps6kNAcmiPNsEaE+SfGfn0Ug/SDh9
- zTNw==
+ :reply-to; bh=CenKEzTcPoLDRcBcEsTcXvijDJrJ/9k/bqUajU10YlI=;
+ b=FOofpqmMUBBL30RSrKRVoNH6SNNl5V5E8VI4mDIZBq1pb5wnO6y7L3PP1CxKMAsE+o
+ RPgVjrN4ES7Kq0eAnuCelCZFHieFoVAlC7wXh/Av4HNz/PX4Z5HZ4kYou1xYjOBm45AX
+ BfzXHxb9geF1mnJdo+vk1DD7V9qXhd7+hFcsT9hLhIFbmuxU0xQT62NcbXzbjhuu5XXH
+ gI98meMd3T1WF8ttLv2Jy7QLPh+mrYbNcqa7zWkkK6KLlY+di8dkH1eYoZqNLe8rbkX7
+ znu17SWaP3or23RMBTVvRCtKfSX6yXE9CybQ3AhXzOE651tHqWlnMP9NAkqH9CnFwHlu
+ YwZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778880044; x=1779484844;
+ d=1e100.net; s=20251104; t=1778880000; x=1779484800;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=ZZgub/ePDDWE5FkQuF8yjkRLktGlum9Bc8Z4CY9iTsc=;
- b=oRjrYGdlRcrg/rOC13X64QT6zaWv9BG3J5C/Htg4defntHUeQa/tu6xkhRJ3s4qBjF
- SWJCD4KDQz+7b90Jjf/vh1hVLWtqpyqaK5XGewj3Og/3nwyWyW0jY15HN5eRvL6O+QoO
- qhXXfClmAwJ6HF9eJ6cxiQPXqq/TYPORNdQnnw9EW4Cr0OHL8Z/8SJv96EzinHHT7HbL
- czmJ5cZ3n9XB/XR0a1FeYcrD/YvrltZG33JZTQANzH5yTCgi6kbJVZ39xI5qSNvu/ff7
- ypkBnA2sPg+QSck47DUmEeuznMGQ3CCAaq5J8cnQkt2dAz5lEfuHttyobC+aEpjFVunn
- dSQg==
-X-Gm-Message-State: AOJu0Yx+tdMf61oQzKgC2tVjjyG1eyoMbmuHwwybSzk85VzRlyYShcSr
- BSH6FLZmYGnksyt2yeTR8GYCkciTRwKBNRquBKkyavTNfOyWxgojD5nxqh5Wkjq7WfUc4iCfB4o
- UrhSlNP8=
-X-Gm-Gg: Acq92OGq+cdagES3zqoHzoKO0EcmXqH85z5EHxxoDihV7huq17gAbOyLoLWl99Ylz09
- V7ctGYaiu716nOws4skQpiAEKYEfKWkFCVH395QFl1CDeMrKGbqR6WQ4JHPNvO+pXacysqA08is
- ObdVWSeYA0vXqHv/Lvi1DATlmdAcGBEgDUOHq7VBTFRr2wc+9PPk+itnOtdq4Dlq3tNUaJ+Fv/p
- 8qSOW3uBo9mHBdEDWg/NBGq1GsBB2ptUis+cTaB44BKzX87nlBSOmEqSYir7DLI/xXcBExcTwXh
- PG5NsDupnTIj6N6Ozh3bNyWj6F/I3TdyZXBaWKc9epZwoE+43D4ZO77v/RUGow1x32AFVwhZn5q
- mJ9z04ARL8Ml8x5w5fKlAdmiNgg+/jcTZKHPytOE5j/XUJU7xVIQM3RHC2CRytSrsql6vvQGoc3
- LIqecS7GzDyg==
-X-Received: by 2002:a05:6830:488f:b0:7e3:d29b:fea4 with SMTP id
- 46e09a7af769-7e4fa0569e3mr4204608a34.22.1778880044066; 
- Fri, 15 May 2026 14:20:44 -0700 (PDT)
+ bh=CenKEzTcPoLDRcBcEsTcXvijDJrJ/9k/bqUajU10YlI=;
+ b=mXCpslyLM49/nnMAoViQc8WYGzSEYg1Bx2efNnhDVW13PTvHXaMqWEV2sSmM4h78We
+ IOhPRgxzGBPDP6ZVk0U4F+fNM8Q/uDiFhCBcqkOly49XgkpLsKr18GHo/ViX1mDIV8bA
+ dLSMgtQfJmZlfAJoJRktLWsCOoaj9sR591D1aDpLUFNidFE+NhfnLknh5TnNe3sdY0Ei
+ gI9XoMueOnLpRPqxvoJkXVjvJ7o3rWA06s0SqEcYAsJAHvutWJzEyZ1LIqKV7tlyPoOm
+ Y+zuX+2QxtAmOysGlNv9JLwGr/3JVogstNMDaabK9zIk2nGHtCNsbPK5roFmtceBaOXC
+ oxEw==
+X-Gm-Message-State: AOJu0YyzJleM43LIVF5iSfugRYlqeeLjlnpUStN6N0RvNJ0HaC4XoArh
+ 2ayVhV2SGwLr00RzCHt8SvaO0/Dobs7XHeJO28nOPVmNafq37EXpBYXTicvg35BauGOUaSgMomv
+ RCiamlT4=
+X-Gm-Gg: Acq92OFRtXwv5H3GU1vpBBqb0vjPxivLCgtegXzI0rW3bNSmxc2+cfXCMxQEX/PJE9h
+ UDtV9nvE5+dW3Rzt5a35ho6wEOU319Wogg9IXBms6nkSrWnFWEF14cYTIuRomb6/LGCV3qKSoBp
+ XS8Ok4QnT9NY5e2ziLB0XCt7rvsZetAUYyjpLCekAe5rR/ELici3eckXFQwgtNo7a4KnCCxljmR
+ jNh7CGrLGTm8aWb3UyVqqEtXGjo6dYFZsZWAE0YXR3ZRUmIbsp1ArdF6kMqGFce8s51nMwHC9Qa
+ dbjXFiqKYciHJfNCenRT+K2h4UsiPQKeerORg1jtN9WjWNan78YqcKMuCeN7+ZkFW/4BjP6WCv+
+ eGMm14kMaJ4jSKkVFUudUhWtbFFWAykB9yNzY+kt1+WnWNQRF/s83l+6T7v+TrO//ED40sqh3QJ
+ JrU7C2HtKzVDFvvV386Aft
+X-Received: by 2002:a05:6830:4489:b0:7dc:d601:a69 with SMTP id
+ 46e09a7af769-7e4f2b8e71emr4248089a34.20.1778880000642; 
+ Fri, 15 May 2026 14:20:00 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55b7c6b29sm2185612a34.1.2026.05.15.14.20.42
+ 46e09a7af769-7e55b7c6b29sm2185612a34.1.2026.05.15.14.19.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 14:20:43 -0700 (PDT)
+ Fri, 15 May 2026 14:20:00 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Fri, 15 May 2026 15:19:39 -0600
-Subject: [PATCH 40/66] bsd-user: Free CPU state and TaskState on thread
- creation failure
+Date: Fri, 15 May 2026 15:19:00 -0600
+Subject: [PATCH 01/66] bsd-user: catchup to locking / mapping routines in
+ bsd-misc.
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260515-misc-2026q2-v1-40-5438ca41b27a@bsdimp.com>
+Message-Id: <20260515-misc-2026q2-v1-1-5438ca41b27a@bsdimp.com>
 References: <20260515-misc-2026q2-v1-0-5438ca41b27a@bsdimp.com>
 In-Reply-To: <20260515-misc-2026q2-v1-0-5438ca41b27a@bsdimp.com>
 To: qemu-devel@nongnu.org
@@ -78,24 +78,24 @@ Cc: Kyle Evans <kevans@freebsd.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1291; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=6zH1P/EfzAjKwYbXo5qc1t1pTr0e5VpKM3jOBHc8mPk=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqB43lDJ8iIfjt9qmgALG7gHoMp/QgNSAiZ+8F4
- WlCvZg+PvGJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCageN5QAKCRBsHNEofbAR
- AJt+D/9ckcYy5nQeHZw/9rgVWmSU0SzTOl/TBcuEitvElFqH9N3WFC1/anQtRPpg+kWsYlNl3Ni
- iWDYseS6gzRQ2Me4uTrNWPRV9VNNb4j6rYuGItzjZNxDVrit3W4s4WflAygz/7e2GT7ZefLmjM9
- qV3zt+PWISglhpt2uwx8t+1BUagmg+gGA9M7zLfTZT3/Ho/lTsve1o3Z4lPN7xioU4AMyrLu5cN
- PsV3BzYU+3IqCFoL/IJByplfz73AiA7UgoJRYHz8esU1HpdD4tVkhBUO24+BWXJXTbBL3Y9poTv
- sSyGnmw/RBRtsmJCbBocChTw4QxgatKdMCVZUBkARehe5nz3/+nQ7k3RIbKfd6bGfZXxh4OhqBZ
- SQRs3daAPYfj05Z5JLXdoUkeserSmUddd4RXDhJ8G+ZZYDSMJC9c6R71gCwuXUqnUlqNZ3Vglg3
- Cyr+n+0e8Zdv4PAInKE2kRFA/Og7qnTfmh0o8EgGecYnF/DCmL2fnrpZLztw36zgNEkU+WaD881
- bUu+q5QsWK9te4QyiGca/PkHv2Ifnt3Oa8fq1dGXeuN/tNxO9stOQE4s99c9TVFXXcXpkj5pY3l
- q67kscRloKcE30aNUviCFK3+0zwzdUSelVIjlEl/6cr4nZL77qRRExBKDdRc8jeosKTnp/j7gak
- yDla+xRcS3YekJA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1492; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=pDBL7W85bLOqj4gx3AV175aLRI3QACypNGsgVG8xCQ4=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqB43h29+NZ+VZeC6ZgQiJn8HpXMjhksTZ4/npe
+ mDpleXfM3aJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCageN4QAKCRBsHNEofbAR
+ AP2XD/9Qc4PzmAM50SMpjsI9xuJtUgNDxlMZm1xVVntUSM0PGjD3PLJvtZfF5b2/h77Vov94s2R
+ aqCoEP1vwdb9PHaKa2Wdrsk/cOWdkMqhAAyOKk3fwdGCTzVL/ofT+UPHlxbm6gSWisT6XGHoVYx
+ kdjHBRVjaJwp5anILU4KhFZpiBtjXwoWDdMGek+odCfqFxRjvHhS4kDxWCSv1DHRzrjhZiO2bbm
+ vIgmVJvJI9rgSl1ClktO9FFskMW3P+w+wcby0QDgTfbjLHDPM9Qpi4GfrPaFkXzRFzBzH807Vnb
+ z0rmI3DZyXTfWyCEVsnp+fwyymCM8+isjT609Y9P1xF/RzgYTiIyBzOAWGIWCFTfYP7tHPUcNSX
+ jOldSJN/d/qkmIVIsMuO0BOPNg+jbArTkonpxat9Ne2MBgCj87jlyf7zdsq+EZcb+uHF5OjVbkX
+ KILUQ2+KCxFvUVHccjpoyzUCM/WZMNanOSJ5fT6VDO0o+Iy2gkc4vsX8q/H9CaSIuwePwhZtTRK
+ cUAmLpyM920+OhSsFDDlRLt11032wZ7ItKZteE1ZV28uZ3hnlYjhSBi7AjYGBvu6dv/M0Ja1XX6
+ e5O0Hd0+41DpCpNx+DC+E5aIkNqCyx6K5/hrn8iQVHG8AoacReF4kzqKULRirMSu+ksBkBwEmqU
+ TiO8oAmMVLSv8GA==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::333;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x333.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::334;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x334.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -117,38 +117,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When pthread_create fails in do_freebsd_thr_new, the allocated
-TaskState and CPU created by cpu_copy were leaked. Clean them up
-using the same object_unparent/object_unref pattern used by
-thr_exit, and free the TaskState with g_free.
+These were added to bsd-misc.c in a prior series. The declarations
+logically belong here, but aren't strictly needed with the current
+structure of the code due to include contamination.
 
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/os-thread.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ bsd-user/qemu-bsd.h | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/bsd-user/freebsd/os-thread.c b/bsd-user/freebsd/os-thread.c
-index 1d88ee05e4..9e6055a040 100644
---- a/bsd-user/freebsd/os-thread.c
-+++ b/bsd-user/freebsd/os-thread.c
-@@ -1633,7 +1633,6 @@ abi_long do_freebsd_thr_new(CPUArchState *env,
-     sigprocmask(SIG_BLOCK, &sigmask, &info.sigmask);
+diff --git a/bsd-user/qemu-bsd.h b/bsd-user/qemu-bsd.h
+index 756425d18e..f7c8338213 100644
+--- a/bsd-user/qemu-bsd.h
++++ b/bsd-user/qemu-bsd.h
+@@ -32,6 +32,24 @@ int host_to_target_waitstatus(int status);
+ void h2g_rusage(const struct rusage *rusage,
+         struct target_freebsd_rusage *target_rusage);
  
-     ret = pthread_create(&info.thread, &attr, new_freebsd_thread_start, &info);
--    /* XXX Free new CPU state if thread creation fails. */
- 
-     sigprocmask(SIG_SETMASK, &info.sigmask, NULL);
-     pthread_attr_destroy(&attr);
-@@ -1642,6 +1641,9 @@ abi_long do_freebsd_thr_new(CPUArchState *env,
-         pthread_cond_wait(&info.cond, &info.mutex);
-     } else {
-         /* Creation of new thread failed. */
-+        object_unparent(OBJECT(new_cpu));
-+        object_unref(OBJECT(new_cpu));
-+        g_free(ts);
-         ret = -host_to_target_errno(errno);
-     }
- 
++/* bsd-misc.c */
++abi_long host_to_target_uuid(abi_ulong target_addr, struct uuid *host_uuid);
++
++abi_long target_to_host_semarray(int semid, unsigned short **host_array,
++        abi_ulong target_addr);
++abi_long host_to_target_semarray(int semid, abi_ulong target_addr,
++        unsigned short **host_array);
++
++abi_long target_to_host_semid_ds(struct semid_ds *host_sd,
++        abi_ulong target_addr);
++abi_long host_to_target_semid_ds(abi_ulong target_addr,
++        struct semid_ds *host_sd);
++
++abi_long target_to_host_msqid_ds(struct msqid_ds *host_md,
++        abi_ulong target_addr);
++abi_long host_to_target_msqid_ds(abi_ulong target_addr,
++        struct msqid_ds *host_md);
++
+ /* bsd-mem.c */
+ void target_to_host_ipc_perm__locked(struct ipc_perm *host_ip,
+         struct target_ipc_perm *target_ip);
 
 -- 
 2.52.0
