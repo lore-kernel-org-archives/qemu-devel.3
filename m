@@ -4,95 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AABECD343F
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 07:55:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59F60CD343F
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 07:58:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNnOG-00046U-Om; Fri, 15 May 2026 03:55:24 -0400
+	id 1wNnRG-0005Lv-Mn; Fri, 15 May 2026 03:58:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wNnOC-000463-Eh
- for qemu-devel@nongnu.org; Fri, 15 May 2026 03:55:20 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wNnOA-0006vW-HI
- for qemu-devel@nongnu.org; Fri, 15 May 2026 03:55:20 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-4585a116a4aso4274387f8f.3
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 00:55:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778831714; x=1779436514; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8Zi+jHsGDDc0WKjYxfz2qk2cVKBzn6/2CQT7bKy12gI=;
- b=i0U6ukAFirxuzGCJFEzwEWR7MaaqZS/ZmZY3lmOdcAW0DsmPIcB8FJGkK9UdR1KrG7
- wyK6O1i93RpApoez/3+H3XUcJ/7PxrySRUbN/YP4Cis5BBlg65my2cYbe9/x3Gihw/+n
- kqwccz0Gm0QGnmgkCP2rSwwm+piYFk5Wd7tV6dYOAucwrFBGecV798wly6FTf6V0zIxH
- xEwoZu8JUTjZHygMmsNSV8m47cqBGMAxcziLufi9cXgo63CvZZ76z+qel4gYOpLu2aeW
- MetnHIyYxyvqnIQNPlOsYIXd6TwUZQJXkGbQ17xWhCHO+eP6MjJ7SN6apnCwSGTquu6m
- ooNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778831714; x=1779436514;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8Zi+jHsGDDc0WKjYxfz2qk2cVKBzn6/2CQT7bKy12gI=;
- b=RFbIPxXymuwlN477TBjBErPTVWhUrrlafagVZhFmXXWJ+eK9oF81wHV8gb8VvCRb/3
- Hs19CuKJAEveQMI4z7h/Xqz8umfxTlepO4143cD5DXXHY1pkgQL+vd/TdwsNGHBatZ3H
- eTeC9Hyqo5FXSe0i1u/4WjKTS5gqP8DMfUwiKRB25Uzacg5YMwVHAsY9vZgmRMdX4Uep
- Ez/n9jmrtC+43DuGpxkMr+YxcyrlEfLPqsUPvNIgoUjp3evlOnSo1kQ5Xqr+sssnXoTo
- 1IJrwWCJejPx3UvXd0lrCtvDsVo95be2mCcBH7mCDxfZO4LaHNTmsHqO4aXaVhnWnOg+
- 0Ciw==
-X-Gm-Message-State: AOJu0YzBVdxq1WGxis6Q7Iobe0Zh99Bws4ukrjsKmm3YPkasTGj6HBUR
- MbdsFfzi/v5PLE/4qyQGZEem1aQvuHAQvsPGOxU7vME2xq66TI9VN2DTCIyPRxQfzb/ToxEoB4V
- W7opuzSs=
-X-Gm-Gg: Acq92OHlXVhbGWdCt1yZ1lv+XtNwJJealtfRwmWwzzDJoU0TsZ76LQ/xPDJwJmPk2k2
- SNx94xlUpqPcbyK+AD1Zas1riDIik2aPerux95FLWItLo+H2pOKs5tBSKUlW20rWWfR1r5Fc4Z1
- zWweztYeoMJJLaQJ42bGE5sS85xjTFfgMA6/qmLqLg1cRBQX80NSn+8N7YoTtQ2NyvSv9jOHs/w
- EHlx99OE4xTowS7akKFlbHeTVeNTlWn8bLn09oxI12/8NczSiEnJ/acHp2bFOaIQZ2O8R8VOK6o
- IcNnIowNydFcR0Wy3ZB7OCS+N8G2oNWzisEQM1Vaq6+A1IGkeUnvA3E5Q1leAYcnL0E0cRpUikV
- tnLe62SOmucwF84iNrQW9wjGvBN0rbHABBOGhp9Fcj8hEu58aOHHGHdb75vWc5fIiR4pcLK3fr2
- Pgr6LYE8o7SwR4H/tf/GBcqvw=
-X-Received: by 2002:a05:6000:1ac7:b0:452:6aaf:76cb with SMTP id
- ffacd0b85a97d-45e5c57d369mr3456829f8f.1.1778831713852; 
- Fri, 15 May 2026 00:55:13 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da15a6454sm12319245f8f.34.2026.05.15.00.55.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 00:55:13 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2A0955F811;
- Fri, 15 May 2026 08:55:12 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Chao Liu <chao.liu.zevorn@gmail.com>
-Cc: qemu-devel@nongnu.org,  John Snow <jsnow@redhat.com>,  Cleber Rosa
- <crosa@redhat.com>
-Subject: Re: [RFC PATCH v2 01/10] AGENTS.md: add basic AGENTS.md for QEMU
-In-Reply-To: <agaXcTwX9PiV6Mqr@ZEVORN-PC.localdomain> (Chao Liu's message of
- "Fri, 15 May 2026 12:26:18 +0800")
-References: <20260511170500.124211-1-alex.bennee@linaro.org>
- <20260511170500.124211-2-alex.bennee@linaro.org>
- <agU4-pUgXDvyA2dI@ZEVORN-PC.localdomain>
- <87bjeicxbi.fsf@draig.linaro.org>
- <agaXcTwX9PiV6Mqr@ZEVORN-PC.localdomain>
-User-Agent: mu4e 1.14.1; emacs 30.1
-Date: Fri, 15 May 2026 08:55:12 +0100
-Message-ID: <87zf21ayzj.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1wNnRB-0005Lj-Ma
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 03:58:26 -0400
+Received: from mail-eastusazon11011067.outbound.protection.outlook.com
+ ([52.101.52.67] helo=BL2PR02CU003.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1wNnR8-0008D4-WC
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 03:58:25 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=loRE3+ng/1Ug+Z3cL1RkU3OeFT4yPeBpVJg4/54FaKB7gX7td0ZnhAlRQjyi/IdSjoBqz1DNmRkh06ERpD2WoTnxjrMqa4js0tEpsaORokucf3rWGWascSoyKdksw/4HCUihjiygrhpMm1N2e7ttbsQ+5bz0Qj/mqWRjvO6ZADzGv4DQ0jCuHSSbUk6uLTeyNUrYY6VUiPhEYq1n6GfIceDvaffo2oQ8s1q6H3BlQODVYgaL/wbdGyxT9HlnQnUzmWNix3wyNa/Z5XVlHkN9UcreXczPfVEfMUp4MvGakX/2+FvhiIO97MbA3QcsqhO0qfl1mfDwY3O3Te1/nwmK7w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=tyCnVT03mgxlCoEQ6DUm+g6FYBhyynL5tXzFP4YmR6E=;
+ b=Cd5fPwOVr6w9pfF4Lfp+szaDCu1zWweGYRsuBuyisuXWnP5R3jyN8z1y4KuVnAKyPDkMGZpnnk6cAMeilIqrcEnz86UuI8GuBhVBVmTZH9RwC5QPQ9q1m45RnzrfoTwnEL42OuMcNKPdajIoPID+X+8dKXRzWRkPunNT8bOy2pTtwxiNvWFVoPTbNOGkY6SA0B86RN+dWPl6xuruY1aLbaEQtgAVSxbLoqG0yRsZO1MhEhCD8SXpx0NiaiZCBfriPWBcNRzGKsA6iphS5RzvLFq+to1zaY+/MqaNlqu+9IscwDVp0dzF3TjBDePN9MS3AQWwQ4Kws7IJYIRvMk165A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tyCnVT03mgxlCoEQ6DUm+g6FYBhyynL5tXzFP4YmR6E=;
+ b=Anzg11ti3x2e9M8IbG1+JDddU2M+NAxANQxPJg89Q0eI9fTpeTELaB14P3FlaW+p9lpkH2X3uj/+HEQo2Uqp8xS33ypDQSVI7xyv1W8oQGnr0uC9pFTIghGxaabGfopb2enbBPeT333/IZdrFBZ1jA83DvxBBlyxW1RIpi7sC+w=
+Received: from BYAPR21CA0012.namprd21.prod.outlook.com (2603:10b6:a03:114::22)
+ by BY5PR12MB4273.namprd12.prod.outlook.com (2603:10b6:a03:212::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.25.18; Fri, 15 May
+ 2026 07:53:12 +0000
+Received: from SJ5PEPF000001D3.namprd05.prod.outlook.com
+ (2603:10b6:a03:114:cafe::9) by BYAPR21CA0012.outlook.office365.com
+ (2603:10b6:a03:114::22) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.48.10 via Frontend Transport; Fri, 15
+ May 2026 07:53:12 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
+Received: from satlexmb08.amd.com (165.204.84.17) by
+ SJ5PEPF000001D3.mail.protection.outlook.com (10.167.242.55) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.25.13 via Frontend Transport; Fri, 15 May 2026 07:53:12 +0000
+Received: from SATLEXMB04.amd.com (10.181.40.145) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.2.2562.41; Fri, 15 May
+ 2026 02:53:10 -0500
+Received: from satlexmb08.amd.com (10.181.42.217) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 15 May
+ 2026 02:53:10 -0500
+Received: from [10.65.99.36] (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.41 via Frontend
+ Transport; Fri, 15 May 2026 02:53:07 -0500
+Message-ID: <d26cfb4b-d70e-415c-8747-904d94f8ccb2@amd.com>
+Date: Fri, 15 May 2026 15:53:07 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 1/1] numa: add 'memmap-type' option for memory type
+ configuration
+To: Igor Mammedov <imammedo@redhat.com>
+CC: <qemu-devel@nongnu.org>, <david@redhat.com>, <gourry@gourry.net>,
+ <jonathan.cameron@huawei.com>, <apopple@nvidia.com>,
+ <dan.j.williams@intel.com>, <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>,
+ David Hildenbrand <david@kernel.org>
+References: <20260306082735.1106690-1-FangSheng.Huang@amd.com>
+ <20260306082735.1106690-2-FangSheng.Huang@amd.com>
+ <20260514150559.3148f9dc@imammedo>
+From: "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com>
+In-Reply-To: <20260514150559.3148f9dc@imammedo>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: None (SATLEXMB04.amd.com: FangSheng.Huang@amd.com does not
+ designate permitted sender hosts)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ5PEPF000001D3:EE_|BY5PR12MB4273:EE_
+X-MS-Office365-Filtering-Correlation-Id: d6c40f5a-521b-4705-ad46-08deb25703cb
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|82310400026|376014|36860700016|13003099007|4143699003|11063799003|56012099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: 63BUjk/xOUQ+ply1AzdauGHzswKb6fqveH/0poPNwz8oxZrLSGXAlp+MsdLor6LBJ42Uz9KxsDnqqHxQtagMGbeF7wx/ZEpLF1q9Til07NpPSBGPMa49T0UOQ0mF4aVVwDIKiawGo4107zyjnm6VclgnBQKZdEHGYc4NFCBh2VaSMbtCoIZNLIbu6dIwpXP6jfBRw9kKgSBBQ/HYIBQLkUvDIN7DsR/vZ1rNnS2G4ypU6AIjZ2rmXkJZFjudjlCXXcXc/YJoAh8sSlb+ITh+Z7M7F77eSpaFVsbMrfI2unZs9KJIxmpJF7jonrSxGrv0cblhufeTfPzcQ+ToEKQGY4d+m4Pg5eep140htDZbPlStV3P73KxEvtJi14Wpr2S4AfBV+TDNCSZ+y/K92eG1nhKkHl6DFzP47bPPdnTe/bJqkQxRFJu4GP1mElwNnuo5BVK3hQeL2LMFtdvwc3egIA6yt5fIbeMrod27fepY9tCfaix9hF1TJ3JZXEfa1H3YAHKJBUHCWlX7O+yYEjhDyuvdrTBb3wjB1TtHll3m9/P2gW9ZKru9T+QOXswTMUcAjTIyswQ02Cnu/itT7bWFyea5AWd8VPdGr9SQwmudU3dk99mANGRmlHSmRgc2AzveEPDj8jvXQjFgGiRg7VjZxa42R5UwrvDk3ACR/6Bgj5+32lptqjObmQJgZUGezwiVAOcjbwR+QUBx+Cyesr+wnYq2HpEH4XD3DgMFomaF0/4=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb08.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(82310400026)(376014)(36860700016)(13003099007)(4143699003)(11063799003)(56012099003)(18002099003)(22082099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: HGGlvBxLcQjJdkJNDQ6MmTPljUzIeIkYAxBZ4vod0F5qFH/LM6lGbc2yWUh5ZcYMwrBijeDh98ClHxMTgjIeQCfW5+XG7fLH54Hvp6nSV4bfx6J/mootjxEF6aDMhbj4y/C0hzscZF4tnBYAB24+SeknE8eLS7rZHTyeSiwxiOLgPB93OgGdB4SohE7yIb9XgdalW1xhDzHBvFmJT/XtqHAeKPcoxfkRk8fsas0oTZNP+g74PKS/Pl2bDKFfeOP8bKhNnF0I3mpLCoSqh8U7VwmoWIG2uHFYiXP+G1/WMCcTPrsdzSJASYNFp50HX3qSWQZFK6pftUn8bc3tOjA40HpgBGk6x3r8SkXa3tZvI8sK3GjyDdLbW8XmakIB6Ly4/V66SrffD/zGrtrGAZN9AojVuojlKBl64sGCRvX3/ImVhMD8gIGXL3H7lPt21/4w
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 May 2026 07:53:12.7704 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d6c40f5a-521b-4705-ad46-08deb25703cb
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb08.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001D3.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4273
+Received-SPF: permerror client-ip=52.101.52.67;
+ envelope-from=FangSheng.Huang@amd.com;
+ helo=BL2PR02CU003.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,94 +137,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Chao Liu <chao.liu.zevorn@gmail.com> writes:
 
-> On Thu, May 14, 2026 at 07:36:01AM +0100, Alex Benn=C3=A9e wrote:
->> Chao Liu <chao.liu.zevorn@gmail.com> writes:
->>=20
->> > Hi Alex,
->> > On Mon, May 11, 2026 at 06:04:50PM +0100, Alex Benn=C3=A9e wrote:
->> >> This was written initially written by ECA based on its understanding =
-of the
->> >> code base. I then expanded it with links to the various documents and
->> >> the general coding style.
->> >>=20
->> >> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> >>=20
->> >> ---
->> >> v4
->> >>   - will add AGENTS to list as we go
->> >>   - moved QOM, QAPI and trace details into qemu-code-explorer skill
->> >>   - add section on Security policy
->> >> v3
->> >>   - More MUST
->> >>   - Remove build and test in favour of agent reference
->> >> v2
->> >>   - more build details and source overview
->> >>   - more on commit style
->> >>   - give plan files a place to live
->> >>   - add Daniel's agent suggestion
->> >> ajb:
->> >>   - I made a slight tweak to use pyenv to run single tests
->> >> ---
->> >>  .gitignore |  1 +
->> >>  AGENTS.md  | 78 ++++++++++++++++++++++++++++++++++++++++++++++++++++=
-++
->> >>  2 files changed, 79 insertions(+)
->> >>  create mode 100644 AGENTS.md
->> >>=20
->> > Do you think we should add CLAUDE.md, GEMINI.md, or other agent-specif=
-ic
->> > prompt files that simply link to AGENTS.md, to better support different
->> > agent CLIs?
->>=20
->> Surely all the mainline agents will read AGENTS.md by now?
->>=20
-> That's true, but in terms of skill compatibility specifically, there are
-> still some subtle differences. I ran detailed tests on opencode, claude,
-> gemini, and codex, and here are the results:
->
->                        | codex    | claude     | opencode  | gemini
->   ---------------------+----------+------------+-----------+----------
->   AGENTS.md            | yes (1=C2=B0) | yes (fb)   | yes (1=C2=B0)  | no=
- (1)
->   .agents/skills/      | yes      | no (2)     | yes       | yes
->   SKILL.md             | yes      | yes        | yes       | yes
->   native dir           | .codex/  | .claude/   | .opencode/| .gemini/
->   x-tool compat        | none     | none       | .cl/.ag(3)| .agents/
->   auto-trigger         | yes      | yes        | yes       | yes
->
->   (1=C2=B0) =3D primary, (fb) =3D fallback.
->
->   (1) Gemini CLI natively reads GEMINI.md, not AGENTS.md.  Redirect via
->       .gemini/settings.json: { "context": { "fileName": ["AGENTS.md"] } }.
->
->   (2) Claude Code only scans .claude/skills/; .agents/skills/ silently
->       ignored.  Workaround: symlink .claude/skills -> ../.agents/skills.
->
->   (3) OpenCode scans both .claude/skills/ and .agents/skills/ as compat
->       paths, in addition to its native .opencode/skills/.
->
-> The current impl maintains maximum compatibility. If we need to fill
-> the gaps, a good approach might be to add a script that registers
-> .agents/skills/ for agents with poorer compatibility.
->
-> Also, I'm still trying to test these skills with as many models as
-> possible. I'll report back once I have results. Thanks Alex for the
-> contribution.
 
-Thanks for trying them all out. I don't think the model itself makes too
-much difference (I've been using Gemini and Opus) but my agent framework
-is ECA. I must admit I haven't tried any of the TUI agent apps.
-
-I should post v3 later today with a split AGENTS.md (basic code-provenance
-and security policy for merging, with the rest in a following patch).
-
+On 5/14/2026 9:05 PM, Igor Mammedov wrote:
+> [You don't often get email from imammedo@redhat.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
+> 
+> On Fri, 6 Mar 2026 16:27:35 +0800
+> fanhuang <FangSheng.Huang@amd.com> wrote:
+> 
+>> Add a 'memmap-type' option to NUMA node configuration that allows
+>> specifying the memory type for a NUMA node.
+>>
+>> Supported values:
+>>    - normal:   Regular system RAM (E820 type 1, default)
+>>    - spm:      Specific Purpose Memory (E820 type 0xEFFFFFFF)
+>>    - reserved: Reserved memory (E820 type 2)
+>>
+>> The 'spm' type indicates Specific Purpose Memory - a hint to the guest
+>> that this memory might be managed by device drivers based on guest policy.
+>> The 'reserved' type marks memory as not usable as RAM.
+>>
+>> Note: This option is only supported on x86 platforms.
+>>
+>> Usage:
+>>    -numa node,nodeid=1,memdev=m1,memmap-type=spm
+> 
+> in short:
+>    don't do it this way
+>    I'm against merging it as is, till you convince me otherwise.
+> 
+> more detailed answer:
+> 
+> * mandatory bashing chapter:
+> 
+> the more i look at it, the hackier this approach looks to me,
+> and what even worse that nonsense propagates to firmware.
+> 
+> Judging by commit message, the goal is to expose some RAM as
+> E820 SPM, to guest (that's it).
+> 
+> You however picked -numa node as a way to achieve that,
+> and then hack the numa code not to generate numa data for it (SRAT)
+> and massage e820 to exclude SPM from  RAM entries.
+> 
+> But at this stage I don't really see a good justification for hack(s)
+> this patch introduces (it's definitely is not in commit message not cover letter).
+> 
+> And until alternative approach is not explored and proved to be worse,
+> I'm against merging this patch.
+> 
+> * suggestion chapter:
+> 
+> I don't recall but I likely asked before
+> why not use device memory instead for it (aka DIMM device or some device derived
+> from device memory object and then add e820 entry for it).
+> 
+> It would be a way more simpler approach and impl. without need to resplit
+> anything in e820.
+> And no need for messing with firmware (SeaBIOS: RamSizeOver4G patch) nor EDK2.
+> 
 >
-> Thanks,
-> Chao
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Hi Igor,
+
+Thanks for taking the time to review this -- and for the candor in
+the bashing chapter.  Before going into the bigger picture, let me
+re-establish one factual point that v7 didn't carry forward from
+the v6 cover letter.
+
+On SRAT generation:
+
+v7 only suppresses SRAT for memmap-type=reserved.  memmap-type=spm
+nodes get a normal SRAT Memory Affinity entry.  This was shown
+explicitly in the v6 cover letter, which v7 didn't carry forward
+since v7 is a single-patch series.  For the spm case:
+
+     [    0.042582] ACPI: SRAT: Node 1 PXM 1 [mem 0x280000000-0x47fffffff]
+
+Full transcript with all three memmap-type variants side by side:
+https://lore.kernel.org/qemu-devel/20260226105023.256568-1-FangSheng.Huang@amd.com/
+
+The bigger picture -- real-world context that drove the design:
+
+The use case is GPU/accelerator HBM exposed to the OS as SPM.  On
+bare metal, the platform firmware:
+
+   - emits E820 type 0xEFFFFFFF (SOFT_RESERVED) for the HBM region;
+   - emits ACPI SRAT memory affinity entries that bind HBM to a
+     dedicated proximity domain (NUMA node);
+   - tags the accelerator's PCI device with _PXM matching that node.
+
+That gives the device driver a stable lookup chain at runtime:
+
+     dev -> pci_dev_to_node(dev) -> SRAT walk -> HBM GPA range
+
+NUMA node here is not incidental -- it is the OS-exposed
+intermediary ID that the device driver uses to find its own HBM.
+This is the in-tree path used by accelerator drivers today.
+
+The "-numa node + memmap-type=spm + E820 SOFT_RESERVED" combo in
+v7 is a direct 1:1 model of this BM topology.  The E820 retyping
+in the patch is exactly what makes the guest-visible E820 match
+what BM firmware emits for the same kind of region.
+
+On the DIMM / device-memory alternative:
+
+David pointed this out in the v6 thread, and Gregory's reply in
+this thread reinforces the same point -- DIMM / NVDIMM ranges are
+described in E820 only as the hotplug area.  SPM needs to be in
+the boot E820 from the start so the OS classifies it as SP and
+treats it accordingly.  Going via DIMM would also detach the
+memory from the NUMA topology (no SRAT entry tied to the device's
+_PXM), which breaks the dev -> node -> SRAT -> HBM lookup the
+driver relies on.
+
+Happy to dig into any of this further, or to reshape parts you
+still see as too hacky.
+
+Best regards,
+FangSheng Huang (Jerry)
+> 
+
 
