@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ECBECD4F3D
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 10:51:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D80C1CD343F
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 10:52:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNq7L-0000em-NC; Fri, 15 May 2026 06:50:07 -0400
+	id 1wNq7O-0000hm-68; Fri, 15 May 2026 06:50:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNq7C-0000c4-TW
+ id 1wNq7A-0000bp-QY
  for qemu-devel@nongnu.org; Fri, 15 May 2026 06:49:59 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNq7B-0001EN-C9
- for qemu-devel@nongnu.org; Fri, 15 May 2026 06:49:58 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4891b0786beso58665475e9.1
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 03:49:56 -0700 (PDT)
+ id 1wNq77-00019k-EV
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 06:49:55 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-44a5174670eso5074062f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 03:49:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778842195; x=1779446995; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778842191; x=1779446991; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Y4CnK/qfjf+jShgaVtl00CoGtL7EKPqfSzGBHgGf5sg=;
- b=p+GU+96HHNlBxCQSCOdZX0P5GD06Oiu3w1mB7F+hGCZxa7UyAI7qK3gLztmKS/VfKk
- 86A1LDvoJfMTG7ramyBT8ZMCBePkCecc1zDMLSD+AFw4bDQT3CvbsIWrJgyT+4Vu3sfj
- 3LkYqFHdUs4tdwSzCfjxDLg+XxW946mEAWELqWpqSUUSsI2W6i8/vNEs/3N5rb+9/MW8
- +tgxZVB+wziCzIlz5Y0OpbLUFaKtHghYDYY1GVog50JsteWX5NJwdTTMtP63M2HKmkl7
- 5Ikhi3gJ2bZqSYpDtMPHGxfAoMmVvr6+1r0Hp/wvYqoP3QcCpv8edgIVon34c74dkgLG
- LJsQ==
+ :reply-to; bh=hW5w2LIFgMkpT09kp6RNzcjxwDvmo2jSkWbQBxRR2No=;
+ b=c3enBVCEtNSSONfdARMno5EZ4WXKTACJOcINLvGZ/ggWrwkBVL8jT8zXp3bps1dCsU
+ ijkpWt9h+yBI2qZoWwchxO7rPJxj3O7ovbE3fhizx5vlmyWwn9ig+Cu8ATeIe7Sgf7bV
+ cvIBwXMbWSHOk74oHVCRs6CgUMh6Ov3J+++qZWMkCQnxEpW6lrHYMnyoI6MoKFuvL4mV
+ +8hp01MYjVhFBPRsflRLd8vKyjqklv2Z7L3egO6/H5bsPieyaVcI93GAPiEWuNG9woks
+ 4DXJeh3zFlOQ8bn1lSe3yP2VH/lZItLJOw2s07Gd0+62VwvOB9J3XgkbJCu2tMLEL4n4
+ cK0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778842195; x=1779446995;
+ d=1e100.net; s=20251104; t=1778842191; x=1779446991;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Y4CnK/qfjf+jShgaVtl00CoGtL7EKPqfSzGBHgGf5sg=;
- b=jLSrU6AR0tZ2/DUTILKO1IUE57CL85bhn+HjvIAG1IyNJx+uP/9cFjP1LUAuNN+ZpJ
- hRIDHeCJzi/QjEJHiv/sb+p6xP3VojFTFjdMdxiVdRRKT7P9YQBxBDF7r6HQlFbtrr2d
- hQ7z4Vo0ZQBY6dO3I0ij7b2fa/I6HYhucmrGUFhUDfj9yx0lvY1CWzkLskWPC0NEFtm6
- ddX0md8QBuUtnpx2wIjgC30CRjelVdozmbV+JQg77Hy3FWRTT2Nyvt8OZ3Oi9P6wqQ/x
- W++v9Y+kZ+kbrtll4FAZ09ayIfGb7Bd7D2ujqDhu/xR6ZZUInk0iiElVWHB+RyADmmXT
- 3/DA==
-X-Gm-Message-State: AOJu0YwjCDe/ajjhvLFfUqrYDiGyaZUMSFFwY3y9t3vrucsZ8Eb/yLal
- Buv43FXtpdpzo7Z8Ib4ntj4ymtSYFspsbpQI6HHavahaysGL+s2vTSgWLUwWC4UNxVr4Kfo166w
- MXqEN
-X-Gm-Gg: Acq92OHQYzJ9m110F76HGSLwkeRdkMUv9qcvgvnTri3GMb24HyqL6EvyfY86PVs5n+N
- fwKuJEN/MlVjpmS4ap3GpaV1K+q72+mf42twvUCmHXT5B+ZHotao8la1tNWLGypfLnRLv1w2sJT
- UpIHT3Zop3vdQeCy3AYfIXaIjnLYb9R+hM+cLkIj1EJ7M6T04y/E+6B3DQrIOxNVYhCSR3svP6T
- aJK4WjCOF/r+Wb+aJGvi25b3zYDNlIni7I/Am9cZA2syMn+GjJakum3P/CXsuy2SBQ8Ck6Sfvzv
- 1u1Q52RxBeqGplTR11vF6CVofVx9VWKVKFiNGAOnDGh71RA7Fb7Dnby/XQexyT5nCipMyoh6bka
- RaZKcm+YZzw8UWX+nglELJ0miSlLEpek6M46VETQSWr58qfPlJSIgJFn3Z4KJPgDKkAQB0XFg2t
- TMDCtUBod0H4y8QQT7uP9RkIy49aGg/qJIr6vUyiHfnpoZfPSYcxtH2IX3docyGcRog5XYNv98z
- 9X+I6HZz20cd1eoa/I/PVIMEkZ5m71TNS0PbFpjqg==
-X-Received: by 2002:a05:600c:a417:b0:488:a882:c7 with SMTP id
- 5b1f17b1804b1-48fe65168a7mr40065315e9.25.1778842195620; 
- Fri, 15 May 2026 03:49:55 -0700 (PDT)
+ bh=hW5w2LIFgMkpT09kp6RNzcjxwDvmo2jSkWbQBxRR2No=;
+ b=B7wFapfjRN6rWgfFrg/ISvYJ9PEAxr3H1ED2OMi/M7xwFCAdpGJYczxHd50G73YflQ
+ g3lxFQQGsgM1UYxQae79t71ieEI33ymyxh+F57BN/2UwKBBDXKdArUQcPyyzQOpf43ZU
+ GYkYNAhEIZc3npU8tUuRWIxswIzKGe/5J/OkfL7Ez71XmEo8nlSofxd0ji0F2sFhWuQC
+ gfQw6ngzQdTqTXkHX3REwUoBkuqpMIPeTIDrM04L1yB4YzzUCVzFRb59+PpbRz/lW90C
+ M4x85QZcg7clT7kWsLds9aFt/g8rxmNYV0tbmz5lvsO6XwcR+FrAqFiyDS5JsLfX8wjS
+ lwCA==
+X-Gm-Message-State: AOJu0Yw/XMVlJy+CprbygB67VrHAp4YRCc3Dt7Bf0jfCHqMUcN/cvYIT
+ tSMddLGNP7L933ogM29jLuwR8DdDXQONYiDWgC98OxC2ZAnyqStlyOA0z7DsQXpW4att9SIWcfy
+ 9pXqw
+X-Gm-Gg: Acq92OGmXV+cGnIv/8aNB9iiWXVhXrhTxwoO3JLLMOMvi7HikNdlSdRFzCZvB/090sU
+ HnlUawbV8tWhjHhr+1aySH+NzBif1zvXykEqkXNuOjvq7mrlC4C6aEGP/qqitpW+5Sky78mF2AT
+ mshFBAyIHTbBcJqEG7gHoc3VtD2w5hYrzmRtZ+T6+p0p0jxc12lMIBBwzqQrZZ3pJko/42LCv9M
+ FsQJRPawNnYwKSgtQZLsoRTzlE/YhTXac1ShqUxrIrMbiCDVA9R2qM+U7acn2ZwYcx3knh3lbZl
+ GhfO60zrguc9AqnVL29R+zvRkShU4rE+keVLqb23jNuwWp4Z8hea08X+RbDL7v2IuIbKwDz7wdP
+ vv32FWAffcegBI8qCylOeq6VDpZ4MWovUZTdXlvMM+LhiaSEb/Ur9h6bIQrXPf3aSn1rbrLcNbR
+ zLxyf8aSIm7guijU2dzIFRT1v0JZQasuVkR0jL2z9Qw2+gvM9TPr0imgUwscAvm2Yy0ImrjcFU/
+ ++ySBGOmG3jvHlywBEJMR6nZ+0VYS8=
+X-Received: by 2002:a05:600c:c173:b0:48f:e230:c3f8 with SMTP id
+ 5b1f17b1804b1-48fe661b50amr47559915e9.30.1778842191274; 
+ Fri, 15 May 2026 03:49:51 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48feaa2949asm18194355e9.1.2026.05.15.03.49.54
+ 5b1f17b1804b1-48feaa2949asm18194355e9.1.2026.05.15.03.49.50
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 03:49:54 -0700 (PDT)
+ Fri, 15 May 2026 03:49:50 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/23] target/arm: GICv5 cpuif: Fix overflow in left shift
-Date: Fri, 15 May 2026 11:49:29 +0100
-Message-ID: <20260515104945.4145203-8-peter.maydell@linaro.org>
+Subject: [PULL 03/23] hw/arm: fsl-imx8mm: Don't call qdev_get_machine in init
+Date: Fri, 15 May 2026 11:49:25 +0100
+Message-ID: <20260515104945.4145203-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260515104945.4145203-1-peter.maydell@linaro.org>
 References: <20260515104945.4145203-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,62 +100,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Coverity points out that we forgot the "ULL" suffix when shifting 1
-right by a bitcount in various places, so for bit counts above 31 we
-end up shifting off the end of the word.  Fix the three problems
-Coverity noticed and one more of the same kind that it didn't.
+From: Vineet Agarwal <agarwal.vineet2006@gmail.com>
 
-CID: 1659588, 1659591, 1659559
-Fixes: ce245ac6957 ("target/arm: GICv5 cpuif: Calculate the highest priority PPI")
-Fixes: 3f79212abae ("target/arm: GICv5 cpuif: Implement GICR CDIA command")
-Fixes: 49f4c98648c ("target/arm: GICv5 cpuif: Implement GIC CDDI")
+Calling qdev_get_machine() from fsl_imx8mm_init() can trigger
+an assertion failure because the machine may not be created yet.
+
+Reproducer:
+
+  ./qemu-system-aarch64 -S -display none \
+      -M virt -device fsl-imx8mm,help
+
+This hits:
+
+../hw/core/qdev.c:844: Object *qdev_get_machine(void):
+Assertion `dev' failed.
+
+Move the CPU initialization into realize(), where accessing the
+machine state is safe.
+
+(This is the same issue we fixed in the fsl-imx8mp machine
+in commit b67d0bcdd41c; we apply the same fix here.)
+
+Signed-off-by: Vineet Agarwal <agarwal.vineet2006@gmail.com>
+Message-id: 20260511115918.32765-1-agarwal.vineet2006@gmail.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260512093856.3197700-2-peter.maydell@linaro.org
 ---
- target/arm/tcg/gicv5-cpuif.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ hw/arm/fsl-imx8mm.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
-index bc44a7fc11..98238ada19 100644
---- a/target/arm/tcg/gicv5-cpuif.c
-+++ b/target/arm/tcg/gicv5-cpuif.c
-@@ -275,7 +275,7 @@ static void gic_recalc_ppi_hppi(CPUARMState *env)
-             int ppi;
-             int bit = ctz64(en_pend_nact);
+diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
+index 97c3f8542c..875e92bb34 100644
+--- a/hw/arm/fsl-imx8mm.c
++++ b/hw/arm/fsl-imx8mm.c
+@@ -157,16 +157,9 @@ static const struct {
  
--            en_pend_nact &= ~(1 << bit);
-+            en_pend_nact &= ~(1ULL << bit);
+ static void fsl_imx8mm_init(Object *obj)
+ {
+-    MachineState *ms = MACHINE(qdev_get_machine());
+     FslImx8mmState *s = FSL_IMX8MM(obj);
+-    const char *cpu_type = ms->cpu_type ?: ARM_CPU_TYPE_NAME("cortex-a53");
+     int i;
  
-             ppi = i * 64 + bit;
-             prio = extract64(env->gicv5_cpuif.ppi_priority[ppi / 8],
-@@ -631,7 +631,7 @@ static uint64_t gicr_cdia_read(CPUARMState *env, const ARMCPRegInfo *ri)
-      * gicv5_activate() cause a re-evaluation of HPPIs they use the
-      * right (new) running priority.
-      */
--    env->gicv5_cpuif.icc_apr[domain] |= (1 << hppi.prio);
-+    env->gicv5_cpuif.icc_apr[domain] |= (1ULL << hppi.prio);
-     switch (type) {
-     case GICV5_PPI:
-     {
-@@ -639,7 +639,7 @@ static uint64_t gicr_cdia_read(CPUARMState *env, const ARMCPRegInfo *ri)
+-    for (i = 0; i < MIN(ms->smp.cpus, FSL_IMX8MM_NUM_CPUS); i++) {
+-        g_autofree char *name = g_strdup_printf("cpu%d", i);
+-        object_initialize_child(obj, name, &s->cpu[i], cpu_type);
+-    }
+-
+     object_initialize_child(obj, "gic", &s->gic, gicv3_class_name());
  
-         assert(id < GICV5_NUM_PPIS);
-         ppireg = id / 64;
--        ppibit = 1 << (id % 64);
-+        ppibit = 1ULL << (id % 64);
+     object_initialize_child(obj, "ccm", &s->ccm, TYPE_IMX8MP_CCM);
+@@ -229,6 +222,8 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+     MachineState *ms = MACHINE(qdev_get_machine());
+     FslImx8mmState *s = FSL_IMX8MM(dev);
+     DeviceState *gicdev = DEVICE(&s->gic);
++    const char *cpu_type =
++        ms->cpu_type ?: ARM_CPU_TYPE_NAME("cortex-a53");
+     int i;
  
-         env->gicv5_cpuif.ppi_active[ppireg] |= ppibit;
-         if (!(env->gicv5_cpuif.ppi_hm[ppireg] & ppibit)) {
-@@ -707,7 +707,7 @@ static void gic_cddi_write(CPUARMState *env, const ARMCPRegInfo *ri,
-         }
+     if (ms->smp.cpus > FSL_IMX8MM_NUM_CPUS) {
+@@ -237,6 +232,12 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+         return;
+     }
  
-         ppireg = id / 64;
--        ppibit = 1 << (id % 64);
-+        ppibit = 1ULL << (id % 64);
- 
-         env->gicv5_cpuif.ppi_active[ppireg] &= ~ppibit;
-         gic_recalc_ppi_hppi(env);
++    for (i = 0; i < ms->smp.cpus; i++) {
++        g_autofree char *name = g_strdup_printf("cpu%d", i);
++        object_initialize_child(OBJECT(dev), name,
++                                &s->cpu[i], cpu_type);
++    }
++
+     /* CPUs */
+     for (i = 0; i < ms->smp.cpus; i++) {
+         /* On uniprocessor, the CBAR is set to 0 */
 -- 
 2.43.0
 
