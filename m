@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B25C2CD4851
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CECF9CD4F3D
 	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 12:58:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNs6k-000649-Mb; Fri, 15 May 2026 08:57:38 -0400
+	id 1wNs6j-000642-Nw; Fri, 15 May 2026 08:57:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNs6j-00063P-33
- for qemu-devel@nongnu.org; Fri, 15 May 2026 08:57:37 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1wNs6g-00062b-Q0
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 08:57:34 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNs6h-0000VU-BQ
- for qemu-devel@nongnu.org; Fri, 15 May 2026 08:57:36 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-48896199cbaso78869775e9.1
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 05:57:34 -0700 (PDT)
+ id 1wNs6f-0000V9-2e
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 08:57:34 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-48fe26a177cso12687985e9.1
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 05:57:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778849854; x=1779454654; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778849851; x=1779454651; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JuPFKRaiB2fHObLjLFJOcy++OZ2S1wxCfyuKUlasefg=;
- b=mdyGYS52/J39fIaFwU/j6OKxyWVGV1J9Y10ahn/Am/ASd2QwkUJivXfrGbUth2Ef4Y
- eGb8i2NUAVvOQbm2tSZCJD1uIIpkCQptgpWlLEpqfA245wqz+Hj0e8/NI9Y7Rz28C/aG
- +qnDCl1KzVl5m6Ak4Hg3yUaQzbgJo7DOINGYlhcal8UfJdV45RrhEipYWo8+MUWyFPW1
- bNU04G68FW5FjFN7DzM5Z1mUVKOGs9bmZujhP0WGeeyEW779czpFbb1crrzJmLR2Ricl
- wYq59MmARKPK2ifJ08utYzMR8a5GUxxhRBjYY0vIFyDOrmhHvhoDdaoSopWI1HmB5Zgn
- IBYw==
+ bh=X9LWXq81PmoJ4M5/Kig4f6Q90NNHPt9NWDEzmnCq//U=;
+ b=tw4N09Jf25eURFmyJxHa16XHes1RUCP9z3OiYNuuCmwk2lKGwo2JTa2b20W0051e4A
+ v7fLXURMl1cH0q7VgcLweVn2JX2HG8Q0i2Y9Cr/OHnKlIZgLMEV78ItsE8A2I4PO/IoZ
+ PCiHParZEopsO+mCW0WxkSKYZzHXlLAnFj0zuCAbZa7MdH+qxVbU+kOVD/3oOhJ/bpqe
+ XHYml4xIaHe0QstCUqE19foe6UILOa6sTaVl17NO67GcHi35F5M/Bt0GLESeAcVUiLEz
+ NcGGYkSum0EKdsz0Igpw5OEHF+lRTy0oiVR4Ry/L34oJGPp2COZnOLUA31j4FQPMGZ2m
+ twMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778849854; x=1779454654;
+ d=1e100.net; s=20251104; t=1778849851; x=1779454651;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=JuPFKRaiB2fHObLjLFJOcy++OZ2S1wxCfyuKUlasefg=;
- b=eak4az0hMVLe5HQWWz5bxrtDYYTNPqXCdlXWAg2d5B9wT5P1Mcm6aVRWvoYP3c2hTK
- dU7InU9i+57zEPNFvXcAy7cLk3zAczbmZ5b8eFzy9VAux/fT3qLoH6DHmlnWNmPtVwow
- fI5q+e0jLQ50li3HAKJOO013T14kBMIEAequ9V6utlwlO0fZ9RBbh3CU9CJOUrgxiJ5h
- GmFLknhgxVkB6Mn5e7dtFQrioQmZjk+uXAXJcQZHlOh8f/z3a+oledjA5mI6Yo2obyxv
- spMlBut3CytEHjcFTp/L3o2+q2qRmx3l7yUVlGdeIsqwiXqY26PAGYAmU+FYtvUbVlFF
- c56g==
-X-Gm-Message-State: AOJu0Yx/+F/xpIivAupf5oWdRqRXIISHgT5eg3Gfo3cnFTmRYIgbuvAL
- WUMUhkLs2lVk18B7/OJtcequWo5QgPf06iSoMR3dIumAtelsFiglq+EM2x+ueX+49jsSG8WNyh1
- uDlJD
-X-Gm-Gg: Acq92OHKzxCcU+DUuHCtTxAVZRr72/47UKgRcNHxwLpYRAy/MaSa3eGLYm8Fe1ogjU2
- J41c+4k6r3hugstfxPsl+8PHzLDpDe7VMrmJ8Fr1xN7Qyec+6LckWSPMBMI0szMdXuaQSGZG9fi
- hiCO58o1TmLhJn66jy5sK3uWaA0XMbuxGUiQUBlmQ38/ItbrPhi7f1elevv1EMbKJ12TVnUDOVE
- 7d/jNBfyP3JCWCprjjMH5lHUH8GEMyM/gymtrPmw3Kf4KpKQhIH7Zy2AWf6Lg/THnnlXPvvEbHD
- eB9QO8NDkEYE7kzEWyyKV34IVpUkYR2yjB0/CyJ0h2gG6wyK/+u+bb35BTjdde4KWPEWagKdB4b
- yAKyWSmRCfuCpFmskkTv1KMagjLCt6Qcvwxb1YBOQXPuZn5x6XcdzeTYU8rgU+VfdwyR9lLGqxy
- PVJOyo8soOZc+fUJHvnmPBCyOdTF/Iu6to+x0xROyUu4pVfUpmNJSFszjENcdURdoU+IM8xOTdj
- IqUyg50WQj6JYOE3M8uLukDYcDsmvs=
-X-Received: by 2002:a05:600c:8184:b0:48f:d1b8:9aa5 with SMTP id
- 5b1f17b1804b1-48fe60ecd7dmr50984535e9.8.1778849853832; 
- Fri, 15 May 2026 05:57:33 -0700 (PDT)
+ bh=X9LWXq81PmoJ4M5/Kig4f6Q90NNHPt9NWDEzmnCq//U=;
+ b=CitakSVMMWSs2OpwIqGKtX+McX/66KbLwr7HjrIiks8YKUPmm+ybXXYWak5bhWLXtV
+ 5FzUtjuUX48qE4sdNV9Sw+Br3flgrRh9VpaPxBeJa+6uQPGixr2vTzCpO+RIi5CQRj3K
+ VvrwHxOCyON2eWwMy2t+qJHhI1TSTsFqXED8W5ktviGkNKbtWZ3V6Mwsq9u4Q/O6EY5m
+ hcFbyJVyeKajepsL4zmrmE05QBwvbCOIFCmlD8TZzYOGPA+Tct1vtjBOVOZNfKlxvE5k
+ 02Q92InQgbNc2Q5r3nK3rvXV/1Dtp56lhPgWYsFi9Vsw2EqK/+MEkcEBKb2iN0lCBf5P
+ xneA==
+X-Gm-Message-State: AOJu0YwQ5TFvPxWkEf0ebR+1eEmi9N0HN17VuV83fBlVeM/JKpsh5YN0
+ Ug7OpE3AkkuMvKhqDSJH1RGqyvQg2oDunZ873axDFLvh4yu24eOVYC6nP2p9WeK9jZiV2NJhP8U
+ PfgRx
+X-Gm-Gg: Acq92OEln9fVlk3VMw/leA0jr9DUF3bOF1v3v+TKQCXaMi9MSVH4toTdD2JtPtVJXIW
+ Dld3bS7ozCmTwrR6rXlPhPVByWMZjPtTmJHDsXQGdd3xyLYblI6dzRy5EtAbfi/p47i22QnOTPq
+ eJfRuK4dARKEcFqa9/WXMQGltCsI3FuAVTVHBk4A0TCtpbWUvVxVeDMEDTXnq0zspdKd2v0WIye
+ 71huR6J78QxZ2qaL8pD9u2GVd6gHmA4w1PZBO/m/+qJipOLxLUof8I3281jMEM1C6O4dE3yhtBE
+ pNoQd7wdg0TgPnuqBApuHaDxozodcuoCGektrQqyj+n9kXy2XqaHsqBdZF7VysNMYIvMUHbAM63
+ 7Fb6v/IbIdWZcrGuDkr9+N+Mz81De1dXiYQ87VuVn4ibkLmfz0qTt+QFE22BDW25zTBYC5q67nW
+ b3pppkRfDuTzG7Njqpo13B4gGEWKYOpelCo2DQOzmkVQRbcJN5t/95y1dNkL7/07hjdvcQKP5GP
+ /12oir7txPxui1dh3H4tr2X6BgIqKcuImn5gC4+ZQONyO9KWb/j
+X-Received: by 2002:a05:600c:b95:b0:48a:8b02:ae91 with SMTP id
+ 5b1f17b1804b1-48fe60ea2dfmr55508855e9.11.1778849851236; 
+ Fri, 15 May 2026 05:57:31 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fe4c833fcsm57526515e9.2.2026.05.15.05.57.32
+ 5b1f17b1804b1-48fe4c833fcsm57526515e9.2.2026.05.15.05.57.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 05:57:32 -0700 (PDT)
+ Fri, 15 May 2026 05:57:30 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Subject: [PATCH 3/3] hw/core: Remove SysemuCPUOps::get_phys_addr_attrs_debug
-Date: Fri, 15 May 2026 13:57:27 +0100
-Message-ID: <20260515125727.349675-4-peter.maydell@linaro.org>
+Subject: [PATCH 1/3] target/microblaze: Convert to translate_for_debug
+Date: Fri, 15 May 2026 13:57:25 +0100
+Message-ID: <20260515125727.349675-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260515125727.349675-1-peter.maydell@linaro.org>
 References: <20260515125727.349675-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,63 +104,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-No targets use the SysemuCPUOps::get_phys_addr_attrs_debug method
-any more, so we can remove it, together with the handling of it
-in cpu_translate_for_debug().
+The get_phys_addr_attrs_debug method of SysemuCPUOps is used only by
+x86 and microblaze.  Convert microblaze to the newer
+translate_for_debug method, as a step towards being able to remove
+get_phys_addr_attrs_debug.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/core/cpu-system.c             | 11 ++---------
- include/hw/core/sysemu-cpu-ops.h | 14 --------------
- 2 files changed, 2 insertions(+), 23 deletions(-)
+ target/microblaze/cpu.c    |  2 +-
+ target/microblaze/cpu.h    |  4 ++--
+ target/microblaze/helper.c | 25 ++++++++++++++-----------
+ 3 files changed, 17 insertions(+), 14 deletions(-)
 
-diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
-index 16f048c956..14eb4ed87f 100644
---- a/hw/core/cpu-system.c
-+++ b/hw/core/cpu-system.c
-@@ -63,15 +63,8 @@ bool cpu_translate_for_debug(CPUState *cpu, vaddr addr,
-         return cpu->cc->sysemu_ops->translate_for_debug(cpu, addr, result);
-     } else {
-         /* Fallbacks for CPUs which don't implement translate_for_debug */
--        if (cpu->cc->sysemu_ops->get_phys_addr_attrs_debug) {
--            result->physaddr =
--                cpu->cc->sysemu_ops->get_phys_addr_attrs_debug(cpu, addr,
--                                                               &result->attrs);
--        } else {
--            result->physaddr
--                = cpu->cc->sysemu_ops->get_phys_addr_debug(cpu, addr);
--            result->attrs = MEMTXATTRS_UNSPECIFIED;
--        }
-+        result->physaddr = cpu->cc->sysemu_ops->get_phys_addr_debug(cpu, addr);
-+        result->attrs = MEMTXATTRS_UNSPECIFIED;
-         if (result->physaddr == -1) {
-             return false;
-         }
-diff --git a/include/hw/core/sysemu-cpu-ops.h b/include/hw/core/sysemu-cpu-ops.h
-index 441901fae8..8be6a84bd5 100644
---- a/include/hw/core/sysemu-cpu-ops.h
-+++ b/include/hw/core/sysemu-cpu-ops.h
-@@ -39,20 +39,6 @@ typedef struct SysemuCPUOps {
-      * for a complete target page or they use memory attributes).
-      */
-     hwaddr (*get_phys_addr_debug)(CPUState *cpu, vaddr addr);
--    /**
--     * @get_phys_addr_attrs_debug: Callback for obtaining a physical address
--     *       and the associated memory transaction attributes to use for the
--     *       access.
--     *
--     * This must be able to handle a non-page-aligned address, and will
--     * return the physical address corresponding to that address.
--     *
--     * CPUs should prefer to implement translate_for_debug instead of
--     * this (and must do so if their translations are not always valid
--     * for a complete target page).
--     */
--    hwaddr (*get_phys_addr_attrs_debug)(CPUState *cpu, vaddr addr,
+diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
+index c6a456dd5e..a97c92a7b6 100644
+--- a/target/microblaze/cpu.c
++++ b/target/microblaze/cpu.c
+@@ -428,7 +428,7 @@ static ObjectClass *mb_cpu_class_by_name(const char *cpu_model)
+ 
+ static const struct SysemuCPUOps mb_sysemu_ops = {
+     .has_work = mb_cpu_has_work,
+-    .get_phys_addr_attrs_debug = mb_cpu_get_phys_addr_attrs_debug,
++    .translate_for_debug = mb_cpu_translate_for_debug,
+ };
+ #endif
+ 
+diff --git a/target/microblaze/cpu.h b/target/microblaze/cpu.h
+index 068da60529..b9602f72b9 100644
+--- a/target/microblaze/cpu.h
++++ b/target/microblaze/cpu.h
+@@ -369,8 +369,8 @@ struct MicroBlazeCPUClass {
+ #ifndef CONFIG_USER_ONLY
+ void mb_cpu_do_interrupt(CPUState *cs);
+ bool mb_cpu_exec_interrupt(CPUState *cs, int int_req);
+-hwaddr mb_cpu_get_phys_addr_attrs_debug(CPUState *cpu, vaddr addr,
 -                                        MemTxAttrs *attrs);
-     /**
-      * @translate_for_debug: Callback for translating a virtual address into
-      * a physical address for debug purposes.
++bool mb_cpu_translate_for_debug(CPUState *cs, vaddr addr,
++                                TranslateForDebugResult *result);
+ #endif /* !CONFIG_USER_ONLY */
+ G_NORETURN void mb_cpu_do_unaligned_access(CPUState *cs, vaddr vaddr,
+                                            MMUAccessType access_type,
+diff --git a/target/microblaze/helper.c b/target/microblaze/helper.c
+index f81c4f625b..9c49c510dd 100644
+--- a/target/microblaze/helper.c
++++ b/target/microblaze/helper.c
+@@ -280,30 +280,33 @@ void mb_cpu_do_interrupt(CPUState *cs)
+     }
+ }
+ 
+-hwaddr mb_cpu_get_phys_addr_attrs_debug(CPUState *cs, vaddr addr,
+-                                        MemTxAttrs *attrs)
++bool mb_cpu_translate_for_debug(CPUState *cs, vaddr addr,
++                                TranslateForDebugResult *result)
+ {
+     MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
+-    hwaddr paddr = 0;
+     MicroBlazeMMULookup lu;
+     int mmu_idx = cpu_mmu_index(cs, false);
+     unsigned int hit;
+ 
+-    /* Caller doesn't initialize */
+-    *attrs = (MemTxAttrs) {};
+-    attrs->secure = mb_cpu_access_is_secure(cpu, MMU_DATA_LOAD);
++    result->attrs = (MemTxAttrs) {
++        .secure = mb_cpu_access_is_secure(cpu, MMU_DATA_LOAD),
++        .debug = 1,
++    };
++
++    result->lg_page_size = TARGET_PAGE_SIZE;
+ 
+     if (mmu_idx != MMU_NOMMU_IDX) {
+         hit = mmu_translate(cpu, &lu, addr, 0, 0);
+         if (hit) {
+-            paddr = lu.paddr + addr - lu.vaddr;
+-        } else
+-            paddr = 0; /* ???.  */
++            result->physaddr = lu.paddr + addr - lu.vaddr;
++        } else {
++            result->physaddr = 0; /* ???.  */
++        }
+     } else {
+-        paddr = addr;
++        result->physaddr = addr;
+     }
+ 
+-    return paddr;
++    return true;
+ }
+ 
+ bool mb_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
 -- 
 2.43.0
 
