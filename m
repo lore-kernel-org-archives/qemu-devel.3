@@ -4,90 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 225D4CD4F25
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 14:28:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BE38CD343F
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 14:29:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNtUi-0006Wr-U4; Fri, 15 May 2026 10:26:28 -0400
+	id 1wNtWN-0002xP-Do; Fri, 15 May 2026 10:28:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNtUH-0005tY-Ha
- for qemu-devel@nongnu.org; Fri, 15 May 2026 10:26:02 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wNtW1-0002Ty-Hi
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 10:27:54 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNtUB-0000zq-RU
- for qemu-devel@nongnu.org; Fri, 15 May 2026 10:25:59 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-441209fb77eso611552f8f.1
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 07:25:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wNtVz-0001qK-4S
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 10:27:49 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-488b8bc6bc9so58372575e9.3
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 07:27:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778855154; x=1779459954; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=lnHCoKfIHOU4NHMQe3Kj9Fosoqb2a9TyPNEWvgX/PmE=;
- b=iz/65VmB3ajRJmG1MFGIj3mGjENRTiG6B/9SlR458Wm6k8cLaJds/xtTDmbwuvCq6K
- AiTyHJCl0bhT/koNdTrIYbHhxFyfGJNtfzBFLGMk6JpkILZ4FgNqAqleH1hRZr8U0jkW
- rrX8Ahge8AkbcjAOT+pynakOacm3giROnN0xYeToqglQI6sXvOGYstuSlCvShqsDNRXf
- FBx4/Gmn/4eCW9TRzQ0pM/8t3hBXcXdYlqj3Ce5edxqyp8kWLDFJwyB0NBgw3goS3yJ7
- NO9OI+72uECGFpItTgg292aX0v1irDUT2PGZ1kMpfbUlPQYXc8cXs1d9kZfILKD7dkhP
- hLaw==
+ d=linaro.org; s=google; t=1778855265; x=1779460065; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=oFRYnpHIGA/dJ+CK69/soRvPFnE1TnXVCnnM1+SY7jM=;
+ b=sebA+gJtGxvoISdKdd1bOm33xPYbuVaAWj27szbMfYOHEnI8zcxK32Xlq/Xjgt/kKz
+ bje+UAtSWpqPaTR4Q/4t99YrAWPO1wnOZC8QDo6umL4LrRN66vwuwGpi8jmnFq/HoHp3
+ Av+biY1wblgsUg1NEHZhcgb6JHDGOCBk6rQE9N6pDQGDnfIrXjJSf0KbjJLokLrKiQ+7
+ oHeFXL5R+Qj2bGoOvpHiE/7BXJBAjHYONlQULrw+yknSwbJHMFZuYu+NCR9jMxwsiqjZ
+ IdImKe6jBATFi69bMbEPAMLrNfLOE41kGf2L8jWmRKxysYt0ZC6Dxrb1Y5dI0kjLarvU
+ iXrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778855154; x=1779459954;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=lnHCoKfIHOU4NHMQe3Kj9Fosoqb2a9TyPNEWvgX/PmE=;
- b=QsOzMa/i/SHcbDZ1GioxcheK+Pg9VCj3Ca9j+QmvjNdhWiA/x/MkGDzObj90lbJaXf
- PyqAO/bJ8qgB48557u36ipwVhpfEnmQCRjztNVoLpb7sX+Gf7P77fGbm4tFh/CZ9Oi2M
- Y5lk5zlrSqTsQBGrixXN0xn5VbBd0LlVD56IhiP4b6iNaTfFRdskegy9b0rM5cGdfJ2F
- UFaVCqXg1LQJgCxKOKthSOIH72iTD344HQPbkSZt66r3sQbfDhChMNQfSP8lpgzAwH5f
- TZYj7izhNwKXZAg2dlLeHEscNO3nz0+Xht7Sk/6VNyOhWWZaPvpeYDhgXF9YBGB1DKoc
- N3uQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/BZvk42w1gAUF6fLUerGXY2IZPjfzG2FCvrA0tULPZFvXK9TVDB0aQTqWI13rJHyLaTKPVsC4cTArv@nongnu.org
-X-Gm-Message-State: AOJu0Ywd/tnsuYwVp8YtMgyG7JvU2+C9OPv93lIgPF5ZEs07JNIblLs0
- AY/mHxnQXv63It7SgcSrAFc6pY7RjO5awkH3CQv51h0co6fEsa41vRGmhfDYEUXyk9TZwx4BCJj
- 2WiIZ
-X-Gm-Gg: Acq92OEXI5AFU+L4dv/HtiDz4d5Vj+A60AVtGQRLOcaOIgqAfoWCIuWOei+eddxJjp3
- 66P0eXjzLt6cPWnxVlgp7awFzx3La2Fv+KTNWHM6MftCb93PH5YsR9L2wytJvOtRzC1JIEzoS1l
- LE2+ko4dFHPRVkeborYEjnLzMeb3Ior2LYzguXhHYQjMQFBV42ATe9aU31Xhetmb0cptsv6wlmM
- saaKbHARL3oHtrnKl/q1gN2BwDMbHi4m0lw8EcI1j+vsZFpgEvLzH1QRIQlT7qMwP+se1uiWdRO
- j65e7/sXMD5OGZTBVd+6+uQ0zuGUu3AMITbpIa4LNRVqpwd7O1vFiYojiEEgqkjop5tbrr3NC2u
- y3izABMytl+UtcgTadTRoU40ULdnpFZP6EsIbr0gs/Ty52a06CYXJsy7ggQj8exS1RZSHVRe2eK
- 92qOY3rBBEZgCtGeX2ry6xvsJydRZjwrDY4yEjBehMACYcdeDDU+jvJ/6s0d0fSeBq3Hy0wQ7dk
- GESk+3Y/gj38VAABbrvWnxXZTN8wPY=
-X-Received: by 2002:a05:6000:4b07:b0:44f:69f4:39b5 with SMTP id
- ffacd0b85a97d-45d9502e84dmr13423623f8f.29.1778855153946; 
- Fri, 15 May 2026 07:25:53 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da15a666fsm13560603f8f.36.2026.05.15.07.25.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 07:25:53 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Subject: [RFC PATCH 11/14] target/arm/ptw: Flip sense of get_phys_addr_gpc
- return value
-Date: Fri, 15 May 2026 15:25:38 +0100
-Message-ID: <20260515142541.571911-12-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260515142541.571911-1-peter.maydell@linaro.org>
-References: <20260515142541.571911-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20251104; t=1778855265; x=1779460065;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=oFRYnpHIGA/dJ+CK69/soRvPFnE1TnXVCnnM1+SY7jM=;
+ b=P4+AhJ0Iq7s/oiSaKeETNjRPpn1oM69TpL+iLZp+VH0zmLxNRoIBlBaNEP2esXTKDz
+ BJYI1Ax+PohcMUzcS1jaEdS0F/aRAwoJYzszmcg7PiP6bADF0HcQhitivYQrgxnZcnAe
+ pG8PUgIH8A6tfSODFWS/ZTKW18Rg7UvZE4dgZXjJxtwEDciuTFRVJIucG7T9fMX9r5/i
+ s8hg2dwpqHMQvW0fudEoHufyATmUc4B0HxECR2rx89i5cucDJp24zoRAnETqweY6M6s/
+ pnPQrKc0F1+gvELWEKZTYhsdX7H2MxVUVJNdvjKIoFXFhgJEPhWsUS+RL3OgqWrk6rsm
+ clIQ==
+X-Gm-Message-State: AOJu0YyiCD1ThD98pb3n8cGcA6qZajDm2rZxYB5DpPRGrkEa2TGaZsSC
+ G1Dt8vMZaB4EwDjVPEIrx6FoyVCoUAnAeTygKoYbYQftuBuCIE01UGJeIlkMwe//9hw=
+X-Gm-Gg: Acq92OF96cKt9Rungu7qMh2WNPHT2ns7LqrNwTlitfa7i7g120vzYT0isXcUIQ3aa79
+ +/2YAVTfyqOBub6JFNl0pi8k6oMGV6vxG5dk7Ilz+PZOyWAzVlRTBxTznTfOzJ+LZoxvh9KuC8C
+ bvJmUjLfhgVEBM+ds33Q/9BD+0OQ/kSOvrx0daJAzBaA0ZWFm3CzvI1oINu3k3UKsefR2DENPIs
+ 3sNyAHRNqQbRJvlXKjM4ueYnSLPdz9O2w8FYYgCjsAAUzV62SJ1jRDPLtz6pTSGrO+YqbFW6ZzB
+ uLGVLjSqjg/CNN9zbCehhT+e1vaSNuR1s/vIf72DrITbo7Zv/ATA/H03rm5EtZf0GBEXX9JRRiH
+ eJcwDC8Wu4CBKGcIrlKfdoPLATQCMeoOQ4POB7HSSjYyYPeC7+THyhvTr4fJq4NuqYMYvfGxPrr
+ CaugGUhePQYZUKpFc/knuowJriYledlnRGonHkmCfwXQ16cdOlDNxC8EiOiz9BUFY4dA==
+X-Received: by 2002:a05:600c:608b:b0:488:8bdd:cfcc with SMTP id
+ 5b1f17b1804b1-48fe5ea04cemr59055745e9.0.1778855265519; 
+ Fri, 15 May 2026 07:27:45 -0700 (PDT)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48fea529727sm34800575e9.1.2026.05.15.07.27.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 15 May 2026 07:27:44 -0700 (PDT)
+Message-ID: <ec819fc6-b5b1-4803-92de-c7a87596f20e@linaro.org>
+Date: Fri, 15 May 2026 16:27:43 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 10/20] target/arm: Restrict IDAU interface to TCG
+ namespace
+Content-Language: en-US
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
+ Joel Stanley <joel@jms.id.au>, Kane Chen <kane_chen@aspeedtech.com>,
+ Troy Lee <leetroy@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Steven Lee
+ <steven_lee@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>
+References: <20260515141032.3271-1-philmd@linaro.org>
+ <20260515141032.3271-11-philmd@linaro.org>
+ <CAAjaMXYJr7Xg+0xSVNaxkG+5ykzJCL=uNwpmeN=GYbbGd34ZjQ@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAAjaMXYJr7Xg+0xSVNaxkG+5ykzJCL=uNwpmeN=GYbbGd34ZjQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,76 +110,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/ptw.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+On 15/5/26 16:23, Manos Pitsidianakis wrote:
+> On Fri, May 15, 2026 at 5:11 PM Philippe Mathieu-Daudé
+> <philmd@linaro.org> wrote:
+>>
+>> Emphasis the IDAU interface is restricted to TCG by
+> 
+> Emphasis?
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 9ecb6238a7..cb41146b9c 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -667,7 +667,7 @@ static bool S1_ptw_translate(CPUARMState *env, S1Translate *ptw,
-         };
-         GetPhysAddrResult s2 = { };
- 
--        if (get_phys_addr_gpc(env, &s2ptw, addr, MMU_DATA_LOAD, 0, &s2, fi)) {
-+        if (!get_phys_addr_gpc(env, &s2ptw, addr, MMU_DATA_LOAD, 0, &s2, fi)) {
-             goto fail;
-         }
- 
-@@ -3806,7 +3806,7 @@ static bool get_phys_addr_gpc(CPUARMState *env, S1Translate *ptw,
- {
-     if (!get_phys_addr_nogpc(env, ptw, address, access_type,
-                             memop, result, fi)) {
--        return true;
-+        return false;
-     }
- 
-     if (FIELD_EX64(env->cp15.gpccr_el3, GPCCR, GPC)) {
-@@ -3826,11 +3826,11 @@ static bool get_phys_addr_gpc(CPUARMState *env, S1Translate *ptw,
-                                           result->f.attrs.space, ptw->in_space,
-                                           fi)) {
-             fi->type = ARMFault_GPCFOnOutput;
--            return true;
-+            return false;
-         }
-     }
- 
--    return false;
-+    return true;
- }
- 
- bool get_phys_addr_for_at(CPUARMState *env, vaddr address,
-@@ -3939,7 +3939,7 @@ bool get_phys_addr(CPUARMState *env, vaddr address,
-         .in_prot_check = 1 << access_type,
-     };
- 
--    return get_phys_addr_gpc(env, &ptw, address, access_type,
-+    return !get_phys_addr_gpc(env, &ptw, address, access_type,
-                              memop, result, fi);
- }
- 
-@@ -3956,15 +3956,15 @@ static bool arm_cpu_get_phys_addr(CPUARMState *env, vaddr addr,
-     };
-     GetPhysAddrResult res = {};
-     ARMMMUFaultInfo fi = {};
--    bool fault = get_phys_addr_gpc(env, &ptw, addr, MMU_DATA_LOAD, 0, &res, &fi);
-+    bool ok = get_phys_addr_gpc(env, &ptw, addr, MMU_DATA_LOAD, 0, &res, &fi);
- 
--    if (!fault) {
-+    if (ok) {
-         /* translation succeeded */
-         result->physaddr = res.f.phys_addr;
-         result->attrs = res.f.attrs;
-         result->lg_page_size = res.f.lg_page_size;
-     }
--    return fault;
-+    return !ok;
- }
- 
- bool arm_cpu_translate_for_debug(CPUState *cs, vaddr addr,
--- 
-2.43.0
+Emphasize!
+
+> 
+>> moving the header under target/arm/tcg/. Move the
+>> definition to cpu-v7m.c which also contains v7/v8
+>> hardware (NVIC), keeping only CPU types in cpu32.c.
+>>
+>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+> 
+> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> 
+>>   include/hw/arm/armv7m.h     |  2 +-
+>>   include/hw/misc/tz-msc.h    |  2 +-
+>>   target/arm/{ => tcg}/idau.h |  4 ++--
+>>   hw/arm/armv7m.c             |  2 +-
+>>   target/arm/cpu.c            |  2 +-
+>>   target/arm/ptw.c            |  2 +-
+>>   target/arm/tcg/cpu-v7m.c    | 11 +++++++++++
+>>   target/arm/tcg/cpu32.c      |  8 --------
+>>   8 files changed, 18 insertions(+), 15 deletions(-)
+>>   rename target/arm/{ => tcg}/idau.h (97%)
 
 
