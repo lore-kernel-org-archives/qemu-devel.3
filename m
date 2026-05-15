@@ -4,103 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9859CD4851
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 21:26:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B56E8CD4851
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 23:01:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNzx7-0001Bg-KA; Fri, 15 May 2026 17:20:13 -0400
+	id 1wO1Ww-0003cP-CB; Fri, 15 May 2026 19:01:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzx6-0001Ah-Er
- for qemu-devel@nongnu.org; Fri, 15 May 2026 17:20:12 -0400
-Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wO1Wc-0003aY-UB
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 19:01:01 -0400
+Received: from mail-dl1-x122e.google.com ([2607:f8b0:4864:20::122e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzx4-0002rM-Gx
- for qemu-devel@nongnu.org; Fri, 15 May 2026 17:20:12 -0400
-Received: by mail-ot1-x32a.google.com with SMTP id
- 46e09a7af769-7dbcb467f2bso312780a34.3
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 14:20:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wO1Wb-0002ob-BF
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 19:00:58 -0400
+Received: by mail-dl1-x122e.google.com with SMTP id
+ a92af1059eb24-12c19d23b19so452014c88.0
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 16:00:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778880009; x=1779484809;
- darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=dhzXJy3OEpRA4uBwKk/HCvyifLHxiSUo68RBlzjPfO8=;
- b=PzoYbP9CHic6ePrirRK/xWz+8vhjF3SWlq/scOviITTPO+RWycOkahb7ZkwaHC3WXA
- pTAI/R/nIEIxbRFgTlWU58xFuv+1uHTHfjg3Rrz6fHaQts5iH7HvwXq6o/Zrxr6WaEid
- NJYU1sZNAlikZ69QWdeEb+KbikaNLjZEC3Y9Gorfb3iuruBLWxsN6mdXFZSSS62czPuC
- Pd6NLY62aciyBkV+nLwCNg8MvZ67TQIF518n+j6Er8LK33/0tK0AHkDcFRr5JK0NMiid
- egl15PZIkGZK5JItdeiZgZtrllWk79oxtRGRPeAtdmnxMrs9Vih7wldMYFcCjTdElxYp
- d1Eg==
+ d=gmail.com; s=20251104; t=1778886055; x=1779490855; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=JI5F+7Vux+E2/tIiQSfm/Vb8/uONQYx2nvo6h9SpnmI=;
+ b=UnBjsfJ0wAyMeSBwY235guJwFwDYhYmpqdo+jogI4bfk0/NGhE5R35ykHHVODZP8vN
+ PhvqNKbBSzkaXr3mwE6cic5pq/bq0a3+DUPS76LD1JNpBgkAPSzf2E+W0HNbZiX7NDHF
+ XmPGmjK0Lsx8Se/VhfED/6bDcnbSnzqKEgCPeKDLfZPYIv2iDbF7A7ocmuhCLQsxlvFz
+ V/0Hhmggf/8XCVeG1UaHzMbOgWvZEZDbV9gjOkEy9RxJw/SRFIFa/dfOGmoxnXsLzEN4
+ OceCR/m6RcImy2mavOMPbelFrc79iTUcbMrS1rBBGYghRQd2A7avMmLzRPlFuK0BU8dD
+ cnTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778880009; x=1779484809;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=dhzXJy3OEpRA4uBwKk/HCvyifLHxiSUo68RBlzjPfO8=;
- b=g4amXoSLDyyCxGHgR9DK1HtAnPWy9AnxQGEn8AWYjS1I6QJ/CTQ5/BR9cUrOXYdyQL
- 8JOhb73AIc6Gf3wJbilx3XLWVyMvSSvmfMvrxD6umDrYO557rZxhJDflh0PmrSsa+vSa
- c+Xmu/Aw2sJ7FhKD1DNr7SwfFrlib5FE2FJ3mKYo4TKUFWFcAlt9B8b1NaPphWbn8a/q
- p3pQyQcR5NbFDvbWRuDEWG+xovvo6aOLWdi/YytOnMaJ3MzeQlf78yg6u5HbtSCHY3GD
- bc9vqVU5Kly1yBNG2urFXCA/SiC9x3xm5kGjyp3hSz8ssH4T5vMqnsos7oLYsxp+SN9+
- yEjg==
-X-Gm-Message-State: AOJu0YyUVZKkZTuFwz5AZB4+kVWdb+DFdZMM5CAtL2hP18qaZArcSx9c
- 3FAKp68ZWYWKxUX85hROdJ6i+hMmm0AKDH0Fut6odXn7QRGRHSZ5hwoys9O70VrApTM=
-X-Gm-Gg: Acq92OH4g83qXBF5AL7ue4lLVoTS4OYedxPdvL3K/CpKNUg06sS8EH4UJcf5vB87Lqf
- 7a8eTaO5TV7k2OYUjLDSqEFG2doEExhnx/X3qsXiFcDhZ1LfgY/yH5jd8JOgAGZWVUhlLI0nsoR
- CBWfeavdaOPECQUc9VYHDeL2B9Y0gszmnN9yuzfxTIEyu/DSffYzrw+KcUggO0pT96pZS90Rm1d
- wGKHNJE4gLv3YrXyfkJOxJfTJozXHLIw1Ack6D7ExIXEpwKL9+BQ8Qkfabi+3SriiWAh5E5zj1w
- dTmXaIFIBUmFfZ6cMSTe/QqdPgmmUVg+/geDmQG8a7rbc37k+YvZQeAPMQjsI/ZjgDtkdALKKet
- 3b/Q9crdurSQJZATYimp3P7Y/hoSYsk/xPjHrJci73TxstWIT7+5tmcAJE9cTGD68BOoXAJCYbX
- 12lEXgJu8+3w==
-X-Received: by 2002:a05:6830:4128:b0:7d9:b2b8:e06f with SMTP id
- 46e09a7af769-7e4f2b6f1f6mr4034266a34.21.1778880009140; 
- Fri, 15 May 2026 14:20:09 -0700 (PDT)
-Received: from rebo.bsdimp.com ([50.253.99.174])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55b7c6b29sm2185612a34.1.2026.05.15.14.20.08
+ d=1e100.net; s=20251104; t=1778886055; x=1779490855;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JI5F+7Vux+E2/tIiQSfm/Vb8/uONQYx2nvo6h9SpnmI=;
+ b=cXlxIatG5TbpWDQNBPZDlU1COTIyL+jLdEX0J7UxUi8FvR6dlAl/TvOF1dx13k0zn+
+ eP0AL9ienArUOB2y7nsUHWJYVtCVIJxjIpj+Hvbci2pDAXSUt2f7t9t4kZcijgsPmEmK
+ g3zH/aDTTt+GKulrGHRes5HAPtPXq1u9fEioV0ncf20X8/5tZOljo6eqUox5BRoZaLGA
+ KZG9C8ir8bC+SRFBgc83rtjhtcnFlfFV1xQHeXfDMXq5m40G5zz0qU6ZBI0eBDDfZtk/
+ ZDQfD+WnDv1m+c4/SdMMr/FbWEx82G9kWiGFuZto4S3jAOt2DuL8Sj8eSW8RlMX9oA/4
+ FA8w==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/BhPbQdJyuT5ytBIFfrLVJk6tsUn/6QkwdolVpC1DQoUfWh3CQd8kW0dFG51ulHs7FVxKgiKyq272U@nongnu.org
+X-Gm-Message-State: AOJu0YwU8cxjp6sUG0oXG/AkSRFYZONivDiKmJO28dODnIiy7XnpNrYp
+ +5IYhxTPrY53xKXT7KmQxrTcV9NhuGqUpj+O95W058v+DmLnPqhg5/T2
+X-Gm-Gg: Acq92OEiwfVw8WIkcx51uBm1PFe2i4HuRs4Hf+Cj/hrIlR+QVoeg4/wURHdOkD1OApF
+ RBVxw35htUwHAgSUxEWcybWdItwpjMdOdpS5/2p8od2bsu78+NDYMIFm6oXxmsxN3fyNJutpFOV
+ gAsKwwohdg2EsJmVphOXz4hNwQb9LtRIDgvAdgHJ5yZnFvne7d5MnoZ9OKcl0g2ZSo0BsNIcKF4
+ UAzul+PEaa71PJ2D5UAf/7K37MBcYuqDfqMu+NP/zyC3Xud0rC3hhjc3hthhkbd3BqBNzHm1js0
+ cIYZanhzCXOZ53cbguDq95Vqn+CNy7VPa0dEndu2/O5io5LGe7YJNlYQsyjb4sla72F+3YgTiz5
+ kZtoYVtwdN34xsQDowDKOSVXbOfqiZKcMM6F4ArdoGX14bndkCwVfMAYhijxEBnISUzLaKXkX10
+ QZ80pPKZdJJ9dJ97sgsDlrTwbPrI2/Ryk=
+X-Received: by 2002:a05:7300:641b:b0:2ca:7eb4:3e0f with SMTP id
+ 5a478bee46e88-30398287da3mr3115751eec.5.1778886055258; 
+ Fri, 15 May 2026 16:00:55 -0700 (PDT)
+Received: from localhost ([38.104.138.51]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-30293e2e3c0sm10314861eec.3.2026.05.15.16.00.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 14:20:08 -0700 (PDT)
-From: Warner Losh <imp@bsdimp.com>
-Date: Fri, 15 May 2026 15:19:08 -0600
-Subject: [PATCH 09/66] bsd-user: Add bsd-socket.h with bind through getsockname
+ Fri, 15 May 2026 16:00:54 -0700 (PDT)
+Date: Fri, 15 May 2026 16:00:53 -0700
+From: Nicholas Piggin <npiggin@gmail.com>
+To: Corey Minyard <cminyard@mvista.com>
+Cc: Alistair Francis <alistair.francis@wdc.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, 
+ Chris Rauer <crauer@google.com>, Michael Ellerman <mpe@kernel.org>, 
+ Joel Stanley <jms@oss.tenstorrent.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, 
+ Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org, Hao Wu <wuhaotsh@google.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH 0/4] hw/i2c: Add designware i2c controller
+Message-ID: <agelQcm_i612YLbW@lima-default>
+References: <20260507120524.111056-1-npiggin@gmail.com>
+ <agCCOdfvlRVtCpYf@mail.minyard.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260515-misc-2026q2-v1-9-5438ca41b27a@bsdimp.com>
-References: <20260515-misc-2026q2-v1-0-5438ca41b27a@bsdimp.com>
-In-Reply-To: <20260515-misc-2026q2-v1-0-5438ca41b27a@bsdimp.com>
-To: qemu-devel@nongnu.org
-Cc: Kyle Evans <kevans@freebsd.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>, 
- Kyle Evans <kevans@FreeBSD.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6824; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=fqu9+KzJbMBPt8l/2aDcgObMouWx7lPgmNU+jL1ZR/A=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqB43igUlr0lWqzA60T38xtzEOAQ6vA2Q9Ft7BB
- IXOqTLgo+SJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCageN4gAKCRBsHNEofbAR
- ABLaEADcVrHbSHxu80ZlX5f7gz5GAaoOsENabOmFXYFfhc/HmLEb8MWgbrG+eeJZ1jM1yW6axCn
- 8ad7w+6bZ5D4h1hyTOblcPFUqz6j12IxUmTMCvyjibGKB0tygqQpTmA3cP+dg4VpPYcQWeCQA9i
- M4JxvVAtaLwDh0QL8zPn/4jKjEVC5HAn/bwtQJWG8wkcyMbi3rOTfc3xS422CVQoZreDYJA2c8+
- KxENGuhvyV0teK6F76O/pHf99AVY+YjylqonsaznsT0hdnL5LKtQ8LFSELbubWlDy2RGmso/psm
- cZ1s39caJHJ01MYODIoS7ZM7KVxYoDUgq75pX3tzfxq7qjjgaz81o6IkUn+m9ibPjJW6NmRuiRW
- eocA/2Xs1tf3DnF5VZcL0R8Ty4duo4X31T7djlkG9yuFkKTf981VOnC1rC5nFo/RE78RbmHeA1I
- IzxpbyPcg/Eo8L5CjxfG44yPJ8tGLG1GcD/2qbTmPqnKjpkgfkKyZ5c2lmoqMphOoEvtTlAwzMM
- e5g5Pdr+5gJ70CICG4xK/dLvpi9yAy/D2/8sem0fcLM93xFQCxAt3JiEAm1+RduXW5L1WRvruWN
- nhey3nJVWUm3/4VLIylPbTVLbuoOzAcKp0DMfJZHa7fNvJajoBsXfjjjU2DmtFmW+/16w8/8X4b
- O4TqwyTK6ujN48g==
-X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
- fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::32a;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x32a.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <agCCOdfvlRVtCpYf@mail.minyard.net>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::122e;
+ envelope-from=npiggin@gmail.com; helo=mail-dl1-x122e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,220 +106,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the first set of socket system call shims: bind, connect,
-accept, getpeername, and getsockname. Also add safe_syscall wrappers
-for sendto, recvfrom, select, pselect, recvmsg, and sendmsg.
+On Sun, May 10, 2026 at 08:03:53AM -0500, Corey Minyard wrote:
+> On Thu, May 07, 2026 at 10:05:18PM +1000, Nicholas Piggin wrote:
+> > Hi,
+> > 
+> > This series contains the DW I2C model written by Chris Rauer and
+> > updated for the Tenstorrent Atlantis machine recently. There was
+> > some more review comment on that submission and so we decided to
+> > take the I2C device out of that series and work on it separately,
+> > see here:
+> > 
+> > https://lore.kernel.org/qemu-devel/20260425131721.932250-1-joel@jms.id.au/T/#mb1ef2824c2f1f37bf4574dc1ef0fb95566c3a2f2
+> > 
+> > The big thing suggested was to move to the QEMU register API. That
+> > is a big change and difficult to review, so I have split that and
+> > a some smaller changes out into their own patches. I don't expect
+> > detailed reviews on the register API patch -- it's quite mechanical
+> > and I did attempt to verify it by diff'ing register traces. But it
+> > would be good to make sure maintainers are happy to go that way.
+> > 
+> > Unfortunately the patch 1 was quite well reviewed and tested so
+> > incremental changes would be preferable, but it is painful to maintain
+> > migration compatibility across these changes.
+> 
+> I had a few comments on the first patch, but they were all fixed in
+> later patches.  From my review this all looks good.
+> 
+> Yes, please squash these as you suggested in the second patch.
+> 
+> Acked-by: Corey Minyard <cminyard@mvista.com>
 
-Signed-off-by: Stacey Son <sson@FreeBSD.org>
-Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
-Signed-off-by: Warner Losh <imp@bsdimp.com>
-Assisted-by: Claude Opus 4.6 (1M context)
----
- bsd-user/bsd-socket.h         | 160 ++++++++++++++++++++++++++++++++++++++++++
- bsd-user/freebsd/os-syscall.c |  15 ++++
- 2 files changed, 175 insertions(+)
+Thank you for the Ack, Corey. Since everybody is happier with it now
+I will squash and submit it with the next revision of the tt-atlantis
+series.
 
-diff --git a/bsd-user/bsd-socket.h b/bsd-user/bsd-socket.h
-new file mode 100644
-index 0000000000..121d3e2a05
---- /dev/null
-+++ b/bsd-user/bsd-socket.h
-@@ -0,0 +1,160 @@
-+/*
-+ * socket related system call shims
-+ *
-+ * Copyright (c) 2013 Stacey D. Son
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef BSD_SOCKET_H
-+#define BSD_SOCKET_H
-+
-+#include <sys/types.h>
-+#include <sys/socket.h>
-+#include <sys/un.h>
-+#include <netinet/in.h>
-+
-+#include "qemu-bsd.h"
-+
-+ssize_t safe_recvfrom(int s, void *buf, size_t len, int flags,
-+    struct sockaddr *restrict from, socklen_t *restrict fromlen);
-+ssize_t safe_sendto(int s, const void *buf, size_t len, int flags,
-+    const struct sockaddr *to, socklen_t tolen);
-+int safe_select(int nfds, fd_set *readfs, fd_set *writefds, fd_set *exceptfds,
-+    struct timeval *timeout);
-+int safe_pselect(int nfds, fd_set *restrict readfds,
-+    fd_set *restrict writefds, fd_set *restrict exceptfds,
-+    const struct timespec *restrict timeout,
-+    const sigset_t *restrict newsigmask);
-+
-+/* bind(2) */
-+static inline abi_long do_bsd_bind(int sockfd, abi_ulong target_addr,
-+                                   socklen_t addrlen)
-+{
-+    abi_long ret;
-+    void *addr;
-+
-+    if ((int)addrlen < 0) {
-+        return -TARGET_EINVAL;
-+    }
-+
-+    addr = alloca(addrlen + 1);
-+    ret = target_to_host_sockaddr(addr, target_addr, addrlen);
-+    if (is_error(ret)) {
-+        return ret;
-+    }
-+
-+    return get_errno(bind(sockfd, addr, addrlen));
-+}
-+
-+/* connect(2) */
-+static inline abi_long do_bsd_connect(int sockfd, abi_ulong target_addr,
-+                                      socklen_t addrlen)
-+{
-+    abi_long ret;
-+    void *addr;
-+
-+    if ((int)addrlen < 0) {
-+        return -TARGET_EINVAL;
-+    }
-+    addr = alloca(addrlen + 1);
-+
-+    ret = target_to_host_sockaddr(addr, target_addr, addrlen);
-+
-+    if (is_error(ret)) {
-+        return ret;
-+    }
-+
-+    return get_errno(connect(sockfd, addr, addrlen));
-+}
-+
-+/* accept(2) */
-+static inline abi_long do_bsd_accept(int fd, abi_ulong target_addr,
-+                                     abi_ulong target_addrlen_addr)
-+{
-+    socklen_t addrlen;
-+    void *addr;
-+    abi_long ret;
-+
-+    if (target_addr == 0) {
-+        return get_errno(accept(fd, NULL, NULL));
-+    }
-+    /* return EINVAL if addrlen pointer is invalid */
-+    if (get_user_u32(addrlen, target_addrlen_addr)) {
-+        return -TARGET_EINVAL;
-+    }
-+    if ((int)addrlen < 0) {
-+        return -TARGET_EINVAL;
-+    }
-+    if (!access_ok(VERIFY_WRITE, target_addr, addrlen)) {
-+        return -TARGET_EINVAL;
-+    }
-+    addr = alloca(addrlen);
-+
-+    ret = get_errno(accept(fd, addr, &addrlen));
-+    if (!is_error(ret)) {
-+        host_to_target_sockaddr(target_addr, addr, addrlen);
-+        if (put_user_u32(addrlen, target_addrlen_addr)) {
-+            ret = -TARGET_EFAULT;
-+        }
-+    }
-+    return ret;
-+}
-+
-+/* getpeername(2) */
-+static inline abi_long do_bsd_getpeername(int fd, abi_ulong target_addr,
-+                                          abi_ulong target_addrlen_addr)
-+{
-+    socklen_t addrlen;
-+    void *addr;
-+    abi_long ret;
-+
-+    if (get_user_u32(addrlen, target_addrlen_addr)) {
-+        return -TARGET_EFAULT;
-+    }
-+    if ((int)addrlen < 0) {
-+        return -TARGET_EINVAL;
-+    }
-+    if (!access_ok(VERIFY_WRITE, target_addr, addrlen)) {
-+        return -TARGET_EFAULT;
-+    }
-+    addr = alloca(addrlen);
-+    ret = get_errno(getpeername(fd, addr, &addrlen));
-+    if (!is_error(ret)) {
-+        host_to_target_sockaddr(target_addr, addr, addrlen);
-+        if (put_user_u32(addrlen, target_addrlen_addr)) {
-+            ret = -TARGET_EFAULT;
-+        }
-+    }
-+    return ret;
-+}
-+
-+/* getsockname(2) */
-+static inline abi_long do_bsd_getsockname(int fd, abi_ulong target_addr,
-+                                          abi_ulong target_addrlen_addr)
-+{
-+    socklen_t addrlen;
-+    void *addr;
-+    abi_long ret;
-+
-+    if (get_user_u32(addrlen, target_addrlen_addr)) {
-+        return -TARGET_EFAULT;
-+    }
-+    if ((int)addrlen < 0) {
-+        return -TARGET_EINVAL;
-+    }
-+    if (!access_ok(VERIFY_WRITE, target_addr, addrlen)) {
-+        return -TARGET_EFAULT;
-+    }
-+    addr = alloca(addrlen);
-+
-+    ret = get_errno(getsockname(fd, addr, &addrlen));
-+    if (!is_error(ret)) {
-+        host_to_target_sockaddr(target_addr, addr, addrlen);
-+        if (put_user_u32(addrlen, target_addrlen_addr)) {
-+            ret = -TARGET_EFAULT;
-+        }
-+    }
-+    return ret;
-+}
-+
-+#endif /* BSD_SOCKET_H */
-diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
-index 228daed4c4..737de36514 100644
---- a/bsd-user/freebsd/os-syscall.c
-+++ b/bsd-user/freebsd/os-syscall.c
-@@ -40,6 +40,7 @@
- #include "bsd-proc.h"
- #include "bsd-misc.h"
- #include "bsd-signal.h"
-+#include "bsd-socket.h"
- 
- /* BSD dependent syscall shims */
- #include "os-stat.h"
-@@ -73,6 +74,20 @@ safe_syscall4(int, ppoll, struct pollfd *, fds, nfds_t, nfds,
- safe_syscall6(ssize_t, copy_file_range, int, infd, off_t *, inoffp, int, outfd,
-     off_t *, outoffp, size_t, len, unsigned int, flags);
- 
-+/* used in bsd-socket */
-+safe_syscall5(int, select, int, nfds, fd_set *, readfs, fd_set *, writefds,
-+    fd_set *, exceptfds, struct timeval *, timeout);
-+safe_syscall6(int, pselect, int, nfds, fd_set *restrict, readfs,
-+    fd_set *restrict, writefds, fd_set *restrict, exceptfds,
-+    const struct timespec *restrict, timeout, const sigset_t *restrict,
-+    newsigmask);
-+safe_syscall6(ssize_t, recvfrom, int, fd, void *, buf, size_t, len, int, flags,
-+    struct sockaddr *restrict, from, socklen_t *restrict, fromlen);
-+safe_syscall6(ssize_t, sendto, int, fd, const void *, buf, size_t, len, int,
-+    flags, const struct sockaddr *, to, socklen_t, tolen);
-+safe_syscall3(ssize_t, recvmsg, int, s, struct msghdr *, msg, int, flags);
-+safe_syscall3(ssize_t, sendmsg, int, s, const struct msghdr *, msg, int, flags);
-+
- /* used in os-proc */
- safe_syscall4(pid_t, wait4, pid_t, wpid, int *, status, int, options,
-     struct rusage *, rusage);
-
--- 
-2.52.0
-
+Thanks,
+Nick
 
