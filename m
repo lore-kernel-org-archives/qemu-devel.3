@@ -4,80 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98B29CD4F25
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 15:12:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A58C4CD4F25
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 15:19:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNuCi-0008EK-UJ; Fri, 15 May 2026 11:11:56 -0400
+	id 1wNuJF-0001Kn-IZ; Fri, 15 May 2026 11:18:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wNuCI-00089l-11
- for qemu-devel@nongnu.org; Fri, 15 May 2026 11:11:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wNuJ9-0001I2-Ev
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 11:18:36 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wNuCD-00089i-0n
- for qemu-devel@nongnu.org; Fri, 15 May 2026 11:11:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778857883;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cd4yBOSUizb8AR1+g5Pai/WWRQIbp7VO/+NvilmGlCA=;
- b=jP9aeq0I4/HqMKQ6U8L5PgxRDqBzPmNcXAQLLs0hM/D7T6XID8BKnvu3jlt7XgjB7n66Cr
- Wm5AVrfU+B3ZZVLmGM2ncizxmxqMlDuPGPKeu4AEvjpSYbP1hPoFRQFLfx/jolc9iOl2N4
- jsKy6ITQk3/OS9KD2V1rxY+DbcA9mlw=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-313-jhjPhdgcNTCrOBdx1lLh0A-1; Fri,
- 15 May 2026 11:11:20 -0400
-X-MC-Unique: jhjPhdgcNTCrOBdx1lLh0A-1
-X-Mimecast-MFC-AGG-ID: jhjPhdgcNTCrOBdx1lLh0A_1778857879
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9CCDE180035D; Fri, 15 May 2026 15:11:18 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.49.123])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 38E5530001A2; Fri, 15 May 2026 15:11:15 +0000 (UTC)
-Date: Fri, 15 May 2026 17:11:12 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Hanna Reitz <hreitz@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Cleber Rosa <crosa@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH v6 00/16] tests: do more testing of block drivers
-Message-ID: <agc3kCGk_MjNIpo6@redhat.com>
-References: <20260513120003.226790-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wNuJ4-0002sa-Fq
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 11:18:33 -0400
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 90474C027E;
+ Fri, 15 May 2026 18:18:23 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:58b::1:17] (unknown
+ [2a02:6bf:8080:58b::1:17])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id MIP7He2KpeA0-t6HqJLNm; Fri, 15 May 2026 18:18:23 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1778858303;
+ bh=0nJb0cyOwiIfDaJI16b95Ox+wwNjcjXusPIzY9Sjq14=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=MDOXSMmXF2kC02u1Hmao4lvy4qnBw3gO246NWR6Zbkk0wJyDc2DBZrkjG1cJi5QEi
+ Pibd058x4Gi5dDUin9iXf45mGKb8jsbcRRuy725oy6YCOrigYTqlNuwki1F7G7b5v/
+ e5sVeW+AH/k8kenOiRWWx1JXx/8pPGSUVu7UphO4=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <9691c27b-3f60-4cb7-a012-09388abb78f6@yandex-team.ru>
+Date: Fri, 15 May 2026 18:18:21 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260513120003.226790-1-berrange@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] kvm: skip tsc synchronization on shutdown
+To: mst@redhat.com
+Cc: marcel.apfelbaum@gmail.com, pbonzini@redhat.com,
+ richard.henderson@linaro.org, eduardo@habkost.net, qemu-devel@nongnu.org,
+ yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
+References: <20260127201831.179237-1-vsementsov@yandex-team.ru>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20260127201831.179237-1-vsementsov@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -89,30 +77,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 13.05.2026 um 13:59 hat Daniel P. Berrangé geschrieben:
->  v1: https://lists.nongnu.org/archive/html/qemu-devel/2025-10/msg01650.html
->  v2: https://lists.nongnu.org/archive/html/qemu-devel/2026-01/msg02083.html
->  v3: https://lists.nongnu.org/archive/html/qemu-devel/2026-01/msg02939.html
->  v4: https://lists.nongnu.org/archive/html/qemu-devel/2026-02/msg03245.html
->  v5: <...somewhere...mailman is dead again at time of sending...>
+ping
+
+On 27.01.26 23:18, Vladimir Sementsov-Ogievskiy wrote:
+> That doesn't make real sense, but may take much time when
+> there are a lot of vCPUs. Let's just skip it.
 > 
-> The recent (at the time of v1) set of regressions identified in the LUKS
-> block driver re-inforced that despite having a hugely useful set of I/O
-> tests, our CI coverage is still letting through too many bugs.
-> [...]
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> ---
+>   hw/i386/kvm/clock.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/i386/kvm/clock.c b/hw/i386/kvm/clock.c
+> index aba6842a22..46efdbed14 100644
+> --- a/hw/i386/kvm/clock.c
+> +++ b/hw/i386/kvm/clock.c
+> @@ -207,7 +207,9 @@ static void kvmclock_vm_state_change(void *opaque, bool running,
+>   
+>           s->runstate_paused = runstate_check(RUN_STATE_PAUSED);
+>   
+> -        kvm_synchronize_all_tsc();
+> +        if (!runstate_check(RUN_STATE_SHUTDOWN)) {
+> +            kvm_synchronize_all_tsc();
+> +        }
+>   
+>           kvm_update_clock(s);
+>           /*
 
-I reviewed the patches directly related to qemu-iotests. One general
-remark I have about this series is that the commit subject lines often
-refer to "tests" when they actually only mean "iotests" (which is the
-common subject line prefix for qemu-iotests changes) instead of all
-tests. This makes the lines sometimes a bit confusing, so I'd suggest to
-change them.
 
-For the other patches more related to CI and the build system in
-general, I had a look at them and agree with them/their commit messsage,
-but didn't fully review them. For anything I didn't comment on, you can
-add:
-
-Acked-by: Kevin Wolf <kwolf@redhat.com>
-
+-- 
+Best regards,
+Vladimir
 
