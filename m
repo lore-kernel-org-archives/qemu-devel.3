@@ -4,100 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 718C0CD4851
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 08:32:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15869CD343F
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 08:50:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNnxK-00039A-6o; Fri, 15 May 2026 04:31:38 -0400
+	id 1wNoEZ-0006HY-SJ; Fri, 15 May 2026 04:49:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNnxF-000382-ND
- for qemu-devel@nongnu.org; Fri, 15 May 2026 04:31:34 -0400
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ id 1wNoEY-0006Gx-2F
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 04:49:26 -0400
+Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNnxE-0001SB-6n
- for qemu-devel@nongnu.org; Fri, 15 May 2026 04:31:33 -0400
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-651c7ddf514so11457251d50.1
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 01:31:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778833890; cv=none;
+ id 1wNoEW-0005aS-28
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 04:49:25 -0400
+Received: by mail-yx1-xb129.google.com with SMTP id
+ 956f58d0204a3-65c7492a2ceso10075802d50.3
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 01:49:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778834962; cv=none;
  d=google.com; s=arc-20240605;
- b=lpD+fg5ckeCutQ75DYaAr7KBmTUSkNcNZnpluZqO2R1V3Sh6/iwU9pllY2vewt7skt
- b2fQ+HrmJSacQgZjRuXPpuJU2nUpQbM+UjosDUwT1RhWq+7DPEgfgdObMePp6fQtbVsM
- ARZsNsdLu/r1Cvox6NbnKpudJwpG6siudag3TOqF3piPQFIwHVwxvDpnvG5EwXqbF2tu
- m2O7Cs3uwpCFm0JtLY4eb8M27PIswdrwr4ETF8OpuzvAEEkBEDF4yfckLu/Mf7c7Zy5b
- tTeTa2DsZQ5hbpu/5bz+OdW0TVlO3b3M0i+jpwU0o7pthyLiNYVaom4b1zTnY8pmnWb0
- mTkw==
+ b=d7nrwTPSfjniCtWIHUqlI5QD1dz+dU0sPtdAEC/iLYfiO2+o6d8gPeRzLjW6e+d6hk
+ v26mAS872yB9/QLPvxp54F3j4B/KJogHKAelp39X3/hxyTmAcQDgATBD2yGvyhCmovIG
+ 6/SWAD+txez49xrTriur9Z1eJeg47EcbQrDGYGIz+oSgu97CvmjlOT9T85y05aADEyht
+ 52xIEx/Ajdq2scz+REMIW+YEHDLWy1YdkaiyX/6aFDUXJmDCdwKnrrUTuE5c1LMshE0W
+ 8IKaJlzidtb5K8oybBbRSZu1Km1TddvQDmYDTPeDrjFPUUlW3VyNnUIs6ZNYcxPX4098
+ qL2g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=alzfgz1aXCJLqugLm78Sp8WFGjGW5XBGx/1DQ0VOqWk=;
- fh=4l4chI0ES9Xgn5V1tZIU8PeHlEtdzN/GjcmVFA6uuSw=;
- b=HKg/wnlFGndFvGe9YpARENhaR+HPKUw7tgidqE2HR0qI4IFmsu0JJDSbOqZgvsAnc6
- 0qhR19r4uaasZYcRWOxQea9qmSjkF9NfqZTfRy9H5ZpZDwNNyhpYPO7mAisJpvKZ/9KU
- ZFRUykL+4mpT/S/ki9X9WU7RPLAJgF6tHQIBEMxXBx06b1srpTPCTsxxCMATyREvFAx3
- LWCpsHKPacJQ52UK5nGizAswQpJOMDUqO1K8JFx6yqdTFHhSbVOE4N2hE1YYUu+4aPNA
- 8w2CjcoUIV7qscMx/nR5zxAr1UsoBg4S2of649TcesWJi15RT+wRMNM+lUcvJOCGXfVw
- 19rA==; darn=nongnu.org
+ bh=1aQU8qSBHLDH70rkd6GhkO/f0JWFbK/pTxADVkt7U4M=;
+ fh=Ayn1XhkevTPgTEqyOLu95RHd3TUepZKYCfpV7siXqls=;
+ b=glH3ViWAtZXIqooGi53FuULVqWCndnpX+LxN7zPUW0DkxgZprKm5Ttn54OlBEk31OX
+ iscmoYHb2W2A2KTpVXUDVSBRlCdF3fXdMn2SCrAw0Mldh563YkzBPqDivo5Lh2HNLv3L
+ 9hjoHgzmL/tRHNpaPiwSz3wkm1SVuJhJVloCm1tjRIGOcvejnmpRVXsINxhTG7Qg4b62
+ nJ+R4Zx9CLm1NuZY5lCHNehk3T9YHreouLaz9r+WJeQ6ftQm/wDoUwosK4ZIYl0eexvW
+ 5r8Dsk/V7mUgjmgjw3kMNfCQWvgR7f3TEaezTucs5YHXf13aOK+T7he7j9F2tgOPSkM6
+ 4T4Q==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778833890; x=1779438690; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778834962; x=1779439762; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=alzfgz1aXCJLqugLm78Sp8WFGjGW5XBGx/1DQ0VOqWk=;
- b=Oz/X7NK2olEnLkxOEP8Q+thSCOAQtu2W3hryNc5ZqYCVa/vLJIK3KmoIDjRAtxLKKI
- JMeviMPPvKYdPjCv38jZSYKV1VJs2jPUbDllwq3rGOCpwv2L0dId4/iejrNVUaa6BV1T
- 321dnA9ML+l1Mr9uguD74hOUJLutbPtsOJvGSfN/b8niX/+WTiHSOT5TqPSWiTcg9RU3
- vCRZyT8kw91CNO9EBPybaNUMmudz1ZEv3RXip09WkHbI0mArULk5PmhDSskaPytzaFXy
- /0HGfVkDFV4vLnLgq7ROnb+jgZdqcHrwFLT4ug+ndzeppw6PwxZkqHjMwsb7TH9JFRm4
- oSAA==
+ bh=1aQU8qSBHLDH70rkd6GhkO/f0JWFbK/pTxADVkt7U4M=;
+ b=nZ7ibKvu5c9RKG+fh31xPdsUbqwJ0cMYdYphcJb3pYoVFiRm8ynLdDRkecyk81pKem
+ +JvD/qWDKPICpBcCZbrm0PpxKbF3oWoxp2GPGDQ5iLXdfByZqiOKTr+yDTyqodaeaUjT
+ qOtP5N5viO/qKPEDv7QcePHC70MZRIobFh//E5K/c79HI1DVXdSscEPeZW5e4l9gpnkF
+ XLDLQPFZbPEK0G72J1Dqv6AYW0Q7FbSc3q/sybKQUI21MNC2XE5JWOK4tAukB4YAz4tf
+ nEQsfGNCQ7IawELSFkYsIp10cOlyQtJWGhq1FG2rQk6H9N96mmujaUMPveaWtgv5m8Sz
+ sk8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778833890; x=1779438690;
+ d=1e100.net; s=20251104; t=1778834962; x=1779439762;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=alzfgz1aXCJLqugLm78Sp8WFGjGW5XBGx/1DQ0VOqWk=;
- b=bFcceqPq7ai4cEP3TCoAOKDMprelXnFNQDA4CHSHrVbShxlm1X+7txqDL+B/Nvh8SI
- BNyXJ4sQSdWufOPSJJRwH7E0wD3jtCvCn7wikQMJKrme6Xp0aEBFr/DBUeCKO3hd+4vh
- mStl9qbWaBQWKnHjw3uoj5VocrnWCGPpK6sElSgA0nKNJzovEa8PnDuFnLrxOr8hzK54
- pnfU3/Y3V8UrpeyvZhhJ20gL9MLgelPK7paqnWSsDwdFt/6P8o9sg2BJYyj35+7khMbB
- WH1SDGw64TMl86QX/fmCFcwp2TdJCoTc1xEu/sW3Lh7AvOTtI1HfvEIjnRBiV5Q+zkSh
- maVw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9/DFzseQkl3TL/+XayxDsuXSbxfrZEac4+Wl6GfPbavYA7AZNWZyPzOWxZF91UnmKeA8/9AKVa0/eW@nongnu.org
-X-Gm-Message-State: AOJu0YwaOUL+JNXaz6JKHsRZchzIrQzmA+1Uv6I5sBzbBGInLt9CGJz4
- uEH2ZLd7P663u2PC2rbp7UOqZ7w69S21wGeeQlbjtfz4eYzE96H3Ev5395a3zBDxqm/HxKW6dnX
- PW2nrBCNcT+GfVwd6/uHCmNGxsPi66uyoHRTqYrus5w==
-X-Gm-Gg: Acq92OERnpZefvDXjILtBmx/q9svpyqbpv/5ZqFd6sFtbtbYwopvT3KZskakAbFCOuk
- 57nt48m28X8oCP497Y8+hAYjuOzpRNA/VJro2g7G3r+PqMwjr9n47TaJufSRi6+Gv/zZhha/2hL
- nH87G6FWZcLJGz9ewrWr9QpDHWj/6sMbIZTp+cRSU4PrhbRpK+6OGP6De8vvghnFl8/9/0g65M4
- 5DyXdjAYZJMnrP9W11O7NXdd8OMaP9efo1bHsoMb6AQIGk/WHfDKg/Dl6K31x/p0mOi588eGQNn
- pe67ELWGCs+v3C3Xdy3Qrj15lkBcGdgaAKtKRJmtBSfZbcPaYlE0XIgTBUSDJl5pAyQ=
-X-Received: by 2002:a05:690e:155c:10b0:651:c234:8204 with SMTP id
- 956f58d0204a3-65e226bf7dbmr2437248d50.24.1778833890611; Fri, 15 May 2026
- 01:31:30 -0700 (PDT)
+ bh=1aQU8qSBHLDH70rkd6GhkO/f0JWFbK/pTxADVkt7U4M=;
+ b=py5xyMfEOxAoCUqH80DDfX5DxNq7wBgIDzVWZnJJdFYvS91uxcwviVszPrGM9DYiLv
+ YjnUS7/fqi8utqpqXIO5kRkZDoT1hrgX8z+Y+U8E7P1o5ZtFZV2GM9M4SRJTMkEAJ86k
+ wQnPpfs4ljU47V795QdXIXY5pcNKGQyI/D25IB4/WRxsfjiUTO3nnPnkEHSvrKtLaYqV
+ 2XD5rZdPsyNGfl1NOfMGW0Siny4m1NU6EQkDzxopEVuq9Ce9mGrHULx301iLFTTcqLv2
+ kNtOfBwVy3faGMj0OE7LprDYtF6lMt0oZ8nk+EH7VA3oCpAQ85JlQ4hjDFX6XB0mfq2o
+ +1lw==
+X-Gm-Message-State: AOJu0Yxqajl5H0erc74sLGwVrMNPXQ+jWLfaA+vSMMcfaqK8fx28pD//
+ OrAxzYyn7nGeSFG6WD7CWSlMBECkreFq4GAeWGYlQAKYqXL/lddQmwUAM0joIEb8tKTQJC+28mt
+ cfOU/xlHlLFQLBhVv2IasLSuWSsTShTISuVM3FBca8i8w0ITR3M8F
+X-Gm-Gg: Acq92OG4dD5uSYefp31KtYacZOepiBLOEqOxD0Hr3PFJyAm229m2s0cEfe4NEOE4+9Z
+ RMGZ9j5BM9dms16La9YIuw89GQnlC/AbW+obddnbqv8G3mJnNfhY8IVTuAGHE5S3y8Duo4QN6NB
+ tV7hVAVYNauzXQ0knTV07h7mJM4RIVAfpVj1QTdvCr36ktHGiYyKf1QsQLfRqjHTZ1SBFnrSQ6k
+ E4y6ukXm3Zbc+QVtKLQO5AcKTfC0hlosuQySyAl/0Bsmcs6r6Qfkz6GUjOlubjLkl9n9Um1BwZQ
+ UGiszkf5OH68aofqzIUR9/Oc//yJuqNFAsuCxPYjgj5Bqf59UfWes0zFL8DoEo3Jnqk=
+X-Received: by 2002:a53:c041:0:20b0:658:509a:754f with SMTP id
+ 956f58d0204a3-65e226bb1acmr2455063d50.18.1778834962165; Fri, 15 May 2026
+ 01:49:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260503073541.790215-1-eric.auger@redhat.com>
-In-Reply-To: <20260503073541.790215-1-eric.auger@redhat.com>
+References: <20260508104723.2144051-1-peter.maydell@linaro.org>
+In-Reply-To: <20260508104723.2144051-1-peter.maydell@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 15 May 2026 09:31:19 +0100
-X-Gm-Features: AVHnY4JAVD4AJ5nfdtuw8hlYr0xUlyVi_OqdmNMtbkuR_uPHuC85swtfT1ALIAc
-Message-ID: <CAFEAcA-TE-8cj6fGOYJaChRVB5GE7E8ys87cxPP4Yw1kgjh9Dg@mail.gmail.com>
-Subject: Re: [PATCH v4 00/17] kvm/arm: Introduce a customizable aarch64 KVM
- host model
-To: Eric Auger <eric.auger@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- kvmarm@lists.linux.dev, richard.henderson@linaro.org, cohuck@redhat.com, 
- sebott@redhat.com, skolothumtho@nvidia.com, philmd@linaro.org, maz@kernel.org, 
- oliver.upton@linux.dev, pbonzini@redhat.com, armbru@redhat.com, 
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com
+Date: Fri, 15 May 2026 09:49:10 +0100
+X-Gm-Features: AVHnY4KLMYBda9biDDKnUFL8TJBDyzlgFrWBE2rhNOoZepw0mONQP_aKlmQdyaw
+Message-ID: <CAFEAcA_o7XwLGoaD=4KMb0MMxy9s=EkiP2_US44FkO1ng7m3FQ@mail.gmail.com>
+Subject: Re: [PATCH] meson.build: Add -fzero-init-padding-bits=all
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -120,42 +114,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 3 May 2026 at 08:35, Eric Auger <eric.auger@redhat.com> wrote:
+On Fri, 8 May 2026 at 11:47, Peter Maydell <peter.maydell@linaro.org> wrote:
 >
-> This series enhances the current host KVM model with capability to
-> set writable ID reg fields.
+> The C standard doesn't always guarantee that struct and union padding
+> bits are zero initialized, even if the code initializes a struct.
+> For QEMU, this is potentially problematic, because we often have
+> structs that match data structures in guest memory, where we
+> initialize them and then bulk copy them into the guest.  If the
+> compiler didn't zero init the whole of the memory containing the
+> struct, we could potentially leak random data from the host into the
+> guest via the padding bytes.
 >
-> Since v6.7 kernel, KVM/arm allows the userspace to overwrite the values
-> of a subset of ID regs. The list of writable fields continues to grow.
-> The feature ID range is defined as the AArch64 System register space
-> with op0==3, op1=={0, 1, 3}, CRn==0, CRm=={0-7}, op2=={0-7}.
+> We already use -ftrivial-auto-var-init=zero, which will zero out
+> padding in many of these cases, but -fzero-init-padding-bits=all
+> closes some gaps, for example cases where we initialize a
+> variable with a struct initializer, and cases involving unions.
 >
-> The end goal is to get more flexibility when migrating guests
-> between different host hardware.
+> Follow the Linux kernel in using both options. Compare kernel
+> commit dce4aab8441 ("kbuild: Use -fzero-init-padding-bits=all").
 >
-> QEMU retrieves the writable ID fields from KVM UAPI [1] and
-> match them against a generated description of ID regs and their
-> named fields that stem from AARCHMRS Registers.json file.
-> Current description is based on latest 2026-03 edition.
-> The content of the generated files was compared against kernel
-> linux/arch/arm64/tools/sysreg file [3] . It is not straightforward
-> to have unit tests for python scripts as there are many cases for
-> field extraction.
+> This option exists in gcc-15 and above; it's not supported
+> by clang, but clang documents that it guarantees zero init
+> of these cases always:
+> https://clang.llvm.org/docs/LanguageExtensions.html#union-and-aggregate-initialization-in-c
+> Older gcc which don't have the option behave as if it were set.
 >
-> For each writable named field a uint64 property is created
-> following the "SYSREG_<REG>_<FIELD>" naming convention. REG and
-> FIELD names are those described in ARM ARM Reference manual.
+> (These options are passed through the cc.get_supported_arguments()
+> filter, so we don't need to do anything extra to avoid passing it to
+> a compiler that doesn't recognize it.)
+>
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
-So if the user asks to set ID registers to an architecturally
-invalid combination (e.g. one that reports FEAT_X but not
-FEAT_Y even though FEAT_X is supposed to imply FEAT_Y, or
-one where one ID register says we have FEAT_X but a different
-ID register says we don't have FEAT_X), what happens ?
-Do we catch and reject that? Does the kernel reject that?
-Or do we just report to the guest what the user asked for,
-and if they asked for something broken they can keep both
-pieces ?
+I'll take this via target-arm.next.
 
-thanks
 -- PMM
 
