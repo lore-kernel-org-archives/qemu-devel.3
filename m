@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1625DCD4F25
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 16:32:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C4FBCD4F25
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 16:33:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNvRe-0005uY-I2; Fri, 15 May 2026 12:31:26 -0400
+	id 1wNvRb-0005n9-5S; Fri, 15 May 2026 12:31:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wNvRJ-0005dl-Nq
- for qemu-devel@nongnu.org; Fri, 15 May 2026 12:31:11 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1wNvRL-0005dr-D1
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 12:31:12 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wNvRG-000277-2G
- for qemu-devel@nongnu.org; Fri, 15 May 2026 12:31:04 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-48a7fe4f40bso217805e9.0
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 09:31:01 -0700 (PDT)
+ id 1wNvRJ-00027r-Ev
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 12:31:07 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4891e5b9c1fso6015e9.2
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 09:31:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778862660; x=1779467460; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778862663; x=1779467463; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=n8toGhl6HNFSdtVND/yM1sQU/Jwuqjo1Ew04f+H6Atk=;
- b=dwrK5A7T2Qptp3R4UxPEktb06V+mxmUHb+qHyCONj1zqLt/mr1vwaa7ypOLcwICzlW
- wBWOli3dVrmdwBEMzRh4CCqa9wA+2+8Xqak6rXYbwQNBuCnOHqKGoBz8hXT5adE0TpZ8
- XQbqgDhYYD/+W6BatT2hqFKo5PptULy10pxRPpnXFVRW24NuTDr5ziTMG20+rvWv3k5G
- Ij6yHZw25ObsKvB8Z6PENGv+7PRHCN0qKaDUAHCLPrqp+3WXRU8oOp15gi5apURROXwk
- uCoBIPf1P3QKgSRWxK9MMyYr/D97oq81h4+A+A0Zr9EDp4/gwlv33lfhklrId9N/xxRu
- oEDA==
+ bh=TZ2iWX33HeoG0R/fQ++7Hb1Satx2YRpoKwe+JWxXPCk=;
+ b=nBcI+K37ZXDQ1ayVX2NANdsQAHIcMj/wsNU7fR/suUBIK0QDX6FBNOJxUgv7GgOL4j
+ 7i+rbUMVMevcm1wgpObsuLF2mjw2mHsXBADdl3GRgU4n60LSDpFtkVLgzah1rEyIt1cp
+ Pfm0wf7pw+q4rkj5oOLtuiFN7Mp6HMlzI57Rm2HJgwakknhbISHHKGJ838JkRSfIS7Eo
+ fCPJIXesGh4f4c0ibCr1xDcYPals/WmezR671mxptDIFNhx+s3udZ6KabJ0CGpG//PbG
+ zDZwcSv4pZkKv6HEek09cJNfahZA3al1NKWXD2XfkGQNSX1+S1536A8D3BBrklYlmv0w
+ 1u9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778862660; x=1779467460;
+ d=1e100.net; s=20251104; t=1778862663; x=1779467463;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=n8toGhl6HNFSdtVND/yM1sQU/Jwuqjo1Ew04f+H6Atk=;
- b=kYP0LyR3MIoWDXrrJIohSj+9l90cihbb9Ncia8iFvah4cTn4fk3wDT4Fi1ra9gC+38
- 4kLAq6lNERRPFyCak8TNtp63QaZEYRRs/nWm9FD89o+2voKsBP6ut7JtdXmX0Uh1Wm9G
- vjcFYQk2zGCSQAHEn547CkScl2lZXGoOXiOUDiMM6FnHbn2N8NZadVgzW9TuxX3aFrKP
- PwwAOr9gXiW3Ht4gM22YtoGWlxBsf+ePBkrszGwxS6/sp7c0s1xspAQNiiKpsAekTxsI
- uuQP117k3ZkPpQrHPlfT114ClCoWxVu0Gb69AhYdmrpm1RAnpQZH2PpZzJD1REgFFUJA
- K3PQ==
-X-Gm-Message-State: AOJu0YxzaAYDZEuMcGfxndrnP9rQI/Mb5KX6Sh/L64MIA2n14+Q7FiDX
- WbQ++6TDl6PVqSFw3AN247BceZuwkhOaJLjc3LhVDJ8HZ65K41yWeYt77SxTSpME1K7w87xKG40
- 7iOtnDOs=
-X-Gm-Gg: Acq92OFNhJyJ9/+DQ6nxS1sblZa/7dW7lp+mgtNfket473Z9eNSchJwKKD8xTxAg6Qk
- SmwOGHZn2D8w0FGbrNuwq2F68GsfuC1yvtn5bmTWSu1BIJ4g1o2fRMnrfLOjansUOCD3lzN0WmV
- ylrQIJEiy+b2YujztluXbPsghEsK8BBCCRLUWCC40k96xOvhHfsZLMJoe15ChjHoz8vqMaDcq59
- C40RJElwi1zvDVAf8N0WVxFoELLsaKWbXAXaGxiOhJedVDcyG1jOO+mVyO3O7i/9lwm0N0f5oAD
- xjMhdt5MptOn8sOGptvZ9U0AzJgUyEUGjWVbyiU+YaXj/8hjmR4URfLdii7gme7r6ncNQG5pLXH
- OgRqY4undSot3fHLDtelLmAm0EAIUh7ywfDcwLVzQo8DxwAIF0HKVIcPU5ecnBqwomMH7Dr6CN4
- LMaZGy+9Mq1OjiU5tEmpi+8LU=
-X-Received: by 2002:a05:600c:48a8:b0:48f:e230:d5ab with SMTP id
- 5b1f17b1804b1-48fe651e11cmr40956605e9.31.1778862660456; 
- Fri, 15 May 2026 09:31:00 -0700 (PDT)
+ bh=TZ2iWX33HeoG0R/fQ++7Hb1Satx2YRpoKwe+JWxXPCk=;
+ b=F/uwQ+ZX8lk6Wq/OtTIuTK4dCyKscqZlN9agecwdArq0NbhyrC2Nt+9UYf0kY1vyOP
+ 5oDerTxMPMnZMd6WnRq3wESZCXgCgEeebkeektwu8VGE8W5KhpcD8JefUeoF2sMrr2Vk
+ AMYMWc1Uh5P3bFyuAlNQlZmNeqgGHotyBfpRmFljGWuyYWScRifhSk9DcQEw9JyB9Rw2
+ wM/QoD/vkytAEzvZO/rrnkGIWb2EcsRYOVzOUr40nb8LTm5LQ2PAicRQ2AP4fuZM68rN
+ 5eBC/C0+0PKgKb2kdlfyfgJ0D0SUJ3b/aiTPAPsS8UMGRhKdP/pR2Al5la+Yu0Xvbc9z
+ sP/g==
+X-Gm-Message-State: AOJu0YyQFe/88c2Dk8qCoL+ZAVXroe237RhjKKPJo30i/+LalHhNG70C
+ +sKhzXeHyzxGVt24PiNgbU/+VV3S8QHNBDCdux8oDox1KPRGOmqR7bdhSepHh4raSlM=
+X-Gm-Gg: Acq92OEukLRF7fOePsOp6E5logFZxsRM96+G0MwC/31NJ84Skb1G8vl+C4XUcbNbnFU
+ Jeb91RyxN4KDv9ZMTymt1SNB4y0Byo8EV0d70WoIWnOKo1Fplwn3M+UROaKW+jZBNVsnI9wmwfY
+ wkdDM39fDkTXQQinUAu0r9a6n7Zq2aehhq1/efQhIttkYfrYn8yQNptJpJBoFpDGAqTOWtG/ti1
+ 6CZ2Nu9YgRdzmaWm0n+O4REAfi4DUd/wFB+sgcz6wkxMYDc8b0UmB8P4B95xCWdFmcNYNM1Rgeu
+ uPoK7NzS00zrM/jN9nR/NpCaEWTNaStoN40Oq1K2B3fQV6nmMS0w3htSEZiLWLqOQxFKFgLUvVA
+ E+n2lPiS1JOCyJxYkr/peffMBHs4swlCWZ5hhE2ZIlKi0EBw5C/w21hHrehpMBhf5sWuWCAX9U9
+ Hmor+PAzZuzNLcuajPW+DhI4U=
+X-Received: by 2002:a05:600c:8b6e:b0:485:9a50:3370 with SMTP id
+ 5b1f17b1804b1-48fe60ecc24mr74608155e9.8.1778862662802; 
+ Fri, 15 May 2026 09:31:02 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48feaa2a878sm30983345e9.1.2026.05.15.09.30.58
+ 5b1f17b1804b1-48fe5cab818sm73873195e9.14.2026.05.15.09.30.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 15 May 2026 09:30:59 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 54C2D5FA65;
+ by draig.lan (Postfix) with ESMTP id 249585F954;
  Fri, 15 May 2026 17:30:56 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Cleber Rosa <crosa@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  John Snow <jsnow@redhat.com>
-Subject: [RFC PATCH v3 09/11] .agents/skills: add qemu-issue-helper skill
-Date: Fri, 15 May 2026 17:30:52 +0100
-Message-ID: <20260515163055.1792262-10-alex.bennee@linaro.org>
+Subject: [RFC PATCH v3 07/11] .agents/skills: add qemu-code-reviewer skill
+Date: Fri, 15 May 2026 17:30:50 +0100
+Message-ID: <20260515163055.1792262-8-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260515163055.1792262-1-alex.bennee@linaro.org>
 References: <20260515163055.1792262-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,78 +104,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This provides basic instructions for fetching issue details and
-summarising details about the issue for other agents.
+This provides basic instructions for how to download and apply a
+patch series from the mailing list.
+
+Currently it is only taught about checkpatch but we could consider
+adding common code smells and review comments that come up frequently.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- .agents/skills/qemu-issue-helper/SKILL.md | 47 +++++++++++++++++++++++
- AGENTS.md                                 |  1 +
- 2 files changed, 48 insertions(+)
- create mode 100644 .agents/skills/qemu-issue-helper/SKILL.md
 
-diff --git a/.agents/skills/qemu-issue-helper/SKILL.md b/.agents/skills/qemu-issue-helper/SKILL.md
+---
+v2
+  - merge checkpatch skill
+  - moved later in series to leverage build and test skills
+  - properly reference qemu-build and qemu-tester skills
+  - mention the qemu-code-explorer skill for navigation
+---
+ .agents/skills/qemu-code-reviewer/SKILL.md | 93 ++++++++++++++++++++++
+ AGENTS.md                                  |  1 +
+ 2 files changed, 94 insertions(+)
+ create mode 100644 .agents/skills/qemu-code-reviewer/SKILL.md
+
+diff --git a/.agents/skills/qemu-code-reviewer/SKILL.md b/.agents/skills/qemu-code-reviewer/SKILL.md
 new file mode 100644
-index 00000000000..725097bac36
+index 00000000000..48ec6b07520
 --- /dev/null
-+++ b/.agents/skills/qemu-issue-helper/SKILL.md
-@@ -0,0 +1,47 @@
++++ b/.agents/skills/qemu-code-reviewer/SKILL.md
+@@ -0,0 +1,93 @@
 +---
-+name: qemu-issue-helper
-+description: Summarize QEMU issue analysis for main agent. Helps sub-agents report findings including build config, CLI, tests, and GitLab issue data. Trigger when analyzing QEMU bugs or issues reported on GitLab.
++name: qemu-code-reviewer
++description: Pull and apply patch series from mailing lists for review and testing in QEMU, including style and build validation.
 +license: GPL-2.0-or-later
 +---
 +
-+# QEMU Issue Helper
++# QEMU Code Reviewer Skill
 +
-+Assist sub-agent in summarizing issue analysis for main agent.
++This skill provides instructions on how to retrieve patch series submitted to the QEMU mailing list (`qemu-devel@nongnu.org`) using `b4` or manual methods.
 +
-+## Fetching Issue Data
++## Using b4 (Recommended)
 +
-+Use `glab` to retrieve issue details from GitLab. QEMU primary repo: `qemu-project/qemu`.
++`b4` is the preferred tool for working with patch series from public-inbox instances like `lore.kernel.org`.
 +
-+### Commands
-+- **View issue**: `glab issue view <ID_OR_URL> -R qemu-project/qemu`
-+- **View comments**: `glab issue view <ID_OR_URL> -R qemu-project/qemu --comments`
-+- **Search issues**: `glab issue list -R qemu-project/qemu --search "<KEYWORDS>"`
++### 1. Fetching a series
++To download a series and prepare it for `git am`:
++```bash
++b4 am <message-id-or-url>
++```
++This creates a `.mbx` file containing the entire series, properly ordered.
 +
-+## Report Format
++### 2. Applying a series directly
++To apply a series directly to your current branch:
++```bash
++b4 shazam <message-id-or-url>
++```
++This is often the fastest way to get a series ready for testing.
 +
-+Sub-agent MUST provide a summary of the GitLab issue discussion and findings in this format:
++### 3. Creating a local branch for the series
++```bash
++b4 am -t <message-id-or-url>
++git am ./*.mbx
++```
++The `-t` flag (or `--trust-all`) can be useful if you know the source.
 +
-+### 1. Issue Context
-+- **Source**: GitLab URL/ID.
-+- **Title**: Short issue description.
-+- **Reporter**: User who found it.
-+- **Relevant Commits**: List any commits mentioned in the issue that are related to the bug or previous attempts to fix it.
++## Manual mbox Retrieval (Alternative)
 +
-+### 2. Build & Reproduction (from issue)
-+- **Reported Environment**: Host OS, CPU, QEMU version.
-+- **Build Configuration**: Required `configure` flags mentioned in the issue.
-+- **Reproduction CLI**: Exact QEMU command used to reproduce.
++If `b4` is unavailable, you can fetch the mbox manually from `lore.kernel.org`.
 +
-+### 3. Proposed Fixes & Series
-+- **Proposed Fixes**: Flag any specific code snippets or logic fixes suggested in the comments.
-+- **Patch Series**: Note if any patch series or Merge Requests have been linked.
++### 1. Locate the thread
++Find the patch series on [lore.kernel.org/qemu-devel/](https://lore.kernel.org/qemu-devel/).
 +
-+### 4. Discussion Summary
-+- **Current Consensus**: What is the community's current understanding of the bug?
-+- **Key Constraints**: Note any blockers, requirements, or specific feedback from maintainers.
-+- **Next Steps**: What is needed to move the issue forward?
++### 2. Download the mbox
++Every thread on lore has an `mbox.gz` link. You can use `curl` or `wget`:
++```bash
++curl -L "https://lore.kernel.org/qemu-devel/<message-id>/raw" -o series.mbox
++```
++*Note: Appending `/raw` to the message URL usually provides the mbox format.*
 +
-+## Rules
-+- **No Independent Analysis**: Do not perform your own root cause analysis. Summarize ONLY what is present in the issue tracker.
-+- **Terse**: Use brief technical English.
-+- **Links**: Provide direct links to relevant comments or patches if available.
++### 3. Apply with git am
++```bash
++git am series.mbox
++```
++
++## Post-Application Steps
++
++Once the patches are applied, you should perform initial validation:
++
++### 1. Style Check
++Run the QEMU checkpatch script to ensure the patches follow the project's coding style.
++
++- **Check applied patches**:
++  ```bash
++  ./scripts/checkpatch.pl master..HEAD
++  ```
++- **Check a specific commit**:
++  ```bash
++  ./scripts/checkpatch.pl <commit-hash>^..
++  ```
++- **Check a specific file**:
++  ```bash
++  ./scripts/checkpatch.pl -f <file-path>
++  ```
++- **Strict mode** (often required for new code or specific subsystems):
++  ```bash
++  ./scripts/checkpatch.pl --strict <commit-range>
++  ```
++
++### 2. Build and Test
++Refer to the `AGENTS.md` or the `qemu-build` and `qemu-testing` skills for build and test instructions.
++- Ensure you are in a clean build directory.
++- Run `ninja` or `make`.
++- Run relevant tests (e.g., `make check-qtest`).
++
++### 3. Reviewing Patches
++Refer to the `qemu-code-explorer` skill for navigating the code base and resolving functions and where they are called from.
++
++
++
++## Common Troubleshooting
++
++- **Applying fails**: If `git am` fails due to conflicts, you may need to use `git am --3way` or manually resolve conflicts.
++- **Missing dependencies**: Ensure your tree is up to date with the base branch the patches were intended for (usually `master`).
 diff --git a/AGENTS.md b/AGENTS.md
-index 26a9c93007b..6a91c39638e 100644
+index f5439282967..fe50057cef7 100644
 --- a/AGENTS.md
 +++ b/AGENTS.md
-@@ -35,6 +35,7 @@ You should use the following specialized skills for common tasks:
+@@ -33,6 +33,7 @@ You should use the following specialized skills for common tasks:
+ - `qemu-code-explorer`: For finding where things are defined, how they're used, or understanding a specific subsystem.
+ - `qemu-build`: For configuring and building QEMU (including debug and sanitizer builds).
  - `qemu-testing`: For finding, listing, and running individual tests (Unit, QTest, Functional, TCG).
- - `qemu-code-reviewer`: For pulling and applying patch series from mailing lists.
- - `qemu-mail-thread`: For analyzing and parsing mailing list threads.
-+- `qemu-issue-helper`: For fetching and summarising issue details from the bug tracker.
++- `qemu-code-reviewer`: For pulling and applying patch series from mailing lists.
  
  ## Source Code Layout (see `docs/devel/codebase.rst`)
  - **`accel/`**: Hardware accelerators (KVM, TCG, HVF, Xen, etc.) and architecture-agnostic acceleration code.
