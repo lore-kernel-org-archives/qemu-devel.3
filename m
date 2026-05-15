@@ -4,97 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7591CD4851
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 21:21:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55369CD343F
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 21:21:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNzx8-0001CM-N2; Fri, 15 May 2026 17:20:14 -0400
+	id 1wNzyG-0004hR-LT; Fri, 15 May 2026 17:21:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzx7-0001BI-4e
- for qemu-devel@nongnu.org; Fri, 15 May 2026 17:20:13 -0400
-Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzxl-0002vj-W0
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 17:20:55 -0400
+Received: from mail-oi1-x22b.google.com ([2607:f8b0:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzx5-0002sB-DR
- for qemu-devel@nongnu.org; Fri, 15 May 2026 17:20:12 -0400
-Received: by mail-ot1-x334.google.com with SMTP id
- 46e09a7af769-7e568ab0bc5so343697a34.0
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 14:20:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wNzxj-00039M-UR
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 17:20:53 -0400
+Received: by mail-oi1-x22b.google.com with SMTP id
+ 5614622812f47-479d593a0c3so236875b6e.0
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 14:20:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778880010; x=1779484810;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778880050; x=1779484850;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=QwxcDBxfcEuftcZ6S6KRRMd4HtIR3+pnE2ndVidOVhk=;
- b=EewIf0YxRcFtH7VTsrphn33I+3UiG0f4Jp9YamJEAva0OOECgd3SHdapc8GKFWwP6R
- O8OosRmDcCIFB9vWSUqpVWS5Ki5zcho+CJwGyRglMZ5/U2AAsPkLPiUuPjhtxSYmC69i
- 0wOjia5Q0RETqwZFTGn4Sf9EXwSOoyy9frofxvu3xcOHOWi45HnMcw1/Znl3IY4NV/yN
- hXShmV6eyfkywcLVokbZL6KN5ltWsVA/41Gd7n/EP8qENrZfWX9rBMQN+3xdogg5SrC2
- 4hud9FpO6MuS9ufpxrrqQ16N08MJ2xo++y8Fgnr1sG3fKi4nRLAkuwIL5GPV8ZQLKG5m
- gT0w==
+ :reply-to; bh=2EsJKY6wRKyUAHQyJydxItZiWMuRqA47IYT8gmTrP+8=;
+ b=Y372ZVEmV3/pledt6K2QlfmSEA+OqCvMINFHEyPTB+OWMyegvabxBU2CZkrlRkfO5l
+ TrY2MBz5mKJd9PlNmeamFARwTWncib4WpWQ75wmwlnjzteHoEbVV3C7YcJfp7/zxfmR5
+ hwZSVlW/uycKa6ncILmSSwYWdDWoj+S7W+GH3T3qk02lNJZe8pnRY/cKB4YHmg32hqF5
+ gh/tkQq8QAc9WME7bXd2NLznzbwfgciRwvsm3JZl4v2i5HAv8xUT2xF7YAjKsUZMSMIV
+ v7ABjjNcHE9gucUcw+HTMBymIumRvjGJqwsUgDxIqQGG29K5dnvk9pbMvnK9jfsd01Sc
+ xJfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778880010; x=1779484810;
+ d=1e100.net; s=20251104; t=1778880050; x=1779484850;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=QwxcDBxfcEuftcZ6S6KRRMd4HtIR3+pnE2ndVidOVhk=;
- b=kOzRVwfKkn3umC085MpYLExEpdXIsJpuyMoh+Ndqqh65Fw/WlxxXtgcVhs4TyccijH
- C9oR/RJirUqOt3xc+Sll+jkE9hVhKsDFLdksofqRDc1h3B7usP7cFjFRdLttYaEmL757
- HPYfXgqZ752ICSobwuyqiW3VPe0MB1jloXOvqHy4CCwAFW5JE6lr0sW4KuZKGdLY6QHz
- ExPyvuJqnS1lMZ/ekZOU71N0x5om8gWscgqd0DTnX3x8vEYzsZBYBBMMpOiI2aHffbuc
- MZtFMKAsTguhEh0VLvUtJp0nHQXY8rNeLrmGtgwh0a3fZhk4fy+AOWNm2G7VaWxbADX+
- FhhA==
-X-Gm-Message-State: AOJu0Yw+IxNqzDw4+dWIRGSoC3FdaYRkcNS36ZLxzgKBMzmmeawqEtWo
- QwAHOLBLd+Wvo738EI+8DQKDHIibvEYUw54CjWECdMj65BFjyRth3q/b31fVqrreBhE=
-X-Gm-Gg: Acq92OF3BT+2mfYh91k4f3BOqz1hNuT23aiqIKt1REk7am46e3advOgHoAuNeaCLkps
- iVj3cgBcobqP2bMQUhHCnevwHH2UTnZXpRCPusQKFrjhbvmAe28C/zYR+YeaGLgCxriwC/KQsLv
- fvkctmI2jgQjiHIlV+Ut5Ira+m3r/93sc4L47GY6dKhwhWiwVQGCeM8TNg0Qvz7oNhR2nKIN7Fd
- t02gUexpKtbOlgkf9n6BFb4ASqn2i8ZtpSBCvivU6ELnA4VGk/h8wmLJiJxxtVP4wx6wmtCBhV0
- 1mZHpkPv8yMeH/aFbYV3KKQ/pLP5RjwG7pdTVgy103MUOQ23zD4JE6PvA+QIT0tQFftn1buGOS6
- 7xuEnNoGlg9FVL3uugtKx1hqz7Uv+gR5VnCUGd1b1lsuPXTDWk6i3RiH4JoyR0gdhyRDsvflJE6
- IySePZjEsSsEzDwQwYQwEI
-X-Received: by 2002:a05:6830:d0d:b0:7dc:cb0d:9e02 with SMTP id
- 46e09a7af769-7e4a3e5e77bmr3496110a34.9.1778880010384; 
- Fri, 15 May 2026 14:20:10 -0700 (PDT)
+ bh=2EsJKY6wRKyUAHQyJydxItZiWMuRqA47IYT8gmTrP+8=;
+ b=GM3+shzI5vo9VG44aXISVCu2w45xXikvstMXfBow5RPP+FaY5ftLnojDIY/G+/bxJv
+ Dg43YdzfCK3jOCAfvsyuqttf8vGzDSj5ohypJR/5I+wmYS2OLSFiSwF5SykYM8CMZNuJ
+ 8+Id1qD9OW0a1LdedY35THpzMohlV5OdEwLYU2in5pIKKoj4ebGZVSMipLk0gYaWPToj
+ uM9ac+DH9NvZ6wQ1JH/ev+mulnwIoy5OdcjQwd4a6hEaDXuB1NsrMeyDzY8osLrpxpxI
+ HmcjdIBU4xN0OXulBY+H/BiZMj+mmsKsql3ogYv/ooRpYaM9llWRRHYLbYdpQeZth2rP
+ Q4Mg==
+X-Gm-Message-State: AOJu0YyitI1Q2j27KuOE9xbRdJ/fUqV4E8kCcZkiSppLdOi8UiDXMlaU
+ C76jAHvfbKlekh3HNwYR6O+EMxHJNLALyrsMAU5Tt8MAkHQDlL8EoGe2apLrC2y9NY3wBMTBccC
+ WHwZkY0U=
+X-Gm-Gg: Acq92OGeUPALQLZBytTMSRI+N3BwxYkcCfYAcvdYxw4qih2jEOjgOJa/pdnq6T0zAsn
+ wVI0kmexHmMRgIkIgFGuMiRyGiQbN/98RaXp5XzGjdzjme6BGMKYHrWi1CytNL8MTjVcfd0aNeb
+ u46DHzWnsYkMPUjQDvIuWYBAshhLNAeLzEYZWcVoycJZ9VylIdTU9sNQqfEqr9zakPT+FMxoLkx
+ /Yps+TxLs3F2RPsqxmjg24RMTvmakFToWlpjwS3gS4KX4AcBvzfSUeA32nGzoYxX8auRS4I+BEt
+ HS/jPgBPKFBMt8FlXl3cLD+XTphZQIaF6P1Vwxa6AK2YAXyY9O/OV6gReQJcGREKQ/CY6CWB9Ya
+ PL7IUjGHl7DrG3HKmM7X+ZOak0Nw68bmpJAFJYpNDVUSt2923maiH9hakWOBl95Eg1KrdSTTXdc
+ wCOFTPE1b7FA==
+X-Received: by 2002:a05:6808:181e:b0:450:b249:71bb with SMTP id
+ 5614622812f47-482cb927ed6mr4928338b6e.19.1778880050243; 
+ Fri, 15 May 2026 14:20:50 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55b7c6b29sm2185612a34.1.2026.05.15.14.20.09
+ 46e09a7af769-7e55b7c6b29sm2185612a34.1.2026.05.15.14.20.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 14:20:09 -0700 (PDT)
+ Fri, 15 May 2026 14:20:49 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Fri, 15 May 2026 15:19:09 -0600
-Subject: [PATCH 10/66] bsd-user: Add socket shims socketpair through shutdown
+Date: Fri, 15 May 2026 15:19:45 -0600
+Subject: [PATCH 46/66] bsd-user: freebsd_umtx_mutex_wake2 fix unlock_user
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260515-misc-2026q2-v1-10-5438ca41b27a@bsdimp.com>
+Message-Id: <20260515-misc-2026q2-v1-46-5438ca41b27a@bsdimp.com>
 References: <20260515-misc-2026q2-v1-0-5438ca41b27a@bsdimp.com>
 In-Reply-To: <20260515-misc-2026q2-v1-0-5438ca41b27a@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>, 
- Kyle Evans <kevans@FreeBSD.org>
+ Warner Losh <imp@bsdimp.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4186; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=Z5UdDzcopzUGMjRMp45t8+R+3fsuou9TYbXSLV+0l+I=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqB43iOikGFSOnUbRn+pX9ly3rXu6Zv8fOkg+Hp
- OZMx5RCf8SJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCageN4gAKCRBsHNEofbAR
- ALGEEADBpKg2YbNQOAbNE2FxQb9Ln1+Wia43WAX9c/xFIuWx3YNhvn0C8/UtmlZLmXTKv4dtvru
- +3L7spFAEURA4RIHqwaMinHAe9tuRJLgSaF3sQvTrOuKEqNMeytnHQR677uKK/IlI9RL+BPOB9M
- s3O+eG2MchDID9FDwbMvDYOLZTx0vv7gw9Zn1GT59bPaOmx0UPRgWBriRtfDWRNw//lWOicXdlg
- 7K6aLSWi72atbfzLIfzC1Zvd0oNxD8dvlsbIjn2tudxL9CQs3tfMxVAANsJvMJlKNXJcK+jdeED
- hTQgkFVKMW0/jNDak3mjFiTcLDypc/3EDIM8xF+v9GAbWbJynvb/rOgXJoff9fYV+NfJVuPPAYi
- 4EHaeRbP5OQ7F0WaHAUUGHhBcWdPnC9fD8mY+v8yLK+dEYlS5Wx6gEt+2cbzzjPCJ074GLpTlPL
- aOVDXxVa588ErKe7Wb8JeSIwnaKUcAEzwdp7JWly1FOP+VrsNiqnzv1HOjVHnpHSFz/SycVqcpf
- WpA1ICflhApaZo3yoIVoQavp8berAEyvpkD0Fc0/wWdHhYonFQUGFAB6UNWPMhda4tbu5wfJuOC
- MhM71Y33+H6E5vFk/OHIUOfNVuMVLOhYU+KS/FIc+bjILGdkwDsILujDjpgMR7qHD67NLjsziY3
- pg+w5UNndQoInqw==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=934; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=+tJeoK0ng+exvyjMVCcN8K1cXKYqQMT9ULR0VIbAmwA=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqB43mYYem8x2ZCvbA7/xqzzsyf0DnSxrK+lCIT
+ jNXnbVzTdCJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCageN5gAKCRBsHNEofbAR
+ AHb2D/9qO8P0CZDs//g+O0arEzB1EKhgwO56dSOh1drObpTx53aHM5HURCosF03k70fcX7ZQy/J
+ craBzJ9m8mdg0yoNtDiqR35I2A7m7Pvh8cLpf3hwIMpz8Xp1vwcw9RsvHmrtYrDwpQFKeUt27E6
+ iU1JKCh9CHkT/WH+GBeoxziZ8MsgznmZ5sR+YgNP1xNL8k8tLsVkijAXU3tBxWWX4xhF1nGyPzb
+ 9iIymDZ0+zmvImNSma/4zvMLKahNSjq4brl3DV3/HlO5IaE61U9lb7ty1rDfPdEyqYJ8pOuIuXT
+ IQmw/twzMRnRDYUxyqGYGjZTAiX8BezCz/g8+XPeqKFMf9halztS2vJMniIDxHe0F+XFUR/IS/C
+ kiOmIQZPC/sVb3f0ClUGxsl2FK1HG/LodRPQTcSbLzV0C91JN2NfAzVmnX9V/P7boXh/rrTOKXd
+ C6rqcWFUPu5Af5F7Qc072GbHc+aLgXCV4d8JlGnnqUOrmVn4RgBBhVfQCYBO4orrZgJV9zxiQu4
+ Hq9imJDndh1HoJOUrclF2FldCY8V17r3nfT9Kp5uudua6Y2vect9IB16krGraweKDSlPhql6LjY
+ o7vHdmfDqsh6dmnhf2xtUjh7I9IZx7wePwvB56jBjFjfVKcHrguWzZ8inB0uuWnxQxvp11szptA
+ e6u3qoZK8cGdJoA==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::334;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x334.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::22b;
+ envelope-from=imp@bsdimp.com; helo=mail-oi1-x22b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -116,140 +116,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Complete bsd-socket.h with socketpair, sendto, recvfrom, socket,
-and shutdown system call shims.
+This should be an unlock_user_struct to match the
+lock_user_struct. Didn't change the writeback to '1' since the
+tcmpset_32 writes to target memory and we don't need to write again.
 
-Signed-off-by: Stacey Son <sson@FreeBSD.org>
-Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
-Assisted-by: Claude Opus 4.6 (1M context)
 ---
- bsd-user/bsd-socket.h | 114 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 114 insertions(+)
+ bsd-user/freebsd/os-thread.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/bsd-user/bsd-socket.h b/bsd-user/bsd-socket.h
-index 121d3e2a05..578cc3959d 100644
---- a/bsd-user/bsd-socket.h
-+++ b/bsd-user/bsd-socket.h
-@@ -157,4 +157,118 @@ static inline abi_long do_bsd_getsockname(int fd, abi_ulong target_addr,
-     return ret;
- }
+diff --git a/bsd-user/freebsd/os-thread.c b/bsd-user/freebsd/os-thread.c
+index b91e0d32b0..7c3256a87e 100644
+--- a/bsd-user/freebsd/os-thread.c
++++ b/bsd-user/freebsd/os-thread.c
+@@ -474,7 +474,7 @@ abi_long freebsd_umtx_mutex_wake2(abi_ulong target_addr, uint32_t flags)
+     }
+     pthread_mutex_unlock(&umtx_wait_lck);
+     addr = g2h_untagged((uintptr_t)&target_umutex->m_owner);
+-    unlock_user(target_umutex, target_addr, 0);
++    unlock_user_struct(target_umutex, target_addr, 0);
  
-+/* socketpair(2) */
-+static inline abi_long do_bsd_socketpair(int domain, int type, int protocol,
-+                                         abi_ulong target_tab_addr)
-+{
-+    int tab[2];
-+    abi_long ret;
-+
-+    if (!access_ok(VERIFY_WRITE, target_tab_addr, sizeof(tab[0]) * 2)) {
-+        return -TARGET_EFAULT;
-+    }
-+    ret = get_errno(socketpair(domain, type, protocol, tab));
-+    if (!is_error(ret)) {
-+        if (put_user_s32(tab[0], target_tab_addr) ||
-+                put_user_s32(tab[1], target_tab_addr + sizeof(tab[0]))) {
-+            ret = -TARGET_EFAULT;
-+        }
-+    }
-+    return ret;
-+}
-+
-+/* sendto(2) */
-+static inline abi_long do_bsd_sendto(int fd, abi_ulong msg, size_t len,
-+                                     int flags, abi_ulong target_addr,
-+                                     socklen_t addrlen)
-+{
-+    struct sockaddr *saddr;
-+    void *host_msg;
-+    abi_long ret;
-+
-+    if ((int)addrlen < 0) {
-+        return -TARGET_EINVAL;
-+    }
-+    if (len != 0) {
-+        host_msg = lock_user(VERIFY_READ, msg, len, 1);
-+        if (!host_msg) {
-+            return -TARGET_EFAULT;
-+        }
-+    } else {
-+        host_msg = NULL;
-+    }
-+    if (target_addr) {
-+        saddr = alloca(addrlen);
-+        ret = target_to_host_sockaddr(saddr, target_addr, addrlen);
-+        if (is_error(ret)) {
-+            unlock_user(host_msg, msg, 0);
-+            return ret;
-+        }
-+        ret = get_errno(safe_sendto(fd, host_msg, len, flags, saddr, addrlen));
-+    } else {
-+        ret = get_errno(send(fd, host_msg, len, flags));
-+    }
-+    unlock_user(host_msg, msg, 0);
-+    return ret;
-+}
-+
-+/* recvfrom(2) */
-+static inline abi_long do_bsd_recvfrom(int fd, abi_ulong msg, size_t len,
-+                                       int flags, abi_ulong target_addr,
-+                                       abi_ulong target_addrlen)
-+{
-+    socklen_t addrlen;
-+    struct sockaddr *saddr;
-+    void *host_msg;
-+    abi_long ret;
-+
-+    host_msg = lock_user(VERIFY_WRITE, msg, len, 0);
-+    if (!host_msg) {
-+        return -TARGET_EFAULT;
-+    }
-+    if (target_addr) {
-+        if (get_user_u32(addrlen, target_addrlen)) {
-+            ret = -TARGET_EFAULT;
-+            goto fail;
-+        }
-+        if ((int)addrlen < 0) {
-+            ret = -TARGET_EINVAL;
-+            goto fail;
-+        }
-+        saddr = alloca(addrlen);
-+        ret = get_errno(safe_recvfrom(fd, host_msg, len, flags, saddr,
-+                    &addrlen));
-+    } else {
-+        saddr = NULL; /* To keep compiler quiet.  */
-+        ret = get_errno(recv(fd, host_msg, len, flags));
-+    }
-+    if (!is_error(ret)) {
-+        if (target_addr) {
-+            host_to_target_sockaddr(target_addr, saddr, addrlen);
-+            if (put_user_u32(addrlen, target_addrlen)) {
-+                ret = -TARGET_EFAULT;
-+                goto fail;
-+            }
-+        }
-+        unlock_user(host_msg, msg, len);
-+    } else {
-+fail:
-+        unlock_user(host_msg, msg, 0);
-+    }
-+    return ret;
-+}
-+
-+/* socket(2) */
-+static inline abi_long do_bsd_socket(abi_long domain, abi_long type,
-+                                     abi_long protocol)
-+{
-+    return get_errno(socket(domain, type, protocol));
-+}
-+
-+/* shutdown(2) */
-+static inline abi_long do_bsd_shutdown(abi_long s, abi_long how)
-+{
-+    return get_errno(shutdown(s, how));
-+}
-+
- #endif /* BSD_SOCKET_H */
+     return get_errno(safe__umtx_op(addr, UMTX_OP_WAKE_PRIVATE, 1, NULL,
+         NULL));
 
 -- 
 2.52.0
