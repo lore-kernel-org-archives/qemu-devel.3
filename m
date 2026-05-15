@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CFBDCD4F25
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 10:51:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76BC3CD343F
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 10:51:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNq7W-0000mL-40; Fri, 15 May 2026 06:50:18 -0400
+	id 1wNq7P-0000iS-4d; Fri, 15 May 2026 06:50:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNq7T-0000ld-RR
- for qemu-devel@nongnu.org; Fri, 15 May 2026 06:50:15 -0400
+ id 1wNq76-0000bi-SA
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 06:49:59 -0400
 Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNq7R-0001md-VA
- for qemu-devel@nongnu.org; Fri, 15 May 2026 06:50:15 -0400
+ id 1wNq75-00016r-8f
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 06:49:52 -0400
 Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-488a8ca4aadso79900965e9.3
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 03:50:13 -0700 (PDT)
+ 5b1f17b1804b1-48e8132c6d0so45660535e9.1
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 03:49:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778842212; x=1779447012; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778842188; x=1779446988; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=C30Lsosj0P4uFdNJOQFWFt5BVMseTiXExw/kFxdzvL8=;
- b=kBz5muptu8n1U00xKnxj7onIabngZ9Q5iyHoTWLDUt3RK0wnw3WdtSgUf8Uo8qQgQ6
- M3fyciL04OTDvxK0/VNuPwkBtHQCO5HgqoISjsbNIZR6b67WxRlrp5EVT3ARRvWQJr3G
- W99BLa6pC9UG4hCgrLpldntOjQBhx4LWBzFU+9J152Op1WJgS9bhHlLYstBWHMd/VCyW
- JYsnfRjPIVM72BJ1L2dnu635I2eFqCCvGmQuDauTdE+QXSNUDYolA8T/f9pehg8OJyxG
- hOArLF+JbrUTGuMk17xEACiI1KEvQ0j9x924lnz7gbHsN1nNeyd7M+0SUHuDKwMJYsfP
- w5tw==
+ :reply-to; bh=s4bMqeaqqVIhpwFG12+SoiibGvlQN/iUNnXG7PwJyPw=;
+ b=nd9qV+UelVcfZMVG5f1i0g5oX2Vq/17m3STrQa28xF54R5fJdOGlub6INXXEUrFF5I
+ IIDMq0q9H989Fw9m6BTbPhDWUr10DnR8A+iF+2kpeTIZJ7j85tHDzRYac21kBMTqKGMJ
+ +3vxPyVlFfFORd0uPqRM4WA2gsurObkRcnPHFzcebZV4Op+SUUTt3JoU2jhv4sz3gBQT
+ S3sr+nwMdF5WIHr3BiYpagjacof8ePj9yObu3T12DpGzqh8CCzR0VD58PPmTGsaWJZxj
+ 06RslDQXIymIge4+j0qLO8Xw5HCxM37fSD3rOUlkf5bXJalgT3xDNh2wgkYWdmRt5RdJ
+ atcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778842212; x=1779447012;
+ d=1e100.net; s=20251104; t=1778842188; x=1779446988;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=C30Lsosj0P4uFdNJOQFWFt5BVMseTiXExw/kFxdzvL8=;
- b=V3G16DhSS1IJUF5rvSCPXL0ku2fZPtnSf1VWogZneKAH7Rrt+xonfB6Q+56FYhtZVW
- w4gjwCNSSPEznmnQGWTHEQ37bLPIMiLSyG4csk3LzjCxzAfdiLLf2btPc/m44GRL63pz
- nHeBNJbkk3pCGpc9INR75P3q9gX0Az1RXKz7Ug15TbJYVfN5QxQtgt7wwqcbIQITY5c5
- IjhopqNblEt2h5wm9v9JRJRZ1/DBWxLpY32QvbIxkwRwJVVLCzuAUPxTRpbj2NIo5wp9
- m6ygDKFQnOMa6IgeLtamgnkX784dfYUE3dAYo4R0boVoT2pZ++dFThDrA7IJJNkPUH/q
- 7EKw==
-X-Gm-Message-State: AOJu0YyFy+lxq6b7gtJAAw01ENZzNxRVTDSRyn+l0PWtY360M35HgKoz
- 7nUqhK+uQQvGu+a8kvPa4/UAGOAA7+n/ylfXeRw8jjCo1k5RSvIYe+dx4bCQ3SUN/M5xPk/FG2Y
- vZlAI
-X-Gm-Gg: Acq92OHzMUPFpXa3NNsjWQSORjCxI7SOBs7eQaHtJxImYpUQSYDmVuZuPdOHvJjhQsi
- iexFk/KsQSNNjCgx3WQvvWJYonuzrNwV1jD/Ogow51fEQeKaVvgFAo3y2TcDE9EpKppeS5Tqpgh
- iVK0Ayd6UjQLtWw/jiowwyTD5rN5r45SLODcaiMQFQWtcJ326qooR9AZQ25ZaVCKngG3SHuOYft
- IIJ7GgY92+MJ4GLqNpmSqYgvuXSD9pJxjwHb7biWfMLoJewe8s+CH7FaqN1NfE8tAS6tcKaCAuS
- PZrbkjGQtHgjYA9iHjzz2snsRLDdcmlPB8lYW6+2EgFc1au+R3GHTBQ1b07sKTWZlOjCtBcnnGA
- 5NXqj7TTi13Iw7JxRlJJiBLYftGCpLnzOt/9tU5ttgIRrImmGlJDoXQ4kn2Xl3zvfG2UQDS2UPE
- KxBKQkCrp1Ye1LgNq28mjC/qCDIn4lh8/IC/Qirzr7Dj8S7aUuEV8W5Q11rOZJ1wd9TXG2+2Ctb
- la6TVF8rMXX+DnhQCNndjLbhsKt/5o=
-X-Received: by 2002:a05:600c:c10e:b0:48a:65a5:750f with SMTP id
- 5b1f17b1804b1-48fe63265ddmr38494635e9.21.1778842212154; 
- Fri, 15 May 2026 03:50:12 -0700 (PDT)
+ bh=s4bMqeaqqVIhpwFG12+SoiibGvlQN/iUNnXG7PwJyPw=;
+ b=UUysL9KKU6xMuU38AcfjZ8o14rXTtdPuY8Dsu4fbhBPbcxRnxDYiAb+qFr1HoHwLj3
+ RkSIct65vww3nu/g8/p0jcRB1vxbQ7Rw1P5+W5bdi4VH+UUKh4xDT35WYw1NteKIQPCQ
+ P/uNZqjsLA692NaSZGJr14SmporBBkN6BzuYHDFG2ZtfcREorplZhcN2PhAIahJmmqYH
+ D1XkfRlYvNVgE9R6rCn0FXgjc6OknuvHdEYXhQT5WBr0mHLqa7oNKVRWgvYxRNFDwnnF
+ vwVpta+9801/7yXHu9JOgWZXgOyrmerDwTFpHKDDYS1w1S28Y5aqGR0KfKVJGiMOjtFm
+ /AyQ==
+X-Gm-Message-State: AOJu0YxiGEbcI0rlZA9q9Skwc7atBbnx2uSeyQPApX0+Z+6YpG9lIy81
+ ypHwQ1VnjTQMAllw+gqYJzQRC8fPWkeVWHqKP5NemlnciABfz3QTqyhslxg+WhRcFLVZz6uHKsG
+ cXhMY
+X-Gm-Gg: Acq92OGLkkjRjCVzzeG78hW+PlQFtooTSIHyNGpa3t6TwWr0qmjYauseBBrmcryi4oq
+ bF8DjmdpFQZXnzmB9NvOOQOPF4PxowZ253IIUYjB9gy4GbTk2ySxCKYQRYOLq57i0863PKVytFQ
+ 5HvGjUKmDtOaCTKIJtZQAk9lhICfoXn2VWz4UEpt/nP1o8IQXH5hKsjFwYweemmGqzK+a+EoNky
+ YDPM51DLmao7q+GuJhqQ+po5ybnarOSKWZZu9gozNXPGpszq7RilyK0kuKFcoa3/jr7z0Z/5MF9
+ 9OzGJJpH8poUZ87xK0EOw1EvbwvDACgmsuVGHn4eYSPgteDjcnvM3m7lwxgZ+d9lwC1brr9OBg6
+ 6wbQQXqi7IAK3hGzD4I3bg8ecWTyc9/Uh1r5ZW26qp1EMxXWLJteQgP1/pYnaP8d49Z/zdB//aY
+ grCaA+tVcU5fE7wEXb3jZaeL0bi1cetNW2i4aSz6faHgdCUuX0vWFDoSCjpC5WzSJWw4YrB+GEk
+ /UdWQWfnGcPPMeBL554g8Fv1zj+/Jc=
+X-Received: by 2002:a05:600c:8b56:b0:48e:8741:fd4c with SMTP id
+ 5b1f17b1804b1-48fe632536cmr55553595e9.18.1778842188245; 
+ Fri, 15 May 2026 03:49:48 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48feaa2949asm18194355e9.1.2026.05.15.03.50.11
+ 5b1f17b1804b1-48feaa2949asm18194355e9.1.2026.05.15.03.49.47
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 03:50:11 -0700 (PDT)
+ Fri, 15 May 2026 03:49:47 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 22/23] tests/functional/qemu_test/asset.py: Don't use setxattr
- when it doesn't exist
-Date: Fri, 15 May 2026 11:49:44 +0100
-Message-ID: <20260515104945.4145203-23-peter.maydell@linaro.org>
+Subject: [PULL 01/23] docs: Document TIMEOUT_MULTIPLIER for raising test
+ timeouts
+Date: Fri, 15 May 2026 11:49:23 +0100
+Message-ID: <20260515104945.4145203-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260515104945.4145203-1-peter.maydell@linaro.org>
 References: <20260515104945.4145203-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
  envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
@@ -102,53 +101,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Python os.setxattr() API is Linux-specific, so trying to use
-it on other OSes triggers a failure:
+Our test infrastructure allows you to set the TIMEOUT_MULTIPLIER
+environment variable to raise the test timeouts if you're building
+for a slow environment.  (scripts/mtest2make.py reads it and sets the
+meson test -t argument accordingly.)
 
-  File "/Users/pm215/src/qemu/tests/functional/qemu_test/asset.py",
-line 227, in fetch
-    os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
-    ^^^^^^^^^^^
-AttributeError: module 'os' has no attribute 'setxattr'
+Document this so it's not a secret feature only known to a select
+few.
 
-Since we only set the attributes here for informational
-purposes, skip them when os.setxattr() isn't available.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 9903217a4ed013 ("tests/functional: add a module for handling asset download & caching")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Thomas Huth <th.huth+qemu@posteo.eu>
-Message-id: 20260501115506.3792110-1-peter.maydell@linaro.org
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-id: 20260427161132.1463385-1-peter.maydell@linaro.org
 ---
- tests/functional/qemu_test/asset.py | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ docs/devel/testing/main.rst | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
-index 51a434b2b7..0abd89e0a3 100644
---- a/tests/functional/qemu_test/asset.py
-+++ b/tests/functional/qemu_test/asset.py
-@@ -223,11 +223,14 @@ def fetch(self):
-             raise AssetError(self, "Download retries exceeded", transient=True)
+diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
+index 0662766b5c..b01a374865 100644
+--- a/docs/devel/testing/main.rst
++++ b/docs/devel/testing/main.rst
+@@ -52,6 +52,21 @@ Before running tests, it is best to build QEMU programs first. Some tests
+ expect the executables to exist and will fail with obscure messages if they
+ cannot find them.
  
-         try:
--            # Set these just for informational purposes
--            os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
--                        self.url.encode('utf8'))
--            os.setxattr(str(tmp_cache_file), "user.qemu-asset-hash",
--                        self.hash.encode('utf8'))
-+            # Set these just for informational purposes. Note that
-+            # setxattr is Linux-only; as this is only informational
-+            # we can simply skip it on other platforms.
-+            if hasattr(os, "setxattr"):
-+                os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
-+                            self.url.encode('utf8'))
-+                os.setxattr(str(tmp_cache_file), "user.qemu-asset-hash",
-+                            self.hash.encode('utf8'))
-         except OSError as e:
-             self.log.debug("Unable to set xattr on %s: %s", tmp_cache_file, e)
++The timeouts for QEMU tests are set conservatively so you should not
++in general find that tests time out. However, if you are running on a
++particularly slow host or with a slow configuration (such as a build
++with the clang address-sanitizer enabled) you can globally raise all
++the timeouts, by setting the ``TIMEOUT_MULTIPLIER`` environment
++variable. For instance:
++
++.. code::
++
++ TIMEOUT_MULTIPLIER=3 make check
++
++will run with all the default timeouts multiplied by three. You can
++also disable timeouts entirely by setting the environment variable to
++``0``.
++
+ .. _unit-tests:
  
+ Unit tests
+@@ -959,6 +974,9 @@ Python. You can run the functional tests simply by executing:
+ 
+ See :ref:`checkfunctional-ref` for more details.
+ 
++The harness for the functional tests also honours the
++``TIMEOUT_MULTIPLIER`` environment variable.
++
+ .. _checktcg-ref:
+ 
+ Testing with "make check-tcg"
 -- 
 2.43.0
 
