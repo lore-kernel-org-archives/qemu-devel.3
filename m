@@ -4,98 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AA6FCD4F25
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 17:08:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46C35CD4F25
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 17:11:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNw0r-0001Ge-Cz; Fri, 15 May 2026 13:07:49 -0400
+	id 1wNw3X-00027D-F6; Fri, 15 May 2026 13:10:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wNw0p-0001F8-4T
- for qemu-devel@nongnu.org; Fri, 15 May 2026 13:07:47 -0400
+ id 1wNw3B-0001wZ-43
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 13:10:14 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wNw0n-0001O4-D0
- for qemu-devel@nongnu.org; Fri, 15 May 2026 13:07:46 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ id 1wNw36-0002eV-NK
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 13:10:12 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64FBjGGC3514759
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 17:07:44 GMT
+ 64FCM3aX3795431
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 17:10:06 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ppy4XNBJmlehcTqEN00OoWyv1R1L7Rt8ELpsOAqCvbQ=; b=A1DbuHoFMdLUQs8s
- GCazTM17zQKsgSUWm4UXtwceB4lNIIPFQw5n8VzTJdv3huPmN0YcvQTMS8S5LoJz
- T8RtLkytXPqT2HnYFZ4JDC//eWgNXzqrQy3XiX6nNtGFajuFRJOx754ML+i6Qeuj
- wyQ4HFiYRwVqwboqQLBS5CAmPlqRCU8tIzCpaO1iUv+8sOH80X8GV9D+B45XKJ3h
- 5TTzydAup/NRvTiYBErNiVze3Pl1v8XbmDt0XScZfKekF9MKYOlyWtnLkJjKPXxm
- HpCxB32MBWLGq3dt4PI9J+9ZIG032yeFWfus/FiEjB7OLuZq6zzakOqPDeg7NMi3
- JgVe5w==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e5m1vc5w5-1
+ s9qXxFRHC0vJtaVE7vbTukR4VrKVoAu8hb0fR6+sNyQ=; b=N4cm7K96J6RLtMHt
+ 51Po3e4TIc3LQOwqMpXlwLyYkAVcn0lYiJq/PdncC7Ik4LZzImqG7OvVZfopM5qm
+ Garpo6S4UhN7ufVy7QoVdSKPa1wuKvDeAADjsS4BUZs0fGPRZ50ZDiDmw8HoBVC4
+ EUgjbQMkF+29WScxO87daTdt44xcNM/2tR4jkZf0k8rmFsjuYfNWGKWJ0uT9BwZJ
+ J4iGY/E11KMKcRR7ERNtD1utr6iqJ6FR7Q2p+hJEBpjN6W1pUBBc7DjhvVZqKNr3
+ h3uaBrKMW+3+WR2Vy6Jq5Hq1t4pb5FNM1aOVCRUm8jacvzWTsK4Rh/Qnt2bIRTS6
+ f6Wcog==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
+ [74.125.82.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e5m1sv3yu-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 17:07:44 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-2ee1da7a13fso46487eec.1
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 10:07:44 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 17:10:06 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id
+ 5a478bee46e88-2ef37c3f773so36919eec.1
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 10:10:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778864863; x=1779469663; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1778865005; x=1779469805; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ppy4XNBJmlehcTqEN00OoWyv1R1L7Rt8ELpsOAqCvbQ=;
- b=jW46S6ei35cru53FYzWmD8iU65DE1T5ucbi8ZY31lUJY/YKO4Db8Dj7G45XV2XlGvU
- /ow/mtkr1aYXBu7iwn758LRqea12dWf6eg23TSLsSMnw6HN6lgMsPEgH4R4RjtRQuNlF
- 0RxVJMCqqud1+Fr4VkA4dLJBrjVLO4ZeiIi473LbX/Sty4U8bjhadjFlgcNwKeAoQ4RC
- L5KlAjUtQMMKNEqPKbwub/jolWMrszrsIMJrYpvaON66pKHjsQ+jd2M15xCfkKZMpbJJ
- t0pE0j/z69pZfmC4LeJegr1tX4e2t2RhHd7GiXOdbS+v995sfGilcahr2DwD+qDGlvi/
- sLaQ==
+ bh=s9qXxFRHC0vJtaVE7vbTukR4VrKVoAu8hb0fR6+sNyQ=;
+ b=agpd5XKHRcItrjQFBlRSHQYh3GWYNL6tshBHfZh/IjXzm3H1tQpkhF+cnAqU7X/SiT
+ 6goC4IftvMYIuYblFw0DrkevcfUedgiAXGbPUTpXR98VZlr4TTHuZ+lM1q5nTZjrlmrG
+ xSUWsznM7uuTCQ9HYzcpCqzCrw2n1lgzQimz5/+pbTB2yV+PYa3F5NhQBG9OFUSkIA0s
+ moe2qbfYFMMrxHrMyd9D4FClQ6LZqmC7TZcYQHPKWZWmekdITbnGOtuf+WfgtpmtdSl0
+ CWaLMSM/eN5FihvYTwhda9y63J1hsr0Lz3Y8QhQWgniIc8oa8a1FnrSycs5SE5O0iXs9
+ TrhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778864863; x=1779469663;
+ d=1e100.net; s=20251104; t=1778865005; x=1779469805;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ppy4XNBJmlehcTqEN00OoWyv1R1L7Rt8ELpsOAqCvbQ=;
- b=lromSriEXadCaxv/aXOdPMI1Xq0zyXCZBfiB7/So+JQVlerOK8pwvCALogjBUIFgLo
- zH0KqfbC6/1rSBgJTIIDtZZzRGfFh1UMj0MD48PPaTM2KCFmm6fzHc8FS30q5xBW4s2C
- eHCbAJlmnDG3gGBDht53AoZrh9I3xa9c5oBvKkOPtiHo30i//2l6yi8dqx4PXjzLbtoy
- AKcJM4NscJQkLTuP5P9IEdfJSWYDMzpnAxLfPP4rh1UlWc3CW29sMiF4lwrGjnY+qZ4o
- RO2ma1fhExc+4pLdikw4CIi/2v5oGPeq2tPqhUFRI15zZf2EhGWjMQcGwNs95Fn/HCU+
- xdvg==
+ bh=s9qXxFRHC0vJtaVE7vbTukR4VrKVoAu8hb0fR6+sNyQ=;
+ b=Z+26TevnWXD3DrAa3bGhYwyIT+pKMsPXQAwidLVlOuejxH6bgw8z4Q1U4wMfdznaJP
+ ADM9Pgk+umyHWVf3jQGWyhwtNlqfuj/5aoElly/Q9ftbGksCV++x+14lPqt/plTb0HAp
+ nbqV3I2bYnMnyu7a6Ay/ooxKkWuCXEXKNa1svVnLtSYzs05oOTObrC2Va8HfPw9TCih7
+ i13/d6wnF+Bis10y+gt+bNKKgnjvvb+/Lz7GNoXxT3VCi0qG+2RNvQjanYNBYIWCnVkk
+ M8J5Uxt18UrjzqNv3a6JOZ9YHpd0aWLgWB9+wyuNrDmF7Nx4a9EARRZfRx82EqWP7nrH
+ hgpw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/WSHOEdoHsAgw7PUIRWV+GP/T7frXpS80PPe6AdOXEOSmK5OcQrXUOZMNOSIWtPzYf2dekCd0uNN07@nongnu.org
-X-Gm-Message-State: AOJu0YyiJjScwH98fZ0+uf1m81KmR+LHmGqkQlkU57W/3OX0OEX0TW5Z
- DV5P2kyfN6LWlN4A8dyBF6B+ZZa9O8gFJd8R4qk71OB91YW7XaWepyuK6ONNQ2YCfkho0bQSe8X
- ZnL/CwKoo9HNQ+DOk0+Tc1GmRDDi0clHgbtSF+9zUskBQhXEhiPa24LmAyw==
-X-Gm-Gg: Acq92OHOlGDr2zf4HdMatAaCA375bxGCJYem+95BkZT+X8XU6UR+nzNN7Lgnmg3gmgA
- bAWq4bBnBQ+HQAp15OmJ7nCtvtpOjMypbRuTmwOFX1i3jg8CeUhRA62g1qxXrQ4eDWhrKfack1q
- BZqXeuDtB0sHSZCvi4wMRilkWQkXrNVX3QT9vst3SZH0Kl+scRxVGjlyA0hPavXKnS9PsuX2qgk
- LLxn2ECFcithdionNgv8HnbeTz84vpgeawXHQ0FRADx8b1EuYs3OWTGaAsvCtFR2kBdt5EQI2Di
- lxxXYpacrOiR0ErHpnFpHrqaPs8ckGbnsTt8oSwqYmmrS4MGvmrB3pRKkCs9oQmGu8g55wIOqCX
- k3quxPZqWuoyt5Z0YyiAHJ2/o+bwoK31h9hbBCZGEGTRABbcMJ6HU5vDnimddktYrGcjnBo5peK
- UmppMmiN0JXrPTzg==
-X-Received: by 2002:a05:7301:1693:b0:2dd:8ac2:9f7a with SMTP id
- 5a478bee46e88-3039816a0a8mr2378951eec.11.1778864863100; 
- Fri, 15 May 2026 10:07:43 -0700 (PDT)
-X-Received: by 2002:a05:7301:1693:b0:2dd:8ac2:9f7a with SMTP id
- 5a478bee46e88-3039816a0a8mr2378916eec.11.1778864862446; 
- Fri, 15 May 2026 10:07:42 -0700 (PDT)
+ AFNElJ8R7wkuvUpM8OmVZrvHANmgCxMquub3ZDvggLkGQh9rJOHP7pGJdK5OwchjOFG4SzGkoQOpiXaRAC7H@nongnu.org
+X-Gm-Message-State: AOJu0YyeBYkYKx9EJJn+TDa7vO3VpRidqKQRqCpQQCmFx/1ccbxUVp30
+ 6Yfokqz+C9TaBBHfHwGPOUjsX5y58G4iKFUbeJN3QcI5Xam9cPlpKbuD7mc+6JBoSnC2DwSxijH
+ oZFawYw4AdRqR91H+/AanI3lPGlLB8uDTdzr52ugdcO3/a7SFZekY0rQksQ==
+X-Gm-Gg: Acq92OENYFbGL8yZTTkLKxLK5PNRMd/OYmSmyY9CxaVphPE8+PQ9K5YcRpAsT3CvLz0
+ A5S9S4hzPtHpTjN2Hkixara2Nu71Wi53ZWiizmFjGQxxP8cmisscWDTeGjOiRuj7A1sIUDWgQS1
+ zjvaO8p0QPdYMAN+RR/z6VqEvdw08RuaTloWjvB98GLAoidvp7dzMvpEKrl3FAe25MvuJ5pa4n+
+ egIlpQCCuOQYGKfxUJjOO+Vc5FTCB4cKFnHA76Hd/RIIGVVQAjORgWS/v532vBWnfRWOxH+TDGt
+ 0PnmRCc3xnTjDcUanIQo4BHL+M+olS0BOqSL2wC8Wh226VqSf4sID8ZM8wNcwaQXpgsB5gLIwR4
+ lTAw56D3nr6QNOCW29pfALCnXMXdqDS36JBYTR7b+X4h/7DjQgQhC7FaAt80bJAUylZVwg31Hf7
+ LrPkFbzndNPn5znQ==
+X-Received: by 2002:a05:7300:dc03:b0:2ee:be86:7b90 with SMTP id
+ 5a478bee46e88-303986b1538mr2329784eec.29.1778865005166; 
+ Fri, 15 May 2026 10:10:05 -0700 (PDT)
+X-Received: by 2002:a05:7300:dc03:b0:2ee:be86:7b90 with SMTP id
+ 5a478bee46e88-303986b1538mr2329761eec.29.1778865004551; 
+ Fri, 15 May 2026 10:10:04 -0700 (PDT)
 Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30296dcb6c3sm9065660eec.19.2026.05.15.10.07.41
+ 5a478bee46e88-302978ad18asm7531719eec.26.2026.05.15.10.10.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 15 May 2026 10:07:42 -0700 (PDT)
-Message-ID: <622880be-3420-4451-b628-fd4a29f4dd81@oss.qualcomm.com>
-Date: Fri, 15 May 2026 10:07:40 -0700
+ Fri, 15 May 2026 10:10:04 -0700 (PDT)
+Message-ID: <e11a2547-8d2d-403a-94d2-3ab5e35dff77@oss.qualcomm.com>
+Date: Fri, 15 May 2026 10:10:02 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 10/20] target/arm: Restrict IDAU interface to TCG
- namespace
+Subject: Re: [PATCH v6 12/20] target/arm: Extract common code related to 'max'
+ CPU
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goate?=
@@ -107,34 +107,34 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goate?=
  Andrew Jeffery <andrew@codeconstruct.com.au>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 References: <20260515141032.3271-1-philmd@linaro.org>
- <20260515141032.3271-11-philmd@linaro.org>
+ <20260515141032.3271-13-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20260515141032.3271-11-philmd@linaro.org>
+In-Reply-To: <20260515141032.3271-13-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE1MDE3NSBTYWx0ZWRfX5skpsoslwndf
- ku44hO+EAMw/3yQbOjrG2lv3tLXs4HTRzRE/BQS+/w807L0GU7SiZiAj4c9w2ImFq+ASY6pKK9j
- Ywj+klicQqbxY1RNzmX5LoMH0gCp/LX8JCtRuzJK1w+2h90ExNsY86EMVZHOim7bEyx/wmupsCd
- 15DqaijaXHHcLSLbzxV9O3g40+8OVKx8WAnM1QcRW6IEJ7uYjDtc4B2j7nnVURFJgfDzi8vumUU
- QfqC965QsOGqWYvLA5YGndaCciJlDcwbo7swze4rb5r+MKkKZuqQnq3B0YdTyMmUiFB8FM4a79A
- LgAdSYYeL+ABFInrXcV7vcP3lte0JTAmhrnq5xSP7+RPEr70O11SZvTbltaVEDaz2JE2n1EQJxe
- WRuFM+trr41kD5nDv4pfToxHUbrFzpTCTTeN2KKJO/BPQpFZ4OVh7oYgsVzruY3VgVSjFxnToU6
- RiqlHrpowhCv/w8EP1g==
-X-Proofpoint-GUID: WrxwJlyBeHnCXWs48oNhYfHO9v4kFZ6g
-X-Proofpoint-ORIG-GUID: WrxwJlyBeHnCXWs48oNhYfHO9v4kFZ6g
-X-Authority-Analysis: v=2.4 cv=BvqtB4X5 c=1 sm=1 tr=0 ts=6a0752e0 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE1MDE3NSBTYWx0ZWRfX70M+zaf41f/4
+ +blx5hCKKFEa5u+uHikZRNsfrAxUXsVqAY8khm5fZ+ldkpEiZgGRvnpRwfWNdYWmkC5Mu3ug8FK
+ M/N8VqIoMolvHbXp9ak+JOfeQXQE9l6//xOR1WnyNSmQRYNeBvr0HCctz/gAGkKor3wql8RUJLB
+ fLsb08AH0f+uyLY0uoN0i2CFGWhVQREUzYaBJdnmlw6SsU5OUomyUgSzUC+VEdEDtrlDqDhC8PR
+ HIVY5DSPVnsPCVCdkqM1M89iSBpwLn/2rZ6MLMMdAEwkt5Er5cnphmLtVW3mXZfVG95C7ELB5iH
+ /94XzA9buzvsP6IU7q5hOvbYcXnNw6RdLvISupq7Q7MkmrhkOJ65h/USBNzSMCPcWamkILMrXzL
+ sb+LMKGaT2/HjTWgEJOE/CooN6DxXef2mru4Id6bPFs8YgehTICV5se0rw+ImtaK0mjyWwp0vmU
+ AsCIdZefg0dcQoow1OA==
+X-Authority-Analysis: v=2.4 cv=cZXiaHDM c=1 sm=1 tr=0 ts=6a07536e cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=npYeWHLxjx11dXknAyEA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22 a=cvBusfyB2V15izCimMoJ:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=bcbY33BGdfAjHCA2VuMA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=bBxd6f-gb0O0v-kibOvt:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: L3dwXuO9rbclCvcDF4fTq-HyrYkzmT3u
+X-Proofpoint-ORIG-GUID: L3dwXuO9rbclCvcDF4fTq-HyrYkzmT3u
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-15_04,2026-05-15_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 phishscore=0 clxscore=1015 priorityscore=1501
- spamscore=0 malwarescore=0 bulkscore=0 adultscore=0 lowpriorityscore=0
+ lowpriorityscore=0 spamscore=0 phishscore=0 suspectscore=0 adultscore=0
+ bulkscore=0 impostorscore=0 malwarescore=0 clxscore=1015 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605150175
 Received-SPF: pass client-ip=205.220.180.131;
@@ -145,8 +145,8 @@ X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UPPERCASE_50_75=0.008 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,184 +163,251 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/15/2026 7:10 AM, Philippe Mathieu-Daudé wrote:
-> Emphasis the IDAU interface is restricted to TCG by
-> moving the header under target/arm/tcg/. Move the
-> definition to cpu-v7m.c which also contains v7/v8
-> hardware (NVIC), keeping only CPU types in cpu32.c.
-> 
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  include/hw/arm/armv7m.h     |  2 +-
->  include/hw/misc/tz-msc.h    |  2 +-
->  target/arm/{ => tcg}/idau.h |  4 ++--
->  hw/arm/armv7m.c             |  2 +-
->  target/arm/cpu.c            |  2 +-
->  target/arm/ptw.c            |  2 +-
->  target/arm/tcg/cpu-v7m.c    | 11 +++++++++++
->  target/arm/tcg/cpu32.c      |  8 --------
->  8 files changed, 18 insertions(+), 15 deletions(-)
->  rename target/arm/{ => tcg}/idau.h (97%)
+>  target/arm/cpu-max.c   | 106 +++++++++++++++++++++++++++++++++++++++++
+>  target/arm/tcg/cpu32.c |  96 -------------------------------------
+>  target/arm/meson.build |   1 +
+>  3 files changed, 107 insertions(+), 96 deletions(-)
+>  create mode 100644 target/arm/cpu-max.c
 > 
-> diff --git a/include/hw/arm/armv7m.h b/include/hw/arm/armv7m.h
-> index 98ad08db036..70555962bb9 100644
-> --- a/include/hw/arm/armv7m.h
-> +++ b/include/hw/arm/armv7m.h
-> @@ -13,7 +13,7 @@
->  #include "hw/core/sysbus.h"
->  #include "hw/intc/armv7m_nvic.h"
->  #include "hw/misc/armv7m_ras.h"
-> -#include "target/arm/idau.h"
-> +#include "target/arm/tcg/idau.h"
->  #include "qom/object.h"
->  #include "hw/core/clock.h"
->  
-> diff --git a/include/hw/misc/tz-msc.h b/include/hw/misc/tz-msc.h
-> index 07112d8caa3..6cf4c6b09eb 100644
-> --- a/include/hw/misc/tz-msc.h
-> +++ b/include/hw/misc/tz-msc.h
-> @@ -51,7 +51,7 @@
->  #define TZ_MSC_H
->  
->  #include "hw/core/sysbus.h"
-> -#include "target/arm/idau.h"
-> +#include "target/arm/tcg/idau.h"
->  #include "qom/object.h"
->  
->  #define TYPE_TZ_MSC "tz-msc"
-> diff --git a/target/arm/idau.h b/target/arm/tcg/idau.h
-> similarity index 97%
-> rename from target/arm/idau.h
-> rename to target/arm/tcg/idau.h
-> index 0ef5251971d..e5736ad848d 100644
-> --- a/target/arm/idau.h
-> +++ b/target/arm/tcg/idau.h
-> @@ -25,8 +25,8 @@
->   * connected to the CPU using a link property.
->   */
->  
-> -#ifndef TARGET_ARM_IDAU_H
-> -#define TARGET_ARM_IDAU_H
-> +#ifndef TARGET_ARM_TCG_IDAU_H
-> +#define TARGET_ARM_TCG_IDAU_H
->  
->  #include "qom/object.h"
->  
-> diff --git a/hw/arm/armv7m.c b/hw/arm/armv7m.c
-> index a29eab6c915..68a1cbd6316 100644
-> --- a/hw/arm/armv7m.c
-> +++ b/hw/arm/armv7m.c
-> @@ -20,7 +20,7 @@
->  #include "qemu/error-report.h"
->  #include "qemu/module.h"
->  #include "qemu/log.h"
-> -#include "target/arm/idau.h"
-> +#include "target/arm/tcg/idau.h"
->  #include "target/arm/cpu.h"
->  #include "target/arm/cpu-features.h"
->  #include "target/arm/cpu-qom.h"
-> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-> index 31e0a12a986..76f5909e902 100644
-> --- a/target/arm/cpu.c
-> +++ b/target/arm/cpu.c
-> @@ -24,7 +24,6 @@
->  #include "qemu/log.h"
->  #include "exec/page-vary.h"
->  #include "system/whpx.h"
-> -#include "target/arm/idau.h"
->  #include "qemu/module.h"
->  #include "qapi/error.h"
->  #include "cpu.h"
-> @@ -42,6 +41,7 @@
->  #include "hw/intc/arm_gicv5_stream.h"
->  #ifdef CONFIG_TCG
->  #include "hw/intc/armv7m_nvic.h"
-> +#include "target/arm/tcg/idau.h"
->  #endif /* CONFIG_TCG */
->  #endif /* !CONFIG_USER_ONLY */
->  #include "system/tcg.h"
-> diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-> index 8706dd59dd6..a4842a4b62b 100644
-> --- a/target/arm/ptw.c
-> +++ b/target/arm/ptw.c
-> @@ -17,7 +17,7 @@
->  #include "cpu.h"
->  #include "internals.h"
->  #include "cpu-features.h"
-> -#include "idau.h"
-> +#include "target/arm/tcg/idau.h"
->  
->  typedef struct S1Translate {
->      /*
-> diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
-> index dc249ce1f14..02abd831e6a 100644
-> --- a/target/arm/tcg/cpu-v7m.c
-> +++ b/target/arm/tcg/cpu-v7m.c
-> @@ -11,6 +11,7 @@
->  #include "qemu/osdep.h"
->  #include "cpu.h"
->  #include "accel/tcg/cpu-ops.h"
-> +#include "target/arm/tcg/idau.h"
->  #include "internals.h"
->  
->  #if !defined(CONFIG_USER_ONLY)
-> @@ -40,6 +41,16 @@ static bool arm_v7m_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
->      return ret;
->  }
->  
-> +static const TypeInfo arm_v8m_types[] = {
-> +    {
-> +        .name = TYPE_IDAU_INTERFACE,
-> +        .parent = TYPE_INTERFACE,
-> +        .class_size = sizeof(IDAUInterfaceClass),
-> +    }
-> +};
+> diff --git a/target/arm/cpu-max.c b/target/arm/cpu-max.c
+> new file mode 100644
+> index 00000000000..9fd48ce46e2
+> --- /dev/null
+> +++ b/target/arm/cpu-max.c
+> @@ -0,0 +1,106 @@
+> +/*
+> + * QEMU ARM 'max' CPU
+> + *
+> + * Copyright (c) 2018 Linaro Ltd
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
 > +
-> +DEFINE_TYPES(arm_v8m_types)
+> +#include "qemu/osdep.h"
+> +#include "target/arm/internals.h"
 > +
->  #endif /* !CONFIG_USER_ONLY */
->  
->  static void cortex_m0_initfn(Object *obj)
+> +/* Share AArch32 -cpu max features with AArch64. */
+> +void aa32_max_features(ARMCPU *cpu)
+> +{
+> +    uint32_t t;
+> +    ARMISARegisters *isar = &cpu->isar;
+> +
+> +    /* Add additional features supported by QEMU */
+> +    t = GET_IDREG(isar, ID_ISAR5);
+> +    t = FIELD_DP32(t, ID_ISAR5, AES, 2);          /* FEAT_PMULL */
+> +    t = FIELD_DP32(t, ID_ISAR5, SHA1, 1);         /* FEAT_SHA1 */
+> +    t = FIELD_DP32(t, ID_ISAR5, SHA2, 1);         /* FEAT_SHA256 */
+> +    t = FIELD_DP32(t, ID_ISAR5, CRC32, 1);
+> +    t = FIELD_DP32(t, ID_ISAR5, RDM, 1);          /* FEAT_RDM */
+> +    t = FIELD_DP32(t, ID_ISAR5, VCMA, 1);         /* FEAT_FCMA */
+> +    SET_IDREG(isar, ID_ISAR5, t);
+> +
+> +    t = GET_IDREG(isar, ID_ISAR6);
+> +    t = FIELD_DP32(t, ID_ISAR6, JSCVT, 1);        /* FEAT_JSCVT */
+> +    t = FIELD_DP32(t, ID_ISAR6, DP, 1);           /* Feat_DotProd */
+> +    t = FIELD_DP32(t, ID_ISAR6, FHM, 1);          /* FEAT_FHM */
+> +    t = FIELD_DP32(t, ID_ISAR6, SB, 1);           /* FEAT_SB */
+> +    t = FIELD_DP32(t, ID_ISAR6, SPECRES, 1);      /* FEAT_SPECRES */
+> +    t = FIELD_DP32(t, ID_ISAR6, BF16, 1);         /* FEAT_AA32BF16 */
+> +    t = FIELD_DP32(t, ID_ISAR6, I8MM, 1);         /* FEAT_AA32I8MM */
+> +    SET_IDREG(isar, ID_ISAR6, t);
+> +
+> +    t = cpu->isar.mvfr1;
+> +    t = FIELD_DP32(t, MVFR1, FPHP, 3);            /* FEAT_FP16 */
+> +    t = FIELD_DP32(t, MVFR1, SIMDHP, 2);          /* FEAT_FP16 */
+> +    cpu->isar.mvfr1 = t;
+> +
+> +    t = cpu->isar.mvfr2;
+> +    t = FIELD_DP32(t, MVFR2, SIMDMISC, 3);        /* SIMD MaxNum */
+> +    t = FIELD_DP32(t, MVFR2, FPMISC, 4);          /* FP MaxNum */
+> +    cpu->isar.mvfr2 = t;
+> +
+> +    FIELD_DP32_IDREG(isar, ID_MMFR3, PAN, 2);          /* FEAT_PAN2 */
+> +
+> +    t = GET_IDREG(isar, ID_MMFR4);
+> +    t = FIELD_DP32(t, ID_MMFR4, HPDS, 2);         /* FEAT_HPDS2 */
+> +    t = FIELD_DP32(t, ID_MMFR4, AC2, 1);          /* ACTLR2, HACTLR2 */
+> +    t = FIELD_DP32(t, ID_MMFR4, CNP, 1);          /* FEAT_TTCNP */
+> +    t = FIELD_DP32(t, ID_MMFR4, XNX, 1);          /* FEAT_XNX */
+> +    t = FIELD_DP32(t, ID_MMFR4, EVT, 2);          /* FEAT_EVT */
+> +    SET_IDREG(isar, ID_MMFR4, t);
+> +
+> +    FIELD_DP32_IDREG(isar, ID_MMFR5, ETS, 2);          /* FEAT_ETS2 */
+> +
+> +    t = GET_IDREG(isar, ID_PFR0);
+> +    t = FIELD_DP32(t, ID_PFR0, CSV2, 2);          /* FEAT_CSV2 */
+> +    t = FIELD_DP32(t, ID_PFR0, DIT, 1);           /* FEAT_DIT */
+> +    t = FIELD_DP32(t, ID_PFR0, RAS, 1);           /* FEAT_RAS */
+> +    SET_IDREG(isar, ID_PFR0, t);
+> +
+> +    t = GET_IDREG(isar, ID_PFR2);
+> +    t = FIELD_DP32(t, ID_PFR2, CSV3, 1);          /* FEAT_CSV3 */
+> +    t = FIELD_DP32(t, ID_PFR2, SSBS, 1);          /* FEAT_SSBS */
+> +    SET_IDREG(isar, ID_PFR2, t);
+> +
+> +    t = GET_IDREG(isar, ID_DFR0);
+> +    t = FIELD_DP32(t, ID_DFR0, COPDBG, 10);       /* FEAT_Debugv8p8 */
+> +    t = FIELD_DP32(t, ID_DFR0, COPSDBG, 10);      /* FEAT_Debugv8p8 */
+> +    t = FIELD_DP32(t, ID_DFR0, PERFMON, 6);       /* FEAT_PMUv3p5 */
+> +    SET_IDREG(isar, ID_DFR0, t);
+> +
+> +    /* Debug ID registers. */
+> +
+> +    /* Bit[15] is RES1, Bit[13] and Bits[11:0] are RES0. */
+> +    t = 0x00008000;
+> +    t = FIELD_DP32(t, DBGDIDR, SE_IMP, 1);
+> +    t = FIELD_DP32(t, DBGDIDR, NSUHD_IMP, 1);
+> +    t = FIELD_DP32(t, DBGDIDR, VERSION, 10);      /* FEAT_Debugv8p8 */
+> +    t = FIELD_DP32(t, DBGDIDR, CTX_CMPS, 1);
+> +    t = FIELD_DP32(t, DBGDIDR, BRPS, 5);
+> +    t = FIELD_DP32(t, DBGDIDR, WRPS, 3);
+> +    cpu->isar.dbgdidr = t;
+> +
+> +    t = 0;
+> +    t = FIELD_DP32(t, DBGDEVID, PCSAMPLE, 3);
+> +    t = FIELD_DP32(t, DBGDEVID, WPADDRMASK, 1);
+> +    t = FIELD_DP32(t, DBGDEVID, BPADDRMASK, 15);
+> +    t = FIELD_DP32(t, DBGDEVID, VECTORCATCH, 0);
+> +    t = FIELD_DP32(t, DBGDEVID, VIRTEXTNS, 1);
+> +    t = FIELD_DP32(t, DBGDEVID, DOUBLELOCK, 1);
+> +    t = FIELD_DP32(t, DBGDEVID, AUXREGS, 0);
+> +    t = FIELD_DP32(t, DBGDEVID, CIDMASK, 0);
+> +    cpu->isar.dbgdevid = t;
+> +
+> +    /* Bits[31:4] are RES0. */
+> +    t = 0;
+> +    t = FIELD_DP32(t, DBGDEVID1, PCSROFFSET, 2);
+> +    cpu->isar.dbgdevid1 = t;
+> +
+> +    FIELD_DP32_IDREG(isar, ID_DFR1, HPMN0, 1);         /* FEAT_HPMN0 */
+> +}
 > diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
-> index 2127d456ad6..73d21c6cf7d 100644
+> index 73d21c6cf7d..919ed8a6cf8 100644
 > --- a/target/arm/tcg/cpu32.c
 > +++ b/target/arm/tcg/cpu32.c
-> @@ -12,7 +12,6 @@
->  #include "cpu.h"
->  #include "accel/tcg/cpu-ops.h"
->  #include "internals.h"
-> -#include "target/arm/idau.h"
->  #if !defined(CONFIG_USER_ONLY)
->  #include "hw/core/boards.h"
->  #endif
-> @@ -899,17 +898,10 @@ static const ARMCPUInfo arm_tcg_cpus[] = {
->  #endif
->  };
+> @@ -18,102 +18,6 @@
+>  #include "cpregs.h"
 >  
-> -static const TypeInfo idau_interface_type_info = {
-> -    .name = TYPE_IDAU_INTERFACE,
-> -    .parent = TYPE_INTERFACE,
-> -    .class_size = sizeof(IDAUInterfaceClass),
-> -};
+>  
+> -/* Share AArch32 -cpu max features with AArch64. */
+> -void aa32_max_features(ARMCPU *cpu)
+> -{
+> -    uint32_t t;
+> -    ARMISARegisters *isar = &cpu->isar;
 > -
->  static void arm_tcg_cpu_register_types(void)
->  {
->      size_t i;
+> -    /* Add additional features supported by QEMU */
+> -    t = GET_IDREG(isar, ID_ISAR5);
+> -    t = FIELD_DP32(t, ID_ISAR5, AES, 2);          /* FEAT_PMULL */
+> -    t = FIELD_DP32(t, ID_ISAR5, SHA1, 1);         /* FEAT_SHA1 */
+> -    t = FIELD_DP32(t, ID_ISAR5, SHA2, 1);         /* FEAT_SHA256 */
+> -    t = FIELD_DP32(t, ID_ISAR5, CRC32, 1);
+> -    t = FIELD_DP32(t, ID_ISAR5, RDM, 1);          /* FEAT_RDM */
+> -    t = FIELD_DP32(t, ID_ISAR5, VCMA, 1);         /* FEAT_FCMA */
+> -    SET_IDREG(isar, ID_ISAR5, t);
+> -
+> -    t = GET_IDREG(isar, ID_ISAR6);
+> -    t = FIELD_DP32(t, ID_ISAR6, JSCVT, 1);        /* FEAT_JSCVT */
+> -    t = FIELD_DP32(t, ID_ISAR6, DP, 1);           /* Feat_DotProd */
+> -    t = FIELD_DP32(t, ID_ISAR6, FHM, 1);          /* FEAT_FHM */
+> -    t = FIELD_DP32(t, ID_ISAR6, SB, 1);           /* FEAT_SB */
+> -    t = FIELD_DP32(t, ID_ISAR6, SPECRES, 1);      /* FEAT_SPECRES */
+> -    t = FIELD_DP32(t, ID_ISAR6, BF16, 1);         /* FEAT_AA32BF16 */
+> -    t = FIELD_DP32(t, ID_ISAR6, I8MM, 1);         /* FEAT_AA32I8MM */
+> -    SET_IDREG(isar, ID_ISAR6, t);
+> -
+> -    t = cpu->isar.mvfr1;
+> -    t = FIELD_DP32(t, MVFR1, FPHP, 3);            /* FEAT_FP16 */
+> -    t = FIELD_DP32(t, MVFR1, SIMDHP, 2);          /* FEAT_FP16 */
+> -    cpu->isar.mvfr1 = t;
+> -
+> -    t = cpu->isar.mvfr2;
+> -    t = FIELD_DP32(t, MVFR2, SIMDMISC, 3);        /* SIMD MaxNum */
+> -    t = FIELD_DP32(t, MVFR2, FPMISC, 4);          /* FP MaxNum */
+> -    cpu->isar.mvfr2 = t;
+> -
+> -    FIELD_DP32_IDREG(isar, ID_MMFR3, PAN, 2);          /* FEAT_PAN2 */
+> -
+> -    t = GET_IDREG(isar, ID_MMFR4);
+> -    t = FIELD_DP32(t, ID_MMFR4, HPDS, 2);         /* FEAT_HPDS2 */
+> -    t = FIELD_DP32(t, ID_MMFR4, AC2, 1);          /* ACTLR2, HACTLR2 */
+> -    t = FIELD_DP32(t, ID_MMFR4, CNP, 1);          /* FEAT_TTCNP */
+> -    t = FIELD_DP32(t, ID_MMFR4, XNX, 1);          /* FEAT_XNX */
+> -    t = FIELD_DP32(t, ID_MMFR4, EVT, 2);          /* FEAT_EVT */
+> -    SET_IDREG(isar, ID_MMFR4, t);
+> -
+> -    FIELD_DP32_IDREG(isar, ID_MMFR5, ETS, 2);          /* FEAT_ETS2 */
+> -
+> -    t = GET_IDREG(isar, ID_PFR0);
+> -    t = FIELD_DP32(t, ID_PFR0, CSV2, 2);          /* FEAT_CSV2 */
+> -    t = FIELD_DP32(t, ID_PFR0, DIT, 1);           /* FEAT_DIT */
+> -    t = FIELD_DP32(t, ID_PFR0, RAS, 1);           /* FEAT_RAS */
+> -    SET_IDREG(isar, ID_PFR0, t);
+> -
+> -    t = GET_IDREG(isar, ID_PFR2);
+> -    t = FIELD_DP32(t, ID_PFR2, CSV3, 1);          /* FEAT_CSV3 */
+> -    t = FIELD_DP32(t, ID_PFR2, SSBS, 1);          /* FEAT_SSBS */
+> -    SET_IDREG(isar, ID_PFR2, t);
+> -
+> -    t = GET_IDREG(isar, ID_DFR0);
+> -    t = FIELD_DP32(t, ID_DFR0, COPDBG, 10);       /* FEAT_Debugv8p8 */
+> -    t = FIELD_DP32(t, ID_DFR0, COPSDBG, 10);      /* FEAT_Debugv8p8 */
+> -    t = FIELD_DP32(t, ID_DFR0, PERFMON, 6);       /* FEAT_PMUv3p5 */
+> -    SET_IDREG(isar, ID_DFR0, t);
+> -
+> -    /* Debug ID registers. */
+> -
+> -    /* Bit[15] is RES1, Bit[13] and Bits[11:0] are RES0. */
+> -    t = 0x00008000;
+> -    t = FIELD_DP32(t, DBGDIDR, SE_IMP, 1);
+> -    t = FIELD_DP32(t, DBGDIDR, NSUHD_IMP, 1);
+> -    t = FIELD_DP32(t, DBGDIDR, VERSION, 10);      /* FEAT_Debugv8p8 */
+> -    t = FIELD_DP32(t, DBGDIDR, CTX_CMPS, 1);
+> -    t = FIELD_DP32(t, DBGDIDR, BRPS, 5);
+> -    t = FIELD_DP32(t, DBGDIDR, WRPS, 3);
+> -    cpu->isar.dbgdidr = t;
+> -
+> -    t = 0;
+> -    t = FIELD_DP32(t, DBGDEVID, PCSAMPLE, 3);
+> -    t = FIELD_DP32(t, DBGDEVID, WPADDRMASK, 1);
+> -    t = FIELD_DP32(t, DBGDEVID, BPADDRMASK, 15);
+> -    t = FIELD_DP32(t, DBGDEVID, VECTORCATCH, 0);
+> -    t = FIELD_DP32(t, DBGDEVID, VIRTEXTNS, 1);
+> -    t = FIELD_DP32(t, DBGDEVID, DOUBLELOCK, 1);
+> -    t = FIELD_DP32(t, DBGDEVID, AUXREGS, 0);
+> -    t = FIELD_DP32(t, DBGDEVID, CIDMASK, 0);
+> -    cpu->isar.dbgdevid = t;
+> -
+> -    /* Bits[31:4] are RES0. */
+> -    t = 0;
+> -    t = FIELD_DP32(t, DBGDEVID1, PCSROFFSET, 2);
+> -    cpu->isar.dbgdevid1 = t;
+> -
+> -    FIELD_DP32_IDREG(isar, ID_DFR1, HPMN0, 1);         /* FEAT_HPMN0 */
+> -}
+> -
+>  /* CPU models. These are not needed for the AArch64 linux-user build. */
+>  #if !defined(CONFIG_USER_ONLY) || !defined(TARGET_AARCH64)
 >  
-> -    type_register_static(&idau_interface_type_info);
->      for (i = 0; i < ARRAY_SIZE(arm_tcg_cpus); ++i) {
->          arm_cpu_register(&arm_tcg_cpus[i]);
->      }
+> diff --git a/target/arm/meson.build b/target/arm/meson.build
+> index 5376be2e3bc..3e02941d0d5 100644
+> --- a/target/arm/meson.build
+> +++ b/target/arm/meson.build
+> @@ -9,6 +9,7 @@ arm_user_ss = ss.source_set()
+>  arm_common_system_ss.add(files('gdbstub.c'))
+>  arm_user_ss.add(files('gdbstub.c'))
+>  
+> +arm_ss.add(files('cpu-max.c'))
+>  arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
+>    'cpu64.c',
+>  ))
 
-That's the patch causing an issue for kvm/xen only build on aarch64 hosts.
+Some bikeshedding: maybe name this cpu32-max.c for consistency?
+No strong opinion though, just a feeling.
 
-../target/arm/cpu.c: In function ‘arm_cpu_post_init’:
-../target/arm/cpu.c:1620:47: error: ‘TYPE_IDAU_INTERFACE’ undeclared
-(first use in this function); did you mean ‘TYPE_INTERFACE’?
- 1620 |         object_property_add_link(obj, "idau",
-TYPE_IDAU_INTERFACE, &cpu->idau,
-      |                                               ^~~~~~~~~~~~~~~~~~~
-      |                                               TYPE_INTERFACE
-../target/arm/cpu.c:1620:47: note: each undeclared identifier is
-reported only once for each function it appears in
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+
+Regards,
+Pierrick
 
