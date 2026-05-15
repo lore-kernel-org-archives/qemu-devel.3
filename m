@@ -4,39 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3AADCD4F3C
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 18:04:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA2D3CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 18:04:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNwqx-0007YY-F3; Fri, 15 May 2026 14:01:39 -0400
+	id 1wNwqx-0007YT-Ay; Fri, 15 May 2026 14:01:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwqL-0007Km-I1
- for qemu-devel@nongnu.org; Fri, 15 May 2026 14:01:07 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwqb-0007N3-Hn
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 14:01:22 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwqI-0001MA-7r
- for qemu-devel@nongnu.org; Fri, 15 May 2026 14:01:00 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1wNwqP-0001Pd-Qg
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 14:01:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
- Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+ s=dkim; h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:
+ In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=1I3Bgv0SQHY8SsYW832jIY3xIe6YZKMN3LWNdtZDkRc=; b=RzL/mX6+TKVos4K
- DmEgxAGgcaXGAyIRJz+ISEP563Gdub9S8oZKmcIzf98tdl+/Vz0pGcCG5hJlMSeQdWKJ+QBriK+gv
- sk3KOuu8/4Y6yG51jsi9VcyQmQFTgyPaZ1mi6Ge7qwW4RLJqK4aeJS7rimJG5Fl2uz6QOrypnGJSf
- FA=;
+ List-Help; bh=W/DLWrRh5+Y4og+0LUFPAspmS8bfpYDPmYoWzEDDT+s=; b=f3O8NAV4SHM6ZM4
+ CKxeEq0zZFm8iWh8w1vaGR2tHx7xhit4xh86Recgp8biES9q60uSNIG8hu9mYyHxpEz4E53NpXJst
+ Uzaf/7TcQJ/lic+s+D7lI/ZDa6mSodLs5+jZJedJqEIM+HR72O4UDoCJLOIziEjnCikgtrX4q7p8U
+ xU=;
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, philmd@linaro.org, alistair.francis@wdc.com,
  Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v6 13/27] target/riscv: Fix size of gei fields
-Date: Fri, 15 May 2026 20:04:23 +0200
-Message-ID: <20260515180437.23620-14-anjo@rev.ng>
+Subject: [PATCH v6 23/27] target/riscv: Move CSR declarations to separate
+ csr.h header
+Date: Fri, 15 May 2026 20:04:33 +0200
+Message-ID: <20260515180437.23620-24-anjo@rev.ng>
 In-Reply-To: <20260515180437.23620-1-anjo@rev.ng>
 References: <20260515180437.23620-1-anjo@rev.ng>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
@@ -63,133 +65,355 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-geilen takes the values 31 or 63, fix it to 8 bits. hgeie and hgeip are
-at most 64 bits in size, fix to 64.  Update relevant function arguments
-and uses of hgeie and hgeip.  Note, masking is widened to 64-bit as
-geilen is already verified to be smaller than the target long size, and
-an out-of-bounds shift would be UB anyway.
+Most of these definitions save riscv_csrr, riscv_csrrw, riscv_csr_read,
+riscv_csr_write are only used in target/.  Move declarations to a
+separate headers which will soon be made internal to target/.
+
+csr.h is temporarily included from cpu.h to not break includes from
+outside target/, this include will be removed in the following commit.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/riscv/cpu.h        | 10 +++++-----
- target/riscv/cpu.c        |  4 ++--
- target/riscv/cpu_helper.c |  4 ++--
- target/riscv/csr.c        |  4 ++--
- target/riscv/machine.c    |  4 ++--
- 5 files changed, 13 insertions(+), 13 deletions(-)
+ target/riscv/cpu.h            |  87 +----------------------------
+ target/riscv/csr.h            | 100 ++++++++++++++++++++++++++++++++++
+ target/riscv/cpu.c            |   1 +
+ target/riscv/csr.c            |   1 +
+ target/riscv/gdbstub.c        |   1 +
+ target/riscv/kvm/kvm-cpu.c    |   1 +
+ target/riscv/mips_csr.c       |   1 +
+ target/riscv/monitor.c        |   1 +
+ target/riscv/op_helper.c      |   1 +
+ target/riscv/riscv-qmp-cmds.c |   1 +
+ target/riscv/th_csr.c         |   1 +
+ 11 files changed, 110 insertions(+), 86 deletions(-)
+ create mode 100644 target/riscv/csr.h
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 79d3e74b7a..a2ba5bef60 100644
+index d7a0b083d1..eb18e1f59f 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -279,7 +279,7 @@ struct CPUArchState {
- #ifndef CONFIG_USER_ONLY
-     /* This contains QEMU specific information about the virt state. */
-     bool virt_enabled;
--    target_ulong geilen;
-+    uint8_t geilen;
-     uint64_t resetvec;
+@@ -903,75 +903,7 @@ RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env);
+ RISCVPmPmm riscv_pm_get_vm_ldst_pmm(CPURISCVState *env);
+ uint32_t riscv_pm_get_pmlen(RISCVPmPmm pmm);
  
-     uint64_t mhartid;
-@@ -356,8 +356,8 @@ struct CPUArchState {
-     uint64_t htval;
-     uint64_t htinst;
-     uint64_t hgatp;
--    target_ulong hgeie;
--    target_ulong hgeip;
-+    uint64_t hgeie;
-+    uint64_t hgeip;
-     uint64_t htimedelta;
-     uint64_t hvien;
+-RISCVException riscv_csrr(CPURISCVState *env, int csrno,
+-                          target_ulong *ret_value);
+-
+-RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
+-                           target_ulong *ret_value, target_ulong new_value,
+-                           target_ulong write_mask, uintptr_t ra);
+-RISCVException riscv_csrrw_debug(CPURISCVState *env, int csrno,
+-                                 target_ulong *ret_value,
+-                                 target_ulong new_value,
+-                                 target_ulong write_mask);
+-
+-static inline void riscv_csr_write(CPURISCVState *env, int csrno,
+-                                   target_ulong val)
+-{
+-    riscv_csrrw(env, csrno, NULL, val, MAKE_64BIT_MASK(0, TARGET_LONG_BITS), 0);
+-}
+-
+-static inline target_ulong riscv_csr_read(CPURISCVState *env, int csrno)
+-{
+-    target_ulong val = 0;
+-    riscv_csrr(env, csrno, &val);
+-    return val;
+-}
+-
+-typedef RISCVException (*riscv_csr_predicate_fn)(CPURISCVState *env,
+-                                                 int csrno);
+-typedef RISCVException (*riscv_csr_read_fn)(CPURISCVState *env, int csrno,
+-                                            target_ulong *ret_value);
+-typedef RISCVException (*riscv_csr_write_fn)(CPURISCVState *env, int csrno,
+-                                             target_ulong new_value,
+-                                             uintptr_t ra);
+-typedef RISCVException (*riscv_csr_op_fn)(CPURISCVState *env, int csrno,
+-                                          target_ulong *ret_value,
+-                                          target_ulong new_value,
+-                                          target_ulong write_mask);
+-
+-RISCVException riscv_csrr_i128(CPURISCVState *env, int csrno,
+-                               Int128 *ret_value);
+-RISCVException riscv_csrrw_i128(CPURISCVState *env, int csrno,
+-                                Int128 *ret_value, Int128 new_value,
+-                                Int128 write_mask, uintptr_t ra);
+-
+-typedef RISCVException (*riscv_csr_read128_fn)(CPURISCVState *env, int csrno,
+-                                               Int128 *ret_value);
+-typedef RISCVException (*riscv_csr_write128_fn)(CPURISCVState *env, int csrno,
+-                                             Int128 new_value);
+-
+-typedef struct {
+-    const char *name;
+-    riscv_csr_predicate_fn predicate;
+-    riscv_csr_read_fn read;
+-    riscv_csr_write_fn write;
+-    riscv_csr_op_fn op;
+-    riscv_csr_read128_fn read128;
+-    riscv_csr_write128_fn write128;
+-    /* The default priv spec version should be PRIV_VERSION_1_10_0 (i.e 0) */
+-    uint32_t min_priv_ver;
+-} riscv_csr_operations;
+-
+-struct RISCVCSR {
+-    int csrno;
+-    bool (*insertion_test)(RISCVCPU *cpu);
+-    riscv_csr_operations csr_ops;
+-};
+-
+-/* CSR function table constants */
+-enum {
+-    CSR_TABLE_SIZE = 0x1000
+-};
++#include "target/riscv/csr.h"
  
-@@ -609,8 +609,8 @@ int riscv_cpu_mirq_pending(CPURISCVState *env);
- int riscv_cpu_sirq_pending(CPURISCVState *env);
- int riscv_cpu_vsirq_pending(CPURISCVState *env);
- bool riscv_cpu_fp_enabled(CPURISCVState *env);
--target_ulong riscv_cpu_get_geilen(CPURISCVState *env);
--void riscv_cpu_set_geilen(CPURISCVState *env, target_ulong geilen);
-+uint8_t riscv_cpu_get_geilen(CPURISCVState *env);
-+void riscv_cpu_set_geilen(CPURISCVState *env, uint8_t geilen);
- bool riscv_cpu_vector_enabled(CPURISCVState *env);
- void riscv_cpu_set_virt_enabled(CPURISCVState *env, bool enable);
- int riscv_env_mmu_index(CPURISCVState *env, bool ifetch);
+ /*
+  * The event id are encoded based on the encoding specified in the
+@@ -1015,28 +947,11 @@ void riscv_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
+ void riscv_add_satp_mode_properties(Object *obj);
+ bool riscv_cpu_accelerator_compatible(RISCVCPU *cpu);
+ 
+-/* CSR function table */
+-extern riscv_csr_operations csr_ops[CSR_TABLE_SIZE];
+-bool riscv_csr_is_fpu(int csrno);
+-bool riscv_csr_is_vpu(int csrno);
+-
+ extern const bool valid_vm_1_10_32[], valid_vm_1_10_64[];
+ 
+-void riscv_get_csr_ops(int csrno, riscv_csr_operations *ops);
+-void riscv_set_csr_ops(int csrno, const riscv_csr_operations *ops);
+-
+ void riscv_cpu_register_gdb_regs_for_features(CPUState *cs);
+ 
+-target_ulong riscv_new_csr_seed(target_ulong new_value,
+-                                target_ulong write_mask);
+-
+ const char *satp_mode_str(uint8_t satp_mode, bool is_32_bit);
+ 
+-/* In th_csr.c */
+-extern const RISCVCSR th_csr_list[];
+-
+-/* Implemented in mips_csr.c */
+-extern const RISCVCSR mips_csr_list[];
+-
+ const char *priv_spec_to_str(int priv_version);
+ #endif /* RISCV_CPU_H */
+diff --git a/target/riscv/csr.h b/target/riscv/csr.h
+new file mode 100644
+index 0000000000..fef3cd34cb
+--- /dev/null
++++ b/target/riscv/csr.h
+@@ -0,0 +1,100 @@
++/*
++ * QEMU RISC-V CSRs
++ *
++ * Copyright (c) 2016-2017 Sagar Karandikar, sagark@eecs.berkeley.edu
++ * Copyright (c) 2017-2018 SiFive, Inc.
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef RISCV_CSR_H
++#define RISCV_CSR_H
++
++target_ulong riscv_new_csr_seed(target_ulong new_value,
++                                target_ulong write_mask);
++
++RISCVException riscv_csrr(CPURISCVState *env, int csrno,
++                          target_ulong *ret_value);
++
++RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
++                           target_ulong *ret_value, target_ulong new_value,
++                           target_ulong write_mask, uintptr_t ra);
++RISCVException riscv_csrrw_debug(CPURISCVState *env, int csrno,
++                                 target_ulong *ret_value,
++                                 target_ulong new_value,
++                                 target_ulong write_mask);
++
++static inline void riscv_csr_write(CPURISCVState *env, int csrno,
++                                   target_ulong val)
++{
++    riscv_csrrw(env, csrno, NULL, val, MAKE_64BIT_MASK(0, TARGET_LONG_BITS), 0);
++}
++
++static inline target_ulong riscv_csr_read(CPURISCVState *env, int csrno)
++{
++    target_ulong val = 0;
++    riscv_csrr(env, csrno, &val);
++    return val;
++}
++
++typedef RISCVException (*riscv_csr_predicate_fn)(CPURISCVState *env,
++                                                 int csrno);
++typedef RISCVException (*riscv_csr_read_fn)(CPURISCVState *env, int csrno,
++                                            target_ulong *ret_value);
++typedef RISCVException (*riscv_csr_write_fn)(CPURISCVState *env, int csrno,
++                                             target_ulong new_value,
++                                             uintptr_t ra);
++typedef RISCVException (*riscv_csr_op_fn)(CPURISCVState *env, int csrno,
++                                          target_ulong *ret_value,
++                                          target_ulong new_value,
++                                          target_ulong write_mask);
++
++RISCVException riscv_csrr_i128(CPURISCVState *env, int csrno,
++                               Int128 *ret_value);
++RISCVException riscv_csrrw_i128(CPURISCVState *env, int csrno,
++                                Int128 *ret_value, Int128 new_value,
++                                Int128 write_mask, uintptr_t ra);
++
++typedef RISCVException (*riscv_csr_read128_fn)(CPURISCVState *env, int csrno,
++                                               Int128 *ret_value);
++typedef RISCVException (*riscv_csr_write128_fn)(CPURISCVState *env, int csrno,
++                                             Int128 new_value);
++
++typedef struct {
++    const char *name;
++    riscv_csr_predicate_fn predicate;
++    riscv_csr_read_fn read;
++    riscv_csr_write_fn write;
++    riscv_csr_op_fn op;
++    riscv_csr_read128_fn read128;
++    riscv_csr_write128_fn write128;
++    /* The default priv spec version should be PRIV_VERSION_1_10_0 (i.e 0) */
++    uint32_t min_priv_ver;
++} riscv_csr_operations;
++
++struct RISCVCSR {
++    int csrno;
++    bool (*insertion_test)(RISCVCPU *cpu);
++    riscv_csr_operations csr_ops;
++};
++
++/* CSR function table constants */
++enum {
++    CSR_TABLE_SIZE = 0x1000
++};
++
++/* CSR function table */
++extern riscv_csr_operations csr_ops[CSR_TABLE_SIZE];
++
++bool riscv_csr_is_fpu(int csrno);
++bool riscv_csr_is_vpu(int csrno);
++
++void riscv_get_csr_ops(int csrno, riscv_csr_operations *ops);
++void riscv_set_csr_ops(int csrno, const riscv_csr_operations *ops);
++
++/* In th_csr.c */
++extern const RISCVCSR th_csr_list[];
++
++/* Implemented in mips_csr.c */
++extern const RISCVCSR mips_csr_list[];
++
++#endif /* RISCV_CSR_H */
 diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 27310a95d1..d7219edd87 100644
+index 133ec5cbc3..daad317381 100644
 --- a/target/riscv/cpu.c
 +++ b/target/riscv/cpu.c
-@@ -1064,9 +1064,9 @@ static void riscv_cpu_set_irq(void *opaque, int irq, int level)
-         }
- 
-         /* Update HGEIP CSR */
--        env->hgeip &= ~((target_ulong)1 << irq);
-+        env->hgeip &= ~(1ULL << irq);
-         if (level) {
--            env->hgeip |= (target_ulong)1 << irq;
-+            env->hgeip |= 1ULL << irq;
-         }
- 
-         /* Update mip.SGEIP bit */
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index ff4e941d94..e7c0ff49d0 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -712,7 +712,7 @@ void riscv_cpu_swap_hypervisor_regs(CPURISCVState *env)
-     }
- }
- 
--target_ulong riscv_cpu_get_geilen(CPURISCVState *env)
-+uint8_t riscv_cpu_get_geilen(CPURISCVState *env)
- {
-     if (!riscv_has_ext(env, RVH)) {
-         return 0;
-@@ -721,7 +721,7 @@ target_ulong riscv_cpu_get_geilen(CPURISCVState *env)
-     return env->geilen;
- }
- 
--void riscv_cpu_set_geilen(CPURISCVState *env, target_ulong geilen)
-+void riscv_cpu_set_geilen(CPURISCVState *env, uint8_t geilen)
- {
-     if (!riscv_has_ext(env, RVH)) {
-         return;
+@@ -23,6 +23,7 @@
+ #include "qemu/log.h"
+ #include "cpu.h"
+ #include "cpu_vendorid.h"
++#include "target/riscv/csr.h"
+ #include "internals.h"
+ #include "qapi/error.h"
+ #include "qapi/visitor.h"
 diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index ec08fbddce..0e84554f29 100644
+index 7908ea02a5..6cc3fcd4e3 100644
 --- a/target/riscv/csr.c
 +++ b/target/riscv/csr.c
-@@ -3768,7 +3768,7 @@ static RISCVException rmw_mip64(CPURISCVState *env, int csrno,
+@@ -21,6 +21,7 @@
+ #include "qemu/log.h"
+ #include "qemu/timer.h"
+ #include "cpu.h"
++#include "target/riscv/csr.h"
+ #include "tcg/tcg-cpu.h"
+ #include "pmu.h"
+ #include "time_helper.h"
+diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
+index 7abacd0e11..a2bbaf7f07 100644
+--- a/target/riscv/gdbstub.c
++++ b/target/riscv/gdbstub.c
+@@ -21,6 +21,7 @@
+ #include "gdbstub/helpers.h"
+ #include "cpu.h"
+ #include "internals.h"
++#include "target/riscv/csr.h"
  
-     if (csrno != CSR_HVIP) {
-         gin = get_field(env->hstatus, HSTATUS_VGEIN);
--        old_mip |= (env->hgeip & ((target_ulong)1 << gin)) ? MIP_VSEIP : 0;
-+        old_mip |= (env->hgeip & (1ULL << gin)) ? MIP_VSEIP : 0;
-         old_mip |= env->vstime_irq ? MIP_VSTIP : 0;
-     }
+ struct TypeSize {
+     const char *gdb_type;
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index b047ffa9c0..1f730f337e 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -31,6 +31,7 @@
+ #include "system/kvm.h"
+ #include "system/kvm_int.h"
+ #include "cpu.h"
++#include "target/riscv/csr.h"
+ #include "trace.h"
+ #include "accel/accel-cpu-target.h"
+ #include "hw/pci/pci.h"
+diff --git a/target/riscv/mips_csr.c b/target/riscv/mips_csr.c
+index 822e25e346..609718f288 100644
+--- a/target/riscv/mips_csr.c
++++ b/target/riscv/mips_csr.c
+@@ -10,6 +10,7 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "cpu_vendorid.h"
++#include "target/riscv/csr.h"
  
-@@ -4953,7 +4953,7 @@ static RISCVException write_hgeie(CPURISCVState *env, int csrno,
-                                   target_ulong val, uintptr_t ra)
+ /* Static MIPS CSR state storage */
+ static struct {
+diff --git a/target/riscv/monitor.c b/target/riscv/monitor.c
+index 9edac0533c..3e89dcaf7c 100644
+--- a/target/riscv/monitor.c
++++ b/target/riscv/monitor.c
+@@ -22,6 +22,7 @@
+ #include "qemu/ctype.h"
+ #include "qemu/qemu-print.h"
+ #include "cpu.h"
++#include "target/riscv/csr.h"
+ #include "cpu_bits.h"
+ #include "monitor/monitor.h"
+ #include "monitor/hmp.h"
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index c074b24bc9..3dc8c4f6b3 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -20,6 +20,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "cpu.h"
++#include "target/riscv/csr.h"
+ #include "internals.h"
+ #include "exec/cputlb.h"
+ #include "accel/tcg/cpu-ldst.h"
+diff --git a/target/riscv/riscv-qmp-cmds.c b/target/riscv/riscv-qmp-cmds.c
+index 8a1856c50e..d1c64c1e7f 100644
+--- a/target/riscv/riscv-qmp-cmds.c
++++ b/target/riscv/riscv-qmp-cmds.c
+@@ -35,6 +35,7 @@
+ #include "system/tcg.h"
+ #include "cpu-qom.h"
+ #include "cpu.h"
++#include "target/riscv/csr.h"
+ 
+ static void riscv_cpu_add_definition(gpointer data, gpointer user_data)
  {
-     /* Only GEILEN:1 bits implemented and BIT0 is never implemented */
--    val &= ((((target_ulong)1) << env->geilen) - 1) << 1;
-+    val &= ((1ULL << env->geilen) - 1) << 1;
-     env->hgeie = val;
-     /* Update mip.SGEIP bit */
-     riscv_cpu_update_mip(env, MIP_SGEIP,
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index ce5e44325d..8a8f5be8d6 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -91,8 +91,8 @@ static const VMStateDescription vmstate_hyper = {
-         VMSTATE_UINT64(env.htval, RISCVCPU),
-         VMSTATE_UINT64(env.htinst, RISCVCPU),
-         VMSTATE_UINT64(env.hgatp, RISCVCPU),
--        VMSTATE_UINTTL(env.hgeie, RISCVCPU),
--        VMSTATE_UINTTL(env.hgeip, RISCVCPU),
-+        VMSTATE_UINT64(env.hgeie, RISCVCPU),
-+        VMSTATE_UINT64(env.hgeip, RISCVCPU),
-         VMSTATE_UINT64(env.hvien, RISCVCPU),
-         VMSTATE_UINT64(env.hvip, RISCVCPU),
-         VMSTATE_UINT64(env.htimedelta, RISCVCPU),
+diff --git a/target/riscv/th_csr.c b/target/riscv/th_csr.c
+index 49eb7bbab5..a4ea4ce391 100644
+--- a/target/riscv/th_csr.c
++++ b/target/riscv/th_csr.c
+@@ -19,6 +19,7 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "cpu_vendorid.h"
++#include "target/riscv/csr.h"
+ 
+ #define CSR_TH_SXSTATUS 0x5c0
+ 
 -- 
 2.52.0
 
