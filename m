@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF194CD4F25
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 14:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44D31CD343F
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 14:56:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNtwU-0006rV-Bo; Fri, 15 May 2026 10:55:10 -0400
+	id 1wNtxU-0007Vl-Hu; Fri, 15 May 2026 10:56:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wNtwR-0006g8-M1
- for qemu-devel@nongnu.org; Fri, 15 May 2026 10:55:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wNtwv-0007TF-8q
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 10:55:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wNtwP-00039U-7t
- for qemu-devel@nongnu.org; Fri, 15 May 2026 10:55:07 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wNtwt-0003Ez-Ah
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 10:55:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778856904;
+ s=mimecast20190719; t=1778856933;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=At7SI92euwjr0G8w0j0IxH5iCVPqB8dt5PuHZ/OUDLY=;
- b=OQfFt+RNknkJcaAculGBn8o7Ugfi+ObPgQfSrvYZTPNREYdwwGlI2DA8Peq6J28XE7tKoR
- CfZ0HICJLP5JgI7R2Rx7LziBf7EGf85NoE7QJvgXe5K0nC35epBnz8S2DpvttRHnd9bkAj
- eZHdeUklqgfqjEqkuCppqUUgvrfx0dQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=mUoB2ihuyzsfI1OQ/iJIXrQZc154IJ4gBZLsXr5Ew2I=;
+ b=C5AWQ/WVE4anUHyQJo+40NKiurW3d/fcXDQNpEAp/Ce6IfO0RSpzMoR2XxOASaLMYmYBL4
+ 2YdaZamZMx/hndSiROItVZqmyguzaZUpXwecxxaHXeOHX4LG8MbfFWnmN4yE+REQx8yxH2
+ ix1cWEpmnZrCOekv6tJSIDEXya8Q3ko=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-638-i96rkyYvOneeSvvdROMwkQ-1; Fri,
- 15 May 2026 10:55:00 -0400
-X-MC-Unique: i96rkyYvOneeSvvdROMwkQ-1
-X-Mimecast-MFC-AGG-ID: i96rkyYvOneeSvvdROMwkQ_1778856899
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-407-SEyD4jI9Oc29GcCps4piZQ-1; Fri,
+ 15 May 2026 10:55:26 -0400
+X-MC-Unique: SEyD4jI9Oc29GcCps4piZQ-1
+X-Mimecast-MFC-AGG-ID: SEyD4jI9Oc29GcCps4piZQ_1778856916
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BD394195608A; Fri, 15 May 2026 14:54:58 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 40BD318002D0; Fri, 15 May 2026 14:55:16 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.49.123])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5121F19560A2; Fri, 15 May 2026 14:54:55 +0000 (UTC)
-Date: Fri, 15 May 2026 16:54:52 +0200
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1D8AA1800240; Fri, 15 May 2026 14:55:12 +0000 (UTC)
+Date: Fri, 15 May 2026 16:55:10 +0200
 From: Kevin Wolf <kwolf@redhat.com>
 To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
@@ -56,25 +56,25 @@ Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  Cleber Rosa <crosa@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH v6 08/16] tests: add a meson suite / make target per
- block I/O tests format
-Message-ID: <agczvB2e0BTm5Kta@redhat.com>
+Subject: Re: [PATCH v6 09/16] docs/devel/testing: expand documentation for
+ 'make check-block'
+Message-ID: <agczzsjGAEHOfRB2@redhat.com>
 References: <20260513120003.226790-1-berrange@redhat.com>
- <20260513120003.226790-9-berrange@redhat.com>
+ <20260513120003.226790-10-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260513120003.226790-9-berrange@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+In-Reply-To: <20260513120003.226790-10-berrange@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,24 +92,10 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Am 13.05.2026 um 13:59 hat Daniel P. Berrangé geschrieben:
-> Currently each block format is classified as either 'quick', 'slow' or
-> 'thorough' and this controls whether its I/O tests are added to the meson
-> suites 'block-quick', 'block-slow' or 'block-thorough'.
+> Explain in greater detail what 'check-block' will run for each format,
+> and also document the new format specific targets.
 > 
-> This suites are exposed the 'check-block' make target, accepting the
-> optional SPEED variable.
-> 
-> As we add more formats to the 'thorough' group, however, it becomes
-> increasingly large and time consuming to run. What is needed is a make
-> target that can exercise all tests for an individual format, regardless
-> of speed classification.
-> 
-> This makes use of the previous enhancement to mtest2make.py to introduce
-> new meson suites 'block-$FORMAT-optional', which translate to new top
-> level make targets 'check-block-$FORMAT'. These new targets always run
-> all tests and as such do not need the SPEED variable to be set, but are
-> not triggered by 'make check' or 'make check-block'.
-> 
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
 > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 
