@@ -4,60 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDFB5CD4F25
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 14:39:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FE8ECD4F25
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 14:42:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNth1-0002rP-Hj; Fri, 15 May 2026 10:39:11 -0400
+	id 1wNtk7-0003i0-7L; Fri, 15 May 2026 10:42:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wNtgv-0002qk-To
- for qemu-devel@nongnu.org; Fri, 15 May 2026 10:39:07 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wNtk5-0003hn-Mi
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 10:42:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wNtgs-0005QO-4N
- for qemu-devel@nongnu.org; Fri, 15 May 2026 10:39:04 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wNtk1-0006Vm-KK
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 10:42:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778855941;
+ s=mimecast20190719; t=1778856136;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=slS+xGGBrcxWvZFE84wqwyyN2BCLJeaqhOxhyQmvPRA=;
- b=aEm8ZiHbmoleC4HZD6nFTFzS3JuMH91QgXH+FlS8XYZyLDtD1o+fMbGMdbxNqE2pvhOUlK
- x9eAjY+B8vIoEYIpiNS4EGf+9Qa2V4wGuAeCuV8swmbR5QoDX3ZOtTYdiTBoMdFdXLSWZT
- XpN8giLOhhB4XHDflA0f2/Y6gy1tOmI=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-473-VupEgE11O5Wfws3pu5llNg-1; Fri,
- 15 May 2026 10:38:59 -0400
-X-MC-Unique: VupEgE11O5Wfws3pu5llNg-1
-X-Mimecast-MFC-AGG-ID: VupEgE11O5Wfws3pu5llNg_1778855938
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 623B419560BA; Fri, 15 May 2026 14:38:58 +0000 (UTC)
-Received: from thuth-p1g4.redhat.corp
- (headnet01.pony-001.prod.iad2.dc.redhat.com [10.2.32.101])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 70EC01956053; Fri, 15 May 2026 14:38:56 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
-	qemu-devel@nongnu.org
-Cc: f.ebner@proxmox.com,
-	qemu-trivial@nongnu.org
-Subject: [PATCH] system/vl: Free allocate memory for pid file name in case
- realpath() failed
-Date: Fri, 15 May 2026 16:38:54 +0200
-Message-ID: <20260515143854.2010741-1-thuth@redhat.com>
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=kw134qv454wYj1vXFo830vSIdJ7nkK9og9zvffIwLGE=;
+ b=H5W9pzGIrYJYMiurgQAqTC1EW3LpV721Hcf+lUfyFtjIHYu6/C09H6boa99Yiu/T7kdxJt
+ Z5oC4/5vcKUxyKJfd48aQ7Im432LZ1nYCmwot2mr66tpCdwjE7iqSBpQqRdgIwPYGTtmL+
+ Uf6aImjtTi+6kee0x9dnB4Rc0gfCRZU=
+Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
+ [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-507--0dQAygIMO6AIoPBMadbPQ-1; Fri, 15 May 2026 10:42:14 -0400
+X-MC-Unique: -0dQAygIMO6AIoPBMadbPQ-1
+X-Mimecast-MFC-AGG-ID: -0dQAygIMO6AIoPBMadbPQ_1778856133
+Received: by mail-lj1-f200.google.com with SMTP id
+ 38308e7fff4ca-393d72477bfso44562431fa.0
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 07:42:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1778856133; x=1779460933; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=kw134qv454wYj1vXFo830vSIdJ7nkK9og9zvffIwLGE=;
+ b=XLOMEds2dtacTAnjiEv0y3T7O6r6kPpn6JVWAQIdv+PnJyAwdt1IbEI1cq1c+0bzIK
+ LjG4RWXY+p9yo0EX/JbW5+ASrbNpfRGR6XIviAf62P5qgMZsUFCIhVLEue/LqqamL00a
+ Py/XKYsSr+qzXKtTBf9etzfe/D/RbmdYdDetTo7FjN56kSzG6EDmFt4Vzx8AmkDAeWjZ
+ +z3xgu/LaUrIkx2/OtPhxSfCKbn7nPcoQ/8YShCTjrNjd0CLzujlxFcRaA00bt/ZO/xp
+ U/x1KE4+fEmGK4/S0+EVSOeuo0vvpqis7iGhpEYnjmxlfhJsWFKGcq1qYcUjNxclFXUF
+ JsRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778856133; x=1779460933;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=kw134qv454wYj1vXFo830vSIdJ7nkK9og9zvffIwLGE=;
+ b=jWFwlW+ljPHKw6YHnrhAAWnR49yb41ggJm5e7rN87Fklvqc9i51TPhDIMiCp5uzyC8
+ tWV3F0PaMmw9uc1WL43qI3StAhYkasvIcXenu1lhJlmdyN4nPY6v1GYiXFY34ZglnqeI
+ G/9//+M3UIY/Ay1DPQoJEsx7IKv11LVcufeDZyouc5JHpKlLwIhSZ9FKwi6Ch3L1F6lB
+ jnhmWviPS5QetHd4PLK5hOFq0X71y2YNnxZoH/OZsxmWEgXaNYeS7zSVOymvaaM+7+gs
+ f3xIa+JEaPbtjSvaeFg4rxQHwOURmKzui5pqnNkEaFz4wHtG2Kld670rd8L6nxc3sxff
+ EZaw==
+X-Gm-Message-State: AOJu0YxX1HPfmYcNEaWhH087WpOjNTJ0y6e9l7snMDbVAs8EnU5OsLBC
+ QxlvvgVecXoSVoGj5VKjbdEzrkZh0A/Hzr/QuiJ/TZsPFHtYcUIteMykWJMsxymvXOowe4k+Gm9
+ lr2g0/nxOSxGo1lkPMhSLLO6+lrY/u+KuLiQxJNcb/G7U0ByXTEDzPPN8
+X-Gm-Gg: Acq92OHAXMiQKlOVdio4adcAVis/ZirZQWTeck5H7UZo0CQfOUsQXrMZngpi960bpDI
+ o4rJThf/K/LCVeNzdMWQHBWJRDX/c8PEZEzB6W+p977BPZbR7zOyHxMWByCBelvt+fqpBY81rHx
+ xgQFaB2cCr1VM4Bj2v5/GbaQKUPBUlvIe6mjAZuI9Wz72/jvs/jiZyrqIAH8v/E3xiSYGakcWUA
+ Qu8jZwv0h65+NOUY5Fjp8XoZgAzxaStotOv1HOPrpGvj1uO6khDOGbVlVKBfn4vAdxIFTXCRMYu
+ WB5cgIFp3ZxcFti3EQR9ViZZ2z5BU8UJgzTXB/RE8vBMY+o/6jxcZauPaLnwTzAjIBL4hrEvhFO
+ Nb0yvsKu5h7HMvAWqzvemziFjMwVx/9Zga30VtBsu01oYShs=
+X-Received: by 2002:a05:651c:1141:b0:38e:2fcc:78fe with SMTP id
+ 38308e7fff4ca-39561c05430mr13570721fa.3.1778856132889; 
+ Fri, 15 May 2026 07:42:12 -0700 (PDT)
+X-Received: by 2002:a05:651c:1141:b0:38e:2fcc:78fe with SMTP id
+ 38308e7fff4ca-39561c05430mr13570601fa.3.1778856132217; 
+ Fri, 15 May 2026 07:42:12 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ 38308e7fff4ca-3945cb015f9sm15690801fa.32.2026.05.15.07.42.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 15 May 2026 07:42:11 -0700 (PDT)
+Date: Fri, 15 May 2026 10:42:08 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Aadeshveer Singh <aadeshveer07@gmail.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de
+Subject: Re: [PATCH] migration: use eventfd functions instead of bare
+ read/write
+Message-ID: <agcwwAdQ7_F865PR@x1.local>
+References: <20260514075136.301706-2-aadeshveer07@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260514075136.301706-2-aadeshveer07@gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -81,31 +114,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+On Thu, May 14, 2026 at 01:21:37PM +0530, Aadeshveer Singh wrote:
+> Replace read() and write() syscalls on eventfd with glibc wrappers
+> eventfd_read() and eventfd_write(), to make code more robust, readable
+> and future-proof.
+> 
+> Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
 
-In case realpath() fails, the code returns early in the function
-qemu_maybe_daemonize(), without freeing the allocated memory. Add
-a g_free() here to fix it.
+queued, thanks
 
-Fixes: dee2a4d4d2f ("vl: defuse PID file path resolve error")
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- system/vl.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/system/vl.c b/system/vl.c
-index d2f4044e5d8..7e2ed898240 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -2670,6 +2670,7 @@ static void qemu_maybe_daemonize(const char *pid_file)
-                 warn_report("not removing PID file on exit: cannot resolve PID "
-                             "file path: %s: %s", pid_file, strerror(errno));
-             }
-+            g_free(pid_file_realpath);
-             return;
-         }
- 
 -- 
-2.54.0
+Peter Xu
 
 
