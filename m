@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9310ACD343F
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 18:24:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7037CD343F
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 18:35:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNxBj-00053G-RP; Fri, 15 May 2026 14:23:07 -0400
+	id 1wNxMq-0006iB-8S; Fri, 15 May 2026 14:34:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wNxBi-00052f-4l
- for qemu-devel@nongnu.org; Fri, 15 May 2026 14:23:06 -0400
-Received: from mail-dy1-x1329.google.com ([2607:f8b0:4864:20::1329])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wNxMd-0006hi-3S
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 14:34:24 -0400
+Received: from mail-dl1-x122e.google.com ([2607:f8b0:4864:20::122e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wNxBg-0000RK-4I
- for qemu-devel@nongnu.org; Fri, 15 May 2026 14:23:05 -0400
-Received: by mail-dy1-x1329.google.com with SMTP id
- 5a478bee46e88-2c156c4a9efso162993eec.1
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 11:23:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wNxMb-0004H1-IU
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 14:34:22 -0400
+Received: by mail-dl1-x122e.google.com with SMTP id
+ a92af1059eb24-1331e851faaso39155c88.1
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 11:34:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778869382; x=1779474182; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778870060; x=1779474860; darn=nongnu.org;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date:from:to
  :cc:subject:date:message-id:reply-to;
- bh=7tZN6XjI4WwtDkwaarmEa/UzUnar2/5RNKZjM1KwEp4=;
- b=TWedXQzytogv0X7Vo5R85zRMYdspbulFmuVEy9yn3weGPoJMFH0onDguOuuBGxoWJz
- 45qA+uTdjLcob77yyk5UIeD9P2uUbDPi/og83PetWVIY8V0/CCFhS0tCoIohkhNjnVMM
- D0czUvrkGzc5HaHo0M9/91lhMXsg4ttuiPqGYpAJbEr1EnfMezStkorkb3EProeL4pQ3
- p2bnzu1FlCN3Cg/+Dn1iV0+LwV8egaMaQDrYTrSleYeIxFW7wd7/1oCFFk/jjohKMMaz
- XSjPr9UbqiaPNntCouzPBbUuLuqXGGGqTL0VqvMzM9hcMPVjDDlke9QAYV5tx28Yi7rB
- FHXg==
+ bh=HxyBNmC1jV171Qs4hlyCZtRG8zDuOe5XpBt61mfaLZg=;
+ b=soVUZqw7MOGrqNGCpBYJzB2iONodbY3jTldA+DVyhFYQbF/F26k7AjEQ2oar1j3D2d
+ OdpHuis9bSvMaz/4UEkdvth/wkzbGqqYQ/NTSvXE2KPRG4vcjVNbwpY8X4GhuQCiNVdl
+ SO5Xb+lRBoUgghswdtRzhTbW92YtgijFq1Ket5YCTMJVeQfjXBxqXP+DtROGRun87a0J
+ UTiF5okRlMae4VLHhdbEKd8XFPZ7MPGL34wUCSCmPVBHV3lZsse0ExAqScfaeLlb6Ifi
+ hcwCYvl9VPESwFZAWg0qUZvgEAKTJkTK2t3WGyzQa/xFopJ8k1fFDygdrphnlsa9NmUH
+ GQcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778869382; x=1779474182;
+ d=1e100.net; s=20251104; t=1778870060; x=1779474860;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7tZN6XjI4WwtDkwaarmEa/UzUnar2/5RNKZjM1KwEp4=;
- b=ckpjkmvCfEoC5hrbDMGhagEuVVwRHq8R6pIJogWxqb/QoVhFgR8C8mRJo8AcG/17BX
- ZAa1U21OwPDRVDtaGClEJ6pDJqs8wnj1CAifL0zpIP+2mRrTUwJP7KbX4Ma3HXCymeh0
- 1yR23c6APCjUDPjpRcad+INKL6S5bIaYIgcdVQdLNHHBLMjhJRLLBZTKQgeEU7VBe3Tj
- MOqem1rXmfRK15JcedzPgmmZP4CWunr3hb6NI7ST6Y87IX9BMRrKRX146ATx8IhkzLq/
- uektbl4pQLH5ulIlDOJCX0kYDzH5wRoKwMekxFS7jHtiseVACjOEqWW/DPqC0mISCa6t
- r4/w==
+ bh=HxyBNmC1jV171Qs4hlyCZtRG8zDuOe5XpBt61mfaLZg=;
+ b=aJy+A4HJAQA82to5gT8B6gq068I8fCmsb3EXacoLCOYyy/xwMWXYmH4OFnxJGWSG3d
+ ZfRFeBn6Xq+ZBDT4nG8PppiaAt5NEXg2J+tUb0e82WQKTY+3JGjQNGXrdh+Krb1XBstG
+ 0zqhXuCqyR6oCn/z975MAgzzK1mxE9dOjaEvvvtcbwWBmynFQ/+zbJnzic+Qxz9KHp58
+ Jc5aWWwcTeUhu3UpyMjIry78/oFox1t5qMsicllfnjOIZ8/k74ZQfxx2tHTeozppw2Dw
+ j/efPRTz0ulIt1TYvne4gF+SdVQWrWB+vnEmy40tJwGnAM/ub3nT3dGIzXaLycs0YASq
+ 0aHw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9m2GKOVQynSTykoGwLwn6wcK4WuRyqRwiXmf3i3fvUbi3Wur2wcDHre5ZoKNcWUW/LDNgakQn7PWS3@nongnu.org
-X-Gm-Message-State: AOJu0YxYaSgxIPDctwdZXChcAcHrVwQhQAzXiHtj868vpPoWzcNKEQ/2
- UcGjzg8qmnCJDMIkVIWNA8/L1uY1w4J9BCB383dMkbli5tBZ53/9mwdz
-X-Gm-Gg: Acq92OGW/XZ4X3SSJNcRf5u7Tem5fkffgmZ30f0dYHVMzB7T86nojNV0zmK6LImhgH7
- cQIg2VjdLf+Ey/VbCDGxUsmnqE7x2gRwWMRevaIysSLrY2O+NH+K+d/vdjKTJwP61D7VSVRM0Dv
- /HiEEZhw4htf9YzGqloTspbw8MXnn72p8r8BIG0ePe2aGs4dHoiv4aq62UImBqqZcr+d7OB6Gb4
- fY2MPJ3WJF7KySfJkzqRvV3aVtFzEx72Yfk0CXzf8Cl8Y6xS5CWtOyiJUEhU2kGQi96aM60BqZX
- 6jNvmzkVxOzcy3GgGrXdbxvPWl9Z0uyNPehZMjaIWiM7/jYVatdkzuGOymRYD1y9gi+ywTjTvXI
- agimzmNyVjlRIC7ErEANVLqgN8Sj1yawDhRtJH91OLA/edbecs9rhtXYZKCHEu2E3Mb+wF4a64J
- Stz23KAHZ+jhs9zBI3hn/bxQv1gYZWEVNMdNfS3jyYUQ==
-X-Received: by 2002:a05:7300:6c05:b0:2d8:df01:d9f6 with SMTP id
- 5a478bee46e88-3039864d5c1mr2500737eec.23.1778869382241; 
- Fri, 15 May 2026 11:23:02 -0700 (PDT)
+ AFNElJ/bkcWR63Nh3ACaA1YLAHpq0bc/So0Ptyv47aM3MidM1UHjCsqHAbd6/2TaKnL5Vv7vMg2nJshM6dDz@nongnu.org
+X-Gm-Message-State: AOJu0Yw3IrsEGPgRLgq/mcKJDSzTGyOc7+WX+fI4R6geHoXKROQHznWX
+ pTulG8ZL0mmtYyUk5fgvcnvu8u2cFGrMPiJCsxWAXf6liSYaTFP8/zNz
+X-Gm-Gg: Acq92OFCMivDNY1Ji1JJF/VkasfSEuaask4oS/XQv/YS8evKYJrqUFRpxYxjP5YIpot
+ y2vKd9DY5tsB+hAGCpQZI05PvPm35jLnFK/7GXwAh6Azwa1CnBkhGmWf90AHkgJKqgTHwZVyDT/
+ fUpf7Qd9HcbKmxAqUOhYeYWpo4IYHXRNaqTW4lTpFZdkKtkLfp11aUYL1kjE7ENLP46oZJSRnLV
+ j7r6GP2bol1zjCo/KqABLqJJ14j2CK5sz/W9VTeLuA6mAJokHIDhCu2qMhBas6puJBbaMWEthTg
+ aUmpve7Rc4ew+i0TbgHH+gJQyen2/Cirydas8etNntn0yAorQe3vtjBkDqg+T3XMrsaZ4EKzt1s
+ kMf5TUyiFVjdic/NYoGaro/25MVf71Kl1/ryFpF3P2WzIkMZ86FPQlhkiHY0xzRBiUSPutHgAEc
+ NGGkDdNpGACXQFJXsush9wofeCzlipRUI=
+X-Received: by 2002:a05:7022:427:b0:135:2588:6314 with SMTP id
+ a92af1059eb24-135258863a8mr1112197c88.8.1778870059752; 
+ Fri, 15 May 2026 11:34:19 -0700 (PDT)
 Received: from localhost ([38.104.138.51]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30296dcb6f6sm9237768eec.17.2026.05.15.11.23.01
+ a92af1059eb24-134cbed531esm10640431c88.8.2026.05.15.11.34.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 11:23:01 -0700 (PDT)
-Date: Sat, 16 May 2026 04:23:00 +1000
+ Fri, 15 May 2026 11:34:18 -0700 (PDT)
+Date: Sat, 16 May 2026 04:34:18 +1000
 From: Nicholas Piggin <npiggin@gmail.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Alistair Francis <alistair23@gmail.com>
 Cc: Corey Minyard <cminyard@mvista.com>, 
  Alistair Francis <alistair.francis@wdc.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
@@ -73,26 +73,28 @@ Cc: Corey Minyard <cminyard@mvista.com>,
  Michael Ellerman <mpe@kernel.org>, Joel Stanley <jms@oss.tenstorrent.com>, 
  Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
  Portia Stephens <portias@oss.tenstorrent.com>, 
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org, Hao Wu <wuhaotsh@google.com>
-Subject: Re: [PATCH 2/4] [RFC] hw/i2c/designware_i2c: Switch to Fifo8
-Message-ID: <agdi9vz5Ty3XsSH5@lima-default>
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org, Hao Wu <wuhaotsh@google.com>, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH 3/4] [RFC] hw/i2c/designware_i2c: Switch to QEMU register
+ API
+Message-ID: <agdlhBe4DiL74-Sb@lima-default>
 References: <20260507120524.111056-1-npiggin@gmail.com>
- <20260507120524.111056-3-npiggin@gmail.com>
- <9c5d66ee-0e50-4311-8dc8-17797e92fdbd@linaro.org>
+ <20260507120524.111056-4-npiggin@gmail.com>
+ <CAKmqyKO=pivPx5ohQdZXOE1u4sp8tU8dwpN10+WtaNGBhuofXA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <9c5d66ee-0e50-4311-8dc8-17797e92fdbd@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1329;
- envelope-from=npiggin@gmail.com; helo=mail-dy1-x1329.google.com
+In-Reply-To: <CAKmqyKO=pivPx5ohQdZXOE1u4sp8tU8dwpN10+WtaNGBhuofXA@mail.gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::122e;
+ envelope-from=npiggin@gmail.com; helo=mail-dl1-x122e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,46 +110,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 11, 2026 at 12:18:41PM +0200, Philippe Mathieu-Daudé wrote:
-> On 7/5/26 14:05, Nicholas Piggin wrote:
-> > Alistair suggested moving to Fifo8, which I think is
-> > a good improvement.
-> > 
-> > Broken out for individual review, but IMO we should
-> > squash before merge since it changes VMState format.
-> > 
-> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> > ---
-> >   hw/i2c/designware_i2c.c         | 37 ++++++++++++++++++++-------------
-> >   include/hw/i2c/designware_i2c.h |  7 +++----
-> >   2 files changed, 25 insertions(+), 19 deletions(-)
-> 
-> 
-> > @@ -53,8 +54,6 @@ typedef enum DesignWareI2CStatus {
-> >    * @ic_comp_version: I2C component version register
-> >    * @ic_comp_type: I2C component type register
-> >    * @rx_fifo: The FIFO buffer for receiving in FIFO mode.
-> > - * @rx_cur: The current position of rx_fifo.
-> > - * @status: The current status of the SMBus.
-> >    */
-> >   typedef struct DesignWareI2CState {
-> >       SysBusDevice parent_obj;
-> > @@ -88,8 +87,8 @@ typedef struct DesignWareI2CState {
-> >       uint32_t ic_comp_version;
-> >       uint32_t ic_comp_type;
-> > -    uint8_t      rx_fifo[DESIGNWARE_I2C_RX_FIFO_SIZE];
-> > -    uint8_t      rx_cur;
-> > +    /* fifo8_num_used(rx_fifo) should always equal ic_rxflr */
-> 
-> Why not remove ic_rxflr then?
+On Wed, May 13, 2026 at 12:03:17PM +1000, Alistair Francis wrote:
+> On Thu, May 7, 2026 at 10:07â€¯PM Nicholas Piggin <npiggin@gmail.com> wrote:
 
-I did consider that... but the next patch to rework the registers
-adds storage for them all as a block. We could still just ignore
-the storage and use fifo8_num_used() instead but I was vaguely
-worried about complexity of vmstate compat if we change things, but
-not sure if that is a rational concern. In the end the code is
-quite simple and only a couple of places where this is adjusted so
-I kept it this way.
+[...]
+
+> > +REG32(DW_IC_COMP_PARAM_1,       0xf4) /* Component parameter */
+> > +    FIELD(DW_IC_COMP_PARAM_1, TX_FIFO_SIZE,       16, 8)
+> > +    FIELD(DW_IC_COMP_PARAM_1, RX_FIFO_SIZE,        8, 8)
+> > +    FIELD(DW_IC_COMP_PARAM_1, HAS_ENCODED_PARAMS,  7, 1)
+> > +    FIELD(DW_IC_COMP_PARAM_1, HAS_DMA,             6, 1)
+> > +    FIELD(DW_IC_COMP_PARAM_1, INTR_IO,             5, 1)
+> > +    FIELD(DW_IC_COMP_PARAM_1, HC_COUNT_VAL,        4, 1)
+> > +    FIELD(DW_IC_COMP_PARAM_1, HIGH_SPEED_MODE,     2, 2)
+> > +    FIELD(DW_IC_COMP_PARAM_1, APB_DATA_WIDTH_32,   0, 2)
+> > +REG32(DW_IC_COMP_VERSION,       0xf8) /* I2C component version */
+> > +REG32(DW_IC_COMP_TYPE,          0xfc) /* I2C component type */
+> 
+> This looks fine to me, again no datasheet so no idea if it's right though :)
+> 
+> For future reference, generally in QEMU when people say the Register
+> API they just mean this maco part above
+
+Ah, okay!
+
+> >  static void dw_i2c_update_irq(DesignWareI2CState *s)
+> >  {
+> > -    int level;
+> > -    uint32_t intr = s->ic_raw_intr_stat & s->ic_intr_mask;
+> > -
+> > -    level = !!((intr & DW_IC_INTR_RX_UNDER) |
+> > -        (intr & DW_IC_INTR_RX_OVER) |
+> > -        (intr & DW_IC_INTR_RX_FULL) |
+> > -        (intr & DW_IC_INTR_TX_OVER) |
+> > -        (intr & DW_IC_INTR_TX_EMPTY) |
+> > -        (intr & DW_IC_INTR_RD_REQ) |
+> > -        (intr & DW_IC_INTR_TX_ABRT) |
+> > -        (intr & DW_IC_INTR_RX_DONE) |
+> > -        (intr & DW_IC_INTR_ACTIVITY) |
+> > -        (intr & DW_IC_INTR_STOP_DET) |
+> > -        (intr & DW_IC_INTR_START_DET) |
+> > -        (intr & DW_IC_INTR_GEN_CALL) |
+> > -        (intr & DW_IC_INTR_RESTART_DET)
+> > -        );
+> > -    qemu_set_irq(s->irq, level);
+> > +    uint32_t intr = s->regs[R_DW_IC_RAW_INTR_STAT] & s->regs[R_DW_IC_INTR_MASK];
+> 
+> Which gives you advantages like this and the FIELD set/clear which you
+> aren't using anyway.
+
+Yeah it's quite nice. I started using FIELD set/clear etc but it looked
+to make the patch harder to read and a bit harder to script it. Things
+might be cleaned up a bit, although there is not much multi-bit field
+manipulation in the driver where those kind fo macros help most.
+
+> > +    return value;
+> > +}
+> >
+> > -    /* This register is invalid at this point. */
+> > -    default:
+> > -        qemu_log_mask(LOG_GUEST_ERROR,
+> > -                      "%s: write to invalid offset or readonly register 0x%"
+> > -                      HWADDR_PRIx "\n",
+> > -                      DEVICE(s)->canonical_path, offset);
+> > -        break;
+> > +static const RegisterAccessInfo designware_i2c_regs_info[] = {
+> 
+> QEMU doesn't expect you to implement the RegisterAccessInfo struct.
+> This struct exists as it's easy to autogenerate from RTL (or some
+> other source), but you don't have to write it out yourself. You can
+> use the REG/FIELD macros above and not RegisterAccessInfo, which is
+> what most devices do (Xilinx devices excluded).
+> 
+> Sorry for the extra hassle and work or converting it to
+> RegisterAccessInfo. Keeping the RegisterAccessInfo is fine, just
+> letting you know you don't have to do it next time.
+
+Hah! That's fine, it was interesting to try using it anyway. It makes
+things more consistent and hopefully less error prone, and ended up with
+fewer lines of code.
+
+> I think squash these 4 together and that'll be it for the I2C patch in
+> your Atlantis series.
 
 Thanks,
 Nick
