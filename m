@@ -4,112 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C053ECD4F25
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 10:53:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 357E6CD343F
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 11:26:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNqAN-0000mF-AX; Fri, 15 May 2026 06:53:15 -0400
+	id 1wNqg5-0006va-3q; Fri, 15 May 2026 07:26:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anushree.mathur@linux.ibm.com>)
- id 1wNqAF-0000kv-L1; Fri, 15 May 2026 06:53:07 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wNqg0-0006uo-0j
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 07:25:56 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anushree.mathur@linux.ibm.com>)
- id 1wNqAD-0002kZ-O8; Fri, 15 May 2026 06:53:07 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64EJ6phQ3950769; Fri, 15 May 2026 10:53:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=EpNOIa
- DSZkfUevBZzGPbc+oDJItvPlY7qzfxOj12tBU=; b=N71OAUuCeOj4WEPZNOFHpu
- m3CfAcdJKf2apaIq54aGRsm7AjWsOME9X6FoYWU+QPDtBYfx264ggJcyXm5wlNp4
- wEDUFnJrrxDgobA2CGroexZyQ7DIFY0D9zfSctLu7QOAo+Ju4lpH2vbr41oztXQx
- nB1cSjQSMmzaNA79MIinWF5tK6IPgGiyuuAIptIOwbQzI4tpL1PFSFS/qLdg/fHm
- 9uBLPuwF8yZQMmjNI4pBbmNOq1wcIj6usqRANsyGdxPaB6D/a29XU9puFjqNt9L0
- jP44jcHVLebN5o7Pmj5ghCOJuoUs7GC3r4cCbfwJBZRMKe1ivz0+CwImeqCSGOmg
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e5m8yau6d-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 15 May 2026 10:53:03 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64FAd4IM014408;
- Fri, 15 May 2026 10:53:02 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e5m3ak2sx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 15 May 2026 10:53:02 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64FAr14J64618778
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 15 May 2026 10:53:01 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0CAC558055;
- Fri, 15 May 2026 10:53:01 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9993E58063;
- Fri, 15 May 2026 10:52:57 +0000 (GMT)
-Received: from [9.61.251.54] (unknown [9.61.251.54])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 15 May 2026 10:52:57 +0000 (GMT)
-Message-ID: <ace856fe-bd1e-46b1-b587-6cae408efd5e@linux.ibm.com>
-Date: Fri, 15 May 2026 16:22:56 +0530
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wNqfy-00067L-0Z
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 07:25:55 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64FBF1pO3219672
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 11:25:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ CL1xSf9ptTIxSj7+unxG6pyDtdqcuY49OJA2sU//u0c=; b=Kmk/c65DWtM3Ww6w
+ emsPj+jCqQFufK4xaTfkn9/8XoleIgwzJmPsBK5P+HIk2waqY+5x1jn3vLh2u0Cj
+ hKPmuqqnbaPZbGuMRxD7Pvc+1jWVVTSJY2a39uZh0rIomH6bwAHzSfo1oblS129s
+ Er+XOUiGLc1i9kK/Qa0d4HOi08vUJy4I0tqEbDZ8FIIVBq7reKakhW4foYiV7bSx
+ wAWbI7rlBV5DC8HWKwuedtNwNCzOY5AriSafSi2VIdDrBiU2BnA0KB0iw3Jj6Lz2
+ vEw5Pu4CYsNEPUCu7uh1s0zfXhL3qxCX0f8XvbNnAsAEaQXxTLF40p0fyYQCCa/6
+ 6nEK0w==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e5m1s30qc-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 11:25:51 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-8b49260e3d5so133588296d6.2
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 04:25:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1778844351; x=1779449151; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CL1xSf9ptTIxSj7+unxG6pyDtdqcuY49OJA2sU//u0c=;
+ b=fFMVwp20+d+cNaBhhWXmmXh6rQUzpPR4BwJ0oTpVq72vDdHW1GRFXl7f+bBLF90Lu1
+ yB38q2PwxZPtyuvE0RLJo++nEE8Ed7itGhFCKu9dLbeaS1HgqQ1u+GxAvtXmFu9aWEqb
+ SfaULmAzDZToQmklzXvQZTAmyBi392OQ6L6RQrs7+16EdLuYMGcu+0iCoSxhnFCUQjND
+ 8smNU8I+I6P+1oNnAMAYOPL3shWiZgO9BcGDKvUVUwlAff3XygXH5vWSrafphecnzHS1
+ UtmPyCERodJE14crG+fHqMG4oZwYtzC9qPfszb29bvtel2Dns6O0wj8hjhvJSMnqOKZ/
+ 3fQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778844351; x=1779449151;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CL1xSf9ptTIxSj7+unxG6pyDtdqcuY49OJA2sU//u0c=;
+ b=DF5FIAFH5yZThnh/5Wh4LhZVHLlQVpbi+MGQj3Ppg0tssuChIa0yMok0Np0Ce6K8xQ
+ iQohjxUfoDYi+bASKgrUpp3d3GxVmn19oXIoj2t75YquQbCFWZGVHsZy7klif4CE+rBC
+ uk7ibADgaqEKEw0BJa4wMvxjthAqLXUQiotBwLe97WW8drta/2Reh7EAqKqYOLgFIgaQ
+ nOS1DSpkmrKCXUxOG27x1BQzyrpL6OmuCyzLm+XnG4AGxWD+RFrcV+n0TLCGUZvy/uNO
+ Gf2h/8xGygzUuLCC7PWAZxdHBw4kOTJ1bjYyms3/TYscm9WrasbCBVK92qFmKrJsD2PJ
+ 27Lw==
+X-Gm-Message-State: AOJu0YxPlDGl6upbqB0n7pyJKvwZtvI6hWmuiCmcUuO1qnhcGKzGDh13
+ LsPUP+KiXQtUvJepzcXrsd+bmDH1IVENqzV3ctC3oumjk1gbUOf/6+WcJg7Vj05HnqYi94jVOrU
+ zb9zxK+DLLC9O0XtZGU2D1gV2oztflYGvzmM9/ZF9YXKM5jq/yJ6Dj02ovw==
+X-Gm-Gg: Acq92OESPF0YkVY0aZKnHHkT73lGekb4IHXRnnMZYKF1fjAbPEyeIkLCaLNkStErJEH
+ u1tlmWvDgGnPKni5sCTH9uL10o45YdvEUyUSNaYwc5cAmmI9zbhhp110N0tDJXPj5qGkAjTMd/c
+ TRzTi5d98Zkq3wAIiRIZiP4iEQEWfxUb6Ogfx31cbFdApy7gEYqP2RQFUG9vFUQDeYUm8QRdsr0
+ uVZ8TWE1PkvMoFH0BnffIrxJtEYC+Rh3/5U376lComhNy7FWaJOSJRcWELSU3xGtDpSV7FyKP0f
+ eTyJ1zMzQRDkzf6d8Qp3EvxCZlIrqiDibWng3+33ZCQLCGuVF9FtuHU/HXu3gZF/R8AGn3SUE2l
+ k4eThZIUXcl8PpMdfbMj6Rq4V9vb96lot6UprYvfLKMQv5K0W5tWUofcDW1I=
+X-Received: by 2002:a05:6214:4a02:b0:8c9:bcd5:2856 with SMTP id
+ 6a1803df08f44-8ca0f6f95d0mr57543756d6.46.1778844351296; 
+ Fri, 15 May 2026 04:25:51 -0700 (PDT)
+X-Received: by 2002:a05:6214:4a02:b0:8c9:bcd5:2856 with SMTP id
+ 6a1803df08f44-8ca0f6f95d0mr57543096d6.46.1778844350811; 
+ Fri, 15 May 2026 04:25:50 -0700 (PDT)
+Received: from [192.168.68.106] ([191.202.238.222])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8c90c164b19sm48687546d6.38.2026.05.15.04.25.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 15 May 2026 04:25:50 -0700 (PDT)
+Message-ID: <d2f5af2d-57d8-43dd-b599-7b280eb0fb6d@oss.qualcomm.com>
+Date: Fri, 15 May 2026 08:25:46 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] ppc/kvm: Handle CPU compatibility mode correctly
- for nested guests
-To: Amit Machhiwal <amachhiw@linux.ibm.com>, qemu-ppc@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: Vaibhav Jain <vaibhav@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, anushree.mathur@linux.ibm.com
-References: <20260502140021.69712-1-amachhiw@linux.ibm.com>
+Subject: Re: [PATCH v1] hw/riscv/riscv-iommu: Avoid caching PCI device IDs
+To: Chengbo Gao <gaochengbo@bosc.ac.cn>, palmer@dabbelt.com,
+ alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ qemu-riscv@nongnu.org
+Cc: qemu-devel@nongnu.org
+References: <20260514020637.2819308-1-gaochengbo@bosc.ac.cn>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Content-Language: en-US
-From: Anushree Mathur <anushree.mathur@linux.ibm.com>
-In-Reply-To: <20260502140021.69712-1-amachhiw@linux.ibm.com>
+In-Reply-To: <20260514020637.2819308-1-gaochengbo@bosc.ac.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: suvxzwxmtVpdEgUC1H4eEFLCx2eYlHql
-X-Authority-Analysis: v=2.4 cv=Os5/DS/t c=1 sm=1 tr=0 ts=6a06fb0f cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=p0WdMEafAAAA:8
- a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=UQ17OVVmNpHQdldK9y0A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: AuwB3Fjyd_FDd8AxZh2qiwbggz8C0nzW
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE1MDEwNyBTYWx0ZWRfXxjHNUNNiNp0a
- g5X8D3JFLGgWlQDXGNl76k2XtZw3i50GmpbE9wMG2gI1N4CNF6Q8nGxNVZpVPvunH0NeJt75wIo
- 1puMvnODMdzSeAj/doHldlM5EwQhxEz8S9OjiDCctM2YAUBoOwnpkbfAQtDORNsnkeAWRqtz7WE
- grDZ7lHXrZP9USp46o6Q4/r6VipIUIXR5CBz2I+TFVcLBjuu0oqWXITmNMyir0t9vTNhAWy6P3+
- nIKQ0/iaDkcuuclva9hPt27Taf1wglyQob9AO3DdfPclz1/tXR290lbAitnPUXEoO7sal7RE0Z3
- nfb7OYfe4v9MIeo71mUH3gErQRyj2+ny6zlJ56XWW6/SFixaYOFLG/1jgZW0YoQBZhJB6rEJc++
- JTCqadv/sy3zjDff+wwkXApCy+m1llYb3CGEw+2TReeE1nndPA1Xygr/4b+Xr6eKAdmjtYYcMm1
- 7oUUnHZx+I96FQYnTIw==
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE1MDExNSBTYWx0ZWRfX0omK5ALLlqve
+ 9VZx9Eu1JUfeXOh7zp/HOLn1Ra+qAi1SJ8lXxmN7Q3quZ6a5vDsPBxbRlrUiJYX0qcScNp1Ljdy
+ VFTBOkeDg3bYpzGbhbExvnPOb105GSXVEe3cxWYnHug1Cpr1LN5ltAp6GNPkdWU9mVd1TzwDQgf
+ Xz2PHejYoPnJ2PH70YqDmaGE7RMwmotuEpAMZHd45HnJ7iB0VB/XuYznZ+MW0/wB5cS8ffxrbc3
+ ulksxGSgVPaMPJzOLGa6e/u61JUVBDGowF6R7q/Rw5nY6E/5sswTw3wfGie0zRz3nLiVOH77RSv
+ RDp3lIO1uH0sGFBWxI9bQXEIzRXEqxdNvn9ckVwgbP3bSrwppqKXl2rCM8ooy6XWyZgZAK/97by
+ R4CNJ0G/zP/frHjhV2ymtFYwC1XwOvtzua0zHICy7tya4ljcJmbaz1K9eJunOwxRkqiCQdf+a2l
+ glxI9apKd/kcNl8T2eg==
+X-Proofpoint-GUID: zjl6uA6Oj_ZhETK0fEDBkIAT7-VbIrma
+X-Proofpoint-ORIG-GUID: zjl6uA6Oj_ZhETK0fEDBkIAT7-VbIrma
+X-Authority-Analysis: v=2.4 cv=HJ7z0Itv c=1 sm=1 tr=0 ts=6a0702bf cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=etEqFfc6qwXwpI8uT8rzbw==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=EUspDBNiAAAA:8 a=mHkEaqlKh9Ly4tyT5M0A:9 a=QEXdDO2ut3YA:10
+ a=1HOtulTD9v-eNWfpl4qZ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-15_02,2026-05-13_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 impostorscore=0 clxscore=1015 lowpriorityscore=0
- adultscore=0 malwarescore=0 priorityscore=1501 bulkscore=0 suspectscore=0
+ priorityscore=1501 lowpriorityscore=0 suspectscore=0 phishscore=0 spamscore=0
+ clxscore=1015 impostorscore=0 adultscore=0 bulkscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605150107
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=anushree.mathur@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605150115
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,104 +153,143 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 02/05/26 7:30 PM, Amit Machhiwal wrote:
-> On POWER systems, newer processor generations can operate in compatibility
-> modes corresponding to earlier generations (e.g., a Power11 system running
-> in Power10 compatibility mode). In such cases, the effective CPU level
-> exposed to guests differs from the physical processor generation.
->
-> This creates issues for nested virtualization. When booting a nested KVM
-> guest, QEMU may derive the CPU model from the raw hardware PVR and attempt
-> to configure the guest accordingly. However, the host is constrained by the
-> compatibility level negotiated with the hypervisor, and requests exceeding
-> that level are rejected by KVM, leading to guest boot failures such as:
->
->    KVM-NESTEDv2: couldn't set guest wide elements
->
-> This series addresses the issue in two ways:
->
-> 1. Do not silently fall back to raw mode when KVM rejects a requested
->     compatibility level during CAS. Instead, propagate the error so invalid
->     configurations are visible and fail early.
->
-> 2. Query the effective CPU compatibility modes supported by the host via
->     KVM and use this information to select an appropriate CPU model for
->     nested guests.
->
-> With these changes, QEMU avoids masking KVM errors and ensures that nested
-> guests are configured with CPU models consistent with the host
-> compatibility mode, allowing them to boot correctly.
->
-> Patch summary:
->    [1/3] hw/ppc/spapr: Do not fallback to raw mode when KVM rejects compat
->    [2/3] [DO_NOT_MERGE] linux-headers: Add uapi header changes
->    [3/3] target/ppc/kvm: Use host compatibility mode for nested guests
->
-> Changes in v2:
-> - Patch 3: Guard compatibility mode code with #if defined(TARGET_PPC64)
->    to fix compilation for ppc32 targets. The POWER9/10/11 PVR constants
->    are only defined for 64-bit builds, and compatibility modes are only
->    relevant for 64-bit systems.
->
-> Tested on:
->    - Power11 pSeries LPAR in Power10 compatibility mode
->    - Power10 PowerNV and QEMU PowerNV 11 TCG L0 host
->
-> CI test results: https://gitlab.com/amachhiw/qemu/-/pipelines/2494987253
->
-> Note: Patch 2 is marked DO_NOT_MERGE as it contains linux-headers updates
-> that will be synced separately once the corresponding kernel patches are
-> merged.
->
-> The corresponding Linux patches have been posted [1]
->
-> [1] https://lore.kernel.org/all/20260430054906.94431-1-amachhiw@linux.ibm.com/
->
-> Amit Machhiwal (3):
->    hw/ppc/spapr: Do not fallback to raw mode when KVM rejects compat
->    [DO_NOT_MERGE] linux-headers: Add uapi header changes
->    target/ppc/kvm: Use host compatibility mode for nested guests
->
->   hw/ppc/spapr_hcall.c            |  9 ++++++
->   linux-headers/asm-powerpc/kvm.h |  7 ++++
->   linux-headers/linux/kvm.h       |  3 ++
->   target/ppc/kvm.c                | 57 +++++++++++++++++++++++++++++++++
->   4 files changed, 76 insertions(+)
->
->
-> base-commit: 3d626609ccae61a2e552bccd59c7a0931bab8261
+On 5/13/2026 11:06 PM, Chengbo Gao wrote:
+> PCI bus numbers may still be unassigned when QEMU initializes a PCI
+> device's bus-master address space.  For devices behind bridges,
+> pci_bus_num() can return 0 at that point because the guest has not yet
+> programmed the bridge Secondary Bus Number register.
+> 
+> The RISC-V IOMMU currently stores a fixed device_id in RISCVIOMMUSpace
+> when the address space is created.  If the guest later enumerates the
+> device on a non-zero bus, DMA translation still uses the stale device_id
+> and may look up the wrong device context in the DDT.
+> 
+> Store the stable PCIBus pointer and devfn in RISCVIOMMUSpace instead,
+> and compute the device_id from the current bus number when it is needed.
+> This keeps DMA translation and ATS invalidation in sync with guest PCI
+> bus enumeration.
+> 
+> Signed-off-by: Chengbo Gao <gaochengbo@bosc.ac.cn>
+> ---
 
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-
-Hi Amit,
-I tried booting up a guest on P11 lpar booted with P10 compat mode 
-applying your patch along with the linux patch series and it has been 
-working perfectly fine.
-
-Host lscpu:
-
-lscpu
-Architecture:                ppc64le
-   Byte Order:                Little Endian
-CPU(s):                      80
-   On-line CPU(s) list:       0-79
-Model name:                  POWER10 (architected), altivec supported
-
-
-Guest lscpu:
-
-lscpu
-Architecture:                ppc64le
-   Byte Order:                Little Endian
-CPU(s):                      10
-   On-line CPU(s) list:       0-9
-Model name:                  POWER10 (architected), altivec supported
-
-Feel free to add :
-
-Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
-
-Thank you!
-Anushree Mathur
+>   hw/riscv/riscv-iommu.c | 40 +++++++++++++++++++++++++---------------
+>   1 file changed, 25 insertions(+), 15 deletions(-)
+> 
+> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+> index 7ba3240552..9a75639549 100644
+> --- a/hw/riscv/riscv-iommu.c
+> +++ b/hw/riscv/riscv-iommu.c
+> @@ -49,7 +49,8 @@ struct RISCVIOMMUSpace {
+>       IOMMUMemoryRegion iova_mr;  /* IOVA memory region for attached device */
+>       AddressSpace iova_as;       /* IOVA address space for attached device */
+>       RISCVIOMMUState *iommu;     /* Managing IOMMU device state */
+> -    uint32_t devid;             /* Requester identifier, AKA device_id */
+> +    PCIBus *bus;                /* PCI bus of the requester */
+> +    uint8_t devfn;              /* Requester identifier, AKA device_id */
+>       bool notifier;              /* IOMMU unmap notifier enabled */
+>       QLIST_ENTRY(RISCVIOMMUSpace) list;
+>   };
+> @@ -74,6 +75,15 @@ struct RISCVIOMMUEntry {
+>   /* IOMMU index for transactions without process_id specified. */
+>   #define RISCV_IOMMU_NOPROCID 0
+>   
+> +static uint32_t riscv_iommu_space_devid(RISCVIOMMUSpace *as)
+> +{
+> +    uint32_t devid = PCI_BUILD_BDF(pci_bus_num(as->bus), as->devfn);
+> +
+> +    /* FIXME: PCIe bus remapping for attached endpoints. */
+> +    devid |= as->iommu->bus << 8;
+> +    return devid;
+> +}
+> +
+>   static uint8_t riscv_iommu_get_icvec_vector(uint32_t icvec, uint32_t vec_type)
+>   {
+>       switch (vec_type) {
+> @@ -1343,15 +1353,13 @@ static void riscv_iommu_ctx_put(RISCVIOMMUState *s, void *ref)
+>   }
+>   
+>   /* Find or allocate address space for a given device */
+> -static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, uint32_t devid)
+> +static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, PCIBus *bus,
+> +                                            int devfn)
+>   {
+>       RISCVIOMMUSpace *as;
+>   
+> -    /* FIXME: PCIe bus remapping for attached endpoints. */
+> -    devid |= s->bus << 8;
+> -
+>       QLIST_FOREACH(as, &s->spaces, list) {
+> -        if (as->devid == devid) {
+> +        if (as->bus == bus && as->devfn == devfn) {
+>               break;
+>           }
+>       }
+> @@ -1361,10 +1369,11 @@ static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, uint32_t devid)
+>           as = g_new0(RISCVIOMMUSpace, 1);
+>   
+>           as->iommu = s;
+> -        as->devid = devid;
+> +        as->bus = bus;
+> +        as->devfn = devfn;
+>   
+>           snprintf(name, sizeof(name), "riscv-iommu-%04x:%02x.%d-iova",
+> -            PCI_BUS_NUM(as->devid), PCI_SLOT(as->devid), PCI_FUNC(as->devid));
+> +            pci_bus_num(bus), PCI_SLOT(devfn), PCI_FUNC(devfn));
+>   
+>           /* IOVA address space, untranslated addresses */
+>           memory_region_init_iommu(&as->iova_mr, sizeof(as->iova_mr),
+> @@ -1374,8 +1383,8 @@ static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, uint32_t devid)
+>   
+>           QLIST_INSERT_HEAD(&s->spaces, as, list);
+>   
+> -        trace_riscv_iommu_new(s->parent_obj.id, PCI_BUS_NUM(as->devid),
+> -                PCI_SLOT(as->devid), PCI_FUNC(as->devid));
+> +        trace_riscv_iommu_new(s->parent_obj.id, pci_bus_num(bus),
+> +                PCI_SLOT(devfn), PCI_FUNC(devfn));
+>       }
+>       return &as->iova_as;
+>   }
+> @@ -1696,7 +1705,7 @@ static void riscv_iommu_ats(RISCVIOMMUState *s,
+>       pid = get_field(cmd->dword0, RISCV_IOMMU_CMD_ATS_PID);
+>   
+>       QLIST_FOREACH(as, &s->spaces, list) {
+> -        if (as->devid == devid) {
+> +        if (riscv_iommu_space_devid(as) == devid) {
+>               break;
+>           }
+>       }
+> @@ -2710,8 +2719,9 @@ static IOMMUTLBEntry riscv_iommu_memory_region_translate(
+>           .addr_mask = ~0ULL,
+>           .perm = flag,
+>       };
+> +    uint32_t devid = riscv_iommu_space_devid(as);
+>   
+> -    ctx = riscv_iommu_ctx(as->iommu, as->devid, iommu_idx, &ref);
+> +    ctx = riscv_iommu_ctx(as->iommu, devid, iommu_idx, &ref);
+>       if (ctx == NULL) {
+>           /* Translation disabled or invalid. */
+>           iotlb.addr_mask = 0;
+> @@ -2723,8 +2733,8 @@ static IOMMUTLBEntry riscv_iommu_memory_region_translate(
+>       }
+>   
+>       /* Trace all dma translations with original access flags. */
+> -    trace_riscv_iommu_dma(as->iommu->parent_obj.id, PCI_BUS_NUM(as->devid),
+> -                          PCI_SLOT(as->devid), PCI_FUNC(as->devid), iommu_idx,
+> +    trace_riscv_iommu_dma(as->iommu->parent_obj.id, PCI_BUS_NUM(devid),
+> +                          PCI_SLOT(devid), PCI_FUNC(devid), iommu_idx,
+>                             IOMMU_FLAG_STR[flag & IOMMU_RW], iotlb.iova,
+>                             iotlb.translated_addr);
+>   
+> @@ -2772,7 +2782,7 @@ static AddressSpace *riscv_iommu_find_as(PCIBus *bus, void *opaque, int devfn)
+>   
+>       /* Find first matching IOMMU */
+>       while (s != NULL && as == NULL) {
+> -        as = riscv_iommu_space(s, PCI_BUILD_BDF(pci_bus_num(bus), devfn));
+> +        as = riscv_iommu_space(s, bus, devfn);
+>           s = s->iommus.le_next;
+>       }
+>   
 
 
