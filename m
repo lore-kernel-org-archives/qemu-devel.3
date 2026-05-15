@@ -4,83 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C251CD4F47
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 14:28:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3974CD343F
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 14:28:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNtUg-0006DU-A1; Fri, 15 May 2026 10:26:26 -0400
+	id 1wNtWn-0004dv-CH; Fri, 15 May 2026 10:28:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNtU9-0005jF-O2
- for qemu-devel@nongnu.org; Fri, 15 May 2026 10:25:53 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1wNtWZ-0004N7-3Y
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 10:28:26 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNtU6-0000vf-Ps
- for qemu-devel@nongnu.org; Fri, 15 May 2026 10:25:52 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-44509921fbcso4770233f8f.3
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 07:25:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1wNtWX-00021Y-D4
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 10:28:22 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-449de065cb3so8485665f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 07:28:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778855299; cv=none;
+ d=google.com; s=arc-20240605;
+ b=gmjXBr52mC+h/pL7aQC8GHG1LKFYUjSuF3qXdwAYPwSYD/1OMqAHVRMetD/kqM4cI0
+ C0B5KbTx9fgRzTHXSgPTrucnhouJ1UlK41gClmkOm1v2MXYGbJtDugCcc0y2lCB99yLo
+ pb/YOF9g9LtXctRLIO5qM/D3WckiLMMJgE/peLVlqd2uWSrwGrtx87sfnJ+bxZDoLkRJ
+ hwDx0dyXshDI3HVsv0CV2WQkDC9ADU83mx4uETfIZl77wi//V3EOIriQo8uSgBe0hkMS
+ hg27+JST1Rrw9s5TNclPVlLG3cDj3tWBI5RMkTJOpMzfqakro/e75fbJWY+RgwVnAQQy
+ zK/g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=e6thmI8LHMZd83dauSGaPGvKYFzq9Z6zsC8vRuq9GXQ=;
+ fh=G+JBw2Pu6hUZ8zKsXx/FXyHuhiws+/jrNByUetwlSSw=;
+ b=R+63L3mm8/2L0+EqOYnI9CxancYPUiTCx4S7fUg7UdQdrZYPtSIZt4HMOZLhGmO7K6
+ qjVRJeagq9VmlJLCmcETm4Rk9SMZ/iI04fkHpBmAd+r3GiSROPH99FzakdREj0VOrfUt
+ O7dM6nABeuEU4uKnfmRLsW5kI8y7MZaUuo1iDFl86+AOX9/Nnfrr8wDLRMpWMRYvGY4h
+ kJriHeI9nVsIZv9RAR3+ceJVQVmCeiQb+U/k9r2MaZYa9Fh/srwrz6mevTLji3oM44m4
+ AyOaUwHCa/FoIcFld/7SBXyAICHPn3j32FS7X0pcFL7wvFl4E5gGFb2JC9zzrJhMq7kg
+ ygRQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778855148; x=1779459948; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=iMeESVfxoQL4XM+HmSKggMAQZr6iHvyZ6SpMkCmyMlQ=;
- b=xxr4DHVjwldXXkWJzo/oYmfRlyJhob6KnbOcbisSzF0VfsumVe+yujXVMrKPt/2W2h
- 6XpUfeufdG0G28Bdf7mGPQNTGxO0xqq0W2qN6vHoQYHAYBnDluujhx/7V7VNbsGM8Ukn
- BUl45xc4Y9DaYzgxc7o4LzaqfB0vS0nInuKCP7hDb3md0JUq5/rzXp2e/krEFOBpKmxJ
- n8s3mCAUj8ykqdVmUI8XT7V82tRufW6FP0MXxDrC5B+xdyOryOe7XHCNmXhwijjS2ZWZ
- k/IMd4L+fE9v/SPXza6ie+iD3JA86QG9ioZaUM/K4FT3B2c/Fm5JvFk0+ViULDsjir24
- rHag==
+ d=linaro.org; s=google; t=1778855299; x=1779460099; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=e6thmI8LHMZd83dauSGaPGvKYFzq9Z6zsC8vRuq9GXQ=;
+ b=pN09vn1qddxVRcQbdpm+wV1L3zVEQBnGkchr02U/UWeuYmuj7YcDRCHNRMHf53sayc
+ ua4YS3Oa34XVEvOrJLmAfd8MVijaK1rKcdJrVmBjp5x0OJurIa2IIntaTukc/XxnRuRD
+ I+pxPkhEg0ZsHv+fOQtkaEiOVvBSjiw2xPM7coTZZIq6pBRF3ilDREkFbvu2LPymEjYh
+ fKOUr44eeRblSJXqjz+QIOTQ7lDhpE2CpkQAHWNy6PfX+k8lD0cuF6pRdPDnoRfoKi7o
+ v9nQhZznB6rSYMVdp/sbswmG3ty6vLtln+RnUCHkAmlDJyZ4PsFwApm83/k1IeOfCipD
+ XRqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778855148; x=1779459948;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=iMeESVfxoQL4XM+HmSKggMAQZr6iHvyZ6SpMkCmyMlQ=;
- b=CZTb0rqAtWS3auZQViWOX44hxZh3LtBf9AqIPnZYpwvS9+NTpCWut4XZN84lK8zCh7
- W9z+6aTDD9nyKzwjwmAB2RmmUeccglYlVVwrjisZMlzlMBWOoD8B85HWZKks9A7sMRMj
- HjKxWxXu5YlqACLOXen/2jtbsm+SFJ+Vb2fCrJsAUA4gCK16hvvXRc8Fvb1ktx8NZGaQ
- pJWZLdT7xEeiRUZ8Jah/RSNfhg0H0cz1JR6LRwU18WmEpxP1+2Ly2OCvQIVhzGkZKcJk
- V6f6RYYtkPjmK729iH8TCAKZPYKzNnKAkd4iTfJ8PHBPRuTrpmi+E35oq/B+EEJoG08J
- zyxA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ99Z1OBdHzRlxu1Br5unXiFeZ88fTsAWhNvdh0ayDcHBrTd+djkqshwoDvo+daj/hKxsbXUDDqpwORL@nongnu.org
-X-Gm-Message-State: AOJu0YxYmxFNIfVEnTdgaRjtd5PXYfVYvebK3oppjlNL483gScbK3ZcH
- 8kG1oYJjJE53eltMWLvJwvw7am1MdWemZU5QMbCEnA2Imf8ZvoFHgdCaKKdx1YtIDt1mV16opr1
- +dzwP
-X-Gm-Gg: Acq92OE/dBNpWVOdKmMuPSR1gNojaRkIvSNf1wZ4kV9l4yTYPP+dvHC51PwtyqqLQy3
- Sq91YgTAaEFYJx0eexnaCs8L99EP/kVxylcGyZiDjkc25hIMdKxf1NpSN9MbhjwsV4KqHxUIqQl
- 30mYpsgkt7JFoXTOlv33OQGv/U3bXd04yk759pBtLhyBbCMDwvekajmzMi1E6Cr4ovBbyhBQxtz
- CNT/PGTXITAahLEaoIM1P4m9KupMnUebx2cmUQiDHAO/c6NkAhmGvbHQf3t7lhm5HO7tt9NdHE2
- gHBlHRzg1whz6RybCUXOi6HRbHKn8gnYdnFSlGJlD9wGqh5+3Dls6yZQ33wVv9lkCgkgscVPPm5
- Vkt82FxH2wtQjEgEQvZxgGxZYoW09q8VAAILkdw0JqJNjXPU9ZRRIH43cMnRPN2tZuzN+i9p18E
- cD/uCqxZBV3HDNGjJpx7HjHVTZNu4ZWnS6A3yUjYe5zcvcQM+0XNOafzRUC2N3WRY17TRvMNqjm
- mx3LQxyBUjQdx1Jf8SpfPppUBvvSx4oHxQzkdWENYMUv/MTNDu/
-X-Received: by 2002:a05:6000:2502:b0:43d:7e34:889c with SMTP id
- ffacd0b85a97d-45e5c5e68b7mr5918628f8f.39.1778855147705; 
- Fri, 15 May 2026 07:25:47 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da15a666fsm13560603f8f.36.2026.05.15.07.25.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 07:25:47 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Subject: [RFC PATCH 04/14] target/arm/ptw: Flip sense of get_phys_addr_v5
- return value
-Date: Fri, 15 May 2026 15:25:31 +0100
-Message-ID: <20260515142541.571911-5-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260515142541.571911-1-peter.maydell@linaro.org>
-References: <20260515142541.571911-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20251104; t=1778855299; x=1779460099;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=e6thmI8LHMZd83dauSGaPGvKYFzq9Z6zsC8vRuq9GXQ=;
+ b=gA1irjD22uzc6uQPYSBwurTHrJwqGkXX9pExaPErWcu+iBCGgs4CkpPFzyh1ayo56k
+ DoPCrHgxj4HOSV0NyhXNia3nhNirqtmddf/+a45iAjvgk8L+RiSkX2TX0z1vwzZp3Ur+
+ 5+uAGpeUWfy+TAWh+bBXi3BWjaYIlCuuxbAo5sfNhHv+yuSOKjnALwCCIS3WItFHMAd2
+ q2S6kC0cbgvwqt5aBaS/8YYB5q/BUf1bIhJYmFl2PgKLdkDpD7FksVBn9/qWbxXG7qZb
+ zWCfiH2NyWP8szCY1DOG3BBSaVNcNe+Y2J6p7nspXlyNHltFJ9aFqrqxZcib+Nd6svYy
+ JHhA==
+X-Gm-Message-State: AOJu0Yy1l+32o0Xga0BKCD5eD+9jKRu0qLEQcNHZvKEBTjOrUpl0sMus
+ 9UXI4W4aeGgWXCIFGB0mwYrzREIPFVYkO8L7fZjrOtIw5jb30Icqjch1P5yDE9v4TSjaS8uLUD0
+ 2gqi6Tk4FK05yGNA8g5khdSCEzPf6EbdTwto28g1FPw==
+X-Gm-Gg: Acq92OGjO+uyqtghSBWvWkEUhn4UC2p/GPO7jjA1ASyVEk9S9xX/pVdhorv8FQ8mHw+
+ pqS2QZzcCQgvHpPCqyuiyTTlIS9RO4UNuok2RSP8Fz14GMwPMFK+p5PSOdaq8ceM4IBGmS5A/YN
+ JMesVeufnMtMZxFvUh6ai0//sZ8G9XN+8qPGfM4fQPXvChuA8s29F5+Q6gUEveiXUURZVPORT3t
+ PuKejcXML3Ts5r4D4HjUtafvlNbCaCCffAk4v7Xq6ktkRrm7NotUDiaRxRYs3A6PfCXDoKR7gSd
+ NR+/zeUvkJfcb6T1kAQVHYHSfGz+oi4zsO+k7NE//ScYlh6yMw==
+X-Received: by 2002:a05:6000:4205:b0:43d:7dcf:ae26 with SMTP id
+ ffacd0b85a97d-45e5c5cd116mr5507358f8f.34.1778855299122; Fri, 15 May 2026
+ 07:28:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+References: <20260515141032.3271-1-philmd@linaro.org>
+ <20260515141032.3271-17-philmd@linaro.org>
+In-Reply-To: <20260515141032.3271-17-philmd@linaro.org>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Fri, 15 May 2026 17:27:49 +0300
+X-Gm-Features: AVHnY4JfWSM68WGkRQpLkRNA7wvoK6nBedenhWmkj7GlNswXaoFz2GuXEVAwhVg
+Message-ID: <CAAjaMXbA6xcLyG80vD89u2wwqYQkCOnP74CACBjoRsMO7K9zqQ@mail.gmail.com>
+Subject: Re: [PATCH v6 16/20] target/arm: Factor aarch64_aa32_a57_init() out
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org, 
+ Joel Stanley <joel@jms.id.au>, Kane Chen <kane_chen@aspeedtech.com>,
+ Troy Lee <leetroy@gmail.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, 
+ Steven Lee <steven_lee@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,39 +124,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/ptw.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+On Fri, May 15, 2026 at 5:12=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> In order to make the following commit easier to review,
+> factor aarch64_aa32_a57_init() out of aarch64_a57_initfn()
+> as a preliminary step. We only add a %aa32_only argument
+> to restrict AArch64 features.
+>
+> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index fa251f5b5c..1730caf180 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -1169,11 +1169,11 @@ static bool get_phys_addr_v5(CPUARMState *env, S1Translate *ptw,
-         goto do_fault;
-     }
-     result->f.phys_addr = phys_addr;
--    return false;
-+    return true;
- do_fault:
-     fi->domain = domain;
-     fi->level = level;
--    return true;
-+    return false;
- }
- 
- static bool get_phys_addr_v6(CPUARMState *env, S1Translate *ptw,
-@@ -3793,7 +3793,7 @@ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
-                regime_sctlr(env, mmu_idx) & SCTLR_XP) {
-         return !get_phys_addr_v6(env, ptw, address, access_type, result, fi);
-     } else {
--        return get_phys_addr_v5(env, ptw, address, access_type, result, fi);
-+        return !get_phys_addr_v5(env, ptw, address, access_type, result, fi);
-     }
- }
- 
--- 
-2.43.0
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
+>  target/arm/cpu64.c | 36 ++++++++++++++++++++++++------------
+>  1 file changed, 24 insertions(+), 12 deletions(-)
+>
+> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+> index 7b2f09cf8ec..7dce17fdb20 100644
+> --- a/target/arm/cpu64.c
+> +++ b/target/arm/cpu64.c
+> @@ -686,17 +686,20 @@ void aarch64_cpu_lpa2_finalize(ARMCPU *cpu, Error *=
+*errp)
+>      SET_IDREG(&cpu->isar, ID_AA64MMFR0, t);
+>  }
+>
+> -static void aarch64_a57_initfn(Object *obj)
+> +static void aarch64_aa32_a57_init(Object *obj, bool aa32_only)
+>  {
+>      ARMCPU *cpu =3D ARM_CPU(obj);
+>      ARMISARegisters *isar =3D &cpu->isar;
+> +    const bool aarch64_enabled =3D !aa32_only;
+>
+>      cpu->dtb_compatible =3D "arm,cortex-a57";
+>      set_feature(&cpu->env, ARM_FEATURE_V8);
+>      set_feature(&cpu->env, ARM_FEATURE_NEON);
+>      set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+>      set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+> -    set_feature(&cpu->env, ARM_FEATURE_AARCH64);
+> +    if (aarch64_enabled) {
+> +        set_feature(&cpu->env, ARM_FEATURE_AARCH64);
+> +    }
+>      set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
+>      set_feature(&cpu->env, ARM_FEATURE_EL2);
+>      set_feature(&cpu->env, ARM_FEATURE_EL3);
+> @@ -727,10 +730,12 @@ static void aarch64_a57_initfn(Object *obj)
+>      SET_IDREG(isar, ID_ISAR4, 0x00011142);
+>      SET_IDREG(isar, ID_ISAR5, 0x00011121);
+>      SET_IDREG(isar, ID_ISAR6, 0);
+> -    SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
+> -    SET_IDREG(isar, ID_AA64DFR0, 0x10305106);
+> -    SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
+> -    SET_IDREG(isar, ID_AA64MMFR0, 0x00001124);
+> +    if (aarch64_enabled) {
+> +        SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
+> +        SET_IDREG(isar, ID_AA64DFR0, 0x10305106);
+> +        SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
+> +        SET_IDREG(isar, ID_AA64MMFR0, 0x00001124);
+> +    }
+>      cpu->isar.dbgdidr =3D 0x3516d000;
+>      cpu->isar.dbgdevid =3D 0x01110f13;
+>      cpu->isar.dbgdevid1 =3D 0x2;
+> @@ -742,14 +747,21 @@ static void aarch64_a57_initfn(Object *obj)
+>      cpu->ccsidr[1] =3D make_ccsidr(CCSIDR_FORMAT_LEGACY, 3, 64, 48 * KiB=
+, 2);
+>      /* 2048KB L2 cache */
+>      cpu->ccsidr[2] =3D make_ccsidr(CCSIDR_FORMAT_LEGACY, 16, 64, 2 * MiB=
+, 7);
+> -    set_dczid_bs(cpu, 4); /* 64 bytes */
+> -    cpu->gic_num_lrs =3D 4;
+> -    cpu->gic_vpribits =3D 5;
+> -    cpu->gic_vprebits =3D 5;
+> -    cpu->gic_pribits =3D 5;
+> +    if (aarch64_enabled) {
+> +        set_dczid_bs(cpu, 4); /* 64 bytes */
+> +        cpu->gic_num_lrs =3D 4;
+> +        cpu->gic_vpribits =3D 5;
+> +        cpu->gic_vprebits =3D 5;
+> +        cpu->gic_pribits =3D 5;
+> +    }
+>      define_cortex_a72_a57_a53_cp_reginfo(cpu);
+>  }
+>
+> +static void aarch64_a57_initfn(Object *obj)
+> +{
+> +    aarch64_aa32_a57_init(obj, false);
+> +}
+> +
+>  static void aarch64_a53_initfn(Object *obj)
+>  {
+>      ARMCPU *cpu =3D ARM_CPU(obj);
+> @@ -886,7 +898,7 @@ static void aarch64_max_initfn(Object *obj)
+>      }
+>
+>      if (tcg_enabled() || qtest_enabled()) {
+> -        aarch64_a57_initfn(obj);
+> +        aarch64_aa32_a57_init(obj, false);
+>      }
+>
+>      /* '-cpu max' for TCG: we currently do this as "A57 with extra thing=
+s" */
+> --
+> 2.53.0
+>
 
