@@ -4,105 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7029CD4F47
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 14:27:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BD82CD4F25
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 14:28:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNtUn-0006lQ-6j; Fri, 15 May 2026 10:26:33 -0400
+	id 1wNtUi-0006R4-2o; Fri, 15 May 2026 10:26:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wNtUO-00063D-II
- for qemu-devel@nongnu.org; Fri, 15 May 2026 10:26:13 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wNtUD-0005qw-P3
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 10:25:57 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wNtUM-00016x-WF
- for qemu-devel@nongnu.org; Fri, 15 May 2026 10:26:08 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-45297094718so7405343f8f.3
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 07:26:05 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778855165; cv=none;
- d=google.com; s=arc-20240605;
- b=I0m6qDP714frT3gtSLYGbrIVsiyIatLy2KwVGloUU8dJHMu5QNeCIPTH6mTDqBo54U
- Mc4kQut91m5qocoae84v/bkwX24aaacVf+BptjcGP9LWg9bhptpGCFA4OyIkvoNSIkyt
- dvcMl65Vdk63zzbvTzPyZdgl3gV6n1fA2vkUEuWmzsbBt+xfzimbBTPB/7dy+r2zhbOw
- bmvLEvnOqAlIrQH1HToUOLXZfvLz/wukLe+kzN1dLgfCb8fs3i4iF4Qxm+AJe683n6QT
- lQhq4RAHJgoGmJ7bEexup/t5ZzRhpd37gTnUZd0KNpDbVz626knp1QPJKwKvpT/Ws8Me
- lRnw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=nXV6Znl7157zGgNN0CYzCLlN/eTh/tytW7d8DvhGN5I=;
- fh=G+JBw2Pu6hUZ8zKsXx/FXyHuhiws+/jrNByUetwlSSw=;
- b=N7ioha77vI0Dx4IwrYiO5Mme6176fQMACOkSTjf0SdICPDbunb/2e9YsQvue5vWPRI
- 7mztQvdZMqZA2CBIt9O1rFXB3Ux6b7sN9NLoI33DUjyvdsG4QMJhtce3S2KNU6cCDUkb
- s2GlIT4lXTUfROOUwBDJC2YstuK11SxMV3tpajfr2xNff9Zz53pIwqMFrjWZ3tgfJgPW
- t+42I6y6uxVe4zYjNiCFV3Csd5vCne/CvR+i6wHDBBnsFZyIWogtzVdbHGQnfLYTrmY7
- ZOXwJC5n4XPzHbcNHqKXClqXnX5pqJZVGz8z4FAnbW2otzi5IfJS9bYCBfkSE4E+1W2q
- zYhw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wNtU9-0000xh-8o
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 10:25:55 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-44e1860558fso5989662f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 07:25:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778855165; x=1779459965; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nXV6Znl7157zGgNN0CYzCLlN/eTh/tytW7d8DvhGN5I=;
- b=UcAozl520OfolxlX0eZ7Yjj6DSpzyezEIbbFab341Q/A2Wll9puNf8xQzL5bxc5F6w
- HlRlawVmzxhtJ26s4WBTVXXuG7ghXibFvZoW8zUj4yZ2HjHy7Uc0iGhuRPQUORLjv5w8
- 8kN9UmugUW9WE9E4O1s6w8yTH5o2uQwBwr7rwWcRiNfoWweTALSCs0iaoElGKVPc4oSX
- 992GntvDRD6COHPxjbCzDhNwwmOKebQgQ98h7hawDopWDW7B/AS4FkL8E5HrbluoMWqr
- EjqozqoqGzKbWf8ChWOFCje/8VlsNVIwWHEAHIenHxV70sZQNne0xqRfIXLz9ny2YGy4
- mM5w==
+ d=linaro.org; s=google; t=1778855151; x=1779459951; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=dG4YbbQLzdn6s6+yCfVqlzQwYjjvxFEtdufrlxMzgL4=;
+ b=Uw9g5njR/dDRRoyiPO0XdzmZa+lG1znEV6c8pA/tAgkOTb4j0W827XR92BD3hfZtiN
+ o1/V7RME3zjLTyk630/S7agOfVbO2u+T5YIC6cY+blrziTMhEYMK8kHXr8tbiaydCzrK
+ BEifc4zXV4d+YyXGgWitkvXuTFXbLGPoczVm/IxEZ6tngbj7lxi2lFSUEpTI4ouh/Jx9
+ 8HXZ7llnbQZHKzq/Shm73auzJmt/oElrYq2zYnmy0vDwW2hsxpT921Wv7dZmmypy4VQ5
+ 8BdNijsB12D2kT92D9B9NDpV0SemeOnde/jEqWruwR7+PkDXBPTQwltBn74HbOghzzrr
+ 5qkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778855165; x=1779459965;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=nXV6Znl7157zGgNN0CYzCLlN/eTh/tytW7d8DvhGN5I=;
- b=BkDSHavMaShqsCZhUj6vedpGsVQiQQmmkWZ6hel8l6JGxHSQspMsUuWIkkjmz3TpeT
- ZlIAyh81TZjCY2vkt+sUhyEkYR71fLqZ9lFcWohdB2swoYbgy94e3eOLSsjbLAUmx4fT
- PYA3t+l1AqeKJ/dWgpFQOk0jxKpLvavjqY5GGyWQtWoWyEimaUYD13fsRnPehzlBNUT/
- nLBQkvhj8PX/jPCKrDWf8/GJvh1KO5EqoU7nFBy8L4UuMWsVNG3XXfv6JaNXoNLb/icN
- jj7hGDGk1pcRDhVSDbb9EYBJkBJDQgiwrUg+9c56z7GchDzkQCo7YfwmkyDg/L7otbXt
- Rdgw==
-X-Gm-Message-State: AOJu0YxzdXA46eUU0cy5AhwZxWq3MfhSiQFBOA4r+2uSRUeQoW7XYywQ
- EQ/hnqYOdbgPW+923hmLPQLvTW3EVlkg7tTJzUwXxur3a6OdIxBOOG4EaIYPSmMPoiYSKzVgzYZ
- Lwfnw1YlpoBJ+PzCkU+a79GIY8QiOTyw0DueMspsiqA==
-X-Gm-Gg: Acq92OElQvWH1unYIQlwAbQgOronYV+XDD+SvB1RTq3LFe3KGy6SVoCjdmdcFM3CFgw
- g+rJYAYutr7JD+Exj9aVYsjUVF3eraJ92YEkrasGH4LZQocFmZUkA8/+Iizn7W9GRoqV5beiTj+
- rL62KnBn4uQyN9kHeVnOttKHSHKnYyi4+fwRzjO9vUm2Tob1weTrCMwvjCaXCC2s047QgWCTSPC
- 5Q8gKcFeffZ5IBHOqHFT59jAaa6p18lMxMVbBM0Q5U2f62sNB3yK+Cv8y/MlKBaG3gFKAoln4ij
- jSqpxVYSfSBwiTdZUUbaeFoCGJzIbaB2bEdIFLmbhX7e2BDUuA==
-X-Received: by 2002:a05:6000:230d:b0:45d:b14b:2412 with SMTP id
- ffacd0b85a97d-45e5c362c56mr5896041f8f.6.1778855164656; Fri, 15 May 2026
- 07:26:04 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1778855151; x=1779459951;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=dG4YbbQLzdn6s6+yCfVqlzQwYjjvxFEtdufrlxMzgL4=;
+ b=UeD/qgOQeauwKYSc8JpI73dz2ABhc1peEG6iHU+guV1Ct9R08bEqCZCwq4s+kwM11d
+ kkd40ooVPWGUSzoHq15pN24wR3H8KKLtUHDYPfSvxpfjvavoQkNpqTnJOzxWfSTHzRk9
+ QnJEUrUSdg0BZtnHdptqUIHh1TDk18xew4wZ6RNTYT4W8MLB3VgDXwNtBpvhE+Eo1sHG
+ XO7CeTiwRX5SxEqhbjkfO4w9MPZl+qELeSo5usq0byXnZdmCIp0n3sfBg+MjgttoQxZI
+ Q4Zz7iqrVMjP9eAKKaVpu7PzWTrvmatzs9dlyzbP6sRcA4OQ1gymNKeMVip266KTmdRb
+ wdmg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/s8EBuzPqCj4gu2offFEjXOXh7+4pglStZgW7lokMj+cIxWTwxUjnHFhyUoWxFEZisTpR9ZW0VSXrk@nongnu.org
+X-Gm-Message-State: AOJu0YwRBnF2nLEXvjiRVVVRHT82o8QHZQ0ZmeMy9CTHxvFJlrN0m2MX
+ PET9DwXC8nxte6oDtIc3frRvypMgFb0L8tmRf9wWn28DbnfrJ8ICXrqiRvn7mmUrS6s=
+X-Gm-Gg: Acq92OFdvI1d2o1+NiVELNiVLSO93lAwZqAKNHTa+yt3wP2iuQfXG1WCpbcwY4O1PtO
+ OiYeLTjxUw7Gaw1ZbCV6qi36yYF0KERgA7NvTL+7UWScRATEt6D6DwExXpRqcUmrGk2CpoJ1qRw
+ ZmiBb7PcSTyizi10DS6P5tbgHi0EIk+uygtvvB0QfI1F2UkrAWitUmZmeEHXo4s7DTbREf7zbt3
+ qrQZRkTuj7LNCjmkJFB/EynLwzEYkolMUEBfrJ4+zQgSalZKy9FijKlLAB/ai3XaoqCupbNT0h3
+ U0KGIwd+IJLyEFMxb4qjgIwjDjToxnQNGX3Q8JI/hH6z88clTTu1GohKX4jcSBZ0YUkXIprREsO
+ m0U1geWET2+7Han8F3I/L4c9/wDkSbcMiC8Qk1G+aeQXNbGYjftWtOM8XNezl+KqFbMFb6djCtg
+ gK8tpASM37/y7Ah/p+1zSh3uegRw+2z2pcOEHp3p50OhYKV+4EKngY0Nblgw1CFzAHQML5O/uq+
+ opYpXUPa2EPLPX53nzaCmND7O9mx9w=
+X-Received: by 2002:a05:6000:1ace:b0:43d:775b:c9bd with SMTP id
+ ffacd0b85a97d-45e5c58906amr5815222f8f.10.1778855151388; 
+ Fri, 15 May 2026 07:25:51 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45da15a666fsm13560603f8f.36.2026.05.15.07.25.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 15 May 2026 07:25:50 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [RFC PATCH 08/14] target/arm/ptw: Flip sense of pmsav8_mpu_lookup
+ return value
+Date: Fri, 15 May 2026 15:25:35 +0100
+Message-ID: <20260515142541.571911-9-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260515142541.571911-1-peter.maydell@linaro.org>
+References: <20260515142541.571911-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-References: <20260515141032.3271-1-philmd@linaro.org>
- <20260515141032.3271-14-philmd@linaro.org>
-In-Reply-To: <20260515141032.3271-14-philmd@linaro.org>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Fri, 15 May 2026 17:25:37 +0300
-X-Gm-Features: AVHnY4KmzFZ-weH9aeaGQUbDrNBtYyPZF1yBawjKpQhoOchSooiy1O8k0quz3xM
-Message-ID: <CAAjaMXY3DDaLk591=7bWy5sMobokr00nbGCkYDxaazu=om96gw@mail.gmail.com>
-Subject: Re: [PATCH v6 13/20] target/arm: Use make_ccsidr(LEGACY) in 32 bit
- 'max' CPU type
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org, 
- Joel Stanley <joel@jms.id.au>, Kane Chen <kane_chen@aspeedtech.com>,
- Troy Lee <leetroy@gmail.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, 
- Steven Lee <steven_lee@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x434.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -125,54 +102,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 15, 2026 at 5:12=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> Commit 676624d757a ("target/arm/tcg: refine cache descriptions
-> with a wrapper") added the make_ccsidr() helper. Use it. Besides
-> being simpler to review, it also makes arm_max_initfn() more in
-> line which aarch64_a57_initfn(), which it almost duplicates.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/ptw.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 9e5a7e77c0..c89cccd431 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -2844,6 +2844,7 @@ bool pmsav8_mpu_lookup(CPUARMState *env, uint32_t address,
+      * If the region hit doesn't cover the entire TARGET_PAGE the address
+      * is within, then we set the result page_size to 1 to force the
+      * memory system to use a subpage.
++     * Return true on success, false on fault.
+      */
+     ARMCPU *cpu = env_archcpu(env);
+     bool is_user = regime_is_user(mmu_idx);
+@@ -2944,7 +2945,7 @@ bool pmsav8_mpu_lookup(CPUARMState *env, uint32_t address,
+                 if (arm_feature(env, ARM_FEATURE_M)) {
+                     fi->level = 1;
+                 }
+-                return true;
++                return false;
+             }
+ 
+             matchregion = n;
+@@ -2958,7 +2959,7 @@ bool pmsav8_mpu_lookup(CPUARMState *env, uint32_t address,
+         } else {
+             fi->type = ARMFault_Permission;
+         }
+-        return true;
++        return false;
+     }
+ 
+     if (matchregion == -1) {
+@@ -3020,7 +3021,7 @@ bool pmsav8_mpu_lookup(CPUARMState *env, uint32_t address,
+     if (arm_feature(env, ARM_FEATURE_M)) {
+         fi->level = 1;
+     }
+-    return (prot_check & ~result->f.prot) != 0;
++    return (prot_check & ~result->f.prot) == 0;
+ }
+ 
+ static bool v8m_is_sau_exempt(CPUARMState *env,
+@@ -3222,7 +3223,7 @@ static bool get_phys_addr_pmsav8(CPUARMState *env,
+         }
+     }
+ 
+-    ret = !pmsav8_mpu_lookup(env, address, access_type, ptw->in_prot_check,
++    ret = pmsav8_mpu_lookup(env, address, access_type, ptw->in_prot_check,
+                             mmu_idx, secure, result, fi, NULL);
+     /*
+      * For two-stage PMSA translations, s2prot holds the stage 2
+-- 
+2.43.0
 
->  target/arm/tcg/cpu32.c | 10 +++++++---
->  1 file changed, 7 insertions(+), 3 deletions(-)
->
-> diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
-> index 919ed8a6cf8..cf643ce43b1 100644
-> --- a/target/arm/tcg/cpu32.c
-> +++ b/target/arm/tcg/cpu32.c
-> @@ -9,6 +9,7 @@
->   */
->
->  #include "qemu/osdep.h"
-> +#include "qemu/units.h"
->  #include "cpu.h"
->  #include "accel/tcg/cpu-ops.h"
->  #include "internals.h"
-> @@ -756,9 +757,12 @@ static void arm_max_initfn(Object *obj)
->      SET_IDREG(isar, ID_ISAR6, 0);
->      cpu->isar.reset_pmcr_el0 =3D 0x41013000;
->      SET_IDREG(isar, CLIDR, 0x0a200023);
-> -    cpu->ccsidr[0] =3D 0x701fe00a; /* 32KB L1 dcache */
-> -    cpu->ccsidr[1] =3D 0x201fe012; /* 48KB L1 icache */
-> -    cpu->ccsidr[2] =3D 0x70ffe07a; /* 2048KB L2 cache */
-> +    /* 32KB L1 dcache */
-> +    cpu->ccsidr[0] =3D make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 32 * KiB=
-, 7);
-> +    /* 48KB L1 icache */
-> +    cpu->ccsidr[1] =3D make_ccsidr(CCSIDR_FORMAT_LEGACY, 3, 64, 48 * KiB=
-, 2);
-> +    /* 2048KB L2 cache */
-> +    cpu->ccsidr[2] =3D make_ccsidr(CCSIDR_FORMAT_LEGACY, 16, 64, 2 * MiB=
-, 7);
->      define_cortex_a72_a57_a53_cp_reginfo(cpu);
->
->      aa32_max_features(cpu);
-> --
-> 2.53.0
->
 
