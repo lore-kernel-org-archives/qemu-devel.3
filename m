@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DE35CD4851
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 08:04:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6BD7CD4851
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 May 2026 08:05:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wNnWw-00076T-EY; Fri, 15 May 2026 04:04:22 -0400
+	id 1wNnXz-0008FF-8j; Fri, 15 May 2026 04:05:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNnWm-000730-48
- for qemu-devel@nongnu.org; Fri, 15 May 2026 04:04:12 -0400
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ id 1wNnXy-0008Ey-Hm
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 04:05:26 -0400
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wNnWj-0001RU-Ct
- for qemu-devel@nongnu.org; Fri, 15 May 2026 04:04:11 -0400
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-6530287803cso11121455d50.1
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 01:04:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778832248; cv=none;
+ id 1wNnXt-0001bj-Lj
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 04:05:26 -0400
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-65db820588aso6563744d50.2
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 01:05:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778832312; cv=none;
  d=google.com; s=arc-20240605;
- b=h8mZrC3nSuLrvqfvzCN+T8kffj6aZmMRWo0Io1yVshnNmFlmBhDYVnuPUVE5IqauCD
- 8By/U0zwB2kakntzKNRxOkbJ0escr9fTPwi10VJss9nQoKPOBwhMphSsWuZKK7eU1m5m
- 2bX0Jmgi1z7Df2ZGXOCaJBn83TblBb+LdzTfJkgQJ0iCSc/PpKI6yc5OaUozUmwRMS4Y
- 3K4Howd+c01YO3gVPAue0YXD3YW+0pS2rRmMTZh1ROQJm1JhkpJgfWCjc/F/iODePSUd
- xLBjsin/a2/9m9msWxVrBVWJlvZ/AbmbtHVgoHJl11vbvYpqNGpLyiZ2lCV54cbnLjag
- rmxw==
+ b=dEqTFaPNQwMrWiWMHP3EDck0kUGF9TzRa383ZybsIS67ISjG2nuTpd9duE4vFhHEEC
+ FjzpYw0ADSDRGDQTl7d4c4JZQ8bYjJFTaY6Y0stS0ndwJXtJo33YRa4pT5to5HsowD7e
+ MUQOuH6XG2TbzEdMKJ5QHszF4PoxjBD1wjLHgevPf2Zxrvj1Q4ws2sdLyicXAzML0BSR
+ QcjVS9LmsOrQCdf7ZVuwjRKmv3Bo0P24OeOAG3Ek97UiRj7LrC0LMFTUDiElY4XpxJ44
+ Xfqiqly1iIRR32hxzYWoaHb0iv2i4662vyXLywhEKO281tbsL609P8V6XRG0kopctSi4
+ amHg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=tAeko3QliCsjSnxHyD7hnmpxbGpB6r/G/Yu1W1e5c44=;
+ bh=HnYsEQVL9dMO2N/s53m3HWDVMwKyMQo5sK+LOR840cE=;
  fh=kvOOaizNZldvZrGcUk8ta2JEDnV4vPRBdkt8TLZf/QY=;
- b=hJSbErqXVvd38e20ewyaBwehTR0r1noKrd1AQadzu2xP5SHcUKk9KDVZMzJYhCMe58
- +Ab7kwmUY5vuIWzS8YV5P9nI21ugM0BSrzknLQLnOBmAHdU1X2r01Vz41c/fZ8vnbS+J
- jD92WhXmLxpKYdtRdLOiteDxEBtHBtlXnA1SJXKlCA+NEjxTTIgZDLuYB1WMOYJcGb/2
- PCa+taK8UgnZVNsAmL6c2+8isW2wBV6QmecWNqFJMhfK9KntGrJ/m93atukMxtLQnIVb
- ogozjacKA5bNAP5I9/1LQd1Ac/9Um6HRD6bXkj0BVKW2pX6SRRg+ZDHjsA2MX7levGRr
- DmhA==; darn=nongnu.org
+ b=PosJXGy++a4HlblabGgHdGWvFdc4bkTtQe3TTFI4mOzQmva4kryK/3GSiHfE3yzMrW
+ z10BtTHwV1z/VsqayFKXCCHORBy5OHsUYxwxWRXEcRcZkW5bYvZk4ccesiFPV50fGF45
+ 3SZCE7SuC/ieKqFc+aJDbou3OSvj/Ng5dnbVT1swY00a0KcH2VfUDZ/R4Tgu9W7P/Qrw
+ t5z320TXJppgH5Z2iXU1eN4D1hgwL1rf39iEo7T1n4mE+uN8LP8diymFS6fSsi0jC5CI
+ Fg62N0Sl5C0dqBFH9BbA4TNxwbHx0eU7VTpZrln+YJ/R7uRX/pNOKB9DIQtDZSReFMa8
+ tzWA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778832248; x=1779437048; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778832312; x=1779437112; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tAeko3QliCsjSnxHyD7hnmpxbGpB6r/G/Yu1W1e5c44=;
- b=F/kkitSEfcS6TUYOodXhaEh1FqF0GYOKzWcGK0ommTw26h0NIrVW9Wug6SjoXoSvAI
- M4obzIg2HV/GSBCWoUx+AFMkIILgX6ouvohI9OU2RCILJssE+BrEVg8agvNEthzaok1K
- fG8CC291ymOZWIRiXClURNYVKzE2uO5WR5ONYGu09lgfj+GiUGDlFLtAOzS1OL3h+AcX
- gU9BhTT3lEEU3dMXaxT2t/R8ItXglX/nkU36+t4zBecclM9G+orW59WSb49qDNm4tPBC
- w4dC2z7gQR6LLkys+/wJg2sJdzpECYooEf68Afq+dDkAn2hcURqa5jEFSCIv6WYLW8a7
- /prw==
+ bh=HnYsEQVL9dMO2N/s53m3HWDVMwKyMQo5sK+LOR840cE=;
+ b=g0161VOFJVhWls+VIQPFNSBQLopjUJ0hFVFbNPLD+RR7xklpx0NsgF0UYGFwr0BA1M
+ iFd/tkcqgf9MUORxUygwZnWvVjDKsvLznlkTZJm3KS0iVjRMA/YmAvwfxy+qAiKUSDNi
+ OSSHaHPGCUKVcZVqo3lwhMxSov3Sm7xY1sXhiLG9S90mjfR75mRU2s6hi35FwNWWZQbO
+ XO+sNMxeEgBOJVdm4MVeGDdA2XvC5aVVTGOBTRW/x7yJpMuIg5CgfDYApauc4qycOLIP
+ Ax1CBXa3XdP3hBdeGpt8i22wSje7lLh7drzy5iEOEbKJJMs11hRN3G8Zxf9ujeQDEEh7
+ MaJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778832248; x=1779437048;
+ d=1e100.net; s=20251104; t=1778832312; x=1779437112;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=tAeko3QliCsjSnxHyD7hnmpxbGpB6r/G/Yu1W1e5c44=;
- b=bG8VFGH/1J69TLYtlpKHQPk9dp/ozBu308SoC4w9rGKv+VndJdi3LzuzvfdoWYZeZz
- b35HsL0prJnm3l6x+nujbuFXHiISH7guvPbaC0O98UOIt1FRQxgXYuaC4BylRtNpC6LV
- K6baI336NM1hN2DZMvqdg4h2YOJ0+eMUkm6qxQ6ymIfjO+Loc+EJlShuwQb4ZOqzbUF2
- tURNahVFRa6wYOqE7GoGGXxJQz5znqY2AajlLVB1P3Fkn1jbBI2xH0Tq+K4k+Q9xPAFz
- jis+PiuHaRgOo2WHF0x2Oq1hriFuh7haO1qQQQ8JfFWlynnXHqFgokgJa7nq+d8hNgII
- YIZg==
-X-Gm-Message-State: AOJu0YyQ/t26ZGD65YxSyrxQtQf9kGFI6Bf0l/KMXy5rX8Y/YJYxnAKD
- DAf0WwkG4DNKP0fozrWycCsl3/yGlhz09NxT6a0BilDczxea/bH4ifom86PtoaziK033JM0Yzwz
- mTSYt+Eo9qCZ4Vgv/FXXgrgJBk7L8L9gcH5rZY7hRxw==
-X-Gm-Gg: Acq92OHqFr6DQaXrZB5wMTXF+z54REUyDUzeeQ8Rr5TwEPdPuvXOhkM3Mi7quEwi9bC
- MebnVCJHuBZsJhMGvTzdyhgsUbqVEkoBkFMHmsqq6lKtc8X89D6lXgqaK0s5R4YFAPT8PaFAvRv
- Hc4LM9WVRUS3AdolgFaY6/ncq4WrTXCBHccYkLsjz2/0rwRKs6N+8qpsvB06Kr//XnUpW9/9sqT
- gCkH3+w3YSYKeJE4Bnqpbec/UJ1w10+wFg6tKzy3FyISbIMznT1y+58Y7TQbZa8LpoEZhEDOVuB
- O3hD1yC9IdrLOSk4K/douEySaAmS/8esNzWyQlDA6+gzzKXSlu8wnjyv+mkW25Mo+lA=
-X-Received: by 2002:a53:d008:0:b0:65c:5329:788e with SMTP id
- 956f58d0204a3-65e227bacc0mr2480805d50.32.1778832248002; Fri, 15 May 2026
- 01:04:08 -0700 (PDT)
+ bh=HnYsEQVL9dMO2N/s53m3HWDVMwKyMQo5sK+LOR840cE=;
+ b=RR7c18vpnbDzgcYW5w/e9L92GPDRNrzrRYpbFhZhaI2wHLY6S6Ru1ZQPWht7qTFlr2
+ qOOwKQe6ixzmwea5T8vPmawYZtDmhR0/FCvMq+RdwguwMtgaGYGpGdJ23pPPQEZNehz6
+ kw/B9fe74wETFNIG4qmdMKSYrFQpXfqsiSOk2hTnvPHqEK1/dCytY1g49/Z19ae587sa
+ VzUdEv+tGBFv0/tB7aVe6q+5HdyFF3uHEYrJCwg+Lau0afQhc8OdjnUYoFyWsiMKPEJf
+ VLY9MDxQHqGziqcwbEHHvYPt7HFKlfVofU3ZyUcYoSd7xnpRBB68opktTFA9yugazqPC
+ 4SHg==
+X-Gm-Message-State: AOJu0YxLj+zhNJ/13e/JtieiSf1ikVby9ry9f39SKC+rcygM4xpmJMDa
+ q9mY2aMmmCUp68vXzjgkGM+ImtkqNl+dFTBVg0zP5cuCjez2ukqXSNEyR3f8JxMHSGDyPQ8aN0V
+ 9nPzOyuBzUK7ifMhTl3a4huUD58QIjU52Y14sGeyIrQ==
+X-Gm-Gg: Acq92OEUmdkl6Zuc1XeK4HPo9ELMCs5IWfo6CJ1bMwmyWCrTfGDa86wzp7Sdv/A/OT7
+ /OhBN5YI4606p0JVSRdQun7DNHjgrMh9nyAEvSwtFHek62mLIe61xyVn9ElES2hCGAUu1pzK2WR
+ sl7/OXheiCR30Llq2kXSbQw6ORlp9IUJkcTqrxmbMm+6kEr/hm1EWTkEANfdr0JzmmbOLn6GHpL
+ IHJ0/287Q5uAx/GZ1KLHKcyNi/7U3egjd+RDOP9XDexl4Vg0K87hAisUhnQ0B14WprROmuuyaUe
+ NcJ+2HoHaUftShSk8z/8XnrAlD/RtUbM0XfiTLlQRt9k3PGgLyfSSML1PCpvbf2NX/0=
+X-Received: by 2002:a05:690e:2501:10b0:654:28b9:e50 with SMTP id
+ 956f58d0204a3-65e227f64f0mr2343975d50.40.1778832311545; Fri, 15 May 2026
+ 01:05:11 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260513105517.146706-1-corvin.koehne@gmail.com>
- <20260513105517.146706-2-corvin.koehne@gmail.com>
-In-Reply-To: <20260513105517.146706-2-corvin.koehne@gmail.com>
+ <20260513105517.146706-12-corvin.koehne@gmail.com>
+In-Reply-To: <20260513105517.146706-12-corvin.koehne@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 15 May 2026 09:03:55 +0100
-X-Gm-Features: AVHnY4Ke-tAGlteQHWfYiv4ZYE-rSsNmuu97DIvTD-XkmqgM9rJgTsCezHgFryo
-Message-ID: <CAFEAcA92NRy1ePw2nHuGj7B4uzBOzGiPeMsAGjsF6viX+wQxnA@mail.gmail.com>
-Subject: Re: [PATCH v6 01/15] hw/timer: Make frequency configurable
+Date: Fri, 15 May 2026 09:04:59 +0100
+X-Gm-Features: AVHnY4LzgOjijIKoT1x5ObKE2BRtNh7QeM7Q1sXVSLElYpvF_8q4hMwxr_Jcw90
+Message-ID: <CAFEAcA_QMfn6OvjuxfG0m90ZP54KpvkpnCjuVUakiCs5KEjUMw@mail.gmail.com>
+Subject: Re: [PATCH v6 11/15] hw/block/m25p80: Add HAS_SR_TB flag for
+ is25lp016d
 To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
  Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
@@ -100,8 +101,8 @@ Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -129,20 +130,9 @@ rote:
 >
 > From: YannickV <Y.Vossen@beckhoff.com>
 >
-> The a9 global timer and arm mp timers rely on the PERIPHCLK as
-> their clock source. The current implementation does not take
-> that into account. That causes problems for applications assuming
-> other frequencies than 1 GHz.
->
-> We can now configure frequencies for the a9 global timer and
-> arm mp timer. By allowing these values to be set according to
-> the application's needs, we ensure that the timers behave
-> consistently with the expected system configuration. The SoC
-> configures the device correctly.
->
-> Information can be found in the Zynq 7000 SoC Technical
-> Reference Manual under Timers.
-> https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM
+> The is25lp016d has 4 Block Write Protect Bits. BP3 specifies
+> whether the upper or lower range should be protected. Therefore,
+> we add the HAS_SR_TB flag to the is25lp016d flags.
 >
 > Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
 
