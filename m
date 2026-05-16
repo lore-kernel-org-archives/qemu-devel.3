@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51363CD4F21
-	for <qemu-devel@archiver.kernel.org>; Sat, 16 May 2026 08:01:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C08E8CD4F21
+	for <qemu-devel@archiver.kernel.org>; Sat, 16 May 2026 08:02:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wO9xn-0001y4-Co; Sat, 16 May 2026 04:01:35 -0400
+	id 1wO9xH-00087B-Go; Sat, 16 May 2026 04:01:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wO9xh-0001sC-12
- for qemu-devel@nongnu.org; Sat, 16 May 2026 04:01:29 -0400
+ id 1wO9xF-0007uE-C0
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 04:01:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wO9xf-0007xM-5c
- for qemu-devel@nongnu.org; Sat, 16 May 2026 04:01:28 -0400
+ id 1wO9xD-0007lY-OY
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 04:01:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778918486;
+ s=mimecast20190719; t=1778918459;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=n4m7pmp7qnl/dyUVLbYMaT8ZipvvTkt7+0WBm0mtE5E=;
- b=EFYU8+LT8bX0JHsUMEbQr0tC3D2o4DQS1c9jm6zPY4gCi1MZvQ840MS9fO97/N8btBZr2v
- fFz+X2/mddzNU2jbAs8LDgIzgpJLgDCK04ERwnQdLObJ0rXcIR9hzVLvZI9RAGu+OWxFVx
- S7C6c1l6W97n9ySHrgl+rbJmQ6yLRJg=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=u94aymaMQos4Ok1FqE43DnNiM5L1ZW3yqR+cto55E4c=;
+ b=V8c7buO6Y6JElkRMf6fwSt6XuSXwO2Qg24F6evk2T8n1st+Aez3gHJvTPXQ7XbkYHMxLXt
+ a79zCBH7r/nHz0vFro7NmbbNLkUxNSTges2vcPYg0xz12DVSbUCtINLQK0czm+xpnoLuQ5
+ jnFouIPOFG34HoY48F0fUactXBWM5S8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-363-boY4hZj2P1ebmvQ1A3Ffnw-1; Sat,
- 16 May 2026 04:01:24 -0400
-X-MC-Unique: boY4hZj2P1ebmvQ1A3Ffnw-1
-X-Mimecast-MFC-AGG-ID: boY4hZj2P1ebmvQ1A3Ffnw_1778918483
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-447-XvjIIlTVMA6nxBI9R1sBCw-1; Sat,
+ 16 May 2026 04:00:56 -0400
+X-MC-Unique: XvjIIlTVMA6nxBI9R1sBCw-1
+X-Mimecast-MFC-AGG-ID: XvjIIlTVMA6nxBI9R1sBCw_1778918456
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D216919560AE
- for <qemu-devel@nongnu.org>; Sat, 16 May 2026 08:01:23 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 032FE195606C
+ for <qemu-devel@nongnu.org>; Sat, 16 May 2026 08:00:56 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D3C4218001E8; Sat, 16 May 2026 08:01:22 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id CD54530001A2; Sat, 16 May 2026 08:00:54 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sat, 16 May 2026 11:59:21 +0400
-Subject: [PATCH v3 22/24] target/riscv: use hash table as set for user_options
+Date: Sat, 16 May 2026 11:59:16 +0400
+Subject: [PATCH v3 17/24] hw/i386/pc: free pcspk on finalization
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260516-qom-tests-v3-22-3f20c3a029a7@redhat.com>
+Message-Id: <20260516-qom-tests-v3-17-3f20c3a029a7@redhat.com>
 References: <20260516-qom-tests-v3-0-3f20c3a029a7@redhat.com>
 In-Reply-To: <20260516-qom-tests-v3-0-3f20c3a029a7@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4750;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1234;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=rzQyp5DQ5nvhaO0TBZoOhaU+VtZA1JAU78E8mJirGw4=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqCCPQN4u0LHMf1Wf/VLxNx6N+CMJUkPRbupF8h
- SdoiwoFWbqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaggj0AAKCRDa6OEJdZac
- 5b4rEACnA0l3Gh37hZD5yXoK1+ey7KUCJal5DFpC1nVWjI2OY23VaydfCZb2by0SVpGMkflh8QX
- IZqYoFOMVWScxZhdt5Z4bXsFdxqd4jj2ViBZBFxBT0opgGGGSG7t4WBYD3R9fkS1YfnuI5re3gY
- 8zVGEtu1ABL65bepBmckyxBgjdTIzgHO7caTf2A91wpai+WVUldj9iW4GHwWdlZaTjryb52Yb1u
- EVq3pg3cehKU5lG4Y+uqzbMssW1oYNCe5pTH8oOEfDY0WUeYo/jAVEwfd5TAM0vahHzTmKD/gdz
- rqFF2rGnUhdm3XV2JnKpf7xRMo9Y65DcTX5d0jOmaZSxC3UtVgCz5UPTHXwsrSBdN5CyZrRKLBu
- fDYXXGgMO6rgUr+IbAsBVU04VK1d9xADpknXcjgIkqHeFJdI7BupOjMSXj0y0hHDMXKvWJ2lMzT
- W64wZR4Uhtmil+cOow5SHpbG16CRURck3uJs26QDxPLzgtLvCYyWdsnjLxzq6GUGU2KJXU3E/zh
- hQ+AOGJMt8tfOdnl1c9ADRNL0b673O8UG73vmkvXmB0VVaol/nqcG92CLtsLKMwwNjEr7eLpJTG
- 5snDH+0H3U8br9FfJAUQVS3TDngLFKvJMRmOeNGKOgH3QODM/QW3rD/Xv6aXsi7ByCsXmMh/Puo
- 2kpXlYEpDdTtTxA==
+ bh=nx/Hm05PL6UbVe3ziRxkh2R3TZg6+6BhzI4zbHucfHg=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqCCPPy8Px4iYVo3xLAAr6D3bC8A6YjjA1DEUfr
+ YuaD1Y7GhGJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaggjzwAKCRDa6OEJdZac
+ 5XUnD/wKHo3AlwLZxfxRM0cCAZB33bckddJtizWd3Ieo9vLZh9SsHE+xLxhI1XnPJDAuS4f4yIo
+ iLEKq7sFeo3jk8aAQAF6JdGWkpBNLe/Wl4KygPQw86RYAyUpIqIwnfAycpEVpf7pjSBcvnVFMlC
+ 5jTdRP1j+DlC97opRglpIfwP3vvYUdi+Obm2SU74M605jG+J/pa8PNycCgPBeeCAKM/4nOS9XM9
+ 3HJor5p4KpXIQM/Se0C3Na3Dj1NemUX8OhF1Ydq4xHyQCMjQLzgdfhFVKpQGUU0DN5rX/AHb2MH
+ lVu1HkTZFfAEK5k5E6vzg6k4+Us5+xAwW+waOkKyJbsOGLRCGL8W3Y9NVCZAN7OrhdBxgtRq7xr
+ jGFVMQxcJNp68lXzW+y4oa2to9yecGoy7irfk2SNwrzM+rBzB0/OqSV84DaKBA/vUNgs+qdF9DF
+ EQvG7Bq8EwfhpEx5PsERzxnBSlhbWDg7qIWFTsyW3WyWpFnqR3uzoUzllhkCNg+d3r5CLl7gGSj
+ dndrAR42UeSWK4VPVTydS8SauE3dKl65lbIotsGIVRAQaRm0LQooWP83fOxRgcbch9jVNVIMmcL
+ I1YrfKNrA9jQ1t9w76pvHMO5CkBPZTSofkfKZI52ueAFPLXXf7fRWWQZmt8O8xLM3k424zbSTET
+ HLdN6cwd0bbYqMw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -103,150 +103,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The values stored in user_options are never retrieved, only key
-presence is checked. Use g_hash_table_add() instead of
-g_hash_table_insert() and drop the unused value parameter.
+Add pc_machine_finalize() to unref the pcspk device when it was never
+realized. Once realized, the bus owns it and no action is needed.
 
+Fixes: 6b8d1416482f ("audio: create pcspk device early")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- target/riscv/cpu.c | 32 +++++++++++++++-----------------
- 1 file changed, 15 insertions(+), 17 deletions(-)
+ hw/i386/pc.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index bbdc9d8f5de..6adba597969 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -60,11 +60,9 @@ bool riscv_cpu_is_32bit(RISCVCPU *cpu)
-     return riscv_cpu_mxl(&cpu->env) == MXL_RV32;
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 2ecad3c503f..7b6ad97e5a9 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -1610,6 +1610,15 @@ static void pc_machine_initfn(Object *obj)
+     }
  }
  
--static void cpu_option_add_user_setting(RISCVCPU *cpu, const char *optname,
--                                        uint32_t value)
-+static void cpu_option_add_user_setting(RISCVCPU *cpu, const char *optname)
++static void pc_machine_finalize(Object *obj)
++{
++    PCMachineState *pcms = PC_MACHINE(obj);
++
++    if (pcms->pcspk && !qdev_is_realized(DEVICE(pcms->pcspk))) {
++        object_unref(OBJECT(pcms->pcspk));
++    }
++}
++
+ static void pc_machine_reset(MachineState *machine, ResetType type)
  {
--    g_hash_table_insert(cpu->user_options, (gpointer)optname,
--                        GUINT_TO_POINTER(value));
-+    g_hash_table_add(cpu->user_options, (gpointer)optname);
- }
- 
- bool riscv_cpu_option_set(RISCVCPU *cpu, const char *optname)
-@@ -1452,7 +1450,7 @@ static void prop_pmu_num_set(Object *obj, Visitor *v, const char *name,
- 
-     warn_report("\"pmu-num\" property is deprecated; use \"pmu-mask\"");
-     cpu->cfg.pmu_mask = pmu_mask;
--    cpu_option_add_user_setting(cpu, "pmu-mask", pmu_mask);
-+    cpu_option_add_user_setting(cpu, "pmu-mask");
- }
- 
- static void prop_pmu_num_get(Object *obj, Visitor *v, const char *name,
-@@ -1494,7 +1492,7 @@ static void prop_pmu_mask_set(Object *obj, Visitor *v, const char *name,
-         return;
-     }
- 
--    cpu_option_add_user_setting(cpu, name, value);
-+    cpu_option_add_user_setting(cpu, name);
-     cpu->cfg.pmu_mask = value;
- }
- 
-@@ -1526,7 +1524,7 @@ static void prop_mmu_set(Object *obj, Visitor *v, const char *name,
-         return;
-     }
- 
--    cpu_option_add_user_setting(cpu, name, value);
-+    cpu_option_add_user_setting(cpu, name);
-     cpu->cfg.mmu = value;
- }
- 
-@@ -1558,7 +1556,7 @@ static void prop_pmp_set(Object *obj, Visitor *v, const char *name,
-         return;
-     }
- 
--    cpu_option_add_user_setting(cpu, name, value);
-+    cpu_option_add_user_setting(cpu, name);
-     cpu->cfg.pmp = value;
- }
- 
-@@ -1598,7 +1596,7 @@ static void prop_num_pmp_regions_set(Object *obj, Visitor *v, const char *name,
-         return;
-     }
- 
--    cpu_option_add_user_setting(cpu, name, value);
-+    cpu_option_add_user_setting(cpu, name);
-     cpu->cfg.pmp_regions = value;
- }
- 
-@@ -1636,7 +1634,7 @@ static void prop_pmp_granularity_set(Object *obj, Visitor *v, const char *name,
-         return;
-     }
- 
--    cpu_option_add_user_setting(cpu, name, value);
-+    cpu_option_add_user_setting(cpu, name);
-     cpu->cfg.pmp_granularity = value;
- }
- 
-@@ -1709,7 +1707,7 @@ static void prop_priv_spec_set(Object *obj, Visitor *v, const char *name,
-         return;
-     }
- 
--    cpu_option_add_user_setting(cpu, name, priv_version);
-+    cpu_option_add_user_setting(cpu, name);
-     cpu->env.priv_ver = priv_version;
- }
- 
-@@ -1743,7 +1741,7 @@ static void prop_vext_spec_set(Object *obj, Visitor *v, const char *name,
-         return;
-     }
- 
--    cpu_option_add_user_setting(cpu, name, VEXT_VERSION_1_00_0);
-+    cpu_option_add_user_setting(cpu, name);
-     cpu->env.vext_ver = VEXT_VERSION_1_00_0;
- }
- 
-@@ -1786,7 +1784,7 @@ static void prop_vlen_set(Object *obj, Visitor *v, const char *name,
-         return;
-     }
- 
--    cpu_option_add_user_setting(cpu, name, value);
-+    cpu_option_add_user_setting(cpu, name);
-     cpu->cfg.vlenb = value >> 3;
- }
- 
-@@ -1827,7 +1825,7 @@ static void prop_elen_set(Object *obj, Visitor *v, const char *name,
-         return;
-     }
- 
--    cpu_option_add_user_setting(cpu, name, value);
-+    cpu_option_add_user_setting(cpu, name);
-     cpu->cfg.elen = value;
- }
- 
-@@ -1863,7 +1861,7 @@ static void prop_cbom_blksize_set(Object *obj, Visitor *v, const char *name,
-         return;
-     }
- 
--    cpu_option_add_user_setting(cpu, name, value);
-+    cpu_option_add_user_setting(cpu, name);
-     cpu->cfg.cbom_blocksize = value;
- }
- 
-@@ -1899,7 +1897,7 @@ static void prop_cbop_blksize_set(Object *obj, Visitor *v, const char *name,
-         return;
-     }
- 
--    cpu_option_add_user_setting(cpu, name, value);
-+    cpu_option_add_user_setting(cpu, name);
-     cpu->cfg.cbop_blocksize = value;
- }
- 
-@@ -1935,7 +1933,7 @@ static void prop_cboz_blksize_set(Object *obj, Visitor *v, const char *name,
-         return;
-     }
- 
--    cpu_option_add_user_setting(cpu, name, value);
-+    cpu_option_add_user_setting(cpu, name);
-     cpu->cfg.cboz_blocksize = value;
- }
- 
+     CPUState *cs;
+@@ -1748,6 +1757,7 @@ static const TypeInfo pc_machine_info = {
+     .abstract = true,
+     .instance_size = sizeof(PCMachineState),
+     .instance_init = pc_machine_initfn,
++    .instance_finalize = pc_machine_finalize,
+     .class_size = sizeof(PCMachineClass),
+     .class_init = pc_machine_class_init,
+     .interfaces = (const InterfaceInfo[]) {
 
 -- 
 2.54.0
