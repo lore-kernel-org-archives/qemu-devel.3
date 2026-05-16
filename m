@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBA37CD4F21
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 050A2CD4F46
 	for <qemu-devel@archiver.kernel.org>; Sat, 16 May 2026 17:16:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOIcC-0002Kc-0Y; Sat, 16 May 2026 13:15:52 -0400
+	id 1wOIcF-0002LG-6c; Sat, 16 May 2026 13:15:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOIbz-0002Ib-1l
- for qemu-devel@nongnu.org; Sat, 16 May 2026 13:15:40 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOIc6-0002Jv-C0
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 13:15:48 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOIbw-0007wk-Tr
- for qemu-devel@nongnu.org; Sat, 16 May 2026 13:15:38 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-48984d29fe3so9267735e9.0
- for <qemu-devel@nongnu.org>; Sat, 16 May 2026 10:15:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOIc4-00080E-JI
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 13:15:46 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-44ce78ab5feso700771f8f.0
+ for <qemu-devel@nongnu.org>; Sat, 16 May 2026 10:15:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778951734; x=1779556534; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778951742; x=1779556542; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=K1V+GWtucxSZl1YZ8nu1MtklisKojriGnpVCnzAvOg4=;
- b=ol34DBFuewsCoFEFKHoTuleOmV4Xf2WKIQ7SH83VGFW1BtwfdPRHz4CDMGMq0ot3XK
- 2eNQn4giSLbkUw0dMOYixjX1p/VbGGHGC60Aq4PrnhlOG1k7U9yHplq8DENBc3C0RNrO
- foDKjp2v0wiPWoMLz6+LS4HPfErh0PesdZweFqMlej9FeH/dZ++PBTuYWJkJwuhVEBiZ
- XsFDv8+TNPhXku9xVWv+O/IvhaLwXwRNv/2GGHGNTpfnbckI6pq1ZgQIYnzMlQTEhtya
- 9tzFOi4gbETOZtun1jSSnObnaFYqr1/raKwiVyZDjRBcQvRmCUWIjy0+GYLjHRk1j1j4
- ZN2w==
+ bh=2gO7kH8C8rZvwRXohHJ8ISNs5J2Ughnu3Zfsenumg60=;
+ b=zbt88k100yiCnI+NzJUC/mI6p4yOUFYRLtWktiTIj0yAzf1Uiv5t3ushIt4zU+t4gZ
+ Rer9xU7aLPm9V46QYEaBIquceiiFoJ6pPCD3ihUwWquUwh8eUD7GQronObpt/fMjaVXk
+ x396XkFnkrR/NlLiD37J+iL9bSqTOkRDWOYwrF0jJUuLyBfWVwyKFCHAgeMJEap/69j3
+ sTns6ExaL8flu57w9XHVzhnD2m2xhgYhCnviZx45oG44SwfmSc6Yy1/F9kPRKFF+hgJE
+ dH/xOwWy/5Pq0jvXXt0ICIUewjAWoghflkm/LZ5Iks2kg201Do6/2ZYYlZCBAtxGvR43
+ b/vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778951734; x=1779556534;
+ d=1e100.net; s=20251104; t=1778951742; x=1779556542;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=K1V+GWtucxSZl1YZ8nu1MtklisKojriGnpVCnzAvOg4=;
- b=s6LNJez7HvEREDt/OPkZH29h4EcTCqvbOjrjGWhNQIuS3n1E1QZLhmg97t/PMHfhne
- Q4TEv2oihpJp2EUlTpmwhPBuLIhgVO/3Y0RGev3sLxsl+aq/t2zlfNDx+slb3hcpZWhb
- hMEj6ASNDclmHZzLMdh7lH6vcFgVN/bMrFmQ0yZYO/zzQSDqnLeVMNFRhWLJfO6wRJUV
- JlT/pHdiYrYdlpTWjGFDGhqw0slu/ISYKfokYvJbkB0L4/cesifqevYJV11MpoQT1/Ht
- 67HvRoZ8KhOvAJh0sZmjdMDmkjkdAsuYqLWUmMC0y06zwSbo1SlH2GyTBvv55GCv34HP
- nB3w==
-X-Gm-Message-State: AOJu0YyIQ0llXkoGM4wz7nE/VMFFvlBUOqEELz+vPZZKShHvmRHw+uDl
- hQFdCj9wOAHaQb4VAcDdnWpLm1o1s0bIogN3R4tlx9WqdnjVGDDdgLo7AGMyX/R7b9WT3yyALat
- XxDfi0mU=
-X-Gm-Gg: Acq92OHcBcj87Y+O0B6CGNKAUXRZ0Tu8aPrLh9o8qZM/rhOfhk3P656R93vMfyE0UjX
- +H/wUTgZiTnCiLd8s5FyeSmwtqHQ6kRfayhZCsmYhYXXeAZazMN+ygkBvLNf4lpR5Zj5zJE0BWg
- oG14F55AJ7eD1TPlW/pxavyLKGp3wggXHMaudpyPjBO+AxEJjxwE41OdIQTGF53/Mo9TfWdTdLN
- EtewQr38mljFrxlrvP47y6iikUimYm9NK8durqiWSWpL+Ioq4aKJ2MiJMjunek4a//P4LQj9ztI
- m3KJhA+aUfhacnKWhjMUN+erZL/+ZSVWxWF9qplLbhjJBbnVSY7mrH6CaajZ5M7L10hrktnyaYM
- yithrp9Ju2fXFE4iW2NSRoEfFl3SLFN2I7Ld/3tcprja/1uYOJ+Q4Ftj0XwXeZfXi6bSuK5GM/N
- E0txsrP5/57f0tzZeok4OcCYJ1v7d78eFicuuZAjjgfgm1YvkCvjNZ9t+AhzC31lzPwifvlxD/
-X-Received: by 2002:a05:600d:b:b0:48e:8741:fd42 with SMTP id
- 5b1f17b1804b1-48fe60ee64amr95588555e9.12.1778951734492; 
- Sat, 16 May 2026 10:15:34 -0700 (PDT)
+ bh=2gO7kH8C8rZvwRXohHJ8ISNs5J2Ughnu3Zfsenumg60=;
+ b=s08C9AHengbGykY6DtMcniwx7/QNVFFNctAazk7+Ma86/0vBlzKTS/ByORK3olQngR
+ HQmyETf8hywWbtdkz8VEsaAwwWc4CNudb24rXrDekt1hxQa0TfxNHg62hxwTx6mYLu81
+ 3NIr3b5amCr9I3IpnaKJkhSrHYiGwig0FIWW3ykSasTAERUJszsC52K8IQZ1Bv6gLljP
+ BB+VOyHvSomUFKYVeENq9UViRAX+vm+HET0G8vLQcftR819ShwAgrQnWJ/CSbo9Uufys
+ qCA4MywbhZgVQFQRkIUqJRU7Yr3ozNGg6KFGUd/bbrlbBz7dz7O0p+OJyme/hGD9UTUz
+ m1Ew==
+X-Gm-Message-State: AOJu0YwCsAj5lf/5pxFvnLskQogbix7VMaWU9Yb+vFc1rGl7COuaOQPA
+ DYkHsFsyQXNqERFo0Frt2whX1gkz1SHy0jVqiQWAIwAVf0Ed6Pt7aU99ZwSNRML7rVVIq7THOfb
+ iht0XM/4=
+X-Gm-Gg: Acq92OEIjhs3v5SWnAwFQLAO3f/c7p+BMIXtSku5btElt8w8chwB+AIMuM1cyiSm3MU
+ PA6XMAkOZ0GUFQ4Cm8ALvV5lybkht9v5bTWPUT/DADIt1+KnagGJQqrs2xuz5Q4daSpRxxuzVR7
+ oGNxiJemtLQmkl/j2uY8fkAHQUtfnG/aabfEf+QvjTHeqHicDERBAufEx7Xo9k2r+BHxgpK+cok
+ 1jPPGs4LXj25OOUcoK6rbKUebODj0NoBMSFWxENgOwIdPNxX4mCyU4B5FxA+nNVI6ESGIaFqEpl
+ 9rZB0HIcrHmaBSmIksPlJoMibDYsN5xoJ64WKKdK20lGiqqzwqMOl3w31HIZkg19ULK/Ts4QRNY
+ Z3kJqf21NEkd0+BhVkkR5hqlI6xpmvMd4v1rk/Ss/k2h0Qyo6mkHE9HcLHe09ArY3eErYY6Lq4K
+ YiFVgnBmO3ATy3/y1rbSad3NG7uRa9V5bp99kWsafsEOuniWXFkcYqCFZ8OCl9Dpmtq9zRTkfH
+X-Received: by 2002:a05:6000:2893:b0:452:d67:5020 with SMTP id
+ ffacd0b85a97d-45e5c362753mr11883251f8f.1.1778951741892; 
+ Sat, 16 May 2026 10:15:41 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fe53ab773sm146381125e9.3.2026.05.16.10.15.33
+ ffacd0b85a97d-45da0a178adsm24942751f8f.18.2026.05.16.10.15.40
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 16 May 2026 10:15:33 -0700 (PDT)
+ Sat, 16 May 2026 10:15:41 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Steven Lee <steven_lee@aspeedtech.com>,
@@ -77,20 +77,19 @@ Cc: Steven Lee <steven_lee@aspeedtech.com>,
  qemu-arm@nongnu.org, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Matthew Penney <matt@matthewpenney.net>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v7 01/21] tests/qtest: fix discarded const qualifier warning
-Date: Sat, 16 May 2026 19:15:03 +0200
-Message-ID: <20260516171524.19184-2-philmd@linaro.org>
+ Fabiano Rosas <farosas@suse.de>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [PATCH v7 02/21] hw/arm: Build ARM/HVF GICv3 stub once
+Date: Sat, 16 May 2026 19:15:04 +0200
+Message-ID: <20260516171524.19184-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260516171524.19184-1-philmd@linaro.org>
 References: <20260516171524.19184-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,38 +112,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matthew Penney <matt@matthewpenney.net>
+Move arm_gicv3_hvf_stub.c, introduced in commit 48396ad6ce9
+("hw/intc: arm_gicv3_hvf: save/restore Apple GIC state"), to
+the global stub_ss[] source set which holds stub files being
+built once for all binaries, instead of one time per system
+binary. This prevents symbol clash when trying to build a
+single QEMU system binary:
 
-Modern compilers warn that the result of strstr() may discard
-const qualifiers when assigned to a non-const pointer.
+  clang: error: linker command failed with exit code 1 (use -v to see invocation)
+  duplicate symbol '_vmstate_gicv3_hvf' in:
+      libqemu-aarch64-softmmu.a.p/hw_intc_arm_gicv3_hvf_stub.c.o
+      libqemu-arm-softmmu.a.p/hw_intc_arm_gicv3_hvf_stub.c.o
+  ld: 1 duplicate symbols
 
-Make 'found' a const char * to fix the warning.
-
-Signed-off-by: Matthew Penney <matt@matthewpenney.net>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260514191844.105888-1-matt@matthewpenney.net>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/qtest/libqtest.c | 2 +-
+ hw/intc/meson.build | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
-index bf9284b9a13..b1e06ea364e 100644
---- a/tests/qtest/libqtest.c
-+++ b/tests/qtest/libqtest.c
-@@ -2146,7 +2146,7 @@ bool mkimg(const char *file, const char *fmt, unsigned size_mb)
- bool qtest_verbose(const char *domain)
- {
-     const char *log = getenv("QTEST_LOG");
--    char *found;
-+    const char *found;
- 
-     assert(domain);
- 
+diff --git a/hw/intc/meson.build b/hw/intc/meson.build
+index d7db99ce354..fac2d228f9b 100644
+--- a/hw/intc/meson.build
++++ b/hw/intc/meson.build
+@@ -47,7 +47,7 @@ arm_common_ss.add(when: 'CONFIG_ARM_GICV3', if_true: files('arm_gicv3_cpuif.c'))
+ specific_ss.add(when: 'CONFIG_ARM_GIC_KVM', if_true: files('arm_gic_kvm.c'))
+ specific_ss.add(when: ['CONFIG_WHPX', 'TARGET_AARCH64'], if_true: files('arm_gicv3_whpx.c'))
+ specific_ss.add(when: ['CONFIG_HVF', 'CONFIG_ARM_GICV3'], if_true: files('arm_gicv3_hvf.c'))
+-specific_ss.add(when: ['CONFIG_HVF', 'CONFIG_ARM_GICV3'], if_false: files('arm_gicv3_hvf_stub.c'))
++stub_ss.add(files('arm_gicv3_hvf_stub.c'))
+ specific_ss.add(when: ['CONFIG_ARM_GIC_KVM', 'TARGET_AARCH64'], if_true: files('arm_gicv3_kvm.c', 'arm_gicv3_its_kvm.c'))
+ arm_common_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('armv7m_nvic.c'))
+ specific_ss.add(when: 'CONFIG_GRLIB', if_true: files('grlib_irqmp.c'))
 -- 
 2.53.0
 
