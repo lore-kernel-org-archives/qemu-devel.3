@@ -4,91 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 803B0CD4F25
-	for <qemu-devel@archiver.kernel.org>; Sat, 16 May 2026 17:20:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49D07CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Sat, 16 May 2026 18:04:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOIdT-000441-2t; Sat, 16 May 2026 13:17:11 -0400
+	id 1wOJMb-00028T-4e; Sat, 16 May 2026 14:03:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOId1-0003ZK-CL
- for qemu-devel@nongnu.org; Sat, 16 May 2026 13:16:49 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wOJMZ-00028A-Rc
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 14:03:47 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOIcz-0008Ao-RM
- for qemu-devel@nongnu.org; Sat, 16 May 2026 13:16:43 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-44a14580111so612181f8f.0
- for <qemu-devel@nongnu.org>; Sat, 16 May 2026 10:16:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wOJMY-000257-3f
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 14:03:47 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-82f8893bff3so404425b3a.2
+ for <qemu-devel@nongnu.org>; Sat, 16 May 2026 11:03:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778951800; x=1779556600; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0/8BFtttVT3g+0FRyeC1PPimTkeRBXGfBRsBUAZi9y4=;
- b=sKdXmDqyjs0tVzeHMcfqfZN2FtZomB8VKkQAmVwlKXfX/mwCZPE+5mLGYDesy0FEFN
- FsMm09b0qUnrCRjXxFqWbOxa53n/f9UHAFNEyNDi1GGLQOU1pa1O8vNFQtNExlAPM5VU
- SKpovTkTB+kjw4TyjxJ96ONbQzWAHsIFCkueGqeyILYtMted/DAUrT/3unc/BEYootFq
- j5c+NS052rRybMv6m815V7UCskr6XTElyUZXx5qfmIQHDuTB4s4YaxjR5EFlVsCiiP/V
- mVTZOq+SE9/9NQUbIIJU6TJBC48dEBkpEay2KY9My+FLOGzz34N+Xm3rnwrlbjuXzrlt
- KslQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778951800; x=1779556600;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ d=linaro.org; s=google; t=1778954624; x=1779559424; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=0/8BFtttVT3g+0FRyeC1PPimTkeRBXGfBRsBUAZi9y4=;
- b=tQPFB1IRNFXTi7sR3gXAKjYO6lJRBeHCAJRbPoyJCyPs6P05jguoTSLReRX6vg7Xh6
- KBfU4yZmi3yMIXM/OfN5O87f/Zf988Kp6vsGWkqPBuz4Jnow+sW1zrbZTTJbUeSM8AzC
- trQYBaeSCkZ4tGuYWSnI/MqpYIFsPOLRYh5yoxMM4f1+MkRyAr9iQo7KdW+CsNkROLke
- PXvJ7scj9PKvTTqjo4dzPnHjC4QiucyhsGjkZko6x7NpQLcRF/H53JhrCETBFwh41bU7
- bvCrAjekDEIMfXn4uMOnW2Uh1v/dFyZp658aK32UW5O/OHsG3H3lQej5VUdjSRBXCqub
- 3X7w==
-X-Gm-Message-State: AOJu0YyUBexKTgAjO8ROCijI8Ec7SCfO8RKUuo2aU7v0K4mI840J/8PX
- aM3lPsIml8y2+OB/7HiwnseD4ynFSvscFKagyr4s7q6Hvo4XfVCJ6RWuhzfN2+/slm7fiM2rORa
- Vcv3aRmg=
-X-Gm-Gg: Acq92OFbrojTZca2lDOkcctoO5HgB7o46+KvpMH7h5K7UaNBl4jWoV6c4O8fyKhSAY4
- lOtdm8sCHSPRI8siOr9CUy8jce+bBq+Oq8ut2brYzzKXd5D7ePbfy5gjU6vyzJjtcaXiksT05lD
- uoGB5kp+lycniEsHlHOT7/uCYykIV+/L59TyEw99nB93fz6MCBL+asfbq6npae8lvservrJJ4HS
- EnzCKXD7m9N3YG7Qa9JRD9qbB/3w28EnsqShLR6d7clnV9r9hYZFJ9yw5U+9A5yFBT0DNMEw2z0
- scjOpNd5qe9NiUx9xz9nmCpUBmp404zHHVgFsD71eelfMhIoojIM7nZ3L7Ax3Cao7NpfU+7Xnm0
- Usv1qDUor8qEv0zFsYCX7MnewtbPrSai+UPKnvrRHb6hG/TPp0y2gXVvgxRA2hIvOjEkXsvvgle
- IS8LQddtWghcWJRjtZaE2hRDCLEjmN4qnQjSNl13iy6YHO3HmaH5uGObTS5YVCndrswdTDNriK
-X-Received: by 2002:a05:6000:2c12:b0:43d:7af0:3a7c with SMTP id
- ffacd0b85a97d-45e5c608d29mr12287288f8f.29.1778951800226; 
- Sat, 16 May 2026 10:16:40 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da0a178adsm24948033f8f.18.2026.05.16.10.16.38
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 16 May 2026 10:16:39 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Steven Lee <steven_lee@aspeedtech.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Joel Stanley <joel@jms.id.au>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Laurent Vivier <lvivier@redhat.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Troy Lee <leetroy@gmail.com>,
- qemu-arm@nongnu.org, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v7 10/21] target/arm: Build cpu64.o as common object
-Date: Sat, 16 May 2026 19:15:12 +0200
-Message-ID: <20260516171524.19184-11-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260516171524.19184-1-philmd@linaro.org>
-References: <20260516171524.19184-1-philmd@linaro.org>
+ bh=YlKmFSFwZPKbHnr1+wcvQc1lFtSnECQOGaF8rh8TLhY=;
+ b=NrHAkjehronhHWUXTsNPMGTeO1dyCRpX0TNm5/mz+ox/94agil6tSqP5JwGlvNIJzP
+ L5CrvMg3DvBRfZALMaI4qLzAvCmM5Ujgn7Sl4XyOFzPMTJ+GNWELWEH6Onp4kZe/hGBf
+ MM9Smo4bJUpe0Z/JCHBm44TJp7Gk5CNxsv99reyKneaZtaPS5aaehDQE3JL/DTaqViu4
+ fIhmc/BNcRwcWSmaDcxeH0yBjb5l8hOlXhaUvDiTofYjMnnMEyd5P7jC7i439nQrWAbO
+ uoRuN/xcyTXEK2sAixoifiSXJD1w5yaknXfZerFo8PIjo40vFExsKxSaxGRpOkIFjI3e
+ DnZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778954624; x=1779559424;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=YlKmFSFwZPKbHnr1+wcvQc1lFtSnECQOGaF8rh8TLhY=;
+ b=eG+xXjWO24J6y0meiHBDUSCKE8GiqRZhfyCb6f6/J21J/hLf1vbCtWSMRkboP4t+Rx
+ VKl5/HWL15aCyeEA+7NNO1cHuKc77M41Wt4aICm9oq5NmUYu9hXP/fWnRpst4uL0l7dS
+ /+A4XQ6lqfIAJtAnvVHa6X8Dss2gj/oUHZgzTn7dgo++zNLZg2RivHHxuRkyiNhl59pv
+ 6svQ81QxDbjzpG9+gn29MnXYZDWhay4m2qBD1TNURMfcDub0VYqHpf8XnXlzoKsydP8P
+ HQEQNIeqQARs64yk/fKJAPj+eCS9XPdjcp6Ln3PlZzshxs/EEgrEHUMjEyWhphJcnWf8
+ 9aFw==
+X-Gm-Message-State: AOJu0YyUownv4q7n5JZUoHIt3JbXCA/cVz8RHtCAal7XhowS0njQHzKu
+ DWlwKPms9VTUvah5tI2qVcEUvHIZdCBD/Y0Q3XWN6x24PevF7RImd8LXQiH6hfiMZyiP2EGfNmU
+ tuNnw
+X-Gm-Gg: Acq92OGA8vvvkekm9o3lnxe5jRmxhmnos5dygl+pkCrZWvmWf9dEKdElc1YXb/7mWwD
+ 018KJc6+7+zq04qP34s812DY6RVyVSjOtUmZT4WVlNbwIO5pKejlHC4AIweLbbTv/Dj+9scphLC
+ u5Ii3ST2JERpbZsRRTNxrzIDqvRTaT3OVEBGoo6sq8lBeb6LBT8oGS7qFUCCDWiokBJgRwf3s4J
+ /EaoZM63yYpnBoIl1oIxg06fI01w+RyI4J/myeWzaaXELnXntZUdXCsafVKm5pkdivieUDvYzIo
+ abJK/Nu0wq8HlbUHyn5mpQQeCNDe8wH+eZVy3qtXBSlhOLJ8ejvcLqW7MQRIk2Lyv9YyAocUsuD
+ ORsCQwM9J+RUHCs88YG5GqYJcMfbeo5cFcEvZfbwcRrENjZP+XM3PnP3Sm7GiCEu3odnqhco9W9
+ J6zs+XWBOA3nJaSPQsbP9FajLibgjRvJFo0xsP
+X-Received: by 2002:a05:6a00:4094:b0:837:8b75:a5ac with SMTP id
+ d2e1a72fcca58-83f33d8860emr9539257b3a.34.1778954623831; 
+ Sat, 16 May 2026 11:03:43 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.142.33])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-83f196638d0sm11856627b3a.7.2026.05.16.11.03.43
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 16 May 2026 11:03:43 -0700 (PDT)
+Message-ID: <77790d9b-b710-4ebb-ba61-1b4cffe48b11@linaro.org>
+Date: Sat, 16 May 2026 11:03:41 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] target/arm: GICv5 cpuif: Fix overflow in left shift
+To: qemu-devel@nongnu.org
+References: <20260512093856.3197700-1-peter.maydell@linaro.org>
+ <20260512093856.3197700-2-peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260512093856.3197700-2-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,39 +104,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While gdbstub64.o is already built once, build it as
-common object, reducing target-specific set in arm_ss[].
+On 5/12/26 02:38, Peter Maydell wrote:
+> Coverity points out that we forgot the "ULL" suffix when shifting 1
+> right by a bitcount in various places, so for bit counts above 31 we
+> end up shifting off the end of the word.  Fix the three problems
+> Coverity noticed and one more of the same kind that it didn't.
+> 
+> CID: 1659588, 1659591, 1659559
+> Fixes: ce245ac6957 ("target/arm: GICv5 cpuif: Calculate the highest priority PPI")
+> Fixes: 3f79212abae ("target/arm: GICv5 cpuif: Implement GICR CDIA command")
+> Fixes: 49f4c98648c ("target/arm: GICv5 cpuif: Implement GIC CDDI")
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> ---
+>   target/arm/tcg/gicv5-cpuif.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
----
- target/arm/tcg/meson.build | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
-index 9eeccb2adca..97d31b7515e 100644
---- a/target/arm/tcg/meson.build
-+++ b/target/arm/tcg/meson.build
-@@ -35,7 +35,6 @@ arm_ss.add(files(
- ))
- 
- arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
--  'cpu64.c',
-   'gengvec64.c',
-   'translate-a64.c',
-   'translate-sve.c',
-@@ -79,6 +78,9 @@ arm_common_user_system_ss.add(
-   'vec_helper.c',
-   'vfp_helper.c',
- ))
-+arm_common_user_system_ss.add(when: 'TARGET_AARCH64', if_true: files(
-+  'cpu64.c',
-+))
- 
- arm_common_system_ss.add(files(
-   'cpregs-at.c',
--- 
-2.53.0
-
+r~
 
