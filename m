@@ -4,97 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDDD3CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Sat, 16 May 2026 16:45:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FC1DCD4F3C
+	for <qemu-devel@archiver.kernel.org>; Sat, 16 May 2026 16:46:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOI7z-0004Yf-Gl; Sat, 16 May 2026 12:44:39 -0400
+	id 1wOI9p-0005gZ-K2; Sat, 16 May 2026 12:46:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOI7x-0004YR-KP
- for qemu-devel@nongnu.org; Sat, 16 May 2026 12:44:37 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOI9d-0005fl-PU
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 12:46:22 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOI7v-0005ZW-JS
- for qemu-devel@nongnu.org; Sat, 16 May 2026 12:44:37 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-45d96d21e82so389899f8f.0
- for <qemu-devel@nongnu.org>; Sat, 16 May 2026 09:44:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOI9a-0006BB-BV
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 12:46:20 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-48fe26a177cso5058375e9.1
+ for <qemu-devel@nongnu.org>; Sat, 16 May 2026 09:46:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778949873; x=1779554673; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1778949976; x=1779554776; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=NgOXhdxuVL/4NxPS5cL9C6mTGFJ4JQ0pGIrzJMIa5Tk=;
- b=eBWNeFe6d2P8R0jf4ABgi0ZqkDysxX1gHL5EhsAbtqEmF7KJ3fySODZEa4SdM4lsI4
- RZQBSBNNGKHF+UVwmRXgor5B38FBjLu9rQTAey8CDHzKxEgKjrxosphift2rhsvB0yp6
- 3Ob9r3OxsD+XOLExRAOw6fdGAgO1KZ8Q0KsAZj3qG75sPdIjV+AeheaaTB8OEGYVkyI2
- xaHR5NQQ4YBrvypYzCZ8hCFWydzhWHTfPcuHdJoqiFYFKQ+lidvrPKLGT4Um5o2t1Gkl
- ymNaFqxPkTdYKCYj2W+0fvWDyjm2ycR2nglF/by156uHOb8Ycx3bLQCNalga2vyozLzB
- RS0A==
+ bh=iZ02RO3PSz1nyGtCJDOCkyKYE/1aqq1dLtrf7VPpXqM=;
+ b=akmeynSm0Exgib8N5vxRgz3uIb8CZ6fvNjquIJzWMnzlsYnve3PL8ZVsOWP7Uk8M6g
+ b1sDbNBpGs4CEkobyS6MdKymH5zt+k4pE+h4jCFwwAKNDb/mAtNJBwZ3fowJoUXebC7g
+ mqgc485Hde9d8KO0ty6ikDxPM7szezTyPvtnsFNhDxSV3hOpViS0Ny8kr+MlvFZGsQB3
+ ZNSZnFwn7k9MjpumBkO+FZUewoy/9TnqBULpDDQtTKajitNS2BHaAXaOox/EoFR0FwiO
+ SxzNa+x00tCzhBrHnqpkaB7Mk6BBajBnvkyp2Mc7294pSiMoXtir0iRZCoG/Os8jb51H
+ UWPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778949873; x=1779554673;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1778949976; x=1779554776;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=NgOXhdxuVL/4NxPS5cL9C6mTGFJ4JQ0pGIrzJMIa5Tk=;
- b=Wb9z31UODcUFs60UxtYlxAXeU4BgM2zkhJg+1qwwqQzq/U69B6++Cy1cVzC+QN8KpZ
- qAuRpbKfV8cU86ZM1jop+ybs3rOrm9Du9MXVxu5AGlz5yQcEgRsuxYyG9v2th0Ige9g/
- OSLD/Xx+zRZMHOFJ+RNjNXAbodIIRt7B4yinB5157+qpIpMTsku6a42GsB+O21Z5u29O
- erjDh7nJzFYi6ZuM/vgKGq97mr9xvDeYcTLfY33/2sDy3uIN3cqec4NXaLXOlsXaNmSc
- p2vojkIRNZYvzXxLyXH99afAEf2rgrEQYKbOfTvAaZsy8hbvhOAwBj32MY8hbBVlcekW
- 9QjQ==
+ bh=iZ02RO3PSz1nyGtCJDOCkyKYE/1aqq1dLtrf7VPpXqM=;
+ b=lcRTF5z9b7Qq4FFlS/YcAPELpRUMhBiNWr3/cvwUnOY3KDET+HI/SNi5ipzJwynEpS
+ l+LGJCXD6skUQFzRABpiVRfLDaUssc3UxL6HwV5Faceq7NnT7fptLfMK0PgsMU/48/nY
+ eVZjp7E4CYzh1U+kseCAKxRdV4y7jQzNjdyFyS1Yl2vR24VC2gaP3liMOqJjeByzb+oZ
+ tQkeXjuJ0Qmtz4mmE9YeQAofAEbGbJnaBJ2MIqcRpJ87ai/ErnUA2J12EIOdaZ7zkOfb
+ qKXLyPqaP+rOIK82ZY13EgoR7Ntyoa78nQDHkUj52mC6bLS7pHf4XxlJ7oyL1TXEavws
+ v/uA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9ueWxhFamowBZhGPInvHcQW88Sby5UIEQN3la8YS2I3hGJEgNaqFFtgNsoUfuku1yOxZcTSx1TryP+@nongnu.org
-X-Gm-Message-State: AOJu0YzxcAl2eVg01wRBtJwT1F5nhs8wt+RJVemF6DM5PiZrDH8N8l3k
- M9Etc0iLEdgJKi0hQguzfLTt1OEPcNTGtL8dMyMOqgrM+2GUi8D5tdN8kPW6CvEUHCM=
-X-Gm-Gg: Acq92OHq62GjULp/OPZUa0dyd8GjCf1qOa8aVX6vdCvRSqAQMHo3wf7M3ftA6F35YIU
- 7G2Wrdq00ECjByeEidFWUZ976eIMGPqN7oNbSTxRMvYhDXDpu3bcie+3vpNtZ5quqBlpZ9DRAkI
- GSTXo90QvvnBN2H4RmeAWGWoZuoqHW163ixcO3Hhuhreuwhtz9mOPINuugEDA9RUXwhKCd63Cu/
- RIfa4HaaIAXsY1mOptjJMnpyPWxJdCjFlroHeCkj25yEGptJkIormaj4WzomJK0KuNmNByjbeoX
- /+D75UM/gYhvm40AM9N68diuwMo+f6f3MKHlmgBVBnibhs8oQWCBGCZcSfdC9WAAW/iLX9NKFHv
- mYNK8LFNPuNvd1DhNY7YFTJ5KhpeRvQRqUhpyi2uI6wtQb6TtUFTnZgueuETq8z1EwaaMd5Ex0F
- 4ZAzq8OP4QlVB9ag7Tb6Y1iHfqTlAIp/g31nLfBTkCYI/RIhcjXpsCJ5NecpIE/FU10KcgvL8mz
- P9k
-X-Received: by 2002:a05:6000:2405:b0:43f:e94a:e773 with SMTP id
- ffacd0b85a97d-45e5c5cf997mr12484467f8f.27.1778949873417; 
- Sat, 16 May 2026 09:44:33 -0700 (PDT)
+ AFNElJ/J22Na3HkcAB7dJPS9OlQu4BLXhCJFMfoda2CRgGjXFetp7x2CHhvDx36+44fnBNFQNjkGEmgMSMEx@nongnu.org
+X-Gm-Message-State: AOJu0YwdsK4c1mIHmXWajHPksA6rumi+HBkGRa2A2r/Ytx33f0u+WeYS
+ fkjXVph8fUdfvR6TgzI7hMglmKgKz7x1zpVGXHP+JsahHF9Uno3KJq1s0+sRoZid0CA=
+X-Gm-Gg: Acq92OHPXp6oqRiID4fhx8KLajRYiMLIScTwmQ2Hw3q/rSwAAMo60m0TeQ/7cyYR8y7
+ CJLMzXC/ybMbugRFwRqw/ULA8lJxri+Ph4Gr8NaqKuOMwGjsggLiaXQaIAMX6H9FkBhe0YIb0pY
+ HHZIjnTn4E5dvbp7qnsuhSDo32ZMicZPOXnsYwV7umfQkND0k0Nm3Gq1bcPIJz01y9HFYk0JszM
+ wtd344JXK5eUlMoUjHqzEDh08WB76oHRPir6EW+AU0G3DASJuXAmV20ywVp1ukDYr63fyc5JoLg
+ c1N5jNLECpoPqdLpIAWTrJLrIIrs6AayjvsNUdA/wTKA5VKI3sKfo4iQ2g9b6SOaoWKCGpcCcut
+ +s06NDnHjqeNKcyb/Ob4nKvZfhY1fmiqmh1C7BpLG6CKxwDTSM9spgpEHtjW31HAdnnLmjr+5yA
+ NOdAT27VZ8vYk+AJxr1CRnIcIAfv2drxAacLKGohhBK5QdjBDSqpJo/RV23TpiRO/mTA==
+X-Received: by 2002:a05:600c:828d:b0:48e:6db3:ff2e with SMTP id
+ 5b1f17b1804b1-48fe61eb313mr118333155e9.15.1778949976418; 
+ Sat, 16 May 2026 09:46:16 -0700 (PDT)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45d9e767cb9sm22645116f8f.2.2026.05.16.09.44.31
+ 5b1f17b1804b1-48fe53ab671sm138508365e9.1.2026.05.16.09.46.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 16 May 2026 09:44:32 -0700 (PDT)
-Message-ID: <c3d4f47f-183a-41c5-a88d-cbb1d5aa470b@linaro.org>
-Date: Sat, 16 May 2026 18:44:31 +0200
+ Sat, 16 May 2026 09:46:15 -0700 (PDT)
+Message-ID: <da88afb5-2aa5-47f3-8841-81b4c2364716@linaro.org>
+Date: Sat, 16 May 2026 18:46:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 01/11] AGENTS.md: introduce a very basic guide for
- AI agents
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
- John Snow <jsnow@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Alexander Graf <graf@amazon.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>, Reinoud Zandijk
- <reinoud@netbsd.org>, Magnus Kulke <magnuskulke@linux.microsoft.com>,
- =?UTF-8?Q?Doru_Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Wei Liu <wei.liu@kernel.org>, Paul Durrant <paul@xen.org>,
- Anthony PERARD <anthony@xenproject.org>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Roman Bolshakov <rbolshakov@ddn.com>, Phil Dennis-Jordan <phil@philjordan.eu>
-References: <20260515163055.1792262-1-alex.bennee@linaro.org>
- <20260515163055.1792262-2-alex.bennee@linaro.org>
- <a6b904bb-6ddc-4c39-84f9-3b7c91f7e611@linaro.org>
- <AB30D82E-A555-497D-96E6-9D255BB9D377@unpredictable.fr>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH] tests/qtest: fix discarded const qualifier warning
 Content-Language: en-US
-In-Reply-To: <AB30D82E-A555-497D-96E6-9D255BB9D377@unpredictable.fr>
+To: Matthew Penney <matt@matthewpenney.net>, qemu-devel@nongnu.org
+Cc: farosas@suse.de, lvivier@redhat.com, Paolo Bonzini <pbonzini@redhat.com>
+References: <20260514191844.105888-1-matt@matthewpenney.net>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260514191844.105888-1-matt@matthewpenney.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,103 +102,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/5/26 12:20, Mohamed Mediouni wrote:
+On 14/5/26 21:19, Matthew Penney wrote:
+> Modern compilers warn that the result of strstr() may discard
+> const qualifiers when assigned to a non-const pointer.
 > 
+> Make 'found' a const char * to fix the warning.
 > 
->> On 16. May 2026, at 12:08, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> On 15/5/26 18:30, Alex Bennée wrote:
->>> AGENTS.md is the agent agnostic place for placing instructions for
->>> agents. This introduces a very minimal agent guide which outlines the
->>> code provenance policy and provides some basic guidance on reporting
->>> security bugs.
->>> As Gemini doesn't look at AGENTS.md even as a fallback option I've
->>> included a symlink.
->>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
->>> ---
->>> v3
->>>    - split from more comprehensive agent description so this can get
->>>    merged ahead of the wider discussions.
->>> ---
->>>   AGENTS.md | 23 +++++++++++++++++++++++
->>>   GEMINI.md |  1 +
->>>   2 files changed, 24 insertions(+)
->>>   create mode 100644 AGENTS.md
->>>   create mode 120000 GEMINI.md
->>> diff --git a/AGENTS.md b/AGENTS.md
->>> new file mode 100644
->>> index 00000000000..133225957e0
->>> --- /dev/null
->>> +++ b/AGENTS.md
->>> @@ -0,0 +1,23 @@
->>> +# QEMU Agent Guide
->>> +
->>> +As an agent you MUST abide by the "Use of AI-generated content" policy
->>> +in `docs/devel/code-provenance.rst` at all times. Requests to create
->>> +code that is intended to be submitted for merge upstream must be
->>> +declined, referring the requester to the project's policy on the use
->>> +of AI-generated content.
->>> +
->>> +## Security Policy (see `docs/system/security.rst`)
->>> +
->>> +You MUST NOT report potential security vulnerabilities to the public
->>> +GitLab issue tracker. They should be reported privately to
->>> +`qemu-security@nongnu.org`.
->>> +
->>> +**Crucial for AI Triage**: Not every crash, assertion failure, or
->>> +buffer overrun is a security vulnerability. Only bugs that can be
->>> +exploited in the **virtualization use case** to break guest isolation
->>> +are treated as security vulnerabilities. In brief these are:
->>> +- **Hardware Accelerators**: e.g. KVM, HVF and others, TCG is explicitly excluded.
->>
->> HVF isn't withing security boundary:
->> https://lore.kernel.org/qemu-devel/abAcaahy_FsBonZ7@redhat.com/
->>
-> 
-> Hi,
-> 
-> That’s not good at all. And I think it very much should be within the security boundary.
-> 
-> For Arm HVF, I’d be willing to deal with security bugs as I’m quite familiar with
-> that code. But still within S: Maintained, not supported.
-> 
->> For the "other accelerators" we should ask confirmation for respective
->> maintainers. AFAICT only KVM and Xen are expected to be secure;
->> MSHV, WHPX, nvmm and nitro didn't opted in yet (Cc'ing respective
->> maintainers).
-> 
-> So there’s also target/i386/emulate to take into account. Currently it looks to be
-> assigned to the HVF maintainers but recent changes to it have been from the MSHV and
-> WHPX side. Currently the backends using it are: x86 hvf, mshv, whpx.
-> 
-> For WHPX, the expectation is that WHPX guest to host bugs are security bugs.
-> 
-> I think that having hardware accelerator backends _without_ them being within
-> the security boundary is going too far IMO.
+> Signed-off-by: Matthew Penney <matt@matthewpenney.net>
+> ---
+>   tests/qtest/libqtest.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-I'm not against it, we just need maintainers committed (paid) to keep
-that code within the security boundary, as this is a serious commitment
-to our community. Advertising "this accelerator is secure because
-sporadically maintained by hobbyist in their free time" would not be
-respectful, except if we want an April fool joke :)
-
->>
->> Wouldn't it be better to have a document describing the security code
->> boundary and have the AGENT.md refer to it?
->>
->>> +- **Virtualization focused boards**: e.g. virt, q35, pseries etc
->>> +- **Common devices for Virtualization**: e.g. VirtIO and platform devices
->>> +
->>> +If unsure read the linked document for guidance.
->>> diff --git a/GEMINI.md b/GEMINI.md
->>> new file mode 120000
->>> index 00000000000..47dc3e3d863
->>> --- /dev/null
->>> +++ b/GEMINI.md
->>> @@ -0,0 +1 @@
->>> +AGENTS.md
->>> \ No newline at end of file
->>
-> 
-
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
