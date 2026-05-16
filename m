@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49D07CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Sat, 16 May 2026 18:04:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C1F6CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Sat, 16 May 2026 18:10:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOJMb-00028T-4e; Sat, 16 May 2026 14:03:49 -0400
+	id 1wOJSf-0003I6-Pn; Sat, 16 May 2026 14:10:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wOJMZ-00028A-Rc
- for qemu-devel@nongnu.org; Sat, 16 May 2026 14:03:47 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1wOJSZ-0003HJ-8M
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 14:10:01 -0400
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wOJMY-000257-3f
- for qemu-devel@nongnu.org; Sat, 16 May 2026 14:03:47 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-82f8893bff3so404425b3a.2
- for <qemu-devel@nongnu.org>; Sat, 16 May 2026 11:03:45 -0700 (PDT)
+ id 1wOJST-0003kE-Dv
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 14:09:58 -0400
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-c80170db7d6so321277a12.0
+ for <qemu-devel@nongnu.org>; Sat, 16 May 2026 11:09:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778954624; x=1779559424; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778954983; x=1779559783; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=YlKmFSFwZPKbHnr1+wcvQc1lFtSnECQOGaF8rh8TLhY=;
- b=NrHAkjehronhHWUXTsNPMGTeO1dyCRpX0TNm5/mz+ox/94agil6tSqP5JwGlvNIJzP
- L5CrvMg3DvBRfZALMaI4qLzAvCmM5Ujgn7Sl4XyOFzPMTJ+GNWELWEH6Onp4kZe/hGBf
- MM9Smo4bJUpe0Z/JCHBm44TJp7Gk5CNxsv99reyKneaZtaPS5aaehDQE3JL/DTaqViu4
- fIhmc/BNcRwcWSmaDcxeH0yBjb5l8hOlXhaUvDiTofYjMnnMEyd5P7jC7i439nQrWAbO
- uoRuN/xcyTXEK2sAixoifiSXJD1w5yaknXfZerFo8PIjo40vFExsKxSaxGRpOkIFjI3e
- DnZA==
+ bh=V8mlbprU+TGictMd0ht+tC2FriL8fiT0zKcP0VCCDj4=;
+ b=m5VkHBh8pDcSERuPJfVOj9N3EnAjbt+XtBED69Scihjp9hs21Z+FASF+KLgbFIHB93
+ tBB8uWS96BFJ7usns7Mm2KzpKjA1xBeyfrwHrAY/ZfVWEpBVlwedzpafpzK1B9IdGnEP
+ AoxyV643VpFXKmeMoVMnL5wnQrnKQIpCFT2IogDqlc8WF+wtemqMUxcwU/5bmbZuHZy+
+ rK6GI5NGIK1bEcV+vAjU59DiKIIQLZ6f0DIRX9fC2VjIcQMxlSPSyLcaQ9n6KW5LxrHK
+ ymkrSsSqLJ8uKv+qatOtWlO4UvuIlF+BomaF3Ud8YfnuGT7yJxCpKno7jUmNLHg2cynP
+ mzjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778954624; x=1779559424;
+ d=1e100.net; s=20251104; t=1778954983; x=1779559783;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=YlKmFSFwZPKbHnr1+wcvQc1lFtSnECQOGaF8rh8TLhY=;
- b=eG+xXjWO24J6y0meiHBDUSCKE8GiqRZhfyCb6f6/J21J/hLf1vbCtWSMRkboP4t+Rx
- VKl5/HWL15aCyeEA+7NNO1cHuKc77M41Wt4aICm9oq5NmUYu9hXP/fWnRpst4uL0l7dS
- /+A4XQ6lqfIAJtAnvVHa6X8Dss2gj/oUHZgzTn7dgo++zNLZg2RivHHxuRkyiNhl59pv
- 6svQ81QxDbjzpG9+gn29MnXYZDWhay4m2qBD1TNURMfcDub0VYqHpf8XnXlzoKsydP8P
- HQEQNIeqQARs64yk/fKJAPj+eCS9XPdjcp6Ln3PlZzshxs/EEgrEHUMjEyWhphJcnWf8
- 9aFw==
-X-Gm-Message-State: AOJu0YyUownv4q7n5JZUoHIt3JbXCA/cVz8RHtCAal7XhowS0njQHzKu
- DWlwKPms9VTUvah5tI2qVcEUvHIZdCBD/Y0Q3XWN6x24PevF7RImd8LXQiH6hfiMZyiP2EGfNmU
- tuNnw
-X-Gm-Gg: Acq92OGA8vvvkekm9o3lnxe5jRmxhmnos5dygl+pkCrZWvmWf9dEKdElc1YXb/7mWwD
- 018KJc6+7+zq04qP34s812DY6RVyVSjOtUmZT4WVlNbwIO5pKejlHC4AIweLbbTv/Dj+9scphLC
- u5Ii3ST2JERpbZsRRTNxrzIDqvRTaT3OVEBGoo6sq8lBeb6LBT8oGS7qFUCCDWiokBJgRwf3s4J
- /EaoZM63yYpnBoIl1oIxg06fI01w+RyI4J/myeWzaaXELnXntZUdXCsafVKm5pkdivieUDvYzIo
- abJK/Nu0wq8HlbUHyn5mpQQeCNDe8wH+eZVy3qtXBSlhOLJ8ejvcLqW7MQRIk2Lyv9YyAocUsuD
- ORsCQwM9J+RUHCs88YG5GqYJcMfbeo5cFcEvZfbwcRrENjZP+XM3PnP3Sm7GiCEu3odnqhco9W9
- J6zs+XWBOA3nJaSPQsbP9FajLibgjRvJFo0xsP
-X-Received: by 2002:a05:6a00:4094:b0:837:8b75:a5ac with SMTP id
- d2e1a72fcca58-83f33d8860emr9539257b3a.34.1778954623831; 
- Sat, 16 May 2026 11:03:43 -0700 (PDT)
+ bh=V8mlbprU+TGictMd0ht+tC2FriL8fiT0zKcP0VCCDj4=;
+ b=GSyVwVe2mOFDUlYBpIy8AaSPjEsBNW2GNXrILRLJuhIPd990Ig01EC5hYFQWfwNpul
+ EqPuC5dQzD5bQ4vRh64uDq4V51OeUyEhD2I12H8kiBXWi7s/i6DeKQuoN7uGEGS7pCIq
+ QIv7Ms2+fwDF3fBDz2mhNfz6l2AdCZzsF/uTyvEpNDHkCXit8gNZMx0WiUhSxMbWvhWc
+ bT6jX9epvwSrIMqHqmUC9qN4R4z+mcaT3hvDeZZRy4BvHruHi5Pq1GFdLx+fIZoX0l2M
+ dK7O3G3L8Sowu33SSPM+m7kUe6Db96EHNgPIIKKMgcEhRTM+I2w+1wBwqFwN5iHdduvv
+ bKcQ==
+X-Gm-Message-State: AOJu0YyXRHCFaujXH+0Ljw0U5qOAMeZrD/xa21bcjSLJO0aNhK2tLG9q
+ mTDDXSV16MhBAINmgm2Di2U3s2CeXALv/7nZrVf2gpFOeINrdtgZf+4yB+WnBw+I3iuqx0yrsbE
+ qTRaI
+X-Gm-Gg: Acq92OG/c7+HR1rUP3vqDfK3ZrqUMi+wD+F3aa1NrXEaj2ukkGhGMv5r9XfBpVpjPUU
+ PbfLzVHYEmR2mHxfICQBincCs3z/pScwC+dQRVqFqJXj7hiLYCCV4mEsV3mSUNGjQdLkd8kRgXE
+ EDbOYt0iSbK3ylI/CMob9WqjHRZ/AMao0hI5jIfRGx+4ep+mlW9xUOAvgryxPAGl9/cBm/nOFE4
+ 885BL9xUTIh+d4R81VI3GcxqL5fWKG4jiM85mQJUQXcqkOqZNY4F71MBU0XSaLBakuk1gDc3lUq
+ FbQLXqdy/Q8CLb1c301h7sTOzlZfV4HMNeSv9fbXKMV55jBnQRKZmqT0uP6kuxLPlolgANrRrcu
+ CwnX9By0CrenHfbMlhvEwCgSV85ixo6zlTf4VU1uAzUXCdW8enbsKzfb23H9zuIQ8OveOv9O1yo
+ sRR5pECKlhQIElGBDk46yTYIOqo/zPDAjl+Lq3
+X-Received: by 2002:a05:6a21:ec13:20b0:3a2:7ef4:81e1 with SMTP id
+ adf61e73a8af0-3b22ecb36f2mr7275127637.47.1778954983020; 
+ Sat, 16 May 2026 11:09:43 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.142.33])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-83f196638d0sm11856627b3a.7.2026.05.16.11.03.43
+ 41be03b00d2f7-c82da93df0dsm2518832a12.19.2026.05.16.11.09.41
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 16 May 2026 11:03:43 -0700 (PDT)
-Message-ID: <77790d9b-b710-4ebb-ba61-1b4cffe48b11@linaro.org>
-Date: Sat, 16 May 2026 11:03:41 -0700
+ Sat, 16 May 2026 11:09:42 -0700 (PDT)
+Message-ID: <a5579cf6-5c87-4429-a44d-70f8dbc9786f@linaro.org>
+Date: Sat, 16 May 2026 11:09:40 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] target/arm: GICv5 cpuif: Fix overflow in left shift
+Subject: Re: [PATCH 3/4] hw/intc/arm_gicv5: Avoid NULL dereference in trace
+ line
 To: qemu-devel@nongnu.org
 References: <20260512093856.3197700-1-peter.maydell@linaro.org>
- <20260512093856.3197700-2-peter.maydell@linaro.org>
+ <20260512093856.3197700-4-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260512093856.3197700-2-peter.maydell@linaro.org>
+In-Reply-To: <20260512093856.3197700-4-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,19 +106,20 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/12/26 02:38, Peter Maydell wrote:
-> Coverity points out that we forgot the "ULL" suffix when shifting 1
-> right by a bitcount in various places, so for bit counts above 31 we
-> end up shifting off the end of the word.  Fix the three problems
-> Coverity noticed and one more of the same kind that it didn't.
+> In the handling of writes to the IRS_SPI_RESAMPLER register,
+> we call a trace function, passing it information about the SPI
+> being resampled. However, spi could be NULL if the guest tried
+> to resample a nonexistent SPI or one configured for a different
+> domain. Move the trace statement inside the "if (spi)" block,
+> as it's only interesting trace if we actually did a resample
+> and potentially changed the state of the SPI.
 > 
-> CID: 1659588, 1659591, 1659559
-> Fixes: ce245ac6957 ("target/arm: GICv5 cpuif: Calculate the highest priority PPI")
-> Fixes: 3f79212abae ("target/arm: GICv5 cpuif: Implement GICR CDIA command")
-> Fixes: 49f4c98648c ("target/arm: GICv5 cpuif: Implement GIC CDDI")
+> CID: 1959593
+> Fixes: 33185e1d64e ("hw/intc/arm_gicv5: Update SPI state for CLEAR/SET events")
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   target/arm/tcg/gicv5-cpuif.c | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+>   hw/intc/arm_gicv5.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
