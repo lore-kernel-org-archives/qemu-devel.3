@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92207CD343F
-	for <qemu-devel@archiver.kernel.org>; Sat, 16 May 2026 00:44:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E9DBCD4F46
+	for <qemu-devel@archiver.kernel.org>; Sat, 16 May 2026 00:44:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wO36x-0000Cl-Nr; Fri, 15 May 2026 20:42:35 -0400
+	id 1wO374-0000IM-QU; Fri, 15 May 2026 20:42:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wO36w-0000CW-Ut
- for qemu-devel@nongnu.org; Fri, 15 May 2026 20:42:34 -0400
-Received: from mail-dl1-x1231.google.com ([2607:f8b0:4864:20::1231])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wO373-0000Gw-4X
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 20:42:41 -0400
+Received: from mail-dl1-x1234.google.com ([2607:f8b0:4864:20::1234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wO36t-0001lH-Po
- for qemu-devel@nongnu.org; Fri, 15 May 2026 20:42:34 -0400
-Received: by mail-dl1-x1231.google.com with SMTP id
- a92af1059eb24-1309f4ee97fso393020c88.1
- for <qemu-devel@nongnu.org>; Fri, 15 May 2026 17:42:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wO370-0001v7-W7
+ for qemu-devel@nongnu.org; Fri, 15 May 2026 20:42:40 -0400
+Received: by mail-dl1-x1234.google.com with SMTP id
+ a92af1059eb24-130c9dcbd25so1046829c88.1
+ for <qemu-devel@nongnu.org>; Fri, 15 May 2026 17:42:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778892150; x=1779496950; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778892157; x=1779496957; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UDoNhf6KynPL4YFKLBUj+5auhyRSEdnU3zK6Mig90ZY=;
- b=J4QEIp8cfWpacxgYJ/gr2+7msWv8Lz7/4MGiCT3l99QR9B8zLX8zXcKlSum7cDYHsr
- 2QeVnBv69X0EH8xE1DN/p5LUlDS87WM5pW7gXIcRuHB3PoWx2BVPOkPPeWgKyQLfAIA3
- 6q+qMXx61YG65FfHBp4vJpQMru+zWy3UdFkTQ/PQRunUWU91nZYXUpzn4+ZAFsZ+cbaD
- ky8Eooh0RmiEe6ehMG+BEIojD/lxsC4wcOpC4+ka6CbkgwscpIs96C2KYhdIih/PXq6Q
- 6bNgzKPGo7xO81q5MYpdQUVXBF8YaNeidSDH6mXRkMsKOu3QbveU89dACzfLKMhDx8WN
- ZIkw==
+ bh=Yls46R/LgoP+X+gXXLEasNr3guubwxoCbJukRxMefmo=;
+ b=Deh2yIbQZT0+mMK1541UY12AaZ4cwAGIOD8Ux8X54iQADvtn2OiqAArRqL28FTsHsM
+ ImwlAELJO+CzgMqs5z9nws6pLj+pdt8lCptixA/VZbtHRWvCbdm3XRvaBFaRvxnqbAJ4
+ 65bRARLMQNg81xDKrtTCZxvYY9Pw1WD98R4+IVINYRjaHzc6ucDahz55q4jABRYS8dpF
+ QnZ+iKVqDD6ZeML333Aq98qoBrU4ZItrkse6iy8JNIrOFL52BijVNJbAOFI+prXYycho
+ ft5ifgI8IEmPvRpq4rOyEK6kNFlPseUFpqDgqwkazVi9p7xE1NQAd8V2sgk7DIRh2/AU
+ kHAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778892150; x=1779496950;
+ d=1e100.net; s=20251104; t=1778892157; x=1779496957;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=UDoNhf6KynPL4YFKLBUj+5auhyRSEdnU3zK6Mig90ZY=;
- b=jPwOYT5Dx3URyDHqQB+CpVMD7RHpR/6D7ZnG5SLdIKAzMomn4+cr+Mm06KO15y6IZ5
- Y9L8oAfC4K/Yf5SZTaAy41MMG+R0NeapY3/e+anxkrIJovpTSGkyZ6mtntaY3Ngf6UKz
- WWOwdNHNVYmU3TDnA3p4RzhJUVK+xOLDPw6tSDa8kplo3df5M5RPSLtoLgVFgRidsErm
- bIP9vcohqwl1JaKVQscJWNCRgXCk2Ov06+Lgo+oKbL9Wvp2OxgHG5c1CdV1iaby4vkHa
- CatOHo93vkc0+jBgoA8Ijy7PCtmU3C0dq3t90v7DFoz7PBEI0tKOH6dTKnTGVi9WAbe7
- zW3w==
+ bh=Yls46R/LgoP+X+gXXLEasNr3guubwxoCbJukRxMefmo=;
+ b=HVbPOUeIk4sDst7lJi/ZShRfBk9uIinyylwzKHeyf/G7b+wOyI4Gmf6x753VjPE6Xd
+ CadqJDVUr4wRsBt9Z1vi1Nf1PqoQlO03NTxYZB7ex3IfmRJ4hnalv2yWwrEDMl+rPLcB
+ 4g94Zn7f8TYEcdJb5YsGi9+jRE1VUMV2w3HS50NOssSxiHxHcqbd6LWLViKcOWB/KbXu
+ FXoNrCl1N09Vsof5K7S6Zwof+/JVNDEO6OPnSb0w0lowYxmQsO56fAc1N/srXCp8TTfC
+ ZT1lR0wNNhCKv3tzZxKWyUlqlkQCroi6IKBz0B6oKrAh1uUyPdgX33zQN3BeporTRAG0
+ bwQg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/8GQB2n4LH1bRBrbclC/4ogXrSEWvXDlVXpOIukWHAyrmnJADMomZRNJqG73mvz3ieULRAv5uRoNwk@nongnu.org
-X-Gm-Message-State: AOJu0Yyp5ZcxgFA72WSprT+w6bRBcbcjeKi2u4cVqjn+J9O/xLuqFaYd
- 46ylgoizimCSDsv7jg8q5x/c0Q0o/GZCpgL7ZOdbaofoeuM1X7nNb9hJ
-X-Gm-Gg: Acq92OEhTdHISwREr+kMNF/RevGT/xxdO+GnfRet49GZh7eu6uqBOiarJ00Wdc9Uav/
- ZvKYYDTDM/yGsfdL+k80jeK4MtfunHXSSSWBH4GWLW3MXKEAdpyEZ7nDqoIHh6NQ8QogwjtneqP
- i/HAcLWjCxFJ2FIHyNlWARm5in9NIwGKZandZIopbOIYjTY9LMzHJnFC0Fr6PUWdK/Yp3m59OSj
- i/JLvk2gU+MYHW2E57XcELwvhCJ6JkswRNtgJ3zfo5IZTX4oUe8cCSeDDykWqRphwLv5zZG2lcc
- FOVm0Rx+DUfsWZBCwEkulscfG2Gko4X1Lg/cq3r0h/fYpI45OJ3F4/4RfuuMD/A5VVUyK/w1HXf
- itrAqDlrmV6bJv4f9fTAKAU8Px56Fh6hdiy8RE4DSUE1SZLFzcFc7P+rblDM5MZvvRJF4iujkIJ
- WspBoDlJYmmB3czhEw47kV4KVOeQ2h2bg=
-X-Received: by 2002:a05:7022:128c:b0:128:ca83:5aa3 with SMTP id
- a92af1059eb24-1350440d257mr2587224c88.1.1778892150297; 
- Fri, 15 May 2026 17:42:30 -0700 (PDT)
+ AFNElJ81gjcfuhKphu9xIxQaLhxtp2og8pQI4a2HpA8CQei8rWCmFdm402p/jZEysZ8XK4cgw5VwIYGgkpTo@nongnu.org
+X-Gm-Message-State: AOJu0YzNokTYk/yzw7zcIYKBaiMp1rbVm7gz2hzCS93/nDqTRkZCfHxx
+ ztGjzmsO+bO4WS9S0/xG3ymeoOrGUC1N+qSP7pFhwL5EtLHmHoxNnqd9
+X-Gm-Gg: Acq92OFXG7L3xxc2jHQFUAUBknxwQPne/eZnnbOHsy7uZnPz35E8ozzoWBmTzUklzd4
+ 66mHL7b6xSDUupwJKj1Zn2KJRfStHIsde8af0MFmnfvopLw7DublOpDsoiRy5quDTvX4SUHHnxq
+ 9L9ZHDDgVZsSC2Woi6Ad9wpHcar92VrF3ytz2zgCEc1drhUrgvBBaqkLty4dJW7v1v9oBYOrNVp
+ EE9XAX8GFjNjOF2Zby5pNxLkGfnvTyoDfM0NELu9mbBQQcyqtjh3z3SK/4NPQhY2R4DXuFPtmed
+ GDBVPtCEz3a0hvC6uf6OBtcPGXbyep7ZYbtqWV1ILbuKmyQehOjkwc6iwpGaJ0gODF/r1wWg2vR
+ dM8K24nkDD5PN0f9dJSX+aNCvFjs+uFKhneyKtPiHZQMf7BlDPTxJ7QLmpUczuEOUZQRSYMRX7D
+ WngiPX7EudJm60my3cB2F9wXWHmWl7xpA=
+X-Received: by 2002:a05:7022:43a8:b0:12c:81b:c74b with SMTP id
+ a92af1059eb24-134c880b9a3mr4870930c88.1.1778892157458; 
+ Fri, 15 May 2026 17:42:37 -0700 (PDT)
 Received: from localhost ([38.104.138.51]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-134cbcb9ed3sm11661762c88.1.2026.05.15.17.42.29
+ a92af1059eb24-134cbcb9ef5sm11327220c88.2.2026.05.15.17.42.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 May 2026 17:42:29 -0700 (PDT)
+ Fri, 15 May 2026 17:42:36 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: Alistair Francis <alistair.francis@wdc.com>
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -74,17 +74,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
  qemu-devel@nongnu.org, Joel Stanley <joel@jms.id.au>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v6 06/10] hw/riscv/atlantis: Provide a simple halting payload
-Date: Fri, 15 May 2026 17:42:01 -0700
-Message-ID: <20260516004206.169035-7-npiggin@gmail.com>
+Subject: [PATCH v6 10/10] hw/riscv/atlantis: Add some i2c peripherals
+Date: Fri, 15 May 2026 17:42:05 -0700
+Message-ID: <20260516004206.169035-11-npiggin@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260516004206.169035-1-npiggin@gmail.com>
 References: <20260516004206.169035-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1231;
- envelope-from=npiggin@gmail.com; helo=mail-dl1-x1231.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1234;
+ envelope-from=npiggin@gmail.com; helo=mail-dl1-x1234.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,74 +107,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-OpenSBI hangs before any console output if the domain init code sees the
-next stage is not in an executable region.
+From: Joel Stanley <joel@jms.id.au>
 
-If no kernel payload is provided to QEMU, the next stage address is
-NULL, and the riscv virt machine memory map ends up covering the 0
-address with the catch all S-mode RWX region and so OpenSBI prints
-console messages and does not hang until the next stage boot.
+Add an I2C RTC device and a temperature sensor. These are not present
+on the board but help for testing.
 
-The Tenstorrent Atlantis machine address map has RAM starting at 0 and
-it loads OpenSBI there, so it is M-mode and not accessible by S-mode,
-tripping the early check and hang.
+The tmp105 is a lm75 compatible temperature sensor used by the
+SENSORS_LM75 Linux kernel driver.
 
-Add a helper to set up a simple payload that gets OpenSBI messages to
-console, until OpenSBI can be fixed.
+The ds1338 is a RTC device that is used by the RTC_DRV_DS1307 Linux
+kernel driver.
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Joel Stanley <joel@jms.id.au>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
+ hw/riscv/Kconfig       |  2 ++
  hw/riscv/tt_atlantis.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ 2 files changed, 29 insertions(+)
 
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index 38180a903f..ff2d250ee4 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -130,6 +130,8 @@ config TENSTORRENT
+     select SERIAL_MM
+     select DEVICE_TREE
+     select DESIGNWARE_I2C
++    select DS1338
++    select TMP105
+ 
+ config XIANGSHAN_KUNMINGHU
+     bool
 diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
-index 43f47fbd75..789a66870a 100644
+index 38be593b18..55d3f2a08a 100644
 --- a/hw/riscv/tt_atlantis.c
 +++ b/hw/riscv/tt_atlantis.c
-@@ -384,6 +384,30 @@ static void create_fdt(TTAtlantisState *s)
-     create_fdt_pmu(s);
- }
+@@ -68,6 +68,13 @@ static const MemMapEntry tt_atlantis_memmap[] = {
+     [TT_ATL_DDR_HI] =          { 0x100000000,  0x1000000000 },
+ };
  
-+/*
-+ * This works around a problem with OpenSBI hanging with no console output if
-+ * no payload is provided. By chance, machines with memory at 0x80000000 do get
-+ * output, but Atlantis memory begins at 0x0 which takes a different OpenSBI
-+ * error path.
-+ *
-+ * This can be removed when OpenSBI is fixed in QEMU.
-+ */
-+static void tt_atlantis_setup_halting_payload_opensbi_fixup(
-+                                        RISCVBootInfo *info, hwaddr addr)
++static I2CBus *i2c_get_bus(TTAtlantisState *s, unsigned busnr)
 +{
-+    /* Store the payload vector in little_endian byte order */
-+    static const uint32_t payload_vec[] = {
-+        const_le32(0x10500073),         /* 1: wfi           */
-+        const_le32(0xffdff06f),         /* j       1b       */
-+    };
-+    rom_add_blob_fixed_as("mrom.payload", payload_vec, sizeof(payload_vec),
-+                          addr, &address_space_memory);
++    assert(busnr < TT_ATL_NUM_I2C);
 +
-+    info->kernel_size = sizeof(payload_vec);
-+    info->image_low_addr = addr;
-+    info->image_high_addr = info->image_low_addr + info->kernel_size;
++    return s->i2c[busnr].bus;
 +}
 +
- static void tt_atlantis_machine_done(Notifier *notifier, void *data)
+ static uint32_t next_phandle(void)
  {
-     TTAtlantisState *s = container_of(notifier, TTAtlantisState, machine_done);
-@@ -421,6 +445,9 @@ static void tt_atlantis_machine_done(Notifier *notifier, void *data)
-     if (machine->kernel_filename) {
-         riscv_load_kernel(machine, &boot_info, kernel_start_addr,
-                           true, NULL);
-+    } else {
-+        tt_atlantis_setup_halting_payload_opensbi_fixup(&boot_info,
-+                                                        kernel_start_addr);
-     }
-     kernel_entry = boot_info.image_low_addr;
+     static uint32_t phandle = 1;
+@@ -358,6 +365,19 @@ static void create_fdt_i2c(void *fdt, const MemMapEntry *mem, uint32_t irq,
+     qemu_fdt_setprop_cell(fdt, name, "#size-cells", 0);
+ }
  
++static void create_fdt_i2c_device(TTAtlantisState *s, int bus,
++                                  const char *compat, int addr)
++{
++    void *fdt = MACHINE(s)->fdt;
++    hwaddr base = s->memmap[TT_ATL_I2C0 + bus].base;
++    g_autofree char *name = g_strdup_printf("/soc/i2c@%"HWADDR_PRIX"/sensor@%x",
++                                            base, addr);
++
++    qemu_fdt_add_subnode(fdt, name);
++    qemu_fdt_setprop_string(fdt, name, "compatible", compat);
++    qemu_fdt_setprop_cell(fdt, name, "reg", addr);
++}
++
+ static void finalize_fdt(TTAtlantisState *s)
+ {
+     uint32_t aplic_s_phandle = next_phandle();
+@@ -385,6 +405,9 @@ static void finalize_fdt(TTAtlantisState *s)
+                        TT_ATL_I2C0_IRQ + i,
+                        aplic_s_phandle, periph_clk_phandle);
+     }
++
++    create_fdt_i2c_device(s, 0, "dallas,ds1338", 0x6f);
++    create_fdt_i2c_device(s, 4, "ti,tmp105", 0x48);
+ }
+ 
+ static void create_fdt(TTAtlantisState *s)
+@@ -594,6 +617,10 @@ static void tt_atlantis_machine_init(MachineState *machine)
+                            qdev_get_gpio_in(s->irqchip, TT_ATL_I2C0_IRQ + i));
+     }
+ 
++    /* I2C peripherals: qemu specific */
++    i2c_slave_create_simple(i2c_get_bus(s, 0), "ds1338", 0x6f);
++    i2c_slave_create_simple(i2c_get_bus(s, 4), "tmp105", 0x48);
++
+     /* Load or create device tree */
+     if (machine->dtb) {
+         machine->fdt = load_device_tree(machine->dtb, &s->fdt_size);
 -- 
 2.53.0
 
