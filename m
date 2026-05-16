@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 948EDCD4F25
-	for <qemu-devel@archiver.kernel.org>; Sat, 16 May 2026 18:10:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F098CD4851
+	for <qemu-devel@archiver.kernel.org>; Sat, 16 May 2026 18:19:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOJTN-0003YH-CB; Sat, 16 May 2026 14:10:49 -0400
+	id 1wOJak-000542-In; Sat, 16 May 2026 14:18:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wOJTL-0003Y4-Lv
- for qemu-devel@nongnu.org; Sat, 16 May 2026 14:10:47 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1wOJai-00053g-Kp
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 14:18:24 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wOJTK-0004IL-6E
- for qemu-devel@nongnu.org; Sat, 16 May 2026 14:10:47 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2bd9c3b550aso6529675ad.2
- for <qemu-devel@nongnu.org>; Sat, 16 May 2026 11:10:45 -0700 (PDT)
+ id 1wOJah-0007bz-2W
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 14:18:24 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-8353c9f24d2so427896b3a.3
+ for <qemu-devel@nongnu.org>; Sat, 16 May 2026 11:18:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778955044; x=1779559844; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778955501; x=1779560301; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=9ZJ4RRoSKVH7q7+F0JXKNuoRLeBQSw0eVAJq3rndSO0=;
- b=CbdQL3Xp2cl4EGw5YTMhZ+6RBFZa0Li9EC2sA39jyQaig9HGhIG/cNYzOHjR+YXvRT
- 3rhCX+v08R1ZSocVw8STTOQOcbvLQZ0jViqpobrLeHmBJuLZDSvj0JHuzNjLKEvTCcfG
- sBGbHKpo/JiB74LNYmiXguCdi9rU9H1hVZ4SQhpdiNvZIq38EkLV3SLxzbClmPb6H651
- bzwLzqXV4vCEvWxTjMRGFDs1eCbrBWqMTTOZBWCGuIGoRQORQzuOiGgdg/xqsKsn7SaT
- F2D6ZE0Vo6Z9BgyIJnrqE2yHXym8Vq82P6r6kg88CTERgtTkddfo2mdgu9rmbngI7tIE
- OAZw==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=SkCRmJVbMNWIUW+47BF5u3h4ZiH2luosrvtnuMXpL8A=;
+ b=LzB8NMRqvlOiACpOCbGggkmnzGV4Zvssm/XgD0pQqP7zKIWUQPRV3kIjcVxbj9x9zg
+ 3aYDOTEfeC+8gQ+4/nR3aALcYNUjj9UqmIu09FHWPycUubRPeQogNHKb3F4J3vIBtEsb
+ AUwqnocq6cyhXmmMUEmmF+UqOua+ikfowjaVRemRTlDOaxEhYaiXM3jRcUCEQyR/dZeA
+ asNOCAgWqTfGVIapdMZm8xU8V1VAMyVGnK0RF76zfMYd74T0GkLIAweK6AH/+6MP2MpF
+ PK1Hbw4MuvzAO3fThYJP+ap+q59xjnpbB2B40nLf1E6UMFOYaxpIW6dEPKUjI1erhYi8
+ G+NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778955044; x=1779559844;
+ d=1e100.net; s=20251104; t=1778955501; x=1779560301;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=9ZJ4RRoSKVH7q7+F0JXKNuoRLeBQSw0eVAJq3rndSO0=;
- b=SuELEjfJjSh6qoeHC4bh8gdeXmjaoSDR30B2quucwg2lx2vr6qQGaANyxdie73Pebx
- njLodKiCXu3KovMqIxvc+MBouuSdG4+P77nL4LkNVw8r8N9MyEIvXHmG0jfgG24/Nmff
- g1aZKGlvqL/u/22pZmiyU0QJN9uu4wTK71LIetIBJwQWSny4BbE809WfqkGyc/7fdng+
- vPksDYK+u1KvoB9sFMNA1b/FA6pT7kt0HnP5lSeYtUIgVV/qTDFA4d39oBbT3J0QahrY
- ixq1fp0WoOTIBEonA4WfuKHPHOsgvO9M+SneMRpid1dk5acJW1j01NY9nHF3KfMTGS6P
- vR/w==
-X-Gm-Message-State: AOJu0Yy5ySmmWclXNWh/oKzUhOHjdLUNuHB8mjKZpQYorz6gqtOHjrU/
- CGGV7edi8dR8Z5UdJmsrTUPXCI0FYvL1tz6nPBlcJcqGX1UxShyTQY6E+ng2TXrcH1gkDA/I4mW
- jLRIn
-X-Gm-Gg: Acq92OEsjCe4NFSxnIJ9l0bQSXsNce2d8i6auPET4P3alPS0qhqtkZq2T4E1aqyQK0P
- 9ZnCCCT23l1I4F69cK0Rb+hnqOkr2OpqES6dP4PapWu6WbFKMlJTV/L7xVkBzZX/5IjiHj60Aaz
- U25d3mYza2SyevU4AG+EBYP94UHvNdWaJtxd29UcfGUIfPZpRIFtTNIBya38WDxUMdTImpB/Y2n
- h+wbrEflNmfTrTrdfODOVkMTpEMbmCWgtKKQ4t18gZAdZq58z4vvcL2SBmxedthQ8WNEds8CM+F
- RAEIUeFkuWhpZMfoa0GFGC2C4HMNSoLCma4oRzj3iV88vp2LzyMCWLt1eK2sraa7AWk2C15M3GI
- rtDjumy7yahRgKMV2KnLvnPG9DLtysGPW9URsStZj5WTfQhPXyozvrCjHEs5/eItmL6Vi8rSF/3
- EoqL+2K4L6sNbxj451w2VR5HYGVEWySg0y40Js
-X-Received: by 2002:a17:902:d702:b0:2b7:88f9:9c3d with SMTP id
- d9443c01a7336-2bd7e7cb191mr67707465ad.12.1778955044458; 
- Sat, 16 May 2026 11:10:44 -0700 (PDT)
+ bh=SkCRmJVbMNWIUW+47BF5u3h4ZiH2luosrvtnuMXpL8A=;
+ b=NthzsBg+AMFgKul5jHdf75TfnHicZ34cGsfG9Wek61/9e0YE+OfQP1nL9WzL8NXltW
+ ctzedZW9xNGRHkysKpka3E4jHH3KgohzQGvRL27vyME99nLSGg3wGz7lMm6VbX3JGmQr
+ +sUSFLjkkJh5dqZUUMjkRLAw7ONelhRQhZE0zmUWSihkrWQ+ZY/TbPxusvBeuBfVZxke
+ eNCl9wuVv+A+MN3dG3hLp2uBztp6+KSAt5kXEplBTXIcaNS7iYVYwM46jK9IRAW952a8
+ sIOaxWKmB2ceykhRMbbBSzw+vcMHL3Ygpye56Dija/zHIWcdZE86tyrrGB5mdLDhhtuB
+ 6cog==
+X-Gm-Message-State: AOJu0YxMShWO6jgFJWX0Fy6NRHoIXS/eZSawztY193bDBdT4zHOage1S
+ BJuJUzc9SjkH1pl6UBMjpEG5MnIiDrLttKx7u35i3z5tB7cT6wDWc0JKCPDqW9F9AAQ=
+X-Gm-Gg: Acq92OHHF/mltaMZXe1YjAtirwpTI5Be7Sek1Il/Ss3NQzRq8SRyh+qBbLk1hVJfwAW
+ Yy8IUIoW6i/kMHoale8zeuy5R447shS+PSL4ScPmL/y3oUUNb4xCQhCJmb3IYH20Rrh2aqaaFBT
+ 6LrCHC2tRBsnRZUTs+mY7POJ3j141PsADycSzurS0sSvXeHwsC73MhA0+d2HLYZxv+1LcBpQxVB
+ UyduXMr98lYN6hBQefbh0zaDIWaWbvELjdRvgFvGrfKRtr6Nh912K2fYpQmQm7GGoi2xgSYgLGu
+ CChwHy0MBietcxNGAuoarOscSr8Qvp3rAaf1C/zhg1uHN4YaOcH1xoHz4M8H/c84vmcxdb2bm/H
+ XuwO1NQSAodql6s1+MFFz1vlXGSF0LrKUmmbEqOVJiyGMCTUsbts8Zx2h4gVJi+O8f17p182Hlu
+ +9KV6O2Uu8JbaR2H++uhNGjX3LZQiAlBWATV4B+3Afk2KDhjY=
+X-Received: by 2002:a05:6a00:3a2a:b0:837:e9cc:d46e with SMTP id
+ d2e1a72fcca58-83f33cbf654mr9338120b3a.21.1778955501309; 
+ Sat, 16 May 2026 11:18:21 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.142.33])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2bd5bd5f2e7sm93970055ad.5.2026.05.16.11.10.43
- for <qemu-devel@nongnu.org>
+ d2e1a72fcca58-83f196660f9sm12105464b3a.10.2026.05.16.11.18.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 16 May 2026 11:10:44 -0700 (PDT)
-Message-ID: <8ff8207f-f373-4e97-803d-57a21d7436ff@linaro.org>
-Date: Sat, 16 May 2026 11:10:42 -0700
+ Sat, 16 May 2026 11:18:20 -0700 (PDT)
+Message-ID: <0b520bc5-d680-4e40-92ad-1ff4b6f71466@linaro.org>
+Date: Sat, 16 May 2026 11:18:18 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] hw/intc/arm_gicv5: Add missing early return in
- gicv5_set_handling()
-To: qemu-devel@nongnu.org
-References: <20260512093856.3197700-1-peter.maydell@linaro.org>
- <20260512093856.3197700-5-peter.maydell@linaro.org>
+Subject: Re: [PATCH 02/37] target/arm: Implement FEAT_FAMINMAX for AdvSIMD
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20260421051346.41106-1-richard.henderson@linaro.org>
+ <20260421051346.41106-3-richard.henderson@linaro.org>
+ <CAFEAcA8cM2aKa=9Qh8LOVyoEZKQfw3rTBfNrDi4xd_s+tXq2Mg@mail.gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260512093856.3197700-5-peter.maydell@linaro.org>
+In-Reply-To: <CAFEAcA8cM2aKa=9Qh8LOVyoEZKQfw3rTBfNrDi4xd_s+tXq2Mg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,37 +104,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/12/26 02:38, Peter Maydell wrote:
-> In gicv5_set_handling(), if the guest tried to set the handling mode
-> on a nonexistent SPI then we print a GUEST_ERROR log message.
-> However, we forgot to then return, so execution continues into a NULL
-> pointer dereference.
+On 5/14/26 03:35, Peter Maydell wrote:
+> On Tue, 21 Apr 2026 at 06:15, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   target/arm/cpu-features.h        |  5 +++++
+>>   target/arm/tcg/helper-a64-defs.h |  7 +++++++
+>>   target/arm/tcg/vec_internal.h    |  7 +++++++
+>>   target/arm/tcg/translate-a64.c   | 14 +++++++++++++
+>>   target/arm/tcg/vec_helper64.c    | 35 ++++++++++++++++++++++++++++++++
+>>   target/arm/tcg/a64.decode        |  5 +++++
+>>   6 files changed, 73 insertions(+)
 > 
-> Add the missing "return", bringing the code structure in to line with
-> the equivalent parts in other functions like gicv5_set_pending() and
-> gicv5_set_target().
 > 
-> CID: 1659596
-> Fixes: 5beb48ab53d ("hw/intc/arm_gicv5: Make gicv5_set_* update SPI state")
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   hw/intc/arm_gicv5.c | 1 +
->   1 file changed, 1 insertion(+)
 > 
-> diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
-> index 7ad274e369..6b1dd04991 100644
-> --- a/hw/intc/arm_gicv5.c
-> +++ b/hw/intc/arm_gicv5.c
-> @@ -926,6 +926,7 @@ void gicv5_set_handling(GICv5Common *cs, uint32_t id,
->           if (!spi) {
->               qemu_log_mask(LOG_GUEST_ERROR, "gicv5_set_handling: tried to set "
->                             "priority of unreachable SPI %d\n", id);
-> +            return;
->           }
->   
->           spi->hm = handling;
+>> +#define DO_FAMINMAX(NAME, TYPE, FN)                             \
+>> +TYPE TYPE##_##NAME(TYPE a, TYPE b, float_status *s)             \
+>> +{                                                               \
+>> +    bool save_fz = get_flush_to_zero(s);                        \
+>> +    bool save_fiz = get_flush_inputs_to_zero(s);                \
+>> +    int new_flags, save_flags = get_float_exception_flags(s);   \
+>> +                                                                \
+>> +    set_flush_to_zero(0, s);                                    \
+>> +    set_flush_inputs_to_zero(0, s);                             \
+>> +    TYPE r = TYPE##_##FN(TYPE##_abs(a), TYPE##_abs(b), s);      \
+>> +                                                                \
+>> +    set_flush_to_zero(save_fz, s);                              \
+>> +    set_flush_inputs_to_zero(save_fiz, s);                      \
+>> +    new_flags = get_float_exception_flags(s);                   \
+>> +    new_flags = (save_flags & float_flag_input_denormal_used)   \
+>> +              | (new_flags & ~float_flag_input_denormal_used);  \
+>> +    set_float_exception_flags(new_flags, s);                    \
+>> +                                                                \
+>> +    return r;                                                   \
+>> +}
+> 
+> I don't think this has the right behaviour for NaN inputs.
+> We don't special-case NaNs in this function, and we pass
+> our inputs to the floatN_abs() functions, which also don't
+> special-case NaNs, they just flip the sign bit. So if the
+> input is a NaN with the sign bit set, the max/min function
+> will propagate a sign-flipped NaN to the output, rather
+> than correctly propagating the input NaN untouched.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Yep.
+
+See FPAbsMax{N}, where the sign bits are squashed before unpacking:
+
+     let op1 = '0'::op1_in[N-2:0];
+     let op2 = '0'::op2_in[N-2:0];
+     let (type1,-,value1) = FPUnpack{N}(op1, fpcr);
+     let (type2,-,value2) = FPUnpack{N}(op2, fpcr);
+
 
 r~
 
