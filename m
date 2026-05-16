@@ -4,96 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9103CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Sat, 16 May 2026 16:51:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBA37CD4F21
+	for <qemu-devel@archiver.kernel.org>; Sat, 16 May 2026 17:16:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOIDq-0006f8-6W; Sat, 16 May 2026 12:50:42 -0400
+	id 1wOIcC-0002Kc-0Y; Sat, 16 May 2026 13:15:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOIDn-0006eb-7p
- for qemu-devel@nongnu.org; Sat, 16 May 2026 12:50:39 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOIbz-0002Ib-1l
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 13:15:40 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOIDj-0007TZ-Vw
- for qemu-devel@nongnu.org; Sat, 16 May 2026 12:50:38 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4891e86fabeso11268765e9.1
- for <qemu-devel@nongnu.org>; Sat, 16 May 2026 09:50:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOIbw-0007wk-Tr
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 13:15:38 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-48984d29fe3so9267735e9.0
+ for <qemu-devel@nongnu.org>; Sat, 16 May 2026 10:15:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778950233; x=1779555033; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=aGI9KWuxfCdBDF342DGsOBonHHbCgtlGcJg4C9UWci0=;
- b=yT7yfU3O2NAVd0lipHEuFO0IPPLft/+18btXGzOi5x4n5t9JD9ENSN69UdwWmMRCUs
- f84uNoVfMk0M6XSzT7QNhQqbROmW6IakKD15J0rigI2DSpYqfp1RcNApp9vA3qhhsB0+
- hB9DQ4d/HO0U2fpt7tbwtnQAKX43zc6ZyYuJj5A4wqcZ44hdLa6rLOxIzV6zc1A74gnv
- nOy3exNeQwXKiP7pLrLguLGR64wYp6B7ajGV4VNC+EiAXr9ItJc2W+Fj+MRienYRUXIi
- X7iw1EIYD8QvMSpQnzHPWyJ6gQlWc1g2Nz02JB8M9eaIicROU0pZZ7h/dVPZWiiROYvi
- 1h6A==
+ d=linaro.org; s=google; t=1778951734; x=1779556534; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=K1V+GWtucxSZl1YZ8nu1MtklisKojriGnpVCnzAvOg4=;
+ b=ol34DBFuewsCoFEFKHoTuleOmV4Xf2WKIQ7SH83VGFW1BtwfdPRHz4CDMGMq0ot3XK
+ 2eNQn4giSLbkUw0dMOYixjX1p/VbGGHGC60Aq4PrnhlOG1k7U9yHplq8DENBc3C0RNrO
+ foDKjp2v0wiPWoMLz6+LS4HPfErh0PesdZweFqMlej9FeH/dZ++PBTuYWJkJwuhVEBiZ
+ XsFDv8+TNPhXku9xVWv+O/IvhaLwXwRNv/2GGHGNTpfnbckI6pq1ZgQIYnzMlQTEhtya
+ 9tzFOi4gbETOZtun1jSSnObnaFYqr1/raKwiVyZDjRBcQvRmCUWIjy0+GYLjHRk1j1j4
+ ZN2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778950233; x=1779555033;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=aGI9KWuxfCdBDF342DGsOBonHHbCgtlGcJg4C9UWci0=;
- b=OGRot9JPwho4tScnb42Sq48Zt5Ei6SernNKfzzFl5QzhOfRVP9dH8nkni/PgK9ssUz
- gcwOJFp0swUCdNpZGtC5rsnjStY69wP8H37t8B4x+ns+vkzjfxjYksbZfTjnk/45Gsz+
- URR9TORLd+7QK6NF/4/smddw0jpRfO/krH31DVeBfxEggly89gX0ZUs9SE/b4JsF75TQ
- eZjPSVdvZsz+RiF46wH28tDCwAtJAP6fq/oCJAWrzAd3qUiV9l1psKGdzp7Z4zD0sPpc
- A/xhp05jwN0Vc+lmTZX8VGJDrb153iDcM6CcGDYE85545LDEAfiSoYubPY00M3oVXGN+
- Bdyg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8GijhDup2kLz0kX8sYQu3OOyN2yD1+nyOT6NMNuP4FzvvvpcCYEW5DDrOUxblDOwM+ylUy1vTCZWVw@nongnu.org
-X-Gm-Message-State: AOJu0YwR1q07/FKphs+1I9Ag2ajHtYsx1zoQlYgso+SaVnj0JJV4vDCx
- kwR54P8l7S+9yZ9t27w+eVnSXYbpjpBPn9xkpyYBQZu1XFsCqzLKyrxNwmRvMXjsJzs=
-X-Gm-Gg: Acq92OEFu6eKklna6M434cDyYG2/+Qh5PuY2nPyZQdfiw0A6obOK+G24UgNCkcSiziw
- zNIEF4ucNDppYru+yTl40n2XVitrpkR6tARGTu8V5ccy458jnevDyyHUhAoMiSONUSftIiyYPA9
- E6EYSNj2HTr6+0XS8Xobn4cDvTtfpmQn/L294T4zJ/Xc3NUY/QPiXFYbo4WIQSB3y/s2VNLZXnf
- 3U+yAu2mIiktPgZiFM2/4pW42sedzFkfoftCmgBYjVGJB8szevS+S4ZSApvSHa4Cu1kUdn88dh1
- EuNDLSIvmxHIwRVSJj7yZ1DlrdrybfPVoWYJk8M3rGkU+T7YCeENJB2sOEXMuBmulaXf893x3ib
- 86VUcd/GsfiszWNwP0L/fMPpkJALqH2LyQcH/BmENPGKzbNK3BBVaU+qk2sbMLhTXAaH26JNcwf
- NkgP3QYNi0XEjsVVw4Ao8uX1cktih0OxBp3Ex6y3a5BoyVqQgfm29gTDq7anvvQ3p7nQ==
-X-Received: by 2002:a5d:5f49:0:b0:441:1e41:19c with SMTP id
- ffacd0b85a97d-45e5c5fd484mr12455055f8f.20.1778950233035; 
- Sat, 16 May 2026 09:50:33 -0700 (PDT)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20251104; t=1778951734; x=1779556534;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=K1V+GWtucxSZl1YZ8nu1MtklisKojriGnpVCnzAvOg4=;
+ b=s6LNJez7HvEREDt/OPkZH29h4EcTCqvbOjrjGWhNQIuS3n1E1QZLhmg97t/PMHfhne
+ Q4TEv2oihpJp2EUlTpmwhPBuLIhgVO/3Y0RGev3sLxsl+aq/t2zlfNDx+slb3hcpZWhb
+ hMEj6ASNDclmHZzLMdh7lH6vcFgVN/bMrFmQ0yZYO/zzQSDqnLeVMNFRhWLJfO6wRJUV
+ JlT/pHdiYrYdlpTWjGFDGhqw0slu/ISYKfokYvJbkB0L4/cesifqevYJV11MpoQT1/Ht
+ 67HvRoZ8KhOvAJh0sZmjdMDmkjkdAsuYqLWUmMC0y06zwSbo1SlH2GyTBvv55GCv34HP
+ nB3w==
+X-Gm-Message-State: AOJu0YyIQ0llXkoGM4wz7nE/VMFFvlBUOqEELz+vPZZKShHvmRHw+uDl
+ hQFdCj9wOAHaQb4VAcDdnWpLm1o1s0bIogN3R4tlx9WqdnjVGDDdgLo7AGMyX/R7b9WT3yyALat
+ XxDfi0mU=
+X-Gm-Gg: Acq92OHcBcj87Y+O0B6CGNKAUXRZ0Tu8aPrLh9o8qZM/rhOfhk3P656R93vMfyE0UjX
+ +H/wUTgZiTnCiLd8s5FyeSmwtqHQ6kRfayhZCsmYhYXXeAZazMN+ygkBvLNf4lpR5Zj5zJE0BWg
+ oG14F55AJ7eD1TPlW/pxavyLKGp3wggXHMaudpyPjBO+AxEJjxwE41OdIQTGF53/Mo9TfWdTdLN
+ EtewQr38mljFrxlrvP47y6iikUimYm9NK8durqiWSWpL+Ioq4aKJ2MiJMjunek4a//P4LQj9ztI
+ m3KJhA+aUfhacnKWhjMUN+erZL/+ZSVWxWF9qplLbhjJBbnVSY7mrH6CaajZ5M7L10hrktnyaYM
+ yithrp9Ju2fXFE4iW2NSRoEfFl3SLFN2I7Ld/3tcprja/1uYOJ+Q4Ftj0XwXeZfXi6bSuK5GM/N
+ E0txsrP5/57f0tzZeok4OcCYJ1v7d78eFicuuZAjjgfgm1YvkCvjNZ9t+AhzC31lzPwifvlxD/
+X-Received: by 2002:a05:600d:b:b0:48e:8741:fd42 with SMTP id
+ 5b1f17b1804b1-48fe60ee64amr95588555e9.12.1778951734492; 
+ Sat, 16 May 2026 10:15:34 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45d9ec3acf7sm23414506f8f.12.2026.05.16.09.50.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 16 May 2026 09:50:32 -0700 (PDT)
-Message-ID: <2590c2e5-e3f0-4906-ae3c-7d6858e75eae@linaro.org>
-Date: Sat, 16 May 2026 18:50:31 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 04/20] hw/arm/aspeed: Initialize 64-bit CPU types
- during DeviceRealize()
-Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
- Joel Stanley <joel@jms.id.au>, Kane Chen <kane_chen@aspeedtech.com>,
- Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Steven Lee <steven_lee@aspeedtech.com>,
+ 5b1f17b1804b1-48fe53ab773sm146381125e9.3.2026.05.16.10.15.33
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sat, 16 May 2026 10:15:33 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Steven Lee <steven_lee@aspeedtech.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Joel Stanley <joel@jms.id.au>, Jamin Lin <jamin_lin@aspeedtech.com>,
+ Laurent Vivier <lvivier@redhat.com>,
  Andrew Jeffery <andrew@codeconstruct.com.au>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-References: <20260515141032.3271-1-philmd@linaro.org>
- <20260515141032.3271-5-philmd@linaro.org>
- <e8e1d0f8-b5b9-49a3-9478-f58f72e962e7@kaod.org>
- <99983366-9174-40cf-a158-a663daa7965f@oss.qualcomm.com>
- <3db1823e-bdb3-4801-81a0-dc901bf75655@kaod.org>
- <64a611a9-a509-412b-8ff4-5bcd85348b97@oss.qualcomm.com>
- <3c55962b-cd03-4728-8442-c895f7e8d132@kaod.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <3c55962b-cd03-4728-8442-c895f7e8d132@kaod.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Troy Lee <leetroy@gmail.com>,
+ qemu-arm@nongnu.org, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Matthew Penney <matt@matthewpenney.net>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH v7 01/21] tests/qtest: fix discarded const qualifier warning
+Date: Sat, 16 May 2026 19:15:03 +0200
+Message-ID: <20260516171524.19184-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260516171524.19184-1-philmd@linaro.org>
+References: <20260516171524.19184-1-philmd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,49 +113,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/5/26 23:17, Cédric Le Goater wrote:
-> On 5/15/26 19:22, Pierrick Bouvier wrote:
->> On 5/15/2026 10:18 AM, Cédric Le Goater wrote:
->>> On 5/15/26 19:00, Pierrick Bouvier wrote:
->>>> On 5/15/2026 9:29 AM, Cédric Le Goater wrote:
->>>>> On 5/15/26 16:10, Philippe Mathieu-Daudé wrote:
->>>>>> aspeed_ast27x0.c models 2 similar SoC based on a 64-bit only
->>>>>> CPU (Cortex-A35), only available in the 64-bit binary.
->>>>>>
->>>>>> If we build this file as common object, these SoCs become
->>>>>> available in both 32 and 64-bit binaries; however when running
->>>>>> the introspection test on the 32-bit binary, the init() method
->>>>>> tries to init the Cortex-A35 type -- although not realizing it
->>>>>> -- which is not available. This can be avoided by deferring the
->>>>>> CPU type initialization to the SoC DeviceRealize step (this is
->>>>>> safe because nothing uses the CPU type before, only the GIC
->>>>>> access them, just after their realization).
->>>>>
->>>>> I understand this is a qtest workaround. Could we introduce
->>>>> instead a (qtest_enabled() && 32-bit binary) helper ?
->>>>>
->>>>
->>>> In general, it exposes a dependency issue in QOM type system.
->>>> In this case, we get a class depending on another one through
->>>> class_init. Moving this to realize seems like the best fix.
->>>
->>> My feeling is that this goes against the best modeling practices
->>> we have tried to put in place over the last decade.
->>>
->>
->> In this case, adding the workaround you suggested might be the best
->> approach indeed.
+From: Matthew Penney <matt@matthewpenney.net>
 
-What was said is "we'll soon have a single ARM binary able to run all
-all CPU types, no need to make pointless changes due to a test that
-won't fail because all CPU types available in this binary". But we
-are still 1 step from it -- removing the 32-bit binary -- so I'll add
-Cédric's workaround.
+Modern compilers warn that the result of strstr() may discard
+const qualifiers when assigned to a non-const pointer.
 
-> 
-> Well, if we want to make progress, let's at least add a comment
-> for better fix later.
-> 
-> C.
+Make 'found' a const char * to fix the warning.
+
+Signed-off-by: Matthew Penney <matt@matthewpenney.net>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Tested-by: Thomas Huth <thuth@redhat.com>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260514191844.105888-1-matt@matthewpenney.net>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ tests/qtest/libqtest.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+index bf9284b9a13..b1e06ea364e 100644
+--- a/tests/qtest/libqtest.c
++++ b/tests/qtest/libqtest.c
+@@ -2146,7 +2146,7 @@ bool mkimg(const char *file, const char *fmt, unsigned size_mb)
+ bool qtest_verbose(const char *domain)
+ {
+     const char *log = getenv("QTEST_LOG");
+-    char *found;
++    const char *found;
+ 
+     assert(domain);
+ 
+-- 
+2.53.0
 
 
