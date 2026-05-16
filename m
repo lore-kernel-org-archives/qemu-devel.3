@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0CEECD4F48
-	for <qemu-devel@archiver.kernel.org>; Sat, 16 May 2026 17:19:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55B13CD4F25
+	for <qemu-devel@archiver.kernel.org>; Sat, 16 May 2026 17:19:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOIe7-000735-T7; Sat, 16 May 2026 13:17:51 -0400
+	id 1wOIdu-0005vN-UC; Sat, 16 May 2026 13:17:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOIe6-0006sP-0q
- for qemu-devel@nongnu.org; Sat, 16 May 2026 13:17:50 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOIdq-0005cG-PA
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 13:17:35 -0400
 Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOIe3-0008UK-O8
- for qemu-devel@nongnu.org; Sat, 16 May 2026 13:17:49 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOIdp-0008Ow-70
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 13:17:34 -0400
 Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-488a8ca4aadso7830705e9.3
- for <qemu-devel@nongnu.org>; Sat, 16 May 2026 10:17:47 -0700 (PDT)
+ 5b1f17b1804b1-488b8bc6bc9so4346435e9.3
+ for <qemu-devel@nongnu.org>; Sat, 16 May 2026 10:17:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778951866; x=1779556666; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778951851; x=1779556651; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2B+NBXajc/QmvN9GPFw1CKwqetwZlIhbn6ldsGmgu/E=;
- b=HLawme6nRauGn3tSTRvLPCN1kRDq2is+lUy8quD7OP6M8hoUFtmw82AxbXVrEZtILo
- VGPcyJE/E8AzBwnR8chRLCpa5p392q/rvj8ieufFM2rY5g/j0Yis/HYv7Sjo5SKbwgdI
- A6ZMnY3beO+DKK52lN2MVXjKb2KFJkx8RK7LROtzXfVisZWJ7xt2WmWJCnp9YC4Eem6A
- DuoPqXByZM3fn0OcC1gEAlnQt/Dbf3Yai+VqgeQDCeonzH1t++++FBNiR06I8GgPdAhl
- K+cwm1U7mlrHQCtpeNqULc4a10ynq6a/0Go2Sp9xQz+LjiZE/tGaBqzzd7hhe/t8Ffma
- iLkQ==
+ bh=PWZdLVhlhSLtHCNbbyN0ZgO/iZgjO8xlliAMjKdmLuw=;
+ b=BsSK19C+ZMaM1rn5nUSGEevXEmn2h+INVQHIu5S0u+jIf6X7xL314mS395S+Av0oyN
+ Mp++2Auxm7rQJsnoPysmdFtEUtlS/Qrz563Rw2bZgR0ODPugXMk/SY0xnsn4br712yH1
+ N11Rgb6HfdQLop1QxqoKZmMnpuPVb5S63OI/8VlqT0VDjdMIPo6gIKjfLe5texsyOU+d
+ nLP4oE1FKUMU5HWa0IMrhHDobDLWQVeOsp9e/S+XXjeQ+RCZA53dbF3eJAVKFclsCVPX
+ v67qzCoKeGP+A2b2cqOmcrR/dZypPhmq+9zk63ItQ+4eTFlbrayhcH4qhV8/J8DPnBil
+ yATQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778951866; x=1779556666;
+ d=1e100.net; s=20251104; t=1778951851; x=1779556651;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=2B+NBXajc/QmvN9GPFw1CKwqetwZlIhbn6ldsGmgu/E=;
- b=ig9ucg75iLf5eqJaj3fSWWcfANWuH9xBHNST9ivlyTVvP8KsyjB+Ktj8IHwYpxz4Dc
- lt84wEoA5L3T9C1QLyrMVW+IhcRd+s8mD6WNHJXXM8+G3qbKMT883/g3YjyInezwQ5hA
- PQ8lje10PJXjDgcSlEgRt7arJH/bQMhFSYrVYSdZ480FtZ4iSpODAsOLRxcNINq1nxYV
- SisglsMxiG+mHlqpsCMz3Pliy7YebSwOxQ+EV1wfmweJXPmdyqALAzv6EqWAqgNiYPYq
- e7UITBslSvKG8LoWsA0wRlwPkUwxOvrrtccDsPmSR5NHDnoHUMInCHFh65oa9rsNFMZ2
- nFzg==
-X-Gm-Message-State: AOJu0YzKntbZVH2uESCSCGNGUM+9pFCmOKtYg3R9vYyphDbF3ggzU2EF
- xqxqpu3zm76nXUlXWno7swjGPsdIv6tskhfcZl178p/dekpH2U3U8ro0rp7YNY0FtVa3DYQJHfn
- g1fjSj/w=
-X-Gm-Gg: Acq92OFd/Rpt4w3TzrOxnvS/fzbkSfMRFTa+Znwtpt9freLLSamzP9MwMXM8D72M4Tn
- 7Xb2oR+3+d7FLPftzZRFf7CPms2U+Kl5KCuPbQsF5/hmn/ymy5Yb+p3ykkkBR4351XIRHqUJf87
- MCp1NB+FbVf4HPuJGf3MQ3xBzk/0zKn4LWwMGUvQxHvVMZpXphIoQrZrEa4OZx0u73K8Fx7s+MI
- xf/ybXHx5VZvC7dzeWfc+xRZER1a7vY8WhnH25/aqLxfpYMqMDRAOG/acW/atT5UgZqgw9nT37r
- 87CzJd2JiFn0YLRgJGBx7Lc7fGBEeuw38uWENzDwo4qY/U8nYwUC5JjJCF2rs2q8vvm0YBSKDMX
- WznMccax27J35T+mkM5Niqp6wlFoYad7sI0iwQDI4hFhqVBvVELZN9IODH55yidUHqXQjEpcbM0
- /DY4DzfPkO26JIZbiBECg4BLxfaOL8W7L2bq6dDqZ5BDuFdhQ8coOpOQtEzmdp1OsxNsp2ZcL6W
- sACiKmNGJU=
-X-Received: by 2002:a05:600c:3e1b:b0:48a:9562:7a30 with SMTP id
- 5b1f17b1804b1-48fe6515f20mr112814825e9.24.1778951866223; 
- Sat, 16 May 2026 10:17:46 -0700 (PDT)
+ bh=PWZdLVhlhSLtHCNbbyN0ZgO/iZgjO8xlliAMjKdmLuw=;
+ b=IxhASFxTcXLTk7tkE+ckGsYQ2O56hlNtVPqZsilZK6S5HtMuW+3KhKpWkPmruonn1a
+ cjUUphyO3KoeHZw373gIhXSOlHxgveNA1L93zfBQO03wYIHa0HnMvfEtbDzZVGgmV2Li
+ CTYf7GopHDWpP9m4v9fo4SoGaPy+DV7A49UKkSaBPdrsDUzNv/6lwFLXtypdo1fEBkMg
+ YWeDhtvK5My57Zn/cJAod2qPnVc2SnQ8p2bm15dFB8/Pq+GPiGnxlqgV++wQ7G9ub5p0
+ jpYixZbSmiI8IhorTZh+BA/Z4Jdfn6yGo7CkAz3d6CQ34BGM1Or6Mu4DNQpeO9NJgrXg
+ ev0Q==
+X-Gm-Message-State: AOJu0YyU3RfjFP5COUGbENpZ3gGOVXc2UFrSfe0LImIDmkBVzX+94fCq
+ O798cKFxN3MWbwPIFL7IYNtdm5DYql2X1srTd7C+qD5890drHkXYkw1oYKx91gYVJkehyoVv0Wk
+ 5VP1mYgk=
+X-Gm-Gg: Acq92OHTrkYAC0p4ysHhX7sGXbGKeWJ8WhaVOnpIiYZl/z+7IX0gGzpik7Bc+d7CzyR
+ vCxmLt4B//ZpT7E3trhzNagynDBctHQN65LZb95xMr+TWBmqz2Jmh3zegNogmVx3nksKqyudXJ5
+ yy23juXPtczQIMUlGUGEYWMuvhD+rIXypPoI0NcRv1xvCn3W2VvITpYp0OOyEQuqIY8t68e93EC
+ 875CRIlxwqnaP7/q51DK9E0em1YNsMbef3YKO9zRy3OSd77KT06msOQaBXObXfHo0yV4emQz2dC
+ +RfLLfc6b+jBSIQnP2n+pin4W1lmRboF23/vhg9ZYasLiA6EItlScgN/tXLito+IR3QY+fE8tgP
+ GkqVrrbomoiMSrBxQVBA1UrTebMT2O4pLU7A1JVT04lwUQu6P8xasy//RiSgwgnq9lSg07B32pO
+ gdooZMK+Fma8dM6xbELgsBJTkOvXZZ4tr4nvOib4gCDAc8DQ3PDoV2M/hJrU4sUATLAwyLfhVK
+X-Received: by 2002:a05:600c:4fcb:b0:488:a797:f0ac with SMTP id
+ 5b1f17b1804b1-48fe6613ab3mr115062185e9.28.1778951851393; 
+ Sat, 16 May 2026 10:17:31 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48feab2a23dsm41555855e9.5.2026.05.16.10.17.44
+ 5b1f17b1804b1-48fe4c833fcsm138060665e9.2.2026.05.16.10.17.30
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 16 May 2026 10:17:45 -0700 (PDT)
+ Sat, 16 May 2026 10:17:30 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Steven Lee <steven_lee@aspeedtech.com>,
@@ -79,9 +78,9 @@ Cc: Steven Lee <steven_lee@aspeedtech.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v7 19/21] target/arm: Define 'max' CPU type in cpu-max.c
-Date: Sat, 16 May 2026 19:15:21 +0200
-Message-ID: <20260516171524.19184-20-philmd@linaro.org>
+Subject: [PATCH v7 17/21] target/arm: Factor aarch64_aa32_a57_init() out
+Date: Sat, 16 May 2026 19:15:19 +0200
+Message-ID: <20260516171524.19184-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260516171524.19184-1-philmd@linaro.org>
 References: <20260516171524.19184-1-philmd@linaro.org>
@@ -96,7 +95,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,223 +111,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than having the 32-bit 'max' CPU type defined in
-cpu32.c and the 64-bit counter part in cpu64.c, unify the
-code in a single place in cpu-max.c. Define stubs for
-aarch64_host_initfn() and aarch64_max_tcg_initfn() in the
-32-bit binary.
+In order to make the following commit easier to review,
+factor aarch64_aa32_a57_init() out of aarch64_a57_initfn()
+as a preliminary step. We only add a %aa32_only argument
+to restrict AArch64 features.
 
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- target/arm/internals.h   |  1 +
- target/arm/cpu-max.c     | 65 ++++++++++++++++++++++++++++++++++++++++
- target/arm/cpu64.c       | 21 +------------
- target/arm/tcg/cpu32.c   | 29 ------------------
- target/arm/tcg/stubs32.c | 10 +++++++
- 5 files changed, 77 insertions(+), 49 deletions(-)
+ target/arm/cpu64.c | 36 ++++++++++++++++++++++++------------
+ 1 file changed, 24 insertions(+), 12 deletions(-)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index c95f3d63138..ccada1c9018 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -1759,6 +1759,7 @@ void aarch64_add_pauth_properties(Object *obj);
- void aarch64_add_sve_properties(Object *obj);
- void aarch64_add_sme_properties(Object *obj);
- void aarch64_aa32_a57_init(Object *obj, bool aa32_only);
-+void aarch64_host_initfn(Object *obj);
- 
- /* Return true if the gdbstub is presenting an AArch64 CPU */
- static inline bool arm_gdbstub_is_aarch64(ARMCPU *cpu)
-diff --git a/target/arm/cpu-max.c b/target/arm/cpu-max.c
-index 6fc54ebe74e..8cf8edc6535 100644
---- a/target/arm/cpu-max.c
-+++ b/target/arm/cpu-max.c
-@@ -8,7 +8,10 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/units.h"
-+#include "system/hw_accel.h"
- #include "system/kvm.h"
-+#include "system/qtest.h"
-+#include "system/tcg.h"
- #include "target/arm/internals.h"
- #include "target/arm/cpregs.h"
- 
-@@ -178,3 +181,65 @@ void aa32_max_features(ARMCPU *cpu)
- 
-     FIELD_DP32_IDREG(isar, ID_DFR1, HPMN0, 1);         /* FEAT_HPMN0 */
- }
-+
-+/*
-+ * -cpu max: a CPU with as many features enabled as our emulation supports.
-+ * The version of '-cpu max' for qemu-system-aarch64 is defined in cpu64.c;
-+ * this only needs to handle 32 bits, and need not care about KVM.
-+ */
-+static void cpu_max_initfn(Object *obj)
-+{
-+    ARMCPU *cpu = ARM_CPU(obj);
-+
-+#ifdef TARGET_AARCH64
-+    const bool aarch64_enabled = true;
-+#else
-+    const bool aarch64_enabled = false;
-+#endif /* !TARGET_AARCH64 */
-+
-+    if (hwaccel_enabled()) {
-+        assert(aarch64_enabled);
-+        /*
-+         * When hardware acceleration enabled, '-cpu max' is
-+         * identical to '-cpu host'
-+         */
-+        aarch64_host_initfn(obj);
-+        return;
-+    }
-+
-+    if (tcg_enabled() || qtest_enabled()) {
-+        aarch64_aa32_a57_init(obj, !aarch64_enabled);
-+    }
-+
-+    if (!aarch64_enabled) {
-+        aa32_max_features(cpu);
-+#ifdef CONFIG_USER_ONLY
-+        /*
-+         * Break with true ARMv8 and add back old-style VFP short-vector
-+         * support. Only do this for user-mode, where -cpu max is the default,
-+         * so that older v6 and v7 programs are more likely to work without
-+         * adjustment.
-+         */
-+        cpu->isar.mvfr0 = FIELD_DP32(cpu->isar.mvfr0, MVFR0, FPSHVEC, 1);
-+#endif
-+    } else if (tcg_enabled()) {
-+        assert(aarch64_enabled);
-+        /*
-+         * '-cpu max' for TCG: we currently do this as
-+         * "A57 with extra things"
-+         */
-+        aarch64_max_tcg_initfn(obj);
-+    }
-+}
-+
-+static const ARMCPUInfo arm_max_cpu = {
-+    .name = "max",
-+    .initfn = cpu_max_initfn,
-+};
-+
-+static void arm_max_cpu_register_types(void)
-+{
-+    arm_cpu_register(&arm_max_cpu);
-+}
-+
-+type_init(arm_max_cpu_register_types)
 diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 499d154dace..28167355773 100644
+index 7b2f09cf8ec..7dce17fdb20 100644
 --- a/target/arm/cpu64.c
 +++ b/target/arm/cpu64.c
-@@ -791,7 +791,7 @@ static void kvm_arm_set_cpreg_mig_tolerances(ARMCPU *cpu)
+@@ -686,17 +686,20 @@ void aarch64_cpu_lpa2_finalize(ARMCPU *cpu, Error **errp)
+     SET_IDREG(&cpu->isar, ID_AA64MMFR0, t);
  }
- #endif
  
--static void aarch64_host_initfn(Object *obj)
-+void aarch64_host_initfn(Object *obj)
+-static void aarch64_a57_initfn(Object *obj)
++static void aarch64_aa32_a57_init(Object *obj, bool aa32_only)
  {
      ARMCPU *cpu = ARM_CPU(obj);
+     ARMISARegisters *isar = &cpu->isar;
++    const bool aarch64_enabled = !aa32_only;
  
-@@ -818,28 +818,9 @@ static void aarch64_host_initfn(Object *obj)
-     }
+     cpu->dtb_compatible = "arm,cortex-a57";
+     set_feature(&cpu->env, ARM_FEATURE_V8);
+     set_feature(&cpu->env, ARM_FEATURE_NEON);
+     set_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER);
+     set_feature(&cpu->env, ARM_FEATURE_BACKCOMPAT_CNTFRQ);
+-    set_feature(&cpu->env, ARM_FEATURE_AARCH64);
++    if (aarch64_enabled) {
++        set_feature(&cpu->env, ARM_FEATURE_AARCH64);
++    }
+     set_feature(&cpu->env, ARM_FEATURE_CBAR_RO);
+     set_feature(&cpu->env, ARM_FEATURE_EL2);
+     set_feature(&cpu->env, ARM_FEATURE_EL3);
+@@ -727,10 +730,12 @@ static void aarch64_a57_initfn(Object *obj)
+     SET_IDREG(isar, ID_ISAR4, 0x00011142);
+     SET_IDREG(isar, ID_ISAR5, 0x00011121);
+     SET_IDREG(isar, ID_ISAR6, 0);
+-    SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
+-    SET_IDREG(isar, ID_AA64DFR0, 0x10305106);
+-    SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
+-    SET_IDREG(isar, ID_AA64MMFR0, 0x00001124);
++    if (aarch64_enabled) {
++        SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
++        SET_IDREG(isar, ID_AA64DFR0, 0x10305106);
++        SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
++        SET_IDREG(isar, ID_AA64MMFR0, 0x00001124);
++    }
+     cpu->isar.dbgdidr = 0x3516d000;
+     cpu->isar.dbgdevid = 0x01110f13;
+     cpu->isar.dbgdevid1 = 0x2;
+@@ -742,14 +747,21 @@ static void aarch64_a57_initfn(Object *obj)
+     cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 3, 64, 48 * KiB, 2);
+     /* 2048KB L2 cache */
+     cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 16, 64, 2 * MiB, 7);
+-    set_dczid_bs(cpu, 4); /* 64 bytes */
+-    cpu->gic_num_lrs = 4;
+-    cpu->gic_vpribits = 5;
+-    cpu->gic_vprebits = 5;
+-    cpu->gic_pribits = 5;
++    if (aarch64_enabled) {
++        set_dczid_bs(cpu, 4); /* 64 bytes */
++        cpu->gic_num_lrs = 4;
++        cpu->gic_vpribits = 5;
++        cpu->gic_vprebits = 5;
++        cpu->gic_pribits = 5;
++    }
+     define_cortex_a72_a57_a53_cp_reginfo(cpu);
  }
  
--static void aarch64_max_initfn(Object *obj)
--{
--    if (hwaccel_enabled()) {
--        /* When hardware acceleration enabled, '-cpu max' is identical to '-cpu host' */
--        aarch64_host_initfn(obj);
--        return;
--    }
--
--    if (tcg_enabled() || qtest_enabled()) {
--        aarch64_aa32_a57_init(obj, false);
--    }
--
--    /* '-cpu max' for TCG: we currently do this as "A57 with extra things" */
--    if (tcg_enabled()) {
--        aarch64_max_tcg_initfn(obj);
--    }
--}
--
- static const ARMCPUInfo aarch64_cpus[] = {
-     { .name = "cortex-a57",         .initfn = aarch64_a57_initfn },
-     { .name = "cortex-a53",         .initfn = aarch64_a53_initfn },
--    { .name = "max",                .initfn = aarch64_max_initfn },
- #if defined(CONFIG_KVM) || defined(CONFIG_HVF) || defined(CONFIG_WHPX)
-     { .name = "host",               .initfn = aarch64_host_initfn },
- #endif
-diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
-index a2f730451fb..8220d785f5b 100644
---- a/target/arm/tcg/cpu32.c
-+++ b/target/arm/tcg/cpu32.c
-@@ -711,32 +711,6 @@ static void sa1110_initfn(Object *obj)
-     cpu->reset_sctlr = 0x00000070;
- }
- 
--#ifndef TARGET_AARCH64
--/*
-- * -cpu max: a CPU with as many features enabled as our emulation supports.
-- * The version of '-cpu max' for qemu-system-aarch64 is defined in cpu64.c;
-- * this only needs to handle 32 bits, and need not care about KVM.
-- */
--static void arm_max_initfn(Object *obj)
--{
--    ARMCPU *cpu = ARM_CPU(obj);
--
--    /* Cortex-A57 advertising none of the aarch64 features */
--    aarch64_aa32_a57_init(obj, true);
--
--    aa32_max_features(cpu);
--
--#ifdef CONFIG_USER_ONLY
--    /*
--     * Break with true ARMv8 and add back old-style VFP short-vector support.
--     * Only do this for user-mode, where -cpu max is the default, so that
--     * older v6 and v7 programs are more likely to work without adjustment.
--     */
--    cpu->isar.mvfr0 = FIELD_DP32(cpu->isar.mvfr0, MVFR0, FPSHVEC, 1);
--#endif
--}
--#endif /* !TARGET_AARCH64 */
--
- static const ARMCPUInfo arm_tcg_cpus[] = {
-     { .name = "arm926",      .initfn = arm926_initfn },
-     { .name = "arm946",      .initfn = arm946_initfn },
-@@ -760,9 +734,6 @@ static const ARMCPUInfo arm_tcg_cpus[] = {
-     { .name = "ti925t",      .initfn = ti925t_initfn },
-     { .name = "sa1100",      .initfn = sa1100_initfn },
-     { .name = "sa1110",      .initfn = sa1110_initfn },
--#ifndef TARGET_AARCH64
--    { .name = "max",         .initfn = arm_max_initfn },
--#endif
- };
- 
- static void arm_tcg_cpu_register_types(void)
-diff --git a/target/arm/tcg/stubs32.c b/target/arm/tcg/stubs32.c
-index 3945dc49e5e..78f819ef6ff 100644
---- a/target/arm/tcg/stubs32.c
-+++ b/target/arm/tcg/stubs32.c
-@@ -22,3 +22,13 @@ void aarch64_translate_code(CPUState *cs, TranslationBlock *tb,
++static void aarch64_a57_initfn(Object *obj)
++{
++    aarch64_aa32_a57_init(obj, false);
++}
++
+ static void aarch64_a53_initfn(Object *obj)
  {
-     g_assert_not_reached();
- }
-+
-+void aarch64_host_initfn(Object *obj)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void aarch64_max_tcg_initfn(Object *obj)
-+{
-+    g_assert_not_reached();
-+}
+     ARMCPU *cpu = ARM_CPU(obj);
+@@ -886,7 +898,7 @@ static void aarch64_max_initfn(Object *obj)
+     }
+ 
+     if (tcg_enabled() || qtest_enabled()) {
+-        aarch64_a57_initfn(obj);
++        aarch64_aa32_a57_init(obj, false);
+     }
+ 
+     /* '-cpu max' for TCG: we currently do this as "A57 with extra things" */
 -- 
 2.53.0
 
