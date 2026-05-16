@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B04BCD4F3C
-	for <qemu-devel@archiver.kernel.org>; Sat, 16 May 2026 18:59:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFCB8CD4851
+	for <qemu-devel@archiver.kernel.org>; Sat, 16 May 2026 18:59:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOKE6-0005NN-IS; Sat, 16 May 2026 14:59:06 -0400
+	id 1wOKE6-0005N8-4T; Sat, 16 May 2026 14:59:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wOKE5-0005MC-0f
- for qemu-devel@nongnu.org; Sat, 16 May 2026 14:59:05 -0400
-Received: from smtpout9.mo534.mail-out.ovh.net ([178.33.251.187])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wOKE2-0006La-VL
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wOKE4-0005KP-8M
  for qemu-devel@nongnu.org; Sat, 16 May 2026 14:59:04 -0400
+Received: from smtpout2.mo534.mail-out.ovh.net ([51.210.94.141])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wOKE2-0006LH-In
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 14:59:03 -0400
 Received: from director6.derp.mail-out.ovh.net
  (director6.derp.mail-out.ovh.net [51.255.22.22])
- by mo534.mail-out.ovh.net (Postfix) with ESMTPS id 4gHtdb4lxwz6111;
- Sat, 16 May 2026 18:58:59 +0000 (UTC)
+ by mo534.mail-out.ovh.net (Postfix) with ESMTPS id 4gHtdR5FsTz613R;
+ Sat, 16 May 2026 18:58:51 +0000 (UTC)
 Received: from director6.derp.mail-out.ovh.net
  (director6.derp.mail-out.ovh.net. [127.0.0.1])
  by director6.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Sat, 16 May 2026 18:58:59 +0000 (UTC)
-Received: from mta10.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.96.93])
- by director6.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4gHtdb3lYPz7v3c; Sat, 16 May 2026 18:58:59 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.3])
+ for <jamin_lin@aspeedtech.com>; Sat, 16 May 2026 18:58:51 +0000 (UTC)
+Received: from mta3.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.54.44])
+ by director6.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4gHtdR01Khz7tgt;
+ Sat, 16 May 2026 18:58:51 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.0])
  (Authenticated sender: clg@kaod.org)
- by mta10.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- 2AC0C1923AFA; Sat, 16 May 2026 18:58:57 +0000 (UTC)
+ by mta3.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id CBAAB12E3B34;
+ Sat, 16 May 2026 18:58:48 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-111S005bdd9244b-f77b-4c9c-9be3-0b4b005b7b19,
+ (GARM-112S006a7c9b4b4-8660-430e-b62f-f650ce8c9147,
  A74BDF057EA0444B936764C4F05D8334868F2957) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 90.14.253.154
-Message-ID: <3a912a68-ba37-496e-9e5f-c3305019b94f@kaod.org>
-Date: Sat, 16 May 2026 20:58:56 +0200
+Message-ID: <c8b85c06-bfdf-4483-bbc8-e07b98b91dd8@kaod.org>
+Date: Sat, 16 May 2026 20:58:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 06/21] hw/arm/aspeed: Build objects once
+Subject: Re: [PATCH v7 05/21] hw/arm/aspeed: Do not realize 64-bit CPU types
+ under QTest
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Steven Lee <steven_lee@aspeedtech.com>,
@@ -54,10 +55,9 @@ Cc: Steven Lee <steven_lee@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
  <pbonzini@redhat.com>, Troy Lee <leetroy@gmail.com>, qemu-arm@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
- Fabiano Rosas <farosas@suse.de>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ Fabiano Rosas <farosas@suse.de>
 References: <20260516171524.19184-1-philmd@linaro.org>
- <20260516171524.19184-7-philmd@linaro.org>
+ <20260516171524.19184-6-philmd@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -102,30 +102,30 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260516171524.19184-7-philmd@linaro.org>
+In-Reply-To: <20260516171524.19184-6-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 13723312493020490797
+x-ovh-tracer-id: 13721060691137047597
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEBUWnl2tvfysYg7Pr+0iYAa4pbES6hKMKvnVC7j0ugnkIiwxcoamTp7ofYcJD3c2/u8wAxlbDD+ro1/jfAPFfhirNQ889iM6qpj4J76wW42M/9pIOtxcVSr55MYl2XP8RPRe74JN91mjyZBRkdFDhTzUrTceDPpK8+C7rNG1mB1SdEqOguIMt9c3nk7Q/beS743F58sDArzuWcIF4asEpkC24J+tiCLT8w4CYRIGUwTNHSdc5PGF1h2W6AgqBmRjXBuK4XzWHK3Yy9frHFeeO2chtbs2H9SBD5ZbZdjIgaDTwINm+TL528fcTGGEUlEJiyqOTO0kWl/PCo8GFi4mbjMPj/PZ+1RyGihlw98JCXL0BPEDXofiCeLosqopFjC5Zhvi2/pTZTS0VmRi8NklcCpxUGfKk7GH9M77Cl0bp6nF3W2KfskPhqJ9AXbe50MQ1i/Mr/Qq6GPkw9XgovDnXN4voshExtBX04kjG+jnaEsv1Ky2M5SPHKMOM1ASi9ml8hUnl9m5DWmc2Z9fiMSs568dT9pY2dyjNghZtK/snquKzodrOkrXZcJ7taybSZzlTb7H2Kgysmb5J0vlHRXSHiN+2hQB4AzMftzmZJvAaHonMZlVX9sQXcldUWFZ7KB7hgfss4lOJVC9SRIDtipjl2wgPx0wHh11NIuYz5taq/IQ
-DKIM-Signature: a=rsa-sha256; bh=eQGACl8aDAfufn6ivVW9b5iGoUsQT4hOrGSKY/+faZY=; 
+X-VR-SPAMCAUSE: dmFkZTFFflXHV1bDsDm/zTWZaC1ROu/FTGVmPD/AGJjPVbovo5Ngh37dBhTwcojhIgNygrfUFDsDrkR+p5CISoqSd+kkiRFTAU1aVKJbPqgsTWsiFGGr72hM/o4jsNmCLLAkk76/pw0RC2IDTOxsM3jyca6yzrmu+oxMJf0gKSLAKc2hFkFGZ789mTfzRJnnYeveOrifRP+2nGo2BvdANCkblSFL4Pfa9hg5gVqee0/zI0XrMOIZOJmO1HGnAE/jKEtdN3lAvZTS71Ny0hJczmwLe7IYfdAPwb7AnhuaPK0xawnrpva3O9gu25euN0Rd2m+2bx5ez0TEz8izBvvOiJrbGrwyHazbokW1Sn9H/F0Hqwd1Zd7Jp6Z4vXnrSGVFeHP4JuOvHihi6b1KwbctzAzwUFsfvgbawGoBj1wXEzPpbqamZCiFpdRo+u0RbxGf63tNGuz/ugRbrVX7tz8rh3qWoOF+lAb6aJt4Rm0aeoT97XaROjccIKyi/0YpVQr1wcW2t/ws0bfZXV9x8kHMm5+w2Z+2ePYWBJoBsmeAzBrSE9IJzqyN/Dk4q9a8USRwkOR6Cx9wv93r88++G7Z650e3v1+MzBWC6JIkmT3r+yu3aqiXJRiZkc+Q8QoeZGSKTkpzDOds6cBdPZd+P0nGvx09axDrgc9ruSj7ZkHN//KPjZU1wg
+DKIM-Signature: a=rsa-sha256; bh=Fgbupl1STtfH5gUNzdQRvpHrt7pK7lTm51npEEyuWBw=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1778957939; v=1;
- b=Habc71JZGsm7AIbgCDN3SfJ+VgqtqhMdECSLUuJxJRDqtOBnm/rOP7dOwpYy6HcRlDd0yYa5
- Bxp5P6xlj9QBEQtQFWDeUiancxdm0l+M8z+G+uoimXBmv1jH7YvF7mSIKMi9pMd2I6znTGBGXBA
- Nh95IU7powJJzMIlXs6NtGXYo+CsHZA9EZNZgsB8NTObJbzB7Z9wG5IP2mtAkBAZ+oiRjhLhs7X
- GKV7zdih1vqAvsX0RJ4313BkJk+ePnQ/onq3XsRVcZU9FLg5VdMd+9l+yw1XehxqupDnChgzhoE
- 0cKz0wHvB+0GL4ULRHdSPCAtpDiJ8pO5IDsW/7TqXfNKA==
-Received-SPF: pass client-ip=178.33.251.187; envelope-from=clg@kaod.org;
- helo=smtpout9.mo534.mail-out.ovh.net
+ t=1778957933; v=1;
+ b=qtLcqKBUools/OSZfLV2/J+0LiTjafq2GGW8z3un+JurWr3PFnRbLFqYMQB7pWLVLJ+2QsHD
+ YSj27ty7uLXye/u/s9Vsxzb+kC74zi3hNR1aWe6PIFvwJ8NxEL3GP3B+imSttyY2m+v4xTPffWM
+ EQhJAv4FWtFQhCQqiWGszrd/+57fqFpLHqlZtrVzuks5p8jGhW90E1u71fm9Q57UQQ9SPwUKoff
+ 3OUz8X9B7nnJaTKhrkgtX77OqSkRcLsaqVLGg4FOVOJvKeA5evBIX3OAlU7tNsE/NY9Nht8U+9H
+ j+MqW/ADozPNWEDL284Uz4PR9WOxzzGX9enf0CVRRZdkA==
+Received-SPF: pass client-ip=51.210.94.141; envelope-from=clg@kaod.org;
+ helo=smtpout2.mo534.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,50 +142,69 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/16/26 19:15, Philippe Mathieu-Daudé wrote:
-> Commit 064f1ce95fe ("hw/arm/aspeed: Split AST2700 EVB
-> machine into a separate source file for maintainability")
-> remove the last TARGET_AARCH64 use.
+> aspeed_ast27x0.c models 2 similar SoC based on a 64-bit only
+> CPU (Cortex-A35), only available in the 64-bit binary.
 > 
-> Now than Aspeed machines can be filtered when running a
-> qemu-system-arm or qemu-system-aarch64 binary, we can
-> compile the aspeed.c file once, moving it from arm_ss[]
-> source set to arm_common_ss[].
+> If we build this file as common object, these SoCs become
+> available in both 32 and 64-bit binaries; however when running
+> the introspection test on the 32-bit binary, the init() method
+> tries to init the Cortex-A35 type -- although not realizing it
+> -- which is not available. Simply skip CPU initialization when
+> running QTests on a 32-bit binary, asserting the realization
+> step is not reached.
 > 
+> Suggested-by: Cédric Le Goater <clg@kaod.org>
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> ---
->   hw/arm/meson.build | 5 ++---
->   1 file changed, 2 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-> index 144e4827660..7c3d66f4378 100644
-> --- a/hw/arm/meson.build
-> +++ b/hw/arm/meson.build
-> @@ -43,7 +43,7 @@ arm_common_ss.add(when: 'CONFIG_XLNX_VERSAL', if_true: files('xlnx-versal.c', 'x
->   arm_common_ss.add(when: 'CONFIG_FSL_IMX25', if_true: files('fsl-imx25.c', 'imx25_pdk.c'))
->   arm_common_ss.add(when: 'CONFIG_FSL_IMX31', if_true: files('fsl-imx31.c', 'kzm.c'))
->   arm_common_ss.add(when: 'CONFIG_FSL_IMX6', if_true: files('fsl-imx6.c'))
-> -arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-> +arm_common_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
->     'aspeed.c',
->     'aspeed_soc_common.c',
->     'aspeed_ast2400.c',
-> @@ -66,8 +66,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
->     'aspeed_ast2600_gb200nvl.c',
->     'aspeed_ast2600_rainier.c',
->     'aspeed_ast10x0.c',
-> -  'aspeed_ast10x0_evb.c'))
-> -arm_common_ss.add(when: ['CONFIG_ASPEED_SOC', 'TARGET_AARCH64'], if_true: files(
-> +  'aspeed_ast10x0_evb.c',
->     'aspeed_ast1700.c',
->     'aspeed_ast27x0.c',
->     'aspeed_ast27x0_evb.c',
+
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
+
+> ---
+>   hw/arm/aspeed_ast27x0.c | 14 ++++++++++++++
+>   1 file changed, 14 insertions(+)
+> 
+> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+> index 87dcb82e1b0..8311902f0c7 100644
+> --- a/hw/arm/aspeed_ast27x0.c
+> +++ b/hw/arm/aspeed_ast27x0.c
+> @@ -18,6 +18,7 @@
+>   #include "qemu/error-report.h"
+>   #include "hw/i2c/aspeed_i2c.h"
+>   #include "net/net.h"
+> +#include "system/qtest.h"
+>   #include "system/system.h"
+>   #include "hw/intc/arm_gicv3.h"
+>   #include "qobject/qlist.h"
+> @@ -419,6 +420,15 @@ static void aspeed_soc_ast2700_init(Object *obj)
+>       }
+>   
+>       for (i = 0; i < sc->num_cpus; i++) {
+> +        if (qtest_enabled() && !target_aarch64()) {
+> +            /*
+> +             * Introspection qtest just want to create this object
+> +             * without realizing it. ARM_CPU_TYPE_NAME("cortex-a35")
+> +             * is not available on 32-bit binary: skip it since we
+> +             * won't even realize it.
+> +             */
+> +            continue;
+> +        }
+>           object_initialize_child(obj, "cpu[*]", &a->cpu[i],
+>                                   aspeed_soc_cpu_type(sc->valid_cpu_types));
+>       }
+> @@ -693,6 +703,10 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+>       qemu_irq irq;
+>       int uart;
+>   
+> +    if (qtest_enabled() && !target_aarch64()) {
+> +        g_assert_not_reached();
+> +    }
+> +
+>       /* Default boot region (SPI memory or ROMs) */
+>       memory_region_init(&s->spi_boot_container, OBJECT(s),
+>                          "aspeed.spi_boot_container", 0x400000000);
+
 
