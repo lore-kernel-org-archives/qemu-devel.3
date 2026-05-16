@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71C28CD4F25
-	for <qemu-devel@archiver.kernel.org>; Sat, 16 May 2026 08:02:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B2D8CD4F21
+	for <qemu-devel@archiver.kernel.org>; Sat, 16 May 2026 08:02:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wO9xt-0002B8-Hg; Sat, 16 May 2026 04:01:41 -0400
+	id 1wO9xZ-0001Pq-0J; Sat, 16 May 2026 04:01:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wO9xn-00021B-Hr
- for qemu-devel@nongnu.org; Sat, 16 May 2026 04:01:35 -0400
+ id 1wO9xW-0001CS-HD
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 04:01:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wO9xl-0007yk-Qd
- for qemu-devel@nongnu.org; Sat, 16 May 2026 04:01:35 -0400
+ id 1wO9xU-0007rw-LV
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 04:01:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778918492;
+ s=mimecast20190719; t=1778918476;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0OfyzipyaFyY1CMp4s0Vws0Sy7SQL4ehZCVUgrOMSFM=;
- b=NAl/HL6qVfiKu0bm5eFcoVEN3RvWkhYSp+ffR/YhoEPAunxkA4dW6eEzsMp4gbPpPgJlGL
- LypV45VDAk379ZelwOYAsPl9cH2C+3ZDC3ic97VlhUpKj3CZTq1NOTG0sSz3RMRUPM7eVJ
- htnUxk2K1igQxil44GWKCXWW+dHOgGI=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=AtjRG2uOcioJaCs6Yzten5VTU1iCUoC5q9GYq6iXtUY=;
+ b=YKjHdjNC3KQNJgiTvv94heD6ZZkIV5mJwC45PSUJi/L7uIH4UsieNpRyTx46Mo35h8l/gL
+ XT0OA/A42iBLHiE3gByon5NrfBrwcRpMGBeQsyHOyq+ot30mbp3MAgmE16Ncas933JHjkj
+ COA82y4gxMG80qx3gjGSa2nSW3vTzMQ=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-492-GIrYqC9kNDC7GmpINsl3FA-1; Sat,
- 16 May 2026 04:01:30 -0400
-X-MC-Unique: GIrYqC9kNDC7GmpINsl3FA-1
-X-Mimecast-MFC-AGG-ID: GIrYqC9kNDC7GmpINsl3FA_1778918489
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-214-dsSEk6yvNDOvUQ-fhZOUDA-1; Sat,
+ 16 May 2026 04:01:13 -0400
+X-MC-Unique: dsSEk6yvNDOvUQ-fhZOUDA-1
+X-Mimecast-MFC-AGG-ID: dsSEk6yvNDOvUQ-fhZOUDA_1778918473
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BF7B819560B7
- for <qemu-devel@nongnu.org>; Sat, 16 May 2026 08:01:29 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0B6D619560B1
+ for <qemu-devel@nongnu.org>; Sat, 16 May 2026 08:01:13 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7F6541956053; Sat, 16 May 2026 08:01:27 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E5F1730002DC; Sat, 16 May 2026 08:01:11 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sat, 16 May 2026 11:59:22 +0400
-Subject: [PATCH v3 23/24] hw/i2c/pmbus: fix undefined behavior in
- pmbus_direct_mode2data
+Date: Sat, 16 May 2026 11:59:19 +0400
+Subject: [PATCH v3 20/24] hw/ppc/spapr: free host_model and host_serial on
+ finalization
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260516-qom-tests-v3-23-3f20c3a029a7@redhat.com>
+Message-Id: <20260516-qom-tests-v3-20-3f20c3a029a7@redhat.com>
 References: <20260516-qom-tests-v3-0-3f20c3a029a7@redhat.com>
 In-Reply-To: <20260516-qom-tests-v3-0-3f20c3a029a7@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1137;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=811;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=tLDFCKiyZ3IHoxFsadnpmt3a+eVCWPPwxdz50j2s6oQ=;
- b=kA0DAAoB2ujhCXWWnOUByyZiAGoII9CjBP9pOTrKkBw8FODUs+r8Sems975be0j7nkIEd+gsO
- YkCMwQAAQoAHRYhBIepvZM/h8YG0nb2Ldro4Ql1lpzlBQJqCCPQAAoJENro4Ql1lpzlvXAP/3lD
- uCS/BLbWgLZXNCVT000dA4ZKYrJUA4gHUkq8W0voMJCUH3OS2E4QbTrlHwzqWDwcF2Wp2YkhC00
- qAU65ClLqy7lQHyLJ5MA3JM5esdJtwCwJIzfN4tZK/67TIjP92dKKfalVkbeJoVT5H5RgilB1Dp
- rgi5IRRljrmXvkYYC6puwLLxqo7iauUekQr6LijOBfje48lrmlDaxLACWEvv1VGuWoevZbzI1Q0
- 9QPC7YcnKcMK3Y8WpPWNhZbU3IO2YO11vQnglLoiiXUn3yXpp8b4Hvi28JdfI2j0yndSVjN/bXh
- OGtLCX+Se2XyJZjDwzaiySt2bxNzApumkH5dEChMnmnJY2MfZk3AiGbttVLblbmFlNPk+/2KJbB
- /THuSVMVNB+4y6BiFAzpsX2FWXOsqwzzC/dzNJ8Jyp4zfW3YUsZbW9miiq/KKqY+p+Q6XBJUYZx
- c8wY1o+mj0vgLI7HnbBxiCzolu43kgsO9yJjJiWDy8hhYnaBQlTDc8gi9fwhRDSONMVSpnS5/70
- TuF4z97Cqjd2WSA0z9LAjfC0jK+tbERIAfKOwRq+gkFDiPA5kbysHlqAyG5U0iFpT73PRXjqx/H
- prVAJLodAPtr+/IfY7kLBuQfurMSWst9GlJSQ5fWkyY1i9lFDF7WghOyLtS2r4tDNVRlNedNsrr
- BoRPe
+ bh=q1VoyFbeNpTCUOW8T79Mb82LIAro7PYvZcbi1R2YJPk=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqCCPPBBV/pW20MitgvNVtoQhgN/w/3jvG7yq3U
+ nnQnyDVYhGJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaggjzwAKCRDa6OEJdZac
+ 5YV0D/4nEdR6kqSTLK+kXS5Jz9RhAXeKbXVie9TDEao6WY2Z+VdftNKYa6b/aJ9fQqIRjv4OE8N
+ mwlMeUdzYNiHyWZgbl1fFAl7daZf7jfo0Ml3MbDe/SCoNrcXXONdYV3nDBNCzEMapHRdDMonGss
+ pLB/OBxxxt3c1SNDB5mUaQUIBxhai07IfoESQkRldRoL4/Izfwy3CTOHavhYfUDJNYWS0gqI2le
+ ZzuVCC2fChNvMNqHvpOJUiT9YB30maDqDeSv8w+6fCA2ci0cwqcm4avzbgEugX78SwZ3F9CO4J4
+ TW+GjXv6LFsS3GMYQhrtU8RzF/CpPu6mh7SvqTRv3wwR7mcW7mrYqtKg367+26qYP/aSsQuKNiJ
+ foATeoY7Uc2l7AWQkhSDciumM0miCU/a+4hnI7TYvtqj+ztO4ycY1wtyW5tnGdZuo9bd0ZjUlBv
+ y6bheZQ9rhoUL/5mBEFcPlfjUFDGqoqmcu+XrLUyRSS/mNn+JADs0vNshY+qUT57i6Xip5hA/PY
+ GOrKNPRMYxW2sDJts1GhkyuhKwuUpgBFDMsXod5T5Gf7wOQ4gzab+OO+er2myPnP6ZlHnKW5qNN
+ mfi7RzBOLjw0Si+mFZhPR2ClriMkGsPuXRzy8Vrk+VlSgheUby7GSo1eYlU3ybNGPgLFOUHMIJn
+ cmF0q+IknZmPSyg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -104,34 +104,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The intermediate result of (Y * 10^-R - b) / m can be negative when
-the bias (b) is large and the raw register value is small (e.g. zero
-on an uninitialized device). Assigning that negative double to uint32_t
-is undefined behavior, caught by UBSan/clang.
+The host_model and host_serial strings are allocated via g_strdup in
+property setters but never freed when the machine is destroyed.
 
-Use a double intermediate and clamp negative results to zero.
-
-Fixes: 3746d5c15e70 ("hw/i2c: add support for PMBus")
+Fixes: 27461d69a0f ("ppc: add host-serial and host-model machine attributes (CVE-2019-8934)")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/i2c/pmbus_device.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/ppc/spapr.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/hw/i2c/pmbus_device.c b/hw/i2c/pmbus_device.c
-index 853dc4b4342..861f5b4fb63 100644
---- a/hw/i2c/pmbus_device.c
-+++ b/hw/i2c/pmbus_device.c
-@@ -23,8 +23,8 @@ uint16_t pmbus_data2direct_mode(PMBusCoefficients c, uint32_t value)
- uint32_t pmbus_direct_mode2data(PMBusCoefficients c, uint16_t value)
- {
-     /* X = (Y * 10^-R - b) / m */
--    uint32_t x = (value / pow(10, c.R) - c.b) / c.m;
--    return x;
-+    double x = (value / pow(10, c.R) - c.b) / c.m;
-+    return (x > 0) ? (uint32_t)x : 0;
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index d40af312fae..4ec0a7d20b8 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -3517,6 +3517,8 @@ static void spapr_machine_finalizefn(Object *obj)
+     SpaprMachineState *spapr = SPAPR_MACHINE(obj);
+ 
+     g_free(spapr->kvm_type);
++    g_free(spapr->host_model);
++    g_free(spapr->host_serial);
  }
  
- uint16_t pmbus_data2linear_mode(uint16_t value, int exp)
+ void spapr_do_system_reset_on_cpu(CPUState *cs, run_on_cpu_data arg)
 
 -- 
 2.54.0
