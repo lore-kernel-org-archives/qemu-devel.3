@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8406CD4F21
-	for <qemu-devel@archiver.kernel.org>; Sat, 16 May 2026 08:01:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EEEFCD4F25
+	for <qemu-devel@archiver.kernel.org>; Sat, 16 May 2026 08:01:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wO9wd-0005TZ-Tm; Sat, 16 May 2026 04:00:23 -0400
+	id 1wO9x7-0006vs-Op; Sat, 16 May 2026 04:00:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wO9wb-0005Nr-7c
- for qemu-devel@nongnu.org; Sat, 16 May 2026 04:00:21 -0400
+ id 1wO9x3-0006ey-61
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 04:00:51 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wO9wZ-0007TP-H2
- for qemu-devel@nongnu.org; Sat, 16 May 2026 04:00:20 -0400
+ id 1wO9x1-0007j9-J1
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 04:00:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778918418;
+ s=mimecast20190719; t=1778918446;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Feyzoi72st3BK6uw08MumeJ0heMFM0ajonX0WOp0f0U=;
- b=ZVbD47+Ng+q1k8SKktsGbIawKZ2AByC8XcVgAeENINVX4KBdYkpSxPgDwLF4LVyOIvgtO7
- 9QCiQhPOjg0UdVStUJcJdKS7wd6wBT6+wEo3WuBisfi1CItwiDgFEAPsUwqnAC5vlRVKnn
- E0Ts8PzBnNhUCAt59Yw1/iFLEMJeDG8=
+ bh=Cm1yArhtz5sU59WBphWUAJT4oX4EP1pkrBrfy7DzZ4I=;
+ b=Y95IVKq/tD/krZdUHc77EiWicFmxTPBwofddUVNu+1OWOM8KDGK2IJ3LVRE0MEssiUIDdm
+ zu8uZ1otYRV6p79rj6k/Da3N675tHS2dRZZCvglRWwPETzHLp/gXn3TOIAhqCncvH3c8GR
+ V4+MojprzvWAkzAtAdyRm0mvDafNnec=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-693-34Qqa2qrM564gibyahUvxw-1; Sat,
- 16 May 2026 04:00:16 -0400
-X-MC-Unique: 34Qqa2qrM564gibyahUvxw-1
-X-Mimecast-MFC-AGG-ID: 34Qqa2qrM564gibyahUvxw_1778918416
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-475-F_t5smDuNXegxMF4cUb1uQ-1; Sat,
+ 16 May 2026 04:00:45 -0400
+X-MC-Unique: F_t5smDuNXegxMF4cUb1uQ-1
+X-Mimecast-MFC-AGG-ID: F_t5smDuNXegxMF4cUb1uQ_1778918444
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B1E1F1956046
- for <qemu-devel@nongnu.org>; Sat, 16 May 2026 08:00:15 +0000 (UTC)
+ id 63D881956053
+ for <qemu-devel@nongnu.org>; Sat, 16 May 2026 08:00:44 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7AA2518001D2; Sat, 16 May 2026 08:00:13 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 320EA19560A2; Sat, 16 May 2026 08:00:42 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Sat, 16 May 2026 11:59:09 +0400
-Subject: [PATCH v3 10/24] backends/cryptodev-lkcf: skip cleanup when not
- initialized
+Date: Sat, 16 May 2026 11:59:14 +0400
+Subject: [PATCH v3 15/24] target/i386/kvm/tdx: free strings in
+ tdx_guest_finalize
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260516-qom-tests-v3-10-3f20c3a029a7@redhat.com>
+Message-Id: <20260516-qom-tests-v3-15-3f20c3a029a7@redhat.com>
 References: <20260516-qom-tests-v3-0-3f20c3a029a7@redhat.com>
 In-Reply-To: <20260516-qom-tests-v3-0-3f20c3a029a7@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1186;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=837;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=XKESI/0DSqdUBTRFIDl2KEKlv25ZaJ+0o7RYfGRaK9M=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqCCPPXjoFYqe82ja7TeolINHMRI0XBYapOmkZ2
- 3rAWE/bXcOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaggjzwAKCRDa6OEJdZac
- 5SGsEACDYr0SxoYLF/VScqblNrVaiqwORbiOd2bZ8ddMRNXQ0ZBbs5hoz+8JM7pNfhzHy1xcCMa
- wFJOeInRjjLr7smSIQgAWCKTrCXuZl5ErBRRhyeWbPm3QTSEfZ6sIX1ponFad6I3j06bDJUXZRH
- K1cn/dIIT7RfAOkLcT7kjtZp5igqVuHWZx7rIEvvyurFxmNi/67kBeNTRccENlFPGo032yv1Jt1
- VeAGJPUqiEsoJGUjQJ9UhRbTLT67mI7qDo8Hbli/iSPQPc6FPpV9hRSEqBcjIcF4xmN1S/dyv20
- /B9EDcLkVAi4PjjeoVqeJYixABQF6h68H6uLcd0E1owPIrJI1eKa7+661CE76I+T7MLiMxxIyCp
- +/BwdLc895q+Sg9+vcxJbebBbiKQdY02ZkHNvtop5O9AKSKmkDRrocywoPLjBFOnsXeUydLS76c
- Nzqq9H2kruOU08iBNNHOvEQcVIIFtatHn5wg08V+cSBDtF8uncVganMNfAYZZ1XOMXLXuHy/UzB
- 4sxJbAePtUJmmAdUQPoAW02oRzGDsv7UwmDqEG8xeG74bNVWxC7zfIg6nV47oBAI/jFdvXm+mrv
- pP7lnyU422d2k2cay2rMDikRQlPADZzDaIpu0W+vVbGU8jsZ346HlrAr1KUwQxdP5Up/y6xgQ8y
- HTillYk9Wvdy20A==
+ bh=MNRXqvTukQ+paxNe0QQZQxRe4jE5rhTlC8L20HzTXMs=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqCCPP/OtfgBQHwhiqz5NIlFFJrZM4xwFJmxjZw
+ LOaQWi61j2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaggjzwAKCRDa6OEJdZac
+ 5Vf8D/4m7w4u3HvSqr1axC97FrXYYb9oYOs8IJ8p7WaFgTTEyW8Yc9BErxQh1T+7nsYnlY7vs/V
+ KNAPkrL1tXqlNVRAhaXwcpRvuQGMhPLriNTEnpP0TXtOIWeqzDUaNhzRj/gzp84nA7jsXSe2bcw
+ FFrl78ffezCz8j5ch1w2ilhPTepPTcz19MAFlQFNv9bTpAm67G6ht0ri9Mzf6YC6ySSNcS05RY0
+ IQhPshSJaIFmUbYMu0hxlVd7oqDHUD8t1CaEbtS3lJF/YjERYreJfP6kOw8omASYcodNI4SjZQQ
+ YdwtbHIM8MF+huoMCU+gmN2WzFHbQL4mWziD5VotG+H0xyHgEqC3OzdyQpRG9L7csM2F7uXGk4t
+ tE4qVculjBfeb5YlzC8nJzWBczx55kFKA2m9o3E/u4d3MibKGfgnEccsJBjymhItRhiH8/3DULS
+ l2NouRlFzZsWRFOTItV7SnvutV0/Cb7VY3tSmFJtkiznXuDCkU0ucjGMEyyrF8uNo8HIwLBNCtt
+ f9h27k9eBF7+hE9nOC+Kb5QoFcdbHdtYv5cyy+oRmztRekZKSADRIhn3sIG5vhW7XTtZ0m8cnDi
+ 19BL3D046HGBXw2bQsEuInZ+WqnBZ1zwem8b0bi/B1W4YhimhNa8jhMgzq+SKTijIz1RmkJ9Jj7
+ D6SnrdLb/SSbv8Q==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -104,37 +104,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-cryptodev_lkcf_cleanup() locks a mutex that is only initialized
-during the init vfunc (called at realize time). When the backend
-is destroyed without ever being realized, the mutex is uninitialized
-and the lock aborts.
+tdx_guest_finalize was empty, so mrconfigid, mrowner, and
+mrownerconfig set by property setters were never freed.
 
-Return early from cleanup when the backend was never started.
-
-Note: it looks like cryptodev init/cleanup callbacks should rather be
-regular complete/finalize overrides (calling the parent method).
-
-Fixes: 39fff6f3e8b3 ("cryptodev: Add a lkcf-backend for cryptodev")
+Fixes: d05a0858cf87 ("i386/tdx: Support user configurable mrconfigid/mrowner/mrownerconfig")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- backends/cryptodev-lkcf.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ target/i386/kvm/tdx.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/backends/cryptodev-lkcf.c b/backends/cryptodev-lkcf.c
-index 40c7bd3c5a0..3fe29d3104c 100644
---- a/backends/cryptodev-lkcf.c
-+++ b/backends/cryptodev-lkcf.c
-@@ -255,6 +255,10 @@ static void cryptodev_lkcf_cleanup(CryptoDevBackend *backend, Error **errp)
-     CryptoDevBackendClient *cc;
-     CryptoDevLKCFTask *task, *next;
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index 4714c9d514e..df46fce7693 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -1585,6 +1585,11 @@ static void tdx_guest_init(Object *obj)
  
-+    if (!cryptodev_backend_is_ready(backend)) {
-+        return;
-+    }
+ static void tdx_guest_finalize(Object *obj)
+ {
++    TdxGuest *tdx = TDX_GUEST(obj);
 +
-     qemu_mutex_lock(&lkcf->mutex);
-     lkcf->running = false;
-     qemu_mutex_unlock(&lkcf->mutex);
++    g_free(tdx->mrconfigid);
++    g_free(tdx->mrowner);
++    g_free(tdx->mrownerconfig);
+ }
+ 
+ static ResettableState *tdx_reset_state(Object *obj)
 
 -- 
 2.54.0
