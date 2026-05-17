@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B618ECD4851
-	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 00:31:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF97ECD4F3D
+	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 00:31:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOPPd-0007vd-E7; Sat, 16 May 2026 20:31:21 -0400
+	id 1wOPPm-0008HT-Be; Sat, 16 May 2026 20:31:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wOPOa-000793-8E
- for qemu-devel@nongnu.org; Sat, 16 May 2026 20:30:17 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1wOPOk-0007Dh-MT
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 20:30:31 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wOPOX-0004sI-7V
- for qemu-devel@nongnu.org; Sat, 16 May 2026 20:30:15 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-83537a80ab6so769183b3a.1
- for <qemu-devel@nongnu.org>; Sat, 16 May 2026 17:30:12 -0700 (PDT)
+ id 1wOPOf-00051q-Nh
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 20:30:25 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-83ef1d17904so1078134b3a.1
+ for <qemu-devel@nongnu.org>; Sat, 16 May 2026 17:30:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778977811; x=1779582611; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778977820; x=1779582620; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HTm+tJ9AXbaN4UCtQXozdvXW5oj4hpGtuMfl8xxCE7w=;
- b=ikix6iJFvuacZ8TXpQRF5hB4y/ysxl79LLFSAf5kbePiNcUflZakBfAnMZ8CFMHAKM
- 2nnET4e9FZfG6hmZzC0x8gwGFi6b68x8Wz/wTzfWbX0CIVhcpE0T541db5VLd8VnFxGK
- oLm9oVdd1Yz+Fyi+DnE5mhF0+LVmEA+YBCI86a5cBV8f7imjbE83dJOPoxiFQF9rQa8+
- pPmG4L/lemeUXKl3wqgOzSrOO9KB47s1jdyKazqgQgBLatGZqtH3MzeYVOdsZ9K1H9kz
- +P5JupKta+4AsJosMCUOKeWIgY1DtXnjBa78ZNjAGFCAeIc3EHpr35F5AEYesXX8CA1I
- jkHA==
+ bh=Wl6+4I26v8HYA+JJlHEMinIiz3qcncuhnbxRtIcqZ1g=;
+ b=vhy+qo4t8cACiidz1/LgBP3W0ZSUqXJJB06eclbYEG4/LrrKE2FCNtblUrH68pg3ao
+ KK/EjaNbgOsEmZgSSZyu+kDCscg1xAHbi0DffGK9zgdkEOsDF5RfZYnzWUotHvdwxADo
+ T1xJ8Ya6TeRnYbY9JnLUTLJJY0WsXfd1aL6WUQtY7lbMHXLV2DtZKK281Gxu8U2BXW1s
+ CcDAE4YkPp/hVyyeZYibGO0iyRdA/pOypHjDIwK2TC7wHgXv4zGmJlDZAIUT7m3xHGiv
+ wfcbK12vKcpMP5KPOyNLjz4l7DtZgWxeTuq7YKzCY+KGZl823CKQJLZKJjSTH3ehdbf+
+ ZAYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778977811; x=1779582611;
+ d=1e100.net; s=20251104; t=1778977820; x=1779582620;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=HTm+tJ9AXbaN4UCtQXozdvXW5oj4hpGtuMfl8xxCE7w=;
- b=mwHms6w7C3/YC4g2wjKFOf8PxDTvpH31qRpPPs0DA2LROmLI99WL90TEzF3dvb+cyb
- 4ugtQN98Q+B0Igoaxy/3CYSYFun468rVAbJRXWlO9AT8vYriElbBu5we7dd1kNRLWHII
- 2RJZsyunESqJpoVHc0jWA0wRskR6LasDnCHNR/bssg4lOd5KNd+GywvwLBPo1isMBw+a
- 14NBsE1Yr+MV+15PDmWKOpcvY5J2/dCMYnTiLTBvdydWaAEcn94MvPCOlqGZDVknyPhG
- /g89EYUIdJr8rh+bkzbb67k1ECT3/awTqmxRoia6K3I1wJNU/EZxiIk6okweA8Ment50
- gJUQ==
-X-Gm-Message-State: AOJu0Ywsb1lm8ZZChlNqfdZhb3tSnxZu2A7+CIzgk1PMVD6Hb4yXYTUf
- hXRywGpyOSSv8z4lbhfmkI/Xeds7nDTgiIT34hmEq134XE5Y4Jf9VhLNhOKqvSx3WdxkJNWYE10
- jCIUn
-X-Gm-Gg: Acq92OHu3cDHBvSmb7XY0snosgba+voZRnBgzixC2PMpA27XyduFNSj2XlHudx9KgNu
- m0B6pVMwpiOOQx1VhpTmwKqVRZp8DyzHfYuRIJ96yyFIosCuWUWngQYbeUhT7jRWaVjYX2oFvAE
- Nv0srLi/fMFuBd5GwsmNn5ErE3HMxa3HeyeCo/wANIWGxRED+lp4jx8b8nbQ+bnNhaNGYBbJH/l
- /Sc5Ge/+NZ0Du3mUdCzagY1kJzSEowaOp/DCH/KOIuvvnKFGL52LQ5bCtO0gHMzTFYyj34rFUXC
- GjJpymfC78UptoLNSGvBjCou+dwMSPySGlYHmkqnsI75Tbo72hQ0YlknnzZxsc2WhnWI5J2l3iL
- QSfUhPpXO41AYdGotvSN/3Rn4F5sHVIKV3gKu+jhpl3O99U2Pm+xmrDbyKhmzHzyZy6NL9x9iCH
- TOWnLVnmMRYSph45XxNnuGDHtAMkZT
-X-Received: by 2002:a05:6a00:1404:b0:829:9a7b:db84 with SMTP id
- d2e1a72fcca58-83f33f30bf8mr9765756b3a.49.1778977810719; 
- Sat, 16 May 2026 17:30:10 -0700 (PDT)
+ bh=Wl6+4I26v8HYA+JJlHEMinIiz3qcncuhnbxRtIcqZ1g=;
+ b=HtFMhT1sT+6YzTZyh3l6+MVAMaHQfCFupFawsTFQCO4/IZxGETCQu8jYA0top4gOjq
+ zNL4idcY/dlglrwniidnnrjILDuNbEVeJz8A5RBNvjkxoAlhVJULLeR7lJ0EX7bsc65g
+ S0SjRRF9R7BTmx14Fw1tFhB9R0w5ccYLym/BbqCTvmTviuBwKXR2kYT57f3gJGlrjJnX
+ 4Tz8Y8DoPLBreEztcxV3gXFgBPBqBVWQ9OOGwkrjpgDnVjLrvwx5/gQgieMLn3tdWs7u
+ U5cKA72l2jFeneoIbalSYUgVI/A0+IYhKYOHsKHhj5FWq+CmGb+vhWRurnn6PG2QcLZQ
+ vggQ==
+X-Gm-Message-State: AOJu0YwR2KFGxMsRGjTkHVK14V2wIAwPmZ7Mk9ShYAKkzFOmxvzdrFbC
+ QBh8FP3HDWMSzj4Ffx75pddj8qbTd/3nGwDx65xkuhqzYZGAmW0P3TSqE1nKxtMTzQK2dmRSYma
+ HwKq3
+X-Gm-Gg: Acq92OHZiPOOOWi1mRGio1ydgDFF9dsXQ0J3MQuTy+qe4m+UdHA2U1o5p/PU/qAHY3j
+ /6jct1x73t8ukJKdiSZLyh/dE+v/gnE6ttfJTPCAJXajZb3KjN37/GNOwJmKm8i3kGculuss1sQ
+ ScMLuHxMwV0kJzmylB86Cibl6dd6YSqCd2TJJMpc5TJ6slwri5U7dqTfGrI8qQiJUSr1b9rI51e
+ b/gpREndmZpXJXghR/Dpb8We9u6I0UDpd/L96UqmH8gZhRHxa15nyUWUhoHmEXPBMwu3MLeXYrL
+ hSJijTfPMyUntTq+/RiO6piBLbMw9xaDQfPEkBQULCmmWS4pLDCVA+/s7OeVZ8SRBQ1JQ/S+kLO
+ XaOcz+L3J/ygrkrsg9PwE1VMqDClZW4FvUt/L5uWgBPez7+YSXWJ1j6cRxnSfOu2WIMLZZbX2E4
+ 0LE0FhTncwkJvP/DbMGFX29+Vx1xef
+X-Received: by 2002:a05:6a00:3014:b0:82c:dfea:9e2a with SMTP id
+ d2e1a72fcca58-83f33c4d95fmr10807174b3a.2.1778977819880; 
+ Sat, 16 May 2026 17:30:19 -0700 (PDT)
 Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-83f19663cfdsm12272745b3a.9.2026.05.16.17.30.10
+ d2e1a72fcca58-83f19663cfdsm12272745b3a.9.2026.05.16.17.30.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 16 May 2026 17:30:10 -0700 (PDT)
+ Sat, 16 May 2026 17:30:19 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH v5 08/63] target/arm: Update HCRX bits for Arm ARM M.a.a
-Date: Sat, 16 May 2026 17:29:07 -0700
-Message-ID: <20260517003002.321430-9-richard.henderson@linaro.org>
+Subject: [PATCH v5 18/63] target/arm: Add isar_feature_aa64_f8cvt
+Date: Sat, 16 May 2026 17:29:17 -0700
+Message-ID: <20260517003002.321430-19-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260517003002.321430-1-richard.henderson@linaro.org>
 References: <20260517003002.321430-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,24 +101,25 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/internals.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ target/arm/cpu-features.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 3edc15c7b4..4414be85d9 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -258,7 +258,9 @@ FIELD(VSTCR, SA, 30, 1)
- #define HCRX_TCR2EN   (1ULL << 14)
- #define HCRX_SCTLR2EN (1ULL << 15)
- #define HCRX_GCSEN    (1ULL << 22)
--
-+#define HCRX_ENFPM    (1ULL << 23)
-+#define HCRX_PACMEN   (1ULL << 24)
-+#define HCRX_SRMASKEN (1ULL << 26)
- #define HPFAR_NS      (1ULL << 63)
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index 1bb77d78da..1fde3e9231 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -1569,6 +1569,11 @@ static inline bool isar_feature_aa64_sme2p1(const ARMISARegisters *id)
+     return FIELD_EX64_IDREG(id, ID_AA64SMFR0, SMEVER) >= 2;
+ }
  
- #define HSTR_TTEE (1 << 16)
++static inline bool isar_feature_aa64_f8cvt(const ARMISARegisters *id)
++{
++    return FIELD_EX64_IDREG(id, ID_AA64FPFR0, F8CVT);
++}
++
+ /*
+  * Combinations of feature tests, for ease of use with TRANS_FEAT.
+  */
 -- 
 2.43.0
 
