@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B32CCD4851
-	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 00:27:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01678CD4851
+	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 00:27:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOPKp-0001iC-H8; Sat, 16 May 2026 20:26:23 -0400
+	id 1wOPKq-0001iI-F1; Sat, 16 May 2026 20:26:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wOPKW-0001eJ-Tj
- for qemu-devel@nongnu.org; Sat, 16 May 2026 20:26:07 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1wOPKc-0001f6-9p
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 20:26:11 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wOPKU-0002YA-6V
- for qemu-devel@nongnu.org; Sat, 16 May 2026 20:26:03 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-8354461da74so444400b3a.1
- for <qemu-devel@nongnu.org>; Sat, 16 May 2026 17:26:01 -0700 (PDT)
+ id 1wOPKa-0002gw-EL
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 20:26:10 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-c802803ac17so394969a12.1
+ for <qemu-devel@nongnu.org>; Sat, 16 May 2026 17:26:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778977561; x=1779582361; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778977567; x=1779582367; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=2J8h7EuqX8JGH71JQZgqsud/ulFplvnKZbTkt0er6k4=;
- b=DemfvLZoIwfhF2RWcaopTdjkBqGfx+jiNo2s4QtldWqIl2yT5fJjsYXZyybN+5IZtU
- ZA+IkI/tnGf9D7E0vPoV9BXFHotNa2CpuwW1zDsjjHivhj0OiQrD/PYuTQFiYePMvPn5
- kqQ3CSJE1suA0jg/BBEFVQ/aDlnr0hhulAcAdnpaMS9yF/zdBYA8xThNqGdmoh0AqR+H
- mQsfeRTPTloVGb9e2EquTk8PE2gTrNcR/Id9g9/QQlZ8ZQ8gX7wHXOdHanpBE049G47B
- n59ucPZPoJpgY8A6cg+pf4VmX6uSw/kk4N9jfMPpajmBuDpCIyTuOdfUh6JBabI3oHXs
- Ljiw==
+ :reply-to; bh=AsQJRNP1GjT+LK7oBczLFbhTenBiS0j96dQXCFfIHLw=;
+ b=g2wxqbULpeIgdIwlInPZKwXlxtz1wJJ56vV+ioGCAPQqIDzUUk+cCWl7kFUwch4aGG
+ YMCrGSn238rT39QkWMDpLfTuSVRECX8kStnQSvdMOX/j7ujx0Q/X8lOzvVPmi9sXQ6U6
+ bI2PfojZuAF9OelOk9MwuBzuTRUkPuXDWT1k0IpDRZ0wKi9svrHC7KPVqzDzDLrTnKIL
+ uZCmlwbjsN6u7X9TYRYXbhCM168nvshgrNh25B8D6dUvd+ks1EFcs5izxUQ/laSi51pC
+ SgjQY8vWpBc+b1jJE5sfKjMmnasJ5ITO+2IVgL/dGG26PloyqHNgCu6joqrFmI27KM5Y
+ eHZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778977561; x=1779582361;
+ d=1e100.net; s=20251104; t=1778977567; x=1779582367;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=2J8h7EuqX8JGH71JQZgqsud/ulFplvnKZbTkt0er6k4=;
- b=M3kLjQZG37uUaJsWOiCqlwULooeqfh5XSkPKooz8+9qQA8xW0bo1KpiRNy0wuhTDEA
- nByurnIeXPMz4ExINaw5S+QY2eLXr0TsYqfq6Vc41RWKd0DNvfgEIPUyA0r+6KzkgZZc
- OxBy9JOEdnBzx3sfSw5mFRU+XAVIUEetNiR8xT/tQIRKD92RKEyW86dKBqnsQgmCq1k9
- 5eZUVy1N4sgH5za3w+udAB9OxX7OegxzIEg7uL6j+JSMwmpcwkAZiiqIp/heYrHnW/3w
- oZ3bT5JT63e6OL1cxqsxnw5YNmijFwBh+CfyVzEJRtfM+LBhgZxFD1WKqg0RpqRZ18YE
- N+7Q==
-X-Gm-Message-State: AOJu0YxVM0I8QfajFaRmCgOpoWwyxGq4oSpG66XWIoPkBNb2F6fs6DFi
- OxF+B4yVT747kYNYLuzv5a0sDLFjuMPO5n8pYsYdcD/oCWaFqO89nNXAhj2yAjicmC1dI8uJ8E/
- K2op7
-X-Gm-Gg: Acq92OGcO6nNOJfENqryumqjuJmEF6YtJ8I/DuPQQ60h9HzIWXoSkRD6LOXXRTrN/ti
- YTMK3i7DK6CRICRkNEKUWpJ2vlpolHaKpNS7RQR284cTbHiK0CuX+d+OhjfIh1JqTtUXXEgHfnB
- 9yFNqrlMXiFoLjqg1Wfv+WQhLpWFpiFBMEapNZrwvTViprOQhNKzjuLnGoyaXHAQBl9X97o30nJ
- PZOJThY1Qb5urVq9bGSI4FcNgDpx4ICnuSSGzQ8Vd6kpulGE2dyoVa8t3QbWWjTFs0aBqiRT92V
- DSzO2k3KXIc4NIRS3y6ExRi/HBpr5Dz+7XboCwznz10Mpfb1aHQWnN8gfPcvFDrG3M/tyZAtFZN
- SVf4T87FFuAnHM4bfSWTfPaBI+eAwbLUIfREkGf3pNmMP486smIk8GxymrnhD0t5tlR/oVMx04T
- iUgr5P/IADphXrNxhq0z9wCo8Girc5
-X-Received: by 2002:a05:6a00:a20e:b0:82c:e1aa:21e3 with SMTP id
- d2e1a72fcca58-83f33bca81dmr9848317b3a.10.1778977560527; 
- Sat, 16 May 2026 17:26:00 -0700 (PDT)
+ bh=AsQJRNP1GjT+LK7oBczLFbhTenBiS0j96dQXCFfIHLw=;
+ b=FeC+9AjSLiRdCxYnAuUTL1B+6ZNi6qs4Ilyla6Hczb1H/iarSdUk7IOupUPymIQbbQ
+ 39kl4jMhRa8disdmk/OrKI8A5x+BHaK3JVWPcXXXgF6Ekt8T41uHN/DbSl5oE2IBzeSZ
+ gotlMOVV6uZSDOUaZ2x8g6d6lNu8rS23sFAFKVfx30UwwckFSMRBwfxXVJw6VmnZ39B6
+ pS0/dBbeqkr635AqSAsLGh8pI5CRN+r/oNiccPbWGMjikSKuEbg5DDIv/lJY6gugRgYi
+ T5qKR9Sva4G+EihU3qBLtZVeoRek25RAnJknzR3gRfZW+EPTUOk1xc8I+ugsggio3aZH
+ 44qw==
+X-Gm-Message-State: AOJu0YzCz8Kb4b7JGEKbqs5QmhMByUU2rTEXmdSnDepMKYcmcaF2KHW0
+ CoMpCTATGg8ofawqOq3IVrzyt4fDvPgFxLO/KjArt+Tv/kJ6rh6O/QnPXhQtdZYDhancwYUWefM
+ btnPv
+X-Gm-Gg: Acq92OFc8hVA25r8vdCt7ydBiX8xdWhDANvf4YQQxXR1qTAmZecFmRnGJDfY3eA/JtU
+ jLCPq71ahBngcNd+XseBSBFxWhJYTNg3zIBzL/dkWcMHEqLvCIJ+Nc97aDubkHDC/4rZmil9keH
+ mAYIquXqR3d32I3Sp+q/Ryt3ul2wDRtsZq3z/hwDW178lj9pa69SwVsg1KBmFlpxT2PYVa50eq2
+ fK+tjo8nMMXCo4A1qg2BoGWfdv2AL6zH7+dnPgbz1+Hc5AK1owFP44GQ+KTkZPxRmVmwV0+q5Y5
+ +ejijX5Xt3TV7sqPr8AWG0rdz0ZvAIDQZoiTKIvwWVH3UT4zNRasNLhdyBNRfw/7VFYZnE7KGfG
+ ZrXO9VxstmOT1c/VOQl0UdVv0FJFWn0fuGQAf9GshPsdh8Rf4JR95jeH4BbUVgS0Z0O1kDrc6iS
+ a46RlT+7MRynVdA3EXd0upS9qYIHpK
+X-Received: by 2002:a05:6a00:429b:b0:83e:b125:ff30 with SMTP id
+ d2e1a72fcca58-83f33ab698bmr10169419b3a.7.1778977566951; 
+ Sat, 16 May 2026 17:26:06 -0700 (PDT)
 Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-83f19c5be71sm9670317b3a.39.2026.05.16.17.25.59
+ d2e1a72fcca58-83f19c5be71sm9670317b3a.39.2026.05.16.17.26.06
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 16 May 2026 17:26:00 -0700 (PDT)
+ Sat, 16 May 2026 17:26:06 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v4 06/12] fpu: Use parts64_round_to_int in
- parts_s390_divide_to_integer
-Date: Sat, 16 May 2026 17:25:43 -0700
-Message-ID: <20260517002550.321291-7-richard.henderson@linaro.org>
+Subject: [PATCH v4 12/12] fpu: Introduce exp_scalbn
+Date: Sat, 16 May 2026 17:25:49 -0700
+Message-ID: <20260517002550.321291-13-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260517002550.321291-1-richard.henderson@linaro.org>
 References: <20260517002550.321291-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,35 +98,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We will not expose parts_round_to_int_normal.
+Avoid exponent overflow as well as checking that we don't
+lose information with opposing scaling.  Use it in partsN(scalbn)
+and partsN(round_to_int_normal).
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- fpu/softfloat.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ fpu/softfloat.c           | 17 +++++++++++++++++
+ fpu/softfloat-parts.c.inc |  5 ++---
+ 2 files changed, 19 insertions(+), 3 deletions(-)
 
 diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-index 905ba6ecf8..08ea56a71d 100644
+index a762f4b43a..722bf5ecda 100644
 --- a/fpu/softfloat.c
 +++ b/fpu/softfloat.c
-@@ -5197,12 +5197,11 @@ static void parts_s390_divide_to_integer(FloatParts64 *a, FloatParts64 *b,
-          * Rounding of partial quotient may be inexact. This is the whole point
-          * of distinguishing partial quotients, so ignore the exception.
-          */
--        *n = *q;
--        parts64_round_to_int_normal(n,
--                                    is_q_smallish
--                                    ? final_quotient_rounding_mode
--                                    : float_round_to_zero,
--                                    0, fmt->frac_size);
-+        *n = parts64_round_to_int(q,
-+                                  is_q_smallish
-+                                  ? final_quotient_rounding_mode
-+                                  : float_round_to_zero,
-+                                  0, status, fmt);
+@@ -601,6 +601,23 @@ static float128 QEMU_FLATTEN float128_pack_raw(const FloatParts128 *p)
+ *----------------------------------------------------------------------------*/
+ #include "softfloat-specialize.c.inc"
  
-         /* Compute precise remainder */
-         r_precise = parts64_muladd(b, n, a,
++static int32_t exp_scalbn(int32_t exp, int32_t scale)
++{
++    /*
++     * Catch chains of scaling which lose information.
++     * In particular, if the exponent has been saturated,
++     * do not allow it to become unsaturated.
++     */
++    if (unlikely(exp == INT32_MAX)) {
++        assert(scale >= 0);
++    } else if (unlikely(exp == INT32_MIN)) {
++        assert(scale <= 0);
++    } else {
++        exp = sadd32_saturate(exp, scale);
++    }
++    return exp;
++}
++
+ /*
+  * Helper functions for softfloat-parts.c.inc, per-size operations.
+  */
+diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+index 914e588ec8..0c617beef7 100644
+--- a/fpu/softfloat-parts.c.inc
++++ b/fpu/softfloat-parts.c.inc
+@@ -1108,8 +1108,7 @@ static bool partsN(round_to_int_normal)(FloatPartsN *a, FloatRoundMode rmode,
+     uint64_t frac_lsb, frac_lsbm1, rnd_even_mask, rnd_mask, inc;
+     int shift_adj;
+ 
+-    scale = MIN(MAX(scale, -0x10000), 0x10000);
+-    a->exp += scale;
++    a->exp = exp_scalbn(a->exp, scale);
+ 
+     if (a->exp < 0) {
+         bool one;
+@@ -1633,7 +1632,7 @@ FloatPartsN partsN(scalbn)(const FloatPartsN *a, int n, float_status *s)
+     case float_class_normal:
+         {
+             FloatPartsN r = *a;
+-            r.exp += MIN(MAX(n, -0x10000), 0x10000);
++            r.exp = exp_scalbn(r.exp, n);
+             return r;
+         }
+     default:
 -- 
 2.43.0
 
