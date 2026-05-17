@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AF49CD4F4A
-	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 17:27:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F64ACD4F4A
+	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 17:29:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOfGX-000273-Or; Sun, 17 May 2026 13:27:01 -0400
+	id 1wOfII-0002aS-L1; Sun, 17 May 2026 13:28:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wOfGS-00026o-5M
- for qemu-devel@nongnu.org; Sun, 17 May 2026 13:26:56 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1wOfIB-0002Zf-IV
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 13:28:43 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wOfGO-0003p3-2g
- for qemu-devel@nongnu.org; Sun, 17 May 2026 13:26:55 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2bd8c4aa911so16314265ad.0
- for <qemu-devel@nongnu.org>; Sun, 17 May 2026 10:26:50 -0700 (PDT)
+ id 1wOfI9-0004Tc-UU
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 13:28:43 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2b458ca2296so10414825ad.0
+ for <qemu-devel@nongnu.org>; Sun, 17 May 2026 10:28:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779038809; x=1779643609; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779038920; x=1779643720; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=tcCxoDkBkYJHWH/amTOpcAWrPp0fn8NCYthn5//+3vM=;
- b=efaREnB45Vc5PoxEgMIIn1ipAE29SgMsHccWDXFCppVlFlNq9cMMn/PpMGnyg6NzTl
- aHDrVLcoMe1xNx5beNZkL3OV0KX87iw8jy7vrv+qCJBxSPIIKPXMjsa89je7pitp1A2e
- fMXPsqbVEBGsdVMqTgKxZ6zNM3UhgjT+b57ABH4lF8q6DDX4BXMwkQRzF1V6cnn1axW7
- 3qBrYsT/rmeL4wfk4g7BUBl7LH+LC8PtUm97lp2VVhWAGuA4d2uHQpIqTyO1dmqHirR5
- fefudv9jqV421C6iETS6PcJjcQWj20p3Tk7dxhN3xhdL2Uk6tbYdxtbNIGMi1GaIua6c
- ISBw==
+ bh=vOFU4znfEsGVp9l4smN/TYD987cfM65/uvub5YClsds=;
+ b=NP85OqP/bbU2tvanVIiaJ6NsjQaOigG1f6L4kub3w3krmDMgERS8ATOzxKGQrRUThv
+ LaTXuknB9uXWxgeH/E5RYlZdLDADu6oyotvS0meenRG9bdbgTbZbdLZq1p0OVRI41xuV
+ ggPKU7LHlOLiU4MOggs09y4df3uvTZW/wT7kXHp8sylizuk2lpbkbWPbpVx1h6QKo1iA
+ pQjw1EKJ9bdsK4lOjQee71pQTWYFQzfLmAKUzw9qCYilHk1ex7X9/eByHQbDwGIpF1mJ
+ ST7RL8hFyxUqVI5eygiDUUYWtfiu7OiV9wehPbIXcBbDfN5Ofac6y/VxuJfrApkd+uMz
+ eWZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779038809; x=1779643609;
+ d=1e100.net; s=20251104; t=1779038920; x=1779643720;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=tcCxoDkBkYJHWH/amTOpcAWrPp0fn8NCYthn5//+3vM=;
- b=NnPgAX/vQ1Zqjo53//dJF4sg6zIxedBcWX5FvNq8Z9XSlzv841TOu7exRwE66Acs4F
- 3E3PlvRK4gkcNqA7pW0qmucx/NJDvtrYNWHQuNDDes/8etk6FWeGd10T06hq1JVdHjHh
- EmD8rZ6oSRH/BfCxVmTwx0g/gPtLTqTN+nd35Pm/mjNHY9Fvg/nArK/zjMpefdTfVPI6
- rDHWVQNP0p7XdJBc9VUMzA4uqzeOptrJgEuygTW1Rq28yYRKpYmmiw3BGfj5b5XDCK83
- A+cFKedVqNHvFZmG0A0XqhLfkvCSRbcNVqWcDE1fp+f38hfL9tYyBhH3O+AeGEYs0rHh
- LNbQ==
-X-Gm-Message-State: AOJu0YwbC2TfeDLBGGSGqdViiHV9rhDQSW3CnbFKjkBCQ7uOB+qPMwtn
- oE0EK03XWWNST4IDtD7VrEg8Zh9CG/dZaMfmGw8zLVFXhcnYMkYhiAT2c16YWgcsWbq5m4RbNTT
- yVhdg
-X-Gm-Gg: Acq92OHi/7dTEQnZesIaWqD20hn5MJSwGkRTWeW8UT3tdfUxvle+m63L0WJNC/ruk6x
- jwmqFUG9LkFAMUqBgGF0ui3MfJA7sKFlZu2Jx7KkAYhKF4UYFnH0yjSexCNRH+HvXOwdLIKG0ps
- ho7sqHSR0PS18IYRpFEo7jTjtxChDLyk13Jc9Nq3i8xbsichHj2sCd2lkPPlqDqSZScUzc0gh7p
- Sa6wmYkmwOFTGbytz/yJtlAr/wQSRANtNw0bTMosX28YFBizwqe8iDi1RquboXHxZRskCVqFfTx
- tRe/m34ma2Kj64o04zbaDR0tHJA4/w4OH0eraiTkN4zXj5KIJGtq3L32cL6hI/N6pVUhYD3o8EV
- tFQwvGIAgw9V+9tQ+jbV3ueDL9qUKpbjZTbZo0AhfL49HASKVbY+8Y++A90J0FB0cC00a1FWY7E
- lq7+hmNGX5ykECz5PEb9EDTatpVjc7LyeqIYSV
-X-Received: by 2002:a17:903:40d2:b0:2b4:5f69:715d with SMTP id
- d9443c01a7336-2bd7e8f07f3mr131504105ad.25.1779038809176; 
- Sun, 17 May 2026 10:26:49 -0700 (PDT)
+ bh=vOFU4znfEsGVp9l4smN/TYD987cfM65/uvub5YClsds=;
+ b=IfU1syL0qhMA7Jr8MtIseN0fBdM31MNjYlaA0A4SY3llTtnkkeqixGfls/71GnHvM6
+ GdpRaScr66dDpfltBVcZ8JYEFeynx1/BxYmo5M2opyRWYrd2kU7krIG4PrBoLG+Rn3vI
+ gkQ13xWkCWIcy3YAktjBHi2BH7OvUn14/H2Y/+RU+3cG6tNq1FRZUUebTb2Jbi4uJHuc
+ Qm4lTNpmo81W4IQ1HxF0BzKhy1o6HEl+AkH8pjvvfSUNzd3gjN9qm1OHhq/u1KURs4/B
+ +QWe15I7OhfIfdyW7olbV7cDLLaX4wRzvURKYXfRWsgTbwiQsFCxrryON02DDOS9DsZt
+ 5/cA==
+X-Gm-Message-State: AOJu0Yz6DARLKP2b+pGYcUfsAd8DLMBQg4on1p/NaMRoqDySc4l7WkVI
+ 0SIiu/URMMO6fpyLxgEDvBgqkb4aP+PXQlGNrbsKvCHkaxjJE2UVX3OgMIgXDOClq0hgwuFmb4h
+ UDMKy
+X-Gm-Gg: Acq92OHyYDuw08TjUVVoZDCTuHFDgY0LNyLn6kKlqHnD26kRfLsfA+7wNP6C0nvaxHB
+ fv8Gx6yUvXeYjv+qxKuJWvNa3eYycKhwtsQBuFf8SZrX+O35eVKZ/xGhTjfGIAMj9+aA3PKscMa
+ tKw+g1lCsQhsKfxgle2IeJIZx011xP5tZw0e1ey24HgoFZNwwQdIHFqRAVS0j3sT3jdxv66/rSv
+ OrTuHGQzfwpOe+saTJe0wetguPdYFl0oWgENG+hCxbbbwswHkS64d3Gmc80xs+ATFGDnmt/mJ50
+ 0ZFa2bbkFfodu0XJB10xY/fxYIfQBDwxyA2hKBp8huQrKGJuu4l/+99zFp/qEweImC40VTAAglg
+ BPXpD6VEpW4xyPpn57rTQ5/aAREXjsUDBleDXH6zWzLhxomo/5VjYI3uu9qtwJzK+OnxwOZjE9A
+ SbUQzT23jm7lw2fZcz57u0PmhAMIQkUZ0CJrmW
+X-Received: by 2002:a17:903:3508:b0:2bd:78d6:2a15 with SMTP id
+ d9443c01a7336-2bd7e802592mr124105665ad.7.1779038920179; 
+ Sun, 17 May 2026 10:28:40 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.142.33])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2bd5b568cefsm125283335ad.0.2026.05.17.10.26.48
+ d9443c01a7336-2bd5d11c7f3sm119926905ad.70.2026.05.17.10.28.39
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 17 May 2026 10:26:48 -0700 (PDT)
-Message-ID: <e94dba05-3457-45ff-9ce3-15dd26b12da1@linaro.org>
-Date: Sun, 17 May 2026 10:26:47 -0700
+ Sun, 17 May 2026 10:28:39 -0700 (PDT)
+Message-ID: <9aba3624-a5d4-41a6-a1b7-6e4b1ca53ae1@linaro.org>
+Date: Sun, 17 May 2026 10:28:38 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 15/35] target/mips: add Octeon MTM0 instruction
+Subject: Re: [PATCH v7 16/35] target/mips: add Octeon MTP0 instruction
 To: qemu-devel@nongnu.org
 References: <20260514-mips-octeon-missing-insns-v2-v7-0-226686be4ce1@gmail.com>
- <20260514-mips-octeon-missing-insns-v2-v7-15-226686be4ce1@gmail.com>
+ <20260514-mips-octeon-missing-insns-v2-v7-16-226686be4ce1@gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260514-mips-octeon-missing-insns-v2-v7-15-226686be4ce1@gmail.com>
+In-Reply-To: <20260514-mips-octeon-missing-insns-v2-v7-16-226686be4ce1@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,26 +105,34 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/14/26 10:37, James Hilliard wrote:
-> +static void octeon_reset_mtm0_mpl_state(void)
-> +{
-> +    TCGv_i64 zero = tcg_constant_i64(0);
-> +
-> +    /*
-> +     * MTM0 defines MPL1 as zero; model the architecturally unpredictable
-> +     * MPL2/MPL4/MPL5 lanes as zero for deterministic emulation.
-> +     */
-> +    octeon_store_mpl(1, zero);
-> +    octeon_store_mpl(2, zero);
-> +    octeon_store_mpl(4, zero);
-> +    octeon_store_mpl(5, zero);
-> +}
-
-Thanks for the CN71xx docs.  The fact that MPL1 is cleared with index 0 makes sense, for 
-backward compatibility with CN5xxx.  It's tempting to set the others to 0xdeadbeef, but ok.
-
+> MTP0 loads the low Octeon3 partial-product pair from rs/rt into P[0]
+> and P[3] and sets P[1] to zero. Model the architecturally unpredictable
+> P[2], P[4], and P[5] lanes as zero for deterministic emulation.
+> 
+> Legacy single-source encodings have rt encoded as $zero, so the same
+> translator path also preserves the older Octeon behavior. Add the
+> translator storage path so subsequent VMULU/VMM0/V3MULU operations can
+> consume guest-managed partial products.
+> 
+> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+> ---
+> Changes v2 -> v3:
+>    - Split MTP0 out of the combined Octeon arithmetic and memory
+>      instruction patch.  (requested by Richard Henderson)
+> 
+> Changes v3 -> v4:
+>    - Keep the Octeon3 two-source rt high-lane operand and document that
+>      legacy one-source MTP encodings use rt == $zero.
+> 
+> Changes v5 -> v6:
+>    - Zero P1 and model P2/P4/P5 as zero after checking the CN71XX
+>      register-state table and description.
+> ---
+>   target/mips/tcg/octeon.decode      |  1 +
+>   target/mips/tcg/octeon_translate.c | 28 ++++++++++++++++++++++++++++
+>   2 files changed, 29 insertions(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
-
 
