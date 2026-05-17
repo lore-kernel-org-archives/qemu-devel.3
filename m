@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8587CCD4F4A
-	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 17:19:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F056CD4F47
+	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 17:19:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOf8Q-00085W-3L; Sun, 17 May 2026 13:18:38 -0400
+	id 1wOf9D-0008PC-Md; Sun, 17 May 2026 13:19:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wOf8K-00083M-RE
- for qemu-devel@nongnu.org; Sun, 17 May 2026 13:18:32 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1wOf92-0008My-FZ
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 13:19:17 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wOf8J-0000k9-D1
- for qemu-devel@nongnu.org; Sun, 17 May 2026 13:18:32 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2ba4efedbeaso11237325ad.1
- for <qemu-devel@nongnu.org>; Sun, 17 May 2026 10:18:30 -0700 (PDT)
+ id 1wOf91-00017p-2v
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 13:19:16 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-366087480d8so1206865a91.3
+ for <qemu-devel@nongnu.org>; Sun, 17 May 2026 10:19:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779038310; x=1779643110; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779038353; x=1779643153; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=dTdYWoNbYTebKkpxuutWdzy+3Mer7uVGN/BkklGUBW0=;
- b=shQFVIx/1nHlkAyNjgO3bm/Rss4P40TqIZcJTA/0YzeJtcP3OZSBVLtumWmcoV2Wzz
- ue8rUiOwUokvqVhr4GH3csSqswl2OEfCmGED4DXduPRGDKikJIA5zBZnn8OPmHRBBhRX
- sbHXFTqZuP9bSVWsWjfMXI8a3BEmUyYCMORfTkWcYDR9Wq74iAUvc2MYweYBv4i5DYCd
- 3Bvzmffk6hMJwbK6oO6837CqHKOA4AjRQcRmsO0C7vjlb0guwnBhXADivbW0JN6Bt4AK
- aue/KWFVCwPK0I3nDL+pS83ZVFkA3IL50tj1X1Rtk28vDmvzivchLciM8TQKkFjOH+vg
- 1GLQ==
+ bh=swJS/PRqRUKNQubMwtcKvLt2zQhOsttzMnZXhZCGXHU=;
+ b=MzIB1ry3GJtlEL61qgRZ486bHJdQ8c70126IoYzTVyYzuQPgFJDuBZbt1IkY5YXbg9
+ vuaSMuyRUDWHBvGNQdcHSPhJhoNqtc4OEd/FmcWzy0hGm1NZz9T3MuggzRurDs9d0HeX
+ WWu9+17f7AGYd4s1KXHGL77oPtaQxnP9q9FNCdTr0VklwnGp0fVYaJKunfjAs2hVg0U7
+ Sx+W8o/oGjNVB1VvVgyXwsUgAN53EGnX2T6mrJZ8amh5+R2+mYNFVANIVViaLavcqfbi
+ mlsp6tMASN7eCuoYrqmunGzRq6wkjBpO4/R+VL8qCnzW1wFMASRDtSjg1PLIPToW4j9K
+ lXjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779038310; x=1779643110;
+ d=1e100.net; s=20251104; t=1779038353; x=1779643153;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=dTdYWoNbYTebKkpxuutWdzy+3Mer7uVGN/BkklGUBW0=;
- b=JcslRODvFVqC8cz/UOC3o2ekc+YNiEqyLpPzIo3Scp5KZEBxXwxSd5MZQzbjMxoDDA
- NsU3W8N1zq7isla1FCJHV4prsC+iZ562NSb9L9ZbHcbwM4k5BnSkqZG7a54musazsffL
- 2RwBr6+LOjFTbF8MmNHWW2tGkO9znua+DRcrse867SR1kNbgJ5FpQAWQBnPX3evfySaj
- esnOmizGQeHihkt2iuiMFQDocShXFLLoJQRU26XnPWkBS0pFdo8IUPs/nLTE7FYGnyMs
- LBOvsHqEzosy3av3gaAVUsqVkTMD0ydcLDK6M0UIgI1zJCNGWGf0STqKmpAUMAoVjX3E
- thrA==
-X-Gm-Message-State: AOJu0Ywpm8yvzNmNruobOjZMJmfu/pGE8OE9ni+r4TeSB9eyv7M9qRml
- VjhwW97PK7stLNayB/zXIChreCkjvREG1Lpz2WngwofCljuxyzw8gUF83G0q6Y5b+e1F97Jvifj
- R/pG2
-X-Gm-Gg: Acq92OFSNbCkOafp08GCmqZ5IaKbGrRIa0lo7tZjFekUrIDgbNoKuAXSGQqr24ae9b0
- hg3q8Dgq7sFlZa44134jhn6mNoH69nFCzHIf7ZgFA7PAELj4LztVbS/vtxCotIjTC3dkkeb1PJ6
- e95d9bUhfce2UjpdBTDIKuKugrCZNKDUDtDR6l8fIFjLCYMfchTHnrmSaeZG5NGT5ghFITz9EQA
- ZnQhkEor58uyoghmY5d/aMTJXeYtrGHoNc6FONNNIEmzFY1G8PLheMuDVURzaN80mjhlBgqVRs3
- cOxKGwC0dV5wq0mfu50/oO3SLbslgCOx6AzKfKcrw3cDqSlJcO6v9oddBvHo4I8jM7mSk8cHDL7
- TCpdtl68t1Wq/no8C5nw/JqBRG+UY/k7DOSXK3bmvJaV59VtDpxmI7RmFpEdVbIYPk5bM0yY8ob
- CCbNg9WHtEsS2kP+IXijx86I9Dq9KQM2cjEc15
-X-Received: by 2002:a17:903:b10:b0:2ba:4ad9:70f6 with SMTP id
- d9443c01a7336-2bd7e93871emr128788985ad.31.1779038309648; 
- Sun, 17 May 2026 10:18:29 -0700 (PDT)
+ bh=swJS/PRqRUKNQubMwtcKvLt2zQhOsttzMnZXhZCGXHU=;
+ b=cTdCYNPWggcX53538LivbPhr6dH/hjrk1INmFDV5HPN/LMrbrA4eSxjhgdh8A7mwgb
+ MuVUavAEEIfhnxFnPOQjgY+LVudgf2wqUbDKkHmqDHw7E24HrzBp6ZYcdic4nvJeyawc
+ BYncolJ4GKFp9amGpc1k8Nwe/rkNXwGAAixIdh/X23DseBrq4oHm0bNLxswCDSvv0QLB
+ 4C8XZyeQ4RHtJmTbSLRIKeWXc0/pi3Y/SNSd3aMo/sYGRLzlLtp6mvtw86O3ShfKlBZC
+ h5WiQ1QU72PZTWu5+zLSmxDMHGO5WUGVbjEJUCPGoy34zx314smDIDkPXAqt9g+gHpGx
+ mDSg==
+X-Gm-Message-State: AOJu0Yx5ZTNWKzTUR0nrJnhu4HU73IZjCmj8ADww4O2y74nlZD5sogC6
+ 9TcHcGw9QUjnyrGBxbt/5m9o9WGDzGMr4SasOaTJ0T5QTv/Jx998vz40WTE8Fm2zrVSpvESHXtU
+ L3PIz
+X-Gm-Gg: Acq92OHMl9Yw0uNNtJhIGHSa50LxI6ivfzllkkVfNASVi62UWYc8TYnZDGG92SWtkxj
+ YdaCv/27EtCJVpvFqCeNG04TNmBXD7awisfPjeDA7gGB5D0uTbbtW9BiYczWNhk/fkBIHRksfJY
+ db1mLKVGAya6L+MGuUcqY4Wu6hh1AGPB9kIcXBgTR8w6WTeMwHAfG8ewdZggPx4aTMS1H4JkAZu
+ P3FOpDmFkng8fVsAcC7fCUDsLS/2PtsmMaSV9EvMUFJLuebtsfrwNOvpidXvAS37uE8MDGAekCA
+ +aApDT/MawfLnECDJdQta+wzxXs54IFiwdrTeBbI4s5Q+rfb8O5yXYtUAraR367Tu25o/YpuLnd
+ nIDB0sknxdPYbxhoutGx7imy+XtNAIw6EXZ9dj/GxpEwOzSZ5fSKzpRDq25DAh1voTNEAKLht4x
+ pEWVIXd/2UmZ8hwzVIeEfpGyRSCztc68pOPPLu
+X-Received: by 2002:a17:90b:2248:b0:368:341a:a925 with SMTP id
+ 98e67ed59e1d1-36951c97685mr12321992a91.23.1779038352559; 
+ Sun, 17 May 2026 10:19:12 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.142.33])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2bd5d235e04sm125904255ad.80.2026.05.17.10.18.29
+ 98e67ed59e1d1-369517ed182sm8676769a91.15.2026.05.17.10.19.11
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 17 May 2026 10:18:29 -0700 (PDT)
-Message-ID: <c9300c93-b20e-45ad-9b93-d23e19e58a80@linaro.org>
-Date: Sun, 17 May 2026 10:18:27 -0700
+ Sun, 17 May 2026 10:19:12 -0700 (PDT)
+Message-ID: <5b9eed93-fa48-4345-bb41-edc028dbaf30@linaro.org>
+Date: Sun, 17 May 2026 10:19:10 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/12] hw/dma/omap_dma: Remove unused ifdeffed out code
+Subject: Re: [PATCH 12/12] hw/dma/omap_dma: Drop model argument to
+ omap_dma_init()
 To: qemu-devel@nongnu.org
 References: <20260512203414.3633237-1-peter.maydell@linaro.org>
- <20260512203414.3633237-12-peter.maydell@linaro.org>
+ <20260512203414.3633237-13-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260512203414.3633237-12-peter.maydell@linaro.org>
+In-Reply-To: <20260512203414.3633237-13-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,24 +106,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/12/26 13:34, Peter Maydell wrote:
-> The OMAP DMA device includes a lot of code which has been disabled
-> via ifdefs for over a decade. Whatever this unfinished development
-> work was, all knowledge of it is long gone, and we're unlikely to
-> be doing any serious work on this device model in future. If we
-> did, we'd likely have to start from scratch.
-> 
-> Remove all the ifdeffed out code.
+> The model argument to omap_dma_init() is always omap_dma_3_1, and all
+> we do with it now is assert this; drop the argument and the enum.
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   hw/dma/omap_dma.c | 94 -----------------------------------------------
->   1 file changed, 94 deletions(-)
+>   hw/arm/omap1.c        |  2 +-
+>   hw/dma/omap_dma.c     |  8 +++-----
+>   include/hw/arm/omap.h | 12 +++---------
+>   3 files changed, 7 insertions(+), 15 deletions(-)
 
-There's a bunch of code that's mis-indented after removing some ifdef'd if blocks.
-
-Otherwise,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
 
 r~
 
