@@ -4,136 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CD4ACD4F3C
-	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 20:25:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC44ACD4F3D
+	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 21:08:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOi39-0007da-Ic; Sun, 17 May 2026 16:25:23 -0400
+	id 1wOiic-0005Za-OK; Sun, 17 May 2026 17:08:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
- id 1wOi34-0007d1-Pa
- for qemu-devel@nongnu.org; Sun, 17 May 2026 16:25:18 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
- id 1wOi32-0007ZF-V1
- for qemu-devel@nongnu.org; Sun, 17 May 2026 16:25:18 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64HEUCtb172004
- for <qemu-devel@nongnu.org>; Sun, 17 May 2026 20:25:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=qcppdkim1; bh=1dtVfUgUSwwZldZpn0OG7MIF
- TCIkR2/uRuQfKXp3wIM=; b=UHiE7Td9yZP3gQ6FoCWxyxrQD0K8wlGu5K9KGF0W
- B/25GhPwCPgebKNHkqGpwZPhwJ19/qa5vDSJ9loc5NvBYpwk74wds2LTudulL3Is
- bkaY432IA4d1BpHDuLMuMsIYYD3UPZIcDgBnlniQMcxBWK1rDhOJIQYzoPRt81iu
- soN9ei2aI1++QeboQbbSOjSjwfmx3KUDgBj6dpbXP3ro/SolA3i78mTaxfOAH0yW
- hHxrk7lI1VBKQ/cV8r5/qDhlbRpbLYp4GOEg2ht6+VqrqIljZJXsagYMesUjzXEN
- 7m9trzF3d0yyDPos3Zyqj/PWxO2SuEVThQ7/8moITudQzQ==
-Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e6h0g3gqq-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sun, 17 May 2026 20:25:13 +0000 (GMT)
-Received: by mail-dl1-f69.google.com with SMTP id
- a92af1059eb24-12dece274b1so1966615c88.1
- for <qemu-devel@nongnu.org>; Sun, 17 May 2026 13:25:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <faithilikerun@gmail.com>)
+ id 1wOiiW-0005Yo-KA
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 17:08:08 -0400
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <faithilikerun@gmail.com>)
+ id 1wOiiU-0007Bl-NK
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 17:08:08 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-c80167f56cdso507420a12.3
+ for <qemu-devel@nongnu.org>; Sun, 17 May 2026 14:08:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779052085; cv=none;
+ d=google.com; s=arc-20240605;
+ b=QA8VRii1AMhnkMlPoMNzPT+T9vFXFhOs4ch4nlvf+HI5pYYxZleh6oJBErT7JXTBuu
+ xhNRsvUsL39GmxHViP+oS7hnn9tfkqQf9NFnzoHSwJN3EjkUiMCIaXINfP2vij2sufUr
+ oaeccr8z8wR/+ttFWHklHCy68R5yZCS/li1KP3Fk+sGfDdQ9tjD2mKX+mUOQYl47sBLR
+ wJXLtL440rUeyxGVx1GiU3dBhyOMVRivPtC+Hycm7ACuk3ovWEhzMzK4OBWhzdmEL1oU
+ MeH3kjBIXUaE+OCYp5PmpgL+E9NpD2VqwG/xHHyCUhe6ajG0+AcEw18kims739rPTuYX
+ YHTw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=AAMAc5V5ln8/O/jwy9RnlRqB0jUpihC6riHyTV7R2z0=;
+ fh=16ROSnVJ/M0vRbjdNRcio4ye9tBpAiAozVgOoszGlKA=;
+ b=LzzEyhcbcsJqP9NNbxbmOmie0tj+vSyyxQ49r0VNhGQB1w793KNUgya3MauBfyE0tM
+ GtXpJcq5dTpCQPVaA1q9+ytP+vGWqZivXqrNUgySysgQ+9VOfudSOvKcTO8URCvaN2lC
+ vJUXYBPilrtOurmNvRaKqKwKiaCdklafZrSaeW8IQXl2l5gRd5VXBPtZAacuFx6p3vVq
+ jbiKm93jnPgy0tKZeaBoXZe8lck3YILxqlv0UwCyVRms8h6DYZmtGu/mxa5E5yWS6Qb4
+ InJ0xtT15FhtLrOXfESpquB7Mss7m3QyLmso+rX5yVQWZfWhXrI0Ylt/DGJIjdv5ql8n
+ tUuQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1779049513; x=1779654313; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=1dtVfUgUSwwZldZpn0OG7MIFTCIkR2/uRuQfKXp3wIM=;
- b=imZSf1Nr6zP3hacQHqxztCbsGY05cedm9s+nhvRL5hKP1BNuoRSmKwlFMsxwyDg6qZ
- M/Fh4utCrF71mFFmkTSO46BYmDBKnr+F5lcYBNdR4SaStUzwPuoED8Po3zhG8GXdm57J
- DcomWlArJhAvvu4eg9O2nSatpmL0HSb4EhjIDJq3I90PaTLKHPBtV2MzRZ1Y4Ee6qtKO
- JH0GDbL18a8/MnlL1ymXcF8fyec6C6jo/9fpob+ZZ9PJHSOHwZ0ZZtpeizG9FReVBdk8
- O02Mh8Lw2VjAHLbNCUEmKrhyKaspPoFsrdWMldYzitTsXcdDZPQbVxom6X2Wq3LK55qm
- U8gQ==
+ d=gmail.com; s=20251104; t=1779052085; x=1779656885; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=AAMAc5V5ln8/O/jwy9RnlRqB0jUpihC6riHyTV7R2z0=;
+ b=QOhb7pmkQPRdHyfd1N7S+cQbXkksX7XRWNg4/c5BfE3v/nL7z4RPLQASX+HUnNhSUI
+ 0dwwaj/Zz/kFVlLoJDqRivLP/BNsqnvmS+JRPMLvwah+UrWgPHl3j+9+fKXWuediY9LD
+ ZzpfTGyxwkFuztKAtX5ujp0rnIJfMgpU0CpyzjnivI69gxlp3bc+9xE4zOo4J+/R6gWE
+ 4QXpfpVr0bP6R5nB4SHKT1q0mG6QyIKA9rknoM3yBoG5IqCqiRVA9HkkkYqwAqD9Ds+7
+ lmOqDuCsr6Ucl7EEp+xzlSPVLeZRV4MeZZSBk1L9GrEGx1pYCt8QMkmCyr1qPiXAUKve
+ VU9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779049513; x=1779654313;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1dtVfUgUSwwZldZpn0OG7MIFTCIkR2/uRuQfKXp3wIM=;
- b=plLmziWG5kt3vEB3hWUv7b0glOGFK78k+GOtMP/d9Kv+B5eeEPHPzKj5JqeawF6WKp
- EOuy4T8rZudVg8a5ovhUF3ZWLaSaoEIiqtAyMxj5977jy5CdR7zu+fECXChmp+0BiCrI
- vObxHl/T1N8/aHaZMoCMGVL3NCN6IGtxd4cz7JhHdUSuaIyxcABJFNGxGGSg32o+g77M
- 0/Sb/5HIOibq60BxBqxXKEfIKgIETF7dX6+BPN5CUtJmRcua9f0yavc7sm2ue2y2LCxL
- 5tD9ixtoSIG82TXy7O+S1U7qT+aP/mrnKDoq02os9neyPhHi35qdybVAY+Ws11cMb4Ay
- OhzA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9puBsS4gnHnUOAzROcld4btuCGoJO/w3aF8GDn/HX6NcfOM5bQnaUhPyybPrIW+dM+2ycecjFig6el@nongnu.org
-X-Gm-Message-State: AOJu0Yx8QK/vY3TYc/BI3b9uY1y7Zifd1/VG0s6Sl7K4O3S1WXX0dCVB
- 1utilNBxUYC2ZsAP4kn2g1rqVr6qwPk260eGPMz+x4LKhy13h+quZhPu/DG98fl0eD6vQ6a93HU
- sn5K0ARqDFBlel1j5ZbrD2XjS98QZA2Tg4h8pn5RlmerQNTrlMJI+aHhFXA==
-X-Gm-Gg: Acq92OFwlnIKczFDcopXHSmnOk4JIxOClU7Q2j3r4tlL7EaSLwB15uXrDdQoYjXDWA3
- fPaGHLDubT5WyGn5ZHrN9O/pUOJGYGwiFICr67lgaJquH1ArNuqpYWpZo2FJSrejyx90KuDAaLL
- 36kDvo4HyAXyFX4bI0qXk0K7fsGP7oEjpj3BOEL91wz1V9OBbc3Qf8HSnJ98ioP8D922CDfdLbJ
- cBGNOlDXjZii6/eLFxBfx/3JWIpsoFe5Xi8TyJZ+1ndXIe9ev0et8a7xQny+Rq5x1zPpJtpkjzS
- 5P+2NjmZHZOgkkXdIKV0lSNsriEmKW/wjHpS9o8dV33D+3VDQ6vAKpdVPBwJtnb4layrmCtRmEB
- DCv1zL100dzBGZbwBstuYxGPriMAwCg==
-X-Received: by 2002:a05:7022:689a:b0:135:26e2:9b73 with SMTP id
- a92af1059eb24-13526e29c4cmr4508603c88.5.1779049513145; 
- Sun, 17 May 2026 13:25:13 -0700 (PDT)
-X-Received: by 2002:a05:7022:689a:b0:135:26e2:9b73 with SMTP id
- a92af1059eb24-13526e29c4cmr4508591c88.5.1779049512600; 
- Sun, 17 May 2026 13:25:12 -0700 (PDT)
-Received: from localhost ([140.82.166.162]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-134cf44668asm14876417c88.6.2026.05.17.13.25.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 17 May 2026 13:25:12 -0700 (PDT)
-Date: Sun, 17 May 2026 15:25:10 -0500
-From: Andrew Jones <andrew.jones@oss.qualcomm.com>
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- leif.lindholm@oss.qualcomm.com, Fei Wu <wu.fei9@sanechips.com.cn>
-Subject: Re: [PATCH v6 2/4] target/riscv: Add server platform reference cpu
-Message-ID: <iglchyedne3jhwr6n4b2ayhqtvyubjpha23kxtobuayjkts4xp@vlzvv3iok36o>
-References: <20260514204640.2540054-1-daniel.barboza@oss.qualcomm.com>
- <20260514204640.2540054-3-daniel.barboza@oss.qualcomm.com>
- <agdgwnLqvEeMoeqk@lima-default>
- <174f03b2-b979-47d2-aec8-645d797ab758@oss.qualcomm.com>
+ d=1e100.net; s=20251104; t=1779052085; x=1779656885;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=AAMAc5V5ln8/O/jwy9RnlRqB0jUpihC6riHyTV7R2z0=;
+ b=JqLqxvKh/wHHp1sKx91HQL/SePzAdTL4nnv77OcmU1SOsJYNzOY9VGnnUiHTuXJZjY
+ qyrmmlvHO6d4sEKjSk7HzPCqfsRbgbfKP+wJ/3RDWhMVcRnSIFdB60JYOdr9eIbnDNyD
+ t9uQEiIrlAvwoxup85LKtEutjd0+fs40DPUPxi41YWEuIeT12nImmZMe0MfTWGqMcZ+7
+ KOlqUBF7QTe/g91pPGUWCy7JLhFf8Tp6txxFOZP52CCVjGAvy1Nl3XdnvvbjwAtSQZPp
+ BiIhARErgkCFlf8rVRqOa01rXbzQAUE9oYa+2JDeRc4O6pNgRfiFOKEzv9jMRZTnFSjC
+ MPLA==
+X-Gm-Message-State: AOJu0Yy1wKzCx4FjQySVG0jBoFLL++SLwppoRjm34bySxm0zarJX8J7n
+ Cql7fhRsIjm7OOt50sXuZLZIApM8b0gG6iv/E6zcNCbzBcGfd6H7td1uz0c8G6xusikS7zl69yl
+ S8Tg0MJtD8VRk+NLTShqTqxB2NQyOHqI=
+X-Gm-Gg: Acq92OEYnVJ9w3XMhht14onCWKVB5kLRCCE/bqTrV63UgkEVax64kz+WFcD1IndK74K
+ h5AgQuQJuOAYeSkpYtMohZzsbjj/eRnd+gYNp6oVyQrguvuLjU+zJ17cw7xj0R4DAkvBvwY35v7
+ eWcOMmZ8DQ8B+9/GsF/aDsL4uEo4XrraaOGUdOpay9ws411JJVROhE3jdpdQlTfuVO5uJlneP13
+ 29aoTam/ApZqTIbHDyBiC/Gsfpg909ye2p2LWUo2YsZhk2Iiz9/GAu9ShbdX6XQJAtQkfXtd49u
+ w5gMOA3hYcu1/ETxNb/5KEebZaWfXTmX/gK4Cp1faLgoNBOsfbAROq2VAtkIcJ1c93ZU36ra2w=
+ =
+X-Received: by 2002:a17:90b:3845:b0:368:763a:17b8 with SMTP id
+ 98e67ed59e1d1-36951889325mr12677066a91.2.1779052084612; Sun, 17 May 2026
+ 14:08:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <174f03b2-b979-47d2-aec8-645d797ab758@oss.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE3MDIyMCBTYWx0ZWRfX+IdxIVkimPWl
- DgSVO6zsA6uB1tnqMsy5WTME7TpEZbz8dYmXxgw4HgLR9RfMocKqhkx+1l248zgf6hlMUWskgFI
- x2JMnsKT7LrEf5p6VXIdO0w2ZSStIzpdqBdWgIi+To2vXZtMlVNHVCctInhLA7zpDvaqCjn7nZN
- k9bnxs+wzieRtU/86AF2PAicjd/7inV9HM+JTsCf+ouRka/MZLc8zi03PEkPPeXb0lv/KtE+cbF
- QOceSnaUaP1ndkywfoFDRZP5B7951Tfp+Nr5APBEGIuGACNN6Pc9peK6ft0ifnUptxWFaCkF9qV
- +0cVObZoGpMy2xPVdJRTtlnMp9BnQVTkBo2BML60L/hwHay309DuueGpsrWQ7fgcnPhpQ4Km51N
- j465ROJJqQZcEpQjAn/ykyQtsPX7p6UQcQPyKbqBOhqHcwZuNrhXK43eaYHpo1FQDMUL4fUQSqi
- VCLhiaJupkuKjKqbAQg==
-X-Authority-Analysis: v=2.4 cv=W7gIkxWk c=1 sm=1 tr=0 ts=6a0a2429 cx=c_pps
- a=kVLUcbK0zfr7ocalXnG1qA==:117 a=cvcws7F5//HeuvjG1O1erQ==:17
- a=kj9zAlcOel0A:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=uTRCLKPYAAAA:8 a=UyxrdN3CEDufz-4FsiYA:9 a=CjuIK1q_8ugA:10
- a=vr4QvYf-bLy2KjpDp97w:22 a=T-agBWn15iSmxapsA1lH:22
-X-Proofpoint-GUID: twyBkGYhh5oipeULSER_a5iLK0kRF3Lk
-X-Proofpoint-ORIG-GUID: twyBkGYhh5oipeULSER_a5iLK0kRF3Lk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-17_05,2026-05-15_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 malwarescore=0 impostorscore=0 adultscore=0
- phishscore=0 clxscore=1015 spamscore=0 lowpriorityscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605170220
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=andrew.jones@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260510175059.311814-1-faithilikerun@gmail.com>
+ <20260510175059.311814-2-faithilikerun@gmail.com>
+ <20260514184742.GB1535937@fedora>
+In-Reply-To: <20260514184742.GB1535937@fedora>
+From: Sam Li <faithilikerun@gmail.com>
+Date: Sun, 17 May 2026 23:07:38 +0200
+X-Gm-Features: AVHnY4KoQABONWJ1oj74DpPSKJbVwJi2_1jm_J0xawnmLv9g-MI_yqlh4ByaszI
+Message-ID: <CAAAx-8K4=7X0mybK7SOrX10kmx6ZsFHubtB0UJtJVkVyWaJczA@mail.gmail.com>
+Subject: Re: [PATCH v10 1/4] docs/qcow2: add the zoned format feature
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, dmitry.fomichev@wdc.com, 
+ Kevin Wolf <kwolf@redhat.com>, cassel@kernel.org,
+ Markus Armbruster <armbru@redhat.com>, 
+ qemu-block@nongnu.org, dlemoal@kernel.org, Eric Blake <eblake@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, hare@suse.de,
+ Hanna Reitz <hreitz@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=faithilikerun@gmail.com; helo=mail-pg1-x52b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,42 +124,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 15, 2026 at 04:54:43PM -0300, Daniel Henrique Barboza wrote:
-> 
-> 
-> On 5/15/2026 3:15 PM, Nicholas Piggin wrote:
-> > On Thu, May 14, 2026 at 05:46:38PM -0300, Daniel Henrique Barboza wrote:
-> > > From: Fei Wu <wu.fei9@sanechips.com.cn>
-> > > 
-> > > The harts requirements of RISC-V server platform [1] require RVA23 ISA
-> > > profile support and others.
-> > > 
-> > > This patch provides a new "riscv-server-ref" CPU to go along with the
-> > > future "riscv-server-ref" board.
-> > 
-> > About compatibility, if we get a server platform spec v2.0 that requires
-> > a different machine and RVA28 + Sxxx CPU. Is the plan to update these,
-> > or add a new CPU and machine types? If the latter, then perhaps a
-> > version in the names like riscv-server-v1.0 / riscv-server-v1.0-cpu
-> > would be good.
-> 
-> Good question.  We can get away with machine props to change the board
-> behavior based on spec version but not sure if this makes sense with
-> a CPU.  I suppose we could live with:
-> 
-> -cpu riscv-server-ref,spec1.1=on
-> 
-> to change the CPU setup to v1.1 and so on, but creating a new CPU with the
-> spec version in the name like you suggested (e.g. riscv-server-ref-v1.1)
-> seems cleaner.  In particular if the spec doesn't change that much - which
-> I guess it's fair to assume given that a reference spec wouldn't be much
-> of a reference if it keeps changing/updating all the time ...
+On Thu, May 14, 2026 at 8:47=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.co=
+m> wrote:
+>
+> On Sun, May 10, 2026 at 07:50:56PM +0200, Sam Li wrote:
+> > Add the specs for the zoned format feature of the qcow2 driver.
+> > The qcow2 file then can emulate real zoned devices, either passed
+> > through by virtio-blk device or NVMe ZNS drive to the guest
+> > given zoned information.
+> >
+> > Signed-off-by: Sam Li <faithilikerun@gmail.com>
+> > Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> > ---
+> >  docs/system/qemu-block-drivers.rst.inc | 42 ++++++++++++++++++++++++++
+> >  1 file changed, 42 insertions(+)
 
-How about we make the platform spec version properties global properties so
-they can cleanly apply to both the machine model and the cpu model?
+Hi Stefan,
 
- -global platform_spec_1_0=on -machine riscv-server-ref -cpu riscv-server-ref
+Thanks for reviewing!
 
-Thanks,
-drew
+> >
+> > diff --git a/docs/system/qemu-block-drivers.rst.inc b/docs/system/qemu-=
+block-drivers.rst.inc
+> > index 384e95ba76..5066c943d5 100644
+> > --- a/docs/system/qemu-block-drivers.rst.inc
+> > +++ b/docs/system/qemu-block-drivers.rst.inc
+> > @@ -172,6 +172,48 @@ This section describes each format and the options=
+ that are supported for it.
+> >      filename`` to check if the NOCOW flag is set or not (Capital 'C' i=
+s
+> >      NOCOW flag).
+> >
+> > +  .. option:: zone.mode
+> > +    If this is set to ``host-managed``, the image is an emulated zoned
+> > +    block device. This option is only valid to emulated zoned device f=
+iles.
+> > +
+> > +  .. option:: zone.size
+> > +
+> > +    The size of a zone in bytes. The device is divided into zones of t=
+his
+> > +    size with the exception of the last zone, which may be smaller.
+>
+> This option is required when zone.mode=3Dhost-managed?
+>
+> It would be useful to indicate whether each option listed here is
+> required or has a default value when absent.
+
+Makes sense. I'll set the default to 256MB.
+
+>
+> > +
+> > +  .. option:: zone.capacity
+> > +
+> > +    The initial capacity value, in bytes, for all zones. The capacity =
+must
+> > +    be less than or equal to zone size. If the last zone is smaller, t=
+hen
+> > +    its capacity is capped.
+> > +
+> > +    The zone capacity is per zone and may be different between zones i=
+n real
+> > +    devices. QCow2 sets all zones to the same capacity.
+>
+> This defaults to zone.size?
+
+Yes.
+
+>
+> > +
+> > +  .. option:: zone.conventional_zones
+> > +
+> > +    The number of conventional zones of the zoned device.
+>
+> This defaults to (size + size.size - 1) / zone.size?
+
+Or just zero, meaning all zones are sequential write required.
+
+>
+> > +
+> > +  .. option:: zone.max_active_zones
+> > +
+> > +    The limit of the zones with implicit open, explicit open or closed=
+ state.
+> > +
+> > +    The max active zones must be less or equal to the number of SWR
+> > +    (sequential write required) zones of the device.
+>
+> This defaults to (size + size.size - 1) / zone.size?
+
+Or maybe zero, meaning no limit. Although it does have a limit lower
+than nr_zones.
+
+>
+> > +
+> > +  .. option:: zone.max_open_zones
+> > +
+> > +    The maximal allowed open zones. The max open zones must not be lar=
+ger than
+> > +    the max active zones.
+> > +
+> > +    If the limits of open zones or active zones are equal to the numbe=
+r of
+> > +    SWR zones, then it is the same as having no limits.
+>
+> This defaults to max_active_zones?
+
+Yes, if max_active_zone is set, otherwise zero.
+
+>
+> > +  .. option:: zone.max_append_bytes
+> > +
+> > +    The number of bytes in a zone append request that can be issued to=
+ the
+> > +    device. It must be 512-byte aligned and less than the zone capacit=
+y.
+>
+> Is there a default?
+
+Yes, it can set to 64 KB.
+
+>
+> > +
+> >  .. program:: image-formats
+> >  .. option:: qed
+> >
+> > --
+> > 2.43.0
+> >
 
