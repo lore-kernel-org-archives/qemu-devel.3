@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F4053CD4F49
-	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 00:34:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C776CD4851
+	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 00:34:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOPPe-0007zX-RK; Sat, 16 May 2026 20:31:22 -0400
+	id 1wOPPG-0007UE-UX; Sat, 16 May 2026 20:30:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wOPOp-0007FX-MF
- for qemu-devel@nongnu.org; Sat, 16 May 2026 20:30:36 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1wOPOX-00077x-Jv
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 20:30:15 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wOPOk-00053i-De
- for qemu-devel@nongnu.org; Sat, 16 May 2026 20:30:31 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-834f1075805so859121b3a.2
- for <qemu-devel@nongnu.org>; Sat, 16 May 2026 17:30:24 -0700 (PDT)
+ id 1wOPOT-0004mD-8K
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 20:30:12 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-c80203b9d7bso364583a12.0
+ for <qemu-devel@nongnu.org>; Sat, 16 May 2026 17:30:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778977824; x=1779582624; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778977805; x=1779582605; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OZixi1Vftt/RVjdhKeHFrWjm5Jh2dbB7A0JieKjZg60=;
- b=d4v4eRzobXGy395XlOOQLujCGhHKa4s9ELirxrPdpxcq8xZxtyEe6oBxnAocXTeEOy
- mFt1r02XQdrA3xSVt8Lc0ak3sA8po4iPT8Jf+kJpOJXQVUFiEg8nAjDFDTFJ+nFvQN6y
- uj4M2ahjZyL1C4vy9clw1ZC2i6/mTlQ42QNWODj8LaPjT+QmPRemn3HAZl1kpQaOyY5N
- zegeET0jVT3va6JDl7uwwEpCbpW7jA/4ixCeTy03VDMebcJHHhb95ri/2L0YZXuxc2zM
- ma4p7NStYf4YObeOuvB5NTxmt51lvHG6rrx79p2axgEteSDJDDbS0iFSzSuHaunVWZ3E
- I3eQ==
+ bh=9W1EBfH4i3cptA357mAisKZHMw8L8t6q4cd+UQXFGVY=;
+ b=WZUfJb8hToibQgCV7sPHs5lKX8ZXeDVVMd5IDfL7k0FDx3zLD1+mEZ34fUGoFdcZcx
+ /ml0KgJO239urDWvDRQkc5+4B+qDYVBX9+9erFI15/wOtOsvzuh9lazPqrWLRJnwrY36
+ bQDW4TgS29RMqyG6oHPdgSzr5c1qUHNN/pF8L2j0HA0KWcyvUKoqTAsd/0EvPV7yHy0b
+ 9+AV5pFX9xI+ZMaDdre5ZaFKsE6zSq2S3daWlKTzcVhoMKOhmQx1k7b0/CogeCJQXGgR
+ sVqgMmr1BL27t+rR4O/lJFgB12ZdHcW8k0cJn+xq0GdnANvuExryJUXAKGBNEi76w06/
+ dpnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778977824; x=1779582624;
+ d=1e100.net; s=20251104; t=1778977805; x=1779582605;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=OZixi1Vftt/RVjdhKeHFrWjm5Jh2dbB7A0JieKjZg60=;
- b=j6mm6sqLSZhcRpVW56ILX1RvyteWU7jFh5vtBglIRq0u+TGCsXCzkzZXi6nzStMtzg
- /wEHvR5A0j07SU2Ei3fCj6yhb+weNpY8RGZN23V9cu1sQjAwLuPNHajLHyvp8fB0FvkU
- 1LkhFP7Lfq5SPKxy+5rh/VvuPaeEQJTvcRZUGElCQFmsWRJesaRzc5sDQlTdYnd0qIae
- ZihVn0+vsA+6u/eBVULSdI7M2aSv9p1KdxcAYz2nixl1yTe6voIyLNmSMAuuNo/7E8XD
- D02AfxojZInke+Aq2BiMWiXiiqPoNM0nxHoTwcGHpUlMXLhHzBS98RgDXTh116OC8/mY
- fL5Q==
-X-Gm-Message-State: AOJu0YyF33PbZGQQQtfIarvOKUlaxb4A1CozPO1s1TpM4gyCwilGvjgP
- QtzHhN0PUJRfH2jMEB8CpqYfA3e4G9dCgJmSUI/DY+49jBCslX0psGFWbioQ3lin+xck9gNLHP8
- zE+pg
-X-Gm-Gg: Acq92OF7ELlyTnBzvf9ncVqYcjXweGhI0klJPRnxo6KhLpBicSZaB4vIiTQkSVd/y1e
- TedvkzLiixdI6gaACimQLALj9ssY6LlbVhDZCVjHBdxF5V8Se8Un0lZnALFX0pfgR+YSPZ/G300
- zsLaOr106EJRASRqwmhIrQLmNuImc7PopXAmMmrrFRPqQDgG0TbeiVKevHZ+v3FHohkDTtRN5U0
- 0LcuaFl146qxgJauoEuqB7IenGSmsXiHuY26wGfY4XO8cEtX+ks0ZeoHXk1l5jGkayV3FQs2i4R
- a2BDRGrlBMtHEGXtZxPuTQm6mHLpNE1Xz07jaLY22OTHviHcVNQwZLP16KaywpZPYzPbNdvYPwf
- 9mk7hqdtRo/JObQOKwyQgAbU+KC/dgC+Lx6DTRAxXog0bvsin3YA7JjEyRz+wiETfUlaV34VwqO
- Hw2LKWGXptyovXuSrz8UwBgxPfOXjW
-X-Received: by 2002:a05:6a00:3391:b0:82f:425b:4c27 with SMTP id
- d2e1a72fcca58-83f33cb3aa7mr10246988b3a.14.1778977823754; 
- Sat, 16 May 2026 17:30:23 -0700 (PDT)
+ bh=9W1EBfH4i3cptA357mAisKZHMw8L8t6q4cd+UQXFGVY=;
+ b=VnpVPLdUoBiX/p1pENvF0yw0hHYpUAphLYedYaVlbvVwq93KPe+/+kersXjy/0yHFY
+ T2XJ99RmULl39p8hH0VZG6+2/7WdtGQW4ekwPJKK+5zpt2KOSc+l4pnRtHEUw4bnulok
+ RXAEGCCZAjuJgtP1X1iHF8qEgI2ddTrA5k84bCOpD/hFXeKajSrdE66jHefyDpv+VEwf
+ +qT9ZBgwsCjfj/Olp49RGUbr6Vxy0PeHbGBhE9zSI9sYDcBW9F1CoIWz2obngkvd6W74
+ o5VhUcHuZtefEvb4i5Fnu3HQy2Hks1mTn1ETZgmJB9NzD7rpsQ1sUQ5WFhpo3XSUAOmx
+ vzuQ==
+X-Gm-Message-State: AOJu0YzTtby+rgKaApfQ0j4FzKfV9o8SIr9uX12bp9gQ9PtKihzryLGh
+ rgTOQ6YePcvoSO7zhJZFpO9ZOPWlbNpIhVnfl4zxuLXbHgq2UsaTpZMdRnHq1a2BWyfXEPb677i
+ riJV/
+X-Gm-Gg: Acq92OGqyeUmyC4CYVPRBVUHa+fTXoS9k+4ZDmZpdgHuRY92zJLkg5FxX0ms4Vcy4ev
+ GzITDPvfuU3FUulQ8ZXxd90Cmh0UXKgsu00XHrcEwn92EbWnV+6hb+sNOGWnlIulE5GJcc7R7i3
+ Kp49RaMDTAFDRz3+FsmY2uR5kow5/sW3VRN5L/kSdrPP4udSIcsW12Fqr+UXHQEMJYqM37ONU+U
+ lZMihTY/Mx6RYhVh1vdD/MVgloWoEeCqASfahqrXcBkQknmdrEsO2fSWqLvIomVz+w/cUcpV655
+ t/eaUGKk0p9xsFCdllRCpuleSFSmZiNCgkHCFmdsF9FP48T1YBoQTZROlg4JRW3WQSQkQQjSS1p
+ SikapfwdZgTU86+xxwRseouCLi0RwTGEPcamQCKVIIFV+nv/t10QiIJd1c4B8Vs1TKHMmP5R21D
+ L+XIICxf8kaUZy8GfrFKYw/dSTtkO6
+X-Received: by 2002:a05:6a00:e8e:b0:82f:38df:681c with SMTP id
+ d2e1a72fcca58-83f33ab35damr9719736b3a.6.1778977804615; 
+ Sat, 16 May 2026 17:30:04 -0700 (PDT)
 Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-83f19663cfdsm12272745b3a.9.2026.05.16.17.30.22
+ d2e1a72fcca58-83f19663cfdsm12272745b3a.9.2026.05.16.17.30.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 16 May 2026 17:30:22 -0700 (PDT)
+ Sat, 16 May 2026 17:30:04 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH v5 23/63] target/arm: Implement BF1CVTL, BF1CVTL2, BF2CVTL,
- BF2CVTL2 for AdvSIMD
-Date: Sat, 16 May 2026 17:29:22 -0700
-Message-ID: <20260517003002.321430-24-richard.henderson@linaro.org>
+Subject: [PATCH v5 02/63] fpu: Export floatN_minmax
+Date: Sat, 16 May 2026 17:29:01 -0700
+Message-ID: <20260517003002.321430-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260517003002.321430-1-richard.henderson@linaro.org>
 References: <20260517003002.321430-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,287 +99,303 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Allow target access to routines using the minmax flags.
+Make the existing min/max wrappers inline.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/helper-fp8.h          |  14 ++++
- target/arm/tcg/helper-fp8-defs.h |   6 ++
- target/arm/tcg/translate-a64.h   |   1 +
- target/arm/tcg/fp8_helper.c      | 132 +++++++++++++++++++++++++++++++
- target/arm/tcg/translate-a64.c   |  34 ++++++++
- target/arm/tcg/a64.decode        |   3 +
- target/arm/tcg/meson.build       |   1 +
- 7 files changed, 191 insertions(+)
- create mode 100644 target/arm/helper-fp8.h
- create mode 100644 target/arm/tcg/helper-fp8-defs.h
- create mode 100644 target/arm/tcg/fp8_helper.c
+ include/fpu/softfloat.h   | 93 ++++++++++++++++++++++-----------------
+ fpu/softfloat.c           | 50 +++------------------
+ fpu/softfloat-parts.c.inc |  8 ++--
+ 3 files changed, 62 insertions(+), 89 deletions(-)
 
-diff --git a/target/arm/helper-fp8.h b/target/arm/helper-fp8.h
-new file mode 100644
-index 0000000000..c45211ba22
---- /dev/null
-+++ b/target/arm/helper-fp8.h
-@@ -0,0 +1,14 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
+diff --git a/include/fpu/softfloat.h b/include/fpu/softfloat.h
+index 1580d956d5..097e0a5f1d 100644
+--- a/include/fpu/softfloat.h
++++ b/include/fpu/softfloat.h
+@@ -132,6 +132,25 @@ enum {
+     float_muladd_suppress_add_product_zero = 8,
+ };
+ 
++/*----------------------------------------------------------------------------
++| Options to indicate which negations to perform in float*_minmax()
++*----------------------------------------------------------------------------*/
 +
-+#ifndef HELPER_FP8_H
-+#define HELPER_FP8_H
-+
-+#include "exec/helper-proto-common.h"
-+#include "exec/helper-gen-common.h"
-+
-+#define HELPER_H "tcg/helper-fp8-defs.h"
-+#include "exec/helper-proto.h.inc"
-+#include "exec/helper-gen.h.inc"
-+#undef HELPER_H
-+
-+#endif /* HELPER_FP8_H */
-diff --git a/target/arm/tcg/helper-fp8-defs.h b/target/arm/tcg/helper-fp8-defs.h
-new file mode 100644
-index 0000000000..0caaf63749
---- /dev/null
-+++ b/target/arm/tcg/helper-fp8-defs.h
-@@ -0,0 +1,6 @@
-+/*
-+ * AArch64 FP8 helper definitions
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+DEF_HELPER_FLAGS_4(advsimd_bfcvtl, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
-diff --git a/target/arm/tcg/translate-a64.h b/target/arm/tcg/translate-a64.h
-index 9c45f89305..35f8d4f82e 100644
---- a/target/arm/tcg/translate-a64.h
-+++ b/target/arm/tcg/translate-a64.h
-@@ -25,6 +25,7 @@ TCGv_i64 read_cpu_reg_sp(DisasContext *s, int reg, int sf);
- void write_fp_dreg(DisasContext *s, int reg, TCGv_i64 v);
- bool logic_imm_decode_wmask(uint64_t *result, unsigned int immn,
-                             unsigned int imms, unsigned int immr);
-+bool fpmr_access_check(DisasContext *s);
- bool sve_access_check(DisasContext *s);
- bool sme_enabled_check(DisasContext *s);
- bool sme_enabled_check_with_svcr(DisasContext *s, unsigned);
-diff --git a/target/arm/tcg/fp8_helper.c b/target/arm/tcg/fp8_helper.c
-new file mode 100644
-index 0000000000..33f12d45bb
---- /dev/null
-+++ b/target/arm/tcg/fp8_helper.c
-@@ -0,0 +1,132 @@
-+/*
-+ * AArch64 FP8 Operations
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "cpu.h"
-+#include "internals.h"
-+#include "tcg/tcg-gvec-desc.h"
-+#include "fpu/softfloat.h"
-+#include "fpu/softfloat-parts.h"
-+#include "helper-fp8.h"
-+#include "vec_internal.h"
-+
-+#define HELPER_H "tcg/helper-fp8-defs.h"
-+#include "exec/helper-info.c.inc"
-+
-+typedef enum FPMRType {
-+    OFP8_E5M2 = 0,
-+    OFP8_E4M3 = 1,
-+    Unsupp2 = 2,
-+    Unsupp3 = 3,
-+    Unsupp4 = 4,
-+    Unsupp5 = 5,
-+    Unsupp6 = 6,
-+    Unsupp7 = 7,
-+} FPMRType;
-+
-+typedef struct FP8Context {
-+    float_status stat;
-+    ARMFPStatusFlavour fpst;
-+    FPMRType f8fmt;
-+    int scale;
-+    bool high;
-+} FP8Context;
-+
-+static FP8Context fp8_start(CPUARMState *env, uint32_t desc,
-+                            FPMRType f8fmt, int scale)
-+{
-+    ARMFPStatusFlavour fpst = extract32(desc, SIMD_DATA_SHIFT + 2, 4);
-+
-+    FP8Context ret = {
-+        .stat = env->vfp.fp_status[fpst],
-+        .fpst = fpst,
-+        .f8fmt = f8fmt,
-+        .scale = scale,
-+        .high = extract32(desc, SIMD_DATA_SHIFT + 1, 1),
-+    };
-+
-+    set_flush_to_zero(0, &ret.stat);
-+    set_flush_inputs_to_zero(0, &ret.stat);
-+    set_default_nan_mode(true, &ret.stat);
-+    set_float_rounding_mode(float_round_nearest_even, &ret.stat);
-+
-+    return ret;
-+}
-+
-+static void fp8_finish_fpst(float_status *orig, float_status *tmp,
-+                            int propagate_flags)
-+{
-+    int e = get_float_exception_flags(tmp);
-+    float_raise(e & propagate_flags, orig);
-+}
-+
-+static void fp8_finish(CPUARMState *env, FP8Context *c)
-+{
-+    /* FP8 convert insns don't update FPSR.IDC */
-+    fp8_finish_fpst(&env->vfp.fp_status[c->fpst], &c->stat,
-+                    ~float_flag_input_denormal_used);
-+}
-+
-+static FP8Context fp8_src_start(CPUARMState *env, uint32_t desc, int scale_mask)
-+{
-+    bool issrc2 = extract32(desc, SIMD_DATA_SHIFT, 1);
-+    uint64_t fpmr = env->vfp.fpmr;
-+    FPMRType f8fmt = (issrc2
-+                      ? FIELD_EX64(fpmr, FPMR, F8S2)
-+                      : FIELD_EX64(fpmr, FPMR, F8S1));
-+    int scale;
-+
-+    scale = fpmr >> (issrc2 ? R_FPMR_LSCALE2_SHIFT : R_FPMR_LSCALE_SHIFT);
-+    scale = -(scale & scale_mask);
-+
-+    return fp8_start(env, desc, f8fmt, scale);
-+}
-+
-+
-+static FloatParts64 fp8_invalid_input(uint8_t x, float_status *s)
-+{
++/* Flags for parts_minmax. */
++enum {
++    /* Set for minimum; clear for maximum. */
++    float_minmax_ismin = 1,
++    /* Set for the IEEE 754-2008 minNum() and maxNum() operations. */
++    float_minmax_isnum = 2,
++    /* Set for the IEEE 754-2008 minNumMag() and minNumMag() operations. */
++    float_minmax_ismag = 4,
 +    /*
-+     * Invalid input format is treated as snan, then one of the uses
-+     * will convert to default nan and raise invalid.
++     * Set for the IEEE 754-2019 minimumNumber() and maximumNumber()
++     * operations.
 +     */
-+    float_raise(float_flag_invalid | float_flag_invalid_snan, s);
-+    return parts64_default_nan(s);
-+}
-+
-+typedef FloatParts64 fp8_input_fn(uint8_t x, float_status *s);
-+
-+static fp8_input_fn * const fp8_input_fmt[8] = {
-+    [0 ... 7] = fp8_invalid_input,
-+    [OFP8_E5M2] = float8_e5m2_unpack_canonical,
-+    [OFP8_E4M3] = float8_e4m3_unpack_canonical,
++    float_minmax_isnumber = 8,
 +};
 +
-+static bfloat16 fcvt_fp8_to_b16(uint8_t x, fp8_input_fn *f8fmt,
-+                                int scale, float_status *s)
-+{
-+    FloatParts64 p = f8fmt(x, s);
-+    p = parts64_scalbn(&p, scale, s);
-+    return bfloat16_round_pack_canonical(&p, s);
-+}
+ /*----------------------------------------------------------------------------
+ | Software IEC/IEEE integer-to-floating-point conversion routines.
+ *----------------------------------------------------------------------------*/
+@@ -258,14 +277,7 @@ float16 float16_muladd_scalbn(float16, float16, float16,
+                               int, int, float_status *status);
+ float16 float16_div(float16, float16, float_status *status);
+ float16 float16_scalbn(float16, int, float_status *status);
+-float16 float16_min(float16, float16, float_status *status);
+-float16 float16_max(float16, float16, float_status *status);
+-float16 float16_minnum(float16, float16, float_status *status);
+-float16 float16_maxnum(float16, float16, float_status *status);
+-float16 float16_minnummag(float16, float16, float_status *status);
+-float16 float16_maxnummag(float16, float16, float_status *status);
+-float16 float16_minimum_number(float16, float16, float_status *status);
+-float16 float16_maximum_number(float16, float16, float_status *status);
++float16 float16_minmax(float16, float16, float_status *status, int flags);
+ float16 float16_sqrt(float16, float_status *status);
+ FloatRelation float16_compare(float16, float16, float_status *status);
+ FloatRelation float16_compare_quiet(float16, float16, float_status *status);
+@@ -451,14 +463,7 @@ bfloat16 bfloat16_div(bfloat16, bfloat16, float_status *status);
+ bfloat16 bfloat16_muladd(bfloat16, bfloat16, bfloat16, int,
+                          float_status *status);
+ float16 bfloat16_scalbn(bfloat16, int, float_status *status);
+-bfloat16 bfloat16_min(bfloat16, bfloat16, float_status *status);
+-bfloat16 bfloat16_max(bfloat16, bfloat16, float_status *status);
+-bfloat16 bfloat16_minnum(bfloat16, bfloat16, float_status *status);
+-bfloat16 bfloat16_maxnum(bfloat16, bfloat16, float_status *status);
+-bfloat16 bfloat16_minnummag(bfloat16, bfloat16, float_status *status);
+-bfloat16 bfloat16_maxnummag(bfloat16, bfloat16, float_status *status);
+-bfloat16 bfloat16_minimum_number(bfloat16, bfloat16, float_status *status);
+-bfloat16 bfloat16_maximum_number(bfloat16, bfloat16, float_status *status);
++bfloat16 bfloat16_minmax(bfloat16, bfloat16, float_status *status, int flags);
+ bfloat16 bfloat16_sqrt(bfloat16, float_status *status);
+ FloatRelation bfloat16_compare(bfloat16, bfloat16, float_status *status);
+ FloatRelation bfloat16_compare_quiet(bfloat16, bfloat16, float_status *status);
+@@ -622,14 +627,7 @@ float32 float32_exp2(float32, float_status *status);
+ float32 float32_log2(float32, float_status *status);
+ FloatRelation float32_compare(float32, float32, float_status *status);
+ FloatRelation float32_compare_quiet(float32, float32, float_status *status);
+-float32 float32_min(float32, float32, float_status *status);
+-float32 float32_max(float32, float32, float_status *status);
+-float32 float32_minnum(float32, float32, float_status *status);
+-float32 float32_maxnum(float32, float32, float_status *status);
+-float32 float32_minnummag(float32, float32, float_status *status);
+-float32 float32_maxnummag(float32, float32, float_status *status);
+-float32 float32_minimum_number(float32, float32, float_status *status);
+-float32 float32_maximum_number(float32, float32, float_status *status);
++float32 float32_minmax(float32, float32, float_status *status, int flags);
+ bool float32_is_quiet_nan(float32, float_status *status);
+ bool float32_is_signaling_nan(float32, float_status *status);
+ float32 float32_silence_nan(float32, float_status *status);
+@@ -818,14 +816,7 @@ float64 float64_sqrt(float64, float_status *status);
+ float64 float64_log2(float64, float_status *status);
+ FloatRelation float64_compare(float64, float64, float_status *status);
+ FloatRelation float64_compare_quiet(float64, float64, float_status *status);
+-float64 float64_min(float64, float64, float_status *status);
+-float64 float64_max(float64, float64, float_status *status);
+-float64 float64_minnum(float64, float64, float_status *status);
+-float64 float64_maxnum(float64, float64, float_status *status);
+-float64 float64_minnummag(float64, float64, float_status *status);
+-float64 float64_maxnummag(float64, float64, float_status *status);
+-float64 float64_minimum_number(float64, float64, float_status *status);
+-float64 float64_maximum_number(float64, float64, float_status *status);
++float64 float64_minmax(float64, float64, float_status *status, int flags);
+ bool float64_is_quiet_nan(float64 a, float_status *status);
+ bool float64_is_signaling_nan(float64, float_status *status);
+ float64 float64_silence_nan(float64, float_status *status);
+@@ -1277,14 +1268,7 @@ float128 float128_rem(float128, float128, float_status *status);
+ float128 float128_sqrt(float128, float_status *status);
+ FloatRelation float128_compare(float128, float128, float_status *status);
+ FloatRelation float128_compare_quiet(float128, float128, float_status *status);
+-float128 float128_min(float128, float128, float_status *status);
+-float128 float128_max(float128, float128, float_status *status);
+-float128 float128_minnum(float128, float128, float_status *status);
+-float128 float128_maxnum(float128, float128, float_status *status);
+-float128 float128_minnummag(float128, float128, float_status *status);
+-float128 float128_maxnummag(float128, float128, float_status *status);
+-float128 float128_minimum_number(float128, float128, float_status *status);
+-float128 float128_maximum_number(float128, float128, float_status *status);
++float128 float128_minmax(float128, float128, float_status *status, int flags);
+ bool float128_is_quiet_nan(float128, float_status *status);
+ bool float128_is_signaling_nan(float128, float_status *status);
+ float128 float128_silence_nan(float128, float_status *status);
+@@ -1386,4 +1370,33 @@ static inline bool float128_unordered_quiet(float128 a, float128 b,
+ *----------------------------------------------------------------------------*/
+ float128 float128_default_nan(float_status *status);
+ 
++/*----------------------------------------------------------------------------
++| Minumum and maximum functions.
++*----------------------------------------------------------------------------*/
 +
-+void HELPER(advsimd_bfcvtl)(void *vd, void *vn, CPUARMState *env, uint32_t desc)
-+{
-+    FP8Context ctx = fp8_src_start(env, desc, 0x3f);
-+    fp8_input_fn *input_fmt = fp8_input_fmt[ctx.f8fmt];
-+    uint8_t *n = vn, scratch[16];
-+    bfloat16 *d = vd;
++#define MINMAX_1(type, name, flags)                                     \
++    static inline type type##_##name(type a, type b, float_status *s)   \
++    { return type##_minmax(a, b, s, flags); }
 +
-+    if (vd == vn) {
-+        n = memcpy(scratch, vn, 16);
-+    }
-+    n += ctx.high * 8;
++#define MINMAX_2(type)                                                  \
++    MINMAX_1(type, max, 0)                                              \
++    MINMAX_1(type, maxnum, float_minmax_isnum)                          \
++    MINMAX_1(type, maxnummag, float_minmax_isnum | float_minmax_ismag)  \
++    MINMAX_1(type, maximum_number, float_minmax_isnumber)               \
++    MINMAX_1(type, min, float_minmax_ismin)                             \
++    MINMAX_1(type, minnum, float_minmax_ismin | float_minmax_isnum)     \
++    MINMAX_1(type, minnummag,                                           \
++             float_minmax_ismin | float_minmax_isnum | float_minmax_ismag) \
++    MINMAX_1(type, minimum_number,                                      \
++             float_minmax_ismin | float_minmax_isnumber)
 +
-+    for (size_t i = 0; i < 8; ++i) {
-+        d[H2(i)] = fcvt_fp8_to_b16(n[H1(i)], input_fmt, ctx.scale, &ctx.stat);
-+    }
++MINMAX_2(float16)
++MINMAX_2(bfloat16)
++MINMAX_2(float32)
++MINMAX_2(float64)
++MINMAX_2(float128)
 +
-+    fp8_finish(env, &ctx);
-+    clear_tail(vd, 16, simd_maxsz(desc));
-+}
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index ac18ceeeab..085e7e3b95 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -22,6 +22,7 @@
- #include "helper-a64.h"
- #include "helper-sme.h"
- #include "helper-sve.h"
-+#include "helper-fp8.h"
- #include "translate.h"
- #include "translate-a64.h"
- #include "tcg/tcg-op.h"
-@@ -1457,6 +1458,24 @@ static bool fp_access_check(DisasContext *s)
-     return fp_access_check_only(s) && nonstreaming_check(s);
++#undef MINMAX_1
++#undef MINMAX_2
++
+ #endif /* SOFTFLOAT_H */
+diff --git a/fpu/softfloat.c b/fpu/softfloat.c
+index 722bf5ecda..56c8ae3e09 100644
+--- a/fpu/softfloat.c
++++ b/fpu/softfloat.c
+@@ -397,21 +397,6 @@ float64_gen2(float64 xa, float64 xb, float_status *s,
+     return soft(ua.s, ub.s, s);
  }
  
-+/*
-+ * Check that FPMR access is enabled, for an indirect reference by a
-+ * vector instruction.  See CheckFPMREnabled().
-+ */
-+bool fpmr_access_check(DisasContext *s)
-+{
-+    if (s->fpmr_el) {
-+        /*
-+         * While denied direct access to the FPMR raises SystemRegisterTrap
-+         * and targets a specific EL, denied indirect access to the FPMR
-+         * results in a simple UNDEFINED to the default exception level.
-+         */
-+        unallocated_encoding(s);
-+        return false;
-+    }
-+    return true;
-+}
-+
- /*
-  * Return <0 for non-supported element sizes, with MO_16 controlled by
-  * FEAT_FP16; return 0 for fp disabled; otherwise return >0 for success.
-@@ -10612,6 +10631,21 @@ static bool trans_FCVTL_v(DisasContext *s, arg_qrr_e *a)
-     return true;
- }
- 
-+static bool do_f8cvt(DisasContext *s, arg_qrr_e *a,
-+                     gen_helper_gvec_2_ptr *fn, bool issrc2)
-+{
-+    if (fpmr_access_check(s) && fp_access_check(s)) {
-+        tcg_gen_gvec_2_ptr(vec_full_reg_offset(s, a->rd),
-+                           vec_full_reg_offset(s, a->rn),
-+                           tcg_env, 16, vec_full_reg_size(s),
-+                           issrc2 | (a->q << 1) | (FPST_A64 << 2), fn);
-+    }
-+    return true;
-+}
-+
-+TRANS_FEAT(BF1CVTL, aa64_f8cvt, do_f8cvt, a, gen_helper_advsimd_bfcvtl, false)
-+TRANS_FEAT(BF2CVTL, aa64_f8cvt, do_f8cvt, a, gen_helper_advsimd_bfcvtl, true)
-+
- static bool trans_OK(DisasContext *s, arg_OK *a)
+-/* Flags for parts_minmax. */
+-enum {
+-    /* Set for minimum; clear for maximum. */
+-    minmax_ismin = 1,
+-    /* Set for the IEEE 754-2008 minNum() and maxNum() operations. */
+-    minmax_isnum = 2,
+-    /* Set for the IEEE 754-2008 minNumMag() and minNumMag() operations. */
+-    minmax_ismag = 4,
+-    /*
+-     * Set for the IEEE 754-2019 minimumNumber() and maximumNumber()
+-     * operations.
+-     */
+-    minmax_isnumber = 8,
+-};
+-
+ /* Simple helpers for checking if, or what kind of, NaN we have */
+ static inline __attribute__((unused)) bool is_nan(FloatClass c)
  {
-     return true;
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 02c7264cb9..b7aac148f2 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -1910,6 +1910,9 @@ URSQRTE_v       0.10 1110 101 00001 11001 0 ..... .....     @qrr_s
+@@ -4062,7 +4047,7 @@ float128 uint128_to_float128(Int128 a, float_status *status)
+  * Minimum and maximum
+  */
  
- FCVTL_v         0.00 1110 0.1 00001 01111 0 ..... .....     @qrr_sd
+-static float16 float16_minmax(float16 a, float16 b, float_status *s, int flags)
++float16 float16_minmax(float16 a, float16 b, float_status *s, int flags)
+ {
+     FloatParts64 pa = float16_unpack_canonical(a, s);
+     FloatParts64 pb = float16_unpack_canonical(b, s);
+@@ -4071,8 +4056,7 @@ static float16 float16_minmax(float16 a, float16 b, float_status *s, int flags)
+     return float16_round_pack_canonical(pr, s);
+ }
  
-+BF1CVTL         0.10 1110 101 00001 01111 0 ..... .....     @qrr_h
-+BF2CVTL         0.10 1110 111 00001 01111 0 ..... .....     @qrr_h
-+
- &fcvt_q         rd rn esz q shift
- @fcvtq_h        . q:1 . ...... 001 .... ...... rn:5 rd:5    \
-                 &fcvt_q esz=1 shift=%fcvt_f_sh_h
-diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
-index 4fb2c15f7e..936994eb3f 100644
---- a/target/arm/tcg/meson.build
-+++ b/target/arm/tcg/meson.build
-@@ -46,6 +46,7 @@ arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
-   'sme_helper.c',
-   'sve_helper.c',
-   'vec_helper64.c',
-+  'fp8_helper.c',
- ))
+-static bfloat16 bfloat16_minmax(bfloat16 a, bfloat16 b,
+-                                float_status *s, int flags)
++bfloat16 bfloat16_minmax(bfloat16 a, bfloat16 b, float_status *s, int flags)
+ {
+     FloatParts64 pa = bfloat16_unpack_canonical(a, s);
+     FloatParts64 pb = bfloat16_unpack_canonical(b, s);
+@@ -4081,7 +4065,7 @@ static bfloat16 bfloat16_minmax(bfloat16 a, bfloat16 b,
+     return bfloat16_round_pack_canonical(pr, s);
+ }
  
- arm_common_system_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('cpu-v7m.c'))
+-static float32 float32_minmax(float32 a, float32 b, float_status *s, int flags)
++float32 float32_minmax(float32 a, float32 b, float_status *s, int flags)
+ {
+     FloatParts64 pa = float32_unpack_canonical(a, s);
+     FloatParts64 pb = float32_unpack_canonical(b, s);
+@@ -4090,7 +4074,7 @@ static float32 float32_minmax(float32 a, float32 b, float_status *s, int flags)
+     return float32_round_pack_canonical(pr, s);
+ }
+ 
+-static float64 float64_minmax(float64 a, float64 b, float_status *s, int flags)
++float64 float64_minmax(float64 a, float64 b, float_status *s, int flags)
+ {
+     FloatParts64 pa = float64_unpack_canonical(a, s);
+     FloatParts64 pb = float64_unpack_canonical(b, s);
+@@ -4099,8 +4083,7 @@ static float64 float64_minmax(float64 a, float64 b, float_status *s, int flags)
+     return float64_round_pack_canonical(pr, s);
+ }
+ 
+-static float128 float128_minmax(float128 a, float128 b,
+-                                float_status *s, int flags)
++float128 float128_minmax(float128 a, float128 b, float_status *s, int flags)
+ {
+     FloatParts128 pa = float128_unpack_canonical(a, s);
+     FloatParts128 pb = float128_unpack_canonical(b, s);
+@@ -4109,29 +4092,6 @@ static float128 float128_minmax(float128 a, float128 b,
+     return float128_round_pack_canonical(pr, s);
+ }
+ 
+-#define MINMAX_1(type, name, flags) \
+-    type type##_##name(type a, type b, float_status *s) \
+-    { return type##_minmax(a, b, s, flags); }
+-
+-#define MINMAX_2(type) \
+-    MINMAX_1(type, max, 0)                                                \
+-    MINMAX_1(type, maxnum, minmax_isnum)                                  \
+-    MINMAX_1(type, maxnummag, minmax_isnum | minmax_ismag)                \
+-    MINMAX_1(type, maximum_number, minmax_isnumber)                       \
+-    MINMAX_1(type, min, minmax_ismin)                                     \
+-    MINMAX_1(type, minnum, minmax_ismin | minmax_isnum)                   \
+-    MINMAX_1(type, minnummag, minmax_ismin | minmax_isnum | minmax_ismag) \
+-    MINMAX_1(type, minimum_number, minmax_ismin | minmax_isnumber)        \
+-
+-MINMAX_2(float16)
+-MINMAX_2(bfloat16)
+-MINMAX_2(float32)
+-MINMAX_2(float64)
+-MINMAX_2(float128)
+-
+-#undef MINMAX_1
+-#undef MINMAX_2
+-
+ /*
+  * Floating point compare
+  */
+diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+index 0c617beef7..11034f9950 100644
+--- a/fpu/softfloat-parts.c.inc
++++ b/fpu/softfloat-parts.c.inc
+@@ -1459,7 +1459,7 @@ static FloatPartsN *partsN(minmax)(FloatPartsN *a, FloatPartsN *b,
+          * if one operand is a QNaN, and the other
+          * operand is numerical, then return numerical argument.
+          */
+-        if ((flags & (minmax_isnum | minmax_isnumber))
++        if ((flags & (float_minmax_isnum | float_minmax_isnumber))
+             && !(ab_mask & float_cmask_snan)
+             && (ab_mask & ~float_cmask_qnan)) {
+             record_denormals_used(ab_mask, s);
+@@ -1477,7 +1477,7 @@ static FloatPartsN *partsN(minmax)(FloatPartsN *a, FloatPartsN *b,
+          *   but unless both operands are NaNs,
+          *   the SNaN is otherwise ignored and not converted to a QNaN.
+          */
+-        if ((flags & minmax_isnumber)
++        if ((flags & float_minmax_isnumber)
+             && (ab_mask & float_cmask_snan)
+             && (ab_mask & ~float_cmask_anynan)) {
+             float_raise(float_flag_invalid, s);
+@@ -1532,7 +1532,7 @@ static FloatPartsN *partsN(minmax)(FloatPartsN *a, FloatPartsN *b,
+      * Take the sign into account.
+      * For ismag, only do this if the magnitudes are equal.
+      */
+-    if (!(flags & minmax_ismag) || cmp == 0) {
++    if (!(flags & float_minmax_ismag) || cmp == 0) {
+         if (a->sign != b->sign) {
+             /* For differing signs, the negative operand is less. */
+             cmp = a->sign ? -1 : 1;
+@@ -1542,7 +1542,7 @@ static FloatPartsN *partsN(minmax)(FloatPartsN *a, FloatPartsN *b,
+         }
+     }
+ 
+-    if (flags & minmax_ismin) {
++    if (flags & float_minmax_ismin) {
+         cmp = -cmp;
+     }
+     return cmp < 0 ? b : a;
 -- 
 2.43.0
 
