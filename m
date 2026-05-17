@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7960DCD4F3D
-	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 20:04:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAAAFCD4F3C
+	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 20:23:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOhiF-00038X-Lg; Sun, 17 May 2026 16:03:47 -0400
+	id 1wOi0O-0006jQ-AA; Sun, 17 May 2026 16:22:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <demiobenour@gmail.com>)
- id 1wOhgA-0002YB-Tx
- for qemu-devel@nongnu.org; Sun, 17 May 2026 16:01:53 -0400
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ id 1wOi0L-0006iz-PJ
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 16:22:30 -0400
+Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <demiobenour@gmail.com>)
- id 1wOhg8-0006Te-HL
- for qemu-devel@nongnu.org; Sun, 17 May 2026 16:01:38 -0400
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-7b4ee3a88e1so9460507b3.1
- for <qemu-devel@nongnu.org>; Sun, 17 May 2026 13:01:35 -0700 (PDT)
+ id 1wOi0K-00068g-2V
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 16:22:29 -0400
+Received: by mail-yx1-xb129.google.com with SMTP id
+ 956f58d0204a3-651d6347a69so3462335d50.0
+ for <qemu-devel@nongnu.org>; Sun, 17 May 2026 13:22:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779048094; x=1779652894; darn=nongnu.org;
- h=autocrypt:content-language:to:subject:from:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=1WwOT0gK3Mh2ogurXkaI6d1IIURt8dRlov8w8ibucK0=;
- b=OMsD6F17UtHBbwQJfBJUviLIaUhlf25zq3zI8ATtdMTXMlSjmlzmOxXt2ud57lziDn
- qVwIAk2SfH3xp66fA4e4pyDANIzu5glvXRQ/vuAt7a1tKJNE2aSCfyOMnvjd9a6X11LR
- s3iZIx04JUXOL01UYy7pj/Y+H2Nv2+BEuJTELwIc5pj31Q73925lWXqy3BYJ2utVtAXD
- X1BIhCQ/WivSZJuGjRGtdPcml1n/DldyZLCadTuzz+gmd/lyfZrkDIo7flgck21lMrT5
- trIowAjhYu6cVFV5xgnj1PD7YSfuEG0D9051dPuwuA0uvYJMOBmML9sW+55RDAuacZBZ
- 5FpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779048094; x=1779652894;
- h=autocrypt:content-language:to:subject:from:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1779049347; x=1779654147; darn=nongnu.org;
+ h=in-reply-to:autocrypt:content-language:references:to:from:subject
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1WwOT0gK3Mh2ogurXkaI6d1IIURt8dRlov8w8ibucK0=;
- b=YA6hdg2k+I3+6VQJB9iOXYO8r5UKa9vcv4harMixZzUPx1l6DdJr/e+Y8IgInsoKIh
- MIk4n6PJvaTGNhFp02Ay5iNMkFKjqhyrGZHrreU+99xd9kxD8IpOEXyVf+CJOzOw5EVk
- 4R3yBPu1nfVaTHsLsFzDqemlMne/X1LcPaYa1Ip1lwahZ8ju63wFIqq+BS8izNe4Sucp
- +AzhHU9oGQ73i1vk35FY6YyAvI6u23raFilRJzt36rTRoybfRXJmK5kb+9r3KlnPQgj+
- QKufbgUyHnHljnH4C2MRughrtFwBJVZ7DToMSx2G/I1TERCsYBLuIVthgklOeAdqirr4
- inQw==
-X-Gm-Message-State: AOJu0YxpowyeWmIgILee0xnDMGYhtvnLkGfsjf4JZ2D0MLXkYVFjOEUA
- 3iKLUxtugf5M59Sfjcs4zkJl2RSzeznwXH+/iX/6NgORvfQic9OEPKD237wrzwk1
-X-Gm-Gg: Acq92OHA7D2QKv//MV4pOsdfKZuL1Q/KGcnJIwZb/xPwUQ4v6aoocqWd+MmpF/M6Qqk
- vRwn09/2GOVQmY25rv/VUTLKNkFYip/3uBIhhYLcgSieRB/NmsDxfthtk5aoaFcRucfjH58HQ0e
- D0mAsJMH04XmomNY2yUnGuWkEezUQ7gm/3gqqRxftErkJjSt/g+r2hKP+7+ayMuXAUzLF7v8Inm
- rxZxm7ql5F7orna6gGkxFU7gc2HMuRaqyx83wpfqtD7n6o0a2EF5Dc6f1NWYIlfQMiASmxr1bTS
- C86vLygbdm3PHRjJoJeZ3COH8kDJd6Ld2MNym5pRr7M7kqk605c7yIMXVeSpspWbwZp/ImqGUGx
- ooG3UJNhTupaAnevBMfdsIIlL6ayI7xS88biF2Gj2tr4Xsk/9J3g6O49AF34HeqEwS7vK4+uK7f
- at/8HvZfpUYxjUMGmwYMgi5oQr0Csd36ojMh1sKBuJy/DkV0h6OLANjzB4bcOVy1cFjs0cGe/ro
- WDpPb9QmXNRNOgLcaKKXzlavHanX2SgE5o7+qDE2Q==
-X-Received: by 2002:a05:690c:e3e2:b0:7b2:2382:e309 with SMTP id
- 00721157ae682-7c95c7ef3eamr148057717b3.33.1779048094182; 
- Sun, 17 May 2026 13:01:34 -0700 (PDT)
+ bh=SBS+jAOR4tpQfKP7QpcVI4LoEN55ofaRXD2nbgk6FiU=;
+ b=n94nwsPdpuRIO1ernwMu3o3NYcTVo24zwhGLmD/1bz+DJMaFZLSQlPVtm459CfTnkc
+ 8L4JPM2A4CPWTMz2k6OxCgXTS1iljK9iclRxF1o82xtOis/uEdMlTp5Xrwkhz1x5PbQ+
+ 4Ow5qoH1ta1wXUbQkt5oK+6utEvhdm/Mp1iFjJymlu20JCNda9pdKwq5AhocCdCxDsJD
+ HfxOwjgE9PMPuU9XtmppLa+QypFk9wfq4Tqbwif/BDs65KO3oN2vs/fdFqJPmmzykIWX
+ aRtsR7HPW3I1ydFl180mVKIkOrN+Shj23AaoJXh/k+NbRq6DE+z/RondnrCHt60qJHCc
+ ORMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779049347; x=1779654147;
+ h=in-reply-to:autocrypt:content-language:references:to:from:subject
+ :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=SBS+jAOR4tpQfKP7QpcVI4LoEN55ofaRXD2nbgk6FiU=;
+ b=hb/MfJAh7j8O3SG6hPvZkP3zjU+y+j/tZyJUTC/Nme2j0Ii9DsDBoHm8eug9ZNlDwJ
+ jTPzDgENCcYIo8Ho04e2BHmdo/lBiFpeAUkPQHTzyqheldI3HBjUXAcLnZhe8HxbfmYu
+ crvFKoDq8Yf+ODc0HW7WndM4QH4jixoqkadpQVgXh+w/h7a0dOk58BnXiypOZA0w0XzL
+ VYunb+SsGYlo4tYL+aTFsuYnK06Qgs9sPQt/t3tmo/Knk2wALPodT46/qZG57E48hmoa
+ wfSM/mElFXv+h7uefkmrKDRA+ZFKFotD7qSaToZLExAH5AIRhEHx39pCKLYnui53693M
+ owow==
+X-Gm-Message-State: AOJu0YzSh18FvrJq1wPSeVEypkM0JVR3yoBkb6fcTfjMiCeofZfXHvC/
+ myAshOQJTA4HdeyvIrYv7YqErTZJJi3gbYIPPXrapKtGurW8uVM5Ds68ctFrpOXA
+X-Gm-Gg: Acq92OH7Q/UEQY/zlkOeuTA7ODtEmlsAnz2lxhpvvKkJYEVWoXTKBz+Pg3qNY2A+k9v
+ cj8Wg0LdqHgiOOeN4BwWbqLCyGxn9IiAjtUhYirpArgAxxhRMtSNPsubZNYPXBUmYsPXPLG4lNT
+ IEr+JR++m73CXEjCuy8oUkFwRWJWlpVJsAMQElUVCwan6Q560kAFspuQpbakS+hYicm1+1yTN2d
+ 1SLYNdlG1/WF0u3LMI/0Rtmo3w68IRX/Fc7dS0LbZnPwFyJkjaLtX/oineLqqI+4xwy9sffc0xh
+ yZf45kvPvIW+5BHaU248GMC5r4U4MHbKE/i+x0VA4eUklRm1uttj5mWh9n82GLa+McyRRiagagS
+ dcp46wbUIl5iUFpXPr4j9u4+/3b6inUyYVrsfPI9hLDaN0Pb/0GQi4uF1WJL0re3lP8yV7143PF
+ uNyYt2IlDD80Y4iQqLOXHAYzYp/XUq8zApu5kac4TbI9FwlTipQb8+yq9qY+dZm67YXD8/bWkuP
+ sOtOVcY8811dXZog+YFBmqOsFZJJWFY98kKYz3E0A==
+X-Received: by 2002:a05:690e:12cb:b0:65e:4bcb:2a76 with SMTP id
+ 956f58d0204a3-65e4bcb316amr2873112d50.39.1779049346531; 
+ Sun, 17 May 2026 13:22:26 -0700 (PDT)
 Received: from [10.138.34.110]
  (h69-131-150-190.cncrtn.broadband.dynamic.tds.net. [69.131.150.190])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-7cc9c9bbad1sm11760617b3.40.2026.05.17.13.01.33
+ 956f58d0204a3-65e0db6f4f4sm5493041d50.15.2026.05.17.13.22.25
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 17 May 2026 13:01:33 -0700 (PDT)
-Message-ID: <06ca8cc0-1ace-406c-9cd2-7904de0c9beb@gmail.com>
-Date: Sun, 17 May 2026 16:01:28 -0400
+ Sun, 17 May 2026 13:22:25 -0700 (PDT)
+Message-ID: <33d49604-4088-4b83-879c-913e9e83cd65@gmail.com>
+Date: Sun, 17 May 2026 16:22:19 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: Vhost-user spec questions.
 From: Demi Marie Obenour <demiobenour@gmail.com>
-Subject: Vhost-user spec questions.
 To: QEMU development <qemu-devel@nongnu.org>
+References: <06ca8cc0-1ace-406c-9cd2-7904de0c9beb@gmail.com>
 Content-Language: en-US
 Autocrypt: addr=demiobenour@gmail.com; keydata=
  xsFNBFp+A0oBEADffj6anl9/BHhUSxGTICeVl2tob7hPDdhHNgPR4C8xlYt5q49yB+l2nipd
@@ -117,11 +119,12 @@ Autocrypt: addr=demiobenour@gmail.com; keydata=
  vUSQHSrmfOzX3cV4yfmjM5lewgSstoxGyTx2M8enslgdXhPthZlDnTnOT+C+OTsh8+m5tos8
  HQjaPM01MKBiAqdPgksm1wu2DrrwUi6ChRVTUBcj6+/9IJ81H2P2gJk3Ls3AVIxIffLoY34E
  +MYSfkEjBz0E8CLOcAw7JIwAaeBT
+In-Reply-To: <06ca8cc0-1ace-406c-9cd2-7904de0c9beb@gmail.com>
 Content-Type: multipart/signed; micalg=pgp-sha256;
  protocol="application/pgp-signature";
- boundary="------------0gj0fOVtZiKAYU5e9eW0AL08"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=demiobenour@gmail.com; helo=mail-yw1-x1133.google.com
+ boundary="------------GQdKEmr22RdM64aaGZY9ezXk"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
+ envelope-from=demiobenour@gmail.com; helo=mail-yx1-xb129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -145,16 +148,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------0gj0fOVtZiKAYU5e9eW0AL08
-Content-Type: multipart/mixed; boundary="------------tw6vpKErdX4PW6Ch17900Ow8";
+--------------GQdKEmr22RdM64aaGZY9ezXk
+Content-Type: multipart/mixed; boundary="------------oCQbeYT0HAjXz8krIMp0am9a";
  protected-headers="v1"
-Message-ID: <06ca8cc0-1ace-406c-9cd2-7904de0c9beb@gmail.com>
-Date: Sun, 17 May 2026 16:01:28 -0400
+Message-ID: <33d49604-4088-4b83-879c-913e9e83cd65@gmail.com>
+Date: Sun, 17 May 2026 16:22:19 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: Vhost-user spec questions.
 From: Demi Marie Obenour <demiobenour@gmail.com>
-Subject: Vhost-user spec questions.
 To: QEMU development <qemu-devel@nongnu.org>
+References: <06ca8cc0-1ace-406c-9cd2-7904de0c9beb@gmail.com>
 Content-Language: en-US
 Autocrypt: addr=demiobenour@gmail.com; keydata=
  xsFNBFp+A0oBEADffj6anl9/BHhUSxGTICeVl2tob7hPDdhHNgPR4C8xlYt5q49yB+l2nipd
@@ -199,40 +203,76 @@ Autocrypt: addr=demiobenour@gmail.com; keydata=
  vUSQHSrmfOzX3cV4yfmjM5lewgSstoxGyTx2M8enslgdXhPthZlDnTnOT+C+OTsh8+m5tos8
  HQjaPM01MKBiAqdPgksm1wu2DrrwUi6ChRVTUBcj6+/9IJ81H2P2gJk3Ls3AVIxIffLoY34E
  +MYSfkEjBz0E8CLOcAw7JIwAaeBT
+In-Reply-To: <06ca8cc0-1ace-406c-9cd2-7904de0c9beb@gmail.com>
 
---------------tw6vpKErdX4PW6Ch17900Ow8
-Content-Type: multipart/mixed; boundary="------------3gTByhQLR2UZjYwjlPmaq1HE"
+--------------oCQbeYT0HAjXz8krIMp0am9a
+Content-Type: multipart/mixed; boundary="------------jkG3eqr6vkegquagIc1819m0"
 
---------------3gTByhQLR2UZjYwjlPmaq1HE
+--------------jkG3eqr6vkegquagIc1819m0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-I'm working on a virtio-vhost-user implementation.  Part of that
-implementation is a vhost-user server.  From reading the vhost-user
-spec, there are situations where correct behavior is unclear:
+On 5/17/26 16:01, Demi Marie Obenour wrote:
+> I'm working on a virtio-vhost-user implementation.  Part of that
+> implementation is a vhost-user server.  From reading the vhost-user
+> spec, there are situations where correct behavior is unclear:
+>=20
+> 1. It isn't clear whether a given guest physical address or
+>    user address is guaranteed to be in at most one memory region.
+>    Having it in more than one seems very illogical and confusing:
+>    what does a given address mean in this case?  However, I don't
+>    see anything forbidding it.
+>=20
+> 2. Are there any alignment requirements on addresses and memory region
+>    sizes?  Is it reasonable to assume that they will be page aligned?
+>=20
+> 3. What is the minimum alignment of the fields in IOTLB messages?
+>=20
+> 4. What is the recommended data structure for an IOTLB?  Having to
+>    maintain a full page table (the way hardware would) seems both
+>    memory-intensive and slow.
+>=20
+> 5. Is it possible to transparently implement an IOTLB in a proxy?
 
-1. It isn't clear whether a given guest physical address or
-   user address is guaranteed to be in at most one memory region.
-   Having it in more than one seems very illogical and confusing:
-   what does a given address mean in this case?  However, I don't
-   see anything forbidding it.
+Other questions:
 
-2. Are there any alignment requirements on addresses and memory region
-   sizes?  Is it reasonable to assume that they will be page aligned?
+ 6. Are empty memory regions forbidden?
 
-3. What is the minimum alignment of the fields in IOTLB messages?
+ 7. Can I assume that on Linux, the frontend will always send an
+    eventfd instead of a pipe for notification FDs?  My current
+    implementation checks that the server sent an eventfd.
 
-4. What is the recommended data structure for an IOTLB?  Having to
-   maintain a full page table (the way hardware would) seems both
-   memory-intensive and slow.
+ 8. Will the frontend always unmap an existing IOTLB entry before
+    creating a new one?
 
-5. Is it possible to transparently implement an IOTLB in a proxy?
+ 9. How important is postcopy live migration?  The virtio-vhost-user
+    device has a hard time implementing it.  The backend may well be
+    shared by multiple frontends and the userfaultfd would allow the
+    frontend to stall backend memory accesses indefinitely.
+   =20
+    Precopy live migration avoids this problem because the backend=E2=80=99=
+s
+    memory accesses are never blocked on the frontend.
+
+10. Is the frontend allowed to send an inbound migration FD more than
+    once in the lifetime of the backend?  What about an outbound
+    migration FD?  Can there be more than one migration FD open
+    at once?
+
+11. Which vhost-user protocol features are the most important?
+    In particular, is it okay to not support features that require the
+    backend to send file descriptors to the frontend?  In the future,
+    I would like for virtio-vhost-user to support external objects,
+    but that will come significantly later.
+
+12. How important is zero-copy for live migration data send and
+    receive?  The current plan for virtio-vhost-user is to just use a
+    pipe and accept the extra copies.  The VM implementing the device
+    is not trusted.
 --=20
 Sincerely,
 Demi Marie Obenour (she/her/hers)
-
-
---------------3gTByhQLR2UZjYwjlPmaq1HE
+--------------jkG3eqr6vkegquagIc1819m0
 Content-Type: application/pgp-keys; name="OpenPGP_0xB288B55FFF9C22C1.asc"
 Content-Disposition: attachment; filename="OpenPGP_0xB288B55FFF9C22C1.asc"
 Content-Description: OpenPGP public key
@@ -352,31 +392,31 @@ EtJuZYM5blWncBOJCoWMnBEcTEo/viU3GgcVRw=3D=3D
 =3Dx94R
 -----END PGP PUBLIC KEY BLOCK-----
 
---------------3gTByhQLR2UZjYwjlPmaq1HE--
+--------------jkG3eqr6vkegquagIc1819m0--
 
---------------tw6vpKErdX4PW6Ch17900Ow8--
+--------------oCQbeYT0HAjXz8krIMp0am9a--
 
---------------0gj0fOVtZiKAYU5e9eW0AL08
+--------------GQdKEmr22RdM64aaGZY9ezXk
 Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEopQtqVJW1aeuo9/sszaHOrMp8lMFAmoKHpkACgkQszaHOrMp
-8lOU0hAAh0uHiOmEefaYes+oGjCaAfEIgxYYZ2fLQolhRHU6qQ9vqXblB5YJVadB
-HnXTt3u8bfj+4TbhFHDj5EpnHGPkuL7BTK3/fxfucK34qnm2+BQXRpiQRpB0LAKw
-FyydQjNrHPrHG+XogyQWIDU+MeVgYf0VULXK/iKFuMYRGyAwV4ZmsVSxFqR40LWh
-RTdowlwAeesUoPvsR+QbKg5M3QiHIMfrnfMceHIK9JX5dqFb1guWKyRL9takYzys
-/zLSqYTjf4385XxAWHMEXmlFLydodd8VPXKlXB86kBEZQA5n/s/FSBmksGZuowda
-AEGbScWPIXrKlbc+VL4KePqJQjljdF95C78iaFj2HWAW/Fqr1zulCmLevXZB6h99
-YPdRPbBM/ybbVd6AGJiIHUPM0zKX69nT3KI8P/WO5q4cZYfXda/yyLIdJ9yGfFRt
-vSxCLnT6z5aj9YP5iVjlrCAtqCVLJKLK39tjNxg92KhQQqit94I/V7cYvP5HibeG
-4XwhozxUgvLC6kgSdxX5HSQVs05DIdWUILvPx3y9NyULtXCRcQSx7iHHUbwlXLsO
-3zikqwl4dhdThZFyIEdS6qIBLvQsnU/H2Mn8DjkrUMlLcvw6NS0Vn7pR2LMxpC5M
-Ur1ZXdyQ6aGYNGXXP1d+MMpjngSn6eLAYuAoLaFPVOzWcRuuAyE=
-=+KrA
+iQIzBAEBCgAdFiEEopQtqVJW1aeuo9/sszaHOrMp8lMFAmoKI3wACgkQszaHOrMp
+8lPPHw//Q5kvfjr68uXvPDaMI5fMFqtBN7OblCm6JFAECEvPsRE0izmSAKkg4mVK
+hAGiVPIOkM7/yMn1GH5wMZdIUSVAAuD8ST5xntkfZZfCi8MLLBIOlZn6ckR3wmIh
+k9qAZqB4PZUjNwCwhSi1/3f25qtS1FCkKMXv2S/7lXllnu0BBnp5DjCYTXrO76w8
+eTbKRTJ8ejYsdaPW7/ICgErxaScw/9rEmIE6K7IipRyjPi7FHichgTbfXJJoQULv
+mTGYFt1kDMPS0+j4WiEQuU9Y93oICuyaMT6Q5TNba3V0B7hk9VEW2H6YFwmKeVD1
+47gQkmFWOmAlRF95cN/QbjCiPITknyjIv26ARoZtSJYS5PtlH6XFUkue7MQHmZo1
+hiXKh+TBd8gTQmQiG2pbtgR7S/Cge+k9oYTfkgZKHS1BxLZApq8ljzq0FwKPogUD
+R7x3w2R7kZbii8f3QtEKMMxRK3KqiJlBlWE11vG6LxmiX7PyTPDlmzUnvlWUVvPv
+bnwLo5Qv2pvpFHKRFSEpdaxA0nauqbR3lqnj6PNUmyRuDGFCG83ZIiH8WoHGscVc
+C/6+o8H9sm29+FxcwwmAHUmza16a1DbBlQ5fEMEZ3PBuyf8tq86cB/f35uVNu7j1
+YGZjA0jJNZyBOAkhjKvjxzNz52wrHdVkza93qYbuxCHTAPIcv4s=
+=NZkm
 -----END PGP SIGNATURE-----
 
---------------0gj0fOVtZiKAYU5e9eW0AL08--
+--------------GQdKEmr22RdM64aaGZY9ezXk--
 
