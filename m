@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 256D7CD4F21
-	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 15:36:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB74BCD4F47
+	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 15:43:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOdXM-0007MQ-Tx; Sun, 17 May 2026 11:36:16 -0400
+	id 1wOddV-0008LW-SQ; Sun, 17 May 2026 11:42:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOdX7-0007LS-Lp
- for qemu-devel@nongnu.org; Sun, 17 May 2026 11:36:03 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOddO-0008LF-G8
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 11:42:32 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOdX6-0002lr-3f
- for qemu-devel@nongnu.org; Sun, 17 May 2026 11:36:01 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-488a8ca4aadso13050695e9.3
- for <qemu-devel@nongnu.org>; Sun, 17 May 2026 08:35:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOddK-0005cf-QB
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 11:42:29 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-48984d29fe3so15427885e9.0
+ for <qemu-devel@nongnu.org>; Sun, 17 May 2026 08:42:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779032158; x=1779636958; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779032544; x=1779637344; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=gu4xACLf4LIfVkuWzTNd9lt+vsT8s19thDLSjqw+Q1I=;
- b=jRlK0pkBq3aMJvu81+0TdUeNOptNP+RDnxhWrDqYFRRpYGKD7BS9PeIknV0OGY7v0w
- KbS8yvBVtXzku272hYENDIjb5msb4aJFJtirRZ/sBUu8xEr9/cJmFzv0Oii70HomCFRc
- nHnWj3NKKVUHplasZ8eRej1qkR3DYJQwA06CjPDssy0YPmnksnbkWFwPJ7aW0NqpS0Pv
- 9/4TQpzWHpgL+paOq+HvQsY6c8w8NRu0Hbf6rulIUvm0eKsae5s8diRVo0jbPqcMdArk
- oW0oWDHBw7QHclgBMZc9llow9l79/VeWtbhoUjTXUsSVmqXdS5205q1ODmicI1Um+AJK
- lvuA==
+ bh=kMbDrkvtCtd6UvJc33ms9/XbJib8gw5zzxz0w3QAZxc=;
+ b=fk5KC7ZGiSKzsVmSJiXbhi9IzmzoCh4CVs3h45YJ9zDom+PDvEdnxRpCYcyJ9nOa0P
+ r+/RYtycjlM6/ycqpCRC4H6gAhzDj9Xgfbjijyk2rxqlTnMXtlHsngqgk1Mj+5MeT0xC
+ cmvOtxgVfXEwx+Y7sIjoTYSPgQifIP+tWORebukTJhzKVU3JQIIpbRvlgRjGwAkcy6s5
+ LruP9IMM15oTRYCR1J64Z3HPskdGO9ae06dgjZSUFbcHH/ZSq5YQ5lHdMzB41oSxo56s
+ 0wJHrOuTs61t0nxUy/g748McHTRDpTikR5kh5tN7W8GhDOGX6DexUoSgGxM2/SKCYBbe
+ qT1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779032158; x=1779636958;
+ d=1e100.net; s=20251104; t=1779032544; x=1779637344;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=gu4xACLf4LIfVkuWzTNd9lt+vsT8s19thDLSjqw+Q1I=;
- b=GK2Lyep3cd/IwJQWveznVItXcLt6lz3eGE3hX58cnRQkethjXZhy8Ge/gT/Cu0Ct1J
- UIG1k9q2/fNF1rZP8kkSSyyI0LaC+oMPfl/g2ypldJI3dGaD1MNSOrkKoaIKqX3/JT9g
- r3S63fvPBLZAaHlva5JPb7LKrXCpztgeJsQl023gw/OKIXdqbLlC7WsfsQUvcrIxVLcN
- Vu3xO12zFM+r6tCVvlCUbwmKZ4JKOalhlrxHeRgCMotHOSZbeEEHln8n1ml/EEv/qBYK
- beWsqf/FLXSTOxqfliRYVeAowMQPqimEK+MewCDaepEhQV2bnjYtjMbhjMaRluNEG9b5
- qSlA==
+ bh=kMbDrkvtCtd6UvJc33ms9/XbJib8gw5zzxz0w3QAZxc=;
+ b=CB41HbGH6EKzIuMEGng+bpUjOcb92fZB7o2e96bYGu44lC+EZ/ZEA4mjKqwrReRwhU
+ adxtUXD20umj0HgxIpFLWhrYNSbqLbuKB6IuEwB07DWWGh9YAH34oP+YKKhi2WhkDtu9
+ 1v5OPOzQYSWpqzV4QZN8IA/rLIEmWkAyJqOGVyJ+sWHfPtalh27eyASrdXasomNdviVa
+ 4DdJdd7kn0w6LaXBzYhA6FUmmNz7SxmtXqZP1tRFmHTVxblnIsaCOntNlJS+TVRdhcFm
+ YKtL6IcVC7a+gl4KBoK0E8jcxURrZFKNjrxU+asHDmY+NGzNJROpjkIQVuU3AHUx/XfV
+ 29jw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/JCrxiwIgdW1lezfDGn4Qqa++aa1xvHIf759j2wWZJojONtEl0lcjpxs3hLADzoSsw4ZtmIvmxFj3c@nongnu.org
-X-Gm-Message-State: AOJu0YwSgrcccHfak2/wSKhTGYsUfK5AI4Bmz67UxUWnYdjYgthtwQ8D
- 64uic2pLI0yplbX4KqR2dudUjQGwGdjutWRv1FDBjbvA13ucOL3Tq4YXB9g8PxExWxo=
-X-Gm-Gg: Acq92OHTOLyO1vOhplSh7WBX+ohthKyYdfv3+FSxax8vengBYLOpI9k8qBoxM6zFmXx
- 1OaWQu3JDX6s2hB53PtPUFBPoW0t+C0YBWZ9w68X7UQ8tarIL3q71ywfZLpGv5y6v3Onf76BRvs
- 1gnpNQoFtRKWS/5VpshYI6rUXLSk0VatYmNC5lm/0RGgun5fMRvqaiaKUlvY2gMiUTIMsT8j2xD
- kwjJLHBf8phGI3V8ICRkKR7kntyfr8ONEx9b2wnVF6ZM0sbtR44JAOQNiRtyiH5a6ErvdYxushB
- awGZ+imwAaNbIk0S2c2+TTmCt+UkjqQZZ7V3tIOqKSRAxfC5GWoZVdpq6OrTiRoNzlz6WeNidnA
- qlSwqB/PE7NSasbYpNyFScc5JNd1vbjb7K0bruNsXdrHfoVBv2uTRx7fqW7H7XJUKdS0gYj/eEa
- H/MJ5e5nGmxUIrUlBqqOeHmcLje9GyJlEEbn9oewwYJj+VWwnQv6Xqjy82je9T5aklNw==
-X-Received: by 2002:a05:600c:4fc9:b0:489:1c1f:35df with SMTP id
- 5b1f17b1804b1-48fe60e58ecmr160151645e9.10.1779032157675; 
- Sun, 17 May 2026 08:35:57 -0700 (PDT)
+ AFNElJ8uJJQ2TPxt2jfwGU+CmbN4PSZ7F1visIplF78SPWIILSezm362ldjpDU3th5tB78pxY7AMMOke2EtO@nongnu.org
+X-Gm-Message-State: AOJu0YxZR2W4UJNaJM3DQv4Fltl/sMCXOX8v/qgfYgMqQQa8xJUGg2Gv
+ ZKvjb2FzfzlYFFQhsChvibYm7HmFCk3veifn/HJGRQtjxAKav/PgZGVdOxoRVtqUq8o=
+X-Gm-Gg: Acq92OECRh8DQ+d0l0PXNxzx5ZqDaZJibIVHqfB+8oGPZHC1vfJo4gQ8xn4uUQqmz9z
+ yv/hQjsbriXBiDHYF3rBmWtnYbjYf7kcrbg6s7amiqH6hgfhUKZ5TlHVCYk/EqKiJ7F/jBBEsju
+ ko7rVS1I/Oqd/ejjLD6O2fVnhH1qKEGSlC8eizd6Yw6Zz3kIPU7X9GKXuJBN6LcaxXAZAEqBT3F
+ zbP0vjxRQ6qzwhCVQvirrw+fUjSlt/5l/+N2G8BzIyS2YTAxdfgAGV1mhD1Jx3UT0XzVK47DQrp
+ liZoY5idLVsaMpT1qJk2pbMf7+Bwfg5JFwzR/jP/A5F5JI8NrsEsbfZC2g8Rt1cda4pjxhOb2nM
+ 9pypO5doa6EPK09hZQPE8zUhw6o3j1BCN8fS6xG5bj6vrUXVTMEnwujI17sY3QjQk4IPbtxg1+f
+ gdE/9KZQBX6joRV2JS62sDBYWcyfxlWxmNfYfstrypuiJSFgh6ud6YmItt6b7QIpKuAkIa/8hsy
+ IRf
+X-Received: by 2002:a05:600c:a406:b0:48e:82cc:4d4c with SMTP id
+ 5b1f17b1804b1-48fe6514939mr143010085e9.23.1779032543653; 
+ Sun, 17 May 2026 08:42:23 -0700 (PDT)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fe5cab818sm202737635e9.14.2026.05.17.08.35.56
+ 5b1f17b1804b1-48fe4c833fcsm196781765e9.2.2026.05.17.08.42.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 17 May 2026 08:35:56 -0700 (PDT)
-Message-ID: <cc75dbbd-c040-4bcc-9d5f-7a1c58cc3ba1@linaro.org>
-Date: Sun, 17 May 2026 17:35:56 +0200
+ Sun, 17 May 2026 08:42:22 -0700 (PDT)
+Message-ID: <38468155-e075-4974-909c-5c7b6a52df5b@linaro.org>
+Date: Sun, 17 May 2026 17:42:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 14/27] target/riscv: Fix size of [m|s|vs]iselect fields
+Subject: Re: [PATCH v6 24/27] target/riscv: Introduce externally facing CSR
+ access functions
 Content-Language: en-US
 To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org, alistair.francis@wdc.com
 References: <20260515180437.23620-1-anjo@rev.ng>
- <20260515180437.23620-15-anjo@rev.ng>
+ <20260515180437.23620-25-anjo@rev.ng>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260515180437.23620-15-anjo@rev.ng>
+In-Reply-To: <20260515180437.23620-25-anjo@rev.ng>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,21 +106,145 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 15/5/26 20:04, Anton Johansson wrote:
-> [m|s|vs]iselect are defined in version 20250508 of the privileged
-> specification to be XLEN in size, however QEMU only ever uses at most
-> 16 bits of these fields, so fix them to 16.  Update relevant function
-> arguments.
+> Convert riscv_csr_[read|write]() into target_ulong angnostic CSR access
+> functions that can be safely used from outside of target/ without
+> knowledge of the target register size.  Replace the 4 existing CSR
+> accesses in hw/ and linux-user/.
 > 
 > Signed-off-by: Anton Johansson <anjo@rev.ng>
 > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Acked-by: Alistair Francis <alistair.francis@wdc.com>
 > ---
->   target/riscv/cpu.h     |  6 +++---
->   target/riscv/csr.c     | 32 ++++++++++++++++----------------
->   target/riscv/machine.c |  6 +++---
->   3 files changed, 22 insertions(+), 22 deletions(-)
+>   target/riscv/cpu.h        |  7 ++++++-
+>   target/riscv/csr.h        | 13 -------------
+>   hw/riscv/riscv_hart.c     |  7 +++----
+>   linux-user/riscv/signal.c |  5 +++--
+>   target/riscv/csr.c        | 17 +++++++++++++++++
+>   5 files changed, 29 insertions(+), 20 deletions(-)
+> 
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index eb18e1f59f..3352409676 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -903,7 +903,12 @@ RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env);
+>   RISCVPmPmm riscv_pm_get_vm_ldst_pmm(CPURISCVState *env);
+>   uint32_t riscv_pm_get_pmlen(RISCVPmPmm pmm);
+>   
+> -#include "target/riscv/csr.h"
+> +/*
+> + * Externally facing CSR access functions, wrappers around riscv_csr*().
 
--static inline int riscv_cpu_xlen(CPURISCVState *env)
-+static inline uint16_t riscv_cpu_xlen(CPURISCVState *env)
+Return: #RISCVException
+
+> + */
+> +
+> +int riscv_csr_write_i64(CPURISCVState *env, int csrno, uint64_t val);
+> +int riscv_csr_read_i64(CPURISCVState *env, int csrn, uint64_t *res);
+
+s/int/RISCVException/?
+
+>   
+>   /*
+>    * The event id are encoded based on the encoding specified in the
+> diff --git a/target/riscv/csr.h b/target/riscv/csr.h
+> index fef3cd34cb..370da83a69 100644
+> --- a/target/riscv/csr.h
+> +++ b/target/riscv/csr.h
+> @@ -23,19 +23,6 @@ RISCVException riscv_csrrw_debug(CPURISCVState *env, int csrno,
+>                                    target_ulong new_value,
+>                                    target_ulong write_mask);
+>   
+> -static inline void riscv_csr_write(CPURISCVState *env, int csrno,
+> -                                   target_ulong val)
+> -{
+> -    riscv_csrrw(env, csrno, NULL, val, MAKE_64BIT_MASK(0, TARGET_LONG_BITS), 0);
+> -}
+> -
+> -static inline target_ulong riscv_csr_read(CPURISCVState *env, int csrno)
+> -{
+> -    target_ulong val = 0;
+> -    riscv_csrr(env, csrno, &val);
+> -    return val;
+> -}
+> -
+>   typedef RISCVException (*riscv_csr_predicate_fn)(CPURISCVState *env,
+>                                                    int csrno);
+>   typedef RISCVException (*riscv_csr_read_fn)(CPURISCVState *env, int csrno,
+> diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
+> index e675358e1a..d1c7188369 100644
+> --- a/hw/riscv/riscv_hart.c
+> +++ b/hw/riscv/riscv_hart.c
+> @@ -67,12 +67,11 @@ static void csr_call(char *cmd, uint64_t cpu_num, int csrno, uint64_t *val)
+>       RISCVCPU *cpu = RISCV_CPU(cpu_by_arch_id(cpu_num));
+>       CPURISCVState *env = &cpu->env;
+>   
+> -    int ret = RISCV_EXCP_NONE;
+> +    RISCVException ret = RISCV_EXCP_NONE;
+>       if (strcmp(cmd, "get_csr") == 0) {
+> -        ret = riscv_csrr(env, csrno, (target_ulong *)val);
+> +        ret = riscv_csr_read_i64(env, csrno, val);
+>       } else if (strcmp(cmd, "set_csr") == 0) {
+> -        ret = riscv_csrrw(env, csrno, NULL, *(target_ulong *)val,
+> -                          MAKE_64BIT_MASK(0, TARGET_LONG_BITS), 0);
+> +        ret = riscv_csr_write_i64(env, csrno, *val);
+>       }
+>   
+>       g_assert(ret == RISCV_EXCP_NONE);
+> diff --git a/linux-user/riscv/signal.c b/linux-user/riscv/signal.c
+> index 358fa1d82d..9d5ba300e4 100644
+> --- a/linux-user/riscv/signal.c
+> +++ b/linux-user/riscv/signal.c
+> @@ -90,7 +90,8 @@ static void setup_sigcontext(struct target_sigcontext *sc, CPURISCVState *env)
+>           __put_user(env->fpr[i], &sc->fpr[i]);
+>       }
+>   
+> -    uint32_t fcsr = riscv_csr_read(env, CSR_FCSR);
+> +    uint64_t fcsr;
+> +    riscv_csr_read_i64(env, CSR_FCSR, &fcsr);
+>       __put_user(fcsr, &sc->fcsr);
+>   }
+>   
+> @@ -159,7 +160,7 @@ static void restore_sigcontext(CPURISCVState *env, struct target_sigcontext *sc)
+>   
+>       uint32_t fcsr;
+>       __get_user(fcsr, &sc->fcsr);
+> -    riscv_csr_write(env, CSR_FCSR, fcsr);
+> +    riscv_csr_write_i64(env, CSR_FCSR, fcsr);
+>   }
+>   
+>   static void restore_ucontext(CPURISCVState *env, struct target_ucontext *uc)
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index 6cc3fcd4e3..3ffb56e938 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -5716,6 +5716,23 @@ RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
+>       return riscv_csrrw_do64(env, csrno, ret_value, new_value, write_mask, ra);
+>   }
+>   
+> +int riscv_csr_write_i64(CPURISCVState *env, int csrno, uint64_t val)
+> +{
+> +    RISCVException ret;
+> +    ret = riscv_csrrw(env, csrno, NULL, val,
+> +                      MAKE_64BIT_MASK(0, TARGET_LONG_BITS), 0);
+> +    return ret;
+
+(Directly return?)
+
+> +}
+> +
+> +int riscv_csr_read_i64(CPURISCVState *env, int csrno, uint64_t *res)
+> +{
+> +    RISCVException ret;
+> +    target_ulong val = 0;
+> +    ret = riscv_csrr(env, csrno, &val);
+> +    *res = val;
+
+Clever :)
+
+> +    return ret;
+> +}
+> +
+>   static RISCVException riscv_csrrw_do128(CPURISCVState *env, int csrno,
+>                                           Int128 *ret_value,
+>                                           Int128 new_value,
 
 
