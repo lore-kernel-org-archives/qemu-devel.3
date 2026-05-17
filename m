@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27DE7CD4F47
-	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 17:14:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFA3CCD4F47
+	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 17:14:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOf3d-0006FH-2P; Sun, 17 May 2026 13:13:41 -0400
+	id 1wOf4d-0006f3-81; Sun, 17 May 2026 13:14:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wOf3a-0006Db-AE
- for qemu-devel@nongnu.org; Sun, 17 May 2026 13:13:38 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ id 1wOf4U-0006dC-8F
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 13:14:34 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wOf3Y-0006t9-SA
- for qemu-devel@nongnu.org; Sun, 17 May 2026 13:13:38 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-c8021c8c42fso480046a12.3
- for <qemu-devel@nongnu.org>; Sun, 17 May 2026 10:13:36 -0700 (PDT)
+ id 1wOf4R-0007Gt-Lh
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 13:14:33 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-3660ab73adbso926049a91.1
+ for <qemu-devel@nongnu.org>; Sun, 17 May 2026 10:14:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779038015; x=1779642815; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779038070; x=1779642870; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=+BrGrX1Prrl6FAxzuSxftgdKyOQQ28fg7sauoUQmdBg=;
- b=y03xsd4Al8SkQoonGMeAFvWusHJ1FC5l5b1LE+bf4CUF8rs4zqZdzwJdCZTwQ+7EzG
- MJSCsokolXufMDvnnHkRsDWw4sr1ILl4QuOCDU/3FMkpf8nP+mHCjq7v6fLU+Ru98q1Q
- V49PEvD7+4I2brfQ/TrOAM2lk/W+40qrnucQfBbYLmRTg0BOmaNP5LiyKhV87k1SW3eY
- bOkVcM+TE3jpltbe3/2dIusruV8+mD8PX51MJRNifKlHPSz+Cr8s8U3fjZqnEo8PcsHi
- fCT/skJ88XESdL+FPzXaCvSwrXf0fHn8LGpFveJiwpyz4mcpiwBlJD9jmiT0/99EF7Qo
- hYBQ==
+ bh=2D+L8Ic1BCX0ye9kJy+Dv/vVfY6wo39yQ9H3bUjJPGY=;
+ b=MW+oTwXPkuBwEUtXz3mRzUYFwCIsnECfPQFS1q5RQJuzubkBfnhgMKTQfzGYdAzN4N
+ n2tAFkwMf+dhTklmPzZtdBsgctMSMgZD7eWr1vrrpyVQvar7FAEGkd67z/bS4LFdMZMQ
+ v4KOZWIwF0m5y0clS/GUoS/A7Nw/dUF7vN1FiSxincxhWG7eK2PvqviJ2cKTOatXqZEN
+ CF9UUJ32KWGIELRsdeHODfQacmkmE+37fBFCTfKfvvO3T7fEXgh55H+goT/HFPCTIl06
+ Om5yLTXJw8zdNKo0YlvoFeF4SoDDtQe5hSz3csoAQKU0BoS+dHz9h8q5bOGRklrysq3i
+ fnGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779038015; x=1779642815;
+ d=1e100.net; s=20251104; t=1779038070; x=1779642870;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=+BrGrX1Prrl6FAxzuSxftgdKyOQQ28fg7sauoUQmdBg=;
- b=cs2uGgWnuZOwCdbvRtVWR9FH7eGz/BdrTOq/e72np3v2JbuJ2rJYMEeYBaz3NKy1HV
- ui4S+d7guhbf0BxUoNGguH3y/JrRXHVl3ZreLiFEvdzQIqHvBlwatTECFLbNS90oDDLB
- xSKfxLWWFDmCH9LvwK2McCKqKqgw2Qv7S9SWjTrDqCpz5pU7mVkL5TFBTxyyfGEGsHz8
- k90zM8y9TIlqyPxkxsFtkRezvQf+I/gZjhLsJvik/XdRpW9kLo14LUi5r0AN+eH/bEhJ
- fDxcnX380xWZrYjd8CdZ0VzcZwsG0znWVvHDJc8Fccb3e+73Wcxo4YHMkmyZNR9V/cz6
- bF/g==
-X-Gm-Message-State: AOJu0YwhLSgKqcByAcKZrY/TIE3socsBfOeonlMUvuguLzpJzozp8qEf
- NwhMVvKMTxzBbBGgKOT2kYGctpDr6m++erk+rPRWJKwHK7vAU2X/LyzdTLMLUXqFZhel6fI2m8k
- 3IMVa
-X-Gm-Gg: Acq92OHGlKnswzSmULHnJKj0fdeLq2v0pbupFrawXKV+XwB1sG3L6HkAa21bg8BKDn3
- tOdrfyIXCvuzP6bTFyWQJvhkqHNtm8tquDzAWVAVxdebD/T99GBOzhEXjasoo6IqHo9ZPaP87HH
- YuUNp5SlWVFJ89Y1VpaI2PItrfx5MdMJLlUMUhQo2b2o8hrGi9NlqX4FJRd4w9hJEEAK8198s9i
- gpJvb+mh+g0viovMsP/D40l73MXxDqGQweIJwi8kYmPyfpy13QRpIIZHNukQc54PtkX6zUFV7hI
- UeQFfq1Pv5CmEe21dBSQecj30Hhzjp3z4Um7OjCCYuFVEjwiaUZAV6OYb7PCFng1ri9gFJqPv4h
- 7cm0pIx/F/lhN1wFLkPBHu9ys/Az4miswDFMPGAC4DKAToZWkGmKntY+SPFoPrsyjxkrto2ezHS
- z1YBE9f6E8B93NPixibTHqQ1sTpGcMYWFoH8nQT6YDTPZkBQ4=
-X-Received: by 2002:a05:6a00:18a9:b0:82a:f02:7355 with SMTP id
- d2e1a72fcca58-83f33d24d71mr11512618b3a.32.1779038014912; 
- Sun, 17 May 2026 10:13:34 -0700 (PDT)
+ bh=2D+L8Ic1BCX0ye9kJy+Dv/vVfY6wo39yQ9H3bUjJPGY=;
+ b=nHlpE7gy2tW5TFT3xmcVc59UMhz5xDaMU1TJ9xEseROARTT8+ExkM/BnBeVMQ3xuIc
+ HuwbDPgemR+r+LZ55A+AY5GByLq9guyiGWk6bp3Uy9/Mh1Jtp/ldAbwJnxc3SeDIp6Qn
+ W5vOK+84QNQOCmvSZoHiM79svX9wD1W0eepF9Ml33z/N/xnshhHy2BEn5d8jSpda1O04
+ jmTHXAUovZYs1hHCKN7kihWErxEfN8iQJPB08vq3A9Wvs8K1pCKuR6OsfKHjaa9A37/r
+ u6TQ3lkQpCEN0LfNN5OEYAbUKYDonmfIb1p7Sc3a0FwtgV+A1ilxL7jB5y/fHThn/tVB
+ dWTw==
+X-Gm-Message-State: AOJu0Yy7dBVsfwTdJGhIJwFkMSCH67co4SXaHYjtY3zql5WWZyWqE12I
+ f59nYGgc5vB7aw52vEAl/E9w4vLFbmgr2WxmB0E51EoXjTWxenP3ZIRML6U5FCX4EXjwKVAEELG
+ S0lQO
+X-Gm-Gg: Acq92OG2vOtpTnkNkfSWehTlf/0gV6rncaJwmuaZVZqoWtHwJYhb0d3Z3uy/3FQ+61Q
+ E1eAGDYbCJeQwpjbI3GnvKjhSH48pxl0Z9ZCg877UZBxH7vFdhoQ33J8+dky7fU/mIFNRm5mjuY
+ OZeIiHaFjmjrIIh2343qbw64I/2VdM30fphT5BPfSoXNBUPW7jfBVhXsKe7KeWLtfb75PtU6TpF
+ 4lnrodrYA9oU5bh2Y5Ftd98Kuq7h4WrKrDeiRlyl8FxNU4aZPtVt7gtNpf6VbZC7uVebA13TkF7
+ YayMBfmOLdcJ9wWw0AEda/SzD70G3AcCUoI/A3hcOfKsOWis6qhr4YVLgGWnUlFDmGiKpKtk0oJ
+ 20eoDfsWNLPohAxQKzO0UauAIBRV81XZdCr4bixacp67iGq6K+FaLuDpgGC2xNagzTb+N+pZUhq
+ PUHVkGr0ZoQohqTmS5FInDm1Zp/7i9WsJqWtud
+X-Received: by 2002:a17:90a:d40b:b0:368:4942:50c4 with SMTP id
+ 98e67ed59e1d1-3692363eecamr13695233a91.17.1779038070201; 
+ Sun, 17 May 2026 10:14:30 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.142.33])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-83f1966471dsm12152976b3a.6.2026.05.17.10.13.34
+ 98e67ed59e1d1-36951437316sm8551603a91.11.2026.05.17.10.14.29
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 17 May 2026 10:13:34 -0700 (PDT)
-Message-ID: <21a6e20d-0bd5-4889-82fb-7a8a5aafc92e@linaro.org>
-Date: Sun, 17 May 2026 10:13:32 -0700
+ Sun, 17 May 2026 10:14:29 -0700 (PDT)
+Message-ID: <dedf8a54-31d6-4e70-99d8-2cbb9b43f3c7@linaro.org>
+Date: Sun, 17 May 2026 10:14:28 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/12] hw/dma/omap_dma: Remove support for dma_3_0 and
- dma_3_2
+Subject: Re: [PATCH 08/12] hw/dma/omap_dma: Fold omap_dma_sys_read() and
+ omap_dma_sys_write() into callers
 To: qemu-devel@nongnu.org
 References: <20260512203414.3633237-1-peter.maydell@linaro.org>
- <20260512203414.3633237-8-peter.maydell@linaro.org>
+ <20260512203414.3633237-9-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260512203414.3633237-8-peter.maydell@linaro.org>
+In-Reply-To: <20260512203414.3633237-9-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,22 +106,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/12/26 13:34, Peter Maydell wrote:
-> The omap_dma device has support for modelling different variants
-> of the DMA block, as enumerated by the omap_dma_model enum:
-> 3_0, 3_1 and 3_2. However, our one remaining OMAP SoC always
-> passes omap_dma_3_1 into the omap_dma_init() function, so the
-> handling for 3_0 and 3_2 is never used.
-> 
-> Remove the support for the other versions; this lets us
-> delete entirely two large functions that were specific
-> to 3.2 DMA to the LCD controller, and all their associated
-> fields in the omap_dma_lcd_channel_s struct.
+> Now we have removed the DMA 3.2 support, we call omap_dma_sys_read()
+> only for the single address offset 0x400, and similarly for
+> omap_dma_sys_write().  The other cases in those functions are DMA
+> 3.2-only and now dead code.  Fold the 0x400 register directly into
+> the callers, and remove the rest.
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   hw/dma/omap_dma.c     | 348 ++----------------------------------------
->   include/hw/arm/omap.h |  28 ----
->   2 files changed, 15 insertions(+), 361 deletions(-)
+>   hw/dma/omap_dma.c | 121 ++--------------------------------------------
+>   1 file changed, 5 insertions(+), 116 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
