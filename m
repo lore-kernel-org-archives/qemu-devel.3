@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F056CD4F47
-	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 17:19:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AF49CD4F4A
+	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 17:27:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOf9D-0008PC-Md; Sun, 17 May 2026 13:19:27 -0400
+	id 1wOfGX-000273-Or; Sun, 17 May 2026 13:27:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wOf92-0008My-FZ
- for qemu-devel@nongnu.org; Sun, 17 May 2026 13:19:17 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1wOfGS-00026o-5M
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 13:26:56 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wOf91-00017p-2v
- for qemu-devel@nongnu.org; Sun, 17 May 2026 13:19:16 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-366087480d8so1206865a91.3
- for <qemu-devel@nongnu.org>; Sun, 17 May 2026 10:19:13 -0700 (PDT)
+ id 1wOfGO-0003p3-2g
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 13:26:55 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2bd8c4aa911so16314265ad.0
+ for <qemu-devel@nongnu.org>; Sun, 17 May 2026 10:26:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779038353; x=1779643153; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779038809; x=1779643609; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=swJS/PRqRUKNQubMwtcKvLt2zQhOsttzMnZXhZCGXHU=;
- b=MzIB1ry3GJtlEL61qgRZ486bHJdQ8c70126IoYzTVyYzuQPgFJDuBZbt1IkY5YXbg9
- vuaSMuyRUDWHBvGNQdcHSPhJhoNqtc4OEd/FmcWzy0hGm1NZz9T3MuggzRurDs9d0HeX
- WWu9+17f7AGYd4s1KXHGL77oPtaQxnP9q9FNCdTr0VklwnGp0fVYaJKunfjAs2hVg0U7
- Sx+W8o/oGjNVB1VvVgyXwsUgAN53EGnX2T6mrJZ8amh5+R2+mYNFVANIVViaLavcqfbi
- mlsp6tMASN7eCuoYrqmunGzRq6wkjBpO4/R+VL8qCnzW1wFMASRDtSjg1PLIPToW4j9K
- lXjQ==
+ bh=tcCxoDkBkYJHWH/amTOpcAWrPp0fn8NCYthn5//+3vM=;
+ b=efaREnB45Vc5PoxEgMIIn1ipAE29SgMsHccWDXFCppVlFlNq9cMMn/PpMGnyg6NzTl
+ aHDrVLcoMe1xNx5beNZkL3OV0KX87iw8jy7vrv+qCJBxSPIIKPXMjsa89je7pitp1A2e
+ fMXPsqbVEBGsdVMqTgKxZ6zNM3UhgjT+b57ABH4lF8q6DDX4BXMwkQRzF1V6cnn1axW7
+ 3qBrYsT/rmeL4wfk4g7BUBl7LH+LC8PtUm97lp2VVhWAGuA4d2uHQpIqTyO1dmqHirR5
+ fefudv9jqV421C6iETS6PcJjcQWj20p3Tk7dxhN3xhdL2Uk6tbYdxtbNIGMi1GaIua6c
+ ISBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779038353; x=1779643153;
+ d=1e100.net; s=20251104; t=1779038809; x=1779643609;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=swJS/PRqRUKNQubMwtcKvLt2zQhOsttzMnZXhZCGXHU=;
- b=cTdCYNPWggcX53538LivbPhr6dH/hjrk1INmFDV5HPN/LMrbrA4eSxjhgdh8A7mwgb
- MuVUavAEEIfhnxFnPOQjgY+LVudgf2wqUbDKkHmqDHw7E24HrzBp6ZYcdic4nvJeyawc
- BYncolJ4GKFp9amGpc1k8Nwe/rkNXwGAAixIdh/X23DseBrq4oHm0bNLxswCDSvv0QLB
- 4C8XZyeQ4RHtJmTbSLRIKeWXc0/pi3Y/SNSd3aMo/sYGRLzlLtp6mvtw86O3ShfKlBZC
- h5WiQ1QU72PZTWu5+zLSmxDMHGO5WUGVbjEJUCPGoy34zx314smDIDkPXAqt9g+gHpGx
- mDSg==
-X-Gm-Message-State: AOJu0Yx5ZTNWKzTUR0nrJnhu4HU73IZjCmj8ADww4O2y74nlZD5sogC6
- 9TcHcGw9QUjnyrGBxbt/5m9o9WGDzGMr4SasOaTJ0T5QTv/Jx998vz40WTE8Fm2zrVSpvESHXtU
- L3PIz
-X-Gm-Gg: Acq92OHMl9Yw0uNNtJhIGHSa50LxI6ivfzllkkVfNASVi62UWYc8TYnZDGG92SWtkxj
- YdaCv/27EtCJVpvFqCeNG04TNmBXD7awisfPjeDA7gGB5D0uTbbtW9BiYczWNhk/fkBIHRksfJY
- db1mLKVGAya6L+MGuUcqY4Wu6hh1AGPB9kIcXBgTR8w6WTeMwHAfG8ewdZggPx4aTMS1H4JkAZu
- P3FOpDmFkng8fVsAcC7fCUDsLS/2PtsmMaSV9EvMUFJLuebtsfrwNOvpidXvAS37uE8MDGAekCA
- +aApDT/MawfLnECDJdQta+wzxXs54IFiwdrTeBbI4s5Q+rfb8O5yXYtUAraR367Tu25o/YpuLnd
- nIDB0sknxdPYbxhoutGx7imy+XtNAIw6EXZ9dj/GxpEwOzSZ5fSKzpRDq25DAh1voTNEAKLht4x
- pEWVIXd/2UmZ8hwzVIeEfpGyRSCztc68pOPPLu
-X-Received: by 2002:a17:90b:2248:b0:368:341a:a925 with SMTP id
- 98e67ed59e1d1-36951c97685mr12321992a91.23.1779038352559; 
- Sun, 17 May 2026 10:19:12 -0700 (PDT)
+ bh=tcCxoDkBkYJHWH/amTOpcAWrPp0fn8NCYthn5//+3vM=;
+ b=NnPgAX/vQ1Zqjo53//dJF4sg6zIxedBcWX5FvNq8Z9XSlzv841TOu7exRwE66Acs4F
+ 3E3PlvRK4gkcNqA7pW0qmucx/NJDvtrYNWHQuNDDes/8etk6FWeGd10T06hq1JVdHjHh
+ EmD8rZ6oSRH/BfCxVmTwx0g/gPtLTqTN+nd35Pm/mjNHY9Fvg/nArK/zjMpefdTfVPI6
+ rDHWVQNP0p7XdJBc9VUMzA4uqzeOptrJgEuygTW1Rq28yYRKpYmmiw3BGfj5b5XDCK83
+ A+cFKedVqNHvFZmG0A0XqhLfkvCSRbcNVqWcDE1fp+f38hfL9tYyBhH3O+AeGEYs0rHh
+ LNbQ==
+X-Gm-Message-State: AOJu0YwbC2TfeDLBGGSGqdViiHV9rhDQSW3CnbFKjkBCQ7uOB+qPMwtn
+ oE0EK03XWWNST4IDtD7VrEg8Zh9CG/dZaMfmGw8zLVFXhcnYMkYhiAT2c16YWgcsWbq5m4RbNTT
+ yVhdg
+X-Gm-Gg: Acq92OHi/7dTEQnZesIaWqD20hn5MJSwGkRTWeW8UT3tdfUxvle+m63L0WJNC/ruk6x
+ jwmqFUG9LkFAMUqBgGF0ui3MfJA7sKFlZu2Jx7KkAYhKF4UYFnH0yjSexCNRH+HvXOwdLIKG0ps
+ ho7sqHSR0PS18IYRpFEo7jTjtxChDLyk13Jc9Nq3i8xbsichHj2sCd2lkPPlqDqSZScUzc0gh7p
+ Sa6wmYkmwOFTGbytz/yJtlAr/wQSRANtNw0bTMosX28YFBizwqe8iDi1RquboXHxZRskCVqFfTx
+ tRe/m34ma2Kj64o04zbaDR0tHJA4/w4OH0eraiTkN4zXj5KIJGtq3L32cL6hI/N6pVUhYD3o8EV
+ tFQwvGIAgw9V+9tQ+jbV3ueDL9qUKpbjZTbZo0AhfL49HASKVbY+8Y++A90J0FB0cC00a1FWY7E
+ lq7+hmNGX5ykECz5PEb9EDTatpVjc7LyeqIYSV
+X-Received: by 2002:a17:903:40d2:b0:2b4:5f69:715d with SMTP id
+ d9443c01a7336-2bd7e8f07f3mr131504105ad.25.1779038809176; 
+ Sun, 17 May 2026 10:26:49 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.142.33])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-369517ed182sm8676769a91.15.2026.05.17.10.19.11
+ d9443c01a7336-2bd5b568cefsm125283335ad.0.2026.05.17.10.26.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 17 May 2026 10:19:12 -0700 (PDT)
-Message-ID: <5b9eed93-fa48-4345-bb41-edc028dbaf30@linaro.org>
-Date: Sun, 17 May 2026 10:19:10 -0700
+ Sun, 17 May 2026 10:26:48 -0700 (PDT)
+Message-ID: <e94dba05-3457-45ff-9ce3-15dd26b12da1@linaro.org>
+Date: Sun, 17 May 2026 10:26:47 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/12] hw/dma/omap_dma: Drop model argument to
- omap_dma_init()
+Subject: Re: [PATCH v7 15/35] target/mips: add Octeon MTM0 instruction
 To: qemu-devel@nongnu.org
-References: <20260512203414.3633237-1-peter.maydell@linaro.org>
- <20260512203414.3633237-13-peter.maydell@linaro.org>
+References: <20260514-mips-octeon-missing-insns-v2-v7-0-226686be4ce1@gmail.com>
+ <20260514-mips-octeon-missing-insns-v2-v7-15-226686be4ce1@gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260512203414.3633237-13-peter.maydell@linaro.org>
+In-Reply-To: <20260514-mips-octeon-missing-insns-v2-v7-15-226686be4ce1@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,18 +104,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/12/26 13:34, Peter Maydell wrote:
-> The model argument to omap_dma_init() is always omap_dma_3_1, and all
-> we do with it now is assert this; drop the argument and the enum.
-> 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
->   hw/arm/omap1.c        |  2 +-
->   hw/dma/omap_dma.c     |  8 +++-----
->   include/hw/arm/omap.h | 12 +++---------
->   3 files changed, 7 insertions(+), 15 deletions(-)
+On 5/14/26 10:37, James Hilliard wrote:
+> +static void octeon_reset_mtm0_mpl_state(void)
+> +{
+> +    TCGv_i64 zero = tcg_constant_i64(0);
+> +
+> +    /*
+> +     * MTM0 defines MPL1 as zero; model the architecturally unpredictable
+> +     * MPL2/MPL4/MPL5 lanes as zero for deterministic emulation.
+> +     */
+> +    octeon_store_mpl(1, zero);
+> +    octeon_store_mpl(2, zero);
+> +    octeon_store_mpl(4, zero);
+> +    octeon_store_mpl(5, zero);
+> +}
+
+Thanks for the CN71xx docs.  The fact that MPL1 is cleared with index 0 makes sense, for 
+backward compatibility with CN5xxx.  It's tempting to set the others to 0xdeadbeef, but ok.
+
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
+
 
