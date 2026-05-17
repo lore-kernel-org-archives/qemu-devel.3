@@ -4,117 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76A36CD4F48
-	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 19:41:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7960DCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 20:04:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOhLx-0005Mj-QX; Sun, 17 May 2026 15:40:48 -0400
+	id 1wOhiF-00038X-Lg; Sun, 17 May 2026 16:03:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Costas.Argyris@amd.com>)
- id 1wOhBT-0001uO-NE
- for qemu-devel@nongnu.org; Sun, 17 May 2026 15:29:55 -0400
-Received: from mail-northcentralusazon11012040.outbound.protection.outlook.com
- ([40.107.200.40] helo=CH5PR02CU005.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Costas.Argyris@amd.com>)
- id 1wOhBR-0002LV-LE
- for qemu-devel@nongnu.org; Sun, 17 May 2026 15:29:55 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=DAjqap4sMsroexoN+0yjawHNn2y3gQZevhBf+fBR0M0/HLFOLbysrvIcRulNxp6UPWQzi9QMSUW9AS1TWcwiIffKOF5yl5ivCKGd6GQ5VfWanZTJStORoBDp+9N/V/UngZ8ah3DE5qCcndFjq8iRmYqVx6hvbImBoDrnzH8g//Ihr3clm6emSJAaXHzvA1lGQ/IojWBfzZnSgHdHxc5dyRILLmkoXiVhUMCGvK3EzYWp6maxayxkZ/ca4teD9Hba+KYhHV2WxPvoz3If0YCNv8FQMIWn6gTnmNybjN71JaetR+WW2umctvwKEjM6ws6ymt6Bw3vDUhcz4/17v5W5eg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WesSBblTGsYz019IcL/ktmViu/7aC/UST+jINlpxAJg=;
- b=HEyg9U3+kt5DeGfXKc56Fh3aP5gbQTYdUmOpmDTs4vzSAsN3Io7EZxcZ3gqNNwgzr9OtmYsHAa+nooVFbwT/o5Z5Io9tIX+y6kBD67vHDSrQMMSvmJhyPSRDvfVfeR8svqNxu5fSLf2u8gnDgRAKvHyQK6PmassPlZFt5ZwDVsz+dsyoiFe5098AnliKEAp/lIPjzs8J/haBi9mqlbzWPY+yHlI3HB/XdlFddPChFJbgTQeVleL2IQC/S7C+aXwRVxj6RNeFf64gouMlCEo7OH2K/z4YpeMRYWfliFL4Y5w/URnlkQ/GtnYCdHGZ5I9NjJwtI3ER+uuv7RmGt2Sm5w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=WesSBblTGsYz019IcL/ktmViu/7aC/UST+jINlpxAJg=;
- b=cIQi7rSBZjovo5z4IJSXVXpCayy5qPAbhnPvFhA4+EkLk6oJne+saiaja51mQiVziHaNDH6ldF9GrNy5+f8PQ+JhIpW0r9KjzMDHE2C+DRODGLdAaU8/37fYn0C7albPHq+iTTsKSvszD+L6HCXD70zc+MHrmTmAMOpmhKoMsu0=
-Received: from MN2PR05CA0037.namprd05.prod.outlook.com (2603:10b6:208:236::6)
- by DM4PR12MB6232.namprd12.prod.outlook.com (2603:10b6:8:a5::7) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9891.16; Sun, 17 May 2026 19:24:46 +0000
-Received: from BN3PEPF0000B372.namprd21.prod.outlook.com
- (2603:10b6:208:236:cafe::7f) by MN2PR05CA0037.outlook.office365.com
- (2603:10b6:208:236::6) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.48.10 via Frontend Transport; Sun, 17
- May 2026 19:24:46 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- BN3PEPF0000B372.mail.protection.outlook.com (10.167.243.169) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.71.0 via Frontend Transport; Sun, 17 May 2026 19:24:46 +0000
-Received: from MIKCARGYRISD1.amd.com (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Sun, 17 May
- 2026 14:24:44 -0500
-From: Costas Argyris <costas.argyris@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, Sairaj Kodilkar
- <sarunkod@amd.com>, "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, "Costas
- Argyris" <costas.argyris@amd.com>
-Subject: [PATCH] amd-iommu: fix CmdHeadPtr not wrapping to 0 after full
- command buffer pass
-Date: Sun, 17 May 2026 20:23:14 +0100
-Message-ID: <20260517192314.355499-1-costas.argyris@amd.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <demiobenour@gmail.com>)
+ id 1wOhgA-0002YB-Tx
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 16:01:53 -0400
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <demiobenour@gmail.com>)
+ id 1wOhg8-0006Te-HL
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 16:01:38 -0400
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-7b4ee3a88e1so9460507b3.1
+ for <qemu-devel@nongnu.org>; Sun, 17 May 2026 13:01:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1779048094; x=1779652894; darn=nongnu.org;
+ h=autocrypt:content-language:to:subject:from:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=1WwOT0gK3Mh2ogurXkaI6d1IIURt8dRlov8w8ibucK0=;
+ b=OMsD6F17UtHBbwQJfBJUviLIaUhlf25zq3zI8ATtdMTXMlSjmlzmOxXt2ud57lziDn
+ qVwIAk2SfH3xp66fA4e4pyDANIzu5glvXRQ/vuAt7a1tKJNE2aSCfyOMnvjd9a6X11LR
+ s3iZIx04JUXOL01UYy7pj/Y+H2Nv2+BEuJTELwIc5pj31Q73925lWXqy3BYJ2utVtAXD
+ X1BIhCQ/WivSZJuGjRGtdPcml1n/DldyZLCadTuzz+gmd/lyfZrkDIo7flgck21lMrT5
+ trIowAjhYu6cVFV5xgnj1PD7YSfuEG0D9051dPuwuA0uvYJMOBmML9sW+55RDAuacZBZ
+ 5FpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779048094; x=1779652894;
+ h=autocrypt:content-language:to:subject:from:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1WwOT0gK3Mh2ogurXkaI6d1IIURt8dRlov8w8ibucK0=;
+ b=YA6hdg2k+I3+6VQJB9iOXYO8r5UKa9vcv4harMixZzUPx1l6DdJr/e+Y8IgInsoKIh
+ MIk4n6PJvaTGNhFp02Ay5iNMkFKjqhyrGZHrreU+99xd9kxD8IpOEXyVf+CJOzOw5EVk
+ 4R3yBPu1nfVaTHsLsFzDqemlMne/X1LcPaYa1Ip1lwahZ8ju63wFIqq+BS8izNe4Sucp
+ +AzhHU9oGQ73i1vk35FY6YyAvI6u23raFilRJzt36rTRoybfRXJmK5kb+9r3KlnPQgj+
+ QKufbgUyHnHljnH4C2MRughrtFwBJVZ7DToMSx2G/I1TERCsYBLuIVthgklOeAdqirr4
+ inQw==
+X-Gm-Message-State: AOJu0YxpowyeWmIgILee0xnDMGYhtvnLkGfsjf4JZ2D0MLXkYVFjOEUA
+ 3iKLUxtugf5M59Sfjcs4zkJl2RSzeznwXH+/iX/6NgORvfQic9OEPKD237wrzwk1
+X-Gm-Gg: Acq92OHA7D2QKv//MV4pOsdfKZuL1Q/KGcnJIwZb/xPwUQ4v6aoocqWd+MmpF/M6Qqk
+ vRwn09/2GOVQmY25rv/VUTLKNkFYip/3uBIhhYLcgSieRB/NmsDxfthtk5aoaFcRucfjH58HQ0e
+ D0mAsJMH04XmomNY2yUnGuWkEezUQ7gm/3gqqRxftErkJjSt/g+r2hKP+7+ayMuXAUzLF7v8Inm
+ rxZxm7ql5F7orna6gGkxFU7gc2HMuRaqyx83wpfqtD7n6o0a2EF5Dc6f1NWYIlfQMiASmxr1bTS
+ C86vLygbdm3PHRjJoJeZ3COH8kDJd6Ld2MNym5pRr7M7kqk605c7yIMXVeSpspWbwZp/ImqGUGx
+ ooG3UJNhTupaAnevBMfdsIIlL6ayI7xS88biF2Gj2tr4Xsk/9J3g6O49AF34HeqEwS7vK4+uK7f
+ at/8HvZfpUYxjUMGmwYMgi5oQr0Csd36ojMh1sKBuJy/DkV0h6OLANjzB4bcOVy1cFjs0cGe/ro
+ WDpPb9QmXNRNOgLcaKKXzlavHanX2SgE5o7+qDE2Q==
+X-Received: by 2002:a05:690c:e3e2:b0:7b2:2382:e309 with SMTP id
+ 00721157ae682-7c95c7ef3eamr148057717b3.33.1779048094182; 
+ Sun, 17 May 2026 13:01:34 -0700 (PDT)
+Received: from [10.138.34.110]
+ (h69-131-150-190.cncrtn.broadband.dynamic.tds.net. [69.131.150.190])
+ by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-7cc9c9bbad1sm11760617b3.40.2026.05.17.13.01.33
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 17 May 2026 13:01:33 -0700 (PDT)
+Message-ID: <06ca8cc0-1ace-406c-9cd2-7904de0c9beb@gmail.com>
+Date: Sun, 17 May 2026 16:01:28 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN3PEPF0000B372:EE_|DM4PR12MB6232:EE_
-X-MS-Office365-Filtering-Correlation-Id: 620a45c0-c5c3-4b09-3916-08deb449f49e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|82310400026|1800799024|36860700016|18002099003|56012099003|3023799003|11063799003|13003099007;
-X-Microsoft-Antispam-Message-Info: hHJnVh+srzp7Zes5tW9wJsk6lwmA1a0VGfSRprfn1CF2+JFUZYUjjOq3HxMpzJ9u6i8b4GtUvSOPbvoW2/fTqXwoxrBO5scFi8TFnXQpm2GelSPzGZr7AjOUCq7LzM/MSiZpZxG9X1Ib2hZQr8vE7FaLj4XAE9PIMcgmTJ57znkzRwHVmQJwyCS3tfhNhO1DX8wiTLpTFgWmkDusR82nMhuegO1Rlu7aSz2bt6IU7J5WYql1NjN+9bJxqckA0y4MWwUh7CxCmL0ZjzITB7my/WnJnvxCfx9GU/2A+VrGmUBXP/+Fd8bLoTDoilsqFjvza2NbSbHg3Q213H+ENGxAx6ooQ15YxfnDe+GBgUSD5YZE0rJW8oUkMmW7U1qpz1XDpz2FGHn+x35roJh+gZ8j27eAjF0gbXgflockGxuFekDj7yhRJ80qvo5ofcK8nriTYm4qOCdc3hPknEh+3kQbu34PIj5NISUfkg/LCyjsW0QVGQE20oFYxUIcR+G+TjuDA68NJcXth4H4+PM+HrM1YKj+LaMOf9REpoIRIuMn04DrJk92nXhqYeSGFeWzKYeHDEcJa3OzmtDTd3GI3xHBsUuoH5TmQq+GOoNE65Jk6JDcBBJxEwk+q6mSY+EL9N5nxTzZa2QTtEo+X++HZdllb+BBXunEu89tUiVAWPuxSf8osq05NnURx43oC9aVgM9kKJUHmAWdQZ+QYlv6K0WrENweJSiRm2q0mUY/iMXgYK4=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(376014)(82310400026)(1800799024)(36860700016)(18002099003)(56012099003)(3023799003)(11063799003)(13003099007);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: Qh0qwQ5tt/SifYwW9Qn8deBY3CeBtHhpdRTdqXKbU1NDbv44KQy4g3R7paDqRI5SXmeCGjTUCzpRN/izS2rGmDXlZXLtJR1WSdktpOASzJT99PWknwJBtjZY+rZFyNBMpbngvZRQK9VjKPlGwkUJDRJqRQGEhfMdc6/IsPcAwyhu+Gh2DDlLwBZErML+FJWh80bfzfFN5Y8u5UuBdZkbx+38I9ISIZJvGbo1/QWBNaZZmote4t0jK8/Ri48iJiIhd1ga+ZGshFn8OUfslsFHjjxZPrtyNPjLjSFv3NEDjEshzRD4Ir45VU/MtDMs5SNkFLLSBtuyVPT11p0UAuS/5MZpcpuUUs+jZ4sK5TDWYLLFg0rZPGv8O1wLiKvZM4ktxPxaTlRum945iTEo5kxVpOepqSrC20o2M46ANsOUTrt4Xpc/fzCzilRe6Tp58A92
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 May 2026 19:24:46.2387 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 620a45c0-c5c3-4b09-3916-08deb449f49e
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B372.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6232
-Received-SPF: permerror client-ip=40.107.200.40;
- envelope-from=Costas.Argyris@amd.com;
- helo=CH5PR02CU005.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+From: Demi Marie Obenour <demiobenour@gmail.com>
+Subject: Vhost-user spec questions.
+To: QEMU development <qemu-devel@nongnu.org>
+Content-Language: en-US
+Autocrypt: addr=demiobenour@gmail.com; keydata=
+ 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
+ +MYSfkEjBz0E8CLOcAw7JIwAaeBT
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------0gj0fOVtZiKAYU5e9eW0AL08"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=demiobenour@gmail.com; helo=mail-yw1-x1133.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 17 May 2026 15:40:43 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -129,151 +144,239 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When processing commands, the internal cmdbuf_head state is correctly
-reset to 0 on wrap, but the MMIO CmdHeadPtr register was written before
-the wrap check, leaving the guest-visible register stuck at the buffer
-length instead of 0 after a full command buffer pass.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------0gj0fOVtZiKAYU5e9eW0AL08
+Content-Type: multipart/mixed; boundary="------------tw6vpKErdX4PW6Ch17900Ow8";
+ protected-headers="v1"
+Message-ID: <06ca8cc0-1ace-406c-9cd2-7904de0c9beb@gmail.com>
+Date: Sun, 17 May 2026 16:01:28 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Demi Marie Obenour <demiobenour@gmail.com>
+Subject: Vhost-user spec questions.
+To: QEMU development <qemu-devel@nongnu.org>
+Content-Language: en-US
+Autocrypt: addr=demiobenour@gmail.com; keydata=
+ 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
+ +MYSfkEjBz0E8CLOcAw7JIwAaeBT
 
-Move the register write after the wrap check so the MMIO value stays in
-sync with the internal state.
+--------------tw6vpKErdX4PW6Ch17900Ow8
+Content-Type: multipart/mixed; boundary="------------3gTByhQLR2UZjYwjlPmaq1HE"
 
-The Linux kernel AMD IOMMU driver is not affected by this bug because
-it uses COMPLETION_WAIT with a memory store doorbell to detect command
-progress.
+--------------3gTByhQLR2UZjYwjlPmaq1HE
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Add a test to lock this down.
+I'm working on a virtio-vhost-user implementation.  Part of that
+implementation is a vhost-user server.  From reading the vhost-user
+spec, there are situations where correct behavior is unclear:
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3338
+1. It isn't clear whether a given guest physical address or
+   user address is guaranteed to be in at most one memory region.
+   Having it in more than one seems very illogical and confusing:
+   what does a given address mean in this case?  However, I don't
+   see anything forbidding it.
 
-Signed-off-by: Costas Argyris <costas.argyris@amd.com>
----
- MAINTAINERS                  |  1 +
- hw/i386/amd_iommu.c          |  2 +-
- tests/qtest/amd-iommu-test.c | 71 ++++++++++++++++++++++++++++++++++++
- tests/qtest/meson.build      |  1 +
- 4 files changed, 74 insertions(+), 1 deletion(-)
- create mode 100644 tests/qtest/amd-iommu-test.c
+2. Are there any alignment requirements on addresses and memory region
+   sizes?  Is it reasonable to assume that they will be page aligned?
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 80d28e618d..750d415389 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4052,6 +4052,7 @@ M: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
- R: Sairaj Kodilkar <sarunkod@amd.com>
- S: Supported
- F: hw/i386/amd_iommu*
-+F: tests/qtest/amd-iommu-test.c
- 
- OpenSBI Firmware
- L: qemu-riscv@nongnu.org
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 789e09d6f2..ce18cb453f 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -1475,12 +1475,12 @@ static void amdvi_cmdbuf_run(AMDVIState *s)
-         trace_amdvi_command_exec(s->cmdbuf_head, s->cmdbuf_tail, s->cmdbuf);
-         amdvi_cmdbuf_exec(s);
-         s->cmdbuf_head += AMDVI_COMMAND_SIZE;
--        amdvi_writeq_raw(s, AMDVI_MMIO_COMMAND_HEAD, s->cmdbuf_head);
- 
-         /* wrap head pointer */
-         if (s->cmdbuf_head >= s->cmdbuf_len * AMDVI_COMMAND_SIZE) {
-             s->cmdbuf_head = 0;
-         }
-+        amdvi_writeq_raw(s, AMDVI_MMIO_COMMAND_HEAD, s->cmdbuf_head);
-     }
- }
- 
-diff --git a/tests/qtest/amd-iommu-test.c b/tests/qtest/amd-iommu-test.c
-new file mode 100644
-index 0000000000..0438ee9586
---- /dev/null
-+++ b/tests/qtest/amd-iommu-test.c
-@@ -0,0 +1,71 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+#include "hw/i386/amd_iommu.h"
-+
-+#define CMDBUF_ADDR       0x200000
-+#define CMDBUF_ENTRIES    256
-+#define CMDBUF_LEN_FIELD  8
-+
-+static inline uint64_t amdvi_reg_readq(QTestState *s, uint64_t offset)
-+{
-+    return qtest_readq(s, AMDVI_BASE_ADDR + offset);
-+}
-+
-+static inline void amdvi_reg_writeq(QTestState *s, uint64_t offset,
-+                                    uint64_t val)
-+{
-+    qtest_writeq(s, AMDVI_BASE_ADDR + offset, val);
-+}
-+
-+static void test_cmdbuf_head_wrap(void)
-+{
-+    QTestState *s;
-+    uint64_t head;
-+    int i;
-+    /* 16 bytes per command */
-+    struct {
-+        uint64_t qw0;
-+        uint64_t qw1;
-+    } cmdbuf[CMDBUF_ENTRIES];
-+
-+    s = qtest_init("-M q35 -device amd-iommu");
-+
-+    /* write 256 COMPLETION_WAIT (no-op) commands to guest RAM */
-+    for (i = 0; i < CMDBUF_ENTRIES; i++) {
-+        cmdbuf[i].qw0 = (uint64_t)AMDVI_CMD_COMPLETION_WAIT << 60;
-+        cmdbuf[i].qw1 = 0;
-+    }
-+    qtest_memwrite(s, CMDBUF_ADDR, cmdbuf, sizeof(cmdbuf));
-+
-+    /* point the IOMMU at the command buffer and set its length */
-+    amdvi_reg_writeq(s, AMDVI_MMIO_COMMAND_BASE,
-+                     CMDBUF_ADDR | ((uint64_t)CMDBUF_LEN_FIELD << 56));
-+
-+    /* enable the IOMMU and its command buffer processor */
-+    amdvi_reg_writeq(s, AMDVI_MMIO_CONTROL,
-+                     AMDVI_MMIO_CONTROL_AMDVIEN | AMDVI_MMIO_CONTROL_CMDBUFLEN);
-+
-+    /* advance tail to the last entry, consuming entries 0..254 */
-+    amdvi_reg_writeq(s, AMDVI_MMIO_COMMAND_TAIL,
-+                     (CMDBUF_ENTRIES - 1) * AMDVI_COMMAND_SIZE);
-+
-+    /* wrap tail to 0, consuming entry 255 and completing the buffer */
-+    amdvi_reg_writeq(s, AMDVI_MMIO_COMMAND_TAIL, 0);
-+
-+    /* after consuming all 256 entries the IOMMU must wrap CmdHeadPtr to 0 */
-+    head = amdvi_reg_readq(s, AMDVI_MMIO_COMMAND_HEAD);
-+    g_assert((head & AMDVI_MMIO_CMDBUF_HEAD_MASK) == 0);
-+
-+    qtest_quit(s);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+    qtest_add_func("/q35/amd-iommu/cmdbuf-head-wrap", test_cmdbuf_head_wrap);
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 728dde54b3..67eea5c71a 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -95,6 +95,7 @@ qtests_i386 = \
-   (config_all_devices.has_key('CONFIG_SB16') ? ['fuzz-sb16-test'] : []) +                   \
-   (config_all_devices.has_key('CONFIG_SDHCI_PCI') ? ['fuzz-sdcard-test'] : []) +            \
-   (config_all_devices.has_key('CONFIG_ESP_PCI') ? ['am53c974-test'] : []) +                 \
-+  (config_all_devices.has_key('CONFIG_AMD_IOMMU') ? ['amd-iommu-test'] : []) +             \
-   (config_all_devices.has_key('CONFIG_VTD') ? ['intel-iommu-test'] : []) +                 \
-   (config_all_devices.has_key('CONFIG_VTD') and
-    config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') ? ['iommu-intel-test'] : []) +      \
--- 
-2.43.0
+3. What is the minimum alignment of the fields in IOTLB messages?
 
+4. What is the recommended data structure for an IOTLB?  Having to
+   maintain a full page table (the way hardware would) seems both
+   memory-intensive and slow.
+
+5. Is it possible to transparently implement an IOTLB in a proxy?
+--=20
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+
+
+--------------3gTByhQLR2UZjYwjlPmaq1HE
+Content-Type: application/pgp-keys; name="OpenPGP_0xB288B55FFF9C22C1.asc"
+Content-Disposition: attachment; filename="OpenPGP_0xB288B55FFF9C22C1.asc"
+Content-Description: OpenPGP public key
+Content-Transfer-Encoding: quoted-printable
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+xsFNBFp+A0oBEADffj6anl9/BHhUSxGTICeVl2tob7hPDdhHNgPR4C8xlYt5q49y
+B+l2nipdaq+4Gk6FZfqC825TKl7eRpUjMriwle4r3R0ydSIGcy4M6eb0IcxmuPYf
+bWpr/si88QKgyGSVZ7GeNW1UnzTdhYHuFlk8dBSmB1fzhEYEk0RcJqg4AKoq6/3/
+UorR+FaSuVwT7rqzGrTlscnTDlPWgRzrQ3jssesI7sZLm82E3pJSgaUoCdCOlL7M
+MPCJwI8JpPlBedRpe9tfVyfu3euTPLPxwcV3L/cfWPGSL4PofBtB8NUU6QwYiQ9H
+zx4xOyn67zW73/G0Q2vPPRst8LBDqlxLjbtx/WLR6h3nBc3eyuZ+q62HS1pJ5EvU
+T1vjyJ1ySrqtUXWQ4XlZyoEFUfpJxJoN0A9HCxmHGVckzTRl5FMWo8TCniHynNXs
+BtDQbabt7aNEOaAJdE7to0AH3T/Bvwzcp0ZJtBk0EM6YeMLtotUut7h2Bkg1b//r
+6bTBswMBXVJ5H44Qf0+eKeUg7whSC9qpYOzzrm7+0r9F5u3qF8ZTx55TJc2g656C
+9a1P1MYVysLvkLvS4H+crmxA/i08Tc1h+x9RRvqba4lSzZ6/Tmt60DPM5Sc4R0nS
+m9BBff0Nm0bSNRS8InXdO1Aq3362QKX2NOwcL5YaStwODNyZUqF7izjK4QARAQAB
+zTxEZW1pIE9iZW5vdXIgKElUTCBFbWFpbCBLZXkpIDxhdGhlbmFAaW52aXNpYmxl
+dGhpbmdzbGFiLmNvbT7CwY4EEwEIADgWIQR2h02fEza6IlkHHHGyiLVf/5wiwQUC
+X6YJvQIbAwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgAAKCRCyiLVf/5wiwWRhD/0Y
+R+YYC5Kduv/2LBgQJIygMsFiRHbR4+tWXuTFqgrxxFSlMktZ6gQrQCWe38WnOXkB
+oY6n/5lSJdfnuGd2UagZ/9dkaGMUkqt+5WshLFly4BnP7pSsWReKgMP7etRTwn3S
+zk1OwFx2lzY1EnnconPLfPBc6rWG2moA6l0WX+3WNR1B1ndqpl2hPSjT2jUCBWDV
+rGOUSX7r5f1WgtBeNYnEXPBCUUM51pFGESmfHIXQrqFDA7nBNiIVFDJTmQzuEqIy
+Jl67pKNgooij5mKzRhFKHfjLRAH4mmWZlB9UjDStAfFBAoDFHwd1HL5VQCNQdqEc
+/9lZDApqWuCPadZN+pGouqLysesIYsNxUhJ7dtWOWHl0vs7/3qkWmWun/2uOJMQh
+ra2u8nA9g91FbOobWqjrDd6x3ZJoGQf4zLqjmn/P514gb697788e573WN/MpQ5XI
+Fl7aM2d6/GJiq6LC9T2gSUW4rbPBiqOCeiUx7Kd/sVm41p9TOA7fEG4bYddCfDsN
+xaQJH6VRK3NOuBUGeL+iQEVF5Xs6Yp+U+jwvv2M5Lel3EqAYo5xXTx4ls0xaxDCu
+fudcAh8CMMqx3fguSb7Mi31WlnZpk0fDuWQVNKyDP7lYpwc4nCCGNKCj622ZSocH
+AcQmX28L8pJdLYacv9pU3jPy4fHcQYvmTavTqowGnM08RGVtaSBNYXJpZSBPYmVu
+b3VyIChsb3ZlciBvZiBjb2RpbmcpIDxkZW1pb2Jlbm91ckBnbWFpbC5jb20+wsF4
+BBMBAgAiBQJafgNKAhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRCyiLVf
+/5wiwYa/EACv8a2+MMou9cSCNoZBQaU+fTmyzft9hUE+0d5W2UY1RY3OsjFIzm9R
+/4SVccfsqOYLEo+S0vQMIIIqFEq3FCpXXwPzyimotps05VA8U3Bd7yseojFygOgK
+sAMOAee2RCaDDOnoJue01dfZMzzHPO/TVdp3OvnpWipfv5G1Xg96rwbhMLE3tg6N
+xwAHa31Bv4/Xq8CJOoIWvx6fcmZQpz01/lSvsYn0KrfEbTKkuUf0vM9JrCTCP2oz
+VNN5BYzqaq2M4r+jmSyeXLim922VOWqGkUEQ85BSEemqrRS06IU6NtEMsF8EWt/b
+hWjk/9GDKTcnpdJHTrMxTspExBiNrvpI2t+YPU5B/dJJAUxvmhFrbSIbdB8umBZs
+I3AMYrEmpAbh5x7jEjoskUC7uN3o9vpg1oCLS2ePDLtAtyBtbHnkA4xGD7ar8mem
+xpH9lY/i+sC6CyyIUWcUDnnagKyJP0m9ks0GLsTeOCA0bft2XA6rD6aaCnMUsndT
+ctrab42CV5XypjmC4U1rPJ8JQJUh1/3P48/8sMH+3krxpJ06KNWNFaUbaMTGiltZ
+7x9DngklSYrX0T+2G4kVXNmjaljwkoLahwLla2gUWwBSyofXdqyhQdwZsp01KXNQ
+UCyT/Pg+aDcm/E7OMV3d4lf7g/CSxiX2GSEe6BlhSz+Lmd7ZJ3g32M1ARGVtaSBN
+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
+EtJuZYM5blWncBOJCoWMnBEcTEo/viU3GgcVRw=3D=3D
+=3Dx94R
+-----END PGP PUBLIC KEY BLOCK-----
+
+--------------3gTByhQLR2UZjYwjlPmaq1HE--
+
+--------------tw6vpKErdX4PW6Ch17900Ow8--
+
+--------------0gj0fOVtZiKAYU5e9eW0AL08
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEopQtqVJW1aeuo9/sszaHOrMp8lMFAmoKHpkACgkQszaHOrMp
+8lOU0hAAh0uHiOmEefaYes+oGjCaAfEIgxYYZ2fLQolhRHU6qQ9vqXblB5YJVadB
+HnXTt3u8bfj+4TbhFHDj5EpnHGPkuL7BTK3/fxfucK34qnm2+BQXRpiQRpB0LAKw
+FyydQjNrHPrHG+XogyQWIDU+MeVgYf0VULXK/iKFuMYRGyAwV4ZmsVSxFqR40LWh
+RTdowlwAeesUoPvsR+QbKg5M3QiHIMfrnfMceHIK9JX5dqFb1guWKyRL9takYzys
+/zLSqYTjf4385XxAWHMEXmlFLydodd8VPXKlXB86kBEZQA5n/s/FSBmksGZuowda
+AEGbScWPIXrKlbc+VL4KePqJQjljdF95C78iaFj2HWAW/Fqr1zulCmLevXZB6h99
+YPdRPbBM/ybbVd6AGJiIHUPM0zKX69nT3KI8P/WO5q4cZYfXda/yyLIdJ9yGfFRt
+vSxCLnT6z5aj9YP5iVjlrCAtqCVLJKLK39tjNxg92KhQQqit94I/V7cYvP5HibeG
+4XwhozxUgvLC6kgSdxX5HSQVs05DIdWUILvPx3y9NyULtXCRcQSx7iHHUbwlXLsO
+3zikqwl4dhdThZFyIEdS6qIBLvQsnU/H2Mn8DjkrUMlLcvw6NS0Vn7pR2LMxpC5M
+Ur1ZXdyQ6aGYNGXXP1d+MMpjngSn6eLAYuAoLaFPVOzWcRuuAyE=
+=+KrA
+-----END PGP SIGNATURE-----
+
+--------------0gj0fOVtZiKAYU5e9eW0AL08--
 
