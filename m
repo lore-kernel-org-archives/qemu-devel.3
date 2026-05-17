@@ -4,85 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4C8FCD4F3C
-	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 00:39:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83578CD37AC
+	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 06:18:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOPSs-0000mU-LT; Sat, 16 May 2026 20:34:42 -0400
+	id 1wOUoc-0004Dq-GM; Sun, 17 May 2026 02:17:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wOPS1-0006hG-TN
- for qemu-devel@nongnu.org; Sat, 16 May 2026 20:33:50 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wOPRy-0006nx-RA
- for qemu-devel@nongnu.org; Sat, 16 May 2026 20:33:49 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-c828daf83e2so414285a12.2
- for <qemu-devel@nongnu.org>; Sat, 16 May 2026 17:33:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778978025; x=1779582825; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VNbX6rDkUzGYSDjQPckiG6GuulyRjAicqxJ0YGYEVwQ=;
- b=ko5lrW2P4AD5j1wB1A7RakpOn29gPrr+clWK1qVwB7xYQBzKPzam8flkoCUbKbrlzX
- 26ND9/0RLZXsC/kitNRkUFkUiPBexalLyul4lfVsZdc/srpbfxP9JS5SyapSILg2Ml6B
- 5GavZkYUdqPt76LmnPx9l8LcJ17Zcy0xoBfBX/PznasZFfDavFUqhOmy7H5kpoyjiu/q
- +g047r87kDoQNOXkgDqgvVe+aeMfHFBwuXGtErpnXT8mRpHZlUVszdpaHiWHKIa/hG/5
- 9XPoV5pJvel8wbfvd1fLPHqyVAXZtnSIW8ttUI9gBj5rge4c7YjAlYUxpQDSxuYuuyZ2
- wZFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778978025; x=1779582825;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=VNbX6rDkUzGYSDjQPckiG6GuulyRjAicqxJ0YGYEVwQ=;
- b=ZUfzTu0SMaxt6wWckmM86UHF/3HxROcJF4+T7CL99qJqC8Ch9CcIgBtyTjI5oQT4xX
- WivZdWf3bZ7ufCPM7YhE8UpTRiC1EBVvLlfUFIByqDmG9iuYg0C6lYD0ipqBSDKNLMmv
- VcJ21A26F8YNrWmzH5slyScHxjNTIJvV26aKPQY6beZhZpxpS5C/xMwL6ZYDW4LD2Pe9
- YfQ52KJHruLdY3BQGWRNH3NZvN/bR43Su/QU5Bq/ENtv7zgaAD7FTkbGR1XIDo2rbhO3
- ikFcFap1uC6pbCUVfXM2MN+dfzzxYwvUHid1IAxx2NLsO7Mcv13oguSBblIf6duMMWzv
- jzIg==
-X-Gm-Message-State: AOJu0YzlwcTa/UQurF5w3rApbjxm4ePbzi1qMt67Z95/hHtp6xPsV9C2
- SbkF74y+QGZSLM/79nAef2sNlcudzZVpBDjO7zSmt2y6pd+gEKlTdSjp73jpBbhiOiyTNO1a9mr
- m0LYL
-X-Gm-Gg: Acq92OECEdtQKuDYl8ZeuoMgGJztkWZDxz6/OGqEpgJ9wSgtfbcyk/lhOYER4NOCLzq
- qCdECt2yb+lifY/R40lTEmhVwFUqt1q0Slso6CGruUZicwxg9xWsZNpYeDmuRk7XTVGIgrDVhIm
- hJhx+Vi34JQBbyBDk9tpDQBcfNLYnEm5P+G88TxAOao5sDeSoIAE9PwvK75QXI3BxGzZtnxdpy2
- bJlpjLUlrDx9cFP1UiKcPAHNn1z2DrKtnWOyOML22VCh23jooVFTB7wvCC9S7hZU6qNb/+z54a3
- NfF6/3/4LyhaC615+cAP3WyeDX8FZK8xSUhwtd/ls6no4dXnP7oomLdW3an3hNMXUEWxImQeb63
- 11/P1bD4UddinlokPQYN5UpLdXAQj2D2CmzzeqIbVisDUf9Sb3R+nUhOGUs1Mv0PMDy8M4XCPTh
- 0XvuD0uMXr3lt4qJrtXlRoeuhCHaXB
-X-Received: by 2002:a05:6a20:e212:b0:3aa:c93b:6266 with SMTP id
- adf61e73a8af0-3b22e738febmr10834416637.19.1778978025231; 
- Sat, 16 May 2026 17:33:45 -0700 (PDT)
-Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c82da93df0dsm3010559a12.19.2026.05.16.17.33.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 16 May 2026 17:33:44 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-Subject: [PATCH v5 45/63] target/arm: Implement FMLALB, FMLALT for AdvSIMD
-Date: Sat, 16 May 2026 17:29:44 -0700
-Message-ID: <20260517003002.321430-46-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260517003002.321430-1-richard.henderson@linaro.org>
-References: <20260517003002.321430-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wOUoT-0004As-9e
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 02:17:22 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wOUoP-0004Bf-5r
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 02:17:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1778998621; bh=BultDMM4u468t0d+glXtM4jIyECq2jQIh70JfIOFe8E=;
+ h=Date:Subject:To:References:From:In-Reply-To;
+ b=BO59yA14UR7S5OqVT+JbTDy5gjo9hnVEV+IUsPs4ygp98b9Fl0lSFYS6SqxZ4Quzw
+ HbPD+zA7ayPAOyx0MH45SKKYX1tG2yc1nk4ln5drLzp4YAY1buCuTxGV2cBx/wUxV0
+ +C0cEsIJ5NRxdLQ/m9KAHW72shDUMryAXuUfu/ZXqldRHasY6D/CeuFEG4HH7wTVzH
+ sh+7Ry1BR9mG9eT5bwTPzJkM/h6aaHPQHb8knxAbdj+n6ldk/rT1CaTfAflPCoZrA1
+ qeqBojKePf6aAQd5B02pc9DqCih5NClso51trjkP4kXHsoJwouUhC8yldUwOc16rMh
+ yOSVZBpGkx1Kg==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 8495C1AC5F3;
+ Sun, 17 May 2026 09:17:01 +0300 (MSK)
+Message-ID: <9d864bdd-2bb3-4fbb-8020-1eced5d6c131@tls.msk.ru>
+Date: Sun, 17 May 2026 09:17:03 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 23/23] target/arm/hvf: Fix WFI halting to stop idle vCPU
+ spinning
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+References: <20260515104945.4145203-1-peter.maydell@linaro.org>
+ <20260515104945.4145203-24-peter.maydell@linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260515104945.4145203-24-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,231 +110,288 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/cpu-features.h        |   5 ++
- target/arm/tcg/helper-fp8-defs.h |   3 +
- target/arm/tcg/fp8_helper.c      | 113 +++++++++++++++++++++++++++++++
- target/arm/tcg/translate-a64.c   |  16 +++++
- target/arm/tcg/a64.decode        |   8 +++
- 5 files changed, 145 insertions(+)
+On 15.05.2026 13:49, Peter Maydell wrote:
+> From: "Scott J. Goldman" <scottjgo@gmail.com>
+> 
+> Commit b5f8f77271 ("accel/hvf: Implement WFI without using pselect()")
+> changed hvf_wfi() from blocking the vCPU thread with pselect() to
+> returning EXCP_HLT, intending QEMU's main event loop to handle the
+> idle wait. However, cpu->halted was never set, so cpu_thread_is_idle()
+> always returns false and the vCPU thread spins at 100% CPU per core
+> while the guest is idle.
+> 
+> Fix this by:
+> 
+> 1. Setting cpu->halted = 1 in hvf_wfi() so the vCPU thread sleeps on
+>     halt_cond in qemu_process_cpu_events().
+> 
+> 2. Arming a per-vCPU QEMU_CLOCK_VIRTUAL timer to fire when the guest's
+>     virtual timer (CNTV_CVAL_EL0) would expire. This is necessary
+>     because HVF only delivers HV_EXIT_REASON_VTIMER_ACTIVATED during
+>     hv_vcpu_run(), which is not called while the CPU is halted. The
+>     timer callback mirrors the VTIMER_ACTIVATED handler: it raises the
+>     vtimer IRQ through the GIC and marks vtimer_masked, causing the
+>     interrupt delivery chain to wake the vCPU via qemu_cpu_kick().
+> 
+> 3. Clearing cpu->halted in hvf_arch_vcpu_exec() when cpu_has_work()
+>     indicates a pending interrupt, and cancelling the WFI timer.
+> 
+> 4. Re-arming the WFI timer from hvf_vm_state_change() on the resume
+>     transition for any halted vCPU, since the QEMUTimer is per-instance
+>     state and is not migrated. After cpu_synchronize_all_states() the
+>     migrated vtimer state is mirrored in env, so we can read CNTV_CTL
+>     and CNTV_CVAL from there. If the vtimer has already expired by the
+>     time the destination resumes, hvf_wfi_timer_cb() is invoked
+>     directly so the halted vCPU is woken up.
+> 
+> All wfi_timer handling (allocation, arming, deletion, and the resume
+> re-arm) is gated on !hvf_irqchip_in_kernel(): with the Apple in-kernel
+> vGIC, HVF owns the vtimer and delivers wake-ups itself.
+> 
+> Note for stable backports: this commit won't apply to 11.0 as
+> it has changes to handle the hvf in-kernel irqchip support that
+> landed after the 11.0 release. The v3 version of this commit:
+>    https://patchew.org/QEMU/20260427195516.46256-1-scottjgo@gmail.com/
+> should be suitable for 11.0 backporting (it is essentially
+> identical except that it doesn't make the changes conditional
+> on !hvf_irqchip_in_kernel()).
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index 007e656ed4..ee20d74164 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -1590,6 +1590,11 @@ static inline bool isar_feature_aa64_f8cvt(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64FPFR0, F8CVT);
- }
- 
-+static inline bool isar_feature_aa64_f8fma(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64FPFR0, F8FMA);
-+}
-+
- /*
-  * Combinations of feature tests, for ease of use with TRANS_FEAT.
-  */
-diff --git a/target/arm/tcg/helper-fp8-defs.h b/target/arm/tcg/helper-fp8-defs.h
-index 36ae977431..7aa8366d94 100644
---- a/target/arm/tcg/helper-fp8-defs.h
-+++ b/target/arm/tcg/helper-fp8-defs.h
-@@ -23,3 +23,6 @@ DEF_HELPER_FLAGS_4(sve2_fcvtnb_bs, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
- DEF_HELPER_FLAGS_4(sve2_fcvtnt_bs, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
- DEF_HELPER_FLAGS_4(sme2_fcvt_bs, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
- DEF_HELPER_FLAGS_4(sme2_fcvtn_bs, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
-+
-+DEF_HELPER_FLAGS_5(gvec_fmla_hb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, env, i32)
-+DEF_HELPER_FLAGS_5(gvec_fmla_idx_hb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, env, i32)
-diff --git a/target/arm/tcg/fp8_helper.c b/target/arm/tcg/fp8_helper.c
-index 931ea54cb6..c873de65cd 100644
---- a/target/arm/tcg/fp8_helper.c
-+++ b/target/arm/tcg/fp8_helper.c
-@@ -571,3 +571,116 @@ void HELPER(sme2_fcvtn_bs)(void *vd, void *vn, CPUARMState *env, uint32_t desc)
- 
-     fp8_finish(env, &ctx);
- }
-+
-+typedef struct FP8MulContext {
-+    float_status stat;
-+    fp8_input_fn *fmt1;
-+    fp8_input_fn *fmt2;
-+    int scale;
-+} FP8MulContext;
-+
-+static FP8MulContext fp8_mul_start(CPUARMState *env, int scale_mask)
-+{
-+    uint64_t fpmr = env->vfp.fpmr;
-+
-+    FP8MulContext ret = {
-+        .stat = env->vfp.fp_status[FPST_A64],
-+        .fmt1 = fp8_input_fmt[FIELD_EX64(fpmr, FPMR, F8S1)],
-+        .fmt2 = fp8_input_fmt[FIELD_EX64(fpmr, FPMR, F8S2)],
-+        .scale = -(FIELD_EX64(fpmr, FPMR, LSCALE) & scale_mask),
-+    };
-+
-+    set_flush_to_zero(0, &ret.stat);
-+    set_flush_inputs_to_zero(0, &ret.stat);
-+    set_default_nan_mode(true, &ret.stat);
-+    set_float_rounding_mode(FIELD_EX64(fpmr, FPMR, OSM)
-+                            ? float_round_nearest_even_max
-+                            : float_round_nearest_even, &ret.stat);
-+
-+    return ret;
-+}
-+
-+static void fp8_mul_finish(CPUARMState *env, FP8MulContext *c)
-+{
-+    /*
-+     * FP8 multiplies don't update FPSR.{IDC,IOC,IXC,UFC}.
-+     * Since this is multiply-add, DZC does not apply and only OFC remains.
-+     */
-+    fp8_finish_fpst(&env->vfp.fp_status[FPST_A64], &c->stat,
-+                    float_flag_overflow);
-+}
-+
-+static FloatParts64 f8dot(uint64_t a, uint64_t b, int n, FP8MulContext *ctx)
-+{
-+    /*
-+     * Because of default_nan_mode, NaNs need no special handling.
-+     * We'll simply get the default NaN out at the end of the sequence.
-+     */
-+    FloatParts64 p0 = ctx->fmt1(a & 0xff, &ctx->stat);
-+    FloatParts64 p1 = ctx->fmt2(b & 0xff, &ctx->stat);
-+    FloatParts64 pr = parts64_mul(&p0, &p1, &ctx->stat);
-+
-+    for (int i = 1; i < n; ++i) {
-+        p0 = ctx->fmt1(extract64(a, i * 8, 8), &ctx->stat);
-+        p1 = ctx->fmt2(extract64(b, i * 8, 8), &ctx->stat);
-+        pr = parts64_muladd(&p0, &p1, &pr, 0, &ctx->stat);
-+    }
-+    return parts64_scalbn(&pr, ctx->scale, &ctx->stat);
-+}
-+
-+static float16 f8dotadd_h(uint64_t a, uint64_t b, int n, float16 c,
-+                          FP8MulContext *ctx)
-+{
-+    FloatParts64 p0 = f8dot(a, b, n, ctx);
-+    FloatParts64 p1 = float16_unpack_canonical(c, &ctx->stat);
-+
-+    p0 = parts64_addsub(&p0, &p1, &ctx->stat, false);
-+    return float16_round_pack_canonical(&p0, &ctx->stat);
-+}
-+
-+void HELPER(gvec_fmla_hb)(void *vd, void *vn, void *vm,
-+                          CPUARMState *env, uint32_t desc)
-+{
-+    FP8MulContext ctx = fp8_mul_start(env, 0xf);
-+    bool high = extract32(desc, SIMD_DATA_SHIFT, 1);
-+    size_t oprsz = simd_oprsz(desc);
-+    size_t nelem = oprsz / 2;
-+    uint8_t *n = vn;
-+    uint8_t *m = vm;
-+    float16 *d = vd;
-+
-+    for (size_t i = 0; i < nelem; i++) {
-+        uint8_t e0 = n[H1(2 * i + high)];
-+        uint8_t e1 = m[H1(2 * i + high)];
-+
-+        d[H2(i)] = f8dotadd_h(e0, e1, 1, d[H2(i)], &ctx);
-+    }
-+
-+    fp8_mul_finish(env, &ctx);
-+    clear_tail(vd, oprsz, simd_maxsz(desc));
-+}
-+
-+void HELPER(gvec_fmla_idx_hb)(void *vd, void *vn, void *vm,
-+                              CPUARMState *env, uint32_t desc)
-+{
-+    FP8MulContext ctx = fp8_mul_start(env, 0xf);
-+    bool idx_n = extract32(desc, SIMD_DATA_SHIFT, 1);
-+    size_t idx_m = extract32(desc, SIMD_DATA_SHIFT + 2, 4);
-+    size_t oprsz = simd_oprsz(desc);
-+    size_t nelem = oprsz / 2;
-+    uint8_t *n = vn;
-+    uint8_t *m = vm;
-+    float16 *d = vd;
-+    size_t i = 0;
-+
-+    do {
-+        uint8_t e1 = m[2 * i + H1(idx_m)];
-+        do {
-+            uint8_t e0 = n[H1(2 * i + idx_n)];
-+            d[H2(i)] = f8dotadd_h(e0, e1, 1, d[H2(i)], &ctx);
-+        } while (++i % 8 != 0);
-+    } while (i < nelem);
-+
-+    fp8_mul_finish(env, &ctx);
-+    clear_tail(vd, oprsz, simd_maxsz(desc));
-+}
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index ee71c63116..1c1d4ad2f7 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -7384,6 +7384,22 @@ TRANS_FEAT(FMLSL_vi, aa64_fhm, do_fmlal_idx, a, true, false)
- TRANS_FEAT(FMLAL2_vi, aa64_fhm, do_fmlal_idx, a, false, true)
- TRANS_FEAT(FMLSL2_vi, aa64_fhm, do_fmlal_idx, a, true, true)
- 
-+static bool do_fmla_fp8(DisasContext *s, arg_rxx *a,
-+                        gen_helper_gvec_3_ptr *fn)
-+{
-+    if (fpmr_access_check(s) && fp_access_check(s)) {
-+        tcg_gen_gvec_3_ptr(vec_full_reg_offset(s, a->rd),
-+                           vec_full_reg_offset(s, a->rn),
-+                           vec_full_reg_offset(s, a->rm),
-+                           tcg_env, 16, vec_full_reg_size(s),
-+                           a->idxn | (a->idxm << 2), fn);
-+    }
-+    return true;
-+}
-+
-+TRANS_FEAT(FMLAL_hb_v, aa64_f8fma, do_fmla_fp8, a, gen_helper_gvec_fmla_hb)
-+TRANS_FEAT(FMLAL_hb_vi, aa64_f8fma, do_fmla_fp8, a, gen_helper_gvec_fmla_idx_hb)
-+
- static bool do_int3_vector_idx(DisasContext *s, arg_qrrx_e *a,
-                                gen_helper_gvec_3 * const fns[2])
- {
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 6aea3ce89f..b89e83ce76 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -25,6 +25,7 @@
- %esz_hsd        22:2 !function=xor_2
- %hl             11:1 21:1
- %hlm            11:1 20:2
-+%hlm4           11:1 19:3
- 
- &r              rn
- &rrr            rd rn rm
-@@ -38,6 +39,7 @@
- &rri_e          rd rn imm esz
- &rrr_e          rd rn rm esz
- &rrx_e          rd rn rm idx esz
-+&rxx            rd rn rm idxn idxm
- &rrrr_e         rd rn rm ra esz
- &qrr_e          q rd rn esz
- &qrri_e         q rd rn imm esz
-@@ -1204,6 +1206,9 @@ FSCALE          0.10 1110 1.1 ..... 11111 1 ..... ..... @qrrr_sd
- FCVTN_bh        0.00 1110 010 ..... 11110 1 ..... ..... @qrrr_h
- FCVTN_bs        0.00 1110 000 ..... 11110 1 ..... ..... @qrrr_h
- 
-+FMLAL_hb_v      0 idxn:1 00 1110 110 rm:5 11111 1 rn:5 rd:5 \
-+                &rxx idxm=0
-+
- ### Advanced SIMD scalar x indexed element
- 
- FMUL_si         0101 1111 00 .. .... 1001 . 0 ..... .....   @rrx_h
-@@ -1322,6 +1327,9 @@ SQDMLAL_vi      0.00 1111 10 . ..... 0011 . 0 ..... .....   @qrrx_s
- SQDMLSL_vi      0.00 1111 01 .. .... 0111 . 0 ..... .....   @qrrx_h
- SQDMLSL_vi      0.00 1111 10 . ..... 0111 . 0 ..... .....   @qrrx_s
- 
-+FMLAL_hb_vi     0 idxn:1 00 1111 11 ... rm:3 0000 . 0 rn:5 rd:5 \
-+                &rxx idxm=%hlm4
-+
- # Floating-point conditional select
- 
- FCSEL           0001 1110 .. 1 rm:5 cond:4 11 rn:5 rd:5     esz=%esz_hsd
--- 
-2.43.0
+Hi!
+
+How about I pick up this patch instead, but add a one-line on top
+of target/arm/hvf/hvf.c (or to include/system/hvf_int.h):
+
+#define hvf_irqchip_in_kernel() 0
+
+with a comment saying why it's here?  I think it will be cleaner
+this way, with better traceable roots.
+
+Thanks,
+
+/mjt
+
+> Cc: qemu-stable@nongnu.org
+> Fixes: b5f8f77271 ("accel/hvf: Implement WFI without using pselect()")
+> Signed-off-by: Scott J. Goldman <scottjgo@gmail.com>
+> Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> [PMM: added note about stable backports to commit message]
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   include/system/hvf_int.h |   1 +
+>   target/arm/hvf/hvf.c     | 140 ++++++++++++++++++++++++++++++++++++++-
+>   2 files changed, 140 insertions(+), 1 deletion(-)
+> 
+> diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
+> index ad7d375109..d5eaf26dda 100644
+> --- a/include/system/hvf_int.h
+> +++ b/include/system/hvf_int.h
+> @@ -48,6 +48,7 @@ struct AccelCPUState {
+>       hv_vcpu_exit_t *exit;
+>       bool vtimer_masked;
+>       bool guest_debug_enabled;
+> +    struct QEMUTimer *wfi_timer;
+>   #endif
+>   };
+>   
+> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+> index 9312607001..d88cbe7c82 100644
+> --- a/target/arm/hvf/hvf.c
+> +++ b/target/arm/hvf/hvf.c
+> @@ -29,6 +29,7 @@
+>   #include "hw/core/irq.h"
+>   #include "hw/arm/virt.h"
+>   #include "qemu/main-loop.h"
+> +#include "qemu/timer.h"
+>   #include "system/cpus.h"
+>   #include "arm-powerctl.h"
+>   #include "target/arm/cpu.h"
+> @@ -308,6 +309,8 @@ void hvf_arm_init_debug(void)
+>   #define TMR_CTL_IMASK   (1 << 1)
+>   #define TMR_CTL_ISTATUS (1 << 2)
+>   
+> +static void hvf_wfi_timer_cb(void *opaque);
+> +
+>   static uint32_t chosen_ipa_bit_size;
+>   
+>   typedef struct HVFVTimer {
+> @@ -1296,6 +1299,11 @@ void hvf_arch_vcpu_destroy(CPUState *cpu)
+>   {
+>       hv_return_t ret;
+>   
+> +    if (!hvf_irqchip_in_kernel()) {
+> +        timer_free(cpu->accel->wfi_timer);
+> +        cpu->accel->wfi_timer = NULL;
+> +    }
+> +
+>       ret = hv_vcpu_destroy(cpu->accel->fd);
+>       assert_hvf_ok(ret);
+>   }
+> @@ -1487,6 +1495,11 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+>                                 arm_cpu->isar.idregs[ID_AA64MMFR0_EL1_IDX]);
+>       assert_hvf_ok(ret);
+>   
+> +    if (!hvf_irqchip_in_kernel()) {
+> +        cpu->accel->wfi_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
+> +                                             hvf_wfi_timer_cb, cpu);
+> +    }
+> +
+>       aarch64_add_sme_properties(OBJECT(cpu));
+>       return 0;
+>   }
+> @@ -2194,6 +2207,62 @@ static uint64_t hvf_vtimer_val_raw(void)
+>       return mach_absolute_time() - hvf_state->vtimer_offset;
+>   }
+>   
+> +static void hvf_wfi_timer_cb(void *opaque)
+> +{
+> +    CPUState *cpu = opaque;
+> +    ARMCPU *arm_cpu = ARM_CPU(cpu);
+> +
+> +    /*
+> +     * vtimer expired while the CPU was halted for WFI.
+> +     * Mirror HV_EXIT_REASON_VTIMER_ACTIVATED: raise the vtimer
+> +     * interrupt and mark as masked so hvf_sync_vtimer() will
+> +     * check and unmask when the guest handles it.
+> +     *
+> +     * The interrupt delivery chain (GIC -> cpu_interrupt ->
+> +     * qemu_cpu_kick) wakes the vCPU thread from halt_cond.
+> +     */
+> +    qemu_set_irq(arm_cpu->gt_timer_outputs[GTIMER_VIRT], 1);
+> +    cpu->accel->vtimer_masked = true;
+> +}
+> +
+> +/*
+> + * Arm a host-side QEMU_CLOCK_VIRTUAL timer to fire when the guest's
+> + * vtimer (CNTV_CVAL_EL0) is scheduled to expire. HVF only delivers
+> + * HV_EXIT_REASON_VTIMER_ACTIVATED during hv_vcpu_run(), which we won't
+> + * call while the vCPU is halted, so we need this to wake the vCPU.
+> + *
+> + * QEMU_CLOCK_VIRTUAL pauses while the VM is stopped, which keeps the
+> + * timer in lockstep with the guest's view of vtime across pause/resume.
+> + *
+> + * Caller must supply the current CNTV_CTL_EL0 and CNTV_CVAL_EL0 values,
+> + * since the appropriate source (HVF vs. env) depends on context.
+> + *
+> + * Returns 0 if the timer was armed (or if the vtimer is disabled/masked
+> + * and the vCPU should still halt waiting on another event), or -1 if
+> + * the vtimer has already expired.
+> + */
+> +static int hvf_arm_wfi_timer(CPUState *cpu, uint64_t ctl, uint64_t cval)
+> +{
+> +    ARMCPU *arm_cpu = ARM_CPU(cpu);
+> +    uint64_t now;
+> +    int64_t delta_ns;
+> +
+> +    if (!(ctl & TMR_CTL_ENABLE) || (ctl & TMR_CTL_IMASK)) {
+> +        return 0;
+> +    }
+> +
+> +    now = hvf_vtimer_val_raw();
+> +    if (cval <= now) {
+> +        return -1;
+> +    }
+> +
+> +    delta_ns = muldiv64(cval - now, NANOSECONDS_PER_SECOND,
+> +                        arm_cpu->gt_cntfrq_hz);
+> +    timer_mod(cpu->accel->wfi_timer,
+> +              qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + delta_ns);
+> +    return 0;
+> +}
+> +
+>   static int hvf_wfi(CPUState *cpu)
+>   {
+>       if (cpu_has_work(cpu)) {
+> @@ -2204,6 +2273,29 @@ static int hvf_wfi(CPUState *cpu)
+>           return 0;
+>       }
+>   
+> +    if (!hvf_irqchip_in_kernel()) {
+> +        uint64_t ctl, cval;
+> +        hv_return_t r;
+> +
+> +        /*
+> +         * Read the vtimer state directly from HVF. We're on the vCPU
+> +         * thread, just exited from hv_vcpu_run(), so HVF holds the
+> +         * authoritative values and env may be stale.
+> +         */
+> +        r = hv_vcpu_get_sys_reg(cpu->accel->fd, HV_SYS_REG_CNTV_CTL_EL0,
+> +                                &ctl);
+> +        assert_hvf_ok(r);
+> +        r = hv_vcpu_get_sys_reg(cpu->accel->fd, HV_SYS_REG_CNTV_CVAL_EL0,
+> +                                &cval);
+> +        assert_hvf_ok(r);
+> +
+> +        if (hvf_arm_wfi_timer(cpu, ctl, cval) < 0) {
+> +            /* vtimer already expired, don't halt */
+> +            return 0;
+> +        }
+> +    }
+> +
+> +    cpu->halted = 1;
+>       return EXCP_HLT;
+>   }
+>   
+> @@ -2502,7 +2594,13 @@ int hvf_arch_vcpu_exec(CPUState *cpu)
+>       hv_return_t r;
+>   
+>       if (cpu->halted) {
+> -        return EXCP_HLT;
+> +        if (!cpu_has_work(cpu)) {
+> +            return EXCP_HLT;
+> +        }
+> +        cpu->halted = 0;
+> +        if (!hvf_irqchip_in_kernel()) {
+> +            timer_del(cpu->accel->wfi_timer);
+> +        }
+>       }
+>   
+>       flush_cpu_state(cpu);
+> @@ -2551,6 +2649,46 @@ static void hvf_vm_state_change(void *opaque, bool running, RunState state)
+>           /* Update vtimer offset on all CPUs */
+>           hvf_state->vtimer_offset = mach_absolute_time() - s->vtimer_val;
+>           cpu_synchronize_all_states();
+> +
+> +        /*
+> +         * After migration restore (or any resume), the wfi_timer is not
+> +         * scheduled on this QEMU instance, so re-arm it for any halted
+> +         * vCPU with a pending vtimer. For a non-migration resume the
+> +         * QEMU_CLOCK_VIRTUAL timer was already scheduled; recomputing the
+> +         * deadline produces the same value and is a harmless no-op.
+> +         *
+> +         * cpu_synchronize_all_states() above ensures env mirrors the
+> +         * authoritative vtimer state (whether that came from HVF or from
+> +         * the migration stream), so we can safely read it here from the
+> +         * iothread.
+> +         *
+> +         * Only applies when we own the wfi_timer; with an in-kernel vGIC
+> +         * the timer is never allocated and HVF handles vtimer wake-ups.
+> +         */
+> +        if (!hvf_irqchip_in_kernel()) {
+> +            CPUState *cpu;
+> +
+> +            CPU_FOREACH(cpu) {
+> +                ARMCPU *arm_cpu;
+> +                uint64_t ctl, cval;
+> +
+> +                if (!cpu->accel || !cpu->halted) {
+> +                    continue;
+> +                }
+> +
+> +                arm_cpu = ARM_CPU(cpu);
+> +                ctl = arm_cpu->env.cp15.c14_timer[GTIMER_VIRT].ctl;
+> +                cval = arm_cpu->env.cp15.c14_timer[GTIMER_VIRT].cval;
+> +
+> +                if (hvf_arm_wfi_timer(cpu, ctl, cval) < 0) {
+> +                    /*
+> +                     * vtimer already expired while we were paused; raise
+> +                     * the IRQ now so the halted vCPU wakes up.
+> +                     */
+> +                    hvf_wfi_timer_cb(cpu);
+> +                }
+> +            }
+> +        }
+>       } else {
+>           /* Remember vtimer value on every pause */
+>           s->vtimer_val = hvf_vtimer_val_raw();
 
 
