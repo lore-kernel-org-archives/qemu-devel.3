@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 928A4CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 21:11:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32D5FCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 21:14:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOilV-0006SS-KO; Sun, 17 May 2026 17:11:13 -0400
+	id 1wOio6-0006wA-Fh; Sun, 17 May 2026 17:13:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <demiobenour@gmail.com>)
- id 1wOilT-0006Rx-9c
- for qemu-devel@nongnu.org; Sun, 17 May 2026 17:11:11 -0400
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
+ id 1wOio5-0006vz-4d
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 17:13:53 -0400
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <demiobenour@gmail.com>)
- id 1wOilR-0008SR-AU
- for qemu-devel@nongnu.org; Sun, 17 May 2026 17:11:11 -0400
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-7ca947f9b00so9226527b3.0
- for <qemu-devel@nongnu.org>; Sun, 17 May 2026 14:11:08 -0700 (PDT)
+ id 1wOio3-0000yf-7E
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 17:13:52 -0400
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-7c307937816so8735637b3.0
+ for <qemu-devel@nongnu.org>; Sun, 17 May 2026 14:13:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779052268; x=1779657068; darn=nongnu.org;
- h=in-reply-to:autocrypt:from:content-language:references:cc:to
+ d=gmail.com; s=20251104; t=1779052430; x=1779657230; darn=nongnu.org;
+ h=in-reply-to:autocrypt:content-language:references:cc:to:from
  :subject:user-agent:mime-version:date:message-id:from:to:cc:subject
  :date:message-id:reply-to;
- bh=vlW4pGkNYUhLn6WCiggSCT55pfAEu5c3RxjgHlHvbOE=;
- b=O/+SPQrQqNHSQiqSMYxhLKDkQNAyjs0UC1nmj7ZvI0lzm3tFM6QLWMmQokF8L9Xkc4
- wFwvxQQ1chN6pr6lv+ZqlJBkKNUZ9FThLPxYBOac/qXFWPMfvbAuwlEM5pnHgkggl0Nl
- HeO0K1cCMSN8o355y6+T5SBuuavBLBsoKO0Mj6mdNlVr0MS1BD/SZDOasVyEY4fGGD95
- hzqvSKJB1oNgpPq8QtXpeo9XQar/cLLWE8QjeATmmcZH+AW1lb8OpnORTbpiN70gCViX
- XWzh3zi7ta1BwrJNn/om+hVYd4rrczMzZ9/kAMR6S9EQVE2krn3+zlFf7/SJ3g8nt+Lg
- 3eUg==
+ bh=JT02Yfoe4uBJd6LgafBhGdypFlEqqwbzXWkgH1dAyDI=;
+ b=j6Mh9y3ZQEla62J3kAtkkVjcuI3nr9sCjhKXPWtS5zzhODpgFlxVpgEnkGYZOnnLAS
+ mpCjyNo7+hycionIU2auNrVuD8BgclqwkI04vHye/m675Bg8zdgl9U2mLyYopCowNeQ7
+ MGMlNe+DdgrthjuvteRU1JbkejkKmKC/qXLUKY6yHfhmoXt7W8XmMm1ZUB8JV0ihf6UW
+ DRM9EVC1uedbaMkRrsd/DMMZ3BTFFHswwr+O4L6q7qZK+NWfiE58/fyQbF+17/hAbR58
+ kmr0dya+5ayx3WULp+G7+bPCbM/LBGU62sNZHD4Ws1+KxwhCK2s4w49EDaudQpabJPgW
+ NaqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779052268; x=1779657068;
- h=in-reply-to:autocrypt:from:content-language:references:cc:to
+ d=1e100.net; s=20251104; t=1779052430; x=1779657230;
+ h=in-reply-to:autocrypt:content-language:references:cc:to:from
  :subject:user-agent:mime-version:date:message-id:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vlW4pGkNYUhLn6WCiggSCT55pfAEu5c3RxjgHlHvbOE=;
- b=gYODdRkY3Ja1cL2ZoBO9A0+QjqV0IntYmnsEMm7jeZ2aMWBM67lYfmyT9vvKFoQCA0
- M1M84r3g/qjpJ0pH5bAQklJ7rl6Ij0lC0yCpqhdGgDyBXWMhpSXURmmPDhivNLs0TQfm
- ncp9HY+ytkXQIXGmDM5IHYd33F5jwJLf2nznsNHqxurDYv1jVgGxY6AOIhWam0dkXDmH
- ubqoo9FqNrr4fG6p7ipr4fuPmJq6SgvfdE37mk8sy3N3hk4kmQcc1l6k3uA2wxUyR6AT
- F6mtLMAoeqKa0+QXH0hzqcKE2BZegoA7Eu9Xfp8cbRPitCbqE50kEFlLMMLL2sRU2p6W
- SrGg==
+ bh=JT02Yfoe4uBJd6LgafBhGdypFlEqqwbzXWkgH1dAyDI=;
+ b=NK6Hvisq4kgDBUwAe3JlR6bLllFo/rWWk7X/U/uc2gSiavUv5jMRJllzzUu9NxXfEN
+ Ufi0eiQPxkWAZA56N8ik/2+qQzGPnPYbr2FszkW5LGJVpV7BdvCv84btqKMgFgt3d/AN
+ gOkU0591ASumfclUmHPI89WGw8uZSKcAjjhCyGjbIMePK6Fd0rGWkMZOLwzt+FXplpy6
+ 3H4G6ozK0NF63hUz6pXuVjqA79dZdi1hhO44oCcOL0Ws1rcEbbR3XQ/ta4144PSTy9p1
+ QKwRXczdKL9CK4dKvdvYQSD4SYoeTY/bc8wNzN+dkZgeM3lnOb8Yr3DzF1PEBFasGtwW
+ 7UTQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/F7JH+UZyK+OELG3mQRuYpnxgFBLxtEQaL7MoexzwCGLtnCgKZzErw9plYt3RPqUxc1dOWIh8PcjWq@nongnu.org
-X-Gm-Message-State: AOJu0Yz/T4/egmNYQEv7zJdKkGmRdIP0DOVn2CXUBaLVlbhnUSI/FyNt
- KP4SF9/uRIWYDS6EumhWT47MMEq+76NDgFaA7YwYjWkWck7qRzeJw5Ui
-X-Gm-Gg: Acq92OE5uJ8aA1DZE4QgjUo5GK2Qssxt9S0mHBy5xcO1LeHPRXZyaxtZ6voi6JWhiWM
- qKVK2LjMLF3CzC7rX0rW4MitlpgLm8br/zJSVuhscabQX8WYlp49F/1VGuhz9mK8FWy4xU7SieH
- 1TzxKbjn9z2nEL6dyM4oRfk1oJzDRzcvIaJIVOJaOlVtuaHktKh/cuWj7/ZanGzU/8SL2vk0SrD
- tbZjCSMFsTzmbB6jUQ+MJJQ72jKtpuUmwMV4BRXv58Ys/h9RXUhObse7b7jmj5AI0wTuC+ZCV2A
- tlW14FMWRux8foAxb3KpFT6Gj11pgbfSmGK5oLkSUWC//9A+vtkcXAbJ6yakA3YQcy4IRdfcRRX
- x8SHlzWi5cw1intvSCXP776/JH4ELE7IXJv7NJdCj2O4xTntm2xnMwzz4wrJXZTHfOn6t9aCucH
- bZm2QlH3t6mZd+XETunS1VU8xmKEtu57xXv7tjABYP/g7qlAGpPZgWPlyAcNXbeQJCB+1gWee1G
- rFYmu3iU4KZt9+mznBN/0ZqIUh2dPnE5n1eXbAMxg==
-X-Received: by 2002:a05:690c:9304:b0:7bd:4b0c:132f with SMTP id
- 00721157ae682-7c95b82a6ffmr113104557b3.24.1779052267895; 
- Sun, 17 May 2026 14:11:07 -0700 (PDT)
+ AFNElJ9VBc/p5lzC9mM4MjUZfZuhpuJwpMXST2B/XVKXXobkWS0RodckaoaqjS+E+BJMIWWcQPP5vMXgEvXm@nongnu.org
+X-Gm-Message-State: AOJu0Yw6L5+kWwMy1vJQk5bKkdHX1Ffk70THHk75xTdGnR33wUIOPwKL
+ J39kIapSSY+NKIzAwdp9/yyIh9QRjSoZvav6ld/pWVbxwtnSnobf0aSo
+X-Gm-Gg: Acq92OFsPwF28QYcFLWENmJr4I2MFZqGiCLimFUQV6pE4qPmjuACjOy1bmR/00dOeH0
+ EitlN0PPjP3zhhbEFd5S+nq6p0YbiwwRDxBYCmM+9HnmuKFyw6vJxrJhbU/JCBEou2VXdyoTGRP
+ KoNc67I5At35Tn80l7hqmL6eaX7TKYjgBEkuII+2hwXcxsooLu9lpJBLDsSCGjwfIvcl3UhvwNL
+ RSNxbb+Ag8zguWT1G0ftKc6LfLzqo0X+XGJVVcZv2z/QTIKp3MUVXGlIXznikLe5+OEv4AQOJMB
+ WXPXOUw50zf5NFxbNpC4wpfdLM6KVdktGnUAWKD8qvTlDn/WsNKu1Nv+M/ZZknA/RRNNQDCEaCp
+ 9rjp8j/mQPLy9I1zci+dWRO0EP9HKJ8IEIcu4XV4V7JiG7B46UCSpHyeSHzP5oySH2tRi5AJSQe
+ mHRemHqzH1hNwjR+GIke4Tbzq5nyCL6ptstwVsDRvIK2r/hYPVylR8qWfUkmmKoUzAPZVZSb+t9
+ LW67DpUkDGHKc/tS2Z5uToH2apXFCLysyB9d6/lFEcRJN16+dX/
+X-Received: by 2002:a05:690c:385:b0:7c0:deb6:ce2d with SMTP id
+ 00721157ae682-7c95d7b1ca6mr134452227b3.43.1779052429879; 
+ Sun, 17 May 2026 14:13:49 -0700 (PDT)
 Received: from [10.138.34.110]
  (h69-131-150-190.cncrtn.broadband.dynamic.tds.net. [69.131.150.190])
  by smtp.gmail.com with ESMTPSA id
- 00721157ae682-7cc9cea0642sm12423647b3.45.2026.05.17.14.11.06
+ 00721157ae682-7cc991c97absm12613207b3.8.2026.05.17.14.13.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 17 May 2026 14:11:06 -0700 (PDT)
-Message-ID: <c641d234-76df-4d43-945a-e60243ab6a60@gmail.com>
-Date: Sun, 17 May 2026 17:11:01 -0400
+ Sun, 17 May 2026 14:13:48 -0700 (PDT)
+Message-ID: <c57e35d0-f419-400c-90d9-e06b37616494@gmail.com>
+Date: Sun, 17 May 2026 17:13:44 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [RFC PATCH v3 01/11] AGENTS.md: introduce a very basic guide for
  AI agents
+From: Demi Marie Obenour <demiobenour@gmail.com>
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Mohamed Mediouni <mohamed@unpredictable.fr>
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -92,8 +93,8 @@ References: <20260515163055.1792262-1-alex.bennee@linaro.org>
  <a6b904bb-6ddc-4c39-84f9-3b7c91f7e611@linaro.org>
  <AB30D82E-A555-497D-96E6-9D255BB9D377@unpredictable.fr>
  <c3d4f47f-183a-41c5-a88d-cbb1d5aa470b@linaro.org>
+ <c641d234-76df-4d43-945a-e60243ab6a60@gmail.com>
 Content-Language: en-US
-From: Demi Marie Obenour <demiobenour@gmail.com>
 Autocrypt: addr=demiobenour@gmail.com; keydata=
  xsFNBFp+A0oBEADffj6anl9/BHhUSxGTICeVl2tob7hPDdhHNgPR4C8xlYt5q49yB+l2nipd
  aq+4Gk6FZfqC825TKl7eRpUjMriwle4r3R0ydSIGcy4M6eb0IcxmuPYfbWpr/si88QKgyGSV
@@ -137,12 +138,12 @@ Autocrypt: addr=demiobenour@gmail.com; keydata=
  vUSQHSrmfOzX3cV4yfmjM5lewgSstoxGyTx2M8enslgdXhPthZlDnTnOT+C+OTsh8+m5tos8
  HQjaPM01MKBiAqdPgksm1wu2DrrwUi6ChRVTUBcj6+/9IJ81H2P2gJk3Ls3AVIxIffLoY34E
  +MYSfkEjBz0E8CLOcAw7JIwAaeBT
-In-Reply-To: <c3d4f47f-183a-41c5-a88d-cbb1d5aa470b@linaro.org>
+In-Reply-To: <c641d234-76df-4d43-945a-e60243ab6a60@gmail.com>
 Content-Type: multipart/signed; micalg=pgp-sha256;
  protocol="application/pgp-signature";
- boundary="------------pmxSbjgRxJ0e3xZSqbZRdk20"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=demiobenour@gmail.com; helo=mail-yw1-x1129.google.com
+ boundary="------------Ddgx0w2jqs0r0jm0Mm8uZPAj"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=demiobenour@gmail.com; helo=mail-yw1-x112d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -166,15 +167,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------pmxSbjgRxJ0e3xZSqbZRdk20
-Content-Type: multipart/mixed; boundary="------------OZyfdueftv1FGa2wxsa0aC9X";
+--------------Ddgx0w2jqs0r0jm0Mm8uZPAj
+Content-Type: multipart/mixed; boundary="------------IgocfmV6MQCUbfTzb255vAq5";
  protected-headers="v1"
-Message-ID: <c641d234-76df-4d43-945a-e60243ab6a60@gmail.com>
-Date: Sun, 17 May 2026 17:11:01 -0400
+Message-ID: <c57e35d0-f419-400c-90d9-e06b37616494@gmail.com>
+Date: Sun, 17 May 2026 17:13:44 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [RFC PATCH v3 01/11] AGENTS.md: introduce a very basic guide for
  AI agents
+From: Demi Marie Obenour <demiobenour@gmail.com>
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Mohamed Mediouni <mohamed@unpredictable.fr>
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -193,8 +195,8 @@ References: <20260515163055.1792262-1-alex.bennee@linaro.org>
  <a6b904bb-6ddc-4c39-84f9-3b7c91f7e611@linaro.org>
  <AB30D82E-A555-497D-96E6-9D255BB9D377@unpredictable.fr>
  <c3d4f47f-183a-41c5-a88d-cbb1d5aa470b@linaro.org>
+ <c641d234-76df-4d43-945a-e60243ab6a60@gmail.com>
 Content-Language: en-US
-From: Demi Marie Obenour <demiobenour@gmail.com>
 Autocrypt: addr=demiobenour@gmail.com; keydata=
  xsFNBFp+A0oBEADffj6anl9/BHhUSxGTICeVl2tob7hPDdhHNgPR4C8xlYt5q49yB+l2nipd
  aq+4Gk6FZfqC825TKl7eRpUjMriwle4r3R0ydSIGcy4M6eb0IcxmuPYfbWpr/si88QKgyGSV
@@ -238,130 +240,136 @@ Autocrypt: addr=demiobenour@gmail.com; keydata=
  vUSQHSrmfOzX3cV4yfmjM5lewgSstoxGyTx2M8enslgdXhPthZlDnTnOT+C+OTsh8+m5tos8
  HQjaPM01MKBiAqdPgksm1wu2DrrwUi6ChRVTUBcj6+/9IJ81H2P2gJk3Ls3AVIxIffLoY34E
  +MYSfkEjBz0E8CLOcAw7JIwAaeBT
-In-Reply-To: <c3d4f47f-183a-41c5-a88d-cbb1d5aa470b@linaro.org>
+In-Reply-To: <c641d234-76df-4d43-945a-e60243ab6a60@gmail.com>
 
---------------OZyfdueftv1FGa2wxsa0aC9X
-Content-Type: multipart/mixed; boundary="------------uO0jle6SzbdB0BQ0QUYrMeXM"
+--------------IgocfmV6MQCUbfTzb255vAq5
+Content-Type: multipart/mixed; boundary="------------0Qej2KoEeQsXIEPWyqDhmUfP"
 
---------------uO0jle6SzbdB0BQ0QUYrMeXM
+--------------0Qej2KoEeQsXIEPWyqDhmUfP
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-On 5/16/26 12:44, Philippe Mathieu-Daud=C3=A9 wrote:
-> On 16/5/26 12:20, Mohamed Mediouni wrote:
->>
->>
->>> On 16. May 2026, at 12:08, Philippe Mathieu-Daud=C3=A9 <philmd@linaro=
-=2Eorg> wrote:
+On 5/17/26 17:11, Demi Marie Obenour wrote:
+> On 5/16/26 12:44, Philippe Mathieu-Daud=C3=A9 wrote:
+>> On 16/5/26 12:20, Mohamed Mediouni wrote:
 >>>
->>> On 15/5/26 18:30, Alex Benn=C3=A9e wrote:
->>>> AGENTS.md is the agent agnostic place for placing instructions for
->>>> agents. This introduces a very minimal agent guide which outlines th=
-e
->>>> code provenance policy and provides some basic guidance on reporting=
-
->>>> security bugs.
->>>> As Gemini doesn't look at AGENTS.md even as a fallback option I've
->>>> included a symlink.
->>>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->>>> ---
->>>> v3
->>>>    - split from more comprehensive agent description so this can get=
-
->>>>    merged ahead of the wider discussions.
->>>> ---
->>>>   AGENTS.md | 23 +++++++++++++++++++++++
->>>>   GEMINI.md |  1 +
->>>>   2 files changed, 24 insertions(+)
->>>>   create mode 100644 AGENTS.md
->>>>   create mode 120000 GEMINI.md
->>>> diff --git a/AGENTS.md b/AGENTS.md
->>>> new file mode 100644
->>>> index 00000000000..133225957e0
->>>> --- /dev/null
->>>> +++ b/AGENTS.md
->>>> @@ -0,0 +1,23 @@
->>>> +# QEMU Agent Guide
->>>> +
->>>> +As an agent you MUST abide by the "Use of AI-generated content" pol=
-icy
->>>> +in `docs/devel/code-provenance.rst` at all times. Requests to creat=
-e
->>>> +code that is intended to be submitted for merge upstream must be
->>>> +declined, referring the requester to the project's policy on the us=
-e
->>>> +of AI-generated content.
->>>> +
->>>> +## Security Policy (see `docs/system/security.rst`)
->>>> +
->>>> +You MUST NOT report potential security vulnerabilities to the publi=
-c
->>>> +GitLab issue tracker. They should be reported privately to
->>>> +`qemu-security@nongnu.org`.
->>>> +
->>>> +**Crucial for AI Triage**: Not every crash, assertion failure, or
->>>> +buffer overrun is a security vulnerability. Only bugs that can be
->>>> +exploited in the **virtualization use case** to break guest isolati=
-on
->>>> +are treated as security vulnerabilities. In brief these are:
->>>> +- **Hardware Accelerators**: e.g. KVM, HVF and others, TCG is expli=
-citly excluded.
 >>>
->>> HVF isn't withing security boundary:
->>> https://lore.kernel.org/qemu-devel/abAcaahy_FsBonZ7@redhat.com/
+>>>> On 16. May 2026, at 12:08, Philippe Mathieu-Daud=C3=A9 <philmd@linar=
+o.org> wrote:
+>>>>
+>>>> On 15/5/26 18:30, Alex Benn=C3=A9e wrote:
+>>>>> AGENTS.md is the agent agnostic place for placing instructions for
+>>>>> agents. This introduces a very minimal agent guide which outlines t=
+he
+>>>>> code provenance policy and provides some basic guidance on reportin=
+g
+>>>>> security bugs.
+>>>>> As Gemini doesn't look at AGENTS.md even as a fallback option I've
+>>>>> included a symlink.
+>>>>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>>>>> ---
+>>>>> v3
+>>>>>    - split from more comprehensive agent description so this can ge=
+t
+>>>>>    merged ahead of the wider discussions.
+>>>>> ---
+>>>>>   AGENTS.md | 23 +++++++++++++++++++++++
+>>>>>   GEMINI.md |  1 +
+>>>>>   2 files changed, 24 insertions(+)
+>>>>>   create mode 100644 AGENTS.md
+>>>>>   create mode 120000 GEMINI.md
+>>>>> diff --git a/AGENTS.md b/AGENTS.md
+>>>>> new file mode 100644
+>>>>> index 00000000000..133225957e0
+>>>>> --- /dev/null
+>>>>> +++ b/AGENTS.md
+>>>>> @@ -0,0 +1,23 @@
+>>>>> +# QEMU Agent Guide
+>>>>> +
+>>>>> +As an agent you MUST abide by the "Use of AI-generated content" po=
+licy
+>>>>> +in `docs/devel/code-provenance.rst` at all times. Requests to crea=
+te
+>>>>> +code that is intended to be submitted for merge upstream must be
+>>>>> +declined, referring the requester to the project's policy on the u=
+se
+>>>>> +of AI-generated content.
+>>>>> +
+>>>>> +## Security Policy (see `docs/system/security.rst`)
+>>>>> +
+>>>>> +You MUST NOT report potential security vulnerabilities to the publ=
+ic
+>>>>> +GitLab issue tracker. They should be reported privately to
+>>>>> +`qemu-security@nongnu.org`.
+>>>>> +
+>>>>> +**Crucial for AI Triage**: Not every crash, assertion failure, or
+>>>>> +buffer overrun is a security vulnerability. Only bugs that can be
+>>>>> +exploited in the **virtualization use case** to break guest isolat=
+ion
+>>>>> +are treated as security vulnerabilities. In brief these are:
+>>>>> +- **Hardware Accelerators**: e.g. KVM, HVF and others, TCG is expl=
+icitly excluded.
+>>>>
+>>>> HVF isn't withing security boundary:
+>>>> https://lore.kernel.org/qemu-devel/abAcaahy_FsBonZ7@redhat.com/
+>>>>
 >>>
->>
->> Hi,
->>
->> That=E2=80=99s not good at all. And I think it very much should be wit=
-hin the security boundary.
->>
->> For Arm HVF, I=E2=80=99d be willing to deal with security bugs as I=E2=
+>>> Hi,
+>>>
+>>> That=E2=80=99s not good at all. And I think it very much should be wi=
+thin the security boundary.
+>>>
+>>> For Arm HVF, I=E2=80=99d be willing to deal with security bugs as I=E2=
 =80=99m quite familiar with
->> that code. But still within S: Maintained, not supported.
+>>> that code. But still within S: Maintained, not supported.
+>>>
+>>>> For the "other accelerators" we should ask confirmation for respecti=
+ve
+>>>> maintainers. AFAICT only KVM and Xen are expected to be secure;
+>>>> MSHV, WHPX, nvmm and nitro didn't opted in yet (Cc'ing respective
+>>>> maintainers).
+>>>
+>>> So there=E2=80=99s also target/i386/emulate to take into account. Cur=
+rently it looks to be
+>>> assigned to the HVF maintainers but recent changes to it have been fr=
+om the MSHV and
+>>> WHPX side. Currently the backends using it are: x86 hvf, mshv, whpx.
+>>>
+>>> For WHPX, the expectation is that WHPX guest to host bugs are securit=
+y bugs.
+>>>
+>>> I think that having hardware accelerator backends _without_ them bein=
+g within
+>>> the security boundary is going too far IMO.
 >>
->>> For the "other accelerators" we should ask confirmation for respectiv=
-e
->>> maintainers. AFAICT only KVM and Xen are expected to be secure;
->>> MSHV, WHPX, nvmm and nitro didn't opted in yet (Cc'ing respective
->>> maintainers).
->>
->> So there=E2=80=99s also target/i386/emulate to take into account. Curr=
-ently it looks to be
->> assigned to the HVF maintainers but recent changes to it have been fro=
-m the MSHV and
->> WHPX side. Currently the backends using it are: x86 hvf, mshv, whpx.
->>
->> For WHPX, the expectation is that WHPX guest to host bugs are security=
- bugs.
->>
->> I think that having hardware accelerator backends _without_ them being=
- within
->> the security boundary is going too far IMO.
+>> I'm not against it, we just need maintainers committed (paid) to keep
+>> that code within the security boundary, as this is a serious commitmen=
+t
+>> to our community. Advertising "this accelerator is secure because
+>> sporadically maintained by hobbyist in their free time" would not be
+>> respectful, except if we want an April fool joke :)
 >=20
-> I'm not against it, we just need maintainers committed (paid) to keep
-> that code within the security boundary, as this is a serious commitment=
+> Volunteer-maintained projects can still be very secure.  OpenSSH is
+> one example example.  They can=E2=80=99t provide any legally-binding SL=
+A,
+> but neither do the Xen Project, curl, Qubes OS, or many other projects
+> that do have paid maintainers.
+>=20
+> Also, "Maintained" usually is greater than "Odd fixes", which is
+> going to be the state of QEMU=E2=80=99s USB support even once someone i=
+s
+> paid to fix vulnerabilities in it.
+>=20
+> If the maintainer of a subsystem is willing to provide security
+> support, I think they should be given a chance.
 
-> to our community. Advertising "this accelerator is secure because
-> sporadically maintained by hobbyist in their free time" would not be
-> respectful, except if we want an April fool joke :)
-
-Volunteer-maintained projects can still be very secure.  OpenSSH is
-one example example.  They can=E2=80=99t provide any legally-binding SLA,=
-
-but neither do the Xen Project, curl, Qubes OS, or many other projects
-that do have paid maintainers.
-
-Also, "Maintained" usually is greater than "Odd fixes", which is
-going to be the state of QEMU=E2=80=99s USB support even once someone is
-paid to fix vulnerabilities in it.
-
-If the maintainer of a subsystem is willing to provide security
-support, I think they should be given a chance.
+As an aside, it makes sense to state that HVF on x86_64 isn=E2=80=99t
+security supported, because macOS on x86_64 is going to be obsolete
+soon.  But that doesn=E2=80=99t apply to HVM on Arm64.
 --=20
 Sincerely,
 Demi Marie Obenour (she/her/hers)
---------------uO0jle6SzbdB0BQ0QUYrMeXM
+--------------0Qej2KoEeQsXIEPWyqDhmUfP
 Content-Type: application/pgp-keys; name="OpenPGP_0xB288B55FFF9C22C1.asc"
 Content-Disposition: attachment; filename="OpenPGP_0xB288B55FFF9C22C1.asc"
 Content-Description: OpenPGP public key
@@ -481,31 +489,31 @@ EtJuZYM5blWncBOJCoWMnBEcTEo/viU3GgcVRw=3D=3D
 =3Dx94R
 -----END PGP PUBLIC KEY BLOCK-----
 
---------------uO0jle6SzbdB0BQ0QUYrMeXM--
+--------------0Qej2KoEeQsXIEPWyqDhmUfP--
 
---------------OZyfdueftv1FGa2wxsa0aC9X--
+--------------IgocfmV6MQCUbfTzb255vAq5--
 
---------------pmxSbjgRxJ0e3xZSqbZRdk20
+--------------Ddgx0w2jqs0r0jm0Mm8uZPAj
 Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEopQtqVJW1aeuo9/sszaHOrMp8lMFAmoKLuUACgkQszaHOrMp
-8lNxHw/9EAYwEoaPk1+Sn2qWg9ygQUFOujU/7hR1IMXog0zSgkkBrjXxwOenZbzZ
-C+aWC3EGP1pyDodpNDcgxvX69vv767NX1xY9qL3p4V8ak2T+tPIb9gex8ZMsBVjw
-R4jepJeFaGupz9Gb4xrYPoaoyLcV61YzfmFYfl2QWDVp0CWJ0XJWsZ3ncQBsYMmr
-vqlpHhyD5d8p23CaSU76CtuWb9cHBRsbzUYI9vHjJCh7lI7Eg4/15lmnrXXbMmDv
-8gecuKiLqc9/jOiHc2zkssVfLDhbslct5RsZ2nUSgalONmXoXpaAg3iwsy6n2Qcs
-D6Av95akJBvg9bO5k6lTPrRcVbVFkyrTRul1zG0LiDIa/74U3xT9nM7Xzdi56Ake
-VyPQSOoLE/Y23bWwdYl363y8u0JHoj66KCilzemhGkmpOydB5wAt53XGNqCW0T0z
-KEO0AMjXFyq9tnSlpVbHxEVIBALmj/FPCmBJSR8hFJC7r8VAXU0Mu23rrd4D60mD
-VkKzOSVzb0CfcxrnBzVLjs5OM/fRRCIdDIkj/PSBpu/DgwnkYsXCs2Jxb8x+R/jh
-JUaG9BzcD7Y0epStO6Ry7tjH7pNO+uN7x4NAOnaKUTBLQd4KtfxUTCoNOH6zNOBO
-KHTJieiEVz+v801MKdDLZqUov8+MLfWFgET5mn199WMKp80whFk=
-=Ok5l
+iQIzBAEBCgAdFiEEopQtqVJW1aeuo9/sszaHOrMp8lMFAmoKL4gACgkQszaHOrMp
+8lMnyw//ctpooxv4L5XgCZX7VqfYwlCy94+/9jx58hkTZ8kR8nP54gKPeh6En3KF
+TVtWH6U0xTgcWaUD0FgaHU6RfJU3keQP2LL3EeQ1j69i4TNrqmdmFPs5X9PcH4gw
+m8CLPzskRhlmWD3H478A4tE5Y2b1p/DdK0vsN7SsFMRdV76V/iykyI3VrWWyCn38
+eoonetyApDWCzXM1cDGsUgQyz3B97sDC/tHZCq2sdt2/G2gBcjdIa+1YsLOTIJ58
+z0dfs8akhglX7o9hBOdmVqHS1p2ZOq11Q9tvWBNLBKbqyeKjCmL/DIhsMcx0+UQW
+el24RWdGL8pu/T0OqeEC9hVV1qJA9knW7QsSqN+/Zb1pyvKwC9k9bX48cA9YKj+l
+50Rg6zwCFW8BMDthzHIo68ROhad5uAAvFfADlzN7OyLnfE+71EI/kw+iulTyIfeh
+PijhkD3NU+4JnYy8e1z6xz7YRN3Kbpqx3F2+iiVJ9qYjPXgquppQ2Rg46iknRugo
+tAjFkxOSKrtFtp1eoWFGOilLYPB0PniTKMRO+b2OQSjWCrPUlSxmNBGJlM5dn9Dq
+6MmnhpQpemvQMHncb32oFwTvU5si2JFl3+RkzfdFmN8v4QGIq8T4nvqQNGDTEdV+
+xs5d1CY+tUh/Z3wOKmT6pZ4d61d7busKEKOd2DRGb34LfOAL0bQ=
+=J1Ld
 -----END PGP SIGNATURE-----
 
---------------pmxSbjgRxJ0e3xZSqbZRdk20--
+--------------Ddgx0w2jqs0r0jm0Mm8uZPAj--
 
