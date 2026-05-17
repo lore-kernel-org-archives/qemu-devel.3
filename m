@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF97ECD4F3D
-	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 00:31:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3E26CD4851
+	for <qemu-devel@archiver.kernel.org>; Sun, 17 May 2026 00:31:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOPPm-0008HT-Be; Sat, 16 May 2026 20:31:30 -0400
+	id 1wOPPH-0007Vl-G7; Sat, 16 May 2026 20:30:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wOPOk-0007Dh-MT
+ id 1wOPOi-0007DT-5d
  for qemu-devel@nongnu.org; Sat, 16 May 2026 20:30:31 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wOPOf-00051q-Nh
- for qemu-devel@nongnu.org; Sat, 16 May 2026 20:30:25 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-83ef1d17904so1078134b3a.1
- for <qemu-devel@nongnu.org>; Sat, 16 May 2026 17:30:20 -0700 (PDT)
+ id 1wOPOb-0004xX-5y
+ for qemu-devel@nongnu.org; Sat, 16 May 2026 20:30:20 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-83945063f70so1038088b3a.0
+ for <qemu-devel@nongnu.org>; Sat, 16 May 2026 17:30:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778977820; x=1779582620; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778977815; x=1779582615; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Wl6+4I26v8HYA+JJlHEMinIiz3qcncuhnbxRtIcqZ1g=;
- b=vhy+qo4t8cACiidz1/LgBP3W0ZSUqXJJB06eclbYEG4/LrrKE2FCNtblUrH68pg3ao
- KK/EjaNbgOsEmZgSSZyu+kDCscg1xAHbi0DffGK9zgdkEOsDF5RfZYnzWUotHvdwxADo
- T1xJ8Ya6TeRnYbY9JnLUTLJJY0WsXfd1aL6WUQtY7lbMHXLV2DtZKK281Gxu8U2BXW1s
- CcDAE4YkPp/hVyyeZYibGO0iyRdA/pOypHjDIwK2TC7wHgXv4zGmJlDZAIUT7m3xHGiv
- wfcbK12vKcpMP5KPOyNLjz4l7DtZgWxeTuq7YKzCY+KGZl823CKQJLZKJjSTH3ehdbf+
- ZAYw==
+ bh=6CH8sn0raFot2c6HYSuCv/vuUo7CdYLWHtN+GrqCIxQ=;
+ b=uy014aMwhKRPk/HxYOkbD+aJEbXJG1e5oUvQ2oVFG4jdWDEp9WuqKCJSV3zmqzkRso
+ aij0igU9wkKozuJHJMuvkYQjxx7fty3jpDTpMZ4Mlumj/5QFn3TH5nuxQAoXCR3ApjMZ
+ 1ZMWWbify8xrlUL5mryvLe/4XQKzfXPUz/mPttra6aR1WVqbNcNviXbObTjO8G+FpOwv
+ zeI5twh5bJEbyx5JPFcuiQIwsoK3JTAupq1o4I6xW97gq+6CgbGQDTIqOvV36TGhqtF/
+ pgsSKfvEDE2vZsueOXX2qIAPF0xYg6z2TZzznvQHTfR8SiutDWyZdqQGEsmkxEUAqnUH
+ qT0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778977820; x=1779582620;
+ d=1e100.net; s=20251104; t=1778977815; x=1779582615;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Wl6+4I26v8HYA+JJlHEMinIiz3qcncuhnbxRtIcqZ1g=;
- b=HtFMhT1sT+6YzTZyh3l6+MVAMaHQfCFupFawsTFQCO4/IZxGETCQu8jYA0top4gOjq
- zNL4idcY/dlglrwniidnnrjILDuNbEVeJz8A5RBNvjkxoAlhVJULLeR7lJ0EX7bsc65g
- S0SjRRF9R7BTmx14Fw1tFhB9R0w5ccYLym/BbqCTvmTviuBwKXR2kYT57f3gJGlrjJnX
- 4Tz8Y8DoPLBreEztcxV3gXFgBPBqBVWQ9OOGwkrjpgDnVjLrvwx5/gQgieMLn3tdWs7u
- U5cKA72l2jFeneoIbalSYUgVI/A0+IYhKYOHsKHhj5FWq+CmGb+vhWRurnn6PG2QcLZQ
- vggQ==
-X-Gm-Message-State: AOJu0YwR2KFGxMsRGjTkHVK14V2wIAwPmZ7Mk9ShYAKkzFOmxvzdrFbC
- QBh8FP3HDWMSzj4Ffx75pddj8qbTd/3nGwDx65xkuhqzYZGAmW0P3TSqE1nKxtMTzQK2dmRSYma
- HwKq3
-X-Gm-Gg: Acq92OHZiPOOOWi1mRGio1ydgDFF9dsXQ0J3MQuTy+qe4m+UdHA2U1o5p/PU/qAHY3j
- /6jct1x73t8ukJKdiSZLyh/dE+v/gnE6ttfJTPCAJXajZb3KjN37/GNOwJmKm8i3kGculuss1sQ
- ScMLuHxMwV0kJzmylB86Cibl6dd6YSqCd2TJJMpc5TJ6slwri5U7dqTfGrI8qQiJUSr1b9rI51e
- b/gpREndmZpXJXghR/Dpb8We9u6I0UDpd/L96UqmH8gZhRHxa15nyUWUhoHmEXPBMwu3MLeXYrL
- hSJijTfPMyUntTq+/RiO6piBLbMw9xaDQfPEkBQULCmmWS4pLDCVA+/s7OeVZ8SRBQ1JQ/S+kLO
- XaOcz+L3J/ygrkrsg9PwE1VMqDClZW4FvUt/L5uWgBPez7+YSXWJ1j6cRxnSfOu2WIMLZZbX2E4
- 0LE0FhTncwkJvP/DbMGFX29+Vx1xef
-X-Received: by 2002:a05:6a00:3014:b0:82c:dfea:9e2a with SMTP id
- d2e1a72fcca58-83f33c4d95fmr10807174b3a.2.1778977819880; 
- Sat, 16 May 2026 17:30:19 -0700 (PDT)
+ bh=6CH8sn0raFot2c6HYSuCv/vuUo7CdYLWHtN+GrqCIxQ=;
+ b=r6ICr4NN2RPnbLmviMITyRiIA/ycde19AsH270HVxUGa0b4V6xaO6kVkUfQBgu62EP
+ beyxtSYoElSuy1Bq++wBECkMF9/xa6wd9wwnsDbL1hRUjLwgvojO6UDLBXt6TOCqOYR4
+ hCmenPF5a3gTdob5rGadfRCUliZWB2BqU/dnaQGj/8t/l1wikq5f4CoZBvCozkTkDHFg
+ 0bTcLvMxRAPVHFLuP91n1GTbUsjBYlpS7DFJW3QrYb0natXCac/BCuw/eKIKCwlXgdy9
+ Z+2KgDy5EjhLK/nICbWePCflDka+s70kSiLaa7ytqOYzHPClXsZ1JXePgynt6sCKS7R9
+ Gksg==
+X-Gm-Message-State: AOJu0Yxw2eXRKS3xROQOJ5ZskSZ0NMDyo7miDhY3IIoM46gFHfxIMglP
+ wlTO1ik6/d9rKGfkv/7GtMQNLblEZjplweUMpkzkIShkEhYPI4w/UpSeWa4LV4qYf7lg1NbEwOl
+ 8bnOJ
+X-Gm-Gg: Acq92OGUnZg1ZfasJmSdAcSVI71OC4OWa9tGPHhYY/II0cOUJbEZT1H6HiQz65tgSgz
+ yRezwQyH+wL+72iXJSelzJwKxt1JZn1rjZhmiAaGK+CRFjcfK1CwAxSvQAWl8gkquK/dHFTxN3y
+ 0SIbyUa/NRXSKQgTF9uf9G/XXlACUNHy18S7IbI788+hw484wwmiolEzPJRWgTfNlk6/2t/fnhh
+ CepfboEu+eGriWPnnJBx7sELkg/ZWL/xkzuAJSVdoGJyS/Whp9EDhso7khdH4Kqqw1NzprjJMOQ
+ oQrD91YxfVHqxhiUgcdPUJGKljeQV1jqylb8rzHnRFv1AXcJh1Oj9wV+rl+JHh8Ms0jR+efFVHI
+ zslTR7M8DMIHCyAQrIeeJe519dSSwBxj6BJrQxhg4IVmKz9Ef36Aw0cfbIM7KLm4Reivgwfvn3f
+ Kb9kBncx/wjuXVVrVFmk0XoJZZsww0yxbxx3EWheg=
+X-Received: by 2002:a05:6a00:14c4:b0:82a:146d:36a3 with SMTP id
+ d2e1a72fcca58-83f33c9570fmr7885654b3a.21.1778977815132; 
+ Sat, 16 May 2026 17:30:15 -0700 (PDT)
 Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-83f19663cfdsm12272745b3a.9.2026.05.16.17.30.19
+ d2e1a72fcca58-83f19663cfdsm12272745b3a.9.2026.05.16.17.30.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 16 May 2026 17:30:19 -0700 (PDT)
+ Sat, 16 May 2026 17:30:14 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH v5 18/63] target/arm: Add isar_feature_aa64_f8cvt
-Date: Sat, 16 May 2026 17:29:17 -0700
-Message-ID: <20260517003002.321430-19-richard.henderson@linaro.org>
+Subject: [PATCH v5 12/63] target/arm: Clear FPMR on ResetSVEState
+Date: Sat, 16 May 2026 17:29:11 -0700
+Message-ID: <20260517003002.321430-13-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260517003002.321430-1-richard.henderson@linaro.org>
 References: <20260517003002.321430-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,27 +99,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+FPMR is cleared when entering or exiting Streaming Mode.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/cpu-features.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ target/arm/helper.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index 1bb77d78da..1fde3e9231 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -1569,6 +1569,11 @@ static inline bool isar_feature_aa64_sme2p1(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64SMFR0, SMEVER) >= 2;
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 7eb7031294..3d6e7f1ccc 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -4856,6 +4856,7 @@ static void arm_reset_sve_state(CPUARMState *env)
+     /* Recall that FFR is stored as pregs[16]. */
+     memset(env->vfp.pregs, 0, sizeof(env->vfp.pregs));
+     vfp_set_fpsr(env, 0x0800009f);
++    env->vfp.fpmr = 0;
  }
  
-+static inline bool isar_feature_aa64_f8cvt(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64FPFR0, F8CVT);
-+}
-+
- /*
-  * Combinations of feature tests, for ease of use with TRANS_FEAT.
-  */
+ void aarch64_set_svcr(CPUARMState *env, uint64_t new, uint64_t mask)
 -- 
 2.43.0
 
