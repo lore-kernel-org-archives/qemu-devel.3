@@ -4,71 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A423CD343F
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 06:24:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC4F9CD343F
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 06:33:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOrOS-0003m9-Qy; Mon, 18 May 2026 02:24:00 -0400
+	id 1wOrX9-000590-2m; Mon, 18 May 2026 02:32:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wOrOH-0003ks-99
- for qemu-devel@nongnu.org; Mon, 18 May 2026 02:23:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wOrX7-00058c-Hb
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 02:32:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wOrOD-00057U-87
- for qemu-devel@nongnu.org; Mon, 18 May 2026 02:23:47 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wOrX5-0000Yg-T0
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 02:32:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779085422;
+ s=mimecast20190719; t=1779085974;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0mt7JmGUDUhN0wvJiFJEqgjin190T9t4/LncjP/w3v0=;
- b=G3vD5QB9cnMnLra25GXg2IYMHW8s9dl7Id5PkufNCd0Oba0gFBpyXIoWsz91Nb0V3mphpx
- Xkl9IVTdIFufW+MIlvxkhYe15cg9PimmgZHSVy8UDTtx1O9VXamJpUKA+tmdNRG5/7fMwF
- ol3H3A4PDpAJwRVtictl8KNQhWpKYBQ=
+ bh=yyFQj1pqptq0Cooh6y4JVd8pyW9pXrNeWcoPgVL8trU=;
+ b=evxWCDkFM+Ce7E/7e8s8ImppQsl/4RX94UtaldBx105Kf9sh6pyj7qYHrGXZO9ZHg7z/R5
+ 3pFAVz7nd1eF0ByfCphSm8OgiNACS7pftyo6W4zyC/cdF1EjAmmRQxVv1gB80bj4loPWM3
+ CVFOBaigDe4MXMCQOp3db1rFN595ze0=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-533--FnVhRYpNVmpVBHSrjHywA-1; Mon,
- 18 May 2026 02:23:40 -0400
-X-MC-Unique: -FnVhRYpNVmpVBHSrjHywA-1
-X-Mimecast-MFC-AGG-ID: -FnVhRYpNVmpVBHSrjHywA_1779085420
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-166-JqCvvmSSNUiBIL3i5kIMKg-1; Mon,
+ 18 May 2026 02:32:53 -0400
+X-MC-Unique: JqCvvmSSNUiBIL3i5kIMKg-1
+X-Mimecast-MFC-AGG-ID: JqCvvmSSNUiBIL3i5kIMKg_1779085972
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A5F47195605C; Mon, 18 May 2026 06:23:39 +0000 (UTC)
+ id EE643195605E
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 06:32:51 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4C02030001A2; Mon, 18 May 2026 06:23:39 +0000 (UTC)
+ id A967730001A2
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 06:32:51 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C2DB521E6A01; Mon, 18 May 2026 08:23:36 +0200 (CEST)
+ id 1281B21E6A01; Mon, 18 May 2026 08:32:49 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
-To: Demi Marie Obenour <demiobenour@gmail.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, qemu-block@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>
-Subject: Re: QEMU Storage Daemon: production-quality and secure?
-In-Reply-To: <22967882-230a-4ebe-b947-da2566d11e33@gmail.com> (Demi Marie
- Obenour's message of "Sun, 17 May 2026 17:23:08 -0400")
-References: <22967882-230a-4ebe-b947-da2566d11e33@gmail.com>
-Date: Mon, 18 May 2026 08:23:36 +0200
-Message-ID: <87pl2tjkwn.fsf@pond.sub.org>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 12/13] monitor: add 'info ramblock-attributes' command
+In-Reply-To: <20260504-rdm5-v4-12-bdf61e57c1e1@redhat.com> (=?utf-8?Q?=22M?=
+ =?utf-8?Q?arc-Andr=C3=A9?=
+ Lureau"'s message of "Mon, 04 May 2026 16:30:18 +0400")
+References: <20260504-rdm5-v4-0-bdf61e57c1e1@redhat.com>
+ <20260504-rdm5-v4-12-bdf61e57c1e1@redhat.com>
+Date: Mon, 18 May 2026 08:32:49 +0200
+Message-ID: <875x4lz0q6.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,15 +89,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc: qemu-block and maintainer.
+Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
 
-Demi Marie Obenour <demiobenour@gmail.com> writes:
-
-> When used as a vhost-user server, is the QEMU Storage Daemon suitable
-> for production use with untrusted guests and images?  Does it have
-> decent performance?
+> Add a new 'info ramblock-attributes' HMP command and the corresponding
+> 'x-query-ramblock-attributes' QMP command to display the shared/private
+> memory attributes for ram blocks.
 >
-> I'm wondering because Cloud Hypervisor has support for various formats,
-> but that adds complexity.
+> The QMP command returns structured data (RamBlockAttributesInfo list
+> with per-range shared/populated attributes), while HMP formats it for
+> human consumption.
+>
+> This is useful for debugging confidential guests (TDX, SNP) to inspect
+> which memory regions are shared vs private, and their population state
+> when a RamDiscardManager is present (e.g. virtio-mem).
+>
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> ---
+>  qapi/machine.json             | 55 +++++++++++++++++++++++++++++++++
+>  include/monitor/hmp.h         |  1 +
+>  hw/core/machine-hmp-cmds.c    | 32 +++++++++++++++++++
+>  system/ram-block-attributes.c | 72 +++++++++++++++++++++++++++++++++++++=
+++++++
+>  hmp-commands-info.hx          | 13 ++++++++
+>  5 files changed, 173 insertions(+)
+>
+> diff --git a/qapi/machine.json b/qapi/machine.json
+> index 685e4e29b87..aac8a235cf6 100644
+> --- a/qapi/machine.json
+> +++ b/qapi/machine.json
+
+I have a few fairly ignorant questions.  They may or may not indicate a
+need for doc improvements.
+
+> @@ -1738,6 +1738,61 @@
+>    'returns': 'HumanReadableText',
+>    'features': [ 'unstable' ] }
+>=20=20
+> +##
+> +# @RamBlockAttributeRange:
+> +#
+> +# A contiguous range within a ram block with uniform attributes.
+
+RAM please.  More of the same below, not flagging it again.
+
+> +#
+> +# @start: start offset in bytes within the ram block
+> +#
+> +# @length: length in bytes of the range
+> +#
+> +# @shared: true if the range is shared, false if private
+
+What does it mean for a range to be shared?
+
+> +#
+> +# @populated: true if the range is populated (only present when a
+> +#     RamDiscardManager is managing the block)
+
+What's a RamDiscardManager?
+
+> +#
+> +# Since: 11.1
+> +##
+> +{ 'struct': 'RamBlockAttributeRange',
+> +  'data': { 'start': 'uint64',
+> +            'length': 'uint64',
+> +            'shared': 'bool',
+> +            '*populated': 'bool' } }
+> +
+> +##
+> +# @RamBlockAttributesInfo:
+> +#
+> +# Shared/private memory attributes for a ram block.
+> +#
+> +# @name: the ram block identifier
+
+Where do RAM block names come from?
+
+> +#
+> +# @ranges: list of attribute ranges
+> +#
+> +# Since: 11.1
+> +##
+> +{ 'struct': 'RamBlockAttributesInfo',
+> +  'data': { 'name': 'str',
+> +            'ranges': [ 'RamBlockAttributeRange' ] } }
+> +
+> +##
+> +# @x-query-ramblock-attributes:
+> +#
+> +# Query ram block shared/private attributes.  This is useful
+> +# to debug confidential guests.
+
+What are RAM blocks?
+
+> +#
+> +# Features:
+> +#
+> +# @unstable: This command is meant for debugging.
+> +#
+> +# Returns: list of ram block attributes
+> +#
+> +# Since: 11.1
+> +##
+> +{ 'command': 'x-query-ramblock-attributes',
+> +  'returns': [ 'RamBlockAttributesInfo' ],
+> +  'features': [ 'unstable' ] }
+> +
+>  ##
+>  # @x-query-roms:
+>  #
+
+[...]
 
 
