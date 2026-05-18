@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7751CCD4F49
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 16:04:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9164ECD4F3C
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 16:04:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP0QY-0001Ha-Tr; Mon, 18 May 2026 12:02:47 -0400
+	id 1wP0QV-00010r-NQ; Mon, 18 May 2026 12:02:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wP0Q9-0000Nt-DL
- for qemu-devel@nongnu.org; Mon, 18 May 2026 12:02:29 -0400
+ id 1wP0Py-0000MW-Cj
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 12:02:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wP0Q3-0005wa-9w
- for qemu-devel@nongnu.org; Mon, 18 May 2026 12:02:21 -0400
+ id 1wP0Pv-0005cm-Ci
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 12:02:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779120134;
+ s=mimecast20190719; t=1779120126;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SehIcGL5+cgE4/kfJH/adrcIXagz7Lnlktp3htwqCmA=;
- b=B67vTeUXFWZdMumBUAK/yoEGAcRlv82DFMiQOVaUGovoe2T0ZGh52t0S+rd7hExNemFQ58
- /Zwf29bF+96ZJOBVfKyPcSYYJXI1juuMNynQNwiBjInBy7xQtp7b+LKPdq09D9mbLDaChd
- vUyMAoh2e6Td0VVKuF+ma5VmZy8Dp+s=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=qyI/tzMp2ImDMh0+rZ0xpwtnUXHIjbxTzj+UiEn3P/Y=;
+ b=K82c/Xvy1HN1BTavPiS8spLJJWOG/SJ9fAbILAZ/kOL6lOQppFlGW85TnupxOcPpAqEfje
+ 70kmaU5gmHpcH3rZpqFm0V4nKuLrrYvAOH4R4UA6LdK0rDJWGr88IPk9Pqw+kXCtcGgcbe
+ ffcqmSUaL5oP2XBfR4/6TSdGYIfM6NU=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-76-jF9ubn6bPKmuRKQmUpI35A-1; Mon,
- 18 May 2026 12:02:11 -0400
-X-MC-Unique: jF9ubn6bPKmuRKQmUpI35A-1
-X-Mimecast-MFC-AGG-ID: jF9ubn6bPKmuRKQmUpI35A_1779120129
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-614-br1YuBOuMmaC0gfHP4FDqA-1; Mon,
+ 18 May 2026 12:02:02 -0400
+X-MC-Unique: br1YuBOuMmaC0gfHP4FDqA-1
+X-Mimecast-MFC-AGG-ID: br1YuBOuMmaC0gfHP4FDqA_1779120121
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C099019560B4; Mon, 18 May 2026 16:02:09 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 12B04195608B; Mon, 18 May 2026 16:02:01 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.32.79])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E41E630002DC; Mon, 18 May 2026 16:02:05 +0000 (UTC)
+ id 3821530001A2; Mon, 18 May 2026 16:01:56 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: John Snow <jsnow@redhat.com>, qemu-block@nongnu.org,
@@ -58,9 +58,9 @@ Cc: John Snow <jsnow@redhat.com>, qemu-block@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v8 16/16] gitlab: remove I/O tests from build-tcg-disabled job
-Date: Mon, 18 May 2026 17:00:51 +0100
-Message-ID: <20260518160051.903616-17-berrange@redhat.com>
+Subject: [PATCH v8 14/16] iotests: mark 185 as a flaky test
+Date: Mon, 18 May 2026 17:00:49 +0100
+Message-ID: <20260518160051.903616-15-berrange@redhat.com>
 In-Reply-To: <20260518160051.903616-1-berrange@redhat.com>
 References: <20260518160051.903616-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -91,38 +91,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that we have dedicated CI jobs for running I/O tests on each
-supported format/protocol, we no longer need to special case a
-run of a hand picked set of tests in the build-tcg-disabled job.
+Introduce a "_flaky_test" function for I/O  tests which accepts a
+GitLab issue URL, and causes the I/O test to be skipped unless the
+$QEMU_TEST_FLAKY_TESTS environment variable is set.
 
-Acked-by: Kevin Wolf <kwolf@redhat.com>
+This is used by test 185 which currently fails in GitLab CI for
+unknown reasons.
+
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- .gitlab-ci.d/buildtest.yml | 9 ---------
- 1 file changed, 9 deletions(-)
+ tests/qemu-iotests/185       |  1 +
+ tests/qemu-iotests/common.rc | 16 ++++++++++++++++
+ 2 files changed, 17 insertions(+)
 
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index cf0281ecd6..d054349030 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -366,15 +366,6 @@ build-tcg-disabled:
-     - make -j"$JOBS"
-     - make check-unit
-     - make check-qapi-schema
--    - ./run tests/qemu-iotests/check -raw 001 002 003 004 005 008 009
--            010 011 012 021 025 032 033 048 052 063 077 086 101 104 106
--            113 148 150 151 152 157 159 160 163 170 171 184 192 194 208
--            221 226 227 236 253 277 image-fleecing
--    - ./run tests/qemu-iotests/check -qcow2 028 051 056 057 058 065 068
--            082 085 091 095 096 102 122 124 132 139 142 144 145 151 152
--            155 157 165 194 196 200 202 208 209 216 218 227 234 246 247
--            248 250 254 255 257 258 260 261 262 263 264 270 272 273 277
--            279 image-fleecing
-     - make distclean
+diff --git a/tests/qemu-iotests/185 b/tests/qemu-iotests/185
+index 17489fb91c..a62ae8d329 100755
+--- a/tests/qemu-iotests/185
++++ b/tests/qemu-iotests/185
+@@ -50,6 +50,7 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
+ _supported_fmt qcow2
+ _supported_proto file
+ _supported_os Linux
++_flaky_test https://gitlab.com/qemu-project/qemu/-/issues/3270
  
- build-user:
+ size=$((64 * 1048576))
+ TEST_IMG="${TEST_IMG}.base" _make_test_img $size
+diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
+index 731e4b2b99..298bc483e0 100644
+--- a/tests/qemu-iotests/common.rc
++++ b/tests/qemu-iotests/common.rc
+@@ -1088,5 +1088,21 @@ _qcow2_dump_header()
+     fi
+ }
+ 
++# This must be referenced after any _require_  lines, so that
++# test filtering happens first
++_flaky_test()
++{
++    if test -z "$1"
++    then
++	echo "A GitLab issue URL must be provided for a flaky test"
++	exit 1
++    fi
++
++    if test -z "$QEMU_TEST_FLAKY_TESTS"
++    then
++	_notrun "Test is flaky (see $1) and \$QEMU_TEST_FLAKY_TESTS is not set"
++    fi
++}
++
+ # make sure this script returns success
+ true
 -- 
 2.54.0
 
