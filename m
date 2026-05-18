@@ -4,105 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5482CD343F
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 21:32:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F6EFCD4F4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 21:32:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP5Vs-0000mH-Na; Mon, 18 May 2026 17:28:36 -0400
+	id 1wP5Vs-0000mC-KT; Mon, 18 May 2026 17:28:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5Vm-0000YO-Ua
- for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:32 -0400
-Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5Vj-0000WE-7S
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:27 -0400
+Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5Vk-0000hX-Tj
- for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:30 -0400
-Received: by mail-ot1-x332.google.com with SMTP id
- 46e09a7af769-7e36bb16a92so1712596a34.2
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 14:28:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5Ve-0000aJ-LN
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:26 -0400
+Received: by mail-ot1-x32d.google.com with SMTP id
+ 46e09a7af769-7dd73b7c757so1437649a34.0
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 14:28:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779139708; x=1779744508;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779139701; x=1779744501;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Dk/gcJTcR+HqotYXXre567+adU5e8XCaDOO7/5sPCWw=;
- b=hjfDy+ukXnxul+bMuKYCWffdotVaDf6RtWZIHDbI3+A8rlsc6Y+Txuo5SHzmfQTpPx
- ByRwg/BMgS9S1dUIaHR/hqZlQ4DuhDJPjrn+NRIJpxM+6Em2tmusqdxdAIHd+8msdKl+
- XH6e6tVbG+wHo/LpJo7B5POW1s4/YK9argKTPw5FGik9Yems8ePxCsxXyvHB0/DGgRpo
- UCj39bmml87P96TBMsGVwsUh19Jj0dWh6+S/vuzx4TAM+h5bmFxx+xQGr8+V5ipKoG9i
- WCEVbtavqYioutr2FazG5ec4tD0ryyV06lLrnPyv2uy6e+Caj5sNEPJStrwbqoc9xyQv
- Zcnw==
+ :reply-to; bh=5Ym5e+SajqMg43ILFEA/gLXJCeMOEhtFDwp7ME9PnMY=;
+ b=J6dzKzdBIMXL63xrOQ5AnE6enkWnrXHd1zJWMgea+zWCTk6trT6Vp+suI+8P9J2UbD
+ uV5qUCTBECaJqyNVDAw0zam6EmtsvPC3e2DbRdme91nXiQx7ddRPP/UeyOQ/Tdm434S3
+ yIvJdanUP5Av9HMjFV/MnvCHN8IdTqGJcYeC327G4JF6JtaCNFxwjauvKD4nFgkDOKVU
+ n4RYAkfXGH2q7wI2KLEFDIU4rT3LPvW3iRuhil0+x/Re3qCQfiOTAHSE8+tjFvJaWtqr
+ tcqRS9gXBLamJYLtQeQAWGyEvRjNortZU62s+gUDBCyGkeY0sZyhkGwhizDlCYEyU/2E
+ 6d6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779139708; x=1779744508;
+ d=1e100.net; s=20251104; t=1779139701; x=1779744501;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Dk/gcJTcR+HqotYXXre567+adU5e8XCaDOO7/5sPCWw=;
- b=eF8ZJmmx38Dx/n3sFNv4TQR7W/fsnjRYxB2UtLTG9oOOrj7KTPQSamAzqRWF2HbOXn
- tLlwGenWtQTWRbc3kDUZa/RrF8GHH2jgNV6uBuRrhj9Hwf8lG8z83pgBAW7iOhBMV/6l
- /0Dorcn7PM9laUyCtQQGqFoTJdGA67rGAYtzt+HE/D5eF0stTF7SzFZOXjbYFWBBBwFx
- 87WKkTLP8Sc9gOg+9ukrWzFze4FmgDbsuNO8Xa2cqNjiYKWf/p77flJVC0/QO3A1Z32j
- h9dUhD33MHE4eu82Z3ESUr2nzJ0XNS4mMSYUuoPoW2zIMUUaGu22Fst4UiVixMV4ILdD
- Dlsg==
-X-Gm-Message-State: AOJu0Yw2242gwOcqZJ/P+amrECeGwWB9ub927Dy3RXQkTTHHW7FBoFiZ
- reZe8uj/wJt9bkzcrRlMIPcygHZ/T+9tMhkfoKKurSIQGh9i7amJIidj7WIRBnkv92s=
-X-Gm-Gg: Acq92OGMYImwYgsMik64LtgBFbvrlIUvRioZ/JTpKbs7CNMQNKRwUL+NSx9LXb0p3p+
- 66a4GswVMj1xyZVewpFUfD3sT8TfK1E4eAHa1XrZdK4yrRhhH/KJk96+qm5Eus4Yx8V8UCFzdGC
- lwcuYoBv1iAmB7vg5QZwusZgOaVhIJ9Hg2kS7SfADh9wXGmn4wBXa7KLLW0pTfDJEjTvxJRI1Gx
- pkCrbsCEME7S9NazcY2NCOjBuqvCIWkYYO3iobj48eQZLIfkFh5MB2R8u6Ho6T+6faxs2xxrGR0
- muCNsrXtuCGcYBkEeftAH0Wq31/eAOMxdV9IIdmPpb8o517fBe51r4w4FYeKWoa2HTZ4j8l+Obh
- rH/nGAuamjjGkMkZXe5MvQWB6FZoocDz8S+poh03WSWcTJ63XTY2KFUHKw2uWDTPAXovy63yxHO
- NSmAl5nJy6oA==
-X-Received: by 2002:a05:6830:4486:b0:7d7:f638:7a03 with SMTP id
- 46e09a7af769-7e4ea07fd2bmr13318626a34.10.1779139707825; 
- Mon, 18 May 2026 14:28:27 -0700 (PDT)
+ bh=5Ym5e+SajqMg43ILFEA/gLXJCeMOEhtFDwp7ME9PnMY=;
+ b=GKCDiTzOsKBYKGbC/dLSvv20iH/OP0z7MyTxecfbcr/mAMwS+ArCtfrbdMN0Jonca8
+ JqZo/+MusQJjIwpUW5QOQU1pKuu8EF3n9vKpKkGi1yIKaJKh5msLGbfVKu6nTu+zvzW+
+ GmNr0uhRlAOA76yoHqeg41hXPmyd2DWyVfcGlbnoU1/Wrf8hs4Syo5nfTxDW5lVOmOO5
+ WvWLRyZDize9RXOqeo4oM30NRePnnZmeUyWGV+sVGig8VDoOYi8lHlwi3LcIAnJIvh9k
+ hZqaR6CXB2/7m2I0cRbvLPS1xygJcK2jl8j47ck4sg9UWt80QMJoiZghBNr/lqEJZJgV
+ AD3w==
+X-Gm-Message-State: AOJu0YyEmIOsTUx55HmF/1+uCY6kJsV29TiKDK2ffWZ3FhUCZAbPoMfc
+ Ap7KsA7xy/Zin04xSHTD94RruuS9LG+GILeAeylYd8UWUnQaQ5aAHfzFHTWRkcGowvU=
+X-Gm-Gg: Acq92OGRKFv3muL2+1EZBVYkbx+Ertgfhwp2UZfyksMKAqqT75yhqf0aaNFiRtOyhtA
+ EPgCUVosA2LWLGNw7wzQLy2VMjAIZI/bfEm67dKOGboGjM1lSF+2m4lJpwjftYZPQ/3aEmgTJdn
+ ozk45iZmqWcorMFd92vZ76/tjWZq9/N28W6T18nkDgRFKGHiy5NRz7fPlAGJeIXaza1rNTXKtFN
+ 0zkmnfhIhXEIdblZ1Aq0YQdlpv22OqCPACeBTQSfwZIBT7GPxNoEwB3vcVJTRFWcZoBcMf+mPav
+ m+Xf5XMdRZtzmed5weKDVrR/MrHvf24Ciq3hY9VcTFbDMuS6FZMVP4sCifHiUxp/PFkrrZDaFzX
+ T+vX7Po4U2DBU1C5fK46vD2pq9uburrCTlTr+/rvnpK+7Oml+naLIuP3VuuLmq3FYmqSrdlzhtj
+ Ftaj3h58bquw==
+X-Received: by 2002:a05:6830:2589:b0:7e1:cbe3:bb1b with SMTP id
+ 46e09a7af769-7e4de6a6079mr10842367a34.0.1779139701178; 
+ Mon, 18 May 2026 14:28:21 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55b81cc5asm7980358a34.8.2026.05.18.14.28.26
+ 46e09a7af769-7e55b81cc5asm7980358a34.8.2026.05.18.14.28.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 May 2026 14:28:27 -0700 (PDT)
+ Mon, 18 May 2026 14:28:20 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Mon, 18 May 2026 15:27:53 -0600
-Subject: [PATCH v2 35/37] bsd-user: Add scheduler and cpuset functions to
- os-misc.h
+Date: Mon, 18 May 2026 15:27:46 -0600
+Subject: [PATCH v2 28/37] bsd-user: Add os-thread.c with umtx, mutex, and
+ thread creation
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260518-misc-2026q2-v2-35-6c16fe448301@bsdimp.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260518-misc-2026q2-v2-28-6c16fe448301@bsdimp.com>
 References: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
 In-Reply-To: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>, 
- Sean Bruno <sbruno@FreeBSD.org>, 
- =?utf-8?q?Mika=C3=ABl_Urankar?= <mikael.urankar@gmail.com>
+ Kyle Evans <kevans@FreeBSD.org>, Jessica Clarke <jrtc27@jrtc27.com>, 
+ Sean Bruno <sbruno@FreeBSD.org>, Michal Meloun <mmel@FreeBSD.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=11338; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=VJLI5yf/kV1K/lBJ1hjwgi5j2yWe3Wg0MdjyGKt/tVc=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqC4RJbLhq5nA+nbNGVfUyudY3q9nuvkGQSdjIJ
- fAofqUhnxCJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaguESQAKCRBsHNEofbAR
- APH5EACKR6eWJtotiEjl9iUuDyOWWspUpXJyK9P8sbGxA05a8SikFRNtcU8Ux/qWMR399ck7VPY
- UUT9F9/4qvm7ov/FpRJFG0NaxsRSOoZ7i4hFfD4mD4Qh8jMYWL7W0hL7Y5LBMOnhNBe0/8vWYOL
- ZUMnCVbeh01T95elBhiZlphU0VBweeemLv26W9RuaJhEJr5d8/Kj85qau5oKwoCHQjFoxlqbvlr
- ltF0uUkoNbey4rUjGJSx7TuCIBSVSNHoc9wOdbJfKmj7YNSJFP15y4qyCUyCxEDOnoxdidHQY7f
- wMcTLdM8XTKHzIFCJ9l4NrE/fjv1eT5pLuYSJCepavak8eTHHstNZBhl2i4fvuQmUMHkMPdgwFP
- Kp255VYcvoiVxALPg0DmB0HXcn956cf1sLv61/k3GCrqUmtswYDi/0yqHSuye4L1Bjhk06fsEAk
- rtbUVoIenYuXy+9esbDQPi423BedLDnyTAxxPAFcz3aTYoyoUyuDfLUaphmU1HFhtDmFYphq0k3
- p1acWJH2bgl64Vj5CbPEcbhj3YL3dYM4IRPu+9sTqofT8HBOIk3SLlYCVHhWRd2LkPENjAdkhgV
- D7PytXSCfm2edXQLaeH4psAT2/cLs9nzLfk/SC98ph0Z4mrpNM6U9KubsXt594IUc2Ee0u49tsH
- c0ftXvHWcqbJSUQ==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=59857; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=4mnFhJd5dcbA7v1boAaSw5bHaZMUX/CSC2qF9GM+qUQ=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqC4RIDpdtrblPd6+4Fkms72Xec4zRzE6hWZrJN
+ 5tjfMfqLdGJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaguESAAKCRBsHNEofbAR
+ AO6hEADDGe/YE8fE8FVFjXor1Cier4XqDnFkKDtHYujKChJ1P/ZWIX1qvsu3Mue5f/JlwdBmDTD
+ ejmt4nOA6TanxOmQnC+XpGyjJe/PiYXYnvzRaotpYLmC4+qH2psX6Ib3XOsJMAEVRK3+YENP8xo
+ v2c8mmXw9cSi1YCK6U2PTloKFpRsxPiLALvS10Lau8RVS5CVljDDqhgSmYAnlBqXf1Lhj9Jh4VC
+ qsoxOZLJ2hYw2v4YpnAqGE51evYrbdFkC1IgYxPUwlsVJwZvpVCdXUO0xGs+ZMk/BgSar6kwVW7
+ oAZVbb32X3OwB96O2vgdL+al/P5i+aVyKtIQuoGdcndZ0DPYp6UZi5gjS7xzu3N8xR4zgAS4GBK
+ aiKXNNkWetqb84piabsghOab1i1iw+HzMEOdW8ByVOyT83TqM8WdFO7OcyZjJPNZqFqJ+SkXNrN
+ al4cEhEAlFItUbtuwJ8wagoS+nx/zkklfKx7KAnOvuiBzviMHzllvmR/C5WJtaB+k7VwJFs+uSz
+ y00RkLYVHwjypEPc0UYn84qscVLxp1JkNOC3IQm5NCC2g5mwAWXjO8d4AGd2VB+h793mGvtVQQ1
+ Kn6WM6HlyTI8U45LLvBPdApVtoMXYSpgeFGdhRaQf5vr/l42EG6iatxskGChy4BKK7EszoP7u7l
+ /EE/JBdduoYJ4vw==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::332;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x332.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::32d;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x32d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ SPF_NONE=0.001, T_FILL_THIS_FORM_SHORT=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,370 +118,1712 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Expand os-misc.h with scheduler functions (sched_setparam,
-sched_getparam, sched_setscheduler, sched_getscheduler,
-sched_rr_get_interval) and CPU affinity functions (cpuset,
-cpuset_setid, cpuset_getid, cpuset_getaffinity, cpuset_setaffinity).
-Also add sched_yield, sched_get_priority_min, and
-sched_get_priority_max to bsd-proc.h.
+Add the FreeBSD threading implementation including: umtx wait/wake
+operations, mutex lock/unlock, condition variables, reader-writer
+locks, semaphores, thread creation (thr_new), rtprio conversion,
+robust list support, and shared memory operations. This is a large
+implementation file that provides the backing for the _umtx_op
+syscall and related thread operations.
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
+Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
+Signed-off-by: Jessica Clarke <jrtc27@jrtc27.com>
 Signed-off-by: Sean Bruno <sbruno@FreeBSD.org>
-Signed-off-by: Mikaël Urankar <mikael.urankar@gmail.com>
+Signed-off-by: Michal Meloun <mmel@FreeBSD.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 Assisted-by: Claude Opus 4.6 (1M context)
 ---
- bsd-user/bsd-proc.h        |  20 +++-
- bsd-user/freebsd/os-misc.h | 288 +++++++++++++++++++++++++++++++++++++--------
- 2 files changed, 257 insertions(+), 51 deletions(-)
+ bsd-user/freebsd/os-thread.c | 1682 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 1682 insertions(+)
 
-diff --git a/bsd-user/bsd-proc.h b/bsd-user/bsd-proc.h
-index 62052c70b9..b9973dbedf 100644
---- a/bsd-user/bsd-proc.h
-+++ b/bsd-user/bsd-proc.h
-@@ -400,4 +400,22 @@ static inline abi_long do_bsd_setpriority(abi_long which, abi_long who,
-     return get_errno(setpriority(which, who, prio));
- }
- 
--#endif /* !BSD_PROC_H_ */
-+/* sched_yield(2) */
-+static inline abi_long do_bsd_sched_yield(void)
-+{
-+    return get_errno(sched_yield());
-+}
+diff --git a/bsd-user/freebsd/os-thread.c b/bsd-user/freebsd/os-thread.c
+new file mode 100644
+index 0000000000..dcf2216525
+--- /dev/null
++++ b/bsd-user/freebsd/os-thread.c
+@@ -0,0 +1,1682 @@
++/*
++ * FreeBSD thr emulation support code
++ *
++ * Copyright (c) 2013-2015 Stacey D. Son
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include "qemu/osdep.h"
 +
-+/* sched_get_priority_min(2) */
-+static inline abi_long do_bsd_sched_get_priority_min(int policy)
-+{
-+    return get_errno(sched_get_priority_min(policy));
-+}
++#include <machine/atomic.h>
 +
-+/* sched_get_priority_max(2) */
-+static inline abi_long do_bsd_sched_get_priority_max(int policy)
-+{
-+    return get_errno(sched_get_priority_max(policy));
-+}
++#include "qemu.h"
++#include "qemu-os.h"
++#include "signal-common.h"
++#include "target_arch_cpu.h"
++#include "target_arch_thread.h"
++#include "tcg/startup.h"
++#include "exec/tb-flush.h"
 +
-+#endif /* !BSD_PROC_H */
-diff --git a/bsd-user/freebsd/os-misc.h b/bsd-user/freebsd/os-misc.h
-index d9979b2a8b..74ed1d2f47 100644
---- a/bsd-user/freebsd/os-misc.h
-+++ b/bsd-user/freebsd/os-misc.h
-@@ -11,76 +11,264 @@
- #include <sys/cpuset.h>
- #include <sys/random.h>
- #include <sched.h>
-+#include <kenv.h>
- 
--/*
-- * shm_open2 isn't exported, but the __sys_ alias is. We can use either for the
-- * static version, but to dynamically link we have to use the sys version.
-- */
--int __sys_shm_open2(const char *path, int flags, mode_t mode, int shmflags,
-+int shm_open2(const char *path, int flags, mode_t mode, int shmflags,
-     const char *);
- 
--#if defined(__FreeBSD_version) && __FreeBSD_version >= 1300048
--/* shm_open2(2) */
--static inline abi_long do_freebsd_shm_open2(abi_ulong pathptr, abi_ulong flags,
--    abi_long mode, abi_ulong shmflags, abi_ulong nameptr)
-+/* sched_setparam(2) */
-+static inline abi_long do_freebsd_sched_setparam(pid_t pid,
-+        abi_ulong target_sp_addr)
- {
--    int ret;
--    void *uname, *upath;
-+    abi_long ret;
-+    struct sched_param host_sp;
- 
--    if (pathptr == (uintptr_t)SHM_ANON) {
--        upath = SHM_ANON;
--    } else {
--        upath = lock_user_string(pathptr);
--        if (upath == NULL) {
--            return -TARGET_EFAULT;
--        }
-+    ret = get_user_s32(host_sp.sched_priority, target_sp_addr);
-+    if (!is_error(ret)) {
-+        ret = get_errno(sched_setparam(pid, &host_sp));
-     }
-+    return ret;
-+}
- 
--    uname = NULL;
--    if (nameptr != 0) {
--        uname = lock_user_string(nameptr);
--        if (uname == NULL) {
--            unlock_user(upath, pathptr, 0);
--            return -TARGET_EFAULT;
--        }
-+/* sched_get_param(2) */
-+static inline abi_long do_freebsd_sched_getparam(pid_t pid,
-+        abi_ulong target_sp_addr)
-+{
-+    abi_long ret;
-+    struct sched_param host_sp;
++#include "os-thread.h"
 +
-+    ret = get_errno(sched_getparam(pid, &host_sp));
-+    if (!is_error(ret)) {
-+        ret = put_user_s32(host_sp.sched_priority, target_sp_addr);
-     }
--    ret = get_errno(__sys_shm_open2(upath,
--                target_to_host_bitmask(flags, fcntl_flags_tbl), mode,
--                target_to_host_bitmask(shmflags, shmflag_flags_tbl), uname));
-+    return ret;
-+}
++/* #define DEBUG_UMTX(...)   fprintf(stderr, __VA_ARGS__) */
++/* #define DEBUG_UMTX(...) qemu_log(__VA_ARGS__) */
++#define DEBUG_UMTX(...)
 +
-+/* sched_setscheduler(2) */
-+static inline abi_long do_freebsd_sched_setscheduler(pid_t pid, int policy,
-+        abi_ulong target_sp_addr)
-+{
-+    abi_long ret;
-+    struct sched_param host_sp;
- 
--    if (upath != SHM_ANON) {
--        unlock_user(upath, pathptr, 0);
-+    ret = get_user_s32(host_sp.sched_priority, target_sp_addr);
-+    if (!is_error(ret)) {
-+        ret = get_errno(sched_setscheduler(pid, policy, &host_sp));
-     }
--    if (uname != NULL) {
--        unlock_user(uname, nameptr, 0);
-+    return ret;
-+}
++#define DETECT_DEADLOCK 0
++#define DEADLOCK_TO     1200
 +
-+/* sched_getscheduler(2) */
-+static inline abi_long do_freebsd_sched_getscheduler(pid_t pid)
-+{
++#define NEW_STACK_SIZE  0x40000
 +
-+    return get_errno(sched_getscheduler(pid));
-+}
++/* sys/_umtx.h */
++struct target_umtx {
++    abi_ulong   u_owner;    /* Owner of the mutex. */
++};
 +
-+/* sched_getscheduler(2) */
-+static inline abi_long do_freebsd_sched_rr_get_interval(pid_t pid,
-+        abi_ulong target_ts_addr)
-+{
-+    abi_long ret;
-+    struct timespec host_ts;
-+
-+    ret = get_errno(sched_rr_get_interval(pid, &host_ts));
-+    if (!is_error(ret)) {
-+        ret = h2t_freebsd_timespec(target_ts_addr, &host_ts);
-     }
-     return ret;
- }
--#endif /* __FreeBSD_version >= 1300048 */
- 
--#if defined(__FreeBSD_version) && __FreeBSD_version >= 1300049
--/* shm_rename(2) */
--static inline abi_long do_freebsd_shm_rename(abi_ulong fromptr, abi_ulong toptr,
--        abi_ulong flags)
-+/* cpuset(2) */
-+static inline abi_long do_freebsd_cpuset(abi_ulong target_cpuid)
- {
--    int ret;
--    void *ufrom, *uto;
-+    abi_long ret;
-+    cpusetid_t setid;
- 
--    ufrom = lock_user_string(fromptr);
--    if (ufrom == NULL) {
--        return -TARGET_EFAULT;
-+    ret = get_errno(cpuset(&setid));
-+    if (is_error(ret)) {
-+        return ret;
-     }
--    uto = lock_user_string(toptr);
--    if (uto == NULL) {
--        unlock_user(ufrom, fromptr, 0);
--        return -TARGET_EFAULT;
-+    return put_user_s32(setid, target_cpuid);
-+}
-+
-+#define target_to_host_cpuset_which(hp, t) { \
-+    (*hp) = t;                               \
-+} while (0)
-+
-+#define target_to_host_cpuset_level(hp, t) { \
-+    (*hp) = t;                               \
-+} while (0)
-+
-+/* cpuset_setid(2) */
-+static inline abi_long do_freebsd_cpuset_setid(CPUArchState *env, abi_long arg1,
-+        abi_ulong arg2, abi_ulong arg3, abi_ulong arg4, abi_ulong arg5)
-+{
-+    id_t id;    /* 64-bit value */
-+    cpusetid_t setid;
-+    cpuwhich_t which;
-+
-+    target_to_host_cpuset_which(&which, arg1);
++struct target_umutex {
++    uint32_t    m_owner;    /* Owner of the mutex */
++    uint32_t    m_flags;    /* Flags of the mutex */
++    uint32_t    m_ceiling[2];   /* Priority protect ceiling */
++    abi_ulong   m_rb_lnk;   /* Robust linkage. */
 +#if TARGET_ABI_BITS == 32
-+    /* See if we need to align the register pairs */
-+    if (regpairs_aligned(env)) {
-+        id = target_arg64(arg3, arg4);
-+        setid = arg5;
-+    } else {
-+        id = target_arg64(arg2, arg3);
-+        setid = arg4;
-     }
--    ret = get_errno(shm_rename(ufrom, uto, flags));
--    unlock_user(ufrom, fromptr, 0);
--    unlock_user(uto, toptr, 0);
-+#else
-+    id = arg2;
-+    setid = arg3;
++    uint32_t    m_pad;
 +#endif
-+    return get_errno(cpuset_setid(which, id, setid));
-+}
++    uint32_t    m_spare;
++    uint32_t    m_count;    /* QEMU-internal; takes one spare. */
++};
 +
-+/* cpuset_getid(2) */
-+static inline abi_long do_freebsd_cpuset_getid(abi_long arg1, abi_ulong arg2,
-+        abi_ulong arg3, abi_ulong arg4, abi_ulong arg5)
-+{
-+    abi_long ret;
-+    id_t id;    /* 64-bit value */
-+    cpusetid_t setid;
-+    cpuwhich_t which;
-+    cpulevel_t level;
-+    abi_ulong target_setid;
++struct target_ucond {
++    uint32_t    c_has_waiters;  /* Has waiters in kernel */
++    uint32_t    c_flags;    /* Flags of the condition variable */
++    uint32_t    c_clockid;  /* Clock id */
++    uint32_t    c_spare[1];
++};
 +
-+    target_to_host_cpuset_which(&which, arg1)
-+        ;
-+    target_to_host_cpuset_level(&level, arg2);
++struct target_urwlock {
++    uint32_t    rw_state;
++    uint32_t    rw_flags;
++    uint32_t    rw_blocked_readers;
++    uint32_t    rw_blocked_writers;
++    uint32_t    rw_spare[4];
++};
++
++struct target__usem {
++    uint32_t    _has_waiters;
++    uint32_t    _count;
++    uint32_t    _flags;
++};
++
++struct target__usem2 {
++    uint32_t    _count;
++    uint32_t    _flags;
++};
++
++struct target_umtx_robust_lists_params {
++    abi_ulong   robust_list_offset;
 +#if TARGET_ABI_BITS == 32
-+    id = target_arg64(arg3, arg4);
-+    target_setid = arg5;
-+#else
-+    id = arg3;
-+    target_setid = arg4;
++    uint32_t    m_pad1;
 +#endif
-+    ret = get_errno(cpuset_getid(level, which, id, &setid));
-+    if (is_error(ret)) {
-+        return ret;
++    abi_ulong   robust_priv_list_offset;
++#if TARGET_ABI_BITS == 32
++    uint32_t    m_pad2;
++#endif
++    abi_ulong   robust_inact_offset;
++#if TARGET_ABI_BITS == 32
++    uint32_t    m_pad3;
++#endif
++};
++
++/*
++ * !!! These mutexes must be reset in fork_end() (in bsd-user/main.c).
++ */
++static pthread_mutex_t new_thread_lock = PTHREAD_MUTEX_INITIALIZER;
++pthread_mutex_t *new_freebsd_thread_lock_ptr = &new_thread_lock;
++static pthread_mutex_t umtx_wait_lck = PTHREAD_MUTEX_INITIALIZER;
++pthread_mutex_t *freebsd_umtx_wait_lck_ptr = &umtx_wait_lck;
++
++static void rtp_to_schedparam(const struct rtprio *rtp, int *policy,
++        struct sched_param *param)
++{
++
++    switch (rtp->type) {
++    case RTP_PRIO_REALTIME:
++        *policy = SCHED_RR;
++        param->sched_priority = RTP_PRIO_MAX - rtp->prio;
++        break;
++
++    case RTP_PRIO_FIFO:
++        *policy = SCHED_FIFO;
++        param->sched_priority = RTP_PRIO_MAX - rtp->prio;
++        break;
++
++    default:
++        *policy = SCHED_OTHER;
++        param->sched_priority = 0;
++        break;
 +    }
-+    return put_user_s32(setid, target_setid);
 +}
 +
-+static abi_ulong copy_from_user_cpuset_mask(cpuset_t *mask,
-+        abi_ulong target_mask_addr)
++void *new_freebsd_thread_start(void *arg)
 +{
-+        int i, j, k;
-+        abi_ulong b, *target_mask;
++    new_freebsd_thread_info_t *info = arg;
++    CPUArchState *env;
++    CPUState *cpu;
++    long tid;
 +
-+        target_mask = lock_user(VERIFY_READ, target_mask_addr,
-+                                CPU_SETSIZE / 8, 1);
-+        if (target_mask == NULL) {
-+                return -TARGET_EFAULT;
-+        }
-+        CPU_ZERO(mask);
-+        k = 0;
-+        for (i = 0; i < ((CPU_SETSIZE / 8) / sizeof(abi_ulong)); i++) {
-+                __get_user(b, &target_mask[i]);
-+                for (j = 0; j < TARGET_ABI_BITS; j++) {
-+                        if ((b >> j) & 1) {
-+                                CPU_SET(k, mask);
-+                        }
-+                        k++;
-+                }
-+        }
-+        unlock_user(target_mask, target_mask_addr, 0);
++    rcu_register_thread();
++    tcg_register_thread();
++    env = info->env;
++    cpu = env_cpu(env);
++    thread_cpu = cpu;
++    (void)thr_self(&tid);
 +
-+        return 0;
-+}
++    /* copy out the child TID to both locations */
++    if (info->param.child_tid) {
++        put_user_ual(tid, info->param.child_tid);
++    }
++    if (info->param.parent_tid) {
++        put_user_ual(tid, info->param.parent_tid);
++    }
 +
-+static abi_ulong copy_to_user_cpuset_mask(abi_ulong target_mask_addr,
-+        cpuset_t *mask)
-+{
-+        int i, j, k;
-+        abi_ulong b, *target_mask;
++    /* Set arch dependent registers to start thread. */
++    target_thread_set_upcall(env, info->param.start_func, info->param.arg,
++        info->param.stack_base, info->param.stack_size);
++    target_cpu_set_tls(env, info->param.tls_base);
 +
-+        target_mask = lock_user(VERIFY_WRITE, target_mask_addr,
-+                                CPU_SETSIZE / 8, 0);
-+        if (target_mask == NULL) {
-+                return -TARGET_EFAULT;
-+        }
-+        k = 0;
-+        for (i = 0; i < ((CPU_SETSIZE / 8) / sizeof(abi_ulong)); i++) {
-+                b = 0;
-+                for (j = 0; j < TARGET_ABI_BITS; j++) {
-+                        b |= ((CPU_ISSET(k, mask) != 0) << j);
-+                        k++;
-+                }
-+                __put_user(b, &target_mask[i]);
-+        }
-+        unlock_user(target_mask, target_mask_addr, (CPU_SETSIZE / 8));
++    /* Enable signals */
++    sigprocmask(SIG_SETMASK, &info->sigmask, NULL);
++    /* Signal to the parent that we're ready. */
++    pthread_mutex_lock(&info->mutex);
++    pthread_cond_broadcast(&info->cond);
++    pthread_mutex_unlock(&info->mutex);
++    /* Wait until the parent has finished. */
++    pthread_mutex_lock(new_freebsd_thread_lock_ptr);
++    pthread_mutex_unlock(new_freebsd_thread_lock_ptr);
 +
-+        return 0;
-+}
++    cpu_loop(env);
++    /* never exits */
 +
-+/* cpuset_getaffinity(2) */
-+/* cpuset_getaffinity(cpulevel_t, cpuwhich_t, id_t, size_t, cpuset_t *); */
-+static inline abi_long do_freebsd_cpuset_getaffinity(cpulevel_t level,
-+        cpuwhich_t which, abi_ulong arg3, abi_ulong arg4, abi_ulong arg5,
-+        abi_ulong arg6)
-+{
-+        cpuset_t mask;
-+        abi_long ret;
-+    id_t id;    /* 64-bit */
-+    abi_ulong setsize, target_mask;
-+
-+#if TARGET_ABI_BITS == 32
-+    id = (id_t)target_arg64(arg3, arg4);
-+    setsize = arg5;
-+    target_mask = arg6;
-+#else
-+    id = (id_t)arg3;
-+    setsize = arg4;
-+    target_mask = arg5;
-+#endif
-+
-+        ret = get_errno(cpuset_getaffinity(level, which, id, setsize, &mask));
-+        if (ret == 0) {
-+                ret = copy_to_user_cpuset_mask(target_mask, &mask);
-+        }
- 
-     return ret;
- }
--#endif /* __FreeBSD_version >= 1300049 */
-+
-+/* cpuset_setaffinity(2) */
-+/* cpuset_setaffinity(cpulevel_t, cpuwhich_t, id_t, size_t, const cpuset_t *);*/
-+static inline abi_long do_freebsd_cpuset_setaffinity(cpulevel_t level,
-+        cpuwhich_t which, abi_ulong arg3, abi_ulong arg4, abi_ulong arg5,
-+        abi_ulong arg6)
-+{
-+        cpuset_t mask;
-+        abi_long ret;
-+    id_t id; /* 64-bit */
-+    abi_ulong setsize, target_mask;
-+
-+#if TARGET_ABI_BITS == 32
-+    id = (id_t)target_arg64(arg3, arg4);
-+    setsize = arg5;
-+    target_mask = arg6;
-+#else
-+    id = (id_t)arg3;
-+    setsize = arg4;
-+    target_mask = arg5;
-+#endif
-+
-+        ret = copy_from_user_cpuset_mask(&mask, target_mask);
-+        if (ret == 0) {
-+                ret = get_errno(cpuset_setaffinity(level, which, id, setsize,
-+                                                   &mask));
-+        }
-+
-+        return ret;
++    return NULL;
 +}
 +
 +/*
-+ * Pretend there are no modules loaded into the kernel. Don't allow loading or
-+ * unloading of modules. This works well for tests, and little else seems to
-+ * care. Will reevaluate if examples are found that do matter.
++ * FreeBSD user mutex (_umtx) emulation
 + */
++static int tcmpset_al(abi_ulong *addr, abi_ulong a, abi_ulong b)
++{
++    abi_ulong current = tswapal(a);
++    abi_ulong new = tswapal(b);
 +
- 
- #endif /* OS_MISC_H */
++#ifdef TARGET_ABI32
++    return atomic_cmpset_acq_32(addr, current, new);
++#else
++    return atomic_cmpset_acq_64(addr, current, new);
++#endif
++}
++
++#ifdef _UMTX_OPTIMIZED
++static int optimized_umtx_op(abi_ulong obj, int op, abi_ulong val,
++    void *uaddr1, void *uaddr2)
++{
++
++    return get_errno(safe__umtx_op(g2h_untagged(obj), QEMU_UMTX_OP(op), val,
++                                   uaddr1, uaddr2));
++}
++
++#else /* !_UMTX_OPTIMIZED */
++
++/*
++ * _cv_mutex keeps other threads from doing a signal or broadcast until
++ * the thread is actually asleep and ready.  This is a global mutex for all
++ * condition vars so I am sure performance may be a problem if there are lots
++ * of CVs.
++ *
++ */
++static struct umutex _cv_mutex;
++
++static int tcmpset_32(uint32_t *addr, uint32_t a, uint32_t b)
++{
++    uint32_t current = tswap32(a);
++    uint32_t new = tswap32(b);
++
++    return atomic_cmpset_acq_32(addr, current, new);
++}
++
++#endif /* _UMTX_OPTIMIZED */
++
++static abi_long _umtx_wait_uint(uint32_t *addr, uint32_t target_val,
++        size_t tsz, void *t, const char *where)
++{
++#if DETECT_DEADLOCK
++    abi_long ret;
++    long cnt = 0;
++
++    /* target_val has already been tswap'ed. */
++    if (t == NULL) {
++        struct timespec ts;
++
++        ts.tv_sec = 5;
++        ts.tv_nsec = 0;
++
++        do {
++            if (target_val != *addr) {
++                return 0;
++            }
++
++            ret = get_errno(safe__umtx_op(addr, QEMU_UMTX_OP(UMTX_OP_WAIT_UINT),
++                    target_val, NULL, &ts));
++
++            if (ret != -TARGET_ETIMEDOUT) {
++                return ret;
++            }
++            if (cnt++ > DEADLOCK_TO) {
++                fprintf(stderr, "QEMU: Deadlock in %s from %s\n",
++                        __func__, where);
++                abort();
++            }
++        } while (1);
++    } else
++#endif
++        return get_errno(safe__umtx_op(addr, QEMU_UMTX_OP(UMTX_OP_WAIT_UINT),
++            target_val, (void *)tsz, t));
++}
++
++abi_long freebsd_umtx_wait_uint(abi_ulong obj, uint32_t target_val,
++        size_t tsz, void *t)
++{
++    /* target_val has already been tswap'ed. */
++
++    DEBUG_UMTX("<WAIT> %s: _umtx_op(%p, %d, 0x%x, %d, %p)\n", __func__,
++               g2h_untagged(obj), UMTX_OP_WAIT_UINT, target_val, (int)tsz, t);
++
++    return _umtx_wait_uint(g2h_untagged(obj), target_val, tsz, t, __func__);
++}
++
++static abi_long _umtx_wait_uint_private(uint32_t *addr, uint32_t target_val,
++        size_t tsz, void *t, const char *where)
++{
++#if DETECT_DEADLOCK
++    abi_long ret;
++    long cnt = 0;
++
++    /* target_val has already been tswap'ed. */
++    if (t == NULL) {
++        struct timespec ts;
++
++        ts.tv_sec = 5;
++        ts.tv_nsec = 0;
++
++        do {
++            if (target_val != *addr) {
++                return 0;
++            }
++
++            ret = get_errno(safe__umtx_op(addr,
++                QEMU_UMTX_OP(UMTX_OP_WAIT_UINT_PRIVATE), target_val, NULL,
++                &ts));
++
++            if (ret != -TARGET_ETIMEDOUT) {
++                return ret;
++            }
++            if (cnt++ > DEADLOCK_TO) {
++                fprintf(stderr, "QEMU: Deadlock in %s from %s\n", __func__,
++                        where);
++                abort();
++            }
++        } while (1);
++    } else
++#endif /* DETECT_DEADLOCK */
++    {
++        return get_errno(safe__umtx_op(addr,
++            QEMU_UMTX_OP(UMTX_OP_WAIT_UINT_PRIVATE), target_val, (void *)tsz,
++            t));
++    }
++}
++
++abi_long freebsd_umtx_wait_uint_private(abi_ulong obj, uint32_t target_val,
++        size_t tsz, void *t)
++{
++    DEBUG_UMTX("<WAIT_UINT_PRIVATE> %s: _umtx_op(%p (%u), %d, 0x%x, %d, %p)\n",
++        __func__, g2h_untagged(obj), tswap32(*(uint32_t *)g2h_untagged(obj)),
++        UMTX_OP_WAIT_UINT_PRIVATE, target_val, (int)tsz, t);
++
++    return _umtx_wait_uint_private(g2h_untagged(obj), target_val, tsz, t,
++        __func__);
++}
++
++static abi_long _umtx_wait(abi_ulong *addr, abi_ulong target_val, size_t tsz,
++        void *t, const char *where)
++{
++#if DETECT_DEADLOCK
++    abi_long ret;
++    long cnt = 0;
++
++    /* target_val has already been tswap'ed. */
++
++    if (t == NULL) {
++        struct timespec ts;
++
++        ts.tv_sec = 5;
++        ts.tv_nsec = 0;
++
++        do {
++            if (target_val != *addr) {
++                return 0;
++            }
++
++            ret = get_errno(safe__umtx_op(addr, QEMU_UMTX_OP(UMTX_OP_WAIT),
++                        target_val, NULL, &ts));
++            if (ret != -TARGET_ETIMEDOUT) {
++                return ret;
++            }
++
++            if (cnt++ > DEADLOCK_TO) {
++                fprintf(stderr, "QEMU: Deadlock in %s from %s\n", __func__,
++                        where);
++                abort();
++            }
++        } while (1);
++    } else
++#endif /* DETECT_DEADLOCK */
++    {
++        return get_errno(safe__umtx_op(addr, QEMU_UMTX_OP(UMTX_OP_WAIT),
++                target_val, (void *)tsz, t));
++    }
++}
++
++abi_long freebsd_umtx_wait(abi_ulong targ_addr, abi_ulong target_id, size_t tsz,
++        void *t)
++{
++
++    /* target_id has already been tswap'ed. */
++
++    /* We want to check the user memory but not lock it.  We might sleep. */
++    if (!access_ok(VERIFY_READ, targ_addr, sizeof(abi_ulong))) {
++        return -TARGET_EFAULT;
++    }
++
++    DEBUG_UMTX("<WAIT> %s: _umtx_op(%p, %d, 0x%llx, %d, %p)\n",
++        __func__, g2h_untagged(targ_addr), UMTX_OP_WAIT, (long long)target_id,
++        (int)tsz, t);
++    return _umtx_wait(g2h_untagged(targ_addr), target_id, tsz, t, __func__);
++}
++
++
++abi_long freebsd_umtx_wake_private(abi_ulong obj, uint32_t val)
++{
++
++    DEBUG_UMTX("<WAKE_PRIVATE> %s: _umtx_op(%p (%d), %d, %u, NULL, NULL)\n",
++        __func__, g2h_untagged(obj), tswap32(*(uint32_t *)g2h_untagged(obj)),
++        UMTX_OP_WAKE_PRIVATE, val);
++    return get_errno(safe__umtx_op(g2h_untagged(obj),
++        QEMU_UMTX_OP(UMTX_OP_WAKE_PRIVATE), val, NULL, NULL));
++}
++
++#if defined(UMTX_OP_NWAKE_PRIVATE)
++#define BATCH_SIZE 128
++abi_long freebsd_umtx_nwake_private(abi_ulong target_array_addr, uint32_t num)
++{
++#ifdef _UMTX_OPTIMIZED
++    abi_ulong *tp;
++    uintptr_t uaddrs[BATCH_SIZE];
++    int count, error, i, j;
++
++    if (!access_ok(VERIFY_READ, target_array_addr, num * sizeof(abi_ulong))) {
++        return -TARGET_EFAULT;
++    }
++
++    /*
++     * If we haven't relocated the guest, there's a 1:1 mapping so we can avoid
++     * having to g2h_untagged() each address and just pass it through as-is.
++     */
++    if (!have_guest_base && !reserved_va) {
++        return optimized_umtx_op(target_array_addr, UMTX_OP_NWAKE_PRIVATE, num,
++            NULL, NULL);
++    }
++
++    tp = (abi_ulong *)g2h_untagged(target_array_addr);
++    for (i = 0, count = num; i < num; i += BATCH_SIZE, count -= BATCH_SIZE) {
++        for (j = i; j < i + MIN(BATCH_SIZE, count); j++) {
++            uaddrs[j % BATCH_SIZE] = (uintptr_t)g2h_untagged(tp[j]);
++        }
++
++        /*
++         * This one should not be passed as compat32 at this point; we've
++         * converted them all to host pointers.
++         */
++        error = safe__umtx_op(uaddrs, UMTX_OP_NWAKE_PRIVATE,
++            MIN(BATCH_SIZE, count), NULL, NULL);
++        if (error != 0) {
++            return error;
++        }
++    }
++
++    return 0;
++#else
++    int i;
++    abi_ulong *uaddr;
++    abi_long ret = 0;
++
++    DEBUG_UMTX("<NWAKE_PRIVATE> %s: _umtx_op(%p, %d, %d, NULL, NULL) Waking: ",
++        __func__, g2h_untagged(target_array_addr), UMTX_OP_NWAKE_PRIVATE, num);
++
++    if (!access_ok(VERIFY_READ, target_array_addr, num * sizeof(abi_ulong))) {
++        return -TARGET_EFAULT;
++    }
++
++    uaddr = (abi_ulong *)g2h_untagged(target_array_addr);
++    for (i = 0; i < (int32_t)num; i++) {
++        DEBUG_UMTX("%p (%u) ", g2h_untagged(tswapal(uaddr[i])),
++            tswap32(*(uint32_t *)g2h_untagged(tswapal(uaddr[i]))));
++        ret = get_errno(safe__umtx_op(g2h_untagged(tswapal(uaddr[i])),
++            UMTX_OP_WAKE_PRIVATE, INT_MAX, NULL, NULL));
++        if (is_error(ret)) {
++            DEBUG_UMTX("\n");
++            return ret;
++        }
++    }
++    DEBUG_UMTX("\n");
++    return ret;
++#endif /* _UMTX_OPTIMIZED */
++}
++#endif /* UMTX_OP_NWAKE_PRIVATE */
++
++#if defined(UMTX_OP_MUTEX_WAKE2)
++abi_long freebsd_umtx_mutex_wake2(abi_ulong target_addr, uint32_t flags)
++{
++#ifdef _UMTX_OPTIMIZED
++    if (!access_ok(VERIFY_WRITE, target_addr, sizeof(struct target_umutex))) {
++        return -TARGET_EFAULT;
++    }
++
++    DEBUG_UMTX("<MUTEX WAKE2> %s: _umtx_op(%p, %d, 0x%x, NULL, NULL)\n",
++        __func__, g2h_untagged(target_addr), UMTX_OP_MUTEX_WAKE2, flags);
++    return optimized_umtx_op(target_addr, UMTX_OP_MUTEX_WAKE2, flags, NULL,
++        NULL);
++#else
++    uint32_t count, owner, *addr;
++    struct target_umutex *target_umutex;
++
++    if (!lock_user_struct(VERIFY_WRITE, target_umutex, target_addr, 1)) {
++        return -TARGET_EFAULT;
++    }
++    pthread_mutex_lock(&umtx_wait_lck);
++    __get_user(count, &target_umutex->m_count);
++    __get_user(owner, &target_umutex->m_owner);
++    while ((owner & TARGET_UMUTEX_CONTESTED) == 0 && (count > 1 ||
++            (count == 1 && (owner & ~TARGET_UMUTEX_CONTESTED) != 0))) {
++        if (tcmpset_32(&target_umutex->m_owner, owner,
++                    (owner | TARGET_UMUTEX_CONTESTED)))
++            break;
++
++        /* owner has changed */
++        __get_user(owner, &target_umutex->m_owner);
++    }
++    pthread_mutex_unlock(&umtx_wait_lck);
++    addr = &target_umutex->m_owner;
++    /* tcmpset_32 above writes to guest, and addr is just a key below */
++    unlock_user_struct(target_umutex, target_addr, 0);
++
++    return get_errno(safe__umtx_op(addr, UMTX_OP_WAKE_PRIVATE, 1, NULL,
++        NULL));
++#endif /* _UMTX_OPTIMIZED */
++}
++#endif /* UMTX_OP_MUTEX_WAKE2 */
++
++abi_long freebsd_umtx_sem2_wait(abi_ulong obj, size_t tsz, void *t)
++{
++#ifdef _UMTX_OPTIMIZED
++    if (!access_ok(VERIFY_WRITE, obj, sizeof(struct target__usem2))) {
++        return -TARGET_EFAULT;
++    }
++
++    return optimized_umtx_op(obj, UMTX_OP_SEM2_WAIT, 1,
++        (void *)(uintptr_t)tsz, t);
++#else
++    struct target__usem2 *t__usem2;
++    uint32_t count, flags;
++    uint32_t *addr;
++    abi_long ret = 0;
++
++    if (!lock_user_struct(VERIFY_WRITE, t__usem2, obj, 0)) {
++        return -TARGET_EFAULT;
++    }
++
++    /*
++     * Make sure the count field has the has USEM_HAS_WAITERS flag set
++     * so userland will always call freebsd_umtx_sem2_wake().
++     */
++    for (;;) {
++        __get_user(count, &t__usem2->_count);
++        if (USEM_COUNT(count) != 0) {
++            unlock_user_struct(t__usem2, obj, 1);
++            return 0;
++        }
++        if ((count & USEM_HAS_WAITERS) != 0) {
++            break;
++        }
++        if (tcmpset_32(&t__usem2->_count, count, (count | USEM_HAS_WAITERS))) {
++            break;
++        }
++    }
++
++    __get_user(flags, &t__usem2->_flags);
++    addr = &t__usem2->_count;
++    unlock_user_struct(t__usem2, obj, 1);
++
++    if ((flags & USYNC_PROCESS_SHARED) == 0) {
++        DEBUG_UMTX("<WAIT SEM2> %s: _umtx_op(%p, %d, %p)\n",
++            __func__, addr, UMTX_OP_WAIT_UINT_PRIVATE, (int)tsz, t);
++
++#if DETECT_DEADLOCK
++        if (t != NULL) {
++            ret = _umtx_wait_uint_private(addr, tswap32(USEM_HAS_WAITERS), tsz,
++                t, __func__);
++        } else {
++            for (;;) {
++                struct timespec ts;
++
++                ts.tv_sec = 120;
++                ts.tv_nsec = 0;
++
++                ret = _umtx_wait_uint_private(addr, tswap32(USEM_HAS_WAITERS),
++                                              0, (void *)&ts, __func__);
++                if (ret == 0) {
++                    break;
++                }
++                if (ret != -ETIMEDOUT) {
++                    break;
++                }
++                if (!lock_user_struct(VERIFY_READ, t__usem2, obj, 1)) {
++                    return -TARGET_EFAULT;
++                }
++                __get_user(count, &t__usem2->_count);
++                unlock_user_struct(t__usem2, obj, 0);
++                if (USEM_COUNT(count) != 0) {
++                    fprintf(stderr, "QEMU:(%s) TIMEOUT (count!=0)\n", __func__);
++                    ret = 0;
++                    break;
++                }
++                if (ret == -ETIMEDOUT) {
++                    fprintf(stderr, "QEMU:(%s) TIMEOUT (exiting)\n", __func__);
++                    exit(-1);
++                }
++            }
++        }
++#else
++        ret = _umtx_wait_uint_private(addr, tswap32(USEM_HAS_WAITERS),
++                                      tsz, t, __func__);
++#endif /* DETECT_DEADLOCK */
++    } else {
++        DEBUG_UMTX("<WAIT SEM2> %s: _umtx_op(%p, %d, %p)\n",
++                   __func__, addr, UMTX_OP_WAIT_UINT, (int)tsz, t);
++#if DETECT_DEADLOCK
++        if (t != NULL) {
++            ret = _umtx_wait_uint(addr, tswap32(USEM_HAS_WAITERS), tsz, t,
++                                  __func__);
++        } else {
++            for (;;) {
++                struct timespec ts;
++
++                ts.tv_sec = 120;
++                ts.tv_nsec = 0;
++
++                ret = _umtx_wait_uint(addr, tswap32(USEM_HAS_WAITERS), 0,
++                                      (void *)&ts, __func__);
++                if (ret == 0) {
++                    break;
++                }
++                if (ret != -ETIMEDOUT) {
++                    break;
++                }
++                if (!lock_user_struct(VERIFY_READ, t__usem2, obj, 1)) {
++                    return -TARGET_EFAULT;
++                }
++                __get_user(count, &t__usem2->_count);
++                unlock_user_struct(t__usem2, obj, 0);
++                if (USEM_COUNT(count) != 0) {
++                    fprintf(stderr, "QEMU:(%s) TIMEOUT (count!=0)\n", __func__);
++                    ret = 0;
++                    break;
++                }
++                if (ret == -ETIMEDOUT) {
++                    fprintf(stderr, "QEMU:(%s) TIMEOUT (exiting)\n", __func__);
++                    exit(-1);
++                }
++            }
++        }
++#else
++        ret = _umtx_wait_uint(addr, tswap32(USEM_HAS_WAITERS), tsz, t,
++                              __func__);
++#endif /* DETECT_DEADLOCK */
++    }
++    return ret;
++#endif /* _UMTX_OPTIMIZED */
++}
++
++abi_long freebsd_umtx_sem2_wake(abi_ulong obj)
++{
++#ifdef _UMTX_OPTIMIZED
++    if (!access_ok(VERIFY_READ, obj, sizeof(struct target__usem2))) {
++        return -TARGET_EFAULT;
++    }
++
++    return optimized_umtx_op(obj, UMTX_OP_SEM2_WAKE, 1, NULL, NULL);
++#else
++    struct target__usem2 *t__usem2;
++    uint32_t *addr, flags;
++    abi_long ret;
++
++    if (!lock_user_struct(VERIFY_READ, t__usem2, obj, 1)) {
++        return -TARGET_EFAULT;
++    }
++
++    __get_user(flags, &t__usem2->_flags);
++    addr = &t__usem2->_count;
++    unlock_user_struct(t__usem2, obj, 0);
++
++    if ((flags & USYNC_PROCESS_SHARED) == 0) {
++        DEBUG_UMTX("<WAKE SEM2> %s: _umtx_op(%p, %d, %d, NULL, NULL)\n",
++                   __func__,  addr, UMTX_OP_WAKE_PRIVATE, INT_MAX);
++        ret = get_errno(safe__umtx_op(addr, UMTX_OP_WAKE_PRIVATE, INT_MAX, NULL,
++                                      NULL));
++    } else {
++        DEBUG_UMTX("<WAKE SEM2> %s: _umtx_op(%p, %d, %d, NULL, NULL)\n",
++                   __func__,  addr, UMTX_OP_WAKE, INT_MAX);
++        ret = get_errno(safe__umtx_op(addr, UMTX_OP_WAKE, INT_MAX, NULL, NULL));
++    }
++
++    return ret;
++#endif /* _UMTX_OPTIMIZED */
++}
++
++abi_long freebsd_umtx_sem_wait(abi_ulong obj, size_t tsz, void *t)
++{
++#ifdef _UMTX_OPTIMIZED
++    if (!access_ok(VERIFY_WRITE, obj, sizeof(struct target__usem))) {
++        return -TARGET_EFAULT;
++    }
++
++    return optimized_umtx_op(obj, UMTX_OP_SEM_WAIT, 1,
++        (void *)(uintptr_t)tsz, t);
++#else
++        struct target__usem *t__usem;
++        uint32_t count, flags, *addr;
++        abi_long ret;
++
++        if (!lock_user_struct(VERIFY_WRITE, t__usem, obj, 0)) {
++                return -TARGET_EFAULT;
++        }
++
++        __get_user(count, &t__usem->_count);
++        if (count != 0) {
++                unlock_user_struct(t__usem, obj, 1);
++                return 0;
++        }
++
++        /*
++         * Make sure the _has_waiters field is set so userland will always
++         * call freebsd_umtx_sem_wake().
++         */
++        __put_user(1, &t__usem->_has_waiters);
++
++        __get_user(flags, &t__usem->_flags);
++        addr = &t__usem->_count;
++        unlock_user_struct(t__usem, obj, 1);
++
++        if ((flags &  USYNC_PROCESS_SHARED) == 0) {
++            DEBUG_UMTX("<WAIT SEM> %s: _umtx_op(%p, %d, %d, NULL, NULL)\n",
++                       __func__,  &t__usem->_count, UMTX_OP_WAKE_PRIVATE, 0);
++            ret = _umtx_wait_uint_private(addr, 0, tsz, t, __func__);
++        } else {
++            DEBUG_UMTX("<WAIT SEM> %s: _umtx_op(%p, %d, %d, NULL, NULL)\n",
++                       __func__,  &t__usem->_count, UMTX_OP_WAKE, 0);
++            ret = _umtx_wait_uint(addr, 0, tsz, t, __func__);
++        }
++
++        return ret;
++#endif /* _UMTX_OPTIMIZED */
++}
++
++abi_long freebsd_umtx_sem_wake(abi_ulong obj)
++{
++#ifdef _UMTX_OPTIMIZED
++    if (!access_ok(VERIFY_WRITE, obj, sizeof(struct target__usem))) {
++        return -TARGET_EFAULT;
++    }
++
++    return optimized_umtx_op(obj, UMTX_OP_SEM_WAKE, 1, NULL, NULL);
++#else
++    struct target__usem *t__usem;
++        uint32_t flags, *addr;
++        abi_long ret;
++
++        if (!lock_user_struct(VERIFY_READ, t__usem, obj, 1)) {
++                return -TARGET_EFAULT;
++        }
++        __get_user(flags, &t__usem->_flags);
++        addr = &t__usem->_count;
++        unlock_user_struct(t__usem, obj, 0);
++
++        if ((flags & USYNC_PROCESS_SHARED) == 0) {
++            DEBUG_UMTX("<WAKE SEM> %s: _umtx_op(%p, %d, %d, NULL, NULL)\n",
++                       __func__,  &t__usem->_count, UMTX_OP_WAKE_PRIVATE, 1);
++            ret = get_errno(safe__umtx_op(addr, UMTX_OP_WAKE_PRIVATE, 1, NULL,
++                                          NULL));
++        } else {
++            DEBUG_UMTX("<WAKE SEM> %s: _umtx_op(%p, %d, %d, NULL, NULL)\n",
++                       __func__,  &t__usem->_count, UMTX_OP_WAKE, 1);
++            ret = get_errno(safe__umtx_op(addr, UMTX_OP_WAKE, 1, NULL, NULL));
++        }
++
++        return ret;
++#endif /* _UMTX_OPTIMIZED */
++}
++
++abi_long t2h_freebsd_rtprio(struct rtprio *host_rtp, abi_ulong target_addr)
++{
++    struct target_freebsd_rtprio *target_rtp;
++
++    if (!lock_user_struct(VERIFY_READ, target_rtp, target_addr, 1)) {
++        return -TARGET_EFAULT;
++    }
++    __get_user(host_rtp->type, &target_rtp->type);
++    __get_user(host_rtp->prio, &target_rtp->prio);
++    unlock_user_struct(target_rtp, target_addr, 0);
++    return 0;
++}
++
++abi_long h2t_freebsd_rtprio(abi_ulong target_addr, struct rtprio *host_rtp)
++{
++    struct target_freebsd_rtprio *target_rtp;
++
++    if (!lock_user_struct(VERIFY_WRITE, target_rtp, target_addr, 0)) {
++        return -TARGET_EFAULT;
++    }
++    __put_user(host_rtp->type, &target_rtp->type);
++    __put_user(host_rtp->prio, &target_rtp->prio);
++    unlock_user_struct(target_rtp, target_addr, 1);
++    return 0;
++}
++
++/* XXX We should never see this? OP_LOCK and OP_UNLOCK are now RESERVED{0,1} */
++abi_long freebsd_lock_umtx(abi_ulong target_addr, abi_long id, size_t tsz,
++        void *t)
++{
++    abi_long ret;
++    abi_long owner;
++
++    gemu_log("This is unreachable.");
++
++    /*
++     * XXX Note that memory at umtx_addr can change and so we need to be
++     * careful and check for faults.
++     */
++    for (;;) {
++        struct target_umtx *target_umtx;
++
++        if (!lock_user_struct(VERIFY_WRITE, target_umtx, target_addr, 0)) {
++            return -TARGET_EFAULT;
++        }
++        /* Check the simple uncontested case. */
++        if (tcmpset_al(&target_umtx->u_owner,
++                TARGET_UMTX_UNOWNED, id)) {
++            unlock_user_struct(target_umtx, target_addr, 1);
++            return 0;
++        }
++        /* Check to see if the lock is contested but free. */
++        __get_user(owner, &target_umtx->u_owner);
++
++        if (TARGET_UMTX_CONTESTED == owner) {
++            if (tcmpset_al(&target_umtx->u_owner, TARGET_UMTX_CONTESTED,
++                        id | TARGET_UMTX_CONTESTED)) {
++                unlock_user_struct(target_umtx, target_addr, 1);
++                return 0;
++            }
++            /* We failed because it changed on us, restart. */
++            unlock_user_struct(target_umtx, target_addr, 1);
++            continue;
++        }
++
++        /* Set the contested bit and sleep. */
++        do {
++            __get_user(owner, &target_umtx->u_owner);
++            if (owner & TARGET_UMTX_CONTESTED) {
++                break;
++            }
++        } while (!tcmpset_al(&target_umtx->u_owner, owner,
++                    owner | TARGET_UMTX_CONTESTED));
++
++        __get_user(owner, &target_umtx->u_owner);
++        unlock_user_struct(target_umtx, target_addr, 1);
++
++        /* Byte swap, if needed, to match what is stored in user mem. */
++        owner = tswapal(owner);
++        DEBUG_UMTX("<WAIT> %s: _umtx_op(%p, %d, 0x%llx, NULL, NULL)\n",
++            __func__, g2h_untagged(target_addr), UMTX_OP_WAIT,
++            (long long)owner);
++        ret = _umtx_wait(g2h_untagged(target_addr), owner, tsz, t, __func__);
++        if (is_error(ret)) {
++            return ret;
++        }
++    }
++}
++
++/* XXX We should never see this? OP_LOCK and OP_UNLOCK are now RESERVED{0,1} */
++abi_long freebsd_unlock_umtx(abi_ulong target_addr, abi_long id)
++{
++    abi_ulong owner;
++    struct target_umtx *target_umtx;
++
++    gemu_log("This is unreachable.");
++    if (!lock_user_struct(VERIFY_WRITE, target_umtx, target_addr, 0)) {
++        return -TARGET_EFAULT;
++    }
++    __get_user(owner, &target_umtx->u_owner);
++    if ((owner & ~TARGET_UMTX_CONTESTED) != id) {
++        unlock_user_struct(target_umtx, target_addr, 1);
++        return -TARGET_EPERM;
++    }
++    /* Check the simple uncontested case. */
++    if ((owner & ~TARGET_UMTX_CONTESTED) == 0) {
++        if (tcmpset_al(&target_umtx->u_owner, owner,
++            TARGET_UMTX_UNOWNED)) {
++            unlock_user_struct(target_umtx, target_addr, 1);
++            return 0;
++        }
++    }
++    /* This is a contested lock. Unlock it. */
++    __put_user(TARGET_UMTX_UNOWNED, &target_umtx->u_owner);
++    unlock_user_struct(target_umtx, target_addr, 1);
++
++    /* Wake up all those contesting it. */
++    DEBUG_UMTX("<WAKE> %s: _umtx_op(%p, %d, 0x%x, NULL, NULL)\n",
++            __func__, g2h_untagged(target_addr), UMTX_OP_WAKE, 0);
++    return get_errno(safe__umtx_op(g2h_untagged(target_addr),
++        QEMU_UMTX_OP(UMTX_OP_WAKE), 0, 0, 0));
++}
++
++abi_long freebsd_umtx_wake(abi_ulong target_addr, uint32_t n_wake)
++{
++
++    DEBUG_UMTX("<WAKE> %s: _umtx_op(%p, %d, 0x%x, NULL, NULL)\n",
++            __func__, g2h_untagged(target_addr), UMTX_OP_WAKE, n_wake);
++    return get_errno(safe__umtx_op(g2h_untagged(target_addr),
++        QEMU_UMTX_OP(UMTX_OP_WAKE), n_wake, NULL, 0));
++}
++
++abi_long freebsd_umtx_wake_unsafe(abi_ulong target_addr, uint32_t n_wake)
++{
++
++    DEBUG_UMTX("<WAKE> %s: _umtx_op(%p, %d, 0x%x, NULL, NULL)\n",
++            __func__, g2h_untagged(target_addr), UMTX_OP_WAKE, n_wake);
++    return get_errno(_umtx_op(g2h_untagged(target_addr),
++        QEMU_UMTX_OP(UMTX_OP_WAKE), n_wake, NULL, 0));
++}
++
++abi_long freebsd_umtx_mutex_wake(abi_ulong obj, abi_long val)
++{
++
++    DEBUG_UMTX("<WAKE> %s: _umtx_op(%p, %d, 0x%llx, NULL, NULL)\n",
++            __func__, g2h_untagged(obj), UMTX_OP_WAKE, (long long)val);
++    return get_errno(safe__umtx_op(g2h_untagged(obj),
++        QEMU_UMTX_OP(UMTX_OP_MUTEX_WAKE), val, NULL, NULL));
++}
++
++abi_long freebsd_lock_umutex(abi_ulong target_addr, uint32_t id,
++        void *ts, size_t tsz, int mode, abi_ulong val)
++{
++#ifdef _UMTX_OPTIMIZED
++    int op;
++
++    if (!access_ok(VERIFY_WRITE, target_addr, sizeof(struct target_umutex))) {
++        return -TARGET_EFAULT;
++    }
++
++    switch (mode) {
++    case TARGET_UMUTEX_WAIT:
++        op = UMTX_OP_MUTEX_WAIT;
++        DEBUG_UMTX("<MUTEX WAIT> %s: _umtx_op(%p, %d, 0x%llx, %p, %p)\n",
++                __func__, g2h_untagged(target_addr), op, (long long)val,
++                (void *)(uintptr_t)tsz, ts);
++        break;
++    case TARGET_UMUTEX_TRY:
++        op = UMTX_OP_MUTEX_TRYLOCK;
++        DEBUG_UMTX("<MUTEX TRYLOCK> %s: _umtx_op(%p, %d, 0x%llx, %p, %p)\n",
++                __func__, g2h_untagged(target_addr), op, (long long)val,
++                (void *)(uintptr_t)tsz, ts);
++        break;
++    default:
++        op = UMTX_OP_MUTEX_LOCK;
++        DEBUG_UMTX("<MUTEX LOCK> %s: _umtx_op(%p, %d, 0x%llx, %p, %p)\n",
++                __func__, g2h_untagged(target_addr), op, (long long)val,
++                (void *)(uintptr_t)tsz, ts);
++        break;
++    }
++
++    return optimized_umtx_op(target_addr, op, val, (void *)(uintptr_t)tsz, ts);
++#else
++    struct target_umutex *target_umutex;
++    uint32_t owner, flags, count, *addr;
++    int ret = 0;
++
++    if (!lock_user_struct(VERIFY_WRITE, target_umutex, target_addr, 0)) {
++        return -TARGET_EFAULT;
++    }
++
++    for (;;) {
++
++        __get_user(owner, &target_umutex->m_owner);
++
++        if ((owner & ~TARGET_UMUTEX_CONTESTED) == 0) {
++            /* Lock is unowned. */
++            if (TARGET_UMUTEX_WAIT == mode) {
++                /* Waiting on an unlocked mutex; bail out. */
++                unlock_user_struct(target_umutex, target_addr, 1);
++                return 0;
++            }
++
++            /* Attempt to acquire it, preserve the contested bit ("owner"). */
++            while ((owner & ~TARGET_UMUTEX_CONTESTED) == 0 &&
++                    !tcmpset_32(&target_umutex->m_owner, owner, owner | id)) {
++                __get_user(owner, &target_umutex->m_owner);
++            }
++
++            if ((owner & ~TARGET_UMUTEX_CONTESTED) == 0) {
++                /*
++                 * The acquire succeeded, because we didn't observe owner with
++                 * a different id.
++                 */
++                unlock_user_struct(target_umutex, target_addr, 1);
++                return 0;
++            }
++
++            /* Otherwise, someone beat us to it; carry on. */
++        }
++
++        __get_user(flags, &target_umutex->m_flags);
++        if ((flags & TARGET_UMUTEX_ERROR_CHECK) != 0 &&
++                (owner & ~TARGET_UMUTEX_CONTESTED) == id) {
++            unlock_user_struct(target_umutex, target_addr, 1);
++            return -TARGET_EDEADLK;
++        }
++
++        if (TARGET_UMUTEX_TRY == mode) {
++            unlock_user_struct(target_umutex, target_addr, 1);
++            return -TARGET_EBUSY;
++        }
++
++        /* Set the contested bit and sleep. */
++        while ((owner & TARGET_UMUTEX_CONTESTED) == 0) {
++            if (tcmpset_32(&target_umutex->m_owner, owner,
++                    owner | TARGET_UMUTEX_CONTESTED)) {
++                /*
++                 * Keep our local view of owner consistent with what we think
++                 * we've set it to.  We're about to sleep on it, and we don't
++                 * really want a spurious return from _umtx_op because of this.
++                 */
++                owner |= TARGET_UMUTEX_CONTESTED;
++
++                break;
++            } else {
++                __get_user(owner, &target_umutex->m_owner);
++            }
++        }
++
++        /*
++         * If it changed during the above loop, we may be able to acquire now.
++         */
++        if ((owner & ~TARGET_UMUTEX_CONTESTED) == 0) {
++            continue;
++        }
++
++        pthread_mutex_lock(&umtx_wait_lck);
++        __get_user(count, &target_umutex->m_count);
++        count++;
++        __put_user(count, &target_umutex->m_count);
++        pthread_mutex_unlock(&umtx_wait_lck);
++
++        addr = &target_umutex->m_owner;
++
++        /* addr used only as key below, not dereferenced */
++        unlock_user_struct(target_umutex, target_addr, 1);
++
++        DEBUG_UMTX("<WAIT UMUTEX> %s: _umtx_op(%p, %d, 0x%x, %d, %jx) "
++            "count = %d\n", __func__, g2h_untagged(target_addr),
++            UMTX_OP_WAIT_PRIVATE, tswap32(target_umutex->m_owner), tsz,
++            (uintmax_t)ts, count);
++        ret = _umtx_wait_uint_private(addr, owner, tsz, (void *)ts, __func__);
++
++        if (!lock_user_struct(VERIFY_WRITE, target_umutex, target_addr, 0)) {
++            return -TARGET_EFAULT;
++        }
++
++        pthread_mutex_lock(&umtx_wait_lck);
++        __get_user(count, &target_umutex->m_count);
++        count--;
++        __put_user(count, &target_umutex->m_count);
++        pthread_mutex_unlock(&umtx_wait_lck);
++        if (ret != 0) {
++            unlock_user_struct(target_umutex, target_addr, 1);
++            break;
++        }
++    }
++    return ret;
++#endif  /* _UMTX_OPTIMIZED */
++}
++
++abi_long freebsd_unlock_umutex(abi_ulong target_addr, uint32_t id)
++{
++#ifdef _UMTX_OPTIMIZED
++    if (!access_ok(VERIFY_WRITE, target_addr, sizeof(struct target_umutex))) {
++        return -TARGET_EFAULT;
++    }
++
++    return optimized_umtx_op(target_addr, UMTX_OP_MUTEX_UNLOCK, 0, NULL, NULL);
++#else
++    struct target_umutex *target_umutex;
++    uint32_t count, owner, *addr, flags;
++
++    if (!lock_user_struct(VERIFY_WRITE, target_umutex, target_addr, 0)) {
++        return -TARGET_EFAULT;
++    }
++    /* Make sure we own this mutex. */
++    __get_user(owner, &target_umutex->m_owner);
++    if ((owner & ~TARGET_UMUTEX_CONTESTED) != id) {
++        unlock_user_struct(target_umutex, target_addr, 1);
++        return -TARGET_EPERM;
++    }
++    pthread_mutex_lock(&umtx_wait_lck);
++    __get_user(count, &target_umutex->m_count);
++
++    /* Unlock it; set the contested bit as needed. */
++    flags = TARGET_UMUTEX_UNOWNED;
++    if (count > 1) {
++        flags |= TARGET_UMUTEX_CONTESTED;
++    }
++    __put_user(flags, &target_umutex->m_owner);
++    pthread_mutex_unlock(&umtx_wait_lck);
++
++    addr = &target_umutex->m_owner;
++
++    /* addr is used only as a key, so we can unlock before we use it below */
++    unlock_user_struct(target_umutex, target_addr, 1);
++
++    /*
++     * And wake up any that may be contested it.  We used to only do this if the
++     * lock wasn't contested coming in, but that could have changed in the
++     * interim.  Unconditionally issue the wakeup, in conjunction with the
++     * previous change of owner this should catch all cases.
++     */
++    DEBUG_UMTX("<WAKE> %s: _umtx_op(%p, %d, 0x%x, NULL, NULL)\n",
++        __func__, g2h_untagged(target_addr), UMTX_OP_WAKE, 0);
++    return get_errno(safe__umtx_op(addr, UMTX_OP_WAKE_PRIVATE, 1, NULL, NULL));
++#endif  /* _UMTX_OPTIMIZED */
++}
++
++/*
++ * wflags CVWAIT_CHECK_UNPARKING, CVWAIT_ABSTIME, CVWAIT_CLOCKID
++ */
++abi_long freebsd_cv_wait(abi_ulong target_ucond_addr,
++        abi_ulong target_umtx_addr, struct timespec *ts, int wflags)
++{
++#ifdef _UMTX_OPTIMIZED
++    if (!access_ok(VERIFY_WRITE, target_ucond_addr,
++        sizeof(struct target_ucond))) {
++        return -TARGET_EFAULT;
++    }
++
++    return optimized_umtx_op(target_ucond_addr, UMTX_OP_CV_WAIT, wflags,
++        g2h_untagged(target_umtx_addr), ts);
++#else
++    abi_long ret;
++    long tid;
++    struct target_ucond *target_ucond;
++
++    if (!lock_user_struct(VERIFY_WRITE, target_ucond, target_ucond_addr, 0)) {
++        return -TARGET_EFAULT;
++    }
++
++    /* Check the clock ID if needed. */
++    if ((wflags & TARGET_CVWAIT_CLOCKID) != 0) {
++        uint32_t clockid;
++
++        __get_user(clockid, &target_ucond->c_clockid);
++        if (clockid >= CLOCK_THREAD_CPUTIME_ID) {
++            /* Only HW clock id will work. */
++            unlock_user_struct(target_ucond, target_ucond_addr, 1);
++            return -TARGET_EINVAL;
++        }
++    }
++
++    thr_self(&tid);
++
++    /* Lock the _cv_mutex so we can safely unlock the user mutex */
++    safe__umtx_op(&_cv_mutex, UMTX_OP_MUTEX_LOCK, 0, NULL, NULL);
++
++    /* Set c_has_waiters before releasing the user mutex! */
++    __put_user(1, &target_ucond->c_has_waiters);
++
++    /* unlock the user mutex */
++    ret = freebsd_unlock_umutex(target_umtx_addr, tid);
++    if (is_error(ret)) {
++        safe__umtx_op(&_cv_mutex, UMTX_OP_MUTEX_UNLOCK, 0, NULL, NULL);
++        unlock_user_struct(target_ucond, target_ucond_addr, 1);
++        return ret;
++    }
++
++    /* UMTX_OP_CV_WAIT unlocks _cv_mutex */
++    DEBUG_UMTX("<CV_WAIT> %s: _umtx_op(%p, %d, 0x%x, %p, NULL)\n",
++        __func__, g2h_untagged(target_ucond_addr), UMTX_OP_CV_WAIT, wflags,
++        &_cv_mutex);
++    ret = safe__umtx_op(g2h_untagged(target_ucond_addr), UMTX_OP_CV_WAIT,
++                        wflags, &_cv_mutex, ts);
++
++    if (is_error(ret)) {
++        safe__umtx_op(&_cv_mutex, UMTX_OP_MUTEX_UNLOCK, 0, NULL, NULL);
++        unlock_user_struct(target_ucond, target_ucond_addr, 1);
++        return ret;
++    }
++    ret = freebsd_lock_umutex(target_umtx_addr, tid, NULL, 0, TARGET_UMUTEX_TRY,
++        0);
++    safe__umtx_op(&_cv_mutex, UMTX_OP_MUTEX_UNLOCK, 0, NULL, NULL);
++    unlock_user_struct(target_ucond, target_ucond_addr, 1);
++
++    return ret;
++#endif  /* _UMTX_OPTIMIZED */
++}
++
++abi_long freebsd_cv_signal(abi_ulong target_ucond_addr)
++{
++#ifdef _UMTX_OPTIMIZED
++    if (!access_ok(VERIFY_WRITE, target_ucond_addr,
++        sizeof(struct target_ucond))) {
++        return -TARGET_EFAULT;
++    }
++
++    return optimized_umtx_op(target_ucond_addr, UMTX_OP_CV_SIGNAL, 0, NULL,
++        NULL);
++#else
++    abi_long ret;
++
++    if (!access_ok(VERIFY_WRITE, target_ucond_addr,
++                sizeof(struct target_ucond))) {
++        return -TARGET_EFAULT;
++    }
++
++    /* Lock the _cv_mutex to prevent a race in do_cv_wait(). */
++    safe__umtx_op(&_cv_mutex, UMTX_OP_MUTEX_LOCK, 0, NULL, NULL);
++    DEBUG_UMTX("<CV_SIGNAL> %s: _umtx_op(%p, %d, 0x%x, NULL, NULL)\n",
++            __func__, g2h_untagged(target_ucond_addr), UMTX_OP_CV_SIGNAL, 0);
++    ret = get_errno(safe__umtx_op(g2h_untagged(target_ucond_addr),
++                                  UMTX_OP_CV_SIGNAL, 0, NULL, NULL));
++    safe__umtx_op(&_cv_mutex, UMTX_OP_MUTEX_UNLOCK, 0, NULL, NULL);
++
++    return ret;
++#endif /* _UMTX_OPTIMIZED */
++}
++
++abi_long freebsd_cv_broadcast(abi_ulong target_ucond_addr)
++{
++#ifdef _UMTX_OPTIMIZED
++    if (!access_ok(VERIFY_WRITE, target_ucond_addr,
++        sizeof(struct target_ucond))) {
++        return -TARGET_EFAULT;
++    }
++
++    return optimized_umtx_op(target_ucond_addr, UMTX_OP_CV_BROADCAST, 0, NULL,
++        NULL);
++#else
++    int ret;
++
++    if (!access_ok(VERIFY_WRITE, target_ucond_addr,
++                sizeof(struct target_ucond))) {
++        return -TARGET_EFAULT;
++    }
++
++    /* Lock the _cv_mutex to prevent a race in do_cv_wait(). */
++    safe__umtx_op(&_cv_mutex, UMTX_OP_MUTEX_LOCK, 0, NULL, NULL);
++    DEBUG_UMTX("<CV_BROADCAST> %s: _umtx_op(%p, %d, 0x%x, NULL, NULL)\n",
++        __func__, g2h_untagged(target_ucond_addr), UMTX_OP_CV_BROADCAST, 0);
++    ret = get_errno(safe__umtx_op(g2h_untagged(target_ucond_addr),
++                                  UMTX_OP_CV_BROADCAST, 0, NULL, NULL));
++    safe__umtx_op(&_cv_mutex, UMTX_OP_MUTEX_UNLOCK, 0, NULL, NULL);
++
++    return ret;
++#endif /* _UMTX_OPTIMIZED */
++}
++
++abi_long freebsd_rw_rdlock(abi_ulong target_addr, long fflag, size_t tsz,
++        void *t)
++{
++#ifdef _UMTX_OPTIMIZED
++    if (!access_ok(VERIFY_WRITE, target_addr, sizeof(struct target_urwlock))) {
++        return -TARGET_EFAULT;
++    }
++
++    return optimized_umtx_op(target_addr, UMTX_OP_RW_RDLOCK, fflag,
++        (void *)(uintptr_t)tsz, t);
++#else
++    struct target_urwlock *target_urwlock;
++    uint32_t flags, wrflags;
++    uint32_t state;
++    uint32_t blocked_readers;
++    abi_long ret;
++
++    if (!lock_user_struct(VERIFY_WRITE, target_urwlock, target_addr, 0)) {
++        return -TARGET_EFAULT;
++    }
++
++    __get_user(flags, &target_urwlock->rw_flags);
++    wrflags = TARGET_URWLOCK_WRITE_OWNER;
++    if (!(fflag & TARGET_URWLOCK_PREFER_READER) &&
++            !(flags & TARGET_URWLOCK_PREFER_READER)) {
++        wrflags |= TARGET_URWLOCK_WRITE_WAITERS;
++    }
++    for (;;) {
++        __get_user(state, &target_urwlock->rw_state);
++        /* try to lock it */
++        while (!(state & wrflags)) {
++            if (TARGET_URWLOCK_READER_COUNT(state) ==
++                TARGET_URWLOCK_MAX_READERS) {
++                unlock_user_struct(target_urwlock,
++                    target_addr, 1);
++                return -TARGET_EAGAIN;
++            }
++            if (tcmpset_32(&target_urwlock->rw_state, state,
++                (state + 1))) {
++                /* The acquired succeeded. */
++                unlock_user_struct(target_urwlock,
++                    target_addr, 1);
++                return 0;
++            }
++            __get_user(state, &target_urwlock->rw_state);
++        }
++        /* set read contention bit */
++        if (!tcmpset_32(&target_urwlock->rw_state, state,
++            state | TARGET_URWLOCK_READ_WAITERS)) {
++            /* The state has changed.  Start over. */
++            continue;
++        }
++
++        /* contention bit is set, increase read waiter count */
++        __get_user(blocked_readers, &target_urwlock->rw_blocked_readers);
++        while (!tcmpset_32(&target_urwlock->rw_blocked_readers,
++                    blocked_readers, blocked_readers + 1)) {
++            __get_user(blocked_readers, &target_urwlock->rw_blocked_readers);
++        }
++
++        ret = 0;
++        while (state & wrflags) {
++            /* sleep/wait */
++            unlock_user_struct(target_urwlock, target_addr, 1);
++            DEBUG_UMTX("<WAIT> %s: _umtx_op(%p, %d, 0x%x (0x%x), NULL, NULL)\n",
++                    __func__, &target_urwlock->rw_state,
++                    UMTX_OP_WAIT_UINT, tswap32(state),
++                    target_urwlock->rw_state);
++            ret = _umtx_wait_uint(&target_urwlock->rw_state, tswap32(state),
++                    tsz, t, __func__);
++            if (is_error(ret)) {
++                if (!lock_user_struct(VERIFY_WRITE, target_urwlock,
++                                      target_addr, 0)) {
++                    return ret;
++                }
++                goto rdlock_decrement;
++            }
++            if (!lock_user_struct(VERIFY_WRITE, target_urwlock, target_addr,
++                        0)) {
++                return -TARGET_EFAULT;
++            }
++            __get_user(state, &target_urwlock->rw_state);
++        }
++
++        /* decrease read waiter count */
++rdlock_decrement:
++        __get_user(blocked_readers, &target_urwlock->rw_blocked_readers);
++        while (!tcmpset_32(&target_urwlock->rw_blocked_readers,
++                    blocked_readers, (blocked_readers - 1))) {
++            __get_user(blocked_readers, &target_urwlock->rw_blocked_readers);
++        }
++        if (blocked_readers == 1) {
++            /* clear read contention bit */
++            __get_user(state, &target_urwlock->rw_state);
++            while (!tcmpset_32(&target_urwlock->rw_state, state,
++                state & ~TARGET_URWLOCK_READ_WAITERS)) {
++                __get_user(state, &target_urwlock->rw_state);
++            }
++        }
++        if (is_error(ret)) {
++            /* tcmpset_32 operates on the target memory, so don't double copy */
++            unlock_user_struct(target_urwlock, target_addr, 0);
++            return ret;
++        }
++    }
++#endif /* _UMTX_OPTIMIZED */
++}
++
++abi_long freebsd_rw_wrlock(abi_ulong target_addr, long fflag, size_t tsz,
++        void *t)
++{
++#ifdef _UMTX_OPTIMIZED
++    if (!access_ok(VERIFY_WRITE, target_addr, sizeof(struct target_urwlock))) {
++        return -TARGET_EFAULT;
++    }
++
++    return optimized_umtx_op(target_addr, UMTX_OP_RW_WRLOCK, fflag,
++        (void *)(uintptr_t)tsz, t);
++#else
++    struct target_urwlock *target_urwlock;
++    uint32_t blocked_readers, blocked_writers;
++    uint32_t state;
++    abi_long ret;
++
++    if (!lock_user_struct(VERIFY_WRITE, target_urwlock, target_addr, 0)) {
++        return -TARGET_EFAULT;
++    }
++    blocked_readers = 0;
++    for (;;) {
++        __get_user(state, &target_urwlock->rw_state);
++        while (!(state & TARGET_URWLOCK_WRITE_OWNER) &&
++            TARGET_URWLOCK_READER_COUNT(state) == 0) {
++            if (tcmpset_32(&target_urwlock->rw_state, state,
++                        state | TARGET_URWLOCK_WRITE_OWNER)) {
++                unlock_user_struct(target_urwlock, target_addr, 1);
++                return 0;
++            }
++            __get_user(state, &target_urwlock->rw_state);
++        }
++
++        if (!(state & (TARGET_URWLOCK_WRITE_OWNER |
++                        TARGET_URWLOCK_WRITE_WAITERS)) &&
++                blocked_readers != 0) {
++            DEBUG_UMTX("<WAKE> %s: _umtx_op(%p, %d, 0x%x, NULL, NULL)\n",
++                __func__, &target_urwlock->rw_state, UMTX_OP_WAKE,
++                tswap32(state));
++            ret = get_errno(safe__umtx_op(&target_urwlock->rw_state,
++                UMTX_OP_WAKE, INT_MAX, NULL, NULL));
++            unlock_user_struct(target_urwlock, target_addr, ret == 0);
++            return ret;
++        }
++        /* re-read the state */
++        __get_user(state, &target_urwlock->rw_state);
++
++        /* and set TARGET_URWLOCK_WRITE_WAITERS */
++        while (((state & TARGET_URWLOCK_WRITE_OWNER) ||
++                    TARGET_URWLOCK_READER_COUNT(state) != 0) &&
++                (state & TARGET_URWLOCK_WRITE_WAITERS) == 0) {
++            if (tcmpset_32(&target_urwlock->rw_state, state,
++                        state | TARGET_URWLOCK_WRITE_WAITERS)) {
++                break;
++            }
++            __get_user(state, &target_urwlock->rw_state);
++        }
++
++        /* contention bit is set, increase write waiter count */
++        __get_user(blocked_writers, &target_urwlock->rw_blocked_writers);
++        while (!tcmpset_32(&target_urwlock->rw_blocked_writers,
++                    blocked_writers, blocked_writers + 1)) {
++            __get_user(blocked_writers, &target_urwlock->rw_blocked_writers);
++        }
++
++        /* sleep */
++        ret = 0;
++        while ((state & TARGET_URWLOCK_WRITE_OWNER) ||
++                (TARGET_URWLOCK_READER_COUNT(state) != 0)) {
++            unlock_user_struct(target_urwlock, target_addr, 1);
++            DEBUG_UMTX("<WAIT> %s: _umtx_op(%p, %d, 0x%x(0x%x), NULL, NULL)\n",
++                    __func__, &target_urwlock->rw_blocked_writers,
++                    UMTX_OP_WAIT_UINT, tswap32(state),
++                    target_urwlock->rw_state);
++            ret = _umtx_wait_uint(&target_urwlock->rw_state,
++                        tswap32(state), tsz, t, __func__);
++            if (is_error(ret)) {
++                if (!lock_user_struct(VERIFY_WRITE, target_urwlock,
++                                      target_addr, 0)) {
++                    return ret;
++                }
++                goto wrlock_decrement;
++            }
++            if (!lock_user_struct(VERIFY_WRITE, target_urwlock, target_addr,
++                        0)) {
++                return -TARGET_EFAULT;
++            }
++            __get_user(state, &target_urwlock->rw_state);
++        }
++
++        /* decrease the write waiter count */
++wrlock_decrement:
++        __get_user(blocked_writers, &target_urwlock->rw_blocked_writers);
++        while (!tcmpset_32(&target_urwlock->rw_blocked_writers,
++                    blocked_writers, (blocked_writers - 1))) {
++            __get_user(blocked_writers, &target_urwlock->rw_blocked_writers);
++        }
++        if (blocked_writers == 1) {
++            /* clear write contention bit */
++            __get_user(state, &target_urwlock->rw_state);
++            while (!tcmpset_32(&target_urwlock->rw_state, state,
++                        state & ~TARGET_URWLOCK_WRITE_WAITERS)) {
++                __get_user(state, &target_urwlock->rw_state);
++            }
++            __get_user(blocked_readers, &target_urwlock->rw_blocked_readers);
++        } else {
++            blocked_readers = 0;
++        }
++        if (is_error(ret)) {
++            /* tcmpset_32 operates on the target memory, so don't double copy */
++            unlock_user_struct(target_urwlock, target_addr, 0);
++            return ret;
++        }
++    }
++#endif /* _UMTX_OPTIMIZED */
++}
++
++abi_long freebsd_rw_unlock(abi_ulong target_addr)
++{
++#ifdef _UMTX_OPTIMIZED
++    if (!access_ok(VERIFY_WRITE, target_addr, sizeof(struct target_urwlock))) {
++        return -TARGET_EFAULT;
++    }
++
++    return optimized_umtx_op(target_addr, UMTX_OP_RW_UNLOCK, 0, NULL, NULL);
++#else
++    struct target_urwlock *target_urwlock;
++    uint32_t flags, state, count = 0;
++
++    if (!lock_user_struct(VERIFY_WRITE, target_urwlock, target_addr, 0)) {
++        return -TARGET_EFAULT;
++    }
++
++    __get_user(flags, &target_urwlock->rw_flags);
++    __get_user(state, &target_urwlock->rw_state);
++
++    if (state & TARGET_URWLOCK_WRITE_OWNER) {
++        for (;;) {
++            if (!tcmpset_32(&target_urwlock->rw_state, state,
++                state & ~TARGET_URWLOCK_WRITE_OWNER)) {
++                /*
++                 * Update the state here because we want to make sure that
++                 * another thread didn't unste the flag from underneath us.
++                 * If they did, we throw EPERM as the kernel does.
++                 */
++                __get_user(state, &target_urwlock->rw_state);
++                if (!(state & TARGET_URWLOCK_WRITE_OWNER)) {
++                    unlock_user_struct(target_urwlock, target_addr, 1);
++                    return -TARGET_EPERM;
++                }
++            } else {
++                break;
++            }
++        }
++    } else if (TARGET_URWLOCK_READER_COUNT(state) != 0) {
++        /* decrement reader count */
++        for (;;) {
++            if (!tcmpset_32(&target_urwlock->rw_state, state, (state  - 1))) {
++                /*
++                 * Just as in the branch above; we update the state here because
++                 * we want to make sure the reader count didn't hit 0 while we
++                 * are still trying to decrement this. The kernel also returns
++                 * EPERM here.
++                 */
++                __get_user(state, &target_urwlock->rw_state);
++                if (TARGET_URWLOCK_READER_COUNT(state) == 0) {
++                    unlock_user_struct(target_urwlock, target_addr, 1);
++                    return -TARGET_EPERM;
++                 }
++            } else {
++                break;
++            }
++        }
++    } else {
++        unlock_user_struct(target_urwlock, target_addr, 1);
++        return -TARGET_EPERM;
++    }
++
++    if (!(flags & TARGET_URWLOCK_PREFER_READER)) {
++        if (state & TARGET_URWLOCK_WRITE_WAITERS) {
++            count = 1;
++        } else if (state & TARGET_URWLOCK_READ_WAITERS) {
++            count = INT_MAX;
++        }
++    } else {
++        if (state & TARGET_URWLOCK_READ_WAITERS) {
++            count = INT_MAX;
++        } else if (state & TARGET_URWLOCK_WRITE_WAITERS) {
++            count = 1;
++        }
++    }
++
++    /* rw_state used below as key only */
++    unlock_user_struct(target_urwlock, target_addr, 1);
++    if (count != 0) {
++        DEBUG_UMTX("<WAKE> %s: _umtx_op(%p, %d, 0x%x, NULL, NULL)\n",
++                __func__, &target_urwlock->rw_state, UMTX_OP_WAKE, count);
++        return get_errno(safe__umtx_op(&target_urwlock->rw_state, UMTX_OP_WAKE,
++                    count, NULL, NULL));
++    } else {
++        return 0;
++    }
++#endif  /* _UMTX_OPTIMIZED */
++}
++
++abi_long
++freebsd_umtx_shm(abi_ulong target_addr, long fflag)
++{
++
++    return get_errno(safe__umtx_op(NULL, QEMU_UMTX_OP(UMTX_OP_SHM), fflag,
++        g2h_untagged(target_addr), NULL));
++}
++
++abi_long
++freebsd_umtx_robust_list(abi_ulong target_addr, size_t rbsize)
++{
++#ifdef _UMTX_OPTIMIZED
++    struct target_umtx_robust_lists_params *tparams;
++    struct umtx_robust_lists_params hparams;
++    abi_long error;
++
++    if (rbsize < sizeof(*tparams)) {
++        return -TARGET_EINVAL;
++    }
++
++    if (!lock_user_struct(VERIFY_READ, tparams, target_addr, 1)) {
++        return -TARGET_EFAULT;
++    }
++
++    hparams.robust_list_offset =
++        (uintptr_t)g2h_untagged(tparams->robust_list_offset);
++    hparams.robust_priv_list_offset =
++        (uintptr_t)g2h_untagged(tparams->robust_priv_list_offset);
++    hparams.robust_inact_offset =
++        (uintptr_t)g2h_untagged(tparams->robust_inact_offset);
++
++    error = optimized_umtx_op(0, UMTX_OP_ROBUST_LISTS, sizeof(hparams),
++        &hparams, NULL);
++        unlock_user_struct(tparams, target_addr, 0);
++    return error;
++#else
++    gemu_log("safe__umtx_op(..., UMTX_OP_ROBUST_LISTS. ...)  not supported\n");
++    return -TARGET_EOPNOTSUPP;
++#endif
++}
++
++abi_long do_freebsd_thr_new(CPUArchState *env,
++        abi_ulong target_param_addr, int32_t param_size)
++{
++    new_freebsd_thread_info_t info;
++    pthread_attr_t attr;
++    TaskState *ts;
++    CPUArchState *new_env;
++    CPUState *new_cpu;
++    struct target_freebsd_thr_param *target_param;
++    abi_ulong target_rtp_addr;
++    struct target_freebsd_rtprio *target_rtp;
++    struct rtprio *rtp_ptr, rtp;
++    CPUState *cpu = env_cpu(env);
++    TaskState *parent_ts = (TaskState *)cpu->opaque;
++    sigset_t sigmask;
++    struct sched_param sched_param;
++    int sched_policy;
++    int ret = 0;
++
++    memset(&info, 0, sizeof(info));
++
++    if (!lock_user_struct(VERIFY_READ, target_param, target_param_addr, 1)) {
++        return -TARGET_EFAULT;
++    }
++    info.param.start_func = tswapal(target_param->start_func);
++    info.param.arg = tswapal(target_param->arg);
++    info.param.stack_base = tswapal(target_param->stack_base);
++    info.param.stack_size = tswapal(target_param->stack_size);
++    info.param.tls_base = tswapal(target_param->tls_base);
++    info.param.tls_size = tswapal(target_param->tls_size);
++    info.param.child_tid = tswapal(target_param->child_tid);
++    info.param.parent_tid = tswapal(target_param->parent_tid);
++    info.param.flags = tswap32(target_param->flags);
++    target_rtp_addr = info.param.rtp = tswapal(target_param->rtp);
++    unlock_user_struct(target_param, target_param_addr, 0);
++
++    thr_self(&info.parent_tid);
++
++    if (target_rtp_addr) {
++        if (!lock_user_struct(VERIFY_READ, target_rtp, target_rtp_addr, 1)) {
++            return -TARGET_EFAULT;
++        }
++        rtp.type = tswap16(target_rtp->type);
++        rtp.prio = tswap16(target_rtp->prio);
++        unlock_user_struct(target_rtp, target_rtp_addr, 0);
++        rtp_ptr = &rtp;
++    } else {
++        rtp_ptr = NULL;
++    }
++
++    /* Create a new CPU instance. */
++    ts = g_malloc0(sizeof(TaskState));
++    init_task_state(ts);
++
++    /* Grab a mutex so that thread setup appears atomic. */
++    pthread_mutex_lock(new_freebsd_thread_lock_ptr);
++
++    /*
++     * If this is our first additional thread, we need to ensure we
++     * generate code for parallel execution and flush old translations.
++     * Do this now so that the copy gets CF_PARALLEL too.
++     */
++    if (!(cpu->tcg_cflags & CF_PARALLEL)) {
++        cpu->tcg_cflags |= CF_PARALLEL;
++        tb_flush__exclusive_or_serial();
++    }
++
++    new_env = cpu_copy(env);
++
++    new_cpu = env_cpu(new_env);
++    new_cpu->opaque = ts;
++    ts->bprm = parent_ts->bprm;
++    ts->info = parent_ts->info;
++    ts->signal_mask = parent_ts->signal_mask;
++    ts->ts_tid = qemu_get_thread_id();
++
++    pthread_mutex_init(&info.mutex, NULL);
++    pthread_mutex_lock(&info.mutex);
++    pthread_cond_init(&info.cond, NULL);
++    info.env = new_env;
++
++    /* XXX check return values... */
++    pthread_attr_init(&attr);
++    pthread_attr_setstacksize(&attr, NEW_STACK_SIZE);
++    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
++
++    if (rtp_ptr) {
++        rtp_to_schedparam(&rtp, &sched_policy, &sched_param);
++        pthread_attr_setschedpolicy(&attr, sched_policy);
++        pthread_attr_setschedparam(&attr, &sched_param);
++    }
++
++    /*
++     * It is not safe to deliver signals until the child has finished
++     * initializing, so temporarily block all signals.
++     */
++    sigfillset(&sigmask);
++    sigprocmask(SIG_BLOCK, &sigmask, &info.sigmask);
++
++    ret = pthread_create(&info.thread, &attr, new_freebsd_thread_start, &info);
++
++    sigprocmask(SIG_SETMASK, &info.sigmask, NULL);
++    pthread_attr_destroy(&attr);
++    if (ret == 0) {
++        /* Wait for the child to initialize. */
++        pthread_cond_wait(&info.cond, &info.mutex);
++    } else {
++        /* Creation of new thread failed. */
++        object_unparent(OBJECT(new_cpu));
++        object_unref(OBJECT(new_cpu));
++        g_free(ts);
++        ret = -host_to_target_errno(errno);
++    }
++
++    pthread_mutex_unlock(&info.mutex);
++    pthread_cond_destroy(&info.cond);
++    pthread_mutex_destroy(&info.mutex);
++    pthread_mutex_unlock(new_freebsd_thread_lock_ptr);
++
++    return ret;
++}
 
 -- 
 2.52.0
