@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A18FCD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 00:30:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07A17CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 00:31:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOlrn-0002X7-Af; Sun, 17 May 2026 20:29:55 -0400
+	id 1wOltA-0003RK-JQ; Sun, 17 May 2026 20:31:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wOlrl-0002Ui-LX
- for qemu-devel@nongnu.org; Sun, 17 May 2026 20:29:53 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ id 1wOlt8-0003Ph-QS
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 20:31:18 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wOlrk-0002c9-77
- for qemu-devel@nongnu.org; Sun, 17 May 2026 20:29:53 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-678adefbd26so3374137a12.3
- for <qemu-devel@nongnu.org>; Sun, 17 May 2026 17:29:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779064191; cv=none;
+ id 1wOlt6-0003Km-Tw
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 20:31:18 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-67179ed133dso2045350a12.2
+ for <qemu-devel@nongnu.org>; Sun, 17 May 2026 17:31:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779064275; cv=none;
  d=google.com; s=arc-20240605;
- b=N10n21XsaiWx0EqL6PT9i8ceXycngf2cOwY5FI9oHs34+aIYYjQDuDgej4WjIprHWa
- Sv+qYzxmChoT77/qHqXrfxUoRqC2ZWGX1kGqD4zWQ6mas1z67Kyf1Pg0ATFKHa9P9cou
- oc+w+5rTcZo4oV5QQCNjCamkCwn8JKNTIcER8uqAK4ZdTI6iaO8zu8R3Eejra/uGo3ri
- q60R+gmqm2UkSdGpITfh2q7qb0LKfzQ09KWggkdR56A87ihKNeULBz6HDO2sdOPDuWEy
- KzQxH04/huixPXyTQ1qTL5T6MrN6/jWTfr6RdykvnIwWhGLGw11Qxw//qbD8oOeaWHMy
- 3Kww==
+ b=E/MIDCfppXpotynatvQRrLy0KxN/cdL2deContdMUwpkjRpahXNLcvpnycB/adqusI
+ XXGQqYRFIj80tdQBIc/BF6JVnXFHFDVvCBdJKFXi9MYb8tPUdU+A6SnSyDOM0SuErDll
+ 38D9/WXX3KDnSk12+gY+tf3gBcsiPpH7ak6WXS7E9lwWKt5BA8toxj0q3TgHNSZ6hhME
+ x/z+Rm8xd1AWjUc4zTb30CFJ4cK9SeVr8tVHKFZ4nN5UcOgkxiSyDrIOuJzV5hYWbENi
+ /PJz9cMT7qjUcsu/IKrGH2TwoGrIZPxStMjsSVotp6H1eP69cmF1Cois3uwK+sFVRWoI
+ LbAw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=3NFvGlc9JL1cvXdqUUF1+rJo6bAzt4s/QCYZ5ZTD5pg=;
- fh=A83smZfl0aCJbt0aSN8uyH4Eb0MKJr+HQbscuSe7+j8=;
- b=T8bm03H6Y2AzH1buC0Sm67zyW6cQrwIonzvno/3hDfO//OvcysSH3jnQWpVQ5IdJuj
- EpX55ZPD7czJWkhW5lPC4dbVoH2OYy8TQgTPiSlOtxs5n/Jtc+BzDmB0J5qABDFPnCGf
- aCxzzcdFspaxDab5dDvx24JPCX7hbHnURHtlu7jrqxAGuqbJlKo1HB6Mk8hdlkSqf4/c
- TWbKAKGl85WfY4bGcmk02SDW0zDagnx9LDXAeIWFhtq9DVZ8APCzwicPX5towkckh3eS
- 8rvTgCS6zPPAk+BSo0HZBnlSDhZnbz7K6lLH9KVA2SrInK+t33EoN0ASSiGGZ87eRJru
- Jeew==; darn=nongnu.org
+ bh=ao18OrPK59ADZagYZZqGbWwS8VztrM60bRTxETz1Htc=;
+ fh=3Sf9BLDVZ4JX9vg6z70n+7pXurqJuwEJaRk/xKNPJpo=;
+ b=Ue6vU0EqoRfVhr86DyQkXPTz5e7ElwOx5zB4neU77S+DJv4rsF5/wPfbPTFdH+gkJj
+ /NYx/ZzTptj3ZvnEu/Sqhztj2LD165dwXV9uJeZcW0SfIPxin1cpX7MUnocVJpMd0wKu
+ kCXYcfs9zrI5SBBOVAqMFPVmVLLMBweCpFnHCaRkOBtwBdDU3Q9VtVmiSN2QHx8JnMWP
+ 145xiNBS7X3vudyXZlyC5/l/uWFIZLp1Yy+uGdTG0Cuh+6QdEOFJCDg5DA1xZhlLHEli
+ Clplv/faAqP051eJvOXkkWgi5ry17cQF8EKCNROs5XuTy6PMopruxFtIjeBfQ+4XQn5Q
+ w/aA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779064191; x=1779668991; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779064275; x=1779669075; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3NFvGlc9JL1cvXdqUUF1+rJo6bAzt4s/QCYZ5ZTD5pg=;
- b=DoQ2kTYT5+iiNHxCpnr80dbLsju5ZbObwFhV3RtHTuBvqXG42XxXY8w2UbU+1psc6t
- hmxgRqVnPcHilpVi2t8uFIJceHbzi7V8iivGM2ixe2b25qZDFjsXVaukLlh5gN9AOIR0
- 963DsNGBrzVWNzl/a8hcxnvEykJXu5rBGzUwudTZcjUITGz91XBEbP1UOMAZiNMdTGTr
- nuaAmlZIE5UNXofKwf5wejLFX0FfPhpeQjj4KPUttS3D+Lv6sJZL9QKbPAcLQiHyLy+q
- DSdzX9cj/ufyt9m9y9zvjIULRnrWMTWsQ1PitGPjbM654eHGWIQVoTaZI6nQWC4EF0kn
- q9SA==
+ bh=ao18OrPK59ADZagYZZqGbWwS8VztrM60bRTxETz1Htc=;
+ b=lVznaTKUFm+1UhODug2HFU+tJgFLB+/DKeZRjBMlXJJb1+0hy82h7hYMyaCTtbT3He
+ BnfWu03sFFwNF0z2Zn9UIHIW/K5UgMsuzfrJqym20v2lOCXHyHrxa1zilYR5bD/6tOH7
+ 0gjj2aA/R9PvgxjxDD4FcDgl6UAO5K2wIdMPTElqQo8ms31I4IhC7xUX9VrboEbcEzwS
+ fX0MeWVJcRIQm6AFOxtVT7WxpG26QckMyfED2R5PQECCpSHVNcHBbSVzNZsNtvnJpS/2
+ g3lNk7B2+lVMXwfCLmqJs17zhi3W4EhWytnHoyAxfX/dLbryU3BPRe8ZSwsSaIhroekH
+ vavg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779064191; x=1779668991;
+ d=1e100.net; s=20251104; t=1779064275; x=1779669075;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=3NFvGlc9JL1cvXdqUUF1+rJo6bAzt4s/QCYZ5ZTD5pg=;
- b=MEH1wb0Ag0A42KnK9qqWJes0+jDHUoPKdGICB+24GuPNOlO2IXH3AxeWANGuUA3zEb
- P9GRxgRQTKgm15DBIKnDSvyvH//fsFYWjnEqdK88VafqVrGa79oeTPSSKktwHlPKbiuF
- zvfPRnvp89PiQkPQIB36J+aGc7bgKu7utTIFuFPKbHWc6+hj12u7Lv2tPsghqTV2sBbW
- zo0DhBLBcp5IqS2KKTp8PdM8zHE5nw6EF3URew2XJ92Gdi8l2xWgkJeqVBeLF8z87wLo
- /8Jeg8BAfq4MZg2bqSpmEYP5jp+YCc0tFSX1ER95fQn/vo3eRemqrMg+rQ5uX6GFuYP4
- A6ow==
+ bh=ao18OrPK59ADZagYZZqGbWwS8VztrM60bRTxETz1Htc=;
+ b=Cw3UYZq3+ddqcTY+jyp6gtzWL7EX9rQx1H1JOa5whJ7p9+jonlXc5LVyUH+Gh7y9Jk
+ 48F+x2XOZdZ6pRSPdrvdEVI1rSHUjN7EF2pxKbw485/yU3xh7xz6BxYsQK4tgN1xYswb
+ 2EyU4brokBWpn4vvDS/uH9NCyIz9euU8KYqEdlEdUfe8/kEi8coXQqaSjZdDEA8V83DM
+ pIVrAIx6rrJ0Xc94yL6va2YNdOU/pUdHtbm1NsyomjVQeHqiFW26TBiCB72t6m11x2Dx
+ 5/nZ0Azt9AYIKuAX/EUosoU8g82LFEOwqeIoJYzTziLDa7uEkVVdI+IFBztijMqHaMtc
+ WmaA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+HvpaQTzHvV+L/cWS6pjLv6rD84DWlf7HgG1zw37lbpemHvpSHbe7JIstmtLPIM9jire7X7OCnvCNp@nongnu.org
-X-Gm-Message-State: AOJu0Yxx7vZaPtGWs2v3LI44Ymc7aVEpPn3JifmojaXQsO/rrim9bqjr
- WGS7RVClbqnhGWCLVEDaSHOh21JUhdm6PzcH2mBLctUmMngsl7pA1UDP0t+iA1+Mq8TidSY/xfp
- xr3E0mNiDyWGEL8PXxvkunZcWdioP3Fic7eoy
-X-Gm-Gg: Acq92OH0UR72dd9hp0LKNCE9EXH9Ia/C3hyn1rUBD6epOnEhqBBTpe1m1Hi+IbsDylr
- SwB5jzttaYUIiBV+dPKO/qTEV+RL6rQJz1kxaTRvK9Dmg7PkDck2K7b7+IAdNuisGzZ/pOq2FZo
- bi502LKYTrZ9N/PQc2aH5kYhve00qrHQZfSJNU5xwDh/xykRFvwBXD/uGLII1BnhnZXSOTVkkUP
- cUod6dT5dp3pcIh9N/+jkGZfY37+fBVxX9jPGDl8An3Rh7AAlj5YJnzuZLuP+7zStaunikEIm6O
- xhNAr/9EWqdR/vYqdhH3ySIrJz189HNwDrHnYDLUYdPb/h67
-X-Received: by 2002:a17:907:a09:b0:bd7:bbae:1ff2 with SMTP id
- a640c23a62f3a-bd7bbae4519mr93282666b.21.1779064190670; Sun, 17 May 2026
- 17:29:50 -0700 (PDT)
+ AFNElJ/FuE5fj71S8u5yVJmxXJOq1SZPRTJ7kv21X/PSxhbHRUiCJfJ7UPXOUeXdqi59/DfOsKG5cUdm3Fzb@nongnu.org
+X-Gm-Message-State: AOJu0YzW6p15hIu2nIuqy6UxhgNxwQ4/iqyrrwl8hkcPb8ZFF/v4EKfp
+ czTHKHCPUrfxWpjeCPJQEpEtYFJ3PM1k9G5Od8Qgyqq+NhJaW+aKAvKBW6mqMomObv8v2uWat96
+ hQFRFvRBcU7wE49d0LvIAw1cCHSUU+9Q=
+X-Gm-Gg: Acq92OG+Et1p5TRcnWD3t/VCm6T18414c82xkdGh3b9as1ToG4d9IXTXCeaFI2/ZiUE
+ hVYKLIWlDMOmWkYHC0f/NDrvTwHr9G1tlZ5WyZbKXv9mYx8UCT/t9vs68woE/VBcNefpe3A40TH
+ HY+BTMAYrpyHRA3Bz+Q0YS6EArQ0fX7MDsKlpSG1vcOVuKE7XHUEqx2rDtsvdMTtJxc0UkyX+Kb
+ orH6XWjiNW1Mbf8PaGhcrnF3bPk6WIEItGlyERF2pP7Yq/mtqsiqQK1iTpt7GqUl+CB7uISxqta
+ v1uoQUQWPdFYuFcLBvx5aKzb/bsiApd6sVViqQ==
+X-Received: by 2002:a17:907:c714:b0:bd0:7949:a931 with SMTP id
+ a640c23a62f3a-bd517960723mr691216966b.27.1779064274905; Sun, 17 May 2026
+ 17:31:14 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260511072126.3009004-1-vulab@iscas.ac.cn>
-In-Reply-To: <20260511072126.3009004-1-vulab@iscas.ac.cn>
+References: <20260508174917.371667-1-vulab@iscas.ac.cn>
+In-Reply-To: <20260508174917.371667-1-vulab@iscas.ac.cn>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 18 May 2026 10:29:23 +1000
-X-Gm-Features: AVHnY4LimANkw7C8vOGUCAUq6soWOrX2WkVs5HdeT_onKFuTitH3xIAH9dggLAs
-Message-ID: <CAKmqyKN-5Hwj0AcutXB6P7P5eBukt6j7x5kFV=1k1rCM1uqq2Q@mail.gmail.com>
-Subject: Re: [PATCH v2] target/riscv/pmp: Fix integer overflow in TOR and NA4
- address computation
+Date: Mon, 18 May 2026 10:30:48 +1000
+X-Gm-Features: AVHnY4LhiyDxjn9Pc8rH5QEyWfuVYwKdFr50GNG5kHxPxwc-mRLK9Hp8FCEh7kg
+Message-ID: <CAKmqyKNjcVLUnLM8Zs3e-c7fNYDt-D7AZf3ASFk3Sag38d9J5g@mail.gmail.com>
+Subject: Re: [PATCH v2] target/riscv: Fix missing CDE check for scountinhibit
 To: Zishun Yi <vulab@iscas.ac.cn>
 Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>, 
@@ -100,8 +99,8 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -125,25 +124,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 11, 2026 at 7:53=E2=80=AFPM Zishun Yi <vulab@iscas.ac.cn> wrote=
-:
+On Sat, May 9, 2026 at 3:51=E2=80=AFAM Zishun Yi <vulab@iscas.ac.cn> wrote:
 >
-> According to the RISC-V Privileged Manual: "The Sv32 page-based
-> virtual-memory scheme described in sv32 supports 34-bit physical
-> addresses for RV32, so the PMP scheme must support addresses wider than
-> XLEN for RV32."
+> According to the RISC-V smcdeleg specification: "When menvcfg.CDE=3D0,
+> attempts to access scountinhibit raise an illegal-instruction
+> exception."
 >
-> However, the current QEMU implementation uses `target_ulong` (which
-> resolves to `uint32_t` on RV32) for PMP address variables.  When
-> shifting these addresses left (e.g., `this_addr << 2`), an integer
-> overflow occurs, truncating the high bits of the 34-bit physical
-> address.
+> The current implementation of scountinhibit_pred() only checks the
+> hardware extensions (ext_ssccfg, ext_smcdeleg) and virtualization
+> status, but completely misses the runtime environment configuration
+> check (menvcfg.CDE).  This allows S-mode to access scountinhibit even
+> when the M-mode has explicitly disabled counter delegation.
 >
-> Fix this issue by casting the `target_ulong` variables to `hwaddr`
-> before performing the left shift operation.
+> This issue was discovered by the SpecHunter tool
+> (https://github.com/yizishun/rv-isa-sec/blob/master/output/riscv-isa-manu=
+al/pr-2571/qemu.txt).
+>
+> Fixes: 6247dc2ef70b ("target/riscv: Add counter delegation/configuration =
+support")
+> Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
 
-It's probably a better idea to just use `hwaddr` for `this_addr` and
-`prev_addr` instead
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
+
+> ---
+> v2: Removed mistakenly added #include "cpu_bits.h".
+>
+>  target/riscv/csr.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index da366cf56271..9ae8d553dcf1 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -398,6 +398,10 @@ static RISCVException scountinhibit_pred(CPURISCVSta=
+te *env, int csrno)
+>          return RISCV_EXCP_ILLEGAL_INST;
+>      }
+>
+> +    if (!get_field(env->menvcfg, MENVCFG_CDE)) {
+> +        return RISCV_EXCP_ILLEGAL_INST;
+> +    }
+> +
+>      if (env->virt_enabled) {
+>          return RISCV_EXCP_VIRT_INSTRUCTION_FAULT;
+>      }
+> --
+> 2.51.2
+>
+>
 
