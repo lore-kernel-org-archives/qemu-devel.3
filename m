@@ -4,106 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22D27CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 01:24:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2D44CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 01:26:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOmi4-0001U8-Q6; Sun, 17 May 2026 21:23:56 -0400
+	id 1wOmkK-000270-MI; Sun, 17 May 2026 21:26:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wOmi2-0001T5-Oj
- for qemu-devel@nongnu.org; Sun, 17 May 2026 21:23:54 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wOmkI-00026e-LW
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 21:26:14 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wOmi1-0003Wh-8H
- for qemu-devel@nongnu.org; Sun, 17 May 2026 21:23:54 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-bce386d5b85so258655566b.1
- for <qemu-devel@nongnu.org>; Sun, 17 May 2026 18:23:52 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779067431; cv=none;
- d=google.com; s=arc-20240605;
- b=PPJlRiMZYIeFBFUzZelN16pK1jxV4hDiGBNjl/GhytS1/rVMBx5wYyKXuytIadVad5
- JUhlc06/7L9hdlQq7kC6CFg9nxAuIHmpcEbIW9JZfHfnFVZ6Vmr86axRa4hbMsTaanoU
- 9J6Ck2vtJ/y6GWS0Mn60x2EmhcDaV+/ZlNQiq8oxxwJBwIkESkkDCMb7ibThdADJzqbN
- MRV2TFO5fI6UiU6ATC3T20oDV1FBJztuW0LrwkzgFLrnIHmjRv2VJIhxe2YyBIFL9GyE
- 8QEHZQDETQHS0EN1QgFwKBspYwd45VWYONAUrLvuckVXIxlwP/qJxEULSYUqE03Iu0Er
- Q3Ew==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=L6x2/KE/Ff9HALcvjvAvRWSEqJV18mdqQgCNhtCBB4s=;
- fh=CXwePVPAEerRKZHZnrWTzdAYO4TaouveGW3zeIx1o5Y=;
- b=HH7CGZzrwYbCXndh80B7VyDglRRFs32V++k3Bz16TsbcRnxhbnRXk002RAKPbs1UAt
- fQVldDiOj/owpgZIbwTkUeZ8gx4eMAWhHwPJ++vJzJQa5OVQGwmBzsxC9LxH3pi3AnUh
- +ftQEW+IpWGHoZm3mJXMmqEjwgIBbA5XlD41Pjo2oA8GB+bzqinhmr4L1apPUO+tVEln
- kaSU0hso6dvtYllKKVbTjpkcInbkdLDk/3F72WZ5AFq7gR3WanJhe/rNTpyc8fsoaA3E
- jmkdBNKBE7ZCd7ydHL9mY2w0N4xXsGDYDAZpYLIttLVe2UDq5HmIfEeX0X238y5lMXb1
- WB3Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wOmkH-0004Cm-1Z
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 21:26:14 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-3697c35eab7so642189a91.0
+ for <qemu-devel@nongnu.org>; Sun, 17 May 2026 18:26:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779067431; x=1779672231; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=L6x2/KE/Ff9HALcvjvAvRWSEqJV18mdqQgCNhtCBB4s=;
- b=nFOFR0yDuYrhNbgEjl8qOuhBECzwWG91XayfmAfJAh5Odm0xWHK8KiubiniD9Z/8xi
- PjY+519EYtBm/QcEhVAW+5KFauH3FlHcvXsl2yIlXAytenNDVNqTztWeB3jp2MjrLfTz
- 7X8k+vES06moi038mC9pRrZEoEabGjQkQpdFQBopH2KmLN8rnYVtGTo37r8eypMrnmWh
- 4GHW13BX0pNaMAaqMeCtv/Fzwk6Sbo/GV5pJfunEDjq9DejDRIf32Hx+dg4tF2ZB/Y/D
- 6GxER+q8O6TMLnbTJBn5ZLhWD1FWOhsGvJEKZ/BosAGMpggkH9d5GBP65K98N6VVqHF+
- B1Mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779067431; x=1779672231;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ d=linaro.org; s=google; t=1779067571; x=1779672371; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=L6x2/KE/Ff9HALcvjvAvRWSEqJV18mdqQgCNhtCBB4s=;
- b=qt0CFGDFDNRy4LQFACuB+AxG2G/SMjXWajtj3wEh65Exk/epN9BxNjrxlpZawgFrE6
- EVFUGhpPyH5iTB9XcW4nG2O5qBMuZaDtSYY9nTkXAviGAaeksxtsTgXT6i2bfdIBushV
- J5GXwHOBuDXklnffNmWlaoSsgwmIFPMpHwzI1soTv5K3th7hYL6j/A7d02F0/cjZBH5E
- w9Y3Jg81ZA63o+EaNU4u9D2L6VWU1vG5aqGJqyPp2ZKS5TKH7hiwZdEq2WqERmRLCCn7
- wBsh1FOh1MGeAb5RrJik3wUwYuch6pkNW6ogaX3J9U8CsFfxHc3srj0NsxoGc9KwGGzz
- uz3A==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9y5ILjDmkj0VZ/rudVqVvxEZuz0TmWjv8RrGWvZKS4EbwW5pHobPwOy7Nm/zhSMXGIfAZF/jANRy0u@nongnu.org
-X-Gm-Message-State: AOJu0YxKLIopnNY4girGFJF4ngO54Qq2Rr9ho3Mw8F7SFm2tcwEBhN4o
- 0MznGUA4qgYOx8cHWlr1E8fWald3tdmPckYRL2fIQXfPyxCxots5W+rv+9j7+PG7Xa+yBii1akV
- mANYDmsd9t/AOHwBFAwnmIBT9WJNiMX4=
-X-Gm-Gg: Acq92OGohOn1U3pMldHwipD2yDql2nJtqDHbSyvlhteaPm5B+wkqIuPb7XFBRjuJ6/E
- 2TV+qE9hfZOHYtaGvTRvtRr3X9uc5ceAIFhqQ+6ZqG+aPanv/NdZYacnIaTZiCc9hjrzLH18Axh
- tcwwToOr4yYOn2QsBbfdKGdb8hJci68pWILyZDgzoqlmNc/S+vLCYRtMvH86mKW5bv0UkNCYLmx
- qxu3slj5BC//AHK99kQU++rAYXletVqenPzegwZO4RZ/iPN61WlCMWiIih2pxpKG7fD1ep3SPNH
- mBPhA1nfh8+gstdTyvzysFRj5LTSfWrGBud4Ng==
-X-Received: by 2002:a17:907:e849:b0:bd0:6293:bd0a with SMTP id
- a640c23a62f3a-bd5177aa3e1mr650636566b.7.1779067431384; Sun, 17 May 2026
- 18:23:51 -0700 (PDT)
+ bh=sLgtw4nCC6Ta6El2BWhyiRkX84Clbq7kWdbXQP4ga+Y=;
+ b=kr0SRcfrAqXyV/SRh9SWBuzXSrQW24daUiDMFV6E3VUIEktFDP4Y2cc6qSktANXfyB
+ yKCTtsa+0glsGIdI3TUYo2nPzuHmoG4B4oVjUtLcYUqNrHEREBa548su5OjIRLukt4tA
+ F6avscAMS5BYpZi05lodOkIFHQM/Jyls4b00aAobJAMKEVJqPB0aYZSd29RSYL9g9I8K
+ rxX0u08zch9RfWgdlUj6+iIRhsBd3RKJroYfKtOOQ3Ak4teQnx9xIXHjCw4XtOcwZKHY
+ /w8S4GXnaVIyoSJDh8BVuGJVs0/s6/BEkIU6SRBEkLxVj5O7w8HpIrba8eeNuZpK5B9Q
+ iphg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779067571; x=1779672371;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=sLgtw4nCC6Ta6El2BWhyiRkX84Clbq7kWdbXQP4ga+Y=;
+ b=Q57DautwuJwrvwAbQnDKdk/hgYmdhlH3D/0uZJ0xTx8oUOUBlegAWVyhNSELHZoyFL
+ hlqWIFYy8mWBgLJf46qATvV7E0SLhDijVTEVI0gXgxqnzcLw3gmTmaGtemprYawsrq83
+ +e3w040pivHtE8yFRrggTePkbJCiCoWEJypTWV2DU4/4ATaLkCcr2k7ddnS3WeL2uocq
+ hgPgZHT5xWQhvND0ggswxFNNgSB+TViAjUShW808gI3QUk5IGEHQqDlqIAxw91nLC4LY
+ mexrVOp2lUbBlBsHk1hXE3tUhZg1CCjnConxZCf80h5j3zyd2+rm5QGsEHS7Qm6En1Hy
+ Odjg==
+X-Gm-Message-State: AOJu0YwH5Kkmtm0JBJ45b2UdMonzy1FkT+mCdSHfs6sv/1kZwGH99Icp
+ fWJYHEXTOhmvxYPaTVkT1CkLDpSYeiVLFAG1TedkO6rMDzQEhFvCDPPVJGgcdAR4w6QZjsRY6RU
+ i/isV
+X-Gm-Gg: Acq92OHpa313bbyhlcdGppQ/d5iHeL5BahllamhJdIwAVZbQ9Y4HdNjr2CJXKZISyUG
+ p1HzUv63ot9olv6ZW88lxbDvYwECIdror3AbAyfPf0iBSCI9X6GHUq9I2I65P+Sf9mRVMv+Rixb
+ dZLs1RHeR5wG3pqkyW2UaMtgJFSXnYVSS0bZnsZBDIU7oQfKxvy17D4/wUwkf5vQFF2j1KefeEd
+ TfM0LEmTj/39ZHDdjFUDSvTVGhqyBX9Kszk227oMQSXXdC9GgpVbxftCn4nnbghL+QFsUFTz4C1
+ 1P6y9PB0fz1BV0gzxi9Fl4a1rOKTSGklV0DRvCJWYzdolbFb9XdpLsZW2aMY8O5D1Ozmef8kY+T
+ nec4czhDXiscQZ+HeRfB8ZImTRa2xjQEQ+bmPUx9SAwisd5xC4XROhcrjPsWlq/TtEj9dEsLo+N
+ Q6dRXNVAIwYpXccv+K43tuECvpJ+denHHOQeV/
+X-Received: by 2002:a17:90b:53cf:b0:366:16d1:6a25 with SMTP id
+ 98e67ed59e1d1-369518b206cmr13095491a91.5.1779067571235; 
+ Sun, 17 May 2026 18:26:11 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.142.33])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-369a37f34f5sm1536736a91.4.2026.05.17.18.26.10
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 17 May 2026 18:26:10 -0700 (PDT)
+Message-ID: <ee6ecc2c-ac50-49e8-b19b-8795f13d163a@linaro.org>
+Date: Sun, 17 May 2026 18:26:09 -0700
 MIME-Version: 1.0
-References: <20260513023859.518484-1-alistair.francis@wdc.com>
-In-Reply-To: <20260513023859.518484-1-alistair.francis@wdc.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 18 May 2026 11:23:25 +1000
-X-Gm-Features: AVHnY4JhzVYURVfX9-PGElG7jL0BOUgLnaFbxsH1q-dQGqI0IkDSBJ0LFMVTpdA
-Message-ID: <CAKmqyKPfv=0NmtbfG477HPddsXZwWwFhF-r46M0cUEwELwDJag@mail.gmail.com>
-Subject: Re: [PATCH] MAINTAINERS: Mark Microchip PolarFire SoC as Odd Fixes
-To: palmer@dabbelt.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com, 
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org, conor@kernel.org, 
- sebastian.huber@embedded-brains.de
-Cc: Alistair Francis <alistair.francis@wdc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x62f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 27/35] target/mips: add Octeon COP2 crypto core support
+To: qemu-devel@nongnu.org
+References: <20260514-mips-octeon-missing-insns-v2-v7-0-226686be4ce1@gmail.com>
+ <20260514-mips-octeon-missing-insns-v2-v7-27-226686be4ce1@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260514-mips-octeon-missing-insns-v2-v7-27-226686be4ce1@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -121,44 +104,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 13, 2026 at 12:39=E2=80=AFPM <alistair23@gmail.com> wrote:
->
-> From: Alistair Francis <alistair.francis@wdc.com>
->
-> Mark the "Microchip PolarFire SoC Icicle Kit" as Odd Fixes and enlist
-> Conor and Sebastian as people to help deal with the fixes.
->
-> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-
-Thanks!
-
-Applied to riscv-to-apply.next
-
-Alistair
-
+On 5/14/26 10:37, James Hilliard wrote:
+> Octeon processors expose their crypto engines through selector-driven
+> DMFC2/DMTC2 accesses rather than architected standalone opcodes. Add the
+> common COP2 state, selector decode, and helper plumbing for the base
+> engine set.
+> 
+> This covers the hash, AES, CRC, GFM, 3DES, KASUMI, and SNOW3G engines
+> and moves the implementation into octeon_crypto.c to keep the MIPS
+> helper layer manageable.
+> 
+> Model the AES RESINP selector bank as writable as well as
+> readable. Octeon COP2 engines use these slots as result-input staging
+> registers, so the shared bank belongs with the base selector support.
+> 
+> Extend the TCG smoke test with AES key-register readback checks for the
+> selector window introduced here.
+> 
+> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 > ---
-> Conor let me know if it should be a different address
->
->  MAINTAINERS | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 952ed683bb..9626eb1ea9 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1751,8 +1751,10 @@ F: target/riscv/xlrbr.decode
->  F: tests/tcg/riscv64/test-crc32.S
->
->  Microchip PolarFire SoC Icicle Kit
-> +M: Conor Dooley <conor@kernel.org>
-> +M: Sebastian Huber <sebastian.huber@embedded-brains.de>
->  L: qemu-riscv@nongnu.org
-> -S: Supported
-> +S: Odd Fixes
->  F: docs/system/riscv/microchip-icicle-kit.rst
->  F: hw/riscv/microchip_pfsoc.c
->  F: hw/char/mchp_pfsoc_mmuart.c
-> --
-> 2.53.0
->
+> Changes v1 -> v2:
+>    - Fold the AES COP2 selector readback smoke coverage into this patch.
+>    - Move Octeon COP2 decode plumbing into octeon_translate.c.
+>      (suggested by Philippe Mathieu-Daudé)
+>    - Use uint64_t/i64 helper types for Octeon COP2 state transfers.
+>      (suggested by Philippe Mathieu-Daudé)
+> 
+> Changes v2 -> v3:
+>    - Remove redundant MIPS64 checks from Octeon COP2 translation; the
+>      opcode path is already restricted to TARGET_MIPS64 Octeon CPUs.
+>      (suggested by Richard Henderson)
+> 
+> Changes v5 -> v6:
+>    - Rename COP2 selector constants and comments to use RESINP/INP,
+>      HSH_STARTSHA, and MF/MT direction suffixes from the hardware selector
+>      naming.
+>    - Rename COP2 crypto state fields and shared-window helpers to use
+>      HSH_IV/HSH_DAT/HSH_IVW/HSH_DATW and GFM_RESINP hardware naming.
+>    - Rename HSH register word-packing helpers from octeon_hash_* to
+>      octeon_hsh_*.
+
+This is not good.
+
+(1) Split out the machine state change patch, like you did for multiply.
+
+(2) Don't keep re-decoding these insns at different levels.
+All of these should be decoded individually in octeon.decode, like so:
+
+{
+   [
+     CVM_MF_KAS_KEY0  010010 00001 rt:5 0000 0000 1000 0000
+     CVM_MF_KAS_KEY1  010010 00001 rt:5 0000 0000 1000 0001
+     CVM_MF_KAS_KEY2  010010 00001 rt:5 0000 0000 1000 0010
+     ...
+   ]
+   CP2_Undef          010010 ----- ----- -------- --------
+}
+
+Many of these insns are trivial data moves that do not require a helper.
+
+(3) Split this into much smaller batches.
+
+
+r~
 
