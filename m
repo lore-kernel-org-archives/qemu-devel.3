@@ -4,135 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE739CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 12:20:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 922ECCD4F3C
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 12:20:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOwxG-0000b1-Me; Mon, 18 May 2026 08:20:18 -0400
+	id 1wOwxc-0000uJ-Qc; Mon, 18 May 2026 08:20:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wOwxC-0000ag-PS
- for qemu-devel@nongnu.org; Mon, 18 May 2026 08:20:16 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wOwxa-0000tl-3c
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 08:20:38 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wOwxB-000603-1D
- for qemu-devel@nongnu.org; Mon, 18 May 2026 08:20:14 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ id 1wOwxY-00067t-Hb
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 08:20:37 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64I7dqTE2891865
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 12:20:11 GMT
+ 64IBHRL32482391
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 12:20:35 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- g/KYs/9HzaSc7sRHr9BHpeOOFAj3jhIo8nRRI6S/X20=; b=PngEaU8Hgc8KyXuK
- NScjeZrOoMcObauGT0NVHdwoY5g+yNsV8BwTWsBmDU4uMNNBjtnSo4KAtViCLMD2
- m4fF29Oq/EVabCNz1rwEp5HgAtgzVvi3UEogN4HcZjYcbpIYom2hSoqJwIxiL1Df
- dimN2ddjhxRkyKVE7E7N71TJWZV5RXUAcLFIHwzsOL+EmE+9sH4B70HQgLxF0Hyy
- +NQoMQu7KFyIFJLjHPEHjBHzkA70qRMw/t6RUKVyRnSVOztqbI36FKeNKF0HOBz4
- oEeWaYuxTzngbNZHEY+tNIAlk1ABowrnV5CAg6dFsw4nlhdF890YvuApZltixVWO
- +yUflw==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e7xk19501-1
+ zzI5dIVTDPi0q3mFhwbGl1F0WzdSwZ7vh9U9z7Th+hs=; b=g0ge619cFTnv6+2Q
+ oPT5+p1eM9CFA0aLK5FNGSL8c8cMXN88Gy9Ma1vkWubmKeRHEDHlHYYdIhj1LCtb
+ r+elM9PXAn96kjuj/RGrAphqeFfBNsSHM5WlQvFdPjt9gF9P2BjW/f+0XGX6p0d1
+ vfHMtzXadd3bZm2MAzCb1dsHuzzC3LRZEmgQJaNLl9xcPOGnZAI4BOWwvONJc0c1
+ qcBk/zkb6e/MfCvIreeLTNfGon7ZqCpjXyD7k1XynSw5TBGXcHXL6MOEmtMaOlAb
+ R3Lu4AlOKoE04uNxrhm1hkm76Ad4YfKWsNtu8L4i3J/oOjnz0GoXFcG3uzavLWa2
+ WsZGVw==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e81rvg7gq-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 12:20:11 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-8b459fa5f76so28918976d6.1
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 05:20:11 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 12:20:35 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-90ccab62c33so223050885a.0
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 05:20:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1779106810; x=1779711610; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1779106835; x=1779711635; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=g/KYs/9HzaSc7sRHr9BHpeOOFAj3jhIo8nRRI6S/X20=;
- b=YCTX5rjriWzQcqQ/mNIlMUgTyonEn9C+MfYLj9svNC56+Pv/7r0CX9G6vqqEBJXGeg
- jyJThUXITF5CmUUgEgOUgliWYdqZx3zXBLXNsbdO+zrIr+8K7ZoM/0CauTqIk7oV0v95
- kwV0OG9BMPajm1zP5o7MbrjscKrvYI3tRTfkj3v0NtagCO0qwvUtlLdIgZNt1n6vZcaA
- yBEu5576m6zmskSvXA4foYNEGVBcj0wl/N1cFwOQhTZVEY3X3j54NIaqi1kZYWrPKz+7
- nkoWP59UdexF+YIDbkX5RIpXRXPsXjf/0KROS17lB07nNSt6tqy6v7mdYDA4J42uG9G9
- YlGQ==
+ bh=zzI5dIVTDPi0q3mFhwbGl1F0WzdSwZ7vh9U9z7Th+hs=;
+ b=BdLITvdN9p9P9uTMSS7qXz1AYJDK9LIF68+9KsOpAIxf2it0yMJkIMwlwxoWV/hPFE
+ hjK5E8/N3Mo4/Skm0md4OVGp2EH5EPV4eKHQjyZA2IwYlGz/93RhLVtK6g+zf1PeXIYd
+ JdNCiye/UUqvS/BsiWikReCzFpAherSnJIJrPUzVUI0Q0hgcL7lT5QcnCig2gvGeVzm6
+ aS7jGnF3brZXfaKQQANTsiEBzRCthXY6JTWEWCei0wSL/xVi+wpo8P8+AsffzMJ07BE3
+ Fa0WFqhCG5socDIC1dWUmNSRooxqVv3EVDcVaDaoq23pX+d+aMaQ+O+VubEGKDHCKcOf
+ iffQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779106810; x=1779711610;
+ d=1e100.net; s=20251104; t=1779106835; x=1779711635;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=g/KYs/9HzaSc7sRHr9BHpeOOFAj3jhIo8nRRI6S/X20=;
- b=MSrWvsGYe8jTrqG2ZLGZ9d7XXTApvp8R7/jPBo94DahuVzIxxLlb65/vdSdOkWVeAO
- cQU4ZXJ0pnORRxJ31RY8y+WLDFBI4wC7nhxXgnDb2Xqwz9n1UWSeSRKEYopIt3Glkj1F
- HI6KKxrxrPSyn2V5fm0OnaDQ2HtdhOl9M5VDpbQyiueyRhV//6PutqnA/qULYJp5e7hF
- kDzl0eqKv9ET/HCxMHwWGvlCcK4f2UCbM1qbALh9o3PEkTrPSP2OvYkoTDxBCpqceJf0
- JYc8c2Ygqzn1u16djIRjj+ZsfvBXValgFoRMdp+/39YLSj4mfhqPkXoCJjXlvyAoMXrN
- 5NCQ==
+ bh=zzI5dIVTDPi0q3mFhwbGl1F0WzdSwZ7vh9U9z7Th+hs=;
+ b=R5ld+3D2SDagkz1N1Ysw0h4YCJwe13ylP0YXY6hD+yIDC9qVExfy04PDMcpUPhsPo9
+ 45lf/vE525nkXpGTPuHLBa3l4ajHoDfHD2+mmplBhwCuxmfM22Jnc9JuDghEtdqB9mds
+ biyUJocAx3X1JGoQtHW324l0QKXqiEMyq1hol1yFjF1R3ObieCm6wy7OtxORVg8ix5gg
+ kYPvQXGlsE78DIOPLkU+0Luzj840TCp9qHNcV6ABW4AyYyllEzJ8SRPZ+ZlhZZstp+VS
+ I1nN4LFrnLPVfZj3NrMLdwbUHizEhmbowkqCfok/Nq6vvILEuCFHDEMuWBveQj94ht3N
+ ewyg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8LUx8mI3MWYksaQaafPOvCH6IV17mKHvG1BdKbZKfXG4PpuBzCb6QesojS3pZigqKDVG4lN5IgZ2kI@nongnu.org
-X-Gm-Message-State: AOJu0Yz2zQHvZf0oH5JKqKo45qMjZIa8XMvGkkBXsunlnDPOdNiG07OK
- tLZWLPOtKczhDGOgjb1EBbLzRkXd8G1B7AginAiA3V2cdIP0995sIS5Ch0NI6VLuADLhdYuwbG9
- KsSSIk1h/cDT7iEpLa+lQ5za2D+bLRFfI/UJ10kB0aQVYt5vu5ZU+xldnFQ==
-X-Gm-Gg: Acq92OE6ZR0pVyihUReo2sDoYH8cSdGr9cf2Yci1WZkkmxpCXDq3Dtb9rsifyPn8rbC
- tntSkwwTJMGrTELuyDSx7KJoI+wzLF1+5NhViZD1/zJ/vuGtQaCedTWPKLH6KmlosbUjSRpD9QP
- HQNg3xTBFwOp/w4xY3bsVJUR5ZzGVXZCnUOFH3I3rwmeiUK70Sefr1hrUpmwCjY/DdpDNyeaSfg
- gaFoc3HtLPSDjVm3KEyCH2C9gg1p2/p3LEvodRYC/BKFV35BDTUdsov70eBLtDAdK5EiyyhEre+
- j7xqXP+s3an/+VLZhFtAECnoIGP8iAZclUJBv4Ar7T6GMnvM3ScvLmLtKpyX+Pdm1ICKeva83DX
- u+BzfHKptteQTPx8ObsR2IiuWUKgfNcXuqMbbZre2lMb3e2ZjX+z8T71nwXs=
-X-Received: by 2002:ad4:5802:0:b0:8be:3da0:bbac with SMTP id
- 6a1803df08f44-8ca0f5b15ffmr175764196d6.3.1779106809298; 
- Mon, 18 May 2026 05:20:09 -0700 (PDT)
-X-Received: by 2002:ad4:5802:0:b0:8be:3da0:bbac with SMTP id
- 6a1803df08f44-8ca0f5b15ffmr175763176d6.3.1779106808191; 
- Mon, 18 May 2026 05:20:08 -0700 (PDT)
+ AFNElJ81F9+9NIlaKmhvrdeywtWLCz2mqI3xaD/QxnokVOyc7P48XL8SKTkAg/fY6TmMYBb7IBAj88XxCxPt@nongnu.org
+X-Gm-Message-State: AOJu0Yymxqn89tVmu7xhaFdiRs6FtbfZPyCOXSvoo9hBxypifCHIRbGB
+ 45k/LupARoPH49FkN3tPTbjkgtInkue9MTYjkGgsSlhX7x9bBwN0GEo/gCTP7Cex8F4OEJwP6Zd
+ /ItMBHg56H7HnHkvrX1aqKXOE+9Vjmmyb3ZZkrmnWP3nxK2sSm4RDwdg0Hw==
+X-Gm-Gg: Acq92OEmqTVhb5y9wOUCqdfKOmuwbmKJ8TpHU887+Bls74zxPEyGkIH9BsKj7O9bUSy
+ wkIaYeDRs9YfXzr8Lim18ZYSF5C1V6nMaI+Ew/WNHgwxzGABCh3N/xBIgzBjZa32gMRte+nfNG+
+ ri3QW+AmSKC+YJYoyE8uxKeS0oU78kItwit3E6kYKTn+QccF/MoXAamvJ3EY3R3Dh0pHgv8Tx2r
+ UJ+Vjg+wpNRRDOB/SzfVCDaZVucnX2Dm1Z6TJijvNFYj4K+/C0+YzkacS8r6+BTuft4G4umxTe4
+ 16luMLUUeozEJF/6tp1YJnYgG99/S6MqrHvOO4zG43V4/ndNHS2MvW3FomfA1HSTAhAQ1q2wdXL
+ y58tHcsRn/8TOwzuJkxi4abUEv/THG9ZQftRXVFiG8XmWQtkrllvXa1FdRk0=
+X-Received: by 2002:a05:620a:4542:b0:8f0:f1a5:680c with SMTP id
+ af79cd13be357-911cef062f4mr2296773985a.29.1779106834880; 
+ Mon, 18 May 2026 05:20:34 -0700 (PDT)
+X-Received: by 2002:a05:620a:4542:b0:8f0:f1a5:680c with SMTP id
+ af79cd13be357-911cef062f4mr2296769485a.29.1779106834376; 
+ Mon, 18 May 2026 05:20:34 -0700 (PDT)
 Received: from [192.168.68.106] ([191.202.238.222])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8ca361bcb20sm54130416d6.49.2026.05.18.05.20.05
+ af79cd13be357-910bae27359sm1542218485a.17.2026.05.18.05.20.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 May 2026 05:20:07 -0700 (PDT)
-Message-ID: <c24aaeb2-74d4-4cbe-a92f-1232b7dcbb46@oss.qualcomm.com>
-Date: Mon, 18 May 2026 09:20:03 -0300
+ Mon, 18 May 2026 05:20:33 -0700 (PDT)
+Message-ID: <c96dc256-9d89-4c06-b908-5419a6568ee0@oss.qualcomm.com>
+Date: Mon, 18 May 2026 09:20:30 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] hw/intc: riscv_aplic: Fix level trigger IRQ in direct
- delivery mode
+Subject: Re: [PATCH 3/4] hw/intc: riscv_imsic: Add reset API to IMSIC
 To: Jim Shu <jim.shu@sifive.com>, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
  <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Chao Liu <chao.liu.zevorn@gmail.com>
 References: <20260428160103.3551125-1-jim.shu@sifive.com>
- <20260428160103.3551125-2-jim.shu@sifive.com>
+ <20260428160103.3551125-4-jim.shu@sifive.com>
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20260428160103.3551125-2-jim.shu@sifive.com>
+In-Reply-To: <20260428160103.3551125-4-jim.shu@sifive.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: qQRBhd9nhONNAPKGdwQNvc0kB8Sg0uKE
-X-Proofpoint-ORIG-GUID: qQRBhd9nhONNAPKGdwQNvc0kB8Sg0uKE
-X-Authority-Analysis: v=2.4 cv=BICDalQG c=1 sm=1 tr=0 ts=6a0b03fb cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=etEqFfc6qwXwpI8uT8rzbw==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE4MDExOSBTYWx0ZWRfXzyioB9zAZzDI
+ 3kM9vcByeuF59I9+IoYtdx2aVqFNeAJkosrVt3hqRvN4RRlnVUnmQuXuktKKIDYR8a3NejUlukk
+ aGAH51m/erYo+9tfAzGClfDeXG1awgC0uKf0EiPVOst/825z4xP0cwksya2oWZRL/uUEr9uFKgy
+ 2PkBbLVDmRQpEEQ5jJT1Ca1Q/+0qkln77dQS0CWEQ/U4HjrpGY3j37hLZ7I4LixfVfJag714PbB
+ 5RbkGp1If0TWOM4O4jxj+Flen8JHVxoksAtlaEf0/Jyu7fJVyiB6926pcmxgEeKZQBkJO7pvguw
+ FxEJTIGL6xGw+T/ygrFgQbLNbVz2q2O5A7DaXvEsYiDVuJKESf5XIMK922V+8rfYdNjHDMQAHOE
+ qGqhMaYOL3O1uNPFxjoBs2gkVMxPsQXjIGoyqCIcBWSrfbeSZNBs9iOOGOGL7Y1GTjLMv2sKSHa
+ yjxrovS2/OjD0NQ39sA==
+X-Proofpoint-GUID: 6pwBS1N7bcar5h9-0GSb0_f5wdqYMzJp
+X-Proofpoint-ORIG-GUID: 6pwBS1N7bcar5h9-0GSb0_f5wdqYMzJp
+X-Authority-Analysis: v=2.4 cv=Lf0MLDfi c=1 sm=1 tr=0 ts=6a0b0413 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=etEqFfc6qwXwpI8uT8rzbw==:17
  a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=pFyQfRViAAAA:8 a=EUspDBNiAAAA:8 a=p3-ECv0yDWoYNiPIsKoA:9 a=QEXdDO2ut3YA:10
- a=1HOtulTD9v-eNWfpl4qZ:22 a=oJz5jJLG1JtSoe7EL652:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE4MDExOSBTYWx0ZWRfXz0m6d1OVaTF+
- 30GCjlUveuBaxK/bCx1/iGgxkng+ZNmK8zcmtSiX+/WKajfttQfAuCr/IcH9HWuNKermi/WZ1xb
- 1UjKT6mkkDnKtb66ztyg1ba/245MD7haH2LpnivWn4Yy4kmPVIGQpEZb4JCl3qOpB634N23lwL+
- Lsm0MgeSHCPHfZxpRspUkOoc3zUBpntbB69pK738TSyjKeLlyiWpLU8B45oJ2zDEIOs8wXY+VnM
- 6Df/YIrDROy8Bp2Zfr0OUs9vWw4i9EAbBF4wdOg2KaaMZ9OvPkVRVsVmH8r2JU/mBmUb/WsMe1P
- f8v2Gc0jebM9cpyMxME2bxx6hUGq7XgM3mdm7xIg3coI5qUd2ulEJglK1Hy7AKzrG3LbF3eqMNs
- 8BRp/P6k2Kc8E8WNavKq9ZQ6VBkLudjzrAgL9zhFS7AtFX7cUu6nAe20FhGHhAbGqipbLDFSbnk
- VpR5w1bLFckglsyCpSw==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=pFyQfRViAAAA:8 a=EUspDBNiAAAA:8 a=Ylk5joYACZCeeTKyrs8A:9 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22 a=oJz5jJLG1JtSoe7EL652:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-18_03,2026-05-15_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0 suspectscore=0
- priorityscore=1501 impostorscore=0 phishscore=0 clxscore=1015 bulkscore=0
+ suspectscore=0 phishscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
+ adultscore=0 clxscore=1015 impostorscore=0 malwarescore=0 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605180119
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -158,54 +157,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 4/28/2026 1:01 PM, Jim Shu wrote:
-> According to the AIA spec ch4.7 ("Precise effects on interrupt-pending
-> bits"), pending bit of APLIC should be set/cleared whenever the
-> rectified input value is high/low in the both level-trigger mode
-> and direct delivery mode.
-> 
-> Currently, QEMU APLIC only clears the pending bit when interrupt is
-> claimed in APLIC, but not clears it when the rectified input value is
-> low. (e.g. IRQ source signal is low in the LEVEL_HIGH/Level1 mode).
-> The software may receive an additional IRQ if the peripheral
-> triggers one after the software clears the APLIC IRQ but before it
-> clears the peripheral's IRQ.
-> 
-> Thus, we also clear the pending bit via the rectified input value in the
-> level-trigger mode.
-> 
-> This change doesn't affect MSI delivery mode. Calling
-> riscv_aplic_msi_irq_update() when IRQ pending is low will do nothing.
+> Clearing IMSIC registers and qemu_irq in the reset function
 > 
 > Signed-off-by: Jim Shu <jim.shu@sifive.com>
 > ---
 
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
->   hw/intc/riscv_aplic.c | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+>   hw/intc/riscv_imsic.c | 19 +++++++++++++++++++
+>   1 file changed, 19 insertions(+)
 > 
-> diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-> index 8f700431114..791e0b01b96 100644
-> --- a/hw/intc/riscv_aplic.c
-> +++ b/hw/intc/riscv_aplic.c
-> @@ -591,14 +591,14 @@ static void riscv_aplic_request(void *opaque, int irq, int level)
->           }
->           break;
->       case APLIC_SOURCECFG_SM_LEVEL_HIGH:
-> -        if ((level > 0) && !(state & APLIC_ISTATE_PENDING)) {
-> -            riscv_aplic_set_pending_raw(aplic, irq, true);
-> +        if ((level > 0) != !!(state & APLIC_ISTATE_PENDING)) {
-> +            riscv_aplic_set_pending_raw(aplic, irq, level > 0);
->               update = true;
->           }
->           break;
->       case APLIC_SOURCECFG_SM_LEVEL_LOW:
-> -        if ((level <= 0) && !(state & APLIC_ISTATE_PENDING)) {
-> -            riscv_aplic_set_pending_raw(aplic, irq, true);
-> +        if ((level <= 0) != !!(state & APLIC_ISTATE_PENDING)) {
-> +            riscv_aplic_set_pending_raw(aplic, irq, level <= 0);
->               update = true;
->           }
->           break;
+> diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
+> index 7c9a0120335..ac59496c22b 100644
+> --- a/hw/intc/riscv_imsic.c
+> +++ b/hw/intc/riscv_imsic.c
+> @@ -342,6 +342,23 @@ static const MemoryRegionOps riscv_imsic_ops = {
+>       }
+>   };
+>   
+> +static void riscv_imsic_reset_enter(Object *obj, ResetType type)
+> +{
+> +    RISCVIMSICState *imsic = RISCV_IMSIC(obj);
+> +    int i;
+> +
+> +    memset(imsic->eidelivery, 0, sizeof(uint32_t) * imsic->num_pages);
+> +    memset(imsic->eithreshold, 0, sizeof(uint32_t) * imsic->num_pages);
+> +
+> +    for (i = 0; i < imsic->num_eistate; i++) {
+> +        imsic->eistate[i] &= ~IMSIC_EISTATE_ENABLED;
+> +    }
+> +
+> +    for (i = 0; i < imsic->num_pages; i++) {
+> +        qemu_irq_lower(imsic->external_irqs[i]);
+> +    }
+> +}
+> +
+>   static void riscv_imsic_realize(DeviceState *dev, Error **errp)
+>   {
+>       RISCVIMSICState *imsic = RISCV_IMSIC(dev);
+> @@ -425,9 +442,11 @@ static const VMStateDescription vmstate_riscv_imsic = {
+>   static void riscv_imsic_class_init(ObjectClass *klass, const void *data)
+>   {
+>       DeviceClass *dc = DEVICE_CLASS(klass);
+> +    ResettableClass *rc = RESETTABLE_CLASS(klass);
+>   
+>       device_class_set_props(dc, riscv_imsic_properties);
+>       dc->realize = riscv_imsic_realize;
+> +    rc->phases.enter = riscv_imsic_reset_enter;
+>       dc->vmsd = &vmstate_riscv_imsic;
+>   }
+>   
 
 
