@@ -4,101 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 413CECD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 05:06:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76C74CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 05:07:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOqBG-0002ui-SR; Mon, 18 May 2026 01:06:20 -0400
+	id 1wOqBg-0002xS-9Q; Mon, 18 May 2026 01:06:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wOqB5-0002tN-4V
- for qemu-devel@nongnu.org; Mon, 18 May 2026 01:06:12 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ id 1wOqBR-0002w4-EQ
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 01:06:31 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wOqB2-0004vf-4s
- for qemu-devel@nongnu.org; Mon, 18 May 2026 01:06:06 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-bd3d7c29b4dso267043666b.2
- for <qemu-devel@nongnu.org>; Sun, 17 May 2026 22:06:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779080762; cv=none;
+ id 1wOqBL-000540-Vp
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 01:06:29 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-bd85ebb368fso31906766b.1
+ for <qemu-devel@nongnu.org>; Sun, 17 May 2026 22:06:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779080782; cv=none;
  d=google.com; s=arc-20240605;
- b=Mt2Ba6fyxoptYtsjBavluWbn73jTQidcUCF47f2EZArjjreANy+q3NvSAYtxqoP6y9
- 11MTuauJL9jr01xd06R2dwYoF0pBPFZMB6/av6dTXlYY4yfnJARcs4UCntISqNGC0uUo
- +EufJLQa7Zp6dj6TrBk+N1sLY94wiRu4fg9rxIwFXr34K2IUKwpqNS6Y7NEVSOPJlNPJ
- EtR6/AsLR/MXLosZKkTyByUVJQy0f+WiL5OwY5g3jp61a6UK531X1Tagxrv+VKCf70jq
- RdLvkN2tzfP/UHTAcM3H9LKN3l7sz5Tr66VYYkkkoIK99kiEOTc0nsNSp48i40Rzk95S
- dcLQ==
+ b=aDRQFoSGj1kKzeIT+cfQggGL2/kQxZiOY1kUJIpjx3zPMoQIPx+SJkcewDLqc5Tf23
+ VEyTSO73h+W11PT9IPUq9dTsJTMXPrXl7w9aimtDGg8Ky+uYk3rFell1F0tv6whP2v3/
+ wNyGBg9d1NSSAAym8LohGzLhMZTTVxC9f1psnl0r5P48F2Y2b6VINgICbG4O0aeYPoSP
+ CsiEW7tfPlxxU8UjonqiMAJmoEel3dVyAdpIVScKSYSqsPFWi1VYdBzrUCFweJIWUSiY
+ zLZbwLq7gKdYUbR/MbYHRwmNDKoSm9asj6z5ibrpkIDYhe/r97fvCq5oZeroRSyvokTp
+ J7Ng==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=QWmQcYU57p4OMf5I0lxF3//HcJkWkUi/KGPWap3Mk7g=;
- fh=KxFgLvB8QpbaNzAHYkYnodH8BxFTJmWAX/wpmrbktoY=;
- b=hbyRvByi69DjgQwTGFXlHUQftAwxq6dHmM+z2ycoNoeaLZqT7QxOP9SzXcPTWatNKF
- PFvxePTD152DyI+P2ykT5Z1q9qONYOuFMMrH3aCmEdqNeaWOcHiqCn3J1U5O7RJrreZr
- 0oTzy/L1UJeXj/KAf3njrm3mr7DIVFFXCkliY91bR0OQzJ+Qu6HuL2csEGD1LxhOug5q
- V2SA1jWflQ38gP2tP6/HjzHsyQJN7I2ws/+z4GLT/LWjx0Q6LG0pe1vc7skXW9I+0Cty
- Ji09c0NNGi8H02KqaY48un4v4aQGAjUhN35PUOyyH4W6b4+IjabxEiMQajJ73A1TLFIU
- Sy1A==; darn=nongnu.org
+ bh=3bykSsnRwW13pK4J3w4731v1FUdcYA9X2U+HFGNKB3s=;
+ fh=mlu/rwcbLTJ6NOKEPShSMQL5j1Nxw4EitIiL7lEEXxM=;
+ b=Ey4oitODk/JuaZ28Re0JxUMgkq0zFh1P1Bnc9yUV2dJGXVCt3ukdum7AEBg923ovWa
+ TcBm2FDy7z0hUnNKtEbUjflddV8RJwRGlS5XfDpy7rLUj6eMiKy99XdrljyJUPSzGKA3
+ lvpkgKbq4GBtxGF+5OLGzdoZohTMwtlI2+gkPjxjSmZ2JQOrCZRPqucxwb5VOffMbOt4
+ Uoa8ibPxTsyxTKjLPvi1tObywMOOUCs+DLuGKM6qauQaBDILKkLs+cm6xqha5QNanDVE
+ cyOxemH16ONW4K4XDrvXi0jJkc56r0MnScYW3wOAc/ybe3ScRonlEvrIAOlMj+jthuYv
+ tmMQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779080762; x=1779685562; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779080782; x=1779685582; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QWmQcYU57p4OMf5I0lxF3//HcJkWkUi/KGPWap3Mk7g=;
- b=Mv5OTIs8RfkhjVX0ouuitP1VRsjc7LP4vPvfWynUAbsDDtYZypTahtPkgC00JJUvG5
- yXQ/raKnBqRXK9IXMqbsRqAMj2FpRBiLt9m1cLmzChMtFkl9am0x05K3bg9p/w6JanLv
- Ymq0Mvd/xXSnUDhf30ALIO1Z6WL5XXsov9CD3sz84etkkSqjgG5whyuGE0MqYbiSSUDv
- pM6WqZDHSSI22E4KnBRfG+ZOn/yf7SL35gFbNLlOrU+uj3JKQytnF+Zyq3lTRe6aON6O
- kLoJwFYsU/eoCcdRm6Stq1iDdSvrw42zRhIX+HeQW9hGJwWH8uk+nD0DU85pXHuO1NSJ
- BQHA==
+ bh=3bykSsnRwW13pK4J3w4731v1FUdcYA9X2U+HFGNKB3s=;
+ b=UgVYIkyWb2P4PzaaxXk76viVo3nrbP/D7nd/tmaKnDITqpdM/tiRyeqjxyEoNbi+op
+ czzH3Cr7I62p4RXOe5tWQaD5eE5l/m6a0z1hN7Xzbtg3moNVLCcKfHL4txVdtnQT284O
+ zF3W2wXfxpxqEpXJdp8YMFyRflZCmAB8LnhbuHi04mHekI4u08ElDlnOHCA9gM+SgQeA
+ r+LdiAv8mEmfTUZiT56Gn2kSfR8zEMNxh/acD8NLkfY+nTF7/13s/fOctglhF+hMH+JY
+ 3UM1p95M3G0DUOwBmx0J4SKYmSJdfujOZAfqO40drf09GyAgl52fjdUTlsfGyqBweZRo
+ 1S6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779080762; x=1779685562;
+ d=1e100.net; s=20251104; t=1779080782; x=1779685582;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=QWmQcYU57p4OMf5I0lxF3//HcJkWkUi/KGPWap3Mk7g=;
- b=SrYfxW5K14Me0wLAUsPI6wBfDeIWkbY/OxaQ7eopRPmI/2FOrQInIDMmcT92YNBmHt
- 39+nnMIuvSFce/CW+iAySUR7jKRJpyrqp7vzFh7tcTCo+DAevNpR7lUSjiC7SoWH7ukz
- wYqMx1jXX2u0MZ+x3hprCKUNNipXIin/ML8cAEX5/ZwahQWjy8sVB7U+g4koejz6QMqb
- 9LbhmfitEbcgddukzPoD/Rzsl1svX9ADSe+p1vBXb2iDEGottaSyMshUNKQesAFxRLeN
- 3r9nciT53UXYKjPi1VATCemjK5fQF1le/dhsdVbeuwIFgwCJuRMNMRyv1vcWJF3URGlK
- i1PA==
-X-Gm-Message-State: AOJu0Yy6WEzx65tgFsTxgopucr8313Wdg36D+JAXK28pCiDIbvnqTgDc
- QdSt60XjaWXVK5Fvb7lTMCesq2GZGyeMnCvo0VvzKVZJmotsDLBO42tpw/QC+70NeyRUWOGVZ+J
- 3GsfMBAlcscABTBIkbkT85f3I+RSLXqY=
-X-Gm-Gg: Acq92OGE5QXVG9UFY4Gob8vap/8TWfUPwjVJDc9WnUQAYhc8Kc5DrMDl6nkz1gr081k
- tOEHYOl3C4p0LxqoNF9b7UJGMPovp7WmwLhpVJB5PTn/SwudzXTa35X8+wdKlNGrBiitcA2Sqkd
- rx3nRSF1BNGSkCvVsoAqNPccIT/5gwujrqt+e+lfMPnjbhnUsRQDB5md84DssitsqJelTpYVYNB
- XrclE12NHVvQGm0BSj8Ng+SFb53wCv4fgWpBb0cC6RKtI772UtLHENf0PcrVqfLMh5ZHywpCBHc
- 4jJAwNR5vJLtihrsR6lZnT/pmA+Ftdz7fhefBw==
-X-Received: by 2002:a17:907:7287:b0:bd1:9f5c:abbf with SMTP id
- a640c23a62f3a-bd51798eb09mr677859766b.43.1779080762175; Sun, 17 May 2026
- 22:06:02 -0700 (PDT)
+ bh=3bykSsnRwW13pK4J3w4731v1FUdcYA9X2U+HFGNKB3s=;
+ b=T+WCTw2jxZGErwjqx4kn77w8uPmszXcN9NbdvJVqkc/5BBDMJ20REi4cYrqjnXUM2c
+ rT9SSErSffUgf4mV6Ur7lBoIo8FD4AuYBlPiViiSQaUSIQVcIuwB268N74a9u7woSvUr
+ WPJfuJaKsiCf7ZQgZz9VjBktXm0fdKK0Bq4WluTky0Isx1exhBYF3JHjG09mMudtASp/
+ JaG/7ktEBY0PvssHQSvBq+K6vNbRa/XcmSa3PUMsjK6xTpmTvDm5y9Bq2dpmO/eCD0Lv
+ SPBs3QEHaLnnaxSCwQOQo5T328Avac5b6F/FuQsj3CXAoij/De29kHyANfB0U96pZr0H
+ plbQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8GPX7BTit+OEsripE/7rNcKULW+zDr3iT33BrNfGMXadej+bxVjWlKPvUPsDBzmGnNCS2HoljM0Rzl@nongnu.org
+X-Gm-Message-State: AOJu0YwGtYEXxxMsKjd3209yPlUwksjRwFy58d92icUZ8Z4wqVVSkgQP
+ x4KeYb/eAiASSv2FOXQEIWw1kWLvYpkLb19OX23UHAVyPeABu69U66QjbTdXEGykjm9+7xCBYVb
+ y+q15jo+AhNEDntuUV66ChfVFSefgz8s=
+X-Gm-Gg: Acq92OEGiVJgrAhOLFpjLgpchppWXMS1t/PHtnPo9Wpf5zbnSXqBMBXBOQBexWPWB+g
+ xzHqLto2ZIx6+ZQIwdieTTIsry8q/cnDYEWKIv4a10c81aXLM8dq5+iICQiuupf10WMuaOHkQXn
+ y2qlJAnTSxxCfgPU1jNEpx4SuUV2QwpyW0MriNq0rxxJWyHlyhLhVPVQRfC03VRrIfIfwSaBRK1
+ /qI521EtMdeFA9r8Xzy3RqPON3si7mVYQIyJmW3o80EICpKw8tSmeGvBWh/1oFdleQ9PhcARAO7
+ vZf7KQPYgDmBX111KsF1pqFe+ZXgRIvR2gYMoA==
+X-Received: by 2002:a17:907:3944:b0:b9d:8697:73b8 with SMTP id
+ a640c23a62f3a-bd5178c7d45mr657404366b.22.1779080781965; Sun, 17 May 2026
+ 22:06:21 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251231045000.30120-1-jay.chang@sifive.com>
- <CACNNAjPw1RAQKctNWa5=hVs__qz8uOqzd6VrL8V2XvEfEaepRA@mail.gmail.com>
-In-Reply-To: <CACNNAjPw1RAQKctNWa5=hVs__qz8uOqzd6VrL8V2XvEfEaepRA@mail.gmail.com>
+References: <20260106080520.28711-1-jay.chang@sifive.com>
+ <a696a6c1-c1b0-40ed-8788-da7bd4d0d73d@ventanamicro.com>
+ <CACNNAjMsNS4RUR+nR5aPhsb-w-QwUDNTNXYpim4fxRrqvNKW+A@mail.gmail.com>
+In-Reply-To: <CACNNAjMsNS4RUR+nR5aPhsb-w-QwUDNTNXYpim4fxRrqvNKW+A@mail.gmail.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 18 May 2026 15:05:35 +1000
-X-Gm-Features: AVHnY4K3dhzRjqly3If50wVEfsMIzBLtcV2X74jzHfjphO6m-FAqPfyeEA_g6lM
-Message-ID: <CAKmqyKOeabe3td8s4xxidKzRFEFaGADFAgZkbH4x0y94ZCnxbw@mail.gmail.com>
-Subject: Re: [PATCH v3 0/2] target/riscv: Fix PMP address alignment
+Date: Mon, 18 May 2026 15:05:55 +1000
+X-Gm-Features: AVHnY4IApd3MN7HdkyibGlsQJS1IPVd5HgLH4ktyCWmiPErr9PJJVYaUEzws1uk
+Message-ID: <CAKmqyKNSzXgHEQwxH9Jg9g=TCZ=COr6kveUtYeRALteZ7oTZHA@mail.gmail.com>
+Subject: Re: [PATCH] hw/riscv: riscv-iommu: Re-process command queue after
+ clearing CMD_ILL
 To: Jay Chang <jay.chang@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Frank Chang <frank.chang@sifive.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x62a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -106,7 +109,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,7 +125,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 18, 2026 at 12:51=E2=80=AFPM Jay Chang <jay.chang@sifive.com> w=
+On Mon, May 18, 2026 at 12:55=E2=80=AFPM Jay Chang <jay.chang@sifive.com> w=
 rote:
 >
 > Hi,
@@ -138,32 +141,60 @@ Alistair
 > Thanks,
 > Jay Chang
 >
-> On Wed, Dec 31, 2025 at 12:50=E2=80=AFPM Jay Chang <jay.chang@sifive.com>=
- wrote:
+> On Wed, Jan 7, 2026 at 9:52=E2=80=AFPM Daniel Henrique Barboza <dbarboza@=
+ventanamicro.com> wrote:
 >>
->> This series fixes PMP address alignment to comply with the RISC-V
->> specification WARL (Write-Any, Read-Legal) semantics.
 >>
->> When configuring pmpcfg (TOR, NA4, or NAPOT) and pmpaddr, if the
->> value is smaller than the PMP granularity, it needs to be aligned
->> to the PMP granularity.
 >>
->> Changes in v3:
->> - Use ROUND_UP() macro for NAPOT address alignment
+>> On 1/6/26 5:05 AM, Jay Chang wrote:
+>> > When software clears CMD_ILL or CQMF error bits by writing 1 to CQCSR,
+>> > the IOMMU should re-check the command queue and continue processing
+>> > pending commands if head !=3D tail.
+>> >
+>> > Per RISC-V IOMMU specification, the software error recovery sequence:
+>> >
+>> >    1. Read the head pointer
+>> >    2. Software has two options:
+>> >       - Option 1: Set tail =3D head to re-start from an empty queue
+>> >       - Option 2: Overwrite the illegal command with a valid one
+>> >    3. Re-enable the command queue by writing 1 to cqcsr.cmd_ill
+>> >
+>> >    "At this point, IOMMU will start working on the first command
+>> >     in the queue."
+>> >
+>> > Signed-off-by: Jay Chang <jay.chang@sifive.com>
+>> > Reviewed-by: Frank Chang <frank.chang@sifive.com>
+>> > ---
 >>
->> Changes in v2:
->> - Fixed commit message grammar ("it needs to be aligned")
->> - Use ROUND_DOWN() macro for TOR address alignment to improve
->>   code readability
+>> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 >>
->> Jay Chang (2):
->>   target/riscv: Align pmp size to pmp-granularity
->>   target/riscv: Use macros for PMP address alignment
->>
->>  target/riscv/pmp.c | 22 ++++++++++++++++------
->>  1 file changed, 16 insertions(+), 6 deletions(-)
->>
->> --
->> 2.48.1
+>> >   hw/riscv/riscv-iommu.c | 10 ++++++++++
+>> >   1 file changed, 10 insertions(+)
+>> >
+>> > diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+>> > index b46b337375..e89a262a63 100644
+>> > --- a/hw/riscv/riscv-iommu.c
+>> > +++ b/hw/riscv/riscv-iommu.c
+>> > @@ -1992,6 +1992,16 @@ static void riscv_iommu_process_cq_control(RISC=
+VIOMMUState *s)
+>> >       }
+>> >
+>> >       riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_CQCSR, ctrl_set, ctrl_c=
+lr);
+>> > +
+>> > +    /*
+>> > +     * After clearing error bits (CMD_ILL, CQMF), if queue is still a=
+ctive,
+>> > +     * re-process pending command.
+>> > +     */
+>> > +    ctrl_set =3D riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_CQCSR);
+>> > +    if ((ctrl_set & RISCV_IOMMU_CQCSR_CQON) &&
+>> > +        !(ctrl_set & (RISCV_IOMMU_CQCSR_CMD_ILL | RISCV_IOMMU_CQCSR_C=
+QMF))) {
+>> > +        riscv_iommu_process_cq_tail(s);
+>> > +    }
+>> >   }
+>> >
+>> >   static void riscv_iommu_process_fq_control(RISCVIOMMUState *s)
 >>
 
