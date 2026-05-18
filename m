@@ -4,112 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76C74CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 05:07:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BB35CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 05:19:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOqBg-0002xS-9Q; Mon, 18 May 2026 01:06:44 -0400
+	id 1wOqNL-0005IS-2b; Mon, 18 May 2026 01:18:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wOqBR-0002w4-EQ
- for qemu-devel@nongnu.org; Mon, 18 May 2026 01:06:31 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wOqBL-000540-Vp
- for qemu-devel@nongnu.org; Mon, 18 May 2026 01:06:29 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-bd85ebb368fso31906766b.1
- for <qemu-devel@nongnu.org>; Sun, 17 May 2026 22:06:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779080782; cv=none;
- d=google.com; s=arc-20240605;
- b=aDRQFoSGj1kKzeIT+cfQggGL2/kQxZiOY1kUJIpjx3zPMoQIPx+SJkcewDLqc5Tf23
- VEyTSO73h+W11PT9IPUq9dTsJTMXPrXl7w9aimtDGg8Ky+uYk3rFell1F0tv6whP2v3/
- wNyGBg9d1NSSAAym8LohGzLhMZTTVxC9f1psnl0r5P48F2Y2b6VINgICbG4O0aeYPoSP
- CsiEW7tfPlxxU8UjonqiMAJmoEel3dVyAdpIVScKSYSqsPFWi1VYdBzrUCFweJIWUSiY
- zLZbwLq7gKdYUbR/MbYHRwmNDKoSm9asj6z5ibrpkIDYhe/r97fvCq5oZeroRSyvokTp
- J7Ng==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=3bykSsnRwW13pK4J3w4731v1FUdcYA9X2U+HFGNKB3s=;
- fh=mlu/rwcbLTJ6NOKEPShSMQL5j1Nxw4EitIiL7lEEXxM=;
- b=Ey4oitODk/JuaZ28Re0JxUMgkq0zFh1P1Bnc9yUV2dJGXVCt3ukdum7AEBg923ovWa
- TcBm2FDy7z0hUnNKtEbUjflddV8RJwRGlS5XfDpy7rLUj6eMiKy99XdrljyJUPSzGKA3
- lvpkgKbq4GBtxGF+5OLGzdoZohTMwtlI2+gkPjxjSmZ2JQOrCZRPqucxwb5VOffMbOt4
- Uoa8ibPxTsyxTKjLPvi1tObywMOOUCs+DLuGKM6qauQaBDILKkLs+cm6xqha5QNanDVE
- cyOxemH16ONW4K4XDrvXi0jJkc56r0MnScYW3wOAc/ybe3ScRonlEvrIAOlMj+jthuYv
- tmMQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779080782; x=1779685582; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3bykSsnRwW13pK4J3w4731v1FUdcYA9X2U+HFGNKB3s=;
- b=UgVYIkyWb2P4PzaaxXk76viVo3nrbP/D7nd/tmaKnDITqpdM/tiRyeqjxyEoNbi+op
- czzH3Cr7I62p4RXOe5tWQaD5eE5l/m6a0z1hN7Xzbtg3moNVLCcKfHL4txVdtnQT284O
- zF3W2wXfxpxqEpXJdp8YMFyRflZCmAB8LnhbuHi04mHekI4u08ElDlnOHCA9gM+SgQeA
- r+LdiAv8mEmfTUZiT56Gn2kSfR8zEMNxh/acD8NLkfY+nTF7/13s/fOctglhF+hMH+JY
- 3UM1p95M3G0DUOwBmx0J4SKYmSJdfujOZAfqO40drf09GyAgl52fjdUTlsfGyqBweZRo
- 1S6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779080782; x=1779685582;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=3bykSsnRwW13pK4J3w4731v1FUdcYA9X2U+HFGNKB3s=;
- b=T+WCTw2jxZGErwjqx4kn77w8uPmszXcN9NbdvJVqkc/5BBDMJ20REi4cYrqjnXUM2c
- rT9SSErSffUgf4mV6Ur7lBoIo8FD4AuYBlPiViiSQaUSIQVcIuwB268N74a9u7woSvUr
- WPJfuJaKsiCf7ZQgZz9VjBktXm0fdKK0Bq4WluTky0Isx1exhBYF3JHjG09mMudtASp/
- JaG/7ktEBY0PvssHQSvBq+K6vNbRa/XcmSa3PUMsjK6xTpmTvDm5y9Bq2dpmO/eCD0Lv
- SPBs3QEHaLnnaxSCwQOQo5T328Avac5b6F/FuQsj3CXAoij/De29kHyANfB0U96pZr0H
- plbQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8GPX7BTit+OEsripE/7rNcKULW+zDr3iT33BrNfGMXadej+bxVjWlKPvUPsDBzmGnNCS2HoljM0Rzl@nongnu.org
-X-Gm-Message-State: AOJu0YwGtYEXxxMsKjd3209yPlUwksjRwFy58d92icUZ8Z4wqVVSkgQP
- x4KeYb/eAiASSv2FOXQEIWw1kWLvYpkLb19OX23UHAVyPeABu69U66QjbTdXEGykjm9+7xCBYVb
- y+q15jo+AhNEDntuUV66ChfVFSefgz8s=
-X-Gm-Gg: Acq92OEGiVJgrAhOLFpjLgpchppWXMS1t/PHtnPo9Wpf5zbnSXqBMBXBOQBexWPWB+g
- xzHqLto2ZIx6+ZQIwdieTTIsry8q/cnDYEWKIv4a10c81aXLM8dq5+iICQiuupf10WMuaOHkQXn
- y2qlJAnTSxxCfgPU1jNEpx4SuUV2QwpyW0MriNq0rxxJWyHlyhLhVPVQRfC03VRrIfIfwSaBRK1
- /qI521EtMdeFA9r8Xzy3RqPON3si7mVYQIyJmW3o80EICpKw8tSmeGvBWh/1oFdleQ9PhcARAO7
- vZf7KQPYgDmBX111KsF1pqFe+ZXgRIvR2gYMoA==
-X-Received: by 2002:a17:907:3944:b0:b9d:8697:73b8 with SMTP id
- a640c23a62f3a-bd5178c7d45mr657404366b.22.1779080781965; Sun, 17 May 2026
- 22:06:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <michaeljclark@mac.com>)
+ id 1wOqNJ-0005I4-Ds
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 01:18:45 -0400
+Received: from ci-2006j-snip4-1.eps.apple.com ([57.103.90.222]
+ helo=outbound.ci.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <michaeljclark@mac.com>)
+ id 1wOqNH-00009e-Vj
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 01:18:45 -0400
+Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-central-1k-60-percent-11 (Postfix) with ESMTPS id
+ AA8141800133
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 05:18:41 +0000 (UTC)
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQhKAkMOUhxBCE4dXwJLVxQEFVoOXwpXHFMbXwxFAHIdWBsdDlgGEhZdRV4EVANTFVUSUAFWGVkwVBlQQ1QEX1BLGw5cFwNXHFZFXBhDCV0FVxwdDl5FWxNVF0YJGQhdHRkIRx8KMANCDlYDQwdFAC0ZHFdQWgpRXloXXk1aAlZNBUxQDFVTBEVfVVVUVgofRFgcV0APCAMTFEgLDA5bBkgJTAIJBytfEVpWUAJaVRIEQAhWUF4IXh9MHA==
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mac.com; s=1a1hai;
+ t=1779081522; x=1781673522; bh=U3IgSxeujyvKOMi89oZlF3JrMfmRjjAwHKKwC1bg9TI=;
+ h=Message-ID:Date:MIME-Version:Subject:From:To:Content-Type:x-icloud-hme;
+ b=mqHA51Z4nemnctq7l1KHkFg/Z22aU5GOnHv0dhlB5a5c+v1tAZ+3On/V4TIskA1Ct2TJIN1d6ZZ+feWJMsxdyRZQq3fa4GGVWBrvsJxjsYvy+JI/mYNmy7XMIkvI0aLia6Jpy0GgeMArfupVSHFEU6cGbtLrP+Mh5t6WbuZMereYQIa4mBi9qn9o4wCJECeVkRcfPMVAy6zrUQIzyVzXFGYDudsy6INn3Ffr5k7U+nJh99tWsTpzzkktOYmCn7/xnb4zP7MlO+psI/aSeWQ+y9z9P24dDsxoSitxOO6Zy8ZZYgWmjFuS0829xW9ojn8XhVaf7PCdEpxh56nZ/iIHwQ==
+Received: from [192.168.1.3] (unknown [17.57.156.36])
+ by p00-icloudmta-asmtp-us-central-1k-60-percent-11 (Postfix) with ESMTPSA id
+ C1415180011B
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 05:18:40 +0000 (UTC)
+Message-ID: <4cab865f-f9aa-4add-8c1c-08a9048041d0@mac.com>
+Date: Mon, 18 May 2026 17:18:38 +1200
 MIME-Version: 1.0
-References: <20260106080520.28711-1-jay.chang@sifive.com>
- <a696a6c1-c1b0-40ed-8788-da7bd4d0d73d@ventanamicro.com>
- <CACNNAjMsNS4RUR+nR5aPhsb-w-QwUDNTNXYpim4fxRrqvNKW+A@mail.gmail.com>
-In-Reply-To: <CACNNAjMsNS4RUR+nR5aPhsb-w-QwUDNTNXYpim4fxRrqvNKW+A@mail.gmail.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 18 May 2026 15:05:55 +1000
-X-Gm-Features: AVHnY4IApd3MN7HdkyibGlsQJS1IPVd5HgLH4ktyCWmiPErr9PJJVYaUEzws1uk
-Message-ID: <CAKmqyKNSzXgHEQwxH9Jg9g=TCZ=COr6kveUtYeRALteZ7oTZHA@mail.gmail.com>
-Subject: Re: [PATCH] hw/riscv: riscv-iommu: Re-process command queue after
- clearing CMD_ILL
-To: Jay Chang <jay.chang@sifive.com>
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Frank Chang <frank.chang@sifive.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x62e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: GLYPH: TLB miss handlers, virtualization, and modes
+From: Michael Clark <michaeljclark@mac.com>
+To: qemu-devel <qemu-devel@nongnu.org>
+References: <2143170d-8998-4812-9204-57febae9d755@mac.com>
+Content-Language: en-US
+In-Reply-To: <2143170d-8998-4812-9204-57febae9d755@mac.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: bzKZczZTUhHJTdokM5tJXxkTiwZEIjlg
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE4MDA0OCBTYWx0ZWRfXx86hFmrJG2fJ
+ Ne/3+JLT8qTuIsMn022vptKefMttShu74qWW+Q8ZJ/sASymV44EzM80eETcOKDSN294sFx9uW8R
+ 7DtBSCAksC6Fv+MhtNIAHuSgCkhKjtB7n1ehkgp1fDb38J5P8QiHMCSlT6er8vYiqZVsX1vkxPw
+ 7WbmfRlNNt8NNZEq+WRbYiJ097gC9b4GhQUVVXshZtSsiyDS8PhgvMvAhhPk/iCoecfBdzZ1BkX
+ AsLU07pDm7w5BkAq/Fw2ojwwNAgyY0+h5FvhgjLqSFzHu+uI5UJIiGxZlgvcnCK9XCKa5N5ly9A
+ 0NpdOyRMsGFW8i99qbhdjyZYqPeT5MpiNLGpFr0hT2OYLGrxRIxEwQiSr1TVwo=
+X-Proofpoint-GUID: bzKZczZTUhHJTdokM5tJXxkTiwZEIjlg
+X-Authority-Info-Out: v=2.4 cv=NcHrFmD4 c=1 sm=1 tr=0 ts=6a0aa131
+ cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
+ a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10
+ a=x7bEGLp0ZPQA:10 a=u0hES8UrWMkA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=gfWoCXCNgtdp1CFxvS4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+Received-SPF: pass client-ip=57.103.90.222; envelope-from=michaeljclark@mac.com;
+ helo=outbound.ci.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,76 +82,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 18, 2026 at 12:55=E2=80=AFPM Jay Chang <jay.chang@sifive.com> w=
-rote:
->
-> Hi,
->
-> Gentle ping on this patch.
+On 5/18/26 14:42, Michael Clark wrote:
+> “This maps onto VMX non-root operation with EPT/NPT second-level 
+> translation and VPID-tagged TLB behavior, but generalizes the refill 
+> path into an architecturally visible per-domain handler mechanism.”
 
-Can you please resend the series, I lost this the first time around
+except we wrote the spec in English. that's some AI-generated nonsense.
 
-Alistair
-
-
->
-> Thanks,
-> Jay Chang
->
-> On Wed, Jan 7, 2026 at 9:52=E2=80=AFPM Daniel Henrique Barboza <dbarboza@=
-ventanamicro.com> wrote:
->>
->>
->>
->> On 1/6/26 5:05 AM, Jay Chang wrote:
->> > When software clears CMD_ILL or CQMF error bits by writing 1 to CQCSR,
->> > the IOMMU should re-check the command queue and continue processing
->> > pending commands if head !=3D tail.
->> >
->> > Per RISC-V IOMMU specification, the software error recovery sequence:
->> >
->> >    1. Read the head pointer
->> >    2. Software has two options:
->> >       - Option 1: Set tail =3D head to re-start from an empty queue
->> >       - Option 2: Overwrite the illegal command with a valid one
->> >    3. Re-enable the command queue by writing 1 to cqcsr.cmd_ill
->> >
->> >    "At this point, IOMMU will start working on the first command
->> >     in the queue."
->> >
->> > Signed-off-by: Jay Chang <jay.chang@sifive.com>
->> > Reviewed-by: Frank Chang <frank.chang@sifive.com>
->> > ---
->>
->> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
->>
->> >   hw/riscv/riscv-iommu.c | 10 ++++++++++
->> >   1 file changed, 10 insertions(+)
->> >
->> > diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
->> > index b46b337375..e89a262a63 100644
->> > --- a/hw/riscv/riscv-iommu.c
->> > +++ b/hw/riscv/riscv-iommu.c
->> > @@ -1992,6 +1992,16 @@ static void riscv_iommu_process_cq_control(RISC=
-VIOMMUState *s)
->> >       }
->> >
->> >       riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_CQCSR, ctrl_set, ctrl_c=
-lr);
->> > +
->> > +    /*
->> > +     * After clearing error bits (CMD_ILL, CQMF), if queue is still a=
-ctive,
->> > +     * re-process pending command.
->> > +     */
->> > +    ctrl_set =3D riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_CQCSR);
->> > +    if ((ctrl_set & RISCV_IOMMU_CQCSR_CQON) &&
->> > +        !(ctrl_set & (RISCV_IOMMU_CQCSR_CMD_ILL | RISCV_IOMMU_CQCSR_C=
-QMF))) {
->> > +        riscv_iommu_process_cq_tail(s);
->> > +    }
->> >   }
->> >
->> >   static void riscv_iommu_process_fq_control(RISCVIOMMUState *s)
->>
+~mc
 
