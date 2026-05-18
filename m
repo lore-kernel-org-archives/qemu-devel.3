@@ -4,95 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 734F3CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 07:38:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DCEACD4F48
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 07:38:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOsXi-0003so-7p; Mon, 18 May 2026 03:37:39 -0400
+	id 1wOsUx-0000pM-CN; Mon, 18 May 2026 03:34:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
- id 1wOsWt-0003Bz-80; Mon, 18 May 2026 03:36:49 -0400
-Received: from mx07-0090a401.pphosted.com ([66.159.244.62])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
- id 1wOsWq-0001gq-QA; Mon, 18 May 2026 03:36:46 -0400
-Received: from pps.filterd (m0463074.ppops.net [127.0.0.1])
- by mx07-0090a401.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64I5m7ws2203215; Mon, 18 May 2026 07:36:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=beckhoff.com; h=
- cc:content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=mail2022r; bh=NXF3O1V7i0KJ8OrHyjw685/0
- H/6/Ky+sF/XADbpg4RQ=; b=bOxybrldpYSNpirkttDfVhhkUe1VRum04gy3ORd3
- kBFbEhGyHkCO+zmd9FA0ldb/R5ZsPtNyJXHA22zUO9tqSkxYKXUinA9Uiil+b2pn
- P1EBYYl+ah3f5NrakoqdUkt85ebRBzVP91Eyhv+8+PoJiCAT/VoQuwoc/ZoItsDL
- QrMg6BbhdEvK8SyhuvoKv6WYn1uJinlM7SK3HPFJjYW0LRRB/4/DrNnHIlcyEWAR
- wE9kQrPzsEw76ZwXM/oaVyUW6dZQGCC2yTXkANL2mHgOPMD42Al4g6V5pAiBvrA9
- cH7/lALUjk0uudungrhKmqDhDwVB6hRasZb9aY5X/VEOXA==
-Received: from ex09.beckhoff.com ([62.159.14.12])
- by mx07-0090a401.pphosted.com (PPS) with ESMTPS id 4e760rsgh6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 18 May 2026 07:36:33 +0000 (GMT)
-Received: from ex10.beckhoff.com (172.17.2.111) by ex09.beckhoff.com
- (172.17.6.17) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Mon, 18 May
- 2026 09:36:33 +0200
-Received: from ex10.beckhoff.com ([fe80::ab7f:9a91:d220:441b]) by
- ex10.beckhoff.com ([fe80::ab7f:9a91:d220:441b%12]) with mapi id
- 15.02.2562.035; Mon, 18 May 2026 09:36:33 +0200
-From: =?utf-8?B?Q29ydmluIEvDtmhuZQ==?= <C.Koehne@beckhoff.com>
-To: "peter.maydell@linaro.org" <peter.maydell@linaro.org>
-CC: "hreitz@redhat.com" <hreitz@redhat.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-block@nongnu.org" <qemu-block@nongnu.org>, "edgar.iglesias@gmail.com"
- <edgar.iglesias@gmail.com>, "kwolf@redhat.com" <kwolf@redhat.com>,
- =?utf-8?B?WWFubmljayBWb8OfZW4=?= <Y.Vossen@beckhoff.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "pierrick.bouvier@oss.qualcomm.com" <pierrick.bouvier@oss.qualcomm.com>,
- "alistair@alistair23.me" <alistair@alistair23.me>
-Subject: Re: [PATCH v6 15/15] docs/system/arm: Add support for Beckhoff CX7200
-Thread-Topic: [PATCH v6 15/15] docs/system/arm: Add support for Beckhoff CX7200
-Thread-Index: AQHc4scJQKrjf3Iwc0OYGlSYpEachrYOnV4AgAStpAA=
-Date: Mon, 18 May 2026 07:36:33 +0000
-Message-ID: <c14139567e6d7db69816d86cd193083658ef684b.camel@beckhoff.com>
-References: <20260513105517.146706-1-corvin.koehne@gmail.com>
- <20260513105517.146706-16-corvin.koehne@gmail.com>
- <CAFEAcA8aLT4LQZ1HaQtduZeWm9w+62bDaXmLetbnJQHN3xq3jg@mail.gmail.com>
-In-Reply-To: <CAFEAcA8aLT4LQZ1HaQtduZeWm9w+62bDaXmLetbnJQHN3xq3jg@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-originating-ip: [172.17.129.38]
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="=-aDc/qhe+YnBEi8+FDx+2"
+ (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
+ id 1wOsUQ-0000gE-N7
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 03:34:17 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
+ id 1wOsUO-0000PQ-Lq
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 03:34:14 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-45e7c636e74so375578f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 00:34:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1779089651; x=1779694451; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=k6VI4nokCfZ+LKIGnO4eT2U19gP+31CsGFQKC59urGA=;
+ b=r6TrSA8c61wddicWqBExcNKQvVwiudMKMIm4ebFTOO99pLgvwFFaPERlHXdBB95iKJ
+ pcHGzMyuivOpKEPjQEaom3+0kXo+68sp8Fx1Gh9xo0vbiWEweH+ixe+oBP7mkskifORI
+ uXJ33Qty4wo/sBO3a9iAkX5smqkYgMEJLcuVoxwCitXZZ8+SU+MDcTOl4S6PMgGULOCo
+ mDj3Tfkmq0Yghcg2Pt6ORa1lKBRNSRounaRFnVbyMijXWyTrQh1TeWbewPjFJpY9NtTX
+ oTwIOPR+jHOmilS3DtM2Cvd/VaamaTIu40/9dqMhiaU4fizdHPGd+fZvGepHGMeq2qAD
+ E3Fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779089651; x=1779694451;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=k6VI4nokCfZ+LKIGnO4eT2U19gP+31CsGFQKC59urGA=;
+ b=E19WN95HrAsOln/jLPSO69kRvKmBT69rUPUgt8aYHdwFl7M939OqBmkA8RvkBtLBtF
+ RCAMDPcEF/qzPX1uZ+3iR9IsIjpk6Bcz8y7uET9IP7MIHUzFEpNj3gucQXzqQhzfmepl
+ ldSSjXWfrdw+ykvDL9L4E5Po4mkPjCGMKsNnhtmFpQkfR6yEXwMeqnvZwNsrrR/vmVaF
+ x9QekbW+MUTkXJkQZEdKbYmPgDltVb1tFh9N9j0aEr5VkjklQ8WVyT9fOnhuTt1f6HV4
+ Y5JpNYdl94G7TAVomm23QCQwtDc0IMtGEgTMjSls8jfnyMwHlgXOwF0v7Y3pfSrYZ/f1
+ NOfA==
+X-Gm-Message-State: AOJu0YwElkNtP5N1lgawWfCuhCnVYeZnrNuwPWp8fCxCZYiZcYPkKtE9
+ jpJK/Lf0T4W1il4WYaMW2sGaN9Zcax/7z6qJWOtNbMMkUpifqVya+DqvPfbxkNv4
+X-Gm-Gg: Acq92OFGxftkEEsMke5ZB0JgyLyBVVOSVlo4VUJIY/QeHSoHzSli46kj5oxNPWqVRAn
+ FzGgjMdhTI1WI/IgxfG/hcAgdk4jlcEz7xDUcd60t95DiHRBpCt8zc56rQ+qEgzHD1BdPQ81KJO
+ f/Jp72oT6dLSqiv20OsYEnnP5i6HAY96zVScM0bxC5LDF7iRbh9TUwG5eYKqgXQoFLH3vAQgaiD
+ n34EfB/ouwWzE9BRa4knB6mmj2kp96xoHeViENBpcoUGjPRqa1aFx7Kz7/q2Q6xA9eTFyVGjwHD
+ Cxq8SWtF/lgP8NLjnory4BhU+BT9DvY+VW3tur4jNr1Az44EDiaOgQ23Lti30Ts/2AQztd9qYxf
+ slHptkmYodvPjUT+L7bgj0+kFnkd2m/jTgFQ9i9L+UT040FLQYMqxhwd3E6izjHrZkeUY4FMjKl
+ jwqseiGZ1Qn5s7TkilTcm39tQxlBxZpsflIIun2tr4FPVArg==
+X-Received: by 2002:a05:6000:603:b0:45d:3aa3:7f76 with SMTP id
+ ffacd0b85a97d-45e5c5ebd5amr22226900f8f.33.1779089650726; 
+ Mon, 18 May 2026 00:34:10 -0700 (PDT)
+Received: from PC-DA2D10.beckhoff.com
+ ([2001:9e8:dc08:b284:85e6:f7f4:1a4a:4dfe])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45d9ec3b18fsm32590222f8f.11.2026.05.18.00.34.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 18 May 2026 00:34:10 -0700 (PDT)
+From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Yannick=20Vo=C3=9Fen?= <y.vossen@beckhoff.com>,
+ Hanna Reitz <hreitz@redhat.com>,
+ =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Yannick Vossen <Y.Vossen@beckhoff.com>, qemu-arm@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Alistair Francis <alistair@alistair23.me>,
+ Corvin Koehne <C.Koehne@beckhoff.com>, qemu-block@nongnu.org,
+ "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+Subject: [PATCH v7 07/16] hw/misc/zynq_slcr: Add logic for DCI configuration
+Date: Mon, 18 May 2026 09:33:52 +0200
+Message-ID: <20260518073401.11279-8-corvin.koehne@gmail.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260518073401.11279-1-corvin.koehne@gmail.com>
+References: <20260518073401.11279-1-corvin.koehne@gmail.com>
 MIME-Version: 1.0
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE4MDA3MiBTYWx0ZWRfX/0Vk8fjleNSO
- HULUIus2aWFHhzc+uFDO+orEsI/bA80YA8bSaaIFHOamPLGgfltjd9PPMFA7e6qGjxkbXgs/RGd
- x9U8Cz9W8XMGtRYD+MhdMLSWZ10j2ET/W/JExKg4PKeeP7U6utiINhCtNxEo7ygKb+0DVxNKwvW
- MJfG0i9ocHpPO91/QD29TqTD55DTHsdhdnxk1NgYARXIsLshS70WZod19P+eD7MKXfrkErDsj52
- N+pk4XI9btlVeBxZ4o28qkdL5YKZthlbS5QIglCeMvArRXhlmQ+o8MR49geOTEXUdg0RhmGEp04
- /Rzgx3zdbpNh6EtfsXqPGH934qdL/2Sq8Mym1JgPTM6x4nHR8nlyMm5AH/HZStEQvNf4Go8cN+/
- yscNHGWWAPRrp09oKGVxyks6WNxa1WEnHwGEtJ8C1E4IkLL2zx+v6hZqMt2rdPb0tRQqncDA/zG
- RgTY0P89s8gkqf4rkGQ==
-X-Authority-Analysis: v=2.4 cv=XIUAjwhE c=1 sm=1 tr=0 ts=6a0ac181 cx=c_pps
- a=ZkhbYXbYXnnsONUOWLo3Bg==:117 a=ZkhbYXbYXnnsONUOWLo3Bg==:17
- a=xqWC_Br6kY4A:10 a=zoJHxBl5aBcA:10 a=NGcC8JguVDcA:10 a=M51BFTxLslgA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=a9bgyBvlNMQzFU9Z5g25:22 a=PpDwSNkculO1Pa3iPHCZ:22
- a=GaQpPoNlAAAA:8 a=pGLkceISAAAA:8 a=Cmw_MBCVAAAA:8 a=ghdlahQueheaTJ4_ZG0A:9
- a=QEXdDO2ut3YA:10 a=s2Jy__7ezXR0vfk6w2IA:9 a=FfaGCDsud1wA:10
- a=xF5q_uoM5gZT5J3czcBi:22 a=ZJSrCmYe3mwGoKZA4Vko:22
-X-Proofpoint-GUID: yY33sRuaIOdRW8L-xX6KBmd9TnfB8MnV
-X-Proofpoint-ORIG-GUID: yY33sRuaIOdRW8L-xX6KBmd9TnfB8MnV
-Received-SPF: pass client-ip=66.159.244.62; envelope-from=C.Koehne@beckhoff.com;
- helo=mx07-0090a401.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=corvin.koehne@gmail.com; helo=mail-wr1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,96 +110,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---=-aDc/qhe+YnBEi8+FDx+2
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="UTF-8"
+From: YannickV <Y.Vossen@beckhoff.com>
 
-On Fri, 2026-05-15 at 09:10 +0100, Peter Maydell wrote:
-> On Wed, 13 May 2026 at 11:=E2=80=8A55, Corvin K=C3=B6hne <corvin.=E2=80=
-=8Akoehne@=E2=80=8Agmail.=E2=80=8Acom>
-> wrote: > > From: YannickV <Y.=E2=80=8AVossen@=E2=80=8Abeckhoff.=E2=80=8Ac=
-om> > > This commit offers
-> some documentation on the Beckhoff CX7200 > qemu emulation. > > Signed-of=
-f-
-> by:=E2=80=8A
-> =C2=A0
-> On Wed, 13 May 2026 at 11:55, Corvin K=C3=B6hne <corvin.koehne@gmail.com>=
- wrote:
-> >=20
-> > From: YannickV <Y.Vossen@beckhoff.com>
-> >=20
-> > This commit offers some documentation on the Beckhoff CX7200
-> > qemu emulation.
-> >=20
-> > Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
->=20
-> I had review comments on this patch too:
-> https://urldefense.com/v3/__https://patchew.org/QEMU/20251204093502.50582=
--1-corvin.koehne@gmail.com/20251204093502.50582-16-corvin.koehne@gmail.com/=
-__;!!PlYMe_wG1g!gcagXIjFAwYeOUzFGLkUDNWeXWrymvnQXZphDz_zZ_0Epx0dqTmMXFlDLjw=
--CJhr3EZpHTwKBKRG4qgsBzyTxsBswg$
->=20
-> Please don't just ignore code review and repost a series.
-> If you disagree with the review or have a reason why you
-> don't want to address it, that's fine -- we can have that
-> discussion. But ignoring review silently is not a good idea.
->=20
-> thanks
-> -- PMM
+The registers for the digitally controlled impedance (DCI) clock are
+part of the system level control registers (SLCR). The DONE bit in
+the status register indicates a successfull DCI calibration. An
+description of the calibration process can be found here:
+https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/DDR-IOB-Impedance-Calibration
 
-Hi Peter,
+The DCI control register and status register have been added. As soon
+as the ENABLE and RESET bit are set, the RESET bit has also been toggled
+to 0 before and the UPDATE_CONTROL is not set, the DONE bit in the status
+register is set. If these bits change the DONE bit is reset. Note that the
+option bits are not taken into consideration.
 
-sry, I somehow ended up pushing the old version again by accident. I've pos=
-ted
-v7 and it should address all open comments.
+Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+---
+ hw/misc/zynq_slcr.c | 31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
+diff --git a/hw/misc/zynq_slcr.c b/hw/misc/zynq_slcr.c
+index faae98fa02..0ae5d607be 100644
+--- a/hw/misc/zynq_slcr.c
++++ b/hw/misc/zynq_slcr.c
+@@ -180,6 +180,12 @@ REG32(GPIOB_CFG_HSTL, 0xb14)
+ REG32(GPIOB_DRVR_BIAS_CTRL, 0xb18)
+ 
+ REG32(DDRIOB, 0xb40)
++REG32(DDRIOB_DCI_CTRL, 0xb70)
++    FIELD(DDRIOB_DCI_CTRL, RESET, 0, 1)
++    FIELD(DDRIOB_DCI_CTRL, ENABLE, 1, 1)
++    FIELD(DDRIOB_DCI_CTRL, UPDATE_CONTROL, 20, 1)
++REG32(DDRIOB_DCI_STATUS, 0xb74)
++    FIELD(DDRIOB_DCI_STATUS, DONE, 13, 1)
+ #define DDRIOB_LENGTH 14
+ 
+ #define ZYNQ_SLCR_MMIO_SIZE     0x1000
+@@ -193,6 +199,8 @@ struct ZynqSLCRState {
+ 
+     MemoryRegion iomem;
+ 
++    bool ddriob_dci_ctrl_reset_toggled;
++
+     uint32_t regs[ZYNQ_SLCR_NUM_REGS];
+ 
+     Clock *ps_clk;
+@@ -331,6 +339,8 @@ static void zynq_slcr_reset_init(Object *obj, ResetType type)
+ 
+     DB_PRINT("RESET\n");
+ 
++    s->ddriob_dci_ctrl_reset_toggled = false;
++
+     s->regs[R_LOCKSTA] = 1;
+     /* 0x100 - 0x11C */
+     s->regs[R_ARM_PLL_CTRL]   = 0x0001A008;
+@@ -418,6 +428,8 @@ static void zynq_slcr_reset_init(Object *obj, ResetType type)
+     s->regs[R_DDRIOB + 4] = s->regs[R_DDRIOB + 5] = s->regs[R_DDRIOB + 6]
+                           = 0x00000e00;
+     s->regs[R_DDRIOB + 12] = 0x00000021;
++
++    s->regs[R_DDRIOB_DCI_CTRL] = 0x00000020;
+ }
+ 
+ static void zynq_slcr_reset_hold(Object *obj, ResetType type)
+@@ -554,6 +566,25 @@ static void zynq_slcr_write(void *opaque, hwaddr offset,
+                 (int)offset, (unsigned)val & 0xFFFF);
+         }
+         return;
++
++    case R_DDRIOB_DCI_CTRL:
++        if (!FIELD_EX32(val, DDRIOB_DCI_CTRL, RESET) &&
++            FIELD_EX32(s->regs[R_DDRIOB_DCI_CTRL], DDRIOB_DCI_CTRL, RESET)) {
++
++            s->ddriob_dci_ctrl_reset_toggled = true;
++            DB_PRINT("DDRIOB DCI CTRL RESET was toggled\n");
++        }
++
++        if (FIELD_EX32(val, DDRIOB_DCI_CTRL, ENABLE) &&
++            FIELD_EX32(val, DDRIOB_DCI_CTRL, RESET) &&
++            !FIELD_EX32(val, DDRIOB_DCI_CTRL, UPDATE_CONTROL) &&
++            s->ddriob_dci_ctrl_reset_toggled) {
++
++            s->regs[R_DDRIOB_DCI_STATUS] |= R_DDRIOB_DCI_STATUS_DONE_MASK;
++        } else {
++            s->regs[R_DDRIOB_DCI_STATUS] &= ~R_DDRIOB_DCI_STATUS_DONE_MASK;
++        }
++        break;
+     }
+ 
+     if (s->regs[R_LOCKSTA]) {
+-- 
+2.47.3
 
---=20
-Best regards,
-Corvin
-
-
-
-This email contains confidential information. If you have received it in er=
-ror, you must not read, use, copy or pass on this e-mail or its attachments.
-If you have received the e-mail in error, please inform me immediately by r=
-eply e-mail and then delete this e-mail from your system. Thank you
-
-Diese E-Mail enth=C3=A4lt vertrauliche Informationen. Sollten Sie sie irrt=
-=C3=BCmlich erhalten haben, d=C3=BCrfen Sie diese E-Mail oder ihre Anh=C3=
-=A4nge nicht lesen, verwenden, kopieren oder weitergeben.
-Sollten Sie die Mail versehentlich erhalten haben, teilen Sie mir dies bitt=
-e umgehend per Antwort-E-Mail mit und l=C3=B6schen Sie diese E-Mail dann au=
-s Ihrem System. Vielen Dank
-
-Beckhoff Automation GmbH & Co. KG=20
-Managing Director: Dipl. Phys. Hans Beckhoff
-Registered office: Verl, Germany=20
-Register court: Guetersloh HRA 7075
-
-DisclaimerID:x9d5u140
-
-
---=-aDc/qhe+YnBEi8+FDx+2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEgvRSla3m2t/H2U9G2FTaVjFeAmoFAmoKwYAACgkQ2FTaVjFe
-AmpJ1Q//dbk/z0QzD3tNx5PziIl5ug0qMQsCIpmtinNFI/StiGB1aCSob71P46V7
-DBomfzhXsrVy3WFVFlFIV8/CqXIJhysZBDFEba/1VV9nWxRW9qufIueY5eyapT7p
-ep2nl7kYBm4QytdJP4b49GA5oVnuEzKQIFm3y2D+cVj6O6aOifBu/y72Qiknryol
-irzdJZQxUj4kNNoUQbAdPGig1v5juFnSnu6RpQWJCFoiG3BvxIUrfvxDFAs9NjPM
-7cnvvhJXeSImdBsZCzdHbOT8gF0/REOORKIIRoUA5px4d9Lv+fO1uuCEEf5us/zk
-xd0dPdOeqsvqd/5OT8Hq7F6A113UQyNWvBZ4eeq0hlnyoWnKl7et1D1uWRl5mSvW
-xn7rAT0xIaxfG4d50Vc2aDkiuPp52GJHp9veNMt1Wd5WRZMb0/gbbTcUQy80qxj0
-3ETewcRfk3t/BZ9VhkqPVoYCtXenEQYwlsI+ORZrhcwhFcPpBmiiKYFuxVfe98Ic
-39BFNTrMlpS1c/WHS2Z63JrcSUf97a00GvXfXOpQwkQPztoDhErxR/v2YCWI/41r
-PSMQris2UsiyhIBCbKSkXxwrsS08AkW9uq11B6ZgWeYxX9zLDRcz9p8hgLdv7FZS
-AgVOIycEI56fr1q3/zzl0wi4XM4vT5itdlScew13+mnQ84rSmDg=
-=cCro
------END PGP SIGNATURE-----
-
---=-aDc/qhe+YnBEi8+FDx+2--
 
