@@ -4,58 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13615CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 11:02:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27715CD4F52
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 11:19:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOvj1-0006au-QG; Mon, 18 May 2026 07:01:31 -0400
+	id 1wOw08-0005Cc-7R; Mon, 18 May 2026 07:19:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wOviw-0006YP-QL
- for qemu-devel@nongnu.org; Mon, 18 May 2026 07:01:26 -0400
-Received: from out30-131.freemail.mail.aliyun.com ([115.124.30.131])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wOw00-0005Bv-9D
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 07:19:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wOvit-0005hR-4P
- for qemu-devel@nongnu.org; Mon, 18 May 2026 07:01:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1779102075; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=tYd/FuZSv5qtUD4kEa/eP6UgqMgevIiY56njdGnB7yo=;
- b=nf9C0YFArSlbYaI+dVZCOqA6jJm0XRWGuOT3ZdEkfe1EGmlDv1R6EK9SaqWBKG6crEf+Ql2P159p/mXjzNxZ+ItNhEBiHm7EDR2e/Et4priMUS9aA6OHx/Tq+UCmJxfpk92S9IJ52xNhKCK1f+AmEqm29HliRbFO2FF1iF3RY8E=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R131e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045133197;
- MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=3; SR=0;
- TI=SMTPD_---0X38-omx_1779102073; 
-Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0X38-omx_1779102073 cluster:ay36) by smtp.aliyun-inc.com;
- Mon, 18 May 2026 19:01:14 +0800
-From: Bin Guo <guobin@linux.alibaba.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com,
-	farosas@suse.de
-Subject: [PATCH 1/8] migration/fd: collapse migration_fd_valid into single
- boolean expression
-Date: Mon, 18 May 2026 19:01:05 +0800
-Message-ID: <20260518110112.21395-2-guobin@linux.alibaba.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260518110112.21395-1-guobin@linux.alibaba.com>
-References: <20260518110112.21395-1-guobin@linux.alibaba.com>
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wOvzx-0006ee-DW
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 07:19:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779103138;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gwEWrOOYTLAPMaO3lRn5iSKX4UDUY5G2Dr42FVTOx8E=;
+ b=AoZlnr2A1Znc7EkgSC13zLyJkAm+1cjtat7HqVvPKvECIc9EQSOIFXa7ULqeKcXmePAbKU
+ K+1bCmvs9suMpxdbVaqsuV6TV6FPerlCGTnN5atkA2/D0mhxPOWbewbn1G9o2STqOoJZP1
+ HFQ+bpsyCx5xSP96pVPUY0HyzN1deHY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-192-UyQKlyHdNjKyBMuzCWXmQQ-1; Mon,
+ 18 May 2026 07:18:55 -0400
+X-MC-Unique: UyQKlyHdNjKyBMuzCWXmQQ-1
+X-Mimecast-MFC-AGG-ID: UyQKlyHdNjKyBMuzCWXmQQ_1779103134
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EFF6718005B6; Mon, 18 May 2026 11:18:53 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.48.13])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 78D211956053; Mon, 18 May 2026 11:18:53 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 6624B1800603; Mon, 18 May 2026 13:18:52 +0200 (CEST)
+Date: Mon, 18 May 2026 13:18:52 +0200
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, devel@lists.libvirt.org
+Subject: Re: Limit USB 1.0 (UHCI/OCHI) and 2.0 (EHCI) to non-virt use cases
+Message-ID: <agrz1zBDwGc9Bvlo@sirius.home.kraxel.org>
+References: <agRC56rkfb4z6zSO@redhat.com>
+ <CAFEAcA9_Xmy8FukkMDGVzU8LvE9giSp9zgrpiGvbxn=wNjJp-g@mail.gmail.com>
+ <agrtSFk-XGA-EcQd@sirius.home.kraxel.org>
+ <CAFEAcA9b2oeZaZtGkn5YPMKOXWDdZQEvdoBj5mGVh51aKi-BYw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.131;
- envelope-from=guobin@linux.alibaba.com;
- helo=out30-131.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA9b2oeZaZtGkn5YPMKOXWDdZQEvdoBj5mGVh51aKi-BYw@mail.gmail.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,36 +86,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Two if/return-true blocks followed by a final return false
-are equivalent to a single OR-expression and easier to scan.
+On Mon, May 18, 2026 at 12:00:02PM +0100, Peter Maydell wrote:
+> On Mon, 18 May 2026 at 11:53, Gerd Hoffmann <kraxel@redhat.com> wrote:
+> > I fully support that too, recommending xhci since 2018 ;)
+> >
+> > https://www.kraxel.org/blog/2018/08/qemu-usb-tips/
+> >
+> > Except for the claim that windows 7 is in widespread use this
+> > still applies today.
+> 
+> Is it still the case that the "-usb" QEMU option gives you the
+> old OHCI/UHCI controller? (My quick look at the source code suggests
+> it is.) If so, that's an unfortunate default, since it makes it very
+> easy to pick the non-security-supported bad config by accident.
 
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
----
- migration/fd.c | 10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
+It was still the case when I stopped maintaining usb and it is unlikely
+it has changed since.
 
-diff --git a/migration/fd.c b/migration/fd.c
-index f05f95992f..939cdda4e1 100644
---- a/migration/fd.c
-+++ b/migration/fd.c
-@@ -39,15 +39,7 @@ static bool fd_is_pipe(int fd)
- 
- static bool migration_fd_valid(int fd)
- {
--    if (fd_is_socket(fd)) {
--        return true;
--    }
--
--    if (fd_is_pipe(fd)) {
--        return true;
--    }
--
--    return false;
-+    return fd_is_socket(fd) || fd_is_pipe(fd);
- }
- 
- QIOChannel *fd_connect_outgoing(MigrationState *s, const char *fdname,
--- 
-2.50.1 (Apple Git-155)
+> Could we make "-usb" give the PC machines an XHCI controller for new
+> machine version types ?
+
+Sounds reasonable to me.  libvirt has changed defaults years ago.
+
+take care,
+  Gerd
 
 
