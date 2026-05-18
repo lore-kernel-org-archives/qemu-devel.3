@@ -4,48 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAB0FCD4F50
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 18:32:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1276CD4F50
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 18:33:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP2lM-0006Hp-Id; Mon, 18 May 2026 14:32:38 -0400
+	id 1wP2m6-0006be-5b; Mon, 18 May 2026 14:33:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <96cf23eea1204b34443218fe76bd4a5eaf9163e8@kylie.crudebyte.com>)
- id 1wP2l5-0006HN-Ci; Mon, 18 May 2026 14:32:07 -0400
+ (envelope-from <a0592741a918b7cbe751980ec7ec0c03f505924c@kylie.crudebyte.com>)
+ id 1wP2l8-0006Kx-R5; Mon, 18 May 2026 14:32:21 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <96cf23eea1204b34443218fe76bd4a5eaf9163e8@kylie.crudebyte.com>)
- id 1wP2l3-0002O5-Qx; Mon, 18 May 2026 14:32:07 -0400
+ (envelope-from <a0592741a918b7cbe751980ec7ec0c03f505924c@kylie.crudebyte.com>)
+ id 1wP2l7-0002Oe-Gi; Mon, 18 May 2026 14:32:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=XoyYoo89AyoQKbQdczMsvDAvQaW1Tggzuljl0HV6HPM=; b=m/YRb
- JQO6EA+VMQ3e90+efYlgFGQDUqYw7rKMOID8auiNeFqIaPMfpgoGPaZBwZ3S2YCDQeRhHpdjygC+F
- BsKEsr+KBDd0lVhzoG18vA04on1PcXq7wDR7fefUW3riZdvaTSnyYW3Cqj6L8gG82pMV5tKIQTbqI
- Sbea2ZqmXq/dPRQJJo4K+UoGUlUyxNxF8lEwONj464PhS5Tan8WaYvRLrcqNCK8HSDkwKtI2R6dAu
- rqP27V7JF6BFLPVmiaYag0jeiOkeCskuAulcjrEMoDMD0y+2G27pbJg3Dt2GuGMy5KuBAjaGFR70V
- /34+cpPXqHD4X9gprDLkXLQdeSKVrcoKsGcewRUFsileY0zmW1oeqnJwU91Zwq+IJgNP5DifL4T15
- fmZCMO8DcWgNlIrO12lBNJEQQIKjCbF5MHkWyrUJFyjoQxL96Xcng/HlGoKjUBqP7dtijMRvcHapd
- 7/sC/yKmGHS9eSi92VNVTqY0I0NDkWKkoqSy1Iuu1hWoYLWKkcoQe5Y5uKpHdYUajkafkcuP8+WAr
- K+q9L/ZB9gmw47Aod29Do//0RucxUXfDUpugTcC0f3kAraK23EqU+b/bRR5sjybyBUq1OFzg3i4bR
- B/kGftf8BbVnrglPeuk67jvwo5A5Kv30+NgLDNUaM50QeHT8zAO61Ta1mJetIs=;
-Message-ID: <96cf23eea1204b34443218fe76bd4a5eaf9163e8.1779126034.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=XKiX0XyHKyBgRAeITQtv9rXyqRpwst1PipAJNZmp62E=; b=FONjU
+ UC6hFyoN+i8wR5v9ZRHYL4xuK0Agp9S/0vZ1S+GXEF++3p3FtM442pGuwHxRFIQTv8wGUeS5AL2qK
+ YP8lTpgNj8cPs83fjH2UY9/TGZ3m9+HP6FzNbuIE2aDQx/876VERnD8l/Je0hAV9npgEp2Tv61dEF
+ DFEqaypU8k/32FYLxihHvKfLuHr12+tlPZVZf+VLcnT3aZ4JUQy52Jfgg4qybPzZbT4K1fY/osqoA
+ RakhbOrUW44hUj1n0vomWi532B+rd4Avw5PE6INXqhH/VjVpXNzLMHJ6jVdFZGJKzs9WvCOTyKRIl
+ s2G66ORpIIHaP1T6eh9vlQ14W6m/lXtwThYLARsiZwQmhPQ7N+jQeZtnjMWpWVFr4PZO9Dzq1recw
+ eAdDdi1c8H1868+ojTrn3YyAlUhCpyzVLih3yBWIScbWef6lQTgBQ42hATNR/cX8Ewt/xtxbKm2aI
+ Sa6IhisSAkPoPqKcNLxGAszkLDl4TBKY4Kel5tlbqo44G0hfyAPUwb3nwlzkn4Zfq+D4ZOPNchOjK
+ QMEhU0htKsQ7Fe9mVMtpabFLF9oqhlioaw/Nml287kd2WGyhjlhzlXzyDvVM1bDrpevrepatu8VGd
+ b+8yf/wNnp9eet0oXWCrr58yHw4iCPVTAhnirNEEn9xqJndlMBlhiVZF5I5/xo=;
+Message-ID: <a0592741a918b7cbe751980ec7ec0c03f505924c.1779126034.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1779126034.git.qemu_oss@crudebyte.com>
 References: <cover.1779126034.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Mon, 18 May 2026 19:36:01 +0200
-Subject: [PATCH 5/6] tests/qtest/libqos: add qvirtqueue_reset_pool() for
- descriptor pool reset
+Date: Mon, 18 May 2026 19:35:56 +0200
+Subject: [PATCH 3/6] hw/9pfs: add error handling to v9fs_fix_path()
 To: qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>, Jia Jia <physicalmtea@gmail.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
+Cc: Greg Kurz <groug@kaod.org>,
+    Jia Jia <physicalmtea@gmail.com>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=96cf23eea1204b34443218fe76bd4a5eaf9163e8@kylie.crudebyte.com;
+ envelope-from=a0592741a918b7cbe751980ec7ec0c03f505924c@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -68,68 +66,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a function to reset the virtqueue descriptor pool state without
-reinitializing the device. This is useful for tests that issue a high
-number of requests and are limited by the simplified virtio test
-driver's descriptor tracking, which decrements num_free but never
-increments it back.
-
-The function is safe for synchronous test code where requests are
-sent and completed before the next request is issued.
+Update v9fs_fix_path() to return int and propagate errors from
+v9fs_path_sprintf(). This allows callers to detect and handle
+path formatting failures.
 
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- tests/qtest/libqos/virtio.c | 23 +++++++++++++++++++++++
- tests/qtest/libqos/virtio.h |  2 ++
- 2 files changed, 25 insertions(+)
+ hw/9pfs/9p.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/tests/qtest/libqos/virtio.c b/tests/qtest/libqos/virtio.c
-index 010ff40834..ccbb325222 100644
---- a/tests/qtest/libqos/virtio.c
-+++ b/tests/qtest/libqos/virtio.c
-@@ -464,6 +464,29 @@ bool qvirtqueue_get_buf(QTestState *qts, QVirtQueue *vq, uint32_t *desc_idx,
-     return true;
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index 88894ec9d2..d704de644f 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -1417,13 +1417,15 @@ static void print_sg(struct iovec *sg, int cnt)
  }
  
-+/*
-+ * qvirtqueue_reset_pool:
-+ * @vq: The virtqueue to reset
-+ *
-+ * Reset the descriptor pool state without reinitializing the device.
-+ * This is useful for tests that issue a high number of requests and
-+ * are limited by the simplified virtio test driver's descriptor tracking,
-+ * which decrements num_free but never increments it back.
-+ *
-+ * This is only safe for synchronous test code where requests are
-+ * sent and completed before the next request is issued. Do not use
-+ * with asynchronous code where multiple requests may be in-flight.
-+ *
-+ * Note: This only resets the available descriptor pool (free_head,
-+ * num_free). The used ring position (last_used_idx) is NOT reset
-+ * and should continue to track consumed responses across iterations.
-+ */
-+void qvirtqueue_reset_pool(QVirtQueue *vq)
-+{
-+    vq->free_head = 0;
-+    vq->num_free = vq->size;
-+}
-+
- void qvirtqueue_set_used_event(QTestState *qts, QVirtQueue *vq, uint16_t idx)
+ /* Will call this only for path name based fid */
+-static void v9fs_fix_path(V9fsPath *dst, V9fsPath *src, int len)
++static int v9fs_fix_path(V9fsPath *dst, V9fsPath *src, int len)
  {
-     g_assert(vq->event);
-diff --git a/tests/qtest/libqos/virtio.h b/tests/qtest/libqos/virtio.h
-index e238f1726f..f17be0b9b6 100644
---- a/tests/qtest/libqos/virtio.h
-+++ b/tests/qtest/libqos/virtio.h
-@@ -150,6 +150,8 @@ void qvirtqueue_kick(QTestState *qts, QVirtioDevice *d, QVirtQueue *vq,
- bool qvirtqueue_get_buf(QTestState *qts, QVirtQueue *vq, uint32_t *desc_idx,
-                         uint32_t *len);
+     V9fsPath str;
++    int ret;
+     v9fs_path_init(&str);
+     v9fs_path_copy(&str, dst);
+-    v9fs_path_sprintf(dst, "%s%s", src->data, str.data + len);
++    ret = v9fs_path_sprintf(dst, "%s%s", src->data, str.data + len);
+     v9fs_path_free(&str);
++    return ret;
+ }
  
-+void qvirtqueue_reset_pool(QVirtQueue *vq);
-+
- void qvirtqueue_set_used_event(QTestState *qts, QVirtQueue *vq, uint16_t idx);
- 
- void qvirtio_start_device(QVirtioDevice *vdev);
+ static inline bool is_ro_export(FsContext *ctx)
 -- 
 2.47.3
 
