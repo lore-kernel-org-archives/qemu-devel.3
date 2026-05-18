@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A6E1CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 12:09:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EEE6CD4F52
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 12:09:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOwmx-00045Y-L0; Mon, 18 May 2026 08:09:39 -0400
+	id 1wOwmx-00042d-3a; Mon, 18 May 2026 08:09:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wOwlq-0003KG-IQ; Mon, 18 May 2026 08:08:32 -0400
+ id 1wOwlu-0003NF-Ns; Mon, 18 May 2026 08:08:36 -0400
 Received: from fhigh-b6-smtp.messagingengine.com ([202.12.124.157])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wOwlo-00070w-92; Mon, 18 May 2026 08:08:29 -0400
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
- by mailfhigh.stl.internal (Postfix) with ESMTP id F22BB7A00C5;
- Mon, 18 May 2026 08:08:26 -0400 (EDT)
+ id 1wOwlt-00079n-6f; Mon, 18 May 2026 08:08:34 -0400
+Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 6C9427A00A4;
+ Mon, 18 May 2026 08:08:31 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-01.internal (MEProxy); Mon, 18 May 2026 08:08:27 -0400
+ by phl-compute-03.internal (MEProxy); Mon, 18 May 2026 08:08:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
- t=1779106106; x=1779192506; bh=n/a+USxh8EdDUhVbtp23PdkSgDZISod4
- 7MBbJ4FXVR8=; b=M8ZhGKHl014CICyzN5s6Th6kqYjBpinA8rCEriGTyDV70Esb
- h/nnBeGuWbmQyouFBFWNj+B0Zp579/N54WFDCn3LBoM7WblyhRweZejk20bVwB8D
- FjcimNC1S6/1nGqccqky4kXbHE3SEJNlArow7ErTTydqhgJu5SJKWeBvqZ6rOPP7
- kI/g2VdpMNJjWec2ZohV+WBOhgb9iZfYJ++763BT9zqHOUJTnn+enk0Uw43GxjQK
- 1SI5dBufxp7MYQR29b1zvexNyW7IcxovcgWSWXX3wehKQYv/YLQwZVdEVa0nfWOm
- k+gveAzCZalmf+X50rS696oPIiaG36QpF+YZkw==
+ h=cc:cc:content-transfer-encoding:content-type:date:date:from
+ :from:in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm2; t=1779106111; x=
+ 1779192511; bh=tbXFTi8YS7dwA1aT84yOrBaUVntxEmAQl1rJumHbdj4=; b=L
+ qXQqM9lExpkh7M7lvxYI+JIcK90g03aDvHKgNmsUI//jW9xIwxem3YRF4CvxtbWo
+ j3n4mEAUkdnsFfCBRUmWYs5KUnO9b/7qAF3teXv8+MUgJGauIMfNn3lzUXPnv9Ld
+ Fz9lQvSz4XCP68lk1IZ8lrxjV0TkY8XhNskmsmVnd1hIekRP7iVqIPdo8K4v7RMM
+ P6mFMxHWF9iYfd8sBnBHqFZ+Dr1yqCCoXG4PQPMtmudG7rGO94m6Qig3su++tUWJ
+ h/zwtiI7SCSq6MyIYBGU3l5MTfiZffqICU9leBf7mJwEr4stILd1CMruRwuocazF
+ 6Xi9LJH1jbVHLgFUgD/mA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779106106; x=
- 1779192506; bh=n/a+USxh8EdDUhVbtp23PdkSgDZISod47MBbJ4FXVR8=; b=s
- BLQQFrHwJNao55jYjOO2JoaugCE2iO6aOTzgxVeXChnvwCKfFLoT0R07GPMx2/52
- rZzXsMhZ1/u/mr2978hNkKsYtFlOf4Z2LRG6RZAv3nPr6Rngv1rp1aiTXnTVZqAB
- G23CHqngN2gL+xqm0Wi1kTQNb75MXuFCUdmEKEFf0gIUJcccizxrcjn1s4YATuno
- lV+Hmxc2OhGI/UfuiagjgAacedHRE56tuVW/+MH+tJnWsl3jO5iYjtrv2pgbz6I/
- 9Sj+XJxMOX3kFaEcSu5kw0itkIq0UBX+7wxY4vtx3P6bhHIFtdzyb4ewXWxCrZRS
- KOitAlLCqZn7PWniVc3ng==
-X-ME-Sender: <xms:OgELam6sILkF_PeOdH-EqHQi1_gJIGjW5EAFvi_w-rM19kutk30K1g>
- <xme:OgELaswTWg6UbXC7E80yYnDKegO8FVJLmyRTOw3ZLZxze-jO4B4IXYoUksB0lyOEX
- 6z0aZzA2wK8zeUYuZBKfi_fT4CeyNUq8M5pHg-XdmCsi37QhzR_1YtI>
-X-ME-Received: <xmr:OgELalNrwD8lB1J4XzItMWJTIwhTrBnuVnvGliKmlLjjOfWteafOn90e72Zr_A2-YA0Xxs2zTYWrX2Nwoxrqrol0>
+ :content-type:date:date:feedback-id:feedback-id:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm3; t=1779106111; x=1779192511; bh=t
+ bXFTi8YS7dwA1aT84yOrBaUVntxEmAQl1rJumHbdj4=; b=oYlsUdkol+RRw9nHB
+ 8dXJlesmKxMmcC9GlPBqnxkq3lCwIZr2Fbtok+ORA5kut/yvqSJo4gEULwCenPuP
+ DuHItlbFDW9puDsSDxE3FUs0vNG3c9mz0Eeb/HLgnyHhoZNoiSR917HNbbPRSYhS
+ 5CLvzSojZnTHcM21o6QgbCTYiyu9HNLDV7QJ1SIhFJ/+0efeBaPZxfpC1NypRSHA
+ UlHnr+lschk/o8GZWABeqMwqp51wEEaS+jaE/TaiQXBTNhTDTEnTBso6FFjcaA+4
+ 0ziIdiusBkO9pH8H+ksN14rG9KXIuj2viai90alPPA1Swz7Mp4D2lZ+Vddi8QHhQ
+ 8BXZA==
+X-ME-Sender: <xms:PwELapt6GHhVGbFF6YbuVyVOoXa7UcaVzLKwNQzEKWMcWBzgFAWBaw>
+ <xme:PwELaudzL3IRy0cyw7A5KuGgLjcj80jWLQ6CMwmZGS2QPvLGhYY4f-B8CBJsk24iW
+ sh6m5Q8rzzIm6L3CE6ctQcy0bKGGUMjXLNqJYyB9pHWUrteILd0hP0>
+X-ME-Received: <xmr:PwELau8zDe7KGTeTwalbXxklrt3rt1Qh6MDeBaD-bLG9wWjaY8wN6nvGq0_LCxqJPXpN-IRPxOGvlbNWxbmO3MPF>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddufeekkeefucetufdoteggodetrf
  dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
  rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
- gurhephffvvefufffkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpefmlhgruhhs
- ucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnthdrughkqeenucggtffrrghtth
- gvrhhnpeefvedtueetueduffevgffgtdeftdeuleffhfeigeffkeegfeejfeffteejiefh
- vdenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehith
- hssehirhhrvghlvghvrghnthdrughkpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
- thhpohhuthdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpd
- hrtghpthhtohepphgvthgvrhdrmhgrhiguvghllheslhhinhgrrhhordhorhhgpdhrtghp
- thhtohepsggvrhhrrghnghgvsehrvgguhhgrthdrtghomhdprhgtphhtthhopehkrdhjvg
- hnshgvnhesshgrmhhsuhhnghdrtghomhdprhgtphhtthhopehksghushgthheskhgvrhhn
- vghlrdhorhhgpdhrtghpthhtohepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdprhgtph
- htthhopehfohhsshesuggvfhhmrggtrhhordhithdprhgtphhtthhopehpihgvrhhrihgt
- khdrsghouhhvihgvrhesohhsshdrqhhurghltghomhhmrdgtohhmpdhrtghpthhtohepqh
- gvmhhuqdgslhhotghksehnohhnghhnuhdrohhrgh
-X-ME-Proxy: <xmx:OgELail0XnFK31V5IHEsNvpUS0KJBGp1nHRm2dqNVqSnF0Hub2PD_A>
- <xmx:OgELaqQBAtdkKl8CoBzbT61EJyMglJtRGNH8GaEqmCAaORrZJ3pQcg>
- <xmx:OgELahUHi93hcZz8gjR1NT54F3Dh1MGgSz8eesZimyZmjhhCdy3LAQ>
- <xmx:OgELauLItnGIJZxd5w8d-xZnj1Un1ya2gdFq3Zb8-_GqeMQ6aM0eng>
- <xmx:OgELauZ_TJqgw1vEegLNWDdP8utVwuZYI7Sz_Ew3m7NXPwOJt77BAotq>
+ gurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomhepmfhlrghushcu
+ lfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvg
+ hrnhepjefgieelgfeiveehkeeuveehheekfeevgeeigfehfefgjeejhefffeegudejudeg
+ necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepihhtsh
+ esihhrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhht
+ phhouhhtpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprh
+ gtphhtthhopehpvghtvghrrdhmrgihuggvlhhlsehlihhnrghrohdrohhrghdprhgtphht
+ thhopehkrdhjvghnshgvnhesshgrmhhsuhhnghdrtghomhdprhgtphhtthhopehqvghmuh
+ dqshhtrggslhgvsehnohhnghhnuhdrohhrghdprhgtphhtthhopegrrdhhihhnuggsohhr
+ ghesshgrmhhsuhhnghdrtghomhdprhgtphhtthhopehksghushgthheskhgvrhhnvghlrd
+ horhhgpdhrtghpthhtohepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdprhgtphhtthho
+ pehfohhsshesuggvfhhmrggtrhhordhithdprhgtphhtthhopehqvghmuhdqsghlohgtkh
+ esnhhonhhgnhhurdhorhhg
+X-ME-Proxy: <xmx:PwELahS3T41YygW9Dgbsit3LmukClWZlR3b6_XQdrlEtC1VLTWfSgg>
+ <xmx:PwELanrA-m6i0CrONb3caMlNtQd3osqQMszW4_k9xf-im08ZUuG_Zg>
+ <xmx:PwELamlFttNmirpyGWao6l_H7vmZu9CTiTp1A0I87_FuTbmwyzIEhA>
+ <xmx:PwELaocTRHMh6nEyi87Hcc6ZmiknG-l04AanLzrun62Fl9u33-f5SA>
+ <xmx:PwELajxgnB7-SdUotudFsaZvr7XOVIq2Rhg8_LY4wLlEMxEWeE__9phc>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 18 May 2026 08:08:25 -0400 (EDT)
+ 18 May 2026 08:08:29 -0400 (EDT)
 From: Klaus Jensen <its@irrelevant.dk>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Klaus Jensen <k.jensen@samsung.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org,
+ Andreas Hindborg <a.hindborg@samsung.com>, Keith Busch <kbusch@kernel.org>,
  Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-block@nongnu.org
-Subject: [PULL 3/5] hw/nvme: add user controlled 'model' property
-Date: Mon, 18 May 2026 14:07:46 +0200
-Message-ID: <20260518120748.14831-4-its@irrelevant.dk>
+ qemu-block@nongnu.org
+Subject: [PULL 5/5] hw/nvme: fix admin cq msix setup
+Date: Mon, 18 May 2026 14:07:48 +0200
+Message-ID: <20260518120748.14831-6-its@irrelevant.dk>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260518120748.14831-1-its@irrelevant.dk>
 References: <20260518120748.14831-1-its@irrelevant.dk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=202.12.124.157; envelope-from=its@irrelevant.dk;
  helo=fhigh-b6-smtp.messagingengine.com
@@ -115,94 +114,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Klaus Jensen <k.jensen@samsung.com>
 
-This enables overriding the built in default "QEMU NVMe Ctrl" string
-with a user specified string. The value can be at most 40 characters
-in length.
+If MSI-X is not enabled when the admin completion queue is created,
+msix_vector_use() is not called. But, if MSI-X is subsequently enabled,
+msix_notify() will fail to fire the interrupt because the use count for
+the vector remains at 0.
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+msix_vector_use/unuse should be called if MSI-X is *present*, not
+*enabled*. Fix this.
+
+Cc: qemu-stable@nongnu.org
+Reported-by: Andreas Hindborg <a.hindborg@samsung.com>
 Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
 ---
- docs/system/devices/nvme.rst |  5 +++++
- hw/nvme/ctrl.c               | 14 ++++++++++++--
- hw/nvme/nvme.h               |  1 +
- 3 files changed, 18 insertions(+), 2 deletions(-)
+ hw/nvme/ctrl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/docs/system/devices/nvme.rst b/docs/system/devices/nvme.rst
-index 6509b35fcb4e..109c01a70d50 100644
---- a/docs/system/devices/nvme.rst
-+++ b/docs/system/devices/nvme.rst
-@@ -60,6 +60,11 @@ parameters.
-   the SMART / Health information extended log become available in the
-   controller. We emulate version 5 of this log page.
- 
-+``model`` (default: ``QEMU NVMe Ctrl``)
-+  Override the default reported model, which can be used when needing
-+  to more closely impersonate a particular device type. The model name
-+  can be a maximum of 40 characters in length.
-+
- Additional Namespaces
- ---------------------
- 
 diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 2556aced2a47..4822bc0a99b1 100644
+index 5b03929451d0..815f39173c8a 100644
 --- a/hw/nvme/ctrl.c
 +++ b/hw/nvme/ctrl.c
-@@ -43,7 +43,8 @@
-  *              atomic.dn=<on|off[optional]>, \
-  *              atomic.awun<N[optional]>, \
-  *              atomic.awupf<N[optional]>, \
-- *              subsys=<subsys_id>
-+ *              subsys=<subsys_id>, \
-+ *              model=<model-str>
-  *      -device nvme-ns,drive=<drive_id>,bus=<bus_name>,nsid=<nsid>,\
-  *              zoned=<true|false[optional]>, \
-  *              subsys=<subsys_id>,shared=<true|false[optional]>, \
-@@ -8608,6 +8609,13 @@ static bool nvme_check_params(NvmeCtrl *n, Error **errp)
-         return false;
+@@ -5519,7 +5519,7 @@ static void nvme_free_cq(NvmeCQueue *cq, NvmeCtrl *n)
+         event_notifier_set_handler(&cq->notifier, NULL);
+         event_notifier_cleanup(&cq->notifier);
+     }
+-    if (msix_enabled(pci) && cq->irq_enabled) {
++    if (msix_present(pci) && cq->irq_enabled) {
+         msix_vector_unuse(pci, cq->vector);
+     }
+     if (cq->cqid) {
+@@ -5560,7 +5560,7 @@ static void nvme_init_cq(NvmeCQueue *cq, NvmeCtrl *n, uint64_t dma_addr,
+ {
+     PCIDevice *pci = PCI_DEVICE(n);
+ 
+-    if (msix_enabled(pci) && irq_enabled) {
++    if (msix_present(pci) && irq_enabled) {
+         msix_vector_use(pci, vector);
      }
  
-+    if (params->model &&
-+        strlen(params->model) > NVME_ID_CTRL_MN_MAX_LEN) {
-+        error_setg(errp, "'model' parameter '%s' can be at most '%d' characters",
-+                   params->model, NVME_ID_CTRL_MN_MAX_LEN);
-+        return false;
-+    }
-+
-     if (params->mqes < 1) {
-         error_setg(errp, "mqes property cannot be less than 1");
-         return false;
-@@ -9101,7 +9109,8 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
- 
-     id->vid = cpu_to_le16(pci_get_word(pci_conf + PCI_VENDOR_ID));
-     id->ssvid = cpu_to_le16(pci_get_word(pci_conf + PCI_SUBSYSTEM_VENDOR_ID));
--    strpadcpy((char *)id->mn, sizeof(id->mn), "QEMU NVMe Ctrl", ' ');
-+    strpadcpy((char *)id->mn, sizeof(id->mn),
-+              n->params.model ? n->params.model : "QEMU NVMe Ctrl", ' ');
-     strpadcpy((char *)id->fr, sizeof(id->fr), QEMU_VERSION, ' ');
-     strpadcpy((char *)id->sn, sizeof(id->sn), n->params.serial, ' ');
- 
-@@ -9381,6 +9390,7 @@ static const Property nvme_props[] = {
-     DEFINE_PROP_LINK("subsys", NvmeCtrl, subsys, TYPE_NVME_SUBSYS,
-                      NvmeSubsystem *),
-     DEFINE_PROP_STRING("serial", NvmeCtrl, params.serial),
-+    DEFINE_PROP_STRING("model", NvmeCtrl, params.model),
-     DEFINE_PROP_UINT32("cmb_size_mb", NvmeCtrl, params.cmb_size_mb, 0),
-     DEFINE_PROP_UINT32("num_queues", NvmeCtrl, params.num_queues, 0),
-     DEFINE_PROP_UINT32("max_ioqpairs", NvmeCtrl, params.max_ioqpairs, 64),
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index d66f7dc82d5c..ebf1fcfdcde0 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -542,6 +542,7 @@ typedef struct NvmeCQueue {
- 
- typedef struct NvmeParams {
-     char     *serial;
-+    char     *model;
-     uint32_t num_queues; /* deprecated since 5.1 */
-     uint32_t max_ioqpairs;
-     uint16_t msix_qsize;
 -- 
 2.53.0
 
