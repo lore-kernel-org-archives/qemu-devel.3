@@ -4,92 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CE3CCD343F
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 19:23:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 486D3CD4F4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 19:36:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP3YG-0003ln-QF; Mon, 18 May 2026 15:22:56 -0400
+	id 1wP3ko-0005oN-Lt; Mon, 18 May 2026 15:35:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wP3YE-0003le-2q
- for qemu-devel@nongnu.org; Mon, 18 May 2026 15:22:54 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1wP3kL-0005jo-47
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 15:35:33 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wP3YC-00051z-2i
- for qemu-devel@nongnu.org; Mon, 18 May 2026 15:22:53 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-48ff4f8ef0dso30790435e9.3
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 12:22:51 -0700 (PDT)
+ id 1wP3kI-0001X6-Nh
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 15:35:24 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-488b8bc6bc9so15743545e9.3
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 12:35:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779132170; x=1779736970; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779132920; x=1779737720; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/n3sQumJ8vdM5IdLJAScj3dFK9Tm1tDHXqW/ZQfwMrs=;
- b=n6OZtMxpTnoOjjQoJIINNZD/41Hh/COGV+muvOklwkrDal2cQiwCr083ygsvS1H8tp
- JXUL/M35b/xkHxVEQYdM/r2B0zpqmBh6ZqzgsrWceXrXvZPdKuZQ5PApn73DXykIhCem
- W4f6tikxNoq20sBPKY9C8rMoY1Z5rEeHBeiizFRSXH6OftyBvMU7XhJyRSFg6iM5Ykjd
- 3Ik102DjF0O0xwOMQHFHxXwyeSoex+nuOuK5dlmXMaT6gX6mCgwx8bwqJeP97TVyjl9a
- buXgZKb40wnZzm6rMcu1+l9uVpeq96x8wvfzfrQ4Iqc0r3XR54yol5sty/ZdFcthj5Z5
- wDDQ==
+ bh=OhePajZcGpCeLD99/y/srf2qfOYcQkuGDsSu0Gk7e1s=;
+ b=xqU41RlBOPiUbjmKdpGdwf08AnHFvdMMu1FNDEtjBazK9UPnG/o1LWQUDb4cpyidth
+ UE2MpXqHrzfx0y9cJ+SmkU2wi//1rKAourydCchdeeswLWIkLg8QWoOYDx5wa6GG3klE
+ o7KGHZ79GAkqK8tzpVin+XuH3bKyz46Yd+dbmUl1n07UPavtZOCjWPV9L1C4ixj6F5Pz
+ KipiHBWKmsWEN/VVk7MJyK2WHAgG236mMg0pjh3y0kGMadTj8qbZK9lQJYvT93RXYYL6
+ 3PX+AhvIMCI/VRyH/DAC8GNfrxl8f7XRQjDG1kja0x2vml0PNME/VxkUiPJITFEztFT/
+ Kapw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779132170; x=1779736970;
+ d=1e100.net; s=20251104; t=1779132920; x=1779737720;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/n3sQumJ8vdM5IdLJAScj3dFK9Tm1tDHXqW/ZQfwMrs=;
- b=ah06zadlSpLGCCb24K/mC8X6MOPr2gNYVtO+zLzaJrSlTp73xNidMED67oaHhBWgFj
- xCZIByWYCRKaszDvVUTGFqAVUG8Pq9JHxDELoqKGz1kBeRAjGCs6Fxr3Xgms08WIli/m
- NtHnnBgiC2YU47cmp0ZpUf0ZJrN6MIoKEBvckkX3uNlrR6EnzXjGbXLeeO0acapoDP9Y
- EZcgoogijt22ML68QRXMYaFfnqYIv6Cbnjv1etbMH3NrIyCcFR0ftIWRxJmr7uzTVFo9
- EVyAZsHB1l2YJNKdfWIrLkegzvZMlklhxqSNqITK+ypJ7eQ79ZdxYX+z/ytk19vySklj
- wN/A==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+MZXmfCC+M/fa8ugCHGk6zpN6MVHon4GwQmZrXTfAWcLzMSP3ufragxsVgF+WJMES0xm6/vyNVxuIu@nongnu.org
-X-Gm-Message-State: AOJu0YyYcDoAaS4mJ8wS4/0NwJejeZKO8gP/lqbuP16NecD3bOFhNAvk
- pI6sz2+sQPYVNWtmX8V1JZ1aAkSBDC3ynNUZUBi68Z1oRk4NwmLsGmd9qdpeyiXFAUk=
-X-Gm-Gg: Acq92OHT2qx2TSTUK6ffIjU/DpzPCVazpMoTujHlvoO2xdpqY5IGB/rldo5FfZ9XFKX
- qfZdLuVEqscUthb+SEHHNxZSt4U+lHqjki+/oVSpS877iDaeOAjVrOyseu6++Nm3fT9YisylwUp
- pc6IRr/4lcHqnzCLODWGCmgmSZdhzj9y/ds8uXKlRrCW5zDfU4pxcYwCVJxN751PovsOEmYxxCp
- uL6bGQSbeFZlq1C4kTPDbfTcVf8vNCjYsJOZFmQF+2X7jTtcXU64nomBOM/WH4bfpqTuiBk4UqT
- RlNFXmlKw6ffc52nbsMewL5x9B/L58blgJbOqEs6ZmHwS4JkDVufY6vyp+3ZW0rO4CwP27YSdPn
- 3klRvFNI7GtLdaAqhIeOe9AO0AKQ9oCzVIXKFNjKzaN1mgt70RxgPmR6Uqa5Sn8Fux73keBVQwg
- KDG6skYsWtmXT2hIVNKihGurs=
-X-Received: by 2002:a05:600c:13ca:b0:48f:eb8b:9988 with SMTP id
- 5b1f17b1804b1-48feb8b9a84mr144472485e9.23.1779132170304; 
- Mon, 18 May 2026 12:22:50 -0700 (PDT)
+ bh=OhePajZcGpCeLD99/y/srf2qfOYcQkuGDsSu0Gk7e1s=;
+ b=RQP57NUAWLqS3i2yD5QWXF6e6OGmMDDMTHe69przP0ZxUni+LQxM0c+VXTZX6gZ+wJ
+ soxDN5pTvOwnEzT3O1pIZ0+gRuUANzaqQcU7RqVunoMo8ySNb/JD97Bkzi9WCzjSJiP5
+ MMTyoAw7Ic7rLD+yurebVnp6ZRvsfi1c0sm+BUGjcVvyBfzK0fZXU3BBmsvePfV4jwiG
+ VcIf0bAGrajLZfhwJ5oUyGbNhinzwK76KLwY7uQfnJWG7ANnThwxQt7YsI39PGff7mjH
+ 3iE1oUQClOc8K89GZXiVihtFNzTQO+lOyc8myPvIGeYYWvoaPgGRPj3Wj3Nvt2dwfQdH
+ eYMA==
+X-Gm-Message-State: AOJu0Yx6rfSJiDUhhwmxSGthIizuVWd6BDXirDpkMoke+Pb6lXG+a2zs
+ fLRoWLvp/BZXkFxDGPEy2p9ER7ChtuNa6A3ggte8EyjfRFMYTQqs0cfdpUkCw+lXSaY=
+X-Gm-Gg: Acq92OGV8vaGjeTPpABjtlZgIMwcjbw58R8JjGOr4LkGWKLWT5FJsae7q2FdlXEahu2
+ GU9IoDQ2w+e/Js4s/6fkZKXxt2a0r7UrvNo9mMMVfD4ef+631C5OZh4/yfYpcskshRmHtY7z/6s
+ hdaglrptlSnVSxVgSesNy764NE+sbpUokyYSeylevPjz4xYtOUz+o6vG466mHiekZJKy8jxDszi
+ T8qhvLVwbJc60LNSqVWKciuQsxV241GRsqmJzqwQOU78BR7L7SHwg0pevQFiGKMk3ASLhss7R/B
+ Y1i5002vdFmkBDkUvWUcAu101/ZQC/33ezje5uX7qxUawPQeo2y0MAO4gOWnXPzhyAdVHSkKpYK
+ gUI/FTZmcQgg90mMMrfvdVLuyHYsyW3mJAGkAjl2q5Wo6rUMyAN1AnLkO7YIPvaC5UacfUODM1y
+ 4V7bvqvHEL6NZ0SAIgyBrgoj0=
+X-Received: by 2002:a05:600c:a406:b0:48a:599a:3716 with SMTP id
+ 5b1f17b1804b1-48fe651487emr202459505e9.23.1779132920392; 
+ Mon, 18 May 2026 12:35:20 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fe53ab6aasm294696695e9.2.2026.05.18.12.22.49
+ 5b1f17b1804b1-48febe7dd22sm118359945e9.7.2026.05.18.12.35.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 May 2026 12:22:49 -0700 (PDT)
+ Mon, 18 May 2026 12:35:19 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 932345F7B1;
- Mon, 18 May 2026 20:22:48 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 8559A5F7B1;
+ Mon, 18 May 2026 20:35:18 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Benno =?utf-8?B?RsO8bmZzdMO8Y2s=?= <benno.fuenfstueck@neodyme.io>
-Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>,
- qemu-devel@nongnu.org,
- "Michael S. Tsirkin" <mst@redhat.com>,  Akihiko Odaki
- <odaki@rsg.ci.i.u-tokyo.ac.jp>,  Dmitry Osipenko
- <dmitry.osipenko@collabora.com>
-Subject: Re: [PATCH] virtio-gpu: fix inverted mouse cursor
-In-Reply-To: <CAP-XHHCuVyP=21LyME1KmNB0heRDXAdq7QdCsoVomAK38ZRi7A@mail.gmail.com>
- ("Benno =?utf-8?B?RsO8bmZzdMO8Y2siJ3M=?= message of "Wed, 15 Apr 2026
- 15:01:20 +0200")
-References: <20260409144639.3610-1-benno.fuenfstueck@neodyme.io>
- <CAJ+F1CKYu4UfJyFJxPYLe9gjQhOD9QA7BrTmBXSCPuCDFgPf1A@mail.gmail.com>
- <CAP-XHHCuVyP=21LyME1KmNB0heRDXAdq7QdCsoVomAK38ZRi7A@mail.gmail.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org,  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH v2 0/2] virtio-gpu: Do not wait for the main thread
+ during reset
+In-Reply-To: <20260424-gpu-v2-0-9fd2fc0dd1bd@rsg.ci.i.u-tokyo.ac.jp> (Akihiko
+ Odaki's message of "Fri, 24 Apr 2026 23:06:40 +0900")
+References: <20260424-gpu-v2-0-9fd2fc0dd1bd@rsg.ci.i.u-tokyo.ac.jp>
 User-Agent: mu4e 1.14.1; emacs 30.1
-Date: Mon, 18 May 2026 20:22:48 +0100
-Message-ID: <87se7ocyk7.fsf@draig.linaro.org>
+Date: Mon, 18 May 2026 20:35:18 +0100
+Message-ID: <87mrxwcxzd.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,114 +105,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Benno F=C3=BCnfst=C3=BCck <benno.fuenfstueck@neodyme.io> writes:
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> writes:
 
-> Hi Marc-Andr=C3=A9,
+> This fixes a deadlock I previously observed with the test in [1].
 >
-> On Mon, 13 Apr 2026 at 15:23, Marc-Andr=C3=A9 Lureau <marcandre.lureau@gm=
-ail.com> wrote:
->
->  Arguably, this is a bug in virgl vrend_renderer_get_cursor_content(),
->  since the function doesn't return y0_top it should always return the
->  data in the correct orientation.
->
->  We may have a temporary workaround in qemu though for older virgl, but
->  I think it should be solved there too.
->
-> Thanks, I didn't know about this. I submitted a MR to virglrenderer now a=
-s well to fix it there:
-> https://gitlab.freedesktop.org/virgl/virglrenderer/-/merge_requests/1611
+> However, I can no longer reproduce the issue reliably with that test, so
+> I used Codex, a coding agent, to write a more reliable local test case,
+> shown below. I applied to Codex for Open Source to get access. The test
+> case is not intended for merge: current policy prohibits that, and it is
+> probably not worth carrying anyway because race-condition tests are
+> inherently fragile.
 
-I see this is merged now. Do we want to version gate the fix or just
-drop it and wait for things to be backported?
+What sort of hit rate where you getting with the race? So far they have
+both been rock solid without the additional patches for me.
 
+
+> The remaining patches were written by me.
 >
-> How should I change the patch to make it a temporary fix? Some kind of ve=
-rsion gate (but not sure yet in which version of
-> virglrenderer the fix will end up being release)?
+> [1] https://lore.kernel.org/qemu-devel/20251014111234.3190346-9-alex.benn=
+ee@linaro.org/
+>
+> To: qemu-devel@nongnu.org
+> Cc: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Cc: Michael S. Tsirkin <mst@redhat.com>
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>
+> Below is the Codex-written test case:
+>
+> diff --git a/tests/functional/aarch64/test_gpu_blob.py b/tests/functional=
+/aarch64/test_gpu_blob.py
+> index a913d3b29c84..52627b4541f9 100755
+> --- a/tests/functional/aarch64/test_gpu_blob.py
+> +++ b/tests/functional/aarch64/test_gpu_blob.py
+> @@ -13,7 +13,9 @@
+>  #
+>  # SPDX-License-Identifier: GPL-2.0-or-later
 >=20=20
+> -from qemu.machine.machine import VMLaunchFailure
+> +import subprocess
+> +
+> +from qemu.machine.machine import AbnormalShutdown, VMLaunchFailure
 >=20=20
->  > ---
->  >  hw/display/virtio-gpu-gl.c | 20 +++++++++++++++++++-
->  >  1 file changed, 19 insertions(+), 1 deletion(-)
->  >
->  > diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
->  > index 2b7a41c466..4562d3405e 100644
->  > --- a/hw/display/virtio-gpu-gl.c
->  > +++ b/hw/display/virtio-gpu-gl.c
->  > @@ -33,6 +33,9 @@ static void virtio_gpu_gl_update_cursor_data(VirtIOG=
-PU *g,
->  >      VirtIOGPUGL *gl =3D VIRTIO_GPU_GL(g);
->  >      uint32_t width, height;
->  >      uint32_t pixels, *data;
->  > +    bool y_0_top =3D true;
->  > +    int ret;
->  > +    struct virgl_renderer_resource_info info;
->  >
->  >      if (gl->renderer_state !=3D RS_INITED) {
->  >          return;
->  > @@ -49,8 +52,23 @@ static void virtio_gpu_gl_update_cursor_data(VirtIO=
-GPU *g,
->  >          return;
->  >      }
->  >
->  > +    memset(&info, 0, sizeof(info));
->  > +    ret =3D virgl_renderer_resource_get_info(resource_id, &info);
->  > +    if (ret =3D=3D 0) {
->  > +        y_0_top =3D info.flags & VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP;
->  > +    }
->  > +
->  >      pixels =3D s->current_cursor->width * s->current_cursor->height;
->  > -    memcpy(s->current_cursor->data, data, pixels * sizeof(uint32_t));
->  > +    if (y_0_top) {
->  > +        memcpy(s->current_cursor->data, data, pixels * sizeof(uint32_=
-t));
->  > +    } else {
->  > +        uint32_t *dst =3D s->current_cursor->data;
->  > +        for (uint32_t y =3D 0; y < height; y++) {
->  > +            memcpy(dst + y * width,
->  > +                   data + (height - 1 - y) * width,
->  > +                   width * sizeof(uint32_t));
->  > +        }
->  > +    }
->  >      free(data);
->  >  }
->  >
->  > --
->  > 2.50.1 (Apple Git-155)
->  >
->  >
->  > --
->  > Neodyme AG
->  > Sitz der Gesellschaft / Address: Dirnismaning 55 | Halle 13 |
->  > 85748 Garching b.M=C3=BCnchen
->  > Postanschrift: Rosenthaler Stra=C3=9Fe 72a | 10119
->  > Berlin
->  >
->  > Registergericht / Registry court: M=C3=BCnchen, HRB 269168
->  > Vorstand /
->  > Management Board: Thomas Lambertz | Tobias Madl
->  > Aufsichtsratsvorsitzender /
->  > Chairman of the Supervisory Board: Hendrik Hofstadt
->  >
->  >
->  >
->  >
->  >
+>  from qemu_test import Asset
+>  from qemu_test import wait_for_console_pattern
+> @@ -25,8 +27,7 @@ class Aarch64VirtBlobTest(LinuxKernelTest):
+>                         'download?path=3D%2Fblob-test&files=3Dqemu-880.bi=
+n',
+>                         '2f6ab85d0b156c94fcedd2c4c821c5cbd52925a2de107f8e=
+2d569ea2e34e42eb')
+>=20=20
+> -    def test_virtio_gpu_blob(self):
+> -
+> +    def launch_blob_test(self):
+>          self.set_machine('virt')
+>          self.require_accelerator("tcg")
+>=20=20
+> @@ -65,9 +66,27 @@ def test_virtio_gpu_blob(self):
+>                  self.log.info("unhandled launch failure: %s", excp.outpu=
+t)
+>                  raise excp
+>=20=20
+> +    def test_virtio_gpu_blob(self):
+> +        self.launch_blob_test()
+> +
+>          self.wait_for_console_pattern('[INFO] virtio-gpu test finished')
+>          # the test should cleanly exit
+>=20=20
+> +    def test_virtio_gpu_blob_shutdown_race(self):
+> +        self.launch_blob_test()
+> +
+> +        self.wait_for_console_pattern('[INFO] unmapping blob object reso=
+urce')
+> +
+> +        try:
+> +            self.vm.shutdown(timeout=3D10)
+> +        except AbnormalShutdown as excp:
+> +            if isinstance(excp.__cause__, subprocess.TimeoutExpired):
+> +                raise AssertionError(
+> +                    "QEMU failed to exit while virtio-gpu reset was raci=
+ng "
+> +                    "with shutdown") from excp
+> +            self.log.info("QEMU exited before the shutdown request compl=
+eted: %s",
+> +                          excp)
+> +
+>=20=20
+>  if __name__ =3D=3D '__main__':
+>      LinuxKernelTest.main()
 >
->  --=20
->  Marc-Andr=C3=A9 Lureau
+> ---
+> Changes in v2:
+> - Added the patch "virtio-gpu: Run reset cleanup in the same BH".
+> - My assumption about the ordering was incorrect, so I changed the patch
+>   to follow the approach used by virtio-gpu-gl.
+> - Link to v1: https://lore.kernel.org/qemu-devel/20251029-gpu-v1-1-e3e3c7=
+eebc9e@rsg.ci.i.u-tokyo.ac.jp
 >
-> Neodyme AG
+> ---
+> Akihiko Odaki (2):
+>       virtio-gpu: Run reset cleanup in the same BH
+>       virtio-gpu: Do not wait for the main thread during reset
 >
-> Sitz der Gesellschaft / Address: Dirnismaning 55 | Halle 13 | 85748 Garch=
-ing b.M=C3=BCnchen
-> Postanschrift: =E2=80=8BRosenthaler Stra=C3=9Fe 72a | =E2=80=8B10119 Berl=
-in
-> Registergericht / Registry court: M=C3=BCnchen, HRB 269168
-> Vorstand / Management Board: Thomas Lambertz | Tobias Madl
-> Aufsichtsratsvorsitzender / Chairman of the Supervisory Board: Hendrik Ho=
-fstadt
+>  include/hw/virtio/virtio-gpu.h |  4 +--
+>  hw/display/virtio-gpu.c        | 60 ++++++++++++++++++++----------------=
+------
+>  2 files changed, 30 insertions(+), 34 deletions(-)
+> ---
+> base-commit: 14f38a63b9adc02c0ebe3b5ada1f1208abaf21ea
+> change-id: 20251029-gpu-c3f45747f7ba
+>
+> Best regards,
 
 --=20
 Alex Benn=C3=A9e
