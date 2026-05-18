@@ -4,71 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD7C3CD343F
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 21:29:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EB51CD4F56
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 21:29:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP5Vl-0000XO-6X; Mon, 18 May 2026 17:28:29 -0400
+	id 1wP5VN-0000Om-6P; Mon, 18 May 2026 17:28:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5Vc-0000Ur-Vx
- for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:21 -0400
-Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5VM-0000Nt-03
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:04 -0400
+Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5Va-0000Vq-2y
- for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:20 -0400
-Received: by mail-ot1-x333.google.com with SMTP id
- 46e09a7af769-7dcdd1b492eso2948061a34.1
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 14:28:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5VK-0000Ri-2r
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:03 -0400
+Received: by mail-ot1-x32b.google.com with SMTP id
+ 46e09a7af769-7dcd9061b1aso2714638a34.2
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 14:28:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779139695; x=1779744495;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779139681; x=1779744481;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=+8Ux4G6M9Fv0nwLtFscsvZGnjN/b2cZpTTDBQ0OTQp0=;
- b=LQPet8oXoEsO9mFPu2hq5G7wCqkZ/it+SyQVk2tBOubTQOb/Y85lgCPgY5AYLw32Y1
- uZLYkDEJeLVpViwm+J3x65toqc4dbb7x0Oej8Ucp8dM5NPKRL/SeAflv1f6cItER0t2d
- NWwuZ+6j0pRkwx7KkdtQsWbaOLd6LV6U7ZxOy+dwra6YiOdkr7TbOgab2Af6qjBE2VrB
- 1isnKo97+DZrjUkcZfPEgPtLg+xwjBcc2Kqkl/nEhc/Mmreirwb4DQUi+1suF9km8ABK
- wJrje4j4ro/Qfs55x1tdP5jMDR52EpOdHQesqjWbK7f7doYOq/We7EfMbpJpG4R8IVA6
- HFfw==
+ :reply-to; bh=X139v/fq6kIlZd7LLSuaNP39cVFCILWMkztN9EqyH7E=;
+ b=ReCidHy/jDbtRVYUPUTmuvduggPQAd7wgk3sBfeGhZ9JTMLnrsbuA/JAQ+oQDxrOif
+ 3KgJf4Fwc7f+CkTBshlKtqJAUQpS6sfyRP8JPdYr7jPTTf2PcGsYP35Vp7Tf95pSP4wr
+ Z1B2DgYJybrHHB+J4VclBCkdF8NWTkLpeC5/klCzGlzUFQemMnHw+f9eJAOboZhCs/mq
+ H92BZClq0z+Yl+jw4LcWFjijbpeTDYkCy0oZRiuE9e+ixCxKppX3qJ35/yKv8R78AV9m
+ VRys6KSxKl4aAYTb7VT4nT9k9C+4UBwm482q81xg36AR4qlxUqW4SQFFLCp5DRD+LzHy
+ VDwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779139695; x=1779744495;
+ d=1e100.net; s=20251104; t=1779139681; x=1779744481;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=+8Ux4G6M9Fv0nwLtFscsvZGnjN/b2cZpTTDBQ0OTQp0=;
- b=htdC0MY13PAqu5xgrAInctwB4cQyDBqp1uKy4cR+1XwtyeUGYNdcCy+C7KjJJGm031
- zIt7pPxP1hrn1uR2RZDQcDdxfvgRwrpGZoMh1gIYW+FaswAH3N0nx+Fr1k/zZOvKp6EX
- JK5XJ1l+lCnptXMfVIssd1OnTWkCrzyFepPf1nm3z3wnEB5stkZllKbxBvbyQrKqLw0r
- xhT7XF5Pe8oW2hfjZlYKNTclCXjmS5vJu1kjQkvmVmsF7MXyLG6k9jAz9AW99yQ+jXtc
- wJgjRSOt3hqimsHEjwbEb356sAiUCtA+2pxoIG5+N3kBBHU4WqcWtShQl5vftWCIEsdR
- Z1zw==
-X-Gm-Message-State: AOJu0Yzn2EgCyzDhFCkGdmuPzSnwvUkGUyIyiZDrlhM5NFm5J8xvmkD/
- ZLAPOcdUZePJphNtbhl9EfsU8w5hG9OHoG4VN9DTSKj69gpXCFyM6maiQn9pbK5rpSg=
-X-Gm-Gg: Acq92OEEfKBUsjGyGP9UGJBD/peC5evfaGAbhxQZrqG0HP70ERAB+QeIvrG3O1GAC3U
- oAKTcZIt7/fJUU83IzCVjCGCApbCvBznRufQMRA743lBZIobQX0ji3aofrhhsQZv2EV/VgM11q/
- doiE/NEkPLe+5bXCOOlVtIeg2xeFWckUQzvYolW6ON3lzXRvd0s/J2yiqzcLzGqqAgvacXQbP9k
- FD1IlmX3KF142xAXFP0vbdD8c1U4daAGcexvWrw3MhouCy266XdBzpg71kj7Qw3LcTchqEITWs9
- jJHKE4qr6Fb+Q4PN2sJPtezGiaaPCJh4o2GKYOOtYtEy8r9Sg1cgRv04Rq/fnKT58PeOQxK/VbL
- uU+Vf+bQfgyxCiBr+M3QrbbOZfIafseCz09lvDk0/0Pmd8JYl2zqeFeZ2lAERJfrxLpz6+sK8Q6
- p4QTgzfXIkdA==
-X-Received: by 2002:a05:6830:90b:b0:7dc:1bcd:43be with SMTP id
- 46e09a7af769-7e49a9379f2mr10129938a34.5.1779139695293; 
- Mon, 18 May 2026 14:28:15 -0700 (PDT)
+ bh=X139v/fq6kIlZd7LLSuaNP39cVFCILWMkztN9EqyH7E=;
+ b=T+lmJ1IeDR1zXeydnUZvoPAPyID4kjslO44i5wxl26yWwYvyFRXDA/hYyEhFwTP4Jj
+ 4rR1awdLoiDek20AQRPHKihIlz/KnUmLEp9I4vdNl42pS1fEbYT1x90wzP+6hSDfVCTx
+ luo627lm8eVvwz8CO99VdOI6ajc/xxQ2tEmwxe9E4kLEltDmpNyo3kz7I6r8P0hqSAgn
+ shZlXL/9dNx29UhQWn+7I8zlVzcSVl1c1m6YMbMzKybsRHkeMAt0aO+GeD1RwU3NuUYV
+ 8vQnO6Q8Xg7n+m76HnftleFdttKaTxM8oeevq6xzhZ0TTA0wY+mGkz0PYqFu2DIe4bM5
+ p9BQ==
+X-Gm-Message-State: AOJu0Yx0tQ9CN/WbT/LLxm8T4c5QOiNGZXx85TTAMDcEPxrIlcSudzAF
+ GkpqWmBjx+uM4OLqoOdKU7b9/J9SV+tl+khetOzmTgOULjHAZjhsCs+FQDJg0trBxgv0N0AREdF
+ nDAk6rvg=
+X-Gm-Gg: Acq92OFhVtEuMFKsTJVBKtky4t10yOTY3uiFHw06Mya8BbHtk5t5BSGj/c5bXysbqoc
+ D5EtS2OwoBBoak7VHMr9csERLjURE60wELYG3i+gLDxbS/hKLVf02iyiHJdzoOUW1qEqRUrf3XO
+ uySETq2e6I/ZlSAlRW1o2fdvNEwT0FacEFQJ81DacIMYsIw55E+5S9BJqU1Fbt/YfJt2CTgvj3y
+ ThHf9qp09/Y1h6CviLkWqtnwINE5/bIF30HQzGnQq201rDCH9hsb0/QHSk9RJLFgAw0NBAw3E0v
+ Wty27uBWb89oX09sS88jyyV6EY0A76D1hn52c+vg1UvSIR63OV5IQR4Vd9qdLXBDe15NNMRmgC0
+ kzkPuAT6ipluZ1rvWVtyvd0OldM2wBTr/xWWTYITY5ePhq0+2Mlz2Xdh/VfvTd4hiPV1MaetkLi
+ uwldOPpk0hqg==
+X-Received: by 2002:a05:6830:349e:b0:7d9:f50f:9691 with SMTP id
+ 46e09a7af769-7e4de6b026fmr11827528a34.0.1779139680895; 
+ Mon, 18 May 2026 14:28:00 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55b81cc5asm7980358a34.8.2026.05.18.14.28.13
+ 46e09a7af769-7e55b81cc5asm7980358a34.8.2026.05.18.14.27.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 May 2026 14:28:14 -0700 (PDT)
+ Mon, 18 May 2026 14:28:00 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Mon, 18 May 2026 15:27:41 -0600
-Subject: [PATCH v2 23/37] bsd-user: Add time system call dispatch
+Date: Mon, 18 May 2026 15:27:27 -0600
+Subject: [PATCH v2 09/37] bsd-user: Add bsd-socket.h with bind through
+ getsockname
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260518-misc-2026q2-v2-23-6c16fe448301@bsdimp.com>
+Message-Id: <20260518-misc-2026q2-v2-9-6c16fe448301@bsdimp.com>
 References: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
 In-Reply-To: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
 To: qemu-devel@nongnu.org
@@ -77,24 +79,24 @@ Cc: Kyle Evans <kevans@freebsd.org>,
  Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>, 
  Kyle Evans <kevans@FreeBSD.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5661; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=y/M4lfN1u9uogW+bC03bPRccqF4MOtoBLBj5D18mpLY=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqC4RIFYh+m+c6vLv4b8kqiNi45fNu9405XPeVT
- lruuhra0L2JAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaguESAAKCRBsHNEofbAR
- AB2aD/4poG/I3X1440nqhNS1my7JsoSHgRqW4BRX6m7imf8iiSLeRujmPOe/fe/Rq8VCn1TXHuc
- TSOIc43cN+ayvHgK9l0Gel6jR/PWu3FtUFKzuyn87LMSF5XXC9Xv4F43kDO/s1UvMMyejPzhsYW
- WZTUrOwi+crgfNHEU7u+e2rdRVBVhVi4dBM+oTUVAaaYSx4Tf99teRrAxW/eGaadvsaOh7ke3Tg
- tpYNThb7IA42QZvzh3cvCGdtLFxInBIlUq0LK4/MZq0hd0ZRf+SrMSpNTEyDPYLdgxNYEXLGV3A
- mqJcLRNzKoRDa5jkA3B9uPEMtEGfzeIAARS8w3L/V0H+J0yviges2N42sNwrQTeKlIn7T89dWiH
- f+DF9aUvdAQJPt+dBUjQe04DnLUgqovaxM5Jk3Z21h9AJvFJjjkX0jUO4gqyodoJ+1lee69Gmc8
- FjfWRvXza7ypbZSQdBV/XoGQC74VS7CLs9rRi5oFWcyWes0eEG74jYbEl/TWA4ougCLFc6uQiud
- Ig/u1PwS4qcOUy91hLLrwZ+gMYzED91eenXuxe9G4g//EwFSTaPwXausN3baHsAl8Tm3a1I9BNQ
- Lwa8APyM6yVdyzfsXqX4gpc0pY5QPyXzk8ri7SnYKKVhvDUZt4amAiAVSHTeTjLF5cuiOqgyXEL
- HGm21ybRSBS7rvQ==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7095; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=r4P6eqFpteuxxeqRzsUj7FYwHABI/v6ZFvzXHh1X9Fk=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqC4RGqKuWaGO+P/UGAlD0L4z1OhcTt5i6gFRQF
+ X44I9CwOMOJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaguERgAKCRBsHNEofbAR
+ AHaXEADKIGGvCc11N3NhBhNBzrWQUsLhcvyd0HZiMsH52U1QskU7O+u+yaBq36ExrPLbl/Xai2v
+ QcTZw0eZCXC4+CwUT8DsIuzEtJCJikmxEJl+IuoBYT/1vrgDVbFRF8EVU7Mw0nHn2jtTTAi7WUl
+ jpL1H/SK0EITHdt+N0AlEVKCz+FXBaUajQfOgjbEmvQAfjpabu2Rf/4OQc9GvIppBTg8eRB0p1f
+ zEZGNID+3IaWwo7HTqf7jBfUso3D1ApbWknwF6tv0yzCGJ1Ak+A4h6K+fWmTKAAnqZ2ldLeWFMB
+ OtZXDCWOrFKDphDTN433gVpFSbb9ARPQAoPb9Qhbbop7KM+HgjFuoaYWhRdlF5vFMXmiahPdoWL
+ WxFPELcoKrza2BENZ6aWMlAo0iUesbH2ZLl0lMmlKzbdrSuW+PW979AsoKmDAzi6azg2oUJGpCv
+ owEvmt/Ifw/5P/V8usMSfJhAYNo1MqDteOoaNVqQK3N+67WVv0a5mvbXplhB1A9DhYLJeWpTlF6
+ srAep60FzGlNtEANlOTwTUDCxtWiRZo2Ocu9OmyG3+Pvo+BUetPa83fG+GGGWLpH/oMM6Aj+td3
+ NmOo2hkAb1WuG/fIHqpMzqCyGz2LSSPgZ0feEvUsm7R3URIMDCItmUh2S1V5igQdiXcA6xMaRYK
+ TQizpvaxINCKlkg==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::333;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x333.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::32b;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x32b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -116,167 +118,225 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Wire up time-related system calls in the FreeBSD syscall dispatcher:
-nanosleep, clock_nanosleep, clock_gettime, clock_settime, clock_getres,
-gettimeofday, settimeofday, adjtime, ntp_adjtime, ntp_gettime,
-clock_getcpuclockid2, utimes, lutimes, futimes, futimesat,
-ktimer_create, ktimer_delete, ktimer_settime, ktimer_gettime,
-select, pselect, ppoll, kqueue, freebsd11_kevent, kevent,
-setitimer, getitimer, futimens, utimensat, and sigtimedwait.
+Add the first set of socket system call shims: bind, connect,
+accept, getpeername, and getsockname. Also add safe_syscall wrappers
+for sendto, recvfrom, select, pselect, recvmsg, and sendmsg.
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
 Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 Assisted-by: Claude Opus 4.6 (1M context)
 ---
- bsd-user/freebsd/os-syscall.c | 124 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 124 insertions(+)
+ bsd-user/bsd-socket.h         | 167 ++++++++++++++++++++++++++++++++++++++++++
+ bsd-user/freebsd/os-syscall.c |  15 ++++
+ 2 files changed, 182 insertions(+)
 
+diff --git a/bsd-user/bsd-socket.h b/bsd-user/bsd-socket.h
+new file mode 100644
+index 0000000000..c786d6717a
+--- /dev/null
++++ b/bsd-user/bsd-socket.h
+@@ -0,0 +1,167 @@
++/*
++ * socket related system call shims
++ *
++ * Copyright (c) 2013 Stacey D. Son
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#ifndef BSD_SOCKET_H
++#define BSD_SOCKET_H
++
++#include <sys/types.h>
++#include <sys/socket.h>
++#include <sys/un.h>
++#include <netinet/in.h>
++
++#include "qemu-bsd.h"
++
++ssize_t safe_recvfrom(int s, void *buf, size_t len, int flags,
++    struct sockaddr *restrict from, socklen_t *restrict fromlen);
++ssize_t safe_sendto(int s, const void *buf, size_t len, int flags,
++    const struct sockaddr *to, socklen_t tolen);
++int safe_select(int nfds, fd_set *readfs, fd_set *writefds, fd_set *exceptfds,
++    struct timeval *timeout);
++int safe_pselect(int nfds, fd_set *restrict readfds,
++    fd_set *restrict writefds, fd_set *restrict exceptfds,
++    const struct timespec *restrict timeout,
++    const sigset_t *restrict newsigmask);
++
++/* bind(2) */
++static inline abi_long do_bsd_bind(int sockfd, abi_ulong target_addr,
++                                   socklen_t addrlen)
++{
++    abi_long ret;
++    void *addr;
++
++    if ((int)addrlen < 0) {
++        return -TARGET_EINVAL;
++    }
++
++    addr = alloca(addrlen + 1);
++    ret = target_to_host_sockaddr(addr, target_addr, addrlen);
++    if (is_error(ret)) {
++        return ret;
++    }
++
++    return get_errno(bind(sockfd, addr, addrlen));
++}
++
++/* connect(2) */
++static inline abi_long do_bsd_connect(int sockfd, abi_ulong target_addr,
++                                      socklen_t addrlen)
++{
++    abi_long ret;
++    void *addr;
++
++    if ((int)addrlen < 0) {
++        return -TARGET_EINVAL;
++    }
++    addr = alloca(addrlen + 1);
++
++    ret = target_to_host_sockaddr(addr, target_addr, addrlen);
++
++    if (is_error(ret)) {
++        return ret;
++    }
++
++    return get_errno(connect(sockfd, addr, addrlen));
++}
++
++/* accept(2) */
++static inline abi_long do_bsd_accept(int fd, abi_ulong target_addr,
++                                     abi_ulong target_addrlen_addr)
++{
++    socklen_t addrlen;
++    void *addr;
++    abi_long ret;
++
++    if (target_addr == 0) {
++        return get_errno(accept(fd, NULL, NULL));
++    }
++    /* return EINVAL if addrlen pointer is invalid */
++    if (get_user_u32(addrlen, target_addrlen_addr)) {
++        return -TARGET_EINVAL;
++    }
++    if ((int)addrlen < 0) {
++        return -TARGET_EINVAL;
++    }
++    if (!access_ok(VERIFY_WRITE, target_addr, addrlen)) {
++        return -TARGET_EINVAL;
++    }
++    addr = alloca(addrlen);
++
++    ret = get_errno(accept(fd, addr, &addrlen));
++    if (!is_error(ret)) {
++        if (is_error(host_to_target_sockaddr(target_addr, addr, addrlen))) {
++            close(ret);
++            ret = -TARGET_EFAULT;
++        } else if (put_user_u32(addrlen, target_addrlen_addr)) {
++            close(ret);
++            ret = -TARGET_EFAULT;
++        }
++    }
++    return ret;
++}
++
++/* getpeername(2) */
++static inline abi_long do_bsd_getpeername(int fd, abi_ulong target_addr,
++                                          abi_ulong target_addrlen_addr)
++{
++    socklen_t addrlen;
++    void *addr;
++    abi_long ret;
++
++    if (get_user_u32(addrlen, target_addrlen_addr)) {
++        return -TARGET_EFAULT;
++    }
++    if ((int)addrlen < 0) {
++        return -TARGET_EINVAL;
++    }
++    if (!access_ok(VERIFY_WRITE, target_addr, addrlen)) {
++        return -TARGET_EFAULT;
++    }
++    addr = alloca(addrlen);
++    ret = get_errno(getpeername(fd, addr, &addrlen));
++    if (!is_error(ret)) {
++        ret = host_to_target_sockaddr(target_addr, addr, addrlen);
++        if (is_error(ret)) {
++            ret = -TARGET_EFAULT;
++        } else if (put_user_u32(addrlen, target_addrlen_addr)) {
++            ret = -TARGET_EFAULT;
++        }
++    }
++    return ret;
++}
++
++/* getsockname(2) */
++static inline abi_long do_bsd_getsockname(int fd, abi_ulong target_addr,
++                                          abi_ulong target_addrlen_addr)
++{
++    socklen_t addrlen;
++    void *addr;
++    abi_long ret;
++
++    if (get_user_u32(addrlen, target_addrlen_addr)) {
++        return -TARGET_EFAULT;
++    }
++    if ((int)addrlen < 0) {
++        return -TARGET_EINVAL;
++    }
++    if (!access_ok(VERIFY_WRITE, target_addr, addrlen)) {
++        return -TARGET_EFAULT;
++    }
++    addr = alloca(addrlen);
++
++    ret = get_errno(getsockname(fd, addr, &addrlen));
++    if (!is_error(ret)) {
++        ret = host_to_target_sockaddr(target_addr, addr, addrlen);
++        if (is_error(ret)) {
++            ret = -TARGET_EFAULT;
++        } else if (put_user_u32(addrlen, target_addrlen_addr)) {
++            ret = -TARGET_EFAULT;
++        }
++    }
++    return ret;
++}
++
++#endif /* BSD_SOCKET_H */
 diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
-index 020d16fda3..cc66be3b7c 100644
+index 228daed4c4..737de36514 100644
 --- a/bsd-user/freebsd/os-syscall.c
 +++ b/bsd-user/freebsd/os-syscall.c
-@@ -48,6 +48,7 @@
- #include "os-signal.h"
- #include "os-file.h"
- #include "os-socket.h"
-+#include "os-time.h"
- #include "os-misc.h"
+@@ -40,6 +40,7 @@
+ #include "bsd-proc.h"
+ #include "bsd-misc.h"
+ #include "bsd-signal.h"
++#include "bsd-socket.h"
  
- /* I/O */
-@@ -1037,9 +1038,132 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
-         ret = do_bsd_getdtablesize();
-         break;
+ /* BSD dependent syscall shims */
+ #include "os-stat.h"
+@@ -73,6 +74,20 @@ safe_syscall4(int, ppoll, struct pollfd *, fds, nfds_t, nfds,
+ safe_syscall6(ssize_t, copy_file_range, int, infd, off_t *, inoffp, int, outfd,
+     off_t *, outoffp, size_t, len, unsigned int, flags);
  
-+        /*
-+         * time related system calls.
-+         */
-+    case TARGET_FREEBSD_NR_nanosleep: /* nanosleep(2) */
-+        ret = do_freebsd_nanosleep(arg1, arg2);
-+        break;
++/* used in bsd-socket */
++safe_syscall5(int, select, int, nfds, fd_set *, readfs, fd_set *, writefds,
++    fd_set *, exceptfds, struct timeval *, timeout);
++safe_syscall6(int, pselect, int, nfds, fd_set *restrict, readfs,
++    fd_set *restrict, writefds, fd_set *restrict, exceptfds,
++    const struct timespec *restrict, timeout, const sigset_t *restrict,
++    newsigmask);
++safe_syscall6(ssize_t, recvfrom, int, fd, void *, buf, size_t, len, int, flags,
++    struct sockaddr *restrict, from, socklen_t *restrict, fromlen);
++safe_syscall6(ssize_t, sendto, int, fd, const void *, buf, size_t, len, int,
++    flags, const struct sockaddr *, to, socklen_t, tolen);
++safe_syscall3(ssize_t, recvmsg, int, s, struct msghdr *, msg, int, flags);
++safe_syscall3(ssize_t, sendmsg, int, s, const struct msghdr *, msg, int, flags);
 +
-+    case TARGET_FREEBSD_NR_clock_nanosleep: /* clock_nanosleep(2) */
-+        ret = do_freebsd_clock_nanosleep(arg1, arg2, arg3, arg4);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_clock_gettime: /* clock_gettime(2) */
-+        ret = do_freebsd_clock_gettime(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_clock_settime: /* clock_settime(2) */
-+        ret = do_freebsd_clock_settime(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_clock_getres: /* clock_getres(2) */
-+        ret = do_freebsd_clock_getres(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_gettimeofday: /* gettimeofday(2) */
-+        ret = do_freebsd_gettimeofday(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_settimeofday: /* settimeofday(2) */
-+        ret = do_freebsd_settimeofday(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_adjtime: /* adjtime(2) */
-+        ret = do_freebsd_adjtime(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_ntp_adjtime: /* ntp_adjtime(2) */
-+        ret = do_freebsd_ntp_adjtime(arg1);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_clock_getcpuclockid2: /* Not documented. */
-+        ret = do_freebsd_clock_getcpuclockid2(arg1, arg2, arg3, arg4);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_ntp_gettime: /* ntp_gettime(2) */
-+        ret = do_freebsd_ntp_gettime(arg1);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_utimes: /* utimes(2) */
-+        ret = do_freebsd_utimes(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_lutimes: /* lutimes(2) */
-+        ret = do_freebsd_lutimes(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_futimes: /* futimes(2) */
-+        ret = do_freebsd_futimes(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_futimesat: /* futimesat(2) */
-+        ret = do_freebsd_futimesat(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_ktimer_create: /* timer_create(2) */
-+        ret = do_freebsd_ktimer_create(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_ktimer_delete: /* timer_delete(2) */
-+        ret = do_freebsd_ktimer_delete(arg1);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_ktimer_settime: /* timer_settime(2) */
-+        ret = do_freebsd_ktimer_settime(arg1, arg2, arg3, arg4);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_ktimer_gettime: /* timer_gettime(2) */
-+        ret = do_freebsd_ktimer_gettime(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_select: /* select(2) */
-+        ret = do_freebsd_select(env, arg1, arg2, arg3, arg4, arg5);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_pselect: /* pselect(2) */
-+        ret = do_freebsd_pselect(env, arg1, arg2, arg3, arg4, arg5, arg6);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_ppoll: /* ppoll(2) */
-+        ret = do_freebsd_ppoll(env, arg1, arg2, arg3, arg4);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_kqueue: /* kqueue(2) */
-+        ret = do_freebsd_kqueue();
-+        break;
-+
-+    case TARGET_FREEBSD_NR_freebsd11_kevent: /* kevent(2) */
-+        ret = do_freebsd_freebsd11_kevent(arg1, arg2, arg3, arg4, arg5, arg6);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_kevent: /* kevent(2) */
-+        ret = do_freebsd_kevent(arg1, arg2, arg3, arg4, arg5, arg6);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_setitimer: /* setitimer(2) */
-+        ret = do_freebsd_setitimer(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_getitimer: /* getitimer(2) */
-+        ret = do_freebsd_getitimer(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_futimens: /* futimens(2) */
-+        ret = do_freebsd_futimens(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_utimensat: /* utimensat(2) */
-+        ret = do_freebsd_utimensat(arg1, arg2, arg3, arg4);
-+        break;
-+
-         /*
-          * signal system calls
-          */
-+    case TARGET_FREEBSD_NR_sigtimedwait: /* sigtimedwait(2) */
-+        ret = do_freebsd_sigtimedwait(arg1, arg2, arg3);
-+        break;
-+
-     case TARGET_FREEBSD_NR_sigaction: /* sigaction(2) */
-         ret = do_bsd_sigaction(arg1, arg2, arg3);
-         break;
+ /* used in os-proc */
+ safe_syscall4(pid_t, wait4, pid_t, wpid, int *, status, int, options,
+     struct rusage *, rusage);
 
 -- 
 2.52.0
