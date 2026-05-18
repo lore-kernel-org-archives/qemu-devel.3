@@ -4,60 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CF4FCD4F52
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 09:37:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A9B9CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 09:48:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOuOo-00022c-6V; Mon, 18 May 2026 05:36:34 -0400
+	id 1wOua0-0003iM-Rw; Mon, 18 May 2026 05:48:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mengzhuo@iscas.ac.cn>)
- id 1wOuOl-00021l-Bp; Mon, 18 May 2026 05:36:31 -0400
-Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <mengzhuo@iscas.ac.cn>)
- id 1wOuOi-00036P-PV; Mon, 18 May 2026 05:36:31 -0400
-Received: from iscas.ac.cn (unknown [113.12.18.145])
- by APP-01 (Coremail) with SMTP id qwCowADHM2+N3QpqDHuaEA--.1334S2;
- Mon, 18 May 2026 17:36:14 +0800 (CST)
-From: Meng Zhuo <mengzhuo@iscas.ac.cn>
-To: qemu-riscv@nongnu.org
-Cc: qemu-devel@nongnu.org,
-	Meng Zhuo <mengzhuo@iscas.ac.cn>
-Subject: [PATCH v2] target/riscv/kvm: skip FP/Vector sync on
- KVM_PUT_RUNTIME_STATE
-Date: Mon, 18 May 2026 17:36:13 +0800
-Message-ID: <20260518093613.2763743-1-mengzhuo@iscas.ac.cn>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wOuZx-0003hp-PL
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 05:48:05 -0400
+Received: from mail-dy1-x1343.google.com ([2607:f8b0:4864:20::1343])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wOuZv-0000iM-Kk
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 05:48:05 -0400
+Received: by mail-dy1-x1343.google.com with SMTP id
+ 5a478bee46e88-2f36da5c8fbso1687291eec.0
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 02:48:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1779097682; x=1779702482; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=lEQI2yRCl//AlmmsGnhV8KMY+ueymBNq8SjEtVX2Vcw=;
+ b=ji1DyiHuhd1BGRalgVVvXJ7eAjdMBhNap/is6skt8EzIyf0bSQMh2S1cOV3LYjj647
+ xUHGbuzvlh6hr6hln9pcXRWb06jVN0zaQParMfA4H/KKZOMh/ITC/E0Fz8qarF7CZ70A
+ XFY2yh3eV3w6VvE2UtwiWchvZ7EZ1bKOTEewosxKsvm1pbu8y247DkG3bOcU1GNcocZy
+ bLPFedG0t0KbdvavNOopzpETVDNUr74QfAkSZ8Wz6qJe587liyWdLEAFpDsSNT2H/MWM
+ /K+YR43qI1Y0CpqQPIwg6fGGBOhEQXHcPDjsuYdvp6D38mxdDa3E1oBcqX/PHoUVuEo2
+ Wphg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779097682; x=1779702482;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=lEQI2yRCl//AlmmsGnhV8KMY+ueymBNq8SjEtVX2Vcw=;
+ b=ByuEXOiAv0nGpjObP4NF24+w0aNuf3Kdn1jZJt7yb+/TaS+B5JMr7B4Ytvuq8TmPb6
+ /S+PHkoZylntUorGrgoKr0oQ4jkwCW5udipVhgNfyxWY06IAMyhxPhq5Kxpyw9MRB3z5
+ rLyL66D6OcP8bAxQBM4xLODp84NJYKOdRBPCjpjwZiuBORdg0wqcQFwmDtxgjbGpyYyc
+ WSqL6nz+1ISAh99uXcSHnnUy/XlCEyx/vuZR0hqItOhTgt3CoBKlh1HWn8aeTaCD6mD0
+ 5Cv6QS6n+C3x56uahE6HaXMwb6hnFuXD7zSrUAhg9jioLrbWXKTvvKF9VmfuHaOeZiqw
+ W0qQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/lpsToX66W++Veo3Yu6dpH0scd73w/aqJytMkbGmP03jmEUqeP8g1/jdDk37iAWazjwXziMU+eTlXK@nongnu.org
+X-Gm-Message-State: AOJu0Ywo0yXkaAha5V3JidxRzdyxOb956i8/ND75PyWsyzH4edDvu2de
+ sY8wraHyDzXBmbIfBC7KibuMZgYtl7Bt1tZBqkYRY1lN47f74C/u26p/
+X-Gm-Gg: Acq92OHlqZJeGNxCNt3UUWLARXNTN/QLFkqY2KucwtSTsaQsNBhavmgJlr/3VwOa+t1
+ X0X/eLoRknCdoUvGE9x2aPzWrBqHzz4cL4BRp4EZd/YLfDUJgH6kytAdY37YHUEcwAXHWszE/s6
+ Jl1dcXX5dvT+Mhe8V+e3xePiR0jGYI4yE7zMfpiTPvMJxyEzXhNXq/O5qmK+OSd8Fo7Lgos0GVf
+ d/vjVsPrVXJHpmk3cU5g8F2lUeYhSLb+vxl2eltlmpTa/egyYgwD1ZrHGXF2NpIu/pfThUFZXrL
+ Q/gcqlZclWjlTWabgB66V/0YilFzMk42gSfkRSUIxu+d81RISGTBrAwRjn9lJgu7QGIS73woUGd
+ uWGElvCPNcAeIAhKbDx14A33PaQqSJeHrfjmL6VuA6RJiowkAWu0lPfGkBoiMEQdrPuqQn949ME
+ bVn+1SfIF+ksyHw8nl+0A4Pod6Ni/x9h/f7sTFs0KLB3inhAStw1j88vTOBUFXn3/bCIMatQ==
+X-Received: by 2002:a05:7301:608a:b0:2fc:9aa8:83da with SMTP id
+ 5a478bee46e88-303986a03d0mr6183543eec.29.1779097681551; 
+ Mon, 18 May 2026 02:48:01 -0700 (PDT)
+Received: from localhost ([64.186.250.142]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-302978b3cb2sm16961274eec.30.2026.05.18.02.47.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 18 May 2026 02:48:01 -0700 (PDT)
+Date: Mon, 18 May 2026 17:47:57 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Kuan-Wei Chiu <visitorckw@gmail.com>
+Cc: pbonzini@redhat.com, marcandre.lureau@redhat.com, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, christoph.muellner@vrull.eu, farosas@suse.de,
+ lvivier@redhat.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, 
+ jserv@ccns.ncku.edu.tw, eleanor15x@gmail.com, marscheng@google.com, 
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Subject: Re: [PATCH v2 2/6] hw/char: Add dw8250 UART
+Message-ID: <agrgNcCORO2n2gwe@ChaodeMBP.bbrouter>
+References: <20260514011528.1263665-1-visitorckw@gmail.com>
+ <20260514011528.1263665-3-visitorckw@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qwCowADHM2+N3QpqDHuaEA--.1334S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7Zr13urW7Wr1UCw4UKF1ftFb_yoW8tr13pr
- 45Ca93Wr1xGrWxCw4IyF1kXF4rWFWxWrWDurZFy3y3KFs0krWYgr4kKFWFvr1DCrW8Cr1a
- 9F4jyr43u398AaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUyv14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
- rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
- 1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4j
- 6r4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oV
- Cq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
- I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
- 4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCF04k20xvY0x0EwIxG
- rwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4
- vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IY
- x2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26c
- xKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAF
- wI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7VUbrMaUUUUUU==
-X-Originating-IP: [113.12.18.145]
-X-CM-SenderInfo: pphqw6xkxrqxpvfd2hldfou0/1tbiDAgLEmoKqZLYRAAAsa
-Received-SPF: pass client-ip=159.226.251.21; envelope-from=mengzhuo@iscas.ac.cn;
- helo=cstnet.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260514011528.1263665-3-visitorckw@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1343;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1343.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,67 +105,252 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-During KVM exit processing (KVM_PUT_RUNTIME_STATE), QEMU never modifies
-FP or Vector registers — only core GPRs/PC and CSRs are potentially
-changed.  Re-syncing 32 FP and 32 Vector registers on every KVM exit
-wastes 36-68 individual KVM_SET_ONE_REG ioctls per vCPU exit.
+On Thu, May 14, 2026 at 01:15:24AM +0800, Kuan-Wei Chiu wrote:
+> Add the dw8250 uart support. This hardware is a widely used 16550A
+> derivative that includes additional registers.
+> 
+> Without this specific device support, the Linux 8250_dw driver fails to
+> probe the extended registers (UCV, CPR, etc.), which are essential for
+> correct feature detection:
+> 
+> [    0.293566] Serial: 8250/16550 driver, 4 ports, IRQ sharing disabled
+> [    0.306929] Oops - store (or AMO) access fault [#1]
+> [    0.307020] Modules linked in:
+> [    0.307192] CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 7.0.0 #1 PREEMPTLAZY
+> [    0.307250] Hardware name: Milk-V Duo (DT)
+> [    0.307294] epc : dw8250_setup_port+0x22/0x520
+> [    0.307504]  ra : dw8250_probe+0x57e/0x5b8
+> [    0.307518] epc : ffffffff80708dd6 ra : ffffffff8070a49e sp : ffffffc60000b820
+> [    0.307525]  gp : ffffffff81a32ba8 tp : ffffffd602180cc0 t0 : 0000000000000073
+> [    0.307533]  t1 : 000000000000006c t2 : 0000000000000000 s0 : ffffffc60000b830
+> [    0.307539]  s1 : ffffffd6028c8640 a0 : ffffffc60000b848 a1 : ffffffff813162c1
+> [    0.307546]  a2 : ffffffff813162c0 a3 : ffffffd6028c8640 a4 : ffffffc60002d0b4
+> [    0.307552]  a5 : 0000000000000001 a6 : 0000000000000094 a7 : 0000000000000060
+> [    0.307558]  s2 : ffffffd60225d410 s3 : ffffffd60225d400 s4 : 0000000000000000
+> [    0.307573]  s5 : ffffffff80e31a48 s6 : 0000000000000008 s7 : 0000000000000000
+> [    0.307584]  s8 : 0000000000000149 s9 : 0000000000000000 s10: 0000000000000000
+> [    0.307590]  s11: 0000000000000000 t3 : ffffffd602007c00 t4 : ffffffff81601540
+> [    0.307604]  t5 : 0000000000000003 t6 : ffffffd602a42f82 ssp : 0000000000000000
+> [    0.307611] status: 0000000200000120 badaddr: ffffffc60002d0b4 cause: 0000000000000007
+> [    0.307652] [<ffffffff80708dd6>] dw8250_setup_port+0x22/0x520
+> [    0.307695] [<ffffffff8070a49e>] dw8250_probe+0x57e/0x5b8
+> [    0.307702] [<ffffffff80731f0e>] platform_probe+0x46/0x80
+> [    0.307708] [<ffffffff8072f67c>] really_probe+0x84/0x22c
+> [    0.307715] [<ffffffff8072f880>] __driver_probe_device+0x5c/0xd4
+> [    0.307721] [<ffffffff8072f9be>] driver_probe_device+0x2e/0xf4
+> [    0.307727] [<ffffffff8072fbe6>] __driver_attach+0x6e/0x14c
+> [    0.307734] [<ffffffff8072d5f0>] bus_for_each_dev+0x60/0xb0
+> [    0.307740] [<ffffffff8072f1b2>] driver_attach+0x1a/0x24
+> [    0.307746] [<ffffffff8072e8da>] bus_add_driver+0xca/0x1d8
+> [    0.307752] [<ffffffff80730aaa>] driver_register+0x3e/0xdc
+> [    0.307757] [<ffffffff80731c54>] __platform_driver_register+0x1c/0x24
+> [    0.307779] [<ffffffff80c334f6>] dw8250_platform_driver_init+0x1a/0x24
+> [    0.307793] [<ffffffff80011992>] do_one_initcall+0x4e/0x2a4
+> [    0.307800] [<ffffffff80c01362>] kernel_init_freeable+0x226/0x2b0
+> [    0.307807] [<ffffffff80bc3798>] kernel_init+0x1c/0x144
+> [    0.307813] [<ffffffff8001361c>] ret_from_fork_kernel+0x18/0x164
+> [    0.307820] [<ffffffff80bcefb6>] ret_from_fork_kernel_asm+0x16/0x18
+> [    0.307914] Code: 3683 2085 0b63 32f7 000f 0140 6918 4785 0713 0b47 (c31c) 2583
+> [    0.308041] ---[ end trace 0000000000000000 ]---
+> [    0.308180] Kernel panic - not syncing: Fatal exception in interrupt
+> [    0.315760] ---[ end Kernel panic - not syncing: Fatal exception in interrupt ]---
+> 
+> Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 
-Follow the s390x pattern: early return on RUNTIME after syncing core
-registers and CSRs.  KVM_PUT_FULL_STATE and KVM_PUT_RESET_STATE continue
-to sync everything for correctness during migration and initialization.
-
-Signed-off-by: Meng Zhuo <mengzhuo@iscas.ac.cn>
----
- target/riscv/kvm/kvm-cpu.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
-
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index b047ffa9c0..6b41de8bf9 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -1373,7 +1373,7 @@ int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu, int state)
- 
- int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
- {
--    int ret = 0;
-+    int ret;
- 
-     ret = kvm_riscv_put_regs_core(cs);
-     if (ret) {
-@@ -1385,6 +1385,17 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
-         return ret;
-     }
- 
-+    /*
-+     * For RUNTIME_STATE, KVM already has the correct FP and Vector state
-+     * from the preceding KVM_RUN exit. QEMU never modifies these registers
-+     * during exit handling, so re-syncing is unnecessary.  This saves ~68
-+     * KVM_SET_ONE_REG ioctls per vCPU exit.  See also s390x which uses
-+     * the same pattern.
-+     */
-+    if (level == KVM_PUT_RUNTIME_STATE) {
-+        return 0;
-+    }
-+
-     ret = kvm_riscv_put_regs_fp(cs);
-     if (ret) {
-         return ret;
-@@ -1397,11 +1408,9 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
- 
-     if (KVM_PUT_RESET_STATE == level) {
-         RISCVCPU *cpu = RISCV_CPU(cs);
--        if (cs->cpu_index == 0) {
--            ret = kvm_riscv_sync_mpstate_to_kvm(cpu, KVM_MP_STATE_RUNNABLE);
--        } else {
--            ret = kvm_riscv_sync_mpstate_to_kvm(cpu, KVM_MP_STATE_STOPPED);
--        }
-+        int state = cs->cpu_index == 0 ? KVM_MP_STATE_RUNNABLE
-+                                       : KVM_MP_STATE_STOPPED;
-+        ret = kvm_riscv_sync_mpstate_to_kvm(cpu, state);
-         if (ret) {
-             return ret;
-         }
--- 
-2.47.3
-
+Thanks,
+Chao
+> ---
+>  hw/char/Kconfig          |   4 ++
+>  hw/char/dw8250.c         | 118 +++++++++++++++++++++++++++++++++++++++
+>  hw/char/meson.build      |   1 +
+>  include/hw/char/dw8250.h |  27 +++++++++
+>  4 files changed, 150 insertions(+)
+>  create mode 100644 hw/char/dw8250.c
+>  create mode 100644 include/hw/char/dw8250.h
+> 
+> diff --git a/hw/char/Kconfig b/hw/char/Kconfig
+> index 020c0a84bb..418d99b757 100644
+> --- a/hw/char/Kconfig
+> +++ b/hw/char/Kconfig
+> @@ -95,3 +95,7 @@ config IP_OCTAL_232
+>      bool
+>      default y
+>      depends on IPACK
+> +
+> +config DW8250
+> +    bool
+> +    select SERIAL
+> diff --git a/hw/char/dw8250.c b/hw/char/dw8250.c
+> new file mode 100644
+> index 0000000000..4ec829ceaf
+> --- /dev/null
+> +++ b/hw/char/dw8250.c
+> @@ -0,0 +1,118 @@
+> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+> +/*
+> + * Synopsys DesignWare APB UART (DW 8250)
+> + *
+> + * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qapi/error.h"
+> +#include "hw/char/dw8250.h"
+> +#include "hw/core/qdev-properties.h"
+> +#include "hw/core/qdev-properties-system.h"
+> +
+> +#define DW_UART_REGION_SIZE 0x100
+> +
+> +#define DW_UART_RE_EN 0xB4 /* Receiver Output Enable Register */
+> +#define DW_UART_DLF   0xC0 /* Divisor Latch Fraction Register */
+> +#define DW_UART_CPR   0xF4 /* Component Parameter Register */
+> +#define DW_UART_UCV   0xF8 /* UART Component Version */
+> +#define DW_UART_CTR   0xFC /* Component Type Register */
+> +
+> +#define DW_UART_UCV_VALUE 0x3332332A /* "323*" -> v3.23a */
+> +#define DW_UART_CTR_VALUE 0x44570110 /* "DW" */
+> +
+> +static uint64_t dw8250_ext_read(void *opaque, hwaddr addr, unsigned int size)
+> +{
+> +    switch (addr) {
+> +    case DW_UART_UCV:
+> +        return DW_UART_UCV_VALUE;
+> +    case DW_UART_CPR:
+> +        return 0x00000000; /* No advanced features (DMA, extra FIFOs) */
+> +    case DW_UART_CTR:
+> +        return DW_UART_CTR_VALUE;
+> +
+> +    case DW_UART_RE_EN:
+> +    case DW_UART_DLF:
+> +        /*
+> +         * Return 0 to indicate these optional features
+> +         * (RS485 and Fractional Divisor) are not implemented.
+> +         */
+> +        return 0x00000000;
+> +
+> +    default:
+> +        return 0;
+> +    }
+> +}
+> +
+> +static void dw8250_ext_write(void *opaque, hwaddr addr, uint64_t val, unsigned int size)
+> +{
+> +}
+> +
+> +static const MemoryRegionOps dw8250_ext_ops = {
+> +    .read = dw8250_ext_read,
+> +    .write = dw8250_ext_write,
+> +    .endianness = DEVICE_LITTLE_ENDIAN,
+> +    .valid.min_access_size = 4,
+> +    .valid.max_access_size = 4,
+> +};
+> +
+> +static void dw8250_instance_init(Object *obj)
+> +{
+> +    DW8250State *s = DW8250(obj);
+> +
+> +    s->serial_mm = qdev_new("serial-mm");
+> +    object_property_add_child(obj, "serial-mm", OBJECT(s->serial_mm));
+> +    object_property_add_alias(obj, "chardev", OBJECT(s->serial_mm), "chardev");
+> +}
+> +
+> +static void dw8250_realize(DeviceState *dev, Error **errp)
+> +{
+> +    DW8250State *s = DW8250(dev);
+> +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+> +    SysBusDevice *serial_sbd = SYS_BUS_DEVICE(s->serial_mm);
+> +
+> +    memory_region_init(&s->container, OBJECT(dev), "dw8250-container",
+> +                       DW_UART_REGION_SIZE);
+> +    sysbus_init_mmio(sbd, &s->container);
+> +
+> +    qdev_prop_set_uint8(s->serial_mm, "regshift", s->regshift);
+> +    qdev_prop_set_uint8(s->serial_mm, "endianness", DEVICE_LITTLE_ENDIAN);
+> +    sysbus_realize(serial_sbd, errp);
+> +
+> +    memory_region_init_io(&s->ext_iomem, OBJECT(dev), &dw8250_ext_ops, s,
+> +                          "dw8250-ext", DW_UART_REGION_SIZE);
+> +    memory_region_add_subregion(&s->container, 0, &s->ext_iomem);
+> +
+> +    memory_region_add_subregion_overlap(&s->container, 0,
+> +                                        sysbus_mmio_get_region(serial_sbd, 0), 1);
+> +
+> +    sysbus_pass_irq(sbd, serial_sbd);
+> +}
+> +
+> +static const Property dw8250_properties[] = {
+> +    DEFINE_PROP_UINT8("regshift", DW8250State, regshift, 2),
+> +};
+> +
+> +static void dw8250_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +
+> +    dc->realize = dw8250_realize;
+> +    device_class_set_props(dc, dw8250_properties);
+> +}
+> +
+> +static const TypeInfo dw8250_info = {
+> +    .name          = TYPE_DW8250,
+> +    .parent        = TYPE_SYS_BUS_DEVICE,
+> +    .instance_size = sizeof(DW8250State),
+> +    .instance_init = dw8250_instance_init,
+> +    .class_init    = dw8250_class_init,
+> +};
+> +
+> +static void dw8250_register_types(void)
+> +{
+> +    type_register_static(&dw8250_info);
+> +}
+> +
+> +type_init(dw8250_register_types)
+> diff --git a/hw/char/meson.build b/hw/char/meson.build
+> index fc3d7ee506..b2250ee6ae 100644
+> --- a/hw/char/meson.build
+> +++ b/hw/char/meson.build
+> @@ -38,6 +38,7 @@ system_ss.add(when: 'CONFIG_STM32L4X5_USART', if_true: files('stm32l4x5_usart.c'
+>  system_ss.add(when: 'CONFIG_MCHP_PFSOC_MMUART', if_true: files('mchp_pfsoc_mmuart.c'))
+>  system_ss.add(when: 'CONFIG_HTIF', if_true: files('riscv_htif.c'))
+>  system_ss.add(when: 'CONFIG_GOLDFISH_TTY', if_true: files('goldfish_tty.c'))
+> +system_ss.add(when: 'CONFIG_DW8250', if_true: files('dw8250.c'))
+>  
+>  specific_ss.add(when: 'CONFIG_TERMINAL3270', if_true: files('terminal3270.c'))
+>  specific_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr_vty.c'))
+> diff --git a/include/hw/char/dw8250.h b/include/hw/char/dw8250.h
+> new file mode 100644
+> index 0000000000..59396ad202
+> --- /dev/null
+> +++ b/include/hw/char/dw8250.h
+> @@ -0,0 +1,27 @@
+> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+> +/*
+> + * Synopsys DesignWare APB UART (DW 8250)
+> + *
+> + * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
+> + */
+> +
+> +#ifndef HW_CHAR_DW8250_H
+> +#define HW_CHAR_DW8250_H
+> +
+> +#include "hw/core/sysbus.h"
+> +#include "qom/object.h"
+> +
+> +#define TYPE_DW8250 "dw8250"
+> +OBJECT_DECLARE_SIMPLE_TYPE(DW8250State, DW8250)
+> +
+> +struct DW8250State {
+> +    SysBusDevice parent_obj;
+> +
+> +    MemoryRegion container;
+> +    MemoryRegion ext_iomem;
+> +    DeviceState *serial_mm;
+> +
+> +    uint8_t regshift;
+> +};
+> +
+> +#endif
+> -- 
+> 2.54.0.563.g4f69b47b94-goog
+> 
 
