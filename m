@@ -4,78 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E04DCD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 16:04:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69588CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 16:05:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP0QX-0001CA-Dl; Mon, 18 May 2026 12:02:45 -0400
+	id 1wP0SZ-0007E8-2i; Mon, 18 May 2026 12:04:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wP0Q3-0000N0-Bh
- for qemu-devel@nongnu.org; Mon, 18 May 2026 12:02:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wP0Q0-0005on-MR
- for qemu-devel@nongnu.org; Mon, 18 May 2026 12:02:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779120131;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7WmkbRyCOvc8KhMxUJJu07mhxWy5DTBCisJMQWdsY70=;
- b=Tp6eEsl92YtPUFK+kqfzYOhwV/NaOcu/Or6sOb63+eLmnvtKwOxsDRG27NGs2TRuxiLBO5
- VlkwSDkIodw/9BAdJeRvpeCqjE8OPCPosoHaSxUv2Fkrk9DrxdBnEZT22O3ReZ2Q69CiTi
- SmOY0CiiB9eGVJcL1yPd1OUAwMzCToE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-103-7KXHr2xcMzeHcCYt8KYEag-1; Mon,
- 18 May 2026 12:02:06 -0400
-X-MC-Unique: 7KXHr2xcMzeHcCYt8KYEag-1
-X-Mimecast-MFC-AGG-ID: 7KXHr2xcMzeHcCYt8KYEag_1779120125
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 738F6195605C; Mon, 18 May 2026 16:02:05 +0000 (UTC)
-Received: from berrange.com (unknown [10.44.32.79])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8A5B630001A2; Mon, 18 May 2026 16:02:01 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: John Snow <jsnow@redhat.com>, qemu-block@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v8 15/16] gitlab: add jobs for thorough block tests
-Date: Mon, 18 May 2026 17:00:50 +0100
-Message-ID: <20260518160051.903616-16-berrange@redhat.com>
-In-Reply-To: <20260518160051.903616-1-berrange@redhat.com>
-References: <20260518160051.903616-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wP0SU-000772-52
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 12:04:46 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wP0SS-0007ds-73
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 12:04:45 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-48e82c23840so19226625e9.3
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 09:04:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779120282; x=1779725082; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ufefbwsKMhzpZARdFsQrTqHVtQOsOsH0aXUUe4C0qkg=;
+ b=RenoWLfHyBKwIEoQIfqyEexuep41v11BbB4VQv7x37IQsGqv/9lvp6NuD5zO4aKcle
+ s6qc0IIHyqz9GR4Nsltcofpd9SXX4XuYRCh0gxCDpVUmZ+vnfOv0vJ8wKUBjhS1GPFFb
+ rFwXaGj4b68U/+iFFfaYFlGAgylOl5nKDy70KV+7j79DdPSYwRBiwyt1DXK8ga+c/92A
+ VIxq8e6csUKFvICj056aPd0de/B0D5Bz/100p4i3qPK1zcn1iHj2v2FGO28a+Sgtagc8
+ c6tZrNDlCR8EgFTLjU2B2IHHcFRq3pklDQr9QJcDTQMUwvWDlN9ChKpqNNsPiMMbnOK4
+ of4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779120282; x=1779725082;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ufefbwsKMhzpZARdFsQrTqHVtQOsOsH0aXUUe4C0qkg=;
+ b=o0XSjFLJ6Fe3bcEz+FNB/BFO2j2xg89zODW71PnDltZ3ruh0nsCqfjtfsoV8/ZbzzV
+ wCLOc/T7l3BTWojBjzXI2zo6cNzbb63sgzoGR6vJ1FxG/XTk6GjfOwycJqIJW6EYXIpq
+ jZR6mxr6ZqmyWkEk5peWydSPEmgz9rwOD8Z+JYwZ1/u+P7EkEtY0FH4bEIEVKI7o1LbR
+ ncpXMKY8PlTHz1Fz4KTSI2lcFFYIxOmVGSlK4dOg9mkGWvdzExKCdg8gRGkrHroB2Y1B
+ Am2dv8mJjwbD0+wZshR7PqN3GRjvaTOVd7sFHcbTZH3JkT9TDQrEkeUzlomCCtYn2E7H
+ 2uxg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+wUtnpXkX/SMQQzph/h04GFGk1f3x7igbmiqKDtMni2Iq3gzyNLQgf2TjYCb4hkMCGx05um/AUJnyn@nongnu.org
+X-Gm-Message-State: AOJu0YwS7qTT2+deKUOnYUiOiSfRIL0I0c0Jfcu44Y7VlkLJx4pT+bEB
+ oRHL9yzJMvbdSNkLPx7TP/o8CPL+BpsvbsCm7n0etBoI+hCedrZYWBtFbMRoHTOiGVU=
+X-Gm-Gg: Acq92OGZGu1UhJXI9ZdG8moaUDwmUna73c4ou4wD5fL79wqnD7tq2dgVAV7RvYNy3hM
+ XC3sbcN9AxolOEv9GWS8lmhVHgn5WYNxIvpEd2crWkLeyTsVHhooZhLYDolCNSPKFf1e/HnmhHp
+ pFYwXyUZbF5zzloP1xRMfqOFARzpjqwe2G2MP6MaJxiC/eo+m1X6maAqnp4pjqUV8l/jl8k9ki9
+ sRw0ejemsVdr/a9J/TwWxbERRBisMrzwp+Kso1PYoMzl5cXeZK/2MQixkuHeAwVQ8QeMPZimKJj
+ EfP9sXnrMAaYKkN6Jea5olppTIGmjFboRQWZ/FoP4zknur6h7ulAvSP6nkL6GIyJb3KnoNG03tj
+ Ak5XxDmTaM+YBrfGzEZ6rZw1lG9OIZOIUryJ9iDJ0yWLOof2SygHxt/pPEl9golP5B8IspXInQH
+ 3kZaJtINjU2yd8A088wHKeKhR/0c850SAtsckiWGg5JUcIiAkMWpaqKXj5yLVtb7INEI2s2HYu7
+ 1mfw1n9vU9aLxVkpnHXpGSC7k8B4exooVqPIYfdyQ==
+X-Received: by 2002:a05:600c:8599:b0:490:778:4fe8 with SMTP id
+ 5b1f17b1804b1-4900778509emr84516355e9.25.1779120281864; 
+ Mon, 18 May 2026 09:04:41 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45d9e767cb9sm37060577f8f.2.2026.05.18.09.04.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 18 May 2026 09:04:41 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH] tests/functional/aarch64: Bump up timeout on vbsa
+Date: Mon, 18 May 2026 17:04:40 +0100
+Message-ID: <20260518160440.1037245-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,58 +100,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CI is only exercising the qcow2 'auto' tests currently. As a result we
-get no exposure of changes which cause regressions in other block format
-drivers.
+On a debug build, the virt_vbsa functional test takes about 2 minutes to
+run on my machine, so it tends to time out. Bump the timeout to 4 mins.
 
-This adds new CI jobs for each block format, that will run the target
-'make check-block-$FORMAT'. The jobs are separate so that we have the
-ability to make each format gating or not, depending on their level
-of reliability.
-
-The 'centos' image is used to run the I/O tests since several tests
-have an implicit dependency on x86_64-softmmu, and thus break with
-other architecture targets. The 'centos' build job is the only one
-that creates the x86_64-softmmu target in CI. Ideally this target
-portability in I/O tests would be fixed to avoid this limitation.
-
-Acked-by: Kevin Wolf <kwolf@redhat.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- .gitlab-ci.d/buildtest.yml | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ tests/functional/aarch64/meson.build | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index 4b1949a3a5..cf0281ecd6 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -174,6 +174,24 @@ build-system-centos:
-       x86_64-softmmu rx-softmmu sh4-softmmu
-     MAKE_CHECK_ARGS: check-build
+diff --git a/tests/functional/aarch64/meson.build b/tests/functional/aarch64/meson.build
+index 9803f66299..e81afd6c39 100644
+--- a/tests/functional/aarch64/meson.build
++++ b/tests/functional/aarch64/meson.build
+@@ -17,6 +17,7 @@ test_aarch64_timeouts = {
+   'tuxrun' : 240,
+   'virt' : 360,
+   'virt_gpu' : 480,
++  'virt_vbsa' : 240,
+ }
  
-+
-+# NB: block-XXX jobs use 'centos' since that is the build
-+# job that provides the x86_64-softmmu.  Some I/O tests
-+# are currently buggy and blindly assume characteristics
-+# of x86 (such as PCIe) causing failures with other arches
-+
-+block:
-+  extends: .native_test_job_template
-+  needs:
-+    - job: build-system-centos
-+      artifacts: true
-+  variables:
-+    IMAGE: centos9
-+    MAKE_CHECK_ARGS: "check-block-$FORMAT"
-+  parallel:
-+    matrix:
-+      - FORMAT: [luks, nbd, parallels, qcow2, qed, raw, vdi, vhdx, vmdk, vpc]
-+
- # Previous QEMU release. Used for cross-version migration tests.
- build-previous-qemu:
-   extends: .native_build_job_template
+ tests_aarch64_system_quick = [
 -- 
-2.54.0
+2.43.0
 
 
