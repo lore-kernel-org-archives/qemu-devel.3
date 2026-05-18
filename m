@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6144CD343F
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 20:06:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69E80CD4F4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 20:11:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP4Dz-0003eJ-5U; Mon, 18 May 2026 16:06:03 -0400
+	id 1wP4Im-0004SQ-TA; Mon, 18 May 2026 16:11:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wP4Dy-0003e5-0k
- for qemu-devel@nongnu.org; Mon, 18 May 2026 16:06:02 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wP4Ik-0004Rx-GA
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 16:10:58 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wP4Dw-0004eu-Fz
- for qemu-devel@nongnu.org; Mon, 18 May 2026 16:06:01 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-48a563e4ef7so22368195e9.0
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 13:05:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wP4Ii-0006iK-VD
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 16:10:58 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4891e5b9c1fso22878695e9.2
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 13:10:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779134758; x=1779739558; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=JuxY4TNT4NrE+d7nPm4By0S+Ij2mE4zsTuMrupvUsF4=;
- b=F3kAnu4EUT9HVfEd3aRlz4Opqh2u4S9fhYCiNy7CWHULLsXQXIkuDeTrgspHG5IjTF
- l+JfQ2qXVfkjpdDcw7+CC+S4yUgkwpjc1el5fES6p/SmEJU8OEVpNLvCyPdOUhK860Um
- YfKCziMCur/ewonaZ+p32xypFfOcFRZX8NER2MYJv56LBCCafn19OrM4T9bPe/QkN258
- gFlAGmIwIaTpkdBTBCt8GzH1f9TyjwRo/62mvHPPmhFIiHl9jBvwKSBj45Q8HwJsi39f
- 9qnR0wfAdn3HWYnRQWTruRKxyezbQF+GoTe0aJweCF0pVI2MztLlq4MeRMm1alN5B5mq
- osiw==
+ d=linaro.org; s=google; t=1779135055; x=1779739855; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5C2hYN0+e1ZuPhm36oCBMGZoosnk4qk5VS1wpggaF1g=;
+ b=fJJMY207blZS0qbYeQuBgauLQjY1epitH+0/XegP5jRmq1HKv0vQuC3e1ahEWY2zFq
+ zChimUAn31Hw/jEAvyHR3Sd1/pDKYmiI8Zl4spbOZtqQRqaTkOId5VjOdd9jQ1TJe8Qt
+ /yeo510LZhgYIZWKVGZbSv8Akd4wKKBCWgT8+NlZEsm/YgPgPnYDkv8p7zBZ+zllyco6
+ jJnUQlCKhbej+9A+nPwEcfMa3Xq4idHfrKxYD1hs5m3qYqmN4VfR6NlX14wB2E2Ic5sk
+ loDzptgCrFZv7bYXfZU5WEckxb/Yxg89oJA67Q6of2impgiwFVqBR1MSDiHPH/HQX5Sc
+ Jx3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779134758; x=1779739558;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1779135055; x=1779739855;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=JuxY4TNT4NrE+d7nPm4By0S+Ij2mE4zsTuMrupvUsF4=;
- b=kdOfyxlHp6ng4oNVuf7ItRf1dizYQkvPd6790UHyk9wq3D5vhpN5GB4ze4eDMcTAwK
- E9q18cDa08gGeygZOXv6GnnjXpO0y2ruj7pZoI/CZZIHaI+QGHWsFFcbwKi3/+MJiUZ1
- Vp4jDguks5ZWaYd7UVCSjEF9oaEcmmKa82E1C7IMwmldDX2D3H4Lh0mVMPKFralFY17V
- eyQ3KJyqmrtlRqlHpFBpEj+Y2aCJKQaIEXCoEEcedilYkvnTTMWX0OH8p3WXixAE1Kop
- UO57sejed4kHf5/A9+GV7twyA39VLAuJG7l8/pWeuwAkcktAFVPqqoNJ1bTAHNL3/YaY
- sOcg==
+ bh=5C2hYN0+e1ZuPhm36oCBMGZoosnk4qk5VS1wpggaF1g=;
+ b=oQY9pA/wRf6fq0pJh4UY+IaxJAUPPg/nAnu7s047Xgr6n2Xs/B18cfS2PghfoYHMp9
+ lstwr/vurgQjt1UHHpqCIrxIJg2EQkt9QDEfCaLuvI/3zEeIJvE5u9CKjEe0plZdFRzw
+ HYUxapg/EOFTtmSzd3JXlPVTD3awMEzgB5EA/2hVZ9l4CtJmqhGnCZmgwotSHiEnnC6b
+ j4VIGL93Zso9KKplqIAVtaXzm6t2uOxUXx+FaWedpcDqlXjywYTHwI/2bgsjlZxlXTLI
+ ScliuM8Y2TUWS4rmGq+l1WUvvt9g7Ha+R8XBfB+jOF/ef8dp9YfXRjQhkdyoYKc//xP/
+ x5/w==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+r+fS0y3OhNRalybYPYTj8yNmWvadvJd8mHiPoVVSeqVccvruX3D6kJmf5h8JUfeWw0NeuJKacqxG2@nongnu.org
-X-Gm-Message-State: AOJu0Yx5hZx/izJ1/PtyWVbIoqBKt+6u1W4oQgkXzSUnAJK6MDJRiuUE
- 9pqCDoviSCdxwP8lbhggtT4PJL0fdkaLja4MtK9xiCOHmCKGK5z31sbf5qvnpsIMRQw=
-X-Gm-Gg: Acq92OFe2ZKN3ceK67wGW5dl0SSTN9XeO8lowz6xfNnuQzNls3UwVftSUspe+3M0Ym0
- O+JCFnMHoCJ2yGQ5gIMxnMFzmsAL6ZmKCYQ/3uc6Gusc8IoW9MEV6kB/nKMdca4boPxc/FYfXGI
- d4Bzli/7w+m/panxDwrvzgB6ZH9En7npOENOjV1SxnTpEfyU0Xz/uzpbYog3tlAX3k73/Jv838u
- Y+1Y6lE6/6mopO5m24Fx7xxfQVdsngNCsR3Ie2J11BKJRYObhZKbD+jVeBU0a9tSQoYrV05N8xG
- FV11WJPsQtVKo46wNpsxKPyBxEh1H85qj/4y2unnt+dufYL6TwLRZ+kanDW9EQxgr3fNxv10bbn
- dyABjfRP/usL9QMK/IU/yTagGTyl2p3MVLTA1TyvrUI+VQ1MmKZF1SMv24BTzkgbG/PsnTVoFvs
- lpZ/UZlMfZ8VL73itLG2Md3Cq1gQp1I5rW+DRsekMIe1om/dgcwCeot74hf4vq7f+P+zqErhs87
- JIHaWz4ZgtHNuY=
-X-Received: by 2002:a05:600c:630a:b0:48f:e249:4094 with SMTP id
- 5b1f17b1804b1-48fe632663emr305752115e9.18.1779134757766; 
- Mon, 18 May 2026 13:05:57 -0700 (PDT)
+ AFNElJ+O1WXR9nEJUH8aQGxnPy6ntHW8HnZcywsXpbVnr4dguWvkI2FUobkoL+kpC4e7TeFxa2WWql+HCseW@nongnu.org
+X-Gm-Message-State: AOJu0Yyds4MJfeGBoExikVFWd2AO5wh4rY7tIw/qzbnC690FJnl1Wvpb
+ 5HsTLpYNgYgAIqMhqIeAEf4FZUVxxwzBmmfDwrwoAHxlh298qMO6jPDT0mgeztYsY5admsMYmyX
+ 6NJpvYwY=
+X-Gm-Gg: Acq92OFvn5oAfJI8vKgTsLXh6rTVABSjyVkwdMVuSu5FYp+7TM1Ti30QKc/7P6SjjmT
+ XzXgOEjX9Yd24ajn7mCexLPPLV8CRx/XaqQm8EfI5FigXWgX7Fe26d2AnLEtGqZDEJCmCHS4Jih
+ XhWQITCzStJgApgUymgG6Xc8CbJf+bkn7aJ3qLy8wwIf79hlpLuRtpDzNgxha5q0WS8n9mTk/s8
+ OGhXUxP+OLtCIE5mgf902qO8q2sql9JF/6IrY47nb1heE4jAjDtUvkWATk57uhB47BAUDvcGK55
+ 0aO/O2ifXsiTF+UbQl92a0OGv0EIWufcHtJSpxhuFEp4rSDnI7O5pubZHBidGx1Tv34n7MdJFEc
+ IsL5YJ35w08Q6a55+5tKdwaPYM8q05DdJ0vOnAFyCbkF0LnCd19+OEEsLvtjElZnK+MB4xAm/Lm
+ BusPemf+pRJohBN33w2uFLQEb32yrA1cYDjSgQuIbid3xI2/w1OFv6aqYQFhGF0mkQUwAm23IUS
+ mMx
+X-Received: by 2002:a05:600c:4e46:b0:48f:e230:8cab with SMTP id
+ 5b1f17b1804b1-48fe6626cfbmr261019315e9.31.1779135054920; 
+ Mon, 18 May 2026 13:10:54 -0700 (PDT)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fe4c88e5asm295133455e9.6.2026.05.18.13.05.56
+ 5b1f17b1804b1-48febe58638sm86658785e9.17.2026.05.18.13.10.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 May 2026 13:05:57 -0700 (PDT)
-Message-ID: <11a4d47c-ede2-4431-86df-4dca1140b47c@linaro.org>
-Date: Mon, 18 May 2026 22:05:56 +0200
+ Mon, 18 May 2026 13:10:53 -0700 (PDT)
+Message-ID: <e0f4dbe4-7573-495c-9802-b021cd226592@linaro.org>
+Date: Mon, 18 May 2026 22:10:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 11/12] fpu: Saturate the exponent in uncanon_normal
+Subject: Re: [PATCH v4 10/12] target/arm: Use FloatParts64 in f16_dotadd
+Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20260517002550.321291-1-richard.henderson@linaro.org>
- <20260517002550.321291-12-richard.henderson@linaro.org>
+ <20260517002550.321291-11-richard.henderson@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260517002550.321291-12-richard.henderson@linaro.org>
+In-Reply-To: <20260517002550.321291-11-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,38 +105,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 17/5/26 02:25, Richard Henderson wrote:
-> Notice the conflict between saturation and rebias_overflow,
-> which should never happen.  Otherwise, saturate to INT32_MAX
-> and allow the usual overflow to max, infinity, or dnan.
+> Use softfloat-parts.h so that we can more naturally
+> perform the required operations witha single rounding step.
+> This happens to also simplify the NaN detection step.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   fpu/softfloat-parts.c.inc | 12 +++++++++++-
->   1 file changed, 11 insertions(+), 1 deletion(-)
-> 
-> diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-> index 45606f8402..914e588ec8 100644
-> --- a/fpu/softfloat-parts.c.inc
-> +++ b/fpu/softfloat-parts.c.inc
-> @@ -341,7 +341,17 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
->           g_assert_not_reached();
->       }
->   
-> -    exp = p->exp + fmt->exp_bias;
-> +    /* Because exp_bias is positive, we can only overflow past INT_MAX. */
-> +    if (sadd32_overflow(p->exp, fmt->exp_bias, &exp)) {
-> +        /*
-> +         * rebias_overflow wants to compute a modulo exponent, which
-> +         * conflicts with saturation.  That said, saturation can only
-> +         * happen with scalbn, which is not a PowerPC operation.
-> +         */
-> +        assert(!s->rebias_overflow);
-> +        exp = INT32_MAX;
-> +    }
-> +
->       if (likely(exp > 0)) {
->           if (p->frac_lo & round_mask) {
->               flags |= float_flag_inexact;
+>   target/arm/tcg/sme_helper.c | 96 ++++++++++++++++---------------------
+>   1 file changed, 40 insertions(+), 56 deletions(-)
 
 To the best of my softfloat understanding:
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
