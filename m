@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B7E1CD343F
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 21:31:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D66ACD4F4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 21:31:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP5Vm-0000Xm-IY; Mon, 18 May 2026 17:28:30 -0400
+	id 1wP5VM-0000Of-PN; Mon, 18 May 2026 17:28:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5Vj-0000WS-J2
- for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:27 -0400
-Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5VL-0000Nf-6c
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:03 -0400
+Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5Vh-0000b8-71
- for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:27 -0400
-Received: by mail-ot1-x32f.google.com with SMTP id
- 46e09a7af769-7dcd689829eso2448348a34.3
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 14:28:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5VI-0000Rb-KQ
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:02 -0400
+Received: by mail-ot1-x333.google.com with SMTP id
+ 46e09a7af769-7dbccf6a23dso2406224a34.2
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 14:28:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779139704; x=1779744504;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779139679; x=1779744479;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=9/Pm983+RalHXEJdvhTE1ujaaD6WPIIdOj3PbrYoEDY=;
- b=gGF2UTrQ/XXc4NHuTUnA11mhZLme189qbbgwP4jvL82PlQpFeXX7pFe+uCxak8gvsr
- CVg/HD5dOUmkQ4mpygf6+DRpebQy5+EixRNtguoN7inJc8dPQcNtxarRpw49bTOP2Tj/
- 7XUqFDigrPgTCK/W1KEjK12LWVC4gweC5O9f1yj4NXbxdyrJ3869w1G1Z5RPfpb9olXh
- upfxAuetsQdatn9bhvrzonH2FWgHwCe82Kfb17eraDI0kWxekpav/eG2aMIDTtZBzTgp
- AwJ2I8t7BsTW6ADjwpbn4o5O+g8iLjSKANKHKhJz9YpBRQInoMUHILQb4yUDC9ees+Cs
- f3Lw==
+ :reply-to; bh=t8+v/EjXETKRTwyWebZC5HE0qPUNEGr0KvGN264bUy8=;
+ b=H+xbyhUytBSIUPYnAsXlJWPyM5SEndBVu1Rhoy41L9kPM7s1eCA7sbTx33P3rJBGB4
+ n+66c6VJEdVWjI2vDXGrsluKidvtP2gd0bhCchwb+jwj/jS1W4a/a+Ze8UbWBgYOwQ0f
+ Y25q8ifRvbbnU+dWdGAIsDhr5l8RpUSlo3vV6/wtcE8zgNMEBnjTd/O0w/k6G57KGo77
+ O1OgqHLGM3LjjSz64g4zFHGVj81CdNRxY5AuI/ATAHUMuhYD+ngJNfLESrRQyqrxkZwM
+ XXRG7PqgqJxnOC0ZJF/cjDqJNE7ZvMuB6lxoxL6Rfc7AAJnnS4kpMzm+GrFU7PKKyfpB
+ 287Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779139704; x=1779744504;
+ d=1e100.net; s=20251104; t=1779139679; x=1779744479;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=9/Pm983+RalHXEJdvhTE1ujaaD6WPIIdOj3PbrYoEDY=;
- b=c+PwOXCdK6Mlq7KyFps+qRuwk4aKYyCtHWvNbgAUqQu4SpxTArrvad9FVT8mxeoGZx
- nAGYF/K7c1MAKoDHhSSYHGQWFKY6Ph4uiEw22MTY7PaLUBVwR7geO5pkskygQ/WGBCZ5
- pFOkVEtBWRddCs2Wx1KAgmuDjK/vc4Kx1C1GPiOQyXMuvShYRzk/SmBOlndMVObvmnDe
- VThZPE6TjBCWkDhM4DYhVkTX3pbk7ugwq4/JHDbqwih5UMKpr/RUkGp4/HDdlqDzyD6a
- djG/A6MZHTz+Gho/vTz/RQjEFhOPxKZ9my+U4CpSxp4aSgJtlTOAsjQATG8UrR/lBZDf
- 5mFw==
-X-Gm-Message-State: AOJu0Ywryg44eMLlD6IWpr1Cxd01UznJSMvsJasVGQ9YQ84LOgjJNMP4
- cyVhIOwwC8vFjJC/i76iN3EXrg8f+Y09RiOJ6qETxWspzeImVo20+aqejFQFz1D1JN4=
-X-Gm-Gg: Acq92OG+XnSYi9HjNZnOS6ShTpyY+fgFZjuO0PiGM1vZePr2AAmGEH7csq8bnsIIdzT
- HOPUAPvc+Iq30yzlvwtKpSXM9P0w+4KdFqDC6DFKTQ3AiLZNlDu61+yrdBHTBg7PRFcrv34/prD
- w26qNmCwE+OOKQA6Y+/70/CYQyz/3QFtLUIaSAO+BmNCwaksvznkWVXwOM/vr7Lq+9I8rikV8Pc
- KJ0zT4HbGQ44S/emm4j7RPB6a99vWKqw3brR7X6Rqlmqt1mODl3jGzJYrJhNsoNeGR5nRZZe0Q7
- gK4IVKe6OVjw1IBciMEA5iBqgpCiaer+YgQzYtxql5KaDO1wAzydAKdvBf1t234+3a1BqdV6jbB
- Gk2hY2QHYwh0wC5huteSLXHguGSAShbiTqzSQ2sURF2NP4JzbS7O6dACiKmcGymEWoFUTp1KSX7
- 5uMD009TuDLg==
-X-Received: by 2002:a05:6830:3c10:b0:7d7:58b0:7685 with SMTP id
- 46e09a7af769-7e4f2b45a37mr11795047a34.13.1779139704277; 
- Mon, 18 May 2026 14:28:24 -0700 (PDT)
+ bh=t8+v/EjXETKRTwyWebZC5HE0qPUNEGr0KvGN264bUy8=;
+ b=maCwehj+OMROgljVU16OUdY4Cv91N7ozizdAlVG7xGMscGuWW4TykoO88oGmtPfRhi
+ c3occaUmdD3lsRDGeIoPCUKANEoZOM852CXrw3swk972p1ARYiqkjvzO04KiqN0/JbkK
+ 96+u5mGBzN2x4jW0iRS7ld/mHolT6iYMT9vEaL+6ekHJUhdp5ayaW9RT6qpMvfEUUsgE
+ uGjtWFvuxnji9S2AnQPTAckfjmmeDEagdoCJHXG+Y+bzBWDj86kJyUd7aYg6hwh8tXd5
+ RaJG7U8JEG3I9E+lOBvQR34qxD2Rv4icVz5t2ckkOtCKHKT3UvYe/zP+g37nRIkTfS9y
+ Kb4g==
+X-Gm-Message-State: AOJu0Yzn1xZU46UeB89p3veKoSnKQHWrOyH9P10KqYTZd7V78kVYxxfZ
+ mE0X/iDXODIu721yaCwuSz3pfADqHwQRJ7TCZUtTtB4+fwdsnyJ7qOyxB7mY2jyidIQeFJdLACo
+ egm71Smw=
+X-Gm-Gg: Acq92OEJO6mGOwwyeUuo+IT3d+9sVIm4j+6kiN8W2zHjJ39TtvUGXFFzqDtx1+0Tj4W
+ xWwcTnWzsNknvvVtdMPuHMBpYBInE8grExZp09DQBPuB5HtPseT8vkUE2nRC3iBqZTY/5PkDfFA
+ Dzst4zqnEi6lNXxxUS2EpRHViJt+JjtT6BP1E8huiE2jzGHyR/g3ejcLD5LuQVdkmkr/qKhkCfE
+ 3ml8hnfvZzLE1M7kX4N3Ckx2NcBzlI5FRQGu0cz2u54A+3PzzdHPkIkZrGTD9iyKbTO848eTI1X
+ BGtNM/SBHfKqqRq+GKINAzMIy00TZzN+ys64IM4k3VDBBE6XutxaCVTG6HZ3jCdQCMq9+3cRY1K
+ 8tRIRaoYOaV1XcGgSyFHnSSwlEyKIsmPUoU0s8nGvQqqq9QvjFQOsK8SP0tbxKKNKw5tLuTIVMp
+ 3FZTG4ILDwrQ==
+X-Received: by 2002:a05:6830:6602:b0:7d7:c985:3a30 with SMTP id
+ 46e09a7af769-7e4f2a30195mr13830425a34.11.1779139679648; 
+ Mon, 18 May 2026 14:27:59 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55b81cc5asm7980358a34.8.2026.05.18.14.28.23
+ 46e09a7af769-7e55b81cc5asm7980358a34.8.2026.05.18.14.27.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 May 2026 14:28:23 -0700 (PDT)
+ Mon, 18 May 2026 14:27:59 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Mon, 18 May 2026 15:27:49 -0600
-Subject: [PATCH v2 31/37] bsd-user: Add link and list extattr functions to
- os-extattr.h
+Date: Mon, 18 May 2026 15:27:26 -0600
+Subject: [PATCH v2 08/37] bsd-user: Add file operation system call dispatch
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260518-misc-2026q2-v2-31-6c16fe448301@bsdimp.com>
+Message-Id: <20260518-misc-2026q2-v2-8-6c16fe448301@bsdimp.com>
 References: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
 In-Reply-To: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
 To: qemu-devel@nongnu.org
@@ -77,24 +77,24 @@ Cc: Kyle Evans <kevans@freebsd.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5758; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=PPbhfZAlz9FxOpn1hoNZ1jrd9DPBmOMpHGkAGZveSpc=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqC4RJE2p5r0kysLDzLNjAnUH0pZbZOSUJhksaz
- OkrBm/eqkuJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaguESQAKCRBsHNEofbAR
- AKNFEADe7TJLTpUEb8WF75QT84uyv4ShkP10lkYzSVsJRZkXV6ywwqD4yO8yOp0ClGJtxgXdMHF
- XWGoGRqc3MEInOBN/PQ6z5fV3fgiMFm2P6iB7sgNiuGmuuEJo3RjI4ds317/6lPvWKo9Mx7phu/
- dlw3CtoPkk+Jc0iPLcM+9T3IX9yEVhBV48Y8wfePJoZjMVAjBkK3QJerWRlhwbqEaDwranLCu1P
- xTIBaaFS7rDf9YzuHnMU2p6rUlmGafQ2tuo22gZw2V4dWUEeWcjy5p/eaHZQq6naerunQ4ZRrqn
- yww70NdkQhRGG3iWNODrz0wY28m2xXfR/Mq6hvijBWJSYEgMQKfg5toyedvcZsbnayAXmTca/EB
- /l7LZj3cowWlSd8iFQ1G7Zv5iP3mf4VXCaMCJSc+F6qdwBfZzMpEmOwrQ92eLwTcS7Y+2SJqlnq
- spDGVhcKUWJaTyqCailqYEQLaLf7+fkU9/DeFfMXjXiZqZQ+6iWFBU7n3czWoQqlsJxBijGVgXc
- ztBZzcaJwN+bsZ750Lm4e/2jj0MyXSqBMYVYjMQ5zja6nRBMjgMPJ1zARSWYlBTlS+eXQDXiHeK
- gf63hnPuxmNFfVQuxEDuIfn0/3UQYsPLWDmJ96vcwY/1WCBOtSD62cBrYTKgDCuvsdvtNw1TGHf
- 45otcow17+q5xVg==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3697; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=p3uvcx4gphk1awyIPaOzO4oRtM8CLnIjjebf6/6Tgk4=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqC4RG6vVfdCP0XMTlMboozbEd9BfucP0bnEanb
+ E7/0SrAlyCJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaguERgAKCRBsHNEofbAR
+ AFC1D/43ghBcwaidSO7Qc53BWTtjVh1rar172HL4pMBKGgrVgOw0RwQ0z3h4/Szx8VELFpxBVg1
+ gh1rwaxgagnaOgYAv5SPpzz7SKlca8bnALiEu9hsGWx9ABltjVemSzHYCjmfH+/5KnHeneoxTxb
+ kvfhTQwgcUiLU/eumiBt48iKSyzXgZ4jZz7V6Hpqj+VeWlTL2u3c8kf69EtcBp4MGOm22wANJN3
+ y8UWsA+cPSIAICPzL9b9um3xmX+hMYUGxZlH1l2gDE6RB5X8A10albG1z6yN1GEyGXymzt1ye2F
+ Xor1SCOMD6J45c5a0jYBJiZCe0aQ9NS9oVSspQpjUjBJsN4pVukRmN1rxjEBpA4ypme3/IyAyZi
+ Rxq7faKxDRxf+uztc7CJfuxfERagCc1/2VIXIBD4Ef8xJ95fr0kdPxXCBZedVpNzxF82hH3NcG+
+ GR9G+Jm4FkC1S9nSdw/X98Z4z2wwArWSH1n8geDWsMGA8evdQj2DVQSPf8oKALMx41T9Gb+cJFa
+ iVEl3esdT7haPPaJk5MOkcITedVP9HIfANRRdnDEpRdngfLmJJuE0QoQv3iTzj1s+YkCmaz3ohI
+ IaD2bFq7zd/zQI3IpPgdIu4/FU62Veecv1ytJTnbZ11jMwG2V7uoJtjQPmZMarDBgq1iaMQW3HJ
+ 7MHDAVrDMndn0Pw==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::32f;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x32f.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::333;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x333.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -116,198 +116,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add extattr_get_link, extattr_set_link, extattr_delete_link,
-extattr_list_fd, extattr_list_file, and extattr_list_link.
+Wire up additional file-related system calls: poll, lseek, pipe,
+pipe2, swapon, swapoff, chflagsat, close_range, __realpathat,
+copy_file_range, and __specialfd. Also fix __realpathat to use
+__sys___realpathat on FreeBSD >= 15.0.
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 Assisted-by: Claude Opus 4.6 (1M context)
 ---
- bsd-user/freebsd/os-extattr.h | 172 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 172 insertions(+)
+ bsd-user/freebsd/os-stat.h    |  8 +------
+ bsd-user/freebsd/os-syscall.c | 51 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 52 insertions(+), 7 deletions(-)
 
-diff --git a/bsd-user/freebsd/os-extattr.h b/bsd-user/freebsd/os-extattr.h
-index f1dfa344cf..788e40ef30 100644
---- a/bsd-user/freebsd/os-extattr.h
-+++ b/bsd-user/freebsd/os-extattr.h
-@@ -204,5 +204,177 @@ static inline abi_long do_freebsd_extattr_delete_fd(abi_long arg1,
+diff --git a/bsd-user/freebsd/os-stat.h b/bsd-user/freebsd/os-stat.h
+index ea95aa6344..4e5fc30de4 100644
+--- a/bsd-user/freebsd/os-stat.h
++++ b/bsd-user/freebsd/os-stat.h
+@@ -622,11 +622,6 @@ static inline abi_long do_freebsd_fcntl(abi_long arg1, abi_long arg2,
      return ret;
  }
  
-+/* extattr_get_link(2) */
-+static inline abi_long do_freebsd_extattr_get_link(abi_ulong arg1,
-+                                                   abi_long arg2,
-+                                                   abi_ulong arg3,
-+                                                   abi_ulong arg4,
-+                                                   abi_ulong arg5)
-+{
-+    abi_long ret;
-+    void  *p, *a, *d;
-+
-+    p = lock_user_string(arg1);
-+    if (p == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    a = lock_user_string(arg3);
-+    if (a == NULL) {
-+        unlock_user(p, arg1, 0);
-+        return -TARGET_EFAULT;
-+    }
-+    if (arg4 && arg5 > 0) {
-+        d = lock_user(VERIFY_WRITE, arg4, arg5, 0);
-+        if (d == NULL) {
-+            unlock_user(a, arg3, 0);
-+            unlock_user(p, arg1, 0);
-+            return -TARGET_EFAULT;
-+        }
-+        ret = get_errno(extattr_get_link(path(p), arg2, a, d, arg5));
-+        unlock_user(d, arg4, arg5);
-+    } else {
-+        ret = get_errno(extattr_get_link(path(p), arg2, a, NULL, arg5));
-+    }
-+    unlock_user(a, arg3, 0);
-+    unlock_user(p, arg1, 0);
-+
-+    return ret;
-+}
-+
-+/* extattr_set_link(2) */
-+static inline abi_long do_freebsd_extattr_set_link(abi_ulong arg1,
-+                                                   abi_long arg2,
-+                                                   abi_ulong arg3,
-+                                                   abi_ulong arg4,
-+                                                   abi_ulong arg5)
-+{
-+    abi_long ret;
-+    void  *p, *a, *d;
-+
-+    p = lock_user_string(arg1);
-+    if (p == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    a = lock_user_string(arg3);
-+    if (a == NULL) {
-+        unlock_user(p, arg1, 0);
-+        return -TARGET_EFAULT;
-+    }
-+    d = lock_user(VERIFY_READ, arg4, arg5, 1);
-+    if (d == NULL) {
-+        unlock_user(a, arg3, 0);
-+        unlock_user(p, arg1, 0);
-+        return -TARGET_EFAULT;
-+    }
-+    ret = get_errno(extattr_set_link(path(p), arg2, a, d, arg5));
-+    unlock_user(d, arg4, arg5);
-+    unlock_user(a, arg3, 0);
-+    unlock_user(p, arg1, 0);
-+
-+    return ret;
-+}
-+
-+/* extattr_delete_link(2) */
-+static inline abi_long do_freebsd_extattr_delete_link(abi_ulong arg1,
-+                                                      abi_long arg2,
-+                                                      abi_ulong arg3)
-+{
-+    abi_long ret;
-+    void *p, *a;
-+
-+    p = lock_user_string(arg1);
-+    if (p == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    a = lock_user_string(arg3);
-+    if (a == NULL) {
-+        unlock_user(p, arg1, 0);
-+        return -TARGET_EFAULT;
-+    }
-+    ret = get_errno(extattr_delete_link(path(p), arg2, a));
-+    unlock_user(a, arg3, 0);
-+    unlock_user(p, arg1, 0);
-+
-+    return ret;
-+}
-+
-+/* extattr_list_fd(2) */
-+static inline abi_long do_freebsd_extattr_list_fd(
-+    abi_long arg1, abi_long arg2, abi_ulong arg3, abi_ulong arg4)
-+{
-+    abi_long ret;
-+    void *d;
-+
-+    if (arg3 && arg4 > 0) {
-+        d = lock_user(VERIFY_WRITE, arg3, arg4, 0);
-+        if (d == NULL) {
-+            return -TARGET_EFAULT;
-+        }
-+        ret = get_errno(extattr_list_fd(arg1, arg2, d, arg4));
-+        unlock_user(d, arg3, arg4);
-+    } else {
-+        ret = get_errno(extattr_list_fd(arg1, arg2, NULL, arg4));
-+    }
-+    return ret;
-+}
-+
-+/* extattr_list_file(2) */
-+static inline abi_long do_freebsd_extattr_list_file(
-+    abi_long arg1, abi_long arg2, abi_ulong arg3, abi_ulong arg4)
-+{
-+    abi_long ret;
-+    void *p, *d;
-+
-+    p = lock_user_string(arg1);
-+    if (p == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    if (arg3 && arg4 > 0) {
-+        d = lock_user(VERIFY_WRITE, arg3, arg4, 0);
-+        if (d == NULL) {
-+            unlock_user(p, arg1, 0);
-+            return -TARGET_EFAULT;
-+        }
-+        ret = get_errno(extattr_list_file(path(p), arg2, d, arg4));
-+        unlock_user(d, arg3, arg4);
-+    } else {
-+        ret = get_errno(extattr_list_file(path(p), arg2, NULL, arg4));
-+    }
-+    unlock_user(p, arg1, 0);
-+
-+    return ret;
-+}
-+
-+/* extattr_list_link(2) */
-+static inline abi_long do_freebsd_extattr_list_link(
-+    abi_long arg1, abi_long arg2, abi_ulong arg3, abi_ulong arg4)
-+{
-+    abi_long ret;
-+    void *p, *d;
-+
-+    p = lock_user_string(arg1);
-+    if (p == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    if (arg3 && arg4 > 0) {
-+        d = lock_user(VERIFY_WRITE, arg3, arg4, 0);
-+        if (d == NULL) {
-+            unlock_user(p, arg1, 0);
-+            return -TARGET_EFAULT;
-+        }
-+        ret = get_errno(extattr_list_link(path(p), arg2, d, arg4));
-+        unlock_user(d, arg3, arg4);
-+    } else {
-+        ret = get_errno(extattr_list_link(path(p), arg2, NULL, arg4));
-+    }
-+    unlock_user(p, arg1, 0);
-+
-+    return ret;
-+}
-+
-+/*
-+ *  Access Control Lists
-+ */
-+
+-#if defined(__FreeBSD_version) && __FreeBSD_version >= 1300080
+-extern int __realpathat(int fd, const char *path, char *buf, size_t size,
+-        int flags);
+-/* https://svnweb.freebsd.org/base?view=revision&revision=358172 */
+-/* no man page */
+ static inline abi_long do_freebsd_realpathat(abi_long arg1, abi_long arg2,
+         abi_long arg3, abi_long arg4, abi_long arg5)
+ {
+@@ -640,12 +635,11 @@ static inline abi_long do_freebsd_realpathat(abi_long arg1, abi_long arg2,
+         return -TARGET_EFAULT;
+     }
  
- #endif /* FREEBSD_OS_EXTATTR_H */
+-    ret = get_errno(__realpathat(arg1, p, b, arg4, arg5));
++    ret = get_errno(syscall(SYS___realpathat, arg1, p, b, arg4, arg5));
+     UNLOCK_PATH(p, arg2);
+     unlock_user(b, arg3, ret);
+ 
+     return ret;
+ }
+-#endif
+ 
+ #endif /* BSD_USER_FREEBSD_OS_STAT_H */
+diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
+index 8a25be4ac7..228daed4c4 100644
+--- a/bsd-user/freebsd/os-syscall.c
++++ b/bsd-user/freebsd/os-syscall.c
+@@ -700,6 +700,57 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
+         ret = do_bsd_undelete(arg1);
+         break;
+ 
++    case TARGET_FREEBSD_NR_poll: /* poll(2) */
++        ret = do_bsd_poll(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR_lseek: /* lseek(2) */
++        ret = do_bsd_lseek(env, arg1, arg2, arg3, arg4, arg5);
++        break;
++
++    case TARGET_FREEBSD_NR_freebsd10_pipe: /* pipe(2) */
++        ret = do_bsd_pipe(env, arg1);
++        break;
++
++    case TARGET_FREEBSD_NR_pipe2: /* pipe2(2) */
++        ret = do_bsd_pipe2(env, arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_swapon: /* swapon(2) */
++        ret = do_bsd_swapon(arg1);
++        break;
++
++#if TARGET_FREEBSD_NR_freebsd13_swapoff
++    case TARGET_FREEBSD_NR_freebsd13_swapoff: /* freebsd13_swapoff(2) */
++        ret = do_freebsd13_swapoff(arg1);
++        break;
++#endif
++
++    case TARGET_FREEBSD_NR_swapoff: /* swapoff(2) */
++        ret = do_bsd_swapoff(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR_chflagsat: /* chflagsat(2) */
++        ret = do_bsd_chflagsat(arg1, arg2, arg3, arg4);
++        break;
++
++    case TARGET_FREEBSD_NR_close_range: /* close_range(2) */
++        ret = do_freebsd_close_range(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR___realpathat:
++        /* __realpathat(2) (XXX no realpathat()) */
++        ret = do_freebsd_realpathat(arg1, arg2, arg3, arg4, arg5);
++        break;
++
++    case TARGET_FREEBSD_NR_copy_file_range:
++        ret = do_freebsd_copy_file_range(arg1, arg2, arg3, arg4, arg5, arg6);
++        break;
++
++    case TARGET_FREEBSD_NR___specialfd:
++        ret = do_freebsd___specialfd(arg1, arg2, arg3);
++        break;
++
+         /*
+          * ioctl(2)
+          */
 
 -- 
 2.52.0
