@@ -4,101 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC75BCD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 08:47:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B45B4CD4F52
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 08:48:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOtcg-0000kp-TH; Mon, 18 May 2026 04:46:51 -0400
+	id 1wOte9-0001MJ-PL; Mon, 18 May 2026 04:48:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wOtce-0000kG-Ds
- for qemu-devel@nongnu.org; Mon, 18 May 2026 04:46:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wOtcc-00059I-LA
- for qemu-devel@nongnu.org; Mon, 18 May 2026 04:46:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779094004;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=udrfsbQyHjIQqW2SC5P9t1PVGvQE/FNQbqsDkpSjdwA=;
- b=IXlwuMIOpyeQHMgtwBiAmu+zFeMBfBH2skoqZEFZlAo1NVfz1k6dqDk8cT6jBp2SEWFHrG
- QTOtXn8yyKDB1fBqI3CnaEas/gfqHQpFoxpF5o/xIxkI8BOBxZROeZ++Y2QebG6uTgrGcQ
- 379DDb63xtPZs94Lla9m0qTRdbtronc=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-326-JXy7N70-P1K3SERN5WRElg-1; Mon, 18 May 2026 04:46:42 -0400
-X-MC-Unique: JXy7N70-P1K3SERN5WRElg-1
-X-Mimecast-MFC-AGG-ID: JXy7N70-P1K3SERN5WRElg_1779094000
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-45e81291d62so396321f8f.1
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 01:46:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wOtds-0001Ce-AR
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 04:48:04 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wOtdq-0005e3-6O
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 04:48:04 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-65e15fb394bso1465386d50.2
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 01:48:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779094081; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Kgvzx26B4QB5AdX31s5T00lbjrZSQN4AkvBh8ly/Xkw82sHS39Kj/PyCph7vK6hORM
+ IbrY9BNWBw66q+fGcy4tGsnW2PtIrkSLVrqggNJgF46QAuLOwaS/jJGKQ8EGjYGWtgDa
+ NTPIIZ4ai4ymjTk+s0gegSQ8Ocq0k8osrKY+0g2KhfpXoUAC9f8EEY4ptNOGGU225Trk
+ r9rRJeg99PtdW2wvF70qiFn/I5NenBYRLB1fCFe31oZSkc29BQdnwEHUFimcYEDCtk5U
+ FiiT4f0WQxZiCitRVDc8rNOg7sNYvu8QkBxa9Tdd/jkNrpPcfLPUm90lD/Puz8X58k2W
+ Nh6A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=nq37c4BIe3NGikFm23gPRVpL7LmnoxhCBB66HlFCe5U=;
+ fh=w+TdsQ0QXyoZbPmlwTpqCP9IS5BrDV/zIi0MsrLlMXc=;
+ b=gnzRwXutPm+YwdkMds7L8AmDu0AgCxwX6crB7ccqHul7s1AEt2Qg8lXU2GIXuXwcYt
+ W8Ik5qZ3Dvh3k7UnsoUXaMuDSr8A9As23nL17PsYVI6PVh/SygHlUHRSrVmFlwWVMWFl
+ YiZtoR0MsrK+kd3ERNXLJoXH9pYXn2yj9JziTM3nvZ2foPn+cExcPz1vY4BAPkchI0f2
+ +6YGwJAMskpGbWcbK2AERZdi7MXyC1ZKxmHUyX4x/Cb5mTu7UpaiNJcDWzw5sasCLild
+ s2Ju5Wzn/Viya3SJg6bWSjwmifdh8NFyD3E3AEVKpSBCvjUZorwQ4lQAqxn5nRKavmRX
+ O8yQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779094000; x=1779698800; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=udrfsbQyHjIQqW2SC5P9t1PVGvQE/FNQbqsDkpSjdwA=;
- b=XWSjqmgbaTlmVMLp01dtj9OF5aAxJlKIACbe6B/xanDRZ5I8W5lKVAYXo23Rd5HCCZ
- qgSpnJwTv749sq0N30Z9FsAzvIovMH1BA/xNPFTrU3Dy780ZuPts1YlIswojYbEOMs7U
- /uRaLI6q8ZAPiF5Iu9rskLh0d0iO+R2ajIxWO1cawNPTYcTssGO46GMPC15Gkxd+9p49
- ek2u9vmHVLfQ0EtFbUUmtvHSnYVu+Gh33aolOnxSKsCMw/ePLqSnLFRkb2wtIg3osf7o
- G8wJ9jLcC+HZlhBDinZTHwKFab/OHZfQqN06sW1pLqjjhewc3wS+kxKRADokyD5vO8br
- XewQ==
+ d=linaro.org; s=google; t=1779094081; x=1779698881; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nq37c4BIe3NGikFm23gPRVpL7LmnoxhCBB66HlFCe5U=;
+ b=prO7hvAUYN0PbHPftduaYU+tTWNuBd7qc8yavof5bvnOeSWYzAwJF06MOW4K9RhSu2
+ 0u3KkswXOZFhI1mmzZYiPD/d2GHY3eAG6M8SfdiMuhAp5ZqUOtTVNb/GXy+mXygz8HIU
+ 3laS73RjrrzZuvXCPOvbSL4kYMltSgzVWdIObeP19oFNYtSXHlc4Gd6sukoKuOeLj5HO
+ 7DzwZuaqaAcKTVbbaDV5jW4MmZpBrqHgLEb32AuB1zvU+lR0HrbxhqCdR4sFSkBrsC3t
+ 1FAEtfD0aPps30NFvbxo2mv2reXKxeH9et21GZS90viptqP6EVpBtdziZ8GrNN4LiWSb
+ AVKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779094000; x=1779698800;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=udrfsbQyHjIQqW2SC5P9t1PVGvQE/FNQbqsDkpSjdwA=;
- b=m1Bs9C/zprpYkI6/t0vlMo8mwsH1k57xD9JnEuppP17DpHg/XZ4PaDeBYTgJj7RCVf
- aRyUDRqv9YIWjWiLfVeLrfqtjfQIpK+AaEjcmZycPCreb64ofTKroKtNwFD7Ce/rnT5w
- czDacGZB4zcg6EWePRsT3im/gIiPMI7qyMrs8HC5RG7JKFByR/lSghz2EyaRbTypATeD
- MJOJss4nXRZOkEtEJ5epa2XB7rH88wbu2KDht/h8M6SibB3PaPX0FchN3IPcw4RItSSM
- cZ5yMuUu2eFq6YTb3LpSb/343tzPzlskc1Viq6M1ZXiUXPfdSEPko6LnFzIZ4ugD8Oe0
- 7enA==
-X-Gm-Message-State: AOJu0YxUZ23zBtrtVDKpjGm31+20YO+z3AYKwd4zo2HR+4qyAq+bPsvM
- VjgwNV5x/q7jgw6ST+8qcw3bm/hQCkFPDqvCHez1IQcqS77cxUf484DsT/CcV8TJxDwhSQ9CCd/
- L40ihXlKyHRJFOsuxuu6zlxMruO5P5uYdUzQ0TQuV7vvkey2cdV57N3kk
-X-Gm-Gg: Acq92OF79BWXNYEqKdjSb8/fxgb5w80nFCBJY6mex4Aa40bN3ABL5NQlf9CCvCf/cIL
- s1S9PmqoWWPkrZvgC0M7/KJqljM9ABSR3LmWrU+Byt8vRwge6G5lKgelrC4NSGTgr/YBrC/kyFH
- fN/CaV+kpzLUDcP9reYKRQL1T6fO25tiVh/QG/Hp9k22wxaGSGj+VFvth7+NcQiekmSN0dqQedz
- i4rd0BQg8FGe2G0815MHgbfWs/7uJpB8pyaEtLvyp89Z2I+cn8oLNjGb4yo9XNQUezKZNDtFCXK
- kpNEMZD1gU+ZJFsZBHwvDNnssYh5Bz1bqIk8DwNVZHPFvvCtxKV7HqrL1VHYWUIogmoJkVfnynP
- NUE1pxU5+ljWKY0pPmqY6orqtX5kwa9ZoSWOVAEsl
-X-Received: by 2002:a5d:5d01:0:b0:452:a293:4d91 with SMTP id
- ffacd0b85a97d-45e5c34b279mr21973881f8f.0.1779093999756; 
- Mon, 18 May 2026 01:46:39 -0700 (PDT)
-X-Received: by 2002:a5d:5d01:0:b0:452:a293:4d91 with SMTP id
- ffacd0b85a97d-45e5c34b279mr21973831f8f.0.1779093999218; 
- Mon, 18 May 2026 01:46:39 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-48-7.inter.net.il. [80.230.48.7])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da0fe248dsm35010296f8f.30.2026.05.18.01.46.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 May 2026 01:46:38 -0700 (PDT)
-Date: Mon, 18 May 2026 04:46:36 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: khaled saleh <khaled.saleh.req@gmail.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] hw/pci/shpc: Enable 66MHz Bus Speed Support
-Message-ID: <20260518044520-mutt-send-email-mst@kernel.org>
-References: <20260518073714.70571-1-khaled.saleh.req@gmail.com>
+ d=1e100.net; s=20251104; t=1779094081; x=1779698881;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=nq37c4BIe3NGikFm23gPRVpL7LmnoxhCBB66HlFCe5U=;
+ b=OdyRugXq8oMeKCuXCQdaFGmobOqDO5vfeIivkTEp4ZhAYs34Jx+eTrX4OYeR+8Yw01
+ +UbNSw/ySqv/X4klVh9yBtEpH2WWlDh/EdbrQ/HXlJdNurE4wdf9vdUmzlfh3O2bOHnO
+ f3rkStRbrt87psiHOhuuZlicIchrQATk0oT7GMXXHbfMtc/LwgJ/aOrYsDj4IUkhClCc
+ L1XHAmngAu4dJAVt8cxYgUrQyC2heESo1CFjyeLIGUahX/sBphP+XNLAnewfw9wNtTAH
+ whH2VnYeNAH77iUWyVdc7/9k7ViKJtU8AApAH7THUutdpHDeTheYb+QkZuFUWw1ANOgS
+ NumA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9SR4ZcDagNZJg0hBvnb+cZpgOWSdpy+pauiOYSN3ao69hlyQSxTN4c9GVRyTRPewJO4WvsJAVf76L1@nongnu.org
+X-Gm-Message-State: AOJu0YyXgBps6mJzoYRW5B2W7TiySjJIHGvJxneGCoVC0qAV1nuIaYB1
+ zZBeZ9Y7cZ/Hj/5XZOGeiMCd2ss7KURFE8nmDnu2HxcB3p6Z06/GMHY9P48IiJSHKleh6FlfBT2
+ XSquFQ7VpFCp/0ElyP7FXQKBM5c7RPYEgd7Sas2dzbg==
+X-Gm-Gg: Acq92OFexWQXQUB6RQ1XjGXxGbfUaovjsxYy4Hd43lKbyC3YkvjIW/XiZ3So/nIj3Qn
+ exUxRKVLu8ou06hvGzD+Mee4hEf7bNzENo+0Fk3azQDCTni50rQt8GHi5MJpEtFyAmVgE7PVBg+
+ Szu84ULC3xmNy9+kYoq/N+671NnWmfbwouCjn1WrsZLFGrVkpndPu00MFIGSmW/q5vh2W9mkQrg
+ yr4d6EV27ChtfjUuM+8i9oR8pjkvJuWWi+gs/8AztP6Nni3ca5Af/9N495VlyKrBoqr5yumb7qj
+ uUo9T8wCm63E96C+kv8XjRXHITUmgWk/+zQsI3VQ9LVjDcPgNZLkdgbntsaoVtdZ6WQ=
+X-Received: by 2002:a05:690e:d47:b0:651:be50:af09 with SMTP id
+ 956f58d0204a3-65e2267428cmr12381743d50.3.1779094080722; Mon, 18 May 2026
+ 01:48:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260518073714.70571-1-khaled.saleh.req@gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260515163055.1792262-1-alex.bennee@linaro.org>
+ <20260515163055.1792262-2-alex.bennee@linaro.org>
+ <a6b904bb-6ddc-4c39-84f9-3b7c91f7e611@linaro.org>
+In-Reply-To: <a6b904bb-6ddc-4c39-84f9-3b7c91f7e611@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 18 May 2026 09:47:48 +0100
+X-Gm-Features: AVHnY4Lf9I6ZN7vScbLnE2MCP7UPX1JDgTDBqoYJyCdFKev-q0RcDyS8wLhCB6c
+Message-ID: <CAFEAcA-DS3k-7SEFMASa4ncpuZmX07A2n66quSEG4R_VYq+AHg@mail.gmail.com>
+Subject: Re: [RFC PATCH v3 01/11] AGENTS.md: introduce a very basic guide for
+ AI agents
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
+ John Snow <jsnow@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Alexander Graf <graf@amazon.com>, Pedro Barbuda <pbarbuda@microsoft.com>, 
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Reinoud Zandijk <reinoud@netbsd.org>, 
+ Magnus Kulke <magnuskulke@linux.microsoft.com>, 
+ =?UTF-8?Q?Doru_Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>, 
+ Wei Liu <wei.liu@kernel.org>, Paul Durrant <paul@xen.org>, 
+ Anthony PERARD <anthony@xenproject.org>,
+ Stefano Stabellini <sstabellini@kernel.org>, 
+ Roman Bolshakov <rbolshakov@ddn.com>, Phil Dennis-Jordan <phil@philjordan.eu>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,124 +132,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 18, 2026 at 09:37:14AM +0200, khaled saleh wrote:
-> The Standard Hot-Plug Controller (SHPC) specification (PI=1) defines
-> 66MHz conventional PCI as a valid bus speed mode. While QEMU defined
-> the relevant constants, it hardcoded the secondary bus speed to 33MHz
-> and advertised 0 slots as 66MHz capable.
-> 
-> This patch enables 66MHz support by:
-> 1. Allowing SHPC_SEC_BUS_66 in shpc_set_sec_bus_speed().
-> 2. Advertising all slots as 66MHz capable in shpc_reset().
-> 3. Dynamically checking and reporting a slot's 66MHz capability based
->    on the plugged PCI device's Status Register (PCI_STATUS_66MHZ).
-> 
-> PCI-X speeds remain unsupported and will continue to trigger an
-> INVALID_MODE command status error.
-> 
-> Signed-off-by: khaled saleh <khaled.saleh.req@gmail.com>
-> ---
->  hw/pci/shpc.c | 29 ++++++++++++++++++++++++-----
->  1 file changed, 24 insertions(+), 5 deletions(-)
-> 
-> diff --git a/hw/pci/shpc.c b/hw/pci/shpc.c
-> index 938602866d..3becde7f10 100644
-> --- a/hw/pci/shpc.c
-> +++ b/hw/pci/shpc.c
-> @@ -12,7 +12,7 @@
->  
->  /* TODO: model power only and disabled slot states. */
->  /* TODO: handle SERR and wakeups */
-> -/* TODO: consider enabling 66MHz support */
-> +
->  
->  /* TODO: remove fully only on state DISABLED and LED off.
->   * track state to properly record this. */
-> @@ -30,7 +30,7 @@
->  #define SHPC_PHYS_BUTTON  0x8000
->  #define SHPC_SEC_BUS      0x10 /* 2 bytes */
->  #define SHPC_SEC_BUS_33   0x0
-> -#define SHPC_SEC_BUS_66   0x1 /* Unused */
-> +#define SHPC_SEC_BUS_66   0x1
->  #define SHPC_SEC_BUS_MASK 0x7
->  #define SHPC_MSI_CTL      0x12 /* 1 byte */
->  #define SHPC_PROG_IFC     0x13 /* 1 byte */
-> @@ -169,6 +169,17 @@ static void shpc_set_status(SHPCDevice *shpc,
->      pci_word_test_and_set_mask(status, value << ctz32(msk));
->  }
->  
-> +static bool shpc_device_is_66mhz_capable(SHPCDevice *shpc, int slot)
-> +{
-> +    int pci_slot = SHPC_IDX_TO_PCI(slot);
-> +    PCIDevice *dev = shpc->sec_bus->devices[PCI_DEVFN(pci_slot, 0)];
-> +
-> +    if (!dev) {
-> +        return false;
-> +    }
-> +    return pci_get_word(dev->config + PCI_STATUS) & PCI_STATUS_66MHZ;
-> +}
-> +
->  static void shpc_interrupt_update(PCIDevice *d)
->  {
->      SHPCDevice *shpc = d->shpc;
-> @@ -203,6 +214,7 @@ static void shpc_set_sec_bus_speed(SHPCDevice *shpc, uint8_t speed)
->  {
->      switch (speed) {
->      case SHPC_SEC_BUS_33:
-> +    case SHPC_SEC_BUS_66:
->          shpc->config[SHPC_SEC_BUS] &= ~SHPC_SEC_BUS_MASK;
->          shpc->config[SHPC_SEC_BUS] |= speed;
->          break;
-> @@ -220,7 +232,7 @@ void shpc_reset(PCIDevice *d)
->      memset(shpc->config, 0, SHPC_SIZEOF(d));
->      pci_set_byte(shpc->config + SHPC_NSLOTS, nslots);
->      pci_set_long(shpc->config + SHPC_SLOTS_33, nslots);
-> -    pci_set_long(shpc->config + SHPC_SLOTS_66, 0);
-> +    pci_set_long(shpc->config + SHPC_SLOTS_66, nslots);
->      pci_set_byte(shpc->config + SHPC_FIRST_DEV, SHPC_IDX_TO_PCI(0));
->      pci_set_word(shpc->config + SHPC_PHYS_SLOT,
->                   SHPC_IDX_TO_PHYSICAL(0) |
-> @@ -256,7 +268,9 @@ void shpc_reset(PCIDevice *d)
->              shpc_set_status(shpc, i, SHPC_LED_OFF, SHPC_SLOT_PWR_LED_MASK);
->          }
->          shpc_set_status(shpc, i, SHPC_LED_OFF, SHPC_SLOT_ATTN_LED_MASK);
-> -        shpc_set_status(shpc, i, 0, SHPC_SLOT_STATUS_66);
-> +        shpc_set_status(shpc, i,
-> +                        shpc_device_is_66mhz_capable(shpc, i) ? 1 : 0,
-> +                        SHPC_SLOT_STATUS_66);
->      }
->      shpc_set_sec_bus_speed(shpc, SHPC_SEC_BUS_33);
->      shpc->msi_requested = 0;
-> @@ -578,6 +592,9 @@ void shpc_device_plug_cb(HotplugHandler *hotplug_dev, DeviceState *dev,
->          shpc_set_status(shpc, slot, 0, SHPC_SLOT_STATUS_MRL_OPEN);
->          shpc_set_status(shpc, slot, SHPC_SLOT_STATUS_PRSNT_7_5W,
->                          SHPC_SLOT_STATUS_PRSNT_MASK);
-> +        shpc_set_status(shpc, slot,
-> +                        shpc_device_is_66mhz_capable(shpc, slot) ? 1 : 0,
-> +                        SHPC_SLOT_STATUS_66);
->          return;
->      }
->  
-> @@ -596,7 +613,9 @@ void shpc_device_plug_cb(HotplugHandler *hotplug_dev, DeviceState *dev,
->          shpc->config[SHPC_SLOT_EVENT_LATCH(slot)] |=
->              SHPC_SLOT_EVENT_BUTTON;
->      }
-> -    shpc_set_status(shpc, slot, 0, SHPC_SLOT_STATUS_66);
-> +    shpc_set_status(shpc, slot,
-> +                    shpc_device_is_66mhz_capable(shpc, slot) ? 1 : 0,
-> +                    SHPC_SLOT_STATUS_66);
->      shpc_interrupt_update(pci_hotplug_dev);
->  }
->  
-> -- 
-> 2.34.1
+On Sat, 16 May 2026 at 11:09, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> On 15/5/26 18:30, Alex Benn=C3=A9e wrote:
+> > AGENTS.md is the agent agnostic place for placing instructions for
+> > agents. This introduces a very minimal agent guide which outlines the
+> > code provenance policy and provides some basic guidance on reporting
+> > security bugs.
+> >
+> > As Gemini doesn't look at AGENTS.md even as a fallback option I've
+> > included a symlink.
+> >
+> > Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
+> > +## Security Policy (see `docs/system/security.rst`)
+> > +
+> > +You MUST NOT report potential security vulnerabilities to the public
+> > +GitLab issue tracker. They should be reported privately to
+> > +`qemu-security@nongnu.org`.
+> > +
+> > +**Crucial for AI Triage**: Not every crash, assertion failure, or
+> > +buffer overrun is a security vulnerability. Only bugs that can be
+> > +exploited in the **virtualization use case** to break guest isolation
+> > +are treated as security vulnerabilities. In brief these are:
+> > +- **Hardware Accelerators**: e.g. KVM, HVF and others, TCG is explicit=
+ly excluded.
+>
+> HVF isn't withing security boundary:
+> https://lore.kernel.org/qemu-devel/abAcaahy_FsBonZ7@redhat.com/
+>
+> For the "other accelerators" we should ask confirmation for respective
+> maintainers. AFAICT only KVM and Xen are expected to be secure;
+> MSHV, WHPX, nvmm and nitro didn't opted in yet (Cc'ing respective
+> maintainers).
+>
+> Wouldn't it be better to have a document describing the security code
+> boundary and have the AGENT.md refer to it?
 
-This can't be done unconditionally without breaking cross version
-migration. You need to add a property (prefixed with "x-" to mark it
-not a stable ABI) and then tweak it in the compat machinery.
+We do have such a document:
+https://qemu-project.gitlab.io/qemu/system/security.html
+and the AGENTS.md does tell the LLM about it.
 
--- 
-MST
+It puts all the virtualization accelerators within the
+security use case boundary. Personally I think this is
+reasonable -- the main reasons for having TCG outside it are
+(1) the TCG emulation itself is a lot of code and
+(2) it is a convenient way to rule out an enormous amount
+of old board and device model code in one go.
+This applies much less to the hvf, whpx, etc cases as they are
+using almost exactly the same board/device/core code as KVM.
 
+The idea as I understand it here is that by giving a very
+brief summary of the other document you make sure that the
+important parts we want to emphasize are in the agent's context
+and clearly stated. But I'm no expert on how to craft these
+files...
+
+thanks
+-- PMM
 
