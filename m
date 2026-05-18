@@ -4,47 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89DD3CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 09:29:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CF4FCD4F52
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 09:37:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOuHr-0000KN-To; Mon, 18 May 2026 05:29:24 -0400
+	id 1wOuOo-00022c-6V; Mon, 18 May 2026 05:36:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1wOuHl-0000Jm-6X; Mon, 18 May 2026 05:29:17 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1wOuHj-0006JC-Go; Mon, 18 May 2026 05:29:16 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 8FCBF44B48;
- Mon, 18 May 2026 11:29:04 +0200 (CEST)
-Message-ID: <d915efb6-f9a9-491e-b17f-23334d943c02@proxmox.com>
-Date: Mon, 18 May 2026 11:29:03 +0200
+ (Exim 4.90_1) (envelope-from <mengzhuo@iscas.ac.cn>)
+ id 1wOuOl-00021l-Bp; Mon, 18 May 2026 05:36:31 -0400
+Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <mengzhuo@iscas.ac.cn>)
+ id 1wOuOi-00036P-PV; Mon, 18 May 2026 05:36:31 -0400
+Received: from iscas.ac.cn (unknown [113.12.18.145])
+ by APP-01 (Coremail) with SMTP id qwCowADHM2+N3QpqDHuaEA--.1334S2;
+ Mon, 18 May 2026 17:36:14 +0800 (CST)
+From: Meng Zhuo <mengzhuo@iscas.ac.cn>
+To: qemu-riscv@nongnu.org
+Cc: qemu-devel@nongnu.org,
+	Meng Zhuo <mengzhuo@iscas.ac.cn>
+Subject: [PATCH v2] target/riscv/kvm: skip FP/Vector sync on
+ KVM_PUT_RUNTIME_STATE
+Date: Mon, 18 May 2026 17:36:13 +0800
+Message-ID: <20260518093613.2763743-1-mengzhuo@iscas.ac.cn>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] system/vl: Free allocate memory for pid file name in case
- realpath() failed
-To: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org
-References: <20260515143854.2010741-1-thuth@redhat.com>
-Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <20260515143854.2010741-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1779096532019
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qwCowADHM2+N3QpqDHuaEA--.1334S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7Zr13urW7Wr1UCw4UKF1ftFb_yoW8tr13pr
+ 45Ca93Wr1xGrWxCw4IyF1kXF4rWFWxWrWDurZFy3y3KFs0krWYgr4kKFWFvr1DCrW8Cr1a
+ 9F4jyr43u398AaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUUyv14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+ rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+ 1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4j
+ 6r4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oV
+ Cq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
+ I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
+ 4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCF04k20xvY0x0EwIxG
+ rwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4
+ vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IY
+ x2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26c
+ xKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAF
+ wI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7VUbrMaUUUUUU==
+X-Originating-IP: [113.12.18.145]
+X-CM-SenderInfo: pphqw6xkxrqxpvfd2hldfou0/1tbiDAgLEmoKqZLYRAAAsa
+Received-SPF: pass client-ip=159.226.251.21; envelope-from=mengzhuo@iscas.ac.cn;
+ helo=cstnet.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,36 +73,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 15.05.26 um 4:39 PM schrieb Thomas Huth:
-> From: Thomas Huth <thuth@redhat.com>
-> 
-> In case realpath() fails, the code returns early in the function
-> qemu_maybe_daemonize(), without freeing the allocated memory. Add
-> a g_free() here to fix it.
-> 
-> Fixes: dee2a4d4d2f ("vl: defuse PID file path resolve error")
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+During KVM exit processing (KVM_PUT_RUNTIME_STATE), QEMU never modifies
+FP or Vector registers — only core GPRs/PC and CSRs are potentially
+changed.  Re-syncing 32 FP and 32 Vector registers on every KVM exit
+wastes 36-68 individual KVM_SET_ONE_REG ioctls per vCPU exit.
 
-Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
+Follow the s390x pattern: early return on RUNTIME after syncing core
+registers and CSRs.  KVM_PUT_FULL_STATE and KVM_PUT_RESET_STATE continue
+to sync everything for correctness during migration and initialization.
 
-Thanks!
+Signed-off-by: Meng Zhuo <mengzhuo@iscas.ac.cn>
+---
+ target/riscv/kvm/kvm-cpu.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-> ---
->  system/vl.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/system/vl.c b/system/vl.c
-> index d2f4044e5d8..7e2ed898240 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -2670,6 +2670,7 @@ static void qemu_maybe_daemonize(const char *pid_file)
->                  warn_report("not removing PID file on exit: cannot resolve PID "
->                              "file path: %s: %s", pid_file, strerror(errno));
->              }
-> +            g_free(pid_file_realpath);
->              return;
->          }
->  
-
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index b047ffa9c0..6b41de8bf9 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -1373,7 +1373,7 @@ int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu, int state)
+ 
+ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
+ {
+-    int ret = 0;
++    int ret;
+ 
+     ret = kvm_riscv_put_regs_core(cs);
+     if (ret) {
+@@ -1385,6 +1385,17 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
+         return ret;
+     }
+ 
++    /*
++     * For RUNTIME_STATE, KVM already has the correct FP and Vector state
++     * from the preceding KVM_RUN exit. QEMU never modifies these registers
++     * during exit handling, so re-syncing is unnecessary.  This saves ~68
++     * KVM_SET_ONE_REG ioctls per vCPU exit.  See also s390x which uses
++     * the same pattern.
++     */
++    if (level == KVM_PUT_RUNTIME_STATE) {
++        return 0;
++    }
++
+     ret = kvm_riscv_put_regs_fp(cs);
+     if (ret) {
+         return ret;
+@@ -1397,11 +1408,9 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
+ 
+     if (KVM_PUT_RESET_STATE == level) {
+         RISCVCPU *cpu = RISCV_CPU(cs);
+-        if (cs->cpu_index == 0) {
+-            ret = kvm_riscv_sync_mpstate_to_kvm(cpu, KVM_MP_STATE_RUNNABLE);
+-        } else {
+-            ret = kvm_riscv_sync_mpstate_to_kvm(cpu, KVM_MP_STATE_STOPPED);
+-        }
++        int state = cs->cpu_index == 0 ? KVM_MP_STATE_RUNNABLE
++                                       : KVM_MP_STATE_STOPPED;
++        ret = kvm_riscv_sync_mpstate_to_kvm(cpu, state);
+         if (ret) {
+             return ret;
+         }
+-- 
+2.47.3
 
 
