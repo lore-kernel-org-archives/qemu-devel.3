@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B1E6CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 12:09:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 901D1CD4F52
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 12:09:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOwmy-0004Fk-EL; Mon, 18 May 2026 08:09:40 -0400
+	id 1wOwmq-0003sB-6R; Mon, 18 May 2026 08:09:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wOwlu-0003MS-3G; Mon, 18 May 2026 08:08:34 -0400
-Received: from fout-b4-smtp.messagingengine.com ([202.12.124.147])
+ id 1wOwlo-0003I4-6g; Mon, 18 May 2026 08:08:30 -0400
+Received: from fhigh-b6-smtp.messagingengine.com ([202.12.124.157])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wOwlr-00074A-2x; Mon, 18 May 2026 08:08:33 -0400
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfout.stl.internal (Postfix) with ESMTP id 5001C1D00134;
- Mon, 18 May 2026 08:08:29 -0400 (EDT)
+ id 1wOwlm-0006xZ-NU; Mon, 18 May 2026 08:08:27 -0400
+Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id F0DE97A00A4;
+ Mon, 18 May 2026 08:08:24 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-04.internal (MEProxy); Mon, 18 May 2026 08:08:29 -0400
+ by phl-compute-06.internal (MEProxy); Mon, 18 May 2026 08:08:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:content-type
  :date:date:from:from:in-reply-to:in-reply-to:message-id
  :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
- t=1779106109; x=1779192509; bh=R9FXlLmUfHZYMjYxeo3bsF4ZrgUGQXj7
- M9rLfpvDIts=; b=lGA/dYvgGMhIdZzY7621qaFFVb78przulj0Qu4T3LFiPzWeT
- X/52zup7muTI02viSgugmMMDRQpB8HJ/aA6JxPALfgVkhuxkYjE9pxz8kFeVekuV
- BdI4AxTEP6VBpYUgj0+GawbiPvZB/f/b7dRed6vD2XJD5cAbWuqeo6kAOCCFQC4P
- FKviggywF/eQyNUCS3UN0elAMcJrQ/2i1hLwwgkaXQEA4b0Hobb4g6Axp4o8hDIK
- lZLUZIWGHaGYic4ivntAk6Vs8z40igZvcPqVZlumTLioSmUsQ2B+wJvtChO/l4+K
- Y0w6ZBmxjH2bXPw/UYUqpPzxlye3T7U8kOAG9A==
+ t=1779106104; x=1779192504; bh=pqMNEYCNy79Tbh4L38XZx7k0q6H5dcq6
+ P54JV6pMWIc=; b=hhFuTaySt/Hiv3eZt+hT0cWPJINOUfDLniXkOOLbXWZaQWRM
+ FGEPRERHJcnAOp3ByWYfKefQYRcXeiW5w2x94d9wWXdXgz1K97+W4nefciLSOQO/
+ m60+lmsKhfKp80UUYxhbuo9ArWnXhaaconJyJYoP0LtREFzJO1YufdeVvs+jbOwN
+ 8LpFLmc/z+wmTni9fUEX3dnqqBkxvgE4YbN2PcL6xDDS7BtBkiGp4ebWGPkTcQ+i
+ jO6NAzBqj5pT04qfhm0hLpGcO2cqA6qPhxbmUMIYfzXknFRls+J67hW5GDJfuxa2
+ xHj3CnAAwIp4AiWkJ2TdI/CdqMIHLrkZpT+Gag==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779106109; x=
- 1779192509; bh=R9FXlLmUfHZYMjYxeo3bsF4ZrgUGQXj7M9rLfpvDIts=; b=A
- C4NfvOi0TqUoKp3GZxPzgK9Xy8NU0Jf5Aakfc2fMZCIVKrrFE5Hp80GHJwxTZVZ8
- Zdm4UR9M44eUSVxXiFyrx3EhaSCsSWBCeNHTMqXI6TItu8tDww0Q8ngXJ0yby0SP
- XT3QNABmgFcVwMHaM1zjDE4izLqSTLW8FUMeDEIz0+numqTz0IOqLX4kEPyFUSC/
- c1yp0wzjSUbeEap3YXXvtXWcAfLEMBAlP5hgRntk2Mvn10r1tpcWlptO1yVa7wrj
- lNbTI8EfLOK7GsVz1kO/ZgeHT9XaTYHQDgP+MKcbGxtn8/M03KsGQ13Hxq/4vgmU
- ZQWZG2S8hTU6rKj7pmLNg==
-X-ME-Sender: <xms:PAELajA5cci0wFbt7xM-BGYnqmck81jQyq6tjgBEJ41F7kG29cYBKA>
- <xme:PAELamZO9PD1MCCL-PJZk8X4iJdOe0rMJPQ7242ImjAM5I0e0qA9UJr2m70bDQu7X
- G6695ILdd2ZHGF6XJQwPti3onrt2ebrzc11LWgxZJHs79KyVTW4>
-X-ME-Received: <xmr:PAELauW6Cd58xu-Qkzt9SkfefXjoCQLFwDY1Dx8d65SgOB850xEWBtD9u-PxKVgDzJ2wd9VfBA6Q1ZThx2Act7ym>
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1779106104; x=
+ 1779192504; bh=pqMNEYCNy79Tbh4L38XZx7k0q6H5dcq6P54JV6pMWIc=; b=q
+ Hk0Tx6z7JG1Wn+K9CpKou/+YGOA2U2JftytA2Oh6MfnZINx6f+tGBOMnlyW1cwPp
+ S3AAWq6KCm440oN2gSbleEKfuVW7wuTCKNWyChlbW4Deu7nP8qSyx7FXZZDq7l6p
+ zeb8ErUPR7KbK6QiyLWKtn3jnaviPJE0SMUgKaHBrX8rf90I8rxbpzOIxv1FTmjA
+ KfM59/XQ0EenPptMiIhBSVolwedV96nQnkn4yMTUG3NZTYfsFhg60JnifXYuQIxF
+ PR4dWb+h+ZZPYitwoinO6s849VlUHU039sich1qoQtB3Vbnf3213CHwrYtv1V/3S
+ x+IRd5cQDJ7uGuobUOpIA==
+X-ME-Sender: <xms:OAELar7G9dX7WmftlsqVEXw8cyXgcT4qNc5IspbQLgeOQb3k0nyW_A>
+ <xme:OAELaq-yqTcefHQlDFG4ZFpEU3d28xMRLYBkpj35pSZge96SJhXl7aJ0cXMauQkYh
+ Yq3n94l4fV_lo8MOQsErIYVarS4naJFql90YxRKHTd02HDvcFZcZPY>
+X-ME-Received: <xmr:OAELaiWq-BjY0qK3d4cF0bU9BfQ1cEt7wCI9aEtkbb1iliFHy-zbhBZW6sR8m1Hldjz72bmifS2g-gmlVy2cvB7e>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddufeekkeefucetufdoteggodetrf
  dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
  rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
@@ -58,41 +58,40 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddufeekkeefucetufdote
  ucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnthdrughkqeenucggtffrrghtth
  gvrhhnpeefvedtueetueduffevgffgtdeftdeuleffhfeigeffkeegfeejfeffteejiefh
  vdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehith
- hssehirhhrvghlvghvrghnthdrughkpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
+ hssehirhhrvghlvghvrghnthdrughkpdhnsggprhgtphhtthhopeekpdhmohguvgepshhm
  thhpohhuthdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpd
  hrtghpthhtohepphgvthgvrhdrmhgrhiguvghllheslhhinhgrrhhordhorhhgpdhrtghp
  thhtohepsggvrhhrrghnghgvsehrvgguhhgrthdrtghomhdprhgtphhtthhopehkrdhjvg
  hnshgvnhesshgrmhhsuhhnghdrtghomhdprhgtphhtthhopehksghushgthheskhgvrhhn
  vghlrdhorhhgpdhrtghpthhtohepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdprhgtph
- htthhopehfohhsshesuggvfhhmrggtrhhordhithdprhgtphhtthhopehpihgvrhhrihgt
- khdrsghouhhvihgvrhesohhsshdrqhhurghltghomhhmrdgtohhmpdhrtghpthhtohepqh
- gvmhhuqdgslhhotghksehnohhnghhnuhdrohhrgh
-X-ME-Proxy: <xmx:PAELalOBqqoxAzQgQZt3-RJyAyfq5JqlX_EUQATVwMQWEgm5stnxqg>
- <xmx:PAELaoZY7x4U0CaKvnzLSOV-X_heqA1TYmY-KJ6sGHYiFmHUW0druQ>
- <xmx:PAELak8RAM6tktYRMEy4eos7aJVFpF2WcyIB4_ezsMlEZieeb2FClw>
- <xmx:PAELapQ_NLQaohv-RTa15Dy8KR5Vsnv2LI2QpScQJ2AJniwau69ieQ>
- <xmx:PQELal2teXYk5EHwSdjzv6ugw4l4FW3y9FqA_rkUjx_J9OBTdN-YQvjW>
+ htthhopehfohhsshesuggvfhhmrggtrhhordhithdprhgtphhtthhopehqvghmuhdqsghl
+ ohgtkhesnhhonhhgnhhurdhorhhg
+X-ME-Proxy: <xmx:OAELatqqQokPBr3yEosdDtOrkZYMUDNigNMRzuMsLy8cK-0Dl79uOw>
+ <xmx:OAELaslYZ3e6x2uSo80z0J6AOAP210ZQf7QAbBk80MZbX56tWTEInA>
+ <xmx:OAELal2B-kzvvJPDukSKWKxyjnOdEHDBhTsLBbj3-crfuoYE1Bv03g>
+ <xmx:OAELahQx3eaVcfUcQp5f8UpZOxc9cw5UDeW80pGAekC6UL4ZwxmM1A>
+ <xmx:OAELalGhbLzuAJXa4ltr9HIYNn_b_SsAsUG3XQwuMbZxAo4TRY6pQDIv>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 18 May 2026 08:08:27 -0400 (EDT)
+ 18 May 2026 08:08:22 -0400 (EDT)
 From: Klaus Jensen <its@irrelevant.dk>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Klaus Jensen <k.jensen@samsung.com>, Keith Busch <kbusch@kernel.org>,
  Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-block@nongnu.org
-Subject: [PULL 4/5] hw/nvme: add user controlled 'firmware-version' property
-Date: Mon, 18 May 2026 14:07:47 +0200
-Message-ID: <20260518120748.14831-5-its@irrelevant.dk>
+ qemu-block@nongnu.org
+Subject: [PULL 2/5] hw/nvme: report error for oversized 'serial' parameter
+Date: Mon, 18 May 2026 14:07:45 +0200
+Message-ID: <20260518120748.14831-3-its@irrelevant.dk>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260518120748.14831-1-its@irrelevant.dk>
 References: <20260518120748.14831-1-its@irrelevant.dk>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.147; envelope-from=its@irrelevant.dk;
- helo=fout-b4-smtp.messagingengine.com
+Received-SPF: pass client-ip=202.12.124.157; envelope-from=its@irrelevant.dk;
+ helo=fhigh-b6-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -117,92 +116,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-This enables overriding the built in default QEMU project version string
-with a user specified string. The value can be at most 8 characters
-in length.
+The 'serial' accepted by the NVME device is at most 20 characters
+long. An over-sized user supplied value should be reported rather
+than silently truncated.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
 ---
- docs/system/devices/nvme.rst |  5 +++++
- hw/nvme/ctrl.c               | 14 ++++++++++++--
- hw/nvme/nvme.h               |  1 +
- 3 files changed, 18 insertions(+), 2 deletions(-)
+ hw/nvme/ctrl.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/docs/system/devices/nvme.rst b/docs/system/devices/nvme.rst
-index 109c01a70d50..98a44010438b 100644
---- a/docs/system/devices/nvme.rst
-+++ b/docs/system/devices/nvme.rst
-@@ -65,6 +65,11 @@ parameters.
-   to more closely impersonate a particular device type. The model name
-   can be a maximum of 40 characters in length.
- 
-+``firmware-version`` (default: current QEMU version number)
-+  Override the default reported firmware version, which can be used when
-+  needing to more closely impersonate a particular device type. The version
-+  can be a maximum of 8 characters in length.
-+
- Additional Namespaces
- ---------------------
- 
 diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 4822bc0a99b1..5b03929451d0 100644
+index be6c7028cb58..2556aced2a47 100644
 --- a/hw/nvme/ctrl.c
 +++ b/hw/nvme/ctrl.c
-@@ -44,7 +44,8 @@
-  *              atomic.awun<N[optional]>, \
-  *              atomic.awupf<N[optional]>, \
-  *              subsys=<subsys_id>, \
-- *              model=<model-str>
-+ *              model=<model-str>, \
-+ *              firmware-version=<version-str>
-  *      -device nvme-ns,drive=<drive_id>,bus=<bus_name>,nsid=<nsid>,\
-  *              zoned=<true|false[optional]>, \
-  *              subsys=<subsys_id>,shared=<true|false[optional]>, \
-@@ -8616,6 +8617,13 @@ static bool nvme_check_params(NvmeCtrl *n, Error **errp)
+@@ -8602,6 +8602,11 @@ static bool nvme_check_params(NvmeCtrl *n, Error **errp)
+         error_setg(errp, "serial property not set");
          return false;
      }
- 
-+    if (params->firmware_version &&
-+        strlen(params->firmware_version) > NVME_ID_CTRL_FR_MAX_LEN) {
-+        error_setg(errp, "'firmware-version' parameter '%s' can be at most '%d' characters",
-+                   params->firmware_version, NVME_ID_CTRL_FR_MAX_LEN);
++    if (strlen(params->serial) > NVME_ID_CTRL_SN_MAX_LEN) {
++        error_setg(errp, "'serial' parameter '%s' can be at most '%d' characters",
++                   params->serial, NVME_ID_CTRL_SN_MAX_LEN);
 +        return false;
 +    }
-+
+ 
      if (params->mqes < 1) {
          error_setg(errp, "mqes property cannot be less than 1");
-         return false;
-@@ -9111,7 +9119,8 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
-     id->ssvid = cpu_to_le16(pci_get_word(pci_conf + PCI_SUBSYSTEM_VENDOR_ID));
-     strpadcpy((char *)id->mn, sizeof(id->mn),
-               n->params.model ? n->params.model : "QEMU NVMe Ctrl", ' ');
--    strpadcpy((char *)id->fr, sizeof(id->fr), QEMU_VERSION, ' ');
-+    strpadcpy((char *)id->fr, sizeof(id->fr),
-+              n->params.firmware_version ? n->params.firmware_version : QEMU_VERSION, ' ');
-     strpadcpy((char *)id->sn, sizeof(id->sn), n->params.serial, ' ');
- 
-     id->cntlid = cpu_to_le16(n->cntlid);
-@@ -9391,6 +9400,7 @@ static const Property nvme_props[] = {
-                      NvmeSubsystem *),
-     DEFINE_PROP_STRING("serial", NvmeCtrl, params.serial),
-     DEFINE_PROP_STRING("model", NvmeCtrl, params.model),
-+    DEFINE_PROP_STRING("firmware-version", NvmeCtrl, params.firmware_version),
-     DEFINE_PROP_UINT32("cmb_size_mb", NvmeCtrl, params.cmb_size_mb, 0),
-     DEFINE_PROP_UINT32("num_queues", NvmeCtrl, params.num_queues, 0),
-     DEFINE_PROP_UINT32("max_ioqpairs", NvmeCtrl, params.max_ioqpairs, 64),
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index ebf1fcfdcde0..5ef3ebee29e5 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -543,6 +543,7 @@ typedef struct NvmeCQueue {
- typedef struct NvmeParams {
-     char     *serial;
-     char     *model;
-+    char     *firmware_version;
-     uint32_t num_queues; /* deprecated since 5.1 */
-     uint32_t max_ioqpairs;
-     uint16_t msix_qsize;
 -- 
 2.53.0
 
