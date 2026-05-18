@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40C79CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 05:35:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D0DDCD343F
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 05:36:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOqZ1-00087h-9m; Mon, 18 May 2026 01:30:51 -0400
+	id 1wOqY6-0006ul-GZ; Mon, 18 May 2026 01:30:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wOqYL-0006wx-0a
- for qemu-devel@nongnu.org; Mon, 18 May 2026 01:30:09 -0400
+ id 1wOqXo-0006s7-Vk
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 01:29:39 -0400
 Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wOqYG-0003aW-RG
- for qemu-devel@nongnu.org; Mon, 18 May 2026 01:30:08 -0400
+ id 1wOqXk-0003Su-9s
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 01:29:35 -0400
 Received: by mail-oi1-x22f.google.com with SMTP id
- 5614622812f47-479d37e7d7fso472961b6e.1
- for <qemu-devel@nongnu.org>; Sun, 17 May 2026 22:30:02 -0700 (PDT)
+ 5614622812f47-47c6f914617so848076b6e.1
+ for <qemu-devel@nongnu.org>; Sun, 17 May 2026 22:29:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779082201; x=1779687001; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779082167; x=1779686967; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=v7rp6+rNMIEclIzKubuq6lCqztB2uEmsOX6adbP8QUw=;
- b=hbRmc55nYI2L5S6QkxpDGkZRSrNbPuWDNrerEY0RAuCQCJ75wAQzpwLyguMUYkRWqY
- op+fHMOQWhbotHVxKguIawoaOPP0CuSoJtgmJRa/XUbFY/9OCBS5xk4JBsCJfKVQ9mnI
- v54OEdHJwInadL/zqH2acSKT3mWoGTjeAZwxXgLnpVsPimscEUCXv+HQrPxrn/IlIplS
- HozZ722R43BXGKRSLyHP0y2+j1Pqmgcc4t4h7fHPv/4xS/eqYzY7yO/r+rFyZJmRg/Ir
- jz3cmWXLCvx58JG1tAEjedIavFOfD+mBSxglI9hDWMUrxmDNs/oaDGtNHHEEMUUo8d6x
- VEJg==
+ :reply-to; bh=iNGUkUQb5J29ukIe0u9qyTma9foPdK9x44s0U5JWP3E=;
+ b=DuonEcuQOBmoIsDWzwoRxHzh6KnMbS3oBzwd3ugEkoTFhegz0kHoMhF4zwhLbsGweE
+ VZIdemRUsrrlNikMzkH0HVmL4i9OvOofk12r60LFfCxNmgNj0AzXZE7u+NOV+OW9LDIn
+ HzyrwASkmWWGi3qiUzYXsNOjX3j23skRsy8qcNEjl8GHcNSrUkXbOkFOlGW0xlmoukG6
+ WMCgmq/BDPO/SIbCCNGW9u6pfG+XxF5DR5kPC+5ceNh3uHboHWZMFQKX/MTsp1W6SMmJ
+ H8OOKISaPFSkX2ItDrxPWupFwoY3XizuKLDgJQEnKuMIph1gLS1rU4jI8UvlM5Gd1p/8
+ E8ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779082201; x=1779687001;
+ d=1e100.net; s=20251104; t=1779082167; x=1779686967;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=v7rp6+rNMIEclIzKubuq6lCqztB2uEmsOX6adbP8QUw=;
- b=E823VxsnZx+emJvvztEWJXRJlXMKl4iqulj0ohMCNDYSADjN1pLa4DgBAjafWmeTe6
- U9roi+EN1sOBNAc9MLAH/fVs39weUF0dFEg+6RMN8Uzzi/fDC2Hy8g9oBfym8oa6yWGp
- tupkDXAd8bkQrrGN3IfGKcY4pPzt8Qsozb/Moy/Lu1PZVlviofW5odzHZb8zqYLR3KPO
- LQ1OuKksim9k75h28PipxC/aMY90676jhiKqkUIvhSwlAq5XZ9fD+JrPeWjfmGOyJE0w
- FNHhog0G82ZMnUwSeh5Juo0tlrtE4Pk6i6jSQvAyQRlJ2zEzQAqRIQOY9JAnYykR0Ihr
- sLuw==
-X-Gm-Message-State: AOJu0YzNgE2G5su8Wsxr3Y7DSTo3AUK+I+suDNfKoPNssBViLz3ir2Ac
- k7bGks0wwTxC0I4pjqGzhayEzHSRvvSo4XRdfVRaP4gefACEkimfpnA2
-X-Gm-Gg: Acq92OH8NG3hLwo+1riHbmIdjj+60iEARnSluMcy2lI+jgNp6sZLJgSuU4X10Sl4NNk
- XBXClwlV4IL4SHsy1TPfx7kb6N06ibD1xS6JR2AstZez60TYqxhEo3VaQ7BKaOG2Dg1+Z7q3oYR
- Ep2sTxMafVSVQZC7qz9f2jakqwduaXNScvz2q9BkrDU53+cVT40m8A0LckKaiWbJ8E5NUbfq/xM
- RoiytmH1dG6wyg6yBxpkcg4GdDmRCfgDRmXmORpBg3c+wSku6ZGxgISf2/oEg71LBCkipmahALK
- +/cT1RIjEppn4c+2ydn8gbiSunTESqavTVDsZqEefL3j+P8trrxyscVq1uhMcdEfIOyrkWZoyBX
- +RgZnYli/9gIlGce5UiGZE81LCGspjt8hc7jL7+R5YLoEwVNBPJFN3PqBmdSlRtnEsA9QtoFLfa
- b5EInGRvYDrx4cnxeJQCQosdnt1K4p7s5kyvx0vmVBWfmXc8tAvVyPqAwGlPCdhG/ulACBMP01f
- WfPmmqE8hNyHH859ahW6JLMdXAiB/p2mgPj2MNABgdHbnW7IVpBKrRnukcEzhNi+IAdRiDbGDM6
- NByU7w==
-X-Received: by 2002:a05:6808:124e:b0:479:ac7d:6da8 with SMTP id
- 5614622812f47-482e56310e9mr8215926b6e.18.1779082201245; 
- Sun, 17 May 2026 22:30:01 -0700 (PDT)
+ bh=iNGUkUQb5J29ukIe0u9qyTma9foPdK9x44s0U5JWP3E=;
+ b=Evr2rxUQImYZEf1zreYCWs3D6+Hu5idgJL9iDNtkNGiX4K14LNoyriP136bxXMgM27
+ nkKJaDiCaLROXfTgrEcGyEaDD3KAkCxZMFlwjqUtjKv4YsgotZdxQ+9KGeZGncxl65Xy
+ kSgEwTKEF4YtzKGIJQLe+szy2VCseXRphWImFd2m4Z3mJdVz08gkYCUfdxqdMi7U0bI3
+ +FWo5pBeUKEWXQ2RK/y0Bbo0B9pltHWa+svM/HSWTTtg+EUCQMudDzrEtsYI3T2UuQrW
+ nPWDOqPr0hphIovn5kcXojG+zXNpCAitZzA/822bNA0xJbExkq29VcK/Lci5woy13gUl
+ I/nA==
+X-Gm-Message-State: AOJu0YyvRNlWU0V3YNhnStFbvlKTuPG+fyTM6mZPVtNF/BcewME9LwJ4
+ 0PdXkjnqn4g6FMULyTKqCivx5v+9/ww+fumMOQOhBrhhl5fakZAhB5hp
+X-Gm-Gg: Acq92OFEuo7A5UVdr7WSQo40qO7b2ke8claDXhSPyOCjpp7H6Khj/FapeWYMDRnwy54
+ tMpbdToz2fGCAL2XdS7KUyHVz4pvxkUUwzKBqrrtpmckNwQmpMTuG8Ez6K/vKcfnEO97U/wPs6S
+ y8kAXkjb05SK0XLd4dPpczWcC7icPC+WW1RKJeOg6+85yBu8BUgDghlQ4bHgV68/ivZDo3MCq9l
+ b8yuJODqFLJ61HJilYvXC46jVRmgQ0BCX0pm0jwavR49FFa5WXw+DE8Fe4gP8fmUw8/R7TVr/C+
+ C2ED5IpjslfQnFk25JHMWmNI4oVeUPXFgU4odzBRDyBTfgBfn0SNUY8/Ym7gp0L7DfdCupVn8gJ
+ LSlYyUpHF+B6zRF8FYuN26PbjhAFE4mYEZ9Tv3eAte/T918+EeleLXVCMA7TMDRBPCPYTv99izm
+ Qms52amxgbdLFfFe+TEt45pm8iqWFw3XRG+hRCZLomLVMMV4hDubOAP22mH89bLp7KasHppBJm8
+ OgT49y7dcYppKwS1xbkVKi6tX/nvSoSGxS0Hy6IbDER4CbWcTHmAufw8aIoblcGbtNcLUo2xw9j
+ jx0faQ==
+X-Received: by 2002:a05:6808:1811:b0:460:f435:2aa1 with SMTP id
+ 5614622812f47-482e5929632mr9248446b6e.46.1779082167440; 
+ Sun, 17 May 2026 22:29:27 -0700 (PDT)
 Received: from mac.localdomain (71-218-255-245.hlrn.qwest.net.
  [71.218.255.245]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-482ee5349a5sm4628357b6e.15.2026.05.17.22.30.00
+ 5614622812f47-482ee5349a5sm4628357b6e.15.2026.05.17.22.29.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 17 May 2026 22:30:00 -0700 (PDT)
+ Sun, 17 May 2026 22:29:27 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Sun, 17 May 2026 23:29:31 -0600
-Subject: [PATCH v8 34/35] tests/tcg/mips: cover Octeon QMAC and CvmCount
+Date: Sun, 17 May 2026 23:29:03 -0600
+Subject: [PATCH v8 06/35] target/mips: split Octeon SEQ/SNE decode
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260517-mips-octeon-missing-insns-v2-v8-34-206151ee77ec@gmail.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260517-mips-octeon-missing-insns-v2-v8-6-206151ee77ec@gmail.com>
 References: <20260517-mips-octeon-missing-insns-v2-v8-0-206151ee77ec@gmail.com>
 In-Reply-To: <20260517-mips-octeon-missing-insns-v2-v8-0-206151ee77ec@gmail.com>
 To: qemu-devel@nongnu.org
@@ -110,94 +110,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extend the Octeon linux-user smoke test with QMAC/QMACS fixed-point
-accumulator checks and an RDHWR $31 monotonicity check.
+Decode the equality and inequality forms as explicit SEQ/SNE and
+SEQI/SNEI instructions rather than using shared generated SEQNE/SEQNEI
+entries.
+
+The explicit decoder names match the architectural mnemonics, which makes
+the translator entry points and trace/debug output easier to correlate
+with the instruction set.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-
 ---
-Changes v5 -> v6:
-  - New patch.
----
- tests/tcg/mips/user/isa/octeon/octeon-insns.c | 57 +++++++++++++++++++++++++++
- 1 file changed, 57 insertions(+)
+Changes v1 -> v2:
+  - Split the SEQ/SNE decode cleanup out of the Octeon arithmetic
+    instruction patch.  (suggested by Philippe Mathieu-Daudé)
 
-diff --git a/tests/tcg/mips/user/isa/octeon/octeon-insns.c b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
-index 435ccfa347..1dbdd9f52a 100644
---- a/tests/tcg/mips/user/isa/octeon/octeon-insns.c
-+++ b/tests/tcg/mips/user/isa/octeon/octeon-insns.c
-@@ -129,6 +129,59 @@ static uint64_t octeon_vmm0(uint64_t mpl0, uint64_t p0,
-     return rd;
+Changes v2 -> v3:
+  - Remove the decoded ne field now that the instructions are split.
+  - Reuse @r3 for SEQ/SNE and pass the TCG condition into a shared
+    translator helper.  (suggested by Richard Henderson)
+---
+ target/mips/tcg/octeon.decode      |  7 +++--
+ target/mips/tcg/octeon_translate.c | 52 ++++++++++++++++++++------------------
+ 2 files changed, 32 insertions(+), 27 deletions(-)
+
+diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
+index 102a05860d..a2bfd0751d 100644
+--- a/target/mips/tcg/octeon.decode
++++ b/target/mips/tcg/octeon.decode
+@@ -30,6 +30,7 @@ BBIT         11 set:1 . 10 rs:5 ..... offset:s16 p=%bbit_p
+ # SNEI rt, rs, immediate
+ 
+ @r3          ...... rs:5 rt:5 rd:5 ..... ......
++&cmpi        rs rt imm
+ %bitfield_p  0:1 6:5
+ @bitfield    ...... rs:5 rt:5 lenm1:5 ..... ..... . p=%bitfield_p
+ 
+@@ -38,8 +39,10 @@ DMUL         011100 ..... ..... ..... 00000 000011 @r3
+ EXTS         011100 ..... ..... ..... ..... 11101 . @bitfield
+ CINS         011100 ..... ..... ..... ..... 11001 . @bitfield
+ POP          011100 rs:5 00000 rd:5 00000 10110 dw:1
+-SEQNE        011100 rs:5 rt:5 rd:5 00000 10101 ne:1
+-SEQNEI       011100 rs:5 rt:5 imm:s10 10111 ne:1
++SEQ          011100 ..... ..... ..... 00000 101010 @r3
++SNE          011100 ..... ..... ..... 00000 101011 @r3
++SEQI         011100 rs:5 rt:5 imm:s10 101110 &cmpi
++SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
+ 
+ &lx          base index rd
+ @lx          ...... base:5 index:5 rd:5 ...... ..... &lx
+diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
+index b7531653e5..5497ddfb10 100644
+--- a/target/mips/tcg/octeon_translate.c
++++ b/target/mips/tcg/octeon_translate.c
+@@ -106,52 +106,54 @@ static bool trans_POP(DisasContext *ctx, arg_POP *a)
+     return true;
  }
  
-+static uint64_t octeon_qmac_lo(uint64_t rs, uint64_t rt, uint64_t lo)
-+{
-+    uint64_t rd;
-+
-+    asm volatile(
-+        "move $8, %[rs]\n\t"
-+        "move $9, %[rt]\n\t"
-+        "mtlo %[lo]\n\t"
-+        "mthi $0\n\t"
-+        ".word 0x710904d2\n\t" /* qmac.03 $8, $9 */
-+        "mflo %[rd]\n\t"
-+        : [rd] "=r" (rd)
-+        : [rs] "r" (rs), [rt] "r" (rt), [lo] "r" (lo)
-+        : "$8", "$9");
-+
-+    return rd;
-+}
-+
-+static uint64_t octeon_qmacs_state(uint64_t rs, uint64_t rt, uint64_t lo)
-+{
-+    uint64_t hi, rd;
-+
-+    asm volatile(
-+        "move $8, %[rs]\n\t"
-+        "move $9, %[rt]\n\t"
-+        "mtlo %[lo]\n\t"
-+        "mthi $0\n\t"
-+        ".word 0x71090012\n\t" /* qmacs.00 $8, $9 */
-+        "mfhi %[hi]\n\t"
-+        "mflo %[rd]\n\t"
-+        : [hi] "=r" (hi), [rd] "=r" (rd)
-+        : [rs] "r" (rs), [rt] "r" (rt), [lo] "r" (lo)
-+        : "$8", "$9");
-+
-+    return ((hi & 1) << 32) | (rd & 0xffffffff);
-+}
-+
-+static uint64_t octeon_rdhwr31_non_decreasing(void)
-+{
-+    uint64_t first, second;
-+
-+    asm volatile(
-+        ".word 0x7c08f83b\n\t" /* rdhwr $8, $31 */
-+        ".word 0x7c09f83b\n\t" /* rdhwr $9, $31 */
-+        "move %[first], $8\n\t"
-+        "move %[second], $9\n\t"
-+        : [first] "=r" (first), [second] "=r" (second)
-+        :
-+        : "$8", "$9");
-+
-+    return second >= first;
-+}
-+
- static uint64_t octeon_vmm0_zeroes_mpl1(void)
+-static bool trans_SEQNE(DisasContext *ctx, arg_SEQNE *a)
++static bool do_seq_sne(DisasContext *ctx, const arg_decode_ext_octeon1 *a,
++                       TCGCond cond)
  {
-     uint64_t rd;
-@@ -259,6 +312,10 @@ int main(void)
-     assert(octeon_seq(0xabc, 0xdef) == 0);
-     assert(octeon_sne(0xabc, 0xabc) == 0);
-     assert(octeon_sne(0xabc, 0xdef) == 1);
-+    assert(octeon_qmac_lo(0x0003000000000000ULL, 2, 1) == 13);
-+    assert(octeon_qmacs_state(1, 1, 0x7ffffffe) == 0x17fffffffULL);
-+    assert(octeon_qmacs_state(0x8000, 0x8000, 0) == 0x17fffffffULL);
-+    assert(octeon_rdhwr31_non_decreasing());
-     assert(octeon_vmulu(5, 7, 11) == 46);
-     assert(octeon_vmm0(5, 13, 7, 11) == 59);
-     assert(octeon_vmm0_zeroes_mpl1() == 0);
+     TCGv_i64 t0, t1;
+ 
+-    if (a->rd == 0) {
+-        /* nop */
+-        return true;
+-    }
+-
+     t0 = tcg_temp_new_i64();
+     t1 = tcg_temp_new_i64();
+ 
+     gen_load_gpr(t0, a->rs);
+     gen_load_gpr(t1, a->rt);
+ 
+-    if (a->ne) {
+-        tcg_gen_setcond_i64(TCG_COND_NE, cpu_gpr[a->rd], t1, t0);
+-    } else {
+-        tcg_gen_setcond_i64(TCG_COND_EQ, cpu_gpr[a->rd], t1, t0);
+-    }
++    tcg_gen_setcond_i64(cond, t0, t1, t0);
++    gen_store_gpr(t0, a->rd);
+     return true;
+ }
+ 
+-static bool trans_SEQNEI(DisasContext *ctx, arg_SEQNEI *a)
++static bool trans_SEQ(DisasContext *ctx, arg_SEQ *a)
+ {
+-    TCGv_i64 t0;
++    return do_seq_sne(ctx, a, TCG_COND_EQ);
++}
+ 
+-    if (a->rt == 0) {
+-        /* nop */
+-        return true;
+-    }
++static bool trans_SNE(DisasContext *ctx, arg_SNE *a)
++{
++    return do_seq_sne(ctx, a, TCG_COND_NE);
++}
+ 
+-    t0 = tcg_temp_new_i64();
++static bool do_seqi_snei(DisasContext *ctx, const arg_cmpi *a, TCGCond cond)
++{
++    TCGv_i64 t0;
+ 
++    t0 = tcg_temp_new_i64();
+     gen_load_gpr(t0, a->rs);
+ 
+-    /* Sign-extend to 64 bit value */
+-    target_ulong imm = a->imm;
+-    if (a->ne) {
+-        tcg_gen_setcondi_i64(TCG_COND_NE, cpu_gpr[a->rt], t0, imm);
+-    } else {
+-        tcg_gen_setcondi_i64(TCG_COND_EQ, cpu_gpr[a->rt], t0, imm);
+-    }
++    tcg_gen_setcondi_i64(cond, t0, t0, a->imm);
++    gen_store_gpr(t0, a->rt);
+     return true;
+ }
+ 
++static bool trans_SEQI(DisasContext *ctx, arg_SEQI *a)
++{
++    return do_seqi_snei(ctx, a, TCG_COND_EQ);
++}
++
++static bool trans_SNEI(DisasContext *ctx, arg_SNEI *a)
++{
++    return do_seqi_snei(ctx, a, TCG_COND_NE);
++}
++
+ static bool trans_lx(DisasContext *ctx, arg_lx *a, MemOp mop)
+ {
+     gen_lx(ctx, a->rd, a->base, a->index, mop);
 
 -- 
 2.54.0
