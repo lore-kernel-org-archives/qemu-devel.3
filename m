@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F30DACD4F52
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 11:02:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ADC7CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 11:02:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOvj0-0006ad-FK; Mon, 18 May 2026 07:01:30 -0400
+	id 1wOviy-0006ZK-SG; Mon, 18 May 2026 07:01:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wOviy-0006Za-1D
- for qemu-devel@nongnu.org; Mon, 18 May 2026 07:01:28 -0400
-Received: from out30-111.freemail.mail.aliyun.com ([115.124.30.111])
+ id 1wOviv-0006Y2-8H
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 07:01:25 -0400
+Received: from out30-131.freemail.mail.aliyun.com ([115.124.30.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wOviu-0005iO-5E
- for qemu-devel@nongnu.org; Mon, 18 May 2026 07:01:27 -0400
+ id 1wOvis-0005iH-MA
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 07:01:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
  t=1779102078; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=/Hf9bNk5euKjuZd4SN8a7/rLYdpLWK+prrB/RupffPk=;
- b=uFndEFNu9MfosrdLoTNwjdDueA4IGJ2L2kWcANcZb6WMK730m0nIqqL3AThgc2dTAIGPLy3rvOA950VIB3m2voiKNPwY0bU/6swyhKDK5P6Xd23aMMhM9tQTcxDzllzd+KzKd6E3+zAiflQKSg+YExdHxBV75np61iDL5bRqbjI=
+ bh=8+8p3ol65rhq0ecDJNkEpWpx97Ua/BIn3MGtDEFk66o=;
+ b=VE8pr4T2zcC3NhtjIeg/k1V75viX6qFg3FZtioHxW3E7QAkiCaNSzxU5Ze5TxmJwmI30LMs8RZaEfzAOKyrIuhdnAwSSRYBj1LFHUVdJ5crwd+wVCWC8KXxdw1CKIPGhABsMVAk8qmXMzOgTIh/wSsntZkq/mfWlCeHowf+esms=
 X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R201e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037033178;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
  MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=3; SR=0;
- TI=SMTPD_---0X382z.a_1779102076; 
+ TI=SMTPD_---0X38AAVS_1779102077; 
 Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0X382z.a_1779102076 cluster:ay36) by smtp.aliyun-inc.com;
- Mon, 18 May 2026 19:01:16 +0800
+ fp:SMTPD_---0X38AAVS_1779102077 cluster:ay36) by smtp.aliyun-inc.com;
+ Mon, 18 May 2026 19:01:17 +0800
 From: Bin Guo <guobin@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com,
 	farosas@suse.de
-Subject: [PATCH 4/8] migration/savevm: use stack-allocated bitmap in
- configuration_validate_capabilities
-Date: Mon, 18 May 2026 19:01:08 +0800
-Message-ID: <20260518110112.21395-5-guobin@linux.alibaba.com>
+Subject: [PATCH 6/8] migration/multifd: merge thread-join and cleanup loops in
+ multifd_recv_cleanup
+Date: Mon, 18 May 2026 19:01:10 +0800
+Message-ID: <20260518110112.21395-7-guobin@linux.alibaba.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260518110112.21395-1-guobin@linux.alibaba.com>
 References: <20260518110112.21395-1-guobin@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.111;
+Received-SPF: pass client-ip=115.124.30.131;
  envelope-from=guobin@linux.alibaba.com;
- helo=out30-111.freemail.mail.aliyun.com
+ helo=out30-131.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -71,46 +71,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-configuration_validate_capabilities() allocates a bitmap on the heap
-to track source capabilities via bitmap_new()/g_free().  Since
-MIGRATION_CAPABILITY__MAX is a small compile-time constant (< 64),
-a heap allocation for a bitmap this small is wasteful: it adds
-malloc/free overhead and a potential cache miss for a transient
-8-byte allocation.
+multifd_recv_cleanup() iterates over all receive channels twice:
+one loop to join threads and another to clean up each channel.  Unlike
+the send side where all threads must be signalled before any is joined
+(to avoid deadlock), on the receive side the threads are already
+terminated by multifd_recv_terminate_threads().  Each join simply
+waits for an already-terminated thread, so the join and cleanup for
+channel i are independent of channel j, and the two loops can safely
+be merged into one.
 
-Replace with DECLARE_BITMAP() on the stack and bitmap_zero() to
-initialize.  This eliminates the heap round-trip entirely.
+This cuts the iteration count in half and improves locality: the
+thread's resources are freed immediately after its join.
 
 Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 ---
- migration/savevm.c | 5 ++---
+ migration/multifd.c | 5 ++---
  1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/migration/savevm.c b/migration/savevm.c
-index d1dd696c17..23adaf9dd9 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -347,10 +347,10 @@ static bool configuration_validate_capabilities(SaveState *state)
- {
-     bool ret = true;
-     MigrationState *s = migrate_get_current();
--    unsigned long *source_caps_bm;
-+    DECLARE_BITMAP(source_caps_bm, MIGRATION_CAPABILITY__MAX);
-     int i;
- 
--    source_caps_bm = bitmap_new(MIGRATION_CAPABILITY__MAX);
-+    bitmap_zero(source_caps_bm, MIGRATION_CAPABILITY__MAX);
-     for (i = 0; i < state->caps_count; i++) {
-         MigrationCapability capability = state->capabilities[i];
-         set_bit(capability, source_caps_bm);
-@@ -373,7 +373,6 @@ static bool configuration_validate_capabilities(SaveState *state)
-         }
+diff --git a/migration/multifd.c b/migration/multifd.c
+index b3eef875cc..67ee9bdf5e 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -1153,15 +1153,14 @@ void multifd_recv_cleanup(void)
+         return;
      }
+     multifd_recv_terminate_threads(NULL);
++
+     for (i = 0; i < migrate_multifd_channels(); i++) {
+         MultiFDRecvParams *p = &multifd_recv_state->params[i];
  
--    g_free(source_caps_bm);
-     return ret;
+         if (p->thread_created) {
+             qemu_thread_join(&p->thread);
+         }
+-    }
+-    for (i = 0; i < migrate_multifd_channels(); i++) {
+-        multifd_recv_cleanup_channel(&multifd_recv_state->params[i]);
++        multifd_recv_cleanup_channel(p);
+     }
+     multifd_recv_cleanup_state();
  }
- 
 -- 
 2.50.1 (Apple Git-155)
 
