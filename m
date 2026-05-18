@@ -4,69 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFD55CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 02:43:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF7B4CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 02:51:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOnwX-00011k-Lo; Sun, 17 May 2026 22:42:57 -0400
+	id 1wOo3f-0002H0-Bg; Sun, 17 May 2026 22:50:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michaeljclark@mac.com>)
- id 1wOnwT-00011K-3i
- for qemu-devel@nongnu.org; Sun, 17 May 2026 22:42:53 -0400
-Received: from pv-2002i-snip4-3.eps.apple.com ([57.103.64.134]
- helo=outbound.pv.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michaeljclark@mac.com>)
- id 1wOnwQ-00079E-5j
- for qemu-devel@nongnu.org; Sun, 17 May 2026 22:42:52 -0400
-Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-1a-60-percent-0 (Postfix) with ESMTPS id
- 4DC75180011F
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 02:42:47 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQhKAkMOUhxBCE4dXwJLVxQEFVoOXwpXHFMbXwxFAHIdWBsdDlgGEhZdRV4EVANTFVUSUAFWGVkwVBlQQ1QEX1BLGw5cFwNXHFZFXBhDCV0FVxwdHUFFWxNVF0YJGQhdHRkIRx8KMANCDlYDQwdFAC0ZHFdQWgpRXloXXk1aAlZNBUoCWQRaBUBdVQtUDlMfRAFJAUAOWQJEFE0EC1IJUxUAHARYAitfEVpWUAJaVRIEQAhWUF4IXh9MHA==
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mac.com; s=1a1hai;
- t=1779072168; x=1781664168; bh=WMOb7T49Eyo1q3+VLeXnJrVzy+t0/ewa+UxjmmvKG/o=;
- h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type:x-icloud-hme;
- b=LT21kePrR1rNyL0iHFlGXa/eceVmh03WgSNEExz116WSEuEK0GjyYk5I+uURQ3COcCGUCl0/oVRnOk/bn2aOBVZoMpAe4psGjDT7bSo7WE1yi/YRMcVM+e5wkOd5vM84iWtiRiMwyvScunGyX+ZFVODuNLsMPiaTM1Cl+ubf0U6budNbxzPQ7VIO93fQ+zkm6nbER/t8VofWKT5ZmueGkltgvsMAX1CJhhyJakkcgwv80umtO2rXUxhpxCzTe/von8EfR7Qnjs6iF9ruHuCdc23sdoyIMA+lvBySxYQZRE+pdLV5rI7xylsrO0gGIa9CVLiqsSLK02yjniBjleK89g==
-Received: from [192.168.1.3] (unknown [17.56.9.36])
- by p00-icloudmta-asmtp-us-west-1a-60-percent-0 (Postfix) with ESMTPSA id
- 10E67180010C
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 02:42:45 +0000 (UTC)
-Message-ID: <2143170d-8998-4812-9204-57febae9d755@mac.com>
-Date: Mon, 18 May 2026 14:42:43 +1200
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1wOo3Y-0002Ft-1j
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 22:50:13 -0400
+Received: from mail-dl1-x122c.google.com ([2607:f8b0:4864:20::122c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1wOo3V-00025M-8m
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 22:50:10 -0400
+Received: by mail-dl1-x122c.google.com with SMTP id
+ a92af1059eb24-12ddbe104ccso1082983c88.0
+ for <qemu-devel@nongnu.org>; Sun, 17 May 2026 19:50:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779072607; cv=none;
+ d=google.com; s=arc-20240605;
+ b=agPcqxcbmZ3RjjJ920O6mAE26HZ0SmXtGCkxjtQA8eV81/dGy87kZPByyyWwQLR+/B
+ bUsQTa/P1sTwWQfn9DTxDBrVbquaKtVJnlyx8XIWEPsrY/FFaKVKZ+qxBcZOlBZ4tVQU
+ lm8I9FWhtD6rVn38pOOLYAL0JbuRkpdz4IZFLJ7+/a0GnYW2+UYSDW7ICupSJct8xoVh
+ DnqCtSMP2u3rigO7BQjvWMGNtKv7qhs9T+0y4QzXpoMlHEnc2sNVGkiIiBrClkHkQTOm
+ BXv5l/32SyEoYzYrTZRj8TnI6oWdKF0C1ZD5TF23s5J0dNrAe3l76Q7zQ/jgXuE0ghf+
+ sjIg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=HVEP74diACQvZTcsz7rg+b5tAbQ/pSU9inMps9VNzbw=;
+ fh=5B7mkaEET076WYem2sxgV9NDr9+NwGVcOT5DkhO2s+4=;
+ b=HZiA1iLuuLeeeA9J9q84NaBUW7oab3Z+ue3XI3VTj9ufUQzufeRpOi9L3nJKlW3iwA
+ xiLhnyfmxVfuzjazNPjpt5DoML9z/JKkdVPTn0FvD6wgOb+OQYgCVS/BWW3Re58nAA+I
+ 1DP6KYyokwtduUqlCgehR2XPlhs+xW77xuornTZw39xVJGWjxRtgngqCFISyv2jPfSJr
+ 6pFPQqJ3dWQGTVp8Vm3J2Qy1U2svnkUCH2YvxDjYLsOPM4vSewny1AYF+UIH46PhyjtZ
+ Bcfk1U2nemprn+bH1CqqTL+QRwwiSAXmDnL9Sj5x0/QvLg82QGtxljA5e7UsoY6wki9P
+ CmQQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1779072607; x=1779677407; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=HVEP74diACQvZTcsz7rg+b5tAbQ/pSU9inMps9VNzbw=;
+ b=lZrylzJ55VCAaJEg85ruIcGtcNYIR2OZIXv7v8rDsaUzLfvXZHXeQl2M7SG7LAYESC
+ VXKaGnG1L8GDlYHpmvxvEZMZaUOsVyPIRla9ehLDCYDugKTXUySEh+UdVdLmY1OGqRyO
+ CI7UJe3S9BtU9vJ0uO5A4lTPmFHr6zBnbfpK4y/qPQmlal4A0j2QB2DzfBcb8S26z33u
+ +reS0e085V7Qm3Nu3l/vFs3k6EXwCsnC8e6CuP4CUVxCqqfKQlLFeaihLwqUoNTLPKTc
+ xJWIpMLhh2ptyujgmnCRFYZCEm1iFJ9R9AQEiYkUD+pGFWBvqojA/9dqbMQjcsgQzQbg
+ GxgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779072607; x=1779677407;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=HVEP74diACQvZTcsz7rg+b5tAbQ/pSU9inMps9VNzbw=;
+ b=pWwYzD+K+QDdYW3kEnWm5ddMHos2qQJfQZP1gBYTFqewRXECbTjW07xw147tH1Sc9D
+ Clsr+6Jtq/LQuW26pBLUPBSP48bQQBruw4SlzTl335e2lH5jNnRw7YDBpy6f81Tgtt2v
+ w8tJ8kWP3qViZgg8FdDrq6p/MoCr1q0cHSw6vTB0n6xdMW3hVOova7Je438HNy/H8Ajf
+ p2/DttTOYD6byt12T2dAWON9jJLfFH91zoicHLo+GPyweu2vgbpGDS7o1ZbVBkpph0p3
+ I/FCE2A2u9OMxl6pW/gp5HQhvXoPbhJJIosdif6XXdxbAUnbAvsh3P0xO1vnPo8Vyys7
+ yeDA==
+X-Gm-Message-State: AOJu0Yz+xeud0hNj27vx0Kz8dT0M1mcdsWUK5iu0ReKzPyNkDayzQo9P
+ Zx+YRv33+6X5t8x+RuVPSkFHtoHvPdLttLfSSFf+bU0p/Eyq0Xj08wzYTAkg5w9jrBlltX3JJHm
+ F8fhU8YqOy27UElPsauMtlAS5ldYiAwdnBlNQw3t8zPFFEwashW0H/Oo=
+X-Gm-Gg: Acq92OGVF/Z3X0ishdI5WrKF8RkgFvwCkirzeSM3lzhgzuNhPD3+Py8YkSauyEH8zhu
+ 3MgGK7bJqVHA7fUufn3DLiN5ZG6hRWEydvn173J5KLm2LcQZNIRdtyr6aXF8o3iVS7ikUdDLaW4
+ rRXBk4JjQVVPHrITX1P0ToFiyPd1eO9mrEgeQE9rKFjrvgPCH4aX1XLgxxG45JD44yySh2YmQA/
+ Lw9kEZnjR8KYhHdJ/Mj+VPIovVK8zXqFGAf0o04pIxKcF7ok0kv3l5zrjkMVLKu1P5H/1pJ2kVY
+ W08AOEXXnA==
+X-Received: by 2002:a05:7022:925:b0:11a:fb3c:568b with SMTP id
+ a92af1059eb24-135044172c4mr5190186c88.17.1779072607077; Sun, 17 May 2026
+ 19:50:07 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: qemu-devel <qemu-devel@nongnu.org>
-From: Michael Clark <michaeljclark@mac.com>
-Subject: GLYPH: TLB miss handlers, virtualization, and modes
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: Ovd8gq5wjYq6mTvu1v2hq9cJnAHzgB_D
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE4MDAyNCBTYWx0ZWRfX/YiM0/vjxrvP
- NJ5ScTLmvuV+QU8dvXFzPlodbO6LqtwRVXBpN6QPHDcNJqmyH1r9M01hL8JWWRiXlZk3mbQfY6P
- ycg1l5eepZe2Cy7gMZhV6qWTu0/l1jMqv3QZUxfeZDKC33liEnwTWR1D532IJegR46r1gGXhlfO
- jiHjYrPgD5I7yaWft2ijqF5Sw0QUwhtt3Br1c3j1KEduSnLeeUZAg2CcUL1hAIGu88MOaYD9gaw
- eSpqr8Djd2LYLaaAC+zuJJFagnBhuqPKnXot4U/ReJ9DCg58tpDJ2IH2FGLFQbhGt2OWw0UpRpw
- Nqpz5Pg4tDwyV8m74yIDb4pTdxdDNbYygVKY/UxTk9ceC/OMjQ6Gha/CVcsyWE=
-X-Authority-Info-Out: v=2.4 cv=d+74CBjE c=1 sm=1 tr=0 ts=6a0a7ca7
- cx=c_apl:c_pps:t_out a=azHRBMxVc17uSn+fyuI/eg==:117
- a=azHRBMxVc17uSn+fyuI/eg==:17 a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10
- a=x7bEGLp0ZPQA:10 a=u0hES8UrWMkA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=YJ9zdN9lAAAA:8 a=NEAV23lmAAAA:8 a=lDmWKlVU4ShJGlyLhkoA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=eqbXquKEjoujS2g1hgVW:22
-X-Proofpoint-ORIG-GUID: Ovd8gq5wjYq6mTvu1v2hq9cJnAHzgB_D
-Received-SPF: pass client-ip=57.103.64.134; envelope-from=michaeljclark@mac.com;
- helo=outbound.pv.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20251231045000.30120-1-jay.chang@sifive.com>
+In-Reply-To: <20251231045000.30120-1-jay.chang@sifive.com>
+From: Jay Chang <jay.chang@sifive.com>
+Date: Mon, 18 May 2026 10:49:56 +0800
+X-Gm-Features: AVHnY4LuoHCBsdU64tCwwYPdRQ3rpDdZaIQ_-rgL1MEmzMK7pomqiVPqx3q3Cg8
+Message-ID: <CACNNAjPw1RAQKctNWa5=hVs__qz8uOqzd6VrL8V2XvEfEaepRA@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] target/riscv: Fix PMP address alignment
+To: qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Content-Type: multipart/alternative; boundary="000000000000c657c606520e9eb9"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::122c;
+ envelope-from=jay.chang@sifive.com; helo=mail-dl1-x122c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,111 +117,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Folks,
+--000000000000c657c606520e9eb9
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-rather lengthy update on a high-level architecture exploration:
+Hi,
 
-- https://metaparadigm.com/~mclark/glyph.pdf
+Gentle ping on this patch.
 
-I have reached an inflection point with nested virtualization and SLAT.
-I believe I expose enough from an architectural perspective to support
-SLAT in this version of the architecture, theoretically, as we have a
-dominating machine capability for each virtual domain. it still needs
-testing in a full system architectural simulator. I think this version
-of the specification is worth a fine look, though. I just made a change
-to domain context switching for nested traps, keeping in mind SLAT plus
-TLB miss handlers for first level address translation.
+Thanks,
+Jay Chang
 
-# SLAT with virtual TLB miss handlers
+On Wed, Dec 31, 2025 at 12:50=E2=80=AFPM Jay Chang <jay.chang@sifive.com> w=
+rote:
 
-most of the architectures exposing TLB miss handlers are somewhat dead.
-few of them supported virtual TLB miss handlers with SLAT. I know QEMU
-would like it, because when having the right page sizes it could make
-soft-MMU super fast. interesting nuances. UltraSPARC exposes fixed TLB
-entries in the architectural spec, obviously because when using SLAT
-one can't call a TLB handler in a VM using virtual physical addresses.
+> This series fixes PMP address alignment to comply with the RISC-V
+> specification WARL (Write-Any, Read-Legal) semantics.
+>
+> When configuring pmpcfg (TOR, NA4, or NAPOT) and pmpaddr, if the
+> value is smaller than the PMP granularity, it needs to be aligned
+> to the PMP granularity.
+>
+> Changes in v3:
+> - Use ROUND_UP() macro for NAPOT address alignment
+>
+> Changes in v2:
+> - Fixed commit message grammar ("it needs to be aligned")
+> - Use ROUND_DOWN() macro for TOR address alignment to improve
+>   code readability
+>
+> Jay Chang (2):
+>   target/riscv: Align pmp size to pmp-granularity
+>   target/riscv: Use macros for PMP address alignment
+>
+>  target/riscv/pmp.c | 22 ++++++++++++++++------
+>  1 file changed, 16 insertions(+), 6 deletions(-)
+>
+> --
+> 2.48.1
+>
+>
 
-planning to address the virtual physical address problem with hardware.
-just added "per-domain" TLB miss handlers to this version of the spec.
-if added to a virtual domain, one could use the register update event
-to call the miss handler on the handler virtual physical addresses and
-map it to a fixed entry in the TLB, but do so in hardware. in this
-model, miss handlers would have TLB slots. but architecturally, not as
-a micro-architectural detail, so unlike UltraSPARC, we won't expose
-tables, just the miss handler address. i.e. hardware-managed TLB
-software miss handler. hardware controls evictions, and if we need to
-ensure the "virtual" miss handler is in the TLB, we will specify that a
-miss handler on a domain with a dominating machine domain can access
-virtual physical in its address space, as it will be performing SLAT.
+--000000000000c657c606520e9eb9
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-# microcoded privilege levels using domain capability matrices
+<div dir=3D"ltr">Hi,<br><br>Gentle=C2=A0ping=C2=A0on this patch.<br><br>Tha=
+nks,<br>Jay Chang</div><br><div class=3D"gmail_quote"><div dir=3D"ltr" clas=
+s=3D"gmail_attr">On Wed, Dec 31, 2025 at 12:50=E2=80=AFPM Jay Chang &lt;<a =
+href=3D"mailto:jay.chang@sifive.com" target=3D"_blank">jay.chang@sifive.com=
+</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:=
+0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">=
+This series fixes PMP address alignment to comply with the RISC-V<br>
+specification WARL (Write-Any, Read-Legal) semantics.<br>
+<br>
+When configuring pmpcfg (TOR, NA4, or NAPOT) and pmpaddr, if the<br>
+value is smaller than the PMP granularity, it needs to be aligned<br>
+to the PMP granularity.<br>
+<br>
+Changes in v3:<br>
+- Use ROUND_UP() macro for NAPOT address alignment<br>
+<br>
+Changes in v2:<br>
+- Fixed commit message grammar (&quot;it needs to be aligned&quot;)<br>
+- Use ROUND_DOWN() macro for TOR address alignment to improve<br>
+=C2=A0 code readability<br>
+<br>
+Jay Chang (2):<br>
+=C2=A0 target/riscv: Align pmp size to pmp-granularity<br>
+=C2=A0 target/riscv: Use macros for PMP address alignment<br>
+<br>
+=C2=A0target/riscv/pmp.c | 22 ++++++++++++++++------<br>
+=C2=A01 file changed, 16 insertions(+), 6 deletions(-)<br>
+<br>
+-- <br>
+2.48.1<br>
+<br>
+</blockquote></div>
 
-- 16 hardware domain slots default.
-- address space reserved for up to 256 per core.
-- 64 seems like it might be a sane choice in 12-15 years time.
-- domains have MSI addresses on them.
-- interrupt can context switch domains.
-
-# hypervisor/firmware/OS config
-
-- 4 sets of 4 privilege level domains
-- 4 sets of 3 privilege level domains, plus hypervisor, enclave, iommu
-- 6 sets of 2 privilege level domains, plus hypervisor, enclave, iommu
-- 16 bare metal domains with all capabilities self-mapped
-
-it is trap-routing. we mux 4-bits of "domain" through microcode SRAM.
-they have been carefully sized with combinatorial complexity in mind.
-
-# domains and capabilities versus privilege levels
-
-trap routing for capabilities on virtual domains is an elegant model.
-this work could trigger a tidal wave. the model is super simple and I
-have been compressing on it for years, adopting elements from RISC-V
-piecemeal, in a simplified form, while also adding some complexity back.
-because we have to MUX through some SRAM for trap decisions. added a
-domain stack to handle exception nesting and hiding 'dom' from 'sys'.
-
-model misconfigurations. analysis of the rather simple capability model
-presented is huge work. it is not like I have a department at a school.
-it is a missing piece. the work extends Cambridge Xen. Cambridge CHERI
-is fine grained memory-object capabilities for pointers. GLYPH is
-domain capabilities and page coloring capabilities. the model is simple.
-
-# meta-circular virtual memory
-
-virtual TLB miss handlers aren't specified in detail but the idea is to
-trap to the dominating machine default domain for a given domain and
-have that domain invoke the first level TLB miss handlers within a
-virtual physical address space, then run second-level translation on
-them. there are a number of ways around "needs physical not virtual
-physical" so that the handler itself is in the TLB. we could link
-relocatable code in a hypervisor API and host them in M mode at known
-physical addresses. needs a verifier. alternatively, we could cause TLB
-miss traps on some "system TLB miss handler vector" addresses for the
-virtual physical addresses and have magic add them to per domain fixed
-TLB table entries a la UltraSPARC. I have physical self-map checking as
-an option. this way, under certain circumstances, we can depend on
-physical addresses being usable when virtual memory is enabled.
-
-# QEMU soft-MMU
-
-system-level TLB miss handlers with SLAT have the potential to make
-emulators like QEMU be 5X to 10X faster in systems mode with domain or
-system level TLB miss handlers. soft-MMU is super slow. this could also
-help with development and testing of IOMMU/vIOMMU in emulators.
-
-there is no full system architectural simulator for this work yet, but
-the privileged architecture is quite settled, at least theoretically.
-if you read the spec you can see the dimensional aligment. maybe:
-
-“This maps onto VMX non-root operation with EPT/NPT second-level 
-translation and VPID-tagged TLB behavior, but generalizes the refill 
-path into an architecturally visible per-domain handler mechanism.”
-
-Regards. Michael.
-
-glyph current - https://metaparadigm.com/~mclark/glyph.pdf
-glyph latest  - https://metaparadigm.com/~mclark/glyph-20260518.pdf
-glyph repo    - https://github.com/larkmjc/glyph
-x86 repo      - https://github.com/larkmjc/x86
+--000000000000c657c606520e9eb9--
 
