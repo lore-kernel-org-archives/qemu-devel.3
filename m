@@ -4,99 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDB6DCD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 00:51:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D43FCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 00:54:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOmCE-0007jV-4z; Sun, 17 May 2026 20:51:02 -0400
+	id 1wOmFA-0008LN-3o; Sun, 17 May 2026 20:54:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wOmCB-0007jD-8u
- for qemu-devel@nongnu.org; Sun, 17 May 2026 20:51:00 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1wOmF8-0008L0-TP
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 20:54:02 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wOmC9-0001i0-1C
- for qemu-devel@nongnu.org; Sun, 17 May 2026 20:50:58 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-67e24b8ef55so3140917a12.1
- for <qemu-devel@nongnu.org>; Sun, 17 May 2026 17:50:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779065454; cv=none;
+ id 1wOmF7-0002tG-E1
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 20:54:02 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-bce386d5b85so256517666b.1
+ for <qemu-devel@nongnu.org>; Sun, 17 May 2026 17:54:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779065640; cv=none;
  d=google.com; s=arc-20240605;
- b=PUE9LQpvVn8RMkQ0VjA99AyCxdvo+OAFugSPptHNy31Ecd9nzV4jn1TzB+HIIYixob
- 58LIe5sd0wU0hApW1doovHKVobZeNfU83xRGJPbLat6b3JESiqMYlgcQdrIODHLVNqlo
- tANeZdp3ZkuHjD0veAVPZs+3ZVN8cHK+Lfjd1CmF1XAx6QmZvvFtJjHVT95JVgUGcSCZ
- /VEQOBQY/h6VwsdKrBbqG35BmXT+KiRYRyLmAg73KX0neQFL0BiVJL/vu7oIOK8pyj9M
- 0t1D+VnXLIEv4NC4iL/dampIZHrI7KP2n7JvZH8CC24hne8P7GreujCkMjP1qQbk7n6S
- yhhw==
+ b=dfe2nLQUANaeqgPR2Ss7E1OCNzBbAr3J8wqurPrDbP7/rf/nXlS5q7AJaF0K11MkNz
+ 172rEd1yVirif691wLaATSa5y46I+qRjxmjvd4EV4q2nW/PR1l98Dv8U9XxmVIwD57jo
+ QEHqDVtdjZFYPm7KKkI6cgQfDLeFgHVFlo/tiAp1h0EWJdnMCTR2yK8BH+27gu7ZcNw2
+ 7ggOwpNTEgsln/ukxCmHG+uwPDkIvTWN56RhgMW2L/VPdcHwNbNBz6PLJNXPe2WptFt9
+ ekOSdcDx3vHKlZ6RquUnKjDF9cdyWRreLdPVXuFFX7a+YAfFE2BG75WI6dlFiPZtxWoR
+ GLDQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=1QwjIw9dYy4zhBtgKhWHeAgjwsyQhOe116YsaThWpvA=;
- fh=mNvwrgRDW27qPzXFRvj5VM3jGJdRqaIN2QkMevA1WLw=;
- b=Fpx7xcsdgo95gl2XxaEXw78YDhFXlcN4JP3rM9ttZ1KasV8ZERxQHEHH136RSKA8XH
- fEFiu5UmsRjIOlcbQL59UqTdOpvyGQ+9PrCJHEYxxe1S9NR3o8gQiSYGIg8CYoIzVTuy
- 333ZimIHOuUPukk1J9MPEnpA6KaA5c0j18+XteqnseKe29Vio5alhRFGVg+0+yvkavJy
- CGeGfQ13q+VcodALFUy6C1WWnp4g2XR1BJTYlcKd8cG8sktiD6QI3w2WDDDv9aXbtzWd
- +qI0rKVcJ9WWHtgM9cG4pTmSY1WU/pZmf8MaO1T6Sfip5A9jbWyAGuNZxkg63S9QnV0R
- jJFg==; darn=nongnu.org
+ bh=C8C72PZRBmFuQDjGjr+ttXBXmCETR23Y/HVybO24ry0=;
+ fh=OWEzxzQQH6i0CXrK7Il7AIoLdlIq6Z1/sAdwj53zKLQ=;
+ b=MUDXM/wCgqGGWIYEFGhhzhp43sIftkJ3dVn+Fgvvtb1flOa7TjdsLzG9c8cMXVhbYj
+ tCWTwDBywnnkSAcDXhZ7KocIy/r7A+2ltIzyjEWALV8ClIdEOL16qr6RfeHjO6AOonzX
+ ahDGqkt5ajJ+PlNId/3AikvBgn8msLHbTCiOkw8gHmDT9efNH6HqWaoPGQ3JA3MvG/qF
+ K8ZnAN8HJR7t5YfECHN2osOw2neyKGY4dMP4uv3sp4kBDYdVf5Fl5XKvBGbUAvDCNt0k
+ +3523u86Znh0DKvCu0dkUQk/LqCE5AuafTeLaJPcRPnB9AzlRmwd76MQb/xImBZE+GNP
+ Xkxw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779065454; x=1779670254; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779065640; x=1779670440; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1QwjIw9dYy4zhBtgKhWHeAgjwsyQhOe116YsaThWpvA=;
- b=I043vyqHsyRF4fRmTuS8YF4YsJsAr5l0WLrRGsZb+9HgTEq0DdfyTc3yBvqjxhyzGN
- YA6OkGr41gRg/pcu3wMXUZH8B9gYUasWTmc9/+++W6wmHp1dER4LQ7eBGdWI8S8FySNb
- 67YbxYHSzRrLyDTjvQYpHCldV87ZhLyh2BotfLZXX/v4ZRbRXB0++5ZWTCl0x7etwmY6
- 5sB3EPhETARNnNqXtBM2b4WQkVjj4fNPYzFLd8yU1jehfUurPqxnW9AMOatrC1DFCoA2
- YG7XTVULD+o6dwAOiHyzzgWXoBdrXpP8aqvNLL4jB1KH75j8h4sFYPv+mBX1AMwlMY5r
- z68g==
+ bh=C8C72PZRBmFuQDjGjr+ttXBXmCETR23Y/HVybO24ry0=;
+ b=XiT68LZdhssv7TRba5IdGYmyj6g08ivxsVSR3xeQR4VXg5Oy2aOiI7B7eKnQzpjOUc
+ uLbMYiBwWBgJ8C7WBjnGxZzz7lRnfdEDntQI7s0uWL8gY8uLnqRq3Flz7w9/dick7/Yz
+ QjOVeZzxC5vIbbDQyah9YFGqf6bCjI07fdhNO7R77G5Pnapo9lW3S5YD9EOg7FqBv4+Y
+ Rq04Yo2ms21bl0mL7HZ3TADcBfk8qa+pLp+zMC3pfyItvackTCHBYkr61vbykcQXzH9l
+ oou7GlwX1sn5SIw8La3X/33J7r2yAeIW2w9hCOMF4Jca10UK7NEfl/mmta914zA8SjUe
+ j7Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779065454; x=1779670254;
+ d=1e100.net; s=20251104; t=1779065640; x=1779670440;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=1QwjIw9dYy4zhBtgKhWHeAgjwsyQhOe116YsaThWpvA=;
- b=Tgl0kpF0ZuoluMBTlrFVS77et9BHs7LLIlmH0tht6ux+Qy9MyZUDgp2+msEckuEEqo
- 35tZdfZMGQvVczaYOPA7UnY3X5uD3sp35GRwHOD4uT3hJvVTBoTYuOQqL5dz85DpwKVI
- wEVfsXtrCr4Q9B3EiOz8FtLSj6CiCGPIgMJCfwbwtLPVyM6HjDVhADUuSGRs3u9cO3Me
- eHdXATiJ2hzo/0+qctugCb4tOCy7F+CcDJivaQnbdPG/WRcGcmgOHshvvV4GRwvVw71X
- 2Nf3g9FVyRUNmBHABxHWPUzJJBZnFAiu682Y+vybWlPrRuqxGssJKfb/KsY0Ow0R9SDO
- iukA==
+ bh=C8C72PZRBmFuQDjGjr+ttXBXmCETR23Y/HVybO24ry0=;
+ b=sx4WxSGFSGw4ykt9YIzW1My8wkzCRE/mfMqM4vQHjqgO90UiTUDoi6HqJwtIS4zOVG
+ 2n3EA2j3Lc4QgS+lZdN9yp7HMg3aEoEQVUIUYvjHFdEdo3cMuOLm22xnr4af8jw3St1v
+ Wnr8gY5EC2kSTTL1keIoHPkS09qZujF20EbGqLoR+19zMucqPEChSQ/fW8bmZ/meJ2dT
+ Ed+pjDgVgZRb8XQkDlVu4IyldU7yMHCsx7ym9gmwO2gkq0SQFUv6Wt60yku3t0uFMLGp
+ LBMhwgjqKK9p+OEjkbj7loHuc1lNq3odbn/8gJ0ZQvxxC28ZC+PzLb7Dpw0NGjpqNAA/
+ sGQg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+dDesH6fUMKy4VD1eTIK2SMYd1bEXPQiWSXD+f5N4Ht6W1dTSP+7I+DBCDSPS89YF7IJh7+DjODNs/@nongnu.org
-X-Gm-Message-State: AOJu0Yz7MyqAQU7+6x4gGFDgjMGxavlKbK9mZ+D/anemphIU0E8pfWkX
- J4EMWEGdVCGGMwhr70rqXFjELuQSs/SnhUma4efutO7H226J0024zUDIcI4hv6yN0yF/CEI5gES
- iJ1yFPOK8srGYNqEFM+Zag1RK5aQf39c=
-X-Gm-Gg: Acq92OGayg5mVkD7hbCetJj63BTGjiFKGh+Mt0be1mLyrTVT+wnYuARHpzjIrbpVm1a
- x91umRIinfmZbTQwvKpupNn0KS4yR5wJWa6hwu6JcZQbtZtVfUynnsdp+OBraojDy0lJNPHuId6
- ytpUbehgnAO2rPRingH4lTQyosNakR9pCGAJKQob2gXTPd4KOk/mMAGjDpIH5kwI9w3tfc2CULQ
- qWbZAi6RvClyq9Qpg4g579jqCBXDR9Yq3bYvph3E/T9oNZxvoI3RcshPpC1Gs1DtTS0FPVIgw7O
- z7fzvrhirZ9rCJigQKLHxObfzqJvDLETW/rRvw==
-X-Received: by 2002:a17:907:8b98:b0:bd3:413d:c51a with SMTP id
- a640c23a62f3a-bd5178848demr665850166b.17.1779065453794; Sun, 17 May 2026
- 17:50:53 -0700 (PDT)
+ AFNElJ+TF8Ax3w2axyzK32eu9+DLd9ysv/9LzDU7B0ABHwdIqa2rh1x2tzV10djqMkqbYCLDcUddRZMB5+YU@nongnu.org
+X-Gm-Message-State: AOJu0YxwlmrX5evNhKfJ7d/G+uDEAKLmbpRlblW/kkihyxXW+vzIs4XB
+ FTqcvVD3yszVifbsolIgxT8U1fwrsWOiywyyNB8WT/aITVqYoP1l+rvm7qDePpBAP0+OAI60a5T
+ 8MTblezw2wz1cNu7a547k+IYjHv05n0U=
+X-Gm-Gg: Acq92OEL43ZdJ1It+/ncrXPJfp5G/TGL1GgfZH6af7jb7q87rWHoYAJJQVH0vem6lKl
+ zkBPrJiLDw+SsDkFFbSeoenMoajnhAp7K6uB2VgN7zMLrLTRnXnmlPe6faE6Iz7bPuXyBendRBG
+ xYs2SnABm0ccU8D8+81ZQdJwNpU1Thoxlq5Vt5zwP5lLrNe7bryBw4L9QBAwPR6X2O35741zUXj
+ vm405K65C21ppgVhxlRGqHw7SROYaXLzQj1RHovMeGmbLUmTS+u0c9vTvtL9XVnIgo+dMfl3vmv
+ qcyviEsVYjmtSS+Ovn9RF2KbxypUGoCDO6ktsQ==
+X-Received: by 2002:a17:907:a317:b0:baf:e47:1b6a with SMTP id
+ a640c23a62f3a-bd5179305eamr665570266b.24.1779065639544; Sun, 17 May 2026
+ 17:53:59 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260513051841.1671987-1-alistair.francis@wdc.com>
-In-Reply-To: <20260513051841.1671987-1-alistair.francis@wdc.com>
+References: <20260512052240.330815-1-vulab@iscas.ac.cn>
+In-Reply-To: <20260512052240.330815-1-vulab@iscas.ac.cn>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 18 May 2026 10:50:27 +1000
-X-Gm-Features: AVHnY4Ijw6YN6Y71fvbFodsdRqkA06BUmHXSr0VbiOf3DrjWZUnNIsDJ2TMpAQs
-Message-ID: <CAKmqyKO6BUwvKZHAQnY0j6XnzCMywK3jghw+JX-+LOdyBix97Q@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv: Update the local interrupt mask
-To: palmer@dabbelt.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com, 
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair.francis@wdc.com>
+Date: Mon, 18 May 2026 10:53:33 +1000
+X-Gm-Features: AVHnY4IFTC-syojsnzg_PE8wldM_HhPGMoaglAcXSJAgoshyNU2l4s7zdp-v1Uo
+Message-ID: <CAKmqyKP5xaK0DkM0L94H5P9_XtDfZcq4wmFQbACyaEAm4sCW=A@mail.gmail.com>
+Subject: Re: [PATCH v1] target/riscv: clear mseccfg on reset for all dependent
+ extensions
+To: Zishun Yi <vulab@iscas.ac.cn>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu.zevorn@gmail.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -120,29 +125,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 13, 2026 at 3:18=E2=80=AFPM <alistair23@gmail.com> wrote:
+On Tue, May 12, 2026 at 3:24=E2=80=AFPM Zishun Yi <vulab@iscas.ac.cn> wrote=
+:
 >
-> From: Alistair Francis <alistair.francis@wdc.com>
+> Currently, the `mseccfg` CSR is only cleared to 0 during reset if the
+> `ext_smepmp` is enabled. However, this register is now shared by
+> several other extensions such as `zkr`, `smmpm`, and `zicfilp`.
 >
-> The RISC-V spec describes bits 0-15 as standard fixed interrupts. The
-> AIA spec on the other hand describes bits 0-12 as standard fixed
-> interrupts. This conflict causes issues for us as we don't dynamically
-> determine if AIA is enabled when setting the *delegable_ints consts.
+> Fix by clearing `mseccfg` if any dependent extension is present, and
+> adjusting the relevant comments.
 >
-> This means currently we incorrectly treat the LCOFIP bit as delegable,
-> even if AIA is disabled, which is incorrect (see the issues mentioned
-> below).
+> This vulnerability was discovered and reported by SpecHunter, an
+> AI-driven architecture specification analysis tool.
 >
-> The AIA spec indicates that implementations can determine which bits of
-> 13-63 in mvien are writable, so let's just make it bits 15-63 to match
-> the main spec.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3133
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3134
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3135
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3138
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3140
-> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+> Link: https://github.com/yizishun/rv-isa-sec/blob/master/output/riscv-svv=
+ptc/pr-134/qemu.txt
+> Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
 
 Thanks!
 
@@ -151,36 +149,34 @@ Applied to riscv-to-apply.next
 Alistair
 
 > ---
->  target/riscv/csr.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  target/riscv/cpu.c | 10 +++++++---
+>  1 file changed, 7 insertions(+), 3 deletions(-)
 >
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index e1cd4a299c..db886aeed1 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -1777,13 +1777,13 @@ static RISCVException write_stimecmph(CPURISCVSta=
-te *env, int csrno,
->  #define VSTOPI_NUM_SRCS 5
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index ce15a17c37de..3cabfeb1fa7a 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -756,10 +756,14 @@ static void riscv_cpu_reset_hold(Object *obj, Reset=
+Type type)
 >
->  /*
-> - * All core local interrupts except the fixed ones 0:12. This macro is f=
-or
-> + * All core local interrupts except the fixed ones 0:15. This macro is f=
-or
->   * virtual interrupts logic so please don't change this to avoid messing=
- up
->   * the whole support, For reference see AIA spec: `5.3 Interrupt filteri=
-ng and
->   * virtual interrupts for supervisor level` and `6.3.2 Virtual interrupt=
-s for
->   * VS level`.
->   */
-> -#define LOCAL_INTERRUPTS   (~0x1FFFULL)
-> +#define LOCAL_INTERRUPTS   (~0xFFFFULL)
+>      /*
+>       * Clear mseccfg and unlock all the PMP entries upon reset.
+> -     * This is allowed as per the priv and smepmp specifications
+> -     * and is needed to clear stale entries across reboots.
+> +     * This is required as per the priv, smepmp, and other security
+> +     * extension specifications that share this CSR, and is needed
+> +     * to clear stale entries across reboots.
+>       */
+> -    if (riscv_cpu_cfg(env)->ext_smepmp) {
+> +    if (riscv_cpu_cfg(env)->ext_smepmp ||
+> +        riscv_cpu_cfg(env)->ext_zkr ||
+> +        riscv_cpu_cfg(env)->ext_smmpm ||
+> +        riscv_cpu_cfg(env)->ext_zicfilp) {
+>          env->mseccfg =3D 0;
+>      }
 >
->  static const uint64_t delegable_ints =3D
->      S_MODE_INTERRUPTS | VS_MODE_INTERRUPTS | MIP_LCOFIP;
 > --
-> 2.53.0
+> 2.51.2
+>
 >
 
