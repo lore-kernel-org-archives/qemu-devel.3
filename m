@@ -4,96 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10AAACD343F
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 21:31:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF979CD343F
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 21:31:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP5Vq-0000hS-6v; Mon, 18 May 2026 17:28:34 -0400
+	id 1wP5Vm-0000Xt-Il; Mon, 18 May 2026 17:28:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5Vk-0000XP-Pb
- for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:29 -0400
-Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5Vg-0000Vm-RX
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:26 -0400
+Received: from mail-ot1-x336.google.com ([2607:f8b0:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5Vi-0000cD-8Q
- for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:28 -0400
-Received: by mail-ot1-x332.google.com with SMTP id
- 46e09a7af769-7dd73b7c757so1437674a34.0
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 14:28:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5Ve-0000Zz-L2
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:24 -0400
+Received: by mail-ot1-x336.google.com with SMTP id
+ 46e09a7af769-7e36bb16a92so1712551a34.2
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 14:28:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779139705; x=1779744505;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779139700; x=1779744500;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=46PeUjItrCiTFLvIk8NnwF5r7lBcB9iBG7KmhEjuYK0=;
- b=XWo1CF/JxEvMTtuhPghaeYzJo7e7B3bTsvfni7i2LUMUy1cgrKeb8pGaFqblJF4i+U
- RFCmpAuPVdOcDwWKbgzvS+cXGW7wBmaFO5xr92ON5Yie7SeitzwgIoKL8QgSFjxTovLC
- Ao371XcK+I3nEjZTc9y5rmwyZu4ssbrGeKW6us81cbfE+XfT/7aVFvVDYopHYnhiqak7
- 7Iw4e+Ihz3bc34Zh3w3ldnwVa0n8HR8384rYw+gW862dPYQEjcnCcpWe1PcsIo1lswGy
- V9mpd6rMjaQsuN+PXMlPHD3DVqc7KJUNqL5kOC/74Lp8Yt+N0WRcRwT5OtHqVEjFHCKi
- O0GA==
+ :reply-to; bh=if9zs5/BYj3vgggDFOtTdd7tyuToJLpo8aht9ThzVZ4=;
+ b=NLJ2+8703OJlqvl0TDW+GLk5FwGTK9Dl6lI1qXBqsMB8kHXA+zQfb5ymwstSnZH13d
+ nXDmiH6EW5D9KucTdsYCZbohqIW50+HvijIr90e36fcxwWx9sL5o+MyaVsC0yHLFWznD
+ 3KNKOX2T8aM5vytGbw+/S+/XfyAURrOXDoQhnIf5CmyK2O4JtIG1pZkI2+c3XecOFNqn
+ iEnUPrgI0NvReYL1ozVXdjpxLm3lwUwS5DHfMsh6+OKLDFyye6vbBMosDcwj0TSy6gsx
+ 6eZ+5JVu+/0RAu4viwpB6TO526uO3XoxRTKeGCjXkUCJlGsWwrd3izDoIIwdXxJhm57f
+ RzTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779139705; x=1779744505;
+ d=1e100.net; s=20251104; t=1779139700; x=1779744500;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=46PeUjItrCiTFLvIk8NnwF5r7lBcB9iBG7KmhEjuYK0=;
- b=fd1G6dzeGkjJifPz5AaLKfH13GJ7sehLhTykUs1ix2rBXCBAoJfQol1MZqXvt7rk57
- ewkPFJ/VdXwhu6t4yDGfZs91UQGq8YUrdUg3ckBKwepAqSOnsh5IsqN2Be4xm3Txqd/Q
- /VQcoWkdrWaiHfMzJ3ZVwpWm7p/HrWkFVRmJvgi/7UbQ+lZ4JjVcDb+9Imzyy6VIEyPj
- VEgt/07nL/gj33hCvzXLL0gip1Q/MVcUZM30NjBuo99JsHx5JIJf5+0E23gWW4HXkbg3
- A3aL/t7SfIVc1+P7Hk9rjRCPTWXbBN+/P+V+Rg7NmByoqoOc12UUD0yWG7MRkcNtB+UP
- 5Y/g==
-X-Gm-Message-State: AOJu0YwJMjFbh5SFOE95rfEY5XESzsM470s8TzGrIx96weR+7dmM522y
- CrY8DzV9uiP+jpEIp/DDVdO+D2cbzVJcNA9bBsxlNzz/VGmU59QE+kQie+GRVg6vG4k=
-X-Gm-Gg: Acq92OEBr5bs8fozjt6o79IHxN+spj10ntunBLXIf4lF7voVu9vMI8CBBSOfwRzZKbD
- 2Fl3W+h9KsvQD7K2zEfk9ooWoXw6HbH2mlYGXq0FXXGSxqok79zIW6xJ+8TgGOwAh1h6BFNjNPX
- hMvOsSYWsR6VOnpCmPPfHli1aFjYybwO7Pjw3ninFiYaEDggDRzmlafjYosZxpzvrTOkjj2aoPE
- GPRsHtx1jmk9oegPf4nJjXD9Pdat5sW2QONI1ebRHsPJjoZNmXT7bkrQagiscsbA7wtVQLPqAC8
- XIkEfj3kMnKSmxJT32AVsBYzDFxneihQzGlC2M5wEh1uFbTNyDXQx+i5BvR2NUvh3fTx2i5smgV
- bsptvnObt/fh6hv9rk7NHPdEkX2VWnE6IIy4xsLTtw4JtHd6VIlNvOoq6ocIp635n9DDPHUbWMy
- +Wbn125tQbJg==
-X-Received: by 2002:a05:6830:4ac1:b0:7dc:dd19:7f69 with SMTP id
- 46e09a7af769-7e4f2bd7a56mr11041453a34.17.1779139705115; 
- Mon, 18 May 2026 14:28:25 -0700 (PDT)
+ bh=if9zs5/BYj3vgggDFOtTdd7tyuToJLpo8aht9ThzVZ4=;
+ b=ruRi40ibt2QgOJsf10mphK/Rnm8wfMGEyE7Xqd5JlMiMo0bGeJzpZIRqqtxKrlcSv9
+ 8WFHeyOssl3j8IntLB1cHuW+t0o8DobymRnc99yIUQEqE4zqkgRhn8JuiDBb9fxAG8uK
+ k1hFHx5nPNHm9bXPSp6lVJUrG5j5Yt49IyVgZAov3ekrNd1XQAd9eJSA+lm7BuJyuq0C
+ hmmZSgjk7T45Wws7TzdLn36y23/GlO3HpoQVzAiuZZ3b12+djNWbNuyF4jN3UZVxd3Z4
+ xKyhv291hpwbLWCGh+ef1VttCsVxj6My1HOp0Vrf+Am2W1FI1G6dRiBAAo1FROBUws/c
+ mkWA==
+X-Gm-Message-State: AOJu0YyKIarSgQHVaZ6yKVdpJvEuZS8DwuTmWYBT+O9AnWCvMlRFpFy4
+ xwfxXh6rN51xeqKvkP7Q6jCjNCVpMTerK4EOMQPwKc3yJmkrt/Td437kqGEiPvsXhGw=
+X-Gm-Gg: Acq92OGl70k4lnkLJ9FD4KrdlKn4XkHS9AzrLvSSEdW2Ldul0ZpOtEUn/Enl+2EujbM
+ YkNBbh7KzPYyrKaEbBIcULaqt6owhNWo4StGXuQsTZOdUUNxZpYgbjtiWZZ63Mc8KkkjaAEhQIU
+ eJkZkvNtnJeBw2q2ooxt2STkDRbPU7GgNHLNK75Vx6NLt/g/4RLhCAiSwA7ym7mFKw/WwqwADT5
+ xIODxLCitRyNIEPFhT6bdDef7B2o3Us90uxxjoAARBJhIsPkyUlxxfcpgH7+tpRvJcC+du/HP/c
+ utowkEIv1JrJYrftVHLTrkNWPZp7J0wrZplnJS8a+4z8RRxCsrIJuKSU7HdeqKYatTvd98O3WQJ
+ taCHT9MbcK9HWIAMa1HQI2vcmlk6rLjej+l7Fj7zSilzRGtz0fxdesdoK2iqogETpnle5oEgrUR
+ bEuWd/CmnRgA==
+X-Received: by 2002:a9d:3e17:0:b0:7e5:6f53:5bee with SMTP id
+ 46e09a7af769-7e56f535debmr6516762a34.21.1779139700162; 
+ Mon, 18 May 2026 14:28:20 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55b81cc5asm7980358a34.8.2026.05.18.14.28.24
+ 46e09a7af769-7e55b81cc5asm7980358a34.8.2026.05.18.14.28.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 May 2026 14:28:24 -0700 (PDT)
+ Mon, 18 May 2026 14:28:19 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Mon, 18 May 2026 15:27:50 -0600
-Subject: [PATCH v2 32/37] bsd-user: Add ACL system call shims to os-extattr.h
+Date: Mon, 18 May 2026 15:27:45 -0600
+Subject: [PATCH v2 27/37] bsd-user: Add do_freebsd__umtx_op to os-thread.h
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260518-misc-2026q2-v2-32-6c16fe448301@bsdimp.com>
+Message-Id: <20260518-misc-2026q2-v2-27-6c16fe448301@bsdimp.com>
 References: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
 In-Reply-To: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>
+ Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>, 
+ Kyle Evans <kevans@FreeBSD.org>, Jessica Clarke <jrtc27@jrtc27.com>, 
+ Sean Bruno <sbruno@FreeBSD.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=9931; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=cxGOb8uOizVRPPdFfcThc7BXNzJpQX4gEPSZTPwW3gc=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqC4RJCbmGXBibmRp8k9xaGxsyFDTNMj3XUABpy
- WwVx4I6y6aJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaguESQAKCRBsHNEofbAR
- APXSD/90wnATv6GJmeZkgAgGazgUDuGF0giIqOyZczOFIi5c5tHvtKS3cKH+FsryQQ0u+7J3/nX
- oNGbpucKFvQ+j5wDhuH+BMTE5MG2TAqsWbdqV/r7APaZ1YbqPix98zhZJQVJsSsmBLXJiwa7lfG
- TPYAbEFEVHEnXRLvuF3FOOmq7hvuwkpL5tzgbPNL7kzSJgFsqXDWXpEYhtd3RdqnjCW2gaHGQgY
- 4I/OR7NyVUhxCDOmtE3eFZA3eji9yT49nayjbqrpuALD3aqvHjdZhF/gl/KCQvE/vyghYkfP2rZ
- 8NiZL8O0kxDy2GbDbTc1tQCqE247WbvXNpeObPa0p3Ovt/D0m4lp2+wTjlnE/bFmQ2GCLbDVnwj
- akHWdMUl7FbXTVwWI9vBzpJu3HE0rEfK0547NxPMIgnrDpXUxaoy7z/gB/8pAZn+w13mgWQ8sgK
- TnLFHMCCgcNH6RREhW3ga4eeWmSv+FM4Zidw8WUBEvmdaYIIkd3yvfnHEPPkNZRieX2iq7xyvZr
- 93vB2pqU8xqE/CeUZJQq4qd56ivJLCc0MxA8BEvsiDmvbykeQnFH+TrJQ6pzRhVJ2tPg0iFGxvJ
- yYfTQ0Dirj8Vu3/TT8gZTEAGM7rVvwqXSsmQuUa5gU65p7MpUUvFieW1mLjsGEx+aAhV8gWneUW
- vD2LEBCIxFNyNTA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=13091; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=4+GA8QrCmXfs+eg4WCBeD7ThMbhd3jADQhQetC+1sMw=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqC4RIbENyMNLx/ppCPS1aLYRJtrTnWDkDPmPgV
+ VL7m/u+60GJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaguESAAKCRBsHNEofbAR
+ AEPVEACcWjbLH9UCPw7pu2EWfRmdJSrPI6U9OqMuwJKf9qBcdMGEwimQKppCS8PWlm2zwZuX7Nr
+ k6m/y3s+TNwbggRqSSOwXLyCmEVkKQ19mdXC8EcIYmnWMZXsf7V+lty0medAJiMHXbbbRBXEJd3
+ yb1/POMlHfAApU60WQ4YhMaQJ0hTGsJpQ1jAAdBYd1FlSaf1imEoemET4AWZmGeEElOFD0bWPvf
+ pu+u2N9cth8/Kz23QFlC1v4STeECiySHtk1wXyoSOsa1+nvYKaGU7uQXL3CO7Em5jrr8kUTeItn
+ zNa7LFdcdNHzFKYlo/Wx/f4zO6WFLhEEiTwGXIQ193hDFTzy0S5gtUHtjn9fERa+2/E/ynCTE7p
+ 7Q3FquXbBHa51ACMZMMyYiWOdnw9VeF0Xp3e/DabVXyYkTS77zXr+iC+AheePFZGsoET1MOm7oN
+ 92hV9jjEoUQ1fO6/2eFY5hR8PC3EHTTM/aA5HnoScRO/MWfiR7GEKylfZdlw07SY16kuRAxvn23
+ 3UyBNPuO7KlLTKH/7636bpzg2oC0nmYOyAWLFmP6P/fqc2ivDIhdcw+6cbQOEhfHM0hIyJEWYHc
+ JUtml3rpnJVZC2qQcSy0+VMU0XmfxWCBx/FWzvHVuEjUgcwkWHuDEurXGhPIYiIjwINC3VsigL5
+ Ew9UWbPP9G1aRVQ==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::332;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x332.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::336;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x336.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -115,338 +117,382 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Complete os-extattr.h with ACL operations: __acl_aclcheck_fd,
-__acl_aclcheck_file, __acl_aclcheck_link, __acl_delete_fd,
-__acl_delete_file, __acl_delete_link, __acl_get_fd, __acl_get_file,
-__acl_get_link, __acl_set_fd, __acl_set_file, and __acl_set_link.
+Add the _umtx_op system call implementation with support for
+UMTX lock/unlock, mutex operations, condition variables, reader-writer
+locks, semaphores, shared memory, and robust lists.
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
+Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
+Signed-off-by: Jessica Clarke <jrtc27@jrtc27.com>
+Signed-off-by: Sean Bruno <sbruno@FreeBSD.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 Assisted-by: Claude Opus 4.6 (1M context)
 ---
- bsd-user/freebsd/os-extattr.h | 290 +++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 286 insertions(+), 4 deletions(-)
+ bsd-user/freebsd/os-thread.h | 352 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 352 insertions(+)
 
-diff --git a/bsd-user/freebsd/os-extattr.h b/bsd-user/freebsd/os-extattr.h
-index 788e40ef30..5f5678b380 100644
---- a/bsd-user/freebsd/os-extattr.h
-+++ b/bsd-user/freebsd/os-extattr.h
-@@ -65,7 +65,7 @@ static inline abi_long do_freebsd_extattr_set_file(abi_ulong arg1,
-         return -TARGET_EFAULT;
-     }
-     ret = get_errno(extattr_set_file(path(p), arg2, a, d, arg5));
--    unlock_user(d, arg4, arg5);
-+    unlock_user(d, arg4, 0);
-     unlock_user(a, arg3, 0);
-     unlock_user(p, arg1, 0);
- 
-@@ -151,7 +151,7 @@ static inline abi_long do_freebsd_extattr_set_fd(abi_long arg1, abi_long arg2,
-         return -TARGET_EFAULT;
-     }
-     ret = get_errno(extattr_set_fd(arg1, arg2, a, d, arg5));
--    unlock_user(d, arg4, arg5);
-+    unlock_user(d, arg4, 0);
-     unlock_user(a, arg3, 0);
- 
-     return ret;
-@@ -267,7 +267,7 @@ static inline abi_long do_freebsd_extattr_set_link(abi_ulong arg1,
-         return -TARGET_EFAULT;
-     }
-     ret = get_errno(extattr_set_link(path(p), arg2, a, d, arg5));
--    unlock_user(d, arg4, arg5);
-+    unlock_user(d, arg4, 0);
-     unlock_user(a, arg3, 0);
-     unlock_user(p, arg1, 0);
- 
-@@ -376,5 +376,287 @@ static inline abi_long do_freebsd_extattr_list_link(
-  *  Access Control Lists
+diff --git a/bsd-user/freebsd/os-thread.h b/bsd-user/freebsd/os-thread.h
+index bb8f279060..98fcd61009 100644
+--- a/bsd-user/freebsd/os-thread.h
++++ b/bsd-user/freebsd/os-thread.h
+@@ -240,5 +240,357 @@ static inline abi_long do_freebsd_swapcontext(CPUArchState *env, abi_ulong arg1,
+  * undocumented _umtx_op(void *obj, int op, u_long val, void *uaddr,
+  *                           void *target_time);
   */
++static inline abi_long do_freebsd__umtx_op(abi_ulong obj, int op, abi_ulong val,
++        abi_ulong uaddr, abi_ulong target_time)
++{
++    abi_long ret;
++#ifndef _UMTX_OPTIMIZED
++    struct _umtx_time ut[2];
++    struct timespec ts;
++    size_t utsz;
++    long tid;
++#endif
++
++    switch (op) {
++    case TARGET_UMTX_OP_WAIT:
++        /* args: obj *, val, (void *)sizeof(ut), ut * */
++#ifdef _UMTX_OPTIMIZED
++        if (target_time != 0 && !access_ok(VERIFY_READ, target_time, uaddr)) {
++            return -TARGET_EFAULT;
++        }
++        ret = freebsd_umtx_wait(obj, val, uaddr,
++                                safe_g2h_untagged(target_time));
++#else
++        if (target_time != 0) {
++            ret = t2h_freebsd_umtx_time(target_time, uaddr, ut, &utsz);
++            if (is_error(ret)) {
++                return ret;
++            }
++            ret = freebsd_umtx_wait(obj, tswapal(val), utsz, &ut);
++        } else {
++            ret = freebsd_umtx_wait(obj, tswapal(val), 0, NULL);
++        }
++#endif
++        break;
++
++    case TARGET_UMTX_OP_WAKE:
++        /* args: obj *, nr_wakeup */
++        ret = freebsd_umtx_wake(obj, val);
++        break;
++
++    case TARGET_UMTX_OP_MUTEX_LOCK:
++#ifdef _UMTX_OPTIMIZED
++        if (target_time != 0 && !access_ok(VERIFY_READ, target_time, uaddr)) {
++            return -TARGET_EFAULT;
++        }
++        ret = freebsd_lock_umutex(obj, 0, safe_g2h_untagged(target_time), uaddr,
++                                  0, val);
++#else
++        ret = get_errno(thr_self(&tid));
++        if (is_error(ret)) {
++            return ret;
++        }
++        if (target_time != 0) {
++            ret = t2h_freebsd_umtx_time(target_time, uaddr, ut, &utsz);
++            if (is_error(ret)) {
++                return ret;
++            }
++            ret = freebsd_lock_umutex(obj, tid, ut, utsz, 0, tswapal(val));
++        } else {
++            ret = freebsd_lock_umutex(obj, tid, NULL, 0, 0, tswapal(val));
++        }
++#endif
++        break;
++
++    case TARGET_UMTX_OP_MUTEX_UNLOCK:
++#ifdef _UMTX_OPTIMIZED
++        ret = freebsd_unlock_umutex(obj, 0);
++#else
++        ret = get_errno(thr_self(&tid));
++        if (is_error(ret)) {
++            return ret;
++        }
++        ret = freebsd_unlock_umutex(obj, tid);
++#endif
++        break;
++
++    case TARGET_UMTX_OP_MUTEX_TRYLOCK:
++#ifdef _UMTX_OPTIMIZED
++        ret = freebsd_lock_umutex(obj, 0, NULL, 0, TARGET_UMUTEX_TRY, val);
++#else
++        ret = get_errno(thr_self(&tid));
++        if (is_error(ret)) {
++            return ret;
++        }
++        ret = freebsd_lock_umutex(obj, tid, NULL, 0, TARGET_UMUTEX_TRY,
++            tswapal(val));
++#endif
++        break;
++
++    case TARGET_UMTX_OP_MUTEX_WAIT:
++#ifdef _UMTX_OPTIMIZED
++        if (target_time != 0 && !access_ok(VERIFY_READ, target_time, uaddr)) {
++            return -TARGET_EFAULT;
++        }
++        ret = freebsd_lock_umutex(obj, 0, safe_g2h_untagged(target_time), uaddr,
++            TARGET_UMUTEX_WAIT, val);
++#else
++        ret = get_errno(thr_self(&tid));
++        if (is_error(ret)) {
++            return ret;
++        }
++        if (target_time != 0) {
++            ret = t2h_freebsd_umtx_time(target_time, uaddr, ut, &utsz);
++            if (is_error(ret)) {
++                return ret;
++            }
++            ret = freebsd_lock_umutex(obj, tid, ut, utsz, TARGET_UMUTEX_WAIT,
++                tswapal(val));
++        } else {
++            ret = freebsd_lock_umutex(obj, tid, NULL, 0, TARGET_UMUTEX_WAIT,
++                tswapal(val));
++        }
++#endif
++        break;
++
++    case TARGET_UMTX_OP_MUTEX_WAKE:
++        /* Don't need to do access_ok(). */
++        ret = freebsd_umtx_mutex_wake(obj, val);
++        break;
++
++    case TARGET_UMTX_OP_SET_CEILING:
++        ret = 0; /* XXX quietly ignore these things for now */
++        break;
++
++    case TARGET_UMTX_OP_CV_WAIT:
++#ifdef _UMTX_OPTIMIZED
++        if (target_time != 0 && !access_ok(VERIFY_READ, target_time, uaddr)) {
++            return -TARGET_EFAULT;
++        }
++        ret = freebsd_cv_wait(obj, uaddr, safe_g2h_untagged(target_time), val);
++#else
++        /*
++         * Initialization of the struct conv is done by
++         * bzero'ing everything in userland.
++         */
++        if (target_time != 0) {
++            if (t2h_freebsd_timespec(&ts, target_time)) {
++                return -TARGET_EFAULT;
++            }
++            ret = freebsd_cv_wait(obj, uaddr, &ts, val);
++        } else {
++            ret = freebsd_cv_wait(obj, uaddr, NULL, val);
++        }
++#endif
++        break;
++
++    case TARGET_UMTX_OP_CV_SIGNAL:
++        /*
++         * XXX
++         * User code may check if c_has_waiters is zero.  Other
++         * than that it is assume that user code doesn't do
++         * much with the struct conv fields and is pretty
++         * much opauque to userland.
++         */
++        ret = freebsd_cv_signal(obj);
++        break;
++
++    case TARGET_UMTX_OP_CV_BROADCAST:
++        /*
++         * XXX
++         * User code may check if c_has_waiters is zero.  Other
++         * than that it is assume that user code doesn't do
++         * much with the struct conv fields and is pretty
++         * much opauque to userland.
++         */
++        ret = freebsd_cv_broadcast(obj);
++        break;
++
++    case TARGET_UMTX_OP_WAIT_UINT:
++#ifdef _UMTX_OPTIMIZED
++        if (target_time != 0 && !access_ok(VERIFY_READ, target_time, uaddr)) {
++            return -TARGET_EFAULT;
++        }
++        ret = freebsd_umtx_wait_uint(obj, val, uaddr,
++                                     safe_g2h_untagged(target_time));
++#else
++        if (!access_ok(VERIFY_READ, obj, sizeof(abi_ulong))) {
++            return -TARGET_EFAULT;
++        }
++        /* args: obj *, val, (void *)sizeof(ut), ut * */
++        if (target_time != 0) {
++            ret = t2h_freebsd_umtx_time(target_time, uaddr, ut, &utsz);
++            if (is_error(ret)) {
++                return ret;
++            }
++            ret = freebsd_umtx_wait_uint(obj, tswap32((uint32_t)val),
++                                         utsz, &ut);
++        } else {
++            ret = freebsd_umtx_wait_uint(obj, tswap32((uint32_t)val), 0, NULL);
++        }
++#endif
++        break;
++
++    case TARGET_UMTX_OP_WAIT_UINT_PRIVATE:
++#ifdef _UMTX_OPTIMIZED
++        if (target_time != 0 && !access_ok(VERIFY_READ, target_time, uaddr)) {
++            return -TARGET_EFAULT;
++        }
++        ret = freebsd_umtx_wait_uint_private(obj, val, uaddr,
++            safe_g2h_untagged(target_time));
++#else
++        if (!access_ok(VERIFY_READ, obj, sizeof(abi_ulong))) {
++            return -TARGET_EFAULT;
++        }
++        /* args: obj *, val, (void *)sizeof(ut), ut * */
++        if (target_time != 0) {
++            ret = t2h_freebsd_umtx_time(target_time, uaddr, ut, &utsz);
++            if (is_error(ret)) {
++                return ret;
++            }
++            ret = freebsd_umtx_wait_uint_private(obj, tswap32((uint32_t)val),
++                    utsz, &ut);
++        } else {
++            ret = freebsd_umtx_wait_uint_private(obj, tswap32((uint32_t)val),
++                    0, NULL);
++        }
++#endif
++        break;
++
++    case TARGET_UMTX_OP_WAKE_PRIVATE:
++        /* Don't need to do access_ok(). */
++        ret = freebsd_umtx_wake_private(obj, val);
++        break;
++
++    case TARGET_UMTX_OP_RW_RDLOCK:
++#ifdef _UMTX_OPTIMIZED
++        if (target_time != 0 && !access_ok(VERIFY_READ, target_time, uaddr)) {
++            return -TARGET_EFAULT;
++        }
++        ret = freebsd_rw_rdlock(obj, val, uaddr,
++                                safe_g2h_untagged(target_time));
++#else
++        if (target_time != 0) {
++            ret = t2h_freebsd_umtx_time(target_time, uaddr, ut, &utsz);
++            if (is_error(ret)) {
++                return ret;
++            }
++            ret = freebsd_rw_rdlock(obj, val, utsz, &ut);
++        } else {
++            ret = freebsd_rw_rdlock(obj, val, 0, NULL);
++        }
++#endif
++        break;
++
++    case TARGET_UMTX_OP_RW_WRLOCK:
++#ifdef _UMTX_OPTIMIZED
++        if (target_time != 0 && !access_ok(VERIFY_READ, target_time, uaddr)) {
++            return -TARGET_EFAULT;
++        }
++        ret = freebsd_rw_wrlock(obj, val, uaddr,
++                                safe_g2h_untagged(target_time));
++#else
++        if (target_time != 0) {
++            ret = t2h_freebsd_umtx_time(target_time, uaddr, ut, &utsz);
++            if (is_error(ret)) {
++                return ret;
++            }
++            ret = freebsd_rw_wrlock(obj, val, utsz, &ut);
++        } else {
++            ret = freebsd_rw_wrlock(obj, val, 0, NULL);
++        }
++#endif
++        break;
++
++    case TARGET_UMTX_OP_RW_UNLOCK:
++        ret = freebsd_rw_unlock(obj);
++        break;
++
++#ifdef UMTX_OP_MUTEX_WAKE2
++    case TARGET_UMTX_OP_MUTEX_WAKE2:
++        ret = freebsd_umtx_mutex_wake2(obj, val);
++        break;
++#endif /* UMTX_OP_MUTEX_WAKE2 */
++
++#ifdef UMTX_OP_NWAKE_PRIVATE
++    case TARGET_UMTX_OP_NWAKE_PRIVATE:
++        ret = freebsd_umtx_nwake_private(obj, val);
++        break;
++#endif /* UMTX_OP_NWAKE_PRIVATE */
++
++    case TARGET_UMTX_OP_SEM2_WAIT:
++        /* args: obj *, val, (void *)sizeof(ut), ut * */
++#ifdef _UMTX_OPTIMIZED
++        if (target_time != 0 && !access_ok(
++            (uaddr > sizeof(struct target_freebsd__umtx_time) ? VERIFY_WRITE :
++             VERIFY_READ), target_time, uaddr)) {
++            return -TARGET_EFAULT;
++        }
++        ret = freebsd_umtx_sem2_wait(obj, uaddr,
++                                     safe_g2h_untagged(target_time));
++#else
++        if (target_time != 0) {
++            ret = t2h_freebsd_umtx_time(target_time, uaddr, ut, &utsz);
++            if (is_error(ret)) {
++                return ret;
++            }
++            /* Kernel writes out the ut[1] if utsz >= _umtx_time + timespec. */
++            ret = freebsd_umtx_sem2_wait(obj, utsz, ut);
++            if (ret == -TARGET_EINTR && (ut[0]._flags & UMTX_ABSTIME) == 0 &&
++                utsz >= sizeof(struct target_freebsd__umtx_time) +
++                sizeof(struct target_freebsd_timespec)) {
++                abi_ulong cret;
++
++                cret = h2t_freebsd_timespec(target_time +
++                    sizeof(struct target_freebsd__umtx_time), &ut[1]._timeout);
++                if (is_error(cret)) {
++                    ret = cret;
++                }
++            }
++        } else {
++            ret = freebsd_umtx_sem2_wait(obj, 0, NULL);
++        }
++#endif
++        break;
++
++    case TARGET_UMTX_OP_SEM2_WAKE:
++        /* Don't need to do access_ok(). */
++        ret = freebsd_umtx_sem2_wake(obj);
++        break;
++    case TARGET_UMTX_OP_SEM_WAIT:
++        /* args: obj *, val, (void *)sizeof(ut), ut * */
++#ifdef _UMTX_OPTIMIZED
++        if (target_time != 0 && !access_ok(VERIFY_READ, target_time, uaddr)) {
++            return -TARGET_EFAULT;
++        }
++        ret = freebsd_umtx_sem_wait(obj, uaddr, safe_g2h_untagged(target_time));
++#else
++        if (target_time != 0) {
++            ret = t2h_freebsd_umtx_time(target_time, uaddr, ut, &utsz);
++            if (is_error(ret)) {
++                return ret;
++            }
++            ret = freebsd_umtx_sem_wait(obj, utsz, ut);
++        } else {
++            ret = freebsd_umtx_sem_wait(obj, 0, NULL);
++        }
++#endif
++        break;
++
++    case TARGET_UMTX_OP_SEM_WAKE:
++        /* Don't need to do access_ok(). */
++        ret = freebsd_umtx_sem_wake(obj);
++        break;
++    case UMTX_OP_SHM:
++        ret = freebsd_umtx_shm(uaddr, val);
++        break;
++    case TARGET_UMTX_OP_ROBUST_LISTS:
++        ret = freebsd_umtx_robust_list(uaddr, val);
++        break;
++    default:
++        return -TARGET_EINVAL;
++    }
++    return ret;
++}
  
-+/* __acl_aclcheck_fd(int filedes, acl_type_t type, struct acl *aclp); */
-+static inline abi_long do_freebsd__acl_aclcheck_fd(abi_long arg1, abi_long arg2,
-+                                                   abi_ulong arg3)
-+{
-+    abi_long ret;
-+    struct acl host_acl;
-+    acl_type_t type;
-+
-+    ret = t2h_freebsd_acl_type(&type, arg2);
-+    if (is_error(ret)) {
-+        return ret;
-+    }
-+    ret = t2h_freebsd_acl(&host_acl, arg3);
-+    if (!is_error(ret)) {
-+        ret = get_errno(__acl_aclcheck_fd(arg1, type, &host_acl));
-+    }
-+
-+    return ret;
-+}
-+
-+/* __acl_aclcheck_file(const char *path, acl_type_t type, struct acl *aclp); */
-+static inline abi_long do_freebsd__acl_aclcheck_file(abi_ulong arg1,
-+                                                     abi_long arg2,
-+                                                     abi_ulong arg3)
-+{
-+    abi_long ret;
-+    void *p;
-+    struct acl host_acl;
-+    acl_type_t type;
-+
-+    ret = t2h_freebsd_acl_type(&type, arg2);
-+    if (is_error(ret)) {
-+        return ret;
-+    }
-+    p = lock_user_string(arg1);
-+    if (p == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    ret = t2h_freebsd_acl(&host_acl, arg3);
-+    if (!is_error(ret)) {
-+        ret = get_errno(__acl_aclcheck_file(path(p), type, &host_acl));
-+    }
-+    unlock_user(p, arg1, 0);
-+
-+    return ret;
-+}
-+
-+/* __acl_aclcheck_link(const char *path, acl_type_t type, struct acl *aclp); */
-+static inline abi_long do_freebsd__acl_aclcheck_link(abi_ulong arg1,
-+                                                     abi_long arg2,
-+                                                     abi_ulong arg3)
-+{
-+    abi_long ret;
-+    void *p;
-+    struct acl host_acl;
-+    acl_type_t type;
-+
-+    ret = t2h_freebsd_acl_type(&type, arg2);
-+    if (is_error(ret)) {
-+        return ret;
-+    }
-+    p = lock_user_string(arg1);
-+    if (p == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    ret = t2h_freebsd_acl(&host_acl, arg3);
-+    if (!is_error(ret)) {
-+        ret = get_errno(__acl_aclcheck_link(path(p), type, &host_acl));
-+    }
-+    unlock_user(p, arg1, 0);
-+
-+    return ret;
-+}
-+
-+/* int __acl_delete_fd(int filedes, acl_type_t type); */
-+static inline abi_long do_freebsd__acl_delete_fd(abi_long arg1, abi_long arg2)
-+{
-+    abi_long ret;
-+    acl_type_t type;
-+
-+    ret = t2h_freebsd_acl_type(&type, arg2);
-+    if (is_error(ret)) {
-+        return ret;
-+    }
-+    return get_errno(__acl_delete_fd(arg1, type));
-+}
-+
-+/* int __acl_delete_file(const char *path, acl_type_t type); */
-+static inline abi_long do_freebsd__acl_delete_file(abi_ulong arg1,
-+                                                   abi_long arg2)
-+{
-+    abi_long ret;
-+    void *p;
-+    acl_type_t type;
-+
-+    ret = t2h_freebsd_acl_type(&type, arg2);
-+    if (is_error(ret)) {
-+        return ret;
-+    }
-+    p = lock_user_string(arg1);
-+    if (p == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    ret = get_errno(__acl_delete_file(path(p), type));
-+    unlock_user(p, arg1, 0);
-+
-+    return ret;
-+}
-+
-+/* int __acl_delete_link(const char *path, acl_type_t type); */
-+static inline abi_long do_freebsd__acl_delete_link(abi_ulong arg1,
-+                                                   abi_long arg2)
-+{
-+    abi_long ret;
-+    void *p;
-+    acl_type_t type;
-+
-+    ret = t2h_freebsd_acl_type(&type, arg2);
-+    if (is_error(ret)) {
-+        return ret;
-+    }
-+    p = lock_user_string(arg1);
-+    if (p == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    ret = get_errno(__acl_delete_link(path(p), type));
-+    unlock_user(p, arg1, 0);
-+
-+    return ret;
-+}
-+
-+/* int __acl_get_fd(int filedes, acl_type_t type, struct acl *aclp); */
-+static inline abi_long do_freebsd__acl_get_fd(abi_long arg1, abi_long arg2,
-+                                              abi_ulong arg3)
-+{
-+    abi_long ret;
-+    acl_type_t type;
-+    struct acl host_acl;
-+
-+    memset(&host_acl, 0, sizeof(struct acl));
-+    host_acl.acl_maxcnt = ACL_MAX_ENTRIES;
-+
-+    ret = t2h_freebsd_acl_type(&type, arg2);
-+    if (is_error(ret)) {
-+        return ret;
-+    }
-+    ret = get_errno(__acl_get_fd(arg1, type, &host_acl));
-+    if (!is_error(ret)) {
-+        ret = h2t_freebsd_acl(arg3, &host_acl);
-+    }
-+
-+    return ret;
-+}
-+
-+/* __acl_get_file(const char *path, acl_type_t type, struct acl *aclp); */
-+static inline abi_long do_freebsd__acl_get_file(abi_ulong arg1, abi_long arg2,
-+                                                abi_ulong arg3)
-+{
-+    abi_long ret;
-+    void *p;
-+    acl_type_t type;
-+    struct acl host_acl;
-+
-+    memset(&host_acl, 0, sizeof(struct acl));
-+    host_acl.acl_maxcnt = ACL_MAX_ENTRIES;
-+
-+    ret = t2h_freebsd_acl_type(&type, arg2);
-+    if (is_error(ret)) {
-+        return ret;
-+    }
-+    p = lock_user_string(arg1);
-+    if (p == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    ret = get_errno(__acl_get_file(path(p), type, &host_acl));
-+    if (!is_error(ret)) {
-+        ret = h2t_freebsd_acl(arg3, &host_acl);
-+    }
-+    unlock_user(p, arg1, 0);
-+
-+    return ret;
-+}
-+
-+/* int __acl_get_link(const char *path, acl_type_t type, struct acl *aclp); */
-+static inline abi_long do_freebsd__acl_get_link(abi_ulong arg1, abi_long arg2,
-+                                                abi_ulong arg3)
-+{
-+    abi_long ret;
-+    void *p;
-+    acl_type_t type;
-+    struct acl host_acl;
-+
-+    memset(&host_acl, 0, sizeof(struct acl));
-+    host_acl.acl_maxcnt = ACL_MAX_ENTRIES;
-+
-+    ret = t2h_freebsd_acl_type(&type, arg2);
-+    if (is_error(ret)) {
-+        return ret;
-+    }
-+    p = lock_user_string(arg1);
-+    if (p == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    ret = get_errno(__acl_get_link(path(p), type, &host_acl));
-+    if (!is_error(ret)) {
-+        ret = h2t_freebsd_acl(arg3, &host_acl);
-+    }
-+    unlock_user(p, arg1, 0);
-+
-+    return ret;
-+}
-+
-+/* int __acl_set_fd(int filedes, acl_type_t type, struct acl *aclp); */
-+static inline abi_long do_freebsd__acl_set_fd(abi_long arg1, abi_long arg2,
-+                                              abi_ulong arg3)
-+{
-+    abi_long ret;
-+    acl_type_t type;
-+    struct acl host_acl;
-+
-+    ret = t2h_freebsd_acl_type(&type, arg2);
-+    if (is_error(ret)) {
-+        return ret;
-+    }
-+    ret = t2h_freebsd_acl(&host_acl, arg3);
-+    if (!is_error(ret)) {
-+        ret = get_errno(__acl_set_fd(arg1, type, &host_acl));
-+    }
-+
-+    return ret;
-+}
-+
-+/* int __acl_set_file(const char *path, acl_type_t type, struct acl *aclp); */
-+static inline abi_long do_freebsd__acl_set_file(abi_ulong arg1, abi_long arg2,
-+                                                abi_ulong arg3)
-+{
-+    abi_long ret;
-+    void *p;
-+    acl_type_t type;
-+    struct acl host_acl;
-+
-+    ret = t2h_freebsd_acl_type(&type, arg2);
-+    if (is_error(ret)) {
-+        return ret;
-+    }
-+    p = lock_user_string(arg1);
-+    if (p == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    ret = t2h_freebsd_acl(&host_acl, arg3);
-+    if (!is_error(ret)) {
-+        ret = get_errno(__acl_set_file(path(p), type, &host_acl));
-+    }
-+    unlock_user(p, arg1, 0);
-+
-+    return ret;
-+}
-+
-+/* int __acl_set_link(const char *path, acl_type_t type, struct acl *aclp); */
-+static inline abi_long do_freebsd__acl_set_link(abi_ulong arg1, abi_long arg2,
-+                                                abi_ulong arg3)
-+{
-+    abi_long ret;
-+    void *p;
-+    acl_type_t type;
-+    struct acl host_acl;
-+
-+    ret = t2h_freebsd_acl_type(&type, arg2);
-+    if (is_error(ret)) {
-+        return ret;
-+    }
-+    p = lock_user_string(arg1);
-+    if (p == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    ret = t2h_freebsd_acl(&host_acl, arg3);
-+    if (!is_error(ret)) {
-+        ret = get_errno(__acl_set_link(path(p), type, &host_acl));
-+    }
-+    unlock_user(p, arg1, 0);
-+
-+    return ret;
-+}
- 
--#endif /* FREEBSD_OS_EXTATTR_H */
+ #endif /* FREEBSD_OS_THREAD_H */
 
 -- 
 2.52.0
