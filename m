@@ -4,103 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90BE7CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 08:08:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F44DCD4F3C
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 08:16:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOt1E-0000o8-8x; Mon, 18 May 2026 04:08:08 -0400
+	id 1wOt9E-0002VG-5G; Mon, 18 May 2026 04:16:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wOt1A-0000no-Lv
- for qemu-devel@nongnu.org; Mon, 18 May 2026 04:08:05 -0400
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wOt17-0006Wn-Tx
- for qemu-devel@nongnu.org; Mon, 18 May 2026 04:08:04 -0400
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-7bd5e373d07so13410217b3.2
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 01:08:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779091681; cv=none;
- d=google.com; s=arc-20240605;
- b=EWemULcfiKTEd8Ly+3Fu/FgKBmsQ+OV6SwoM1O++P6naniBz/gv0LXO465yqCP6ySj
- uNmTy7H9c4igObSrmDHt7n1k9ijyLV4iVbfeImftJ4f1rr3Q4w03gZJdJS9n/dHtXozC
- +JrzS7XA/puFia3W5pe0Y0R0Wwn4ULaGK4/LjW4rHXHdW21LTf6BmDMdoPB/3VzaDNJ2
- GnwCw7WKNybaCfiq1ygxBvQZ7WzcUVbEp0P143c8xLCd+KGL8FsSaw7gD7pJGu4834oa
- OnIhiUM8HrtS9mo2IKgdJ83ETZr4EuYtH4Bw1pHeA2k9eZ9Wk54Ux2l7/eMzELSk2gQB
- Q0NA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=mF8/OyME8P+WqAHdnlKSikaJibRkpDmpkpdTAKme0ts=;
- fh=GI2e/SBiq4MTIPc9mHou6R6WJe3VvhdDMWKbaXflkfU=;
- b=bO51hZJYR6cUVTxAXcLM6fxn44OvGnu5VjsehJXyVGJvGGdKjC4D5mR5GnEUc37T18
- ghraibLCBC774VtYYRk1rxOOlRXmDWYna3N7U/AapO4E+0ruv3Q9I525OVINZo1x+WQc
- pYwR0ZQ4x7+TjjtLIUk9Dn4xeNucvHcCofptqd1+m2n130pt9+k+IYSfw7ShUhznmWLh
- 2UywBZxbfFxud5p2fPSDDHH2DckC/63fX21R2njTKnWdMOlf6EQvlE24hPHiw0o/D5ru
- lhUzgZQhLSPPZV1PzgwbxGNoOHQGiNNLnSpBW9ljMlJkZkax1Ks6NKINNtD1hF4SmP/A
- 2UHA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779091681; x=1779696481; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=mF8/OyME8P+WqAHdnlKSikaJibRkpDmpkpdTAKme0ts=;
- b=NtSv4t2ClMFZhxKDUXpjyL0ITMgTFqKgPUlHzIHTbJQ7tyHkcseGsg3ZmFvh+E+nGV
- bmAAvn7GoSEx+sO0aqEHAoaF6euulAoxqwSDldTf3fUgvn2rTAxEwBof+pW1Iv0TnGhk
- gObq0YaXwDUpnsvITHDJsw7bv5kc9fuMHDaZEt18AkreluFsKBHdUbFlsjryCSr8j9h/
- bsxcnTwRDvOX44QPXl1RJ/gcO4VNhdGYllAw2q1O71j9XdufMsFnxDs0DcRK4zBYxArh
- JGL36SxixZhnrvmnfbImEsWZq3YfCnIl2GSGiVgNZWgwDxbuzuxEzZuN7UN4JZzNCeda
- T+Gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779091681; x=1779696481;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mF8/OyME8P+WqAHdnlKSikaJibRkpDmpkpdTAKme0ts=;
- b=BZsSILDZEiazGPXTbubCB05g63GxVIplfigjVmiXVTBN/Qg2fSaRN1RvuXhLufk1tx
- dt0q6m5E7MpobmCM5knsXEXgqU64Ec1aDVQGGPiw/ysnBKHbNfEFU42dOUM5uHVfEGyZ
- yIcY1bVO2xxQ4jxvNUXCdQXnmSjLnAkvSXFxou8VG0t2pYKQhfPwHs1dvtrBuQeg9uwf
- UZOakxudbhuYCCoy/0E2Ai+Ft/ssyg3ddMv1hgQQigOt70bHHQSrIJecQlSrw8fIl/A4
- 8JtF61X6g1ZG94LczUqyXgEnixj9PqX9PU0nsg9yKmgLcUdB9+l4pXKAxH5BVZE+N3JV
- TkVw==
-X-Gm-Message-State: AOJu0YzLryobqZo0GhYZFxhuaf3H+oHjniS23DVJrh90vbQmsBexjb3T
- xqd5qepuKlz6VpeIG3hMbjkuHqrDWe6gQ2w7v1ZAzO2TnNZEunvQfSqP2ez7xXl79BOGWocnjSA
- O2zzfQc9YC4sqDvk1oDf9S4GBk4FK2p9pO7sUJT4iTDIMJ0jdc7TT
-X-Gm-Gg: Acq92OE+lHw85fdQmAeIeT961R8bzzDt0LGrW7vsrOWjbhLav69uaZiMRue3CaVzRBa
- fk+eQ08GYOT+eN2dHA9VvHiYvMzBM6MM042vQB0slHi+l4a4vX5x6Ic5U8CAN/TGyaOuo5/RAMk
- 25VBnvpjE4TsigM3K78HvMtpI9pcmVvQILWeqknhPb2T4Ydn1TsxfLcjEpGhcGsC6n5NTXSSVB3
- kTV52WFd9hq1u53QVrBnN8f7/LT7DmLumMgTy76Q65ihoXftkmtQ4E4tf2VQd7xRQD7zC8wtAkV
- bXQ8oZ2BbujYEZLv/meVn6PZEInswyDnc1TYEwXN6a5ZDBPMACySDiocrr8F7DpgdH7dlzSp6MJ
- gXQ==
-X-Received: by 2002:a05:690e:1908:b0:65e:c81:3a6f with SMTP id
- 956f58d0204a3-65e2278f705mr14193995d50.27.1779091680706; Mon, 18 May 2026
- 01:08:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wOt8o-0002T0-51
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 04:16:01 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@kernel.org>) id 1wOt8k-0002Rb-Vx
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 04:15:56 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id DEC406001A;
+ Mon, 18 May 2026 08:15:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1A80C2BCB7;
+ Mon, 18 May 2026 08:15:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1779092150;
+ bh=GWDds7yqi2xVMi7jWmZI2TcHNIEEpEPJV0sHnpQtS3o=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=uRBIPIiRt5kI6O5T4eBYjE8XBqjTgNn0dKifMib2F+of63Z2cWflFJZVAzO3JVNyl
+ ofduxWciaNOVTW2PGrcM/dE/F1geJ9NcQqEnP5dwtyPcAtJcmvxwNOxT25Qx8CfYc3
+ wnNwREy34AKH4K95ykalYFI2JuNwTol1rjtFIFSI8OkaO7VsAFQ7UosHFMhSnBa7fU
+ 4pFMSAEEFCD5O1HtTQsgwpmzgcp2ePbg5RdVYgUn4OddvZWBvyXZGjE9Q0Dowgvvs7
+ 11o59ynaOMaLX9ifvgxFoWIKZ7V7++I8UNrBKwBey2vTTBJ2nP4/AujcpYxhTDBUTW
+ wnZkgo5wXt0Jw==
+Message-ID: <abb04e21-27ef-47f0-9eec-d0a1ad0003df@kernel.org>
+Date: Mon, 18 May 2026 10:15:45 +0200
 MIME-Version: 1.0
-References: <20260512203414.3633237-1-peter.maydell@linaro.org>
- <20260512203414.3633237-12-peter.maydell@linaro.org>
- <c9300c93-b20e-45ad-9b93-d23e19e58a80@linaro.org>
-In-Reply-To: <c9300c93-b20e-45ad-9b93-d23e19e58a80@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 18 May 2026 09:07:49 +0100
-X-Gm-Features: AVHnY4KM6e0fH2nSqu-Vu8yKXJiNU8AC6I5kqRv5b2ZqoJYFKq0UfVabMVMTpfs
-Message-ID: <CAFEAcA_Pfnv95bB+st=9V87cg964a3gh1wEX6SB31fNe6q6LeA@mail.gmail.com>
-Subject: Re: [PATCH 11/12] hw/dma/omap_dma: Remove unused ifdeffed out code
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 1/1] numa: add 'memmap-type' option for memory type
+ configuration
+To: Gregory Price <gourry@gourry.net>, Igor Mammedov <imammedo@redhat.com>
+Cc: fanhuang <FangSheng.Huang@amd.com>, qemu-devel@nongnu.org,
+ jonathan.cameron@huawei.com, apopple@nvidia.com, dan.j.williams@intel.com,
+ Zhigang.Luo@amd.com, Lianjie.Shi@amd.com
+References: <20260306082735.1106690-1-FangSheng.Huang@amd.com>
+ <20260306082735.1106690-2-FangSheng.Huang@amd.com>
+ <20260514150559.3148f9dc@imammedo> <agXQUrxu06Wfl-Wj@gourry-fedora-PF4VCD3F>
+From: "David Hildenbrand (Arm)" <david@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=david@kernel.org; keydata=
+ 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
+ qIws/H2t
+In-Reply-To: <agXQUrxu06Wfl-Wj@gourry-fedora-PF4VCD3F>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=david@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,28 +118,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 17 May 2026 at 18:19, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 5/12/26 13:34, Peter Maydell wrote:
-> > The OMAP DMA device includes a lot of code which has been disabled
-> > via ifdefs for over a decade. Whatever this unfinished development
-> > work was, all knowledge of it is long gone, and we're unlikely to
-> > be doing any serious work on this device model in future. If we
-> > did, we'd likely have to start from scratch.
-> >
-> > Remove all the ifdeffed out code.
-> >
-> > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> > ---
-> >   hw/dma/omap_dma.c | 94 -----------------------------------------------
-> >   1 file changed, 94 deletions(-)
->
-> There's a bunch of code that's mis-indented after removing some ifdef'd if blocks.
+On 5/14/26 15:38, Gregory Price wrote:
+> On Thu, May 14, 2026 at 03:05:59PM +0200, Igor Mammedov wrote:
+>>
+>> I don't recall but I likely asked before
+>> why not use device memory instead for it (aka DIMM device or some device derived
+>> from device memory object and then add e820 entry for it).
+>>
+>> It would be a way more simpler approach and impl. without need to resplit
+>> anything in e820.
+>> And no need for messing with firmware (SeaBIOS: RamSizeOver4G patch) nor EDK2.
+>>
+> 
+> David previously addressed your question on the original patch version:
+> 
+> https://lore.kernel.org/qemu-devel/6e7ad90d-a467-40cc-99fa-d0915438dd05@redhat.com/
+> 
+>   I wondered the same in my reply: I'm afraid it cannot be a DIMM/NVDIMM,
+>   these ranges are only described in E820 as "hotplug area".
+> 
+>   I think it must be something that's present in the memory map right from
+>   the start, where the OS would identify it as SP and treat it accordingly.
+> 
+> 
+> We're trending towards devices being given dedicated nodes for their
+> memory, so this actually makes sense as an extension to NUMA.
 
-Yes; I deliberately didn't reindent as the patch diff would then
-be harder to read. I should have put in a separate reindent patch
-afterwards, though.
+Yes.
 
--- PMM
+-- 
+Cheers,
+
+David
 
