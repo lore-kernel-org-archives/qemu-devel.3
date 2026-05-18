@@ -4,95 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C94E8CD343F
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 21:31:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D54CCCD343F
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 21:31:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP5VZ-0000Tk-K6; Mon, 18 May 2026 17:28:17 -0400
+	id 1wP5Vr-0000kO-7L; Mon, 18 May 2026 17:28:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5VX-0000TS-DC
- for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:15 -0400
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5Vm-0000Xu-5p
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:30 -0400
 Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5VT-0000Uv-Fg
- for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:14 -0400
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5Vk-0000ff-Hd
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:29 -0400
 Received: by mail-ot1-x332.google.com with SMTP id
- 46e09a7af769-7dca00c1591so735871a34.3
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 14:28:10 -0700 (PDT)
+ 46e09a7af769-7e582b3bcaaso2129121a34.3
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 14:28:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779139690; x=1779744490;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779139707; x=1779744507;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=+9XmWQulmeQTxV7cz+ITMN9VZZhvuiCJswwX1H8U88A=;
- b=EEtzBWFn1dKNpC4+eab9pMZUhBfGppEI7RVgOVZ3ZoO4k9q5F0tknyydUkYFgIlK2P
- fFYSCqNwrbWOPa4NvLv1y7LxMCnF0k/PV3fl6W51EoZjZp6SVCnsKib+SlXhJZYswy4S
- Mj7b6nFiMthIcsZa9ReP55hgqMzF3h+P2dYpKseTXNNs4grjxPEjhmz1O5vxU+4ErABy
- CneJlaUPyk8vv18VOv3oeuFLpK+hIDLkWPdNh6Qg2hb9T6YnzxOWOYltOAojEfL4b4rz
- EGqfiJkNY7cstqjwoGs8u+O2EMtY+aSXJjydVKLCIdqhON1bLjNHfzd4LKfkaVAjjI8t
- cePg==
+ :reply-to; bh=sSzVC6h9YW49+ZfM5l/6+Z7F9FLLQN1G4shYKdPjNRs=;
+ b=UmWmteDHRzTiIMdZGishd7CkL/t6qlbIWeyOrOH5z2hQOJxi/ff9SBTcADqQsWdnrF
+ Citl8o20cD3ay9EfqN4NH0aw8u0URaGzt+Xu5jgDylIoF6Y17ActLQ3d8ym2wUS8PuSu
+ V2ZiHFyMvpZ1t9SVzV4TiPZmdxxJvlDk/lOPgv1wzbkNcV0hNNKAEaeoq37FBbUhnH7d
+ qx3R9U+QxilTr21nEp9J7lmWFQpMk1ZY93gkVpAR+BMbmIq9ztEIuNS4Ow0FJEIT9A7l
+ JUPy+KNjWUimN2vZGnmQrdTF1yFAAHOPG255jH9uvpdY3/iAcQSQIyIdT54OGZvnKdq8
+ t2vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779139690; x=1779744490;
+ d=1e100.net; s=20251104; t=1779139707; x=1779744507;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=+9XmWQulmeQTxV7cz+ITMN9VZZhvuiCJswwX1H8U88A=;
- b=PqJXLxlqEAiCG9TR9Ad5gfGLAHLgueFdZIdjassHG5cPKoFP6Cz5uRf0tlE2169920
- /eTQsHfOag0IfpoIft9jB2x9clE8wb/KU0bkj4To1u8Law1WrY8ILl+6kFonC/MNyaHe
- uitOH4Y22t8tbu12k8VvcAeZ3KJ9UjiNBl2mBaDhN0mNXa2Q8PExbn6Xg7qVUmijgPXk
- lvKBif05hXjOu306XgG2Hij8eI2BqDT7MLObyiwu6keISzEoa7F1250Fjne/GHkVhC2w
- 0QjGOA9ZgUtARkOXLqECjp4XTYmtYS86DEL5SEiA9nz1WkAC5DNUuVGUXJCbyL16dmBQ
- nMpw==
-X-Gm-Message-State: AOJu0Ywp6X/Z8wm0O52GjojfobuIVdh47XzKaTa1G/Gc9gM9ryBMTluj
- AlcFgrvoU1WfkRhzFVZ+X3KzuQSeqdufttbO/BPKUDB5Fnf0SgCWRAd/FTR1o9Djpvo=
-X-Gm-Gg: Acq92OGGNSnFBVHlwjhw6gksPZ+kG9eEuE/0eD4DWeL3RBh5Z0qRsm9Pu+glqfiIoX5
- yZvxM7y6MYo+jJnXdXzPgvST75NXEGiF5jLUW5AOzwRKjLSf7OPSUxt/sD2cuYQyMqHlYhgGYSm
- GOPk6tva/PFar8vv7Bp0Mx4XYbiUs6FujLG5qd2lnytLr1mKCbp+yweLl0mxj52Cvxvz8k/qqeS
- TtcI8PTRJVyFhOvK+nWygzURy2URAlxMbXxvMhy2qXJGs7E0tQUUUbz4JobODjG+wSG6FvprbuR
- vUzGq3OSCOXZXiOHIG9ZYZNDFksxJa4jzuHVkIjxWndONeGQOr2etlvnnbB9PJ3CsTDP0uDCw7D
- x1u7KleRP88j/2F3afmEPBzm0HLvHO67WcuPlyFeAiU1JUjaKpY6nFOzRNfAJn7HXL+4chmuIH6
- q4uRPnQDvxRq9obPEgsQEI
-X-Received: by 2002:a05:6830:6010:b0:7dc:e37b:b5d2 with SMTP id
- 46e09a7af769-7e4ea185c16mr11930302a34.8.1779139690145; 
- Mon, 18 May 2026 14:28:10 -0700 (PDT)
+ bh=sSzVC6h9YW49+ZfM5l/6+Z7F9FLLQN1G4shYKdPjNRs=;
+ b=Tjy8s42/rQ7fyCu73a1wb78bgDd/qNxAEVhnX/gDl6GMEO2MRi2ZzIzcuSl+XV/jSW
+ RFlnk88SbPDzLSI9J2nERJ29bqOEMID+KTpS9a5l67OncPgsCbdtjXtA+gQ0f12nuiwy
+ IRNhi8PDORSnmNd7Nms+lClVZ8lHGVshJ7AYuz354dyR3rqkRvQ0IWvuPsy98EiOTY/G
+ mK34ibsXx2Fs6EQwnsgsj+a8jPEiEczgDtRHLmtVoE8945PMeAnkfepxm1mjRaIytLBa
+ A3chT/6492qsdnjdedsfd7+HDwEp562tYXkB/sEtFZ30nyWD6x8jVNHZv/sg91I2hJs0
+ Y9sQ==
+X-Gm-Message-State: AOJu0YxpDFSgiVyDfXguE9armOB66alrvhF9ecrDwoiPd2vPeF1JHnEy
+ uxd5TxLFW/vdDAVtQRUopuYmr6NbeDYeGXx35TMy+5QAmZdxstcZzpyLwWhgsKp3+1A=
+X-Gm-Gg: Acq92OHBJo8rC6k4s/odPJqZEGruq3ToCxSmgral8tC0ItwOT/RLHtqDNj3M5qldjZK
+ o/UZ0ObM+5WoZ4TzZ5OQwJIXKJ0jLcAO/gTQIXGcaZRbpHuRYcHb9fPbdtI3/eXY/JfkE81/G6O
+ CMymruGfiT2YuMVTefVcjWdXwueTLt90GRvjrz8IoX9Syy/T5vrALFSbLUrJcNwg7exCYPwC1Do
+ trhYLe0g3XCtb8IJ8v4OpI0obH0YT0oH3RAnvKRK2GCn9yEMFe0E0SRriKWuqxhycNcdV/jztyF
+ QEJvtV8dIQUdUTdGvs347e82/yHtrYutONQt3isXLCvVPAynU0gtgEQWaEBLOQZDjcfKpWz8mi5
+ kWDVhCh8+R2a5TVErPnKw6kaTZH+qbxMHuDIDu/P181I1N5RrhIhNVLKDbuunCPy60zK8/byTIj
+ kqDmwRBlPqRjEBZxinVcng
+X-Received: by 2002:a05:6830:4387:b0:7dc:db3c:1d82 with SMTP id
+ 46e09a7af769-7e4ea17e2dbmr13699259a34.10.1779139706828; 
+ Mon, 18 May 2026 14:28:26 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55b81cc5asm7980358a34.8.2026.05.18.14.28.09
+ 46e09a7af769-7e55b81cc5asm7980358a34.8.2026.05.18.14.28.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 May 2026 14:28:09 -0700 (PDT)
+ Mon, 18 May 2026 14:28:26 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Mon, 18 May 2026 15:27:36 -0600
-Subject: [PATCH v2 18/37] bsd-user: Add utimes, futimes, and ktimer
- functions to os-time.h
+Date: Mon, 18 May 2026 15:27:52 -0600
+Subject: [PATCH v2 34/37] bsd-user: Add extended attribute and ACL system
+ call dispatch
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260518-misc-2026q2-v2-18-6c16fe448301@bsdimp.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260518-misc-2026q2-v2-34-6c16fe448301@bsdimp.com>
 References: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
 In-Reply-To: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>, 
- =?utf-8?q?Mika=C3=ABl_Urankar?= <mikael.urankar@gmail.com>, 
- Kyle Evans <kevans@FreeBSD.org>
+ Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6472; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=GzpJa4xVkJQoXZiJ9eFNVqoa5W4JZ3qBXY89UUHqa70=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqC4RHL7KDv6KXIZe0eaUO8jZPjojyFmd+tVVMR
- Uc5YRQcWbSJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaguERwAKCRBsHNEofbAR
- AC6HEAC8usGRenx+nFXcapYGePwTBSxyBFHhVs0f6XManZ+5GVrhgzYd+/xMbPu+pTH1BLjdYwl
- l3qh0J3AOqJ5TTQtBqCCZfZsUokTLwrkPKprRP3wKaLe5MJ9H/4H0qNlfKFMvFiK+Iyh5LS6PPH
- DbLcxVYxIHCBZ7/WFXBS3aFHFNMKHoXqee29GtowOsM1Cr2pji4IoZOmnBGZEHLvP0hJxq1b2r0
- GFlXS34I1yIALr3gDV0usBf7bxZQ1w+Zdf9xH5NNomoNc4UeBiPN9zw9m/957u+9XcjERrJRSm2
- LDBfsIBxNPzfzOn0+GsM4WwvmnzB3h/2vSm0ulZtceFY3FOjGlmpRTE2jAM8PRTfliXIj3NTzYp
- Wv07s+tsomFe7a1CYllGctbhY8KTmtPh8gVVMVJmfIlw0o64JjP/dUR+NAEfUs24FR4zx62hxu5
- KEBl/ix0JenfVmF3HUIMXV2DrUGzy87E/zPxCxeTsCsKJh8HMruQXIV7frSzBOvGnsFs8XOCPkR
- OZtXyWwaQcbqxrDl0t/dl7/d9Aiz6107pUZ/iyxe5uuK9PnSuLgdvL2j8wPZUPuReLUXjyKEX5r
- qOZXKoEpfR0uWnU8r3KSjg9NmzTavfSnVadv05m2+zTM+YHfsOMVocsAbXunkWQ2sFIPF4dcdID
- SjdvO3iTiPGNWnw==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5002; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=hz3iLr6GJQnPMw6JXtduOv2rNv9Bqx6Ov86pywyJ/KM=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqC4RJbbs6F8VFZyi4Y2XK+weRMj0zBYN5ZriiA
+ XMaZ+cdMg2JAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaguESQAKCRBsHNEofbAR
+ AB55D/9elkp97qRuCGzw3VcJFZS9mpB2KO4H//7ypoBznkmCTbi0xzjrlUlvA6IFQFk/X9LAOIq
+ XokuK7nDt7MJRhtK2VOQfEi8HWV2GHQBdve5Zhtn5d5fvO7YQHCualMxMTRrLO9kw1pLSqzOJHS
+ e3S2DNn3QWvDYjPXLyYpQOHkpMQdKhkA/rG7UbGSW20LTLXgRnlwzJIZjQMD+ksoi2cR7QVMtlR
+ miig4tAOVTUaOF+cHr+lB38BXPsfvfPivI3I4wD/IDbvgRnDuBjhOlpTw3wCtSogbLO4tWRNS3u
+ hM0EhEuid5CnTFtCm+68oCeLFbjeDT2TU1nrtBWyxRCt5XtZ7AGaPms8zlOWEHy8dhKnnk2Sz3q
+ lulXldagDzIFrPSLAtlKazbJ0bzKHvE+25ZqC3c1Z7B48A4cdfS6YP5LoSwD4+xMyZhXZlEOCNM
+ 3jeVclHYEYyrNwTjwvenZeB9z4cSGHbvkUElRPNFf3OGFx8LLpBRqYnrOgZ+as5rzj/Nwe9uUqC
+ /hsQQpGSa4Xxnnz7CvLfuVooeAtX1nKFb/L9GYzLUfr8XgT+dMDtZGItxhVO+6ggdp6pVCS/rbM
+ /x2xnWN/ocT60EtS6jMhkqdH94NGXx5ZfNV+XzS7W0uJhezkI6WO6xtHTjyi7a8eVyNwek1vTrF
+ MVAns2hVZCu5btg==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
 Received-SPF: none client-ip=2607:f8b0:4864:20::332;
@@ -118,239 +116,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add time-related system call shims: utimes, lutimes, futimes,
-futimesat, ktimer_create, ktimer_delete, ktimer_settime, and
-ktimer_gettime.
+Wire up extended attribute and ACL system calls: extattrctl,
+extattr_set/get/delete for file, fd, and link variants,
+extattr_list for fd, file, and link, and all __acl_* operations
+(aclcheck, delete, get, set for fd, file, and link).
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
-Signed-off-by: Mikaël Urankar <mikael.urankar@gmail.com>
-Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 Assisted-by: Claude Opus 4.6 (1M context)
 ---
- bsd-user/freebsd/os-time.h | 210 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 210 insertions(+)
+ bsd-user/freebsd/os-syscall.c | 103 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 103 insertions(+)
 
-diff --git a/bsd-user/freebsd/os-time.h b/bsd-user/freebsd/os-time.h
-index 16b71e6234..05fa043442 100644
---- a/bsd-user/freebsd/os-time.h
-+++ b/bsd-user/freebsd/os-time.h
-@@ -217,5 +217,215 @@ static inline abi_long do_freebsd_ntp_gettime(abi_ulong target_ntv_addr)
- }
+diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
+index f385034a53..7825e042b0 100644
+--- a/bsd-user/freebsd/os-syscall.c
++++ b/bsd-user/freebsd/os-syscall.c
+@@ -1365,6 +1365,109 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
+         ret = do_freebsd_sysarch(env, arg1, arg2);
+         break;
  
- 
-+/* utimes(2) */
-+static inline abi_long do_freebsd_utimes(abi_long arg1, abi_long arg2)
-+{
-+    abi_long ret;
-+    void *p;
-+    struct timeval *tvp, tv[2];
++        /*
++         * extended attributes and ACL system calls
++         */
++    case TARGET_FREEBSD_NR_extattrctl: /* extattrctl() */
++        ret = do_freebsd_extattrctl(arg1, arg2, arg3, arg4, arg5);
++        break;
 +
-+    if (arg2 != 0) {
-+        if (t2h_freebsd_timeval(&tv[0], arg2) ||
-+                t2h_freebsd_timeval(&tv[1], arg2 +
-+                        sizeof(struct target_freebsd_timeval))) {
-+            return -TARGET_EFAULT;
-+        }
-+        tvp = tv;
-+    } else {
-+        tvp = NULL;
-+    }
-+    p = lock_user_string(arg1);
-+    if (p == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    ret = get_errno(utimes(p, tvp));
-+    unlock_user(p, arg1, 0);
++    case TARGET_FREEBSD_NR_extattr_set_file: /* extattr_set_file(2) */
++        ret = do_freebsd_extattr_set_file(arg1, arg2, arg3, arg4, arg4);
++        break;
 +
-+    return ret;
-+}
++    case TARGET_FREEBSD_NR_extattr_get_file: /* extattr_get_file(2) */
++        ret = do_freebsd_extattr_get_file(arg1, arg2, arg3, arg4, arg4);
++        break;
 +
-+/* lutimes(2) */
-+static inline abi_long do_freebsd_lutimes(abi_long arg1, abi_long arg2)
-+{
-+    abi_long ret;
-+    void *p;
-+    struct timeval *tvp, tv[2];
++    case TARGET_FREEBSD_NR_extattr_delete_file: /* extattr_delete_file(2) */
++        ret = do_freebsd_extattr_delete_file(arg1, arg2, arg3);
++        break;
 +
-+    if (arg2 != 0) {
-+        if (t2h_freebsd_timeval(&tv[0], arg2) ||
-+                t2h_freebsd_timeval(&tv[1], arg2 +
-+                        sizeof(struct target_freebsd_timeval))) {
-+            return -TARGET_EFAULT;
-+        }
-+        tvp = tv;
-+    } else {
-+        tvp = NULL;
-+    }
-+    p = lock_user_string(arg1);
-+    if (p == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    ret = get_errno(lutimes(p, tvp));
-+    unlock_user(p, arg1, 0);
++    case TARGET_FREEBSD_NR_extattr_set_fd: /* extattr_set_fd(2) */
++        ret = do_freebsd_extattr_set_fd(arg1, arg2, arg3, arg4, arg5);
++        break;
 +
-+    return ret;
-+}
++    case TARGET_FREEBSD_NR_extattr_get_fd: /* extattr_get_fd(2) */
++        ret = do_freebsd_extattr_get_fd(arg1, arg2, arg3, arg4, arg5);
++        break;
 +
-+/* futimes(2) */
-+static inline abi_long do_freebsd_futimes(abi_long arg1, abi_long arg2)
-+{
-+    struct timeval *tvp, tv[2];
++    case TARGET_FREEBSD_NR_extattr_delete_fd: /* extattr_delete_fd(2) */
++        ret = do_freebsd_extattr_delete_fd(arg1, arg2, arg3);
++        break;
 +
-+    if (arg2 != 0) {
-+        if (t2h_freebsd_timeval(&tv[0], arg2) ||
-+                t2h_freebsd_timeval(&tv[1], arg2 +
-+                        sizeof(struct target_freebsd_timeval))) {
-+            return -TARGET_EFAULT;
-+        }
-+        tvp = tv;
-+    } else {
-+        tvp = NULL;
-+    }
++    case TARGET_FREEBSD_NR_extattr_get_link: /* extattr_get_link(2) */
++        ret = do_freebsd_extattr_get_link(arg1, arg2, arg3, arg4, arg4);
++        break;
 +
-+    return get_errno(futimes(arg1, tvp));
-+}
++    case TARGET_FREEBSD_NR_extattr_set_link: /* extattr_set_link(2) */
++        ret = do_freebsd_extattr_set_link(arg1, arg2, arg3, arg4, arg4);
++        break;
 +
-+/* futimesat(2) */
-+static inline abi_long do_freebsd_futimesat(abi_long arg1, abi_long arg2,
-+        abi_long arg3)
-+{
-+    abi_long ret;
-+    void *p;
-+    struct timeval *tvp, tv[2];
++    case TARGET_FREEBSD_NR_extattr_delete_link: /* extattr_delete_link(2) */
++        ret = do_freebsd_extattr_delete_link(arg1, arg2, arg3);
++        break;
 +
-+    if (arg3 != 0) {
-+        if (t2h_freebsd_timeval(&tv[0], arg3) ||
-+                t2h_freebsd_timeval(&tv[1], arg3 +
-+                        sizeof(struct target_freebsd_timeval))) {
-+            return -TARGET_EFAULT;
-+        }
-+        tvp = tv;
-+    } else {
-+        tvp = NULL;
-+    }
++    case TARGET_FREEBSD_NR_extattr_list_fd: /* extattr_list_fd(2) */
++        ret = do_freebsd_extattr_list_fd(arg1, arg2, arg3, arg4);
++        break;
 +
-+    p = lock_user_string(arg2);
-+    if (p == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    ret = get_errno(futimesat(arg1, p, tvp));
-+    unlock_user(p, arg2, 0);
++    case TARGET_FREEBSD_NR_extattr_list_file: /* extattr_list_file(2) */
++        ret = do_freebsd_extattr_list_file(arg1, arg2, arg3,  arg4);
++        break;
 +
-+    return ret;
-+}
++    case TARGET_FREEBSD_NR_extattr_list_link: /* extattr_list_link(2) */
++        ret = do_freebsd_extattr_list_link(arg1, arg2, arg3, arg4);
++        break;
 +
-+/* timer_create(2) */
-+static inline abi_long do_freebsd_ktimer_create(abi_long arg1, abi_long arg2,
-+        abi_long arg3)
-+{
-+    /* args: clockid_t clockid, struct sigevent *sevp, int *timerid */
-+    abi_long ret;
++    case TARGET_FREEBSD_NR___acl_aclcheck_fd: /* __acl_aclcheck_fd() */
++        ret = do_freebsd__acl_aclcheck_fd(arg1, arg2, arg3);
++        break;
 +
-+    struct sigevent host_sevp = { 0 }, *phost_sevp = NULL;
++    case TARGET_FREEBSD_NR___acl_aclcheck_file: /* __acl_aclcheck_file() */
++        ret = do_freebsd__acl_aclcheck_file(arg1, arg2, arg3);
++        break;
 +
-+    int clkid = arg1;
-+    int timer_index = next_free_host_timer();
++    case TARGET_FREEBSD_NR___acl_aclcheck_link: /* __acl_aclcheck_link() */
++        ret = do_freebsd__acl_aclcheck_link(arg1, arg2, arg3);
++        break;
 +
-+    if (timer_index < 0) {
-+        ret = -TARGET_EAGAIN;
-+    } else {
-+        int *phtimer = g_posix_timers  + timer_index;
++    case TARGET_FREEBSD_NR___acl_delete_fd: /* __acl_delete_fd() */
++        ret = do_freebsd__acl_delete_fd(arg1, arg2);
++        break;
 +
-+        if (arg2) {
-+            phost_sevp = &host_sevp;
-+            ret = target_to_host_sigevent(phost_sevp, arg2);
-+            if (ret != 0) {
-+                return -TARGET_EFAULT;
-+            }
-+        }
++    case TARGET_FREEBSD_NR___acl_delete_file: /* __acl_delete_file() */
++        ret = do_freebsd__acl_delete_file(arg1, arg2);
++        break;
 +
-+        ret = get_errno(__sys_ktimer_create(clkid, phost_sevp, phtimer));
-+        if (ret) {
-+            phtimer = NULL;
-+        } else {
-+            if (put_user(TIMER_MAGIC | timer_index, arg3, int)) {
-+                ret = -TARGET_EFAULT;
-+            }
-+        }
-+    }
-+    return ret;
-+}
++    case TARGET_FREEBSD_NR___acl_delete_link: /* __acl_delete_link() */
++        ret = do_freebsd__acl_delete_link(arg1, arg2);
++        break;
 +
-+/* timer_delete(2) */
-+static inline abi_long do_freebsd_ktimer_delete(abi_long arg1)
-+{
-+    /* args: int timerid */
-+    abi_long ret;
-+    int timerid = get_timer_id(arg1);
++    case TARGET_FREEBSD_NR___acl_get_fd: /* __acl_get_fd() */
++        ret =  do_freebsd__acl_get_fd(arg1, arg2, arg3);
++        break;
 +
-+    if (timerid < 0) {
-+        ret = timerid;
-+    } else {
-+        int htimer = g_posix_timers[timerid];
-+        ret = get_errno(__sys_ktimer_delete(htimer));
-+        g_posix_timers[timerid] = 0;
-+    }
-+    return ret;
-+}
++    case TARGET_FREEBSD_NR___acl_get_file: /* __acl_get_file() */
++        ret = do_freebsd__acl_get_file(arg1, arg2, arg3);
++        break;
 +
-+/* timer_settime(2) */
-+static inline abi_long do_freebsd_ktimer_settime(abi_long arg1, abi_long arg2,
-+        abi_long arg3, abi_long arg4)
-+{
-+    /*
-+     * args: int timerid, int flags, const struct itimerspec *new_value,
-+     * struct itimerspec * old_value
-+     */
-+    abi_long ret;
-+    int timerid = get_timer_id(arg1);
++    case TARGET_FREEBSD_NR___acl_get_link: /* __acl_get_link() */
++        ret = do_freebsd__acl_get_link(arg1, arg2, arg3);
++        break;
 +
-+    if (timerid < 0) {
-+        ret = timerid;
-+    } else if (arg3 == 0) {
-+        ret = -TARGET_EINVAL;
-+    } else {
-+        int htimer = g_posix_timers[timerid];
-+        struct itimerspec hspec_new = {{0},}, hspec_old = {{0},};
++    case TARGET_FREEBSD_NR___acl_set_fd: /* __acl_get_fd() */
++        ret = do_freebsd__acl_set_fd(arg1, arg2, arg3);
++        break;
 +
-+        if (target_to_host_itimerspec(&hspec_new, arg3)) {
-+            return -TARGET_EFAULT;
-+        }
-+        ret = get_errno(
-+            __sys_ktimer_settime(htimer, arg2, &hspec_new, &hspec_old));
-+        if (arg4 && host_to_target_itimerspec(arg4, &hspec_old)) {
-+            return -TARGET_EFAULT;
-+        }
-+    }
-+    return ret;
-+}
++    case TARGET_FREEBSD_NR___acl_set_file: /* __acl_set_file() */
++        ret = do_freebsd__acl_set_file(arg1, arg2, arg3);
++        break;
 +
-+/* timer_gettime(2) */
-+static inline abi_long do_freebsd_ktimer_gettime(abi_long arg1, abi_long arg2)
-+{
-+    /* args: int timerid, struct itimerspec *curr_value */
-+    abi_long ret;
-+    int timerid = get_timer_id(arg1);
++    case TARGET_FREEBSD_NR___acl_set_link: /* __acl_set_link() */
++        ret = do_freebsd__acl_set_link(arg1, arg2, arg3);
++        break;
 +
-+    if (timerid < 0) {
-+        ret = timerid;
-+    } else if (!arg2) {
-+        ret = -TARGET_EFAULT;
-+    } else {
-+        int htimer = g_posix_timers[timerid];
-+        struct itimerspec hspec;
-+        ret = get_errno(__sys_ktimer_gettime(htimer, &hspec));
-+
-+        if (host_to_target_itimerspec(arg2, &hspec)) {
-+            ret = -TARGET_EFAULT;
-+        }
-+    }
-+    return ret;
-+}
-+
- 
- #endif /* FREEBSD_OS_TIME_H */
+     default:
+         qemu_log_mask(LOG_UNIMP, "Unsupported syscall: %d\n", num);
+         ret = -TARGET_ENOSYS;
 
 -- 
 2.52.0
