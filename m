@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1276CD4F50
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 18:33:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B405ACD4F50
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 18:33:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP2m6-0006be-5b; Mon, 18 May 2026 14:33:15 -0400
+	id 1wP2mD-0006eQ-5n; Mon, 18 May 2026 14:33:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <a0592741a918b7cbe751980ec7ec0c03f505924c@kylie.crudebyte.com>)
- id 1wP2l8-0006Kx-R5; Mon, 18 May 2026 14:32:21 -0400
+ (envelope-from <933552b2cfc2c442fac7f4e68c777dce20ee8d7e@kylie.crudebyte.com>)
+ id 1wP2la-0006OW-LR; Mon, 18 May 2026 14:32:48 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <a0592741a918b7cbe751980ec7ec0c03f505924c@kylie.crudebyte.com>)
- id 1wP2l7-0002Oe-Gi; Mon, 18 May 2026 14:32:10 -0400
+ (envelope-from <933552b2cfc2c442fac7f4e68c777dce20ee8d7e@kylie.crudebyte.com>)
+ id 1wP2lV-0002Ql-J7; Mon, 18 May 2026 14:32:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
- Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=XKiX0XyHKyBgRAeITQtv9rXyqRpwst1PipAJNZmp62E=; b=FONjU
- UC6hFyoN+i8wR5v9ZRHYL4xuK0Agp9S/0vZ1S+GXEF++3p3FtM442pGuwHxRFIQTv8wGUeS5AL2qK
- YP8lTpgNj8cPs83fjH2UY9/TGZ3m9+HP6FzNbuIE2aDQx/876VERnD8l/Je0hAV9npgEp2Tv61dEF
- DFEqaypU8k/32FYLxihHvKfLuHr12+tlPZVZf+VLcnT3aZ4JUQy52Jfgg4qybPzZbT4K1fY/osqoA
- RakhbOrUW44hUj1n0vomWi532B+rd4Avw5PE6INXqhH/VjVpXNzLMHJ6jVdFZGJKzs9WvCOTyKRIl
- s2G66ORpIIHaP1T6eh9vlQ14W6m/lXtwThYLARsiZwQmhPQ7N+jQeZtnjMWpWVFr4PZO9Dzq1recw
- eAdDdi1c8H1868+ojTrn3YyAlUhCpyzVLih3yBWIScbWef6lQTgBQ42hATNR/cX8Ewt/xtxbKm2aI
- Sa6IhisSAkPoPqKcNLxGAszkLDl4TBKY4Kel5tlbqo44G0hfyAPUwb3nwlzkn4Zfq+D4ZOPNchOjK
- QMEhU0htKsQ7Fe9mVMtpabFLF9oqhlioaw/Nml287kd2WGyhjlhzlXzyDvVM1bDrpevrepatu8VGd
- b+8yf/wNnp9eet0oXWCrr58yHw4iCPVTAhnirNEEn9xqJndlMBlhiVZF5I5/xo=;
-Message-ID: <a0592741a918b7cbe751980ec7ec0c03f505924c.1779126034.git.qemu_oss@crudebyte.com>
-In-Reply-To: <cover.1779126034.git.qemu_oss@crudebyte.com>
-References: <cover.1779126034.git.qemu_oss@crudebyte.com>
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:Message-ID:Content-Type:
+ Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Content-ID:
+ Content-Description; bh=t8s7J6yEtqcRJEkBmv7SqXGFV2+aytw+FyII5ro4DyI=; b=Om7ny
+ NHQONP0+JiOf6rarGzw2BuGF/DrmKzQIzpQC31NU8i/CqmSA5PaZB9p1o+wEIi2Vcr851NYYLzkh0
+ dpI17QGHK0plBj5+5Gr2JicvbX1w4AXc+bMjQLjFnFK6wxreurG6yxgtZZvCtJ3fW40MIDFdzVNt1
+ iSr0wX5qR3IxTrAeiyBS7n5tEUiJhR3ZbDL6Y62AIVPQgAPDhOMNwnuWwQ7tsmy9v8rrl4JRCF60m
+ wfJrP/DOOkDEAdb7a4rnfs4PFiJvnxrv3NIUmgJuPv4Pdx5hjUTY8/FBFRg1xvQL6jW93IFaRyHsg
+ o22rgqHazvHdcvGspjajMzUfezut480cgYb4K0AWgVlcS6eVYHK0zAZydeATmbt/8VtKKqRzsF1y3
+ xTjn/2QvSZkqhuFgGMBNGU4chWu1ie9ycYap7RVzZS2D/a2yzND2QR+zhrA7DoBZRC4U3keOiGoN2
+ TuQWDQC/HJ0OZ3QjSRqc4aZyRuC7asAgsVsCrBxk2HA9XIWuI8jIJfZaTgpjq2SHtqqdvX7fQAX+a
+ gj7RdNbbfyuRlEvCojUujFDNYE7X5aAeAMEUOyXThdxK22v7G8dtA8YwS+MS1/WQ6nRpagfIE/hoh
+ n9OJcW08GlMYgB0QI/KqyBbikKTCHeEugouL8I01WlcZGOoh1frRsOEAXDW9+U=;
+Message-ID: <cover.1779126034.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Mon, 18 May 2026 19:35:56 +0200
-Subject: [PATCH 3/6] hw/9pfs: add error handling to v9fs_fix_path()
+Date: Mon, 18 May 2026 19:40:34 +0200
+Subject: [PATCH 0/6] 9pfs: fix V9fsPath heap buffer overflow
 To: qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>,
-    Jia Jia <physicalmtea@gmail.com>
+Cc: Greg Kurz <groug@kaod.org>, Jia Jia <physicalmtea@gmail.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=a0592741a918b7cbe751980ec7ec0c03f505924c@kylie.crudebyte.com;
+ envelope-from=933552b2cfc2c442fac7f4e68c777dce20ee8d7e@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -66,37 +65,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update v9fs_fix_path() to return int and propagate errors from
-v9fs_path_sprintf(). This allows callers to detect and handle
-path formatting failures.
+This series fixes a heap buffer overflow vulnerability in the 9pfs local
+backend. The vulnerability occurs when handling paths exceeding 65536 bytes,
+due to the V9fsPath.size field being limited to 16 bits.
 
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
----
- hw/9pfs/9p.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+The fix consists of:
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 88894ec9d2..d704de644f 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -1417,13 +1417,15 @@ static void print_sg(struct iovec *sg, int cnt)
- }
- 
- /* Will call this only for path name based fid */
--static void v9fs_fix_path(V9fsPath *dst, V9fsPath *src, int len)
-+static int v9fs_fix_path(V9fsPath *dst, V9fsPath *src, int len)
- {
-     V9fsPath str;
-+    int ret;
-     v9fs_path_init(&str);
-     v9fs_path_copy(&str, dst);
--    v9fs_path_sprintf(dst, "%s%s", src->data, str.data + len);
-+    ret = v9fs_path_sprintf(dst, "%s%s", src->data, str.data + len);
-     v9fs_path_free(&str);
-+    return ret;
- }
- 
- static inline bool is_ro_export(FsContext *ctx)
+- Changing V9fsPath.size from uint16_t to size_t.
+- Converting v9fs_path_sprintf() to return int for error handling.
+- Adding error propagation through all path manipulation functions.
+
+Invididual Patches:
+
+- Patch 1 is just an additional defensive patch.
+
+- Actual fixes are patches 2..4, where patch 2..3 are prepatory, and
+  patch 4 is the actual behaviour fix.
+
+- Patch 5 adds a reset function to the virtio test client for the new
+  test to work.
+
+- Patch 6 adds a new test to guard this buffer overflow issue.
+  It must be enabled explicitly by -m slow for it to run.
+  
+More details about this issue:
+https://gitlab.com/qemu-project/qemu/-/issues/3358
+
+Christian Schoenebeck (6):
+  hw/9pfs: add NULL check in v9fs_path_is_ancestor()
+  hw/9pfs: change V9fsPath.size to size_t and v9fs_path_sprintf() return
+    type
+  hw/9pfs: add error handling to v9fs_fix_path()
+  hw/9pfs: let callers of v9fs_path_sprintf() and v9fs_fix_path() handle
+    errors
+  tests/qtest/libqos: add qvirtqueue_reset_pool() for descriptor pool
+    reset
+  tests/9pfs: add deep absolute path test
+
+ fsdev/file-op-9p.h           |  2 +-
+ hw/9pfs/9p-local.c           | 23 ++++++++----
+ hw/9pfs/9p.c                 | 41 +++++++++++++++------
+ hw/9pfs/9p.h                 |  4 +--
+ tests/qtest/libqos/virtio.c  | 23 ++++++++++++
+ tests/qtest/libqos/virtio.h  |  2 ++
+ tests/qtest/virtio-9p-test.c | 69 ++++++++++++++++++++++++++++++++++++
+ 7 files changed, 144 insertions(+), 20 deletions(-)
+
 -- 
 2.47.3
 
