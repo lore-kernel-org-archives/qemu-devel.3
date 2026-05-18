@@ -4,97 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F865CD4F48
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 07:39:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3512CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 07:39:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOsVA-00012c-6S; Mon, 18 May 2026 03:35:00 -0400
+	id 1wOsYB-00049P-2j; Mon, 18 May 2026 03:38:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1wOsUb-0000j1-CN
- for qemu-devel@nongnu.org; Mon, 18 May 2026 03:34:28 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <khaled.saleh.req@gmail.com>)
+ id 1wOsXi-0003xs-P9
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 03:37:39 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1wOsUX-0000Yi-Gs
- for qemu-devel@nongnu.org; Mon, 18 May 2026 03:34:25 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-44e1ebb3122so1006249f8f.2
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 00:34:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <khaled.saleh.req@gmail.com>)
+ id 1wOsXg-00024w-4D
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 03:37:38 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-bd0fc4c336eso421712066b.3
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 00:37:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779089659; x=1779694459; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XT/CXfHvPxeFJmlyE6fORLT0liEeLgpzBFdfs1VHhk4=;
- b=ERhP8yo/S23hhGBJelkYaWIhrGDEKps4GeHqXx8Ymox+HFE52MHfcOUqg8J3dRKIN5
- LaIGsAY/heB3UwwdyGerQgbrS9MDdtJgsqhdLKvQtstjYnRpLgQG1p4RmOObL9Z3PSJJ
- VMFMGQGbgBItKVuQ3MjsqSarLiaTtVp35z10KXLd2teeDlUo912NbtTMONwkG8kNUv+9
- 3cKiyakO+qlx+evdWPJUXSUeTd8j5Inb6/+APiAsggScYPCk/kooiMdew8M24Uu9C4TH
- 2jyk90bpjn4xrzusexHNBJI867z24tQ1NVfVDlCvcbJ/VVVDaZhd2d+UIKvqlyjwVcvB
- qkRA==
+ d=gmail.com; s=20251104; t=1779089854; x=1779694654; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=VbKi8Yc8JA84Fh5O5Hw2DC9TRezepdwCjtJF/nXJMEI=;
+ b=UhxtQ8+GfxJ2vlQeEpKt6c+Lc5WJsX6si1IXqtGh1P7JOTEsjhnIyjpcu0s/OA+vHw
+ K/pVrwYJiMQnSoh756Ajffu0oEkoG9rXEZfkTGLZnk9JIhxNRvTr8BWwoIqfGUgPIsr5
+ lMjHRxI3JFGiIrYd9R26rYJDDGvLPKFg+3RXOPFGA50sduarbaj7Bq/B5aFnqv9hQReT
+ kCv1eOj+hDIV6rAaq7lHuXsYf5ZlaGbK16eXzULDaTQTlD/UPH5EUhaQWn2ENbHb8mUr
+ 9j38PCB4BferHn7ba/oSmnyqE7zu3igcY81Kk+E/V1kZ/FwX1ftEipsOqTxbpnvKEleN
+ kvKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779089659; x=1779694459;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=XT/CXfHvPxeFJmlyE6fORLT0liEeLgpzBFdfs1VHhk4=;
- b=Jd99X7lMku5mcAKyWI4GVoIQeV+Nh7YiW+NndmGk92JsnplwC+NF3jf8N5Deztp7XQ
- wzqsHVhR0tO+Rj2E5QoUAOphuF/JH3i4ptQ2JA2kAk4uywPuh9cxIy3ycYeWX61pDgmh
- ZQa3I+3ndr8+CNm8dQ6mMChsjNWiXU6KZZPrIsMkiQ+wEg3ytNiyYNb/o0SqXlb2HKAv
- U0GW/r3wpdUY1SSg+Ehp7EJpquELTpCZF/UtB/vKXTnxV1qKBm8e2eB++A1s1e4SkN0y
- LkShYVcMFODpOfQ6ux2ZP+jGjrpEZc3uGmGL7B4k2CXsuwebe2uNW6pt1ZnE509qYScp
- Wwuw==
-X-Gm-Message-State: AOJu0YzYyiH+z23dsuwFK6uj7fmAxB1TTrAlm6FPCatd+jglSLTPDRx9
- WX0LwnqJvEgu9AMDEUaWhelTigOoMWw2+sR81PUsJ/6ztjsah2jDUPVvXXz8gSxj
-X-Gm-Gg: Acq92OGUlkboXlJLSyMF0UhNaFDfFUmOeiSt9ooI39j8S6aLhkYIDNqYUJxDqP1fTrg
- BodYbL7iTRjnaW0+nUb7B8ojHSs9mPNDiB98jPwUuKLGM+i5rck4a4zOlkv1KwI9ElO1RG5Aapv
- ODnKsP+ZNHhhzR5KNBl+8/q+lqLYpSKdqOAifsqZl2WLJ6tcfTbW9FYkgx8q2yOIp6gG0DecP8a
- kI/lixBCiuR+UdrgHJParT4fRovum5Uj+DXpr62Is+ANNONuAzdYHrg5An9huO1kozBXa0z5JuA
- TLm3rhY3l0xBi2XYvXaWnpeYvs8z9DZr7pfU9A2I8CDm2Ffy7n9UGw1rFxoSsUkOozbSXh0TqLQ
- pURywv+SFS8qu3EXcVQwExHWE/Kj/SuKqg+4aGqseoj/H5XdWodDejaDtMTeEOte9LMRQ5xKupX
- 6SPXVGbaR0N17STEqfe0VuqAigO7rDKxJsG3SHX4gDBg4XpQ==
-X-Received: by 2002:a05:6000:2503:b0:451:4d47:c9d9 with SMTP id
- ffacd0b85a97d-45e5c367265mr21505482f8f.14.1779089658737; 
- Mon, 18 May 2026 00:34:18 -0700 (PDT)
-Received: from PC-DA2D10.beckhoff.com
- ([2001:9e8:dc08:b284:85e6:f7f4:1a4a:4dfe])
+ d=1e100.net; s=20251104; t=1779089854; x=1779694654;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VbKi8Yc8JA84Fh5O5Hw2DC9TRezepdwCjtJF/nXJMEI=;
+ b=MZviW0qHbKjGu18SecQ+FwbBQQq7UH9jbtgdgXMRI3f4/y2gkxGsnvPbMs85HoVFK8
+ pF+caim85RqmEHr5MrX7zmgc+brz1HFrY9KBQApW2lkej5xPChzHzSftrJkokc1uTKX5
+ Klmnc8Oo+DZNzBcysT+C/dMYXlKnhizupjUpzlrxfBYJ6xNevODlsWCwDfwW/29NwELh
+ GyVKd3PUMiRREIZ/xkjLPkRetEPWO6D/KJiJvzt6AIbedHKu3N8vvJbBm9UtjodLZjt+
+ NsQMYwkUGCcjmRnYUTLuA5jZfi09+sZwb39Hom416QoNeaJ8HmBY3bA+bMJEHTEH0RqG
+ BAXA==
+X-Gm-Message-State: AOJu0YyYly47YuGJ4YtPE0xFILya/tBUORb8d3ww8aFNBZsls3mPP60Y
+ s8jaUZR3XcvyYM639nx4OgBp3GCqomb1KzxPbwC22G5EsEWMpL1O0QKPJMqlQZDLkys=
+X-Gm-Gg: Acq92OGpmprE2Hyvg5+pmFhXiVZoboLMd4/HLC5758y7H/KVQBSjP7MxSUPXQqzIaed
+ ockhBMAm5X3QsplfbVmKi/eM/H2KWfUMDZax6MItwI+ewR5fWzmxeiodKkEeHJE61+hPnVPYYuA
+ v2tGgjNY+hYU+n1zhqpNxdcfSUQswwKTjaLZxJIwm3VMyqPu60NB1jqWRfQexmqPfRkZ6SNqtkj
+ /njzjYl0RrazV6SX77MSNBsLq5ZmDwpYqGtZfRgKGpO9+yIjJ9bYOj1FTdqa2+8txDyJkotl8Yz
+ 5f5bIrZZndJgGsy3oUPrtGgVJNydWk2J19BDuweAgjmimWC+j8mhhhWNvdtpTxR+Ne+wvYnEOJz
+ ZBfidOPhQfWIk2PZ3RWYCfA68OijUM/rn153OSQKeVlD80r5gROszVuN01rDoSa1kRO2SC+Upw5
+ Y+prO30RiVhIIcGZga7KnqU17LGKxdi8mFztT5BMHgYP29q/y/Qt3oad4SGpgTQK7+nuYWqbUm8
+ clw+pSmYuT8jgw=
+X-Received: by 2002:a17:907:ca0a:b0:bd5:ec9:e063 with SMTP id
+ a640c23a62f3a-bd51797a6d0mr543534666b.49.1779089854102; 
+ Mon, 18 May 2026 00:37:34 -0700 (PDT)
+Received: from localhost.localdomain ([105.32.5.68])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45d9ec3b18fsm32590222f8f.11.2026.05.18.00.34.17
+ a640c23a62f3a-bd4f4bd0a24sm533191866b.11.2026.05.18.00.37.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 May 2026 00:34:18 -0700 (PDT)
-From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Yannick=20Vo=C3=9Fen?= <y.vossen@beckhoff.com>,
- Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Yannick Vossen <Y.Vossen@beckhoff.com>, qemu-arm@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Alistair Francis <alistair@alistair23.me>,
- Corvin Koehne <C.Koehne@beckhoff.com>, qemu-block@nongnu.org
-Subject: [PATCH v7 15/16] hw/arm: Add new machine based on xilinx-zynq-a9 for
- Beckhoff CX7200
-Date: Mon, 18 May 2026 09:34:00 +0200
-Message-ID: <20260518073401.11279-16-corvin.koehne@gmail.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260518073401.11279-1-corvin.koehne@gmail.com>
-References: <20260518073401.11279-1-corvin.koehne@gmail.com>
+ Mon, 18 May 2026 00:37:33 -0700 (PDT)
+From: khaled saleh <khaled.saleh.req@gmail.com>
+To: mst@redhat.com
+Cc: qemu-devel@nongnu.org,
+	khaled.saleh.req@gmail.com
+Subject: [PATCH] hw/pci/shpc: Enable 66MHz Bus Speed Support
+Date: Mon, 18 May 2026 09:37:14 +0200
+Message-Id: <20260518073714.70571-1-khaled.saleh.req@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=corvin.koehne@gmail.com; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=khaled.saleh.req@gmail.com; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,161 +98,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: YannickV <Y.Vossen@beckhoff.com>
+The Standard Hot-Plug Controller (SHPC) specification (PI=1) defines
+66MHz conventional PCI as a valid bus speed mode. While QEMU defined
+the relevant constants, it hardcoded the secondary bus speed to 33MHz
+and advertised 0 slots as 66MHz capable.
 
-Introduce a new machine type 'beckhoff-cx7200' that inherits from the
-xilinx-zynq-a9 machine. The CX7200 is an industrial PC based on the
-Xilinx Zynq-7000 SoC.
-The machine preserves all standard Zynq features (boot-mode selection,
-SPI, UART, Ethernet, etc.) while adding CX7200-specific hardware
-components.
+This patch enables 66MHz support by:
+1. Allowing SHPC_SEC_BUS_66 in shpc_set_sec_bus_speed().
+2. Advertising all slots as 66MHz capable in shpc_reset().
+3. Dynamically checking and reporting a slot's 66MHz capability based
+   on the plugged PCI device's Status Register (PCI_STATUS_66MHZ).
 
-Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
+PCI-X speeds remain unsupported and will continue to trigger an
+INVALID_MODE command status error.
+
+Signed-off-by: khaled saleh <khaled.saleh.req@gmail.com>
 ---
- MAINTAINERS              |  9 +++++
- hw/arm/Kconfig           |  7 ++++
- hw/arm/beckhoff_CX7200.c | 80 ++++++++++++++++++++++++++++++++++++++++
- hw/arm/meson.build       |  1 +
- 4 files changed, 97 insertions(+)
- create mode 100644 hw/arm/beckhoff_CX7200.c
+ hw/pci/shpc.c | 29 ++++++++++++++++++++++++-----
+ 1 file changed, 24 insertions(+), 5 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 788b815501..c0a9531bf1 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1159,6 +1159,15 @@ F: include/hw/adc/zynq-xadc.h
- X: hw/ssi/xilinx_*
- F: docs/system/arm/xlnx-zynq.rst
+diff --git a/hw/pci/shpc.c b/hw/pci/shpc.c
+index 938602866d..3becde7f10 100644
+--- a/hw/pci/shpc.c
++++ b/hw/pci/shpc.c
+@@ -12,7 +12,7 @@
  
-+Beckhoff CX7200
-+M: Yannick Vossen <Y.Vossen@beckhoff.com>
-+M: Corvin Koehne <C.Koehne@beckhoff.com>
-+L: qemu-arm@nongnu.org
-+S: Maintained
-+F: hw/arm/beckhoff_CX7200.c
-+F: hw/misc/beckhoff_ccat.c
-+F: include/hw/misc/beckhoff_ccat.h
+ /* TODO: model power only and disabled slot states. */
+ /* TODO: handle SERR and wakeups */
+-/* TODO: consider enabling 66MHz support */
 +
- Xilinx ZynqMP and Versal
- M: Alistair Francis <alistair@alistair23.me>
- M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index fb798ccbee..be500186ca 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -292,6 +292,13 @@ config ZYNQ
-     select XLNX_ZYNQ_DDRC
-     select ZYNQ_DEVCFG
  
-+config BECKHOFF_CX7200
-+    bool
-+    default y
-+    depends on TCG && ARM
-+    select ZYNQ
-+    select BECKHOFF_CCAT
-+
- config ARM_V7M
-     bool
-     # currently v7M must be included in a TCG build due to translate.c
-diff --git a/hw/arm/beckhoff_CX7200.c b/hw/arm/beckhoff_CX7200.c
-new file mode 100644
-index 0000000000..6e27515886
---- /dev/null
-+++ b/hw/arm/beckhoff_CX7200.c
-@@ -0,0 +1,80 @@
-+
-+/*
-+ * Modified Xilinx Zynq Baseboard System emulation for Beckhoff CX7200.
-+ *
-+ * Copyright (c) 2026 Beckhoff Automation GmbH & Co. KG
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "hw/core/boards.h"
-+#include "hw/block/block.h"
-+#include "hw/core/loader.h"
-+#include "hw/core/qdev-properties.h"
-+#include "hw/core/clock.h"
-+#include "qemu/error-report.h"
-+#include "hw/arm/xilinx_zynq.h"  /* For ZynqMachineState */
-+#include "hw/cpu/a9mpcore.h"
-+#include "hw/timer/a9gtimer.h"
-+#include "qom/object.h"
-+
-+#define TYPE_CX7200_MACHINE MACHINE_TYPE_NAME("beckhoff-cx7200")
-+
-+#define CX7200_PS_CLK_FREQUENCY (40 * 1000 * 1000)
-+
-+static void ccat_init(uint32_t base, BlockBackend *eeprom_blk)
+ /* TODO: remove fully only on state DISABLED and LED off.
+  * track state to properly record this. */
+@@ -30,7 +30,7 @@
+ #define SHPC_PHYS_BUTTON  0x8000
+ #define SHPC_SEC_BUS      0x10 /* 2 bytes */
+ #define SHPC_SEC_BUS_33   0x0
+-#define SHPC_SEC_BUS_66   0x1 /* Unused */
++#define SHPC_SEC_BUS_66   0x1
+ #define SHPC_SEC_BUS_MASK 0x7
+ #define SHPC_MSI_CTL      0x12 /* 1 byte */
+ #define SHPC_PROG_IFC     0x13 /* 1 byte */
+@@ -169,6 +169,17 @@ static void shpc_set_status(SHPCDevice *shpc,
+     pci_word_test_and_set_mask(status, value << ctz32(msk));
+ }
+ 
++static bool shpc_device_is_66mhz_capable(SHPCDevice *shpc, int slot)
 +{
-+    DeviceState *dev;
-+    SysBusDevice *busdev;
++    int pci_slot = SHPC_IDX_TO_PCI(slot);
++    PCIDevice *dev = shpc->sec_bus->devices[PCI_DEVFN(pci_slot, 0)];
 +
-+    dev = qdev_new("beckhoff-ccat");
-+    if (eeprom_blk) {
-+        qdev_prop_set_drive_err(dev, "eeprom", eeprom_blk, &error_fatal);
++    if (!dev) {
++        return false;
 +    }
-+    busdev = SYS_BUS_DEVICE(dev);
-+    sysbus_realize_and_unref(busdev, &error_fatal);
-+    sysbus_mmio_map(busdev, 0, base);
++    return pci_get_word(dev->config + PCI_STATUS) & PCI_STATUS_66MHZ;
 +}
 +
-+static void beckhoff_cx7200_init(MachineState *machine)
-+{
-+    DriveInfo *di;
-+    BlockBackend *blk;
-+    MachineClass *parent_mc;
-+
-+    parent_mc = MACHINE_CLASS(object_class_get_parent(
-+                                  object_get_class(OBJECT(machine))));
-+    parent_mc->init(machine);
-+
-+    di = drive_get(IF_NONE, 0, 0);
-+    blk = di ? blk_by_legacy_dinfo(di) : NULL;
-+    ccat_init(0x40000000, blk);
-+}
-+
-+static void beckhoff_cx7200_machine_class_init(ObjectClass *oc,
-+                                               const void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+    ZynqMachineClass *zmc = ZYNQ_MACHINE_CLASS(oc);
-+
-+    mc->desc = "Beckhoff CX7200 Industrial PC (Zynq-based)";
-+    mc->init = beckhoff_cx7200_init;
-+    zmc->qspi_flash_type = "is25lp016d";
-+    zmc->ps_clk_freq = CX7200_PS_CLK_FREQUENCY;
-+}
-+
-+static const TypeInfo beckhoff_cx7200_machine_type = {
-+    .name = TYPE_CX7200_MACHINE,
-+    .parent = TYPE_ZYNQ_MACHINE,
-+    .class_init = beckhoff_cx7200_machine_class_init,
-+    .instance_size = sizeof(ZynqMachineState),
-+};
-+
-+static void beckhoff_cx7200_machine_register_types(void)
-+{
-+    type_register_static(&beckhoff_cx7200_machine_type);
-+}
-+
-+type_init(beckhoff_cx7200_machine_register_types)
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 80068f70bb..46e77cb49b 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -2,6 +2,7 @@ arm_ss = ss.source_set()
- arm_common_ss = ss.source_set()
- arm_common_ss.add(when: 'CONFIG_ARM_VIRT', if_true: files('virt.c'))
- arm_common_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-acpi-build.c'))
-+arm_common_ss.add(when: 'CONFIG_BECKHOFF_CX7200', if_true: files('beckhoff_CX7200.c'))
- arm_common_ss.add(when: 'CONFIG_DIGIC', if_true: files('digic_boards.c'))
- arm_common_ss.add(when: 'CONFIG_EMCRAFT_SF2', if_true: files('msf2-som.c'))
- arm_common_ss.add(when: 'CONFIG_INTEGRATOR', if_true: files('integratorcp.c'))
+ static void shpc_interrupt_update(PCIDevice *d)
+ {
+     SHPCDevice *shpc = d->shpc;
+@@ -203,6 +214,7 @@ static void shpc_set_sec_bus_speed(SHPCDevice *shpc, uint8_t speed)
+ {
+     switch (speed) {
+     case SHPC_SEC_BUS_33:
++    case SHPC_SEC_BUS_66:
+         shpc->config[SHPC_SEC_BUS] &= ~SHPC_SEC_BUS_MASK;
+         shpc->config[SHPC_SEC_BUS] |= speed;
+         break;
+@@ -220,7 +232,7 @@ void shpc_reset(PCIDevice *d)
+     memset(shpc->config, 0, SHPC_SIZEOF(d));
+     pci_set_byte(shpc->config + SHPC_NSLOTS, nslots);
+     pci_set_long(shpc->config + SHPC_SLOTS_33, nslots);
+-    pci_set_long(shpc->config + SHPC_SLOTS_66, 0);
++    pci_set_long(shpc->config + SHPC_SLOTS_66, nslots);
+     pci_set_byte(shpc->config + SHPC_FIRST_DEV, SHPC_IDX_TO_PCI(0));
+     pci_set_word(shpc->config + SHPC_PHYS_SLOT,
+                  SHPC_IDX_TO_PHYSICAL(0) |
+@@ -256,7 +268,9 @@ void shpc_reset(PCIDevice *d)
+             shpc_set_status(shpc, i, SHPC_LED_OFF, SHPC_SLOT_PWR_LED_MASK);
+         }
+         shpc_set_status(shpc, i, SHPC_LED_OFF, SHPC_SLOT_ATTN_LED_MASK);
+-        shpc_set_status(shpc, i, 0, SHPC_SLOT_STATUS_66);
++        shpc_set_status(shpc, i,
++                        shpc_device_is_66mhz_capable(shpc, i) ? 1 : 0,
++                        SHPC_SLOT_STATUS_66);
+     }
+     shpc_set_sec_bus_speed(shpc, SHPC_SEC_BUS_33);
+     shpc->msi_requested = 0;
+@@ -578,6 +592,9 @@ void shpc_device_plug_cb(HotplugHandler *hotplug_dev, DeviceState *dev,
+         shpc_set_status(shpc, slot, 0, SHPC_SLOT_STATUS_MRL_OPEN);
+         shpc_set_status(shpc, slot, SHPC_SLOT_STATUS_PRSNT_7_5W,
+                         SHPC_SLOT_STATUS_PRSNT_MASK);
++        shpc_set_status(shpc, slot,
++                        shpc_device_is_66mhz_capable(shpc, slot) ? 1 : 0,
++                        SHPC_SLOT_STATUS_66);
+         return;
+     }
+ 
+@@ -596,7 +613,9 @@ void shpc_device_plug_cb(HotplugHandler *hotplug_dev, DeviceState *dev,
+         shpc->config[SHPC_SLOT_EVENT_LATCH(slot)] |=
+             SHPC_SLOT_EVENT_BUTTON;
+     }
+-    shpc_set_status(shpc, slot, 0, SHPC_SLOT_STATUS_66);
++    shpc_set_status(shpc, slot,
++                    shpc_device_is_66mhz_capable(shpc, slot) ? 1 : 0,
++                    SHPC_SLOT_STATUS_66);
+     shpc_interrupt_update(pci_hotplug_dev);
+ }
+ 
 -- 
-2.47.3
+2.34.1
 
 
