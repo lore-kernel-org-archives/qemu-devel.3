@@ -4,99 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB3A9CD4F56
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B53C7CD4F4A
 	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 21:31:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP5Vr-0000l0-Mq; Mon, 18 May 2026 17:28:35 -0400
+	id 1wP5VQ-0000R9-DN; Mon, 18 May 2026 17:28:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5Vn-0000YS-TP
- for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:32 -0400
-Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5VP-0000Pl-Bh
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:07 -0400
+Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5Vl-0000jM-SF
- for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:31 -0400
-Received: by mail-ot1-x32b.google.com with SMTP id
- 46e09a7af769-7de4a9cb8eeso2865720a34.0
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 14:28:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5VN-0000SX-BS
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:07 -0400
+Received: by mail-oi1-x235.google.com with SMTP id
+ 5614622812f47-484df1dce93so1114468b6e.2
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 14:28:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779139709; x=1779744509;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779139684; x=1779744484;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=jGHnVuP8jIyMC8JIdhhrduGtNIGJ/j5NOLUiUoZFHBY=;
- b=CbAc9sex+D9krn9X3dayteBWGqRig1CYPKvv6NZwaYZig6QTMil/gkeBsBv7Sn10BW
- 15SKYz30s6egvsVRgqhfToaWL+jTFcMhek/fL5ZyAghQ37bDdEOL7B2RN01ODGrY7rOc
- v1l0yXwwwdJHSs/Y2jpnbVtI9uZXFqKZCDvQHFC9l7PwU+sc+gP9N8xCmtioZJ7vm/Fk
- qffT1t4EmHMl+ZUZ5f9RD1+e8xoi0RHLW1s2Ld74IfC4z4VBpsQNbWIA38bta5ROMrOl
- 7GO4Yzpxk7c0nwz6NVW0ewUifWjWMTroP7U3ujcnVR1PqlQrZCiVEglG5wMbV9Ghmutt
- 8DHA==
+ :reply-to; bh=mm2q91Iz2qpAj0cOr1D4/1HfcCh46UzWrvusR45KGyU=;
+ b=nwOE7WLJY84oXXKch2mVbOTXa8vZrlab57O5oM6s0e5dJ7ABc/vtgCSrZCcOnvwUV6
+ CzH4qILp40jDMFLJRrpJJewRzZrDrt2XgeBaYc/zn2GO6lePraum0o3gaZXYo0QFQ1ug
+ U5Xbg6c9oDP7x6aooLOR42S26w3NthiuzFRx7SMi5iVJIJU80pjsExNJ0ZrRw4iUhZrc
+ Z2D22EI8D83DrL8vStaQdpR63CBeAafBtfpaTU26u8icONsw2Eqr7ePfAIqDvgKuA9LD
+ x0GjhTNcKBUAzlxFycmFqzys5QSMztUy2Iiwk6xMEgNBhd1xDPtRTT45ariv4gf8knPp
+ GAKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779139709; x=1779744509;
+ d=1e100.net; s=20251104; t=1779139684; x=1779744484;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=jGHnVuP8jIyMC8JIdhhrduGtNIGJ/j5NOLUiUoZFHBY=;
- b=nkq0YP1kbY+8CPqbP/LqtTac6e+e4lsKi5Bc+N9IakdG7DkdnO0u/yFYMXfq0V3ead
- ZzWCCnae43LbJ9/JgyMcy1e9zSLxrJIjfylkTar3zPD0H0uUsBTgcL+8GTdH7CZIYUFg
- GefS8h2WP6VWuoSUdnK8a4JAgAWYa5R/uUlaZ4Zz6uRngKoh6CwsK3t9LA4rw4F64qcg
- iqPs3Q8yPCqNzoj1/ktg3GWZajJ2Ty7d1HRCEVpQFSIAwuHi/yotwQWM7nhovpEgmgfo
- OL4MXlRietWLghIcu9Fvif9a3Di/lqO+oQU3DpA6E1gbl83zx9bUxaFrgCYkUsiSGqRs
- cvBg==
-X-Gm-Message-State: AOJu0Yy2cKsKz69ityXbCZKw1+JqYX7fw8+BTwQeDyddVanwl9KLHZ3z
- 2YhrJy922OS4Rn+Kt4fAqudB0Gi+1YQrXkV8heS0qnxsm64XajO15ywiLU7+2IILP0E=
-X-Gm-Gg: Acq92OGQ8Z1HcjKxtvaBgkxnrcTrpxIZPO7NsHBIzJ+KS5aCzsCsASKm65/gZv41QHH
- sVIhrjspaUodABwz3e5qY4Raa+rgTNkECn/LfM2ItSNjY2kazJVWZGKWRGZuGud1FX7UmJYbLBu
- lcEGgkF8WqN3vJeS05JH3gzSC4iwXUl/wn/NNYBTICSLoC8jOhyH6c6K0OtCs5giOP3lpfjqt/A
- 8fq1ScQ+JACatlGxZWZrJKGXSluaSuOMiTSnjmeB+2Mqgk1lGLncmuwsWW7psgH/CZwYZwO5PhD
- e1V/Z/68qqZUFuezIunIAILlJEYWffhgkFjE4Mh/Qg0IkzCB+7zfPnq21f9N3+IPfOcnu8Mnc7N
- r6C0xzeKrtPo/ERaqYtU83LmpuDj4Ag7s8KbLcN5LYu79SK2c9J/BiWqHcyKQade1p82+u//jLA
- Si3f3lrIedAQ==
-X-Received: by 2002:a05:6830:3910:b0:7d7:4fc9:5204 with SMTP id
- 46e09a7af769-7e4ea01a8bfmr11360487a34.2.1779139708849; 
- Mon, 18 May 2026 14:28:28 -0700 (PDT)
+ bh=mm2q91Iz2qpAj0cOr1D4/1HfcCh46UzWrvusR45KGyU=;
+ b=PwK7I4WdKt3uEZKng80a6ecorVs8J1dUwsK7jUI6Hcpw5k4ZL365bQiA/zAGsW4D3S
+ 4bSWlA19/ROjPsvzvvAErFF8fgvbkE6/wXLUfqsqNcih+z6w6/53llKeQAEJBq0XECEJ
+ dKJbADU5XESBKo/sekOxf5c2OOhPHOHSlduafhYKbUNwwu52xVKDgPoEZrymj2896rRJ
+ p5ITx9mLibrNTo5q18zabQaQ698sdKwFmR9aHICm6TOoo7FxE0+sSFnMra3j9Z09omkw
+ CGXfI+SOB6QUH0dh5CFX5XP05OY4KWJsT10UNYiAghUAlS4mvwATHixWAvLcvtSiWjNh
+ sPmQ==
+X-Gm-Message-State: AOJu0YyZmFCahNWdwnPAYdFCLJsaZDRc/kMu7YZqqTUMT7CfYafc/m7I
+ EjcHzoyzIove016fjLt6TwWCT9fEzDL/DJSn1v5CndVR2DlPsRTPkmCHyD5z0aWOlpI=
+X-Gm-Gg: Acq92OGRYmabUGxDERkqQ1XxkyAsso/hdoYNy3SM3dhBBVK+kfqwQG6BLVrIcKJkXQX
+ NuncTAUw4tN5AaCuJC+ROxwNUhmpHLNM4UckzLqYliUvVLRX+4GvanKylfXXJn1nFl+pn+Me96X
+ ZBuBOA1ah7XhvHlVuUdCVvMDKZVtjkE9eHfAgCPWKSMQ9DS92YQU7qWbf65lDaPGUQ/rzeSrCQb
+ I9YxZbnGW7g7f+SqdMVsyV+pWY6eJmc6GM+KjGJQQ3HpuH43prqKjFivKxLotKsjS6qy17FQe3P
+ bC7/X/qbKOy22++ylv5PXAIZu/i27Z9qkG7L0ZOLPfAeRG1mhak3rinEZu/vsz5rtNrGRnVE9FT
+ iKqoZe4ugYLlumk4UHfsT2F/czXVht8Z3HrBV34EFqEYb6FHNFef+QUI6RUybZkN0h+K+RjlXsX
+ ZQfVjr6Zh7mPf8f4j1570c
+X-Received: by 2002:a05:6808:14d0:b0:47b:d505:d84 with SMTP id
+ 5614622812f47-482e576317fmr10571930b6e.33.1779139683896; 
+ Mon, 18 May 2026 14:28:03 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55b81cc5asm7980358a34.8.2026.05.18.14.28.27
+ 46e09a7af769-7e55b81cc5asm7980358a34.8.2026.05.18.14.28.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 May 2026 14:28:28 -0700 (PDT)
+ Mon, 18 May 2026 14:28:03 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Mon, 18 May 2026 15:27:54 -0600
-Subject: [PATCH v2 36/37] bsd-user: Add kmod, posix, and misc functions to
- os-misc.h
+Date: Mon, 18 May 2026 15:27:30 -0600
+Subject: [PATCH v2 12/37] bsd-user: Add do_bsd_setsockopt and socket option
+ definitions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260518-misc-2026q2-v2-36-6c16fe448301@bsdimp.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260518-misc-2026q2-v2-12-6c16fe448301@bsdimp.com>
 References: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
 In-Reply-To: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>, 
- Karim Taha <kariem.taha2.7@gmail.com>, Sean Bruno <sbruno@FreeBSD.org>, 
- Alexander Kabaev <kan@FreeBSD.org>
+ =?utf-8?q?Mika=C3=ABl_Urankar?= <mikael.urankar@gmail.com>, 
+ Jessica Clarke <jrtc27@jrtc27.com>, Kyle Evans <kevans@FreeBSD.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8178; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=AEXzakBRiEw81OkCt4uOUOmVZS5H1ln6ibu6g6qBDME=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqC4RJx7pk7hVDeU2lhpnTN4VKMgf9jk7AS2dT6
- bSJ6oQZL5yJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaguESQAKCRBsHNEofbAR
- AOPeEADhxq4TScRL/sJ26EKsajcDXL8ebRNBYXQRusjL6GOIv7j+WZ+wiHXL7Kw/zcr1/WYAd0s
- eG2bx8vtYZ800t6FCeXNQEAv2lW7QHecxA0EJEj4huEp0bvUcHOVGp1PcoiHqZVomjhNXiT4/iP
- puRYwrajr3tM7J3UkHSp2RG+zTLghIn4Ig1F0CEaBBy73miIu5mcr5onH8QjOMqzCDiLG81Cfs/
- tq03+J2wR+TSogDZRFF0t217TxLc5Xr4b3+D4BksKxzYsX2hctRyy+zbrGwJMZ3bI+LcjN5Hj2f
- XZZDIBtBXO4tmFFfB10uOmVe2rnDlwx5YN1Q3BNoNn2U4ZNasbrD3h3/DiMxWvDTVmDfggNSXcr
- YOlVMvJvvsV7WRm95G5PwamWBlZqjKVhxgXUh60WBJmfBNt8bzxmvMXGVWAY7CKWy5VC+FRS3tP
- VSOsB9vKdJb1s3sBsjhIiLxlsipK2kDGJnOhMQkdgL/gd+L13SmGoI2ALF2d9qDxfPP0d9sALM1
- cPhlsYwlh6yWoAC525B2Qpuf9E6yMOM5EEqn+bGjDsV4yxTpVnDb91XEefPAyzOoLMEewdkNh+Q
- K3W6kIkNGiWjuvVoOMW/CNB48EQ/ClmyqFG4I+oaMDud05FnLCDc1l1veLLhFKOUYp9csikLpqi
- I4nLz1qC/kotugA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=10944; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=HFUKZ0KW+q4ANQLfrca+alp3qDZmSuVh3eAS8iwM+Zo=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqC4RH0Q2IiP94aNVYQ1OdrNUydOOewv7IDAADV
+ g9HzwtVvbuJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaguERwAKCRBsHNEofbAR
+ AAeyD/oCCN47uQq7TT1foTD5SEtL3/J+NNJneBqMBTIYY2VLHDhzKg3Xy7oKRK/8OePHJfz1WXV
+ j2pQFfpOwPXtRv7Dg6m+410fiqpzvI16FhdWUvnZk9mfGBZEK/+G4mkM/Och+EFl4/FAUL9SfL1
+ EHUFSP64bmJsYhniFYspkk7z+5g4DQd/6n1pS1iWQJlPly5yXn6p/ld3xqtaRYD5E556gwMqz0q
+ dN/cCU2AhVf1FtOZ27/JeJED+yVLHzbYQo4A/c3JtSvJzrE+Uh+1IZcdOFeRZjT6AcYOirRvzrb
+ 9mD+Dw+lP9MZAR/OYEQTWmvqdUgePlub+N7DNk/fb+QdXdn8zwTzTR5vw/3B6iMhiq0LrrXg/Zs
+ KlziWMMXj1SmQBNnUDs3dHuxWpv2+SjVktEE/pE44DVsGe5MG/MdImEiZyxVY4abQiEhE+NMNj4
+ Dp2Q7xpi+50udcERwiwe3v1SewAoGAYiYCWkP+N2m3xEZsp0+Lpb5K4e8h/bVYrDOZ0cFBOvikY
+ zqf+OpapgujLWRtQTZlKmCk9pyBqoKWzEzEaFs//Sp2lhGZAnyLTkRn1Fhhcio68P7e28c2QA8u
+ SOy1x++5O4GOKzvE6uxR9JRI/79kDU0GIeD7o9J5vl4FR40EIMigwevJBT7TqwA91tc/BseCsZb
+ DwvYz9Svke+YJNA==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::32b;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x32b.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::235;
+ envelope-from=imp@bsdimp.com; helo=mail-oi1-x235.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -118,305 +118,291 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Complete os-misc.h with kernel module functions (modfnext, modfind,
-kldload, kldunload, kldunloadf, kldfind, kldnext, kldstat,
-kldfirstmod, kldsym), POSIX functions (posix_fallocate, posix_openpt),
-getrandom, and kenv.
+Add the setsockopt(2) implementation handling IPPROTO_TCP, IPPROTO_IP,
+IPPROTO_IPV6, and SOL_SOCKET levels. Also add the TARGET_SO_* socket
+option definitions and TARGET_SOL_SOCKET to syscall_defs.h.
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
-Signed-off-by: Karim Taha <kariem.taha2.7@gmail.com>
-Signed-off-by: Sean Bruno <sbruno@FreeBSD.org>
-Signed-off-by: Alexander Kabaev <kan@FreeBSD.org>
+Signed-off-by: Mikaël Urankar <mikael.urankar@gmail.com>
+Signed-off-by: Jessica Clarke <jrtc27@jrtc27.com>
+Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 Assisted-by: Claude Opus 4.6 (1M context)
 ---
- bsd-user/freebsd/os-misc.h | 274 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 274 insertions(+)
+ bsd-user/freebsd/os-socket.h | 261 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 261 insertions(+)
 
-diff --git a/bsd-user/freebsd/os-misc.h b/bsd-user/freebsd/os-misc.h
-index 74ed1d2f47..cc33d16abb 100644
---- a/bsd-user/freebsd/os-misc.h
-+++ b/bsd-user/freebsd/os-misc.h
-@@ -270,5 +270,279 @@ static inline abi_long do_freebsd_cpuset_setaffinity(cpulevel_t level,
-  * care. Will reevaluate if examples are found that do matter.
-  */
+diff --git a/bsd-user/freebsd/os-socket.h b/bsd-user/freebsd/os-socket.h
+index 279157dd05..897a1f4d2f 100644
+--- a/bsd-user/freebsd/os-socket.h
++++ b/bsd-user/freebsd/os-socket.h
+@@ -138,5 +138,266 @@ static abi_long do_sendrecvmsg(int fd, abi_ulong target_msg,
+     return ret;
+ }
  
-+/* modfnext(2) */
-+static inline abi_long do_freebsd_modfnext(abi_long modid)
-+{
-+    return -TARGET_ENOENT;
-+}
-+
-+/* modfind(2) */
-+static inline abi_long do_freebsd_modfind(abi_ulong target_name)
-+{
-+    return -TARGET_ENOENT;
-+}
-+
-+/* kldload(2) */
-+static inline abi_long do_freebsd_kldload(abi_ulong target_name)
-+{
-+    return -TARGET_EPERM;
-+}
-+
-+/* kldunload(2) */
-+static inline abi_long do_freebsd_kldunload(abi_long fileid)
-+{
-+    return -TARGET_EPERM;
-+}
-+
-+/* kldunloadf(2) */
-+static inline abi_long do_freebsd_kldunloadf(abi_long fileid, abi_long flags)
-+{
-+    return -TARGET_EPERM;
-+}
-+
-+/* kldfind(2) */
-+static inline abi_long do_freebsd_kldfind(abi_ulong target_name)
-+{
-+    return -TARGET_ENOENT;
-+}
-+
-+/* kldnext(2) */
-+static inline abi_long do_freebsd_kldnext(abi_long fileid)
-+{
-+    return -TARGET_ENOENT;
-+}
-+
-+
-+/* kldstat(2) */
-+static inline abi_long do_freebsd_kldstat(abi_long fileid,
-+        abi_ulong target_stat)
-+{
-+    return -TARGET_ENOENT;
-+}
-+
-+/* kldfirstmod(2) */
-+static inline abi_long do_freebsd_kldfirstmod(abi_long fileid)
-+{
-+    return -TARGET_ENOENT;
-+}
-+
-+/* kldsym(2) */
-+static inline abi_long do_freebsd_kldsym(abi_long fileid, abi_long cmd,
-+        abi_ulong target_data)
-+{
-+    return -TARGET_ENOENT;
-+}
-+
-+/*
-+ * New posix calls
-+ */
-+
-+#if TARGET_ABI_BITS == 32
-+static inline uint64_t target_offset64(uint32_t word0, uint32_t word1)
-+{
-+#ifdef TARGET_BIG_ENDIAN
-+    return ((uint64_t)word0 << 32) | word1;
-+#else
-+    return ((uint64_t)word1 << 32) | word0;
-+#endif
-+}
-+#else /* TARGET_ABI_BITS == 32 */
-+static inline uint64_t target_offset64(uint64_t word0, uint64_t word1)
-+{
-+    return word0;
-+}
-+#endif /* TARGET_ABI_BITS != 32 */
-+
-+/* posix_fallocate(2) */
-+static inline abi_long do_freebsd_posix_fallocate(abi_long arg1, abi_long arg2,
-+    abi_long arg3, abi_long arg4, abi_long arg5, abi_long arg6)
-+{
-+
-+#if TARGET_ABI_BITS == 32
-+    return get_errno(posix_fallocate(arg1, target_offset64(arg3, arg4),
-+        target_offset64(arg5, arg6)));
-+#else
-+    return get_errno(posix_fallocate(arg1, arg2, arg3));
-+#endif
-+}
-+
-+/* posix_openpt(2) */
-+static inline abi_long do_freebsd_posix_openpt(abi_long flags)
-+{
-+
-+    return get_errno(posix_openpt(flags));
-+}
-+
-+/*
-+ * shm_open2 isn't exported, but the __sys_ alias is. We can use either for the
-+ * static version, but to dynamically link we have to use the sys version.
-+ */
-+int __sys_shm_open2(const char *path, int flags, mode_t mode, int shmflags,
-+    const char *);
-+
-+/* shm_open2(2) */
-+static inline abi_long do_freebsd_shm_open2(abi_ulong pathptr, abi_ulong flags,
-+    abi_long mode, abi_ulong shmflags, abi_ulong nameptr)
-+{
-+    int ret;
-+    void *uname, *upath;
-+
-+    if (pathptr == (uintptr_t)SHM_ANON) {
-+        upath = SHM_ANON;
-+    } else {
-+        upath = lock_user_string(pathptr);
-+        if (upath == NULL) {
-+            return -TARGET_EFAULT;
-+        }
-+    }
-+
-+    uname = NULL;
-+    if (nameptr != 0) {
-+        uname = lock_user_string(nameptr);
-+        if (uname == NULL) {
-+            unlock_user(upath, pathptr, 0);
-+            return -TARGET_EFAULT;
-+        }
-+    }
-+    ret = get_errno(__sys_shm_open2(upath,
-+                target_to_host_bitmask(flags, fcntl_flags_tbl), mode,
-+                target_to_host_bitmask(shmflags, shmflag_flags_tbl), uname));
-+
-+    if (upath != SHM_ANON) {
-+        unlock_user(upath, pathptr, 0);
-+    }
-+    if (uname != NULL) {
-+        unlock_user(uname, nameptr, 0);
-+    }
-+    return ret;
-+}
-+
-+/* shm_rename(2) */
-+static inline abi_long do_freebsd_shm_rename(abi_ulong fromptr, abi_ulong toptr,
-+        abi_ulong flags)
-+{
-+    int ret;
-+    void *ufrom, *uto;
-+
-+    ufrom = lock_user_string(fromptr);
-+    if (ufrom == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    uto = lock_user_string(toptr);
-+    if (uto == NULL) {
-+        unlock_user(ufrom, fromptr, 0);
-+        return -TARGET_EFAULT;
-+    }
-+    ret = get_errno(shm_rename(ufrom, uto, flags));
-+    unlock_user(ufrom, fromptr, 0);
-+    unlock_user(uto, toptr, 0);
-+
-+    return ret;
-+}
-+
-+#if defined(CONFIG_GETRANDOM)
-+static inline abi_long do_freebsd_getrandom(abi_ulong buf, abi_ulong buflen,
-+        abi_ulong flags)
++/* setsockopt(2) */
++static inline abi_long do_bsd_setsockopt(int sockfd, int level, int optname,
++        abi_ulong optval_addr, socklen_t optlen)
 +{
 +    abi_long ret;
++    int val;
++    struct ip_mreqn *ip_mreq;
 +    void *p;
 +
-+    p = lock_user(VERIFY_WRITE, buf, buflen, 0);
-+    if (p == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    ret = get_errno(getrandom(p, buflen, flags));
-+    unlock_user(p, buf, ret);
-+
-+    return ret;
-+}
-+#endif
-+
-+static inline abi_long do_freebsd_kenv(abi_long action, abi_ulong name,
-+    abi_ulong value, abi_long len)
-+{
-+    abi_long ret;
-+    void *gname = NULL;         /* unlocked in cases where set */
-+    void *gvalue = NULL;        /* unlocked in cases where set */
-+
-+    ret = -TARGET_EINVAL;
-+    switch (action) {
-+    case KENV_GET:
-+        gname = lock_user_string(name);
-+        if (gname == NULL) {
-+            ret = -TARGET_EFAULT;
-+            break;
++    switch (level) {
++    case IPPROTO_TCP:
++        /* TCP options all take an 'int' value. */
++        if (optlen < sizeof(uint32_t)) {
++            return -TARGET_EINVAL;
 +        }
-+        gvalue = lock_user(VERIFY_WRITE, value, len, 0);
-+        if (gvalue == NULL) {
-+            ret = -TARGET_EFAULT;
-+            break;
++        if (get_user_u32(val, optval_addr)) {
++            return -TARGET_EFAULT;
 +        }
-+        ret = get_errno(kenv(action, gname, gvalue, len));
-+        if (ret > 0) {
-+            len = ret;
-+        } else {
-+            len = 0;
-+        }
++        ret = get_errno(setsockopt(sockfd, level, optname, &val, sizeof(val)));
 +        break;
-+    case KENV_SET:
-+        gname = lock_user_string(name);
-+        if (gname == NULL) {
-+            ret = -TARGET_EFAULT;
-+            break;
-+        }
-+        gvalue = lock_user(VERIFY_READ, value, len, 1);
-+        if (gvalue == NULL) {
-+            ret = -TARGET_EFAULT;
-+            break;
-+        }
-+        ret = get_errno(kenv(action, gname, gvalue, len));
-+        unlock_user(gvalue, value, 0);
-+        gvalue = NULL;
-+        break;
-+    case KENV_UNSET:
-+        gname = lock_user_string(name);
-+        if (gname == NULL) {
-+            ret = -TARGET_EFAULT;
-+            break;
-+        }
-+        /* value and name ignored, per kenv(2) */
-+        ret = get_errno(kenv(action, gname, NULL, 0));
-+        break;
-+    /* All three treated the same */
-+    case KENV_DUMP:
-+    case KENV_DUMP_LOADER:
-+    case KENV_DUMP_STATIC:
-+        /* value == NULL -> just return length */
-+        if (value != 0) {
-+            gvalue = lock_user(VERIFY_WRITE, value, len, 0);
-+            if (gvalue == NULL) {
-+                ret = -TARGET_EFAULT;
-+                break;
++
++    case IPPROTO_IP:
++        switch (optname) {
++        case IP_OPTIONS:
++            p = lock_user(VERIFY_READ, optval_addr, optlen, 1);
++            if (p == NULL) {
++                return -TARGET_EFAULT;
 +            }
++            ret = get_errno(setsockopt(sockfd, level, optname, p, optlen));
++            unlock_user(p, optval_addr, 0);
++            break;
++        case IP_HDRINCL:/* int; header is included with data */
++        case IP_TOS:    /* int; IP type of service and preced. */
++        case IP_TTL:    /* int; IP time to live */
++        case IP_RECVOPTS: /* bool; receive all IP opts w/dgram */
++        case IP_RECVRETOPTS: /* bool; receive IP opts for response */
++        case IP_RECVDSTADDR: /* bool; receive IP dst addr w/dgram */
++        case IP_MULTICAST_IF:/* u_char; set/get IP multicast i/f  */
++        case IP_MULTICAST_TTL:/* u_char; set/get IP multicast ttl */
++        case IP_MULTICAST_LOOP:/*u_char;set/get IP multicast loopback */
++        case IP_PORTRANGE: /* int; range to choose for unspec port */
++        case IP_RECVIF: /* bool; receive reception if w/dgram */
++        case IP_IPSEC_POLICY:   /* int; set/get security policy */
++        case IP_RECVTTL: /* bool; receive reception TTL w/dgram */
++            val = 0;
++            if (optlen >= sizeof(uint32_t)) {
++                if (get_user_u32(val, optval_addr)) {
++                    return -TARGET_EFAULT;
++                }
++            } else if (optlen >= 1) {
++                if (get_user_u8(val, optval_addr)) {
++                    return -TARGET_EFAULT;
++                }
++            }
++            ret = get_errno(setsockopt(sockfd, level, optname, &val,
++                        sizeof(val)));
++            break;
++
++        case IP_ADD_MEMBERSHIP: /*ip_mreq; add an IP group membership */
++        case IP_DROP_MEMBERSHIP:/*ip_mreq; drop an IP group membership*/
++            if (optlen < sizeof(struct target_ip_mreq) ||
++                    optlen > sizeof(struct target_ip_mreqn)) {
++                return -TARGET_EINVAL;
++            }
++            ip_mreq = (struct ip_mreqn *) alloca(optlen);
++            ret = target_to_host_ip_mreq(ip_mreq, optval_addr, optlen);
++            if (is_error(ret)) {
++                return -TARGET_EFAULT;
++            }
++            ret = get_errno(setsockopt(sockfd, level, optname, ip_mreq,
++                        optlen));
++            break;
++
++        default:
++            goto unimplemented;
 +        }
-+        /* name is ignored, per kenv(2) */
-+        ret = get_errno(kenv(action, NULL, gvalue, len));
-+        if (ret > 0) {
-+            len = ret;
-+        } else {
-+            len = 0;
++        break;
++
++    case IPPROTO_IPV6:
++        switch (optname) {
++        case IPV6_UNICAST_HOPS:     /* int; IP6 hops */
++        case IPV6_MULTICAST_IF:     /* u_int; set/get IP6 multicast i/f  */
++        case IPV6_MULTICAST_HOPS:   /* int; set/get IP6 multicast hops */
++        case IPV6_MULTICAST_LOOP:   /* u_int; set/get IP6 multicast loopback */
++        case IPV6_PORTRANGE:        /* int; range to choose for unspec port */
++        case IPV6_CHECKSUM:         /* int; checksum offset for raw socket */
++        case IPV6_V6ONLY:           /* bool; make AF_INET6 sockets v6 only */
++        case IPV6_RECVPKTINFO:      /* bool; recv if, dst addr */
++        case IPV6_RECVHOPLIMIT:     /* bool; recv hop limit */
++        case IPV6_RECVRTHDR:        /* bool; recv routing header */
++        case IPV6_RECVHOPOPTS:      /* bool; recv hop-by-hop option */
++        case IPV6_RECVDSTOPTS:      /* bool; recv dst option after rthdr */
++        case IPV6_USE_MIN_MTU:      /* bool; send packets at the minimum MTU */
++        case IPV6_RECVPATHMTU:      /* bool; notify an according MTU */
++        case IPV6_HOPLIMIT:         /* int; send hop limit */
++        case IPV6_RECVTCLASS:       /* bool; recv traffic class values */
++        case IPV6_AUTOFLOWLABEL:    /* bool; attach flowlabel automagically */
++        case IPV6_TCLASS:           /* int; send traffic class value */
++        case IPV6_DONTFRAG:         /* bool; disable IPv6 fragmentation */
++        case IPV6_PREFER_TEMPADDR:  /* int; prefer temporary addresses */
++        case IPV6_BINDANY:          /* bool: allow bind to any address */
++#ifdef IPV6_BINDMULTI
++        case IPV6_BINDMULTI:        /* bool; allow multibind to same addr/port*/
++#endif /* IPV6_BINDMULTI */
++#ifdef IPV6_RSS_LISTEN_BUCKET
++        case IPV6_RSS_LISTEN_BUCKET: /* int; set RSS listen bucket */
++#endif /* IPV6_RSS_LISTEN_BUCKET */
++#ifdef IPV6_FLOWID
++        case IPV6_FLOWID:           /* int; flowid of given socket */
++#endif /* IPV6_FLOWID */
++#ifdef IPV6_FLOWTYPE
++        case IPV6_FLOWTYPE:         /* int; flowtype of given socket */
++#endif /* IPV6_FLOWTYPE */
++#ifdef IPV6_RSSBUCKETID
++        case IPV6_RSSBUCKETID:      /* int; RSS bucket ID of given socket */
++#endif /* IPV6_RSSBUCKETID */
++            val = 0;
++            if (optlen >= sizeof(uint32_t)) {
++                if (get_user_u32(val, optval_addr)) {
++                    return -TARGET_EFAULT;
++                }
++            } else if (optlen >= 1) {
++                if (get_user_u8(val, optval_addr)) {
++                    return -TARGET_EFAULT;
++                }
++            }
++            ret = get_errno(setsockopt(sockfd, level, optname, &val,
++                        sizeof(val)));
++            break;
++
++        case IPV6_JOIN_GROUP:   /* ipv6_mreq; join a group membership */
++        case IPV6_LEAVE_GROUP:  /* ipv6_mreq; leave a group membership */
++        case ICMP6_FILTER:      /* icmp6_filter; icmp6 filter */
++        case IPV6_IPSEC_POLICY: /* struct; get/set security policy */
++        case IPV6_FW_ADD:       /* add a firewall rule to chain */
++        case IPV6_FW_DEL:       /* delete a firewall rule from chain */
++        case IPV6_FW_FLUSH:     /* flush firewall rule chain */
++        case IPV6_FW_ZERO:      /* clear single/all firewall counter(s) */
++        case IPV6_FW_GET:       /* get entire firewall rule chain */
++        case IPV6_RTHDRDSTOPTS: /* ip6_dest; send dst option before rthdr */
++        case IPV6_PATHMTU:      /* mtuinfo; get the current path MTU */
++        case IPV6_PKTINFO:      /* in6_pktinfo; send if, src addr */
++        case IPV6_NEXTHOP:      /* sockaddr; next hop addr */
++        case IPV6_HOPOPTS:      /* ip6_hbh; send hop-by-hop option */
++        case IPV6_DSTOPTS:      /* ip6_dest; send dst option befor rthdr */
++        case IPV6_RTHDR:        /* ip6_rthdr; send routing header */
++        case IPV6_MSFILTER:     /* struct __msfilterreq; */
++        default:
++            goto unimplemented;
 +        }
++        break;
++
++    case TARGET_SOL_SOCKET:
++        switch (optname) {
++        /* Options with 'int' argument.  */
++        case TARGET_SO_DEBUG:
++            optname = SO_DEBUG;
++            break;
++
++        case TARGET_SO_REUSEADDR:
++            optname = SO_REUSEADDR;
++            break;
++
++        case TARGET_SO_REUSEPORT:
++            optname = SO_REUSEPORT;
++            break;
++
++        case TARGET_SO_KEEPALIVE:
++            optname = SO_KEEPALIVE;
++            break;
++
++        case TARGET_SO_DONTROUTE:
++            optname = SO_DONTROUTE;
++            break;
++
++        case TARGET_SO_LINGER:
++            optname = SO_LINGER;
++            break;
++
++        case TARGET_SO_BROADCAST:
++            optname = SO_BROADCAST;
++            break;
++
++        case TARGET_SO_OOBINLINE:
++            optname = SO_OOBINLINE;
++            break;
++
++        case TARGET_SO_SNDBUF:
++            optname = SO_SNDBUF;
++            break;
++
++        case TARGET_SO_RCVBUF:
++            optname = SO_RCVBUF;
++            break;
++
++        case TARGET_SO_SNDLOWAT:
++            optname = SO_RCVLOWAT;
++            break;
++
++        case TARGET_SO_RCVLOWAT:
++            optname = SO_RCVLOWAT;
++            break;
++
++        case TARGET_SO_SNDTIMEO:
++            optname = SO_SNDTIMEO;
++            break;
++
++        case TARGET_SO_RCVTIMEO:
++            optname = SO_RCVTIMEO;
++            break;
++
++        case TARGET_SO_ACCEPTFILTER:
++            goto unimplemented;
++
++        case TARGET_SO_NOSIGPIPE:
++            optname = SO_NOSIGPIPE;
++            break;
++
++        case TARGET_SO_TIMESTAMP:
++            optname = SO_TIMESTAMP;
++            break;
++
++        case TARGET_SO_BINTIME:
++            optname = SO_BINTIME;
++            break;
++
++        case TARGET_SO_ERROR:
++            optname = SO_ERROR;
++            break;
++
++        case TARGET_SO_SETFIB:
++            optname = SO_SETFIB;
++            break;
++
++#ifdef SO_USER_COOKIE
++        case TARGET_SO_USER_COOKIE:
++            optname = SO_USER_COOKIE;
++            break;
++#endif
++        default:
++            goto unimplemented;
++        }
++        if (optlen < sizeof(uint32_t)) {
++            return -TARGET_EINVAL;
++        }
++        if (get_user_u32(val, optval_addr)) {
++            return -TARGET_EFAULT;
++        }
++        ret = get_errno(setsockopt(sockfd, SOL_SOCKET, optname, &val,
++                    sizeof(val)));
 +        break;
 +    default:
-+        ret = -TARGET_EINVAL;
-+        break;
-+    }
-+
-+    /* Unmap everything mapped */
-+    if (gvalue != NULL) {
-+        unlock_user(gvalue, value, len);
-+    }
-+    if (gname != NULL) {
-+        unlock_user(gname, name, 0);
++unimplemented:
++    gemu_log("Unsupported setsockopt level=%d optname=%d\n",
++        level, optname);
++    ret = -TARGET_ENOPROTOOPT;
 +    }
 +
 +    return ret;
 +}
++
  
- #endif /* OS_MISC_H */
+ #endif /* BSD_USER_FREEBSD_OS_SOCKET_H */
 
 -- 
 2.52.0
