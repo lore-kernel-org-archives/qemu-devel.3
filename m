@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C49B1CD4F52
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 11:35:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94EB6CD4F52
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 11:36:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOwFf-0008LF-Ne; Mon, 18 May 2026 07:35:15 -0400
+	id 1wOwGS-00022A-KY; Mon, 18 May 2026 07:36:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wOwFd-0008Hf-TX
- for qemu-devel@nongnu.org; Mon, 18 May 2026 07:35:13 -0400
+ id 1wOwGR-00021U-CS
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 07:36:03 -0400
 Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wOwFb-0006GU-5d
- for qemu-devel@nongnu.org; Mon, 18 May 2026 07:35:12 -0400
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 7433FC01D4;
- Mon, 18 May 2026 14:35:09 +0300 (MSK)
+ id 1wOwGP-00073M-Hp
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 07:36:03 -0400
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 62B2CC01D4;
+ Mon, 18 May 2026 14:35:59 +0300 (MSK)
 Received: from [IPV6:2a02:6bf:8080:b95::1:20] (unknown
  [2a02:6bf:8080:b95::1:20])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id 8ZO0pT3M1W20-OTp1PI1o; Mon, 18 May 2026 14:35:08 +0300
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id wZOhgV3KleA0-letYSqat; Mon, 18 May 2026 14:35:58 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1779104108;
- bh=pcph23snDTpCxPTIpoSncXJNW1cSRlxkcXqCqhJ/X8w=;
+ s=default; t=1779104158;
+ bh=0abCbUwwzLjFU6gNdhBuoDgphm3rxmERneLmEoxD65g=;
  h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=dxKPvTBTTRAC8w01gBeU4sQzniDLH9GPxYncsRMPTwf3faU6i/S5qXSZYsG3BG8DX
- kamhzHt/6VYDixVHar1pIatBPon9+OG8KtpkI2irAIBdYntY1/8iJ+SE7NZsnR4JVC
- jhRBppgKV8WiXkh+5dtwEIiZ/gOQCf8qmxpJPb/Q=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ b=VrnoDZE7qIw8AYHqCcP6NCplLekL/1PiHe5zI1kTy7VseQbeVO/QZDM24s7WuUy7H
+ lkGul0Wmvo1nAgMaX4VGDXH+3D4nZDvKWOM/TjT7xq6S+42jJd5wkdedlsgly9Ah9t
+ soR3nzDbXrvrDs6tl5f547+sZsJdu/dyYhLPhsdE=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-Message-ID: <99f7f6c5-baab-4920-9f4e-92bdd2605220@yandex-team.ru>
-Date: Mon, 18 May 2026 14:35:08 +0300
+Message-ID: <d60b5b69-7c0b-4a49-98ac-7d826b6fce54@yandex-team.ru>
+Date: Mon, 18 May 2026 14:35:58 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 00/13] net: refactoring and fixes
-To: jasowang@redhat.com
-Cc: qemu-devel@nongnu.org, bchaney@akamai.com, yc-core@yandex-team.ru,
- d-tatianin@yandex-team.ru, davydov-max@yandex-team.ru
-References: <20260318113144.15697-1-vsementsov@yandex-team.ru>
+Subject: Re: [PATCH v15 0/8] virtio-net: live-TAP local migration
+To: jasowang@redhat.com, mst@redhat.com
+Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
+ raphael.s.norwitz@gmail.com, bchaney@akamai.com, qemu-devel@nongnu.org,
+ berrange@redhat.com, pbonzini@redhat.com, yc-core@yandex-team.ru
+References: <20260420193846.675844-1-vsementsov@yandex-team.ru>
 Content-Language: en-US
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20260318113144.15697-1-vsementsov@yandex-team.ru>
+In-Reply-To: <20260420193846.675844-1-vsementsov@yandex-team.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=178.154.239.72;
@@ -78,36 +79,58 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 ping
 
-On 18.03.26 14:31, Vladimir Sementsov-Ogievskiy wrote:
+On 20.04.26 22:38, Vladimir Sementsov-Ogievskiy wrote:
 > Hi all!
 > 
-> Here are some refactoring and fixes, mostly in net/tap.c I'm making on
-> my way to implementing TAP fd migration (through UNIX domain socket).
+> Here is a new migration parameter "local", which allows to
+> enable local migration of TAP virtio-net backend (and maybe other
+> devices and backends in future), including its properties and open
+> fds.
 > 
-> v4:
-> 01-12: add r-b by Ben
-> 10: fix bug in tap_parse_vhost_fds(), keep r-b
+> With this new option, management software doesn't need to initialize
+> new TAP and do a switch to it. Nothing should be done around
+> virtio-net in local migration: it just migrates and continues to use
+> same TAP device. So we avoid extra logic in management software, extra
+> allocations in kernel (for new TAP), and corresponding extra delay in
+> migration downtime.
 > 
-> Vladimir Sementsov-Ogievskiy (13):
->    net/af-xdp: fix type overflow
->    net/tap: net_init_tap_one(): add return value
->    net/tap: net_init_tap(): drop extra vhostfdname variable
->    net/tap: net_init_tap(): refactor parameter checking
->    net/tap: net_init_tap(): common fail label
->    net/tap: net_init_tap_one() refactor to get vhostfd param
->    net/tap: net_init_tap_one(): drop model parameter
->    net: introduce net_parse_fds()
->    net/tap: move fds parameters handling to separate functions
->    net/tap: fix vhostfds/vhostfd parameters API
->    net/tap: net_init_tap(): merge fd=, fds= and helper= cases into one
->    net/tap: net_init_tap(): relax QEMU hubs check
->    net/tap: check that user tries to define zero queues
+> v15:
+> 03: add a-b by Peter
+> 05: rebase on master, fix compat property to be part of 11.0
 > 
->   net/af-xdp.c |  44 ++-----
->   net/tap.c    | 324 +++++++++++++++++++++------------------------------
->   net/util.c   |  55 +++++++++
->   net/util.h   |  14 +++
->   4 files changed, 211 insertions(+), 226 deletions(-)
+> v15 pushed as branch up-tap-fd-migration-with-bk-opt
+>      at https://gitlab.com/vsementsov/qemu.git
+> 
+> Based-on: <20260318113144.15697-1-vsementsov@yandex-team.ru>
+>     "[PATCH v4 00/13] net: refactoring and fixes"
+> 
+> Vladimir Sementsov-Ogievskiy (8):
+>    net/tap: move vhost-net open() calls to tap_parse_vhost_fds()
+>    net/tap: move vhost initialization to tap_setup_vhost()
+>    qapi: add local migration parameter
+>    net: introduce vmstate_net_peer_backend
+>    virtio-net: support local migration of backend
+>    net/tap: support local migration with virtio-net
+>    tests/functional: add skipWithoutSudo() decorator
+>    tests/functional: add test_tap_migration
+> 
+>   hw/core/machine.c                             |   5 +
+>   hw/i386/pc_q35.c                              |   1 +
+>   hw/net/virtio-net.c                           | 137 +++++-
+>   include/hw/core/boards.h                      |   3 +
+>   include/hw/virtio/virtio-net.h                |   2 +
+>   include/migration/misc.h                      |   2 +
+>   include/net/net.h                             |   6 +
+>   migration/options.c                           |  18 +-
+>   net/net.c                                     |  47 ++
+>   net/tap.c                                     | 246 ++++++++--
+>   qapi/migration.json                           |  12 +-
+>   qapi/net.json                                 |  10 +-
+>   tests/functional/qemu_test/decorators.py      |  16 +
+>   tests/functional/x86_64/meson.build           |   1 +
+>   tests/functional/x86_64/test_tap_migration.py | 456 ++++++++++++++++++
+>   15 files changed, 911 insertions(+), 51 deletions(-)
+>   create mode 100755 tests/functional/x86_64/test_tap_migration.py
 > 
 
 
