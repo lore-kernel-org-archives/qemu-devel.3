@@ -4,118 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72F30CD4F3C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FB18CD4F52
 	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 11:46:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOwPN-0003be-Nl; Mon, 18 May 2026 07:45:17 -0400
+	id 1wOwPM-0003bD-Tq; Mon, 18 May 2026 07:45:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avi@scylladb.com>) id 1wOwP8-0003a2-4C
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wOwP9-0003aD-P0
  for qemu-devel@nongnu.org; Mon, 18 May 2026 07:45:09 -0400
-Received: from mail-vk1-xa35.google.com ([2607:f8b0:4864:20::a35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <avi@scylladb.com>) id 1wOwOr-000292-R9
- for qemu-devel@nongnu.org; Mon, 18 May 2026 07:44:47 -0400
-Received: by mail-vk1-xa35.google.com with SMTP id
- 71dfb90a1353d-575212eb419so1555561e0c.1
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 04:44:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779104683; cv=none;
- d=google.com; s=arc-20240605;
- b=jVRetfNC+oaVsHMtu/Shb5CsNtmo30fPPzDtFvhuIjzUWmHyFX56lTi+xP1qUHe248
- LhYsw9pdro5u44JhM2X8jgaarvAFrD5Z0CeEo77c2tU3qfCjmXUPQbXIaEcnvXsoghRk
- 4Ko0mMvpDK7CNmpQH82N9fREakKtzqZMnBNQgKTAYVLJe7K7jwRbd7dhnrCAC2GLrASs
- +jXJSc6Oqs6AlQw/r9SlVGnPnloPb7J4Lw4ql/ORlh/GgufeUCiRg/UkC9cQ2Jg5lA6S
- ydakfehxbMRypK6FdCkBp0PTkZ0+Iu5uV7owYMKQHvG75wlaTWNh71NBxNaZILlIZgzI
- iegQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Dsu9VmyPA3MFI6qwx5Ke2ianplKMkJa4tw9F7/oXies=;
- fh=F2XsAGgEqHrLS/qtDmFV1PM0/P8vrcSnPQ7nUxdP7Mg=;
- b=ff6V/fiG0y5qIQCw0m6xi0V8+1kbhwIyjuLmu09gWnV0Z/myrZRyo+/dSVLNNWQPkk
- HPnL+hx+IJJ7bdiwTbGypxRH1oLElmfRz5k1JpB7puee4F5M6eFJp9bXvd0QVP1aiKc6
- NTBJAYv7ssq25qYkw0Ok5IS+l+LhlWZjiMg04fKpTT5BhmrKZhRp7C/PoJaIhtlvnc9V
- zrpj/LN8xU3VGoBQAWZ2DxYbjRzHFjtMNXbSL6ks2sDZ8YRVfzxxYlxiqyxgh3IyZCX7
- w2HRq95/fahZ8eseX493eVVn+Knz+K/8MD7UGko2nJFbHdUF5Fch7zTzzXfgj1VOUWW3
- gY4w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=scylladb.com; s=google; t=1779104683; x=1779709483; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Dsu9VmyPA3MFI6qwx5Ke2ianplKMkJa4tw9F7/oXies=;
- b=pQ/IjqsLg9Opdk8ULp3N20rDn6CCU920M1ZkU4w3Am3CG6+fr6frpETE2MIYLIZRX1
- 5ic8ayEtQSnp/XjSbwaXEMdzoh1OmSiB07tlfacvah9f3kSHMzbDqKsBBgn+6NizXu71
- 6TXyfbkXOETlkI58AneqhK0pU0HYApfdPKZ+GhUMYGSFI5dqMgM4p/W5wsQAGF7lB02e
- LKs8x27JhG8ytA4NPRD4zAJKeh34D9iMvhB44Eu4wwhWOXYvM9QJhicf69pUGwyBg4Kq
- Ht9YqM3HqPh6mcSgi4MTzGkH19JFnj+C2nGo8I2nTwkfLw46MA6L3yrqYaN5PSi8GW1+
- Q2Cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779104683; x=1779709483;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Dsu9VmyPA3MFI6qwx5Ke2ianplKMkJa4tw9F7/oXies=;
- b=RsXsfnx7toDal2f8xnNG5RG9zTZ8/fPIT9Xe4AfJ/9uCJR0mqdJAFqIa/5zrk7v1eE
- n2ZW/CxM30nhRWhAvni7M5U5AOIzESz2lUf2jdu8wj6b1TZmDjy5yq3rcf2CVBVZavft
- QR+YBstPkALHC7sulnSelgSazekwxmvPlfYm0cPUfZNUHMYI9+tSHglYk1XVJu0tcAIK
- ZcBfBh2fbY3y9JrpRStL8q90Ap8iX34d36R7XViUFGHBpfIq8RK+AN+UNSZ1sX2AsBZ8
- jU2JM9ZqWg0H7LtW4P2ymBPgIwvP3zx6tyfQmNeMHe/mGZS/kjcY9r9f9YGu43VQ7l6E
- +6yQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9Lwz4k9aIROEDqoHOtMC4U4FwOuj4rV5lZpHL8IjMYXlsbfcYdrRTM244ksBRPwlmG/zwajRSJ6uu/@nongnu.org
-X-Gm-Message-State: AOJu0YwmhrDjr51cR8QpWr8lTx0imepOEdD7u45ra4fijZS4c8auLFrK
- k6gVFVvQ2uRnOaemJroYoCYQOBFwL949oNhDNnYLDghuV033rW02/XzkK649/h8+hKCxHqdUwkY
- 7j8t/OOGnUul5PIqS3gqXUZBmhNWQCqMA2oQ7SyX0mXhoCVV1SZzA8Nm4yNWB9PDLGnJSb6c2Pn
- rJqVJz4YEiQQrXo3V+jfMqsHZ13M7g2ojqnhtf5o932c8Tt+IVFawimWDtmQdusd77XtHw8tBor
- /GaLsEgHRNJZGYO2VUno3WfKoAzw4dENHLzzr2UVWv+GKCWWgYzQnQ4jkHydPSxt1ZXHHrdlHRc
- sMK9NWMDOxin4EOuaI1kkojE0b5WLz+VMu15oPZke1hG0jwKzW6LD4bh4NU1D9i5NWrxw5aH
-X-Gm-Gg: Acq92OEyIH9fJjrfx78B0G+c1SbowdEyQr7iE3ZZ7kWsmJAM7/AJjl2d5tM//jLG5kg
- PPfU2anVmCooIZMpkOhw5OHf+xdPUA5YvphqBRMrc5o1nSlQl69DnWLNE1+qhKh0MdjfFO75fAb
- SCuC6edG8I0LB1FAgcDOlp7JifihgWCC2A26jheKTLea1/xbfj87xINhEt07gyCqSq9fDqT2xM2
- gU48lY3dST/tTrwfZsyd0XYmc9o8GDKevKzaccD789xxNToI5KCeDvOtOJDZ3hoo1kGzsyRCJNO
- CERc8Og=
-X-Received: by 2002:a05:6122:6b8a:10b0:56e:e652:2c10 with SMTP id
- 71dfb90a1353d-575f574b7e6mr4783861e0c.4.1779104683482; Mon, 18 May 2026
- 04:44:43 -0700 (PDT)
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wOwOv-00029u-6o
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 07:45:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779104686;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8yxS2hOlVCCE43jVC3QbMt/kEHOmWfGNie6mBrK10kc=;
+ b=IiowVqwpJ1Oaxcn3tT+XfQGuBJb7B2qH2K5CaJTpUuhtJEO+fcKQWFQ9sGr0z4IdbQOuGh
+ sWY6WJdzeN9Jn76OD78J+kj7UQTgPz9bhksuYVq/sB28DljMkhwbcCFGQrAQ2jjfoPdQY2
+ wo+XY8lbFTMCgvOrGveRXNACudupxR8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-639-HBm4YvwdO8m1VEH9DEKhIg-1; Mon,
+ 18 May 2026 07:44:42 -0400
+X-MC-Unique: HBm4YvwdO8m1VEH9DEKhIg-1
+X-Mimecast-MFC-AGG-ID: HBm4YvwdO8m1VEH9DEKhIg_1779104681
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7B7211956089; Mon, 18 May 2026 11:44:41 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8A24230002DF; Mon, 18 May 2026 11:44:40 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 26C0721E6A01; Mon, 18 May 2026 13:44:38 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
+ <dave@treblig.org>,  Eric Blake <eblake@redhat.com>,  Markus Armbruster
+ <armbru@redhat.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Stefan
+ Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PATCH V7 02/14] iothread: introduce iothread_ref/unref to
+ track attached devices
+In-Reply-To: <20260511140416.28271-3-zhangckid@gmail.com> (Zhang Chen's
+ message of "Mon, 11 May 2026 22:04:04 +0800")
+References: <20260511140416.28271-1-zhangckid@gmail.com>
+ <20260511140416.28271-3-zhangckid@gmail.com>
+Date: Mon, 18 May 2026 13:44:38 +0200
+Message-ID: <877bp1uel5.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20260306165717.3360110-1-berrange@redhat.com>
- <ad0pQDzYIki56wUe@AALNPWKJENSEN.aal.scsc.local>
-In-Reply-To: <ad0pQDzYIki56wUe@AALNPWKJENSEN.aal.scsc.local>
-From: Avi Kivity <avi@scylladb.com>
-Date: Mon, 18 May 2026 14:44:32 +0300
-X-Gm-Features: AVHnY4Iwp4Xbj5eY70Z_v637NQ21s0vVezHouk84pJwtosKilIxDsg0TajzIQHc
-Message-ID: <CAF950WJM4=n=L-cSEgTFWTkOFDJCD9+aWSVwxm3oaN5+rvR7+g@mail.gmail.com>
-Subject: Re: [PATCH 0/4] hw/nvme: make model & firmware version cnofigurable
-To: Klaus Jensen <its@irrelevant.dk>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Keith Busch <kbusch@kernel.org>, Kevin Wolf <kwolf@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng <fam@euphon.net>,
- Hanna Reitz <hreitz@redhat.com>, 
- Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000ad75000652161684"
-X-CLOUD-SEC-AV-Sent: true
-X-CLOUD-SEC-AV-Info: scylladb,google_mail,monitor
-X-Gm-Spam: 0
-X-Gm-Phishy: 0
-X-CLOUD-SEC-AV-Sent: true
-X-CLOUD-SEC-AV-Info: scylla,google_mail,monitor
-X-Gm-Spam: 0
-X-Gm-Phishy: 0
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a35;
- envelope-from=avi@scylladb.com; helo=mail-vk1-xa35.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,91 +90,244 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000ad75000652161684
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Zhang Chen <zhangckid@gmail.com> writes:
 
-On Mon, Apr 13, 2026 at 8:34=E2=80=AFPM Klaus Jensen <its@irrelevant.dk> wr=
-ote:
-
-> On Mar  6 16:57, Daniel P. Berrang=C3=A9 wrote:
-> > These are both currently set to QEMU specific hardcoded defaults,
-> > and in common with other block devices, should allow user overrides.
-> >
-> > The pre-existing serial field should also be length checked to
-> > detect & report invalid user input instead of silently truncating.
-> >
-> > Daniel P. Berrang=C3=A9 (4):
-> >   include/block: define constants for NVME string fields
-> >   hw/nvme: report error for oversized 'serial' parameter
-> >   hw/nvme: add user controlled 'model' property
-> >   hw/nvme: add user controlled 'firmware-version' property
-> >
-> >  docs/system/devices/nvme.rst | 10 ++++++++++
-> >  hw/nvme/ctrl.c               | 31 ++++++++++++++++++++++++++++---
-> >  hw/nvme/nvme.h               |  2 ++
-> >  include/block/nvme.h         | 10 +++++++---
-> >  4 files changed, 47 insertions(+), 6 deletions(-)
-> >
-> > --
-> > 2.53.0
-> >
-> >
+> Currently, IOThreads do not maintain a record of which devices are
+> associated with them. This makes it difficult to monitor the
+> workload distribution of IOThreads, especially in complex
+> hotplug scenarios involving multiple virtio-blk or virtio-scsi devices.
 >
-> Given the reference to prior art on introducing error checking in these
-> cases, this LGTM.
+> This patch introduces a reference counting and tracking mechanism
+> within the IOThread object:
 >
-> Applied to nvme.for-11.1. Thanks!
+> - iothread_ref(): Prepends the device's QOM path to a list.
+> - iothread_unref(): Searches for the device path using a custom
+>   string comparison (g_strcmp0), releases the associated memory
+>   upon a successful match.
+> - holders: A GList storing the QOM paths of attached devices
+>   for runtime introspection.
 >
+> A later commit will add QMP commands to let management applications
+> query the attachment status of IOThreads.
+>
+> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> ---
+>  include/system/iothread.h |  5 +++
+>  iothread.c                | 67 +++++++++++++++++++++++++++++++++++++++
+>  qapi/misc.json            | 48 ++++++++++++++++++++++++++++
+>  3 files changed, 120 insertions(+)
+>
+> diff --git a/include/system/iothread.h b/include/system/iothread.h
+> index a1ef7696cb..2871b06edc 100644
+> --- a/include/system/iothread.h
+> +++ b/include/system/iothread.h
+> @@ -50,6 +50,11 @@ struct IOThread {
+>      bool stopping;              /* has iothread_stop() been called? */
+>      bool running;               /* should iothread_run() continue? */
+>      int thread_id;
+> +    /*
+> +     * The list elements are of type IoThreadHolder, which can
+> +     * represent either a QOM path or a block node name.
+> +     */
+> +    GList *holders;
+>=20=20
+>      /* AioContext poll parameters */
+>      int64_t poll_max_ns;
+> diff --git a/iothread.c b/iothread.c
+> index 3558535b40..b805e4f97d 100644
+> --- a/iothread.c
+> +++ b/iothread.c
+> @@ -25,6 +25,66 @@
+>  #include "qemu/rcu.h"
+>  #include "qemu/main-loop.h"
+>=20=20
+> +/*
+> + * Add the @holder path to the iothread's tracking list.
+> + * The @holder is a QOM path if it starts with '/', else a block node na=
+me.
+> + */
 
-I don't see it in master. What's the schedule for upstreaming it?
+This interface overloads two string keys: QOM paths and block node
+names.  For that to work, a key value must be unambiguously either QOM
+path or block node name.  To get that, you restrict QOM path to
+absolute.  Not exactly pretty, but it works.
 
---000000000000ad75000652161684
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+What if you ever need to add another kind of holder?
 
-<div dir=3D"ltr"><div dir=3D"ltr">On Mon, Apr 13, 2026 at 8:34=E2=80=AFPM K=
-laus Jensen &lt;<a href=3D"mailto:its@irrelevant.dk">its@irrelevant.dk</a>&=
-gt; wrote:</div><div class=3D"gmail_quote gmail_quote_container"><blockquot=
-e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
-olid rgb(204,204,204);padding-left:1ex">On Mar=C2=A0 6 16:57, Daniel P. Ber=
-rang=C3=A9 wrote:<br>
-&gt; These are both currently set to QEMU specific hardcoded defaults,<br>
-&gt; and in common with other block devices, should allow user overrides.<b=
-r>
-&gt; <br>
-&gt; The pre-existing serial field should also be length checked to<br>
-&gt; detect &amp; report invalid user input instead of silently truncating.=
-<br>
-&gt; <br>
-&gt; Daniel P. Berrang=C3=A9 (4):<br>
-&gt;=C2=A0 =C2=A0include/block: define constants for NVME string fields<br>
-&gt;=C2=A0 =C2=A0hw/nvme: report error for oversized &#39;serial&#39; param=
-eter<br>
-&gt;=C2=A0 =C2=A0hw/nvme: add user controlled &#39;model&#39; property<br>
-&gt;=C2=A0 =C2=A0hw/nvme: add user controlled &#39;firmware-version&#39; pr=
-operty<br>
-&gt; <br>
-&gt;=C2=A0 docs/system/devices/nvme.rst | 10 ++++++++++<br>
-&gt;=C2=A0 hw/nvme/ctrl.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0| 31 ++++++++++++++++++++++++++++---<br>
-&gt;=C2=A0 hw/nvme/nvme.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0|=C2=A0 2 ++<br>
-&gt;=C2=A0 include/block/nvme.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 10 +++++=
-++---<br>
-&gt;=C2=A0 4 files changed, 47 insertions(+), 6 deletions(-)<br>
-&gt; <br>
-&gt; -- <br>
-&gt; 2.53.0<br>
-&gt; <br>
-&gt; <br>
-<br>
-Given the reference to prior art on introducing error checking in these<br>
-cases, this LGTM.<br>
-<br>
-Applied to nvme.for-11.1. Thanks!<br></blockquote><div><br></div><div>I don=
-&#39;t see it in master. What&#39;s the schedule for upstreaming it?=C2=A0<=
-/div></div></div>
+Any new kind of holder would need a string key that cannot start with
+'/', and cannot clash with block node names.  You'd either have to redo
+this interface, or outlaw the clashes.
 
---000000000000ad75000652161684--
+PATCH 06 in fact adds a new kind of holder: monitors.  To keep this
+interface working, it uses made-up QOM paths as keys.  This is cheating.
+
+Daniel Berrang=C3=A9 posted a series that turns monitors into QOM objects.
+If it gets merged, your series can be fixed not to cheat.
+
+More in review of PATCH 06.
+
+> +static void iothread_ref(IOThread *iothread, const char *holder)
+> +{
+> +    IoThreadHolder *h =3D g_new0(IoThreadHolder, 1);
+> +
+> +    assert(holder);
+> +
+> +    if (holder[0] =3D=3D '/') {
+> +        h->type =3D IO_THREAD_HOLDER_KIND_QOM_OBJECT;
+> +        h->u.qom_object.data =3D g_strdup(holder);
+> +    } else {
+> +        h->type =3D IO_THREAD_HOLDER_KIND_BLOCK_NODE;
+> +        h->u.block_node.data =3D g_strdup(holder);
+> +    }
+> +
+> +    iothread->holders =3D g_list_prepend(iothread->holders, h);
+> +}
+> +
+> +static int iothread_holder_compare(gconstpointer a, gconstpointer b)
+> +{
+> +    const IoThreadHolder *holder_node =3D a;
+> +    const char *target_name =3D b;
+> +    const char *current_name;
+> +
+> +    if (holder_node->type =3D=3D IO_THREAD_HOLDER_KIND_QOM_OBJECT) {
+> +        current_name =3D holder_node->u.qom_object.data;
+> +    } else if (holder_node->type =3D=3D IO_THREAD_HOLDER_KIND_BLOCK_NODE=
+) {
+> +        current_name =3D holder_node->u.block_node.data;
+> +    } else {
+> +        /*
+> +         * This should not happen. If it does, current_name remains
+> +         * NULL and g_strcmp0 will handle it safely.
+> +         */
+> +        current_name =3D NULL;
+> +    }
+> +
+> +    return g_strcmp0(current_name, target_name);
+> +}
+> +
+> +/*
+> + * This function removes the @holder from the @iothread's tracking list.
+> + * The @holder string must match the one used previously in iothread_ref=
+).
+> + * It is a programming error to call this with a @holder that is not
+> + * currently associated with the @iothread.
+> + */
+> +static void iothread_unref(IOThread *iothread, const char *holder)
+> +{
+> +    GList *link =3D g_list_find_custom(iothread->holders, holder,
+> +                                     (GCompareFunc)iothread_holder_compa=
+re);
+> +
+> +    assert(link);
+> +
+> +    IoThreadHolder *h =3D (IoThreadHolder *)link->data;
+> +    qapi_free_IoThreadHolder(h);
+> +    iothread->holders =3D g_list_delete_link(iothread->holders, link);
+> +}
+> +
+>  static void *iothread_run(void *opaque)
+>  {
+>      IOThread *iothread =3D opaque;
+> @@ -108,6 +168,9 @@ static void iothread_instance_finalize(Object *obj)
+>=20=20
+>      iothread_stop(iothread);
+>=20=20
+> +    /* We don't support finalize without holders */
+> +    assert(iothread->holders =3D=3D NULL);
+
+The comment seems to say "no holders is not supposed to happen".
+
+The assertion says "holders is not supposed to happen".
+
+Which one is wrong?
+
+> +
+>      /*
+>       * Before glib2 2.33.10, there is a glib2 bug that GSource context
+>       * pointer may not be cleared even if the context has already been
+> @@ -356,6 +419,10 @@ char *iothread_get_id(IOThread *iothread)
+>=20=20
+>  AioContext *iothread_get_aio_context(IOThread *iothread)
+>  {
+> +    /* Remove in next patch for build */
+> +    iothread_ref(iothread, "tmp");
+> +    iothread_unref(iothread, "tmp");
+> +
+>      return iothread->ctx;
+>  }
+>=20=20
+> diff --git a/qapi/misc.json b/qapi/misc.json
+> index c71a5fe657..5fb7dcfcad 100644
+> --- a/qapi/misc.json
+> +++ b/qapi/misc.json
+> @@ -67,6 +67,54 @@
+>  ##
+>  { 'command': 'query-name', 'returns': 'NameInfo', 'allow-preconfig': tru=
+e }
+>=20=20
+> +
+> +##
+> +# @IoThreadHolderBlockNode:
+> +#
+> +# @data: Block node name.
+
+Could we name this @node-name?
+
+> +#
+> +# Since: 11.1
+> +#
+> +##
+> +{ 'struct': 'IoThreadHolderBlockNode',
+> +  'data': { 'data': 'str' } }
+> +
+> +##
+> +# @IoThreadHolderQomObject:
+> +#
+> +# @data: Absolute @qom-path.
+
+Could we name this @qom-path?
+
+> +#
+> +# Since: 11.1
+> +#
+> +##
+> +{ 'struct': 'IoThreadHolderQomObject',
+> +  'data': { 'data': 'str' } }
+> +
+> +##
+> +# @IoThreadHolderKind:
+> +#
+> +# @block-node: Block node name.
+> +# @qom-object: Absolute @qom-path.
+
+Let's use
+
+   # @block-node: A block node
+   #
+   # @qom-object: A QOM Object
+
+> +#
+> +# Since: 11.1
+> +##
+> +{ 'enum': 'IoThreadHolderKind',
+> +  'data': [ 'block-node', 'qom-object' ] }
+> +
+> +##
+> +# @IoThreadHolder:
+> +#
+> +# @type: the kind of I/O thread holder.
+> +#
+> +# Since: 11.1
+> +##
+> +{ 'union': 'IoThreadHolder',
+> +  'base': { 'type': 'IoThreadHolderKind' },
+> +  'discriminator': 'type',
+> +  'data': {
+> +    'block-node': 'IoThreadHolderBlockNode',
+> +    'qom-object': 'IoThreadHolderQomObject' } }
+> +
+>  ##
+>  # @IOThreadInfo:
+>  #
+
 
