@@ -4,71 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 343F1CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 12:33:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17FACCD4F52
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 12:33:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOx97-000410-7g; Mon, 18 May 2026 08:32:34 -0400
+	id 1wOx8G-0003ke-HB; Mon, 18 May 2026 08:31:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wOx8o-0003wU-5C
- for qemu-devel@nongnu.org; Mon, 18 May 2026 08:32:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wOx8m-0004oy-Pu
- for qemu-devel@nongnu.org; Mon, 18 May 2026 08:32:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779107531;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=gwdOOi13j1pB+fS90iq4rLcAKamyS/B6P4b2VG43UME=;
- b=is0a1gTMdHUYlusw2kR1VUciOjf5Kooa4ryD1ATUbSmQtZ3KZZorlUYXJB9aoYHFYssrKU
- Z0W+1f2hMvG6ZyE3MD9rpw89FOLV1+mQ/jt3V5YvLUZTQbymdmhHz7pZUXkbvGp0S941hj
- fuzHW35tBIaIXhsoJkawABa2D9eXLAQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-Ffo9PMYKNZaYKF40NWiafg-1; Mon,
- 18 May 2026 08:32:07 -0400
-X-MC-Unique: Ffo9PMYKNZaYKF40NWiafg-1
-X-Mimecast-MFC-AGG-ID: Ffo9PMYKNZaYKF40NWiafg_1779107526
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6D3B018002C8; Mon, 18 May 2026 12:32:06 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.101])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D4DB7180034E; Mon, 18 May 2026 12:32:05 +0000 (UTC)
-Date: Sat, 16 May 2026 19:25:30 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, stefanha@redhat.com
-Subject: Re: [PULL 0/1] virtio: Add vhost-user-rtc and vhost-user-rtc-pci
-Message-ID: <20260516232530.GA39178@fedora>
-References: <20260515132315.520678-1-manos.pitsidianakis@linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOx80-0003hN-MR
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 08:31:37 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOx7w-00049O-DW
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 08:31:23 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-45ae6a0e523so1058617f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 05:31:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779107463; x=1779712263; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=o9dCBHREVN4FOUkZ7TOOiDnBqojjUMpj/VFwISRHQ94=;
+ b=pyhKWZw01tbH+FbfgP/gmM7TiMGYpfTm2gMXvZ62qSWUn/P9fm0YMq0KNSXihaFeIl
+ u2adrskv4tpERrPJvq9tIkX192+yPfFC7B5gKw55T9wwI1gcUcc/DDg1SoyLogsBXLA+
+ ygUsUmVJq8BVC5a/8TvBvvMLwkMP40p3WYyS+smdz526LbYUJnIljzpOCERVDH/zwToo
+ D0ENIdZ4T96Ssn0AOD9ElfeQva4kcVfa7G7gUKBYPU/TKz9Xtz62LdUJ5rB6PFauiQ/T
+ BpNUuk8PsfCBCTH6QxV4kMSeJqxLdDlHZ1K9rQkR+/iB/jV77fEx1cIHwoXJbCZ0v5GN
+ FYmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779107463; x=1779712263;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=o9dCBHREVN4FOUkZ7TOOiDnBqojjUMpj/VFwISRHQ94=;
+ b=ctI9jGkht83zTMpbvUUgm9dmtllRc6e7uFUBze7kWjkROGiHyr/YcYSp9jGR8Ru8RF
+ /aMmoiksuFt+At+UIGsVeiPGRj/Kuh8eIooruGls9KfgP69XUe8fZSUEG2iedXruMFO/
+ gLX02Zb4u6fF/syHnglRi/5xQWjTOh9FWljYsJ+54RKTNPqisVMSsY03yeSI5dHcpqi1
+ 5aK5JFUUHWaa4Dnzgf88hV+Gm9Jupp6FK/qDPwOg3BADgPTBZVj48XhG9NQbVrW5ZUbM
+ MOiiIZS6Q4ZCeOQC9DyGTMCHWVx7LQxyWNHR7bO38gvZABSmdte3Kto23dwy4E72YKF3
+ SaEw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8jihKr/pzxFLLP5QDz0cWXlnDR+4ldUfneVRih7qhy54LxJCCJWm3OQS6J4GLuo0ATNyDE1EQI/ZNq@nongnu.org
+X-Gm-Message-State: AOJu0Yx63xIQHmExrWzhjb1wFvAP3KhHcRjfbQ8qpjCQUN/wHiscdU55
+ 6rixIGLs2HoDkmQe2Ch3vUh7t4vsgX75BRQck297BZ8TJVvbOFfGnn0Syq0E/RDhG5g=
+X-Gm-Gg: Acq92OHmDrpjPTCNYWTKEeps6gL95c5Qv40jIb+0bV2YJkKPC+6idN7CpwnQrDOZKvV
+ ajTRVfQoGawxzVcHRC9Wyae1YUyOz04HW1QlkFtHHVVXIXExnq3cPWknSzYIZmH8vo9z0B+zof7
+ 1nu3zhNYx4BxptUUCMqfj23VTfIVqWkSI0Iaysh7NB8fMvAZriQ5T5BnPyvc8bBgCVZ3ODi8XNf
+ Wk8jf0aGUfoPHqljkmMGK7dzA+Hf7bHLS+lgp+BRBdCiY428OaE1/9B+PkR0xeMbHnwY26SM4Kh
+ qjKLIkwfPi9aiEZEGmebqWAr7/hVrU166/5m6mtZ9X8EEuS3EBUHHdoPEvr6RdcnccVhW6NhoGs
+ NfjiqhIdj2smUCTKQ0gECubXuzdZUmW0K+gqfyjtA8PQEd1I8W9A1PC/M28iVi8G0DT5HUPNH07
+ vpP8TyIIukWKEsocBdntQIR8YXH+pde1vSRMapdKUESEQccwhjl7iUguwxcDvNdZ2F3w==
+X-Received: by 2002:a5d:5d82:0:b0:45c:1c89:b1c6 with SMTP id
+ ffacd0b85a97d-45e5c5952e7mr24788660f8f.33.1779107462934; 
+ Mon, 18 May 2026 05:31:02 -0700 (PDT)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45d9ec39806sm36236632f8f.9.2026.05.18.05.31.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 18 May 2026 05:31:02 -0700 (PDT)
+Message-ID: <eae9fbe5-a09a-40a0-b299-d0039fcbfab8@linaro.org>
+Date: Mon, 18 May 2026 14:31:01 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="DiMbzpiEEVbZVhWF"
-Content-Disposition: inline
-In-Reply-To: <20260515132315.520678-1-manos.pitsidianakis@linaro.org>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -11
-X-Spam_score: -1.2
-X-Spam_bar: -
-X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_24_48=1.34,
- DKIMWL_WL_HIGH=-0.445, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] system/vl: Free allocate memory for pid file name in case
+ realpath() failed
+Content-Language: en-US
+To: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: f.ebner@proxmox.com, qemu-trivial@nongnu.org,
+ Qemu-block <qemu-block@nongnu.org>
+References: <20260515143854.2010741-1-thuth@redhat.com>
+ <1aec7543-ea5a-482c-a42e-fb1cdb0e7498@linaro.org>
+ <b6cc3aa4-6c32-4ebf-90f9-efb7f2a9b897@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <b6cc3aa4-6c32-4ebf-90f9-efb7f2a9b897@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,30 +107,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 18/5/26 13:50, Thomas Huth wrote:
+> On 16/05/2026 12.13, Philippe Mathieu-Daudé wrote:
+>> On 15/5/26 16:38, Thomas Huth wrote:
+>>> From: Thomas Huth <thuth@redhat.com>
+>>>
+>>> In case realpath() fails, the code returns early in the function
+>>> qemu_maybe_daemonize(), without freeing the allocated memory. Add
+>>> a g_free() here to fix it.
+>>>
+>>> Fixes: dee2a4d4d2f ("vl: defuse PID file path resolve error")
+>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>> ---
+>>>   system/vl.c | 1 +
+>>>   1 file changed, 1 insertion(+)
+>>>
+>>> diff --git a/system/vl.c b/system/vl.c
+>>> index d2f4044e5d8..7e2ed898240 100644
+>>> --- a/system/vl.c
+>>> +++ b/system/vl.c
+>>> @@ -2670,6 +2670,7 @@ static void qemu_maybe_daemonize(const char 
+>>> *pid_file)
+>>>                   warn_report("not removing PID file on exit: cannot 
+>>> resolve PID "
+>>>                               "file path: %s: %s", pid_file, 
+>>> strerror(errno));
+>>>               }
+>>> +            g_free(pid_file_realpath);
+>>>               return;
+>>>           }
+>>
+>> Don't we also need to release the other paths?
+>>
+>>   - qemu_unlink_pidfile()
+>>   - pid_file_init()
+>>   - pid_file_cleanup()
+> 
+> Adding it to qemu_unlink_pidfile() makes sense here (though QEMU is 
+> terminating anyway afterwards, some malloc sanitizers might complain 
+> otherwise), so I sent a v2 for this.
+> 
+> pid_file_init() and pid_file_cleanup() is in the storage daemon, so this 
+> is a separate problem (the variable just has the same name there). Not 
+> sure whether it's worth the effort to free the memory there, too, since 
+> the code exits afterwards anyway, and the pointer is kept 'til the end?
 
---DiMbzpiEEVbZVhWF
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+OK, fine!
 
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.1 for any user-visible changes.
-
---DiMbzpiEEVbZVhWF
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmoI/OoACgkQnKSrs4Gr
-c8itzQf+JIdOMmw04D58gRC9rX9ERNgsluUaEWz05Aie/k7fjyY0K//thS0TaF6y
-ACpXsikZuug1Y3x6yIfs+Wg83aTFLODkZh4vucnnZN+Xz67aU4yuibgzVcR81mAB
-0zFYY6PbmsGXXKiwl8ALPLcSvDwAWit8MQeLO/XnwNwbCNQ5/5F5gYYpr5KL4TXi
-fzN5bICnAY/Hi5iGlaTxyeFE5ouAV8RyA4CxpsGbnkMEMHrR281ln5QXOHMe2YOb
-BZuctCKeN5i2E1ZxeLLb0eHzhm/0KESU2ixVKyNtDsPrTlH2L1ToYYwewBRH5zfF
-dAIhQyTfwnZwdbFk4VdBWyyz3blxZQ==
-=/Vv8
------END PGP SIGNATURE-----
-
---DiMbzpiEEVbZVhWF--
+> 
+>   Thomas
+> 
+> 
 
 
