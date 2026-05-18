@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5F8ECD343F
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 05:34:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08679CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 05:34:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOqYa-0007Ft-9T; Mon, 18 May 2026 01:30:24 -0400
+	id 1wOqYa-0007FV-2o; Mon, 18 May 2026 01:30:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wOqYI-0006wa-Ni
- for qemu-devel@nongnu.org; Mon, 18 May 2026 01:30:08 -0400
-Received: from mail-oi1-x231.google.com ([2607:f8b0:4864:20::231])
+ id 1wOqYG-0006wI-UC
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 01:30:07 -0400
+Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wOqYC-0003Yb-6R
- for qemu-devel@nongnu.org; Mon, 18 May 2026 01:30:06 -0400
-Received: by mail-oi1-x231.google.com with SMTP id
- 5614622812f47-47c918c62b4so1254871b6e.0
- for <qemu-devel@nongnu.org>; Sun, 17 May 2026 22:29:58 -0700 (PDT)
+ id 1wOqY8-0003X9-I3
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 01:30:02 -0400
+Received: by mail-oi1-x22f.google.com with SMTP id
+ 5614622812f47-479d85152c9so685871b6e.2
+ for <qemu-devel@nongnu.org>; Sun, 17 May 2026 22:29:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779082197; x=1779686997; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779082192; x=1779686992; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=wnaY5LAWjvmngWaNR8ilqfsNpU27MDlzRq9OtHdJTlA=;
- b=T8Eyp0I9iV8iUXkHnGb+8YsDWueOrNJIF0qzpPB3pxoF5jfgYO0407dCHHxQ3sABsz
- v+xz30jr/jFNG4FZUp5A9XLoSTO5w1/pJvtuyxVPIp4LRGAaPYYQxq840QGzA4EGlMor
- Jz8d3bTFzZxla0lOr40XubJF1a6TZ35d4wxPWkQR4Ewz6vhC78MeFPTwh9UpmyOHj8Zb
- Py/QzPOpBddVWJw8ijjkJXzpGlBYJ0UIEQHrLt9HMi7EhRNO/UwG1gSAenttkSbRj8zt
- jMCQotvBLV84qzlj2PW/icFSxWwZysZH8ZZ7J+NCE70VOgBSZgoiqOz+T/VGql1aNWZZ
- Npfg==
+ :reply-to; bh=AVEpSrcnpj1Xg/9unBDmSLAS85j28PkHKR8pLo9UYb8=;
+ b=W7MSD4o8lRoYvoWx4EHJWyzRJ88E13S8aBxwbvSTBFjXXHrBSiUyGTZ2BBt+NGImoC
+ tLq3VLQ7517GOC6H7xtgR0rPKHwSUOYBeQ2R5CT7cyBGxnSOynGcsB4Sae6FUKwVJSe+
+ 4Pc7EZQjLC3d9rC+pBl2YU7SiSiD9dIIkxV/gIYBpunQNjlsH/Wa6SX4lhDZ7K2ln91P
+ huxM4M73iY9VU5EpftdRRWDbbKMJ4MfB8Er5+oYwWXYIA5mSAXP54WaVTp5vJUi7BwAP
+ TfOtBAaIEWvNyqcPzgiF7eX8KWZp+bZ/dVB2Sq1aJBudwzcLq/1lknFErAYTi8I+AdOk
+ r++Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779082197; x=1779686997;
+ d=1e100.net; s=20251104; t=1779082192; x=1779686992;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=wnaY5LAWjvmngWaNR8ilqfsNpU27MDlzRq9OtHdJTlA=;
- b=sf2FgoQJSK+jY6dTkTW5cU8surwwH8lpxp7njpb3G/x15asr5icSfzX3tlfGNHVsMd
- EotMKakJTE3HaVlySTmZ7Bzp9ukWs4ykMe505nhbw4+Xmas2++w7ByPdFVzIuENX5HN9
- 3j4nz3omyo0jeU6NscJXPrNuYN0tX6tLDzDhLINvjYB7fBacnsrj4rbeBssKyWXBU2Mu
- VcgMACIxUHeXWhe/nSINPyP2b/g6LnbQXSTnDbspxlEe+C8glfeFsookwmfZKRdvX/4x
- ixcziGxMuen4o0swg2GSJh8E81B4L1Ve9pGKbeUHwWGbcXfDN/xPgnO/ekXEFAhX0zGK
- 40mg==
-X-Gm-Message-State: AOJu0YyLNM78OpvMmzYKBC03LaBTFve4kox0XMwA0rXi2R1jx9sJrgE9
- 3C7i6yqTVuNjMFFThco1lWsQvDq2ZvFeQCcGhTloaXGzSrckwehDVjCE
-X-Gm-Gg: Acq92OE3JdsCLuu505dHxe3rA04asTvRPmgrsr5AamtVsyQ4wqHUFJWVLNsoJZd36VY
- CmS5z4M5fkJFkg3q7NeUDVPkqEEbaa07LvPYTGBadZaM6JXj+IIY5cfILG2hn3t6WhidSClaUQx
- EsVAIim+NnzX3oJodeM04wCQpcdOwAzBADLVe0AROIuxLxBfIhXtGm93SzcsnAHY4RpWNE5Xfn5
- fkY54L1rlmk/hsMI8HYLVussdfNBnr+PLIfjHiCNLmBU4wMUwLRomHF+1PXk+Z7ZoK4AJnmOhgs
- 6v7NGiWujEc2BtosCu5IeSntOIjUIg8mW9Ju3MK1Pie3tB7XVLzHjEdtcnLcF2rNBQUfGZUN1P2
- byoi0afvFj+VwlBGr/pLp7T9+OTzvFa3Hzw1JaCs7+D3khAmPailx6Ywn7S1hVJUp0lfWl+jdld
- fzCBLMvAeel/wnMerUjBKCKEb7zQm721SMdp1YtvVgR3WZ7WUedX/btFCnr7D1lEyglGW+GnaTs
- Z3REm2gGWiVWiZ9rSYQ8QV8E+6GQbTVsOHKa+X9SdX25ni+4UGhHXdLRNUE/qiwqX0ztrPaFfGB
- M7lyvw==
-X-Received: by 2002:a05:6808:d51:b0:472:b43a:3063 with SMTP id
- 5614622812f47-482e592ff41mr8693329b6e.38.1779082197326; 
- Sun, 17 May 2026 22:29:57 -0700 (PDT)
+ bh=AVEpSrcnpj1Xg/9unBDmSLAS85j28PkHKR8pLo9UYb8=;
+ b=Y6QpyXXFzmoK3DzrcHocPSQqtOH6K9yMhb6h1p+uuYh/6F6BAoAB+5dhhMkep8LOCl
+ SKCtaALJxXdvdUeQNaFS9M2vTmrNtVHihn6ZBjvlbpDqfMdoW778iSvX76KOoADbfbek
+ d/C9SticYmREwxcFD7DK+ccVO+kiLkU7ZKRNt1PrHM5FT0UwaQVB24YL4DXv8POEuUjh
+ WE0DM09/HCp1XfWgL3Z4P6j9dGNXnKHNBNyoFxo6GxkSdQR44ALDA/ovbcce6qwvextF
+ fSNm8yZTecHyyurd9gP/4S5ykL/PJYtDdF8aPAJsQJTRNj2gwgywZIOJqraoNVGU4U1V
+ sfvA==
+X-Gm-Message-State: AOJu0Yxi4A8vPh/a4LbAT0PQfQtbuzaBbri9j2jIOKzbx9iY7jbiGTj8
+ D/vGdbVBRuVKsWjtW3std5ni2gQS5q40R5nKgqVg/05Lx8O7uZLLXFxt
+X-Gm-Gg: Acq92OEQMrhcOKaLxEkNC15NVpHSLUnVM2oPk9V9BwPZAkJrxppMKXO7a9S5jZY1l2Z
+ TVW9JopPBA14Tyu49bhV+HRpLxbJfHhVVg9fQ/6f+4KzWsMPS8bPtLN9e3Ead9UAbSxU61pfQy/
+ ag+mKQ7sJESJmA44+T1hacnJrtD60ve8yjJ+wGK177HMu276zQigcjXiaAxRkk3ATlAGnDg8u2e
+ 9M72aSJGqpvh1Nujh0E3dBFonZ8mIySyoGHTMU1jWXxlllLIYQSg3jIs8/AxUahudTLi8tzY4Ur
+ 3mGAvsFtAEXytgI6B2NeyrhTSTekWoNnT1p75ftMh03krq/eYqOhzmxKZ8yVx/HJo/KrRsvcx4S
+ TuMky4bA8K/BjhzMsMqARtJ4+gB6mQly9VFA5uD6+J6+TkloxV23a/cNEcG4kGfdskInlV7sCqC
+ RYS+1DS+O69xUUtQCqrBS3MIa7bJWT8C80A8CfOtdyVI9QOZSKa0K7vUnSRFc9oJm4SsmryyVIL
+ A0HALz0f8IRAFQiM3QkXkYEP4bOUBcplC5QVnTN86icTAlp+EQC/3yZdokl7mXXUkSW+dLK7Cm0
+ LiAb2g==
+X-Received: by 2002:a05:6808:3a19:b0:47b:ea3c:cd92 with SMTP id
+ 5614622812f47-482e57b66b5mr9076790b6e.22.1779082192310; 
+ Sun, 17 May 2026 22:29:52 -0700 (PDT)
 Received: from mac.localdomain (71-218-255-245.hlrn.qwest.net.
  [71.218.255.245]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-482ee5349a5sm4628357b6e.15.2026.05.17.22.29.56
+ 5614622812f47-482ee5349a5sm4628357b6e.15.2026.05.17.22.29.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 17 May 2026 22:29:56 -0700 (PDT)
+ Sun, 17 May 2026 22:29:51 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Sun, 17 May 2026 23:29:28 -0600
-Subject: [PATCH v8 31/35] target/mips: decode Octeon COP2 selectors explicitly
+Date: Sun, 17 May 2026 23:29:24 -0600
+Subject: [PATCH v8 27/35] target/mips: add Octeon SHA3 crypto support
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260517-mips-octeon-missing-insns-v2-v8-31-206151ee77ec@gmail.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260517-mips-octeon-missing-insns-v2-v8-27-206151ee77ec@gmail.com>
 References: <20260517-mips-octeon-missing-insns-v2-v8-0-206151ee77ec@gmail.com>
 In-Reply-To: <20260517-mips-octeon-missing-insns-v2-v8-0-206151ee77ec@gmail.com>
 To: qemu-devel@nongnu.org
@@ -85,8 +85,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>, 
  Paolo Bonzini <pbonzini@redhat.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::231;
- envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x231.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x22f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -110,595 +110,334 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Decode Octeon CP2 selector operations in octeon.decode instead of first
-accepting generic CP2 opcodes and re-decoding the selector inside
-gen_octeon_cop2().
+Add the Octeon SHA3 register window and STARTOP selector.
 
-Emit direct TCG loads and stores for simple COP2 register moves and keep
-helper calls only for operation selectors and shared-window state that
-require side effects. Unknown Octeon CP2 selectors now hit an explicit
-CP2_Undef decoder entry.
+Keep the shared HSH/SHA3/SHA512 write path coherent, then model the
+dedicated 25-lane Keccak state and the Keccak-f[1600] permutation so the
+COP2 SHA3 interface follows the hardware behaviour.
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
-Changes v7 -> v8:
-  - Decode Octeon COP2 selectors explicitly in decodetree.
-  - Use direct TCG loads/stores for simple COP2 register transfers and
-    preserve helper calls for operation selectors with side effects.
----
- target/mips/tcg/octeon.decode      | 205 ++++++++++++++++++++++
- target/mips/tcg/octeon_translate.c | 344 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 549 insertions(+)
+Changes v1 -> v2:
+  - Use switch ranges and g_assert_not_reached() for SHA3 selector
+    position decoding.  (suggested by Philippe Mathieu-Daudé)
+  - Add selector dispatch updates in octeon_translate.c after moving
+    COP2 decode out of translate.c.  (suggested by Philippe
+    Mathieu-Daudé)
 
-diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index 1e44c588dd..0ff8c0d7cd 100644
---- a/target/mips/tcg/octeon.decode
-+++ b/target/mips/tcg/octeon.decode
-@@ -97,3 +97,208 @@ LBUX         011111 ..... ..... ..... 00110 001010 @lx
- LWUX         011111 ..... ..... ..... 10000 001010 @lx
- LBX          011111 ..... ..... ..... 10110 001010 @lx
- LDX          011111 ..... ..... ..... 01000 001010 @lx
-+
-+# Selector-driven DMFC2/DMTC2 interfaces for Octeon COP2 engines.
-+&cp2          rt
-+{
-+  [
-+    CVM_MF_HSH_IV0                       010010 00001 rt:5 0000 0000 0100 1000 &cp2
-+    CVM_MF_HSH_IV1                       010010 00001 rt:5 0000 0000 0100 1001 &cp2
-+    CVM_MF_HSH_IV2                       010010 00001 rt:5 0000 0000 0100 1010 &cp2
-+    CVM_MF_HSH_IV3                       010010 00001 rt:5 0000 0000 0100 1011 &cp2
-+    CVM_MF_SHA3_DAT24                    010010 00001 rt:5 0000 0000 0101 0000 &cp2
-+    CVM_MF_GFM_MUL_REFLECT0              010010 00001 rt:5 0000 0000 0101 1000 &cp2
-+    CVM_MF_GFM_MUL_REFLECT1              010010 00001 rt:5 0000 0000 0101 1001 &cp2
-+    CVM_MF_GFM_RESINP_REFLECT0           010010 00001 rt:5 0000 0000 0101 1010 &cp2
-+    CVM_MF_GFM_RESINP_REFLECT1           010010 00001 rt:5 0000 0000 0101 1011 &cp2
-+    CVM_MF_3DES_KEY0                     010010 00001 rt:5 0000 0000 1000 0000 &cp2
-+    CVM_MF_3DES_KEY1                     010010 00001 rt:5 0000 0000 1000 0001 &cp2
-+    CVM_MF_3DES_KEY2                     010010 00001 rt:5 0000 0000 1000 0010 &cp2
-+    CVM_MF_3DES_IV                       010010 00001 rt:5 0000 0000 1000 0100 &cp2
-+    CVM_MF_3DES_RESULT                   010010 00001 rt:5 0000 0000 1000 1000 &cp2
-+    CVM_MF_3DES_RESULT_MT                010010 00001 rt:5 0000 0000 1001 1000 &cp2
-+    CVM_MF_AES_RESINP0                   010010 00001 rt:5 0000 0001 0000 0000 &cp2
-+    CVM_MF_AES_RESINP1                   010010 00001 rt:5 0000 0001 0000 0001 &cp2
-+    CVM_MF_AES_IV0                       010010 00001 rt:5 0000 0001 0000 0010 &cp2
-+    CVM_MF_AES_IV1                       010010 00001 rt:5 0000 0001 0000 0011 &cp2
-+    CVM_MF_AES_KEY0                      010010 00001 rt:5 0000 0001 0000 0100 &cp2
-+    CVM_MF_AES_KEY1                      010010 00001 rt:5 0000 0001 0000 0101 &cp2
-+    CVM_MF_AES_KEY2                      010010 00001 rt:5 0000 0001 0000 0110 &cp2
-+    CVM_MF_AES_KEY3                      010010 00001 rt:5 0000 0001 0000 0111 &cp2
-+    CVM_MF_AES_KEYLENGTH                 010010 00001 rt:5 0000 0001 0001 0000 &cp2
-+    CVM_MF_AES_INP0                      010010 00001 rt:5 0000 0001 0001 0001 &cp2
-+    CVM_MF_CRC_POLYNOMIAL                010010 00001 rt:5 0000 0010 0000 0000 &cp2
-+    CVM_MF_CRC_IV                        010010 00001 rt:5 0000 0010 0000 0001 &cp2
-+    CVM_MF_CRC_LEN                       010010 00001 rt:5 0000 0010 0000 0010 &cp2
-+    CVM_MF_CRC_IV_REFLECT                010010 00001 rt:5 0000 0010 0000 0011 &cp2
-+    CVM_MF_HSH_DATW0                     010010 00001 rt:5 0000 0010 0100 0000 &cp2
-+    CVM_MF_HSH_DATW1                     010010 00001 rt:5 0000 0010 0100 0001 &cp2
-+    CVM_MF_HSH_DATW2                     010010 00001 rt:5 0000 0010 0100 0010 &cp2
-+    CVM_MF_HSH_DATW3                     010010 00001 rt:5 0000 0010 0100 0011 &cp2
-+    CVM_MF_HSH_DATW4                     010010 00001 rt:5 0000 0010 0100 0100 &cp2
-+    CVM_MF_HSH_DATW5                     010010 00001 rt:5 0000 0010 0100 0101 &cp2
-+    CVM_MF_HSH_DATW6                     010010 00001 rt:5 0000 0010 0100 0110 &cp2
-+    CVM_MF_HSH_DATW7                     010010 00001 rt:5 0000 0010 0100 0111 &cp2
-+    CVM_MF_HSH_DATW8                     010010 00001 rt:5 0000 0010 0100 1000 &cp2
-+    CVM_MF_HSH_DATW9                     010010 00001 rt:5 0000 0010 0100 1001 &cp2
-+    CVM_MF_HSH_DATW10                    010010 00001 rt:5 0000 0010 0100 1010 &cp2
-+    CVM_MF_HSH_DATW11                    010010 00001 rt:5 0000 0010 0100 1011 &cp2
-+    CVM_MF_HSH_DATW12                    010010 00001 rt:5 0000 0010 0100 1100 &cp2
-+    CVM_MF_HSH_DATW13                    010010 00001 rt:5 0000 0010 0100 1101 &cp2
-+    CVM_MF_HSH_DATW14                    010010 00001 rt:5 0000 0010 0100 1110 &cp2
-+    CVM_MF_HSH_DATW15                    010010 00001 rt:5 0000 0010 0100 1111 &cp2
-+    CVM_MF_HSH_IVW0                      010010 00001 rt:5 0000 0010 0101 0000 &cp2
-+    CVM_MF_HSH_IVW1                      010010 00001 rt:5 0000 0010 0101 0001 &cp2
-+    CVM_MF_HSH_IVW2                      010010 00001 rt:5 0000 0010 0101 0010 &cp2
-+    CVM_MF_HSH_IVW3                      010010 00001 rt:5 0000 0010 0101 0011 &cp2
-+    CVM_MF_HSH_IVW4                      010010 00001 rt:5 0000 0010 0101 0100 &cp2
-+    CVM_MF_HSH_IVW5                      010010 00001 rt:5 0000 0010 0101 0101 &cp2
-+    CVM_MF_HSH_IVW6                      010010 00001 rt:5 0000 0010 0101 0110 &cp2
-+    CVM_MF_HSH_IVW7                      010010 00001 rt:5 0000 0010 0101 0111 &cp2
-+    CVM_MF_GFM_MUL0                      010010 00001 rt:5 0000 0010 0101 1000 &cp2
-+    CVM_MF_GFM_MUL1                      010010 00001 rt:5 0000 0010 0101 1001 &cp2
-+    CVM_MF_GFM_RESINP0                   010010 00001 rt:5 0000 0010 0101 1010 &cp2
-+    CVM_MF_GFM_RESINP1                   010010 00001 rt:5 0000 0010 0101 1011 &cp2
-+    CVM_MF_GFM_POLY                      010010 00001 rt:5 0000 0010 0101 1110 &cp2
-+    CVM_MF_CHORD                         010010 00001 rt:5 0000 0100 0000 0000 &cp2
-+    CVM_MF_LLM_DATA0                     010010 00001 rt:5 0000 0100 0000 0010 &cp2
-+    CVM_MF_LLM_DATA1                     010010 00001 rt:5 0000 0100 0000 1010 &cp2
-+    CVM_MT_HSH_DAT0                      010010 00101 rt:5 0000 0000 0100 0000 &cp2
-+    CVM_MT_HSH_DAT1                      010010 00101 rt:5 0000 0000 0100 0001 &cp2
-+    CVM_MT_HSH_DAT2                      010010 00101 rt:5 0000 0000 0100 0010 &cp2
-+    CVM_MT_HSH_DAT3                      010010 00101 rt:5 0000 0000 0100 0011 &cp2
-+    CVM_MT_HSH_DAT4                      010010 00101 rt:5 0000 0000 0100 0100 &cp2
-+    CVM_MT_HSH_DAT5                      010010 00101 rt:5 0000 0000 0100 0101 &cp2
-+    CVM_MT_HSH_DAT6                      010010 00101 rt:5 0000 0000 0100 0110 &cp2
-+    CVM_MT_HSH_IV0                       010010 00101 rt:5 0000 0000 0100 1000 &cp2
-+    CVM_MT_HSH_IV1                       010010 00101 rt:5 0000 0000 0100 1001 &cp2
-+    CVM_MT_HSH_IV2                       010010 00101 rt:5 0000 0000 0100 1010 &cp2
-+    CVM_MT_HSH_IV3                       010010 00101 rt:5 0000 0000 0100 1011 &cp2
-+    CVM_MT_SHA3_DAT24                    010010 00101 rt:5 0000 0000 0101 0000 &cp2
-+    CVM_MT_SHA3_DAT15                    010010 00101 rt:5 0000 0000 0101 0001 &cp2
-+    CVM_MT_HSH_STARTSHA_COMPAT           010010 00101 rt:5 0000 0000 0101 0111 &cp2
-+    CVM_MT_GFM_MUL_REFLECT0              010010 00101 rt:5 0000 0000 0101 1000 &cp2
-+    CVM_MT_GFM_MUL_REFLECT1              010010 00101 rt:5 0000 0000 0101 1001 &cp2
-+    CVM_MT_GFM_XOR0_REFLECT              010010 00101 rt:5 0000 0000 0101 1100 &cp2
-+    CVM_MT_3DES_KEY0                     010010 00101 rt:5 0000 0000 1000 0000 &cp2
-+    CVM_MT_3DES_KEY1                     010010 00101 rt:5 0000 0000 1000 0001 &cp2
-+    CVM_MT_3DES_KEY2                     010010 00101 rt:5 0000 0000 1000 0010 &cp2
-+    CVM_MT_3DES_IV                       010010 00101 rt:5 0000 0000 1000 0100 &cp2
-+    CVM_MT_3DES_RESULT                   010010 00101 rt:5 0000 0000 1001 1000 &cp2
-+    CVM_MT_AES_RESINP0                   010010 00101 rt:5 0000 0001 0000 0000 &cp2
-+    CVM_MT_AES_RESINP1                   010010 00101 rt:5 0000 0001 0000 0001 &cp2
-+    CVM_MT_AES_IV0                       010010 00101 rt:5 0000 0001 0000 0010 &cp2
-+    CVM_MT_AES_IV1                       010010 00101 rt:5 0000 0001 0000 0011 &cp2
-+    CVM_MT_AES_KEY0                      010010 00101 rt:5 0000 0001 0000 0100 &cp2
-+    CVM_MT_AES_KEY1                      010010 00101 rt:5 0000 0001 0000 0101 &cp2
-+    CVM_MT_AES_KEY2                      010010 00101 rt:5 0000 0001 0000 0110 &cp2
-+    CVM_MT_AES_KEY3                      010010 00101 rt:5 0000 0001 0000 0111 &cp2
-+    CVM_MT_AES_ENC_CBC0                  010010 00101 rt:5 0000 0001 0000 1000 &cp2
-+    CVM_MT_AES_ENC0                      010010 00101 rt:5 0000 0001 0000 1010 &cp2
-+    CVM_MT_AES_DEC_CBC0                  010010 00101 rt:5 0000 0001 0000 1100 &cp2
-+    CVM_MT_AES_DEC0                      010010 00101 rt:5 0000 0001 0000 1110 &cp2
-+    CVM_MT_AES_KEYLENGTH                 010010 00101 rt:5 0000 0001 0001 0000 &cp2
-+    CVM_MT_CAMELLIA_FL                   010010 00101 rt:5 0000 0001 0001 0101 &cp2
-+    CVM_MT_CAMELLIA_FLINV                010010 00101 rt:5 0000 0001 0001 0110 &cp2
-+    CVM_MT_CRC_IV                        010010 00101 rt:5 0000 0010 0000 0001 &cp2
-+    CVM_MT_CRC_WRITE_IV_REFLECT          010010 00101 rt:5 0000 0010 0001 0001 &cp2
-+    CVM_MT_CRC_WRITE_BYTE                010010 00101 rt:5 0000 0010 0000 0100 &cp2
-+    CVM_MT_CRC_WRITE_HALF                010010 00101 rt:5 0000 0010 0000 0101 &cp2
-+    CVM_MT_CRC_WRITE_WORD                010010 00101 rt:5 0000 0010 0000 0110 &cp2
-+    CVM_MT_CRC_WRITE_BYTE_REFLECT        010010 00101 rt:5 0000 0010 0001 0100 &cp2
-+    CVM_MT_CRC_WRITE_HALF_REFLECT        010010 00101 rt:5 0000 0010 0001 0101 &cp2
-+    CVM_MT_CRC_WRITE_WORD_REFLECT        010010 00101 rt:5 0000 0010 0001 0110 &cp2
-+    CVM_MT_HSH_DATW0                     010010 00101 rt:5 0000 0010 0100 0000 &cp2
-+    CVM_MT_HSH_DATW1                     010010 00101 rt:5 0000 0010 0100 0001 &cp2
-+    CVM_MT_HSH_DATW2                     010010 00101 rt:5 0000 0010 0100 0010 &cp2
-+    CVM_MT_HSH_DATW3                     010010 00101 rt:5 0000 0010 0100 0011 &cp2
-+    CVM_MT_HSH_DATW4                     010010 00101 rt:5 0000 0010 0100 0100 &cp2
-+    CVM_MT_HSH_DATW5                     010010 00101 rt:5 0000 0010 0100 0101 &cp2
-+    CVM_MT_HSH_DATW6                     010010 00101 rt:5 0000 0010 0100 0110 &cp2
-+    CVM_MT_HSH_DATW7                     010010 00101 rt:5 0000 0010 0100 0111 &cp2
-+    CVM_MT_HSH_DATW8                     010010 00101 rt:5 0000 0010 0100 1000 &cp2
-+    CVM_MT_HSH_DATW9                     010010 00101 rt:5 0000 0010 0100 1001 &cp2
-+    CVM_MT_HSH_DATW10                    010010 00101 rt:5 0000 0010 0100 1010 &cp2
-+    CVM_MT_HSH_DATW11                    010010 00101 rt:5 0000 0010 0100 1011 &cp2
-+    CVM_MT_HSH_DATW12                    010010 00101 rt:5 0000 0010 0100 1100 &cp2
-+    CVM_MT_HSH_DATW13                    010010 00101 rt:5 0000 0010 0100 1101 &cp2
-+    CVM_MT_HSH_DATW14                    010010 00101 rt:5 0000 0010 0100 1110 &cp2
-+    CVM_MT_HSH_DATW15                    010010 00101 rt:5 0000 0010 0100 1111 &cp2
-+    CVM_MT_HSH_IVW0                      010010 00101 rt:5 0000 0010 0101 0000 &cp2
-+    CVM_MT_HSH_IVW1                      010010 00101 rt:5 0000 0010 0101 0001 &cp2
-+    CVM_MT_HSH_IVW2                      010010 00101 rt:5 0000 0010 0101 0010 &cp2
-+    CVM_MT_HSH_IVW3                      010010 00101 rt:5 0000 0010 0101 0011 &cp2
-+    CVM_MT_HSH_IVW4                      010010 00101 rt:5 0000 0010 0101 0100 &cp2
-+    CVM_MT_HSH_IVW5                      010010 00101 rt:5 0000 0010 0101 0101 &cp2
-+    CVM_MT_HSH_IVW6                      010010 00101 rt:5 0000 0010 0101 0110 &cp2
-+    CVM_MT_HSH_IVW7                      010010 00101 rt:5 0000 0010 0101 0111 &cp2
-+    CVM_MT_GFM_MUL0                      010010 00101 rt:5 0000 0010 0101 1000 &cp2
-+    CVM_MT_GFM_MUL1                      010010 00101 rt:5 0000 0010 0101 1001 &cp2
-+    CVM_MT_GFM_RESINP0                   010010 00101 rt:5 0000 0010 0101 1010 &cp2
-+    CVM_MT_GFM_RESINP1                   010010 00101 rt:5 0000 0010 0101 1011 &cp2
-+    CVM_MT_GFM_XOR0                      010010 00101 rt:5 0000 0010 0101 1100 &cp2
-+    CVM_MT_GFM_POLY                      010010 00101 rt:5 0000 0010 0101 1110 &cp2
-+    CVM_MT_SHA3_XORDAT0                  010010 00101 rt:5 0000 0010 1100 0000 &cp2
-+    CVM_MT_SHA3_XORDAT1                  010010 00101 rt:5 0000 0010 1100 0001 &cp2
-+    CVM_MT_SHA3_XORDAT2                  010010 00101 rt:5 0000 0010 1100 0010 &cp2
-+    CVM_MT_SHA3_XORDAT3                  010010 00101 rt:5 0000 0010 1100 0011 &cp2
-+    CVM_MT_SHA3_XORDAT4                  010010 00101 rt:5 0000 0010 1100 0100 &cp2
-+    CVM_MT_SHA3_XORDAT5                  010010 00101 rt:5 0000 0010 1100 0101 &cp2
-+    CVM_MT_SHA3_XORDAT6                  010010 00101 rt:5 0000 0010 1100 0110 &cp2
-+    CVM_MT_SHA3_XORDAT7                  010010 00101 rt:5 0000 0010 1100 0111 &cp2
-+    CVM_MT_SHA3_XORDAT8                  010010 00101 rt:5 0000 0010 1100 1000 &cp2
-+    CVM_MT_SHA3_XORDAT9                  010010 00101 rt:5 0000 0010 1100 1001 &cp2
-+    CVM_MT_SHA3_XORDAT10                 010010 00101 rt:5 0000 0010 1100 1010 &cp2
-+    CVM_MT_SHA3_XORDAT11                 010010 00101 rt:5 0000 0010 1100 1011 &cp2
-+    CVM_MT_SHA3_XORDAT12                 010010 00101 rt:5 0000 0010 1100 1100 &cp2
-+    CVM_MT_SHA3_XORDAT13                 010010 00101 rt:5 0000 0010 1100 1101 &cp2
-+    CVM_MT_SHA3_XORDAT14                 010010 00101 rt:5 0000 0010 1100 1110 &cp2
-+    CVM_MT_SHA3_XORDAT15                 010010 00101 rt:5 0000 0010 1100 1111 &cp2
-+    CVM_MT_SHA3_XORDAT16                 010010 00101 rt:5 0000 0010 1101 0000 &cp2
-+    CVM_MT_SHA3_XORDAT17                 010010 00101 rt:5 0000 0010 1101 0001 &cp2
-+    CVM_MT_LLM_READ_ADDR0                010010 00101 rt:5 0000 0100 0000 0000 &cp2
-+    CVM_MT_LLM_WRITE_ADDR0               010010 00101 rt:5 0000 0100 0000 0001 &cp2
-+    CVM_MT_LLM_DATA0                     010010 00101 rt:5 0000 0100 0000 0010 &cp2
-+    CVM_MT_LLM_READ64_ADDR0              010010 00101 rt:5 0000 0100 0000 0100 &cp2
-+    CVM_MT_LLM_WRITE64_ADDR0             010010 00101 rt:5 0000 0100 0000 0101 &cp2
-+    CVM_MT_LLM_READ_ADDR1                010010 00101 rt:5 0000 0100 0000 1000 &cp2
-+    CVM_MT_LLM_WRITE_ADDR1               010010 00101 rt:5 0000 0100 0000 1001 &cp2
-+    CVM_MT_LLM_DATA1                     010010 00101 rt:5 0000 0100 0000 1010 &cp2
-+    CVM_MT_LLM_READ64_ADDR1              010010 00101 rt:5 0000 0100 0000 1100 &cp2
-+    CVM_MT_LLM_WRITE64_ADDR1             010010 00101 rt:5 0000 0100 0000 1101 &cp2
-+    CVM_MT_CRC_WRITE_LEN                 010010 00101 rt:5 0001 0010 0000 0010 &cp2
-+    CVM_MT_CRC_WRITE_DWORD               010010 00101 rt:5 0001 0010 0000 0111 &cp2
-+    CVM_MT_CRC_WRITE_VAR                 010010 00101 rt:5 0001 0010 0000 1000 &cp2
-+    CVM_MT_CRC_WRITE_DWORD_REFLECT       010010 00101 rt:5 0001 0010 0001 0111 &cp2
-+    CVM_MT_CRC_WRITE_VAR_REFLECT         010010 00101 rt:5 0001 0010 0001 1000 &cp2
-+    CVM_MT_AES_ENC_CBC1                  010010 00101 rt:5 0011 0001 0000 1001 &cp2
-+    CVM_MT_AES_ENC1                      010010 00101 rt:5 0011 0001 0000 1011 &cp2
-+    CVM_MT_AES_DEC_CBC1                  010010 00101 rt:5 0011 0001 0000 1101 &cp2
-+    CVM_MT_AES_DEC1                      010010 00101 rt:5 0011 0001 0000 1111 &cp2
-+    CVM_MT_CAMELLIA_ROUND                010010 00101 rt:5 0011 0001 0001 0100 &cp2
-+    CVM_MT_SMS4_ENC_CBC1                 010010 00101 rt:5 0011 0001 0001 1001 &cp2
-+    CVM_MT_SMS4_ENC1                     010010 00101 rt:5 0011 0001 0001 1011 &cp2
-+    CVM_MT_SMS4_DEC_CBC1                 010010 00101 rt:5 0011 0001 0001 1101 &cp2
-+    CVM_MT_SMS4_DEC1                     010010 00101 rt:5 0011 0001 0001 1111 &cp2
-+    CVM_MT_HSH_STARTMD5                  010010 00101 rt:5 0100 0000 0100 0111 &cp2
-+    CVM_MT_SNOW3G_START                  010010 00101 rt:5 0100 0000 0100 1101 &cp2
-+    CVM_MT_SNOW3G_MORE                   010010 00101 rt:5 0100 0000 0100 1110 &cp2
-+    CVM_MT_HSH_STARTSHA256               010010 00101 rt:5 0100 0000 0100 1111 &cp2
-+    CVM_MT_SHA3_STARTOP                  010010 00101 rt:5 0100 0000 0101 0010 &cp2
-+    CVM_MT_ZUC_START                     010010 00101 rt:5 0100 0000 0101 0101 &cp2
-+    CVM_MT_ZUC_MORE                      010010 00101 rt:5 0100 0000 0101 0110 &cp2
-+    CVM_MT_HSH_STARTSHA                  010010 00101 rt:5 0100 0000 0101 0111 &cp2
-+    CVM_MT_GFM_XORMUL1_REFLECT           010010 00101 rt:5 0100 0000 0101 1101 &cp2
-+    CVM_MT_3DES_ENC_CBC                  010010 00101 rt:5 0100 0000 1000 1000 &cp2
-+    CVM_MT_KAS_ENC_CBC                   010010 00101 rt:5 0100 0000 1000 1001 &cp2
-+    CVM_MT_3DES_ENC                      010010 00101 rt:5 0100 0000 1000 1010 &cp2
-+    CVM_MT_KAS_ENC                       010010 00101 rt:5 0100 0000 1000 1011 &cp2
-+    CVM_MT_3DES_DEC_CBC                  010010 00101 rt:5 0100 0000 1000 1100 &cp2
-+    CVM_MT_3DES_DEC                      010010 00101 rt:5 0100 0000 1000 1110 &cp2
-+    CVM_MT_CRC_WRITE_POLYNOMIAL          010010 00101 rt:5 0100 0010 0000 0000 &cp2
-+    CVM_MT_CRC_WRITE_POLYNOMIAL_REFLECT  010010 00101 rt:5 0100 0010 0001 0000 &cp2
-+    CVM_MT_HSH_STARTSHA512               010010 00101 rt:5 0100 0010 0100 1111 &cp2
-+    CVM_MT_GFM_XORMUL1                   010010 00101 rt:5 0100 0010 0101 1101 &cp2
-+  ]
-+  CP2_Undef                              010010 ----- ----- ---- ---- ---- ----
-+}
-diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index 5a124b3c90..303489a9b9 100644
---- a/target/mips/tcg/octeon_translate.c
-+++ b/target/mips/tcg/octeon_translate.c
-@@ -13,6 +13,350 @@
- /* Include the auto-generated decoder.  */
- #include "decode-octeon.c.inc"
+Changes v5 -> v6:
+  - Rename SHA3 DAT15 selector aliases with MF/MT direction suffixes.
+---
+ target/mips/cpu.h               |  22 ++++++
+ target/mips/system/machine.c    |   1 +
+ target/mips/tcg/octeon_crypto.c | 171 ++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 194 insertions(+)
+
+diff --git a/target/mips/cpu.h b/target/mips/cpu.h
+index 1a23994c78..65c11b2072 100644
+--- a/target/mips/cpu.h
++++ b/target/mips/cpu.h
+@@ -541,6 +541,7 @@ typedef enum MIPSOcteonSharedMode {
+     OCTEON_SHARED_MODE_NONE = 0,
+     OCTEON_SHARED_MODE_SHA512,
+     OCTEON_SHARED_MODE_SNOW3G,
++    OCTEON_SHARED_MODE_SHA3,
+ } MIPSOcteonSharedMode;
  
-+#define OCTEON_CRYPTO_OFFSET(FIELD) \
-+    offsetof(CPUMIPSState, octeon_crypto.FIELD)
+ typedef enum MIPSOcteonCop2Sel {
+@@ -645,6 +646,7 @@ typedef enum MIPSOcteonCop2Sel {
+     OCTEON_COP2_SEL_HSH_DATW13,
+     OCTEON_COP2_SEL_HSH_DATW14,
+     OCTEON_COP2_SEL_HSH_DATW15,
++    OCTEON_COP2_SEL_SHA3_DAT15_MF = 0x024f,
+     OCTEON_COP2_SEL_HSH_IVW0 = 0x0250,
+     OCTEON_COP2_SEL_HSH_IVW1,
+     OCTEON_COP2_SEL_HSH_IVW2,
+@@ -671,6 +673,24 @@ typedef enum MIPSOcteonCop2Sel {
+     OCTEON_COP2_SEL_GFM_RESINP1,
+     OCTEON_COP2_SEL_GFM_XOR0,
+     OCTEON_COP2_SEL_GFM_POLY = 0x025e,
++    OCTEON_COP2_SEL_SHA3_XORDAT0 = 0x02c0,
++    OCTEON_COP2_SEL_SHA3_XORDAT1,
++    OCTEON_COP2_SEL_SHA3_XORDAT2,
++    OCTEON_COP2_SEL_SHA3_XORDAT3,
++    OCTEON_COP2_SEL_SHA3_XORDAT4,
++    OCTEON_COP2_SEL_SHA3_XORDAT5,
++    OCTEON_COP2_SEL_SHA3_XORDAT6,
++    OCTEON_COP2_SEL_SHA3_XORDAT7,
++    OCTEON_COP2_SEL_SHA3_XORDAT8,
++    OCTEON_COP2_SEL_SHA3_XORDAT9,
++    OCTEON_COP2_SEL_SHA3_XORDAT10,
++    OCTEON_COP2_SEL_SHA3_XORDAT11,
++    OCTEON_COP2_SEL_SHA3_XORDAT12,
++    OCTEON_COP2_SEL_SHA3_XORDAT13,
++    OCTEON_COP2_SEL_SHA3_XORDAT14,
++    OCTEON_COP2_SEL_SHA3_XORDAT15,
++    OCTEON_COP2_SEL_SHA3_XORDAT16,
++    OCTEON_COP2_SEL_SHA3_XORDAT17,
+     OCTEON_COP2_SEL_AES_ENC_CBC1 = 0x3109,
+     OCTEON_COP2_SEL_AES_ENC1 = 0x310b,
+     OCTEON_COP2_SEL_AES_DEC_CBC1 = 0x310d,
+@@ -683,6 +703,7 @@ typedef enum MIPSOcteonCop2Sel {
+     OCTEON_COP2_SEL_SNOW3G_START = 0x404d,
+     OCTEON_COP2_SEL_SNOW3G_MORE = 0x404e,
+     OCTEON_COP2_SEL_HSH_STARTSHA256 = 0x404f,
++    OCTEON_COP2_SEL_SHA3_STARTOP = 0x4052,
+     OCTEON_COP2_SEL_GFM_XORMUL1_REFLECT = 0x405d,
+     OCTEON_COP2_SEL_HSH_STARTSHA = 0x4057,
+     OCTEON_COP2_SEL_HSH_STARTSHA512 = 0x424f,
+@@ -697,6 +718,7 @@ typedef struct MIPSOcteonCryptoState {
+     uint64_t hsh_dat[8];
+     uint64_t hsh_ivw[8];
+     uint64_t hsh_datw[16];
++    uint64_t sha3_state[25];
+     uint64_t aes_iv[2];
+     uint64_t aes_key[4];
+     uint64_t aes_result[2];
+diff --git a/target/mips/system/machine.c b/target/mips/system/machine.c
+index ebfa0a9eb0..e6336534f4 100644
+--- a/target/mips/system/machine.c
++++ b/target/mips/system/machine.c
+@@ -292,6 +292,7 @@ static const VMStateDescription mips_vmstate_octeon_crypto = {
+         VMSTATE_UINT64_ARRAY(env.octeon_crypto.hsh_dat, MIPSCPU, 8),
+         VMSTATE_UINT64_ARRAY(env.octeon_crypto.hsh_ivw, MIPSCPU, 8),
+         VMSTATE_UINT64_ARRAY(env.octeon_crypto.hsh_datw, MIPSCPU, 16),
++        VMSTATE_UINT64_ARRAY(env.octeon_crypto.sha3_state, MIPSCPU, 25),
+         VMSTATE_UINT64_ARRAY(env.octeon_crypto.aes_iv, MIPSCPU, 2),
+         VMSTATE_UINT64_ARRAY(env.octeon_crypto.aes_key, MIPSCPU, 4),
+         VMSTATE_UINT64_ARRAY(env.octeon_crypto.aes_result, MIPSCPU, 2),
+diff --git a/target/mips/tcg/octeon_crypto.c b/target/mips/tcg/octeon_crypto.c
+index 2d2b19ad30..42e68f4205 100644
+--- a/target/mips/tcg/octeon_crypto.c
++++ b/target/mips/tcg/octeon_crypto.c
+@@ -487,21 +487,150 @@ static void octeon_sha512_transform(MIPSOcteonCryptoState *crypto)
+     crypto->hsh_ivw[7] += h;
+ }
+ 
++static const uint64_t octeon_sha3_round_constants[24] = {
++    0x0000000000000001ULL, 0x0000000000008082ULL,
++    0x800000000000808aULL, 0x8000000080008000ULL,
++    0x000000000000808bULL, 0x0000000080000001ULL,
++    0x8000000080008081ULL, 0x8000000000008009ULL,
++    0x000000000000008aULL, 0x0000000000000088ULL,
++    0x0000000080008009ULL, 0x000000008000000aULL,
++    0x000000008000808bULL, 0x800000000000008bULL,
++    0x8000000000008089ULL, 0x8000000000008003ULL,
++    0x8000000000008002ULL, 0x8000000000000080ULL,
++    0x000000000000800aULL, 0x800000008000000aULL,
++    0x8000000080008081ULL, 0x8000000000008080ULL,
++    0x0000000080000001ULL, 0x8000000080008008ULL,
++};
 +
-+#define CP2_MF_I64(NAME, FIELD) \
-+    TRANS(NAME, trans_octeon_cp2_mf_i64, OCTEON_CRYPTO_OFFSET(FIELD))
-+#define CP2_MF_U32(NAME, FIELD) \
-+    TRANS(NAME, trans_octeon_cp2_mf_u32, OCTEON_CRYPTO_OFFSET(FIELD))
-+#define CP2_MF_U16(NAME, FIELD) \
-+    TRANS(NAME, trans_octeon_cp2_mf_u16, OCTEON_CRYPTO_OFFSET(FIELD))
-+#define CP2_MF_U8(NAME, FIELD) \
-+    TRANS(NAME, trans_octeon_cp2_mf_u8, OCTEON_CRYPTO_OFFSET(FIELD))
-+#define CP2_MF_HELPER(NAME, SEL) \
-+    TRANS(NAME, trans_octeon_cp2_mf_helper, SEL)
-+#define CP2_MT_I64(NAME, FIELD) \
-+    TRANS(NAME, trans_octeon_cp2_mt_i64, OCTEON_CRYPTO_OFFSET(FIELD))
-+#define CP2_MT_U32(NAME, FIELD) \
-+    TRANS(NAME, trans_octeon_cp2_mt_u32, OCTEON_CRYPTO_OFFSET(FIELD))
-+#define CP2_MT_U16(NAME, FIELD) \
-+    TRANS(NAME, trans_octeon_cp2_mt_u16, OCTEON_CRYPTO_OFFSET(FIELD))
-+#define CP2_MT_U8(NAME, FIELD) \
-+    TRANS(NAME, trans_octeon_cp2_mt_u8, OCTEON_CRYPTO_OFFSET(FIELD))
-+#define CP2_MT_HELPER(NAME, SEL) \
-+    TRANS(NAME, trans_octeon_cp2_mt_helper, SEL)
++static const uint8_t octeon_sha3_rotation_constants[24] = {
++     1,  3,  6, 10, 15, 21, 28, 36, 45, 55,  2, 14,
++    27, 41, 56,  8, 25, 43, 62, 18, 39, 61, 20, 44,
++};
 +
-+static bool trans_CP2_Undef(DisasContext *ctx, arg_CP2_Undef *a)
++static const uint8_t octeon_sha3_pi_lanes[24] = {
++    10,  7, 11, 17, 18,  3,  5, 16,  8, 21, 24,  4,
++    15, 23, 19, 13, 12,  2, 20, 14, 22,  9,  6,  1,
++};
++
++static void octeon_sha3_permute(MIPSOcteonCryptoState *crypto)
 +{
-+    generate_exception_err(ctx, EXCP_CpU, 2);
-+    return true;
++    uint64_t *state = crypto->sha3_state;
++
++    for (int round = 0; round < 24; round++) {
++        uint64_t bc[5];
++        uint64_t temp;
++
++        for (int x = 0; x < 5; x++) {
++            bc[x] = state[x] ^ state[5 + x] ^ state[10 + x] ^
++                    state[15 + x] ^ state[20 + x];
++        }
++        for (int x = 0; x < 5; x++) {
++            temp = bc[(x + 4) % 5] ^ rol64(bc[(x + 1) % 5], 1);
++            for (int y = 0; y < 25; y += 5) {
++                state[y + x] ^= temp;
++            }
++        }
++
++        temp = state[1];
++        for (int i = 0; i < 24; i++) {
++            uint64_t next = state[octeon_sha3_pi_lanes[i]];
++
++            state[octeon_sha3_pi_lanes[i]] =
++                rol64(temp, octeon_sha3_rotation_constants[i]);
++            temp = next;
++        }
++
++        for (int y = 0; y < 25; y += 5) {
++            for (int x = 0; x < 5; x++) {
++                bc[x] = state[y + x];
++            }
++            for (int x = 0; x < 5; x++) {
++                state[y + x] = bc[x] ^ ((~bc[(x + 1) % 5]) & bc[(x + 2) % 5]);
++            }
++        }
++
++        state[0] ^= octeon_sha3_round_constants[round];
++    }
 +}
 +
-+static bool trans_octeon_cp2_mf_i64(DisasContext *ctx, arg_cp2 *a, int offset)
++static bool octeon_sha3_is_dat_sel(uint32_t sel)
 +{
-+    TCGv_i64 value = tcg_temp_new_i64();
-+
-+    tcg_gen_ld_i64(value, tcg_env, offset);
-+    gen_store_gpr(value, a->rt);
-+    return true;
++    switch (sel) {
++    case OCTEON_COP2_SEL_HSH_DATW0 ... OCTEON_COP2_SEL_HSH_DATW15:
++    case OCTEON_COP2_SEL_HSH_IVW0 ... OCTEON_COP2_SEL_HSH_IVW7:
++    case OCTEON_COP2_SEL_SHA3_DAT15_MT:
++    case OCTEON_COP2_SEL_SHA3_DAT24:
++        return true;
++    default:
++        return false;
++    }
 +}
 +
-+static bool trans_octeon_cp2_mf_u32(DisasContext *ctx, arg_cp2 *a, int offset)
++static int octeon_sha3_dat_pos_from_sel(uint32_t sel)
 +{
-+    TCGv_i64 value = tcg_temp_new_i64();
-+
-+    tcg_gen_ld32u_i64(value, tcg_env, offset);
-+    gen_store_gpr(value, a->rt);
-+    return true;
++    switch (sel) {
++    case OCTEON_COP2_SEL_HSH_DATW0 ... OCTEON_COP2_SEL_HSH_DATW14:
++        return sel - OCTEON_COP2_SEL_HSH_DATW0;
++    case OCTEON_COP2_SEL_HSH_IVW0 ... OCTEON_COP2_SEL_HSH_IVW7:
++        return 16 + (sel - OCTEON_COP2_SEL_HSH_IVW0);
++    case OCTEON_COP2_SEL_HSH_DATW15:
++    case OCTEON_COP2_SEL_SHA3_DAT15_MT:
++        return 15;
++    case OCTEON_COP2_SEL_SHA3_DAT24:
++        return 24;
++    default:
++        g_assert_not_reached();
++    }
 +}
 +
-+static bool trans_octeon_cp2_mf_u16(DisasContext *ctx, arg_cp2 *a, int offset)
++static uint64_t octeon_sha3_reg_to_lane(uint64_t value)
 +{
-+    TCGv_i64 value = tcg_temp_new_i64();
-+
-+    tcg_gen_ld16u_i64(value, tcg_env, offset);
-+    gen_store_gpr(value, a->rt);
-+    return true;
++    /*
++     * The COP2 register interface is consumed by big-endian MIPS code as
++     * 64-bit register values, while Keccak lanes are byte-little-endian.
++     */
++    return bswap64(value);
 +}
 +
-+static bool trans_octeon_cp2_mf_u8(DisasContext *ctx, arg_cp2 *a, int offset)
++static uint64_t octeon_sha3_lane_to_reg(uint64_t value)
 +{
-+    TCGv_i64 value = tcg_temp_new_i64();
-+
-+    tcg_gen_ld8u_i64(value, tcg_env, offset);
-+    gen_store_gpr(value, a->rt);
-+    return true;
++    return bswap64(value);
 +}
 +
-+static bool trans_octeon_cp2_mf_helper(DisasContext *ctx, arg_cp2 *a,
-+                                       uint32_t sel)
-+{
-+    TCGv_i64 value = tcg_temp_new_i64();
-+
-+    gen_helper_octeon_cop2_dmfc2(value, tcg_env, tcg_constant_i32(sel));
-+    gen_store_gpr(value, a->rt);
-+    return true;
-+}
-+
-+static bool trans_octeon_cp2_mt_i64(DisasContext *ctx, arg_cp2 *a, int offset)
-+{
-+    TCGv_i64 value = tcg_temp_new_i64();
-+
-+    gen_load_gpr(value, a->rt);
-+    tcg_gen_st_i64(value, tcg_env, offset);
-+    return true;
-+}
-+
-+static bool trans_octeon_cp2_mt_u32(DisasContext *ctx, arg_cp2 *a, int offset)
-+{
-+    TCGv_i64 value = tcg_temp_new_i64();
-+
-+    gen_load_gpr(value, a->rt);
-+    tcg_gen_st32_i64(value, tcg_env, offset);
-+    return true;
-+}
-+
-+static bool trans_octeon_cp2_mt_u16(DisasContext *ctx, arg_cp2 *a, int offset)
-+{
-+    TCGv_i64 value = tcg_temp_new_i64();
-+
-+    gen_load_gpr(value, a->rt);
-+    tcg_gen_st16_i64(value, tcg_env, offset);
-+    return true;
-+}
-+
-+static bool trans_octeon_cp2_mt_u8(DisasContext *ctx, arg_cp2 *a, int offset)
-+{
-+    TCGv_i64 value = tcg_temp_new_i64();
-+
-+    gen_load_gpr(value, a->rt);
-+    tcg_gen_st8_i64(value, tcg_env, offset);
-+    return true;
-+}
-+
-+static bool trans_octeon_cp2_mt_resinp(DisasContext *ctx, arg_cp2 *a,
-+                                       unsigned int index)
-+{
-+    TCGv_i64 value = tcg_temp_new_i64();
-+
-+    gen_load_gpr(value, a->rt);
-+    tcg_gen_st_i64(value, tcg_env,
-+                   OCTEON_CRYPTO_OFFSET(aes_input[index]));
-+    tcg_gen_st_i64(value, tcg_env,
-+                   OCTEON_CRYPTO_OFFSET(aes_result[index]));
-+    return true;
-+}
-+
-+static bool trans_octeon_cp2_mt_helper(DisasContext *ctx, arg_cp2 *a,
-+                                       uint32_t sel)
-+{
-+    TCGv_i64 value = tcg_temp_new_i64();
-+
-+    gen_load_gpr(value, a->rt);
-+    gen_helper_octeon_cop2_dmtc2(tcg_env, value, tcg_constant_i32(sel));
-+    return true;
-+}
-+
-+CP2_MF_I64(CVM_MF_HSH_IV0, hsh_iv[0]);
-+CP2_MF_I64(CVM_MF_HSH_IV1, hsh_iv[1]);
-+CP2_MF_I64(CVM_MF_HSH_IV2, hsh_iv[2]);
-+CP2_MF_I64(CVM_MF_HSH_IV3, hsh_iv[3]);
-+CP2_MF_HELPER(CVM_MF_SHA3_DAT24, OCTEON_COP2_SEL_SHA3_DAT24);
-+CP2_MF_I64(CVM_MF_GFM_MUL_REFLECT0, gfm_reflect_mul[0]);
-+CP2_MF_I64(CVM_MF_GFM_MUL_REFLECT1, gfm_reflect_mul[1]);
-+CP2_MF_I64(CVM_MF_GFM_RESINP_REFLECT0, gfm_reflect_resinp[0]);
-+CP2_MF_I64(CVM_MF_GFM_RESINP_REFLECT1, gfm_reflect_resinp[1]);
-+CP2_MF_I64(CVM_MF_3DES_KEY0, des3_key[0]);
-+CP2_MF_I64(CVM_MF_3DES_KEY1, des3_key[1]);
-+CP2_MF_I64(CVM_MF_3DES_KEY2, des3_key[2]);
-+CP2_MF_I64(CVM_MF_3DES_IV, des3_iv);
-+CP2_MF_I64(CVM_MF_3DES_RESULT, des3_result);
-+CP2_MF_I64(CVM_MF_3DES_RESULT_MT, des3_result);
-+CP2_MF_I64(CVM_MF_AES_RESINP0, aes_result[0]);
-+CP2_MF_I64(CVM_MF_AES_RESINP1, aes_result[1]);
-+CP2_MF_I64(CVM_MF_AES_IV0, aes_iv[0]);
-+CP2_MF_I64(CVM_MF_AES_IV1, aes_iv[1]);
-+CP2_MF_I64(CVM_MF_AES_KEY0, aes_key[0]);
-+CP2_MF_I64(CVM_MF_AES_KEY1, aes_key[1]);
-+CP2_MF_I64(CVM_MF_AES_KEY2, aes_key[2]);
-+CP2_MF_I64(CVM_MF_AES_KEY3, aes_key[3]);
-+CP2_MF_U8(CVM_MF_AES_KEYLENGTH, aes_keylen);
-+CP2_MF_I64(CVM_MF_AES_INP0, aes_input[0]);
-+CP2_MF_U32(CVM_MF_CRC_POLYNOMIAL, crc_poly);
-+CP2_MF_U32(CVM_MF_CRC_IV, crc_iv);
-+CP2_MF_U32(CVM_MF_CRC_LEN, crc_len);
-+CP2_MF_HELPER(CVM_MF_CRC_IV_REFLECT, OCTEON_COP2_SEL_CRC_IV_REFLECT);
-+CP2_MF_HELPER(CVM_MF_HSH_DATW0, OCTEON_COP2_SEL_HSH_DATW0);
-+CP2_MF_HELPER(CVM_MF_HSH_DATW1, OCTEON_COP2_SEL_HSH_DATW1);
-+CP2_MF_HELPER(CVM_MF_HSH_DATW2, OCTEON_COP2_SEL_HSH_DATW2);
-+CP2_MF_HELPER(CVM_MF_HSH_DATW3, OCTEON_COP2_SEL_HSH_DATW3);
-+CP2_MF_HELPER(CVM_MF_HSH_DATW4, OCTEON_COP2_SEL_HSH_DATW4);
-+CP2_MF_HELPER(CVM_MF_HSH_DATW5, OCTEON_COP2_SEL_HSH_DATW5);
-+CP2_MF_HELPER(CVM_MF_HSH_DATW6, OCTEON_COP2_SEL_HSH_DATW6);
-+CP2_MF_HELPER(CVM_MF_HSH_DATW7, OCTEON_COP2_SEL_HSH_DATW7);
-+CP2_MF_HELPER(CVM_MF_HSH_DATW8, OCTEON_COP2_SEL_HSH_DATW8);
-+CP2_MF_HELPER(CVM_MF_HSH_DATW9, OCTEON_COP2_SEL_HSH_DATW9);
-+CP2_MF_HELPER(CVM_MF_HSH_DATW10, OCTEON_COP2_SEL_HSH_DATW10);
-+CP2_MF_HELPER(CVM_MF_HSH_DATW11, OCTEON_COP2_SEL_HSH_DATW11);
-+CP2_MF_HELPER(CVM_MF_HSH_DATW12, OCTEON_COP2_SEL_HSH_DATW12);
-+CP2_MF_HELPER(CVM_MF_HSH_DATW13, OCTEON_COP2_SEL_HSH_DATW13);
-+CP2_MF_HELPER(CVM_MF_HSH_DATW14, OCTEON_COP2_SEL_HSH_DATW14);
-+CP2_MF_HELPER(CVM_MF_HSH_DATW15, OCTEON_COP2_SEL_HSH_DATW15);
-+CP2_MF_HELPER(CVM_MF_HSH_IVW0, OCTEON_COP2_SEL_HSH_IVW0);
-+CP2_MF_HELPER(CVM_MF_HSH_IVW1, OCTEON_COP2_SEL_HSH_IVW1);
-+CP2_MF_HELPER(CVM_MF_HSH_IVW2, OCTEON_COP2_SEL_HSH_IVW2);
-+CP2_MF_HELPER(CVM_MF_HSH_IVW3, OCTEON_COP2_SEL_HSH_IVW3);
-+CP2_MF_HELPER(CVM_MF_HSH_IVW4, OCTEON_COP2_SEL_HSH_IVW4);
-+CP2_MF_HELPER(CVM_MF_HSH_IVW5, OCTEON_COP2_SEL_HSH_IVW5);
-+CP2_MF_HELPER(CVM_MF_HSH_IVW6, OCTEON_COP2_SEL_HSH_IVW6);
-+CP2_MF_HELPER(CVM_MF_HSH_IVW7, OCTEON_COP2_SEL_HSH_IVW7);
-+CP2_MF_I64(CVM_MF_GFM_MUL0, gfm_mul[0]);
-+CP2_MF_I64(CVM_MF_GFM_MUL1, gfm_mul[1]);
-+CP2_MF_I64(CVM_MF_GFM_RESINP0, gfm_resinp[0]);
-+CP2_MF_I64(CVM_MF_GFM_RESINP1, gfm_resinp[1]);
-+CP2_MF_U16(CVM_MF_GFM_POLY, gfm_poly);
-+CP2_MF_I64(CVM_MF_CHORD, chord);
-+CP2_MF_I64(CVM_MF_LLM_DATA0, llm_data[0]);
-+CP2_MF_I64(CVM_MF_LLM_DATA1, llm_data[1]);
-+CP2_MT_I64(CVM_MT_HSH_DAT0, hsh_dat[0]);
-+CP2_MT_I64(CVM_MT_HSH_DAT1, hsh_dat[1]);
-+CP2_MT_I64(CVM_MT_HSH_DAT2, hsh_dat[2]);
-+CP2_MT_I64(CVM_MT_HSH_DAT3, hsh_dat[3]);
-+CP2_MT_I64(CVM_MT_HSH_DAT4, hsh_dat[4]);
-+CP2_MT_I64(CVM_MT_HSH_DAT5, hsh_dat[5]);
-+CP2_MT_I64(CVM_MT_HSH_DAT6, hsh_dat[6]);
-+CP2_MT_I64(CVM_MT_HSH_IV0, hsh_iv[0]);
-+CP2_MT_I64(CVM_MT_HSH_IV1, hsh_iv[1]);
-+CP2_MT_I64(CVM_MT_HSH_IV2, hsh_iv[2]);
-+CP2_MT_I64(CVM_MT_HSH_IV3, hsh_iv[3]);
-+CP2_MT_HELPER(CVM_MT_SHA3_DAT24, OCTEON_COP2_SEL_SHA3_DAT24);
-+CP2_MT_HELPER(CVM_MT_SHA3_DAT15, OCTEON_COP2_SEL_SHA3_DAT15_MT);
-+CP2_MT_HELPER(CVM_MT_HSH_STARTSHA_COMPAT, OCTEON_COP2_SEL_HSH_STARTSHA_COMPAT);
-+CP2_MT_I64(CVM_MT_GFM_MUL_REFLECT0, gfm_reflect_mul[0]);
-+CP2_MT_I64(CVM_MT_GFM_MUL_REFLECT1, gfm_reflect_mul[1]);
-+CP2_MT_I64(CVM_MT_GFM_XOR0_REFLECT, gfm_reflect_xor0);
-+CP2_MT_I64(CVM_MT_3DES_KEY0, des3_key[0]);
-+CP2_MT_I64(CVM_MT_3DES_KEY1, des3_key[1]);
-+CP2_MT_I64(CVM_MT_3DES_KEY2, des3_key[2]);
-+CP2_MT_I64(CVM_MT_3DES_IV, des3_iv);
-+CP2_MT_I64(CVM_MT_3DES_RESULT, des3_result);
-+TRANS(CVM_MT_AES_RESINP0, trans_octeon_cp2_mt_resinp, 0);
-+TRANS(CVM_MT_AES_RESINP1, trans_octeon_cp2_mt_resinp, 1);
-+CP2_MT_I64(CVM_MT_AES_IV0, aes_iv[0]);
-+CP2_MT_I64(CVM_MT_AES_IV1, aes_iv[1]);
-+CP2_MT_I64(CVM_MT_AES_KEY0, aes_key[0]);
-+CP2_MT_I64(CVM_MT_AES_KEY1, aes_key[1]);
-+CP2_MT_I64(CVM_MT_AES_KEY2, aes_key[2]);
-+CP2_MT_I64(CVM_MT_AES_KEY3, aes_key[3]);
-+CP2_MT_I64(CVM_MT_AES_ENC_CBC0, aes_input[0]);
-+CP2_MT_I64(CVM_MT_AES_ENC0, aes_input[0]);
-+CP2_MT_I64(CVM_MT_AES_DEC_CBC0, aes_input[0]);
-+CP2_MT_I64(CVM_MT_AES_DEC0, aes_input[0]);
-+CP2_MT_U8(CVM_MT_AES_KEYLENGTH, aes_keylen);
-+CP2_MT_HELPER(CVM_MT_CAMELLIA_FL, OCTEON_COP2_SEL_CAMELLIA_FL);
-+CP2_MT_HELPER(CVM_MT_CAMELLIA_FLINV, OCTEON_COP2_SEL_CAMELLIA_FLINV);
-+CP2_MT_U32(CVM_MT_CRC_IV, crc_iv);
-+CP2_MT_HELPER(CVM_MT_CRC_WRITE_IV_REFLECT,
-+              OCTEON_COP2_SEL_CRC_WRITE_IV_REFLECT);
-+CP2_MT_HELPER(CVM_MT_CRC_WRITE_BYTE, OCTEON_COP2_SEL_CRC_WRITE_BYTE);
-+CP2_MT_HELPER(CVM_MT_CRC_WRITE_HALF, OCTEON_COP2_SEL_CRC_WRITE_HALF);
-+CP2_MT_HELPER(CVM_MT_CRC_WRITE_WORD, OCTEON_COP2_SEL_CRC_WRITE_WORD);
-+CP2_MT_HELPER(CVM_MT_CRC_WRITE_BYTE_REFLECT,
-+              OCTEON_COP2_SEL_CRC_WRITE_BYTE_REFLECT);
-+CP2_MT_HELPER(CVM_MT_CRC_WRITE_HALF_REFLECT,
-+              OCTEON_COP2_SEL_CRC_WRITE_HALF_REFLECT);
-+CP2_MT_HELPER(CVM_MT_CRC_WRITE_WORD_REFLECT,
-+              OCTEON_COP2_SEL_CRC_WRITE_WORD_REFLECT);
-+CP2_MT_HELPER(CVM_MT_HSH_DATW0, OCTEON_COP2_SEL_HSH_DATW0);
-+CP2_MT_HELPER(CVM_MT_HSH_DATW1, OCTEON_COP2_SEL_HSH_DATW1);
-+CP2_MT_HELPER(CVM_MT_HSH_DATW2, OCTEON_COP2_SEL_HSH_DATW2);
-+CP2_MT_HELPER(CVM_MT_HSH_DATW3, OCTEON_COP2_SEL_HSH_DATW3);
-+CP2_MT_HELPER(CVM_MT_HSH_DATW4, OCTEON_COP2_SEL_HSH_DATW4);
-+CP2_MT_HELPER(CVM_MT_HSH_DATW5, OCTEON_COP2_SEL_HSH_DATW5);
-+CP2_MT_HELPER(CVM_MT_HSH_DATW6, OCTEON_COP2_SEL_HSH_DATW6);
-+CP2_MT_HELPER(CVM_MT_HSH_DATW7, OCTEON_COP2_SEL_HSH_DATW7);
-+CP2_MT_HELPER(CVM_MT_HSH_DATW8, OCTEON_COP2_SEL_HSH_DATW8);
-+CP2_MT_HELPER(CVM_MT_HSH_DATW9, OCTEON_COP2_SEL_HSH_DATW9);
-+CP2_MT_HELPER(CVM_MT_HSH_DATW10, OCTEON_COP2_SEL_HSH_DATW10);
-+CP2_MT_HELPER(CVM_MT_HSH_DATW11, OCTEON_COP2_SEL_HSH_DATW11);
-+CP2_MT_HELPER(CVM_MT_HSH_DATW12, OCTEON_COP2_SEL_HSH_DATW12);
-+CP2_MT_HELPER(CVM_MT_HSH_DATW13, OCTEON_COP2_SEL_HSH_DATW13);
-+CP2_MT_HELPER(CVM_MT_HSH_DATW14, OCTEON_COP2_SEL_HSH_DATW14);
-+CP2_MT_HELPER(CVM_MT_HSH_DATW15, OCTEON_COP2_SEL_HSH_DATW15);
-+CP2_MT_HELPER(CVM_MT_HSH_IVW0, OCTEON_COP2_SEL_HSH_IVW0);
-+CP2_MT_HELPER(CVM_MT_HSH_IVW1, OCTEON_COP2_SEL_HSH_IVW1);
-+CP2_MT_HELPER(CVM_MT_HSH_IVW2, OCTEON_COP2_SEL_HSH_IVW2);
-+CP2_MT_HELPER(CVM_MT_HSH_IVW3, OCTEON_COP2_SEL_HSH_IVW3);
-+CP2_MT_HELPER(CVM_MT_HSH_IVW4, OCTEON_COP2_SEL_HSH_IVW4);
-+CP2_MT_HELPER(CVM_MT_HSH_IVW5, OCTEON_COP2_SEL_HSH_IVW5);
-+CP2_MT_HELPER(CVM_MT_HSH_IVW6, OCTEON_COP2_SEL_HSH_IVW6);
-+CP2_MT_HELPER(CVM_MT_HSH_IVW7, OCTEON_COP2_SEL_HSH_IVW7);
-+CP2_MT_I64(CVM_MT_GFM_MUL0, gfm_mul[0]);
-+CP2_MT_I64(CVM_MT_GFM_MUL1, gfm_mul[1]);
-+CP2_MT_I64(CVM_MT_GFM_RESINP0, gfm_resinp[0]);
-+CP2_MT_I64(CVM_MT_GFM_RESINP1, gfm_resinp[1]);
-+CP2_MT_I64(CVM_MT_GFM_XOR0, gfm_xor0);
-+CP2_MT_U16(CVM_MT_GFM_POLY, gfm_poly);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT0, OCTEON_COP2_SEL_SHA3_XORDAT0);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT1, OCTEON_COP2_SEL_SHA3_XORDAT1);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT2, OCTEON_COP2_SEL_SHA3_XORDAT2);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT3, OCTEON_COP2_SEL_SHA3_XORDAT3);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT4, OCTEON_COP2_SEL_SHA3_XORDAT4);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT5, OCTEON_COP2_SEL_SHA3_XORDAT5);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT6, OCTEON_COP2_SEL_SHA3_XORDAT6);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT7, OCTEON_COP2_SEL_SHA3_XORDAT7);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT8, OCTEON_COP2_SEL_SHA3_XORDAT8);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT9, OCTEON_COP2_SEL_SHA3_XORDAT9);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT10, OCTEON_COP2_SEL_SHA3_XORDAT10);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT11, OCTEON_COP2_SEL_SHA3_XORDAT11);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT12, OCTEON_COP2_SEL_SHA3_XORDAT12);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT13, OCTEON_COP2_SEL_SHA3_XORDAT13);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT14, OCTEON_COP2_SEL_SHA3_XORDAT14);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT15, OCTEON_COP2_SEL_SHA3_XORDAT15);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT16, OCTEON_COP2_SEL_SHA3_XORDAT16);
-+CP2_MT_HELPER(CVM_MT_SHA3_XORDAT17, OCTEON_COP2_SEL_SHA3_XORDAT17);
-+CP2_MT_HELPER(CVM_MT_LLM_READ_ADDR0, OCTEON_COP2_SEL_LLM_READ_ADDR0);
-+CP2_MT_HELPER(CVM_MT_LLM_WRITE_ADDR0,
-+              OCTEON_COP2_SEL_LLM_WRITE_ADDR_INTERNAL0);
-+CP2_MT_I64(CVM_MT_LLM_DATA0, llm_data[0]);
-+CP2_MT_HELPER(CVM_MT_LLM_READ64_ADDR0, OCTEON_COP2_SEL_LLM_READ64_ADDR0);
-+CP2_MT_HELPER(CVM_MT_LLM_WRITE64_ADDR0,
-+              OCTEON_COP2_SEL_LLM_WRITE64_ADDR_INTERNAL0);
-+CP2_MT_HELPER(CVM_MT_LLM_READ_ADDR1, OCTEON_COP2_SEL_LLM_READ_ADDR1);
-+CP2_MT_HELPER(CVM_MT_LLM_WRITE_ADDR1,
-+              OCTEON_COP2_SEL_LLM_WRITE_ADDR_INTERNAL1);
-+CP2_MT_I64(CVM_MT_LLM_DATA1, llm_data[1]);
-+CP2_MT_HELPER(CVM_MT_LLM_READ64_ADDR1, OCTEON_COP2_SEL_LLM_READ64_ADDR1);
-+CP2_MT_HELPER(CVM_MT_LLM_WRITE64_ADDR1,
-+              OCTEON_COP2_SEL_LLM_WRITE64_ADDR_INTERNAL1);
-+CP2_MT_U32(CVM_MT_CRC_WRITE_LEN, crc_len);
-+CP2_MT_HELPER(CVM_MT_CRC_WRITE_DWORD, OCTEON_COP2_SEL_CRC_WRITE_DWORD);
-+CP2_MT_HELPER(CVM_MT_CRC_WRITE_VAR, OCTEON_COP2_SEL_CRC_WRITE_VAR);
-+CP2_MT_HELPER(CVM_MT_CRC_WRITE_DWORD_REFLECT,
-+              OCTEON_COP2_SEL_CRC_WRITE_DWORD_REFLECT);
-+CP2_MT_HELPER(CVM_MT_CRC_WRITE_VAR_REFLECT,
-+              OCTEON_COP2_SEL_CRC_WRITE_VAR_REFLECT);
-+CP2_MT_HELPER(CVM_MT_AES_ENC_CBC1, OCTEON_COP2_SEL_AES_ENC_CBC1);
-+CP2_MT_HELPER(CVM_MT_AES_ENC1, OCTEON_COP2_SEL_AES_ENC1);
-+CP2_MT_HELPER(CVM_MT_AES_DEC_CBC1, OCTEON_COP2_SEL_AES_DEC_CBC1);
-+CP2_MT_HELPER(CVM_MT_AES_DEC1, OCTEON_COP2_SEL_AES_DEC1);
-+CP2_MT_HELPER(CVM_MT_CAMELLIA_ROUND, OCTEON_COP2_SEL_CAMELLIA_ROUND);
-+CP2_MT_HELPER(CVM_MT_SMS4_ENC_CBC1, OCTEON_COP2_SEL_SMS4_ENC_CBC1);
-+CP2_MT_HELPER(CVM_MT_SMS4_ENC1, OCTEON_COP2_SEL_SMS4_ENC1);
-+CP2_MT_HELPER(CVM_MT_SMS4_DEC_CBC1, OCTEON_COP2_SEL_SMS4_DEC_CBC1);
-+CP2_MT_HELPER(CVM_MT_SMS4_DEC1, OCTEON_COP2_SEL_SMS4_DEC1);
-+CP2_MT_HELPER(CVM_MT_HSH_STARTMD5, OCTEON_COP2_SEL_HSH_STARTMD5);
-+CP2_MT_HELPER(CVM_MT_SNOW3G_START, OCTEON_COP2_SEL_SNOW3G_START);
-+CP2_MT_HELPER(CVM_MT_SNOW3G_MORE, OCTEON_COP2_SEL_SNOW3G_MORE);
-+CP2_MT_HELPER(CVM_MT_HSH_STARTSHA256, OCTEON_COP2_SEL_HSH_STARTSHA256);
-+CP2_MT_HELPER(CVM_MT_SHA3_STARTOP, OCTEON_COP2_SEL_SHA3_STARTOP);
-+CP2_MT_HELPER(CVM_MT_ZUC_START, OCTEON_COP2_SEL_ZUC_START);
-+CP2_MT_HELPER(CVM_MT_ZUC_MORE, OCTEON_COP2_SEL_ZUC_MORE);
-+CP2_MT_HELPER(CVM_MT_HSH_STARTSHA, OCTEON_COP2_SEL_HSH_STARTSHA);
-+CP2_MT_HELPER(CVM_MT_GFM_XORMUL1_REFLECT,
-+              OCTEON_COP2_SEL_GFM_XORMUL1_REFLECT);
-+CP2_MT_HELPER(CVM_MT_3DES_ENC_CBC, OCTEON_COP2_SEL_3DES_ENC_CBC);
-+CP2_MT_HELPER(CVM_MT_KAS_ENC_CBC, OCTEON_COP2_SEL_KAS_ENC_CBC);
-+CP2_MT_HELPER(CVM_MT_3DES_ENC, OCTEON_COP2_SEL_3DES_ENC);
-+CP2_MT_HELPER(CVM_MT_KAS_ENC, OCTEON_COP2_SEL_KAS_ENC);
-+CP2_MT_HELPER(CVM_MT_3DES_DEC_CBC, OCTEON_COP2_SEL_3DES_DEC_CBC);
-+CP2_MT_HELPER(CVM_MT_3DES_DEC, OCTEON_COP2_SEL_3DES_DEC);
-+CP2_MT_U32(CVM_MT_CRC_WRITE_POLYNOMIAL, crc_poly);
-+CP2_MT_U32(CVM_MT_CRC_WRITE_POLYNOMIAL_REFLECT, crc_poly);
-+CP2_MT_HELPER(CVM_MT_HSH_STARTSHA512, OCTEON_COP2_SEL_HSH_STARTSHA512);
-+CP2_MT_HELPER(CVM_MT_GFM_XORMUL1, OCTEON_COP2_SEL_GFM_XORMUL1);
-+
- static bool trans_BBIT(DisasContext *ctx, arg_BBIT *a)
+ static void octeon_store_shared_hsh_window(MIPSOcteonCryptoState *crypto,
+                                          uint32_t sel, uint64_t value)
  {
-     TCGv_i64 p;
+     switch (sel) {
+     case OCTEON_COP2_SEL_HSH_DATW0 ... OCTEON_COP2_SEL_HSH_DATW14:
+         crypto->hsh_datw[sel - OCTEON_COP2_SEL_HSH_DATW0] = value;
++        crypto->sha3_state[sel - OCTEON_COP2_SEL_HSH_DATW0] =
++            octeon_sha3_reg_to_lane(value);
+         break;
+     case OCTEON_COP2_SEL_HSH_IVW0 ... OCTEON_COP2_SEL_HSH_IVW7:
+         crypto->hsh_ivw[sel - OCTEON_COP2_SEL_HSH_IVW0] = value;
++        crypto->sha3_state[16 + (sel - OCTEON_COP2_SEL_HSH_IVW0)] =
++            octeon_sha3_reg_to_lane(value);
++        break;
++    case OCTEON_COP2_SEL_SHA3_DAT15_MT:
++        crypto->sha3_state[15] = octeon_sha3_reg_to_lane(value);
++        break;
++    case OCTEON_COP2_SEL_SHA3_DAT24:
++        crypto->sha3_state[24] = octeon_sha3_reg_to_lane(value);
+         break;
+     default:
+         g_assert_not_reached();
+     }
+ }
+ 
++static int octeon_sha3_xordat_pos_from_sel(uint32_t sel)
++{
++    if (sel >= OCTEON_COP2_SEL_SHA3_XORDAT0 &&
++        sel <= OCTEON_COP2_SEL_SHA3_XORDAT17) {
++        return sel - OCTEON_COP2_SEL_SHA3_XORDAT0;
++    }
++    return -1;
++}
++
+ static const uint8_t octeon_snow3g_sr[256] = {
+     0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5,
+     0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
+@@ -1396,6 +1525,7 @@ static void octeon_gfm_mul(const uint64_t x[2], const uint64_t y[2],
+ uint64_t helper_octeon_cop2_dmfc2(CPUMIPSState *env, uint32_t sel)
+ {
+     MIPSOcteonCryptoState *crypto = &env->octeon_crypto;
++    int sha3_pos;
+ 
+     if (crypto->shared_mode == OCTEON_SHARED_MODE_SNOW3G) {
+         if (sel >= OCTEON_COP2_SEL_SNOW3G_LFSR0 &&
+@@ -1417,6 +1547,12 @@ uint64_t helper_octeon_cop2_dmfc2(CPUMIPSState *env, uint32_t sel)
+         }
+     }
+ 
++    if (crypto->shared_mode == OCTEON_SHARED_MODE_SHA3 &&
++        octeon_sha3_is_dat_sel(sel)) {
++        sha3_pos = octeon_sha3_dat_pos_from_sel(sel);
++        return octeon_sha3_lane_to_reg(crypto->sha3_state[sha3_pos]);
++    }
++
+     switch (sel) {
+     case OCTEON_COP2_SEL_3DES_KEY0:
+     case OCTEON_COP2_SEL_3DES_KEY1:
+@@ -1507,6 +1643,7 @@ void helper_octeon_cop2_dmtc2(CPUMIPSState *env, uint64_t value,
+ {
+     MIPSOcteonCryptoState *crypto = &env->octeon_crypto;
+     uint64_t data = value;
++    int sha3_pos;
+ 
+     switch (sel) {
+     case OCTEON_COP2_SEL_3DES_KEY0:
+@@ -1628,6 +1765,14 @@ void helper_octeon_cop2_dmtc2(CPUMIPSState *env, uint64_t value,
+         octeon_set_shared_mode(crypto, OCTEON_SHARED_MODE_SHA512);
+         octeon_sha512_transform(crypto);
+         break;
++    case OCTEON_COP2_SEL_SHA3_DAT15_MT:
++        octeon_set_shared_mode(crypto, OCTEON_SHARED_MODE_SHA3);
++        octeon_store_shared_hsh_window(crypto, sel, data);
++        break;
++    case OCTEON_COP2_SEL_SHA3_DAT24:
++        octeon_set_shared_mode(crypto, OCTEON_SHARED_MODE_SHA3);
++        octeon_store_shared_hsh_window(crypto, sel, data);
++        break;
+     case OCTEON_COP2_SEL_HSH_IVW0:
+     case OCTEON_COP2_SEL_HSH_IVW1:
+     case OCTEON_COP2_SEL_HSH_IVW2:
+@@ -1688,6 +1833,32 @@ void helper_octeon_cop2_dmtc2(CPUMIPSState *env, uint64_t value,
+         crypto->hsh_dat[7] = data;
+         octeon_sha1_transform(crypto);
+         break;
++    case OCTEON_COP2_SEL_SHA3_XORDAT0:
++    case OCTEON_COP2_SEL_SHA3_XORDAT1:
++    case OCTEON_COP2_SEL_SHA3_XORDAT2:
++    case OCTEON_COP2_SEL_SHA3_XORDAT3:
++    case OCTEON_COP2_SEL_SHA3_XORDAT4:
++    case OCTEON_COP2_SEL_SHA3_XORDAT5:
++    case OCTEON_COP2_SEL_SHA3_XORDAT6:
++    case OCTEON_COP2_SEL_SHA3_XORDAT7:
++    case OCTEON_COP2_SEL_SHA3_XORDAT8:
++    case OCTEON_COP2_SEL_SHA3_XORDAT9:
++    case OCTEON_COP2_SEL_SHA3_XORDAT10:
++    case OCTEON_COP2_SEL_SHA3_XORDAT11:
++    case OCTEON_COP2_SEL_SHA3_XORDAT12:
++    case OCTEON_COP2_SEL_SHA3_XORDAT13:
++    case OCTEON_COP2_SEL_SHA3_XORDAT14:
++    case OCTEON_COP2_SEL_SHA3_XORDAT15:
++    case OCTEON_COP2_SEL_SHA3_XORDAT16:
++    case OCTEON_COP2_SEL_SHA3_XORDAT17:
++        octeon_set_shared_mode(crypto, OCTEON_SHARED_MODE_SHA3);
++        sha3_pos = octeon_sha3_xordat_pos_from_sel(sel);
++        crypto->sha3_state[sha3_pos] ^= octeon_sha3_reg_to_lane(data);
++        break;
++    case OCTEON_COP2_SEL_SHA3_STARTOP:
++        octeon_set_shared_mode(crypto, OCTEON_SHARED_MODE_SHA3);
++        octeon_sha3_permute(crypto);
++        break;
+     case OCTEON_COP2_SEL_GFM_XORMUL1_REFLECT:
+         octeon_gfm_mul_reflect(crypto, data);
+         break;
 
 -- 
 2.54.0
