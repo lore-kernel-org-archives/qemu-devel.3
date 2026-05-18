@@ -4,97 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55594CD4F4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 21:31:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5482CD343F
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 21:32:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP5Vs-0000lR-2f; Mon, 18 May 2026 17:28:36 -0400
+	id 1wP5Vs-0000mH-Na; Mon, 18 May 2026 17:28:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5Vi-0000Vr-FK
- for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:26 -0400
-Received: from mail-oi1-x236.google.com ([2607:f8b0:4864:20::236])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5Vm-0000YO-Ua
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:32 -0400
+Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5Vg-0000as-B1
- for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:26 -0400
-Received: by mail-oi1-x236.google.com with SMTP id
- 5614622812f47-479f7e75a6bso1006780b6e.2
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 14:28:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5Vk-0000hX-Tj
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:30 -0400
+Received: by mail-ot1-x332.google.com with SMTP id
+ 46e09a7af769-7e36bb16a92so1712596a34.2
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 14:28:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779139703; x=1779744503;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779139708; x=1779744508;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=M1JQVOiuc+A4ksNToUTMbfJYQEFXRR5y86p07JOscgc=;
- b=JHi5mFqpIkXIQas63BSuCTzeRQn+LsHjVtV1UgL/i+0OM2Ki4CQUGM0oa2I9aQ/oOI
- NxX/VqR7BkRnNe55Zj41Uw2KxfvJSUPc8o/kurKx0f/X+n7zkbtqTkjF5/9bVcDJ1hnM
- TGg/KtRsdjpHtm113zqUT/XmJRj7m13ajSkEgQLO2U4+k4rGi+J39/8sN8HgJ53eKdIr
- A9KuFtr3CDsdOUbyGZJq3IgXBed9x/Oy6ENFeU8okbpaPiWB0Br1CqD3ULnBKFOkwkbN
- FZHd/1JTs7jKrhMAn2rplZtwyQ7Jnl16X7jIFmAY5fdgv7+DWxkmtYWhCbzCT4B4wZDu
- D1TA==
+ :reply-to; bh=Dk/gcJTcR+HqotYXXre567+adU5e8XCaDOO7/5sPCWw=;
+ b=hjfDy+ukXnxul+bMuKYCWffdotVaDf6RtWZIHDbI3+A8rlsc6Y+Txuo5SHzmfQTpPx
+ ByRwg/BMgS9S1dUIaHR/hqZlQ4DuhDJPjrn+NRIJpxM+6Em2tmusqdxdAIHd+8msdKl+
+ XH6e6tVbG+wHo/LpJo7B5POW1s4/YK9argKTPw5FGik9Yems8ePxCsxXyvHB0/DGgRpo
+ UCj39bmml87P96TBMsGVwsUh19Jj0dWh6+S/vuzx4TAM+h5bmFxx+xQGr8+V5ipKoG9i
+ WCEVbtavqYioutr2FazG5ec4tD0ryyV06lLrnPyv2uy6e+Caj5sNEPJStrwbqoc9xyQv
+ Zcnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779139703; x=1779744503;
+ d=1e100.net; s=20251104; t=1779139708; x=1779744508;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=M1JQVOiuc+A4ksNToUTMbfJYQEFXRR5y86p07JOscgc=;
- b=PM8e5Yi/ol+gb5IV3HQZnzTpsA5ZZd0eUh4R4QATobqZaVcTV/jxOW/w38ykkspGv0
- o3zL/UKM77NUAXwan5FuaS7Ih9cayVyEogiAO4s9CUUNwTXW3I3cGqn7Ki9L4i3KQFao
- tLbSN9r2aNDgQfgHGMZdLtShDE+vnSL+rp+gSUwG47Z3QX8l0b7MPeKkDcUUam3tuo7K
- wHrcE9ogF68btb8cFyjxuiKmV6CkWUrGeyvUMrZkGKXJ/XJPmLwwW9ySjHipRtfQ6n1c
- YoIggNTJN1I0SlqO8iYew+2ccyjFcBdc4J5iRkp0nYDdEOy5qHYfq7acMK8klsw4aKlR
- Zv4A==
-X-Gm-Message-State: AOJu0YyYFzgi2eJkka5utWpN/mRwCsRpleFgArOuJ68nbHzQA7zXy0kJ
- yi5wO/P+uh3/y1o09epmIU3hZxO0y7d3Z9zdAGVcsGP/7pVf8hT360j6gwqqwQMkdl4=
-X-Gm-Gg: Acq92OH1RVYNMQb+TsY7dAvlT5FuK7lHhPnxKGTry6OP/EQ6+l9Po2o8uHkNWRH6b80
- uFWhrwywqPGrNK36BnZOmBzYgbh+2UNYqhMCaRbV+6Zj2DKvPhlK78O8bJUzY97oYAxCzPu6dCH
- NLMLPDo6bmJ12OICmg9QwFq8oY42WiBxX7Ts52WtNAT5/qNa/S2aFha7E00gVIcuKkNdU6wmOBU
- yHlHK4MNJJJVwbCoUa/OpHm25DIxMBfHfcPLOq+LAWZUoOCZnS/6Pv4j/+I797u6KWiI4MN7zNl
- w5aqEBoq9dQ//HAv4WtV1XxddDOUO6I8OVDAkjYLLu2kzaERZs1KdNhrUMl1FiZEcZl9oGf11Za
- dXP17Ry7UF5aEcZgleng5k63SpqRTmWlogwn0uI/wcAhpQrd0BcCDqNROy1PJi6ofOQ6CALVuZu
- wX7RHdw9lo/A==
-X-Received: by 2002:a05:6808:c1e6:b0:47b:bd7b:10e5 with SMTP id
- 5614622812f47-482e55e6829mr10953018b6e.3.1779139703350; 
- Mon, 18 May 2026 14:28:23 -0700 (PDT)
+ bh=Dk/gcJTcR+HqotYXXre567+adU5e8XCaDOO7/5sPCWw=;
+ b=eF8ZJmmx38Dx/n3sFNv4TQR7W/fsnjRYxB2UtLTG9oOOrj7KTPQSamAzqRWF2HbOXn
+ tLlwGenWtQTWRbc3kDUZa/RrF8GHH2jgNV6uBuRrhj9Hwf8lG8z83pgBAW7iOhBMV/6l
+ /0Dorcn7PM9laUyCtQQGqFoTJdGA67rGAYtzt+HE/D5eF0stTF7SzFZOXjbYFWBBBwFx
+ 87WKkTLP8Sc9gOg+9ukrWzFze4FmgDbsuNO8Xa2cqNjiYKWf/p77flJVC0/QO3A1Z32j
+ h9dUhD33MHE4eu82Z3ESUr2nzJ0XNS4mMSYUuoPoW2zIMUUaGu22Fst4UiVixMV4ILdD
+ Dlsg==
+X-Gm-Message-State: AOJu0Yw2242gwOcqZJ/P+amrECeGwWB9ub927Dy3RXQkTTHHW7FBoFiZ
+ reZe8uj/wJt9bkzcrRlMIPcygHZ/T+9tMhkfoKKurSIQGh9i7amJIidj7WIRBnkv92s=
+X-Gm-Gg: Acq92OGMYImwYgsMik64LtgBFbvrlIUvRioZ/JTpKbs7CNMQNKRwUL+NSx9LXb0p3p+
+ 66a4GswVMj1xyZVewpFUfD3sT8TfK1E4eAHa1XrZdK4yrRhhH/KJk96+qm5Eus4Yx8V8UCFzdGC
+ lwcuYoBv1iAmB7vg5QZwusZgOaVhIJ9Hg2kS7SfADh9wXGmn4wBXa7KLLW0pTfDJEjTvxJRI1Gx
+ pkCrbsCEME7S9NazcY2NCOjBuqvCIWkYYO3iobj48eQZLIfkFh5MB2R8u6Ho6T+6faxs2xxrGR0
+ muCNsrXtuCGcYBkEeftAH0Wq31/eAOMxdV9IIdmPpb8o517fBe51r4w4FYeKWoa2HTZ4j8l+Obh
+ rH/nGAuamjjGkMkZXe5MvQWB6FZoocDz8S+poh03WSWcTJ63XTY2KFUHKw2uWDTPAXovy63yxHO
+ NSmAl5nJy6oA==
+X-Received: by 2002:a05:6830:4486:b0:7d7:f638:7a03 with SMTP id
+ 46e09a7af769-7e4ea07fd2bmr13318626a34.10.1779139707825; 
+ Mon, 18 May 2026 14:28:27 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55b81cc5asm7980358a34.8.2026.05.18.14.28.22
+ 46e09a7af769-7e55b81cc5asm7980358a34.8.2026.05.18.14.28.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 May 2026 14:28:22 -0700 (PDT)
+ Mon, 18 May 2026 14:28:27 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Mon, 18 May 2026 15:27:48 -0600
-Subject: [PATCH v2 30/37] bsd-user: Add os-extattr.h with file and fd
- extattr functions
+Date: Mon, 18 May 2026 15:27:53 -0600
+Subject: [PATCH v2 35/37] bsd-user: Add scheduler and cpuset functions to
+ os-misc.h
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260518-misc-2026q2-v2-30-6c16fe448301@bsdimp.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260518-misc-2026q2-v2-35-6c16fe448301@bsdimp.com>
 References: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
 In-Reply-To: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>
+ Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>, 
+ Sean Bruno <sbruno@FreeBSD.org>, 
+ =?utf-8?q?Mika=C3=ABl_Urankar?= <mikael.urankar@gmail.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6734; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=Mm8GHafCndpbMfsQZNiUocUTnedWT7NJI/bDY50K/R0=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqC4RINy1INaeXWug354SI7pRmAGneCXYV3+a7t
- p4ZpDdFNFeJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaguESAAKCRBsHNEofbAR
- AE7pD/0YrY9FyD5ypFx8E/SHhnbO4Q1JGDVe/0vtbUCsWp5Pr0tmsHqp0p53lNWaTzG6rEmz655
- Ol5FNz4khSCVNYPHoBht9V4rTZvmkCzyQbj/UJaaJVjVCL2mnm7DpUP0JIQ+nagFbyPCRe3cl4l
- 6XSvozriuxsBQu+xaZC5tvZDfq8yRYQxq29efkAsFWJkesd7NhIXrGEHdyLCp4o5IvbMMzidhhx
- T3JBEluxwjsFKZ4a3bFbwTixl3Bde2JwZtwTASNJwd4Exny+rCYjC1cOUr0o/NpZW2QTfwUNkSG
- 4trVp3XXYhTLI2Y0peraKAw9ydNv6Lzd4RcpS3UcR8vO8iw0O6sIMW6OArUYlNHtKk9GGQGN6V4
- iAziOhYgiZ3sUzIXSd+HmlFD0kOfPXiOA2ikbxgXqXOPfDyg1cc6YDGlqeu1zKV6xLxHnQCEmKL
- eF6QhZ0mtb5eVWE2Ud4po1HrHJ9ndcL0K0QqQpWGJFdynCT+Q2HindGA7I5+kUsmhUesEGx8H3v
- SHcwqkP2/zycJur27ND2A0FGOjbxKl4JL30rNU3rpOjTgZl/NPTe0YXEM9uCLl/ASkg46pF42B/
- L4xKHMBcg9+iKnL1NDV44SA6aB0hKezAxmgzEDe1XndOR6TtTDCQ6wJdG1wH8WyXCfqV78JcW6g
- UyddGnAGKahBBOA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=11338; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=VJLI5yf/kV1K/lBJ1hjwgi5j2yWe3Wg0MdjyGKt/tVc=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqC4RJbLhq5nA+nbNGVfUyudY3q9nuvkGQSdjIJ
+ fAofqUhnxCJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaguESQAKCRBsHNEofbAR
+ APH5EACKR6eWJtotiEjl9iUuDyOWWspUpXJyK9P8sbGxA05a8SikFRNtcU8Ux/qWMR399ck7VPY
+ UUT9F9/4qvm7ov/FpRJFG0NaxsRSOoZ7i4hFfD4mD4Qh8jMYWL7W0hL7Y5LBMOnhNBe0/8vWYOL
+ ZUMnCVbeh01T95elBhiZlphU0VBweeemLv26W9RuaJhEJr5d8/Kj85qau5oKwoCHQjFoxlqbvlr
+ ltF0uUkoNbey4rUjGJSx7TuCIBSVSNHoc9wOdbJfKmj7YNSJFP15y4qyCUyCxEDOnoxdidHQY7f
+ wMcTLdM8XTKHzIFCJ9l4NrE/fjv1eT5pLuYSJCepavak8eTHHstNZBhl2i4fvuQmUMHkMPdgwFP
+ Kp255VYcvoiVxALPg0DmB0HXcn956cf1sLv61/k3GCrqUmtswYDi/0yqHSuye4L1Bjhk06fsEAk
+ rtbUVoIenYuXy+9esbDQPi423BedLDnyTAxxPAFcz3aTYoyoUyuDfLUaphmU1HFhtDmFYphq0k3
+ p1acWJH2bgl64Vj5CbPEcbhj3YL3dYM4IRPu+9sTqofT8HBOIk3SLlYCVHhWRd2LkPENjAdkhgV
+ D7PytXSCfm2edXQLaeH4psAT2/cLs9nzLfk/SC98ph0Z4mrpNM6U9KubsXt594IUc2Ee0u49tsH
+ c0ftXvHWcqbJSUQ==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::236;
- envelope-from=imp@bsdimp.com; helo=mail-oi1-x236.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::332;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x332.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -116,231 +118,370 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the first part of extended attribute support: extattrctl,
-extattr_set_file, extattr_get_file, extattr_delete_file,
-extattr_set_fd, extattr_get_fd, and extattr_delete_fd.
+Expand os-misc.h with scheduler functions (sched_setparam,
+sched_getparam, sched_setscheduler, sched_getscheduler,
+sched_rr_get_interval) and CPU affinity functions (cpuset,
+cpuset_setid, cpuset_getid, cpuset_getaffinity, cpuset_setaffinity).
+Also add sched_yield, sched_get_priority_min, and
+sched_get_priority_max to bsd-proc.h.
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
+Signed-off-by: Sean Bruno <sbruno@FreeBSD.org>
+Signed-off-by: Mikaël Urankar <mikael.urankar@gmail.com>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 Assisted-by: Claude Opus 4.6 (1M context)
 ---
- bsd-user/freebsd/os-extattr.h | 208 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 208 insertions(+)
+ bsd-user/bsd-proc.h        |  20 +++-
+ bsd-user/freebsd/os-misc.h | 288 +++++++++++++++++++++++++++++++++++++--------
+ 2 files changed, 257 insertions(+), 51 deletions(-)
 
-diff --git a/bsd-user/freebsd/os-extattr.h b/bsd-user/freebsd/os-extattr.h
-new file mode 100644
-index 0000000000..f1dfa344cf
---- /dev/null
-+++ b/bsd-user/freebsd/os-extattr.h
-@@ -0,0 +1,208 @@
+diff --git a/bsd-user/bsd-proc.h b/bsd-user/bsd-proc.h
+index 62052c70b9..b9973dbedf 100644
+--- a/bsd-user/bsd-proc.h
++++ b/bsd-user/bsd-proc.h
+@@ -400,4 +400,22 @@ static inline abi_long do_bsd_setpriority(abi_long which, abi_long who,
+     return get_errno(setpriority(which, who, prio));
+ }
+ 
+-#endif /* !BSD_PROC_H_ */
++/* sched_yield(2) */
++static inline abi_long do_bsd_sched_yield(void)
++{
++    return get_errno(sched_yield());
++}
++
++/* sched_get_priority_min(2) */
++static inline abi_long do_bsd_sched_get_priority_min(int policy)
++{
++    return get_errno(sched_get_priority_min(policy));
++}
++
++/* sched_get_priority_max(2) */
++static inline abi_long do_bsd_sched_get_priority_max(int policy)
++{
++    return get_errno(sched_get_priority_max(policy));
++}
++
++#endif /* !BSD_PROC_H */
+diff --git a/bsd-user/freebsd/os-misc.h b/bsd-user/freebsd/os-misc.h
+index d9979b2a8b..74ed1d2f47 100644
+--- a/bsd-user/freebsd/os-misc.h
++++ b/bsd-user/freebsd/os-misc.h
+@@ -11,76 +11,264 @@
+ #include <sys/cpuset.h>
+ #include <sys/random.h>
+ #include <sched.h>
++#include <kenv.h>
+ 
+-/*
+- * shm_open2 isn't exported, but the __sys_ alias is. We can use either for the
+- * static version, but to dynamically link we have to use the sys version.
+- */
+-int __sys_shm_open2(const char *path, int flags, mode_t mode, int shmflags,
++int shm_open2(const char *path, int flags, mode_t mode, int shmflags,
+     const char *);
+ 
+-#if defined(__FreeBSD_version) && __FreeBSD_version >= 1300048
+-/* shm_open2(2) */
+-static inline abi_long do_freebsd_shm_open2(abi_ulong pathptr, abi_ulong flags,
+-    abi_long mode, abi_ulong shmflags, abi_ulong nameptr)
++/* sched_setparam(2) */
++static inline abi_long do_freebsd_sched_setparam(pid_t pid,
++        abi_ulong target_sp_addr)
+ {
+-    int ret;
+-    void *uname, *upath;
++    abi_long ret;
++    struct sched_param host_sp;
+ 
+-    if (pathptr == (uintptr_t)SHM_ANON) {
+-        upath = SHM_ANON;
+-    } else {
+-        upath = lock_user_string(pathptr);
+-        if (upath == NULL) {
+-            return -TARGET_EFAULT;
+-        }
++    ret = get_user_s32(host_sp.sched_priority, target_sp_addr);
++    if (!is_error(ret)) {
++        ret = get_errno(sched_setparam(pid, &host_sp));
+     }
++    return ret;
++}
+ 
+-    uname = NULL;
+-    if (nameptr != 0) {
+-        uname = lock_user_string(nameptr);
+-        if (uname == NULL) {
+-            unlock_user(upath, pathptr, 0);
+-            return -TARGET_EFAULT;
+-        }
++/* sched_get_param(2) */
++static inline abi_long do_freebsd_sched_getparam(pid_t pid,
++        abi_ulong target_sp_addr)
++{
++    abi_long ret;
++    struct sched_param host_sp;
++
++    ret = get_errno(sched_getparam(pid, &host_sp));
++    if (!is_error(ret)) {
++        ret = put_user_s32(host_sp.sched_priority, target_sp_addr);
+     }
+-    ret = get_errno(__sys_shm_open2(upath,
+-                target_to_host_bitmask(flags, fcntl_flags_tbl), mode,
+-                target_to_host_bitmask(shmflags, shmflag_flags_tbl), uname));
++    return ret;
++}
++
++/* sched_setscheduler(2) */
++static inline abi_long do_freebsd_sched_setscheduler(pid_t pid, int policy,
++        abi_ulong target_sp_addr)
++{
++    abi_long ret;
++    struct sched_param host_sp;
+ 
+-    if (upath != SHM_ANON) {
+-        unlock_user(upath, pathptr, 0);
++    ret = get_user_s32(host_sp.sched_priority, target_sp_addr);
++    if (!is_error(ret)) {
++        ret = get_errno(sched_setscheduler(pid, policy, &host_sp));
+     }
+-    if (uname != NULL) {
+-        unlock_user(uname, nameptr, 0);
++    return ret;
++}
++
++/* sched_getscheduler(2) */
++static inline abi_long do_freebsd_sched_getscheduler(pid_t pid)
++{
++
++    return get_errno(sched_getscheduler(pid));
++}
++
++/* sched_getscheduler(2) */
++static inline abi_long do_freebsd_sched_rr_get_interval(pid_t pid,
++        abi_ulong target_ts_addr)
++{
++    abi_long ret;
++    struct timespec host_ts;
++
++    ret = get_errno(sched_rr_get_interval(pid, &host_ts));
++    if (!is_error(ret)) {
++        ret = h2t_freebsd_timespec(target_ts_addr, &host_ts);
+     }
+     return ret;
+ }
+-#endif /* __FreeBSD_version >= 1300048 */
+ 
+-#if defined(__FreeBSD_version) && __FreeBSD_version >= 1300049
+-/* shm_rename(2) */
+-static inline abi_long do_freebsd_shm_rename(abi_ulong fromptr, abi_ulong toptr,
+-        abi_ulong flags)
++/* cpuset(2) */
++static inline abi_long do_freebsd_cpuset(abi_ulong target_cpuid)
+ {
+-    int ret;
+-    void *ufrom, *uto;
++    abi_long ret;
++    cpusetid_t setid;
+ 
+-    ufrom = lock_user_string(fromptr);
+-    if (ufrom == NULL) {
+-        return -TARGET_EFAULT;
++    ret = get_errno(cpuset(&setid));
++    if (is_error(ret)) {
++        return ret;
+     }
+-    uto = lock_user_string(toptr);
+-    if (uto == NULL) {
+-        unlock_user(ufrom, fromptr, 0);
+-        return -TARGET_EFAULT;
++    return put_user_s32(setid, target_cpuid);
++}
++
++#define target_to_host_cpuset_which(hp, t) { \
++    (*hp) = t;                               \
++} while (0)
++
++#define target_to_host_cpuset_level(hp, t) { \
++    (*hp) = t;                               \
++} while (0)
++
++/* cpuset_setid(2) */
++static inline abi_long do_freebsd_cpuset_setid(CPUArchState *env, abi_long arg1,
++        abi_ulong arg2, abi_ulong arg3, abi_ulong arg4, abi_ulong arg5)
++{
++    id_t id;    /* 64-bit value */
++    cpusetid_t setid;
++    cpuwhich_t which;
++
++    target_to_host_cpuset_which(&which, arg1);
++#if TARGET_ABI_BITS == 32
++    /* See if we need to align the register pairs */
++    if (regpairs_aligned(env)) {
++        id = target_arg64(arg3, arg4);
++        setid = arg5;
++    } else {
++        id = target_arg64(arg2, arg3);
++        setid = arg4;
+     }
+-    ret = get_errno(shm_rename(ufrom, uto, flags));
+-    unlock_user(ufrom, fromptr, 0);
+-    unlock_user(uto, toptr, 0);
++#else
++    id = arg2;
++    setid = arg3;
++#endif
++    return get_errno(cpuset_setid(which, id, setid));
++}
++
++/* cpuset_getid(2) */
++static inline abi_long do_freebsd_cpuset_getid(abi_long arg1, abi_ulong arg2,
++        abi_ulong arg3, abi_ulong arg4, abi_ulong arg5)
++{
++    abi_long ret;
++    id_t id;    /* 64-bit value */
++    cpusetid_t setid;
++    cpuwhich_t which;
++    cpulevel_t level;
++    abi_ulong target_setid;
++
++    target_to_host_cpuset_which(&which, arg1)
++        ;
++    target_to_host_cpuset_level(&level, arg2);
++#if TARGET_ABI_BITS == 32
++    id = target_arg64(arg3, arg4);
++    target_setid = arg5;
++#else
++    id = arg3;
++    target_setid = arg4;
++#endif
++    ret = get_errno(cpuset_getid(level, which, id, &setid));
++    if (is_error(ret)) {
++        return ret;
++    }
++    return put_user_s32(setid, target_setid);
++}
++
++static abi_ulong copy_from_user_cpuset_mask(cpuset_t *mask,
++        abi_ulong target_mask_addr)
++{
++        int i, j, k;
++        abi_ulong b, *target_mask;
++
++        target_mask = lock_user(VERIFY_READ, target_mask_addr,
++                                CPU_SETSIZE / 8, 1);
++        if (target_mask == NULL) {
++                return -TARGET_EFAULT;
++        }
++        CPU_ZERO(mask);
++        k = 0;
++        for (i = 0; i < ((CPU_SETSIZE / 8) / sizeof(abi_ulong)); i++) {
++                __get_user(b, &target_mask[i]);
++                for (j = 0; j < TARGET_ABI_BITS; j++) {
++                        if ((b >> j) & 1) {
++                                CPU_SET(k, mask);
++                        }
++                        k++;
++                }
++        }
++        unlock_user(target_mask, target_mask_addr, 0);
++
++        return 0;
++}
++
++static abi_ulong copy_to_user_cpuset_mask(abi_ulong target_mask_addr,
++        cpuset_t *mask)
++{
++        int i, j, k;
++        abi_ulong b, *target_mask;
++
++        target_mask = lock_user(VERIFY_WRITE, target_mask_addr,
++                                CPU_SETSIZE / 8, 0);
++        if (target_mask == NULL) {
++                return -TARGET_EFAULT;
++        }
++        k = 0;
++        for (i = 0; i < ((CPU_SETSIZE / 8) / sizeof(abi_ulong)); i++) {
++                b = 0;
++                for (j = 0; j < TARGET_ABI_BITS; j++) {
++                        b |= ((CPU_ISSET(k, mask) != 0) << j);
++                        k++;
++                }
++                __put_user(b, &target_mask[i]);
++        }
++        unlock_user(target_mask, target_mask_addr, (CPU_SETSIZE / 8));
++
++        return 0;
++}
++
++/* cpuset_getaffinity(2) */
++/* cpuset_getaffinity(cpulevel_t, cpuwhich_t, id_t, size_t, cpuset_t *); */
++static inline abi_long do_freebsd_cpuset_getaffinity(cpulevel_t level,
++        cpuwhich_t which, abi_ulong arg3, abi_ulong arg4, abi_ulong arg5,
++        abi_ulong arg6)
++{
++        cpuset_t mask;
++        abi_long ret;
++    id_t id;    /* 64-bit */
++    abi_ulong setsize, target_mask;
++
++#if TARGET_ABI_BITS == 32
++    id = (id_t)target_arg64(arg3, arg4);
++    setsize = arg5;
++    target_mask = arg6;
++#else
++    id = (id_t)arg3;
++    setsize = arg4;
++    target_mask = arg5;
++#endif
++
++        ret = get_errno(cpuset_getaffinity(level, which, id, setsize, &mask));
++        if (ret == 0) {
++                ret = copy_to_user_cpuset_mask(target_mask, &mask);
++        }
+ 
+     return ret;
+ }
+-#endif /* __FreeBSD_version >= 1300049 */
++
++/* cpuset_setaffinity(2) */
++/* cpuset_setaffinity(cpulevel_t, cpuwhich_t, id_t, size_t, const cpuset_t *);*/
++static inline abi_long do_freebsd_cpuset_setaffinity(cpulevel_t level,
++        cpuwhich_t which, abi_ulong arg3, abi_ulong arg4, abi_ulong arg5,
++        abi_ulong arg6)
++{
++        cpuset_t mask;
++        abi_long ret;
++    id_t id; /* 64-bit */
++    abi_ulong setsize, target_mask;
++
++#if TARGET_ABI_BITS == 32
++    id = (id_t)target_arg64(arg3, arg4);
++    setsize = arg5;
++    target_mask = arg6;
++#else
++    id = (id_t)arg3;
++    setsize = arg4;
++    target_mask = arg5;
++#endif
++
++        ret = copy_from_user_cpuset_mask(&mask, target_mask);
++        if (ret == 0) {
++                ret = get_errno(cpuset_setaffinity(level, which, id, setsize,
++                                                   &mask));
++        }
++
++        return ret;
++}
++
 +/*
-+ * FreeBSD extended attributes and ACL system call support
-+ *
-+ * Copyright (c) 2013 Stacey D. Son
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
++ * Pretend there are no modules loaded into the kernel. Don't allow loading or
++ * unloading of modules. This works well for tests, and little else seems to
++ * care. Will reevaluate if examples are found that do matter.
 + */
-+#include <sys/extattr.h>
-+#include <sys/acl.h>
 +
-+/* extattrctl() */
-+static inline abi_long do_freebsd_extattrctl(abi_ulong arg1, abi_ulong arg2,
-+                                             abi_ulong arg3, abi_ulong arg4,
-+                                             abi_ulong arg5)
-+{
-+    abi_long ret;
-+    void *p, *a, *f;
-+
-+    p = lock_user_string(arg1);
-+    if (p == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    f = lock_user_string(arg3);
-+    if (f == NULL) {
-+        unlock_user(p, arg1, 0);
-+        return -TARGET_EFAULT;
-+    }
-+    a = lock_user_string(arg5);
-+    if (a == NULL) {
-+        unlock_user(f, arg3, 0);
-+        unlock_user(p, arg1, 0);
-+        return -TARGET_EFAULT;
-+    }
-+    ret = get_errno(extattrctl(path(p), arg2, f, arg4, a));
-+    unlock_user(a, arg5, 0);
-+    unlock_user(f, arg3, 0);
-+    unlock_user(p, arg1, 0);
-+
-+    return ret;
-+}
-+
-+/* extattr_set_file(2) */
-+static inline abi_long do_freebsd_extattr_set_file(abi_ulong arg1,
-+                                                   abi_long arg2,
-+                                                   abi_ulong arg3,
-+                                                   abi_ulong arg4,
-+                                                   abi_ulong arg5)
-+{
-+    abi_long ret;
-+    void *p, *a, *d;
-+
-+    p = lock_user_string(arg1);
-+    if (p == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    a = lock_user_string(arg3);
-+    if (a == NULL) {
-+        unlock_user(p, arg1, 0);
-+        return -TARGET_EFAULT;
-+    }
-+    d = lock_user(VERIFY_READ, arg4, arg5, 1);
-+    if (d == NULL) {
-+        unlock_user(a, arg3, 0);
-+        unlock_user(p, arg1, 0);
-+        return -TARGET_EFAULT;
-+    }
-+    ret = get_errno(extattr_set_file(path(p), arg2, a, d, arg5));
-+    unlock_user(d, arg4, arg5);
-+    unlock_user(a, arg3, 0);
-+    unlock_user(p, arg1, 0);
-+
-+    return ret;
-+}
-+
-+/* extattr_get_file(2) */
-+static inline abi_long do_freebsd_extattr_get_file(abi_ulong arg1,
-+                                                   abi_long arg2,
-+                                                   abi_ulong arg3,
-+                                                   abi_ulong arg4,
-+                                                   abi_ulong arg5)
-+{
-+    abi_long ret;
-+    void *p, *a, *d;
-+
-+    p = lock_user_string(arg1);
-+    if (p == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    a = lock_user_string(arg3);
-+    if (a == NULL) {
-+        unlock_user(p, arg1, 0);
-+        return -TARGET_EFAULT;
-+    }
-+    if (arg4 && arg5 > 0) {
-+        d = lock_user(VERIFY_WRITE, arg4, arg5, 0);
-+        if (d == NULL) {
-+            unlock_user(a, arg3, 0);
-+            unlock_user(p, arg1, 0);
-+            return -TARGET_EFAULT;
-+        }
-+        ret = get_errno(extattr_get_file(path(p), arg2, a, d, arg5));
-+        unlock_user(d, arg4, arg5);
-+    } else {
-+        ret = get_errno(extattr_get_file(path(p), arg2, a, NULL, arg5));
-+    }
-+    unlock_user(a, arg3, 0);
-+    unlock_user(p, arg1, 0);
-+
-+    return ret;
-+}
-+
-+/* extattr_delete_file(2) */
-+static inline abi_long do_freebsd_extattr_delete_file(abi_ulong arg1,
-+                                                      abi_long arg2,
-+                                                      abi_ulong arg3)
-+{
-+    abi_long ret;
-+    void *p, *a;
-+
-+    p = lock_user_string(arg1);
-+    if (p == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    a = lock_user_string(arg3);
-+    if (a == NULL) {
-+        unlock_user(p, arg1, 0);
-+        return -TARGET_EFAULT;
-+    }
-+    ret = get_errno(extattr_delete_file(path(p), arg2, a));
-+    unlock_user(a, arg3, 0);
-+    unlock_user(p, arg1, 0);
-+
-+    return ret;
-+}
-+
-+/* extattr_set_fd(2) */
-+static inline abi_long do_freebsd_extattr_set_fd(abi_long arg1, abi_long arg2,
-+                                                 abi_ulong arg3, abi_ulong arg4,
-+                                                 abi_ulong arg5)
-+{
-+    abi_long ret;
-+    void *a, *d;
-+
-+    a = lock_user_string(arg3);
-+    if (a == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    d = lock_user(VERIFY_READ, arg4, arg5, 1);
-+    if (d == NULL) {
-+        unlock_user(a, arg3, 0);
-+        return -TARGET_EFAULT;
-+    }
-+    ret = get_errno(extattr_set_fd(arg1, arg2, a, d, arg5));
-+    unlock_user(d, arg4, arg5);
-+    unlock_user(a, arg3, 0);
-+
-+    return ret;
-+}
-+
-+/* extattr_get_fd(2) */
-+static inline abi_long do_freebsd_extattr_get_fd(abi_long arg1, abi_long arg2,
-+                                                 abi_ulong arg3, abi_ulong arg4,
-+                                                 abi_ulong arg5)
-+{
-+    abi_long ret;
-+    void *a, *d;
-+
-+    a = lock_user_string(arg3);
-+    if (a == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+
-+    if (arg4 && arg5 > 0) {
-+        d = lock_user(VERIFY_WRITE, arg4, arg5, 0);
-+        if (d == NULL) {
-+            unlock_user(a, arg3, 0);
-+            return -TARGET_EFAULT;
-+        }
-+        ret = get_errno(extattr_get_fd(arg1, arg2, a, d, arg5));
-+        unlock_user(d, arg4, arg5);
-+    } else {
-+        ret = get_errno(extattr_get_fd(arg1, arg2, a, NULL, arg5));
-+    }
-+    unlock_user(a, arg3, 0);
-+
-+    return ret;
-+}
-+
-+/* extattr_delete_fd(2) */
-+static inline abi_long do_freebsd_extattr_delete_fd(abi_long arg1,
-+                                                    abi_long arg2,
-+                                                    abi_ulong arg3)
-+{
-+    abi_long ret;
-+    void *a;
-+
-+    a = lock_user_string(arg3);
-+    if (a == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    ret = get_errno(extattr_delete_fd(arg1, arg2, a));
-+    unlock_user(a, arg3, 0);
-+
-+    return ret;
-+}
-+
-+
-+#endif /* FREEBSD_OS_EXTATTR_H */
+ 
+ #endif /* OS_MISC_H */
 
 -- 
 2.52.0
