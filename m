@@ -4,77 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4224ACD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 07:57:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 568BDCD4F3C
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 07:59:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOsql-0005uI-9W; Mon, 18 May 2026 03:57:19 -0400
+	id 1wOst1-0006QE-S6; Mon, 18 May 2026 03:59:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wOsqj-0005uA-5z
- for qemu-devel@nongnu.org; Mon, 18 May 2026 03:57:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wOsqh-0001yD-59
- for qemu-devel@nongnu.org; Mon, 18 May 2026 03:57:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779091033;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=fRD0saUvL1Dk1Sbq+Lljk3rudm7E0yzGiXm73rvKOY0=;
- b=QaF8WckmBtqkuOGAkSllXdUHgnDqm9d3HM/fhZTnxoYppg3RNSetVxyiRawoCecWoVH/1w
- f0m0GxA/8gcUByJ1mPj/D32GU3vq6g6a2shN+kHdwCPn5+vHSSNuRqfaPGIMV3uInYAWan
- R79DNJbbSKoqgSftr1VtHVFs1Xj1l0k=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-384-tMrBcx1VOauHyLINIgMC2Q-1; Mon,
- 18 May 2026 03:57:11 -0400
-X-MC-Unique: tMrBcx1VOauHyLINIgMC2Q-1
-X-Mimecast-MFC-AGG-ID: tMrBcx1VOauHyLINIgMC2Q_1779091030
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 15F4D18002D0; Mon, 18 May 2026 07:57:10 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 312DB19560A2; Mon, 18 May 2026 07:57:09 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E185A21E6A01; Mon, 18 May 2026 09:57:06 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Sam Li <faithilikerun@gmail.com>
-Cc: qemu-devel@nongnu.org,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  dmitry.fomichev@wdc.com,  Kevin Wolf
- <kwolf@redhat.com>,  cassel@kernel.org,  Stefan Hajnoczi
- <stefanha@redhat.com>,  qemu-block@nongnu.org,  dlemoal@kernel.org,  Eric
- Blake <eblake@redhat.com>,  "Michael S. Tsirkin" <mst@redhat.com>,
- hare@suse.de,  Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH v10 2/4] qcow2: add configurations for zoned format
- extension
-In-Reply-To: <20260510175059.311814-3-faithilikerun@gmail.com> (Sam Li's
- message of "Sun, 10 May 2026 19:50:57 +0200")
-References: <20260510175059.311814-1-faithilikerun@gmail.com>
- <20260510175059.311814-3-faithilikerun@gmail.com>
-Date: Mon, 18 May 2026 09:57:06 +0200
-Message-ID: <87mrxxw3ot.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wOssl-0006PM-7r
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 03:59:26 -0400
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wOssi-0002q5-Ru
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 03:59:22 -0400
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-6563f83ae9fso2015839d50.1
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 00:59:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779091159; cv=none;
+ d=google.com; s=arc-20240605;
+ b=bd2EmBShRol1js6ir8h/Io3LxvvBRjvltgEeVz+yLCfMr+Z3okPsSOAl3vIFC8riHs
+ Aj3HNMn3etc3su5dwF/cRE2HobP2Y2SxTnpSZF31KqPdegalEEPthwsPV1UlpO3TAhrK
+ W9l5dwL0Tx3osaZ6cymGc9yNoYMirydriddxuQ2cWj2b6lIrDbiXnlAfkhOe+WE9SjFT
+ jdjCA+VdZAQCjLJBKVNoee64P1ia/TxqzBrqKX7gTKr5eJujHW4PnTAs3TNZ6MyRqrxx
+ Z7uLb7nPE6kJYEo+a2lLd+vc+7lleup8PbLiDFkre9xb9Z0/MdycvFDlZ1+sQF+m2WnW
+ Ceug==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=bjPJLzDEZVBVu0sK9PLjZ0sM0ySsDXY2h7uFcBq/ArE=;
+ fh=SqhfW9Uabp42tD4Mwg9dafZId5P2FwuZ7m3MYYvmn94=;
+ b=S9ufl5c9O8RVChJF8TeTB5GTIjnTAZkORBI8KHvSNT2V66nDZXOe9Rez7bqTNpUtto
+ 5kg+vH4gTLdhl/CgGit9BeOthtZG3/FmVtmFeU4pVxl3hHkkl9cvZ35fLs+vn4593nLT
+ gAcCATcCYOuNbHFxXwiVYiS5gUp30CKyTeRMSCBxV6FepjdJN4ucMSrDyPamAkimgk+k
+ lOnpnV3dZhedzBkQjSync2gq8P/32j9VFZedlV9CwaTkIs/B5zFqKlDFwY8B3jqgCG36
+ dap4oat8+Ue0ndLJ9KMRhkBrmeeGfQE8AlGafdZJvzBy4jz5ph+DJUpzkE/jwYQjuVnY
+ +8Vw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779091159; x=1779695959; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=bjPJLzDEZVBVu0sK9PLjZ0sM0ySsDXY2h7uFcBq/ArE=;
+ b=meeWRrENC4cfiwZamISpHg0tHis+hx0cIdY8dLDkV6MkbS+KsiTLDR2pmTcCx1tMB4
+ sUYIw86fIOHTokGMqifQ60Ge7Yi19TdnSoN4FNmCK7e1ZETQenGMop/P0v7msit32K6x
+ 5NXwbWWfVfpWqfjuma5avZJoYm/2qtFfeUtg1VQVRLjLX3PG1xM8S7eJiJLB05/ObHCO
+ Im7d3KGrhFXtTRRA+kVWcCMCimqGEFJ0bxthsSOWrNm2JIjvCg5z9DCEbqy6RRikjxwJ
+ eW+v5O4CUhyu2RgYda67UDWRsAPsn+eK7DG5qCpWtq4T234W830ac0xO1s9x0O8W9qhm
+ vGJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779091159; x=1779695959;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bjPJLzDEZVBVu0sK9PLjZ0sM0ySsDXY2h7uFcBq/ArE=;
+ b=hp0FFyh3ovslkTxhSf7yoNuXXiyQ5Y5tDCmbwtbDiYxLcB96+dCcf8AaYcg5Y5+Fmj
+ sxUIhcvQN1v72oO4ZUsn455cdaJxKi3qhGXAS3a6DDL5MpmLiyLvYfhX9aCBHiIIyDfy
+ qyN1toMY4SVny43ItpoCnNIQiCdQWuMkv8fAkGEJAd+C8QEKlnvP6PmpUlv+onnBGx/3
+ 1jOoeo6UnIHedPxrZwriDDaZVdvll2sYeXdv7DV3AWgmkkkWTthoMNl/W2dy7e11x1C2
+ SPKQh+OKgR7RtcVnf1AvOztaJiPbrFVEIHWMJK9rE83+v2ym/KZyJQ8p1KeTmF8dgLc1
+ fPxQ==
+X-Gm-Message-State: AOJu0YxxioDZwZlVV7kyi1ZfMcHxzR5HXr+yYI5EIV3n5Y0BBzfdvuby
+ spyXfSGeBa3nP265616M7NgN2AjbAfjs+5zHM9KjSubJqh2xNSy6lFwsIk8ICJjglqzPqutllXf
+ /y65D/gySX246KgnkXcQftvdPIbqQK+JK70JjY9XM/r72b2OHHFRO
+X-Gm-Gg: Acq92OEhwYyp2TXx+7ys+0XnrnL24yM7Pus4UD9wHJADLBHK6SLvLpHIqJVhp0mOwdl
+ usJtJo/DcJAzBGNjhmLc7qJoTia1MjhpZSAPSVQ5VK5DkJXBCMk4aYWrhYO37WcYJpc+PysmnxD
+ iuurerMFRe1iRn0psNu9EoEHFYdeMTs6JIhn2Gwjtk/oqS+/tNuSXhZ+i7V1SiYxJ+adPXMW0YT
+ aMmJDNLXJTJx4Cwjawpa+wBLzTKYE4zi3KCXypF3hafKI02WC55cl+opKGwFCwkodh0PVM+8SuD
+ tFnTq4hXA/p11R3rO3ZH8yvcXxV+dp3i0DQYiEl3imEUiFxhBLqUMLCzNfDnYMMRf6w=
+X-Received: by 2002:a05:690e:1588:20b0:651:cc9c:af0a with SMTP id
+ 956f58d0204a3-65e22769ffbmr11447251d50.15.1779091159239; Mon, 18 May 2026
+ 00:59:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260516005558.92136-1-clintdotphillips@gmail.com>
+In-Reply-To: <20260516005558.92136-1-clintdotphillips@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 18 May 2026 08:59:07 +0100
+X-Gm-Features: AVHnY4INU3mo0Q0Fj_gwLRptx4DfsJXosVW2MHMlOrg-GHhmOcWwh9lJ7mdghgY
+Message-ID: <CAFEAcA8SSL7NGzk1rhBAB2dYTYomvpU6PmiS4fpY1WgWj=fFoQ@mail.gmail.com>
+Subject: Re: [PATCH] docs: fix doubled-word typos in user documentation
+To: Clinton Phillips <clintdotphillips@gmail.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,151 +113,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sam Li <faithilikerun@gmail.com> writes:
-
-> To configure the zoned format feature on the qcow2 driver, it
-> requires settings as: the device size, zone model, zone size,
-> zone capacity, number of conventional zones, limits on zone
-> resources (max append bytes, max open zones, and max_active_zones).
+On Sat, 16 May 2026 at 05:06, Clinton Phillips
+<clintdotphillips@gmail.com> wrote:
 >
-> To create a qcow2 image with zoned format feature, use command like
-> this:
-> qemu-img create -f qcow2 zbc.qcow2 -o size=768M \
-> -o zone.size=64M -o zone.capacity=64M -o zone.conventional_zones=0 \
-> -o zone.max_append_bytes=4096 -o zone.max_open_zones=6 \
-> -o zone.max_active_zones=8 -o zone.mode=host-managed
+> - docs/devel/style.rst: "assume that that type" -> "assume that type"
+> - docs/system/arm/aspeed.rst: "how to to boot" -> "how to boot"
+> - docs/system/devices/can.rst: "supported by by drivers" -> "supported by drivers"
 >
-> Signed-off-by: Sam Li <faithilikerun@gmail.com>
+> Signed-off-by: Clinton Phillips <clintdotphillips@gmail.com>
+> ---
+>  docs/devel/style.rst        | 2 +-
+>  docs/system/arm/aspeed.rst  | 2 +-
+>  docs/system/devices/can.rst | 2 +-
+>  3 files changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/docs/devel/style.rst b/docs/devel/style.rst
+> index b8edcf9..6b9544f 100644
+> --- a/docs/devel/style.rst
+> +++ b/docs/devel/style.rst
+> @@ -341,7 +341,7 @@ but only for RAM, it may not cover whole guest address space.
+>  If it's file-size related, use off_t.
+>  If it's file-offset related (i.e., signed), use off_t.
+>  If it's just counting small numbers use "unsigned int";
+> -(on all but oddball embedded systems, you can assume that that
+> +(on all but oddball embedded systems, you can assume that
+>  type is at least four bytes wide).
 
-[...]
+This is not an error; both "that" and "that that" are OK here.
+(The first one goes with "assume" to introduce the clause
+we are assuming, and is optional; the second one is a determiner.)
 
-Just doc polish this time around.  Never been closer!
-
-> diff --git a/qapi/block-core.json b/qapi/block-core.json
-> index 508b081ac1..d771dfb4a1 100644
-> --- a/qapi/block-core.json
-> +++ b/qapi/block-core.json
-> @@ -5268,6 +5268,70 @@
->  { 'enum': 'Qcow2CompressionType',
->    'data': [ 'zlib', { 'name': 'zstd', 'if': 'CONFIG_ZSTD' } ] }
->  
-> +##
-> +# @Qcow2ZoneModel:
-> +#
-> +# Zoned device model used in qcow2 image file
-> +#
-> +# @host-managed: The host-managed model only allows sequential write
-> +#     over the device zones.
-> +#
-> +# Since 11.0
-
-It's 11.1 now.  More of the same below, not flagging it again.
-
-> +##
-> +{ 'enum': 'Qcow2ZoneModel',
-> +  'data': [ 'host-managed'] }
-> +
-> +##
-> +# @Qcow2ZoneHostManaged:
-> +#
-> +# The host-managed zone model.  It only allows sequential writes.
-> +#
-> +# @size: Total number of bytes within zones (default 256 MB).
-> +#
-> +# @capacity: The number of usable logical blocks within zones
-> +#     in bytes.  A zone capacity is always smaller or equal to the
-> +#     zone size (default to zone size).
-
-"Number blocks ... in bytes" is awkward.  Do you mean the usable space,
-which is a multiple of the logical block size?
-
-> +#
-> +# @conventional-zones: The number of conventional zones of the
-> +#     zoned device (default 0).
-> +#
-> +# @max-open-zones: The maximal number of open zones.  It is less than
-> +#     or equal to the number of sequential write required zones of
-> +#     the device (default 0).
-
-Is the "number of sequential write required zones" visible via QMP?
-
-> +#
-> +# @max-active-zones: The maximal number of zones in the implicit
-> +#     open, explicit open or closed state.  It is less than or equal
-> +#     to the max open zones (default 0).
-
-"to the maximal number of open zones" or "to @max-open-zones"
-
-> +#
-> +# @max-append-bytes: The maximal number of bytes of a zone
-> +#     append request that can be issued to the device.  It must be
-> +#     512-byte aligned and less than the zone capacity
-> +#     (default 64 KB).
-
-"Must be 512-byte aligned": do you mean it must be a multiple of 512?
-
-> +#
-> +# Since 11.0
-> +##
-> +{ 'struct': 'Qcow2ZoneHostManaged',
-> +  'data': { '*size':          'size',
-> +            '*capacity':      'size',
-> +            '*conventional-zones': 'uint32',
-> +            '*max-open-zones':     'uint32',
-> +            '*max-active-zones':   'uint32',
-> +            '*max-append-bytes':   'size' } }
-> +
-> +##
-> +# @Qcow2ZoneCreateOptions:
-> +#
-> +# The zone device model for the qcow2 image.
-
-"Device model" has a specific meaning in QEMU: it's a device frontend,
-such as "ide-hd", "e1000", "usb-tablet", ...
-
-Maybe something like "Creation options for zoned qcow2 images"?
-
-> +#
-> +# @mode: The zone device model modes.
-
-Sure its plural modes, and not mode?
-
-> +#
-> +# Since 11.0
-> +##
-> +{ 'union': 'Qcow2ZoneCreateOptions',
-> +  'base': { 'mode': 'Qcow2ZoneModel' },
-> +  'discriminator': 'mode',
-> +  'data': { 'host-managed': 'Qcow2ZoneHostManaged' } }
-> +
->  ##
->  # @BlockdevCreateOptionsQcow2:
->  #
-> @@ -5310,6 +5374,9 @@
->  # @compression-type: The image cluster compression method
->  #     (default: zlib, since 5.1)
->  #
-> +# @zone: The zone device model modes.  The default is that the
-> +#     device is not zoned.  (since 11.0)
-
-Maybe something like
-
-   # @zone: Options for zoned images.  If absent, the device is not
-   #     zoned.  (Since 11.0)
-
-> +#
->  # Since: 2.12
->  ##
->  { 'struct': 'BlockdevCreateOptionsQcow2',
-> @@ -5326,7 +5393,8 @@
->              '*preallocation':   'PreallocMode',
->              '*lazy-refcounts':  'bool',
->              '*refcount-bits':   'int',
-> -            '*compression-type':'Qcow2CompressionType' } }
-> +            '*compression-type':'Qcow2CompressionType',
-> +            '*zone':            'Qcow2ZoneCreateOptions' } }
->  
->  ##
->  # @BlockdevCreateOptionsQed:
-
+-- PMM
 
