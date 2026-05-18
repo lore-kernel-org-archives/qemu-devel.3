@@ -4,101 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B02EFCD4F49
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 14:33:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB4DCCD4F4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 14:35:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOz1Z-00011V-9d; Mon, 18 May 2026 10:32:53 -0400
+	id 1wOz3x-0001UE-An; Mon, 18 May 2026 10:35:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1wOz1X-00011F-Ft
- for qemu-devel@nongnu.org; Mon, 18 May 2026 10:32:51 -0400
+ id 1wOz3v-0001Tq-26
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 10:35:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1wOz1V-0006qp-1g
- for qemu-devel@nongnu.org; Mon, 18 May 2026 10:32:51 -0400
+ id 1wOz3s-0007s9-Tn
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 10:35:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779114767;
+ s=mimecast20190719; t=1779114915;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=P9XbZXIBDepwxGETTfVnR1shJ1x1rE3gsut92l3uTL4=;
- b=e2uEKiTL6esv522c0xjBu0d5FBMhrY8EWI1uZsIBSyjXkZvny/IfnxF/dOV3WoeqSR9OQL
- J1HVU8f1WD7vx+ZMxBxiUMcCpdoh2G0dxrhZINvHDJxHvhzCiTsguOHsz3+wuWA9Aew6Cd
- w05U07xhipOnlf4DB3hmqG1fv+PKtGY=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=7MgIlykHkGNF8bfeDDgS7KR+swoaarGo4n37t1LGEOU=;
+ b=RBO1s2dIXyphcQk8tQ80BqZm9OFygm5v1OaP1fjqksbZVaviPhuFIQsw6aMJfU/iX/NaiI
+ ecROqldJe8Yc2uyabrgXyXjoy7bcJkaBlMdmIydz1YuAKKUpxFqs++er/gpX7OxC2XY2KA
+ 3jQ3OPdAqytOyxU9xcNcQ72YVwjLbMI=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-17-rkauQAJXPKalQkC2N7-vJg-1; Mon, 18 May 2026 10:32:44 -0400
-X-MC-Unique: rkauQAJXPKalQkC2N7-vJg-1
-X-Mimecast-MFC-AGG-ID: rkauQAJXPKalQkC2N7-vJg_1779114762
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-447f2ce5556so2250190f8f.2
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 07:32:43 -0700 (PDT)
+ us-mta-353-7C3b-CtWOUuv_AdtPb-yqQ-1; Mon, 18 May 2026 10:35:14 -0400
+X-MC-Unique: 7C3b-CtWOUuv_AdtPb-yqQ-1
+X-Mimecast-MFC-AGG-ID: 7C3b-CtWOUuv_AdtPb-yqQ_1779114910
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-45e78dd7baaso1322510f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 07:35:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779114762; x=1779719562; darn=nongnu.org;
+ d=redhat.com; s=google; t=1779114910; x=1779719710; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=P9XbZXIBDepwxGETTfVnR1shJ1x1rE3gsut92l3uTL4=;
- b=Ok8f/nqzyGeoJdQ8AcTTqbaGTNMF+N/yi2t6W6EyxBar6U5oEg5o6SqST+3/sAMYPK
- 0dX+pg7Gab8Qcsmy+5YVvy3hEEknLTvFIFayZd6BX9RP5VxM7YeVrdFTgk1s/dYKEjD0
- 8rMG00EL7osvZ8+5/GCSaY6OomPuImm+vcaKoxox1MCZSsWwprmcL4KYkhxCL0qDVE+o
- pyoW91hG2sdU8VR2C8qmpGvFmx9psFn9lkhljp+/OtUchStvfz7pehmras9RJ7rw/52g
- 6xe5clAoKsDUR4rSIXuIIa2tJoeKq3fhPQjZoF6kmx9g6sixWXnnArl16RMjUsd/Xts8
- P9qw==
+ bh=7MgIlykHkGNF8bfeDDgS7KR+swoaarGo4n37t1LGEOU=;
+ b=lr92Zr4I9sgo7nmHAZUH4Ri/g/IoBA48yXPOAWuX1jjymmNfhux8UdvbMtjQKsCqdQ
+ 2/k2Ou75uWsZIZVezi36Jke5XXx+ONZ3GbveCYJhAXhLC9TjnxZ6iwW7r9WTSD3B6aaf
+ ej1elTusMA49NEWvd6/7K8uLhSzX4QnK1haMJrjPtzdHtdzT3VqP1qdyOQM28znz92iH
+ 9b4tfDOBehw8lo+4XV/UYG5rE4RCpL+s7yxIkT23UacK//5APOoec6GdGhv9pWw2+lOw
+ zEU778GVJoywG18gKDQsuYC/GmUEHz2Akqbd3EgdsSfHhuJMxupuH+LswhbUicTCaNn0
+ HEaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779114762; x=1779719562;
+ d=1e100.net; s=20251104; t=1779114910; x=1779719710;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=P9XbZXIBDepwxGETTfVnR1shJ1x1rE3gsut92l3uTL4=;
- b=q4EkEuZx8IZb4M1RPLR2NZujIfQ8r56fbXHvt63NduDueDqZjHy1Rw8azgH4Ki0SYr
- EiBHnzVBQPoGLPC8NoScqBtMw2XPmmu2mWakqcUzyE+hAiEa29P4pPjIXnxnnbxZmzHS
- zqhUZpm7/Igpccou3dFZTlO6oraIvbAN3gUKk8Uc5PnPEfgAefainsAiT3xpwU4D8i9p
- dq2MebVWdxV+D3CZX2WCwyWNinwoOSpKpAO3HsZZy6YwIVvUli8YbHalnnqIefHAxbOM
- eX7el7N2o6tSUl8lWwPLpST/A9qSqxi/ZvyjT+t1H0Er72NL8tsaa3qDQIQM5gpXqkRp
- X1JQ==
-X-Gm-Message-State: AOJu0Yxo+yFqAAJPQ80F2Lxv/WpGSFaRs4KoTU9ZAk7rKr/CNsgQF4RG
- j18YaZFckg6QSu1ZzRcrXjLoKC15d+m69sGIqJ/EwIgPm5UccS1F3kimia2fu8s+fd8S1uI0l9p
- jk6IyCuFJ82l2CC4Lo3tF9aQtPK/SN7vmn6cZAFXb5koU6iB6AemP6yjO
-X-Gm-Gg: Acq92OEbsTvSgHHa+8xfQ04DDQFLDN7DPTs/gFqlG8q51IKxbKKO2qe57xh8BiCyu6f
- /xG4eO2t6SNuVxM600muUqcGwEX9+Vo+cKMYysFi3IhcbVU3MEoPP46gOyFoUh1Lg86Lk/pFte/
- Fl2fRjQAvYCwvkzXJA+n/wtrNLtqanKUN35BMHlrDJ0mXutpBWIVjg+E42oZ+paoFZtxBULnl7y
- dZmKL9wUc4jVwssc2iPnBL2NBQBKRbd0J+7R02U3lgDGJ+/7hWZlKl2D0acBnzSkxbg6Jm44zO4
- gUbuR7Hz9sMd4kvd5MBsgfRASvmXQDiMk+Agxp6lPTWjJkDeS5JHhFTyX7Q1NbDSQ+SKbwtBnsp
- VbWleCA==
-X-Received: by 2002:a05:6000:25c7:b0:452:79c0:f7f1 with SMTP id
- ffacd0b85a97d-45e5c349e9amr24709797f8f.0.1779114762029; 
- Mon, 18 May 2026 07:32:42 -0700 (PDT)
-X-Received: by 2002:a05:6000:25c7:b0:452:79c0:f7f1 with SMTP id
- ffacd0b85a97d-45e5c349e9amr24709733f8f.0.1779114761469; 
- Mon, 18 May 2026 07:32:41 -0700 (PDT)
-Received: from imammedo ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45e7c22d8b7sm8692577f8f.6.2026.05.18.07.32.40
+ bh=7MgIlykHkGNF8bfeDDgS7KR+swoaarGo4n37t1LGEOU=;
+ b=EqQOyBZtx6m0uUXl+Y8STqWYNQZMkKgEaggpI1ilkyCC6vMi9ySprGbLctBha2n2nz
+ VE33D16208JBizHVpu33LPBdNYVu0HG2VYMxXTivDQJAQ6h+w3a+n3ZQ5r0cwCTPD5lw
+ 9LZN4r2EFh+zHndVNTzdDMw3/TJSXPQJtU6pe/PRHy4GCH6dRiAm2TYhoSOjPLGX1O8h
+ Q3vmP+q64zHsMNClV4X8+ce2w+KiFVPrrVwwqruk2WhuIaRJhd+zEuiaiMM+jVhyXv1C
+ n3hu/Y2ILWNAhzFynhf64rueGvxk0NIPcLgfmY1eH7sYbM+05+HmCuoN/VSdI686QlmG
+ 1C+g==
+X-Gm-Message-State: AOJu0Yz6xZtq9RRVnXHqkmes/yUFvD8m55Y05onv3J4RF4/o+Vxk+/K8
+ acU6Bpvgp+OTnDUIcnYxyR0cy558M6jalFqvaQ4tD2T+ZWsQhZWAHhzh49xyrPMqgnKctcuiQbO
+ BROVnuPQDhDLQU4RB/xgizlOYZopVxsHUmOGxjRzjQgltotKqra6T1NY3Qy/rjPvXq/MtPRB/gA
+ NBAehiapecKGDVjWOiQrdqKgAP49ZCdcuSmOBJk9Jr
+X-Gm-Gg: Acq92OEvb/3f7KgOsf5NF8BQwq5ouYWGqeWGRWS21Ix79kEJacZNrhf12DFw73Q20SH
+ nuFfHNSqqn15Gfc0lX0cLYqBXeO69KVr9YK2iatYe7ZjfT/iOW0IzTAL76pqYdumfEhmWtUsxAr
+ 3Xc4f1lYMN0slaKITEKE86Mnsw5oQgLKre7rEhhSmxHsCpcjNCcNJsJSP71TY1hwwNmIosebWex
+ FqxjklCG+jQfOMeL1JuEtgmEQHttxrLZdpOJodPpbgl+ivUjkYojRQUsYtG9Xd1CGgvpz12ymN6
+ 2lrc/NiiKgF/OVj38Q6+VRIoDWPswD295t1MvOYNluGqi1G44moz4l2C714FUZcnMXzTaCZtCOA
+ cCt1PKA==
+X-Received: by 2002:a05:600c:a406:b0:48f:e230:1d12 with SMTP id
+ 5b1f17b1804b1-48fe6329913mr188799715e9.31.1779114909740; 
+ Mon, 18 May 2026 07:35:09 -0700 (PDT)
+X-Received: by 2002:a05:600c:a406:b0:48f:e230:1d12 with SMTP id
+ 5b1f17b1804b1-48fe6329913mr188798985e9.31.1779114909192; 
+ Mon, 18 May 2026 07:35:09 -0700 (PDT)
+Received: from imammedo ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45da0fe248dsm37143726f8f.30.2026.05.18.07.35.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 May 2026 07:32:40 -0700 (PDT)
-Date: Mon, 18 May 2026 16:32:39 +0200
+ Mon, 18 May 2026 07:35:08 -0700 (PDT)
+Date: Mon, 18 May 2026 16:35:07 +0200
 From: Igor Mammedov <imammedo@redhat.com>
-To: "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com>
-Cc: <qemu-devel@nongnu.org>, <david@redhat.com>, <gourry@gourry.net>,
- <jonathan.cameron@huawei.com>, <apopple@nvidia.com>,
- <dan.j.williams@intel.com>, <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>,
- David Hildenbrand <david@kernel.org>
-Subject: Re: [PATCH v7 1/1] numa: add 'memmap-type' option for memory type
- configuration
-Message-ID: <20260518163239.2fd73491@imammedo>
-In-Reply-To: <4a3de73b-03bd-446e-8cbd-dedd5323e295@amd.com>
-References: <20260306082735.1106690-1-FangSheng.Huang@amd.com>
- <20260306082735.1106690-2-FangSheng.Huang@amd.com>
- <20260514150559.3148f9dc@imammedo>
- <d26cfb4b-d70e-415c-8747-904d94f8ccb2@amd.com>
- <20260515150453.409e0e3e@imammedo>
- <4a3de73b-03bd-446e-8cbd-dedd5323e295@amd.com>
+To: peter.maydell@linaro.org
+Cc: qemu-devel@nongnu.org, mst@redhat.com, anisinha@redhat.com,
+ pbonzini@redhat.com, shannon.zhaosl@gmail.com, philmd@linaro.org,
+ zhao1.liu@intel.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com,
+ qemu-arm@nongnu.org
+Subject: Re: [PATCH v2 00/21] Introduce ACPI watchdog for Q35 and arm/virt
+ boards
+Message-ID: <20260518163507.7b794600@imammedo>
+In-Reply-To: <20260512153057.1a353c3e@imammedo>
+References: <20260303092532.2410177-1-imammedo@redhat.com>
+ <20260428161215.49cc1c0f@imammedo>
+ <20260512153057.1a353c3e@imammedo>
 X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -127,280 +125,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 18 May 2026 18:43:10 +0800
-"Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com> wrote:
+On Tue, 12 May 2026 15:30:57 +0200
+Igor Mammedov <imammedo@redhat.com> wrote:
 
-> Hi Igor,
+
+Peter,
+
+could you take a look at ARM related patches,
+I hope that I have addressed you concerns from v1.
+
+> On Tue, 28 Apr 2026 16:12:15 +0200
+> Igor Mammedov <imammedo@redhat.com> wrote:
 > 
-> Thanks again for the careful read.
-> 
-> On 5/15/2026 9:04 PM, Igor Mammedov wrote:
-> > On Fri, 15 May 2026 15:53:07 +0800
-> > "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com> wrote:
+> > On Tue,  3 Mar 2026 10:25:11 +0100
+> > Igor Mammedov <imammedo@redhat.com> wrote:
 > >   
-> >> On 5/14/2026 9:05 PM, Igor Mammedov wrote: 
-> >>
-> >> Hi Igor,
-> >>
-> >> Thanks for taking the time to review this -- and for the candor in
-> >> the bashing chapter.  Before going into the bigger picture, let me
-> >> re-establish one factual point that v7 didn't carry forward from
-> >> the v6 cover letter.  
+> > > Changelog:
+> > >   v2:
+> > >      * ditch generic '-machine acpi-watchdog' option in favor of
+> > >        board specific variants:
+> > >            x86/q35:  -machine wdat={on|off}
+> > >            arm/virt: -device sbsa_gwdt,wdat={on|off}
+> > >      * arm/virt: add FDT and GTDT ACPI entries for GWDT when it's present
+> > >        and hide GDTD one when WDAT is enabled.
+> > >      * arm/virt: add test case for GTDT 
+> > >      * [18-21] optional GWDT cleanup/fixes in handling WCV register update,
+> > >        make QEMU behave according to spec (at least the way I read it and
+> > >        it appears MS also read it that way). It fixes Windows 11 reboots when
+> > >        GWDT is present (without WDAT). With that fixed it's up to MS to fix
+> > >        their driver to set sane timeout as with the current one wdatchdog
+> > >        will never trigger.    
 > > 
-> > feel free to bash my review as well, I hope that we end up with
-> > clear picture what and why we are doing.
+> > given merge window should be open by now,
+> > gentle ping  
+> 
+> 2 weeks later,
+> yet another ping
+> 
 > >   
-> Let me take your points in order: first the bigger-picture context
-> you asked for (which I'll also put in v8's commit message), then
-> the dax/kmem compatibility state, the prior thread on this CLI
-> shape, and where this could go longer-term.
-> 
-> > 
-> > bigger picture should be somewhere in commit message so later on
-> > a reader could understand why we are doing it at all/this way.
-> >   
-> > lets continue with questions wrt impl.
-> >   
-> Agreed, v8 will carry a condensed version of the bigger picture
-> in the commit message body.  Setting the architectural context
-> out in full here first -- the rest of the reply depends on it.
-> 
-> (1) The architectural context: HBM is system memory in this class
-> of systems
-> 
-> This patch targets coherent CPU+accelerator shared-address-space
-> systems, where the accelerator's high-bandwidth memory is no
-> longer a device-private framebuffer behind a PCIe BAR.  It lives
-> in the host physical address space -- visible to the CPU as
-> system memory (not as device MMIO) and shared coherently with
-> the accelerator over the platform fabric.  Both sides must keep
-> consistent views of those pages or the coherent contract breaks.
-> 
-> >> The use case is GPU/accelerator HBM exposed to the OS as SPM.  On
-> >> bare metal, the platform firmware:
-> >>
-> >>     - emits E820 type 0xEFFFFFFF (SOFT_RESERVED) for the HBM region;
-> >>     - emits ACPI SRAT memory affinity entries that bind HBM to a
-> >>       dedicated proximity domain (NUMA node);
-> >>     - tags the accelerator's PCI device with _PXM matching that node.
-> >>
-> >> That gives the device driver a stable lookup chain at runtime:
-> >>
-> >>       dev -> pci_dev_to_node(dev) -> SRAT walk -> HBM GPA range  
-> > 
-> > it looks kind of convoluted, isn't it.
-> > PCI devices were supposed to be self describing/discoverable.
-> > Preferably without above mentioned firmware 'hooks'.
-> > Above example could be just early impl. issues, rather than by
-> > design issue.
-> >   
-> >> NUMA node here is not incidental -- it is the OS-exposed
-> >> intermediary ID that the device driver uses to find its own HBM.
-> >> This is the in-tree path used by accelerator drivers today.  
-> > 
-> > I'm assuming GPU is exposed as some composite PCI/CXL device.
-> > and use-case is its pass-through to guest.
-> > 
-> > Perhaps we can't do anything about it now.
-> > But shouldn't device driver discover its own memory (HBM and what not)
-> > without external parties that magically gain knowledge about parts of
-> > device that driver supposedly driving the device has not a clue about?
-> > How doesn bios know about SPM when device's driver with knowledge of
-> > device internals knows nothing about?
-> >     
-> To be blunt about it: in this architecture, "the device alone
-> knows where its own memory is" doesn't apply.  The accelerator
-> package knows it has HBM and how much, but the GPA it's mapped to
-> is set by platform firmware during boot fabric training, in
-> coordination with the CPU host bridge and the fabric coherency
-> hardware.  Firmware "knows the GPA" because firmware authored
-> that binding, not because some external party magically learned
-> the device's internals; every party including the driver has to
-> conform to it.
-
-
-Without magic/hardcodding, firmware is likely to discover HBM memory
-as CXL device and adds E820/SRAT entries for it. That ideally how it
-should be modeled in QEMU as well. (not ad-hoc -numa foo options)
-
-I won't push towards the feature being part of GPU pass-through,
-or being HBM being a CXL device (which it probably should be).
-but read on ...
- 
-> That makes the OS-level requirement twofold: the memory has to be
-> visible in the system memory map (so the CPU side can address it)
-> and reserved exclusively for the accelerator's driver (so the
-> general allocator doesn't hand HBM pages to random workloads).
-> The SP marking therefore has to reach the CPU memory subsystem,
-> not just the driver.  EFI_MEMORY_SP / E820 SOFT_RESERVED + SRAT
-> memory-affinity is the mechanism that fits this: a system-level,
-> firmware-produced topology that the CPU memory subsystem honors
-> and that the accelerator's driver consumes to discover and
-> manage its HBM range.  Any path that emits only an ACPI namespace
-> node, without E820 SOFT_RESERVED, leaves the CPU memory subsystem
-> without that signal and the contract breaks; any path that does
-> also emit E820 SOFT_RESERVED restores it.
-> 
-> >> The "-numa node + memmap-type=spm + E820 SOFT_RESERVED" combo in
-> >> v7 is a direct 1:1 model of this BM topology.  The E820 retyping
-> >> in the patch is exactly what makes the guest-visible E820 match
-> >> what BM firmware emits for the same kind of region.
-> >>
-> >> On the DIMM / device-memory alternative:  
-> > 
-> > wrt modeling GPU pass-through, my 1st attempt would be
-> > to make -device gpu-foo take everything need to compose the device
-> > (like in real hw) and be done with it (and PCI/CXL machinery would
-> > take care of mapping/exposing memory to guest).
-> > Why we aren't doing it?
-> > 
-> > barring that, and assuming we have to pass SPM as a separate memory
-> > (why and why it should be exposed in E820 and at boot time only?)
-> > I'd try -device foo-memory approach.
-> >   
-> So this isn't HBM-as-VRAM, the device-private framebuffer model
-> from discrete GPUs.  It's HBM as a system memory tier under
-> driver-owned allocation policy, and -numa node + memmap-type=spm
-> is the direct expression of that, not a workaround layered on top.
-> 
-> (2) v7 is naturally compatible with stock upstream Linux dax/kmem
-> 
-> v7 emits E820 SOFT_RESERVED via existing machine-init, into the
-> same fw_cfg blob the firmware and the guest kernel already
-> consume.  The upstream kernel already understands this signal --
-> dax/kmem is one such consumer in tree, picking the region up via
-> the IORES_DESC_SOFT_RESERVED hook in drivers/dax/hmem/device.c.
-> The accelerator's own driver discovers its HBM range from the
-> same E820 + SRAT entries via dev_to_node + SRAT walk.  Neither
-> side needs new code for v7.
-> 
-> For a memory-device-derived spm-memory device to reach the same
-> dax/kmem path, it would have to inject E820 SOFT_RESERVED from
-> its realize() -- which is new plumbing inside the device_memory
-> subsystem.
-
-It shouldn't be done at realize time.
-
-Ultimately we publish E820 table at machine_done time,
-and it's right time to iterate over present memory devices
-and add relevant entries if necessary.
-SRAT is produced even later
-(effectively at runtime on 1st access to acpi tables blob),
-so it can pickup memory devices at that time as well.
-
-> That also bears on two of your other points:
-> > And no need for messing with firmware (SeaBIOS: RamSizeOver4G
-> > patch) nor EDK2.  
-> 
-> That holds only for the path where the driver doesn't go through
-> E820 SOFT_RESERVED at all -- but that path needs the in-tree
-> accelerator driver rewritten to walk ACPI namespace instead of
-> SRAT, plus a kernel-side patch to wire ACPI memory device
-> descriptors into dax/kmem.  For the e820+SRAT fallback path you
-> describe as Step 3, the firmware-side requirement is identical to
-> v7.
-> 
-> > figure out why device driver has to fetch memory map
-> > and proximity from static tables as opposed to getting it dynamically
-> > from _PXM -> maped-memory range. (at the time PCI devices enum runs, 
->  > all ACPI
-> > info incl. run time one is fully accessible to in-kernel users)
-> > i.e. try to make driver work with runtime proximity  
-> 
-> The current amdgpu lookup is already a runtime, PXM-keyed dynamic
-> lookup -- dev_to_node(pdev) evaluates _PXM on the PCI device,
-> then a SRAT memory-affinity walk matches by proximity_domain.
-> PXM is the matching key; SRAT is the storage venue.  What you're
-> suggesting is moving the (PXM -> range) mapping from a system-
-> level table to a per-device ACPI node.  Both are populated by
-> firmware at boot and queried by the driver at probe; the
-> difference is which kernel subsystem reads the result.  The
-> system-table choice is what keeps the CPU memory subsystem in the
-> loop, per (1).
-> 
-> (3) The current CLI shape reflects prior maintainer alignment
-> 
-> The memmap-type=[normal,spm,reserved] form itself came from
-> Gregory's suggestion on the v4 thread in January, where you also
-> noted that AMD hardware "such memory has 1:1 mapping" -- which
-> is exactly the use case this patch targets.  v6 adopted that
-> naming, and v7 carries Acked-by: David and Reviewed-by: Gregory.
-> 
-> On the firmware side, OVMF SOFT_RESERVED handling is merged
-> upstream (edk2 commit 4e90b65e7b); the SeaBIOS-side conversation
-> with Gerd and Paul is converging on a small downstream knob.
-> 
-> So the current shape isn't a unilateral pick -- it's the form
-> the review converged on, with explicit tags from David and
-> Gregory and consistent firmware-side adoption.
-> 
-> > 
-> > wrt my suggestion using memory-device.
-> > It's true that the device memory region has started as hotpluggable memory.
-> > But that's impl. detail, nothing fundamentally prevents us from
-> > describing mix of present at boot time memory devices within it in e820/SRAT.
-> >   
-> > Answer to why DIMMs aren't in e820 was for us to avoid dealing with
-> > linux kernel putting that memory into zone_normal instead of zone_movable.
-> > On real hardware, one is likely to see all present at boot dimms, in e820
-> > and SRAT.
-> > For already existing memory devices, I'd like us continue dodging e820,
-> > so we wouldn't break existing deployments. however for a new memory device
-> > we don't have such limitations.
-> > 
-> > What I'd try is:
-> >   1: inherit spm-memory device from memory-device
-> >         (all memory mapping and APCI memory device descriptors, can be made
-> >          to pick it along with DIMM devices)
-> >   2: figure out why device driver has to fetch memory map
-> >     and proximity from static tables as opposed to getting it dynamically
-> >     from _PXM -> maped-memory range. (at the time PCI devices enum runs, all ACPI
-> >     info incl. run time one is fully accessible to in-kernel users)
-> >     i.e. try to make driver work with runtime proximity
-> >   3. if #2 is impossible, we can try to expose SPM memory devices in e820,
-> >       and partition SRAT to match actual device_memory region layout.
-> > 
-> >     
-> (4) On the longer-term direction
-
-that's exactly what I'm concerned about
-
-> An spm-memory device built on memory-device infrastructure -- one
-> that emits the same E820 SOFT_RESERVED + SRAT memory-affinity
-> entries v7 produces today -- is a reasonable direction for a
-> separate RFC in QEMU 11.2 / 12.x.  Such an RFC would close
-> exactly the gap David noted earlier, that boot memory isn't
-> currently modeled as a memory device on the QEMU side.
-> 
-> One thing that has to stay in any such direction: the SRAT
-> memory-affinity emission -- without it the CPU memory subsystem
-> loses visibility into HBM and the contract from (1) breaks.
-> Happy to take part in that RFC when someone kicks it off, but
-> it's better treated as its own work than as a gate on v7.
-
-If we merge v7 approach, we are bound to support it for years
-and if we later on we add device based variant, it will increase
-support burden even more and complicate configuration, which
-in turn will propagate up the stack.
-
-Hence, I'd like possible options on the table explored 1st
-before we commit to a particular approach. 
-
-I wouldn't object much is it were a fix that we had to rush in,
-but this is not the case (are we in hurry to rush this in?).
-
-My hunch is that memory device based approach will end-up with
-more straightforward and cleaner code, not to mention proper
-backend/frontend modeling.
-
-(also related to long term: ideally existing -numa 'some memory' interface,
-should go away and be replaced by memory devices.
-Adding more similar '-numa' options, doesn't help that case and only
-increases out technical debt).
-
-
-> Best regards,
-> FangSheng Huang (Jerry)
+> > > Windows doesn't ship built-in TCO watchdog driver, and users are
+> > > forced to install vendor specific driver(s) if such exists.
+> > > However the OS provides a generic watchdog driver that uses
+> > > ACPI WDAT table [1] to abstract actual hardware behind it.
+> > > The same applies to ARM version of Windows.
+> > > 
+> > > This series adds
+> > >  *  WDAT table tailored for TCO watchdog that Q35 already
+> > >     has as part of ICH9 chipset and a knob to enable it.
+> > >  *  SBSA GWDT to arm/virt machine with WDAT table tailored
+> > >     for it and necessary tweaks to GWDT to make usable
+> > >     with WDAT driver.
+> > >     * in addition to WDAT, it also adds native variant
+> > >       with GWDT described in FDT and DTDT
+> > >       (broken on Windows/works on linux).
+> > > 
+> > > Guest OS WDAT support is present since Windows Vista and Linux since 2016[2].
+> > > 
+> > > One can test it launching VM with following options:
+> > >   * x86:
+> > >        -machine q35,wdat=on
+> > >   * arm/virt:
+> > >        -device sbsa_gwdt,wdat=on
+> > > 
+> > > to trace access to TCO registers one can add to CLI:
+> > >     -trace "tco_*"
+> > > to trace access to GWDT registers one can add to CLI:
+> > >     -trace "sbsa_gwdt*"
+> > > 
+> > > To verify that guest uses WDAT (both Windows and Linux would use it if present),
+> > >   * on linux make sure that watchdog service is configured/enabled
+> > >     (use wdctl to check what watchdog device is in use) and then
+> > >     trigger kernel panic with command:
+> > >       echo c > /proc/sysrq-trigger
+> > >   * on Windows kill svchost process, running cmd in admin mode:
+> > >       taskkill /f /im svchost.exe
+> > > 
+> > > Tested with WS2025 & RHEL9.6 & Fedora 43 (aarch64)
+> > > 
+> > > git tree at: https://gitlab.com/imammedo/qemu/-/commits/gwdt_v2
+> > > 
+> > > 1) http://msdn.microsoft.com/en-us/windows/hardware/gg463320.aspx
+> > > 2) https://lwn.net/Articles/700524/
+> > > 
+> > > PS:
+> > >  previous revision:
+> > >   https://patchew.org/QEMU/20260206131438.1857182-1-imammedo@redhat.com/
+> > > 
+> > > Igor Mammedov (21):
+> > >   acpi: add API to build WDAT instructions
+> > >   x86: q35: add 'wdat' property
+> > >   x86: q35: generate WDAT ACPI table
+> > >   tests: acpi: x86/q35: whitelist new WDAT table
+> > >   tests: acpi: x86/q35: add WDAT table test case
+> > >   tests: acpi: x86/q35: update expected WDAT blob
+> > >   arm: sbsa_gwdt: fixup default "clock-frequency"
+> > >   arm: add tracing events to sbsa_gwdt
+> > >   arm: virt: create sbsa_gwdt watchdog
+> > >   arm: sbsa_gwdt: add 'wdat' option
+> > >   arm: virt: add support for WDAT based watchdog
+> > >   tests: acpi: arm/virt: whitelist new WDAT table
+> > >   tests: acpi: arm/virt: add WDAT table test case
+> > >   tests: acpi: arm/virt: update expected WDAT blob
+> > >   tests: acpi: arm/virt: whitelist GTDT table
+> > >   tests: acpi: arm/virt: add GTDT watchdog table test case
+> > >   tests: acpi: arm/virt: update expected GTDT blob
+> > >   sbsa_gwdt: reduce code ident
+> > >   sbsa_gwdt: move all foo_REFRESH logic under REFRESH condition
+> > >   sbsa_gwdt: reschedule timer on direct WCV load
+> > >   sbsa_gwdt: limit compare_value to INT64_MAX
+> > > 
+> > >  include/hw/acpi/wdat-gwdt.h            |  19 ++++
+> > >  include/hw/acpi/wdat-ich9.h            |  15 ++++
+> > >  include/hw/acpi/wdat.h                 | 118 +++++++++++++++++++++++++
+> > >  include/hw/i386/pc.h                   |   1 +
+> > >  include/hw/watchdog/sbsa_gwdt.h        |   1 +
+> > >  hw/acpi/aml-build.c                    |  14 +++
+> > >  hw/acpi/meson.build                    |   5 +-
+> > >  hw/acpi/wdat-gwdt-stub.c               |  16 ++++
+> > >  hw/acpi/wdat-gwdt.c                    |  92 +++++++++++++++++++
+> > >  hw/acpi/wdat-ich9-stub.c               |  15 ++++
+> > >  hw/acpi/wdat-ich9.c                    |  90 +++++++++++++++++++
+> > >  hw/arm/Kconfig                         |   1 +
+> > >  hw/arm/virt-acpi-build.c               |  65 +++++++++++++-
+> > >  hw/arm/virt.c                          |   2 +
+> > >  hw/core/sysbus-fdt.c                   |  32 +++++++
+> > >  hw/i386/acpi-build.c                   |  12 +++
+> > >  hw/i386/pc_q35.c                       |  18 ++++
+> > >  hw/watchdog/sbsa_gwdt.c                |  65 +++++++++-----
+> > >  hw/watchdog/trace-events               |   9 ++
+> > >  tests/data/acpi/aarch64/virt/GTDT.gwdt | Bin 0 -> 132 bytes
+> > >  tests/data/acpi/aarch64/virt/WDAT.wdat | Bin 0 -> 260 bytes
+> > >  tests/data/acpi/x86/q35/WDAT.wdat      | Bin 0 -> 308 bytes
+> > >  tests/qtest/bios-tables-test.c         |  54 +++++++++++
+> > >  23 files changed, 618 insertions(+), 26 deletions(-)
+> > >  create mode 100644 include/hw/acpi/wdat-gwdt.h
+> > >  create mode 100644 include/hw/acpi/wdat-ich9.h
+> > >  create mode 100644 include/hw/acpi/wdat.h
+> > >  create mode 100644 hw/acpi/wdat-gwdt-stub.c
+> > >  create mode 100644 hw/acpi/wdat-gwdt.c
+> > >  create mode 100644 hw/acpi/wdat-ich9-stub.c
+> > >  create mode 100644 hw/acpi/wdat-ich9.c
+> > >  create mode 100644 tests/data/acpi/aarch64/virt/GTDT.gwdt
+> > >  create mode 100644 tests/data/acpi/aarch64/virt/WDAT.wdat
+> > >  create mode 100644 tests/data/acpi/x86/q35/WDAT.wdat
+> > >     
 > >   
 > 
 
