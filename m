@@ -4,58 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AEC2CD4F4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 16:51:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1094ECD4F3C
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 16:54:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP1BC-0007go-0b; Mon, 18 May 2026 12:50:58 -0400
+	id 1wP1EQ-00009c-RP; Mon, 18 May 2026 12:54:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1wP1B0-0007aL-MI
- for qemu-devel@nongnu.org; Mon, 18 May 2026 12:50:47 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wP1Dr-000089-R4
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 12:53:45 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1wP1Ax-0008Sk-3k
- for qemu-devel@nongnu.org; Mon, 18 May 2026 12:50:45 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 5322440B41;
- Mon, 18 May 2026 16:50:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45630C2BCB7;
- Mon, 18 May 2026 16:50:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1779123039;
- bh=aaUWYtPeEv8HQr8zVANm4WhLlrEYrbyYhjvZvsnv7YM=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=lDGwE0xxmOCdfxkajvZCTvOJY5ijR4c2iLCTaguB0trkqs72SMqjtibhnxmWlbqF6
- Ccyy2ARdftg5YySqpRf7X6TQaVwcJyP71r++QKBDQRTjk0GxJHOfir4caD7lcWLwcq
- RxSyNUco+I7ejjDlqU2Ohm7XsH+VIhyP6A9Wf7MVA6b3b0uTrdygRGgeDC4IORtk0/
- f3LoYDGd6ylSfPWXyl8EvHYJ2q7PcJzq7uGtXACtbvKY6SmIOXi+bXcRxz1GoNHxX5
- PFS8z/+1cvqCjxuqsKfhZBXbjBfK9lauv7FIDKvTwZSz/yuEgSDrtKbIn4rBzD1gkp
- geV9M+dl/Imqg==
-Date: Mon, 18 May 2026 17:50:30 +0100
-From: Jonathan Cameron <jic23@kernel.org>
-To: Jia Jia <physicalmtea@gmail.com>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org,
- linux-cxl@vger.kernel.org, farosas@suse.de, lvivier@redhat.com,
- pbonzini@redhat.com
-Subject: Re: [PATCH v2] hw/cxl: bound Set Feature writes
-Message-ID: <20260518175030.1ff9033a@jic23-huawei>
-In-Reply-To: <20260429152750.2409174-1-physicalmtea@gmail.com>
-References: <CAFEAcA_DnrvSCVY3f2q=3OnXt0+708BcwSJ=KhMn1t3sbbXQbg@mail.gmail.com>
- <20260429152750.2409174-1-physicalmtea@gmail.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wP1Dp-0000jr-M6
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 12:53:43 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64IEnGGZ2975394
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 16:53:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ llMtLF45uXqRdnKRDA/t586E1+zajq8sfTGMfPsNYbM=; b=YxSBQXOqAUz1vCu1
+ DKry/JCVGl+ySw5uosItq1Gt3QEb+vJq1EbVUASItquBJDsRW011V6xKLZt5TEIi
+ 6fc21OMVZEW9kcalqyIctCw1EFW3MmkJ0g3Sm8uETsfMG9VQipMs+AYbc2etKQPy
+ 9OpZ3VX8fEbBPw6xsfyDRK3pdRfRad8uuPk8omfgTHG8SECG0TaBF4/6B/7pXju+
+ sMCyqMitTjXBZhFfrwNommQx+u/WLy7evlRQhxxzdnu7CkN9zt0LVM7q6N0IzIOo
+ yCFlkP8z684VKaO5RoOGl48o9MTozNmyPMVIXUcZFg/BKXoPumlREiMfxG1GuElU
+ XjWJ8Q==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e84v48fdf-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 16:53:38 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-910b2b92741so395346585a.0
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 09:53:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1779123218; x=1779728018; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=llMtLF45uXqRdnKRDA/t586E1+zajq8sfTGMfPsNYbM=;
+ b=Cg63A//mxX0D2/bc4dnpRisN3Ht+I4gQOo53SRspmj9lLmmX+NEtmYlFr7/rkTo2uk
+ V2FUBLmf6E8mJYOP2N/PX6Xgn0d0l7dlhpmyLqVk6uIPzyQR3t0Oe7OKxmK7bRpWvMca
+ boZTZCg40IYDSlSV6Q5HIHzpRI8us+9qA1MMNCaKG/uJG8CeK7IzAMO0fBCCURRBQ0+9
+ fsIq10GQkeugAhnh+itO7DeGC0PdMz1hY4oD3XEIWvtzt68UdSzV0Y339RZ52qqOwrIh
+ 2b6L3AhxUCXL3dUc+4QUFidM/vDfELCaGkQWWlhtW7OxUm6N2VWS7HniikzTCm92SgYs
+ ORBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779123218; x=1779728018;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=llMtLF45uXqRdnKRDA/t586E1+zajq8sfTGMfPsNYbM=;
+ b=CkEvzlSeSot6Aa4K2vlE+Sz1PiQBSW7ASx107tBCT4gn06eemLPk7KHwQY4MocqRhJ
+ DVppoVqK2iCpVhyoHciy5gjbctb5lbSA3zAGYBAC42QEW+WfJUMSCc4JJJiNwPgc/4UB
+ 5qlzUC/DzfgRsjgdrbZ9blmq17JAHDrxdOHDi8cKVDDHrgHt79StNHfnmaz4907QET4O
+ uMdXpW60f9EADFF0WzH39Vvs3hTR5NnoQ/4ozeMi1sQvOktegmp42RcmJK1hgex0/fo3
+ uxqllgrSOcqM+hmwZte4XHFiYUqLg9iLIKS+MKNNapowfg/jpXcBOVqCR+Qp8emF0E5K
+ 3fPQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/VBVMZqO1g0MIQWWx4Oy9MY5v6wBce+GDnPlF+/jHwJunqLQ4sPDWxxzNsh7X93ytuh0Utz/ZVfMPZ@nongnu.org
+X-Gm-Message-State: AOJu0YwBz13KdypzeJ9msKuyybEQ3zH+QH8gL+DRYpSrxlLbV+EPspgo
+ RRfuD7qi99YSnzupV27b/JYCq9kDH1RnOQXSGW/L3krXC1p1UAfgNU+RNX3n6B7POTT3w19GTDp
+ 8t6r82jSPNsAWrQF2NTXg+v61Ro5unutOle7FwOc1AB+iLN+UfL9HePIsDA==
+X-Gm-Gg: Acq92OGxUEHMV95do0yXsdm3Zt9d1uC4PU/GzkNLQ/KYhe/qqumq4zmZ9daaYn05fdD
+ OYFIs6+/aELO62JvUyereBMpMWztTp3b/EwG3u1Sv+AH0GMo8R2fB56FYaFIHt6KgThUxHiATru
+ QN5mNvX6hmXm+AEY8zQjVVTTGp2D4hCX9HF+mF58NRD0nwtFpnZLpc5Me/M8SomV5V4X7HAl9TR
+ TQUX6djupA2C7I9cfTgt1Iv7pz0dctt0XZ/wCKfuNNywio4rTF2up/+3K6NiUiE7xIPh+4VGxS8
+ z48F6INZv4mYVE97eWWY46IRJf8pb+gcqb0aQMdaOWKa5aSdvKUfsq3VBHaKVHRmaHhwfsekVM8
+ dYSS3vxNqXT14uds0knmOLBEOTpicXIku3toCdFlIvbMcDrakMjFOTjYFO3o=
+X-Received: by 2002:a05:620a:a019:b0:911:e17d:1d78 with SMTP id
+ af79cd13be357-911e17d1e4dmr1864934685a.21.1779123217836; 
+ Mon, 18 May 2026 09:53:37 -0700 (PDT)
+X-Received: by 2002:a05:620a:a019:b0:911:e17d:1d78 with SMTP id
+ af79cd13be357-911e17d1e4dmr1864931185a.21.1779123217377; 
+ Mon, 18 May 2026 09:53:37 -0700 (PDT)
+Received: from [192.168.68.106] ([191.202.238.222])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-910ba36d137sm1528859285a.1.2026.05.18.09.53.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 18 May 2026 09:53:36 -0700 (PDT)
+Message-ID: <ccb35d50-514d-4b17-8018-8d6bf58934f8@oss.qualcomm.com>
+Date: Mon, 18 May 2026 13:53:33 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=jic23@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/2] target/riscv: Use macros for PMP address alignment
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jay Chang <jay.chang@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Anton Johansson <anjo@rev.ng>
+References: <20260518070725.9816-1-jay.chang@sifive.com>
+ <20260518070725.9816-3-jay.chang@sifive.com>
+ <3bb15715-b11e-46a6-bba5-46a85c036632@linaro.org>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <3bb15715-b11e-46a6-bba5-46a85c036632@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=VJPtWdPX c=1 sm=1 tr=0 ts=6a0b4412 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=etEqFfc6qwXwpI8uT8rzbw==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=VwQbUJbxAAAA:8 a=pFyQfRViAAAA:8 a=69wJf7TsAAAA:8 a=jV4xrG5E8RH9DHdS76YA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+ a=oJz5jJLG1JtSoe7EL652:22 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-ORIG-GUID: BLjcrzuqWQzlglstlP0D0KTXGq_9FtHg
+X-Proofpoint-GUID: BLjcrzuqWQzlglstlP0D0KTXGq_9FtHg
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE4MDE2NiBTYWx0ZWRfXxzzFyzm6FVSq
+ ZGqZT53ZC5nXtYPNT5KXdXPUzL57s7U7B2HXpi9C/kfijsIHNvoCZ2cmVaizBefb2xol53LrYYJ
+ NFoHzuCbSdVUFPSWX3KhVQLfPdgBqD0zp+m2nRJ431aqSJPIlxmVOPvIc9pZEKb99RKiOmf7j53
+ bZG0foPJq+do3C7kfn3lOwVQjcqXiW1MvI+QCcqAzbIIcBfYbd4ceuN/8iCQNMbWZD0CQYW209t
+ zAEeApULCYhWpYcyuhjhk1kIRuCQgbYxaKU/v9kIlTvUqtmjquMZxb2+TXntVVk4xRTQvnEZv78
+ quQ8XDMmFRaIeAnPhjpT6MMIhfcofhjTjsYnExnX4BBHYdPeR4t8IAxbWUGtJUaqLv8+X4esBAe
+ 3NypnO84Ljl5YnmcZRt87fZJkb08zGFWvDf8r1PRSe9rZRldqwu7oaNPI38phZNOepYV/XIlSNa
+ GyGMkXVMHA1Ffa81s/A==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-18_03,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 adultscore=0 malwarescore=0 bulkscore=0
+ spamscore=0 suspectscore=0 lowpriorityscore=0 clxscore=1015 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605180166
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,388 +158,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 29 Apr 2026 23:27:50 +0800
-Jia Jia <physicalmtea@gmail.com> wrote:
 
-Sorry I've taken so long to get to cxl qemu stuff.
 
-> Commit c1c4d6b38b13 added offset + length checks for the
-> patrol_scrub and ecs Set Feature branches, but the remaining
-> branches still copy mailbox payload data into fixed-size
-> write-attribute objects without the same validation.
+On 5/18/2026 4:19 AM, Philippe Mathieu-Daudé wrote:
+> On 18/5/26 09:07, Jay Chang wrote:
+>> Replace manual bit manipulation with alignment macros for better
+>> readability:
+>>
+>> - TOR: Use ROUND_DOWN() to clear lower bits
+>> - NAPOT: Use ROUND_UP() to set lower bits
+>>
+>> The behavior remains unchanged.
+>>
+>> Signed-off-by: Jay Chang <jay.chang@sifive.com>
+>> ---
+>>   target/riscv/pmp.c | 14 +++++++++-----
+>>   1 file changed, 9 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
+>> index de2157c830..238c7c5162 100644
+>> --- a/target/riscv/pmp.c
+>> +++ b/target/riscv/pmp.c
+>> @@ -247,8 +247,9 @@ void pmp_update_rule_addr(CPURISCVState *env, uint32_t pmp_index)
+>>       case PMP_AMATCH_TOR:
+>>           /* Bits pmpaddr[G-1:0] do not affect the TOR address-matching logic. */
+>>           if (g >= 1) {
+>> -            prev_addr &= ~((1ULL << g) - 1ULL);
+>> -            this_addr &= ~((1ULL << g) - 1ULL);
+>> +            target_ulong granule = 1ULL << g;
 > 
-> A full mailbox payload can still reach rank_sparing and overrun
-> CXLMemSparingWriteAttrs on current master. With an ASan build
-> this aborts the host process with:
+> Maybe better to directly use uint64_t, in preparation of
+> https://lore.kernel.org/qemu-devel/20260515180437.23620-1-anjo@rev.ng/
+
+Can we please CC qemu-riscv@nongnu.org for the next version? This might
+be the first time the RISC-V reviewers are made aware that this series
+exists.  It surely is my first time :D
+
+
+Cheers,
+Daniel
+
+
 > 
->   ERROR: AddressSanitizer: heap-buffer-overflow
->   WRITE of size 2016
->       #0 __interceptor_memcpy
->       #1 cmd_features_set_feature ../hw/cxl/cxl-mailbox-utils.c:1908
->       #2 cxl_process_cci_message ../hw/cxl/cxl-mailbox-utils.c:4622
->       #3 mailbox_reg_write ../hw/cxl/cxl-device-utils.c:209
-> 
-> Fold the bounds checking into a small helper and use it for
-> all Set Feature write-attribute branches, so oversized
-> requests fail with CXL_MBOX_INVALID_PAYLOAD_LENGTH instead
-> of overflowing the target buffers.
-> 
-> Add a qtest covering the rank_sparing path.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3458
-
-Please can we have a Fixes tag (possibly several) for where the bug was introduced.
-
-This is great in general - comments are all about splitting it up
-and minor things to make the test easier to understand.
-
-Thanks
-
-Jonathan
-
-
-> Signed-off-by: Jia Jia <physicalmtea@gmail.com>
-> ---
-> Hi Peter,
-> 
-> Thanks, that makes sense.
-> 
-> I've folded the repeated bounds checking into a small helper and respun
-> the patch as v2.
-> 
-> Thanks
-> 
-> v2:
-> - fold the repeated Set Feature bounds checks into a helper
-> - use the helper for all Set Feature write-attribute branches
-> 
->  hw/cxl/cxl-mailbox-utils.c | 94 ++++++++++++++++++++++++------
->  tests/qtest/cxl-test.c     | 99 ++++++++++++++++++++++++++++++++++++++
->  2 files changed, 169 insertions(+), 24 deletions(-)
-> 
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index d8ba7e8625..4c7a083e4c 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -1702,6 +1702,21 @@ static CXLRetCode cmd_features_get_feature(const struct cxl_cmd *cmd,
->      return CXL_MBOX_SUCCESS;
->  }
->  
-> +static CXLRetCode cxl_set_feature_copy(void *write_attrs,
-> +                                       size_t write_attrs_size,
-> +                                       uint16_t offset,
-> +                                       const void *payload,
-> +                                       uint16_t bytes_to_copy)
-> +{
-> +    if ((uint32_t)offset + bytes_to_copy > write_attrs_size) {
-> +        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
-> +    }
-> +
-> +    memcpy((uint8_t *)write_attrs + offset, payload, bytes_to_copy);
-> +
-> +    return CXL_MBOX_SUCCESS;
-> +}
-
-Ideally split the refactor part and existing usecases out as a precursor patch.
-Then in a second patch add the missing checks.
-
-
-> +
->  /* CXL r3.1 section 8.2.9.6.3: Set Feature (Opcode 0502h) */
->  static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
->                                             uint8_t *payload_in,
-> @@ -1713,6 +1728,7 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
->      CXLSetFeatureInHeader *hdr = (void *)payload_in;
->      CXLSetFeatureInfo *set_feat_info;
->      uint16_t bytes_to_copy = 0;
-> +    CXLRetCode ret;
->      uint8_t data_transfer_flag;
->      CXLType3Dev *ct3d;
->      uint16_t count;
-> @@ -1760,13 +1776,13 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
->              return CXL_MBOX_UNSUPPORTED;
->          }
->  
-> -        if ((uint32_t)hdr->offset + bytes_to_copy >
-> -            sizeof(ct3d->patrol_scrub_wr_attrs)) {
-> -            return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
-> -        }
-> -        memcpy((uint8_t *)&ct3d->patrol_scrub_wr_attrs + hdr->offset,
-> -               ps_write_attrs,
-> -               bytes_to_copy);
-> +        ret = cxl_set_feature_copy(&ct3d->patrol_scrub_wr_attrs,
-> +                                   sizeof(ct3d->patrol_scrub_wr_attrs),
-> +                                   hdr->offset, ps_write_attrs,
-> +                                   bytes_to_copy);
-> +        if (ret) {
-> +            return ret;
-> +        }
->          set_feat_info->data_size += bytes_to_copy;
->  
->          if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
-> @@ -1787,13 +1803,13 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
->              return CXL_MBOX_UNSUPPORTED;
->          }
->  
-> -        if ((uint32_t)hdr->offset + bytes_to_copy >
-> -            sizeof(ct3d->ecs_wr_attrs)) {
-> -            return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
-> -        }
-> -        memcpy((uint8_t *)&ct3d->ecs_wr_attrs + hdr->offset,
-> -               ecs_write_attrs,
-> -               bytes_to_copy);
-> +        ret = cxl_set_feature_copy(&ct3d->ecs_wr_attrs,
-> +                                   sizeof(ct3d->ecs_wr_attrs),
-> +                                   hdr->offset, ecs_write_attrs,
-> +                                   bytes_to_copy);
-> +        if (ret) {
-> +            return ret;
-> +        }
->          set_feat_info->data_size += bytes_to_copy;
->  
->          if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
-> @@ -1813,8 +1829,13 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
->              return CXL_MBOX_UNSUPPORTED;
->          }
->  
-> -        memcpy((uint8_t *)&ct3d->soft_ppr_wr_attrs + hdr->offset,
-> -               sppr_write_attrs, bytes_to_copy);
-> +        ret = cxl_set_feature_copy(&ct3d->soft_ppr_wr_attrs,
-> +                                   sizeof(ct3d->soft_ppr_wr_attrs),
-> +                                   hdr->offset, sppr_write_attrs,
-> +                                   bytes_to_copy);
-> +        if (ret) {
-> +            return ret;
-> +        }
->          set_feat_info->data_size += bytes_to_copy;
->  
->          if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
-> @@ -1832,8 +1853,13 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
->              return CXL_MBOX_UNSUPPORTED;
->          }
->  
-> -        memcpy((uint8_t *)&ct3d->hard_ppr_wr_attrs + hdr->offset,
-> -               hppr_write_attrs, bytes_to_copy);
-> +        ret = cxl_set_feature_copy(&ct3d->hard_ppr_wr_attrs,
-> +                                   sizeof(ct3d->hard_ppr_wr_attrs),
-> +                                   hdr->offset, hppr_write_attrs,
-> +                                   bytes_to_copy);
-> +        if (ret) {
-> +            return ret;
-> +        }
->          set_feat_info->data_size += bytes_to_copy;
->  
->          if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
-> @@ -1851,8 +1877,13 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
->              return CXL_MBOX_UNSUPPORTED;
->          }
->  
-> -        memcpy((uint8_t *)&ct3d->cacheline_sparing_wr_attrs + hdr->offset,
-> -               mem_sparing_write_attrs, bytes_to_copy);
-> +        ret = cxl_set_feature_copy(&ct3d->cacheline_sparing_wr_attrs,
-> +                                   sizeof(ct3d->cacheline_sparing_wr_attrs),
-> +                                   hdr->offset, mem_sparing_write_attrs,
-> +                                   bytes_to_copy);
-> +        if (ret) {
-> +            return ret;
-> +        }
->          set_feat_info->data_size += bytes_to_copy;
->  
->          if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
-> @@ -1869,8 +1900,13 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
->              return CXL_MBOX_UNSUPPORTED;
->          }
->  
-> -        memcpy((uint8_t *)&ct3d->row_sparing_wr_attrs + hdr->offset,
-> -               mem_sparing_write_attrs, bytes_to_copy);
-> +        ret = cxl_set_feature_copy(&ct3d->row_sparing_wr_attrs,
-> +                                   sizeof(ct3d->row_sparing_wr_attrs),
-> +                                   hdr->offset, mem_sparing_write_attrs,
-> +                                   bytes_to_copy);
-> +        if (ret) {
-> +            return ret;
-> +        }
->          set_feat_info->data_size += bytes_to_copy;
->  
->          if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
-> @@ -1887,8 +1923,13 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
->              return CXL_MBOX_UNSUPPORTED;
->          }
->  
-> -        memcpy((uint8_t *)&ct3d->bank_sparing_wr_attrs + hdr->offset,
-> -               mem_sparing_write_attrs, bytes_to_copy);
-> +        ret = cxl_set_feature_copy(&ct3d->bank_sparing_wr_attrs,
-> +                                   sizeof(ct3d->bank_sparing_wr_attrs),
-> +                                   hdr->offset, mem_sparing_write_attrs,
-> +                                   bytes_to_copy);
-> +        if (ret) {
-> +            return ret;
-> +        }
->          set_feat_info->data_size += bytes_to_copy;
->  
->          if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
-> @@ -1905,8 +1946,13 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
->              return CXL_MBOX_UNSUPPORTED;
->          }
->  
-> -        memcpy((uint8_t *)&ct3d->rank_sparing_wr_attrs + hdr->offset,
-> -               mem_sparing_write_attrs, bytes_to_copy);
-> +        ret = cxl_set_feature_copy(&ct3d->rank_sparing_wr_attrs,
-> +                                   sizeof(ct3d->rank_sparing_wr_attrs),
-> +                                   hdr->offset, mem_sparing_write_attrs,
-> +                                   bytes_to_copy);
-> +        if (ret) {
-> +            return ret;
-> +        }
->          set_feat_info->data_size += bytes_to_copy;
->  
->          if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
->              data_transfer_flag == CXL_SET_FEATURE_FLAG_FINISH_DATA_TRANSFER) {
-> diff --git a/tests/qtest/cxl-test.c b/tests/qtest/cxl-test.c
-> index 8fb7e58d4f..a9fcd98736 100644
-> --- a/tests/qtest/cxl-test.c
-> +++ b/tests/qtest/cxl-test.c
-
-Test should be a 3rd patch.  We may not want to backport this one.
-Great to have it though!
-
-> @@ -7,6 +7,7 @@
->  
->  #include "qemu/osdep.h"
->  #include "libqtest-single.h"
-> +#include "hw/cxl/cxl_device.h"
->  
->  #define QEMU_PXB_CMD \
->      "-machine q35,cxl=on " \
-> @@ -59,6 +60,12 @@
->      "-object memory-backend-file,id=lsa0,mem-path=%s,size=256M " \
->      "-device cxl-type3,bus=rp0,volatile-memdev=cxl-mem0,lsa=lsa0,id=mem0 "
->  
-> +#define QEMU_T3D_DIRECT_PMEM \
-> +    "-machine q35,cxl=on -nodefaults " \
-> +    "-object memory-backend-file,id=cxl-mem0,mem-path=%s,size=256M " \
-> +    "-object memory-backend-file,id=lsa0,mem-path=%s,size=1M " \
-> +    "-device cxl-type3,bus=pcie.0,persistent-memdev=cxl-mem0,lsa=lsa0,id=pmem0 "
-> +
->  #define QEMU_2T3D \
->      "-object memory-backend-file,id=cxl-mem0,mem-path=%s,size=256M " \
->      "-object memory-backend-file,id=lsa0,mem-path=%s,size=256M " \
-> @@ -81,6 +88,17 @@
->      "-object memory-backend-file,id=lsa3,mem-path=%s,size=256M " \
->      "-device cxl-type3,bus=rp3,persistent-memdev=cxl-mem3,lsa=lsa3,id=pmem3 "
->  
-> +#define CXL_T3D_DEVFN 0x08
-> +#define CXL_T3D_BAR2_ADDR 0x10000000ULL
-Can we add some info on why that address?
-> +
-> +typedef struct QEMU_PACKED CXLSetFeatureInHeaderTest {
-> +    uint8_t uuid[16];
-> +    uint32_t flags;
-> +    uint16_t offset;
-> +    uint8_t version;
-> +    uint8_t rsvd[9];
-> +} CXLSetFeatureInHeaderTest;
-> +
->  static void cxl_basic_hb(void)
->  {
->      qtest_start("-machine q35,cxl=on");
-> @@ -118,6 +136,85 @@ static void cxl_2root_port(void)
->  }
->  
->  #ifdef CONFIG_POSIX
-> +static uint32_t cxl_test_pci_config_addr(uint8_t devfn, uint8_t offset)
-> +{
-> +    return 0x80000000U | (devfn << 8) | offset;
-
-Can we have a define for that enable bit?
-
-Given this file includes both x86 and arm virt tests can we add
-something to names of these functions to make it clear they are x86 only?
-
-> +}
-> +
-> +static void cxl_test_t3d_enable_bar2(void)
-> +{
-> +    outl(0xcf8, cxl_test_pci_config_addr(CXL_T3D_DEVFN, 0x18));
-> +    outl(0xcfc, CXL_T3D_BAR2_ADDR);
-> +    outl(0xcf8, cxl_test_pci_config_addr(CXL_T3D_DEVFN, 0x1c));
-> +    outl(0xcfc, 0);
-> +    outl(0xcf8, cxl_test_pci_config_addr(CXL_T3D_DEVFN, 0x04));
-> +    outl(0xcfc, 0x2);
-Can we express that 0x2 in terms of the fields in the register?
-
-> +}
-> +
-> +static uint64_t cxl_test_t3d_mailbox_base(void)
-> +{
-> +    return CXL_T3D_BAR2_ADDR + CXL_MAILBOX_REGISTERS_OFFSET;
-> +}
-> +
-> +static uint64_t cxl_test_t3d_payload_base(void)
-> +{
-> +    return cxl_test_t3d_mailbox_base() + A_CXL_DEV_CMD_PAYLOAD;
-> +}
-> +
-> +static void cxl_test_t3d_submit_set_feature(const void *payload, size_t len)
-> +{
-> +    memwrite(cxl_test_t3d_payload_base(), payload, len);
-> +    writeq(cxl_test_t3d_mailbox_base() + A_CXL_DEV_MAILBOX_CMD,
-> +           ((uint64_t)len << 16) | (0x05 << 8) | 0x02);
-> +    writel(cxl_test_t3d_mailbox_base() + A_CXL_DEV_MAILBOX_CTRL, 1);
-> +}
-> +
-> +static uint16_t cxl_test_t3d_mailbox_errno(void)
-> +{
-> +    return (readq(cxl_test_t3d_mailbox_base() + A_CXL_DEV_MAILBOX_STS) >>
-> +            32) & 0xffff;
-> +}
-> +
-> +static void cxl_test_fill_set_feature_header(CXLSetFeatureInHeaderTest *hdr,
-> +                                             const uint8_t uuid[16],
-> +                                             uint16_t offset,
-> +                                             uint8_t version)
-> +{
-> +    memset(hdr, 0, sizeof(*hdr));
-> +    memcpy(hdr->uuid, uuid, 16);
-> +    hdr->offset = cpu_to_le16(offset);
-> +    hdr->version = version;
-> +}
-> +
-> +static void cxl_t3d_set_feature_rejects_oversized_rank_sparing(void)
-
-Would be nice to expand the tests to cover more cases, ideally including one
-that works!
-
-> +{
-> +    static const uint8_t rank_sparing_uuid[16] = {
-> +        0x34, 0xdb, 0xaf, 0xf5, 0x05, 0x52, 0x42, 0x81,
-> +        0x8f, 0x76, 0xda, 0x0b, 0x5e, 0x7a, 0x76, 0xa7,
-> +    };
-> +    g_autoptr(GString) cmdline = g_string_new(NULL);
-> +    g_autofree const char *tmpfs = NULL;
-> +    uint8_t payload[CXL_MAILBOX_MAX_PAYLOAD_SIZE] = { 0 };
-> +    CXLSetFeatureInHeaderTest *hdr = (void *)payload;
-> +
-> +    tmpfs = g_dir_make_tmp("cxl-test-XXXXXX", NULL);
-> +    g_string_printf(cmdline, QEMU_T3D_DIRECT_PMEM, tmpfs, tmpfs);
-> +
-> +    qtest_start(cmdline->str);
-> +    cxl_test_t3d_enable_bar2();
-> +
-> +    cxl_test_fill_set_feature_header(hdr, rank_sparing_uuid, 0,
-> +                                     CXL_MEMDEV_SPARING_SET_FEATURE_VERSION);
-> +    memset(payload + sizeof(*hdr), 0x41,
-> +           sizeof(payload) - sizeof(*hdr));
-
-I think that fits on one line.
-
-> +    cxl_test_t3d_submit_set_feature(payload, sizeof(payload));
-> +    g_assert_cmphex(cxl_test_t3d_mailbox_errno(), ==,
-> +                    CXL_MBOX_INVALID_PAYLOAD_LENGTH);
-> +
-> +    qtest_end();
-> +    rmdir(tmpfs);
-> +}
-
+>> +            prev_addr = ROUND_DOWN(prev_addr, granule);
+>> +            this_addr = ROUND_DOWN(this_addr, granule);
+>>           }
 
 
