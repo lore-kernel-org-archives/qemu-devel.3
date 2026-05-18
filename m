@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD740CD4F54
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA33ACD4F3C
 	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 11:35:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOwFB-00081x-Te; Mon, 18 May 2026 07:34:45 -0400
+	id 1wOwEq-0007yK-Hp; Mon, 18 May 2026 07:34:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wOwF4-0007z6-1u
- for qemu-devel@nongnu.org; Mon, 18 May 2026 07:34:38 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ id 1wOwEn-0007y3-Tz
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 07:34:22 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wOwF2-0005h4-Cc
- for qemu-devel@nongnu.org; Mon, 18 May 2026 07:34:37 -0400
-Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c08:7605:0:640:8d9a:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 974CF80799;
- Mon, 18 May 2026 14:34:32 +0300 (MSK)
+ id 1wOwEj-0005dP-Kk
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 07:34:21 -0400
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 58782C01E9;
+ Mon, 18 May 2026 14:34:09 +0300 (MSK)
 Received: from [IPV6:2a02:6bf:8080:b95::1:20] (unknown
  [2a02:6bf:8080:b95::1:20])
- by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id VYOXO04LuGk0-jYYRx5Et; Mon, 18 May 2026 14:34:32 +0300
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id 8YOHfV3KkW20-OKE6n4QD; Mon, 18 May 2026 14:34:08 +0300
+Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1779104072;
- bh=SleAMGeVC29wze3qO4rAL9He2doUaKg8FG/D3x4jn1k=;
+ s=default; t=1779104048;
+ bh=nSClXN3eXG42yD3LkmTJnlXbZjK5kftqnjRWlDJK4cY=;
  h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=N93OVdXv4UVxR6TnJ9E+A0TVACOOkxj0EorhtFJIlUhdlPA3KAdobvNGt86YLs1Fd
- NvIjK6m58OZXp94NTMPyX3JuEjMky1R2fX/1EM8cbLU7buH8fLTO+dMusN84rDrH6N
- EEnuVVtK9oBCTQkUsLQREKZQ1ZuBTI6ppqfrL/ps=
-Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
+ b=0AY3m71RuCMHYhgbEPYuLwzSBfMt64KhMAjZJifjykcgbGxUkwlnLdnc5DgdYudo6
+ A28ldE2fQR5BhIS2kSTDVm7EPjbOBEaLQDRV28kVJwu8Sl8rvAWPeUP/ztiRGrlylg
+ mRTWTdkFiQpmuIQLZjR8ZfP2/IEzw/mjTZyGhkJQ=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-Message-ID: <fa70e2bc-1286-4ff0-9de5-81caafdf956a@yandex-team.ru>
-Date: Mon, 18 May 2026 14:34:31 +0300
+Message-ID: <3c2974e6-05a7-4693-8b3d-727ffa7d121f@yandex-team.ru>
+Date: Mon, 18 May 2026 14:34:08 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/10] vhost-user: VHOST_USER_PROTOCOL_F_GPA_ADDRESSES
+Subject: Re: [PATCH v6 00/22] vhost refactoring and fixes
 To: mst@redhat.com
-Cc: sgarzare@redhat.com, qemu-devel@nongnu.org, d-tatianin@yandex-team.ru
-References: <20260420202032.714884-1-vsementsov@yandex-team.ru>
+Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
+ yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
+References: <20260420200339.708640-1-vsementsov@yandex-team.ru>
 Content-Language: en-US
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20260420202032.714884-1-vsementsov@yandex-team.ru>
+In-Reply-To: <20260420200339.708640-1-vsementsov@yandex-team.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -64,7 +65,6 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -78,46 +78,66 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 ping
 
-
-On 20.04.26 23:20, Vladimir Sementsov-Ogievskiy wrote:
-> Hi all!
+On 20.04.26 23:03, Vladimir Sementsov-Ogievskiy wrote:
+> Hi all. That's a preparation for vhost-user-blk backend-transfer
+> feature.
 > 
-> Here is a new feature to pass GPA addresses instead of UVA
-> to vhost-user server from QEMU. The details are in last patch
-> 10/10 the others are preparation and refactoring.
+> v6:
+> 04: add vhost-user-stub.c to fix build without vhost-user
 > 
-> v2:
-> 06: reword commit message
+> Vladimir Sementsov-Ogievskiy (22):
+>    vhost-user: rework enabling vrings
+>    vhost: drop backend_features field
+>    vhost-user: introduce vhost_user_has_protocol_feature() helper
+>    vhost: move protocol_features to vhost_user
+>    vhost-user-gpu: drop code duplication
+>    vhost: make vhost_dev.features private
+>    virtio: move common part of _set_guest_notifier to generic code
+>    virtio: drop *_set_guest_notifier_fd_handler() helpers
+>    vhost-user: keep QIOChannelSocket for backend channel
+>    vhost: vhost_virtqueue_start(): fix failure path
+>    vhost: make vhost_memory_unmap() null-safe
+>    vhost: simplify calls to vhost_memory_unmap()
+>    vhost: move vrings mapping to the top of vhost_virtqueue_start()
+>    vhost: vhost_virtqueue_start(): drop extra local variables
+>    vhost: final refactoring of vhost vrings map/unmap
+>    vhost: simplify vhost_dev_init() error-path
+>    vhost: move busyloop timeout initialization to vhost_virtqueue_init()
+>    vhost: vhost_dev_init(): simplify features initialization
+>    hw/virtio/virtio-bus: refactor virtio_bus_set_host_notifier()
+>    vhost-user: make trace events more readable
+>    vhost-user-blk: add some useful trace-points
+>    vhost: add some useful trace-points
 > 
-> Based-on: <20260420200339.708640-1-vsementsov@yandex-team.ru>
->     "[PATCH v6 00/22] vhost refactoring and fixes"
-> 
-> Vladimir Sementsov-Ogievskiy (10):
->    vhost: move IOTLB functions from vhost-backend.c to vhost.c
->    vhost: use consistent naming for backend handlers
->    vhost: rename vhost-backend.c to vhost-kernel.c
->    vhost: replace .vhost_vq_get_addr() with .vhost_phys_vring_addr()
->    vhost: simplify vhost_memory_map() and vhost_memory_unmap()
->    qapi: remove user addresses from x-query-virtio-vhost-queue-status
->    vhost: stop reusing vq->desc (and friends) to store physical address
->    vhost: rename vring pointer fields to reflect user addresses
->    vhost: add .vhost_phys_iotlb_msg() handler
->    vhost-user: add VHOST_USER_PROTOCOL_F_GPA_ADDRESSES
-> 
->   docs/interop/vhost-user.rst                   |  21 +-
->   hw/virtio/meson.build                         |   2 +-
->   hw/virtio/{vhost-backend.c => vhost-kernel.c} |  90 +-------
->   hw/virtio/vhost-user.c                        |  32 ++-
->   hw/virtio/vhost-vdpa.c                        |  19 +-
->   hw/virtio/vhost.c                             | 193 +++++++++++++-----
->   hw/virtio/virtio-hmp-cmds.c                   |   3 -
->   hw/virtio/virtio-qmp.c                        |   3 -
->   include/hw/virtio/vhost-backend.h             |  37 ++--
->   include/hw/virtio/vhost-user.h                |   1 +
->   include/hw/virtio/vhost.h                     |   8 +-
->   qapi/virtio.json                              |  15 --
->   12 files changed, 210 insertions(+), 214 deletions(-)
->   rename hw/virtio/{vhost-backend.c => vhost-kernel.c} (83%)
+>   backends/cryptodev-vhost.c     |   9 +-
+>   hw/block/trace-events          |  10 ++
+>   hw/block/vhost-user-blk.c      |  26 +++-
+>   hw/display/vhost-user-gpu.c    |  11 +-
+>   hw/net/vhost_net.c             |  35 ++---
+>   hw/s390x/virtio-ccw.c          |  35 +++--
+>   hw/scsi/vhost-scsi.c           |   1 -
+>   hw/scsi/vhost-user-scsi.c      |   1 -
+>   hw/virtio/meson.build          |   3 +
+>   hw/virtio/trace-events         |  16 +-
+>   hw/virtio/vdpa-dev.c           |   3 +-
+>   hw/virtio/vhost-user-base.c    |   8 +-
+>   hw/virtio/vhost-user-stub.c    |   6 +
+>   hw/virtio/vhost-user.c         | 260 ++++++++++++++++++++++-----------
+>   hw/virtio/vhost.c              | 243 +++++++++++++++---------------
+>   hw/virtio/virtio-bus.c         |  18 +--
+>   hw/virtio/virtio-hmp-cmds.c    |   2 -
+>   hw/virtio/virtio-mmio.c        |  41 +-----
+>   hw/virtio/virtio-pci.c         |  34 +----
+>   hw/virtio/virtio-qmp.c         |  12 +-
+>   hw/virtio/virtio.c             |  48 +++---
+>   include/hw/virtio/vhost-user.h |   4 +
+>   include/hw/virtio/vhost.h      |  63 +++++---
+>   include/hw/virtio/virtio-pci.h |   3 -
+>   include/hw/virtio/virtio.h     |  15 +-
+>   net/vhost-vdpa.c               |   7 +-
+>   qapi/virtio.json               |   3 -
+>   27 files changed, 502 insertions(+), 415 deletions(-)
+>   create mode 100644 hw/virtio/vhost-user-stub.c
 > 
 
 
