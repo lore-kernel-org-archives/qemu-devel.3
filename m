@@ -4,87 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69588CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 16:05:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C52C4CD4F49
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 16:05:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP0SZ-0007E8-2i; Mon, 18 May 2026 12:04:53 -0400
+	id 1wP0Pm-0000BP-J7; Mon, 18 May 2026 12:02:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wP0SU-000772-52
- for qemu-devel@nongnu.org; Mon, 18 May 2026 12:04:46 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wP0SS-0007ds-73
- for qemu-devel@nongnu.org; Mon, 18 May 2026 12:04:45 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-48e82c23840so19226625e9.3
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 09:04:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779120282; x=1779725082; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ufefbwsKMhzpZARdFsQrTqHVtQOsOsH0aXUUe4C0qkg=;
- b=RenoWLfHyBKwIEoQIfqyEexuep41v11BbB4VQv7x37IQsGqv/9lvp6NuD5zO4aKcle
- s6qc0IIHyqz9GR4Nsltcofpd9SXX4XuYRCh0gxCDpVUmZ+vnfOv0vJ8wKUBjhS1GPFFb
- rFwXaGj4b68U/+iFFfaYFlGAgylOl5nKDy70KV+7j79DdPSYwRBiwyt1DXK8ga+c/92A
- VIxq8e6csUKFvICj056aPd0de/B0D5Bz/100p4i3qPK1zcn1iHj2v2FGO28a+Sgtagc8
- c6tZrNDlCR8EgFTLjU2B2IHHcFRq3pklDQr9QJcDTQMUwvWDlN9ChKpqNNsPiMMbnOK4
- of4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779120282; x=1779725082;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ufefbwsKMhzpZARdFsQrTqHVtQOsOsH0aXUUe4C0qkg=;
- b=o0XSjFLJ6Fe3bcEz+FNB/BFO2j2xg89zODW71PnDltZ3ruh0nsCqfjtfsoV8/ZbzzV
- wCLOc/T7l3BTWojBjzXI2zo6cNzbb63sgzoGR6vJ1FxG/XTk6GjfOwycJqIJW6EYXIpq
- jZR6mxr6ZqmyWkEk5peWydSPEmgz9rwOD8Z+JYwZ1/u+P7EkEtY0FH4bEIEVKI7o1LbR
- ncpXMKY8PlTHz1Fz4KTSI2lcFFYIxOmVGSlK4dOg9mkGWvdzExKCdg8gRGkrHroB2Y1B
- Am2dv8mJjwbD0+wZshR7PqN3GRjvaTOVd7sFHcbTZH3JkT9TDQrEkeUzlomCCtYn2E7H
- 2uxg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+wUtnpXkX/SMQQzph/h04GFGk1f3x7igbmiqKDtMni2Iq3gzyNLQgf2TjYCb4hkMCGx05um/AUJnyn@nongnu.org
-X-Gm-Message-State: AOJu0YwS7qTT2+deKUOnYUiOiSfRIL0I0c0Jfcu44Y7VlkLJx4pT+bEB
- oRHL9yzJMvbdSNkLPx7TP/o8CPL+BpsvbsCm7n0etBoI+hCedrZYWBtFbMRoHTOiGVU=
-X-Gm-Gg: Acq92OGZGu1UhJXI9ZdG8moaUDwmUna73c4ou4wD5fL79wqnD7tq2dgVAV7RvYNy3hM
- XC3sbcN9AxolOEv9GWS8lmhVHgn5WYNxIvpEd2crWkLeyTsVHhooZhLYDolCNSPKFf1e/HnmhHp
- pFYwXyUZbF5zzloP1xRMfqOFARzpjqwe2G2MP6MaJxiC/eo+m1X6maAqnp4pjqUV8l/jl8k9ki9
- sRw0ejemsVdr/a9J/TwWxbERRBisMrzwp+Kso1PYoMzl5cXeZK/2MQixkuHeAwVQ8QeMPZimKJj
- EfP9sXnrMAaYKkN6Jea5olppTIGmjFboRQWZ/FoP4zknur6h7ulAvSP6nkL6GIyJb3KnoNG03tj
- Ak5XxDmTaM+YBrfGzEZ6rZw1lG9OIZOIUryJ9iDJ0yWLOof2SygHxt/pPEl9golP5B8IspXInQH
- 3kZaJtINjU2yd8A088wHKeKhR/0c850SAtsckiWGg5JUcIiAkMWpaqKXj5yLVtb7INEI2s2HYu7
- 1mfw1n9vU9aLxVkpnHXpGSC7k8B4exooVqPIYfdyQ==
-X-Received: by 2002:a05:600c:8599:b0:490:778:4fe8 with SMTP id
- 5b1f17b1804b1-4900778509emr84516355e9.25.1779120281864; 
- Mon, 18 May 2026 09:04:41 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45d9e767cb9sm37060577f8f.2.2026.05.18.09.04.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 May 2026 09:04:41 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH] tests/functional/aarch64: Bump up timeout on vbsa
-Date: Mon, 18 May 2026 17:04:40 +0100
-Message-ID: <20260518160440.1037245-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wP0PS-0008LZ-TY
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 12:01:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wP0PQ-0004xM-U1
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 12:01:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779120096;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Hc2Tp08f8byxhDOq5HgFnpy1NP/YS++i+tAQt8iu9DM=;
+ b=fC+MGqKjF3qx9Pem9sz0kg3PCjmA6Py/GM18M59/sayb46L5ACQYoQshW9uYJ/RxXCu4U/
+ /xJhsMj+4UGkChVKdgPyELZc4hlsG/5xFjf+CSAxcdPYgX2ndAjecBQR6+s3ooioudK+gD
+ rDj/uYb66szTgyC+EYp0H8l4e5xm1Xc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-689-1z5rsqx3NXiB87nTcRAlkQ-1; Mon,
+ 18 May 2026 12:01:31 -0400
+X-MC-Unique: 1z5rsqx3NXiB87nTcRAlkQ-1
+X-Mimecast-MFC-AGG-ID: 1z5rsqx3NXiB87nTcRAlkQ_1779120090
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9BA40195608D; Mon, 18 May 2026 16:01:30 +0000 (UTC)
+Received: from berrange.com (unknown [10.44.32.79])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 85EAE30002DF; Mon, 18 May 2026 16:01:26 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: John Snow <jsnow@redhat.com>, qemu-block@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v8 07/16] scripts/mtest2make: support optional tests grouping
+Date: Mon, 18 May 2026 17:00:42 +0100
+Message-ID: <20260518160051.903616-8-berrange@redhat.com>
+In-Reply-To: <20260518160051.903616-1-berrange@redhat.com>
+References: <20260518160051.903616-1-berrange@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,27 +91,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On a debug build, the virt_vbsa functional test takes about 2 minutes to
-run on my machine, so it tends to time out. Bump the timeout to 4 mins.
+Currently tests can be classified into three speed groups depending on
+whether the meson suite name ends in '-slow' or '-thorough' or neither.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+This gets turned into make targets that match the name of the meson
+suite, with the speed suffix stripped. e.g.
+
+ * suite=block ->  'make check-block'
+ * suite=block-slow -> 'make check-block SPEED=slow'
+ * suite=block-thorough -> 'make check-block SPEED=thorough'
+
+The set of tests under the "thorough" speed, however, can get rather
+large and it would be useful to have a way to expose further make
+targets for directly running a particular subset of tests.
+
+This needs a way to run a target without requiring the SPEED variable,
+while also not having them enabled by default as if they were 'quick'
+tests.
+
+This modifies mtest2make.py to support this idea by allowing for a new
+suffix '-optional' on a suite. When this is present, a correspondingly
+named make target will be created without the '-optional' suffix which
+will never be run automatically.
+
+This is intended to be combined with use of other suites. For example,
+a single NBD test might be added to two suites, 'block-thorough' and
+'block-nbd-optional'.
+
+This would allow running it as part of all the block tests with
+'make check-block SPEED=thorough', and as part of a standalone target
+'make check-block-nbd'.
+
+Acked-by: Kevin Wolf <kwolf@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/functional/aarch64/meson.build | 1 +
- 1 file changed, 1 insertion(+)
+ scripts/mtest2make.py | 22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
 
-diff --git a/tests/functional/aarch64/meson.build b/tests/functional/aarch64/meson.build
-index 9803f66299..e81afd6c39 100644
---- a/tests/functional/aarch64/meson.build
-+++ b/tests/functional/aarch64/meson.build
-@@ -17,6 +17,7 @@ test_aarch64_timeouts = {
-   'tuxrun' : 240,
-   'virt' : 360,
-   'virt_gpu' : 480,
-+  'virt_vbsa' : 240,
- }
+diff --git a/scripts/mtest2make.py b/scripts/mtest2make.py
+index 915f02d600..383ea68b16 100644
+--- a/scripts/mtest2make.py
++++ b/scripts/mtest2make.py
+@@ -22,7 +22,7 @@ def names(self, base):
+ print(r'''
+ SPEED = quick
  
- tests_aarch64_system_quick = [
+-.speed.quick = $(sort $(filter-out %-slow %-thorough, $1))
++.speed.quick = $(sort $(filter-out %-slow %-thorough %-optional, $1))
+ .speed.slow = $(sort $(filter-out %-thorough, $1))
+ .speed.thorough = $(sort $1)
+ 
+@@ -66,10 +66,15 @@ def process_tests(test, targets, suites):
+             s = s[:-9]
+             suites[s].speeds.add('thorough')
+ 
++def target_name(suite):
++    if suite.endswith('-optional'):
++        return suite[0:-9]
++    return suite
++
+ def emit_prolog(suites, prefix):
+-    all_targets = ' '.join((f'{prefix}-{k}'
++    all_targets = ' '.join((f'{prefix}-{target_name(k)}'
+                             for k in sorted(suites.keys())))
+-    all_xml = ' '.join((f'{prefix}-report-{k}.junit.xml'
++    all_xml = ' '.join((f'{prefix}-report-{target_name(k)}.junit.xml'
+                         for k in sorted(suites.keys())))
+     print()
+     print(f'all-{prefix}-targets = {all_targets}')
+@@ -83,14 +88,17 @@ def emit_prolog(suites, prefix):
+     print(f'\t$(MAKE) {prefix}$* MTESTARGS="$(MTESTARGS) --logbase {prefix}-report$*" && ln -f meson-logs/$@ .')
+ 
+ def emit_suite(name, suite, prefix):
++    tgtname = target_name(name)
+     deps = ' '.join(sorted(suite.deps))
+     print()
+-    print(f'.{prefix}-{name}.deps = {deps}')
+-    print(f'.ninja-goals.check-build += $(.{prefix}-{name}.deps)')
++    print(f'.{prefix}-{tgtname}.deps = {deps}')
++    print(f'.ninja-goals.check-build += $(.{prefix}-{tgtname}.deps)')
+ 
+     names = ' '.join(sorted(suite.names(name)))
+-    targets = f'{prefix}-{name} {prefix}-report-{name}.junit.xml'
+-    if not name.endswith('-slow') and not name.endswith('-thorough'):
++    targets = f'{prefix}-{tgtname} {prefix}-report-{tgtname}.junit.xml'
++    if not name.endswith('-slow') and \
++       not name.endswith('-thorough') and \
++       not name.endswith('-optional'):
+         targets += f' {prefix} {prefix}-report.junit.xml'
+     print(f'ifneq ($(filter {targets}, $(MAKECMDGOALS)),)')
+     # for the "base" suite possibly add FOO-slow and FOO-thorough
 -- 
-2.43.0
+2.54.0
 
 
