@@ -4,66 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 121E1CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 13:30:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6B3ACD4F50
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 13:30:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOy26-0000eG-MD; Mon, 18 May 2026 09:29:22 -0400
+	id 1wOy26-0000eH-WF; Mon, 18 May 2026 09:29:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pm_bounces@pm.mtasv.net>)
- id 1wOxkS-0004ql-QN
- for qemu-devel@nongnu.org; Mon, 18 May 2026 09:11:14 -0400
-Received: from mta220-ab1.mtasv.net ([50.31.205.220])
+ id 1wOxkq-0004tJ-Hp
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 09:11:32 -0400
+Received: from mta196a-ord.mtasv.net ([104.245.209.196])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pm_bounces@pm.mtasv.net>)
- id 1wOxkM-0006qQ-26
- for qemu-devel@nongnu.org; Mon, 18 May 2026 09:11:05 -0400
+ id 1wOxkn-0007Iq-DW
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 09:11:32 -0400
 X-KumoRef: eyJfQF8iOiJcXF8vIiwicmVjaXBpZW50IjoicWVtdS1kZXZlbEBub25nbnUub3JnIn0=
 DKIM-Signature: v=1; a=rsa-sha256; d=pm.mtasv.net; s=pm20250806;
  c=relaxed/relaxed; 
- bh=VeFHp6FKvmaH2pBv5/p25VIf65/VpOb+0qoRGNbvAyY=;
+ bh=0JbQeoOqTiL1eqXMetxQ2DhpxGAfdHIVjrJbrCsoHY4=;
  h=from:to:subject:date:mime-version:content-type:sender:cc:date:message-id;
- t=1779109860; x=1779714660;
- b=iqBQlH3qAuNJqnaJ1vJ1S8nguUbwsoAoZbtUST+hVD4Jeo1ASehxNarHQV6Xi3ZctTQ9u0ALH
- kMxzqoJ9rOh37UQIc3lQngdm5Dskw6aOV3AxNcSUoAl2bvhssTtbwYQGHihmmX+lmsheDNNBBMa
- w0zohfk6LoIkvz7Q3tw6flZuPfmsSnhGD+piXnfa35CbzBm5xTIg91xNp7c066lRubjQcZ28AoZ
- tZ4amHq+ovInuN7nUBqn4iIJrn6qzevCihDPnCdIA6UWMXglUnZO4lryzrTszPGWwarwA7e5vSC
- 2DVoPRFBH8M9m82lPecz9VgM3cFQKvOpnzNHAWGZ7MeQ==;
-Received: from ip-172-26-31-179.us-east-2.compute.internal (172.26.31.179)
- by production-pmta-useast2.internal.postmarkapp.com (KumoMTA 10.97.242.151) 
- with ESMTP id 04096c4652bb11f193700292cb89fe79 for <qemu-devel@nongnu.org>;
- Mon, 18 May 2026 13:11:00 +0000
+ t=1779109888; x=1779714688;
+ b=ATq9AX/AwWsBYheKKMX2QsFCxmbzz1CB6CMISBgskwkoDmSsuqzggvNay7pLOBNz8o8+rZL4f
+ Wu2kE5d/JmzfztJ1S3hxlZEZHg3sS4a4gkBHfbbkVpy8dsQMqxIfeMOJkZHQTo1Zh1HEuB+Ztk5
+ ni2rgphGIGI85OpJqb+GyY9/rrsIXu7PDwQ8CJe2hu1qlN5+62UYow0uUnsbbyEE/PyiMz2Ki1A
+ WhP5kb/tatxFvJWAE9EZq0dg4KzsRb+FgdfvYoE8mgj0lvOyrjxv+7Ben276zifr9IFUijyX3zz
+ VcySjlkcKQC/S8LST+Mxj5kWsi8YZtTkevxeX4PS1euQ==;
+Received: from ip-172-26-31-200.us-east-2.compute.internal (172.26.31.200)
+ by production-pmta-useast2.internal.postmarkapp.com (KumoMTA 10.97.240.249) 
+ with ESMTP id 1470c87c52bb11f19e1d029aa6c00279 for <qemu-devel@nongnu.org>;
+ Mon, 18 May 2026 13:11:28 +0000
 From: SignKirigami <prcups@krgm.moe>
-Date: Mon, 18 May 2026 13:11:00 +0000
-Subject: [PATCH 0/4] target/loongarch: add LVZ support for TCG
-Message-Id: <75d2c4d9-aa2e-4660-9a47-1cf0f8a23f7b@mtasv.net>
+Date: Mon, 18 May 2026 13:11:27 +0000
+Subject: [PATCH 1/4] target/loongarch: add LVZ CPU state and CSR metadata
+Message-Id: <ac715039-55b0-400d-bd78-32ff7ec889c8@mtasv.net>
 To: qemu-devel@nongnu.org
-Cc: SignKirigami <prcups@krgm.moe>, Bibo Mao <maobibo@loongson.cn>,
- xianglai li <lixianglai@loongson.cn>, Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+Cc: SignKirigami <prcups@krgm.moe>, Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260518130918.76338-1-prcups@krgm.moe>
+References: <20260518130918.76338-1-prcups@krgm.moe>
 Feedback-ID: s9655927-_:s9655927:a251693:postmark
 X-Complaints-To: abuse@postmarkapp.com
 X-Job: 251693_9655927
-X-PM-Message-Id: 75d2c4d9-aa2e-4660-9a47-1cf0f8a23f7b
+X-PM-Message-Id: ac715039-55b0-400d-bd78-32ff7ec889c8
 X-PM-RCPT: |bTF8MjUxNjkzfDk2NTU5Mjd8cWVtdS1kZXZlbEBub25nbnUub3Jn|
 X-PM-Message-Options: v1;
- 1.4KqlDEvRmpl6Fe-aOcI5GA.-Okxl7-e35Wp8XDclql3SK_UgNO1Fw2eAET7IBNGaGeLuhsKL-r24vKKsYMfQRoVoGVekKI2VzTxsG3szNL6JWE0b9rBfME_jmilbV2eTYPbRpsp1MDB43yGDEEMI__B0qCuLJ6n6euQXLqTPhMwQXf80HWksb6Q0hGTmD8-E89UtzoMvHutwe-decmS9-Sr
-X-virtual-MTA: mta220-ab1
+ 1.q4JnIHVj2EnK0st9Jh-dIA.Nx3iPtmyKBqD5mTWQKVh3VfNlfpkdHyTMGiKlkP8jJM_lpF1zmZ6YziFn2Bz8Bypdy-XyHF3Car1Lj7NxrEBgB7TxViq7PRM0VMfio8ozFoWAFuwTyRA0IYYZwAgV0UK6vKSrLdpMinOjqtFlk2GNVW8jVLgTQNbKptzUj0HAlo5pHieBQEaUjHbWrB9C10B
+X-virtual-MTA: ord-104-245-209-196
 X-PM-MTA-Pool: transactional-2
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=50.31.205.220;
- envelope-from=pm_bounces@pm.mtasv.net; helo=mta220-ab1.mtasv.net
+Received-SPF: pass client-ip=104.245.209.196;
+ envelope-from=pm_bounces@pm.mtasv.net; helo=mta196a-ord.mtasv.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Mon, 18 May 2026 09:29:19 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,46 +83,737 @@ Reply-To: prcups@krgm.moe
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch implements Loongson VirtualiZation (LVZ) extension support
-for LoongArch's TCG target. With this patch, it is now possible to
-start a nested KVM-accelerated virtual machine on a TCG-emulated virtual
-machine.
-
-Cc: Bibo Mao <maobibo@loongson.cn>
-Cc: xianglai li <lixianglai@loongson.cn>
 Signed-off-by: SignKirigami <prcups@krgm.moe>
 Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+---
+ target/loongarch/cpu-csr.h |  42 +++++++
+ target/loongarch/cpu.h     | 125 ++++++++++++++++++-
+ target/loongarch/csr.c     | 122 ++++++++++++++++++
+ target/loongarch/csr.h     |   3 +
+ target/loongarch/machine.c | 249 +++++++++++++++++++++++++------------
+ 5 files changed, 457 insertions(+), 84 deletions(-)
 
-SignKirigami (4):
-  target/loongarch: add LVZ CPU state and CSR metadata
-  target/loongarch: add LVZ guest runtime support
-  target/loongarch: translate LVZ CSR and trap instructions
-  target/loongarch: virtualize guest TLB and address translation
-
- target/loongarch/cpu-csr.h                    |  42 ++
- target/loongarch/cpu-mmu.h                    |  37 +-
- target/loongarch/cpu.c                        | 132 ++++
- target/loongarch/cpu.h                        | 125 +++-
- target/loongarch/cpu_helper.c                 | 119 ++--
- target/loongarch/csr.c                        | 122 ++++
- target/loongarch/csr.h                        |   3 +
- target/loongarch/disas.c                      |  10 +
- target/loongarch/insns.decode                 |  17 +
- target/loongarch/internals.h                  |   8 +-
- target/loongarch/kvm/kvm.c                    |   1 +
- target/loongarch/machine.c                    | 249 ++++---
- target/loongarch/tcg/constant_timer.c         |  62 +-
- target/loongarch/tcg/csr_helper.c             | 127 +++-
- target/loongarch/tcg/helper.h                 |  30 +-
- .../tcg/insn_trans/trans_privileged.c.inc     | 353 +++++++++-
- target/loongarch/tcg/op_helper.c              |  83 ++-
- target/loongarch/tcg/tcg_cpu.c                | 182 +++--
- target/loongarch/tcg/tcg_loongarch.h          |   6 +-
- target/loongarch/tcg/tlb_helper.c             | 629 +++++++++++++-----
- target/loongarch/tcg/translate.c              |   6 +-
- target/loongarch/translate.h                  |   2 +
- 22 files changed, 1909 insertions(+), 436 deletions(-)
-
+diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
+index d860417af2..4b0bb4d2e5 100644
+--- a/target/loongarch/cpu-csr.h
++++ b/target/loongarch/cpu-csr.h
+@@ -180,11 +180,13 @@ FIELD(CSR_TLBREHI_64, VPPN, 13, 35)
+ #define LOONGARCH_CSR_TLBRPRMD       0x8f /* TLB refill mode info */
+ FIELD(CSR_TLBRPRMD, PPLV, 0, 2)
+ FIELD(CSR_TLBRPRMD, PIE, 2, 1)
++FIELD(CSR_TLBRPRMD, PGM, 3, 1)
+ FIELD(CSR_TLBRPRMD, PWE, 4, 1)
+=20
+ /* Machine Error CSRs */
+ #define LOONGARCH_CSR_MERRCTL        0x90 /* ERRCTL */
+ FIELD(CSR_MERRCTL, ISMERR, 0, 1)
++FIELD(CSR_MERRCTL, PGM, 5, 1)
+ #define LOONGARCH_CSR_MERRINFO1      0x91
+ #define LOONGARCH_CSR_MERRINFO2      0x92
+ #define LOONGARCH_CSR_MERRENTRY      0x93 /* MError exception base */
+@@ -224,4 +226,44 @@ FIELD(CSR_DBG, ECODE, 16, 6)
+ #define LOONGARCH_CSR_DERA           0x501 /* Debug era */
+ #define LOONGARCH_CSR_DSAVE          0x502 /* Debug save */
+=20
++/* LVZ (LoongArch Virtualization) CSRs */
++#define LOONGARCH_CSR_GSTAT          0x50 /* Guest status */
++FIELD(CSR_GSTAT, VM, 0, 1)
++FIELD(CSR_GSTAT, PVM, 1, 1)
++FIELD(CSR_GSTAT, GIDBIT, 4, 6)
++FIELD(CSR_GSTAT, GID, 16, 8)
++
++#define LOONGARCH_CSR_GCFG           0x51 /* Guest config */
++FIELD(CSR_GCFG, MATP, 0, 4)
++FIELD(CSR_GCFG, MATC, 4, 2)
++FIELD(CSR_GCFG, TOPIP, 6, 1)
++FIELD(CSR_GCFG, TOPI, 7, 1)
++FIELD(CSR_GCFG, TOTIP, 8, 1)
++FIELD(CSR_GCFG, TOTI, 9, 1)
++FIELD(CSR_GCFG, TOEP, 10, 1)
++FIELD(CSR_GCFG, TOE, 11, 1)
++FIELD(CSR_GCFG, TOPP, 12, 1)
++FIELD(CSR_GCFG, TOP, 13, 1)
++FIELD(CSR_GCFG, TOHUP, 14, 1)
++FIELD(CSR_GCFG, TOHU, 15, 1)
++FIELD(CSR_GCFG, TOCIP, 16, 4)
++FIELD(CSR_GCFG, TOCI, 20, 2)
++FIELD(CSR_GCFG, GPMP, 23, 1)
++FIELD(CSR_GCFG, GPMNUM, 24, 3)
++
++#define LOONGARCH_CSR_GINTC          0x52 /* Guest interrupt config */
++FIELD(CSR_GINTC, HWIS, 0, 8)
++FIELD(CSR_GINTC, HWIP, 8, 8)
++FIELD(CSR_GINTC, HWIC, 16, 8)
++
++#define LOONGARCH_CSR_GCNTC          0x53 /* Guest counter compensation */
++
++#define LOONGARCH_CSR_GTLBC          0x15 /* Guest TLB control */
++FIELD(CSR_GTLBC, GMTLBSZ, 0, 6)
++FIELD(CSR_GTLBC, USETGID, 12, 1)
++FIELD(CSR_GTLBC, TOTI, 13, 1)
++FIELD(CSR_GTLBC, TGID, 16, 8)
++
++#define LOONGARCH_CSR_TRGP           0x16 /* Trapped guest physical addres=
+s */
++
+ #endif /* LOONGARCH_CPU_CSR_H */
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 096d778928..8d3cae59fa 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -20,6 +20,20 @@
+ #include "cpu-csr.h"
+ #include "cpu-qom.h"
+=20
++#define GET_CSR_IF(guest_mode, csr_name) \
++    ((guest_mode) ? (env->GCSR_##csr_name) : (env->CSR_##csr_name))
++
++#define SET_CSR_IF(guest_mode, csr_name, value) \
++    do {                                        \
++        if (guest_mode) {                       \
++            env->GCSR_##csr_name =3D (value);     \
++        } else {                                \
++            env->CSR_##csr_name =3D (value);      \
++        }                                       \
++    } while (0)
++
++#define CPU_INTERRUPT_GUEST CPU_INTERRUPT_TGT_EXT_0
++
+ #define FCSR0_M1    0x1f         /* FCSR1 mask, Enables */
+ #define FCSR0_M2    0x1f1f0000   /* FCSR2 mask, Cause and Flags */
+ #define FCSR0_M3    0x300        /* FCSR3 mask, Round Mode */
+@@ -93,6 +107,10 @@ FIELD(FCSR0, CAUSE, 24, 5)
+ #define  EXCCODE_WPEM                EXCODE(19, 1)
+ #define  EXCCODE_BTD                 EXCODE(20, 0)
+ #define  EXCCODE_BTE                 EXCODE(21, 0)
++#define  EXCCODE_GSPR                EXCODE(22, 0)
++#define  EXCCODE_HVC                 EXCODE(23, 0)
++#define  EXCCODE_GCSC                EXCODE(24, 0)
++#define  EXCCODE_GCHC                EXCODE(25, 0)
+ #define  EXCCODE_DBP                 EXCODE(26, 0) /* Reserved subcode use=
+d for debug */
+=20
+ /* cpucfg[0] bits */
+@@ -255,6 +273,7 @@ FIELD(TLB_MISC, E, 0, 1)
+ FIELD(TLB_MISC, ASID, 1, 10)
+ FIELD(TLB_MISC, VPPN, 13, 35)
+ FIELD(TLB_MISC, PS, 48, 6)
++FIELD(TLB_MISC, GID, 54, 8)
+=20
+ /*Msg interrupt registers */
+ #define N_MSGIS                4
+@@ -389,6 +408,79 @@ typedef struct CPUArchState {
+     uint64_t CSR_DBG;
+     uint64_t CSR_DERA;
+     uint64_t CSR_DSAVE;
++
++    /* LVZ (LoongArch Virtualization) CSRs */
++    uint64_t CSR_GSTAT;
++    uint64_t CSR_GCFG;
++    uint64_t CSR_GINTC;
++    uint64_t CSR_GCNTC;
++    uint64_t CSR_GTLBC;
++    uint64_t CSR_TRGP;
++
++    /* Guest CSR registers (GCSR) */
++    uint64_t GCSR_CRMD;
++    uint64_t GCSR_PRMD;
++    uint64_t GCSR_EUEN;
++    uint64_t GCSR_MISC;
++    uint64_t GCSR_ECFG;
++    uint64_t GCSR_ESTAT;
++    uint64_t GCSR_ERA;
++    uint64_t GCSR_BADV;
++    uint64_t GCSR_BADI;
++    uint64_t GCSR_EENTRY;
++    uint64_t GCSR_TLBIDX;
++    uint64_t GCSR_TLBEHI;
++    uint64_t GCSR_TLBELO0;
++    uint64_t GCSR_TLBELO1;
++    uint64_t GCSR_ASID;
++    uint64_t GCSR_PGDL;
++    uint64_t GCSR_PGDH;
++    uint64_t GCSR_PGD;
++    uint64_t GCSR_PWCL;
++    uint64_t GCSR_PWCH;
++    uint64_t GCSR_STLBPS;
++    uint64_t GCSR_RVACFG;
++    uint64_t GCSR_CPUID;
++    uint64_t GCSR_PRCFG1;
++    uint64_t GCSR_PRCFG2;
++    uint64_t GCSR_PRCFG3;
++    uint64_t GCSR_SAVE[16];
++    uint64_t GCSR_TID;
++    uint64_t GCSR_TCFG;
++    uint64_t GCSR_TVAL;
++    uint64_t GCSR_CNTC;
++    uint64_t GCSR_TICLR;
++    uint64_t GCSR_LLBCTL;
++    uint64_t GCSR_IMPCTL1;
++    uint64_t GCSR_IMPCTL2;
++    uint64_t GCSR_TLBRENTRY;
++    uint64_t GCSR_TLBRBADV;
++    uint64_t GCSR_TLBRERA;
++    uint64_t GCSR_TLBRSAVE;
++    uint64_t GCSR_TLBRELO0;
++    uint64_t GCSR_TLBRELO1;
++    uint64_t GCSR_TLBREHI;
++    uint64_t GCSR_TLBRPRMD;
++    uint64_t GCSR_MERRCTL;
++    uint64_t GCSR_MERRINFO1;
++    uint64_t GCSR_MERRINFO2;
++    uint64_t GCSR_MERRENTRY;
++    uint64_t GCSR_MERRERA;
++    uint64_t GCSR_MERRSAVE;
++    uint64_t GCSR_CTAG;
++    uint64_t GCSR_DMW[4];
++    uint64_t GCSR_DBG;
++    uint64_t GCSR_DERA;
++    uint64_t GCSR_DSAVE;
++    uint64_t GCSR_GSTAT;
++    uint64_t GCSR_GCFG;
++    uint64_t GCSR_GINTC;
++    uint64_t GCSR_GCNTC;
++    uint64_t GCSR_GTLBC;
++    uint64_t GCSR_TRGP;
++
++    bool guest;
++    bool vm_exit;
+     /* Msg interrupt registers */
+     uint64_t CSR_MSGIS[N_MSGIS];
+     uint64_t CSR_MSGIR;
+@@ -410,6 +502,7 @@ typedef struct CPUArchState {
+ #ifndef CONFIG_USER_ONLY
+ #ifdef CONFIG_TCG
+     LoongArchTLB  tlb[LOONGARCH_TLB_MAX];
++    LoongArchTLB gtlb[LOONGARCH_TLB_MAX];
+ #endif
+=20
+     AddressSpace *address_space_iocsr;
+@@ -434,9 +527,11 @@ struct ArchCPU {
+=20
+     CPULoongArchState env;
+     QEMUTimer timer;
++    QEMUTimer guest_timer;
+     uint32_t  phy_id;
+     OnOffAuto lbt;
+     OnOffAuto pmu;
++    OnOffAuto lvz;
+     OnOffAuto ptw;
+     OnOffAuto lsx;
+     OnOffAuto lasx;
+@@ -480,6 +575,24 @@ struct LoongArchCPUClass {
+ #define MMU_KERNEL_IDX   MMU_PLV_KERNEL
+ #define MMU_USER_IDX     MMU_PLV_USER
+ #define MMU_DA_IDX       4
++#define MMU_GUEST_IDX    5
++#define MMU_GUEST_DA_IDX 9
++
++static inline bool is_guest_mmu_idx(int mmu_idx)
++{
++    return mmu_idx >=3D MMU_GUEST_IDX;
++}
++
++static inline int mmu_idx_to_plv(int mmu_idx)
++{
++    if (mmu_idx =3D=3D MMU_DA_IDX || mmu_idx =3D=3D MMU_GUEST_DA_IDX) {
++        return 0;
++    }
++    if (is_guest_mmu_idx(mmu_idx)) {
++        return mmu_idx - MMU_GUEST_IDX;
++    }
++    return mmu_idx;
++}
+=20
+ static inline bool is_la64(CPULoongArchState *env)
+ {
+@@ -490,8 +603,9 @@ static inline bool is_va32(CPULoongArchState *env)
+ {
+     /* VA32 if !LA64 or VA32L[1-3] */
+     bool va32 =3D !is_la64(env);
+-    uint64_t plv =3D FIELD_EX64(env->CSR_CRMD, CSR_CRMD, PLV);
+-    if (plv >=3D 1 && (FIELD_EX64(env->CSR_MISC, CSR_MISC, VA32) & (1 << p=
+lv))) {
++    uint64_t plv =3D FIELD_EX64(GET_CSR_IF(env->guest, CRMD), CSR_CRMD, PL=
+V);
++    if (plv >=3D 1 &&
++        (FIELD_EX64(GET_CSR_IF(env->guest, MISC), CSR_MISC, VA32) & BIT(pl=
+v))) {
+         va32 =3D true;
+     }
+     return va32;
+@@ -515,6 +629,13 @@ static inline void set_pc(CPULoongArchState *env, uint=
+64_t value)
+ #define HW_FLAGS_CRMD_PG    R_CSR_CRMD_PG_MASK   /* 0x10 */
+ #define HW_FLAGS_VA32       0x20
+ #define HW_FLAGS_EUEN_ASXE  0x40
++#define HW_FLAGS_GUEST_MODE 0x80
++
++bool has_lvz_capability(CPULoongArchState *env);
++bool will_return_to_guest(CPULoongArchState *env);
++uint8_t get_gid(CPULoongArchState *env);
++uint8_t get_tgid(CPULoongArchState *env);
++void trigger_vm_exit(CPULoongArchState *env);
+=20
+ #define CPU_RESOLVING_TYPE TYPE_LOONGARCH_CPU
+=20
+diff --git a/target/loongarch/csr.c b/target/loongarch/csr.c
+index fff2312f87..1c4505536d 100644
+--- a/target/loongarch/csr.c
++++ b/target/loongarch/csr.c
+@@ -20,8 +20,27 @@
+         .flags =3D 0, .readfn =3D NULL, .writefn =3D NULL           \
+     }
+=20
++#define GCSR_OFF_FUNCS(NAME, FL, RD, WR)                              \
++    [LOONGARCH_CSR_##                                                 \
++        NAME] =3D { .name =3D (stringify(GCSR_##NAME)),                   =
+\
++                  .offset =3D offsetof(CPULoongArchState, GCSR_##NAME), \
++                  .flags =3D FL,                                        \
++                  .readfn =3D RD,                                       \
++                  .writefn =3D WR }
++
++#define GCSR_OFF_ARRAY(NAME, N)                                         \
++    [LOONGARCH_CSR_##NAME(N)] =3D { .name =3D (stringify(GCSR_##NAME##N)),=
+  \
++                                  .offset =3D offsetof(CPULoongArchState, =
+\
++                                                     GCSR_##NAME[N]),   \
++                                  .flags =3D 0,                           =
+\
++                                  .readfn =3D NULL,                       =
+\
++                                  .writefn =3D NULL }
++
+ #define CSR_OFF_FLAGS(NAME, FL)   CSR_OFF_FUNCS(NAME, FL, NULL, NULL)
+ #define CSR_OFF(NAME)             CSR_OFF_FLAGS(NAME, 0)
++#define GCSR_OFF_FLAGS(NAME, FL) GCSR_OFF_FUNCS(NAME, FL, NULL, NULL)
++#define GCSR_OFF(NAME) GCSR_OFF_FLAGS(NAME, 0)
++#define GCSR_GSPR(NAME) GCSR_OFF_FUNCS(NAME, CSRFL_GSPR, NULL, NULL)
+=20
+ static CSRInfo csr_info[] =3D {
+     CSR_OFF_FLAGS(CRMD, CSRFL_EXITTB),
+@@ -35,6 +54,8 @@ static CSRInfo csr_info[] =3D {
+     CSR_OFF_FLAGS(BADI, CSRFL_READONLY),
+     CSR_OFF(EENTRY),
+     CSR_OFF(TLBIDX),
++    CSR_OFF(GTLBC),
++    CSR_OFF(TRGP),
+     CSR_OFF(TLBEHI),
+     CSR_OFF(TLBELO0),
+     CSR_OFF(TLBELO1),
+@@ -71,6 +92,10 @@ static CSRInfo csr_info[] =3D {
+     CSR_OFF_FLAGS(TVAL, CSRFL_READONLY | CSRFL_IO),
+     CSR_OFF(CNTC),
+     CSR_OFF_FLAGS(TICLR, CSRFL_IO),
++    CSR_OFF(GSTAT),
++    CSR_OFF(GCFG),
++    CSR_OFF_FLAGS(GINTC, CSRFL_IO),
++    CSR_OFF(GCNTC),
+     CSR_OFF(LLBCTL),
+     CSR_OFF(IMPCTL1),
+     CSR_OFF(IMPCTL2),
+@@ -135,6 +160,87 @@ static CSRInfo csr_info[] =3D {
+     CSR_OFF(MSGIR),
+ };
+=20
++static CSRInfo gcsr_info[] =3D {
++    GCSR_OFF_FLAGS(CRMD, CSRFL_EXITTB),
++    GCSR_OFF(PRMD),
++    GCSR_OFF_FLAGS(EUEN, CSRFL_EXITTB),
++    GCSR_OFF_FLAGS(MISC, CSRFL_GUEST_READONLY),
++    GCSR_OFF(ECFG),
++    GCSR_OFF_FLAGS(ESTAT, CSRFL_EXITTB),
++    GCSR_OFF(ERA),
++    GCSR_OFF(BADV),
++    GCSR_OFF_FLAGS(BADI, CSRFL_GUEST_READONLY),
++    GCSR_OFF(EENTRY),
++    GCSR_OFF(TLBIDX),
++    GCSR_GSPR(GTLBC),
++    GCSR_GSPR(TRGP),
++    GCSR_OFF(TLBEHI),
++    GCSR_OFF(TLBELO0),
++    GCSR_OFF(TLBELO1),
++    GCSR_OFF_FLAGS(ASID, CSRFL_EXITTB),
++    GCSR_OFF(PGDL),
++    GCSR_OFF(PGDH),
++    GCSR_OFF_FLAGS(PGD, CSRFL_GUEST_READONLY),
++    GCSR_OFF(PWCL),
++    GCSR_OFF(PWCH),
++    GCSR_OFF(STLBPS),
++    GCSR_OFF(RVACFG),
++    GCSR_OFF_FLAGS(CPUID, CSRFL_GUEST_READONLY),
++    GCSR_OFF_FLAGS(PRCFG1, CSRFL_GUEST_READONLY),
++    GCSR_OFF_FLAGS(PRCFG2, CSRFL_GUEST_READONLY),
++    GCSR_OFF_FLAGS(PRCFG3, CSRFL_GUEST_READONLY),
++    GCSR_OFF_ARRAY(SAVE, 0),
++    GCSR_OFF_ARRAY(SAVE, 1),
++    GCSR_OFF_ARRAY(SAVE, 2),
++    GCSR_OFF_ARRAY(SAVE, 3),
++    GCSR_OFF_ARRAY(SAVE, 4),
++    GCSR_OFF_ARRAY(SAVE, 5),
++    GCSR_OFF_ARRAY(SAVE, 6),
++    GCSR_OFF_ARRAY(SAVE, 7),
++    GCSR_OFF_ARRAY(SAVE, 8),
++    GCSR_OFF_ARRAY(SAVE, 9),
++    GCSR_OFF_ARRAY(SAVE, 10),
++    GCSR_OFF_ARRAY(SAVE, 11),
++    GCSR_OFF_ARRAY(SAVE, 12),
++    GCSR_OFF_ARRAY(SAVE, 13),
++    GCSR_OFF_ARRAY(SAVE, 14),
++    GCSR_OFF_ARRAY(SAVE, 15),
++    GCSR_OFF(TID),
++    GCSR_OFF_FLAGS(TCFG, CSRFL_IO),
++    GCSR_OFF_FLAGS(TVAL, CSRFL_GUEST_READONLY | CSRFL_IO),
++    GCSR_OFF(CNTC),
++    GCSR_OFF_FLAGS(TICLR, CSRFL_IO),
++    GCSR_GSPR(GSTAT),
++    GCSR_GSPR(GCFG),
++    GCSR_GSPR(GINTC),
++    GCSR_GSPR(GCNTC),
++    GCSR_OFF(LLBCTL),
++    GCSR_GSPR(IMPCTL1),
++    GCSR_GSPR(IMPCTL2),
++    GCSR_OFF(TLBRENTRY),
++    GCSR_OFF(TLBRBADV),
++    GCSR_OFF(TLBRERA),
++    GCSR_OFF(TLBRSAVE),
++    GCSR_OFF(TLBRELO0),
++    GCSR_OFF(TLBRELO1),
++    GCSR_OFF(TLBREHI),
++    GCSR_OFF(TLBRPRMD),
++    GCSR_GSPR(MERRCTL),
++    GCSR_GSPR(MERRINFO1),
++    GCSR_GSPR(MERRINFO2),
++    GCSR_GSPR(MERRENTRY),
++    GCSR_GSPR(MERRERA),
++    GCSR_GSPR(MERRSAVE),
++    GCSR_GSPR(CTAG),
++    GCSR_OFF_ARRAY(DMW, 0),
++    GCSR_OFF_ARRAY(DMW, 1),
++    GCSR_OFF_ARRAY(DMW, 2),
++    GCSR_OFF_ARRAY(DMW, 3),
++    GCSR_GSPR(DBG),
++    GCSR_GSPR(DERA),
++    GCSR_GSPR(DSAVE),
++};
++
+ CSRInfo *get_csr(unsigned int csr_num)
+ {
+     CSRInfo *csr;
+@@ -151,6 +257,22 @@ CSRInfo *get_csr(unsigned int csr_num)
+     return csr;
+ }
+=20
++CSRInfo *get_gcsr(unsigned int csr_num)
++{
++    CSRInfo *csr;
++
++    if (csr_num >=3D ARRAY_SIZE(gcsr_info)) {
++        return NULL;
++    }
++
++    csr =3D &gcsr_info[csr_num];
++    if (csr->offset =3D=3D 0) {
++        return NULL;
++    }
++
++    return csr;
++}
++
+ bool set_csr_flag(unsigned int csr_num, int flag)
+ {
+     CSRInfo *csr;
+diff --git a/target/loongarch/csr.h b/target/loongarch/csr.h
+index 81a656baae..a0846353de 100644
+--- a/target/loongarch/csr.h
++++ b/target/loongarch/csr.h
+@@ -14,6 +14,8 @@ enum {
+     CSRFL_EXITTB   =3D (1 << 1),
+     CSRFL_IO       =3D (1 << 2),
+     CSRFL_UNUSED   =3D (1 << 3),
++    CSRFL_GUEST_READONLY =3D (1 << 4),
++    CSRFL_GSPR     =3D (1 << 5),
+ };
+=20
+ typedef struct {
+@@ -25,5 +27,6 @@ typedef struct {
+ } CSRInfo;
+=20
+ CSRInfo *get_csr(unsigned int csr_num);
++CSRInfo *get_gcsr(unsigned int csr_num);
+ bool set_csr_flag(unsigned int csr_num, int flag);
+ #endif /* TARGET_LOONGARCH_CSR_H */
+diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
+index 4db53fec26..df7a7c9075 100644
+--- a/target/loongarch/machine.c
++++ b/target/loongarch/machine.c
+@@ -197,11 +197,101 @@ static const VMStateDescription vmstate_tlb =3D {
+     .version_id =3D 0,
+     .minimum_version_id =3D 0,
+     .needed =3D tlb_needed,
+-    .fields =3D (const VMStateField[]) {
+-        VMSTATE_STRUCT_ARRAY(env.tlb, LoongArchCPU, LOONGARCH_TLB_MAX,
+-                             0, vmstate_tlb_entry, LoongArchTLB),
+-        VMSTATE_END_OF_LIST()
+-    }
++    .fields =3D
++        (const VMStateField[]){
++            VMSTATE_STRUCT_ARRAY(env.tlb, LoongArchCPU, LOONGARCH_TLB_MAX,=
+ 0,
++                                 vmstate_tlb_entry, LoongArchTLB),
++            VMSTATE_END_OF_LIST() }
++};
++
++static bool lvz_needed(void *opaque)
++{
++    LoongArchCPU *cpu =3D opaque;
++
++    return FIELD_EX32(cpu->env.cpucfg[2], CPUCFG2, LVZ);
++}
++
++static const VMStateDescription vmstate_lvz =3D {
++    .name =3D "cpu/lvz",
++    .version_id =3D 1,
++    .minimum_version_id =3D 1,
++    .needed =3D lvz_needed,
++    .fields =3D
++        (const VMStateField[]){
++            VMSTATE_UINT64(env.CSR_GSTAT, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_GCFG, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_GINTC, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_GCNTC, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_GTLBC, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_TRGP, LoongArchCPU),
++
++            VMSTATE_UINT64(env.GCSR_CRMD, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_PRMD, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_EUEN, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_MISC, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_ECFG, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_ESTAT, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_ERA, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_BADV, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_BADI, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_EENTRY, LoongArchCPU),
++
++            VMSTATE_UINT64(env.GCSR_TLBIDX, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_TLBEHI, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_TLBELO0, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_TLBELO1, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_ASID, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_PGDL, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_PGDH, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_PGD, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_PWCL, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_PWCH, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_STLBPS, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_RVACFG, LoongArchCPU),
++
++            VMSTATE_UINT64(env.GCSR_CPUID, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_PRCFG1, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_PRCFG2, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_PRCFG3, LoongArchCPU),
++            VMSTATE_UINT64_ARRAY(env.GCSR_SAVE, LoongArchCPU, 16),
++
++            VMSTATE_UINT64(env.GCSR_TID, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_TCFG, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_TVAL, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_CNTC, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_TICLR, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_LLBCTL, LoongArchCPU),
++
++            VMSTATE_UINT64(env.GCSR_IMPCTL1, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_IMPCTL2, LoongArchCPU),
++
++            VMSTATE_UINT64(env.GCSR_TLBRENTRY, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_TLBRBADV, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_TLBRERA, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_TLBRSAVE, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_TLBRELO0, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_TLBRELO1, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_TLBREHI, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_TLBRPRMD, LoongArchCPU),
++
++            VMSTATE_UINT64(env.GCSR_MERRCTL, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_MERRINFO1, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_MERRINFO2, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_MERRENTRY, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_MERRERA, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_MERRSAVE, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_CTAG, LoongArchCPU),
++
++            VMSTATE_UINT64_ARRAY(env.GCSR_DMW, LoongArchCPU, 4),
++
++            VMSTATE_UINT64(env.GCSR_DBG, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_DERA, LoongArchCPU),
++            VMSTATE_UINT64(env.GCSR_DSAVE, LoongArchCPU),
++
++            VMSTATE_BOOL(env.guest, LoongArchCPU),
++            VMSTATE_STRUCT_ARRAY(env.gtlb, LoongArchCPU, LOONGARCH_TLB_MAX=
+, 0,
++                                 vmstate_tlb_entry, LoongArchTLB),
++            VMSTATE_END_OF_LIST() },
+ };
+ #endif
+=20
+@@ -210,83 +300,78 @@ const VMStateDescription vmstate_loongarch_cpu =3D {
+     .name =3D "cpu",
+     .version_id =3D 4,
+     .minimum_version_id =3D 4,
+-    .fields =3D (const VMStateField[]) {
+-        VMSTATE_UINT64_ARRAY(env.gpr, LoongArchCPU, 32),
+-        VMSTATE_UINT64(env.pc, LoongArchCPU),
+-
+-        /* Remaining CSRs */
+-        VMSTATE_UINT64(env.CSR_CRMD, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_PRMD, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_EUEN, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_MISC, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_ECFG, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_ESTAT, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_ERA, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_BADV, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_BADI, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_EENTRY, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TLBIDX, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TLBEHI, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TLBELO0, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TLBELO1, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_ASID, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_PGDL, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_PGDH, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_PGD, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_PWCL, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_PWCH, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_STLBPS, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_RVACFG, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_PRCFG1, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_PRCFG2, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_PRCFG3, LoongArchCPU),
+-        VMSTATE_UINT64_ARRAY(env.CSR_SAVE, LoongArchCPU, 16),
+-        VMSTATE_UINT64(env.CSR_TID, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TCFG, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TVAL, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_CNTC, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TICLR, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_LLBCTL, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_IMPCTL1, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_IMPCTL2, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TLBRENTRY, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TLBRBADV, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TLBRERA, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TLBRSAVE, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TLBRELO0, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TLBRELO1, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TLBREHI, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_TLBRPRMD, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_MERRCTL, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_MERRINFO1, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_MERRINFO2, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_MERRENTRY, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_MERRERA, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_MERRSAVE, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_CTAG, LoongArchCPU),
+-        VMSTATE_UINT64_ARRAY(env.CSR_DMW, LoongArchCPU, 4),
+-
+-        /* Debug CSRs */
+-        VMSTATE_UINT64(env.CSR_DBG, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_DERA, LoongArchCPU),
+-        VMSTATE_UINT64(env.CSR_DSAVE, LoongArchCPU),
+-
+-        VMSTATE_UINT64(kvm_state_counter, LoongArchCPU),
+-        /* PV steal time */
+-        VMSTATE_UINT64(env.stealtime.guest_addr, LoongArchCPU),
+-
+-        VMSTATE_END_OF_LIST()
+-    },
+-    .subsections =3D (const VMStateDescription * const []) {
+-        &vmstate_fpu,
+-        &vmstate_lsx,
+-        &vmstate_lasx,
++    .fields =3D
++        (const VMStateField[]){
++            VMSTATE_UINT64_ARRAY(env.gpr, LoongArchCPU, 32),
++            VMSTATE_UINT64(env.pc, LoongArchCPU),
++
++            /* Remaining CSRs */
++            VMSTATE_UINT64(env.CSR_CRMD, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_PRMD, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_EUEN, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_MISC, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_ECFG, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_ESTAT, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_ERA, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_BADV, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_BADI, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_EENTRY, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_TLBIDX, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_TLBEHI, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_TLBELO0, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_TLBELO1, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_ASID, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_PGDL, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_PGDH, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_PGD, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_PWCL, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_PWCH, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_STLBPS, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_RVACFG, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_PRCFG1, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_PRCFG2, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_PRCFG3, LoongArchCPU),
++            VMSTATE_UINT64_ARRAY(env.CSR_SAVE, LoongArchCPU, 16),
++            VMSTATE_UINT64(env.CSR_TID, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_TCFG, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_TVAL, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_CNTC, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_TICLR, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_LLBCTL, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_IMPCTL1, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_IMPCTL2, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_TLBRENTRY, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_TLBRBADV, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_TLBRERA, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_TLBRSAVE, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_TLBRELO0, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_TLBRELO1, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_TLBREHI, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_TLBRPRMD, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_MERRCTL, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_MERRINFO1, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_MERRINFO2, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_MERRENTRY, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_MERRERA, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_MERRSAVE, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_CTAG, LoongArchCPU),
++            VMSTATE_UINT64_ARRAY(env.CSR_DMW, LoongArchCPU, 4),
++
++            /* Debug CSRs */
++            VMSTATE_UINT64(env.CSR_DBG, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_DERA, LoongArchCPU),
++            VMSTATE_UINT64(env.CSR_DSAVE, LoongArchCPU),
++
++            VMSTATE_UINT64(kvm_state_counter, LoongArchCPU),
++            /* PV steal time */
++            VMSTATE_UINT64(env.stealtime.guest_addr, LoongArchCPU),
++
++            VMSTATE_END_OF_LIST() },
++    .subsections =3D
++        (const VMStateDescription *const[]) {
++            &vmstate_fpu, &vmstate_lsx, &vmstate_lasx,
+ #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+-        &vmstate_tlb,
++            &vmstate_tlb, &vmstate_lvz,
+ #endif
+-        &vmstate_lbt,
+-        &vmstate_msgint,
+-        &vmstate_pmu,
+-        NULL
+-    }
++            &vmstate_lbt, &vmstate_msgint, &vmstate_pmu, NULL }
+ };
 --=20
 2.52.0
 
