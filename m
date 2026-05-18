@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C59ECD4F50
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 18:33:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 605FBCD4F57
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 18:33:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP2mG-0006kD-46; Mon, 18 May 2026 14:33:22 -0400
+	id 1wP2mS-00072D-0P; Mon, 18 May 2026 14:33:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <1d11dcbfc95b811dcdb48c6d7f3894d0ebd073a2@kylie.crudebyte.com>)
- id 1wP2lK-0006Lj-0p; Mon, 18 May 2026 14:32:36 -0400
+ (envelope-from <933552b2cfc2c442fac7f4e68c777dce20ee8d7e@kylie.crudebyte.com>)
+ id 1wP2lg-0006QK-Qr; Mon, 18 May 2026 14:32:56 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <1d11dcbfc95b811dcdb48c6d7f3894d0ebd073a2@kylie.crudebyte.com>)
- id 1wP2lC-0002PA-10; Mon, 18 May 2026 14:32:15 -0400
+ (envelope-from <933552b2cfc2c442fac7f4e68c777dce20ee8d7e@kylie.crudebyte.com>)
+ id 1wP2lf-0002h4-0c; Mon, 18 May 2026 14:32:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=nRxWZaQWIF566VG4Viq1KZglD+FlmXtv4gAEQLaY6TY=; b=kPmx7
- IS2t2T4ndZnaPvnjEnyzDTbDNVddGM8MejIImqyyYJJiNcbTezbY2ZDbRN/8HtKrlfoKf2sGHN7Zk
- 6OnVU7/jcFotJdoi7xFSnJNbcak340JyzdMXkGRTw4M61j83OUjj1BNPMGAWpLXOCKrnhk1FNUa4M
- KLfIJ4ZWMoUigVapTZGJAP6jW+yOaMGR4BPhVucgXV+wb4LR8W+nvzwJYy3a/behK+/t90TRkjF0q
- sWAD1XV6lNZK9fL9gyG8pRCJj4sWnUGNomDieeqS94HmE6w8gvsjZ/t7tLQuVS/SH7Rz704v1Ulf3
- 7JPK9J7S97DKsu2yW5j+ON/uxe5crlEhh8H3QUzB3ImnCCIt8KS1ieND8wR2fXoeu+m/Ee+FelSVQ
- 50rmQzkpEdp60uCe/PbuvQJoDbRh5fnQ31zWhCky+rfLLNGvVoMtVUFSh+WZpSQxii0VlHHoGd6+V
- GS1LYmEDkWRH90yYNF0z5RlVjyC9OtH/LnvnQRXIUOBB0p5RZIhNxXj+VicXCBryuCo025UIA43Xv
- XmmPwg6AKW209MwKxtsQGpe/u3GybJv1j4NRBC+ov3FsMY1Ny5t67HnsDowUxcZFQe9/MfJTsloMC
- +Zqdl92sTyyYbe8CXMHKN0y7bwz2mROZeFSbB6vSTLj7LYKgOHeADbcVBMJ3b4=;
-Message-ID: <1d11dcbfc95b811dcdb48c6d7f3894d0ebd073a2.1779126034.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=p/F1BCg5h9kR2piod5kuo35i5pYgag2fdNeBSD44JP8=; b=K4X4y
+ tyfshaKHEArazQ42gWpFHYZ0PEKr8M73XsDxnzfUo4zghrwv3nhgws9/tygsQj5tzxIGgnNlTsuPC
+ y1KKHe9JGCSM7YPz0Kp2KcCt4W57q00TKlbXSotzcMSXRyvBGQMNknHmRGtlAevPQiDDWVL0IRDFV
+ kJglyVkQRRvXCGqbDf9a3T8A96TzYv53UNbOJVo3eIymPyYeszcz8+BzzHIKrpGA3m3artnkOv4iU
+ c3pbEmKwuV676evQTbJo0wGWhsxojiAEnvleozRMqWmA7FmvLSJVhn8v32Ge3tqMd2zk+p8NcXD2X
+ G+uBMeZ7urle1UIgUK8O002oreSghfM0N4r82H0w7enwjsfsu3CZ0NGdGR6NuT6W4Nj+qsETfj3sU
+ wHTAKrFBr8W6GkiM8HK8Ooa2aspJXBDl+0nYi4P3kon4vzzyqLlXdfs+T/B6ImYxEKpGplnmGZssy
+ hVUoQZxxoC4U6MGAksqPyeQ4gZzAIg5Y9dAAaVpoZ0vbnpUwEbdkytqCHtxMs8lkY5Jftwu//GYC7
+ GZHzM0ceHKHHc8CFfwa5N85JDzPfrf1uBQGqowB68fz2/ztjwvfoLywBGhUAtpyxndzLE+XNRlAsN
+ LvGGA+xuTmpPy+2B/RImhJWZDQ2VE+b7G9sqGS3ppdgGhvPk/xjOMT6b5UTCPs=;
+Message-ID: <933552b2cfc2c442fac7f4e68c777dce20ee8d7e.1779126034.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1779126034.git.qemu_oss@crudebyte.com>
 References: <cover.1779126034.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Mon, 18 May 2026 19:35:59 +0200
-Subject: [PATCH 4/6] hw/9pfs: let callers of v9fs_path_sprintf() and
- v9fs_fix_path() handle errors
+Date: Mon, 18 May 2026 19:36:03 +0200
+Subject: [PATCH 6/6] tests/9pfs: add deep absolute path test
 To: qemu-devel@nongnu.org, qemu-stable@nongnu.org
 Cc: Greg Kurz <groug@kaod.org>,
     Jia Jia <physicalmtea@gmail.com>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=1d11dcbfc95b811dcdb48c6d7f3894d0ebd073a2@kylie.crudebyte.com;
+ envelope-from=933552b2cfc2c442fac7f4e68c777dce20ee8d7e@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -67,135 +66,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch mitigates issues with very large absolute paths.
+Add fs_deep_absolute_path test that creates a deep directory
+structure with an absolute path length exceeding 16-bit range
+(i.e. >65536) to verify the previous buffer overflow fix.
 
-- Add error handling to all v9fs_path_sprintf() calls in
-  local_name_to_path()
+This is a slow test (may take several seconds) and therefore
+registered as "slow" test and not running by default.
 
-- Update callers of v9fs_fix_path() to check return values.
+Use -m slow to run this test.
 
-- When path formatting fails, clunk the affected FIDs to prevent use of
-  invalid paths.
-
-- Use g_autofree for temporary variables to simplify code.
-
-Even though paths are usually limited to PATH_MAX (typically 4k) on guest,
-this limitation can be circumvented by using *at() functions on guest and
-creating very deep directory structures. This was a problem for QEMU 9p
-server, as it currently tracks the absolute path for each FID internally
-that always requires assembly of a (potentially ver large) absolute path.
-
-A true long-term fix would be getting rid of storing an absolute path for
-each FID internally. However that would likely be a massive change with
-uncertain implications.
-
-This patch therefore just mitigates the problem by immediately clunking
-(i.e. closing) all FIDs whose path exceed a limit that we could handle.
-As this only accounts to very unusual large absolute paths not ever been
-reported on (sane) production machines, this is currently considered an
-acceptable mitigation that should only (counter)affect malicious attempts.
-
-Fixes: 2f008a8c97e2 ("hw/9pfs: Use the correct signed type ...")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3358
+Link: https://gitlab.com/qemu-project/qemu/-/issues/3358
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- hw/9pfs/9p-local.c | 23 ++++++++++++++++-------
- hw/9pfs/9p.c       | 18 +++++++++++++-----
- 2 files changed, 29 insertions(+), 12 deletions(-)
+ tests/qtest/virtio-9p-test.c | 69 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 69 insertions(+)
 
-diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
-index 24cb1da90a..aa48306b0e 100644
---- a/hw/9pfs/9p-local.c
-+++ b/hw/9pfs/9p-local.c
-@@ -1261,26 +1261,35 @@ static int local_name_to_path(FsContext *ctx, V9fsPath *dir_path,
-         } else if (!strcmp(name, "..")) {
-             if (!strcmp(dir_path->data, ".")) {
-                 /* ".." relative to the root is "." */
--                v9fs_path_sprintf(target, ".");
-+                if (v9fs_path_sprintf(target, ".") < 0) {
-+                    return -1;
-+                }
-             } else {
--                char *tmp = g_path_get_dirname(dir_path->data);
-+                g_autofree char *tmp = g_path_get_dirname(dir_path->data);
-                 /* Symbolic links are resolved by the client. We can assume
-                  * that ".." relative to "foo/bar" is equivalent to "foo"
-                  */
--                v9fs_path_sprintf(target, "%s", tmp);
--                g_free(tmp);
-+                if (v9fs_path_sprintf(target, "%s", tmp) < 0) {
-+                    return -1;
-+                }
-             }
-         } else {
-             assert(!strchr(name, '/'));
--            v9fs_path_sprintf(target, "%s/%s", dir_path->data, name);
-+            if (v9fs_path_sprintf(target, "%s/%s", dir_path->data, name) < 0) {
-+                return -1;
-+            }
-         }
-     } else if (!strcmp(name, "/") || !strcmp(name, ".") ||
-                !strcmp(name, "..")) {
-             /* This is the root fid */
--        v9fs_path_sprintf(target, ".");
-+        if (v9fs_path_sprintf(target, ".") < 0) {
-+            return -1;
-+        }
-     } else {
-         assert(!strchr(name, '/'));
--        v9fs_path_sprintf(target, "./%s", name);
-+        if (v9fs_path_sprintf(target, "./%s", name) < 0) {
-+            return -1;
-+        }
-     }
-     return 0;
+diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
+index ac38ccf595..1c69d41e33 100644
+--- a/tests/qtest/virtio-9p-test.c
++++ b/tests/qtest/virtio-9p-test.c
+@@ -14,6 +14,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/module.h"
++#include "libqos/virtio.h"
+ #include "libqos/virtio-9p-client.h"
+ 
+ #define twalk(...) v9fs_twalk((TWalkOpt) __VA_ARGS__)
+@@ -752,6 +753,72 @@ static void fs_use_after_unlink(void *obj, void *data,
+     g_assert_cmpint(attr.size, ==, 2001);
  }
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index d704de644f..b4314d2549 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -3325,12 +3325,14 @@ static int coroutine_fn v9fs_complete_rename(V9fsPDU *pdu, V9fsFidState *fidp,
-             goto out;
-         }
-     } else {
--        char *dir_name = g_path_get_dirname(fidp->path.data);
-+        g_autofree char *dir_name = g_path_get_dirname(fidp->path.data);
-         V9fsPath dir_path;
  
-         v9fs_path_init(&dir_path);
--        v9fs_path_sprintf(&dir_path, "%s", dir_name);
--        g_free(dir_name);
-+        err = v9fs_path_sprintf(&dir_path, "%s", dir_name);
-+        if (err < 0) {
-+            goto out;
-+        }
++/* https://gitlab.com/qemu-project/qemu/-/issues/3358 */
++static void fs_deep_absolute_path(void *obj, void *data,
++                                  QGuestAllocator *t_alloc)
++{
++    QVirtio9P *v9p = obj;
++    v9fs_set_allocator(t_alloc);
++
++    if (!g_test_slow()) {
++        g_test_skip("This is a slow test, run with -m slow");
++        return;
++    }
++
++    GString *path = g_string_new("/");
++    char name[256];
++    uint32_t current_fid = 0;
++
++    tattach({ .client = v9p });
++
++    /* Create deep directory structure until absolute path length
++     * exceeds 16-bit range.
++     */
++    while (path->len <= 65536) {
++        /* use 255-byte name (NAME_MAX) to reduce iterations to ~257 */
++        memset(name, 'A', 255);
++        name[255] = '\0';
++
++        /* create the directory relative to current FID */
++        tmkdir({
++            .client = v9p,
++            .dfid = current_fid,
++            .name = name
++        });
++
++        /* just for locally tracking the current path length */
++        g_string_append(path, name);
++        g_string_append(path, "/");
++
++        /* acquire new FID for the newly created directory */
++        char *wnames[] = { name };
++        current_fid = twalk({
++            .client = v9p,
++            .fid = current_fid,
++            .nwname = 1,
++            .wnames = wnames
++        }).newfid;
++
++        /* Reset descriptor pool to avoid exhaustion. The simplified
++         * virtio test driver does never free descriptors back to the pool
++         * after use, so we must manually reset it for the required high
++         * amount of 9p requests here.
++         */
++        qvirtqueue_reset_pool(v9p->vq);
++    }
++
++    /* check if the deepest directory is accessible */
++    v9fs_attr attr = {};
++    tgetattr({
++        .client = v9p,
++        .fid = current_fid,
++        .request_mask = P9_GETATTR_BASIC,
++        .rgetattr.attr = &attr
++    });
++
++    g_string_free(path, TRUE);
++}
++
+ static void cleanup_9p_local_driver(void *data)
+ {
+     /* remove previously created test dir when test is completed */
+@@ -819,6 +886,8 @@ static void register_virtio_9p_test(void)
+                  &opts);
+     qos_add_test("local/use_after_unlink", "virtio-9p", fs_use_after_unlink,
+                  &opts);
++    qos_add_test("local/deep_absolute_path", "virtio-9p",
++                 fs_deep_absolute_path, &opts);
+ }
  
-         err = v9fs_co_name_to_path(pdu, &dir_path, name->data, &new_path);
-         v9fs_path_free(&dir_path);
-@@ -3351,7 +3353,10 @@ static int coroutine_fn v9fs_complete_rename(V9fsPDU *pdu, V9fsFidState *fidp,
-     while (g_hash_table_iter_next(&iter, &fid, (gpointer *) &tfidp)) {
-         if (v9fs_path_is_ancestor(&fidp->path, &tfidp->path)) {
-             /* replace the name */
--            v9fs_fix_path(&tfidp->path, &new_path, strlen(fidp->path.data));
-+            if (v9fs_fix_path(&tfidp->path, &new_path,
-+                              strlen(fidp->path.data)) < 0) {
-+                clunk_fid(s, tfidp->fid);
-+            }
-         }
-     }
- out:
-@@ -3448,7 +3453,10 @@ static int coroutine_fn v9fs_fix_fid_paths(V9fsPDU *pdu, V9fsPath *olddir,
-     while (g_hash_table_iter_next(&iter, &fid, (gpointer *) &tfidp)) {
-         if (v9fs_path_is_ancestor(&oldpath, &tfidp->path)) {
-             /* replace the name */
--            v9fs_fix_path(&tfidp->path, &newpath, strlen(oldpath.data));
-+            if (v9fs_fix_path(&tfidp->path, &newpath,
-+                              strlen(oldpath.data)) < 0) {
-+                clunk_fid(s, tfidp->fid);
-+            }
-         }
-     }
- out:
+ libqos_init(register_virtio_9p_test);
 -- 
 2.47.3
 
