@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6878CD4F52
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 10:23:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51CC5CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 10:23:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOv82-0003Ld-Ho; Mon, 18 May 2026 06:23:21 -0400
+	id 1wOv8D-0003gr-Op; Mon, 18 May 2026 06:23:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOv7U-0003C5-67
- for qemu-devel@nongnu.org; Mon, 18 May 2026 06:22:47 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOv7a-0003DD-Vd
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 06:22:52 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOv7R-0004bm-AS
- for qemu-devel@nongnu.org; Mon, 18 May 2026 06:22:42 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4891e86fabeso28394855e9.1
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 03:22:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOv7Y-0004cp-Fp
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 06:22:49 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-449d6c68ed8so1951804f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 03:22:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779099759; x=1779704559; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779099766; x=1779704566; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tcXQkPyrj9ryl+0V331jklwK59WUdwO/zS4bfu+FcFU=;
- b=jqbec5puYKNtVv0J/eLt5B+eOwrdsVJJ5k4Dlu5MkFxCI3VHWX4SAlo1YzzfpjrfIM
- MA3UJbEIi4vIDFVnHUEAWcvJfl8Sn7182g2eCHRaEH7P4QUe7p7DWIlFKLzRibWkJ0VV
- 0aGwewH7eavby4qy1qj47Wh/hkCzb5EiCzZ3hTkn1Xg5Qo0Jj00SIZX0oZXVcrS75aGw
- eAEax8ZawCpwWvdrPPzqBTEQ9qThpBdx9ZvV6oSdqnv8vwdz1WiG5OXIHmuBkWWk09o3
- doo4WnBzNAQm38MuL3xwqLm1w6vDBoXSYtjt1wzVnxbV0ZJQ2tWQS2Dhmx7qDe85XZXf
- Sysg==
+ bh=QEcf6N1MK4ofOLN9IBTOXBjDN7tY8BSgSiVib0hXDLM=;
+ b=Q7Wy9lq1oeCKXxfV3soLFDqAIsuE0OnxcvoZlU4xp/OBfC9IV3W5Y0GEiccqonUnsh
+ blqvHavUVktwqZcISUyFENGtYmnZEZ6f4lNaaGi8c1oyHmXNkRwgIlqrRpGKmoC0n4vB
+ JvH+0us5y7zPP9vX2wATY/qcg5C56HXMBzHJh9YR4bfFizvmBl0GcNQ9YUmdsd59mTLL
+ n42VICLn7cmDQbXMHfapas1qBs02VQxe27r1eV8ukSffrNZ6+YiSwM9DWLvRtxri7eeX
+ lkhVG+K7b7pWhSXVuPkJ6w2100Xy3FM5XXvoeL7mi+4ADjt2LKakRsCsyYPtx2p6n1Ln
+ HqJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779099759; x=1779704559;
+ d=1e100.net; s=20251104; t=1779099766; x=1779704566;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=tcXQkPyrj9ryl+0V331jklwK59WUdwO/zS4bfu+FcFU=;
- b=mYE2m6ILWPheZCRQSXudN1vUkg4Lo877F8fTKmBsNi4/sRNwTtIiLwFgL27O2+w/OM
- /+3MrJb/L7VD4UyxlnZJ4QjAHB4dK81Cfoj3k4W1bhIA1VkTmBH8KD/e/yevo9e/ycd8
- fKLrPfxkdetu6P7l5sRO9RI5imIGzkBsQvidClysg1f8SoCQFKSQTQBbXn6cdeqiRW9/
- IAWFW+94U4+xtb85XE2iZWSv7CIkye0mhS604EqjNtGdWEtzeFQxcQhBjg2rIhcj+aFM
- 0IhRQh1+8dTHWrXnTAKXSes2+/TfI2KFfyTGAs/UlHPM2KZ9Ev7z+G2rq2qak+rZJYsQ
- VWEQ==
-X-Gm-Message-State: AOJu0YyQtXoKlBMa7mXJJJQMefWCix7VOBCUv6+k++UqHpBSSP9gHec4
- pli0oj7iFlGxMfRyUmc1sgqdj5rQkP86FOJtKG2hBf6FlVlK4FYOKeN/Cas0nRUtDDKtqoERWfN
- NMLiw4G0=
-X-Gm-Gg: Acq92OEj0Z2587fJltyrHwImYXISAFi8ocfof0jOK7WDUxFNSSLuybtn2SEolmJth29
- DP+7OqYIlbYOb36eCc9HwpR1ie+j9Pu+xPXslFi478srywhqGVSK06fXn5U8Agr0WJiBUTi3s9o
- RS0eCevDIDVmPNUnW4a2FER7HGydkz2TvF5KkKIkETPgHkSUeTFFhZlH4GgtGjCRu3nOQda/tAD
- 8xfhOXa5XDLVknAVY3nX/0JXJNHeVRhIzlRHGDQzJ3i/yfc/VmNXhTk6kniudXI25c2dHqtlion
- cOeC3FxooUN8HD7M11Om4jhrQ6fzqqyc17HRol1DH5pRIbg7O/Vy2NPa1nRVC32pTvUXUaFdB2c
- WEJ0ToPA6pQ/35RefouQOOqXSPKE5u5nrNZcxRSPvUMTVwm/sSSZBhQVXqbM4WALXrjrusqm61u
- B/kx7os08SL5pwpffwVD0QugLJamyyMi6RdEwbT4sLHnGjmdcrt4PGH53EwOQlHf/U3oh23ZrX
-X-Received: by 2002:a05:600c:885:b0:489:c57:7836 with SMTP id
- 5b1f17b1804b1-48fe6517fdfmr136750915e9.27.1779099758780; 
- Mon, 18 May 2026 03:22:38 -0700 (PDT)
+ bh=QEcf6N1MK4ofOLN9IBTOXBjDN7tY8BSgSiVib0hXDLM=;
+ b=ZpHG4SNchrH3vChVFVdZ08y0Wv0MdbKii6gyps1xmr4mK5XEQvW5s+0NWSCMsYKtxN
+ 4Octsfw958AMOZ9TGlnrAgh+OOixjWJVgNGp/B9jToTlJsf0YX1lUFO3LudLAI/14qH4
+ yha9totJroQccpfCbyUqHzvcY2VpOaH8aaaGdD0ukST9dbR7r78cpAfESHt4olNoj8wN
+ J5BqQ8lfTcDGsVd7VhIzi+jxGLO/Lz4XgO4Vk6CJahy57GvGHfM+DwmDzAadl3r48Wqp
+ cez/B79CWZw8my4T9B6DEAXU+YQjp6nPhq1WDnuDThHyOvYEAtTYNfj684jBO2QQ2huM
+ JRBA==
+X-Gm-Message-State: AOJu0YxDJh5a3r1QnkIH86lRMQxVqddHXbXAfhBaevLHIGGhMfCYV9Bj
+ 8NUAzLBH95t25pgiNjRaSNyE8ftKPDqOqDWpadkCVpeSgR8Ia92HYNzNqrK2pZqA1isjScopjOw
+ JscxD4xo=
+X-Gm-Gg: Acq92OFhtAnN/QoPKD3eReAP5Kkx7Ts2nvlZjv2N0QpuNSiYL1PtavQupVt42476XmF
+ JNIh4XDgkGS5Yb5mLQEz8VdKUWESZuwf/X+4KT3KcafBxfdN+GhAS/b+UcF/RA2Q/QHFlwisIdP
+ 2AKNZXiSlSPtNumVCIl2qEj0nVg6hBoDQ917n9+BoRLVu+8rZ6lDJissh2mTZ3oq7YzzDriSw01
+ pQc9N20DDfQUJuAEyZSSYG59tKGKR4sYrYkJUlI+SR9nMwBhPpOyCCt+1LF5ICQS19IS+QSY5pa
+ s1P5iJeM8HGLXVXwyDZ9GBDr5RxKCGkDP9ELCPB4u6uLyHumn3m6KVQ609thfBrBJ7F6l8slHCP
+ U1xOtNiv2uEZrlOEdnodxxipY4CUaLiHtMquq+XuwlITfWQ2t9nE840i7e4QuBVMWw0FW+ItACi
+ s/zntnaj/vMmBVPSJm5MvmOuZIi04Oz+cBJJecRxW7yO8zreVURiPJITjoUDK9rN/08osFVAJl
+X-Received: by 2002:a05:600c:34ca:b0:48a:7676:30bc with SMTP id
+ 5b1f17b1804b1-48fe60ee4c7mr229850125e9.14.1779099765953; 
+ Mon, 18 May 2026 03:22:45 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45d9ec39ff1sm38988772f8f.10.2026.05.18.03.22.37
+ 5b1f17b1804b1-48feae166dasm90230005e9.9.2026.05.18.03.22.44
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 18 May 2026 03:22:38 -0700 (PDT)
+ Mon, 18 May 2026 03:22:45 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Max Filippov <jcmvbkbc@gmail.com>,
@@ -72,20 +72,19 @@ Cc: Max Filippov <jcmvbkbc@gmail.com>,
  Cleber Rosa <crosa@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  John Snow <jsnow@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Bibo Mao <maobibo@loongson.cn>
-Subject: [PATCH 2/7] MAINTAINERS: Cover debian-loongarch-cross.docker with
- LoongArch section
-Date: Mon, 18 May 2026 12:22:17 +0200
-Message-ID: <20260518102222.80735-3-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 3/7] MAINTAINERS: Cover debian-xtensa-cross.docker with Xtensa
+ section
+Date: Mon, 18 May 2026 12:22:18 +0200
+Message-ID: <20260518102222.80735-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260518102222.80735-1-philmd@linaro.org>
 References: <20260518102222.80735-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,24 +109,23 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
-Cc: Song Gao <gaosong@loongson.cn>
-Cc: Bibo Mao <maobibo@loongson.cn>
+Cc: Max Filippov <jcmvbkbc@gmail.com>
 ---
  MAINTAINERS | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index b1df7a4dd96..17ceb0db349 100644
+index 17ceb0db349..3f900123ce6 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -280,6 +280,7 @@ LoongArch TCG CPUs
- M: Song Gao <gaosong@loongson.cn>
+@@ -445,6 +445,7 @@ W: http://wiki.osll.ru/doku.php?id=etc:users:jcmvbkbc:qemu-target-xtensa
  S: Maintained
- F: target/loongarch/
-+F: tests/docker/dockerfiles/debian-loongarch-cross.docker
- F: tests/tcg/loongarch64/
- F: tests/functional/loongarch64/meson.build
- F: tests/functional/loongarch64/test_virt.py
+ F: target/xtensa/
+ F: hw/xtensa/
++F: tests/docker/dockerfiles/debian-xtensa-cross.docker
+ F: tests/functional/xtensa/meson.build
+ F: tests/tcg/xtensa/
+ F: tests/tcg/xtensaeb/
 -- 
 2.53.0
 
