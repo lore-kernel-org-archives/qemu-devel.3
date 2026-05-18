@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA33ACD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 11:35:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C49B1CD4F52
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 11:35:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOwEq-0007yK-Hp; Mon, 18 May 2026 07:34:25 -0400
+	id 1wOwFf-0008LF-Ne; Mon, 18 May 2026 07:35:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wOwEn-0007y3-Tz
- for qemu-devel@nongnu.org; Mon, 18 May 2026 07:34:22 -0400
+ id 1wOwFd-0008Hf-TX
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 07:35:13 -0400
 Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wOwEj-0005dP-Kk
- for qemu-devel@nongnu.org; Mon, 18 May 2026 07:34:21 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 58782C01E9;
- Mon, 18 May 2026 14:34:09 +0300 (MSK)
+ id 1wOwFb-0006GU-5d
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 07:35:12 -0400
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 7433FC01D4;
+ Mon, 18 May 2026 14:35:09 +0300 (MSK)
 Received: from [IPV6:2a02:6bf:8080:b95::1:20] (unknown
  [2a02:6bf:8080:b95::1:20])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id 8YOHfV3KkW20-OKE6n4QD; Mon, 18 May 2026 14:34:08 +0300
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id 8ZO0pT3M1W20-OTp1PI1o; Mon, 18 May 2026 14:35:08 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1779104048;
- bh=nSClXN3eXG42yD3LkmTJnlXbZjK5kftqnjRWlDJK4cY=;
+ s=default; t=1779104108;
+ bh=pcph23snDTpCxPTIpoSncXJNW1cSRlxkcXqCqhJ/X8w=;
  h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=0AY3m71RuCMHYhgbEPYuLwzSBfMt64KhMAjZJifjykcgbGxUkwlnLdnc5DgdYudo6
- A28ldE2fQR5BhIS2kSTDVm7EPjbOBEaLQDRV28kVJwu8Sl8rvAWPeUP/ztiRGrlylg
- mRTWTdkFiQpmuIQLZjR8ZfP2/IEzw/mjTZyGhkJQ=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ b=dxKPvTBTTRAC8w01gBeU4sQzniDLH9GPxYncsRMPTwf3faU6i/S5qXSZYsG3BG8DX
+ kamhzHt/6VYDixVHar1pIatBPon9+OG8KtpkI2irAIBdYntY1/8iJ+SE7NZsnR4JVC
+ jhRBppgKV8WiXkh+5dtwEIiZ/gOQCf8qmxpJPb/Q=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-Message-ID: <3c2974e6-05a7-4693-8b3d-727ffa7d121f@yandex-team.ru>
-Date: Mon, 18 May 2026 14:34:08 +0300
+Message-ID: <99f7f6c5-baab-4920-9f4e-92bdd2605220@yandex-team.ru>
+Date: Mon, 18 May 2026 14:35:08 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 00/22] vhost refactoring and fixes
-To: mst@redhat.com
-Cc: sgarzare@redhat.com, raphael@enfabrica.net, qemu-devel@nongnu.org,
- yc-core@yandex-team.ru, d-tatianin@yandex-team.ru
-References: <20260420200339.708640-1-vsementsov@yandex-team.ru>
+Subject: Re: [PATCH v4 00/13] net: refactoring and fixes
+To: jasowang@redhat.com
+Cc: qemu-devel@nongnu.org, bchaney@akamai.com, yc-core@yandex-team.ru,
+ d-tatianin@yandex-team.ru, davydov-max@yandex-team.ru
+References: <20260318113144.15697-1-vsementsov@yandex-team.ru>
 Content-Language: en-US
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20260420200339.708640-1-vsementsov@yandex-team.ru>
+In-Reply-To: <20260318113144.15697-1-vsementsov@yandex-team.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=178.154.239.72;
@@ -78,66 +78,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 ping
 
-On 20.04.26 23:03, Vladimir Sementsov-Ogievskiy wrote:
-> Hi all. That's a preparation for vhost-user-blk backend-transfer
-> feature.
+On 18.03.26 14:31, Vladimir Sementsov-Ogievskiy wrote:
+> Hi all!
 > 
-> v6:
-> 04: add vhost-user-stub.c to fix build without vhost-user
+> Here are some refactoring and fixes, mostly in net/tap.c I'm making on
+> my way to implementing TAP fd migration (through UNIX domain socket).
 > 
-> Vladimir Sementsov-Ogievskiy (22):
->    vhost-user: rework enabling vrings
->    vhost: drop backend_features field
->    vhost-user: introduce vhost_user_has_protocol_feature() helper
->    vhost: move protocol_features to vhost_user
->    vhost-user-gpu: drop code duplication
->    vhost: make vhost_dev.features private
->    virtio: move common part of _set_guest_notifier to generic code
->    virtio: drop *_set_guest_notifier_fd_handler() helpers
->    vhost-user: keep QIOChannelSocket for backend channel
->    vhost: vhost_virtqueue_start(): fix failure path
->    vhost: make vhost_memory_unmap() null-safe
->    vhost: simplify calls to vhost_memory_unmap()
->    vhost: move vrings mapping to the top of vhost_virtqueue_start()
->    vhost: vhost_virtqueue_start(): drop extra local variables
->    vhost: final refactoring of vhost vrings map/unmap
->    vhost: simplify vhost_dev_init() error-path
->    vhost: move busyloop timeout initialization to vhost_virtqueue_init()
->    vhost: vhost_dev_init(): simplify features initialization
->    hw/virtio/virtio-bus: refactor virtio_bus_set_host_notifier()
->    vhost-user: make trace events more readable
->    vhost-user-blk: add some useful trace-points
->    vhost: add some useful trace-points
+> v4:
+> 01-12: add r-b by Ben
+> 10: fix bug in tap_parse_vhost_fds(), keep r-b
 > 
->   backends/cryptodev-vhost.c     |   9 +-
->   hw/block/trace-events          |  10 ++
->   hw/block/vhost-user-blk.c      |  26 +++-
->   hw/display/vhost-user-gpu.c    |  11 +-
->   hw/net/vhost_net.c             |  35 ++---
->   hw/s390x/virtio-ccw.c          |  35 +++--
->   hw/scsi/vhost-scsi.c           |   1 -
->   hw/scsi/vhost-user-scsi.c      |   1 -
->   hw/virtio/meson.build          |   3 +
->   hw/virtio/trace-events         |  16 +-
->   hw/virtio/vdpa-dev.c           |   3 +-
->   hw/virtio/vhost-user-base.c    |   8 +-
->   hw/virtio/vhost-user-stub.c    |   6 +
->   hw/virtio/vhost-user.c         | 260 ++++++++++++++++++++++-----------
->   hw/virtio/vhost.c              | 243 +++++++++++++++---------------
->   hw/virtio/virtio-bus.c         |  18 +--
->   hw/virtio/virtio-hmp-cmds.c    |   2 -
->   hw/virtio/virtio-mmio.c        |  41 +-----
->   hw/virtio/virtio-pci.c         |  34 +----
->   hw/virtio/virtio-qmp.c         |  12 +-
->   hw/virtio/virtio.c             |  48 +++---
->   include/hw/virtio/vhost-user.h |   4 +
->   include/hw/virtio/vhost.h      |  63 +++++---
->   include/hw/virtio/virtio-pci.h |   3 -
->   include/hw/virtio/virtio.h     |  15 +-
->   net/vhost-vdpa.c               |   7 +-
->   qapi/virtio.json               |   3 -
->   27 files changed, 502 insertions(+), 415 deletions(-)
->   create mode 100644 hw/virtio/vhost-user-stub.c
+> Vladimir Sementsov-Ogievskiy (13):
+>    net/af-xdp: fix type overflow
+>    net/tap: net_init_tap_one(): add return value
+>    net/tap: net_init_tap(): drop extra vhostfdname variable
+>    net/tap: net_init_tap(): refactor parameter checking
+>    net/tap: net_init_tap(): common fail label
+>    net/tap: net_init_tap_one() refactor to get vhostfd param
+>    net/tap: net_init_tap_one(): drop model parameter
+>    net: introduce net_parse_fds()
+>    net/tap: move fds parameters handling to separate functions
+>    net/tap: fix vhostfds/vhostfd parameters API
+>    net/tap: net_init_tap(): merge fd=, fds= and helper= cases into one
+>    net/tap: net_init_tap(): relax QEMU hubs check
+>    net/tap: check that user tries to define zero queues
+> 
+>   net/af-xdp.c |  44 ++-----
+>   net/tap.c    | 324 +++++++++++++++++++++------------------------------
+>   net/util.c   |  55 +++++++++
+>   net/util.h   |  14 +++
+>   4 files changed, 211 insertions(+), 226 deletions(-)
 > 
 
 
