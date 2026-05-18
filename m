@@ -4,100 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5251CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 00:08:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3A7ACD4F3D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 00:14:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOlWs-00073w-EH; Sun, 17 May 2026 20:08:18 -0400
+	id 1wOlcN-0007wp-98; Sun, 17 May 2026 20:13:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wOlWk-00073K-FR
- for qemu-devel@nongnu.org; Sun, 17 May 2026 20:08:11 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1wOlcM-0007wV-02
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 20:13:58 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wOlWh-0003fw-Aj
- for qemu-devel@nongnu.org; Sun, 17 May 2026 20:08:09 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-67929ff6dbfso2856370a12.2
- for <qemu-devel@nongnu.org>; Sun, 17 May 2026 17:08:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779062885; cv=none;
+ id 1wOlcK-0005Zs-2j
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 20:13:57 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-bd4d7f4fa02so301234366b.3
+ for <qemu-devel@nongnu.org>; Sun, 17 May 2026 17:13:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779063234; cv=none;
  d=google.com; s=arc-20240605;
- b=c/UFPq6kwc7E+vxy51DZ1yiHDl9cCKnnW5t+d1wNDTxjqJfd+49ucybDasmhzTI1Ph
- 0XKoBqFnnJDzdqNLhOuynf8cUdTXdsy9dygZPo/AY5Ka4rr9z3EXmF+YTmwR/Z3w/s6m
- 7MSDO+Y/aNfdKZDkeMQAPMw92rgboEdH1tS8404pxzH+oAUsvcvUrU+wQuzu8HDyEPdg
- bpODvrPEQhNfXBwzEyhjroHe2dp5fPpmnD0eYDJgG00D6zh3nH1JJ07GFOBLGrzcHUkQ
- MoRJcrQ7eWE+bfrqIjS8sX+q8j+6KP42n2eaq8S56+z0k0H1V9wNnAJO8rgJ8gPY8yYE
- YS8g==
+ b=M4Y/ddMRJRIfn6Sr+RyhLP7QDlOzZm8Qw3EipogQ2lHb4lJBqD5VMhD3lk01WZWGn6
+ qAe20SkfYSfQLKYfqEP3bOlFYzOn64JDWz1i6qnJlgMlG0gPkuL4jZbGCraHP2BwWg/V
+ 9KaLKir5WXNQWtobDHyz++qdlsxEo1xbuznekzOk+SSQm5ssAgaMBjkjIYaV8TWsQcxd
+ xS+U7x+ScrHigWYjyI73aj7wU2gKMK7fd2mHVTJ7ODLx+CWcwlG6N/6TZge75r4PsUYT
+ 2Va1in72RMQoS2jlFKc96aPZBsIjh35m0CNfEhYSPmdt7hOTEMsNr0uBCPkU1XBB0/QL
+ VZdQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=SRh3W7NEPixp5eWlgij8j2O+YcuiGupzzGNGl7oMHjQ=;
- fh=xUPK3WmcXSXmYUNRz6cyBi7fUwKP4bpURxe/wNyWmQo=;
- b=CHhpuObDLHv37z5+uPpI8kkRdaiDmWg0g+PaTAFQhEgQSBgTPXZamGO9ad/TBFmght
- 99OEVclTSREyYvOcWhnZX8LcZZrUdxDyIUUsFDLOuWQYi5BjDiDrS+dhxpJlkwQS7207
- dy1mjfVhevuwe2W4U+MHRuTJPFtkErLuiYcwykMh6uSDfdVAtlvJr7bLbwumm6GNHqAt
- I6s9x/OJGc8/9FxToeEit8ZsGnGEHD3cx7prQgojyStSiy8lb3eGDrE9LiKWhPXstB2t
- ngz+iZv294ocYB8zgGopnFHKDdElqkadIsKeZmZft0FOVLq6IhTMBgOtdFtZ4BHn0JVU
- o7og==; darn=nongnu.org
+ bh=kwXk53vsyitp2oLPbSb3KrPsWW/x/V5JHE7bOlSz0z4=;
+ fh=V35bOn+ojg9QwXXYxPTDi/M9cx9eHLMfSvGHHCHJCSg=;
+ b=JeBNp5l3cmFrvVrDB5sHCn3GaESBeHdSy3z5MpQsuQhXkTpnb0wbeVIoVyMp4/uxGS
+ mo/m2bS12xlztwdOyAtgvs3qYy+9jrLrzLd6Y/3y+wvpax9rvIxqmHpXOIhQTth57scD
+ gM/hvR2VvrMPU2kwfwI5AoWvssT4IPgUNPDD58YaBHtewPYrysygtMWHsFEeBfjUdHBI
+ 13lfNhfMDWtn1TwDO+M2jWYbMH2AHc7uua0hwnhgk105FkT5af09QosGoo3u6vSG8DvM
+ 36R4HNy5d5//9e7IS+L36VopopVlJEZrIaP3+S7UyQI5VHdCTB/z8jLRK4D4TvIeQ+Ew
+ 3pQQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779062885; x=1779667685; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779063234; x=1779668034; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SRh3W7NEPixp5eWlgij8j2O+YcuiGupzzGNGl7oMHjQ=;
- b=RZK8IloXvCGii1hzs7rTd+0Ftnoef6+GFJ0aBbevJji4y/ddK6HcLdd9DjqiykhHYi
- mMQ6RNgkhwF6Ke1itrIDn6Cir5oPvoL4kN0uKwS693M9N4MtTLKrnmrjnbQPzYRtzii+
- RvEDIeb97Rxpl5QxCr5rBbUXuj2FTZdg+qtuCn5fpG+kKz5IRW7C2iZ1irjNb8E7HpXW
- UcdzDuRI4lU7UGLYrXP6u4+YUiun46fO9VSO7jQyX96yKW8zztM/unRQMppzGlQFXEMz
- Ew+LQfwmAHOcrf9PvVlzgQ8+UFQhpHGObKc6mz39EIFEDE/IiGwrrshUrxljz6Hc9NFu
- QW7g==
+ bh=kwXk53vsyitp2oLPbSb3KrPsWW/x/V5JHE7bOlSz0z4=;
+ b=jyddbzghSRaNTAKFsesVIyF+HjmKDZjsHpBeYwAfnP0If3Tu+BeJ4mYV3rEQXDp4g5
+ J+hm/pOFqJi8Sl7+orhAl0HI3tsFey14IyaCUOjRsIsxsaBR8CA9iIzUzPGoSZua+5wq
+ kkEIT6N9TG8RPmY7zOdotu4C/tXR0d+dLLrKAfh+rwi/U1SfiEQ6834hJSY900cLqfio
+ +i/Y1HnkenvqIzReK6IaPSbkm4diUyZBz9V5cPRmjWd6dBcE7WDAduQnlNYN/Rmzzu8R
+ rL+v1qchUqwW2KY5UIY+6n5nmsyDMwsiq/CXaC3AxXCqaJ5sdjILNNcAwwq8UMqfxoqm
+ lCVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779062885; x=1779667685;
+ d=1e100.net; s=20251104; t=1779063234; x=1779668034;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=SRh3W7NEPixp5eWlgij8j2O+YcuiGupzzGNGl7oMHjQ=;
- b=Ord34NutaeiEy+9hMepVysrlEnjaptzTtFFcTeRtpSYvA/GH1wPhasL8ye2Rstc3Kf
- 3a4LcAQHu480dIqbFYv1kR6yVYwmaXxfZF40UOuKOk5mTbUBTI25O3uPsxSS1AiWogtZ
- z3O0RP+XBQwdKML8eP/bahWg2iM0IXqJ62FfUKjNdh9nb1LiUv8DzbCwaiaNy1Whh4fK
- SwXGfKPObN7btP3lk6V529Rwek5cTenMdbjgGLiAL+4dTi4WyWXsln1JLJVGJaUiLcWM
- nKWZxOt0D+dvb1dRpTmwann/kBQLx1NhLzX/WVDDch2Kpaamdp/eR3FD4Vo8kTXX4PVt
- 4Hvw==
-X-Gm-Message-State: AOJu0Yw6wBFun7zQ0JvfWi7JKtU7qJgG0p/wzaLT2cb3A39VMsUjaboj
- Dr8Zk8k+xuCQdcPjcZg83jcwWtsROrOkFgJ0tjAUMkX9OGd8FE6lpQJ+U0qq/G3h/TuzpnJMsrm
- Q5t5BiME3qlbmZom0Audd/ay71xCahZw=
-X-Gm-Gg: Acq92OFFfiAn6pw/VaIgVzCfcPWyUPE8DVojFMvWgKAAnxlNR6sbuubE4jJ6Fb6/PFG
- S0//ZkBbwc8i837N9rfQAbExJAmXNnVk9nrxOWMIpVIxzxIacbOHjwpHS9NwSksf2y7u3Tb3xDW
- Vu+IMEOk+DJQdNH8yTSUcmAaT9jJijs3ijq/bX8Ua8d4TttZtd4z2Tneokw8nRBmvgxfNmBnadj
- HDtpaYpfThqu1mFz0K+q8/uX2GMSt0MffeWXOSYWmCG2uVOjbHUVgL9zIhKUiJxAczI7iM3MkSl
- a+QpDSnwBRZ3VBwJihrIxOGtANgJVg7JJvuFbTjxrM7YsvVi
-X-Received: by 2002:a17:907:3cc7:b0:bd5:18e8:1ad8 with SMTP id
- a640c23a62f3a-bd518e82334mr611399366b.4.1779062884946; Sun, 17 May 2026
- 17:08:04 -0700 (PDT)
+ bh=kwXk53vsyitp2oLPbSb3KrPsWW/x/V5JHE7bOlSz0z4=;
+ b=G86J+Rwn2OaZyafjNwUwNpk9ozB0lb5nInpLR45ywN+7f+EUPFcDmgWxZve6uCYvqf
+ 50lR/yp6wEO3f/sMoQ1nivJEi/o0s0b7AUn+ecE3jLOxgTRI8IpQfAZspnlxxbVhuEOl
+ gyrpRPI71hPzj3wa2I6QBRX3U7/0ecij7bHJ5rXDMfI5BQIzOJjLc98mzAfAbXqSzkTG
+ WZNo2Ap3fnBwkPr9wpdbzGrvwG/mI3EDaDg4GpYXutoEAcxceQ87xKPt3PZmnllDBjcm
+ G4NQF69KclzYPT2PC7zMuQVt2778s9TuRIH7QHsPU7HziU/nXDFnUz0Axg94bZW3izbZ
+ GRPw==
+X-Gm-Message-State: AOJu0YzhiE4GiHIzFZ5Dc0gA0nWI/eCSVMJ9u8vLU67gmaINlP5jkRL3
+ cnYJNTwj0/dTe/4t9p9QtyrMfHbct+CLkdia9hmbe7mMARQsOycxq6MJy22eBgoDL4tmhQoti0g
+ NMa8jzEY4vnvc6Fr7t0huK+IPIuW472o=
+X-Gm-Gg: Acq92OFXru/N0M5CpI82g28+tonvm/fsrcLmyzDR1zT+vfOs7CE3ulfz5jherwANTXG
+ qV3uISI3RlyHeLnk3gjXQ+EXwLQzPP/fvmpi4TalUKo0ZnYY6lSFZa5MQoSeEFwaegeupOB6XRu
+ 6MFFIT3JwEExdvP6vb6ocZQmPSH9rdUdipJwSFqml0LDfRlWZr0+KUIXbOeQByx7vwJJQK8SEFN
+ 8NNZN4DbQDAxb05hVSvluzAdlguQbP8wIoOH+oLWEnkD3r9ErQSLij2HU0MdtCjasZ+BG4JOnR0
+ lcCk4Oakt68YobJN+FhIg/JFoyEo9/9eUmuRXEByQ0Fzkugf
+X-Received: by 2002:a17:906:eec4:b0:bd5:17f9:e987 with SMTP id
+ a640c23a62f3a-bd517f9eb24mr518177066b.46.1779063234101; Sun, 17 May 2026
+ 17:13:54 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260513030503.3665414-1-frank.chang@sifive.com>
-In-Reply-To: <20260513030503.3665414-1-frank.chang@sifive.com>
+References: <20260427051507.727280-1-314abh@gmail.com>
+ <20260427051507.727280-2-314abh@gmail.com>
+In-Reply-To: <20260427051507.727280-2-314abh@gmail.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 18 May 2026 10:07:38 +1000
-X-Gm-Features: AVHnY4LohafFGImQCUEU5jTY9_g9E0d89XNMN7fK9czZLtE11AA6UgXiBB44iI4
-Message-ID: <CAKmqyKPs9kd_4=6kW25suJcPPCy9kFUM9CkgMOjNAJezfY2NWg@mail.gmail.com>
-Subject: Re: [PATCH] hw/char: Check interrupt after txctrl register is written
-To: frank.chang@sifive.com
-Cc: qemu-devel@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- "open list:SiFive Machines" <qemu-riscv@nongnu.org>, 
- Chao Liu <chao.liu.zevorn@gmail.com>, Jim Shu <jim.shu@sifive.com>
+Date: Mon, 18 May 2026 10:13:27 +1000
+X-Gm-Features: AVHnY4KgWu96upN869UPVEWPJ8NGIHLHkFsNcIa7IRfwGndml71YggsiHK_H6aQ
+Message-ID: <CAKmqyKPhQPHYHkHP0F3UBp9-yFiP9qRmD8=bbW6Z9585B-+C_A@mail.gmail.com>
+Subject: Re: [PATCH 1/1] target/riscv: Fix medeleg[11] read-only zero bit for
+ M-mode ECALL
+To: Abhigyan Kumar <314abh@gmail.com>
+Cc: qemu-devel@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com, 
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
+ qemu-riscv@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -121,48 +121,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 13, 2026 at 1:06=E2=80=AFPM <frank.chang@sifive.com> wrote:
+On Mon, Apr 27, 2026 at 10:50=E2=80=AFPM Abhigyan Kumar <314abh@gmail.com> =
+wrote:
 >
-> From: Frank Chang <frank.chang@sifive.com>
+> RISC-V Privileged Specification 3.1.8 (Machine Trap Delegation Registers
+> (medeleg and mideleg)) mentions:
 >
-> It's possible that the transmit watermark level (txctrl.txcnt) is
-> updated when the user writes to txctrl register, which may decrease the
-> transmit watermark level to less than the number of entries in the
-> transmit FIFO. In such a case, the interrupt should be raised so we need =
-to
-> call sifive_uart_update_irq() to check and update interrupt when txctrl
-> register is written. Otherwise, the interrupt will have to be delayed
-> until next TX FIFO transmission is processed.
+> "For exceptions that cannot occur in less privileged modes, the
+> corresponding medeleg bits should be read-only zero. In particular,
+> medeleg[11] is read-only zero."
 >
-> Suggested-by: Chao Liu <chao.liu.zevorn@gmail.com>
-> Signed-off-by: Frank Chang <frank.chang@sifive.com>
-> Reviewed-by: Jim Shu <jim.shu@sifive.com>
+> QEMU incorrectly included RISCV_EXCP_M_ECALL in DELEGABLE_EXCPS. It
+> allowed the 11th bit to be written and read as set. Fixed by removing it
+> from the DELEGABLE_EXCPS mask, adhering to the specification.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3438
+> Signed-off-by: Abhigyan Kumar <314abh@gmail.com>
 
-Thanks!
-
-Applied to riscv-to-apply.next
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  hw/char/sifive_uart.c | 1 +
->  1 file changed, 1 insertion(+)
+>  target/riscv/csr.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 >
-> diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
-> index b4de662d616..b9bbaaef595 100644
-> --- a/hw/char/sifive_uart.c
-> +++ b/hw/char/sifive_uart.c
-> @@ -213,6 +213,7 @@ sifive_uart_write(void *opaque, hwaddr addr,
->          if (SIFIVE_UART_TXEN(s->txctrl) && !fifo8_is_empty(&s->tx_fifo))=
- {
->              sifive_uart_trigger_tx_fifo(s);
->          }
-> +        sifive_uart_update_irq(s);
->          return;
->      case SIFIVE_UART_RXCTRL:
->          s->rxctrl =3D val64;
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index a75281539..c9bf73dd7 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -1775,6 +1775,10 @@ static const uint64_t vs_delegable_ints =3D
+>      (VS_MODE_INTERRUPTS | LOCAL_INTERRUPTS) & ~MIP_LCOFIP;
+>  static const uint64_t all_ints =3D M_MODE_INTERRUPTS | S_MODE_INTERRUPTS=
+ |
+>                                       HS_MODE_INTERRUPTS | LOCAL_INTERRUP=
+TS;
+> +/*
+> + * As per RSIC-V Privileged Spec Section 3.1.8, M-mode ecall should be a
+> + * read-only zero. Therefore, medeleg[11] is set to zero below.
+> + */
+>  #define DELEGABLE_EXCPS ((1ULL << (RISCV_EXCP_INST_ADDR_MIS)) | \
+>                           (1ULL << (RISCV_EXCP_INST_ACCESS_FAULT)) | \
+>                           (1ULL << (RISCV_EXCP_ILLEGAL_INST)) | \
+> @@ -1786,7 +1790,6 @@ static const uint64_t all_ints =3D M_MODE_INTERRUPT=
+S | S_MODE_INTERRUPTS |
+>                           (1ULL << (RISCV_EXCP_U_ECALL)) | \
+>                           (1ULL << (RISCV_EXCP_S_ECALL)) | \
+>                           (1ULL << (RISCV_EXCP_VS_ECALL)) | \
+> -                         (1ULL << (RISCV_EXCP_M_ECALL)) | \
+>                           (1ULL << (RISCV_EXCP_INST_PAGE_FAULT)) | \
+>                           (1ULL << (RISCV_EXCP_LOAD_PAGE_FAULT)) | \
+>                           (1ULL << (RISCV_EXCP_STORE_PAGE_FAULT)) | \
 > --
-> 2.43.0
+> 2.54.0
 >
 >
 
