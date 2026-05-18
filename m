@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0570BCD4F3D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 00:06:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5251CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 00:08:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOlUT-0006TQ-2f; Sun, 17 May 2026 20:05:49 -0400
+	id 1wOlWs-00073w-EH; Sun, 17 May 2026 20:08:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wOlUC-0006SV-Bi
- for qemu-devel@nongnu.org; Sun, 17 May 2026 20:05:35 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ id 1wOlWk-00073K-FR
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 20:08:11 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wOlU6-000344-V2
- for qemu-devel@nongnu.org; Sun, 17 May 2026 20:05:30 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-67c2b4809baso4156379a12.3
- for <qemu-devel@nongnu.org>; Sun, 17 May 2026 17:05:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779062724; cv=none;
+ id 1wOlWh-0003fw-Aj
+ for qemu-devel@nongnu.org; Sun, 17 May 2026 20:08:09 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-67929ff6dbfso2856370a12.2
+ for <qemu-devel@nongnu.org>; Sun, 17 May 2026 17:08:06 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779062885; cv=none;
  d=google.com; s=arc-20240605;
- b=QDJ3ArjoKkZ7ynG947PLCA+rScgaH2MkF2DbtONxXD0ACGoSQyUrMCZlO7zfpxyVv3
- v+Q8Jf/QX+xxoY33WyAJ2oL7kWtoSPry5zJr0TekOaK4p2Qyu36j1EOtyw2ne85YkqLB
- Wn1fEMR4qrpEJPRbK6oKgEevuixaboFltPV9ZzSGnocoestBvl5/QzdIi0lFh3iI54lK
- JPvOMaAtdW9Bwe8rVfF8+dSaA9UEOJSa7osSPtcadDkAhaS7GrYDduhl8QgwL3JIaVUS
- 0ej7zE7MA3E1jcErJ8WfRr3xiVKEnHnR08sRTpmMEn1r6wYYBdC3MTX3tI0bUv3t0Lo5
- GglA==
+ b=c/UFPq6kwc7E+vxy51DZ1yiHDl9cCKnnW5t+d1wNDTxjqJfd+49ucybDasmhzTI1Ph
+ 0XKoBqFnnJDzdqNLhOuynf8cUdTXdsy9dygZPo/AY5Ka4rr9z3EXmF+YTmwR/Z3w/s6m
+ 7MSDO+Y/aNfdKZDkeMQAPMw92rgboEdH1tS8404pxzH+oAUsvcvUrU+wQuzu8HDyEPdg
+ bpODvrPEQhNfXBwzEyhjroHe2dp5fPpmnD0eYDJgG00D6zh3nH1JJ07GFOBLGrzcHUkQ
+ MoRJcrQ7eWE+bfrqIjS8sX+q8j+6KP42n2eaq8S56+z0k0H1V9wNnAJO8rgJ8gPY8yYE
+ YS8g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=kudALb8CfM7RD//r77QAgGduABr7gcgOIUW3f+y996Q=;
+ bh=SRh3W7NEPixp5eWlgij8j2O+YcuiGupzzGNGl7oMHjQ=;
  fh=xUPK3WmcXSXmYUNRz6cyBi7fUwKP4bpURxe/wNyWmQo=;
- b=OUKTxjxWbJ9X8/3oeAPYyDMHYbbkqb+B5FV48QLhZWfB/9LYE+YDTznio/0mhhAM2v
- hwWTGguFGRy8aK1K0dxNJ+UAemM7j67EsNR/SYfFsA/NQDElzrM43YximAk3yTDrzuTb
- c3EjIvcs29UH/4jG3T+4S1a6v3e8eKZJAuDU6/oZAvVXRgbDn0Zft8byAhllIw6vDmE4
- x/FBVlvprOKT1VwYnhnzxwbx1K8AC7qt0OzOibHS16YL+mDvt8wksWFAWpLRHt+KKOe5
- ltHpTNZ3n8MJiqkMfTxGXUeTUzpLRAaKRMjBJMASFk3QnXlWGEKt/Ev0oYg4orIlXaCl
- n0jg==; darn=nongnu.org
+ b=CHhpuObDLHv37z5+uPpI8kkRdaiDmWg0g+PaTAFQhEgQSBgTPXZamGO9ad/TBFmght
+ 99OEVclTSREyYvOcWhnZX8LcZZrUdxDyIUUsFDLOuWQYi5BjDiDrS+dhxpJlkwQS7207
+ dy1mjfVhevuwe2W4U+MHRuTJPFtkErLuiYcwykMh6uSDfdVAtlvJr7bLbwumm6GNHqAt
+ I6s9x/OJGc8/9FxToeEit8ZsGnGEHD3cx7prQgojyStSiy8lb3eGDrE9LiKWhPXstB2t
+ ngz+iZv294ocYB8zgGopnFHKDdElqkadIsKeZmZft0FOVLq6IhTMBgOtdFtZ4BHn0JVU
+ o7og==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779062724; x=1779667524; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779062885; x=1779667685; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kudALb8CfM7RD//r77QAgGduABr7gcgOIUW3f+y996Q=;
- b=DC/KdzKUS9MpvoYXKMGT7EbZnHfA2tuc+PHXsQni5lUPtW2D4VasHuGkc/rgebLt4e
- IxnC6DiJVHR+psu8wKYb0o8/HDhj2v6K0iegQ59m2Mu5s/oK1FxAEoZ6Ee86oosXCz6/
- jGgHQPeevIWniXR4t7IjrvgE5Rva7m06eUNLNKJYWrytPlJUBjPB7AiY4VNambCx+J7S
- jSXTKfGFJ2CxV0aF1GmWC+ju60rOqJIXTsnhlGQorcy57/Iw/W27Js6Ryu4ieA7fR3nK
- idfnlG5lgOeJkSc8/8TKKh2VyfDC13mB0WTCGHGOg/CXbqNo+XXGn4lUCUtLlwiaTxNJ
- qU+w==
+ bh=SRh3W7NEPixp5eWlgij8j2O+YcuiGupzzGNGl7oMHjQ=;
+ b=RZK8IloXvCGii1hzs7rTd+0Ftnoef6+GFJ0aBbevJji4y/ddK6HcLdd9DjqiykhHYi
+ mMQ6RNgkhwF6Ke1itrIDn6Cir5oPvoL4kN0uKwS693M9N4MtTLKrnmrjnbQPzYRtzii+
+ RvEDIeb97Rxpl5QxCr5rBbUXuj2FTZdg+qtuCn5fpG+kKz5IRW7C2iZ1irjNb8E7HpXW
+ UcdzDuRI4lU7UGLYrXP6u4+YUiun46fO9VSO7jQyX96yKW8zztM/unRQMppzGlQFXEMz
+ Ew+LQfwmAHOcrf9PvVlzgQ8+UFQhpHGObKc6mz39EIFEDE/IiGwrrshUrxljz6Hc9NFu
+ QW7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779062724; x=1779667524;
+ d=1e100.net; s=20251104; t=1779062885; x=1779667685;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=kudALb8CfM7RD//r77QAgGduABr7gcgOIUW3f+y996Q=;
- b=SDSAUMerDIDpPwfr7vPieogvJXH1Ud+C3GzydzfzQ9sei88iElEw+ly9CxlOuX2QF/
- rdvYnoef5WF4DELH5xBCOi/oa0llqdclJtO2pkZ8csL+oWdqCHyjU9l4njEpHiXmapOx
- qTGLlkn5P+VHnTCrwtUuZbi1vcpqXX26/YfVJ4jiFMXN4ufALQVwjR7jj/k3ZOBDVSmi
- nwFjzDSvqg7rEVHUUyogkLKSil4ZBtgj3+oF3L236DLuxBrH5xNHaAZcSrj4oyN6b0YQ
- AOWniXItdGI45YeNWj+F2X8Md4wQupp0uWJ+rSxh7Vr1RLlZfry4rD5VVKRTQaxXiMrw
- FZXg==
-X-Gm-Message-State: AOJu0Yy5DsewbXlaqNpjnezLSVGhFN+2oAUfxU0mO2z7KtSfJayb4jzL
- oRPruYWRnThSVP2Ujm0mW0/t0bnQZqbMgUGR/o3qtxMY8IcA60x+0SvVvNaCazSeVLJ/tj6jnbB
- Asg8kQPZnBm/4Ok/wCWNyav/0nl0aVrc=
-X-Gm-Gg: Acq92OEeRuKoosQhGAaWv3Oji3rGpABd9WczG3zMMNpbaI2jzPSYKTDq6456VlztITO
- mleDhAKF1ix3yNWpxf8gFJ2O3OPo3tWzScRImrqFFFWFNyiIVDtQo+uVTt62IcHWtL2dond9kjK
- MMI28WS5KsHFTPXuixQ0TOUR3j9B6/Iu/EL8U/Wk1QOIL0WHgM/t/R7EamVvY+kDz7rPTqwDrJz
- KYT/DTbXgcr36GOV0sAvnzH76wyaK/IE3R35IQkAYCwEA7FKJQJLg8wgWEsAWkf/uWynl76Uh3l
- 0pQsHY7/OudyNjBd433mSfG/O+jtqD2T7N83wg==
-X-Received: by 2002:a17:907:84a:b0:bd5:18e2:4c5 with SMTP id
- a640c23a62f3a-bd518e20645mr661353066b.47.1779062723331; Sun, 17 May 2026
- 17:05:23 -0700 (PDT)
+ bh=SRh3W7NEPixp5eWlgij8j2O+YcuiGupzzGNGl7oMHjQ=;
+ b=Ord34NutaeiEy+9hMepVysrlEnjaptzTtFFcTeRtpSYvA/GH1wPhasL8ye2Rstc3Kf
+ 3a4LcAQHu480dIqbFYv1kR6yVYwmaXxfZF40UOuKOk5mTbUBTI25O3uPsxSS1AiWogtZ
+ z3O0RP+XBQwdKML8eP/bahWg2iM0IXqJ62FfUKjNdh9nb1LiUv8DzbCwaiaNy1Whh4fK
+ SwXGfKPObN7btP3lk6V529Rwek5cTenMdbjgGLiAL+4dTi4WyWXsln1JLJVGJaUiLcWM
+ nKWZxOt0D+dvb1dRpTmwann/kBQLx1NhLzX/WVDDch2Kpaamdp/eR3FD4Vo8kTXX4PVt
+ 4Hvw==
+X-Gm-Message-State: AOJu0Yw6wBFun7zQ0JvfWi7JKtU7qJgG0p/wzaLT2cb3A39VMsUjaboj
+ Dr8Zk8k+xuCQdcPjcZg83jcwWtsROrOkFgJ0tjAUMkX9OGd8FE6lpQJ+U0qq/G3h/TuzpnJMsrm
+ Q5t5BiME3qlbmZom0Audd/ay71xCahZw=
+X-Gm-Gg: Acq92OFFfiAn6pw/VaIgVzCfcPWyUPE8DVojFMvWgKAAnxlNR6sbuubE4jJ6Fb6/PFG
+ S0//ZkBbwc8i837N9rfQAbExJAmXNnVk9nrxOWMIpVIxzxIacbOHjwpHS9NwSksf2y7u3Tb3xDW
+ Vu+IMEOk+DJQdNH8yTSUcmAaT9jJijs3ijq/bX8Ua8d4TttZtd4z2Tneokw8nRBmvgxfNmBnadj
+ HDtpaYpfThqu1mFz0K+q8/uX2GMSt0MffeWXOSYWmCG2uVOjbHUVgL9zIhKUiJxAczI7iM3MkSl
+ a+QpDSnwBRZ3VBwJihrIxOGtANgJVg7JJvuFbTjxrM7YsvVi
+X-Received: by 2002:a17:907:3cc7:b0:bd5:18e8:1ad8 with SMTP id
+ a640c23a62f3a-bd518e82334mr611399366b.4.1779062884946; Sun, 17 May 2026
+ 17:08:04 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260513030503.3665414-1-frank.chang@sifive.com>
 In-Reply-To: <20260513030503.3665414-1-frank.chang@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 18 May 2026 10:04:56 +1000
-X-Gm-Features: AVHnY4IGZeigxqKSB-math3WU0WMla3K52KTMWUA6Lr2bvmkBT9RIgh4wyCi49E
-Message-ID: <CAKmqyKN2RfQ3LKh=n4f=Nio=XejwAv5Pyrm5Vjf7cxKJdq-vaQ@mail.gmail.com>
+Date: Mon, 18 May 2026 10:07:38 +1000
+X-Gm-Features: AVHnY4LohafFGImQCUEU5jTY9_g9E0d89XNMN7fK9czZLtE11AA6UgXiBB44iI4
+Message-ID: <CAKmqyKPs9kd_4=6kW25suJcPPCy9kFUM9CkgMOjNAJezfY2NWg@mail.gmail.com>
 Subject: Re: [PATCH] hw/char: Check interrupt after txctrl register is written
 To: frank.chang@sifive.com
 Cc: qemu-devel@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>, 
@@ -96,8 +96,8 @@ Cc: qemu-devel@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>,
  Chao Liu <chao.liu.zevorn@gmail.com>, Jim Shu <jim.shu@sifive.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -138,7 +138,9 @@ to
 > Signed-off-by: Frank Chang <frank.chang@sifive.com>
 > Reviewed-by: Jim Shu <jim.shu@sifive.com>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
