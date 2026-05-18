@@ -4,101 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EEE6CD4F52
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 12:09:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E21DCD4F52
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 12:19:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOwmx-00042d-3a; Mon, 18 May 2026 08:09:39 -0400
+	id 1wOwva-00089A-RZ; Mon, 18 May 2026 08:18:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wOwlu-0003NF-Ns; Mon, 18 May 2026 08:08:36 -0400
-Received: from fhigh-b6-smtp.messagingengine.com ([202.12.124.157])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wOwvS-000883-PO
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 08:18:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wOwlt-00079n-6f; Mon, 18 May 2026 08:08:34 -0400
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 6C9427A00A4;
- Mon, 18 May 2026 08:08:31 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-03.internal (MEProxy); Mon, 18 May 2026 08:08:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm2; t=1779106111; x=
- 1779192511; bh=tbXFTi8YS7dwA1aT84yOrBaUVntxEmAQl1rJumHbdj4=; b=L
- qXQqM9lExpkh7M7lvxYI+JIcK90g03aDvHKgNmsUI//jW9xIwxem3YRF4CvxtbWo
- j3n4mEAUkdnsFfCBRUmWYs5KUnO9b/7qAF3teXv8+MUgJGauIMfNn3lzUXPnv9Ld
- Fz9lQvSz4XCP68lk1IZ8lrxjV0TkY8XhNskmsmVnd1hIekRP7iVqIPdo8K4v7RMM
- P6mFMxHWF9iYfd8sBnBHqFZ+Dr1yqCCoXG4PQPMtmudG7rGO94m6Qig3su++tUWJ
- h/zwtiI7SCSq6MyIYBGU3l5MTfiZffqICU9leBf7mJwEr4stILd1CMruRwuocazF
- 6Xi9LJH1jbVHLgFUgD/mA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; t=1779106111; x=1779192511; bh=t
- bXFTi8YS7dwA1aT84yOrBaUVntxEmAQl1rJumHbdj4=; b=oYlsUdkol+RRw9nHB
- 8dXJlesmKxMmcC9GlPBqnxkq3lCwIZr2Fbtok+ORA5kut/yvqSJo4gEULwCenPuP
- DuHItlbFDW9puDsSDxE3FUs0vNG3c9mz0Eeb/HLgnyHhoZNoiSR917HNbbPRSYhS
- 5CLvzSojZnTHcM21o6QgbCTYiyu9HNLDV7QJ1SIhFJ/+0efeBaPZxfpC1NypRSHA
- UlHnr+lschk/o8GZWABeqMwqp51wEEaS+jaE/TaiQXBTNhTDTEnTBso6FFjcaA+4
- 0ziIdiusBkO9pH8H+ksN14rG9KXIuj2viai90alPPA1Swz7Mp4D2lZ+Vddi8QHhQ
- 8BXZA==
-X-ME-Sender: <xms:PwELapt6GHhVGbFF6YbuVyVOoXa7UcaVzLKwNQzEKWMcWBzgFAWBaw>
- <xme:PwELaudzL3IRy0cyw7A5KuGgLjcj80jWLQ6CMwmZGS2QPvLGhYY4f-B8CBJsk24iW
- sh6m5Q8rzzIm6L3CE6ctQcy0bKGGUMjXLNqJYyB9pHWUrteILd0hP0>
-X-ME-Received: <xmr:PwELau8zDe7KGTeTwalbXxklrt3rt1Qh6MDeBaD-bLG9wWjaY8wN6nvGq0_LCxqJPXpN-IRPxOGvlbNWxbmO3MPF>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddufeekkeefucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
- gurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomhepmfhlrghushcu
- lfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvg
- hrnhepjefgieelgfeiveehkeeuveehheekfeevgeeigfehfefgjeejhefffeegudejudeg
- necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepihhtsh
- esihhrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhht
- phhouhhtpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprh
- gtphhtthhopehpvghtvghrrdhmrgihuggvlhhlsehlihhnrghrohdrohhrghdprhgtphht
- thhopehkrdhjvghnshgvnhesshgrmhhsuhhnghdrtghomhdprhgtphhtthhopehqvghmuh
- dqshhtrggslhgvsehnohhnghhnuhdrohhrghdprhgtphhtthhopegrrdhhihhnuggsohhr
- ghesshgrmhhsuhhnghdrtghomhdprhgtphhtthhopehksghushgthheskhgvrhhnvghlrd
- horhhgpdhrtghpthhtohepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdprhgtphhtthho
- pehfohhsshesuggvfhhmrggtrhhordhithdprhgtphhtthhopehqvghmuhdqsghlohgtkh
- esnhhonhhgnhhurdhorhhg
-X-ME-Proxy: <xmx:PwELahS3T41YygW9Dgbsit3LmukClWZlR3b6_XQdrlEtC1VLTWfSgg>
- <xmx:PwELanrA-m6i0CrONb3caMlNtQd3osqQMszW4_k9xf-im08ZUuG_Zg>
- <xmx:PwELamlFttNmirpyGWao6l_H7vmZu9CTiTp1A0I87_FuTbmwyzIEhA>
- <xmx:PwELaocTRHMh6nEyi87Hcc6ZmiknG-l04AanLzrun62Fl9u33-f5SA>
- <xmx:PwELajxgnB7-SdUotudFsaZvr7XOVIq2Rhg8_LY4wLlEMxEWeE__9phc>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 18 May 2026 08:08:29 -0400 (EDT)
-From: Klaus Jensen <its@irrelevant.dk>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org,
- Andreas Hindborg <a.hindborg@samsung.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
- qemu-block@nongnu.org
-Subject: [PULL 5/5] hw/nvme: fix admin cq msix setup
-Date: Mon, 18 May 2026 14:07:48 +0200
-Message-ID: <20260518120748.14831-6-its@irrelevant.dk>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260518120748.14831-1-its@irrelevant.dk>
-References: <20260518120748.14831-1-its@irrelevant.dk>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wOwvB-0004RG-Mr
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 08:18:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779106688;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=XnlVTdNJjmtyz3+bNSEwMtBQen5CfJUQP65HJkR+8ww=;
+ b=cdlgKHlze9X/TfIaYOZucmaBPpfGHujiSLwWSRTB3vPt4lGwnpmEA0IOclagPNO0BPVmqK
+ l68I59hBlhH0YhenxyXAEtbS1lMfEZ/UjhRtDzcDbWH1xnpV9mC1K2htAJhompJ2PIyyAv
+ C3sPCVYrJOjRv/9j8nUuyv4PSyk4E50=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-264-I8jRHDePOQOSxF2aCGi5OA-1; Mon,
+ 18 May 2026 08:18:04 -0400
+X-MC-Unique: I8jRHDePOQOSxF2aCGi5OA-1
+X-Mimecast-MFC-AGG-ID: I8jRHDePOQOSxF2aCGi5OA_1779106683
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EA5821800612; Mon, 18 May 2026 12:18:01 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 22A9919560A2; Mon, 18 May 2026 12:18:01 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id B675C21E6A01; Mon, 18 May 2026 14:17:58 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: khaled saleh <khaled.saleh.req@gmail.com>,  palmer@dabbelt.com,
+ alistair.francis@wdc.com,  liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com,  chao.liu.zevorn@gmail.com,
+ qemu-riscv@nongnu.org,  qemu-devel@nongnu.org,  Andrew Jones
+ <andrew.jones@oss.qualcomm.com>
+Subject: Re: [PATCH] target/riscv: Convert priv_spec property from string to
+ enum
+In-Reply-To: <4f53cc45-ba10-4a94-a2b5-45b5d0259727@oss.qualcomm.com> (Daniel
+ Henrique Barboza's message of "Mon, 18 May 2026 07:36:44 -0300")
+References: <20260517192800.112905-1-khaled.saleh.req@gmail.com>
+ <4f53cc45-ba10-4a94-a2b5-45b5d0259727@oss.qualcomm.com>
+Date: Mon, 18 May 2026 14:17:58 +0200
+Message-ID: <87h5o4ud1l.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.157; envelope-from=its@irrelevant.dk;
- helo=fhigh-b6-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,46 +89,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Klaus Jensen <k.jensen@samsung.com>
+Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com> writes:
 
-If MSI-X is not enabled when the admin completion queue is created,
-msix_vector_use() is not called. But, if MSI-X is subsequently enabled,
-msix_notify() will fail to fire the interrupt because the use count for
-the vector remains at 0.
+> Ccing Drew Jones
+>
+> On 5/17/2026 4:28 PM, khaled saleh wrote:
+>> The priv_spec property accepts a fixed set of values (v1.10.0, v1.11.0, v1.12.0, v1.13.0) but was implemented as a string type with manual string-to-enum conversion in custom getter/setter functions.
+>>
+>> Convert it to use QEnumLookup with visit_type_enum() for:
+>> - Automatic input validation by the visitor framework
+>> - QMP introspection support (valid values are discoverable)
+>> - Reduced boilerplate (priv_spec_from_str/to_str removed)
+>>
+>> This resolves the "FIXME enum?" comment in cpu.c.
+>>
+>> Signed-off-by: khaled saleh <khaled.saleh.req@gmail.com>
+>> ---
+>
+> This would be an improvement from what we have but I'm not sure if 'enum'
+> is what we want either.  We tend to go towards on/off flags that are more
+> QMP friendly.  So instead of enum property called 'priv_spec' we would have
+> booleans like "priv_ver_1_11 = on/off" and etc.
+>
+> And I believe we can't just get rid of the existing string properties all of
+> a sudden too.  The string option would need to go through a deprecation
+> cycle first, and I'm not even sure if we can re-use the same property name
+> with 'enum' instead of string (my guess is we can't).  So it seems to me that
+> the 'priv_ver' property is basically doomed to be a string type until it goes
+> away.
 
-msix_vector_use/unuse should be called if MSI-X is *present*, not
-*enabled*. Fix this.
+Enums are strings on the wire.  Changing a QMP command argument or QOM
+property that accepts only a finite set of values from string to enum
+with the same set of values is compatible.
 
-Cc: qemu-stable@nongnu.org
-Reported-by: Andreas Hindborg <a.hindborg@samsung.com>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
----
- hw/nvme/ctrl.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 5b03929451d0..815f39173c8a 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -5519,7 +5519,7 @@ static void nvme_free_cq(NvmeCQueue *cq, NvmeCtrl *n)
-         event_notifier_set_handler(&cq->notifier, NULL);
-         event_notifier_cleanup(&cq->notifier);
-     }
--    if (msix_enabled(pci) && cq->irq_enabled) {
-+    if (msix_present(pci) && cq->irq_enabled) {
-         msix_vector_unuse(pci, cq->vector);
-     }
-     if (cq->cqid) {
-@@ -5560,7 +5560,7 @@ static void nvme_init_cq(NvmeCQueue *cq, NvmeCtrl *n, uint64_t dma_addr,
- {
-     PCIDevice *pci = PCI_DEVICE(n);
- 
--    if (msix_enabled(pci) && irq_enabled) {
-+    if (msix_present(pci) && irq_enabled) {
-         msix_vector_use(pci, vector);
-     }
- 
--- 
-2.53.0
+In the case of QMP, introspection with query-qmp-schema gets more
+precise, which could conveivably confuse management applications.
+Non-issue here, I believe.
 
 
