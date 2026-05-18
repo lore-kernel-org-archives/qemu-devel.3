@@ -4,88 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 376F0CD343F
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 20:15:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18B4ACD343F
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 20:22:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP4MW-00056x-0O; Mon, 18 May 2026 16:14:52 -0400
+	id 1wP4T0-0006L6-La; Mon, 18 May 2026 16:21:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wP4MQ-00056d-J4
- for qemu-devel@nongnu.org; Mon, 18 May 2026 16:14:46 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wP4Sq-0006Kt-UG
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 16:21:24 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wP4MO-00081c-Te
- for qemu-devel@nongnu.org; Mon, 18 May 2026 16:14:46 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-48909558b3aso29106035e9.0
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 13:14:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779135283; x=1779740083; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oIyOi59fozT/sXvVqbp5nOsCdrHNsDDqiw3JDTptoBc=;
- b=yXwPn4Mpue+hM5G9ZzeBscNbf1BATiHD4UkIGCNRgy6Q58okO2FFvl2eVvpNbOfFDd
- xFEgg0Q7/op9NAlye35RnEDJMP7jBDjGYkPQafYlvFe4pXRFou0bnnVGNzW4Ij+s5SKi
- 32KOOGMTlK/n7XVsf6tTJqRO51zxnVQOnvxSZtZ7Ob8FYhbbPEIrRhgyqLmjKGvON+gg
- S2KB69f7L/sWv1Z8ooTtZW7rikrHcHL4Dbl4UbEXBZUtubpK2tC9y08GFeWEr2nnUh9N
- OU8S9OyV0thiHg9wCy1G90N8Xk4iioNp6zBszksqZSwjIqwcfBrvrV5BqS1gJwqnwweC
- u4Kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779135283; x=1779740083;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=oIyOi59fozT/sXvVqbp5nOsCdrHNsDDqiw3JDTptoBc=;
- b=HXm72d+SFv4vxNEUEGV7r/CPfXICsim8pYDWkK/T98NODrAUYIPi0ZqfUhyyREpeCT
- fOB0Sx1uWFde9U5WR5r/5jDuyNB9xWKMXGnyeO+NOnZrDfz19l/2wDyNB3Lk503Ib3JJ
- nMz/zZnu0c0BUNzXp6os9Lb+oWoF/YJF5gFL7aiviZGJuzuOz0GKn5XIgitT951IyJUk
- RO9EX4D+N1ZSvzuLBxoja3VyRztRDXbKReaU82GAK0BbiLS797ooJ1YEDs+LHThI2Y2/
- DIjaV8oCQvn4P9qw0LYnX12k4YtzfhdlP2xx0z3TRKVG1yTlAAt6h7jTlmbKvMLX+0cM
- m/vg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9Ga3fGFFhMa3gb9f5mfQbKyXLZmLNrNAbC9kMUKmI57IVjmHe4WbErDhr6sxK2Zk/na8zOXbdiTD+l@nongnu.org
-X-Gm-Message-State: AOJu0YzVdZL7QX+1R/0Yia8h6VnA67WHii0xHm2g/8xfTR9CBvrB36jm
- tWvjZPl8qBhvHhY/wiMPT0yVpD0/jPd1e0Q+Zwa+nCW92iWg7ojlC4oNdHKFJQYPBmk=
-X-Gm-Gg: Acq92OGP3cQbMWMzVSpOFO67nBU8JzRleSe1eq18IWxwf35BYhWLeUHXvE0k7arDGYP
- xQQVrCiINSkkCDMoGNx9gp+U3TMNCZae2ME7aWDo07CojDX6ejaeJg2S2exHi4PaW6lQF1dUmtk
- WU/S9wnfI81KEcj8d0x6J4xn/7Qt+s2km8fdOkQesdWsCAa/PBCITe+wmhXOVYZHr8y90zp2Y5S
- 7hnZfx6UcnVM1HN/OHTiAKg7/h9P4dkYbBL/NbetyeWDen5Mucgp3fztNxR0ZuXlOjgpr4EO7PG
- TNzAuF6NUmFZnIMentH91eWxmWytIUI7aaHBkH51aDwH+3kkvxeScVpPkp/SQgnohl32VKwQQ+U
- zRd3a+puH1Oh1Mx96Dx6xWrqW6hdzsIDcsu20IylPYzZQfjtwew4MbxLBCopfBFtH3DVRw1DeQ8
- YmFwqaFndIIpKEVtiiCSHHDg6+p2mIcJywSU0pVaNpN9s4fxbLxBZvWhWfcHGCo0amUQ==
-X-Received: by 2002:a05:600c:4fc9:b0:489:1c1f:35df with SMTP id
- 5b1f17b1804b1-48fe60e58ecmr237615085e9.10.1779135283111; 
- Mon, 18 May 2026 13:14:43 -0700 (PDT)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45d9ec39ff1sm42392695f8f.10.2026.05.18.13.14.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 May 2026 13:14:42 -0700 (PDT)
-Message-ID: <6170dc99-98c0-4d06-9517-d6b147779503@linaro.org>
-Date: Mon, 18 May 2026 22:14:41 +0200
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wP4Sp-00025S-B1
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 16:21:24 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 213DD6415B;
+ Mon, 18 May 2026 20:21:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1779135681; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=yMUppViUcKKPqkZWfZLrVNpr7IrypGtLB65nGRvigk8=;
+ b=A1b72tZ4pOBhb6kYK48GHqNaC1pmPVlJ9+GD70hEdtcmJEIsxS4gcSCRaMsCZd5C+Iyoxo
+ EMC0EXhES0V73Ic3DS8P7zdQtGblnto3v3PMVq+7Q809d5RaAjInXg7EiYBYWuu2nI9z7P
+ 0HzQ/vRRgBXbXRWnemW7TNilamo0OI0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1779135681;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=yMUppViUcKKPqkZWfZLrVNpr7IrypGtLB65nGRvigk8=;
+ b=zgQ2EeaStOiU8oX+0s4V4ZoAUiCzWqlCE9n6sxXaFL5trYZaCZgK6clDRB2zRkCeYjP7UT
+ ew/ytQ9nL+4yGsAg==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1779135680; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=yMUppViUcKKPqkZWfZLrVNpr7IrypGtLB65nGRvigk8=;
+ b=IeRndGp0RhgwvQWvEGbPqzm9Q0Q5ATIXmh9usKnu4f2kazdo1ejffNeO8b0bnwALi0RosM
+ JtvPNMJ1ZImBUhkjqsGOLWQlBhaIylVc6suByQ2v/M1g+U/vT/R1pXEBsGDPIuVrX9H/5W
+ 8nm9EEunfRqgPQ30aYd44d2YFIKLmeA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1779135680;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=yMUppViUcKKPqkZWfZLrVNpr7IrypGtLB65nGRvigk8=;
+ b=me0mlsvHqsc8l6AgIGTgNa1tbyDUdMXv3kVGEnE5b+J8o5WoyX8mV6NIHLNGpAiQjxKyox
+ NBNrwRQikb1xo9AA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B74CB593A8;
+ Mon, 18 May 2026 20:21:19 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 3Cf6Ib90C2o2WQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 18 May 2026 20:21:19 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Bin Guo <guobin@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: peterx@redhat.com
+Subject: Re: [PATCH 6/8] migration/multifd: merge thread-join and cleanup
+ loops in multifd_recv_cleanup
+In-Reply-To: <20260518110112.21395-7-guobin@linux.alibaba.com>
+References: <20260518110112.21395-1-guobin@linux.alibaba.com>
+ <20260518110112.21395-7-guobin@linux.alibaba.com>
+Date: Mon, 18 May 2026 17:21:17 -0300
+Message-ID: <87bjec4gg2.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 08/12] target/arm: Use FloatParts64 in bfdotadd_ebf
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20260517002550.321291-1-richard.henderson@linaro.org>
- <20260517002550.321291-9-richard.henderson@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260517002550.321291-9-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
+ alibaba.com:email]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,17 +116,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/5/26 02:25, Richard Henderson wrote:
-> Use softfloat-parts.h so that we can more naturally
-> perform the required operations witha single rounding step.
-> This happens to also simplify the NaN detection step.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Bin Guo <guobin@linux.alibaba.com> writes:
+
+> multifd_recv_cleanup() iterates over all receive channels twice:
+> one loop to join threads and another to clean up each channel.
+
+ok
+
+> Unlike the send side where all threads must be signalled before any is
+> joined (to avoid deadlock),
+
+Not super relevant what the send side does. It's just a similar piece of
+code, that's all.
+
+> on the receive side the threads are already
+> terminated by multifd_recv_terminate_threads().  Each join simply
+> waits for an already-terminated thread, so the join and cleanup for
+> channel i are independent of channel j, and the two loops can safely
+> be merged into one.
+>
+
+We do really need to join all threads before proceeding. There's no
+guarantee on the the order in which they'll terminate.
+
+> This cuts the iteration count in half and improves locality: the
+> thread's resources are freed immediately after its join.
+>
+> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 > ---
->   target/arm/tcg/vec_helper.c | 77 +++++++++++++++++++------------------
->   1 file changed, 40 insertions(+), 37 deletions(-)
-
-To the best of my softfloat understanding:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+>  migration/multifd.c | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
+>
+> diff --git a/migration/multifd.c b/migration/multifd.c
+> index b3eef875cc..67ee9bdf5e 100644
+> --- a/migration/multifd.c
+> +++ b/migration/multifd.c
+> @@ -1153,15 +1153,14 @@ void multifd_recv_cleanup(void)
+>          return;
+>      }
+>      multifd_recv_terminate_threads(NULL);
+> +
+>      for (i = 0; i < migrate_multifd_channels(); i++) {
+>          MultiFDRecvParams *p = &multifd_recv_state->params[i];
+>  
+>          if (p->thread_created) {
+>              qemu_thread_join(&p->thread);
+>          }
+> -    }
+> -    for (i = 0; i < migrate_multifd_channels(); i++) {
+> -        multifd_recv_cleanup_channel(&multifd_recv_state->params[i]);
+> +        multifd_recv_cleanup_channel(p);
+>      }
+>      multifd_recv_cleanup_state();
+>  }
 
