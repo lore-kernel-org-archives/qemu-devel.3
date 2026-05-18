@@ -4,50 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ADC7CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 11:02:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CE1FCD4F52
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 11:02:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOviy-0006ZK-SG; Mon, 18 May 2026 07:01:29 -0400
+	id 1wOvj1-0006at-AX; Mon, 18 May 2026 07:01:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wOviv-0006Y2-8H
- for qemu-devel@nongnu.org; Mon, 18 May 2026 07:01:25 -0400
-Received: from out30-131.freemail.mail.aliyun.com ([115.124.30.131])
+ id 1wOviw-0006YK-OU
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 07:01:26 -0400
+Received: from out30-97.freemail.mail.aliyun.com ([115.124.30.97])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wOvis-0005iH-MA
- for qemu-devel@nongnu.org; Mon, 18 May 2026 07:01:24 -0400
+ id 1wOvit-0005iY-Ds
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 07:01:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1779102078; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=8+8p3ol65rhq0ecDJNkEpWpx97Ua/BIn3MGtDEFk66o=;
- b=VE8pr4T2zcC3NhtjIeg/k1V75viX6qFg3FZtioHxW3E7QAkiCaNSzxU5Ze5TxmJwmI30LMs8RZaEfzAOKyrIuhdnAwSSRYBj1LFHUVdJ5crwd+wVCWC8KXxdw1CKIPGhABsMVAk8qmXMzOgTIh/wSsntZkq/mfWlCeHowf+esms=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R201e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
+ t=1779102079; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=6zpWYZsxVFc8HgF8nKU7F6t6On57u4ibzgThAGNU7gQ=;
+ b=HaU9Lpd+hVndttqzpvaSdniV98Nrh0ax64CqHRITEYTYqgEQZ5TZANnKSS7fruULLEIzardLC1/boRdk8BjPWVkCOVu7Lo60yBDpDo2zLl+MmEWQaAISg1mkg18Mtc836mTvqQeRMe8S0I5pR64JTt/yX6kP37c4I5vrXC/fUGM=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R581e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037009110;
  MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=3; SR=0;
- TI=SMTPD_---0X38AAVS_1779102077; 
+ TI=SMTPD_---0X382z02_1779102078; 
 Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0X38AAVS_1779102077 cluster:ay36) by smtp.aliyun-inc.com;
- Mon, 18 May 2026 19:01:17 +0800
+ fp:SMTPD_---0X382z02_1779102078 cluster:ay36) by smtp.aliyun-inc.com;
+ Mon, 18 May 2026 19:01:18 +0800
 From: Bin Guo <guobin@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com,
 	farosas@suse.de
-Subject: [PATCH 6/8] migration/multifd: merge thread-join and cleanup loops in
- multifd_recv_cleanup
-Date: Mon, 18 May 2026 19:01:10 +0800
-Message-ID: <20260518110112.21395-7-guobin@linux.alibaba.com>
+Subject: [PATCH 7/8] migration/multifd: cache migrate_multifd_channels() in
+ send/recv hot paths
+Date: Mon, 18 May 2026 19:01:11 +0800
+Message-ID: <20260518110112.21395-8-guobin@linux.alibaba.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260518110112.21395-1-guobin@linux.alibaba.com>
 References: <20260518110112.21395-1-guobin@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.131;
- envelope-from=guobin@linux.alibaba.com;
- helo=out30-131.freemail.mail.aliyun.com
+Received-SPF: pass client-ip=115.124.30.97;
+ envelope-from=guobin@linux.alibaba.com; helo=out30-97.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -71,45 +70,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-multifd_recv_cleanup() iterates over all receive channels twice:
-one loop to join threads and another to clean up each channel.  Unlike
-the send side where all threads must be signalled before any is joined
-(to avoid deadlock), on the receive side the threads are already
-terminated by multifd_recv_terminate_threads().  Each join simply
-waits for an already-terminated thread, so the join and cleanup for
-channel i are independent of channel j, and the two loops can safely
-be merged into one.
+multifd_send() and multifd_recv() are on the per-page-batch hot path
+of live migration.  Both functions call migrate_multifd_channels()
+multiple times (3-4 calls each) for modulo arithmetic in the
+round-robin channel selection loop.
 
-This cuts the iteration count in half and improves locality: the
-thread's resources are freed immediately after its join.
+Each call goes through migrate_get_current() -> dereference
+MigrationState -> read parameters.multifd_channels.  While each
+individual call is cheap, these functions execute for every page
+batch during the entire migration, easily millions of times.
+
+Cache the return value in a local variable at function entry.  The
+channel count is fixed for the duration of a migration and cannot
+change mid-flight.
+
+For multifd_send(): 3 calls reduced to 1.
+For multifd_recv(): 4 calls reduced to 1.
 
 Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 ---
- migration/multifd.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ migration/multifd.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
 diff --git a/migration/multifd.c b/migration/multifd.c
-index b3eef875cc..67ee9bdf5e 100644
+index 67ee9bdf5e..cc2fa90204 100644
 --- a/migration/multifd.c
 +++ b/migration/multifd.c
-@@ -1153,15 +1153,14 @@ void multifd_recv_cleanup(void)
-         return;
-     }
-     multifd_recv_terminate_threads(NULL);
-+
-     for (i = 0; i < migrate_multifd_channels(); i++) {
-         MultiFDRecvParams *p = &multifd_recv_state->params[i];
+@@ -362,13 +362,15 @@ bool multifd_send(MultiFDSendData **send_data)
+     /* We wait here, until at least one channel is ready */
+     qemu_sem_wait(&multifd_send_state->channels_ready);
  
-         if (p->thread_created) {
-             qemu_thread_join(&p->thread);
++    int thread_count = migrate_multifd_channels();
++
+     /*
+      * next_channel can remain from a previous migration that was
+      * using more channels, so ensure it doesn't overflow if the
+      * limit is lower now.
+      */
+-    next_channel %= migrate_multifd_channels();
+-    for (i = next_channel;; i = (i + 1) % migrate_multifd_channels()) {
++    next_channel %= thread_count;
++    for (i = next_channel;; i = (i + 1) % thread_count) {
+         if (multifd_send_should_exit()) {
+             return false;
          }
--    }
--    for (i = 0; i < migrate_multifd_channels(); i++) {
--        multifd_recv_cleanup_channel(&multifd_recv_state->params[i]);
-+        multifd_recv_cleanup_channel(p);
+@@ -378,7 +380,7 @@ bool multifd_send(MultiFDSendData **send_data)
+          * sender thread can clear it.
+          */
+         if (qatomic_read(&p->pending_job) == false) {
+-            next_channel = (i + 1) % migrate_multifd_channels();
++            next_channel = (i + 1) % thread_count;
+             break;
+         }
      }
-     multifd_recv_cleanup_state();
- }
+@@ -998,6 +1000,7 @@ bool multifd_recv(void)
+     int i;
+     static int next_recv_channel;
+     MultiFDRecvParams *p = NULL;
++    int thread_count = migrate_multifd_channels();
+     MultiFDRecvData *data = multifd_recv_state->data;
+ 
+     /*
+@@ -1005,8 +1008,8 @@ bool multifd_recv(void)
+      * using more channels, so ensure it doesn't overflow if the
+      * limit is lower now.
+      */
+-    next_recv_channel %= migrate_multifd_channels();
+-    for (i = next_recv_channel;; i = (i + 1) % migrate_multifd_channels()) {
++    next_recv_channel %= thread_count;
++    for (i = next_recv_channel;; i = (i + 1) % thread_count) {
+         if (multifd_recv_should_exit()) {
+             return false;
+         }
+@@ -1014,7 +1017,7 @@ bool multifd_recv(void)
+         p = &multifd_recv_state->params[i];
+ 
+         if (qatomic_read(&p->pending_job) == false) {
+-            next_recv_channel = (i + 1) % migrate_multifd_channels();
++            next_recv_channel = (i + 1) % thread_count;
+             break;
+         }
+     }
 -- 
 2.50.1 (Apple Git-155)
 
