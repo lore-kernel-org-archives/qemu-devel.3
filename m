@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E44DCD343F
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 05:31:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9BA6CD343F
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 05:31:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOqYS-00072y-C0; Mon, 18 May 2026 01:30:16 -0400
+	id 1wOqYP-00071c-HN; Mon, 18 May 2026 01:30:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wOqY8-0006vI-P8
- for qemu-devel@nongnu.org; Mon, 18 May 2026 01:30:06 -0400
-Received: from mail-oi1-x22a.google.com ([2607:f8b0:4864:20::22a])
+ id 1wOqY2-0006tv-9i
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 01:29:50 -0400
+Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wOqY1-0003Tv-TJ
- for qemu-devel@nongnu.org; Mon, 18 May 2026 01:29:51 -0400
-Received: by mail-oi1-x22a.google.com with SMTP id
- 5614622812f47-479d593a0c3so1599510b6e.0
- for <qemu-devel@nongnu.org>; Sun, 17 May 2026 22:29:35 -0700 (PDT)
+ id 1wOqXx-0003TX-Eb
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 01:29:48 -0400
+Received: by mail-oi1-x22f.google.com with SMTP id
+ 5614622812f47-47c35be031dso1372025b6e.3
+ for <qemu-devel@nongnu.org>; Sun, 17 May 2026 22:29:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779082174; x=1779686974; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779082173; x=1779686973; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=4zXKkWES8qZhC3q3QrRolIAmTOGEqkkPCkIvVM774G0=;
- b=DSQH7gmAcZlEnS+bOFaWR9j+1MAkaoJjj6pWyseOG3DQ6TuHOBcqito00zDOQ6g+Qq
- +bBFbpFcQkdd1AoswM0NE4q5Q2dDLoMadGX37eplNnXz+cA1XlFvwu3IAUSbSPDU4xH1
- k9f9PxfdJJ9398lFoC7hRPsnkCAHMK4UPUfIOvVOd+doCiZXZxf5/hIU2p0tjWxQCa3g
- aOuV96krB/Cc//HpUsVTxoQJrbtzSwRht5HpxKF+H2LspJpvFtfV+wdxb7zlh/t/riwc
- 6OE+tU6dMWvx71/CzFjCJeu+urhQuPWGv12kyTLD0cdcDewbVjLnsSuGQ5FchEN5dRP0
- 60/Q==
+ :reply-to; bh=UADH+4H0+NWhce4iEtIjPf3ElkgBOHbMXUCIk3Pg91I=;
+ b=kYlQ7RVIIlR0ShTjN6LxnXDwmmktIgkqOH8u/fXWrDGZmQvbJIRqIEJDyFBCubUzDJ
+ acYpHExmcFr/abU0JuQhY1dcNhhzvpPzQw0KURdFP9qkKcbvU/DxdSJuWMJxhWUjb+Er
+ gEPvGn+0glF1mdpbtKNczSZOdWr7GIbMd7J9oeV8WQjKkYZb2WUED2qkayiCJVJqm9Op
+ 4Z5EgYGnG1YIHFHgM80r7NX2yK27sTdO8IzZGPRWTJnVQp6dFkmM7t1KZVshuMRv8DZ5
+ K27RX0ftZUO48wzHHqw2gWqBiqRZUV4FLnMgTjhOpmz7/nebWHOyvsMmsx1fSTu2Xmj7
+ VF8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779082174; x=1779686974;
+ d=1e100.net; s=20251104; t=1779082173; x=1779686973;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=4zXKkWES8qZhC3q3QrRolIAmTOGEqkkPCkIvVM774G0=;
- b=NM3zFdFk4uR6qGVY/RvGY+E0P//tr4dDHAIYiBpiZlaBPA9pLOt/NJtViMk3wNdyr9
- QUgcPEmXMa9mK8zYQKJudsVYlj8ISmnEmNxnhRy1ZJZ+SQIC6Enq21fnvekCDSoOvFCs
- ZbGXFNMx6yTBhcdchJYf/ydYdfqNWg73vrLkHJb4530Bc0qjRhKqyTpSNengn92JSk8N
- JVOSEU9RtOCA1m/Tmj8lSnO+qtP/YP9LwmfcnEU6T6YJwin2OMxCW4y64DhnlxcW/QT9
- vaBdT1MvFo3yjIUH7R88xHz7b4Xr2/Bpu3eKfFXAinZbtRkt1DUdST4rBMoTNY7qodJR
- e29w==
-X-Gm-Message-State: AOJu0YxU16hXEXkc6tlI4aSlqfQ00OS2dBjwk7heT/0yFzcy2AOa+qJn
- 0DA7VPCIlt1y3Hcsm8OzkZnGQvrHGeF4oZEiugDDcTZwav3ePvfbh73K
-X-Gm-Gg: Acq92OEgsS07riZu+NlquScHXtE/dDz9XUDcD4UWjj0octg7bvnnAkHVyQ5LH1tWcm6
- kZWjYtv+oUWbcYEZhNY1zA3vFFgOGrHiu7or2f8JIfOz96pwWni3f5rI7kY/OQ2cvY6C2Iv4d2f
- 1mp1Dg3Jm2f3gGubH06L3ty0BglzyLwYijxzIlOwn7RwcTI5U9B01L5CIUgOYEeWUx/e0MJpw1s
- 4lqJ7eZCBSstnn6hZYopdU4FnOpJ126ZrIXDrzbUkEorCDMMqck960d1IjhAPBtSg9j25Vqztxl
- C1ETgKl2Y2MEN3ZtfoiLzE7DMDLrC2wKcfRcVn0tzrx+Qvp3+EWXtj+MVVStAJq0OeanJNNYkwW
- jhDjifZAyqF/sulMi8bu8y3ULVWrW6kyWFgAQSGSoJzNqkl/U3JPBnUrmdbjYxTIG6wF5c91gxb
- tqxLjjV+8pGaQyt9/eVd6ZiYCAM6oa+c06oKS2rUDJ18/dvISaMV/0Tu+a8yTj+2Vmt4lYqmBqW
- TJZUuoUg+0g+qVboHVV80XXxaA08MKKU3n6xkGcNq95CKh69TxrXB+zuhIa4QP1W9xgmVSaaDOy
- pnPVr+9lifqEmtRb
-X-Received: by 2002:a05:6808:1798:b0:479:d674:dcca with SMTP id
- 5614622812f47-482cb71ea38mr10052658b6e.4.1779082174403; 
- Sun, 17 May 2026 22:29:34 -0700 (PDT)
+ bh=UADH+4H0+NWhce4iEtIjPf3ElkgBOHbMXUCIk3Pg91I=;
+ b=ffyCHk1Zb9wbGmtFtwdMhFkiuc2YRTpLKD6CA/CHIu8XQKK5jjHywb4w2R66+dGG9k
+ ZBkMfF0/8QiRkGBAdfV1S8iPDS6kBc8bO3cbXQwArOOgx1Fbn/FlraOAo/UV+5MlcSTq
+ zHpmNLwvD4QugI/Lc4gvxiWTFsnMw7ogELnOUx0sl66wpGtNeJB/ZvNgTCfhbXSWaRKo
+ hsxkgnYUfR5vsUGdrA1M05NBApFzvRhWVfQZmn+LnbEKgg+Zolq5Ivj3Vdm67HsXLDba
+ Hwa6R/ZatOteIKKKrtSf54GVmyLno3/juIuKdjO2VG76X31nvgjXyqkkyy4Uic//hFg9
+ A3og==
+X-Gm-Message-State: AOJu0Yyw3apFlNQ8/OaEK8sXUrE2bSDfW6jKsQDhRM9KK853bEFArpI8
+ ZKX33McqPzhYixBbiDC89+903FSNgqjd7dLLU0jWseTrc2U6maQ5sBzT
+X-Gm-Gg: Acq92OHoveKBPnyJlLfG8LJSf1AO4AkVYESgQAQ0Pe7Riie7ZzyK0/6A0Ffc08bWf2b
+ OlEfdzifSp3Rm9gO+AqhVo81GMlTfYasgVgJdWtyL2jzdCSp15rJi253mrYp/w4ZAiCfi3Yye4w
+ yufBqivsC70iJ7uppoZDiUGYu+C5Sv6rzhyXS6IFY+oiojku2y9BadeOuvFnS5+YeBbppaWbSGe
+ Zxyj6RXpyLGvfjjYzx18vBF1L9nQzTJ0Ona5L+Maz+RhLImVvsTg1kBBnVhOqOfgzQ5sHXqHnRG
+ kkehFQwEOXmDuZs/Wa1yrlDglayG8NjvbenqEIyFh/erryLsAQM/9Cg+bvxIQrZw/4DfVq0EmaD
+ ijwB/V+cRZlqsUmhHAXI+Iu3CQG3x7B1R7jh6m4qgs9h2rBj1mBFgHzKBbIRxOWbXatgiruf1Q/
+ TNkKz+acxuILUhYeET+v4lDEMuQy9zfWF7RhzRu4bRf1XOQlqYlXg76AzbF8Gdf5DDyFTOlh/IO
+ SVW5TUZRNSen0sA5IeelDRPvDFIxpL5Wvsrt0Ha0DH++vGopxDqsBC3kQUa2xD/eYIVTRRTZv+I
+ PbVJNg==
+X-Received: by 2002:a05:6808:c3ec:b0:479:f370:fac0 with SMTP id
+ 5614622812f47-482e5611657mr9044871b6e.18.1779082173130; 
+ Sun, 17 May 2026 22:29:33 -0700 (PDT)
 Received: from mac.localdomain (71-218-255-245.hlrn.qwest.net.
  [71.218.255.245]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-482ee5349a5sm4628357b6e.15.2026.05.17.22.29.33
+ 5614622812f47-482ee5349a5sm4628357b6e.15.2026.05.17.22.29.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 17 May 2026 22:29:33 -0700 (PDT)
+ Sun, 17 May 2026 22:29:32 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Sun, 17 May 2026 23:29:09 -0600
-Subject: [PATCH v8 12/35] target/mips: add Octeon ZCB and ZCBT instructions
+Date: Sun, 17 May 2026 23:29:08 -0600
+Subject: [PATCH v8 11/35] target/mips: add Octeon SAAD instruction
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260517-mips-octeon-missing-insns-v2-v8-12-206151ee77ec@gmail.com>
+Message-Id: <20260517-mips-octeon-missing-insns-v2-v8-11-206151ee77ec@gmail.com>
 References: <20260517-mips-octeon-missing-insns-v2-v8-0-206151ee77ec@gmail.com>
 In-Reply-To: <20260517-mips-octeon-missing-insns-v2-v8-0-206151ee77ec@gmail.com>
 To: qemu-devel@nongnu.org
@@ -85,8 +85,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>, 
  Paolo Bonzini <pbonzini@redhat.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22a;
- envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x22a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x22f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -110,84 +110,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ZCB zeros the 128-byte cache block containing the base address. ZCBT has
-the same user-mode-visible memory effect for QEMU purposes.
+SAAD is the doubleword form of SAA: it atomically adds rt to the
+naturally aligned 64-bit doubleword at base and discards the old memory
+value.
 
-Model both forms with a single decodetree wildcard entry, align the
-address down to a 128-byte line, and store eight zero 128-bit chunks to
-guest memory.
+Route it through the common SAA/SAAD translator so the MemOp selects the
+aligned doubleword transaction size.
 
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
-Changes v7 -> v8:
-  - Fold the ZCBT wildcard decode into the ZCB patch so the series does not
-    add a ZCB-only decode and rewrite it in the next patch.
-
 Changes v6 -> v7:
-  - Use 128-bit zero stores with MO_128 instead of sixteen 64-bit stores.
-    (suggested by Philippe Mathieu-Daudé)
-  - Fold ZCB and ZCBT into a single decodetree wildcard entry instead of
-    using a duplicate entry with a selector comment.  (suggested by Philippe
+  - Use MO_64 for the doubleword atomic transaction; the signedness bits are
+    irrelevant for a discarded fetch-add result.  (suggested by Philippe
     Mathieu-Daudé)
 
 Changes v2 -> v3:
-  - Split ZCB/ZCBT out of the combined Octeon arithmetic and memory
+  - Split SAAD out of the combined Octeon arithmetic and memory
     instruction patch.  (requested by Richard Henderson)
+
+Changes v3 -> v4:
+  - Note that SAAD shares the Octeon+ gated SAA translator path.
+
+Changes v4 -> v5:
+  - Drop the Octeon+ gated wording/path and keep SAAD under the existing
+    Octeon feature bucket.
 ---
- target/mips/tcg/octeon.decode      |  3 +++
- target/mips/tcg/octeon_translate.c | 27 +++++++++++++++++++++++++++
- 2 files changed, 30 insertions(+)
+ target/mips/tcg/octeon.decode      | 1 +
+ target/mips/tcg/octeon_translate.c | 1 +
+ 2 files changed, 2 insertions(+)
 
 diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index d77717cd50..01ed3b50be 100644
+index d6b241de42..d77717cd50 100644
 --- a/target/mips/tcg/octeon.decode
 +++ b/target/mips/tcg/octeon.decode
-@@ -49,6 +49,9 @@ SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
+@@ -47,6 +47,7 @@ SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
+ &saa         base rt
+ @saa         ...... base:5 rt:5 ................ &saa
  SAA          011100 ..... ..... 00000 00000 011000 @saa
- SAAD         011100 ..... ..... 00000 00000 011001 @saa
++SAAD         011100 ..... ..... 00000 00000 011001 @saa
  
-+&zcb         base
-+ZCB          011100 base:5 00000 00000 1110- 011111 &zcb
-+
  &lx          base index rd
  @lx          ...... base:5 index:5 rd:5 ...... ..... &lx
- LWX          011111 ..... ..... ..... 00000 001010 @lx
 diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index d3dfef2e0c..d89e53045e 100644
+index f00692830a..d3dfef2e0c 100644
 --- a/target/mips/tcg/octeon_translate.c
 +++ b/target/mips/tcg/octeon_translate.c
-@@ -176,6 +176,33 @@ static bool trans_saa(DisasContext *ctx, arg_saa *a, MemOp mop)
+@@ -175,6 +175,7 @@ static bool trans_saa(DisasContext *ctx, arg_saa *a, MemOp mop)
+ }
  
  TRANS(SAA,  trans_saa, MO_32);
- TRANS(SAAD, trans_saa, MO_64);
-+
-+static bool trans_ZCB(DisasContext *ctx, arg_ZCB *a)
-+{
-+    TCGv_i64 addr = tcg_temp_new_i64();
-+    TCGv_i64 line = tcg_temp_new_i64();
-+    TCGv_i64 zero64 = tcg_constant_i64(0);
-+    TCGv_i128 zero128 = tcg_temp_new_i128();
-+
-+    gen_base_offset_addr(ctx, addr, a->base, 0);
-+    tcg_gen_concat_i64_i128(zero128, zero64, zero64);
-+
-+    /*
-+     * QEMU models ZCB/ZCBT as zeroing the containing 128-byte cache line
-+     * in guest memory.
-+     */
-+    tcg_gen_andi_i64(line, addr, ~0x7fULL);
-+
-+    for (int i = 0; i < 8; i++) {
-+        TCGv_i64 slot = tcg_temp_new_i64();
-+
-+        tcg_gen_addi_i64(slot, line, i * 16);
-+        tcg_gen_qemu_st_i128(zero128, slot, ctx->mem_idx,
-+                             mo_endian(ctx) | MO_128);
-+    }
-+
-+    return true;
-+}
++TRANS(SAAD, trans_saa, MO_64);
  TRANS(LBX,  trans_lx, MO_SB);
  TRANS(LBUX, trans_lx, MO_UB);
  TRANS(LHX,  trans_lx, MO_SW);
