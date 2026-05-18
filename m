@@ -4,148 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6592FCD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 08:05:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90BE7CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 08:08:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOsy2-0007qA-0L; Mon, 18 May 2026 04:04:50 -0400
+	id 1wOt1E-0000o8-8x; Mon, 18 May 2026 04:08:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
- id 1wOsxz-0007pc-8V; Mon, 18 May 2026 04:04:48 -0400
-Received: from mail-japaneastazolkn190130003.outbound.protection.outlook.com
- ([2a01:111:f403:d405::3] helo=TYDPR03CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
- id 1wOsxx-00052l-AE; Mon, 18 May 2026 04:04:47 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=GYrz8Q4PxRU/b8YhoWswwybCFoly4jKaQb2Cmu6GLxQDATs3pwCJiIT2pMNKbzoy4dGu75MYoRfnaOxY7ryGaBSnJhmIxlUnR1QTAh0SfEIb/xvthfducXZ+nnjB5nsHV80pnSL3PBKffO96Ol2e7FSE1sGlnXUlPwq6tnDHpEWI5597dFz/NylpGMv8utPK1SbhsxmJ29sAP7EKAw0FGH//XXVCHGmzEYMrhR97dMky7JGkOnwN5qy+6u0nIGfSyxA6SCg/HWoVpT2JWNlw2p9rF0hd5sJiHVYOI6gcr5sxhhlmofRHFDStu+7N/9AMJQPc0ahS3oUuW/R/iBeIYA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qGnclxtpHkVxBYYdBeR51CJPGuH6eTJ7Uxjw30/BV5o=;
- b=LuBSpiTON+GsZ1zA58eWgffMIjjyI6uJW1ZTDdyZgdjnevl7EWEU4iuthBT4UhkcxMQlyvwy+dly1OnsAVnZSAI81uabuM/Mg1Zv2w2s1xwRn0GV9d/fJJw/BGEqDA7MDsITwxn9elqzBK/OxWcFjk2Tzc/DcB+9fMQtU4RVvYDBBZN4fB1KEwnHEuxFvH8YM5l4DPh+jzxXZXF8QATlrhkfb4faBjiE1PuXNXg/D/smXVNQyrrgnJicTpPK+y18/AvcyDaiKpG56kADgHEEUIRPUiewGhFeLS9AnlYyJUYE7HTR+IWOu0y/mGWjPFLCZoylFFcx7COKDS0KliKp9w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qGnclxtpHkVxBYYdBeR51CJPGuH6eTJ7Uxjw30/BV5o=;
- b=BvrifmwDOqhN/Dz3wuEikNdwoEZAK9+N76C+xLpcBjkL5uFi/v6iwq3prGiT95JAyQ12VC0yodKVkVEna6T7z5ztahfKNNov+YAOoOTzhBqxySvoecCP5CuqBXV0pI1XN0tbkIGAWfoWxvpGtJ7KNNbfRrV5PUtBYY1IGHuAsZYgS7cBDJyJBARXuO9ij43oRzKARDd2VMIiTavK8ZeIqV7p3ATxjcIlC5CNUZHBq/bQLQJ6HlqPnpdzN9tdmcOTs50/z6atKXkE2b2r8cz/ZywtHNFhcnzEY2W2/twz9JrbO1dZuAjMGP8pHsN+U88Js9/IwSvJH+fBCUgpIo973Q==
-Received: from TYQPR04MB8919.apcprd04.prod.outlook.com (2603:1096:405:2ff::8)
- by SEYPR04MB8914.apcprd04.prod.outlook.com (2603:1096:101:2d5::5)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.25.21; Mon, 18 May
- 2026 08:04:38 +0000
-Received: from TYQPR04MB8919.apcprd04.prod.outlook.com
- ([fe80::9fd0:3e67:e02d:4a4f]) by TYQPR04MB8919.apcprd04.prod.outlook.com
- ([fe80::9fd0:3e67:e02d:4a4f%6]) with mapi id 15.21.0025.020; Mon, 18 May 2026
- 08:04:38 +0000
-Message-ID: <TYQPR04MB8919508A10DEA9A3A3DDBA3FF3032@TYQPR04MB8919.apcprd04.prod.outlook.com>
-Date: Mon, 18 May 2026 16:04:32 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/riscv: riscv-iommu: Re-process command queue after
- clearing CMD_ILL
-To: Jay Chang <jay.chang@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Frank Chang <frank.chang@sifive.com>
-References: <20260518070143.8405-1-jay.chang@sifive.com>
-Content-Language: en-US
-From: "Nutty.Liu" <nutty.liu@hotmail.com>
-In-Reply-To: <20260518070143.8405-1-jay.chang@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TP0P295CA0020.TWNP295.PROD.OUTLOOK.COM
- (2603:1096:910:5::10) To TYQPR04MB8919.apcprd04.prod.outlook.com
- (2603:1096:405:2ff::8)
-X-Microsoft-Original-Message-ID: <2aac71b4-1da0-4d53-aa67-822d29d0fa55@hotmail.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wOt1A-0000no-Lv
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 04:08:05 -0400
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wOt17-0006Wn-Tx
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 04:08:04 -0400
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-7bd5e373d07so13410217b3.2
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 01:08:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779091681; cv=none;
+ d=google.com; s=arc-20240605;
+ b=EWemULcfiKTEd8Ly+3Fu/FgKBmsQ+OV6SwoM1O++P6naniBz/gv0LXO465yqCP6ySj
+ uNmTy7H9c4igObSrmDHt7n1k9ijyLV4iVbfeImftJ4f1rr3Q4w03gZJdJS9n/dHtXozC
+ +JrzS7XA/puFia3W5pe0Y0R0Wwn4ULaGK4/LjW4rHXHdW21LTf6BmDMdoPB/3VzaDNJ2
+ GnwCw7WKNybaCfiq1ygxBvQZ7WzcUVbEp0P143c8xLCd+KGL8FsSaw7gD7pJGu4834oa
+ OnIhiUM8HrtS9mo2IKgdJ83ETZr4EuYtH4Bw1pHeA2k9eZ9Wk54Ux2l7/eMzELSk2gQB
+ Q0NA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=mF8/OyME8P+WqAHdnlKSikaJibRkpDmpkpdTAKme0ts=;
+ fh=GI2e/SBiq4MTIPc9mHou6R6WJe3VvhdDMWKbaXflkfU=;
+ b=bO51hZJYR6cUVTxAXcLM6fxn44OvGnu5VjsehJXyVGJvGGdKjC4D5mR5GnEUc37T18
+ ghraibLCBC774VtYYRk1rxOOlRXmDWYna3N7U/AapO4E+0ruv3Q9I525OVINZo1x+WQc
+ pYwR0ZQ4x7+TjjtLIUk9Dn4xeNucvHcCofptqd1+m2n130pt9+k+IYSfw7ShUhznmWLh
+ 2UywBZxbfFxud5p2fPSDDHH2DckC/63fX21R2njTKnWdMOlf6EQvlE24hPHiw0o/D5ru
+ lhUzgZQhLSPPZV1PzgwbxGNoOHQGiNNLnSpBW9ljMlJkZkax1Ks6NKINNtD1hF4SmP/A
+ 2UHA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779091681; x=1779696481; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=mF8/OyME8P+WqAHdnlKSikaJibRkpDmpkpdTAKme0ts=;
+ b=NtSv4t2ClMFZhxKDUXpjyL0ITMgTFqKgPUlHzIHTbJQ7tyHkcseGsg3ZmFvh+E+nGV
+ bmAAvn7GoSEx+sO0aqEHAoaF6euulAoxqwSDldTf3fUgvn2rTAxEwBof+pW1Iv0TnGhk
+ gObq0YaXwDUpnsvITHDJsw7bv5kc9fuMHDaZEt18AkreluFsKBHdUbFlsjryCSr8j9h/
+ bsxcnTwRDvOX44QPXl1RJ/gcO4VNhdGYllAw2q1O71j9XdufMsFnxDs0DcRK4zBYxArh
+ JGL36SxixZhnrvmnfbImEsWZq3YfCnIl2GSGiVgNZWgwDxbuzuxEzZuN7UN4JZzNCeda
+ T+Gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779091681; x=1779696481;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mF8/OyME8P+WqAHdnlKSikaJibRkpDmpkpdTAKme0ts=;
+ b=BZsSILDZEiazGPXTbubCB05g63GxVIplfigjVmiXVTBN/Qg2fSaRN1RvuXhLufk1tx
+ dt0q6m5E7MpobmCM5knsXEXgqU64Ec1aDVQGGPiw/ysnBKHbNfEFU42dOUM5uHVfEGyZ
+ yIcY1bVO2xxQ4jxvNUXCdQXnmSjLnAkvSXFxou8VG0t2pYKQhfPwHs1dvtrBuQeg9uwf
+ UZOakxudbhuYCCoy/0E2Ai+Ft/ssyg3ddMv1hgQQigOt70bHHQSrIJecQlSrw8fIl/A4
+ 8JtF61X6g1ZG94LczUqyXgEnixj9PqX9PU0nsg9yKmgLcUdB9+l4pXKAxH5BVZE+N3JV
+ TkVw==
+X-Gm-Message-State: AOJu0YzLryobqZo0GhYZFxhuaf3H+oHjniS23DVJrh90vbQmsBexjb3T
+ xqd5qepuKlz6VpeIG3hMbjkuHqrDWe6gQ2w7v1ZAzO2TnNZEunvQfSqP2ez7xXl79BOGWocnjSA
+ O2zzfQc9YC4sqDvk1oDf9S4GBk4FK2p9pO7sUJT4iTDIMJ0jdc7TT
+X-Gm-Gg: Acq92OE+lHw85fdQmAeIeT961R8bzzDt0LGrW7vsrOWjbhLav69uaZiMRue3CaVzRBa
+ fk+eQ08GYOT+eN2dHA9VvHiYvMzBM6MM042vQB0slHi+l4a4vX5x6Ic5U8CAN/TGyaOuo5/RAMk
+ 25VBnvpjE4TsigM3K78HvMtpI9pcmVvQILWeqknhPb2T4Ydn1TsxfLcjEpGhcGsC6n5NTXSSVB3
+ kTV52WFd9hq1u53QVrBnN8f7/LT7DmLumMgTy76Q65ihoXftkmtQ4E4tf2VQd7xRQD7zC8wtAkV
+ bXQ8oZ2BbujYEZLv/meVn6PZEInswyDnc1TYEwXN6a5ZDBPMACySDiocrr8F7DpgdH7dlzSp6MJ
+ gXQ==
+X-Received: by 2002:a05:690e:1908:b0:65e:c81:3a6f with SMTP id
+ 956f58d0204a3-65e2278f705mr14193995d50.27.1779091680706; Mon, 18 May 2026
+ 01:08:00 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYQPR04MB8919:EE_|SEYPR04MB8914:EE_
-X-MS-Office365-Filtering-Correlation-Id: a3f9e113-4cd6-4cc7-721e-08deb4b41b27
-X-Microsoft-Antispam: BCL:0;
- ARA:14566002|19110799012|45011099003|5072599009|8060799015|23021999003|12121999013|6090799003|15080799012|51005399006|440099028|3412199025|40105399003;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?L0hVV0JRelJsQWhpODhtdENnK0tEdXViTjV3aENpK3UvbTdOdXJHR2tnWmwy?=
- =?utf-8?B?ODJEemFDMUo3MjRBSHJDNE5uRkV5Zi95eGpYKzduL1hybTM5THZBM291ejhS?=
- =?utf-8?B?WlNuOHgwSzk4ZklIZnh5OHNJUTViTHE4NmxXTlh3Z1ByY2puU3RmaTA5UVpl?=
- =?utf-8?B?K21HRE1TMTRpaHVNREFmbFYwdkN2cldrUlhweWNkSURmK0g4Ri90aGM2TnJn?=
- =?utf-8?B?UWlRVlhzYTBENGY2VkN5UkdGa2hPOVF2MXlCcDg1SE1XRmJGZmJEdkxkS1pq?=
- =?utf-8?B?cm9TVi82U29pNTI2RFFhd2crN05LeDNUYjlPRXRKWU85RWxrK05DZ1BBZGcz?=
- =?utf-8?B?Zm5sWDBrWTkrU2M4TEJWOWZpVWY4UnRaRzRKcXB5ZHZmbWREQjNYVnFtMlYv?=
- =?utf-8?B?aG10MmlXK3VQZ3BsSGFxZHhRdmJHVWpENSsxM25McWpzZENraUFpMDNUdmNt?=
- =?utf-8?B?NnVqY0VCM0pPMmtWYm9ZbHVJcGs4ZjRXeG9rS2FGVUZ6alczVEtNYlhWdWx5?=
- =?utf-8?B?Sm13bnEwRXZHdWM3UGxaeVlNMTdsaCtoUEFvM00yU3FWRi9ZVGtKOEpVTmd4?=
- =?utf-8?B?R3phaTNRNXYwNFhzTjQ3dVp6LzR0S3B2ZU5vd2tEVG56U1dJK1phTDVNMEpi?=
- =?utf-8?B?SHZZdCthMmN5WUVGME9ZdHJzZmFtS3V6dFY4aGkyb2gvdCszRzBzdWZrU0Nr?=
- =?utf-8?B?MWlRRmdjRW1GY29ZOTl0eU9UUUVvNW5aRVRMM05PSFF2cmlXOGZka2NZdEU1?=
- =?utf-8?B?NHpKZHFqLzZ4ZjBGUnROZWJ5Y0FnektGbHdoMU8vNEphQWlJTmpBUGRyRkV5?=
- =?utf-8?B?Z1hLbDhVNWtoNU5zYi9EZUF6RnI2U3I1THQwTWl1UU54NGFEOHIzSWhrUHRU?=
- =?utf-8?B?WkpPdmoxcFpmTU1zNldGTXZTM3pjNEFSeFNKR01NMGVWU3IrS0lPTm1KNzg4?=
- =?utf-8?B?VU5GdlllVlcwQmMrNjhidjUrM1BMYjJxM2ZzY0FQMEVZVUZ4ck5xaG92TThI?=
- =?utf-8?B?WjNCenNoZnVCc0pzSk5nN3B5QURCbkhkMjF5TTl5d1ZoUzRsUjlhSFVDeXdi?=
- =?utf-8?B?ZTl2RGZPWWlEZDFSNFNOM2pESUd0Z04xU293L3gvQlBJRDBMT0FhKzgrL25x?=
- =?utf-8?B?Q09DNWp6SStjL011bHN0NFlYMDFBSVFpeHRnWWtzMm5Lc2VJNGNuZ0JJVk1u?=
- =?utf-8?B?WGNLazF6enFOUEJhQXFpSnJiZXVHb2VSRTUvTnJhZTRvRDR5YVRaY2hLQzJK?=
- =?utf-8?B?UGZSZ2E1YTl0eE53a2MxNndwMDJhUVgwSy8rdW9tNk8xeDR5Y3FiT1U4cHF5?=
- =?utf-8?Q?YtUD5DaDj/l93m/OwR4ELab4fhHAGvCqQR?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Y25CTG00N1IyN0tRSnlyNnhNMFhpS2hBMmd6bUw4NnB1ZlAwN3AzbktUdFdz?=
- =?utf-8?B?cUhkRnRxQisvSDRMYWpkZmhnZUpldmZiN1AxQU5nWHRRT1ZRRnZKb3NJZnN0?=
- =?utf-8?B?ZjF0V2o5aklla2ZMa2laMGgxdCtLWVJtUzJGT2NuZ1Rkcjd1bVdjaEZ2cWlk?=
- =?utf-8?B?VXp5cXJENGNVYkVPNXAwUXY3MVgwcVdGeENydGpXaWpEMFlrK0dvVk9UZHho?=
- =?utf-8?B?dFNNTWwrS2RIVGxSRFBBcHNaSjJTb0g3ZlgxMVRoUTNxdlNBVkw1SElJc3RX?=
- =?utf-8?B?NEw4ZXMwNWlCZG9jRkNEUUlsRlpZNnBvQ3h3MEpleVRIK2ZVaE5VQ2UvNldC?=
- =?utf-8?B?ZjhvN3A4MERJRGowM3NQOUdJZWN2U1dQM3o0YUJXUzFxMHhaKzJ3Z0NWc21F?=
- =?utf-8?B?bG5RUFRQN0JSNHJsNGlpWnphaHh0Wmx2NUNQUkZJbDNvWlgzaHgxaVBURFBj?=
- =?utf-8?B?ZndrQUFGWVZFZHhJWjNiTHhWOEZQbVBGYWM5RGx2SFZrWGxyUmtZWURJWEgw?=
- =?utf-8?B?UHloSFExdjl0YXdCU0NkSEcwekhjYUxVNGVheitiR05EZml2c3N3L2lIQU5C?=
- =?utf-8?B?dC9BeVlVMXFIQ2xpRm41R0I2eUdVaTZEL1pJcStZei83RG9wbVN3SjBIdHU3?=
- =?utf-8?B?UzBXNVdUMHRSc1c5cEVPMkorRFJLNG93YUlhclNyWWJucG4zK1hzWmVhY3R6?=
- =?utf-8?B?MnJ6OE9XdGowTkk1ak5Zc2IyZFlkT3htV2tpUnljYStMaVJleWlHVThMVjY2?=
- =?utf-8?B?d2Q0UzdMRVpzUHI4bVNMMUtTZlBCaXZ4NlBEVlRGR2xTYi81aVRsNngyejd1?=
- =?utf-8?B?dFFMSXBrUHdBaHk0VEM3RWxDclRjSVpTQ1lNNGNTUnBvYk5wYitjaEV5RmNz?=
- =?utf-8?B?aHBBNGk1MCt2cXRFa0VFNHV3ajhPZTZJaXZ2K1VnM3NmZ1ZrZXd0RlRIL0hn?=
- =?utf-8?B?WEVvMS95M2Y0cTNxenQwVXd3d3gwWEZaNUxIclJDSzBaR2Mrb29SQ0l5bFhD?=
- =?utf-8?B?RVNxRE5EOEw0SEQ4M0JyUlE0Q0o3aFIrTXVIOXRzNDVaOGxSOWJ4NnFWTG1Q?=
- =?utf-8?B?bmxOQml4RkM4QWJsSjR2OUtNMThCb3FNSGZUVXRWYjhEZlN4OU5tZHM4SzA4?=
- =?utf-8?B?c0Nhc2E3ME9nZ2xhWnRJTHVwOFZFMEtDUFpMWS9EWnkwMGRSZXlvd2wrRllE?=
- =?utf-8?B?eTkxQ2kzK3pobnNsZkUza1BhRkpTM3NXaDI2a1JmWE9xOTgwSjVadWpKcE54?=
- =?utf-8?B?WU1oVDNqQlFLeFhONmtRSWpDeEs2UDVITitudy9xamdFeXhKUnJBb1lYa1ZX?=
- =?utf-8?B?YTJmQ2dQSVBaTVRTcVRaT1dkSEY2U1RLVEVxSW1yck1uYjZCU21FY05nd1E1?=
- =?utf-8?B?N3UwVXROSjhNZ3BRK1BIV0RtbFhLbXVLK2dmaHdhUWlPeFB2aDFON3oyUTRL?=
- =?utf-8?B?MGJPcmdNZmE4Z0dBTDB4L0VHbkZ6MEl6dzR0REc0MGJ6T09UcENkeGxjN3dB?=
- =?utf-8?B?V1JoUEQ5RU8rZ1hzeDM1dDJEa0NVMmxNK0xRQ0x5bkFxaTNqMUNUek9pU0tL?=
- =?utf-8?B?YXhCb2FvTDEzSnliWlF1ZW5Ia0VGR0dJaTJab3l5UXBGRldSakl2Q0Q2Rjg1?=
- =?utf-8?B?Nng1ZnZ1cU5FcG9jcGpHMzRJd2dEaE5Pb1BobzNPZkN6V0dEYm8vVmpBMjhL?=
- =?utf-8?B?WXpWMlBFbGpqNTN6TTRPdnNYWTc0MHRENHdyb2ZXbCtrbkd6R1NHSW1WbnIv?=
- =?utf-8?B?RElzNElUSUtuWjUrSnprUzQ4RTJxOStPQnJoUUNoNVJGWmpRUlp3cmxjcm5x?=
- =?utf-8?B?VVBrei8yQlZMRWU4ZDlJWnpVTkdIWGdiLzBYRnF0TTdBUnFrOTcwNFFHcitM?=
- =?utf-8?Q?6n+lgmzuR7bbr?=
-X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-c3e7a.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: a3f9e113-4cd6-4cc7-721e-08deb4b41b27
-X-MS-Exchange-CrossTenant-AuthSource: TYQPR04MB8919.apcprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 May 2026 08:04:38.1228 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR04MB8914
-Received-SPF: pass client-ip=2a01:111:f403:d405::3;
- envelope-from=nutty.liu@hotmail.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
+References: <20260512203414.3633237-1-peter.maydell@linaro.org>
+ <20260512203414.3633237-12-peter.maydell@linaro.org>
+ <c9300c93-b20e-45ad-9b93-d23e19e58a80@linaro.org>
+In-Reply-To: <c9300c93-b20e-45ad-9b93-d23e19e58a80@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 18 May 2026 09:07:49 +0100
+X-Gm-Features: AVHnY4KM6e0fH2nSqu-Vu8yKXJiNU8AC6I5kqRv5b2ZqoJYFKq0UfVabMVMTpfs
+Message-ID: <CAFEAcA_Pfnv95bB+st=9V87cg964a3gh1wEX6SB31fNe6q6LeA@mail.gmail.com>
+Subject: Re: [PATCH 11/12] hw/dma/omap_dma: Remove unused ifdeffed out code
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,48 +116,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Sun, 17 May 2026 at 18:19, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 5/12/26 13:34, Peter Maydell wrote:
+> > The OMAP DMA device includes a lot of code which has been disabled
+> > via ifdefs for over a decade. Whatever this unfinished development
+> > work was, all knowledge of it is long gone, and we're unlikely to
+> > be doing any serious work on this device model in future. If we
+> > did, we'd likely have to start from scratch.
+> >
+> > Remove all the ifdeffed out code.
+> >
+> > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> > ---
+> >   hw/dma/omap_dma.c | 94 -----------------------------------------------
+> >   1 file changed, 94 deletions(-)
+>
+> There's a bunch of code that's mis-indented after removing some ifdef'd if blocks.
 
-On 5/18/2026 3:01 PM, Jay Chang wrote:
-> When software clears CMD_ILL or CQMF error bits by writing 1 to CQCSR,
-> the IOMMU should re-check the command queue and continue processing
-> pending commands if head != tail.
->
-> Per RISC-V IOMMU specification :
-> If command-queue access leads to a memory fault then the
-> command-queue-memory-fault bit is set to 1 and the commandqueue
-> stalls until this bit is cleared. To re-enable command
-> processing, software should clear this bit by writing 1.
->
-> Signed-off-by: Jay Chang <jay.chang@sifive.com>
-> Reviewed-by: Frank Chang <frank.chang@sifive.com>
-> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Yes; I deliberately didn't reindent as the patch diff would then
+be harder to read. I should have put in a separate reindent patch
+afterwards, though.
 
-Thanks,
-Nutty
-> ---
->   hw/riscv/riscv-iommu.c | 10 ++++++++++
->   1 file changed, 10 insertions(+)
->
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index 5bc2472a83..1b8a8e9ef2 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -2034,6 +2034,16 @@ static void riscv_iommu_process_cq_control(RISCVIOMMUState *s)
->       }
->   
->       riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_CQCSR, ctrl_set, ctrl_clr);
-> +
-> +    /*
-> +     * After clearing error bits (CMD_ILL, CQMF), if queue is still active,
-> +     * re-process pending command.
-> +     */
-> +    ctrl_set = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_CQCSR);
-> +    if ((ctrl_set & RISCV_IOMMU_CQCSR_CQON) &&
-> +        !(ctrl_set & (RISCV_IOMMU_CQCSR_CMD_ILL | RISCV_IOMMU_CQCSR_CQMF))) {
-> +        riscv_iommu_process_cq_tail(s);
-> +    }
->   }
->   
->   static void riscv_iommu_process_fq_control(RISCVIOMMUState *s)
+-- PMM
 
