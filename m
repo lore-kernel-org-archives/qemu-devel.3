@@ -4,112 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB4DCCD4F4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 14:35:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69B0BCD4F49
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 14:45:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOz3x-0001UE-An; Mon, 18 May 2026 10:35:21 -0400
+	id 1wOzDL-0003t5-HI; Mon, 18 May 2026 10:45:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1wOz3v-0001Tq-26
- for qemu-devel@nongnu.org; Mon, 18 May 2026 10:35:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1wOz3s-0007s9-Tn
- for qemu-devel@nongnu.org; Mon, 18 May 2026 10:35:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779114915;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7MgIlykHkGNF8bfeDDgS7KR+swoaarGo4n37t1LGEOU=;
- b=RBO1s2dIXyphcQk8tQ80BqZm9OFygm5v1OaP1fjqksbZVaviPhuFIQsw6aMJfU/iX/NaiI
- ecROqldJe8Yc2uyabrgXyXjoy7bcJkaBlMdmIydz1YuAKKUpxFqs++er/gpX7OxC2XY2KA
- 3jQ3OPdAqytOyxU9xcNcQ72YVwjLbMI=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-353-7C3b-CtWOUuv_AdtPb-yqQ-1; Mon, 18 May 2026 10:35:14 -0400
-X-MC-Unique: 7C3b-CtWOUuv_AdtPb-yqQ-1
-X-Mimecast-MFC-AGG-ID: 7C3b-CtWOUuv_AdtPb-yqQ_1779114910
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-45e78dd7baaso1322510f8f.0
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 07:35:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wOzD5-0003sV-Hu
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 10:44:49 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wOzD3-0002bP-Qg
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 10:44:47 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2babfd18435so9619885ad.1
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 07:44:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779114910; x=1779719710; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7MgIlykHkGNF8bfeDDgS7KR+swoaarGo4n37t1LGEOU=;
- b=lr92Zr4I9sgo7nmHAZUH4Ri/g/IoBA48yXPOAWuX1jjymmNfhux8UdvbMtjQKsCqdQ
- 2/k2Ou75uWsZIZVezi36Jke5XXx+ONZ3GbveCYJhAXhLC9TjnxZ6iwW7r9WTSD3B6aaf
- ej1elTusMA49NEWvd6/7K8uLhSzX4QnK1haMJrjPtzdHtdzT3VqP1qdyOQM28znz92iH
- 9b4tfDOBehw8lo+4XV/UYG5rE4RCpL+s7yxIkT23UacK//5APOoec6GdGhv9pWw2+lOw
- zEU778GVJoywG18gKDQsuYC/GmUEHz2Akqbd3EgdsSfHhuJMxupuH+LswhbUicTCaNn0
- HEaA==
+ d=linaro.org; s=google; t=1779115484; x=1779720284; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LxGxP54sIf9Ea7LpRahtjVWCCrPJDxFOp3Hcmc0VUEI=;
+ b=Gs4a9uz3DI8/9MbAvK7HkNA8QY31IPMkj5+kY1H0Johci07oYyNkZThCHob3gFCE3M
+ Df8/5NIS0ErMDI+ePa7EXvCue1OxekV2NBwRUwj6KjsS554XIldrrOlvwOPl8lengLfK
+ sNGcEBcXtOJ7Lz4/XHJ++mx6gJxGO5/8VCQ7Nd2ocyOXzSuEWNEsTsXwhc3m1L2AwgB8
+ +pdP69UQLBcZwzt1/m9Ei5FGMtfpqauFvlsDUyzOdA2qHDnuA0PbJ56asiWeMh5oaF52
+ fEAHDuR87HRUjTBA/MgEddGh3gos3sDlSLHCeGNxb00wTJx9KU1nYUbAc3dS2bOzbKpT
+ gDRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779114910; x=1779719710;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=7MgIlykHkGNF8bfeDDgS7KR+swoaarGo4n37t1LGEOU=;
- b=EqQOyBZtx6m0uUXl+Y8STqWYNQZMkKgEaggpI1ilkyCC6vMi9ySprGbLctBha2n2nz
- VE33D16208JBizHVpu33LPBdNYVu0HG2VYMxXTivDQJAQ6h+w3a+n3ZQ5r0cwCTPD5lw
- 9LZN4r2EFh+zHndVNTzdDMw3/TJSXPQJtU6pe/PRHy4GCH6dRiAm2TYhoSOjPLGX1O8h
- Q3vmP+q64zHsMNClV4X8+ce2w+KiFVPrrVwwqruk2WhuIaRJhd+zEuiaiMM+jVhyXv1C
- n3hu/Y2ILWNAhzFynhf64rueGvxk0NIPcLgfmY1eH7sYbM+05+HmCuoN/VSdI686QlmG
- 1C+g==
-X-Gm-Message-State: AOJu0Yz6xZtq9RRVnXHqkmes/yUFvD8m55Y05onv3J4RF4/o+Vxk+/K8
- acU6Bpvgp+OTnDUIcnYxyR0cy558M6jalFqvaQ4tD2T+ZWsQhZWAHhzh49xyrPMqgnKctcuiQbO
- BROVnuPQDhDLQU4RB/xgizlOYZopVxsHUmOGxjRzjQgltotKqra6T1NY3Qy/rjPvXq/MtPRB/gA
- NBAehiapecKGDVjWOiQrdqKgAP49ZCdcuSmOBJk9Jr
-X-Gm-Gg: Acq92OEvb/3f7KgOsf5NF8BQwq5ouYWGqeWGRWS21Ix79kEJacZNrhf12DFw73Q20SH
- nuFfHNSqqn15Gfc0lX0cLYqBXeO69KVr9YK2iatYe7ZjfT/iOW0IzTAL76pqYdumfEhmWtUsxAr
- 3Xc4f1lYMN0slaKITEKE86Mnsw5oQgLKre7rEhhSmxHsCpcjNCcNJsJSP71TY1hwwNmIosebWex
- FqxjklCG+jQfOMeL1JuEtgmEQHttxrLZdpOJodPpbgl+ivUjkYojRQUsYtG9Xd1CGgvpz12ymN6
- 2lrc/NiiKgF/OVj38Q6+VRIoDWPswD295t1MvOYNluGqi1G44moz4l2C714FUZcnMXzTaCZtCOA
- cCt1PKA==
-X-Received: by 2002:a05:600c:a406:b0:48f:e230:1d12 with SMTP id
- 5b1f17b1804b1-48fe6329913mr188799715e9.31.1779114909740; 
- Mon, 18 May 2026 07:35:09 -0700 (PDT)
-X-Received: by 2002:a05:600c:a406:b0:48f:e230:1d12 with SMTP id
- 5b1f17b1804b1-48fe6329913mr188798985e9.31.1779114909192; 
- Mon, 18 May 2026 07:35:09 -0700 (PDT)
-Received: from imammedo ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da0fe248dsm37143726f8f.30.2026.05.18.07.35.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 May 2026 07:35:08 -0700 (PDT)
-Date: Mon, 18 May 2026 16:35:07 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: peter.maydell@linaro.org
-Cc: qemu-devel@nongnu.org, mst@redhat.com, anisinha@redhat.com,
- pbonzini@redhat.com, shannon.zhaosl@gmail.com, philmd@linaro.org,
- zhao1.liu@intel.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com,
- qemu-arm@nongnu.org
-Subject: Re: [PATCH v2 00/21] Introduce ACPI watchdog for Q35 and arm/virt
- boards
-Message-ID: <20260518163507.7b794600@imammedo>
-In-Reply-To: <20260512153057.1a353c3e@imammedo>
-References: <20260303092532.2410177-1-imammedo@redhat.com>
- <20260428161215.49cc1c0f@imammedo>
- <20260512153057.1a353c3e@imammedo>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+ d=1e100.net; s=20251104; t=1779115484; x=1779720284;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=LxGxP54sIf9Ea7LpRahtjVWCCrPJDxFOp3Hcmc0VUEI=;
+ b=QNfOTLRGSJxQ/GZHHYwrNyToLi8QdUulyt+drfo33VMimQpnF+ndL7PixBdmp8uyja
+ jXDK2CzF+7hH1dXGTVqYSOtMVhkL5ukGXUBsiNsZGBMlGsxbC/DZ75hqT5TLPH3yT7X2
+ EJck4GOUEi9kbxYvU1JpWskqRGNjDqIc1gdaz1GVWZtH0Rcp1jkbmgQLBOvJR5leEHub
+ 5+pO7gIsalL/afoC4dXGGENnfeaw8H1ND2tPXtSbqLdBQdgQl6BKByFsVGzj9Rw00spj
+ UQFFv1S+hFxrkymt6weFlnv16HCj+uV8Oqj0t36OYnMRDiLpORGO2deOgIv3sccN5jVj
+ I2pw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/yRjbR2pPJGAKyrz39Amqn/n2Wlmqe/j8/lhMHqK3rDyoBOjm7LrS9otvUp9DF1pOwB1AiNt2CMeoh@nongnu.org
+X-Gm-Message-State: AOJu0YxsobiLRT+jD9r5gqQRk/E3y0XRxUdhKTqwOfekJ0crLjFYiRPZ
+ Wp7pfqqdJqQWQNfqJODe9LPEaz/SQqdeMj01kWOWmqorfayYU0tiMjmOXf5vjST3C90=
+X-Gm-Gg: Acq92OHJK4TD8cuaaaR9ut6NmjixxiT6mYOdeVVgI33F1Mw6FcpDa1qJPHzF6vK3i8w
+ 8ZP4nXN2SA0njG8XPeu6JOHYFK9LLxJtQaxxPMj/QiT5sjsljx2VrhIwMStA1czd5ZPsKl1KsoN
+ DjoLgomhGeu7OhkDEIqFdD5EHCNEjxttxn4rnowcyOV/YfD68RYhsC4YI8z24IChIud8pd5Qf14
+ 78Y2PlaURNIyfwbgFEMK4PC7b4X9IEKnY7va+vio+72wY/592fs+RlcsOn4e+TcTE+v5vkMIhKU
+ XXaMnnvoYo2Z8of62Ab1e2F94G7yzaiLovEFWi2BeCySpq1JgLtyy/hP7vv8I7INzzpxygxlZhd
+ g6GyNqA66d6Mb4JvuRZ81Kp9uJq5wgVw8dzafZtHWT3yRf1pX9IQJsRSM7r8iXU6N7jtSCVELFw
+ znpZ7HMyQ/xsLIcxb1YYUTt0GhXjFvBrQ19WyZ
+X-Received: by 2002:a17:903:990:b0:2ae:6259:5aff with SMTP id
+ d9443c01a7336-2bd7e784bd9mr161663695ad.6.1779115483729; 
+ Mon, 18 May 2026 07:44:43 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.142.33])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2bd5c05fcb3sm157134905ad.26.2026.05.18.07.44.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 18 May 2026 07:44:43 -0700 (PDT)
+Message-ID: <2d7e1845-601f-46b3-813a-c5b3e64044e4@linaro.org>
+Date: Mon, 18 May 2026 07:44:41 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 24/35] target/mips: add Octeon COP2 crypto state
+To: James Hilliard <james.hilliard1@gmail.com>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang
+ <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <arikalo@gmail.com>,
+ Huacai Chen <chenhuacai@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20260517-mips-octeon-missing-insns-v2-v8-0-206151ee77ec@gmail.com>
+ <20260517-mips-octeon-missing-insns-v2-v8-24-206151ee77ec@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260517-mips-octeon-missing-insns-v2-v8-24-206151ee77ec@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,151 +110,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 12 May 2026 15:30:57 +0200
-Igor Mammedov <imammedo@redhat.com> wrote:
-
-
-Peter,
-
-could you take a look at ARM related patches,
-I hope that I have addressed you concerns from v1.
-
-> On Tue, 28 Apr 2026 16:12:15 +0200
-> Igor Mammedov <imammedo@redhat.com> wrote:
+On 5/17/26 22:29, James Hilliard wrote:
+> Add the common state needed by Octeon's selector-driven COP2 crypto
+> interfaces. This includes the selector constants and storage for the base
+> hash, AES, CRC, GFM, 3DES, KASUMI, and SNOW3G engines, plus the shared
+> selector-window mode used by overlapping hardware register banks.
 > 
-> > On Tue,  3 Mar 2026 10:25:11 +0100
-> > Igor Mammedov <imammedo@redhat.com> wrote:
-> >   
-> > > Changelog:
-> > >   v2:
-> > >      * ditch generic '-machine acpi-watchdog' option in favor of
-> > >        board specific variants:
-> > >            x86/q35:  -machine wdat={on|off}
-> > >            arm/virt: -device sbsa_gwdt,wdat={on|off}
-> > >      * arm/virt: add FDT and GTDT ACPI entries for GWDT when it's present
-> > >        and hide GDTD one when WDAT is enabled.
-> > >      * arm/virt: add test case for GTDT 
-> > >      * [18-21] optional GWDT cleanup/fixes in handling WCV register update,
-> > >        make QEMU behave according to spec (at least the way I read it and
-> > >        it appears MS also read it that way). It fixes Windows 11 reboots when
-> > >        GWDT is present (without WDAT). With that fixed it's up to MS to fix
-> > >        their driver to set sane timeout as with the current one wdatchdog
-> > >        will never trigger.    
-> > 
-> > given merge window should be open by now,
-> > gentle ping  
+> Describe the shared HSH/SHA512, SHA3, SNOW3G, and ZUC selector window up
+> front so later engine patches only add their own selectors and state
+> instead of rewriting common comments.
 > 
-> 2 weeks later,
-> yet another ping
+> Migrate the state in an Octeon-only subsection so non-Octeon CPU models do
+> not grow migration data. Later patches wire helpers and explicit selector
+> decode on top of this state.
 > 
-> >   
-> > > Windows doesn't ship built-in TCO watchdog driver, and users are
-> > > forced to install vendor specific driver(s) if such exists.
-> > > However the OS provides a generic watchdog driver that uses
-> > > ACPI WDAT table [1] to abstract actual hardware behind it.
-> > > The same applies to ARM version of Windows.
-> > > 
-> > > This series adds
-> > >  *  WDAT table tailored for TCO watchdog that Q35 already
-> > >     has as part of ICH9 chipset and a knob to enable it.
-> > >  *  SBSA GWDT to arm/virt machine with WDAT table tailored
-> > >     for it and necessary tweaks to GWDT to make usable
-> > >     with WDAT driver.
-> > >     * in addition to WDAT, it also adds native variant
-> > >       with GWDT described in FDT and DTDT
-> > >       (broken on Windows/works on linux).
-> > > 
-> > > Guest OS WDAT support is present since Windows Vista and Linux since 2016[2].
-> > > 
-> > > One can test it launching VM with following options:
-> > >   * x86:
-> > >        -machine q35,wdat=on
-> > >   * arm/virt:
-> > >        -device sbsa_gwdt,wdat=on
-> > > 
-> > > to trace access to TCO registers one can add to CLI:
-> > >     -trace "tco_*"
-> > > to trace access to GWDT registers one can add to CLI:
-> > >     -trace "sbsa_gwdt*"
-> > > 
-> > > To verify that guest uses WDAT (both Windows and Linux would use it if present),
-> > >   * on linux make sure that watchdog service is configured/enabled
-> > >     (use wdctl to check what watchdog device is in use) and then
-> > >     trigger kernel panic with command:
-> > >       echo c > /proc/sysrq-trigger
-> > >   * on Windows kill svchost process, running cmd in admin mode:
-> > >       taskkill /f /im svchost.exe
-> > > 
-> > > Tested with WS2025 & RHEL9.6 & Fedora 43 (aarch64)
-> > > 
-> > > git tree at: https://gitlab.com/imammedo/qemu/-/commits/gwdt_v2
-> > > 
-> > > 1) http://msdn.microsoft.com/en-us/windows/hardware/gg463320.aspx
-> > > 2) https://lwn.net/Articles/700524/
-> > > 
-> > > PS:
-> > >  previous revision:
-> > >   https://patchew.org/QEMU/20260206131438.1857182-1-imammedo@redhat.com/
-> > > 
-> > > Igor Mammedov (21):
-> > >   acpi: add API to build WDAT instructions
-> > >   x86: q35: add 'wdat' property
-> > >   x86: q35: generate WDAT ACPI table
-> > >   tests: acpi: x86/q35: whitelist new WDAT table
-> > >   tests: acpi: x86/q35: add WDAT table test case
-> > >   tests: acpi: x86/q35: update expected WDAT blob
-> > >   arm: sbsa_gwdt: fixup default "clock-frequency"
-> > >   arm: add tracing events to sbsa_gwdt
-> > >   arm: virt: create sbsa_gwdt watchdog
-> > >   arm: sbsa_gwdt: add 'wdat' option
-> > >   arm: virt: add support for WDAT based watchdog
-> > >   tests: acpi: arm/virt: whitelist new WDAT table
-> > >   tests: acpi: arm/virt: add WDAT table test case
-> > >   tests: acpi: arm/virt: update expected WDAT blob
-> > >   tests: acpi: arm/virt: whitelist GTDT table
-> > >   tests: acpi: arm/virt: add GTDT watchdog table test case
-> > >   tests: acpi: arm/virt: update expected GTDT blob
-> > >   sbsa_gwdt: reduce code ident
-> > >   sbsa_gwdt: move all foo_REFRESH logic under REFRESH condition
-> > >   sbsa_gwdt: reschedule timer on direct WCV load
-> > >   sbsa_gwdt: limit compare_value to INT64_MAX
-> > > 
-> > >  include/hw/acpi/wdat-gwdt.h            |  19 ++++
-> > >  include/hw/acpi/wdat-ich9.h            |  15 ++++
-> > >  include/hw/acpi/wdat.h                 | 118 +++++++++++++++++++++++++
-> > >  include/hw/i386/pc.h                   |   1 +
-> > >  include/hw/watchdog/sbsa_gwdt.h        |   1 +
-> > >  hw/acpi/aml-build.c                    |  14 +++
-> > >  hw/acpi/meson.build                    |   5 +-
-> > >  hw/acpi/wdat-gwdt-stub.c               |  16 ++++
-> > >  hw/acpi/wdat-gwdt.c                    |  92 +++++++++++++++++++
-> > >  hw/acpi/wdat-ich9-stub.c               |  15 ++++
-> > >  hw/acpi/wdat-ich9.c                    |  90 +++++++++++++++++++
-> > >  hw/arm/Kconfig                         |   1 +
-> > >  hw/arm/virt-acpi-build.c               |  65 +++++++++++++-
-> > >  hw/arm/virt.c                          |   2 +
-> > >  hw/core/sysbus-fdt.c                   |  32 +++++++
-> > >  hw/i386/acpi-build.c                   |  12 +++
-> > >  hw/i386/pc_q35.c                       |  18 ++++
-> > >  hw/watchdog/sbsa_gwdt.c                |  65 +++++++++-----
-> > >  hw/watchdog/trace-events               |   9 ++
-> > >  tests/data/acpi/aarch64/virt/GTDT.gwdt | Bin 0 -> 132 bytes
-> > >  tests/data/acpi/aarch64/virt/WDAT.wdat | Bin 0 -> 260 bytes
-> > >  tests/data/acpi/x86/q35/WDAT.wdat      | Bin 0 -> 308 bytes
-> > >  tests/qtest/bios-tables-test.c         |  54 +++++++++++
-> > >  23 files changed, 618 insertions(+), 26 deletions(-)
-> > >  create mode 100644 include/hw/acpi/wdat-gwdt.h
-> > >  create mode 100644 include/hw/acpi/wdat-ich9.h
-> > >  create mode 100644 include/hw/acpi/wdat.h
-> > >  create mode 100644 hw/acpi/wdat-gwdt-stub.c
-> > >  create mode 100644 hw/acpi/wdat-gwdt.c
-> > >  create mode 100644 hw/acpi/wdat-ich9-stub.c
-> > >  create mode 100644 hw/acpi/wdat-ich9.c
-> > >  create mode 100644 tests/data/acpi/aarch64/virt/GTDT.gwdt
-> > >  create mode 100644 tests/data/acpi/aarch64/virt/WDAT.wdat
-> > >  create mode 100644 tests/data/acpi/x86/q35/WDAT.wdat
-> > >     
-> >   
+> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+> ---
+> Changes v7 -> v8:
+>    - Split COP2 crypto state and migration coverage out of the combined
+>      COP2 crypto core patch.
+> ---
+>   target/mips/cpu.h            | 165 +++++++++++++++++++++++++++++++++++++++++++
+>   target/mips/system/machine.c |  37 ++++++++++
+>   2 files changed, 202 insertions(+)
 > 
+> diff --git a/target/mips/cpu.h b/target/mips/cpu.h
+> index 346713705a..1c552b8134 100644
+> --- a/target/mips/cpu.h
+> +++ b/target/mips/cpu.h
+> @@ -537,6 +537,169 @@ struct TCState {
+>   };
+>   
+>   struct MIPSITUState;
+> +typedef enum MIPSOcteonSharedMode {
+> +    OCTEON_SHARED_MODE_NONE = 0,
+> +    OCTEON_SHARED_MODE_SHA512,
+> +    OCTEON_SHARED_MODE_SNOW3G,
+> +} MIPSOcteonSharedMode;
+> +
+> +typedef enum MIPSOcteonCop2Sel {
 
+This enumeration shouldn't be required -- it's all decode.
+
+> +typedef struct MIPSOcteonCryptoState {
+> +    uint64_t des3_key[3];
+> +    uint64_t des3_iv;
+> +    uint64_t des3_result;
+> +    uint64_t hsh_iv[4];
+> +    uint64_t hsh_dat[8];
+> +    uint64_t hsh_ivw[8];
+> +    uint64_t hsh_datw[16];
+> +    uint64_t aes_iv[2];
+> +    uint64_t aes_key[4];
+> +    uint64_t aes_result[2];
+> +    uint64_t aes_input[2];
+> +    uint64_t gfm_mul[2];
+> +    uint64_t gfm_resinp[2];
+> +    uint64_t gfm_xor0;
+> +    uint64_t gfm_reflect_mul[2];
+> +    uint64_t gfm_reflect_resinp[2];
+> +    uint64_t gfm_reflect_xor0;
+> +    uint16_t gfm_poly;
+> +    uint8_t aes_keylen;
+> +    uint32_t shared_mode;
+
+I guess you're using uint32_t instead of MIPSOcteonSharedMode for ease of migration?
+
+
+r~
 
