@@ -4,97 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFDF4CD343F
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 21:29:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E70BCD4F4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 21:29:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP5VV-0000T2-DB; Mon, 18 May 2026 17:28:13 -0400
+	id 1wP5VU-0000T0-H7; Mon, 18 May 2026 17:28:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5VT-0000SX-M6
- for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:11 -0400
-Received: from mail-ot1-x335.google.com ([2607:f8b0:4864:20::335])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5VR-0000S6-Pw
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:09 -0400
+Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5VR-0000TG-8Z
- for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:10 -0400
-Received: by mail-ot1-x335.google.com with SMTP id
- 46e09a7af769-7dcc9b506d9so3022604a34.1
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 14:28:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5VP-0000Sx-JK
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:09 -0400
+Received: by mail-ot1-x32f.google.com with SMTP id
+ 46e09a7af769-7de431da8fbso2619104a34.1
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 14:28:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779139688; x=1779744488;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779139686; x=1779744486;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=BIZZ3MoLaByazBW5BUbMYe7Y/3osI58B02Q2ofvFBtk=;
- b=CdKG89BcY1bv6IUO+WS1Y9Biwy9eWBoixCkh8wQ0YJZFc7QLixD2OB+1aHPt00CwVg
- R+fBwMxihwWA7cDJe/T/f/YYs26/WII1gnGD1c+e4O77KEq9TvXA8ExJRqgAnYGlAbkg
- xHp9/G9oi35RomO4tVsFTSo51Q9Xxoyvu21G1P/G7Wx/twhNcemd/RUmPkWitGk67i87
- 8Bu5qRysbK2Cho4ioAsJFlpCYLMSsspdLFQRpbB/wmx9vnbGM3X36B/OVI4Ec8ddKbTX
- ZLOinR40qAyQmv3ILV6Syat5+DVKsdgJRCX5Is/nycGpo7I2e5PDLgi4jtFnRE5rbMaS
- /KHQ==
+ :reply-to; bh=FbApW7rZI6sL6Z/Hr+ekwEC9JyWrh50/L7jk7LMyAm4=;
+ b=KHC5iFxe+7LVXGZZzKJPFPMaOg1L98Ovmoz7qDCesoGpy/8sV3+0brn2OlzgF/Yk2z
+ k3vaKLTv7fEv7ZPvB5TljuHsJWmi9a9osj0z8tHKcSODyzPciFREzAIh3kBpy9xNIsC0
+ H/qhMol6z/ABQtqjEfMeJItMaOZrPZbTnVCh/MYU/ZNQ1I7+ltsWXPWmt91HYbZv70SC
+ BXZL5QDZWUMQ7yNor1xDdTskdzowfnL0eVRfMuY+GWNWUIcV4h2FWqdJbiO7MyFBqO+x
+ DSzxgAykl9qMf+VWQhmX8knmtjVbF3PFezS0FHEK5Pl9BRlAfvNNLeSX4Czwj0phhqhQ
+ x3rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779139688; x=1779744488;
+ d=1e100.net; s=20251104; t=1779139686; x=1779744486;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=BIZZ3MoLaByazBW5BUbMYe7Y/3osI58B02Q2ofvFBtk=;
- b=CMU7TtlihOFxw2/XQG5pbvtkCAYM5U96MuHg8DNvOx7AmOLbPVpuiWZkMOXUvu+foE
- KWrQekaGYzhJKpRikjUoajr3wFgQptNZrieC7PB4qc26vnO8Np8qLW0xUdD6WyoktzRh
- 8XWQc0wSZgwlB/brgmGrmpkwzTX5mcSRstVyFhPbgklsm9Nyt+nxf1tBrkXatMvx2w+5
- QlsdbDBuKx67efN5gwi3PlQrx0nCFnzXqjAPLpm3nvpQWs4zmoNoG4bvm9u8P49IFR4c
- Z68guRxv8TWL66JrkLR84xF9QqS8EbB3PAFa0di3Ys/JHinQW5krOulEv2WRj+KcwOYt
- R/Yg==
-X-Gm-Message-State: AOJu0YwDiTUu3eiDj38mL+Cx7/iZlE9ys4y9gShATwDoTJOXC9pyje0C
- jCLUPPWLKsHohslpcmi9aeCWF8/RS7p8baak+/uuA9gPb3VgHJ841JWx408nBy6zF2I=
-X-Gm-Gg: Acq92OHq0kA9c/zADuGlnFH/2B8AEkiudxuBFKBSHbUybYtFkFFaUnWwdtq7mOwzt3C
- rObYJUkM57qk3FFkey81/F9TD0PTHq/zNWKqdeEHb8yR2Lqo/+TODrAtgMWwba8P/vsvvaH3Gde
- 4Y9lIo/AE4xHjgsc2PqIe+i2Wnx3WOrZq9J8FFbaWbnLKXmAxrIH3gPRNj7X7Gdq+VXECQi5aIo
- +aj+HRzl5dKkD5F5ecWnD7acipycNz2Icuv2uUZnu7YDTslKuj2fepfZIP9WgxKqE+plCZj6scx
- I6Qd4LWftQmXUybKeHCPTFH1AAuGBTq6UNu8ed0ZnZ98WsNd2PADsltP6eHTPvsZ4Mm6yRyStPO
- Ft0S1T9IckmyPDI9i8BKmKP0kDypmf46qwUFDsbPGMdkYIAun2rkISmPPykrgNPeMM/Tnddby3c
- gM/extZfoMa5xPRQSqd8Fr
-X-Received: by 2002:a05:6830:3902:b0:7dc:cd0b:58ac with SMTP id
- 46e09a7af769-7e4f2a448a3mr11846523a34.9.1779139688069; 
- Mon, 18 May 2026 14:28:08 -0700 (PDT)
+ bh=FbApW7rZI6sL6Z/Hr+ekwEC9JyWrh50/L7jk7LMyAm4=;
+ b=IhGomYYsO08tJEDuyEtKhp16vjUFfDgLg07qJEEvybATGLUgS+er7Rm/xZ34CwxlFb
+ mQg4LSzxw6jmh2z1gWqZaFT7jQBK1W7F2riUAsCdI68Uu6vmqR3VW05Co2RjTvxYD+A8
+ i99AsLjcecL0UP4ZetsT2skPyFoaF2U5F+ebYeF7gktMlBdXhKj2aaoHyDZdIPLciwTp
+ 79HtFuYjKMecsB+r552rJn4rj+MZfV0elHNTzxnf6yJFj55K2+qpcgLp1k92i8Iqu9Nn
+ zaVv+B8VYSpNkYc9UaMCTH9KtL9NyRN/u6KAThuV6LAd0hexde7ZWZ97h4knyhj9L1V4
+ w7Cg==
+X-Gm-Message-State: AOJu0Yx7j74rZk5NiIQT4g/TJeTimfeRY78MnhTh7E0phNlDFSpAUlwY
+ exHWoNfrsH/TP9JB+dJbav6CW98owkf0JdY3bO5XDgWLMGRYmfzcMwA/AxxFYl/FMjc=
+X-Gm-Gg: Acq92OEik8/tuKhouU2E92OYwZZOpIqsPhimWvNbgiAwvDJ6lRaQUgMMuL/tqq/CX+W
+ cGXK9nYZgWTBSDpTavn0qiIRzGHbD2PJx16zfPzvUzOQi9vJ4cKJaoOPmt+Py016JJPYw7YCUaU
+ vT++K8dcxyjE6ErIoDJ6lCDEhnUZx0g61rzgu9A7j7ITeuLHLCy6yO2X/XJZUKTlowXbB+ZCzaP
+ KV4tj3R31OtXtF6dNjbnS9Iuu5Pcflw79RP90EFtqTJ4MkvevGyE3g8l98zrnh28eb0AvGcoii5
+ goF0RXUf4pPcYf2pXmtQOZUDNdzysddwzPwvjBa26EDDlqxFuN0aK72VUicBXcvlT7gNzBhHJkp
+ xJ5eIvWX8Yo/c+EC2ZljtHanBK8frrp+kZZu8+M+HEnVjoky3FotNtIDQK/PU7tFJ2653TLwjVZ
+ yMCSWiZhXKLg==
+X-Received: by 2002:a05:6830:6315:b0:7dc:e2fc:53f5 with SMTP id
+ 46e09a7af769-7e4f2a39a1emr11195664a34.9.1779139686612; 
+ Mon, 18 May 2026 14:28:06 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55b81cc5asm7980358a34.8.2026.05.18.14.28.06
+ 46e09a7af769-7e55b81cc5asm7980358a34.8.2026.05.18.14.28.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 May 2026 14:28:07 -0700 (PDT)
+ Mon, 18 May 2026 14:28:06 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Mon, 18 May 2026 15:27:34 -0600
-Subject: [PATCH v2 16/37] bsd-user: Add socket system call dispatch
+Date: Mon, 18 May 2026 15:27:33 -0600
+Subject: [PATCH v2 15/37] bsd-user: Add os-socket.c with cmsg conversion
+ functions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260518-misc-2026q2-v2-16-6c16fe448301@bsdimp.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260518-misc-2026q2-v2-15-6c16fe448301@bsdimp.com>
 References: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
 In-Reply-To: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>, 
- Kyle Evans <kevans@FreeBSD.org>
+ =?utf-8?q?Mika=C3=ABl_Urankar?= <mikael.urankar@gmail.com>, 
+ Kyle Evans <kevans@FreeBSD.org>, Michal Meloun <mmel@FreeBSD.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3563; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=TZhqz7LKdkYXM01TJu9w2X05NnhTh/MQLP6Gzmk/xUk=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqC4RH3/4buRW2HOb8yg9TUO/UuVrTcoDpg2CSA
- zcNFPUpghaJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaguERwAKCRBsHNEofbAR
- AE/FEAChm0qy3FHZZEzRgjPT+LggpycTGOsaQSYn2QBNmkcc6xBflPnC29ojYFLo7f2aBMJ+16J
- gW8rNz7Q9yLf1ZZNOR+/JEeosJGLSBF0PLYsj7cXZ7F1YSbRJEKbKTCraDpQjsxv3P2LmtMbn5p
- VZ7swUvHaXXVoUBU5wHp9gqq2eSFDg7hW4ED0fREtfCPKuD5cFud608J/kURQDvR66c8fypKU5F
- Yhjp/sJfMsIF7gd1VtxEBs+PTbYE73BaxhHfaUb15TTminU8E4k5PJlxAud+zGpt/A27h4DMuyQ
- tKJ23KS7lhVRr8ge2FxaZU0XBJYdfYwSd01/sRtbZG50BPcnZojMexCH5PbDB/kgD8julkXJOXG
- TRnW09qLsXz3whAZAgldFF47MBOmIwdF97IEzHAi+xtmNetHSor1pLBVe0BlVR3ZPf6LXkl+V9W
- 9U3NrOhgKZm5Q6+GugKOUWUISjbkzrD4i3oGgpagspvoWd5scTRoIvAuJ4MdTrBSkesPmznAFAo
- 7A9w+ThROeV9p/RhYTAVp3oYvld0Nos/E1KttD8Mq8jMsNbtbwWcVCRCsW0ApgFvvqQUW+cN+LZ
- 2riDInSvjhAvUhsVgOnLy9Sn6lGR3yGArAqWHyMq4tJtWCzzaDBci4TB5vEtjmO3ayIRZZ6ntdn
- 8y/Ety/5L7vqW5g==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=10178; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=JqmPhzahuDeg5rc6BZHHnP/NICMAIXOd7HLZVHZaNGM=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqC4RHKoB+2vxLSuj6WkKxWdKCmfSOdgcfjUylg
+ WVkOPY8CrqJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaguERwAKCRBsHNEofbAR
+ ALUWD/0a5aNp/ZlDIKAUYmLBGuTxFcedglsERX0ts5gffuhPa+eUc8g8ZZMQXY2nm7TNZNwQ2hZ
+ X9lHSLbVDDj01eeowx0YonBC1Ga8O28s2L7AzKp451iP+SX0Q9JzytUMIQ8FMBliEHUgKcC3jPW
+ Dnxer+HRigaxOvkg8VYKEh0za3Gw97VWJ8VnUwUNyEi/qHZbV948biq7jme2dcdI6BFzx3c7ODS
+ WvFDRWyFgo5086Ujdf8FE+h9yTLIaovOFuQRicKPaDP5HdsBWmMwAY2wB7i80UvT6vYpTEjh+Ux
+ v8e/MBk8DipNv7cSCuRr7h9/QVG3Jl8KL+ddN1oavREgmsPlApXPhSq6hwpfYPl/SM9gW0rkB4X
+ p9Pm0lbdgiAC/6Tkkh4/8tawksKwJUtiziB5AmFLxjSiZUbkYhD092GSehwxMF+6bhNQe8acVoO
+ 4tCvzYhsfFCIBKbeUCVnZjx5p6GivTp3KxbaYL+LMIZDlGgXvoTUbE51M88j33SoAxZn9bJ/jKn
+ MGIehl6mL9/MQU6fZNXT8eTFtlR6nGrR99Ckbm6D/UFABNuEIKOwIGuRG2qLPauD0m+T6/zAXBm
+ 2YFa5/dBpBNJhsxhm8lT8d3D1hNiyFG6p+ktdi8m4WSHkRrVZdJJJFlzItSF5fi72f8JU/pOADX
+ sTZ64lWeN8p0f2Q==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::335;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x335.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::32f;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x32f.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -116,109 +118,281 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Wire up socket-related system calls in the FreeBSD syscall dispatcher:
-accept, accept4, bind, bindat, connect, connectat, getpeername,
-getsockname, getsockopt, setsockopt, listen, recvfrom, recvmsg,
-sendmsg, sendto, socket, socketpair, shutdown, and setfib.
+Add target-to-host and host-to-target control message conversion
+functions (t2h_freebsd_cmsg and h2t_freebsd_cmsg) for sendmsg/recvmsg
+support, and add os-socket.c to the FreeBSD build.
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
+Signed-off-by: Mikaël Urankar <mikael.urankar@gmail.com>
 Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
+Signed-off-by: Michal Meloun <mmel@FreeBSD.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 Assisted-by: Claude Opus 4.6 (1M context)
 ---
- bsd-user/freebsd/os-syscall.c | 79 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 79 insertions(+)
+ bsd-user/freebsd/meson.build |   8 +-
+ bsd-user/freebsd/os-socket.c | 234 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 240 insertions(+), 2 deletions(-)
 
-diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
-index 46fee46336..5d3a66e360 100644
---- a/bsd-user/freebsd/os-syscall.c
-+++ b/bsd-user/freebsd/os-syscall.c
-@@ -1073,6 +1073,85 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
-         ret = do_freebsd_pdkill(arg1, arg2);
-         break;
+diff --git a/bsd-user/freebsd/meson.build b/bsd-user/freebsd/meson.build
+index 38f2debf7e..0fc779749d 100644
+--- a/bsd-user/freebsd/meson.build
++++ b/bsd-user/freebsd/meson.build
+@@ -4,9 +4,13 @@ bsd_syscall_nr = custom_target('bsd-syscall-h',
+     command: [sh, meson.current_source_dir() / 'scripts/syscallhdr.sh', '@INPUT@', '@OUTPUT@', 'FREEBSD'])
  
+ bsd_user_ss.add(files(
+-  'os-stat.c',
++  'os-extattr.c',
+   'os-proc.c',
++  'os-socket.c',
++  'os-stat.c',
+   'os-sys.c',
+-  'os-syscall.c'),
++  'os-syscall.c',
++  'os-thread.c',
++  'os-time.c'),
+   bsd_syscall_nr
+ )
+diff --git a/bsd-user/freebsd/os-socket.c b/bsd-user/freebsd/os-socket.c
+new file mode 100644
+index 0000000000..8eb728240d
+--- /dev/null
++++ b/bsd-user/freebsd/os-socket.c
+@@ -0,0 +1,234 @@
++/*
++ * FreeBSD socket related system call helpers
++ *
++ * Copyright (c) 2013 Stacey D. Son
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include "qemu/osdep.h"
++
++#include <sys/types.h>
++#include <sys/socket.h>
++#include <netinet/in.h>
++
++#include "qemu.h"
++#include "qemu-os.h"
++
++abi_long t2h_freebsd_cmsg(struct msghdr *msgh,
++        struct target_msghdr *target_msgh)
++{
++    struct cmsghdr *cmsg = CMSG_FIRSTHDR(msgh);
++    socklen_t msg_controllen;
++    abi_ulong target_cmsg_addr;
++    struct target_cmsghdr *target_cmsg, *target_cmsg_start;
++    socklen_t space = 0;
++
++    msg_controllen = tswap32(target_msgh->msg_controllen);
++    if (msg_controllen < sizeof(struct target_cmsghdr)) {
++        goto the_end;
++    }
++    target_cmsg_addr = tswapal(target_msgh->msg_control);
++    target_cmsg = lock_user(VERIFY_READ, target_cmsg_addr, msg_controllen, 1);
++    target_cmsg_start = target_cmsg;
++    if (!target_cmsg) {
++        return -TARGET_EFAULT;
++    }
++
++    while (cmsg && target_cmsg) {
++        void *data = CMSG_DATA(cmsg);
++        void *target_data = TARGET_CMSG_DATA(target_cmsg);
++        int len = (unsigned char *)(target_cmsg) +
++            tswap32(target_cmsg->cmsg_len) - (unsigned char *)target_data;
++
++        space += CMSG_SPACE(len);
++        if (space > msgh->msg_controllen) {
++            space -= CMSG_SPACE(len);
++            /*
++             * This is a QEMU bug, since we allocated the payload area ourselves
++             * (unlike overflow in host-to-target conversion, which is just the
++             * guest giving us a buffer that's too small). It can't happen for
++             * the payload types we currently support; if it becomes an issue in
++             * future we would need to improve our allocation strategy to
++             * something more intelligent than "twice the size of the target
++             * buffer we're reading from".
++             */
++            gemu_log("Host cmsg overflow\n");
++            break;
++        }
++
++        if (tswap32(target_cmsg->cmsg_level) == TARGET_SOL_SOCKET) {
++            cmsg->cmsg_level = SOL_SOCKET;
++        } else {
++            cmsg->cmsg_level = tswap32(target_cmsg->cmsg_level);
++        }
++        cmsg->cmsg_type = tswap32(target_cmsg->cmsg_type);
++        cmsg->cmsg_len = CMSG_LEN(len);
++
++        if (cmsg->cmsg_level == SOL_SOCKET && cmsg->cmsg_type == SCM_RIGHTS) {
++            int *fd = (int *)data;
++            int *target_fd = (int *)target_data;
++            int i, numfds = len / sizeof(int);
++
++            for (i = 0; i < numfds; i++) {
++                __get_user(fd[i], target_fd + i);
++            }
++        } else if ((cmsg->cmsg_level == SOL_SOCKET) &&
++            (cmsg->cmsg_type == SCM_TIMESTAMP) &&
++            (len == sizeof(struct target_freebsd_timeval)))  {
++            /* copy struct timeval to host */
++            struct timeval *tv = (struct timeval *)data;
++            struct target_freebsd_timeval *target_tv =
++                (struct target_freebsd_timeval *)target_data;
++            __get_user(tv->tv_sec, &target_tv->tv_sec);
++            __get_user(tv->tv_usec, &target_tv->tv_usec);
++        } else {
++            gemu_log("Unsupported target ancillary data: %d/%d\n",
++                     cmsg->cmsg_level, cmsg->cmsg_type);
++            memcpy(data, target_data, len);
++        }
++
++        cmsg = CMSG_NXTHDR(msgh, cmsg);
++        target_cmsg = TARGET_CMSG_NXTHDR(target_msgh, target_cmsg,
++                                         target_cmsg_start);
++    }
++    unlock_user(target_cmsg_start, target_cmsg_addr, 0);
++the_end:
++    msgh->msg_controllen = space;
++    return 0;
++}
++
++abi_long h2t_freebsd_cmsg(struct target_msghdr *target_msgh,
++        struct msghdr *msgh)
++{
++    struct cmsghdr *cmsg = CMSG_FIRSTHDR(msgh);
++    socklen_t msg_controllen;
++    abi_ulong target_cmsg_addr;
++    struct target_cmsghdr *target_cmsg, *target_cmsg_start;
++    socklen_t space = 0;
++
++    msg_controllen = tswap32(target_msgh->msg_controllen);
++    if (msg_controllen < sizeof(struct target_cmsghdr)) {
++        goto the_end;
++    }
++    target_cmsg_addr = tswapal(target_msgh->msg_control);
++    target_cmsg = lock_user(VERIFY_WRITE, target_cmsg_addr, msg_controllen, 0);
++    target_cmsg_start = target_cmsg;
++    if (!target_cmsg) {
++        return -TARGET_EFAULT;
++    }
++
++    while (cmsg && target_cmsg) {
++        void *data = CMSG_DATA(cmsg);
++        void *target_data = TARGET_CMSG_DATA(target_cmsg);
++        int len = (unsigned char *)(cmsg) + cmsg->cmsg_len -
++            (unsigned char *)data;
++
++        int tgt_len, tgt_space;
++
 +        /*
-+         * socket related system calls
++         * We never copy a half-header but may copy half-data; this is Linux's
++         * behaviour in put_cmsg(). Note that truncation here is a guest problem
++         * (which we report to the guest via the CTRUNC bit), unlike truncation
++         * in target_to_host_cmsg, which is a QEMU bug.
 +         */
-+    case TARGET_FREEBSD_NR_accept: /* accept(2) */
-+        ret = do_bsd_accept(arg1, arg2, arg3);
-+        break;
++        if (msg_controllen < sizeof(struct target_cmsghdr)) {
++            target_msgh->msg_flags |= tswap32(MSG_CTRUNC);
++            break;
++        }
 +
-+    case TARGET_FREEBSD_NR_accept4: /* accept4(2) */
-+        ret = do_freebsd_accept4(arg1, arg2, arg3, arg4);
-+        break;
++        if (cmsg->cmsg_level == SOL_SOCKET) {
++            target_cmsg->cmsg_level = tswap32(TARGET_SOL_SOCKET);
++        } else {
++            target_cmsg->cmsg_level = tswap32(cmsg->cmsg_level);
++        }
++        target_cmsg->cmsg_type = tswap32(cmsg->cmsg_type);
 +
-+    case TARGET_FREEBSD_NR_bind: /* bind(2) */
-+        ret = do_bsd_bind(arg1, arg2, arg3);
-+        break;
++        /*
++         * Payload types which need a different size of payload on the target
++         * must adjust tgt_len here.
++         */
++        tgt_len = len;
++        switch (cmsg->cmsg_level) {
++        case SOL_SOCKET:
++            switch (cmsg->cmsg_type) {
++            case SCM_TIMESTAMP:
++                tgt_len = sizeof(struct target_freebsd_timeval);
++                break;
++            default:
++                break;
++            }
++            break;
++        default:
++            break;
++        }
 +
-+    case TARGET_FREEBSD_NR_bindat: /* bindat(2) */
-+        ret = do_freebsd_bindat(arg1, arg2, arg3, arg4);
-+        break;
++        if (msg_controllen < TARGET_CMSG_LEN(tgt_len)) {
++            target_msgh->msg_flags |= tswap32(MSG_CTRUNC);
++            tgt_len = msg_controllen - sizeof(struct target_cmsghdr);
++        }
 +
-+    case TARGET_FREEBSD_NR_connect: /* connect(2) */
-+        ret = do_bsd_connect(arg1, arg2, arg3);
-+        break;
++        /*
++         * We must now copy-and-convert len bytes of payload into tgt_len bytes
++         * of destination space. Bear in mind that in both source and
++         * destination we may be dealing with a truncated value!
++         */
++        switch (cmsg->cmsg_level) {
++        case SOL_SOCKET:
++            switch (cmsg->cmsg_type) {
++            case SCM_RIGHTS:
++            {
++                int *fd = (int *)data;
++                int *target_fd = (int *)target_data;
++                int i, numfds = tgt_len / sizeof(int);
 +
-+    case TARGET_FREEBSD_NR_connectat: /* connectat(2) */
-+        ret = do_freebsd_connectat(arg1, arg2, arg3, arg4);
-+        break;
++                for (i = 0; i < numfds; i++) {
++                    __put_user(fd[i], target_fd + i);
++                }
++                break;
++            }
++            case SCM_TIMESTAMP:
++            {
++                struct timeval *tv = (struct timeval *)data;
++                struct target_freebsd_timeval *target_tv =
++                    (struct target_freebsd_timeval *)target_data;
 +
-+    case TARGET_FREEBSD_NR_getpeername: /* getpeername(2) */
-+        ret = do_bsd_getpeername(arg1, arg2, arg3);
-+        break;
++                if (len != sizeof(struct timeval) ||
++                    tgt_len != sizeof(struct target_freebsd_timeval)) {
++                    goto unimplemented;
++                }
 +
-+    case TARGET_FREEBSD_NR_getsockname: /* getsockname(2) */
-+        ret = do_bsd_getsockname(arg1, arg2, arg3);
-+        break;
++                /* copy struct timeval to target */
++                __put_user(tv->tv_sec, &target_tv->tv_sec);
++                __put_user(tv->tv_usec, &target_tv->tv_usec);
++                break;
++            }
++            default:
++                goto unimplemented;
++            }
++            break;
++        default:
++        unimplemented:
++            gemu_log("Unsupported host ancillary data: %d/%d\n",
++                     cmsg->cmsg_level, cmsg->cmsg_type);
++            memcpy(target_data, data, MIN(len, tgt_len));
++            if (tgt_len > len) {
++                memset(target_data + len, 0, tgt_len - len);
++            }
++        }
 +
-+    case TARGET_FREEBSD_NR_getsockopt: /* getsockopt(2) */
-+        ret = do_bsd_getsockopt(arg1, arg2, arg3, arg4, arg5);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_setsockopt: /* setsockopt(2) */
-+        ret = do_bsd_setsockopt(arg1, arg2, arg3, arg4, arg5);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_listen: /* listen(2) */
-+        ret = get_errno(listen(arg1, arg2));
-+        break;
-+
-+    case TARGET_FREEBSD_NR_recvfrom: /* recvfrom(2) */
-+        ret = do_bsd_recvfrom(arg1, arg2, arg3, arg4, arg5, arg6);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_recvmsg: /* recvmsg(2) */
-+        ret = do_sendrecvmsg(arg1, arg2, arg3, 0);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_sendmsg: /* sendmsg(2) */
-+        ret = do_sendrecvmsg(arg1, arg2, arg3, 1);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_sendto: /* sendto(2) */
-+        ret = do_bsd_sendto(arg1, arg2, arg3, arg4, arg5, arg6);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_socket: /* socket(2) */
-+        ret = do_bsd_socket(arg1, arg2, arg3);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_socketpair: /* socketpair(2) */
-+        ret = do_bsd_socketpair(arg1, arg2, arg3, arg4);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_shutdown: /* shutdown(2) */
-+        ret = do_bsd_shutdown(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_setfib: /* setfib(2) */
-+        ret = do_freebsd_setfib(arg1);
-+        break;
-+
-         /*
-          * sys{ctl, arch, call}
-          */
++        target_cmsg->cmsg_len = tswap32(TARGET_CMSG_LEN(tgt_len));
++        tgt_space = TARGET_CMSG_SPACE(tgt_len);
++        if (msg_controllen < tgt_space) {
++            tgt_space = msg_controllen;
++        }
++        msg_controllen -= tgt_space;
++        space += tgt_space;
++        cmsg = CMSG_NXTHDR(msgh, cmsg);
++        target_cmsg = TARGET_CMSG_NXTHDR(target_msgh, target_cmsg,
++                                         target_cmsg_start);
++    }
++    unlock_user(target_cmsg_start, target_cmsg_addr, space);
++the_end:
++    target_msgh->msg_controllen = tswap32(space);
++    return 0;
++}
 
 -- 
 2.52.0
