@@ -4,102 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC4F8CD4F4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 19:44:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1F50CD343F
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 19:50:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP3sh-0007SM-0u; Mon, 18 May 2026 15:44:03 -0400
+	id 1wP3y1-0008V0-MB; Mon, 18 May 2026 15:49:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wP3sa-0007Rp-K1
- for qemu-devel@nongnu.org; Mon, 18 May 2026 15:43:57 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wP3xs-0008TI-Ax
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 15:49:26 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wP3sX-0004a1-4h
- for qemu-devel@nongnu.org; Mon, 18 May 2026 15:43:54 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id C47F55D3F6;
- Mon, 18 May 2026 19:43:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1779133429; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4xH3wvOeyoSc+XFE2NFsVZqIoCEwfc+nFmxBljxxZdI=;
- b=FIBNiwHx5uM57zpMPfRwggHm8Qg7p4k1CmUqyYxc5eTORZQtWm9ycCIBZFMRhz+asdRSoI
- Pgl+zSM/4wRPgZhgPC0ZvIN6cRZXjN6lTOUboPgXDkD/HndcR7lUWGU+7C3mBLM43KSNPu
- sbRZOcFNRvjU5nU5sjhq4ND2+s/KvXU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1779133429;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4xH3wvOeyoSc+XFE2NFsVZqIoCEwfc+nFmxBljxxZdI=;
- b=AjZtMbFd0JEkiCpASZ29CbjYjpOGX8oZYs8PD3G6kPKKxhneo7lhApBWYBCggr4BL0N7XO
- xymcaVF645czmLDA==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1779133429; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4xH3wvOeyoSc+XFE2NFsVZqIoCEwfc+nFmxBljxxZdI=;
- b=FIBNiwHx5uM57zpMPfRwggHm8Qg7p4k1CmUqyYxc5eTORZQtWm9ycCIBZFMRhz+asdRSoI
- Pgl+zSM/4wRPgZhgPC0ZvIN6cRZXjN6lTOUboPgXDkD/HndcR7lUWGU+7C3mBLM43KSNPu
- sbRZOcFNRvjU5nU5sjhq4ND2+s/KvXU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1779133429;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4xH3wvOeyoSc+XFE2NFsVZqIoCEwfc+nFmxBljxxZdI=;
- b=AjZtMbFd0JEkiCpASZ29CbjYjpOGX8oZYs8PD3G6kPKKxhneo7lhApBWYBCggr4BL0N7XO
- xymcaVF645czmLDA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 64262593A8;
- Mon, 18 May 2026 19:43:49 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id L+aIDfVrC2qzNgAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 18 May 2026 19:43:49 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Bin Guo <guobin@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com
-Subject: Re: [PATCH 5/8] migration/multifd: fix off-by-one in recv channel
- ID validation
-In-Reply-To: <20260518110112.21395-6-guobin@linux.alibaba.com>
-References: <20260518110112.21395-1-guobin@linux.alibaba.com>
- <20260518110112.21395-6-guobin@linux.alibaba.com>
-Date: Mon, 18 May 2026 16:43:33 -0300
-Message-ID: <87ecj84i6y.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wP3xq-0006b5-Pn
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 15:49:24 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-452169ae568so1757827f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 12:49:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779133760; x=1779738560; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hgH/EpClVj36vD0mFCHEvS+oT8byVUNIwK3om4YJTWU=;
+ b=fXRM5Q8h0VSXjOIsevPGTfzZ+BJuBqKeCwcK698hbkvH50Cd86htTJ6cct+ibsFU3x
+ E0KyHMNp7j+IsMCytBc9GTPXa/87eAAhCdKAMR6exYjt9FwW7esQt+KLEaTQWzDJUKFs
+ JC4IprjBSMc5JEk3cqg5wfL01jv9yvVWoYWDmsFjAJsUGiywGw1vyyXAv0ANT4iCLULG
+ Yye/tBHyZPkson3zcl0TKBTcRwye3gc3NUAT1TaxonKP+eOUxnC+WcaCw5vWxejYYMv3
+ 1Decz7a2v1r9ioRKL9AtmLgTkYUjbW3mFQhv4lZIPHQHpYJDfpem0TrUOMK9e6grqefk
+ y/sQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779133760; x=1779738560;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=hgH/EpClVj36vD0mFCHEvS+oT8byVUNIwK3om4YJTWU=;
+ b=A5+aR9T6iXwQE2oOk0Pxn0CwUFyJf4biPt92wvJXyipRFqPdJh0f63sMYLRyv1VF8O
+ uMOP6SyqFYtH2jDECwMNXn9/TXpRMShndoRhSE4hcxQEvk0gPIj1nKwhndj6VOSHLraI
+ gBy1Br0fitLx2Ymk2rAG75hmEaJneBtIzbSjO1p9j5o0tA6GEo8lUIuxjJsy6Il6QztN
+ hk2yatTZr46s435/QGFI3hZ+E8DA33booFPYR7EebwWqdOLXVivVwrdnLLvic7anTsb5
+ C+qxM2SSS/CeAt9gNGQDYiP6lPUppakmxaMl9wsgornRPdR2oXlBgRyc83ThthUvF49F
+ XC2Q==
+X-Gm-Message-State: AOJu0YzhqLKVK40SVRgWYVIDR9RA6e0zZx9vJ2eCPme/Bx/dYrF01OUY
+ CywSW3uW/WDQhMJB1gCcI3W+XHcYu996vSpHP+l+HkQPHsAS4PVILG4LDA2AHEQKE9g=
+X-Gm-Gg: Acq92OF05WtPwe/4IqvPqzpwIzT0SaPTrMQHjvZIdwZM00hjytYqc//QIAapdwKeGbD
+ 00TuAtmTYUYQuFVap6gruFhNdxxVHIvdO1HekoT9vjjh1h2S/aCJrYfxXkuPT7FQohfWx3qdORV
+ WweL83OZe9im3NSMPj935dtes3HGvXs4Y0S9p5akPZRnS/aGSv9U97FY5lj+vNHNWRKWdH7gWeE
+ etXMcr8uoJo61djslrDphNGjWcMr6TS6MI6+s5V2SyqD1kGlyOM+q72naDwXV90dKEA1+yksBDI
+ G0vsNLfkg4nLGzNifDEAR0Ontc0IAHZz0K6uclfdvy8m/BGa9KGNJIVqFWyhwiL04MO0JVug94x
+ U12y2sQn0B6XcBpA3LBDHvTQzY26DTHZawT8NGnloIUxBYPU+WajmMSBYvVB086NWtBe1QPhMDL
+ j1zZlR0IrqXbzcbddlJRNptj4=
+X-Received: by 2002:a05:6000:2f87:b0:43b:5672:efe with SMTP id
+ ffacd0b85a97d-45e5c5bbef7mr27222780f8f.9.1779133760448; 
+ Mon, 18 May 2026 12:49:20 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45d9e768c4fsm39693646f8f.8.2026.05.18.12.49.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 18 May 2026 12:49:19 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id D81045F7B1;
+ Mon, 18 May 2026 20:49:18 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Lucas Amaral <lucaaamaral@gmail.com>
+Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,
+ dmitry.osipenko@collabora.com,  marcandre.lureau@redhat.com,
+ visitorckw@gmail.com
+Subject: Re: [PATCH v5 2/4] virtio-gpu: add VIRTIO_GPU_F_BLOB_ALIGNMENT
+ header definitions
+In-Reply-To: <20260317182049.33848-3-lucaaamaral@gmail.com> (Lucas Amaral's
+ message of "Tue, 17 Mar 2026 15:20:47 -0300")
+References: <20260317182049.33848-1-lucaaamaral@gmail.com>
+ <20260317182049.33848-3-lucaaamaral@gmail.com>
+User-Agent: mu4e 1.14.1; emacs 30.1
+Date: Mon, 18 May 2026 20:49:18 +0100
+Message-ID: <87bjeccxc1.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
- suse.de:email]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,42 +107,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Bin Guo <guobin@linux.alibaba.com> writes:
+Lucas Amaral <lucaaamaral@gmail.com> writes:
 
-> multifd_recv_initial_packet() validates the channel ID received from
-> the source against the configured number of channels. The current
-> check uses '>' which allows msg.id == N to pass through. This ID is
-> then used to index multifd_recv_state->params[msg.id], which was
-> allocated with g_new0(MultiFDRecvParams, N) -- an out-of-bounds
-> access.
+> Define VIRTIO_GPU_F_BLOB_ALIGNMENT (feature bit 5) and the
+> blob_alignment field in virtio_gpu_config per the OASIS virtio
+> specification.
 >
-> A malicious or buggy source could send id == N and cause heap
-> corruption on the destination.
->
-> Fix by changing '>' to '>='. Also fix the error message to say
-> "exceeds channel count" for accuracy.
->
-> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+> Signed-off-by: Lucas Amaral <lucaaamaral@gmail.com>
 > ---
->  migration/multifd.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+>  include/standard-headers/linux/virtio_gpu.h | 6 ++++++
+>  1 file changed, 6 insertions(+)
 >
-> diff --git a/migration/multifd.c b/migration/multifd.c
-> index 035cb70f7b..b3eef875cc 100644
-> --- a/migration/multifd.c
-> +++ b/migration/multifd.c
-> @@ -210,9 +210,9 @@ static int multifd_recv_initial_packet(QIOChannel *c, Error **errp)
->          return -1;
->      }
->  
-> -    if (msg.id > migrate_multifd_channels()) {
-> -        error_setg(errp, "multifd: received channel id %u is greater than "
-> -                   "number of channels %u", msg.id, migrate_multifd_channels());
-> +    if (msg.id >= migrate_multifd_channels()) {
-> +        error_setg(errp, "multifd: received channel id %u exceeds "
-> +                   "channel count %u", msg.id, migrate_multifd_channels());
->          return -1;
->      }
+> diff --git a/include/standard-headers/linux/virtio_gpu.h b/include/standa=
+rd-headers/linux/virtio_gpu.h
+> index 00cd3f04..252704e7 100644
+> --- a/include/standard-headers/linux/virtio_gpu.h
+> +++ b/include/standard-headers/linux/virtio_gpu.h
+> @@ -64,6 +64,11 @@
+>   * context_init and multiple timelines
+>   */
+>  #define VIRTIO_GPU_F_CONTEXT_INIT        4
+> +/*
+> + * VIRTIO_GPU_F_BLOB_ALIGNMENT: device advertises blob_alignment
+> + * in virtio_gpu_config (OASIS virtio-spec feature bit 5)
+> + */
+> +#define VIRTIO_GPU_F_BLOB_ALIGNMENT      5
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+What kernel version does this symbol get added in? I can't see it in 7.0
+
+Headers should be imported with the scripts/update-linux-headers.sh
+script, see 49f6b93d075 (linux-headers: Update to Linux v6.19-rc1) for
+an example.
+
+>=20=20
+>  enum virtio_gpu_ctrl_type {
+>  	VIRTIO_GPU_UNDEFINED =3D 0,
+> @@ -365,6 +370,7 @@ struct virtio_gpu_config {
+>  	uint32_t events_clear;
+>  	uint32_t num_scanouts;
+>  	uint32_t num_capsets;
+> +	uint32_t blob_alignment;
+>  };
+>=20=20
+>  /* simple formats for fbcon/X use */
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
