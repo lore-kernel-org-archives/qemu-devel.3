@@ -4,92 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4BFBCD4F49
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 16:03:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25C8FCD4F49
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 16:03:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP0QW-00019v-Te; Mon, 18 May 2026 12:02:44 -0400
+	id 1wP0PR-0008Gr-HI; Mon, 18 May 2026 12:01:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wP0QF-0000Vl-VH
- for qemu-devel@nongnu.org; Mon, 18 May 2026 12:02:31 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wP0QE-0006Gl-4g
- for qemu-devel@nongnu.org; Mon, 18 May 2026 12:02:27 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-452169ae568so1608708f8f.3
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 09:02:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779120143; x=1779724943; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=KpSVbcWtsb1XgYzrv/fBQFzeGb8SOko7ov2BWscxtF8=;
- b=EhdMV2ZzF5RRPNb21oqluJRDplWINGIwki+tOMvChPHDYiRz50Fv8Ytnse3dtokR9p
- xAXjXIkiUHm4PVacWvVEfoZqXVCD6TH1kIO8j7WCkzzkOhGVfrFldCnFFdSjpybuUT3x
- Tg7xAcS8yqPZoNvRKpkRuqkfJsJhavm6RBLJe9VTAjiiI7XZ/arKcguKW/FY3gAmlUCC
- rt2fc3f/gRhpP6ebkvarAiHAXgXT59RG71RzCIuwhaIrIYBNNmLcvsXDUPpbOL8r/7tu
- uwbAbCbm4HB+du9pGoDLC5UDiBb4vgaMubA8XAsKc/T3y6YTznnpaCSVlzuKAJ4mLFN3
- 9JoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779120143; x=1779724943;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=KpSVbcWtsb1XgYzrv/fBQFzeGb8SOko7ov2BWscxtF8=;
- b=m8kxY3ZKknqby8AE/JPSyJnwaKWZX889k6lm0gto7n1m0Fq+sSApoFYy5IDnn1o60y
- 8mAMW9K4o1fZI7POQT01uB2g0FZnq6Qu0/BMqONuD1CqiKBvXJWc42zmNCutWZ6IXro+
- bVFB1SJ3WeggaWUQRi94KtMuiHi+C8RlYs/5XnPHyRsYUkNxiMeB0WOQoQ2kISpVM/32
- 52zq3tCCcNKTo1orOJx11QdIQt9Ehmr18GbSXKMs6EMMvOmaO/3EAdh40BYgmkf/CClY
- s6AMWSvf3wadVwcCTHPDtbx+4Ndi/eoYXZooQe2WQGIlYm2GJwMGDXbudGtBjyI2B/b7
- VOFA==
-X-Gm-Message-State: AOJu0YxZOO1ujh7vuMqwyARPg7Hbx4xRl9nBbr7mPoO7RCr7pD2YYI0u
- WO/EBXJjmnIlngasBq0ATZsOgaGYXDauro/Wv6WtA4FYdM+J/V/yO0Rm5oFHtBL5oE3NM07FXhe
- kucEdk5A=
-X-Gm-Gg: Acq92OFi7qcb603VGdfMHvWCNcRp8RH36C1Qu6dIUAzMPxSXWsQlzSW9fQH9num5fX0
- pGWo7b6dnO+2mEQ18Inpy2YsfiB7m5ysGowu8Sq46pJGo2ySfKMCcIgDFJFuFIuK5eIVr1iNgYJ
- 7YdmX5MOOC5Kpg1xBMG8dYvGfuohyr04FG4CIkh28FCA68/nuUSd0+hSyHUp+lpQ7IrcqIiS4F4
- FTw2rYCHMieNLJAa30v2XPtvFz8sFAg4cV9u7JhiE2bYz0f2m+p0bubeR9WbNSleYRtwYITlxWr
- S4wwfPw9fZSSdmKJfEQppYUpgO3EIeH8EBrxmE1VGJEk/Z2UQ71OlQn2hUwu8SFPfS3oldvvNlU
- 5YbpO9stE19fnCaE5qcW3C/ltKFCPDtLA4BG7sGeWM831l1dspeXnsR0i4nNn7CcRD8R1m9CnYu
- G8wSTba4YxO3bG8xuVoP8O/boaBB1SaIhNoltNLZNXBlkkB+ybJ0QmSFXkSf4GaQ/Gdw==
-X-Received: by 2002:a05:6000:2383:b0:441:1e41:194 with SMTP id
- ffacd0b85a97d-45e5c5cca8amr25597222f8f.17.1779120142246; 
- Mon, 18 May 2026 09:02:22 -0700 (PDT)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da15a562dsm38633087f8f.33.2026.05.18.09.02.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 May 2026 09:02:21 -0700 (PDT)
-Message-ID: <129e7c07-c5d9-4eaa-bfc7-8eddc276e2ab@linaro.org>
-Date: Mon, 18 May 2026 18:02:20 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] buildsys: Remove support for MIPS host
-Content-Language: en-US
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wP0PB-0007zA-SO
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 12:01:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wP0PA-0004j2-Bb
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 12:01:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779120079;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Llt01sfV1uMijeO9+B9YU6bVdoSwllDNDiw/k0nL1mE=;
+ b=YTVN1vkXJe+3tQ3iu5zvebd6/96mRe2BaOrwWZtTkSpuYu9ep22MPgRa5r6KJrS/1Ru5w2
+ 5LBzgzy5pIsq3Z3i7mHuhasboHBiO6TyHCks9v+PDEoWcldtqdWOzMgUz38cYQe7t8mGbJ
+ Wpt5DwBinNVEevPvW3leI5KNe8/sJ8s=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-117-M994N77mNPOmSVD50iHt9w-1; Mon,
+ 18 May 2026 12:01:13 -0400
+X-MC-Unique: M994N77mNPOmSVD50iHt9w-1
+X-Mimecast-MFC-AGG-ID: M994N77mNPOmSVD50iHt9w_1779120072
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4983C1956050; Mon, 18 May 2026 16:01:12 +0000 (UTC)
+Received: from berrange.com (unknown [10.44.32.79])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DE05530001A2; Mon, 18 May 2026 16:01:07 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Huacai Chen <chenhuacai@kernel.org>, devel@lists.libvirt.org,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Aleksandar Rikalo
- <arikalo@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>
-References: <20260511135312.38705-1-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260511135312.38705-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: John Snow <jsnow@redhat.com>, qemu-block@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v8 03/16] iotests: print reason when I/O test is skipped in
+ TAP mode
+Date: Mon, 18 May 2026 17:00:38 +0100
+Message-ID: <20260518160051.903616-4-berrange@redhat.com>
+In-Reply-To: <20260518160051.903616-1-berrange@redhat.com>
+References: <20260518160051.903616-1-berrange@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,16 +92,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/5/26 15:53, Philippe Mathieu-Daudé wrote:
+The TAP output on a skipped test:
 
-> This series removes host support for MIPS.
-> 
-> Philippe Mathieu-Daudé (5):
->    buildsys: Remove MIPS cross containers
->    buildsys: Remove support for MIPS hosts
->    hw/mips: Include missing 'cpu.h' header
->    buildsys: Remove MIPS KVM
->    buildsys: Remove MIPS TCG backend
+  ok raw 181 # SKIP
 
-Series queued, thanks.
+is not informative.
+
+The test program included a reason, and that should be displayed
+in TAP mode (it is already shown in non-TAP mode):
+
+  ok raw 181 # SKIP Postcopy is not supported
+
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ tests/qemu-iotests/testrunner.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/qemu-iotests/testrunner.py b/tests/qemu-iotests/testrunner.py
+index e2a3658994..dbe2dddc32 100644
+--- a/tests/qemu-iotests/testrunner.py
++++ b/tests/qemu-iotests/testrunner.py
+@@ -174,7 +174,7 @@ def test_print_one_line(self, test: str,
+             elif status == 'fail':
+                 print(f'not ok {self.env.imgfmt} {test}')
+             elif status == 'not run':
+-                print(f'ok {self.env.imgfmt} {test} # SKIP')
++                print(f'ok {self.env.imgfmt} {test} # SKIP {description}')
+             return
+ 
+         if lasttime:
+-- 
+2.54.0
+
 
