@@ -4,50 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 251A2CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 10:52:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61EA9CD4F52
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 10:52:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOvaK-0003qI-8p; Mon, 18 May 2026 06:52:32 -0400
+	id 1wOvaS-0003rX-AC; Mon, 18 May 2026 06:52:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wOvaD-0003pX-Is
+ id 1wOvaF-0003pZ-8i
  for qemu-devel@nongnu.org; Mon, 18 May 2026 06:52:27 -0400
-Received: from out30-118.freemail.mail.aliyun.com ([115.124.30.118])
+Received: from out30-97.freemail.mail.aliyun.com ([115.124.30.97])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wOva9-0000tg-9G
- for qemu-devel@nongnu.org; Mon, 18 May 2026 06:52:23 -0400
+ id 1wOvaA-0000sD-QT
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 06:52:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1779101528; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=tYd/FuZSv5qtUD4kEa/eP6UgqMgevIiY56njdGnB7yo=;
- b=w/oNBwaaQg3pgk1NtS6IGkaIEwd7KBr0GV1AG7ma1mptBMA23eLlW/MddnA8mnQZRuTuVkiS0mGDJqlF4SJ8ECoOgggV95QPElyAr7vlCV2MpmKfj4AwdvQPpiWm32PCcrtVBlau4PVzOk1IO/JTR0ExekA9F+ROj9NO0QXXhAQ=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R211e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037033178;
+ t=1779101523; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=yiOq06laJ9OAIKjKUpt4VDwPVBagTZHRhpc52CFfiVU=;
+ b=SUn0IauMOenirmzL/WHsjs7ZJdyIt3sHUbSQQrACRHsUPVOcoNMTp2iDExQc7udVVuWWHgh6E/12Z6gtbwrTbpX2vMKJ64Z5dFGAf8LhS787B90Ck7knvbO9Q6VT2r6zPZPuLS2r6WzSKz6rEsVmeR5QLZ36nhG9NZ1Tvpwpt2g=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R881e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045098064;
  MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=3; SR=0;
- TI=SMTPD_---0X37cuKt_1779101522; 
+ TI=SMTPD_---0X37tYzb_1779101516; 
 Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0X37cuKt_1779101522 cluster:ay36) by smtp.aliyun-inc.com;
- Mon, 18 May 2026 18:52:07 +0800
+ fp:SMTPD_---0X37tYzb_1779101516 cluster:ay36) by smtp.aliyun-inc.com;
+ Mon, 18 May 2026 18:52:02 +0800
 From: Bin Guo <guobin@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com,
 	farosas@suse.de
-Subject: [PATCH 1/8] migration/fd: collapse migration_fd_valid into single
- boolean expression
-Date: Mon, 18 May 2026 18:51:48 +0800
-Message-ID: <20260518105156.17626-2-guobin@linux.alibaba.com>
+Subject: [PATCH 0/8] migration: cleanups, fixes and micro-optimizations
+Date: Mon, 18 May 2026 18:51:47 +0800
+Message-ID: <20260518105156.17626-1-guobin@linux.alibaba.com>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260518105156.17626-1-guobin@linux.alibaba.com>
-References: <20260518105156.17626-1-guobin@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.118;
- envelope-from=guobin@linux.alibaba.com;
- helo=out30-118.freemail.mail.aliyun.com
+Received-SPF: pass client-ip=115.124.30.97;
+ envelope-from=guobin@linux.alibaba.com; helo=out30-97.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -71,35 +67,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Two if/return-true blocks followed by a final return false
-are equivalent to a single OR-expression and easier to scan.
+This series collects several small improvements to the migration
+subsystem:
 
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
----
- migration/fd.c | 10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
+- Bug fix: off-by-one in multifd recv channel ID validation that
+  could allow an out-of-bounds write (patch 5).
+- Micro-optimizations: cache migrate_multifd_channels() in hot
+  paths (patches 7-8), use stack-allocated bitmap instead of
+  heap (patch 4), avoid per-element heap churn in vmstate ptr
+  marker field (patch 3).
+- Cleanups: collapse migration_fd_valid into a single boolean
+  expression (patch 1), replace strcpy("") with explicit NUL
+  termination (patch 2), merge thread-join and cleanup loops in
+  multifd_recv_cleanup (patch 6).
 
-diff --git a/migration/fd.c b/migration/fd.c
-index f05f95992f..939cdda4e1 100644
---- a/migration/fd.c
-+++ b/migration/fd.c
-@@ -39,15 +39,7 @@ static bool fd_is_pipe(int fd)
- 
- static bool migration_fd_valid(int fd)
- {
--    if (fd_is_socket(fd)) {
--        return true;
--    }
--
--    if (fd_is_pipe(fd)) {
--        return true;
--    }
--
--    return false;
-+    return fd_is_socket(fd) || fd_is_pipe(fd);
- }
- 
- QIOChannel *fd_connect_outgoing(MigrationState *s, const char *fdname,
+No functional change intended except for the off-by-one fix in
+patch 5.
+
+Bin Guo (8):
+  migration/fd: collapse migration_fd_valid into single boolean
+    expression
+  migration/global_state: replace strcpy("") with explicit NUL
+    termination
+  migration/vmstate: avoid per-element heap churn in vmsd ptr marker
+    field
+  migration/savevm: use stack-allocated bitmap in
+    configuration_validate_capabilities
+  migration/multifd: fix off-by-one in recv channel ID validation
+  migration/multifd: merge thread-join and cleanup loops in
+    multifd_recv_cleanup
+  migration/multifd: cache migrate_multifd_channels() in send/recv hot
+    paths
+  migration/multifd: cache channel count in multifd_send_sync_main
+
+ migration/fd.c           | 10 +---------
+ migration/global_state.c |  2 +-
+ migration/multifd.c      | 32 +++++++++++++++++--------------
+ migration/savevm.c       |  5 ++---
+ migration/vmstate.c      | 41 ++++++++++++++++------------------------
+ 5 files changed, 38 insertions(+), 52 deletions(-)
+
 -- 
 2.50.1 (Apple Git-155)
 
