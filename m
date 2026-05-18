@@ -4,47 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7813CCD4F52
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 11:01:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05FFACD4F3C
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 11:01:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOviz-0006a6-80; Mon, 18 May 2026 07:01:29 -0400
+	id 1wOvj3-0006dO-CE; Mon, 18 May 2026 07:01:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wOviw-0006YI-Le
- for qemu-devel@nongnu.org; Mon, 18 May 2026 07:01:26 -0400
-Received: from out30-131.freemail.mail.aliyun.com ([115.124.30.131])
+ id 1wOviy-0006Zc-2r
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 07:01:28 -0400
+Received: from out30-130.freemail.mail.aliyun.com ([115.124.30.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wOvis-0005hH-V1
- for qemu-devel@nongnu.org; Mon, 18 May 2026 07:01:26 -0400
+ id 1wOviu-0005ia-QW
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 07:01:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1779102074; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=yiOq06laJ9OAIKjKUpt4VDwPVBagTZHRhpc52CFfiVU=;
- b=c353xQA7/7AcbSiv7FTnAxp6nvGHH5Y0JjjpuxvTbEUglNVi9o1hbPWMC+cbBnr5gnWv4+Rzv81BQtuVZ7Cnyn0HQZjLioscndKp43tJeONbqNw07sJgPmkOdEuAQq1Mm5dXdvEFhAjTJLrs1PGwJIwCJC+HqCuLl0BE7pOh380=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R731e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032089153;
+ t=1779102079; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=GazgXwplieYD1E3kZIynTm21GjivhQWz7Fa/Q3ZVKPM=;
+ b=lm3hx3GQdoJ8ovvNAcwKAkxxJan5a5qNVdlJRzY0Gn7XRl7NEVuXc0+7A8+OuNaO8mZnYCFy4dfta3c8Z1vo2Lt+G4KjXWvicF4SizvbB3YAMM4Hlq0Uz4gRlhJ4mh3Qm/VSjFUKYdFtNa0asWgBrqgKLSAsP+LWNOZ7oPeD20w=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R121e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037009110;
  MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=3; SR=0;
- TI=SMTPD_---0X382z-v_1779102072; 
+ TI=SMTPD_---0X38-ooA_1779102078; 
 Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0X382z-v_1779102072 cluster:ay36) by smtp.aliyun-inc.com;
- Mon, 18 May 2026 19:01:13 +0800
+ fp:SMTPD_---0X38-ooA_1779102078 cluster:ay36) by smtp.aliyun-inc.com;
+ Mon, 18 May 2026 19:01:19 +0800
 From: Bin Guo <guobin@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com,
 	farosas@suse.de
-Subject: [PATCH 0/8] migration: cleanups, fixes and micro-optimizations
-Date: Mon, 18 May 2026 19:01:04 +0800
-Message-ID: <20260518110112.21395-1-guobin@linux.alibaba.com>
+Subject: [PATCH 8/8] migration/multifd: cache channel count in
+ multifd_send_sync_main
+Date: Mon, 18 May 2026 19:01:12 +0800
+Message-ID: <20260518110112.21395-9-guobin@linux.alibaba.com>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260518110112.21395-1-guobin@linux.alibaba.com>
+References: <20260518110112.21395-1-guobin@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.131;
+Received-SPF: pass client-ip=115.124.30.130;
  envelope-from=guobin@linux.alibaba.com;
- helo=out30-131.freemail.mail.aliyun.com
+ helo=out30-130.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -68,46 +71,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series collects several small improvements to the migration
-subsystem:
+multifd_send_sync_main() is called once per RAM synchronization round
+during live migration.  It iterates over all multifd channels twice
+(signal loop + wait loop), calling migrate_multifd_channels()
+independently in each loop header.
 
-- Bug fix: off-by-one in multifd recv channel ID validation that
-  could allow an out-of-bounds write (patch 5).
-- Micro-optimizations: cache migrate_multifd_channels() in hot
-  paths (patches 7-8), use stack-allocated bitmap instead of
-  heap (patch 4), avoid per-element heap churn in vmstate ptr
-  marker field (patch 3).
-- Cleanups: collapse migration_fd_valid into a single boolean
-  expression (patch 1), replace strcpy("") with explicit NUL
-  termination (patch 2), merge thread-join and cleanup loops in
-  multifd_recv_cleanup (patch 6).
+Cache migrate_multifd_channels() in a local thread_count variable at
+function entry, matching the pattern already used in
+multifd_send_setup() and multifd_recv_setup().  This eliminates 2
+redundant config lookups per sync call.
 
-No functional change intended except for the off-by-one fix in
-patch 5.
+Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+---
+ migration/multifd.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-Bin Guo (8):
-  migration/fd: collapse migration_fd_valid into single boolean
-    expression
-  migration/global_state: replace strcpy("") with explicit NUL
-    termination
-  migration/vmstate: avoid per-element heap churn in vmsd ptr marker
-    field
-  migration/savevm: use stack-allocated bitmap in
-    configuration_validate_capabilities
-  migration/multifd: fix off-by-one in recv channel ID validation
-  migration/multifd: merge thread-join and cleanup loops in
-    multifd_recv_cleanup
-  migration/multifd: cache migrate_multifd_channels() in send/recv hot
-    paths
-  migration/multifd: cache channel count in multifd_send_sync_main
-
- migration/fd.c           | 10 +---------
- migration/global_state.c |  2 +-
- migration/multifd.c      | 32 +++++++++++++++++--------------
- migration/savevm.c       |  5 ++---
- migration/vmstate.c      | 41 ++++++++++++++++------------------------
- 5 files changed, 38 insertions(+), 52 deletions(-)
-
+diff --git a/migration/multifd.c b/migration/multifd.c
+index cc2fa90204..bc8aacd660 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -611,13 +611,15 @@ static int multifd_zero_copy_flush(QIOChannel *c)
+ int multifd_send_sync_main(MultiFDSyncReq req)
+ {
+     int i;
++    int thread_count;
+     bool flush_zero_copy;
+ 
+     assert(req != MULTIFD_SYNC_NONE);
+ 
++    thread_count = migrate_multifd_channels();
+     flush_zero_copy = migrate_zero_copy_send();
+ 
+-    for (i = 0; i < migrate_multifd_channels(); i++) {
++    for (i = 0; i < thread_count; i++) {
+         MultiFDSendParams *p = &multifd_send_state->params[i];
+ 
+         if (multifd_send_should_exit()) {
+@@ -634,7 +636,7 @@ int multifd_send_sync_main(MultiFDSyncReq req)
+         qatomic_set(&p->pending_sync, req);
+         qemu_sem_post(&p->sem);
+     }
+-    for (i = 0; i < migrate_multifd_channels(); i++) {
++    for (i = 0; i < thread_count; i++) {
+         MultiFDSendParams *p = &multifd_send_state->params[i];
+ 
+         if (multifd_send_should_exit()) {
 -- 
 2.50.1 (Apple Git-155)
 
