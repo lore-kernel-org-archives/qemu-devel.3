@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 776B1CD4F50
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 18:32:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAB0FCD4F50
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 18:32:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP2l3-0006G5-Uq; Mon, 18 May 2026 14:32:05 -0400
+	id 1wP2lM-0006Hp-Id; Mon, 18 May 2026 14:32:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <2d2348d94ff43fbe4cc0aea24fb312c5c15ee809@kylie.crudebyte.com>)
- id 1wP2l2-0006FE-1T; Mon, 18 May 2026 14:32:04 -0400
+ (envelope-from <96cf23eea1204b34443218fe76bd4a5eaf9163e8@kylie.crudebyte.com>)
+ id 1wP2l5-0006HN-Ci; Mon, 18 May 2026 14:32:07 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <2d2348d94ff43fbe4cc0aea24fb312c5c15ee809@kylie.crudebyte.com>)
- id 1wP2l0-0002NZ-HK; Mon, 18 May 2026 14:32:03 -0400
+ (envelope-from <96cf23eea1204b34443218fe76bd4a5eaf9163e8@kylie.crudebyte.com>)
+ id 1wP2l3-0002O5-Qx; Mon, 18 May 2026 14:32:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=MfSrrNMocb/kKkoLsE778NJNnbAO0o0xLQ5wR9ZrXCw=; b=a29Kf
- LFtwF6sp7iPxpsuhECehrQtOjz+eIUZ3O1LgNLO2Bn3gGyyhW93froS3A+1DwobZbXThQ1atPBBpl
- xtx7DWP83i+4XyZRqaPOSIyMUnB8kRhn05PLjqmvPEUOBdQ/uUJ3Lwgj14QXRS6Ua+Fc7ESN5R48N
- uJglJMhWI+Kp9WvY8S1BPWAfsIq74Aak3EqZYKNGz6a5HgccbY4iDfW4GZB82cky9xUu+ZNan/QSH
- RKfHX+fdBhckgq02XGWsLMXIIn2BB72eIJZ1DbzbAp463Unk123j6KTFDFWvsYsSN67f1507pwPtl
- PGu5SgGyeulKqsi0lCtvrVy79GIYnQKZBBifzV8CzguS9KLkY5f7jUcWj8hpoGxxrnSR7wSR5yEEV
- wuMImoh54Ivs0GD1Dlco27TZJhsznffVaFzODs25MjEiw5ni01t7oaUMs0KdnzNXevrRjb3ijQ4Ah
- U9dIZ2eRhEtH/QghRAfwbRCQlu9A0z0Ncy45429KAdb8+vPo1NiabsCJ8Fwu1Dqwy1KfjgmhJ8nsr
- 63hKvDxzb5rE9GHWpHg8PktVCiFeifQGbXposeRG5nvIwBWfcMvUkcHPLiXdz8YpnYp3vDN3Zz/Fs
- N6OTePMKChicg5ruR4PeDHakn1EFxZruIwJ4bFFQrEtZvqsYAMm2D5RXwAMd/A=;
-Message-ID: <2d2348d94ff43fbe4cc0aea24fb312c5c15ee809.1779126034.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=XoyYoo89AyoQKbQdczMsvDAvQaW1Tggzuljl0HV6HPM=; b=m/YRb
+ JQO6EA+VMQ3e90+efYlgFGQDUqYw7rKMOID8auiNeFqIaPMfpgoGPaZBwZ3S2YCDQeRhHpdjygC+F
+ BsKEsr+KBDd0lVhzoG18vA04on1PcXq7wDR7fefUW3riZdvaTSnyYW3Cqj6L8gG82pMV5tKIQTbqI
+ Sbea2ZqmXq/dPRQJJo4K+UoGUlUyxNxF8lEwONj464PhS5Tan8WaYvRLrcqNCK8HSDkwKtI2R6dAu
+ rqP27V7JF6BFLPVmiaYag0jeiOkeCskuAulcjrEMoDMD0y+2G27pbJg3Dt2GuGMy5KuBAjaGFR70V
+ /34+cpPXqHD4X9gprDLkXLQdeSKVrcoKsGcewRUFsileY0zmW1oeqnJwU91Zwq+IJgNP5DifL4T15
+ fmZCMO8DcWgNlIrO12lBNJEQQIKjCbF5MHkWyrUJFyjoQxL96Xcng/HlGoKjUBqP7dtijMRvcHapd
+ 7/sC/yKmGHS9eSi92VNVTqY0I0NDkWKkoqSy1Iuu1hWoYLWKkcoQe5Y5uKpHdYUajkafkcuP8+WAr
+ K+q9L/ZB9gmw47Aod29Do//0RucxUXfDUpugTcC0f3kAraK23EqU+b/bRR5sjybyBUq1OFzg3i4bR
+ B/kGftf8BbVnrglPeuk67jvwo5A5Kv30+NgLDNUaM50QeHT8zAO61Ta1mJetIs=;
+Message-ID: <96cf23eea1204b34443218fe76bd4a5eaf9163e8.1779126034.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1779126034.git.qemu_oss@crudebyte.com>
 References: <cover.1779126034.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Mon, 18 May 2026 19:35:53 +0200
-Subject: [PATCH 2/6] hw/9pfs: change V9fsPath.size to size_t and
- v9fs_path_sprintf() return type
+Date: Mon, 18 May 2026 19:36:01 +0200
+Subject: [PATCH 5/6] tests/qtest/libqos: add qvirtqueue_reset_pool() for
+ descriptor pool reset
 To: qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>,
-    Jia Jia <physicalmtea@gmail.com>
+Cc: Greg Kurz <groug@kaod.org>, Jia Jia <physicalmtea@gmail.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=2d2348d94ff43fbe4cc0aea24fb312c5c15ee809@kylie.crudebyte.com;
+ envelope-from=96cf23eea1204b34443218fe76bd4a5eaf9163e8@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -67,79 +68,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-- Change V9fsPath.size from uint16_t to size_t to support paths larger
-  than 65536 bytes.
+Add a function to reset the virtqueue descriptor pool state without
+reinitializing the device. This is useful for tests that issue a high
+number of requests and are limited by the simplified virtio test
+driver's descriptor tracking, which decrements num_free but never
+increments it back.
 
-- Change v9fs_path_sprintf() return type from void to int to allow error
-  reporting.
+The function is safe for synchronous test code where requests are
+sent and completed before the next request is issued.
 
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- fsdev/file-op-9p.h |  2 +-
- hw/9pfs/9p.c       | 14 +++++++++++---
- hw/9pfs/9p.h       |  4 ++--
- 3 files changed, 14 insertions(+), 6 deletions(-)
+ tests/qtest/libqos/virtio.c | 23 +++++++++++++++++++++++
+ tests/qtest/libqos/virtio.h |  2 ++
+ 2 files changed, 25 insertions(+)
 
-diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
-index b85c9934de..e8d0661c4b 100644
---- a/fsdev/file-op-9p.h
-+++ b/fsdev/file-op-9p.h
-@@ -112,7 +112,7 @@ struct FsContext {
- };
- 
- struct V9fsPath {
--    uint16_t size;
-+    size_t size;
-     char *data;
- };
- P9ARRAY_DECLARE_TYPE(V9fsPath);
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index e590c414ab..88894ec9d2 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -203,16 +203,24 @@ void v9fs_path_free(V9fsPath *path)
+diff --git a/tests/qtest/libqos/virtio.c b/tests/qtest/libqos/virtio.c
+index 010ff40834..ccbb325222 100644
+--- a/tests/qtest/libqos/virtio.c
++++ b/tests/qtest/libqos/virtio.c
+@@ -464,6 +464,29 @@ bool qvirtqueue_get_buf(QTestState *qts, QVirtQueue *vq, uint32_t *desc_idx,
+     return true;
  }
  
- 
--void v9fs_path_sprintf(V9fsPath *path, const char *fmt, ...)
-+int v9fs_path_sprintf(V9fsPath *path, const char *fmt, ...)
++/*
++ * qvirtqueue_reset_pool:
++ * @vq: The virtqueue to reset
++ *
++ * Reset the descriptor pool state without reinitializing the device.
++ * This is useful for tests that issue a high number of requests and
++ * are limited by the simplified virtio test driver's descriptor tracking,
++ * which decrements num_free but never increments it back.
++ *
++ * This is only safe for synchronous test code where requests are
++ * sent and completed before the next request is issued. Do not use
++ * with asynchronous code where multiple requests may be in-flight.
++ *
++ * Note: This only resets the available descriptor pool (free_head,
++ * num_free). The used ring position (last_used_idx) is NOT reset
++ * and should continue to track consumed responses across iterations.
++ */
++void qvirtqueue_reset_pool(QVirtQueue *vq)
++{
++    vq->free_head = 0;
++    vq->num_free = vq->size;
++}
++
+ void qvirtqueue_set_used_event(QTestState *qts, QVirtQueue *vq, uint16_t idx)
  {
-     va_list ap;
-+    int ret;
+     g_assert(vq->event);
+diff --git a/tests/qtest/libqos/virtio.h b/tests/qtest/libqos/virtio.h
+index e238f1726f..f17be0b9b6 100644
+--- a/tests/qtest/libqos/virtio.h
++++ b/tests/qtest/libqos/virtio.h
+@@ -150,6 +150,8 @@ void qvirtqueue_kick(QTestState *qts, QVirtioDevice *d, QVirtQueue *vq,
+ bool qvirtqueue_get_buf(QTestState *qts, QVirtQueue *vq, uint32_t *desc_idx,
+                         uint32_t *len);
  
-     v9fs_path_free(path);
++void qvirtqueue_reset_pool(QVirtQueue *vq);
++
+ void qvirtqueue_set_used_event(QTestState *qts, QVirtQueue *vq, uint16_t idx);
  
-     va_start(ap, fmt);
--    /* Bump the size for including terminating NULL */
--    path->size = g_vasprintf(&path->data, fmt, ap) + 1;
-+    ret = g_vasprintf(&path->data, fmt, ap);
-     va_end(ap);
-+    if (ret < 0) {
-+        error_report_once("9pfs: unusual path formatting failure; "
-+                         "invalidating associated FID");
-+        return -1;
-+    }
-+    /* Bump the size for including terminating NULL */
-+    path->size = ret + 1;
-+    return 0;
- }
- 
- void v9fs_path_copy(V9fsPath *dst, const V9fsPath *src)
-diff --git a/hw/9pfs/9p.h b/hw/9pfs/9p.h
-index 65cc45e344..b2df659b0e 100644
---- a/hw/9pfs/9p.h
-+++ b/hw/9pfs/9p.h
-@@ -456,8 +456,8 @@ static inline uint8_t v9fs_request_cancelled(V9fsPDU *pdu)
- void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu);
- void v9fs_path_init(V9fsPath *path);
- void v9fs_path_free(V9fsPath *path);
--void G_GNUC_PRINTF(2, 3) v9fs_path_sprintf(V9fsPath *path, const char *fmt,
--                                           ...);
-+int G_GNUC_PRINTF(2, 3) v9fs_path_sprintf(V9fsPath *path, const char *fmt,
-+                                          ...);
- void v9fs_path_copy(V9fsPath *dst, const V9fsPath *src);
- size_t v9fs_readdir_response_size(V9fsString *name);
- int v9fs_name_to_path(V9fsState *s, V9fsPath *dirpath,
+ void qvirtio_start_device(QVirtioDevice *vdev);
 -- 
 2.47.3
 
