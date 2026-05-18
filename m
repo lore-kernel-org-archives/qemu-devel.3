@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05FFACD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 11:01:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 105B4CD4F52
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 11:01:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOvj3-0006dO-CE; Mon, 18 May 2026 07:01:33 -0400
+	id 1wOvj0-0006ah-L1; Mon, 18 May 2026 07:01:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wOviy-0006Zc-2r
- for qemu-devel@nongnu.org; Mon, 18 May 2026 07:01:28 -0400
-Received: from out30-130.freemail.mail.aliyun.com ([115.124.30.130])
+ id 1wOviw-0006YN-PL
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 07:01:26 -0400
+Received: from out30-119.freemail.mail.aliyun.com ([115.124.30.119])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wOviu-0005ia-QW
- for qemu-devel@nongnu.org; Mon, 18 May 2026 07:01:27 -0400
+ id 1wOvit-0005hy-6x
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 07:01:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1779102079; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=GazgXwplieYD1E3kZIynTm21GjivhQWz7Fa/Q3ZVKPM=;
- b=lm3hx3GQdoJ8ovvNAcwKAkxxJan5a5qNVdlJRzY0Gn7XRl7NEVuXc0+7A8+OuNaO8mZnYCFy4dfta3c8Z1vo2Lt+G4KjXWvicF4SizvbB3YAMM4Hlq0Uz4gRlhJ4mh3Qm/VSjFUKYdFtNa0asWgBrqgKLSAsP+LWNOZ7oPeD20w=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R121e4; CH=green; DM=||false|;
+ t=1779102076; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=oli3TV2O+h3vqz3L6ihhLNIlHjx7t0sun6devc9rBO4=;
+ b=SlROCCkpTXB3cWLe+QK3+vix5MHdCuPJn4bs9kztoLoxPkQOFnEQDdVz4craM+66mxKiT97pHxJPooORf4FWJAOhjnZ2oc0rECCs6k/4Zab5v31XNS9KYHtpF5S424SPD/6a1vgjTOXI22A5RUGbTdbphfviS8WeQtPotyMr3p8=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R201e4; CH=green; DM=||false|;
  DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037009110;
  MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=3; SR=0;
- TI=SMTPD_---0X38-ooA_1779102078; 
+ TI=SMTPD_---0X38-onF_1779102075; 
 Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0X38-ooA_1779102078 cluster:ay36) by smtp.aliyun-inc.com;
- Mon, 18 May 2026 19:01:19 +0800
+ fp:SMTPD_---0X38-onF_1779102075 cluster:ay36) by smtp.aliyun-inc.com;
+ Mon, 18 May 2026 19:01:15 +0800
 From: Bin Guo <guobin@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com,
 	farosas@suse.de
-Subject: [PATCH 8/8] migration/multifd: cache channel count in
- multifd_send_sync_main
-Date: Mon, 18 May 2026 19:01:12 +0800
-Message-ID: <20260518110112.21395-9-guobin@linux.alibaba.com>
+Subject: [PATCH 3/8] migration/vmstate: avoid per-element heap churn in vmsd
+ ptr marker field
+Date: Mon, 18 May 2026 19:01:07 +0800
+Message-ID: <20260518110112.21395-4-guobin@linux.alibaba.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260518110112.21395-1-guobin@linux.alibaba.com>
 References: <20260518110112.21395-1-guobin@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.130;
+Received-SPF: pass client-ip=115.124.30.119;
  envelope-from=guobin@linux.alibaba.com;
- helo=out30-130.freemail.mail.aliyun.com
+ helo=out30-119.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -71,51 +71,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-multifd_send_sync_main() is called once per RAM synchronization round
-during live migration.  It iterates over all multifd channels twice
-(signal loop + wait loop), calling migrate_multifd_channels()
-independently in each loop header.
+For every NULL slot in a VMS_ARRAY_OF_POINTER (or every entry of a
+dynamic array), the saver allocates a 1-element fake VMStateField via
+g_new0 and frees it again right after the save. For arrays of
+thousands of entries this is thousands of malloc/free pairs on the
+hot save path.
 
-Cache migrate_multifd_channels() in a local thread_count variable at
-function entry, matching the pattern already used in
-multifd_send_setup() and multifd_recv_setup().  This eliminates 2
-redundant config lookups per sync call.
+Replace the heap-allocated marker with a stack-resident field
+populated by an init helper. The caller passes a pointer to a local
+VMStateField, the helper fills it in (still asserting the
+precondition), and no g_free is needed.
 
 Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 ---
- migration/multifd.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ migration/vmstate.c | 41 ++++++++++++++++-------------------------
+ 1 file changed, 16 insertions(+), 25 deletions(-)
 
-diff --git a/migration/multifd.c b/migration/multifd.c
-index cc2fa90204..bc8aacd660 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -611,13 +611,15 @@ static int multifd_zero_copy_flush(QIOChannel *c)
- int multifd_send_sync_main(MultiFDSyncReq req)
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index 2f13b48a37..9ced78532f 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -59,29 +59,23 @@ vmstate_field_exists(const VMStateDescription *vmsd, const VMStateField *field,
+  * array of a VMS_ARRAY_OF_POINTER VMSD field.  It's needed because we
+  * can't dereference the NULL pointer.
+  */
+-static const VMStateField *
+-vmsd_create_ptr_marker_field(const VMStateField *field)
++static void
++vmsd_init_ptr_marker_field(VMStateField *fake, const VMStateField *field)
  {
-     int i;
-+    int thread_count;
-     bool flush_zero_copy;
+-    VMStateField *fake = g_new0(VMStateField, 1);
+-
+     /* It can only happen on an array of pointers! */
+     assert(field->flags & VMS_ARRAY_OF_POINTER);
  
-     assert(req != MULTIFD_SYNC_NONE);
+-    /* Some of fake's properties should match the original's */
+-    fake->name = field->name;
+-    fake->version_id = field->version_id;
+-
+-    /* Do not need "field_exists" check as it always exists */
+-    fake->field_exists = NULL;
+-
+-    /* See vmstate_info_ptr_marker - use 1 byte to represent ptr status */
+-    fake->size = 1;
+-    fake->info = &vmstate_info_ptr_marker;
+-    fake->flags = VMS_SINGLE;
+-
+-    /* All the rest fields shouldn't matter.. */
+-
+-    return (const VMStateField *)fake;
++    /* See vmstate_info_ptr_marker - 1 byte represents ptr status */
++    *fake = (VMStateField) {
++        .name = field->name,
++        .version_id = field->version_id,
++        /* Marker always exists, no field_exists callback needed */
++        .field_exists = NULL,
++        .size = 1,
++        .info = &vmstate_info_ptr_marker,
++        .flags = VMS_SINGLE,
++        /* All other fields stay zero-initialised */
++    };
+ }
  
-+    thread_count = migrate_multifd_channels();
-     flush_zero_copy = migrate_zero_copy_send();
+ static int vmstate_n_elems(void *opaque, const VMStateField *field)
+@@ -680,6 +674,7 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+             for (i = 0; i < n_elems; i++) {
+                 void *curr_elem = first_elem + size * i;
+                 const VMStateField *inner_field;
++                VMStateField marker_field;
+                 /* maximum number of elements to compress in the JSON blob */
+                 int max_elems = vmsd_can_compress(field) ? (n_elems - i) : 1;
+                 bool use_marker_field, is_null = false;
+@@ -693,7 +688,8 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+                 use_marker_field = use_dynamic_array || is_null;
  
--    for (i = 0; i < migrate_multifd_channels(); i++) {
-+    for (i = 0; i < thread_count; i++) {
-         MultiFDSendParams *p = &multifd_send_state->params[i];
+                 if (use_marker_field) {
+-                    inner_field = vmsd_create_ptr_marker_field(field);
++                    vmsd_init_ptr_marker_field(&marker_field, field);
++                    inner_field = &marker_field;
+                 } else {
+                     inner_field = field;
+                 }
+@@ -730,11 +726,6 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+                                                     inner_field, vmdesc_loop,
+                                                     i, max_elems, errp);
  
-         if (multifd_send_should_exit()) {
-@@ -634,7 +636,7 @@ int multifd_send_sync_main(MultiFDSyncReq req)
-         qatomic_set(&p->pending_sync, req);
-         qemu_sem_post(&p->sem);
-     }
--    for (i = 0; i < migrate_multifd_channels(); i++) {
-+    for (i = 0; i < thread_count; i++) {
-         MultiFDSendParams *p = &multifd_send_state->params[i];
- 
-         if (multifd_send_should_exit()) {
+-                /* If we used a fake temp field.. free it now */
+-                if (use_marker_field) {
+-                    g_clear_pointer((gpointer *)&inner_field, g_free);
+-                }
+-
+                 if (!ok) {
+                     goto out;
+                 }
 -- 
 2.50.1 (Apple Git-155)
 
