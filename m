@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80CCECD343F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 413CECD4F3C
 	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 05:06:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOqBC-0002tQ-47; Mon, 18 May 2026 01:06:15 -0400
+	id 1wOqBG-0002ui-SR; Mon, 18 May 2026 01:06:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wOqAn-0002sY-JB
- for qemu-devel@nongnu.org; Mon, 18 May 2026 01:05:51 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1wOqB5-0002tN-4V
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 01:06:12 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wOqAl-0004ky-8q
- for qemu-devel@nongnu.org; Mon, 18 May 2026 01:05:48 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-67f7caa33easo3923843a12.1
- for <qemu-devel@nongnu.org>; Sun, 17 May 2026 22:05:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779080745; cv=none;
+ id 1wOqB2-0004vf-4s
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 01:06:06 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-bd3d7c29b4dso267043666b.2
+ for <qemu-devel@nongnu.org>; Sun, 17 May 2026 22:06:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779080762; cv=none;
  d=google.com; s=arc-20240605;
- b=APsdLetBw5Mek55pc0zKEo8beYYb+Qo8k5NZLyyKcnEKCpvR9NDJlwwyCjHk+L1Oi+
- wuJKtcIcF966Gb1nKEI39Hlt4ZfGgU77+xAvZHEm22MEhIp2Xba5dX/b0tKwfAPBhLRF
- 9zBz+GP0juywURWVWUVkSPNiLzskABqnlVdsGgrTR6BLuDmfEQBhGMLrkhapVLrcxYeb
- CSFn8H3SNUzGIQE2Qd5HSGpK1rNkaGX16l7Kaq6oCOrV677XS8raFg1/ZKnwDSbf9XlV
- 4YtKE+FDtjgovqjLcwqm9dCKs2WWA/T9WR2ix+U+bazgMp/80/LZWuTpOIYx459mUZWa
- YSGA==
+ b=Mt2Ba6fyxoptYtsjBavluWbn73jTQidcUCF47f2EZArjjreANy+q3NvSAYtxqoP6y9
+ 11MTuauJL9jr01xd06R2dwYoF0pBPFZMB6/av6dTXlYY4yfnJARcs4UCntISqNGC0uUo
+ +EufJLQa7Zp6dj6TrBk+N1sLY94wiRu4fg9rxIwFXr34K2IUKwpqNS6Y7NEVSOPJlNPJ
+ EtR6/AsLR/MXLosZKkTyByUVJQy0f+WiL5OwY5g3jp61a6UK531X1Tagxrv+VKCf70jq
+ RdLvkN2tzfP/UHTAcM3H9LKN3l7sz5Tr66VYYkkkoIK99kiEOTc0nsNSp48i40Rzk95S
+ dcLQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=T6YtyFlKjaCEj+GtDXCk5hFK8cgIsyn2oi5Ayb2Wpvo=;
+ bh=QWmQcYU57p4OMf5I0lxF3//HcJkWkUi/KGPWap3Mk7g=;
  fh=KxFgLvB8QpbaNzAHYkYnodH8BxFTJmWAX/wpmrbktoY=;
- b=jhUWT1Zr4VOx05gWdvuqyuzngWh2jQRbxS6/yLarrXVYMfrNvqvSqXgd2B7ZlRug/j
- 45bnesUhbcFzYrDxM4oUzt7DpeytUiYRJ2DrHNMxj5yi//NAwq1AnoDBRPMlSEhl4PX6
- krtj06fk/J4GW58YRFEKrPmPlFV83i8BUrclhgF4lh6W8bg3VD4N405vffLN/9u/aGpr
- uVueIsIjFpBwiNEJAZyn1kqbYwtiv08sgLf1qzLfvcATAT3jhOJHJIUg4MJp08uU00UV
- uHsPvu/N0XrxacCz+5L3XBtKA5qU6MB2HK1kSezxMl5qg+lhJpNYlzh0NkDgQnQVvqTd
- +KKg==; darn=nongnu.org
+ b=hbyRvByi69DjgQwTGFXlHUQftAwxq6dHmM+z2ycoNoeaLZqT7QxOP9SzXcPTWatNKF
+ PFvxePTD152DyI+P2ykT5Z1q9qONYOuFMMrH3aCmEdqNeaWOcHiqCn3J1U5O7RJrreZr
+ 0oTzy/L1UJeXj/KAf3njrm3mr7DIVFFXCkliY91bR0OQzJ+Qu6HuL2csEGD1LxhOug5q
+ V2SA1jWflQ38gP2tP6/HjzHsyQJN7I2ws/+z4GLT/LWjx0Q6LG0pe1vc7skXW9I+0Cty
+ Ji09c0NNGi8H02KqaY48un4v4aQGAjUhN35PUOyyH4W6b4+IjabxEiMQajJ73A1TLFIU
+ Sy1A==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779080745; x=1779685545; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779080762; x=1779685562; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=T6YtyFlKjaCEj+GtDXCk5hFK8cgIsyn2oi5Ayb2Wpvo=;
- b=bIKxnYgEOept5NWKkqGPCthmnj7CBn9HBYPcpfHDtZk8gP0VfNBkAel3NPfz9g89yf
- Oh59rg73nAD+0fgKrSbLiJMH5W2Zc2WHSnGKVfkfGpx8IrrNhVDvBi2pZqGD0O/rJXec
- 3KjQeR/6BTOgOHKtI+vObOotSUxYtRqbsYL43i+aEQM/Wrqy/z/RVtyH+zIdXFeFHaUH
- mPmBm3SyrvICxTc/ZxIPKe26JrYf6zYBFyPdQl4sj7Np4ImmGIPC4ppa2hKVfHegtsln
- ecvLy9/6ls6ZL2ddPozGzbzsrEGCsvUnKqasedi3FQNFtbV4n6hgyX8aSwPMlZgz+tAX
- b44g==
+ bh=QWmQcYU57p4OMf5I0lxF3//HcJkWkUi/KGPWap3Mk7g=;
+ b=Mv5OTIs8RfkhjVX0ouuitP1VRsjc7LP4vPvfWynUAbsDDtYZypTahtPkgC00JJUvG5
+ yXQ/raKnBqRXK9IXMqbsRqAMj2FpRBiLt9m1cLmzChMtFkl9am0x05K3bg9p/w6JanLv
+ Ymq0Mvd/xXSnUDhf30ALIO1Z6WL5XXsov9CD3sz84etkkSqjgG5whyuGE0MqYbiSSUDv
+ pM6WqZDHSSI22E4KnBRfG+ZOn/yf7SL35gFbNLlOrU+uj3JKQytnF+Zyq3lTRe6aON6O
+ kLoJwFYsU/eoCcdRm6Stq1iDdSvrw42zRhIX+HeQW9hGJwWH8uk+nD0DU85pXHuO1NSJ
+ BQHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779080745; x=1779685545;
+ d=1e100.net; s=20251104; t=1779080762; x=1779685562;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=T6YtyFlKjaCEj+GtDXCk5hFK8cgIsyn2oi5Ayb2Wpvo=;
- b=tT4ebADJVsnIr0hjXIqcMnSoOf/VuBEfPNQGA3vz9ABU1jFvl9xt7gbLrB2uz5rMPk
- ygEdC9g8I5sBADpEcEwd7lpCVXnsHEjJptcs70yYHm5/JxqqQzYIskdkawzUBMxR2waW
- dZDprv8qERy+URdQBhGW/VJgzdj/H64bLZygQliDBXVeyZFa30PZ9Dcu00g/hac8SgLH
- D9PzE8RLbYCVQ7uMBb5MBxqKvaftmOD9EZTQgCzXWB8xaaHNmE6fgbcqAlySE2wlkg3i
- CusX8P+CE3qZdtYImsJHUScCGJLbRgVA1R4CBV46Z/v/NYO41b6+hE8rE37lsmsfWyHV
- 4nzw==
-X-Gm-Message-State: AOJu0YwRW7jAnAUuBoCI8OsPkaA1rCFsDmbBVng5dIY0/sifI0wG6QD1
- Mh1il4zaU2JnmooXkhmfTMtiym20TB2r6GnBE8qJ//2+zICOEj1D6vacE0L1zCXsesSE8bIV60D
- mdp11FSwzNh1DzkfXUBPyi9zhGt5KbAo=
-X-Gm-Gg: Acq92OH190IRkN17fr05dIKWcM/x5HWjQ2HVXZWMv2NvCAb3/yjyY/3nRnoX9aDmxPk
- dTaIozrfDHUkeWcbHF1hryl6e/RI5hUuINhL4Bd2ad9fwJYv65ZQmGjvCD0l3CfIO4ulHNwrceT
- MDHeKA4Uqe3S14oretZ2T1QggN9SJ3s+hyIBHo1bUgVWEQszIrJm9y2E9jIPTC1ZRdA9trRexZ7
- F6W2EXni07cxzH1fjKQ6k39pX2rnKsX/AzYGV/VTZ0PVyDuKgtm8kWVem4s0BUFFWQkOWNnhp14
- nQ3oog2lSpVV4KfET/ETn9vH1XisyJP6bbcL/A==
-X-Received: by 2002:a17:907:6d04:b0:b97:1d24:c004 with SMTP id
- a640c23a62f3a-bd517860e1dmr668866466b.21.1779080744784; Sun, 17 May 2026
- 22:05:44 -0700 (PDT)
+ bh=QWmQcYU57p4OMf5I0lxF3//HcJkWkUi/KGPWap3Mk7g=;
+ b=SrYfxW5K14Me0wLAUsPI6wBfDeIWkbY/OxaQ7eopRPmI/2FOrQInIDMmcT92YNBmHt
+ 39+nnMIuvSFce/CW+iAySUR7jKRJpyrqp7vzFh7tcTCo+DAevNpR7lUSjiC7SoWH7ukz
+ wYqMx1jXX2u0MZ+x3hprCKUNNipXIin/ML8cAEX5/ZwahQWjy8sVB7U+g4koejz6QMqb
+ 9LbhmfitEbcgddukzPoD/Rzsl1svX9ADSe+p1vBXb2iDEGottaSyMshUNKQesAFxRLeN
+ 3r9nciT53UXYKjPi1VATCemjK5fQF1le/dhsdVbeuwIFgwCJuRMNMRyv1vcWJF3URGlK
+ i1PA==
+X-Gm-Message-State: AOJu0Yy6WEzx65tgFsTxgopucr8313Wdg36D+JAXK28pCiDIbvnqTgDc
+ QdSt60XjaWXVK5Fvb7lTMCesq2GZGyeMnCvo0VvzKVZJmotsDLBO42tpw/QC+70NeyRUWOGVZ+J
+ 3GsfMBAlcscABTBIkbkT85f3I+RSLXqY=
+X-Gm-Gg: Acq92OGE5QXVG9UFY4Gob8vap/8TWfUPwjVJDc9WnUQAYhc8Kc5DrMDl6nkz1gr081k
+ tOEHYOl3C4p0LxqoNF9b7UJGMPovp7WmwLhpVJB5PTn/SwudzXTa35X8+wdKlNGrBiitcA2Sqkd
+ rx3nRSF1BNGSkCvVsoAqNPccIT/5gwujrqt+e+lfMPnjbhnUsRQDB5md84DssitsqJelTpYVYNB
+ XrclE12NHVvQGm0BSj8Ng+SFb53wCv4fgWpBb0cC6RKtI772UtLHENf0PcrVqfLMh5ZHywpCBHc
+ 4jJAwNR5vJLtihrsR6lZnT/pmA+Ftdz7fhefBw==
+X-Received: by 2002:a17:907:7287:b0:bd1:9f5c:abbf with SMTP id
+ a640c23a62f3a-bd51798eb09mr677859766b.43.1779080762175; Sun, 17 May 2026
+ 22:06:02 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251211025611.99038-1-jay.chang@sifive.com>
- <CACNNAjNV-ffHE_Vs7BOkgC-ff+j4+uz8tX9Zi2xGfPuLfbKdpQ@mail.gmail.com>
-In-Reply-To: <CACNNAjNV-ffHE_Vs7BOkgC-ff+j4+uz8tX9Zi2xGfPuLfbKdpQ@mail.gmail.com>
+References: <20251231045000.30120-1-jay.chang@sifive.com>
+ <CACNNAjPw1RAQKctNWa5=hVs__qz8uOqzd6VrL8V2XvEfEaepRA@mail.gmail.com>
+In-Reply-To: <CACNNAjPw1RAQKctNWa5=hVs__qz8uOqzd6VrL8V2XvEfEaepRA@mail.gmail.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 18 May 2026 15:05:18 +1000
-X-Gm-Features: AVHnY4LxV4wFrwG5t0UfEA8Crt2GSTQTRHWRFtA8Pg5EIbVqz7bD2Hh6_EdoM5g
-Message-ID: <CAKmqyKOW71u1pB+13m5FZ10FFrtW2nbdAiOe8SkQH6XUv8BW+Q@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Don't insert DDT cache in Bare mode
+Date: Mon, 18 May 2026 15:05:35 +1000
+X-Gm-Features: AVHnY4K3dhzRjqly3If50wVEfsMIzBLtcV2X74jzHfjphO6m-FAqPfyeEA_g6lM
+Message-ID: <CAKmqyKOeabe3td8s4xxidKzRFEFaGADFAgZkbH4x0y94ZCnxbw@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] target/riscv: Fix PMP address alignment
 To: Jay Chang <jay.chang@sifive.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
  Palmer Dabbelt <palmer@dabbelt.com>,
@@ -97,8 +97,8 @@ Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -122,7 +122,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 18, 2026 at 12:38=E2=80=AFPM Jay Chang <jay.chang@sifive.com> w=
+On Mon, May 18, 2026 at 12:51=E2=80=AFPM Jay Chang <jay.chang@sifive.com> w=
 rote:
 >
 > Hi,
@@ -133,25 +133,35 @@ Can you please resend the series, I lost this the first time around
 
 Alistair
 
+
 >
 > Thanks,
 > Jay Chang
 >
-> On Thu, Dec 11, 2025 at 10:56=E2=80=AFAM Jay Chang <jay.chang@sifive.com>=
+> On Wed, Dec 31, 2025 at 12:50=E2=80=AFPM Jay Chang <jay.chang@sifive.com>=
  wrote:
 >>
->> When IOMMU is in Bare mode, DDT (Device Directory Table) lookup is not
->> performed. This series fixes two issues:
+>> This series fixes PMP address alignment to comply with the RISC-V
+>> specification WARL (Write-Any, Read-Legal) semantics.
 >>
->> 1. Avoid inserting unnecessary DDT cache entries in Bare mode
->> 2. Properly free Bare mode contexts to prevent memory leaks
+>> When configuring pmpcfg (TOR, NA4, or NAPOT) and pmpaddr, if the
+>> value is smaller than the PMP granularity, it needs to be aligned
+>> to the PMP granularity.
+>>
+>> Changes in v3:
+>> - Use ROUND_UP() macro for NAPOT address alignment
+>>
+>> Changes in v2:
+>> - Fixed commit message grammar ("it needs to be aligned")
+>> - Use ROUND_DOWN() macro for TOR address alignment to improve
+>>   code readability
 >>
 >> Jay Chang (2):
->>   hw/riscv: Don't insert DDT cache in Bare mode
->>   hw/riscv: Refactor riscv_iommu_ctx_put() for Bare mode handling
+>>   target/riscv: Align pmp size to pmp-granularity
+>>   target/riscv: Use macros for PMP address alignment
 >>
->>  hw/riscv/riscv-iommu.c | 34 +++++++++++++++++++++++++---------
->>  1 file changed, 25 insertions(+), 9 deletions(-)
+>>  target/riscv/pmp.c | 22 ++++++++++++++++------
+>>  1 file changed, 16 insertions(+), 6 deletions(-)
 >>
 >> --
 >> 2.48.1
