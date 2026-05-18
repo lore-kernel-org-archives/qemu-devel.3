@@ -4,53 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50711CD4F50
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 18:33:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9BC0CD4F4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 18:44:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP2mM-0006t0-D0; Mon, 18 May 2026 14:33:26 -0400
+	id 1wP2wR-0003Gd-43; Mon, 18 May 2026 14:43:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <3348c4d683f061c23083bd45994d527be4fb7cbc@kylie.crudebyte.com>)
- id 1wP2ld-0006P2-67; Mon, 18 May 2026 14:32:56 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
+ (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1wP2wO-0003F9-9i
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 14:43:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <3348c4d683f061c23083bd45994d527be4fb7cbc@kylie.crudebyte.com>)
- id 1wP2lb-0002cf-Po; Mon, 18 May 2026 14:32:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
- Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=7y4nYDRtPEbRAEWf7KeUH8jL/lEt8hJcinQokaixdsE=; b=K+vxQ
- TVeJl/jCSgJBEf+7ApRvpcdehuot9cE1686gpL3acNetJyMUu00l0/BjGxLq9RY7nsDxXdADGy/PQ
- lfVEwIkbYqtv4JT9YgvvLoUAJmXg+n/W+Wgtq1sLDvgodJHx3eeNLIn73TOQlT8d81NGJvQwRjkuV
- M5SW/q1bIcEIJ3k5pme9HAajg8kxSUquk27EPHKd2NkUB4Tq8ItfDhig+1PQe6Sbwxfg+FnWQRlYJ
- mdcZ1Q+B9sxWdprzKcMz3Axkz/RreL8AgOlUXOSpg6/OqGiKmJ5PTLQNTIHMtFMf6EEBEqmYnuXhd
- XWG3ZeVDrCwjzskfWP4/EJEj45qdWLSSkq9cIsYaAKw2VeU7M/XJ+7UB9kgGbY3c8mRKEhO4rPlm+
- rCZgn355neVwsA9swLkILyrymUzHoc0UsKiVnrdjHb/Ots+NbbYs8kjgnj5W/eIREPvTe3CodBsWZ
- 3T7pasHDraalK0xAV2t8i/jWYyy0bXk+Qzgw7/iNnhZOjAgBnMeqKMCjGy7XHSww0R0l9xQu9VOK1
- ACarbm/1cmSP/FwvMrUh/bqGtxPWOnjWF8mIuz2kek9xQxj7iftNP+Ldb53Wrw/UHe86gW4Pzi67q
- rFN4R8ihWACryCeDzzBshFqaKRlnsaJy2N/olzLwnsMMlRm4fVWjBsdQ0RF4BM=;
-Message-ID: <3348c4d683f061c23083bd45994d527be4fb7cbc.1779126034.git.qemu_oss@crudebyte.com>
-In-Reply-To: <cover.1779126034.git.qemu_oss@crudebyte.com>
-References: <cover.1779126034.git.qemu_oss@crudebyte.com>
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Mon, 18 May 2026 19:35:36 +0200
-Subject: [PATCH 1/6] hw/9pfs: add NULL check in v9fs_path_is_ancestor()
-To: qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>,
-    Jia Jia <physicalmtea@gmail.com>
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=3348c4d683f061c23083bd45994d527be4fb7cbc@kylie.crudebyte.com;
- helo=kylie.crudebyte.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1wP2wM-0006fB-Mz
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 14:43:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779129825;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ujkKcm9SJ37D7TbGkriFSIS1MzvrH3bOzDjz9FqpvHk=;
+ b=P9S9Ks9HktJbmlVbPY+rShsjwiaw3y7OYsk+3SjLKXMg5cgO2Oh0FHpRGtfTKwqBES8F1W
+ SnmUFsZstxc7qmZJsVOr2WyZnC5lPHkvYBFzB/OzMVOw2shn8fIgFuI/GYGrGvSG20TWLS
+ lHQg2P5rGoCcR6NmlBaQOCnsdqaRtHo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-372-1Rm4UOmcMdaVMnEKuvlnwQ-1; Mon,
+ 18 May 2026 14:43:41 -0400
+X-MC-Unique: 1Rm4UOmcMdaVMnEKuvlnwQ-1
+X-Mimecast-MFC-AGG-ID: 1Rm4UOmcMdaVMnEKuvlnwQ_1779129821
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AD25D18002F3; Mon, 18 May 2026 18:43:40 +0000 (UTC)
+Received: from cash.home.annexia.org (unknown [10.44.50.109])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4DF551800576; Mon, 18 May 2026 18:43:37 +0000 (UTC)
+From: "Richard W.M. Jones" <rjones@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: berrange@redhat.com, rjones@redhat.com, thuth@redhat.com,
+ lvivier@redhat.com, farosas@suse.de, pbonzini@redhat.com
+Subject: [PATCH] system/exit-with-parent.c: Close the file descriptor before
+ exit
+Date: Mon, 18 May 2026 19:43:27 +0100
+Message-ID: <20260518184333.8505-1-rjones@redhat.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=rjones@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,33 +79,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add NULL check for s1->data and s2->data before using them in
-string operations. This prevents potential crashes when dealing
-with uninitialized paths.
+On macOS we leak the open file descriptor in the background thread.
+Close it before returning.
 
-This is just a defensive measure. We are currently never passing
-NULL to this function.
-
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Link: https://lists.gnu.org/archive/html/qemu-devel/2026-05/msg04286.html
+Reported-by: Thomas Huth
+Fixes: commit 886898baad ("Implement -run-with exit-with-parent=on")
+Signed-off-by: Richard W.M. Jones <rjones@redhat.com>
 ---
- hw/9pfs/9p.c | 3 +++
- 1 file changed, 3 insertions(+)
+ system/exit-with-parent.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index e2713b9eee..e590c414ab 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -241,6 +241,9 @@ int v9fs_name_to_path(V9fsState *s, V9fsPath *dirpath,
-  */
- static int v9fs_path_is_ancestor(V9fsPath *s1, V9fsPath *s2)
- {
-+    if (!s1->data || !s2->data) {
-+        return 0;
-+    }
-     if (!strncmp(s1->data, s2->data, s1->size - 1)) {
-         if (s2->data[s1->size - 1] == '\0' || s2->data[s1->size - 1] == '/') {
-             return 1;
+diff --git a/system/exit-with-parent.c b/system/exit-with-parent.c
+index df65d2231a..d236944572 100644
+--- a/system/exit-with-parent.c
++++ b/system/exit-with-parent.c
+@@ -109,6 +109,7 @@ exit_with_parent_loop(void *vp)
+         /* Behave like Linux and FreeBSD above, as if SIGTERM was sent */
+         qemu_system_killed(SIGTERM, ppid);
+     }
++    close(fd);
+ 
+     return NULL;
+ }
 -- 
-2.47.3
+2.53.0
 
 
