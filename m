@@ -4,97 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D7E6CD4F4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 21:29:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B228CD343F
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 21:29:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP5Vk-0000XM-Jv; Mon, 18 May 2026 17:28:28 -0400
+	id 1wP5VO-0000PY-LG; Mon, 18 May 2026 17:28:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5Ve-0000VC-Sp
- for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:22 -0400
-Received: from mail-oi1-x236.google.com ([2607:f8b0:4864:20::236])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5VM-0000OP-GY
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:04 -0400
+Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5Va-0000WG-Tg
- for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:22 -0400
-Received: by mail-oi1-x236.google.com with SMTP id
- 5614622812f47-479e6bc357eso1005483b6e.2
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 14:28:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5VK-0000S4-VP
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:04 -0400
+Received: by mail-ot1-x32b.google.com with SMTP id
+ 46e09a7af769-7dcdd1b492eso2947826a34.1
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 14:28:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779139697; x=1779744497;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779139682; x=1779744482;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=NLw1jYsA1FC75BIK+XU/FjvD1FNM1m0O7ZBaQMzntbs=;
- b=n0QsfdPD+xaUHlC0/Vr2cbPPa5IX53slBMnYEsop+d4Fxk1odsmTPNm4jPjxPXSj46
- P7aSsOtmYxnHbxvmSAtAITU46liwpo2Wjx4vfr6OVafsug1kKL4aBASwSVIjn+b20zcm
- silbZ+q6TltEI4S/czxPHEz3aOR3/phaXr6sWePN0Gpw1Dn2ad+d7YSpGFs79j2mm16E
- GgqF6x/mO+W9pfrUI/9q77yt5sLDdBQN0/C33LdqofiEcrpoVP5PeoqFbZgXQeGT7538
- 0sWjUtXyIXuKRudnTvBbNQtwTXmxHq24vjihVUSwDGkuQmQvJ5/8eAQoScyDXrGtnO8k
- ACNw==
+ :reply-to; bh=ZJ7v//PQurI3QUAyO+HvdctCbJ9hSdibdnByYDaydXY=;
+ b=Z2hZ0UJyx4kmXotMBe6m/pW6WBlx+rvdZehWEkHqjnsei3G72p93qpjDdOzYhKU3HJ
+ KV6fJ6/GATxhBxp5ktFp+rO68QBGk3q0xbfgyjfp0JRqrbLMKguOAxceNkwhK0sWEmZS
+ eI4Y9d4StJW6pcnZcS7Z+F6U1z9YpQeFwgQByU3KzmX7ivkuL0acb059XeI9eUQNrb4S
+ KbcJBvL6B0U7uo2cSYAWN9p4y13k9xwHGIdDzN7BSkvHNK8fqmvTtCfxEEE1x9xqLr5l
+ LjeNjjXHWhRGz012PTg4gO2HqpjcLg7YTRsvy9DyTLl7q9YD9oYwNHS1h8DjtvKNyLIx
+ s0pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779139697; x=1779744497;
+ d=1e100.net; s=20251104; t=1779139682; x=1779744482;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=NLw1jYsA1FC75BIK+XU/FjvD1FNM1m0O7ZBaQMzntbs=;
- b=KCbkTQohWk350+FwTg11Iwgv6u2Ipifa48xE2D2gyiLm9mf+D6G3YrQ35zfCqm6hal
- 5RGIjKRWRkL7e7rjI4rbEt7l6HTS0EjHtECnv8mM/iwgf2a/Eq048xiX7w320Ape+Ejn
- 5WHYycCCNb21gUFtQy0gghnF0HN/80HOFcKcUwtMFxN6QTtyqOr0jEP1PNVaYMfc3rrz
- q8n0yvDLGVd7oZBzBLxPG1Y2nCXZde/54pydMTedoC01VIcCQ5xAGwJd1Sc1Udrc/6nT
- t7QRkF2PE99fqDnbrpw0OS/VGQPiPuJounopILbO+O1xtCFU5TpKAmyBuxnvpcG4Jkzs
- vMLA==
-X-Gm-Message-State: AOJu0YyiWoUhKUS9MkHNQcAZ4De3m3XNOb2n0ToY6C4o4dOEHGsEtkRI
- L0F22IXSINPZ1V1tI1tWcUA+lvK3vb+skzRLr8kFoVtORsccMaA9MhXwjuqrebXYjKg=
-X-Gm-Gg: Acq92OHrQI3Dau53p2/OEtybVeTUIcC0Olt/JyXBOsekh04AYr0GqtslZkcbRvGzU/p
- 2UeHj03/UkGMpwMe6MhtzxHp/oWnb72k0jwrG9RT7Z1ZaHUegEzCn3Qqpv62FNgoaBOFttorWld
- ZDpbkxhi2wuV0Do0SfTiWUEmR/yt9l9ea9D6qQXfZmNRUQnnqm/r/3MZPhIwBq7kFn0jQQ04LuL
- z3zIU27ZNy7a4Tcp+V+d1wQkjLf4GUgfdxK8OwVl6cWoqpdeldKYy7d8ayg+MYSWn4slMtyhr8P
- d3wJbfVCGiGVLSihsoWfSYk++FxdckEoBHqYUbHyQLvYWPOik2Jc1KQt85GhHXhyKAhWSpFWa0Z
- H1DOSCEexk8d1SYjhSJcJZmGZmhC/OnnlCmj32/WsiR/thTbpEO8i/5hoiXsNyh+c7X8/P5vaxw
- sTu8i9lua2oA==
-X-Received: by 2002:a54:438e:0:b0:47b:c8d0:512e with SMTP id
- 5614622812f47-482e577b3dcmr7866339b6e.34.1779139697265; 
- Mon, 18 May 2026 14:28:17 -0700 (PDT)
+ bh=ZJ7v//PQurI3QUAyO+HvdctCbJ9hSdibdnByYDaydXY=;
+ b=Gu8QzX9vfXB410l2ywQ9zPVPWd6lYtWIiBOFbzjKXX3Xb6f/Ru7MwWn1NOnzrwo5xu
+ VL1M5JrvusKDNA+Iyg0O2aOSyjlWj0Dimw09zdn4chuSnz/SU3m8gW4XRsEUxuS6EFGP
+ p8pgTiSC1JYDFQIIhd8XJ/Pz1zgMPrWHbQKGwt1iheBfY8ZgpbfhGXujpjaFNq/5mRES
+ 127W3GOwmTXbKeK3xD4QLRYGO/PfSeNfyoe5rJFGxtP1InHAHAfLeCa9fPP3HXT66e54
+ k/JZwE1Z8m3AJP5cJDqIQ14Y1JbKx+WSX5jQmsFnEIwA8Fi2I3Ctk972WQYCKk8/tR2v
+ FZNg==
+X-Gm-Message-State: AOJu0YzCGKyjFaYkQ1y5qnoSEDtuTH2j7XUvArrL7asS0VRSbNuu2NG2
+ zju+tyVaBnGCAopieN2Fvh2NG1hna4ZZP0v3rOTvxIH9LujNCVNxUh3Z2L4BYpRd22I=
+X-Gm-Gg: Acq92OERPiseIMod71DGN7viW58HcYM8mGs3Ov/PDd5nkqOhMwMLDSwK07nBZq8Nr+f
+ c0N5+9gn2s1gWakXe5IBLDe5F+ChNp8X5QdKZTK+iSyisiULtZ/0o68rxCVNVwzCTz/uzvivuGa
+ 2+jJipRfEbHsPfp9cfCi01Lz+iIEXWsAqDW60hc0wsea8QrOAktJQwX4Y14qU8FCRmXJL0Hqe8p
+ jXSfmCBfebSsXLRfaHW1Vdx0R19qkO9RdB5JLsQm1Nu1RxogfrUGdCe/9Z6fSG6S+RkorvsfcUT
+ FfDybHizZydI/1GNB31Lslsoojlld+tHyGP+MXPp+/+iO7kWwKH/RSfxV7Sq+A/4HSCaXybDbYN
+ dFUN+XXAfa82RgFM3mMm8t1k0Wlx8aWTrxLd9tcAL3R1RJVymopJezjTHBlsZ7HrFsbhJpeF6cj
+ GDmEIHb6XC1MPWZGg+kS8G
+X-Received: by 2002:a9d:4f15:0:b0:7dc:e43f:4b31 with SMTP id
+ 46e09a7af769-7e3f14c8d19mr8791428a34.12.1779139681847; 
+ Mon, 18 May 2026 14:28:01 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55b81cc5asm7980358a34.8.2026.05.18.14.28.16
+ 46e09a7af769-7e55b81cc5asm7980358a34.8.2026.05.18.14.28.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 May 2026 14:28:16 -0700 (PDT)
+ Mon, 18 May 2026 14:28:01 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Mon, 18 May 2026 15:27:43 -0600
-Subject: [PATCH v2 25/37] bsd-user: Add cpu_copy and make init_task_state
- non-static
+Date: Mon, 18 May 2026 15:27:28 -0600
+Subject: [PATCH v2 10/37] bsd-user: Add socket shims socketpair through
+ shutdown
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260518-misc-2026q2-v2-25-6c16fe448301@bsdimp.com>
+Message-Id: <20260518-misc-2026q2-v2-10-6c16fe448301@bsdimp.com>
 References: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
 In-Reply-To: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>
+ Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>, 
+ Kyle Evans <kevans@FreeBSD.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2745; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=eDWZgAgv3qFfpEQZ8pRz9vg/5ayhGnyO/P476vk93so=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqC4RIqVy/pi7k3DZyBX5FnQVZ+YbMtZe5rAQGT
- zhuy3eIy8GJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaguESAAKCRBsHNEofbAR
- AGQxD/9941+EMW3JhBaevzrUxc0sh7h9E6+oxDxjXZsenqTIJpqhwFGmjLkVvCd2+RGVLZLBDx/
- ZKgBhduY/yV8sJXKmUyZ+EcWJTejsQ3x80uJJwWkdv9R2daO8nE05BX6W6++9ltLrWQlVUFy65v
- Us4OdIaDLRaTWu7gKglOsxYa1bEVxp6gv01hdocMUvpZ7AUel0/1zkVy+zO6gHNXGwiK1g6/d2I
- lYa7dd4RqNSX+fkxYabLFYX545PKJZvyY3c/u9F6d7W43jgZoakN4rgPkHc/YDGK9FXgm+WdvNK
- 1hCJqnZw8Y8OvXOedKZh6A86PKvQXwqTSSFwhK35djYj0WocbGbypc5BK+n/C+Wo5bbi7HwYXYu
- UD1PcrTqnE9Lx8eG9ulIB/boKXNdywiIHQEIAma89my84dS2puiaBQmsYCqT1BaB1iEiaOB6vWe
- nDs9CuSdC4nnwLrfsAESV0uWpsh9lLc5mmhRdYc1yYa2gqNhFJm09cdfwnTAKUOlW3/ABmJRbWz
- ME5QFWWGgsJ6o3Q0ElJyDny8Y9ieU0vwC/ni+mfyHKQ8u7ePtv4eIzx6nqaGhurukqKXlzSgIMb
- 32Gg2mtRWXoyG0OwgscfF2UTnkk5Bm6zItkZlWAM5CZYzSczUc4X0bZhK5/47X3wdL6Wlpp6e44
- dy5Dj2L0OQY/nhg==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4286; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=p+SdwfCAmHsiJep/Ad8iRM9GDkukh3wykvHxywkpLCc=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqC4RGevPBMDjfezN8f/kRACf1wC1Ui7bxbwKVS
+ maB5iM38YyJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaguERgAKCRBsHNEofbAR
+ AIXvD/9wEm0S86iRvI1aDfm6rRe/v/ux+WwKC65AvFJi860rDhDZ2BVbX3r5rQBYgu+S4mUJod9
+ exCHllGAR8pdpdoYk+j95ahQ2yAb6GIeCgwSs8K1jZFzy1fz0ONPX5wsSRg7uKIVIyXbx6grg9i
+ JeWmmmLn/LM2h2pGshGxhWnHIOxlugnZVHBZ8nBL+WbjxDiP5jpoj/Vt8Phdq1YU5Av6IrhYJdS
+ Zx/tBs5CTIB/i31nrE/51nSY0McqoWDWF4i1yw7IMHruDTmTFxe33RwD2i0BNwj3etTnKWSunrL
+ Ui0L8HGIecnN0e/20kl2dVwfWI3HNED8X5wpcwUq9d8/5jR+V9E5E9NzUhKzbOUIFr0lKv0cSR2
+ x6KQtwupbG3QZkRT1tt+pO+CXx2H4gwgba9Q5vCHjnJx7ZQSZ6ij8T9ib5rQpPHRoAV4CM9GjkS
+ BrmHq1gDaI9T9d7XomnsvJJ+9RaUlf0rf88l2WWQkY3S9/ZzeNVEKEQXAbPsWrDMJMNklOvHW4N
+ fcm16YyQ4TJls2G7FkrEYI6DQD99KQxhe4Ux5AOzv870g0F512UXMX/qieT3PUi6Nmy9LaQG1g5
+ P6P9x4q68imf8Ym0r7QmOuVFEX5GVtftTtZvfPEaakIv6A2DtizReSC+aZ4EUHoWk91b3vK/1h4
+ 9kvdJobqXaMnx7A==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::236;
- envelope-from=imp@bsdimp.com; helo=mail-oi1-x236.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::32b;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x32b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -116,94 +117,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add cpu_copy() function for thread creation support and make
-init_task_state() non-static so it can be called from os-thread.c.
-Move cpu_type to file scope so cpu_copy() can access it.
+Complete bsd-socket.h with socketpair, sendto, recvfrom, socket,
+and shutdown system call shims.
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
+Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 Assisted-by: Claude Opus 4.6 (1M context)
 ---
- bsd-user/main.c | 32 ++++++++++++++++++++++++++++++--
- bsd-user/qemu.h |  1 +
- 2 files changed, 31 insertions(+), 2 deletions(-)
+ bsd-user/bsd-socket.h | 116 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 116 insertions(+)
 
-diff --git a/bsd-user/main.c b/bsd-user/main.c
-index 73aae8c327..3c150b54cd 100644
---- a/bsd-user/main.c
-+++ b/bsd-user/main.c
-@@ -49,6 +49,7 @@
- #include "qemu/guest-random.h"
- #include "gdbstub/user.h"
- #include "exec/page-vary.h"
-+#include "exec/watchpoint.h"
- 
- #include "host-os.h"
- #include "target_arch_cpu.h"
-@@ -215,7 +216,7 @@ bool qemu_cpu_is_self(CPUState *cpu)
+diff --git a/bsd-user/bsd-socket.h b/bsd-user/bsd-socket.h
+index c786d6717a..c87ba195dc 100644
+--- a/bsd-user/bsd-socket.h
++++ b/bsd-user/bsd-socket.h
+@@ -164,4 +164,120 @@ static inline abi_long do_bsd_getsockname(int fd, abi_ulong target_addr,
+     return ret;
  }
  
- /* Assumes contents are already zeroed.  */
--static void init_task_state(TaskState *ts)
-+void init_task_state(TaskState *ts)
- {
-     ts->sigaltstack_used = (struct target_sigaltstack) {
-         .ss_sp = 0,
-@@ -224,6 +225,34 @@ static void init_task_state(TaskState *ts)
-     };
- }
- 
-+static const char *cpu_type;
-+
-+CPUArchState *cpu_copy(CPUArchState *env)
++/* socketpair(2) */
++static inline abi_long do_bsd_socketpair(int domain, int type, int protocol,
++                                         abi_ulong target_tab_addr)
 +{
-+    CPUState *cpu = env_cpu(env);
-+    CPUState *new_cpu = cpu_create(cpu_type);
-+    CPUArchState *new_env = cpu_env(new_cpu);
-+    CPUBreakpoint *bp;
++    int tab[2];
++    abi_long ret;
 +
-+    /* Reset non arch specific state */
-+    cpu_reset(new_cpu);
-+
-+    new_cpu->tcg_cflags = cpu->tcg_cflags;
-+    memcpy(new_env, env, sizeof(CPUArchState));
-+
-+    /*
-+     * Clone all break/watchpoints.
-+     * Note: Once we support ptrace with hw-debug register access, make sure
-+     * BP_CPU break/watchpoints are handled correctly on clone.
-+     */
-+    QTAILQ_INIT(&new_cpu->breakpoints);
-+    QTAILQ_FOREACH(bp, &cpu->breakpoints, entry) {
-+        cpu_breakpoint_insert(new_cpu, bp->pc, bp->flags, NULL);
++    if (!access_ok(VERIFY_WRITE, target_tab_addr, sizeof(tab[0]) * 2)) {
++        return -TARGET_EFAULT;
 +    }
-+
-+    return new_env;
++    ret = get_errno(socketpair(domain, type, protocol, tab));
++    if (!is_error(ret)) {
++        if (put_user_s32(tab[0], target_tab_addr) ||
++                put_user_s32(tab[1], target_tab_addr + sizeof(tab[0]))) {
++            ret = -TARGET_EFAULT;
++        }
++    }
++    return ret;
 +}
 +
- static QemuPluginList plugins = QTAILQ_HEAD_INITIALIZER(plugins);
- 
- void gemu_log(const char *fmt, ...)
-@@ -256,7 +285,6 @@ int main(int argc, char **argv)
- {
-     const char *filename;
-     const char *cpu_model;
--    const char *cpu_type;
-     const char *log_file = NULL;
-     const char *log_mask = NULL;
-     const char *seed_optarg = NULL;
-diff --git a/bsd-user/qemu.h b/bsd-user/qemu.h
-index 069baa7011..d2dd8c2ee8 100644
---- a/bsd-user/qemu.h
-+++ b/bsd-user/qemu.h
-@@ -122,6 +122,7 @@ struct TaskState {
-     struct target_sigaltstack sigaltstack_used;
- } __attribute__((aligned(16)));
- 
-+void init_task_state(TaskState *ts);
- void stop_all_tasks(void);
- extern const char *interp_prefix;
- extern const char *qemu_uname_release;
++/* sendto(2) */
++static inline abi_long do_bsd_sendto(int fd, abi_ulong msg, size_t len,
++                                     int flags, abi_ulong target_addr,
++                                     socklen_t addrlen)
++{
++    struct sockaddr *saddr;
++    void *host_msg;
++    abi_long ret;
++
++    if ((int)addrlen < 0) {
++        return -TARGET_EINVAL;
++    }
++    if (len != 0) {
++        host_msg = lock_user(VERIFY_READ, msg, len, 1);
++        if (!host_msg) {
++            return -TARGET_EFAULT;
++        }
++    } else {
++        host_msg = NULL;
++    }
++    if (target_addr) {
++        saddr = alloca(addrlen + 1);
++        ret = target_to_host_sockaddr(saddr, target_addr, addrlen);
++        if (is_error(ret)) {
++            unlock_user(host_msg, msg, 0);
++            return ret;
++        }
++        ret = get_errno(safe_sendto(fd, host_msg, len, flags, saddr, addrlen));
++    } else {
++        ret = get_errno(send(fd, host_msg, len, flags));
++    }
++    unlock_user(host_msg, msg, 0);
++    return ret;
++}
++
++/* recvfrom(2) */
++static inline abi_long do_bsd_recvfrom(int fd, abi_ulong msg, size_t len,
++                                       int flags, abi_ulong target_addr,
++                                       abi_ulong target_addrlen)
++{
++    socklen_t addrlen;
++    struct sockaddr *saddr;
++    void *host_msg;
++    abi_long ret;
++
++    host_msg = lock_user(VERIFY_WRITE, msg, len, 0);
++    if (!host_msg) {
++        return -TARGET_EFAULT;
++    }
++    if (target_addr) {
++        if (get_user_u32(addrlen, target_addrlen)) {
++            ret = -TARGET_EFAULT;
++            goto fail;
++        }
++        if ((int)addrlen < 0) {
++            ret = -TARGET_EINVAL;
++            goto fail;
++        }
++        saddr = alloca(addrlen + 1);
++        ret = get_errno(safe_recvfrom(fd, host_msg, len, flags, saddr,
++                    &addrlen));
++    } else {
++        saddr = NULL; /* To keep compiler quiet.  */
++        ret = get_errno(recv(fd, host_msg, len, flags));
++    }
++    if (!is_error(ret)) {
++        if (target_addr) {
++            if (is_error(host_to_target_sockaddr(target_addr, saddr, addrlen))) {
++                ret = -TARGET_EFAULT;
++                goto fail;
++            } else if (put_user_u32(addrlen, target_addrlen)) {
++                ret = -TARGET_EFAULT;
++                goto fail;
++            }
++        }
++        unlock_user(host_msg, msg, len);
++    } else {
++fail:
++        unlock_user(host_msg, msg, 0);
++    }
++    return ret;
++}
++
++/* socket(2) */
++static inline abi_long do_bsd_socket(abi_long domain, abi_long type,
++                                     abi_long protocol)
++{
++    return get_errno(socket(domain, type, protocol));
++}
++
++/* shutdown(2) */
++static inline abi_long do_bsd_shutdown(abi_long s, abi_long how)
++{
++    return get_errno(shutdown(s, how));
++}
++
+ #endif /* BSD_SOCKET_H */
 
 -- 
 2.52.0
