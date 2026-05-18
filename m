@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7D27CD4F48
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 07:35:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8161BCD4F3C
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 07:35:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOsVB-00013q-3p; Mon, 18 May 2026 03:35:01 -0400
+	id 1wOsUj-0000oI-5F; Mon, 18 May 2026 03:34:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1wOsUc-0000j9-2P
- for qemu-devel@nongnu.org; Mon, 18 May 2026 03:34:28 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1wOsUL-0000fo-Ci
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 03:34:15 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1wOsUY-0000Yz-KT
- for qemu-devel@nongnu.org; Mon, 18 May 2026 03:34:25 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-488b0046078so16627245e9.1
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 00:34:20 -0700 (PDT)
+ id 1wOsUH-0000Bs-I1
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 03:34:08 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-48a7fe4f40bso24098585e9.0
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 00:34:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779089660; x=1779694460; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PAEBPFqVQi36NfFP7Jq0Ftsf5CsUo7EyAsxwaDAqaz0=;
- b=qzWtVG6FyoWNlmJs0jXDijNEGDYmz3lhOgHBdv2agDhKM761UdoJzx3yw735/z9cdw
- 0/SyKaSiFFQg/4lsilFxdndMuSBtNTaVsvn9ZEo96Y9WDm6atsB//649C29CwrfKgQSj
- 7y0V5wB/ATO7GMzuNuBnD3jkuqWUwXY/Vfxh3LmrVLWXWaYYeqy/IS1G1IJN/ZUauDkD
- bbP0ijLVQj2C4+TC3/OMsIo7fwQDgp+NRAwSQSTNp4PqA0DB2jsuu6VBvqnlRkpM6+CY
- hJ5bOaFhC6Lk8aQIoPdJqM+Kwa3M48IaALGdyfEyBx5ir6XQk17vFVXL+ZTDtNrDSYVf
- fVWw==
+ d=gmail.com; s=20251104; t=1779089643; x=1779694443; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=kAgSRBIgRfg5Ci/kYkem6tx0tKkzNP30+dM14vaMmgA=;
+ b=ck1PzqB7kbNuRecxQXdSM/gsXKjXYkXS3j9kaZDieB0+PG5TFp6CugRAJEe9pYB5pJ
+ lAQ1UdAaZbEJQZOh2iUqn1xxgm3yABiKIXkqx9f35M6LSEJaaer9ZOf9tRobloRgPxe8
+ tQLAgOm7AytrT35rKm0ALw//XTRu+t1AjtZsKMnHKwEwqBpvacOlKqSqBoP+NA6WQSzP
+ ncXpaZpV9Y1/efMIutZdIe6RVEBlgQP1WCWvNYn/rwQevYW88Q6bR1goBTO5BiXPccAd
+ 8d18lu19GwkhhGaQTmo1+zsH8boRvPr8RcgdAYSvq4OZMwx/bg7pE2hazvATWIY4tGa9
+ dyhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779089660; x=1779694460;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=PAEBPFqVQi36NfFP7Jq0Ftsf5CsUo7EyAsxwaDAqaz0=;
- b=JtlGCm9Q8ZSH4cAx6ux19bzrxaqPEwwWZbk3WHnua0Jc9j4sw6ymjxwhTijxTBUG7A
- 7cymmf/Q8cRaIoG4lKAeJDxQi7LDmNok1O97JresROJghJ+jaJrHagWGmdnX2Cp1I9js
- PeU3c/FRBUjy2bpAlj5DQikLlQIaGTEfcr10A0NtCU4BSJJyHFJc2lrkIEWZ2c7MRDC2
- xPUjjHeXmAgnMFAM2BfsiK6rUmkjh3vLReeoPN59cTaRKuAtDCdsSLT/ueh3t46j0zyi
- XsXJ2b4Q90HzICyfx/eh2mXkIPz0hfE4cL9e0ncXFPYYw7p8+PAYrgTMwdv6ySv2MFfG
- xCCw==
-X-Gm-Message-State: AOJu0YwfKH37HVxilNLQ+TTNYij4VQYTPILGfK9zauVmg5WJcjVyVD9q
- V9rdaLfldRW5TTElceejhO+GvBzCSoiDEiQAPVKWLmCCuazBKjWCko8009Qt/L84
-X-Gm-Gg: Acq92OEbOPRPskG3B7dCghDtg0+wp4kfOk/uehmmMjb84mBUIF644ga81c0u0WMQgbw
- gg6yiSWRwxqLRxnnte6UGmOl7hcKa+W41SDkPnFJJIyhsPS6DKbbApJCF+33/Gel/eiUGEWwNub
- j+r5/vQ0h4I80+U1zi8zXpwOIK52U9ZttSm5bYtlz5YyxoUvqCPKudySxb8O6bgMNP0Fim1PoQV
- lh1hMiMXENinBfNV0jeMWcEC8l+0hE906glNW13F7vZK4ZbZosrKx4TRKtJ+pZXDuMvcjgt9bMb
- XuaRQAkkpsjGb5F6aKjyle/ykmiJx/xok5qavpfeoRYJnOXmUBM0NraF17KEVIyjr8w8BpyZBBK
- nEKrrRdAfnnl2l2O3wBHd+9JjEu8bkcXkj9oKlWGKqTCGgJa/MIywdLfUaTdpnSZbJiGPfZquJh
- q+MXpDuMEwAqEslluJ9DMdotcPaCJuHuM0FOXfW5mrVYnIFWQPJwX85StP
-X-Received: by 2002:a05:600c:a102:b0:489:a4:e578 with SMTP id
- 5b1f17b1804b1-48fe60da919mr153278085e9.14.1779089659718; 
- Mon, 18 May 2026 00:34:19 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779089643; x=1779694443;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=kAgSRBIgRfg5Ci/kYkem6tx0tKkzNP30+dM14vaMmgA=;
+ b=KWL7AiFnHCLZMDHhIIc2Bu43mclRY95814C7Iogl4RoBAPA0x5HIOIogwC7b/xQEtD
+ /iBCrNW/MIWg/LbxexF1Ad4BCtyc9QjoBe87k4kMZucBl9hxRBUgg72EDX49/LycZt9/
+ X468cxsilfEx/dls4lxc60xB+zTymqDPPTbQCWMgOO36ANXnW4NYB7zP8zK0v3Osloon
+ nQApGjSp9SWwLb/oY3Nm1RTuZgi6c/NFZSSXbX05OAlR6/MJp1a4aE+p7eIaFtbiTei8
+ 6FsYRnLiPRhFnj7yvfRe6+/lrys3yi3mVzRHznefl2TUb1fDpnHMoajO29k+zsnkIGQJ
+ 5z+Q==
+X-Gm-Message-State: AOJu0Yw0FhIx2EO3CmroZZITrAS9pd78eaexiPZ+BDlPvHu2p3z/qY3z
+ tTmsXHWwFmFxg/O50IE98dzyxXTs0UXkbF0+Jr2v5F9bTnYGBeWzTMN8tgo11Knr
+X-Gm-Gg: Acq92OF8G7HKnxHfJgRmTdiy/QYYNci7Yy3lqMsGI4ok1TMdaYDr+IJmzgzXy+Wxw59
+ 5Q0RIIeWcX9myM4WM7nJXZovwwr1HE9bjwSuQuq9wHKH/pxtspeVU/Vxb+ZDPk9CXsBDsXIWofV
+ 2ZHLVlWHCW053LrmNbcF5n9h3EDlD7ktPBj8q1mDxBITFKdL5hDp6Ftz01V0ugn3UEQtDBHiqAk
+ JAUk7ujyUnk205bxqEYWcJy/SA9don6/obxc4RDVNz9YsfZ0NeB8CWU5dhdR/QJzL0G/bi38ycK
+ 2ayMOuDPMnUgegp5g2PEGYEMcbhwrONPZvo0jwdKwuIHTYLD/wjbXV0AIOIgOtIPPlRUhA+YMh+
+ gvCJp07qN47Sb3ck2qMzeskPy2sNpR9iR6HE1LUefCcgN2N0DZhSVvKPna9m+RM6SXiQwf6k4R6
+ HQbCsCHIjxdZgu9t646mg9JSB4hRM/tYfHg8gXE9mox6YFOw==
+X-Received: by 2002:a05:6000:2c07:b0:45e:75c5:1a6a with SMTP id
+ ffacd0b85a97d-45e75c51b5emr7245024f8f.33.1779089643289; 
+ Mon, 18 May 2026 00:34:03 -0700 (PDT)
 Received: from PC-DA2D10.beckhoff.com
  ([2001:9e8:dc08:b284:85e6:f7f4:1a4a:4dfe])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45d9ec3b18fsm32590222f8f.11.2026.05.18.00.34.18
+ ffacd0b85a97d-45d9ec3b18fsm32590222f8f.11.2026.05.18.00.34.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 May 2026 00:34:19 -0700 (PDT)
+ Mon, 18 May 2026 00:34:02 -0700 (PDT)
 From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -76,26 +75,23 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Yannick Vossen <Y.Vossen@beckhoff.com>, qemu-arm@nongnu.org,
  Kevin Wolf <kwolf@redhat.com>, Alistair Francis <alistair@alistair23.me>,
- Corvin Koehne <C.Koehne@beckhoff.com>, qemu-block@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v7 16/16] docs/system/arm: Add support for Beckhoff CX7200
-Date: Mon, 18 May 2026 09:34:01 +0200
-Message-ID: <20260518073401.11279-17-corvin.koehne@gmail.com>
+ Corvin Koehne <C.Koehne@beckhoff.com>, qemu-block@nongnu.org
+Subject: [PATCH v7 00/16] hw/arm: add Beckhoff CX7200 board
+Date: Mon, 18 May 2026 09:33:45 +0200
+Message-ID: <20260518073401.11279-1-corvin.koehne@gmail.com>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260518073401.11279-1-corvin.koehne@gmail.com>
-References: <20260518073401.11279-1-corvin.koehne@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=corvin.koehne@gmail.com; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=corvin.koehne@gmail.com; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- WEIRD_QUOTING=0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,99 +107,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: YannickV <Y.Vossen@beckhoff.com>
+From: Corvin Köhne <c.koehne@beckhoff.com>
 
-This commit offers some documentation on the Beckhoff CX7200
-qemu emulation.
+Hi,
 
-Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
----
- docs/system/arm/beckhoff-cx7200.rst | 62 +++++++++++++++++++++++++++++
- docs/system/target-arm.rst          |  1 +
- 2 files changed, 63 insertions(+)
+Beckhoff has build a board, called CX7200, based on the Xilinx Zynq A9
+platform. This commit series adds the Beckhoff CX7200 as new board variant to
+QEMU.
+
+The emulation is able to successfully boot an CX7200 image. The image includes
+some self tests executed on every boot. Only the cache self test fails due to
+QEMU emulating the cache as always being coherent. The self tests include f.e.:
+
+* Network
+* Flash
+* CCAT DMA + EEPROM [1]
+* TwinCAT (Beckhoff's automation control software [2])
+
+[1] https://github.com/beckhoff/ccat
+[2] https://www.beckhoff.com/en-us/products/automation/
+
+YannickV (16):
+  hw/dma/zynq-devcfg: Handle bitstream loading via DMA to 0xffffffff
+  hw/arm/zynq-devcfg: Prevent unintended unlock during initialization
+  hw/dma/zynq: Ensure PCFG_DONE bit remains set to indicate PL is in
+    user mode
+  hw/dma/zynq-devcfg: Simulate dummy PL reset
+  hw/dma/zynq-devcfg: Indicate power-up status of PL
+  hw/misc: Add dummy ZYNQ DDR controller
+  hw/misc/zynq_slcr: Add logic for DCI configuration
+  hw/misc: Add Beckhoff CCAT device
+  hw/block/m25p80: Add HAS_SR_TB flag for is25lp016d
+  hw/arm/xilinx_zynq: Split xilinx_zynq into header and implementation
+    files
+  hw/arm/xilinx_zynq: Add flash type as machine class property
+  hw/misc/zynq_slcr: Add CPU clock outputs and ratios
+  hw/timer,cpu: Add Clock API support to A9MPCore timers
+  hw/arm/xilinx_zynq: Make PS frequency configurable
+  hw/arm: Add new machine based on xilinx-zynq-a9 for Beckhoff CX7200
+  docs/system/arm: Add support for Beckhoff CX7200
+
+ MAINTAINERS                         |  11 +
+ docs/system/arm/beckhoff-cx7200.rst |  62 ++++
+ docs/system/target-arm.rst          |   1 +
+ hw/arm/Kconfig                      |   8 +
+ hw/arm/beckhoff_CX7200.c            |  80 ++++++
+ hw/arm/meson.build                  |   1 +
+ hw/arm/xilinx_zynq.c                |  54 ++--
+ hw/block/m25p80.c                   |   3 +-
+ hw/cpu/a9mpcore.c                   |  12 +
+ hw/dma/xlnx-zynq-devcfg.c           |  27 +-
+ hw/misc/Kconfig                     |   6 +
+ hw/misc/beckhoff_ccat.c             | 339 ++++++++++++++++++++++
+ hw/misc/meson.build                 |   2 +
+ hw/misc/xlnx-zynq-ddrc.c            | 421 ++++++++++++++++++++++++++++
+ hw/misc/zynq_slcr.c                 |  71 +++++
+ hw/timer/a9gtimer.c                 |  18 +-
+ hw/timer/arm_mptimer.c              |  20 +-
+ include/hw/arm/xilinx_zynq.h        |  38 +++
+ include/hw/cpu/a9mpcore.h           |   1 +
+ include/hw/misc/xlnx-zynq-ddrc.h    | 147 ++++++++++
+ include/hw/timer/a9gtimer.h         |   1 +
+ include/hw/timer/arm_mptimer.h      |   2 +
+ 22 files changed, 1292 insertions(+), 33 deletions(-)
  create mode 100644 docs/system/arm/beckhoff-cx7200.rst
+ create mode 100644 hw/arm/beckhoff_CX7200.c
+ create mode 100644 hw/misc/beckhoff_ccat.c
+ create mode 100644 hw/misc/xlnx-zynq-ddrc.c
+ create mode 100644 include/hw/arm/xilinx_zynq.h
+ create mode 100644 include/hw/misc/xlnx-zynq-ddrc.h
 
-diff --git a/docs/system/arm/beckhoff-cx7200.rst b/docs/system/arm/beckhoff-cx7200.rst
-new file mode 100644
-index 0000000000..6163a0cfa5
---- /dev/null
-+++ b/docs/system/arm/beckhoff-cx7200.rst
-@@ -0,0 +1,62 @@
-+Beckhoff CX7200 (``beckhoff-cx7200``)
-+======================================
-+The Beckhoff CX7200 is based on the same architecture as the Xilinx Zynq A9.
-+The Zynq 7000 family is based on the AMD SoC architecture. These products
-+integrate a feature-rich dual or single-core Arm Cortex-A9 MPCore based
-+processing system (PS) and AMD programmable logic (PL) in a single device.
-+The Beckhoff Communication Controller (CCAT) can be found in the PL of Zynq.
-+
-+You can find more detail about this board on
-+`the manufacturer's product page <https://www.beckhoff.com/en-en/products/ipc/embedded-pcs/cx7000-arm-r-cortex-r/cx7293.html?>`__.
-+The SoC is documented in the
-+`Zynq 7000 Technical Reference manual <https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM>`__.
-+
-+The CX7200 supports the following:
-+
-+- Arm Cortex-A9 MPCore CPU
-+
-+  - Cortex-A9 CPUs
-+  - GIC v1 interrupt controller
-+  - Generic timer
-+  - Watchdog timer
-+
-+- OCM 256KB
-+- SMC SRAM 64MB
-+- Zynq SLCR
-+- SPI x2
-+- QSPI
-+- UART
-+- TTC x2
-+- Gigabit Ethernet Controller x2
-+- SD Controller x2
-+- XADC
-+- Arm PrimeCell DMA Controller
-+- DDR Memory
-+- USB 2.0 x2
-+- DDR Controller
-+- Beckhoff Communication Controller (CCAT)
-+
-+  - EEPROM Interface
-+  - DMA Controller
-+
-+The following is not supported:
-+    - I2C
-+
-+Running
-+"""""""
-+Directly loading an ELF file to the CPU of the CX7200 to run f.e. TC/RTOS (based on FreeRTOS):
-+
-+.. code-block:: bash
-+
-+  $ qemu-system-arm -M beckhoff-cx7200 \
-+        -device loader,file=CX7200_Zynq_Fsbl.elf \
-+        -display none
-+
-+
-+For setting the EEPROM content of the CCAT provide the following on the command line:
-+
-+.. code-block:: bash
-+
-+        -drive file=eeprom.bin,format=raw,id=ccat-eeprom
-+
-+The size of eeprom.bin must be aligned to a power of 2 and bigger than 256 bytes.
-diff --git a/docs/system/target-arm.rst b/docs/system/target-arm.rst
-index e34492402f..e6fbdb663c 100644
---- a/docs/system/target-arm.rst
-+++ b/docs/system/target-arm.rst
-@@ -82,6 +82,7 @@ Board-specific documentation
-    arm/aspeed
-    arm/bananapi_m2u.rst
-    arm/b-l475e-iot01a.rst
-+   arm/beckhoff-cx7200
-    arm/sabrelite
-    arm/digic
-    arm/cubieboard
 -- 
 2.47.3
 
