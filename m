@@ -4,69 +4,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BBE1CD4F49
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 08:21:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9BC1CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 08:25:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOtDQ-0003Ff-QW; Mon, 18 May 2026 04:20:45 -0400
+	id 1wOtHu-0004FB-3V; Mon, 18 May 2026 04:25:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wOtDN-0003F8-LA
- for qemu-devel@nongnu.org; Mon, 18 May 2026 04:20:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wOtHs-0004En-9i
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 04:25:20 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wOtDL-0004MP-H2
- for qemu-devel@nongnu.org; Mon, 18 May 2026 04:20:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779092437;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=2wixNXvBjVdKlMysFfA4PoWuMSl9Cmj5gJgPVScZPRo=;
- b=aI5J6CTUkvF1IHT6eGjH8Z1h1NxNgR1C6fliphN56RkfsBXPgeCVMdceZyWz6wP3cbEP8o
- tQEpK7qvWj95pQlFjhZprLfsZLsIOjMPvPJE/cpMoHua8RkCu1TI6BGYBRC0XKeNfGQ3HI
- cDUgnSYJCnrH6AfdJzaTD9YitSk7aFE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-30-MJW12RR4NWe3JtXo68AiCg-1; Mon,
- 18 May 2026 04:20:32 -0400
-X-MC-Unique: MJW12RR4NWe3JtXo68AiCg-1
-X-Mimecast-MFC-AGG-ID: MJW12RR4NWe3JtXo68AiCg_1779092432
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DCBA419560AA; Mon, 18 May 2026 08:20:31 +0000 (UTC)
-Received: from redhat.com (stefkas-mbp.str.redhat.com [10.33.192.245])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6E2801800352; Mon, 18 May 2026 08:20:30 +0000 (UTC)
-Date: Mon, 18 May 2026 10:20:28 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Demi Marie Obenour <demiobenour@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, qemu-block@nongnu.org
-Subject: Re: QEMU Storage Daemon: production-quality and secure?
-Message-ID: <agrLzMGkB7-fN5ws@redhat.com>
-References: <22967882-230a-4ebe-b947-da2566d11e33@gmail.com>
- <87pl2tjkwn.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wOtHq-0005xV-AD
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 04:25:19 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64I5YetG2685062
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 08:25:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ EELbi55Nh7IqAHJ4/zv6ZCSEqNDfGNYK20gLNOmqQ+s=; b=NHsP498dJrmP2ji5
+ SRdeQtM2YCdc93F8zI7Ijofc2bMvb1ppxC5M5gbuPI1q1OQWtnDxcSQAleFhpsFl
+ t9e21eLTjCJUJyG/X4CDcJbuJf6viHgXmaIBmbZnF87Jw1hQM+Sp4Q8iLXe/zRTg
+ GgQABju35u0Aj+MjFCNPSDK+lrZFSjNCsBXDsbkNQXnDHSOsjPS3CIuGOkQnIq5J
+ cY4IbZHJoezk2DSL1+8k+7vYjqz8q/r947bnZjPn+3ZyZqwdZ2pOsxUMAHahzQ0R
+ AkUv1uSe0KY9iqh2ht5ITfLxW1Jq4pc1wwXvi5TzmCBfhIx/a4EQNrioC787FtD2
+ 0aMhmg==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e7vrbrreh-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 08:25:16 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-2ee1da7a13fso2474948eec.1
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 01:25:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1779092715; x=1779697515; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=EELbi55Nh7IqAHJ4/zv6ZCSEqNDfGNYK20gLNOmqQ+s=;
+ b=Dk4YSHL2yXp9LpLYkm14codW0mya2PmW9POigofU0WjpXpFt8nIXKNjE/v9MZvj8Rp
+ HhlYjjiYwb8pgs4chHQgswvu0lm4yEvIMHck54p/qY5ZEaMoF/FB6UGnURoukgYM7SeG
+ f2bdD0E74L2/lI++frK3DhqlxgrMOSRHnh2ySnR98hYWQgc/zkM9UX4Q3pjvbooxxhjJ
+ Y+2YxCqI+5L/yfSJM0/Ylk4uTzGCuIK4Vz0L2iVx/FU7poxIKCEvGaEc/g1BM4hu0zSy
+ 5FYPsrgREAofMAyLP13XDr5wXhRWuWtrVZKs8BMSTloGfY802swGokBvCZzt1AKxRvfW
+ F2ZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779092715; x=1779697515;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=EELbi55Nh7IqAHJ4/zv6ZCSEqNDfGNYK20gLNOmqQ+s=;
+ b=GRVvg/85YfkP16AQZuwm0xa0Sl0QRBZM9PlzPi64TwVV8Ql2GbiqmtAA8BtpEu6TvO
+ Lv1jbju3h8QD7gI9p3ehBNsXMOoiScvnTXPrtzpGC3pDkwGKLy76VxhovC59rpOkJfO6
+ oRVtbD1t86uJ7FaiPg9Ev75MR7werxi//h7J6+o9KhBDVUMacEO11EfYPYSoQ4zleT30
+ eRPG9q9ECxkDID/H42E/V7roiv7MkABjraJjVirorvdKM5JngsQBVHUqmR/zcmzWUy3o
+ KaSMZPkxz7M2AAfgjSA5rF409z/0vIdzP0NEtB7OeRsmaqWZEJGO5ims6BuTdXXS+F3+
+ 9S9A==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ//np1B8Jb/Oew7Vh7/ElgonqvE0Cn0tUiSW2cQyYn4R2t7pkT2FVjm4lfPSKOitDzIWvQviFB9MNHG@nongnu.org
+X-Gm-Message-State: AOJu0Yx9gNjz3Gx+0XRk12jO1Yg64L8d/XWWJdbwpYga2KCR1HumjRGQ
+ XajYNEumCVPA3PX+/WK7OXmvalkjAlUeE0L5fu0QiH+LKvpWf2zA6jpsfwSrRWDskT8bSZkNgVz
+ 4KQUsqDtUdmA6H0vys6kbvZ4K8Uga+qToRnhqNgMcxLHVmeJ078Do8Gkmxw==
+X-Gm-Gg: Acq92OEG/Hy85DXwBCFriA10dgqYj76thD1ETeBpQBFkqcQSxfulEq2H+wxTbv8ASAT
+ 8njJ2kBIT+Dm2KxWgUP0jGZfWjjrDIa+WQ2zwZe5LEyIHhpfWuapfbS5eJv3A/i077kY5U1zWUF
+ O/rpfvpvoR1nTbsQBvt2bHY+SCacPlpx4zaEUgrsW+jFF4aLGZGjZSW0trhva9Xbx0DlOEbzWhX
+ Otrm7oiueYVruRP+mq3agCQkfBfDH5M3QvX2bKPflBjDRFBvpKURuPjc3jPFe86aUU4nRblsxXd
+ YeuIZo7U6S7jrzjGtN69HAr1MKwi2Myywaj/Hpq6IQkKYcmaNF2owxW/jKYUzUfAFbOczmTJGPa
+ hU5+TS7FImCLU32+7lQmBRl0rtkX+dlQW817uJP4+jbMplbYKKzy/Ihs=
+X-Received: by 2002:a05:7300:6c05:b0:2d8:df01:d9f6 with SMTP id
+ 5a478bee46e88-3039864d5c1mr5904431eec.23.1779092715491; 
+ Mon, 18 May 2026 01:25:15 -0700 (PDT)
+X-Received: by 2002:a05:7300:6c05:b0:2d8:df01:d9f6 with SMTP id
+ 5a478bee46e88-3039864d5c1mr5904406eec.23.1779092714881; 
+ Mon, 18 May 2026 01:25:14 -0700 (PDT)
+Received: from [10.11.7.97] ([50.238.185.218])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-302973bc9d4sm13024749eec.23.2026.05.18.01.25.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 18 May 2026 01:25:14 -0700 (PDT)
+Message-ID: <b718241c-12d4-4223-a2cf-a8086ed7f84b@oss.qualcomm.com>
+Date: Mon, 18 May 2026 03:25:11 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87pl2tjkwn.fsf@pond.sub.org>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 11/21] target/arm: Restrict IDAU interface to TCG
+ namespace
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Steven Lee <steven_lee@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Laurent Vivier <lvivier@redhat.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Troy Lee <leetroy@gmail.com>,
+ qemu-arm@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>
+References: <20260516171524.19184-1-philmd@linaro.org>
+ <20260516171524.19184-12-philmd@linaro.org>
+ <5053ba4c-01eb-443d-b364-50a32be41e26@oss.qualcomm.com>
+ <2a560940-d834-4184-9369-301ca9dfc5fd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <2a560940-d834-4184-9369-301ca9dfc5fd@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: HF7VvHpOx4pD6nxlg54yDOjp-UmqFUmG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE4MDA3OSBTYWx0ZWRfX0O9woBfk7JFJ
+ hyHQUDS/XET6MZcL+OAPppu64+8qGJWPwrA9jpr2HW40Dl1DJjGg78H+TaKa2khnDgZKUwIGsal
+ UKqeVL1qXTDbMANQ9Jt0MFI01pMYvFilpD7ehMAeI3GO3SCjTf4AQLAZWtfcJBTuPwxwBL0/l1c
+ eiEXatY6NPKrvcD0ACSI8RoMHLW+ulptf42s1Cv/lZM+AMSKVXBYqskWXgFTMEJI9S0uwsheB13
+ g0Rsx6HaK0JWDYkSaoVlb+naqKeId4m2/vlzoh0mBDfKpv0gt5/Xwe9tQbuy+jy1VCfH3LwLCIi
+ DxGDgKmSMr4FLXhgLDtUux9aIm9QrbnKRuY3onu9lL030jv0DyoklMyTnxGv6QS+wJEeuOIHn6I
+ geh46k9eKHY0EEhFS3XDUf7HB+1Tz2qhARIfy05RHvCUgD9Misc2vM2/GXdqQSIja3rtkihtvVc
+ nF6IfukdqZsSJXk0DPA==
+X-Authority-Analysis: v=2.4 cv=KZ3idwYD c=1 sm=1 tr=0 ts=6a0accec cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=+WjNtiTvTqxFfZe9JAS8OQ==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=CVyTDA8UNC5bGtqKXk8A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: HF7VvHpOx4pD6nxlg54yDOjp-UmqFUmG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-18_02,2026-05-15_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0 phishscore=0 priorityscore=1501 adultscore=0
+ clxscore=1015 spamscore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605180079
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,31 +165,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 18.05.2026 um 08:23 hat Markus Armbruster geschrieben:
-> Cc: qemu-block and maintainer.
+On 5/18/2026 2:59 AM, Philippe Mathieu-Daudé wrote:
+> On 18/5/26 09:48, Pierrick Bouvier wrote:
+>> On 5/16/2026 12:15 PM, Philippe Mathieu-Daudé wrote:
+>>> Emphasize the IDAU interface is restricted to TCG by moving the
+>>> header under target/arm/tcg/. Move the definition to cpu-v7m.c
+>>> which also contains v7/v8 hardware (NVIC), keeping only CPU types
+>>> in cpu32.c.
+>>>
+>>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>>   include/hw/arm/armv7m.h     |  2 +-
+>>>   include/hw/misc/tz-msc.h    |  2 +-
+>>>   target/arm/{ => tcg}/idau.h |  4 ++--
+>>>   hw/arm/armv7m.c             |  2 +-
+>>>   target/arm/cpu.c            |  2 +-
+>>>   target/arm/ptw.c            |  2 +-
+>>>   target/arm/tcg/cpu-v7m.c    | 11 +++++++++++
+>>>   target/arm/tcg/cpu32.c      |  8 --------
+>>>   8 files changed, 18 insertions(+), 15 deletions(-)
+>>>   rename target/arm/{ => tcg}/idau.h (97%)
+>>>
+>>
+>> This patch creates a problem with the (now merged) commit:
+>> 8d3e31c0d575b3265ae5cacfba10680718ba5a22
+>> "target/arm: Extract IDAU interface to its own unit"
+>>
+>> Indeed, it results with TYPE_IDAU_INTERFACE being register twice which
+>> fails at startup.
+>>
+>> Maybe simply drop current commit?
 > 
-> Demi Marie Obenour <demiobenour@gmail.com> writes:
+> Yes. I'll repost, but the series still won't apply cleanly when
+> the "discarded const qualifier warning" fix gets merged (just
+> letting know, I don't mind respinning).
+>
+
+No rush to respin, as I fixed it on my side for now :)
+
+>>
+>> Regards,
+>> Pierrick
 > 
-> > When used as a vhost-user server, is the QEMU Storage Daemon suitable
-> > for production use with untrusted guests and images?  Does it have
-> > decent performance?
-
-I think this is actually two questions:
-
-Is qemu-storage-daemon production quality and secure? It is really just
-a very thin wrapper around the components that QEMU itself uses. The
-part that is distinct is basically just parsing the command line, after
-that it's exactly the same as QEMU itself (well, exactly the same as a
-subset of QEMU, obviously). So I wouldn't worry about that part.
-
-The other question is about the performance of the vhost-user-blk
-export. It's been a while since I benchmarked exports, but when I
-did for my KVM Forum 2024 talk [1], performance wasn't bad, though it
-looked like it wasn't quite perfect either: vdpa-blk (VDUSE) performed
-slightly better, so if you can use that instead, it's worth a look.
-
-Kevin
-
-[1] https://gitlab.com/qemu-project/kvm-forum/-/raw/main/_attachments/2024/slides_out_of_process_storage_backends_hGZBfpS.pdf
 
 
