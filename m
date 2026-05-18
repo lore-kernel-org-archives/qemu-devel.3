@@ -4,60 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30AA8CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 10:22:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07CB0CD4F54
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 10:22:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOv7C-00035U-W0; Mon, 18 May 2026 06:22:28 -0400
+	id 1wOv7Y-0003Bx-Bo; Mon, 18 May 2026 06:22:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mengzhuo@iscas.ac.cn>)
- id 1wOv6M-0002tw-Ly; Mon, 18 May 2026 06:21:35 -0400
-Received: from smtp25.cstnet.cn ([159.226.251.25] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <mengzhuo@iscas.ac.cn>)
- id 1wOv6J-0003zm-Sg; Mon, 18 May 2026 06:21:34 -0400
-Received: from iscas.ac.cn (unknown [113.12.18.145])
- by APP-05 (Coremail) with SMTP id zQCowAAHlwof6ApqzvKcEA--.3899S2;
- Mon, 18 May 2026 18:21:19 +0800 (CST)
-From: Meng Zhuo <mengzhuo@iscas.ac.cn>
-To: qemu-riscv@nongnu.org
-Cc: qemu-devel@nongnu.org,
-	Meng Zhuo <mengzhuo@iscas.ac.cn>
-Subject: [PATCH v3] target/riscv/kvm: skip FP/Vector sync on
- KVM_PUT_RUNTIME_STATE
-Date: Mon, 18 May 2026 18:21:18 +0800
-Message-ID: <20260518102118.2768383-1-mengzhuo@iscas.ac.cn>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOv7K-00039U-Ct
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 06:22:35 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wOv7F-0004Qc-MO
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 06:22:33 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-488af9fdaa7so9103695e9.1
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 03:22:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779099745; x=1779704545; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=TZBH42ILwKQyH1XTfiS0LgBIXFhIK/W0uxA38waXJmE=;
+ b=PDqXlmDNyyZFpIfwGnsahguxotU3aReLr+frhwao1FY9ByBK36kUTuOZE+3YOy2NmV
+ pd+9px3O2RPaOU5/MzLr5+Uiw0IW9DvHX82jBZCG3yo8aveTNGmFN4SrNeBnXM6ZDVta
+ r5wS8TfAtgofNUB+nDFU91IGyQArVPdhoT2vGQnBp44CIY0aZLOpETtFfJH5yzJfzQHr
+ hQ4rrNt/zNVHZUu7YmtKMOUhkw++nbQXfMiAz2VQHuTzq5VYeR3jKB7ta+v+dfmT3/ae
+ dl5kbunodJNXSSH+sCSzT8l8oM3b4Kj6RGduWxTSpnL60GTRVhfEKTR1exA54ShGd9st
+ OCzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779099745; x=1779704545;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TZBH42ILwKQyH1XTfiS0LgBIXFhIK/W0uxA38waXJmE=;
+ b=c/O+5LmXPzUMBoee91jx7Q9sov3UV1rOmktwyNQx1ZGtpByBDl0eLy4KUnruDb0fzW
+ ckd2h1xIfNUFnmLtnmWK2A9tgkQ/P8royrqmp1H2yA9eZDUYpvcJIM1JSsnqYaqzOerG
+ 43wQ7VlGBE1iuYRRhp5Ux2nQ41AMzpvHm1TUS28rVvf1j34B0qbOjn1E78hIXplmFaXe
+ lbp1Vx6JFazUJolMTBN274ErD8qdcsY4ZgrcZWNV2NCL2S+8SpPu0fnL21DNJeHAstBo
+ TmUi0z7l6Tt/yN4Z5r1z4i8vXbPjrBczSgyWOEmOl6TvEPTdIJPyE5E6eygnZa+tI8yU
+ /AeQ==
+X-Gm-Message-State: AOJu0YzIHkO/u2PV8DQ8rXggsoOLvSceRZ9Kzk+D1hZ2zvep2uVBD5Ir
+ KJVfKpWn2Vg46n7oA92rB900GGzDylcGs4TSkv4BPpWSQR6yjSkUWRhC6TehZYXUQX2X3J5mbIE
+ Pi+vyO68=
+X-Gm-Gg: Acq92OE0jdMydHXl/YZsoiAPcG0pbhr2YS8tmy2zafpRtXmQxp0tOC9Fio6BS6YwbCj
+ KJw9mMVlY+UEl8ceCew/58ZAFoOo4oIo7dgSRi0CszT/VoI6nI1l6I6eH/LbxPBLFAsd46wyFZM
+ pwwcF7/m4fRuW9dRLVrSq1kir3aNCtsrZ4SHcAQVCJcRmKXccAO5rsDA4BkPFUXwDEEjRyjgnpQ
+ vIuLtQA80UM+Pygl4qxVmxnAKvT+DE1rLyMfj1hleODmGz/7Rmla0nviFRyMUafVjH/rY1eDaou
+ IZMmhyxq2KjgMYuQmAY9qHH5Qklnko5iE2GtisMMbc61BCnPP45F6DLV0Y4O8UfUTrs2K2H56kw
+ 1FG/ZuyUHN9U94fVSushjOI2HHMVkUfMf/OmY0fYeD90i81/Y5jipWbSU0QyHDlDuBv3IzjyI+7
+ zvygY54tPlET7T+BAv18oLV+s2hKUAwproHroaRQ1MpyeKDDu11kzqlFZJ1LDJZOjXAbwcD16W
+X-Received: by 2002:a05:600c:4fcb:b0:488:a797:f0ac with SMTP id
+ 5b1f17b1804b1-48fe6613ab3mr209820765e9.28.1779099744693; 
+ Mon, 18 May 2026 03:22:24 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48fe5694fbfsm429263165e9.6.2026.05.18.03.22.23
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 18 May 2026 03:22:24 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Max Filippov <jcmvbkbc@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Song Gao <gaosong@loongson.cn>,
+ Cleber Rosa <crosa@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ John Snow <jsnow@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 0/7] docker: Remove LegacyKeyValueFormat warnings
+Date: Mon, 18 May 2026 12:22:15 +0200
+Message-ID: <20260518102222.80735-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: zQCowAAHlwof6ApqzvKcEA--.3899S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7Zr13urW7Wr1UCw4UKF1ftFb_yoW8Zr1fpr
- 47Ga9xGr17GrWxCw1SyF1kXFWrWrWfWrWDur9Fyw47Kan0krWYgr1kKFyF9F1DCrW8ArWa
- 9F4jyrW3urZ8ZaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUyv14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
- rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
- 1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4j
- 6r4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oV
- Cq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
- I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
- 4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCF04k20xvY0x0EwIxG
- rwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4
- vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcVC0I7IY
- x2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26c
- xKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAF
- wI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7VUbrMaUUUUUU==
-X-Originating-IP: [113.12.18.145]
-X-CM-SenderInfo: pphqw6xkxrqxpvfd2hldfou0/1tbiBg0LEmoKqNj-7wAAsS
-Received-SPF: pass client-ip=159.226.251.25; envelope-from=mengzhuo@iscas.ac.cn;
- helo=cstnet.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,58 +103,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-During KVM exit processing (KVM_PUT_RUNTIME_STATE), QEMU never modifies
-FP or Vector registers — only core GPRs/PC and CSRs are potentially
-changed.  Re-syncing 32 FP and 32 Vector registers on every KVM exit
-wastes 36-68 individual KVM_SET_ONE_REG ioctls per vCPU exit.
+Update MAINTAINERS entries for manually maintained Dockerfiles.
 
-Follow the s390x pattern: early return on RUNTIME after syncing core
-registers and CSRs.  KVM_PUT_FULL_STATE and KVM_PUT_RESET_STATE continue
-to sync everything for correctness during migration and initialization.
+Remove warnings such:
 
-Signed-off-by: Meng Zhuo <mengzhuo@iscas.ac.cn>
----
- target/riscv/kvm/kvm-cpu.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ - LegacyKeyValueFormat: "ENV key=value" should be used instead of legacy "ENV key value" format (line 98)
+ - LegacyKeyValueFormat: "ENV key=value" should be used instead of legacy "ENV key value" format (line 64)
+ - LegacyKeyValueFormat: "ENV key=value" should be used instead of legacy "ENV key value" format (line 97)
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index b047ffa9c0..dd4193ea8b 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -1385,6 +1385,17 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
-         return ret;
-     }
- 
-+    /*
-+     * For RUNTIME_STATE, KVM already has the correct FP and Vector state
-+     * from the preceding KVM_RUN exit. QEMU never modifies these registers
-+     * during exit handling, so re-syncing is unnecessary.  This saves ~68
-+     * KVM_SET_ONE_REG ioctls per vCPU exit.  See also s390x which uses
-+     * the same pattern.
-+     */
-+    if (KVM_PUT_RUNTIME_STATE == level) {
-+        return ret;
-+    }
-+
-     ret = kvm_riscv_put_regs_fp(cs);
-     if (ret) {
-         return ret;
-@@ -1397,11 +1408,9 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
- 
-     if (KVM_PUT_RESET_STATE == level) {
-         RISCVCPU *cpu = RISCV_CPU(cs);
--        if (cs->cpu_index == 0) {
--            ret = kvm_riscv_sync_mpstate_to_kvm(cpu, KVM_MP_STATE_RUNNABLE);
--        } else {
--            ret = kvm_riscv_sync_mpstate_to_kvm(cpu, KVM_MP_STATE_STOPPED);
--        }
-+        int state = cs->cpu_index == 0 ? KVM_MP_STATE_RUNNABLE
-+                                       : KVM_MP_STATE_STOPPED;
-+        ret = kvm_riscv_sync_mpstate_to_kvm(cpu, state);
-         if (ret) {
-             return ret;
-         }
+See https://docs.docker.com/reference/build-checks/legacy-key-value-format/
+
+Philippe Mathieu-Daudé (7):
+  MAINTAINERS: Fix docker/dockerfiles/debian-hexagon-cross.docker path
+  MAINTAINERS: Cover debian-loongarch-cross.docker with LoongArch
+    section
+  MAINTAINERS: Cover debian-xtensa-cross.docker with Xtensa section
+  MAINTAINERS: Cover debian-tricore-cross.docker with TriCore section
+  MAINTAINERS: Cover python.docker with Python library section
+  docker: Remove LegacyKeyValueFormat warnings in non-generated files
+  docker: Remove LegacyKeyValueFormat warnings in generated files
+
+ MAINTAINERS                                        |  6 +++++-
+ tests/lcitool/refresh                              | 12 +++++++-----
+ tests/docker/dockerfiles/alpine.docker             |  2 +-
+ tests/docker/dockerfiles/centos9.docker            |  2 +-
+ .../dockerfiles/debian-all-test-cross.docker       | 10 ++++++----
+ tests/docker/dockerfiles/debian-amd64-cross.docker |  2 +-
+ tests/docker/dockerfiles/debian-arm64-cross.docker |  2 +-
+ tests/docker/dockerfiles/debian-armhf-cross.docker |  2 +-
+ .../docker/dockerfiles/debian-hexagon-cross.docker | 14 +++++++-------
+ tests/docker/dockerfiles/debian-i686-cross.docker  |  2 +-
+ .../dockerfiles/debian-loongarch-cross.docker      | 10 +++++-----
+ .../dockerfiles/debian-mips64el-cross.docker       |  2 +-
+ .../docker/dockerfiles/debian-mipsel-cross.docker  |  2 +-
+ .../docker/dockerfiles/debian-ppc64el-cross.docker |  2 +-
+ .../docker/dockerfiles/debian-riscv64-cross.docker |  2 +-
+ tests/docker/dockerfiles/debian-s390x-cross.docker |  2 +-
+ .../docker/dockerfiles/debian-tricore-cross.docker |  6 +++---
+ .../docker/dockerfiles/debian-xtensa-cross.docker  |  8 ++++----
+ tests/docker/dockerfiles/debian.docker             |  2 +-
+ .../docker/dockerfiles/fedora-rust-nightly.docker  |  2 +-
+ tests/docker/dockerfiles/fedora-win64-cross.docker |  2 +-
+ tests/docker/dockerfiles/fedora.docker             |  2 +-
+ tests/docker/dockerfiles/opensuse-leap.docker      |  2 +-
+ tests/docker/dockerfiles/python.docker             |  5 +++--
+ scripts/coverity-scan/coverity-scan.docker         | 12 ++++++------
+ scripts/git.orderfile                              |  4 ++++
+ 26 files changed, 66 insertions(+), 53 deletions(-)
+
 -- 
-2.47.3
+2.53.0
 
 
