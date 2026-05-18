@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5083ACD4F50
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 05:30:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F686CD343F
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 05:30:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOqY3-0006tw-0d; Mon, 18 May 2026 01:29:51 -0400
+	id 1wOqXz-0006sy-KW; Mon, 18 May 2026 01:29:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wOqXo-0006s6-Ur
- for qemu-devel@nongnu.org; Mon, 18 May 2026 01:29:39 -0400
-Received: from mail-oi1-x22c.google.com ([2607:f8b0:4864:20::22c])
+ id 1wOqXl-0006rs-9Y
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 01:29:36 -0400
+Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wOqXh-0003Sk-VG
- for qemu-devel@nongnu.org; Mon, 18 May 2026 01:29:35 -0400
-Received: by mail-oi1-x22c.google.com with SMTP id
- 5614622812f47-479ef2b78f3so1866761b6e.2
- for <qemu-devel@nongnu.org>; Sun, 17 May 2026 22:29:27 -0700 (PDT)
+ id 1wOqXc-0003QZ-Ak
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 01:29:28 -0400
+Received: by mail-oi1-x230.google.com with SMTP id
+ 5614622812f47-47c941f7213so1240396b6e.1
+ for <qemu-devel@nongnu.org>; Sun, 17 May 2026 22:29:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779082166; x=1779686966; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779082162; x=1779686962; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=dHHO0+eLtIM55QW60taazGzRUaV2VP4TeBWDtHdLRxw=;
- b=LEmCuRWQ3PW77Nj5L5XCk7BhfEeT0KT3NH6rdR6qAbpgtKazzlNN6w+e/N1l1HTYnb
- pYNh01w8MLsMtsy7N6QXPDm7n1CGFIrIi5g4tOJWAj32xVrXrgpJ0ruXj+rVj3Voo8qZ
- JgoPAdS8U0sEwrRM5z7GyjV7WGJRngfbNBAmddq5gd9/v/ABXCG2Q6tN82m1Ak8s3k6n
- 12jjM93DpjNURBHcXjWNw+3rT/O1k4mt1ClNBixsQLR6qIDB5Ql4DqkNclv/Cvv2eZCl
- Wm9EUyPgEmlsrvHmiaYWLDdb8mXB4pW0ERNmguK7KqIK1qLUWAoR+TGzDen/fVywDejE
- t83Q==
+ :reply-to; bh=7jM1jwUY6doQWw7cNzzrKAiwqt9SLepu9Iq35gPFd94=;
+ b=pGZCb/fVvInJu3ItAA8g0CK6Oix/rzyMJ6xABs3b4Lc2rQyYzklnnMPmmSjE3d0Q4+
+ P4jpac5a+HD44luO8ep6fvxsRAZis0vEVadnZqcHBd96w6xUsi5ZN9jCwd+U9yqh8A1P
+ tAPrb7cKJlgkplCq4IuvyIGA8LBQ/lASymPOUrc8w/nhcZpceSb3zXUe6G6tz1J3GcBx
+ BzWkab+svU/ybxhyWt2x94gFEMJH4gslDRUldhnjY9tGBoMbP7wbIHiy/eI+vcB5YYeb
+ GC+2UKbYAabjkD/betl1GzOrcnd0oyBFLptHvHw94xKhYysGK40Wjx36O5+NySsodval
+ 4rBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779082166; x=1779686966;
+ d=1e100.net; s=20251104; t=1779082162; x=1779686962;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=dHHO0+eLtIM55QW60taazGzRUaV2VP4TeBWDtHdLRxw=;
- b=N89dj+XzXTZIXr+GP0aBOKfAVYVCDitSACP3Ce4zLfIxK0tMCblvAxcq14T4nUD4Fw
- XCLidwbylmY1JtVQIzOgG0ivTRMEsUIo5s5G9wiaUtTUdlNG7RqvR9RBr26i0ZD4Kmn2
- y60yxqdJLfHQTvOr2LYJi+ybi2izBrY7htgM9CqxFJaCKXyIHjpD1JBBkrWHBbQUUWvI
- O089Hq6OmlX156SKlKv3vMR1QmX9ZKZO+hIuBy6EBFaeUBW9dob1vhFYWqBz4gBdpChW
- dPrLJkGLh/2Ns1mof9psMtUCV6H8+CCtIUufhQddbdcw5EYSE3lJteB5tvFxJhgrS7mj
- ifiA==
-X-Gm-Message-State: AOJu0YzXeFQs2krbqvh8U4wPbDrsF5dCLNDN+x/RtLNmDrr5N1WlEQpX
- GwWsMjrweiUus30hPB2nTIcYXjER3FjhnMFGLdrnO6rYiP0fqQBJIFfP
-X-Gm-Gg: Acq92OE5G7q+qZGzUwFiEaKm4KJxr3mg0n2PHqzHep9fvQgjKVV3LRg56HiLK3QqSqL
- cM4uKeR4VZ7ANxqqmVTHXHstyTvRKR1hxM/kOJlXtgnLoz9nqtiMAsWtHgOD6M2gddr9n2vDPeP
- ucUB7C/VJKHW8aUAz0SCQMnS0jpzyT/DDZni+l7dRvB2XBpG6QtXJr17N9tvTzjiSy7GhOg2S8h
- 5sA7kGzhaNhaitQg4RNeTBJ/9/fmvMn3CHrjrFDsyZaOHLCFO1z/cpEz59+Sn0weizw8swotdQZ
- 2bAGDkNnqAy+/Kf6JEUQsLo4P+zU9/XNQbls28jePemPUk6pYWrAXdk2mWKqzt0yl2Z291FArZT
- l7B32rVw+N31F+zqUpjl0zHBxGLOojDDOPl03M8pxmDTftJQIX0W8huUKS/Kwau2RoCpBXpZubl
- +CY7ucAqSNp798VpwqX4M9DBeqL3M3iBic8IQFEmPDrW4cgu3svidTrAOaHc874THFak+IH9rBV
- F8VS3Cq2r0rFSZDah8KHg6eyqsMOF8Fw6r4yd18HGH8HF3pkaT22vw6qaIdFKu7k/IuAkEm+700
- 3wgowQ==
-X-Received: by 2002:a05:6808:6787:b0:479:fa21:adfe with SMTP id
- 5614622812f47-482e55af551mr8728620b6e.6.1779082166366; 
- Sun, 17 May 2026 22:29:26 -0700 (PDT)
+ bh=7jM1jwUY6doQWw7cNzzrKAiwqt9SLepu9Iq35gPFd94=;
+ b=csR6r/6tfXDdN+jhNmcjbBheA8aWrtBX4GG7Hf/dh4DMDokgCBgJSHeolvDT1m5rap
+ IRZgi8Sj8fRASahkJ2c/pDDBv5PsScHTs/VrSjbFwebzmMjbCVexmnE8D4J32XjSkZu4
+ s0ZUVFNvv79xSuucdyl+oWu30sAEsdOg3Jg8oToFr5l189jCn/y0sXICp57T2TmhVBF3
+ jpnJg2LpRndWJU5S1lgTE8BFfRojuxPeO88Tlrx7wvzLh/8CnEnCEXIjoP702v3PU+K4
+ Dij73KERI5RWDRkzmkQxgj0BMOybX+IbKOlxTDJEWSB/MLyzU+xe84EKoNkhdnjHZTV/
+ rIkw==
+X-Gm-Message-State: AOJu0YwQ3cUvnzmtWRKgnT5jU+IOLAhe3hVKr6IjrqHr4e++asQ01uyw
+ PUCy1iE49ud0syAVf+ajlM66ymNYdIJW1USyrpiJsZmpfDNFljpIx1b1
+X-Gm-Gg: Acq92OFG4R6BdR8KhgbA5yv35ABqkEDKB6LPSP7chqeKCSPIbOQUDc9PTro9KEUNfxu
+ n0PRU7Wq1kzxjHlQgi3fYKmaSHUFplKcjayqxnN7S9nBabQ3cbqfjySY0MMD4x5I5xkUfTjR7+y
+ lDEZrhxZFzFt4f2Qz0lxlCk+NMmkTLeTab5NDT7wexfPus7e78GLFmN7J6tk+Ug3YiUh2aTKfUM
+ qSpXYdP8U/OS0U2VObiqkmSwrE53eUg6HY67Ve+QsWGRkwMxTNcoZtF00zeFsRmLmjCGwh9iVFg
+ Pzb8aYQB7sCrmoN372TUiAd/r2iqdqsP1u+Uo0R1eSiwuePg9dV14gHjORR2Hnh0YKQTQKCbg3E
+ Crb16txYEQ4i0BT0TeTYuHtJai2bYqYBD2syKFbNC9QIdqzDRgmpqcBhYJdCc7pd7J/E1RCmsS3
+ 8PhR1IG9m4LQsoXl6HRaWpTei/UbpSWQucKOmTM7UeJLoPDwVzFZh6h+vkZ0y9LEDKK+SP1CIOO
+ ofUJSy112OBhikoQGjPYkTMwnCE1hIXpUc2G4x9y0pGqtrgtpuomfTomMFvzfn1f5Nr8xM=
+X-Received: by 2002:a05:6808:148e:b0:482:5538:20c3 with SMTP id
+ 5614622812f47-482e57298a1mr9523834b6e.29.1779082161696; 
+ Sun, 17 May 2026 22:29:21 -0700 (PDT)
 Received: from mac.localdomain (71-218-255-245.hlrn.qwest.net.
  [71.218.255.245]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-482ee5349a5sm4628357b6e.15.2026.05.17.22.29.25
+ 5614622812f47-482ee5349a5sm4628357b6e.15.2026.05.17.22.29.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 17 May 2026 22:29:25 -0700 (PDT)
+ Sun, 17 May 2026 22:29:21 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Sun, 17 May 2026 23:29:02 -0600
-Subject: [PATCH v8 05/35] target/mips: drop Octeon zero-register fast paths
+Date: Sun, 17 May 2026 23:28:58 -0600
+Subject: [PATCH v8 01/35] linux-user/mips: implement sysmips(MIPS_FLUSH_CACHE)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260517-mips-octeon-missing-insns-v2-v8-5-206151ee77ec@gmail.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260517-mips-octeon-missing-insns-v2-v8-1-206151ee77ec@gmail.com>
 References: <20260517-mips-octeon-missing-insns-v2-v8-0-206151ee77ec@gmail.com>
 In-Reply-To: <20260517-mips-octeon-missing-insns-v2-v8-0-206151ee77ec@gmail.com>
 To: qemu-devel@nongnu.org
@@ -85,8 +84,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>, 
  Paolo Bonzini <pbonzini@redhat.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22c;
- envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x22c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::230;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x230.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -110,64 +109,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-EXTS, CINS, and POP route their destination writes through
-gen_store_gpr(), which already discards writes to $zero. Remove the
-remaining translator fast paths for destination $zero so these Octeon
-instructions follow the same shape as BADDU/DMUL and the generic MIPS
-translator helpers.
+Add the target sysmips dispatcher and implement MIPS_FLUSH_CACHE as a
+successful no-op for linux-user.
+
+Self-modifying code is handled by QEMU's normal user-mode translation
+invalidation machinery, so the target ABI only needs the syscall command
+to be accepted.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
 Changes v2 -> v3:
-  - Remove the remaining destination $zero fast paths and let
-    gen_store_gpr() discard writes to $zero.  (suggested by Richard
-    Henderson)
+  - Split MIPS_FLUSH_CACHE out of the combined sysmips/MIPS_FIXADE patch.
+    (suggested by Richard Henderson)
 ---
- target/mips/tcg/octeon_translate.c | 15 ---------------
- 1 file changed, 15 deletions(-)
+ linux-user/mips/target_syscall.h   |  1 +
+ linux-user/mips64/target_syscall.h |  1 +
+ linux-user/syscall.c               | 17 +++++++++++++++++
+ 3 files changed, 19 insertions(+)
 
-diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index 4dd7626835..b7531653e5 100644
---- a/target/mips/tcg/octeon_translate.c
-+++ b/target/mips/tcg/octeon_translate.c
-@@ -74,11 +74,6 @@ static bool trans_EXTS(DisasContext *ctx, arg_EXTS *a)
- {
-     TCGv_i64 t0;
+diff --git a/linux-user/mips/target_syscall.h b/linux-user/mips/target_syscall.h
+index dfcdf320b7..3f36c1695a 100644
+--- a/linux-user/mips/target_syscall.h
++++ b/linux-user/mips/target_syscall.h
+@@ -10,6 +10,7 @@
+ #define TARGET_MCL_ONFAULT 4
  
--    if (a->rt == 0) {
--        /* nop */
--        return true;
--    }
--
-     t0 = tcg_temp_new_i64();
-     gen_load_gpr(t0, a->rs);
-     tcg_gen_sextract_i64(t0, t0, a->p, a->lenm1 + 1);
-@@ -90,11 +85,6 @@ static bool trans_CINS(DisasContext *ctx, arg_CINS *a)
- {
-     TCGv_i64 t0;
+ #define TARGET_FORCE_SHMLBA
++#define TARGET_SYSMIPS_FLUSH_CACHE     3
  
--    if (a->rt == 0) {
--        /* nop */
--        return true;
--    }
--
-     t0 = tcg_temp_new_i64();
-     gen_load_gpr(t0, a->rs);
-     tcg_gen_deposit_z_i64(t0, t0, a->p, a->lenm1 + 1);
-@@ -106,11 +96,6 @@ static bool trans_POP(DisasContext *ctx, arg_POP *a)
+ static inline abi_ulong target_shmlba(CPUMIPSState *env)
  {
-     TCGv_i64 t0;
+diff --git a/linux-user/mips64/target_syscall.h b/linux-user/mips64/target_syscall.h
+index 9135bf5e8b..20ea7c6ab9 100644
+--- a/linux-user/mips64/target_syscall.h
++++ b/linux-user/mips64/target_syscall.h
+@@ -10,6 +10,7 @@
+ #define TARGET_MCL_ONFAULT 4
  
--    if (a->rd == 0) {
--        /* nop */
--        return true;
--    }
--
-     t0 = tcg_temp_new_i64();
-     gen_load_gpr(t0, a->rs);
-     if (!a->dw) {
+ #define TARGET_FORCE_SHMLBA
++#define TARGET_SYSMIPS_FLUSH_CACHE     3
+ 
+ static inline abi_ulong target_shmlba(CPUMIPSState *env)
+ {
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index d3d9fffb54..73f09bb775 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -6630,6 +6630,19 @@ static abi_long do_prctl_syscall_user_dispatch(CPUArchState *env,
+     }
+ }
+ 
++#ifdef TARGET_NR_sysmips
++static abi_long do_sysmips(CPUArchState *env, abi_long cmd, abi_long arg1,
++                           abi_long arg2)
++{
++    switch (cmd) {
++    case TARGET_SYSMIPS_FLUSH_CACHE:
++        return 0;
++    default:
++        return -TARGET_EINVAL;
++    }
++}
++#endif
++
+ static abi_long do_prctl(CPUArchState *env, abi_long option, abi_long arg2,
+                          abi_long arg3, abi_long arg4, abi_long arg5)
+ {
+@@ -12102,6 +12115,10 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+     case TARGET_NR_prctl:
+         return do_prctl(cpu_env, arg1, arg2, arg3, arg4, arg5);
+         break;
++#ifdef TARGET_NR_sysmips
++    case TARGET_NR_sysmips:
++        return do_sysmips(cpu_env, arg1, arg2, arg3);
++#endif
+ #ifdef TARGET_NR_arch_prctl
+     case TARGET_NR_arch_prctl:
+         return do_arch_prctl(cpu_env, arg1, arg2);
 
 -- 
 2.54.0
