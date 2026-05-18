@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CA80CD4F50
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 16:04:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7751CCD4F49
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 16:04:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP0QU-0000zB-RF; Mon, 18 May 2026 12:02:42 -0400
+	id 1wP0QY-0001Ha-Tr; Mon, 18 May 2026 12:02:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wP0Po-0000EY-RH
- for qemu-devel@nongnu.org; Mon, 18 May 2026 12:02:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wP0Q9-0000Nt-DL
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 12:02:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wP0Pn-0005Iz-9z
- for qemu-devel@nongnu.org; Mon, 18 May 2026 12:02:00 -0400
+ id 1wP0Q3-0005wa-9w
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 12:02:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779120117;
+ s=mimecast20190719; t=1779120134;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=S1qpIroQyaGIbCB6MQky+U4C7yjILb1PZ8jYJABwVSg=;
- b=LbH/FdXgASAEX6kUXAKOHkGTnTGA5unFQPf3YVf/Y8C/3eeUvAgI6RlknEkeiyX6djmGgf
- /2Agq3d34i21cbW9/sSKRLyHERjVJjew8PJ1550XslQrP/D7ByfL281Pp5IgHQL4wmGcAU
- 0TMk1GctkrOaFkLH5iY+n3au+Xe9rPE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=SehIcGL5+cgE4/kfJH/adrcIXagz7Lnlktp3htwqCmA=;
+ b=B67vTeUXFWZdMumBUAK/yoEGAcRlv82DFMiQOVaUGovoe2T0ZGh52t0S+rd7hExNemFQ58
+ /Zwf29bF+96ZJOBVfKyPcSYYJXI1juuMNynQNwiBjInBy7xQtp7b+LKPdq09D9mbLDaChd
+ vUyMAoh2e6Td0VVKuF+ma5VmZy8Dp+s=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-631-lqSYKzOWMDavvf4o4eOjCg-1; Mon,
- 18 May 2026 12:01:53 -0400
-X-MC-Unique: lqSYKzOWMDavvf4o4eOjCg-1
-X-Mimecast-MFC-AGG-ID: lqSYKzOWMDavvf4o4eOjCg_1779120112
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-76-jF9ubn6bPKmuRKQmUpI35A-1; Mon,
+ 18 May 2026 12:02:11 -0400
+X-MC-Unique: jF9ubn6bPKmuRKQmUpI35A-1
+X-Mimecast-MFC-AGG-ID: jF9ubn6bPKmuRKQmUpI35A_1779120129
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 614791800344; Mon, 18 May 2026 16:01:52 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C099019560B4; Mon, 18 May 2026 16:02:09 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.32.79])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6708730001A2; Mon, 18 May 2026 16:01:48 +0000 (UTC)
+ id E41E630002DC; Mon, 18 May 2026 16:02:05 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: John Snow <jsnow@redhat.com>, qemu-block@nongnu.org,
@@ -58,23 +58,23 @@ Cc: John Snow <jsnow@redhat.com>, qemu-block@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v8 12/16] iotests: validate dmsetup result in test 128
-Date: Mon, 18 May 2026 17:00:47 +0100
-Message-ID: <20260518160051.903616-13-berrange@redhat.com>
+Subject: [PATCH v8 16/16] gitlab: remove I/O tests from build-tcg-disabled job
+Date: Mon, 18 May 2026 17:00:51 +0100
+Message-ID: <20260518160051.903616-17-berrange@redhat.com>
 In-Reply-To: <20260518160051.903616-1-berrange@redhat.com>
 References: <20260518160051.903616-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,57 +91,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The I/O test 128 uses 'dmsetup create' to create a device, optionally
-using sudo to elevate privileges.
+Now that we have dedicated CI jobs for running I/O tests on each
+supported format/protocol, we no longer need to special case a
+run of a hand picked set of tests in the build-tcg-disabled job.
 
-This dmsetup command works in GitLab CI, however, the test then fails
-with a missing device name:
-
-  1..1
-  # running raw 128
-  not ok raw 128
-  ----------------------------------- stderr -----------------------------------
-  --- /builds/berrange/qemu/tests/qemu-iotests/128.out
-  +++ /builds/berrange/qemu/build/scratch/raw-file-128/128.out.bad
-  @@ -1,5 +1,5 @@
-   QA output created by 128
-
-   == reading from error device ==
-  -read failed: Input/output error
-  +qemu-io: can't open device /dev/mapper/eiodev16546: Could not open '/dev/mapper/eiodev16546': No such file or directory
-   *** done
-
-  (test program exited with status code 1)
-
-It is believed that this is due to the build env using a manually
-populated /dev, such that the device mapper node won't ever appear.
-It is not a race, since a test adding a sleep did not result in the
-device appearing.
-
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Acked-by: Kevin Wolf <kwolf@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/qemu-iotests/128 | 6 ++++++
- 1 file changed, 6 insertions(+)
+ .gitlab-ci.d/buildtest.yml | 9 ---------
+ 1 file changed, 9 deletions(-)
 
-diff --git a/tests/qemu-iotests/128 b/tests/qemu-iotests/128
-index d0e00d24b1..d75b1a451a 100755
---- a/tests/qemu-iotests/128
-+++ b/tests/qemu-iotests/128
-@@ -42,6 +42,12 @@ _setup_eiodev()
- 		echo "0 $((1024 * 1024 * 1024 / 512)) error" | \
- 			$cmd dmsetup create "$devname" 2>/dev/null
- 		if [ "$?" -eq 0 ]; then
-+			DEV="/dev/mapper/$devname"
-+			if ! -e $DEV
-+			then
-+				_notrun "Device $DEV not appearing"
-+			fi
-+
- 			sudo="$cmd"
- 			return
- 		fi
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index cf0281ecd6..d054349030 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -366,15 +366,6 @@ build-tcg-disabled:
+     - make -j"$JOBS"
+     - make check-unit
+     - make check-qapi-schema
+-    - ./run tests/qemu-iotests/check -raw 001 002 003 004 005 008 009
+-            010 011 012 021 025 032 033 048 052 063 077 086 101 104 106
+-            113 148 150 151 152 157 159 160 163 170 171 184 192 194 208
+-            221 226 227 236 253 277 image-fleecing
+-    - ./run tests/qemu-iotests/check -qcow2 028 051 056 057 058 065 068
+-            082 085 091 095 096 102 122 124 132 139 142 144 145 151 152
+-            155 157 165 194 196 200 202 208 209 216 218 227 234 246 247
+-            248 250 254 255 257 258 260 261 262 263 264 270 272 273 277
+-            279 image-fleecing
+     - make distclean
+ 
+ build-user:
 -- 
 2.54.0
 
