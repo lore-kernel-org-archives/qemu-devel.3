@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB8A1CD4F48
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 07:38:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 734F3CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 07:38:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wOsV9-00011B-Ar; Mon, 18 May 2026 03:34:59 -0400
+	id 1wOsXi-0003so-7p; Mon, 18 May 2026 03:37:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1wOsUY-0000hR-TA
- for qemu-devel@nongnu.org; Mon, 18 May 2026 03:34:27 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1wOsUV-0000XR-DD
- for qemu-devel@nongnu.org; Mon, 18 May 2026 03:34:22 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-488e1a8ac40so18838285e9.2
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 00:34:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779089656; x=1779694456; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6CJZtjp2PDz3MfIqh4LsQdUXR0a9IzqUvFl4W/HGC4w=;
- b=kzTLXweZHW81m9m54imarqwt3NWtHZY9udl4LUgeuYrR2BPiA2WmsWK8Jvd0ngkYvs
- tcuLab0eeyjlTw6SxDOmPVj8mFUUqMvqE7PDxImf9+RRhNKyVu37Jirm8uzlGklUPW9h
- 6AeH7wiUOPytBFneGBp0atWfAhiBF4pWdUaL/Sasoo0rplCANcanaFpr7xo8iEnNXpl5
- 7AKG9kUExE9oL0O6PvfcjTMz/o2s/4BqX0/c+hriE5n0U8cJcwXKRTuWr62D2TkFIz/V
- azM1ssuQIV+xRAV4xHJpj7mqTdVzer2Zh8tk4xwm0joquQLC13Pp7zRVJD6sDeqV79c3
- hXkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779089656; x=1779694456;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=6CJZtjp2PDz3MfIqh4LsQdUXR0a9IzqUvFl4W/HGC4w=;
- b=hM5+fDt5md8/oFxKEwSprUgDBa9mLICSOISQW2Qp1RuhRm2QgJKvrm3zTZ+Nm0W46U
- JPSAnVQBqZFxf7YHCqHil1HdJ1+Ebx50Mp8VUuUJFzDVIBlqxsOcH3wkZT2AELhls8Y2
- fnjPSa5ggeN6KpLklP76aiUEv3gtEraOBqwxNG0w2tmjvsMTfT9E132vcL7IxTaaUEsD
- s5Yka8n6DpYqqc0t7dRC83zIOO33zfWHojE609QFW5HjMHHYDZM8pRYdDXsvKY4XmzUj
- r+IfQ7tHitvSMmue7dXC5qzEjXrunR38xAKIPKAS0PSnHoaYZ8XKAplExfvwJI8fhCRD
- mpfA==
-X-Gm-Message-State: AOJu0YwbatXi6C5KOW/nvX+jUeAs36vIlJeDoMQIozPH+G8Zz6w+tgCs
- 697vkQdwlxTUJRR9IxcODIdfSk16lD1lTY9mRHmvbx5/tEjrhdbMtaMFjqXaeegD
-X-Gm-Gg: Acq92OHqWlFjCC3FdX8TQZ9k6zCUjDMN4nDgG4zPpbiDrG7iGcR9Q6xDUtiFeAyLNw8
- ZyB0IhzcRo845xGUIl4wUyWHlyIi4q1hcJYV89ETQW9nyL0suXCdes7XDcCHkoaNc9EaPTD7hg8
- KsxzhlKGBWFcxuhjpMw8xCCzR8iQKsWt0KrLCJL+ZwLDKdFpV0UjHPmrMHochWLGrAMiu9ZAn7h
- yk1EhTpyApdis34oUCw155wKAVDMz7l7aXp1wphcrpRGcbSP9XaoiQbwOv7ESoq+oQqEpRY3C74
- adJtqj/hCA4yB2noD9SzGLvQdz2MJLMYtchGTdkIViDY9XXucAj7f/Z2INE61vEsh92j5juvi8H
- fYVJz2uPwZlWOuHxWxbL/Egy9N27jQbkDLwbajBKZzd6nz7pyj9IxFLrf5FS8DotqgbZ2HrBhLf
- IQfMWBFTTAAo6q0gE+WUdXAtDKJxa0vFuLqmXrenP+XTx1IQ==
-X-Received: by 2002:a05:600c:848c:b0:488:b749:8482 with SMTP id
- 5b1f17b1804b1-48fe60e52c1mr222469055e9.4.1779089655676; 
- Mon, 18 May 2026 00:34:15 -0700 (PDT)
-Received: from PC-DA2D10.beckhoff.com
- ([2001:9e8:dc08:b284:85e6:f7f4:1a4a:4dfe])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45d9ec3b18fsm32590222f8f.11.2026.05.18.00.34.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 May 2026 00:34:15 -0700 (PDT)
-From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Yannick=20Vo=C3=9Fen?= <y.vossen@beckhoff.com>,
- Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Yannick Vossen <Y.Vossen@beckhoff.com>, qemu-arm@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Alistair Francis <alistair@alistair23.me>,
- Corvin Koehne <C.Koehne@beckhoff.com>, qemu-block@nongnu.org
-Subject: [PATCH v7 12/16] hw/misc/zynq_slcr: Add CPU clock outputs and ratios
-Date: Mon, 18 May 2026 09:33:57 +0200
-Message-ID: <20260518073401.11279-13-corvin.koehne@gmail.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260518073401.11279-1-corvin.koehne@gmail.com>
-References: <20260518073401.11279-1-corvin.koehne@gmail.com>
+ (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
+ id 1wOsWt-0003Bz-80; Mon, 18 May 2026 03:36:49 -0400
+Received: from mx07-0090a401.pphosted.com ([66.159.244.62])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
+ id 1wOsWq-0001gq-QA; Mon, 18 May 2026 03:36:46 -0400
+Received: from pps.filterd (m0463074.ppops.net [127.0.0.1])
+ by mx07-0090a401.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64I5m7ws2203215; Mon, 18 May 2026 07:36:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=beckhoff.com; h=
+ cc:content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=mail2022r; bh=NXF3O1V7i0KJ8OrHyjw685/0
+ H/6/Ky+sF/XADbpg4RQ=; b=bOxybrldpYSNpirkttDfVhhkUe1VRum04gy3ORd3
+ kBFbEhGyHkCO+zmd9FA0ldb/R5ZsPtNyJXHA22zUO9tqSkxYKXUinA9Uiil+b2pn
+ P1EBYYl+ah3f5NrakoqdUkt85ebRBzVP91Eyhv+8+PoJiCAT/VoQuwoc/ZoItsDL
+ QrMg6BbhdEvK8SyhuvoKv6WYn1uJinlM7SK3HPFJjYW0LRRB/4/DrNnHIlcyEWAR
+ wE9kQrPzsEw76ZwXM/oaVyUW6dZQGCC2yTXkANL2mHgOPMD42Al4g6V5pAiBvrA9
+ cH7/lALUjk0uudungrhKmqDhDwVB6hRasZb9aY5X/VEOXA==
+Received: from ex09.beckhoff.com ([62.159.14.12])
+ by mx07-0090a401.pphosted.com (PPS) with ESMTPS id 4e760rsgh6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 18 May 2026 07:36:33 +0000 (GMT)
+Received: from ex10.beckhoff.com (172.17.2.111) by ex09.beckhoff.com
+ (172.17.6.17) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Mon, 18 May
+ 2026 09:36:33 +0200
+Received: from ex10.beckhoff.com ([fe80::ab7f:9a91:d220:441b]) by
+ ex10.beckhoff.com ([fe80::ab7f:9a91:d220:441b%12]) with mapi id
+ 15.02.2562.035; Mon, 18 May 2026 09:36:33 +0200
+From: =?utf-8?B?Q29ydmluIEvDtmhuZQ==?= <C.Koehne@beckhoff.com>
+To: "peter.maydell@linaro.org" <peter.maydell@linaro.org>
+CC: "hreitz@redhat.com" <hreitz@redhat.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-block@nongnu.org" <qemu-block@nongnu.org>, "edgar.iglesias@gmail.com"
+ <edgar.iglesias@gmail.com>, "kwolf@redhat.com" <kwolf@redhat.com>,
+ =?utf-8?B?WWFubmljayBWb8OfZW4=?= <Y.Vossen@beckhoff.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "pierrick.bouvier@oss.qualcomm.com" <pierrick.bouvier@oss.qualcomm.com>,
+ "alistair@alistair23.me" <alistair@alistair23.me>
+Subject: Re: [PATCH v6 15/15] docs/system/arm: Add support for Beckhoff CX7200
+Thread-Topic: [PATCH v6 15/15] docs/system/arm: Add support for Beckhoff CX7200
+Thread-Index: AQHc4scJQKrjf3Iwc0OYGlSYpEachrYOnV4AgAStpAA=
+Date: Mon, 18 May 2026 07:36:33 +0000
+Message-ID: <c14139567e6d7db69816d86cd193083658ef684b.camel@beckhoff.com>
+References: <20260513105517.146706-1-corvin.koehne@gmail.com>
+ <20260513105517.146706-16-corvin.koehne@gmail.com>
+ <CAFEAcA8aLT4LQZ1HaQtduZeWm9w+62bDaXmLetbnJQHN3xq3jg@mail.gmail.com>
+In-Reply-To: <CAFEAcA8aLT4LQZ1HaQtduZeWm9w+62bDaXmLetbnJQHN3xq3jg@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+x-originating-ip: [172.17.129.38]
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="=-aDc/qhe+YnBEi8+FDx+2"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=corvin.koehne@gmail.com; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE4MDA3MiBTYWx0ZWRfX/0Vk8fjleNSO
+ HULUIus2aWFHhzc+uFDO+orEsI/bA80YA8bSaaIFHOamPLGgfltjd9PPMFA7e6qGjxkbXgs/RGd
+ x9U8Cz9W8XMGtRYD+MhdMLSWZ10j2ET/W/JExKg4PKeeP7U6utiINhCtNxEo7ygKb+0DVxNKwvW
+ MJfG0i9ocHpPO91/QD29TqTD55DTHsdhdnxk1NgYARXIsLshS70WZod19P+eD7MKXfrkErDsj52
+ N+pk4XI9btlVeBxZ4o28qkdL5YKZthlbS5QIglCeMvArRXhlmQ+o8MR49geOTEXUdg0RhmGEp04
+ /Rzgx3zdbpNh6EtfsXqPGH934qdL/2Sq8Mym1JgPTM6x4nHR8nlyMm5AH/HZStEQvNf4Go8cN+/
+ yscNHGWWAPRrp09oKGVxyks6WNxa1WEnHwGEtJ8C1E4IkLL2zx+v6hZqMt2rdPb0tRQqncDA/zG
+ RgTY0P89s8gkqf4rkGQ==
+X-Authority-Analysis: v=2.4 cv=XIUAjwhE c=1 sm=1 tr=0 ts=6a0ac181 cx=c_pps
+ a=ZkhbYXbYXnnsONUOWLo3Bg==:117 a=ZkhbYXbYXnnsONUOWLo3Bg==:17
+ a=xqWC_Br6kY4A:10 a=zoJHxBl5aBcA:10 a=NGcC8JguVDcA:10 a=M51BFTxLslgA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=a9bgyBvlNMQzFU9Z5g25:22 a=PpDwSNkculO1Pa3iPHCZ:22
+ a=GaQpPoNlAAAA:8 a=pGLkceISAAAA:8 a=Cmw_MBCVAAAA:8 a=ghdlahQueheaTJ4_ZG0A:9
+ a=QEXdDO2ut3YA:10 a=s2Jy__7ezXR0vfk6w2IA:9 a=FfaGCDsud1wA:10
+ a=xF5q_uoM5gZT5J3czcBi:22 a=ZJSrCmYe3mwGoKZA4Vko:22
+X-Proofpoint-GUID: yY33sRuaIOdRW8L-xX6KBmd9TnfB8MnV
+X-Proofpoint-ORIG-GUID: yY33sRuaIOdRW8L-xX6KBmd9TnfB8MnV
+Received-SPF: pass client-ip=66.159.244.62; envelope-from=C.Koehne@beckhoff.com;
+ helo=mx07-0090a401.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,125 +109,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: YannickV <Y.Vossen@beckhoff.com>
+--=-aDc/qhe+YnBEi8+FDx+2
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
 
-Add CPU clock outs und derive the related domains from the
-base CPU clock ration. This makes the CPU clock domains
-visible and keeps their ratios consistent with the hardware
-clock tree.
+On Fri, 2026-05-15 at 09:10 +0100, Peter Maydell wrote:
+> On Wed, 13 May 2026 at 11:=E2=80=8A55, Corvin K=C3=B6hne <corvin.=E2=80=
+=8Akoehne@=E2=80=8Agmail.=E2=80=8Acom>
+> wrote: > > From: YannickV <Y.=E2=80=8AVossen@=E2=80=8Abeckhoff.=E2=80=8Ac=
+om> > > This commit offers
+> some documentation on the Beckhoff CX7200 > qemu emulation. > > Signed-of=
+f-
+> by:=E2=80=8A
+> =C2=A0
+> On Wed, 13 May 2026 at 11:55, Corvin K=C3=B6hne <corvin.koehne@gmail.com>=
+ wrote:
+> >=20
+> > From: YannickV <Y.Vossen@beckhoff.com>
+> >=20
+> > This commit offers some documentation on the Beckhoff CX7200
+> > qemu emulation.
+> >=20
+> > Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
+>=20
+> I had review comments on this patch too:
+> https://urldefense.com/v3/__https://patchew.org/QEMU/20251204093502.50582=
+-1-corvin.koehne@gmail.com/20251204093502.50582-16-corvin.koehne@gmail.com/=
+__;!!PlYMe_wG1g!gcagXIjFAwYeOUzFGLkUDNWeXWrymvnQXZphDz_zZ_0Epx0dqTmMXFlDLjw=
+-CJhr3EZpHTwKBKRG4qgsBzyTxsBswg$
+>=20
+> Please don't just ignore code review and repost a series.
+> If you disagree with the review or have a reason why you
+> don't want to address it, that's fine -- we can have that
+> discussion. But ignoring review silently is not a good idea.
+>=20
+> thanks
+> -- PMM
 
-We also need to set the reset values during realization to
-ensure CPU clocks are properly enabled at startup. Without
-this, CPU clocks would have a frequency of 0 Hz, which
-causes problems in the a9mpcore timer implementations.
+Hi Peter,
 
-Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
----
- hw/misc/zynq_slcr.c | 40 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+sry, I somehow ended up pushing the old version again by accident. I've pos=
+ted
+v7 and it should address all open comments.
 
-diff --git a/hw/misc/zynq_slcr.c b/hw/misc/zynq_slcr.c
-index 0ae5d607be..43e4cc74fe 100644
---- a/hw/misc/zynq_slcr.c
-+++ b/hw/misc/zynq_slcr.c
-@@ -61,6 +61,13 @@ REG32(DDR_PLL_CFG, 0x114)
- REG32(IO_PLL_CFG, 0x118)
- 
- REG32(ARM_CLK_CTRL, 0x120)
-+    FIELD(ARM_CLK_CTRL, CPU_PERI_CLKACT, 28, 1);
-+    FIELD(ARM_CLK_CTRL, CPU_1XCLKACT, 27, 1);
-+    FIELD(ARM_CLK_CTRL, CPU_2XCLKACT, 26, 1);
-+    FIELD(ARM_CLK_CTRL, CPU_3OR2XCLKACT, 25, 1);
-+    FIELD(ARM_CLK_CTRL, CPU_6OR4XCLKACT, 24, 1);
-+    FIELD(ARM_CLK_CTRL, DIVISOR, 8, 6);
-+    FIELD(ARM_CLK_CTRL, SRCSEL, 4, 2);
- REG32(DDR_CLK_CTRL, 0x124)
- REG32(DCI_CLK_CTRL, 0x128)
- REG32(APER_CLK_CTRL, 0x12c)
-@@ -98,6 +105,7 @@ FPGA_CTRL_REGS(3, 0x1a0)
- REG32(BANDGAP_TRIP, 0x1b8)
- REG32(PLL_PREDIVISOR, 0x1c0)
- REG32(CLK_621_TRUE, 0x1c4)
-+    FIELD(CLK_621_TRUE, CLK_621_TRUE, 0, 1)
- 
- REG32(PSS_RST_CTRL, 0x200)
-     FIELD(PSS_RST_CTRL, SOFT_RST, 0, 1)
-@@ -206,6 +214,10 @@ struct ZynqSLCRState {
-     Clock *ps_clk;
-     Clock *uart0_ref_clk;
-     Clock *uart1_ref_clk;
-+    Clock *cpu_1x;
-+    Clock *cpu_2x;
-+    Clock *cpu_3x2x;
-+    Clock *cpu_6x4x;
-     uint8_t boot_mode;
- };
- 
-@@ -286,14 +298,31 @@ static void zynq_slcr_compute_clocks_internal(ZynqSLCRState *s, uint64_t ps_clk)
-     uint64_t io_pll = zynq_slcr_compute_pll(ps_clk, s->regs[R_IO_PLL_CTRL]);
-     uint64_t arm_pll = zynq_slcr_compute_pll(ps_clk, s->regs[R_ARM_PLL_CTRL]);
-     uint64_t ddr_pll = zynq_slcr_compute_pll(ps_clk, s->regs[R_DDR_PLL_CTRL]);
-+    uint64_t cpu_base;
- 
-     uint64_t uart_mux[4] = {io_pll, io_pll, arm_pll, ddr_pll};
-+    uint64_t cpu_mux[4] = {arm_pll, arm_pll, ddr_pll, io_pll};
-+
-+    bool use_621 = FIELD_EX32(s->regs[R_CLK_621_TRUE], CLK_621_TRUE,
-+                              CLK_621_TRUE);
-+    /* Select 6:2:1 (true) or 4:2:1 (false) CPU clock ratios. */
-+    uint32_t ratio_6x4x = use_621 ? 6 : 4;
-+    uint32_t ratio_3x2x = use_621 ? 3 : 2;
-+
- 
-     /* compute uartX reference clocks */
-     clock_set(s->uart0_ref_clk,
-               ZYNQ_COMPUTE_CLK(s, uart_mux, R_UART_CLK_CTRL, CLKACT0));
-     clock_set(s->uart1_ref_clk,
-               ZYNQ_COMPUTE_CLK(s, uart_mux, R_UART_CLK_CTRL, CLKACT1));
-+
-+    /* Base is CPU clock (6x/4x domain). Derive other CPU domains via ratios. */
-+    cpu_base = ZYNQ_COMPUTE_CLK(s, cpu_mux, R_ARM_CLK_CTRL, CPU_6OR4XCLKACT);
-+
-+    clock_set(s->cpu_6x4x, cpu_base);
-+    clock_set(s->cpu_3x2x, cpu_base * ratio_6x4x / ratio_3x2x);
-+    clock_set(s->cpu_2x,   cpu_base * ratio_6x4x / 2);
-+    clock_set(s->cpu_1x,   cpu_base * ratio_6x4x);
- }
- 
- /**
-@@ -322,6 +351,10 @@ static void zynq_slcr_propagate_clocks(ZynqSLCRState *s)
- {
-     clock_propagate(s->uart0_ref_clk);
-     clock_propagate(s->uart1_ref_clk);
-+    clock_propagate(s->cpu_1x);
-+    clock_propagate(s->cpu_2x);
-+    clock_propagate(s->cpu_3x2x);
-+    clock_propagate(s->cpu_6x4x);
- }
- 
- static void zynq_slcr_ps_clk_callback(void *opaque, ClockEvent event)
-@@ -620,6 +653,10 @@ static const ClockPortInitArray zynq_slcr_clocks = {
-     QDEV_CLOCK_IN(ZynqSLCRState, ps_clk, zynq_slcr_ps_clk_callback, ClockUpdate),
-     QDEV_CLOCK_OUT(ZynqSLCRState, uart0_ref_clk),
-     QDEV_CLOCK_OUT(ZynqSLCRState, uart1_ref_clk),
-+    QDEV_CLOCK_OUT(ZynqSLCRState, cpu_1x),
-+    QDEV_CLOCK_OUT(ZynqSLCRState, cpu_2x),
-+    QDEV_CLOCK_OUT(ZynqSLCRState, cpu_3x2x),
-+    QDEV_CLOCK_OUT(ZynqSLCRState, cpu_6x4x),
-     QDEV_CLOCK_END
- };
- 
-@@ -630,6 +667,9 @@ static void zynq_slcr_realize(DeviceState *dev, Error **errp)
-     if (s->boot_mode > 0xF) {
-         error_setg(errp, "Invalid boot mode %d specified", s->boot_mode);
-     }
-+
-+    zynq_slcr_reset_init(OBJECT(s), 0);
-+    zynq_slcr_compute_clocks_internal(s, clock_get(s->ps_clk));
- }
- 
- static void zynq_slcr_init(Object *obj)
--- 
-2.47.3
 
+--=20
+Best regards,
+Corvin
+
+
+
+This email contains confidential information. If you have received it in er=
+ror, you must not read, use, copy or pass on this e-mail or its attachments.
+If you have received the e-mail in error, please inform me immediately by r=
+eply e-mail and then delete this e-mail from your system. Thank you
+
+Diese E-Mail enth=C3=A4lt vertrauliche Informationen. Sollten Sie sie irrt=
+=C3=BCmlich erhalten haben, d=C3=BCrfen Sie diese E-Mail oder ihre Anh=C3=
+=A4nge nicht lesen, verwenden, kopieren oder weitergeben.
+Sollten Sie die Mail versehentlich erhalten haben, teilen Sie mir dies bitt=
+e umgehend per Antwort-E-Mail mit und l=C3=B6schen Sie diese E-Mail dann au=
+s Ihrem System. Vielen Dank
+
+Beckhoff Automation GmbH & Co. KG=20
+Managing Director: Dipl. Phys. Hans Beckhoff
+Registered office: Verl, Germany=20
+Register court: Guetersloh HRA 7075
+
+DisclaimerID:x9d5u140
+
+
+--=-aDc/qhe+YnBEi8+FDx+2
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEgvRSla3m2t/H2U9G2FTaVjFeAmoFAmoKwYAACgkQ2FTaVjFe
+AmpJ1Q//dbk/z0QzD3tNx5PziIl5ug0qMQsCIpmtinNFI/StiGB1aCSob71P46V7
+DBomfzhXsrVy3WFVFlFIV8/CqXIJhysZBDFEba/1VV9nWxRW9qufIueY5eyapT7p
+ep2nl7kYBm4QytdJP4b49GA5oVnuEzKQIFm3y2D+cVj6O6aOifBu/y72Qiknryol
+irzdJZQxUj4kNNoUQbAdPGig1v5juFnSnu6RpQWJCFoiG3BvxIUrfvxDFAs9NjPM
+7cnvvhJXeSImdBsZCzdHbOT8gF0/REOORKIIRoUA5px4d9Lv+fO1uuCEEf5us/zk
+xd0dPdOeqsvqd/5OT8Hq7F6A113UQyNWvBZ4eeq0hlnyoWnKl7et1D1uWRl5mSvW
+xn7rAT0xIaxfG4d50Vc2aDkiuPp52GJHp9veNMt1Wd5WRZMb0/gbbTcUQy80qxj0
+3ETewcRfk3t/BZ9VhkqPVoYCtXenEQYwlsI+ORZrhcwhFcPpBmiiKYFuxVfe98Ic
+39BFNTrMlpS1c/WHS2Z63JrcSUf97a00GvXfXOpQwkQPztoDhErxR/v2YCWI/41r
+PSMQris2UsiyhIBCbKSkXxwrsS08AkW9uq11B6ZgWeYxX9zLDRcz9p8hgLdv7FZS
+AgVOIycEI56fr1q3/zzl0wi4XM4vT5itdlScew13+mnQ84rSmDg=
+=cCro
+-----END PGP SIGNATURE-----
+
+--=-aDc/qhe+YnBEi8+FDx+2--
 
