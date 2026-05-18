@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D66ACD4F4A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B31B9CD4F57
 	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 21:31:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP5VM-0000Of-PN; Mon, 18 May 2026 17:28:04 -0400
+	id 1wP5VK-0000NO-Rt; Mon, 18 May 2026 17:28:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5VL-0000Nf-6c
- for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:03 -0400
-Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5VI-0000Rb-KQ
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5VK-0000ND-5T
  for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:02 -0400
-Received: by mail-ot1-x333.google.com with SMTP id
- 46e09a7af769-7dbccf6a23dso2406224a34.2
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 14:28:00 -0700 (PDT)
+Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wP5VH-0000Qv-6d
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 17:28:01 -0400
+Received: by mail-ot1-x331.google.com with SMTP id
+ 46e09a7af769-7dcd17e19b6so1523156a34.1
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 14:27:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779139679; x=1779744479;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1779139678; x=1779744478;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=t8+v/EjXETKRTwyWebZC5HE0qPUNEGr0KvGN264bUy8=;
- b=H+xbyhUytBSIUPYnAsXlJWPyM5SEndBVu1Rhoy41L9kPM7s1eCA7sbTx33P3rJBGB4
- n+66c6VJEdVWjI2vDXGrsluKidvtP2gd0bhCchwb+jwj/jS1W4a/a+Ze8UbWBgYOwQ0f
- Y25q8ifRvbbnU+dWdGAIsDhr5l8RpUSlo3vV6/wtcE8zgNMEBnjTd/O0w/k6G57KGo77
- O1OgqHLGM3LjjSz64g4zFHGVj81CdNRxY5AuI/ATAHUMuhYD+ngJNfLESrRQyqrxkZwM
- XXRG7PqgqJxnOC0ZJF/cjDqJNE7ZvMuB6lxoxL6Rfc7AAJnnS4kpMzm+GrFU7PKKyfpB
- 287Q==
+ :reply-to; bh=GZJKrvGvmoh3Z0h4Tj8bSMp6OmJceu4fQaKo2fvtPoU=;
+ b=Kno3lZUWMVmsPAnZQ9bmj0pnqx7d+2j6dWzKcRgdLvCAhHWIJOclDoe/C8TzFzQN5b
+ itedT+V8jc9oqjdV3nvs0LW6du6R1jqe5z1Q/sxOOOUYaHIDWPQhvh+XOMpMpVlAwwwU
+ Gl+TbJQdTE04mIuVRzpw1OiSnZ+6s4kV4dXsT2DhzNwpmPkJS5W+Zy195h64JD1hxhGz
+ lAIS6+Lv0fOY7TNyUOsNwRIQRZYPlvB3+nHzChS59R9JhoUDLMTEXZYLqnHjTigEbKII
+ Y66IexnqE2t+cwblEHxN4wbQ0ja2OLwAyhinQni7FlDE85klBugXKbd2Nvu1HcUS+hC0
+ n/5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779139679; x=1779744479;
+ d=1e100.net; s=20251104; t=1779139678; x=1779744478;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=t8+v/EjXETKRTwyWebZC5HE0qPUNEGr0KvGN264bUy8=;
- b=maCwehj+OMROgljVU16OUdY4Cv91N7ozizdAlVG7xGMscGuWW4TykoO88oGmtPfRhi
- c3occaUmdD3lsRDGeIoPCUKANEoZOM852CXrw3swk972p1ARYiqkjvzO04KiqN0/JbkK
- 96+u5mGBzN2x4jW0iRS7ld/mHolT6iYMT9vEaL+6ekHJUhdp5ayaW9RT6qpMvfEUUsgE
- uGjtWFvuxnji9S2AnQPTAckfjmmeDEagdoCJHXG+Y+bzBWDj86kJyUd7aYg6hwh8tXd5
- RaJG7U8JEG3I9E+lOBvQR34qxD2Rv4icVz5t2ckkOtCKHKT3UvYe/zP+g37nRIkTfS9y
- Kb4g==
-X-Gm-Message-State: AOJu0Yzn1xZU46UeB89p3veKoSnKQHWrOyH9P10KqYTZd7V78kVYxxfZ
- mE0X/iDXODIu721yaCwuSz3pfADqHwQRJ7TCZUtTtB4+fwdsnyJ7qOyxB7mY2jyidIQeFJdLACo
- egm71Smw=
-X-Gm-Gg: Acq92OEJO6mGOwwyeUuo+IT3d+9sVIm4j+6kiN8W2zHjJ39TtvUGXFFzqDtx1+0Tj4W
- xWwcTnWzsNknvvVtdMPuHMBpYBInE8grExZp09DQBPuB5HtPseT8vkUE2nRC3iBqZTY/5PkDfFA
- Dzst4zqnEi6lNXxxUS2EpRHViJt+JjtT6BP1E8huiE2jzGHyR/g3ejcLD5LuQVdkmkr/qKhkCfE
- 3ml8hnfvZzLE1M7kX4N3Ckx2NcBzlI5FRQGu0cz2u54A+3PzzdHPkIkZrGTD9iyKbTO848eTI1X
- BGtNM/SBHfKqqRq+GKINAzMIy00TZzN+ys64IM4k3VDBBE6XutxaCVTG6HZ3jCdQCMq9+3cRY1K
- 8tRIRaoYOaV1XcGgSyFHnSSwlEyKIsmPUoU0s8nGvQqqq9QvjFQOsK8SP0tbxKKNKw5tLuTIVMp
- 3FZTG4ILDwrQ==
-X-Received: by 2002:a05:6830:6602:b0:7d7:c985:3a30 with SMTP id
- 46e09a7af769-7e4f2a30195mr13830425a34.11.1779139679648; 
- Mon, 18 May 2026 14:27:59 -0700 (PDT)
+ bh=GZJKrvGvmoh3Z0h4Tj8bSMp6OmJceu4fQaKo2fvtPoU=;
+ b=eQhoERsA9PGRK7Wt/L0h1dlcpkMfwA56BaICUHpSql2DIAs+JEBk+5ytEEoe//2JCC
+ /NWmLjSXm5+wJsRNHyEL6hiH2MZfMrNdn3UqQK2FzmbAKvnxCMQcgTMndjDiWBXEORTe
+ j/5o6am7E6nLIxHbHeQvZ+3FnBw5sSe6XEVn4+o77KEk9Lrna9+PXwsMRsP4epk+fJ6O
+ 1TCEVjwjfgbnowSpvnvlUYws9eQabVko2GqiOymXVdeeJ+QYDxhyOKq0aygu6aw3du0v
+ 1mjL/9MmFAgjrazhqZQeRMu/CgTxEV0r7XfEOcaqgq9WlF83rQ/53RRVV3HHusPYBqMx
+ yHRg==
+X-Gm-Message-State: AOJu0Yy4ObbJXPFOLHkxNv3KYMilFhw+HEJnQrPrM6L30+VgFxd3oSCU
+ NZE9xgwZkeMUOpelwZ9pt/YftX/HzvXbU8IGQUosO3F/QWUAvETPHAF+wA0yh8h/EW8=
+X-Gm-Gg: Acq92OFhyIycWByiuAQgK7fNv/NeMyGzoY84iuH5Pc/vGeI0kYhLLhV/TyWkJeesaiH
+ E+5DAWelQEiq2btXBXc7idroJwa0AQpwsyyFZSlil2WnkTV3EKM6VjMK60YzDJypukUfRTlCzOE
+ DABoyiPjoeURqMq7kXHDKA0qFGdYy8OfeIfDE3lIbMx4E9SbOCt0KwCSmEbSqiE3TdsTQXkhwY6
+ BOUvD0AlwQKa+di4zXH0ui9ls5pTjVbyQnhJOfD3/32zcnbygNd/ZZnNtGCnN6whjawY3JU7D/x
+ zmnbc4r2jmqR7DmOvDKijlFvcXWjbqQhx2F5Op6e/+FsjI31o3uFTaUe0raXNGpgBIt2wnuYAr4
+ XF/DOWClp+GvgJ+6Kt8F4DtgQ+ykNc51h8B9G/W52So3LAymr98lpIHcVEg71tqJF+XjgbVWUoZ
+ mBTXh4GHSBFDlFPJT90RGnSoD9/TywWpA=
+X-Received: by 2002:a05:6830:2b10:b0:7dc:dd58:50c7 with SMTP id
+ 46e09a7af769-7e4fa05515bmr12117707a34.18.1779139677825; 
+ Mon, 18 May 2026 14:27:57 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e55b81cc5asm7980358a34.8.2026.05.18.14.27.59
+ 46e09a7af769-7e55b81cc5asm7980358a34.8.2026.05.18.14.27.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 May 2026 14:27:59 -0700 (PDT)
+ Mon, 18 May 2026 14:27:57 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Mon, 18 May 2026 15:27:26 -0600
-Subject: [PATCH v2 08/37] bsd-user: Add file operation system call dispatch
+Date: Mon, 18 May 2026 15:27:24 -0600
+Subject: [PATCH v2 06/37] bsd-user: Add poll, lseek, pipe, and swap system
+ call shims
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260518-misc-2026q2-v2-8-6c16fe448301@bsdimp.com>
+Message-Id: <20260518-misc-2026q2-v2-6-6c16fe448301@bsdimp.com>
 References: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
 In-Reply-To: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
 To: qemu-devel@nongnu.org
@@ -77,24 +77,24 @@ Cc: Kyle Evans <kevans@freebsd.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3697; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=p3uvcx4gphk1awyIPaOzO4oRtM8CLnIjjebf6/6Tgk4=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqC4RG6vVfdCP0XMTlMboozbEd9BfucP0bnEanb
- E7/0SrAlyCJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaguERgAKCRBsHNEofbAR
- AFC1D/43ghBcwaidSO7Qc53BWTtjVh1rar172HL4pMBKGgrVgOw0RwQ0z3h4/Szx8VELFpxBVg1
- gh1rwaxgagnaOgYAv5SPpzz7SKlca8bnALiEu9hsGWx9ABltjVemSzHYCjmfH+/5KnHeneoxTxb
- kvfhTQwgcUiLU/eumiBt48iKSyzXgZ4jZz7V6Hpqj+VeWlTL2u3c8kf69EtcBp4MGOm22wANJN3
- y8UWsA+cPSIAICPzL9b9um3xmX+hMYUGxZlH1l2gDE6RB5X8A10albG1z6yN1GEyGXymzt1ye2F
- Xor1SCOMD6J45c5a0jYBJiZCe0aQ9NS9oVSspQpjUjBJsN4pVukRmN1rxjEBpA4ypme3/IyAyZi
- Rxq7faKxDRxf+uztc7CJfuxfERagCc1/2VIXIBD4Ef8xJ95fr0kdPxXCBZedVpNzxF82hH3NcG+
- GR9G+Jm4FkC1S9nSdw/X98Z4z2wwArWSH1n8geDWsMGA8evdQj2DVQSPf8oKALMx41T9Gb+cJFa
- iVEl3esdT7haPPaJk5MOkcITedVP9HIfANRRdnDEpRdngfLmJJuE0QoQv3iTzj1s+YkCmaz3ohI
- IaD2bFq7zd/zQI3IpPgdIu4/FU62Veecv1ytJTnbZ11jMwG2V7uoJtjQPmZMarDBgq1iaMQW3HJ
- 7MHDAVrDMndn0Pw==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=22776; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=hUNdFuSlQwlBNp0LTbIKejA8PoWYPc3Mrxw5hMM4IAg=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqC4RGreuBr3G3DJg3z9usZ+c/V1/sPLnhVYpQf
+ Mq5QXEVAumJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaguERgAKCRBsHNEofbAR
+ AGYQEADfriQG5bQwzpw5PqSGa0bq0LXaSTXw9cZazVuUs/mMuHoFhMdlrYaThXib5MWCLyhRTEE
+ akmJ1XftWe8mLDifC0oqqK+NospVm3GYHkpfA/W7d+wJDSSYdNNrbyzIBWsQxIlE1GXvnzawUVg
+ ny1Tz5EGpPafZCXYrRzTTwOEsTHMn3pF3foIkcHOzIBCbVAcd0rgvnQjtLlIcHLyFkRombJq/Gl
+ ogIg1JQ9GU5BAiRqUE0InCIymt43mdsunp6bJx4NNrlmXJQbjIGTrub8sw6f85Uj0W0eyYSqiyb
+ v283mpm/9Bfpz3oND3/lQbTsaVYMxvQNNhq7cjCUN4rkmU7OGibhzqanOYrzF1cdjxwTpZGQ1wn
+ MJEGu5AsHJKsq+hhNg6Fldey710Bq9/aw+zdWAcgDacCevtFIy6DWWrWZd3b6MwJJbrprd5GCw0
+ ZRM/QHr0ijxynwhHalTIeY01DKo9LZ/PXA/INMqkYv6E0n8k6Qn9GqT8w+HsGWMC9HwWbXZu1Wu
+ HiS4JxKyK1+m8e6aV+fTCfQ4Ehh0fvXJ398uWj7ZwL9IqZZnc2A7wH/VE4Zx5vRfKLfA2QK/mP2
+ tTVj72JlGCUBrtkqv5Y7wQzOHnTyuBy+YkL84p2yEFcWGzg+McuLL0OrSz4tbeVhJ0hgkiICEBU
+ B32VqiJWIx0C8Bw==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::333;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x333.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::331;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x331.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -116,111 +116,724 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Wire up additional file-related system calls: poll, lseek, pipe,
-pipe2, swapon, swapoff, chflagsat, close_range, __realpathat,
-copy_file_range, and __specialfd. Also fix __realpathat to use
-__sys___realpathat on FreeBSD >= 15.0.
+Add do_bsd_poll, do_bsd_lseek, do_bsd_pipe, do_bsd_swapon,
+do_freebsd13_swapoff, and do_bsd_swapoff to bsd-file.h. Also add
+target_pollfd structure to syscall_defs.h and include poll.h in
+os-syscall.c.
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 Assisted-by: Claude Opus 4.6 (1M context)
 ---
- bsd-user/freebsd/os-stat.h    |  8 +------
- bsd-user/freebsd/os-syscall.c | 51 +++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 52 insertions(+), 7 deletions(-)
+ bsd-user/bsd-file.h           | 136 +++++++++++++
+ bsd-user/freebsd/os-syscall.c |   1 +
+ bsd-user/syscall_defs.h       | 458 ++++++++++++++++++++++++++++++++++++------
+ 3 files changed, 534 insertions(+), 61 deletions(-)
 
-diff --git a/bsd-user/freebsd/os-stat.h b/bsd-user/freebsd/os-stat.h
-index ea95aa6344..4e5fc30de4 100644
---- a/bsd-user/freebsd/os-stat.h
-+++ b/bsd-user/freebsd/os-stat.h
-@@ -622,11 +622,6 @@ static inline abi_long do_freebsd_fcntl(abi_long arg1, abi_long arg2,
-     return ret;
- }
+diff --git a/bsd-user/bsd-file.h b/bsd-user/bsd-file.h
+index dec59bd80b..c5636aff6f 100644
+--- a/bsd-user/bsd-file.h
++++ b/bsd-user/bsd-file.h
+@@ -55,6 +55,10 @@ ssize_t safe_pwrite(int fd, void *buf, size_t nbytes, off_t offset);
+ ssize_t safe_writev(int fd, const struct iovec *iov, int iovcnt);
+ ssize_t safe_pwritev(int fd, const struct iovec *iov, int iovcnt, off_t offset);
  
--#if defined(__FreeBSD_version) && __FreeBSD_version >= 1300080
--extern int __realpathat(int fd, const char *path, char *buf, size_t size,
--        int flags);
--/* https://svnweb.freebsd.org/base?view=revision&revision=358172 */
--/* no man page */
- static inline abi_long do_freebsd_realpathat(abi_long arg1, abi_long arg2,
-         abi_long arg3, abi_long arg4, abi_long arg5)
++int safe_ppoll(struct pollfd *fds, nfds_t nfds,
++               const struct timespec *restrict timeout,
++               const sigset_t *restrict newsigmask);
++
+ /* read(2) */
+ static abi_long do_bsd_read(abi_long arg1, abi_long arg2, abi_long arg3)
  {
-@@ -640,12 +635,11 @@ static inline abi_long do_freebsd_realpathat(abi_long arg1, abi_long arg2,
-         return -TARGET_EFAULT;
-     }
- 
--    ret = get_errno(__realpathat(arg1, p, b, arg4, arg5));
-+    ret = get_errno(syscall(SYS___realpathat, arg1, p, b, arg4, arg5));
-     UNLOCK_PATH(p, arg2);
-     unlock_user(b, arg3, ret);
- 
+@@ -925,4 +929,136 @@ static abi_long do_bsd_undelete(abi_long arg1)
      return ret;
  }
--#endif
  
- #endif /* BSD_USER_FREEBSD_OS_STAT_H */
-diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
-index 8a25be4ac7..228daed4c4 100644
---- a/bsd-user/freebsd/os-syscall.c
-+++ b/bsd-user/freebsd/os-syscall.c
-@@ -700,6 +700,57 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
-         ret = do_bsd_undelete(arg1);
-         break;
- 
-+    case TARGET_FREEBSD_NR_poll: /* poll(2) */
-+        ret = do_bsd_poll(arg1, arg2, arg3);
-+        break;
++/* poll(2) */
++static abi_long do_bsd_poll(abi_long arg1, abi_long arg2, abi_long arg3)
++{
++    abi_long ret;
++    nfds_t i, nfds = arg2;
++    int timeout = arg3;
++    struct pollfd *pfd;
++    struct target_pollfd *target_pfd;
++    struct timespec ts, *pts = NULL;
 +
-+    case TARGET_FREEBSD_NR_lseek: /* lseek(2) */
-+        ret = do_bsd_lseek(env, arg1, arg2, arg3, arg4, arg5);
-+        break;
++    target_pfd = lock_user(VERIFY_WRITE, arg1,
++            sizeof(struct target_pollfd) * nfds, 1);
++    if (!target_pfd) {
++        return -TARGET_EFAULT;
++    }
++    pfd = alloca(sizeof(struct pollfd) * nfds);
++    for (i = 0; i < nfds; i++) {
++        pfd[i].fd = tswap32(target_pfd[i].fd);
++        pfd[i].events = tswap16(target_pfd[i].events);
++    }
 +
-+    case TARGET_FREEBSD_NR_freebsd10_pipe: /* pipe(2) */
-+        ret = do_bsd_pipe(env, arg1);
-+        break;
++    if (timeout != INFTIM) {
++        ts.tv_sec = timeout / 1000;
++        ts.tv_nsec = (timeout % 1000) * 1000000;
++        pts = &ts;
++    }
 +
-+    case TARGET_FREEBSD_NR_pipe2: /* pipe2(2) */
-+        ret = do_bsd_pipe2(env, arg1, arg2);
-+        break;
++    ret = get_errno(safe_ppoll(pfd, nfds, pts, NULL));
 +
-+    case TARGET_FREEBSD_NR_swapon: /* swapon(2) */
-+        ret = do_bsd_swapon(arg1);
-+        break;
++    if (!is_error(ret)) {
++        for (i = 0; i < nfds; i++) {
++            target_pfd[i].revents = tswap16(pfd[i].revents);
++        }
++    }
++    unlock_user(target_pfd, arg1, sizeof(struct target_pollfd) * nfds);
 +
-+#if TARGET_FREEBSD_NR_freebsd13_swapoff
-+    case TARGET_FREEBSD_NR_freebsd13_swapoff: /* freebsd13_swapoff(2) */
-+        ret = do_freebsd13_swapoff(arg1);
-+        break;
++    return ret;
++}
++
++/* lseek(2) */
++static abi_long do_bsd_lseek(CPUArchState *env, abi_long arg1, abi_long arg2,
++        abi_long arg3, abi_long arg4, abi_long arg5)
++{
++    abi_long ret;
++#if TARGET_ABI_BITS == 32
++    int64_t res;
++
++    /* 32-bit arch's use two 32 registers for 64 bit return value */
++    if (regpairs_aligned(env) != 0) {
++        res = lseek(arg1, target_arg64(arg3, arg4), arg5);
++    } else {
++        res = lseek(arg1, target_arg64(arg2, arg3), arg4);
++    }
++    if (res == -1) {
++        ret = get_errno(res);
++        set_second_rval(env, 0xFFFFFFFF);
++    } else {
++#ifdef TARGET_BIG_ENDIAN
++        ret = ((res >> 32) & 0xFFFFFFFF);
++        set_second_rval(env, res & 0xFFFFFFFF);
++#else
++        ret = res & 0xFFFFFFFF;
++        set_second_rval(env, (res >> 32) & 0xFFFFFFFF);
++#endif
++    }
++#else
++    ret = get_errno(lseek(arg1, arg2, arg3));
++#endif
++    return ret;
++}
++
++/* pipe(2) */
++static abi_long do_bsd_pipe(CPUArchState *env, abi_ulong pipedes)
++{
++    abi_long ret;
++    int host_pipe[2];
++    int host_ret = pipe(host_pipe);
++
++    if (host_ret != -1) {
++        set_second_rval(env, host_pipe[1]);
++        ret = host_pipe[0];
++    } else {
++        ret = get_errno(host_ret);
++    }
++    return ret;
++}
++
++/* swapon(2) */
++static abi_long do_bsd_swapon(abi_long arg1)
++{
++    abi_long ret;
++    void *p;
++
++    LOCK_PATH(p, arg1);
++    ret = get_errno(swapon(path(p)));
++    UNLOCK_PATH(p, arg1);
++
++    return ret;
++}
++
++#ifdef TARGET_FREEBSD_NR_freebsd13_swapoff
++/* swapoff(2) */
++static abi_long do_freebsd13_swapoff(abi_long arg1)
++{
++    abi_long ret;
++    void *p;
++
++    LOCK_PATH(p, arg1);
++    ret = get_errno(swapoff(path(p), 0));
++    UNLOCK_PATH(p, arg1);
++
++    return ret;
++}
 +#endif
 +
-+    case TARGET_FREEBSD_NR_swapoff: /* swapoff(2) */
-+        ret = do_bsd_swapoff(arg1, arg2);
-+        break;
++/* swapoff(2) */
++static abi_long do_bsd_swapoff(abi_long arg1, abi_long arg2)
++{
++    abi_long ret;
++    void *p;
 +
-+    case TARGET_FREEBSD_NR_chflagsat: /* chflagsat(2) */
-+        ret = do_bsd_chflagsat(arg1, arg2, arg3, arg4);
-+        break;
++    LOCK_PATH(p, arg1);
++#ifdef TARGET_FREEBSD_NR_freebsd13_swapoff
++    ret = get_errno(swapoff(path(p), arg2));
++#else
++    ret = get_errno(swapoff(path(p)));
++#endif
++    UNLOCK_PATH(p, arg1);
 +
-+    case TARGET_FREEBSD_NR_close_range: /* close_range(2) */
-+        ret = do_freebsd_close_range(arg1, arg2, arg3);
-+        break;
++    return ret;
++}
 +
-+    case TARGET_FREEBSD_NR___realpathat:
-+        /* __realpathat(2) (XXX no realpathat()) */
-+        ret = do_freebsd_realpathat(arg1, arg2, arg3, arg4, arg5);
-+        break;
+ #endif /* BSD_FILE_H */
+diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
+index 06148fe3ce..fc6273a780 100644
+--- a/bsd-user/freebsd/os-syscall.c
++++ b/bsd-user/freebsd/os-syscall.c
+@@ -26,6 +26,7 @@
+ #include <sys/mount.h>
+ #include <sys/sysctl.h>
+ #include <utime.h>
++#include <poll.h>
+ 
+ #include "include/gdbstub/syscalls.h"
+ 
+diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
+index 0612be8bbb..833c7509e3 100644
+--- a/bsd-user/syscall_defs.h
++++ b/bsd-user/syscall_defs.h
+@@ -42,26 +42,6 @@ struct target_ipc_perm {
+ #define TARGET_IPC_SET  1   /* set options */
+ #define TARGET_IPC_STAT 2   /* get options */
+ 
+-/*
+- * sys/shm.h
+- */
+-struct target_shmid_ds {
+-    struct  target_ipc_perm shm_perm; /* peration permission structure */
+-    abi_ulong   shm_segsz;  /* size of segment in bytes */
+-    int32_t     shm_lpid;   /* process ID of last shared memory op */
+-    int32_t     shm_cpid;   /* process ID of creator */
+-    int32_t     shm_nattch; /* number of current attaches */
+-    target_time_t shm_atime;  /* time of last shmat() */
+-    target_time_t shm_dtime;  /* time of last shmdt() */
+-    target_time_t shm_ctime;  /* time of last change by shmctl() */
+-};
+-
+-#define N_BSD_SHM_REGIONS   32
+-struct bsd_shm_regions {
+-    abi_long start;
+-    abi_long size;
+-};
+-
+ /*
+  * sys/sem.h
+  */
+@@ -93,6 +73,26 @@ struct target_semid_ds {
+     target_time_t   sem_ctime;  /* times measured in secs */
+ };
+ 
++/*
++ * sys/shm.h
++ */
++struct target_shmid_ds {
++    struct  target_ipc_perm shm_perm; /* peration permission structure */
++    abi_ulong   shm_segsz;  /* size of segment in bytes */
++    int32_t     shm_lpid;   /* process ID of last shared memory op */
++    int32_t     shm_cpid;   /* process ID of creator */
++    int32_t     shm_nattch; /* number of current attaches */
++    target_time_t shm_atime;  /* time of last shmat() */
++    target_time_t shm_dtime;  /* time of last shmdt() */
++    target_time_t shm_ctime;  /* time of last change by shmctl() */
++};
 +
-+    case TARGET_FREEBSD_NR_copy_file_range:
-+        ret = do_freebsd_copy_file_range(arg1, arg2, arg3, arg4, arg5, arg6);
-+        break;
++#define N_BSD_SHM_REGIONS   32
++struct bsd_shm_regions {
++    abi_long start;
++    abi_long size;
++};
 +
-+    case TARGET_FREEBSD_NR___specialfd:
-+        ret = do_freebsd___specialfd(arg1, arg2, arg3);
-+        break;
+ /*
+  * sys/msg.h
+  */
+@@ -118,23 +118,26 @@ struct target_msgbuf {
+     char        mtext[1];   /* body of message */
+ };
+ 
++/*
++ * sched.h
++ */
++struct target_sched_param {
++        int32_t sched_priority;
++};
 +
-         /*
-          * ioctl(2)
-          */
+ /*
+  *  sys/mman.h
+  */
+ #define TARGET_MADV_DONTNEED            4       /* dont need these pages */
+ 
+-#define TARGET_FREEBSD_MAP_RESERVED0080 0x0080  /* previously misimplemented */
+-                                                /* MAP_INHERIT */
+-#define TARGET_FREEBSD_MAP_RESERVED0100 0x0100  /* previously unimplemented */
+-                                                /* MAP_NOEXTEND */
+-#define TARGET_FREEBSD_MAP_STACK        0x0400  /* region grows down, like a */
+-                                                /* stack */
+-#define TARGET_FREEBSD_MAP_NOSYNC       0x0800  /* page to but do not sync */
+-                                                /* underlying file */
++#define MAP_TYPE 0xf
+ 
++/* XXX These are needed by mmap.c until it is updated to match blitz */
++#define TARGET_FREEBSD_MAP_RESERVED0080 0x0080
++#define TARGET_FREEBSD_MAP_RESERVED0100 0x0100
++#define TARGET_FREEBSD_MAP_STACK        0x0400
++#define TARGET_FREEBSD_MAP_NOSYNC       0x0800
+ #define TARGET_FREEBSD_MAP_FLAGMASK     0x1ff7
+-
+-/* XXX */
+ #define TARGET_BSD_MAP_FLAGMASK         0x3ff7
+ 
+ /*
+@@ -142,8 +145,6 @@ struct target_msgbuf {
+  * sys/timex.h
+  */
+ 
+-typedef abi_long target_freebsd_suseconds_t;
+-
+ /* compare to sys/timespec.h */
+ struct target_freebsd_timespec {
+     target_time_t   tv_sec;     /* seconds */
+@@ -165,12 +166,75 @@ struct target_freebsd__umtx_time {
+ 
+ struct target_freebsd_timeval {
+     target_time_t       tv_sec; /* seconds */
+-    target_freebsd_suseconds_t  tv_usec;/* and microseconds */
++    target_suseconds_t  tv_usec;/* and microseconds */
+ #if !defined(TARGET_I386) && TARGET_ABI_BITS == 32
+     abi_long _pad;
+ #endif
+ };
+ 
++/* compare to sys/timex.h */
++struct target_freebsd_ntptimeval {
++    struct target_freebsd_timespec  time;
++    abi_long    maxerror;
++    abi_long    esterror;
++    abi_long    tai;
++    int32_t     time_state;
++};
++
++struct target_freebsd_itimerspec {
++    struct target_freebsd_timespec it_interval;
++    struct target_freebsd_timespec it_value;
++};
++
++struct target_freebsd_timex {
++    uint32_t    modes;
++    abi_long    offset;
++    abi_long    freq;
++    abi_long    maxerror;
++    abi_long    esterror;
++    int32_t     status;
++    abi_long    constant;
++    abi_long    precision;
++    abi_long    tolerance;
++
++    abi_long    ppsfreq;
++    abi_long    jitter;
++    int32_t     shift;
++    abi_long    stabil;
++    abi_long    jitcnt;
++    abi_long    calcnt;
++    abi_long    errcnt;
++    abi_long    stbcnt;
++};
++
++/* Maxiumum of 32 active POSIX timers allowed at any one time. */
++extern int g_posix_timers[32];
++
++#define TIMER_MAGIC 0x0caf0000
++#define TIMER_MAGIC_MASK 0xffff0000
++
++/*
++ * sys/event.h
++ */
++struct target_freebsd11_kevent {
++    abi_ulong  ident;
++    int16_t    filter;
++    uint16_t   flags;
++    uint32_t   fflags;
++    abi_long   data;
++    abi_ulong  udata;
++};
++
++struct target_freebsd_kevent {
++    abi_ulong  ident;
++    int16_t    filter;
++    uint16_t   flags;
++    uint32_t   fflags;
++    int64_t data;
++    abi_ulong  udata;
++    uint64_t  ext[4];
++};
++
+ /*
+  *  sys/resource.h
+  */
+@@ -219,6 +283,154 @@ struct target_freebsd__wrusage {
+     struct target_freebsd_rusage wru_children;
+ };
+ 
++/*
++ * sys/socket.h
++ */
++
++/*
++ * Types
++ */
++#define TARGET_SOCK_STREAM      1   /* stream socket */
++#define TARGET_SOCK_DGRAM       2   /* datagram socket */
++#define TARGET_SOCK_RAW         3   /* raw-protocol interface */
++#define TARGET_SOCK_RDM         4   /* reliably-delivered message */
++#define TARGET_SOCK_SEQPACKET   5   /* sequenced packet stream */
++
++
++/*
++ * Option flags per-socket.
++ */
++
++#define TARGET_SO_DEBUG         0x0001  /* turn on debugging info recording */
++#define TARGET_SO_ACCEPTCONN    0x0002  /* socket has had listen() */
++#define TARGET_SO_REUSEADDR     0x0004  /* allow local address reuse */
++#define TARGET_SO_KEEPALIVE     0x0008  /* keep connections alive */
++#define TARGET_SO_DONTROUTE     0x0010  /* just use interface addresses */
++#define TARGET_SO_BROADCAST     0x0020  /* permit sending of broadcast msgs */
++#define TARGET_SO_USELOOPBACK   0x0040  /* bypass hardware when possible */
++#define TARGET_SO_LINGER        0x0080  /* linger on close if data present */
++#define TARGET_SO_OOBINLINE     0x0100  /* leave received OOB data in line */
++#define TARGET_SO_REUSEPORT     0x0200  /* allow local address & port reuse */
++#define TARGET_SO_TIMESTAMP     0x0400  /* timestamp received dgram traffic */
++#define TARGET_SO_NOSIGPIPE     0x0800  /* no SIGPIPE from EPIPE */
++#define TARGET_SO_ACCEPTFILTER  0x1000  /* there is an accept filter */
++#define TARGET_SO_BINTIME       0x2000  /* timestamp received dgram traffic */
++#define TARGET_SO_NO_OFFLOAD    0x4000  /* socket cannot be offloaded */
++#define TARGET_SO_NO_DDP        0x8000  /* disable direct data placement */
++
++/*
++ * Additional options, not kept in so_options.
++ */
++#define TARGET_SO_SNDBUF        0x1001  /* send buffer size */
++#define TARGET_SO_RCVBUF        0x1002  /* receive buffer size */
++#define TARGET_SO_SNDLOWAT      0x1003  /* send low-water mark */
++#define TARGET_SO_RCVLOWAT      0x1004  /* receive low-water mark */
++#define TARGET_SO_SNDTIMEO      0x1005  /* send timeout */
++#define TARGET_SO_RCVTIMEO      0x1006  /* receive timeout */
++#define TARGET_SO_ERROR         0x1007  /* get error status and clear */
++#define TARGET_SO_TYPE          0x1008  /* get socket type */
++#define TARGET_SO_LABEL         0x1009  /* socket's MAC label */
++#define TARGET_SO_PEERLABEL     0x1010  /* socket's peer's MAC label */
++#define TARGET_SO_LISTENQLIMIT  0x1011  /* socket's backlog limit */
++#define TARGET_SO_LISTENQLEN    0x1012  /* socket's complete queue length */
++#define TARGET_SO_LISTENINCQLEN 0x1013  /* socket's incomplete queue length */
++#define TARGET_SO_SETFIB        0x1014  /* use this FIB to route */
++#define TARGET_SO_USER_COOKIE   0x1015  /* user cookie (dummynet etc.) */
++#define TARGET_SO_PROTOCOL      0x1016  /* get socket protocol (Linux name) */
++
++/* alias for SO_PROTOCOL (SunOS name) */
++#define TARGET_SO_PROTOTYPE     TARGET_SO_PROTOCOL
++
++/*
++ * Level number for (get/set)sockopt() to apply to socket itself.
++ */
++#define TARGET_SOL_SOCKET       0xffff  /* options for socket level */
++
++#ifndef CMSG_ALIGN
++#define CMSG_ALIGN(len) (((len) + sizeof(long) - 1) & ~(sizeof(long) - 1))
++#endif
++
++/*
++ * sys/socket.h
++ */
++struct target_msghdr {
++    abi_long    msg_name;       /* Socket name */
++    int32_t     msg_namelen;    /* Length of name */
++    abi_long    msg_iov;        /* Data blocks */
++    int32_t     msg_iovlen;     /* Number of blocks */
++    abi_long    msg_control;    /* Per protocol magic (eg BSD fd passing) */
++    int32_t     msg_controllen; /* Length of cmsg list */
++    int32_t     msg_flags;      /* flags on received message */
++};
++
++struct target_sockaddr {
++    uint8_t sa_len;
++    uint8_t sa_family;
++    uint8_t sa_data[14];
++} QEMU_PACKED;
++
++struct target_in_addr {
++    uint32_t s_addr; /* big endian */
++};
++
++struct target_cmsghdr {
++    uint32_t    cmsg_len;
++    int32_t     cmsg_level;
++    int32_t     cmsg_type;
++};
++
++/*
++ * mips32 is the exception to the general rule of long-alignment; it
++ * unconditionally uses 64-bit alignment instead.
++ */
++#if defined(TARGET_MIPS) && TARGET_ABI_BITS == 32
++#define TARGET_ALIGNBYTES   (sizeof(abi_llong) - 1)
++#else
++#define TARGET_ALIGNBYTES   (sizeof(abi_long) - 1)
++#endif
++
++#define TARGET_CMSG_NXTHDR(mhdr, cmsg, cmsg_start) \
++                               __target_cmsg_nxthdr(mhdr, cmsg, cmsg_start)
++#define TARGET_CMSG_ALIGN(len) (((len) + TARGET_ALIGNBYTES) \
++                               & (size_t) ~TARGET_ALIGNBYTES)
++#define TARGET_CMSG_DATA(cmsg) \
++    ((unsigned char *)(cmsg) + TARGET_CMSG_ALIGN(sizeof(struct target_cmsghdr)))
++#define TARGET_CMSG_SPACE(len) \
++    (TARGET_CMSG_ALIGN(sizeof(struct target_cmsghdr)) + TARGET_CMSG_ALIGN(len))
++#define TARGET_CMSG_LEN(len) \
++    (TARGET_CMSG_ALIGN(sizeof(struct target_cmsghdr)) + (len))
++
++static inline struct target_cmsghdr *
++__target_cmsg_nxthdr(struct target_msghdr *__mhdr,
++                     struct target_cmsghdr *__cmsg,
++                     struct target_cmsghdr *__cmsg_start)
++{
++    struct target_cmsghdr *__ptr;
++
++    __ptr = (struct target_cmsghdr *)((unsigned char *) __cmsg +
++        TARGET_CMSG_ALIGN(tswap32(__cmsg->cmsg_len)));
++    if ((unsigned long)((char *)(__ptr + 1) - (char *)__cmsg_start) >
++        tswap32(__mhdr->msg_controllen)) {
++        /* No more entries.  */
++        return (struct target_cmsghdr *)0;
++    }
++    return __ptr;
++}
++
++/*
++ * netinet/in.h
++ */
++struct target_ip_mreq {
++    struct target_in_addr   imr_multiaddr;
++    struct target_in_addr   imr_interface;
++};
++
++struct target_ip_mreqn {
++    struct target_in_addr   imr_multiaddr;
++    struct target_in_addr   imr_address;
++    int32_t                 imr_ifindex;
++};
++
+ /*
+  * sys/stat.h
+  */
+@@ -434,6 +646,152 @@ struct target_freebsd_flock {
+ /* user: vfork(2) semantics, clear signals */
+ #define TARGET_RFSPAWN (1U << 31)
+ 
++/* sys/specialfd.h */
++enum target_specialfd_type {
++    TARGET_SPECIALFD_EVENT         = 1,
++};
++
++struct target_specialfd_eventfd {
++    unsigned int initval;
++    int flags;
++};
++
++/*
++ * FreeBSD thread and user mutex support.
++ */
++
++/* sys/thr.h */
++#define TARGET_THR_SUSPENDED    0x0001
++#define TARGET_THR_SYSTEM_SCOPE 0x0002
++
++struct target_freebsd_thr_param {
++    abi_ulong   start_func; /* thread entry function. */
++    abi_ulong   arg;        /* argument for entry function. */
++    abi_ulong   stack_base; /* stack base address. */
++    abi_ulong   stack_size; /* stack size. */
++    abi_ulong   tls_base;   /* tls base address. */
++    abi_ulong   tls_size;   /* tls size. */
++    abi_ulong   child_tid;  /* address to store new TID. */
++    abi_ulong   parent_tid; /* parent access the new TID here. */
++    int32_t     flags;      /* thread flags. */
++    abi_ulong   rtp;        /* Real-time scheduling priority. */
++    abi_ulong   spare[3];   /* spares. */
++};
++
++/* sys/rtprio.h */
++struct target_freebsd_rtprio {
++    uint16_t    type;
++    uint16_t    prio;
++};
++
++typedef struct {
++    CPUArchState *env;
++    long parent_tid;
++    pthread_mutex_t mutex;
++    pthread_cond_t cond;
++    pthread_t thread;
++    sigset_t sigmask;
++    struct target_freebsd_thr_param param;
++} new_freebsd_thread_info_t;
++
++/* sys/utmx.h */
++/* op code for _umtx_op */
++#define TARGET_UMTX_OP_LOCK                 0
++#define TARGET_UMTX_OP_UNLOCK               1
++#define TARGET_UMTX_OP_WAIT                 2
++#define TARGET_UMTX_OP_WAKE                 3
++#define TARGET_UMTX_OP_MUTEX_TRYLOCK        4
++#define TARGET_UMTX_OP_MUTEX_LOCK           5
++#define TARGET_UMTX_OP_MUTEX_UNLOCK         6
++#define TARGET_UMTX_OP_SET_CEILING          7
++#define TARGET_UMTX_OP_CV_WAIT              8
++#define TARGET_UMTX_OP_CV_SIGNAL            9
++#define TARGET_UMTX_OP_CV_BROADCAST         10
++#define TARGET_UMTX_OP_WAIT_UINT            11
++#define TARGET_UMTX_OP_RW_RDLOCK            12
++#define TARGET_UMTX_OP_RW_WRLOCK            13
++#define TARGET_UMTX_OP_RW_UNLOCK            14
++#define TARGET_UMTX_OP_WAIT_UINT_PRIVATE    15
++#define TARGET_UMTX_OP_WAKE_PRIVATE         16
++#define TARGET_UMTX_OP_MUTEX_WAIT           17
++#define TARGET_UMTX_OP_MUTEX_WAKE           18
++#define TARGET_UMTX_OP_SEM_WAIT             19
++#define TARGET_UMTX_OP_SEM_WAKE             20
++#define TARGET_UMTX_OP_NWAKE_PRIVATE        21
++#define TARGET_UMTX_OP_MUTEX_WAKE2          22
++#define TARGET_UMTX_OP_SEM2_WAIT            23
++#define TARGET_UMTX_OP_SEM2_WAKE            24
++#define TARGET_UMTX_OP_SHM                  25
++#define TARGET_UMTX_OP_ROBUST_LISTS         26
++
++/* flags for UMTX_OP_CV_WAIT */
++#define TARGET_CVWAIT_CHECK_UNPARKING       0x01
++#define TARGET_CVWAIT_ABSTIME               0x02
++#define TARGET_CVWAIT_CLOCKID               0x04
++
++#define TARGET_UMTX_UNOWNED                 0x0
++#define TARGET_UMUTEX_UNOWNED               0x0
++#define TARGET_UMTX_CONTESTED               (abi_ulong)(-1)
++#define TARGET_UMUTEX_CONTESTED             0x80000000U
++
++/* flags for umutex */
++#define TARGET_UMUTEX_ERROR_CHECK   0x0002  /* Error-checking mutex */
++#define TARGET_UMUTEX_PRIO_INHERIT  0x0004  /* Priority inherited mutex */
++#define TARGET_UMUTEX_PRIO_PROTECT  0x0008  /* Priority protect mutex */
++
++#define TARGET_UMUTEX_TRY           1
++#define TARGET_UMUTEX_WAIT          2
++
++/* urwlock flags */
++#define TARGET_URWLOCK_PREFER_READER    0x0002
++#define TARGET_URWLOCK_WRITE_OWNER      0x80000000U
++#define TARGET_URWLOCK_WRITE_WAITERS    0x40000000U
++#define TARGET_URWLOCK_READ_WAITERS     0x20000000U
++#define TARGET_URWLOCK_MAX_READERS      0x1fffffffU
++#define TARGET_URWLOCK_READER_COUNT(c)  ((c) & TARGET_URWLOCK_MAX_READERS)
++
++/*
++ * sys/acl.h
++ */
++#define TARGET_FREEBSD_ACL_MAX_ENTRIES          254
++
++/* vaild acl_type_t arguments */
++#define TARGET_FREEBSD_ACL_TYPE_ACCESS_OLD      0x00000000
++#define TARGET_FREEBSD_ACL_TYPE_DEFAULT_OLD     0x00000001
++#define TARGET_FREEBSD_ACL_TYPE_ACCESS          0x00000002
++#define TARGET_FREEBSD_ACL_TYPE_DEFAULT         0x00000003
++#define TARGET_FREEBSD_ACL_TYPE_NFS4            0x00000004
++
++struct target_freebsd_acl_entry {
++    uint32_t    ae_tag;
++    uint32_t    ae_id;
++    uint32_t    ae_perm;
++    uint16_t    ae_entry_type;
++    uint16_t    ae_flags;
++};
++
++struct target_freebsd_acl {
++    uint32_t            acl_maxcnt;
++    uint32_t            acl_cnt;
++    int32_t             acl_spare[4];
++    struct target_freebsd_acl_entry  acl_entry[TARGET_FREEBSD_ACL_MAX_ENTRIES];
++};
++
++/*
++ *  sys/uuid.h
++ */
++
++#define TARGET_UUID_NODE_LEN    6
++
++struct target_uuid {
++    uint32_t    time_low;
++    uint16_t    time_mid;
++    uint16_t    time_hi_and_version;
++    uint8_t     clock_seq_hi_and_reserved;
++    uint8_t     clock_seq_low;
++    uint8_t     node[TARGET_UUID_NODE_LEN];
++};
++
+ /*
+  * from sys/procctl.h
+  */
+@@ -475,21 +833,6 @@ struct target_procctl_reaper_kill {
+     uint32_t rk_pad0[15];
+ };
+ 
+-/*
+- * sys/uuid.h
+- */
+-#define TARGET_UUID_NODE_LEN    6
+-
+-struct target_uuid {
+-    uint32_t    time_low;
+-    uint16_t    time_mid;
+-    uint16_t    time_hi_and_version;
+-    uint8_t     clock_seq_hi_and_reserved;
+-    uint8_t     clock_seq_low;
+-    uint8_t     node[TARGET_UUID_NODE_LEN];
+-};
+-
+-
+ #define safe_syscall0(type, name) \
+ type safe_##name(void) \
+ { \
+@@ -537,22 +880,15 @@ type safe_##name(type1 arg1, type2 arg2, type3 arg3, type4 arg4, \
+     return safe_syscall(SYS_##name, arg1, arg2, arg3, arg4, arg5, arg6); \
+ }
+ 
+-/*
+- * sys/socket.h
+- */
+-struct target_sockaddr {
+-    uint8_t sa_len;
+-    uint8_t sa_family;
+-    uint8_t sa_data[14];
+-} QEMU_PACKED;
+-
+-struct target_in_addr {
+-    uint32_t s_addr; /* big endian */
+-};
+-
+ #define safe_ioctl(...) safe_syscall(SYS_ioctl, __VA_ARGS__)
+ #define safe_fcntl(...) safe_syscall(SYS_fcntl, __VA_ARGS__)
+ 
++struct target_pollfd {
++    int32_t fd;         /* file descriptor */
++    int16_t events;     /* requested events */
++    int16_t revents;    /* returned events */
++};
++
+ /* So far all target and host bitmasks are the same */
+ #undef  target_to_host_bitmask
+ #define target_to_host_bitmask(x, tbl) (x)
 
 -- 
 2.52.0
