@@ -4,96 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 434E8CD4F4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 20:33:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35EAECD343F
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 20:54:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP4dk-0008AS-LZ; Mon, 18 May 2026 16:32:40 -0400
+	id 1wP4yH-0002n4-Ls; Mon, 18 May 2026 16:53:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wP4df-00089k-JF
- for qemu-devel@nongnu.org; Mon, 18 May 2026 16:32:36 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wP4yG-0002mc-Bt
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 16:53:52 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wP4da-0005va-TT
- for qemu-devel@nongnu.org; Mon, 18 May 2026 16:32:32 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wP4yE-0006Ja-L4
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 16:53:52 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 52BE866D5A;
- Mon, 18 May 2026 20:32:27 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id CB2D464188;
+ Mon, 18 May 2026 20:53:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1779136348; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1779137629; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=XFTTCMIuOsMP6I25gXPZroz1t016hgDVyscXULnovqw=;
- b=aVeZRi9WWKOdDm6e+cLyaIxp5pc8D2rp4PKrnPZxh1AHjNsF7GygM09JqY37wuIU3m1cGk
- eTDk0dXNIaEQE03Ukmx5B/9HVU/iK8KOQRWMWAKOFYCl49P1dDINpxGwiZ2lQ8/am0F1uP
- fkoXDgeoamX9Pd3RcLFCViQNFI8S/hA=
+ bh=iFy1afwZ49iaQxrTI06bp2qGek5VGg2+6csG1O4bfHg=;
+ b=1KN7qHpvLKXwPxMqucKebKwJ4xo4MsJkLXqqpTBq+XQi5B+GfC+5qa5pVODUSQ0ovaaA/J
+ gKtgNv9CrXu9ZHh1FU0BSdztcuvZYDaeDQWUCHqGdl3Xz9fNoAJ/DrfFSRp6ImuEjtgKPG
+ XzVXExgoi3gdp3W0XHMosJaf+O/4EQ4=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1779136348;
+ s=susede2_ed25519; t=1779137629;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=XFTTCMIuOsMP6I25gXPZroz1t016hgDVyscXULnovqw=;
- b=QymXhrKaYEBN9JdYVYGSuXurjOo68sHJ42x872jT5QS+6PTqS/j7IwB7WQTZ/1Bx7GLjV4
- rnME7HfxrS2aTZCg==
-Authentication-Results: smtp-out2.suse.de;
-	none
+ bh=iFy1afwZ49iaQxrTI06bp2qGek5VGg2+6csG1O4bfHg=;
+ b=wxbGb2w+BAGwe2UhXJQ02lG8mGYaJ87V1aCtH/WRwQEI6/fXLEiFKKBYtcehVZQrFva3gi
+ fvV8E7NwYbQOKaCg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=cMkJcaUJ;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=aHQDmCrw
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1779136347; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1779137628; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=XFTTCMIuOsMP6I25gXPZroz1t016hgDVyscXULnovqw=;
- b=EDadOwMDkjgfk+rO0uwZt2sewiHv5OKZWhJJCsptpyMg2y+SyHN+G2SG98oDaBWj4LC+Vm
- vlOzFP0svSHLXpdgtY2b9sfeXoTL158xbnEe0+42YfMC8IaDf9ecQbANoncPJcnI9FbILk
- 0mz3pQyqc82D9AbE9iErVwnRl3gyd0w=
+ bh=iFy1afwZ49iaQxrTI06bp2qGek5VGg2+6csG1O4bfHg=;
+ b=cMkJcaUJLgfUyroECWlu591IKcNzOfHfpxi+4GHb6ny7w25lJ0KNJZDipwUBmoCdaXtjGD
+ 9iPzFGS9D+8xcwfmAc8LrF/87rSEM+1IKOSlYSCk+YYonZ1dPfdE89fxh7o+HiUEfklODq
+ M99+EtiP0ogZOzPrCujiqEWww89wYNg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1779136347;
+ s=susede2_ed25519; t=1779137628;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=XFTTCMIuOsMP6I25gXPZroz1t016hgDVyscXULnovqw=;
- b=ht1ajq+ps1tZXmIumT+gpqqdnDM0XTmnm/Z3Sywtc/Y0xr2NDdbJu/SZn3uvJ2zw/p453o
- 3bKMgnVaIDUVNLDQ==
+ bh=iFy1afwZ49iaQxrTI06bp2qGek5VGg2+6csG1O4bfHg=;
+ b=aHQDmCrwFzttauoQVC0MAO84WrFiMbVMaspuVP61MOGZZm//VXh7jxcFQktA6ydkXS1hdk
+ QBz5KwvRQaVv72Dg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E862F593A8;
- Mon, 18 May 2026 20:32:26 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6BBDC593A8;
+ Mon, 18 May 2026 20:53:48 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id WVrYLVp3C2qhYwAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 18 May 2026 20:32:26 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id iXRvD1x8C2oWeAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 18 May 2026 20:53:48 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Bin Guo <guobin@linux.alibaba.com>, qemu-devel@nongnu.org
 Cc: peterx@redhat.com
-Subject: Re: [PATCH 2/8] migration/global_state: replace strcpy("") with
- explicit NUL termination
-In-Reply-To: <20260518110112.21395-3-guobin@linux.alibaba.com>
+Subject: Re: [PATCH 4/8] migration/savevm: use stack-allocated bitmap in
+ configuration_validate_capabilities
+In-Reply-To: <20260518110112.21395-5-guobin@linux.alibaba.com>
 References: <20260518110112.21395-1-guobin@linux.alibaba.com>
- <20260518110112.21395-3-guobin@linux.alibaba.com>
-Date: Mon, 18 May 2026 17:32:24 -0300
-Message-ID: <875x4k4fxj.fsf@suse.de>
+ <20260518110112.21395-5-guobin@linux.alibaba.com>
+Date: Mon, 18 May 2026 17:53:45 -0300
+Message-ID: <8733zo4exy.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
  MID_RHS_MATCH_FROM(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:mid,
- imap1.dmz-prg2.suse.org:helo, alibaba.com:email]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,suse.de:mid];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: CB2D464188
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -118,27 +126,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Bin Guo <guobin@linux.alibaba.com> writes:
 
-> Drop the unnecessary strcpy of an empty literal (and its spurious
-> (char *)& cast) in favor of a direct NUL store, which avoids the
-> libc call and hides no bugs behind a cast.
+> configuration_validate_capabilities() allocates a bitmap on the heap
+> to track source capabilities via bitmap_new()/g_free().  Since
+> MIGRATION_CAPABILITY__MAX is a small compile-time constant (< 64),
+> a heap allocation for a bitmap this small is wasteful: it adds
+> malloc/free overhead and a potential cache miss for a transient
+> 8-byte allocation.
+>
+> Replace with DECLARE_BITMAP() on the stack and bitmap_zero() to
+> initialize.  This eliminates the heap round-trip entirely.
 >
 > Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 > ---
->  migration/global_state.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  migration/savevm.c | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
 >
-> diff --git a/migration/global_state.c b/migration/global_state.c
-> index c1f90fce0f..91fefdf525 100644
-> --- a/migration/global_state.c
-> +++ b/migration/global_state.c
-> @@ -148,7 +148,7 @@ static const VMStateDescription vmstate_globalstate = {
->  void register_global_state(void)
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index d1dd696c17..23adaf9dd9 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -347,10 +347,10 @@ static bool configuration_validate_capabilities(SaveState *state)
 >  {
->      /* We would use it independently that we receive it */
-> -    strcpy((char *)&global_state.runstate, "");
-> +    global_state.runstate[0] = '\0';
->      global_state.received = false;
->      vmstate_register(NULL, 0, &vmstate_globalstate, &global_state);
+>      bool ret = true;
+>      MigrationState *s = migrate_get_current();
+> -    unsigned long *source_caps_bm;
+> +    DECLARE_BITMAP(source_caps_bm, MIGRATION_CAPABILITY__MAX);
+>      int i;
+>  
+> -    source_caps_bm = bitmap_new(MIGRATION_CAPABILITY__MAX);
+> +    bitmap_zero(source_caps_bm, MIGRATION_CAPABILITY__MAX);
+>      for (i = 0; i < state->caps_count; i++) {
+>          MigrationCapability capability = state->capabilities[i];
+>          set_bit(capability, source_caps_bm);
+> @@ -373,7 +373,6 @@ static bool configuration_validate_capabilities(SaveState *state)
+>          }
+>      }
+>  
+> -    g_free(source_caps_bm);
+>      return ret;
 >  }
 
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
