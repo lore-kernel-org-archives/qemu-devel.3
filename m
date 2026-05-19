@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9998ACD4F5B
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 17:49:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C70CCD4F5B
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 17:50:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPOYv-0004hw-B0; Tue, 19 May 2026 13:49:01 -0400
+	id 1wPOYy-0004nQ-KG; Tue, 19 May 2026 13:49:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <williamdapinho@gmail.com>)
- id 1wPOYk-0004fg-Jw
- for qemu-devel@nongnu.org; Tue, 19 May 2026 13:48:52 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1wPOYn-0004gG-LA
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 13:48:55 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <williamdapinho@gmail.com>)
- id 1wPOYi-0008Mz-Oo
- for qemu-devel@nongnu.org; Tue, 19 May 2026 13:48:50 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4896c22fcbaso32879445e9.0
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 10:48:48 -0700 (PDT)
+ id 1wPOYj-0008N4-WE
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 13:48:51 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-44509921fbcso2433766f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 10:48:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779212927; x=1779817727; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=/SBLz/jBkK5JwJeAidAiyw3zmoon26oOp3vH5EZYXkU=;
- b=RP9BlRBqBsZvNSFFh3oOyT5oHk7F7lI8oraIKZ7tZ6k/bFLMEwpr3xoHpo2lHbQVIK
- i5uYVNtbkOAd4IceklrNs+26Bxk+yIVDGcTms8vc11JfLtKWdM1rZ0K/rk1hqTb60ofh
- r3Yfx26q5+p7o0sIPkTl7bcVMIFv2zvecpVggDjy1MkwoWQyNdz4N8GbJERAGJ2a64Qy
- caIvCCwZkynttngqP3sYgIi+px8H56DI48atii9SGBtiOya2wwVAjKoBn0J1+LU7r9dq
- fa7VvEg2DpFk5QST4lZSxAT9IVNnEf81yjJOfH1+qdtoFmJAw4nkxMAfGv/V0nVxa3zt
- ljbg==
+ d=gmail.com; s=20251104; t=1779212928; x=1779817728; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=a9auS0agNGpEVN2f018I0hCwEtLQPozZwovzvL21kwo=;
+ b=qb/MKKe+5hlbobvrV83JEDXLfndIl7b+G5wHN7t9QNMzxB8ZBWQG2vNox7VjRBfSYt
+ 42dR3GO4jRvibS2MVgiPjw/J9/Ks8nM4kN2qCT7Md/bznkki8h4vmB007aacvL3jx+hK
+ 5kIVr2iFrKnCpb/NAnJPjVUc1F0+ZnazC9f9i/qjIx8kXn2QrcJ+e1udTQqIZd6ovmPK
+ q7Xn/EQYi7msVJMUpiALhCgIakZYvD+Ypa52f9jRKSMjTuKgVhdSCg6DIOSsVG4x3DJe
+ Wmukky6mzUBZHEm0OZyM7tGI6wqoGglLyDR1exw4S63xfYMqVyjF6arGz14Oi5F1pd9g
+ iTew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779212927; x=1779817727;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/SBLz/jBkK5JwJeAidAiyw3zmoon26oOp3vH5EZYXkU=;
- b=HvHR5zZ8eLOGwxwqsVaOnXZ3e/SlzFVXvNx6RrOY8fuNRr6kis9MQ89SCfd/T4o2nz
- ESm0nAKGasTPgl5bZK0LWRRGyqeaBBXUNZVKVe1g9jEVes7Z6n/7iROnrfmtNcaffU3m
- NR+zJjSjBFhF4PgNLJ1HD2Ejmgud7ejJWuDU1IqpP7zGduOYgGJcvb/jt8yIBi1GbdOL
- tdcOZDep6bhysiZsQiTxlefTiLVhYXl0J1L7FayMl3JcT6RUEvoROx4EPEm/BEFjcOPy
- pe4vH7+zue8JmewBCsvIBI0mRmbza9LlcaQDppMPwMgdyxnXAlAW/Aug6L5YDoEZZPid
- LA5Q==
-X-Gm-Message-State: AOJu0YyuBLGpeVjeQryDFTIj4wUsvUOO3ef5tsF6SPRQMeO9V/+56Wpu
- X0kF0TlYs36j2QMfCcS5QT1lTP1gGtxQChfVTCzDfiyOpbK9h3/9oKTW
-X-Gm-Gg: Acq92OF/iYYajkL+WDieoJe57HhaMv0BLd0L+JtBTjNGqUqPJBS89pFoSHFGXmHJieE
- iP9YvMtwFtsiK/JEuVj1Lxf7+18TUZwPKPTMFcUaemtPYa8k/Wpl8FPipUKdcyyXbEf7SJGPGBn
- 1nbmiGnQAkyPx1ZGIa9lqI45g9Q+B3ps2GAT/XwVV7na7Ga1LKr9eIZUOtP58lohWVZrk/sMH3T
- vHsn5+JPFc1CuoDwUn1cfFstbvdLVKkKxT/4OV4gdeIRjZw6EdU3Dfu0yyNM8LvnAFZW+wS7eXY
- ru04+lGLQoT+8fCAWCtPz2EUlGjW3bfupCmgBFGeYLgQgolnOl/8G0KSTUS/QPJ1E/iwrVEEWbO
- mrAP/IG4a/KQGasp9K4UJfmLc2NVRb4gebd26mOa6JHP9VsfomK7j6qWkzxxpEkbEDCZj685wtm
- NzJ+pc0JeRlwaMoO3m7bm5UMsrI1Sv05mf
-X-Received: by 2002:a05:600c:a30a:b0:48a:568f:ae8a with SMTP id
- 5b1f17b1804b1-48fe5fda35fmr246912045e9.8.1779212926714; 
- Tue, 19 May 2026 10:48:46 -0700 (PDT)
-Received: from localhost ([2a03:2880:30ff:4::])
+ d=1e100.net; s=20251104; t=1779212928; x=1779817728;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=a9auS0agNGpEVN2f018I0hCwEtLQPozZwovzvL21kwo=;
+ b=p0b2FvCkTFJfC3Ox1hRGuVpQXzNON2sOZlUqm35ugwJ0MeC8Zkpi2KjJ2/IhmjVgjJ
+ o+3Y7IU4SnWMyiajfTdx8EoEEtxJjJciKsmw4RexdzDMoSHc89GhDmMF9+2xAd1JxGfi
+ 0kZ8+7OD1QWlsolQhMZocaCwr3ngGjkvNu/J3XkeYd8Un1JnNIW6qKHufqFHjMTMY8yi
+ dsH0x8jtrVJj+N9tHK+6Gz5UBtxph8o5mv8h2ORge/rkRyD0JfD/LANWLnKyGYa6VuNJ
+ wz/EOkPLHrEOTB3Ff7KKVuVxGZpQU5hfevxtSCgggrwqxW/o4HHmoYeXG2jIldQjCX3G
+ h1vg==
+X-Gm-Message-State: AOJu0YyNoqxndE4DAp1F/aQVYtpGV5SPORn1gDL029QvoD3PIwe87r/t
+ ZifbOJkXvqepzv/wmXbUmBOTmrFmbd94aH56FqGV8kZmCjFI5lTsR9PM
+X-Gm-Gg: Acq92OHjfEBtinZaMIKSm0YBpfPsgaM2kEbD2ArfDxv2RKP0gsqotgMRMdMsthUZinU
+ 42+icOltdSwH4tHei/t0nXjgToiwSFiKb/lYxx7p3FGtv8kan4Shdxndvt7IzaO2JeA+50GeBqT
+ oKFyDK8LC74TBXaVSTAFMpPZ1W6Ey5c6qq+Td7jQxEOzeNlpQuEhDJc8HotdSllz0Ub8jxcPgOw
+ cKdtkwQom0taHfGo7ftnXyCxEm/GZAV5exZJkOCifVrpjx/zjwaVOQ+a+5W6pZqkzXmIKczXgPC
+ +NQAFXKuh/dVB7VntYynP7HNKYNoLd7fESXs+phGlIqwj/K9ppv+6GhZ7QKFMjeoMUQ/xxH2Yhb
+ GLiHJ6Dmp8bnlJaIrlOg7CaAD74RyoEQpU1D0/Q2H+Hxrmwuj9iS5YOiPiLODi1GaYwElubDBOs
+ Tryey7JX5Vk5LW6pe1Ij7oTBNa8sh4swRx
+X-Received: by 2002:a05:6000:2584:b0:43d:7783:c684 with SMTP id
+ ffacd0b85a97d-45e5c5e6d3dmr33720709f8f.43.1779212927926; 
+ Tue, 19 May 2026 10:48:47 -0700 (PDT)
+Received: from localhost ([2a03:2880:30ff:1::])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fea52a0bfsm174471855e9.0.2026.05.19.10.48.46
+ ffacd0b85a97d-45d9adc2209sm43965414f8f.0.2026.05.19.10.48.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 May 2026 10:48:46 -0700 (PDT)
+ Tue, 19 May 2026 10:48:47 -0700 (PDT)
 From: William de Abreu Pinho <williamdapinho@gmail.com>
-Subject: [PATCH v3 0/3] hw/arm/aspeed: add anacapa-bmc machine
-Date: Tue, 19 May 2026 10:48:37 -0700
-Message-Id: <20260519-add-anacapa-machine-v3-0-56c23993a20a@gmail.com>
+Date: Tue, 19 May 2026 10:48:38 -0700
+Subject: [PATCH v3 1/3] tests/functional/aspeed: introduce FacebookAspeedTest
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAHWiDGoC/23OwQqDMAyA4VeRnpfRdtrOnfYeY4fYVg3MKu0oG
- +K7rwoDDx7/QL5kZtEFcpHdipkFlyjS6HNcTgUzPfrOAdncTHKpeCUEoLWAHg1OCAOanrwD02q
- uFTYcW2R5cwqupc+mPp65e4rvMXy3I0ms079XHXpJAIdaq8o43tSlVPduQHqdzTiw1Utyb9THh
- sxGqbnUV6Vt/m5vLMvyA+/pFR36AAAA
+Message-Id: <20260519-add-anacapa-machine-v3-1-56c23993a20a@gmail.com>
+References: <20260519-add-anacapa-machine-v3-0-56c23993a20a@gmail.com>
+In-Reply-To: <20260519-add-anacapa-machine-v3-0-56c23993a20a@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
  Peter Maydell <peter.maydell@linaro.org>, 
@@ -84,8 +82,8 @@ Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
  William de Abreu Pinho <williamdapinho@gmail.com>, 
  =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 X-Mailer: b4 0.13.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=williamdapinho@gmail.com; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=williamdapinho@gmail.com; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,54 +106,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series adds support for the Anacapa machine type.  The first patch
-introduces FacebookAspeedTest and updates the existing Facebook machine
-tests.  The second patch adds the machine model and functional tests.
-The third patch adds the FRU EEPROM contents.
+Facebook OpenBMC Images include an early script [1] that lowers the
+console log level to warning.  This suppresses the "Hostname set to"
+message from the serial console.  Introduce FacebookAspeedTest (a
+subclass of AspeedTest), that waits for login prompt instead.  Update
+bletchley-bmc and catalina-bmc to use the new class.
 
-To: qemu-devel@nongnu.org
-Cc: Cédric Le Goater <clg@kaod.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Cc: Steven Lee <steven_lee@aspeedtech.com>
-Cc: Troy Lee <leetroy@gmail.com>
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>
-Cc: Kane Chen <kane_chen@aspeedtech.com>
-Cc: Andrew Jeffery <andrew@codeconstruct.com.au>
-Cc: Joel Stanley <joel@jms.id.au>
-Cc: qemu-arm@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+This is also used by the anacapa-bmc machine introduced in the following
+patch.
 
-Changes in v3:
-- Update docs/system/arm/aspeed.rst to add anacapa-bmc (suggested by
-  Cédric Le Goater)
-- Link to v2: https://lore.kernel.org/qemu-devel/20260519-add-anacapa-machine-v2-0-47027867d76a@gmail.com
+[1]: https://github.com/openbmc/openbmc/blob/6a56a45931fb7015a3fc18553415909105b484d6/meta-facebook/recipes-phosphor/initrdscripts/phosphor-static-norootfs-init/999-reduce-printk
 
-Changes in v2:
-- Split the functional test (FacebookAspeedTest) into a separate patch,
-  also updating bletchley-bmc and catalina-bmc to use it.
-- Link to v1: https://lore.kernel.org/qemu-devel/20260515-add-anacapa-machine-v1-0-9765ce0b9426@gmail.com
-
+Signed-off-by: William de Abreu Pinho <williamdapinho@gmail.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
-William de Abreu Pinho (3):
-      tests/functional/aspeed: introduce FacebookAspeedTest
-      hw/arm/aspeed: add anacapa-bmc machine
-      hw/arm/aspeed: anacapa: add FRU EEPROM data
+ tests/functional/arm/test_aspeed_bletchley.py | 6 +++---
+ tests/functional/arm/test_aspeed_catalina.py  | 6 +++---
+ tests/functional/aspeed.py                    | 8 ++++++++
+ 3 files changed, 14 insertions(+), 6 deletions(-)
 
- docs/system/arm/aspeed.rst                    |   3 +-
- hw/arm/aspeed_ast2600_anacapa.c               | 362 ++++++++++++++++++++++++++
- hw/arm/meson.build                            |   1 +
- tests/functional/arm/meson.build              |   2 +
- tests/functional/arm/test_aspeed_anacapa.py   |  25 ++
- tests/functional/arm/test_aspeed_bletchley.py |   6 +-
- tests/functional/arm/test_aspeed_catalina.py  |   6 +-
- tests/functional/aspeed.py                    |   8 +
- 8 files changed, 406 insertions(+), 7 deletions(-)
----
-base-commit: ee7eb612be8f8886d48c1d0c1f1c65e495138f83
-change-id: 20260511-add-anacapa-machine-cf7076ab0afa
+diff --git a/tests/functional/arm/test_aspeed_bletchley.py b/tests/functional/arm/test_aspeed_bletchley.py
+index 5a60b24b3d..3000d0c302 100755
+--- a/tests/functional/arm/test_aspeed_bletchley.py
++++ b/tests/functional/arm/test_aspeed_bletchley.py
+@@ -5,10 +5,10 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ from qemu_test import Asset
+-from aspeed import AspeedTest
++from aspeed import FacebookAspeedTest
+ 
+ 
+-class BletchleyMachine(AspeedTest):
++class BletchleyMachine(FacebookAspeedTest):
+ 
+     ASSET_BLETCHLEY_FLASH = Asset(
+         'https://github.com/legoater/qemu-aspeed-boot/raw/master/images/bletchley-bmc/openbmc-20250128071329/obmc-phosphor-image-bletchley-20250128071329.static.mtd.xz',
+@@ -22,4 +22,4 @@ def test_arm_ast2600_bletchley_openbmc(self):
+                                         soc='AST2600 rev A3')
+ 
+ if __name__ == '__main__':
+-    AspeedTest.main()
++    FacebookAspeedTest.main()
+diff --git a/tests/functional/arm/test_aspeed_catalina.py b/tests/functional/arm/test_aspeed_catalina.py
+index dc2f24e7b4..2694e4b005 100755
+--- a/tests/functional/arm/test_aspeed_catalina.py
++++ b/tests/functional/arm/test_aspeed_catalina.py
+@@ -5,10 +5,10 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ from qemu_test import Asset
+-from aspeed import AspeedTest
++from aspeed import FacebookAspeedTest
+ 
+ 
+-class CatalinaMachine(AspeedTest):
++class CatalinaMachine(FacebookAspeedTest):
+ 
+     ASSET_CATALINA_FLASH = Asset(
+         'https://github.com/legoater/qemu-aspeed-boot/raw/a866feb5ef81245b4827a214584bf6bcc72939f6/images/catalina-bmc/obmc-phosphor-image-catalina-20250619123021.static.mtd.xz',
+@@ -22,4 +22,4 @@ def test_arm_ast2600_catalina_openbmc(self):
+                                         soc='AST2600 rev A3')
+ 
+ if __name__ == '__main__':
+-    AspeedTest.main()
++    FacebookAspeedTest.main()
+diff --git a/tests/functional/aspeed.py b/tests/functional/aspeed.py
+index 47e84e035b..88b6590934 100644
+--- a/tests/functional/aspeed.py
++++ b/tests/functional/aspeed.py
+@@ -28,6 +28,9 @@ def do_test_arm_aspeed_openbmc(self, machine, image, uboot='2019.04',
+         self.wait_for_console_pattern(f'Booting Linux on physical CPU {cpu_id}')
+         self.wait_for_console_pattern(f'ASPEED {soc}')
+         self.wait_for_console_pattern('/init as init process')
++        self.wait_for_boot_complete(hostname)
++
++    def wait_for_boot_complete(self, hostname):
+         self.wait_for_console_pattern(f'systemd[1]: Hostname set to <{hostname}>.')
+ 
+     def do_test_arm_aspeed_buildroot_start(self, image, cpu_id, pattern='Aspeed EVB'):
+@@ -69,3 +72,8 @@ def generate_otpmem_image(self):
+             f.write(pattern)
+         return path
+ 
++
++class FacebookAspeedTest(AspeedTest):
++
++    def wait_for_boot_complete(self, hostname):
++        self.wait_for_console_pattern(f'{hostname} login:')
 
-Best regards,
 -- 
-William de Abreu Pinho <williamdapinho@gmail.com>
+2.53.0-Meta
 
 
