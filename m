@@ -4,94 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 341F0CD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 12:16:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59725CD4F5B
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 12:37:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPJMM-0006A8-K2; Tue, 19 May 2026 08:15:42 -0400
+	id 1wPJgk-0002GZ-Sj; Tue, 19 May 2026 08:36:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wPJMK-00069a-Qp
- for qemu-devel@nongnu.org; Tue, 19 May 2026 08:15:40 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1wPJgi-0002GL-V8
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 08:36:45 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wPJMJ-0004hp-0x
- for qemu-devel@nongnu.org; Tue, 19 May 2026 08:15:40 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4890d945eb4so24139165e9.0
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 05:15:38 -0700 (PDT)
+ id 1wPJgg-0007re-Vt
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 08:36:44 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-44ce78ab5feso2952138f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 05:36:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779192937; x=1779797737; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779194201; x=1779799001; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=w2NQjIjyumK2mXUiLmWfCFhx1hgkbPYL7k4RdOc49DU=;
- b=Eq8jLyuE83Q6thM63MlzCW7VmEpbr6kSQdsBaaVNmwN7J/mxE+0pr1djdBv+c+wbVc
- tNRGCvVLWtWZ0GN1tgTXJ1FFTz2hxYrov9gs7JRSP8hf0o+G1CWZf96AyjbnN+jKzvBi
- chrojKzWOcLdtI3VdVeEdFHoVxqDVSOJdRoGYST50tzFITRYple1FbRtcDWefcRPZvpO
- pOONwErVcLuDkl/IVabn9xsNcoGH6j/Rl4A92xfya0ODE/T/vMeZiGvAJK0i8JA8ExTF
- c5+tLUDVV/HUPAXqps8+hzML2yAKrKZgAZ59xsxyW/x2JxxVNUr/u/ncVwEgxPcA5/CY
- iTlQ==
+ bh=wRTnoBxN0lbRbmFFTzOCk04MZRCz5mKr5D6NYiZN+j4=;
+ b=iAdAxxcy2MZWw+u27pqcRup33I9HA/s/ttgjG6b6vaz8/hrYe9rgsSyXXIbz3gjSMX
+ ipCJeBxrazmi/HoL+DV2Vnqww7CqSsS77iomVBHYXr5qSoktJu9si8+1qXVHeKsSValS
+ q6EgF61z0HDFH/zJhWr0hIRg2L5ipsFN90wzPs55dNw95sUnZyu2iCEE/FsFhgWBY3WU
+ Qs2qubg0Qr7xVImGlC5cSYjefBvRhMKgPAiWldusLBCH9k7o+SgT1MnfL8jjABN1TCdp
+ ycEQxMh4PxIURGV6YFlcSTXJkcs4PkLMo9maVa2xFYc+ndfJd944WIALNDBIBTwWMAWs
+ NKzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779192937; x=1779797737;
+ d=1e100.net; s=20251104; t=1779194201; x=1779799001;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=w2NQjIjyumK2mXUiLmWfCFhx1hgkbPYL7k4RdOc49DU=;
- b=lnj+5w+mBPfcYIp5DvZxXlGMFImHpQk8ICZqqP3FwK8TJy5g+mv3yXzGoQMmGOdJrE
- 3v3eCLHo1Fz0WE97uZ+ODmshfc+jOmUnSnu3PbEOLm8GURG9a1pAwvYsQpLEt+WGgDgn
- 73i9XRghF4lqU/+FTwAFdMzsP6kcdG3eZHbFn0TbgqpjyWhUVBw9j6YhbVeo7kpe+A4X
- TcNRY0Fm5+Jlsi9fI5d9jiPr/BdJy3PqmGLMd3knjLqvT+M6Gc9NnWSwoXicxUttkash
- vUp5q/Le6e5P8ZhV4DkRqAMwxXTsbD7a6ANIogBlRvgXd+CWAjm01lhCHvHsYsCa4jbM
- RfhA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+VRR2+OzjqvdVOVR0gbIQeeOWwiPIYqXe0ZTrloqcypVNPYDq9paZMgIMxqkr9BUinDRRHL7dBhtGa@nongnu.org
-X-Gm-Message-State: AOJu0Yyx3E85JohIpb48WMpgo2aD3jMkGpMnmAObsQSHv5tJj7JYH4fa
- /cqt4/NWd6ggarJSR/P0U1e/+B2khRoKI7sqLRAJLUQoxmBp768bw0LwhE5ho0CqX3s=
-X-Gm-Gg: Acq92OHRqmokk6BhgkPe1Egyd2ytIpSUhmI0FHKmYvDsze30A0afIDTSruORa6D2Qpg
- 77ErABifbRbkdn8oCiUk8AmFIkLY9iQHyr2+68r4hu6qaEcVVSAs1PcL2yApxyqrwgxdLkzWDki
- u2BWZYxaVH966f/eLPp9oqSJbhi/aCk0+BaZiC6fx2mzNTXymdd/qhMbvBpJCjnzDzJhwitiym/
- FqpldvQXhGkQxj/lA2sXGBdnhPa4SXrhRoAd/0ouv5BTFWvnhJRJT6Xj3iXCETHWzmEcLzBvCYq
- heaClQcvhc5HMJMdrLgijAfrPXML3Yk2JVd6sP+3IgxtLOZFJaR+YpU53dsoZj7meVv8rF4wLuP
- vwolWaUWMvk2QXj0o4VW/hiJnwKLfpXfMl7i1k1DIyq3fIgiZAa29hrNdsILI0/40z9zwcvPsdR
- B52u8mklYr2aNUuJnKq9RNszQ=
-X-Received: by 2002:a05:600c:609b:b0:485:3c2e:60d5 with SMTP id
- 5b1f17b1804b1-48fe4cadfeemr292665445e9.2.1779192936657; 
- Tue, 19 May 2026 05:15:36 -0700 (PDT)
+ bh=wRTnoBxN0lbRbmFFTzOCk04MZRCz5mKr5D6NYiZN+j4=;
+ b=S7KHrWO3RdmopcpHu2Ew/NwnQskk53ZFWkUF6n8RxBnt3+47/t/r3YQrniFZv1/9KG
+ hfn6KiAm0AfZAspWqyUex9v2uswNF8/n70hqG1HavvoNkdbet28sgPfTflDjldFLtZ8z
+ iLyKbeLwh3ETmhJo1eR0EgdEaqj/ViOr1dBvX59PndNqKpI2SFggF8QRJDaKO+Y3PnMi
+ dCN0dWJcfVjcJJ6yg56xxMYmSWZAkoDy3LiqDiT8D0D6F0aSntlI3p2FoiHPm9XUTvti
+ nf8Gs0u8oUkHk+1EBbhmaIWzYCgYcXPvLPuo+OItZbHIMRbOolZI5CRGklKiRZeAcx91
+ GehA==
+X-Gm-Message-State: AOJu0YxUkrQWGbIx+SNKHguDQP7OZqzwnh/Pa/MPteqOgDm4x0pVeR9+
+ A2M0nM+Pz6WqmzRHhtuOyhHjYlzREOw5tGj+uiLApttMNAkX57DTtpJ739xqaSbSJ10=
+X-Gm-Gg: Acq92OGX0dVZkxmJF4qVRMycHKiOEZf5Z4BDuNQuyREIe3iEZKMlMe0fORJdwN/c6bn
+ UtV06ctyxUBhU80dXNi6r/7AUIN7q8v+3kDZzyNl4rVg1aaA4+IRq/mpUPYq4p3k84bSP4PHnnT
+ kMfAuaLXyzeL7GNr9hC2r5PnZTCOZK3109Njb6L2mQWEqH8ceYhzw+Jd/zc6YPCRD+b8720NxoD
+ nPltVDg4FHUNw0B7A6Xst7obebdEmHDRy/uh4MKnbc764wNczfpB/DTySIhAHR1xZa/5FS5Kz06
+ G1LSDGXY6fcQdD47bO+UQU1rH7L/FiwT1CIGseymtelIYdGObRqewFyBitmpETrnQw8pAoiX/30
+ 1JGmyKXpI2AKpaTb7I09SrbdzdKNrHfPJJvCLtApmWMuJs7bDN+u1O//nnTc5zjPFFjpV/464CA
+ eIove0UlgPGAbtkfshE6JUJc2USf7R1O4IUA==
+X-Received: by 2002:a05:6000:401e:b0:449:c5e2:a8b7 with SMTP id
+ ffacd0b85a97d-45e5c59ec1cmr30434333f8f.30.1779194200738; 
+ Tue, 19 May 2026 05:36:40 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48feaa2949asm153832375e9.1.2026.05.19.05.15.34
+ ffacd0b85a97d-45da0fe1a41sm49377493f8f.31.2026.05.19.05.36.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 May 2026 05:15:35 -0700 (PDT)
+ Tue, 19 May 2026 05:36:40 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E2BAB5F81D;
- Tue, 19 May 2026 13:15:33 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id B21925F81D;
+ Tue, 19 May 2026 13:36:38 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  qemu-devel@nongnu.org,  qemu-trivial@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,  Cornelia Huck
- <cohuck@redhat.com>,  qemu-s390x <qemu-s390x@nongnu.org>
-Subject: Re: [PATCH] system/rtc: Fix a possible year-2038 integer overflow
- problem
-In-Reply-To: <b70b35ef-1761-4624-9f98-7c1ae161ed9a@redhat.com> (Thomas Huth's
- message of "Tue, 19 May 2026 11:26:15 +0200")
-References: <20260518160255.1844308-1-thuth@redhat.com>
- <ags5_IDkvxClCdHm@redhat.com> <ags7xIsUG2DqX5vu@redhat.com>
- <dbc6464c-2685-46c4-803c-6af53d345083@linaro.org>
- <c9fa27e3-0939-4490-b350-7a625ebcdcdb@redhat.com>
- <b70b35ef-1761-4624-9f98-7c1ae161ed9a@redhat.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org,  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH v2 0/2] virtio-gpu: Do not wait for the main thread
+ during reset
+In-Reply-To: <aeeb9f81-3dd8-4fea-83ae-7d88ec1be971@rsg.ci.i.u-tokyo.ac.jp>
+ (Akihiko Odaki's message of "Tue, 19 May 2026 15:29:28 +0900")
+References: <20260424-gpu-v2-0-9fd2fc0dd1bd@rsg.ci.i.u-tokyo.ac.jp>
+ <87mrxwcxzd.fsf@draig.linaro.org>
+ <aeeb9f81-3dd8-4fea-83ae-7d88ec1be971@rsg.ci.i.u-tokyo.ac.jp>
 User-Agent: mu4e 1.14.1; emacs 30.1
-Date: Tue, 19 May 2026 13:15:33 +0100
-Message-ID: <87mrxvbnoa.fsf@draig.linaro.org>
+Date: Tue, 19 May 2026 13:36:38 +0100
+Message-ID: <87h5o3bmp5.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,92 +107,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> writes:
 
-> On 19/05/2026 11.18, Thomas Huth wrote:
->> On 19/05/2026 10.24, Philippe Mathieu-Daud=C3=A9 wrote:
->>> On 18/5/26 18:18, Daniel P. Berrang=C3=A9 wrote:
->>>> On Mon, May 18, 2026 at 05:10:36PM +0100, Daniel P. Berrang=C3=A9 wrot=
-e:
->>>>> On Mon, May 18, 2026 at 06:02:55PM +0200, Thomas Huth wrote:
->>>>>> From: Thomas Huth <thuth@redhat.com>
->>>>>>
->>>>>> rtc_realtime_clock_offset is initialized with:
->>>>>>
->>>>>> =C2=A0=C2=A0 rtc_realtime_clock_offset =3D
->>>>>> qemu_clock_get_ms(QEMU_CLOCK_REALTIME) / 1000;
->>>>>>
->>>>>> And QEMU_CLOCK_REALTIME might be based on gettimeofday() in certain
->>>>>> cases (see get_clock_realtime() in include/qemu/timer.h). So this
->>>>>> counter will exceed 32 bits in the year 2038, thus we should not
->>>>>> store this value in a normal integer variable. Change it to an int64=
-_t
->>>>>> to fix the problem.
->>>>>> And while we're at it, also adjust the nearby rtc_host_datetime_offs=
-et
->>>>>> variable to be on the safe side in the related code.
->>>>>>
->>>>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
->>>>>> ---
->>>>>> =C2=A0 system/rtc.c | 4 ++--
->>>>>> =C2=A0 1 file changed, 2 insertions(+), 2 deletions(-)
->>>>>
->>>>> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->>>>
->>>> Actually on second reading I think this patch is not quite right.
->>>> The code which uses the value is:
->>>>
->>>> =C2=A0=C2=A0=C2=A0=C2=A0 time_t value =3D qemu_clock_get_ms(clock) / 1=
-000;
->>>> =C2=A0=C2=A0=C2=A0=C2=A0 switch (clock) {
->>>> =C2=A0=C2=A0=C2=A0=C2=A0 case QEMU_CLOCK_REALTIME:
->>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 value -=3D rtc_realti=
-me_clock_offset;
->>>>
->>>>
->>>> On 64-bit platforms 'int' was 64-bit already and so was time_t so we
->>>> have no bug to fix.
->>>>
->>>> On 32-bit platforms the patch fixes 'int' to 'int64' which is fine
->>>> but that int64 value is then subtracted from time_t which is usually
->>>> going to be 32-bit again, unless the OS was built with 64-bit time_t
->>>> on 32-bit which almost no one does.
->>>>
->>>> IOW we only platform this fixes is 32-bit OS with 64-bit time_t.
->>>
->>> "32-bit *host* OS".
->>>
->>> Per ./configure script, we still allow:
->>> - x86_64 x32 ABI=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (CPU_CFLAGS=3D"-mx32")
->> We should maybe deprecate that x32 ABI ...
+> On 2026/05/19 4:35, Alex Benn=C3=A9e wrote:
+>> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> writes:
 >>=20
->>> - sparc32=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 (CPU_CFLAGS=3D"-m32 -mv8plus -mcpu=3Dultrasparc")
->> ... and that one as well?
->>=20
->>> - s390=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 (CPU_CFLAGS=3D"-m31")
->> Uh, we really still allow 31-bit s390 hosts here? I think this could
->> be removed nowadays, also upstream kernel recently ditched the
->> 31-bit userspace:
->>  =C2=A0https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.gi=
-t/
->> commit/?id=3D8e0b986c59c67e08ada646249f834655a9e6da16
->> Question is whether we can remove it immediately, or whether it
->> needs to be deprecated first?
+>>> This fixes a deadlock I previously observed with the test in [1].
+>>>
+>>> However, I can no longer reproduce the issue reliably with that test, so
+>>> I used Codex, a coding agent, to write a more reliable local test case,
+>>> shown below. I applied to Codex for Open Source to get access. The test
+>>> case is not intended for merge: current policy prohibits that, and it is
+>>> probably not worth carrying anyway because race-condition tests are
+>>> inherently fragile.
+>> What sort of hit rate where you getting with the race? So far they
+>> have
+>> both been rock solid without the additional patches for me.
 >
-> Ah, wait, we completely disallow disallow 32-bit hosts nowadays:
->
->  https://gitlab.com/qemu-project/qemu/-/commit/372ec46b9f1215f48a4717f2b7=
-ed969f65bfadc6
->
-> ... so these checks in the configure script are just dead code
-> nowadays that could be removed now? Or is there still some hidden
-> magic here that depends on these lines?
+> I hit the deadlock in 8 out of 10 trials.
 
-Didn't we re-enable 32 bit hosts for qemu-img and friends?
+It's taking a lot longer on my system (~ 1 in 100) but with these
+patches I'm still seeing a hang, it just takes a lot longer to get
+there.
+
 >
->  Thomas
+>>=20
+>>> The remaining patches were written by me.
+>>>
+>>> [1] https://lore.kernel.org/qemu-devel/20251014111234.3190346-9-alex.be=
+nnee@linaro.org/
+>>>
+>>> To: qemu-devel@nongnu.org
+>>> Cc: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>>> Cc: Michael S. Tsirkin <mst@redhat.com>
+>>> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>>
+>>> Below is the Codex-written test case:
+>>>
+>>> diff --git a/tests/functional/aarch64/test_gpu_blob.py b/tests/function=
+al/aarch64/test_gpu_blob.py
+>>> index a913d3b29c84..52627b4541f9 100755
+>>> --- a/tests/functional/aarch64/test_gpu_blob.py
+>>> +++ b/tests/functional/aarch64/test_gpu_blob.py
+>>> @@ -13,7 +13,9 @@
+>>>   #
+>>>   # SPDX-License-Identifier: GPL-2.0-or-later
+>>>   -from qemu.machine.machine import VMLaunchFailure
+>>> +import subprocess
+>>> +
+>>> +from qemu.machine.machine import AbnormalShutdown, VMLaunchFailure
+>>>     from qemu_test import Asset
+>>>   from qemu_test import wait_for_console_pattern
+>>> @@ -25,8 +27,7 @@ class Aarch64VirtBlobTest(LinuxKernelTest):
+>>>                          'download?path=3D%2Fblob-test&files=3Dqemu-880=
+.bin',
+>>>                          '2f6ab85d0b156c94fcedd2c4c821c5cbd52925a2de107=
+f8e2d569ea2e34e42eb')
+>>>   -    def test_virtio_gpu_blob(self):
+>>> -
+>>> +    def launch_blob_test(self):
+>>>           self.set_machine('virt')
+>>>           self.require_accelerator("tcg")
+>>>   @@ -65,9 +66,27 @@ def test_virtio_gpu_blob(self):
+>>>                   self.log.info("unhandled launch failure: %s", excp.ou=
+tput)
+>>>                   raise excp
+>>>   +    def test_virtio_gpu_blob(self):
+>>> +        self.launch_blob_test()
+>>> +
+>>>           self.wait_for_console_pattern('[INFO] virtio-gpu test finishe=
+d')
+>>>           # the test should cleanly exit
+>>>   +    def test_virtio_gpu_blob_shutdown_race(self):
+>>> +        self.launch_blob_test()
+>>> +
+>>> +        self.wait_for_console_pattern('[INFO] unmapping blob object re=
+source')
+>>> +
+>>> +        try:
+>>> +            self.vm.shutdown(timeout=3D10)
+>>> +        except AbnormalShutdown as excp:
+>>> +            if isinstance(excp.__cause__, subprocess.TimeoutExpired):
+>>> +                raise AssertionError(
+>>> +                    "QEMU failed to exit while virtio-gpu reset was ra=
+cing "
+>>> +                    "with shutdown") from excp
+>>> +            self.log.info("QEMU exited before the shutdown request com=
+pleted: %s",
+>>> +                          excp)
+>>> +
+>>>     if __name__ =3D=3D '__main__':
+>>>       LinuxKernelTest.main()
+>>>
+>>> ---
+>>> Changes in v2:
+>>> - Added the patch "virtio-gpu: Run reset cleanup in the same BH".
+>>> - My assumption about the ordering was incorrect, so I changed the patch
+>>>    to follow the approach used by virtio-gpu-gl.
+>>> - Link to v1: https://lore.kernel.org/qemu-devel/20251029-gpu-v1-1-e3e3=
+c7eebc9e@rsg.ci.i.u-tokyo.ac.jp
+>>>
+>>> ---
+>>> Akihiko Odaki (2):
+>>>        virtio-gpu: Run reset cleanup in the same BH
+>>>        virtio-gpu: Do not wait for the main thread during reset
+>>>
+>>>   include/hw/virtio/virtio-gpu.h |  4 +--
+>>>   hw/display/virtio-gpu.c        | 60 ++++++++++++++++++++-------------=
+---------
+>>>   2 files changed, 30 insertions(+), 34 deletions(-)
+>>> ---
+>>> base-commit: 14f38a63b9adc02c0ebe3b5ada1f1208abaf21ea
+>>> change-id: 20251029-gpu-c3f45747f7ba
+>>>
+>>> Best regards,
+>>=20
 
 --=20
 Alex Benn=C3=A9e
