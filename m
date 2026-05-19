@@ -4,50 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BE9BCD4F5E
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 15:34:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE996CD4F5B
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 15:39:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPMRw-00005Z-L1; Tue, 19 May 2026 11:33:42 -0400
+	id 1wPMXM-0002Tt-8P; Tue, 19 May 2026 11:39:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wrigjl@proton.me>)
- id 1wPMRc-0008OC-HW; Tue, 19 May 2026 11:33:25 -0400
-Received: from mail-08.mail-europe.com ([57.129.93.249])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wrigjl@proton.me>)
- id 1wPMRY-0002dP-LT; Tue, 19 May 2026 11:33:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
- s=protonmail; t=1779204784; x=1779463984;
- bh=TLUSb75E2+Mi79iYObYCFOnCZjCa+60+qqKR++qsirk=;
- h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
- Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
- b=ZQV2+zPSmg3AEZhc8ZfGYEfOW9lHkYfAuj+43J2wBIspKVq2favGoykwTZllR8DkU
- aB/5Q6lRKCp26+Oo6llNBMQC4acJ1Om4rzRRYAVC3tssluY+JjZAapP27GiHXbbeJG
- +DEgGWIffLHUNj6JyOtCvY62gVZZN87T98iwOTHnTev7+2urSvbBH3NVsp9K/jUVFK
- bUNKwTS/KD6/I4aKAfXGA9L8XyvEiuM1g6hJnSowdbUvmLs8sbk7nYNLii1PHqmcKU
- kVzUnSYDmon0Au69j0AtXWqE73NBSddyToUK+Lz842Y5fgXX74orPdjuco1Mke/4gl
- aVqRu9xnj3swg==
-Date: Tue, 19 May 2026 15:32:58 +0000
-To: Peter Maydell <peter.maydell@linaro.org>
-From: Jason Wright <wrigjl@proton.me>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH 0/2] target/arm: implement FEAT_RNG_TRAP
-Message-ID: <20260519153249.31100-1-wrigjl@proton.me>
-Feedback-ID: 198029889:user:proton
-X-Pm-Message-ID: f768763d4384a97b5c460f34371a91a2ee85066e
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wPMXK-0002TY-VP
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 11:39:14 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wPMXJ-0004Cl-1T
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 11:39:14 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-c80167f56cdso1656201a12.3
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 08:39:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779205151; x=1779809951; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=2GX01AdvA2zAfcvhLJFZRVp3l+TaA6eSkbrN/UeZnNA=;
+ b=VgnI/d0b16gWL1+591rp5tsgwQIj0kv1Vpt4XML6aaB2tTq9LRKxIzqV0YwExGBUFb
+ ZqvJYJ6yRS091O0Vo+9Gj6UVm0wwRS+VZV4L/6wLFF0ffAeiB9X6GWzA2IeGVhtKF1uV
+ ENQVCL014ugoTf/2OXXSbmAGeqHYMU51RsUm0s965gV1SVAdbBj6CHWi816QwkJ98rGz
+ LLQseOaPfRDvoWtg5ddxzbYeSpPW8oCuBSYjOCHCY/2zTUcuV+IGJ3C+Doz9AjACAI2q
+ Wczo4fV3fvVpxTxnyWvwXSdCrWymlaFa/hPbnrvpGbwNpO1abF2cN06YkPJID/rbASQs
+ iR5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779205151; x=1779809951;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=2GX01AdvA2zAfcvhLJFZRVp3l+TaA6eSkbrN/UeZnNA=;
+ b=JdhEgqZbjoQ4uDDemQwtziAei60TfZA8cdblVtYqop44RTtvVx15mGjURcJ/Z2U4Zt
+ 9mSGMWmSpqjr0sn9ewnOoDjI/UohKaCJGwgoMjdnQsb7jM1YlYjZYaXaU6Z85ZX6fU8l
+ JQvdQHWLQrfKdv4zg9m99+g3L8qkMIUo5qf6J+5zUX+2ZH580rBfCqlu9tI/3ikq0dDr
+ 8z8nFI5jNo6lKws9q2YBtzZdUPVkutmCYPmBZT9R1MHv5ORTpEfvknKinNVvXnSQdEX9
+ aLx47Z/8UZ3TPJimptxqvBJBtPsjHiQjUHWaNbq5slZ9DxOkvTKUYA7ggrQmRWZ7wXAv
+ eHvw==
+X-Gm-Message-State: AOJu0Yxfcw0ilO2KTcT+WOcK8fpxrBc3VQTYJYhH/8ExMkIMB/0SpHb3
+ P9f1SZ4qoRoD7D1vEmErEcU0H9Rjk3gkjMS7fBubqJkwbu0slwSa+lphgw3RnVzJ/ZI=
+X-Gm-Gg: Acq92OHp9elw5EJfQ44XRnc68N9RnP3dwPl1CcMFZSSFWKgbKJoBl+tbIwj1reQgxdc
+ 0+2n2ekkawy9nQRu0oyd74BsBQ4sUzTWKOPK+J9G0R2u3vn2pJZPINVsKfWoCEcXxSEr4arjIWF
+ 0MMXYy8a91FwXRKQoiz9YkZ91lnMpzl3HUwmGhVGKtWqGrc+tI+9DgI33ndFV88WGjwf3Ll9tJH
+ LGKf8TbNIih/VNzK5Y8giidDfHmzbj9+Wn1h3+8DjTOR/8kpampqQ16GdYBy/cKzo672OSxqkYM
+ wwrAdaFtj1hiSnvVWZOF8smS7nrIgoGWn792XX7uu4rip4Q4AFyFwYLxAQsc7pLlB+OpRvjVM4k
+ pG4PZUc1g/iRl9u5NuBneH5wFcamrnsXfwiSxz8ajWS2gaYTWxOHexKSq5dKQ2iftB20IQjGW/D
+ vxc2YI9BVOaYlIRO+GAeMbmX3Rcqu02ROwEttW
+X-Received: by 2002:a05:6a20:6716:b0:3b2:a809:ff7 with SMTP id
+ adf61e73a8af0-3b2a8093e2amr5553849637.10.1779205151002; 
+ Tue, 19 May 2026 08:39:11 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.142.33])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c82bb07d2fesm16938614a12.9.2026.05.19.08.39.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 May 2026 08:39:10 -0700 (PDT)
+Message-ID: <e8df74d9-6744-4ba8-bf40-d348d2c073e5@linaro.org>
+Date: Tue, 19 May 2026 08:39:08 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=57.129.93.249; envelope-from=wrigjl@proton.me;
- helo=mail-08.mail-europe.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 11/12] fpu: Saturate the exponent in uncanon_normal
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20260517002550.321291-1-richard.henderson@linaro.org>
+ <20260517002550.321291-12-richard.henderson@linaro.org>
+ <CAFEAcA9ni3_c83Ex+Oc73yTxvUm2GkF=CFcqf5gv4VhD3uTJ2A@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA9ni3_c83Ex+Oc73yTxvUm2GkF=CFcqf5gv4VhD3uTJ2A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -64,39 +104,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series implements FEAT_RNG_TRAP in QEMU's AArch64 emulation and
-enables it on the cortex-max CPU.
+On 5/19/26 02:57, Peter Maydell wrote:
+> On Sun, 17 May 2026 at 01:27, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> Notice the conflict between saturation and rebias_overflow,
+>> which should never happen.  Otherwise, saturate to INT32_MAX
+>> and allow the usual overflow to max, infinity, or dnan.
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   fpu/softfloat-parts.c.inc | 12 +++++++++++-
+>>   1 file changed, 11 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+>> index 45606f8402..914e588ec8 100644
+>> --- a/fpu/softfloat-parts.c.inc
+>> +++ b/fpu/softfloat-parts.c.inc
+>> @@ -341,7 +341,17 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
+>>           g_assert_not_reached();
+>>       }
+>>
+>> -    exp = p->exp + fmt->exp_bias;
+>> +    /* Because exp_bias is positive, we can only overflow past INT_MAX. */
+>> +    if (sadd32_overflow(p->exp, fmt->exp_bias, &exp)) {
+>> +        /*
+>> +         * rebias_overflow wants to compute a modulo exponent, which
+>> +         * conflicts with saturation.  That said, saturation can only
+>> +         * happen with scalbn, which is not a PowerPC operation.
+>> +         */
+>> +        assert(!s->rebias_overflow);
+>> +        exp = INT32_MAX;
+> 
+> As mentioned in the review comment on one of the Arm patches,
+> I think that if we set exp to INT32_MAX here then the
+> "round up" code below can increment it, overflowing to INT_MIN,
+> and then we won't correctly spot that it is too large for the format.
 
-FEAT_RNG_TRAP lets EL3 firmware trap MRS reads of RNDR and RNDRRS by settin=
-g
-SCR_EL3.TRNDR=3D1. When that bit is set, every read is delivered to EL3 as
-sysreg trap, from any EL (including EL3).
-
-SCR_TRNDR and ID_AA64PFR1_EL1.RNDR_TRAP are already defined, but
-had no readers and no CPU advertising the feature. With these two
-patches, EL3 firmware that detects FEAT_RNG_TRAP via
-ID_AA64PFR1_EL1 and sets SCR_EL3.TRNDR receives the architected trap.
-
-Patch 1 adds the implementation: an .accessfn on the RNDR/RNDRRS
-ARMCPRegInfo entries that returns CP_ACCESS_TRAP_EL3 whenever
-SCR_EL3.TRNDR is set, plus a one-line addition to scr_write()'s valid_mask
-to keep the bit writable when the CPU advertises the feature. It is a no-op
-on its own because no CPU model yet advertises FEAT_RNG_TRAP.
-
-Patch 2 enables FEAT_RNG_TRAP on cortex-max by setting
-ID_AA64PFR1_EL1.RNDR_trap=3D1.
-
-Jason Wright (2):
-  target/arm: implement FEAT_RNG_TRAP for RNDR/RNDRRS
-  target/arm: advertise FEAT_RNG_TRAP on cortex-max
-
- target/arm/cpu-features.h |  5 +++++
- target/arm/helper.c       | 16 ++++++++++++++--
- target/arm/tcg/cpu64.c    |  1 +
- 3 files changed, 20 insertions(+), 2 deletions(-)
-
---=20
-2.50.1 (Apple Git-155)
+Right-o.  I'm going to drop this one and constrain exp during scalbn et al to something 
+smaller than INT32_{MIN,MAX}, so that we don't have to consider overflow everywhere.
 
 
+r~
 
