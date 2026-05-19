@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18AE2CD4F5B
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 17:13:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F13FCD4F5B
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 17:13:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPO0E-0000ZJ-5T; Tue, 19 May 2026 13:13:10 -0400
+	id 1wPO0K-0000cb-Dw; Tue, 19 May 2026 13:13:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPO03-0000Vo-HB
- for qemu-devel@nongnu.org; Tue, 19 May 2026 13:13:01 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPO0I-0000bZ-RH
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 13:13:14 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPO01-0007Lh-W2
- for qemu-devel@nongnu.org; Tue, 19 May 2026 13:12:59 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-488ff90d6c7so29477625e9.2
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 10:12:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPO0H-0007RV-8g
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 13:13:14 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-44c350a5b87so2339047f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 10:13:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779210776; x=1779815576; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779210791; x=1779815591; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mDGkTt4tPBj5+q7fES2uiVCIWmZVHm7K0SHYNVP93xw=;
- b=lcpi1/SjydnjmgScjLew4+qiwUaR0OG9ysAl54rHPsogaIXQ+at2COHrupDt2Fr5Df
- 1a4wvrQDwpx/J+8fbkcR/6FPGrjwjUQf0nClmNfC1oeM1UaRKvFD1DT2DSuHfwYkB5HI
- jUIzh9OBFmOsMHLEB6ADAP9zjcdCywpgJTS4/niPeTf0Mnx7bzeb6jyx8/cL1bqVYcdt
- kgAoTX/7TjbZL6jfRlrUoE2iggM8LKPX0MESIlA3a2gviu/tpIzg2vwNfG7ut8iS2TRE
- Uqpj0PR2IzVRswzE/v/qSWB4R+6J7fsv7LAP4pfUrLBB0yMiDwblqp90jREs/NvsnEPv
- /zrQ==
+ bh=WXgDhE7kozuJ/9LR8qnIVSwpmu8uvTaKscAokMnZ2aI=;
+ b=M/z5y+RRVIPxzw5fdP0dRuUaNAEzkTFy8CG9VXGNx+CXpNANnL8rwgn+L3xv3189va
+ tHIV4teOQbpb/PRb3MBvOhvbTj5ztlZEQTBxYnY9a/8/PhyCkhMvOupM2/w5cWjvHEH0
+ 9mp7NTVdEPMv0b7X9Bis8no42s5bSjDyjuxIfByl9Who0+mW5ekswTLtPxvM6+nf9wr4
+ aiCz1FH3UosBJT1860PiGl75DK5UvkATtrNtkX+GgoX3KbWnuL89rb6b8rwt0XkaEZNO
+ 7WemQmiD7tUdO6yPKP9Hi8Mw/oV17ZI8wng4dyPViLY7HkSOpz1NHVLzifDJTvay3VNh
+ ACOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779210776; x=1779815576;
+ d=1e100.net; s=20251104; t=1779210791; x=1779815591;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=mDGkTt4tPBj5+q7fES2uiVCIWmZVHm7K0SHYNVP93xw=;
- b=Fyay8s+zLu402mi17T9uli6nCB6juCjc63bA+MOAQqbcSSra8OEP59jNIQQHXf+rgs
- Zfilc/azdp00+b5AGNGKM06fVr6ho84mBuSl6TV1KfFTj04tKUS89R4kWkJa/i57UAxg
- lYP5ozrPPC3cPoOCPfyZRw07WfVrNXat8A2P9VQDVgMIl1e7joc6n7sq2k5GTtS7znkZ
- EsWP2xdfC0l2K3JG4rZ1hduwgSqOnXPdZCGFOx5X9sFC6OlFb1nbCN11Amt0E3K6DgvE
- RwfvPH4hJP+iqO2L7sltkyIoRxrhrGP0Q79Dyk/vpAczuWK2NvEgfEgzPIA3+m8vVPZH
- 4G7w==
-X-Gm-Message-State: AOJu0YyrDs2cNrcVeP4qV62eWaKasiMtcBh/yXucBJ3HxbGrYvaYpLWK
- vTzBm68pAtj/IRZb4TvPWjRqXsfLzu8sISZLV2JIrFWf2wHaIBb9GLlBpmpa9sj2xLDry7TzzmF
- fKpLTOu0=
-X-Gm-Gg: Acq92OGMB4LgmE84LZ+TtSQP4anNDDbYDnd5fjGjttAPYHaPknjOgrCc58jx40vfhyq
- kJU+jjVWIb5L6+SN4TXjLrf1/ZCG5UZrnnQ/mNbbFiiTpxlR60Tkx58W7fjUn7PBe1w+eYlmGRH
- t7Tq/SoTppZVuEIRMlZCfVLloXtVtCRKcaJs5HY8w0uxJuWAkwWlPwn/VMWEcsCxs9DEUUVAfEo
- 8yw2ufhCwrPv8yN7h3KliW//itP00cLjwUIe0y9tL7WuUieFyP+WWXC/jSvGln4q2NhmEdxFOVd
- MfesevtCuX8yhUJepT/1blh5fQPr5ccPyhNRa7IuiTKBf7lfRhQxBqdKFLu3I+spJmFR/M2W+w3
- KkruWBiwiBbpS1TMPDLGME6tJ/9RtiLeno2abVXc9zKVE5QPS1koWb6JkcGnGepVR8wyEAkxAYC
- s1+LyYlTCQ+4uTmw/JUiq3BtdvwUEMQjai47PsaJiwavXs/BPDEiwIx+u/2ogKo5NzMTnrZ4+m
-X-Received: by 2002:a05:600c:609a:b0:490:b07:5fd1 with SMTP id
- 5b1f17b1804b1-4900b076103mr158721515e9.11.1779210776466; 
- Tue, 19 May 2026 10:12:56 -0700 (PDT)
+ bh=WXgDhE7kozuJ/9LR8qnIVSwpmu8uvTaKscAokMnZ2aI=;
+ b=Z2LBdUTABo6Sz2vh20IUrp9lqCeMt9OWrQaqoABClTzA49ndvFeT5eGdQzilNyvdRc
+ BygaIRKDizJDYf27iDWHib1X904FcJWNVYkWzgTkKuwf3hBkgeRrIFxVrmIsYGlQuoNK
+ 8oLitLKw2uaclfhfFfk4+jE22eiV0u2rdlcbRnK2lzuTXY6wofdwKN4EvncEeTGkAfiq
+ Z29Do5f4fA6Xr1oZOsy41/v1YirdOR7ZXX1skOmbAFwu795xJFl66jpS21bW2UyemYPT
+ Eb36rivA3klwcxlxm1hmpsGNyA78ZstctIYzac4POvkVNP5pCQimq0HjkNXK3z5AwOWt
+ u6kg==
+X-Gm-Message-State: AOJu0Yw2kVNwfkG/rTxBKCg0knD+yHWUR2o+jxe//I+dlBOdkdpHDsu/
+ eFPA+MRgVBUaToykFd0Tq9yo1ln2hfTJ4RdVUFGCe8M1bThxPxdDG2s+6Ex0QQrFkesI2kSWUqg
+ NWvopaBQ=
+X-Gm-Gg: Acq92OEFCbYNUz+MOLrzllq9feSBa2VWBVB9lY1XXHzzWOy1H3ba0Amw4fsbUCf5ylc
+ 9W+rxdloacS6U7+46HYvaACFQLLPXe+GFrgoeetzmpDuzAPI0NCIF65snrsOzb/zNjuu0TAfM+K
+ SzgJLk0tTEfFxQdEmxfHRHJ0gOhzDCtveNJ+zluOvrYf67R6MytgACQuVePnGjCm00xpOp4ew6d
+ i5CWemsUuoTQU9E0jMOPpIwZNdWVXtg4Cymx4aeeg/mpUx6SKIyRIl4ePCPBceWQJHmnFmLRAGD
+ cdV2uRrdtY3/3qel+pqNTTZPDkcwEHW58tkbwJE8woHkeQSUp4fcnvsLGfpSpHAk+3+cjxOGE2E
+ qJgF330Ztkphyy+K2ytN5WBC+y+QyrRvpa3rQBaIy/Wmd01PkFyv00CVFT21ewiecSqIvPaoUiG
+ LQ3/8zfjHHOqtiNZlgrcREs1Ke7CJjjQD2QhN5LQPPejZqF4tgxPufEzVnXSvuApgfKxV1vkC63
+ ALzO1soJjM=
+X-Received: by 2002:a05:600c:3e1b:b0:486:fd5c:2b35 with SMTP id
+ 5b1f17b1804b1-48fe60eccc3mr315897355e9.13.1779210791235; 
+ Tue, 19 May 2026 10:13:11 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da15a5653sm47225173f8f.35.2026.05.19.10.12.55
+ 5b1f17b1804b1-48fead1c364sm110762695e9.8.2026.05.19.10.13.10
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 19 May 2026 10:12:55 -0700 (PDT)
+ Tue, 19 May 2026 10:13:10 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org
-Subject: [PATCH v2 2/4] MAINTAINERS: Fix tcg/s390x/ path
-Date: Tue, 19 May 2026 19:12:38 +0200
-Message-ID: <20260519171240.97420-3-philmd@linaro.org>
+Subject: [PATCH v2 4/4] tests/tcg: Explicitly check for 64-bit z/Architecture
+Date: Tue, 19 May 2026 19:12:40 +0200
+Message-ID: <20260519171240.97420-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260519171240.97420-1-philmd@linaro.org>
 References: <20260519171240.97420-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,28 +101,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This folder was renamed in commit 3704993f545 ("tcg/s390x: Rename
-from tcg/s390").
+We do not support the 32-bit ESA/390 target, only the
+64-bit z/Architecture.
 
-Reported-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- MAINTAINERS | 2 +-
+ tests/tcg/multiarch/nop_func.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7749fe7f9bc..92b875ddfc1 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4180,7 +4180,7 @@ F: disas/riscv*.[ch]
- S390 TCG target
- M: Richard Henderson <richard.henderson@linaro.org>
- S: Maintained
--F: tcg/s390/
-+F: tcg/s390x/
- L: qemu-s390x@nongnu.org
- 
- SPARC TCG target
+diff --git a/tests/tcg/multiarch/nop_func.h b/tests/tcg/multiarch/nop_func.h
+index f714d210000..26d3a76eb62 100644
+--- a/tests/tcg/multiarch/nop_func.h
++++ b/tests/tcg/multiarch/nop_func.h
+@@ -15,7 +15,7 @@ static const char nop_func[] = {
+     0x1e, 0xff, 0x2f, 0xe1,     /* bx lr */
+ #elif defined(__riscv)
+     0x67, 0x80, 0x00, 0x00,     /* ret */
+-#elif defined(__s390__)
++#elif defined(__s390x__)
+     0x07, 0xfe,                 /* br %r14 */
+ #elif defined(__i386__) || defined(__x86_64__)
+     0xc3,                       /* ret */
 -- 
 2.53.0
 
