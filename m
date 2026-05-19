@@ -4,90 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BE42CD4F5B
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 14:59:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30DEFCD4F3C
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 15:00:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPLuU-0003bR-Ub; Tue, 19 May 2026 10:59:06 -0400
+	id 1wPLvA-00044Y-Tc; Tue, 19 May 2026 10:59:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPLuT-0003aq-B0
- for qemu-devel@nongnu.org; Tue, 19 May 2026 10:59:05 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPLuR-00021t-Ic
- for qemu-devel@nongnu.org; Tue, 19 May 2026 10:59:05 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-48e8132c6d0so24281745e9.1
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 07:59:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wPLvA-00044L-1A
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 10:59:48 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wPLv8-0002AU-5y
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 10:59:47 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64JEx4qM2867828
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 14:59:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ uazcnBQ7oMtoNk2hItVR1GsCa16CG+2aTM3hYIxXdcg=; b=D9UkREJGJoommzCl
+ UXDs0SYgn1I52HQYv6004YNM8A+9ywbMsNKwhBn5nHIUVmP+BW1dpvnBDD1vObaC
+ OySDnfx1iabEb20McqeHjWr3dyMTJD1f7Xc30dMANF5Ib8PfJXwdla6RbkzwHf62
+ V/4813flo6y3vqJsj/2zEjvuqRmlZSzQ3ll5lPeS56RPDaatQ1+SaMSgNXgYXQTW
+ jkX2TJE4XAHUqfFyF5jJ926TqLz3YysAIfBAZZYh6EopzjQZ0dozU+IzZ4kUp07l
+ G7qqz1BfSeMqz2kOoI3C9sVzqsdqv5Hay7xHTW9GWzvZgzRnOUxFyWZs+8P6pSHp
+ 8cyh7Q==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e8t3w804x-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 14:59:44 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-2ef37c3f773so3806342eec.1
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 07:59:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779202741; x=1779807541; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=SZelGvEgEEvg0CCXVNGBslj4QJmWf6JnvfcIYGqOwQo=;
- b=aWT4rgyoGj6M0vIbRsf+oNSiiG/ef8C9MTbZPUI9xK+3C0Nzl5BJDWGRpNUcVaydMg
- TQc8Ydokt9+KVsO336b+yud77fr7oZtd7e1qBQsJAKAun8j/TqAjrP3cAiUZimxn8xzv
- jeh5ubwZUEgJoITdDIPIq6BvKX5zXJY0HKR5/6scfEU/86sSI4Uh3eu05n8i+FeSkeTH
- NEFJD7HjhQAYM1vvsnQEI2wKghzraXGmUbiOE2xIKsiMGqHs3gv2teCvJnsX3uuhx/2d
- /hW4H6GGtbF0NBAjll75Pxc9d0TMEixS9GENzTVEo6jocUL0eKRpREkwlXVCrTQAsKDV
- TPxg==
+ d=oss.qualcomm.com; s=google; t=1779202783; x=1779807583; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=uazcnBQ7oMtoNk2hItVR1GsCa16CG+2aTM3hYIxXdcg=;
+ b=FBw+G00Y/Bmq6bqJRjap345unw15HOPRuLiN20FPekDORcrDP83ufeSjQ/Juk82Y0z
+ VM1sGMsMAjZqCTqysyF4JdKAMti3E4m4k5KBAQ7Uj8KhA4AsZ/57XqNjfo7/dGDYL1M7
+ 2moQbjyAohSl51W351W/qi++PMYILHAbyo9XMCEQcDflSvySuOP46bFebLw64htIheXS
+ HSYhTau3F0PXGDEFA8ISxmBsF0yZD+VD5KpNt+RUETVZ2cXU+XoqorCjSabHXfreTOUt
+ SNfopIRZBFPmoQUZDnn96KtAT8ni+jfUyG96lL4gldsUOcfv5WXm9S4AGdThbC4MlXst
+ Igxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779202741; x=1779807541;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SZelGvEgEEvg0CCXVNGBslj4QJmWf6JnvfcIYGqOwQo=;
- b=rb2HEyg/pYZJDoMEqzeYWx0ePo9hiJ9WsZRkXy/881ws2gIo7j83zlzO1w2XSAKc5b
- hUyZkliCyMtL91LAVmV01GesqWTz7MOViqpbwhTywXNKe/Bk2wIrW0u4FPp388ojHK2f
- altKNWTI2GEIQY9btLqdxVY/9w6dBFZLPEdGvXs+AnTYi59K95OUrywkLcj+DjLjvF6k
- 5Jv2N1wMKU4ncZgU6s6xYpitGax4+82RTzOgDLpIXdg9OhLlDfbjo68Fg2dLGn6Zpv47
- oUQNVoFBlDo5b0cq2G4ekqEMt0ZGsG2JRxVvxEA1TicPxwrs/OxCxrTKUl0P03z/y5HN
- SvyA==
-X-Gm-Message-State: AOJu0Yyv6+RsauqyxUud95Kr2Cg96xSPyszIzxx1GHOiK6XTDNE0UrzF
- W2ILHyaTdfRf8d7234EXy+ZXEeHRN1yxRg9J9yKxwPz9HN7VqvtUdfvM3owUT09kIQp6p4R9DYk
- JJfME2ak=
-X-Gm-Gg: Acq92OEj0TMRcB+SLBmVB0M5Fo56q4A19hgYYn1jY7y/hfi9gW0zYUwPRo1z+CI0PVJ
- gYNy2NzZTYrmxCZ+TQF9B995Qw/SefUjm/501C4J+ww4AyjJ9APj0c2QYHCPn8k+UleByVb/Kwy
- X17cnEEtwQhn+SlHiHSCRR4o3QEnORRMAntD243XZAUrcMyrtkumE6jONbLgLnpdMOjdQEPWEPy
- IFgwWB0MfhG3iRzQsrXO8Ymw4dlHUDuuPmATprFpJK3gODOK0oXxZY/rcAQ3IFqjV5Yp1zyYjhG
- hAT4B6sKtoeCbMWxbndUUMddQ5aoD8CqEj56vIol/PAB7FlFMjvBqvc5hwzqZRZieveniJ3cltr
- yvm254YMsYityCsvR7og3d7llw3uUL6WlYdlkV3V0Wa0ZxGR4yJ+0Rq1+1aH06Ws5n75ZMaMGgt
- IyQwW4QoEqoOetmL01GmVA9eLbUPouOidO9wxICHebBT17m1RTrlbKqM8FFcMypTxPHHhfKNZUj
- 7GRF8zyAN0=
-X-Received: by 2002:a05:600c:5296:b0:490:31e:d6f4 with SMTP id
- 5b1f17b1804b1-490031ed905mr193136935e9.18.1779202741515; 
- Tue, 19 May 2026 07:59:01 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fe5ab3977sm362148885e9.9.2026.05.19.07.59.00
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 19 May 2026 07:59:00 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-block@nongnu.org, qemu-s390x@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH] buildsys: Stop checking for ESA/390 host
-Date: Tue, 19 May 2026 16:58:59 +0200
-Message-ID: <20260519145859.91999-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
+ d=1e100.net; s=20251104; t=1779202783; x=1779807583;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=uazcnBQ7oMtoNk2hItVR1GsCa16CG+2aTM3hYIxXdcg=;
+ b=I05nQzEaN/U0ovIN85dnTZdhnSnWl7AlbskhEEkkeXJAfJAZ3bc97TGGZS6ymOzrNa
+ uvMwLwEtA1vKeGfzHMPkKMx5E3QesssaN3JVqtWYqqXIpT+y+FNddf/KtvPF3NbJXEqT
+ IL9MBOXFlAwkr+PZq/CRzmpG4npVpwtDSZ139VFBjhOTIR/ngvjwvM+IatT+yDCaXUOi
+ OZ/oBdzEfLTfsBNosomRr4cnDgqYasI41jcggT/+fW9aTE+D76Qti4kxjomOPdS130pn
+ afh6h9akQk/qR/9ofefBhC2ssr3jbp+c3bxS8KydC97TraKjWbeUQZH8A4c5BLW8GXft
+ Uniw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8y5OJhXqqgARB51FCoRnO8wS5nIuRXodVnEY5wl2Vn0FAmIl6CLPen6nlIbL73M37S3OaClf0y7al5@nongnu.org
+X-Gm-Message-State: AOJu0Yy7c4f/TRiFdDWhiHIF2o/ov0ojN6M5UFX8PX79XNSYDmthyIyF
+ vBQNsmTrR3fLfyVjx/5MGn4DYhQq4YF+3kTO9U7xZ/S/UOkiZixQeqwTqzPZQjRQ27hyFf7xIUI
+ tSVpDzsG80joMdgQvcUdD/4/K3jXc3sPwtWE8FhqUolEt7jlih/mmhPcgeg==
+X-Gm-Gg: Acq92OESNwdp+D5AWAItx5fPMdWfAwm2+dr0bz3en99XIHA+d6yueXKqGoFFkv97YaW
+ MIcSHrpWAyaFz524+fwwclyIfomr8+/Cdm+uH/9ijSGPrQGP/yxPrWvurjim9b7okHtU91iRi8A
+ 6h2iHiiHl8FuNCq8E6uZ7wqU1E0hmh0IJnoQimSbrqKg6ZlXgyzsg1FCjnmJFj6z90cr5+ZZXJA
+ bBvfqqFfWpH0aziYmsq6h7B5MkGy5i8YvnykR+MhLXoKY+vXJBhgnXvp6ReuG730KvjYmSwXorK
+ mRsskBuKrjPxYzIbkrF37qg3ZxPMlBgDKmmTKbtq09lQJD+t9CGrTUJvDiS5KlU2DJQR5mA02iC
+ //c9wkOLi9Kzo661y93QLnpxFHuVZwcjGcawQNgtUETLBT10f+SES3yM=
+X-Received: by 2002:a05:7301:400a:b0:2de:1508:937c with SMTP id
+ 5a478bee46e88-3039869fcffmr8548768eec.24.1779202783519; 
+ Tue, 19 May 2026 07:59:43 -0700 (PDT)
+X-Received: by 2002:a05:7301:400a:b0:2de:1508:937c with SMTP id
+ 5a478bee46e88-3039869fcffmr8548744eec.24.1779202782987; 
+ Tue, 19 May 2026 07:59:42 -0700 (PDT)
+Received: from [10.36.20.156] ([24.52.49.144])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-30293e2e3c0sm20973936eec.3.2026.05.19.07.59.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 May 2026 07:59:42 -0700 (PDT)
+Message-ID: <6873b72b-536b-42d7-8217-33ad9c78532d@oss.qualcomm.com>
+Date: Tue, 19 May 2026 09:59:40 -0500
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 02/37] bsd-user: Rename cpu_env to env throughout
+ bsd-user
+To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
+Cc: Kyle Evans <kevans@freebsd.org>, Stacey Son <sson@FreeBSD.org>
+References: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
+ <20260518-misc-2026q2-v2-2-6c16fe448301@bsdimp.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260518-misc-2026q2-v2-2-6c16fe448301@bsdimp.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE5MDE0OCBTYWx0ZWRfX+O66/ekmcUcO
+ YHzQzaKZl9yWaNYaCIY67Gn/6uklSQSTMB4xD3RIGtr2BG7oi31zzZk7p6ivE2X0vnAuIFk8W2s
+ fMlL0oHtvN/PpPBFAcxQPnz04SEOFCcPFgnnFS5/n9vNrHhBPbeaWyQ0s1uyaiKLrYrR2Vm0t1S
+ 1TpwnO+hQfMhvWgSw4k3NzMX1Wh5LsdhBJP1S7uS+O/0Udpb5fbKeAloITv3F6QkyRUFBPlLxWp
+ tSyM2OLJ5+tP/YpVRZrg+en9nb5UB/1egbJaDJ9fCH0JxovBXsfvzsOcO86kiAHh/DEz73zlmGX
+ bCombSQ8+mCU4Rk7xGTtDX9mK7P8j4jaO7NQaUWzsUY9YW1kqtbAqSlvhlhz4j4ntQAicCL0gAC
+ qhsrxMICTCg5X6tHzjWc/RhflxhtUJFGZ0yxk3YmEZo9vTIIyXcAdS0BwHL24c9Sh1gHyU9cxbS
+ oAJR39wA4dhAZvHXwQw==
+X-Authority-Analysis: v=2.4 cv=Q/viJY2a c=1 sm=1 tr=0 ts=6a0c7ae0 cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=56Y9rEFZEhgGDzydt2dtyA==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=6I5d2MoRAAAA:8 a=7Qk2ozbKAAAA:8 a=EUspDBNiAAAA:8 a=mMo0orje6vIiFnOlkY4A:9
+ a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22 a=1lyxoWkJIXJV6VJUPhuM:22
+X-Proofpoint-GUID: eBLucvuoIU7mRT4Ndxz_I_OwRh-KL_YS
+X-Proofpoint-ORIG-GUID: eBLucvuoIU7mRT4Ndxz_I_OwRh-KL_YS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-19_04,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 impostorscore=0 priorityscore=1501 suspectscore=0
+ spamscore=0 clxscore=1015 phishscore=0 bulkscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605190148
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,133 +153,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We still build QEMU tools on 32-bit hosts (see commit
-cf634dfcd8f), however no OS supported by QEMU still runs
-on ESA/390 (Linux dropped support in release 4.1 in 2015).
+On 5/18/2026 4:27 PM, Warner Losh wrote:
+> Replace 'void *cpu_env' parameters with 'CPUArchState *env' across all
+> bsd-user source files. This improves type safety and aligns with the
+> convention used in the rest of the codebase.
+> 
+> Signed-off-by: Stacey Son <sson@FreeBSD.org>
+> Signed-off-by: Warner Losh <imp@bsdimp.com>
+> Assisted-by: Claude Opus 4.6 (1M context)
+> ---
+>  bsd-user/aarch64/target.h     |  2 +-
+>  bsd-user/arm/target.h         |  2 +-
+>  bsd-user/bsd-file.h           | 28 +++++++++++++--------------
+>  bsd-user/bsd-mem.h            |  4 ++--
+>  bsd-user/bsd-proc.h           |  6 +++---
+>  bsd-user/freebsd/os-proc.c    |  4 ++--
+>  bsd-user/freebsd/os-proc.h    | 26 ++++++++++++-------------
+>  bsd-user/freebsd/os-sys.c     |  4 ++--
+>  bsd-user/freebsd/os-syscall.c | 44 +++++++++++++++++++++----------------------
+>  bsd-user/i386/target.h        |  2 +-
+>  bsd-user/qemu.h               |  6 +++---
+>  bsd-user/riscv/target.h       |  2 +-
+>  bsd-user/x86_64/target.h      |  2 +-
+>  13 files changed, 66 insertions(+), 66 deletions(-)
+> 
 
-Remove the configure check, directly checking for the 64-bit
-z/Architecture.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- configure                      | 12 ++----------
- include/qemu/cacheflush.h      |  2 +-
- include/qemu/timer.h           |  2 +-
- tests/tcg/multiarch/nop_func.h |  2 +-
- block/file-posix.c             |  2 +-
- disas/disas-host.c             |  2 +-
- util/cacheflush.c              |  2 +-
- 7 files changed, 8 insertions(+), 16 deletions(-)
-
-diff --git a/configure b/configure
-index eea90306728..513ef7a153d 100755
---- a/configure
-+++ b/configure
-@@ -401,12 +401,8 @@ elif check_define _ARCH_PPC64 ; then
-   fi
- elif check_define __mips64 ; then
-   cpu="mips64"
--elif check_define __s390__ ; then
--  if check_define __s390x__ ; then
--    cpu="s390x"
--  else
--    cpu="s390"
--  fi
-+elif check_define __s390x__ ; then
-+  cpu="s390x"
- elif check_define __riscv && check_define _LP64 ; then
-   cpu="riscv64"
- elif check_define __aarch64__ ; then
-@@ -469,10 +465,6 @@ case "$cpu" in
-     linux_arch=riscv
-     ;;
- 
--  s390)
--    linux_arch=s390
--    CPU_CFLAGS="-m31"
--    ;;
-   s390x)
-     host_arch=s390x
-     linux_arch=s390
-diff --git a/include/qemu/cacheflush.h b/include/qemu/cacheflush.h
-index 8c64b878145..0618966ddde 100644
---- a/include/qemu/cacheflush.h
-+++ b/include/qemu/cacheflush.h
-@@ -19,7 +19,7 @@
-  * mappings of the same physical page(s).
-  */
- 
--#if defined(__x86_64__) || defined(__s390__)
-+#if defined(__x86_64__) || defined(__s390x__)
- 
- static inline void flush_idcache_range(uintptr_t rx, uintptr_t rw, size_t len)
- {
-diff --git a/include/qemu/timer.h b/include/qemu/timer.h
-index b931181f53d..fc021f8f966 100644
---- a/include/qemu/timer.h
-+++ b/include/qemu/timer.h
-@@ -889,7 +889,7 @@ static inline int64_t cpu_get_host_ticks(void)
-     return val;
- }
- 
--#elif defined(__s390__)
-+#elif defined(__s390x__)
- 
- static inline int64_t cpu_get_host_ticks(void)
- {
-diff --git a/tests/tcg/multiarch/nop_func.h b/tests/tcg/multiarch/nop_func.h
-index f714d210000..26d3a76eb62 100644
---- a/tests/tcg/multiarch/nop_func.h
-+++ b/tests/tcg/multiarch/nop_func.h
-@@ -15,7 +15,7 @@ static const char nop_func[] = {
-     0x1e, 0xff, 0x2f, 0xe1,     /* bx lr */
- #elif defined(__riscv)
-     0x67, 0x80, 0x00, 0x00,     /* ret */
--#elif defined(__s390__)
-+#elif defined(__s390x__)
-     0x07, 0xfe,                 /* br %r14 */
- #elif defined(__i386__) || defined(__x86_64__)
-     0xc3,                       /* ret */
-diff --git a/block/file-posix.c b/block/file-posix.c
-index e49b13d6abb..5019ddade9b 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -79,7 +79,7 @@
- #include <linux/hdreg.h>
- #include <linux/magic.h>
- #include <scsi/sg.h>
--#ifdef __s390__
-+#ifdef __s390x__
- #include <asm/dasd.h>
- #endif
- #ifndef FS_NOCOW_FL
-diff --git a/disas/disas-host.c b/disas/disas-host.c
-index 7cf432938e0..d41235250a0 100644
---- a/disas/disas-host.c
-+++ b/disas/disas-host.c
-@@ -74,7 +74,7 @@ static void initialize_debug_host(CPUDebug *s)
-     s->info.print_insn = print_insn_little_mips;
- #elif defined(__m68k__)
-     s->info.print_insn = print_insn_m68k;
--#elif defined(__s390__)
-+#elif defined(__s390x__)
-     s->info.cap_arch = CS_ARCH_SYSZ;
-     s->info.cap_insn_unit = 2;
-     s->info.cap_insn_split = 6;
-diff --git a/util/cacheflush.c b/util/cacheflush.c
-index c043c5f881a..77440ddb478 100644
---- a/util/cacheflush.c
-+++ b/util/cacheflush.c
-@@ -223,7 +223,7 @@ static void __attribute__((constructor)) init_cache_info(void)
-  * Architecture (+ OS) specific cache flushing mechanisms.
-  */
- 
--#if defined(__x86_64__) || defined(__s390__)
-+#if defined(__x86_64__) || defined(__s390x__)
- 
- /* Caches are coherent and do not require flushing; symbol inline. */
- 
--- 
-2.53.0
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
