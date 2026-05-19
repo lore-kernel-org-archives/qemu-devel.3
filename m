@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE4A1CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 17:13:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBFF0CD4F5B
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 17:13:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPO0J-0000cT-KW; Tue, 19 May 2026 13:13:15 -0400
+	id 1wPO05-0000Vz-HU; Tue, 19 May 2026 13:13:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPO0H-0000ao-19
- for qemu-devel@nongnu.org; Tue, 19 May 2026 13:13:13 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPNzw-0000TV-Nd
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 13:12:52 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPO0E-0007Op-BR
- for qemu-devel@nongnu.org; Tue, 19 May 2026 13:13:12 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-48e8132c6d0so25667835e9.1
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 10:13:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPNzv-0007Km-91
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 13:12:52 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4891b0786beso26805775e9.1
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 10:12:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779210784; x=1779815584; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779210770; x=1779815570; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XCEJ6qDdNbwTKvqImY9OH3y5ocoLUF7QvLyzezwoPI4=;
- b=YNWbp4JxKB4WdaehVrQZorUElViTve7mh0bAQIiDfJSdqwgUBz6mEiTUegpONnARRR
- KlbY7A7KcdNNvOJS3zKtETb+gwM1Bi9lUH+9WPb6mY8E156KujyloLB10wz45fapw7D/
- /q3iQEZX9V+3Ci3FQWc+3V0P2adEvrW9u5r4JjTK+9X4/v9nUl3JpCySaY+1KdNVE4Vc
- Vy3X4imuDXRMQCjTCU/kn8HPy5H0INrskxa80H23fNEvr9w/VSCMKc9AT/R+60SV9sCW
- 8AfXNwCdSxW88+JZU+77518zM4z7tApMmU4sJG5cGagC7WMVuDv2kC833wYGExmWFElS
- oCgg==
+ bh=W5aM9LUMM6/oOZYHLSdxAIyM2Jbu5rO9yNDEVgQNtoM=;
+ b=kMFa3GnvNqRZRKsE8mBhMvAwD7IdTo8LirNXNriSnj6LBdZDsWR5+Q/e5BD4KMEv2L
+ tJscCV/qBJGbYj1ozzTwqzsq66nLpdj4LdYjQEt757iLZ9fYsmY/6BKWcm3L13xto4nt
+ iJQrpDyPpmPy1XQ+cy2HKf4WNrT9dQiBOu+Y/K4ZXEuuocxBlitbFzSpfhZ7xlQwzBkU
+ 9WWI3oJpBHCdWvqSbGGfnercwuYISKlFKNvM7PBG9Hd5m5HSluj15X3nmYNmSboUlMdx
+ aMszpWwqPTnsGXd7/GceIh662/z6lD7o0YxNMJvSQUsCuEWOyV6ORKeHM4+HGMU+6g6j
+ SV2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779210784; x=1779815584;
+ d=1e100.net; s=20251104; t=1779210770; x=1779815570;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=XCEJ6qDdNbwTKvqImY9OH3y5ocoLUF7QvLyzezwoPI4=;
- b=Eweu1HuFiNYVNGJk78rKNztJSxb8OdnkjThYnfZkrOVxX4+CaGWyWbMTMEcmLjHBY6
- J6skEETweMwWfoFHhdvvfYpyIMKwJuKQTxCAIWHjqjhtaa7FtUAJceyAxO3LDFdqJzfy
- cLQMW9IV9G8Qc7jggdbqUdNuT7rZlUjxRTiR0791Mtab6xhfRbo4+DM0HsXTHAsBRMpW
- 7vtzVCTHQTsXmJZLYfe3v5FZRa/6x2Ms+gTz5Alp8PZDcACPvW6YIIpbaT+e9xIGNbRq
- B7gjObEBi5pzD3nz1b/272W94CQN+XNBPBzTs3zetrFJo7GRtIT/adtoKrQPA4HTgiD4
- QcrQ==
-X-Gm-Message-State: AOJu0YzI8aDkbya9aLCNP5f0Oqz2tvW+XjQVr+k1YQVvXrq3MTJhydPv
- EhHv2n8GXxMer7TcEs4FcvcKmbYaEygE87jOhkTG+0GFaxifOpc8SHrUYJ9RA7RPhO7umC//0C6
- Dex/DGwA=
-X-Gm-Gg: Acq92OFpPNY4w7TYkItmUkSNRe/i47uv8jUDeS2S4aQc2PhgWLPallyrACNBmHEUkV0
- yRGP1q0lcCErpKWQhjUYDKKCA7fJRqOocw7/eZwoMp02QbXTJBx/viRsSvXPSmrnaaaeIFqWbHc
- fLv4HQB3S9tfl25FZvIt73osp+t/DbCDzX3asXGfwkdpsxkc/BaMu6BstvWnGv1GXUbfLHi4Uz0
- lxC153ujAaj+cev9qtp+UfSFS5chKO7QXpe3cjNowX/0YmZIt9tj9vKv7zZr6M4Cwv/SJe07avr
- mmh0B/kASE7Ul42apAeFicr1ZJpv3WQK35+sLpo4j+bpOX1psz7s38wm1nSrsCe96c7n/9FhPpy
- 5dmCp3obQq5H5mZgE3nKdpy762/gQkhuuSk5HLvSMNgJTBk74TdsKQN/24YSFb6JjJuEaZzxE3K
- ubHL8o4j7lB/pTG6sBTn6mLMhwgUwi87QpiG5ROhrbsWa+yZbbcTU8/GXfL+kkAE/jWRHx12L+m
- F1XNXKX0kCfkxnEyqencQ==
-X-Received: by 2002:a05:600c:3f0a:b0:48e:82af:d9 with SMTP id
- 5b1f17b1804b1-48fe6612a59mr323653355e9.29.1779210784404; 
- Tue, 19 May 2026 10:13:04 -0700 (PDT)
+ bh=W5aM9LUMM6/oOZYHLSdxAIyM2Jbu5rO9yNDEVgQNtoM=;
+ b=WE7Tv0DibMKKCiAdwdDalepWovoJkO4pAoB+EVrf2Ty0GwgJtnPfH2VdIJ/bu43aTR
+ WSUtWeZbdlW/m7nvxECQUf+8VzrMw0bP1+OP4qLRxjlXBMuZ/d+OeVsp+HbPIQ8QRw+L
+ WJXg4aiWHIzSwytiOXlCEekPqqAX20K+Gl/U+w6uM5TbACMvVNZW1QvPzK6BM+/tBz01
+ cB77F/UUsTMkFy5GtKBErWFxFz5akYZpwgvGxfO7UlrHAgyRF4oyd/fyJTHs6SQQzEkv
+ TNqE/IPNP4+x8udZluWS3wSZT7GpZpQ/h5DAziq8avtuG1Q41SWtzfOdgFMi5agTFpJt
+ P3Hw==
+X-Gm-Message-State: AOJu0Yx9a9+EmtI07QZSi3Rkd+iLIZ9jDYydUPMtgUWG9Qv2kBVwLy4c
+ gXWpLhq2ozU5wG12Ik9JURgew022hfaFfQPJkXST4y6edoUgBR3lzcVGAxAgbKGFbaPSEgPxubj
+ L1qhhi2A=
+X-Gm-Gg: Acq92OFiFO9GWqAH+yl50mI9dz8lZNcxBCHOJHUARxFL4zO/ePqPFqfbCbAjDDR4SXB
+ trrlHyUAwRp5CVAmx2aufWI5wuWezzXNOV38y3dqZOcKQqW0qu36cmh+gQIGdPWDxWpdthS/J6Y
+ +eel0Qtebiu7f0+6JHhMTHBp3CNlkwz698NqKzMXsjCybbmoQV/RP5Ml0eno3t1OpcN8NrlrnNv
+ yHzgdMwslxclAD55AbqOtiKWR3Bodm4FkCtokvPvuFuovkLD5gWSma87Xpb0aCuTNWxhe3cT2j4
+ TpzatalCNEv+oryeGwFI9dJ0ifk8BHkvidOwTv5iG4xR5q7jjLf+RkvoO9v5LwobqoF8/zflV0x
+ BV48KUlW/4jYLZFgZD4ciTVzIrNs30j4jWv3mc0Ymp72thURNmh2Z86oW66IyOCLdFfM1Hgf5JT
+ ydMU0JVNlFgyXjmK6qJOH9Rix1PygKNCKN3VrewAZ5rEHpZCtLoSAUqdih3yfNz4FbUHRVouE9h
+ ZC/WGTXYNE=
+X-Received: by 2002:a05:600c:34d3:b0:48e:6db3:ff3a with SMTP id
+ 5b1f17b1804b1-48fe63270fdmr296649545e9.16.1779210769585; 
+ Tue, 19 May 2026 10:12:49 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48febe6afe7sm106855245e9.24.2026.05.19.10.13.02
+ ffacd0b85a97d-45da0fe1a41sm51055455f8f.31.2026.05.19.10.12.48
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 19 May 2026 10:13:03 -0700 (PDT)
+ Tue, 19 May 2026 10:12:48 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org
-Subject: [PATCH v2 3/4] buildsys: Stop checking for ESA/390 host
-Date: Tue, 19 May 2026 19:12:39 +0200
-Message-ID: <20260519171240.97420-4-philmd@linaro.org>
+Subject: [PATCH v2 1/4] MAINTAINERS: Fix s390x storage key/attribute device
+ paths
+Date: Tue, 19 May 2026 19:12:37 +0200
+Message-ID: <20260519171240.97420-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260519171240.97420-1-philmd@linaro.org>
 References: <20260519171240.97420-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,121 +102,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We still build QEMU tools on 32-bit hosts (see commit
-cf634dfcd8f), however no OS supported by QEMU still runs
-on ESA/390 (Linux dropped support in release 4.1 in 2015).
-
-Remove the configure check, directly checking for the 64-bit
-z/Architecture.
-
-Also per commit 3704993f545 from 2020:
-
-  "we don't support s390, only 64-bit s390x hosts".
-
+Fixes: 56e34834029 ("MAINTAINERS: split out s390x sections")
+Reported-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- configure                 | 12 ++----------
- include/qemu/cacheflush.h |  2 +-
- include/qemu/timer.h      |  2 +-
- block/file-posix.c        |  2 +-
- disas/disas-host.c        |  2 +-
- util/cacheflush.c         |  2 +-
- 6 files changed, 7 insertions(+), 15 deletions(-)
+ MAINTAINERS | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/configure b/configure
-index eea90306728..513ef7a153d 100755
---- a/configure
-+++ b/configure
-@@ -401,12 +401,8 @@ elif check_define _ARCH_PPC64 ; then
-   fi
- elif check_define __mips64 ; then
-   cpu="mips64"
--elif check_define __s390__ ; then
--  if check_define __s390x__ ; then
--    cpu="s390x"
--  else
--    cpu="s390"
--  fi
-+elif check_define __s390x__ ; then
-+  cpu="s390x"
- elif check_define __riscv && check_define _LP64 ; then
-   cpu="riscv64"
- elif check_define __aarch64__ ; then
-@@ -469,10 +465,6 @@ case "$cpu" in
-     linux_arch=riscv
-     ;;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index eda1e84268a..7749fe7f9bc 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2975,7 +2975,7 @@ M: Halil Pasic <pasic@linux.ibm.com>
+ M: Christian Borntraeger <borntraeger@linux.ibm.com>
+ R: Jason Herne <jjherne@linux.ibm.com>
+ S: Supported
+-F: hw/s390x/storage-keys.h
++F: include/hw/s390x/storage-keys.h
+ F: hw/s390x/s390-skeys*.c
+ L: qemu-s390x@nongnu.org
  
--  s390)
--    linux_arch=s390
--    CPU_CFLAGS="-m31"
--    ;;
-   s390x)
-     host_arch=s390x
-     linux_arch=s390
-diff --git a/include/qemu/cacheflush.h b/include/qemu/cacheflush.h
-index 8c64b878145..0618966ddde 100644
---- a/include/qemu/cacheflush.h
-+++ b/include/qemu/cacheflush.h
-@@ -19,7 +19,7 @@
-  * mappings of the same physical page(s).
-  */
- 
--#if defined(__x86_64__) || defined(__s390__)
-+#if defined(__x86_64__) || defined(__s390x__)
- 
- static inline void flush_idcache_range(uintptr_t rx, uintptr_t rw, size_t len)
- {
-diff --git a/include/qemu/timer.h b/include/qemu/timer.h
-index b931181f53d..fc021f8f966 100644
---- a/include/qemu/timer.h
-+++ b/include/qemu/timer.h
-@@ -889,7 +889,7 @@ static inline int64_t cpu_get_host_ticks(void)
-     return val;
- }
- 
--#elif defined(__s390__)
-+#elif defined(__s390x__)
- 
- static inline int64_t cpu_get_host_ticks(void)
- {
-diff --git a/block/file-posix.c b/block/file-posix.c
-index e49b13d6abb..5019ddade9b 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -79,7 +79,7 @@
- #include <linux/hdreg.h>
- #include <linux/magic.h>
- #include <scsi/sg.h>
--#ifdef __s390__
-+#ifdef __s390x__
- #include <asm/dasd.h>
- #endif
- #ifndef FS_NOCOW_FL
-diff --git a/disas/disas-host.c b/disas/disas-host.c
-index 7cf432938e0..d41235250a0 100644
---- a/disas/disas-host.c
-+++ b/disas/disas-host.c
-@@ -74,7 +74,7 @@ static void initialize_debug_host(CPUDebug *s)
-     s->info.print_insn = print_insn_little_mips;
- #elif defined(__m68k__)
-     s->info.print_insn = print_insn_m68k;
--#elif defined(__s390__)
-+#elif defined(__s390x__)
-     s->info.cap_arch = CS_ARCH_SYSZ;
-     s->info.cap_insn_unit = 2;
-     s->info.cap_insn_split = 6;
-diff --git a/util/cacheflush.c b/util/cacheflush.c
-index c043c5f881a..77440ddb478 100644
---- a/util/cacheflush.c
-+++ b/util/cacheflush.c
-@@ -223,7 +223,7 @@ static void __attribute__((constructor)) init_cache_info(void)
-  * Architecture (+ OS) specific cache flushing mechanisms.
-  */
- 
--#if defined(__x86_64__) || defined(__s390__)
-+#if defined(__x86_64__) || defined(__s390x__)
- 
- /* Caches are coherent and do not require flushing; symbol inline. */
+@@ -2984,7 +2984,7 @@ M: Halil Pasic <pasic@linux.ibm.com>
+ M: Christian Borntraeger <borntraeger@linux.ibm.com>
+ R: Jason Herne <jjherne@linux.ibm.com>
+ S: Supported
+-F: hw/s390x/storage-attributes.h
++F: include/hw/s390x/storage-attributes.h
+ F: hw/s390x/s390-stattrib*.c
+ L: qemu-s390x@nongnu.org
  
 -- 
 2.53.0
