@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8828FCD5BA4
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 12:55:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F059FCD5BA4
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 12:55:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPJwx-0007XL-WA; Tue, 19 May 2026 08:53:32 -0400
+	id 1wPJvm-00068f-In; Tue, 19 May 2026 08:52:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wPJwb-0006yx-NQ
- for qemu-devel@nongnu.org; Tue, 19 May 2026 08:53:10 -0400
+ id 1wPJvj-00065o-Dr
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 08:52:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wPJwa-0000yO-AA
- for qemu-devel@nongnu.org; Tue, 19 May 2026 08:53:09 -0400
+ id 1wPJvh-0000C0-IJ
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 08:52:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779195187;
+ s=mimecast20190719; t=1779195132;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7WmkbRyCOvc8KhMxUJJu07mhxWy5DTBCisJMQWdsY70=;
- b=T9+p/T9as47S85Xfh47N34Nm8+5kKkoWJnvfM1mK2Tr0yhQZXtJHuIxztHJxzq68QBMR+D
- OX6oVExHdm6SF/uTAXzzg9Qs3CFm1xO6ZY80IzAvKYWsT5aurUUpH3mkgdZLlR7URtNoOM
- 0ohBbbYwfex7GBE3bc0MSGieUL8PQ/M=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=bDPJ/rA4TRt7vjgNzC7L2s8kaU1MKdXtrs0Sj3PEP7k=;
+ b=OpSsUdgM7kSBIpWk4SqRML0XMFOrtMUjKl1Y/GJRKtjR2skY1eLtX4JfV+A53V26YD76jo
+ M0SxBy/ItApjqQoaYGgIwEQBoNYeP86SPiy7xCtzvcfZgr6fulvTMC5t1Cq6k+68wkIEN0
+ xI7y0gV7ZhOcPk08axmEeGpQGXUKhqM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-482-Xv3ZhQQ3Mjy5qzOS8FdjIA-1; Tue,
- 19 May 2026 08:53:06 -0400
-X-MC-Unique: Xv3ZhQQ3Mjy5qzOS8FdjIA-1
-X-Mimecast-MFC-AGG-ID: Xv3ZhQQ3Mjy5qzOS8FdjIA_1779195185
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-692-0s7kEbE6PaCVVxft957MfQ-1; Tue,
+ 19 May 2026 08:52:09 -0400
+X-MC-Unique: 0s7kEbE6PaCVVxft957MfQ-1
+X-Mimecast-MFC-AGG-ID: 0s7kEbE6PaCVVxft957MfQ_1779195128
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5824B1956046; Tue, 19 May 2026 12:53:05 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EE51D195609F; Tue, 19 May 2026 12:52:07 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.49.49])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 434EE1800347; Tue, 19 May 2026 12:53:02 +0000 (UTC)
+ id 4A3D71800673; Tue, 19 May 2026 12:52:04 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Cleber Rosa <crosa@redhat.com>,
@@ -55,10 +55,11 @@ Cc: Cleber Rosa <crosa@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>
-Subject: [PULL 17/28] gitlab: add jobs for thorough block tests
-Date: Tue, 19 May 2026 13:51:41 +0100
-Message-ID: <20260519125153.1015315-18-berrange@redhat.com>
+ John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Subject: [PULL 02/28] crypto: fix client side anonymous TLS credentials
+Date: Tue, 19 May 2026 13:51:26 +0100
+Message-ID: <20260519125153.1015315-3-berrange@redhat.com>
 In-Reply-To: <20260519125153.1015315-1-berrange@redhat.com>
 References: <20260519125153.1015315-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -90,57 +91,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CI is only exercising the qcow2 'auto' tests currently. As a result we
-get no exposure of changes which cause regressions in other block format
-drivers.
+The previous refactoring of credential creation failed to allocate
+storage fo the anonymous TLS credentials on the client endpoint.
 
-This adds new CI jobs for each block format, that will run the target
-'make check-block-$FORMAT'. The jobs are separate so that we have the
-ability to make each format gating or not, depending on their level
-of reliability.
-
-The 'centos' image is used to run the I/O tests since several tests
-have an implicit dependency on x86_64-softmmu, and thus break with
-other architecture targets. The 'centos' build job is the only one
-that creates the x86_64-softmmu target in CI. Ideally this target
-portability in I/O tests would be fixed to avoid this limitation.
-
-Acked-by: Kevin Wolf <kwolf@redhat.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Fixes: 70f9fd8dbf7233bee497055a9b7825e3729ce853
+Reported-by: Maciej S. Szmigiero <mail@maciej.szmigiero.name>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- .gitlab-ci.d/buildtest.yml | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ crypto/tlscredsanon.c               |   2 +
+ tests/unit/test-crypto-tlssession.c | 120 +++++++++++++++++++++++++++-
+ 2 files changed, 121 insertions(+), 1 deletion(-)
 
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index 4b1949a3a5..cf0281ecd6 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -174,6 +174,24 @@ build-system-centos:
-       x86_64-softmmu rx-softmmu sh4-softmmu
-     MAKE_CHECK_ARGS: check-build
+diff --git a/crypto/tlscredsanon.c b/crypto/tlscredsanon.c
+index 1551382e1f..190c9833a7 100644
+--- a/crypto/tlscredsanon.c
++++ b/crypto/tlscredsanon.c
+@@ -73,6 +73,8 @@ qcrypto_tls_creds_anon_load(QCryptoTLSCredsAnon *creds,
+                                              box->dh_params);
+         }
+     } else {
++        box = qcrypto_tls_creds_box_new_client(GNUTLS_CRD_ANON);
++
+         ret = gnutls_anon_allocate_client_credentials(&box->data.anonclient);
+         if (ret < 0) {
+             error_setg(errp, "Cannot allocate credentials: %s",
+diff --git a/tests/unit/test-crypto-tlssession.c b/tests/unit/test-crypto-tlssession.c
+index 0d06a6892e..dc7a01bb06 100644
+--- a/tests/unit/test-crypto-tlssession.c
++++ b/tests/unit/test-crypto-tlssession.c
+@@ -24,6 +24,7 @@
+ #include "crypto-tls-psk-helpers.h"
+ #include "crypto/tlscredsx509.h"
+ #include "crypto/tlscredspsk.h"
++#include "crypto/tlscredsanon.h"
+ #include "crypto/tlssession.h"
+ #include "qom/object_interfaces.h"
+ #include "qapi/error.h"
+@@ -190,6 +191,121 @@ static void test_crypto_tls_session_psk(void)
+ }
  
+ 
++static QCryptoTLSCreds *test_tls_creds_anon_create(
++    QCryptoTLSCredsEndpoint endpoint)
++{
++    Object *parent = object_get_objects_root();
++    Object *creds = object_new_with_props(
++        TYPE_QCRYPTO_TLS_CREDS_ANON,
++        parent,
++        (endpoint == QCRYPTO_TLS_CREDS_ENDPOINT_SERVER ?
++         "testtlscredsserver" : "testtlscredsclient"),
++        &error_abort,
++        "endpoint", (endpoint == QCRYPTO_TLS_CREDS_ENDPOINT_SERVER ?
++                     "server" : "client"),
++        "priority", "NORMAL",
++        NULL
++        );
++    return QCRYPTO_TLS_CREDS(creds);
++}
 +
-+# NB: block-XXX jobs use 'centos' since that is the build
-+# job that provides the x86_64-softmmu.  Some I/O tests
-+# are currently buggy and blindly assume characteristics
-+# of x86 (such as PCIe) causing failures with other arches
 +
-+block:
-+  extends: .native_test_job_template
-+  needs:
-+    - job: build-system-centos
-+      artifacts: true
-+  variables:
-+    IMAGE: centos9
-+    MAKE_CHECK_ARGS: "check-block-$FORMAT"
-+  parallel:
-+    matrix:
-+      - FORMAT: [luks, nbd, parallels, qcow2, qed, raw, vdi, vhdx, vmdk, vpc]
++static void test_crypto_tls_session_anon(void)
++{
++    QCryptoTLSCreds *clientCreds;
++    QCryptoTLSCreds *serverCreds;
++    QCryptoTLSSession *clientSess = NULL;
++    QCryptoTLSSession *serverSess = NULL;
++    int channel[2];
++    bool clientShake = false;
++    bool serverShake = false;
++    int ret;
 +
- # Previous QEMU release. Used for cross-version migration tests.
- build-previous-qemu:
-   extends: .native_build_job_template
++    /* We'll use this for our fake client-server connection */
++    ret = qemu_socketpair(AF_UNIX, SOCK_STREAM, 0, channel);
++    g_assert(ret == 0);
++
++    /*
++     * We have an evil loop to do the handshake in a single
++     * thread, so we need these non-blocking to avoid deadlock
++     * of ourselves
++     */
++    qemu_set_blocking(channel[0], false, &error_abort);
++    qemu_set_blocking(channel[1], false, &error_abort);
++
++    clientCreds = test_tls_creds_anon_create(
++        QCRYPTO_TLS_CREDS_ENDPOINT_CLIENT);
++    g_assert(clientCreds != NULL);
++
++    serverCreds = test_tls_creds_anon_create(
++        QCRYPTO_TLS_CREDS_ENDPOINT_SERVER);
++    g_assert(serverCreds != NULL);
++
++    /* Now the real part of the test, setup the sessions */
++    clientSess = qcrypto_tls_session_new(
++        clientCreds, NULL, NULL,
++        QCRYPTO_TLS_CREDS_ENDPOINT_CLIENT, &error_abort);
++    g_assert(clientSess != NULL);
++
++    serverSess = qcrypto_tls_session_new(
++        serverCreds, NULL, NULL,
++        QCRYPTO_TLS_CREDS_ENDPOINT_SERVER, &error_abort);
++    g_assert(serverSess != NULL);
++
++    /* For handshake to work, we need to set the I/O callbacks
++     * to read/write over the socketpair
++     */
++    qcrypto_tls_session_set_callbacks(serverSess,
++                                      testWrite, testRead,
++                                      &channel[0]);
++    qcrypto_tls_session_set_callbacks(clientSess,
++                                      testWrite, testRead,
++                                      &channel[1]);
++
++    /*
++     * Finally we loop around & around doing handshake on each
++     * session until we get an error, or the handshake completes.
++     * This relies on the socketpair being nonblocking to avoid
++     * deadlocking ourselves upon handshake
++     */
++    do {
++        int rv;
++        if (!serverShake) {
++            rv = qcrypto_tls_session_handshake(serverSess,
++                                               &error_abort);
++            g_assert(rv >= 0);
++            if (rv == QCRYPTO_TLS_HANDSHAKE_COMPLETE) {
++                serverShake = true;
++            }
++        }
++        if (!clientShake) {
++            rv = qcrypto_tls_session_handshake(clientSess,
++                                               &error_abort);
++            g_assert(rv >= 0);
++            if (rv == QCRYPTO_TLS_HANDSHAKE_COMPLETE) {
++                clientShake = true;
++            }
++        }
++    } while (!clientShake || !serverShake);
++
++
++    /* Finally make sure the server & client validation is successful. */
++    g_assert(qcrypto_tls_session_check_credentials(serverSess,
++                                                   &error_abort) == 0);
++    g_assert(qcrypto_tls_session_check_credentials(clientSess,
++                                                   &error_abort) == 0);
++
++    object_unparent(OBJECT(serverCreds));
++    object_unparent(OBJECT(clientCreds));
++
++    qcrypto_tls_session_free(serverSess);
++    qcrypto_tls_session_free(clientSess);
++
++    close(channel[0]);
++    close(channel[1]);
++}
++
++
+ struct QCryptoTLSSessionTestData {
+     const char *servercacrt;
+     const char *clientcacrt;
+@@ -421,9 +537,11 @@ int main(int argc, char **argv)
+     test_tls_init(KEYFILE);
+     test_tls_psk_init(PSKFILE);
+ 
+-    /* Simple initial test using Pre-Shared Keys. */
++    /* Simple initial tests using Pre-Shared Keys & anon creds */
+     g_test_add_func("/qcrypto/tlssession/psk",
+                     test_crypto_tls_session_psk);
++    g_test_add_func("/qcrypto/tlssession/anon",
++                    test_crypto_tls_session_anon);
+ 
+     /* More complex tests using X.509 certificates. */
+ # define TEST_SESS_REG(name, caCrt,                                     \
 -- 
 2.54.0
 
