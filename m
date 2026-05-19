@@ -4,72 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81E39CD5BA4
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 12:41:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27A42CD4F5B
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 12:41:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPJkH-000313-Ij; Tue, 19 May 2026 08:40:25 -0400
+	id 1wPJkd-0003AN-88; Tue, 19 May 2026 08:40:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wPJjo-0002vt-J5
- for qemu-devel@nongnu.org; Tue, 19 May 2026 08:39:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
+ id 1wPJkP-000382-GZ; Tue, 19 May 2026 08:40:35 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wPJjm-0002DW-Be
- for qemu-devel@nongnu.org; Tue, 19 May 2026 08:39:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779194392;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xU4mUWAlexcwA+GX69eJvJ7LgLD191u99rk5n2YbY9k=;
- b=DawoSCfrWsbb4hD73zLU6Ku2EYy64DVuZKgZt1Wi8wOuTjVovgvTByfxMqF/2R+oiKwxI3
- jnEmT/tOrGV+MFqBxD16hrAH+AR8Ei+goL+yA0JYx2ipbpD7ySr8d8hU78IkAOvSSPjzBC
- uJzvLFuDqw9l7FKRyCImdIWmDX6EVgw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-491-YRhMiFc7OPCtK9gedUIQ8w-1; Tue,
- 19 May 2026 08:39:48 -0400
-X-MC-Unique: YRhMiFc7OPCtK9gedUIQ8w-1
-X-Mimecast-MFC-AGG-ID: YRhMiFc7OPCtK9gedUIQ8w_1779194387
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A95301956080; Tue, 19 May 2026 12:39:46 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.118])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1280D19560A2; Tue, 19 May 2026 12:39:45 +0000 (UTC)
-Date: Tue, 19 May 2026 08:39:44 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Klaus Jensen <its@irrelevant.dk>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Klaus Jensen <k.jensen@samsung.com>
-Subject: Re: [PULL 0/5] hw/nvme queue
-Message-ID: <20260519123944.GA106707@fedora>
-References: <20260518120748.14831-1-its@irrelevant.dk>
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
+ id 1wPJkN-0003CT-Aj; Tue, 19 May 2026 08:40:33 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 9698160126;
+ Tue, 19 May 2026 12:40:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAA02C2BCB8;
+ Tue, 19 May 2026 12:40:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1779194429;
+ bh=C9LJspxe9GlzuGA89k1Z0lPBgQt209jCJ7X50Q61Rbc=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=BxvXTuw/1KacfEuUcxA2ShzLusAlC1/fZN4LJ1syCuxeVT0wCRJBbz1vfN2Oyv8Qm
+ laupkzT3Szae7dDCk2WyAfR1JO6EWUtFWMeCu6GUrtojLGRciixMgNUgEbSGfwKxV5
+ kWo+Ds/+lcbJkp0uff0/b8XlvXvOHzVyKvZY59zvDmFewnPbw2syELpEn9rJbiO6az
+ 9NyfExj1eN5h8NyjNtrhIyhPj7SkS+oKDidCjGzwfYzjVarRSqMQteA19hqSZYAntn
+ ihCYDQjsc4vt82dLdQrSWcI1AlRa0A0NQ1dqijbRAs9ZIwuxe+azXu6L1e+ORAFgru
+ 5qwgcQBIjyV0w==
+Date: Tue, 19 May 2026 13:40:14 +0100
+From: Jonathan Cameron <jic23@kernel.org>
+To: <mhonap@nvidia.com>
+Cc: <alwilliamson@nvidia.com>, <skolothumtho@nvidia.com>,
+ <ankita@nvidia.com>, <mst@redhat.com>, <imammedo@redhat.com>,
+ <anisinha@redhat.com>, <eric.auger@redhat.com>, <peter.maydell@linaro.org>,
+ <shannon.zhaosl@gmail.com>, <jonathan.cameron@huawei.com>,
+ <fan.ni@samsung.com>, <pbonzini@redhat.com>,
+ <richard.henderson@linaro.org>, <marcel.apfelbaum@gmail.com>,
+ <clg@redhat.com>, <cohuck@redhat.com>, <dan.j.williams@intel.com>,
+ <dave.jiang@intel.com>, <alejandro.lucero-palau@amd.com>,
+ <vsethi@nvidia.com>, <cjia@nvidia.com>, <targupta@nvidia.com>,
+ <zhiw@nvidia.com>, <kjaju@nvidia.com>, <linux-cxl@vger.kernel.org>,
+ <kvm@vger.kernel.org>, <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
+Subject: Re: [RFC 1/9] hw/arm/virt: Add CXL FMWS PA window for device memory
+Message-ID: <20260519134014.474a8289@jic23-huawei>
+In-Reply-To: <20260427181235.3003865-2-mhonap@nvidia.com>
+References: <20260427181235.3003865-1-mhonap@nvidia.com>
+ <20260427181235.3003865-2-mhonap@nvidia.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="ZxbWF7JftBU/7iHT"
-Content-Disposition: inline
-In-Reply-To: <20260518120748.14831-1-its@irrelevant.dk>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=jic23@kernel.org;
+ helo=tor.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,30 +79,216 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, 27 Apr 2026 23:42:27 +0530
+<mhonap@nvidia.com> wrote:
 
---ZxbWF7JftBU/7iHT
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> From: Manish Honap <mhonap@nvidia.com>
+> 
+> CXL VFIO passthrough needs a stable guest physical address range for
+> device memory (DPA) that falls inside a CFMWS entry the guest discovers
+> from ACPI CEDT. Without a dedicated range in the address map, the HDM
+> decoder has nowhere to point.
+> 
+> Add VIRT_HIGH_CXL_MMIO immediately after the second PCIe MMIO window.
+> It gets its own highmem_cxl_mmio flag in VirtMachineState rather than
+> sharing highmem_cxl, so the two slots are independently controllable
+> even though both are currently tied to CXL bridge presence.
 
-Applied, thanks.
+Can we clearly state here what they are.  highmem_cxl is the root
+bridge registers. I'm not entirely sure I yet understand what highmem_cxl_mmio
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.1 for any user-visible changes.
+> 
+> The base and size flow through GPEXConfig.cxl_mmio to
+> acpi_dsdt_add_gpex(), which carves out a QWord memory descriptor in the
+> first CXL root bridge's _CRS. The CFMWS window is system-wide, so only
+> the first CXL bridge gets the descriptor - subsequent ones would
+> produce duplicate resource claims for the same range.
 
---ZxbWF7JftBU/7iHT
-Content-Type: application/pgp-signature; name=signature.asc
+I don't follow. CFMWS are not system wide. They refer to one or more of the
+root bridges. I suppose you could argue that the 'or more' bit makes
+them kind of system wide. Right now I'm not even sure why they are in
+CRS at all as opposed to being obtained from CEDT.
 
------BEGIN PGP SIGNATURE-----
+Maybe a spec reference for why a bridge should be claiming these regions?
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmoMWhAACgkQnKSrs4Gr
-c8gmWwf7BWvjGPMshnN5Vd2hlIenuZ44IUCBeIvkccsdf6CpEId1GPP6rn0hiqza
-L8PK3e9kmExV1sIRvsaPZSUD98VXOieM/lGvykrsP+W3+Gfg/6ts4pycUJav/tR4
-zXDB9hr9fJ1lOFmlOJwbBX3IkqqWs8V/VL0VlTWTRf7FiWxems2YkK8lvJGekgu/
-dJMe/ZElXp3x9cIjge8LTIk6FN/JaGcIOg46JLoQ4dJUaJ7yiUwb3MQSZaTOoeZz
-hm6oKCj0JECOvht7UPAQBRMbzoXg7RQ7JzduFQYwq/V2cbQAy5S1hQovHO3IJdyQ
-nDl3+O/lY3ti4VgcuNyxDG/Tnoysrw==
-=3+AZ
------END PGP SIGNATURE-----
+I'm not understanding yet why we can't use the existing CFMWS support
+so please add information on that tot his commit message.
 
---ZxbWF7JftBU/7iHT--
+
+> 
+> build_crs() already emits the bridge's own 64-bit ranges into crs.
+> The CFMWS window is a separate system-wide range, so only that window
+> is appended as a new QWord descriptor; the bridge ranges are not
+> re-emitted. A warn_report() fires if the CFMWS window overlaps any
+> existing bridge 64-bit range, since that would indicate an address
+> layout conflict.
+> 
+> Signed-off-by: Zhi Wang <zhiw@nvidia.com>
+> Signed-off-by: Manish Honap <mhonap@nvidia.com>
+> ---
+>  hw/arm/virt-acpi-build.c   |  5 +++++
+>  hw/arm/virt.c              |  9 +++++++++
+>  hw/pci-host/gpex-acpi.c    | 40 ++++++++++++++++++++++++++++++++++++++
+>  include/hw/arm/virt.h      |  2 ++
+>  include/hw/pci-host/gpex.h |  1 +
+>  5 files changed, 57 insertions(+)
+> 
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index 591cfc993c..863e0680fb 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -176,6 +176,11 @@ static void acpi_dsdt_add_pci(Aml *scope, const MemMapEntry *memmap,
+>          cfg.mmio64 = memmap[VIRT_HIGH_PCIE_MMIO];
+>      }
+>  
+> +    if (vms->highmem_cxl) {
+> +        cfg.cxl_mmio.base = memmap[VIRT_HIGH_CXL_MMIO].base;
+> +        cfg.cxl_mmio.size = memmap[VIRT_HIGH_CXL_MMIO].size;
+> +    }
+> +
+>      acpi_dsdt_add_gpex(scope, &cfg);
+>      QLIST_FOREACH(bus, &vms->bus->child, sibling) {
+>          if (pci_bus_is_cxl(bus)) {
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index ec0d8475ca..fa07819401 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -211,6 +211,8 @@ static const MemMapEntry base_memmap[] = {
+>  #define DEFAULT_HIGH_PCIE_MMIO_SIZE_GB 512
+>  #define DEFAULT_HIGH_PCIE_MMIO_SIZE (DEFAULT_HIGH_PCIE_MMIO_SIZE_GB * GiB)
+>  
+> +#define DEFAULT_HIGH_CXL_MMIO_SIZE  DEFAULT_HIGH_PCIE_MMIO_SIZE
+> +
+>  /*
+>   * Highmem IO Regions: This memory map is floating, located after the RAM.
+>   * Each MemMapEntry base (GPA) will be dynamically computed, depending on the
+> @@ -237,6 +239,11 @@ static MemMapEntry extended_memmap[] = {
+>      [VIRT_HIGH_PCIE_ECAM] =     { 0x0, 256 * MiB },
+>      /* Second PCIe window */
+>      [VIRT_HIGH_PCIE_MMIO] =     { 0x0, DEFAULT_HIGH_PCIE_MMIO_SIZE },
+> +    /*
+> +     * CXL FMWS guest PA window - separate from PCIe MMIO so the two are
+> +     * independently sizeable. Same default size for now.
+> +     */
+> +    [VIRT_HIGH_CXL_MMIO] =      { 0x0, DEFAULT_HIGH_CXL_MMIO_SIZE },
+>      /* Any CXL Fixed memory windows come here */
+
+Why not use the infra this comment is talking about?
+
+>  };
+>  
+> @@ -1724,6 +1731,7 @@ static void create_cxl_host_reg_region(VirtMachineState *vms)
+>                         vms->memmap[VIRT_CXL_HOST].size);
+>      memory_region_add_subregion(sysmem, vms->memmap[VIRT_CXL_HOST].base, mr);
+>      vms->highmem_cxl = true;
+> +    vms->highmem_cxl_mmio = true;
+>  }
+>  
+>  static void create_platform_bus(VirtMachineState *vms)
+> @@ -1897,6 +1905,7 @@ static inline bool *virt_get_high_memmap_enabled(VirtMachineState *vms,
+>          &vms->highmem_cxl,
+>          &vms->highmem_ecam,
+>          &vms->highmem_mmio,
+> +        &vms->highmem_cxl_mmio,
+>      };
+>  
+>      assert(ARRAY_SIZE(extended_memmap) - VIRT_LOWMEMMAP_LAST ==
+> diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
+> index d9820f9b41..7de57bbc46 100644
+> --- a/hw/pci-host/gpex-acpi.c
+> +++ b/hw/pci-host/gpex-acpi.c
+> @@ -7,6 +7,7 @@
+>  #include "hw/pci/pci_bridge.h"
+>  #include "hw/pci/pcie_host.h"
+>  #include "hw/acpi/cxl.h"
+> +#include "qemu/error-report.h"
+>  
+>  static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq,
+>                                            Aml *scope, uint8_t bus_num)
+> @@ -108,6 +109,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
+>      CrsRangeSet crs_range_set;
+>      CrsRangeEntry *entry;
+>      int i;
+> +    bool first_cxl = true;
+>  
+>      /* start to construct the tables for pxb */
+>      crs_range_set_init(&crs_range_set);
+> @@ -161,6 +163,44 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
+>               */
+>              crs = build_crs(PCI_HOST_BRIDGE(BUS(bus)->parent), &crs_range_set,
+>                              cfg->pio.base, 0, 0, 0);
+> +            if (is_cxl && first_cxl && cfg->cxl_mmio.size) {
+> +                uint64_t cfmws_end = cfg->cxl_mmio.base +
+> +                                     cfg->cxl_mmio.size - 1;
+> +
+> +                /*
+> +                 * The CXL Fixed Memory Window (CFMWS) is a system-wide GPA
+> +                 * range.  Only the first CXL root bridge emits the QWord
+> +                 * descriptor; adding it to every bridge would give the OS
+> +                 * duplicate resource claims for the same range.
+> +                 *
+> +                 * build_crs() has already appended the bridge's own 64-bit
+> +                 * ranges into crs.  Do not copy them again here; only append
+> +                 * the CFMWS window itself as a new QWord descriptor.
+> +                 *
+> +                 * Warn if the CFMWS window overlaps any range already claimed
+> +                 * by the bridge; in the current address layout they should be
+> +                 * disjoint, but catch it early if the layout ever changes.
+> +                 */
+> +                for (i = 0; i < crs_range_set.mem_64bit_ranges->len; i++) {
+> +                    entry = g_ptr_array_index(crs_range_set.mem_64bit_ranges,
+> +                                              i);
+> +                    if (entry->base <= cfmws_end &&
+> +                        entry->limit >= cfg->cxl_mmio.base) {
+> +                        warn_report("CXL CFMWS [0x%"PRIx64"-0x%"PRIx64"] "
+> +                                    "overlaps CXL root bridge 64-bit range "
+> +                                    "[0x%"PRIx64"-0x%"PRIx64"]",
+> +                                    cfg->cxl_mmio.base, cfmws_end,
+> +                                    entry->base, entry->limit);
+> +                    }
+> +                }
+> +                aml_append(crs,
+> +                    aml_qword_memory(AML_POS_DECODE, AML_MIN_FIXED,
+> +                        AML_MAX_FIXED, AML_NON_CACHEABLE, AML_READ_WRITE,
+> +                        0x0000, cfg->cxl_mmio.base, cfmws_end, 0x0000,
+> +                        cfg->cxl_mmio.size));
+> +                first_cxl = false;
+> +            }
+> +
+>              aml_append(dev, aml_name_decl("_CRS", crs));
+>  
+>              if (is_cxl) {
+> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+> index 5fcbd1c76f..88bb3c0bdf 100644
+> --- a/include/hw/arm/virt.h
+> +++ b/include/hw/arm/virt.h
+> @@ -91,6 +91,7 @@ enum {
+>      VIRT_CXL_HOST,
+>      VIRT_HIGH_PCIE_ECAM,
+>      VIRT_HIGH_PCIE_MMIO,
+> +    VIRT_HIGH_CXL_MMIO,
+>  };
+>  
+>  typedef enum VirtIOMMUType {
+> @@ -147,6 +148,7 @@ struct VirtMachineState {
+>      bool highmem;
+>      bool highmem_compact;
+>      bool highmem_cxl;
+> +    bool highmem_cxl_mmio;  /* VIRT_HIGH_CXL_MMIO window; follows highmem_cxl */
+>      bool highmem_ecam;
+>      bool highmem_mmio;
+>      bool highmem_redists;
+> diff --git a/include/hw/pci-host/gpex.h b/include/hw/pci-host/gpex.h
+> index 1da9c85bce..a7c2e2edf3 100644
+> --- a/include/hw/pci-host/gpex.h
+> +++ b/include/hw/pci-host/gpex.h
+> @@ -43,6 +43,7 @@ struct GPEXConfig {
+>      MemMapEntry mmio32;
+>      MemMapEntry mmio64;
+>      MemMapEntry pio;
+> +    MemMapEntry cxl_mmio;
+>      int         irq;
+>      PCIBus      *bus;
+>      bool        pci_native_hotplug;
 
 
