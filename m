@@ -4,111 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76940CD4F5B
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 17:22:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17992CD4F5B
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 17:27:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPO8q-00059r-TH; Tue, 19 May 2026 13:22:04 -0400
+	id 1wPODT-0006Nv-PD; Tue, 19 May 2026 13:26:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPO8l-00057w-Nj
- for qemu-devel@nongnu.org; Tue, 19 May 2026 13:21:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPO8k-0001Yc-A6
- for qemu-devel@nongnu.org; Tue, 19 May 2026 13:21:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779211317;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=HxUKMicxQL8qvyB9Q0NbwN0ADL4uiQ0R8pX4AUVPcK8=;
- b=QGQLfzYy+0m8OpIc/BuzoDnzLUsP0g8asdei9Q9yhaQiuuM3D7+6X45GBrHbkSIt9+zdG2
- 5CRwOV3NQF28Q/UR1jwYOsTasjP12Cmc4huyYok2HFDhCUEiHf0dAjtKAYqatmLIfImfE/
- 23emYRZ/w/7OMIO3ijA6l+fKD4VGo8Y=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-292-Q4BB8wfdO2-jKNxIYXgVNg-1; Tue, 19 May 2026 13:21:55 -0400
-X-MC-Unique: Q4BB8wfdO2-jKNxIYXgVNg-1
-X-Mimecast-MFC-AGG-ID: Q4BB8wfdO2-jKNxIYXgVNg_1779211315
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-90f5248b209so922614885a.2
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 10:21:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPOD6-0006Le-MT
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 13:26:29 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPOD3-0002XI-PE
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 13:26:28 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-48fde648a71so28595015e9.0
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 10:26:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779211314; x=1779816114; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=HxUKMicxQL8qvyB9Q0NbwN0ADL4uiQ0R8pX4AUVPcK8=;
- b=DRXye4/NwUGvP0FjL6NBrr+HO9Kf41d5c9EEP0MYHDEEVu9EsMrx+uVHHfiWlA7vfO
- o9yPUoDZqm7U1JedO8cbxcIzxMMQsDA+10nW6QGY/KgMLd7wLP5i8X8HX3Vf4Hjf+eDk
- +Dq9bgdYcyTtZ7XKQs6vcd5aPFrAzBqMAJatTy1J8+f3VEq0xKz/QbtLmPJ2580qI+En
- WkArRP7HZ3eryd17NG79bXOPd27dwwzkLnZujF+yLOEiRieylPGoDTrh2MpL3gcdijQX
- WxuiUI47aghcgetku3uOO204FWKbzx37kJvEaAAKtC3Q5DlvB7k6suNQ/gX0667ILZqn
- 6GEg==
+ d=linaro.org; s=google; t=1779211583; x=1779816383; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=W7Y3ov/4uDmrOIHa6vTHJu/NH7XRpswpbX5edldRgyQ=;
+ b=zQscikjrQ2FVsb1LIcGI+sJNpPwN29tpEtNwdZ92br79D+fBdbKIZ7qblnL1K8M+56
+ 1qDVIWU+Q6jtgF+mIrfWINjbB3ECZMCQj/9LMDQmAn+AoTE+zeW/N52Z8R6rVmzFVWYr
+ xrFyuk6udB1TKQrwX2B+Pfa9V15ixYrI0/VVC0/IIlkhbPNespP4A6Bf466UM/e+MAE6
+ cXCaMyuNKB8Qvd5jBUv6n00yteCjVidgxTdBna5uFmXKD32ZRPZQGUFQJ0cjQ7R26dOy
+ lT/+RWdbl80qtAC3KDg5OLx0waTMzdgnnh6EbXB+tKXRdZs9xQmcQNplxGqJrRS9V3xo
+ q2bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779211314; x=1779816114;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HxUKMicxQL8qvyB9Q0NbwN0ADL4uiQ0R8pX4AUVPcK8=;
- b=pc4ZU0hOa8/YbGCp0irl2klYMKwL3945wCTO4PwjGjiK0unLeNL4ydPkQMV0BtYQ89
- OEJah0tdC8iVj/aXa3b1T4G2TzCH9HeThxIzJt96fdVv5xpgsZqMMGn4owv0PahkjaD8
- vqi1qemStR8FcvmFqdjL/dD+YeuUizr0vk1jDrur+W7qxI2YbEdTzGc8y9GzSlCYVGWu
- LLg+Nz4ZcPajp17du/Lw3lU+pU8E+B9bIz2XAX3qgi2raMtVXzoQ0HqoqFQNA9ti7chJ
- iiVU8XYU0vx9TWcD4LKcf+gaQLkuEw+eHvKOH2oumvF1SeYucj5mhNFqBBgRwExEi79R
- P0OA==
-X-Gm-Message-State: AOJu0Yzt8dWYX++2yLfj/w8HR/xSLAgHaMtw/AZ70ODKXyHiAdFDqCJD
- 5jygkyO7/9b7s2s+fwpal806xuvZ9Yrc5HMClICnCysec84Zy6bjTL2h37VVd7R51D9A6JI7HYy
- RBWaMq9hl+zm5SfXTGGCnr0ZxYn7gIzWo27Gc8FKuFM8n5xD2zhAuEsXJcZidFJUB
-X-Gm-Gg: Acq92OGag/pvAsTDbCczc2av0XQVuV6w6o2KVwBZnia8nL8CItcJA493Iy/5cfHkLwc
- 2K4qXN2ViTEmROKRQ/4U7FLGAp7fbzkuleqhLukukt2k9YW2j1CV2TDEACD/xHahVwCC3/Dt/Az
- pSHK4bvxvkvWcg5lnhZuE3fZKwGhgRtjb1/xVowuBPYtMJobiRYTFflJOFda9XEdw/Hsv/wqqu7
- gzd0FGSQT3Yi7/vrGBfywltqz0NahZZkwiiIChWyPTLpj6DDj5GwYmR6zySCiNMgOoCbfEiFPNJ
- mpVN5+oz+OKCKyj9Gg2xtmsBWA8Es3lZlJRY/tzByGQfgrCZKDuVDn98+6Xs9dx3/nnCzSJyJoT
- Jdwd0P2M8B5swFTR3dLBz1V5Gc4KDj9bYtE3xRE5W+4HFiwc=
-X-Received: by 2002:a05:620a:17a1:b0:90f:c88d:ebb9 with SMTP id
- af79cd13be357-911cda50ab4mr3111870785a.13.1779211314370; 
- Tue, 19 May 2026 10:21:54 -0700 (PDT)
-X-Received: by 2002:a05:620a:17a1:b0:90f:c88d:ebb9 with SMTP id
- af79cd13be357-911cda50ab4mr3111863585a.13.1779211313719; 
- Tue, 19 May 2026 10:21:53 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-910bab3ad15sm1874488785a.16.2026.05.19.10.21.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 May 2026 10:21:53 -0700 (PDT)
-Date: Tue, 19 May 2026 13:21:50 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
- Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Keith Busch <kbusch@kernel.org>, Fam Zheng <fam@euphon.net>,
- =?utf-8?B?U3TDqXBoYW5l?= Graber <stgraber@stgraber.org>,
- Klaus Jensen <its@irrelevant.dk>, Zhao Liu <zhao1.liu@intel.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Jesper Devantier <foss@defmacro.it>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: Re: [PATCH v7 1/8] tests/functional/migration: add VM
- launch/configure hooks
-Message-ID: <agycLqsUoEautDQ6@x1.local>
-References: <20260511151131.483217-1-alexander@mihalicyn.com>
- <20260511151131.483217-2-alexander@mihalicyn.com>
+ d=1e100.net; s=20251104; t=1779211583; x=1779816383;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=W7Y3ov/4uDmrOIHa6vTHJu/NH7XRpswpbX5edldRgyQ=;
+ b=gXWOeqr6rtAG582WKXCOTSXgA1TmfSb3J15QwOPN0Cph/7UyOuHWTl80gvGvLSE8qz
+ MKnt8U1xO+EAR1Am/we5PHoIZUxYuCuFMhhQMf//yav+LQVw3IROqXcFZj4SOmmObaEt
+ qzZaMjeMeDUIz6pNKwjLT/FgCxfQ8C18cu3dPk2vKGWl2vr78uV5rtawcio1xmttGpYL
+ pxW4YfFjCidm5gxy5pgUwoOFCMPRQFtgC+dqJZkmtb7XY+UsPbZYy07w4ba649trNuEO
+ 2v1Ef/OHPjgDNX0Da2+leha4X1NrTBmvL1AFJyU5h+sHxHldYMQERIGTwya5oWvMC9HZ
+ Hk8Q==
+X-Gm-Message-State: AOJu0YyidzkvMjWnUjdh+/izGDQevOa6T/dB6oFWXwsk8J/no7lq63hB
+ 7uvt/TDbBNMo1lX4oNtyAomGwH0hrI0GGQaBOh/CgVem+jcDoep6rvXKDsqYdFyPmvNtifRNKum
+ U9GrwS2o=
+X-Gm-Gg: Acq92OE9qi9+Lr0P8npeCvUWBxr5ZHxpxAnZVlAPGY9BkKvS/yUc2xYY5h3U/seIJ/N
+ 2KPCDrQAJGaVryQ9IBe5LIRryYdl5hqMP+gdcPPFtbG6uncXikB6OvPtg+FoQLaiU0aKMgJp5aT
+ KtqK+3yaXTns6bXLWPz2XczUuAjpuuk6onmxPR+dnOjVD+Up9sS3lSccf654VTABSQlOP0/QaV5
+ jvti8VpG8Fh6T6Kzgf9582PO2eEGwPtfvPz2otGbkmB1q93BMoU9O1w3ps9bdYamE9NCq3f8LY9
+ Mi7/wkvBM7dNvZsXJuImuCiUbdla7MKfZwQwSLnBjl8dUEQIdoiveZNXtyWdUFFUBA/G1fxSJNc
+ 5BvZfPiNzIqqJlp+sQxE6985Ssy0tb/dy+73pROyUIr8JWta0qJxUQz21PhWr23H8iVSjTFK0Gl
+ fDzegK74DJtzAq9xGySL9xc3Qakme1oyPrj2VWaQNssmGn5I5uCveGFdEy/e2A+cyu+J+yt0dX
+X-Received: by 2002:a05:600c:8288:b0:490:2640:a982 with SMTP id
+ 5b1f17b1804b1-4902640aefemr16769965e9.3.1779211583306; 
+ Tue, 19 May 2026 10:26:23 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48febe78aadsm108523605e9.29.2026.05.19.10.26.22
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 19 May 2026 10:26:22 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH] MAINTAINERS: Fix RISCV related paths
+Date: Tue, 19 May 2026 19:26:21 +0200
+Message-ID: <20260519172621.98469-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260511151131.483217-2-alexander@mihalicyn.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,18 +98,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 11, 2026 at 05:11:24PM +0200, Alexander Mikhalitsyn wrote:
-> From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-> 
-> Introduce configure_machine, launch_source_vm and assert_dest_vm
-> methods to allow child classes to override some pieces of
-> source/dest VMs creation, start and check logic.
-> 
-> Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Host user-emulation headers were renamed in commits ba0e7333620
+("configure: Merge riscv32 and riscv64 host architectures") and
+bbf15aaf7c7 ("common-user: Move safe-syscall.* from linux-user"),
+then covered in commit 355cdac7d86 ("MAINTAINERS: Add
+common-user/host/riscv to RISC-V section"). Remove the obsolete
+entries.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+test_riscv64_sifive_u.py was renamed in commit e1a8572a8d7
+("tests/functional: Move riscv32/riscv64 tests into target-specific
+folders").
 
+Reported-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ MAINTAINERS | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 73b7ebf1d7e..0a1cc0e51a2 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -361,8 +361,6 @@ F: hw/riscv/
+ F: hw/intc/riscv*
+ F: include/hw/char/riscv_htif.h
+ F: include/hw/riscv/
+-F: linux-user/host/riscv32/
+-F: linux-user/host/riscv64/
+ F: common-user/host/riscv*
+ F: tests/functional/riscv32
+ F: tests/functional/riscv64
+@@ -1783,7 +1781,7 @@ S: Supported
+ F: docs/system/riscv/sifive_u.rst
+ F: hw/*/*sifive*.c
+ F: include/hw/*/*sifive*.h
+-F: tests/functional/test_riscv64_sifive_u.py
++F: tests/functional/riscv64/test_sifive_u.py
+ 
+ AMD Microblaze-V Generic Board
+ M: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
 -- 
-Peter Xu
+2.53.0
 
 
