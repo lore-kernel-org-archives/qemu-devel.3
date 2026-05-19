@@ -4,43 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D65CCD4F54
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 06:37:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84A7ACD4F3C
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 06:45:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPE3v-0000WL-WE; Tue, 19 May 2026 02:36:20 -0400
+	id 1wPEC4-0003Fj-Ie; Tue, 19 May 2026 02:44:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1wPE3u-0000Vd-Qp
- for qemu-devel@nongnu.org; Tue, 19 May 2026 02:36:18 -0400
-Received: from [2400:e920:0:e::2c] (helo=krgm.moe)
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <prcups@krgm.moe>) id 1wPE3q-0004IQ-Qf
- for qemu-devel@nongnu.org; Tue, 19 May 2026 02:36:18 -0400
-Received: from yuno-loong (unknown [IPv6:2400:e920:0:e::2c])
- by krgm.moe (Postfix) with ESMTPSA id C14302430986;
- Tue, 19 May 2026 14:30:59 +0800 (CST)
-From: SignKirigami <prcups@krgm.moe>
-To: qemu-devel@nongnu.org
-Cc: SignKirigami <prcups@krgm.moe>,
-	Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH 3/4] target/loongarch: translate LVZ CSR and trap instructions
-Date: Tue, 19 May 2026 14:30:42 +0800
-Message-ID: <060310ded8b9a188848f48cabf6afe69fcf9216d.1779171126.git.prcups@krgm.moe>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <cover.1779171125.git.prcups@krgm.moe>
-References: <cover.1779171125.git.prcups@krgm.moe>
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wPEBx-0003Ez-Ok
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 02:44:38 -0400
+Received: from 7.mo533.mail-out.ovh.net ([54.36.140.182])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wPEBv-0005B3-Lq
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 02:44:37 -0400
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net [79.137.60.37])
+ by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4gKQBl6BjTz5ylZ;
+ Tue, 19 May 2026 06:44:31 +0000 (UTC)
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net. [127.0.0.1])
+ by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <alexander.hansen@9elements.com>; Tue, 19 May 2026 06:44:31 +0000 (UTC)
+Received: from mta10.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.118.150])
+ by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4gKQBl58Spz1xqB;
+ Tue, 19 May 2026 06:44:31 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.5])
+ (Authenticated sender: clg@kaod.org)
+ by mta10.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
+ 3184F1923B1E; Tue, 19 May 2026 06:44:29 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-106R0063a995ee6-855d-43aa-a4e7-ca1ea9d6154f,
+ A1C5BDF50025601E7F63D663DE463AD2E6007479) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <beb08be1-5806-4132-b8b5-401a671cd6ad@kaod.org>
+Date: Tue, 19 May 2026 08:44:28 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 2400:e920:0:e::2c (failed)
-Received-SPF: pass client-ip=2400:e920:0:e::2c; envelope-from=prcups@krgm.moe;
- helo=krgm.moe
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RDNS_NONE=0.793,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/5] hw/sensor: MAX31790 support
+To: Alexander Hansen <alexander.hansen@9elements.com>, qemu-devel@nongnu.org
+Cc: Titus Rwantare <titusr@google.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org, Steven Lee <steven_lee@aspeedtech.com>,
+ Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
+References: <20260515150610.381066-1-alexander.hansen@9elements.com>
+ <20260515150610.381066-4-alexander.hansen@9elements.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260515150610.381066-4-alexander.hansen@9elements.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+x-ovh-tracer-id: 490610884993592559
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTEuM1MyRbF79z3kqJLBdkiSDPgbyStlJ1DBT84gjFYiGc5l6AMv+C43u06hGjJXH1CO2iIYBkBP1SDHhvRt/CUFabg3oZN0DVkg4XCx7aAYk188nokRGvbK3btRFE7sHz9yrTcBW9cofiQFlfsUuOOcmiAqCB3Hdz6AAXn/Tfs5eRZL20v9Dtwz3XaH+vEFHFOADPJWvqPzAL+baS1Bs7bNj4W1F7dFlOPKbnDyg1r64O4U1czopQCMhMqX2pil5KhSw6YVeBJM4YhEXEhCmS0Xt/MyBesI2lX6G4zfvGK2fK5N2O2P3PW8VPgY3DZf8a+XckNVtE7FkE+vc58gOSxZnxVfd/0UJp4SDGVgah2pV/usw71TcifkIN/K36lyus+StOSzaGDiLqzLgq3w7o/JbSFUNJ9AdXREMtD7uuYavT8TPZduREkzoLzFLveh2Bdwp4zpjZL4N6/GyLsk+rlqEc960JGi7xhvMMVl7ART5+b6HcayMtoxRKm8OAGxzHltYhVCu/hmlaSVvJsd6od+z90WDbxAwcAKNIE8Hp8hV+zIK58FbpHSMR4SIRNDsYwM9n5Wz7f46AUxBUikVR2emiOD1vl01aoEtfth9ZL/RFTilbYlGauwBUwoxL0odxYVk96nO536TBezm7+NAGGBiLTDBmaLCpe5/fxTSrnTbQ
+DKIM-Signature: a=rsa-sha256; bh=oOTYfMjlUidQNlIf+Qoo/nSx4do0Oi2/SPVRYCX5ntc=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1779173072; v=1;
+ b=JTr6N/YkuDjQa2xgqhfru0UPSy50ptGfszNC91wMWaO08VNtWtAWnPlftqEX0X6PMwrvBsrL
+ mK/7brb1ag9K+i8glEjQ8hzoghBCm9qbelaZWVh/i4hTF+bKOom9UFCnplfO6lspfy3c90th1T8
+ kguGAai4KS9fq1UikLy4UU4mDrkFtSpA8heJWDFhdWn8XbW8v7FWej4OX5ufAfs+NCfYeFomYH8
+ 9BxhJVe0warY5FPCK7S++ROoSeV5FY9NPsIkBr0MWWwJlMR2Y9Uoc2T6kmTJlwMGV9neXwpeF9U
+ U+HGPApAz3IXISTodZhmf7MSOAb5A9itU1wavJtU5nCcw==
+Received-SPF: pass client-ip=54.36.140.182; envelope-from=clg@kaod.org;
+ helo=7.mo533.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -56,435 +135,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: SignKirigami <prcups@krgm.moe>
-Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
----
- target/loongarch/disas.c                      |   4 +
- target/loongarch/insns.decode                 |  11 +
- .../tcg/insn_trans/trans_privileged.c.inc     | 225 +++++++++++++++++-
- target/loongarch/tcg/translate.c              |   6 +-
- target/loongarch/translate.h                  |   2 +
- 5 files changed, 240 insertions(+), 8 deletions(-)
+On 5/15/26 16:58, Alexander Hansen wrote:
+> --- a/tests/functional/arm/test_aspeed_fby4.py
+> +++ b/tests/functional/arm/test_aspeed_fby4.py
+> @@ -7,6 +7,8 @@
+>   from qemu_test import Asset
+>   from aspeed import AspeedTest
+>   
+> +from qemu_test import wait_for_console_pattern, exec_command
+> +from qemu_test import exec_command_and_wait_for_pattern
+>   
+>   class YosemiteV4Machine(AspeedTest):
+>   
+> @@ -33,6 +35,22 @@ def do_test_arm_aspeed_openbmc_no_network(self, machine, image, uboot,
+>           # different from the other machines.
+>           self.wait_for_console_pattern('yosemite4 login:')
+>   
+> +        # perform login
+> +        exec_command_and_wait_for_pattern(self,
+> +                                          "root", "Password:");
+> +
+> +        exec_command_and_wait_for_pattern(self, "0penBmc", "#");
+> +
+> +        # MAX31790 test
+> +        exec_command_and_wait_for_pattern(self,
+> +            "cat /sys/class/hwmon/hwmon2/name", "max31790");
+> +        exec_command_and_wait_for_pattern(self,
+> +            "cat /sys/class/hwmon/hwmon2/fan1_input", "4530");
 
-diff --git a/target/loongarch/disas.c b/target/loongarch/disas.c
-index 3249ab7ac6..cae416266b 100644
---- a/target/loongarch/disas.c
-+++ b/target/loongarch/disas.c
-@@ -698,6 +698,10 @@ INSN(tlbfill,      empty)
- INSN(tlbclr,       empty)
- INSN(tlbflush,     empty)
- INSN(invtlb,       i_rr)
-+INSN(gcsrrd,       r_csr)
-+INSN(gcsrwr,       r_csr)
-+INSN(gcsrxchg,     rr_csr)
-+INSN(hvcl,         i)
- INSN(cacop,        cop_r_i)
- INSN(lddir,        rr_i)
- INSN(ldpte,        j_i)
-diff --git a/target/loongarch/insns.decode b/target/loongarch/insns.decode
-index 3089d42044..2ade384081 100644
---- a/target/loongarch/insns.decode
-+++ b/target/loongarch/insns.decode
-@@ -493,6 +493,17 @@ bgeu            0110 11 ................ ..... .....     @rr_offs16
-   csrxchg           0000 0100 .............. ..... .....     @rr_csr
- }
- 
-+#
-+# LVZ (LoongArch Virtualization) instructions
-+#
-+{
-+  gcsrrd            0000 0101 .............. 00000 .....     @r_csr
-+  gcsrwr            0000 0101 .............. 00001 .....     @r_csr
-+  gcsrxchg          0000 0101 .............. ..... .....     @rr_csr
-+}
-+
-+hvcl             0000 0000 0010 1011 1 ...............    @i15
-+
- iocsrrd_b        0000 01100100 10000 00000 ..... .....    @rr
- iocsrrd_h        0000 01100100 10000 00001 ..... .....    @rr
- iocsrrd_w        0000 01100100 10000 00010 ..... .....    @rr
-diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-index 2094d182ac..0cb629e5d7 100644
---- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-@@ -39,6 +39,10 @@ GEN_FALSE_TRANS(lddir)
- GEN_FALSE_TRANS(ertn)
- GEN_FALSE_TRANS(dbcl)
- GEN_FALSE_TRANS(idle)
-+GEN_FALSE_TRANS(gcsrrd)
-+GEN_FALSE_TRANS(gcsrwr)
-+GEN_FALSE_TRANS(gcsrxchg)
-+GEN_FALSE_TRANS(hvcl)
- 
- #else
- 
-@@ -69,8 +73,25 @@ static bool set_csr_trans_func(unsigned int csr_num, GenCSRRead readfn,
-     return true;
- }
- 
-+static bool set_gcsr_trans_func(unsigned int csr_num, GenCSRRead readfn,
-+                                GenCSRWrite writefn)
-+{
-+    CSRInfo *csr;
-+
-+    csr = get_gcsr(csr_num);
-+    if (!csr) {
-+        return false;
-+    }
-+
-+    csr->readfn = (GenCSRFunc)readfn;
-+    csr->writefn = (GenCSRFunc)writefn;
-+    return true;
-+}
-+
- #define SET_CSR_FUNC(NAME, read, write)                 \
-         set_csr_trans_func(LOONGARCH_CSR_##NAME, read, write)
-+#define SET_GCSR_FUNC(NAME, read, write)                \
-+        set_gcsr_trans_func(LOONGARCH_CSR_##NAME, read, write)
- 
- void loongarch_csr_translate_init(void)
- {
-@@ -85,14 +106,28 @@ void loongarch_csr_translate_init(void)
-     SET_CSR_FUNC(TVAL,  gen_helper_csrrd_tval, NULL);
-     SET_CSR_FUNC(TICLR, NULL, gen_helper_csrwr_ticlr);
-     SET_CSR_FUNC(MSGIR, gen_helper_csrrd_msgir, NULL);
-+    SET_CSR_FUNC(GSTAT, NULL, gen_helper_csrwr_gstat);
-+    SET_CSR_FUNC(GTLBC, NULL, gen_helper_csrwr_gtlbc);
-+    SET_CSR_FUNC(GINTC, NULL, gen_helper_csrwr_gintc);
-+
-+    SET_GCSR_FUNC(ESTAT, NULL, gen_helper_gcsrwr_estat);
-+    SET_GCSR_FUNC(ASID, NULL, gen_helper_gcsrwr_asid);
-+    SET_GCSR_FUNC(PGD, gen_helper_gcsrrd_pgd, NULL);
-+    SET_GCSR_FUNC(TCFG, NULL, gen_helper_gcsrwr_tcfg);
-+    SET_GCSR_FUNC(TVAL, gen_helper_gcsrrd_tval, NULL);
-+    SET_GCSR_FUNC(TICLR, NULL, gen_helper_gcsrwr_ticlr);
- }
- #undef SET_CSR_FUNC
-+#undef SET_GCSR_FUNC
- 
- static bool check_csr_flags(DisasContext *ctx, const CSRInfo *csr, bool write)
- {
-     if ((csr->flags & CSRFL_READONLY) && write) {
-         return false;
-     }
-+    if ((csr->flags & CSRFL_GUEST_READONLY) && ctx->guest_mode && write) {
-+        return false;
-+    }
-     if ((csr->flags & CSRFL_IO) && translator_io_start(&ctx->base)) {
-         ctx->base.is_jmp = DISAS_EXIT_UPDATE;
-     } else if ((csr->flags & CSRFL_EXITTB) && write) {
-@@ -110,12 +145,17 @@ static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
-     if (check_plv(ctx)) {
-         return false;
-     }
--    csr = get_csr(a->csr);
-+    csr = ctx->guest_mode ? get_gcsr(a->csr) : get_csr(a->csr);
-     if (csr == NULL) {
-         /* CSR is undefined: read as 0. */
-         dest = tcg_constant_tl(0);
-     } else {
-         check_csr_flags(ctx, csr, false);
-+        if (ctx->guest_mode && (csr->flags & CSRFL_GSPR)) {
-+            gen_helper_gspr(tcg_env);
-+            gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
-+            return true;
-+        }
-         dest = gpr_dst(ctx, a->rd, EXT_NONE);
-         readfn = (GenCSRRead)csr->readfn;
-         if (readfn) {
-@@ -137,12 +177,17 @@ static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
-     if (check_plv(ctx)) {
-         return false;
-     }
--    csr = get_csr(a->csr);
-+    csr = ctx->guest_mode ? get_gcsr(a->csr) : get_csr(a->csr);
-     if (csr == NULL) {
-         /* CSR is undefined: write ignored, read old_value as 0. */
-         gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
-         return true;
-     }
-+    if (ctx->guest_mode && (csr->flags & CSRFL_GSPR)) {
-+        gen_helper_gspr(tcg_env);
-+        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
-+        return true;
-+    }
-     if (!check_csr_flags(ctx, csr, true)) {
-         /* CSR is readonly: trap. */
-         return false;
-@@ -170,28 +215,35 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
-     if (check_plv(ctx)) {
-         return false;
-     }
--    csr = get_csr(a->csr);
-+    csr = ctx->guest_mode ? get_gcsr(a->csr) : get_csr(a->csr);
-     if (csr == NULL) {
-         /* CSR is undefined: write ignored, read old_value as 0. */
-         gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
-         return true;
-     }
-+    if (ctx->guest_mode && (csr->flags & CSRFL_GSPR)) {
-+        gen_helper_gspr(tcg_env);
-+        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
-+        return true;
-+    }
- 
-     if (!check_csr_flags(ctx, csr, true)) {
-         /* CSR is readonly: trap. */
-         return false;
-     }
- 
--    /* So far only readonly csrs have readfn. */
--    assert(csr->readfn == NULL);
--
-     src1 = gpr_src(ctx, a->rd, EXT_NONE);
-     mask = gpr_src(ctx, a->rj, EXT_NONE);
-     oldv = tcg_temp_new();
-     newv = tcg_temp_new();
-     temp = tcg_temp_new();
- 
--    tcg_gen_ld_tl(oldv, tcg_env, csr->offset);
-+    if (csr->readfn) {
-+        GenCSRRead readfn = (GenCSRRead)csr->readfn;
-+        readfn(oldv, tcg_env);
-+    } else {
-+        tcg_gen_ld_tl(oldv, tcg_env, csr->offset);
-+    }
-     tcg_gen_and_tl(newv, src1, mask);
-     tcg_gen_andc_tl(temp, oldv, mask);
-     tcg_gen_or_tl(newv, newv, temp);
-@@ -212,6 +264,11 @@ static bool gen_iocsrrd(DisasContext *ctx, arg_rr *a,
-     TCGv dest = gpr_dst(ctx, a->rd, EXT_NONE);
-     TCGv src1 = gpr_src(ctx, a->rj, EXT_NONE);
- 
-+    if (ctx->guest_mode) {
-+        gen_helper_gspr(tcg_env);
-+        return true;
-+    }
-+
-     if (check_plv(ctx)) {
-         return false;
-     }
-@@ -225,6 +282,11 @@ static bool gen_iocsrwr(DisasContext *ctx, arg_rr *a,
-     TCGv val = gpr_src(ctx, a->rd, EXT_NONE);
-     TCGv addr = gpr_src(ctx, a->rj, EXT_NONE);
- 
-+    if (ctx->guest_mode) {
-+        gen_helper_gspr(tcg_env);
-+        return true;
-+    }
-+
-     if (check_plv(ctx)) {
-         return false;
-     }
-@@ -400,6 +462,10 @@ static bool trans_dbcl(DisasContext *ctx, arg_dbcl *a)
-     if (check_plv(ctx)) {
-         return false;
-     }
-+    if (ctx->guest_mode) {
-+        gen_helper_gspr(tcg_env);
-+        return true;
-+    }
-     generate_exception(ctx, EXCCODE_DBP);
-     return true;
- }
-@@ -410,9 +476,154 @@ static bool trans_idle(DisasContext *ctx, arg_idle *a)
-         return false;
-     }
- 
-+    if (ctx->guest_mode) {
-+        gen_helper_gspr(tcg_env);
-+        return true;
-+    }
-+
-     tcg_gen_movi_tl(cpu_pc, ctx->base.pc_next + 4);
-     gen_helper_idle(tcg_env);
-     ctx->base.is_jmp = DISAS_NORETURN;
-     return true;
- }
-+
-+static bool trans_gcsrrd(DisasContext *ctx, arg_gcsrrd *a)
-+{
-+    TCGv dest;
-+    const CSRInfo *csr;
-+    GenCSRRead readfn;
-+
-+    if (check_plv(ctx)) {
-+        return false;
-+    }
-+    if (!avail_LVZ(ctx) || ctx->guest_mode) {
-+        return false;
-+    }
-+
-+    csr = get_gcsr(a->csr);
-+    if (csr == NULL) {
-+        dest = tcg_constant_tl(0);
-+    } else {
-+        dest = gpr_dst(ctx, a->rd, EXT_NONE);
-+        if (csr->flags & CSRFL_GSPR) {
-+            tcg_gen_movi_tl(dest, 0);
-+        } else {
-+            readfn = (GenCSRRead)csr->readfn;
-+            if (readfn) {
-+                readfn(dest, tcg_env);
-+            } else {
-+                tcg_gen_ld_tl(dest, tcg_env, csr->offset);
-+            }
-+        }
-+    }
-+    gen_set_gpr(a->rd, dest, EXT_NONE);
-+    return true;
-+}
-+
-+static bool trans_gcsrwr(DisasContext *ctx, arg_gcsrwr *a)
-+{
-+    TCGv dest, src1;
-+    const CSRInfo *csr;
-+    GenCSRWrite writefn;
-+
-+    if (check_plv(ctx)) {
-+        return false;
-+    }
-+    if (!avail_LVZ(ctx) || ctx->guest_mode) {
-+        return false;
-+    }
-+
-+    csr = get_gcsr(a->csr);
-+    if (csr == NULL) {
-+        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
-+        return true;
-+    }
-+    if (!check_csr_flags(ctx, csr, true)) {
-+        return false;
-+    }
-+    if (csr->flags & CSRFL_GSPR) {
-+        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
-+        return true;
-+    }
-+
-+    src1 = gpr_src(ctx, a->rd, EXT_NONE);
-+    writefn = (GenCSRWrite)csr->writefn;
-+    if (writefn) {
-+        dest = gpr_dst(ctx, a->rd, EXT_NONE);
-+        writefn(dest, tcg_env, src1);
-+    } else {
-+        dest = tcg_temp_new();
-+        tcg_gen_ld_tl(dest, tcg_env, csr->offset);
-+        tcg_gen_st_tl(src1, tcg_env, csr->offset);
-+    }
-+    gen_set_gpr(a->rd, dest, EXT_NONE);
-+    return true;
-+}
-+
-+static bool trans_gcsrxchg(DisasContext *ctx, arg_gcsrxchg *a)
-+{
-+    TCGv src1, mask, oldv, newv, temp;
-+    const CSRInfo *csr;
-+    GenCSRRead readfn;
-+    GenCSRWrite writefn;
-+
-+    if (check_plv(ctx)) {
-+        return false;
-+    }
-+    if (!avail_LVZ(ctx) || ctx->guest_mode) {
-+        return false;
-+    }
-+
-+    csr = get_gcsr(a->csr);
-+    if (csr == NULL) {
-+        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
-+        return true;
-+    }
-+    if (!check_csr_flags(ctx, csr, true)) {
-+        return false;
-+    }
-+    if (csr->flags & CSRFL_GSPR) {
-+        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
-+        return true;
-+    }
-+
-+    src1 = gpr_src(ctx, a->rd, EXT_NONE);
-+    mask = gpr_src(ctx, a->rj, EXT_NONE);
-+    oldv = tcg_temp_new();
-+    newv = tcg_temp_new();
-+    temp = tcg_temp_new();
-+
-+    readfn = (GenCSRRead)csr->readfn;
-+    if (readfn) {
-+        readfn(oldv, tcg_env);
-+    } else {
-+        tcg_gen_ld_tl(oldv, tcg_env, csr->offset);
-+    }
-+    tcg_gen_and_tl(newv, src1, mask);
-+    tcg_gen_andc_tl(temp, oldv, mask);
-+    tcg_gen_or_tl(newv, newv, temp);
-+
-+    writefn = (GenCSRWrite)csr->writefn;
-+    if (writefn) {
-+        writefn(oldv, tcg_env, newv);
-+    } else {
-+        tcg_gen_st_tl(newv, tcg_env, csr->offset);
-+    }
-+    gen_set_gpr(a->rd, oldv, EXT_NONE);
-+    return true;
-+}
-+
-+static bool trans_hvcl(DisasContext *ctx, arg_hvcl *a)
-+{
-+    if (!avail_LVZ(ctx)) {
-+        return false;
-+    }
-+    if (!ctx->guest_mode) {
-+        return false;
-+    }
-+    tcg_gen_movi_tl(cpu_pc, ctx->base.pc_next);
-+    gen_helper_hvcl(tcg_env, tcg_constant_i32(a->imm));
-+    ctx->base.is_jmp = DISAS_NORETURN;
-+    return true;
-+}
- #endif
-diff --git a/target/loongarch/tcg/translate.c b/target/loongarch/tcg/translate.c
-index 124dce6269..15c83ef72d 100644
---- a/target/loongarch/tcg/translate.c
-+++ b/target/loongarch/tcg/translate.c
-@@ -122,12 +122,16 @@ static void loongarch_tr_init_disas_context(DisasContextBase *dcbase,
-     CPULoongArchState *env = cpu_env(cs);
-     DisasContext *ctx = container_of(dcbase, DisasContext, base);
- 
-+    ctx->guest_mode = (ctx->base.tb->flags & HW_FLAGS_GUEST_MODE) != 0;
-     ctx->page_start = ctx->base.pc_first & TARGET_PAGE_MASK;
-     ctx->plv = ctx->base.tb->flags & HW_FLAGS_PLV_MASK;
-     if (ctx->base.tb->flags & HW_FLAGS_CRMD_PG) {
-         ctx->mem_idx = ctx->plv;
-+        if (ctx->guest_mode) {
-+            ctx->mem_idx += MMU_GUEST_IDX;
-+        }
-     } else {
--        ctx->mem_idx = MMU_DA_IDX;
-+        ctx->mem_idx = ctx->guest_mode ? MMU_GUEST_DA_IDX : MMU_DA_IDX;
-     }
- 
-     /* Bound the number of insns to execute to those left on the page.  */
-diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
-index 8aa8325dc6..db0650e713 100644
---- a/target/loongarch/translate.h
-+++ b/target/loongarch/translate.h
-@@ -26,6 +26,7 @@
- #define avail_FP_DP(C)  (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP_DP))
- #define avail_LSPW(C)   (FIELD_EX32((C)->cpucfg2, CPUCFG2, LSPW))
- #define avail_LAM(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM))
-+#define avail_LVZ(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LVZ))
- #define avail_LAM_BH(C) (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM_BH))
- #define avail_LAMCAS(C) (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAMCAS))
- #define avail_LSX(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LSX))
-@@ -66,6 +67,7 @@ typedef struct DisasContext {
-     TCGv zero;
-     bool la64; /* LoongArch64 mode */
-     bool va32; /* 32-bit virtual address */
-+    bool guest_mode;
-     uint32_t cpucfg1;
-     uint32_t cpucfg2;
-     uint32_t cpucfg3;
--- 
-2.52.0
+Fan read is 1132 in the tests I have run.
+
+C.
+
+
+> +        exec_command_and_wait_for_pattern(self,
+> +            "cat /sys/class/hwmon/hwmon2/fan1_enable", "1");
+> +        exec_command_and_wait_for_pattern(self,
+> +            "cat /sys/class/hwmon/hwmon2/fan1_fault", "0");
+> +
+>       def test_arm_ast2600_yosemitev4_openbmc(self):
+>           image_path = self.uncompress(self.ASSET_YOSEMITE_V4_FLASH)
+>   
+> -- 2.54.0
 
 
