@@ -4,122 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90533CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 04:11:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCCFFCD4F54
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 04:19:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPBnG-0003nv-29; Tue, 19 May 2026 00:10:58 -0400
+	id 1wPBue-00061x-7F; Tue, 19 May 2026 00:18:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wPBnF-0003nf-Bd
- for qemu-devel@nongnu.org; Tue, 19 May 2026 00:10:57 -0400
-Received: from 5.mo534.mail-out.ovh.net ([54.36.140.176])
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1wPBuc-00061Z-Ms
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 00:18:34 -0400
+Received: from mail-westus3azlp170100009.outbound.protection.outlook.com
+ ([2a01:111:f403:c107::9] helo=PH7PR06CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wPBnB-0006Ah-6m
- for qemu-devel@nongnu.org; Tue, 19 May 2026 00:10:57 -0400
-Received: from director1.derp.mail-out.ovh.net
- (director1.derp.mail-out.ovh.net [51.68.80.175])
- by mo534.mail-out.ovh.net (Postfix) with ESMTPS id 4gKLnN1tMwz6LGg;
- Tue, 19 May 2026 04:10:48 +0000 (UTC)
-Received: from director1.derp.mail-out.ovh.net
- (director1.derp.mail-out.ovh.net. [127.0.0.1])
- by director1.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <alexander.hansen@9elements.com>; Tue, 19 May 2026 04:10:48 +0000 (UTC)
-Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.188.39])
- by director1.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4gKLnM6L4Fz5vgh; Tue, 19 May 2026 04:10:47 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.7])
- (Authenticated sender: clg@kaod.org)
- by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 05D251B43B51;
- Tue, 19 May 2026 04:10:45 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-113S007d8456ab5-1a52-4255-b849-d9eddbb0c4a4,
- A1C5BDF50025601E7F63D663DE463AD2E6007479) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <36078e43-f4b1-495d-8c55-3ba2890885a4@kaod.org>
-Date: Tue, 19 May 2026 06:10:45 +0200
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1wPBua-0004K4-1b
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 00:18:34 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YVEm1qnCxJcwFq7qfMYt45/zqlRS5jNJKcCeW4k5EH0ryDtARiU0tHkV0xt8yJne0kKTG36mmSh//reCDyMjcOsI8We8QGyBFaKB9tnJg+d0CVH8FE2IpSI/6gj7R+tPMgefMfB0aFM2nm/NHXzzGCX4u9NZlQx7s0vuHkl6xndDTjDY9f6ZWeQY99I5UOswRTYpylLfyffHf8Ymv795qzWHECIdRVfFqJ+VEhZLF6V4oGbbJhMJGZooH3UMOohzhgDGaCVJr93X65lf7JPy6uIvpx2Obb95mGg23sIBsgTgrRcDY1E3f8rMvFoQy0z8JxzR0gytNyPH89HuqX7lLw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=JH9pQODe58zzRy6VPLd0KwJEyHqkuGz5yRBdhgaXh0M=;
+ b=RIvNtsaQGrPlrYsmHz/9x7Yp42UUtwaG2Det5F7iNxD8Gs1kXYjCbbjr4ad0AyZ/kiYeSIX2MI2Iaz3MK8o0hdkzkpJ8EgSvDiBvMZcYjOg00CcPzzSzpBmwg59kdwrwh5iAWabzyZasOBR+limaSdL9/H2OiV6f+S+OWjHjHRzdRTmLhdYyk87nC76HffxdKDsgRD958FffVh009coy346KWKrKJzyY2Bxotg54biWkftsJPmVNC1jfKz+m4yPNbqx4nPqy9p/jQfGfTdWHlYUzuoh34DpZv7pG8XJYMMSKEMe6mybiu0Z8V0n65ylWvOxxRVB6fihxlY+lpApKmw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=JH9pQODe58zzRy6VPLd0KwJEyHqkuGz5yRBdhgaXh0M=;
+ b=EfNwxjTQqIAxt7qBFl0ghycYluArpW7a1cIPkzPA5zjS4OQeHSO4GSPq470A4AqraU6cW8QRMqbVAxI6+X3/NBGDVIQ+7pRdtoY/rpf0sRaexL9z4d71H+AwZfDqKbz3N7MCw3m7/289M3cpPrrmMb+mbi0Wf+e7qmmXj+SxicA=
+Received: from CYXPR02CA0088.namprd02.prod.outlook.com (2603:10b6:930:ce::11)
+ by SN7PR12MB7856.namprd12.prod.outlook.com (2603:10b6:806:340::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.25.21; Tue, 19 May
+ 2026 04:18:24 +0000
+Received: from DS2PEPF000061C1.namprd02.prod.outlook.com
+ (2603:10b6:930:ce:cafe::b1) by CYXPR02CA0088.outlook.office365.com
+ (2603:10b6:930:ce::11) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.25.25 via Frontend Transport; Tue, 19
+ May 2026 04:18:23 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
+Received: from satlexmb08.amd.com (165.204.84.17) by
+ DS2PEPF000061C1.mail.protection.outlook.com (10.167.23.68) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.48.11 via Frontend Transport; Tue, 19 May 2026 04:18:23 +0000
+Received: from Satlexmb09.amd.com (10.181.42.218) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Mon, 18 May
+ 2026 23:18:23 -0500
+Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb09.amd.com
+ (10.181.42.218) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Mon, 18 May
+ 2026 21:18:23 -0700
+Received: from [10.65.99.141] (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.41 via Frontend
+ Transport; Mon, 18 May 2026 23:18:20 -0500
+Message-ID: <ab7ad06f-1f46-4e5a-9ade-a45f12170eb3@amd.com>
+Date: Tue, 19 May 2026 12:18:19 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/5] hw/sensor: MAX31790 support
-To: Alexander Hansen <alexander.hansen@9elements.com>, qemu-devel@nongnu.org
-Cc: Titus Rwantare <titusr@google.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, Steven Lee <steven_lee@aspeedtech.com>,
- Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
-References: <20260515150610.381066-1-alexander.hansen@9elements.com>
- <20260515150610.381066-4-alexander.hansen@9elements.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20260515150610.381066-4-alexander.hansen@9elements.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 16341311248811928815
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEAINiSDZpNFsZhs4Hk1lyOe6+msghBnwAm0kB6D3rRs++XhRyIgB/HoguD5mnF9LAmchTy9SgTziQ9L9le+H9g+LQZafsG8z5SWYYZA3AXjeAB7LlBpK/uDQAv/Dko4LLqA0MkmAsDJ54AUlmKcvnkG5A2w9PJWV/OsYswHkMPKqtDRgSKFTrZcwm3V88xzqqE+95+WYFP1p/P6gSvNUCVRnC65bq8NLLn7jfdLi/x2rLFKyP6Unup3HDXXj4cD/2fMscTKuo7jIpJ7dyf4uTboat35dpcXAeP/vjUgd0bw+8W1Pc5NHmwj+HMcs5y7uNHJ4yZr20mgfv6kHOBFZ8SPHAc2oHofYJRObupElLCrD48q+wixL2dFo+WR9gfWqvg7arjq3BorxwSlLwMT8oW96WxUlWYSeDYA/UtZd/6Ov86rdk6Q5RD6M9PY2BNa616MAU98BfQq+dI3JZ1lxBXAVCCoCO80krF8DPPZPm900tTwigUqrV+Aypr5IuNJCFz1KUrfRgtXEUX3mfJi6qcc5zi9BnGjBBAT9nOILCVW6bYHLF+GVX9eF5TsdvPqEYdCZ+TZoBBiiEmEomnsePlYahXhy+cb74Sa+PtCM59sTi8OMTbnN0ylpQ13axTH8CwNC1jeW2/s9kApcX2fLok+3xjRBUKcy5flbRmLNUHQw
-DKIM-Signature: a=rsa-sha256; bh=HGlwwPxD19GikKqJ44EFdk0ST2r7crlX+LH/d92jja8=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1779163850; v=1;
- b=Fqkd1wO7cOCwsRUcDJSXX4qzC6rgQl4Yy8dl0Zn2r7EvpX2CG95cI4flpMnpNSY6yavcf/YY
- 3Ph2UJQ04b2yjJq/R/MrX7jxwP7gm9Hz7rFyjFV4QSPDrs61YUTC8eHonmh1oTvcf+LWUGDqk6F
- b8aNZ/wVzMZamkdVNWz+4nUsrGYDBxG+bbO6w/nYPdRPiHbk+RSrECfqu4aIEf0rlQd7ZkmZ2/M
- Iwf39ExMpT7mEPZ6KZd83djD4sHv3f2Db1IFf5SWvyQfutqJpYKSyZDKFpybJWM53GWWUHwfDSR
- 67hU9NfyBx5v228KnFFMuz6gJ61Hj7hYvZyU39CF+TMLQ==
-Received-SPF: pass client-ip=54.36.140.176; envelope-from=clg@kaod.org;
- helo=5.mo534.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+From: "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com>
+Subject: Re: [PATCH v7 1/1] numa: add 'memmap-type' option for memory type
+ configuration
+To: Igor Mammedov <imammedo@redhat.com>, gregory Price <gourry@gourry.net>,
+ David Hildenbrand <david@kernel.org>, David Hildenbrand <david@redhat.com>
+CC: <qemu-devel@nongnu.org>, <jonathan.cameron@huawei.com>,
+ <apopple@nvidia.com>, <dan.j.williams@intel.com>, <Zhigang.Luo@amd.com>,
+ <Lianjie.Shi@amd.com>
+References: <20260306082735.1106690-1-FangSheng.Huang@amd.com>
+ <20260306082735.1106690-2-FangSheng.Huang@amd.com>
+ <20260514150559.3148f9dc@imammedo>
+ <d26cfb4b-d70e-415c-8747-904d94f8ccb2@amd.com>
+ <20260515150453.409e0e3e@imammedo>
+ <4a3de73b-03bd-446e-8cbd-dedd5323e295@amd.com>
+ <20260518163239.2fd73491@imammedo>
+In-Reply-To: <20260518163239.2fd73491@imammedo>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS2PEPF000061C1:EE_|SN7PR12MB7856:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9b821788-6a3a-41b9-eb22-08deb55daad2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700016|82310400026|376014|1800799024|4143699003|11063799003|22082099003|56012099003|18002099003|3023799003;
+X-Microsoft-Antispam-Message-Info: DhH01y8h+nvu5I/5V+n8rFCgYwT4Q+PCjYJ7F9E/z6oXl3C0dNUr+cb7CoEGNAflqKQK3qrptjK4izu7n2u+AAaWJTzTG7/oiunS98nxhQ67UhrRD652qAf0ZJ6X91vyN7lXMh4xqzDf4tyYmybcl7JVfcN+2KFsorJ3pgjvjvvPDO1cg4okZMW6HzHardi+3+DVQDsAfaWHYyBss0fyGpk+du8N52APozgG+uUnm4JFdfMhQt+vZAYvkrX8urN4LsNB122ZL6TEHaZVRvGIIYQjupDca4rwxtl1z8AtNMgI5FXWmLdTdm+xvMfUuQ41aU6VFFsR+1EG3y1C/DYoo6JbHcsuvmfuUd+t6/GWllCLT7z8/yHNmA+ulxmAJlgHMDyfImnDlJdXu6uvJIwil2luOtxJirwekKwMRIEYECjElZ05zSiK0gyPryh8IDnxC5jWJKy07tU8fjHEdblRgbx9RVisKqmczQRM/Xq5pNAjfVuwk4+VD0kxLW7W/J8g1Ce/L+AhALu99LNWZXHuXM8Rh5+Ju/0kswo7SpsuPonMZGMRcO8wbdQ2aMFo/K8BzsixW2O15CGLKj7QttJzIhYSPmxWQk1IIncyVtt6RNlRJhoqnUEOhnOjlsDRqunpvh4Y8dovIsmH/4pxWDRYGIkN3uHvDe3IbhAFeKRvPrD7EVZwYYsZrXx69p4jsSyNRt1PEQNucMtHb8O9Z9WOmg0OAYFF5iQLqMmf3pSjTjI=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb08.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700016)(82310400026)(376014)(1800799024)(4143699003)(11063799003)(22082099003)(56012099003)(18002099003)(3023799003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 9osrLhWwT/vWxWLwxsuyqYh4xXn+QJT+u5esxKMNJwJIYjNoNi3si+84Qq1kqR0H7mhg7H+ATmvMnlZjHHLjJoXNtjEusQbiZnWXspioJ/Ti0McH6A1xlgaXt11zDvOJumSoW6OA04cpcVHlE/VfpqsOXWwLtnJTsfhFOvP9NJA2EsZflMKG+uT5Hje02ecYB6ZWb+Ej6SiZrV/iqXq+YsOVMFYRtBABt+FcsXpmW+XLMZvIDwMhD9cAtD4OGnIfYqnqPU+17n/Mj85vQrqcXwfxO7oqozgjBeqbh0sLaKgIBX5l/qVzfrWJVPgAjZWmtoVBHV3lbyYySoLndEMCSLx0mltPqRZhmbrK+f2KouYpSUzmGk6wt753r3g/5opWS3cqPKG/DSoiD3PWedDBOUaaOCs5FSyBX0yaUBfw0BRtENASzBQlbhib4f1XN25W
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 May 2026 04:18:23.5147 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9b821788-6a3a-41b9-eb22-08deb55daad2
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb08.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: DS2PEPF000061C1.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7856
+Received-SPF: permerror client-ip=2a01:111:f403:c107::9;
+ envelope-from=FangSheng.Huang@amd.com;
+ helo=PH7PR06CU001.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,746 +138,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/15/26 16:58, Alexander Hansen wrote:
-> Product: [1]
-> Datasheet: [2]
+Hi Igor,
+
+Thanks for the concrete pointers in this round -- the machine_done /
+ACPI-runtime timing notes are useful regardless of where this lands.
+Replying inline.
+
+On 5/18/2026 10:32 PM, Igor Mammedov wrote:
+> On Mon, 18 May 2026 18:43:10 +0800
+> "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com> wrote:
 > 
-> MAX31790 Support:
-> - fan inputs are reading
-> - tach reading propertional to pwm setting from linux driver
-> - fans do not show any fault
-> - 6 PWM registers influence 6 TACH registers
+>> Hi Igor,
+>>
+>> Thanks again for the careful read.
+>>
+>> On 5/15/2026 9:04 PM, Igor Mammedov wrote:
 > 
-> There is intentional stub behavior in some places and various functions
-> of the device are currently unsupported.
 > 
-> MAX31790 currently unsupported:
-> - slave address restriction
-> - fan dynamics
-> - spin-up configuration
-> - fault state / failure possibility
-> - rate-of-change control
-> - tach mode
-> - mixed layouts where number of fans != number of tachs
-> - see Figure 5.9 in [2] for example of mixed layout
+> Without magic/hardcodding, firmware is likely to discover HBM memory
+> as CXL device and adds E820/SRAT entries for it. That ideally how it
+> should be modeled in QEMU as well. (not ad-hoc -numa foo options)
 > 
-> Anyone could expand it in the future for more accurate emulation.
+> I won't push towards the feature being part of GPU pass-through,
+> or being HBM being a CXL device (which it probably should be).
+> but read on ...
+>
+Understood, and thanks for not making those preconditions.  Setting
+CXL and GPU-passthrough-bundle aside for this reply, the remaining
+question is whether the SPM topology is expressed on the -numa node
+line (v7) or on a separate -device line (your proposal).  I'll
+address that below under the mixed-memory point.
+
 > 
-> The reason for adding this device is to support Yosemite V4 emulation.
+> It shouldn't be done at realize time.
 > 
-> Tested: on yosemite 4 qemu
+> Ultimately we publish E820 table at machine_done time,
+> and it's right time to iterate over present memory devices
+> and add relevant entries if necessary.
+> SRAT is produced even later
+> (effectively at runtime on 1st access to acpi tables blob),
+> so it can pickup memory devices at that time as well.
+>
+Noted -- machine_done for E820 and ACPI-tables-runtime for SRAT is
+the right hook set for a memory-device-based implementation; that's
+where the iteration over present memory devices would land.
+(v7 itself sets the E820 entries during pc machine-init, which is
+the appropriate hook for the topology-driven -numa path -- there's
+no per-device realize step whose results would need to be iterated
+over.)
+
+>> (4) On the longer-term direction
 > 
-> root@yosemite4:~# ls /sys/class/hwmon/hwmon2/
-> device	    fan2_fault   fan3_target  fan5_fault   fan6_target  pwm2	     pwm5
-> fan1_enable  fan2_input   fan4_enable  fan5_input   name	pwm2_enable  pwm5_enable
-> fan1_fault   fan2_target  fan4_fault   fan5_target  of_node	pwm3	     pwm6
-> fan1_input   fan3_enable  fan4_input   fan6_enable  power	pwm3_enable  pwm6_enable
-> fan1_target  fan3_fault   fan4_target  fan6_fault   pwm1	pwm4	     subsystem
-> fan2_enable  fan3_input   fan5_enable  fan6_input   pwm1_enable  pwm4_enable  uevent
-> root@yosemite4:~# cat /sys/class/hwmon/hwmon2/fan1_input
-> 4551
-> root@yosemite4:~# cat /sys/class/hwmon/hwmon2/fan1_enable
-> 1
-> root@yosemite4:~# cat /sys/class/hwmon/hwmon2/fan1_fault
-> 0
-> root@yosemite4:~# cat /sys/class/hwmon/hwmon2/fan1_target
-> 2048
-> root@yosemite4:~# cat /sys/class/hwmon/hwmon2/pwm1
-> 178
-> root@yosemite4:~# cat /sys/class/hwmon/hwmon2/name
-> max31790
+> that's exactly what I'm concerned about
 > 
-> Trace output:
-> max31790_realize i2c_addr: 0x20
-> max31790_realize i2c_addr: 0x2f
-> max31790_realize i2c_addr: 0x20
-> max31790_realize i2c_addr: 0x2f
-> max31790_event i2c_addr: 0x20, event: 0x01
-> max31790_send i2c_addr: 0x20, data: 0x02
-> max31790_event i2c_addr: 0x20, event: 0x00
-> max31790_recv i2c_addr: 0x20, reg_addr: 0x02
-> max31790_recv_return i2c_addr: 0x20, returns: 0x08
-> ...
 > 
-> References:
-> [1] https://www.analog.com/en/products/MAX31790.html
-> [2] https://www.analog.com/media/en/technical-documentation/data-sheets/MAX31790.pdf
+> If we merge v7 approach, we are bound to support it for years
+> and if we later on we add device based variant, it will increase
+> support burden even more and complicate configuration, which
+> in turn will propagate up the stack.
 > 
-> Cc: Titus Rwantare <titusr@google.com>
-> Cc: "Cédric Le Goater" <clg@kaod.org> (maintainer:ASPEED BMCs)
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Cc: Peter Maydell <peter.maydell@linaro.org>
-> Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org>
-> Cc: qemu-arm@nongnu.org
-> Cc: qemu-devel@nongnu.org
-> Signed-off-by: Alexander Hansen <alexander.hansen@9elements.com>
-> ---
->   MAINTAINERS                              |   1 +
->   hw/arm/aspeed_ast2600_fby4.c             |   4 +-
->   hw/sensor/max31790.c                     | 501 +++++++++++++++++++++++
->   hw/arm/Kconfig                           |   1 +
->   hw/sensor/Kconfig                        |   4 +
->   hw/sensor/meson.build                    |   1 +
->   hw/sensor/trace-events                   |   8 +
->   tests/functional/arm/test_aspeed_fby4.py |  18 +
->   8 files changed, 536 insertions(+), 2 deletions(-)
->   create mode 100644 hw/sensor/max31790.c
+> Hence, I'd like possible options on the table explored 1st
+> before we commit to a particular approach.
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 80d28e618d..dc0cdb4089 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3986,6 +3986,7 @@ S: Maintained
->   F: hw/i2c/pmbus_device.c
->   F: hw/sensor/adm1272.c
->   F: hw/sensor/isl_pmbus_vr.c
-> +F: hw/sensor/max31790.c
->   F: hw/sensor/max34451.c
->   F: include/hw/i2c/pmbus_device.h
->   F: include/hw/sensor/isl_pmbus_vr.h
-> diff --git a/hw/arm/aspeed_ast2600_fby4.c b/hw/arm/aspeed_ast2600_fby4.c
-> index 89fb0ac2fd..1f391022a2 100644
-> --- a/hw/arm/aspeed_ast2600_fby4.c
-> +++ b/hw/arm/aspeed_ast2600_fby4.c
-> @@ -164,7 +164,7 @@ static void fby4_i2c_init_fanboard(I2CSlave *fan_mux, size_t eepromSize)
->           /* TODO */
->   
->           /* maxim,max31790 @ 0x20   (pwm) */
-> -        /* TODO */
-> +        i2c_slave_create_simple(bus, "max31790", 0x20);
->   
->           /*
->            * ti,tca6424 @ 0x22       (gpio)
-> @@ -182,7 +182,7 @@ static void fby4_i2c_init_fanboard(I2CSlave *fan_mux, size_t eepromSize)
->            */
->   
->           /* maxim,max31790 @ 0x2f   (pwm) */
-> -        /* TODO */
-> +        i2c_slave_create_simple(bus, "max31790", 0x2f);
->   
->           /* maxim,max11615 @ 0x33   (adc) */
->           /* TODO */
-> diff --git a/hw/sensor/max31790.c b/hw/sensor/max31790.c
-> new file mode 100644
-> index 0000000000..30bab2e74e
-> --- /dev/null
-> +++ b/hw/sensor/max31790.c
-> @@ -0,0 +1,501 @@
-> +/*
-> + * Maxim MAX31790 PMBus 6-Channel Fan Controller
-> + *
-> + * Datasheet:
-> + * https://www.analog.com/media/en/technical-documentation/data-sheets/MAX31790.pdf
-> + *
-> + * Copyright 2026 9elements
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/log.h"
-> +#include "hw/i2c/i2c.h"
-> +#include "qapi/error.h"
-> +#include "qapi/visitor.h"
-> +#include "migration/vmstate.h"
-> +#include "qemu/module.h"
-> +#include "qom/object.h"
-> +#include "trace.h"
-> +
-> +#define TYPE_MAX31790 "max31790"
-> +
-> +#define MAX31790_NUM_FANS 6
-> +#define MAX31790_NUM_TACHS 12
-> +
-> +#define MAX31790_REG_GLOBAL_CONFIG 0x00
-> +#define MAX31790_REG_PWM_FREQ 0x01
-> +
-> +/* 0x02 to 0x07: N = 0 .. 5 */
-> +#define MAX31790_REG_FAN_CONFIG(N) (0x02 + N)
-> +
-> +/* 0x08 to 0x0d: N = 0 .. 5 */
-> +#define MAX31790_REG_FAN_DYNAMICS(N) (0x08 + N)
-> +
-> +#define MAX31790_REG_FAN_FAULT_STATUS_2 0x10
-> +#define MAX31790_REG_FAN_FAULT_STATUS_1 0x11
-> +#define MAX31790_REG_FAN_FAULT_MASK_2 0x12
-> +#define MAX31790_REG_FAN_FAULT_MASK_1 0x13
-> +#define MAX31790_REG_FAILED_FAN_OPT 0x14
-> +
-> +/* 0x18 to 0x2f: N = 0 .. 11 */
-> +#define MAX31790_REG_TACH_COUNT_MSB(N) (0x18 + 2 * N)
-> +#define MAX31790_REG_TACH_COUNT_LSB(N) (0x19 + 2 * N)
-> +
-> +/* 0x30 to 0x3b: N = 0 .. 5 */
-> +#define MAX31790_REG_PWM_DUTY_CYCLE_MSB(N) (0x30 + 2 * N)
-> +#define MAX31790_REG_PWM_DUTY_CYCLE_LSB(N) (0x31 + 2 * N)
-> +
-> +/* .. reserved registers ... */
-> +
-> +/* 0x40 to 0x4b: N = 0 .. 5 */
-> +#define MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(N) (0x40 + 2 * N)
-> +#define MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(N) (0x41 + 2 * N)
-> +
-> +/* ... 'User Byte' registers ... */
-> +
-> +/* 0x50 to 0x5b: N = 0 .. 5 */
-> +#define MAX31790_REG_TACH_TARGET_COUNT_MSB(N) (0x50 + 2 * N)
-> +#define MAX31790_REG_TACH_TARGET_COUNT_LSB(N) (0x51 + 2 * N)
-> +
-> +struct MAX31790State {
-> +    I2CSlave i2c;
-> +
-> +    uint8_t fan_config[MAX31790_NUM_FANS];
-> +    uint8_t fan_dynamics[MAX31790_NUM_FANS];
-> +
-> +    uint16_t pwm[MAX31790_NUM_FANS];
-> +    uint16_t tach_target[MAX31790_NUM_FANS];
-> +    uint16_t rpm[MAX31790_NUM_TACHS];
-> +
-> +    /* command buffer */
-> +    uint8_t len;
-> +    uint8_t buf[2];
-> +
-> +    /* output buffer */
-> +    uint8_t outlen;
-> +    uint8_t outbuf[2];
-> +
-> +    /* selected register for read/write operation */
-> +    uint8_t pointer;
-> +};
-> +
-> +struct MAX31790Class {
-> +    I2CSlaveClass parent_class;
-> +};
-> +
-> +OBJECT_DECLARE_TYPE(MAX31790State, MAX31790Class, MAX31790)
-> +
-> +static void max31790_read(MAX31790State *s)
-> +{
-> +    size_t index = 0;
-> +    uint8_t out0 = 0;
-> +    uint8_t out1 = 0;
-> +
-> +    switch (s->pointer) {
-> +    case MAX31790_REG_FAN_CONFIG(0):
-> +    case MAX31790_REG_FAN_CONFIG(1):
-> +    case MAX31790_REG_FAN_CONFIG(2):
-> +    case MAX31790_REG_FAN_CONFIG(3):
-> +    case MAX31790_REG_FAN_CONFIG(4):
-> +    case MAX31790_REG_FAN_CONFIG(5):
-> +        out0 = s->fan_config[s->pointer - MAX31790_REG_FAN_CONFIG(0)];
-> +        break;
-> +    case MAX31790_REG_FAN_DYNAMICS(0):
-> +    case MAX31790_REG_FAN_DYNAMICS(1):
-> +    case MAX31790_REG_FAN_DYNAMICS(2):
-> +    case MAX31790_REG_FAN_DYNAMICS(3):
-> +    case MAX31790_REG_FAN_DYNAMICS(4):
-> +    case MAX31790_REG_FAN_DYNAMICS(5):
-> +        out0 = s->fan_dynamics[s->pointer - MAX31790_REG_FAN_DYNAMICS(0)];
-> +        break;
-> +    case MAX31790_REG_FAN_FAULT_STATUS_1:
-> +    case MAX31790_REG_FAN_FAULT_STATUS_2:
-> +        /* we do not have any fan fault */
-> +        out0 = 0x00;
-> +        out1 = 0x00;
-> +        break;
-> +    case MAX31790_REG_TACH_COUNT_MSB(0):
-> +    case MAX31790_REG_TACH_COUNT_MSB(1):
-> +    case MAX31790_REG_TACH_COUNT_MSB(2):
-> +    case MAX31790_REG_TACH_COUNT_MSB(3):
-> +    case MAX31790_REG_TACH_COUNT_MSB(4):
-> +    case MAX31790_REG_TACH_COUNT_MSB(5):
-> +    case MAX31790_REG_TACH_COUNT_MSB(6):
-> +    case MAX31790_REG_TACH_COUNT_MSB(7):
-> +    case MAX31790_REG_TACH_COUNT_MSB(8):
-> +    case MAX31790_REG_TACH_COUNT_MSB(9):
-> +    case MAX31790_REG_TACH_COUNT_MSB(10):
-> +    case MAX31790_REG_TACH_COUNT_MSB(11):
-> +        index = (s->pointer - MAX31790_REG_TACH_COUNT_MSB(0)) / 2;
-> +        out0 = (s->rpm[index] >> 8) & 0xff;
-> +        out1 = s->rpm[index] & 0xff;
-> +        break;
-> +
-> +    case MAX31790_REG_TACH_COUNT_LSB(0):
-> +    case MAX31790_REG_TACH_COUNT_LSB(1):
-> +    case MAX31790_REG_TACH_COUNT_LSB(2):
-> +    case MAX31790_REG_TACH_COUNT_LSB(3):
-> +    case MAX31790_REG_TACH_COUNT_LSB(4):
-> +    case MAX31790_REG_TACH_COUNT_LSB(5):
-> +    case MAX31790_REG_TACH_COUNT_LSB(6):
-> +    case MAX31790_REG_TACH_COUNT_LSB(7):
-> +    case MAX31790_REG_TACH_COUNT_LSB(8):
-> +    case MAX31790_REG_TACH_COUNT_LSB(9):
-> +    case MAX31790_REG_TACH_COUNT_LSB(10):
-> +    case MAX31790_REG_TACH_COUNT_LSB(11):
-> +        index = (s->pointer - MAX31790_REG_TACH_COUNT_LSB(0)) / 2;
-> +        out0 = s->rpm[index] & 0xff;
-> +        break;
-> +
-> +    case MAX31790_REG_PWM_DUTY_CYCLE_MSB(0):
-> +    case MAX31790_REG_PWM_DUTY_CYCLE_MSB(1):
-> +    case MAX31790_REG_PWM_DUTY_CYCLE_MSB(2):
-> +    case MAX31790_REG_PWM_DUTY_CYCLE_MSB(3):
-> +    case MAX31790_REG_PWM_DUTY_CYCLE_MSB(4):
-> +    case MAX31790_REG_PWM_DUTY_CYCLE_MSB(5):
-> +        index = (s->pointer - MAX31790_REG_PWM_DUTY_CYCLE_MSB(0)) / 2;
-> +        out0 = (s->pwm[index] >> 8) & 0xff;
-> +        out1 = s->pwm[index] & 0xff;
-> +        break;
-> +    case MAX31790_REG_PWM_DUTY_CYCLE_LSB(0):
-> +    case MAX31790_REG_PWM_DUTY_CYCLE_LSB(1):
-> +    case MAX31790_REG_PWM_DUTY_CYCLE_LSB(2):
-> +    case MAX31790_REG_PWM_DUTY_CYCLE_LSB(3):
-> +    case MAX31790_REG_PWM_DUTY_CYCLE_LSB(4):
-> +    case MAX31790_REG_PWM_DUTY_CYCLE_LSB(5):
-> +        index = (s->pointer - MAX31790_REG_PWM_DUTY_CYCLE_LSB(0)) / 2;
-> +        out0 = s->pwm[index] & 0xff;
-> +        break;
-> +
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(0):
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(1):
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(2):
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(3):
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(4):
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(5):
-> +        index = (s->pointer - MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(0)) / 2;
-> +        out0 = (s->pwm[index] >> 8) & 0xff;
-> +        out1 = s->pwm[index] & 0xff;
-> +        break;
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(0):
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(1):
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(2):
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(3):
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(4):
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(5):
-> +        index = (s->pointer - MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(0)) / 2;
-> +        out0 = s->pwm[index] & 0xff;
-> +        break;
-> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(0):
-> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(1):
-> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(2):
-> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(3):
-> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(4):
-> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(5):
-> +        index = (s->pointer - MAX31790_REG_TACH_TARGET_COUNT_MSB(0)) / 2;
-> +        out0 = (s->tach_target[index] >> 8) & 0xff;
-> +        out1 = s->tach_target[index] & 0xff;
-> +        break;
-> +    case MAX31790_REG_TACH_TARGET_COUNT_LSB(0):
-> +    case MAX31790_REG_TACH_TARGET_COUNT_LSB(1):
-> +    case MAX31790_REG_TACH_TARGET_COUNT_LSB(2):
-> +    case MAX31790_REG_TACH_TARGET_COUNT_LSB(3):
-> +    case MAX31790_REG_TACH_TARGET_COUNT_LSB(4):
-> +    case MAX31790_REG_TACH_TARGET_COUNT_LSB(5):
-> +        index = (s->pointer - MAX31790_REG_TACH_TARGET_COUNT_LSB(0)) / 2;
-> +        out0 = s->tach_target[index] & 0xff;
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP, "%s: read of register %d", __func__,
+> I wouldn't object much is it were a fix that we had to rush in,
+> but this is not the case (are we in hurry to rush this in?).
+>
+This is where I'd like to push back, on three connected points: the
+mixed-memory question that the v4 thread already converged on; the
+relationship between v7 and a future spm-memory device; and the
+review timeline.
 
-This log event lacks the trailing newline. same for the other ones.
+(1) The mixed-memory question -- v4 thread carries directly over
 
-> +                      s->pointer);
-> +        break;
-> +    }
-> +
-> +    s->outbuf[0] = out0;
-> +    s->outbuf[1] = out1;
-> +}
-> +
-> +static void max31790_set_rpm(MAX31790State *s, size_t index, uint16_t rpm)
-> +{
-> +    /* datasheet: lowest 5 bits are 0 */
-> +    s->rpm[index] = rpm & ~0b11111;
-> +}
-> +
-> +static void max31790_pwm_write(MAX31790State *s, size_t index, uint16_t value)
-> +{
-> +    trace_max31790_pwm_write(s->i2c.address, index, value);
-> +
-> +    s->pwm[index] = value;
-> +
-> +    /* change rpm based on pwm input */
-> +    const uint16_t pwm_no_reserve = s->pwm[index] >> 7;
-> +
-> +    /*
-> +     * This formula has magic values which model the relationship
-> +     * of PWM input to a fan. Not derived from datasheet.
-> +     */
-> +    max31790_set_rpm(s, index, 0x1000 + (pwm_no_reserve << 3));
-> +}
-> +
-> +static void max31790_write_2_byte(MAX31790State *s)
-> +{
-> +    size_t index = 0;
-> +    const uint8_t value0 = s->buf[0];
-> +    const uint8_t value1 = s->buf[1];
-> +
-> +    switch (s->pointer) {
-> +    case MAX31790_REG_FAN_CONFIG(0):
-> +    case MAX31790_REG_FAN_CONFIG(1):
-> +    case MAX31790_REG_FAN_CONFIG(2):
-> +    case MAX31790_REG_FAN_CONFIG(3):
-> +    case MAX31790_REG_FAN_CONFIG(4):
-> +    case MAX31790_REG_FAN_CONFIG(5):
-> +        break; /* handled by one byte write */
-> +    case MAX31790_REG_FAN_DYNAMICS(0):
-> +    case MAX31790_REG_FAN_DYNAMICS(1):
-> +    case MAX31790_REG_FAN_DYNAMICS(2):
-> +    case MAX31790_REG_FAN_DYNAMICS(3):
-> +    case MAX31790_REG_FAN_DYNAMICS(4):
-> +    case MAX31790_REG_FAN_DYNAMICS(5):
-> +        break; /* handled by one byte write */
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(0):
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(1):
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(2):
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(3):
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(4):
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(5):
-> +        index = (s->pointer - MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(0)) / 2;
-> +        max31790_pwm_write(s, index, value0 << 8 | value1);
-> +        break;
-> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(0):
-> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(1):
-> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(2):
-> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(3):
-> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(4):
-> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(5):
-> +        index = (s->pointer - MAX31790_REG_TACH_TARGET_COUNT_MSB(0)) / 2;
-> +        s->tach_target[index] = (value0 << 8) | value1;
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP, "%s: write to register %d", __func__,
-> +                      s->pointer);
-> +        break;
-> +    }
-> +}
-> +
-> +static void max31790_write_1_byte(MAX31790State *s)
-> +{
-> +
+In the v4 round, an -object/backend-property variant of this feature
+was set aside after pushback from Gregory and David on a single
+concern: allowing a single NUMA node to mix SPM and normal memory.
+The current memmap-type=[normal,spm,reserved] form was Gregory's
+suggestion in that same discussion, and v7 carries Acked-by from
+David and Reviewed-by from Gregory.
 
-extra new line above.
+A -device spm-memory model reopens that question.  A memory device
+is plugged into a target NUMA node via its node= parameter; unless
+additional constraints are added, that node can also have normal
+memory attached via -numa node,memdev=.  Adding a runtime check
+that errors out on mixed-node configurations is possible, but it
+changes the failure mode from "read your command line and see which
+node is SPM" to "assemble a command line that looks fine, hit a
+realize-time error, edit, retry."  For users composing multi-node
+topologies on the CLI (or via libvirt-generated cmdlines), that's a
+meaningful UX regression.
 
-> +    size_t index = 0;
-> +    uint16_t pwm = 0;
-> +    const uint8_t value = s->buf[0];
+The whole-node typing in v7 expresses the SPM-vs-normal property
+declaratively, on the same -numa line that already carries the
+node's other attributes -- which is the form the v4 review
+converged on, precisely to keep this kind of constraint visible at
+the configuration layer rather than at realize time.
 
-please add a new line here.
+(Gregory, David: this is exactly the regression you raised in v4
+that pushed the series away from -object form.  Would value your
+read on whether a -device spm-memory variant raises it again, and
+what an acceptable resolution would look like in that form.)
 
-> +    switch (s->pointer) {
-> +    case MAX31790_REG_FAN_CONFIG(0):
-> +    case MAX31790_REG_FAN_CONFIG(1):
-> +    case MAX31790_REG_FAN_CONFIG(2):
-> +    case MAX31790_REG_FAN_CONFIG(3):
-> +    case MAX31790_REG_FAN_CONFIG(4):
-> +    case MAX31790_REG_FAN_CONFIG(5):
-> +        s->fan_config[s->pointer - MAX31790_REG_FAN_CONFIG(0)] = value;
-> +        break;
-> +    case MAX31790_REG_FAN_DYNAMICS(0):
-> +    case MAX31790_REG_FAN_DYNAMICS(1):
-> +    case MAX31790_REG_FAN_DYNAMICS(2):
-> +    case MAX31790_REG_FAN_DYNAMICS(3):
-> +    case MAX31790_REG_FAN_DYNAMICS(4):
-> +    case MAX31790_REG_FAN_DYNAMICS(5):
-> +        s->fan_dynamics[s->pointer - MAX31790_REG_FAN_DYNAMICS(0)] = value;
-> +        break;
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(0):
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(1):
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(2):
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(3):
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(4):
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(5):
-> +        index = (s->pointer - MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(0)) / 2;
-> +        pwm = (value << 8) | (s->pwm[index] & 0x00ff);
-> +        max31790_pwm_write(s, index, pwm);
-> +        break;
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(0):
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(1):
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(2):
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(3):
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(4):
-> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(5):
-> +        index = (s->pointer - MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(0)) / 2;
-> +        pwm = (s->pwm[index] & 0xff00) | (value & 0x00ff);
-> +        max31790_pwm_write(s, index, pwm);
-> +        break;
-> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(0):
-> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(1):
-> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(2):
-> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(3):
-> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(4):
-> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(5):
-> +        index = (s->pointer - MAX31790_REG_TACH_TARGET_COUNT_MSB(0)) / 2;
-> +        s->tach_target[index] = (s->tach_target[index] & 0x00ff) | (value << 8);
-> +        break;
-> +    case MAX31790_REG_TACH_TARGET_COUNT_LSB(0):
-> +    case MAX31790_REG_TACH_TARGET_COUNT_LSB(1):
-> +    case MAX31790_REG_TACH_TARGET_COUNT_LSB(2):
-> +    case MAX31790_REG_TACH_TARGET_COUNT_LSB(3):
-> +    case MAX31790_REG_TACH_TARGET_COUNT_LSB(4):
-> +    case MAX31790_REG_TACH_TARGET_COUNT_LSB(5):
-> +        index = (s->pointer - MAX31790_REG_TACH_TARGET_COUNT_LSB(0)) / 2;
-> +        s->tach_target[index] = (s->tach_target[index] & 0xff00) | value;
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP, "%s: write to register %d", __func__,
-> +                      s->pointer);
-> +        break;
-> +    }
-> +}
-> +
-> +static int max31790_send(I2CSlave *i2c, uint8_t data)
-> +{
-> +    MAX31790State *s = MAX31790(i2c);
-> +
-> +    trace_max31790_send(s->i2c.address, data);
-> +
-> +    if (s->len == 0) {
-> +        /* first byte is the register pointer for a read / write operation */
-> +        s->pointer = data;
-> +        s->len++;
-> +        return 0;
-> +    }
-> +
-> +    if (s->len > 2) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: write too many bytes", __func__);
-> +        return 1; /* NAK */
-> +    }
-> +
-> +    /* second / third byte is the data to write */
-> +    s->buf[s->len - 1] = data;
-> +    s->len++;
-> +
-> +    if (s->len == 2) {
-> +        max31790_write_1_byte(s);
-> +    } else if (s->len == 3) {
-> +        max31790_write_2_byte(s);
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static uint8_t max31790_recv(I2CSlave *i2c)
-> +{
-> +    MAX31790State *s = MAX31790(i2c);
-> +    trace_max31790_recv(s->i2c.address, s->pointer);
-> +
-> +    max31790_read(s);
-> +    s->len = 0;
-> +
-> +    if (s->outlen >= 2) {
-> +        /* error */
+(2) v7 and a future spm-memory device aren't mutually exclusive
 
-Does this condition deserve a qemu_log_mask(LOG_GUEST_ERROR, )  ?
+I don't see anything in v7 that conflicts with the device-based
+direction you sketched.  v7 establishes the user-visible semantic
+(whole-node SPM, with E820 SOFT_RESERVED + SRAT memory-affinity
+emission) and the firmware-side compatibility (OVMF already
+upstream, SeaBIOS in flight).  A future spm-memory device built on
+memory-device infrastructure can target the same E820 + SRAT
+emission and either co-exist with v7 (different idioms for the same
+underlying semantic) or, if and when it proves out, subsume v7 via
+the standard QEMU deprecation flow.
 
+Three observations on the "merging v7 means committing to support
+burden for years" framing:
 
-> +        s->outlen = 0;
-> +    }
-> +
-> +    const uint8_t data = s->outbuf[s->outlen++];
-> +
-> +    trace_max31790_recv_return(s->i2c.address, data);
-> +    return data;
-> +}
-> +
-> +static int max31790_event(I2CSlave *i2c, enum i2c_event event)
-> +{
-> +    MAX31790State *s = MAX31790(i2c);
-> +
-> +    trace_max31790_event(s->i2c.address, event);
-> +
-> +    switch (event) {
-> +    case I2C_START_RECV:
-> +        s->outlen = 0;
-> +        break;
-> +    case I2C_START_SEND:
-> +        s->len = 0;
-> +        break;
-> +    default:
-> +        break;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static const VMStateDescription vmstate_max31790 = {
-> +    .name = TYPE_MAX31790,
-> +    .version_id = 0,
-> +    .minimum_version_id = 0,
-> +    .fields =
-> +        (const VMStateField[]){
-> +            VMSTATE_UINT8(len, MAX31790State),
-> +            VMSTATE_UINT8_ARRAY(fan_config, MAX31790State, MAX31790_NUM_FANS),
-> +            VMSTATE_UINT8_ARRAY(fan_dynamics, MAX31790State, MAX31790_NUM_FANS),
-> +            VMSTATE_UINT16_ARRAY(pwm, MAX31790State, MAX31790_NUM_FANS),
-> +            VMSTATE_UINT16_ARRAY(tach_target, MAX31790State, MAX31790_NUM_FANS),
-> +            VMSTATE_UINT16_ARRAY(rpm, MAX31790State, MAX31790_NUM_TACHS),
-> +            VMSTATE_UINT8_ARRAY(buf, MAX31790State, 2),
-> +            VMSTATE_UINT8(outlen, MAX31790State),
-> +            VMSTATE_UINT8_ARRAY(outbuf, MAX31790State, 2),
-> +            VMSTATE_UINT8(pointer, MAX31790State),
-> +            VMSTATE_I2C_SLAVE(i2c, MAX31790State), VMSTATE_END_OF_LIST() }
-> +};
-> +
-> +static void max31790_reset(DeviceState *dev)
-> +{
-> +    MAX31790State *s = MAX31790(dev);
-> +
-> +    for (int i = 0; i < MAX31790_NUM_FANS; i++) {
-> +        /* POR-State 0b 0XX0 0000 */
-> +        s->fan_config[i] = 0b00000000;
-> +
-> +        /* same as POR-State */
-> +        s->tach_target[i] = 0b0011110000000000;
-> +
-> +        /* same as POR-State */
-> +        s->fan_dynamics[i] = 0b01001100;
-> +
-> +        s->pwm[i] = 0;
-> +    }
-> +
-> +    for (int i = 0; i < MAX31790_NUM_TACHS; i++) {
-> +        max31790_set_rpm(s, i, 0x4444);
-> +    }
-> +}
-> +
-> +static void max31790_realize(DeviceState *dev, Error **errp)
-> +{
-> +    MAX31790State *s = MAX31790(dev);
-> +
-> +    trace_max31790_realize(s->i2c.address);
-> +}
-> +
-> +static void max31790_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
-> +
-> +    dc->realize = max31790_realize;
-> +    dc->desc = "Maxim MAX31790 6-Channel Fan Controller";
-> +    dc->vmsd = &vmstate_max31790;
-> +    dc->legacy_reset = max31790_reset;
-> +    k->event = max31790_event;
-> +    k->recv = max31790_recv;
-> +    k->send = max31790_send;
-> +}
-> +
-> +static const TypeInfo max31790_info = {
-> +    .name = TYPE_MAX31790,
-> +    .parent = TYPE_I2C_SLAVE,
-> +    .instance_size = sizeof(MAX31790State),
-> +    .class_size = sizeof(MAX31790Class),
-> +    .class_init = max31790_class_init,
-> +};
-> +
-> +static void max31790_register_types(void)
-> +{
-> +    type_register_static(&max31790_info);
-> +}
-> +
-> +type_init(max31790_register_types)
-> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-> index 5b198402d5..99864eb878 100644
-> --- a/hw/arm/Kconfig
-> +++ b/hw/arm/Kconfig
-> @@ -552,6 +552,7 @@ config ASPEED_SOC
->       select LED
->       select PMBUS
->       select MAX31785
-> +    select MAX31790
->       select FSI_APB2OPB_ASPEED
->       select AT24C
->       select PCI_EXPRESS
-> diff --git a/hw/sensor/Kconfig b/hw/sensor/Kconfig
-> index bc6331b4ab..ece2f2b167 100644
-> --- a/hw/sensor/Kconfig
-> +++ b/hw/sensor/Kconfig
-> @@ -43,3 +43,7 @@ config ISL_PMBUS_VR
->   config MAX31785
->       bool
->       depends on PMBUS
-> +
-> +config MAX31790
-> +    bool
-> +    depends on PMBUS
+(A) On your own framing, the existing -numa node,memdev= interface
+     for attaching memory to NUMA nodes is itself on a long
+     deprecation arc toward memory-device.  v7's memmap-type= is a
+     sibling attribute on the same -numa node configuration, sharing
+     the same lifetime envelope; it doesn't create a new long-term
+     contract beyond what -numa node,memdev= already commits us to.
 
-I think it should be
+(B) v7 is the interim shape that a future spm-memory device can
+     subsume.  If the device-based variant lands later and proves
+     out, v7's memmap-type=spm can be marked deprecated under the
+     standard two-cycle policy and removed.  That's the same path
+     we'd take for any of the -numa node,memdev= family.  Treating
+     v7 as a permanent commitment overstates the contract.
 
-   depends on I2C
+(C) The marginal code surface of v7 is small: a single new -numa
+     node attribute that routes into the existing E820 plumbing in
+     machine-init.  The marginal maintenance cost is bounded by
+     that surface.  Compare against the cost of holding the in-tree
+     use case while a memory-device-based prototype is designed,
+     implemented, reviewed and stabilised.
 
-same for MAX31785 probably.
+(3) The review timeline
 
+I want to be transparent about this rather than leave it implied.
+This series has been in upstream review for roughly 1.5 years.  The
+v5, v6 and v7 cycles went through with Acked-by from David and
+Reviewed-by from Gregory; your previous engagement on this thread
+was on the v4 round in January.  v7 was posted with the QEMU 11.1
+window in mind, and the soft freeze is 7 July.
 
-> diff --git a/hw/sensor/meson.build b/hw/sensor/meson.build
-> index 420fdc3359..4987c3b253 100644
-> --- a/hw/sensor/meson.build
-> +++ b/hw/sensor/meson.build
-> @@ -8,3 +8,4 @@ system_ss.add(when: 'CONFIG_MAX34451', if_true: files('max34451.c'))
->   system_ss.add(when: 'CONFIG_LSM303DLHC_MAG', if_true: files('lsm303dlhc_mag.c'))
->   system_ss.add(when: 'CONFIG_ISL_PMBUS_VR', if_true: files('isl_pmbus_vr.c'))
->   system_ss.add(when: 'CONFIG_MAX31785', if_true: files('max31785.c'))
-> +system_ss.add(when: 'CONFIG_MAX31790', if_true: files('max31790.c'))
-> diff --git a/hw/sensor/trace-events b/hw/sensor/trace-events
-> index a3fe54fa6d..c15c0a7e93 100644
-> --- a/hw/sensor/trace-events
-> +++ b/hw/sensor/trace-events
-> @@ -4,3 +4,11 @@
->   tmp105_read(uint8_t dev, uint8_t addr) "device: 0x%02x, addr: 0x%02x"
->   tmp105_write(uint8_t dev, uint8_t addr) "device: 0x%02x, addr 0x%02x"
->   tmp105_write_shutdown(uint8_t dev) "device: 0x%02x"
-> +
-> +# max31790.c
-> +max31790_send(uint8_t i2c_addr, uint8_t send) "i2c_addr: 0x%02x, data: 0x%02x"
-> +max31790_recv(uint8_t i2c_addr, uint8_t reg_addr) "i2c_addr: 0x%02x, reg_addr: 0x%02x"
-> +max31790_recv_return(uint8_t i2c_addr, uint8_t data) "i2c_addr: 0x%02x, returns: 0x%02x"
-> +max31790_event(uint8_t i2c_addr, uint8_t event) "i2c_addr: 0x%02x, event: 0x%02x"
-> +max31790_realize(uint8_t i2c_addr) "i2c_addr: 0x%02x"
-> +max31790_pwm_write(uint8_t i2c_addr, size_t index, uint16_t value) "i2c_addr: 0x%02x, index: %zu, value: 0x%04x"
-> diff --git a/tests/functional/arm/test_aspeed_fby4.py b/tests/functional/arm/test_aspeed_fby4.py
-> index a3124c240f..d29423add7 100755
-> --- a/tests/functional/arm/test_aspeed_fby4.py
-> +++ b/tests/functional/arm/test_aspeed_fby4.py
-> @@ -7,6 +7,8 @@
->   from qemu_test import Asset
->   from aspeed import AspeedTest
->   
-> +from qemu_test import wait_for_console_pattern, exec_command
+I'm raising this not to dismiss the technical questions you've put
+on the table -- those are worth a separate RFC and I'd be glad to
+take part -- but because gating v7 on prototyping a memory-device-
+based variant first effectively pushes this past 11.1, and the
+production deployment timeline that this series enables doesn't
+accommodate that.  If the in-tree review on v7 itself had surfaced
+this direction earlier, we'd be in a different place; at this point
+in the cycle, the cleanest path is to land v7 as it stands (with
+the tags it already carries) and pursue the device-based variant as
+its own RFC.
 
+> My hunch is that memory device based approach will end-up with
+> more straightforward and cleaner code, not to mention proper
+> backend/frontend modeling.
+> 
+> (also related to long term: ideally existing -numa 'some memory' interface,
+> should go away and be replaced by memory devices.
+> Adding more similar '-numa' options, doesn't help that case and only
+> increases out technical debt).
+> 
+>
+On the cleaner-code hunch -- agreed in principle for a green-field
+design.  On the -numa-should-go-away point -- agreed as a long-term
+direction; that's exactly why v7 sits within the existing -numa
+node,memdev= lifetime envelope rather than committing us to a new
+one (point 2A above).
 
-I don't see exec_command called below.
+I'd be glad to take part in the spm-memory RFC and in the wider
+migration of the -numa node,memdev= interface family to
+memory-device that you sketched.  Realistically, there are
+architecture-level questions still open on our side that pace what
+we can take on -- and landing v7 in 11.1 helps here by giving us a
+stable in-tree baseline to iterate forward from.
 
-Thanks,
+My ask on this thread is: that v7 lands for 11.1 on the tags it
+already carries, and that the device-based direction proceeds as
+separate, parallel work.
 
-C.
-
-
-> +from qemu_test import exec_command_and_wait_for_pattern
->   
->   class YosemiteV4Machine(AspeedTest):
->   
-> @@ -33,6 +35,22 @@ def do_test_arm_aspeed_openbmc_no_network(self, machine, image, uboot,
->           # different from the other machines.
->           self.wait_for_console_pattern('yosemite4 login:')
->   
-> +        # perform login
-> +        exec_command_and_wait_for_pattern(self,
-> +                                          "root", "Password:");
-> +
-> +        exec_command_and_wait_for_pattern(self, "0penBmc", "#");
-> +
-> +        # MAX31790 test
-> +        exec_command_and_wait_for_pattern(self,
-> +            "cat /sys/class/hwmon/hwmon2/name", "max31790");
-> +        exec_command_and_wait_for_pattern(self,
-> +            "cat /sys/class/hwmon/hwmon2/fan1_input", "4530");
-> +        exec_command_and_wait_for_pattern(self,
-> +            "cat /sys/class/hwmon/hwmon2/fan1_enable", "1");
-> +        exec_command_and_wait_for_pattern(self,
-> +            "cat /sys/class/hwmon/hwmon2/fan1_fault", "0");
-> +
->       def test_arm_ast2600_yosemitev4_openbmc(self):
->           image_path = self.uncompress(self.ASSET_YOSEMITE_V4_FLASH)
->   
+Best regards,
+FangSheng Huang (Jerry)
 
 
