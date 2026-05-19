@@ -4,71 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFCF3CD4F5B
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 17:07:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA2CBCD4F3C
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 17:07:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPNrD-00082M-H3; Tue, 19 May 2026 13:03:51 -0400
+	id 1wPNrA-00080f-P9; Tue, 19 May 2026 13:03:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wPNr5-0007yL-8w
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wPNr7-0007yb-CI
  for qemu-devel@nongnu.org; Tue, 19 May 2026 13:03:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wPNr0-0004CG-B9
- for qemu-devel@nongnu.org; Tue, 19 May 2026 13:03:41 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wPNr3-0004De-Sg
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 13:03:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779210216;
+ s=mimecast20190719; t=1779210220;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cMT/antuLqZyS5oYFLZbd0Cv7OFEzbG2EjWvbMi6YI4=;
- b=c/yJRTFanzOmjU0U9LFYyxZOUUsgzwxl8y6RVMMNcIeyuJ4hudV6okucCxNsgdknA3Dm4X
- 72Y5EWCKAvTscDMFkZ1EmHIPFGhVmzzyWIzartvAmakCtguREYsjS/c1ipNqtAZEsb/jdR
- Qoiwvkd6jrkKrZSsENCTo+PopsxKtm8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=YoBzQot0sIcD2pxlSnw/1cyTfsK6JfUvPYD6dpUYLPY=;
+ b=guxbeTc/cLLWhCkPYk5gtn/EyyWBeCzjgz6mSGKqEBjJJmbUPn5QzdQtvXR99t6JzHwVYi
+ DJQQs6nfb7iAct6RQhlIID4d7mPXJUig/a5vX4x2nX1itW3/lINaFbsiFp3Yc2LmQKYePq
+ 9dLZBim8MfGTuZg00/EGqda0zdcgz0s=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-486-svxVMi4uNMOV_Vt8mxt83Q-1; Tue,
- 19 May 2026 13:03:33 -0400
-X-MC-Unique: svxVMi4uNMOV_Vt8mxt83Q-1
-X-Mimecast-MFC-AGG-ID: svxVMi4uNMOV_Vt8mxt83Q_1779210212
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-207-yUXzXlhIOaGYexewPeBzqw-1; Tue,
+ 19 May 2026 13:03:36 -0400
+X-MC-Unique: yUXzXlhIOaGYexewPeBzqw-1
+X-Mimecast-MFC-AGG-ID: yUXzXlhIOaGYexewPeBzqw_1779210215
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 01D0D19560A7; Tue, 19 May 2026 17:03:32 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A849018002C7; Tue, 19 May 2026 17:03:35 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.44.49.113])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A23E81681; Tue, 19 May 2026 17:03:30 +0000 (UTC)
+ id 57FC91681; Tue, 19 May 2026 17:03:34 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	stefanha@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 02/18] block: Add blk_co_start/end_request() and
- BDRV_REQ_NO_QUEUE
-Date: Tue, 19 May 2026 19:03:01 +0200
-Message-ID: <20260519170317.345032-3-kwolf@redhat.com>
+Subject: [PULL 04/18] ide: Minimal fix for deadlock between TRIM and drain
+Date: Tue, 19 May 2026 19:03:03 +0200
+Message-ID: <20260519170317.345032-5-kwolf@redhat.com>
 In-Reply-To: <20260519170317.345032-1-kwolf@redhat.com>
 References: <20260519170317.345032-1-kwolf@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,190 +82,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If a device uses blk_inc/dec_in_flight() in order to build macro
-operations that involve multiple requests for the block layer and that
-need to be completed as a unit before the BlockBackend can be considered
-drained, it sets the stage for a deadlock: When a drain is requested,
-the inner request at the BlockBackend level will be queued in
-blk_wait_while_drained() and wait until the drained section ends, but at
-the same time, drain_begin can only return if the whole macro operation
-at the device level has completed.
+The implementation of TRIM in IDE can chain multiple discard requests
+and uses blk_inc/dec_in_flight() to make sure that the whole TRIM
+operation has completed when the device needs to be quiescent (e.g. for
+the drain when performing an IDE reset, it would be bad if an IDE
+request like TRIM were still in flight).
 
-Introduce a new interface to allow implementing the logic correctly:
-Instead of queueing individual requests, blk_co_start_request() calls
-blk_wait_while_drained() once at the beginning. The individual requests
-must then set BDRV_REQ_NO_QUEUE to avoid being queued and running into
-the deadlock; being wrapped in blk_co_start/end_request() makes sure
-that drain_begin waits for them and they don't sneak in when the
-BlockBackend is supposed to already be quiescent.
+The problem is that each drain request calls blk_wait_while_drained()
+and when draining, it waits until the drained section ends. At the same
+time, drain_begin can only return if the whole TRIM operation has
+completed. This is a classic deadlock.
 
+Use blk_co_start/end_request() and BDRV_REQ_NO_QUEUE to avoid the
+problem. This requires moving the TRIM state machine to a coroutine.
+This commit does the minimal conversion so that we do have a coroutine
+that works for the fix, but it still looks much like a callback-based
+implementation. This will be cleaned up in the next patch.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 7e5cdb345f77 ('ide: Increment BB in-flight counter for TRIM BH')
+Buglink: https://redhat.atlassian.net/browse/RHEL-121686
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260421161132.99878-3-kwolf@redhat.com>
+Message-ID: <20260421161132.99878-5-kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- include/block/block-common.h      | 11 ++++++++-
- include/system/block-backend-io.h |  2 ++
- block/block-backend.c             | 38 +++++++++++++++++++++++--------
- 3 files changed, 41 insertions(+), 10 deletions(-)
+ hw/ide/core.c | 37 ++++++++++++++++++-------------------
+ 1 file changed, 18 insertions(+), 19 deletions(-)
 
-diff --git a/include/block/block-common.h b/include/block/block-common.h
-index c8c626daeaa..895ea175413 100644
---- a/include/block/block-common.h
-+++ b/include/block/block-common.h
-@@ -215,8 +215,17 @@ typedef enum {
-      */
-     BDRV_REQ_NO_WAIT = 0x400,
- 
-+    /*
-+     * Used between blk_co_start_request() and blk_end_request() to avoid
-+     * that the request waits in a drained BlockBackend until the drained
-+     * section ends. Waiting would cause a deadlock because drain waits for
-+     * blk_end_request() to be called, but the request never completes
-+     * because it waits for the drain to end.
-+     */
-+    BDRV_REQ_NO_QUEUE = 0x800,
-+
-     /* Mask of valid flags */
--    BDRV_REQ_MASK               = 0x7ff,
-+    BDRV_REQ_MASK               = 0xfff,
- } BdrvRequestFlags;
- 
- #define BDRV_O_NO_SHARE    0x0001 /* don't share permissions */
-diff --git a/include/system/block-backend-io.h b/include/system/block-backend-io.h
-index 6d5ac476fc0..0248c1c36e2 100644
---- a/include/system/block-backend-io.h
-+++ b/include/system/block-backend-io.h
-@@ -71,6 +71,8 @@ BlockAIOCB *blk_aio_ioctl(BlockBackend *blk, unsigned long int req, void *buf,
- 
- void blk_inc_in_flight(BlockBackend *blk);
- void blk_dec_in_flight(BlockBackend *blk);
-+void coroutine_fn blk_co_start_request(BlockBackend *blk);
-+void blk_end_request(BlockBackend *blk);
- 
- bool coroutine_fn GRAPH_RDLOCK blk_co_is_inserted(BlockBackend *blk);
- bool co_wrapper_mixed_bdrv_rdlock blk_is_inserted(BlockBackend *blk);
-diff --git a/block/block-backend.c b/block/block-backend.c
-index 99446571201..ee00440e28d 100644
---- a/block/block-backend.c
-+++ b/block/block-backend.c
-@@ -82,6 +82,7 @@ struct BlockBackend {
-     QemuMutex queued_requests_lock; /* protects queued_requests */
-     CoQueue queued_requests;
-     bool disable_request_queuing; /* atomic */
-+    int start_request_count; /* atomic */
- 
-     VMChangeStateEntry *vmsh;
-     bool force_allow_inactivate;
-@@ -1306,10 +1307,16 @@ bool blk_in_drain(BlockBackend *blk)
- }
- 
- /* To be called between exactly one pair of blk_inc/dec_in_flight() */
--static void coroutine_fn blk_wait_while_drained(BlockBackend *blk)
-+static void coroutine_fn blk_wait_while_drained(BlockBackend *blk,
-+                                                BdrvRequestFlags flags)
- {
-     assert(blk->in_flight > 0);
- 
-+    if (flags & BDRV_REQ_NO_QUEUE) {
-+        assert(qatomic_read(&blk->start_request_count));
-+        return;
-+    }
-+
-     if (qatomic_read(&blk->quiesce_counter) &&
-         !qatomic_read(&blk->disable_request_queuing)) {
-         /*
-@@ -1335,7 +1342,7 @@ blk_co_do_preadv_part(BlockBackend *blk, int64_t offset, int64_t bytes,
-     BlockDriverState *bs;
-     IO_CODE();
- 
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, flags);
-     GRAPH_RDLOCK_GUARD();
- 
-     /* Call blk_bs() only after waiting, the graph may have changed */
-@@ -1410,7 +1417,7 @@ blk_co_do_pwritev_part(BlockBackend *blk, int64_t offset, int64_t bytes,
-     BlockDriverState *bs;
-     IO_CODE();
- 
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, flags);
-     GRAPH_RDLOCK_GUARD();
- 
-     /* Call blk_bs() only after waiting, the graph may have changed */
-@@ -1523,6 +1530,19 @@ void blk_dec_in_flight(BlockBackend *blk)
-     aio_wait_kick();
- }
- 
-+void coroutine_fn blk_co_start_request(BlockBackend *blk)
-+{
-+    blk_inc_in_flight(blk);
-+    blk_wait_while_drained(blk, 0);
-+    qatomic_inc(&blk->start_request_count);
-+}
-+
-+void blk_end_request(BlockBackend *blk)
-+{
-+    qatomic_dec(&blk->start_request_count);
-+    blk_dec_in_flight(blk);
-+}
-+
- static void error_callback_bh(void *opaque)
- {
-     struct BlockBackendAIOCB *acb = opaque;
-@@ -1741,7 +1761,7 @@ blk_co_do_ioctl(BlockBackend *blk, unsigned long int req, void *buf)
- {
-     IO_CODE();
- 
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, 0);
-     GRAPH_RDLOCK_GUARD();
- 
-     if (!blk_co_is_available(blk)) {
-@@ -1788,7 +1808,7 @@ blk_co_do_pdiscard(BlockBackend *blk, int64_t offset, int64_t bytes)
+diff --git a/hw/ide/core.c b/hw/ide/core.c
+index 7a15d6cac9b..48359c934c1 100644
+--- a/hw/ide/core.c
++++ b/hw/ide/core.c
+@@ -420,7 +420,6 @@ typedef struct TrimAIOCB {
+     QEMUBH *bh;
      int ret;
-     IO_CODE();
+     QEMUIOVector *qiov;
+-    BlockAIOCB *aiocb;
+     int i, j;
+ } TrimAIOCB;
  
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, 0);
-     GRAPH_RDLOCK_GUARD();
+@@ -433,11 +432,6 @@ static void trim_aio_cancel(BlockAIOCB *acb)
+     iocb->i = (iocb->qiov->iov[iocb->j].iov_len / 8) - 1;
  
-     ret = blk_check_byte_request(blk, offset, bytes);
-@@ -1834,7 +1854,7 @@ int coroutine_fn blk_co_pdiscard(BlockBackend *blk, int64_t offset,
- static int coroutine_fn blk_co_do_flush(BlockBackend *blk)
+     iocb->ret = -ECANCELED;
+-
+-    if (iocb->aiocb) {
+-        blk_aio_cancel_async(iocb->aiocb);
+-        iocb->aiocb = NULL;
+-    }
+ }
+ 
+ static const AIOCBInfo trim_aiocb_info = {
+@@ -456,15 +450,20 @@ static void ide_trim_bh_cb(void *opaque)
+     iocb->bh = NULL;
+     qemu_aio_unref(iocb);
+ 
+-    /* Paired with an increment in ide_issue_trim() */
+-    blk_dec_in_flight(blk);
++    /* Paired with blk_co_start_request in ide_trim_co_entry() */
++    blk_end_request(blk);
+ }
+ 
+-static void ide_issue_trim_cb(void *opaque, int ret)
++static void coroutine_fn ide_trim_co_entry(void *opaque)
  {
-     IO_CODE();
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, 0);
-     GRAPH_RDLOCK_GUARD();
+     TrimAIOCB *iocb = opaque;
+     IDEState *s = iocb->s;
++    int ret = 0;
++
++    /* Paired with blk_end_request in ide_trim_bh_cb() */
++    blk_co_start_request(s->blk);
  
-     if (!blk_co_is_available(blk)) {
-@@ -2009,7 +2029,7 @@ int coroutine_fn blk_co_zone_report(BlockBackend *blk, int64_t offset,
-     IO_CODE();
++loop:
+     if (iocb->i >= 0) {
+         if (ret >= 0) {
+             block_acct_done(blk_get_stats(s->blk), &s->acct);
+@@ -499,11 +498,11 @@ static void ide_issue_trim_cb(void *opaque, int ret)
+                                  count << BDRV_SECTOR_BITS, BLOCK_ACCT_UNMAP);
  
-     blk_inc_in_flight(blk); /* increase before waiting */
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, 0);
-     GRAPH_RDLOCK_GUARD();
-     if (!blk_is_available(blk)) {
-         blk_dec_in_flight(blk);
-@@ -2034,7 +2054,7 @@ int coroutine_fn blk_co_zone_mgmt(BlockBackend *blk, BlockZoneOp op,
-     IO_CODE();
+                 /* Got an entry! Submit and exit.  */
+-                iocb->aiocb = blk_aio_pdiscard(s->blk,
+-                                               sector << BDRV_SECTOR_BITS,
+-                                               count << BDRV_SECTOR_BITS,
+-                                               ide_issue_trim_cb, opaque);
+-                return;
++                ret = blk_co_pdiscard(s->blk,
++                                      sector << BDRV_SECTOR_BITS,
++                                      count << BDRV_SECTOR_BITS,
++                                      BDRV_REQ_NO_QUEUE);
++                goto loop;
+             }
  
-     blk_inc_in_flight(blk);
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, 0);
-     GRAPH_RDLOCK_GUARD();
+             iocb->j++;
+@@ -514,7 +513,6 @@ static void ide_issue_trim_cb(void *opaque, int ret)
+     }
  
-     ret = blk_check_byte_request(blk, offset, len);
-@@ -2058,7 +2078,7 @@ int coroutine_fn blk_co_zone_append(BlockBackend *blk, int64_t *offset,
-     IO_CODE();
+ done:
+-    iocb->aiocb = NULL;
+     if (iocb->bh) {
+         replay_bh_schedule_event(iocb->bh);
+     }
+@@ -527,9 +525,7 @@ BlockAIOCB *ide_issue_trim(
+     IDEState *s = opaque;
+     IDEDevice *dev = s->unit ? s->bus->slave : s->bus->master;
+     TrimAIOCB *iocb;
+-
+-    /* Paired with a decrement in ide_trim_bh_cb() */
+-    blk_inc_in_flight(s->blk);
++    Coroutine *co;
  
-     blk_inc_in_flight(blk);
--    blk_wait_while_drained(blk);
-+    blk_wait_while_drained(blk, flags);
-     GRAPH_RDLOCK_GUARD();
-     if (!blk_is_available(blk)) {
-         blk_dec_in_flight(blk);
+     iocb = blk_aio_get(&trim_aiocb_info, s->blk, cb, cb_opaque);
+     iocb->s = s;
+@@ -539,7 +535,10 @@ BlockAIOCB *ide_issue_trim(
+     iocb->qiov = qiov;
+     iocb->i = -1;
+     iocb->j = 0;
+-    ide_issue_trim_cb(iocb, 0);
++
++    co = qemu_coroutine_create(ide_trim_co_entry, iocb);
++    aio_co_enter(qemu_get_current_aio_context(), co);
++
+     return &iocb->common;
+ }
+ 
 -- 
 2.54.0
 
