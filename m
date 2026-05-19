@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98E6DCD4F54
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 21:52:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03655CD4F54
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 21:52:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPSMF-0007kF-5N; Tue, 19 May 2026 17:52:11 -0400
+	id 1wPSMG-0007kw-Kg; Tue, 19 May 2026 17:52:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPSMD-0007hy-Mo
- for qemu-devel@nongnu.org; Tue, 19 May 2026 17:52:09 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wPSMF-0007kK-74
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 17:52:11 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPSMB-0004vg-Ke
- for qemu-devel@nongnu.org; Tue, 19 May 2026 17:52:09 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-488b150559bso31583615e9.1
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 14:52:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wPSMD-0004wC-LL
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 17:52:10 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-c8028fa6039so2814335a12.2
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 14:52:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779227525; x=1779832325; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1779227528; x=1779832328; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=DEinpFWAf/dgwZJ4Wp4fwI+DaPN2mKDPRq7tIIRp6Io=;
- b=HV6ZU4x5tkphRM3XxsiXjlUaa6HSZDJLC8Aq+SgucqQYTl5NARCR5VM/0zVJ8I4+Ys
- 9758EgHtoevbCo/CMZdZsdGuI26p37NCIeaPcFz34VcSqb75fwMQ2dbSyJFIcl86CKBC
- qAln4b+55YPSuIzNFQuvkaTMRfPZFL3zjsuBQ8ZcWhAuNH2oq8TfXqwYAGeT2HiYJt8C
- 39NhMXSSJS2b3TGDXC5IbPP66wnS+uqxSvfS2OYPM1nfWAJbcQ4PtWD58CAkGwemtffu
- EfOl8lnCYg6b2a7IWIl6WBHgC/xbejulwttYeJ1sBJzDaqwefb+7OZnAF5DVrC+hID0Y
- 6zeA==
+ bh=cjoyWxzcc+a2c9gHHTQ2sXqtL7HPTeJX2sYofxYKnSw=;
+ b=Inv5RE8fKskK+Z1QD5LXEhe2XYS0UiYLmxO2nMe4xBwt5QaVWSTHgrmHLPiPEWIglX
+ EK4j9VbdiKEtEEfiml4odiZHiz/qwHdeq77GE1/G2srgMybQIb/rd7u0kR0WD8oP70HQ
+ p0nDQYFC/S9XJuKl+nNhZIXihR5QRRrd4fWSmNrCHf8mtbrcVdt4tSPn3SBNpSKQs11P
+ Es2GJUb4ZZZQditS1KWtlRRWoalmZrSEVCY5t2F3GEdRgsKMyJHlN0PYk5Bnarbz9pom
+ JV5n0UH+ZTFyljo8/tWfkKaILiLziDIn2SfZkK5lKsI/P6Nzus/l6q+fO3fW1amdpdR1
+ 3gBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779227525; x=1779832325;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1779227528; x=1779832328;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=DEinpFWAf/dgwZJ4Wp4fwI+DaPN2mKDPRq7tIIRp6Io=;
- b=p61F7fNLMPXCoLTOMFggIDistHTKyLgGrnMirNiI22bTzDq2/m9xT85IVWIbtJ9tVW
- RPqrWhUXr8ICiVt7Sv0+ZBIudwyPEuwUppc2JmUjjssK3tS7stknWACzuNkPSUFLjhFk
- 8oM2N3sV8HdN++Yb/wBrsLKJP/L/C71Jufni9JOp0GvEFfgsxjsdg0fL3mTY1JV/AR0x
- CZPjJQ/GYC8hJpvjTeAYBylxN7o6YZbai/3BpUs8561GFq15//9Ty6TAchioEnRVygT7
- g2csmmohC6ssZnrGoSah71cOa6Owqg+Fll0/H6bpr2XokG3gzyYJAxr28Fa1Kqm1NgRW
- GRaA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9G0j4h8abU9AFW5pIoleIVOzUYhLF4Bz1811BF2O5+QQbZ6rO5a2B2R3Lbb4xdOEjKJluM1gSaeXcy@nongnu.org
-X-Gm-Message-State: AOJu0Yx9CTkiPLL3e1AdIpI1A4lqJH+Na/fEWpNC5Id4yMNufD/hFJUX
- bubu3KPDEfZxuTiFFBwMQiE8gi8zQqaNStUfzEwNDAYBXar19O7cLH3iNBqTw33ss7M=
-X-Gm-Gg: Acq92OHnaTX7ZQup3yA+HSyzs03k/NyFKHPy0l5GmJ9T1MmM4hmx6UfwsW8ClEYqn/r
- mx169WNsvz29QwQPLwCE7SDm4RCU9tM79rrrPZdOhVXusNbKhvEdNP94Y1iK+3atjiPzAVujlYX
- ZrWmt+CIFjGvlRdXIxFlSIJiiCTgVaJyBC3TimrGegEdFjw954tUTpszg8S2CxmjKsLFSBMTRII
- YPp2yHsE23jksSlPUSkGcM0lPY3tJlUjHot8zRzXlnspurC6g+ysiJd1FrOtEj75r3w6hpCOubS
- l6F3ijTzZBhnkJBzJxS+jPoG7nlbvIgbwJAJlT2j8SLvq1m4qDFrISMckpF4ZV9V8KDH25W1lmu
- fCW4tIu/O+zfZUDMZZeHfnBC82PytYmTTOjIDQHADBrJicPWU9FC5bd4cIt7clyRRqYTiYcehvd
- KreLKe0d6umZ4QJ+wGf0u67Ti2KmKpMOmI1qtQdZMnPZlqtWlbe99yfB+B+7ncz0pylw==
-X-Received: by 2002:a05:600c:8189:b0:48a:9428:5522 with SMTP id
- 5b1f17b1804b1-48fe632249dmr324012515e9.16.1779227525127; 
- Tue, 19 May 2026 14:52:05 -0700 (PDT)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48febe6aff4sm115799695e9.25.2026.05.19.14.52.03
+ bh=cjoyWxzcc+a2c9gHHTQ2sXqtL7HPTeJX2sYofxYKnSw=;
+ b=jvfjCuqsZFrufLaikJW0FD2SIaLsFy4a7usPAHuoNELPGBX6xMPHBqEtlrU6Gxsxko
+ vFQcTFwRQPAE8HEcfQiLDVdp7kYjABKoSE1bvGZ6EFbPQSVWS13HzEantQaLCDCEknS/
+ a4MNecctJNXIx/QSQIwPFm/hR3mCEl9mw+vkWYgXbVWXWNk6+PPYjvlGaDERbthL8U53
+ eQZ3XCOIoDFy+7a24datUN2MDg1eyiT5KOG7kcgbID1D11sLPwtpmOoWeiwpyF+FL2lQ
+ i8FsqjAPbiHHV8tgqHH4b5U0X7QrE+ARDPMCcyLPQl6TSAfMoSBfafnx7EUzyi/OX4hH
+ MPHg==
+X-Gm-Message-State: AOJu0YzcMceaO8MY/bkiGG/dCAHGaupHiWUoa9rV7uFwX7NA55zoACnY
+ chzsM+VnQz7skgAkohvpsGFbQvcu3IaGybQTadJ7LfM9f+sMQMD1x3mOyLapWcNZNvM=
+X-Gm-Gg: Acq92OHLkpIWU8wEsl73AEbJvlsM+d81zF+EPOo7ZG05ZZXVbIwCBogzv23gEeGuVLy
+ T+u/YC8hHBN5/0eJXcComG09GuUTgPBfBQ/WefKsdjMo8ERVGWYuBcRiVcDtTOTdzrIkwSW4bv3
+ a94u8PY9Nzl3zmblh1GbdmQ6GEsiNQhdNNO9VoruDtALdCmdN+IQTOChhHrv074aKBGhHuVgEx/
+ kqMGEBscEYD1MNNtHfms+LT4FfjDVfWg1jl2aaNfc+VXgnNmPbvhSAn9TEyA910MXXi98iujkO7
+ K0+xlGpLD5PsdeHy8mybvOPZwmMXOHFTl6POjBKAAiE+rnJh7WHn6Py0voba2qyOGGwG3Z+sifF
+ 5ddkk8gEOXhPPPtbUYRvIimd3ItNWcDdVCbvGTZW5Nfv5J/ngxiMttV87eJt0MjX+oSLC6KFMgd
+ y/17h+r0w15FyQ83rkiOPmH3IfLtBEL1dysmW7
+X-Received: by 2002:a05:6a20:7486:b0:3a2:d79c:416d with SMTP id
+ adf61e73a8af0-3b22ed6295emr25180204637.43.1779227527629; 
+ Tue, 19 May 2026 14:52:07 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.142.33])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c82bb07b007sm17563097a12.11.2026.05.19.14.52.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 May 2026 14:52:03 -0700 (PDT)
-Message-ID: <59747973-1075-4db9-b3af-2aad0c7f15a7@linaro.org>
-Date: Tue, 19 May 2026 23:52:02 +0200
+ Tue, 19 May 2026 14:52:07 -0700 (PDT)
+Message-ID: <90811f89-79a0-4e34-b6a8-d349353620f0@linaro.org>
+Date: Tue, 19 May 2026 14:52:05 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCHv1 3/7] hw/misc: Add SRC (System Reset Controller) to
- i.MX8MP
+Subject: Re: [PATCH v5 45/63] target/arm: Implement FMLALB, FMLALT for AdvSIMD
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20260517003002.321430-1-richard.henderson@linaro.org>
+ <20260517003002.321430-46-richard.henderson@linaro.org>
+ <CAFEAcA_4wU+wndbAqjnObpvnLit11OVDZvTZ1RWy_q0cNfH7uA@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-To: Gaurav Sharma <gaurav.sharma_7@nxp.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, peter.maydell@linaro.org, shentey@gmail.com
-References: <20260519175635.3245229-1-gaurav.sharma_7@nxp.com>
- <20260519175635.3245229-4-gaurav.sharma_7@nxp.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260519175635.3245229-4-gaurav.sharma_7@nxp.com>
+In-Reply-To: <CAFEAcA_4wU+wndbAqjnObpvnLit11OVDZvTZ1RWy_q0cNfH7uA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,68 +104,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/5/26 19:56, Gaurav Sharma wrote:
-> From: Bernhard Beschow <shentey@gmail.com>
+On 5/19/26 06:41, Peter Maydell wrote:
+>> +static void fp8_mul_finish(CPUARMState *env, FP8MulContext *c)
+>> +{
+>> +    /*
+>> +     * FP8 multiplies don't update FPSR.{IDC,IOC,IXC,UFC}.
+>> +     * Since this is multiply-add, DZC does not apply and only OFC remains.
+>> +     */
+>> +    fp8_finish_fpst(&env->vfp.fp_status[FPST_A64], &c->stat,
+>> +                    float_flag_overflow);
 > 
-> Add emulation of the i.MX8MP System Reset Controller (SRC).
-> The SRC manages reset control for various subsystems on the i.MX8MP SoC.
-> SRC registers are used to start/stop/poll the M7 core, hence needed for
-> AMP boot.
+> Looking at the A1.5.5 text a bit more carefully I don't think
+> we should propagate OFC either for FP8 mul:
 > 
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> ---
->   docs/system/arm/imx8m.rst    |   1 +
->   hw/arm/Kconfig               |   1 +
->   hw/arm/fsl-imx8mp.c          |  10 +
->   hw/misc/Kconfig              |   3 +
->   hw/misc/imx8mp_src.c         | 431 +++++++++++++++++++++++++++++++++++
->   hw/misc/meson.build          |   1 +
->   hw/misc/trace-events         |   5 +
->   include/hw/arm/fsl-imx8mp.h  |   2 +
->   include/hw/misc/imx8mp_src.h |  32 +++
->   9 files changed, 486 insertions(+)
->   create mode 100644 hw/misc/imx8mp_src.c
->   create mode 100644 include/hw/misc/imx8mp_src.h
+> "When the rounded result with unbounded exponent has an absolute value that
+>   is greater than the maximum normalized number for the output precision:
+>   — Generate one of the following outputs with the sign of the result:
+>   — When FPMR.OSM is 1, the maximum normalized number.
+>   — When FPMR.OSM is 0, an Infinity.
+>   — Do not update FPSR.OFC. "
+
+Huh.  What an odd way to define things.  AFAICS, this means no exception bits are updated 
+at all.  Why not just say that.
+
+> Also, I realized that this squashing mechanic means we can't do
+> the handling of invalid input formats the way we do at the moment.
+> The float_raise() operations done by fp8_invalid_input() will
+> get squashed for multiplies. I think the fp8_invalid_output() part
+> is still OK because we only use it in the FP8 convert operations.
+> 
+> We could perhaps have fp8_mul_start() explicitly check for fmt1
+> or fmt2 being fp8_invalid_input -- it has access to the real
+> fp_status so can raise Invalid and InvalidSNaN there.
+
+Here's the thing:
+
+FP8Unpack doesn't raise an exception itself, just sets fptype = FPType_SNaN.
+
+For FP8ConvertFP, we then explicitly raise invalid and return default nan.
+
+For FP8DotAddFP, we notice nans within a loop, setting any_nan; after the loop, if any_nan 
+is set, we return default nan but do not raise invalid.
+
+So I guess we don't need to do anything special during fp8_mul_start.
+
+One thing I could do that might be slightly clearer is
+
+static FloatParts64 fp8_invalid_input(uint8_t x, float_status *s)
+{
+     /*
+      * Invalid input format is treated as snan, then one of the uses
+      * will convert to default nan and raise invalid.
+      */
+     return (FloatParts64){ .cls = float_class_snan };
+}
+
+What do you think?
 
 
-> +void imx8mp_src_start_cpu(FslImx8mpSrcState *s, int cpuid)
-> +{
-> +    switch (cpuid) {
-> +    case 0:
-> +        arm_set_cpu_on(0, s->regs[R_SRC_GPR2] << 2, 0, 3, true);
-> +        break;
-> +    case 1:
-> +        arm_set_cpu_on(1, s->regs[R_SRC_GPR4] << 2, 0, 3, true);
-> +        break;
-> +    case 2:
-> +        arm_set_cpu_on(2, s->regs[R_SRC_GPR6] << 2, 0, 3, true);
-> +        break;
-> +    case 3:
-> +        arm_set_cpu_on(3, s->regs[R_SRC_GPR8] << 2, 0, 3, true);
-> +        break;
-
-Confirming my thoughts on patch #6, this SoC really need to start with
-no less than '-smp 4' :)
-
-> +    default:
-> +        g_assert_not_reached();
-> +        break;
-> +    }
-> +}
-
-
-> +static void imx8mp_src_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +
-> +    device_class_set_legacy_reset(dc, imx8mp_src_reset);
-
-Please do not use this legacy interface.
-
-> +    dc->realize = imx8mp_src_realize;
-> +    dc->vmsd = &imx8mp_src_vmstate;
-> +    device_class_set_props(dc, imx8mp_src_properties);
-> +    dc->desc = "i.MX 8M Plus System Reset Controller";
-> +}
-
+r~
 
