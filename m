@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94FE0CD4F5B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1D71CD4F5E
 	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 16:24:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPNDy-0006yw-Ud; Tue, 19 May 2026 12:23:18 -0400
+	id 1wPNDe-0006g7-Oo; Tue, 19 May 2026 12:22:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wPNDx-0006y7-G9
- for qemu-devel@nongnu.org; Tue, 19 May 2026 12:23:17 -0400
-Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
+ id 1wPNDY-0006dz-CM
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 12:22:54 -0400
+Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wPNDv-0000qT-2v
- for qemu-devel@nongnu.org; Tue, 19 May 2026 12:23:17 -0400
-Received: by mail-ot1-x32c.google.com with SMTP id
- 46e09a7af769-7e36bb16a92so2267408a34.2
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 09:23:14 -0700 (PDT)
+ id 1wPNDW-0000gF-NB
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 12:22:52 -0400
+Received: by mail-ot1-x331.google.com with SMTP id
+ 46e09a7af769-7e5c85b47c6so436116a34.0
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 09:22:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779207794; x=1779812594; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779207769; x=1779812569; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ZZOjTyR1gKYk3Ul3oxhSb/iRoco7UWLLdf42XLNv3PU=;
- b=Q4Fn86J8vw0fWR8ttQJIVUwfVfzvIqCw+ueG2uxsaZORv9JuNSQjbz1lx3okmX8oLs
- oiiy36H8xWQisNu7T2v+yESlHpzFQZTCdcbkUZfVdaqPiToo7Jh81jt9LzTKPRxYTg36
- 4ZnrMUzfMubmLZaL/i1qEnYts/wdBom7o3MECbRsxsypUx+7AfWgAeZXk2blLaZ5Drld
- Vqk4tiViifTv6AEIS9o952K/IOoYG7XrwLEXzpRd0o35pUUWvKH8cVLk43dD2TdLBhOg
- dM/BB2Lo8ZI/MVBJVB+eEXOr317+JKHRFTYDKIOHXZPphSuYMLijlSIMH1AaR079qqt0
- Tkrg==
+ :reply-to; bh=lCm1V909eQzvanOLLp3AM+2hWgzt/YQUZTI+85aC+C8=;
+ b=mk1TZFvfte3U9lRd1i4bbcFHyGcVXibLF7P6bLzT5SflunF2uBXY94HFhrWNtcCzPU
+ bdDIONVMFVw5Tzm+X541h1Gw4G/6kJu/jT62qmV7vb6THRLX6s/jR+GQD6Dom0LA3tAi
+ mPsTNHeXJiVc/ykj4IepkB2wuwiheYQVqnaFWsUGJQWoIjYvd4qQx1wqnqG7IavvSlCl
+ SCAUBjBRWBTVql5OAxHK+PzOjgaUkMkndRgo9oED12TaxzVqP12bkRukdAZ4Y8M5M95Z
+ LYRHfqRrKgxxw3V/tsSgJ9WhOi0qcTa88uJsHxbuhvNuUxt+dmUHbmCgexSjhCyTByVC
+ HMeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779207794; x=1779812594;
+ d=1e100.net; s=20251104; t=1779207769; x=1779812569;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=ZZOjTyR1gKYk3Ul3oxhSb/iRoco7UWLLdf42XLNv3PU=;
- b=geTL668dkYgmkbyOoF5KRGdSp3QukqpsgvpIuA8QMbFkjPkLIzRzi4szHtWTgwp4KI
- D1WjTnirgMZecimV+gAzvEOVU4FeT9YiH/phv/QfZ3sEhXH9EugR+9551BMS4FkhYHER
- WDMkvutNuBLy8nUbsRRGiWqy0REPeB7RPHa1VNPFHGISrLukZF1J5sFULuYiFCgXBEX2
- ic03+TxkLJVbyO6Hvt7ETzuld+7ZXiMUnX1FKEJnKB5QXXQDpdh/3MOBieAM9PSICtas
- ix5OY48tSyIEvpreE9B6x+wGxq32Eqx2JkiC6UDdeEmaHKRJBzcJbkwH0kHkANxu+5uT
- 9iPg==
-X-Gm-Message-State: AOJu0YyO3Zv/8AJV7ji5QWnk+nEVuXlIMULO6RrEFloCEwPhUU0oIXW/
- fx7fWPK7Ts0XJqAhAbZb7+d7llKT8jbJnT4IP1CJaBUbBJ4RCeaiL/g+
-X-Gm-Gg: Acq92OFqB38wap2h0mzCW4JMrlVtxXreKvTOOW7gKvGFQbCAS7yWdUoWLNCpmFe2QPh
- t7TJCpgwCCD8JQPey7k56HXuHl4aJpU6CJAuFejSPNbZS6aka/FgE4nKnx8edI6RAZP3kUllDAj
- NX+7TVvdMPQhV18CdKFJB4FaZPocLHbK/6MmHKEDBWPGrkumG54sBkyRpJYBD7BQftJ9q4tURP5
- 9BUunecnZ+ZmZDxp47QK4+KtbmiNUCV8rJtCPpwnAr7ij0/pkK7mNK906c7OGsbkWALfdmt4dAR
- tyxGg09L3qxXCk+uO0Gog50B7gnwfnN47pCBY95xHElet72b5WTARztCX3lwociM0Im7TDrjsjh
- BWLMcz9g+XxxWN2p9zwg4USiK6SMD1qm685UwEa/H5A0X3P3vYwMknMRhZ8wmcGQJ5UJHZIFTKr
- NvU/DYcSPL45q4qi3zjBQtyGH70OX1YiMDoj669Mj4ozE4R90PqzvUr37gqHUthznbm0CWFK2jY
- 4DKj7IgClSLg+Q0wubNNgqIzPzP/vjMG9GGfK3tTLJh6EtG4vTXtVvWn/6g5JYBcnFK
-X-Received: by 2002:a05:6820:8c8:b0:695:a610:eccb with SMTP id
- 006d021491bc7-69c942d9966mr11629291eaf.20.1779207793710; 
- Tue, 19 May 2026 09:23:13 -0700 (PDT)
+ bh=lCm1V909eQzvanOLLp3AM+2hWgzt/YQUZTI+85aC+C8=;
+ b=OsnFCNz6EmEr+Dok4fu7myyaaHAE4nqT2KxXCA6hSOMueuOWxXZ1Mey9oLeDEDj4M9
+ c6VCYVIwzFJW8r3nDF55G01Bxu3NUbtCGw5LMfeWk9UTmb7OE5W0DmsDGyG3otImsdcu
+ 3J7Bu19qsxW3nuCWLuJ2TLTdKqyPSQe389Op96Cy/q1G3T7C0a2V0uPuaMmdgZbGqfQJ
+ bKznqyKL+WiK/5PHJx0bMRzmgT2R4wqVEUZFngxcjNPqMekkehEe2lrSIBlEBCKTWZUD
+ UDS+QR2n1sYSI0Kerog4+36Du668119W9wCS63mh5ZVdeWZ21IvaSYMt8bYWL6vDdbYF
+ alMw==
+X-Gm-Message-State: AOJu0YwVaVsCpMtOtWxkGWk5wiMespuLWtAqZj+xvidh213l/tTs+OV2
+ XJO8uL2oBhiFPfmU0CbPOTnUyZSqoVVBEm3BQLfgbGX36cq1tFwQgBoo
+X-Gm-Gg: Acq92OEZf2LUOkdvIWAqtQz7n/+STw7nU6Iu4/1wA7VIKiPM3G99tfYWTjqIaLCu6WL
+ Y7qQUBEDvQlsA6Dakv6dzCO7ABlCPFOIhIcBSRRVVaRRkijBb5NBk9tyrwZPeapAWoFVB2gwV99
+ bMNCTuOQpKPyKCC+e60L7WTWZiJelOiy37oVD0YylaLrrw0zfJYvySLe5sUqR2G8QcukU0vxVnw
+ h3zoumHgqfZlgVWxocnYKnRqvYuRkg9flUS5zz73PMCIxU3/4U2f7iXzi2ld8piQIN3OtJvtNWg
+ 55Se4zyLjjtfA6MZig72OG3bliaeFxvMZOOWjISDHhfvhL2QEQNphMs6tbQIFyLeT+lf8bpp1I+
+ RG2q0pA0sPNJQb//jni3/l6aZC5bMrhATwdqRqDQkTgBpKnNYerlU1Y79fwp4C1reT4WfaJkoSp
+ DG/EXBSo8gRclJ04qYMeYukTPFKq412gwxc25XcP9i83Hm2Mz3FonxkXiMtAYOEHGemBASfUnHr
+ 7TxYQGlWOSiIisw++qxiF9dYhjZ/a8aSSEDcOjHDFV8zjaLzkIDzlfO0lakU4KNilZO
+X-Received: by 2002:a05:6820:1625:b0:694:9d3d:e040 with SMTP id
+ 006d021491bc7-69c94367940mr12066616eaf.31.1779207769012; 
+ Tue, 19 May 2026 09:22:49 -0700 (PDT)
 Received: from mac.localdomain (184-96-146-19.hlrn.qwest.net. [184.96.146.19])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-43a95762ceasm7056296fac.13.2026.05.19.09.23.12
+ 586e51a60fabf-43a95762ceasm7056296fac.13.2026.05.19.09.22.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 May 2026 09:23:13 -0700 (PDT)
+ Tue, 19 May 2026 09:22:48 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Tue, 19 May 2026 10:22:40 -0600
-Subject: [PATCH v9 38/40] target/mips: add Octeon CvmCount RDHWR support
+Date: Tue, 19 May 2026 10:22:16 -0600
+Subject: [PATCH v9 14/40] tcg: Optimize INDEX_op_mul[us]2 for 0 and 1
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260519-mips-octeon-missing-insns-v2-v9-38-d7dd735ecddd@gmail.com>
+Message-Id: <20260519-mips-octeon-missing-insns-v2-v9-14-d7dd735ecddd@gmail.com>
 References: <20260519-mips-octeon-missing-insns-v2-v9-0-d7dd735ecddd@gmail.com>
 In-Reply-To: <20260519-mips-octeon-missing-insns-v2-v9-0-d7dd735ecddd@gmail.com>
 To: qemu-devel@nongnu.org
@@ -84,8 +84,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>, 
  Paolo Bonzini <pbonzini@redhat.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
- envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x32c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x331.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -109,110 +109,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Octeon exposes CvmCount through RDHWR register 31. Add the Octeon-only
-decode path, enable the corresponding HWREna bit for linux-user, and use
-an unsigned mask when checking HWREna so bit 31 is handled safely.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-For user-mode emulation, return host ticks as a monotonic counter source
-suitable for existing Octeon userspace code. In system mode, fall back to
-the existing CP0 Count value.
+Zero operands produce a zero high and low product. One operands produce
+a copy of the other operand and a zero or sign extension in the high
+half.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Fold those cases during TCG optimization so wide-multiply idioms used by
+target translators can collapse before code generation.
+
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+
 ---
-Changes v5 -> v6:
-  - New patch.
+Changes v7 -> v8:
+  - New patch from Richard Henderson's v7.5 multiplier rework.
 ---
- target/mips/cpu.c           |  1 +
- target/mips/helper.h        |  1 +
- target/mips/tcg/op_helper.c | 13 ++++++++++++-
- target/mips/tcg/translate.c | 11 +++++++++++
- 4 files changed, 25 insertions(+), 1 deletion(-)
+ tcg/optimize.c | 92 ++++++++++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 60 insertions(+), 32 deletions(-)
 
-diff --git a/target/mips/cpu.c b/target/mips/cpu.c
-index a2b9f6634f..fe757ef03c 100644
---- a/target/mips/cpu.c
-+++ b/target/mips/cpu.c
-@@ -322,6 +322,7 @@ static void mips_cpu_reset_hold(Object *obj, ResetType type)
-     env->CP0_HWREna |= 0x0000000F;
-     if (env->insn_flags & INSN_OCTEON) {
-         env->CP0_HWREna |= 0x40000000u;
-+        env->CP0_HWREna |= 0x80000000u;
-     }
-     if (env->CP0_Config1 & (1 << CP0C1_FP)) {
-         env->CP0_Status |= (1 << CP0St_CU1);
-diff --git a/target/mips/helper.h b/target/mips/helper.h
-index fd57ebbf00..63c5245950 100644
---- a/target/mips/helper.h
-+++ b/target/mips/helper.h
-@@ -317,6 +317,7 @@ DEF_HELPER_1(rdhwr_ccres, tl, env)
- DEF_HELPER_1(rdhwr_performance, tl, env)
- DEF_HELPER_1(rdhwr_xnp, tl, env)
- DEF_HELPER_1(rdhwr_chord, tl, env)
-+DEF_HELPER_1(rdhwr_cvmcount, tl, env)
- DEF_HELPER_2(pmon, void, env, int)
- DEF_HELPER_1(wait, void, env)
- 
-diff --git a/target/mips/tcg/op_helper.c b/target/mips/tcg/op_helper.c
-index 3e586e3049..df1b5c3734 100644
---- a/target/mips/tcg/op_helper.c
-+++ b/target/mips/tcg/op_helper.c
-@@ -25,6 +25,7 @@
- #include "exec/memop.h"
- #include "fpu_helper.h"
- #include "qemu/crc32c.h"
-+#include "qemu/timer.h"
- #include <zlib.h>
- 
- static inline target_ulong bitswap(target_ulong v)
-@@ -209,7 +210,7 @@ target_ulong helper_yield(CPUMIPSState *env, target_ulong arg)
- 
- static inline void check_hwrena(CPUMIPSState *env, int reg, uintptr_t pc)
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index b1abec69a5..a42ab16fb4 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -2173,45 +2173,73 @@ static bool fold_multiply2(OptContext *ctx, TCGOp *op)
  {
--    if ((env->hflags & MIPS_HFLAG_CP0) || (env->CP0_HWREna & (1 << reg))) {
-+    if ((env->hflags & MIPS_HFLAG_CP0) || (env->CP0_HWREna & (1u << reg))) {
-         return;
-     }
-     do_raise_exception(env, EXCP_RI, pc);
-@@ -261,6 +262,16 @@ target_ulong helper_rdhwr_chord(CPUMIPSState *env)
-     return env->octeon_crypto.chord;
- }
+     swap_commutative(op->args[0], &op->args[2], &op->args[3]);
  
-+target_ulong helper_rdhwr_cvmcount(CPUMIPSState *env)
-+{
-+    check_hwrena(env, 31, GETPC());
-+#ifdef CONFIG_USER_ONLY
-+    return cpu_get_host_ticks();
-+#else
-+    return (uint32_t)cpu_mips_get_count(env);
-+#endif
-+}
+-    if (arg_is_const(op->args[2]) && arg_is_const(op->args[3])) {
+-        uint64_t a = arg_const_val(op->args[2]);
++    if (arg_is_const(op->args[3])) {
+         uint64_t b = arg_const_val(op->args[3]);
+-        uint64_t h, l;
+-        TCGArg rl, rh;
++        TCGArg rl = op->args[0];
++        TCGArg rh = op->args[1];
+         TCGOp *op2;
+ 
+-        switch (op->opc) {
+-        case INDEX_op_mulu2:
+-            if (ctx->type == TCG_TYPE_I32) {
+-                l = (uint64_t)(uint32_t)a * (uint32_t)b;
+-                h = (int32_t)(l >> 32);
+-                l = (int32_t)l;
+-            } else {
+-                mulu64(&l, &h, a, b);
+-            }
+-            break;
+-        case INDEX_op_muls2:
+-            if (ctx->type == TCG_TYPE_I32) {
+-                l = (int64_t)(int32_t)a * (int32_t)b;
+-                h = l >> 32;
+-                l = (int32_t)l;
+-            } else {
+-                muls64(&l, &h, a, b);
++        if (arg_is_const(op->args[2])) {
++            uint64_t a = arg_const_val(op->args[2]);
++            uint64_t h, l;
 +
- void helper_pmon(CPUMIPSState *env, int function)
- {
-     function /= 2;
-diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index 1f44932882..e3467d1525 100644
---- a/target/mips/tcg/translate.c
-+++ b/target/mips/tcg/translate.c
-@@ -10933,6 +10933,17 @@ void gen_rdhwr(DisasContext *ctx, int rt, int rd, int sel)
-         gen_helper_rdhwr_chord(t0, tcg_env);
-         gen_store_gpr(t0, rt);
-         break;
-+    case 31:
-+        if (!(ctx->insn_flags & INSN_OCTEON)) {
-+            gen_reserved_instruction(ctx);
-+            break;
++            switch (op->opc) {
++            case INDEX_op_mulu2:
++                if (ctx->type == TCG_TYPE_I32) {
++                    l = (uint64_t)(uint32_t)a * (uint32_t)b;
++                    h = (int32_t)(l >> 32);
++                    l = (int32_t)l;
++                } else {
++                    mulu64(&l, &h, a, b);
++                }
++                break;
++            case INDEX_op_muls2:
++                if (ctx->type == TCG_TYPE_I32) {
++                    l = (int64_t)(int32_t)a * (int32_t)b;
++                    h = l >> 32;
++                    l = (int32_t)l;
++                } else {
++                    muls64(&l, &h, a, b);
++                }
++                break;
++            default:
++                g_assert_not_reached();
+             }
+-            break;
+-        default:
+-            g_assert_not_reached();
+-        }
+ 
+-        rl = op->args[0];
+-        rh = op->args[1];
++            /* The proper opcode is supplied by tcg_opt_gen_mov. */
++            op2 = opt_insert_before(ctx, op, 0, 2);
++            tcg_opt_gen_movi(ctx, op2, rl, l);
++            tcg_opt_gen_movi(ctx, op, rh, h);
++            return true;
 +        }
-+        translator_io_start(&ctx->base);
-+        gen_helper_rdhwr_cvmcount(t0, tcg_env);
-+        gen_store_gpr(t0, rt);
-+        gen_save_pc(ctx->base.pc_next + 4);
-+        ctx->base.is_jmp = DISAS_EXIT;
-+        break;
-     default:            /* Invalid */
-         MIPS_INVAL("rdhwr");
-         gen_reserved_instruction(ctx);
+ 
+-        /* The proper opcode is supplied by tcg_opt_gen_mov. */
+-        op2 = opt_insert_before(ctx, op, 0, 2);
++        if (b == 0) {
++            op2 = opt_insert_before(ctx, op, 0, 2);
++            tcg_opt_gen_movi(ctx, op2, rl, 0);
++            tcg_opt_gen_movi(ctx, op, rh, 0);
++            return true;
++        }
++        if (b == 1) {
++            op2 = opt_insert_before(ctx, op, 0, 2);
++            tcg_opt_gen_mov(ctx, op2, rl, op->args[2]);
++
++            switch (op->opc) {
++            case INDEX_op_mulu2:
++                tcg_opt_gen_movi(ctx, op, rh, 0);
++                break;
++            case INDEX_op_muls2:
++                op->opc = INDEX_op_sar;
++                op->args[0] = rh;
++                op->args[1] = rl;
++                op->args[2] =
++                    arg_new_constant(ctx, tcg_type_size(ctx->type) * 8 - 1);
++                break;
++            default:
++                g_assert_not_reached();
++            }
+ 
+-        tcg_opt_gen_movi(ctx, op, rl, l);
+-        tcg_opt_gen_movi(ctx, op2, rh, h);
+-        return true;
++            return true;
++        }
+     }
+     return finish_folding(ctx, op);
+ }
 
 -- 
 2.54.0
