@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7BA3CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 13:33:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 819B7CD4F5B
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 13:33:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPKXH-0002Hg-TB; Tue, 19 May 2026 09:31:04 -0400
+	id 1wPKXM-0002uU-4m; Tue, 19 May 2026 09:31:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wPKWf-0001fe-FQ
- for qemu-devel@nongnu.org; Tue, 19 May 2026 09:30:32 -0400
+ id 1wPKXG-00029e-7k
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 09:31:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wPKWc-0008Sm-Uj
- for qemu-devel@nongnu.org; Tue, 19 May 2026 09:30:24 -0400
+ id 1wPKXC-00006i-I3
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 09:30:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779197422;
+ s=mimecast20190719; t=1779197457;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qFB8bEbsG49icsTlwdP+dsQdEM638W12jl/FRcVdeeM=;
- b=eof9dju3T0SgGnIdOGJ4JwYN8dEzMayUcgPOpo3EORNlmGj79CAddooxTCAyF/RbsntMm9
- yF0HPtIVNGzmSLuBu6TbqMupcfMZbIF+4bY0tBYpf/CluUnIOywcbe0/pyX7ZLZUkaa3ij
- K7VopKNCEYXf7509ci+lIxsW6Q633ko=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=nYpIswBUbvAWx5c0QdJS1zE0eazgwAPhomjHPpZ7pys=;
+ b=S3t7cJpNIgcVeP2tmYZeZjmf9BGKkYd27ir9jWAd90UfHlJFGuhmEoGzgVYTzIlByGgh2l
+ SXe3EbUAa6jaYU9KzbdmXpunfZNp97SD3NwxBYigoJtEp8Lk79ZdoC2l7dMHo1TTNGQZbF
+ LH89uZb2OsG0h70jvzI4Ujsoh40OezE=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-157-BpmEcQbAObyZVsv5EHeFgg-1; Tue,
- 19 May 2026 09:30:18 -0400
-X-MC-Unique: BpmEcQbAObyZVsv5EHeFgg-1
-X-Mimecast-MFC-AGG-ID: BpmEcQbAObyZVsv5EHeFgg_1779197416
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-569-O16OgMxxObS4d8EfO-avrw-1; Tue,
+ 19 May 2026 09:30:52 -0400
+X-MC-Unique: O16OgMxxObS4d8EfO-avrw-1
+X-Mimecast-MFC-AGG-ID: O16OgMxxObS4d8EfO-avrw_1779197448
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A147119560A5; Tue, 19 May 2026 13:30:16 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 09F5B1956053; Tue, 19 May 2026 13:30:48 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.44.49.207])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 120621800352; Tue, 19 May 2026 13:30:09 +0000 (UTC)
+ id 4AEE2180034E; Tue, 19 May 2026 13:30:42 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
@@ -56,9 +56,9 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
 Cc: maz@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
  armbru@redhat.com, berrange@redhat.com, abologna@redhat.com,
  jdenemar@redhat.com
-Subject: [PATCH v5 09/18] target/arm/kvm: Introduce kvm_get_writable_id_regs
-Date: Tue, 19 May 2026 15:27:23 +0200
-Message-ID: <20260519132905.145643-10-eric.auger@redhat.com>
+Subject: [PATCH v5 14/18] target/arm/kvm: Special case REVIDR_EL1 and AIDR_EL1
+Date: Tue, 19 May 2026 15:27:28 +0200
+Message-ID: <20260519132905.145643-15-eric.auger@redhat.com>
 In-Reply-To: <20260519132905.145643-1-eric.auger@redhat.com>
 References: <20260519132905.145643-1-eric.auger@redhat.com>
 MIME-Version: 1.0
@@ -89,82 +89,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cornelia Huck <cohuck@redhat.com>
-
-Add an helper to retrieve the writable id reg bitmask.
+Special case REVIDR_EL1 and AIDR_EL1 which are writable but
+does not expose named fields. They will need to be handled
+separately
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-
 ---
+ target/arm/kvm.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-v4 -> v5:
-- get rid of IdRegMap datatype
-- do not store the status of the query in cpu anymore, just
-  return the error in case the retrieval failed
-- add implementation in kvm-stub.c
----
- target/arm/kvm-stub.c |  5 +++++
- target/arm/kvm.c      | 21 +++++++++++++++++++++
- target/arm/kvm_arm.h  |  2 ++
- 3 files changed, 28 insertions(+)
-
-diff --git a/target/arm/kvm-stub.c b/target/arm/kvm-stub.c
-index 88cbe8d85c..cd88eb741a 100644
---- a/target/arm/kvm-stub.c
-+++ b/target/arm/kvm-stub.c
-@@ -119,3 +119,8 @@ char *kvm_print_register_name(uint64_t regidx)
- {
-     g_assert_not_reached();
- }
-+
-+int kvm_arm_get_writable_id_regs(uint64_t *idregmap)
-+{
-+    g_assert_not_reached();
-+}
 diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 7d194ea112..4adfd20050 100644
+index 960052e67e..6373a66bbd 100644
 --- a/target/arm/kvm.c
 +++ b/target/arm/kvm.c
-@@ -505,6 +505,27 @@ void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
-     env->features = arm_host_cpu_features.features;
- }
- 
-+int kvm_arm_get_writable_id_regs(uint64_t *idregmap)
-+{
-+    int cap_writable_id_regs;
-+    struct reg_mask_range range = {
-+        .range = 0, /* up to now only a single range is supported */
-+        .addr = (uint64_t)idregmap,
-+    };
-+    int ret;
-+
-+    cap_writable_id_regs =
-+        kvm_check_extension(kvm_state, KVM_CAP_ARM_SUPPORTED_REG_MASK_RANGES);
-+
-+    if (!cap_writable_id_regs ||
-+        !(cap_writable_id_regs & (1 << KVM_ARM_FEATURE_ID_RANGE))) {
-+        return -ENOSYS;
-+    }
-+
-+    ret = kvm_vm_ioctl(kvm_state, KVM_ARM_GET_REG_WRITABLE_MASKS, &range);
-+    return ret;
-+}
-+
- static bool kvm_no_adjvtime_get(Object *obj, Error **errp)
- {
-     return !ARM_CPU(obj)->kvm_adjvtime;
-diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-index e7c40fb003..c1c2e7ec37 100644
---- a/target/arm/kvm_arm.h
-+++ b/target/arm/kvm_arm.h
-@@ -240,4 +240,6 @@ void arm_gic_cap_kvm_probe(GICCapability *v2, GICCapability *v3);
-  */
- char *kvm_print_register_name(uint64_t regidx);
- 
-+int kvm_arm_get_writable_id_regs(uint64_t *idregmap);
-+
- #endif
+@@ -472,7 +472,15 @@ void kvm_arm_expose_idreg_properties(ARMCPU *cpu, ARM64SysReg *regs)
+                 warn_report("%s: reg %d writable, but not in list of idregs?",
+                             __func__, i);
+             } else {
+-                decode_idreg_writemap(obj, i, mask, &regs[idx]);
++                /*
++                 * special case REVIDR_EL1 and AIDR_EL1 which are writable but
++                 * does not expose named fields. They will need to be handled
++                 * separately
++                 */
++                if (strcmp(regs[idx].name, "REVIDR_EL1") &&
++                    strcmp(regs[idx].name, "AIDR_EL1")) {
++                    decode_idreg_writemap(obj, i, mask, &regs[idx]);
++                }
+             }
+         }
+     }
 -- 
 2.53.0
 
