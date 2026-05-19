@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CA06CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 17:30:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17EFCCD4F3C
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 17:31:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPOGy-0007vh-P3; Tue, 19 May 2026 13:30:28 -0400
+	id 1wPOH6-0007xB-Mz; Tue, 19 May 2026 13:30:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPOGx-0007vS-5u
- for qemu-devel@nongnu.org; Tue, 19 May 2026 13:30:27 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPOH4-0007wW-CP
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 13:30:34 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPOGv-0003e6-EN
- for qemu-devel@nongnu.org; Tue, 19 May 2026 13:30:26 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-48e82c23840so31674505e9.3
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 10:30:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPOH2-0003ex-Ny
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 13:30:34 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-488b3f8fa2bso39356425e9.1
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 10:30:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779211824; x=1779816624; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779211831; x=1779816631; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zxRYnsIA10GXvb5Tkj1WKvjbYAGzHQ2fK6fA9ThVOHY=;
- b=wMhVxAsXs8r9Ykin3bkujexbtJXhJEruQ75F6wQiyYm2g2eR83ymA3y4Ax4HHSjeP9
- nE+CFtHvpalxRXMJoySzW0qWoubVTuSrOaE0A7+6SWXNotrsOBxvXzlUC4tz7NVjiMHo
- EzTX7pYxkL7nLH4tEKqTxXHI33iv69D7fjHckPASVqT7Jtor9LJk03N3juUsnPliXtrC
- qjmCMzbeDyud0EwOAgQEy5Ux9tqSX/pxMWvtuvjysvbhQ3eXoW35GtMMsuh87YX5hc6w
- IFcIDKvFJvshn6qEbV75S45VR+oB0cGzjf8BrY0JPsdxOYaql9NcG/TDH3r2qO4knslM
- z2tg==
+ bh=XmDzBexxRfZjdXehCa61o3ozeGzuRkBiMBbnJs72aFk=;
+ b=M7zR0JTEIxMOsbmcOgJYDYW3MvLPLoFm0x9uLRdSJ5IthniKtvD9GfZnbBbtPCSI/6
+ HWUwnNPy/fp1q9Wu8NktjW01inP9zNQYCjUC83z/Wv3FSStUgORdP9wY+qWbCrE2pr+n
+ R1bhbA4CCvTgTZesaA9+q0dJtyr0CTodBVnCM1KmtYzP08X4A28rwKjoCI18u60NFNpz
+ mvZRe7dvCzvySjAjD9X4IQpMCwW+E9YzFS2SErdbcXvMpoJ3H/7pk2U+Lxk0ufH34hQB
+ Y8xfXyCnBWmJj2YQYmtMhGQelI8T9Ig35VmR+9F94xUKnosPxWmGstQfvYMLxBCzMXL5
+ ushQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779211824; x=1779816624;
+ d=1e100.net; s=20251104; t=1779211831; x=1779816631;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=zxRYnsIA10GXvb5Tkj1WKvjbYAGzHQ2fK6fA9ThVOHY=;
- b=TCS9yB6+bnBsydZHKH3jR7nVSTLKqifwM87m+ZLx7nME5Td8vzOig66TKG3+Vditej
- nb51SwoLXZOcfoTtJ7DC8mvo4RRvEhQTW+C0f+G9ikgEWCt7x0dVVOn6b3S9PdBMcCFE
- L/fF9c3EmWLJd7AYid8zK6+5Hyk+XV8SdghA+/uA/yB+xwTkpfBFPfYR76kBQUtmG44n
- YJGMKAlTC+zmv7MKMIjHEKB5kXc/txzsH6hmKh9GZ+AkXr/lhY7k24eAZRtDh1/MNA2d
- uRQX2J9QHMnOljCWxHAxkaM7CYD/0+alTB46iaw8fgXt8FGkc5No/hR2DEDavFJvfH8g
- wuOA==
-X-Gm-Message-State: AOJu0YwXX5VxGinGpwU9adZoh4zM66Nyhajjnru3QK4D0vWZ6Rrk8Nwl
- ZN2/lmtoDdJN/4NasQOvKDApHUHjD0LqWJXAyAv5tQRe5gShLaGlK1FjacJvcbr34gPfAqB3yoo
- JwQD+kD4=
-X-Gm-Gg: Acq92OFsaEizGvsdY6kMTYTvACNILHQ7y/vfWJdP0JFRvKcOXEszFWbTWm0SdNa60e9
- YltX3LbzjrpG+G70vmTybrOrT7nipWAP+dOxDjwoRAqst7QsHWEvA4Mj9HL0nNa5cv1p9ro3dIR
- NNPrcxyw54TPzFbRHej9j0wpebu0TWZQNbqsy+UUwUdBUe1lLtNYWYqPkb0Hxljx7AXVl92t1sp
- /L3HD4nJNWxcJeFv8gB6fj/O/Jo+XDjqQwmEdrdwzGcMt1WKLP6lNstsvkILIanTlSc1Sd3Pttt
- YTCfn5C6FHHG+VeIsSsIlfdIhk+othV/UqSKrCO18WLvtRGPB6loMiofHAHsikzxsafLjAXfOY/
- lkXYzo3b+sqesqD6ZVA2Eu3JX7am15MDMkC7/+giPIlFy4rFGDb16LTldG+uewF3V91Q/fzH2tf
- NQM6ST6nItvPzCs+jZeLDDwShLLn1zUyZ7n0gE/OPnWkVaAjQQjUkEHmbEjW8a+wQ6Uy+vy/N0
-X-Received: by 2002:a05:600c:1384:b0:490:2238:4021 with SMTP id
- 5b1f17b1804b1-4902238403fmr38396765e9.8.1779211823611; 
- Tue, 19 May 2026 10:30:23 -0700 (PDT)
+ bh=XmDzBexxRfZjdXehCa61o3ozeGzuRkBiMBbnJs72aFk=;
+ b=MAJ3YU2wliLKLL7AzuYxvzdYGC0yonbOAwstQNcWu0Cz+s8vz4zNt7zxtjffug1K/s
+ kppqj6Lt1bDZmZiDXSIKp/TDf1oQslhcmGnAnqHeW7odeaAWiHCkXS4ypADe4BHqZmBF
+ cdxl69ojrU3WPMPHt/Wp1VlyTCF5WcdfbaCwzDviQm/+Sr2cBNqLuUeQV+an4zrOF/OH
+ gFKS4p0Bil+j2PaCcOC2giaqxN8dT9t5mbyL0xqdWHy/ZTX8lAzstG0EQy8XHRzpYwyP
+ rT8GI27SJqDTfOTPDzIblChp7DjIWO2vzc208WHTsMlA5OZrNcZ5DIyL0mEbSjmrSq5G
+ j+9w==
+X-Gm-Message-State: AOJu0YxRtKjmXP6/ldDkCyDNhaU9X7aMhUBk3deESIMJgF9V08Kfdte2
+ lPsWSizl7qygcPculfT6yabbDgI4OW1CbdWFx8I59J6O9sBb4PkZWC1vaMyRdJMYdqrAzDVCAOC
+ rY2n3tEg=
+X-Gm-Gg: Acq92OGSV+UG52k8nMJTFGx2ETwJzDW4e+0htBaXanWPTvKipmgpOPzwjsAEVE091GC
+ e5zh+/ZPNuvh7m3u1pjVlO/g2nHAAvKA2B14hxTpZec1Pz3bR4g1ZKgPDZP3dPFmoYqDCQhg88F
+ 7Gr52uGKKgWjvl6KGYrU3gNmuATS4jMQGwGExVijC4kYNgv2XmVwENnLM3ejxYvLov+a41zD8aB
+ bXHBXh4BPsK4z2fFK9eR+/8iURDKllvXbidwGFqGdTE6Whatm0LixE2KKhH+SI1pRExebOL9bFV
+ jfB0kuEEjXUW55mUcz1xDUz8cYwEeem9L7lMZl/TkL2qxjauOVQmS56RQuHGgmNMCbx8T7k1SNl
+ XaAAhttrHmbhUMVcrSeMWnSzBo66IuIaFJ2r9M7YuyoJbHV45VQSzla3ip8CBmdJ2BzVNDWkgsu
+ asD2quw89baJ262khGhYBpd/rAGXzCZemkMqUBd86PE3CpCrhGSDBRS+7Q4K0RKUre1D3J1P9w
+X-Received: by 2002:a05:600c:83c7:b0:48f:e230:29f5 with SMTP id
+ 5b1f17b1804b1-48fe53a8eccmr313189915e9.16.1779211830483; 
+ Tue, 19 May 2026 10:30:30 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fffb9aac4sm417549755e9.9.2026.05.19.10.30.22
+ 5b1f17b1804b1-48fe53ab6aasm365812085e9.2.2026.05.19.10.30.29
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 19 May 2026 10:30:22 -0700 (PDT)
+ Tue, 19 May 2026 10:30:29 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>,
@@ -70,17 +70,17 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>,
  Kashyap Chamarthy <kchamart@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v3 1/2] MAINTAINERS: Transfer FW schema specs section to Daniel
-Date: Tue, 19 May 2026 19:30:13 +0200
-Message-ID: <20260519173014.98967-2-philmd@linaro.org>
+Subject: [PATCH v3 2/2] MAINTAINERS: Remove PhilMD from firmware sections
+Date: Tue, 19 May 2026 19:30:14 +0200
+Message-ID: <20260519173014.98967-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260519173014.98967-1-philmd@linaro.org>
 References: <20260519173014.98967-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,33 +103,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pass the torch to Daniel, but demote the 'Firmware schema
-specifications' section from 'Maintained' to 'Odd fixes'.
+I'm not paid to support this code. I haven't followed
+it neither, so be fair and just remove myself.
+Demote the status to 'Orphaned'.
 
-Suggested-by: Daniel P. Berrange <berrange@redhat.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Daniel P. Berrange <berrange@redhat.com>
+Cc: Kashyap Chamarthy <kchamart@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ MAINTAINERS | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 85651cf2a18..0ba6391dea6 100644
+index 0ba6391dea6..6b1d004c054 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -4004,10 +4004,9 @@ F: docs/specs/fsi.rst
- F: tests/qtest/aspeed_fsi-test.c
+@@ -2875,9 +2875,8 @@ F: hw/usb/vt82c686-uhci-pci.c
+ F: include/hw/isa/vt82c686.h
  
- Firmware schema specifications
+ Firmware configuration (fw_cfg)
 -M: Philippe Mathieu-Daudé <philmd@linaro.org>
--R: Daniel P. Berrange <berrange@redhat.com>
-+M: Daniel P. Berrange <berrange@redhat.com>
- R: Kashyap Chamarthy <kchamart@redhat.com>
--S: Maintained
-+S: Odd fixes
+ R: Gerd Hoffmann <kraxel@redhat.com>
+-S: Supported
++S: Orphaned
+ F: docs/specs/fw_cfg.rst
+ F: hw/nvram/fw_cfg*.c
+ F: stubs/fw_cfg.c
+@@ -4010,7 +4009,6 @@ S: Odd fixes
  F: docs/interop/firmware.json
  
  EDK2 Firmware
+-M: Philippe Mathieu-Daudé <philmd@linaro.org>
+ M: Gerd Hoffmann <kraxel@redhat.com>
+ S: Supported
+ F: hw/i386/*ovmf*
 -- 
 2.53.0
 
