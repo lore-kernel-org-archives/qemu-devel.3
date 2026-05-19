@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B6FDCD5BA4
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 13:31:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7EADCD5BAC
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 13:31:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPKXJ-0002Vv-G1; Tue, 19 May 2026 09:31:05 -0400
+	id 1wPKWI-00016v-3e; Tue, 19 May 2026 09:30:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wPKWz-0001rF-K3
- for qemu-devel@nongnu.org; Tue, 19 May 2026 09:30:49 -0400
+ id 1wPKWF-00014Q-Id
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 09:29:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wPKWu-0008UG-F9
- for qemu-devel@nongnu.org; Tue, 19 May 2026 09:30:44 -0400
+ id 1wPKWC-0008DN-74
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 09:29:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779197435;
+ s=mimecast20190719; t=1779197395;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JE0HLZrwJsrBKolW/r84ZwL1/ywjoY3zz9XZRBLF7mk=;
- b=jQ8vFP4QEm0LLial9bjUyqUWKrpku+3ShRSoCW2e2zP1rLvs7aLiJkXN4DuxTwA9XSi9MZ
- c7Aonachks64Qzn6iNkct08CqlTBntKo9QubW6cZsp1bvQHJqk4hiBDmRteMUwXvo8VsK2
- YGIv1gAtMBCgQFHrD5Wst52fzDaby3U=
+ bh=2dgC0fflJ1IwtES7qZ7pmfKjjmQsGVnqh8/2aG4sPf8=;
+ b=QcrPPcbqmGaMgDtzDi9z/q4tUhKBDRfz8+aFvTpjchY2wtASDDaj4XdFgerCq2LyUsNCYt
+ 27QvGxCD3HE6yEUkqk3Su89x+IxKFZB27Pwfgtf22Q0oNZY1/ATMB/cL2eUycxvNvEttgm
+ pEUfX5PLvgTglt3mSn4CikylIFrNzWk=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-391-1eztZgn9OzObXBXA7DPV-g-1; Tue,
- 19 May 2026 09:30:28 -0400
-X-MC-Unique: 1eztZgn9OzObXBXA7DPV-g-1
-X-Mimecast-MFC-AGG-ID: 1eztZgn9OzObXBXA7DPV-g_1779197423
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-247-VXXyV1WNM56UHtLRmgR6sw-1; Tue,
+ 19 May 2026 09:29:52 -0400
+X-MC-Unique: VXXyV1WNM56UHtLRmgR6sw-1
+X-Mimecast-MFC-AGG-ID: VXXyV1WNM56UHtLRmgR6sw_1779197390
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DF04E19560AD; Tue, 19 May 2026 13:30:22 +0000 (UTC)
+ id E6E8D195608E; Tue, 19 May 2026 13:29:49 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.44.49.207])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 224A11800352; Tue, 19 May 2026 13:30:16 +0000 (UTC)
+ id 07F86180034E; Tue, 19 May 2026 13:29:43 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
@@ -56,10 +56,10 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
 Cc: maz@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
  armbru@redhat.com, berrange@redhat.com, abologna@redhat.com,
  jdenemar@redhat.com
-Subject: [PATCH v5 10/18] target/arm/cpu64: Retrieve writable ID reg map in
- aarch64_host_initfn()
-Date: Tue, 19 May 2026 15:27:24 +0200
-Message-ID: <20260519132905.145643-11-eric.auger@redhat.com>
+Subject: [PATCH v5 05/18] scripts: Introduce scripts/aarch64_sysreg_helpers
+ module
+Date: Tue, 19 May 2026 15:27:19 +0200
+Message-ID: <20260519132905.145643-6-eric.auger@redhat.com>
 In-Reply-To: <20260519132905.145643-1-eric.auger@redhat.com>
 References: <20260519132905.145643-1-eric.auger@redhat.com>
 MIME-Version: 1.0
@@ -90,58 +90,229 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Store the writable_map array in the CPU state and populate it
-in aarch64_host_initfn(). In case the retrieval fails we simply
-free and null the pointer: this will indicate that the writable_map
-is not usable in subsequent patches.
+We plan to reuse get_opcode() and extract_idregs_from_registers_json()
+functions in another script. So let's move them into a module
+
+No functional change intended.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
 ---
- target/arm/cpu.h   | 3 +++
- target/arm/cpu64.c | 9 +++++++++
- 2 files changed, 12 insertions(+)
+ scripts/aarch64_sysreg_helpers.py            | 109 +++++++++++++++++++
+ scripts/update-aarch64-cpu-sysregs-header.py |  85 +--------------
+ 2 files changed, 110 insertions(+), 84 deletions(-)
+ create mode 100644 scripts/aarch64_sysreg_helpers.py
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index a0a1d7fbe3..3558460333 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1073,6 +1073,9 @@ struct ArchCPU {
-     /* KVM steal time */
-     OnOffAuto kvm_steal_time;
- 
-+    /* ID reg writable bitmask */
-+    uint64_t *writable_map;
+diff --git a/scripts/aarch64_sysreg_helpers.py b/scripts/aarch64_sysreg_helpers.py
+new file mode 100644
+index 0000000000..dd5ec4bafa
+--- /dev/null
++++ b/scripts/aarch64_sysreg_helpers.py
+@@ -0,0 +1,109 @@
++#!/usr/bin/env python3
 +
-     /* Uniprocessor system with MP extensions */
-     bool mp_is_up;
- 
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index a93ad2da5a..f2edbfc437 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -851,6 +851,7 @@ static void kvm_arm_set_cpreg_mig_tolerances(ARMCPU *cpu)
- static void aarch64_host_initfn(Object *obj)
- {
-     ARMCPU *cpu = ARM_CPU(obj);
-+    int ret;
- 
- #if defined(CONFIG_NITRO)
-     if (nitro_enabled()) {
-@@ -861,6 +862,14 @@ static void aarch64_host_initfn(Object *obj)
- 
- #if defined(CONFIG_KVM)
-     kvm_arm_set_cpreg_mig_tolerances(cpu);
++# Helpers used in aarch64 sysreg definition generation
++#
++# Copyright (C) 2026 Red Hat, Inc.
++#
++# Authors: Eric Auger <eric.auger@redhat.com>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+    cpu->writable_map = g_new(uint64_t, KVM_ARM_FEATURE_ID_RANGE_SIZE);
 +
-+    ret = kvm_arm_get_writable_id_regs(cpu->writable_map);
-+    if (ret) {
-+        g_free(cpu->writable_map);
-+        cpu->writable_map = NULL;
-+    }
-     kvm_arm_set_cpu_features_from_host(cpu);
-     aarch64_add_sve_properties(obj);
- #elif defined(CONFIG_HVF)
++import json
++import os
++
++# Some regs have op code values like 000x, 001x. Anyway we don't need
++# them. Besides some regs are undesired in the generated file such as
++# VMPIDR_EL2 and VPIDR_EL2 which are outside of the IDreg scope we
++# are interested in and are tricky to decode as their system accessor
++# refer to MPIDR_EL1/MIDR_EL1 respectively
++
++skiplist = ['ALLINT', 'PM', 'S1_', 'S3_', 'SVCR', \
++            'VMPIDR_EL2', 'VPIDR_EL2']
++
++# returns the int value of a given @opcode for a reg @encoding
++def get_opcode(encoding, opcode):
++    fvalue = encoding.get(opcode)
++    if fvalue:
++        value = fvalue.get('value')
++        if isinstance(value, str):
++            value = value.strip("'")
++            value = int(value, 2)
++            return value
++    return -1
++
++def extract_idregs_from_registers_json(filename):
++    """
++    Load a Registers.json file and extract all ID registers, decode their
++    opcode and dump the information in target/arm/cpu-sysregs.h.inc
++
++    Args:
++        filename (str): The path to the Registers.json
++    returns:
++        idregs: list of ID regs and their encoding
++    """
++    if not os.path.exists(filename):
++        print(f"Error: {filename} could not be found!")
++        return {}
++
++    try:
++        with open(filename, 'r') as f:
++            register_data = json.load(f)
++
++    except json.JSONDecodeError:
++        print(f"Could not decode json from '{filename}'!")
++        return {}
++    except Exception as e:
++        print(f"Unexpected error while reading {filename}: {e}")
++        return {}
++
++    registers = [r for r in register_data if isinstance(r, dict) and \
++                r.get('_type') == 'Register']
++
++    idregs = {}
++
++    # Some regs have op code values like 000x, 001x. Anyway we don't need
++    # them. Besides some regs are undesired in the generated file such as
++    # VMPIDR_EL2 and VPIDR_EL2 which are outside of the IDreg scope we
++    # are interested in and are tricky to decode as their system accessor
++    # refer to MPIDR_EL1/MIDR_EL1 respectively
++
++    skiplist = ['ALLINT', 'PM', 'S1_', 'S3_', 'SVCR', \
++                'VMPIDR_EL2', 'VPIDR_EL2']
++
++    for register in registers:
++        reg_name = register.get('name')
++
++        is_skipped = any(term in (reg_name or "").upper() for term in skiplist)
++
++        if reg_name and not is_skipped:
++            accessors = register.get('accessors', [])
++
++            for accessor in accessors:
++                type = accessor.get('_type')
++                if type in ['Accessors.SystemAccessor']:
++                    encoding_list = accessor.get('encoding')
++
++                    if isinstance(encoding_list, list) and encoding_list and \
++                       isinstance(encoding_list[0], dict):
++                        encoding_wrapper = encoding_list[0]
++                        encoding_source = encoding_wrapper.get('encodings', \
++                                                               encoding_wrapper)
++
++                        if isinstance(encoding_source, dict):
++                                op0 = get_opcode(encoding_source, 'op0')
++                                op1 = get_opcode(encoding_source, 'op1')
++                                op2 = get_opcode(encoding_source, 'op2')
++                                crn = get_opcode(encoding_source, 'CRn')
++                                crm = get_opcode(encoding_source, 'CRm')
++                                encoding_str=f"{op0} {op1} {crn} {crm} {op2}"
++
++                # ID regs are assumed within this scope
++                if op0 == 3 and (op1 == 0 or op1 == 1 or op1 == 3) and \
++                   crn == 0 and (crm >= 0 and crm <= 7) and (op2 >= 0 and op2 <= 7):
++                    idregs[reg_name] = encoding_str
++
++    return idregs
++
++
++
+diff --git a/scripts/update-aarch64-cpu-sysregs-header.py b/scripts/update-aarch64-cpu-sysregs-header.py
+index 8c337147dd..43107264e9 100755
+--- a/scripts/update-aarch64-cpu-sysregs-header.py
++++ b/scripts/update-aarch64-cpu-sysregs-header.py
+@@ -17,90 +17,7 @@
+ import json
+ import os
+ import sys
+-
+-# Some regs have op code values like 000x, 001x. Anyway we don't need
+-# them. Besides some regs are undesired in the generated file such as
+-# VMPIDR_EL2 and VPIDR_EL2 which are outside of the IDreg scope we
+-# are interested in and are tricky to decode as their system accessor
+-# refer to MPIDR_EL1/MIDR_EL1 respectively
+-
+-skiplist = ['ALLINT', 'PM', 'S1_', 'S3_', 'SVCR', \
+-            'VMPIDR_EL2', 'VPIDR_EL2']
+-
+-# returns the int value of a given @opcode for a reg @encoding
+-def get_opcode(encoding, opcode):
+-    fvalue = encoding.get(opcode)
+-    if fvalue:
+-        value = fvalue.get('value')
+-        if isinstance(value, str):
+-            value = value.strip("'")
+-            value = int(value, 2)
+-            return value
+-    return -1
+-
+-def extract_idregs_from_registers_json(filename):
+-    """
+-    Load a Registers.json file and extract all ID registers, decode their
+-    opcode and dump the information in target/arm/cpu-sysregs.h.inc
+-
+-    Args:
+-        filename (str): The path to the Registers.json
+-    returns:
+-        idregs: list of ID regs and their encoding
+-    """
+-    if not os.path.exists(filename):
+-        print(f"Error: {filename} could not be found!")
+-        return {}
+-
+-    try:
+-        with open(filename, 'r') as f:
+-            register_data = json.load(f)
+-
+-    except json.JSONDecodeError:
+-        print(f"Could not decode json from '{filename}'!")
+-        return {}
+-    except Exception as e:
+-        print(f"Unexpected error while reading {filename}: {e}")
+-        return {}
+-
+-    registers = [r for r in register_data if isinstance(r, dict) and \
+-                r.get('_type') == 'Register']
+-
+-    idregs = {}
+-
+-    for register in registers:
+-        reg_name = register.get('name')
+-
+-        is_skipped = any(term in (reg_name or "").upper() for term in skiplist)
+-
+-        if reg_name and not is_skipped:
+-            accessors = register.get('accessors', [])
+-
+-            for accessor in accessors:
+-                type = accessor.get('_type')
+-                if type in ['Accessors.SystemAccessor']:
+-                    encoding_list = accessor.get('encoding')
+-
+-                    if isinstance(encoding_list, list) and encoding_list and \
+-                       isinstance(encoding_list[0], dict):
+-                        encoding_wrapper = encoding_list[0]
+-                        encoding_source = encoding_wrapper.get('encodings', \
+-                                                               encoding_wrapper)
+-
+-                        if isinstance(encoding_source, dict):
+-                                op0 = get_opcode(encoding_source, 'op0')
+-                                op1 = get_opcode(encoding_source, 'op1')
+-                                op2 = get_opcode(encoding_source, 'op2')
+-                                crn = get_opcode(encoding_source, 'CRn')
+-                                crm = get_opcode(encoding_source, 'CRm')
+-                                encoding_str=f"{op0} {op1} {crn} {crm} {op2}"
+-
+-                # ID regs are assumed within this scope
+-                if op0 == 3 and (op1 == 0 or op1 == 1 or op1 == 3) and \
+-                   crn == 0 and (crm >= 0 and crm <= 7) and (op2 >= 0 and op2 <= 7):
+-                    idregs[reg_name] = encoding_str
+-
+-    return idregs
++from aarch64_sysreg_helpers import extract_idregs_from_registers_json
+ 
+ if __name__ == "__main__":
+     # Single arg expected: the path to the Registers.json file
 -- 
 2.53.0
 
