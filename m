@@ -4,105 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1123CD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 04:07:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90533CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 04:11:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPBjD-0002oc-IC; Tue, 19 May 2026 00:06:47 -0400
+	id 1wPBnG-0003nv-29; Tue, 19 May 2026 00:10:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wPBjB-0002lh-SE
- for qemu-devel@nongnu.org; Tue, 19 May 2026 00:06:45 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wPBj9-0003fL-KV
- for qemu-devel@nongnu.org; Tue, 19 May 2026 00:06:45 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-bcd3c190f71so542079866b.0
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 21:06:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779163602; cv=none;
- d=google.com; s=arc-20240605;
- b=MS6oQd/WsjZn4GNT21ZPCZthuVxfVBYEdKMJtVmKyIEDSJQSAi9oZH0pSw+VYCr2hz
- R6qtk3aVUaEbZaJwyOPW2n4kf56QCCW/TdaOgRlAe2wQH68qNKXxtYd0navdwpl7fVbg
- O2VWDM3yatkjAJgPop30CjXC8QwBB9ulYgN6Cwl4NZ93OCuVvXLPF6uC2jMc1pAybRB4
- z3RRmNoIaiET0l5A559BaJAkADFy/K4IWLLjZ3SllR9OF/ViTf1XDQNhbi+LCERx/B/q
- d4JIamBxhcJF4qeXS6CDpL+OpiDh9IwOxi0DN4QvR+xv9A2dvKUkeuNjJSdyY0essHwb
- OU9Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=7JpQCosnPKFIZKxRGUT0J9cCQP1htWgYa8qfIogLVkQ=;
- fh=+dPXGxW3pQNYFrTSil53fSXYfdhGIs7bI6Dyql1Mx+Q=;
- b=PYK3+nnFiyexov7Wl57IWXTB/dj4VcnczfgaBYHN0n/ZqRvCx9Ft+dF4w+U3Pv4mwo
- HQyjhM89SrzLpGZIt5gx34WCUElS5yNPlyLuH34ATdnR19VvSzZ2Q/lGzF7SAUEsAfHK
- +dbo21gscvn9Mqpr+0BpV9/UhVuoUbx65XtQtSMBTWD2RlCFvcqFW9dqfHJUS4E798nH
- m++Yre8Urxjl/HZkRVAOQu+Q8msvsVgWLDWv8GwvJhE5Iu9E2SIb9PsHFLkkP2xWnFHT
- FTpVctoNSG45N8N8bM9YyciXWH+fvdv9Jp1vNdk0moDNGRtocgJuMOG2czxiZvhOe7r0
- B13A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779163602; x=1779768402; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7JpQCosnPKFIZKxRGUT0J9cCQP1htWgYa8qfIogLVkQ=;
- b=mueTYFiDuy35DChsE6G/c1x8hs7xKdl12TwlK/2twMn9MQ6eO3f5M3VV3fKnYoA86+
- 5QEK7rSWjnTZd4YzFrItYd5MbNgjOBsWBapHxYc6FYZnL4IbJYobAF7XrNWVzqOAt4sI
- zSQWWI9Wt+kowB97+hv71CUiB/mg25f7GZV/kyuVPrOGQqVOG1+AjOX5fwjB69wGlu9O
- PGFozRzZLxumJc/DhkAyW+Vdl4s9XVEjWfpdDzBsdXR/am6ac+IZrrPQB1/rcFYaPKw2
- vVE++RuJKcjckJh5MzTLrj30ipTYV6/NDta70H0YWmiaxwtwdC++iezT3vFo3BWomFKc
- I7Cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779163602; x=1779768402;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=7JpQCosnPKFIZKxRGUT0J9cCQP1htWgYa8qfIogLVkQ=;
- b=i04FZAa7eTCpv/bC7qOknlh4+swPXUXWkBs/OlwLD4EK62uNfHOeQEp0u32khBuljG
- GUA5+5x6C4kePXtjIR9dJZhO/HRhbov0bbC7pBhZ+gqnuMAAL82nFG/lC2vqnoWcXNyp
- MRI9OKsPZUYbqwqSogFkRzBGAXlITUiiylNBPRETiWbVMEfAS+AIp0JqJPxh5keJYPyS
- SUSEsVRl68KtrZrCR4rUeBPjuXXsPJeGIFiqhVdD5X5HuJg5Wyo904lHkHPCRDXVMH6f
- Fw70zwvYqmOQKWqP0johrT3tZz8G3h2vFHtoHf2e3a1nFYUix/Bp1lDGbptQMDApv/7m
- Qssw==
-X-Gm-Message-State: AOJu0YxJIzRHNeYIwO12/zUkFIx8BCE3TZo5j1tqK0yjTED0vJQPaC44
- IO5YRW8PdgyK2h2qjNnhMeRJggxu9TmHZyL5TB8Zh3zWIgDF8ZgDRg4GI1ow5lxJNSWdmc6p5yS
- kbvAJZMX2WQ0ErPvaPJxcLoRqI7W05Z4=
-X-Gm-Gg: Acq92OFH94WseJhq+WA0L4AQpRLlQyiOIoXDSJQPhmOusIurWnoE+A/L/uksPPLcDcx
- M0VMEpjOyoDFppah9MOBljs5ql5PyUfiWnuRJckipaStpOv0BCRA34w8eyH2aADV7kMkutEWakI
- wlW04yz0k9xvQ9PQIlcLv4LVxBeyMTYS+TTV6flXE2Dn6KlRcQmiHQfNrq41DWDxmK1uq8WkIkU
- 4yVBbnhOLcXl5fSAxguQF5EriF5T7HP7yPf/+xlTafJL6CY8cY8ipVqkiWtIntLn5N2fIZ5bQOe
- nCOmOBkxKcMeneKf9K3CmNe3kkf6MvFIn3cCTg==
-X-Received: by 2002:a17:906:5193:20b0:bd4:7cec:1066 with SMTP id
- a640c23a62f3a-bd517acd5e6mr703962066b.44.1779163601927; Mon, 18 May 2026
- 21:06:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wPBnF-0003nf-Bd
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 00:10:57 -0400
+Received: from 5.mo534.mail-out.ovh.net ([54.36.140.176])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wPBnB-0006Ah-6m
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 00:10:57 -0400
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net [51.68.80.175])
+ by mo534.mail-out.ovh.net (Postfix) with ESMTPS id 4gKLnN1tMwz6LGg;
+ Tue, 19 May 2026 04:10:48 +0000 (UTC)
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net. [127.0.0.1])
+ by director1.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <alexander.hansen@9elements.com>; Tue, 19 May 2026 04:10:48 +0000 (UTC)
+Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.188.39])
+ by director1.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4gKLnM6L4Fz5vgh; Tue, 19 May 2026 04:10:47 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.7])
+ (Authenticated sender: clg@kaod.org)
+ by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 05D251B43B51;
+ Tue, 19 May 2026 04:10:45 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-113S007d8456ab5-1a52-4255-b849-d9eddbb0c4a4,
+ A1C5BDF50025601E7F63D663DE463AD2E6007479) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <36078e43-f4b1-495d-8c55-3ba2890885a4@kaod.org>
+Date: Tue, 19 May 2026 06:10:45 +0200
 MIME-Version: 1.0
-References: <20260512032926.1978818-1-daniel.barboza@oss.qualcomm.com>
- <20260512032926.1978818-15-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20260512032926.1978818-15-daniel.barboza@oss.qualcomm.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 19 May 2026 14:06:15 +1000
-X-Gm-Features: AVHnY4IxFIfQucsta7CX5JBrHSiVprSJAQ3s6EY7A5d9cpILn9-Hw5G1qnW1rtg
-Message-ID: <CAKmqyKNoOwFv-v4Ba7j0nLyhYe6MxGL8tfo-8yennd8g=PChQQ@mail.gmail.com>
-Subject: Re: [PATCH v2 14/14] target/riscv/cpu: remove riscv_cpu_* arrays
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x634.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/5] hw/sensor: MAX31790 support
+To: Alexander Hansen <alexander.hansen@9elements.com>, qemu-devel@nongnu.org
+Cc: Titus Rwantare <titusr@google.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org, Steven Lee <steven_lee@aspeedtech.com>,
+ Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
+References: <20260515150610.381066-1-alexander.hansen@9elements.com>
+ <20260515150610.381066-4-alexander.hansen@9elements.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260515150610.381066-4-alexander.hansen@9elements.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+x-ovh-tracer-id: 16341311248811928815
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTEAINiSDZpNFsZhs4Hk1lyOe6+msghBnwAm0kB6D3rRs++XhRyIgB/HoguD5mnF9LAmchTy9SgTziQ9L9le+H9g+LQZafsG8z5SWYYZA3AXjeAB7LlBpK/uDQAv/Dko4LLqA0MkmAsDJ54AUlmKcvnkG5A2w9PJWV/OsYswHkMPKqtDRgSKFTrZcwm3V88xzqqE+95+WYFP1p/P6gSvNUCVRnC65bq8NLLn7jfdLi/x2rLFKyP6Unup3HDXXj4cD/2fMscTKuo7jIpJ7dyf4uTboat35dpcXAeP/vjUgd0bw+8W1Pc5NHmwj+HMcs5y7uNHJ4yZr20mgfv6kHOBFZ8SPHAc2oHofYJRObupElLCrD48q+wixL2dFo+WR9gfWqvg7arjq3BorxwSlLwMT8oW96WxUlWYSeDYA/UtZd/6Ov86rdk6Q5RD6M9PY2BNa616MAU98BfQq+dI3JZ1lxBXAVCCoCO80krF8DPPZPm900tTwigUqrV+Aypr5IuNJCFz1KUrfRgtXEUX3mfJi6qcc5zi9BnGjBBAT9nOILCVW6bYHLF+GVX9eF5TsdvPqEYdCZ+TZoBBiiEmEomnsePlYahXhy+cb74Sa+PtCM59sTi8OMTbnN0ylpQ13axTH8CwNC1jeW2/s9kApcX2fLok+3xjRBUKcy5flbRmLNUHQw
+DKIM-Signature: a=rsa-sha256; bh=HGlwwPxD19GikKqJ44EFdk0ST2r7crlX+LH/d92jja8=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1779163850; v=1;
+ b=Fqkd1wO7cOCwsRUcDJSXX4qzC6rgQl4Yy8dl0Zn2r7EvpX2CG95cI4flpMnpNSY6yavcf/YY
+ 3Ph2UJQ04b2yjJq/R/MrX7jxwP7gm9Hz7rFyjFV4QSPDrs61YUTC8eHonmh1oTvcf+LWUGDqk6F
+ b8aNZ/wVzMZamkdVNWz+4nUsrGYDBxG+bbO6w/nYPdRPiHbk+RSrECfqu4aIEf0rlQd7ZkmZ2/M
+ Iwf39ExMpT7mEPZ6KZd83djD4sHv3f2Db1IFf5SWvyQfutqJpYKSyZDKFpybJWM53GWWUHwfDSR
+ 67hU9NfyBx5v228KnFFMuz6gJ61Hj7hYvZyU39CF+TMLQ==
+Received-SPF: pass client-ip=54.36.140.176; envelope-from=clg@kaod.org;
+ helo=5.mo534.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,219 +135,746 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 12, 2026 at 1:31=E2=80=AFPM Daniel Henrique Barboza
-<daniel.barboza@oss.qualcomm.com> wrote:
->
-> There is no more uses left for these arrays. isa_edata_arr[] is doing
-> everything we need, making our lives a little easier when adding new
-> extensions.
->
-> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-
-Alistair
-
+On 5/15/26 16:58, Alexander Hansen wrote:
+> Product: [1]
+> Datasheet: [2]
+> 
+> MAX31790 Support:
+> - fan inputs are reading
+> - tach reading propertional to pwm setting from linux driver
+> - fans do not show any fault
+> - 6 PWM registers influence 6 TACH registers
+> 
+> There is intentional stub behavior in some places and various functions
+> of the device are currently unsupported.
+> 
+> MAX31790 currently unsupported:
+> - slave address restriction
+> - fan dynamics
+> - spin-up configuration
+> - fault state / failure possibility
+> - rate-of-change control
+> - tach mode
+> - mixed layouts where number of fans != number of tachs
+> - see Figure 5.9 in [2] for example of mixed layout
+> 
+> Anyone could expand it in the future for more accurate emulation.
+> 
+> The reason for adding this device is to support Yosemite V4 emulation.
+> 
+> Tested: on yosemite 4 qemu
+> 
+> root@yosemite4:~# ls /sys/class/hwmon/hwmon2/
+> device	    fan2_fault   fan3_target  fan5_fault   fan6_target  pwm2	     pwm5
+> fan1_enable  fan2_input   fan4_enable  fan5_input   name	pwm2_enable  pwm5_enable
+> fan1_fault   fan2_target  fan4_fault   fan5_target  of_node	pwm3	     pwm6
+> fan1_input   fan3_enable  fan4_input   fan6_enable  power	pwm3_enable  pwm6_enable
+> fan1_target  fan3_fault   fan4_target  fan6_fault   pwm1	pwm4	     subsystem
+> fan2_enable  fan3_input   fan5_enable  fan6_input   pwm1_enable  pwm4_enable  uevent
+> root@yosemite4:~# cat /sys/class/hwmon/hwmon2/fan1_input
+> 4551
+> root@yosemite4:~# cat /sys/class/hwmon/hwmon2/fan1_enable
+> 1
+> root@yosemite4:~# cat /sys/class/hwmon/hwmon2/fan1_fault
+> 0
+> root@yosemite4:~# cat /sys/class/hwmon/hwmon2/fan1_target
+> 2048
+> root@yosemite4:~# cat /sys/class/hwmon/hwmon2/pwm1
+> 178
+> root@yosemite4:~# cat /sys/class/hwmon/hwmon2/name
+> max31790
+> 
+> Trace output:
+> max31790_realize i2c_addr: 0x20
+> max31790_realize i2c_addr: 0x2f
+> max31790_realize i2c_addr: 0x20
+> max31790_realize i2c_addr: 0x2f
+> max31790_event i2c_addr: 0x20, event: 0x01
+> max31790_send i2c_addr: 0x20, data: 0x02
+> max31790_event i2c_addr: 0x20, event: 0x00
+> max31790_recv i2c_addr: 0x20, reg_addr: 0x02
+> max31790_recv_return i2c_addr: 0x20, returns: 0x08
+> ...
+> 
+> References:
+> [1] https://www.analog.com/en/products/MAX31790.html
+> [2] https://www.analog.com/media/en/technical-documentation/data-sheets/MAX31790.pdf
+> 
+> Cc: Titus Rwantare <titusr@google.com>
+> Cc: "Cédric Le Goater" <clg@kaod.org> (maintainer:ASPEED BMCs)
+> Cc: Paolo Bonzini <pbonzini@redhat.com>
+> Cc: Peter Maydell <peter.maydell@linaro.org>
+> Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org>
+> Cc: qemu-arm@nongnu.org
+> Cc: qemu-devel@nongnu.org
+> Signed-off-by: Alexander Hansen <alexander.hansen@9elements.com>
 > ---
->  target/riscv/cpu.c | 159 ---------------------------------------------
->  target/riscv/cpu.h |  10 ---
->  2 files changed, 169 deletions(-)
->
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 6dd05597e8..67452bb964 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -1248,165 +1248,6 @@ const char *riscv_get_misa_ext_description(uint32=
-_t bit)
->      return val;
->  }
->
-> -#define MULTI_EXT_CFG_BOOL(_name, _prop, _defval) \
-> -    {.name =3D _name, .offset =3D CPU_CFG_OFFSET(_prop), \
-> -     .enabled =3D _defval}
-> -
-> -const RISCVCPUMultiExtConfig riscv_cpu_extensions[] =3D {
-> -    /* Defaults for standard extensions */
-> -    MULTI_EXT_CFG_BOOL("sscofpmf", ext_sscofpmf, false),
-> -    MULTI_EXT_CFG_BOOL("smcntrpmf", ext_smcntrpmf, false),
-> -    MULTI_EXT_CFG_BOOL("smcsrind", ext_smcsrind, false),
-> -    MULTI_EXT_CFG_BOOL("smcdeleg", ext_smcdeleg, false),
-> -    MULTI_EXT_CFG_BOOL("sscsrind", ext_sscsrind, false),
-> -    MULTI_EXT_CFG_BOOL("ssccfg", ext_ssccfg, false),
-> -    MULTI_EXT_CFG_BOOL("smctr", ext_smctr, false),
-> -    MULTI_EXT_CFG_BOOL("ssctr", ext_ssctr, false),
-> -    MULTI_EXT_CFG_BOOL("zifencei", ext_zifencei, true),
-> -    MULTI_EXT_CFG_BOOL("zicfilp", ext_zicfilp, false),
-> -    MULTI_EXT_CFG_BOOL("zicfiss", ext_zicfiss, false),
-> -    MULTI_EXT_CFG_BOOL("zicsr", ext_zicsr, true),
-> -    MULTI_EXT_CFG_BOOL("zihintntl", ext_zihintntl, true),
-> -    MULTI_EXT_CFG_BOOL("zihintpause", ext_zihintpause, true),
-> -    MULTI_EXT_CFG_BOOL("zimop", ext_zimop, false),
-> -    MULTI_EXT_CFG_BOOL("zcmop", ext_zcmop, false),
-> -    MULTI_EXT_CFG_BOOL("zacas", ext_zacas, false),
-> -    MULTI_EXT_CFG_BOOL("zama16b", ext_zama16b, false),
-> -    MULTI_EXT_CFG_BOOL("zabha", ext_zabha, false),
-> -    MULTI_EXT_CFG_BOOL("zaamo", ext_zaamo, false),
-> -    MULTI_EXT_CFG_BOOL("zalasr", ext_zalasr, false),
-> -    MULTI_EXT_CFG_BOOL("zalrsc", ext_zalrsc, false),
-> -    MULTI_EXT_CFG_BOOL("zawrs", ext_zawrs, true),
-> -    MULTI_EXT_CFG_BOOL("zfa", ext_zfa, true),
-> -    MULTI_EXT_CFG_BOOL("zfbfmin", ext_zfbfmin, false),
-> -    MULTI_EXT_CFG_BOOL("zfh", ext_zfh, false),
-> -    MULTI_EXT_CFG_BOOL("zfhmin", ext_zfhmin, false),
-> -    MULTI_EXT_CFG_BOOL("zve32f", ext_zve32f, false),
-> -    MULTI_EXT_CFG_BOOL("zve32x", ext_zve32x, false),
-> -    MULTI_EXT_CFG_BOOL("zve64f", ext_zve64f, false),
-> -    MULTI_EXT_CFG_BOOL("zve64d", ext_zve64d, false),
-> -    MULTI_EXT_CFG_BOOL("zve64x", ext_zve64x, false),
-> -    MULTI_EXT_CFG_BOOL("zvfbfa", ext_zvfbfa, false),
-> -    MULTI_EXT_CFG_BOOL("zvfbfmin", ext_zvfbfmin, false),
-> -    MULTI_EXT_CFG_BOOL("zvfbfwma", ext_zvfbfwma, false),
-> -    MULTI_EXT_CFG_BOOL("zvfh", ext_zvfh, false),
-> -    MULTI_EXT_CFG_BOOL("zvfhmin", ext_zvfhmin, false),
-> -    MULTI_EXT_CFG_BOOL("sstc", ext_sstc, true),
-> -    MULTI_EXT_CFG_BOOL("ssnpm", ext_ssnpm, false),
-> -    MULTI_EXT_CFG_BOOL("sspm", ext_sspm, false),
-> -    MULTI_EXT_CFG_BOOL("supm", ext_supm, false),
-> -
-> -    MULTI_EXT_CFG_BOOL("smaia", ext_smaia, false),
-> -    MULTI_EXT_CFG_BOOL("smdbltrp", ext_smdbltrp, false),
-> -    MULTI_EXT_CFG_BOOL("smepmp", ext_smepmp, false),
-> -    MULTI_EXT_CFG_BOOL("smpmpmt", ext_smpmpmt, false),
-> -    MULTI_EXT_CFG_BOOL("smrnmi", ext_smrnmi, false),
-> -    MULTI_EXT_CFG_BOOL("smmpm", ext_smmpm, false),
-> -    MULTI_EXT_CFG_BOOL("smnpm", ext_smnpm, false),
-> -    MULTI_EXT_CFG_BOOL("smstateen", ext_smstateen, false),
-> -    MULTI_EXT_CFG_BOOL("ssaia", ext_ssaia, false),
-> -    MULTI_EXT_CFG_BOOL("ssdbltrp", ext_ssdbltrp, false),
-> -    MULTI_EXT_CFG_BOOL("svade", ext_svade, false),
-> -    MULTI_EXT_CFG_BOOL("svadu", ext_svadu, true),
-> -    MULTI_EXT_CFG_BOOL("svinval", ext_svinval, false),
-> -    MULTI_EXT_CFG_BOOL("svnapot", ext_svnapot, false),
-> -    MULTI_EXT_CFG_BOOL("svpbmt", ext_svpbmt, false),
-> -    MULTI_EXT_CFG_BOOL("svrsw60t59b", ext_svrsw60t59b, false),
-> -    MULTI_EXT_CFG_BOOL("svvptc", ext_svvptc, true),
-> -
-> -    MULTI_EXT_CFG_BOOL("zicntr", ext_zicntr, true),
-> -    MULTI_EXT_CFG_BOOL("zihpm", ext_zihpm, true),
-> -    MULTI_EXT_CFG_BOOL("zilsd", ext_zilsd, false),
-> -
-> -    MULTI_EXT_CFG_BOOL("zba", ext_zba, true),
-> -    MULTI_EXT_CFG_BOOL("zbb", ext_zbb, true),
-> -    MULTI_EXT_CFG_BOOL("zbc", ext_zbc, true),
-> -    MULTI_EXT_CFG_BOOL("zbkb", ext_zbkb, false),
-> -    MULTI_EXT_CFG_BOOL("zbkc", ext_zbkc, false),
-> -    MULTI_EXT_CFG_BOOL("zbkx", ext_zbkx, false),
-> -    MULTI_EXT_CFG_BOOL("zbs", ext_zbs, true),
-> -    MULTI_EXT_CFG_BOOL("zk", ext_zk, false),
-> -    MULTI_EXT_CFG_BOOL("zkn", ext_zkn, false),
-> -    MULTI_EXT_CFG_BOOL("zknd", ext_zknd, false),
-> -    MULTI_EXT_CFG_BOOL("zkne", ext_zkne, false),
-> -    MULTI_EXT_CFG_BOOL("zknh", ext_zknh, false),
-> -    MULTI_EXT_CFG_BOOL("zkr", ext_zkr, false),
-> -    MULTI_EXT_CFG_BOOL("zks", ext_zks, false),
-> -    MULTI_EXT_CFG_BOOL("zksed", ext_zksed, false),
-> -    MULTI_EXT_CFG_BOOL("zksh", ext_zksh, false),
-> -    MULTI_EXT_CFG_BOOL("zkt", ext_zkt, false),
-> -    MULTI_EXT_CFG_BOOL("ztso", ext_ztso, false),
-> -
-> -    MULTI_EXT_CFG_BOOL("zdinx", ext_zdinx, false),
-> -    MULTI_EXT_CFG_BOOL("zfinx", ext_zfinx, false),
-> -    MULTI_EXT_CFG_BOOL("zhinx", ext_zhinx, false),
-> -    MULTI_EXT_CFG_BOOL("zhinxmin", ext_zhinxmin, false),
-> -
-> -    MULTI_EXT_CFG_BOOL("zicbom", ext_zicbom, true),
-> -    MULTI_EXT_CFG_BOOL("zicbop", ext_zicbop, true),
-> -    MULTI_EXT_CFG_BOOL("zicboz", ext_zicboz, true),
-> -
-> -    MULTI_EXT_CFG_BOOL("zmmul", ext_zmmul, false),
-> -
-> -    MULTI_EXT_CFG_BOOL("zca", ext_zca, false),
-> -    MULTI_EXT_CFG_BOOL("zcb", ext_zcb, false),
-> -    MULTI_EXT_CFG_BOOL("zcd", ext_zcd, false),
-> -    MULTI_EXT_CFG_BOOL("zce", ext_zce, false),
-> -    MULTI_EXT_CFG_BOOL("zcf", ext_zcf, false),
-> -    MULTI_EXT_CFG_BOOL("zcmp", ext_zcmp, false),
-> -    MULTI_EXT_CFG_BOOL("zcmt", ext_zcmt, false),
-> -    MULTI_EXT_CFG_BOOL("zicond", ext_zicond, false),
-> -    MULTI_EXT_CFG_BOOL("zclsd", ext_zclsd, false),
-> -
-> -    /* Vector cryptography extensions */
-> -    MULTI_EXT_CFG_BOOL("zvbb", ext_zvbb, false),
-> -    MULTI_EXT_CFG_BOOL("zvbc", ext_zvbc, false),
-> -    MULTI_EXT_CFG_BOOL("zvkb", ext_zvkb, false),
-> -    MULTI_EXT_CFG_BOOL("zvkg", ext_zvkg, false),
-> -    MULTI_EXT_CFG_BOOL("zvkned", ext_zvkned, false),
-> -    MULTI_EXT_CFG_BOOL("zvknha", ext_zvknha, false),
-> -    MULTI_EXT_CFG_BOOL("zvknhb", ext_zvknhb, false),
-> -    MULTI_EXT_CFG_BOOL("zvksed", ext_zvksed, false),
-> -    MULTI_EXT_CFG_BOOL("zvksh", ext_zvksh, false),
-> -    MULTI_EXT_CFG_BOOL("zvkt", ext_zvkt, false),
-> -    MULTI_EXT_CFG_BOOL("zvkn", ext_zvkn, false),
-> -    MULTI_EXT_CFG_BOOL("zvknc", ext_zvknc, false),
-> -    MULTI_EXT_CFG_BOOL("zvkng", ext_zvkng, false),
-> -    MULTI_EXT_CFG_BOOL("zvks", ext_zvks, false),
-> -    MULTI_EXT_CFG_BOOL("zvksc", ext_zvksc, false),
-> -    MULTI_EXT_CFG_BOOL("zvksg", ext_zvksg, false),
-> -
-> -    { },
-> -};
-> -
-> -const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[] =3D {
-> -    MULTI_EXT_CFG_BOOL("xtheadba", ext_xtheadba, false),
-> -    MULTI_EXT_CFG_BOOL("xtheadbb", ext_xtheadbb, false),
-> -    MULTI_EXT_CFG_BOOL("xtheadbs", ext_xtheadbs, false),
-> -    MULTI_EXT_CFG_BOOL("xtheadcmo", ext_xtheadcmo, false),
-> -    MULTI_EXT_CFG_BOOL("xtheadcondmov", ext_xtheadcondmov, false),
-> -    MULTI_EXT_CFG_BOOL("xtheadfmemidx", ext_xtheadfmemidx, false),
-> -    MULTI_EXT_CFG_BOOL("xtheadfmv", ext_xtheadfmv, false),
-> -    MULTI_EXT_CFG_BOOL("xtheadmac", ext_xtheadmac, false),
-> -    MULTI_EXT_CFG_BOOL("xtheadmemidx", ext_xtheadmemidx, false),
-> -    MULTI_EXT_CFG_BOOL("xtheadmempair", ext_xtheadmempair, false),
-> -    MULTI_EXT_CFG_BOOL("xtheadsync", ext_xtheadsync, false),
-> -    MULTI_EXT_CFG_BOOL("xventanacondops", ext_XVentanaCondOps, false),
-> -    MULTI_EXT_CFG_BOOL("xmipscbop", ext_xmipscbop, false),
-> -    MULTI_EXT_CFG_BOOL("xmipscmov", ext_xmipscmov, false),
-> -    MULTI_EXT_CFG_BOOL("xmipslsp", ext_xmipslsp, false),
-> -    MULTI_EXT_CFG_BOOL("xlrbr", ext_xlrbr, false),
-> -
-> -    { },
-> -};
-> -
-> -/* These are experimental so mark with 'x-' */
-> -const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] =3D {
-> -    MULTI_EXT_CFG_BOOL("x-svukte", ext_svukte, false),
-> -
-> -    { },
-> -};
-> -
->  static void cpu_set_prop_err(RISCVCPU *cpu, const char *propname,
->                               Error **errp)
->  {
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 46bc29d307..3a91fe5f91 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -983,16 +983,6 @@ bool isa_ext_is_enabled(RISCVCPU *cpu, uint32_t ext_=
-offset);
->  void riscv_cpu_set_misa_ext(CPURISCVState *env, uint32_t ext);
->  bool riscv_cpu_is_vendor(Object *cpu_obj);
->
-> -typedef struct RISCVCPUMultiExtConfig {
-> -    const char *name;
-> -    uint32_t offset;
-> -    bool enabled;
-> -} RISCVCPUMultiExtConfig;
-> -
-> -extern const RISCVCPUMultiExtConfig riscv_cpu_extensions[];
-> -extern const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[];
-> -extern const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[];
-> -
->  typedef struct isa_ext_data {
->      const char *name;
->      const char *prop_name;
-> --
-> 2.43.0
->
->
+>   MAINTAINERS                              |   1 +
+>   hw/arm/aspeed_ast2600_fby4.c             |   4 +-
+>   hw/sensor/max31790.c                     | 501 +++++++++++++++++++++++
+>   hw/arm/Kconfig                           |   1 +
+>   hw/sensor/Kconfig                        |   4 +
+>   hw/sensor/meson.build                    |   1 +
+>   hw/sensor/trace-events                   |   8 +
+>   tests/functional/arm/test_aspeed_fby4.py |  18 +
+>   8 files changed, 536 insertions(+), 2 deletions(-)
+>   create mode 100644 hw/sensor/max31790.c
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 80d28e618d..dc0cdb4089 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -3986,6 +3986,7 @@ S: Maintained
+>   F: hw/i2c/pmbus_device.c
+>   F: hw/sensor/adm1272.c
+>   F: hw/sensor/isl_pmbus_vr.c
+> +F: hw/sensor/max31790.c
+>   F: hw/sensor/max34451.c
+>   F: include/hw/i2c/pmbus_device.h
+>   F: include/hw/sensor/isl_pmbus_vr.h
+> diff --git a/hw/arm/aspeed_ast2600_fby4.c b/hw/arm/aspeed_ast2600_fby4.c
+> index 89fb0ac2fd..1f391022a2 100644
+> --- a/hw/arm/aspeed_ast2600_fby4.c
+> +++ b/hw/arm/aspeed_ast2600_fby4.c
+> @@ -164,7 +164,7 @@ static void fby4_i2c_init_fanboard(I2CSlave *fan_mux, size_t eepromSize)
+>           /* TODO */
+>   
+>           /* maxim,max31790 @ 0x20   (pwm) */
+> -        /* TODO */
+> +        i2c_slave_create_simple(bus, "max31790", 0x20);
+>   
+>           /*
+>            * ti,tca6424 @ 0x22       (gpio)
+> @@ -182,7 +182,7 @@ static void fby4_i2c_init_fanboard(I2CSlave *fan_mux, size_t eepromSize)
+>            */
+>   
+>           /* maxim,max31790 @ 0x2f   (pwm) */
+> -        /* TODO */
+> +        i2c_slave_create_simple(bus, "max31790", 0x2f);
+>   
+>           /* maxim,max11615 @ 0x33   (adc) */
+>           /* TODO */
+> diff --git a/hw/sensor/max31790.c b/hw/sensor/max31790.c
+> new file mode 100644
+> index 0000000000..30bab2e74e
+> --- /dev/null
+> +++ b/hw/sensor/max31790.c
+> @@ -0,0 +1,501 @@
+> +/*
+> + * Maxim MAX31790 PMBus 6-Channel Fan Controller
+> + *
+> + * Datasheet:
+> + * https://www.analog.com/media/en/technical-documentation/data-sheets/MAX31790.pdf
+> + *
+> + * Copyright 2026 9elements
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/log.h"
+> +#include "hw/i2c/i2c.h"
+> +#include "qapi/error.h"
+> +#include "qapi/visitor.h"
+> +#include "migration/vmstate.h"
+> +#include "qemu/module.h"
+> +#include "qom/object.h"
+> +#include "trace.h"
+> +
+> +#define TYPE_MAX31790 "max31790"
+> +
+> +#define MAX31790_NUM_FANS 6
+> +#define MAX31790_NUM_TACHS 12
+> +
+> +#define MAX31790_REG_GLOBAL_CONFIG 0x00
+> +#define MAX31790_REG_PWM_FREQ 0x01
+> +
+> +/* 0x02 to 0x07: N = 0 .. 5 */
+> +#define MAX31790_REG_FAN_CONFIG(N) (0x02 + N)
+> +
+> +/* 0x08 to 0x0d: N = 0 .. 5 */
+> +#define MAX31790_REG_FAN_DYNAMICS(N) (0x08 + N)
+> +
+> +#define MAX31790_REG_FAN_FAULT_STATUS_2 0x10
+> +#define MAX31790_REG_FAN_FAULT_STATUS_1 0x11
+> +#define MAX31790_REG_FAN_FAULT_MASK_2 0x12
+> +#define MAX31790_REG_FAN_FAULT_MASK_1 0x13
+> +#define MAX31790_REG_FAILED_FAN_OPT 0x14
+> +
+> +/* 0x18 to 0x2f: N = 0 .. 11 */
+> +#define MAX31790_REG_TACH_COUNT_MSB(N) (0x18 + 2 * N)
+> +#define MAX31790_REG_TACH_COUNT_LSB(N) (0x19 + 2 * N)
+> +
+> +/* 0x30 to 0x3b: N = 0 .. 5 */
+> +#define MAX31790_REG_PWM_DUTY_CYCLE_MSB(N) (0x30 + 2 * N)
+> +#define MAX31790_REG_PWM_DUTY_CYCLE_LSB(N) (0x31 + 2 * N)
+> +
+> +/* .. reserved registers ... */
+> +
+> +/* 0x40 to 0x4b: N = 0 .. 5 */
+> +#define MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(N) (0x40 + 2 * N)
+> +#define MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(N) (0x41 + 2 * N)
+> +
+> +/* ... 'User Byte' registers ... */
+> +
+> +/* 0x50 to 0x5b: N = 0 .. 5 */
+> +#define MAX31790_REG_TACH_TARGET_COUNT_MSB(N) (0x50 + 2 * N)
+> +#define MAX31790_REG_TACH_TARGET_COUNT_LSB(N) (0x51 + 2 * N)
+> +
+> +struct MAX31790State {
+> +    I2CSlave i2c;
+> +
+> +    uint8_t fan_config[MAX31790_NUM_FANS];
+> +    uint8_t fan_dynamics[MAX31790_NUM_FANS];
+> +
+> +    uint16_t pwm[MAX31790_NUM_FANS];
+> +    uint16_t tach_target[MAX31790_NUM_FANS];
+> +    uint16_t rpm[MAX31790_NUM_TACHS];
+> +
+> +    /* command buffer */
+> +    uint8_t len;
+> +    uint8_t buf[2];
+> +
+> +    /* output buffer */
+> +    uint8_t outlen;
+> +    uint8_t outbuf[2];
+> +
+> +    /* selected register for read/write operation */
+> +    uint8_t pointer;
+> +};
+> +
+> +struct MAX31790Class {
+> +    I2CSlaveClass parent_class;
+> +};
+> +
+> +OBJECT_DECLARE_TYPE(MAX31790State, MAX31790Class, MAX31790)
+> +
+> +static void max31790_read(MAX31790State *s)
+> +{
+> +    size_t index = 0;
+> +    uint8_t out0 = 0;
+> +    uint8_t out1 = 0;
+> +
+> +    switch (s->pointer) {
+> +    case MAX31790_REG_FAN_CONFIG(0):
+> +    case MAX31790_REG_FAN_CONFIG(1):
+> +    case MAX31790_REG_FAN_CONFIG(2):
+> +    case MAX31790_REG_FAN_CONFIG(3):
+> +    case MAX31790_REG_FAN_CONFIG(4):
+> +    case MAX31790_REG_FAN_CONFIG(5):
+> +        out0 = s->fan_config[s->pointer - MAX31790_REG_FAN_CONFIG(0)];
+> +        break;
+> +    case MAX31790_REG_FAN_DYNAMICS(0):
+> +    case MAX31790_REG_FAN_DYNAMICS(1):
+> +    case MAX31790_REG_FAN_DYNAMICS(2):
+> +    case MAX31790_REG_FAN_DYNAMICS(3):
+> +    case MAX31790_REG_FAN_DYNAMICS(4):
+> +    case MAX31790_REG_FAN_DYNAMICS(5):
+> +        out0 = s->fan_dynamics[s->pointer - MAX31790_REG_FAN_DYNAMICS(0)];
+> +        break;
+> +    case MAX31790_REG_FAN_FAULT_STATUS_1:
+> +    case MAX31790_REG_FAN_FAULT_STATUS_2:
+> +        /* we do not have any fan fault */
+> +        out0 = 0x00;
+> +        out1 = 0x00;
+> +        break;
+> +    case MAX31790_REG_TACH_COUNT_MSB(0):
+> +    case MAX31790_REG_TACH_COUNT_MSB(1):
+> +    case MAX31790_REG_TACH_COUNT_MSB(2):
+> +    case MAX31790_REG_TACH_COUNT_MSB(3):
+> +    case MAX31790_REG_TACH_COUNT_MSB(4):
+> +    case MAX31790_REG_TACH_COUNT_MSB(5):
+> +    case MAX31790_REG_TACH_COUNT_MSB(6):
+> +    case MAX31790_REG_TACH_COUNT_MSB(7):
+> +    case MAX31790_REG_TACH_COUNT_MSB(8):
+> +    case MAX31790_REG_TACH_COUNT_MSB(9):
+> +    case MAX31790_REG_TACH_COUNT_MSB(10):
+> +    case MAX31790_REG_TACH_COUNT_MSB(11):
+> +        index = (s->pointer - MAX31790_REG_TACH_COUNT_MSB(0)) / 2;
+> +        out0 = (s->rpm[index] >> 8) & 0xff;
+> +        out1 = s->rpm[index] & 0xff;
+> +        break;
+> +
+> +    case MAX31790_REG_TACH_COUNT_LSB(0):
+> +    case MAX31790_REG_TACH_COUNT_LSB(1):
+> +    case MAX31790_REG_TACH_COUNT_LSB(2):
+> +    case MAX31790_REG_TACH_COUNT_LSB(3):
+> +    case MAX31790_REG_TACH_COUNT_LSB(4):
+> +    case MAX31790_REG_TACH_COUNT_LSB(5):
+> +    case MAX31790_REG_TACH_COUNT_LSB(6):
+> +    case MAX31790_REG_TACH_COUNT_LSB(7):
+> +    case MAX31790_REG_TACH_COUNT_LSB(8):
+> +    case MAX31790_REG_TACH_COUNT_LSB(9):
+> +    case MAX31790_REG_TACH_COUNT_LSB(10):
+> +    case MAX31790_REG_TACH_COUNT_LSB(11):
+> +        index = (s->pointer - MAX31790_REG_TACH_COUNT_LSB(0)) / 2;
+> +        out0 = s->rpm[index] & 0xff;
+> +        break;
+> +
+> +    case MAX31790_REG_PWM_DUTY_CYCLE_MSB(0):
+> +    case MAX31790_REG_PWM_DUTY_CYCLE_MSB(1):
+> +    case MAX31790_REG_PWM_DUTY_CYCLE_MSB(2):
+> +    case MAX31790_REG_PWM_DUTY_CYCLE_MSB(3):
+> +    case MAX31790_REG_PWM_DUTY_CYCLE_MSB(4):
+> +    case MAX31790_REG_PWM_DUTY_CYCLE_MSB(5):
+> +        index = (s->pointer - MAX31790_REG_PWM_DUTY_CYCLE_MSB(0)) / 2;
+> +        out0 = (s->pwm[index] >> 8) & 0xff;
+> +        out1 = s->pwm[index] & 0xff;
+> +        break;
+> +    case MAX31790_REG_PWM_DUTY_CYCLE_LSB(0):
+> +    case MAX31790_REG_PWM_DUTY_CYCLE_LSB(1):
+> +    case MAX31790_REG_PWM_DUTY_CYCLE_LSB(2):
+> +    case MAX31790_REG_PWM_DUTY_CYCLE_LSB(3):
+> +    case MAX31790_REG_PWM_DUTY_CYCLE_LSB(4):
+> +    case MAX31790_REG_PWM_DUTY_CYCLE_LSB(5):
+> +        index = (s->pointer - MAX31790_REG_PWM_DUTY_CYCLE_LSB(0)) / 2;
+> +        out0 = s->pwm[index] & 0xff;
+> +        break;
+> +
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(0):
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(1):
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(2):
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(3):
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(4):
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(5):
+> +        index = (s->pointer - MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(0)) / 2;
+> +        out0 = (s->pwm[index] >> 8) & 0xff;
+> +        out1 = s->pwm[index] & 0xff;
+> +        break;
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(0):
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(1):
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(2):
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(3):
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(4):
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(5):
+> +        index = (s->pointer - MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(0)) / 2;
+> +        out0 = s->pwm[index] & 0xff;
+> +        break;
+> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(0):
+> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(1):
+> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(2):
+> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(3):
+> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(4):
+> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(5):
+> +        index = (s->pointer - MAX31790_REG_TACH_TARGET_COUNT_MSB(0)) / 2;
+> +        out0 = (s->tach_target[index] >> 8) & 0xff;
+> +        out1 = s->tach_target[index] & 0xff;
+> +        break;
+> +    case MAX31790_REG_TACH_TARGET_COUNT_LSB(0):
+> +    case MAX31790_REG_TACH_TARGET_COUNT_LSB(1):
+> +    case MAX31790_REG_TACH_TARGET_COUNT_LSB(2):
+> +    case MAX31790_REG_TACH_TARGET_COUNT_LSB(3):
+> +    case MAX31790_REG_TACH_TARGET_COUNT_LSB(4):
+> +    case MAX31790_REG_TACH_TARGET_COUNT_LSB(5):
+> +        index = (s->pointer - MAX31790_REG_TACH_TARGET_COUNT_LSB(0)) / 2;
+> +        out0 = s->tach_target[index] & 0xff;
+> +        break;
+> +    default:
+> +        qemu_log_mask(LOG_UNIMP, "%s: read of register %d", __func__,
+
+This log event lacks the trailing newline. same for the other ones.
+
+> +                      s->pointer);
+> +        break;
+> +    }
+> +
+> +    s->outbuf[0] = out0;
+> +    s->outbuf[1] = out1;
+> +}
+> +
+> +static void max31790_set_rpm(MAX31790State *s, size_t index, uint16_t rpm)
+> +{
+> +    /* datasheet: lowest 5 bits are 0 */
+> +    s->rpm[index] = rpm & ~0b11111;
+> +}
+> +
+> +static void max31790_pwm_write(MAX31790State *s, size_t index, uint16_t value)
+> +{
+> +    trace_max31790_pwm_write(s->i2c.address, index, value);
+> +
+> +    s->pwm[index] = value;
+> +
+> +    /* change rpm based on pwm input */
+> +    const uint16_t pwm_no_reserve = s->pwm[index] >> 7;
+> +
+> +    /*
+> +     * This formula has magic values which model the relationship
+> +     * of PWM input to a fan. Not derived from datasheet.
+> +     */
+> +    max31790_set_rpm(s, index, 0x1000 + (pwm_no_reserve << 3));
+> +}
+> +
+> +static void max31790_write_2_byte(MAX31790State *s)
+> +{
+> +    size_t index = 0;
+> +    const uint8_t value0 = s->buf[0];
+> +    const uint8_t value1 = s->buf[1];
+> +
+> +    switch (s->pointer) {
+> +    case MAX31790_REG_FAN_CONFIG(0):
+> +    case MAX31790_REG_FAN_CONFIG(1):
+> +    case MAX31790_REG_FAN_CONFIG(2):
+> +    case MAX31790_REG_FAN_CONFIG(3):
+> +    case MAX31790_REG_FAN_CONFIG(4):
+> +    case MAX31790_REG_FAN_CONFIG(5):
+> +        break; /* handled by one byte write */
+> +    case MAX31790_REG_FAN_DYNAMICS(0):
+> +    case MAX31790_REG_FAN_DYNAMICS(1):
+> +    case MAX31790_REG_FAN_DYNAMICS(2):
+> +    case MAX31790_REG_FAN_DYNAMICS(3):
+> +    case MAX31790_REG_FAN_DYNAMICS(4):
+> +    case MAX31790_REG_FAN_DYNAMICS(5):
+> +        break; /* handled by one byte write */
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(0):
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(1):
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(2):
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(3):
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(4):
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(5):
+> +        index = (s->pointer - MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(0)) / 2;
+> +        max31790_pwm_write(s, index, value0 << 8 | value1);
+> +        break;
+> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(0):
+> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(1):
+> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(2):
+> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(3):
+> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(4):
+> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(5):
+> +        index = (s->pointer - MAX31790_REG_TACH_TARGET_COUNT_MSB(0)) / 2;
+> +        s->tach_target[index] = (value0 << 8) | value1;
+> +        break;
+> +    default:
+> +        qemu_log_mask(LOG_UNIMP, "%s: write to register %d", __func__,
+> +                      s->pointer);
+> +        break;
+> +    }
+> +}
+> +
+> +static void max31790_write_1_byte(MAX31790State *s)
+> +{
+> +
+
+extra new line above.
+
+> +    size_t index = 0;
+> +    uint16_t pwm = 0;
+> +    const uint8_t value = s->buf[0];
+
+please add a new line here.
+
+> +    switch (s->pointer) {
+> +    case MAX31790_REG_FAN_CONFIG(0):
+> +    case MAX31790_REG_FAN_CONFIG(1):
+> +    case MAX31790_REG_FAN_CONFIG(2):
+> +    case MAX31790_REG_FAN_CONFIG(3):
+> +    case MAX31790_REG_FAN_CONFIG(4):
+> +    case MAX31790_REG_FAN_CONFIG(5):
+> +        s->fan_config[s->pointer - MAX31790_REG_FAN_CONFIG(0)] = value;
+> +        break;
+> +    case MAX31790_REG_FAN_DYNAMICS(0):
+> +    case MAX31790_REG_FAN_DYNAMICS(1):
+> +    case MAX31790_REG_FAN_DYNAMICS(2):
+> +    case MAX31790_REG_FAN_DYNAMICS(3):
+> +    case MAX31790_REG_FAN_DYNAMICS(4):
+> +    case MAX31790_REG_FAN_DYNAMICS(5):
+> +        s->fan_dynamics[s->pointer - MAX31790_REG_FAN_DYNAMICS(0)] = value;
+> +        break;
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(0):
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(1):
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(2):
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(3):
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(4):
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(5):
+> +        index = (s->pointer - MAX31790_REG_PWM_TARGET_DUTY_CYCLE_MSB(0)) / 2;
+> +        pwm = (value << 8) | (s->pwm[index] & 0x00ff);
+> +        max31790_pwm_write(s, index, pwm);
+> +        break;
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(0):
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(1):
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(2):
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(3):
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(4):
+> +    case MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(5):
+> +        index = (s->pointer - MAX31790_REG_PWM_TARGET_DUTY_CYCLE_LSB(0)) / 2;
+> +        pwm = (s->pwm[index] & 0xff00) | (value & 0x00ff);
+> +        max31790_pwm_write(s, index, pwm);
+> +        break;
+> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(0):
+> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(1):
+> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(2):
+> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(3):
+> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(4):
+> +    case MAX31790_REG_TACH_TARGET_COUNT_MSB(5):
+> +        index = (s->pointer - MAX31790_REG_TACH_TARGET_COUNT_MSB(0)) / 2;
+> +        s->tach_target[index] = (s->tach_target[index] & 0x00ff) | (value << 8);
+> +        break;
+> +    case MAX31790_REG_TACH_TARGET_COUNT_LSB(0):
+> +    case MAX31790_REG_TACH_TARGET_COUNT_LSB(1):
+> +    case MAX31790_REG_TACH_TARGET_COUNT_LSB(2):
+> +    case MAX31790_REG_TACH_TARGET_COUNT_LSB(3):
+> +    case MAX31790_REG_TACH_TARGET_COUNT_LSB(4):
+> +    case MAX31790_REG_TACH_TARGET_COUNT_LSB(5):
+> +        index = (s->pointer - MAX31790_REG_TACH_TARGET_COUNT_LSB(0)) / 2;
+> +        s->tach_target[index] = (s->tach_target[index] & 0xff00) | value;
+> +        break;
+> +    default:
+> +        qemu_log_mask(LOG_UNIMP, "%s: write to register %d", __func__,
+> +                      s->pointer);
+> +        break;
+> +    }
+> +}
+> +
+> +static int max31790_send(I2CSlave *i2c, uint8_t data)
+> +{
+> +    MAX31790State *s = MAX31790(i2c);
+> +
+> +    trace_max31790_send(s->i2c.address, data);
+> +
+> +    if (s->len == 0) {
+> +        /* first byte is the register pointer for a read / write operation */
+> +        s->pointer = data;
+> +        s->len++;
+> +        return 0;
+> +    }
+> +
+> +    if (s->len > 2) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: write too many bytes", __func__);
+> +        return 1; /* NAK */
+> +    }
+> +
+> +    /* second / third byte is the data to write */
+> +    s->buf[s->len - 1] = data;
+> +    s->len++;
+> +
+> +    if (s->len == 2) {
+> +        max31790_write_1_byte(s);
+> +    } else if (s->len == 3) {
+> +        max31790_write_2_byte(s);
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +static uint8_t max31790_recv(I2CSlave *i2c)
+> +{
+> +    MAX31790State *s = MAX31790(i2c);
+> +    trace_max31790_recv(s->i2c.address, s->pointer);
+> +
+> +    max31790_read(s);
+> +    s->len = 0;
+> +
+> +    if (s->outlen >= 2) {
+> +        /* error */
+
+Does this condition deserve a qemu_log_mask(LOG_GUEST_ERROR, )  ?
+
+
+> +        s->outlen = 0;
+> +    }
+> +
+> +    const uint8_t data = s->outbuf[s->outlen++];
+> +
+> +    trace_max31790_recv_return(s->i2c.address, data);
+> +    return data;
+> +}
+> +
+> +static int max31790_event(I2CSlave *i2c, enum i2c_event event)
+> +{
+> +    MAX31790State *s = MAX31790(i2c);
+> +
+> +    trace_max31790_event(s->i2c.address, event);
+> +
+> +    switch (event) {
+> +    case I2C_START_RECV:
+> +        s->outlen = 0;
+> +        break;
+> +    case I2C_START_SEND:
+> +        s->len = 0;
+> +        break;
+> +    default:
+> +        break;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +static const VMStateDescription vmstate_max31790 = {
+> +    .name = TYPE_MAX31790,
+> +    .version_id = 0,
+> +    .minimum_version_id = 0,
+> +    .fields =
+> +        (const VMStateField[]){
+> +            VMSTATE_UINT8(len, MAX31790State),
+> +            VMSTATE_UINT8_ARRAY(fan_config, MAX31790State, MAX31790_NUM_FANS),
+> +            VMSTATE_UINT8_ARRAY(fan_dynamics, MAX31790State, MAX31790_NUM_FANS),
+> +            VMSTATE_UINT16_ARRAY(pwm, MAX31790State, MAX31790_NUM_FANS),
+> +            VMSTATE_UINT16_ARRAY(tach_target, MAX31790State, MAX31790_NUM_FANS),
+> +            VMSTATE_UINT16_ARRAY(rpm, MAX31790State, MAX31790_NUM_TACHS),
+> +            VMSTATE_UINT8_ARRAY(buf, MAX31790State, 2),
+> +            VMSTATE_UINT8(outlen, MAX31790State),
+> +            VMSTATE_UINT8_ARRAY(outbuf, MAX31790State, 2),
+> +            VMSTATE_UINT8(pointer, MAX31790State),
+> +            VMSTATE_I2C_SLAVE(i2c, MAX31790State), VMSTATE_END_OF_LIST() }
+> +};
+> +
+> +static void max31790_reset(DeviceState *dev)
+> +{
+> +    MAX31790State *s = MAX31790(dev);
+> +
+> +    for (int i = 0; i < MAX31790_NUM_FANS; i++) {
+> +        /* POR-State 0b 0XX0 0000 */
+> +        s->fan_config[i] = 0b00000000;
+> +
+> +        /* same as POR-State */
+> +        s->tach_target[i] = 0b0011110000000000;
+> +
+> +        /* same as POR-State */
+> +        s->fan_dynamics[i] = 0b01001100;
+> +
+> +        s->pwm[i] = 0;
+> +    }
+> +
+> +    for (int i = 0; i < MAX31790_NUM_TACHS; i++) {
+> +        max31790_set_rpm(s, i, 0x4444);
+> +    }
+> +}
+> +
+> +static void max31790_realize(DeviceState *dev, Error **errp)
+> +{
+> +    MAX31790State *s = MAX31790(dev);
+> +
+> +    trace_max31790_realize(s->i2c.address);
+> +}
+> +
+> +static void max31790_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +    I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
+> +
+> +    dc->realize = max31790_realize;
+> +    dc->desc = "Maxim MAX31790 6-Channel Fan Controller";
+> +    dc->vmsd = &vmstate_max31790;
+> +    dc->legacy_reset = max31790_reset;
+> +    k->event = max31790_event;
+> +    k->recv = max31790_recv;
+> +    k->send = max31790_send;
+> +}
+> +
+> +static const TypeInfo max31790_info = {
+> +    .name = TYPE_MAX31790,
+> +    .parent = TYPE_I2C_SLAVE,
+> +    .instance_size = sizeof(MAX31790State),
+> +    .class_size = sizeof(MAX31790Class),
+> +    .class_init = max31790_class_init,
+> +};
+> +
+> +static void max31790_register_types(void)
+> +{
+> +    type_register_static(&max31790_info);
+> +}
+> +
+> +type_init(max31790_register_types)
+> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+> index 5b198402d5..99864eb878 100644
+> --- a/hw/arm/Kconfig
+> +++ b/hw/arm/Kconfig
+> @@ -552,6 +552,7 @@ config ASPEED_SOC
+>       select LED
+>       select PMBUS
+>       select MAX31785
+> +    select MAX31790
+>       select FSI_APB2OPB_ASPEED
+>       select AT24C
+>       select PCI_EXPRESS
+> diff --git a/hw/sensor/Kconfig b/hw/sensor/Kconfig
+> index bc6331b4ab..ece2f2b167 100644
+> --- a/hw/sensor/Kconfig
+> +++ b/hw/sensor/Kconfig
+> @@ -43,3 +43,7 @@ config ISL_PMBUS_VR
+>   config MAX31785
+>       bool
+>       depends on PMBUS
+> +
+> +config MAX31790
+> +    bool
+> +    depends on PMBUS
+
+I think it should be
+
+   depends on I2C
+
+same for MAX31785 probably.
+
+
+> diff --git a/hw/sensor/meson.build b/hw/sensor/meson.build
+> index 420fdc3359..4987c3b253 100644
+> --- a/hw/sensor/meson.build
+> +++ b/hw/sensor/meson.build
+> @@ -8,3 +8,4 @@ system_ss.add(when: 'CONFIG_MAX34451', if_true: files('max34451.c'))
+>   system_ss.add(when: 'CONFIG_LSM303DLHC_MAG', if_true: files('lsm303dlhc_mag.c'))
+>   system_ss.add(when: 'CONFIG_ISL_PMBUS_VR', if_true: files('isl_pmbus_vr.c'))
+>   system_ss.add(when: 'CONFIG_MAX31785', if_true: files('max31785.c'))
+> +system_ss.add(when: 'CONFIG_MAX31790', if_true: files('max31790.c'))
+> diff --git a/hw/sensor/trace-events b/hw/sensor/trace-events
+> index a3fe54fa6d..c15c0a7e93 100644
+> --- a/hw/sensor/trace-events
+> +++ b/hw/sensor/trace-events
+> @@ -4,3 +4,11 @@
+>   tmp105_read(uint8_t dev, uint8_t addr) "device: 0x%02x, addr: 0x%02x"
+>   tmp105_write(uint8_t dev, uint8_t addr) "device: 0x%02x, addr 0x%02x"
+>   tmp105_write_shutdown(uint8_t dev) "device: 0x%02x"
+> +
+> +# max31790.c
+> +max31790_send(uint8_t i2c_addr, uint8_t send) "i2c_addr: 0x%02x, data: 0x%02x"
+> +max31790_recv(uint8_t i2c_addr, uint8_t reg_addr) "i2c_addr: 0x%02x, reg_addr: 0x%02x"
+> +max31790_recv_return(uint8_t i2c_addr, uint8_t data) "i2c_addr: 0x%02x, returns: 0x%02x"
+> +max31790_event(uint8_t i2c_addr, uint8_t event) "i2c_addr: 0x%02x, event: 0x%02x"
+> +max31790_realize(uint8_t i2c_addr) "i2c_addr: 0x%02x"
+> +max31790_pwm_write(uint8_t i2c_addr, size_t index, uint16_t value) "i2c_addr: 0x%02x, index: %zu, value: 0x%04x"
+> diff --git a/tests/functional/arm/test_aspeed_fby4.py b/tests/functional/arm/test_aspeed_fby4.py
+> index a3124c240f..d29423add7 100755
+> --- a/tests/functional/arm/test_aspeed_fby4.py
+> +++ b/tests/functional/arm/test_aspeed_fby4.py
+> @@ -7,6 +7,8 @@
+>   from qemu_test import Asset
+>   from aspeed import AspeedTest
+>   
+> +from qemu_test import wait_for_console_pattern, exec_command
+
+
+I don't see exec_command called below.
+
+Thanks,
+
+C.
+
+
+> +from qemu_test import exec_command_and_wait_for_pattern
+>   
+>   class YosemiteV4Machine(AspeedTest):
+>   
+> @@ -33,6 +35,22 @@ def do_test_arm_aspeed_openbmc_no_network(self, machine, image, uboot,
+>           # different from the other machines.
+>           self.wait_for_console_pattern('yosemite4 login:')
+>   
+> +        # perform login
+> +        exec_command_and_wait_for_pattern(self,
+> +                                          "root", "Password:");
+> +
+> +        exec_command_and_wait_for_pattern(self, "0penBmc", "#");
+> +
+> +        # MAX31790 test
+> +        exec_command_and_wait_for_pattern(self,
+> +            "cat /sys/class/hwmon/hwmon2/name", "max31790");
+> +        exec_command_and_wait_for_pattern(self,
+> +            "cat /sys/class/hwmon/hwmon2/fan1_input", "4530");
+> +        exec_command_and_wait_for_pattern(self,
+> +            "cat /sys/class/hwmon/hwmon2/fan1_enable", "1");
+> +        exec_command_and_wait_for_pattern(self,
+> +            "cat /sys/class/hwmon/hwmon2/fan1_fault", "0");
+> +
+>       def test_arm_ast2600_yosemitev4_openbmc(self):
+>           image_path = self.uncompress(self.ASSET_YOSEMITE_V4_FLASH)
+>   
+
 
