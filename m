@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7155ACD4F54
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 23:34:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 550D0CD4F5B
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 23:36:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPTw0-000526-Lm; Tue, 19 May 2026 19:33:12 -0400
+	id 1wPTyg-0005fJ-KY; Tue, 19 May 2026 19:35:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPTvv-00051n-T9
- for qemu-devel@nongnu.org; Tue, 19 May 2026 19:33:07 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ id 1wPTye-0005ep-EN
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 19:35:57 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPTvt-0001i2-51
- for qemu-devel@nongnu.org; Tue, 19 May 2026 19:33:07 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-c82471904fcso1817551a12.2
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 16:33:04 -0700 (PDT)
+ id 1wPTyc-0002PU-Sj
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 19:35:56 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-837dfccd950so1928024b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 16:35:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779233583; x=1779838383; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779233753; x=1779838553; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=mQvOhXfj4HsiAVnhMkSqlbU7ZS1M+piFYKOTzQlthzY=;
- b=SFeBotECjQlVUpTD5hC14flBZ1KX3MFlU5Qk1NZ1ZeC/qp37r+w8wYZPzsUo9gyQiM
- vW1vhuEqZolElN/eSGRJcPs/SUh8uNJoORyaMTHGTCPjIFSEx1Imr50TDuXWLBRobAlX
- z5spets3UBTz5x8MG9gppeJbFuVlt9J8mANaAnqAMiuZVkuBVj2pXNK6feCorKyMN9gL
- AsE9fR3kmANu2oGToKP7XSiOC0EJPhiXIRImq6BU6dDedv1HGlAdTBDgk0MB0vkhk7OD
- t8UGGW6GPYWQVNDW6j5X2D2qN4oyGpAIWbMt5e+WeOGrYr9x/bLlokVr0/X8sKAOo77L
- mrNQ==
+ bh=hmp0CpG/IHRZbwhiBC218VOqIbzrm9kZ7PvKgUXAHok=;
+ b=NhzwTT9qer/W5Pk8jARtaIT4oJrLIfhnJmzjGIZz79KL7ScLhnfR7H/mEcDE5zfwBi
+ 3qWyinQCwjB6HaaeIKVM1PP8hqAf4OM886jxhBdcjvFZsGO353MLlp+NlP0Nx3l7jf7D
+ 1Y1F0CK8e7bGxtbvx1GMDBs7JXs760ew6fIgHmFiauw8tCcxXFhd6GGVeNXwg+VEvyD1
+ 0xiGApdPgttEGfbt7kjPABRXUrY323BcsK6WcPe0p5DSIYkcpksq/g8FqBQDuYKaOsYy
+ p7UgR6MNpwk6C/spAGE4SnQWpg41PmNtSltXwvQgXi/ojVORTdtoA4askejVTbTbvLPO
+ 0GBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779233583; x=1779838383;
+ d=1e100.net; s=20251104; t=1779233753; x=1779838553;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=mQvOhXfj4HsiAVnhMkSqlbU7ZS1M+piFYKOTzQlthzY=;
- b=aTpVUhJWUiv1k7sNwa/inxhJloSpbsax/213bPvWacdnepZ8Pn+Dp9JJf11HcSXxBN
- LCrvg/yG7lEP5UCXdQAogkL/lOkmqmydtK5MDcGPy4MaaM3PLOev0anAIJAzBVg4+2aP
- hsplKgIIxoPt31l/Nyre54RupfSlu6CsXNv6fzPTNiVza2OxIMFQj+qgZhk+7Bclg7tA
- BwxiLGWg8shs+mF7gwPmWRoFx7yN4npbe47UZ0QMXqi4q/UKgGsi5hWnXbjVWTjhIPk1
- 0D84PnAlKDSfrRoRwpFKEmrdnbCsrBpGfBGxY3GvLyUsQVC0jXY3xHaNh16q09T/n40O
- B0LA==
+ bh=hmp0CpG/IHRZbwhiBC218VOqIbzrm9kZ7PvKgUXAHok=;
+ b=KrpudvNagH1v4abfAiRQQ5r9rBSwASkHJQL0Po4ePGMzSyiqQzczzG7GaGe7hWTBy9
+ DX6B45DJRM4TfpJAbUpDCqW0accnPWdZz6986On7uJbzFaDWjM/E53s5sH1SzNKNAuwX
+ KxUs6uSV3dndrxS9Wr8rJKRPtbet7DoteSd1bXR/GE1V04GsbVazTlFVL91CUBsyseH6
+ E3vprj5KANogpcFnW/K0b+adbfWj8XwPd2H/8CEtdJsYWgvtoV85x+NNIl/MfdN4V3W+
+ dtnZJi04N3l4aEIvttGF7ZS4F76lPTBdEa9nIoBh23LA/1HGrBHIDL8Sg/195zKSL8M7
+ yn8A==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/Gb6oSKJWuSBc1NdD/uTvNUhIy5sRmv9DiNgt5BV+n2jsoSN1gVZskxTQKBvAJtvoy/s45MfL4Ucek@nongnu.org
-X-Gm-Message-State: AOJu0YxopaqBl3Vx2fX7oz4ZvVr8D5qex+nxtBGNFXpmJN5uRcZXRAGN
- GVUFpBV+5FgPc/YKSY1dxOxjvg5qQEbthLaftXygYV277H6sj0uFcJ2RIeSPOlY5b7g=
-X-Gm-Gg: Acq92OEWJ5701f5JU5PfA/c9ooFSYQi7u3/6FztsWM2jR+UlfO47YHpKJ4BjWsZ+7Zd
- DEYwHpdWF3bCx6WZeZAMyRYt3Gpv97ibG/E7bMBe20Y3nYQCJOGBWH5bfnZTLMtu6O8aAyaKpgb
- CTpC8E03vcnpUvWTMDzMSbfem/s8p2rY7YpCPUEXqB+GXqzc6Mbq8/mJbBdhDB4vYC7HOGYjpvh
- Iot2DQlilP72q0eyazY07V/PgcJXlLJZXHznF7+RNHIwdlfWsFw8JZ27JslcEN63x4BNl4QCllS
- vpUzw6uUWvTJ06tiR5gf407DuP9VY/02W2kMnflqdc8DOo2qvDH0GKLs8+aMUrqUMbpIOnWwsMA
- IQ6c2VAMdTFok529Ed5fWAAyzM8v8rp+booKL0sCf4YYgntiM+wd1BHHvPDNdZBDJdTWhj0Dhna
- Y+YQ14wxsmfhJMqvFu1+y52T69q3sKc7/4g3Bh
-X-Received: by 2002:a17:903:1a26:b0:2ba:5f24:cae2 with SMTP id
- d9443c01a7336-2bd7e9dc136mr227506005ad.35.1779233582987; 
- Tue, 19 May 2026 16:33:02 -0700 (PDT)
+ AFNElJ9Ag0dFA0fcOq50DWaQBhiJMQmpOJ050gjoLy7Kk6cPNvI4/8p6ZOrD5DctMYKHiozwSjBjoL9JmbFG@nongnu.org
+X-Gm-Message-State: AOJu0Yy9TuoEB/LNgZsxZe1ZVLXJWgQ1TRWqHkDDS5jFU7eLYRPg9zlp
+ 4qct98l4AeoNWQ8G8WWk6WLGeC4sR5uyYDfIi8EQgm57zMF2OJmQssuT/Vt19vLPX+A=
+X-Gm-Gg: Acq92OHbKb4E80nko/fOe9PA53VP/kjiT8tMpyUeVIXH/DO0nQgxH1lzmaCjIaoL/C3
+ gF0c2D0tmEfJMR/Y8JRrtKh3ic2/JjVQfKs6bDrDddhWHWj/KQc3ldZha+FZCW3GEavWZhAho8b
+ RVVtcV3k9WtFl5S0tgQJ8SiammeX0DyBTz86gcawoAvDx7MoZ07tD5D53gAZgNe7QaoiYGhSAsy
+ fTCOfnfVihI0If+ZkiuJHWHXN/oi9D6Lx2cJPGjYuLiRsO7H6a/NQ6rEWh2k6uWc//zcOCXzkwA
+ G1WVAPC5SBNNrcUYH443x2+UyLbTMjSACO9i19e5gsprKz2Y+ir9VyrsHBPrxxe9s8p5K2/ak70
+ UbefYT9DWR8NFJYmtPwIGeu1ZgOjWJbOjOppBy5pwR7em7+lCLa6JEmDTA0/vVIF7Mnny+nwcAe
+ hgHCnn7PR1M/YNDuBtACH3vd9XAgZd56Cfxz/h
+X-Received: by 2002:a05:6300:218e:b0:398:9662:10ff with SMTP id
+ adf61e73a8af0-3b22e6685e2mr25092399637.4.1779233752475; 
+ Tue, 19 May 2026 16:35:52 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.142.33])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2bd5cfe47c8sm199452535ad.51.2026.05.19.16.33.02
+ 41be03b00d2f7-c82da93df0dsm11012898a12.19.2026.05.19.16.35.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 May 2026 16:33:02 -0700 (PDT)
-Message-ID: <95576e03-146b-456d-bad2-139158da7657@linaro.org>
-Date: Tue, 19 May 2026 16:33:00 -0700
+ Tue, 19 May 2026 16:35:52 -0700 (PDT)
+Message-ID: <fd9960af-7ae6-4a60-8c7e-9dfb627a0273@linaro.org>
+Date: Tue, 19 May 2026 16:35:50 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 24/40] target/mips: add Octeon COP2 crypto state
+Subject: Re: [PATCH v9 25/40] target/mips: add Octeon COP2 crypto helper
+ plumbing
 To: James Hilliard <james.hilliard1@gmail.com>, qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -80,14 +81,14 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <arikalo@gmail.com>,
  Huacai Chen <chenhuacai@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>
 References: <20260519-mips-octeon-missing-insns-v2-v9-0-d7dd735ecddd@gmail.com>
- <20260519-mips-octeon-missing-insns-v2-v9-24-d7dd735ecddd@gmail.com>
+ <20260519-mips-octeon-missing-insns-v2-v9-25-d7dd735ecddd@gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260519-mips-octeon-missing-insns-v2-v9-24-d7dd735ecddd@gmail.com>
+In-Reply-To: <20260519-mips-octeon-missing-insns-v2-v9-25-d7dd735ecddd@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,58 +112,33 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/19/26 09:22, James Hilliard wrote:
-> +typedef struct MIPSOcteonCryptoState {
-> +    uint64_t des3_key[3];
-> +    uint64_t des3_iv;
-> +    uint64_t des3_result;
-> +    uint64_t hsh_iv[4];
-> +    uint64_t hsh_dat[8];
-> +    uint64_t hsh_ivw[8];
-> +    uint64_t hsh_datw[16];
-> +    uint64_t aes_iv[2];
-> +    uint64_t aes_key[4];
-> +    uint64_t aes_result[2];
-> +    uint64_t aes_input[2];
-> +    uint64_t gfm_mul[2];
-> +    uint64_t gfm_resinp[2];
-> +    uint64_t gfm_xor0;
-> +    uint64_t gfm_reflect_mul[2];
-> +    uint64_t gfm_reflect_resinp[2];
-> +    uint64_t gfm_reflect_xor0;
-> +    uint16_t gfm_poly;
-> +    uint8_t aes_keylen;
-> +    uint32_t shared_mode;
-> +    uint32_t crc_poly;
-> +    uint32_t crc_iv;
-> +    uint32_t crc_len;
-> +    uint32_t snow3g_fsm[3];
-> +    uint32_t snow3g_lfsr[16];
-> +    uint64_t snow3g_result;
-> +} MIPSOcteonCryptoState;
+> +/*
+> + * The shared HSH/SHA3/SNOW3G/ZUC register window needs selector-position
+> + * arithmetic.  Instruction dispatch itself is still fully decoded by
+> + * decodetree and calls per-operation helpers.
+> + */
+> +#define OCTEON_HSH_DATW(N)          (0x0240u + (N))
+> +#define OCTEON_HSH_IVW(N)           (0x0250u + (N))
+> +#define OCTEON_SHA3_DAT24_SEL       0x0050u
+> +#define OCTEON_SHA3_DAT15_MT_SEL    0x0051u
+> +#define OCTEON_SHA3_DAT15_MF_SEL    OCTEON_HSH_DATW(15)
+> +#define OCTEON_SNOW3G_LFSR(N)       OCTEON_HSH_DATW(N)
+> +#define OCTEON_SNOW3G_RESULT_SEL    OCTEON_HSH_IVW(0)
+> +#define OCTEON_SNOW3G_FSM(N)        OCTEON_HSH_IVW(1 + (N))
 
-It might be easier if these were sorted to match Table 2-2.
+What are these for?  The MF/MT offsets should be irrelevant now.
 
-Why do you use uint32_t crc_len for CRCLEN<3:0>?
 
-There is no gfm_xor0 or gfm_reflect_xor0 in table 2-2.
-I suspect your implementations of CVM_MT_GFM_XOR0 and CVM_MT_GFM_XOR0_REFLECT are wrong.
+> +
+> +static inline void octeon_set_shared_mode(MIPSOcteonCryptoState *crypto,
+> +                                          MIPSOcteonSharedMode mode)
+> +{
+> +    crypto->shared_mode = mode;
+> +}
+> 
 
-hsh_dat[8] is mis-sized? Compared to HASHDAT[15:0]<63:0>.
-
-hsh_datw[8] is not a thing; As I read CVM_MF_HSH_DAT and CVM_MF_HSH_DATW, they are 
-different ways of accessing the same data.
-
-hsh_iv[4] is mis-sized; there is no hsh_ivw[].  Similar error wrt DAT?
-
-aes_result/aes_input should be one AESRESINP.  You should not invent non-architectural cpu 
-state.  Elsewhere you mention latch/result, but that would be an implementation detail of 
-individual operations.  That said, I don't see any use of aes_input / aes_result that 
-actually overlap.  You copy aes_input to a local variable in[], and write to aes_result 
-from a local variable out[].  You've already implemented the latch.
-
-Why shared_mode?  I don't see anything like it in the docs.  From later patches which add 
-zuc_lfsr[] and snow3g_lfsr[], I think this is incorrect.  The docs explicitly say that 
-those modes overlap HASHDAT[].  You should simply re-use that data.
+Unused function.  This patch won't compile with clang.
+Also, as I mentioned against the previous patch, I think shared_mode is an error.
 
 
 r~
