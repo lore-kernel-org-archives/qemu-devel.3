@@ -4,66 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C00A2CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 17:06:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFCF3CD4F5B
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 17:07:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPNrA-00080G-Dq; Tue, 19 May 2026 13:03:48 -0400
+	id 1wPNrD-00082M-H3; Tue, 19 May 2026 13:03:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wPNr3-0007xk-84
- for qemu-devel@nongnu.org; Tue, 19 May 2026 13:03:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wPNr5-0007yL-8w
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 13:03:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wPNqw-000450-L4
- for qemu-devel@nongnu.org; Tue, 19 May 2026 13:03:39 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wPNr0-0004CG-B9
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 13:03:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779210212;
+ s=mimecast20190719; t=1779210216;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=GyuLb4b27pyYkovXVszFJ4DvVAecnzghmIVxmdOWP+A=;
- b=LStJB94wH8vKD5LTjWqsbqdgg02KmOPcanlyjxouIfOE/8X7dOC5AbJ9e2I7o5u3raYXVo
- iX1ScWQuwX08FuaJT1DKfu+wlvgX6IVw5y23HTmbRU4EqDeslfnIwAo7+GVxpDwu7f2kRI
- HaPm0411Zc6dA+l5ty629AjZeoXSyNo=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cMT/antuLqZyS5oYFLZbd0Cv7OFEzbG2EjWvbMi6YI4=;
+ b=c/yJRTFanzOmjU0U9LFYyxZOUUsgzwxl8y6RVMMNcIeyuJ4hudV6okucCxNsgdknA3Dm4X
+ 72Y5EWCKAvTscDMFkZ1EmHIPFGhVmzzyWIzartvAmakCtguREYsjS/c1ipNqtAZEsb/jdR
+ Qoiwvkd6jrkKrZSsENCTo+PopsxKtm8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-605-92GJd4CXPaW6xCfOxiCc-g-1; Tue,
- 19 May 2026 13:03:28 -0400
-X-MC-Unique: 92GJd4CXPaW6xCfOxiCc-g-1
-X-Mimecast-MFC-AGG-ID: 92GJd4CXPaW6xCfOxiCc-g_1779210208
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-486-svxVMi4uNMOV_Vt8mxt83Q-1; Tue,
+ 19 May 2026 13:03:33 -0400
+X-MC-Unique: svxVMi4uNMOV_Vt8mxt83Q-1
+X-Mimecast-MFC-AGG-ID: svxVMi4uNMOV_Vt8mxt83Q_1779210212
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E67F31956058; Tue, 19 May 2026 17:03:27 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 01D0D19560A7; Tue, 19 May 2026 17:03:32 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.44.49.113])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4D54A1681; Tue, 19 May 2026 17:03:25 +0000 (UTC)
+ id A23E81681; Tue, 19 May 2026 17:03:30 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	stefanha@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 00/18] Block layer patches
-Date: Tue, 19 May 2026 19:02:59 +0200
-Message-ID: <20260519170317.345032-1-kwolf@redhat.com>
+Subject: [PULL 02/18] block: Add blk_co_start/end_request() and
+ BDRV_REQ_NO_QUEUE
+Date: Tue, 19 May 2026 19:03:01 +0200
+Message-ID: <20260519170317.345032-3-kwolf@redhat.com>
+In-Reply-To: <20260519170317.345032-1-kwolf@redhat.com>
+References: <20260519170317.345032-1-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
 X-Spam_score: 0.8
 X-Spam_bar: /
 X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -81,108 +84,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 6d17fd91f6cf88df5cb2205e578640d72605cc43:
+If a device uses blk_inc/dec_in_flight() in order to build macro
+operations that involve multiple requests for the block layer and that
+need to be completed as a unit before the BlockBackend can be considered
+drained, it sets the stage for a deadlock: When a drain is requested,
+the inner request at the BlockBackend level will be queued in
+blk_wait_while_drained() and wait until the drained section ends, but at
+the same time, drain_begin can only return if the whole macro operation
+at the device level has completed.
 
-  Merge tag 'pull-nvme-20260518' of https://gitlab.com/birkelund/qemu into staging (2026-05-18 08:33:20 -0400)
+Introduce a new interface to allow implementing the logic correctly:
+Instead of queueing individual requests, blk_co_start_request() calls
+blk_wait_while_drained() once at the beginning. The individual requests
+must then set BDRV_REQ_NO_QUEUE to avoid being queued and running into
+the deadlock; being wrapped in blk_co_start/end_request() makes sure
+that drain_begin waits for them and they don't sneak in when the
+BlockBackend is supposed to already be quiescent.
 
-are available in the Git repository at:
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20260421161132.99878-3-kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+---
+ include/block/block-common.h      | 11 ++++++++-
+ include/system/block-backend-io.h |  2 ++
+ block/block-backend.c             | 38 +++++++++++++++++++++++--------
+ 3 files changed, 41 insertions(+), 10 deletions(-)
 
-  https://repo.or.cz/qemu/kevin.git tags/for-upstream
-
-for you to fetch changes up to 8b663f7d0d96d915d0e0fc5923dc6cc36133f19f:
-
-  block: Improve readability in HMP 'info blockstats' output (2026-05-19 17:34:13 +0200)
-
-----------------------------------------------------------------
-Block layer patches
-
-- qcow2: Fix corruption on discard during write with COW
-- Remove the deprecated glusterfs block driver
-- graph-lock: fix missed wakeup in bdrv_graph_co_rdunlock()
-- ide: Fix deadlock between TRIM and drain
-- scsi: Fix discard_granularity for -drive if=scsi
-- blkdebug: Add 'delay-ns' option
-- qemu-io: Add 'aio_discard' command
-- Improve readability in HMP 'info blockstats' output
-- MAINTAINERS: Lukas Straub will maintain COLO block replication
-
-----------------------------------------------------------------
-Denis V. Lunev (1):
-      block/graph-lock: fix missed wakeup in bdrv_graph_co_rdunlock()
-
-Kevin Wolf (14):
-      blkdebug: Add 'delay-ns' option
-      block: Add blk_co_start/end_request() and BDRV_REQ_NO_QUEUE
-      block: Add flags parameter to blk_*_pdiscard()
-      ide: Minimal fix for deadlock between TRIM and drain
-      ide: Clean up ide_trim_co_entry() to be idiomatic coroutine code
-      ide-test: Factor out wait_dma_completion()
-      ide-test: Test reset during TRIM
-      block: Create DEFAULT_BLOCK_CONF macro
-      block: Add more defaults to DEFAULT_BLOCK_CONF
-      commit: Drain nodes across all of bdrv_commit()
-      qemu-io: Add 'aio_discard' command
-      qcow2: Fix corruption on discard during write with COW
-      iotests/046: Test that discard/write_zeroes wait for dependencies
-      block: Improve readability in HMP 'info blockstats' output
-
-Lukas Straub (2):
-      MAINTAINERS: Add myself as maintainer for replication
-      MAINTAINERS: Rename Replication -> COLO block replication
-
-Thomas Huth (1):
-      Remove the deprecated glusterfs block driver
-
- qapi/block-core.json                               |   56 +-
- docs/about/deprecated.rst                          |    8 -
- docs/about/removed-features.rst                    |    7 +
- docs/system/device-url-syntax.rst.inc              |   39 -
- docs/system/qemu-block-drivers.rst.inc             |   84 -
- meson_options.txt                                  |    2 -
- include/block/block-common.h                       |   11 +-
- include/hw/block/block.h                           |   12 +
- include/system/block-backend-io.h                  |    6 +-
- block/blkdebug.c                                   |   15 +-
- block/block-backend.c                              |   47 +-
- block/commit.c                                     |   10 +-
- block/export/virtio-blk-handler.c                  |    2 +-
- block/gluster.c                                    | 1644 --------------------
- block/graph-lock.c                                 |   12 +-
- block/mirror.c                                     |    4 +-
- block/monitor/block-hmp-cmds.c                     |   38 +-
- block/qcow2-cluster.c                              |   52 +-
- hw/ide/core.c                                      |  110 +-
- hw/scsi/scsi-bus.c                                 |    7 +-
- nbd/server.c                                       |    2 +-
- qemu-io-cmds.c                                     |  117 +-
- tests/qtest/ide-test.c                             |  137 +-
- tests/qtest/modules-test.c                         |    3 -
- tests/unit/test-block-iothread.c                   |    4 +-
- MAINTAINERS                                        |   11 +-
- block/meson.build                                  |    1 -
- meson.build                                        |   47 -
- scripts/ci/setup/debian/debian-13-ppc64le.yaml     |    1 -
- scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml   |    1 -
- scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml     |    1 -
- scripts/coverity-scan/coverity-scan.docker         |    1 -
- scripts/coverity-scan/run-coverity-scan            |    2 +-
- scripts/meson-buildoptions.sh                      |    3 -
- tests/docker/dockerfiles/debian-amd64-cross.docker |    1 -
- tests/docker/dockerfiles/debian-arm64-cross.docker |    1 -
- .../dockerfiles/debian-mips64el-cross.docker       |    1 -
- .../docker/dockerfiles/debian-mipsel-cross.docker  |    1 -
- .../docker/dockerfiles/debian-ppc64el-cross.docker |    1 -
- .../docker/dockerfiles/debian-riscv64-cross.docker |    1 -
- tests/docker/dockerfiles/debian-s390x-cross.docker |    1 -
- tests/docker/dockerfiles/debian.docker             |    1 -
- .../docker/dockerfiles/fedora-rust-nightly.docker  |    1 -
- tests/docker/dockerfiles/fedora.docker             |    1 -
- tests/docker/dockerfiles/opensuse-leap.docker      |    1 -
- tests/docker/dockerfiles/ubuntu2204.docker         |    1 -
- tests/lcitool/projects/qemu.yml                    |    1 -
- tests/qemu-iotests/046                             |   46 +
- tests/qemu-iotests/046.out                         |   36 +
- 49 files changed, 537 insertions(+), 2055 deletions(-)
- delete mode 100644 block/gluster.c
+diff --git a/include/block/block-common.h b/include/block/block-common.h
+index c8c626daeaa..895ea175413 100644
+--- a/include/block/block-common.h
++++ b/include/block/block-common.h
+@@ -215,8 +215,17 @@ typedef enum {
+      */
+     BDRV_REQ_NO_WAIT = 0x400,
+ 
++    /*
++     * Used between blk_co_start_request() and blk_end_request() to avoid
++     * that the request waits in a drained BlockBackend until the drained
++     * section ends. Waiting would cause a deadlock because drain waits for
++     * blk_end_request() to be called, but the request never completes
++     * because it waits for the drain to end.
++     */
++    BDRV_REQ_NO_QUEUE = 0x800,
++
+     /* Mask of valid flags */
+-    BDRV_REQ_MASK               = 0x7ff,
++    BDRV_REQ_MASK               = 0xfff,
+ } BdrvRequestFlags;
+ 
+ #define BDRV_O_NO_SHARE    0x0001 /* don't share permissions */
+diff --git a/include/system/block-backend-io.h b/include/system/block-backend-io.h
+index 6d5ac476fc0..0248c1c36e2 100644
+--- a/include/system/block-backend-io.h
++++ b/include/system/block-backend-io.h
+@@ -71,6 +71,8 @@ BlockAIOCB *blk_aio_ioctl(BlockBackend *blk, unsigned long int req, void *buf,
+ 
+ void blk_inc_in_flight(BlockBackend *blk);
+ void blk_dec_in_flight(BlockBackend *blk);
++void coroutine_fn blk_co_start_request(BlockBackend *blk);
++void blk_end_request(BlockBackend *blk);
+ 
+ bool coroutine_fn GRAPH_RDLOCK blk_co_is_inserted(BlockBackend *blk);
+ bool co_wrapper_mixed_bdrv_rdlock blk_is_inserted(BlockBackend *blk);
+diff --git a/block/block-backend.c b/block/block-backend.c
+index 99446571201..ee00440e28d 100644
+--- a/block/block-backend.c
++++ b/block/block-backend.c
+@@ -82,6 +82,7 @@ struct BlockBackend {
+     QemuMutex queued_requests_lock; /* protects queued_requests */
+     CoQueue queued_requests;
+     bool disable_request_queuing; /* atomic */
++    int start_request_count; /* atomic */
+ 
+     VMChangeStateEntry *vmsh;
+     bool force_allow_inactivate;
+@@ -1306,10 +1307,16 @@ bool blk_in_drain(BlockBackend *blk)
+ }
+ 
+ /* To be called between exactly one pair of blk_inc/dec_in_flight() */
+-static void coroutine_fn blk_wait_while_drained(BlockBackend *blk)
++static void coroutine_fn blk_wait_while_drained(BlockBackend *blk,
++                                                BdrvRequestFlags flags)
+ {
+     assert(blk->in_flight > 0);
+ 
++    if (flags & BDRV_REQ_NO_QUEUE) {
++        assert(qatomic_read(&blk->start_request_count));
++        return;
++    }
++
+     if (qatomic_read(&blk->quiesce_counter) &&
+         !qatomic_read(&blk->disable_request_queuing)) {
+         /*
+@@ -1335,7 +1342,7 @@ blk_co_do_preadv_part(BlockBackend *blk, int64_t offset, int64_t bytes,
+     BlockDriverState *bs;
+     IO_CODE();
+ 
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, flags);
+     GRAPH_RDLOCK_GUARD();
+ 
+     /* Call blk_bs() only after waiting, the graph may have changed */
+@@ -1410,7 +1417,7 @@ blk_co_do_pwritev_part(BlockBackend *blk, int64_t offset, int64_t bytes,
+     BlockDriverState *bs;
+     IO_CODE();
+ 
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, flags);
+     GRAPH_RDLOCK_GUARD();
+ 
+     /* Call blk_bs() only after waiting, the graph may have changed */
+@@ -1523,6 +1530,19 @@ void blk_dec_in_flight(BlockBackend *blk)
+     aio_wait_kick();
+ }
+ 
++void coroutine_fn blk_co_start_request(BlockBackend *blk)
++{
++    blk_inc_in_flight(blk);
++    blk_wait_while_drained(blk, 0);
++    qatomic_inc(&blk->start_request_count);
++}
++
++void blk_end_request(BlockBackend *blk)
++{
++    qatomic_dec(&blk->start_request_count);
++    blk_dec_in_flight(blk);
++}
++
+ static void error_callback_bh(void *opaque)
+ {
+     struct BlockBackendAIOCB *acb = opaque;
+@@ -1741,7 +1761,7 @@ blk_co_do_ioctl(BlockBackend *blk, unsigned long int req, void *buf)
+ {
+     IO_CODE();
+ 
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, 0);
+     GRAPH_RDLOCK_GUARD();
+ 
+     if (!blk_co_is_available(blk)) {
+@@ -1788,7 +1808,7 @@ blk_co_do_pdiscard(BlockBackend *blk, int64_t offset, int64_t bytes)
+     int ret;
+     IO_CODE();
+ 
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, 0);
+     GRAPH_RDLOCK_GUARD();
+ 
+     ret = blk_check_byte_request(blk, offset, bytes);
+@@ -1834,7 +1854,7 @@ int coroutine_fn blk_co_pdiscard(BlockBackend *blk, int64_t offset,
+ static int coroutine_fn blk_co_do_flush(BlockBackend *blk)
+ {
+     IO_CODE();
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, 0);
+     GRAPH_RDLOCK_GUARD();
+ 
+     if (!blk_co_is_available(blk)) {
+@@ -2009,7 +2029,7 @@ int coroutine_fn blk_co_zone_report(BlockBackend *blk, int64_t offset,
+     IO_CODE();
+ 
+     blk_inc_in_flight(blk); /* increase before waiting */
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, 0);
+     GRAPH_RDLOCK_GUARD();
+     if (!blk_is_available(blk)) {
+         blk_dec_in_flight(blk);
+@@ -2034,7 +2054,7 @@ int coroutine_fn blk_co_zone_mgmt(BlockBackend *blk, BlockZoneOp op,
+     IO_CODE();
+ 
+     blk_inc_in_flight(blk);
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, 0);
+     GRAPH_RDLOCK_GUARD();
+ 
+     ret = blk_check_byte_request(blk, offset, len);
+@@ -2058,7 +2078,7 @@ int coroutine_fn blk_co_zone_append(BlockBackend *blk, int64_t *offset,
+     IO_CODE();
+ 
+     blk_inc_in_flight(blk);
+-    blk_wait_while_drained(blk);
++    blk_wait_while_drained(blk, flags);
+     GRAPH_RDLOCK_GUARD();
+     if (!blk_is_available(blk)) {
+         blk_dec_in_flight(blk);
+-- 
+2.54.0
 
 
