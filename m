@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F5DDCD4F54
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 22:36:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7155ACD4F54
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 23:34:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPT2D-0004dQ-FH; Tue, 19 May 2026 18:35:35 -0400
+	id 1wPTw0-000526-Lm; Tue, 19 May 2026 19:33:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPT23-0004S0-18
- for qemu-devel@nongnu.org; Tue, 19 May 2026 18:35:23 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ id 1wPTvv-00051n-T9
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 19:33:07 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPT21-0005gq-68
- for qemu-devel@nongnu.org; Tue, 19 May 2026 18:35:22 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-c8095d7d75bso1571629a12.1
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 15:35:20 -0700 (PDT)
+ id 1wPTvt-0001i2-51
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 19:33:07 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-c82471904fcso1817551a12.2
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 16:33:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779230119; x=1779834919; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779233583; x=1779838383; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=76V8q+sPARnH8z7EYeVZOZi1mA6iPRwVYRtwTAi8hdc=;
- b=g/+21SRwDebpI3PsGGT2U78e6uRTXyBWwthjsx6lHynSWCZHVRKCSbCSqM5wBz8iHs
- CFRnyKgJuIduN7kBfnhqtlqKmywDIudlkc/8HC11HAC7t/EUut58femFl2/Za3jwgy/Y
- 9pT1ahAFi6V2HrSdH2+tRZBIpoV3UY5zQPDlHGDec5R8wkRWPs2Q0mt8YKkNkvKpl/gv
- PGaAQypYImOMoG/KWTEipMfEJGvVsF2AtTXKTPSvwNKUsIRPaQSkmxqrixvIHR8FdnaK
- Nl/6SHEtuYj82y9/Sj0clxpSPPGhVh0RYVtbBP0aYSSPdxrSy1qsCz6Fz5Hg34N/XkJR
- 755g==
+ bh=mQvOhXfj4HsiAVnhMkSqlbU7ZS1M+piFYKOTzQlthzY=;
+ b=SFeBotECjQlVUpTD5hC14flBZ1KX3MFlU5Qk1NZ1ZeC/qp37r+w8wYZPzsUo9gyQiM
+ vW1vhuEqZolElN/eSGRJcPs/SUh8uNJoORyaMTHGTCPjIFSEx1Imr50TDuXWLBRobAlX
+ z5spets3UBTz5x8MG9gppeJbFuVlt9J8mANaAnqAMiuZVkuBVj2pXNK6feCorKyMN9gL
+ AsE9fR3kmANu2oGToKP7XSiOC0EJPhiXIRImq6BU6dDedv1HGlAdTBDgk0MB0vkhk7OD
+ t8UGGW6GPYWQVNDW6j5X2D2qN4oyGpAIWbMt5e+WeOGrYr9x/bLlokVr0/X8sKAOo77L
+ mrNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779230119; x=1779834919;
+ d=1e100.net; s=20251104; t=1779233583; x=1779838383;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=76V8q+sPARnH8z7EYeVZOZi1mA6iPRwVYRtwTAi8hdc=;
- b=qAS9GUPhuXXCRfuCVZUIpyDnfQzyp1Cvir+SQlRxQUoPBOPfWny03uduc9oCeAr6xw
- kp30mg1EgX3QGgqiw7J4Z/LSszlv8RfgB7pQIWlLBKfxikAWxsPJfQ5ljVFwfo4QtmcY
- kOUS+/Bkia/raL/BfZtg0atdkSV5uh5dtAZBGOLyaCpaE8ZpIHKT067nmaQA1265Gt6V
- IrNdXq5pF7q/AenVcSK5cgAbyzvRuSn0CqNzfLhckCKNwKR1xqMNVrdvRopg3Ep3L4IN
- kfFHAzxrWwpmMeAwq7N/GvccaNgrHyCMKHBYtTL3kmrZi/0XfxFYARGLicMAYqvTiJsH
- 7p1Q==
+ bh=mQvOhXfj4HsiAVnhMkSqlbU7ZS1M+piFYKOTzQlthzY=;
+ b=aTpVUhJWUiv1k7sNwa/inxhJloSpbsax/213bPvWacdnepZ8Pn+Dp9JJf11HcSXxBN
+ LCrvg/yG7lEP5UCXdQAogkL/lOkmqmydtK5MDcGPy4MaaM3PLOev0anAIJAzBVg4+2aP
+ hsplKgIIxoPt31l/Nyre54RupfSlu6CsXNv6fzPTNiVza2OxIMFQj+qgZhk+7Bclg7tA
+ BwxiLGWg8shs+mF7gwPmWRoFx7yN4npbe47UZ0QMXqi4q/UKgGsi5hWnXbjVWTjhIPk1
+ 0D84PnAlKDSfrRoRwpFKEmrdnbCsrBpGfBGxY3GvLyUsQVC0jXY3xHaNh16q09T/n40O
+ B0LA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8QnBNh7A9aa3h+5Ft8B7xToFTn2blYAX3Q9v7BmarbiUorgid/GoGfizLaia7VaOvTHE8/wtbrd15q@nongnu.org
-X-Gm-Message-State: AOJu0Ywaj0HYY3aP0jbMoRWD8zWVxiwYtJSgPLQjg2YScM6Gz7Z1oJSh
- n11aHmrc8JAG4on3mpaIB1TiLGvZWaSQBU4LlnS+xUdFZq03qZNdUNIuIrkOTBze4SA=
-X-Gm-Gg: Acq92OGiAEQ6AD5zIOYMu68eIRX0uz+WGm6P1FUROIwF86XPpcbC1hltouBzwvRe2KX
- 03kgUCj7lxnYNS9XZIM8AVNvxeLXU6rOOclmRYNAvrqKZ2sTw2Vm0DSxqjw2yeQ7gjVRveiM2Lj
- zrrDnrDZFy84PozTWx8y0lvoI8F3tegrjbfhmMcMZmzyNL393XwmZma31BCAIrD005q84CHO8Oc
- 2vg5HtQK3Bi5fjNkgPXqPmRzpQbMOrvMA82Cx4TTmWIHw8dpUk1nSKu+D0MIOIu5atE+kv5FixI
- 0pFwVWW4MJaKgCWdtliA3g0x+iw50aWx/W1M2jx6/3L3uASBbxEH2MelNJVhtRrVLY+UpYgZMWh
- w7u7++DAtFi/g9ACcvpAR3e8TlA22tAmEteNq0DT5AdrdUdU7xf3I3N9Car86P96RWvakWnkTkX
- FNHuVmhJRNz+v/iZ/yroKVpYjbR1cvNYtI9VAgrlC1UvPVLGs=
-X-Received: by 2002:a17:902:f788:b0:2bc:f1ef:2e64 with SMTP id
- d9443c01a7336-2bd7e7d683amr245158895ad.12.1779230119257; 
- Tue, 19 May 2026 15:35:19 -0700 (PDT)
+ AFNElJ/Gb6oSKJWuSBc1NdD/uTvNUhIy5sRmv9DiNgt5BV+n2jsoSN1gVZskxTQKBvAJtvoy/s45MfL4Ucek@nongnu.org
+X-Gm-Message-State: AOJu0YxopaqBl3Vx2fX7oz4ZvVr8D5qex+nxtBGNFXpmJN5uRcZXRAGN
+ GVUFpBV+5FgPc/YKSY1dxOxjvg5qQEbthLaftXygYV277H6sj0uFcJ2RIeSPOlY5b7g=
+X-Gm-Gg: Acq92OEWJ5701f5JU5PfA/c9ooFSYQi7u3/6FztsWM2jR+UlfO47YHpKJ4BjWsZ+7Zd
+ DEYwHpdWF3bCx6WZeZAMyRYt3Gpv97ibG/E7bMBe20Y3nYQCJOGBWH5bfnZTLMtu6O8aAyaKpgb
+ CTpC8E03vcnpUvWTMDzMSbfem/s8p2rY7YpCPUEXqB+GXqzc6Mbq8/mJbBdhDB4vYC7HOGYjpvh
+ Iot2DQlilP72q0eyazY07V/PgcJXlLJZXHznF7+RNHIwdlfWsFw8JZ27JslcEN63x4BNl4QCllS
+ vpUzw6uUWvTJ06tiR5gf407DuP9VY/02W2kMnflqdc8DOo2qvDH0GKLs8+aMUrqUMbpIOnWwsMA
+ IQ6c2VAMdTFok529Ed5fWAAyzM8v8rp+booKL0sCf4YYgntiM+wd1BHHvPDNdZBDJdTWhj0Dhna
+ Y+YQ14wxsmfhJMqvFu1+y52T69q3sKc7/4g3Bh
+X-Received: by 2002:a17:903:1a26:b0:2ba:5f24:cae2 with SMTP id
+ d9443c01a7336-2bd7e9dc136mr227506005ad.35.1779233582987; 
+ Tue, 19 May 2026 16:33:02 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.142.33])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2bd5d11b495sm205752095ad.69.2026.05.19.15.35.18
+ d9443c01a7336-2bd5cfe47c8sm199452535ad.51.2026.05.19.16.33.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 May 2026 15:35:18 -0700 (PDT)
-Message-ID: <32e435ed-4487-445a-86eb-91c6cb6fa78e@linaro.org>
-Date: Tue, 19 May 2026 15:35:17 -0700
+ Tue, 19 May 2026 16:33:02 -0700 (PDT)
+Message-ID: <95576e03-146b-456d-bad2-139158da7657@linaro.org>
+Date: Tue, 19 May 2026 16:33:00 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 13/40] tcg: Introduce tcg_gen_addN_i64
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- James Hilliard <james.hilliard1@gmail.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v9 24/40] target/mips: add Octeon COP2 crypto state
+To: James Hilliard <james.hilliard1@gmail.com>, qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang
  <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <arikalo@gmail.com>,
  Huacai Chen <chenhuacai@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>
 References: <20260519-mips-octeon-missing-insns-v2-v9-0-d7dd735ecddd@gmail.com>
- <20260519-mips-octeon-missing-insns-v2-v9-13-d7dd735ecddd@gmail.com>
- <46d5ad2c-4a76-46fa-80cc-e2a33b9fa923@linaro.org>
+ <20260519-mips-octeon-missing-insns-v2-v9-24-d7dd735ecddd@gmail.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <46d5ad2c-4a76-46fa-80cc-e2a33b9fa923@linaro.org>
+In-Reply-To: <20260519-mips-octeon-missing-insns-v2-v9-24-d7dd735ecddd@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,47 +110,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/19/26 13:52, Philippe Mathieu-Daudé wrote:
-> On 19/5/26 18:22, James Hilliard wrote:
->> From: Richard Henderson <richard.henderson@linaro.org>
->>
->> Add a helper for multi-limb 64-bit addition. The helper emits native
->> carry-chain TCG ops when they are available and falls back to explicit
->> carry propagation otherwise.
->>
->> This lets target translators build wider integer accumulators inline
->> without open-coding the same add-with-carry sequence at each use site.
->>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->>
->> ---
->> Changes v7 -> v8:
->>    - New patch from Richard Henderson's v7.5 multiplier rework.
->> ---
->>   include/tcg/tcg-op-common.h |  1 +
->>   tcg/tcg-op.c                | 42 ++++++++++++++++++++++++++++++++++++++++++
->>   2 files changed, 43 insertions(+)
-> 
-> Richard, could we squash something like this?
-> 
-> -- >8 --
-> diff --git a/docs/devel/tcg-ops.rst b/docs/devel/tcg-ops.rst
-> index fd3a50bf4c4..1ac53a61114 100644
-> --- a/docs/devel/tcg-ops.rst
-> +++ b/docs/devel/tcg-ops.rst
-> @@ -672,6 +672,12 @@ Multiword arithmetic support
->          | If mulu2/muls2 are not provided by the backend, the tcg-op generator
->            can obtain the same results by emitting a pair of opcodes, mul + muluh/mulsh.
-> 
-> +   * - addN *n*, *t0*, *t1*, *t2*
-> +
-> +     - | For each *n*, compute *t0* = *t1* + *t2* + *C*,
-> +         where *C* is the input carry bit provided by the host
-> +         architecture, and also compute the output carry bit.
-> +         Overlap between *t0* and *t1*/*t2* arrays is not allowed.
+On 5/19/26 09:22, James Hilliard wrote:
+> +typedef struct MIPSOcteonCryptoState {
+> +    uint64_t des3_key[3];
+> +    uint64_t des3_iv;
+> +    uint64_t des3_result;
+> +    uint64_t hsh_iv[4];
+> +    uint64_t hsh_dat[8];
+> +    uint64_t hsh_ivw[8];
+> +    uint64_t hsh_datw[16];
+> +    uint64_t aes_iv[2];
+> +    uint64_t aes_key[4];
+> +    uint64_t aes_result[2];
+> +    uint64_t aes_input[2];
+> +    uint64_t gfm_mul[2];
+> +    uint64_t gfm_resinp[2];
+> +    uint64_t gfm_xor0;
+> +    uint64_t gfm_reflect_mul[2];
+> +    uint64_t gfm_reflect_resinp[2];
+> +    uint64_t gfm_reflect_xor0;
+> +    uint16_t gfm_poly;
+> +    uint8_t aes_keylen;
+> +    uint32_t shared_mode;
+> +    uint32_t crc_poly;
+> +    uint32_t crc_iv;
+> +    uint32_t crc_len;
+> +    uint32_t snow3g_fsm[3];
+> +    uint32_t snow3g_lfsr[16];
+> +    uint64_t snow3g_result;
+> +} MIPSOcteonCryptoState;
 
-No, because there's no addN *opcode*.  You're raising an old issue: there's no separate 
-documentation for the tcg_gen_* interface.  Also, the text is inaccurate.
+It might be easier if these were sorted to match Table 2-2.
+
+Why do you use uint32_t crc_len for CRCLEN<3:0>?
+
+There is no gfm_xor0 or gfm_reflect_xor0 in table 2-2.
+I suspect your implementations of CVM_MT_GFM_XOR0 and CVM_MT_GFM_XOR0_REFLECT are wrong.
+
+hsh_dat[8] is mis-sized? Compared to HASHDAT[15:0]<63:0>.
+
+hsh_datw[8] is not a thing; As I read CVM_MF_HSH_DAT and CVM_MF_HSH_DATW, they are 
+different ways of accessing the same data.
+
+hsh_iv[4] is mis-sized; there is no hsh_ivw[].  Similar error wrt DAT?
+
+aes_result/aes_input should be one AESRESINP.  You should not invent non-architectural cpu 
+state.  Elsewhere you mention latch/result, but that would be an implementation detail of 
+individual operations.  That said, I don't see any use of aes_input / aes_result that 
+actually overlap.  You copy aes_input to a local variable in[], and write to aes_result 
+from a local variable out[].  You've already implemented the latch.
+
+Why shared_mode?  I don't see anything like it in the docs.  From later patches which add 
+zuc_lfsr[] and snow3g_lfsr[], I think this is incorrect.  The docs explicitly say that 
+those modes overlap HASHDAT[].  You should simply re-use that data.
+
 
 r~
 
