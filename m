@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51038CD5BA4
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 13:33:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 083BDCD4F5B
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 13:33:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPKZo-0008Qk-33; Tue, 19 May 2026 09:33:40 -0400
+	id 1wPKZm-0008M4-Hw; Tue, 19 May 2026 09:33:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wPKZm-0008Lt-7V
- for qemu-devel@nongnu.org; Tue, 19 May 2026 09:33:38 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wPKZk-0008KX-Rc
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 09:33:36 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wPKZk-0000iK-N3
- for qemu-devel@nongnu.org; Tue, 19 May 2026 09:33:37 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wPKZj-0000i3-GK
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 09:33:36 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 1259E60121;
- Tue, 19 May 2026 13:33:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D424C2BCB3;
+ by sea.source.kernel.org (Postfix) with ESMTP id 45C354176C;
  Tue, 19 May 2026 13:33:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09383C2BCB3;
+ Tue, 19 May 2026 13:33:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1779197615;
- bh=d7kHH40NXkm5PLQnHeKBiAkrWHkArmpkDiTZyow9SlI=;
+ s=k20201202; t=1779197614;
+ bh=5Hag2ilN+ESkd2Kb+HT0871PS9TxMnHFXG88KpF4W+M=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=t+wTRTOuNZErg2/pQRnsmhANulFdYu9y3eCKSehIQVRikzHJwfUNXaKWAGrBgWSMk
- Dn4ld9TA3LkT4LLr+bg+PmUopFTybCglzq3QCSUd4m7maKG5tjGen72mYQHNC0fslo
- q2cUl+7G6O44pqKK05TSbuqXDElPoR7cBFuBjuimcgXcOwv0lYav6mFtsHcaM2Om2j
- lUBw1RvFBOTrIvUeFfZQHdTNMB0N0GDGlwOV7FPxUNcJVj9qh2XQRnZpMATmAKRTal
- uM5+u02yJqaP/Ch6wpGFAZFQO6PY0JDs/3Dxdjoj8Ockk0omh83jDwynZYAAP2sdgM
- KA2jQv+B9nd5A==
+ b=hiZdU7bNV0dmiq4raqfaH+Dj5v1u3YXRQlCzveMLV2HVVUi9k55+CUxmkMUo2Wi65
+ n71pz6i1AOmjHPWjKzqIAaJwWEcVdyPl0N3VSluAWsf95Iyqb0UVLaysh5yMYzVUv4
+ L1c+I7TlldAE55+rD6x5jBgw+2Rn4Rsm3OrrUeEc/OsVNP/4lJ8KCc2PBZkoh7p7GZ
+ CgBp6AmEwl4IOOIg14x8xjmq+Bui9e/X3Rt+qakQnGsV/+wdT3fGritNLTJCIDjfXp
+ i6JuYD3hPaeetlKWCtzTYlFTD/IBwCMMjtm2PcYzja4K1/bdeBvkT6iYAJ6bPI6eEn
+ CUq48gCP6Ci+A==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH 2/2] hw/hppa: Move static variable lasi_dev into MachineState
-Date: Tue, 19 May 2026 15:33:29 +0200
-Message-ID: <20260519133329.4268-3-deller@kernel.org>
+Subject: [PATCH 1/2] hw/pci-host/astro: Encode Astro version numbers
+Date: Tue, 19 May 2026 15:33:28 +0200
+Message-ID: <20260519133329.4268-2-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260519133329.4268-1-deller@kernel.org>
 References: <20260519133329.4268-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -72,89 +72,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Avoid static variables, so move lasi_dev into the MachineState struct.
+Add enum which encodes the Astro version numbers.
 
 Signed-off-by: Helge Deller <deller@gmx.de>
 Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/hppa/machine.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ hw/pci-host/astro.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index 0937d90ed2..d762163ddf 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -44,6 +44,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(HppaMachineState, HPPA_COMMON_MACHINE)
- struct HppaMachineState {
-     MachineState parent_obj;
+diff --git a/hw/pci-host/astro.c b/hw/pci-host/astro.c
+index 8c61c696bd..fc07608da7 100644
+--- a/hw/pci-host/astro.c
++++ b/hw/pci-host/astro.c
+@@ -41,6 +41,9 @@ static const int elroy_hpa_offsets[ELROY_NUM] = {
+ static const char elroy_rope_nr[ELROY_NUM] = {
+             0, 1, 4, 6 }; /* busnum path, e.g. [10:6] */
  
-+    DeviceState *lasi_dev;
-     uint64_t memsplit_addr;
- };
- 
-@@ -52,8 +53,6 @@ struct HppaMachineState {
- #define HPA_POWER_BUTTON        (FIRMWARE_END - 0x10)
- static hwaddr soft_power_reg;
- 
--static DeviceState *lasi_dev;
--
- static void hppa_powerdown_req(Notifier *n, void *opaque)
- {
-     uint32_t val;
-@@ -399,7 +398,8 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
- {
-     const char *kernel_filename = machine->kernel_filename;
-     MachineClass *mc = MACHINE_GET_CLASS(machine);
--    DeviceState *dev;
-+    HppaMachineState *hpm = HPPA_COMMON_MACHINE(machine);
-+    DeviceState *dev, *lasi_dev;
-     PCIDevice *pci_dev;
-     long size;
-     uint64_t kernel_entry = 0;
-@@ -408,6 +408,7 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
-     SysBusDevice *s;
- 
-     /* Graphics setup. */
-+    lasi_dev = hpm->lasi_dev;
-     if (lasi_dev && machine->enable_graphics &&
-         vga_interface_type != VGA_NONE) {
-         dev = qdev_new("artist");
-@@ -576,7 +577,8 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
++/* Astro version numbers */
++enum { ID_ASTRO_1_0 = 0, ID_ASTRO_2_1 = 9, ID_ASTRO_3_0 = 2 };
++
+ /*
+  * Helper functions
   */
- static void machine_HP_715_init(MachineState *machine)
- {
--    DeviceState *dev;
-+    HppaMachineState *hpm = HPPA_COMMON_MACHINE(machine);
-+    DeviceState *dev, *lasi_dev;
-     MemoryRegion *addr_space = get_system_memory();
-     TranslateFn *translate;
-     ISABus *isa_bus;
-@@ -596,6 +598,7 @@ static void machine_HP_715_init(MachineState *machine)
- 
-     /* Init Lasi chip */
-     lasi_dev = DEVICE(lasi_init());
-+    hpm->lasi_dev = lasi_dev;
-     memory_region_add_subregion(addr_space, translate(NULL, LASI_HPA_715),
-                                 sysbus_mmio_get_region(
-                                     SYS_BUS_DEVICE(lasi_dev), 0));
-@@ -652,7 +655,8 @@ static void machine_HP_715_init(MachineState *machine)
-  */
- static void machine_HP_B160L_init(MachineState *machine)
- {
--    DeviceState *dev, *dino_dev;
-+    HppaMachineState *hpm = HPPA_COMMON_MACHINE(machine);
-+    DeviceState *dev, *dino_dev, *lasi_dev;
-     MemoryRegion *addr_space = get_system_memory();
-     TranslateFn *translate;
-     ISABus *isa_bus;
-@@ -669,6 +673,7 @@ static void machine_HP_B160L_init(MachineState *machine)
- 
-     /* Init Lasi chip */
-     lasi_dev = DEVICE(lasi_init());
-+    hpm->lasi_dev = lasi_dev;
-     memory_region_add_subregion(addr_space, translate(NULL, LASI_HPA),
-                                 sysbus_mmio_get_region(
-                                     SYS_BUS_DEVICE(lasi_dev), 0));
+@@ -738,7 +741,7 @@ static MemTxResult astro_chip_read_with_attrs(void *opaque, hwaddr addr,
+     switch ((addr >> 3) << 3) {
+     /* R2I registers */
+     case 0x0000:        /* ID */
+-        val = (0x01 << 3) | 0x01ULL;
++        val = ID_ASTRO_2_1;
+         break;
+     case 0x0008:        /* IOC_CTRL */
+         val = s->ioc_ctrl;
 -- 
 2.54.0
 
