@@ -4,101 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BC64CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 04:47:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30AF5CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 04:49:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPCME-0006IG-5F; Tue, 19 May 2026 00:47:06 -0400
+	id 1wPCNz-0006kd-UX; Tue, 19 May 2026 00:48:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wPCMD-0006Hx-Bg
- for qemu-devel@nongnu.org; Tue, 19 May 2026 00:47:05 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1wPCNx-0006kJ-FN
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 00:48:53 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wPCMB-0007wP-So
- for qemu-devel@nongnu.org; Tue, 19 May 2026 00:47:05 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-67f7caa33easo6546766a12.1
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 21:47:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779166022; cv=none;
+ id 1wPCNv-0000kC-Tf
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 00:48:53 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-bd394f4a931so672911166b.2
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 21:48:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779166130; cv=none;
  d=google.com; s=arc-20240605;
- b=Q0Qijq3W+JiVmZLVyPSafPDZAj4sZj3ooVZvwmyLlCBy/xaqpgaYyS9qJOBR6n0l4o
- FGH6QSomy/Jv23MC6uohHn2JN1SkxAfaehYh7ba4+kKNEThP/TzvoYCEjf9W2b5gZ+Jt
- 8J8b8RpPEwNF4Wz7R+VKrQjWZkNLUkQBcL+bTHsX2zfn5eXtz5f/yhxdy3uFj4n/cjw3
- UvpPvWXWov2PcN/bEXWPXp+LgpIA1gU46HbjQcMk+ZCD8d4JZIceCIV7xtX+7WHbBt0q
- u09Fq78/Phqa8zr5ogRYz0AN468tKptyw+LGSTUca7QnWZix2XRmQZ239PyWSPnJaxrT
- pnWA==
+ b=eepieQkHWFKgtbF/ZXAS48kNpPB9x6BNBNiesXZW7Z5hNHxxPyZ34mWnbKSo+5m+zA
+ dvAKhduHspdqSMq33znbIjldj0aXu24ICHKk6t6a3qLC90jScttavDG5Dz4y9/8Q5TTx
+ +mXFjsLmfYamiUMCUzQumw1nwFDigQ7cImVFJiSdvGKHrXab2PWrfpEe6xspMfL81mrc
+ xp+f8X83hHLmd0VfQTQ3JUtaNd8E23qMGafMQ4AHKTfD4mmr7ekt1OwJh6ayYC7rszHw
+ fQrWB/LP+xScPuktStQmzR56Pli8SOJ/pysEyN2I/8X77l7xrPKw87n2oZbDyJvQbdLh
+ b8Jg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=3991GbzDPesCO5+15GL45/56y+2vXTmeBnW5Dhu9hXo=;
- fh=QdiGAo3+20dYAsNfYmSmkU0NWi4CmpUW2WBeZPr6iYY=;
- b=VoZxtT+zsUz9+jmxotUX8YtdDQV2MVBp/jbmFH13dqhjdo7SkZuur4ESNRqPQIRAq9
- 9VstM31Wdsj/jzhz0ShHxkK4aUCP4GnOqBBGlpyd7QdMla1OoB625LPOu4a9KG/8wh31
- LPTgdl3K4o3e9ZVA+P5NMsD/Bqgz8R8CFnEmcq6yz+g/GAH5gIAJ1qt2dTigaU5xPZkK
- Kv2rmOGke7zHoRf6p+Zd6Sf5UtGpz7eoWM4wxGnhhIeiDqe5o3XsGLctNNEBvpdUNuh3
- Bsbf/LHXYwDw5GaiD4QkRhvh1aiFazzlyCVsMKoWECE6pgebP8OnqABmThcLrKLoMhoo
- JY9Q==; darn=nongnu.org
+ bh=37msn/h76tZy7mtPLM4Qy08JA/Un2IRmRhlHQTmizKk=;
+ fh=GDHgVZLUzfC/a9ecQHEKaPVt/uVGB5TWXR6UJeGYf+0=;
+ b=ajLvmZZLvn2FjUG5hMbel1xoUB0SQC0Gloa+kq9pJeutqAGllxFF9Ikk8jsaJFUoeD
+ c0UAfNrFeAyL2YRN4kGvpm7aGagzpOuXHpBXQkJ1oAdE3WWObKP0Y5sNGJzrF5lEeq0N
+ JZWK/AOLdEpr55+eOFi7rQfi1brUg2sOBiLry9BEfM/yrLkE9bQDttlSwJYIdfTKC9QO
+ 8Y9fHnEEtH7GzB47p1wHH1H01S2DJTif2FEBj0NsnR+8V65jkoi4mTcx9A3ydxhhePnf
+ 5TEEyEKvigntYXXcV30BsiWIazxCKm/+pVxafkaanSiskOEVNYZk2hsSX9KxD1peg6hD
+ bypg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779166022; x=1779770822; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779166130; x=1779770930; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3991GbzDPesCO5+15GL45/56y+2vXTmeBnW5Dhu9hXo=;
- b=aqQHykO07em1/6kFMvdfUcXHD+UZSQ1bopGlV5Lxkx1ZgJ0ANcEdm9Ma8KoMIka55w
- vRv2KXzgC9YLPhEkcrw1JihLrll9qOtKz6jJpKEIdMD2fZoeH7f3K+pF1ZJKC0cXvxem
- 81DDuYSRur8DwiIEUbwIOsiCHFCh5tTxcBAVVQazJYPwHWtqeL4tPuny+BCpGfy4LHPk
- 9WUNkNhX4/Auj/wuU81OQtcrFgGnxdEaEwKVitx9xN0kE9BfyXOI0kBEoYo9dKhn/KZi
- C23AixGR/BYy0yI0nDxYXQe6KhIcUYXbYHXFl7uwCW9IsF6oGFutGwzaDgv/sW8XcA6l
- U2AQ==
+ bh=37msn/h76tZy7mtPLM4Qy08JA/Un2IRmRhlHQTmizKk=;
+ b=WlEOlPHechD+1l2w9MQ8837K1rTEwfXgQfpvHUMfW4Z+/VMEVchtnB4nt8YURYPmdb
+ fGBPkMHCDKUp/6fB1JRF59tz9PsB+KdIjOBdhQeyyiP21T3sHr1l+5l+Bo0SNbki1FLu
+ ccgyvI2xNH9W0dJv9XXPFnPeTYSKpULjnvmLCKkAS3rGo5sLEoPw+8vb0DE40ZFH+Kiu
+ c549kNKqgUWwyL4327G2nfQkRnKqpYyKPBDCk73kBSnIW38j4PCoGNCnEMmfQZ22747n
+ haqe5d6PHsgX4/D3LmdwsH0CNA8JaYcX5unr0a8NwKT6o9S6Bag7qA476d05XABRFHgC
+ ioGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779166022; x=1779770822;
+ d=1e100.net; s=20251104; t=1779166130; x=1779770930;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=3991GbzDPesCO5+15GL45/56y+2vXTmeBnW5Dhu9hXo=;
- b=p6Mu6jUPHWZ1yCqqSsYd+69XTnbcxeEr5MvGaph6PbcBn4Mlfl7PxHFK3t4YHuK3je
- kkyT19RLz66gw1iiFsi+CQ6IwMfGwoZ+1hy4N7ap2tEBuqA2bffvFK48wgwROZKZqt3f
- ts97xM7hyGF6S9jlBOuzauGoW6R5hGXZPARtS+8FQCbaxdqtxWWn9/BUj0bZzLg6vjiB
- zO4Uly4/DIDk+gd8JLzWX75yAPJvfOSsNmXuMRbZ0yEjKozj7595kPek379PUBElaOnu
- AkuktEhObDuxYg+QU/oRy6z974k7V4j7kAG38/KcTyWGdTFqdD7iRm6EYj/jtLYDUT7h
- t8ow==
-X-Gm-Message-State: AOJu0YybaTe/WtujIJGuh6wbp9bu1Qt97AKj+Yk7DWvA5zemxvr0XgMX
- E+gQQkNhMNuvsjP/uHx/pVZ7mprbqTHZ/0x91xPhzht2xKxj5r62lvN4z85YmE0JWN3WrqB9jFY
- sJ099VuaBV6weO1vQXqFeMGqfOmFdjmA=
-X-Gm-Gg: Acq92OEjtYrcbzQDVpN74l+735lI2GuvfSLone44Gt3KP6iitp+g4Vue+yDI5ZhoNkw
- 5M03wQxRDdF68aXMdmWSkxUgr6/HyNOG6qfC0JXF45yaAuI6372eX+DhVzoZJsJNI0Nsi6RUUsF
- IKDWo+lJTjJJ3VwRoDwY2mwI9Wsy1tUEXYUYFaq9yMMt8QPzqPa1ze08aFwvipS1A2ewu1Pxkxl
- RbPfq4b9771hoppi8qF2x22RD/wcbcfqLUq+lV2eMfyu7Cwe/0KMbFHjCrbXgVnoTAeTb3FLjG+
- fEZ5lnxT1S+eJa0uIEvddRGNIlCr5UPJj36SWg==
-X-Received: by 2002:a17:907:72d6:b0:bc7:73f8:9f4c with SMTP id
- a640c23a62f3a-bd5177d53admr962489366b.8.1779166021947; Mon, 18 May 2026
- 21:47:01 -0700 (PDT)
+ bh=37msn/h76tZy7mtPLM4Qy08JA/Un2IRmRhlHQTmizKk=;
+ b=M9qrh+WlnHiTY4AXmcqusFhQSqnXxQ+SZ81gBvrFzcYr9QlYoXhpw+nwqjOG2Lv0fG
+ hPdbNwdUYn4vuoqq37v5M//V7zsFIYgVG0cTA3U3xi1SSun3R5ROi0foq7jVf9QR+g6/
+ 4RlJY3E1TTWTsQE764TsU4fKgYvyd1UO/PrynlRdxQonh+G3YuTh7gTPm4oDZ0hZIptP
+ uFbUYEEyYYoWTQevQhu0fphlES9qsjQAbygcyG2OvwOYUM7pi2yii8zhLvPwY1qrcsFV
+ 4JK0qpb/5h1bol+YmCpBpSeiDnGGUWx3w4+NjSfc0VTIzK7lKyyyWvVdJA7it8+yHtdP
+ Vgdw==
+X-Gm-Message-State: AOJu0YzYMWN92glHIPzjSQRQQ9e3fWLpawKdH42HWPS7NXhfqR8BY+nG
+ r/WpRBqtRIz442K4csR6Aq1GCL3+0YaID2EAvjAci/VB4mK9Sgu5j6cGVg506m7QBvtX9CqcrCM
+ T00vkDgBxgNi8nT6Ug4XzyH/earXQHr0=
+X-Gm-Gg: Acq92OGHgDGUHX0jtrA+SFvpSabM2XikZmEDIQIf3kM2eJyrtAv4fE5mlVqfZLFiC2W
+ SZ2N/iUjBBzrHFO4X2B3MOyFuifnVmLZBoMd/nPgA+J7EVP9zp9xidXk481D5IPHwLIxxmp7xtg
+ gMpQl1qxDIKIEtmgh3xSpQFz3sh/yIBXLP/uXPfHlonz0yG2jnuc7SSbbRSFdjceBzcDZxpS9Rp
+ wVqx9IzuGPk/2q53/5gbzhn+nXsK2hkBFKBB2ilUZMAoeQTgr+UnGyyUQ9yaR+L6mbKq7bG6VCn
+ ou+E/JZd31oa/liQrqBAbrtxSPDiCb0Icjsx4g==
+X-Received: by 2002:a17:907:ea8:b0:bd0:4f6e:9b2f with SMTP id
+ a640c23a62f3a-bd51780c078mr1018033666b.1.1779166130017; Mon, 18 May 2026
+ 21:48:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260428160103.3551125-1-jim.shu@sifive.com>
-In-Reply-To: <20260428160103.3551125-1-jim.shu@sifive.com>
+References: <20260518070143.8405-1-jay.chang@sifive.com>
+In-Reply-To: <20260518070143.8405-1-jay.chang@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 19 May 2026 14:46:35 +1000
-X-Gm-Features: AVHnY4LFsH2fj3ff9PStkK8G1AtLrPN_8ZfKM6cRDmwBP4DOtijRnZfuvexTlP4
-Message-ID: <CAKmqyKNVUUhRYt0Dn6cBF9FUqGEKAJKdAyc+7u__FbCE8GuZVA@mail.gmail.com>
-Subject: Re: [PATCH 0/4] Minor fixes and enhancements of RISC-V AIA devices
-To: Jim Shu <jim.shu@sifive.com>
+Date: Tue, 19 May 2026 14:48:22 +1000
+X-Gm-Features: AVHnY4K3s8qoRGMMXfp_mlsfHa1uy_pHEZGN5tZ1maNZUHX_7tcQkQBhr-907E8
+Message-ID: <CAKmqyKNi=scF+fshvBWz3yL89UNM8J6LaVazKdKHy8q6R=bp3A@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/riscv: riscv-iommu: Re-process command queue after
+ clearing CMD_ILL
+To: Jay Chang <jay.chang@sifive.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
  Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>, 
  Weiwei Li <liwei1518@gmail.com>, 
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>
+ Chao Liu <chao.liu.zevorn@gmail.com>, Frank Chang <frank.chang@sifive.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -122,21 +123,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 29, 2026 at 2:04=E2=80=AFAM Jim Shu <jim.shu@sifive.com> wrote:
+On Mon, May 18, 2026 at 5:03=E2=80=AFPM Jay Chang <jay.chang@sifive.com> wr=
+ote:
 >
-> Bugfix:
->   - APLIC should also clear pending bit from rectified value when it is
->     in the both level-trigger mode and direct delivery mode.
+> When software clears CMD_ILL or CQMF error bits by writing 1 to CQCSR,
+> the IOMMU should re-check the command queue and continue processing
+> pending commands if head !=3D tail.
 >
-> Enhancements:
->   - Add reset API to APLIC and IMSIC device
->   - Add trace events of APLIC read/write function
+> Per RISC-V IOMMU specification :
+> If command-queue access leads to a memory fault then the
+> command-queue-memory-fault bit is set to 1 and the commandqueue
+> stalls until this bit is cleared. To re-enable command
+> processing, software should clear this bit by writing 1.
 >
-> Jim Shu (4):
->   hw/intc: riscv_aplic: Fix level trigger IRQ in direct delivery mode
->   hw/intc: riscv_aplic: Add reset API to APLIC
->   hw/intc: riscv_imsic: Add reset API to IMSIC
->   hw/intc: riscv_aplic: add trace events of APLIC read/write function
+> Signed-off-by: Jay Chang <jay.chang@sifive.com>
+> Reviewed-by: Frank Chang <frank.chang@sifive.com>
+> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
 Thanks!
 
@@ -144,14 +146,36 @@ Applied to riscv-to-apply.next
 
 Alistair
 
+> ---
+>  hw/riscv/riscv-iommu.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
 >
->  hw/intc/riscv_aplic.c | 116 +++++++++++++++++++++++++++++-------------
->  hw/intc/riscv_imsic.c |  19 +++++++
->  hw/intc/trace-events  |   4 ++
->  3 files changed, 105 insertions(+), 34 deletions(-)
+> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+> index 5bc2472a83..1b8a8e9ef2 100644
+> --- a/hw/riscv/riscv-iommu.c
+> +++ b/hw/riscv/riscv-iommu.c
+> @@ -2034,6 +2034,16 @@ static void riscv_iommu_process_cq_control(RISCVIO=
+MMUState *s)
+>      }
 >
+>      riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_CQCSR, ctrl_set, ctrl_clr);
+> +
+> +    /*
+> +     * After clearing error bits (CMD_ILL, CQMF), if queue is still acti=
+ve,
+> +     * re-process pending command.
+> +     */
+> +    ctrl_set =3D riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_CQCSR);
+> +    if ((ctrl_set & RISCV_IOMMU_CQCSR_CQON) &&
+> +        !(ctrl_set & (RISCV_IOMMU_CQCSR_CMD_ILL | RISCV_IOMMU_CQCSR_CQMF=
+))) {
+> +        riscv_iommu_process_cq_tail(s);
+> +    }
+>  }
+>
+>  static void riscv_iommu_process_fq_control(RISCVIOMMUState *s)
 > --
-> 2.43.0
+> 2.48.1
 >
 >
 
