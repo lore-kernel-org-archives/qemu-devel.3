@@ -4,85 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17992CD4F5B
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 17:27:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA499CD4F5B
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 17:29:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPODT-0006Nv-PD; Tue, 19 May 2026 13:26:52 -0400
+	id 1wPOFm-0007CQ-5x; Tue, 19 May 2026 13:29:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPOD6-0006Le-MT
- for qemu-devel@nongnu.org; Tue, 19 May 2026 13:26:29 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wPOFf-0007BL-3Q
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 13:29:12 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPOD3-0002XI-PE
- for qemu-devel@nongnu.org; Tue, 19 May 2026 13:26:28 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-48fde648a71so28595015e9.0
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 10:26:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wPOFb-00033J-HK
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 13:29:05 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-48ff4f8ef0dso44285395e9.3
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 10:29:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779211583; x=1779816383; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=W7Y3ov/4uDmrOIHa6vTHJu/NH7XRpswpbX5edldRgyQ=;
- b=zQscikjrQ2FVsb1LIcGI+sJNpPwN29tpEtNwdZ92br79D+fBdbKIZ7qblnL1K8M+56
- 1qDVIWU+Q6jtgF+mIrfWINjbB3ECZMCQj/9LMDQmAn+AoTE+zeW/N52Z8R6rVmzFVWYr
- xrFyuk6udB1TKQrwX2B+Pfa9V15ixYrI0/VVC0/IIlkhbPNespP4A6Bf466UM/e+MAE6
- cXCaMyuNKB8Qvd5jBUv6n00yteCjVidgxTdBna5uFmXKD32ZRPZQGUFQJ0cjQ7R26dOy
- lT/+RWdbl80qtAC3KDg5OLx0waTMzdgnnh6EbXB+tKXRdZs9xQmcQNplxGqJrRS9V3xo
- q2bQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779211583; x=1779816383;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1779211740; x=1779816540; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=W7Y3ov/4uDmrOIHa6vTHJu/NH7XRpswpbX5edldRgyQ=;
- b=gXWOeqr6rtAG582WKXCOTSXgA1TmfSb3J15QwOPN0Cph/7UyOuHWTl80gvGvLSE8qz
- MKnt8U1xO+EAR1Am/we5PHoIZUxYuCuFMhhQMf//yav+LQVw3IROqXcFZj4SOmmObaEt
- qzZaMjeMeDUIz6pNKwjLT/FgCxfQ8C18cu3dPk2vKGWl2vr78uV5rtawcio1xmttGpYL
- pxW4YfFjCidm5gxy5pgUwoOFCMPRQFtgC+dqJZkmtb7XY+UsPbZYy07w4ba649trNuEO
- 2v1Ef/OHPjgDNX0Da2+leha4X1NrTBmvL1AFJyU5h+sHxHldYMQERIGTwya5oWvMC9HZ
- Hk8Q==
-X-Gm-Message-State: AOJu0YyidzkvMjWnUjdh+/izGDQevOa6T/dB6oFWXwsk8J/no7lq63hB
- 7uvt/TDbBNMo1lX4oNtyAomGwH0hrI0GGQaBOh/CgVem+jcDoep6rvXKDsqYdFyPmvNtifRNKum
- U9GrwS2o=
-X-Gm-Gg: Acq92OE9qi9+Lr0P8npeCvUWBxr5ZHxpxAnZVlAPGY9BkKvS/yUc2xYY5h3U/seIJ/N
- 2KPCDrQAJGaVryQ9IBe5LIRryYdl5hqMP+gdcPPFtbG6uncXikB6OvPtg+FoQLaiU0aKMgJp5aT
- KtqK+3yaXTns6bXLWPz2XczUuAjpuuk6onmxPR+dnOjVD+Up9sS3lSccf654VTABSQlOP0/QaV5
- jvti8VpG8Fh6T6Kzgf9582PO2eEGwPtfvPz2otGbkmB1q93BMoU9O1w3ps9bdYamE9NCq3f8LY9
- Mi7/wkvBM7dNvZsXJuImuCiUbdla7MKfZwQwSLnBjl8dUEQIdoiveZNXtyWdUFFUBA/G1fxSJNc
- 5BvZfPiNzIqqJlp+sQxE6985Ssy0tb/dy+73pROyUIr8JWta0qJxUQz21PhWr23H8iVSjTFK0Gl
- fDzegK74DJtzAq9xGySL9xc3Qakme1oyPrj2VWaQNssmGn5I5uCveGFdEy/e2A+cyu+J+yt0dX
-X-Received: by 2002:a05:600c:8288:b0:490:2640:a982 with SMTP id
- 5b1f17b1804b1-4902640aefemr16769965e9.3.1779211583306; 
- Tue, 19 May 2026 10:26:23 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48febe78aadsm108523605e9.29.2026.05.19.10.26.22
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 19 May 2026 10:26:22 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH] MAINTAINERS: Fix RISCV related paths
-Date: Tue, 19 May 2026 19:26:21 +0200
-Message-ID: <20260519172621.98469-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
+ bh=tdDxCKsR0fJl4EJ0tv2iInGhZZkRr8JafcQfuDNdDy8=;
+ b=sDKInW+9jjiZU124QNlL+xkkfYvKVndPgr0MZf89Bhb0KtzZEaAQeDo/noi8ggQ13O
+ lVQY5ND9XWhHVvxIwSHXbOPy1sqxeWyEJsiaEi6WdgXRB4sDpJkyC77sn8qTSRL2CCUm
+ dQDL1PrrnHG6+Rzq45J9Lmb9bet3o/+NNp5kPxTvBotXPfeqmtTpUdkcemCwoxb709Vb
+ y6Bez9pLBPQZnvDJCCwhV6Q33WbwZN9soWDKvYC0zDx8dLks6vkhDE/TydiF1qk5937L
+ Rzp0U7fTyh9rmyZ19F4mfpo8Lzbu4anmhhndxr+CgLWYLFMSWHRsLZahTmHbsq37XAcC
+ TlaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779211740; x=1779816540;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tdDxCKsR0fJl4EJ0tv2iInGhZZkRr8JafcQfuDNdDy8=;
+ b=TpDx53kkrRzrBgVXHRWFWRqzcE6FOcLMZ+R4YXmtYP6EVVoj5n2TWRaDK3OQBP7d32
+ b9110clWPFFv9sLi/+CCMyYgHiMO4+O3xtfa+BiMRMXRg6KjllLqfMaB1pccooexiwA6
+ 3nSxQN+6E0KoG3yzxfPPq76dTXkV3piJJ9M5uqKTvWC3fSFNVA8mWml9IC6kF2Ig5sKr
+ 1kY5auTCitDPx/s1Y3h9FczaSZA1XQ98miHlmlilyz8KMEfU9MgE3Oi7SjMS6cpN182a
+ rWKLGdZ+djFt0vUHLZtaagYrUadglpmAktpAZUN9hxLeBPdi8JRV6Q3NpCsLWalm0wYI
+ UkUA==
+X-Gm-Message-State: AOJu0Yw28Ev4FhWZRkosO46vK8M+RetCzROwGLQWuWXkQIsjXhQ1SZaU
+ 0UZPPFJeQEWy9y7bZb5M4eYqT0B8gMxouWl46ooSk1LnDUQ0hqZp57gRUOeMaBBvhmQ=
+X-Gm-Gg: Acq92OFgEWQ3XZxOLX7a5D79J6d1wYUg0yFKcv044LoD3a4gsqP6ehCRY5uvWQ7BqqA
+ nanNGt/fTNPK2zivruF7P4CsktaVeA6v8pRSemn/cOozF0g+tSmZ9bD72TwaNXZtglqS8v479In
+ MZ8Ox2zfPETPFcDDBU5Ougheon1v8QA8uX/xJEazPqfFPqyAAtoJlHtFRNG63qzTRkcXLoQv6cz
+ XQ1FohzJZzMZj5vuPWX+bNTNAsizXgsQwSjPXoP4c0K+sDh+AZ+TwBMdPwnvHVItvkCTWWZsmf3
+ 6GUmI/QBbd4zVcsp/eL1kw0T/HLo1+FqUMvI31Oktk/H5V2ED1VgEVQpRaaN3STM/6XhuQbBalZ
+ iJ0xT7/p3PgcxsM2Uz27Kq405RNn1RspZotFN2vk6nyTxLAvdgzTsWnSFkGRNVMfsyu2N+TNgmA
+ 1cgvaMVDQInmlcdH96lazN8Rg=
+X-Received: by 2002:a05:600c:4e87:b0:487:21c7:2885 with SMTP id
+ 5b1f17b1804b1-48fe60e142emr331701765e9.5.1779211740345; 
+ Tue, 19 May 2026 10:29:00 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48fe57944c1sm372207145e9.7.2026.05.19.10.28.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 19 May 2026 10:28:59 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 844B05F8C7;
+ Tue, 19 May 2026 18:28:58 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Lucas Amaral <lucaaamaral@gmail.com>
+Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,
+ dmitry.osipenko@collabora.com,  marcandre.lureau@redhat.com
+Subject: Re: [PATCH v5 0/4] virtio-gpu: enable Venus/Vulkan without OpenGL
+ display
+In-Reply-To: <20260519164818.22982-1-lucaaamaral@gmail.com> (Lucas Amaral's
+ message of "Tue, 19 May 2026 13:48:18 -0300")
+References: <20260519164818.22982-1-lucaaamaral@gmail.com>
+User-Agent: mu4e 1.14.1; emacs 30.1
+Date: Tue, 19 May 2026 18:28:58 +0100
+Message-ID: <87wlwz9ulh.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,46 +105,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Host user-emulation headers were renamed in commits ba0e7333620
-("configure: Merge riscv32 and riscv64 host architectures") and
-bbf15aaf7c7 ("common-user: Move safe-syscall.* from linux-user"),
-then covered in commit 355cdac7d86 ("MAINTAINERS: Add
-common-user/host/riscv to RISC-V section"). Remove the obsolete
-entries.
+Lucas Amaral <lucaaamaral@gmail.com> writes:
 
-test_riscv64_sifive_u.py was renamed in commit e1a8572a8d7
-("tests/functional: Move riscv32/riscv64 tests into target-specific
-folders").
+> Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+>
+>> I don't see the r-b on the patch.
+>
+> It's on the v2 thread for the same patch (then 1/3, unchanged content
+> in v5 patch 1/4):
+>
+>   https://patchew.org/QEMU/20260311022752.64192-1-lucaaamaral@gmail.com/2=
+0260311022752.64192-2-lucaaamaral@gmail.com/
+>
+> I'm not familiar with the convention here -- should the Reviewed-by
+> be re-stated in the cover letter of each respin, or carried only in
+> the patch trailer of the next version? Will do whichever is standard
+> in v6.
 
-Reported-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- MAINTAINERS | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+Generally you apply the tags to your commits so they are carried into
+the next version:
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 73b7ebf1d7e..0a1cc0e51a2 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -361,8 +361,6 @@ F: hw/riscv/
- F: hw/intc/riscv*
- F: include/hw/char/riscv_htif.h
- F: include/hw/riscv/
--F: linux-user/host/riscv32/
--F: linux-user/host/riscv64/
- F: common-user/host/riscv*
- F: tests/functional/riscv32
- F: tests/functional/riscv64
-@@ -1783,7 +1781,7 @@ S: Supported
- F: docs/system/riscv/sifive_u.rst
- F: hw/*/*sifive*.c
- F: include/hw/*/*sifive*.h
--F: tests/functional/test_riscv64_sifive_u.py
-+F: tests/functional/riscv64/test_sifive_u.py
- 
- AMD Microblaze-V Generic Board
- M: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
--- 
-2.53.0
+  https://qemu.readthedocs.io/en/master/devel/submitting-a-patch.html#prope=
+r-use-of-reviewed-by-tags-can-aid-review
 
+There is tooling that can do this automatically for you, for example b4
+will gather review tags and apply them when it pulls a series.
+
+>
+> Thanks,
+> Lucas
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
