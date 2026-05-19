@@ -4,89 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AAFCCD4F3C
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 16:49:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9BA5CD4F5E
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 17:04:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPNcQ-00039E-Ub; Tue, 19 May 2026 12:48:35 -0400
+	id 1wPNr9-0007zb-U8; Tue, 19 May 2026 13:03:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
- id 1wPNcK-00037S-7i
- for qemu-devel@nongnu.org; Tue, 19 May 2026 12:48:29 -0400
-Received: from mail-qk1-x72b.google.com ([2607:f8b0:4864:20::72b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
- id 1wPNcI-0007fy-9U
- for qemu-devel@nongnu.org; Tue, 19 May 2026 12:48:27 -0400
-Received: by mail-qk1-x72b.google.com with SMTP id
- af79cd13be357-913cc4d7c71so359669985a.2
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 09:48:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779209305; x=1779814105; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=N4/lqHZRCy3sAKq1DW5PUtGDY6iZILtZtdMIPcKbBuI=;
- b=dHioeM1U5T+qzGhJd8biRJ2A4jZVAyba5BaItxthDdsK9uzv7hk9UBmV1Jxgezmx6T
- 2/u9dLoSBPdOZkhfDeq9KoaI9RF3sl9eexASVW1MPHJ7Ukd/XuFSAwcVtsXks+FF05hU
- 72n/WMXtsDwvVrNvs7syb+YpyHQY2l2K0R33NiS97FNXc6sGFLnCUSdhBql7OtrzEx6Q
- F30wHTUUAujZQ+55mu8QHj9r41w39bQtC9vBVp9NgNQ1FDhzbkgC8Q7972bgTNR4e5HI
- GbDx9XFHsC/ndoTmc/VMsnZICsuZ24J7UtqN28Drwda7/o9IqYXbIWw8riSIs/W5KiHY
- idzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779209305; x=1779814105;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=N4/lqHZRCy3sAKq1DW5PUtGDY6iZILtZtdMIPcKbBuI=;
- b=QNH8cenPWO4w6d5U5ciDt1Au7kEtyT9nufKSJehQKNVie6TQss+IAHEhNy3ZXttszk
- OWWwJYjX5BhZX+zJcH8jLnwFkYZoyD/FfSql9CEMPd76cgjb0PCyrAaM9skLFSF/98JM
- V1YDGKWuxaR9LIhMZpBEkVHjPuvLc4VlOpzPt9JgGXj1WsljFe0FYPBCfdSnudjG690T
- SQRq+AlEcQpcRD+o72nopf9e3nWsx7e8mAn7q6ATwQSO7HAYcuCDSRmkpr9jMTuCjRDJ
- OGZewarNZ9RUy72njy9gmaYWxWYMmgTzn8A9S4fupuHBrdKIuHWA4QUFR/wxTXgxGbU0
- UtYA==
-X-Gm-Message-State: AOJu0YyT2ybkz+1kWdqv4Gcl9JAlC0PoZZIGhPUlCFMvsw2K0YnrtTo2
- BxR7LQgeYwtWchN/kN+I23hH2gaPU0IXLYyUkVBedLDaSIX4JbxwuZtJ
-X-Gm-Gg: Acq92OH5+hBnOQgdJvEtQd3SPvx2EWUiwU/JAVU4EjqNQKJOEhPdChEaepXLsSh8bKQ
- LBkAhjUPax09f33+RAK9QxXcDk7nXfCIqmLAVEAcKKaG64KBYQ6jqQUk0QB1BqIpR8juHzNoI3c
- sSVMUkd0y16BXHjCTARWXb74gi2ryUvifGxzx7RPJZp+76qB1zqCmBMQm6FpkpuBDXQSchTJiIP
- Qz9pIWYcEg2+ymrYCK7tSjAwkm7z/ihILUoJ+8exqeV09RZBcGFNMsGwF8n2iYwRL8FMw1wzSk3
- VzyPKMSJUGz6g4f9mIR2bH7jC98J8MvwI7rz2bW2Huj9KQvKbIWkyhX4mNtRk8PJbu1AMi35rRz
- LjttP1L33IYJ6jAGxOD1yj05ER0o8Db4IhQbdLGRAsRI7tvb6vQeBSytsVRBJKm0ydhMNFrpchm
- MOauV5d1fDvS/CyHI/yHQTE5lvTmpLBcndFyCA2JX+ShZL6+Q9JgPVBW3+NzTmQ/k=
-X-Received: by 2002:a05:620a:4707:b0:8cd:9033:1724 with SMTP id
- af79cd13be357-911cce886fbmr3068237685a.9.1779209305083; 
- Tue, 19 May 2026 09:48:25 -0700 (PDT)
-Received: from localhost.localdomain ([2804:7f4:c030:208b:c9c5:39b5:dd2b:4560])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-910ba182535sm1880223685a.8.2026.05.19.09.48.21
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 19 May 2026 09:48:24 -0700 (PDT)
-From: Lucas Amaral <lucaaamaral@gmail.com>
-To: alex.bennee@linaro.org
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, dmitry.osipenko@collabora.com,
- marcandre.lureau@redhat.com
-Subject: Re: [PATCH v5 0/4] virtio-gpu: enable Venus/Vulkan without OpenGL
- display
-Date: Tue, 19 May 2026 13:48:18 -0300
-Message-ID: <20260519164818.22982-1-lucaaamaral@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <874ik3d6gq.fsf@draig.linaro.org>
-References: 
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wPNr3-0007xm-8x
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 13:03:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wPNqw-00045x-Jy
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 13:03:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779210212;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=EhiDhqiCb7FzuHBnUkHoGrC4DbGr7HjU+ndE2znl4j8=;
+ b=aUZMMDaRHcef8HOrfEwFbdbEMLCvme5pJnXLfiAYeoIHA1Y3nyT/sUIGZNPukPPhLG2Xc0
+ Y+WL4Jn8JPnS8FcwEIUipgczCU9U41QEDlsXymZTKx4tyF8RmkSrVlAFtGiiOpQaGkRkL/
+ UWZkY4UpGS3U05ID8/yIEiGwq2/i810=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-153-NbqgNeN1OceaTsoiJBSCTw-1; Tue,
+ 19 May 2026 13:03:31 -0400
+X-MC-Unique: NbqgNeN1OceaTsoiJBSCTw-1
+X-Mimecast-MFC-AGG-ID: NbqgNeN1OceaTsoiJBSCTw_1779210210
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 363BE1956094; Tue, 19 May 2026 17:03:30 +0000 (UTC)
+Received: from merkur.fritz.box (unknown [10.44.49.113])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7914B1684; Tue, 19 May 2026 17:03:28 +0000 (UTC)
+From: Kevin Wolf <kwolf@redhat.com>
+To: qemu-block@nongnu.org
+Cc: kwolf@redhat.com,
+	stefanha@redhat.com,
+	qemu-devel@nongnu.org
+Subject: [PULL 01/18] blkdebug: Add 'delay-ns' option
+Date: Tue, 19 May 2026 19:03:00 +0200
+Message-ID: <20260519170317.345032-2-kwolf@redhat.com>
+In-Reply-To: <20260519170317.345032-1-kwolf@redhat.com>
+References: <20260519170317.345032-1-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72b;
- envelope-from=lucaaamaral@gmail.com; helo=mail-qk1-x72b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,20 +83,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alex Bennée <alex.bennee@linaro.org> writes:
+Sometimes reproducing a problem for debugging involves slow I/O, so
+let's add something to blkdebug to make I/O slow when we need it. This
+can be used either together with an error so that the request fails
+after the delay, or with errno=0, which allows the request to succeed
+after the delay.
 
-> I don't see the r-b on the patch.
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20260421161132.99878-2-kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+---
+ qapi/block-core.json |  4 ++++
+ block/blkdebug.c     | 15 ++++++++++++++-
+ 2 files changed, 18 insertions(+), 1 deletion(-)
 
-It's on the v2 thread for the same patch (then 1/3, unchanged content
-in v5 patch 1/4):
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index 508b081ac16..0efd51787b4 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -3919,6 +3919,9 @@
+ #
+ # @errno: error identifier (errno) to be returned; defaults to EIO
+ #
++# @delay-ns: request delay before completion in nanoseconds
++#            (default: 0, since: 11.1)
++#
+ # @sector: specifies the sector index which has to be affected in
+ #     order to actually trigger the event; defaults to "any sector"
+ #
+@@ -3934,6 +3937,7 @@
+             '*state': 'int',
+             '*iotype': 'BlkdebugIOType',
+             '*errno': 'int',
++            '*delay-ns': 'int',
+             '*sector': 'int',
+             '*once': 'bool',
+             '*immediately': 'bool' } }
+diff --git a/block/blkdebug.c b/block/blkdebug.c
+index fdc96d1f45d..78cc03746f0 100644
+--- a/block/blkdebug.c
++++ b/block/blkdebug.c
+@@ -95,6 +95,7 @@ typedef struct BlkdebugRule {
+             int immediately;
+             int once;
+             int64_t offset;
++            int64_t delay_ns;
+         } inject;
+         struct {
+             int new_state;
+@@ -144,6 +145,10 @@ static QemuOptsList inject_error_opts = {
+             .name = "immediately",
+             .type = QEMU_OPT_BOOL,
+         },
++        {
++            .name = "delay-ns",
++            .type = QEMU_OPT_NUMBER,
++        },
+         { /* end of list */ }
+     },
+ };
+@@ -216,6 +221,8 @@ static int add_rule(void *opaque, QemuOpts *opts, Error **errp)
+         rule->options.inject.once  = qemu_opt_get_bool(opts, "once", 0);
+         rule->options.inject.immediately =
+             qemu_opt_get_bool(opts, "immediately", 0);
++        rule->options.inject.delay_ns =
++            qemu_opt_get_number(opts, "delay-ns", 0);
+         sector = qemu_opt_get_number(opts, "sector", -1);
+         rule->options.inject.offset =
+             sector == -1 ? -1 : sector * BDRV_SECTOR_SIZE;
+@@ -594,6 +601,7 @@ static int coroutine_fn rule_check(BlockDriverState *bs, uint64_t offset,
+     BlkdebugRule *rule;
+     int error;
+     bool immediately;
++    int64_t delay_ns;
+ 
+     qemu_mutex_lock(&s->lock);
+     QSIMPLEQ_FOREACH(rule, &s->active_rules, active_next) {
+@@ -608,13 +616,14 @@ static int coroutine_fn rule_check(BlockDriverState *bs, uint64_t offset,
+         }
+     }
+ 
+-    if (!rule || !rule->options.inject.error) {
++    if (!rule) {
+         qemu_mutex_unlock(&s->lock);
+         return 0;
+     }
+ 
+     immediately = rule->options.inject.immediately;
+     error = rule->options.inject.error;
++    delay_ns  = rule->options.inject.delay_ns;
+ 
+     if (rule->options.inject.once) {
+         QSIMPLEQ_REMOVE(&s->active_rules, rule, BlkdebugRule, active_next);
+@@ -622,6 +631,10 @@ static int coroutine_fn rule_check(BlockDriverState *bs, uint64_t offset,
+     }
+ 
+     qemu_mutex_unlock(&s->lock);
++
++    if (delay_ns) {
++        qemu_co_sleep_ns(QEMU_CLOCK_REALTIME, delay_ns);
++    }
+     if (!immediately) {
+         aio_co_schedule(qemu_get_current_aio_context(), qemu_coroutine_self());
+         qemu_coroutine_yield();
+-- 
+2.54.0
 
-  https://patchew.org/QEMU/20260311022752.64192-1-lucaaamaral@gmail.com/20260311022752.64192-2-lucaaamaral@gmail.com/
-
-I'm not familiar with the convention here -- should the Reviewed-by
-be re-stated in the cover letter of each respin, or carried only in
-the patch trailer of the next version? Will do whichever is standard
-in v6.
-
-Thanks,
-Lucas
 
