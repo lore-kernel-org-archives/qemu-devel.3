@@ -4,130 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35BE5CD4F54
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 20:47:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D85C5CD4F5B
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 20:50:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPRLl-0005KZ-CN; Tue, 19 May 2026 16:47:37 -0400
+	id 1wPRNq-0006BU-BS; Tue, 19 May 2026 16:49:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wPRLb-0005Hn-IR
- for qemu-devel@nongnu.org; Tue, 19 May 2026 16:47:27 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
+ id 1wPRNo-0006B6-J0; Tue, 19 May 2026 16:49:44 -0400
+Received: from mail-westus3azlp170120001.outbound.protection.outlook.com
+ ([2a01:111:f403:c107::1] helo=PH8PR06CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wPRLV-0005DB-SX
- for qemu-devel@nongnu.org; Tue, 19 May 2026 16:47:23 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64JEwtuP1637265
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 20:47:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=qcppdkim1; bh=FypPL3g7Kl1kPAg3OfPfg3Q5oazJC004v0Y
- YnPLL/Vk=; b=Rc7WC1P3HzqFTn64X2eK1FEoBxATbHsspVPUE3fWK7AV0RSXdwx
- d2dmfgfnp4jxfrpEuNHBHacK2PJ1lL/6Rtf/HSjoJk/lTlLZy7T6chfwLt+3FkP1
- OFVQvW+rY4RUvpwVUszI54R0eYQK5vaMyMZuulzFIbsUsuZxMJeNpqCBpJJrXkaQ
- Euo9I7Eus9Ky8bJGYIcDtFGTUwBOKb7FyMxVf5fKCCe41PsNeDnbJ0QHcNQl9qw4
- iIg4ds7pDbTLBJXE9bclsFytSkDOCROalE52+m1KX6R8bKnRgLUORiMn0QbAmtFz
- HxkFnaPoNVQ2ULY9ixui0Gy/+f/Fa0YFbcg==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e8t3s9cxh-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 20:47:20 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-8b552610488so87640226d6.0
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 13:47:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1779223640; x=1779828440; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=FypPL3g7Kl1kPAg3OfPfg3Q5oazJC004v0YYnPLL/Vk=;
- b=d0oVckifEMTURD9kCjqo+YLN9mDDdjypBdQRuVdM8y4D7QAoYME/bWeKmzCP+ukHzX
- vhtCOcPhOB+lshoXm9AhFAPMirjJu+AdWO2AQFKC2sTea+v/jgHJqXZMttcdfJDD8dcb
- WRoFea5xNyb75hkc2Upr5JUxQEF1fuIETIKtpEz+27sCFxTuLoIID2Xv7XlitEr7HoYy
- XyxmIOFREaNdn+1d2xUPHncd3F3CCPAV91bjQXxelJMUtVOCCH++811q2WkFIR3ZQdYS
- ykYgMCEmOkq6ltwabYD1i4DqzHW+mwGdhsFocDdYezpqlV/5uI9tcKQhd/YmeHp2x9VD
- V//A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779223640; x=1779828440;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FypPL3g7Kl1kPAg3OfPfg3Q5oazJC004v0YYnPLL/Vk=;
- b=JV8vKaOE8ie3DC2v+IxQyG+ZGCUR5FLb0I5LDKGQoQaEf87puJZ4WFlmV2TbKr9nYP
- qvtEuyT4YE77g9YPQR05SYB7h216qaluLgzJkGxY6tcwxhEsYEuAXZnsKkJCdtOMb1Jw
- 4Pzj5jLcEqVLIBeWMwNhIggDcfYQ88LQvxYrcEcbF95YJllcHAaTdHEbXSaSkGg/c1Gc
- IJe4YMGjTwAqXNuk4CHzRfAtJnS1wxYPye/UXmmkSAZHNYc1Qu6o1ps9u1Zgcb9+xWIJ
- Mi0DLgmy+bg4VUaNKKEWHW7Y7+5dlrbYRotsa5lZN0Y1XdWxcO/xESO3Mifq9VHnbKGW
- IYXg==
-X-Gm-Message-State: AOJu0YxTlf2rAHA6vHmYHVbb9o7rWSfX5aPukD619CZelB7zPw9dgyan
- pqKaERHK5zTow+l8hO9W1VPAyCCZVxcxD8Y1kmiIrGl1QKpIQ5zTXth7fxBmf3O3OZOjcEPdaN1
- cL4Hg3EJ8Mh9OjfV2cezmveLGhgSjamXKZvMLyF6kwB64ky3AEA8Jg78JA/ABiHu2Xg==
-X-Gm-Gg: Acq92OEjjuAf9YsvrQKt6HW7T7K8lSbkuDYFYhJfyAlZjUIvoGIm/VjmS9bakSmRiM/
- aS15ZTboDJ9QCWDw+jnzca7+uWQPPkmsthcmskcPSrBSzx47+oFQoUdpcYYl8OHecQCqwfhkMvE
- MvsHsaifw9DGgvCq+ZczzJVyH9UxrnoV5SKzh3cAeovW9f5tV7P3zaanTe5J/5i19kSvjC5i07e
- RguTWfs9mgYfbFZPRQMm4B59Fq7q7IAMU6qr9sT0bzlGUehyDUhRItsEJ0mQpm9/wfYWdklgBli
- HdIzQWsgxF0PITB0qSzYiqKrgWAOQXauXblBwGIPYU59I0CuqmhMqlukF5qXphawIb77dSJQDBC
- DnPkeuDfx1j4T6NRdfvd3rMrJ8XyAF/cwmWdT8+2iFExAx34Ph2Kvk/yey1tV
-X-Received: by 2002:a05:622a:a0c:b0:50f:ae67:96df with SMTP id
- d75a77b69052e-5165a23dfe1mr281424911cf.50.1779223639736; 
- Tue, 19 May 2026 13:47:19 -0700 (PDT)
-X-Received: by 2002:a05:622a:a0c:b0:50f:ae67:96df with SMTP id
- d75a77b69052e-5165a23dfe1mr281424491cf.50.1779223639300; 
- Tue, 19 May 2026 13:47:19 -0700 (PDT)
-Received: from QCOM-UWl2o8bcGT.qualcomm.com ([191.202.238.222])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8ca3619b03fsm102584916d6.37.2026.05.19.13.47.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 May 2026 13:47:18 -0700 (PDT)
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Subject: [PATCH] disas/riscv.c: add 'cbo' insns to disassembler
-Date: Tue, 19 May 2026 17:47:14 -0300
-Message-ID: <20260519204714.1376551-1-daniel.barboza@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
+ id 1wPRNm-0005nM-TU; Tue, 19 May 2026 16:49:44 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=FcztZ9RqewOe+zxm8eV+l6bNVfli7Xli1Ak9ZywB5KeYBsgPfkPtj+7PvoJ9vWpxl/bwQVWI9Vohgq5qCtcW9K3J/uRg5B65oR5Q8759/mmfdAYhsFLAhK4yc00+01afFaiXyHfiBF8Zy/wTD+YDYmVbDdFM07X8a9DK+5fqhSVa9QhI4Qz0/82B2Sit0KYTQO4LZ2nSUJp6EVPi2Q6kUrXKvGuKQ8kiQ1a3K9k2kwrSMumwKIYeFSvvoP1Aacd0MJN4gm2p/hV/hZDolTi8eAUtsQpC4N4Cg+DmIw2Dm8jHALJpThFdedReExBH6vGYjyin+P34t8xq0nvFkHpEGA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=b00CgtHoJm+Jwtht/O3H6X3gNggz22ZEOoUJptiz8YM=;
+ b=l/9fpZ7poLUtQ8AJPrWP5tX7L2qSuQDBKnZN5BJzwIyqDous1ENW1D24PT8WZoDxLs/2qe6o8tsDUkyP55UDwQnMp/8xd8ExPnP2kyhZg6KPs2Pzv9wCOYKNHjBGTpFGhH7G6H+ZvkCMmE8iT2hldHF1yIot1+gP0av3GKZ0awi0Ht8QKptkKg9dmc489eQ4GmsnHD7fwLaYxUX50qmTitNz+ZEUcOLzAFGRn3xX8jw/Iu35bgM/hoKoNlYEkC0+ayAVEaA5PVRvueZBVSwQIg1gcrj0pSVS4KEkgvZvTS4ZEs3oy0QW8/ZWpzo50q2fmYvJL1RdyIlFCDF1B0h2Ug==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=b00CgtHoJm+Jwtht/O3H6X3gNggz22ZEOoUJptiz8YM=;
+ b=AWnEZJld7LZtwKyrIMGkL3fMCjlyZ9jmxKiNJYdiaq485vkbXE3ccBhfLCnzZIZp07d6JDfMWGhzhBBh3GjTUEhd3QfpQMn1UQNZeWIpUZt9Yrpa8l2tyq2hruJ+5InrpUZjHyriMGT2uxq4CYMnnNDQtx4jHBaVRqpgus9JaVUdaXbGsqZbrfb1AiC2DhD0Jbz/+4Xx81gXQFcEKJXaisrn/CWi+oBgbds1qz19QkgW0ZpG4z1IIsW0oqnGO03z8NdSdbIKI17v41668I3Tb1Rt4o2dw4aHeKtyw8Qv+48r1z4OMymaV1OEtPHIdJIoVYKrjWWLuifzmVdmh0XF6w==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DS2PR12MB9567.namprd12.prod.outlook.com (2603:10b6:8:27c::8) by
+ LV2PR12MB5870.namprd12.prod.outlook.com (2603:10b6:408:175::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.14; Tue, 19 May
+ 2026 20:49:35 +0000
+Received: from DS2PR12MB9567.namprd12.prod.outlook.com
+ ([fe80::636:1b52:24ca:d7e5]) by DS2PR12MB9567.namprd12.prod.outlook.com
+ ([fe80::636:1b52:24ca:d7e5%2]) with mapi id 15.21.0025.022; Tue, 19 May 2026
+ 20:49:35 +0000
+Message-ID: <1cbb2859-6f38-4eda-b56d-4e077ac81b26@nvidia.com>
+Date: Tue, 19 May 2026 13:49:33 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/7] hw/arm/smmuv3-accel: Implement "auto" value for
+ "ats"
+To: eric.auger@redhat.com, Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Matt Ochs <mochs@nvidia.com>,
+ Nicolin Chen <nicolinc@nvidia.com>
+References: <20260512193520.3109172-1-nathanc@nvidia.com>
+ <20260512193520.3109172-3-nathanc@nvidia.com>
+ <CH3PR12MB75488C9306659D939ACEE203AB072@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <cb3f2ace-be0d-4b5a-ad3e-9de541a2444a@nvidia.com>
+ <CH3PR12MB75482526F3E2B515168A1E16AB042@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <13629ab2-f89c-42d9-9be1-8341e8146835@redhat.com>
+Content-Language: en-US
+From: Nathan Chen <nathanc@nvidia.com>
+In-Reply-To: <13629ab2-f89c-42d9-9be1-8341e8146835@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE5MDIwNyBTYWx0ZWRfX/AY0zn92o0XV
- w/3GDzwiFz9EkqrR0rAcH/ettcmu16Wcp16/NHr/j2SM7yMvvasar9mrwjCK4kS66L6vrL2vBnf
- sA1O6GcMrjOO3vGlFjtNDdGeF0XaDTuGbJXm+3oBaSvkYcyPQRkw4I+6pBrkltk49N0BOriQMRh
- H64lSPtvRQYqOR9di45gQhNtpKKLpuFS1dNDC1ftE1ZTMG/XuZfcQ5/m38nGACdSw1HDKRarLA4
- 1j6bNxjz/a7tY4+CF/4d0gJMxgVoFCS9bqEW8cjgP8V0QsFvEZoayh1jI67DpzXcYabrQbV1hFG
- VF2gzFnHDOtDw12Q8crFc+Gs5tXe7k+req2op3u7K1fM27X8W/So5ygVOWLy27J9b0RrFLdXgps
- OXYdPQFEkh1J3EBRiyaw+2iAGKeMXfghwzkgWlBnLzXholVYs8WnOl93QGDD2uQqwAp8qG7iPXr
- KCkN3EBDPKd2oR0JqQg==
-X-Authority-Analysis: v=2.4 cv=Oc6oyBTY c=1 sm=1 tr=0 ts=6a0ccc58 cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=etEqFfc6qwXwpI8uT8rzbw==:17
- a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=p0WdMEafAAAA:8
- a=EUspDBNiAAAA:8 a=McKnsUwnZl3qh5pntSMA:9 a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-GUID: gG3tF1iHnY9TKZIqtEVeocpn9MrdHQkj
-X-Proofpoint-ORIG-GUID: gG3tF1iHnY9TKZIqtEVeocpn9MrdHQkj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-19_05,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 clxscore=1015 bulkscore=0 malwarescore=0
- priorityscore=1501 impostorscore=0 lowpriorityscore=0 phishscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
- definitions=main-2605190207
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-ClientProxiedBy: SJ0PR03CA0376.namprd03.prod.outlook.com
+ (2603:10b6:a03:3a1::21) To DS2PR12MB9567.namprd12.prod.outlook.com
+ (2603:10b6:8:27c::8)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS2PR12MB9567:EE_|LV2PR12MB5870:EE_
+X-MS-Office365-Filtering-Correlation-Id: 42b4caeb-160c-43fc-7bb0-08deb5e8229b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|376014|366016|3023799007|11063799006|4143699003|56012099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: jmA6c0aPXnH8e2QkudBYnyIcb/Kba0Aj5J9fSXpLBRlah3ZEYim0ZGJHdfw1e3TzUhjZPinx3EoxR/f8KfDsbrZw3dVmtd2NId/WhoWxFW2Rgv7qzNisNPiSClG/rN0B/SpaK/dtWzkj2hlgevpGU4WLiFfOVA2cMQKgoMjwKN/JQZCRCB5XcWS3zd4uDglrYZ8Eg8vX5gWDnrwnp2HiVlzP8HnHc9ZoLgERqFk5z+baUVP+xl4m3dtAclXvpLHiTdzlKaA3X+Mq7OsMBV1i1/gcy92tZuvBwIhQZKoanchS2flHt8n0iEMxqFGnERE7QTt5KKt/7XklKwIj+BemdWnhJOoPcxphQMyGaruH0YIWsH2VOajzUhFXlJd8QoASh7IV25MmQC4rfqP4Ht89eBZQXapm8AVMHPi+nDNQFl7laHnk2SvFCW7QQJEEW9F/EfuvOQRDOJtSJXFZsfYG1IeOLSIgZM0SfU3AiKZNvlEUGGGJHjxGHXtc8VRQJO1KMDXdPp27vPf2sAzqohWVPtkF0Ig7u5k7Njg1xPKj458QTWbgJUnORIx59V+MBlaLMdw0N9OlouFyL12Kn6izoEUmLtUyae+LhdSX2HSGOEk8MK3RhRenixaTpou22JMXmse4s7NpNxFGMhdVx9G0rxr7hxYe8vyXFwimAE397EvJWfGX8rLWqsUpOTbJV+/a
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DS2PR12MB9567.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016)(3023799007)(11063799006)(4143699003)(56012099003)(22082099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?d2FUVHpWN0IyK0c0U09NS1JJMlFuY0FWMk5taTllSlVSaWZ1ZkRTMHlxZXpZ?=
+ =?utf-8?B?Mld5SVNyRWFnam9TUE11WEdtalp6V1BBNVpHY0k3aERKbk5KN1p1c1JibnNK?=
+ =?utf-8?B?emlxOFJqMndzanhZVXVhQzB3enI2U1BTMEpneUVDNUZuRGxWNjBXRDlEVkFN?=
+ =?utf-8?B?a2lEVGJIYjJObFBsNmxRNHViK3lEV3hxUUZSM01aZGNkeEZmdk12c2RLOWpN?=
+ =?utf-8?B?MmEyOFlDUllBL3NVMC9qTW45Q29Vb0h5blpOdDV1blhYbnZXR1pIRU13eTlv?=
+ =?utf-8?B?eFpPTFZEcVkvSG5ZMmtNZmpxazMrUFJnR1RMTXRBVjlUT043dzUvWWZUSzFY?=
+ =?utf-8?B?Z2xzajFkcFd6RlI5NERMT3FGaFZ0ZXVoV0lpODFvbFBlUExrSlVNaUpqcTht?=
+ =?utf-8?B?Nk9kUnErWXQxL3U3aGp2Z1oxd2Q5c2V3cDRZME81MDVVSXphRDZXYWlVeDVp?=
+ =?utf-8?B?SUwzQlhkNlYrSFVhRVNiUzJ4TXhQMUxwQXV2MExGeDg1MXJzZENya2JJVE8v?=
+ =?utf-8?B?dXZxSG15azBTeFJYVTBpYi9BZ0I2R0NwNWd6WGFVNm5QNVE0U3FoaHM0cmoz?=
+ =?utf-8?B?NzYzQ2NpZlFjVkVFazh5NE1uV3BkMHRIRjI4RUphamVVRUNIY01ON0hhbkg4?=
+ =?utf-8?B?L3ZXd1BTamhBUnpjWVg1bmw5RlZkMXNrdVFhR01UL2FxS2J3MDc5ejFTdmVP?=
+ =?utf-8?B?cVZ0djIzN0hvL291N0lNOU9lZE03eFh5V2dHMGpnTHlKUlI2dnBhcFNMMXRn?=
+ =?utf-8?B?ZVkzTHhiNGtYdmlZc21CUkk4RUdlZGc1Z0tqOW95TWZNTkNLVG1WRmF1V09i?=
+ =?utf-8?B?MU1DYlErd05DNURYQ2JDSkZPQlorV05jQ0RBVVFDMWdzWmVDS2JKTUxvVVpX?=
+ =?utf-8?B?RFhKZFJaOFlNTzVXelcwd2tianZOcWtxamkzczc0ZzJYbUtocG5xNW1UdFRE?=
+ =?utf-8?B?TWNMTFZLWE5YSDQ2c2JmS29hbnUzeFFTL2kzdWFHVHZWWEhXYkRrMFV5OUJ0?=
+ =?utf-8?B?d2docVdnZ3hhV2svL3Vhd25vdWhHWXl1bkNoTmluRk1tbnJDdnp0N0Y5RG5l?=
+ =?utf-8?B?eDM2NlNMRjZOYUIwczJNZXQwNkFaSklWdzd3SVBoeks1Q2dPWUg3eW5HRnVz?=
+ =?utf-8?B?b0Ywalh1aVNsNWFDa05UeXphZVhLUmorNFF5cjlES3Q4ckZrUzcvTThvMDVG?=
+ =?utf-8?B?eWNQUE1xbkNyb09qRU1zdVY2SDl5bElyUUZ5R1ZNdU5rL05CN2VwRUVVcjJm?=
+ =?utf-8?B?RmkxUmdoeUZJYkZQUVM3UWtWTEExak5IdkhrMnRNY1U2Z1BZdEVET2daTmxn?=
+ =?utf-8?B?SklINXNxRjJnTjZvZktWTm9WcDlvcGt3cFVKM0ZGWHhCU1lQVU1SNGNyNFd0?=
+ =?utf-8?B?WDNmZFFKelozZkJKMUdVZnRSeWJrWCsrbUwzMzFZZkx3OVBTS2RCblZQQmVR?=
+ =?utf-8?B?OXlhVXRjQzRpa3Bva3dUVVhWcWRGeTlZNFFEb1YySjgxRXJ0TUVVbjJ6a0N5?=
+ =?utf-8?B?ZjYxNUlQWEJWQ296ci8rL1hta25ybitsbHltT0hhWUcyQ2dqR3hQUHEramJr?=
+ =?utf-8?B?dGtCSzgrdytUMStFRHM2S0grcGFFSjFWaDJTY2FzTnVnVW53RlhocnB4QSsv?=
+ =?utf-8?B?MmRQb1BmbCtSclVFWkdvaE5uS2pZbU95S251dFNXcjhubEtMWHNMMlRFdGti?=
+ =?utf-8?B?MEVyOHFBZGtsTkJJOFYyRG11YlpmMFp6ajhmS1RWT2hjbURLSm1zMGpJZ0Fk?=
+ =?utf-8?B?UVVmaXVsdDFnWDBEZHlCWjkzSVp6VUR5cGFrWkc4cmYyVFZ4c0h6bkRrQ3V6?=
+ =?utf-8?B?NUR2SDFPRkF0RUdWWTQwSlNwcHB1YXFPMkE4ZHdJSDFDZzhIVHJaeTRzM045?=
+ =?utf-8?B?WXUxTHhoOVA4endwalVDN3ZXbTFxWkJSK2lxR3RKQkxtamhoRzhhQmJwMkxm?=
+ =?utf-8?B?bVloY21wMVo1Mzl0SlJBK2o5L1lRQ0pDL0k5RHhxWmVJdWU4K1lPeTZxVUVp?=
+ =?utf-8?B?c1J6NGdzb0lmNXRPQk1leTJqY2dnUFJUOGNpK1poVy9uQU5uR2xLTEU5VG9E?=
+ =?utf-8?B?dndjZXA2bnE2RzlUOXNpcmZrbE9uMExZMkxSWXE0QkxYNGF0QkdLUmtXRHVU?=
+ =?utf-8?B?MFlLRmczRStjRkFMeWFVbnR3bEtjSjBtUmJIZm5ZYjd5TklVQzJWdEJERmJ1?=
+ =?utf-8?B?amo3RzVlR0ZDZDExeEtRME5hdjV4UXQ2aUNYekxUQmFvd1B5U0xlWm1hSlFu?=
+ =?utf-8?B?eDI1eU9kZnl0QlpWK2g1blp4Tk8rMjdJNmZCdjJLVzJSVU5pS0Irb1oycVZX?=
+ =?utf-8?B?L2xSOW9CN0VKU2t3czJrTGJLazNCSFFuS2tLRVFHYUJ6UzJET3VJQT09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 42b4caeb-160c-43fc-7bb0-08deb5e8229b
+X-MS-Exchange-CrossTenant-AuthSource: DS2PR12MB9567.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 May 2026 20:49:35.2323 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: O6jSn4BCmadghQZ2mBZVY1OMmjAQ0wG+kWZ5FKvCcsqnhKsXH4j8WUjivnxp0bkxSH40Mp5zFa4uYpFce4adBQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR12MB5870
+Received-SPF: permerror client-ip=2a01:111:f403:c107::1;
+ envelope-from=nathanc@nvidia.com;
+ helo=PH8PR06CU001.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,90 +158,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We forgot to add 'cbo' insns to disas/riscv.c.  The result is that the
-disassembler recognizes all of them as 'lq', an insn that happens to
-share the same opcode space.
 
-While we're at it reorder cbo_* entries in insn32.decode using opcode
-order instead of insn name.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3480
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
----
- disas/riscv.c              | 29 ++++++++++++++++++++++++++++-
- target/riscv/insn32.decode |  2 +-
- 2 files changed, 29 insertions(+), 2 deletions(-)
+On 5/19/2026 8:30 AM, Eric Auger wrote:
+> 
+> On 5/15/26 9:55 AM, Shameer Kolothum Thodi wrote:
+>>> -----Original Message-----
+>>> From: Nathan Chen<nathanc@nvidia.com>
+>>> Sent: 14 May 2026 21:07
+>>> To: Shameer Kolothum Thodi<skolothumtho@nvidia.com>; qemu-
+>>> arm@nongnu.org;qemu-devel@nongnu.org
+>>> Cc: Eric Auger<eric.auger@redhat.com>; Peter Maydell
+>>> <peter.maydell@linaro.org>; Philippe Mathieu-Daudé<philmd@linaro.org>;
+>>> Zhao Liu<zhao1.liu@intel.com>; Matt Ochs<mochs@nvidia.com>; Nicolin
+>>> Chen<nicolinc@nvidia.com>
+>>> Subject: Re: [PATCH v3 2/7] hw/arm/smmuv3-accel: Implement "auto" value
+>>> for "ats"
+>> [...]
+>>   
+>>>>>        object_class_property_set_description(klass, "oas",
+>>>>>            "Specify Output Address Size (for accel=on). Supported values "
+>>>>>            "are 44 or 48 bits. Defaults to 44 bits. oas=auto is not "
+>>>> In smmuv3.c we have;
+>>>>
+>>>> case SMMU_CMD_ATC_INV:
+>>>>           {
+>>>>               SMMUDevice *sdev = smmu_find_sdev(bs, CMD_SID(&cmd));
+>>>>
+>>>>               if (!sdev || !s->ats) {
+>>>>                   trace_smmuv3_unhandled_cmd(type);
+>>>>                   break;
+>>>>               }
+>>>>
+>>>>               if (!smmuv3_accel_issue_inv_cmd(s, &cmd, sdev, errp)) {
+>>>>                   cmd_error = SMMU_CERROR_ILL;
+>>>>                   break;
+>>>>               }
+>>>>               break;
+>>>>           }
+>>>>
+>>>> The above !s->ats will be true for AUTO case, right? I think
+>>>> we should change the above check with smmuv3_ats_enabled().
+>>>>
+>>>> Also, since we modified the ats to OnOffAuto in the previous
+>>>> series, I am not sure the above should be a fix patch or not.
+>>> I see, I will use smmuv3_ats_enabled() here to account for the AUTO
+>>> case. I am not sure if it should have the Fixes tag either but let's see
+>>> if we can get any guidance on that point.
+>> The default ats with previous series is ON_OFF_AUTO_OFF(=2). So even
+>> if ats is not visible to guest, a malicious guest issuing ats may end up
+>> getting forwarded to host. So, I think we should fix it.
+> good catch. Effectively you may add a preamble commit fixing this in
+> this series with the corresponding Fixes tag. Even can be Stable to
+> apply on previous 11.0. version
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index d416a4d6b3..36609efdf5 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -985,6 +985,10 @@ typedef enum {
-     rv_op_ssamoswap_d = 953,
-     rv_op_c_sspush = 954,
-     rv_op_c_sspopchk = 955,
-+    rv_op_cbo_inval = 956,
-+    rv_op_cbo_clean = 957,
-+    rv_op_cbo_flush = 958,
-+    rv_op_cbo_zero = 959,
- } rv_op;
- 
- /* register names */
-@@ -2255,6 +2259,10 @@ const rv_opcode_data rvi_opcode_data[] = {
-       rv_op_sspush, 0 },
-     { "c.sspopchk", rv_codec_cmop_ss, rv_fmt_rs1, NULL, rv_op_sspopchk,
-       rv_op_sspopchk, 0 },
-+   { "cbo.inval", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
-+   { "cbo.clean", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
-+   { "cbo.flush", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
-+   { "cbo.zero", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
- };
- 
- /* CSR names */
-@@ -2876,7 +2884,26 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
-             switch ((inst >> 12) & 0b111) {
-             case 0: op = rv_op_fence; break;
-             case 1: op = rv_op_fence_i; break;
--            case 2: op = rv_op_lq; break;
-+            case 2:
-+               /*
-+                * 'lq' shares the "(...) 010 ..... 0001111" opcode space
-+                * with 'cbo' insns.  Check the next 5 bits to select
-+                * what we want:
-+                *
-+                * cbo_inval  0000000 00000 ..... 010 00000 0001111
-+                * cbo_clean  0000000 00001 ..... 010 00000 0001111
-+                * cbo_flush  0000000 00010 ..... 010 00000 0001111
-+                * cbo_zero   0000000 00100 ..... 010 00000 0001111
-+                *
-+                * Anything that doesn't match these will default to 'lq'.
-+                */
-+               switch ((inst >> 17) & 0b11111) {
-+               case 0: op = rv_op_cbo_inval; break;
-+               case 1: op = rv_op_cbo_clean; break;
-+               case 2: op = rv_op_cbo_flush; break;
-+               case 4: op = rv_op_cbo_zero; break;
-+               default: op = rv_op_lq; break;
-+               }
-             }
-             break;
-         case 4:
-diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-index 6e35c4b1e6..21272fdb50 100644
---- a/target/riscv/insn32.decode
-+++ b/target/riscv/insn32.decode
-@@ -207,9 +207,9 @@ ldu      ............   ..... 111 ..... 0000011 @i
- {
-   [
-     # *** RV32 Zicbom Standard Extension ***
-+    cbo_inval  0000000 00000 ..... 010 00000 0001111 @sfence_vm
-     cbo_clean  0000000 00001 ..... 010 00000 0001111 @sfence_vm
-     cbo_flush  0000000 00010 ..... 010 00000 0001111 @sfence_vm
--    cbo_inval  0000000 00000 ..... 010 00000 0001111 @sfence_vm
- 
-     # *** RV32 Zicboz Standard Extension ***
-     cbo_zero   0000000 00100 ..... 010 00000 0001111 @sfence_vm
--- 
-2.43.0
+Ok, I will add a preamble commit to fix this with the Stable ML CC'd on 
+the next refresh.
 
+Thanks,
+Nathan
 
