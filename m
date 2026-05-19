@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3B83CD4F5B
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 17:49:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3FE0CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 17:49:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPOZ0-0004oc-Hl; Tue, 19 May 2026 13:49:07 -0400
+	id 1wPOYy-0004nR-Jw; Tue, 19 May 2026 13:49:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <williamdapinho@gmail.com>)
- id 1wPOYq-0004gg-Lu
+ id 1wPOYp-0004gU-KG
  for qemu-devel@nongnu.org; Tue, 19 May 2026 13:48:57 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <williamdapinho@gmail.com>)
- id 1wPOYn-0008NX-Cl
- for qemu-devel@nongnu.org; Tue, 19 May 2026 13:48:56 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-488b3f8fa2bso39510735e9.1
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 10:48:51 -0700 (PDT)
+ id 1wPOYl-0008NI-Aj
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 13:48:55 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-45d96d21e82so2297444f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 10:48:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779212931; x=1779817731; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779212930; x=1779817730; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=8tv8sNGOP2+gDDuYmPlVIIy5gfvrfarZbTKlONa7k1M=;
- b=H9RfVX5dwOMK6qfM/Cz+GJ7QXybnr8K3CmaUtKuPDH7HJ1n2leFBwo8WyQ6SgiD9Eb
- oazd6uhuUS4w7dqS07EkKTMLlvKg3maV1z3a4nTShlGXi1aXFpmd+clFDybQRdBfwlxM
- 1V1m79Z5Z9EFbXfCiIoCe9q+uAfDA/kvcBKJ+oxYJCNGTPgyJ7G5r+nzDldtMC0WDnGJ
- 61CiQRTfTTgnJ2CR9ub4CtUC1UmKVFVzvGNkPg74IPKILtaIsDdbV2Oy2Rg8nbFfTLyY
- F2jT25+NCfu+xsk5Rb2Ps2aI14y2e8IpHRd/B4A0SiqVrkz1CdrMuYlgftfFITQnEcI5
- d/aQ==
+ :reply-to; bh=F6hGIaKJO4UufxfWcbav9/FJnDZWCpBiGK2a4Bgnl+8=;
+ b=Ch5NTAjsR1lH5IWzorsV/U/VTEUu9p6hpuNTHhYRKiKDiDtQ/aox8pcKUgtRp33oI+
+ bWcmoHvZ9MzVHtBd/A6mqrbXDEb3hfUfFi7FH8Dh4Km7v1UTbvGJ2kY9Yk2vI0aes7rx
+ 9hqde6kshX1W0X4kKsrZO9yWbcdjtIjcF1CK9NZL5KHlJqo80vsKYF2vK/rX7m3XIGZg
+ 0ubhNdr3iSM6Qi5CwDwDf3a3YRdMFhLBZ90kS5n3gJPCtGrfZ5ex/skSGxBvPNByN45I
+ GiNKB7JdehhkE6TVDyBXrYVe4SmrZtvKbcCXF3eUWSk/0ILJ7AKMIVDdmq1Tln5oXVgn
+ cahg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779212931; x=1779817731;
+ d=1e100.net; s=20251104; t=1779212930; x=1779817730;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=8tv8sNGOP2+gDDuYmPlVIIy5gfvrfarZbTKlONa7k1M=;
- b=p2oNUvi4Pn/7196SHQMn9gVNd2CJ7opJTa1tDJGon7epjojorhIQEmugXXLQy2iElk
- hkf8e4srZ9xiybjyd3xvM/mMvK2/U/GqJ+RN8vyoZyFBkP4CCeS1Gt45spAVvtcvYoQn
- cIgniCKINuvXkOduwj5MwgQreOLeHjmkOrPj1J2X6e2nrHM3UtXMPcZJyBOdnEgvjdSV
- 37GR6j68qPXtIPLOn7dLDHy4k0B3AOV1RK5ChJgGY+AaY1slwnIQn0R7+OnAtGTbv9sD
- MBIuCFwx9PAFn0IPcciDk+0ka/hqho4MFKedG2b5oCvzlNBY6NSq3PqQRVrx1wYDc2hV
- bjVQ==
-X-Gm-Message-State: AOJu0Yyrk7wM9FtVYEEGLPrFtRO9KLsZc4BZXsWCWefkDsNrh1l+ImkP
- 8xjC+zcLrTQXpKMF0AEIZmrWJRPaF4NUw1ti4yf5BH3oQa3gU4nc5FAb
-X-Gm-Gg: Acq92OExYCLKDoHoaw8+7rIlE55+NAMU5y7YXVd6wBn4MyrlLAptRaBNy2ZG507H+iZ
- C2U3HVQDY/4/JOUs662JYOUDku06xKb8pADuiV/9XBxns5IgOL45OO55phS84SC5yrmvpI618Kq
- 38vr+bMhbtNbmHdAtXqzAoSjqY78UvbTNSxjjroKKu51Z2jh9CSurfFOGwuNViCO1DgeSJdUa+N
- KymFVR2a5/Pdkw3EKNO4keU9/IdQomb+/jwk1Zsc0+Rsicq/uSwaenN4IwRqveN3Hpa+dXm4DAt
- Jxbagf5yiN4+ZzvBD3O4La32qWItiCUTA+YuoruKYtCPiohIzDyPd4Yw3aUOGF5mQTaIsgQnFZr
- XaTQE8ejK4qoAiIsuxaNElO+IixTxl2vh1xrJWHm3RE4UMqsLHFyNajBWyd0yH2myvfbh5EpPc0
- 4SoatXv/LVky4HGvv+xvGlb/ComVKOC1WX
-X-Received: by 2002:a05:600c:8485:b0:48a:5339:a46 with SMTP id
- 5b1f17b1804b1-48fe537fb70mr34065765e9.9.1779212930592; 
- Tue, 19 May 2026 10:48:50 -0700 (PDT)
-Received: from localhost ([2a03:2880:30ff:7::])
+ bh=F6hGIaKJO4UufxfWcbav9/FJnDZWCpBiGK2a4Bgnl+8=;
+ b=IH5G4kYZ+TSbvS3RE15p3sWuuYV1vT4xbhMeMs2YICUAKL1SuIAnzSTnBcTJs7G/vL
+ VlXI5PsBlbmlA3/2y1ek477NMnggKmQAfkYGf4FdvjsddEHVFVorB3yyRMZA2LRO9eaD
+ SZzVqngiSanTmKGFbilpKsAPlhVjS1iR1Kw4BSlxCwSjfmdKqQecpzw0cLcxWvBL0S7l
+ PlZEPMEcVhanl+oolH/7dIW9x4MYWxSNbJ8DvEmXkdZH8X4ZLEy7PbmxM65DxlbwbbQP
+ 5TFsm1Z7oMO0AAN8dcrr4Daog7YzpdHmBOZAYjA6pnuyEPF7j/kSRBSz5UrsgTukPGV6
+ Ss+g==
+X-Gm-Message-State: AOJu0Yw9LNMrwRrs9oSBZum6Bikqn2f4ZZe4sCMHw15RE2GqA/EmwBo8
+ Q9SB7bIogq/L5jo4xH4lTUGefgOsVWm5u4GfPdxD/D9Mt1Qal99o9jO+
+X-Gm-Gg: Acq92OHzmsbXEVBDO2xCD0arfUnwL1hhMEJGNlTMZj1mUoNyFNbosrM0Ck5Hrksxl+2
+ 70RB2Cill7TakUK0H468/THUObUrbqlRRkaPKPiIg4tmcz0pbIHU6Rlf4KCGhxqfYodL/eQPpt4
+ NcuFYVUPO3wwUU/iE89CxkzXvnEHNINLsLw5W08XSKDdW6KFFKz6XmDGMp1littYl6q0XASc74b
+ MwHwdGxkJ8iAbWJV31FgnhDrEBh+bEFnsqG+lbreel/Fdvstfv+JRfwjLH0DrbqVwCwBnY9agHY
+ 9dmaXFMc8XQFpgYOx/4WdSv0nkHC1SYrzPp1FXehOiOjW2bEfL0Zdva8qbnrNcZ5d7s6kZQA7we
+ ELmuBjj9BD005FD1e1s8fQpKvWC4y3LtyK9ISUbj1svSDy2IxiB8SOdsuMvI1Wt6ioO9tqTgOIT
+ q5JAqjgmqrizJR9ZZ97ATuJhvlOxN7uTBA
+X-Received: by 2002:a05:6000:400f:b0:43d:c95c:4259 with SMTP id
+ ffacd0b85a97d-45e5c5dd488mr32204222f8f.30.1779212929292; 
+ Tue, 19 May 2026 10:48:49 -0700 (PDT)
+Received: from localhost ([2a03:2880:30ff:8::])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48febe6afe7sm107422405e9.24.2026.05.19.10.48.50
+ ffacd0b85a97d-45da0fe0f72sm50268908f8f.25.2026.05.19.10.48.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 May 2026 10:48:50 -0700 (PDT)
+ Tue, 19 May 2026 10:48:48 -0700 (PDT)
 From: William de Abreu Pinho <williamdapinho@gmail.com>
-Date: Tue, 19 May 2026 10:48:40 -0700
-Subject: [PATCH v3 3/3] hw/arm/aspeed: anacapa: add FRU EEPROM data
+Date: Tue, 19 May 2026 10:48:39 -0700
+Subject: [PATCH v3 2/3] hw/arm/aspeed: add anacapa-bmc machine
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260519-add-anacapa-machine-v3-3-56c23993a20a@gmail.com>
+Message-Id: <20260519-add-anacapa-machine-v3-2-56c23993a20a@gmail.com>
 References: <20260519-add-anacapa-machine-v3-0-56c23993a20a@gmail.com>
 In-Reply-To: <20260519-add-anacapa-machine-v3-0-56c23993a20a@gmail.com>
 To: qemu-devel@nongnu.org
@@ -82,8 +82,8 @@ Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
  William de Abreu Pinho <williamdapinho@gmail.com>, 
  =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 X-Mailer: b4 0.13.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=williamdapinho@gmail.com; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=williamdapinho@gmail.com; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,298 +106,266 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use frugen to generate FRU data for the following components: HPM MB,
-R-PDB, L-PDB, SCM, BSM, R Bridge Board, L Bridge Board, and HPM board
-ID.
+Add the Facebook Anacapa BMC machine.  The I2C topology is based on the
+Linux kernel device tree [1].  Hardware strap register values are taken
+from real hardware.
+
+A functional test is included using the OpenBMC image built from [2],
+similar to the tests for bletchley-bmc and catalina-bmc.
+
+[1]: https://github.com/torvalds/linux/blob/76b4ec8efdc3887cdbf730da2e55881fc1a18770/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-anacapa.dts
+[2]: https://github.com/openbmc/openbmc/commit/8e22df918eaaa5d83143471d24ef0eeb1c1e3c7c
 
 Signed-off-by: William de Abreu Pinho <williamdapinho@gmail.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/arm/aspeed_ast2600_anacapa.c | 225 ++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 217 insertions(+), 8 deletions(-)
+ docs/system/arm/aspeed.rst                  |   3 +-
+ hw/arm/aspeed_ast2600_anacapa.c             | 153 ++++++++++++++++++++++++++++
+ hw/arm/meson.build                          |   1 +
+ tests/functional/arm/meson.build            |   2 +
+ tests/functional/arm/test_aspeed_anacapa.py |  25 +++++
+ 5 files changed, 183 insertions(+), 1 deletion(-)
 
+diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
+index d0054a7dbb..5a928b7efb 100644
+--- a/docs/system/arm/aspeed.rst
++++ b/docs/system/arm/aspeed.rst
+@@ -1,4 +1,4 @@
+-Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``gb200nvl-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
++Aspeed family boards (``anacapa-bmc``, ``ast2500-evb``, ``ast2600-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``gb200nvl-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
+ ===================================================================================================================================================================================================================================================================================================================================================================================================================
+ 
+ The QEMU Aspeed machines model BMCs of various OpenPOWER systems and
+@@ -35,6 +35,7 @@ AST2600 SoC based machines :
+ - ``fuji-bmc``             Facebook Fuji BMC
+ - ``bletchley-bmc``        Facebook Bletchley BMC
+ - ``fby35-bmc``            Facebook fby35 BMC
++- ``anacapa-bmc``          Facebook Anacapa BMC
+ - ``gb200nvl-bmc``         Nvidia GB200nvl BMC
+ - ``qcom-dc-scm-v1-bmc``   Qualcomm DC-SCM V1 BMC
+ - ``qcom-firework-bmc``    Qualcomm Firework BMC
 diff --git a/hw/arm/aspeed_ast2600_anacapa.c b/hw/arm/aspeed_ast2600_anacapa.c
-index c24f00d44c..a1c8111a93 100644
---- a/hw/arm/aspeed_ast2600_anacapa.c
+new file mode 100644
+index 0000000000..c24f00d44c
+--- /dev/null
 +++ b/hw/arm/aspeed_ast2600_anacapa.c
-@@ -20,6 +20,207 @@
- #define ANACAPA_BMC_HW_STRAP2 0x00000000
- #define ANACAPA_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
- 
+@@ -0,0 +1,153 @@
 +/*
-+ * "Anacapa HPM (MB)" FRU data. Generated with frugen.
++ * Facebook Anacapa
 + *
-+ *    {
-+ *      "board": { "mfg": "Inventec", "pname": "Anacapa QEMU MB EVT2",
-+ *                 "pn": "00000000000", "serial": "00000000000000" },
-+ *      "product": { "mfg": "Inventec", "pname": "CI-Anacapa",
-+ *                   "pn": "10000000001", "ver": "MP",
-+ *                   "serial": "10000000000000", "atag": "QEMU" }
-+ *    }
-+ */
-+static const uint8_t hpm_eeprom[] = {
-+    0x01, 0x00, 0x00, 0x01, 0x08, 0x00, 0x00, 0xf6, 0x01, 0x07, 0x19, 0xb4,
-+    0xa4, 0xf2, 0xc8, 0x49, 0x6e, 0x76, 0x65, 0x6e, 0x74, 0x65, 0x63, 0xd4,
-+    0x41, 0x6e, 0x61, 0x63, 0x61, 0x70, 0x61, 0x20, 0x51, 0x45, 0x4d, 0x55,
-+    0x20, 0x4d, 0x42, 0x20, 0x45, 0x56, 0x54, 0x32, 0x47, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x46, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0a, 0xc0,
-+    0xc1, 0x00, 0x00, 0xb8, 0x01, 0x06, 0x19, 0xc8, 0x49, 0x6e, 0x76, 0x65,
-+    0x6e, 0x74, 0x65, 0x63, 0xca, 0x43, 0x49, 0x2d, 0x41, 0x6e, 0x61, 0x63,
-+    0x61, 0x70, 0x61, 0x46, 0x10, 0x00, 0x00, 0x00, 0x00, 0x1a, 0x82, 0x2d,
-+    0x0c, 0x47, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x83, 0x71, 0xd9,
-+    0xd6, 0xc0, 0xc1, 0x0e
-+};
-+static const size_t hpm_eeprom_len = sizeof(hpm_eeprom);
-+
-+/*
-+ * "Anacapa R-PDB" FRU data. Generated with frugen.
++ * Copyright (c) Meta Platforms, Inc. and affiliates.
 + *
-+ *    {
-+ *      "board": { "mfg": "Inventec", "pname": "Anacapa QEMU RPDB",
-+ *                 "pn": "00000000000", "serial": "00000000000000" },
-+ *      "product": { "mfg": "Inventec", "pname": "CI-Anacapa",
-+ *                   "pn": "10000000001", "ver": "MP",
-+ *                   "serial": "10000000000000", "atag": "QEMU" }
-+ *    }
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+static const uint8_t rpdb_eeprom[] = {
-+    0x01, 0x00, 0x00, 0x01, 0x08, 0x00, 0x00, 0xf6, 0x01, 0x07, 0x19, 0x41,
-+    0x2d, 0xf2, 0xc8, 0x49, 0x6e, 0x76, 0x65, 0x6e, 0x74, 0x65, 0x63, 0xd1,
-+    0x41, 0x6e, 0x61, 0x63, 0x61, 0x70, 0x61, 0x20, 0x51, 0x45, 0x4d, 0x55,
-+    0x20, 0x52, 0x50, 0x44, 0x42, 0x47, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x46, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0a, 0xc0, 0xc1, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x4d, 0x01, 0x06, 0x19, 0xc8, 0x49, 0x6e, 0x76, 0x65,
-+    0x6e, 0x74, 0x65, 0x63, 0xca, 0x43, 0x49, 0x2d, 0x41, 0x6e, 0x61, 0x63,
-+    0x61, 0x70, 0x61, 0x46, 0x10, 0x00, 0x00, 0x00, 0x00, 0x1a, 0x82, 0x2d,
-+    0x0c, 0x47, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x83, 0x71, 0xd9,
-+    0xd6, 0xc0, 0xc1, 0x0e
-+};
-+static const size_t rpdb_eeprom_len = sizeof(rpdb_eeprom);
 +
-+/*
-+ * "Anacapa L-PDB" FRU data. Generated with frugen.
-+ *
-+ *    {
-+ *      "board": { "mfg": "Inventec", "pname": "Anacapa QEMU LPDB",
-+ *                 "pn": "00000000000", "serial": "00000000000000" },
-+ *      "product": { "mfg": "Inventec", "pname": "CI-Anacapa",
-+ *                   "pn": "10000000001", "ver": "MP",
-+ *                   "serial": "10000000000000", "atag": "QEMU" }
-+ *    }
-+ */
-+static const uint8_t lpdb_eeprom[] = {
-+    0x01, 0x00, 0x00, 0x01, 0x08, 0x00, 0x00, 0xf6, 0x01, 0x07, 0x19, 0x41,
-+    0x2d, 0xf2, 0xc8, 0x49, 0x6e, 0x76, 0x65, 0x6e, 0x74, 0x65, 0x63, 0xd1,
-+    0x41, 0x6e, 0x61, 0x63, 0x61, 0x70, 0x61, 0x20, 0x51, 0x45, 0x4d, 0x55,
-+    0x20, 0x4c, 0x50, 0x44, 0x42, 0x47, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x46, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0a, 0xc0, 0xc1, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x53, 0x01, 0x06, 0x19, 0xc8, 0x49, 0x6e, 0x76, 0x65,
-+    0x6e, 0x74, 0x65, 0x63, 0xca, 0x43, 0x49, 0x2d, 0x41, 0x6e, 0x61, 0x63,
-+    0x61, 0x70, 0x61, 0x46, 0x10, 0x00, 0x00, 0x00, 0x00, 0x1a, 0x82, 0x2d,
-+    0x0c, 0x47, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x83, 0x71, 0xd9,
-+    0xd6, 0xc0, 0xc1, 0x0e
-+};
-+static const size_t lpdb_eeprom_len = sizeof(lpdb_eeprom);
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "hw/arm/machines-qom.h"
++#include "hw/arm/aspeed.h"
++#include "hw/arm/aspeed_soc.h"
++#include "hw/i2c/i2c_mux_pca954x.h"
++#include "hw/gpio/pca9552.h"
++#include "hw/nvram/eeprom_at24c.h"
 +
-+/*
-+ * "Anacapa SCM" FRU data. Generated with frugen.
-+ *
-+ *    {
-+ *      "board": { "mfg": "Quanta", "pname": "Anacapa SCM",
-+ *                 "pn": "00000000000", "serial": "00000000000000" },
-+ *      "product": { "mfg": "Quanta", "pname": "CI-Anacapa",
-+ *                   "pn": "10000000001", "ver": "MP",
-+ *                   "serial": "10000000000000", "atag": "QEMU" }
-+ *    }
-+ */
-+static const uint8_t scm_eeprom[] = {
-+    0x01, 0x00, 0x00, 0x01, 0x07, 0x00, 0x00, 0xf7, 0x01, 0x06, 0x19, 0x41,
-+    0x2d, 0xf2, 0xc6, 0x51, 0x75, 0x61, 0x6e, 0x74, 0x61, 0xcb, 0x41, 0x6e,
-+    0x61, 0x63, 0x61, 0x70, 0x61, 0x20, 0x53, 0x43, 0x4d, 0x47, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x46, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0a,
-+    0xc0, 0xc1, 0x00, 0x00, 0x00, 0x00, 0x00, 0xc5, 0x01, 0x06, 0x19, 0xc6,
-+    0x51, 0x75, 0x61, 0x6e, 0x74, 0x61, 0xca, 0x43, 0x49, 0x2d, 0x41, 0x6e,
-+    0x61, 0x63, 0x61, 0x70, 0x61, 0x46, 0x10, 0x00, 0x00, 0x00, 0x00, 0x1a,
-+    0x82, 0x2d, 0x0c, 0x47, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x83,
-+    0x71, 0xd9, 0xd6, 0xc0, 0xc1, 0x00, 0x00, 0xe2
-+};
-+static const size_t scm_eeprom_len = sizeof(scm_eeprom);
++/* Anacapa hardware value */
++#define ANACAPA_BMC_HW_STRAP1 0x00002002
++#define ANACAPA_BMC_HW_STRAP2 0x00000000
++#define ANACAPA_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
 +
-+/*
-+ * "Anacapa BMC Storage Module" FRU data. Generated with frugen.
-+ *
-+ *    {
-+ *      "board": { "mfg": "Quanta", "pname": "Anacapa BMC Storage Module",
-+ *                 "pn": "00000000000", "serial": "00000000000000" },
-+ *      "product": { "mfg": "Quanta", "pname": "CI-Anacapa",
-+ *                   "pn": "10000000001", "ver": "MP",
-+ *                   "serial": "10000000000000", "atag": "QEMU" }
-+ *    }
-+ */
-+static const uint8_t bsm_eeprom[] = {
-+    0x01, 0x00, 0x00, 0x01, 0x0a, 0x00, 0x00, 0xf4, 0x01, 0x09, 0x00, 0x00,
-+    0x00, 0x00, 0xc6, 0x51, 0x75, 0x61, 0x6e, 0x74, 0x61, 0xda, 0x41, 0x6e,
-+    0x61, 0x63, 0x61, 0x70, 0x61, 0x20, 0x42, 0x4d, 0x43, 0x20, 0x53, 0x74,
-+    0x6f, 0x72, 0x61, 0x67, 0x65, 0x20, 0x4d, 0x6f, 0x64, 0x75, 0x6c, 0x65,
-+    0xce, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30,
-+    0x30, 0x30, 0x30, 0xcb, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30,
-+    0x30, 0x30, 0x30, 0xc0, 0xc1, 0x00, 0x00, 0x10, 0x01, 0x08, 0x00, 0xc6,
-+    0x51, 0x75, 0x61, 0x6e, 0x74, 0x61, 0xca, 0x43, 0x49, 0x2d, 0x41, 0x6e,
-+    0x61, 0x63, 0x61, 0x70, 0x61, 0xcb, 0x31, 0x30, 0x30, 0x30, 0x30, 0x30,
-+    0x30, 0x30, 0x30, 0x30, 0x31, 0xc2, 0x4d, 0x50, 0xce, 0x31, 0x30, 0x30,
-+    0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0xc4,
-+    0x51, 0x45, 0x4d, 0x55, 0xc0, 0xc1, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77,
-+};
-+static const size_t bsm_eeprom_len = sizeof(bsm_eeprom);
++static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
++{
++    /* Reference: aspeed-bmc-facebook-anacapa.dts */
 +
-+/*
-+ * "Anacapa R Bridge Board" FRU data. Generated with frugen.
-+ *
-+ *    {
-+ *      "board": { "mfg": "Inventec", "pname": "Anacapa QEMU RBB EVT2",
-+ *                 "pn": "00000000000", "serial": "00000000000000" },
-+ *      "product": { "mfg": "Inventec", "pname": "CI-Anacapa",
-+ *                   "pn": "10000000001", "ver": "MP",
-+ *                   "serial": "10000000000000", "atag": "QEMU" }
-+ *    }
-+ */
-+static const uint8_t rbb_eeprom[] = {
-+    0x01, 0x00, 0x00, 0x01, 0x08, 0x00, 0x00, 0xf6, 0x01, 0x07, 0x19, 0xb4,
-+    0xa4, 0xf2, 0xc8, 0x49, 0x6e, 0x76, 0x65, 0x6e, 0x74, 0x65, 0x63, 0xd5,
-+    0x41, 0x6e, 0x61, 0x63, 0x61, 0x70, 0x61, 0x20, 0x51, 0x45, 0x4d, 0x55,
-+    0x20, 0x52, 0x42, 0x42, 0x20, 0x45, 0x56, 0x54, 0x32, 0x47, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x46, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0a,
-+    0xc0, 0xc1, 0x00, 0x70, 0x01, 0x06, 0x19, 0xc8, 0x49, 0x6e, 0x76, 0x65,
-+    0x6e, 0x74, 0x65, 0x63, 0xca, 0x43, 0x49, 0x2d, 0x41, 0x6e, 0x61, 0x63,
-+    0x61, 0x70, 0x61, 0x46, 0x10, 0x00, 0x00, 0x00, 0x00, 0x1a, 0x82, 0x2d,
-+    0x0c, 0x47, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x83, 0x71, 0xd9,
-+    0xd6, 0xc0, 0xc1, 0x0e
-+};
-+static const size_t rbb_eeprom_len = sizeof(rbb_eeprom);
++    AspeedSoCState *soc = bmc->soc;
++    I2CBus *i2c[16] = {};
++    I2CSlave *i2c_mux;
 +
-+/*
-+ * "Anacapa L Bridge Board" FRU data. Generated with frugen.
-+ *
-+ *    {
-+ *      "board": { "mfg": "Inventec", "pname": "Anacapa QEMU LBB EVT2",
-+ *                 "pn": "00000000000", "serial": "00000000000000" },
-+ *      "product": { "mfg": "Inventec", "pname": "CI-Anacapa",
-+ *                   "pn": "10000000001", "ver": "MP",
-+ *                   "serial": "10000000000000", "atag": "QEMU" }
-+ *    }
-+ */
-+static const uint8_t lbb_eeprom[] = {
-+    0x01, 0x00, 0x00, 0x01, 0x08, 0x00, 0x00, 0xf6, 0x01, 0x07, 0x19, 0xb4,
-+    0xa4, 0xf2, 0xc8, 0x49, 0x6e, 0x76, 0x65, 0x6e, 0x74, 0x65, 0x63, 0xd5,
-+    0x41, 0x6e, 0x61, 0x63, 0x61, 0x70, 0x61, 0x20, 0x51, 0x45, 0x4d, 0x55,
-+    0x20, 0x4c, 0x42, 0x42, 0x20, 0x45, 0x56, 0x54, 0x32, 0x47, 0x00, 0x00,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x46, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0a,
-+    0xc0, 0xc1, 0x00, 0x76, 0x01, 0x06, 0x19, 0xc8, 0x49, 0x6e, 0x76, 0x65,
-+    0x6e, 0x74, 0x65, 0x63, 0xca, 0x43, 0x49, 0x2d, 0x41, 0x6e, 0x61, 0x63,
-+    0x61, 0x70, 0x61, 0x46, 0x10, 0x00, 0x00, 0x00, 0x00, 0x1a, 0x82, 0x2d,
-+    0x0c, 0x47, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x83, 0x71, 0xd9,
-+    0xd6, 0xc0, 0xc1, 0x0e
-+};
-+static const size_t lbb_eeprom_len = sizeof(lbb_eeprom);
++    for (int i = 0; i < ARRAY_SIZE(i2c); i++) {
++        i2c[i] = aspeed_i2c_get_bus(&soc->i2c, i);
++    }
 +
-+/*
-+ * "Anacapa HPM BRD ID" FRU data. Generated with frugen.
-+ *
-+ *    {
-+ *      "board": { "mfg": "Inventec", "pname": "Anacapa HPM BRD ID",
-+ *                 "pn": "00000000000", "serial": "00000000000000" },
-+ *      "product": { "mfg": "Inventec", "pname": "CI-Anacapa",
-+ *                   "pn": "10000000001", "ver": "MP",
-+ *                   "serial": "10000000000000", "atag": "QEMU" }
-+ *    }
-+ */
-+static const uint8_t hpm_brd_id_eeprom[] = {
-+    0x01, 0x00, 0x00, 0x01, 0x08, 0x00, 0x00, 0xf6, 0x01, 0x07, 0x19, 0x41,
-+    0x2d, 0xf2, 0xc8, 0x49, 0x6e, 0x76, 0x65, 0x6e, 0x74, 0x65, 0x63, 0xd2,
-+    0x41, 0x6e, 0x61, 0x63, 0x61, 0x70, 0x61, 0x20, 0x48, 0x50, 0x4d, 0x20,
-+    0x42, 0x52, 0x44, 0x20, 0x49, 0x44, 0x47, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0x00, 0x00, 0x46, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0a, 0xc0, 0xc1, 0x00,
-+    0x00, 0x00, 0x00, 0x42, 0x01, 0x06, 0x19, 0xc8, 0x49, 0x6e, 0x76, 0x65,
-+    0x6e, 0x74, 0x65, 0x63, 0xca, 0x43, 0x49, 0x2d, 0x41, 0x6e, 0x61, 0x63,
-+    0x61, 0x70, 0x61, 0x46, 0x10, 0x00, 0x00, 0x00, 0x00, 0x1a, 0x82, 0x2d,
-+    0x0c, 0x47, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x83, 0x71, 0xd9,
-+    0xd6, 0xc0, 0xc1, 0x0e
-+};
-+static const size_t hpm_brd_id_eeprom_len = sizeof(hpm_brd_id_eeprom);
++    /* &i2c0 */
++    /* eeprom@50 */
++    at24c_eeprom_init(i2c[0], 0x50, 256 * KiB);
++    /* i2c-mux@70 */
++    i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x70);
 +
- static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
- {
-     /* Reference: aspeed-bmc-facebook-anacapa.dts */
-@@ -50,7 +251,8 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
- 
-     /* &i2c6 */
-     /* eeprom@50 */
--    at24c_eeprom_init(i2c[6], 0x50, 32 * KiB);
-+    at24c_eeprom_init_rom(i2c[6], 0x50, 32 * KiB,
-+                          hpm_eeprom, hpm_eeprom_len);
- 
-     /* &i2c8 */
-     /* i2c-mux@72 (PCA9546) */
-@@ -65,7 +267,8 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
-     i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 0),
-                             TYPE_PCA9552, 0x24);
-     /* eeprom@50 */
--    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 0), 0x50, 16 * KiB);
-+    at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 0), 0x50, 16 * KiB,
-+                          rpdb_eeprom, rpdb_eeprom_len);
- 
-     /* i2c8mux ch1 */
-     /* pca9555@22 */
-@@ -75,13 +278,16 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
-     i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 1),
-                             TYPE_PCA9552, 0x24);
-     /* eeprom@50 */
--    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 1), 0x50, 16 * KiB);
-+    at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 1), 0x50, 16 * KiB,
-+                          lpdb_eeprom, lpdb_eeprom_len);
- 
-     /* &i2c9 */
-     /* eeprom@50 */
--    at24c_eeprom_init(i2c[9], 0x50, 16 * KiB);
-+    at24c_eeprom_init_rom(i2c[9], 0x50, 16 * KiB,
-+                          scm_eeprom, scm_eeprom_len);
-     /* eeprom@56 */
--    at24c_eeprom_init(i2c[9], 0x56, 8 * KiB);
-+    at24c_eeprom_init_rom(i2c[9], 0x56, 8 * KiB,
-+                          bsm_eeprom, bsm_eeprom_len);
- 
-     /* &i2c10 */
-     /* i2c-mux@71 (PCA9548) */
-@@ -92,7 +298,8 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
-     i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 5),
-                             TYPE_PCA9552, 0x22);
-     /* eeprom@52 */
--    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 5), 0x52, 32 * KiB);
-+    at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 5), 0x52, 32 * KiB,
-+                          rbb_eeprom, rbb_eeprom_len);
- 
-     /* &i2c11 */
-     /* i2c-mux@71 (PCA9548) */
-@@ -105,7 +312,8 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
-     i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 5),
-                             TYPE_PCA9552, 0x22);
-     /* eeprom@52 */
--    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 5), 0x52, 32 * KiB);
-+    at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 5), 0x52, 32 * KiB,
-+                          lbb_eeprom, lbb_eeprom_len);
- 
-     /* &i2c13 */
-     /* i2c-mux@70 (PCA9548) */
-@@ -116,7 +324,8 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
- 
-     /* i2c13mux ch4 */
-     /* eeprom@51 */
--    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 4), 0x51, 32 * KiB);
-+    at24c_eeprom_init_rom(pca954x_i2c_get_bus(i2c_mux, 4), 0x51, 32 * KiB,
-+                          hpm_brd_id_eeprom, hpm_brd_id_eeprom_len);
- 
-     /* i2c13mux ch7 */
-     /* nfc@28 — no model */
++    /* &i2c1 */
++    /* eeprom@50 */
++    at24c_eeprom_init(i2c[1], 0x50, 256 * KiB);
++    /* i2c-mux@70 (PCA9546) — 4 channels, empty */
++    i2c_slave_create_simple(i2c[1], TYPE_PCA9546, 0x70);
++
++    /* &i2c4 */
++    /* i2c-mux@70 (PCA9548) */
++    i2c_slave_create_simple(i2c[4], TYPE_PCA9548, 0x70);
++
++    /* &i2c6 */
++    /* eeprom@50 */
++    at24c_eeprom_init(i2c[6], 0x50, 32 * KiB);
++
++    /* &i2c8 */
++    /* i2c-mux@72 (PCA9546) */
++    i2c_mux = i2c_slave_create_simple(i2c[8], TYPE_PCA9546, 0x72);
++
++    /* i2c8mux ch0 */
++    /* adc128d818@1f — no model */
++    /* pca9555@22 */
++    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 0),
++                            TYPE_PCA9552, 0x22);
++    /* pca9555@24 */
++    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 0),
++                            TYPE_PCA9552, 0x24);
++    /* eeprom@50 */
++    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 0), 0x50, 16 * KiB);
++
++    /* i2c8mux ch1 */
++    /* pca9555@22 */
++    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 1),
++                            TYPE_PCA9552, 0x22);
++    /* pca9555@24 */
++    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 1),
++                            TYPE_PCA9552, 0x24);
++    /* eeprom@50 */
++    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 1), 0x50, 16 * KiB);
++
++    /* &i2c9 */
++    /* eeprom@50 */
++    at24c_eeprom_init(i2c[9], 0x50, 16 * KiB);
++    /* eeprom@56 */
++    at24c_eeprom_init(i2c[9], 0x56, 8 * KiB);
++
++    /* &i2c10 */
++    /* i2c-mux@71 (PCA9548) */
++    i2c_mux = i2c_slave_create_simple(i2c[10], TYPE_PCA9548, 0x71);
++
++    /* i2c10mux ch5 */
++    /* pca9555@22*/
++    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 5),
++                            TYPE_PCA9552, 0x22);
++    /* eeprom@52 */
++    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 5), 0x52, 32 * KiB);
++
++    /* &i2c11 */
++    /* i2c-mux@71 (PCA9548) */
++    i2c_mux = i2c_slave_create_simple(i2c[11], TYPE_PCA9548, 0x71);
++
++    /* i2c11mux ch0-ch4 — empty */
++
++    /* i2c11mux ch5 */
++    /* pca9555@22 */
++    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 5),
++                            TYPE_PCA9552, 0x22);
++    /* eeprom@52 */
++    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 5), 0x52, 32 * KiB);
++
++    /* &i2c13 */
++    /* i2c-mux@70 (PCA9548) */
++    i2c_mux = i2c_slave_create_simple(i2c[13], TYPE_PCA9548, 0x70);
++
++    /* i2c13mux ch3 */
++    /* adc128d818@1f - no model */
++
++    /* i2c13mux ch4 */
++    /* eeprom@51 */
++    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 4), 0x51, 32 * KiB);
++
++    /* i2c13mux ch7 */
++    /* nfc@28 — no model */
++}
++
++static void aspeed_machine_anacapa_class_init(ObjectClass *oc,
++                                               const void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
++
++    mc->desc       = "Facebook Anacapa BMC (Cortex-A7)";
++    amc->soc_name  = "ast2600-a3";
++    amc->hw_strap1 = ANACAPA_BMC_HW_STRAP1;
++    amc->hw_strap2 = ANACAPA_BMC_HW_STRAP2;
++    amc->fmc_model = "mx66l1g45g";
++    amc->spi_model = NULL;
++    amc->num_cs    = 2;
++    amc->macs_mask = ASPEED_MAC2_ON;
++    amc->i2c_init  = anacapa_bmc_i2c_init;
++    mc->default_ram_size = ANACAPA_BMC_RAM_SIZE;
++    aspeed_machine_class_init_cpus_defaults(mc);
++}
++
++static const TypeInfo aspeed_ast2600_anacapa_types[] = {
++    {
++        .name          = MACHINE_TYPE_NAME("anacapa-bmc"),
++        .parent        = TYPE_ASPEED_MACHINE,
++        .class_init    = aspeed_machine_anacapa_class_init,
++        .interfaces    = arm_machine_interfaces,
++    }
++};
++
++DEFINE_TYPES(aspeed_ast2600_anacapa_types)
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 84b8ec5fb5..3de3dca8a9 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -56,6 +56,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+   'aspeed_ast2500_witherspoon.c',
+   'aspeed_ast2500_yosemitev2.c',
+   'aspeed_ast2600.c',
++  'aspeed_ast2600_anacapa.c',
+   'aspeed_ast2600_bletchley.c',
+   'aspeed_ast2600_catalina.c',
+   'aspeed_ast2600_evb.c',
+diff --git a/tests/functional/arm/meson.build b/tests/functional/arm/meson.build
+index 2f538f29a2..959179a56f 100644
+--- a/tests/functional/arm/meson.build
++++ b/tests/functional/arm/meson.build
+@@ -12,6 +12,7 @@ test_arm_timeouts = {
+   'aspeed_ast2600_sdk' : 720,
+   'aspeed_ast2600_sdk_515' : 720,
+   'aspeed_ast2600_sdk_otp' : 720,
++  'aspeed_anacapa' : 480,
+   'aspeed_bletchley' : 480,
+   'aspeed_catalina' : 480,
+   'aspeed_gb200nvl_bmc' : 480,
+@@ -45,6 +46,7 @@ tests_arm_system_thorough = [
+   'aspeed_ast2600_sdk',
+   'aspeed_ast2600_sdk_515',
+   'aspeed_ast2600_sdk_otp',
++  'aspeed_anacapa',
+   'aspeed_bletchley',
+   'aspeed_catalina',
+   'aspeed_gb200nvl_bmc',
+diff --git a/tests/functional/arm/test_aspeed_anacapa.py b/tests/functional/arm/test_aspeed_anacapa.py
+new file mode 100755
+index 0000000000..27f8bd8b56
+--- /dev/null
++++ b/tests/functional/arm/test_aspeed_anacapa.py
+@@ -0,0 +1,25 @@
++#!/usr/bin/env python3
++#
++# Functional test that boots the ASPEED machines
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++from qemu_test import Asset
++from aspeed import FacebookAspeedTest
++
++
++class AnacapaMachine(FacebookAspeedTest):
++
++    ASSET_ANACAPA_FLASH = Asset(
++        'https://github.com/legoater/qemu-aspeed-boot/raw/3fa3212827b04be4034d43b5adeef57c27d6ab18/images/anacapa-bmc/openbmc-20260512025228/obmc-phosphor-image-anacapa-20260512025228.static.mtd.xz',
++        '2232e241abcfb6d4f6b82cb6c378ce5ce05e364aac6d118785c2b6cc33fe43f3')
++
++    def test_arm_ast2600_anacapa_openbmc(self):
++        image_path = self.uncompress(self.ASSET_ANACAPA_FLASH)
++
++        self.do_test_arm_aspeed_openbmc('anacapa-bmc', image=image_path,
++                                        uboot='2019.04', cpu_id='0xf00',
++                                        soc='AST2600 rev A3')
++
++if __name__ == '__main__':
++    FacebookAspeedTest.main()
 
 -- 
 2.53.0-Meta
