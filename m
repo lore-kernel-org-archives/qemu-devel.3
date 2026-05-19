@@ -4,91 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE996CD4F5B
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 15:39:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61B9FCD4F3C
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 15:50:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPMXM-0002Tt-8P; Tue, 19 May 2026 11:39:16 -0400
+	id 1wPMhB-0004Fj-3F; Tue, 19 May 2026 11:49:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPMXK-0002TY-VP
- for qemu-devel@nongnu.org; Tue, 19 May 2026 11:39:14 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPMXJ-0004Cl-1T
- for qemu-devel@nongnu.org; Tue, 19 May 2026 11:39:14 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-c80167f56cdso1656201a12.3
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 08:39:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779205151; x=1779809951; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=2GX01AdvA2zAfcvhLJFZRVp3l+TaA6eSkbrN/UeZnNA=;
- b=VgnI/d0b16gWL1+591rp5tsgwQIj0kv1Vpt4XML6aaB2tTq9LRKxIzqV0YwExGBUFb
- ZqvJYJ6yRS091O0Vo+9Gj6UVm0wwRS+VZV4L/6wLFF0ffAeiB9X6GWzA2IeGVhtKF1uV
- ENQVCL014ugoTf/2OXXSbmAGeqHYMU51RsUm0s965gV1SVAdbBj6CHWi816QwkJ98rGz
- LLQseOaPfRDvoWtg5ddxzbYeSpPW8oCuBSYjOCHCY/2zTUcuV+IGJ3C+Doz9AjACAI2q
- Wczo4fV3fvVpxTxnyWvwXSdCrWymlaFa/hPbnrvpGbwNpO1abF2cN06YkPJID/rbASQs
- iR5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779205151; x=1779809951;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2GX01AdvA2zAfcvhLJFZRVp3l+TaA6eSkbrN/UeZnNA=;
- b=JdhEgqZbjoQ4uDDemQwtziAei60TfZA8cdblVtYqop44RTtvVx15mGjURcJ/Z2U4Zt
- 9mSGMWmSpqjr0sn9ewnOoDjI/UohKaCJGwgoMjdnQsb7jM1YlYjZYaXaU6Z85ZX6fU8l
- JQvdQHWLQrfKdv4zg9m99+g3L8qkMIUo5qf6J+5zUX+2ZH580rBfCqlu9tI/3ikq0dDr
- 8z8nFI5jNo6lKws9q2YBtzZdUPVkutmCYPmBZT9R1MHv5ORTpEfvknKinNVvXnSQdEX9
- aLx47Z/8UZ3TPJimptxqvBJBtPsjHiQjUHWaNbq5slZ9DxOkvTKUYA7ggrQmRWZ7wXAv
- eHvw==
-X-Gm-Message-State: AOJu0Yxfcw0ilO2KTcT+WOcK8fpxrBc3VQTYJYhH/8ExMkIMB/0SpHb3
- P9f1SZ4qoRoD7D1vEmErEcU0H9Rjk3gkjMS7fBubqJkwbu0slwSa+lphgw3RnVzJ/ZI=
-X-Gm-Gg: Acq92OHp9elw5EJfQ44XRnc68N9RnP3dwPl1CcMFZSSFWKgbKJoBl+tbIwj1reQgxdc
- 0+2n2ekkawy9nQRu0oyd74BsBQ4sUzTWKOPK+J9G0R2u3vn2pJZPINVsKfWoCEcXxSEr4arjIWF
- 0MMXYy8a91FwXRKQoiz9YkZ91lnMpzl3HUwmGhVGKtWqGrc+tI+9DgI33ndFV88WGjwf3Ll9tJH
- LGKf8TbNIih/VNzK5Y8giidDfHmzbj9+Wn1h3+8DjTOR/8kpampqQ16GdYBy/cKzo672OSxqkYM
- wwrAdaFtj1hiSnvVWZOF8smS7nrIgoGWn792XX7uu4rip4Q4AFyFwYLxAQsc7pLlB+OpRvjVM4k
- pG4PZUc1g/iRl9u5NuBneH5wFcamrnsXfwiSxz8ajWS2gaYTWxOHexKSq5dKQ2iftB20IQjGW/D
- vxc2YI9BVOaYlIRO+GAeMbmX3Rcqu02ROwEttW
-X-Received: by 2002:a05:6a20:6716:b0:3b2:a809:ff7 with SMTP id
- adf61e73a8af0-3b2a8093e2amr5553849637.10.1779205151002; 
- Tue, 19 May 2026 08:39:11 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.142.33])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c82bb07d2fesm16938614a12.9.2026.05.19.08.39.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 May 2026 08:39:10 -0700 (PDT)
-Message-ID: <e8df74d9-6744-4ba8-bf40-d348d2c073e5@linaro.org>
-Date: Tue, 19 May 2026 08:39:08 -0700
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wPMh9-0004F3-4k
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 11:49:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wPMh7-0007KV-Dt
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 11:49:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779205759;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=YLc5HOX+HHl9DNacM1UmQ/k758gzrma5gFobMU+xi4s=;
+ b=ba4prCXJOV62AQxeWGoUKR5YV8FzL3YbC3qT45hXtR0Khp3dzH1taxGnyVQSx5hFtN/wG6
+ UT/pX8nFHcD/Ph8YCykaP3Oh+U38KqP3+jJFIPO/dfd91ocODYRw68LLeljT/0+AdFWyoD
+ SJ8WJpZ+klJ2SR8nG+Pv1igKWTZqjPc=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-151-JFC9uRNaP7-vnLJQIzB1Xw-1; Tue,
+ 19 May 2026 11:49:15 -0400
+X-MC-Unique: JFC9uRNaP7-vnLJQIzB1Xw-1
+X-Mimecast-MFC-AGG-ID: JFC9uRNaP7-vnLJQIzB1Xw_1779205753
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 561E71956058; Tue, 19 May 2026 15:49:13 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.118])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 604B71684; Tue, 19 May 2026 15:49:12 +0000 (UTC)
+Date: Tue, 19 May 2026 11:49:11 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Sam Li <faithilikerun@gmail.com>, dlemoal@kernel.org
+Cc: qemu-devel@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ dmitry.fomichev@wdc.com, Kevin Wolf <kwolf@redhat.com>,
+ cassel@kernel.org, Markus Armbruster <armbru@redhat.com>,
+ qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, hare@suse.de,
+ Hanna Reitz <hreitz@redhat.com>
+Subject: Re: [PATCH v10 2/4] qcow2: add configurations for zoned format
+ extension
+Message-ID: <20260519154911.GB119642@fedora>
+References: <20260510175059.311814-1-faithilikerun@gmail.com>
+ <20260510175059.311814-3-faithilikerun@gmail.com>
+ <20260514194906.GC1535937@fedora>
+ <CAAAx-8K+12SGZqzpLGsxjsr6iGAHwQu-TUXe6Z6rtZA27OpjrQ@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 11/12] fpu: Saturate the exponent in uncanon_normal
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-References: <20260517002550.321291-1-richard.henderson@linaro.org>
- <20260517002550.321291-12-richard.henderson@linaro.org>
- <CAFEAcA9ni3_c83Ex+Oc73yTxvUm2GkF=CFcqf5gv4VhD3uTJ2A@mail.gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <CAFEAcA9ni3_c83Ex+Oc73yTxvUm2GkF=CFcqf5gv4VhD3uTJ2A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="xOU5amG3E/U9fVBO"
+Content-Disposition: inline
+In-Reply-To: <CAAAx-8K+12SGZqzpLGsxjsr6iGAHwQu-TUXe6Z6rtZA27OpjrQ@mail.gmail.com>
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,46 +94,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/19/26 02:57, Peter Maydell wrote:
-> On Sun, 17 May 2026 at 01:27, Richard Henderson
-> <richard.henderson@linaro.org> wrote:
->>
->> Notice the conflict between saturation and rebias_overflow,
->> which should never happen.  Otherwise, saturate to INT32_MAX
->> and allow the usual overflow to max, infinity, or dnan.
->>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   fpu/softfloat-parts.c.inc | 12 +++++++++++-
->>   1 file changed, 11 insertions(+), 1 deletion(-)
->>
->> diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
->> index 45606f8402..914e588ec8 100644
->> --- a/fpu/softfloat-parts.c.inc
->> +++ b/fpu/softfloat-parts.c.inc
->> @@ -341,7 +341,17 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
->>           g_assert_not_reached();
->>       }
->>
->> -    exp = p->exp + fmt->exp_bias;
->> +    /* Because exp_bias is positive, we can only overflow past INT_MAX. */
->> +    if (sadd32_overflow(p->exp, fmt->exp_bias, &exp)) {
->> +        /*
->> +         * rebias_overflow wants to compute a modulo exponent, which
->> +         * conflicts with saturation.  That said, saturation can only
->> +         * happen with scalbn, which is not a PowerPC operation.
->> +         */
->> +        assert(!s->rebias_overflow);
->> +        exp = INT32_MAX;
-> 
-> As mentioned in the review comment on one of the Arm patches,
-> I think that if we set exp to INT32_MAX here then the
-> "round up" code below can increment it, overflowing to INT_MIN,
-> and then we won't correctly spot that it is too large for the format.
 
-Right-o.  I'm going to drop this one and constrain exp during scalbn et al to something 
-smaller than INT32_{MIN,MAX}, so that we don't have to consider overflow everywhere.
+--xOU5amG3E/U9fVBO
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Mon, May 18, 2026 at 12:21:55AM +0200, Sam Li wrote:
+> On Thu, May 14, 2026 at 9:49=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.=
+com> wrote:
+> > On Sun, May 10, 2026 at 07:50:57PM +0200, Sam Li wrote:
+> > > +         48 - 55:  zonedmeta_offset
+> > > +                   The offset of zoned metadata structure in the con=
+tained
+> > > +                   image, in bytes.
+> >
+> > Do you want to say anything about the order in which metadata is
+> > persisted to disk when zones used? I guess the data is written into the
+> > image file first, then the non-zoned qcow2 L1/L2/refcount metadata is
+> > updated, and finally the write pointer is written. Write pointers are
+> > not guaranteed to be updated on disk until the write request followed by
+> > a flush request are both completed.
+>=20
+> The current ordering is not like that. The write pointer is written
+> persistently first, then the data writes and the non-zoned qcow2
+> L1/L2/refcount metadata updates. On IO failure, the corresponding
+> write pointer is re-read from disk. As noted in the previous comment,
+> the wp must be updated when issuing the IO, under the assumption that
+> the write IO will succeed.
+>=20
+> The ordering has been settled this way since v7 to deal with
+> concurrent zone append writes. If the wp was only updated after data
+> I/O, two concurrent appends would both have read the same wp and tried
+> to write to the same position.
+>=20
+> >
+> > (The idea is that the data must be visible in the qcow2 file before it
+> > is safe to update the write pointer. Otherwise a power failure would
+> > leave the file in an inconsistent state where the write pointer has
+> > advanced but the data was not written.)
+>=20
+> The crash-consistency is a concern...
 
-r~
+Yes, I'm thinking about crash-consistency. The ordering you described
+can result in qcow2 images where the write pointer is ahead of the
+actually written data after a power failure or maybe a QEMU crash.
+
+QEMU's block layer must follow the same data integrity behavior that
+real devices guarantee.
+
+Damien: Do real zoned block devices guarantee that the updated write
+pointer is persisted only after appended data has written been
+persisted?
+
+Stefan
+
+--xOU5amG3E/U9fVBO
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmoMhncACgkQnKSrs4Gr
+c8gMkggAyZyYszb7FSU9FgqGlMcHwKQG4WM5UWL3wdB0pBRGZ9bLI1gqsI/sxkfV
+EBwrJddxC7SkfbxvmgPFhs2yMNqW6DMRWTMB33SQtAcHrADzPONo1fDPKy1Vk2vl
+K/dAxfLxGtWSs7SsnHnZzhajjm9vrD0t8tDVMp4O8tQO9kWP49XdaFMZ8dCkZgAS
+tdwwMtgtZlIW45kmeUcoJ0bI1MrVCSRvWt8aOYs7y1OPYhkkB7S+MMMoyw6Fs8fU
+cvu4dO1b1/4ENvZ9VJLRD7kzMJVv2xGBl3zwbtFC+dY/Mnpvc60v583ARENn1J2n
+mDwChYGu5mRYAF9RxQ1vMgeoKxQjbg==
+=8VHn
+-----END PGP SIGNATURE-----
+
+--xOU5amG3E/U9fVBO--
+
 
