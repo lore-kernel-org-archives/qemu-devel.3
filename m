@@ -4,98 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 317B6CD4F54
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 22:20:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 606C5CD5BA4
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 22:20:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPSn8-0008Pl-Fy; Tue, 19 May 2026 18:19:58 -0400
+	id 1wPSnn-0000B6-KV; Tue, 19 May 2026 18:20:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <scott.seal@trailofbits.com>)
- id 1wPO5p-00039I-6n
- for qemu-devel@nongnu.org; Tue, 19 May 2026 13:18:57 -0400
-Received: from mail-qk1-x729.google.com ([2607:f8b0:4864:20::729])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wPSnl-0000Aj-Vr
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 18:20:38 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <scott.seal@trailofbits.com>)
- id 1wPO5n-0000QG-8V
- for qemu-devel@nongnu.org; Tue, 19 May 2026 13:18:56 -0400
-Received: by mail-qk1-x729.google.com with SMTP id
- af79cd13be357-911dfc86903so459156085a.3
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 10:18:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779211133; cv=none;
- d=google.com; s=arc-20240605;
- b=esEoDrUjp9QCbG19gQEFleI1rSJzyxw5b30vHSxnWbWMRNsZ+6eFdwKHRvmbLk5SWk
- +0Ve2FT9xVaESmFlE6UAcFUlPm+RytO6Lb5Jdvb+OtJuVb8H4S70v2GKcYiHR+JndtoO
- 5QKcB/iG+qwULKMxc7iATieYdfKtJG3CPOV+Yo5hrU1OSU/4WZBeMS0Iy5l5nN5jizki
- 5agMZZhah5TESn3Cy4POkFmkaLFsYdC1cKVYwYUH2Ki1sKrtUOAdU4fZcSMX9Iz2Ywco
- bvLLXP9kwakIOa5UxnD4FaIP0jrMKlL2zjhfoDD6bikYXxG5lqACCXlVoaf+9h6T3k0V
- ymnw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=UbYPO8wWumjwOMLrIcOv36/c7++g3lqdtsj3xnoaYDM=;
- fh=okiVJJUM19CB7BkeW3ZPAX8bVES1G3mX4JYwUmSjpT0=;
- b=gtXjnViMJuVdLm4xwI40ImQv5o0bbmwxuWmXw7dy/Iec7Da9y+etw7SNWNQd+0UCbz
- FRdt9tmAlqBQilIpxS+e0eeX8HcWjBlrAsv/lSQhuNuf0dHbbW1AyeD5Xg6fZ2VMTf4d
- EyQJ2Vw+mtiU27e3q8Kk1vf5q2IhS/5yiScI/DgDgKWiTI4T1EAg6Iljur1obn2KiNmE
- fOLXg4TNw7pLoHmYbpvxyWPD6FBvMFtBXTNq7cU+RhHaW8qJMjkdlU696lHGEi5poZbE
- geZsFPamZoWwuXtDUvgGKqkWhFjZkPN+fArM6KBaN19OjbzLiSA+BxKfmnSbf8raaWac
- RdNg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wPSnj-00029w-K5
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 18:20:37 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-82f8b60e485so1672076b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 15:20:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=trailofbits.com; s=google; t=1779211133; x=1779815933; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=UbYPO8wWumjwOMLrIcOv36/c7++g3lqdtsj3xnoaYDM=;
- b=cGLunA8krmffbLBmxvVJ5PmVEL40+dZx/T98Ij0OVAia9Iz218WjIA3idAln5EWzuf
- KTibgDVIgfT+BLqxqTFmRtMz5ggdBOIMqnuOXMn6C2y/iqY70Fl7WDw3cBWs30Wlb9+d
- Sw0u86A8yBR0lgXK1GzfOOwbVjW5ZBNhYHXLcDT+v3xPQXcVewmmVDX++VjiiwKsu8Dm
- hvVhYKg5Dz1SvUJ+GrCsysZuBjzJXipD/ydz0vntBcYbhVZwU9K5RcHoS9YaMUO3bQm3
- v4OQyZcUPaBwuhWZOBsW9PXscQwOAgUQnXmvy8u27bKAE7a2qAHKHBljWCPNV5/eTYda
- D/mg==
+ d=linaro.org; s=google; t=1779229234; x=1779834034; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=V2rSyFQh748Ywm44QylXBDDkn41JjDJxYqsWrIlMJUM=;
+ b=EHQjUHoE/jWsiiDDrBtLIYmPEClUzhQ0pYVsTpP29TY6CX4uNtiWG9jJaPm9Z+pxYj
+ LUNvj12CdL4UudThioYMQCRg4ST6/0dptdmU+ELsHwe1VPgymBqXAqmLr7HEqYIljEEi
+ WS3RQB4Cjo22jjHdKooLOI18z9++bU6qW9lMDqx0ZZJikmG9pzddDFbN6ZfxDq3bzfA0
+ +h0jtFLS7K4TXgzAoimxprz+oBCTV4t0ej+dY+uGXVeX4ERU+Bvza5xEndGb+lp4LZTi
+ p2sGht6cscMbgQLGAgktey3eUK4PIZEXiZu6fR6k6CNF9PWZP5WAjt8QdAI54adEM07J
+ MgZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779211133; x=1779815933;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UbYPO8wWumjwOMLrIcOv36/c7++g3lqdtsj3xnoaYDM=;
- b=Ar38/Y5Xq3gJZVBfXWSFy2b9rVc8+Dsp3TKAxdrHjIYcfkWxzLra+buStzJPiWGhJs
- QyxteB1rK1iU7W2Z91siJPq17hy9uE6xBaJGO3+qGq3yKJaxW+ELFPfdAB5vrZMaA+rP
- 0HsHSmleX4sSdgFF4XyzuGH9DQBoq+Uphn7uS8cOPWZ9caXMaU6hbjfAIUm0vz+upLs5
- eMztQF9KHXItTbEl3Iaqzjbl3Xr7ODV/nkG/zOsweoo3+wiHSUCYKX/GcwjbafbsJlum
- YHVfHN39RGNN44t95iUVYr2QmsYKsTQoN2/xJ9f4TkDRxryOMvFC6ucTROcToxzx0s93
- Xlwg==
-X-Gm-Message-State: AOJu0YzXdBoTdGK4trAaivrJxEy1dg4NtW2GgC9nUZP9YA3RrYTC0Dml
- zoggz5R9GiqfypmXeyqlgQqvsJYIstwiJSMo6XH86czCpVneEjcIh9ZeGTRYtz20TwJE0yE2IH8
- d0CdrFXDTjDFHD//+dId3zcLzgpz8Rz1gaXqR0kvEFHt3KExdH/qo
-X-Gm-Gg: Acq92OFWO16Fz1vkugxJjIKiRUm6B1+KFjbnidYkhv81/KyVeQZ40ftrwt+V/LfcZu4
- oSYrUZ06ymApONzSTeuCOgBmpzfvQkJgWwQEiG/bdZxajwdiGgVQkREzoy6CDdi1d8iK/woPb1U
- ESXbyPWASSUSNiAdezlNUHllgJTOyCy9sHkQH7kx5UyZ+/jlfFM8Cg5f0Yoa0El5Jdcc1KN9+jK
- 0TlEmXIoWPXjEIJgxymknbW0oVB1timQPE+D9bhecdO1+kBZOdspVpoBFZe2EaND+aaB8UeQoNI
- hVTfUeMkW9t3oD2UcV4PlnQNwpVIbbzNbDIcM/bpZmL18IDBK2V4
-X-Received: by 2002:a05:620a:4002:b0:8da:358a:c4d4 with SMTP id
- af79cd13be357-911d07874c4mr2945033085a.55.1779211133280; Tue, 19 May 2026
- 10:18:53 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779229234; x=1779834034;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=V2rSyFQh748Ywm44QylXBDDkn41JjDJxYqsWrIlMJUM=;
+ b=Vh8KcCn09/fnoa/CJibn6r+Ix21x9YRualpfXvYqxu5ACf4XlOuChqf23XwQ3oLns9
+ QBhPwcQen/k7mAEQmWEL/snhgnhxHSBxA0Rknwyb0dvz046uC+63iMoxJrYke2DD9vnd
+ Z4cauTunBFB6o7PsTVro850MLx89UQVcplHSFIvV3zhueQOqX9eXsPq8xsMLjMxHsak8
+ WBe1russMyiLF8Rd3p8PM+cZ9hL+IrSBNo1MdKVKa8/BDW0zAw6MLO8/OF/oDVMEbucG
+ PFvRdhrcymjfC0HOJDFO5+bIvBRfA9O4ckUC0fy2HIS4PPvW+HDTXiTdF1e8Mdq46SZ4
+ JcOg==
+X-Gm-Message-State: AOJu0YySJRGzzKN5NarVzQWftn+TJQD8ckW6qW1xeLZYqQsbpP0ildQA
+ ETYU8O4/960boYPU5yLqz9KMhTpk4KzOnmb0YZn+c7VFtwLzeVuutFwPkivgSpAb2l36jygtFq+
+ otZhuezk=
+X-Gm-Gg: Acq92OGYUe/UMy1X5LAP6cawQxtL/VjuGKNmYLHNkAWWxAW1a1mU8/wFSic6xmEeHbz
+ O6HuCgUfGhKMEMDvzvBuzr9OewaLWCf8jmxxc1dYpe4N4fb7RxOwVHrsJXC3gMkKJVAYTLKOD20
+ 5V3G3aU/FmS4M6o3LOcBv8rfbha6TvX3yg8NQAbzW9wXm9xWaWSGHjet9GXgCJy9qBQDvuKPtcz
+ CgveWldSIJbrOktoT1VppiL0tJH4KaFLoOBDZ2TiN+JlxbsKS0x/1cYpZBAdZF6OpO/LSIxaUh0
+ MT9ncANtzy5+uwikKs4q/+YWnFUGCtt7FC9sagwsPD5zQ0EsPR/wZ1qG1iZXj7r4Wtzg2QrH2Lk
+ HBXwt3cRcd132376iMH0HKa/9RUhF98tmSnvmE5r9uGBXq5zPUOGrRnYMDTZvKe0JRg8aDrVDjB
+ u/s4HRks8xlJIygYXfT86/dTCX+Vzx6xvrLvjZ
+X-Received: by 2002:a05:6a20:3d94:b0:3a3:602d:a0d8 with SMTP id
+ adf61e73a8af0-3b22e7537fbmr23250984637.17.1779229233951; 
+ Tue, 19 May 2026 15:20:33 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.142.33])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c82bb06268asm16695172a12.1.2026.05.19.15.20.33
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 May 2026 15:20:33 -0700 (PDT)
+Message-ID: <55708026-fa8a-4a72-b613-3a8820d750c6@linaro.org>
+Date: Tue, 19 May 2026 15:20:32 -0700
 MIME-Version: 1.0
-From: Scott Seal <scott.seal@trailofbits.com>
-Date: Tue, 19 May 2026 12:18:36 -0500
-X-Gm-Features: AVHnY4LA4VmMHW7jjIUEjLhldqlp0QOtIscChoE5Dnfqx2zKnerKJ8MbL2w51tU
-Message-ID: <CACuTwmpnpOwyk5s21idt+Sr8FjGivwQLNPtjjZ-3Zb2sJbjvAg@mail.gmail.com>
-Subject: Trail of Bits + OpenAI security project with [QEMU]
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] disas/riscv.c: add 'cbo' insns to disassembler
 To: qemu-devel@nongnu.org
-Cc: patchtheplanet@trailofbits.com
-Content-Type: multipart/alternative; boundary="00000000000094781306522edfe0"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::729;
- envelope-from=scott.seal@trailofbits.com; helo=mail-qk1-x729.google.com
+References: <20260519204714.1376551-1-daniel.barboza@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260519204714.1376551-1-daniel.barboza@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_KAM_HTML_FONT_INVALID=0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 19 May 2026 18:19:56 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -110,103 +103,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000094781306522edfe0
-Content-Type: text/plain; charset="UTF-8"
+On 5/19/26 13:47, Daniel Henrique Barboza wrote:
+> We forgot to add 'cbo' insns to disas/riscv.c.  The result is that the
+> disassembler recognizes all of them as 'lq', an insn that happens to
+> share the same opcode space.
+> 
+> While we're at it reorder cbo_* entries in insn32.decode using opcode
+> order instead of insn name.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3480
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> ---
+>   disas/riscv.c              | 29 ++++++++++++++++++++++++++++-
+>   target/riscv/insn32.decode |  2 +-
+>   2 files changed, 29 insertions(+), 2 deletions(-)
 
-Hello QEMU Developers!
+As far as it goes,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-I hope this message finds you well. My name is Scott Seal, and I'm a Senior
-Security Engineer at Trail of Bits. As a security researcher, I am a heavy
-user (and great admirer) of QEMU.
+However, I have long-standing nits:
 
-Trail of Bits is running a security project with OpenAI: we're pairing our
-security engineers directly with a small number of OSS projects to spend a
-focused week finding and patching real vulnerabilities. QEMU looks like a
-strong fit.
+> 
+> diff --git a/disas/riscv.c b/disas/riscv.c
+> index d416a4d6b3..36609efdf5 100644
+> --- a/disas/riscv.c
+> +++ b/disas/riscv.c
+> @@ -985,6 +985,10 @@ typedef enum {
+>       rv_op_ssamoswap_d = 953,
+>       rv_op_c_sspush = 954,
+>       rv_op_c_sspopchk = 955,
+> +    rv_op_cbo_inval = 956,
+> +    rv_op_cbo_clean = 957,
+> +    rv_op_cbo_flush = 958,
+> +    rv_op_cbo_zero = 959,
+>   } rv_op;
+>   
+>   /* register names */
+> @@ -2255,6 +2259,10 @@ const rv_opcode_data rvi_opcode_data[] = {
+>         rv_op_sspush, 0 },
+>       { "c.sspopchk", rv_codec_cmop_ss, rv_fmt_rs1, NULL, rv_op_sspopchk,
+>         rv_op_sspopchk, 0 },
+> +   { "cbo.inval", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
+> +   { "cbo.clean", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
+> +   { "cbo.flush", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
+> +   { "cbo.zero", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
+>   };
 
-This is an opportunity for QEMU to get dedicated support identifying,
-triaging, and patching bugs with the latest AI tooling, before independent
-actors begin using similar tools to report or exploit vulnerabilities.
+There's got to be a better way to structure this code so that you don't have a magic 
+correspondence between enumerators and array indexes.
 
-Trail of Bits does the work, you get the fixes:
+>   
+>   /* CSR names */
+> @@ -2876,7 +2884,26 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
+>               switch ((inst >> 12) & 0b111) {
+>               case 0: op = rv_op_fence; break;
+>               case 1: op = rv_op_fence_i; break;
+> -            case 2: op = rv_op_lq; break;
+> +            case 2:
+> +               /*
+> +                * 'lq' shares the "(...) 010 ..... 0001111" opcode space
+> +                * with 'cbo' insns.  Check the next 5 bits to select
+> +                * what we want:
+> +                *
+> +                * cbo_inval  0000000 00000 ..... 010 00000 0001111
+> +                * cbo_clean  0000000 00001 ..... 010 00000 0001111
+> +                * cbo_flush  0000000 00010 ..... 010 00000 0001111
+> +                * cbo_zero   0000000 00100 ..... 010 00000 0001111
+> +                *
+> +                * Anything that doesn't match these will default to 'lq'.
+> +                */
+> +               switch ((inst >> 17) & 0b11111) {
+> +               case 0: op = rv_op_cbo_inval; break;
 
-   - A Trail of Bits engineer dedicated to your project for the week
-   - We validate every finding and submit patches ourselves
-   - You can be as involved as you want, including not at all
+Surely "return foo" would be easier than arranging to fall through all the way to the 
+bottom of the function, just to do
 
-OpenAI is also happy to provide participants with:
+     dec->op = op;
 
-   - 6 months of ChatGPT Pro, which includes Codex
-   - Conditional access to Codex Security
-   - API credits for coding, maintainer automation, release workflows, and
-   core open source work
+with no return value.
 
-Two quick questions for the maintainers:
+To my mind,
 
-   1. Would you want QEMU to be part of this?
-   2. If interested, are you available the first week in June, and how much
-   time could you spend that week? "A few hours" "heads-down for the week," or
-   "none, just tell me what you find" all work.
+     void (*decode_func)(rv_decode *, rv_isa);
 
-Let me know, and I'll get it set up! Thanks again for all your hard work.
+should return "const rv_opcode_data *", with NULL for unrecognized/illegal, so that each 
+opcode_data array need not be exported along with the decode function.
 
--- 
+Indeed, that means you need not have opcode_data arrays at all, and could write
 
-Scott Seal
-Senior Security Engineer | Trail of Bits
-trailofbits.com
+static const rv_op_cbo_inval = {
+     "cbo.inval", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0
+};
 
---00000000000094781306522edfe0
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+     ...
+     case 0: return &rv_op_cbo_inval;
 
-<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div di=
-r=3D"ltr"><div>Hello QEMU Developers!</div><div><br></div><div>I hope this =
-message finds you well. My name is Scott Seal, and I&#39;m a Senior Securit=
-y Engineer at Trail of Bits. As a security researcher, I am a heavy user (a=
-nd great admirer) of QEMU.</div><div><div><br></div>Trail of Bits is runnin=
-g a security project with OpenAI: we&#39;re pairing our security engineers =
-directly with a small number of OSS projects to spend a focused week findin=
-g and patching real vulnerabilities. QEMU looks like a strong fit.<br><br>T=
-his is an opportunity for QEMU to get dedicated support identifying, triagi=
-ng, and patching bugs with the latest AI tooling, before independent actors=
- begin using similar tools to report or exploit vulnerabilities. <br><br>Tr=
-ail of Bits does the work, you get the fixes:<br><ul><li>A Trail of Bits en=
-gineer dedicated to your project for the week</li><li>We validate every fin=
-ding and submit patches ourselves</li><li>You can be as involved as you wan=
-t, including not at all</li></ul>OpenAI is also happy to provide participan=
-ts with:<br><ul><li>6 months of ChatGPT Pro, which includes Codex</li><li>C=
-onditional access to Codex Security</li><li>API credits for coding, maintai=
-ner automation, release workflows, and core open source work</li></ul>Two q=
-uick questions for the maintainers:<br><ol><li style=3D"list-style-type:dec=
-imal">Would you want QEMU to be part of this?</li><li style=3D"list-style-t=
-ype:decimal">If interested, are you available the first week in June, and h=
-ow much time could you spend that week? &quot;A few hours&quot; &quot;heads=
--down for the week,&quot; or &quot;none, just tell me what you find&quot; a=
-ll work.</li></ol>Let me know, and I&#39;ll get it set up! Thanks again for=
- all your hard work.</div><div><br></div><span class=3D"gmail_signature_pre=
-fix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature" data-smartmai=
-l=3D"gmail_signature"><div dir=3D"ltr"><span><p dir=3D"ltr" style=3D"line-h=
-eight:1.7999999999999998;margin-top:0pt;margin-bottom:0pt"><span style=3D"f=
-ont-size:11pt;font-family:&quot;Open Sans&quot;,sans-serif;color:rgb(0,0,0)=
-;background-color:transparent;font-weight:700;vertical-align:baseline">Scot=
-t Seal</span><span style=3D"font-size:11pt;font-family:&quot;Open Sans&quot=
-;,sans-serif;color:rgb(0,0,0);background-color:transparent;font-weight:700;=
-vertical-align:baseline"><br></span><span style=3D"font-size:11pt;font-fami=
-ly:&quot;Open Sans&quot;,sans-serif;color:rgb(0,0,0);background-color:trans=
-parent;vertical-align:baseline">Senior Security Engineer | Trail of Bits</s=
-pan><span style=3D"font-size:11pt;font-family:&quot;Open Sans&quot;,sans-se=
-rif;color:rgb(0,0,0);background-color:transparent;vertical-align:baseline">=
-<br></span><span style=3D"font-size:11pt;font-family:&quot;Open Sans&quot;,=
-sans-serif;color:rgb(0,0,0);background-color:transparent;vertical-align:bas=
-eline"><a href=3D"http://trailofbits.com" target=3D"_blank">trailofbits.com=
-</a>=C2=A0</span></p><div><span style=3D"font-size:11pt;font-family:&quot;O=
-pen Sans&quot;,sans-serif;color:rgb(0,0,0);background-color:transparent;ver=
-tical-align:baseline"><br></span></div></span></div></div></div>
-</div>
-</div>
-</div>
-</div>
 
---00000000000094781306522edfe0--
+r~
 
