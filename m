@@ -4,77 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CABACD4F3C
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 16:12:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F3F9CD5BAB
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 16:20:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPN2i-0004IM-N0; Tue, 19 May 2026 12:11:40 -0400
+	id 1wPNAR-0005kh-PW; Tue, 19 May 2026 12:19:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wPN2g-0004Hv-Sc
- for qemu-devel@nongnu.org; Tue, 19 May 2026 12:11:38 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wPNAP-0005k5-9j
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 12:19:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wPN2e-0005ti-AS
- for qemu-devel@nongnu.org; Tue, 19 May 2026 12:11:38 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wPNAN-00088i-24
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 12:19:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779207094;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1779207574;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=z+/0T5xBlvpvB8Y4D829lMzK/oK0ULSX9Z+1DR5ht/U=;
- b=QgxgpekkGTy+wrFihwwj/Aovgmt4caHktix3FM+z+GXjiVLDb/Cy3v82oNcYuMHRXnjfNY
- 1ymef1tUpA2Oj0YdDPe9dioTpg/qJcgkDV3dWflHRkI+5kVR7eLSina/OSIJ+Tk39k13D9
- MlV9WVHCl/Se9d0dwhCNmW8rZuQCUH4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-94-uekrvJ3qP0-CM21iw55gfQ-1; Tue,
- 19 May 2026 12:11:30 -0400
-X-MC-Unique: uekrvJ3qP0-CM21iw55gfQ-1
-X-Mimecast-MFC-AGG-ID: uekrvJ3qP0-CM21iw55gfQ_1779207090
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C89101956054; Tue, 19 May 2026 16:11:29 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.49.49])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C1E1E19560A6; Tue, 19 May 2026 16:11:27 +0000 (UTC)
-Date: Tue, 19 May 2026 17:11:23 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
+ bh=glozzzPbyENCPdRE7EkTsuy+agnFOta6FJ8AkyF1f+0=;
+ b=RZ8uAdGSU/JSznofjNU4SQwn4AabKBNKvJX1DFTh5yGp8xy/8wNIJNEqIBhmkMy8Iwxdzg
+ eEQach5f96pJaRryv3A1cydQZBAAuAKSVan9EabJl6GjApgjUHV+dCBxikHnjASgjj4T72
+ DedBw/1kKY/RGrPnv6Ya2xc9R843aM8=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-610-_1XDB4nMNE2QqV3-fzrlzQ-1; Tue, 19 May 2026 12:19:32 -0400
+X-MC-Unique: _1XDB4nMNE2QqV3-fzrlzQ-1
+X-Mimecast-MFC-AGG-ID: _1XDB4nMNE2QqV3-fzrlzQ_1779207571
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-48fd3dbd16aso31565365e9.0
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 09:19:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1779207571; x=1779812371; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=glozzzPbyENCPdRE7EkTsuy+agnFOta6FJ8AkyF1f+0=;
+ b=SCgsjW9Woua09pCz5lZePNFZRu85zqbr0y9TWY+jY0+hzOk5FkjMCzsD52zYMOx62n
+ ebEpHbzz3gyn819do22AyoCRbzHNeJoWcJsbJNALrrDNczCFyOqjHDpZvUKw+cMXrVCh
+ +niGYeBUigzW3Pkoxyjm70mpuM2YGLEgHAloeRL0l1zGTP7oTvvL4Nauj1M0w6kDLAqW
+ GsdBgWMT0MplXbmuIT/MVLwBfI1JeUsFILd1PxUc8st34TbmoVPxOI96aR9PeRb6bmtZ
+ 6cbchf9v3rGFaLWvOHwBc9N/ygn3HolfTckQRySpOnlh6+CKgJ+JiNkUBoQllOGE/UBK
+ zQhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779207571; x=1779812371;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=glozzzPbyENCPdRE7EkTsuy+agnFOta6FJ8AkyF1f+0=;
+ b=diNQrZWQGDezAEVjcphNWgdTA5IUB3pmjrp9RX42hxLIIKGo467Y+WMNvKbuRlnwqp
+ ttEqIj6li280gRYazkQMC+i8dK5KCDEfdfkOwKH8v10RAQR8kxsec5PWZk0W+cy3eB9a
+ cjLhSiWSee31gUu4fVWPP6a7ADer01fjA1sJOCqfH9uuIeIZbwDQSk+4U86t68aQHcJP
+ sCsB2fVefL1VhsTg0BaLF8b3gtyVRDdxModZNzgZeZGS2deByYj6WLfrNm96szlRyQs4
+ hkpTY4fEQxg4W6TYZ5HHs+7wO0zjIoBMWZ2bEFAYL8BtrRRPhhj7vUSdjlGoMXiZtjyV
+ AK/g==
+X-Gm-Message-State: AOJu0YzP+4FkatSh56AMuIr6AnRkigxHG37Nhx66ipMJrq5GJhscjvxv
+ gYDY/Ld/cyhdREtDbJzWX2kAKaODaw80x9aFh6yGSUVkuNswIpZ61ucB7x7DjbmFWbeppYg0sGN
+ XeQ7nqJW5VN6wXmcKHrEV7wjU43zH8QR0buZWNFJWzCQFybg3DoVhB/3u
+X-Gm-Gg: Acq92OFaqhsHnu9kzv+bj4B6zQYY+etYf0/fuIKuQjb6Lsb74ASA++i2vh9FuqwukzK
+ u/nJAA831B1U24k6kPixL9jGB/Ex6LTd4PLUsZNycfEL88CxakcE3x7l8x/ZKd91Han2HnRKxSN
+ IN0nrO5myOk0iiUDl/V8Ypcj3eObZm3j3rEb/WtYWmViAX9YZxIHGcMnhdbRuHYODY6oBDZpHMQ
+ jpuFvcE4ppkJvIJ/ZEqF+tV+kgUE92SAsioMpGwWikq2uq0HoQ3wbGAqmAi7fe6SZrkg7wZ/N67
+ RtfG1F+xnPLHHLkdo2uaqaC7cNlCJIFXZqAQ9o1JjqykmOmt2kAmqSl53E0ubz7HUJkK3isWO1r
+ OxdG2egZuh1R0F4lnbW7RtDLSgRr9ZM/JOYF+VY50Tl8=
+X-Received: by 2002:a05:600c:870c:b0:490:320:949 with SMTP id
+ 5b1f17b1804b1-490032009f3mr182091135e9.27.1779207571003; 
+ Tue, 19 May 2026 09:19:31 -0700 (PDT)
+X-Received: by 2002:a05:600c:870c:b0:490:320:949 with SMTP id
+ 5b1f17b1804b1-490032009f3mr182090695e9.27.1779207570530; 
+ Tue, 19 May 2026 09:19:30 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-25-45.inter.net.il. [80.230.25.45])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48feab2896bsm113641795e9.4.2026.05.19.09.19.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 19 May 2026 09:19:29 -0700 (PDT)
+Date: Tue, 19 May 2026 12:19:27 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, Mauro Matteo Cascella <mcascell@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
  Thomas Huth <thuth@redhat.com>
 Subject: Re: RFC: GitLab issues for security disclosures
-Message-ID: <agyLq5AHHQemFTRW@redhat.com>
+Message-ID: <20260519121840-mutt-send-email-mst@kernel.org>
 References: <agxzKzzDOJm1EU_v@redhat.com>
  <20260519111646-mutt-send-email-mst@kernel.org>
+ <agyLq5AHHQemFTRW@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260519111646-mutt-send-email-mst@kernel.org>
-User-Agent: Mutt/2.3.1 (2026-03-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <agyLq5AHHQemFTRW@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,128 +118,135 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 19, 2026 at 11:18:31AM -0400, Michael S. Tsirkin wrote:
-> On Tue, May 19, 2026 at 03:26:51PM +0100, Daniel P. BerrangÃ© wrote:
-> > The qemu-security mailing list was created several years back now and
-> > traditionally saw 1-2 disclosures a month at worst. This was manageable.
+On Tue, May 19, 2026 at 05:11:23PM +0100, Daniel P. Berrangé wrote:
+> On Tue, May 19, 2026 at 11:18:31AM -0400, Michael S. Tsirkin wrote:
+> > On Tue, May 19, 2026 at 03:26:51PM +0100, Daniel P. Berrangé wrote:
+> > > The qemu-security mailing list was created several years back now and
+> > > traditionally saw 1-2 disclosures a month at worst. This was manageable.
+> > > 
+> > > Since approx March 1st, the new normal is to see as many as 20 disclosures
+> > > in one single day, more than 200 in total now. This is unsustainable.
+> > > I was thinking we needed more people on qemu-security to triage, but IMHO
+> > > this won't really fix the problem.
+> > > 
+> > > This needs an issue tracker to cope with & email is not an issue tracker.
+> > > We faked an issue tracker with a shared spreadsheet to prevent us drowning
+> > > these past few months, but this is still not sustainable & probably won't
+> > > ever be.
+> > > 
+> > > The traditional POV was that security disclosures must be dealt with on
+> > > a strict "need to know" basis until there was a concious decision to make
+> > > them public. Typically that happened when a patch was published by the
+> > > maintainer on qemu-devel. Rarely have we applied an embargo period after
+> > > a maintainer had a patch ready to post, as most bugs were not severe
+> > > enough. Also in typical usage Libvirt has SELinux/AppArmour to mitigate
+> > > impact of a guest ecsape into QEMU.
+> > > 
+> > > QEMU is not alone in this chaos, to quote Linus
+> > > 
+> > >    https://lkml.org/lkml/2026/5/17/896
+> > > 
+> > > [quote]
+> > >   the continued flood of AI reports has basically made the security list
+> > >   almost entirely unmanageable, with enormous duplication due to
+> > >   different people finding the same things with the same tools. People
+> > >   spend all their time just forwarding things to the right people or
+> > >   saying "that was already fixed a week/month ago" and pointing to the
+> > >   public discussion.
+> > > [/quote]
+> > > 
+> > > They have explicitly changed their policy for disclosure now:
+> > > 
+> > >   https://github.com/torvalds/linux/commit/a03ef333fbd6cd861c8457c3d055ee3643a9baad
+> > > 
+> > > [quote]
+> > >   If you resorted to AI assistance to identify a bug, you must treat
+> > >   it as public. While you may have valid reasons to believe it is not,
+> > >   the security team's experience shows that bugs discovered this way
+> > >   systematically surface simultaneously across multiple researchers,
+> > >   often on the same day
+> > > [/quote]
+> > > 
+> > > IME for qemu-security we've definitely seen the same bugs reported by
+> > > different people, within days of each other, a couple of times even
+> > > the same day. Dupes are not the majority  - QEMU has so much low
+> > > hanging fruit - but they're a sizeable chunk.
+> > > 
+> > > 
+> > > Because we don't have a good automated way to publish disclosures
+> > > from qemu-security, we don't provide contributors any way to check
+> > > for duplicates before submission. The burden of checking for dupes
+> > > thus falls on the qemu-security triage people, or the maintainers
+> > > we forward issues to.
+> > > 
+> > > For disclosures in the non-virtualization use case, we ask the
+> > > reporter to file a gitlab issue or send a patch. They almost never
+> > > do this. We're lucky to have any reply to emails at all.
+> > > 
+> > > 
+> > > IMHO we need to move to an issue tracker. GitLab was originally
+> > > discounted in favour of qemu-security list since "Confidential"
+> > > issues cannot have visibility managed in a fine grained way.
+> > > They are visible to everyone with "Reporter" role or higher,
+> > > which is 70+ people for QEMU.
+> > > 
+> > > If we accept the kernel's view that AI discovered issues should be
+> > > considered public immediately because of the high chance of parallel
+> > > "discovery", then GitLab's limitations don't seem to bad.
+> > > 
+> > > It is also of note that we've had some people ignoring qemu-security
+> > > policy and directly filing public gitlab issues for stuff discovered
+> > > via AI/LLM agents already. Those are not getting attention for CVE
+> > > assignment, should it be needed which and can't be cross-referenced
+> > > by general maintaniers to stuff we have received via qemu-security.
+> > > 
+> > > We have some options IMHO
+> > > 
+> > >  1. Move all security disclosure to GitLab confidential issues
+> > >     no disclosures via email
+> > > 
+> > >  2. Move AI/fuzzer assisted disclosures to GitLab confidential
+> > >     issues, keep human discovered issues on qemu-security list
+> > > 
+> > >  3. Move AI/fuzzer assisted disclosures to GitLab public
+> > >     issues, keep human discovered issues on qemu-security list
 > > 
-> > Since approx March 1st, the new normal is to see as many as 20 disclosures
-> > in one single day, more than 200 in total now. This is unsustainable.
-> > I was thinking we needed more people on qemu-security to triage, but IMHO
-> > this won't really fix the problem.
-> > 
-> > This needs an issue tracker to cope with & email is not an issue tracker.
-> > We faked an issue tracker with a shared spreadsheet to prevent us drowning
-> > these past few months, but this is still not sustainable & probably won't
-> > ever be.
-> > 
-> > The traditional POV was that security disclosures must be dealt with on
-> > a strict "need to know" basis until there was a concious decision to make
-> > them public. Typically that happened when a patch was published by the
-> > maintainer on qemu-devel. Rarely have we applied an embargo period after
-> > a maintainer had a patch ready to post, as most bugs were not severe
-> > enough. Also in typical usage Libvirt has SELinux/AppArmour to mitigate
-> > impact of a guest ecsape into QEMU.
-> > 
-> > QEMU is not alone in this chaos, to quote Linus
-> > 
-> >    https://lkml.org/lkml/2026/5/17/896
-> > 
-> > [quote]
-> >   the continued flood of AI reports has basically made the security list
-> >   almost entirely unmanageable, with enormous duplication due to
-> >   different people finding the same things with the same tools. People
-> >   spend all their time just forwarding things to the right people or
-> >   saying "that was already fixed a week/month ago" and pointing to the
-> >   public discussion.
-> > [/quote]
-> > 
-> > They have explicitly changed their policy for disclosure now:
-> > 
-> >   https://github.com/torvalds/linux/commit/a03ef333fbd6cd861c8457c3d055ee3643a9baad
-> > 
-> > [quote]
-> >   If you resorted to AI assistance to identify a bug, you must treat
-> >   it as public. While you may have valid reasons to believe it is not,
-> >   the security team's experience shows that bugs discovered this way
-> >   systematically surface simultaneously across multiple researchers,
-> >   often on the same day
-> > [/quote]
-> > 
-> > IME for qemu-security we've definitely seen the same bugs reported by
-> > different people, within days of each other, a couple of times even
-> > the same day. Dupes are not the majority  - QEMU has so much low
-> > hanging fruit - but they're a sizeable chunk.
-> > 
-> > 
-> > Because we don't have a good automated way to publish disclosures
-> > from qemu-security, we don't provide contributors any way to check
-> > for duplicates before submission. The burden of checking for dupes
-> > thus falls on the qemu-security triage people, or the maintainers
-> > we forward issues to.
-> > 
-> > For disclosures in the non-virtualization use case, we ask the
-> > reporter to file a gitlab issue or send a patch. They almost never
-> > do this. We're lucky to have any reply to emails at all.
-> > 
-> > 
-> > IMHO we need to move to an issue tracker. GitLab was originally
-> > discounted in favour of qemu-security list since "Confidential"
-> > issues cannot have visibility managed in a fine grained way.
-> > They are visible to everyone with "Reporter" role or higher,
-> > which is 70+ people for QEMU.
-> > 
-> > If we accept the kernel's view that AI discovered issues should be
-> > considered public immediately because of the high chance of parallel
-> > "discovery", then GitLab's limitations don't seem to bad.
-> > 
-> > It is also of note that we've had some people ignoring qemu-security
-> > policy and directly filing public gitlab issues for stuff discovered
-> > via AI/LLM agents already. Those are not getting attention for CVE
-> > assignment, should it be needed which and can't be cross-referenced
-> > by general maintaniers to stuff we have received via qemu-security.
-> > 
-> > We have some options IMHO
-> > 
-> >  1. Move all security disclosure to GitLab confidential issues
-> >     no disclosures via email
-> > 
-> >  2. Move AI/fuzzer assisted disclosures to GitLab confidential
-> >     issues, keep human discovered issues on qemu-security list
-> > 
-> >  3. Move AI/fuzzer assisted disclosures to GitLab public
-> >     issues, keep human discovered issues on qemu-security list
+> > or 4. do it like linux did, and move ai assisted disclosured
+> > to the public ML. Fuzzer assisted can stay with human discovered.
 > 
-> or 4. do it like linux did, and move ai assisted disclosured
-> to the public ML. Fuzzer assisted can stay with human discovered.
+> Linux could do that because of the way they issue CVEs. IIUC, every
+> bug that goes into stable kernels gets evaluated for whether a CVE
+> is required. Thus they don't need to do CVE allocation in alignment
+> with any bug disclosure process.
+> 
+> While our stable branch process for QEMU is healthier than it has
+> ever been, it is still essentially a 1 person effort looking for
+> candidate patches, not a strong enough culture of maintainers
+> sending patches to stable proactively.  So I don't think we're
+> in a position to replicate Linux's approach to CVE assignment.
+> 
+> So IMHO we still need to have some issue tracking mechanism to
+> tag incoming disclosures as needing CVE assignment or not. If
+> all disclosures end up on qemu-devel and untracked we'll just
+> never end up getting CVEs for most of them. That doesn't feel
+> like a viable approach
+> 
+> 
+> With regards,
+> Daniel
+> -- 
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
-Linux could do that because of the way they issue CVEs. IIUC, every
-bug that goes into stable kernels gets evaluated for whether a CVE
-is required. Thus they don't need to do CVE allocation in alignment
-with any bug disclosure process.
-
-While our stable branch process for QEMU is healthier than it has
-ever been, it is still essentially a 1 person effort looking for
-candidate patches, not a strong enough culture of maintainers
-sending patches to stable proactively.  So I don't think we're
-in a position to replicate Linux's approach to CVE assignment.
-
-So IMHO we still need to have some issue tracking mechanism to
-tag incoming disclosures as needing CVE assignment or not. If
-all disclosures end up on qemu-devel and untracked we'll just
-never end up getting CVEs for most of them. That doesn't feel
-like a viable approach
 
 
-With regards,
-Daniel
+Oh I certainly do not object to that! can be public gitlab+public ML.
+
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+MST
 
 
