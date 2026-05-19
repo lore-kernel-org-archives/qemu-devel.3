@@ -4,104 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7887DCD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 04:41:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 155B3CD4851
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 04:42:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPCG1-0004OW-JE; Tue, 19 May 2026 00:40:41 -0400
+	id 1wPCHn-0004xU-JC; Tue, 19 May 2026 00:42:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wPCFz-0004OE-Lp
- for qemu-devel@nongnu.org; Tue, 19 May 2026 00:40:39 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ id 1wPCHk-0004wp-9i
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 00:42:28 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wPCFw-0003uy-0o
- for qemu-devel@nongnu.org; Tue, 19 May 2026 00:40:37 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-bd4d7f4fa02so553055266b.3
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 21:40:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779165635; cv=none;
+ id 1wPCHi-0004hV-Pb
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 00:42:28 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-bd21ffaca79so627966866b.0
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 21:42:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779165745; cv=none;
  d=google.com; s=arc-20240605;
- b=LnVEUD4vnpKVCqTYWo3XnED7uGdwQ/pbPghCICKxrSs8ogwiEuGZkFjnFxMGzuoGoe
- fqYnWbLORTSZ5fEmomr+vLeyDprU7Dxf6uYMPT90rvSPlDE5fSL1Wrv03b+7fB4e6vCV
- N/jqdpaupk+Wp6zAXmze7Tp5akLvuGpCkVLBuaIQG1gjMSrGK8VkBroE3YkGikkAHzp+
- a99FJOYOepJ5aOzhApJiWc4BCNQ6bNX8PMkPu7OSU3Xf8IDztGh/dufoq11ryFs84qqV
- yuabbnmLs06lLLixMSQGIL/nMkZWvY7Hr6GbFsta+7be7Ai1hHBTPUQVKQVrZ9c4Wa5/
- BXew==
+ b=QHvWTAZeUTKFkQAb1956QKC/fsPNmBtc4MjuqRfPzwBhoHF/bIV8fhAkuDAc/ifgB1
+ MUfvScKd1VsGMwemw/wDTyYsHPxDFd2GQZZI4AmMtIMG4HaNaIQoF06L6CFo7CQW4icA
+ br1l7WT7iW6w9MFvlDQvEeaH7Zj40/WMDqjk7sOV0mOriihwup6EF7oBkIBDPhyPGirn
+ +nvUFRXfAMwapW6g0HW8qTYUn58wzBqZIm89IVpPpRqLfUsfrky2Z3QKBswzPi/xUsTg
+ yYBV7muBK9EzsUWP2g+RyKiNb/EhL8mL6cDmT4+957jbGMTh3HT2wo9naA25lsdqLndx
+ 9PQA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=09M15YEmGZ8eGFqz26DM6q7dUnRGnfTW1Lg4SR65g/A=;
- fh=C8LBNVjOworYcSc1Rwb9o7lZjjJ8pYkXhOru7KiQ21k=;
- b=IjBZKqjtQmyV90QlndJHj7HUqFSitOFIxWf8KOolQ0GYs5p+Pv2Juww4wDGlo7DLAc
- jgHGQ4kYgvVm5cLoENWCYvJtcMcW3zD8ZRYjrGz6C+IdoQKruGBeDoYq04UXsEnjZUxR
- 7VRofWq+nKDB3bVYTVLBwMFGwi7Yq0jbd/B9tI0AmEZqwjC/oCg3la3UBMALYBUx6GQS
- wTq1P4JN8xTDr596u0EvodCCAJjtj+T9TrdA6yAaZgM5c5gIvejJwnThLtkV9u3IQ/ml
- jo35JBaomghIIuNt20gpCIaSNpvVGTEI/K9hjl/u9FsctL1jAYVsCjsfhudjrG6aaDvT
- S8GA==; darn=nongnu.org
+ bh=y/Xm8uZPu/o/iClEawzGN+hY7qYMF79Y0M0iVf6VRcM=;
+ fh=rfkyepp3rkVCuP1zq2/fANJ/AIlST33BvR3R0V4OhSA=;
+ b=C4gqyEV3HzZ1H0/58wLas3gHFxebmIsvHx/BeKOjgCrDAkeXHF7UnuN+6i39sr0KBE
+ +zyKUgpuMIMPw6kgk3ZXHf439l7ocdFjQfnWyCryx6r32jaoh7q4OnLLncWGlVDYhVqi
+ 8nV/C4C9Vvmp6br9GU+BDzEAjtPPrmlRzMJ5TNJkkEHE//x+75lF9RRXDW07bcFZFCDU
+ q2DMXiV2jlMpo4b4mPbwCrhXabC7lvXVcbBvbAVpEgcmFHZkHwcd0/du9SEjVpITACLF
+ y5jbCW4az3FmK39MXFB95V7gUjEfigZkZuJBigeUgA1NjlmnzZdbbNzs2l5GKFbOO7Eo
+ pqBQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779165635; x=1779770435; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779165745; x=1779770545; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=09M15YEmGZ8eGFqz26DM6q7dUnRGnfTW1Lg4SR65g/A=;
- b=k3nk61dEUbicfSAY97LjKqmel2r9XRawpOwe3pwKsAQE0jRtzNelAh2rAN5Eo2xHzO
- dvtMD7ZB1E8Bc0wH1H1/VCgHLoIBm1/ya2Yaj8l1ibJ1j4JiXrzhRxxZvoEXlCZZO6Ce
- VUwcYbdx8d/cgQzZABY/lYXM3XhCar/mlNadEvTRwDQCU0tzdXzttOvC77OnCY5XOH09
- w/GWrK8jMKkQ3EbdkZOqHNwUHF4QMLMe7isR8v5XYwkWjRpaovY8c8PYmgkBi010F/Pu
- N2h8mw4fzta+iMvUooNd1v5z6JPc5ixPa1S02BctrCTF7IIu5IgU9nJCQm+qUo/OAJgv
- Yw0Q==
+ bh=y/Xm8uZPu/o/iClEawzGN+hY7qYMF79Y0M0iVf6VRcM=;
+ b=a76/kBnWxW68agQNrfikYkd9DQDaS3uZ4uFU2oK0BJPwc/3CrazNZOuVNX/3V4orgz
+ 9vfh6BfUszl6JghhNG70Ae4ikX4Nz/SSk8ydDf2dNj2Yz40ZamTL3bU/cFe+QnYz2po6
+ MIpUSeMfrkxMMsfok4ONXWMVAkeVR+BC1HTOLvTQwfk/2NnaYIiGR8tUmAPP3nFf2wJV
+ HjRNpgJiXtGojJs4YORScEAhMOXxYxuwY4Kz1JlqJ8iebh6dM+hlRI9AG9OBNSJMHAUI
+ kSvNsQMl0vChYJSs7WspqqZxB4P4U5DsrnYUnFfduobYsFr6V13i/3ucS4t2yPs06nRi
+ M8QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779165635; x=1779770435;
+ d=1e100.net; s=20251104; t=1779165745; x=1779770545;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=09M15YEmGZ8eGFqz26DM6q7dUnRGnfTW1Lg4SR65g/A=;
- b=ZD3oIvCcMHc9v+bdEXEyOzj9H06D5PhMOIuK+iiHbjICbl69/XtZAIZI3PBis/K4O8
- UqjH/5BftpJUbe/j+ZmpnL22clEmPJOGwT4nQGJEEpp4n8XH9nfKrRGZpyve4/yEsrdQ
- ZimddOs+f66WeB97QWUNSLjV/DTXwxjAeI4hEC4AoY1nSdb/eK8cUD5lJSBiDPFoJplU
- f67Vp6Uf/FTKREHVSmcVvY1n3UhqLHuUtKdtOlokcpcgqtbNwelDnsIrmMgbqzl1vGWo
- HCuqVMfmHAYhfy+eoYiX5jAbGuRl3IH1UNZuiz3YIl/D3RODo8yH0tjpPH+mGnMppYKw
- UYyw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/M1JQVRe4XYL084CDyiipRub9z7/ATRRz6a2oHYBbE7W9R1RUa4MFFsDcpJkIVrfGAdF0P9WcrJp0P@nongnu.org
-X-Gm-Message-State: AOJu0Yx8MrLOflQXLupQtbkvDofy4G4QQyQRDB3xQf1H9qMxZVlICUuv
- pVPm1V6zbLVxThZqHxWpz3a74fBpvpjomImbSEd4cXmV4iTccU6v9FCh8DA2htRBAaaCruOVQBW
- bLpl9lPo7r3lDSiuMpqMUyKUv8iuWBdE=
-X-Gm-Gg: Acq92OGedEHf7w1+yv3JH3i7RgRK8hdocp9gR7v7GuCfZw02Drn3fbmNrodfhtyyWFF
- 0yyIQSR7ro670/RwTj+ABofSfSzBi/vhRfWT7hOUsm2P09woyKjz75x9T0mtIp1AYMTJf82FOFk
- MLYV30xofR0YfIdIJFK6K7m0R/bhErhTKIMzUmvPUJcVaBeTy4Dkv59yBZNduTQcU7y8hQxETkK
- D7Fxm63nprpTTzyY2gU0FDEzT+n1Un2devYTDHQd6rtHSETExsGBNxACa+ZRO6UZ60aAcY8vk8I
- ClVBntRtcYRiu7JHKNRJVJBi+VZAIKvwnqeZ4goYdHthB8gP
-X-Received: by 2002:a17:907:8b85:b0:bd4:f7ee:d334 with SMTP id
- a640c23a62f3a-bd517966f7dmr994297866b.26.1779165634503; Mon, 18 May 2026
- 21:40:34 -0700 (PDT)
+ bh=y/Xm8uZPu/o/iClEawzGN+hY7qYMF79Y0M0iVf6VRcM=;
+ b=B1h1MN6sJElArDoe0QGs+Rh684ilrPZZAz77MC7icB6HKXvSPLj1VVUoVS8q2cU/kQ
+ xlJhQkZHkf8dWj7agys8HVl0Ia5/MuvIB0WloEMqU5cA4S8A+flcm1bvh7FjtYcLmMtZ
+ tZxUAv3D90JLtrwUPkun7rcS7v6qcOEfyV0OnBHoHI+ybAzrEXlLyjH3lR8EL8Bn8EOs
+ CE1anBa2K/A7Po/9MFnS7zP0jtdPATSKr8an7PcKwhT58XlOSNuQU/8w72y6M/5m6ucb
+ 2RV79hYfC7y0nKwrJvV4+i2+/SR4D6VSpoRQLsJlYhkGEravOYXEisloAALxmNl6QtEV
+ vJIw==
+X-Gm-Message-State: AOJu0YyJX4se1+asYGu4GcQCvF3+iWjxV8bGJAMrIA2toxFRtPADHAtQ
+ 0Ljmpa5zCA6rGrVmFcLVOezXAtb4RW+oAx07VnQTV7yKxfgRB+AJtO02QBcqhQ5dxBtxGXF/QbK
+ yWbGgKK8XgDCvAIzup3Lu5FLPEMqrfEs=
+X-Gm-Gg: Acq92OEOuKaEXc8UsyujUSjhRk2UCZD+l/FDxglGyU2HQz6lqHz7uu+iLzDL38+jVCQ
+ Jl4IwS/Dn4yOMngVixvyVWC5B/f7ZZp/IR7h2naXspXgH2HENIq4+YhcpoCisyAaV082zAdbAgu
+ 7k/FQiUBxSptmk0QTYqu2Uwylqaxn5aYSLmrnuAJDlinBfPdvNsP3b6qYYs+1OgbyzIBDXFrIi1
+ D+Zer4nVbDilvejQt/6o45bSfX8TMN6fOKf6I0EToDBx1OSTvft3t+ygoxLM5Nvt1jwFBbnhQgB
+ vaLQsGI4knU7NTMhHtHq2wwwFQI/FXY2hHqL7ZGI4FdtpLZS
+X-Received: by 2002:a17:907:d0b:b0:bd1:77c4:acc0 with SMTP id
+ a640c23a62f3a-bd51550075amr906071866b.19.1779165744948; Mon, 18 May 2026
+ 21:42:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260512062310.348208-1-vulab@iscas.ac.cn>
-In-Reply-To: <20260512062310.348208-1-vulab@iscas.ac.cn>
+References: <20260519043352.3685866-1-stephensportia@gmail.com>
+In-Reply-To: <20260519043352.3685866-1-stephensportia@gmail.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 19 May 2026 14:40:07 +1000
-X-Gm-Features: AVHnY4JvAunM0vtNsT7vy78XpNr6Bu__5fV_HR2qp_BG5AZkoyUI3bR1km0ZbfI
-Message-ID: <CAKmqyKM8X923cN4G-O7NuVMsDPGQS2wdt65tXX0kRbeG+r_hhQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/riscv/virt-acpi-build: Fix off-by-one error in RIMT ID
- mapping
-To: Zishun Yi <vulab@iscas.ac.cn>
-Cc: Sunil V L <sunilvl@ventanamicro.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
+Date: Tue, 19 May 2026 14:41:58 +1000
+X-Gm-Features: AVHnY4IJLyucY2aXTCbTNGgV6Qrye16iEFIOc5Jdzb-aMyh8oX7eOYcaeVimcUQ
+Message-ID: <CAKmqyKOnqq31u8tSt5FN1Y+2_szNvCeMC=kUWuVi1pDzOooKuw@mail.gmail.com>
+Subject: Re: [PATCH v2] target/riscv: Make hpmcounterh return the upper 32-bits
+To: stephensportia@gmail.com
+Cc: qemu-devel@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, chao.liu.zevorn@gmail.com, qemu-riscv@nongnu.org, 
+ Portia Stephens <portias@oss.tenstorrent.com>, qemu-stable@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x62a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -109,7 +102,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,28 +118,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 12, 2026 at 4:26=E2=80=AFPM Zishun Yi <vulab@iscas.ac.cn> wrote=
-:
+On Tue, May 19, 2026 at 2:35=E2=80=AFPM <stephensportia@gmail.com> wrote:
 >
-> In build_rimt(), the calculation of `num_ids` for the ID mapping array
-> incorrectly uses the same formula (`0xffff - s->pci_iommu_bdf`) for both
-> System IOMMU and PCI IOMMU topologies.
+> From: Portia Stephens <portias@oss.tenstorrent.com>
 >
-> For a System IOMMU, `s->pci_iommu_bdf` is 0. This results in a `num_ids`
-> value of 0xffff. Since the source ID base starts at 0, the mapping only
-> covers Requester IDs from 0 to 0xfffe. The final valid PCI Requester ID
-> (0xffff) is erroneously omitted from the RIMT table.
+> The counter value was not being bitshifted for a hpmcounterh read
+> resulting in hpmcounterh returning the bottom 32-bits.
 >
-> Fix this by decoupling the `num_ids` calculation. For System IOMMUs,
-> explicitly set `num_ids` to 0x10000 to cover the entire PCI Requester ID
-> space.
->
-> This issue was discovered and reported by SpecHunter, an AI-driven
-> architecture specification analysis tool.
->
-> Link: https://github.com/yizishun/rv-isa-sec/blob/c78dacf66c8acd677b3538c=
-837fde310bb71a97b/output/riscv-server-platform/pr-102/qemu.txt#L32
-> Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
+> Fixes:  cfc96df65e01 ("target/riscv: Remove upper_half from riscv_pmu_ctr=
+_get_fixed_counters_val")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3498
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Thanks!
 
@@ -155,29 +139,30 @@ Applied to riscv-to-apply.next
 Alistair
 
 > ---
->  hw/riscv/virt-acpi-build.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+>  target/riscv/csr.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 >
-> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-> index fd6ca5dbc4ff..413d47d70ef1 100644
-> --- a/hw/riscv/virt-acpi-build.c
-> +++ b/hw/riscv/virt-acpi-build.c
-> @@ -802,10 +802,11 @@ static void build_rimt(GArray *table_data, BIOSLink=
-er *linker,
->          range =3D &g_array_index(iommu_idmaps, AcpiRimtIdMapping, i);
->          if (virt_is_iommu_sys_enabled(s)) {
->              range->source_id_base =3D 0;
-> +            range->num_ids =3D 0x10000;
->          } else {
->              range->source_id_base =3D s->pci_iommu_bdf + 1;
-> +            range->num_ids =3D 0xffff - s->pci_iommu_bdf;
->          }
-> -        range->num_ids =3D 0xffff - s->pci_iommu_bdf;
->          build_rimt_id_mapping(table_data, range->source_id_base,
->                                range->num_ids, iommu_offset);
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index cfd076b368..c522533807 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -1389,8 +1389,9 @@ RISCVException riscv_pmu_read_ctr(CPURISCVState *en=
+v, target_ulong *val,
+>       */
+>      if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
+>          riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
+> -        *val =3D riscv_pmu_ctr_get_fixed_counters_val(env, ctr_idx) -
+> -                                                    ctr_prev + ctr_val;
+> +        uint64_t cntr =3D riscv_pmu_ctr_get_fixed_counters_val(env, ctr_=
+idx) -
+> +                                                             ctr_prev + =
+ctr_val;
+> +        *val =3D extract64(cntr, start, length);
+>      } else {
+>          *val =3D ctr_val;
 >      }
 > --
-> 2.51.2
+> 2.43.0
 >
 >
 
