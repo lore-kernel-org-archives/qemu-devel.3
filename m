@@ -4,139 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52729CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 15:05:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AC92CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 15:17:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPM0l-0007XU-Hl; Tue, 19 May 2026 11:05:35 -0400
+	id 1wPMAq-000255-2R; Tue, 19 May 2026 11:16:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wPM0k-0007XJ-R7
- for qemu-devel@nongnu.org; Tue, 19 May 2026 11:05:34 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wPMAn-000243-HF
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 11:15:58 -0400
+Received: from 6.mo533.mail-out.ovh.net ([54.36.140.181])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wPM0i-0003jR-Qv
- for qemu-devel@nongnu.org; Tue, 19 May 2026 11:05:34 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64JEx4xX2867829
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 15:05:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- afiz9trpx0viGsIy30noo7gJqHrpxk5oqp2q272R+Z0=; b=clOwaNwKRvuWTEch
- bgdhw0uvLiQs7J8vWEJZFyQ+P1eHDO9UuCFNP0zYsaCGbfisWnJ1ZR1YhefEcnhf
- yge/6C91OplsLAROIDq6d05DHaUXvM0guF8viGAf5qfdxayOdcSF7RhY/3NTx9p5
- VvlmiT0zY7/gqtqZKdGToMqGopLzdb6JqmI1DrIG0k6Nl90mruNOTbbIbvAjr3BT
- U1HoeSLfF1N4PS3c5Tby/kqeeSwlp3ruQXapqYs8RQvchU0USdcXSLMEt/iAzYju
- rl1FfHhA0rC7+Gwp66EUVXuiCP6Q90e5TBpSRrcA48gOvsvzW8aFqF39OVFO6aab
- gLamsg==
-Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e8t3w81f2-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 15:05:30 +0000 (GMT)
-Received: by mail-dl1-f71.google.com with SMTP id
- a92af1059eb24-12dba1e866dso2527680c88.1
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 08:05:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1779203130; x=1779807930; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=afiz9trpx0viGsIy30noo7gJqHrpxk5oqp2q272R+Z0=;
- b=fUzMpiTAcBKCyi41OcOa+cXzknE8OTxB9N/fU/pY0uRVmwSGcqF7rnK8/rAbN0YFSa
- +Sxu+oUr7K+2EFMINrUcO+yfz8c6pzj2u+gHkDaNj8UPTGuwXIjWe9wDIw8IKHNVr5UZ
- osr4oVbjdCaBx4YHCjc2Ilqljl+x0ynirE5+69dOqjtx3ejcGmBVsXoAn/EoI+P+I62O
- eko36NIlOzi8jzak4eTigeHym3FgZRRcqUdtjNqnWmC+AnfSvC+UMYRGGj2SEFq2rYO2
- LZipsguS9QvPHmAO6o2hSjNGSW5OcN+3wDhGiDK/5FZeZO0vACNm2HNs+cuMwyu7LNhH
- tILA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779203130; x=1779807930;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=afiz9trpx0viGsIy30noo7gJqHrpxk5oqp2q272R+Z0=;
- b=Tm4bgeWRL6Xv85qjbbK9iY3tFfjbARVhjRMEjA8INCrKiqGPDr6ZP1Xn6L10HUd7+b
- DUNvaMX8ERLxaNc1eaWX+ufF12F+yO4wOJTmUtkRz5RA8bnB/7T4YwTojxLzmOoE5m1n
- mAQq15f+8ScRljuQc+i9zWvbQaRx6HmrUJ69o1V5006H0lBXlJUtgn+zcSeIMTj4nuR8
- 0aMsY71BQ/w0Y+Y1xXKEJeJRyf5ep9OJmUVPsrNPoQkRZDiOXLnOmaj1yaHrtg25zEF7
- CGKL6DzXIROJcZNBFXwtN4HjcWMXH8Jz/ootzzPzWfH0AkFyB1cFx2vIKSdo3hy79hrx
- mTwA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8vBJewGbPRcvESELXZrXjiMCRAX3CUbbOIQ3FnkZVE45iERSyebGCX1IdYzOr6R+M2rc67NJyrkS6p@nongnu.org
-X-Gm-Message-State: AOJu0Yw6n9UTv2D0P+4YttE+5U4Yr0Onn3BTm9r2fBOdtkzyGExz0+jF
- i6++Evy+xYodHnC0AXnXIMSHWmKOnxlC2/ED3W/HAc6fLwzYgp9DVYOkra55uQeG0Apuo0BEltM
- p1OpPERvjV8hRHYZQKuX+37uWZpRob52yc8bzUFLjHprCYmIDn9FmqR8AyQ==
-X-Gm-Gg: Acq92OFGwuiGXHvnacKqAHoX9AW8NOnG+F+yvD5+hL9EwDRYpAXRk/kaYExi9VRftEt
- PfF7IfcQxQ9bRIkERYjyn1HqIhxYVJvyHiFOpD9u2mtA1zcDwKQ21qn26XoMGKWTW+jOgA7udgs
- tlifg1aTLeDzzedtIMJ4FvlREJpScE44SdD5PDvXkFkJmg4PA8wM77lRm9LU+GKrcpQXd4I+q+H
- aweTQSfHdEczRvNytt7ihbvyBwbOQ2/awfBG/9l44RIf8gWcVx+UebLrohFT1No9yOaaNKYGLqR
- CI26NKhP3twN2Roho4eJ+dWqKcpLLtwle9dxDvkbZaNNmEdIeI10Nx21eebrbIE1iqmTOFVdjDm
- n78+QsZbLoTLqUEFmq8yWvvHtXQS/RqcfDxsHE/M5LKs3BLNZ7IOfqtI=
-X-Received: by 2002:a05:7022:43a8:b0:12c:81b:c74b with SMTP id
- a92af1059eb24-134c880b9a3mr9298051c88.1.1779203130159; 
- Tue, 19 May 2026 08:05:30 -0700 (PDT)
-X-Received: by 2002:a05:7022:43a8:b0:12c:81b:c74b with SMTP id
- a92af1059eb24-134c880b9a3mr9298036c88.1.1779203129603; 
- Tue, 19 May 2026 08:05:29 -0700 (PDT)
-Received: from [10.36.20.156] ([24.52.49.135])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-302973bc9d4sm16056501eec.23.2026.05.19.08.05.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 May 2026 08:05:29 -0700 (PDT)
-Message-ID: <2833f86b-6a86-4459-882c-0a6b71dfd4c8@oss.qualcomm.com>
-Date: Tue, 19 May 2026 10:05:27 -0500
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wPMAj-0006JT-Iy
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 11:15:56 -0400
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net [79.137.60.36])
+ by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4gKdXh12N4z60vN;
+ Tue, 19 May 2026 15:15:48 +0000 (UTC)
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net. [127.0.0.1])
+ by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Tue, 19 May 2026 15:15:48 +0000 (UTC)
+Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.43.51])
+ by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4gKdXh0Gbtz1xpM;
+ Tue, 19 May 2026 15:15:48 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.3])
+ (Authenticated sender: clg@kaod.org)
+ by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 7245A203B54; 
+ Tue, 19 May 2026 15:15:46 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-110S0041460b788-6db6-4bd6-be8c-bed2a4f627ce,
+ A1C5BDF50025601E7F63D663DE463AD2E6007479) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <523acab2-a196-4d02-a3a1-0407dffdf41b@kaod.org>
+Date: Tue, 19 May 2026 17:15:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/37] bsd-user: Rename cpu_env to env throughout
- bsd-user
-To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
-Cc: Kyle Evans <kevans@freebsd.org>, Stacey Son <sson@FreeBSD.org>
-References: <20260518-misc-2026q2-v2-0-6c16fe448301@bsdimp.com>
- <20260518-misc-2026q2-v2-2-6c16fe448301@bsdimp.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260518-misc-2026q2-v2-2-6c16fe448301@bsdimp.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE5MDE0OCBTYWx0ZWRfX250iMMDobH+3
- WfVln6c5UcVnRDMEwXJlHpnv6HGGetUYdWAmhEYE/W9LynsD63I3JUMnr5JdwBPOlemgWIOKfvc
- bgo+/4JjO0aG565kRtlSsZGkItsLirCz+5qRzppLi5gVjWniyJm9lo9eMSrnxEToh4Y2dO2fEx9
- Nmotv0ti+GInlPNPu5CxhKCrWV+MvDJMUwK9suWDTQPBW63MMCNGn++baKyk47Ek+8fVglGk/EK
- 831nbrzVflw4wpuDMUWBgUmD568/+Rozp+UYepUwnU6ObHRdMtWDVtBIj/m8YMVhIf+6z4+uqaR
- HqMqMFRFwu4n+N0iB+oMoaQ1bMtXrHdh/bmpIdCs73Huc4kufTYddU9SIKZCi56yNNHkUqPaot+
- b1RliM1kVAIZ77cU7DVXWweUOj2HttIEtdTA6lL6+712vFNo4EfmF+JtnUtvnFca2XiNSihxaRy
- iAhKdewF5jz4h0f6npA==
-X-Authority-Analysis: v=2.4 cv=Q/viJY2a c=1 sm=1 tr=0 ts=6a0c7c3a cx=c_pps
- a=JYo30EpNSr/tUYqK9jHPoA==:117 a=bunxBM7YXCFQTret8gAQLQ==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=6I5d2MoRAAAA:8 a=7Qk2ozbKAAAA:8 a=mMo0orje6vIiFnOlkY4A:9 a=QEXdDO2ut3YA:10
- a=Fk4IpSoW4aLDllm1B1p-:22 a=1lyxoWkJIXJV6VJUPhuM:22
-X-Proofpoint-GUID: R6sVv1naSEEo18u_3SdtND4UHIsriZnf
-X-Proofpoint-ORIG-GUID: R6sVv1naSEEo18u_3SdtND4UHIsriZnf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-19_04,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 impostorscore=0 priorityscore=1501 suspectscore=0
- spamscore=0 clxscore=1015 phishscore=0 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605190148
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Subject: Re: [PATCH v2 2/3] hw/arm/aspeed: add anacapa-bmc machine
+To: William de Abreu Pinho <williamdapinho@gmail.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ qemu-arm@nongnu.org
+References: <20260519-add-anacapa-machine-v2-0-47027867d76a@gmail.com>
+ <20260519-add-anacapa-machine-v2-2-47027867d76a@gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260519-add-anacapa-machine-v2-2-47027867d76a@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+x-ovh-tracer-id: 9125418747932879883
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTGpAOdXOLUe8g7VrajSpqHXMImpdIvkjDaoXs98iFkJ1YoCF649LaLiZBJbipUbHVAaSBNV/ZByHxwpOz5pQtd0SeZYEdCixITWqan5HZ6NwUVKaj2GmtVlQG7aoszemMAu72hI4je4Hv8yPr4HTR6bi5ZngcsLLzrrdCg05EjUzueQJQ6ATR7eAW89WuCOkGaI4SubqfxNahY+ND/funlW+OKVl+X5vu1YvOSAZALUarAUwHB7JTAhUQK4/fFpnlTX4f2zBWG5JMaYWHu2Qz1o/Ney6mo1rof0RIgwLfGPuosOSN2v0CbvkiYrp6xrdt2fFpk5zmjhjwGuNrHJxmdskmpYIWLWMnyP+FeZxyRV91hCK7/VIai9gCJ6g3LUQrOib34ILWpKdJMEddS2Cx/cHJWW9WD1J3pS151uwXd9lAH2vprc04M+0jN7c97SRrpLNjTxAtG5hojUauy0q5aZY0ak8bjPrdtVFGe9x6vLedu+8QujnMmtLPF8REhNCSVQfCixrvmHZukUyVBaxtZ481xWAVqj7JEyw8ijS/rIS7tru8KxLfi7Lie16f2fWvrCSargHt680bbR16I8PsyR8KNi0jle26tmybYxFIuRKKzH08/npVoQ40rK1HfSRi7QdHQ8xyuTScrikXI4+7/fqSur7luZpZr0ahReVU48Kg
+DKIM-Signature: a=rsa-sha256; bh=M3fUuA9lejfJN1m8R3j6GEk91Lo6hI8Au8p79KNTomE=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1779203749; v=1;
+ b=g5vCkxjVu4Luq4j4V3ooHsu9AvHi5xM5aOWMCTEFXXNa0jf81I1czLnwXpSmTXJcV2bCTom1
+ Sf1kAZ8+aoRNnrxaCxsXgR7RRBhFE9Pv86ecYicCvpMxoQymE4N8n/fbfFi5nQm+rG78Mto46J6
+ EZXUagg6PB1qDCTSzySeWgRrZKjzQbZ38BXh5xvgnPnyNCxGNWCttbP9OhFLT3vgvCxJ6mrrZ8q
+ 9FoHnxIfBmuH5TjKLYIU0YFZiu4bCKdqukGCp3EofWm264Kzquqb5gT6k1Z3BVVMGLPreGQZtoW
+ kxKGXF4uYoksFNUV3e6hW9TDDETSWvtjDfkCBjqV5bMAw==
+Received-SPF: pass client-ip=54.36.140.181; envelope-from=clg@kaod.org;
+ helo=6.mo533.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,50 +133,263 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/18/2026 4:27 PM, Warner Losh wrote:
-> Replace 'void *cpu_env' parameters with 'CPUArchState *env' across all
-> bsd-user source files. This improves type safety and aligns with the
-> convention used in the rest of the codebase.
+On 5/19/26 12:36, William de Abreu Pinho wrote:
+> Add the Facebook Anacapa BMC machine.  The I2C topology is based on the
+> Linux kernel device tree [1].  Hardware strap register values are taken
+> from real hardware.
 > 
-> Signed-off-by: Stacey Son <sson@FreeBSD.org>
-> Signed-off-by: Warner Losh <imp@bsdimp.com>
-> Assisted-by: Claude Opus 4.6 (1M context)
+> A functional test is included using the OpenBMC image built from [2],
+> similar to the tests for bletchley-bmc and catalina-bmc.
+> 
+> [1]: https://github.com/torvalds/linux/blob/76b4ec8efdc3887cdbf730da2e55881fc1a18770/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-anacapa.dts
+> [2]: https://github.com/openbmc/openbmc/commit/8e22df918eaaa5d83143471d24ef0eeb1c1e3c7c
+> 
+> Signed-off-by: William de Abreu Pinho <williamdapinho@gmail.com>
 > ---
->  bsd-user/aarch64/target.h     |  2 +-
->  bsd-user/arm/target.h         |  2 +-
->  bsd-user/bsd-file.h           | 28 +++++++++++++--------------
->  bsd-user/bsd-mem.h            |  4 ++--
->  bsd-user/bsd-proc.h           |  6 +++---
->  bsd-user/freebsd/os-proc.c    |  4 ++--
->  bsd-user/freebsd/os-proc.h    | 26 ++++++++++++-------------
->  bsd-user/freebsd/os-sys.c     |  4 ++--
->  bsd-user/freebsd/os-syscall.c | 44 +++++++++++++++++++++----------------------
->  bsd-user/i386/target.h        |  2 +-
->  bsd-user/qemu.h               |  6 +++---
->  bsd-user/riscv/target.h       |  2 +-
->  bsd-user/x86_64/target.h      |  2 +-
->  13 files changed, 66 insertions(+), 66 deletions(-)
+>   hw/arm/aspeed_ast2600_anacapa.c             | 153 ++++++++++++++++++++++++++++
+>   hw/arm/meson.build                          |   1 +
+>   tests/functional/arm/meson.build            |   2 +
+>   tests/functional/arm/test_aspeed_anacapa.py |  25 +++++
+>   4 files changed, 181 insertions(+)
+
+I forgot to tell you to update docs/system/arm/aspeed.rst too.
+
+With that,
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+> 
+> diff --git a/hw/arm/aspeed_ast2600_anacapa.c b/hw/arm/aspeed_ast2600_anacapa.c
+> new file mode 100644
+> index 0000000000..c24f00d44c
+> --- /dev/null
+> +++ b/hw/arm/aspeed_ast2600_anacapa.c
+> @@ -0,0 +1,153 @@
+> +/*
+> + * Facebook Anacapa
+> + *
+> + * Copyright (c) Meta Platforms, Inc. and affiliates.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qapi/error.h"
+> +#include "hw/arm/machines-qom.h"
+> +#include "hw/arm/aspeed.h"
+> +#include "hw/arm/aspeed_soc.h"
+> +#include "hw/i2c/i2c_mux_pca954x.h"
+> +#include "hw/gpio/pca9552.h"
+> +#include "hw/nvram/eeprom_at24c.h"
+> +
+> +/* Anacapa hardware value */
+> +#define ANACAPA_BMC_HW_STRAP1 0x00002002
+> +#define ANACAPA_BMC_HW_STRAP2 0x00000000
+> +#define ANACAPA_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
+> +
+> +static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
+> +{
+> +    /* Reference: aspeed-bmc-facebook-anacapa.dts */
+> +
+> +    AspeedSoCState *soc = bmc->soc;
+> +    I2CBus *i2c[16] = {};
+> +    I2CSlave *i2c_mux;
+> +
+> +    for (int i = 0; i < ARRAY_SIZE(i2c); i++) {
+> +        i2c[i] = aspeed_i2c_get_bus(&soc->i2c, i);
+> +    }
+
+
+This seems to be a common pattern in the Aspeed machines to initialize
+an array of I2C. We could introduce an helper for it.
+
+
+Thanks,
+
+C.
+
+> +    /* &i2c0 */
+> +    /* eeprom@50 */
+> +    at24c_eeprom_init(i2c[0], 0x50, 256 * KiB);
+> +    /* i2c-mux@70 */
+> +    i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x70);
+> +
+> +    /* &i2c1 */
+> +    /* eeprom@50 */
+> +    at24c_eeprom_init(i2c[1], 0x50, 256 * KiB);
+> +    /* i2c-mux@70 (PCA9546) — 4 channels, empty */
+> +    i2c_slave_create_simple(i2c[1], TYPE_PCA9546, 0x70);
+> +
+> +    /* &i2c4 */
+> +    /* i2c-mux@70 (PCA9548) */
+> +    i2c_slave_create_simple(i2c[4], TYPE_PCA9548, 0x70);
+> +
+> +    /* &i2c6 */
+> +    /* eeprom@50 */
+> +    at24c_eeprom_init(i2c[6], 0x50, 32 * KiB);
+> +
+> +    /* &i2c8 */
+> +    /* i2c-mux@72 (PCA9546) */
+> +    i2c_mux = i2c_slave_create_simple(i2c[8], TYPE_PCA9546, 0x72);
+> +
+> +    /* i2c8mux ch0 */
+> +    /* adc128d818@1f — no model */
+> +    /* pca9555@22 */
+> +    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 0),
+> +                            TYPE_PCA9552, 0x22);
+> +    /* pca9555@24 */
+> +    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 0),
+> +                            TYPE_PCA9552, 0x24);
+> +    /* eeprom@50 */
+> +    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 0), 0x50, 16 * KiB);
+> +
+> +    /* i2c8mux ch1 */
+> +    /* pca9555@22 */
+> +    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 1),
+> +                            TYPE_PCA9552, 0x22);
+> +    /* pca9555@24 */
+> +    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 1),
+> +                            TYPE_PCA9552, 0x24);
+> +    /* eeprom@50 */
+> +    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 1), 0x50, 16 * KiB);
+> +
+> +    /* &i2c9 */
+> +    /* eeprom@50 */
+> +    at24c_eeprom_init(i2c[9], 0x50, 16 * KiB);
+> +    /* eeprom@56 */
+> +    at24c_eeprom_init(i2c[9], 0x56, 8 * KiB);
+> +
+> +    /* &i2c10 */
+> +    /* i2c-mux@71 (PCA9548) */
+> +    i2c_mux = i2c_slave_create_simple(i2c[10], TYPE_PCA9548, 0x71);
+> +
+> +    /* i2c10mux ch5 */
+> +    /* pca9555@22*/
+> +    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 5),
+> +                            TYPE_PCA9552, 0x22);
+> +    /* eeprom@52 */
+> +    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 5), 0x52, 32 * KiB);
+> +
+> +    /* &i2c11 */
+> +    /* i2c-mux@71 (PCA9548) */
+> +    i2c_mux = i2c_slave_create_simple(i2c[11], TYPE_PCA9548, 0x71);
+> +
+> +    /* i2c11mux ch0-ch4 — empty */
+> +
+> +    /* i2c11mux ch5 */
+> +    /* pca9555@22 */
+> +    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 5),
+> +                            TYPE_PCA9552, 0x22);
+> +    /* eeprom@52 */
+> +    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 5), 0x52, 32 * KiB);
+> +
+> +    /* &i2c13 */
+> +    /* i2c-mux@70 (PCA9548) */
+> +    i2c_mux = i2c_slave_create_simple(i2c[13], TYPE_PCA9548, 0x70);
+> +
+> +    /* i2c13mux ch3 */
+> +    /* adc128d818@1f - no model */
+> +
+> +    /* i2c13mux ch4 */
+> +    /* eeprom@51 */
+> +    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 4), 0x51, 32 * KiB);
+> +
+> +    /* i2c13mux ch7 */
+> +    /* nfc@28 — no model */
+> +}
+> +
+> +static void aspeed_machine_anacapa_class_init(ObjectClass *oc,
+> +                                               const void *data)
+> +{
+> +    MachineClass *mc = MACHINE_CLASS(oc);
+> +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
+> +
+> +    mc->desc       = "Facebook Anacapa BMC (Cortex-A7)";
+> +    amc->soc_name  = "ast2600-a3";
+> +    amc->hw_strap1 = ANACAPA_BMC_HW_STRAP1;
+> +    amc->hw_strap2 = ANACAPA_BMC_HW_STRAP2;
+> +    amc->fmc_model = "mx66l1g45g";
+> +    amc->spi_model = NULL;
+> +    amc->num_cs    = 2;
+> +    amc->macs_mask = ASPEED_MAC2_ON;
+> +    amc->i2c_init  = anacapa_bmc_i2c_init;
+> +    mc->default_ram_size = ANACAPA_BMC_RAM_SIZE;
+> +    aspeed_machine_class_init_cpus_defaults(mc);
+> +}
+> +
+> +static const TypeInfo aspeed_ast2600_anacapa_types[] = {
+> +    {
+> +        .name          = MACHINE_TYPE_NAME("anacapa-bmc"),
+> +        .parent        = TYPE_ASPEED_MACHINE,
+> +        .class_init    = aspeed_machine_anacapa_class_init,
+> +        .interfaces    = arm_machine_interfaces,
+> +    }
+> +};
+> +
+> +DEFINE_TYPES(aspeed_ast2600_anacapa_types)
+> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+> index 84b8ec5fb5..3de3dca8a9 100644
+> --- a/hw/arm/meson.build
+> +++ b/hw/arm/meson.build
+> @@ -56,6 +56,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+>     'aspeed_ast2500_witherspoon.c',
+>     'aspeed_ast2500_yosemitev2.c',
+>     'aspeed_ast2600.c',
+> +  'aspeed_ast2600_anacapa.c',
+>     'aspeed_ast2600_bletchley.c',
+>     'aspeed_ast2600_catalina.c',
+>     'aspeed_ast2600_evb.c',
+> diff --git a/tests/functional/arm/meson.build b/tests/functional/arm/meson.build
+> index 2f538f29a2..959179a56f 100644
+> --- a/tests/functional/arm/meson.build
+> +++ b/tests/functional/arm/meson.build
+> @@ -12,6 +12,7 @@ test_arm_timeouts = {
+>     'aspeed_ast2600_sdk' : 720,
+>     'aspeed_ast2600_sdk_515' : 720,
+>     'aspeed_ast2600_sdk_otp' : 720,
+> +  'aspeed_anacapa' : 480,
+>     'aspeed_bletchley' : 480,
+>     'aspeed_catalina' : 480,
+>     'aspeed_gb200nvl_bmc' : 480,
+> @@ -45,6 +46,7 @@ tests_arm_system_thorough = [
+>     'aspeed_ast2600_sdk',
+>     'aspeed_ast2600_sdk_515',
+>     'aspeed_ast2600_sdk_otp',
+> +  'aspeed_anacapa',
+>     'aspeed_bletchley',
+>     'aspeed_catalina',
+>     'aspeed_gb200nvl_bmc',
+> diff --git a/tests/functional/arm/test_aspeed_anacapa.py b/tests/functional/arm/test_aspeed_anacapa.py
+> new file mode 100755
+> index 0000000000..27f8bd8b56
+> --- /dev/null
+> +++ b/tests/functional/arm/test_aspeed_anacapa.py
+> @@ -0,0 +1,25 @@
+> +#!/usr/bin/env python3
+> +#
+> +# Functional test that boots the ASPEED machines
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +from qemu_test import Asset
+> +from aspeed import FacebookAspeedTest
+> +
+> +
+> +class AnacapaMachine(FacebookAspeedTest):
+> +
+> +    ASSET_ANACAPA_FLASH = Asset(
+> +        'https://github.com/legoater/qemu-aspeed-boot/raw/3fa3212827b04be4034d43b5adeef57c27d6ab18/images/anacapa-bmc/openbmc-20260512025228/obmc-phosphor-image-anacapa-20260512025228.static.mtd.xz',
+> +        '2232e241abcfb6d4f6b82cb6c378ce5ce05e364aac6d118785c2b6cc33fe43f3')
+> +
+> +    def test_arm_ast2600_anacapa_openbmc(self):
+> +        image_path = self.uncompress(self.ASSET_ANACAPA_FLASH)
+> +
+> +        self.do_test_arm_aspeed_openbmc('anacapa-bmc', image=image_path,
+> +                                        uboot='2019.04', cpu_id='0xf00',
+> +                                        soc='AST2600 rev A3')
+> +
+> +if __name__ == '__main__':
+> +    FacebookAspeedTest.main()
 > 
 
-...
-
-> diff --git a/bsd-user/bsd-proc.h b/bsd-user/bsd-proc.h
-> index b1d4446ff1..62052c70b9 100644
-> --- a/bsd-user/bsd-proc.h
-> +++ b/bsd-user/bsd-proc.h
-> @@ -6,8 +6,8 @@
->   * SPDX-License-Identifier: GPL-2.0-or-later
->   */
->  
-> -#ifndef BSD_PROC_H_
-> -#define BSD_PROC_H_
-> +#ifndef BSD_PROC_H
-> +#define BSD_PROC_H
->
-
-Last patch of the series does the opposite change in comment associated
-to endif. We should pick one and stick to it consistently.
-
-Regards,
-Pierrick
 
