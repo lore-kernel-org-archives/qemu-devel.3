@@ -4,106 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ECE6CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 13:42:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4FCBCD4F3C
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 13:44:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPKif-0003ex-Iy; Tue, 19 May 2026 09:42:49 -0400
+	id 1wPKjj-0004Zc-Ro; Tue, 19 May 2026 09:43:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wPKib-0003XP-Bc
- for qemu-devel@nongnu.org; Tue, 19 May 2026 09:42:46 -0400
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
+ (Exim 4.90_1) (envelope-from <hongmianquan@bytedance.com>)
+ id 1wPKje-0004Z0-K4
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 09:43:50 -0400
+Received: from va-2-111.ptr.blmpb.com ([209.127.231.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wPKiZ-0002JW-4R
- for qemu-devel@nongnu.org; Tue, 19 May 2026 09:42:44 -0400
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-65dbe04fc1bso3726301d50.1
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 06:42:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779198161; cv=none;
- d=google.com; s=arc-20240605;
- b=RlY/qDx351srTV/0GMy5GIGCy0pCQT8Obt6fInfyxeZpE0yVNuGugjZLEIXMTJ+rWA
- 1LwVsR/U6jNK/nzuxFVbK+zE4MwtgbigTEY9A+R4TBYzTtUIitf86co1zW+P/YTv+mEy
- /+AoFImxr8BUCO6n/tqdQ1ojA6SNiij3VJz+blbTd0J2up2mwiQQAa9e89VJJfExaEIC
- u/fcqY9PSopNXO9bX34fuVaiv0238nFRUga+XQdjN4RKTpG6HwD1nRN8KMbzoECsr1Ss
- PEXe76/QwOi9xoaX+/FZpb5uaY6+jHvdcKF4gkpdGjZHbRvrlBQH4pGDzm4EnsBzFPls
- siDg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=OMlJgMATDg1IQX7aLN7DGj38suPNuOZtNpaYRIBBqlk=;
- fh=dXQfEETdv44juLbUqi4y7hxEPUIETiLVlJo4LA74jm0=;
- b=kM5Cf1HZz2DNM9AjXfXI8+HT2l1BUtc2uYqZiSl0hqzGngSi+t0FruS2LMSCiz7uIG
- A5kErtYe6nO+xnJKwEQTRyU0HwIZZlH+VIeaD8VUml9iprt7XKqFlnqOmGGA7ot8G4aE
- Ou1FsgW1cIC9XNwToV2Otcm/N+0E4PgcynofmJtRB4C5lavG9HObtFkPox83R6cHbvWo
- IJ8Bn3Mk82MtVqfg8MdsGA4sDvNrMuZCfdA7+NIlemuQBJsOm6pB7BQZNKPWYsR+qVLH
- A3sFU4zcUSTaamYEZm9cPUAdAyEIvk0nYnUHqpgXGDT6uMGL/qqtRF27Y/QuSjGrzlKv
- Ep9A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779198161; x=1779802961; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OMlJgMATDg1IQX7aLN7DGj38suPNuOZtNpaYRIBBqlk=;
- b=zPWRTCXQgUSJ7ioUHPJ3Clsp07w5JEcel601TOjutY4P/soTuX7a4T+wzxS5suixPn
- 0w8xdlANHnMD/mwz8WydgKuamYa1e/sTI0qU6kgzWyPvTgUxbYbNu1BUkvX0igZY23/p
- UD0dy9Max5BaXKSOtuK/zpfh6DFmx3w52qn3YAdCKkAeLWt7OEDj3lMwD/dAx9UFnicm
- 1HabnE4Xgy+vnpLgtnkFgu1XsNWpuNWuGp2Qh4uEXx0TKrW6MRp+LMoU5Fx5+AcySKh6
- /N7xjVFQegKlvH9HRN0SDs9pSX1nt3cSjp/oyoIonyR37Nc2a0gJ0mhU9k6jEex3Pz4Z
- v+0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779198161; x=1779802961;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=OMlJgMATDg1IQX7aLN7DGj38suPNuOZtNpaYRIBBqlk=;
- b=G8PKj7ivtwa/PfGio9gKFF6dfZhCKhH+teKE1dwrzI6I5DXng/qZlZJc9a7uzzEUOU
- e+mr7MyUPo4u1GcvuzMOzG0N1XuxIpvG3QdSq378+ts85F8C6Vc6G6aK1kgL/0MZnhh6
- WSENGo+9SpThjNeLO2AcBxxCpwxac6/YoLqHFyCg5YGjfmF9mscQbUQSMWndPOWh7N/m
- 9pvKPukwmbv8paKE/lG70GX+7947bz840i+++bO+20UflYmMwhtMtyr5s7s55MfxB5pS
- +8F1XkgoH8nk2FarHPpI85RCQuEHZSdqyCUg29EzNo5DNOBlWchqz0W6tPuyTMroGTqv
- pk8w==
-X-Gm-Message-State: AOJu0Yx1tyU3lOi5Z464PT6EzsG5TPrP+sYAr2isflpxmfjId4cn/Ge4
- 2ofZE3E7iwv4URvAOr8CrhqY3K8QrOqEeXzZrxio2mBPmCKAPFgV6n106JxwGxlReJQCbXJpdBI
- uvHK/gHCh+c/rIBKPwaDQvNH1ziOd67FrWU/xtEgg+g==
-X-Gm-Gg: Acq92OFOX+8y4mzl1/c1ehipDqQ9wEbQMGhHR+M0lG52DhqE5o+k9eygs2jFsjgSFkM
- Ldi/jPssMFop9WH/mVBINqhq6Ijc7QYIjTa/PVg+Vt4SC55/9+3Fp35gxSrZmu9C7FVSHffuRAP
- GSaj3wAq60Hk4MauYSWmVYP2xwavS49WxyAlF+tSrsipiuPApDsyjjUAXU+/90jZJ/50sxoFRKh
- lG4L2iI9E42gYUEBGgwAMeb8eugMNJw3Grwg1dp17maxXhte2YVp/OcpDhjN4BWfrkg4WTvedux
- +MiFfFwlle91xZFpzqyUeA7vd8ihg6NoOThi/yWo1px/CxK6OH1Lr7Vt6f0TTcXrNFs=
-X-Received: by 2002:a05:690e:191b:b0:65d:7e2c:cbc0 with SMTP id
- 956f58d0204a3-65e227d265dmr19502363d50.37.1779198161121; Tue, 19 May 2026
- 06:42:41 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260519133329.4268-1-deller@kernel.org>
- <20260519133329.4268-3-deller@kernel.org>
-In-Reply-To: <20260519133329.4268-3-deller@kernel.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 19 May 2026 14:42:29 +0100
-X-Gm-Features: AVHnY4JH4aGY1RjMQxsi_e2JgFjodI8Ao6c9Ru8Vr_F9s_yLhePhNa3mdw-Txm0
-Message-ID: <CAFEAcA-5Z5NNNuTNy04P9_1NCFNdpE-9+ySCSnwq1+u5ryTjYA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] hw/hppa: Move static variable lasi_dev into
- MachineState
-To: Helge Deller <deller@kernel.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Helge Deller <deller@gmx.de>, Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <hongmianquan@bytedance.com>)
+ id 1wPKjY-0002Ra-Ry
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 09:43:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=2212171451; d=bytedance.com; t=1779198211; h=from:subject:
+ mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
+ mime-version:in-reply-to:message-id;
+ bh=8F7rVSp8wvr79jarAG6NgG1TF804KKQORfvGcdFbWHM=;
+ b=O2pGOLd24hwUtVDJZnrsBKwNY+l1ConJNiW7+/d3enUTchzyHPp3fIcPZ22kvOXWyzHGHX
+ G2M/G77nPVZfbMJVXczQ69VS71MK358CP4LKHzS09GEVU/8k9aITlSsgSPrYl1UiSTGvpJ
+ dQng4qucTIVonviq19sVGQmtxh3ovsuWL5wSk9h36FCk36DIhNh/0CygfP1sBazeJweN8x
+ f87240kLsjV+nzBcvxfiCRVksf09i/Sx5JJgEGynmger2vSV+QYrjkDAuUko16kTu/A/sW
+ zWeJTBoPO/+R2ytSmU2+XbbOeIx9EGqS42imSmDSsr9fjv31soQECM97GPymYQ==
+X-Original-From: hongmianquan <hongmianquan@bytedance.com>
+To: <qemu-devel@nongnu.org>
+Cc: <peterx@redhat.com>, <farosas@suse.de>, <mark.kanda@oracle.com>, 
+ <bchaney@akamai.com>, "hongmianquan" <hongmianquan@bytedance.com>
+From: "hongmianquan" <hongmianquan@bytedance.com>
+Message-Id: <20260519134315.27997-1-hongmianquan@bytedance.com>
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Subject: [PATCH v3] migration/cpr: use hashtable for cpr fds
+Date: Tue, 19 May 2026 21:43:15 +0800
+X-Mailer: git-send-email 2.32.1 (Apple Git-133)
+X-Lms-Return-Path: <lba+26a0c6901+748c6f+nongnu.org+hongmianquan@bytedance.com>
+Mime-Version: 1.0
+Received-SPF: pass client-ip=209.127.231.111;
+ envelope-from=hongmianquan@bytedance.com; helo=va-2-111.ptr.blmpb.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,17 +66,215 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 19 May 2026 at 14:33, Helge Deller <deller@kernel.org> wrote:
->
-> From: Helge Deller <deller@gmx.de>
->
-> Avoid static variables, so move lasi_dev into the MachineState struct.
->
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> Suggested-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+Use a GHashTable to store cpr fds to reduce the time
+consumption of `cpr_find_fd` in scenarios with a large
+number of fds. The time complexity for `cpr_find_fd` is
+reduced from O(N) to O(1).
+Keep cpr fds lookups in a GHashTable during normal runtime
+while preserving the existing QLIST migration ABI. Build a
+temporary QLIST from the hash table in pre_save and rebuild
+the hash table from the loaded QLIST in post_load.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+To demonstrate the performance improvement, we tested the total time
+consumed by `cpr_find_fd` (called N times for N fds) under our real-world
+business scenarios with different numbers of file descriptors. The results
+are measured in nanoseconds:
 
-thanks
--- PMM
+| Number of FDs | Total time with QLIST (ns) | Total time with GHashTable (ns) |
+|---------------|----------------------------|---------------------------------|
+| 540           | 936,753                    | 393,358                         |
+| 2,870         | 24,102,342                 | 2,212,113                       |
+| 7,530         | 152,715,916                | 5,474,310                       |
+
+As shown in the data, the lookup time grows exponentially with the QLIST
+as the number of fds increases. With the GHashTable, the time consumption
+remains linear (O(1) per lookup), significantly reducing the downtime during
+the CPR process.
+
+Signed-off-by: hongmianquan <hongmianquan@bytedance.com>
+---
+ migration/cpr.c | 116 ++++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 98 insertions(+), 18 deletions(-)
+
+diff --git a/migration/cpr.c b/migration/cpr.c
+index a0b37007f5..ffd1e5af7b 100644
+--- a/migration/cpr.c
++++ b/migration/cpr.c
+@@ -24,6 +24,7 @@
+ /* cpr state container for all information to be saved. */
+ 
+ CprState cpr_state;
++static GHashTable *cpr_fds_hash;
+ 
+ /****************************************************************************/
+ 
+@@ -48,6 +49,84 @@ static const VMStateDescription vmstate_cpr_fd = {
+     }
+ };
+ 
++static guint cpr_fd_hash(gconstpointer v)
++{
++    const CprFd *elem = v;
++
++    return g_str_hash(elem->name) ^ elem->id;
++}
++
++static gboolean cpr_fd_equal(gconstpointer a, gconstpointer b)
++{
++    const CprFd *elem_a = a;
++    const CprFd *elem_b = b;
++
++    return !strcmp(elem_a->name, elem_b->name) && elem_a->id == elem_b->id;
++}
++
++static void cpr_fd_destroy(gpointer data)
++{
++    CprFd *elem = data;
++
++    g_free(elem->name);
++    g_free(elem);
++}
++
++static GHashTable *get_cpr_fds_hash(void)
++{
++    if (!cpr_fds_hash) {
++        cpr_fds_hash = g_hash_table_new_full(cpr_fd_hash, cpr_fd_equal,
++                                             cpr_fd_destroy, NULL);
++    }
++
++    return cpr_fds_hash;
++}
++
++static void cpr_fd_hash_insert(CprFd *elem)
++{
++    /* Use the same CprFd as key and value. */
++    g_hash_table_insert(get_cpr_fds_hash(), elem, elem);
++}
++
++static int cpr_fd_pre_save(void *opaque)
++{
++    CprState *state = (CprState *)opaque;
++    GHashTableIter iter;
++    CprFd *elem;
++
++    QLIST_INIT(&state->fds);
++
++    g_hash_table_iter_init(&iter, get_cpr_fds_hash());
++    while (g_hash_table_iter_next(&iter, (gpointer *)&elem, NULL)) {
++        QLIST_INSERT_HEAD(&state->fds, elem, next);
++    }
++
++    return 0;
++}
++
++static int cpr_fd_post_load(void *opaque, int version_id)
++{
++    CprState *state = (CprState *)opaque;
++    CprFd *elem;
++
++    while ((elem = QLIST_FIRST(&state->fds))) {
++        QLIST_REMOVE(elem, next);
++
++        /*
++         * Preserve legacy QLIST lookup semantics if duplicate keys exist in
++         * the incoming stream: the first matching entry wins.
++         */
++        if (g_hash_table_contains(get_cpr_fds_hash(), elem)) {
++            cpr_fd_destroy(elem);
++            continue;
++        }
++
++        cpr_fd_hash_insert(elem);
++    }
++
++    return 0;
++}
++
+ void cpr_save_fd(const char *name, int id, int fd)
+ {
+     CprFd *elem = g_new0(CprFd, 1);
+@@ -57,37 +136,34 @@ void cpr_save_fd(const char *name, int id, int fd)
+     elem->namelen = strlen(name) + 1;
+     elem->id = id;
+     elem->fd = fd;
+-    QLIST_INSERT_HEAD(&cpr_state.fds, elem, next);
++    cpr_fd_hash_insert(elem);
+ }
+ 
+-static CprFd *find_fd(CprFdList *head, const char *name, int id)
++static CprFd *find_fd(const char *name, int id)
+ {
+-    CprFd *elem;
++    CprFd key = {
++        .name = (char *)name,
++        .id = id,
++    };
+ 
+-    QLIST_FOREACH(elem, head, next) {
+-        if (!strcmp(elem->name, name) && elem->id == id) {
+-            return elem;
+-        }
+-    }
+-    return NULL;
++    return g_hash_table_lookup(get_cpr_fds_hash(), &key);
+ }
+ 
+ void cpr_delete_fd(const char *name, int id)
+ {
+-    CprFd *elem = find_fd(&cpr_state.fds, name, id);
++    CprFd key = {
++        .name = (char *)name,
++        .id = id,
++    };
+ 
+-    if (elem) {
+-        QLIST_REMOVE(elem, next);
+-        g_free(elem->name);
+-        g_free(elem);
+-    }
++    g_hash_table_remove(get_cpr_fds_hash(), &key);
+ 
+     trace_cpr_delete_fd(name, id);
+ }
+ 
+ int cpr_find_fd(const char *name, int id)
+ {
+-    CprFd *elem = find_fd(&cpr_state.fds, name, id);
++    CprFd *elem = find_fd(name, id);
+     int fd = elem ? elem->fd : -1;
+ 
+     trace_cpr_find_fd(name, id, fd);
+@@ -96,7 +172,7 @@ int cpr_find_fd(const char *name, int id)
+ 
+ void cpr_resave_fd(const char *name, int id, int fd)
+ {
+-    CprFd *elem = find_fd(&cpr_state.fds, name, id);
++    CprFd *elem = find_fd(name, id);
+     int old_fd = elem ? elem->fd : -1;
+ 
+     if (old_fd < 0) {
+@@ -125,9 +201,11 @@ int cpr_open_fd(const char *path, int flags, const char *name, int id,
+ 
+ bool cpr_walk_fd(cpr_walk_fd_cb cb)
+ {
++    GHashTableIter iter;
+     CprFd *elem;
+ 
+-    QLIST_FOREACH(elem, &cpr_state.fds, next) {
++    g_hash_table_iter_init(&iter, get_cpr_fds_hash());
++    while (g_hash_table_iter_next(&iter, (gpointer *)&elem, NULL)) {
+         g_assert(elem->fd >= 0);
+         if (!cb(elem->fd)) {
+             return false;
+@@ -141,6 +219,8 @@ static const VMStateDescription vmstate_cpr_state = {
+     .name = CPR_STATE,
+     .version_id = 1,
+     .minimum_version_id = 1,
++    .pre_save = cpr_fd_pre_save,
++    .post_load = cpr_fd_post_load,
+     .fields = (VMStateField[]) {
+         VMSTATE_QLIST_V(fds, CprState, 1, vmstate_cpr_fd, CprFd, next),
+         VMSTATE_END_OF_LIST()
+-- 
+2.32.1 (Apple Git-133)
 
