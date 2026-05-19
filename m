@@ -4,121 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B7BACD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 03:53:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E0BCCD4851
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 03:54:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPBVB-0004D0-1g; Mon, 18 May 2026 23:52:17 -0400
+	id 1wPBX1-0004iz-CU; Mon, 18 May 2026 23:54:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wPBV5-0004AI-Pr
- for qemu-devel@nongnu.org; Mon, 18 May 2026 23:52:13 -0400
-Received: from 5.mo533.mail-out.ovh.net ([54.36.140.180])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wPBV3-0005T3-Vq
- for qemu-devel@nongnu.org; Mon, 18 May 2026 23:52:11 -0400
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net [51.68.94.138])
- by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4gKLMc5DwBz60c0;
- Tue, 19 May 2026 03:51:56 +0000 (UTC)
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net. [127.0.0.1])
- by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <alexander.hansen@9elements.com>; Tue, 19 May 2026 03:51:56 +0000 (UTC)
-Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.43.51])
- by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4gKLMc2ljJz7tjT;
- Tue, 19 May 2026 03:51:56 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.6])
- (Authenticated sender: clg@kaod.org)
- by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id D8FE6203B44; 
- Tue, 19 May 2026 03:51:54 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-96R0017604e49d-e319-45cd-9351-eba482171998,
- A1C5BDF50025601E7F63D663DE463AD2E6007479) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <3365da1a-5f5e-4ed0-9878-5e9bd3ecec27@kaod.org>
-Date: Tue, 19 May 2026 05:51:54 +0200
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wPBWy-0004iI-H3
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 23:54:08 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wPBWv-00065r-9T
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 23:54:07 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-67c9616b4feso5329903a12.1
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 20:54:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779162844; cv=none;
+ d=google.com; s=arc-20240605;
+ b=M6eiMsH92BXNjcjmSF1wOTDjQheFiPxmfY3aWyfWRGA0C79cZKJm8eznwd1WEMk6jv
+ KuI288vvnvGQWOoVl3btj7KZ9QUzqmEjPinYim+sBfT/0fWgrqQjsOXLJ/9eDPDgSWN0
+ iyX18obiTSUMQT+Jtbi9hjws0m6IWvF3fc0U70BLktd1dOvh1MxpLw/e46tjro3KQCe2
+ WJNnDPhjeau+WWD2u+N+3lqmesjfltpmw29oHXA6Uat/gGuqZL40smHFuU3GyiIO1gJh
+ O12Cw0Vq+qUv+Pz+NFYdR5jakokcBiEGuNizWUv/DuPMZFtt5TfMTXhQl5dLEhb6xG2o
+ fkHw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=E6lS5e16FvVpL2+uhei2oOX0DZd2677DKje6A0MZ7Og=;
+ fh=+dPXGxW3pQNYFrTSil53fSXYfdhGIs7bI6Dyql1Mx+Q=;
+ b=OsG4CqHtDp5VYLOrHyiiEqR1DSYKrcBVAIF7aJLjHQG4ayIlaszSchIVGZ87JHLYM5
+ at+hQAVGMoJG3Pgx1RduhEfPJZm5EuXQGMUHBAjYST9im07HuIuib0nibucycfDeDPkI
+ uVZ2jXoyZFvPfh095QmWQbSX1lAxgWEUifFG5xRWC3tY6MzRbBNZMGyTVom1elEw0XOF
+ axyYvsnP0goi6xzE9xQKmQxrDY/994Aynm5tZMrw5KRNphwtkuOKXjbKabS6aphzWY05
+ ibOIrJDef/VKllmMDd0kt/ThlCAs5z0t/AR8Fn/m2lVw8/PgHspjm9Q8pmclD8ZEkWPP
+ vqng==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1779162844; x=1779767644; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=E6lS5e16FvVpL2+uhei2oOX0DZd2677DKje6A0MZ7Og=;
+ b=edpuK7Pc/pIovdgA3okl553jJwVFYipBDKbAzaMaV1K8hzrWyLZvP3PTeQ3Cmng+hf
+ LMJ70TyFG2dD4HolBc4toeWXbCTxZSDvajERmKtJoyJ0cWu6e2rYqAV4TY0KqTzpyKHL
+ c7O/EFSfpFiQ3Ej27dinV72kwvdWz9RLTPICLosoI7B+zfa6/RU3/3rL1xzuq8f1Vd6t
+ LiLPCbLcCBQMbxwAW1oal76t8ju44qwLV26RKsv9s8OyRCvQknQWtroXu0in1Yn5rvUI
+ lRJYl/dOqen1yO7nCkwCH3wkreCkFDUAKG4SPk30gOgkYz17m2DTPWBcweAxpG6SYwjF
+ Ro6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779162844; x=1779767644;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=E6lS5e16FvVpL2+uhei2oOX0DZd2677DKje6A0MZ7Og=;
+ b=Ier+M2zD98UN+iMGHvC9jGDiE944xcSplbxxwOful7tpS3sivXBQZt0S4JoMgMA525
+ m/Emhf8W3XG8ANmuyGGD+0oP0lv27pWTZifNdjCkffE8BU/VSMAxo5prYsorqMjBrWYa
+ oEbPctM+3tzxLYlVqPxfS5z6oowTAk/wIHYtFwk8vJQS5QGD+jU7hJ5M2heDitLrTAFb
+ CFret+bv2pQUp9oDH/8igvjOpnXv8w90RQy82htLFpuuSlhv4cB8FbOCic5u3/4kkSGC
+ DqfMn5nQDZS8CxAN4HZa+EKMHvCx3LDiMRoBgWcXjWxetBhxID2PTMwGKm89bwTO81dT
+ j8Qg==
+X-Gm-Message-State: AOJu0YwGutU6vTt0uH91+hACKWWazjYgv/79VdrXIuQ0MVCjpnxkpnh7
+ rvKZbcgj+Ccc3I1cwIlygQNysEXstyFHOxbfUibOkQpBn7eNDN0niR2wVrbjPkMCWd5jaTGuanQ
+ Ft7hLObdfPvrtDAM9yntMXN5mDvKAUuc=
+X-Gm-Gg: Acq92OFF1gp7ud5BpRJFqB+jBiEkBA2pMCtAu/ONekdW1h72LtaRe4ZBXXN/pStrJ1f
+ SeE2zkOoCzovY1Z+zdg8NP9t0nTSYCO1X03XOqzGjF0caCYitKoh30dI5wS3UdLKbi9OKeCJD6S
+ CPKxFWYcwjiy2OlGtMu2yT/MDw3O4/Fn7D2q3eJ/m+8d7FWQQJkWPSIoKbSSGUfcmA/a/F5eFYJ
+ wXcWyQAIIKcx4FTcPmbRmK1Gs/wQsjFb+Nj2+3JiJBZ8vZ4K49mSAomI/YilV+RvSSC99eUxIj2
+ TwYkfD4Lk9c7+VwbLsEjZSeOGlHwDvS84Vkhy6o7hFWPb8F2
+X-Received: by 2002:a17:907:97ce:b0:bd5:5e7:ae6d with SMTP id
+ a640c23a62f3a-bd5177afb10mr974000566b.3.1779162843533; Mon, 18 May 2026
+ 20:54:03 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/5] ast2600: yosemite4 functional test
-To: Alexander Hansen <alexander.hansen@9elements.com>, qemu-devel@nongnu.org
-Cc: Titus Rwantare <titusr@google.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- qemu-arm@nongnu.org
-References: <20260515150610.381066-1-alexander.hansen@9elements.com>
- <20260515150610.381066-3-alexander.hansen@9elements.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20260515150610.381066-3-alexander.hansen@9elements.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 16022681576791321611
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEZzbA6+2qsGwubvTnVTLkQvGfQlzy40rhUWE+482bVO5kbqoy9saUjvidmLhMqAbR0trwUh9ip5cI5wFo0f+PvdwwzEvoQ86I7dxRAgofJdWGIm2u79u5eg1yt3DtCMDsh14qTUi6+wjny/T0wE1aG7053a+dopvrkyxiBNijFOAGwfhhrYhg9YBfiQk9apjpwsOwzxCQk62Kb5Dqh2aFVEORCLbdQYl3PuuZDdap+D/N+mZp56ZFtwGuHdYGH6X17ydhzojEOK/BDzm6ehUzwtsD9z3kGpm3w2m8gi4vH0p+cw9/6z6uL3059dFDYZn9liyEPPgjgvz8ba9M42fBHPJU840V2T7Ql8FgRsdM1bP/1mHpNiMAhMRrpzQOK7azsTs4cdpL4l640fssYxnF8utILLCwQHic4mTOx6DoThnKprntRQ48qweujvREykGFMQt3+I0w5xHbYcO5hwJVsKg0cFjdsxU2umkFs/jVfmTaHcjcmZh5ETb1FQYnnoFBEZXn2Sbx0AdhNXUclBmc00WAJTVOHJQmp5pWQweT6JmEQuVjNGpJt1TiUMswtoNjHaLMe8sohJWbfX3Y0YIobrv4yhgZF1iZPNwXFf0+KIust0CwsKeFgfiC8SFpL6JbhuO2EUq2N0ofHjnpijCvUREDS7/DvRNuurZLQzaEsvA
-DKIM-Signature: a=rsa-sha256; bh=VMWc2iG3Ew/VA/bCaJzDVNRKNrzQiWUXaLG13XweOOc=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1779162718; v=1;
- b=TR1J8hU7C9kxfTtchDr+zSnsEyMDsR4fI8EvBlojdKkvVTcuih2gxsnRmFNA1JF8RCW1SXcJ
- /gmt0ihuJeVwNm/QcT6kOgDtk1/5CxhmNKuPDKvW7r9kw70CLqP1BRExL7FPyksokIJeBfltUO4
- hNxFnPyTjz63z/BrDHjw3Sy2IKju68bOYcB6Rz4KPM9EeM7+yhdluU3GLQlQyloEPVFtFBKbsyP
- awgiYCjuGwI30sx0KjusFQyB+u750uPpwKj/WRCkTI9pySuVwvrTbbFj5A7xd3GJlTukjKiV8tw
- HYAjoxy20bWDz7qh9nPOve9FUHxbpqFjVcQYucI+2dy3w==
-Received-SPF: pass client-ip=54.36.140.180; envelope-from=clg@kaod.org;
- helo=5.mo533.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260512032926.1978818-1-daniel.barboza@oss.qualcomm.com>
+ <20260512032926.1978818-4-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260512032926.1978818-4-daniel.barboza@oss.qualcomm.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 19 May 2026 13:53:37 +1000
+X-Gm-Features: AVHnY4JV2nHpGIkkNzGx0gagewYd81oYIjvTMvSI1jKMXrNS2_P3KIfXDYqlA9w
+Message-ID: <CAKmqyKOY5LiXM2S=9N5T_VF3WqXMEoR+mVA455YfbbhHGzHiMw@mail.gmail.com>
+Subject: Re: [PATCH v2 03/14] target/riscv: make riscv-qmp-cmds use
+ isa_data_arr[]
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,110 +119,263 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/15/26 16:57, Alexander Hansen wrote:
-> Add a functional test for the Yosemite V4 (fby4-bmc) machine
-> that validates:
-> - U-Boot initialization and kernel boot sequence
-> 
-> The test uses an OpenBMC image built for the yosemite4 board and
-> validates console output through the boot process.
-> 
-> Cc: Titus Rwantare <titusr@google.com>
-> Cc: "Cédric Le Goater" <clg@kaod.org> (maintainer:ASPEED BMCs)
-> Cc: Peter Maydell <peter.maydell@linaro.org> (maintainer:ASPEED BMCs)
-> Cc: Steven Lee <steven_lee@aspeedtech.com> (reviewer:ASPEED BMCs)
-> Cc: Troy Lee <leetroy@gmail.com> (reviewer:ASPEED BMCs)
-> Cc: Jamin Lin <jamin_lin@aspeedtech.com> (reviewer:ASPEED BMCs)
-> Cc: Kane Chen <kane_chen@aspeedtech.com> (reviewer:ASPEED BMCs)
-> Cc: Andrew Jeffery <andrew@codeconstruct.com.au> (reviewer:ASPEED BMCs)
-> Cc: Joel Stanley <joel@jms.id.au> (reviewer:ASPEED BMCs)
-> Cc: qemu-arm@nongnu.org (open list:ASPEED BMCs)
-> Cc: qemu-devel@nongnu.org (open list:All patches CC here)
-> Signed-off-by: Alexander Hansen <alexander.hansen@9elements.com>
-> ---
->   tests/functional/arm/meson.build         |  2 ++
->   tests/functional/arm/test_aspeed_fby4.py | 44 ++++++++++++++++++++++++
->   2 files changed, 46 insertions(+)
->   create mode 100755 tests/functional/arm/test_aspeed_fby4.py
-> 
-> diff --git a/tests/functional/arm/meson.build b/tests/functional/arm/meson.build
-> index 2f538f29a2..10c0006f22 100644
-> --- a/tests/functional/arm/meson.build
-> +++ b/tests/functional/arm/meson.build
-> @@ -14,6 +14,7 @@ test_arm_timeouts = {
->     'aspeed_ast2600_sdk_otp' : 720,
->     'aspeed_bletchley' : 480,
->     'aspeed_catalina' : 480,
-> +  'aspeed_fby4': 480,
->     'aspeed_gb200nvl_bmc' : 480,
->     'aspeed_rainier' : 480,
->     'bpim2u' : 500,
-> @@ -47,6 +48,7 @@ tests_arm_system_thorough = [
->     'aspeed_ast2600_sdk_otp',
->     'aspeed_bletchley',
->     'aspeed_catalina',
-> +  'aspeed_fby4',
->     'aspeed_gb200nvl_bmc',
->     'aspeed_rainier',
->     'bpim2u',
-> diff --git a/tests/functional/arm/test_aspeed_fby4.py b/tests/functional/arm/test_aspeed_fby4.py
-> new file mode 100755
-> index 0000000000..a3124c240f
-> --- /dev/null
-> +++ b/tests/functional/arm/test_aspeed_fby4.py
-> @@ -0,0 +1,44 @@
-> +#!/usr/bin/env python3
-> +#
-> +# Functional test that boots the ASPEED machines
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +from qemu_test import Asset
-> +from aspeed import AspeedTest
+On Tue, May 12, 2026 at 1:31=E2=80=AFPM Daniel Henrique Barboza
+<daniel.barboza@oss.qualcomm.com> wrote:
 >
+> We want to reduce the usage of the riscv_cpu_* arrays in
+> target/riscv/cpu.c, centering everything in isa_edata_arr[] instead, to
+> reduce data duplication and make our lives a bit easier when adding new
+> extensions.
+>
+> To do that we'll have to make isa_edata_arr[] do what the other arrays
+> are currently doing, not breaking existing semantics in the process.
+> The riscv_cpu_* arrays have a few exclusive uses:
+>
+> - set default extensions for rv32 and rv64;
+> - create user CPU properties;
+> - misc uses around tcg-cpu.c and kvm-cpu.c.
+>
+> We'll slowly make isa_edata_arr[] supersede these arrays.  Start by
+> adding a new 'prop_name' field in RISCVIsaExtData.  This field is needed
+> because not all extensions have properties and not all properties match
+> the riscv,isa string name.
+>
+> Create two additional macros and reclassify existing isa_edata_arr[]
+> entries as follows:
+>
+> - ISA_EXT_DATA_ENTRY creates an entry where prop_name =3D=3D riscv,isa.
+>   Most of our regular extensions fall into this category;
+> - ISA_EXPERIMENTAL_EXT_DATA_ENTRY: same as above but add a "x-" to the
+>   prop name, i.e. prop_name =3D=3D "x-" + riscv,isa;
+> - ISA_INTERNAL_EXT_DATA_ENTRY: used to declared internal extensions.  By
+>   'internal' we mean users/management can't set them on or off.
+>
+> With these new macros we can start our simplification by changing
+> riscv-qmp-cmds to use isa_edata_arr[].  We'll just scroll through it
+> once and gather what we need.
+>
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-Missing :
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
-from qemu_test import wait_for_console_pattern
+Alistair
 
-Thanks,
-
-C.
-
+> ---
+>  target/riscv/cpu.c            | 60 +++++++++++++++++++++++------------
+>  target/riscv/cpu.h            |  1 +
+>  target/riscv/riscv-qmp-cmds.c | 30 ++++--------------
+>  3 files changed, 47 insertions(+), 44 deletions(-)
+>
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index ee8f6e5296..42555cb28f 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -97,8 +97,24 @@ static void riscv_cpu_cfg_merge(RISCVCPUConfig *dest, =
+const RISCVCPUConfig *src)
+>  #include "cpu_cfg_fields.h.inc"
+>  }
+>
+> +/* Use this for regular user facing extensions */
+>  #define ISA_EXT_DATA_ENTRY(_name, _min_ver, _prop) \
+> -    {#_name, _min_ver, CPU_CFG_OFFSET(_prop)}
+> +    {#_name, #_name, _min_ver, CPU_CFG_OFFSET(_prop)}
 > +
-> +class YosemiteV4Machine(AspeedTest):
+> +/*
+> + * Same as above but for experimental extensions. We'll add a
+> + * "x-" right after "_name" when creating the user property.
+> + */
+> +#define ISA_EXPERIMENTAL_EXT_DATA_ENTRY(_name, _min_ver, _prop) \
+> +    {#_name, "x-" #_name, _min_ver, CPU_CFG_OFFSET(_prop)}
 > +
-> +    ASSET_YOSEMITE_V4_FLASH = Asset(
-> +        'https://github.com/legoater/qemu-aspeed-boot/raw/refs/heads/master/images/yosemite4-bmc/openbmc-20260505132843/obmc-phosphor-image-yosemite4-20260505132843.static.mtd.xz',
-> +        'dff6946363b41f952b15cfc3156482b89fcfc1b0ecfc3ec8b3ed496a5f001ef9')
-> +
-> +    def do_test_arm_aspeed_openbmc_no_network(self, machine, image, uboot,
-> +                                   cpu_id, soc):
-> +
-> +        self.set_machine(machine)
-> +        self.vm.set_console()
-> +        self.vm.add_args('-drive', f'file={image},if=mtd,format=raw',
-> +                         '-snapshot')
-> +        self.vm.launch()
-> +
-> +        self.wait_for_console_pattern(f'U-Boot {uboot}')
-> +        self.wait_for_console_pattern('## Loading kernel from FIT Image')
-> +        self.wait_for_console_pattern('Starting kernel ...')
-> +        self.wait_for_console_pattern(f'Booting Linux on physical CPU {cpu_id}')
-> +        self.wait_for_console_pattern(f'ASPEED {soc}')
-> +        self.wait_for_console_pattern('/init as init process')
-> +        # yosemite v4 does not emit the hostname log which is
-> +        # different from the other machines.
-> +        self.wait_for_console_pattern('yosemite4 login:')
-> +
-> +    def test_arm_ast2600_yosemitev4_openbmc(self):
-> +        image_path = self.uncompress(self.ASSET_YOSEMITE_V4_FLASH)
-> +
-> +        self.do_test_arm_aspeed_openbmc_no_network('fby4-bmc', image=image_path,
-> +                                        uboot='2019.04', cpu_id='0xf00',
-> +                                        soc='AST2600 rev A3')
-> +
-> +if __name__ == '__main__':
-> +    AspeedTest.main()
-
+> +/*
+> + * Internal extensions are extensions we will declare in the
+> + * riscv,isa DT but they don't have an user property, i.e.
+> + * users/management can't enable/disable them.
+> + */
+> +#define ISA_INTERNAL_EXT_DATA_ENTRY(_name, _min_ver, _prop) \
+> +    {#_name, NULL, _min_ver, CPU_CFG_OFFSET(_prop)}
+>
+>  /*
+>   * Here are the ordering rules of extension naming defined by RISC-V
+> @@ -121,13 +137,13 @@ static void riscv_cpu_cfg_merge(RISCVCPUConfig *des=
+t, const RISCVCPUConfig *src)
+>   * instead.
+>   */
+>  const RISCVIsaExtData isa_edata_arr[] =3D {
+> -    ISA_EXT_DATA_ENTRY(zic64b, PRIV_VERSION_1_12_0, ext_zic64b),
+> +    ISA_INTERNAL_EXT_DATA_ENTRY(zic64b, PRIV_VERSION_1_12_0, ext_zic64b)=
+,
+>      ISA_EXT_DATA_ENTRY(zicbom, PRIV_VERSION_1_12_0, ext_zicbom),
+>      ISA_EXT_DATA_ENTRY(zicbop, PRIV_VERSION_1_12_0, ext_zicbop),
+>      ISA_EXT_DATA_ENTRY(zicboz, PRIV_VERSION_1_12_0, ext_zicboz),
+> -    ISA_EXT_DATA_ENTRY(ziccamoa, PRIV_VERSION_1_11_0, has_priv_1_11),
+> -    ISA_EXT_DATA_ENTRY(ziccif, PRIV_VERSION_1_11_0, has_priv_1_11),
+> -    ISA_EXT_DATA_ENTRY(zicclsm, PRIV_VERSION_1_11_0, has_priv_1_11),
+> +    ISA_INTERNAL_EXT_DATA_ENTRY(ziccamoa, PRIV_VERSION_1_11_0, has_priv_=
+1_11),
+> +    ISA_INTERNAL_EXT_DATA_ENTRY(ziccif, PRIV_VERSION_1_11_0, has_priv_1_=
+11),
+> +    ISA_INTERNAL_EXT_DATA_ENTRY(zicclsm, PRIV_VERSION_1_11_0, has_priv_1=
+_11),
+>      ISA_EXT_DATA_ENTRY(ziccrse, PRIV_VERSION_1_11_0, ext_ziccrse),
+>      ISA_EXT_DATA_ENTRY(zicfilp, PRIV_VERSION_1_12_0, ext_zicfilp),
+>      ISA_EXT_DATA_ENTRY(zicfiss, PRIV_VERSION_1_13_0, ext_zicfiss),
+> @@ -141,7 +157,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+>      ISA_EXT_DATA_ENTRY(zilsd, PRIV_VERSION_1_12_0, ext_zilsd),
+>      ISA_EXT_DATA_ENTRY(zimop, PRIV_VERSION_1_13_0, ext_zimop),
+>      ISA_EXT_DATA_ENTRY(zmmul, PRIV_VERSION_1_12_0, ext_zmmul),
+> -    ISA_EXT_DATA_ENTRY(za64rs, PRIV_VERSION_1_12_0, has_priv_1_12),
+> +    ISA_INTERNAL_EXT_DATA_ENTRY(za64rs, PRIV_VERSION_1_12_0, has_priv_1_=
+12),
+>      ISA_EXT_DATA_ENTRY(zaamo, PRIV_VERSION_1_12_0, ext_zaamo),
+>      ISA_EXT_DATA_ENTRY(zabha, PRIV_VERSION_1_13_0, ext_zabha),
+>      ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
+> @@ -211,13 +227,14 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+>      ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
+>      ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
+>      ISA_EXT_DATA_ENTRY(sdtrig, PRIV_VERSION_1_12_0, debug),
+> -    ISA_EXT_DATA_ENTRY(shcounterenw, PRIV_VERSION_1_12_0, has_priv_1_12)=
+,
+> -    ISA_EXT_DATA_ENTRY(sha, PRIV_VERSION_1_12_0, ext_sha),
+> -    ISA_EXT_DATA_ENTRY(shgatpa, PRIV_VERSION_1_12_0, has_priv_1_12),
+> -    ISA_EXT_DATA_ENTRY(shtvala, PRIV_VERSION_1_12_0, has_priv_1_12),
+> -    ISA_EXT_DATA_ENTRY(shvsatpa, PRIV_VERSION_1_12_0, has_priv_1_12),
+> -    ISA_EXT_DATA_ENTRY(shvstvala, PRIV_VERSION_1_12_0, has_priv_1_12),
+> -    ISA_EXT_DATA_ENTRY(shvstvecd, PRIV_VERSION_1_12_0, has_priv_1_12),
+> +    ISA_INTERNAL_EXT_DATA_ENTRY(shcounterenw, PRIV_VERSION_1_12_0,
+> +                                has_priv_1_12),
+> +    ISA_INTERNAL_EXT_DATA_ENTRY(sha, PRIV_VERSION_1_12_0, ext_sha),
+> +    ISA_INTERNAL_EXT_DATA_ENTRY(shgatpa, PRIV_VERSION_1_12_0, has_priv_1=
+_12),
+> +    ISA_INTERNAL_EXT_DATA_ENTRY(shtvala, PRIV_VERSION_1_12_0, has_priv_1=
+_12),
+> +    ISA_INTERNAL_EXT_DATA_ENTRY(shvsatpa, PRIV_VERSION_1_12_0, has_priv_=
+1_12),
+> +    ISA_INTERNAL_EXT_DATA_ENTRY(shvstvala, PRIV_VERSION_1_12_0, has_priv=
+_1_12),
+> +    ISA_INTERNAL_EXT_DATA_ENTRY(shvstvecd, PRIV_VERSION_1_12_0, has_priv=
+_1_12),
+>      ISA_EXT_DATA_ENTRY(smaia, PRIV_VERSION_1_12_0, ext_smaia),
+>      ISA_EXT_DATA_ENTRY(smcdeleg, PRIV_VERSION_1_13_0, ext_smcdeleg),
+>      ISA_EXT_DATA_ENTRY(smcntrpmf, PRIV_VERSION_1_12_0, ext_smcntrpmf),
+> @@ -232,20 +249,21 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+>      ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
+>      ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
+>      ISA_EXT_DATA_ENTRY(ssccfg, PRIV_VERSION_1_13_0, ext_ssccfg),
+> -    ISA_EXT_DATA_ENTRY(ssccptr, PRIV_VERSION_1_11_0, has_priv_1_11),
+> +    ISA_INTERNAL_EXT_DATA_ENTRY(ssccptr, PRIV_VERSION_1_11_0, has_priv_1=
+_11),
+>      ISA_EXT_DATA_ENTRY(sscofpmf, PRIV_VERSION_1_12_0, ext_sscofpmf),
+> -    ISA_EXT_DATA_ENTRY(sscounterenw, PRIV_VERSION_1_12_0, has_priv_1_12)=
+,
+> +    ISA_INTERNAL_EXT_DATA_ENTRY(sscounterenw, PRIV_VERSION_1_12_0,
+> +                                has_priv_1_12),
+>      ISA_EXT_DATA_ENTRY(sscsrind, PRIV_VERSION_1_12_0, ext_sscsrind),
+>      ISA_EXT_DATA_ENTRY(ssctr, PRIV_VERSION_1_12_0, ext_ssctr),
+>      ISA_EXT_DATA_ENTRY(ssdbltrp, PRIV_VERSION_1_13_0, ext_ssdbltrp),
+>      ISA_EXT_DATA_ENTRY(ssnpm, PRIV_VERSION_1_13_0, ext_ssnpm),
+>      ISA_EXT_DATA_ENTRY(sspm, PRIV_VERSION_1_13_0, ext_sspm),
+> -    ISA_EXT_DATA_ENTRY(ssstateen, PRIV_VERSION_1_12_0, ext_ssstateen),
+> -    ISA_EXT_DATA_ENTRY(ssstrict, PRIV_VERSION_1_12_0, has_priv_1_12),
+> +    ISA_INTERNAL_EXT_DATA_ENTRY(ssstateen, PRIV_VERSION_1_12_0, ext_ssst=
+ateen),
+> +    ISA_INTERNAL_EXT_DATA_ENTRY(ssstrict, PRIV_VERSION_1_12_0, has_priv_=
+1_12),
+>      ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0, ext_sstc),
+> -    ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, has_priv_1_12),
+> -    ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, has_priv_1_12),
+> -    ISA_EXT_DATA_ENTRY(ssu64xl, PRIV_VERSION_1_12_0, has_priv_1_12),
+> +    ISA_INTERNAL_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, has_priv_1=
+_12),
+> +    ISA_INTERNAL_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, has_priv_1=
+_12),
+> +    ISA_INTERNAL_EXT_DATA_ENTRY(ssu64xl, PRIV_VERSION_1_12_0, has_priv_1=
+_12),
+>      ISA_EXT_DATA_ENTRY(supm, PRIV_VERSION_1_13_0, ext_supm),
+>      ISA_EXT_DATA_ENTRY(svade, PRIV_VERSION_1_11_0, ext_svade),
+>      ISA_EXT_DATA_ENTRY(svadu, PRIV_VERSION_1_12_0, ext_svadu),
+> @@ -253,7 +271,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+>      ISA_EXT_DATA_ENTRY(svnapot, PRIV_VERSION_1_12_0, ext_svnapot),
+>      ISA_EXT_DATA_ENTRY(svpbmt, PRIV_VERSION_1_12_0, ext_svpbmt),
+>      ISA_EXT_DATA_ENTRY(svrsw60t59b, PRIV_VERSION_1_13_0, ext_svrsw60t59b=
+),
+> -    ISA_EXT_DATA_ENTRY(svukte, PRIV_VERSION_1_13_0, ext_svukte),
+> +    ISA_EXPERIMENTAL_EXT_DATA_ENTRY(svukte, PRIV_VERSION_1_13_0, ext_svu=
+kte),
+>      ISA_EXT_DATA_ENTRY(svvptc, PRIV_VERSION_1_13_0, ext_svvptc),
+>      ISA_EXT_DATA_ENTRY(xlrbr, PRIV_VERSION_1_13_0, ext_xlrbr),
+>      ISA_EXT_DATA_ENTRY(xmipscbop, PRIV_VERSION_1_12_0, ext_xmipscbop),
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 224c81900d..669735c5cd 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -996,6 +996,7 @@ extern const RISCVCPUMultiExtConfig riscv_cpu_named_f=
+eatures[];
+>
+>  typedef struct isa_ext_data {
+>      const char *name;
+> +    const char *prop_name;
+>      int min_version;
+>      int ext_enable_offset;
+>  } RISCVIsaExtData;
+> diff --git a/target/riscv/riscv-qmp-cmds.c b/target/riscv/riscv-qmp-cmds.=
+c
+> index 8a1856c50e..93e6b7fa68 100644
+> --- a/target/riscv/riscv-qmp-cmds.c
+> +++ b/target/riscv/riscv-qmp-cmds.c
+> @@ -90,27 +90,14 @@ static void riscv_obj_add_qdict_prop(Object *obj, QDi=
+ct *qdict_out,
+>      }
+>  }
+>
+> -static void riscv_obj_add_multiext_props(Object *obj, QDict *qdict_out,
+> -                                         const RISCVCPUMultiExtConfig *a=
+rr)
+> +static void riscv_obj_add_multiext_props(Object *obj, QDict *qdict_out)
+>  {
+> -    for (int i =3D 0; arr[i].name !=3D NULL; i++) {
+> -        riscv_obj_add_qdict_prop(obj, qdict_out, arr[i].name);
+> -    }
+> -}
+> +    const RISCVIsaExtData *edata;
+>
+> -static void riscv_obj_add_named_feats_qdict(Object *obj, QDict *qdict_ou=
+t)
+> -{
+> -    const RISCVCPUMultiExtConfig *named_cfg;
+> -    RISCVCPU *cpu =3D RISCV_CPU(obj);
+> -    QObject *value;
+> -    bool flag_val;
+> -
+> -    for (int i =3D 0; riscv_cpu_named_features[i].name !=3D NULL; i++) {
+> -        named_cfg =3D &riscv_cpu_named_features[i];
+> -        flag_val =3D isa_ext_is_enabled(cpu, named_cfg->offset);
+> -        value =3D QOBJECT(qbool_from_bool(flag_val));
+> -
+> -        qdict_put_obj(qdict_out, named_cfg->name, value);
+> +    for (edata =3D isa_edata_arr; edata && edata->name; edata++) {
+> +        if (edata->prop_name) {
+> +            riscv_obj_add_qdict_prop(obj, qdict_out, edata->prop_name);
+> +        }
+>      }
+>  }
+>
+> @@ -220,10 +207,7 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion=
+(CpuModelExpansionType type,
+>
+>      qdict_out =3D qdict_new();
+>
+> -    riscv_obj_add_multiext_props(obj, qdict_out, riscv_cpu_extensions);
+> -    riscv_obj_add_multiext_props(obj, qdict_out, riscv_cpu_experimental_=
+exts);
+> -    riscv_obj_add_multiext_props(obj, qdict_out, riscv_cpu_vendor_exts);
+> -    riscv_obj_add_named_feats_qdict(obj, qdict_out);
+> +    riscv_obj_add_multiext_props(obj, qdict_out);
+>      riscv_obj_add_profiles_qdict(obj, qdict_out);
+>
+>      /* Add our CPU boolean options too */
+> --
+> 2.43.0
+>
+>
 
