@@ -4,98 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06318CD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 03:59:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A43BECD4F3C
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 04:00:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPBcO-0006dR-IA; Mon, 18 May 2026 23:59:44 -0400
+	id 1wPBdQ-0007Lq-7G; Tue, 19 May 2026 00:00:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wPBcM-0006Xz-Op
- for qemu-devel@nongnu.org; Mon, 18 May 2026 23:59:42 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ id 1wPBdC-0007Da-Ck
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 00:00:39 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wPBcK-00081J-VL
- for qemu-devel@nongnu.org; Mon, 18 May 2026 23:59:42 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-67be871ed3fso7037554a12.1
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 20:59:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779163179; cv=none;
+ id 1wPBd8-0008Nk-Be
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 00:00:32 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-bd8f6ef4ba6so252497766b.3
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 21:00:29 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779163228; cv=none;
  d=google.com; s=arc-20240605;
- b=el1x7q+5Mo2JTzSeSu6wJcC3Vqweu/TGmfkjc64S88Fmomx/vKDkhcit76FgKgivvo
- ms9oqkwN/dIu8ldVDfNgdOUYoqsWYMjDVAzwvoD9cr3tBBzZlzwKHKUSfrjBcr2dAjYx
- aeIpfCZ2JRniSnx49nVid3xovSOFaOI+VUFXJ6ZJKm4WosRfGkHUcNg93t43YpCQDvJV
- CeguGkd2yQ8+8pcKwIxa9LSxZqXIQ5K71D72wiAdzu8+wQhBKR9ECXmLzeDEWmzBUvng
- TXYP5+e0nSNCGRP3v0wZKEq/QI1shdU8poErl8QG8MpJJtRovZS+AItjhCOnhoMhnE22
- /spA==
+ b=bQaxAUprp6aDJIXPrAB6NDlVtJYDT4+2dKmm8hqPsOLT2jfwzPVo6aTg2khCWZgw7w
+ Ogy4M7atqSLP0CgIPJX38LKTMCnN2Tx25Nk8MPHQLOdMnxQXxJMwDt8VIu1bTjXTXnev
+ GLQypTxSt13lC9EhCLd663pl2nHYMVrhs2eUiqecwcfGHp1ni9zXXR6GXt910cSSKjRK
+ id6d5ukad958jGfS0YPXEriHU1Pp+o/lnpUZ4WEZPXrz1Yubh4oIKWUJMKh+9eQ1IcpW
+ olcNj69IHGpajt6E135SMps5CF3X6ginur1SvCQ1aug1t24HBTTs7WsFSapDkUS+jCup
+ 33xw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=1XlpxuP36fWzHsVf26UQYF9pQjtD2oCrSA/780+hgk8=;
+ bh=R+RSarYK2lVqL/6hfrmMfZvIt+9jd7bxJR5kh8b8wiU=;
  fh=+dPXGxW3pQNYFrTSil53fSXYfdhGIs7bI6Dyql1Mx+Q=;
- b=Obr0kkRFqyUEOd+pSYuExsnurE3mCZBQAUVRr/AygXcwu08jnLyMYfMwXLLLL0EoZg
- 3nOf+WzSYhgNm9P+5pwsw+7BI+FHtUFGG872skbhDz93u3r9WJ1es/ZMlA5jAAp9lChS
- yoEOivV9KK2IFvGTG5puou2EcaIGfwBhXVD8fR9/ZnlasTsjX+u/SUG0041Ntnehj3E2
- JMSTlAbvDwHcIBGvwRzLGk1ofmEjbemeE4Pg93Snj3JLRLCQzA4m/HbnVAj1NR8tffVf
- x8wDLI4E3HtyisFQyY3kbiM5hgoi3bA5jFcDELcs+ohtE1RSLE/i+ah9xxBJlpJeBg+f
- EG1Q==; darn=nongnu.org
+ b=Yz/HWCG7xUUlDhIQKffZq31Adqo6alIW0vW26ZsqpoLbuCup4SckAfhoe3Hqqa6NoI
+ EaHSp1WBBbYQbuuZXHAaUEmbVDdijtfzqzTzfeRT/1zoyXLYZ+ZEMOGlOoY6Bhj2+sbl
+ Z/818AMnlzXcvAXYS3uScfzw+RQmYXQtaENhUYyh5emcLQfMUl4JVpN17JgqQ/xzXFXX
+ GjPEfqaAv8v3Alab3tBP6kNnL6Q67vfyDCcrl9eQiX96tQU0BzmHDItLnuq49MG5aIta
+ yvKjSCNTgRGGcJEIueIkGmF8DC10b61tRS5B77SxG9+1/fs+xQ4wd65KEUmCMWmChSrt
+ hbYg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779163179; x=1779767979; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779163228; x=1779768028; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1XlpxuP36fWzHsVf26UQYF9pQjtD2oCrSA/780+hgk8=;
- b=TU/npO7N4E6miRTxJDKOc376mINxNpuzI5meQug3mXiuEOTZVe2q43e3Rdy6imtaoY
- mvzKmFAQQWA33bkSC6JCUIUXIEjrw8bKqAI6Djy82dj0otz7RjhbWuuSeH7kOZn67VKT
- ESabZmqEAHpfgw+i5v5/itbnA+Xm7gYdcryUndI56pGayHdwmJPMwehTgORYo8TwSq3Z
- JzpBwPI8sryYeh/AoNjH2iidtD0SY3l1HhfCLK+2XcXcrZKUAcHF91ERSvrVlU/aonSJ
- 1MQU5+l00y3U81uPY2jOojjpk14amaXGZ3zQbS1NoD3nE0vulestgQAXUelSm4PkgZIg
- /zMA==
+ bh=R+RSarYK2lVqL/6hfrmMfZvIt+9jd7bxJR5kh8b8wiU=;
+ b=CJnbJpYrFdEjKFXbiqRs1byROL30MQP5HHQoBkz1aUujFYkhVr2NYTAdFYz7Wpxd2Y
+ LyhxZab9QfI4ktKt55cyzSb/I8S/P2Mi2jNyAJm/oqUXHqWPvz0p7uc0ZoArPYv+0t3g
+ ZRbY5Ak3/6Mz9zhHHaOA/9Q1RLgeJ4qDb6zfPqxYyPuIhsdxs3LHf4uiAkhw3MNSMwxj
+ cNycEIt0sXm8gH7yqy0lg3c1R8pj+95K4JqFbwJms18QuPbmeF7nHauIv1LFelE59RUM
+ qbims2UPqHS7Jhc1LD2LC2Dt3jMms6CG58X4e9+dujga67tKiwyyEMQpU6Jc/TsSOp4e
+ 2GKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779163179; x=1779767979;
+ d=1e100.net; s=20251104; t=1779163228; x=1779768028;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=1XlpxuP36fWzHsVf26UQYF9pQjtD2oCrSA/780+hgk8=;
- b=qm9RPgyISXPf4rveaodSwAGwMnpCSAeGpOkKObRROmOV+MpidOTdieHmLqj+LfRmLe
- uJMIchPCa9GpkoRnapfpDaaGf0Oe3Uhmm+2gOVbySWZ99X71Za16rLLYxzCF6D01bgqA
- 39W+JqXIEvkM6olc3KLjuiVfRq+aeTfJV85qMPU1zHfRkyytGAVYxsRSKU1NXyd8JbPj
- h42cnvFCpkzaR8y19UmeJqW7q/Kd/PR3pQAn5UHnQOVWW9+lEB9hQmKexJiFHPQp+bf+
- E8q8cg9ndDZRw0PvDVSycuFd1do0hFXOktHyL7QxX/aSXU3H0s9WxTWc4bEETme3KsxB
- hapQ==
-X-Gm-Message-State: AOJu0YzHMvZaHsZm3MetVzvFm9Gq9U3DiVbRV4Ml+PvlPNgjryrxqgaS
- iofGwNyrwS94foDyeYoVLvhu4IDwj22wlb9w1mbrmvocY0+0E+peo+S4UNXv2nWujNQt4z3pznq
- 0ChI/D1oqgDHkVfc3bEORIuASWjbapPA=
-X-Gm-Gg: Acq92OGPqgbDW+8Mu2ZuSrIY5dos/svYJkR53f4o/X3p4jJq8cw67App3e9JAOxP9fA
- hzDg2d1pquG718mMpEEr0JzImSHejBtC7gVixah0/h/6w5MUFty6aTe7Pv437vAqTcyFWTzkyIH
- RCQzSUpOblJFEicx6i2VRKEovwMFSQyRXDCvHxoRRbQRMc1eW3hKv6p4NoHGEJ14zpM8e7djjOj
- FqvqcrZUoXqgFW+kT1i2AW9aLKqmMKLwTTVX33iZMjq7ClgAPtrF8qwGRRt1zIzFFh/RVrvHvAK
- yvm2e3XBYX8BoqBFxQnys2QwgqlThN59OIGlqw==
-X-Received: by 2002:a17:907:a807:b0:bd4:f854:27b5 with SMTP id
- a640c23a62f3a-bd5177da46bmr1091788266b.9.1779163178891; Mon, 18 May 2026
- 20:59:38 -0700 (PDT)
+ bh=R+RSarYK2lVqL/6hfrmMfZvIt+9jd7bxJR5kh8b8wiU=;
+ b=NfmhGKpYoBOyhXuEfIJLQUi32umP9Aps8S7E2YrmXgjaiYdFaxqnDXh4IOMjYtinYe
+ nVW0m0LAl9IbIXzwnhmuUBC+FuueYSPQWCprDde+X9bdcQWMc/Tzy+byVyJXHL9naW5B
+ vcMGqcyKTYmVlUxYAOHY4ZuBEmRiYODdIX4QvRr5Ty2h2ezXgW2Nl+Bj3JmmTbRv/lES
+ +E6W941UYiWZxKdjYcFZwhxZIlCERef1svlDo8dJq1c4A82hiEZcjmWIs1M44H3ZGIgn
+ sjsUGmLhCqzBUp1KzREFpOEaZwEyXhaJtt/593gcklSjIphzqsIMkdtGF4Y0FADOL0IP
+ zdeg==
+X-Gm-Message-State: AOJu0YwXlQ3Bam6aKhz7DT+El6uTVFcKLozXl0Hb8eNPgAEt07hwtgDB
+ hq2S8J6TPwdgin63I9oDsHWyM/XEkdvhzlzavezp5mOivJohQKgQoikyGsXfwN4Tighev71cc9t
+ Lm5QTTM7NtA34MRtouZyGmzDS4GKg6yw=
+X-Gm-Gg: Acq92OFvNdT00utEK9kQ+XxrsLljTGrvlIW1NmHPFiuB/SIbQw9xnrOMohJ9XyeYxdn
+ 7eA+2t5DYdNWIDUlSCVFk5i6HYi6rJ88+Oyhv6sX0Q2Rgo+T0hIEtYtG1fLisJZ07Chi1YOFmks
+ 89TR5uWw4hVB0C8I2u2mXus2JQQMbMoLM0NhkXQC/NZWNDohZ59zhyFKHrADk641b7xHGqHliY8
+ G45r3gxN9ikEd5+F4qt+wAT7VcXqeBpSR0DBtZ/1dzf+kOpgJ5vqG/DKwpKlUze67LPNq2jKefi
+ SW8gg0fSP82S/PdOk2qUqqJp43CdBVKB9kWdiJJpN8PDOvj1
+X-Received: by 2002:a17:907:3890:b0:bd3:1f67:1e10 with SMTP id
+ a640c23a62f3a-bd51793130dmr1048916966b.40.1779163228176; Mon, 18 May 2026
+ 21:00:28 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260512032926.1978818-1-daniel.barboza@oss.qualcomm.com>
- <20260512032926.1978818-7-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20260512032926.1978818-7-daniel.barboza@oss.qualcomm.com>
+ <20260512032926.1978818-8-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260512032926.1978818-8-daniel.barboza@oss.qualcomm.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 19 May 2026 13:59:12 +1000
-X-Gm-Features: AVHnY4KOWHeExzQIyBCMiODTQfFqvZqjLJuk6IQkYFHk8mZCTkajJx8Ot4dqhWo
-Message-ID: <CAKmqyKOvYUhCNa705mex69_Jw4f_Xc0+XSJ7TZYgKe-HcHaCTQ@mail.gmail.com>
-Subject: Re: [PATCH v2 06/14] target/riscv/cpu.c: remove
- riscv_cpu_enable_named_feat()
+Date: Tue, 19 May 2026 14:00:01 +1000
+X-Gm-Features: AVHnY4KOTlLInWd1KLgkEHkEwiE_P58BjRYULWrWMfyGnMxYpfrJUdI5koJQG2E
+Message-ID: <CAKmqyKP5YAFr_npgJh0_018ixERYEdGMVjP8uLotc-D9F-3tBQ@mail.gmail.com>
+Subject: Re: [PATCH v2 07/14] target/riscv: remove riscv_cpu_named_features[]
 To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -119,15 +118,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 12, 2026 at 1:31=E2=80=AFPM Daniel Henrique Barboza
+On Tue, May 12, 2026 at 1:32=E2=80=AFPM Daniel Henrique Barboza
 <daniel.barboza@oss.qualcomm.com> wrote:
 >
-> Deprecate riscv_cpu_enable_named_feat() by creating implied rules for
-> 'sha' and 'ssstateen'.  'zic64' is always true given that our default
-> block size is set to 64.
->
-> With this change we homogeneize extension handling when enabling
-> profiles.
+> This array has no uses left.
 >
 > Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
@@ -136,122 +130,85 @@ Acked-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  target/riscv/cpu.c         | 25 ++++++++++++++++++++++--
->  target/riscv/tcg/tcg-cpu.c | 40 --------------------------------------
->  2 files changed, 23 insertions(+), 42 deletions(-)
+>  target/riscv/cpu.c         | 26 --------------------------
+>  target/riscv/cpu.h         |  1 -
+>  target/riscv/tcg/tcg-cpu.c |  4 ++--
+>  3 files changed, 2 insertions(+), 29 deletions(-)
 >
 > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 42555cb28f..047f81b163 100644
+> index 047f81b163..4940596ffa 100644
 > --- a/target/riscv/cpu.c
 > +++ b/target/riscv/cpu.c
-> @@ -2595,6 +2595,17 @@ static RISCVCPUImpliedExtsRule ZVKSG_IMPLIED =3D {
->      },
+> @@ -1407,32 +1407,6 @@ const RISCVCPUMultiExtConfig riscv_cpu_experimenta=
+l_exts[] =3D {
+>      { },
 >  };
 >
-> +static RISCVCPUImpliedExtsRule SHA_IMPLIED =3D {
-> +    .ext =3D CPU_CFG_OFFSET(ext_sha),
-> +    .implied_misa_exts =3D RVH,
-> +    .implied_multi_exts =3D {
-> +        CPU_CFG_OFFSET(ext_smstateen),
-> +        CPU_CFG_OFFSET(ext_ssstateen),
-> +
-> +        RISCV_IMPLIED_EXTS_RULE_END
-> +    },
-> +};
-> +
->  static RISCVCPUImpliedExtsRule SSCFG_IMPLIED =3D {
->      .ext =3D CPU_CFG_OFFSET(ext_ssccfg),
->      .implied_multi_exts =3D {
-> @@ -2643,6 +2654,15 @@ static RISCVCPUImpliedExtsRule SSCTR_IMPLIED =3D {
->      },
->  };
+> -/*
+> - * 'Named features' is the name we give to extensions that we
+> - * don't want to expose to users. They are either immutable
+> - * (always enabled/disable) or they'll vary depending on
+> - * the resulting CPU state.
+> - *
+> - * Some of them are always enabled depending on priv version
+> - * of the CPU and are declared directly in isa_edata_arr[].
+> - * The ones listed here have special checks during finalize()
+> - * time and require their own flags like regular extensions.
+> - * See riscv_cpu_update_named_features() for more info.
+> - */
+> -const RISCVCPUMultiExtConfig riscv_cpu_named_features[] =3D {
+> -    MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
+> -    MULTI_EXT_CFG_BOOL("ssstateen", ext_ssstateen, true),
+> -    MULTI_EXT_CFG_BOOL("sha", ext_sha, true),
+> -
+> -    /*
+> -     * 'ziccrse' has its own flag because the KVM driver
+> -     * wants to enable/disable it on its own accord.
+> -     */
+> -    MULTI_EXT_CFG_BOOL("ziccrse", ext_ziccrse, true),
+> -
+> -    { },
+> -};
+> -
+>  static void cpu_set_prop_err(RISCVCPU *cpu, const char *propname,
+>                               Error **errp)
+>  {
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 669735c5cd..46bc29d307 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -992,7 +992,6 @@ typedef struct RISCVCPUMultiExtConfig {
+>  extern const RISCVCPUMultiExtConfig riscv_cpu_extensions[];
+>  extern const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[];
+>  extern const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[];
+> -extern const RISCVCPUMultiExtConfig riscv_cpu_named_features[];
 >
-> +static RISCVCPUImpliedExtsRule SSSTATEEN_IMPLIED =3D {
-> +    .ext =3D CPU_CFG_OFFSET(ext_ssstateen),
-> +    .implied_multi_exts =3D {
-> +        CPU_CFG_OFFSET(ext_smstateen),
-> +
-> +        RISCV_IMPLIED_EXTS_RULE_END
-> +    },
-> +};
-> +
->  static RISCVCPUImpliedExtsRule ZVFBFA_IMPLIED =3D {
->      .ext =3D CPU_CFG_OFFSET(ext_zvfbfa),
->      .implied_multi_exts =3D {
-> @@ -2669,8 +2689,9 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_ru=
-les[] =3D {
->      &ZVFBFA_IMPLIED, &ZVFBFMIN_IMPLIED, &ZVFBFWMA_IMPLIED,
->      &ZVFH_IMPLIED, &ZVFHMIN_IMPLIED, &ZVKN_IMPLIED,
->      &ZVKNC_IMPLIED, &ZVKNG_IMPLIED, &ZVKNHB_IMPLIED,
-> -    &ZVKS_IMPLIED,  &ZVKSC_IMPLIED, &ZVKSG_IMPLIED, &SSCFG_IMPLIED,
-> -    &SUPM_IMPLIED, &SSPM_IMPLIED, &SMCTR_IMPLIED, &SSCTR_IMPLIED,
-> +    &ZVKS_IMPLIED,  &ZVKSC_IMPLIED, &ZVKSG_IMPLIED, &SHA_IMPLIED,
-> +    &SSCFG_IMPLIED, &SUPM_IMPLIED, &SSPM_IMPLIED, &SMCTR_IMPLIED,
-> +    &SSCTR_IMPLIED, &SSSTATEEN_IMPLIED,
->      NULL
->  };
->
+>  typedef struct isa_ext_data {
+>      const char *name;
 > diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 704105d3df..c3e354b0ae 100644
+> index c3e354b0ae..8dea22bae5 100644
 > --- a/target/riscv/tcg/tcg-cpu.c
 > +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -322,42 +322,6 @@ static const char *cpu_cfg_ext_get_name(uint32_t ext=
-_offset)
->      g_assert_not_reached();
+> @@ -454,7 +454,7 @@ static void riscv_cpu_disable_priv_spec_isa_exts(RISC=
+VCPU *cpu)
+>      }
 >  }
 >
-> -static bool cpu_cfg_offset_is_named_feat(uint32_t ext_offset)
-> -{
-> -    const RISCVCPUMultiExtConfig *feat;
-> -
-> -    for (feat =3D riscv_cpu_named_features; feat->name !=3D NULL; feat++=
-) {
-> -        if (feat->offset =3D=3D ext_offset) {
-> -            return true;
-> -        }
-> -    }
-> -
-> -    return false;
-> -}
-> -
-> -static void riscv_cpu_enable_named_feat(RISCVCPU *cpu, uint32_t feat_off=
-set)
-> -{
-> -     /*
-> -      * All other named features are already enabled
-> -      * in riscv_tcg_cpu_instance_init().
-> -      */
-> -    switch (feat_offset) {
-> -    case CPU_CFG_OFFSET(ext_zic64b):
-> -        cpu->cfg.cbom_blocksize =3D 64;
-> -        cpu->cfg.cbop_blocksize =3D 64;
-> -        cpu->cfg.cboz_blocksize =3D 64;
-> -        break;
-> -    case CPU_CFG_OFFSET(ext_sha):
-> -        if (!cpu_misa_ext_is_user_set(RVH)) {
-> -            riscv_cpu_write_misa_bit(cpu, RVH, true);
-> -        }
-> -        /* fallthrough */
-> -    case CPU_CFG_OFFSET(ext_ssstateen):
-> -        cpu->cfg.ext_smstateen =3D true;
-> -        break;
-> -    }
-> -}
-> -
->  static void cpu_bump_multi_ext_priv_ver(CPURISCVState *env,
->                                          uint32_t ext_offset)
+> -static void riscv_cpu_update_named_features(RISCVCPU *cpu)
+> +static void riscv_cpu_update_cfg(RISCVCPU *cpu)
 >  {
-> @@ -1327,10 +1291,6 @@ static void riscv_cpu_set_profile(RISCVCPU *cpu,
->          ext_offset =3D profile->ext_offsets[i];
+>      if (cpu->env.priv_ver >=3D PRIV_VERSION_1_11_0) {
+>          cpu->cfg.has_priv_1_11 =3D true;
+> @@ -1181,7 +1181,7 @@ void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu,=
+ Error **errp)
+>          return;
+>      }
 >
->          if (profile->enabled) {
-> -            if (cpu_cfg_offset_is_named_feat(ext_offset)) {
-> -                riscv_cpu_enable_named_feat(cpu, ext_offset);
-> -            }
-> -
->              cpu_bump_multi_ext_priv_ver(&cpu->env, ext_offset);
->          }
+> -    riscv_cpu_update_named_features(cpu);
+> +    riscv_cpu_update_cfg(cpu);
+>      riscv_cpu_validate_profiles(cpu);
 >
+>      if (cpu->cfg.ext_smepmp && !cpu->cfg.pmp) {
 > --
 > 2.43.0
 >
