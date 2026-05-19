@@ -4,69 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA2CBCD4F3C
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 17:07:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C04AACD4F5E
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 17:13:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPNrA-00080f-P9; Tue, 19 May 2026 13:03:48 -0400
+	id 1wPNzt-0000Sd-Ix; Tue, 19 May 2026 13:12:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wPNr7-0007yb-CI
- for qemu-devel@nongnu.org; Tue, 19 May 2026 13:03:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wPNr3-0004De-Sg
- for qemu-devel@nongnu.org; Tue, 19 May 2026 13:03:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779210220;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YoBzQot0sIcD2pxlSnw/1cyTfsK6JfUvPYD6dpUYLPY=;
- b=guxbeTc/cLLWhCkPYk5gtn/EyyWBeCzjgz6mSGKqEBjJJmbUPn5QzdQtvXR99t6JzHwVYi
- DJQQs6nfb7iAct6RQhlIID4d7mPXJUig/a5vX4x2nX1itW3/lINaFbsiFp3Yc2LmQKYePq
- 9dLZBim8MfGTuZg00/EGqda0zdcgz0s=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-207-yUXzXlhIOaGYexewPeBzqw-1; Tue,
- 19 May 2026 13:03:36 -0400
-X-MC-Unique: yUXzXlhIOaGYexewPeBzqw-1
-X-Mimecast-MFC-AGG-ID: yUXzXlhIOaGYexewPeBzqw_1779210215
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A849018002C7; Tue, 19 May 2026 17:03:35 +0000 (UTC)
-Received: from merkur.fritz.box (unknown [10.44.49.113])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 57FC91681; Tue, 19 May 2026 17:03:34 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com,
-	stefanha@redhat.com,
-	qemu-devel@nongnu.org
-Subject: [PULL 04/18] ide: Minimal fix for deadlock between TRIM and drain
-Date: Tue, 19 May 2026 19:03:03 +0200
-Message-ID: <20260519170317.345032-5-kwolf@redhat.com>
-In-Reply-To: <20260519170317.345032-1-kwolf@redhat.com>
-References: <20260519170317.345032-1-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPNzr-0000SL-I1
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 13:12:47 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPNzp-0007IQ-82
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 13:12:47 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-49021532ebdso8594875e9.2
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 10:12:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779210763; x=1779815563; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=GDjhGIy/c2r4F5F7g9Y51GerqpJnwxS78M4iQL4vOIA=;
+ b=m2cnAPS8QBdfQJ+Sc6L4TLJFvoU6Da1Q3tu+14m1kd5tpXT2JqZkpGQEc68QnU27WG
+ lU4WbDP1+H180czxOIR1J61yw9c/rUaSCtyUPHvUybSWu2+qefgrWInEemuq/JE9Rf7a
+ PwMf42aPqXhpLh7rRj+pS83naKtj8o0H73VfdoXXuTh86w8jIfJYUBp+qn2cZYmwsZlu
+ msQwHm1SMWnvvuK4CRpcXEYtf88HgZOU19b24gQxSMre0O0mns0BsfYydrAib3k3fhLH
+ V3wM69CS4bDDm2IvC5ili65kpF5IfHyr+6DuY7c73e9QfxkRwLxlz8tzvXx7KMSO5/8W
+ GI0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779210763; x=1779815563;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GDjhGIy/c2r4F5F7g9Y51GerqpJnwxS78M4iQL4vOIA=;
+ b=Wk9luPrPSL+YXvl1Q/3NEhXHKD36A1K0S+L/HUJtcQc619dCB7X6adFmN4kb+NWN3L
+ 1mCEBa1D8QEcSO5m2D8Qy+9a1Jhv4wHDpoHPujloyd7f03iSyNhsEhIE9n11GAghJiVB
+ 8WX4z7xTM0dpncm8FOXB0HKRlkTOfLfvSCEkk6Y4s0tLexAx5XmIHkF6jAqb/sQZdmVw
+ 0nBPEPeKnEvx6VJ3Sz9ZQkg+hPA5oF9OVYjmZtwOqu9ijFeNTIOn8I18cnnt5TR4rkXa
+ ybl+iofqZOUcBU5pImh57rF0NgageVt1GGlpEtsOZfGLFTvBjyWHzVCEZa08umUxmf0D
+ s3gw==
+X-Gm-Message-State: AOJu0YzMMzq/ZmQ9NnKDK8YtA27OVXNxaieumWsr9bxhjyyV+647dgGp
+ 8M7z7buNYiw1WVp0aiBtfGBk3IA3YKUGqJbq6QIRnmCVSIECVKzDEG5xRMdynvHuvK6EKeQBR9Q
+ /LCnvRJQ=
+X-Gm-Gg: Acq92OGgiVR4XKLnhBPh6oj6Y3LQo0TvFLVaBd+xECv8pRt7X0+5aZiyTagIOuDSeld
+ /dpPm1OZ725rhWL/rg5d2b39k9OSoCWzd7Tm1zF8TzHcgOf09zME8/nG0u9SdSA4RNdbSOCt0ot
+ 4G0hbVnUM7V6dIzJHrKnoRUPJ9hUWbow3GosUCQV+XjAhhnL9hNse2EtOvZte804Ud2vJaBdhRY
+ WoKKd8Vx/2lCfk6m6y8rO+HhAC7uEwpiHhgBZpdngITSsQa16yKq2YVusIltWReCpZrbMLAJvl3
+ 2yhASLWq4Brq8xvjaqt7/YCdKWoH/XyUKhzmJ3On3RLN41GMa7SR4iDf3UzQfeqtMKFfobJ5uMv
+ EorcsF20858Kp+ykwBpYMMinb0Z4m88q/aSkdfU1ti38Vk29AL4pLVtsUtYwpTkD2SGu2ZCGcy3
+ dYg1ilJ3DRNpeJe7Nj5ubI36n2JTJ7PwvbdOvmkejjhu4ocdNQIV2siMewCo9AWfPHQZv/x0jX
+X-Received: by 2002:a05:600c:c10b:b0:489:1cd2:610a with SMTP id
+ 5b1f17b1804b1-48fe60d55c4mr224043335e9.9.1779210762713; 
+ Tue, 19 May 2026 10:12:42 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45da0a1aeafsm49522343f8f.23.2026.05.19.10.12.41
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 19 May 2026 10:12:41 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org
+Subject: [PATCH v2 0/4] buildsys: Stop checking for ESA/390 host
+Date: Tue, 19 May 2026 19:12:36 +0200
+Message-ID: <20260519171240.97420-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,130 +97,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The implementation of TRIM in IDE can chain multiple discard requests
-and uses blk_inc/dec_in_flight() to make sure that the whole TRIM
-operation has completed when the device needs to be quiescent (e.g. for
-the drain when performing an IDE reset, it would be bad if an IDE
-request like TRIM were still in flight).
+- Fix MAINTAINERS entries
+- Remove s390 check in ./configure
+- Replace __s390__ -> __s390x__
 
-The problem is that each drain request calls blk_wait_while_drained()
-and when draining, it waits until the drained section ends. At the same
-time, drain_begin can only return if the whole TRIM operation has
-completed. This is a classic deadlock.
+Philippe Mathieu-Daudé (4):
+  MAINTAINERS: Fix s390x storage key/attribute device paths
+  MAINTAINERS: Fix tcg/s390x/ path
+  buildsys: Stop checking for ESA/390 host
+  tests/tcg: Explicitly check for 64-bit z/Architecture
 
-Use blk_co_start/end_request() and BDRV_REQ_NO_QUEUE to avoid the
-problem. This requires moving the TRIM state machine to a coroutine.
-This commit does the minimal conversion so that we do have a coroutine
-that works for the fix, but it still looks much like a callback-based
-implementation. This will be cleaned up in the next patch.
+ MAINTAINERS                    |  6 +++---
+ configure                      | 12 ++----------
+ include/qemu/cacheflush.h      |  2 +-
+ include/qemu/timer.h           |  2 +-
+ tests/tcg/multiarch/nop_func.h |  2 +-
+ block/file-posix.c             |  2 +-
+ disas/disas-host.c             |  2 +-
+ util/cacheflush.c              |  2 +-
+ 8 files changed, 11 insertions(+), 19 deletions(-)
 
-Cc: qemu-stable@nongnu.org
-Fixes: 7e5cdb345f77 ('ide: Increment BB in-flight counter for TRIM BH')
-Buglink: https://redhat.atlassian.net/browse/RHEL-121686
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260421161132.99878-5-kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- hw/ide/core.c | 37 ++++++++++++++++++-------------------
- 1 file changed, 18 insertions(+), 19 deletions(-)
-
-diff --git a/hw/ide/core.c b/hw/ide/core.c
-index 7a15d6cac9b..48359c934c1 100644
---- a/hw/ide/core.c
-+++ b/hw/ide/core.c
-@@ -420,7 +420,6 @@ typedef struct TrimAIOCB {
-     QEMUBH *bh;
-     int ret;
-     QEMUIOVector *qiov;
--    BlockAIOCB *aiocb;
-     int i, j;
- } TrimAIOCB;
- 
-@@ -433,11 +432,6 @@ static void trim_aio_cancel(BlockAIOCB *acb)
-     iocb->i = (iocb->qiov->iov[iocb->j].iov_len / 8) - 1;
- 
-     iocb->ret = -ECANCELED;
--
--    if (iocb->aiocb) {
--        blk_aio_cancel_async(iocb->aiocb);
--        iocb->aiocb = NULL;
--    }
- }
- 
- static const AIOCBInfo trim_aiocb_info = {
-@@ -456,15 +450,20 @@ static void ide_trim_bh_cb(void *opaque)
-     iocb->bh = NULL;
-     qemu_aio_unref(iocb);
- 
--    /* Paired with an increment in ide_issue_trim() */
--    blk_dec_in_flight(blk);
-+    /* Paired with blk_co_start_request in ide_trim_co_entry() */
-+    blk_end_request(blk);
- }
- 
--static void ide_issue_trim_cb(void *opaque, int ret)
-+static void coroutine_fn ide_trim_co_entry(void *opaque)
- {
-     TrimAIOCB *iocb = opaque;
-     IDEState *s = iocb->s;
-+    int ret = 0;
-+
-+    /* Paired with blk_end_request in ide_trim_bh_cb() */
-+    blk_co_start_request(s->blk);
- 
-+loop:
-     if (iocb->i >= 0) {
-         if (ret >= 0) {
-             block_acct_done(blk_get_stats(s->blk), &s->acct);
-@@ -499,11 +498,11 @@ static void ide_issue_trim_cb(void *opaque, int ret)
-                                  count << BDRV_SECTOR_BITS, BLOCK_ACCT_UNMAP);
- 
-                 /* Got an entry! Submit and exit.  */
--                iocb->aiocb = blk_aio_pdiscard(s->blk,
--                                               sector << BDRV_SECTOR_BITS,
--                                               count << BDRV_SECTOR_BITS,
--                                               ide_issue_trim_cb, opaque);
--                return;
-+                ret = blk_co_pdiscard(s->blk,
-+                                      sector << BDRV_SECTOR_BITS,
-+                                      count << BDRV_SECTOR_BITS,
-+                                      BDRV_REQ_NO_QUEUE);
-+                goto loop;
-             }
- 
-             iocb->j++;
-@@ -514,7 +513,6 @@ static void ide_issue_trim_cb(void *opaque, int ret)
-     }
- 
- done:
--    iocb->aiocb = NULL;
-     if (iocb->bh) {
-         replay_bh_schedule_event(iocb->bh);
-     }
-@@ -527,9 +525,7 @@ BlockAIOCB *ide_issue_trim(
-     IDEState *s = opaque;
-     IDEDevice *dev = s->unit ? s->bus->slave : s->bus->master;
-     TrimAIOCB *iocb;
--
--    /* Paired with a decrement in ide_trim_bh_cb() */
--    blk_inc_in_flight(s->blk);
-+    Coroutine *co;
- 
-     iocb = blk_aio_get(&trim_aiocb_info, s->blk, cb, cb_opaque);
-     iocb->s = s;
-@@ -539,7 +535,10 @@ BlockAIOCB *ide_issue_trim(
-     iocb->qiov = qiov;
-     iocb->i = -1;
-     iocb->j = 0;
--    ide_issue_trim_cb(iocb, 0);
-+
-+    co = qemu_coroutine_create(ide_trim_co_entry, iocb);
-+    aio_co_enter(qemu_get_current_aio_context(), co);
-+
-     return &iocb->common;
- }
- 
 -- 
-2.54.0
+2.53.0
 
 
