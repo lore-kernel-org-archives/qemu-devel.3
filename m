@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79B64CD4F5B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA078CD4F3C
 	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 16:27:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPNDc-0006fS-2S; Tue, 19 May 2026 12:22:56 -0400
+	id 1wPNDu-0006ti-6B; Tue, 19 May 2026 12:23:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wPNDV-0006cm-75
- for qemu-devel@nongnu.org; Tue, 19 May 2026 12:22:50 -0400
-Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
+ id 1wPNDl-0006k5-2B
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 12:23:05 -0400
+Received: from mail-oa1-x2e.google.com ([2001:4860:4864:20::2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wPNDN-0000do-SI
- for qemu-devel@nongnu.org; Tue, 19 May 2026 12:22:48 -0400
-Received: by mail-oi1-x22f.google.com with SMTP id
- 5614622812f47-479d85152c9so1458588b6e.2
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 09:22:39 -0700 (PDT)
+ id 1wPNDj-0000nC-EM
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 12:23:04 -0400
+Received: by mail-oa1-x2e.google.com with SMTP id
+ 586e51a60fabf-43a1004f686so1443955fac.1
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 09:23:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779207759; x=1779812559; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779207782; x=1779812582; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=a0YJCz/+Op9OtTioAKAD1sf9gr9b0ChAoB2bIjmnyqQ=;
- b=peFP067+AfOR8qGHpUwg/DVG1Umr7y3wjxaeGoRclMYXwles3QbYSrzEpmT2yveGia
- 9cmXUBY967utT4BKcSWP04H8Qb8o0jlnIS+yB7Wwbj/FsukKEys7K+sqL4TXYpTXdxB+
- cRj76hdPj4ulisluYRamGkccL2q1P6fObFIK9fujkaJlWkQoKLcGO2RgozmXYYVkLSdj
- 4Le38l4OOkmCEDiqJLPpROtgpMhm0L1+dX2a0bcN+wU2brv02lS4Lk1IgREWShpkMZSh
- 8+JcI7uGyi32zzcVYC0AVK7iAeQJkGoRF/XkLlPY0h5G74cW6X8KKJBiHC0S4lrZSace
- 5+hg==
+ :reply-to; bh=l6iO5cCPGOYFPb3KVLbGSJQx31T0/SdzlJO8X3IH9zk=;
+ b=nm9fcCMQgELjaTJhSNFVDBZNF6i8DWmjsEVdlUyU7hkD9LP5opu+S7fruN8ELZeY1V
+ YUd0HbVcv+OAELP2vQoSMuu8slhHd70ItSTCa0NJY69+zYQ4PBPFBSRhqSusH+ZKOGH/
+ kZbAPRzbfJ7ICuANrKTOIO7AntMpVR7cN2/XJBUYefVO8rwiOsFUh/ZgeGv3jRD5a5vY
+ 89Tk4XBOt9uUMpguKtZkAeIBqGsFKv/HtkIdqi6gNRI3zkln19mkz0Yb/zC4Vp5B3dnc
+ sInjepD1hQe+WM8zsGllIORcJs+uMgXB0OUuoq1SxxcqAwDYBwu4JjblExT0Zoj8C2OY
+ gc9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779207759; x=1779812559;
+ d=1e100.net; s=20251104; t=1779207782; x=1779812582;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=a0YJCz/+Op9OtTioAKAD1sf9gr9b0ChAoB2bIjmnyqQ=;
- b=O2JkT31E+Ln41Ckcwp4NtQTEOrKvarrMT8AXuAfwT7rxSmxrYAIct+kU6EqO2nL3Q/
- CnGndlNdSfWoy2HiXdhrt2t/Mcs7mBMiKnskodZgjVvgF/IpvQqQCPZxCkmg30Xw8kB6
- ffSR8sn9cEzC3nrnaATtnvMd6qHsTWsSCiplCmh24cUtDphETnQrCIX2wOk04T1wsiLy
- VSgad594/XxenrNZtgRXQJtS0F4V/WmdtoRYfDB7lR11xxyT6EcUZhXQjef5f+ZV+AcO
- iRZbq+Y8f3KXHouNz4AziuAE3ZE8RcN1cv65yrA/6PLVUeB9EfofIw1K0pjs0yb9jCLO
- tFvg==
-X-Gm-Message-State: AOJu0YwyKXUPLekEptoFJ50T+uGnq1N/j/7+6w+7LeuCGU65Hx6/7Bth
- bNlndFP8nCaIwiCUqMFr5uhH+crbX83g5rEvidSL4MtT4XaokRKDXVdJ
-X-Gm-Gg: Acq92OEFqw1aLrYiCXzSTuV5RMK3kHbumizHvhYU68b4ZZeClm4wbeGqwS5VOv9LKS4
- u2BD6t58Y4pRf0X/X7k9IWoS1aLxHUYMX42Z6b3TGOtfkJzsKGjDZZzXOhyZNbgkvV4qt52lpup
- ZI43V9NlQn96QisayVQWJnFwUPqsI6Ycsy4uwBCOD1zgd0LUf9V1hWA+osfEq+cxaHMVKGzxtgI
- XjtMs7l0UGRqxBpmnonPoSQRRvxuUCeQJ9UkfpoJYuQCERtW2thb1CMuRahH7KnO6t5ZXOkVKqf
- 5nQ11gcBA4zoz5b25YHePFiTHUW79LboeJ9pmRJpR3D8tGFrod8Y67bbQ6+P5LP4MEUhvUA1fAu
- v/oV3fbCaBpmdl5hdnTANWlfMeHo0fLT69Ws1Bl+OkO6LC3JQAZIBIM2J+bAGidpAVk9+qVdCWI
- mNuEFL2cnpT5Y+/UIk1Z8qirET1r7qg8huO6nYqNomNCRsVc6S3d/hfTjc+mZYtLxvYZIAiVAdk
- tREc7i8oKJrQ690TY6U5tpcSrydl1ZpuCtSIDgQO8vIuWzgJCZW6ERgcen/51OHwGGV
-X-Received: by 2002:a05:6820:3087:b0:685:7d77:27 with SMTP id
- 006d021491bc7-69c9bfd47e6mr13111495eaf.33.1779207758850; 
- Tue, 19 May 2026 09:22:38 -0700 (PDT)
+ bh=l6iO5cCPGOYFPb3KVLbGSJQx31T0/SdzlJO8X3IH9zk=;
+ b=aH4yYpwk3IhN+Zc/SS14mRyG6xuBTwaVaoGJRY7XSPSJlnHrum37BSpHhO/OXENssZ
+ 4c2CiHYwsZJnO+aT95ntLbMGX934OZcdR6cC3ei0YnMA86ZGEwhs3HDuixm7eDodPE+i
+ XgPNTJJ9tDVZCZ5ksTq1We0+buOF5s3ONQ51+PWjKh8Z4ljKR+d2gJ0+95iTOP7ERm6s
+ duQV70MENJaI3iGIT5n+nOwVcsnNsyVU4TWMbdRZFG5jIuQjEf9p80KfFrR3eaHTp+N8
+ TBV2F2i3Nd0O4K9fg4k1JAcIpQZ56bKA6gv9fVy+gzxc2WjrsDGtUFw+YwpTdJfa5AED
+ ZtHw==
+X-Gm-Message-State: AOJu0YzaF0nQ2PHhrNQxIiqoOfvGAGRMbehhD/QL4m6Ccak+7/VzNTQJ
+ HFCX/jSVDwU8NDlOzsD+PAW19LS6T8WJE9xjHc0afM8zuqnBX+wU7wwF
+X-Gm-Gg: Acq92OGWoerluON/Y+C6jY0IY/AE1I4rmDXWBhzhoJxuzYCKDxgRyn3TTaaT62L+q2d
+ 2qyl7Q1H5pe63gp5z3mfpM5+G8hYzYHFY5UEthJ0zqmm9IQTr1XohGdZrluzF6BbRs35yu0dSSp
+ WKq8oPdvndMNkcLabdvG7nzen8R7H230PQ0Jz/F2NQJlbgJOMz3TFKszYNrm1D6qhI4rdDFuzKi
+ /t9ZMXPWSxABHJA5klh5qB/dxCSae1Vyk05ZaLF3Q4wcPJjfhnKmlNuLsrIhi+cnpwcqweh5Qth
+ fbZ1JJV0hnxYncC45snOUnlf5UIqjiQbv6nAkry4ztMyThbIpSHVzrE5CEk5pUVQQ4vhWyubdVf
+ U6whP1qms9KASzMUmebvoy/Hs4OxPQsWJnhfNbvUp+GmXdVwLjCykKSdxCoJSUqZpKHF9BSTLrn
+ VSi4HZUiSPlK8Gh63j4kYu0DoTQEpNmNNV3lNZvqoVJNflJ0DmT2bZJy1t9ul/nejxfv/9SLDur
+ jCy4zN7dNvKbPgcYiVHpLmVDm0NeZV2Npp7u5oFkYNkASeVo341/NrXp1uLQEc3E2Fm
+X-Received: by 2002:a05:6870:3264:b0:42c:1ba9:c1c1 with SMTP id
+ 586e51a60fabf-43a2d90ade6mr13318656fac.8.1779207782206; 
+ Tue, 19 May 2026 09:23:02 -0700 (PDT)
 Received: from mac.localdomain (184-96-146-19.hlrn.qwest.net. [184.96.146.19])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-43a95762ceasm7056296fac.13.2026.05.19.09.22.37
+ 586e51a60fabf-43a95762ceasm7056296fac.13.2026.05.19.09.23.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 May 2026 09:22:38 -0700 (PDT)
+ Tue, 19 May 2026 09:23:01 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Tue, 19 May 2026 10:22:06 -0600
-Subject: [PATCH v9 04/40] target/mips: fix Octeon arithmetic destination
- handling
+Date: Tue, 19 May 2026 10:22:29 -0600
+Subject: [PATCH v9 27/40] target/mips: add Octeon GFM COP2 helpers
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260519-mips-octeon-missing-insns-v2-v9-4-d7dd735ecddd@gmail.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260519-mips-octeon-missing-insns-v2-v9-27-d7dd735ecddd@gmail.com>
 References: <20260519-mips-octeon-missing-insns-v2-v9-0-d7dd735ecddd@gmail.com>
 In-Reply-To: <20260519-mips-octeon-missing-insns-v2-v9-0-d7dd735ecddd@gmail.com>
 To: qemu-devel@nongnu.org
@@ -85,8 +84,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>, 
  Paolo Bonzini <pbonzini@redhat.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
- envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x22f.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2e;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oa1-x2e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -110,69 +109,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-BADDU and DMUL write their results to rd, not rt.  Route writes through
-gen_store_gpr() so rd == $zero is handled consistently.
+Add helper support for the Octeon GFM carryless multiply selectors. This
+models the normal and reflected multiplication paths, including the
+XOR-and-multiply forms that update the result/input state used by Octeon
+crypto code.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Use QEMU's crypto/clmul helpers for the reflected 128-bit carryless
+multiply operation instead of carrying a target-local multiply loop.
+
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
-Changes v1 -> v2:
-  - Split the BADDU/DMUL destination handling fix out of the Octeon
-    arithmetic instruction patch.  (suggested by Philippe Mathieu-Daudé)
-
-Changes v2 -> v3:
-  - Remove the rd == $zero fast paths and let gen_store_gpr() discard
-    writes to $zero.  (suggested by Richard Henderson)
+Changes v8 -> v9:
+  - Split GFM selector operations into their own COP2 helper patch.
+  - Expose per-operation helpers instead of a generic selector helper.
+  - Add matching helper.h declarations with the helper implementation.
 ---
- target/mips/tcg/octeon_translate.c | 16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+ target/mips/helper.h            |  2 +
+ target/mips/tcg/octeon_crypto.c | 98 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 100 insertions(+)
 
-diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index e1f52d444a..4dd7626835 100644
---- a/target/mips/tcg/octeon_translate.c
-+++ b/target/mips/tcg/octeon_translate.c
-@@ -45,18 +45,14 @@ static bool trans_BADDU(DisasContext *ctx, arg_BADDU *a)
- {
-     TCGv_i64 t0, t1;
+diff --git a/target/mips/helper.h b/target/mips/helper.h
+index e802f50fd6..dac9dd8755 100644
+--- a/target/mips/helper.h
++++ b/target/mips/helper.h
+@@ -38,6 +38,8 @@ DEF_HELPER_2(octeon_cp2_mt_crc_write_dword, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_crc_write_var, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_crc_write_dword_reflect, void, env, i64)
+ DEF_HELPER_2(octeon_cp2_mt_crc_write_var_reflect, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_gfm_xormul1_reflect, void, env, i64)
++DEF_HELPER_2(octeon_cp2_mt_gfm_xormul1, void, env, i64)
  
--    if (a->rt == 0) {
--        /* nop */
--        return true;
--    }
--
-     t0 = tcg_temp_new_i64();
-     t1 = tcg_temp_new_i64();
-     gen_load_gpr(t0, a->rs);
-     gen_load_gpr(t1, a->rt);
+ /* microMIPS functions */
+ DEF_HELPER_4(lwm, void, env, tl, tl, i32)
+diff --git a/target/mips/tcg/octeon_crypto.c b/target/mips/tcg/octeon_crypto.c
+index b79ccdd162..7394108c54 100644
+--- a/target/mips/tcg/octeon_crypto.c
++++ b/target/mips/tcg/octeon_crypto.c
+@@ -94,10 +94,108 @@ static void octeon_crc_update_reflect(MIPSOcteonCryptoState *crypto,
  
-     tcg_gen_add_i64(t0, t0, t1);
--    tcg_gen_andi_i64(cpu_gpr[a->rd], t0, 0xff);
-+    tcg_gen_andi_i64(t0, t0, 0xff);
-+    gen_store_gpr(t0, a->rd);
-     return true;
+     octeon_crc_set_state_reflect(crypto, crc);
  }
- 
-@@ -64,17 +60,13 @@ static bool trans_DMUL(DisasContext *ctx, arg_DMUL *a)
++static uint64_t octeon_gfm_reduce64(Int128 product, uint8_t poly)
++{
++    uint64_t lo = int128_getlo(product);
++    uint64_t hi = int128_gethi(product);
++
++    while (hi) {
++        int bit = 63 - clz64(hi);
++        uint64_t shifted_poly = (uint64_t)poly << bit;
++
++        hi ^= 1ULL << bit;
++        lo ^= shifted_poly;
++        if (bit > 56) {
++            hi ^= (uint64_t)poly >> (64 - bit);
++        }
++    }
++
++    return lo;
++}
++
++static void octeon_gfm_mul64_uia2(const uint64_t x[2], const uint64_t y[2],
++                                  uint8_t poly, uint64_t out[2])
++{
++    uint64_t vx = revbit64(x[1]);
++    uint64_t vy = revbit64(y[0]);
++    Int128 product = clmul_64(vx, vy);
++    uint64_t res = octeon_gfm_reduce64(product, revbit32(poly) >> 24);
++
++    out[0] = 0;
++    out[1] = revbit64(res);
++}
++
++static void octeon_gfm_mul_reflect(MIPSOcteonCryptoState *crypto, uint64_t data)
++{
++    uint64_t in[2] = {
++        crypto->gfm_reflect_resinp[0] ^ crypto->gfm_reflect_xor0,
++        crypto->gfm_reflect_resinp[1] ^ data,
++    };
++
++    octeon_gfm_mul64_uia2(in, crypto->gfm_reflect_mul,
++                          crypto->gfm_poly, crypto->gfm_reflect_resinp);
++    crypto->gfm_reflect_xor0 = 0;
++}
++static void octeon_gfm_mul(const uint64_t x[2], const uint64_t y[2],
++                           uint16_t poly, uint64_t out[2])
++{
++    uint64_t zh = 0, zl = 0;
++    uint64_t vh = y[0], vl = y[1];
++    uint64_t rh = (uint64_t)poly << 48;
++    int i;
++
++    for (i = 0; i < 128; i++) {
++        bool bit;
++        bool lsb;
++
++        if (i < 64) {
++            bit = (x[0] >> (63 - i)) & 1;
++        } else {
++            bit = (x[1] >> (127 - i)) & 1;
++        }
++        if (bit) {
++            zh ^= vh;
++            zl ^= vl;
++        }
++
++        lsb = vl & 1;
++        vl = (vh << 63) | (vl >> 1);
++        vh >>= 1;
++        if (lsb) {
++            vh ^= rh;
++        }
++    }
++
++    out[0] = zh;
++    out[1] = zl;
++}
+ uint64_t helper_octeon_cp2_mf_crc_iv_reflect(CPUMIPSState *env)
  {
-     TCGv_i64 t0, t1;
- 
--    if (a->rt == 0) {
--        /* nop */
--        return true;
--    }
--
-     t0 = tcg_temp_new_i64();
-     t1 = tcg_temp_new_i64();
-     gen_load_gpr(t0, a->rs);
-     gen_load_gpr(t1, a->rt);
- 
--    tcg_gen_mul_i64(cpu_gpr[a->rd], t0, t1);
-+    tcg_gen_mul_i64(t0, t0, t1);
-+    gen_store_gpr(t0, a->rd);
-     return true;
+     return octeon_crc_reflect32_by_byte(env->octeon_crypto.crc_iv);
  }
- 
++void helper_octeon_cp2_mt_gfm_xormul1_reflect(CPUMIPSState *env,
++                                              uint64_t value)
++{
++    octeon_gfm_mul_reflect(&env->octeon_crypto, value);
++}
++
++void helper_octeon_cp2_mt_gfm_xormul1(CPUMIPSState *env, uint64_t value)
++{
++    MIPSOcteonCryptoState *crypto = &env->octeon_crypto;
++    uint64_t in[2] = {
++        crypto->gfm_resinp[0] ^ crypto->gfm_xor0,
++        crypto->gfm_resinp[1] ^ value,
++    };
++
++    if (crypto->gfm_poly <= 0xff && crypto->gfm_mul[1] == 0 && in[0] == 0) {
++        octeon_gfm_mul64_uia2(in, crypto->gfm_mul,
++                              crypto->gfm_poly, crypto->gfm_resinp);
++    } else {
++        octeon_gfm_mul(in, crypto->gfm_mul, crypto->gfm_poly,
++                       crypto->gfm_resinp);
++    }
++    crypto->gfm_xor0 = 0;
++}
+ void helper_octeon_cp2_mt_crc_write_iv_reflect(CPUMIPSState *env,
+                                                uint64_t value)
+ {
 
 -- 
 2.54.0
