@@ -4,55 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 206E2CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 02:47:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F774CD343F
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 02:47:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPATH-0002Kp-QZ; Mon, 18 May 2026 22:46:16 -0400
+	id 1wPATa-0002Mr-SY; Mon, 18 May 2026 22:46:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wPAT6-0002J1-Al; Mon, 18 May 2026 22:46:05 -0400
+ id 1wPAT9-0002KM-4h; Mon, 18 May 2026 22:46:07 -0400
 Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wPAT3-0000Vr-BL; Mon, 18 May 2026 22:46:03 -0400
+ id 1wPAT7-0000Vr-1n; Mon, 18 May 2026 22:46:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1779158761; x=1810694761;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=35EGuKaQjwDSwlM1QwxtIljDM26p2iqkf2VD11+8db4=;
- b=IvUH8EABqukmYPc8B9225g0sWSANxzZYX8F/TS//EWyF7QCd8MA/zMRi
- xmWQoeoRmnYZV7neuD6MOpb5STKTEmU9reFmV4KUlkruZe/wh0Ue4asM/
- lO3QNAnODh4cMicXic1E6II6YaPdq9vA/gbARKSErsUCdcQ/sLhJNGuMF
- Fy5WB3Xnap9YTra9DvvapFvlgqCQDuAyhg0DfEkw3aDWTJ6G3NY4KFPh5
- KGP2RrfzOgNzRGryyzPjUAVVCR+nCe7x2bMwOGrYJ9/+e4xxELM5HLVYO
- pvxa9pVZrqt9UP0ITMaRVGlwBtUaA8H1ql5fAP4noI2Xo1YTXENvsftb6 A==;
-X-CSE-ConnectionGUID: bURq3UUMSvyz1Etfl6ShvQ==
-X-CSE-MsgGUID: 0bDAleulQ8GysUJwtz2Q0g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11790"; a="79878340"
-X-IronPort-AV: E=Sophos;i="6.23,243,1770624000"; d="scan'208";a="79878340"
+ t=1779158765; x=1810694765;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=66BiGKeoqPdzkWk01n+msDTW9G8fXVqqceNjf47lShQ=;
+ b=BgeIlBbLOL5F8PSqGxDm8AJu9Mm8GXVqPOUeMw7LBWpbSWbbX1yzEoAD
+ JF96RAvPkkCi6tJZDDxE/029PXcreG3i66OOIZEkcL8eLziA+bthxj0RK
+ laNq+7K+w1KEiFydhT+5iQ73xxCBMYSnxyTIVFimLUw9RXJL300RU2n7s
+ fzF9v2DGaPRiSnCJZVgYb8i4I+Tj7hxa4h9L0KnmxJXPMCP9k0ZljTS3N
+ PIeA/UwHKsH5fBR9hhUxaSeo4Z4jSeOeQxc4F2gTLjrE4BXHmGYhgZbVB
+ kPO7ZYthn7rqCXVL6jyK/+Npu3mE1u0ESAbQhzIt9hkBTkcTmVZ5wTU1h g==;
+X-CSE-ConnectionGUID: yahjz80mR0ehPwU7yRz/wA==
+X-CSE-MsgGUID: 0CCXOCklTxawe54qAubs4w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11790"; a="79878355"
+X-IronPort-AV: E=Sophos;i="6.23,243,1770624000"; d="scan'208";a="79878355"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 May 2026 19:45:51 -0700
-X-CSE-ConnectionGUID: f+lnKwyRRICVXJqsXTy/Kg==
-X-CSE-MsgGUID: dLX6v0e5RCy5jqTqNpltVQ==
+ 18 May 2026 19:46:03 -0700
+X-CSE-ConnectionGUID: kYA+vntRS2qDfcMJHbz6YQ==
+X-CSE-MsgGUID: KlLYzBt1QqGx1iilXrz82g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,243,1770624000"; d="scan'208";a="239879535"
+X-IronPort-AV: E=Sophos;i="6.23,243,1770624000"; d="scan'208";a="239879565"
 Received: from junjie-desk-dev.bj.intel.com ([10.238.152.71])
  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 May 2026 19:45:49 -0700
+ 18 May 2026 19:46:01 -0700
 From: Junjie Cao <junjie.cao@intel.com>
 To: qemu-devel@nongnu.org
 Cc: balaton@eik.bme.hu, chad@jablonski.xyz, philmd@linaro.org, bea1e@proton.me,
  qemu-stable@nongnu.org, junjie.cao@intel.com
-Subject: [PATCH v2 0/2] hw/display/ati: fix HOST_DATA accumulator overflow and
- bpp==0 crashes
-Date: Tue, 19 May 2026 10:39:35 +0800
-Message-ID: <20260519023937.439077-1-junjie.cao@intel.com>
+Subject: [PATCH v2 1/2] hw/display/ati: reset host_data.next in write handler
+ after flush
+Date: Tue, 19 May 2026 10:39:36 +0800
+Message-ID: <20260519023937.439077-2-junjie.cao@intel.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260519023937.439077-1-junjie.cao@intel.com>
+References: <20260519023937.439077-1-junjie.cao@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.17; envelope-from=junjie.cao@intel.com;
@@ -79,30 +81,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Two guest-triggerable crashes in the ati-vga HOST_DATA blit path,
-independently found via fuzzing (generic-fuzz with ASan/UBSan).
+ati_host_data_flush() resets host_data.next only on its success path.
+When it returns early (unsupported bpp, direction, src_source, or
+src_datatype), next remains stale at >= 4. The next HOST_DATA write
+then stores a guest-controlled dword at acc[4+], overflowing the
+4-element accumulator array.
 
-Patch 1 fixes the heap-buffer-overflow: when ati_host_data_flush()
-returns early, host_data.next was not reset, causing subsequent
-HOST_DATA writes to index past acc[3]. The fix moves the reset into
-the write handler as suggested by Chad Jablonski in the v1 discussion.
+Fix this by resetting next unconditionally in the write handler after
+calling ati_host_data_flush() or ati_host_data_finish(), and removing
+the reset from inside ati_host_data_flush(). This ensures the write
+handler owns the full lifecycle of the accumulator index regardless of
+flush success or failure.
 
-Patch 2 fixes division-by-zero (SIGFPE) and g_assert_not_reached()
-when ati_bpp_from_datatype() returns 0 for invalid dp_datatype values.
-
-Based on Feifan Qian's v1 report and the subsequent design discussion
-between BALATON Zoltan and Chad Jablonski.
-
-v1: https://lore.kernel.org/qemu-devel/Czyl6yVfL6sHl_o1kRk8N_LpwXMMRVhO9vgz1qCVJFagn9D4nHSKuiux39iOLty0Q3acxQq_FeovPhTQvSKus2htwjI9lTajLZmqovr0Wxs=@proton.me/
-
-Junjie Cao (2):
-  hw/display/ati: reset host_data.next in write handler after flush
-  hw/display/ati: guard against zero bpp in ati_host_data_flush
-
+Reported-by: Feifan Qian <bea1e@proton.me>
+Resolves: https://lore.kernel.org/qemu-devel/Czyl6yVfL6sHl_o1kRk8N_LpwXMMRVhO9vgz1qCVJFagn9D4nHSKuiux39iOLty0Q3acxQq_FeovPhTQvSKus2htwjI9lTajLZmqovr0Wxs=@proton.me/
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+---
  hw/display/ati.c    | 2 ++
- hw/display/ati_2d.c | 6 +++++-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ hw/display/ati_2d.c | 1 -
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
+diff --git a/hw/display/ati.c b/hw/display/ati.c
+index d77589df67..db7e08a462 100644
+--- a/hw/display/ati.c
++++ b/hw/display/ati.c
+@@ -1034,8 +1034,10 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+         s->host_data.acc[s->host_data.next++] = data;
+         if (addr == HOST_DATA_LAST) {
+             ati_host_data_finish(s);
++            s->host_data.next = 0;
+         } else if (s->host_data.next >= 4) {
+             ati_host_data_flush(s);
++            s->host_data.next = 0;
+         }
+         break;
+     default:
+diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
+index 48498677c7..8ef82bb87f 100644
+--- a/hw/display/ati_2d.c
++++ b/hw/display/ati_2d.c
+@@ -452,7 +452,6 @@ bool ati_host_data_flush(ATIVGAState *s)
+     }
+ 
+     /* Track state of the overall blit for use by the next flush */
+-    s->host_data.next = 0;
+     s->host_data.row = row;
+     s->host_data.col = col;
+     if (s->host_data.row >= ctx.dst.height) {
 -- 
 2.43.0
 
