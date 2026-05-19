@@ -4,83 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 606C5CD5BA4
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 22:20:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15F43CD4F54
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 22:23:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPSnn-0000B6-KV; Tue, 19 May 2026 18:20:39 -0400
+	id 1wPSpw-0001bj-1p; Tue, 19 May 2026 18:22:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPSnl-0000Aj-Vr
- for qemu-devel@nongnu.org; Tue, 19 May 2026 18:20:38 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1wPSpt-0001bG-Nw
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 18:22:49 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPSnj-00029w-K5
- for qemu-devel@nongnu.org; Tue, 19 May 2026 18:20:37 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-82f8b60e485so1672076b3a.0
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 15:20:35 -0700 (PDT)
+ id 1wPSps-0002WS-C6
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 18:22:49 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-366375c4076so1491437a91.3
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 15:22:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779229234; x=1779834034; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779229367; x=1779834167; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=V2rSyFQh748Ywm44QylXBDDkn41JjDJxYqsWrIlMJUM=;
- b=EHQjUHoE/jWsiiDDrBtLIYmPEClUzhQ0pYVsTpP29TY6CX4uNtiWG9jJaPm9Z+pxYj
- LUNvj12CdL4UudThioYMQCRg4ST6/0dptdmU+ELsHwe1VPgymBqXAqmLr7HEqYIljEEi
- WS3RQB4Cjo22jjHdKooLOI18z9++bU6qW9lMDqx0ZZJikmG9pzddDFbN6ZfxDq3bzfA0
- +h0jtFLS7K4TXgzAoimxprz+oBCTV4t0ej+dY+uGXVeX4ERU+Bvza5xEndGb+lp4LZTi
- p2sGht6cscMbgQLGAgktey3eUK4PIZEXiZu6fR6k6CNF9PWZP5WAjt8QdAI54adEM07J
- MgZw==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=W1qCR3UPxl6dfcB9M70dN1HWicU2bvBBAylBEIcJk/o=;
+ b=D0tYPPuA9l00CsRzBugbnWOysHdQjO1tVbXmFmKJ5zhWiM7KN5nAJ18mC75li2P6+m
+ CCB0jTrw6g4KnyUkJ1sHwwJNZ2ot1A77+LYYFednVHWyITMePOXVGlCUvQ/vJql86mej
+ vNYd7kO1PB+vN/s00zMTRWoAmmFv5NP0hNVR8INdGwEy1Jjw2YJ2PmmOEQzKYLBd4X07
+ 3ybi6dG79nEkiI+H1kWEjFn9yDf/AlznyNABsbTsejeCk7nx+k94WPKlQIu9kkwLU/IG
+ te/u4CI6QzLLiW/iK5o6qYc1DA5ClY4EhzmzQB7lDxIcqJrCVTSg02WUXECBUgk2C85L
+ m99A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779229234; x=1779834034;
+ d=1e100.net; s=20251104; t=1779229367; x=1779834167;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=V2rSyFQh748Ywm44QylXBDDkn41JjDJxYqsWrIlMJUM=;
- b=Vh8KcCn09/fnoa/CJibn6r+Ix21x9YRualpfXvYqxu5ACf4XlOuChqf23XwQ3oLns9
- QBhPwcQen/k7mAEQmWEL/snhgnhxHSBxA0Rknwyb0dvz046uC+63iMoxJrYke2DD9vnd
- Z4cauTunBFB6o7PsTVro850MLx89UQVcplHSFIvV3zhueQOqX9eXsPq8xsMLjMxHsak8
- WBe1russMyiLF8Rd3p8PM+cZ9hL+IrSBNo1MdKVKa8/BDW0zAw6MLO8/OF/oDVMEbucG
- PFvRdhrcymjfC0HOJDFO5+bIvBRfA9O4ckUC0fy2HIS4PPvW+HDTXiTdF1e8Mdq46SZ4
- JcOg==
-X-Gm-Message-State: AOJu0YySJRGzzKN5NarVzQWftn+TJQD8ckW6qW1xeLZYqQsbpP0ildQA
- ETYU8O4/960boYPU5yLqz9KMhTpk4KzOnmb0YZn+c7VFtwLzeVuutFwPkivgSpAb2l36jygtFq+
- otZhuezk=
-X-Gm-Gg: Acq92OGYUe/UMy1X5LAP6cawQxtL/VjuGKNmYLHNkAWWxAW1a1mU8/wFSic6xmEeHbz
- O6HuCgUfGhKMEMDvzvBuzr9OewaLWCf8jmxxc1dYpe4N4fb7RxOwVHrsJXC3gMkKJVAYTLKOD20
- 5V3G3aU/FmS4M6o3LOcBv8rfbha6TvX3yg8NQAbzW9wXm9xWaWSGHjet9GXgCJy9qBQDvuKPtcz
- CgveWldSIJbrOktoT1VppiL0tJH4KaFLoOBDZ2TiN+JlxbsKS0x/1cYpZBAdZF6OpO/LSIxaUh0
- MT9ncANtzy5+uwikKs4q/+YWnFUGCtt7FC9sagwsPD5zQ0EsPR/wZ1qG1iZXj7r4Wtzg2QrH2Lk
- HBXwt3cRcd132376iMH0HKa/9RUhF98tmSnvmE5r9uGBXq5zPUOGrRnYMDTZvKe0JRg8aDrVDjB
- u/s4HRks8xlJIygYXfT86/dTCX+Vzx6xvrLvjZ
-X-Received: by 2002:a05:6a20:3d94:b0:3a3:602d:a0d8 with SMTP id
- adf61e73a8af0-3b22e7537fbmr23250984637.17.1779229233951; 
- Tue, 19 May 2026 15:20:33 -0700 (PDT)
+ bh=W1qCR3UPxl6dfcB9M70dN1HWicU2bvBBAylBEIcJk/o=;
+ b=kiDHri2irt0pHRPPtRVYv6kAG83aa5VM8EwB+Y+Z5yE4BItp5iwp00U2UPUbysdvLB
+ kB6y+UGfB8Eiyf3wyhDmosSxGnVS7bJvQu8YXndm0lTIiIaLL66n7aSfjZukRVqss+cW
+ eW8vJn00Zn9ETNuJdMTB4GgeiSnr8RIy+X0kgwZW5GREwCrMoq/WVw1SdonbKw2O7/Z+
+ okL5AO7fdffBUgVQtJzapnk3oV2O2Bv/kOz0Htjw3DB8GLNcmB7o9av/pcFt49exkMyl
+ id73rJPxq21ZrLGF2yUEdnzPruD+dpz7GOpSMyOKysZsVftkmGe0n47jTlcyNg/iDI8d
+ VuwQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8hQmGTvXIWvam/D/4rnohRZIpXF+VMLbq4WfHC3kaGSg4K6XIr3nqzYQXTeMDtORFoLZVNoWP//SGQ@nongnu.org
+X-Gm-Message-State: AOJu0YyYOeKE8tmX8DF/u4Ar2kl2xvn0m2o+DtH4yCw24P9JcyQdCn1u
+ Od5XTKkTxqZlAcZvc8HSQwQpCAAauoaLgjdPGv80IqMzfjY35Rkq65e/hhQXkEWJkC4=
+X-Gm-Gg: Acq92OERjyye7b2lNMrtILiSd8Cfl06mI1w8JbdaM9mOM6GMEOi/r0QqmlBj2H9sAu0
+ 4D6ugFnD11tTUX40banVvotuCFfTHuGk/wMvXvYBXOp6NdDLjpprIPqCzEuyt8hC0/AtwW76GfY
+ ZvQgbqm3oafI0DSsOqyq2A0+yjsI/K5vtB4Z6RQBEXtv36fzkh4sj72yWs3YmMeWvxIekuB0imr
+ TU/G98iRaJfBbSzm1UG3dPW25ym+HtnuuzMmY9lL6NrFhLDw+EYOuifLiF7r3Gu5t9w1v5jruBa
+ sw/FcD3S/1PsgjHadUcn8sBVHGkjBoyUEezE7mQj1m8fGkXo0Bbu52K0UL1tdcfj9FEC++x0owj
+ 8gflSBiSG9XDzQpgTFsnmHvy/OE+2easHpMu+Pz1GDz9TY0shrYf5JsDE6Ks0un5FuCD6h7jzTh
+ D7yArMYaXGVC4IBHG3oGuvkypGAZlwWgwcMSho
+X-Received: by 2002:a17:90b:3505:b0:368:9da3:c496 with SMTP id
+ 98e67ed59e1d1-36951ca7638mr21206807a91.24.1779229366554; 
+ Tue, 19 May 2026 15:22:46 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.142.33])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c82bb06268asm16695172a12.1.2026.05.19.15.20.33
- for <qemu-devel@nongnu.org>
+ 98e67ed59e1d1-3695124601asm15216167a91.2.2026.05.19.15.22.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 May 2026 15:20:33 -0700 (PDT)
-Message-ID: <55708026-fa8a-4a72-b613-3a8820d750c6@linaro.org>
-Date: Tue, 19 May 2026 15:20:32 -0700
+ Tue, 19 May 2026 15:22:46 -0700 (PDT)
+Message-ID: <bfecd168-8d23-4e94-bba0-4ab8361a0640@linaro.org>
+Date: Tue, 19 May 2026 15:22:44 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] disas/riscv.c: add 'cbo' insns to disassembler
-To: qemu-devel@nongnu.org
-References: <20260519204714.1376551-1-daniel.barboza@oss.qualcomm.com>
+Subject: Re: [PATCH] docs/devel/tcg-ops: Fix reStructuredText format
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+References: <20260519210019.11665-1-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260519204714.1376551-1-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260519210019.11665-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,101 +107,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/19/26 13:47, Daniel Henrique Barboza wrote:
-> We forgot to add 'cbo' insns to disas/riscv.c.  The result is that the
-> disassembler recognizes all of them as 'lq', an insn that happens to
-> share the same opcode space.
+On 5/19/26 14:00, Philippe Mathieu-Daudé wrote:
+> In the standard reStructuredText inline markup, italic
+> text is surrounded by one asterisk.
 > 
-> While we're at it reorder cbo_* entries in insn32.decode using opcode
-> order instead of insn name.
+> Fix incomplete style from commits 5e97a28a8b9 ("tcg: convert
+> tcg/README to rst") and 76f42780292 ("tcg: Add add/sub with
+> carry opcodes and infrastructure").
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3480
-> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   disas/riscv.c              | 29 ++++++++++++++++++++++++++++-
->   target/riscv/insn32.decode |  2 +-
->   2 files changed, 29 insertions(+), 2 deletions(-)
+>   docs/devel/tcg-ops.rst | 16 ++++++++--------
+>   1 file changed, 8 insertions(+), 8 deletions(-)
 
-As far as it goes,
+
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-However, I have long-standing nits:
-
-> 
-> diff --git a/disas/riscv.c b/disas/riscv.c
-> index d416a4d6b3..36609efdf5 100644
-> --- a/disas/riscv.c
-> +++ b/disas/riscv.c
-> @@ -985,6 +985,10 @@ typedef enum {
->       rv_op_ssamoswap_d = 953,
->       rv_op_c_sspush = 954,
->       rv_op_c_sspopchk = 955,
-> +    rv_op_cbo_inval = 956,
-> +    rv_op_cbo_clean = 957,
-> +    rv_op_cbo_flush = 958,
-> +    rv_op_cbo_zero = 959,
->   } rv_op;
->   
->   /* register names */
-> @@ -2255,6 +2259,10 @@ const rv_opcode_data rvi_opcode_data[] = {
->         rv_op_sspush, 0 },
->       { "c.sspopchk", rv_codec_cmop_ss, rv_fmt_rs1, NULL, rv_op_sspopchk,
->         rv_op_sspopchk, 0 },
-> +   { "cbo.inval", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
-> +   { "cbo.clean", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
-> +   { "cbo.flush", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
-> +   { "cbo.zero", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
->   };
-
-There's got to be a better way to structure this code so that you don't have a magic 
-correspondence between enumerators and array indexes.
-
->   
->   /* CSR names */
-> @@ -2876,7 +2884,26 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
->               switch ((inst >> 12) & 0b111) {
->               case 0: op = rv_op_fence; break;
->               case 1: op = rv_op_fence_i; break;
-> -            case 2: op = rv_op_lq; break;
-> +            case 2:
-> +               /*
-> +                * 'lq' shares the "(...) 010 ..... 0001111" opcode space
-> +                * with 'cbo' insns.  Check the next 5 bits to select
-> +                * what we want:
-> +                *
-> +                * cbo_inval  0000000 00000 ..... 010 00000 0001111
-> +                * cbo_clean  0000000 00001 ..... 010 00000 0001111
-> +                * cbo_flush  0000000 00010 ..... 010 00000 0001111
-> +                * cbo_zero   0000000 00100 ..... 010 00000 0001111
-> +                *
-> +                * Anything that doesn't match these will default to 'lq'.
-> +                */
-> +               switch ((inst >> 17) & 0b11111) {
-> +               case 0: op = rv_op_cbo_inval; break;
-
-Surely "return foo" would be easier than arranging to fall through all the way to the 
-bottom of the function, just to do
-
-     dec->op = op;
-
-with no return value.
-
-To my mind,
-
-     void (*decode_func)(rv_decode *, rv_isa);
-
-should return "const rv_opcode_data *", with NULL for unrecognized/illegal, so that each 
-opcode_data array need not be exported along with the decode function.
-
-Indeed, that means you need not have opcode_data arrays at all, and could write
-
-static const rv_op_cbo_inval = {
-     "cbo.inval", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0
-};
-
-     ...
-     case 0: return &rv_op_cbo_inval;
-
 
 r~
 
