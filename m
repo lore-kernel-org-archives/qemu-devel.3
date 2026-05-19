@@ -4,90 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 456B1CD4F4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 May 2026 21:57:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1909CD4F56
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 00:03:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wP5xU-0003Yy-69; Mon, 18 May 2026 17:57:08 -0400
+	id 1wP7vK-0003uc-Ui; Mon, 18 May 2026 20:03:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wP5xP-0003WU-7s
- for qemu-devel@nongnu.org; Mon, 18 May 2026 17:57:04 -0400
-Received: from mail-dy1-x1343.google.com ([2607:f8b0:4864:20::1343])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wP5xM-00029q-5W
- for qemu-devel@nongnu.org; Mon, 18 May 2026 17:57:02 -0400
-Received: by mail-dy1-x1343.google.com with SMTP id
- 5a478bee46e88-2f68f3b075fso10750814eec.0
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 14:56:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779141418; x=1779746218; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=VgCvIgz0Xr5F79lfOM3Nv4ex6/IWDLPZm/q336rWcm4=;
- b=mCbQ0RY+/hn+tazXCaS9q+o4p2AvqUsBM6uvacINhXoItC0XgJyE/ZxTKTEiJ++nQS
- TWhs1JaEkvMU0qChWSXY6NKgSmrj3yFMJXw95s3bbP5YhPWpj/JxzunSqs4ut1wV6MQP
- 7f8Ov3/7eNHW+tG1pWFoXPMNklhcwxW5C8WFzgx1zF3Z9J/UU8DGiXv/ocyBKxKw0WcD
- 273h4cublvhV3TF7hZf48YCnUrtf/WC3zbzpTRYfnugAOUHPTm1Yklap2dbZ1Z0Cn4mW
- zkLQE9RjBYmmHaxM6fM2oaBofKbbZshBW7OLcUyu1kF4142XEwppjeJI8EcneFi5mSTH
- pUCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779141418; x=1779746218;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VgCvIgz0Xr5F79lfOM3Nv4ex6/IWDLPZm/q336rWcm4=;
- b=LPwy067Fmc0c9t7hejIeYc1tqrQ/UtC0a6KTCepnVZW8NzExIDRm2AOuyW3LCEGzGz
- Poh7iEFJK7ByEh9+jhFLSva51XTrD3D//tRNKwacMpkHPtabqsMF+0133dpmWWpYvpfI
- a6GiCs8F5dflYvVwz/G2+pR05xmIzTf/wEGU/+ifDRfJZaqNUP3ooLi1xc/XTE3y4Mhp
- wCN+83nQI9f2nbKf76bxvXjWuFKamCXMUQhQds4v2F04oZ0HFU4iiCPYe/8LqigqenL7
- mO/NtfHiPv1FxhFPwJ2fPiMAlW0m+adZJfUI4EPHj0+k4w8S8pBDgW5MeIHxWORlkBvv
- w5bw==
-X-Gm-Message-State: AOJu0Yyy07iiKAzf807SxDxFQ6IMVA8cJ+SYs5EgmHlrBsfzVtYAh6V2
- Q/VN8tblDFRulXE1f5WSdzgcj/jS+DOZUVLF3gososIv5suKjniYympz
-X-Gm-Gg: Acq92OFfk1LrKTo7SJP2V+oIzEySoXZGFd9VN9ri1CDowjjRf/UGfU4RSMMbHQ4CWlH
- v2QKoxe6nm8EgyJot5MRjynKu8mddaSH0cilfDsWEnZx7ZI3kHSDW8JMb011kMBtVv98xBNvwQE
- NZyVIEdPkZIJSBL/JLyzuYn2uVDQ+c2Y5O9AAHJXiuC61dOsIH+SK1VIH//QnOGjWv44qoY6o1H
- v33U6tWkgKat/YDCpgnTyFFfJdOTDXJCUM/qoPwsMyHqmO8cIc4ImBuc9OaFRM6FBxgJudiT4ca
- WUtkXO3Ey08W8RuzhlrHwysHokzNwLXgMnjk++hk/eNwYUMLfj541VbqorUoLqPMMVnT/aEn4JU
- XIuMOKGrLA8Q5LnwfzskELYY58g0m6bxmIn67JB2wTIfFsFbHDUHzVmYnM1SVfOhFOIWMD0UbQZ
- D5xmtxHiQ+gl51cZ/6LI7l5cmzFiX/bAO/tnYlBEnrPjOiFGATzrLQgqXFRGM=
-X-Received: by 2002:a05:7301:6447:b0:2ed:6f94:9d9d with SMTP id
- 5a478bee46e88-3039816bacemr8082134eec.8.1779141418430; 
- Mon, 18 May 2026 14:56:58 -0700 (PDT)
-Received: from localhost ([64.186.250.142]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-302978afdd3sm14960297eec.29.2026.05.18.14.56.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 May 2026 14:56:58 -0700 (PDT)
-Date: Tue, 19 May 2026 05:56:55 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Jim Shu <jim.shu@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: Re: [PATCH 1/4] hw/intc: riscv_aplic: Fix level trigger IRQ in
- direct delivery mode
-Message-ID: <aguLERu7U_cWgVLK@ChaodeMBP.bbrouter>
-References: <20260428160103.3551125-1-jim.shu@sifive.com>
- <20260428160103.3551125-2-jim.shu@sifive.com>
+ (Exim 4.90_1) (envelope-from <pm_bounces@pm.mtasv.net>)
+ id 1wP7vI-0003uD-91
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 20:03:00 -0400
+Received: from mta210a-ord.mtasv.net ([104.245.209.210])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pm_bounces@pm.mtasv.net>)
+ id 1wP7vF-0002sg-Ms
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 20:02:59 -0400
+X-KumoRef: eyJfQF8iOiJcXF8vIiwicmVjaXBpZW50IjoicWVtdS1kZXZlbEBub25nbnUub3JnIn0=
+DKIM-Signature: v=1; a=rsa-sha256; d=pm.mtasv.net; s=pm20250806;
+ c=relaxed/relaxed; 
+ bh=VeFHp6FKvmaH2pBv5/p25VIf65/VpOb+0qoRGNbvAyY=;
+ h=from:to:subject:date:mime-version:content-type:sender:cc:date:message-id;
+ t=1779148976; x=1779753776;
+ b=FqlkeJScuBhTU6kt7/LFnmMPLUYgJLRZ6BtQQKdtI5NtMRKI/kicg6SUlMurzwIn+lYZRl2ST
+ C9pS2CV2wvpJQJLy+AWrmf4GMfVWe9PPwwJrzmsfdK6BnDZU12PoIr5WstOZKNIiWSc4v5ovNII
+ utVgQ7MePa34UVogQ0yiNgAq4evzkKTtWBY0aJQhTzjFGJjXOJZnT7AcpEKP8pFviMb1gfQm1E4
+ z1iYDv1WkABZ4WqDn+GUI/xw9pSe6H/VuP2cXvPCcV7+MqUywpPfkxr6HIybKs4fiQ/qsZBFgZz
+ TpdDNuRDx68jisPHcs5d5zjxh2txtKsYE08/h2Is+dPg==;
+Received: from ip-172-26-21-11.us-east-2.compute.internal (172.26.21.11)
+ by production-pmta-useast2.internal.postmarkapp.com (KumoMTA 10.97.240.249) 
+ with ESMTP id 16f209e3531611f1992c029aa6c00279 for <qemu-devel@nongnu.org>;
+ Tue, 19 May 2026 00:02:56 +0000
+From: SignKirigami <prcups@krgm.moe>
+Date: Tue, 19 May 2026 00:02:56 +0000
+Subject: [PATCH 0/4] target/loongarch: add LVZ support for TCG
+Message-Id: <28e575ca-c2bc-4ff5-b686-0459f743ec65@mtasv.net>
+To: qemu-devel@nongnu.org
+Cc: SignKirigami <prcups@krgm.moe>, Bibo Mao <maobibo@loongson.cn>,
+ xianglai li <lixianglai@loongson.cn>, Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+X-Mailer: git-send-email 2.52.0
+Feedback-ID: s9655927-_:s9655927:a251693:postmark
+X-Complaints-To: abuse@postmarkapp.com
+X-Job: 251693_9655927
+X-PM-Message-Id: 28e575ca-c2bc-4ff5-b686-0459f743ec65
+X-PM-RCPT: |bTF8MjUxNjkzfDk2NTU5Mjd8cWVtdS1kZXZlbEBub25nbnUub3Jn|
+X-PM-Message-Options: v1;
+ 1.3SM2p0lQzyFussJ4qnYt-g.ytOLMYT9GCjoMJEpVIO9y5_SPRy_0qKWVAkg8recux17dor26BIJe66uk834OHy0T5OEX60CtPGS99mpi89kXF6eJJ-ffBImm8h2c8KvywR3UDeRuRR_SRaKbIhwuC3KNbf4IuX71IVkwzPMAGgX0HsgXfL6d3cw_SeqBgyOzpqOIVWX4sot-jcPomjh46-V
+X-virtual-MTA: ord-104-245-209-210
+X-PM-MTA-Pool: transactional-2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260428160103.3551125-2-jim.shu@sifive.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1343;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1343.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=104.245.209.210;
+ envelope-from=pm_bounces@pm.mtasv.net; helo=mta210a-ord.mtasv.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,61 +76,50 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: prcups@krgm.moe
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 29, 2026 at 12:01:00AM +0800, Jim Shu wrote:
-> According to the AIA spec ch4.7 ("Precise effects on interrupt-pending
-> bits"), pending bit of APLIC should be set/cleared whenever the
-> rectified input value is high/low in the both level-trigger mode
-> and direct delivery mode.
-> 
-> Currently, QEMU APLIC only clears the pending bit when interrupt is
-> claimed in APLIC, but not clears it when the rectified input value is
-> low. (e.g. IRQ source signal is low in the LEVEL_HIGH/Level1 mode).
-> The software may receive an additional IRQ if the peripheral
-> triggers one after the software clears the APLIC IRQ but before it
-> clears the peripheral's IRQ.
-> 
-> Thus, we also clear the pending bit via the rectified input value in the
-> level-trigger mode.
-> 
-> This change doesn't affect MSI delivery mode. Calling
-> riscv_aplic_msi_irq_update() when IRQ pending is low will do nothing.
-> 
-> Signed-off-by: Jim Shu <jim.shu@sifive.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+This patch implements Loongson VirtualiZation (LVZ) extension support
+for LoongArch's TCG target. With this patch, it is now possible to
+start a nested KVM-accelerated virtual machine on a TCG-emulated virtual
+machine.
 
-Thanks,
-Chao
-> ---
->  hw/intc/riscv_aplic.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-> index 8f700431114..791e0b01b96 100644
-> --- a/hw/intc/riscv_aplic.c
-> +++ b/hw/intc/riscv_aplic.c
-> @@ -591,14 +591,14 @@ static void riscv_aplic_request(void *opaque, int irq, int level)
->          }
->          break;
->      case APLIC_SOURCECFG_SM_LEVEL_HIGH:
-> -        if ((level > 0) && !(state & APLIC_ISTATE_PENDING)) {
-> -            riscv_aplic_set_pending_raw(aplic, irq, true);
-> +        if ((level > 0) != !!(state & APLIC_ISTATE_PENDING)) {
-> +            riscv_aplic_set_pending_raw(aplic, irq, level > 0);
->              update = true;
->          }
->          break;
->      case APLIC_SOURCECFG_SM_LEVEL_LOW:
-> -        if ((level <= 0) && !(state & APLIC_ISTATE_PENDING)) {
-> -            riscv_aplic_set_pending_raw(aplic, irq, true);
-> +        if ((level <= 0) != !!(state & APLIC_ISTATE_PENDING)) {
-> +            riscv_aplic_set_pending_raw(aplic, irq, level <= 0);
->              update = true;
->          }
->          break;
-> -- 
-> 2.43.0
-> 
+Cc: Bibo Mao <maobibo@loongson.cn>
+Cc: xianglai li <lixianglai@loongson.cn>
+Signed-off-by: SignKirigami <prcups@krgm.moe>
+Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+
+SignKirigami (4):
+  target/loongarch: add LVZ CPU state and CSR metadata
+  target/loongarch: add LVZ guest runtime support
+  target/loongarch: translate LVZ CSR and trap instructions
+  target/loongarch: virtualize guest TLB and address translation
+
+ target/loongarch/cpu-csr.h                    |  42 ++
+ target/loongarch/cpu-mmu.h                    |  37 +-
+ target/loongarch/cpu.c                        | 132 ++++
+ target/loongarch/cpu.h                        | 125 +++-
+ target/loongarch/cpu_helper.c                 | 119 ++--
+ target/loongarch/csr.c                        | 122 ++++
+ target/loongarch/csr.h                        |   3 +
+ target/loongarch/disas.c                      |  10 +
+ target/loongarch/insns.decode                 |  17 +
+ target/loongarch/internals.h                  |   8 +-
+ target/loongarch/kvm/kvm.c                    |   1 +
+ target/loongarch/machine.c                    | 249 ++++---
+ target/loongarch/tcg/constant_timer.c         |  62 +-
+ target/loongarch/tcg/csr_helper.c             | 127 +++-
+ target/loongarch/tcg/helper.h                 |  30 +-
+ .../tcg/insn_trans/trans_privileged.c.inc     | 353 +++++++++-
+ target/loongarch/tcg/op_helper.c              |  83 ++-
+ target/loongarch/tcg/tcg_cpu.c                | 182 +++--
+ target/loongarch/tcg/tcg_loongarch.h          |   6 +-
+ target/loongarch/tcg/tlb_helper.c             | 629 +++++++++++++-----
+ target/loongarch/tcg/translate.c              |   6 +-
+ target/loongarch/translate.h                  |   2 +
+ 22 files changed, 1909 insertions(+), 436 deletions(-)
+
+--=20
+2.52.0
 
