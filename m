@@ -4,83 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76A96CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 14:46:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F4E9CD4F5B
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 14:46:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPLhq-0007nu-Im; Tue, 19 May 2026 10:46:02 -0400
+	id 1wPLhw-0007pP-Hi; Tue, 19 May 2026 10:46:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPLho-0007mt-8a
- for qemu-devel@nongnu.org; Tue, 19 May 2026 10:46:00 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPLhu-0007oT-F1
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 10:46:06 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPLhl-0007dS-UY
- for qemu-devel@nongnu.org; Tue, 19 May 2026 10:45:59 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-44a74032ff8so2589503f8f.1
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 07:45:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPLhs-0007ew-K8
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 10:46:05 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-488ad135063so29223125e9.0
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 07:46:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779201956; x=1779806756; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=mjEY0DrBky3++IIp6Xm8/05zq+4Q//C1o6qyRCvDS9w=;
- b=n4B7/28gQjRfve2JG/uIbkagz47hC4L7Vjj/8D5Pbw2eYoLjMg0luaASCjxiCsoStk
- Df27xUY9Crpqn3Bni1FKVk62u0uU8ARsQzaL42Xp5Sota/WrbuoApJZp8HW4DwPDG1nk
- Yv2linC30/KxXN3IYP+UHpPf5A/lJn1HcElAUJflwrO1kYB6nh2JJDDaCNhujgKauMZs
- D12r9HaRQyg9QikfiykcqFFsNDP4UhjvWdmLwf7ly7n8RijRfmbNZxNtXU36QoeQKjUh
- 1quYhpX+LF6LPknyN7PVkGjafg6Vha7P1HLVBXHquaMDvQIZxPcPGzj23N6Lz27qDuc2
- 2IiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779201956; x=1779806756;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1779201963; x=1779806763; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mjEY0DrBky3++IIp6Xm8/05zq+4Q//C1o6qyRCvDS9w=;
- b=NtMkLksO94qSQ1H6YTJkrAsmlwrvNEUI2Lh/zx98zSfcpozXf/fatfEIFWM5quStKZ
- rpMrrdNyRM6lzbujogm95D3EWK5v9GJltljCeIE5N1QwVIKgsr+tKOu64LJ9QlOkMPC4
- Ba2maIdVFoSF9euJwZ/vKZp9N4ABW0tmRPPWdopYm2YDmjwpCwMdGhczUoNRKXcPBChc
- HJ6gXeBqimXKUsY64wgwl8TlKtVyKk6gNdw+o1wmIx1mM9hrfPkZRFatlA+3OnCl1r+F
- w8gXCxWfiwuYyVomBn1tjPzXY/uarFfkDSaWT176F+QwM17eAXPW2cZKdix9StuRQoji
- Nyhw==
-X-Gm-Message-State: AOJu0YxY2LRS3UPhvmvR6PlQXpl2ttamTXPKN+2fAyRdZyNCV9/Dk+1L
- JukneuvceoZ5qPaAl0eRBRxf0Bk5LKlLnV6hDtSwK+XtkoGcvYJcdsG4b6Optw4geIT35SWcIC2
- 9FBL57yc=
-X-Gm-Gg: Acq92OHAuFiCmRV7fbLAkpShvT+KfN5dsQP+uiqSAVbMgtg8XOPyCeYqcVE55v0VYdc
- bPcmjoskeoZZbchIelhZXSMwQyvgIIoRt7KifuMSe37qNhYqlZyrWWK3G5wyUWgWcpTQzn1FReW
- chS9Go5e433tExTJrcS6Eu0OrxRUXsYY+cMt4M8+a3XIRpFdGvx01XBhGusL4xk0j8CJG5nIY9d
- kf3yayjE2ScvqHzhR9d0ys1xlxiWH70pxTZtvwSm6OGe9fVn5bDnFTXXQlV+nX2lJOqOm3VyPjO
- wDDW0CSIJH03F6gU6DxGixUVvJWORnwm4KWRrvEod2Fun3x1UMl/f/zrdB1IK2loTjosF6Ya3Zv
- E0kG4OUi+jPEfocZctjw/PlzFxKU4lNTTCw8alnXpkWnuUJsRXjaHh+MBR0Sc7CD37VvFozlauA
- /nqpm8iT6gk7B/niXaO2kT+8dLsMGk657ANG72/f7u1qFUYjtNyjdk9dG69CkPlbab4soodmcR
-X-Received: by 2002:a05:6000:1845:b0:43d:309b:9c4f with SMTP id
- ffacd0b85a97d-45e5c57d2fdmr32015944f8f.6.1779201955427; 
- Tue, 19 May 2026 07:45:55 -0700 (PDT)
+ bh=K1V+GWtucxSZl1YZ8nu1MtklisKojriGnpVCnzAvOg4=;
+ b=xkn6a+qV+avhcrRTRKNN2qMlXjRY/eh0qKNxbGbnrc6cVtskrcPAwuyAMu4PKqvIW2
+ VhjxYHY2n4mBuRNndvOP0toHcfZD6EY8ebYOG0F5Sdel7JWABQr8Q2iCbB4MdcRt2DB7
+ 8spTb5YuOGWEWZPvsRZ+lbGCiHIy0IreMRB82vuY3Yx8Odo/fukpax5YwIsR0p4TNeij
+ V6xWbkGuhdESDsML40vjBSqwHsaL9KQVT4xB66oPHIibtqJfvfNIx4TIcCvpOtutdeZH
+ SXSgs7IOu9/qaD9GWb4gbNsUEOe/McXmDjYOMs43T0OkS7+8RZWZQhdSs1yaKuV4LM2U
+ 1nWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779201963; x=1779806763;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=K1V+GWtucxSZl1YZ8nu1MtklisKojriGnpVCnzAvOg4=;
+ b=XMYDSLRDvQcG1tNYf7QPLJlwYvk8hjKouMp4nRiqMF1+eyYDBxUwFKU1sdGdZqP3qC
+ I5VIbZ+zoTDSuKaYxZizhnSaNoS0FtdvcMHx61KKcAGZHkmD/yfmGwH6K24Kx8RkFEAb
+ 88IdlbfsliUE/nDmzbynXmByuSPbYlRf5Jtl7rMh53zRUogHrZf2glJ3lKoelv4udlPc
+ 0O0ppsNLV9HrHTMXsLJFNoc2M25uPOmIBUN8d/aQ8VcTq6McFmT4oEdDu7MrGEbDhgUS
+ vkCGgQpHX1cOvFeVP9FaGCXpv1m0RgfHJCsxK1E6VWnY24/zT84iAsesjg2LNtkiCQPb
+ 9lKw==
+X-Gm-Message-State: AOJu0YzIKZDlOjc0JdwRvIXjpAksZA9rePgMSZQq88WfVTRhJ5Gc6sn3
+ 17k0Ev7QvxzjrLkZSZBOm7eCTErObkYwBYkCsHC23MulPWb89X108oLBA95WkYjFMjC0KsA7lQc
+ EP50LD/4=
+X-Gm-Gg: Acq92OFzkVIyKWglUuLp93L3qiK9FvzK11gpZULTc7HUMHeTOGU8XtHW2oKzlz0PkIZ
+ fcSWR+g+/P3fQHMuGMVmEPnFp1dqsCKAP/+g24uQrg99/lBZzh9mqxJBtmjN1ytHlmPvTXZIdCg
+ XX/X3xV0Pzj2IVdfWdPC7ZXqP/QbgHDo6Df1jZVQAKmKGp4Usy52AWoI7V5Fp7zFmvBazCK50Uw
+ /mbs0YdrC4Py6YU7rsb92efKZd15Ew1L+4VJ3P+iDSK/woc68XAKtGETA82i2NL9MOeXp3XkNnb
+ TU0acHgjEedQpi3lpiZoogtFCR6IlkXZyQsW+2CtC6LbAs8eO+3CGkNP4hPNznS5aMSKBbJc1bm
+ mxQAIjQDVYJpf2hJbP/NnGd9/kt4ZgRafYn0zMGP6Ew/83+p3LrnjvytlbVtNxic3zLMGFyMfk2
+ EBruEEs3/3Uv7LDpwsG4BxnMQ42nClNYG8qRlkzNkauL10TISaWo63aoumiyvPrPtFKUctAooi
+X-Received: by 2002:a05:600c:4fc9:b0:48a:5821:5ffc with SMTP id
+ 5b1f17b1804b1-48fe60e473bmr275437895e9.2.1779201962193; 
+ Tue, 19 May 2026 07:46:02 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da0fe13b4sm46621957f8f.28.2026.05.19.07.45.54
+ 5b1f17b1804b1-48feae166dasm124982975e9.9.2026.05.19.07.46.01
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 19 May 2026 07:45:54 -0700 (PDT)
+ Tue, 19 May 2026 07:46:01 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH v8 00/18] single-binary: Make hw/arm/ common
-Date: Tue, 19 May 2026 16:45:35 +0200
-Message-ID: <20260519144553.91483-1-philmd@linaro.org>
+Subject: [PATCH v8 01/18] tests/qtest: fix discarded const qualifier warning
+Date: Tue, 19 May 2026 16:45:36 +0200
+Message-ID: <20260519144553.91483-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260519144553.91483-1-philmd@linaro.org>
+References: <20260519144553.91483-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,81 +99,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Series fully reviewed.
+From: Matthew Penney <matt@matthewpenney.net>
 
-Since v7:
-- Rebased on top of 8d3e31c0d57 (IDAU interface)
+Modern compilers warn that the result of strstr() may discard
+const qualifiers when assigned to a non-const pointer.
 
-Since v6:
-- Do not initialize Aspeed CPU in SoC realize (cdrx)
+Make 'found' a const char * to fix the warning.
 
-Since v5:
-- Unify 'max' CPU type (rth, pm215)
+Signed-off-by: Matthew Penney <matt@matthewpenney.net>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Tested-by: Thomas Huth <thuth@redhat.com>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260514191844.105888-1-matt@matthewpenney.net>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ tests/qtest/libqtest.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Since v4:
-- Add DEFINE_MACHINE_WITH_INTERFACES (Zoltan)
-- Use GPtrArray for get_valid_cpu_type (Richard)
-- Define InterfaceInfo[] arrays (Richard)
-- Collect R-b tags
-
-Since v3:
-- QAPI structure renamed as QemuTargetInfo
-- MachineClass::get_valid_cpu_types() runtime
-- target_aarch64() checking SysEmuTarget value
-- Remove CONFIG_TCG #ifdef'ry in hw/arm/
-
-Since v2:
-- More comments from Pierrick addressed
-- Use GList to register valid CPUs list
-- Remove all TARGET_AARCH64 uses in hw/arm/
-
-Since v1:
-- Dropped unrelated / irrelevant patches
-- Addressed Pierrick comments
-- Added R-b tag
-- Only considering machines, not CPUs.
-
-Available here, based on my pending patch queue:
-https://gitlab.com/philmd/qemu/-/tags/single-binary-hw-arm-rfc-v5
-
-Matthew Penney (1):
-  tests/qtest: fix discarded const qualifier warning
-
-Philippe Mathieu-Daudé (17):
-  hw/arm/raspi: Initialize 64-bit CPU types during DeviceRealize()
-  hw/arm/raspi: Build objects once
-  hw/arm/aspeed: Do not realize 64-bit CPU types under QTest
-  hw/arm/aspeed: Build objects once
-  hw/arm/meson: Remove now unused arm_ss[] source set
-  target/arm: Introduce common system/user meson source set
-  target/arm: Build gdbstub64.o as common object
-  target/arm: Build cpu64.o as common object
-  target/arm: Extract common code related to 'max' CPU
-  target/arm: Use make_ccsidr(LEGACY) in 32 bit 'max' CPU type
-  target/arm: Implement DBGDEVID* registers in max AArch32 CPU
-  target/arm: Only set %kvm_target when KVM is enabled
-  target/arm: Factor aarch64_aa32_a57_init() out
-  target/arm: Re-use common aarch64_aa32_a57_init() helper
-  target/arm: Define 'max' CPU type in cpu-max.c
-  target/arm: Build cpu32-system.o as common object
-  target/arm: Build cpu-max.c once
-
- target/arm/internals.h                     |   2 +
- hw/arm/aspeed_ast27x0.c                    |  14 ++
- hw/arm/bcm2836.c                           |  14 +-
- hw/arm/raspi.c                             |   4 -
- target/arm/cpu-max.c                       | 241 +++++++++++++++++++++
- target/arm/cpu64.c                         |  80 +------
- target/arm/tcg/{cpu32.c => cpu32-system.c} | 174 +--------------
- target/arm/tcg/stubs32.c                   |  10 +
- tests/qtest/libqtest.c                     |   2 +-
- hw/arm/meson.build                         |  15 +-
- target/arm/meson.build                     |  26 ++-
- target/arm/tcg/meson.build                 |  57 ++---
- 12 files changed, 319 insertions(+), 320 deletions(-)
- create mode 100644 target/arm/cpu-max.c
- rename target/arm/tcg/{cpu32.c => cpu32-system.c} (81%)
-
+diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+index bf9284b9a13..b1e06ea364e 100644
+--- a/tests/qtest/libqtest.c
++++ b/tests/qtest/libqtest.c
+@@ -2146,7 +2146,7 @@ bool mkimg(const char *file, const char *fmt, unsigned size_mb)
+ bool qtest_verbose(const char *domain)
+ {
+     const char *log = getenv("QTEST_LOG");
+-    char *found;
++    const char *found;
+ 
+     assert(domain);
+ 
 -- 
 2.53.0
 
