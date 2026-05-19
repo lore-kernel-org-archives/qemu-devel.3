@@ -4,101 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02AA6CD4F57
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 09:58:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76972CD4851
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 10:00:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPHDC-0005LT-1P; Tue, 19 May 2026 05:58:06 -0400
+	id 1wPHFR-0005oP-46; Tue, 19 May 2026 06:00:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wPHDA-0005LL-Pb
- for qemu-devel@nongnu.org; Tue, 19 May 2026 05:58:04 -0400
-Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wPHD9-0000tV-B0
- for qemu-devel@nongnu.org; Tue, 19 May 2026 05:58:04 -0400
-Received: by mail-yx1-xb132.google.com with SMTP id
- 956f58d0204a3-65c6a2158d3so2380286d50.3
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 02:58:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779184682; cv=none;
- d=google.com; s=arc-20240605;
- b=JMJGtvFgnl1aiIcb3+rQB5LdYzi7PZnwgDhbn/11uxgiod36zID1OaaVyumj0gqdsQ
- BddWpywTGglXxcaeDguO3A37q5oGry0fnXXkxkl7Tn/dpiEHCrKdBqgW7I246XmUera2
- 3RYPlG9yA4uXlMaH90GtiFqXiHw6tIkPK+e/rD3D3gXC33u+YfXd03YMi/gwp4/aShoL
- gJowioLiu4me7Xow1Vu3KutZHWsXTNMQl4riqXgFms715G8Mlz+FXWqxhBGy+uab+Yid
- 0DmQLrqtfbpoxnUAsO78JraT5EsZ91b5VrBDupLXcjvbJmHKTYDwI3rHlU+D3lS3BBF1
- E9ng==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Vj49m6GXllWJ3hKSXBhlJfr7cEZSDKGiNNG4XO6lpcs=;
- fh=GI2e/SBiq4MTIPc9mHou6R6WJe3VvhdDMWKbaXflkfU=;
- b=FWexkuo2+4UYu6W1ZYjg1GvbQT5qVFFtqunMmBqwuyTmh8ujuGhILo+fzN/FQilFpM
- gLlp0D8rZNhMyZ/3omyU06TrFnK+MyTxYSovE6Y3KrDPSktl9jvpBVcaYTIxa1iKBolB
- 5Tw03vrGv5d3oi6WmONyf3qyquVbeNxTbK9r7RuimJm/djS6VNmE6WiR4XCkBKI0/XfZ
- 1UiHDnO3PNRmc/qzyrfeRHC3VVbWqeAAmM58OjWvgk9qNdsR7UUMwLXNq9nZ2Sw6yKrO
- 8sEN8VkocHJfiaHNhi7EM+pe4ggZU5Wqoq6oT39quXxFY0rAt+HWkYqWAvdBMo+RUz0/
- +2pw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779184682; x=1779789482; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Vj49m6GXllWJ3hKSXBhlJfr7cEZSDKGiNNG4XO6lpcs=;
- b=SpEac8WppoS4a4RgdiIayd9lnpf4JK9qBObznK+5tVpJnkj99U9o9GuRszk1tidf1N
- SfoVjYp6U3Njqkntot6MMqY/EBxYCxcVlnHWsOzsvtbkII8C11u5q8YnXVJFXyCXDxYW
- UuQY99rHHNSq/0Az1w0VPY3KUmIjyCZir5NjY/h8N82eYZ5FTjcHbsxdi3S7eEzIrtSa
- MFxw3FuOYAy1l05TYu96F0jy4jSarPQq3853bL02KDwZLAnzStLoC5SpOkmVMzQX0RRd
- 9iUtyY/SMWVCh8pob8+mte5yydDHWUVGyf4YhXN1wuWkdKP8TcBrTrixzppzzy0KJqcN
- fiZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779184682; x=1779789482;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Vj49m6GXllWJ3hKSXBhlJfr7cEZSDKGiNNG4XO6lpcs=;
- b=k5Wzy42vUmYAPAJ3RcFSSMrUsN2Ob5tbDbvV+nOC46BUD7VyaPdkPZPAS5Cnj3zhMD
- Pd/aK90CNCxZpMQz3J3KygGqPIHQM2QXtRrfgmR26g0ix/+Imen5w7kh+4j64sgnCr7H
- WxySc9xmYDLoxBFc4zoIpoWgooyk9tKD5gMXwIXAoB57qJQQTmzVcG8Q1zojpqr98qKd
- /YsKfF13no8/On6eRd4T3OvVIDj/RJckU5y525cIp/Sq7WrHFaSaDdXsQ70T2BKb1o+x
- BzUMzTZ3AZNa96ptdq+csDetp5TBl7JE4UW5xgN1RyOiZPyYYrJnSskKnLL6wPtHQG9q
- vH4Q==
-X-Gm-Message-State: AOJu0YzSVN/ZCSAb2K2qFlnQsZ09iXIoB65rSkZkxm7ZLsbrTII/3U6D
- OhpEoFVG1E6uykAoCAf99KPbiIu3xv7IXzrnO5y7n3oEe3BgRezhbSTJ9AJ+iF4BrIDgljk5yPU
- zNeW6rhELXcepKrdaXF55Hme68AIgBk2lqRuhZwvuAQ==
-X-Gm-Gg: Acq92OHNyux77+rtlnobGCzUtrUvAAczLXOyktcOEaHjwCcxhByw94/pKI0pcqkkTO3
- kQv/dMhgIn0XZ17pZrB/sE1lqKW7txTwZVfduf/QPPdDlRkzoof/cZe6NxV87OlFdRCsScBsLgY
- r/c5l59bCz0f3bJK/CnHO8vIz7ZRBgX4J54q+ACDIqYCeVTyZGA9u5YdpgwFpnvT0G8gDfRanTz
- LVSURwyG2zg0AcZAbyYlnPgukya3VHrkC6fVmK9VjeG+iJYHKYosC4Kf3mbg745gdLkuTx8/hx1
- 0Hg4EhmAqXgXQXvLLVjqldNR2OYep7tyatH5s25vntO38f340F+K3i8v+F59Kll3U04=
-X-Received: by 2002:a05:690e:1403:b0:65e:39d1:d9f4 with SMTP id
- 956f58d0204a3-65e39d1e47amr12244582d50.9.1779184682217; Tue, 19 May 2026
- 02:58:02 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260517002550.321291-1-richard.henderson@linaro.org>
- <20260517002550.321291-12-richard.henderson@linaro.org>
-In-Reply-To: <20260517002550.321291-12-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 19 May 2026 10:57:51 +0100
-X-Gm-Features: AVHnY4Lc2eJAnG3su9YlMUbDtCOEG1ngIzRqBCaAjq8nA9ylGvqVM1uIA7-g57I
-Message-ID: <CAFEAcA9ni3_c83Ex+Oc73yTxvUm2GkF=CFcqf5gv4VhD3uTJ2A@mail.gmail.com>
-Subject: Re: [PATCH v4 11/12] fpu: Saturate the exponent in uncanon_normal
-To: Richard Henderson <richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPHFP-0005oG-2o
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 06:00:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPHFM-0001Xh-TN
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 06:00:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779184818;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ezwyf2U2w/a9iifOhqkpVGgHc4A1NvYnd1BK8rIE1xM=;
+ b=bbWwOlzQGB1JR4FHEAACth1YIF8iBToRP7f1tfNYa75uG55102A68Q8wv8qAbi2eUZ6qsa
+ DY+to287VYogJDQwhOj5KYDScFRw4HaTqkczexqZB5M6ky73M0Qi/X3vdm+QNFUYzDM7+P
+ T1HhpQP2iJqP0gobkft186PFf1oKWcM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-365-QL6YvjQsNW-BV5_uY1-SqQ-1; Tue,
+ 19 May 2026 06:00:17 -0400
+X-MC-Unique: QL6YvjQsNW-BV5_uY1-SqQ-1
+X-Mimecast-MFC-AGG-ID: QL6YvjQsNW-BV5_uY1-SqQ_1779184816
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3FDAD18002E3
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 10:00:16 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B3F7230001A2
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 10:00:15 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 53A5221E6A01; Tue, 19 May 2026 12:00:13 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
 Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Subject: Re: [PATCH v4 12/13] monitor: add 'info ramblock-attributes' command
+In-Reply-To: <CAJ+F1CKpZsWFZy9LSU8WCekNq3B_hWhfw4Xz1pyp2zkRzhPs_g@mail.gmail.com>
+ (=?utf-8?Q?=22Marc-Andr=C3=A9?= Lureau"'s message of "Mon, 18 May 2026
+ 12:27:02 +0400")
+References: <20260504-rdm5-v4-0-bdf61e57c1e1@redhat.com>
+ <20260504-rdm5-v4-12-bdf61e57c1e1@redhat.com>
+ <875x4lz0q6.fsf@pond.sub.org>
+ <CAJ+F1CKpZsWFZy9LSU8WCekNq3B_hWhfw4Xz1pyp2zkRzhPs_g@mail.gmail.com>
+Date: Tue, 19 May 2026 12:00:13 +0200
+Message-ID: <87bjebpvma.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,44 +91,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 17 May 2026 at 01:27, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Notice the conflict between saturation and rebias_overflow,
-> which should never happen.  Otherwise, saturate to INT32_MAX
-> and allow the usual overflow to max, infinity, or dnan.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  fpu/softfloat-parts.c.inc | 12 +++++++++++-
->  1 file changed, 11 insertions(+), 1 deletion(-)
->
-> diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-> index 45606f8402..914e588ec8 100644
-> --- a/fpu/softfloat-parts.c.inc
-> +++ b/fpu/softfloat-parts.c.inc
-> @@ -341,7 +341,17 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
->          g_assert_not_reached();
->      }
->
-> -    exp = p->exp + fmt->exp_bias;
-> +    /* Because exp_bias is positive, we can only overflow past INT_MAX. */
-> +    if (sadd32_overflow(p->exp, fmt->exp_bias, &exp)) {
-> +        /*
-> +         * rebias_overflow wants to compute a modulo exponent, which
-> +         * conflicts with saturation.  That said, saturation can only
-> +         * happen with scalbn, which is not a PowerPC operation.
-> +         */
-> +        assert(!s->rebias_overflow);
-> +        exp = INT32_MAX;
+Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
 
-As mentioned in the review comment on one of the Arm patches,
-I think that if we set exp to INT32_MAX here then the
-"round up" code below can increment it, overflowing to INT_MIN,
-and then we won't correctly spot that it is too large for the format.
+> Hi Markus
+>
+> I am not an expert in this area, and I am only working on this series
+> occasionally (too little activity to keep me fresh on the topic,
+> unfortunately). Bear with me.
 
-> +    }
+Sure!
 
-thanks
--- PMM
+> On Mon, May 18, 2026 at 10:34=E2=80=AFAM Markus Armbruster <armbru@redhat=
+.com> wrote:
+>>
+>> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
+>>
+>> > Add a new 'info ramblock-attributes' HMP command and the corresponding
+>> > 'x-query-ramblock-attributes' QMP command to display the shared/private
+>> > memory attributes for ram blocks.
+>> >
+>> > The QMP command returns structured data (RamBlockAttributesInfo list
+>> > with per-range shared/populated attributes), while HMP formats it for
+>> > human consumption.
+>> >
+>> > This is useful for debugging confidential guests (TDX, SNP) to inspect
+>> > which memory regions are shared vs private, and their population state
+>> > when a RamDiscardManager is present (e.g. virtio-mem).
+>> >
+>> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>> > ---
+>> >  qapi/machine.json             | 55 +++++++++++++++++++++++++++++++++
+>> >  include/monitor/hmp.h         |  1 +
+>> >  hw/core/machine-hmp-cmds.c    | 32 +++++++++++++++++++
+>> >  system/ram-block-attributes.c | 72 ++++++++++++++++++++++++++++++++++=
++++++++++
+>> >  hmp-commands-info.hx          | 13 ++++++++
+>> >  5 files changed, 173 insertions(+)
+>> >
+>> > diff --git a/qapi/machine.json b/qapi/machine.json
+>> > index 685e4e29b87..aac8a235cf6 100644
+>> > --- a/qapi/machine.json
+>> > +++ b/qapi/machine.json
+>>
+>> I have a few fairly ignorant questions.  They may or may not indicate a
+>> need for doc improvements.
+>>
+>> > @@ -1738,6 +1738,61 @@
+>> >    'returns': 'HumanReadableText',
+>> >    'features': [ 'unstable' ] }
+>> >
+>> > +##
+>> > +# @RamBlockAttributeRange:
+>> > +#
+>> > +# A contiguous range within a ram block with uniform attributes.
+>>
+>> RAM please.  More of the same below, not flagging it again.
+>>
+>
+> ok
+>
+>> > +#
+>> > +# @start: start offset in bytes within the ram block
+>> > +#
+>> > +# @length: length in bytes of the range
+>> > +#
+>> > +# @shared: true if the range is shared, false if private
+>>
+>> What does it mean for a range to be shared?
+>
+> commit 5d6483edaa9232d8f3709f68c8eab4bc2033fb70
+> "in the current context
+>     of RamDiscardManager for guest_memfd, the shared state is analogous to
+>     being populated, while the private state can be considered discarded =
+for
+>     simplicity. In the future, it would be more complicated if considering
+>     more states like private/shared/discarded at the same time."
+
+Thought and care went into that commit message.  Unfortunately, it's
+still greek to me.  Not criticism!  It needs to make sense to the people
+working in that area, and I'm not.
+
+Can we assume that anybody with a use for x-query-ramblock-attributes
+understands what "range is shared" means?
+
+>> > +#
+>> > +# @populated: true if the range is populated (only present when a
+>> > +#     RamDiscardManager is managing the block)
+>>
+>> What's a RamDiscardManager?
+>
+> commit 8947d7fc4e77d36fae44411b1b63c513863f89a7
+>  * A #RamDiscardManager coordinates which parts of specific RAM #MemoryRe=
+gion
+>  * regions are currently populated to be used/accessed by the VM, notifyi=
+ng
+>  * after parts were discarded (freeing up memory) and before parts will be
+>  * populated (consuming memory), to be used/accessed by the VM.
+>
+> In this series, RamDiscardManager learned to aggregate from multiple
+> sources (virtio-mem + RamBlockAttributes), so virtio-mem can work with
+> confidential VMs.
+
+Can we assume that anybody with a use for x-query-ramblock-attributes
+understands what "a RamDiscardManager is managing the block" means?
+
+I can't find anything about RamDiscardManager in docs.  Would it make
+sense to have something there, so we can point to it here?
+
+>> > +#
+>> > +# Since: 11.1
+>> > +##
+>> > +{ 'struct': 'RamBlockAttributeRange',
+>> > +  'data': { 'start': 'uint64',
+>> > +            'length': 'uint64',
+>> > +            'shared': 'bool',
+>> > +            '*populated': 'bool' } }
+>> > +
+>> > +##
+>> > +# @RamBlockAttributesInfo:
+>> > +#
+>> > +# Shared/private memory attributes for a ram block.
+>> > +#
+>> > +# @name: the ram block identifier
+>>
+>> Where do RAM block names come from?
+>
+> They are set during vmstate_register_ram(). "idstr" and "name" are
+> used interchangeably to refer to it.
+
+    void vmstate_register_ram(MemoryRegion *mr, DeviceState *dev)
+    {
+        qemu_ram_set_idstr(mr->ram_block,
+                           memory_region_name(mr), dev);
+        qemu_ram_set_migratable(mr->ram_block);
+        ram_block_add_cpr_blocker(mr->ram_block, &error_fatal);
+    }
+
+Looks like it's the name of the memory region associated with the RAM
+block.  Would "the memory region name" do?  Or would something like "the
+name of the RAM block's memory region" be better?
+
+>>
+>> > +#
+>> > +# @ranges: list of attribute ranges
+>> > +#
+>> > +# Since: 11.1
+>> > +##
+>> > +{ 'struct': 'RamBlockAttributesInfo',
+>> > +  'data': { 'name': 'str',
+>> > +            'ranges': [ 'RamBlockAttributeRange' ] } }
+>> > +
+>> > +##
+>> > +# @x-query-ramblock-attributes:
+>> > +#
+>> > +# Query ram block shared/private attributes.  This is useful
+>> > +# to debug confidential guests.
+>>
+>> What are RAM blocks?
+>
+> They are the actual host allocated memory backing guest RAM MemoryRegions
+
+How are RAM blocks related to memory regions?
+
+>> > +#
+>> > +# Features:
+>> > +#
+>> > +# @unstable: This command is meant for debugging.
+>> > +#
+>> > +# Returns: list of ram block attributes
+>> > +#
+>> > +# Since: 11.1
+>> > +##
+>> > +{ 'command': 'x-query-ramblock-attributes',
+>> > +  'returns': [ 'RamBlockAttributesInfo' ],
+>> > +  'features': [ 'unstable' ] }
+>> > +
+>> >  ##
+>> >  # @x-query-roms:
+>> >  #
+>>
+>> [...]
+
 
