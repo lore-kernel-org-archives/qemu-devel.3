@@ -4,119 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AC92CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 15:17:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31BD4CD4F5E
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 15:18:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPMAq-000255-2R; Tue, 19 May 2026 11:16:00 -0400
+	id 1wPMDP-0003EB-E4; Tue, 19 May 2026 11:18:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wPMAn-000243-HF
- for qemu-devel@nongnu.org; Tue, 19 May 2026 11:15:58 -0400
-Received: from 6.mo533.mail-out.ovh.net ([54.36.140.181])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wPMDH-0003DP-MS
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 11:18:32 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wPMAj-0006JT-Iy
- for qemu-devel@nongnu.org; Tue, 19 May 2026 11:15:56 -0400
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net [79.137.60.36])
- by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4gKdXh12N4z60vN;
- Tue, 19 May 2026 15:15:48 +0000 (UTC)
-Received: from director2.derp.mail-out.ovh.net
- (director2.derp.mail-out.ovh.net. [127.0.0.1])
- by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Tue, 19 May 2026 15:15:48 +0000 (UTC)
-Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.43.51])
- by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4gKdXh0Gbtz1xpM;
- Tue, 19 May 2026 15:15:48 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.3])
- (Authenticated sender: clg@kaod.org)
- by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 7245A203B54; 
- Tue, 19 May 2026 15:15:46 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-110S0041460b788-6db6-4bd6-be8c-bed2a4f627ce,
- A1C5BDF50025601E7F63D663DE463AD2E6007479) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <523acab2-a196-4d02-a3a1-0407dffdf41b@kaod.org>
-Date: Tue, 19 May 2026 17:15:45 +0200
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wPMDG-0006ts-2B
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 11:18:31 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id 3511543CB8;
+ Tue, 19 May 2026 15:18:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F1CC2BD01;
+ Tue, 19 May 2026 15:18:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1779203907;
+ bh=0lK4rt6DZc2SX44PTnp22WI+8M5zcVK19F5wYBI0ueA=;
+ h=From:To:Cc:Subject:Date:From;
+ b=KgR+gbHq2ppF8m83wLyNvHmBU5ZfUGS+dJpgX9yeXoFwBWg18X/HY81ARO0060WGn
+ 38NqV3R9gNUZNdWhlQyXgUvGD5PAyS3g/STgZKA8mMrKeJrRhic88udIuIxQxEM6OH
+ B76RIHV9XcBxhgBIi5oowtKc0wJTBB4AJnkJR3eGGdjMQw1JFZumaAqnlhH0u7G//f
+ SM0ltzgqJUJ3BXstXAnWo+kX3wAQUud5w9QrfECRTBKEeLjnVn7fy+as7WxyiaOJoB
+ Pa+1jJjuNskyqKccF2+Mjg5Jglh6jqFuerNRwQk4MPksIDEJ0DiVoiTivF/GVTiGId
+ FusnudNj6cpSQ==
+From: Helge Deller <deller@kernel.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>, deller@gmx.de,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 0/2] Hppa post v11 patches patches
+Date: Tue, 19 May 2026 17:18:21 +0200
+Message-ID: <20260519151823.13878-1-deller@kernel.org>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] hw/arm/aspeed: add anacapa-bmc machine
-To: William de Abreu Pinho <williamdapinho@gmail.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- qemu-arm@nongnu.org
-References: <20260519-add-anacapa-machine-v2-0-47027867d76a@gmail.com>
- <20260519-add-anacapa-machine-v2-2-47027867d76a@gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20260519-add-anacapa-machine-v2-2-47027867d76a@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 9125418747932879883
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGpAOdXOLUe8g7VrajSpqHXMImpdIvkjDaoXs98iFkJ1YoCF649LaLiZBJbipUbHVAaSBNV/ZByHxwpOz5pQtd0SeZYEdCixITWqan5HZ6NwUVKaj2GmtVlQG7aoszemMAu72hI4je4Hv8yPr4HTR6bi5ZngcsLLzrrdCg05EjUzueQJQ6ATR7eAW89WuCOkGaI4SubqfxNahY+ND/funlW+OKVl+X5vu1YvOSAZALUarAUwHB7JTAhUQK4/fFpnlTX4f2zBWG5JMaYWHu2Qz1o/Ney6mo1rof0RIgwLfGPuosOSN2v0CbvkiYrp6xrdt2fFpk5zmjhjwGuNrHJxmdskmpYIWLWMnyP+FeZxyRV91hCK7/VIai9gCJ6g3LUQrOib34ILWpKdJMEddS2Cx/cHJWW9WD1J3pS151uwXd9lAH2vprc04M+0jN7c97SRrpLNjTxAtG5hojUauy0q5aZY0ak8bjPrdtVFGe9x6vLedu+8QujnMmtLPF8REhNCSVQfCixrvmHZukUyVBaxtZ481xWAVqj7JEyw8ijS/rIS7tru8KxLfi7Lie16f2fWvrCSargHt680bbR16I8PsyR8KNi0jle26tmybYxFIuRKKzH08/npVoQ40rK1HfSRi7QdHQ8xyuTScrikXI4+7/fqSur7luZpZr0ahReVU48Kg
-DKIM-Signature: a=rsa-sha256; bh=M3fUuA9lejfJN1m8R3j6GEk91Lo6hI8Au8p79KNTomE=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1779203749; v=1;
- b=g5vCkxjVu4Luq4j4V3ooHsu9AvHi5xM5aOWMCTEFXXNa0jf81I1czLnwXpSmTXJcV2bCTom1
- Sf1kAZ8+aoRNnrxaCxsXgR7RRBhFE9Pv86ecYicCvpMxoQymE4N8n/fbfFi5nQm+rG78Mto46J6
- EZXUagg6PB1qDCTSzySeWgRrZKjzQbZ38BXh5xvgnPnyNCxGNWCttbP9OhFLT3vgvCxJ6mrrZ8q
- 9FoHnxIfBmuH5TjKLYIU0YFZiu4bCKdqukGCp3EofWm264Kzquqb5gT6k1Z3BVVMGLPreGQZtoW
- kxKGXF4uYoksFNUV3e6hW9TDDETSWvtjDfkCBjqV5bMAw==
-Received-SPF: pass client-ip=54.36.140.181; envelope-from=clg@kaod.org;
- helo=6.mo533.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
+ helo=sea.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -133,263 +67,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/19/26 12:36, William de Abreu Pinho wrote:
-> Add the Facebook Anacapa BMC machine.  The I2C topology is based on the
-> Linux kernel device tree [1].  Hardware strap register values are taken
-> from real hardware.
-> 
-> A functional test is included using the OpenBMC image built from [2],
-> similar to the tests for bletchley-bmc and catalina-bmc.
-> 
-> [1]: https://github.com/torvalds/linux/blob/76b4ec8efdc3887cdbf730da2e55881fc1a18770/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-anacapa.dts
-> [2]: https://github.com/openbmc/openbmc/commit/8e22df918eaaa5d83143471d24ef0eeb1c1e3c7c
-> 
-> Signed-off-by: William de Abreu Pinho <williamdapinho@gmail.com>
-> ---
->   hw/arm/aspeed_ast2600_anacapa.c             | 153 ++++++++++++++++++++++++++++
->   hw/arm/meson.build                          |   1 +
->   tests/functional/arm/meson.build            |   2 +
->   tests/functional/arm/test_aspeed_anacapa.py |  25 +++++
->   4 files changed, 181 insertions(+)
+From: Helge Deller <deller@gmx.de>
 
-I forgot to tell you to update docs/system/arm/aspeed.rst too.
+The following changes since commit 6d17fd91f6cf88df5cb2205e578640d72605cc43:
 
-With that,
+  Merge tag 'pull-nvme-20260518' of https://gitlab.com/birkelund/qemu into staging (2026-05-18 08:33:20 -0400)
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+are available in the Git repository at:
 
-> 
-> diff --git a/hw/arm/aspeed_ast2600_anacapa.c b/hw/arm/aspeed_ast2600_anacapa.c
-> new file mode 100644
-> index 0000000000..c24f00d44c
-> --- /dev/null
-> +++ b/hw/arm/aspeed_ast2600_anacapa.c
-> @@ -0,0 +1,153 @@
-> +/*
-> + * Facebook Anacapa
-> + *
-> + * Copyright (c) Meta Platforms, Inc. and affiliates.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "hw/arm/machines-qom.h"
-> +#include "hw/arm/aspeed.h"
-> +#include "hw/arm/aspeed_soc.h"
-> +#include "hw/i2c/i2c_mux_pca954x.h"
-> +#include "hw/gpio/pca9552.h"
-> +#include "hw/nvram/eeprom_at24c.h"
-> +
-> +/* Anacapa hardware value */
-> +#define ANACAPA_BMC_HW_STRAP1 0x00002002
-> +#define ANACAPA_BMC_HW_STRAP2 0x00000000
-> +#define ANACAPA_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
-> +
-> +static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
-> +{
-> +    /* Reference: aspeed-bmc-facebook-anacapa.dts */
-> +
-> +    AspeedSoCState *soc = bmc->soc;
-> +    I2CBus *i2c[16] = {};
-> +    I2CSlave *i2c_mux;
-> +
-> +    for (int i = 0; i < ARRAY_SIZE(i2c); i++) {
-> +        i2c[i] = aspeed_i2c_get_bus(&soc->i2c, i);
-> +    }
+  https://github.com/hdeller/qemu-hppa.git tags/hppa-post-v11-patches-pull-request
 
+for you to fetch changes up to cf05a5c52716fae63a1792a67b94b0612cb800b8:
 
-This seems to be a common pattern in the Aspeed machines to initialize
-an array of I2C. We could introduce an helper for it.
+  hw/hppa: Move static variable lasi_dev into MachineState (2026-05-19 17:17:26 +0200)
 
+----------------------------------------------------------------
+Two hppa cleanup patches
 
-Thanks,
+Two leftover cleanup patches which I did not wanted to merge shortly before the qemu-v11 release.
+Nothing critical, and both suggested by Philippe Mathieu-Daudé.
 
-C.
+----------------------------------------------------------------
 
-> +    /* &i2c0 */
-> +    /* eeprom@50 */
-> +    at24c_eeprom_init(i2c[0], 0x50, 256 * KiB);
-> +    /* i2c-mux@70 */
-> +    i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x70);
-> +
-> +    /* &i2c1 */
-> +    /* eeprom@50 */
-> +    at24c_eeprom_init(i2c[1], 0x50, 256 * KiB);
-> +    /* i2c-mux@70 (PCA9546) — 4 channels, empty */
-> +    i2c_slave_create_simple(i2c[1], TYPE_PCA9546, 0x70);
-> +
-> +    /* &i2c4 */
-> +    /* i2c-mux@70 (PCA9548) */
-> +    i2c_slave_create_simple(i2c[4], TYPE_PCA9548, 0x70);
-> +
-> +    /* &i2c6 */
-> +    /* eeprom@50 */
-> +    at24c_eeprom_init(i2c[6], 0x50, 32 * KiB);
-> +
-> +    /* &i2c8 */
-> +    /* i2c-mux@72 (PCA9546) */
-> +    i2c_mux = i2c_slave_create_simple(i2c[8], TYPE_PCA9546, 0x72);
-> +
-> +    /* i2c8mux ch0 */
-> +    /* adc128d818@1f — no model */
-> +    /* pca9555@22 */
-> +    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 0),
-> +                            TYPE_PCA9552, 0x22);
-> +    /* pca9555@24 */
-> +    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 0),
-> +                            TYPE_PCA9552, 0x24);
-> +    /* eeprom@50 */
-> +    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 0), 0x50, 16 * KiB);
-> +
-> +    /* i2c8mux ch1 */
-> +    /* pca9555@22 */
-> +    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 1),
-> +                            TYPE_PCA9552, 0x22);
-> +    /* pca9555@24 */
-> +    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 1),
-> +                            TYPE_PCA9552, 0x24);
-> +    /* eeprom@50 */
-> +    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 1), 0x50, 16 * KiB);
-> +
-> +    /* &i2c9 */
-> +    /* eeprom@50 */
-> +    at24c_eeprom_init(i2c[9], 0x50, 16 * KiB);
-> +    /* eeprom@56 */
-> +    at24c_eeprom_init(i2c[9], 0x56, 8 * KiB);
-> +
-> +    /* &i2c10 */
-> +    /* i2c-mux@71 (PCA9548) */
-> +    i2c_mux = i2c_slave_create_simple(i2c[10], TYPE_PCA9548, 0x71);
-> +
-> +    /* i2c10mux ch5 */
-> +    /* pca9555@22*/
-> +    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 5),
-> +                            TYPE_PCA9552, 0x22);
-> +    /* eeprom@52 */
-> +    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 5), 0x52, 32 * KiB);
-> +
-> +    /* &i2c11 */
-> +    /* i2c-mux@71 (PCA9548) */
-> +    i2c_mux = i2c_slave_create_simple(i2c[11], TYPE_PCA9548, 0x71);
-> +
-> +    /* i2c11mux ch0-ch4 — empty */
-> +
-> +    /* i2c11mux ch5 */
-> +    /* pca9555@22 */
-> +    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 5),
-> +                            TYPE_PCA9552, 0x22);
-> +    /* eeprom@52 */
-> +    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 5), 0x52, 32 * KiB);
-> +
-> +    /* &i2c13 */
-> +    /* i2c-mux@70 (PCA9548) */
-> +    i2c_mux = i2c_slave_create_simple(i2c[13], TYPE_PCA9548, 0x70);
-> +
-> +    /* i2c13mux ch3 */
-> +    /* adc128d818@1f - no model */
-> +
-> +    /* i2c13mux ch4 */
-> +    /* eeprom@51 */
-> +    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 4), 0x51, 32 * KiB);
-> +
-> +    /* i2c13mux ch7 */
-> +    /* nfc@28 — no model */
-> +}
-> +
-> +static void aspeed_machine_anacapa_class_init(ObjectClass *oc,
-> +                                               const void *data)
-> +{
-> +    MachineClass *mc = MACHINE_CLASS(oc);
-> +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
-> +
-> +    mc->desc       = "Facebook Anacapa BMC (Cortex-A7)";
-> +    amc->soc_name  = "ast2600-a3";
-> +    amc->hw_strap1 = ANACAPA_BMC_HW_STRAP1;
-> +    amc->hw_strap2 = ANACAPA_BMC_HW_STRAP2;
-> +    amc->fmc_model = "mx66l1g45g";
-> +    amc->spi_model = NULL;
-> +    amc->num_cs    = 2;
-> +    amc->macs_mask = ASPEED_MAC2_ON;
-> +    amc->i2c_init  = anacapa_bmc_i2c_init;
-> +    mc->default_ram_size = ANACAPA_BMC_RAM_SIZE;
-> +    aspeed_machine_class_init_cpus_defaults(mc);
-> +}
-> +
-> +static const TypeInfo aspeed_ast2600_anacapa_types[] = {
-> +    {
-> +        .name          = MACHINE_TYPE_NAME("anacapa-bmc"),
-> +        .parent        = TYPE_ASPEED_MACHINE,
-> +        .class_init    = aspeed_machine_anacapa_class_init,
-> +        .interfaces    = arm_machine_interfaces,
-> +    }
-> +};
-> +
-> +DEFINE_TYPES(aspeed_ast2600_anacapa_types)
-> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-> index 84b8ec5fb5..3de3dca8a9 100644
-> --- a/hw/arm/meson.build
-> +++ b/hw/arm/meson.build
-> @@ -56,6 +56,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
->     'aspeed_ast2500_witherspoon.c',
->     'aspeed_ast2500_yosemitev2.c',
->     'aspeed_ast2600.c',
-> +  'aspeed_ast2600_anacapa.c',
->     'aspeed_ast2600_bletchley.c',
->     'aspeed_ast2600_catalina.c',
->     'aspeed_ast2600_evb.c',
-> diff --git a/tests/functional/arm/meson.build b/tests/functional/arm/meson.build
-> index 2f538f29a2..959179a56f 100644
-> --- a/tests/functional/arm/meson.build
-> +++ b/tests/functional/arm/meson.build
-> @@ -12,6 +12,7 @@ test_arm_timeouts = {
->     'aspeed_ast2600_sdk' : 720,
->     'aspeed_ast2600_sdk_515' : 720,
->     'aspeed_ast2600_sdk_otp' : 720,
-> +  'aspeed_anacapa' : 480,
->     'aspeed_bletchley' : 480,
->     'aspeed_catalina' : 480,
->     'aspeed_gb200nvl_bmc' : 480,
-> @@ -45,6 +46,7 @@ tests_arm_system_thorough = [
->     'aspeed_ast2600_sdk',
->     'aspeed_ast2600_sdk_515',
->     'aspeed_ast2600_sdk_otp',
-> +  'aspeed_anacapa',
->     'aspeed_bletchley',
->     'aspeed_catalina',
->     'aspeed_gb200nvl_bmc',
-> diff --git a/tests/functional/arm/test_aspeed_anacapa.py b/tests/functional/arm/test_aspeed_anacapa.py
-> new file mode 100755
-> index 0000000000..27f8bd8b56
-> --- /dev/null
-> +++ b/tests/functional/arm/test_aspeed_anacapa.py
-> @@ -0,0 +1,25 @@
-> +#!/usr/bin/env python3
-> +#
-> +# Functional test that boots the ASPEED machines
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +from qemu_test import Asset
-> +from aspeed import FacebookAspeedTest
-> +
-> +
-> +class AnacapaMachine(FacebookAspeedTest):
-> +
-> +    ASSET_ANACAPA_FLASH = Asset(
-> +        'https://github.com/legoater/qemu-aspeed-boot/raw/3fa3212827b04be4034d43b5adeef57c27d6ab18/images/anacapa-bmc/openbmc-20260512025228/obmc-phosphor-image-anacapa-20260512025228.static.mtd.xz',
-> +        '2232e241abcfb6d4f6b82cb6c378ce5ce05e364aac6d118785c2b6cc33fe43f3')
-> +
-> +    def test_arm_ast2600_anacapa_openbmc(self):
-> +        image_path = self.uncompress(self.ASSET_ANACAPA_FLASH)
-> +
-> +        self.do_test_arm_aspeed_openbmc('anacapa-bmc', image=image_path,
-> +                                        uboot='2019.04', cpu_id='0xf00',
-> +                                        soc='AST2600 rev A3')
-> +
-> +if __name__ == '__main__':
-> +    FacebookAspeedTest.main()
-> 
+Helge Deller (2):
+  hw/pci-host/astro: Encode Astro version numbers
+  hw/hppa: Move static variable lasi_dev into MachineState
+
+ hw/hppa/machine.c   | 15 ++++++++++-----
+ hw/pci-host/astro.c |  5 ++++-
+ 2 files changed, 14 insertions(+), 6 deletions(-)
+
+-- 
+2.54.0
 
 
