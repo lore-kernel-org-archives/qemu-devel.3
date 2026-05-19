@@ -4,98 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3728CD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 03:56:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 368FDCD4F3C
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 03:58:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPBYX-0005Jb-4O; Mon, 18 May 2026 23:55:49 -0400
+	id 1wPBb2-0005qO-Mj; Mon, 18 May 2026 23:58:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wPBYQ-0005JI-K0
- for qemu-devel@nongnu.org; Mon, 18 May 2026 23:55:38 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ id 1wPBb0-0005q3-OT
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 23:58:18 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wPBYO-0006qw-Tu
- for qemu-devel@nongnu.org; Mon, 18 May 2026 23:55:38 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-bd8f9725b30so120534666b.3
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 20:55:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779162935; cv=none;
+ id 1wPBaz-0007VZ-A6
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 23:58:18 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-bd3d7c29b4dso452866266b.2
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 20:58:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779163096; cv=none;
  d=google.com; s=arc-20240605;
- b=USlMaUywXyAeWNUIarNqHiBMLQOxNc7NuuV0QZhoKrLoRyNDAHuryHhSJlnrn7tGnQ
- U48b8Yi2wLHJhuuukbgZ7KWuZD5ziqjzlqz9L6wE+6RRvBUMYJCDPprdLWQAcE76gH+C
- 1HXUiwe4fo9EpmLBQIZWJC+PjB0TR/CALbObaRMJh3KST5/4YCiDSAz3HkJHGxQ4qwnO
- DAAswuVjZvsbXuHMXbrvb1cxeBtyXZHrWvkDIRDf/bF/QuGYcNigSft8EBpeknRVKgVH
- mb/MlMm2qAMdVhaojSt0wV14EST/ynHWJZuLbHidzt48lxQ2WRqmpr5dxy2onHUCKOAM
- +d8A==
+ b=Y5YjmjqUwsEOFArSVqzYz9OYOxiGHEfDsn/mFnQ1jl/s0/qJNpC33PjfHfnpUAojjV
+ 20dHtQxb1RUGI8/jW+g8Qu0HL5wc9NyewsyTjbHO9fjSRHB4PUUEULis9AIoQxKPG3CC
+ tC0LaW4ZuMg0wkQwwCwCCt8RCfydCcvQTo6JhiERkhX8fcBke+n07EKLPeErGOLBaP3e
+ dY7xzONRU6ftGmgX3bG7qOYZibFih8Dn6sNKRSiTecWV3c8sJ2IH/SaqMVV2gM/7mcLp
+ nd+hPzqqI+kJHxAMpRFu0yZfPBBmYTsiv5i5FbC8Cw6XFMGls11PeM6QMIKFkEdATxcn
+ aU7g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=TEX291zrAjpuLnGFaC4H7UVQZQ13ikZilkN0qIAW4jk=;
+ bh=MIGO/WGN1FYJ1807LanhB9dkxUCcjyPWrFoAEdNz0Dg=;
  fh=+dPXGxW3pQNYFrTSil53fSXYfdhGIs7bI6Dyql1Mx+Q=;
- b=GJo22lx3AFXDLgG3Exq8id7xc7uGgkM+wFtW5Kt/1FnAq8O1SP2YMKgehCGZ41qr+R
- qCjBkWa9iocQmpaRY/Ybt2hi//ACYb0ROaFjWqOnqgT6rinjTu3zBfiqGbgSSOlh0jHw
- lcGoBXDkvug41foOZH/MKB5UvrIkswote04tarSOyGt88tmYiwMDxU7xVtZywtIxRvdK
- REgU2DgXN4eQMedqzm5j+fmKOvN470hDZSOk7LbpgTa8pVNvO1ufZodkXIOoh8ZBj7TI
- XXSAOu50A654djzM6iSViMbL9KX4QgQQARUsZmlIV/0W4AOD9kZceVVEe/RkraFQ3MnS
- Motg==; darn=nongnu.org
+ b=Y9vJmosLPuBw/WgbVwkeo6YPrIEM6sY7KWXrCGyhjQyh4i4XXT1A8FGsO09LBrEmV+
+ CWtFysI8AkN9eatcGvTnZV/oAO0eyQRZlps8CFhA8ntz+mmhl8vTamWCb0Tg7qoWEYqL
+ RdWNoLCv69xZV4jXhB/JNEZUz29Y3Bre16dmDfd++T0zik6ZBqr/HrGjE7fP6q6bt3fi
+ MQ6FeBKCP8CTjw8PK2WH5ugXuybBk/2m7H1hWN4+g8YT2GedkwZFxrdFDNFcwrhNP67d
+ eTEAeetiuf5B49j98pGX45AmosLx/g/UrDRQG7opwfVlUYqIQQo15GZK5LDtx/Wc1Lzd
+ /VoQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779162935; x=1779767735; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779163096; x=1779767896; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TEX291zrAjpuLnGFaC4H7UVQZQ13ikZilkN0qIAW4jk=;
- b=dMHkcPYUB7GneI/8wefWFpvFUn/SC1pjs0IaZzw0WV/kjcdTOG0NMzYyCQrzRHxoXe
- mEir61C+ZcLOGzclrQUe4W9FGjzuW00JuISIuELRvqn2JylkqJzNrJ0yutgeCg3Tf+7V
- aeUjyQdYtIDtHfFA9RzEZOgNalZ6ZamT/lcc1TvwpJ9lluEYloUHAlXuGQFx8NSUZv8P
- dU/8XOBFvzsDkzhuUGSABe+J2CC3E5ijnqHzkSlzC62D2Bflrbzh5iTgk8rxMorLF/x4
- bc2Lze4lw2xon0CmiRiIE/5YIueuFH17VrdNh8EkISTWNH3XIQK2540F+nSXsFhvejD8
- 6SZQ==
+ bh=MIGO/WGN1FYJ1807LanhB9dkxUCcjyPWrFoAEdNz0Dg=;
+ b=WnzB4GJCASapCUGD44CAcvzlGQwztck52+W5hwnI2a6PS/PH0TAEho6jplLn/h9QaU
+ GBXmwCfDM21fxWJ+HSssVyrNmh6G+1D7QHLmPfXdDVFegZ+OspkM4IPjt6PnEtHhhhiV
+ 2WU9E2x4MvgjMqMs5dLuqZaVs1ZuXLr01E2XVtQbA3/Pis4chIUtAMhTL0bdgQ7ztc6l
+ 2QOE6cPQWW+W37s+TjQhd/RGE/mB+i4Xe2DRAmK+4tHcEjUhsUUB2YlnsxVIdNRB2ejo
+ AdhvyI8Sc4ZN4rd+h2HDBRDGghFL8n0+GDRQ0WjyZ0XTw4NuPkKWbMTJS5DkmTbgzyTF
+ M2Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779162935; x=1779767735;
+ d=1e100.net; s=20251104; t=1779163096; x=1779767896;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=TEX291zrAjpuLnGFaC4H7UVQZQ13ikZilkN0qIAW4jk=;
- b=KXOxuh3Pj6aS1HeLhppsUfNgiE3pjxlA9zPltI5Ub4vS82+X2ZQSyOeq/JSPui8umO
- 4nCOD/5bTGjkHRzPrJYENcXCMyUsHMg/ZvWt2GL2Cuoyof8xqIkqFriwdIYpO3rULyPS
- EOKdI1Envif8JbvhEug8Cg6WmvCA9w6ZjVxwbf0J7dq20vZOa3mo7aENudMRVGct+DYT
- U34MpB0WPEDiaCKwqnIf3Dy3IpoQGJGnxasml1D2G3r4rlBjK/op85PZJstXeaY24kND
- 3Q9Vm95QRYbsHsjz9OoCnge7QnUQBHaj98jT6iNBEvcXkT7wvTnAc7AkuZWPnTSQDSqe
- NhIA==
-X-Gm-Message-State: AOJu0YySnBYAxpE+yw6U8iDYdMgvMngDKJYDVGf395Jp3oovBprknJDj
- LQG+9btdslhS1IaD0xAlhlvsQFRFq+jHr1UqvmSeE61k9t4HcvCuxipX1WzADOwGTvHiYgC9cOF
- 9+7DH1GSO0gqfnS/cSTFSH4rtgGhEbtM=
-X-Gm-Gg: Acq92OE060q1/cIr4UD+PRPsvGJ5jYZC6mTC+EtBtL95+TZ1VYj+fVgTBW1yYi/wzf1
- vK67BFRSk5tPwkPZE3tF813pBq1YTw1uSxwOir2m4TVoTekqSAvf/gROBkvQ7IS+CHjJAMroVZN
- gNqlxDMl1fbdBnuCy/D0/WmKj5TyUQJ4r6BkFHPCVpOuV7Nw1skPowy8bB90soivMVVre2CGF1g
- Lcsxv/b/jPt9QqS6VFclNT/0lo5ceTYeRBfRf0iyhLQurIfpxna0qcFkemmfLykOnP4g1TaUbjx
- dfWjm81nzkapFNrOMIyUbP0wduSOkJFYyfV+eg==
-X-Received: by 2002:a17:906:6a21:b0:bd5:7a3:a593 with SMTP id
- a640c23a62f3a-bd517add181mr727528566b.46.1779162934972; Mon, 18 May 2026
- 20:55:34 -0700 (PDT)
+ bh=MIGO/WGN1FYJ1807LanhB9dkxUCcjyPWrFoAEdNz0Dg=;
+ b=ePWd7ov2ybI8Ch2mE3J5mti9JWMgxR+kP7hMBT8ENiXz1I4MMcge9figwkC4aFPIh2
+ yrwXYxGlto4Alu9mjoq1wBNdx0LRr4mj6mBZq/QA+dM5YikaqW2SeuQXsivSkXY0xhuk
+ tCnXsxeIXZrje/xp50juG31DS13eWLe8oAiXDKd5NXFYohO4rz+S6li+Avaf7Xjkvw/S
+ TyFxB0oplEzENFcb5b7iyEbse5s8osUhlKkAg+ZDZrB16WPkqS9buNFv6ug5p++4koWn
+ 9jWUft7Sx6Su9uI/8wQQvvZ8N5fYMO1ueg5IFyzR0RvzDjSY5LdXphTfuy2y+cqhB4bE
+ t/Ig==
+X-Gm-Message-State: AOJu0YyqTXGipvXY7ZwQosTuqaix/khu5EUOqGG/dBUV++yNyaZT1P5E
+ hPlfXq33qMWOtcWDY1KGzs1pteP5J19FpKOKaNZzG+5jm+E8+MnvZ9543Luy2vx6l8+tmydivsP
+ BYsnA7PkjkarzNhGj8r6ddU+h78374iY=
+X-Gm-Gg: Acq92OGjO2RohA7bezvavdDLREBxYEBhDuuzdyGjc/5M8KECrkSYsXmzEJdnoFYERy3
+ +eZSsG9zUdJCtVPJvI2t7amQ/kk6u5ydAgfK7az7au1gxighD2/Gt37mwdCO9pUnOij0jT/wHbR
+ HOUhD8LIj5eJnpsja6PtFQhYgeYOWMDa9pxs4ZS1wxtFQ9gMED8qV2MFWDGgcqZajPV9/38jukR
+ TL9oby/0l8io17e6m9HCya9GAKk955ydh4ki/ycWPfhp1A9yvv3sgRUFFaKdN/HVhaBH6X1JoPu
+ 0qyjbTTSwAFV3kc42Y3saZM6Ogd3wiHmn5xD8Q==
+X-Received: by 2002:a17:907:7b83:b0:ba4:94f8:4df with SMTP id
+ a640c23a62f3a-bd5177ee697mr1038949166b.17.1779163095649; Mon, 18 May 2026
+ 20:58:15 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260512032926.1978818-1-daniel.barboza@oss.qualcomm.com>
- <20260512032926.1978818-5-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20260512032926.1978818-5-daniel.barboza@oss.qualcomm.com>
+ <20260512032926.1978818-6-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260512032926.1978818-6-daniel.barboza@oss.qualcomm.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 19 May 2026 13:55:07 +1000
-X-Gm-Features: AVHnY4JRpxWhNhtINs9Ab2Lq7wHe-QQgrTeUAuqSkQMhwngB80v-tA-jZmpfJBY
-Message-ID: <CAKmqyKMe4hASxsvLFYEDa1exYGRh-ioK2dzz_=JvaKOcJg9mUw@mail.gmail.com>
-Subject: Re: [PATCH v2 04/14] target/riscv/tcg: treat all exts equally in
- cpu_disable_priv_spec_isa_exts
+Date: Tue, 19 May 2026 13:57:48 +1000
+X-Gm-Features: AVHnY4KnVc5cyCIObiErqjiF2SRRiS38Unu5i5llqxJFNGN7W4jDGdQGz34OcBQ
+Message-ID: <CAKmqyKPgQcKTeSyVmHbZ-PKSqONNE7MGB-TU1WGv51dUGmUrFQ@mail.gmail.com>
+Subject: Re: [PATCH v2 05/14] target/riscv/tcg: use only isa_edata_arr[] in
+ cpu_cfg_ext_get_name()
 To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -122,32 +122,11 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Tue, May 12, 2026 at 1:31=E2=80=AFPM Daniel Henrique Barboza
 <daniel.barboza@oss.qualcomm.com> wrote:
 >
-> Commit 7e4f75cadf ("target/riscv/tcg: hide warn for named feats when
-> disabling via priv_ver") changed the design of
-> disable_priv_spec_isa_exts to not warn when disabling what we were
-> calling "named features" at that time.
+> We're using both isa_edata_arr[] and riscv_cpu_named_features[] to find
+> an extension name based on a cfg offset.  This is reminiscent of a past
+> where isa_edata_arr[] didn't include entries for internal extensions.
 >
-> Back in that time we were adding RVA22 profile support and we were dealin=
-g
-> with a RVI innovation: named features.  These can be define as cute
-> names for pre-existing behavior/parameters, e.g. 'zic64b' means all
-> cache blocks must have 64 bytes.  They do get inserted in the riscv,isa
-> but they are not "real" extensions because users shouldn't be setting
-> them in the command line, or so we thought back then, and we attempted
-> to model that by calling it "named features".
->
-> This didn't age that well: ziccrse is a so called named feature as far as
-> TCG goes, but then KVM had to treat it as a regular extension that can be
-> user set and we made an exception: ziccrse is a named feature that is
-> user set by KVM.
->
-> "Named features" are regular extensions that might or might not be user
-> set, and might or might not warrant special handling during realize()
-> by setting other parameters.  And we'll being treating them as such,
-> which will culminate in the end of riscv_cpu_named_features[] array in
-> the end.
->
-> This reverts commit 7e4f75cadf44ee67809c7ca82645a289a5268966.
+> At this point we can use just isa_edata_arr[].
 >
 > Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
@@ -156,46 +135,36 @@ Acked-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  target/riscv/tcg/tcg-cpu.c | 13 +++----------
->  1 file changed, 3 insertions(+), 10 deletions(-)
+>  target/riscv/tcg/tcg-cpu.c | 7 -------
+>  1 file changed, 7 deletions(-)
 >
 > diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index a358d91ca5..92406bf41f 100644
+> index 92406bf41f..704105d3df 100644
 > --- a/target/riscv/tcg/tcg-cpu.c
 > +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -484,15 +484,6 @@ static void riscv_cpu_disable_priv_spec_isa_exts(RIS=
-CVCPU *cpu)
->              }
+> @@ -311,7 +311,6 @@ static int cpu_cfg_ext_get_min_version(uint32_t ext_o=
+ffset)
 >
->              isa_ext_update_enabled(cpu, edata->ext_enable_offset, false)=
-;
-> -
-> -            /*
-> -             * Do not show user warnings for named features that users
-> -             * can't enable/disable in the command line. See commit
-> -             * 68c9e54bea for more info.
-> -             */
-> -            if (cpu_cfg_offset_is_named_feat(edata->ext_enable_offset)) =
-{
-> -                continue;
-> -            }
->  #ifndef CONFIG_USER_ONLY
->              warn_report("disabling %s extension for hart 0x%" PRIx64
->                          " because privilege spec version does not match"=
-,
-> @@ -520,9 +511,11 @@ static void riscv_cpu_update_named_features(RISCVCPU=
- *cpu)
->          cpu->cfg.has_priv_1_13 =3D true;
+>  static const char *cpu_cfg_ext_get_name(uint32_t ext_offset)
+>  {
+> -    const RISCVCPUMultiExtConfig *feat;
+>      const RISCVIsaExtData *edata;
+>
+>      for (edata =3D isa_edata_arr; edata->name !=3D NULL; edata++) {
+> @@ -320,12 +319,6 @@ static const char *cpu_cfg_ext_get_name(uint32_t ext=
+_offset)
+>          }
 >      }
 >
-> +    /* zic64b is 1.12 or later */
->      cpu->cfg.ext_zic64b =3D cpu->cfg.cbom_blocksize =3D=3D 64 &&
->                            cpu->cfg.cbop_blocksize =3D=3D 64 &&
-> -                          cpu->cfg.cboz_blocksize =3D=3D 64;
-> +                          cpu->cfg.cboz_blocksize =3D=3D 64 &&
-> +                          cpu->cfg.has_priv_1_12;
->
->      cpu->cfg.ext_ssstateen =3D cpu->cfg.ext_smstateen;
+> -    for (feat =3D riscv_cpu_named_features; feat->name !=3D NULL; feat++=
+) {
+> -        if (feat->offset =3D=3D ext_offset) {
+> -            return feat->name;
+> -        }
+> -    }
+> -
+>      g_assert_not_reached();
+>  }
 >
 > --
 > 2.43.0
