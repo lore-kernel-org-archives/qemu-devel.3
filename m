@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6976CCD4F5B
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 16:23:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F97ACD4F5B
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 16:23:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPNDg-0006hv-LZ; Tue, 19 May 2026 12:23:00 -0400
+	id 1wPNDd-0006fj-4p; Tue, 19 May 2026 12:22:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wPNDT-0006cb-1z
- for qemu-devel@nongnu.org; Tue, 19 May 2026 12:22:48 -0400
-Received: from mail-oa1-x32.google.com ([2001:4860:4864:20::32])
+ id 1wPNDa-0006eK-Aq
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 12:22:55 -0400
+Received: from mail-oa1-x34.google.com ([2001:4860:4864:20::34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wPNDM-0000dT-1T
- for qemu-devel@nongnu.org; Tue, 19 May 2026 12:22:46 -0400
-Received: by mail-oa1-x32.google.com with SMTP id
- 586e51a60fabf-439bdb1d75bso2455115fac.1
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 09:22:37 -0700 (PDT)
+ id 1wPNDY-0000gz-JF
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 12:22:54 -0400
+Received: by mail-oa1-x34.google.com with SMTP id
+ 586e51a60fabf-43acf1694daso1313600fac.3
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 09:22:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779207757; x=1779812557; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779207771; x=1779812571; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=khVlB/iuHBqSxDf1ci1EMIV9f0Ywmy6N/0aX6cS55HM=;
- b=kMTGlQnh5XzJJxq5Fj6WHcLcmNZfGhhanANk3rmRP+RylSCFltHE8w4CgbOqpZBlw7
- av+FHT0eeUyNdSDya9K+BDAz8vW1U8YZ+ZbaEkI+FmmWWDG59Z0gqtTDRjCjtHJyvBfp
- 5yuSMtnbFtO+NToqKm9UaEKobs8TqFguSUM4Ghvc5lHqZkbiCUkWQ22mLF156w5ptIf1
- V37KCprz1CEe4ieHrgsyczJqGOVEjqsr43+0ARLL+h5hH+u9gGBmLpHgsOOZdpcU2ByT
- GctOrSeYvz+odD3o8k5GWNbpk0Q8DJP95UgPR7IZe3sB+0cg5Fax2GsjPXFl2BI1S+N4
- RHxA==
+ :reply-to; bh=SEpaBN+Cf5DSQcUo9bhdwLJ6wNzQO70+KKi67N4ETPs=;
+ b=rgwcZiOvP8BuuZDuqmSFfpCFg/fjRjvNguaP+DaVMSK9LDpQQ1bAR7zp1D2zUl6dxT
+ mgARggcGIBJoaB2nHQ/JT8GZhAJhFeZ/nbknhOefw83zZMIsBfYIij/tJrXyz//v8egw
+ PvFjELBPR5ctdjOu4rRPpBVEGKp9OPUA3vznLGlgyGIFSrAs9VkZK3OTo4S8f+8qRMkI
+ XOOhDwWi+s2PpgbVbIm2oQxq78F9E1vDFiAJ58++1Qe1pt8tIsgK7JDtKvngjPlLmj9o
+ wBQ98Mn82nObLpg/w4QDcX2hBNkQ33W31naSCec0rnh8WzTaz3tZUXEvsZy1bjTIVjRF
+ QG4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779207757; x=1779812557;
+ d=1e100.net; s=20251104; t=1779207771; x=1779812571;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=khVlB/iuHBqSxDf1ci1EMIV9f0Ywmy6N/0aX6cS55HM=;
- b=lLj6Lfhl3eZ66mUDiAkN4/HU0T13aIm/3gTknm4/DEuLFU37PSInon6dfroEGrVCv0
- TlIaYp1mMtVHQgJGwwC88yo/cWHgvodiVf1i5nyUSDIFQM4G6UofkNeoLzI2pmuMajPg
- e1nk81vgqJfHELGsNLC+UaTxFORhHN3G5NjEIyvBsoane1voEe3sNzj1blW/43pUsa+n
- 8MrAGo9/GoWcEarZxJTzm6qFmVzTgvtknSiaTJUKi8XFHuFZJq9wf2rfL+xJChLhapTx
- QDOZnLzmmHABfY5wjttdF+3aq/IIAIPieTtNOkzQbPxQrUlJAwyNajjc1OppAU6hwx21
- ln2w==
-X-Gm-Message-State: AOJu0YycOzO0dewbWpa7vwHs3pJN0Ik9O2ygWJRuIfgc9TlsfFLCxgTb
- HGTpGC7cWfdBvwKKwzvj7ozWYCbpLbKLR8wRzs7rmW2oJvsVfc1yzyBK
-X-Gm-Gg: Acq92OHIqfKP05ZI2bZ9g9uPmjaTuQKvtv6/5WlQzVD2e0LslwBrBD9KanOGVnIDAxR
- +cILU91Pgpwx6RicOL95LNHm2yC33xBA3OtWpiFObEzMZb8cUb7HTeh7EnRc8YdeWGeFAg6jdj2
- BY6PlXriqEfS6UMZ/0BzM5L5wEIUkrmfcpiBXMIq6foQZXyU4/MmqaJW9La6bapW1U++rOlHUuF
- gmRl0/BnA/s9ppyiSYQkAM9gjhXv2OgjzoYYk1aQTq9tv0R/YG9ZsZnfPcJHlLkA3GQjBy/VWwR
- 4sQaaQzDQtxCIJb2ShwRfShzjVd5vXFPkN8eH8s/zArZMb2H6xMPcn2nqy1iN/26f/0xaA2+QVo
- ZAehQUM29r7nJZZ3xjHn/+B92DVtkW0MDrLp+MUxTPM7GuBk0a55S3gQy1gG+CfvaWEznnL+sjU
- 8rQGYKaCDbXfr6sLIIWtwsVpT+mheT4V5E1qbO7/XGTYJZ8IXLPY2BSAOJMdVpL5BV+vwteIXSs
- 62SM7kCOCSbCeOMHbScsq9WJb7st3IY8oadPy3wm70AjyhBTJ9fb3cHEC/tn6LG/Pt2
-X-Received: by 2002:a05:687c:408c:b0:42c:1e4a:8e28 with SMTP id
- 586e51a60fabf-43a2da2a5e5mr13510313fac.12.1779207756866; 
- Tue, 19 May 2026 09:22:36 -0700 (PDT)
+ bh=SEpaBN+Cf5DSQcUo9bhdwLJ6wNzQO70+KKi67N4ETPs=;
+ b=eqaBdsuhkS6/YTCFgMaq7aBdQaURxc0nvE3/gjfKO//0YJCOMdc98c1mQCnQp6AMoY
+ 90CwlOQ03riZ64X+B7MuPGs/O6uQjbntf/X2elsR+hG8dJeOpqFlSXk5/fv/ZjNVEK1t
+ 1mhmZcC4fL8wbJDFtq4AULd/hvhgbnjd5ZGUH0e4nfnD2hPW/Pbkm7MfTpyMHwomvy+O
+ zlh3iYECc0qzmTYK64jS60J+S9HcuRM5cPXUp7A7wVlgUw/rte3v4Vm8bYI51a/7ZCci
+ 1ITFDMKnsXU26cL0vIoUnIuYO2gs4InnJ35YDyobtYJnWn2ie/XsJM1gleLyKkRdDaMm
+ VThA==
+X-Gm-Message-State: AOJu0YzZ9Re2ybWXcHgffw3XDElacrtjxKlJ4SmWSfnHSX+qHJn2OMhw
+ Dwn5jxSaf/k9Gs4NKGMBQYrerRjH24tkcihbEavtVA92k+QRm5Ijz8nu
+X-Gm-Gg: Acq92OGcCa91VFJ+MwA8dX/iT6jQvNcm3pLy3QgdYoCeqvq5tVmuMIsRQqLSES/zmdQ
+ d6quygZZm0QxAtjPpWG9Ogu2ciF3v6F5lqMxLUmcP9ioIzqBtrCxVCkeF4tEjiVQHf+BTtgD6d6
+ Kzv5QklifeSWwJbE7/aR6efSTtQCRXVd6rRB3Gm7e0brOeflKy7mA9F4uDQXc0rTUzOIy36lWgK
+ 0WzNGPn692+RYrBkyTJuM5uw+1JWzpm8vcKdtVOS9oqP4CGZIlPMe44EYfsX8CogfSSCWk21nb5
+ Ze6SIGifhKjA8U3Dwb59j3mObey8GtICxiBPY6x7zyucv3DNk3ucO5k326sREHnmyJPB5yOp3oc
+ xvPvRHzPJKSmQ/8xjUlYde7NceIilpLSkHqiVplBJE96WerywfuecZN8G7E9516lehrf5G56Z8p
+ sHTsvAuN1Lb1zxAfsTdhXWEO01Dd1FulnDdGRuhmahoQ80vBHoF0ggmjajMhNsJMspskkq03up/
+ Objhij77P4ZLdAvGYj36kIlGPe8qS0/XRln5tD83x9qP3bFUsyOsIMr/+pTKS94vM76
+X-Received: by 2002:a05:6870:891d:b0:417:5285:6c7b with SMTP id
+ 586e51a60fabf-43a2db4d89fmr13643328fac.8.1779207770900; 
+ Tue, 19 May 2026 09:22:50 -0700 (PDT)
 Received: from mac.localdomain (184-96-146-19.hlrn.qwest.net. [184.96.146.19])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-43a95762ceasm7056296fac.13.2026.05.19.09.22.36
+ 586e51a60fabf-43a95762ceasm7056296fac.13.2026.05.19.09.22.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 May 2026 09:22:36 -0700 (PDT)
+ Tue, 19 May 2026 09:22:50 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Tue, 19 May 2026 10:22:04 -0600
-Subject: [PATCH v9 02/40] linux-user/mips: implement sysmips(MIPS_ATOMIC_SET)
+Date: Tue, 19 May 2026 10:22:18 -0600
+Subject: [PATCH v9 16/40] target/mips: add Octeon MTM instructions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260519-mips-octeon-missing-insns-v2-v9-2-d7dd735ecddd@gmail.com>
+Message-Id: <20260519-mips-octeon-missing-insns-v2-v9-16-d7dd735ecddd@gmail.com>
 References: <20260519-mips-octeon-missing-insns-v2-v9-0-d7dd735ecddd@gmail.com>
 In-Reply-To: <20260519-mips-octeon-missing-insns-v2-v9-0-d7dd735ecddd@gmail.com>
 To: qemu-devel@nongnu.org
@@ -84,8 +84,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>, 
  Paolo Bonzini <pbonzini@redhat.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2001:4860:4864:20::32;
- envelope-from=james.hilliard1@gmail.com; helo=mail-oa1-x32.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::34;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oa1-x34.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -109,98 +109,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement the MIPS_ATOMIC_SET sysmips command as an aligned 32-bit atomic
-exchange in target memory.
+Add the MTM0, MTM1, and MTM2 forms that load the Octeon3 multiplier
+operand pair from rs/rt into MPL[x] and MPL[x+3], then clear the partial
+products. For MPL0, also set MPL[1] to zero for backward compatibility
+with Octeon2 VMULU.
 
-MIPS reports syscall errors through a separate register, so successful old
-values can overlap the errno range.  Write the return value and error flag
-directly and return -QEMU_ESIGRETURN so the common syscall path leaves the
-registers unchanged.
+Legacy single-source encodings have rt encoded as $zero, so the same
+translator path also preserves the older Octeon behavior.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+
 ---
 Changes v2 -> v3:
-  - Split MIPS_ATOMIC_SET out of the combined sysmips/MIPS_FIXADE patch.
-    (suggested by Richard Henderson)
-  - Always use the explicit MIPS return-register path for successful
-    atomic_set results.  (suggested by Richard Henderson)
----
- linux-user/mips/target_syscall.h   |  1 +
- linux-user/mips64/target_syscall.h |  1 +
- linux-user/syscall.c               | 31 +++++++++++++++++++++++++++++++
- 3 files changed, 33 insertions(+)
+  - Split MTM0 out of the combined Octeon arithmetic and memory
+    instruction patch.  (requested by Richard Henderson)
 
-diff --git a/linux-user/mips/target_syscall.h b/linux-user/mips/target_syscall.h
-index 3f36c1695a..9206694f4f 100644
---- a/linux-user/mips/target_syscall.h
-+++ b/linux-user/mips/target_syscall.h
-@@ -11,6 +11,7 @@
+Changes v3 -> v4:
+  - Keep the Octeon3 two-source rt high-lane operand and document that
+    legacy one-source MTM encodings use rt == $zero.
+
+Changes v5 -> v6:
+  - Clarify the CN71XX-defined MPL1 zeroing after checking the
+    register-state table and description.
+
+Changes v7 -> v8:
+  - Combine MTM0/MTM1/MTM2 in the v7.5 inline TCG translator form from
+    Richard Henderson.
+---
+ target/mips/tcg/octeon.decode      |  7 +++++++
+ target/mips/tcg/octeon_translate.c | 32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 39 insertions(+)
+
+diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
+index 01ed3b50be..5139543b15 100644
+--- a/target/mips/tcg/octeon.decode
++++ b/target/mips/tcg/octeon.decode
+@@ -44,6 +44,13 @@ SNE          011100 ..... ..... ..... 00000 101011 @r3
+ SEQI         011100 rs:5 rt:5 imm:s10 101110 &cmpi
+ SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
  
- #define TARGET_FORCE_SHMLBA
- #define TARGET_SYSMIPS_FLUSH_CACHE     3
-+#define TARGET_SYSMIPS_ATOMIC_SET   2001
- 
- static inline abi_ulong target_shmlba(CPUMIPSState *env)
- {
-diff --git a/linux-user/mips64/target_syscall.h b/linux-user/mips64/target_syscall.h
-index 20ea7c6ab9..e07687f8ac 100644
---- a/linux-user/mips64/target_syscall.h
-+++ b/linux-user/mips64/target_syscall.h
-@@ -11,6 +11,7 @@
- 
- #define TARGET_FORCE_SHMLBA
- #define TARGET_SYSMIPS_FLUSH_CACHE     3
-+#define TARGET_SYSMIPS_ATOMIC_SET   2001
- 
- static inline abi_ulong target_shmlba(CPUMIPSState *env)
- {
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 73f09bb775..3786a34041 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -6631,10 +6631,41 @@ static abi_long do_prctl_syscall_user_dispatch(CPUArchState *env,
- }
- 
- #ifdef TARGET_NR_sysmips
-+static abi_long do_sysmips_atomic_set(CPUArchState *env, abi_ulong addr,
-+                                      abi_long value)
++&r2          rs rt
++@r2          ...... rs:5 rt:5 ..... ..... ...... &r2
++
++MTM0         011100 ..... ..... 00000 00000 001000 @r2
++MTM1         011100 ..... ..... 00000 00000 001100 @r2
++MTM2         011100 ..... ..... 00000 00000 001101 @r2
++
+ &saa         base rt
+ @saa         ...... base:5 rt:5 ................ &saa
+ SAA          011100 ..... ..... 00000 00000 011000 @saa
+diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
+index 721a9a8d9d..67d95423c1 100644
+--- a/target/mips/tcg/octeon_translate.c
++++ b/target/mips/tcg/octeon_translate.c
+@@ -210,3 +210,35 @@ TRANS(LHUX, trans_lx, MO_UW);
+ TRANS(LWX,  trans_lx, MO_SL);
+ TRANS(LWUX, trans_lx, MO_UL);
+ TRANS(LDX,  trans_lx, MO_UQ);
++
++static void octeon_zero_partial_product_state(void)
 +{
-+    uint32_t *ptr;
-+    abi_long old;
-+
-+    if (addr & 3) {
-+        return -TARGET_EINVAL;
++    for (int i = 0; i < OCTEON_MULTIPLIER_REGS; i++) {
++        tcg_gen_movi_i64(oct_p[i], 0);
 +    }
-+
-+    ptr = lock_user(VERIFY_WRITE, addr, sizeof(*ptr), true);
-+    if (!ptr) {
-+        return -TARGET_EINVAL;
-+    }
-+
-+    old = tswap32(qatomic_xchg(ptr, tswap32((uint32_t)value)));
-+    unlock_user(ptr, addr, sizeof(*ptr));
-+
-+    /*
-+     * MIPS uses a separate error flag, but the common linux-user syscall
-+     * path infers that flag from the return value.  Successful atomic_set
-+     * results can overlap the target errno range, so write the result
-+     * registers here and ask the CPU loop to leave them alone.
-+     */
-+    env->active_tc.gpr[2] = old;
-+    env->active_tc.gpr[7] = 0;
-+    return -QEMU_ESIGRETURN;
 +}
 +
- static abi_long do_sysmips(CPUArchState *env, abi_long cmd, abi_long arg1,
-                            abi_long arg2)
- {
-     switch (cmd) {
-+    case TARGET_SYSMIPS_ATOMIC_SET:
-+        return do_sysmips_atomic_set(env, arg1, arg2);
-     case TARGET_SYSMIPS_FLUSH_CACHE:
-         return 0;
-     default:
++static bool trans_mtm(DisasContext *ctx, arg_r2 *a, unsigned int index)
++{
++    /*
++     * Octeon3 two-source MTM forms load lane index from rs and lane index + 3
++     * from rt.  Legacy one-source forms encode rt as $zero.
++     */
++    gen_load_gpr(oct_mpl[index], a->rs);
++    gen_load_gpr(oct_mpl[index + 3], a->rt);
++
++    /*
++     * Octeon3 clears MPL1 with MPL0 so that VMULU sequences remain
++     * backward compatible with Octeon2.
++     */
++    if (index == 0) {
++        tcg_gen_movi_i64(oct_mpl[1], 0);
++    }
++
++    octeon_zero_partial_product_state();
++    return true;
++}
++
++TRANS(MTM0, trans_mtm, 0);
++TRANS(MTM1, trans_mtm, 1);
++TRANS(MTM2, trans_mtm, 2);
 
 -- 
 2.54.0
