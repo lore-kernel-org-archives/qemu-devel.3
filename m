@@ -4,152 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32219CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 03:59:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06318CD4851
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 03:59:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPBby-0006IP-88; Mon, 18 May 2026 23:59:18 -0400
+	id 1wPBcO-0006dR-IA; Mon, 18 May 2026 23:59:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wPBbs-0006HZ-JP
- for qemu-devel@nongnu.org; Mon, 18 May 2026 23:59:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wPBbp-0007mp-7k
- for qemu-devel@nongnu.org; Mon, 18 May 2026 23:59:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779163147;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=SZXk9n0GICLWrqnc79UERiMshy9yOKaaTKzI2r1bV1Y=;
- b=BfPIGlHcSbFl/BA9QDWgIjzXpjc7VrTakCY1kbEYlRdtz7aKUJH23SwKkDLYo5ORO/AoXe
- d0+Q6C0NhjgW/MG2SQrOqTkwca9SWJeD3CI8ZMzeFkKuunCjJFkUXeZ4FPF7nTsqtfLgDG
- perR/hRXpmOp/qZj148b4LUqU2PIQW0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-44-NjYoybYlO8GE7WYorm0dAw-1; Mon, 18 May 2026 23:59:06 -0400
-X-MC-Unique: NjYoybYlO8GE7WYorm0dAw-1
-X-Mimecast-MFC-AGG-ID: NjYoybYlO8GE7WYorm0dAw_1779163145
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-48fdad6cce4so11239535e9.1
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 20:59:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wPBcM-0006Xz-Op
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 23:59:42 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wPBcK-00081J-VL
+ for qemu-devel@nongnu.org; Mon, 18 May 2026 23:59:42 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-67be871ed3fso7037554a12.1
+ for <qemu-devel@nongnu.org>; Mon, 18 May 2026 20:59:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779163179; cv=none;
+ d=google.com; s=arc-20240605;
+ b=el1x7q+5Mo2JTzSeSu6wJcC3Vqweu/TGmfkjc64S88Fmomx/vKDkhcit76FgKgivvo
+ ms9oqkwN/dIu8ldVDfNgdOUYoqsWYMjDVAzwvoD9cr3tBBzZlzwKHKUSfrjBcr2dAjYx
+ aeIpfCZ2JRniSnx49nVid3xovSOFaOI+VUFXJ6ZJKm4WosRfGkHUcNg93t43YpCQDvJV
+ CeguGkd2yQ8+8pcKwIxa9LSxZqXIQ5K71D72wiAdzu8+wQhBKR9ECXmLzeDEWmzBUvng
+ TXYP5+e0nSNCGRP3v0wZKEq/QI1shdU8poErl8QG8MpJJtRovZS+AItjhCOnhoMhnE22
+ /spA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=1XlpxuP36fWzHsVf26UQYF9pQjtD2oCrSA/780+hgk8=;
+ fh=+dPXGxW3pQNYFrTSil53fSXYfdhGIs7bI6Dyql1Mx+Q=;
+ b=Obr0kkRFqyUEOd+pSYuExsnurE3mCZBQAUVRr/AygXcwu08jnLyMYfMwXLLLL0EoZg
+ 3nOf+WzSYhgNm9P+5pwsw+7BI+FHtUFGG872skbhDz93u3r9WJ1es/ZMlA5jAAp9lChS
+ yoEOivV9KK2IFvGTG5puou2EcaIGfwBhXVD8fR9/ZnlasTsjX+u/SUG0041Ntnehj3E2
+ JMSTlAbvDwHcIBGvwRzLGk1ofmEjbemeE4Pg93Snj3JLRLCQzA4m/HbnVAj1NR8tffVf
+ x8wDLI4E3HtyisFQyY3kbiM5hgoi3bA5jFcDELcs+ohtE1RSLE/i+ah9xxBJlpJeBg+f
+ EG1Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779163145; x=1779767945; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=SZXk9n0GICLWrqnc79UERiMshy9yOKaaTKzI2r1bV1Y=;
- b=DlwX98Wh9YBJKfjp3H75PfJPT3aMW+FGDh0w+nW3YDw0NSjaFLGq9+BSo1p+o7veDw
- XlTdWAllb4561jy1KmhKsbrJN9nFtK/T9me/r4jZz0NsgBdCKa4Mc5wdvMxBFGnHFsDG
- MIHTvwZ5Ag293iFqvxgV83G60lZ5lx72KPbmk4+V+Fb9dwFpyJKbIUIuCjc04yxQmbRb
- u7Xa4EhrvbHwWA1kLqDkmEIPPPsq61dxB2jm57GkaStFmk7X440XOamIzCu9XRxIYrVQ
- tjGWeoUY1tupKK1f7vQs31LOcQCgzT/tijh9T0Aw9YfvzHTTnhdoGNkjSc++bwE8468c
- 3tGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779163145; x=1779767945;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1779163179; x=1779767979; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SZXk9n0GICLWrqnc79UERiMshy9yOKaaTKzI2r1bV1Y=;
- b=c6xYz1GATSzu93Q+pa3qMO2yYKeRtOIRxOgizAau4qhi7OyrRztdr0Q9zpQ+AWj884
- gtnIZa/S9/xA6evaphR8xT72duaz9OOVnd4+Z7704N3gL0puh7OL7XAFV/ndsEsMI+ig
- qRElXFl3QPc3E+quj611S8qQUb4d4MCwGRRzdCNdmFnN0+TV1zUCGp0fEjVcJ7lYbmx+
- r7M8367BrVuH9D9rBYT8u7eVVcBXih+1i2YuRbJ+aCWca2pYab6BvxzwOli/7liRGp2g
- +GFXdiYun49uUQD2SpAqy4QKwiWr/RKH6GreiPCtxiZMJvwaHXp+qeFdpvOyYY+z3YdT
- 5JLg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8wC5/S3nEWSa4Cy/20+6PkFELC4SVYvSZ1aXosnX1mEojfJSDCThBnkDBv0f7y36bAYtqCDUWggENl@nongnu.org
-X-Gm-Message-State: AOJu0YxRWYAdpBoNiJYCzfEiUl2H10L157aE27CmdJRtQZFsrJFJuVLt
- SwEGG7aqThIAnAEN9/zdALzMHMrxrIcxbx+ZXi/Ys7rDmewv58BzFuz2T9bMMRSWuUWD4ZgVVPp
- 8tP5lkVp9LS/L1rms9gCkXfI+YDYzQTbwhOFK7FZ0T2IESnCE+Hy8fXka
-X-Gm-Gg: Acq92OG7jW9SUEYlPiGqQOQQal9qBM0Ya/LefcecIjO+m35XPpv2lIuMtG3M9wnNU5b
- XYYBPVM+ExxkBtDhsgEexPo8XfuH7sxz2WZ6XyQqM0Y/VYkZpDB7B9BsY9zDQrhBHkKS431jHfC
- 39kOFDGY8XkfH1F8BzqXLr5gtlh1uqdoLtRYDNBfi5qW0lZiSW6QZsuxOWLefAzI0dueyXE/NJa
- wFNqvv4YzUNPUTXYitV8UKbp2biUx3njaTt9IXEzsdL7D6r5+9AeEUL2UjEuh7eY2+Z4XJbWbh4
- fY5j7NxgcnEMZIHhCUPLsWOwWrGasrYFsUQtJd3f4jUia1xHLh0i+HRYAb0G8OXPJuJYvDNncUZ
- cr5hSxUmYGCB7XUPVJpU=
-X-Received: by 2002:a05:600c:c4a7:b0:48a:53cb:8604 with SMTP id
- 5b1f17b1804b1-48fe539519dmr262103595e9.14.1779163144948; 
- Mon, 18 May 2026 20:59:04 -0700 (PDT)
-X-Received: by 2002:a05:600c:c4a7:b0:48a:53cb:8604 with SMTP id
- 5b1f17b1804b1-48fe539519dmr262103495e9.14.1779163144657; 
- Mon, 18 May 2026 20:59:04 -0700 (PDT)
-Received: from [192.168.0.9] ([47.64.115.131])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fe4c833fcsm298009215e9.2.2026.05.18.20.59.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 May 2026 20:59:04 -0700 (PDT)
-Message-ID: <a829f2b5-d50a-4bef-bbe3-27995a9505fc@redhat.com>
-Date: Tue, 19 May 2026 05:59:02 +0200
+ bh=1XlpxuP36fWzHsVf26UQYF9pQjtD2oCrSA/780+hgk8=;
+ b=TU/npO7N4E6miRTxJDKOc376mINxNpuzI5meQug3mXiuEOTZVe2q43e3Rdy6imtaoY
+ mvzKmFAQQWA33bkSC6JCUIUXIEjrw8bKqAI6Djy82dj0otz7RjhbWuuSeH7kOZn67VKT
+ ESabZmqEAHpfgw+i5v5/itbnA+Xm7gYdcryUndI56pGayHdwmJPMwehTgORYo8TwSq3Z
+ JzpBwPI8sryYeh/AoNjH2iidtD0SY3l1HhfCLK+2XcXcrZKUAcHF91ERSvrVlU/aonSJ
+ 1MQU5+l00y3U81uPY2jOojjpk14amaXGZ3zQbS1NoD3nE0vulestgQAXUelSm4PkgZIg
+ /zMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779163179; x=1779767979;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=1XlpxuP36fWzHsVf26UQYF9pQjtD2oCrSA/780+hgk8=;
+ b=qm9RPgyISXPf4rveaodSwAGwMnpCSAeGpOkKObRROmOV+MpidOTdieHmLqj+LfRmLe
+ uJMIchPCa9GpkoRnapfpDaaGf0Oe3Uhmm+2gOVbySWZ99X71Za16rLLYxzCF6D01bgqA
+ 39W+JqXIEvkM6olc3KLjuiVfRq+aeTfJV85qMPU1zHfRkyytGAVYxsRSKU1NXyd8JbPj
+ h42cnvFCpkzaR8y19UmeJqW7q/Kd/PR3pQAn5UHnQOVWW9+lEB9hQmKexJiFHPQp+bf+
+ E8q8cg9ndDZRw0PvDVSycuFd1do0hFXOktHyL7QxX/aSXU3H0s9WxTWc4bEETme3KsxB
+ hapQ==
+X-Gm-Message-State: AOJu0YzHMvZaHsZm3MetVzvFm9Gq9U3DiVbRV4Ml+PvlPNgjryrxqgaS
+ iofGwNyrwS94foDyeYoVLvhu4IDwj22wlb9w1mbrmvocY0+0E+peo+S4UNXv2nWujNQt4z3pznq
+ 0ChI/D1oqgDHkVfc3bEORIuASWjbapPA=
+X-Gm-Gg: Acq92OGPqgbDW+8Mu2ZuSrIY5dos/svYJkR53f4o/X3p4jJq8cw67App3e9JAOxP9fA
+ hzDg2d1pquG718mMpEEr0JzImSHejBtC7gVixah0/h/6w5MUFty6aTe7Pv437vAqTcyFWTzkyIH
+ RCQzSUpOblJFEicx6i2VRKEovwMFSQyRXDCvHxoRRbQRMc1eW3hKv6p4NoHGEJ14zpM8e7djjOj
+ FqvqcrZUoXqgFW+kT1i2AW9aLKqmMKLwTTVX33iZMjq7ClgAPtrF8qwGRRt1zIzFFh/RVrvHvAK
+ yvm2e3XBYX8BoqBFxQnys2QwgqlThN59OIGlqw==
+X-Received: by 2002:a17:907:a807:b0:bd4:f854:27b5 with SMTP id
+ a640c23a62f3a-bd5177da46bmr1091788266b.9.1779163178891; Mon, 18 May 2026
+ 20:59:38 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] system/exit-with-parent.c: Close the file descriptor
- before exit
-To: "Richard W.M. Jones" <rjones@redhat.com>, qemu-devel@nongnu.org
-Cc: berrange@redhat.com, lvivier@redhat.com, farosas@suse.de,
- pbonzini@redhat.com, QEMU Trivial <qemu-trivial@nongnu.org>
-References: <20260518184333.8505-1-rjones@redhat.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260518184333.8505-1-rjones@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260512032926.1978818-1-daniel.barboza@oss.qualcomm.com>
+ <20260512032926.1978818-7-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260512032926.1978818-7-daniel.barboza@oss.qualcomm.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 19 May 2026 13:59:12 +1000
+X-Gm-Features: AVHnY4KOWHeExzQIyBCMiODTQfFqvZqjLJuk6IQkYFHk8mZCTkajJx8Ot4dqhWo
+Message-ID: <CAKmqyKOvYUhCNa705mex69_Jw4f_Xc0+XSJ7TZYgKe-HcHaCTQ@mail.gmail.com>
+Subject: Re: [PATCH v2 06/14] target/riscv/cpu.c: remove
+ riscv_cpu_enable_named_feat()
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52c.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,31 +119,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/05/2026 20.43, Richard W.M. Jones wrote:
-> On macOS we leak the open file descriptor in the background thread.
-> Close it before returning.
-> 
-> Link: https://lists.gnu.org/archive/html/qemu-devel/2026-05/msg04286.html
-> Reported-by: Thomas Huth
-> Fixes: commit 886898baad ("Implement -run-with exit-with-parent=on")
-> Signed-off-by: Richard W.M. Jones <rjones@redhat.com>
+On Tue, May 12, 2026 at 1:31=E2=80=AFPM Daniel Henrique Barboza
+<daniel.barboza@oss.qualcomm.com> wrote:
+>
+> Deprecate riscv_cpu_enable_named_feat() by creating implied rules for
+> 'sha' and 'ssstateen'.  'zic64' is always true given that our default
+> block size is set to 64.
+>
+> With this change we homogeneize extension handling when enabling
+> profiles.
+>
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+
+Alistair
+
 > ---
->   system/exit-with-parent.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/system/exit-with-parent.c b/system/exit-with-parent.c
-> index df65d2231a..d236944572 100644
-> --- a/system/exit-with-parent.c
-> +++ b/system/exit-with-parent.c
-> @@ -109,6 +109,7 @@ exit_with_parent_loop(void *vp)
->           /* Behave like Linux and FreeBSD above, as if SIGTERM was sent */
->           qemu_system_killed(SIGTERM, ppid);
->       }
-> +    close(fd);
->   
->       return NULL;
->   }
-
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-
+>  target/riscv/cpu.c         | 25 ++++++++++++++++++++++--
+>  target/riscv/tcg/tcg-cpu.c | 40 --------------------------------------
+>  2 files changed, 23 insertions(+), 42 deletions(-)
+>
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 42555cb28f..047f81b163 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -2595,6 +2595,17 @@ static RISCVCPUImpliedExtsRule ZVKSG_IMPLIED =3D {
+>      },
+>  };
+>
+> +static RISCVCPUImpliedExtsRule SHA_IMPLIED =3D {
+> +    .ext =3D CPU_CFG_OFFSET(ext_sha),
+> +    .implied_misa_exts =3D RVH,
+> +    .implied_multi_exts =3D {
+> +        CPU_CFG_OFFSET(ext_smstateen),
+> +        CPU_CFG_OFFSET(ext_ssstateen),
+> +
+> +        RISCV_IMPLIED_EXTS_RULE_END
+> +    },
+> +};
+> +
+>  static RISCVCPUImpliedExtsRule SSCFG_IMPLIED =3D {
+>      .ext =3D CPU_CFG_OFFSET(ext_ssccfg),
+>      .implied_multi_exts =3D {
+> @@ -2643,6 +2654,15 @@ static RISCVCPUImpliedExtsRule SSCTR_IMPLIED =3D {
+>      },
+>  };
+>
+> +static RISCVCPUImpliedExtsRule SSSTATEEN_IMPLIED =3D {
+> +    .ext =3D CPU_CFG_OFFSET(ext_ssstateen),
+> +    .implied_multi_exts =3D {
+> +        CPU_CFG_OFFSET(ext_smstateen),
+> +
+> +        RISCV_IMPLIED_EXTS_RULE_END
+> +    },
+> +};
+> +
+>  static RISCVCPUImpliedExtsRule ZVFBFA_IMPLIED =3D {
+>      .ext =3D CPU_CFG_OFFSET(ext_zvfbfa),
+>      .implied_multi_exts =3D {
+> @@ -2669,8 +2689,9 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_ru=
+les[] =3D {
+>      &ZVFBFA_IMPLIED, &ZVFBFMIN_IMPLIED, &ZVFBFWMA_IMPLIED,
+>      &ZVFH_IMPLIED, &ZVFHMIN_IMPLIED, &ZVKN_IMPLIED,
+>      &ZVKNC_IMPLIED, &ZVKNG_IMPLIED, &ZVKNHB_IMPLIED,
+> -    &ZVKS_IMPLIED,  &ZVKSC_IMPLIED, &ZVKSG_IMPLIED, &SSCFG_IMPLIED,
+> -    &SUPM_IMPLIED, &SSPM_IMPLIED, &SMCTR_IMPLIED, &SSCTR_IMPLIED,
+> +    &ZVKS_IMPLIED,  &ZVKSC_IMPLIED, &ZVKSG_IMPLIED, &SHA_IMPLIED,
+> +    &SSCFG_IMPLIED, &SUPM_IMPLIED, &SSPM_IMPLIED, &SMCTR_IMPLIED,
+> +    &SSCTR_IMPLIED, &SSSTATEEN_IMPLIED,
+>      NULL
+>  };
+>
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index 704105d3df..c3e354b0ae 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -322,42 +322,6 @@ static const char *cpu_cfg_ext_get_name(uint32_t ext=
+_offset)
+>      g_assert_not_reached();
+>  }
+>
+> -static bool cpu_cfg_offset_is_named_feat(uint32_t ext_offset)
+> -{
+> -    const RISCVCPUMultiExtConfig *feat;
+> -
+> -    for (feat =3D riscv_cpu_named_features; feat->name !=3D NULL; feat++=
+) {
+> -        if (feat->offset =3D=3D ext_offset) {
+> -            return true;
+> -        }
+> -    }
+> -
+> -    return false;
+> -}
+> -
+> -static void riscv_cpu_enable_named_feat(RISCVCPU *cpu, uint32_t feat_off=
+set)
+> -{
+> -     /*
+> -      * All other named features are already enabled
+> -      * in riscv_tcg_cpu_instance_init().
+> -      */
+> -    switch (feat_offset) {
+> -    case CPU_CFG_OFFSET(ext_zic64b):
+> -        cpu->cfg.cbom_blocksize =3D 64;
+> -        cpu->cfg.cbop_blocksize =3D 64;
+> -        cpu->cfg.cboz_blocksize =3D 64;
+> -        break;
+> -    case CPU_CFG_OFFSET(ext_sha):
+> -        if (!cpu_misa_ext_is_user_set(RVH)) {
+> -            riscv_cpu_write_misa_bit(cpu, RVH, true);
+> -        }
+> -        /* fallthrough */
+> -    case CPU_CFG_OFFSET(ext_ssstateen):
+> -        cpu->cfg.ext_smstateen =3D true;
+> -        break;
+> -    }
+> -}
+> -
+>  static void cpu_bump_multi_ext_priv_ver(CPURISCVState *env,
+>                                          uint32_t ext_offset)
+>  {
+> @@ -1327,10 +1291,6 @@ static void riscv_cpu_set_profile(RISCVCPU *cpu,
+>          ext_offset =3D profile->ext_offsets[i];
+>
+>          if (profile->enabled) {
+> -            if (cpu_cfg_offset_is_named_feat(ext_offset)) {
+> -                riscv_cpu_enable_named_feat(cpu, ext_offset);
+> -            }
+> -
+>              cpu_bump_multi_ext_priv_ver(&cpu->env, ext_offset);
+>          }
+>
+> --
+> 2.43.0
+>
+>
 
