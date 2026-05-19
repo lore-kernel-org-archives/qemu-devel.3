@@ -4,114 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D089ACD4F57
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 10:41:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 132A4CD5BA3
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 10:42:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPHsA-0001mr-HF; Tue, 19 May 2026 06:40:26 -0400
+	id 1wPHsK-0002ic-NF; Tue, 19 May 2026 06:40:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wPHrd-0000yU-RK; Tue, 19 May 2026 06:39:55 -0400
-Received: from mail-westus3azlp170120001.outbound.protection.outlook.com
- ([2a01:111:f403:c107::1] helo=PH8PR06CU001.outbound.protection.outlook.com)
+ id 1wPHsE-0002EG-Qc; Tue, 19 May 2026 06:40:30 -0400
+Received: from mail-southcentralusazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c10d::3] helo=SN4PR0501CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wPHrb-0006Xl-I8; Tue, 19 May 2026 06:39:52 -0400
+ id 1wPHsC-0006rg-Qk; Tue, 19 May 2026 06:40:30 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=QcLaML0SuSTPr4z+7TOSFXb3IibRtQ/N3ZW+mFxGebxF7zVdGBD5a3S+X9AjAp0zxd9eTnQJSMXXKTZYuE7dXNG1g5fmVSGZfL1tXjHI4B1gyFIy3oDlsygL9RSrfBTG6y6xj6a5KfkeC4Vc2/pHo1IDExSACTZiHtNw0ys7j/hUkeskp2DjJkAaCov4wR7gu8SjOrhkk+muCMgtBObjpd3/gOZs2yiZmLE7oQ4qeYCevBdpikSmLxQIkVfU7eSL4eD/XgY/nY4DoU+/xcbJFAxQKwkIdm8HEjlOnTZrgMaoioLEGmIOnUnKnPQ3vnJzyrPXerdMl0BtJgd1E+WL8w==
+ b=s5VFTn0LdUAU1fX66NO+hIUZ7cClayaL4bFTJMCOUOBkV2rpKFgsZD2dhhVUFaNx43CJh8nN0MoQ6994jLxU3g8Dgrb7roZBkQNiotso4BeQmk+UlkKimFJEHJK7RkVCpkCnx/qjFPvK+6gwHRzDlwtZz+G7R4Hw8R0FPtYq08wBE2hGwDBlESDNNSGCLJwOpwOAqNYW16UwXkQJwFCSoUEQOly6Tk42SfWTcEv8F2e/6yHERLhf19cwc0Rqw+8p85nP0uEkya3J4cOT7IAGfmYNREz3hC4o6Xst4RDWV6eZfB7k1qZA1ivP89thjo+UFkSKl3aTwFHdenr3stMMrw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1Va96SirhYRknJ1P+tBvn4cGX70lMspwMPqcIzl+VFQ=;
- b=Mhfw70ZDlq58I6Xt9R8vjvQjnKIhE9/tjuc6W8K0NZHe77JyHa75RpkRQdaWDqNYDgVXv5a9uEPdmwt+puofQyh7yTeOQbsR6E3wzjKYLSr2WKrtSyvRfbE0J1Q9fZIMl/Mu76xz0iDvIKyRYyze5DhZ/A+02a00bo9vEj5fX3NuuEzLoWL/HvBmdHL8UopQHniEaO1jC9VKNcx3nmyIyNmy6txrQVrJGfVo0WFAJVIkYfaPiJU2Pjo5l0eHTVSwKidwJws6Vbd4UVNNE+X+XZEikD1ojrvWWhut/0LkZj8oEuhyjqywxU50wMUX1XHvMn150wsfujCTMB2JstP87w==
+ bh=Nyy6Xt3WmzNihqPvcBrs0beIQDu+ENLonfXJsLABu/U=;
+ b=WJwQcrXoYxaV1vw+EVbGDZ/FAi3W4VUjh1Y+N90KjAMSZq0yqIKDUlhsaB1WPbRF1h19yLQEdiY2eJJtz5UvP46p1/WuCZjWGGePbCmAIU3dfKjY3eDnRG6U6ZPOA+2UxIKxPKlFmwP74TxAM3NRFwEj7gpIgrWQVwy2viXVq2WbP8nbOcIOuUzCTfUwdJMNnPNsHrGIoZKTlsxBpL8TQMOXZvYUoOtT+KI37JjAIETgczUBO+2/jCieQq7QY+bRcpr+VgldKPkM7y6bY93IqowtEWITFHAXzckvcQTfjxCRUO/GaVv9DFngKNJp5i6p02d3gJVvXew26nz70IfQxg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1Va96SirhYRknJ1P+tBvn4cGX70lMspwMPqcIzl+VFQ=;
- b=FBxjHi9OR5WgC0i/k7cJBZmgNtWjmzcBDm3JKIbDPn920yy9GxOrXTLcfImij4FB6OKjwe2T7X5P37yF5dzDaFQzXMYlGFjN4ggDUH1x6Co/1H5AXoJHbS+Y7HYlP+Chee5KshVyl3UeR+qeAqOLyf0qeTAqpbx5lPopP+tgvbwDj1yJEUqXi9IqKislnfB87XTRSIEMqcRL/d+dARl2COkGL/P+dHy7+R8ux9izSiK/eGYGqVqwxVybJZlRj3pFxza6wyTxsZCZOie3Sz4n3nbkuOJHzCMkrDWX2NR8oTQOtMT/VnnTyA/T1hThs5oOsaexyaoanfYaOEM77apKhQ==
-Received: from BL1P222CA0005.NAMP222.PROD.OUTLOOK.COM (2603:10b6:208:2c7::10)
- by DM4PR12MB7717.namprd12.prod.outlook.com (2603:10b6:8:103::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.25.23; Tue, 19 May
- 2026 10:39:43 +0000
-Received: from BL02EPF0001A101.namprd05.prod.outlook.com
- (2603:10b6:208:2c7:cafe::d0) by BL1P222CA0005.outlook.office365.com
- (2603:10b6:208:2c7::10) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.25.23 via Frontend Transport; Tue, 19
- May 2026 10:39:42 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ bh=Nyy6Xt3WmzNihqPvcBrs0beIQDu+ENLonfXJsLABu/U=;
+ b=ShcqTWZVeqPi0vXLmHC6iJk/ddp6IpLH3YzN5SKJqBtDmGaRfePjMH7qGOL2d5yrw6rg8jRnSZoXHzWR3xMia5WEJkaur6B7FYRfDOkxQP6QVZ0aZaW7RGbC9+07w7cb0uWvg5ehTxlmYpegP+3GcwZooYB2ZPfIADGddfZFKD9+9ezQAYsvRq/1vf2Keg0t18rAgebGOAZE7tm3bnTducy17jIEip9RCIDO5hlD7fcqmu6842fMZjKCl/9VrorP+NLE9uaJmWA6pxR42HHPgUl0endbTVMy7uL9H1NeAm1MvR1Mzrt/lkly8cJQL0wHACFH8BLt7T4fgS2x4l3e3g==
+Received: from PH7PR02CA0016.namprd02.prod.outlook.com (2603:10b6:510:33d::15)
+ by MN0PR12MB5787.namprd12.prod.outlook.com (2603:10b6:208:376::9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.22; Tue, 19 May
+ 2026 10:40:17 +0000
+Received: from CY4PEPF0000EE30.namprd05.prod.outlook.com
+ (2603:10b6:510:33d:cafe::fd) by PH7PR02CA0016.outlook.office365.com
+ (2603:10b6:510:33d::15) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.48.14 via Frontend Transport; Tue, 19
+ May 2026 10:40:17 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
  smtp.mailfrom=nvidia.com;
  dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=nvidia.com;
 Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- BL02EPF0001A101.mail.protection.outlook.com (10.167.241.132) with Microsoft
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ CY4PEPF0000EE30.mail.protection.outlook.com (10.167.242.36) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.48.11 via Frontend Transport; Tue, 19 May 2026 10:39:42 +0000
+ 15.21.48.11 via Frontend Transport; Tue, 19 May 2026 10:40:17 +0000
 Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Tue, 19 May
- 2026 03:39:27 -0700
+ 2026 03:40:03 -0700
 Received: from NV-2Y5XW94.nvidia.com (10.126.231.37) by rnnvmail201.nvidia.com
  (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Tue, 19 May
- 2026 03:39:24 -0700
+ 2026 03:39:59 -0700
 From: Shameer Kolothum <skolothumtho@nvidia.com>
 To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
 CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <clg@redhat.com>,
  <alex@shazbot.org>, <nicolinc@nvidia.com>, <nathanc@nvidia.com>,
  <mochs@nvidia.com>, <jan@nvidia.com>, <jgg@nvidia.com>,
  <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>, <phrdina@redhat.com>,
- <skolothumtho@nvidia.com>
-Subject: [PATCH v5 18/32] system/physmem: Add address_space_range_is_ram()
+ <skolothumtho@nvidia.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v5 26/32] system/physmem: Add qemu_ram_backend_pagesize_min()
  helper
-Date: Tue, 19 May 2026 11:36:56 +0100
-Message-ID: <20260519103727.899332-19-skolothumtho@nvidia.com>
+Date: Tue, 19 May 2026 11:37:04 +0100
+Message-ID: <20260519103727.899332-27-skolothumtho@nvidia.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260519103727.899332-1-skolothumtho@nvidia.com>
 References: <20260519103727.899332-1-skolothumtho@nvidia.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 X-Originating-IP: [10.126.231.37]
 X-ClientProxiedBy: rnnvmail203.nvidia.com (10.129.68.9) To
  rnnvmail201.nvidia.com (10.129.68.8)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL02EPF0001A101:EE_|DM4PR12MB7717:EE_
-X-MS-Office365-Filtering-Correlation-Id: 697e067b-6a4a-414e-2161-08deb592efed
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000EE30:EE_|MN0PR12MB5787:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7f37f408-9eec-4e52-eb46-08deb593045d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|36860700016|376014|82310400026|11063799006|18002099003|56012099003|22082099003;
-X-Microsoft-Antispam-Message-Info: ERH5Jp+udi77AN93bZdAVxY0U3mAACUR3iuyYEJJsniI5LWvlg5bv+WEywdi8yp0wJ6Qjt4yYqu22Qe4JmWBFrKNKyPqSWe2y6acZSHMoso4RwKSBM3Temgp2Dhvv63vhRhVqRBu3QdHW9ATyurCSaR2rJ3000GV3MqcJhC3JcH3fsgduYG06vi1KmPQPwR8mPCHFLRr3aYTjNmuKD5sKXvLaCWnTfyADhWBloKtVuCKv0M2+e+j8QNItsbrKoEbPaTW9FQ/6+sExRiwpSBsxsg/QgudjxultwWds+dXam0MpyDPNlFwCcl7BDQr7FlYkb+Os7f8x1RIU4ZnwTUa/09QJps8kD/Ig3yWtZVkmZ9b3z2YiOHm38zhRyOYSPqEkCAHRum6Xx9fJ9fvvqf8kgszOlyJrP6YQVHHs5t4XWUnLAnm1I4y/6IYX32rBugpCI4IQcUrcsc2z8E1DZqNVYlk4dScN63PIn7jqctVJY7DolcQgrVUgofq8W+Oy9PqWJaH8AldTB1O2j4U5WanmrmalA20h5CGvVuDNj8XK+da/6qsO45cbC+rTnQcdSwmWntRDfnnPwnjEQ65iB0eYq0vc4asUmFYQhn5SlbZ8RLzI2XPybmZSyB2vst9BKgmCIvz2jfalN1d2qUi7qfY4cGMY3U+mB+6j93C6SST+wtfRfkVJZ0A1nj4HEGh+UlLbnl12jz/yLQVoL072v9lazCvW8jVeMhxkbqmfTYYpeY=
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(1800799024)(36860700016)(376014)(82310400026)(11063799006)(18002099003)(56012099003)(22082099003);
+ ARA:13230040|82310400026|1800799024|376014|7416014|36860700016|22082099003|56012099003|11063799006|18002099003;
+X-Microsoft-Antispam-Message-Info: fkhKHeo8GGbihgb1Y+baU+9yL9zhFH84DkxeWueyKAKyjFlghk9Ksy6Dk7L8qPdcIqDUpL2i41/G1wkd5iOWgMdRcGGvZlJyJHuu7g1XJJ3HlJBSqbQKUKHXI+KR3iXKvATheZIX+PXVxpA9bLPwlgQEpzH87vB1y2d/IpmS+PAFeoJyTgZV0H79hminS+iqcSEMCa75IiFKNO9OET5RJMFPV/DuaMzfYEaMS4QLnN3QEjMWejoTdypRHrrWzZVWIHjKq2+ktwAB9wUqxN4X530nu0vFYStxA/xJywXnZrOGKKpxI62KVjkTrSkL6iRt6xhj7zyF2iYTv1Joj/eXWfqcYupSLNM196pkgC6HaxSYBigFeftupB7ZKDZnuFuoS6YXXYeaXTcCWClzaMstfFfLwAvu8wKZnfHboUEVBhGwcw+cOR1lb7dm1vhhj6cwUA8PB1Td5lzZoY1sjBwgrFZ9YCkveJiadcFJB+6DEq7ImatlAnlO2nQlLQIvOpqPIEl/gIBRooy2+rAK3mW++02w0vWCf8UuvtSMXdcs/NxbEXTwecSJaMfc0kMpceR5QLVdPvXErkNHWfVoVbmWNcYbyt4zUzWEHV2CkjrDpHp1pDL4qNdh8IPQru/5d8LNC6QBJYYZDEhwCMa0EHI0Ec1aat1tgLkIJy7uE/vh7anLG3epi/LWUmkDIQWykeKpPNO62MK5+4QyjVqDdGa/Cx34W2K6fjrTdmREv5Y2spM=
+X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(82310400026)(1800799024)(376014)(7416014)(36860700016)(22082099003)(56012099003)(11063799006)(18002099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: VQhOZmUd1aZUNN7LvZ8hnKjUEgY6BlWn8CZkFWvxZtKSUOUNCRBXn3E8yhoPcj6umxLdE9TSMMK+EU/h6aGrLAqzukqDf6bEtH6vIeKdpXg1sm/RxpyN0XwCu7sl7ZVe1rypP46p8Jl3lMO+Vj02pKccD/BKfEDmGOemn3qOZhQjgYpzNNYqa5Yw3hjYG4fUzRlAj1g6h2dNM6+ynHGEF1LzuS0CsdJjwcJH1FW64wwDZky8NXbZmHnihCHboDAq+En/jdHYXQUg3/F4z8EmX2TEF2n/VHJYpg9XbWF8SqUx7AdDI9CL7yo2M7C946asadpqF1DVxBY+fzNlZpPKYNZjLhANefxnGIFkcr5BOtSzgW8Fop86bq+nNMunNavco87ijI6+9+rvRb20uot2IIRYX7VKOQ2DHkYHAH1UY8OubLVDuHobUaBE6e4RDOKW
+X-MS-Exchange-AntiSpam-MessageData-0: 4NGoBM4IK+LFeA/qA60mD1RYqEjTjnunX/HAn+5bYcto1A9Y8V3et5ox3TLypLxuTMLctVw61S8S5iuPHVVf8Bq20JFimEODTDUkQilvN76XTvM2MMuuI/To3fJoigd8t73idGIbnq1YcehgVi56UgpznqnndIkeAojsLDPUmqhPZKhjqc1dUjiMcq/mcjY9lVrbLTB9xuxUpgZTv+OLZ2/t8tPeY6BCVaL1JmEYOtvN7lV7+pweyYXCmDsSuolSC4k4w/Bhpzw4/nz8erul5Bxnq2OUK4zkS/f92vda31d5T8Y46zd1KIUq6W2XzbDYZ07WpBhElcKelvHYZ3ObxAQ5pa8Hf6QhkBZK9Qoeiov+6sR8j3qwFoG5ec8t78LJDd9WxG05jH4wrZ3RNLIV7QrIKxu2KzO7HhdHPNVMEu5kb01v94a43LJ++NxADV7J
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 May 2026 10:39:42.6487 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 697e067b-6a4a-414e-2161-08deb592efed
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 May 2026 10:40:17.0346 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7f37f408-9eec-4e52-eb46-08deb593045d
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
  Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0001A101.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EE30.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB7717
-Received-SPF: permerror client-ip=2a01:111:f403:c107::1;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB5787
+Received-SPF: permerror client-ip=2a01:111:f403:c10d::3;
  envelope-from=skolothumtho@nvidia.com;
- helo=PH8PR06CU001.outbound.protection.outlook.com
+ helo=SN4PR0501CU005.outbound.protection.outlook.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -133,73 +134,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce address_space_range_is_ram(), a helper to determine whether a
-guest physical address range within an AddressSpace resolves entirely
-to RAM-backed MemoryRegions. The range is walked using
-address_space_translate() so contiguous RAM-only ranges return true
-even when they cross multiple MemoryRegion boundaries; any byte
-backed by non-RAM (MMIO, ROM device, hole) returns false.
+Some hardware accelerators DMA directly to the host physical address
+of a guest-resident buffer (e.g. set up via IOMMUFD). The HPA is
+contiguous only within a single host backing page; a buffer larger
+than the smallest backing page in use may span non-contiguous host
+pages and fault.
 
+Introduce qemu_ram_backend_pagesize_min(), which returns the smallest
+page size among RAM regions backed by a memory-backend object. Falls
+back to qemu_real_host_page_size() if no memory-backend RAM blocks
+are found. Callers can use this to bound the size of buffers that
+must remain host-physically contiguous.
+
+A subsequent Tegra241 CMDQV support patch will use this to bound the
+command queue size exposed to the guest.
+
+Cc: Peter Xu <peterx@redhat.com>
+Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org>
 Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 ---
- include/system/memory.h | 13 +++++++++++++
- system/physmem.c        | 19 +++++++++++++++++++
- 2 files changed, 32 insertions(+)
+ include/system/ramblock.h |  1 +
+ system/physmem.c          | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 30 insertions(+)
 
-diff --git a/include/system/memory.h b/include/system/memory.h
-index 1417132f6d..af5f96f6ff 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -2841,6 +2841,19 @@ bool address_space_access_valid(AddressSpace *as, hwaddr addr, hwaddr len,
-  */
- bool address_space_is_io(AddressSpace *as, hwaddr addr);
+diff --git a/include/system/ramblock.h b/include/system/ramblock.h
+index 4435f8d55f..7f7ea53557 100644
+--- a/include/system/ramblock.h
++++ b/include/system/ramblock.h
+@@ -175,6 +175,7 @@ int qemu_ram_get_fd(const RAMBlock *rb);
  
-+/**
-+ * address_space_range_is_ram: check whether a guest physical address range
-+ *                             within an address space resolves entirely to RAM.
-+ *
-+ * @as: #AddressSpace to be accessed
-+ * @addr: address within that address space
-+ * @size: number of bytes in the range starting at @addr
-+ *
-+ * Returns true if every byte in [@addr, @addr + @size) maps to a RAM
-+ * MemoryRegion, false otherwise.
-+ */
-+bool address_space_range_is_ram(AddressSpace *as, hwaddr addr, hwaddr size);
-+
- /* address_space_map: map a physical memory region into a host virtual address
-  *
-  * May map a subset of the requested range, given by and returned in @plen.
+ size_t qemu_ram_pagesize(const RAMBlock *block);
+ size_t qemu_ram_pagesize_largest(void);
++size_t qemu_ram_backend_pagesize_min(void);
+ #include "exec/target_page.h"
+ #include "exec/hwaddr.h"
+ 
 diff --git a/system/physmem.c b/system/physmem.c
-index 7bcbf87573..46b36c7b10 100644
+index 46b36c7b10..7ccec52aa2 100644
 --- a/system/physmem.c
 +++ b/system/physmem.c
-@@ -3668,6 +3668,25 @@ bool address_space_is_io(AddressSpace *as, hwaddr addr)
-     return !(memory_region_is_ram(mr) || memory_region_is_romd(mr));
+@@ -1999,6 +1999,35 @@ size_t qemu_ram_pagesize_largest(void)
+     return largest;
  }
  
-+bool address_space_range_is_ram(AddressSpace *as, hwaddr addr, hwaddr size)
++/*
++ * Returns the smallest page size among RAM regions backed by a
++ * memory-backend object. Falls back to qemu_real_host_page_size() if no
++ * memory-backend RAM blocks are found.
++ */
++size_t qemu_ram_backend_pagesize_min(void)
 +{
-+    MemoryRegion *mr;
-+    hwaddr xlat, l;
++    RAMBlock *rb;
++    size_t pg, min_pg = SIZE_MAX;
 +
-+    RCU_READ_LOCK_GUARD();
-+    while (size > 0) {
-+        l = size;
-+        mr = address_space_translate(as, addr, &xlat, &l, false,
-+                                     MEMTXATTRS_UNSPECIFIED);
-+        if (!memory_region_is_ram(mr)) {
-+            return false;
++    RAMBLOCK_FOREACH(rb) {
++        MemoryRegion *mr = rb->mr;
++
++        if (!mr || !memory_region_is_ram(mr)) {
++            continue;
 +        }
-+        size -= l;
-+        addr += l;
++        if (!object_dynamic_cast(mr->owner, TYPE_MEMORY_BACKEND)) {
++            continue;
++        }
++
++        pg = qemu_ram_pagesize(rb);
++        if (pg && pg < min_pg) {
++            min_pg = pg;
++        }
 +    }
-+    return true;
++
++    return (min_pg == SIZE_MAX) ? qemu_real_host_page_size() : min_pg;
 +}
 +
- static hwaddr
- flatview_extend_translation(FlatView *fv, hwaddr addr,
-                             hwaddr target_len,
+ static int memory_try_enable_merging(void *addr, size_t len)
+ {
+     if (!machine_mem_merge(current_machine)) {
 -- 
 2.43.0
 
