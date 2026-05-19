@@ -4,109 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30AF5CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 04:49:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF45BCD4F3C
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 05:00:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPCNz-0006kd-UX; Tue, 19 May 2026 00:48:55 -0400
+	id 1wPCYE-0000Uq-Fz; Tue, 19 May 2026 00:59:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wPCNx-0006kJ-FN
- for qemu-devel@nongnu.org; Tue, 19 May 2026 00:48:53 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wPCNv-0000kC-Tf
- for qemu-devel@nongnu.org; Tue, 19 May 2026 00:48:53 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-bd394f4a931so672911166b.2
- for <qemu-devel@nongnu.org>; Mon, 18 May 2026 21:48:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779166130; cv=none;
- d=google.com; s=arc-20240605;
- b=eepieQkHWFKgtbF/ZXAS48kNpPB9x6BNBNiesXZW7Z5hNHxxPyZ34mWnbKSo+5m+zA
- dvAKhduHspdqSMq33znbIjldj0aXu24ICHKk6t6a3qLC90jScttavDG5Dz4y9/8Q5TTx
- +mXFjsLmfYamiUMCUzQumw1nwFDigQ7cImVFJiSdvGKHrXab2PWrfpEe6xspMfL81mrc
- xp+f8X83hHLmd0VfQTQ3JUtaNd8E23qMGafMQ4AHKTfD4mmr7ekt1OwJh6ayYC7rszHw
- fQrWB/LP+xScPuktStQmzR56Pli8SOJ/pysEyN2I/8X77l7xrPKw87n2oZbDyJvQbdLh
- b8Jg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=37msn/h76tZy7mtPLM4Qy08JA/Un2IRmRhlHQTmizKk=;
- fh=GDHgVZLUzfC/a9ecQHEKaPVt/uVGB5TWXR6UJeGYf+0=;
- b=ajLvmZZLvn2FjUG5hMbel1xoUB0SQC0Gloa+kq9pJeutqAGllxFF9Ikk8jsaJFUoeD
- c0UAfNrFeAyL2YRN4kGvpm7aGagzpOuXHpBXQkJ1oAdE3WWObKP0Y5sNGJzrF5lEeq0N
- JZWK/AOLdEpr55+eOFi7rQfi1brUg2sOBiLry9BEfM/yrLkE9bQDttlSwJYIdfTKC9QO
- 8Y9fHnEEtH7GzB47p1wHH1H01S2DJTif2FEBj0NsnR+8V65jkoi4mTcx9A3ydxhhePnf
- 5TEEyEKvigntYXXcV30BsiWIazxCKm/+pVxafkaanSiskOEVNYZk2hsSX9KxD1peg6hD
- bypg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779166130; x=1779770930; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=37msn/h76tZy7mtPLM4Qy08JA/Un2IRmRhlHQTmizKk=;
- b=WlEOlPHechD+1l2w9MQ8837K1rTEwfXgQfpvHUMfW4Z+/VMEVchtnB4nt8YURYPmdb
- fGBPkMHCDKUp/6fB1JRF59tz9PsB+KdIjOBdhQeyyiP21T3sHr1l+5l+Bo0SNbki1FLu
- ccgyvI2xNH9W0dJv9XXPFnPeTYSKpULjnvmLCKkAS3rGo5sLEoPw+8vb0DE40ZFH+Kiu
- c549kNKqgUWwyL4327G2nfQkRnKqpYyKPBDCk73kBSnIW38j4PCoGNCnEMmfQZ22747n
- haqe5d6PHsgX4/D3LmdwsH0CNA8JaYcX5unr0a8NwKT6o9S6Bag7qA476d05XABRFHgC
- ioGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779166130; x=1779770930;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=37msn/h76tZy7mtPLM4Qy08JA/Un2IRmRhlHQTmizKk=;
- b=M9qrh+WlnHiTY4AXmcqusFhQSqnXxQ+SZ81gBvrFzcYr9QlYoXhpw+nwqjOG2Lv0fG
- hPdbNwdUYn4vuoqq37v5M//V7zsFIYgVG0cTA3U3xi1SSun3R5ROi0foq7jVf9QR+g6/
- 4RlJY3E1TTWTsQE764TsU4fKgYvyd1UO/PrynlRdxQonh+G3YuTh7gTPm4oDZ0hZIptP
- uFbUYEEyYYoWTQevQhu0fphlES9qsjQAbygcyG2OvwOYUM7pi2yii8zhLvPwY1qrcsFV
- 4JK0qpb/5h1bol+YmCpBpSeiDnGGUWx3w4+NjSfc0VTIzK7lKyyyWvVdJA7it8+yHtdP
- Vgdw==
-X-Gm-Message-State: AOJu0YzYMWN92glHIPzjSQRQQ9e3fWLpawKdH42HWPS7NXhfqR8BY+nG
- r/WpRBqtRIz442K4csR6Aq1GCL3+0YaID2EAvjAci/VB4mK9Sgu5j6cGVg506m7QBvtX9CqcrCM
- T00vkDgBxgNi8nT6Ug4XzyH/earXQHr0=
-X-Gm-Gg: Acq92OGHgDGUHX0jtrA+SFvpSabM2XikZmEDIQIf3kM2eJyrtAv4fE5mlVqfZLFiC2W
- SZ2N/iUjBBzrHFO4X2B3MOyFuifnVmLZBoMd/nPgA+J7EVP9zp9xidXk481D5IPHwLIxxmp7xtg
- gMpQl1qxDIKIEtmgh3xSpQFz3sh/yIBXLP/uXPfHlonz0yG2jnuc7SSbbRSFdjceBzcDZxpS9Rp
- wVqx9IzuGPk/2q53/5gbzhn+nXsK2hkBFKBB2ilUZMAoeQTgr+UnGyyUQ9yaR+L6mbKq7bG6VCn
- ou+E/JZd31oa/liQrqBAbrtxSPDiCb0Icjsx4g==
-X-Received: by 2002:a17:907:ea8:b0:bd0:4f6e:9b2f with SMTP id
- a640c23a62f3a-bd51780c078mr1018033666b.1.1779166130017; Mon, 18 May 2026
- 21:48:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wPCYC-0000U5-3P
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 00:59:28 -0400
+Received: from smtpout4.mo534.mail-out.ovh.net ([188.165.54.92])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wPCY6-0007R5-Be
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 00:59:27 -0400
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net [51.68.80.175])
+ by mo534.mail-out.ovh.net (Postfix) with ESMTPS id 4gKMsL1j9cz6LPD;
+ Tue, 19 May 2026 04:59:18 +0000 (UTC)
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net. [127.0.0.1])
+ by director1.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Tue, 19 May 2026 04:59:18 +0000 (UTC)
+Received: from mta11.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.0.36])
+ by director1.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4gKMsK6N2kz5w8j;
+ Tue, 19 May 2026 04:59:17 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.3])
+ (Authenticated sender: clg@kaod.org)
+ by mta11.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
+ 25BDC2403B51; Tue, 19 May 2026 04:59:16 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-112S0069ff4c1ba-a214-4529-bd00-f3784e604e38,
+ A1C5BDF50025601E7F63D663DE463AD2E6007479) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <1e2e06c1-b36e-4c1a-9ff5-8d84ce7e5f47@kaod.org>
+Date: Tue, 19 May 2026 06:59:15 +0200
 MIME-Version: 1.0
-References: <20260518070143.8405-1-jay.chang@sifive.com>
-In-Reply-To: <20260518070143.8405-1-jay.chang@sifive.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 19 May 2026 14:48:22 +1000
-X-Gm-Features: AVHnY4K3s8qoRGMMXfp_mlsfHa1uy_pHEZGN5tZ1maNZUHX_7tcQkQBhr-907E8
-Message-ID: <CAKmqyKNi=scF+fshvBWz3yL89UNM8J6LaVazKdKHy8q6R=bp3A@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/riscv: riscv-iommu: Re-process command queue after
- clearing CMD_ILL
-To: Jay Chang <jay.chang@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>, Frank Chang <frank.chang@sifive.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x632.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/1] hw/misc/aspeed_sbc: Add bounds checking for OTP
+ write operations
+To: Michael Tokarev <mjt@tls.msk.ru>, Kane Chen <kane_chen@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>,
+ "qemu-stable@nongnu.org" <qemu-stable@nongnu.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+References: <20260428055254.76581-1-kane_chen@aspeedtech.com>
+ <20260428055254.76581-2-kane_chen@aspeedtech.com>
+ <c2b76041-81d8-43e0-b50b-af88c1c658b5@tls.msk.ru>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <c2b76041-81d8-43e0-b50b-af88c1c658b5@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+x-ovh-tracer-id: 17160403431173106940
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTF0W4Ii1i2FiaAotfmUdvRf+zfk5DPeBbgPCBGA0uz+ROnlrYtnpdn43Hu93eQ92i0YNZTJfyvDTE47Zau2uv5jFuH0INpSGzam+2C8lsfLLJrlyDf6NvllTSNA5nFP1PbfXmCbTJOuFdIZjRXVwCiEbgBWzsRdKOJCDAQEKjq5Kvr77KvTznvt+2duCQLZNbpymQjyzQrlTf9ZGKE6qdDCMQMa8B5LHBdmfZosFdO1msuulXnZDid9HMs2/iAOAkWomjW+xsUJ0666cDyR/uJ/LuSbRnh6Az2faI80X2CQx7Q88eazBcg2ZcDThUvG8ZRz9zsPUzq+Uah1yvR86t1nhsgJeI+yz1C/sr9JzwW7Y7nQpsmdd4LzFdMCYuLnHOD7tOXd3IJz8Rn1RHivakH8pqOi1I5Q1lSFG55t+UdG7zT2fnKEJeKZThes0/XBW5SrdJ7V5owKZq5fUFQq1yy88r/Jbc0xFeDbIgelGIiSOWYSCfMQ0rlQbXnDCmIQQtWwDMl5xfcR3g5/FkP337dKonpc5fEMaOb+SyerUcQbmqGmlavSDM2xceQSKxfmCa5s5ZNk8O3PmU2CBN2UhiBHDoZYJ+ThD9iEUX2uM7EHyZQ9h4n+umm4MYsKrOPBaoSKO/GwejacOIEalLkcnSSSd2XgZFaEbixVLmMZjEESFA
+DKIM-Signature: a=rsa-sha256; bh=fLCjlra5E3ISE7Z2zg1x8CVaCENw+4Xw0TS1P96G7AQ=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1779166758; v=1;
+ b=T8xAIX3RXrMTkQo2OWVJlKwAYFu7IQuLMG5Ck1vnNy6rtCo8q2AX/xX7FEFkpqNJgNEtU9Xc
+ 8A10TlnBzmwN0dTK5yYo/8bIdKan8oPKU2FoakZ40k8AeAdjdMsw3CggFUtCMIwynqzQZ0S8I6R
+ pDPp2Bxzxlgpm+3NAS1Cnkf4F7IgRZk/lhAxPJ3EKjs9bObFCEWOgfAF+Tk3rhS7izWfDjkhsW+
+ qFW0Q4+TmPxO9ZA5zqcKQiyNOm2EcRO43CpDn4wP0NBZLEypYExfni8Cq4IMIetzeKIptC2K+7l
+ e0D+QNqrgMwNb/cny7hLKIisb5Gwf1n3tGKpsmSYYt6sA==
+Received-SPF: pass client-ip=188.165.54.92; envelope-from=clg@kaod.org;
+ helo=smtpout4.mo534.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,59 +139,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 18, 2026 at 5:03=E2=80=AFPM Jay Chang <jay.chang@sifive.com> wr=
-ote:
->
-> When software clears CMD_ILL or CQMF error bits by writing 1 to CQCSR,
-> the IOMMU should re-check the command queue and continue processing
-> pending commands if head !=3D tail.
->
-> Per RISC-V IOMMU specification :
-> If command-queue access leads to a memory fault then the
-> command-queue-memory-fault bit is set to 1 and the commandqueue
-> stalls until this bit is cleared. To re-enable command
-> processing, software should clear this bit by writing 1.
->
-> Signed-off-by: Jay Chang <jay.chang@sifive.com>
-> Reviewed-by: Frank Chang <frank.chang@sifive.com>
-> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+On 5/14/26 20:48, Michael Tokarev wrote:
+> On 28.04.2026 08:52, Kane Chen wrote:
+>> There is a mismatch between the Aspeed OTP model and the Aspeed SBC
+>> model in how the guest-provided address is handled.
+>> aspeed_sbc_otp_prog() passes a word-indexed address directly
+>> to address_space_write() without converting it to a byte offset,
+>> whereas aspeed_otp_write() expects a byte offset and applies an
+>> additional shift (otp_addr << 2). This double-shift confusion means
+>> that an out-of-range word address can lead to a write beyond the
+>> allocated storage.
+>>
+>> Fix this by adding bounds checking on the word offset before
+>> converting to byte offset and passing to address_space_write().
+>> This matches the existing bounds check in aspeed_sbc_otp_read().
+>>
+>> Cc: Kane-Chen-AS <kane_chen@aspeedtech.com>
+>> Cc: qemu-stable@nongnu.org
+>> Fixes: 1a00754ccf15 ("hw/misc: Add Aspeed Secure Boot Controller model")
+> 
+> 
+> FWIW (this change has already landed in the master branch, so it's cast
+> in stone), I can't find this commit in my git clone of qemu repository.
+> Neither hash ID nor the name.
 
-Thanks!
+My bad :/ I should improve my flow to check for bogus commit ids.
 
-Applied to riscv-to-apply.next
 
-Alistair
+> Is it this one maybe? https://marc.info/?l=qemu-arm&m=164500409921734,
+> which is commit e1acf581c9 in qemu?  It has a different commit message
+> though.
 
-> ---
->  hw/riscv/riscv-iommu.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
->
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index 5bc2472a83..1b8a8e9ef2 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -2034,6 +2034,16 @@ static void riscv_iommu_process_cq_control(RISCVIO=
-MMUState *s)
->      }
->
->      riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_CQCSR, ctrl_set, ctrl_clr);
-> +
-> +    /*
-> +     * After clearing error bits (CMD_ILL, CQMF), if queue is still acti=
-ve,
-> +     * re-process pending command.
-> +     */
-> +    ctrl_set =3D riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_CQCSR);
-> +    if ((ctrl_set & RISCV_IOMMU_CQCSR_CQON) &&
-> +        !(ctrl_set & (RISCV_IOMMU_CQCSR_CMD_ILL | RISCV_IOMMU_CQCSR_CQMF=
-))) {
-> +        riscv_iommu_process_cq_tail(s);
-> +    }
->  }
->
->  static void riscv_iommu_process_fq_control(RISCVIOMMUState *s)
-> --
-> 2.48.1
->
->
+It should be  :
+
+Fixes: 9f58dd0a8c30 ("hw/misc/aspeed_sbc: Connect ASPEED OTP memory device to SBC")
+
+
+> And this patch does not apply to 10.0.x, - in there, there's no
+> hw/nvram/aspeed_otp.c (688a3dae78 hw/nvram/aspeed_otp: Add ASPEED OTP
+> memory device model).  I assume it's not needed for 10.0.x, but in
+> that case, the Fixes: tag isn't even commit e1acf581c9.
+
+It should apply on stable-10.2
+
+Thanks,
+
+C.
 
