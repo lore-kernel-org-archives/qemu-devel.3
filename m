@@ -4,97 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1AD1CD4F5B
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 21:52:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98E6DCD4F54
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 21:52:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPSLg-0007JM-B4; Tue, 19 May 2026 17:51:36 -0400
+	id 1wPSMF-0007kF-5N; Tue, 19 May 2026 17:52:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wPSLe-0007Ir-IQ; Tue, 19 May 2026 17:51:34 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wPSLb-0004on-JX; Tue, 19 May 2026 17:51:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1779227484; bh=efdfGkTvc2JDKW33IKowDJ1YFs9WMQsC3kI0t03R/Fo=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=T5w6qHxYlDvOrKK/9utjAc+goK50CIrVJKnnWGwfsbKTgQFCYKDqnrBVJmn46nZRd
- DJP9aU6T8yk2fK+O7rWP/obRRKbgPPMwdZpAtFoGD35V89h7CGgSMQJyGfj18ZD31o
- 9xIt15a28VsgHGqhxNxFHJWIXSiToRUbj+0GaUf4P0qV6G9M8A15l2rmFQ+FrN47sh
- EEt38oHuyniqJ1MPnsPt6JhVbg3XcKdsDMhSMD4VduAhMkPWJGOIFGd51Dmn6tiSmd
- dK1gN0Rx4ogN9HzyOF1h8YzptBzL+b4i8A9ysoNq1XzCYVeHwvfMa2q+BB2d+BjfS/
- JbCRveupgcjDA==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 205E61AE239;
- Wed, 20 May 2026 00:51:24 +0300 (MSK)
-Message-ID: <b87f3824-70b7-4f7d-a1fb-91fc7028dbcc@tls.msk.ru>
-Date: Wed, 20 May 2026 00:51:27 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPSMD-0007hy-Mo
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 17:52:09 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPSMB-0004vg-Ke
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 17:52:09 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-488b150559bso31583615e9.1
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 14:52:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779227525; x=1779832325; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DEinpFWAf/dgwZJ4Wp4fwI+DaPN2mKDPRq7tIIRp6Io=;
+ b=HV6ZU4x5tkphRM3XxsiXjlUaa6HSZDJLC8Aq+SgucqQYTl5NARCR5VM/0zVJ8I4+Ys
+ 9758EgHtoevbCo/CMZdZsdGuI26p37NCIeaPcFz34VcSqb75fwMQ2dbSyJFIcl86CKBC
+ qAln4b+55YPSuIzNFQuvkaTMRfPZFL3zjsuBQ8ZcWhAuNH2oq8TfXqwYAGeT2HiYJt8C
+ 39NhMXSSJS2b3TGDXC5IbPP66wnS+uqxSvfS2OYPM1nfWAJbcQ4PtWD58CAkGwemtffu
+ EfOl8lnCYg6b2a7IWIl6WBHgC/xbejulwttYeJ1sBJzDaqwefb+7OZnAF5DVrC+hID0Y
+ 6zeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779227525; x=1779832325;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=DEinpFWAf/dgwZJ4Wp4fwI+DaPN2mKDPRq7tIIRp6Io=;
+ b=p61F7fNLMPXCoLTOMFggIDistHTKyLgGrnMirNiI22bTzDq2/m9xT85IVWIbtJ9tVW
+ RPqrWhUXr8ICiVt7Sv0+ZBIudwyPEuwUppc2JmUjjssK3tS7stknWACzuNkPSUFLjhFk
+ 8oM2N3sV8HdN++Yb/wBrsLKJP/L/C71Jufni9JOp0GvEFfgsxjsdg0fL3mTY1JV/AR0x
+ CZPjJQ/GYC8hJpvjTeAYBylxN7o6YZbai/3BpUs8561GFq15//9Ty6TAchioEnRVygT7
+ g2csmmohC6ssZnrGoSah71cOa6Owqg+Fll0/H6bpr2XokG3gzyYJAxr28Fa1Kqm1NgRW
+ GRaA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9G0j4h8abU9AFW5pIoleIVOzUYhLF4Bz1811BF2O5+QQbZ6rO5a2B2R3Lbb4xdOEjKJluM1gSaeXcy@nongnu.org
+X-Gm-Message-State: AOJu0Yx9CTkiPLL3e1AdIpI1A4lqJH+Na/fEWpNC5Id4yMNufD/hFJUX
+ bubu3KPDEfZxuTiFFBwMQiE8gi8zQqaNStUfzEwNDAYBXar19O7cLH3iNBqTw33ss7M=
+X-Gm-Gg: Acq92OHnaTX7ZQup3yA+HSyzs03k/NyFKHPy0l5GmJ9T1MmM4hmx6UfwsW8ClEYqn/r
+ mx169WNsvz29QwQPLwCE7SDm4RCU9tM79rrrPZdOhVXusNbKhvEdNP94Y1iK+3atjiPzAVujlYX
+ ZrWmt+CIFjGvlRdXIxFlSIJiiCTgVaJyBC3TimrGegEdFjw954tUTpszg8S2CxmjKsLFSBMTRII
+ YPp2yHsE23jksSlPUSkGcM0lPY3tJlUjHot8zRzXlnspurC6g+ysiJd1FrOtEj75r3w6hpCOubS
+ l6F3ijTzZBhnkJBzJxS+jPoG7nlbvIgbwJAJlT2j8SLvq1m4qDFrISMckpF4ZV9V8KDH25W1lmu
+ fCW4tIu/O+zfZUDMZZeHfnBC82PytYmTTOjIDQHADBrJicPWU9FC5bd4cIt7clyRRqYTiYcehvd
+ KreLKe0d6umZ4QJ+wGf0u67Ti2KmKpMOmI1qtQdZMnPZlqtWlbe99yfB+B+7ncz0pylw==
+X-Received: by 2002:a05:600c:8189:b0:48a:9428:5522 with SMTP id
+ 5b1f17b1804b1-48fe632249dmr324012515e9.16.1779227525127; 
+ Tue, 19 May 2026 14:52:05 -0700 (PDT)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48febe6aff4sm115799695e9.25.2026.05.19.14.52.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 May 2026 14:52:03 -0700 (PDT)
+Message-ID: <59747973-1075-4db9-b3af-2aad0c7f15a7@linaro.org>
+Date: Tue, 19 May 2026 23:52:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 13/18] commit: Drain nodes across all of bdrv_commit()
-To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Cc: stefanha@redhat.com, qemu-devel@nongnu.org,
- Fiona Ebner <f.ebner@proxmox.com>
-References: <20260519170317.345032-1-kwolf@redhat.com>
- <20260519170317.345032-14-kwolf@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260519170317.345032-14-kwolf@redhat.com>
+Subject: Re: [PATCHv1 3/7] hw/misc: Add SRC (System Reset Controller) to
+ i.MX8MP
+Content-Language: en-US
+To: Gaurav Sharma <gaurav.sharma_7@nxp.com>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, peter.maydell@linaro.org, shentey@gmail.com
+References: <20260519175635.3245229-1-gaurav.sharma_7@nxp.com>
+ <20260519175635.3245229-4-gaurav.sharma_7@nxp.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260519175635.3245229-4-gaurav.sharma_7@nxp.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,89 +104,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19.05.2026 20:03, Kevin Wolf wrote:
-> The whole implementation of bdrv_commit() is only correct if no new
-> writes come in while it's running: It has only a single loop checking
-> the allocation status for each block and finally calls bdrv_make_empty()
-> without checking if that throws away any new changes.
+On 19/5/26 19:56, Gaurav Sharma wrote:
+> From: Bernhard Beschow <shentey@gmail.com>
 > 
-> We already have to drain while taking the graph write lock. Just extend
-> the drained section to all of bdrv_commit() to make sure that we don't
-> get any inconsistencies.
+> Add emulation of the i.MX8MP System Reset Controller (SRC).
+> The SRC manages reset control for various subsystems on the i.MX8MP SoC.
+> SRC registers are used to start/stop/poll the M7 core, hence needed for
+> AMP boot.
 > 
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> Message-ID: <20260427170520.101242-2-kwolf@redhat.com>
-> Reviewed-by: Denis V. Lunev <den@openvz.org>
-> Tested-by: Denis V. Lunev <den@openvz.org>
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 > ---
->   block/commit.c | 10 ++++++++--
->   1 file changed, 8 insertions(+), 2 deletions(-)
+>   docs/system/arm/imx8m.rst    |   1 +
+>   hw/arm/Kconfig               |   1 +
+>   hw/arm/fsl-imx8mp.c          |  10 +
+>   hw/misc/Kconfig              |   3 +
+>   hw/misc/imx8mp_src.c         | 431 +++++++++++++++++++++++++++++++++++
+>   hw/misc/meson.build          |   1 +
+>   hw/misc/trace-events         |   5 +
+>   include/hw/arm/fsl-imx8mp.h  |   2 +
+>   include/hw/misc/imx8mp_src.h |  32 +++
+>   9 files changed, 486 insertions(+)
+>   create mode 100644 hw/misc/imx8mp_src.c
+>   create mode 100644 include/hw/misc/imx8mp_src.h
 
-Hi!
 
-Does this change makes sense for 10.0.x qemu stable series too?
-It feels like this change should be picked up for 10.0.x (LTS)
-series too.
+> +void imx8mp_src_start_cpu(FslImx8mpSrcState *s, int cpuid)
+> +{
+> +    switch (cpuid) {
+> +    case 0:
+> +        arm_set_cpu_on(0, s->regs[R_SRC_GPR2] << 2, 0, 3, true);
+> +        break;
+> +    case 1:
+> +        arm_set_cpu_on(1, s->regs[R_SRC_GPR4] << 2, 0, 3, true);
+> +        break;
+> +    case 2:
+> +        arm_set_cpu_on(2, s->regs[R_SRC_GPR6] << 2, 0, 3, true);
+> +        break;
+> +    case 3:
+> +        arm_set_cpu_on(3, s->regs[R_SRC_GPR8] << 2, 0, 3, true);
+> +        break;
 
-But I need some help with that.  10.0.x has quite different code
-in this area..
+Confirming my thoughts on patch #6, this SoC really need to start with
+no less than '-smp 4' :)
 
-Can you back-port this change to 10.0.x, or should this one be dropped
-from this series?
+> +    default:
+> +        g_assert_not_reached();
+> +        break;
+> +    }
+> +}
 
-Thank you!
 
-/mjt
-
-> diff --git a/block/commit.c b/block/commit.c
-> index 0d9e1a16d7a..c5e3ef03a21 100644
-> --- a/block/commit.c
-> +++ b/block/commit.c
-> @@ -518,6 +518,7 @@ int bdrv_commit(BlockDriverState *bs)
->       if (!drv)
->           return -ENOMEDIUM;
->   
-> +    bdrv_drain_all_begin();
->       bdrv_graph_rdlock_main_loop();
->   
->       backing_file_bs = bdrv_cow_bs(bs);
-> @@ -549,6 +550,10 @@ int bdrv_commit(BlockDriverState *bs)
->                     BLK_PERM_ALL);
->       backing = blk_new(ctx, BLK_PERM_WRITE | BLK_PERM_RESIZE, BLK_PERM_ALL);
->   
-> +    /* We drained all nodes, but still make requests through BlockBackends */
-> +    blk_set_disable_request_queuing(src, true);
-> +    blk_set_disable_request_queuing(backing, true);
+> +static void imx8mp_src_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
 > +
->       ret = blk_insert_bs(src, bs, &local_err);
->       if (ret < 0) {
->           error_report_err(local_err);
-> @@ -565,7 +570,7 @@ int bdrv_commit(BlockDriverState *bs)
->   
->       bdrv_graph_rdunlock_main_loop();
->   
-> -    bdrv_graph_wrlock_drained();
-> +    bdrv_graph_wrlock();
->       bdrv_set_backing_hd(commit_top_bs, backing_file_bs, &error_abort);
->       bdrv_set_backing_hd(bs, commit_top_bs, &error_abort);
->       bdrv_graph_wrunlock();
-> @@ -647,7 +652,7 @@ ro_cleanup:
->       blk_unref(backing);
->   
->       bdrv_graph_rdunlock_main_loop();
-> -    bdrv_graph_wrlock_drained();
-> +    bdrv_graph_wrlock();
->       if (bdrv_cow_bs(bs) != backing_file_bs) {
->           bdrv_set_backing_hd(bs, backing_file_bs, &error_abort);
->       }
-> @@ -663,6 +668,7 @@ ro_cleanup:
->   
->   out:
->       bdrv_graph_rdunlock_main_loop();
-> +    bdrv_drain_all_end();
->   
->       return ret;
->   }
+> +    device_class_set_legacy_reset(dc, imx8mp_src_reset);
+
+Please do not use this legacy interface.
+
+> +    dc->realize = imx8mp_src_realize;
+> +    dc->vmsd = &imx8mp_src_vmstate;
+> +    device_class_set_props(dc, imx8mp_src_properties);
+> +    dc->desc = "i.MX 8M Plus System Reset Controller";
+> +}
 
 
