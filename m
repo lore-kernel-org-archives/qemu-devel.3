@@ -4,114 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 511E3CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 14:57:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BE42CD4F5B
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 14:59:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPLs0-0002od-6i; Tue, 19 May 2026 10:56:32 -0400
+	id 1wPLuU-0003bR-Ub; Tue, 19 May 2026 10:59:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anushree.mathur@linux.ibm.com>)
- id 1wPLrx-0002oN-CV; Tue, 19 May 2026 10:56:29 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anushree.mathur@linux.ibm.com>)
- id 1wPLrv-0001ap-BW; Tue, 19 May 2026 10:56:29 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64JEnsip1594906; Tue, 19 May 2026 14:56:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=itnP5A
- F1cZ1UvGGw4zM43+PT/iwC/X/DLDFttbOsQlU=; b=NKO/mig/xL6oN5B66tpC1F
- F+wf9gWYrgsc1pU1t+ZGBkPclGkQanhYM6VON9GsFgcilK9BytGzeOYKozLjeHGN
- pgcnhOSDzdNI7U7N6t37hbsTgAEYf6UO/X4YgQ9W4FZEXcPZ/5HSu0cHSMotP+5G
- 9M10Fsv4W1QwiNzrAYWdaQnY74rSHnU3okAkJp/b74FpQTT3tXikDjbm0EqrTLPi
- kcGbJ9m/77iZHONuiH9A58COV0/NqLUuT2B9dc3QqRchZlYAh6vTB2LNd15oHO7f
- J1H9GB3Irx5RSJxEgPnF6gefegOpX/mZEwCI8wxjd78lZ8GrbvL+kRLCoyixRCMQ
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6hb8curt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 19 May 2026 14:56:22 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64JEs5t6025317;
- Tue, 19 May 2026 14:56:22 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e754gax0d-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 19 May 2026 14:56:22 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64JEuKFO16777852
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 19 May 2026 14:56:20 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CBA2E5805D;
- Tue, 19 May 2026 14:56:20 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 994FA58055;
- Tue, 19 May 2026 14:56:16 +0000 (GMT)
-Received: from [9.61.246.77] (unknown [9.61.246.77])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 19 May 2026 14:56:16 +0000 (GMT)
-Message-ID: <8acc0275-ea29-4008-8380-d8eb3de85576@linux.ibm.com>
-Date: Tue, 19 May 2026 20:26:14 +0530
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPLuT-0003aq-B0
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 10:59:05 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPLuR-00021t-Ic
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 10:59:05 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-48e8132c6d0so24281745e9.1
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 07:59:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779202741; x=1779807541; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=SZelGvEgEEvg0CCXVNGBslj4QJmWf6JnvfcIYGqOwQo=;
+ b=aWT4rgyoGj6M0vIbRsf+oNSiiG/ef8C9MTbZPUI9xK+3C0Nzl5BJDWGRpNUcVaydMg
+ TQc8Ydokt9+KVsO336b+yud77fr7oZtd7e1qBQsJAKAun8j/TqAjrP3cAiUZimxn8xzv
+ jeh5ubwZUEgJoITdDIPIq6BvKX5zXJY0HKR5/6scfEU/86sSI4Uh3eu05n8i+FeSkeTH
+ NEFJD7HjhQAYM1vvsnQEI2wKghzraXGmUbiOE2xIKsiMGqHs3gv2teCvJnsX3uuhx/2d
+ /hW4H6GGtbF0NBAjll75Pxc9d0TMEixS9GENzTVEo6jocUL0eKRpREkwlXVCrTQAsKDV
+ TPxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779202741; x=1779807541;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SZelGvEgEEvg0CCXVNGBslj4QJmWf6JnvfcIYGqOwQo=;
+ b=rb2HEyg/pYZJDoMEqzeYWx0ePo9hiJ9WsZRkXy/881ws2gIo7j83zlzO1w2XSAKc5b
+ hUyZkliCyMtL91LAVmV01GesqWTz7MOViqpbwhTywXNKe/Bk2wIrW0u4FPp388ojHK2f
+ altKNWTI2GEIQY9btLqdxVY/9w6dBFZLPEdGvXs+AnTYi59K95OUrywkLcj+DjLjvF6k
+ 5Jv2N1wMKU4ncZgU6s6xYpitGax4+82RTzOgDLpIXdg9OhLlDfbjo68Fg2dLGn6Zpv47
+ oUQNVoFBlDo5b0cq2G4ekqEMt0ZGsG2JRxVvxEA1TicPxwrs/OxCxrTKUl0P03z/y5HN
+ SvyA==
+X-Gm-Message-State: AOJu0Yyv6+RsauqyxUud95Kr2Cg96xSPyszIzxx1GHOiK6XTDNE0UrzF
+ W2ILHyaTdfRf8d7234EXy+ZXEeHRN1yxRg9J9yKxwPz9HN7VqvtUdfvM3owUT09kIQp6p4R9DYk
+ JJfME2ak=
+X-Gm-Gg: Acq92OEj0TMRcB+SLBmVB0M5Fo56q4A19hgYYn1jY7y/hfi9gW0zYUwPRo1z+CI0PVJ
+ gYNy2NzZTYrmxCZ+TQF9B995Qw/SefUjm/501C4J+ww4AyjJ9APj0c2QYHCPn8k+UleByVb/Kwy
+ X17cnEEtwQhn+SlHiHSCRR4o3QEnORRMAntD243XZAUrcMyrtkumE6jONbLgLnpdMOjdQEPWEPy
+ IFgwWB0MfhG3iRzQsrXO8Ymw4dlHUDuuPmATprFpJK3gODOK0oXxZY/rcAQ3IFqjV5Yp1zyYjhG
+ hAT4B6sKtoeCbMWxbndUUMddQ5aoD8CqEj56vIol/PAB7FlFMjvBqvc5hwzqZRZieveniJ3cltr
+ yvm254YMsYityCsvR7og3d7llw3uUL6WlYdlkV3V0Wa0ZxGR4yJ+0Rq1+1aH06Ws5n75ZMaMGgt
+ IyQwW4QoEqoOetmL01GmVA9eLbUPouOidO9wxICHebBT17m1RTrlbKqM8FFcMypTxPHHhfKNZUj
+ 7GRF8zyAN0=
+X-Received: by 2002:a05:600c:5296:b0:490:31e:d6f4 with SMTP id
+ 5b1f17b1804b1-490031ed905mr193136935e9.18.1779202741515; 
+ Tue, 19 May 2026 07:59:01 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48fe5ab3977sm362148885e9.9.2026.05.19.07.59.00
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 19 May 2026 07:59:00 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Hanna Reitz <hreitz@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-block@nongnu.org, qemu-s390x@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [RFC PATCH] buildsys: Stop checking for ESA/390 host
+Date: Tue, 19 May 2026 16:58:59 +0200
+Message-ID: <20260519145859.91999-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/2] Fix GCC 16 const-correctness violations
-To: Amit Machhiwal <amachhiw@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
-Cc: Vaibhav Jain <vaibhav@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- Shivaprasad G Bhat <sbhat@linux.ibm.com>,
- Gautam Menghani <gautam@linux.ibm.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org
-References: <20260518172517.12466-1-amachhiw@linux.ibm.com>
-Content-Language: en-US
-From: Anushree Mathur <anushree.mathur@linux.ibm.com>
-In-Reply-To: <20260518172517.12466-1-amachhiw@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE5MDE0NSBTYWx0ZWRfXzsLDmnYHM/7d
- 2eYv5bjGJn0tqBXHN9ZX7uhV6FscbdIGJNe/x1MAhuXY+nHhcElwG4LQU3nJY/C1Egha2wCt4Hg
- jKzyPBcd4SLCym/AdRey+dRYoW2WQhZH+cZJzKZvMOrl4XmPxVXTUAwsSqkzHmITOMFmAF8fHeI
- 7jSIeeSasXFxsF2MjZTwemmNi2RbsCG8LactRFAsqoGZC2aUeNKQzHsNrb9ZtozVkYq0+bmWbxr
- gWuVg6NSxaTYB7Ehs09aLWuCxwA9YhCpKhd97KgyqtOOhhkaiXq8x6pmHyIpNS669fMx2DQFsLy
- f7dFUtIYUkQRqSSxmiYOc/F5GxcxZFdi4akztq9wHPKo6Wlim5+TOZSzjgrkkGr+qwt9P8QEfMY
- getghArkhLmZgSpOd2WwgR8JwqMqjnZY626aD4T3RqbmZ9zZAsKUSA2nnsJ7LTL3n0Ax24DflYO
- HWXCwlJ/v9crLwAqFhQ==
-X-Proofpoint-GUID: pqqxBL4ZpGLEKFCqnoLa6qsDhWv2tpD_
-X-Proofpoint-ORIG-GUID: SnglmWk2wc3S6qnM5sFBkl-DoQcykg8Z
-X-Authority-Analysis: v=2.4 cv=aYBRWxot c=1 sm=1 tr=0 ts=6a0c7a17 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=M7BuaEJ1ckrLMzOwP28A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-19_04,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0
- clxscore=1011 spamscore=0 phishscore=0 priorityscore=1501 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605190145
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=anushree.mathur@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,103 +103,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+We still build QEMU tools on 32-bit hosts (see commit
+cf634dfcd8f), however no OS supported by QEMU still runs
+on ESA/390 (Linux dropped support in release 4.1 in 2015).
 
+Remove the configure check, directly checking for the 64-bit
+z/Architecture.
 
-On 18/05/26 10:55 PM, Amit Machhiwal wrote:
-> GCC 16 has tightened const-correctness checking and now correctly
-> rejects attempts to modify or assign const-qualified pointers without
-> proper qualification. This series fixes two such violations that cause
-> build failures with GCC 16 when using -Werror=discarded-qualifiers.
->
-> Both patches follow the same approach: changing local variables to
-> const-qualified types and using GLib string functions (g_strdup,
-> g_strndup, g_strstr_len, g_getenv) that work correctly with const
-> strings, eliminating the need for in-place modifications.
->
-> Changes in v3:
-> - Harsh: g_strndup will abort the program in case of OOM eventually making it a
->    dead code. Additionally, typecase (suffix - cname). Also, unlikely() is not
->    needed.
->      - Remove error handling (GLib functions abort on allocation failure)
->      - Remove unlikely() macro (provides no benefit in initialization code)
->      - Typecast (suffix - cname)
-> - Update the commit messages accordingly
-> - v2: https://lore.kernel.org/all/20260511131018.102168-1-vaibhav@linux.ibm.com/
->
-> Changes in v2:
-> - Avoid pointer aliasing
-> - Handle memory allocation failure error
-> - v1: https://lore.kernel.org/all/20260504134344.38958-1-amachhiw@linux.ibm.com
->
-> Tested on:
-> - GCC 16.1.1 (no warnings with -Werror=discarded-qualifiers)
-> - GCC 15.2.1 (backward compatible)
->
-> Amit Machhiwal (2):
->    target/ppc/kvm: Fix const violation when trimming CPU alias suffix
->    tests/qtest/libqtest: Fix const violation in qtest_verbose()
->
->   target/ppc/kvm.c       | 11 +++++------
->   tests/qtest/libqtest.c |  9 ++++-----
->   2 files changed, 9 insertions(+), 11 deletions(-)
->
->
-> base-commit: ac6721b88df944ade0048822b2b74210f543d656
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ configure                      | 12 ++----------
+ include/qemu/cacheflush.h      |  2 +-
+ include/qemu/timer.h           |  2 +-
+ tests/tcg/multiarch/nop_func.h |  2 +-
+ block/file-posix.c             |  2 +-
+ disas/disas-host.c             |  2 +-
+ util/cacheflush.c              |  2 +-
+ 7 files changed, 8 insertions(+), 16 deletions(-)
 
-Hi Amit,
-
-I have tested this patch and it has fixed the qemu build failure. Here 
-is my analysis:
-
-[root@localhost build]# gcc --version
-gcc (GCC) 16.1.1 20260501 (Red Hat 16.1.1-1)
-
-
-Before applying the patch, when I tried to build qemu it failed:
-
-
-[1431/2891] Compiling C object tests/qtest/libqos/libqos.a.p/.._libqtest.c.o
-FAILED: [code=1] tests/qtest/libqos/libqos.a.p/.._libqtest.c.o
-cc -m64 -mlittle-endian -Itests/qtest/libqos/libqos.a.p 
--Itests/qtest/libqos -I../tests/qtest/libqos -I. -Iqapi -Itrace -Iui 
--Iui/shader -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include 
--I/usr/include/sysprof-6 -fdiagnostics-color=auto -Wall -Winvalid-pch 
--Werror -std=gnu11 -O2 -g -fno-link-libatomic -D_GNU_SOURCE 
--D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -fno-strict-aliasing 
--fno-common -fwrapv -ftrivial-auto-var-init=zero 
--fzero-init-padding-bits=all -fzero-call-used-regs=used-gpr 
--fstack-protector-strong -Wempty-body -Wendif-labels 
--Wexpansion-to-defined -Wformat-overflow=2 -Wformat-security 
--Wformat-y2k -Wignored-qualifiers -Wimplicit-fallthrough=2 -Winit-self 
--Wmissing-format-attribute -Wmissing-prototypes -Wnested-externs 
--Wold-style-declaration -Wold-style-definition -Wredundant-decls 
--Wshadow=local -Wstrict-prototypes -Wtype-limits -Wundef -Wvla 
--Wwrite-strings -Wno-missing-include-dirs -Wno-psabi 
--Wno-shift-negative-value -isystem /root/qemu/linux-headers -isystem 
-linux-headers -iquote . -iquote /root/qemu -iquote /root/qemu/include 
--iquote /root/qemu/host/include/ppc64 -iquote 
-/root/qemu/host/include/generic -iquote /root/qemu/tcg/ppc64 -pthread 
--fPIE -MD -MQ tests/qtest/libqos/libqos.a.p/.._libqtest.c.o -MF 
-tests/qtest/libqos/libqos.a.p/.._libqtest.c.o.d -o 
-tests/qtest/libqos/libqos.a.p/.._libqtest.c.o -c ../tests/qtest/libqtest.c
-../tests/qtest/libqtest.c: In function ‘qtest_verbose’:
-../tests/qtest/libqtest.c:2175:15: error: assignment discards ‘const’ 
-qualifier from pointer target type [-Werror=discarded-qualifiers]
-  2175 |         found = strstr(log, domain);
-       |               ^
-cc1: all warnings being treated as errors
-ninja: build stopped: subcommand failed.
-make: *** [Makefile:170: run-ninja] Error 1
-
-
-
-After applying the patch, building qemu worked perfectly fine.
-
-Please feel free to add:
-
-Tested-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
-
-Thank you,
-Anushree Mathur
+diff --git a/configure b/configure
+index eea90306728..513ef7a153d 100755
+--- a/configure
++++ b/configure
+@@ -401,12 +401,8 @@ elif check_define _ARCH_PPC64 ; then
+   fi
+ elif check_define __mips64 ; then
+   cpu="mips64"
+-elif check_define __s390__ ; then
+-  if check_define __s390x__ ; then
+-    cpu="s390x"
+-  else
+-    cpu="s390"
+-  fi
++elif check_define __s390x__ ; then
++  cpu="s390x"
+ elif check_define __riscv && check_define _LP64 ; then
+   cpu="riscv64"
+ elif check_define __aarch64__ ; then
+@@ -469,10 +465,6 @@ case "$cpu" in
+     linux_arch=riscv
+     ;;
+ 
+-  s390)
+-    linux_arch=s390
+-    CPU_CFLAGS="-m31"
+-    ;;
+   s390x)
+     host_arch=s390x
+     linux_arch=s390
+diff --git a/include/qemu/cacheflush.h b/include/qemu/cacheflush.h
+index 8c64b878145..0618966ddde 100644
+--- a/include/qemu/cacheflush.h
++++ b/include/qemu/cacheflush.h
+@@ -19,7 +19,7 @@
+  * mappings of the same physical page(s).
+  */
+ 
+-#if defined(__x86_64__) || defined(__s390__)
++#if defined(__x86_64__) || defined(__s390x__)
+ 
+ static inline void flush_idcache_range(uintptr_t rx, uintptr_t rw, size_t len)
+ {
+diff --git a/include/qemu/timer.h b/include/qemu/timer.h
+index b931181f53d..fc021f8f966 100644
+--- a/include/qemu/timer.h
++++ b/include/qemu/timer.h
+@@ -889,7 +889,7 @@ static inline int64_t cpu_get_host_ticks(void)
+     return val;
+ }
+ 
+-#elif defined(__s390__)
++#elif defined(__s390x__)
+ 
+ static inline int64_t cpu_get_host_ticks(void)
+ {
+diff --git a/tests/tcg/multiarch/nop_func.h b/tests/tcg/multiarch/nop_func.h
+index f714d210000..26d3a76eb62 100644
+--- a/tests/tcg/multiarch/nop_func.h
++++ b/tests/tcg/multiarch/nop_func.h
+@@ -15,7 +15,7 @@ static const char nop_func[] = {
+     0x1e, 0xff, 0x2f, 0xe1,     /* bx lr */
+ #elif defined(__riscv)
+     0x67, 0x80, 0x00, 0x00,     /* ret */
+-#elif defined(__s390__)
++#elif defined(__s390x__)
+     0x07, 0xfe,                 /* br %r14 */
+ #elif defined(__i386__) || defined(__x86_64__)
+     0xc3,                       /* ret */
+diff --git a/block/file-posix.c b/block/file-posix.c
+index e49b13d6abb..5019ddade9b 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -79,7 +79,7 @@
+ #include <linux/hdreg.h>
+ #include <linux/magic.h>
+ #include <scsi/sg.h>
+-#ifdef __s390__
++#ifdef __s390x__
+ #include <asm/dasd.h>
+ #endif
+ #ifndef FS_NOCOW_FL
+diff --git a/disas/disas-host.c b/disas/disas-host.c
+index 7cf432938e0..d41235250a0 100644
+--- a/disas/disas-host.c
++++ b/disas/disas-host.c
+@@ -74,7 +74,7 @@ static void initialize_debug_host(CPUDebug *s)
+     s->info.print_insn = print_insn_little_mips;
+ #elif defined(__m68k__)
+     s->info.print_insn = print_insn_m68k;
+-#elif defined(__s390__)
++#elif defined(__s390x__)
+     s->info.cap_arch = CS_ARCH_SYSZ;
+     s->info.cap_insn_unit = 2;
+     s->info.cap_insn_split = 6;
+diff --git a/util/cacheflush.c b/util/cacheflush.c
+index c043c5f881a..77440ddb478 100644
+--- a/util/cacheflush.c
++++ b/util/cacheflush.c
+@@ -223,7 +223,7 @@ static void __attribute__((constructor)) init_cache_info(void)
+  * Architecture (+ OS) specific cache flushing mechanisms.
+  */
+ 
+-#if defined(__x86_64__) || defined(__s390__)
++#if defined(__x86_64__) || defined(__s390x__)
+ 
+ /* Caches are coherent and do not require flushing; symbol inline. */
+ 
+-- 
+2.53.0
 
 
