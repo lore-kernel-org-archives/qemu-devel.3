@@ -4,57 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF0B9CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 14:33:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21EA8CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 14:34:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPLVX-0003AI-R7; Tue, 19 May 2026 10:33:19 -0400
+	id 1wPLWI-0003vm-OH; Tue, 19 May 2026 10:34:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1wPLVV-00039s-FD
- for qemu-devel@nongnu.org; Tue, 19 May 2026 10:33:17 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wPLWE-0003uL-Nc
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 10:34:03 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1wPLVS-0004pR-Mo
- for qemu-devel@nongnu.org; Tue, 19 May 2026 10:33:17 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id E354844212;
- Tue, 19 May 2026 14:33:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A6C4C2BCB8;
- Tue, 19 May 2026 14:33:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1779201192;
- bh=ShqnucnjtvqD8HwQbqs3PVD/RXRFj1v1T0W39Rp9Qf8=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=n3PyKAqyu4S/tkASEhK27neO628FS+8gYRxvAUCUvoghdzoIx9lNeVGTotdo2HWT5
- ymVTOcNYfW6vivEqyB6paZwk+hyRLnVZg+rbFiGAFeP94GmJRM4/X83aKVq98sRNNn
- 5nw9oT+SP5Fxy9iW4NbTtl3XGlVNoB4J8agXG3YKkxWuTW2ZGCgIezVybcMR+6ukNw
- l9rnR77aAeVovH7b1h6DlWKC+Wbgnnl0OS3ZufCfZrPGhP5pzG6Qc7lglwuyex/eWI
- Atss77q+yGtgsAZJSTiQ8RojAnUUAda0HCkc0NKv23gbOfUb7pk6CtpWAMwdP8nSCV
- z98e2ImQUzXHg==
-Date: Tue, 19 May 2026 15:33:08 +0100
-From: Jonathan Cameron <jic23@kernel.org>
-To: Joshua Lant <joshualant@gmail.com>
-Cc: linux-cxl@vger.kernel.org, qemu-devel@nongnu.org,
- Jonathan.Cameron@huawei.com, arpit1.kumar@samsung.com
-Subject: Re: [RFC QEMU PATCH 01/10] docs: Add documentation for cxl-vcs-switch
-Message-ID: <20260519153308.4626e491@jic23-huawei>
-In-Reply-To: <20260429135717.3048713-2-joshualant@gmail.com>
-References: <20260429135717.3048713-1-joshualant@gmail.com>
- <20260429135717.3048713-2-joshualant@gmail.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wPLWC-0004ut-Qd
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 10:34:02 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64JAhQxI867065
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 14:34:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 95kjqS65FAnFpigyyzYtWaA4xCkotj65/utEcEij0o4=; b=Lyoi4wvquP7o9fnI
+ IbTsA+pqqU6JfyBZgtb3TzpPQxd7TWNRXaH4TQyII/JG008k1DfmTQqVOhRB6wk5
+ aXVPjvscbAl/1oN4W+jGmMQ8Qaqv/UzdY8Ru6EKNkF8AG4gP4RVq8tAqLEPB8EYZ
+ Pwb4aUyrksgjjwL+GwLZlbfIC3lOFvTEdYxE00AwERy/DNwJyISTJOLx3ZybPojW
+ 8/8qiJafchoHjyG+f4OnLorNqssDUx6xQYuLnKhZLajBsR3NmoVjvgW8Y5d/kTrF
+ DAKLfg+neVe+fgO3uLaeRwgbl28HUhSgCGEVhwilpxs4ZCMIgf3/8HZp/HXunRDZ
+ 4V8swQ==
+Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e8hv1j7x1-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 14:33:59 +0000 (GMT)
+Received: by mail-dl1-f72.google.com with SMTP id
+ a92af1059eb24-13537722193so19184619c88.0
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 07:33:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1779201239; x=1779806039; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=95kjqS65FAnFpigyyzYtWaA4xCkotj65/utEcEij0o4=;
+ b=MyLK4i061xivAichqJdd3v+iHnw55R44B1ngD8ovU/oj97WbJJ/JaTvRujGqLyZMC0
+ 6kgQsPSj530NjoIwuOe1vnPvuPkJQrTgA8kTxuB9OUMEWXhYEKdZSmHVgOazsXYG0yNb
+ ag03eloY8s5vb9rbdhvPcY7dvcpH+0WiF9ymq14ikp82WlkcC9Z2DM6IvSFO4+e5N2k9
+ DImXqyz4T9/pwSRtno+6aBtHPfgDQ1kBhqE/vCyYutAjl/04FfU7JNlUWUcyALXrw7hX
+ Ml9kIPx+aZVkyT5uL1esO3eTRRIwk3rJmAcbpCBdI6hXr6OxzZagFfEznP5bkaxQyhIq
+ PWPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779201239; x=1779806039;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=95kjqS65FAnFpigyyzYtWaA4xCkotj65/utEcEij0o4=;
+ b=hJJ9jBJuXMucI1jTOrHV8c83YCm4VyzzntcoaPLpoTtoHSpSuAmpxNbo2mvrISw3Cj
+ YplF4TW0VGCXh6t0boaNeeGrtUpXfCCLeoqrW83mqpC3hEpPqPKMWXHy5fju0ApjLDcq
+ u5fpKVnXF3Ld86dzfpTT4N7gZwXwyXA7W+XmAMIcjnwU1wFqU8136ikbS+sWVsaSBfX3
+ DRnO2kZ1GSxxRiVCeX1zUYL8gN2OzeocgDvRAhO03fyXFUmTy68oO8OsPbO+2pLjdoJa
+ lAcsEOx9PpeE2KN5sn23kTiTZmOiHE1WGVhBJTOd7yAemQABC9HMb4i6Ls1zJRg4x+CT
+ JrnQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/mcgzevSPYJwUJbHVKDI3pfk6ph8Kk9xhjnFpb2y4fppfhIBfGOk6E9ykUoCZwQyMm7ynucVT+ZjFo@nongnu.org
+X-Gm-Message-State: AOJu0YypycyKWWzPdktR53ni/fJwfve+XUThig38NQRwNI+7tAsv19RD
+ R4yp2O/lTyyDk0Xyp2lDaAK0hC3JtLds/tB78yIHkra+jRUPXT6PdSJ6182cAl2vn8epJQd+psq
+ YwxTxFZeP3TmjNR49MSZlOnOmPiwsnMaaJw0cqmt9REMko+IRYlqT1howYMvDddU7EQ==
+X-Gm-Gg: Acq92OGPGD1IGAa+nnELH5iP136Qqlzg5Pir3nFXe22DuvX0d/PrpFsD0i/IN2fHzgh
+ D22J3fFpIU2/WlC9/dZWT+D3x26SqRo+xgqK3aiv4JvvjCACBqu8jN5ALs/o8fJieyUHzUXBGnQ
+ mq3pEgKZg8hfSLvjTGgHA2pe38NVO1ntzd7pcQ1HrSf4Ws9vb5j4bhxeYHdqC/HQDoADeYgz9IE
+ dDhWzQtDqi+VEiCvx/aDsnoZ6ea7G3lmPtzmRVc4szIk++k9CtBjp+SWlZOGA92Ddv+Noy/RVaF
+ FtEWhFkwBR+hrYbjSPtv0sIqMzbHSMTus37UtYBn0JTV6PN6Po0MykdyTyV6VnwziMQHcncwXdc
+ 5z3GB/qzkM0qw8p+cQFBn0194SSpO4NtqY9ADvgwFFRqoXohNdPuJ7u4=
+X-Received: by 2002:a05:7022:128c:b0:124:9dea:188d with SMTP id
+ a92af1059eb24-1350483d04amr9398796c88.30.1779201238818; 
+ Tue, 19 May 2026 07:33:58 -0700 (PDT)
+X-Received: by 2002:a05:7022:128c:b0:124:9dea:188d with SMTP id
+ a92af1059eb24-1350483d04amr9398762c88.30.1779201238283; 
+ Tue, 19 May 2026 07:33:58 -0700 (PDT)
+Received: from [10.36.20.156] ([24.52.49.135])
+ by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-134cc2352f2sm23170416c88.10.2026.05.19.07.33.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 May 2026 07:33:57 -0700 (PDT)
+Message-ID: <97c41220-7bf6-4671-a7b8-08185c3a882a@oss.qualcomm.com>
+Date: Tue, 19 May 2026 09:33:55 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=jic23@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7/7] docker: Remove LegacyKeyValueFormat warnings in
+ generated files
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Max Filippov <jcmvbkbc@gmail.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Song Gao <gaosong@loongson.cn>, Cleber Rosa <crosa@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20260518102222.80735-1-philmd@linaro.org>
+ <20260518102222.80735-8-philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260518102222.80735-8-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE5MDE0MyBTYWx0ZWRfX3e9Kyzr6quP/
+ 4XEwYvKQYZHoy6kkU7LrP9MLIF0S6CGMwtSEffwq6mio0IXytCgI2BtShaTcZoovPmUIRVcSLhA
+ SREHpbbMk/va8+mOnaSKIV6dRlkoVnHymdJGCDnuKkXDsQDYfPzxFUxlNxeidui7UTSBFFZL7b7
+ wuWG6EFG2EIDjcBpU5p5yMMnNVumBbO4fApG6I19AtzQLw/SYA39m9CKfv/hA8CiWipG9IWBmte
+ VtVAGhVN8YPF4xz0s6r2azrXsi3rnOgm/KCV0mt0eq29q9fmPbIC/SNoP+SpDl7hafXY2WLg4W/
+ 7fh3egW0UqNizwW0KJK6HKEjF5d63gWn/gUi4LRWGPLCgDKjCFVmwfJYnfW2Lh9813IVRgQOPAT
+ F5TietvHY+UAQ6uc0IVgcBbhZKGFpiEenzG6M4LbP0GK3buhDF8/0xYOB+Ila/3zUy/7YjVrSj9
+ 44yKL4vAAJm4NaGS/8Q==
+X-Proofpoint-GUID: 5XlxMaC7jmxJJSdgFeu5giIzTtySSQ-a
+X-Proofpoint-ORIG-GUID: 5XlxMaC7jmxJJSdgFeu5giIzTtySSQ-a
+X-Authority-Analysis: v=2.4 cv=WZM8rUhX c=1 sm=1 tr=0 ts=6a0c74d7 cx=c_pps
+ a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=bunxBM7YXCFQTret8gAQLQ==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=n6MYwUk4AAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=NI3Oe7JmTeknEAL-lSEA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=vBUdepa8ALXHeOFLBtFW:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-19_03,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 priorityscore=1501
+ phishscore=0 spamscore=0 impostorscore=0 adultscore=0 bulkscore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
+ definitions=main-2605190143
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,244 +160,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 29 Apr 2026 14:48:35 +0100
-Joshua Lant <joshualant@gmail.com> wrote:
-
-> Signed-off-by: Joshua Lant <joshualant@gmail.com>
-Hi Joshua,
-
-Sorry it's taken me a while to get to this!  I blame to much activity
-on other open source projects! :)
-
-I've mused in the past on how to do the command lines for these.
-So some thoughts are based on that - feel free to argue why we
-the structure you have here works better.
-
-When I get through the series I may well change my mind on some
-of what follows ;)
-
-
-> ---
->  docs/system/devices/cxl.rst | 90 ++++++++++++++++++++++++++++++++++---
->  1 file changed, 85 insertions(+), 5 deletions(-)
+On 5/18/2026 5:22 AM, Philippe Mathieu-Daudé wrote:
+> Display lcitool changes before generated ones.
 > 
-> diff --git a/docs/system/devices/cxl.rst b/docs/system/devices/cxl.rst
-> index 32b1b5d773..9e8452e576 100644
-> --- a/docs/system/devices/cxl.rst
-> +++ b/docs/system/devices/cxl.rst
-> @@ -119,11 +119,11 @@ and associated component register access via PCI bars.
->  CXL Switch
->  ~~~~~~~~~~
->  Here we consider a simple CXL switch with only a single
-> -virtual hierarchy. Whilst more complex devices exist, their
-> -visibility to a particular host is generally the same as for
-> -a simple switch design. Hosts often have no awareness
-> -of complex rerouting and device pooling, they simply see
-> -devices being hot added or hot removed.
-> +virtual hierarchy. Whilst more complex devices exist (see VCS
-> +Switching below), their visibility to a particular host is
-> +generally the same as for a simple switch design. Hosts often
-> +have no awareness of complex rerouting and device pooling,
-> +they simply see devices being hot added or hot removed.
->  
->  A CXL switch has a similar architecture to those in PCIe,
->  with a single upstream port, internal PCI bus and multiple
-> @@ -467,6 +467,86 @@ Example configuration:
->  Guest OS communication with the MCTP CCI can then be established using standard
->  MCTP configuration tools.
->  
-> +CXL Multi-VCS Switching
-> +-----------------------
-> +
-> +The cxl-vcs-switch object allows for a Fabric Manager to dynamically reconfigure
-> +the switching within a multi-upstream port CXL/PCIe topology, This moves beyond
-> +the static switching configuration described above. The use of vcs=X on an
-> +endpoint device indicates that it should be hidden from guests at boot. 
+> Update lcitool refresh script to not use legacy 'ENV key value'
+> format:
+> https://docs.docker.com/reference/build-checks/legacy-key-value-format/
+> 
+> Run "make lcitool-refresh" to update the generated container files.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  tests/lcitool/refresh                                | 12 +++++++-----
+>  tests/docker/dockerfiles/alpine.docker               |  2 +-
+>  tests/docker/dockerfiles/centos9.docker              |  2 +-
+>  .../docker/dockerfiles/debian-all-test-cross.docker  | 10 ++++++----
+>  tests/docker/dockerfiles/debian-amd64-cross.docker   |  2 +-
+>  tests/docker/dockerfiles/debian-arm64-cross.docker   |  2 +-
+>  tests/docker/dockerfiles/debian-armhf-cross.docker   |  2 +-
+>  tests/docker/dockerfiles/debian-i686-cross.docker    |  2 +-
+>  .../docker/dockerfiles/debian-mips64el-cross.docker  |  2 +-
+>  tests/docker/dockerfiles/debian-mipsel-cross.docker  |  2 +-
+>  tests/docker/dockerfiles/debian-ppc64el-cross.docker |  2 +-
+>  tests/docker/dockerfiles/debian-riscv64-cross.docker |  2 +-
+>  tests/docker/dockerfiles/debian-s390x-cross.docker   |  2 +-
+>  tests/docker/dockerfiles/debian.docker               |  2 +-
+>  tests/docker/dockerfiles/fedora-rust-nightly.docker  |  2 +-
+>  tests/docker/dockerfiles/fedora-win64-cross.docker   |  2 +-
+>  tests/docker/dockerfiles/fedora.docker               |  2 +-
+>  tests/docker/dockerfiles/opensuse-leap.docker        |  2 +-
+>  scripts/git.orderfile                                |  4 ++++
+>  19 files changed, 33 insertions(+), 25 deletions(-)
+> 
 
-That bit seems rather unintuitive.  EPs shouldn't really be involved in this
-at all. I guess you are using them as a proxy for a physical downstream port?
-Interesting idea if a bit non intuitive. I wonder if we can put in an explicit
-physical DSP device in. When linked it just proxies the vPPD.
-
-Maybe we can get away without that but it leaves us with no physical port hotplug
-as we can't connect an empty physical downstream port to a VCS.
-
-> Each
-> +upstream port with vcs=X set will conceptually become an upstream PPB. Any
-> +downstream port that is connected to an upstream port with vcs=X set will
-> +automatically become a vPPB for that VCS. The overall cxl-virtual-switch has a
-Neat not to have to set it for the DSPs, but I think we will need them to
-grow new functionality so maybe a different device type is good.
-
-> +single CCI mailbox used for config/status of all ports within the switch.
-
-Need to support both MCTP and switch-cci but that should be fine.
-
-> +Setting local-fm=true indicates that this QEMU instance has the CCI mailbox
-> +attached. Setting it false will create listeners for commands from a remote
-> +QEMU process (yet to be implemented).
-
-Nice but make that the default for now (And drop the parameter).
-Absence of a connected CCI might be sufficient though that's a bit ugly
-to check.
-
-> +
-> +An example of how the topology is described on the CLI is shown below:
-> +
-> +  -object cxl-vcs-switch,id=vcs0,usp-ppbs=2,dsp-ppbs=4,local-fm=true \
-Interesting.  I'd kind of like it to be a device, but it has no presence
-on any bus in of itself (arguably it is on a whole load of them). So maybe not.
-
-> +  -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.0,hdm_for_passthrough=true \
-
-Small side note - avoid the passthrough trick. It means a bunch of code
-paths aren't exercised and has hidden various OS bugs.
-
-> +  -device cxl-rp,port=0,bus=cxl.0,id=root_port1,chassis=0,slot=1 \
-> +  -device pxb-cxl,bus_nr=22,bus=pcie.0,id=cxl.1,hdm_for_passthrough=true \
-> +  -device cxl-rp,port=0,bus=cxl.1,id=root_port2,chassis=1,slot=1 \
-> +  -device cxl-upstream,port=0,sn=1234,bus=root_port1,id=us0,addr=0.0,multifunction=on,vcs=vcs0,usppb=0 \
-> +  -device cxl-upstream,port=0,sn=5678,bus=root_port2,id=us1,addr=0.0,multifunction=on,vcs=vcs0,usppb=1 \
-
-How can we have two upstream ports in a single vcs?  To me those are separate VCSs
-where a VCS is normally a tree topology below a given USP.
-
-I think we have a terminology problem.  If I read this right you are using VCS
-to mean the whole physical switch?  Been a little while but I don't think
-that corresponds at all to it's meaning in the CXL Spec. Your VCS0/1 below
-are right.
-
-
-
-> +  -device cxl-switch-mailbox-cci,bus=root_port1,addr=0.3,target=vcs0 \
-> +  -device usb-cxl-mctp,bus=ehci.0,id=usb0,target=vcs0 \
-> +  -device cxl-downstream,port=0,bus=us0,id=dsp0,slot=3 \
-> +  -device cxl-downstream,port=1,bus=us0,id=dsp1,slot=4 \
-> +  -device cxl-downstream,port=0,bus=us1,id=dsp2,slot=7 \
-> +  -device cxl-downstream,port=1,bus=us1,id=dsp3,slot=8 \
-Ok. So these only know they are virtual because they are connected to a virtual USP.
-Might be enough - or we might want to make that more explicit via
-a new device type.
-
-> +  -device cxl-type3,persistent-memdev=cxl-mem1,id=cxl-ep1,lsa=cxl-lsa1,sn=99,vcs=vcs0,dsppb=0 \
-> +  -device cxl-type3,persistent-memdev=cxl-mem2,id=cxl-ep2,lsa=cxl-lsa2,sn=100,vcs=vcs0,dsppb=1 \
-> +  -device cxl-type3,persistent-memdev=cxl-mem3,id=cxl-ep3,lsa=cxl-lsa3,sn=101,vcs=vcs0,dsppb=2 \
-> +  -device cxl-type3,persistent-memdev=cxl-mem4,id=cxl-ep4,lsa=cxl-lsa4,sn=102,vcs=vcs0,dsppb=3 \
-This I mention above. I 'think' you are using the dsppb to instantiate something that is pretending
-to be a the physical DSP.
-I haven't yet read thee series, but gut feeling is that will make the querying of link
-properties etc rather different from the normal case.
-
-> +  -machine cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.size=8G,cxl-fmw.1.targets.0=cxl.1,cxl-fmw.1.size=8G
-> +
-> +Example topology involving VCS switching::
-> +
-> +               +--------------------+  +--------------------+
-> +               |   Host Bridge 0    |  |   Host Bridge 1    |
-> +               +----------+---------+  +----------+---------+
-> +    +-------+             |                       |
-> +    | MCTP  |             |                       |
-> +    | USB/  |  +----------+---------+  +----------+---------+
-> +    | I2C   |  |    Root Port 0     |  |    Root Port 1     |
-> +    +-----+-+  +----------+---------+  +----------+---------+
-> +          |               |                       |
-> +          |               |                       |
-> +   +------|---------------+-----------------------+-----------------------+
-> +   |    +-+--------+      |  cxl-vcs-switch (vcs0)|                       |
-> +   | +--| CCI MBOX |---*  |                       |                       |
-> +   | |  +----------+      |                       |                       |
-> +   | |  +-----------------+--------+      +-------+------------------+    |
-> +   | +--+                 |   VCS0 |  *---+       |             VCS1 |    |
-> +   |    | +---------------+------+ |      | +-----+----------------+ |    |
-> +   |    | |                      | |      | |                      | |    |
-> +   |    | |        USP 0         | |      | |        USP 1         | |    |
-> +   |    | |                      | |      | |                      | |    |
-> +   |    | +----+------------+----+ |      | +----+------------+----+ |    |
-> +   |    |      |            |      |      |      |            |      |    |
-> +   |    | +----+----+  +----+----+ |      | +----+----+  +----+----+ |    |
-> +   |    | |  DSP 0  |  |  DSP 1  | |      | |  DSP 2  |  |  DSP 3  | |    |
-> +   |    | |(vPPB 0) |  |(vPPB 1) | |      | |(vPPB 0) |  |(vPPB 1) | |    |
-> +   |    | |         |  |         | |      | |         |  |         | |    |
-> +   |    | +---------+  +---------+ |      | +---------+  +----+----+ |    |
-> +   |    +--------------------------+      +-------------------+------+    |
-> +   |                                                          |           |
-> +   |           +----------------------------------------------+           |
-> +   |           |                                                          |
-> +   |           |            -                    -            -           |
-> +   +-----------|------------|--------------------|------------|-----------+
-> +               |            |                    |            |
-> +          +---------+  +---------+          +---------+  +---------+
-> +          |CXL/PCIe |  |CXL/PCIe |          |CXL/PCIe |  |CXL/PCIe |
-> +          |  EP 0   |  |  EP 1   |          |  EP 2   |  |  EP 3   |
-> +          | (PPB0)  |  | (PPB1)  |          | (PPB2)  |  | (PPB3)  |
-> +          +---------+  +---------+          +---------+  +---------+
-> +                 PPB0 Bound to VCS1, vPPB1. Others unbound...
-> +
-Good to have the diagram as makes it easier to discuss.  
-
-What you have here is a bit of a hack because only some entities created
-exist in the command line - the others are spun up implicitly.  I suspect
-we really want to make them explicit.  The one thing I never looked into in
-the following is how hard it would be to poke a vDSP in front of a physical
-DSP and basically proxy stuff through or not.  Some stuff will be programmed
-at boot (windows etc for hotplug later) but other stuff will fire in the hotplug
-flow on an attach of a physical port. Will need some care and stitching up
-memory regions across the boundary.
-
-The command line I'd be looking at for this as a target (feel free to shoot
-at it) would be something like (I went with one PXB - but need to test both options). 
-Note some of this is probably garbage as I haven't checked parameters are right.
- -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.0 \
- -device cxl-rp,bus,cxl.0,id=root_port1...
- -device cxl-rp,bus,cxl.0,id=root_port2..
- -device cxl-upstream,port=0,sn=1234,bus=root_port1,id=us0,addr=0.0,multifunction=on,virtual=on \
- -device cxl-upstream,port=0,sn=5678,bus=root_port2,id=us1,addr=0.0,virtual=on \
-
-#note I extended current target to a list
- -device cxl-virtual-downstream,vport=0,bus=us0,id=vppb0 \
- -device cxl-virtual-downstream,vport=1,bus=us0,id=vppb0 \
- -device cxl-virtual-downstream,vport=2,bus=us0,id=vppb0 \
- -device cxl-virtual-downstream,vport=0,bus=us1,id=vppb0 \
- -device cxl-virtual-downstream,vport=1,bus=us1,id=vppb0 \
- -device cxl-virtual-downstream,vport=2,bus=us1,id=vppb0 \
-# Note more virtual ports than physical - likely common situation.
- -object cxl-switch,usps.0=usp0,usps.1=usp1,id=vsw0 \
-#list of usps so we can navigate downwards from this.
- -device cxl-switch-mailbox-cci,id=swcci0,bus=root_por1,multifunction=on,target=vsw0\
-# Maybe hang the unconnected physical dsps on a bus created by the cxl-switch?
- -device cxl-downstream,port=0,bus=vsw0,id=dsp0,slot=3 \
- -device cxl-downstream,port=1,bus=vsw0,id=dsp1,slot=4 \
- -device cxl-downstream,port=2,bus=vsw0,id=dsp2,slot=7 \
- -device cxl-downstream,port=3,bus=vsw0,id=dsp3,slot=8 \
-#ideally a device but need to think where to hang it.
- -device cxl-type3,persistent-memdev=cxl-mem1,id=cxl-ep1,lsa=cxl-lsa1,sn=99,bus=dsp0 \
- -device cxl-type3,persistent-memdev=cxl-mem2,id=cxl-ep2,lsa=cxl-lsa2,sn=100,bus=dsp1 \
- -device cxl-type3,persistent-memdev=cxl-mem3,id=cxl-ep3,lsa=cxl-lsa3,sn=101,bus=dsp2 \
-#note not all DSPs have anything on them.
-
-Few reasons for this structure.
-1) The unconnected physical port - we want to make sure physical hotplug works both
-   when not associated with a VCS and when it is.
-2) We need to be able to talk to EPs via FM interfaces when they aren't connected
-   Given we have to make that look like PCI, let's make it PCI.  I'm not sure how
-   much hackery that will take as we'll need to do some level of enumeration from
-   the the switch controller.  Only need that once we want to do more than check
-   training etc though - so maybe job for another day.  In theory we can do everything
-   with devices in that state (be it slowly) so would need all the addresses programmed
-   etc. Not as general as current discussions on enumerating full PCI bus in QEMU as
-   all direct connect.
-
-Anyhow it's fiddly with this scheme but I think a little more general
-than your current one and closer representation of the hardware which will
-matter as we add all the introspection stuff etc in the FMAPI.
-
-Jonathan
-
-
-
-> +
->  References
->  ----------
->  
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
