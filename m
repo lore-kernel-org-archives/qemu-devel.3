@@ -4,58 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F05A3CD4F5E
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 15:19:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 016E7CD4F5B
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 15:28:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPMEC-0004AO-6p; Tue, 19 May 2026 11:19:28 -0400
+	id 1wPMMV-0006Wt-Ok; Tue, 19 May 2026 11:28:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1wPMEA-00041p-If
- for qemu-devel@nongnu.org; Tue, 19 May 2026 11:19:26 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1wPME8-00073I-Bd
- for qemu-devel@nongnu.org; Tue, 19 May 2026 11:19:26 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 4247A6020F;
- Tue, 19 May 2026 15:19:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09D53C2BCC6;
- Tue, 19 May 2026 15:19:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1779203963;
- bh=c6iikp5bIksESua5fvx7pi42ccOi0MJq6BG5NtzchzQ=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=kYBQWRhQhfiXWFg++9dFB2SBh5WfR7mzgkD64U2DOpMHt4hvh95VZdlfR1eNan+0G
- MgPnvGoxYxzeXDYVB9wiG2yBa3ejJX67d9csEmUBKb2sdM9h1+NiVQ9UanLW/8ynqu
- +JImpvLRdieAfz8hyJ9pofoPcrv6GFF4MlUW2kurG2hejbxG2c+Co3JROehGg84iel
- 7058r/9hSId3giENOVAiaRQ5FM67UaYE+hmAFJ3gfniU9NOkQejagFlW0PLthDRtnF
- FK12DJq8ROoRDao97xUMyJZNEMGppmq0iLdJyPzLXaTS5S8nX25YuzZ76++vMvL6TU
- uNCMypm1YFKdg==
-Date: Tue, 19 May 2026 16:19:14 +0100
-From: Jonathan Cameron <jic23@kernel.org>
-To: Joshua Lant <joshualant@gmail.com>
-Cc: linux-cxl@vger.kernel.org, qemu-devel@nongnu.org,
- Jonathan.Cameron@huawei.com, arpit1.kumar@samsung.com
-Subject: Re: [RFC QEMU PATCH 05/10] cxl-vcs-switch: Initial support for CXL
- VCS.
-Message-ID: <20260519161914.05f81703@jic23-huawei>
-In-Reply-To: <20260429135717.3048713-6-joshualant@gmail.com>
-References: <20260429135717.3048713-1-joshualant@gmail.com>
- <20260429135717.3048713-6-joshualant@gmail.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wPMMU-0006WS-3L
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 11:28:02 -0400
+Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wPMMS-0000wM-7i
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 11:28:01 -0400
+Received: by mail-yx1-xb12a.google.com with SMTP id
+ 956f58d0204a3-65c5361142fso3719833d50.0
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 08:27:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779204479; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Ct8m5Aptrhb+P8dbYCvWmrh8mgY7S5xnOmTAyqAr/segp4WeZ5IXVsKTX1C8b424lr
+ Oiu4mv7FCOYEwcWyy0P2f6NB3LpyvVqylQ7vgKaG6RnnsdT+BQC/q/sTWXQlcXBW2Wmu
+ scsVjaDwJk2GsryKY5VqQyyASTi7+1Yrkf5D97WryDVTdJZNGLM7JmFQddUhV9LNjXZP
+ mQftdQUbxB78ryMdgiDSYIn+m+fdNeajl9q1NfbY3J3rd9wgWeva43CQ/u0P0lAK6JzM
+ sV9EmJcXUexM2gWsxzoYfJsdpacD38XPr+8MGleSqEuVToh7gfOD6XQMrjxVZjOovfGf
+ Xl8w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=sGrQGLNdI11dxVOlQcjvVQwr8FImet4PCaIQ6Gi2Tq4=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=c2pIpDSWr5Cp0qUBjoEEib7WRAwOXOFRDqMw6a/r/f24o8ux8kSOHManLD+nTAeFHS
+ leBipTi+4mY8eAnJ7Hebo7Nuhq29Bnq7ncmLqvpAU9y5OkWXnu4gDtpN7jXAExwOzuhe
+ Xxw3BI+3UFiTTEnkV+9ggak4LthYuCbSpbIT6lSeiJsut7bhEMVKZAVSV2QoV8f6wbar
+ WXrTx14CTHuc2PMwr6CYXhpDyr4/L2no7hGVbMheMUSWQH6ua/dcr2IxmwAEcAeLmqbC
+ 6mp55THIA15FwBWbMHyJTpMI+KCOZTKPL6vp48PF0SQ+dBBIKGbN3D1O8uJl07ljWBJE
+ +dXA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779204479; x=1779809279; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=sGrQGLNdI11dxVOlQcjvVQwr8FImet4PCaIQ6Gi2Tq4=;
+ b=JwaPwdkI2t45cBCseAumVF22RhGwiRZHvqVR//7J2tHCZvyGIIqIkN0cY4WFBQdNf9
+ BK/ydTLCWsCfF1wpH58vGAFUoxvbzR9SKIkz1uJ+2C09mrjNBhrfPgIJAjiZrScAa6xR
+ gDoM1FMsIf74SYXPKVaFJNXab/rRPbvbCpYMnx87BLAMikjfsRTZ5E35diSc3wW4/mKG
+ wJt1fYHBvWvlSWFINuhszYq94DhNUf2UcbnciUcVEKSInWn7laY6W0DONuvsTuonxdcq
+ Obx9/Ktrlhk2Lcgtfegr2OaUfNQPTg7TJCTWbd6/1qmCyub8zELK3ys52sAy9HbXYqrn
+ yw8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779204479; x=1779809279;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sGrQGLNdI11dxVOlQcjvVQwr8FImet4PCaIQ6Gi2Tq4=;
+ b=fNeiYtk0FWvQPziskQIAXqnP6XGnFhkw0P0h0ABNHwD1iDimkUwSMJWFIV/2+5Y/4O
+ p02tCFSg5e2V59aI+vBzADYoCekLmqRIOEABIrfKPdeMs/D9lp/unDNWnlaDmfn8nEfD
+ 5ugOEZgeGhIT/guqjnGmmJXTZ5N9h4KB3iSR33Lms8Hay3UzBCkA+ckt+3ZO9HM5K9I4
+ /h4XGDUKQQ44sgSuNKjPOpKSHrxveUln3F2d0tevIXoZrjdirbcP1R17rfhNDgs06wy4
+ z7ea7sozCjOifdLmUum5Kdj5uoAKDM5pbeX5QX/P8BSD9El4MJxDSQ7mxxdcdZhTckjf
+ FmYw==
+X-Gm-Message-State: AOJu0YwZ16d1J3ZxXBo2Bt7pjyMYYCwfvNLPVDxWEvM0g1nyZCVXVaMa
+ FWO86LhD2he+YmBpdAezt+xdJhUQcT1NzOlpKPfD9OEV0QM7E7fpJiNbhRMmN9z4+q9BR/VCE0v
+ LLAWHeXiMQh+COJWoS4S+s625ce97fxTC3/y//ih3HQ==
+X-Gm-Gg: Acq92OFRozsqOdkIR7I5fivMZd14I9JXhL4eSYMvc74VxZuxQIPcCdwsbtB0JzRogP1
+ MR8PveyGBAZWI5gXL39k8uJDB7p+LyNA0iiHUgUbUItMuxhL98BzWksE8sC1+6PzVPaOUe7ZrsO
+ MSBkDxDusZkiAuQrrJqokgPL7R1NC1ePl1kM9FsBoGi9ng9B+MTlWydAYWLTCxURbJcSsBSk48r
+ FiXuvna6+wxiZdbrtakHHSdHMoUrCDKN+TGKwjV9OJSsFj0SnThLJCyIGeuBmTMHXvswgFFg6X1
+ Kw5ulh4sltngFrjiB8IEfT1CTg3hJbvcy6kXTbZTq7+kk5kfKs3IiGkZhojJYv2Bk1U=
+X-Received: by 2002:a05:690e:1689:b0:65e:4e7d:9c3e with SMTP id
+ 956f58d0204a3-65e57b34374mr9120059d50.61.1779204478368; Tue, 19 May 2026
+ 08:27:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=jic23@kernel.org;
- helo=tor.source.kernel.org
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20260517003002.321430-1-richard.henderson@linaro.org>
+ <20260517003002.321430-31-richard.henderson@linaro.org>
+ <CAFEAcA-q4GdT-uawv-hw6j9ixdO=Nw60hkJ=mq61G3CxRE5t0w@mail.gmail.com>
+ <CAFEAcA_5nrmafaL8oGr9Oax5BJ=bJUXZ9XjNt0ZL4bcxzcebTQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA_5nrmafaL8oGr9Oax5BJ=bJUXZ9XjNt0ZL4bcxzcebTQ@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 19 May 2026 16:27:47 +0100
+X-Gm-Features: AVHnY4L7BQirOr6E-xdMbApCddObIHgE08LpGnlK5A5PAKUwv3OdhXrxWcD3exw
+Message-ID: <CAFEAcA_VS4xH09PwdpxuScsCrrkJtePp2x4ioTt1fMMTs5n+=g@mail.gmail.com>
+Subject: Re: [PATCH v5 30/63] target/arm: Implement BFCVTN for SVE
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,279 +116,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 29 Apr 2026 14:48:39 +0100
-Joshua Lant <joshualant@gmail.com> wrote:
-
-> Add initial support for VCS (multi-USP/multi-logic-device) switch
-> emulation in CXL. Currently the object only supports the identify/bind/unbind
-> commands (0x5200/0x5201/0x5202), as well as support for device hiding
-> listeners. This enables preliminary testing of the VCS capability,
-> but will not allow for complete emulated flow as described in
-> spec (CXL v3.2, 7.2.3). Nor will it allow for multiple USP's to be
-> disributed over multiple QEMU instances.
-> 
-> Signed-off-by: Joshua Lant <joshualant@gmail.com>
-> ---
->  hw/cxl/cxl-vcs-switch.c         | 524 ++++++++++++++++++++++++++++++++
-
-We need to make it explicit this is a multiple-vcs switch
-Or not bother given other switches don't have an explicit representation
-so we could just call it cxl_switch :)
-
-
-A few trivial things follow.
-
-I'm trying to get my head around how we handle state given we ultimately 
-can't wait to realise until binding because we need to be able to
-do pre binding init of devices etc.
-
-MLDs will be more fun at somepoint as well if we care to go that way.
-
-Anyhow, this is very much first look rather than a detailed review.
-
-> +
-> +/* When a device is instantiated downstream of a VCS's PPB, we
-> + * store the qdicts from the CLI, to realize the device at a
-> + * future time.
-> + */
-> +bool cxl_vcs_hide_device_listener(DeviceListener *listener, const QDict *opts,
-> +                        bool from_json, Error **errp)
-> +{
-> +    CXLVCSSwitch *vcs = container_of(listener, CXLVCSSwitch, listener);
-> +    const char *vcs_id_str   = qdict_get_try_str(opts, "vcs");
-stray space.
-
-> +    const char *ppb_str = qdict_get_try_str(opts, "dsppb");
-> +    int ppb;
-> +
-
-> +
-> +static void vcs_set_usp_ppbs(Object *obj, Visitor *v, const char *name,
-> +                              void *opaque, Error **errp)
-> +{
-> +    CXLVCSSwitch *vcs = CXL_VCS_SWITCH(obj);
-> +    uint8_t val;
-> +    if (!visit_type_uint8(v, name, &val, errp)) {
-> +        return;
-> +    }
-> +    vcs->num_usp_ppbs = val;
-> +}
-Blank line between functions.
-
-> +static void vcs_get_dsp_ppbs(Object *obj, Visitor *v, const char *name,
-> +                              void *opaque, Error **errp)
-> +{
-> +    CXLVCSSwitch *vcs = CXL_VCS_SWITCH(obj);
-> +    uint8_t val = vcs->num_dsp_ppbs;
-> +    visit_type_uint8(v, name, &val, errp);
-> +}
-> +
-> +static void vcs_set_dsp_ppbs(Object *obj, Visitor *v, const char *name,
-> +                              void *opaque, Error **errp)
-> +{
-> +    CXLVCSSwitch *vcs = CXL_VCS_SWITCH(obj);
-> +    uint8_t val;
-Blank line - same in similar places. Normally separate declarations and
-body of code.
-
-> +    if (!visit_type_uint8(v, name, &val, errp)) {
-> +        return;
-> +    }
-> +    vcs->num_dsp_ppbs = val;
-> +}
-> +
-> +static void cxl_vcs_class_init(ObjectClass *oc, const void *data)
-> +{
-> +    CXLVCSSwitchClass *cc = CXL_VCS_SWITCH_CLASS(oc);
-> +    UserCreatableClass *ucc = USER_CREATABLE_CLASS(oc);
-
-Bank line here.
-
-> +    ucc->complete = cxl_vcs_switch_complete;
-> +    ucc->can_be_deleted = cxl_vcs_switch_can_be_deleted;
-> +    cc->identify_switch_device = cxl_vcs_identify_switch_device;
-> +    cc->get_physical_port_state = cxl_vcs_get_physical_port_state;
-> +    cc->physical_port_control = cxl_vcs_physical_port_control;
-> +    cc->get_virtual_switch_info = cxl_vcs_get_virtual_switch_info;
-> +    cc->bind_vppb = cxl_vcs_bind_vppb;
-> +    cc->unbind_vppb = cxl_vcs_unbind_vppb;
-> +
-> +    object_class_property_add_bool(oc, "local-fm",
-> +                              cxl_vcs_get_local_fm, cxl_vcs_set_local_fm);
-As below - drop for now.
-
-> +    object_class_property_set_description(oc, "local-fm",
-> +        "true = FM authority (mctp connected guest), \
-> +        false = slave listener (IPC)");
-Likewise.
-
-> +    object_class_property_add(oc, "usp-ppbs", "uint8",
-> +                          vcs_get_usp_ppbs, vcs_set_usp_ppbs,
-> +                          NULL, NULL);
-> +    object_class_property_set_description(oc, "usp-ppbs",
-> +        "Number of upstream ports in the switch");
-> +    object_class_property_add(oc, "dsp-ppbs", "uint8",
-> +                          vcs_get_dsp_ppbs, vcs_set_dsp_ppbs,
-> +                          NULL, NULL);
-> +    object_class_property_set_description(oc, "dsp-ppbs",
-> +        "Number of downstream ports in the switch");
-> +}
+On Tue, 19 May 2026 at 14:27, Peter Maydell <peter.maydell@linaro.org> wrote:
+> If we do take this approach we also need something like:
 >
-> diff --git a/include/hw/cxl/cxl_vcs_switch.h b/include/hw/cxl/cxl_vcs_switch.h
-> new file mode 100644
-> index 0000000000..6576870bf3
-> --- /dev/null
-> +++ b/include/hw/cxl/cxl_vcs_switch.h
-> @@ -0,0 +1,134 @@
-> +/*
-> + * CXL VCS Capable Switch Object Header
-No point in stating it's a header.
+> --- a/fpu/softfloat-parts.c.inc
+> +++ b/fpu/softfloat-parts.c.inc
+> @@ -288,6 +288,7 @@ static void
+> partsN(uncanon_e4m3_overflow)(FloatPartsN *p, float_status *s,
+>          p->frac_hi = E4M3_NORMAL_FRAC_MAX;
+>      } else {
+>          *p = partsN(default_nan)(s);
+> +        fracN(allones)(p);
+>      }
+>  }
+>
+> because the NaN value from uncanon_e4m3_overflow isn't passed
+> through the NaN handling part of uncanon.
 
-> + *
-> + * Copyright(C) 2026 University of Manchester
-> + * Author: Joshua Lant <joshualant@gmail.com>.
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2. See the
-> + * COPYING file in the top-level directory.
+This isn't sufficient for the e4m3_overflow case, because we
+need to return a NaN with the sign of the input. In the
+Arm pseudocode FP8Round() calls FP8Infinity() for the overflow
+case for both E4M3 and E5M2; for E5M2 that function returns the
+format's Infinity representation, but for E4M3 as there is no
+Infinity it returns the NaN with the sign of the input.
 
-If you are fine with many folk just use SPDX on it's own now.
+diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+index d267bb4bbd..efd130bf16 100644
+--- a/fpu/softfloat-parts.c.inc
++++ b/fpu/softfloat-parts.c.inc
+@@ -287,7 +287,9 @@ static void
+partsN(uncanon_e4m3_overflow)(FloatPartsN *p, float_status *s,
+         p->exp = fmt->exp_max;
+         p->frac_hi = E4M3_NORMAL_FRAC_MAX;
+     } else {
+-        *p = partsN(default_nan)(s);
++        /* SNaN with sign of input */
++        p->cls = float_class_snan;
++        p->exp = INT_MAX;
++        fracN(allones)(p);
+     }
+ }
 
-> + *
-> + * SPDX-License-Identifier: GPL-v2-only
-> + */
-> +
-> +#ifndef CXL_VCS_SWITCH_H
-> +#define CXL_VCS_SWITCH_H
-> +
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "qom/object.h"
-> +#include "qom/object_interfaces.h"
-> +#include "hw/pci-bridge/cxl_upstream_port.h"
-> +#include "hw/pci-bridge/cxl_downstream_port.h"
-> +#include "include/hw/cxl/cxl_device.h"
-> +
-> +#define TYPE_CXL_VCS_SWITCH "cxl-vcs-switch"
-> +OBJECT_DECLARE_TYPE(CXLVCSSwitch, CXLVCSSwitchClass, CXL_VCS_SWITCH);
-> +
-> +#define CXL_VPPB_BINDING_STATUS_UNBOUND        0x00
-> +#define CXL_VPPB_BINDING_STATUS_IN_PROGRESS    0x01
-> +#define CXL_VPPB_BINDING_STATUS_BOUND_PORT     0x02
-> +#define CXL_VPPB_BINDING_STATUS_BOUND_LD       0x03
-> +#define CXL_VPPB_BINDING_STATUS_BOUND_PID      0x04
-> +
-> +#define CXL_VPPB_UNBIND_WAIT_FOR_LINK_DOWN      0x0
-> +#define CXL_VPPB_UNBIND_MANAGED_HOT_REMOVE      0x1
-> +#define CXL_VPPB_UNBIND_SURPRISE_HOT_REMOVE     0x2
-> +
-> +#define CXL_UNSUPPORTED_LD_ID 0xFFFF
-> +#define CXL_INVALID_BOUND_LD_ID 0xFF
-> +
-> +#define CXL_VCS_STATE_INVALID_ID        0xFF
-> +#define CXL_VCS_STATE_DISABLED 0x0
-> +#define CXL_VCS_STATE_ENABLED 0x1
-> +
-> +#define CXL_MAX_VCS_PORTS 0x8
-> +#define CXL_MAX_VPPB_PER_VCS 0x8
-> +#define CXL_MAX_USP_PPBS CXL_MAX_VCS_PORTS
-> +#define CXL_MAX_DSP_PPBS CXL_MAX_VPPB_PER_VCS
-> +
-> +#define CXL_MAX_PPBS (CXL_MAX_USP_PPBS + CXL_MAX_DSP_PPBS)
-> +#define VPPB_LIST_LIMIT 8
-> +
-> +struct CXLVCSSwitchClass {
-> +    ObjectClass parent_class;
-> +    void (*identify_switch_device)(CXLVCSSwitch *sw);
-> +    void (*get_physical_port_state)(CXLVCSSwitch *sw);
-> +    void (*physical_port_control)(CXLVCSSwitch *sw);
-> +    void (*get_virtual_switch_info)(CXLVCSSwitch *sw);
-> +    CXLRetCode (*bind_vppb)(CXLVCSSwitch *sw, uint8_t vcs_id, uint8_t vppb_id,
-> +            uint8_t dsppb_id, uint16_t ld_id);
-> +    CXLRetCode (*unbind_vppb)(CXLVCSSwitch *sw, uint8_t vcs_id, uint8_t vppb_id,
-> +            uint16_t option);
-> +};
-> +
-> +/* CXL r3.2 Table 7-32: Get Virtual CXL Switch Info VCS Info Block Format */
-We tend to use latest available spec for new stuff. So if you can
-reference CXL 4.0 that would preferred.
+gives the right answers but IDK if riscv wants this behaviour
+or some other one.
 
-This is driven by the silly policy of now making old specs easily
-available.
-
-> +typedef struct CXLVPPBInfo {
-> +        PCIDevice *dsp;
-> +        uint8_t binding_status;
-> +        uint8_t bound_port_id;
-> +        uint8_t bound_ld_id;
-> +        uint8_t rsv1;
-> +} CXLVPPBInfo;
-> +
-> +typedef struct CXLVCSInfoBlock {
-> +        uint8_t vcs_id;
-> +        uint8_t vcs_state;
-> +        uint8_t usp_id;
-> +        uint8_t num_vppbs;
-> +        struct CXLVPPBInfo *vppbs[CXL_MAX_VPPB_PER_VCS];
-> +} CXLVCSInfoBlock;
-> +
-> +/* Physical Upstream and Downstream PCI-PCI Bridge (PPBs) structs */
-
-I'd split the comment in two. Kind of obvious but I misread
-it as referring to this struct for both of them.
-
-> +typedef struct CXLUpstreamPPB {
-> +    CXLUpstreamPort   *usp;
-> +    struct CXLVCSInfoBlock *info;
-> +} CXLUpstreamPPB;
-> +
-> +typedef struct CXLDownstreamPPB {
-> +    DeviceState *dev;
-> +    PCIDevice   *pdev;
-> +    // store opts and json in case of simple device hiding.
-> +    QDict       *opts;
-> +    bool        from_json;
-> +    bool        is_bound;
-> +    uint8_t     bound_vcs_id;
-> +    uint8_t     bound_vppb_id;
-> +} CXLDownstreamPPB;
-> +
-> +typedef struct CXLVCSSwitch {
-> +    Object parent;
-> +    uint8_t num_usp_ppbs;
-> +    uint8_t num_dsp_ppbs;
-> +    uint8_t num_vppbs_per_vcs;
-> +    CXLCCI swcci;
-> +    CXLCCI mctpcci;
-> +    DeviceListener listener;
-> +    CXLUpstreamPPB *usp_ppbs[CXL_MAX_USP_PPBS];
-> +    CXLDownstreamPPB *dsp_ppbs[CXL_MAX_DSP_PPBS];
-> +    // true if FM is in this guest, false if remote FM.
-> +    bool local_fm;
-
-As mentioned in comments on cover letter. Drop this for now.
-
-> +} CXLVCSSwitch;
-> +
-> +// Called by USP/DSP/EP CXL devices to build the VCS structures.
-> +void cxl_vcs_register_usp(CXLVCSSwitch *sw, CXLUpstreamPort *usp, Error **errp);
-> +void cxl_vcs_register_vppb(CXLVCSSwitch *sw, CXLUpstreamPort *usp,
-> +        CXLDownstreamPort *dsp, Error **errp);
-> +void cxl_vcs_register_dsppb(CXLVCSSwitch *sw, const QDict *opts,
-> +        bool from_json, Error **errp);
-> +void cxl_vcs_register_qdict_dsppb(CXLVCSSwitch *sw, const QDict *opts,
-> +        bool from_json, Error **errp);
-> +bool cxl_vcs_hide_device_listener(DeviceListener *listener,
-> +        const QDict *device_opts, bool from_json, Error **errp);
-> +
-> +
-> +// Called by the CCI mailbox utils for FMAPI control of VCS.
-> +CXLRetCode cxl_vcs_bind_vppb(CXLVCSSwitch *sw, uint8_t vcs_id, uint8_t vppb_id,
-> +        uint8_t dsppb_id, uint16_t ld_id);
-> +CXLRetCode cxl_vcs_unbind_vppb(CXLVCSSwitch *sw, uint8_t vcs_id,
-> +        uint8_t vppb_id, uint16_t option);
-> +void cxl_vcs_identify_switch_device(CXLVCSSwitch *sw);
-> +void cxl_vcs_get_physical_port_state(CXLVCSSwitch *sw);
-> +void cxl_vcs_physical_port_control(CXLVCSSwitch *sw);
-> +void cxl_vcs_get_virtual_switch_info(CXLVCSSwitch *sw);
-
+-- PMM
 
