@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75908CD4F5B
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 12:55:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA10ECD5BA4
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 12:55:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPJx7-0007jp-EL; Tue, 19 May 2026 08:53:41 -0400
+	id 1wPJyQ-0001Nq-Cw; Tue, 19 May 2026 08:55:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wPJwh-00079B-Ug
- for qemu-devel@nongnu.org; Tue, 19 May 2026 08:53:17 -0400
+ id 1wPJxF-000870-Ls
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 08:53:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wPJwg-0000ze-D2
- for qemu-devel@nongnu.org; Tue, 19 May 2026 08:53:15 -0400
+ id 1wPJxD-0001AG-2v
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 08:53:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779195193;
+ s=mimecast20190719; t=1779195226;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SehIcGL5+cgE4/kfJH/adrcIXagz7Lnlktp3htwqCmA=;
- b=eLrO4gWVBIIEAUl65yWtAFp3gyaSSBde6HmWpgWxAceMLPrgf6zwm93IQUehXpKKDcoyUE
- x5qozlQbqqzcDWTTG0urElkFabW9pCcYdtqHG1emOjw5XddubvfvRFt/SaYUcdJrrLX5IS
- zx5xKZq+3L+bSPC2KHshpCgLdqRVnbw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=1MQXuPaRB7cSoaPWWgGbs2E8mNqPEjYl8oMsJfb79dM=;
+ b=NsoXs4HA6fJ/UV8gB8Oi66G2PshSPTW+FY/YoYH4FnhbA4yUdtiqnBKdigRwEcTsHbf2eR
+ bBcAGbreEsU5qq/w+bZ7XAiHAKnFWIx0XbbfsiFx+ZyT4O/63doWspSFeRkYRTZ+68XIYh
+ UIyTquJ9K8S6gxi8b/oKm45S9InrEMo=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-6-WwALzEpKPf6fite7bhsF3Q-1; Tue,
- 19 May 2026 08:53:10 -0400
-X-MC-Unique: WwALzEpKPf6fite7bhsF3Q-1
-X-Mimecast-MFC-AGG-ID: WwALzEpKPf6fite7bhsF3Q_1779195189
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-56-ifC3wL_cP6mESAmg8UhkVA-1; Tue,
+ 19 May 2026 08:53:39 -0400
+X-MC-Unique: ifC3wL_cP6mESAmg8UhkVA-1
+X-Mimecast-MFC-AGG-ID: ifC3wL_cP6mESAmg8UhkVA_1779195217
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3D316195608B; Tue, 19 May 2026 12:53:09 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B061B19560A7; Tue, 19 May 2026 12:53:37 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.49.49])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E871418004A3; Tue, 19 May 2026 12:53:05 +0000 (UTC)
+ id 4EF9A18004A3; Tue, 19 May 2026 12:53:34 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Cleber Rosa <crosa@redhat.com>,
@@ -56,10 +56,10 @@ Cc: Cleber Rosa <crosa@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PULL 18/28] gitlab: remove I/O tests from build-tcg-disabled job
-Date: Tue, 19 May 2026 13:51:42 +0100
-Message-ID: <20260519125153.1015315-19-berrange@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 25/28] qom: add object_new_with_props_from_qdict
+Date: Tue, 19 May 2026 13:51:49 +0100
+Message-ID: <20260519125153.1015315-26-berrange@redhat.com>
 In-Reply-To: <20260519125153.1015315-1-berrange@redhat.com>
 References: <20260519125153.1015315-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -91,38 +91,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that we have dedicated CI jobs for running I/O tests on each
-supported format/protocol, we no longer need to special case a
-run of a hand picked set of tests in the build-tcg-disabled job.
+This will be used to replace user_creatable_add_type with an impl
+that shares most code with object_new_with_props, and is not tied
+to the user creatable interface.
 
-Acked-by: Kevin Wolf <kwolf@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- .gitlab-ci.d/buildtest.yml | 9 ---------
- 1 file changed, 9 deletions(-)
+ include/qom/object.h | 19 +++++++++++
+ qom/object.c         | 75 ++++++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 88 insertions(+), 6 deletions(-)
 
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index cf0281ecd6..d054349030 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -366,15 +366,6 @@ build-tcg-disabled:
-     - make -j"$JOBS"
-     - make check-unit
-     - make check-qapi-schema
--    - ./run tests/qemu-iotests/check -raw 001 002 003 004 005 008 009
--            010 011 012 021 025 032 033 048 052 063 077 086 101 104 106
--            113 148 150 151 152 157 159 160 163 170 171 184 192 194 208
--            221 226 227 236 253 277 image-fleecing
--    - ./run tests/qemu-iotests/check -qcow2 028 051 056 057 058 065 068
--            082 085 091 095 096 102 122 124 132 139 142 144 145 151 152
--            155 157 165 194 196 200 202 208 209 216 218 227 234 246 247
--            248 250 254 255 257 258 260 261 262 263 264 270 272 273 277
--            279 image-fleecing
-     - make distclean
+diff --git a/include/qom/object.h b/include/qom/object.h
+index be65acff93..fb1cd92d97 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -700,6 +700,25 @@ Object *object_new_with_propv(const char *typename,
+                               va_list vargs,
+                               Error **errp);
  
- build-user:
++/**
++ * object_new_with_props_from_qdict:
++ * @typename:  The name of the type of the object to instantiate.
++ * @parent: the parent object
++ * @id: The unique ID of the object
++ * @props: dictionary of property names and values
++ * @v: visitor to iterate over @props
++ * @errp: pointer to error object
++ *
++ * A variant of object_new_with_props() which accepts the
++ * properties in a QDict.
++ */
++Object *object_new_with_props_from_qdict(const char *typename,
++                                         Object *parent,
++                                         const char *id,
++                                         const QDict *props,
++                                         Visitor *v,
++                                         Error **errp);
++
+ /**
+  * object_set_props:
+  * @obj: the object instance to set properties on
+diff --git a/qom/object.c b/qom/object.c
+index 3f2569d654..a11f559445 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -748,11 +748,14 @@ Object *object_new_with_props(const char *typename,
+ }
+ 
+ 
+-Object *object_new_with_propv(const char *typename,
+-                              Object *parent,
+-                              const char *id,
+-                              va_list vargs,
+-                              Error **errp)
++static Object *
++object_new_with_props_helper(const char *typename,
++                             Object *parent,
++                             const char *id,
++                             void *props,
++                             bool (set_props)(Object *obj, void *props,
++                                              Error **errp),
++                             Error **errp)
+ {
+     Object *obj;
+     ObjectClass *klass;
+@@ -777,7 +780,7 @@ Object *object_new_with_propv(const char *typename,
+     }
+     obj = object_new_with_type(klass->type);
+ 
+-    if (!object_set_propv(obj, vargs, errp)) {
++    if (!set_props(obj, props, errp)) {
+         goto error;
+     }
+ 
+@@ -803,6 +806,66 @@ Object *object_new_with_propv(const char *typename,
+     return NULL;
+ }
+ 
++struct ObjectNewVargsData {
++    va_list vargs;
++};
++
++static bool object_new_with_propv_setter(Object *obj,
++                                         void *props,
++                                         Error **errp)
++{
++    struct ObjectNewVargsData *data = props;
++    return object_set_propv(obj, data->vargs, errp);
++}
++
++Object *object_new_with_propv(const char *typename,
++                              Object *parent,
++                              const char *id,
++                              va_list vargs,
++                              Error **errp)
++{
++    Object *obj;
++    struct ObjectNewVargsData data;
++
++    va_copy(data.vargs, vargs);
++    obj = object_new_with_props_helper(typename,
++                                       parent,
++                                       id,
++                                       &data,
++                                       object_new_with_propv_setter,
++                                       errp);
++    va_end(data.vargs);
++    return obj;
++}
++
++struct ObjectNewQDictData {
++    const QDict *props;
++    Visitor *v;
++};
++
++static bool object_new_with_qdict_setter(Object *obj,
++                                         void *props,
++                                         Error **errp)
++{
++    struct ObjectNewQDictData *data = props;
++    return object_set_props_from_qdict(obj, data->props, data->v, errp);
++}
++
++Object *object_new_with_props_from_qdict(const char *typename,
++                                         Object *parent,
++                                         const char *id,
++                                         const QDict *props,
++                                         Visitor *v,
++                                         Error **errp)
++{
++    struct ObjectNewQDictData data = { props, v };
++    return object_new_with_props_helper(typename,
++                                        parent,
++                                        id,
++                                        &data,
++                                        object_new_with_qdict_setter,
++                                        errp);
++}
+ 
+ bool object_set_props(Object *obj,
+                       Error **errp,
 -- 
 2.54.0
 
