@@ -4,111 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9A1DCD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 10:35:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0499ACD4851
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 10:36:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPHmj-0002oK-IT; Tue, 19 May 2026 06:34:49 -0400
+	id 1wPHo9-0005BX-O1; Tue, 19 May 2026 06:36:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wPHmh-0002jp-K7
- for qemu-devel@nongnu.org; Tue, 19 May 2026 06:34:47 -0400
-Received: from mail-vs1-xe32.google.com ([2607:f8b0:4864:20::e32])
+ (Exim 4.90_1) (envelope-from <williamdapinho@gmail.com>)
+ id 1wPHo8-0005An-Iv
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 06:36:16 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wPHmg-0005SK-1Y
- for qemu-devel@nongnu.org; Tue, 19 May 2026 06:34:47 -0400
-Received: by mail-vs1-xe32.google.com with SMTP id
- ada2fe7eead31-6312af106e3so2651415137.0
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 03:34:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779186885; cv=none;
- d=google.com; s=arc-20240605;
- b=MfWrIPBsuXlouxCwn+iwWhte1ND6pTccSTweEQbrfO9ZZLyt/Eszi298F4zhUMsRmw
- C4wsHCTi7Vl3r8xojWm1X3zMQpFkSHeW5TQ7Iv7W6EWiewd1TERy0g9fFBEy3UTjhvGe
- P/ozkA3kUlIfbDBu9xKAfCuUDwDFqearmknZZQfG7G29HvEgJFct+rLwR4pxLsogLt3R
- MPc7cRkgJbX6xTWPy+mXqhIYzm0dCXmHai7Vog+XRIr9bEb13+m9tgXzw/YzSQFazoXI
- 3Zy4SdWI2irdQZBqXmlighwvDAwt0vXUt3/aNIMLJ/7O1riezvHdLOONBV2ZraJd2hHe
- WxkQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=DjFGDO+rJPTxAOU1tv6enj69fI1k+YxVjY85n3Po5FU=;
- fh=IDp0myVICjsESA2hUndJr6dhiM4iD0DVzqBF3oUg2jA=;
- b=Cai22vnCNehtGaTxrb5cB485HPeWX0yPsaTHksiogmMpbkHYKdB64BBcTOCGuNmAEf
- eaTg/g8ISyRJCjAYR3rO/SIMzG15VZYp2Nht988vjUnXKdFDHG5xenSQ57dpBCOa1aHJ
- AJTctM/zZ/cfuxzAgBMW3z68enVdzrC50G2SvxM0SqPL83ucdXIdhsmZYmHo4EKqB17a
- yrL82MYPpU1IZmjQe0958JB8yhb1SER2Yp01Mlnw0sdYbQtj9v0wYnkFHjDQ+8uOzXUZ
- v/JyjfdfI6DXFKvcfGwqJNIF+zgbHqAV4ixptk1w2bKcSvWO9FuN7lMqiV1n+S9kdgAS
- hpPg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <williamdapinho@gmail.com>)
+ id 1wPHo5-0005sV-F4
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 06:36:16 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-488b3f8fa2bso34852545e9.1
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 03:36:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779186885; x=1779791685; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DjFGDO+rJPTxAOU1tv6enj69fI1k+YxVjY85n3Po5FU=;
- b=DzhqcqXkytQFQ06GgtqwKs8nsi8nI9y7ioSkFK6TWcUJnKmqTL3X8NQkBurxki7gi3
- IGnzQHgLt+7EqXZ6JQukF5SbsdpCN3JOh1KVlz4xiPHap1abJHWGq+vqMT9t/43TVUth
- qmNlLxx9bN1AUXIAx36Wld76wCVvm+LcQ3TqT8NApc9UINs9jfTiltC7rqWa2ll3Jkc+
- zH6qpEPCzhp6Xr+1X/yqlBJPqpjGL+en/e+W6M8i6J+dQG48upU59kwbxJtNR8LUZgma
- 2197EX7onUjJEEUpA6VCsrw8ahisja5vcA/Gopj9nFwT9GvyqHcvhi6DNQfG2YNjyJZf
- CzLA==
+ d=gmail.com; s=20251104; t=1779186971; x=1779791771; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=7y9tRwO+0lSOO4TaJoPdAdG3p2FWJzmWaZsdLD7jsEU=;
+ b=CvZCd3Ryk3xzDrxzYb10CpYoh5FW06Evxwi+/R58iSWB+Lq2/4GQChYHndal4uFuDF
+ 1VjhTVkP79Kjjc+s2fQszR3cNk7K/hYru9/ezYfju394Xgt3UTQLr8BQahcb5tGIk0IZ
+ +cW8HZjw8BzBppLP1hhN+YbPYT7ezHX+EeVhxAqw28RZPIoqrOzmz88hqDUtUtGU28r4
+ ODWmCQrJ027ioc/EgDYfHzrYgwFW38h1xVD6aQXGEQzEE8/vIkUAkUJ+S3eJRelMcem7
+ U4ehjwtad+MEawtXotzgeTrP0Wh8xP6vtSEPXZj0MAkTi/hTy416Y0wNvuIent4zWDIP
+ srBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779186885; x=1779791685;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=DjFGDO+rJPTxAOU1tv6enj69fI1k+YxVjY85n3Po5FU=;
- b=Ya5HlQ2CBLHfJMt3ciafBnF1awMtcpYhguQyKz05vyUFNOqjgBE04MayclmKA1BK1x
- CjVtfoeVPxskI+heE5VnfAVCRDoUqdcOQABxIE9H9lIdPRIoUFe2ycnHh9XgpUfxOlol
- IpEbTLCLXzupLCPs5e72ihcPLod6itSPvBIoTVhVcUIPepG2X8vzInqTHgK5xwjOQ61Z
- tYzwaF7lNAWIdByODV/yyd3e00MjzInXGhYp6yf9Yv+am2lRwTzDrPUR8CqQnTOky9eL
- fza5+f82hecU8utIc0hYp+pXgov8RmxF7zUwudjsqRVcjFMGiwu1JE7ipwT/o+/58tXx
- Uy6g==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/IJ5fpjuIBBtDJNLNC6gEc78p4kIUosCFeUq2cw/BLXrAx69y3eEYuOMNHbE9TbcBVF1cnjsKjXbBD@nongnu.org
-X-Gm-Message-State: AOJu0Yy5O6vIOUeg+w3hEYyJXXcmhroGH2AWn1wGg56qS21nG6yImTvv
- yvjdHZcEEfWhQN0ez7zz78OK/T3UTXYG4hqXiUweTlJScgaCt0HNwzX1QfAmcOh6/K6tMwN/rpe
- 83DdMEVz6l2c1+39dS9e4JlMTUna223ULa89iF2aAfQ==
-X-Gm-Gg: Acq92OHoeTmbs7WFTl40M6JbTGGfCKpR3WnlIFcEuulX7mAbZu1Pf0M80RHVZiipIO5
- g9T6w9TTFckjdkC1CoiE586y6/Y8I029NZCLlXtdm5wWhIjSHSLa769vHI6e+et6avnO7oQ+CJa
- MhzKzh7x8qD/DXspPLq27YG9g6rub+X0Pv10IBPd6afwq56d7mgwl5UBYiuiXT/0eGR2ZLEOtwx
- xhw2yHyH2cGD68xoOwv5q6AyxVQVps1Y4cTnr+2lv6syoXYqcdn2nUKvXsjCsW2goTmk2h9yIGs
- EXsL1XGO1W2waF+6QU84wvHR4DV/77ywxQoF+cjkHE4+piENjvntVruXAgI4nuD99ls=
-X-Received: by 2002:a05:690e:1551:10b0:650:5316:1756 with SMTP id
- 956f58d0204a3-65e228a4ba2mr14812476d50.57.1779186107206; Tue, 19 May 2026
- 03:21:47 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779186971; x=1779791771;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7y9tRwO+0lSOO4TaJoPdAdG3p2FWJzmWaZsdLD7jsEU=;
+ b=hMB40MCBH26bvcALL1Yv70FCxqh45k/Nx6L0o4SQVwBzrTStgWjAtUbhhwRfC5dIyW
+ 7aOd7UUEV/OZ0ZwWlP1cloqeEiWjyrrDSl8CL5ojzE0A6kU31QCZLFcS5lEeemjHeETO
+ /n3gEEg4sDGTQ+cy7LdwBmcxTDKeozTwWPuogpdL8xa5xBelCKHa8eG7JUlKQ6FJ4m9o
+ d0tvCoWAwmzpQSzDq/7C0joI3vWcqjxoCjokjO/v/S5bViH5dG5/bm+x4MzgvidfEQwL
+ SzJNgyVMlYdeYgftB796dEgmtRitiICUV8pG+yNOkchXdSaJQ8xLRBFhz7vXfVehPbv5
+ 55NQ==
+X-Gm-Message-State: AOJu0Yx0IFq6YVDT04sEuFsUq9uT5cOcUxSReGTXwHaoPjygORGzlP29
+ V8NHOVSrT8S0pKrkb0rlQkM4XeRvHd3eXmfakdzOyQtIv7e3OU8DuXRP
+X-Gm-Gg: Acq92OGW3FKTBRhDDXAvZf6wwEKlk24QJsULht9CpnwXwHJbdmUsq3JJAZSL+yNG4dW
+ EEDFC0oOyQH0WlSO8linUVd79XXaEyduaX1eoVkRxuTNsn4CQRyOoSQgv0HREeM0JU8IL/ZAwM5
+ YuEzunfIn2RwPqLVmPtSCzk7zm3zdBYu/44tPTQW/ugqNgPJC5ytg8adJbxAkxGUHc98LCFTQ4/
+ 9A1ifq2masaWqIVLOScwCW20JcqN1KUVeU4eCpZK8r+MLO/7uopP8i4m0yxZb6qvpWcQPmlyKn0
+ z5uqDQRFWlE5BhmL6pojafvlvWNH3sSx/+wx6CBn1NWdfWx0dp7dIUoHkMJH3t/f8dcUxRJ/Hn9
+ Oz+NgNFPr0IkMOSXfd6Ga28DjC8XSZUz0yrJnMtydP38ukGs+KaLEttJ7bG6yavVhyjiKXBhNck
+ nmfZ8VujOuxgxgWz/F8Xf2hw==
+X-Received: by 2002:a05:600c:a406:b0:489:32b:ac0b with SMTP id
+ 5b1f17b1804b1-48fe4fa1902mr228931695e9.6.1779186970772; 
+ Tue, 19 May 2026 03:36:10 -0700 (PDT)
+Received: from localhost ([2a03:2880:30ff:1::])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48fe5ab52a6sm315450985e9.10.2026.05.19.03.36.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 19 May 2026 03:36:09 -0700 (PDT)
+From: William de Abreu Pinho <williamdapinho@gmail.com>
+Subject: [PATCH v2 0/3] hw/arm/aspeed: add anacapa-bmc machine
+Date: Tue, 19 May 2026 03:36:02 -0700
+Message-Id: <20260519-add-anacapa-machine-v2-0-47027867d76a@gmail.com>
 MIME-Version: 1.0
-References: <20260518160255.1844308-1-thuth@redhat.com>
- <ags5_IDkvxClCdHm@redhat.com> <ags7xIsUG2DqX5vu@redhat.com>
- <dbc6464c-2685-46c4-803c-6af53d345083@linaro.org>
- <c9fa27e3-0939-4490-b350-7a625ebcdcdb@redhat.com>
- <b70b35ef-1761-4624-9f98-7c1ae161ed9a@redhat.com>
-In-Reply-To: <b70b35ef-1761-4624-9f98-7c1ae161ed9a@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 19 May 2026 11:21:35 +0100
-X-Gm-Features: AVHnY4IDai8ohiPPmfUsi6sgbNhGbbfI7LCpWhYitX_rzPXlm_IUhss04yTv4bA
-Message-ID: <CAFEAcA9JaXVTNbAXbaTDM-bN=HEZHEX6+cDLiTx8n2=Di04LFQ@mail.gmail.com>
-Subject: Re: [PATCH] system/rtc: Fix a possible year-2038 integer overflow
- problem
-To: Thomas Huth <thuth@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, qemu-trivial@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>,
- Cornelia Huck <cohuck@redhat.com>, qemu-s390x <qemu-s390x@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e32;
- envelope-from=peter.maydell@linaro.org; helo=mail-vs1-xe32.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABM9DGoC/22NQQqDMBBFryKz7pQk1Ihd9R7FxZhMdKBGSYq0i
+ HdvKnTX5Xvw398gcxLOcK02SLxKljkWMKcK3EhxYBRfGIwyVtVaI3mPFMnRQjiRGyUyutCoxlK
+ vKBCU5ZI4yOuo3rvCo+TnnN7Hyaq/9ter//ZWjQrbxtaOVd9ejL0NE8nj7OYJun3fP91ilq+2A
+ AAA
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
+ qemu-arm@nongnu.org, William de Abreu Pinho <williamdapinho@gmail.com>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+X-Mailer: b4 0.13.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=williamdapinho@gmail.com; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -126,44 +107,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 19 May 2026 at 10:27, Thomas Huth <thuth@redhat.com> wrote:
->
-> On 19/05/2026 11.18, Thomas Huth wrote:
-> > On 19/05/2026 10.24, Philippe Mathieu-Daud=C3=A9 wrote:
-> >> "32-bit *host* OS".
-> >>
-> >> Per ./configure script, we still allow:
-> >> - x86_64 x32 ABI      (CPU_CFLAGS=3D"-mx32")
-> >
-> > We should maybe deprecate that x32 ABI ...
-> >
-> >> - sparc32             (CPU_CFLAGS=3D"-m32 -mv8plus -mcpu=3Dultrasparc"=
-)
-> >
-> > ... and that one as well?
-> >
-> >> - s390                (CPU_CFLAGS=3D"-m31")
+This series adds support for the Anacapa machine type.  The first patch
+introduces FacebookAspeedTest and updates the existing Facebook machine
+tests.  The second patch adds the machine model and functional tests.
+The third patch adds the FRU EEPROM contents.
 
-> > Uh, we really still allow 31-bit s390 hosts here? I think this could be
-> > removed nowadays, also upstream kernel recently ditched the 31-bit user=
-space:
-> >
-> >   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/
-> > commit/?id=3D8e0b986c59c67e08ada646249f834655a9e6da16
-> >
-> > Question is whether we can remove it immediately, or whether it needs t=
-o be
-> > deprecated first?
->
-> Ah, wait, we completely disallow disallow 32-bit hosts nowadays:
->
->   https://gitlab.com/qemu-project/qemu/-/commit/372ec46b9f1215f48a4717f2b=
-7ed969f65bfadc6
+Signed-off-by: William de Abreu Pinho <williamdapinho@gmail.com>
+---
+Changes in v2:
+- Split the functional test (FacebookAspeedTest) into a separate patch,
+  also updating bletchley-bmc and catalina-bmc to use it.
+- Link to v1: https://lore.kernel.org/qemu-devel/20260515-add-anacapa-machine-v1-0-9765ce0b9426@gmail.com
 
-We relaxed that check before the 11.0 release in commit cf634dfcd8fc.
-We require a 64-bit host for the emulator binaries but still permit
-32-bit host builds for the tools.
+---
+William de Abreu Pinho (3):
+      tests/functional/aspeed: introduce FacebookAspeedTest
+      hw/arm/aspeed: add anacapa-bmc machine
+      hw/arm/aspeed: anacapa: add FRU EEPROM data
 
-thanks
--- PMM
+ hw/arm/aspeed_ast2600_anacapa.c               | 362 ++++++++++++++++++++++++++
+ hw/arm/meson.build                            |   1 +
+ tests/functional/arm/meson.build              |   2 +
+ tests/functional/arm/test_aspeed_anacapa.py   |  25 ++
+ tests/functional/arm/test_aspeed_bletchley.py |   6 +-
+ tests/functional/arm/test_aspeed_catalina.py  |   6 +-
+ tests/functional/aspeed.py                    |   8 +
+ 7 files changed, 404 insertions(+), 6 deletions(-)
+---
+base-commit: ee7eb612be8f8886d48c1d0c1f1c65e495138f83
+change-id: 20260511-add-anacapa-machine-cf7076ab0afa
+
+Best regards,
+-- 
+William de Abreu Pinho <williamdapinho@gmail.com>
+
 
