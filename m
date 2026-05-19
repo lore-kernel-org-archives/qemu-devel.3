@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 373EDCD4F3C
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 14:34:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A386FCD4F3C
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 14:40:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPLWL-0003xz-Ug; Tue, 19 May 2026 10:34:09 -0400
+	id 1wPLby-0005f9-00; Tue, 19 May 2026 10:39:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPLWF-0003ug-Vn
- for qemu-devel@nongnu.org; Tue, 19 May 2026 10:34:05 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wPLbw-0005em-Rq
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 10:39:56 -0400
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPLWE-0004uz-3o
- for qemu-devel@nongnu.org; Tue, 19 May 2026 10:34:03 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-48a3e9862f0so21333335e9.1
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 07:34:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wPLbv-00068v-A4
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 10:39:56 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-c80203b9d7bso1568438a12.0
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 07:39:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779201240; x=1779806040; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1779201593; x=1779806393; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=1sQ6/dQ7zCds7GQE54OquqnEYgzjXDwNzenXR+zYMVk=;
- b=f/Weduj3I50Q6MnplwFTNmPEX6xEUifNZx0ye17QJ5cPJ1ytLREP+ay+ueTIL66wqT
- TfS3E6CAStX4ljRXk45NM4NiK4Pg3hvi+4cWdsqrzJaL8whAJuUcBKJMuahSp4hiACQ5
- 9DkAqJ7rDMvfnU3fqhL91dZUI7tqf7KJcF233vcJvNh9UOk/rhHNx/6F8VlriezQUZIF
- gV8q9dTWb+gQMtG6coecQ4aMrcZjJSb/NvsbkqRN7qnEg6bi00ip6wXmACtqmZ0SbzYV
- o8rkWDrk4d2z5VXF5Lb6ov63yRWMJkFARmuWGAouGbjK0EStgyRlLtF5edB1EoyKza7s
- uHKw==
+ bh=202QMYTQ7NJ8jn3M0yRrPJKhAhs/TO9y7qYmFJnvhI0=;
+ b=e0W8s8pjV4vxlXzQLssvyEVbpFVKoDt1bcEatxE374x4WsCOkNUbMx3zz9ggXWO+0L
+ 546fUWpRNXa8n8Zetff4g/N3zlkWSp8aIixnIkx1eEqlTgp/fV/+ct4eczryPcpep83g
+ Iw9uiGEMlZukSQ955p9EXNkxLXHLxc7M7YH/7n4zhroxr4b5ZMbG0Qk102SVsmpLOebJ
+ no1IxTbaRVaWX++VPvAie9rVPz1qPKvzTrtz8NrvsjF75UbiVYR/g+dyE/5OMGXooZaX
+ E82r66P4hjBAiBNj8Pl4ceGzhxTnQ4EspGcffAmt5pXFLjM3B43aBXzVzw9se4CE4I9b
+ 1sWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779201240; x=1779806040;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1779201593; x=1779806393;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=1sQ6/dQ7zCds7GQE54OquqnEYgzjXDwNzenXR+zYMVk=;
- b=FpsgliePNH3G5uBkqh/0INwjMwOclu5b1s8KRxnBBQZ2WrYPv69MkUyzGzrkheFyyu
- 8QGxIqXSUdSMQeWqYp5jUjbrnhVLcZfW8OPQOH1Apm5RkiofbOC3TWgGIkZNoSF1K4LS
- KxRkMNZWrtVPnuHhfrvZIq9puON2hKJrRai4ssdGXo5xnInEJRwM5OuTCTnB/cAcqSXK
- Wac8qcDlWzElXLZPFNzE5Y0FdF2xxrR5Fma7ekZcu1+Aqpb0LtSws4Tx30XdtA8NPjM9
- lyfQmFpqyGLAESW8/GE/eNKQMVZqwqg46b/YXr42L9gN3dI4Wgo4gike7esrE9n7dvjU
- /+4A==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8E/BUm6qDAI9NNV8Sg6UmoLxQ2yoLlnNaX6XKlJwbFk57xLQY5orh9rSjDPXAEoO4LV5GcAS7iuLS8@nongnu.org
-X-Gm-Message-State: AOJu0YxvFb10ZKh29TqXYxIcsxvncJvcEeH96Uei1QWg6WGxEMijKbQD
- FSHJne8zRWpCNW3G2kRd86SWq49HhQBOwcPn95vQF2p8DLoqN/Nzsg94ABB4uLnzejU=
-X-Gm-Gg: Acq92OFnxwrpubruh3AfyzyNQ9vDeGBoO0w7m5wvOJN6+8sK9U+W8vAO2k2bDxsRaAo
- 72WAst/Bv1XD8M9s44jSkxm+LaeT4NFaa6yGlFvDkTDHDVcyy3y++wnaioaH5rpzcaqkQbgrVPi
- 1ok/IMWn2yBGkPzTtwF5SmTSZSiXC82Qi3tUXo73UnLrfxvCa3S9o3D0Dr22oqbpsqnl7MoKEv5
- rWOcWa9V6YYqLEID1jTBV1oB8CqRvw9wcyp7Dca3YuPtP/ZByDr1afXDn0F1Dy6X2UMhtnRTmmg
- arMTX01h2FECzFyCmzyEoDWVjpayNhSODxwRK5N1ifdlRtGTwTZ6NAccnpjjIZj6u7F2XLxuAc3
- wWfEdSFbTdcI80geYIA7RnPWYUHPMm0By2LOKpzlSvLZCYXdfh+Z0wh/rzLSh1G8ntSbkIAm/7C
- vR0H1ru3fa9NeXIfLsBRpha1gwMJbIXI0HXYGttXtDufMw98zvxWKfTdjQiCi9Ps9r9PCw9DVNW
- dtt
-X-Received: by 2002:a05:600d:8450:20b0:488:7d01:f67b with SMTP id
- 5b1f17b1804b1-48fd6333288mr273442115e9.6.1779201240301; 
- Tue, 19 May 2026 07:34:00 -0700 (PDT)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da0a19b1dsm45395520f8f.17.2026.05.19.07.33.58
+ bh=202QMYTQ7NJ8jn3M0yRrPJKhAhs/TO9y7qYmFJnvhI0=;
+ b=hJBcRGqgAdKGfS+R1CRr5rk4UTENE5eaJSiQtVM2pYXif7iRDF+lrdCS40mLpSZNGb
+ bo5WA97qSZzfxjurWRDejnx6zuhLFJhv2XzorXFrVo1YyRjYaGoPbgJhOvpqBtnDwaJy
+ pJMZlyTcUwnHpNNJ2zKBwu8T1pM61vXaTEeVgkT0kLykJux5zLmvFroOmlitrfDgnV94
+ LIt8bsuhKcd654eb74fiVZoNiS8tzD7QH1XlGiC8GnZbpseCWsOGPKyI+2pzKLR32G10
+ oPFfsBV8TaLQs+4u5yJbDemL91VJzObdJQVpJvcrIUUqX2vTJK0FHVBvmWSi4U+qFatL
+ jT+g==
+X-Gm-Message-State: AOJu0YzMo4QwuMcdAfDt+4CUMJO40A1UKXtN5sSrmrOIMMpqvHwcIWOo
+ xv9Wgcv7IbbGQAvICwQYNX3vpLWyt4zMNDITm5jaTFFRvxv6dLgyFJh8E7z3gzynka4=
+X-Gm-Gg: Acq92OE+UAq08wLXjXcpDf4X2XAsVB6rNM66O3bodzbmY1OFYCOzU+LDeteqCIRoLGO
+ 1deml6CT2nle/k6JrxfL5sn1WTDmOXWBJQz5OouD5jgmZDm35y5TFTPbvVEutp2S64yQEmJKf2h
+ lgN9zumRGzAM/aH01llrGMhEDcxtZqW4Vod91fQiEDCenZnTyKs64vOKQ+RDnk4rUXVKvIHgBZv
+ iowePYpD9JnKTThyR/kF2/hWiA7t9gGOUriLE4asyYOxO5393Wl5n/88niQEZco3Y36JzcJe7Uh
+ y+QNGh0AhAa1rq06K8h82VFMPd3qb6RCazpveJH6B+f69xNzqeVHuiBLgQHyH31sVV5FZT7z/BT
+ xInnB/7G/u6qg3e5i6WMcXj2AwaRudbXl88VkTZtpRFtQcFxgwLKm3sWU6aFnS3o31tTrzjAhP5
+ Vt/KYQoqx3veCmvT4oqO3Ae8Td4+7TFMhPkTkU
+X-Received: by 2002:a17:90b:568d:b0:368:6ff3:6678 with SMTP id
+ 98e67ed59e1d1-36951cb832cmr21667448a91.20.1779201592753; 
+ Tue, 19 May 2026 07:39:52 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.142.33])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-369514361b6sm14362019a91.12.2026.05.19.07.39.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 May 2026 07:33:59 -0700 (PDT)
-Message-ID: <238ed188-c8df-4cda-ba06-f0d04e6165f7@linaro.org>
-Date: Tue, 19 May 2026 16:33:58 +0200
+ Tue, 19 May 2026 07:39:52 -0700 (PDT)
+Message-ID: <ebd6c0b7-59a0-498b-8dfb-221d31737fd6@linaro.org>
+Date: Tue, 19 May 2026 07:39:50 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] Two hppa cleanup patches
+Subject: Re: [PATCH v5 27/63] target/arm: Implement F1CVTL, F1CVTL2, F2CVTL,
+ F2CVTL2 for AdvSIMD
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20260517003002.321430-1-richard.henderson@linaro.org>
+ <20260517003002.321430-28-richard.henderson@linaro.org>
+ <CAFEAcA_=zOrSCZF7=HU700+DCeDKwvvKK3DM-d5R7jC9ORErZQ@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20260519133329.4268-1-deller@kernel.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260519133329.4268-1-deller@kernel.org>
+In-Reply-To: <CAFEAcA_=zOrSCZF7=HU700+DCeDKwvvKK3DM-d5R7jC9ORErZQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,22 +105,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/5/26 15:33, Helge Deller wrote:
-> From: Helge Deller <deller@gmx.de>
+On 5/19/26 05:06, Peter Maydell wrote:
+> This doesn't quite do the right thing for an input SNaN,
+> which is supposed to set the Invalid Operation bit. This
+> I think is because the parts_canonicalize code in fpu/ isn't
+> handling the "only one NaN" case quite right:
 > 
-> Two leftover cleanup patches which I did not wanted to merge shortly before the qemu-v11 release.
-> Nothing critical, and both suggested by Philippe Mathieu-Daudé.
+>          case float_expmax_e4m3:
+>              if (p->frac_hi == 0b111) {
+>                  fracN(shl)(p, fmt->frac_shift);
+>                  p->cls = (parts_is_snan_frac(p->frac_hi, status)
+>                            ? float_class_snan : float_class_qnan);
+>                  return;
+>              }
 > 
-> Please review.
+> This tries to use parts_is_snan_frac() to determine whether
+> the FP8 NaN is an SNaN or a QNaN. But for Arm at least in
+> E4M3 the NaN is always an SNaN, and parts_is_snan_frac()
+> gives the wrong answer because it's looking at the MSB
+> of the fraction and for Arm snan_bit_is_one() is false.
+> The upshot is that later on when processing this value we
+> don't recognize that it was an SNaN and don't set Invalid.
 > 
-> Helge Deller (2):
->    hw/pci-host/astro: Encode Astro version numbers
->    hw/hppa: Move static variable lasi_dev into MachineState
-> 
->   hw/hppa/machine.c   | 15 ++++++++++-----
->   hw/pci-host/astro.c |  5 ++++-
->   2 files changed, 14 insertions(+), 6 deletions(-)
+> Unfortunately the OCP OFP8 specification doesn't say whether
+> the E4M3 NaN should be signaling or not, which is thus
+> leaving it up to the implementation to decide. If Arm is
+> the only user of the E4M3 code at the moment (looks like
+> maybe we are?) then we can hard-code "always SNaN":
 
-Thank you! Series:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Sadly not.  There are patches for riscv that haven't been merged, and riscv wants the solo 
+nan encoding for e4m3 to be qnan.
+
+I could fix this up locally in fp8_input_fmt[OFP8_E4M3], but perhaps it's clearer for the 
+generic code to add another bit to float_status: e4m3_nan_is_snan?
+
+
+r~
 
