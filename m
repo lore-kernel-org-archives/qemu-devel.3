@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97548CD4F54
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 19:58:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 968CDCD4F54
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 20:10:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPQa3-0007Hz-2N; Tue, 19 May 2026 15:58:19 -0400
+	id 1wPQl6-0002Vj-05; Tue, 19 May 2026 16:09:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPQZz-0007Hk-9l
- for qemu-devel@nongnu.org; Tue, 19 May 2026 15:58:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPQkz-0002UN-3j
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 16:09:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPQZw-0005eo-J8
- for qemu-devel@nongnu.org; Tue, 19 May 2026 15:58:14 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPQkv-0000xR-LY
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 16:09:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779220690;
+ s=mimecast20190719; t=1779221370;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=TC1AxjtIHRMe78qik8GYEk9gRcR7ZcDxsu+tc5L5ve8=;
- b=S4UMv0Sw4GJ9tN1yow3Rs1/MOkm9CcYktG8DBLHMz0qcaoDTiZYD4bLA09PUJcE1ETH0wN
- DziUk+a9P6qfNttcfD2IQm8mRo3YGJ4WT6Dax+OsYjXCOetl0DarE4f+43Zch90ecGXdYd
- APmEaTPO8FkDgFRj2Hoe/b9CSxL/xU4=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=W+O1GrX1fBqzVDcoyySoS/y3ChAmA2Uz09Bcbhy0iLw=;
+ b=EB4BTMsy/I90unZuPcI0MJsnAHxHfjQWLufyM+tVjp2xbN5CS8+20v95w9sDo/wyqORteD
+ 40lnRZ9IjnqGsxstvy1W82PF5jdFx+/XNzlTafTwu9A4zStNhwfvQRHspgu4ia+mosSsyH
+ 0wzem+2IgxhvfPYzTu9e8MfVWTiLAMY=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-222-34fjqwzJM3-qz_2UEUVw4Q-1; Tue, 19 May 2026 15:58:09 -0400
-X-MC-Unique: 34fjqwzJM3-qz_2UEUVw4Q-1
-X-Mimecast-MFC-AGG-ID: 34fjqwzJM3-qz_2UEUVw4Q_1779220688
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-514551d5f2aso166744991cf.2
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 12:58:08 -0700 (PDT)
+ us-mta-653-v1-XOe7VM5-uN8L9UThEJw-1; Tue, 19 May 2026 16:09:28 -0400
+X-MC-Unique: v1-XOe7VM5-uN8L9UThEJw-1
+X-Mimecast-MFC-AGG-ID: v1-XOe7VM5-uN8L9UThEJw_1779221368
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8b49424ad88so136898856d6.1
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 13:09:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779220688; x=1779825488; darn=nongnu.org;
+ d=redhat.com; s=google; t=1779221368; x=1779826168; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=TC1AxjtIHRMe78qik8GYEk9gRcR7ZcDxsu+tc5L5ve8=;
- b=sazpQ27zQ/OZbNVjD8m4LdPzsCfOs1E4Cc61jRI9ioboZQjWA0XyrmBMO7ZVFpw7Jz
- vNzRbdhbQVYrdSZOyGwthhobvHp0aP9Pxu7ygtnTq/J6T9fu4BhOHIp+VXQTi1rkSHN1
- E07hD5detRGStEUeaJucQzbYvJXXZMmGfL/SMyioL90SslkRd0hcqbu9mIP5wjKJAOjc
- HC+kULeQKeMKyQuD651tqQbWfMIrQCYzaeyX0xyg9/i1auNND44bUSUX24dwH+3+Hn4t
- wewEVyfBeR3EMaEUQQip+DKwMmRVdsk7fG5cUa/KptJMqK11NaZ5gd0YdJlHUcGu7OUH
- sP/Q==
+ bh=W+O1GrX1fBqzVDcoyySoS/y3ChAmA2Uz09Bcbhy0iLw=;
+ b=NNOujyR35bW0ojVif9UsPI4KeFqXlSfNwQQKOBFfWhBQCOwwk6zPj5VfIJWRRg/4wW
+ TKCelfJDWP3PkoNtY3lvkIf6aNmBWPdcQkTiirKgY2nl36/H+GswjeFsNKyw2l/oMvqr
+ Sq98rv8bOR16FDqGEn21JWovgiAXpFaEIWfBTeGFo4ArBFy4h+AsY/3puqF+w95amFMQ
+ TWATiRQ5tx+w1PnykW60kVAyR1Yw3yRqq9ErFvnpYgMNrRIya48tFOI4Al+YHgkaQon6
+ wTAu/fEDR49HL5rsGIi3bYX+Gkv6a5jw18NeAaILtrwv79IvYqwigHui/fLj6JfFEfKE
+ eOJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779220688; x=1779825488;
+ d=1e100.net; s=20251104; t=1779221368; x=1779826168;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TC1AxjtIHRMe78qik8GYEk9gRcR7ZcDxsu+tc5L5ve8=;
- b=U3p34dXEenkd45p1ynb+gh2enjW7SXqg+foWI0xLKJeTLiYnd67gjT57NvrPdrh5ls
- Z+Pr39TDZ+NqiUxH2+x2ZisCjE0MEWyU3BpZTqZJKUpKiV9jnCXZbazkT98w01ckoEVz
- Uo/peIGkktuQhKbdiOgMCKgPUm+nev1r308lr+QBY+gB/L8ZR64Gf/vZjoWIh6QbuUOE
- 23TF0GFJ+9lglkUuLDyOxNHhKPR6EIieNP6ll/KACFRbBt02USdiFEt6yL9MMJ/4QJbg
- aFSbIZEQ7uB3Ayo+cTXKJcQ7RvadmeO42YG35O1Wge65bMmsARCJ40tED9pn3MLVLC+3
- upHA==
-X-Gm-Message-State: AOJu0YxdqkwNdHjwYeQCP0eNO/W9uUzie5RTESUBZc7RbYDmpD7a5/8E
- Yr2/SeLnA4faE1oj1fYkF/uSN1uzrNFEtEmBwFZ0MA8hNBaYNYzGGlWoFTTuxuRyRMSIqyfRSmY
- jL6o3OxHKKjvf8RLeFwAwAJG5PCZ/vh5aDrixfWJC678OW9tJrfVAxOBa
-X-Gm-Gg: Acq92OGTa+N1165mlHrWpWelU0AZgs6SDgf9BrSWY9Q0z5re5dGclgq7txx5aiWiNok
- +DuJgNb3u2K11WDGFInjvTWkgMLE5T8MIRaMv4qQ+staeTk/I78IkV6pYhPb4k0CbCywSYNKXib
- kTZrGbQEHKFMa3Ncp/iuQ/F+yH55dCmrHEP503bfBLlF4kPfVv71olncM3imueMc66OMfdY9tuM
- SREWrlpJXeIs11Vg5veWk/MTVAa28xwc9zyqweX2/bvVVZ8xSOSyHKHl6GLhF5FyrJxMDqk80va
- tdVxAdqfGZYVPo3itxq2g1gDyi6cNvTu7n8dJPAzY7EqWF7m7kK93vFduvEvkwKRGZAegDouBYR
- 6A+qCLlxNf8pGWtAMVuGaJ8VGx2D1jc5Bfgd/nGHQV+FY3QS2dtRyTJz1Iw==
-X-Received: by 2002:a05:622a:30f:b0:50d:9f33:9a5 with SMTP id
- d75a77b69052e-5165a02c2b1mr310275291cf.23.1779220687899; 
- Tue, 19 May 2026 12:58:07 -0700 (PDT)
-X-Received: by 2002:a05:622a:30f:b0:50d:9f33:9a5 with SMTP id
- d75a77b69052e-5165a02c2b1mr310274541cf.23.1779220687200; 
- Tue, 19 May 2026 12:58:07 -0700 (PDT)
+ bh=W+O1GrX1fBqzVDcoyySoS/y3ChAmA2Uz09Bcbhy0iLw=;
+ b=VWfKx+Iy767zBmhm9qoDiHxpKAcgHi3swH7pJWZv/0EhqZU1n0A+iOZy0joR2zGqoG
+ c0u38mcyvlg12wd2cXnuPiEpYgB7wzqZiK1wTZj0uuLi9UyTKVBieiq3tpJJm4o1yW9+
+ Cw/1eFuWfLvTvt5eXSDOJwmSSQPKmPyYhZRPEK1veqlo0QvmyGaYk1xQZA62/WE7Eoip
+ 683Jq+AKtnAr66lTSR2jSJ8wdjPv+DwQQ47bD9nZQ7+DaHSAsfWrRTnTyWuMJWSZ2dVp
+ LMqRhvqBbbo6aK773pL1kerdIl1NisLV/9Lt1rNjsYkkn2JQgtER74PAvOeJzoQ62hEx
+ 5Lyw==
+X-Gm-Message-State: AOJu0Yw6ukIMvrBDDxHpkW5K+Wg2I7qDLM65EOPaGjIdH0vN6psdbbgx
+ /tIW/W1s+Y9bR0XegCjzBav2ircpG426GDqWUyyKyDuwC5RjJkYy8kmlrJrhn2Blmo4l/qTFvsn
+ 4NaWG1XQJzHgAcDDh3qLxLA86G9Mqgq9IGG0SROBfxK916hLKloceQY5h
+X-Gm-Gg: Acq92OGEa7OzM2PwdC7iDdICJnGr8uQf2/rPRrYZii8VaNMKSKpcExqq/m1624BhC2t
+ Rvxmfcy7TmuOe2IPOZZvemgRt5gTGeMyrjRSAOvn3Y4VsjnpRLt1fXMxZXjHptzGWZiCy3im6cy
+ a/kgLigkyEviwY8/C4xUCL+mB93KpIDe4YCCd72wZmXvn+E7fh06h2Z8BdlJ366NIvTB8sZCPn+
+ INbqlGEiHHu010IUED2ZWi/Xy/gXDphtT/I35AvIhS46ictUokltGsYOTtIh4IfxCESPLLHdRuL
+ +hsGMgMOylH2vSkwxUD4o0kLUy6fowWU9kII0vnmbHiyKM3Mx/FSgEqfonSAxGOQmFqzPKZyKGe
+ LtJF5NmRXk5Aia5AcdVBM4V6tEQfq6fmV42QW2iVYiwWe8Mw=
+X-Received: by 2002:a05:620a:3188:b0:8cf:c272:9721 with SMTP id
+ af79cd13be357-911ccd8b9d3mr3131173085a.6.1779221367764; 
+ Tue, 19 May 2026 13:09:27 -0700 (PDT)
+X-Received: by 2002:a05:620a:3188:b0:8cf:c272:9721 with SMTP id
+ af79cd13be357-911ccd8b9d3mr3131164985a.6.1779221367168; 
+ Tue, 19 May 2026 13:09:27 -0700 (PDT)
 Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-51645801211sm173051741cf.20.2026.05.19.12.58.06
+ af79cd13be357-910bc936407sm1950783685a.22.2026.05.19.13.09.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 May 2026 12:58:06 -0700 (PDT)
-Date: Tue, 19 May 2026 15:58:05 -0400
+ Tue, 19 May 2026 13:09:26 -0700 (PDT)
+Date: Tue, 19 May 2026 16:09:24 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Avihai Horon <avihaih@nvidia.com>
 Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
@@ -89,23 +89,22 @@ Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
  Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Maor Gottlieb <maorg@nvidia.com>
-Subject: Re: [PATCH 09/14] vfio/migration: Re-query precopy size before
- sending VFIO_MIG_FLAG_DEV_INIT_DATA_SENT
-Message-ID: <agzAzawATnGGMIGO@x1.local>
+Subject: Re: [PATCH 00/14] Make switchover-ack re-usable and add VFIO precopy
+ REINIT feature
+Message-ID: <agzDdH5vClAqwjAs@x1.local>
 References: <20260505081423.28326-1-avihaih@nvidia.com>
- <20260505081423.28326-10-avihaih@nvidia.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260505081423.28326-10-avihaih@nvidia.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20260505081423.28326-1-avihaih@nvidia.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,101 +121,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 05, 2026 at 11:14:18AM +0300, Avihai Horon wrote:
-> When precopy initial_bytes reaches zero VFIO_MIG_FLAG_DEV_INIT_DATA_SENT
-> flag is sent to the destination to indicate that initial data has been
-> sent, so destination can indicate back to source when it finished
-> loading it.
-> 
-> To get a more accurate estimation of initial_bytes, re-query precopy
-> size before sending the flag. Extract the flag sending logic from
-> vfio_save_iterate() to a new helper for clarity.
-> 
-> This may prevent premature sending of VFIO_MIG_FLAG_DEV_INIT_DATA_SENT
-> flag if, for example, the previously queried initial_bytes was lower
-> than actually is. Additionally, it prevents sending the flag if
-> vfio_query_precopy_size() failed.
-> 
-> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
-> ---
->  hw/vfio/migration.c  | 37 ++++++++++++++++++++++++++++++++-----
->  hw/vfio/trace-events |  1 +
->  2 files changed, 33 insertions(+), 5 deletions(-)
-> 
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index 2911583ee1..243624b5fe 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -456,6 +456,37 @@ static void vfio_update_estimated_pending_data(VFIOMigration *migration,
->                                           data_size);
->  }
->  
-> +/* Returns true if the init data flag was sent, false otherwise */
-> +static bool vfio_send_init_data_flag(QEMUFile *f, VFIOMigration *migration)
-> +{
-> +    VFIODevice *vbasedev = migration->vbasedev;
-> +    int ret;
-> +
-> +    if (!migrate_switchover_ack()) {
-> +        return false;
-> +    }
-> +
-> +    if (migration->precopy_init_size || migration->initial_data_sent) {
-> +        return false;
-> +    }
-> +
-> +    /*
-> +     * precopy_init_size holds an estimation of the initial data size, re-query
-> +     * precopy size to ensure it's really zero before sending init data flag.
-> +     * Don't send the flag if query fails.
-> +     */
-> +    ret = vfio_query_precopy_size(migration);
-> +    if (ret || migration->precopy_init_size) {
-> +        return false;
-> +    }
+On Tue, May 05, 2026 at 11:14:09AM +0300, Avihai Horon wrote:
+> Performance tests were done by migrating a single VM with:
+> * 8 GB RAM
+> * 4 mlx5 VFIO devices:
+>   - One device with 1GB of device data (stopcopy data) that runs
+>     workload during precopy so VFIO_PRECOPY_INFO_REINIT is exercised
+>     (generate new initial_bytes chunks during precopy).
 
-IIUC this chunk isn't necessary?  If we don't expect REINIT to happen that
-much (when NIC reconfigures?), then we can still rely on the window where
-the "new switchover ack" will be requested later on during the exact sync.
+Could you elaborate a bit more on what workload is executed, and how that
+will affect REINIT reportings (e.g. is only one REINIT generated, or it
+keeps generating)?
 
-Relying on that seems slightly cleaner.
+Can I understand it in this way: without REINIT, device is forced to put
+those data into stopcopy size; then with REINIT, some stopcopy size is
+essentially moved back to precopy phase?
 
-> +
-> +    qemu_put_be64(f, VFIO_MIG_FLAG_DEV_INIT_DATA_SENT);
-> +    migration->initial_data_sent = true;
-> +    trace_vfio_send_init_data_flag(vbasedev->name);
-> +
-> +    return true;
-> +}
-> +
->  static bool vfio_precopy_supported(VFIODevice *vbasedev)
->  {
->      VFIOMigration *migration = vbasedev->migration;
-> @@ -664,11 +695,7 @@ static int vfio_save_iterate(QEMUFile *f, void *opaque)
->  
->      vfio_update_estimated_pending_data(migration, data_size);
->  
-> -    if (migrate_switchover_ack() && !migration->precopy_init_size &&
-> -        !migration->initial_data_sent) {
-> -        qemu_put_be64(f, VFIO_MIG_FLAG_DEV_INIT_DATA_SENT);
-> -        migration->initial_data_sent = true;
-> -    } else {
-> +    if (!vfio_send_init_data_flag(f, migration)) {
->          qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
->      }
->  
-> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-> index ab27ff5ea2..e91858354c 100644
-> --- a/hw/vfio/trace-events
-> +++ b/hw/vfio/trace-events
-> @@ -176,6 +176,7 @@ vfio_save_iterate(const char *name, uint64_t precopy_init_size, uint64_t precopy
->  vfio_save_iterate_start(const char *name) " (%s)"
->  vfio_save_setup(const char *name, uint64_t data_buffer_size) " (%s) data buffer size %"PRIu64
->  vfio_state_pending(const char *name, uint64_t stopcopy_size, uint64_t precopy_init_size, uint64_t precopy_dirty_size, bool exact) " (%s) stopcopy size %"PRIu64" precopy initial size %"PRIu64" precopy dirty size %"PRIu64 " exact %d"
-> +vfio_send_init_data_flag(const char *name) " (%s)"
->  vfio_vmstate_change(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
->  vfio_vmstate_change_prepare(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
->  
+Thanks,
+
+>   - The other 3 devices are idle.
+> 
+> In this setup, VFIO_PRECOPY_INFO_REINIT reduced total migration downtime by
+> about 43%, and downtime attributed to the busy VFIO device by about 67%:
+> 
+> With VFIO_PRECOPY_INFO_REINIT:
+>   1335ms total (~520ms from the VFIO device running the workload).
+> 
+> Without VFIO_PRECOPY_INFO_REINIT:
+>   2352ms total (~1600ms from the VFIO device running the workload).
+> 
+> Functional tests covered the main code paths and combinations, including
+> legacy and new switchover-ack across versions, for example:
+> * Migration between QEMU 11.0 (old binary) and 11.1 (new binary).
+> * Migration between two 11.1 binaries with different machine versions.
+> * Migration when the VFIO device has no VFIO_PRECOPY_INFO_REINIT.
+> * Migration when the VFIO device has no VFIO precopy support.
+> 
+> === Patch Breakdown ===
+> 
+> * Patches 1-2: Update Linux headers
+> * Patches 3-8,14: Migration cleanups and the new switchover-ack mechanism
+> * Patches 9-13: VFIO cleanups and VFIO_PRECOPY_INFO_REINIT
+> 
+> Thanks.
+> 
+> [1] https://lore.kernel.org/all/20260317161753.18964-1-yishaih@nvidia.com/
+> [2] https://lore.kernel.org/qemu-devel/20260421202110.306051-1-peterx@redhat.com/
+> 
+> Avihai Horon (14):
+>   scripts/update-linux-headers: Add typelimits.h
+>   linux-headers: Update to Linux v7.1-rc1
+>   migration: Propagate errors in migration_completion_precopy()
+>   migration: Log the approver in qemu_loadvm_approve_switchover()
+>   migration: Replace switchover_ack_needed SaveVMHandler
+>   migration: Rename switchover-ack code to legacy
+>   migration: Make switchover-ack re-usable
+>   migration: Check switchover-ack during switchover phase
+>   vfio/migration: Re-query precopy size before sending
+>     VFIO_MIG_FLAG_DEV_INIT_DATA_SENT
+>   vfio/migration: Add Error ** parameter to vfio_migration_init()
+>   vfio/migration: Add new switchover-ack mechanism
+>   vfio/migration: Implement VFIO_PRECOPY_INFO_REINIT feature
+>   vfio/migration: Check VFIO_PRECOPY_INFO_REINIT during switchover
+>   migration: Enable new switchover-ack
+> 
+>  docs/devel/migration/vfio.rst                 |   4 +-
+>  hw/vfio/vfio-migration-internal.h             |   2 +
+>  include/migration/client-options.h            |   1 +
+>  include/migration/misc.h                      |   2 +
+>  include/migration/register.h                  |  21 +-
+>  include/standard-headers/drm/drm_fourcc.h     |  28 +-
+>  include/standard-headers/linux/const.h        |  18 +
+>  include/standard-headers/linux/ethtool.h      |  28 +-
+>  .../linux/input-event-codes.h                 |  13 +
+>  include/standard-headers/linux/pci_regs.h     |  71 ++-
+>  include/standard-headers/linux/typelimits.h   |   8 +
+>  include/standard-headers/linux/virtio_ring.h  |   3 +-
+>  include/standard-headers/linux/virtio_rtc.h   | 237 ++++++++++
+>  include/standard-headers/linux/vmclock-abi.h  |  20 +
+>  linux-headers/asm-arm64/kvm.h                 |   1 +
+>  linux-headers/asm-arm64/unistd_64.h           |   1 +
+>  linux-headers/asm-generic/unistd.h            |   5 +-
+>  linux-headers/asm-loongarch/kvm.h             |   5 +
+>  linux-headers/asm-loongarch/kvm_para.h        |   1 +
+>  linux-headers/asm-loongarch/unistd_64.h       |   2 +
+>  linux-headers/asm-mips/unistd_n32.h           |   1 +
+>  linux-headers/asm-mips/unistd_n64.h           |   1 +
+>  linux-headers/asm-mips/unistd_o32.h           |   1 +
+>  linux-headers/asm-powerpc/unistd_32.h         |   1 +
+>  linux-headers/asm-powerpc/unistd_64.h         |   1 +
+>  linux-headers/asm-riscv/kvm.h                 |  11 +-
+>  linux-headers/asm-riscv/ptrace.h              |  37 ++
+>  linux-headers/asm-riscv/unistd_32.h           |   1 +
+>  linux-headers/asm-riscv/unistd_64.h           |   1 +
+>  linux-headers/asm-s390/unistd_32.h            | 446 ------------------
+>  linux-headers/asm-s390/unistd_64.h            |   1 +
+>  linux-headers/asm-x86/kvm.h                   |  21 +-
+>  linux-headers/asm-x86/unistd_32.h             |   1 +
+>  linux-headers/asm-x86/unistd_64.h             |   1 +
+>  linux-headers/asm-x86/unistd_x32.h            |   1 +
+>  linux-headers/linux/const.h                   |  18 +
+>  linux-headers/linux/iommufd.h                 |  48 ++
+>  linux-headers/linux/kvm.h                     |  46 +-
+>  linux-headers/linux/mshv.h                    |   4 +-
+>  linux-headers/linux/psp-sev.h                 |   2 +-
+>  linux-headers/linux/stddef.h                  |   4 +
+>  linux-headers/linux/vduse.h                   |  85 +++-
+>  linux-headers/linux/vfio.h                    |  30 +-
+>  migration/migration.h                         |  17 +-
+>  migration/savevm.h                            |   4 +-
+>  hw/core/machine.c                             |   4 +-
+>  hw/vfio/migration.c                           | 195 +++++++-
+>  migration/migration.c                         |  65 ++-
+>  migration/options.c                           |   9 +
+>  migration/savevm.c                            | 146 ++++--
+>  hw/vfio/trace-events                          |   5 +-
+>  migration/trace-events                        |   8 +-
+>  scripts/update-linux-headers.sh               |   2 +
+>  53 files changed, 1109 insertions(+), 580 deletions(-)
+>  create mode 100644 include/standard-headers/linux/typelimits.h
+>  create mode 100644 include/standard-headers/linux/virtio_rtc.h
+>  delete mode 100644 linux-headers/asm-s390/unistd_32.h
+> 
 > -- 
 > 2.40.1
 > 
