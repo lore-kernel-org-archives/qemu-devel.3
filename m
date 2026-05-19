@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56DE9CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 19:16:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E282CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 19:17:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPPvF-0004yG-AB; Tue, 19 May 2026 15:16:09 -0400
+	id 1wPPvE-0004wv-2D; Tue, 19 May 2026 15:16:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wPPvD-0004wS-7b
- for qemu-devel@nongnu.org; Tue, 19 May 2026 15:16:07 -0400
+ id 1wPPv9-0004sw-8i
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 15:16:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wPPvB-0005wg-8X
- for qemu-devel@nongnu.org; Tue, 19 May 2026 15:16:06 -0400
+ id 1wPPv5-0005tw-NI
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 15:16:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779218164;
+ s=mimecast20190719; t=1779218158;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oTD0kvnL4/tBRdkBHdbKvd8RLIPg2VMcTJWY4PjZMzo=;
- b=CxfICxsfdPNzMwmnZ1l/ndV77blYqg/sZaixCY3RbEbEiog79SPz2flRuxejSHo48/Fxr+
- UJPZo+Xp2Yky7f3vjQUc0xw1pr3ogTkpoeUVcZXilSbWVtutW5PJ/amjnzGabCcXfU1A2B
- tFZtXCNVN9zmJ+35EMjv3xqy7U+bfK4=
+ bh=/PPKYPCBCgXpNSOInH4RnnHadB8txYUK1zR7KC28T9U=;
+ b=fDFDOqDcJvr6MbRn/ZxqmOjugddIaKKsFv6y48x4a4iX5hSqH92coaptu6ePx8JZ9gVM/D
+ AHfOYNtD3ewh1Sv3qebyeVD8IgNCz8wKeEhsgErwpXj8wdvD6KIX/VUsxOY2sgaBXbYEr8
+ ad8aJFSCKLh13QfuSWKRk3edXfn8PYY=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-QuCExxSiNE2pd3DGMJw_OA-1; Tue,
- 19 May 2026 15:15:57 -0400
-X-MC-Unique: QuCExxSiNE2pd3DGMJw_OA-1
-X-Mimecast-MFC-AGG-ID: QuCExxSiNE2pd3DGMJw_OA_1779218156
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-507-RIvE470GPPqtrgajzy1Ljw-1; Tue,
+ 19 May 2026 15:15:55 -0400
+X-MC-Unique: RIvE470GPPqtrgajzy1Ljw-1
+X-Mimecast-MFC-AGG-ID: RIvE470GPPqtrgajzy1Ljw_1779218154
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9B56419560AA; Tue, 19 May 2026 19:15:56 +0000 (UTC)
+ id 59BEC19560A1; Tue, 19 May 2026 19:15:54 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.118])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D6BE830002DC; Tue, 19 May 2026 19:15:55 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0F9061685; Tue, 19 May 2026 19:15:53 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, hreitz@redhat.com,
  Stefano Garzarella <sgarzare@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, gmaglione@redhat.com,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH v2 3/3] vhost-user: inject kick after SET_VRING_KICK
-Date: Tue, 19 May 2026 15:15:48 -0400
-Message-ID: <20260519191548.335082-4-stefanha@redhat.com>
+Subject: [PATCH v2 2/3] libvhost-user: look for available vq buffers upon
+ SET_VRING_KICK
+Date: Tue, 19 May 2026 15:15:47 -0400
+Message-ID: <20260519191548.335082-3-stefanha@redhat.com>
 In-Reply-To: <20260519191548.335082-1-stefanha@redhat.com>
 References: <20260519191548.335082-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -86,57 +87,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The vhost-user specification was updated to say that front-ends should
-inject a kick after SET_VRING_KICK in case the back-end implements the
-old spec wording which said vrings start when a kick is received. Do
-this in QEMU's front-end.
+When a vring is started the back-end must look for available vq buffers
+and process them. This scenario can happen if the back-end is stopped
+with unprocessed available buffers and then started again.
 
-An example scenario where this behavior helps: the back-end fails to
-check if the vring has available buffers when SET_VRING_KICK is received
-and the front-end stopped and then restarted the vring. In the case the
-back-end may not notice the available buffers unless the front-end
-injects a kick.
+The inflight I/O tracking code already did this, but it should also be
+done when inflight I/O tracking is not enabled. Move the code.
 
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- hw/virtio/vhost-user.c | 24 +++++++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
+ subprojects/libvhost-user/libvhost-user.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index a8907cca74..7ef4105473 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -1365,7 +1365,29 @@ static int vhost_set_vring_file(struct vhost_dev *dev,
- static int vhost_user_set_vring_kick(struct vhost_dev *dev,
-                                      struct vhost_vring_file *file)
- {
--    return vhost_set_vring_file(dev, VHOST_USER_SET_VRING_KICK, file);
-+    int ret = vhost_set_vring_file(dev, VHOST_USER_SET_VRING_KICK, file);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-+    /*
-+     * Inject a kick in case the back-end only starts vring processing upon
-+     * receiving a kick. The spec suggests this to improve compatibility.
-+     */
-+    if (file->fd != -1) {
-+        uint64_t val = 1;
-+        ssize_t nwritten;
-+
-+        do {
-+            nwritten = write(file->fd, &val, sizeof(val));
-+        } while (nwritten < 0 && errno == EINTR);
-+
-+        if (nwritten < 0 && errno != EAGAIN /* back-end can already read */) {
-+            return -errno;
-+        }
-+    }
-+
-+    return 0;
+diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+index 9c630c2170..2e286ea6d9 100644
+--- a/subprojects/libvhost-user/libvhost-user.c
++++ b/subprojects/libvhost-user/libvhost-user.c
+@@ -1390,11 +1390,6 @@ vu_check_queue_inflights(VuDev *dev, VuVirtq *vq)
+         vq->counter = vq->resubmit_list[0].counter + 1;
+     }
+ 
+-    /* in case of I/O hang after reconnecting */
+-    if (eventfd_write(vq->kick_fd, 1)) {
+-        return -1;
+-    }
+-
+     return 0;
  }
  
- static int vhost_user_set_vring_call(struct vhost_dev *dev,
+@@ -1436,6 +1431,11 @@ vu_set_vring_kick_exec(VuDev *dev, VhostUserMsg *vmsg)
+         vu_panic(dev, "Failed to check inflights for vq: %d\n", index);
+     }
+ 
++    /* Inject a kick to look for available vq buffers */
++    if (eventfd_write(dev->vq[index].kick_fd, 1)) {
++        return -1;
++    }
++
+     return false;
+ }
+ 
 -- 
 2.54.0
 
