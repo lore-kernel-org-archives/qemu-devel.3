@@ -4,102 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BAC6CD4F5B
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 17:21:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76940CD4F5B
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 17:22:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPO7r-0004b3-RA; Tue, 19 May 2026 13:21:03 -0400
+	id 1wPO8q-00059r-TH; Tue, 19 May 2026 13:22:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philippe.mathieu-daude@linaro.org>)
- id 1wPO7o-0004ab-EX
- for qemu-devel@nongnu.org; Tue, 19 May 2026 13:21:00 -0400
-Received: from mail-oo1-xc32.google.com ([2607:f8b0:4864:20::c32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philippe.mathieu-daude@linaro.org>)
- id 1wPO7m-0001Ad-PT
- for qemu-devel@nongnu.org; Tue, 19 May 2026 13:21:00 -0400
-Received: by mail-oo1-xc32.google.com with SMTP id
- 006d021491bc7-69d377221aaso1208340eaf.0
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 10:20:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779211255; cv=none;
- d=google.com; s=arc-20240605;
- b=LI8KLVJbjK24l+p8InvXhBpNmUCmFH8ssfY55jM0jPcUK+Rhj8BeC2EKcSOGASAMAS
- NcZ6i10WqxkDzz4UvuqG618P/5n0S9aYkyrPfjw1owohPHCsF9EjTfC6F9MEJzUt7yI/
- Ir/TwsMd3BXQvvXYLwmu7JDqCfJ4uxeAA7y4noEmafulFvUFiSnCUhTGUOHT+qGMlxcA
- UraX5o8prUAlrpIunEHkmMUQHKyyo5i8PQgmCrlInrDm7WksLUS1SVggtrxTj9ZMzjOX
- cl3dW2D2yWL7E4dS5SBgyAFOXTtO9e/HHVmfcMBgR/Dc1TsA+KsFwj6SQXVAsyP2YTJZ
- tb/A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=8RzE6KsJQFWWTPUhwPb8bOflHsHi42ro9MZpZRDsN5A=;
- fh=UAs5dmeEY1vlDEkGnKzhQ+VWmOFW4t80xWne8KHbuyA=;
- b=RdshWvjsmlLO3dDJI+5r4OFph+jkE2D8yjd3U/x/awMDGoGLRgePjxNO3Ga2niTKfT
- Sw51E+RXfwUMOlelmnBQLORh9jYaqnJK8/0skcsu13bDDLNn+GFRgVMLAaFiWlNkRCqC
- Jazcyc6GxQvIiuglPd/XE1aOZYeiICi7G0ZZdKstmsXuQa1oxmlMpQKT0XZXaFr8UAlN
- tJsMpDBEYmZPNaSxx08QUA6fYIFwq6oM1e6+D/F+5ikLBstN/Kthor61FjmIh1ukq6I9
- spJr8dKexusiIuMV+T1QfXsNd2CUdJCdFmGCeasB5yA57Yq6oz+CvX1/iIZriBJk0NjO
- vrBg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPO8l-00057w-Nj
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 13:21:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPO8k-0001Yc-A6
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 13:21:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779211317;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=HxUKMicxQL8qvyB9Q0NbwN0ADL4uiQ0R8pX4AUVPcK8=;
+ b=QGQLfzYy+0m8OpIc/BuzoDnzLUsP0g8asdei9Q9yhaQiuuM3D7+6X45GBrHbkSIt9+zdG2
+ 5CRwOV3NQF28Q/UR1jwYOsTasjP12Cmc4huyYok2HFDhCUEiHf0dAjtKAYqatmLIfImfE/
+ 23emYRZ/w/7OMIO3ijA6l+fKD4VGo8Y=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-292-Q4BB8wfdO2-jKNxIYXgVNg-1; Tue, 19 May 2026 13:21:55 -0400
+X-MC-Unique: Q4BB8wfdO2-jKNxIYXgVNg-1
+X-Mimecast-MFC-AGG-ID: Q4BB8wfdO2-jKNxIYXgVNg_1779211315
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-90f5248b209so922614885a.2
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 10:21:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779211255; x=1779816055; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8RzE6KsJQFWWTPUhwPb8bOflHsHi42ro9MZpZRDsN5A=;
- b=a+P2LAc/BNO2k+OvrGX1LqHt2SKNTs2uwxpotd0rwQv+K0v5iB3fClo93BOvbcWC0C
- 8xB8XsetHiY+xXBdfaKOUqzkjNvk2le+Q9B2d81xHNcmiLAZ4QK8/jjtYbpI+QHTuX3+
- a7uoEAwInjyy1j3v14vTxm4x/yk/7mQ/JKCHCEu9wa8OWhFAvRaN7By7RR2J2S8sfE23
- HoEAmy/U3L6wrtwmQe+A9d1kZ8rFKpRl/gFpsBdBW8aNnebiI7iiZv6Cj3P8g6qIroTC
- XX1zXWcI28nliyrg5y8UkjHKLZnjMd1tH4/s+JpLUg1W8Xw/hdWUIFyHSaDCOCzneRqU
- uAOg==
+ d=redhat.com; s=google; t=1779211314; x=1779816114; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=HxUKMicxQL8qvyB9Q0NbwN0ADL4uiQ0R8pX4AUVPcK8=;
+ b=DRXye4/NwUGvP0FjL6NBrr+HO9Kf41d5c9EEP0MYHDEEVu9EsMrx+uVHHfiWlA7vfO
+ o9yPUoDZqm7U1JedO8cbxcIzxMMQsDA+10nW6QGY/KgMLd7wLP5i8X8HX3Vf4Hjf+eDk
+ +Dq9bgdYcyTtZ7XKQs6vcd5aPFrAzBqMAJatTy1J8+f3VEq0xKz/QbtLmPJ2580qI+En
+ WkArRP7HZ3eryd17NG79bXOPd27dwwzkLnZujF+yLOEiRieylPGoDTrh2MpL3gcdijQX
+ WxuiUI47aghcgetku3uOO204FWKbzx37kJvEaAAKtC3Q5DlvB7k6suNQ/gX0667ILZqn
+ 6GEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779211255; x=1779816055;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=8RzE6KsJQFWWTPUhwPb8bOflHsHi42ro9MZpZRDsN5A=;
- b=P2WL+Vl4fQQtRpNvmh1VLevhF1B/NoH5gfNELdGdojdt98oC+p9IATO/xiMnQkJDaP
- M6RKu5Wuyd246jDkJwX981xa96a9eOnh9Y8m+A0dGw1kIG9sU34uXhyWCNylNrFfBXm3
- 2HHHZ4h+VByfeTBSDEYA/TdwB2fPn3wppuuHx9qSbUfYHRAvV0qx84fQ0LS2A0kBYtC9
- flv5jHGX0HIpUUp0v5WeySF9gI9f2kwsSb2sNNcwQZ8qUpT60tN/sGOqrneSyJv/mgrM
- Q5JQZ62/9lxb1hSd/J0L/ygSjVEho0Z4dsfejWswyVpb/nbHyjgZ4ZPbnUgj/rERbqci
- oz+g==
-X-Gm-Message-State: AOJu0Yww0XkdOGgQT0x1FWltR13qG0ylnWIF2j7ODWxf+QMsEsme6dpx
- 4b42NC16b5Ct85/dZLf5WMd2RGS75j28w4n/4kD8MU106mraBfM49qQboDRjaghULNhhy7RUmCh
- gqe06hI2EowHCmimhHLdaVhpyh+2Z5e/Mx6/z9S9PuYIeTpXHFYXfP44Jow==
-X-Gm-Gg: Acq92OFmNEQe4be+i+xOmjMZqJqWN7blgLobAnRQbBdE9heko2xH/b2gi8M4SMzrpMq
- uVhXUM96eMT7dmJyPgF7P4cpBXV6x5YsBcg5xnlN5oJKgFaNhIXZluOn69laiCr8AtElX+aY3qU
- tnq77SiJ359JEbQsiah/7P7vgP+qGkScbqhof65K68KsYyRehqbKLnWNfRB5/w8sM9GCN5CjyhC
- /i7muP58kxmPhg746GBPiDqp3Fx5NewkVs/BLqoDen1Dxvp2PbXfFV7bbQQLvCFdbB+mJwA+V5c
- 8XSfPMQ=
-X-Received: by 2002:a05:6820:1519:b0:696:1cbd:27b2 with SMTP id
- 006d021491bc7-69c9437c730mr12434157eaf.29.1779211255463; Tue, 19 May 2026
- 10:20:55 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779211314; x=1779816114;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=HxUKMicxQL8qvyB9Q0NbwN0ADL4uiQ0R8pX4AUVPcK8=;
+ b=pc4ZU0hOa8/YbGCp0irl2klYMKwL3945wCTO4PwjGjiK0unLeNL4ydPkQMV0BtYQ89
+ OEJah0tdC8iVj/aXa3b1T4G2TzCH9HeThxIzJt96fdVv5xpgsZqMMGn4owv0PahkjaD8
+ vqi1qemStR8FcvmFqdjL/dD+YeuUizr0vk1jDrur+W7qxI2YbEdTzGc8y9GzSlCYVGWu
+ LLg+Nz4ZcPajp17du/Lw3lU+pU8E+B9bIz2XAX3qgi2raMtVXzoQ0HqoqFQNA9ti7chJ
+ iiVU8XYU0vx9TWcD4LKcf+gaQLkuEw+eHvKOH2oumvF1SeYucj5mhNFqBBgRwExEi79R
+ P0OA==
+X-Gm-Message-State: AOJu0Yzt8dWYX++2yLfj/w8HR/xSLAgHaMtw/AZ70ODKXyHiAdFDqCJD
+ 5jygkyO7/9b7s2s+fwpal806xuvZ9Yrc5HMClICnCysec84Zy6bjTL2h37VVd7R51D9A6JI7HYy
+ RBWaMq9hl+zm5SfXTGGCnr0ZxYn7gIzWo27Gc8FKuFM8n5xD2zhAuEsXJcZidFJUB
+X-Gm-Gg: Acq92OGag/pvAsTDbCczc2av0XQVuV6w6o2KVwBZnia8nL8CItcJA493Iy/5cfHkLwc
+ 2K4qXN2ViTEmROKRQ/4U7FLGAp7fbzkuleqhLukukt2k9YW2j1CV2TDEACD/xHahVwCC3/Dt/Az
+ pSHK4bvxvkvWcg5lnhZuE3fZKwGhgRtjb1/xVowuBPYtMJobiRYTFflJOFda9XEdw/Hsv/wqqu7
+ gzd0FGSQT3Yi7/vrGBfywltqz0NahZZkwiiIChWyPTLpj6DDj5GwYmR6zySCiNMgOoCbfEiFPNJ
+ mpVN5+oz+OKCKyj9Gg2xtmsBWA8Es3lZlJRY/tzByGQfgrCZKDuVDn98+6Xs9dx3/nnCzSJyJoT
+ Jdwd0P2M8B5swFTR3dLBz1V5Gc4KDj9bYtE3xRE5W+4HFiwc=
+X-Received: by 2002:a05:620a:17a1:b0:90f:c88d:ebb9 with SMTP id
+ af79cd13be357-911cda50ab4mr3111870785a.13.1779211314370; 
+ Tue, 19 May 2026 10:21:54 -0700 (PDT)
+X-Received: by 2002:a05:620a:17a1:b0:90f:c88d:ebb9 with SMTP id
+ af79cd13be357-911cda50ab4mr3111863585a.13.1779211313719; 
+ Tue, 19 May 2026 10:21:53 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-910bab3ad15sm1874488785a.16.2026.05.19.10.21.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 19 May 2026 10:21:53 -0700 (PDT)
+Date: Tue, 19 May 2026 13:21:50 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
+ Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Keith Busch <kbusch@kernel.org>, Fam Zheng <fam@euphon.net>,
+ =?utf-8?B?U3TDqXBoYW5l?= Graber <stgraber@stgraber.org>,
+ Klaus Jensen <its@irrelevant.dk>, Zhao Liu <zhao1.liu@intel.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Jesper Devantier <foss@defmacro.it>,
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Subject: Re: [PATCH v7 1/8] tests/functional/migration: add VM
+ launch/configure hooks
+Message-ID: <agycLqsUoEautDQ6@x1.local>
+References: <20260511151131.483217-1-alexander@mihalicyn.com>
+ <20260511151131.483217-2-alexander@mihalicyn.com>
 MIME-Version: 1.0
-References: <20260519171926.98099-1-philmd@linaro.org>
-In-Reply-To: <20260519171926.98099-1-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Date: Tue, 19 May 2026 19:20:43 +0200
-X-Gm-Features: AVHnY4LJsMFYWm4hBsWX8RFpz7RInZmbYtZg8PgqCgYi1ria-dnptWGG-DcmU6Y
-Message-ID: <CAPMQPEJ4qx_WZ7iOTs7q8f=fSjD+tc588kczKms95Tf1VGQ8wA@mail.gmail.com>
-Subject: Re: [PATCH] MAINTAINERS: Correct scripts/coverity-model.c path
-To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c32;
- envelope-from=philippe.mathieu-daude@linaro.org; helo=mail-oo1-xc32.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260511151131.483217-2-alexander@mihalicyn.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,35 +124,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 19 May 2026 at 19:19, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Commit e804f892b90 ("coverity-scan: list components, move model
-> to scripts/coverity-scan") moved the file but forgot to update
-> the MAINTAINERS entry.
->
+On Mon, May 11, 2026 at 05:11:24PM +0200, Alexander Mikhalitsyn wrote:
+> From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+> 
+> Introduce configure_machine, launch_source_vm and assert_dest_vm
+> methods to allow child classes to override some pieces of
+> source/dest VMs creation, start and check logic.
+> 
+> Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-Reported-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  MAINTAINERS | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 92b875ddfc1..73b7ebf1d7e 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3260,7 +3260,7 @@ F: util/qemu-option.c
->  Coverity model
->  M: Markus Armbruster <armbru@redhat.com>
->  S: Supported
-> -F: scripts/coverity-model.c
-> +F: scripts/coverity-scan/model.c
->
->  Coverity Scan integration
->  M: Peter Maydell <peter.maydell@linaro.org>
-> --
-> 2.53.0
->
+-- 
+Peter Xu
+
 
