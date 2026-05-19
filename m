@@ -4,56 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C1DBCD5BAB
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 15:19:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD861CD4F5B
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 15:19:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPMDV-0003G2-Sh; Tue, 19 May 2026 11:18:46 -0400
+	id 1wPMDX-0003GV-Ju; Tue, 19 May 2026 11:18:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wPMDI-0003DT-V6
- for qemu-devel@nongnu.org; Tue, 19 May 2026 11:18:32 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wPMDW-0003G4-2B
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 11:18:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wPMDH-0006u7-Fl
- for qemu-devel@nongnu.org; Tue, 19 May 2026 11:18:32 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 826306021D;
- Tue, 19 May 2026 15:18:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012E2C2BCFD;
- Tue, 19 May 2026 15:18:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1779203910;
- bh=ZHZMWK/Y6BLbreJHxxZE96bnmbO8p9Qkj5s5S03gJ4U=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=LE5DOMOFsJyi0wX60vI4gzKmUPAWDhoTPJGEUVTQIwzU1fcgvsM6QPGEPHH0BjAdN
- ZCo/8DF4yFC0khFyuZbJmi2N3Oy7C7rNLsHzm4LvalFr3DzT8JNhN9fEQK8uEVzouc
- wCNCC5h3OsQaZNPCNgVz2auPs8HQc+U4Q08ckRKur+sWaX28w8h+3/xnY7IZFpe+Fi
- SxPVuw2xOGlgX3X4olKotunfBG1EHL3rsiIlYxugmojRQzbnzqLGcqWU6I0fXZnAUP
- ikgEkpdDJ08cagtIpETc4t+KuXq7glu1g22VYpBNxIsInLbKlHFfU0ZuOciOrdQ4D3
- RTKh0qK51cw9A==
-From: Helge Deller <deller@kernel.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, deller@gmx.de,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 2/2] hw/hppa: Move static variable lasi_dev into MachineState
-Date: Tue, 19 May 2026 17:18:23 +0200
-Message-ID: <20260519151823.13878-3-deller@kernel.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260519151823.13878-1-deller@kernel.org>
-References: <20260519151823.13878-1-deller@kernel.org>
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wPMDS-0006uu-T2
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 11:18:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779203918;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=IFTt9OPBQRIWdyIw3aWWLt7vK2HIYfO5V06dwyLC23Y=;
+ b=FUD1LIFdY+L7m0PZbTigG45V3KCFTQdGrO9slHI43g15brQQVMAom0+YXtZdRRkomWbUYC
+ no6W3M+8c4BzTwVD5Ekickargp66ZIF6y7SNrJ4Fz0wyB+i5g9uCiziGICZohZbOrBFOEy
+ i3UJiVudR4wGt1kAym3QZSrMf7jJQyk=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-369-7NT5vHQDP4K51GeErAl5Jw-1; Tue, 19 May 2026 11:18:36 -0400
+X-MC-Unique: 7NT5vHQDP4K51GeErAl5Jw-1
+X-Mimecast-MFC-AGG-ID: 7NT5vHQDP4K51GeErAl5Jw_1779203915
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-48fda34ed0aso14581895e9.1
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 08:18:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1779203915; x=1779808715; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=IFTt9OPBQRIWdyIw3aWWLt7vK2HIYfO5V06dwyLC23Y=;
+ b=N70RYckEsJUwE2tQy5U/DQ6eC9+rJHIFkMJ194TL7v+l+EturZcWDaUlE+N9bke4Cq
+ v/v7qbht9U0DUM6c8gJ7varsRXJqzr05o/xq5uWpgLcOC56PIb/BYRb+oiP3EE2//oSI
+ GCd1+PPEGQ9OwWYL3OcsVU/ahO1EZgRyLeGduTU9MfdyCTuC8DdMgUeQToDfGCyBg39G
+ NByWU4MHyNTjddMr5sOQYc+tr45oT5QMPxekKKD93fVBlWkDXef6N+lNl9ajMs2hewtV
+ ftzaKzH7dDZpOR0xPDKgACFrvy6u3MaBc3p8oiA0C6lnOWRnOLYJLoRh+CnL3hSViSto
+ +MSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779203915; x=1779808715;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IFTt9OPBQRIWdyIw3aWWLt7vK2HIYfO5V06dwyLC23Y=;
+ b=tRaUQJ4Gi1cH/Now6PYxvXtApaEhv3ZrA89a+9hiEErly6kwfFgo7LYvANYWEGyyYA
+ DWihlUbtfsuAxShFoUPQ8pRt0fQ/R0rAIq9xQxoewjL2Xeo77t0VfAkUck2SttfCoWmy
+ Db3Y267qMEAiACHHdwLtw1cA/yOR13pX+9Djhm5MtffidCTfMI5XCiJ5Y11Ki/QwHkin
+ hp7obuv10IizXU3Gibe7UJg9EDIssEdRjv1f25Hz7u+JqvqcgVdjPA4tqv8llfC/BPTU
+ rt5upM8Im35Xt72aTI8YOtaLmR7hOznD6EH+ei0FwHCOAte7wVeBsYyA2FjncMomp0hf
+ cV7Q==
+X-Gm-Message-State: AOJu0YzbEkcgjmSru62mHh+7ZRbNWBjVfqa4ibKg5n7co4QfXR5u5hTE
+ wY4FTpByOPx/Skv8PsnjkLqI/72rTJVO60otxhXWETtSz4Q/lrebPi/iBkHRAEt/qLHQ0xxJ0uD
+ mdipsT1SaWDSR6HCWz6jW7dMdLSF8tJxNmimkXfW2J9UNascdfw3OwAWH
+X-Gm-Gg: Acq92OGD2sa/1PxKpwjDe26hCwxlg6LLQBqadwWgUdFHu4wu6t9SKOyrAi4bqmz/ymR
+ HTupwDTKTm4tNvcjyU84UT0ebiuQThtDA0JfbTCdP6Nvoj/+vvxf0rzu8jTH7iUb+Yp2AuuqHWQ
+ /QbTMkEp7gpjqgff9mFAOYGYkpZFUHmWTDvsqJNoxe0MjWDPES0Q3z1eun1926sfU5Vu16BtoU9
+ jx6pRt02IUjyZmz632IJ82hycQZi8b/p78jh7Cu+3V5exuUg/ipFZc4Z85nOVUm1aBoq6MaE2rG
+ fxAmkD33pA4/41a6Xug7fRVr2fpu7GjEry//XjvW/YlRKRUVwu1+90E1A59AuHo78yHGcGSNmEl
+ kg+CHOhBD5yu4uNsnN8VG7Xt7t5udRSm2hrOw0EuL9ZZkB+TfZiwgpQ==
+X-Received: by 2002:a05:600c:a405:b0:489:1f04:96c3 with SMTP id
+ 5b1f17b1804b1-48fe5fcded3mr291645025e9.2.1779203914704; 
+ Tue, 19 May 2026 08:18:34 -0700 (PDT)
+X-Received: by 2002:a05:600c:a405:b0:489:1f04:96c3 with SMTP id
+ 5b1f17b1804b1-48fe5fcded3mr291644255e9.2.1779203914132; 
+ Tue, 19 May 2026 08:18:34 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-25-45.inter.net.il. [80.230.25.45])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45d9ed30110sm50538273f8f.13.2026.05.19.08.18.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 19 May 2026 08:18:33 -0700 (PDT)
+Date: Tue, 19 May 2026 11:18:31 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Mauro Matteo Cascella <mcascell@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: Re: RFC: GitLab issues for security disclosures
+Message-ID: <20260519111646-mutt-send-email-mst@kernel.org>
+References: <agxzKzzDOJm1EU_v@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+In-Reply-To: <agxzKzzDOJm1EU_v@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,93 +119,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+On Tue, May 19, 2026 at 03:26:51PM +0100, Daniel P. Berrang� wrote:
+> The qemu-security mailing list was created several years back now and
+> traditionally saw 1-2 disclosures a month at worst. This was manageable.
+> 
+> Since approx March 1st, the new normal is to see as many as 20 disclosures
+> in one single day, more than 200 in total now. This is unsustainable.
+> I was thinking we needed more people on qemu-security to triage, but IMHO
+> this won't really fix the problem.
+> 
+> This needs an issue tracker to cope with & email is not an issue tracker.
+> We faked an issue tracker with a shared spreadsheet to prevent us drowning
+> these past few months, but this is still not sustainable & probably won't
+> ever be.
+> 
+> The traditional POV was that security disclosures must be dealt with on
+> a strict "need to know" basis until there was a concious decision to make
+> them public. Typically that happened when a patch was published by the
+> maintainer on qemu-devel. Rarely have we applied an embargo period after
+> a maintainer had a patch ready to post, as most bugs were not severe
+> enough. Also in typical usage Libvirt has SELinux/AppArmour to mitigate
+> impact of a guest ecsape into QEMU.
+> 
+> QEMU is not alone in this chaos, to quote Linus
+> 
+>    https://lkml.org/lkml/2026/5/17/896
+> 
+> [quote]
+>   the continued flood of AI reports has basically made the security list
+>   almost entirely unmanageable, with enormous duplication due to
+>   different people finding the same things with the same tools. People
+>   spend all their time just forwarding things to the right people or
+>   saying "that was already fixed a week/month ago" and pointing to the
+>   public discussion.
+> [/quote]
+> 
+> They have explicitly changed their policy for disclosure now:
+> 
+>   https://github.com/torvalds/linux/commit/a03ef333fbd6cd861c8457c3d055ee3643a9baad
+> 
+> [quote]
+>   If you resorted to AI assistance to identify a bug, you must treat
+>   it as public. While you may have valid reasons to believe it is not,
+>   the security team's experience shows that bugs discovered this way
+>   systematically surface simultaneously across multiple researchers,
+>   often on the same day
+> [/quote]
+> 
+> IME for qemu-security we've definitely seen the same bugs reported by
+> different people, within days of each other, a couple of times even
+> the same day. Dupes are not the majority  - QEMU has so much low
+> hanging fruit - but they're a sizeable chunk.
+> 
+> 
+> Because we don't have a good automated way to publish disclosures
+> from qemu-security, we don't provide contributors any way to check
+> for duplicates before submission. The burden of checking for dupes
+> thus falls on the qemu-security triage people, or the maintainers
+> we forward issues to.
+> 
+> For disclosures in the non-virtualization use case, we ask the
+> reporter to file a gitlab issue or send a patch. They almost never
+> do this. We're lucky to have any reply to emails at all.
+> 
+> 
+> IMHO we need to move to an issue tracker. GitLab was originally
+> discounted in favour of qemu-security list since "Confidential"
+> issues cannot have visibility managed in a fine grained way.
+> They are visible to everyone with "Reporter" role or higher,
+> which is 70+ people for QEMU.
+> 
+> If we accept the kernel's view that AI discovered issues should be
+> considered public immediately because of the high chance of parallel
+> "discovery", then GitLab's limitations don't seem to bad.
+> 
+> It is also of note that we've had some people ignoring qemu-security
+> policy and directly filing public gitlab issues for stuff discovered
+> via AI/LLM agents already. Those are not getting attention for CVE
+> assignment, should it be needed which and can't be cross-referenced
+> by general maintaniers to stuff we have received via qemu-security.
+> 
+> We have some options IMHO
+> 
+>  1. Move all security disclosure to GitLab confidential issues
+>     no disclosures via email
+> 
+>  2. Move AI/fuzzer assisted disclosures to GitLab confidential
+>     issues, keep human discovered issues on qemu-security list
+> 
+>  3. Move AI/fuzzer assisted disclosures to GitLab public
+>     issues, keep human discovered issues on qemu-security list
 
-Avoid static variables, so move lasi_dev into the MachineState struct.
+or 4. do it like linux did, and move ai assisted disclosured
+to the public ML. Fuzzer assisted can stay with human discovered.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/hppa/machine.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index 0937d90ed2..d762163ddf 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -44,6 +44,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(HppaMachineState, HPPA_COMMON_MACHINE)
- struct HppaMachineState {
-     MachineState parent_obj;
- 
-+    DeviceState *lasi_dev;
-     uint64_t memsplit_addr;
- };
- 
-@@ -52,8 +53,6 @@ struct HppaMachineState {
- #define HPA_POWER_BUTTON        (FIRMWARE_END - 0x10)
- static hwaddr soft_power_reg;
- 
--static DeviceState *lasi_dev;
--
- static void hppa_powerdown_req(Notifier *n, void *opaque)
- {
-     uint32_t val;
-@@ -399,7 +398,8 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
- {
-     const char *kernel_filename = machine->kernel_filename;
-     MachineClass *mc = MACHINE_GET_CLASS(machine);
--    DeviceState *dev;
-+    HppaMachineState *hpm = HPPA_COMMON_MACHINE(machine);
-+    DeviceState *dev, *lasi_dev;
-     PCIDevice *pci_dev;
-     long size;
-     uint64_t kernel_entry = 0;
-@@ -408,6 +408,7 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
-     SysBusDevice *s;
- 
-     /* Graphics setup. */
-+    lasi_dev = hpm->lasi_dev;
-     if (lasi_dev && machine->enable_graphics &&
-         vga_interface_type != VGA_NONE) {
-         dev = qdev_new("artist");
-@@ -576,7 +577,8 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
-  */
- static void machine_HP_715_init(MachineState *machine)
- {
--    DeviceState *dev;
-+    HppaMachineState *hpm = HPPA_COMMON_MACHINE(machine);
-+    DeviceState *dev, *lasi_dev;
-     MemoryRegion *addr_space = get_system_memory();
-     TranslateFn *translate;
-     ISABus *isa_bus;
-@@ -596,6 +598,7 @@ static void machine_HP_715_init(MachineState *machine)
- 
-     /* Init Lasi chip */
-     lasi_dev = DEVICE(lasi_init());
-+    hpm->lasi_dev = lasi_dev;
-     memory_region_add_subregion(addr_space, translate(NULL, LASI_HPA_715),
-                                 sysbus_mmio_get_region(
-                                     SYS_BUS_DEVICE(lasi_dev), 0));
-@@ -652,7 +655,8 @@ static void machine_HP_715_init(MachineState *machine)
-  */
- static void machine_HP_B160L_init(MachineState *machine)
- {
--    DeviceState *dev, *dino_dev;
-+    HppaMachineState *hpm = HPPA_COMMON_MACHINE(machine);
-+    DeviceState *dev, *dino_dev, *lasi_dev;
-     MemoryRegion *addr_space = get_system_memory();
-     TranslateFn *translate;
-     ISABus *isa_bus;
-@@ -669,6 +673,7 @@ static void machine_HP_B160L_init(MachineState *machine)
- 
-     /* Init Lasi chip */
-     lasi_dev = DEVICE(lasi_init());
-+    hpm->lasi_dev = lasi_dev;
-     memory_region_add_subregion(addr_space, translate(NULL, LASI_HPA),
-                                 sysbus_mmio_get_region(
-                                     SYS_BUS_DEVICE(lasi_dev), 0));
--- 
-2.54.0
+> In all three cases, if a GitLab issue is determined to be security
+> relevant, any maintainer could send a request to qemu-security list
+> to get Red Hat product security to allocate a CVE.
+> 
+> Out of those I'd probably lean towards (2) which is slightly
+> more restrictive than the kernel new policy but not by much.
+> 
+> Some key benefits of using GitLab for security disclosures
+> 
+>  * We can trivially make disclosures public if we classify them
+>    as a non-virtualization use case, or when the fix is ready.
+> 
+>  * We can formally track the lifecycle of disclosures through to
+>    the final fix, for both virtualization & non-virtualization
+>    use cases. The only difference will be that the former can
+>    request a CVE assignment
+> 
+>  * We can do reports/queries of outstanding issues
+>  
+>  * We can more easily use automation to process issues
+> 
+>  * Maintainers can see bugs without waiting for someone to triage
+>    and forward it on their way.
+> 
+>  * The small number of security bug triage people are no a bottle
+>    neck anymore
+> 
+> Some downsides/implications
+> 
+>  * Every disclosure in a confidential issue will be visible to every
+>    maintainer who has joined the qemu-project repo on GitLab. IOW
+>    that is treating every maintainer as equally trusted.
+> 
+>    We do have qemu-security though we could be mailed if someone
+>    considered their disclosure to be severely impactful but the triage
+>    team can't make that decision.
+> 
+>  * We must NOT grant membership to qemu-project at a Reporter level
+>    for anyone whom is not an active maintainer. They must be limited
+>    to the "Guest" role at most.
+> 
+>  * No one is formally responsible for GitLab issue triage. We have
+>    had Thomas do it in the past periodically with script assistance.
+>    We have Alex doing some of it now with bot assistance. The danger
+>    is security disclosures get ignored as "somebody else's problem"
+>    no one has accountability.
+> 
+> With regards,
+> Daniel
+> -- 
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
