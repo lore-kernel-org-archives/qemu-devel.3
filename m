@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BEE5CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 16:26:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79B64CD4F5B
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 16:27:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPNDo-0006mD-0N; Tue, 19 May 2026 12:23:08 -0400
+	id 1wPNDc-0006fS-2S; Tue, 19 May 2026 12:22:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wPNDi-0006iq-PY
- for qemu-devel@nongnu.org; Tue, 19 May 2026 12:23:03 -0400
-Received: from mail-oa1-x29.google.com ([2001:4860:4864:20::29])
+ id 1wPNDV-0006cm-75
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 12:22:50 -0400
+Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wPNDh-0000mW-5W
- for qemu-devel@nongnu.org; Tue, 19 May 2026 12:23:02 -0400
-Received: by mail-oa1-x29.google.com with SMTP id
- 586e51a60fabf-4042fe53946so1434897fac.3
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 09:23:00 -0700 (PDT)
+ id 1wPNDN-0000do-SI
+ for qemu-devel@nongnu.org; Tue, 19 May 2026 12:22:48 -0400
+Received: by mail-oi1-x22f.google.com with SMTP id
+ 5614622812f47-479d85152c9so1458588b6e.2
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 09:22:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779207780; x=1779812580; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779207759; x=1779812559; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=FO0azwR+GpNVaHd0K7Iv0la3bhCKm2knHJslFgvy2m8=;
- b=bFpvYmHMeEE6WhF8fSnlQ8RjG91jXwAe3qrosXNIhe2r2/5d4DgwB6fOh6L5/hbI5T
- lCkJcBBiKjNpdaiZFpXym7IvAC+rZfAbA1JDx5Hb/cRm/2zRd/NatYMNlOZgM4gp3oOC
- m0MwuFDngWa6lrNG1Ak1G8n/J/4ynv/HxfaO+6PyFhf3CmlS7h+G0/yNtiR6W1Sy5yxw
- z+lf3+7L9/2aboZHWxJX3F0bnXpon9JUl7g7i34ztJ9ogFUVv17GOMLsrtddLMmFglHJ
- A1D1Q66aAJA3aQjUF7ryXBSEvESP5/h6wxn3ro8Z5M88j7/Pne6u0Ebz/vvfwCL1TYVW
- G3Ew==
+ :reply-to; bh=a0YJCz/+Op9OtTioAKAD1sf9gr9b0ChAoB2bIjmnyqQ=;
+ b=peFP067+AfOR8qGHpUwg/DVG1Umr7y3wjxaeGoRclMYXwles3QbYSrzEpmT2yveGia
+ 9cmXUBY967utT4BKcSWP04H8Qb8o0jlnIS+yB7Wwbj/FsukKEys7K+sqL4TXYpTXdxB+
+ cRj76hdPj4ulisluYRamGkccL2q1P6fObFIK9fujkaJlWkQoKLcGO2RgozmXYYVkLSdj
+ 4Le38l4OOkmCEDiqJLPpROtgpMhm0L1+dX2a0bcN+wU2brv02lS4Lk1IgREWShpkMZSh
+ 8+JcI7uGyi32zzcVYC0AVK7iAeQJkGoRF/XkLlPY0h5G74cW6X8KKJBiHC0S4lrZSace
+ 5+hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779207780; x=1779812580;
+ d=1e100.net; s=20251104; t=1779207759; x=1779812559;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=FO0azwR+GpNVaHd0K7Iv0la3bhCKm2knHJslFgvy2m8=;
- b=VctaoZCicUlIRcIV9vLrfPwRjju5DOkiTEw40GQcjwm+bbJMgWK+Y8kKmAkqCYyzbW
- NkWHPe7nWKZI8L6dtnRGh5FGTFIBBOkG5F+5Jowx1jxaJLpgpQ0ahjAltA8ESgibX2ry
- PRb9QyKdXIsJoh6qfdjdivuMSWjPaxBzAZc4d6vL0mNSMNcs0khPhlEUy7IngJk7rpNf
- GkKC4g0Rk1X86CteQsc3hbJX/H6BFP53Cury8961eURlOj24qIpAAjubp3l0H4eMgKNH
- zyLLOvzUvyFdsQDwmMlM2VYyPtMGCCQmgzB3qrXNK+Xqvs76G4qqTIfpZI3KNID3+oR8
- lmoA==
-X-Gm-Message-State: AOJu0YyFYgT3/OWS01HJhC8OZpvxF3w7HIoLlJ1zonBqXgTl94Bi02/H
- 6dUANPF7sHNIAgf+RZHV6slrdElvlzJ0S1wvctKUNv88b1O+is6UnkTQ
-X-Gm-Gg: Acq92OGc7r5BjA7uWFGKtIVbt1qq/MJn3UUUHqeaCKBpXPylBoCtmqRqj7U8Yba9/kU
- rVfa/bcpvYHHr2uJOqSp44bHgki7RsyK3sdrMGcE6/NYatXGneqpc9IeaaRJbyNRUYHxCdBoXOE
- hQnYlLvSzvPC8O37ffQqrPDSa4PbhSVvS68yOUbKxTg61qFHGdxbbxs7vnQjPmnfs/3sRLejyAq
- qxmYfNtic/dEeKP2pEmLc/9fU/LL6zUwJlEeLI0ZJAbhrVyGBRlrimsdCHTJ4qLpRQ8g8nl0g4u
- oo4COlukKZ60oA7Mu4rBKMy/0IwfM2vdNHcaIRMgB2gvUET6lAY/XQYoBA0/p16tqgI2kLddfCv
- EyzjmxLEPOGaNgaZJbVrDEBgH1c4XaBsKpKweqOSvEcJkuj55iVlroEIR2PRiY5LVjyR2IHFRBD
- w9tI7+fe3lNcOWCQ2O4asrnoLPlbZayyvU4uos94EwHRiXxiqkX2j5UsSvsoB/uyajSyV1AEY9+
- Bh2obXbDRjekeKbO5lniK4tQH43+z7rX2xodoE2Ar9Vpg1CJ0kYMNACu7ht0sZ7TJzVve67giJf
- NyQ=
-X-Received: by 2002:a05:6870:c233:b0:42c:711:a235 with SMTP id
- 586e51a60fabf-43a2de6d4e8mr12687717fac.35.1779207779960; 
- Tue, 19 May 2026 09:22:59 -0700 (PDT)
+ bh=a0YJCz/+Op9OtTioAKAD1sf9gr9b0ChAoB2bIjmnyqQ=;
+ b=O2JkT31E+Ln41Ckcwp4NtQTEOrKvarrMT8AXuAfwT7rxSmxrYAIct+kU6EqO2nL3Q/
+ CnGndlNdSfWoy2HiXdhrt2t/Mcs7mBMiKnskodZgjVvgF/IpvQqQCPZxCkmg30Xw8kB6
+ ffSR8sn9cEzC3nrnaATtnvMd6qHsTWsSCiplCmh24cUtDphETnQrCIX2wOk04T1wsiLy
+ VSgad594/XxenrNZtgRXQJtS0F4V/WmdtoRYfDB7lR11xxyT6EcUZhXQjef5f+ZV+AcO
+ iRZbq+Y8f3KXHouNz4AziuAE3ZE8RcN1cv65yrA/6PLVUeB9EfofIw1K0pjs0yb9jCLO
+ tFvg==
+X-Gm-Message-State: AOJu0YwyKXUPLekEptoFJ50T+uGnq1N/j/7+6w+7LeuCGU65Hx6/7Bth
+ bNlndFP8nCaIwiCUqMFr5uhH+crbX83g5rEvidSL4MtT4XaokRKDXVdJ
+X-Gm-Gg: Acq92OEFqw1aLrYiCXzSTuV5RMK3kHbumizHvhYU68b4ZZeClm4wbeGqwS5VOv9LKS4
+ u2BD6t58Y4pRf0X/X7k9IWoS1aLxHUYMX42Z6b3TGOtfkJzsKGjDZZzXOhyZNbgkvV4qt52lpup
+ ZI43V9NlQn96QisayVQWJnFwUPqsI6Ycsy4uwBCOD1zgd0LUf9V1hWA+osfEq+cxaHMVKGzxtgI
+ XjtMs7l0UGRqxBpmnonPoSQRRvxuUCeQJ9UkfpoJYuQCERtW2thb1CMuRahH7KnO6t5ZXOkVKqf
+ 5nQ11gcBA4zoz5b25YHePFiTHUW79LboeJ9pmRJpR3D8tGFrod8Y67bbQ6+P5LP4MEUhvUA1fAu
+ v/oV3fbCaBpmdl5hdnTANWlfMeHo0fLT69Ws1Bl+OkO6LC3JQAZIBIM2J+bAGidpAVk9+qVdCWI
+ mNuEFL2cnpT5Y+/UIk1Z8qirET1r7qg8huO6nYqNomNCRsVc6S3d/hfTjc+mZYtLxvYZIAiVAdk
+ tREc7i8oKJrQ690TY6U5tpcSrydl1ZpuCtSIDgQO8vIuWzgJCZW6ERgcen/51OHwGGV
+X-Received: by 2002:a05:6820:3087:b0:685:7d77:27 with SMTP id
+ 006d021491bc7-69c9bfd47e6mr13111495eaf.33.1779207758850; 
+ Tue, 19 May 2026 09:22:38 -0700 (PDT)
 Received: from mac.localdomain (184-96-146-19.hlrn.qwest.net. [184.96.146.19])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-43a95762ceasm7056296fac.13.2026.05.19.09.22.58
+ 586e51a60fabf-43a95762ceasm7056296fac.13.2026.05.19.09.22.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 May 2026 09:22:59 -0700 (PDT)
+ Tue, 19 May 2026 09:22:38 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Tue, 19 May 2026 10:22:27 -0600
-Subject: [PATCH v9 25/40] target/mips: add Octeon COP2 crypto helper plumbing
+Date: Tue, 19 May 2026 10:22:06 -0600
+Subject: [PATCH v9 04/40] target/mips: fix Octeon arithmetic destination
+ handling
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260519-mips-octeon-missing-insns-v2-v9-25-d7dd735ecddd@gmail.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260519-mips-octeon-missing-insns-v2-v9-4-d7dd735ecddd@gmail.com>
 References: <20260519-mips-octeon-missing-insns-v2-v9-0-d7dd735ecddd@gmail.com>
 In-Reply-To: <20260519-mips-octeon-missing-insns-v2-v9-0-d7dd735ecddd@gmail.com>
 To: qemu-devel@nongnu.org
@@ -85,8 +85,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>, 
  Paolo Bonzini <pbonzini@redhat.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2001:4860:4864:20::29;
- envelope-from=james.hilliard1@gmail.com; helo=mail-oa1-x29.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oi1-x22f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -110,80 +110,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the Octeon COP2 crypto helper source file and build it with the MIPS
-TCG target. The initial file contains the shared selector-window helper
-constants and mode setter used by later COP2 engine patches.
+BADDU and DMUL write their results to rd, not rt.  Route writes through
+gen_store_gpr() so rd == $zero is handled consistently.
 
-Keep these selector constants local to the helper implementation. The
-instruction dispatch itself remains fully decoded by decodetree, and
-later operation selectors call per-operation helpers rather than a common
-selector-dispatch helper.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
-Changes v8 -> v9:
-  - Split helper plumbing out of the former monolithic COP2 helper patch.
-  - Keep shared-window selector arithmetic local to octeon_crypto.c.
----
- target/mips/tcg/meson.build     |  1 +
- target/mips/tcg/octeon_crypto.c | 37 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 38 insertions(+)
+Changes v1 -> v2:
+  - Split the BADDU/DMUL destination handling fix out of the Octeon
+    arithmetic instruction patch.  (suggested by Philippe Mathieu-Daudé)
 
-diff --git a/target/mips/tcg/meson.build b/target/mips/tcg/meson.build
-index fff9cd6c7f..4ee359874a 100644
---- a/target/mips/tcg/meson.build
-+++ b/target/mips/tcg/meson.build
-@@ -18,6 +18,7 @@ mips_ss.add(files(
-   'lmmi_helper.c',
-   'msa_helper.c',
-   'msa_translate.c',
-+  'octeon_crypto.c',
-   'op_helper.c',
-   'rel6_translate.c',
-   'translate.c',
-diff --git a/target/mips/tcg/octeon_crypto.c b/target/mips/tcg/octeon_crypto.c
-new file mode 100644
-index 0000000000..f9b54f7017
---- /dev/null
-+++ b/target/mips/tcg/octeon_crypto.c
-@@ -0,0 +1,37 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * MIPS Octeon crypto emulation helpers.
-+ *
-+ * Copyright (c) 2026 James Hilliard
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "cpu.h"
-+#include "internal.h"
-+#include "exec/helper-proto.h"
-+#include "crypto/aes.h"
-+#include "crypto/clmul.h"
-+#include "crypto/sm4.h"
-+#include "qemu/bitops.h"
-+#include "qemu/host-utils.h"
-+
-+/*
-+ * The shared HSH/SHA3/SNOW3G/ZUC register window needs selector-position
-+ * arithmetic.  Instruction dispatch itself is still fully decoded by
-+ * decodetree and calls per-operation helpers.
-+ */
-+#define OCTEON_HSH_DATW(N)          (0x0240u + (N))
-+#define OCTEON_HSH_IVW(N)           (0x0250u + (N))
-+#define OCTEON_SHA3_DAT24_SEL       0x0050u
-+#define OCTEON_SHA3_DAT15_MT_SEL    0x0051u
-+#define OCTEON_SHA3_DAT15_MF_SEL    OCTEON_HSH_DATW(15)
-+#define OCTEON_SNOW3G_LFSR(N)       OCTEON_HSH_DATW(N)
-+#define OCTEON_SNOW3G_RESULT_SEL    OCTEON_HSH_IVW(0)
-+#define OCTEON_SNOW3G_FSM(N)        OCTEON_HSH_IVW(1 + (N))
-+
-+static inline void octeon_set_shared_mode(MIPSOcteonCryptoState *crypto,
-+                                          MIPSOcteonSharedMode mode)
-+{
-+    crypto->shared_mode = mode;
-+}
+Changes v2 -> v3:
+  - Remove the rd == $zero fast paths and let gen_store_gpr() discard
+    writes to $zero.  (suggested by Richard Henderson)
+---
+ target/mips/tcg/octeon_translate.c | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
+
+diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
+index e1f52d444a..4dd7626835 100644
+--- a/target/mips/tcg/octeon_translate.c
++++ b/target/mips/tcg/octeon_translate.c
+@@ -45,18 +45,14 @@ static bool trans_BADDU(DisasContext *ctx, arg_BADDU *a)
+ {
+     TCGv_i64 t0, t1;
+ 
+-    if (a->rt == 0) {
+-        /* nop */
+-        return true;
+-    }
+-
+     t0 = tcg_temp_new_i64();
+     t1 = tcg_temp_new_i64();
+     gen_load_gpr(t0, a->rs);
+     gen_load_gpr(t1, a->rt);
+ 
+     tcg_gen_add_i64(t0, t0, t1);
+-    tcg_gen_andi_i64(cpu_gpr[a->rd], t0, 0xff);
++    tcg_gen_andi_i64(t0, t0, 0xff);
++    gen_store_gpr(t0, a->rd);
+     return true;
+ }
+ 
+@@ -64,17 +60,13 @@ static bool trans_DMUL(DisasContext *ctx, arg_DMUL *a)
+ {
+     TCGv_i64 t0, t1;
+ 
+-    if (a->rt == 0) {
+-        /* nop */
+-        return true;
+-    }
+-
+     t0 = tcg_temp_new_i64();
+     t1 = tcg_temp_new_i64();
+     gen_load_gpr(t0, a->rs);
+     gen_load_gpr(t1, a->rt);
+ 
+-    tcg_gen_mul_i64(cpu_gpr[a->rd], t0, t1);
++    tcg_gen_mul_i64(t0, t0, t1);
++    gen_store_gpr(t0, a->rd);
+     return true;
+ }
+ 
 
 -- 
 2.54.0
