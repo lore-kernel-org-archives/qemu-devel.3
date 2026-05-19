@@ -4,105 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B750ACD4851
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 07:53:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34F0BCD4851
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 May 2026 07:59:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPFFK-0008Lt-Hf; Tue, 19 May 2026 03:52:11 -0400
+	id 1wPFLk-0000rI-TL; Tue, 19 May 2026 03:58:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wPFFF-0008LT-W3
- for qemu-devel@nongnu.org; Tue, 19 May 2026 03:52:06 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wPFFE-0001eo-1I
- for qemu-devel@nongnu.org; Tue, 19 May 2026 03:52:05 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 1D9E05DECC;
- Tue, 19 May 2026 07:52:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1779177121; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=12wFIfHs7OJ13sbr6CnRgrTaz2VrBLtTDkirBPDQ+IU=;
- b=M8/qUfO83qGe9I19rMxd0OFpBM+Z1Yq0i+TvBeTVzGOQjxP8sQmuRm05Th/0r2HSHTzBO8
- pOLYpUtzjHsFA05M//KU6slWDRvkrE+cOS+gEqGEoUixUmmTE5pTsH7DlVseUq4FZD0Eoc
- 1aWCoOnR0KdbnCPoWJnVvzMlUyfpnuc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1779177121;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=12wFIfHs7OJ13sbr6CnRgrTaz2VrBLtTDkirBPDQ+IU=;
- b=s6BsYHoD8MdSFCR/MCOzWkFvwrNT1oUfzJ72Hy0jtmWDFBSC0n4gEojBL0XrKhTEU1bbXl
- cyDN34l5xkpuUzAQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1779177121; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=12wFIfHs7OJ13sbr6CnRgrTaz2VrBLtTDkirBPDQ+IU=;
- b=M8/qUfO83qGe9I19rMxd0OFpBM+Z1Yq0i+TvBeTVzGOQjxP8sQmuRm05Th/0r2HSHTzBO8
- pOLYpUtzjHsFA05M//KU6slWDRvkrE+cOS+gEqGEoUixUmmTE5pTsH7DlVseUq4FZD0Eoc
- 1aWCoOnR0KdbnCPoWJnVvzMlUyfpnuc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1779177121;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=12wFIfHs7OJ13sbr6CnRgrTaz2VrBLtTDkirBPDQ+IU=;
- b=s6BsYHoD8MdSFCR/MCOzWkFvwrNT1oUfzJ72Hy0jtmWDFBSC0n4gEojBL0XrKhTEU1bbXl
- cyDN34l5xkpuUzAQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B3C0A593A8;
- Tue, 19 May 2026 07:52:00 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id UJr/IKAWDGo8ZwAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 19 May 2026 07:52:00 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>, qemu-devel@nongnu.org,
- qemu-stable@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>, Jia Jia <physicalmtea@gmail.com>, Laurent
- Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 5/6] tests/qtest/libqos: add qvirtqueue_reset_pool() for
- descriptor pool reset
-In-Reply-To: <96cf23eea1204b34443218fe76bd4a5eaf9163e8.1779126034.git.qemu_oss@crudebyte.com>
-References: <cover.1779126034.git.qemu_oss@crudebyte.com>
- <96cf23eea1204b34443218fe76bd4a5eaf9163e8.1779126034.git.qemu_oss@crudebyte.com>
-Date: Tue, 19 May 2026 04:51:49 -0300
-Message-ID: <87o6ib3kh6.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
+ id 1wPFLj-0000r0-Go; Tue, 19 May 2026 03:58:47 -0400
+Received: from apollo.dupie.be ([51.159.20.238])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
+ id 1wPFLZ-0005Ta-P2; Tue, 19 May 2026 03:58:39 -0400
+Received: from lt-jeanlouis (unknown
+ [IPv6:2a00:1c98:fff1:1001:aee7:ee9c:3ae8:78e2])
+ by apollo.dupie.be (Postfix) with ESMTPSA id 7A1081520D89;
+ Tue, 19 May 2026 09:58:33 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
+ t=1779177513;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=tdKtXZbZmJURISFbusNmAnDHqrCPjGLAAcEd8EWVAug=;
+ b=M1vQYu92C8B9eo8kVyNaOO63h6QWKGZSPMHNvdSulpHmQ35k83/K4fGBnCZK3fl9P+Tamx
+ uQrq3nSnUqAlckqPhPumQuHc5CtGPLt9vYwc4qm9mSZ2Y7PWfMrgAXMQQ/puyiJzyCX4Dy
+ z4DPw4MsthHRVbnxCO9PWbaY8lO1c5RaWgLV57Dk7hu0ar8fe5UlJLV9mqn5L6M+i3vBZK
+ M06yHoooRkFO3Ui2DtN0EN4QTlLmIyMpY1+y8hPQmi+lwVipXJGguzrGkEd26ioH9kF2WX
+ F3OEyksBAF1xjlZMav/whNuLC27zmk/nLDeYNE0mT8WSGFY262rlnhLUmgOFsQ==
+From: Jean-Louis Dupond <jean-louis@dupond.be>
+To: qemu-devel@nongnu.org
+Cc: Hanna Reitz <hreitz@redhat.com>, John Snow <jsnow@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Jean-Louis Dupond <jean-louis@dupond.be>
+Subject: [PATCH] qcow2: add functionality to repair bitmaps
+Date: Tue, 19 May 2026 09:58:13 +0200
+Message-ID: <20260519075813.955333-1-jean-louis@dupond.be>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
- ARC_NA(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FREEMAIL_CC(0.00)[kaod.org,gmail.com,redhat.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCVD_TLS_ALL(0.00)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
- MISSING_XM_UA(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; RCPT_COUNT_SEVEN(0.00)[7];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
- imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=51.159.20.238; envelope-from=jean-louis@dupond.be;
+ helo=apollo.dupie.be
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,71 +68,201 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Christian Schoenebeck <qemu_oss@crudebyte.com> writes:
+In some cases, it might happen that bitmaps become corrupt.
+For example when adding/removing bitmaps on a live image.
 
-> Add a function to reset the virtqueue descriptor pool state without
-> reinitializing the device. This is useful for tests that issue a high
-> number of requests and are limited by the simplified virtio test
-> driver's descriptor tracking, which decrements num_free but never
-> increments it back.
->
-> The function is safe for synchronous test code where requests are
-> sent and completed before the next request is issued.
->
-> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Of course this should not happen, but in case this happens, the image is
+corrupt and cannot even be opened anymore. You get something like the
+following for example:
+qemu-img: Could not open 'disk.qcow2': Bitmap '' doesn't satisfy the constraints
 
-Acked-by: Fabiano Rosas <farosas@suse.de>
+So the image becomes useless, and cannot be repaired. This while in fact
+only (one) bitmap entry is corrupt, and the rest of the data is just
+intact.
 
-> ---
->  tests/qtest/libqos/virtio.c | 23 +++++++++++++++++++++++
->  tests/qtest/libqos/virtio.h |  2 ++
->  2 files changed, 25 insertions(+)
->
-> diff --git a/tests/qtest/libqos/virtio.c b/tests/qtest/libqos/virtio.c
-> index 010ff40834..ccbb325222 100644
-> --- a/tests/qtest/libqos/virtio.c
-> +++ b/tests/qtest/libqos/virtio.c
-> @@ -464,6 +464,29 @@ bool qvirtqueue_get_buf(QTestState *qts, QVirtQueue *vq, uint32_t *desc_idx,
->      return true;
->  }
->  
-> +/*
-> + * qvirtqueue_reset_pool:
-> + * @vq: The virtqueue to reset
-> + *
-> + * Reset the descriptor pool state without reinitializing the device.
-> + * This is useful for tests that issue a high number of requests and
-> + * are limited by the simplified virtio test driver's descriptor tracking,
-> + * which decrements num_free but never increments it back.
-> + *
-> + * This is only safe for synchronous test code where requests are
-> + * sent and completed before the next request is issued. Do not use
-> + * with asynchronous code where multiple requests may be in-flight.
-> + *
-> + * Note: This only resets the available descriptor pool (free_head,
-> + * num_free). The used ring position (last_used_idx) is NOT reset
-> + * and should continue to track consumed responses across iterations.
-> + */
-> +void qvirtqueue_reset_pool(QVirtQueue *vq)
-> +{
-> +    vq->free_head = 0;
-> +    vq->num_free = vq->size;
-> +}
-> +
->  void qvirtqueue_set_used_event(QTestState *qts, QVirtQueue *vq, uint16_t idx)
->  {
->      g_assert(vq->event);
-> diff --git a/tests/qtest/libqos/virtio.h b/tests/qtest/libqos/virtio.h
-> index e238f1726f..f17be0b9b6 100644
-> --- a/tests/qtest/libqos/virtio.h
-> +++ b/tests/qtest/libqos/virtio.h
-> @@ -150,6 +150,8 @@ void qvirtqueue_kick(QTestState *qts, QVirtioDevice *d, QVirtQueue *vq,
->  bool qvirtqueue_get_buf(QTestState *qts, QVirtQueue *vq, uint32_t *desc_idx,
->                          uint32_t *len);
->  
-> +void qvirtqueue_reset_pool(QVirtQueue *vq);
-> +
->  void qvirtqueue_set_used_event(QTestState *qts, QVirtQueue *vq, uint16_t idx);
->  
->  void qvirtio_start_device(QVirtioDevice *vdev);
+This commit adds a way to fix this corruption, by just replacing the
+bitmap list in the qcow2 image with the valid bitmaps, and dropping the
+bitmaps that are corrupt.
+
+qemu-img: Check failed: Invalid argument
+qemu-img: Lost persistent bitmaps during inactivation of node '#block195': Bitmap '' doesn't satisfy the constraints
+
+qcow2_free_clusters failed: Invalid argument
+Leaked cluster 3 refcount=1 reference=0
+Leaked cluster 26 refcount=1 reference=0
+Repairing cluster 3 refcount=1 reference=0
+Repairing cluster 26 refcount=1 reference=0
+The following inconsistencies were found and repaired:
+
+    2 leaked clusters
+    1 corruptions
+
+Double checking the fixed image now...
+No errors were found on the image.
+983056/1048576 = 93.75% allocated, 0.05% fragmented, 0.00% compressed clusters
+Image end offset: 64435847168
+
+And the image is valid again!
+Worst case you lose all bitmaps, but at least the image and the data
+itself is useable again.
+
+Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
+---
+ block/qcow2-bitmap.c | 78 ++++++++++++++++++++++++++++++++++++++++++++
+ block/qcow2.c        | 22 ++++++++++---
+ block/qcow2.h        |  4 +++
+ 3 files changed, 100 insertions(+), 4 deletions(-)
+
+diff --git a/block/qcow2-bitmap.c b/block/qcow2-bitmap.c
+index 256ec99878..f107de3301 100644
+--- a/block/qcow2-bitmap.c
++++ b/block/qcow2-bitmap.c
+@@ -1807,3 +1807,81 @@ uint64_t qcow2_get_persistent_dirty_bitmap_size(BlockDriverState *in_bs,
+ 
+     return bitmaps_size;
+ }
++
++/*
++ * qcow2_check_bitmaps - Check and optionally fix bitmap directory and bitmaps
++ * This function is called during image check to detect bitmap corruption.
++ * It attempts to load the bitmap directory and validates the structures.
++ * If BDRV_FIX_ERRORS is set, it removes corrupted bitmaps.
++ */
++int coroutine_fn GRAPH_RDLOCK
++qcow2_check_bitmaps(BlockDriverState *bs, BdrvCheckResult *result,
++                    BdrvCheckMode fix)
++{
++    BDRVQcow2State *s = bs->opaque;
++    Qcow2BitmapList *bm_list;
++    Qcow2BitmapList *fixed_list = NULL;
++    Qcow2Bitmap *bm;
++    int valid_bitmaps = 0;
++    int ret = 0;
++
++    if (s->nb_bitmaps == 0) {
++        /* No bitmaps - nothing to check */
++        return 0;
++    }
++
++    /* Try to load the bitmap directory */
++    bm_list = bitmap_list_load(bs, s->bitmap_directory_offset,
++                               s->bitmap_directory_size, NULL);
++    if (bm_list == NULL) {
++        /* Bitmap directory is corrupted */
++        result->corruptions++;
++
++        if (fix & BDRV_FIX_ERRORS) {
++            ret = update_ext_header_and_dir(bs, bitmap_list_new());
++            if (ret < 0) {
++                return ret;
++            }
++            result->corruptions_fixed++;
++        }
++
++        return 0;
++    }
++
++    if (fix & BDRV_FIX_ERRORS) {
++        fixed_list = bitmap_list_new();
++    }
++
++    /* Validate each bitmap */
++    QSIMPLEQ_FOREACH(bm, bm_list, entry) {
++        uint64_t *bitmap_table = NULL;
++
++        /* Try to load the bitmap table */
++        ret = bitmap_table_load(bs, &bm->table, &bitmap_table);
++        g_free(bitmap_table);
++        if (ret < 0) {
++            /* Bitmap table is corrupted */
++            result->corruptions++;
++            continue;
++        }
++
++        if (fix & BDRV_FIX_ERRORS) {
++            valid_bitmaps++;
++            QSIMPLEQ_INSERT_TAIL(fixed_list, bm, entry);
++        }
++    }
++
++    bitmap_list_free(bm_list);
++
++    /* If fixing, update the bitmap directory with the repaired list */
++    if ((fix & BDRV_FIX_ERRORS) && s->nb_bitmaps != valid_bitmaps) {
++        ret = update_ext_header_and_dir(bs, fixed_list);
++        bitmap_list_free(fixed_list);
++        if (ret < 0) {
++            return ret;
++        }
++        result->corruptions_fixed += s->nb_bitmaps - valid_bitmaps;
++    }
++
++    return 0;
++}
+\ No newline at end of file
+diff --git a/block/qcow2.c b/block/qcow2.c
+index 81fd299b4c..156fec5de3 100644
+--- a/block/qcow2.c
++++ b/block/qcow2.c
+@@ -608,12 +608,20 @@ static int coroutine_fn GRAPH_RDLOCK
+ qcow2_co_check_locked(BlockDriverState *bs, BdrvCheckResult *result,
+                       BdrvCheckMode fix)
+ {
++    BdrvCheckResult bitmap_res = {};
+     BdrvCheckResult snapshot_res = {};
+     BdrvCheckResult refcount_res = {};
+     int ret;
+ 
+     memset(result, 0, sizeof(*result));
+ 
++    /* Check and fix bitmaps */
++    ret = qcow2_check_bitmaps(bs, &bitmap_res, fix);
++    qcow2_add_check_result(result, &bitmap_res, false);
++    if (ret < 0) {
++        return ret;
++    }
++
+     ret = qcow2_check_read_snapshot_table(bs, &snapshot_res, fix);
+     if (ret < 0) {
+         qcow2_add_check_result(result, &snapshot_res, false);
+@@ -1927,11 +1935,17 @@ qcow2_do_open(BlockDriverState *bs, QDict *options, int flags,
+     if (!(bdrv_get_flags(bs) & BDRV_O_INACTIVE)) {
+         /* It's case 1, 2 or 3.2. Or 3.1 which is BUG in management layer. */
+         bool header_updated;
+-        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, errp)) {
+-            ret = -EINVAL;
+-            goto fail;
++        Error *local_err = NULL;
++        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, &local_err)) {
++            /* Allow this to fail in check mode
++             * because otherwise we can't open the image at all.
++             */
++            if (!(flags & BDRV_O_CHECK)) {
++                ret = -EINVAL;
++                error_propagate(errp, local_err);
++                goto fail;
++            }
+         }
+-
+         update_header = update_header && !header_updated;
+     }
+ 
+diff --git a/block/qcow2.h b/block/qcow2.h
+index 192a45d596..bf56b071fa 100644
+--- a/block/qcow2.h
++++ b/block/qcow2.h
+@@ -1036,6 +1036,10 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
+                               void **refcount_table,
+                               int64_t *refcount_table_size);
+ 
++int coroutine_fn GRAPH_RDLOCK
++qcow2_check_bitmaps(BlockDriverState *bs, BdrvCheckResult *result,
++                    BdrvCheckMode fix);
++
+ bool coroutine_fn GRAPH_RDLOCK
+ qcow2_load_dirty_bitmaps(BlockDriverState *bs, bool *header_updated,
+                          Error **errp);
+-- 
+2.54.0
+
 
