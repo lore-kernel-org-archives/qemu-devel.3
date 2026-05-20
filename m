@@ -4,39 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 527B9CD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 12:52:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69A60CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 12:53:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPgNa-0004vD-NZ; Wed, 20 May 2026 08:50:30 -0400
+	id 1wPgNh-00052p-UD; Wed, 20 May 2026 08:50:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1wPgN6-0004ZP-D5; Wed, 20 May 2026 08:50:08 -0400
+ id 1wPgNV-0004iw-7Z; Wed, 20 May 2026 08:50:27 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1wPgN1-0002cf-R2; Wed, 20 May 2026 08:50:00 -0400
+ id 1wPgNR-0002iO-ON; Wed, 20 May 2026 08:50:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
- Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+ s=dkim; h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:
+ In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=b6qvK9xJyP8PhOxKpYDgJ3HSwZF90Fc7hMnRQr7nY0w=; b=MUdtU7YzVhyKcrl
- vRRs+a0ieA3bAK3GOKbGaO1EOhgGvDFni1CEN80udBvi91RhkbaOvjHSQ7HlIL/B0lP/9K1g9YCBa
- Mm3Nzpqj1+jVcWmUPZCam2P3WKk5nJrNb7oyr0GE/DBm6zzdQXjqL6OHaDvkSf4becqQ/tKD2vJH5
- sA=;
+ List-Help; bh=AE0LEDo25VaZjHCaGcRulwuPv5MPC0rWK8D5yEfw+98=; b=ut6l2W5VezBF81B
+ 4rfh7SFzSddTcl/cUif2bhid5h6K0r8uJbJZfrgmcSbbAAGxovyx9zFDDTtfdy0QTB84UH72AxBax
+ AZuRokiYc7VgCy41WP1JUMbaonq1oFG28RiWscz70pR+ZUh0hcFwaPhf2IKpa9F3+Y6FWqc43Zp6H
+ DI=;
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org,
- alistair.francis@wdc.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v7 05/27] target/riscv: Fix size of badaddr and bins
-Date: Wed, 20 May 2026 14:53:43 +0200
-Message-ID: <20260520125406.28693-6-anjo@rev.ng>
+ alistair.francis@wdc.com, Anton Johansson <anjo@rev.ng>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v7 27/27] target/riscv: Fix pmp.h/cpu.h circular inclusion
+Date: Wed, 20 May 2026 14:54:05 +0200
+Message-ID: <20260520125406.28693-28-anjo@rev.ng>
 In-Reply-To: <20260520125406.28693-1-anjo@rev.ng>
 References: <20260520125406.28693-1-anjo@rev.ng>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
@@ -63,85 +65,97 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix these fields to 64 bits as they cannot be made smaller. Also make
-sure stores to these fields from TCG are 64 bits in size to avoid
-incorrect values on big endian hosts.
+pmp.h is only needed and included for system mode, however relevant
+macros (MAX_RISCV_PMPS, OLD_MAX_RISCV_PMPS, MIN_RISCV_PMP_GRANULARITY)
+are required unconditionally by cpu.c, and so are defined in cpu.h.
+pmp.h then defines pmp_table_t depending on these macros and so requires
+cpu.h, and cpu.h in turn uses pmp_table_t resulting in circular
+inclusion.
+
+Move PMP macros to pmp.h and only expose PMP properties in system mode.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h                             | 4 ++--
- target/riscv/machine.c                         | 2 +-
- target/riscv/translate.c                       | 6 ++++--
- target/riscv/insn_trans/trans_privileged.c.inc | 2 +-
- 4 files changed, 8 insertions(+), 6 deletions(-)
+ target/riscv/cpu.h | 4 ----
+ target/riscv/pmp.h | 4 +++-
+ target/riscv/cpu.c | 6 ++++++
+ 3 files changed, 9 insertions(+), 5 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 76c19902c6..3c7d4acff2 100644
+index de400437be..fb44f0485d 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -234,8 +234,8 @@ struct CPUArchState {
-     uint8_t frm;
-     float_status fp_status;
+@@ -180,10 +180,6 @@ extern RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[];
  
--    target_ulong badaddr;
--    target_ulong bins;
-+    uint64_t badaddr;
-+    uint64_t bins;
+ #define MMU_USER_IDX 3
  
-     target_ulong guest_phys_fault_addr;
+-#define MAX_RISCV_PMPS (64)
+-#define OLD_MAX_RISCV_PMPS (16)
+-#define MIN_RISCV_PMP_GRANULARITY 4
+-
+ #if !defined(CONFIG_USER_ONLY)
+ #include "pmp.h"
+ #endif
+diff --git a/target/riscv/pmp.h b/target/riscv/pmp.h
+index eae305ac6f..4c95c2767a 100644
+--- a/target/riscv/pmp.h
++++ b/target/riscv/pmp.h
+@@ -22,7 +22,9 @@
+ #ifndef RISCV_PMP_H
+ #define RISCV_PMP_H
  
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 07995fb303..b047321073 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -437,7 +437,7 @@ const VMStateDescription vmstate_riscv_cpu = {
-         VMSTATE_UINT64(env.load_res, RISCVCPU),
-         VMSTATE_UINT64(env.load_val, RISCVCPU),
-         VMSTATE_UINT8(env.frm, RISCVCPU),
--        VMSTATE_UINTTL(env.badaddr, RISCVCPU),
-+        VMSTATE_UINT64(env.badaddr, RISCVCPU),
-         VMSTATE_UINTTL(env.guest_phys_fault_addr, RISCVCPU),
-         VMSTATE_UINTTL(env.priv_ver, RISCVCPU),
-         VMSTATE_UINTTL(env.vext_ver, RISCVCPU),
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index 7c23996271..1ea7faea4c 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -273,7 +273,7 @@ static void generate_exception(DisasContext *ctx, RISCVException excp)
+-#include "cpu.h"
++#define MAX_RISCV_PMPS (64)
++#define OLD_MAX_RISCV_PMPS (16)
++#define MIN_RISCV_PMP_GRANULARITY 4
  
- static void gen_exception_illegal(DisasContext *ctx)
+ typedef enum {
+     PMP_READ  = 1 << 0,
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 753f92307f..36f9570f2d 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1127,7 +1127,9 @@ static void riscv_cpu_init(Object *obj)
+     cpu->cfg.cbop_blocksize = 64;
+     cpu->cfg.cboz_blocksize = 64;
+     cpu->cfg.pmp_regions = 16;
++#ifndef CONFIG_USER_ONLY
+     cpu->cfg.pmp_granularity = MIN_RISCV_PMP_GRANULARITY;
++#endif
+     cpu->env.vext_ver = VEXT_VERSION_1_00_0;
+     cpu->cfg.max_satp_mode = -1;
+ 
+@@ -1550,6 +1552,7 @@ static const PropertyInfo prop_mmu = {
+     .set = prop_mmu_set,
+ };
+ 
++#ifndef CONFIG_USER_ONLY
+ static void prop_pmp_set(Object *obj, Visitor *v, const char *name,
+                          void *opaque, Error **errp)
  {
--    tcg_gen_st_i32(tcg_constant_i32(ctx->opcode), tcg_env,
-+    tcg_gen_st_i64(tcg_constant_i64(ctx->opcode), tcg_env,
-                    offsetof(CPURISCVState, bins));
-     if (ctx->virt_inst_excp) {
-         generate_exception(ctx, RISCV_EXCP_VIRT_INSTRUCTION_FAULT);
-@@ -284,7 +284,9 @@ static void gen_exception_illegal(DisasContext *ctx)
+@@ -1658,6 +1661,7 @@ static const PropertyInfo prop_pmp_granularity = {
+     .get = prop_pmp_granularity_get,
+     .set = prop_pmp_granularity_set,
+ };
++#endif /* !CONFIG_USER_ONLY */
  
- static void gen_exception_inst_addr_mis(DisasContext *ctx, TCGv target)
+ static int priv_spec_from_str(const char *priv_spec_str)
  {
--    tcg_gen_st_tl(target, tcg_env, offsetof(CPURISCVState, badaddr));
-+    TCGv_i64 ext = tcg_temp_new_i64();
-+    tcg_gen_extu_tl_i64(ext, target);
-+    tcg_gen_st_i64(ext, tcg_env, offsetof(CPURISCVState, badaddr));
-     generate_exception(ctx, RISCV_EXCP_INST_ADDR_MIS);
- }
+@@ -2666,9 +2670,11 @@ static const Property riscv_cpu_properties[] = {
+     {.name = "pmu-num", .info = &prop_pmu_num}, /* Deprecated */
  
-diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/insn_trans/trans_privileged.c.inc
-index 8a62b4cfcd..a8eaccef67 100644
---- a/target/riscv/insn_trans/trans_privileged.c.inc
-+++ b/target/riscv/insn_trans/trans_privileged.c.inc
-@@ -68,7 +68,7 @@ static bool trans_ebreak(DisasContext *ctx, arg_ebreak *a)
-     if (pre == 0x01f01013 && ebreak == 0x00100073 && post == 0x40705013) {
-         generate_exception(ctx, RISCV_EXCP_SEMIHOST);
-     } else {
--        tcg_gen_st_tl(tcg_constant_tl(ebreak_addr), tcg_env,
-+        tcg_gen_st_i64(tcg_constant_i64(ebreak_addr), tcg_env,
-                       offsetof(CPURISCVState, badaddr));
-         generate_exception(ctx, RISCV_EXCP_BREAKPOINT);
-     }
+     {.name = "mmu", .info = &prop_mmu},
++#ifndef CONFIG_USER_ONLY
+     {.name = "pmp", .info = &prop_pmp},
+     {.name = "num-pmp-regions", .info = &prop_num_pmp_regions},
+     {.name = "pmp-granularity", .info = &prop_pmp_granularity},
++#endif
+ 
+     {.name = "priv_spec", .info = &prop_priv_spec},
+     {.name = "vext_spec", .info = &prop_vext_spec},
 -- 
 2.52.0
 
