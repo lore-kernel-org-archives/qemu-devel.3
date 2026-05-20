@@ -4,101 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55E29CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 19:44:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03DE5CD5BA4
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 19:52:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPmqD-0003Lx-QV; Wed, 20 May 2026 15:44:29 -0400
+	id 1wPmxp-0005If-4Q; Wed, 20 May 2026 15:52:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPmqC-0003Lh-0V
- for qemu-devel@nongnu.org; Wed, 20 May 2026 15:44:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPmqA-0000Bo-DN
- for qemu-devel@nongnu.org; Wed, 20 May 2026 15:44:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779306265;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7miFgHTUf5OvqQSkSaWKeAxOARukKuS7yacpLVTvuLg=;
- b=SeudB/v82KaajaHtwxzfnp38Zi3NHUGtKWN+Xn0SDLaQTsNeNVdq+XMhLIrDrI1z6eWm8O
- tGO5SS2xARG2ZjU9cxBoMCBpATVq+LPZeZPYc5jrUJpXZso+FZjr692ONVD5yz/w92shQx
- l9oeXpJF1CEqEJrnRExc0uYWh1VbO2Y=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-194-Jjg2WT6FNCu0i6FaUQi_xA-1; Wed, 20 May 2026 15:44:23 -0400
-X-MC-Unique: Jjg2WT6FNCu0i6FaUQi_xA-1
-X-Mimecast-MFC-AGG-ID: Jjg2WT6FNCu0i6FaUQi_xA_1779306263
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-8ca1e4eeadaso149680126d6.0
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 12:44:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmxf-0005H0-Cc
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 15:52:12 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmxd-0002mG-NX
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 15:52:11 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-44a74032ff8so3861654f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 12:52:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779306263; x=1779911063; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=7miFgHTUf5OvqQSkSaWKeAxOARukKuS7yacpLVTvuLg=;
- b=EQiy1YmKVdetfQXnwSGZ7/31z5OkiaOEs9lA5Ea2gBqKUb+CsIW1LflGKbzOtKgRlW
- 6m+3NGb7x71J9i7S76sLXVIsneWK1RnsnX36014g0yskvXyLB6E2yfQBP88nuf9IZv9t
- b3e1mti9CNp+TlpGADnOB4gBXzJdR69w1MGJH65N4LRIkopFaehSPKNO6tdqiKvQEWTo
- N4JQzdVfg7DDWbO8JtaCYa7P8Y4D3qXcbhEBIAWZTGyevO9kLspNRxzwh+bepD9OpWcR
- 85TexlwlZbYfdB8vuSawAcDQix4zNvSz++lMBzFNFWb0sUR1fk4Dpm8V79vLAR5mCKsI
- Nxmg==
+ d=linaro.org; s=google; t=1779306728; x=1779911528; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=qa8InOu7Uw3spJrO1u5kMJVu42BjwKBtAX0lC00blUs=;
+ b=a5JQFZJ9wl8yJyoDAdvYMVH5E49NVqQqqoxkXp50SXZQQI1esECd2RqEvNqWjFNKz+
+ UlYzgZH/2tRqDL29zAMvWhVP3otUprrP/NyJSKDg1sFoVIcAJPv7f8kyAg9R+wfdQMrX
+ btErlfkFGhBPCK9rTX5cDY2BMXxTi+Km3Tj56YrPLdopkCYJF4VhiFTgKiJBS334o6Ed
+ quJ6ytsp2coyaOzKhKw7jpmU8Y3UCxLEb/MvEu500k8H20i+KCVcWmDqfmxztkrMW+aB
+ g7GNUuKQpyZ++DK3OoBQf6+8tccIBzOhdCVLd0rHA/AYzjoS+YVgs6BYev3xrZ7PEHN8
+ t6Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779306263; x=1779911063;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7miFgHTUf5OvqQSkSaWKeAxOARukKuS7yacpLVTvuLg=;
- b=ZZsDb4RXaYjbioRaMkAMqAeCUv7wGsjqtnXaYup4k4I/TmV/bgyUqWvvg3geU9zuP/
- 08sQ9D3QqIhCgm/3AqyDY0RJ9wqLYRwbJNVdw8aHyGQnUoNhCfzJMOFREykzEz9mBXxo
- xLszTTOHIJFeoGnNukRhbC9KlE1l9Y53n4rySnmqVME926CGf0YS7bVsLp20NdH3bVGN
- B/6aqPf7umUIbkVlbBGF2tACs8+gx6wGVQ/MYa4KrzvFvJrQReTJVI6aOROrcNXpjT6B
- R6oWjn0e319gXevGuL5qT05C+TfPh9gNRUECzq+W/M/hKE/493g2vBqii7aNIobrfKKD
- kQKA==
-X-Gm-Message-State: AOJu0Yx/nSyIK1m5OWCZH6Qc3JI4nYQWnRrgCVQGeAdzWM4X6WOgitBb
- SbdKLwGf1k36QBPL326mJ94EfK5XMJV4R25NdtL4rJDzXQQPZWrcaS4WQq9UMkmyo+mGDb62Ln/
- QERqJtUQqxrL5M6DsZ5SDe1bMGisguTLzdi6hbnzcDUu1VDrBj2O7fL5q
-X-Gm-Gg: Acq92OGVeaAbAmEPCej6ZunJDWsNr8LVs1ss7IIgnaTt9A14A6cWvPyRQpM3VhZ4G0g
- 4ttvDT95Lg0DFS2re0X/bVK4HsT7KncCAWkYZ8TvY/teHecX/SYJ6r0cNkkiFodGuGIIYg7N7bt
- 9TPfgJVU/RCe9qTmVvckGbi3rjRLzz+aoSKvNMQTCbpZRsFPmr5Yeg/vJF9jqSVZ1/GgoAgpIlQ
- HsdIHV3x1KpT1JjgNp/NlpDwrjJjX0++E4MtC2gtIXVJ7+djfpmc/pEKJf85uW6hvQ2Zya8eSzt
- wfGraK2bzA52UKCXNpD1PGdMSNoeulGS+5Ugk0XoAD+gBDlp6VCtzkSADHmwy6QvoRCyle1WZPg
- 2ayaRqzNS/b/VwKaGBUMkm4ZaqXXuYzxMrdaof5sT71TmO8w=
-X-Received: by 2002:a0c:c243:0:b0:89c:df61:7a06 with SMTP id
- 6a1803df08f44-8ca0f7063b8mr312464246d6.48.1779306263099; 
- Wed, 20 May 2026 12:44:23 -0700 (PDT)
-X-Received: by 2002:a0c:c243:0:b0:89c:df61:7a06 with SMTP id
- 6a1803df08f44-8ca0f7063b8mr312463846d6.48.1779306262547; 
- Wed, 20 May 2026 12:44:22 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8ca361a7284sm137462386d6.40.2026.05.20.12.44.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 12:44:22 -0700 (PDT)
-Date: Wed, 20 May 2026 15:44:20 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Aadeshveer Singh <aadeshveer07@gmail.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de
-Subject: Re: [PATCH] migration: use eventfd functions instead of bare
- read/write
-Message-ID: <ag4PFEdJ9yIhtB_E@x1.local>
-References: <20260514075136.301706-2-aadeshveer07@gmail.com>
+ d=1e100.net; s=20251104; t=1779306728; x=1779911528;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qa8InOu7Uw3spJrO1u5kMJVu42BjwKBtAX0lC00blUs=;
+ b=KpvMDEIRK51812UH4XwquRLOKwRrGRnjfhR+gjxhhSylKT21r3PQadSQ6qSg25xYs8
+ JxcHt+XUehmuUInAOVn7fvryMFjF+YYjF9tCdoqxj3If6luRhtzy5dV69+1HQZYh/sX3
+ PS89k2xlz9f2mA55aTlf9jbRtTNKIKd5aDSfq459sega7CMExsDWYoArfFhjAU5zXLOF
+ yBelYFYM9U7NvJuNpBxpCpW+zdAFFzJt3akONKp5mv83AN7kMdVWhCr1Tzwxw3LDP8Z2
+ ZmIN77zczblABPWBSMNZV/993FDIedtjLYlvRHPgC4GbaTleU1VT0w9m5ePb2kRll8sp
+ BXYg==
+X-Gm-Message-State: AOJu0YwIUIaYMlGEM9GUGJd922UUORkKAWo4UWxGNOWRznQLy8+KI6YV
+ TBFIwaxNhDqSdASScbolMMR0s2khq2Dj4jyCW7Yl5XLfo6CSQUR/wOqEXBufraELCVDJyAizKMa
+ 2vrqz4Bg=
+X-Gm-Gg: Acq92OE6OOvyhdEjN69/Yu8LExsj8W8YYKM6+SziLbFaM4nZWZAdpBTRDGcxPL6oPVM
+ Li/8t+UaaaabL4NAcBGXTxHvBdae0G/YVK2ivyZQy0BpB+T8fzwocDu2teZ2W+Kk5BWOi7Qs5l+
+ D0Ci2ApygO6t6Mvc15aT9a3gsjpUQcCm5kFv0JLwuXeN/vdRDaKdJKyns79Z94fCjlDzdgE/mpN
+ BixJsxqKkDZBRsxdk+M8XbWktPJOcTL4iAfCPR8aIMCLGg5YRqEKXh5hRawb7NrH0/hiS8oZONn
+ JCt7suiJ4wtY993Z+ZFlmTdAu0aedKHYq1wZddvufEeR8hoBR8s5SufjQhBSK3WKO6/fL2flP/V
+ XDFCJyvkroUkBgtTIHmI1IUnpcdjoKxtCrpLAKnBr9W0pWWsa6JmfLku4FSk6DZsoYT/htwpSmK
+ NnSYQm1rUjJ81633eIzv4bJiNvjr7c0mS7jA0KZGI+b+cXE9oNbceYPf7DiTJXdkr8hYqXXnuz
+X-Received: by 2002:a5d:5f90:0:b0:43d:1dfe:350a with SMTP id
+ ffacd0b85a97d-45e5c5bf20cmr42125831f8f.22.1779306727980; 
+ Wed, 20 May 2026 12:52:07 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45da0a19b1dsm56007786f8f.17.2026.05.20.12.52.06
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 20 May 2026 12:52:07 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH] mailmap: Remove PhilMD redirect entries
+Date: Wed, 20 May 2026 21:52:05 +0200
+Message-ID: <20260520195206.40679-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260514075136.301706-2-aadeshveer07@gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_FILL_THIS_FORM_SHORT=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,70 +98,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 14, 2026 at 01:21:37PM +0530, Aadeshveer Singh wrote:
-> Replace read() and write() syscalls on eventfd with glibc wrappers
-> eventfd_read() and eventfd_write(), to make code more robust, readable
-> and future-proof.
-> 
-> Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
-> ---
->  migration/postcopy-ram.c | 10 ++++------
->  1 file changed, 4 insertions(+), 6 deletions(-)
-> 
-> diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-> index f5ef93f193..16113b166d 100644
-> --- a/migration/postcopy-ram.c
-> +++ b/migration/postcopy-ram.c
-> @@ -1330,12 +1330,12 @@ static void *postcopy_ram_fault_thread(void *opaque)
->          }
->  
->          if (pfd[1].revents) {
-> -            uint64_t tmp64 = 0;
-> +            eventfd_t tmp_event = 0;
->  
->              /* Consume the signal */
-> -            if (read(mis->userfault_event_fd, &tmp64, 8) != 8) {
-> +            if (eventfd_read(mis->userfault_event_fd, &tmp_event)) {
->                  /* Nothing obviously nicer than posting this error. */
-> -                error_report("%s: read() failed", __func__);
-> +                error_report("%s: eventfd_read() failed", __func__);
->              }
->  
->              if (qatomic_read(&mis->fault_thread_quit)) {
-> @@ -1773,13 +1773,11 @@ void postcopy_temp_page_reset(PostcopyTmpPage *tmp_page)
->  
->  void postcopy_fault_thread_notify(MigrationIncomingState *mis)
->  {
-> -    uint64_t tmp64 = 1;
-> -
->      /*
->       * Wakeup the fault_thread.  It's an eventfd that should currently
->       * be at 0, we're going to increment it to 1
->       */
-> -    if (write(mis->userfault_event_fd, &tmp64, 8) != 8) {
-> +    if (eventfd_write(mis->userfault_event_fd, 1)) {
->          /* Not much we can do here, but may as well report it */
->          error_report("%s: incrementing failed: %s", __func__,
->                       strerror(errno));
-> -- 
-> 2.54.0
-> 
+Our ./scripts/get_maintainer.pl uses git .mailmap as a fallback:
 
-Unfortunately this will break win builds.  It's because these functions are
-compiled even for windows, and windows doesn't have eventfd.
+  $ ./scripts/get_maintainer.pl -h
+  usage: ./scripts/get_maintainer.pl [options] patchfile
+         ./scripts/get_maintainer.pl [options] -f file|directory
 
-Ideally we shouldn't compile postcopy code in windows at all.  So it's not
-really this patch's problem.  But fixing that would either need temporary
-CONFIG_LINUX check here just to use the glibc API or a larger refactor to
-opt-out compilation of postcopy.
+    --git-fallback => use git when no exact MAINTAINERS pattern (default: 1)
+    --git-since => git history to use (default: 1-year-ago)
+    --mailmap => use .mailmap file (default: 1)
+    ...
 
-I'll drop this patch for now.  Aadeshveer, if you want you can try to have
-a look later on how to not compile postcopy code for windows.  For now, I
-suggest you stick with the gsoc project.
+  Default options:
+    [--email --nogit --git-fallback --m --r --n --l --multiline
+     --pattern-depth=0 --remove-duplicates --rolestats]
 
-Thanks,
+(see the '--git-fallback' used as default option).
 
+Per gitmailmap(5) man page:
+
+  ... the file .mailmap [...] is used to map author and
+  committer names and email addresses to canonical real
+  names and email addresses.
+
+I added my entries in the "replace old addresses by a more recent
+one" section for this script use case, but we have been doing a
+good cleanup at having all files covered in MAINTAINERS, so with
+retrospective these entries aren't needed anymore (besides, using
+them retroactively credits all my contributions to the latest
+employer).
+
+Simply remove my mappings of that "old -> recent" section.
+
+Reported-by: Markus Armbruster <armbru@redhat.com>
+Suggested-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ .mailmap | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/.mailmap b/.mailmap
+index ce569d83f4a..82ff20b8ddb 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -104,9 +104,6 @@ Paul Burton <paulburton@kernel.org> <paul.burton@mips.com>
+ Paul Burton <paulburton@kernel.org> <paul.burton@imgtec.com>
+ Paul Burton <paulburton@kernel.org> <paul@archlinuxmips.org>
+ Paul Burton <paulburton@kernel.org> <pburton@wavecomp.com>
+-Philippe Mathieu-Daudé <philmd@linaro.org> <f4bug@amsat.org>
+-Philippe Mathieu-Daudé <philmd@linaro.org> <philmd@redhat.com>
+-Philippe Mathieu-Daudé <philmd@linaro.org> <philmd@fungible.com>
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> <pierrick.bouvier@linaro.org>
+ Roman Bolshakov <rbolshakov@ddn.com> <r.bolshakov@yadro.com>
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com> <sriram.yagnaraman@est.tech>
 -- 
-Peter Xu
+2.53.0
 
 
