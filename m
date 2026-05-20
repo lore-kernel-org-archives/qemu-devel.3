@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B17C3CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 16:11:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD5E3CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 16:11:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPjU6-0001SJ-TR; Wed, 20 May 2026 12:09:27 -0400
+	id 1wPjVI-0006i5-2b; Wed, 20 May 2026 12:10:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wPjTf-0000Pt-Fl; Wed, 20 May 2026 12:09:03 -0400
+ id 1wPjVF-0006dT-8F; Wed, 20 May 2026 12:10:37 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wPjTX-0002k1-Af; Wed, 20 May 2026 12:08:55 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1wPjVC-0003Qk-Mc; Wed, 20 May 2026 12:10:36 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64K859bV2166376; Wed, 20 May 2026 16:08:48 GMT
+ 64KBgYib3935189; Wed, 20 May 2026 16:10:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=fQRqzWfQu0MuWyVCj
- uoQtVymyiJIMZ2VEAgetY75isM=; b=Lh7vsqbWL+LkmuOlWU/iCclRAmsaCGg0F
- p1q+sqPy1avl8m+h7DkpYH3URUh/TMneJ9ttNM7zw1jVxUBgBevjJcAp/DQJb6nw
- /4xC44dqOq/lpAE3RrK3n0cdmk0y3LxRRbBuggmweNU4ytGR1QC5xwsi1RwnWSbO
- TfkR+0+sUfHXp5EPIpraObeGHESDI7YLOqo+5onEsc+Xq3fJwW3uHJix3jw7nut4
- itviYyTIvphIpmdM9waudvM9upotfgWcXwDcfAfqv4kJYbokHhJ5Vj9A6R4rH5QR
- wVRpkuZ3QWSeJ8N+rnFzAs56FVoMox4BC3bxUadHqZKwaGTFOu5kA==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6h752wxb-1
+ :mime-version:references:subject:to; s=pp1; bh=q4caVHg7aIV4db6NR
+ v60MshPPR0ucxZ1ZzzA1gHlx/c=; b=UvcaaDsomIiH9AcI9gf2t6EA7dUA1OLCs
+ I1BcOCIjrgrkIqj4XhcypwiTCg2IZYC3pViV2rJ2oxSGvNk8o8HW2Kpoz094As21
+ nIAkDMupewfW0tTgIX0/gYO8p7GQNn6uJbZArEqm0KBK0J1kYBvsDljoqJyJ8zkm
+ +SczRKss64o9ppXhufRKc+9b4iLKgUusHcNGlggBojaB5gP17l93AleH1hyC1mTU
+ nFZI9lbsdCqDZvdAwGtA+yMk6AuAjh4B57CwMP5NEpsenTRp0WDTDb+rXaUGtTQc
+ /S39B3UZRWv5MaaW2p73AhcjiMsiRuFoisYZOJKIsQLNcykDKJcug==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6h9y30ha-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 May 2026 16:08:47 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64KFs48N015333;
- Wed, 20 May 2026 16:08:46 GMT
+ Wed, 20 May 2026 16:10:31 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64KG96To025888;
+ Wed, 20 May 2026 16:10:30 GMT
 Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e73wk83h2-1
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e75ky7ty8-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 May 2026 16:08:46 +0000 (GMT)
+ Wed, 20 May 2026 16:10:30 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
  [10.20.54.100])
  by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64KG8gOD53936462
+ 64KGAR0046465316
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 20 May 2026 16:08:42 GMT
+ Wed, 20 May 2026 16:10:27 GMT
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3970120043;
- Wed, 20 May 2026 16:08:42 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 42B5B2004B;
+ Wed, 20 May 2026 16:10:27 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A723020040;
- Wed, 20 May 2026 16:08:36 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0C15720040;
+ Wed, 20 May 2026 16:10:20 +0000 (GMT)
 Received: from li-18a0a34c-33fc-11b2-a85c-d9f1631c5692.ibm.com (unknown
  [9.39.31.153]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 20 May 2026 16:08:36 +0000 (GMT)
+ Wed, 20 May 2026 16:10:19 +0000 (GMT)
 From: Chinmay Rath <rathc@linux.ibm.com>
 To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
  harshpb@linux.ibm.com, richard.henderson@linaro.org,
@@ -66,9 +66,10 @@ Cc: milesg@linux.ibm.com, vishalc@linux.ibm.com, tshah@linux.ibm.com,
  amachhiw@linux.ibm.com, sv@linux.ibm.com, shivani@linux.ibm.com,
  mkchauras@gmail.com, uverma@linux.ibm.com, nikhilks@linux.ibm.com,
  Chinmay Rath <rathc@linux.ibm.com>
-Subject: [RFC PATCH 09/28] target/ppc : Convert mcrf to decode tree
-Date: Wed, 20 May 2026 21:37:09 +0530
-Message-ID: <20260520160728.2283628-10-rathc@linux.ibm.com>
+Subject: [RFC PATCH 26/28] target/ppc: Move mfmsr,
+ mtmsr[d] instructions to decodetree
+Date: Wed, 20 May 2026 21:37:26 +0530
+Message-ID: <20260520160728.2283628-27-rathc@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520160728.2283628-1-rathc@linux.ibm.com>
 References: <20260520160728.2283628-1-rathc@linux.ibm.com>
@@ -76,26 +77,26 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=ffCdDUQF c=1 sm=1 tr=0 ts=6a0ddc8f cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDE1NiBTYWx0ZWRfX571ISNfyY/ov
+ tiS6HVuev4QJXQc8ftm/EY1EhsIqlFIUJ4foQ6JwYWSnf+mBoKP/zSzPB28HFtW1HkqOcswUYOc
+ vkxs+WgIuX/HtZuXr2xuwjnrPKV3oa4mkvshRKGadEbm6gt/s4rDaw0ZdsiSnY9x1XcTc3yMNuc
+ ysNq12UdziSCDzXWgma7jcj01UaAkLA2RZ1rYYNU4TXT07MiEjbJcTYQLy/W2/V2OIYH6VXBlk2
+ OKbIfd7o2Pj+ceGlm7iM8Pu/Tj+LCmZLC7GSLWud1gR7ymvcT3jwR4uo+mAzjdceqXbE46ns9cY
+ pJodyTuLlJjSRNPRh6ZBYbVV9IEF4NpFy4gLMyNPeFQJDx+VWmHa7/vZQgqB2+E9dcVnwXEpoTs
+ 20DY5DFWdT9bkrA/QjQAFjYTG2ENw0iLMjQxo7oQEVLL4/041AKYmdyG2XrMrLVw46YqnwuSM3F
+ l11kqbobj7Rx7lg/ZiA==
+X-Authority-Analysis: v=2.4 cv=BNuDalQG c=1 sm=1 tr=0 ts=6a0ddcf8 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=vy6McjWATDkKsZsaVXEA:9
-X-Proofpoint-ORIG-GUID: 2NG37qJ6cNz5h5qo6gVz0fvg6VUg-vlN
-X-Proofpoint-GUID: 0Q92y532vGHmphFFp_v0vWvHPN2nuzXj
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDE1NiBTYWx0ZWRfX9usWDX2U3t89
- VsMaSqFEBxvctDpcZG2WlU0JEcJY5NdOS0AGIU2DNZKFkg5a3Rcopss/EKIpiYKVf2NoynFvDFG
- 8KNLWJ0l+MD7f/xlKMC2m7AAZtUruK1HbtuwAAXQhJ4aVV0C1yPh7cnIKZjz/g806gInT42Oq92
- VV6siuXbDAQIAswEfNDPV8FUG86B6NrEtfknp+Bcobhaz4W9ZgUWKTO38Z6+akgvlFhJkY/678p
- ggLXvGGYNNagx7+sl7JUCrgxTUJGkddJW/r7lx3yqAuix2roqRw0z/fSIETOGqUqo9OQH/TMFkZ
- //3xEwHsXpRhxoy8sZVe12zAsa+9kSK7SB/s7seEULMXGRQBUC2jjF/nXVcvI4yqxEE91jucRs3
- 1Umao3w9IPkuHYSkMnIiVrHPwEjyz8lI8u1uoTkafEfwOfbvlqnP74lDGqQ1fggAA7F6W7ayVkl
- X5Jmcp2oasFwl63uPRg==
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=fRY7pOLSFYBF0tKEtWUA:9
+X-Proofpoint-ORIG-GUID: ZTKjzRRSpZ0HS8tAXKEKHX1E92Pj9v03
+X-Proofpoint-GUID: YDmJaJ9wjUpWDTAVm8k0N-D8rAR9Em7t
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-20_03,2026-05-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 phishscore=0 suspectscore=0 adultscore=0
- clxscore=1015 impostorscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
+ adultscore=0 priorityscore=1501 malwarescore=0 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605200156
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
@@ -122,76 +123,244 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shivani Nittor <shivani@linux.ibm.com>
+From: Vishal Chourasia <vishalc@linux.ibm.com>
 
-Convert mcrf to decode tree specification.The functionality
-was tested by comparing the qemu -D log -d op,in_asm output
-as well as single stepping gdb.
+Moving the following instructions to decodetree specification:
+            mfmsr                           : X-form
+            mtmsr[d]                        : X-form
 
-Signed-off-by: Shivani Nittor <shivani@linux.ibm.com>
+The changes were verified by validating that the tcg ops generated by
+those instructions remain the same, which were captured with the
+`-d in_asm,op` flag.
+
+This also includes improvements from review feedback:
+- Gate MFMSR/MTMSR on PPC_MISC via TRANS_FLAGS()
+- Use UINT32_MAX instead of 0xFFFFFFFF for clarity
+
+Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
 Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 ---
- target/ppc/insn32.decode             | 6 ++++++
- target/ppc/translate.c               | 7 -------
- target/ppc/translate/misc-impl.c.inc | 6 ++++++
- 3 files changed, 12 insertions(+), 7 deletions(-)
+ target/ppc/insn32.decode             |  5 ++
+ target/ppc/translate.c               | 97 ----------------------------
+ target/ppc/translate/misc-impl.c.inc | 64 ++++++++++++++++++
+ 3 files changed, 69 insertions(+), 97 deletions(-)
 
 diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index dd80a25472..db6e9418f3 100644
+index 15f4a57fa0..c5e24968e4 100644
 --- a/target/ppc/insn32.decode
 +++ b/target/ppc/insn32.decode
-@@ -1445,6 +1445,12 @@ MSGSYNC         011111 ----- ----- ----- 1101110110 -
- SYNC            011111 -- ... --- ..   ----- 1001010110 -           @X_sync
- EIEIO           011111 ----- ----- ----- 1101010110 -
+@@ -315,6 +315,11 @@
+ &M              ra rs sh mb me rc:bool
+ @M              ...... rs:5 ra:5 sh:5 mb:5 me:5 rc:1 &M
  
-+# Condition Register Field Instruction
++### MSR
++MFMSR           011111 ..... ----- ----- 0001010011 -   @X_t
++MTMSR           011111 ..... ---- . ----- 0010010010 -  @X_rs_l
++MTMSRD          011111 ..... ---- . ----- 0010110010 -  @X_rs_l
 +
-+&XL_bfa         bf bfa
-+@XL_bfa         ...... bf:3 .. bfa:3 .. ..... ..... ..... .
-+MCRF            010011 ... -- ... -- ----- 00000 00000 -       @XL_bfa
-+
- # Branch History Rolling Buffer (BHRB) Instructions
+ ### Fixed-Point Load Instructions
  
- &XFX_bhrbe      rt bhrbe
+ LBZ             100010 ..... ..... ................     @D
 diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index c9d04b4a3c..5be508fcb1 100644
+index bd22b7032d..bb7d704a6b 100644
 --- a/target/ppc/translate.c
 +++ b/target/ppc/translate.c
-@@ -3642,12 +3642,6 @@ GEN_CRLOGIC(crorc, tcg_gen_orc_i32, 0x0D);
- /* crxor */
- GEN_CRLOGIC(crxor, tcg_gen_xor_i32, 0x06);
+@@ -2845,13 +2845,6 @@ static void gen_mcrxrx(DisasContext *ctx)
+ }
+ #endif
  
--/* mcrf */
--static void gen_mcrf(DisasContext *ctx)
+-/* mfmsr */
+-static void gen_mfmsr(DisasContext *ctx)
 -{
--    tcg_gen_mov_i32(cpu_crf[crfD(ctx->opcode)], cpu_crf[crfS(ctx->opcode)]);
+-    CHK_SV(ctx);
+-    tcg_gen_mov_tl(cpu_gpr[rD(ctx->opcode)], cpu_msr);
 -}
 -
- /***                           System linkage                              ***/
+ /* mfspr */
+ static inline void gen_op_mfspr(DisasContext *ctx)
+ {
+@@ -2925,93 +2918,6 @@ static void gen_mftb(DisasContext *ctx)
+     gen_op_mfspr(ctx);
+ }
  
- /* rfi (supervisor only) */
-@@ -5746,7 +5740,6 @@ GEN_HANDLER(bc, 0x10, 0xFF, 0xFF, 0x00000000, PPC_FLOW),
- GEN_HANDLER(bcctr, 0x13, 0x10, 0x10, 0x00000000, PPC_FLOW),
- GEN_HANDLER(bclr, 0x13, 0x10, 0x00, 0x00000000, PPC_FLOW),
- GEN_HANDLER_E(bctar, 0x13, 0x10, 0x11, 0x0000E000, PPC_NONE, PPC2_BCTAR_ISA207),
--GEN_HANDLER(mcrf, 0x13, 0x00, 0xFF, 0x00000001, PPC_INTEGER),
- GEN_HANDLER(rfi, 0x13, 0x12, 0x01, 0x03FF8001, PPC_FLOW),
+-/* mtmsr */
+-#if defined(TARGET_PPC64)
+-static void gen_mtmsrd(DisasContext *ctx)
+-{
+-    if (unlikely(!is_book3s_arch2x(ctx))) {
+-        gen_invalid(ctx);
+-        return;
+-    }
+-
+-    CHK_SV(ctx);
+-
+-#if !defined(CONFIG_USER_ONLY)
+-    TCGv t0, t1;
+-    target_ulong mask;
+-
+-    t0 = tcg_temp_new();
+-    t1 = tcg_temp_new();
+-
+-    translator_io_start(&ctx->base);
+-
+-    if (ctx->opcode & 0x00010000) {
+-        /* L=1 form only updates EE and RI */
+-        mask = (1ULL << MSR_RI) | (1ULL << MSR_EE);
+-    } else {
+-        /* mtmsrd does not alter HV, S, ME, or LE */
+-        mask = ~((1ULL << MSR_LE) | (1ULL << MSR_ME) | (1ULL << MSR_S) |
+-                 (1ULL << MSR_HV));
+-        /*
+-         * XXX: we need to update nip before the store if we enter
+-         *      power saving mode, we will exit the loop directly from
+-         *      ppc_store_msr
+-         */
+-        gen_update_nip(ctx, ctx->base.pc_next);
+-    }
+-
+-    tcg_gen_andi_tl(t0, cpu_gpr[rS(ctx->opcode)], mask);
+-    tcg_gen_andi_tl(t1, cpu_msr, ~mask);
+-    tcg_gen_or_tl(t0, t0, t1);
+-
+-    gen_helper_store_msr(tcg_env, t0);
+-
+-    /* Must stop the translation as machine state (may have) changed */
+-    ctx->base.is_jmp = DISAS_EXIT_UPDATE;
+-#endif /* !defined(CONFIG_USER_ONLY) */
+-}
+-#endif /* defined(TARGET_PPC64) */
+-
+-static void gen_mtmsr(DisasContext *ctx)
+-{
+-    CHK_SV(ctx);
+-
+-#if !defined(CONFIG_USER_ONLY)
+-    TCGv t0, t1;
+-    target_ulong mask = 0xFFFFFFFF;
+-
+-    t0 = tcg_temp_new();
+-    t1 = tcg_temp_new();
+-
+-    translator_io_start(&ctx->base);
+-    if (ctx->opcode & 0x00010000) {
+-        /* L=1 form only updates EE and RI */
+-        mask &= (1ULL << MSR_RI) | (1ULL << MSR_EE);
+-    } else {
+-        if (likely(!(ctx->insns_flags2 & PPC2_PPE42))) {
+-            /* mtmsr does not alter S, ME, or LE */
+-            mask &= ~((1ULL << MSR_LE) | (1ULL << MSR_ME) | (1ULL << MSR_S));
+-        }
+-
+-        /*
+-         * XXX: we need to update nip before the store if we enter
+-         *      power saving mode, we will exit the loop directly from
+-         *      ppc_store_msr
+-         */
+-        gen_update_nip(ctx, ctx->base.pc_next);
+-    }
+-
+-    tcg_gen_andi_tl(t0, cpu_gpr[rS(ctx->opcode)], mask);
+-    tcg_gen_andi_tl(t1, cpu_msr, ~mask);
+-    tcg_gen_or_tl(t0, t0, t1);
+-
+-    gen_helper_store_msr(tcg_env, t0);
+-
+-    /* Must stop the translation as machine state (may have) changed */
+-    ctx->base.is_jmp = DISAS_EXIT_UPDATE;
+-#endif
+-}
+-
+ /* mtspr */
+ static void gen_mtspr(DisasContext *ctx)
+ {
+@@ -4713,15 +4619,12 @@ GEN_HANDLER(hrfid, 0x13, 0x12, 0x08, 0x03FF8001, PPC_64H),
+ GEN_HANDLER(sc, 0x11, 0x11, 0xFF, 0x03FFF01D, PPC_FLOW),
+ GEN_HANDLER(sc, 0x11, 0x01, 0xFF, 0x03FFF01D, PPC_FLOW),
+ GEN_HANDLER(mcrxr, 0x1F, 0x00, 0x10, 0x007FF801, PPC_MISC),
+-GEN_HANDLER(mfmsr, 0x1F, 0x13, 0x02, 0x001FF801, PPC_MISC),
+ GEN_HANDLER(mfspr, 0x1F, 0x13, 0x0A, 0x00000001, PPC_MISC),
+ GEN_HANDLER(mftb, 0x1F, 0x13, 0x0B, 0x00000001, PPC_MFTB),
  #if defined(TARGET_PPC64)
- GEN_HANDLER(rfid, 0x13, 0x12, 0x00, 0x03FF8001, PPC_64B),
+-GEN_HANDLER(mtmsrd, 0x1F, 0x12, 0x05, 0x001EF801, PPC_64B),
+ GEN_HANDLER_E(setb, 0x1F, 0x00, 0x04, 0x0003F801, PPC_NONE, PPC2_ISA300),
+ GEN_HANDLER_E(mcrxrx, 0x1F, 0x00, 0x12, 0x007FF801, PPC_NONE, PPC2_ISA300),
+ #endif
+-GEN_HANDLER(mtmsr, 0x1F, 0x12, 0x04, 0x001EF801, PPC_MISC),
+ GEN_HANDLER(mtspr, 0x1F, 0x13, 0x0E, 0x00000000, PPC_MISC),
+ GEN_HANDLER(mfsr, 0x1F, 0x13, 0x12, 0x0010F801, PPC_SEGMENT),
+ GEN_HANDLER(mfsrin, 0x1F, 0x13, 0x14, 0x001F0001, PPC_SEGMENT),
 diff --git a/target/ppc/translate/misc-impl.c.inc b/target/ppc/translate/misc-impl.c.inc
-index cbf82b1ea0..890fbb209e 100644
+index 890fbb209e..54712f9b73 100644
 --- a/target/ppc/translate/misc-impl.c.inc
 +++ b/target/ppc/translate/misc-impl.c.inc
-@@ -155,3 +155,9 @@ static bool trans_ATTN(DisasContext *ctx, arg_ATTN *a)
-     return false;
- #endif
+@@ -161,3 +161,67 @@ static bool trans_MCRF(DisasContext *ctx, arg_MCRF *a)
+     tcg_gen_mov_i32(cpu_crf[a->bf], cpu_crf[a->bfa]);
+     return true;
  }
 +
-+static bool trans_MCRF(DisasContext *ctx, arg_MCRF *a)
++static bool do_mfmsr(DisasContext *ctx, arg_X_t *a)
 +{
-+    tcg_gen_mov_i32(cpu_crf[a->bf], cpu_crf[a->bfa]);
++    REQUIRE_SV(ctx);
++    tcg_gen_mov_tl(cpu_gpr[a->rt], cpu_msr);
 +    return true;
 +}
++TRANS_FLAGS(MISC, MFMSR, do_mfmsr)
++
++static bool do_mtmsr(DisasContext *ctx, arg_X_rs_l *a, bool is_mtmsrd)
++{
++    REQUIRE_SV(ctx);
++#if !defined(CONFIG_USER_ONLY)
++    TCGv t0, t1;
++    target_ulong mask;
++
++    if (is_mtmsrd) {
++        if (unlikely(!is_book3s_arch2x(ctx))) {
++            gen_invalid(ctx);
++            return true;
++        }
++        mask = ~(target_ulong)0;
++    } else {
++        mask = UINT32_MAX;
++    }
++
++    t0 = tcg_temp_new();
++    t1 = tcg_temp_new();
++    translator_io_start(&ctx->base);
++
++    if (a->l) {
++        /* L=1 form only updates EE and RI */
++        mask &= (1ULL << MSR_RI) | (1ULL << MSR_EE);
++    } else {
++        if (is_mtmsrd) {
++            /* mtmsrd does not alter HV, S, ME, or LE */
++            mask &= ~((1ULL << MSR_LE) | (1ULL << MSR_ME) |
++                      (1ULL << MSR_S)  | (1ULL << MSR_HV));
++        } else if (likely(!(ctx->insns_flags2 & PPC2_PPE42))) {
++            /* mtmsr does not alter S, ME, or LE */
++            mask &= ~((1ULL << MSR_LE) | (1ULL << MSR_ME) | (1ULL << MSR_S));
++        }
++        /*
++         * XXX: we need to update nip before the store if we enter
++         *      power saving mode, we will exit the loop directly from
++         *      ppc_store_msr
++         */
++        gen_update_nip(ctx, ctx->base.pc_next);
++    }
++
++    tcg_gen_andi_tl(t0, cpu_gpr[a->rs], mask);
++    tcg_gen_andi_tl(t1, cpu_msr, ~mask);
++    tcg_gen_or_tl(t0, t0, t1);
++
++    gen_helper_store_msr(tcg_env, t0);
++
++    /* Must stop the translation as machine state (may have) changed */
++    ctx->base.is_jmp = DISAS_EXIT_UPDATE;
++#endif /* !CONFIG_USER_ONLY */
++    return true;
++}
++
++TRANS_FLAGS(MISC, MTMSR, do_mtmsr, false)
++TRANS64(MTMSRD, do_mtmsr, true)
 -- 
 2.53.0
 
