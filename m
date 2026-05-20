@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA84DCD5BA4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B809ECD4F54
 	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 11:29:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPf6q-0003MG-Gp; Wed, 20 May 2026 07:29:10 -0400
+	id 1wPf6q-0003MH-GZ; Wed, 20 May 2026 07:29:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf5l-0002xi-Ch
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf5l-0002xh-CD
  for qemu-devel@nongnu.org; Wed, 20 May 2026 07:28:06 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf5e-0004OC-NF
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf5e-0004OE-Nh
  for qemu-devel@nongnu.org; Wed, 20 May 2026 07:27:59 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-67389cf78b0so11054988a12.2
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 04:27:50 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-67e24b8ef55so7996847a12.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 04:27:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1779276470; x=1779881270; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=HfEVDfOeYr2KCaEmdrur19frHUH/yqzbbXUjON7IsyQ=;
- b=uJ6Vjct5v3DOBANM0aOuaKXvrhT+Qz3GSUS+UnFGxvr4MezW9ECkg76QGb5lXNg57v
- 7PTHzxjJsdHywe8WiZ1J6l3YgKOK8t1gxEHigrD02blUoLBgL/DO4cGzEGqMsLi1QBMz
- pTb6Owbl/IGWbw6tSCzX/1C/bQvUVN0CZjEHmt1Fu3oHS5CSaNemK3Si35a0hvYSHKgK
- o28pjbgJHWuRZfoQhM1S6SmFgE9dECm/lpzllqezw6ybZvLhyqTN7ZafB6IMmDyBNEKH
- 7KFGuD1J2jvUV3I+Xg++XVBnIkPEzE3YKzywc2mWSGJmJVJxDi6k75yCzvLbKjy2Za9y
- M9Xw==
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IQD4fR7d1kJbujtCHjx9S6B7VTYIX29Vn1eK5+y9kOs=;
+ b=eOgVQgVv6GogRDW1ISLPyPly4lsFGJ8gwb5+dN2iB9XRlF+7y0TvjFwlJg5576jY5z
+ nHOky4Y2TTU4wJ5EYOnYZeELOLBTMJBFOi2vU11zNMtob0K18ZpJ1/k01qodKVLuXr/X
+ Ie0o84pHYOJu6VCwrrCzxFYOdAR1AZWCH5vJyPqJV6SeqTkcv82s371UGAhvmz3do7gU
+ q/oeha8VVTvDxBaieTRTOBBT4+cc/Qlpk7hAduUk7A6rM9F9MMMjFsG3WbHqNagvDXZr
+ oZUBshIi4Lzzh3ZHKQ8hppo7oR0gqFP6ZVGZx0hKoGx+UOWkRMHZ1hCJE6mF9BRfgijL
+ Dh1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20251104; t=1779276470; x=1779881270;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=HfEVDfOeYr2KCaEmdrur19frHUH/yqzbbXUjON7IsyQ=;
- b=kMyMlCL/DaV1bWyAhWbgwScw3rItP1YA/5d5MDpIiK4VcHKJtykK6625KIZdmrS+rL
- 29alkctby4nVCTYSolTIOgx7lwhWp8A0PREZE3SiGeLzlnB+pkrtKhQN87E4Wt0Tj4T6
- vtRB2ikofd4ifUongcGS3xtxqIqHXmxE827ykneVBOchnLIwYDLldhwBVvdT1wa76AWk
- DsfoZxd6bUM5Zhy/+LbINjD8DtbYj/KHbf59O8gqAKiJ1fxqQVylTyFg0uGcCCFmM3qz
- zUre/fqi5IYHpGb2zP5c4NtcHnIK9r3H6FIFDXggGJj83GeVLZjas3BIMJORza0e/4fT
- ITAw==
-X-Gm-Message-State: AOJu0Yw/XZLPg0iVbdt02qZPN1u3HWsNj6Fp4T0EDRD9raeg3uARiNQr
- dTVgZ+ohgrPN8Ju3Xf0FAkE+yaXhcnXm3W3JiBCOA8wj7uXz51uSWr8DA6vEkxQESYhw1Z5t9GN
- w4DxoN1E=
-X-Gm-Gg: Acq92OHvN0A5VWDFPmZLDMfZepvgHV2WwidgPmVqhTDtEv8FhaNAQVl+te2ccoxfBzZ
- 539c/FONPsNfJbxzR1w3oRADCatj7jLD7Hp5Coul4yLxqHUL1AeFPcq/tiUMvtIoWVjLdEQaydr
- oc/UEOH7n9DxN1TF6/Xmu0sQsZbBmQmyss+Tqh47SDMC5AIEI1pLaGs8PMWY0fUs4TZsXOi3Fuv
- K70m4qxkGedOt2IknHb1d7ffaSeZ6o7DFWbrtTozkHdQpo/KpIAN0UYkv3dog6VncBayUmw/+yl
- N0GlLtdPkM7axtIyz3QzOG48Ju4QBD9moSbIOEocdJTekRUJKqr8IN3zXf97sEK/Y5diZyCA9Aq
- HOodFjsrLsUWdSZr07w/ARPBqD9sCPNzjtspQkZy+9dS1MNkCV9xNOkjf6LaNz+erdDdKMWx0uV
- DQKI+4jfy0OqX0ywDDIzNoN3CdhSmQOh2AWXxzE2rBaI199Cx3iSYBRtof2EyrdyXCkfUOCnQ=
-X-Received: by 2002:a05:600c:4692:b0:48e:51f8:eb39 with SMTP id
- 5b1f17b1804b1-48fe6325746mr382418235e9.28.1779272624447; 
- Wed, 20 May 2026 03:23:44 -0700 (PDT)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=IQD4fR7d1kJbujtCHjx9S6B7VTYIX29Vn1eK5+y9kOs=;
+ b=sd8au3zYavMKylTY3GsGUzGGMmP00jXj+f58BACmNsiOoplralUHo1I0UCxLAgnqDh
+ qlK2xOyXi8MwGwy75uXGoVQckkNvNQnIfyVzuDr4smX9uEorDXnKUNctx4w7+Gq7OlYD
+ iIn3nAMHyQfwcChwWlRxRWgs8hLJxGVulSiVRc+4CU5DXdowumNeJaXB9Tsaxvxepinx
+ EM3EA75H5JxhMyyiLKwHiEqoIXploD4Du3cvFVmv0AQMwJ+puiWp2Kmn7pSC6XDQhQyB
+ qA8+Ag2bXTIlWgik+Rx3OkFo1WgeRXmZ1M6CeRArfcrAcTxfSrtK4fmkd0r532dDv78b
+ 85pQ==
+X-Gm-Message-State: AOJu0Yx6Fc1TVADABk63U9ec6zvM1CPNYpQmKwCHU7xFG47jfMgEBDAX
+ N6yGSBYwp4cYK8wadUvcDt12MtHUHSLCUs2J4Ma3s9KxXgKKeJcz9YGHMFB2cSBQ0PrS1wVQCqs
+ bSKOXnd4=
+X-Gm-Gg: Acq92OGuhzmA89l4sjE8dktIpz1pnzzZ7ZKpDG2GGRxdVmUN1X0VB+Gfpkg8IgsFTUw
+ Dx1sh5R45fguHoWXKYVEBDIirGTdpRgQY5uB5YaR0oj5Cn2/GfU+boFGLBRfIJYZLXstiWb+JY/
+ hhrJ/MX8mJQsnnM0X4Z4ew25rB9IFwsLvIn4PRvK84PQxuNFPhqZNQR3w4tPlUfOyTs5rmrB0nB
+ qGSUqpSbVusSFL10Q1lGcATJMBIlGSIzbrwuKJofTWO+FRojk+5XOawokG8m0Prtn5ZskbpU7kK
+ m5w/yGi/lQj8kPyQUx/d73bLr/bulRaDqguuhtUycAug3CyyaF8DaYFyAesv1F191YKcgpU9Qxf
+ uDejV5uAF/xPeroa+cJMLk0YCmGrY1ZnIxaccMDdnHHAWFOufWp5L/49fZKNw8wH0AgoHXmxEAM
+ W6vvVtG3qVaDVkcVtmQ5sdweisvT+fFYqE7MHfhl/u/S6+pdlvO6xJ/Hki1L2PpRFKlJNrTgO//
+ VjdSm9XD9rwOqgmvUPYMqdCkFc=
+X-Received: by 2002:a05:6000:2503:b0:452:65d:e108 with SMTP id
+ ffacd0b85a97d-45e5c5a5e99mr37522151f8f.3.1779272305972; 
+ Wed, 20 May 2026 03:18:25 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45e6a135f0csm34179323f8f.27.2026.05.20.03.23.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 May 2026 03:23:43 -0700 (PDT)
-Message-ID: <c6075773-0ca7-4e54-a91c-8e4e86808570@linaro.org>
-Date: Wed, 20 May 2026 12:23:42 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 08/24] target/mips: split Octeon SEQ/SNE decode
-Content-Language: en-US
+ ffacd0b85a97d-45d9ec39ff1sm57277622f8f.10.2026.05.20.03.18.24
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 20 May 2026 03:18:25 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Aleksandar Rikalo <arikalo@gmail.com>,
  James Hilliard <james.hilliard1@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Aurelien Jarno <aurelien@aurel32.net>
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v11 02/24] linux-user/mips: implement sysmips(MIPS_ATOMIC_SET)
+Date: Wed, 20 May 2026 12:17:43 +0200
+Message-ID: <20260520101807.9971-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260520101807.9971-1-philmd@linaro.org>
 References: <20260520101807.9971-1-philmd@linaro.org>
- <20260520101807.9971-9-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260520101807.9971-9-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x534.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,25 +106,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/5/26 12:17, Philippe Mathieu-Daudé wrote:
-> From: James Hilliard <james.hilliard1@gmail.com>
-> 
-> Decode the equality and inequality forms as explicit SEQ/SNE
-> instructions rather than using shared generated SEQNE entries.
-> 
-> The explicit decoder names match the architectural mnemonics, which
-> makes the translator entry points and trace/debug output easier to
-> correlate with the instruction set.
-> 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-> [PMD: Split SEQNE (this patch) vs SEQNEI]
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/mips/tcg/octeon.decode                 |  3 +-
->   target/mips/tcg/octeon_translate.c            | 25 +++++++------
->   tests/tcg/mips/user/isa/octeon/octeon-insns.c | 36 +++++++++++++++++++
->   3 files changed, 52 insertions(+), 12 deletions(-)
+From: James Hilliard <james.hilliard1@gmail.com>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Implement the MIPS_ATOMIC_SET sysmips command as an aligned 32-bit atomic
+exchange in target memory.
+
+MIPS reports syscall errors through a separate register, so successful old
+values can overlap the errno range.  Write the return value and error flag
+directly and return -QEMU_ESIGRETURN so the common syscall path leaves the
+registers unchanged.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ linux-user/mips/target_syscall.h   |  1 +
+ linux-user/mips64/target_syscall.h |  1 +
+ linux-user/syscall.c               | 31 ++++++++++++++++++++++++++++++
+ 3 files changed, 33 insertions(+)
+
+diff --git a/linux-user/mips/target_syscall.h b/linux-user/mips/target_syscall.h
+index 3f36c1695a5..9206694f4fb 100644
+--- a/linux-user/mips/target_syscall.h
++++ b/linux-user/mips/target_syscall.h
+@@ -11,6 +11,7 @@
+ 
+ #define TARGET_FORCE_SHMLBA
+ #define TARGET_SYSMIPS_FLUSH_CACHE     3
++#define TARGET_SYSMIPS_ATOMIC_SET   2001
+ 
+ static inline abi_ulong target_shmlba(CPUMIPSState *env)
+ {
+diff --git a/linux-user/mips64/target_syscall.h b/linux-user/mips64/target_syscall.h
+index 20ea7c6ab9b..e07687f8ac9 100644
+--- a/linux-user/mips64/target_syscall.h
++++ b/linux-user/mips64/target_syscall.h
+@@ -11,6 +11,7 @@
+ 
+ #define TARGET_FORCE_SHMLBA
+ #define TARGET_SYSMIPS_FLUSH_CACHE     3
++#define TARGET_SYSMIPS_ATOMIC_SET   2001
+ 
+ static inline abi_ulong target_shmlba(CPUMIPSState *env)
+ {
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 5a8e00337a0..3df42aa159d 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -6631,10 +6631,41 @@ static abi_long do_prctl_syscall_user_dispatch(CPUArchState *env,
+ }
+ 
+ #ifdef TARGET_NR_sysmips
++static abi_long do_sysmips_atomic_set(CPUArchState *env, abi_ulong addr,
++                                      abi_long value)
++{
++    uint32_t *ptr;
++    abi_long old;
++
++    if (addr & 3) {
++        return -TARGET_EINVAL;
++    }
++
++    ptr = lock_user(VERIFY_WRITE, addr, sizeof(*ptr), true);
++    if (!ptr) {
++        return -TARGET_EINVAL;
++    }
++
++    old = tswap32(qatomic_xchg(ptr, tswap32((uint32_t)value)));
++    unlock_user(ptr, addr, sizeof(*ptr));
++
++    /*
++     * MIPS uses a separate error flag, but the common linux-user syscall
++     * path infers that flag from the return value.  Successful atomic_set
++     * results can overlap the target errno range, so write the result
++     * registers here and ask the CPU loop to leave them alone.
++     */
++    env->active_tc.gpr[2] = old;
++    env->active_tc.gpr[7] = 0;
++    return -QEMU_ESIGRETURN;
++}
++
+ static abi_long do_sysmips(CPUArchState *env, abi_long cmd, abi_long arg1,
+                            abi_long arg2)
+ {
+     switch (cmd) {
++    case TARGET_SYSMIPS_ATOMIC_SET:
++        return do_sysmips_atomic_set(env, arg1, arg2);
+     case TARGET_SYSMIPS_FLUSH_CACHE:
+         return 0;
+     default:
+-- 
+2.53.0
+
 
