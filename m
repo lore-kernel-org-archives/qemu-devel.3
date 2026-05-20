@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4871FCD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 12:51:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56381CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 12:52:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPgNp-000593-Lf; Wed, 20 May 2026 08:50:45 -0400
+	id 1wPgNd-0004x9-Hg; Wed, 20 May 2026 08:50:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1wPgNR-0004dX-3z; Wed, 20 May 2026 08:50:21 -0400
+ id 1wPgNM-0004bZ-Ke; Wed, 20 May 2026 08:50:16 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1wPgNN-0002hD-Ry; Wed, 20 May 2026 08:50:20 -0400
+ id 1wPgNJ-0002fK-HE; Wed, 20 May 2026 08:50:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:
  In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=5u1X5DzxX95an5zzGuDMEd23U/R947S+4JCgtMdPzn8=; b=g0wltawQi0e5sbt
- h+bJIxkrKiss5TZVYtX9JTz/uLw9plbFr7i6UMV8Skl4HoBRN4CehYXZsc+5yel7uJL2E4LfsxCGL
- IQzZ8tsS2I4ZWe0Qtr6HhiHsyNy7bdbEE8DleoEyt73HJWtwoPsZ2/pz0zxnU0TSPOrVhJGs9iKAY
- 8k=;
+ List-Help; bh=WJuywjnOSJifbcNQgb2QHXQ2o0+Lj0Y4qA+k+8yCXDU=; b=f12I2SVFhMO9bMK
+ XJJgRnj7ZpucQVdpn/KQX1W6Xd8uIPv833M9YeuVikW35VlXguaHWSiAhK2E9UKhIv2o6wqPQDv8+
+ RWYkpgOlYMQHjXXADQb8btYFecP4J/Gz2WK/j+wAwpyDGBONqqKeTSLygFhfiILQBLxKGCmZLZUFK
+ bM=;
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, pierrick.bouvier@linaro.org, philmd@linaro.org,
  alistair.francis@wdc.com, Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v7 22/27] target/riscv: Move debug.h include away from cpu.h
-Date: Wed, 20 May 2026 14:54:00 +0200
-Message-ID: <20260520125406.28693-23-anjo@rev.ng>
+Subject: [PATCH v7 16/27] target/riscv: Fix size of irq_overflow_left
+Date: Wed, 20 May 2026 14:53:54 +0200
+Message-ID: <20260520125406.28693-17-anjo@rev.ng>
 In-Reply-To: <20260520125406.28693-1-anjo@rev.ng>
 References: <20260520125406.28693-1-anjo@rev.ng>
 MIME-Version: 1.0
@@ -64,134 +64,34 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All debug.h definitions except for RV_MAX_TRIGGERS are internal to
-target/riscv.  Move RV_MAX_TRIGGERS to cpu.h and include debug.h from
-all translation units which relied on the cpu.h include.
+Fix to 64 bits to hold all relevant values.  Also update comment to
+reflect that irq_overflow_left stores the ns beyond INT64_MAX until the
+next overflow, this to account for the uint64_t/int64_t timer value
+difference between RISCV/QEMU.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h         | 2 +-
- target/riscv/debug.h       | 2 --
- target/riscv/cpu.c         | 3 +++
- target/riscv/cpu_helper.c  | 2 +-
- target/riscv/csr.c         | 3 +++
- target/riscv/debug.c       | 1 +
- target/riscv/machine.c     | 2 +-
- target/riscv/tcg/tcg-cpu.c | 1 +
- 8 files changed, 11 insertions(+), 5 deletions(-)
+ target/riscv/cpu.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 315bd736b5..c3cdbae344 100644
+index 9823d7d581..036709b9d6 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -186,12 +186,12 @@ extern RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[];
+@@ -223,8 +223,8 @@ typedef struct PMUCTRState {
+     uint64_t mhpmcounter_val;
+     /* Snapshot value of a counter */
+     uint64_t mhpmcounter_prev;
+-    /* Value beyond UINT32_MAX/UINT64_MAX before overflow interrupt trigger */
+-    target_ulong irq_overflow_left;
++    /* Value beyond INT64_MAX before overflow interrupt trigger */
++    uint64_t irq_overflow_left;
+ } PMUCTRState;
  
- #if !defined(CONFIG_USER_ONLY)
- #include "pmp.h"
--#include "debug.h"
- #endif
- 
- #define RV_VLEN_MAX 1024
- #define RV_MAX_MHPMEVENTS 32
- #define RV_MAX_MHPMCOUNTERS 32
-+#define RV_MAX_TRIGGERS 2
- 
- FIELD(VTYPE, VLMUL, 0, 3)
- FIELD(VTYPE, VSEW, 3, 3)
-diff --git a/target/riscv/debug.h b/target/riscv/debug.h
-index 066e9c585f..55a3ac72e6 100644
---- a/target/riscv/debug.h
-+++ b/target/riscv/debug.h
-@@ -25,8 +25,6 @@
- #include "exec/breakpoint.h"
- #include "exec/target_long.h"
- 
--#define RV_MAX_TRIGGERS         2
--
- /* register index of tdata CSRs */
- enum {
-     TDATA1 = 0,
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 4cff10b0d3..133ec5cbc3 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -37,6 +37,9 @@
- #include "kvm/kvm_riscv.h"
- #include "tcg/tcg-cpu.h"
- #include "tcg/tcg.h"
-+#if !defined(CONFIG_USER_ONLY)
-+#include "target/riscv/debug.h"
-+#endif
- 
- /* RISC-V CPU definitions */
- static const char riscv_single_letter_exts[] = "IEMAFDQCBPVH";
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index c4d396fa11..1086c37690 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -34,7 +34,7 @@
- #include "semihosting/common-semi.h"
- #include "exec/icount.h"
- #include "cpu_bits.h"
--#include "debug.h"
-+#include "target/riscv/debug.h"
- #include "pmp.h"
- #include "qemu/plugin.h"
- 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 837212b55f..7908ea02a5 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -31,6 +31,9 @@
- #include "qapi/error.h"
- #include "tcg/insn-start-words.h"
- #include "internals.h"
-+#if !defined(CONFIG_USER_ONLY)
-+#include "target/riscv/debug.h"
-+#endif
- 
- /* CSR function table public API */
- void riscv_get_csr_ops(int csrno, riscv_csr_operations *ops)
-diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-index 5664466749..30d39ee5cd 100644
---- a/target/riscv/debug.c
-+++ b/target/riscv/debug.c
-@@ -27,6 +27,7 @@
- #include "qemu/log.h"
- #include "qapi/error.h"
- #include "cpu.h"
-+#include "target/riscv/debug.h"
- #include "trace.h"
- #include "exec/helper-proto.h"
- #include "exec/watchpoint.h"
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index c6ebb58882..36f4c3251d 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -22,7 +22,7 @@
- #include "system/kvm.h"
- #include "migration/cpu.h"
- #include "exec/icount.h"
--#include "debug.h"
-+#include "target/riscv/debug.h"
- 
- static bool pmp_needed(void *opaque)
- {
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 02c98cc2db..90ed360648 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -37,6 +37,7 @@
- #include "hw/core/boards.h"
- #include "system/tcg.h"
- #include "exec/icount.h"
-+#include "target/riscv/debug.h"
- #endif
- 
- /* Hash that stores user set extensions */
+ typedef struct PMUFixedCtrState {
 -- 
 2.52.0
 
