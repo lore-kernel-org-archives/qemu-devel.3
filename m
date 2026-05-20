@@ -4,93 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2EDECD4F3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 11:32:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74979CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 11:32:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPfA0-0007u7-WB; Wed, 20 May 2026 07:32:25 -0400
+	id 1wPfAS-0008EU-M9; Wed, 20 May 2026 07:32:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf9o-0007oZ-U1
- for qemu-devel@nongnu.org; Wed, 20 May 2026 07:32:19 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf9n-0005MQ-4n
- for qemu-devel@nongnu.org; Wed, 20 May 2026 07:32:12 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-44a14580111so3475581f8f.0
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 04:32:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779276729; x=1779881529; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BfLMAKm0cFQ1CO5b899F9cGVNdd+gP0hQK4cGU9J1eo=;
- b=H4KBR6C43DisGAU9jIBYDyXUDkxeR3CA+LXPpTShesIS4tjMrmtL8wfQvbElI5RPvY
- +YZlDvSIeCWskq6WJ+ONagOXVY9ajZ948yW1Cb7NYHSM9UPKA1PzHtt5cMdzEZyLVghl
- gfpTqlzNwF1JngHqFFhg6xGP6xvPZUlQWoN464526T2DQ8G1q93pjlFxrZwdsjIWZgS0
- iUnzZmEvoQIH6Q/SZMpwEeZ/nPZ6vJ3QVKRoQgNL3M/LDfbpEzVS9hSYul99EQr3Fn1o
- iyVWHfw4P1hdrkx2kVcK7aGwsCOtM9E7TnGsX4BQAWXBBcIstubbqOzLLpDokyobpJ39
- pXSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779276729; x=1779881529;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=BfLMAKm0cFQ1CO5b899F9cGVNdd+gP0hQK4cGU9J1eo=;
- b=Cgs1ExMzsCvt7FyqP+mr/2DgsEgLTLTF5B/765bNeEDsf8WWaOG7jqUd5e3W5dJRwi
- 6Do8qShOGN0n2vjYksAAUN4cQd5MeAymvP0v+/VjEVmzhnphBW+ZjZSczf9ThA5rGMf4
- 7enNeb8IsMxxuMc0K/42lRkudEvV58LbGT1qWiOOaHTmKWyBzs7Y/0762Gh2o2bllwft
- SgCKLlxQUmMAl06V0pZloVLCxTEnU/Q/ZjwDln8b4oqmFqzaIKW65jbM2aYUBRyqI5Pc
- GVN5g6NhHu5ZuCwJHMk1E/fsnhm4lamnpR5j0XHvMyGyiobSF6Y+X3pf/zHovRSyWxuB
- CRpQ==
-X-Gm-Message-State: AOJu0YyJQ4Rzr8mXkhYh/UhR0r70QzNHWSIhXZhpqRxaIZFB4rNR4It0
- 0i0NF7/oDsgkmopyhbyOlmfQkYRM5OgTZJHdby9Lvzs4po+uXcFBFt1UXlXUjKGvfPyyxtPN2cw
- 2QIxktmw=
-X-Gm-Gg: Acq92OGR1Cnrk2FRittJt3TNcI6PobKit8C+UD9wZzPI5jsQDc3D6R/brA1bSBPEZkW
- HaYXXBbID7TPTtr64eFl7Dosp/7uvIdlt8qNrcOyJjuW8ZG9qNFpjhBTMKI8VbOIWKCIp0HBCgP
- w3dfWG5OUH8cAqRodGxOyn9HJ37cYTKjHBQg5fjb96D13oWNuQDjxJEa+vx9xhatiMFbRLPHG+d
- 4/FifIP0TBGSFLKQSGCV9s/lBTxJngJwI7C6O6QjgYq4Y7jjVwzmCsZXwNU8ebsDofRJQ1KgG6G
- YYVDtOD6ttv+yVZAM1+5BFibAoXpp408x4BD5gNsnkwUY7li0R7y41LtbDFP/Y6a9C7uPxkqXcS
- CUBujWIUu+cpFyvTcBsAsWMxRUzQ/8KEVgXONlFQB/uRbB1NC7yHfFMHDTCP8jDHQr46ja6yLYN
- CtJikKwj6T8aeyam4yTIvCl3PFI/ScsSwM+cM7fqlivUj99Vb2KyPtFE/PICNFUmAhs1hDLSzRQ
- UNPSW+rpEHG4Fcv
-X-Received: by 2002:a05:6000:2c07:b0:45e:75c5:1a6a with SMTP id
- ffacd0b85a97d-45e75c51b5emr23937852f8f.33.1779272298595; 
- Wed, 20 May 2026 03:18:18 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da0fe248dsm52092626f8f.30.2026.05.20.03.18.15
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 20 May 2026 03:18:17 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Aleksandar Rikalo <arikalo@gmail.com>,
- James Hilliard <james.hilliard1@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH v11 01/24] linux-user/mips: implement sysmips(MIPS_FLUSH_CACHE)
-Date: Wed, 20 May 2026 12:17:42 +0200
-Message-ID: <20260520101807.9971-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260520101807.9971-1-philmd@linaro.org>
-References: <20260520101807.9971-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wPfAL-00086I-7Z
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 07:32:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wPfAH-0005Py-Ne
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 07:32:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779276759;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DmI1i4ZLPGwJ94757clEo8XVYHE5lBXGLjLjlr2GDaQ=;
+ b=Xpqlx1MC3jIOQ14azmjCPpiO1h2YgZh5zeSFMX360Q1fBcOmx2Qieemi3SwnwzWJFKGnEi
+ vqyD3QEo6ISImAUrghg1ooJ5Rqo6H77crffA/mjJ/s+dVeX7ew6oZZ9lOeiWKTAqbc27pC
+ yiG/ol097xgsmlM88l5/+bx1wZCSo88=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-578-ZqTlwNnlNJqZRGbrhXzorQ-1; Wed,
+ 20 May 2026 07:32:36 -0400
+X-MC-Unique: ZqTlwNnlNJqZRGbrhXzorQ-1
+X-Mimecast-MFC-AGG-ID: ZqTlwNnlNJqZRGbrhXzorQ_1779276755
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D717619560A2; Wed, 20 May 2026 11:32:34 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.49.211])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 79C28180034E; Wed, 20 May 2026 11:32:33 +0000 (UTC)
+Date: Wed, 20 May 2026 12:32:29 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: =?utf-8?Q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@9elements.com>
+Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH] docs/code-provenance: Fix formatting of *-by tags
+Message-ID: <ag2bzfFmeAE1WozR@redhat.com>
+References: <20260520-prov-v1-1-7a58af334b9c@9elements.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20260520-prov-v1-1-7a58af334b9c@9elements.com>
+User-Agent: Mutt/2.3.1 (2026-03-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,87 +84,90 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: James Hilliard <james.hilliard1@gmail.com>
+On Wed, May 20, 2026 at 01:25:49PM +0200, J. Neuschäfer wrote:
+> Applying both ``code`` and **bold** formatting doesn't have the intended
+> outcome, instead Sphinx emits the backticks into the HTML.
+> 
+> Use only **bold** formatting to fix the HTML output.
+> 
+> Signed-off-by: J. Neuschäfer <j.neuschaefer@9elements.com>
+> ---
+> I'm fine with either solution, keeping the bold or code formatting, and I'll
+> switch to the other if requested. They just don't mix well.
 
-Add the target sysmips dispatcher and implement MIPS_FLUSH_CACHE as a
-successful no-op for linux-user.
+Bold is probably the least worst option here, as it helps legibility
+of the doc more IMHO.
 
-Self-modifying code is handled by QEMU's normal user-mode translation
-invalidation machinery, so the target ABI only needs the syscall command
-to be accepted.
+> ---
+>  docs/devel/code-provenance.rst | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- linux-user/mips/target_syscall.h   |  1 +
- linux-user/mips64/target_syscall.h |  1 +
- linux-user/syscall.c               | 17 +++++++++++++++++
- 3 files changed, 19 insertions(+)
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-diff --git a/linux-user/mips/target_syscall.h b/linux-user/mips/target_syscall.h
-index dfcdf320b7c..3f36c1695a5 100644
---- a/linux-user/mips/target_syscall.h
-+++ b/linux-user/mips/target_syscall.h
-@@ -10,6 +10,7 @@
- #define TARGET_MCL_ONFAULT 4
- 
- #define TARGET_FORCE_SHMLBA
-+#define TARGET_SYSMIPS_FLUSH_CACHE     3
- 
- static inline abi_ulong target_shmlba(CPUMIPSState *env)
- {
-diff --git a/linux-user/mips64/target_syscall.h b/linux-user/mips64/target_syscall.h
-index 9135bf5e8b6..20ea7c6ab9b 100644
---- a/linux-user/mips64/target_syscall.h
-+++ b/linux-user/mips64/target_syscall.h
-@@ -10,6 +10,7 @@
- #define TARGET_MCL_ONFAULT 4
- 
- #define TARGET_FORCE_SHMLBA
-+#define TARGET_SYSMIPS_FLUSH_CACHE     3
- 
- static inline abi_ulong target_shmlba(CPUMIPSState *env)
- {
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 2d4a8aa182b..5a8e00337a0 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -6630,6 +6630,19 @@ static abi_long do_prctl_syscall_user_dispatch(CPUArchState *env,
-     }
- }
- 
-+#ifdef TARGET_NR_sysmips
-+static abi_long do_sysmips(CPUArchState *env, abi_long cmd, abi_long arg1,
-+                           abi_long arg2)
-+{
-+    switch (cmd) {
-+    case TARGET_SYSMIPS_FLUSH_CACHE:
-+        return 0;
-+    default:
-+        return -TARGET_EINVAL;
-+    }
-+}
-+#endif
-+
- static abi_long do_prctl(CPUArchState *env, abi_long option, abi_long arg2,
-                          abi_long arg3, abi_long arg4, abi_long arg5)
- {
-@@ -12110,6 +12123,10 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-     case TARGET_NR_prctl:
-         return do_prctl(cpu_env, arg1, arg2, arg3, arg4, arg5);
-         break;
-+#ifdef TARGET_NR_sysmips
-+    case TARGET_NR_sysmips:
-+        return do_sysmips(cpu_env, arg1, arg2, arg3);
-+#endif
- #ifdef TARGET_NR_arch_prctl
-     case TARGET_NR_arch_prctl:
-         return do_arch_prctl(cpu_env, arg1, arg2);
+
+> 
+> diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.rst
+> index 4e6a9afe0d672c544c069447a9978baa0b4a6212..65b8f232a08f6bc903c77fd0b1f7a5adad9fbe5d 100644
+> --- a/docs/devel/code-provenance.rst
+> +++ b/docs/devel/code-provenance.rst
+> @@ -99,13 +99,13 @@ Other commit tags
+>  While the ``Signed-off-by`` tag is mandatory, there are a number of other tags
+>  that are commonly used during QEMU development:
+>  
+> - * **``Reviewed-by``**: when a QEMU community member reviews a patch on the
+> + * **Reviewed-by**: when a QEMU community member reviews a patch on the
+>     mailing list, if they consider the patch acceptable, they should send an
+>     email reply containing a ``Reviewed-by`` tag. Subsystem maintainers who
+>     review a patch should add this even if they are also adding their
+>     ``Signed-off-by`` to the same commit.
+>  
+> - * **``Acked-by``**: when a QEMU subsystem maintainer approves a patch that
+> + * **Acked-by**: when a QEMU subsystem maintainer approves a patch that
+>     touches their subsystem, but intends to allow a different maintainer to
+>     queue it and send a pull request, they would send a mail containing a
+>     ``Acked-by`` tag. Where a patch touches multiple subsystems, ``Acked-by``
+> @@ -113,18 +113,18 @@ that are commonly used during QEMU development:
+>     maintainer wants to indicate they have done a full review they should use
+>     a ``Reviewed-by`` tag.
+>  
+> - * **``Tested-by``**: when a QEMU community member has functionally tested the
+> + * **Tested-by**: when a QEMU community member has functionally tested the
+>     behaviour of the patch in some manner, they should send an email reply
+>     containing a ``Tested-by`` tag.
+>  
+> - * **``Reported-by``**: when a QEMU community member reports a problem via the
+> + * **Reported-by**: when a QEMU community member reports a problem via the
+>     mailing list, or some other informal channel that is not the issue tracker,
+>     it is good practice to credit them by including a ``Reported-by`` tag on
+>     any patch fixing the issue. When the problem is reported via the GitLab
+>     issue tracker, however, it is sufficient to just include a link to the
+>     issue.
+>  
+> - * **``Suggested-by``**: when a reviewer or other 3rd party makes non-trivial
+> + * **Suggested-by**: when a reviewer or other 3rd party makes non-trivial
+>     suggestions for how to change a patch, it is good practice to credit them
+>     by including a ``Suggested-by`` tag.
+>  
+> 
+> ---
+> base-commit: 6d17fd91f6cf88df5cb2205e578640d72605cc43
+> change-id: 20260520-prov-73c69e4e979c
+> 
+> Best regards,
+> -- 
+> J. Neuschäfer <j.neuschaefer@9elements.com>
+> 
+> 
+
+With regards,
+Daniel
 -- 
-2.53.0
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
