@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88DD7CD5BAA
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 14:42:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30BF5CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 14:42:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPi7j-0002rg-SH; Wed, 20 May 2026 10:42:16 -0400
+	id 1wPi7Z-0002qc-0o; Wed, 20 May 2026 10:42:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wPi7c-0002rC-66
- for qemu-devel@nongnu.org; Wed, 20 May 2026 10:42:08 -0400
+ id 1wPi7W-0002q8-NW
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 10:42:02 -0400
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wPi7Z-0002Gn-Tp
- for qemu-devel@nongnu.org; Wed, 20 May 2026 10:42:07 -0400
+ id 1wPi7V-0002GL-2i
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 10:42:02 -0400
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
  (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wPi7P-00000001uqk-361g; Wed, 20 May 2026 16:41:55 +0200
+ id 1wPi7K-00000001uqY-2awI; Wed, 20 May 2026 16:41:50 +0200
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
  qemu-devel@nongnu.org
-Subject: [PATCH 2/2] vfio/migration: Parallelize device state transitions
-Date: Wed, 20 May 2026 16:41:38 +0200
-Message-ID: <743f03758d2a30df4093db140ccdd0f91f69bd7e.1779217494.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH 1/2] system/runstate: Allow adjustment of priority for VM
+ state change handlers
+Date: Wed, 20 May 2026 16:41:37 +0200
+Message-ID: <b8f3cf976ebe8221d70e0ebcb55da60bfe2a141f.1779217494.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <cover.1779217494.git.maciej.szmigiero@oracle.com>
 References: <cover.1779217494.git.maciej.szmigiero@oracle.com>
@@ -63,298 +64,101 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-When multiple VFIO devices are present in a VM the fact that their state
-transitions on migration happen sequentially has a visible impact on
-migration downtime.
+A future patch will need an ability to register qdev VM state change
+handlers below and above the normal priority level for the registering
+device qdev tree depth, but still properly ordered with respect to handlers
+registered at other tree depths.
 
-This is because both PRE_COPY -> PRE_COPY_P2P -> STOP_COPY transitions on
-the source and RESUMING -> RUNNING_P2P -> RUNNING transitions on the target
-happen during the switchover phase.
-During this phase the VM is stopped so the downtime is ticking.
+To implement this split the priority argument passed to
+qemu_add_vm_change_state_handler_prio_full() into two parts:
+its 15 most significant bits will now carry the actual qdev tree depth
+while the 16 least significant bits will now carry the caller provided
+priority adjustment value.
 
-These device state transitions are performed by VM state change handlers
-registered by the VFIO device migration code.
-
-Instead of performing such state transition synchronously use the priority
-adjustment mechanism from the previous patch to launch a thread performing
-the state change at the priority level *before* all other VM state change
-handlers at the particular VFIO device qdev tree depth.
-Only wait for this thread to finish at the priority level ordered *after*
-all other handlers at this tree depth.
-
-This way these state transitions can happen in parallel not only with
-respect to other VFIO device instances but also ordinary (serialized)
-handlers for other devices at this qdev tree depth while still being
-properly ordered with respect to handlers registered at other tree depths.
-
-Unfortunately, the order in which VM state handlers are called depends
-on whether the VM is starting or stopping.
-Because of this, one extra layer of indirection is necessary to make the
-(first, second) ordering of these handlers constant.
-
-Enable the feature by default since it has no impact on the migration bit
-stream protocol - it shouldn't need disabling for anything else but
-debugging scenarios.
+Although this will limit the qdev tree to a depth of 32k such high limit
+shouldn't be a problem in practice.
 
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- hw/vfio/migration.c               | 174 ++++++++++++++++++++++++++++--
- hw/vfio/pci.c                     |   2 +
- hw/vfio/vfio-migration-internal.h |   4 +-
- include/hw/vfio/vfio-device.h     |   1 +
- 4 files changed, 173 insertions(+), 8 deletions(-)
+ hw/core/vm-change-state-handler.c | 22 +++++++++++++++-------
+ hw/vfio/migration.c               |  2 +-
+ include/system/runstate.h         |  2 +-
+ 3 files changed, 17 insertions(+), 9 deletions(-)
 
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 9889b20ad7dd..fd2b37a85f4b 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -1047,6 +1047,135 @@ static void vfio_vmstate_change(void *opaque, bool running, RunState state)
-                               mig_state_to_str(new_state));
+diff --git a/hw/core/vm-change-state-handler.c b/hw/core/vm-change-state-handler.c
+index 2c111350298d..3db0819984c6 100644
+--- a/hw/core/vm-change-state-handler.c
++++ b/hw/core/vm-change-state-handler.c
+@@ -19,9 +19,9 @@
+ #include "hw/core/qdev.h"
+ #include "system/runstate.h"
+ 
+-static int qdev_get_dev_tree_depth(DeviceState *dev)
++static unsigned int qdev_get_dev_tree_depth(DeviceState *dev)
+ {
+-    int depth;
++    unsigned int depth;
+ 
+     for (depth = 0; dev; depth++) {
+         BusState *bus = dev->parent_bus;
+@@ -61,20 +61,28 @@ VMChangeStateEntry *qdev_add_vm_change_state_handler(DeviceState *dev,
+                                                      void *opaque)
+ {
+     assert(!cb || !cb_ret);
+-    return qdev_add_vm_change_state_handler_full(dev, cb, NULL, cb_ret, opaque);
++    return qdev_add_vm_change_state_handler_full(dev, cb, NULL, cb_ret, opaque, 0);
  }
  
-+typedef struct VMStateChangeThreadData {
-+    VFIODevice *vbasedev;
-+    bool is_prepare;
-+    bool running;
-+    RunState state;
-+} VMStateChangeThreadData;
-+
-+static void *vfio_vmstate_change_thread(void *opaque)
-+{
-+    g_autofree VMStateChangeThreadData *data = opaque;
-+
-+    if (data->is_prepare) {
-+        vfio_vmstate_change_prepare(data->vbasedev, data->running, data->state);
-+    } else {
-+        vfio_vmstate_change(data->vbasedev, data->running, data->state);
-+    }
-+
-+    return NULL;
-+}
-+
-+static void vfio_vmstate_change_thread_launch(VFIODevice *vbasedev,
-+                                              bool is_prepare,
-+                                              bool running,
-+                                              RunState state)
-+{
-+    VFIOMigration *migration = vbasedev->migration;
-+    VMStateChangeThreadData *data = g_new(VMStateChangeThreadData, 1);
-+
-+    data->vbasedev = vbasedev;
-+    data->is_prepare = is_prepare;
-+    data->running = running;
-+    data->state = state;
-+
-+    assert(!migration->vm_state_thread_running);
-+    migration->vm_state_thread_running = true;
-+
-+    qemu_thread_create(&migration->vm_state_thread,
-+                       is_prepare ? "vfio_vmstate_change_prepare" :
-+                       "vfio_vmstate_change",
-+                       vfio_vmstate_change_thread, data,
-+                       QEMU_THREAD_JOINABLE);
-+}
-+
-+static void vfio_vmstate_change_thread_join(VFIODevice *vbasedev)
-+{
-+    VFIOMigration *migration = vbasedev->migration;
-+
-+    assert(migration->vm_state_thread_running);
-+
-+    qemu_thread_join(&migration->vm_state_thread);
-+
-+    migration->vm_state_thread_running = false;
-+}
-+
-+/*
-+ * The first handler called during a vmstate change at a particular depth -
-+ * launch the VFIO device state change thread.
-+ */
-+static void vfio_vmstate_change_first(VFIODevice *vbasedev,
-+                                      bool is_prepare,
-+                                      bool running, RunState state)
-+{
-+    vfio_vmstate_change_thread_launch(vbasedev,
-+                                      is_prepare,
-+                                      running,
-+                                      state);
-+}
-+
-+/*
-+ * The last handler called during a vmstate change at a particular depth -
-+ * wait for the VFIO device state change thread to finish.
-+ */
-+static void vfio_vmstate_change_second(VFIODevice *vbasedev)
-+{
-+    vfio_vmstate_change_thread_join(vbasedev);
-+}
-+
-+/*
-+ * Lower priority number handler:
-+ * Called before higher number handler when VM is starting
-+ * but after higher number handler when VM is stopping.
-+ */
-+static void vfio_vmstate_change_prepare_lower_prio(void *opaque, bool running,
-+                                                   RunState state)
-+{
-+    if (running) {
-+        vfio_vmstate_change_first(opaque, true, running, state);
-+    } else {
-+        vfio_vmstate_change_second(opaque);
-+    }
-+}
-+
-+/*
-+ * Higher priority number handler:
-+ * Called after lower number handler when VM is starting
-+ * but before lower number handler when VM is stopping.
-+ */
-+static void vfio_vmstate_change_prepare_higher_prio(void *opaque, bool running,
-+                                                    RunState state)
-+{
-+    if (running) {
-+        vfio_vmstate_change_second(opaque);
-+    } else {
-+        vfio_vmstate_change_first(opaque, true, running, state);
-+    }
-+}
-+
-+/* Same ordering issues as for vfio_vmstate_change_prepare_lower_prio() */
-+static void vfio_vmstate_change_lower_prio(void *opaque, bool running,
-+                                           RunState state)
-+{
-+    if (running) {
-+        vfio_vmstate_change_first(opaque, false, running, state);
-+    } else {
-+        vfio_vmstate_change_second(opaque);
-+    }
-+}
-+
-+/* Same ordering issues as for vfio_vmstate_change_prepare_higher_prio() */
-+static void vfio_vmstate_change_higher_prio(void *opaque, bool running,
-+                                            RunState state)
-+{
-+    if (running) {
-+        vfio_vmstate_change_second(opaque);
-+    } else {
-+        vfio_vmstate_change_first(opaque, false, running, state);
-+    }
-+}
-+
- static int vfio_migration_state_notifier(NotifierWithReturn *notifier,
-                                          MigrationEvent *e, Error **errp)
+ /*
+  * Exactly like qdev_add_vm_change_state_handler() but passes a prepare_cb
+- * and the cb_ret arguments too.
++ * and the cb_ret arguments too and allows for adjustment of priority.
+  */
+ VMChangeStateEntry *qdev_add_vm_change_state_handler_full(
+     DeviceState *dev, VMChangeStateHandler *cb, VMChangeStateHandler *prepare_cb,
+-    VMChangeStateHandlerWithRet *cb_ret, void *opaque)
++    VMChangeStateHandlerWithRet *cb_ret, void *opaque, int adj)
  {
-@@ -1063,6 +1192,8 @@ static int vfio_migration_state_notifier(NotifierWithReturn *notifier,
-          * MigrationNotifyFunc may not return an error code and an Error
-          * object for MIG_EVENT_FAILED. Hence, report the error
-          * locally and ignore the errp argument.
-+         * This state change is not parallelized as it is not expected to be
-+         * performance critical.
-          */
-         ret = vfio_migration_set_state_or_reset(vbasedev,
-                                                 VFIO_DEVICE_STATE_RUNNING,
-@@ -1143,7 +1274,7 @@ static int vfio_migration_init(VFIODevice *vbasedev, Error **errp)
-     char id[256] = "";
-     g_autofree char *path = NULL, *oid = NULL;
-     uint64_t mig_flags = 0;
--    VMChangeStateHandler *prepare_cb;
-+    VMChangeStateHandler *prepare_cb, *prepare_cb_lower, *prepare_cb_higher;
- 
-     if (!vbasedev->ops->vfio_get_object) {
-         ret = -EINVAL;
-@@ -1223,11 +1354,34 @@ static int vfio_migration_init(VFIODevice *vbasedev, Error **errp)
-     register_savevm_live(id, VMSTATE_INSTANCE_ID_ANY, 1, &savevm_vfio_handlers,
-                          vbasedev);
- 
--    prepare_cb = migration->mig_flags & VFIO_MIGRATION_P2P ?
--                     vfio_vmstate_change_prepare :
--                     NULL;
--    migration->vm_state = qdev_add_vm_change_state_handler_full(
--        vbasedev->dev, vfio_vmstate_change, prepare_cb, NULL, vbasedev, 0);
-+    if (vbasedev->migration_parallel_states) {
-+        /*
-+         * Unfortunately, the order in which vmstate handlers are called depends
-+         * on whether the VM is starting or stopping.
-+         * Because of this, one extra layer of indirection is necessary
-+         * to make the (first, second) ordering of these handlers constant.
-+         */
-+        prepare_cb_lower = migration->mig_flags & VFIO_MIGRATION_P2P ?
-+            vfio_vmstate_change_prepare_lower_prio : NULL;
-+        prepare_cb_higher = migration->mig_flags & VFIO_MIGRATION_P2P ?
-+            vfio_vmstate_change_prepare_higher_prio : NULL;
-+        migration->vm_state_lower_prio = qdev_add_vm_change_state_handler_full(
-+            vbasedev->dev, vfio_vmstate_change_lower_prio, prepare_cb_lower,
-+            NULL, vbasedev, -1);
-+        migration->vm_state_higher_prio = qdev_add_vm_change_state_handler_full(
-+            vbasedev->dev, vfio_vmstate_change_higher_prio, prepare_cb_higher,
-+            NULL, vbasedev, 1);
-+    } else {
-+        prepare_cb = migration->mig_flags & VFIO_MIGRATION_P2P ?
-+            vfio_vmstate_change_prepare : NULL;
-+        /* Arbitrarily use lower_prio field to store non-parallel handler */
-+        migration->vm_state_lower_prio =
-+            qdev_add_vm_change_state_handler_full(vbasedev->dev,
-+                                                  vfio_vmstate_change,
-+                                                  prepare_cb, NULL,
-+                                                  vbasedev, 0);
-+    }
+-    int depth = qdev_get_dev_tree_depth(dev);
++    unsigned int depth = qdev_get_dev_tree_depth(dev);
++    int prio;
 +
++    /* 32k depth should be enough for everyone */
++    assert(depth <= INT16_MAX);
++
++    /* encode depth on 15 MSB and adj on 16 LSB */
++    assert(adj >= INT16_MIN && adj <= INT16_MAX);
++    prio = (depth << 16) + (adj - INT16_MIN);
+ 
+     assert(!cb || !cb_ret);
+     return qemu_add_vm_change_state_handler_prio_full(cb, prepare_cb, cb_ret,
+-                                                      opaque, depth);
++                                                      opaque, prio);
+ }
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index dbfd13b83a15..9889b20ad7dd 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -1227,7 +1227,7 @@ static int vfio_migration_init(VFIODevice *vbasedev, Error **errp)
+                      vfio_vmstate_change_prepare :
+                      NULL;
+     migration->vm_state = qdev_add_vm_change_state_handler_full(
+-        vbasedev->dev, vfio_vmstate_change, prepare_cb, NULL, vbasedev);
++        vbasedev->dev, vfio_vmstate_change, prepare_cb, NULL, vbasedev, 0);
      migration_add_notifier(&migration->migration_state,
                             vfio_migration_state_notifier);
  
-@@ -1302,7 +1456,13 @@ static void vfio_migration_deinit(VFIODevice *vbasedev)
-     VFIOMigration *migration = vbasedev->migration;
- 
-     migration_remove_notifier(&migration->migration_state);
--    qemu_del_vm_change_state_handler(migration->vm_state);
-+
-+    if (vbasedev->migration_parallel_states) {
-+        qemu_del_vm_change_state_handler(migration->vm_state_higher_prio);
-+    }
-+    /* Non-parallel state change uses lower_prio field to store its handler */
-+    qemu_del_vm_change_state_handler(migration->vm_state_lower_prio);
-+
-     unregister_savevm(VMSTATE_IF(vbasedev->dev), "vfio", vbasedev);
-     vfio_migration_free(vbasedev);
-     vfio_unblock_multiple_devices_migration();
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index b2a07f6bb421..fa2411474c9b 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3777,6 +3777,8 @@ static const Property vfio_pci_properties[] = {
-                             ON_OFF_AUTO_AUTO),
-     DEFINE_PROP_SIZE("x-migration-max-queued-buffers-size", VFIOPCIDevice,
-                      vbasedev.migration_max_queued_buffers_size, UINT64_MAX),
-+    DEFINE_PROP_BOOL("x-migration-parallel-states", VFIOPCIDevice,
-+                     vbasedev.migration_parallel_states, true),
-     DEFINE_PROP_BOOL("migration-events", VFIOPCIDevice,
-                      vbasedev.migration_events, false),
-     DEFINE_PROP_BOOL("x-no-mmap", VFIOPCIDevice, vbasedev.no_mmap, false),
-diff --git a/hw/vfio/vfio-migration-internal.h b/hw/vfio/vfio-migration-internal.h
-index a1c58b112685..9fb00f9f4d7d 100644
---- a/hw/vfio/vfio-migration-internal.h
-+++ b/hw/vfio/vfio-migration-internal.h
-@@ -38,7 +38,9 @@ typedef struct VFIOMultifd VFIOMultifd;
- 
- typedef struct VFIOMigration {
-     struct VFIODevice *vbasedev;
--    VMChangeStateEntry *vm_state;
-+    VMChangeStateEntry *vm_state_lower_prio, *vm_state_higher_prio;
-+    QemuThread vm_state_thread;
-+    bool vm_state_thread_running;
-     NotifierWithReturn migration_state;
-     uint32_t device_state;
-     int data_fd;
-diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-index 380a55d6e5ea..28004e1e99f4 100644
---- a/include/hw/vfio/vfio-device.h
-+++ b/include/hw/vfio/vfio-device.h
-@@ -69,6 +69,7 @@ typedef struct VFIODevice {
-     OnOffAuto migration_multifd_transfer;
-     OnOffAuto migration_load_config_after_iter;
-     uint64_t migration_max_queued_buffers_size;
-+    bool migration_parallel_states;
-     bool migration_events;
-     bool use_region_fds;
-     VFIODeviceOps *ops;
+diff --git a/include/system/runstate.h b/include/system/runstate.h
+index 929379adae41..306e2684c195 100644
+--- a/include/system/runstate.h
++++ b/include/system/runstate.h
+@@ -69,7 +69,7 @@ VMChangeStateEntry *qdev_add_vm_change_state_handler(DeviceState *dev,
+                                                      void *opaque);
+ VMChangeStateEntry *qdev_add_vm_change_state_handler_full(
+     DeviceState *dev, VMChangeStateHandler *cb, VMChangeStateHandler *prepare_cb,
+-    VMChangeStateHandlerWithRet *cb_ret, void *opaque);
++    VMChangeStateHandlerWithRet *cb_ret, void *opaque, int adj);
+ void qemu_del_vm_change_state_handler(VMChangeStateEntry *e);
+ /**
+  * vm_state_notify: Notify the state of the VM
 
