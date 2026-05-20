@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEDA1CD5BA6
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 13:09:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E8B9CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 13:09:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPgf5-0004or-9C; Wed, 20 May 2026 09:08:35 -0400
+	id 1wPgfe-0005RB-D2; Wed, 20 May 2026 09:09:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1wPgf0-0004jg-Ct; Wed, 20 May 2026 09:08:30 -0400
+ id 1wPgfO-0005BD-Vi; Wed, 20 May 2026 09:08:55 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
- id 1wPgez-00013q-11; Wed, 20 May 2026 09:08:30 -0400
+ id 1wPgfN-00016F-Ft; Wed, 20 May 2026 09:08:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=KBr+eThmA+MBGaQyD4UVjgIvKfhp9tToxz5pvwR4N+s=; b=C58IsVrLO1b9Ztk
- 4jwR8HhZNod+ISI7fgec12AGpZMXiWNZP0lVVBFAXJKmk/tXocIX+idZf6inBYyhPX3Njj2l+xNXO
- wAuH3xGoR/i+Ye3nh9+ajagVX/DyXOmIybiM6gemIZEOapCtI8ltG2qDZA0XfRhhXde2Qkc1ghhZz
- 7Q=;
-Date: Wed, 20 May 2026 15:12:56 +0200
-Subject: [PATCH v3 04/14] hw/core: Add riscv[32|64] to "none" machine
+ List-Help; bh=BF8v8cSaZotTv9ofY1Q0Eq5ID//ujy6He2TuaI7xsYo=; b=K+jHKeNcF6vSPQt
+ 7T9tP63IiFreW1ZdOroPyIAh8OjI3KJHqFXDsC59jwMOCC6DgoDvz2vtmvcLeUiY4tp1wyP3raV97
+ xSu1j1Ds/Eg9iezLDw8i1iLAMmv0IPllPRp84x2MTzRjhqdjYz+D+duHd96qmLJHOe673vieTXgV8
+ vY=;
+Date: Wed, 20 May 2026 15:13:06 +0200
+Subject: [PATCH v3 14/14] hw/riscv: Compile once
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260520-hw-riscv-cpu-int-v3-4-d1123ea63d9c@rev.ng>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260520-hw-riscv-cpu-int-v3-14-d1123ea63d9c@rev.ng>
 References: <20260520-hw-riscv-cpu-int-v3-0-d1123ea63d9c@rev.ng>
 In-Reply-To: <20260520-hw-riscv-cpu-int-v3-0-d1123ea63d9c@rev.ng>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, philmd@linaro.org, 
  pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com, 
  alistair.francis@wdc.com
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1779282793; l=1009;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1779282793; l=3001;
  i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
- bh=8f6I0VnvVGlvMvWpcxdVl8U3hc8+tzDWCh8MK76yqVs=;
- b=qxt5jGc6HUsKkbQ7MrMwS1jk35BCB62HzQjP0HpbaGj5ITDu50D3dtSePkkrbC0IS7yA89g7K
- aA59oNBTEyQA+lr28pnGJfFdp/5BTR8tJMlLeqbbm+4lBtBoVTwVB2F
+ bh=hPcVcZvIYd01lhNhSrICVkbSKcINgT1h7fDdKkRJbC0=;
+ b=Pw3GafNwZIxE3y5ICq5h2sUdweJ5bnIp4FRTlqEJPg/cJLjq1coTTKZuYe5kCKoqKe6NwmoDV
+ SbmW8oHmTCjCudm9PuTR45dODM6uDd5ERVOPOcKVZ7uN+L0Nhe1bnoH
 X-Developer-Key: i=anjo@rev.ng; a=ed25519;
  pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
@@ -72,31 +72,57 @@ From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- hw/core/null-machine.c | 3 +++
- 1 file changed, 3 insertions(+)
+ hw/riscv/meson.build | 36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/hw/core/null-machine.c b/hw/core/null-machine.c
-index c52b022d3a..f132a7b89b 100644
---- a/hw/core/null-machine.c
-+++ b/hw/core/null-machine.c
-@@ -17,6 +17,7 @@
- #include "system/address-spaces.h"
- #include "hw/core/cpu.h"
- #include "hw/arm/machines-qom.h"
-+#include "hw/riscv/machines-qom.h"
+diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+index 533472e22a..8ea5b098eb 100644
+--- a/hw/riscv/meson.build
++++ b/hw/riscv/meson.build
+@@ -1,21 +1,21 @@
+-riscv_ss = ss.source_set()
+-riscv_ss.add(files('boot.c'))
+-riscv_ss.add(when: 'CONFIG_RISCV_NUMA', if_true: files('numa.c'))
+-riscv_ss.add(files('riscv_hart.c'))
+-riscv_ss.add(when: 'CONFIG_OPENTITAN', if_true: files('opentitan.c'))
+-riscv_ss.add(when: 'CONFIG_RISCV_VIRT', if_true: files('virt.c'))
+-riscv_ss.add(when: 'CONFIG_SHAKTI_C', if_true: files('shakti_c.c'))
+-riscv_ss.add(when: 'CONFIG_SIFIVE_E', if_true: files('sifive_e.c'))
+-riscv_ss.add(when: 'CONFIG_SIFIVE_U', if_true: files('sifive_u.c'))
+-riscv_ss.add(when: 'CONFIG_SPIKE', if_true: files('spike.c'))
+-riscv_ss.add(when: 'CONFIG_MICROCHIP_PFSOC', if_true: files('microchip_pfsoc.c'))
+-riscv_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-acpi-build.c'))
+-riscv_ss.add(when: 'CONFIG_RISCV_IOMMU', if_true: files(
++riscv_common_ss = ss.source_set()
++riscv_common_ss.add(files('boot.c'))
++riscv_common_ss.add(when: 'CONFIG_RISCV_NUMA', if_true: files('numa.c'))
++riscv_common_ss.add(files('riscv_hart.c'))
++riscv_common_ss.add(when: 'CONFIG_OPENTITAN', if_true: files('opentitan.c'))
++riscv_common_ss.add(when: 'CONFIG_RISCV_VIRT', if_true: files('virt.c'))
++riscv_common_ss.add(when: 'CONFIG_SHAKTI_C', if_true: files('shakti_c.c'))
++riscv_common_ss.add(when: 'CONFIG_SIFIVE_E', if_true: files('sifive_e.c'))
++riscv_common_ss.add(when: 'CONFIG_SIFIVE_U', if_true: files('sifive_u.c'))
++riscv_common_ss.add(when: 'CONFIG_SPIKE', if_true: files('spike.c'))
++riscv_common_ss.add(when: 'CONFIG_MICROCHIP_PFSOC', if_true: files('microchip_pfsoc.c'))
++riscv_common_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-acpi-build.c'))
++riscv_common_ss.add(when: 'CONFIG_RISCV_IOMMU', if_true: files(
+ 	'riscv-iommu.c', 'riscv-iommu-pci.c', 'riscv-iommu-sys.c', 'riscv-iommu-hpm.c'))
+-riscv_ss.add(when: 'CONFIG_MICROBLAZE_V', if_true: files('microblaze-v-generic.c'))
+-riscv_ss.add(when: 'CONFIG_XIANGSHAN_KUNMINGHU', if_true: files('xiangshan_kmh.c'))
++riscv_common_ss.add(when: 'CONFIG_MICROBLAZE_V', if_true: files('microblaze-v-generic.c'))
++riscv_common_ss.add(when: 'CONFIG_XIANGSHAN_KUNMINGHU', if_true: files('xiangshan_kmh.c'))
  
- static void machine_none_init(MachineState *mch)
- {
-@@ -59,4 +60,6 @@ static void machine_none_machine_init(MachineClass *mc)
- DEFINE_MACHINE_WITH_INTERFACES("none", machine_none_machine_init,
-                                { TYPE_TARGET_AARCH64_MACHINE },
-                                { TYPE_TARGET_ARM_MACHINE },
-+                               { TYPE_TARGET_RISCV32_MACHINE },
-+                               { TYPE_TARGET_RISCV64_MACHINE },
-                                { })
+-riscv_ss.add(when: 'CONFIG_RISCV_MIPS_CPS', if_true: files('cps.c'))
+-riscv_ss.add(when: 'CONFIG_MIPS_BOSTON_AIA', if_true: files('boston-aia.c'))
++riscv_common_ss.add(when: 'CONFIG_RISCV_MIPS_CPS', if_true: files('cps.c'))
++riscv_common_ss.add(when: 'CONFIG_MIPS_BOSTON_AIA', if_true: files('boston-aia.c'))
+ 
+-hw_arch += {'riscv': riscv_ss}
++hw_common_arch += {'riscv': riscv_common_ss}
 
 -- 
 2.52.0
