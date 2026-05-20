@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8E41CD5BAA
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 16:11:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EDF2CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 16:11:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPjUu-0005Er-Aw; Wed, 20 May 2026 12:10:16 -0400
+	id 1wPjUD-00022O-Pi; Wed, 20 May 2026 12:09:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wPjUr-0004xu-AJ; Wed, 20 May 2026 12:10:13 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1wPjU7-0001Zb-IA; Wed, 20 May 2026 12:09:28 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wPjUn-0003KB-65; Wed, 20 May 2026 12:10:13 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1wPjU4-0002vO-W7; Wed, 20 May 2026 12:09:27 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64KBO5js843724; Wed, 20 May 2026 16:10:06 GMT
+ 64KCRhe53865883; Wed, 20 May 2026 16:09:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=2QJ2P//OGqHj6kLB5
- boQpQfdCJ/QYJGflLAeCV9uhQE=; b=MsINr864LJDPIkrNZUFn0XW0y0dq5uBn8
- kRYnuHuhAx4lK6deC7S4MT7+KUOfyu0Nn1aH1pOMA9fc/qEBT6/fsekTD9FPmsbQ
- shWRlzF6a63tIivFm9GBZjY63GZ4Gc2CWXal71NM+KnVlJxLgEV5fN5wwkokxt6V
- zNt415onkItIdYcFQBw6h9A4I6MrVB+uV9utmfXXcsoci6el5kqelKHM/jsa9FIB
- 8L3cHKyXafXARv201ptdJHeOHqQYcBdeDbTuea85tRP5j/p9qWtAw4OFE3aGBxmc
- BPWKD7z0bYMDPslbaM4nw6+ElPH8FxJhwM7vhLsdBHkZj2vQ0ZWuA==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6h9y30ey-1
+ :mime-version:references:subject:to; s=pp1; bh=OSMQ2CgdcTdYmFEoq
+ 3HDtzSiv+CQk4h/+JiYs1UqPr4=; b=hUoPNfA5Lp1N2/hg0jxR52+dQa/nK1dsi
+ RtVkRjv4aZhBb9GAeSyn4Rq92BMsSTqT3Sn1YXtZSlmzwv0E7Ki3Hd9Dbc66b0e4
+ WZBSGKAaSCbnL4itjCpAVoN6jCLiQqkgVuPPpmS/l/E1J5w8TRsNnydNn/9BBKaO
+ 2Iop3zE6zv4dbimaxAjgvN+c7MuYv0bgRkunQOINoXG7ilqv3ex5/C9lZEOW6wSW
+ s8z66g/U2zinokOodQHHypBj2RM2W6g4imM0cvZX7uEclm31uL3ZfFyPUClsD8EV
+ 8b/dvQQc5Zv19uStV9m+Miac9wdnWNSwOMFmLErGsQ59omQUdJI6Q==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6hb8hwae-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 May 2026 16:10:06 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64KG9Q59016416;
- Wed, 20 May 2026 16:10:05 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e754gfv2v-1
+ Wed, 20 May 2026 16:09:22 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64KG949G007984;
+ Wed, 20 May 2026 16:09:22 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e739w06r3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 May 2026 16:10:05 +0000 (GMT)
+ Wed, 20 May 2026 16:09:21 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
  [10.20.54.100])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64KGA13H25690400
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64KG9Iu947251822
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 20 May 2026 16:10:01 GMT
+ Wed, 20 May 2026 16:09:18 GMT
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A31832004B;
- Wed, 20 May 2026 16:10:01 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 26D8C20043;
+ Wed, 20 May 2026 16:09:18 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0160520040;
- Wed, 20 May 2026 16:09:55 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id CE2AE20040;
+ Wed, 20 May 2026 16:09:12 +0000 (GMT)
 Received: from li-18a0a34c-33fc-11b2-a85c-d9f1631c5692.ibm.com (unknown
  [9.39.31.153]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 20 May 2026 16:09:54 +0000 (GMT)
+ Wed, 20 May 2026 16:09:12 +0000 (GMT)
 From: Chinmay Rath <rathc@linux.ibm.com>
 To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
  harshpb@linux.ibm.com, richard.henderson@linaro.org,
@@ -66,10 +66,10 @@ Cc: milesg@linux.ibm.com, vishalc@linux.ibm.com, tshah@linux.ibm.com,
  amachhiw@linux.ibm.com, sv@linux.ibm.com, shivani@linux.ibm.com,
  mkchauras@gmail.com, uverma@linux.ibm.com, nikhilks@linux.ibm.com,
  Chinmay Rath <rathc@linux.ibm.com>
-Subject: [RFC PATCH 22/28] target/ppc: Move Fixed-Point Load/Store String
- instructions to decodetree.
-Date: Wed, 20 May 2026 21:37:22 +0530
-Message-ID: <20260520160728.2283628-23-rathc@linux.ibm.com>
+Subject: [RFC PATCH 15/28] target/ppc: move various conditional branch insns
+ to decodetree
+Date: Wed, 20 May 2026 21:37:15 +0530
+Message-ID: <20260520160728.2283628-16-rathc@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520160728.2283628-1-rathc@linux.ibm.com>
 References: <20260520160728.2283628-1-rathc@linux.ibm.com>
@@ -77,30 +77,30 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDE1NiBTYWx0ZWRfX5N9R/MsuoAK3
- e5jAGn7uHRat+uEfIhEf5T7Hp9+ZR3suuO4isGB05nTnqMHYeglyD7PZ2zYhoNxfrYLw8TEEEJC
- 4QSLB3m+uEC3O1WSl2PKUakPyPiqBjyHNbHwipUe2VzOv33SHoqDFPsXUPIm/SgndnpHRSyMShx
- BM+toSt3Hs3ecVo1PNflUqLv+7JeobsqO6TC2rRx3OqQEt/l9RZ/6ejFACCgQzZ7fR9mB7fiOgs
- 2sJz5Xtaj5LYU4HjvPbTTUyMb0Es2mB+rECptfRHpIatMpklfl96Lw67rBuhUQ7n65jc9u0p9JN
- TP0r38j3boguu5mVr3YYIXWkdnBeBzoti3TDlokMy1tboDaAAtUKrhVSWLlnDmlTNZsT4WIrZ1J
- ei8BJvKR73pIGhmB9OfalOO6Le4b4niIGUfB0dLN/dDgMAiq82jgTVnfMTaTjXlQX7H3Lc9uizb
- 5s350QQKdOYp/+dfOMg==
-X-Authority-Analysis: v=2.4 cv=BNuDalQG c=1 sm=1 tr=0 ts=6a0ddcde cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDE1NiBTYWx0ZWRfX0CKju6ZqtS4T
+ 2oRpU4Z8ljdl4MsW75LQfyZQsAze6Ud0AHsdU2E0iblNyf89DkBTUiOi/2WNvr9IGNdpP1Z7M1K
+ NmxJfoG9YoYSuDNJwaCtmt1NMuqXp7blZPlveZbE94mc49Fx4tkk2T6LUbno3WZXyzCot3h3tmP
+ zoD4a6bKQ93XrV3u66XLByWXveRqfx1i5xPVUsY3YNMs7wA32PgJkp3ujK2qJE/D8M/c/Ir3RH4
+ LcqM+FPILhAHWn+OtbEXTjl3y0kdbDp9A3LkU9e7KByaRa1R5GCbxWjOCrjGFCCtVDqpfJBswmg
+ c3HuBXgzxVRPw/bs+YChV4jmPeZmlo4KeNqywYfxBgPUA4FF/BEHh06Dwt6gtf/5cyF4xCmWhhi
+ BE39V1oJ8Jisbz2tWxDlgO476b3256XVCnJbCYtHdhzQyOR7baL6qdLckUaKeVUSvnw+tYJKVWC
+ aVGlo03rgYSS29zDGhQ==
+X-Proofpoint-GUID: Mg9wdufWrV-NRJx2ztjIpYnBFaCQG3AW
+X-Proofpoint-ORIG-GUID: r3wclB_-45Xrj8zowKdFSoSyY-tz4phk
+X-Authority-Analysis: v=2.4 cv=aYBRWxot c=1 sm=1 tr=0 ts=6a0ddcb2 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=6C3biiJAFINtBuO-NFUA:9
-X-Proofpoint-ORIG-GUID: 08uZo1TnDPZw8s3IE8JHrl7Zp97DfPHO
-X-Proofpoint-GUID: UaRfm4P-NHuVlHvk3PrPdm0ZdLtMK7im
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=CKxRzG1O2kzciCs865QA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-20_03,2026-05-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 malwarescore=0 impostorscore=0 suspectscore=0
- lowpriorityscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1015
+ impostorscore=0 adultscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0
+ clxscore=1015 spamscore=0 phishscore=0 priorityscore=1501 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605200156
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -123,327 +123,395 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
+From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 
-Move below instructions to decodetree specification :
+Convert the following instrunctions to decodetree specification:
 
-        lsw{i, x},
-        stsw{i, x}                       : X-form
+bc
+bca
+bcl
+bcla
 
-The changes were verified by validating that the tcg ops generated by
-those instructions remain the same, which were captured with the '-d
-in_asm,op' flag.
+bclr
+bclrl
 
-Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+bcctr
+bcctrl
+
+bctar
+bctarl
+
+The branch was tested by comparing the qemu -D log -d op,in_asm output for
+each instruction and also for the various combinations of branch option
+(BO) bits for the conditional branch instructions. Additionally, gdb
+was used to confirm the LR and other register's behavior is consistent
+to legacy behavior.
+
+Further, the changes also pass a boot test into Fedora distro.
+
+Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 ---
- target/ppc/helper.h                        |   6 +-
- target/ppc/insn32.decode                   |   7 ++
- target/ppc/mem_helper.c                    |   6 +-
- target/ppc/translate.c                     | 102 --------------------
- target/ppc/translate/fixedpoint-impl.c.inc | 103 +++++++++++++++++++++
- 5 files changed, 116 insertions(+), 108 deletions(-)
+ target/ppc/insn32.decode               |  13 ++
+ target/ppc/translate.c                 | 148 -----------------------
+ target/ppc/translate/branch-impl.c.inc | 157 +++++++++++++++++++++++++
+ 3 files changed, 170 insertions(+), 148 deletions(-)
 
-diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-index dacc4e223e..50493a72a5 100644
---- a/target/ppc/helper.h
-+++ b/target/ppc/helper.h
-@@ -45,9 +45,9 @@ DEF_HELPER_1(check_tlb_flush_global, void, env)
- 
- DEF_HELPER_3(lmw, void, env, tl, i32)
- DEF_HELPER_FLAGS_3(stmw, TCG_CALL_NO_WG, void, env, tl, i32)
--DEF_HELPER_4(lsw, void, env, tl, i32, i32)
--DEF_HELPER_5(lswx, void, env, tl, i32, i32, i32)
--DEF_HELPER_FLAGS_4(stsw, TCG_CALL_NO_WG, void, env, tl, i32, i32)
-+DEF_HELPER_4(LSW, void, env, tl, i32, i32)
-+DEF_HELPER_5(LSWX, void, env, tl, i32, i32, i32)
-+DEF_HELPER_FLAGS_4(STSW, TCG_CALL_NO_WG, void, env, tl, i32, i32)
- DEF_HELPER_FLAGS_3(DCBZ, TCG_CALL_NO_WG, void, env, tl, int)
- #ifdef TARGET_PPC64
- DEF_HELPER_FLAGS_2(DCBZL, TCG_CALL_NO_WG, void, env, tl)
 diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index f3a1f7970e..0ec9a4d5de 100644
+index b98fe01a84..34b36cbef6 100644
 --- a/target/ppc/insn32.decode
 +++ b/target/ppc/insn32.decode
-@@ -527,6 +527,13 @@ CREQV           010011 ..... ..... ..... 0100100001 -  @X
- CRANDC          010011 ..... ..... ..... 0010000001 -  @X
- CRORC           010011 ..... ..... ..... 0110100001 -  @X
+@@ -1485,6 +1485,19 @@ CLRBHRB         011111 ----- ----- ----- 0110101110 -
  
-+# Fixed Point Move Assist Instructions
+ B               010010 ........................ . .  @I_b
+ 
++%bd             2:14 !function=times_4
++&bcond          bo:uint32_t bi bd aa:bool lk:bool
++@B_bcond        ...... bo:5 bi:5 .............. aa:1 lk:1 &bcond bd=%bd
 +
-+LSWI            011111 ..... ..... ..... 1 001010101 -  @X
-+LSWX            011111 ..... ..... ..... 1 000010101 -  @X
-+STSWI           011111 ..... ..... ..... 1 011010101 -  @X
-+STSWX           011111 ..... ..... ..... 1 010010101 -  @X
++BC              010000 ..... ..... .............. . .  @B_bcond
 +
- # Fixed-Point Hash Instructions
++&bclr          bo bi bh lk:bool
++@XL_bclr       ...... bo:5 bi:5 --- bh:2 .......... lk:1 &bclr
++
++BCLR            010011 ..... ..... ---.. 0000010000 . @XL_bclr
++BCCTR           010011 ..... ..... ---.. 1000010000 . @XL_bclr
++BCTAR           010011 ..... ..... ---.. 1000110000 . @XL_bclr
++
+ ## Misc POWER instructions
  
- HASHST          011111 ..... ..... ..... 1011010010 .   @X_DW
-diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
-index 5d3d377261..303eec4ee5 100644
---- a/target/ppc/mem_helper.c
-+++ b/target/ppc/mem_helper.c
-@@ -190,7 +190,7 @@ static void do_lsw(CPUPPCState *env, target_ulong addr, uint32_t nb,
-     env->gpr[reg] = val;
- }
- 
--void helper_lsw(CPUPPCState *env, target_ulong addr,
-+void helper_LSW(CPUPPCState *env, target_ulong addr,
-                 uint32_t nb, uint32_t reg)
- {
-     do_lsw(env, addr, nb, reg, GETPC());
-@@ -202,7 +202,7 @@ void helper_lsw(CPUPPCState *env, target_ulong addr,
-  * this is valid, but rA won't be loaded.  For now, I'll follow the
-  * spec...
-  */
--void helper_lswx(CPUPPCState *env, target_ulong addr, uint32_t reg,
-+void helper_LSWX(CPUPPCState *env, target_ulong addr, uint32_t reg,
-                  uint32_t ra, uint32_t rb)
- {
-     if (likely(xer_bc != 0)) {
-@@ -218,7 +218,7 @@ void helper_lswx(CPUPPCState *env, target_ulong addr, uint32_t reg,
-     }
- }
- 
--void helper_stsw(CPUPPCState *env, target_ulong addr, uint32_t nb,
-+void helper_STSW(CPUPPCState *env, target_ulong addr, uint32_t nb,
-                  uint32_t reg)
- {
-     uintptr_t raddr = GETPC();
+ ATTN            000000 00000 00000 00000 0100000000 0
 diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 85bdb7deab..fc107399db 100644
+index 37a164951f..22125c30a5 100644
 --- a/target/ppc/translate.c
 +++ b/target/ppc/translate.c
-@@ -2597,104 +2597,6 @@ static void gen_stmw(DisasContext *ctx)
-     gen_helper_stmw(tcg_env, t0, t1);
+@@ -3089,150 +3089,6 @@ static inline void gen_setlr(DisasContext *ctx, target_ulong nip)
+     tcg_gen_movi_tl(cpu_lr, nip);
  }
  
--/***                    Integer load and store strings                     ***/
+-#define BCOND_IM  0
+-#define BCOND_LR  1
+-#define BCOND_CTR 2
+-#define BCOND_TAR 3
 -
--/* lswi */
--/*
-- * PowerPC32 specification says we must generate an exception if rA is
-- * in the range of registers to be loaded.  In an other hand, IBM says
-- * this is valid, but rA won't be loaded.  For now, I'll follow the
-- * spec...
-- */
--static void gen_lswi(DisasContext *ctx)
+-static void gen_bcond(DisasContext *ctx, int type)
 -{
--    TCGv t0;
--    TCGv_i32 t1, t2;
--    int nb = NB(ctx->opcode);
--    int start = rD(ctx->opcode);
--    int ra = rA(ctx->opcode);
--    int nr;
+-    uint32_t bo = BO(ctx->opcode);
+-    TCGLabel *l1;
+-    TCGv target;
+-    target_long bhrb_type = BHRB_TYPE_OTHER;
 -
--    if (ctx->le_mode) {
--        gen_align_no_le(ctx);
--        return;
+-    if (type == BCOND_LR || type == BCOND_CTR || type == BCOND_TAR) {
+-        target = tcg_temp_new();
+-        if (type == BCOND_CTR) {
+-            tcg_gen_mov_tl(target, cpu_ctr);
+-        } else if (type == BCOND_TAR) {
+-            gen_load_spr(target, SPR_TAR);
+-        } else {
+-            tcg_gen_mov_tl(target, cpu_lr);
+-        }
+-        if (!LK(ctx->opcode)) {
+-            bhrb_type |= BHRB_TYPE_INDIRECT;
+-        }
+-        bhrb_type |= BHRB_TYPE_XL_FORM;
+-    } else {
+-        target = NULL;
 -    }
--    if (nb == 0) {
--        nb = 32;
+-    if (LK(ctx->opcode)) {
+-        gen_setlr(ctx, ctx->base.pc_next);
+-        bhrb_type |= BHRB_TYPE_CALL;
 -    }
--    nr = DIV_ROUND_UP(nb, 4);
--    if (unlikely(lsw_reg_in_range(start, nr, ra))) {
--        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_LSWX);
--        return;
+-    l1 = gen_new_label();
+-    if ((bo & 0x4) == 0) {
+-        /* Decrement and test CTR */
+-        TCGv temp = tcg_temp_new();
+-
+-        if (type == BCOND_CTR) {
+-            /*
+-             * All ISAs up to v3 describe this form of bcctr as invalid but
+-             * some processors, ie. 64-bit server processors compliant with
+-             * arch 2.x, do implement a "test and decrement" logic instead,
+-             * as described in their respective UMs. This logic involves CTR
+-             * to act as both the branch target and a counter, which makes
+-             * it basically useless and thus never used in real code.
+-             *
+-             * This form was hence chosen to trigger extra micro-architectural
+-             * side-effect on real HW needed for the Spectre v2 workaround.
+-             * It is up to guests that implement such workaround, ie. linux, to
+-             * use this form in a way it just triggers the side-effect without
+-             * doing anything else harmful.
+-             */
+-            if (unlikely(!is_book3s_arch2x(ctx))) {
+-                gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
+-                return;
+-            }
+-
+-            if (NARROW_MODE(ctx)) {
+-                tcg_gen_ext32u_tl(temp, cpu_ctr);
+-            } else {
+-                tcg_gen_mov_tl(temp, cpu_ctr);
+-            }
+-            if (bo & 0x2) {
+-                tcg_gen_brcondi_tl(TCG_COND_NE, temp, 0, l1);
+-            } else {
+-                tcg_gen_brcondi_tl(TCG_COND_EQ, temp, 0, l1);
+-            }
+-            tcg_gen_subi_tl(cpu_ctr, cpu_ctr, 1);
+-        } else {
+-            tcg_gen_subi_tl(cpu_ctr, cpu_ctr, 1);
+-            if (NARROW_MODE(ctx)) {
+-                tcg_gen_ext32u_tl(temp, cpu_ctr);
+-            } else {
+-                tcg_gen_mov_tl(temp, cpu_ctr);
+-            }
+-            if (bo & 0x2) {
+-                tcg_gen_brcondi_tl(TCG_COND_NE, temp, 0, l1);
+-            } else {
+-                tcg_gen_brcondi_tl(TCG_COND_EQ, temp, 0, l1);
+-            }
+-        }
+-        bhrb_type |= BHRB_TYPE_COND;
 -    }
--    gen_set_access_type(ctx, ACCESS_INT);
--    t0 = tcg_temp_new();
--    gen_addr_register(ctx, t0);
--    t1 = tcg_constant_i32(nb);
--    t2 = tcg_constant_i32(start);
--    gen_helper_lsw(tcg_env, t0, t1, t2);
+-    if ((bo & 0x10) == 0) {
+-        /* Test CR */
+-        uint32_t bi = BI(ctx->opcode);
+-        uint32_t mask = 0x08 >> (bi & 0x03);
+-        TCGv_i32 temp = tcg_temp_new_i32();
+-
+-        if (bo & 0x8) {
+-            tcg_gen_andi_i32(temp, cpu_crf[bi >> 2], mask);
+-            tcg_gen_brcondi_i32(TCG_COND_EQ, temp, 0, l1);
+-        } else {
+-            tcg_gen_andi_i32(temp, cpu_crf[bi >> 2], mask);
+-            tcg_gen_brcondi_i32(TCG_COND_NE, temp, 0, l1);
+-        }
+-        bhrb_type |= BHRB_TYPE_COND;
+-    }
+-
+-    gen_update_branch_history(ctx, ctx->cia, target, bhrb_type);
+-
+-    if (type == BCOND_IM) {
+-        target_ulong li = (target_long)((int16_t)(BD(ctx->opcode)));
+-        if (likely(AA(ctx->opcode) == 0)) {
+-            gen_goto_tb(ctx, 0, ctx->cia + li);
+-        } else {
+-            gen_goto_tb(ctx, 0, li);
+-        }
+-    } else {
+-        if (NARROW_MODE(ctx)) {
+-            tcg_gen_andi_tl(cpu_nip, target, (uint32_t)~3);
+-        } else {
+-            tcg_gen_andi_tl(cpu_nip, target, ~3);
+-        }
+-        gen_lookup_and_goto_ptr(ctx);
+-    }
+-    if ((bo & 0x14) != 0x14) {
+-        /* fallthrough case */
+-        gen_set_label(l1);
+-        gen_goto_tb(ctx, 1, ctx->base.pc_next);
+-    }
+-    ctx->base.is_jmp = DISAS_NORETURN;
 -}
 -
--/* lswx */
--static void gen_lswx(DisasContext *ctx)
+-static void gen_bc(DisasContext *ctx)
 -{
--    TCGv t0;
--    TCGv_i32 t1, t2, t3;
--
--    if (ctx->le_mode) {
--        gen_align_no_le(ctx);
--        return;
--    }
--    gen_set_access_type(ctx, ACCESS_INT);
--    t0 = tcg_temp_new();
--    gen_addr_reg_index(ctx, t0);
--    t1 = tcg_constant_i32(rD(ctx->opcode));
--    t2 = tcg_constant_i32(rA(ctx->opcode));
--    t3 = tcg_constant_i32(rB(ctx->opcode));
--    gen_helper_lswx(tcg_env, t0, t1, t2, t3);
+-    gen_bcond(ctx, BCOND_IM);
 -}
 -
--/* stswi */
--static void gen_stswi(DisasContext *ctx)
+-static void gen_bcctr(DisasContext *ctx)
 -{
--    TCGv t0;
--    TCGv_i32 t1, t2;
--    int nb = NB(ctx->opcode);
--
--    if (ctx->le_mode) {
--        gen_align_no_le(ctx);
--        return;
--    }
--    gen_set_access_type(ctx, ACCESS_INT);
--    t0 = tcg_temp_new();
--    gen_addr_register(ctx, t0);
--    if (nb == 0) {
--        nb = 32;
--    }
--    t1 = tcg_constant_i32(nb);
--    t2 = tcg_constant_i32(rS(ctx->opcode));
--    gen_helper_stsw(tcg_env, t0, t1, t2);
+-    gen_bcond(ctx, BCOND_CTR);
 -}
 -
--/* stswx */
--static void gen_stswx(DisasContext *ctx)
+-static void gen_bclr(DisasContext *ctx)
 -{
--    TCGv t0;
--    TCGv_i32 t1, t2;
--
--    if (ctx->le_mode) {
--        gen_align_no_le(ctx);
--        return;
--    }
--    gen_set_access_type(ctx, ACCESS_INT);
--    t0 = tcg_temp_new();
--    gen_addr_reg_index(ctx, t0);
--    t1 = tcg_temp_new_i32();
--    tcg_gen_trunc_tl_i32(t1, cpu_xer);
--    tcg_gen_andi_i32(t1, t1, 0x7F);
--    t2 = tcg_constant_i32(rS(ctx->opcode));
--    gen_helper_stsw(tcg_env, t0, t1, t2);
+-    gen_bcond(ctx, BCOND_LR);
 -}
- 
- #if !defined(CONFIG_USER_ONLY)
- static inline void gen_check_tlb_flush(DisasContext *ctx, bool global)
-@@ -4940,10 +4842,6 @@ GEN_HANDLER_E(dform39, 0x39, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
- GEN_HANDLER_E(dform3D, 0x3D, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
- GEN_HANDLER(lmw, 0x2E, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
- GEN_HANDLER(stmw, 0x2F, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
--GEN_HANDLER(lswi, 0x1F, 0x15, 0x12, 0x00000001, PPC_STRING),
--GEN_HANDLER(lswx, 0x1F, 0x15, 0x10, 0x00000001, PPC_STRING),
--GEN_HANDLER(stswi, 0x1F, 0x15, 0x16, 0x00000001, PPC_STRING),
--GEN_HANDLER(stswx, 0x1F, 0x15, 0x14, 0x00000001, PPC_STRING),
+-
+-static void gen_bctar(DisasContext *ctx)
+-{
+-    gen_bcond(ctx, BCOND_TAR);
+-}
+-
+ /***                      Condition register logical                       ***/
+ #define GEN_CRLOGIC(name, tcg_op, opc)                                        \
+ static void glue(gen_, name)(DisasContext *ctx)                               \
+@@ -5367,10 +5223,6 @@ GEN_HANDLER(stswx, 0x1F, 0x15, 0x14, 0x00000001, PPC_STRING),
  /* ISA v3.0 changed the extended opcode from 62 to 30 */
+ GEN_HANDLER(wait, 0x1F, 0x1E, 0x01, 0x039FF801, PPC_WAIT),
+ GEN_HANDLER_E(wait, 0x1F, 0x1E, 0x00, 0x039CF801, PPC_NONE, PPC2_ISA300),
+-GEN_HANDLER(bc, 0x10, 0xFF, 0xFF, 0x00000000, PPC_FLOW),
+-GEN_HANDLER(bcctr, 0x13, 0x10, 0x10, 0x00000000, PPC_FLOW),
+-GEN_HANDLER(bclr, 0x13, 0x10, 0x00, 0x00000000, PPC_FLOW),
+-GEN_HANDLER_E(bctar, 0x13, 0x10, 0x11, 0x0000E000, PPC_NONE, PPC2_BCTAR_ISA207),
  GEN_HANDLER(rfi, 0x13, 0x12, 0x01, 0x03FF8001, PPC_FLOW),
  #if defined(TARGET_PPC64)
-diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
-index 26b308e435..76b1011fad 100644
---- a/target/ppc/translate/fixedpoint-impl.c.inc
-+++ b/target/ppc/translate/fixedpoint-impl.c.inc
-@@ -585,6 +585,109 @@ TRANS(CRANDC, cr_logic_common, tcg_gen_andc_i32);
- TRANS(CREQV, cr_logic_common, tcg_gen_eqv_i32);
- TRANS(CRORC, cr_logic_common, tcg_gen_orc_i32);
+ GEN_HANDLER(rfid, 0x13, 0x12, 0x00, 0x03FF8001, PPC_64B),
+diff --git a/target/ppc/translate/branch-impl.c.inc b/target/ppc/translate/branch-impl.c.inc
+index 745f71afd1..44ed40422e 100644
+--- a/target/ppc/translate/branch-impl.c.inc
++++ b/target/ppc/translate/branch-impl.c.inc
+@@ -55,3 +55,160 @@ static bool trans_B(DisasContext *ctx, arg_I_b *a)
  
+     return true;
+ }
 +
-+/***                    Integer load and store strings                     ***/
++#define BCOND_IM  0
++#define BCOND_LR  1
++#define BCOND_CTR 2
++#define BCOND_TAR 3
 +
-+/* lswi */
-+static bool trans_LSWI(DisasContext *ctx, arg_LSWI *a)
++static bool bcond_helper(DisasContext *ctx, int type, uint32_t bo, int bi,
++                         int bd, int bh, bool aa, bool lk)
 +{
-+    TCGv t0;
-+    TCGv_i32 t1, t2;
-+    int nb = a->rb;
-+    int start = a->rt;
-+    int ra = a->ra;
-+    int nr;
++    TCGLabel *l1;
++    TCGv target;
++    target_long bhrb_type = BHRB_TYPE_OTHER;
 +
-+    if (ctx->le_mode) {
-+        gen_align_no_le(ctx);
-+        return true;
++    if (type == BCOND_IM && bh != -1) {
++        /* BCOND_IM should never use bh */
++        return false;
++    } else if (type != BCOND_IM && (bd != -1 || aa != 0)) {
++        /* Other BCOND types should never use bd or aa */
++        return false;
 +    }
-+    if (nb == 0) {
-+        nb = 32;
++
++    if (type == BCOND_LR || type == BCOND_CTR || type == BCOND_TAR) {
++        target = tcg_temp_new();
++        if (type == BCOND_CTR) {
++            tcg_gen_mov_tl(target, cpu_ctr);
++        } else if (type == BCOND_TAR) {
++            gen_load_spr(target, SPR_TAR);
++        } else {
++            tcg_gen_mov_tl(target, cpu_lr);
++        }
++        if (!lk) {
++            bhrb_type |= BHRB_TYPE_INDIRECT;
++        }
++        bhrb_type |= BHRB_TYPE_XL_FORM;
++    } else {
++        target = NULL;
 +    }
-+    nr = DIV_ROUND_UP(nb, 4);
-+    if (unlikely(lsw_reg_in_range(start, nr, ra))) {
-+        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_LSWX);
-+        return true;
++    if (lk) {
++        gen_setlr(ctx, ctx->base.pc_next);
++        bhrb_type |= BHRB_TYPE_CALL;
 +    }
-+    gen_set_access_type(ctx, ACCESS_INT);
-+    t0 = tcg_temp_new();
-+    gen_addr_register(ctx, t0);
-+    t1 = tcg_constant_i32(nb);
-+    t2 = tcg_constant_i32(start);
-+    gen_helper_LSW(tcg_env, t0, t1, t2);
++    l1 = gen_new_label();
++    if ((bo & 0x4) == 0) {
++        /* Decrement and test CTR */
++        TCGv temp = tcg_temp_new();
++
++        if (type == BCOND_CTR) {
++            /*
++             * All ISAs up to v3 describe this form of bcctr as invalid but
++             * some processors, ie. 64-bit server processors compliant with
++             * arch 2.x, do implement a "test and decrement" logic instead,
++             * as described in their respective UMs. This logic involves CTR
++             * to act as both the branch target and a counter, which makes
++             * it basically useless and thus never used in real code.
++             *
++             * This form was hence chosen to trigger extra micro-architectural
++             * side-effect on real HW needed for the Spectre v2 workaround.
++             * It is up to guests that implement such workaround, ie. linux, to
++             * use this form in a way it just triggers the side-effect without
++             * doing anything else harmful.
++             */
++            if (unlikely(!is_book3s_arch2x(ctx))) {
++                gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
++                return true;
++            }
++
++            if (NARROW_MODE(ctx)) {
++                tcg_gen_ext32u_tl(temp, cpu_ctr);
++            } else {
++                tcg_gen_mov_tl(temp, cpu_ctr);
++            }
++            if (bo & 0x2) {
++                tcg_gen_brcondi_tl(TCG_COND_NE, temp, 0, l1);
++            } else {
++                tcg_gen_brcondi_tl(TCG_COND_EQ, temp, 0, l1);
++            }
++            tcg_gen_subi_tl(cpu_ctr, cpu_ctr, 1);
++        } else {
++            tcg_gen_subi_tl(cpu_ctr, cpu_ctr, 1);
++            if (NARROW_MODE(ctx)) {
++                tcg_gen_ext32u_tl(temp, cpu_ctr);
++            } else {
++                tcg_gen_mov_tl(temp, cpu_ctr);
++            }
++            if (bo & 0x2) {
++                tcg_gen_brcondi_tl(TCG_COND_NE, temp, 0, l1);
++            } else {
++                tcg_gen_brcondi_tl(TCG_COND_EQ, temp, 0, l1);
++            }
++        }
++        bhrb_type |= BHRB_TYPE_COND;
++    }
++    if ((bo & 0x10) == 0) {
++        /* Test CR */
++        uint32_t mask = 0x08 >> (bi & 0x03);
++        TCGv_i32 temp = tcg_temp_new_i32();
++
++        if (bo & 0x8) {
++            tcg_gen_andi_i32(temp, cpu_crf[bi >> 2], mask);
++            tcg_gen_brcondi_i32(TCG_COND_EQ, temp, 0, l1);
++        } else {
++            tcg_gen_andi_i32(temp, cpu_crf[bi >> 2], mask);
++            tcg_gen_brcondi_i32(TCG_COND_NE, temp, 0, l1);
++        }
++        bhrb_type |= BHRB_TYPE_COND;
++    }
++
++    gen_update_branch_history(ctx, ctx->cia, target, bhrb_type);
++
++    if (type == BCOND_IM) {
++        target_ulong li = (target_long)((int16_t)(bd));
++        if (likely(aa == 0)) {
++            gen_goto_tb(ctx, 0, ctx->cia + li);
++        } else {
++            gen_goto_tb(ctx, 0, li);
++        }
++    } else {
++        if (NARROW_MODE(ctx)) {
++            tcg_gen_andi_tl(cpu_nip, target, (uint32_t)~3);
++        } else {
++            tcg_gen_andi_tl(cpu_nip, target, ~3);
++        }
++        gen_lookup_and_goto_ptr(ctx);
++    }
++    if ((bo & 0x14) != 0x14) {
++        /* fallthrough case */
++        gen_set_label(l1);
++        gen_goto_tb(ctx, 1, ctx->base.pc_next);
++    }
++    ctx->base.is_jmp = DISAS_NORETURN;
 +
 +    return true;
 +}
 +
-+/* lswx */
-+static bool trans_LSWX(DisasContext *ctx, arg_LSWX *a)
++static bool trans_BC(DisasContext *ctx, arg_bcond *a)
 +{
-+    TCGv t0;
-+    TCGv_i32 t1, t2, t3;
-+
-+    if (ctx->le_mode) {
-+        gen_align_no_le(ctx);
-+        return true;
-+    }
-+
-+    gen_set_access_type(ctx, ACCESS_INT);
-+    t0 = tcg_temp_new();
-+    gen_addr_reg_index(ctx, t0);
-+    t1 = tcg_constant_i32(a->rt);
-+    t2 = tcg_constant_i32(a->ra);
-+    t3 = tcg_constant_i32(a->rb);
-+    gen_helper_LSWX(tcg_env, t0, t1, t2, t3);
-+
-+    return true;
++    /*
++     * bh is not used for bc variants hence we pass -1
++     */
++    return bcond_helper(ctx, BCOND_IM, a->bo, a->bi, a->bd, -1, a->aa, a->lk);
 +}
 +
-+/* stswi */
-+static bool trans_STSWI(DisasContext *ctx, arg_STSWI *a)
++/*
++ * This helper is shared by bclr, bcctr and bctar.
++ */
++static bool bclr_helper(DisasContext *ctx, arg_bclr *a, int type)
 +{
-+    TCGv t0;
-+    TCGv_i32 t1, t2;
-+    int nb = a->rb;
-+
-+    if (ctx->le_mode) {
-+        gen_align_no_le(ctx);
-+        return true;
-+    }
-+    gen_set_access_type(ctx, ACCESS_INT);
-+    t0 = tcg_temp_new();
-+    gen_addr_register(ctx, t0);
-+    if (nb == 0) {
-+        nb = 32;
-+    }
-+    t1 = tcg_constant_i32(nb);
-+    t2 = tcg_constant_i32(a->rt);
-+    gen_helper_STSW(tcg_env, t0, t1, t2);
-+
-+    return true;
++    /*
++     * bd and aa is not used for bc variants hence we pass -1 and 0 respectively
++     */
++    return bcond_helper(ctx, type, a->bo, a->bi, -1, a->bh, 0, a->lk);
 +}
 +
-+/* stswx */
-+static bool trans_STSWX(DisasContext *ctx, arg_STSWX *a)
-+{
-+    TCGv t0;
-+    TCGv_i32 t1, t2;
++TRANS(BCLR, bclr_helper, BCOND_LR)
++TRANS(BCCTR, bclr_helper, BCOND_CTR)
++TRANS(BCTAR, bclr_helper, BCOND_TAR)
 +
-+    if (ctx->le_mode) {
-+        gen_align_no_le(ctx);
-+        return true;
-+    }
-+    gen_set_access_type(ctx, ACCESS_INT);
-+    t0 = tcg_temp_new();
-+    gen_addr_reg_index(ctx, t0);
-+    t1 = tcg_temp_new_i32();
-+    tcg_gen_trunc_tl_i32(t1, cpu_xer);
-+    tcg_gen_andi_i32(t1, t1, 0x7F);
-+    t2 = tcg_constant_i32(a->rt);
-+    gen_helper_STSW(tcg_env, t0, t1, t2);
-+
-+    return true;
-+}
-+
- static bool do_add_D(DisasContext *ctx, arg_D *a, bool add_ca, bool compute_ca,
-                      bool compute_ov, bool compute_rc0)
- {
 -- 
 2.53.0
 
