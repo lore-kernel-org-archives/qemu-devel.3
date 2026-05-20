@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF45DCD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:35:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8B25CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:35:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPoYl-00015i-Lx; Wed, 20 May 2026 17:34:35 -0400
+	id 1wPoZC-00024G-L4; Wed, 20 May 2026 17:35:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoYk-00015U-TJ
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:34:34 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoZA-0001zE-Uz
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:35:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoYi-0007F8-W2
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:34:34 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPoZ9-0007Mh-G0
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:35:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779312872;
+ s=mimecast20190719; t=1779312898;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7f6K3MBcV2u7y7s25cXpahSIeN8CJUpok59sEYFMOnM=;
- b=M+DG9UaywNVO8qxAagSh4XhRXNsGys4Y3q+1sn5qhK09mXTIWklKvyDTMFpsWHepZjwihi
- cA78NF77tWe6ufBiCX6XVnHeQ8PYW+aN50PiEe0xohHqvc6hSNNI9qu2ioPthbRHK+dj34
- 4ARa4rjjaDKCDhhJmjCoMza4AXTlhpI=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8TylKlVXWNtUVl8Uzn5nHhOOFc5t1shMCS/NhQwh3Ug=;
+ b=aCWJRuJMB0UnmAn5RV1ofAC6Z3xAllAwAW7NoQh9rF9nE4Qdc0wA64gmFu4TVXHc2ZT/x9
+ Lw/rqzxtClW26DXeSfYgCW9EbHj5aHmcQmFL0nszsRXrPU1tQGDi0uA2Flr9q/54lfSA8W
+ nU5W/OeuXEjI8e/WqWajBDLpScvVvDw=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-627-IvhPcS8SNmu7VPGyIZ6amA-1; Wed, 20 May 2026 17:34:31 -0400
-X-MC-Unique: IvhPcS8SNmu7VPGyIZ6amA-1
-X-Mimecast-MFC-AGG-ID: IvhPcS8SNmu7VPGyIZ6amA_1779312870
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-8b4bebd2b2aso152650986d6.1
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 14:34:30 -0700 (PDT)
+ us-mta-195-VJxM0GksMRSh2WAJG8c1cA-1; Wed, 20 May 2026 17:34:57 -0400
+X-MC-Unique: VJxM0GksMRSh2WAJG8c1cA-1
+X-Mimecast-MFC-AGG-ID: VJxM0GksMRSh2WAJG8c1cA_1779312896
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-8acb85a973cso23117546d6.3
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 14:34:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779312870; x=1779917670; darn=nongnu.org;
+ d=redhat.com; s=google; t=1779312896; x=1779917696; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7f6K3MBcV2u7y7s25cXpahSIeN8CJUpok59sEYFMOnM=;
- b=cBRrbCTjQwn+BNAXDGtZBjDzQT6dL2tfnCQ+OIPOHf8WA244goQOJEmsy1aQPcHcvn
- 4fJbYwMe1T7uTDETorxaMK15GbNpBOqE0/D/6eyrtgSfqMMQa7NxNGyJ4xsrF0cb2At9
- Q0eajChN4DuaOy1wv7re0OhMCqVGa+k4DQBcAqHxqHN3dVZRQpnFxgg9juNhRHBK0I3+
- /9z4XSYSr0T3IRWyNMGVWY/JHP7h1IRbgM9j5VNYwdEASHi7+Mbizd2bGXy5IxPCtAQ1
- itSlDWoTfxEd62cFV+f56dpjVhTjy+hzdUEXV7IVtiHGgIY9s5jCV/FvIyMzeZVKheDk
- QeFA==
+ bh=8TylKlVXWNtUVl8Uzn5nHhOOFc5t1shMCS/NhQwh3Ug=;
+ b=ZIHhxV0cO+qhwxCCU53YS9k1WGYNLrfwje9+KOqUEkcuqlprpEdKxnnxP9RVv/VrRr
+ bkko4BJeEAKO9b0knlFV20lwhP1EOfScPE5sSoG8kmFq0B/dx+NeLgSZrZlXH4RWI25w
+ tpisCR/JMn8aO/ZM/nPPcSURQpNBalKADpbq/fkUlMhzaElJ+0vDxLkEtzpDhq3N4Ahf
+ djRvB9WIlpL27y/eofHsQBXKYpN0ynONboiTIbwCYPrydKYpljrUs43BiXuW0y7iAeAk
+ +SeCwKi29oaG4bjSg9gZ4v9xsq7l0seovyeWLHaRgwh7YREppNcTud5QRXWJEERvlJcc
+ HYcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779312870; x=1779917670;
+ d=1e100.net; s=20251104; t=1779312896; x=1779917696;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=7f6K3MBcV2u7y7s25cXpahSIeN8CJUpok59sEYFMOnM=;
- b=F6wzVgP2iFNYLgQOJlkiT1+zpezifFW2TEzHafjGBpSzgnFTfQsDtpMmhXETv3aVRg
- b7z3VdCeBO8K1Yl0mR40CcQfTts/5pZC8WUkc/kLt8kPIwf9tZrjAW2wo8ee8XXIX1dh
- T5pl+nrtDW01fkwMbuRPEsl5N4TUX++PjFRwqxKdTuZUU1EIXfVUiopRdOVpJUEthOzn
- 3z1XrkDauGgorBYkZyb1tO+SFxExCGE3/C/hFO3nlFAVpZ31xjVPLTWHBEE1h5yG86uT
- 10yORZzKUF3nmmGoVZobpFIp5zd3BjN3KQ3/4rj8caJAp6Uc+k1teS8bmRtOa3CvDOEV
- sL+A==
-X-Gm-Message-State: AOJu0YyX36W8MTWtca5rYMJ+iWKwQdf3//NWcBsdRKJnS4p6caL9WMS9
- YoCoP/6L1/YGfNkmyAyfi9vcBp3fjh4VMqVviUfKSIqlXPEBdzFmAH4YdjgC68hxzw/u4naXQ2b
- PnqeeJVk5spEIUxByQI3c+Oz6fweQJx6kjW35Cnv7BrJ+mFNdEEQusjHS2vNYFZFjVFIu6w3x6o
- M6tyPgE7KFGQB5oN498OwAydivPfaRtpsGp0xwZw==
-X-Gm-Gg: Acq92OGm79HTjFUE2pVWXr5Sz12LkmHZBw+bA+sRTe5aLqc9+qKzYgRgMYcUZ87Rn/2
- abddyGBEJJ6FZXIWL67D7WNhcaBveWNU3a0P7TW6Qz7LYanfkhMQ03aK7d+aF0AbkpcctEojctL
- h3xph4VrPRY7ZIqWg+h4YUzCshVmsN3BZDfsHtHSAfqPoxADMbtbIUfmwuNOltTXrXJMSQbK8/L
- 8CFxS08sORU1VXfv4cO3ZVVc0NhFwEPzDg/uMYdMa4NxXSbQaA5S/nYsxlc/B3isUc0w5rjSZlU
- 3PMA2ZUA99DcvEgt3wm5jbe2YW1kv1HRYZy6p/ur0n3N0jPPbFHEE3BLc6v3dINI7HXnq/SwVTM
- Yc85Q1wSzKAHnmqUZ6YgLZmdJzZstQtUy0JS+J330aWHe
-X-Received: by 2002:a05:6214:5403:b0:89c:6692:1d83 with SMTP id
- 6a1803df08f44-8cc6e8fc4f7mr2235066d6.3.1779312870234; 
- Wed, 20 May 2026 14:34:30 -0700 (PDT)
-X-Received: by 2002:a05:6214:5403:b0:89c:6692:1d83 with SMTP id
- 6a1803df08f44-8cc6e8fc4f7mr2234636d6.3.1779312869712; 
- Wed, 20 May 2026 14:34:29 -0700 (PDT)
+ bh=8TylKlVXWNtUVl8Uzn5nHhOOFc5t1shMCS/NhQwh3Ug=;
+ b=Dx2RwclSIjB9CXd79lIxZHPzm3WsBSxHNWN/jASK2rxycjlBMaN44noUfhp8jge3Xb
+ sYbuobdovKk5NAV6VsOL0GTrxllZX6knNUyMHvC3caV7oID0ZWhDNzz40WQwMX6NMn3q
+ iGOeBrpU4dbAN+K0kXY+UTgdVHZwBhHV+ArFR1fta9bGe79U4j4jpkp9wBi0/S4GROeD
+ BAdFJHpkOyAwy5uWbiMDEPCobJPUpqBuBVpCzXPBVTT9WhDGScAJI0S/45be578xpiYU
+ JtyoUPjTaWqK2JnOPTSmpDtoE+oshAe21pUhERQ6DoJHes9WdK6I8sP/bJzMHB72OAcX
+ sczA==
+X-Gm-Message-State: AOJu0YwQZqmb/54Fl89049K+1MAe+aPbGzVbNVbOoe0YRcz2NQMWIlqq
+ 1obfnB0zlSh30EkSB1kxG+y10WXrkYbHTlhBOhMzc9UGy6pIktWBpX8IZ0f+ACb9doLUS4THkHq
+ rAzUekcBEF95409huonEk5G8TQLS9a/Ygn4XqAnJG6w/lsK5Cndy6Fp7KDpycOqvQ1cRRcFtqrm
+ OmY8iS74UX35eM0l4F9l8hn27rWtFHKf0FyxfIYA==
+X-Gm-Gg: Acq92OHqTe4NYwZdArJqa2asKL4ubTP82T3WyOEdclrmu8CJIvRBH+FizyGRuC0qgQ6
+ 7YnufEx06KGJosmwNdnm64tQP+sIwvwqGLdODUEqCd+CcZzO6vLNPAcTkEXPAjQ9pW7aoEPiTbb
+ zbge+54Ps0IAVLKRXtUn8g+/EUDRerAGO6kzgij8KJO8RdcGrn+jWA/tljdIvWHwRnbo234wFC/
+ L0cYAa05q/SvMXlGnqKCReUDHj1kkzuKx37FJnw89odpxkC9UeVM0i5LYLD6wqlsCrlkVHNYaXv
+ vfW2RonNYpWtfV8gQwzTWqyteclrGcwUntjnfcYhyEWGeK7F078Gu8puGm3csdCUX3ZSePZUomz
+ mDTOKuMBy3TKLwVEYpbOydouZfuKX+6XiZUmmNgmcomuJ
+X-Received: by 2002:a05:6214:5094:b0:8ac:a744:7789 with SMTP id
+ 6a1803df08f44-8cc6e2d3304mr4755486d6.5.1779312896525; 
+ Wed, 20 May 2026 14:34:56 -0700 (PDT)
+X-Received: by 2002:a05:6214:5094:b0:8ac:a744:7789 with SMTP id
+ 6a1803df08f44-8cc6e2d3304mr4754986d6.5.1779312895913; 
+ Wed, 20 May 2026 14:34:55 -0700 (PDT)
 Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8ca360b362fsm133062716d6.22.2026.05.20.14.34.26
+ 6a1803df08f44-8ca360b362fsm133062716d6.22.2026.05.20.14.34.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 14:34:27 -0700 (PDT)
+ Wed, 20 May 2026 14:34:54 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>,
-	Peter Xu <peterx@redhat.com>
-Subject: [PULL 10/29] tests/qtest/migration: Group unix migration tests
-Date: Wed, 20 May 2026 17:33:38 -0400
-Message-ID: <20260520213357.40646-11-peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
+ Bin Guo <guobin@linux.alibaba.com>
+Subject: [PULL 22/29] migration/global_state: replace strcpy("") with explicit
+ NUL termination
+Date: Wed, 20 May 2026 17:33:50 -0400
+Message-ID: <20260520213357.40646-23-peterx@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520213357.40646-1-peterx@redhat.com>
 References: <20260520213357.40646-1-peterx@redhat.com>
@@ -117,186 +118,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+From: Bin Guo <guobin@linux.alibaba.com>
 
-Remove some repetition when defining unix: tests by introducing a
-_common function.
+Drop the unnecessary strcpy of an empty literal (and its spurious
+(char *)& cast) in favor of a direct NUL store, which avoids the
+libc call and hides no bugs behind a cast.
 
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Link: https://lore.kernel.org/r/20260505160915.25558-5-farosas@suse.de
+Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/r/20260518110112.21395-3-guobin@linux.alibaba.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- tests/qtest/migration/framework.h         |  1 +
- tests/qtest/migration/compression-tests.c |  6 +----
- tests/qtest/migration/framework.c         |  9 +++++++
- tests/qtest/migration/precopy-tests.c     | 30 +++--------------------
- tests/qtest/migration/tls-tests.c         | 12 ++-------
- 5 files changed, 17 insertions(+), 41 deletions(-)
+ migration/global_state.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
-index 3ccc6a99d2..825209ee74 100644
---- a/tests/qtest/migration/framework.h
-+++ b/tests/qtest/migration/framework.h
-@@ -240,6 +240,7 @@ void test_postcopy_common(MigrateCommon *args);
- void test_postcopy_recovery_common(MigrateCommon *args,
-                                    PostcopyRecoveryFailStage fail_stage);
- int test_precopy_common(MigrateCommon *args);
-+void test_precopy_unix_common(MigrateCommon *args);
- void test_file_common(MigrateCommon *args, bool stop_src);
- void *migrate_hook_start_precopy_tcp_multifd_common(QTestState *from,
-                                                     QTestState *to,
-diff --git a/tests/qtest/migration/compression-tests.c b/tests/qtest/migration/compression-tests.c
-index 845e622cd5..7f2856b7f8 100644
---- a/tests/qtest/migration/compression-tests.c
-+++ b/tests/qtest/migration/compression-tests.c
-@@ -123,10 +123,6 @@ migrate_hook_start_xbzrle(QTestState *from,
- 
- static void test_precopy_unix_xbzrle(char *name, MigrateCommon *args)
+diff --git a/migration/global_state.c b/migration/global_state.c
+index c1f90fce0f..91fefdf525 100644
+--- a/migration/global_state.c
++++ b/migration/global_state.c
+@@ -148,7 +148,7 @@ static const VMStateDescription vmstate_globalstate = {
+ void register_global_state(void)
  {
--    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
--
--    args->connect_uri = uri;
--    args->listen_uri = uri;
-     args->start_hook = migrate_hook_start_xbzrle;
-     args->iterations = 2;
-     /*
-@@ -137,7 +133,7 @@ static void test_precopy_unix_xbzrle(char *name, MigrateCommon *args)
- 
-     args->start.caps[MIGRATION_CAPABILITY_XBZRLE] = true;
- 
--    test_precopy_common(args);
-+    test_precopy_unix_common(args);
+     /* We would use it independently that we receive it */
+-    strcpy((char *)&global_state.runstate, "");
++    global_state.runstate[0] = '\0';
+     global_state.received = false;
+     vmstate_register(NULL, 0, &vmstate_globalstate, &global_state);
  }
- 
- static void *
-diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-index 3802c6f57d..1d13b897a9 100644
---- a/tests/qtest/migration/framework.c
-+++ b/tests/qtest/migration/framework.c
-@@ -934,6 +934,15 @@ finish:
-     return 0;
- }
- 
-+void test_precopy_unix_common(MigrateCommon *args)
-+{
-+    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
-+
-+    args->listen_uri = uri;
-+    args->connect_uri = uri;
-+    test_precopy_common(args);
-+}
-+
- static void file_dirty_offset_region(void)
- {
-     g_autofree char *path = g_strdup_printf("%s/%s", tmpfs, FILE_TEST_FILENAME);
-diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-index 0426319199..849aef3ed6 100644
---- a/tests/qtest/migration/precopy-tests.c
-+++ b/tests/qtest/migration/precopy-tests.c
-@@ -37,62 +37,40 @@ static char *tmpfs;
- 
- static void test_precopy_unix_plain(char *name, MigrateCommon *args)
- {
--    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
--
--    args->listen_uri = uri;
--    args->connect_uri = uri;
-     /*
-      * The simplest use case of precopy, covering smoke tests of
-      * get-dirty-log dirty tracking.
-      */
-     args->live = true;
--
--    test_precopy_common(args);
-+    test_precopy_unix_common(args);
- }
- 
- static void test_precopy_unix_suspend_live(char *name, MigrateCommon *args)
- {
--    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
--
--    args->listen_uri = uri;
--    args->connect_uri = uri;
-     /*
-      * despite being live, the test is fast because the src
-      * suspends immediately.
-      */
-     args->live = true;
--
-     args->start.suspend_me = true;
--
--    test_precopy_common(args);
-+    test_precopy_unix_common(args);
- }
- 
- static void test_precopy_unix_suspend_notlive(char *name, MigrateCommon *args)
- {
--    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
--
--    args->listen_uri = uri;
--    args->connect_uri = uri;
-     args->start.suspend_me = true;
--
--    test_precopy_common(args);
-+    test_precopy_unix_common(args);
- }
- 
- static void test_precopy_unix_dirty_ring(char *name, MigrateCommon *args)
- {
--    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
--
--    args->listen_uri = uri;
--    args->connect_uri = uri;
-     /*
-      * Besides the precopy/unix basic test, cover dirty ring interface
-      * rather than get-dirty-log.
-      */
-     args->live = true;
--
-     args->start.use_dirty_ring = true;
--
--    test_precopy_common(args);
-+    test_precopy_unix_common(args);
- }
- 
- #ifdef CONFIG_RDMA
-diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
-index 87898af260..0677ca661e 100644
---- a/tests/qtest/migration/tls-tests.c
-+++ b/tests/qtest/migration/tls-tests.c
-@@ -424,14 +424,10 @@ static void test_multifd_postcopy_preempt_recovery_tls_psk(char *name,
- 
- static void test_precopy_unix_tls_psk(char *name, MigrateCommon *args)
- {
--    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
--
--    args->connect_uri = uri;
--    args->listen_uri = uri;
-     args->start_hook = migrate_hook_start_tls_psk_match;
-     args->end_hook = migrate_hook_end_tls_psk;
- 
--    test_precopy_common(args);
-+    test_precopy_unix_common(args);
- }
- 
- #ifdef CONFIG_TASN1
-@@ -454,14 +450,10 @@ static void test_precopy_unix_tls_x509_default_host(char *name,
- static void test_precopy_unix_tls_x509_override_host(char *name,
-                                                      MigrateCommon *args)
- {
--    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
--
--    args->connect_uri = uri;
--    args->listen_uri = uri;
-     args->start_hook = migrate_hook_start_tls_x509_override_host;
-     args->end_hook = migrate_hook_end_tls_x509;
- 
--    test_precopy_common(args);
-+    test_precopy_unix_common(args);
- }
- #endif /* CONFIG_TASN1 */
- 
 -- 
 2.53.0
 
