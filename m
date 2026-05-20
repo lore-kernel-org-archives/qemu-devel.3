@@ -4,96 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8B65CD5BAA
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 06:54:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5114CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 06:54:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPall-00088J-PR; Wed, 20 May 2026 02:51:06 -0400
+	id 1wPald-0007Pd-ND; Wed, 20 May 2026 02:50:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPalE-0004xX-G4
- for qemu-devel@nongnu.org; Wed, 20 May 2026 02:50:32 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPalC-0002QO-8Y
- for qemu-devel@nongnu.org; Wed, 20 May 2026 02:50:32 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-48a3e9862f0so25463175e9.1
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 23:50:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779259828; x=1779864628; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=vEEX0BGeOpdC6PRMC79+AEmIE2D1bdgwq6Zx6MnU4bI=;
- b=sXrKD7Yyh91AUeHNkF4zcthKcyzaah4yEERZnJOPtgabwrxGhE+wukUlNBCT0tCGPc
- /gXGlzzom3wgIXOylpzo5jKu740OQH5PXAxzzAXu9dOHFZvYdiO7gzLJX6eUbfBvFrjp
- qlYg+8Fib/u72SQ+fp5K6TECym1Jk1rqIRoXc80s0+wiAZtIFFET294PKD3aYmtzHZA4
- 0gLb4JCSRZ66hKgVPHYFtWEG8fGFrSVStWsi9USl/40Qg62PiQwk/jZwI7lyZrXm+CCz
- /SExfDTK1i00i0Tz28mucDPFmhaTQNPqlYinv38a3VewhC/aUMX1YCJXwCO41dVZfphq
- XJCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779259828; x=1779864628;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=vEEX0BGeOpdC6PRMC79+AEmIE2D1bdgwq6Zx6MnU4bI=;
- b=iTOx28lu0dweQ4Ror7x+wcVNn1G1HHKMwsggBBOavk9EDIb9bP62p1twGxSRzdqjv4
- 6XMTMkusxJVcNE2FJh3gRRsbYSkSoIcYft3QuruGb7GYayPZeAFAbH/6W7gaT+I/fGkx
- D0hHj7kRGdikaZeZq3bHD1NyuAcVoSntjlegsK6rx4XrktZC3U+W+0zmYLeAEAqxOnZB
- DURnV5b12kcT7AtidBnzZDBAEL51LqK46pcmiW6iXmPGAJqROqJcR3TOreYGMaz352wu
- u5cPNJg9AZJmbhbQ4fNuXGM24nJdrq/fqwOwqmGwIGDl+w9215XHOVqDxEWNAbPF9oH3
- iTHA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8fcGUdWz2PySfhy915gktRwErFZTQMgfnbCFMCIJv73nMSkGruqRShkUSAjN8pqA6R6U+QPmzl/XFX@nongnu.org
-X-Gm-Message-State: AOJu0YzWgNvTR5wRKASNtRALwmZ4yreTnJPJM9PyP7Xp6kP1sX6DSnfP
- udeTznPR0iAnGVGa5tHL4ets3ynTz02NaJu+jgn6zgeruEmxJRpPRk1/JipH7WfS2WhYRbAavYm
- ivv/Uib8=
-X-Gm-Gg: Acq92OEshp5U2/2/4CJDG6F5iXVF1X+TL5sIBsnRBNiPdimd/mVK380ni8FH8ShPs4P
- Ufo/rbSTQpUG4ubMDy+KRafwkrSPoB4RDCDyQqWCjfwYi5XOXNL678VIJjFbraAqh6n6Yjr/ejs
- lH8lGJ+9+BNg5wV809nLa+zfC75qT64IaZ7tr8PTTw2050BPrTSrGkMTodj4IQoOyhymPo4seU8
- Sv2xlRp+k4oRk5WdY9aWwPwKHyAhaTeY+QuuvFzczA5Ux2GLi5pyrot5vLtJ2kyszYSIZ7rM2rc
- s7B81CJstO0V4EbqQlFgVke8wfYBVCbMA+ALYRd/c1F4zBwAVWBOnPC3preMnIUQQQWc4+tQZM4
- Afr1qBWxEm+g8Rzu7ZtWtziX63vdbXsLoGfJQHfaTjvw/jPSiZl2VHwrta2Ce/W/Y8rykL5DHRf
- p+mIYdQUAtz/RIu3ckNv9O8s5ZdWkaLkkY4gDgm/XbKsIejpdm5A5To1WY9To8jCntzQ==
-X-Received: by 2002:a05:600c:46d0:b0:489:1abb:5559 with SMTP id
- 5b1f17b1804b1-48fe4dad784mr313171325e9.5.1779259827740; 
- Tue, 19 May 2026 23:50:27 -0700 (PDT)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48febe74a53sm126170235e9.27.2026.05.19.23.50.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 May 2026 23:50:27 -0700 (PDT)
-Message-ID: <c9144f6f-5414-4f15-bca7-6284b50e605d@linaro.org>
-Date: Wed, 20 May 2026 08:50:25 +0200
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wPak0-0003Zs-Jj; Wed, 20 May 2026 02:49:23 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wPajv-0001ON-Ub; Wed, 20 May 2026 02:49:16 -0400
+Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.183]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64K6lnbf096590
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 20 May 2026 15:48:17 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=EwTrorDyTXNOzZprZQApTr28BF5pYHegnRMRkjFARHE=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-Id:To:Subject:Date;
+ s=rs20250326; t=1779259697; v=1;
+ b=rujf7fLVMfxH/kh0I12zNw2g0V0sHv+5x4K92ulxDgC2vqtpFX7y1Yyeh3heybxl
+ 44nWs0fCuYSlTUeMybgynSXPo1tHGwWyQ1xU6gbqCXC8VKvVd3U+421T2jjBjEPf
+ 9tfYpWLr2Ojd4m19tLvpQxHm3vK6FoqIMrl2XKnY24hb32S796MKI370PuZWBQjF
+ jsGDoo80CPgM9Jkj6s/oPd2UEbynD203yeJm2wM7M8ThL+JbdsiMWT2sdWnchJNr
+ I7WfgJm8NB2tshmUn6IEi7z7yNgTEiPHdEQO1CuD59pZmXboBSBqAhMZNhqjxP0i
+ QTnMr6+3e10RuApDjwHuwQ==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 20 May 2026 15:48:01 +0900
+Subject: [PATCH v3 18/29] ui/dbus: Use Linux key codes
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/2] target/riscv: Fix PMP address alignment
-To: Jay Chang <jay.chang@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>
-References: <20260520063606.36600-1-jay.chang@sifive.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260520063606.36600-1-jay.chang@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-Id: <20260520-input-v3-18-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260520-input-v3-0-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260520-input-v3-0-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Jan Kiszka <jan.kiszka@web.de>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Thomas Huth <th.huth+qemu@posteo.eu>,
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-arm@nongnu.org, xen-devel@lists.xenproject.org, qemu-ppc@nongnu.org,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.16-dev-16047
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1585;
+ i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
+ bh=gB8mTMZK4mduWPbSZb0FvUSTrDoOfUJgikz48+lTqJQ=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZvpIrE47OTZH9J+OqsPsVz+rhYOmf+kpnretmU/1Tdr
+ RXxTzrUUcrCIMbFICumyJJStJtbI7r2U2FCfAvMHFYmkCEMXJwCMBG9xQz/DFNb4+7Nv3JVUeF2
+ lpzrQYv4d4wpTRffBiYbK33pSwh2YPgr8db1fqmJfLJ9/N++opzs6m8ys3MFw/e9vRNdq8/Tc5E
+ XAA==
+X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
+ fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,18 +90,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/5/26 08:36, Jay Chang wrote:
-> This series fixes PMP address alignment to comply with the RISC-V
-> specification WARL (Write-Any, Read-Legal) semantics.
-> 
-> When configuring pmpcfg (TOR, NA4, or NAPOT) and pmpaddr, if the
-> value is smaller than the PMP granularity, it needs to be aligned
-> to the PMP granularity.
-> 
-> Chagnes in v5:
-> - Use uint64_t for granule, in preparation for upcoming single-binary work:
->    https://lore.kernel.org/qemu-devel/20260515180437.23620-1-anjo@rev.ng/
+QemuInputEvent now stores Linux key codes for key events. Use those
+codes directly instead of translating between internal key code
+representations.
 
-Thank you! Series LGTM.
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+ ui/dbus-console.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/ui/dbus-console.c b/ui/dbus-console.c
+index 24f4542f3121..21eceb24362d 100644
+--- a/ui/dbus-console.c
++++ b/ui/dbus-console.c
+@@ -339,11 +339,11 @@ dbus_kbd_press(DBusDisplayConsole *ddc,
+                GDBusMethodInvocation *invocation,
+                guint arg_keycode)
+ {
+-    QKeyCode qcode = qemu_input_key_number_to_qcode(arg_keycode);
++    unsigned int lnx = qemu_input_key_number_to_linux(arg_keycode);
+ 
+     trace_dbus_kbd_press(arg_keycode);
+ 
+-    qkbd_state_key_event(ddc->kbd, qemu_input_map_qcode_to_linux[qcode], true);
++    qkbd_state_key_event(ddc->kbd, lnx, true);
+ 
+     qemu_dbus_display1_keyboard_complete_press(ddc->iface_kbd, invocation);
+ 
+@@ -355,11 +355,11 @@ dbus_kbd_release(DBusDisplayConsole *ddc,
+                  GDBusMethodInvocation *invocation,
+                  guint arg_keycode)
+ {
+-    QKeyCode qcode = qemu_input_key_number_to_qcode(arg_keycode);
++    unsigned int lnx = qemu_input_key_number_to_linux(arg_keycode);
+ 
+     trace_dbus_kbd_release(arg_keycode);
+ 
+-    qkbd_state_key_event(ddc->kbd, qemu_input_map_qcode_to_linux[qcode], false);
++    qkbd_state_key_event(ddc->kbd, lnx, false);
+ 
+     qemu_dbus_display1_keyboard_complete_release(ddc->iface_kbd, invocation);
+ 
+
+-- 
+2.54.0
 
 
