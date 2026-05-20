@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B21FFCD4F3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 09:17:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B1FECD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 09:17:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPd17-0005O9-2v; Wed, 20 May 2026 05:15:05 -0400
+	id 1wPd2v-0007rz-Tl; Wed, 20 May 2026 05:16:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wPd14-0005Gr-KB
- for qemu-devel@nongnu.org; Wed, 20 May 2026 05:15:02 -0400
+ id 1wPd24-0006pI-Fr
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 05:16:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wPd13-0005nd-05
- for qemu-devel@nongnu.org; Wed, 20 May 2026 05:15:02 -0400
+ id 1wPd22-0006I7-QN
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 05:16:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779268500;
+ s=mimecast20190719; t=1779268562;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=81Xya2hYVglF9oHeEzHTGoXGBXch/bRuppaX98og99s=;
- b=M/W2tz/DnO7IRJ/eNsTxONQA78b1Mdpe3FO3UIl29Q6rsKi/Z1H5gYIKf8mYVIb96rlqAI
- klYaghHFvzVzjz+KaIpK5hNJwdPb8uieYcYh+Zdy5P8a4mVX229CL1a2G/Tx26pjsj6xVO
- +Qc0+5UI/hwqqorNbQjit525jR3+Neg=
+ bh=k+gzzh0TF1FWRjL4FpB4zjStDbm4yVLLWmVa3Ip2Xtw=;
+ b=Bf1aTau6h5ZR9/piqQRZzp3jtXDXYY796CmdkLbhaA/PKVoZhh856HboGbX+5r4ArXl5aW
+ iqleMLeYs6v4BUFrVveqw0SC2plrDTOHUE12cTOGNomOyW3wEII7ku1IlHmxoAaFtSbpso
+ o8oHjVNa4ZenBrt+HIOeKsArIhXkecM=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-68-dbT_bdjhNqu4EO77yE1IFg-1; Wed,
- 20 May 2026 05:14:57 -0400
-X-MC-Unique: dbT_bdjhNqu4EO77yE1IFg-1
-X-Mimecast-MFC-AGG-ID: dbT_bdjhNqu4EO77yE1IFg_1779268495
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-400-QjYX1V1wPDiitCI9PEo7xQ-1; Wed,
+ 20 May 2026 05:16:00 -0400
+X-MC-Unique: QjYX1V1wPDiitCI9PEo7xQ-1
+X-Mimecast-MFC-AGG-ID: QjYX1V1wPDiitCI9PEo7xQ_1779268559
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BC5531956046; Wed, 20 May 2026 09:14:55 +0000 (UTC)
+ id 8A9891955E89; Wed, 20 May 2026 09:15:59 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.49.211])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 08EE8180075B; Wed, 20 May 2026 09:14:50 +0000 (UTC)
+ id A2FB118004A3; Wed, 20 May 2026 09:15:54 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -57,11 +57,12 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  John Snow <jsnow@redhat.com>, John Levon <john.levon@nutanix.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Cleber Rosa <crosa@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PULL 11/29] docs/devel/testing: expand documentation for 'make
- check-block'
-Date: Wed, 20 May 2026 10:13:33 +0100
-Message-ID: <20260520091351.1160442-12-berrange@redhat.com>
+ Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 23/29] qom: shorten name of object_set_properties_from_keyval
+Date: Wed, 20 May 2026 10:13:45 +0100
+Message-ID: <20260520091351.1160442-24-berrange@redhat.com>
 In-Reply-To: <20260520091351.1160442-1-berrange@redhat.com>
 References: <20260520091351.1160442-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -93,67 +94,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Explain in greater detail what 'check-block' will run for each format,
-and also document the new format specific targets.
+This matches the convention established by the object_set_props and
+object_set_propv methods.
 
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- docs/devel/testing/main.rst    | 25 ++++++++++++++++++++++---
- tests/qemu-iotests/meson.build |  2 ++
- 2 files changed, 24 insertions(+), 3 deletions(-)
+ include/qom/object.h    |  6 +++---
+ qom/object_interfaces.c | 12 ++++++------
+ system/qdev-monitor.c   |  4 ++--
+ system/vl.c             |  7 ++++---
+ 4 files changed, 15 insertions(+), 14 deletions(-)
 
-diff --git a/docs/devel/testing/main.rst b/docs/devel/testing/main.rst
-index b01a374865..f691c624c1 100644
---- a/docs/devel/testing/main.rst
-+++ b/docs/devel/testing/main.rst
-@@ -236,9 +236,28 @@ same commit that alters the generator code.
- check-block
- ~~~~~~~~~~~
+diff --git a/include/qom/object.h b/include/qom/object.h
+index a905a9e42f..83b0cd01b5 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -915,7 +915,7 @@ type_init(do_qemu_init_ ## type_array)
+ bool type_print_class_properties(const char *type);
  
--``make check-block`` runs a subset of the block layer iotests (the tests that
--are in the "auto" group).
--See the "QEMU iotests" section below for more information.
-+There are a variety of ways to exercise the block layer I/O tests
-+via make targets.
-+
-+A default ``make check`` or ``make check-block`` command will exercise
-+the ``qcow2`` format, using the tests tagged into the ``auto`` group
-+only.
-+
-+These targets accept the ``SPEED`` variable to augment the set of tests
-+to run. A slightly more comprehensive test plan can be run by defining
-+``SPEED=slow``, which enables all tests for the ``qcow2`` and ``raw``
-+formats. The most comprehensive test plan can be run by defining
-+``SPEED=thorough``, which enables all available tests for the formats
-+``parallels``, ``qcow2``, ``qed``, ``raw``, ``vdi``, ``vhdx``,
-+``vmdk``, and ``vpc``.
-+
-+Each of formats also has its own dedicated make target, named
-+``make check-block-$FORMAT`` which will run all available tests for
-+the designated format and does not require the ``SPEED`` variable
-+to be set.
-+
-+See the "QEMU iotests" section below for more information on the
-+block I/O test framework that is leveraged by these ``make`` targets.
+ /**
+- * object_set_properties_from_keyval:
++ * object_set_props_from_keyval:
+  * @obj: a QOM object
+  * @qdict: a dictionary with the properties to be set
+  * @from_json: true if leaf values of @qdict are typed, false if they
+@@ -925,8 +925,8 @@ bool type_print_class_properties(const char *type);
+  * For each key in the dictionary, parse the value string if needed,
+  * then set the corresponding property in @obj.
+  */
+-void object_set_properties_from_keyval(Object *obj, const QDict *qdict,
+-                                       bool from_json, Error **errp);
++void object_set_props_from_keyval(Object *obj, const QDict *qdict,
++                                  bool from_json, Error **errp);
  
- .. _qemu-iotests:
+ /**
+  * object_class_dynamic_cast_assert:
+diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
+index 415cbee8c5..4377d65b76 100644
+--- a/qom/object_interfaces.c
++++ b/qom/object_interfaces.c
+@@ -44,8 +44,8 @@ bool user_creatable_can_be_deleted(UserCreatable *uc)
+     }
+ }
  
-diff --git a/tests/qemu-iotests/meson.build b/tests/qemu-iotests/meson.build
-index 16a5e39476..66b09d6b97 100644
---- a/tests/qemu-iotests/meson.build
-+++ b/tests/qemu-iotests/meson.build
-@@ -10,6 +10,8 @@ endif
+-static void object_set_properties_from_qdict(Object *obj, const QDict *qdict,
+-                                             Visitor *v, Error **errp)
++static void object_set_props_from_qdict(Object *obj, const QDict *qdict,
++                                        Visitor *v, Error **errp)
+ {
+     const QDictEntry *e;
  
- qemu_iotests_binaries = [qemu_img, qemu_io, qemu_nbd, qsd]
- qemu_iotests_env = {'PYTHON': python.full_path()}
-+# If altering this definition, also update docs/devel/testing/main.rst
-+# section on 'check-block' targets to reflect the changes
- qemu_iotests_formats = {
-   'qcow2': 'quick',
-   'raw': 'slow',
+@@ -62,8 +62,8 @@ out:
+     visit_end_struct(v, NULL);
+ }
+ 
+-void object_set_properties_from_keyval(Object *obj, const QDict *qdict,
+-                                       bool from_json, Error **errp)
++void object_set_props_from_keyval(Object *obj, const QDict *qdict,
++                                  bool from_json, Error **errp)
+ {
+     Visitor *v;
+     if (from_json) {
+@@ -71,7 +71,7 @@ void object_set_properties_from_keyval(Object *obj, const QDict *qdict,
+     } else {
+         v = qobject_input_visitor_new_keyval(QOBJECT(qdict));
+     }
+-    object_set_properties_from_qdict(obj, qdict, v, errp);
++    object_set_props_from_qdict(obj, qdict, v, errp);
+     visit_free(v);
+ }
+ 
+@@ -110,7 +110,7 @@ Object *user_creatable_add_type(const char *type, const char *id,
+ 
+     assert(qdict);
+     obj = object_new_with_class(klass);
+-    object_set_properties_from_qdict(obj, qdict, v, &local_err);
++    object_set_props_from_qdict(obj, qdict, v, &local_err);
+     if (local_err) {
+         goto out;
+     }
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index e5b55e3004..dfc95a08c1 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -730,8 +730,8 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
+     qdict_del(properties, "bus");
+     qdict_del(properties, "id");
+ 
+-    object_set_properties_from_keyval(&dev->parent_obj, properties, from_json,
+-                                      errp);
++    object_set_props_from_keyval(&dev->parent_obj, properties, from_json,
++                                 errp);
+     qobject_unref(properties);
+     if (*errp) {
+         goto err_del_dev;
+diff --git a/system/vl.c b/system/vl.c
+index e690aa3ed8..da36b2c6e1 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -2010,7 +2010,8 @@ static bool object_create_early(const char *type)
+ 
+ static void qemu_apply_machine_options(QDict *qdict)
+ {
+-    object_set_properties_from_keyval(OBJECT(current_machine), qdict, false, &error_fatal);
++    object_set_props_from_keyval(OBJECT(current_machine), qdict,
++                                 false, &error_fatal);
+ 
+     if (semihosting_enabled(false) && !semihosting_get_argc()) {
+         /* fall back to the -kernel/-append */
+@@ -2225,8 +2226,8 @@ static void qemu_create_machine(QDict *qdict)
+             keyval_parse(machine_class->default_machine_opts, NULL, NULL,
+                          &error_abort);
+         qemu_apply_legacy_machine_options(default_opts);
+-        object_set_properties_from_keyval(OBJECT(current_machine), default_opts,
+-                                          false, &error_abort);
++        object_set_props_from_keyval(OBJECT(current_machine), default_opts,
++                                     false, &error_abort);
+         qobject_unref(default_opts);
+     }
+ }
 -- 
 2.54.0
 
