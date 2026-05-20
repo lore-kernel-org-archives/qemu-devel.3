@@ -4,90 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C104CD5BA4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C14DCD5BAA
 	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:22:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPkaU-00036L-Rb; Wed, 20 May 2026 13:20:06 -0400
+	id 1wPkaS-0002pm-66; Wed, 20 May 2026 13:20:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkZX-0001mq-Jd
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:19:08 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wPkZD-0001ZE-Fm
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:47 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkZV-000266-5J
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:19:07 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-48e6db3ff7eso26719275e9.0
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:19:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wPkZ6-0001zl-F5
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:47 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-3699cdeec05so2006130a91.3
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:18:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779297543; x=1779902343; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/kyaJ/nzemdvOsAG6Z3J6mmqZKXxa9crsXJirdrRsf8=;
- b=OZeyV2+G+DsQQCBIlGZJJsqIYyvu8j2vOY8iAcdlynRhDX/Qb+sQbsHlq/xmVOdzz1
- YlBnahUZ0zr/7OziH5w8XPBbb1aKxkj7201+42fK2Mz7ZqpiYlw9AY44fphbJ2wvAUT4
- BKaALktYVkPAjXJpqMPh2wV0fYNrFpBou55nVsIrZcUfmg4YxcCdxPAFL9tugKaUkqv0
- DHTxdhvIJFTVR24H/WvJfAKl6Knf9lliZvlGzeZ9GeaigGiQV2uBNMU8fnW+h5TlcEil
- 3QgyCGE5i1eEdpSsFhgphbe2bfqmAwBvnVsswtvEEmZB9Vm5WrS/f2veH4Gdk6asxMHA
- lqig==
+ d=linaro.org; s=google; t=1779297519; x=1779902319; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vUC9cAbO+O9/DBX4sEI5SDbdyF9kYUZGrauZeyxTeRs=;
+ b=rneYRC7aOMD0FlkKOjddVNGKJvhjOvZXDuXC4VRZYnen9pNyrp9QdK8nhheijlMp8v
+ /av//zYhbRBu/kKxPAYXXFic68eCsqn99C4pnkujt342s5SBkMuBWsDwMretwLus4zV6
+ Lx0LTCOw1IU7IBKshapZgIWCWzkFSO8TWRrlhCrl8VrEvZPoRNlTcfoXF++oKEziKYFb
+ lhNOXckltkMKU43iPlhNed7XbEOg9r3I/eiqH0B/rEgviU4IB3b41GkBMUCQJI5OQKbD
+ yeN4fESWMUaoExRr1zafAOnGV95jZ+E1B64uR04mP4MgEt9/REu3d/Y1chrnqiJJ1LNg
+ lHVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779297543; x=1779902343;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/kyaJ/nzemdvOsAG6Z3J6mmqZKXxa9crsXJirdrRsf8=;
- b=cG0lDP+vzqCquGpGZWv3BeHQT5QxXhtWhQiyBiZc8JJkJoHgOHmLUBjO6v4knn5unl
- ettlB4L9YlVGknYdhA6F1KFAbVAkDtYW1K5L+4VQqfP0i+wDLMp62MzBJOXs4DhvS3MK
- zwcXK/Prgjc0Vwp8pmvKslfEZo1PVSwooSdQlnnHuyF9biJ6V+YLjWxw9u3D3LYtBrTw
- IWz44bPNqoletg365fW4GnUHdLUTPtMszLWBfz49g1uLTubaYqQ6v1aIUiAVh2rJywdN
- EW8BxH1EcHvVioENWne4Vj+l7C4ENcu/mvokNYdP7ykmHUk6gsKltd9+v6ilezPnM56C
- 9/1g==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/iQGW9V1hixzfjbofjh/q9qb9MzDTPdaD1Hw7hqQuypTF1Bte3CpIQn1/s87jSQRPyeWK4d6HNnkSK@nongnu.org
-X-Gm-Message-State: AOJu0YzR0cZbkVZGh5adqpyx4msrox5ddMEdDuGrnr4iPUDW3GM21g/Y
- i6hg/lFBz+yFM8PcV1q5zwtm3EP4KhCh9LtAfU0NgkVy69s5gzzPBlLXeIXxv1huUjk=
-X-Gm-Gg: Acq92OG0it2kpO/syurB3NucgkD8Lii96j1xzBJixC5As6h+mjhYRbdlzKWWUc2MDlU
- ltU43A7KzJeqTaGLpU9QFgHiiSF1IzaugkeHbJyRzAHICRhyqUV/QiQQi1Q6vuLuDEcMsmLdYNV
- PkwoB3pkRU4+SEMl3jfMdgdDR8AVW6ZHrDGgy0XfTJeWQobYPPDhrvV64L8lRxb8/fYpUNxdU3H
- T2lge6rIDvSZmS6lLUp/4tLtxjs5u6Y3YR+o8N1CaB4yL8S/Cd8/aAm0QDfjiaQeyPb92Ty2tST
- KfAWxc2n2b6Hz8gUxcwOTDo1Lue7RpFFtRW0ivH7SLmvuTDlaSLl36K+mW06QHbhJq7FwDrb8Ll
- ZRoJXZHx6Wcp4dkeMqDC5EJyp5hY58uZdoVzesQE7Cang2IR03Fr/cnzCKYwE0xdlaZkpnlTZXK
- pAoOm2ACvrITPsEqy1NJXec5w5AW6Wx+9yOtgWVsKfu2qXS0X8RsZ9DJAh0YiCDLa31ylMmVNR3
- XMR
-X-Received: by 2002:a05:600c:6288:b0:490:32da:30d with SMTP id
- 5b1f17b1804b1-49032da04e9mr25340955e9.9.1779297542789; 
- Wed, 20 May 2026 10:19:02 -0700 (PDT)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49031731733sm30037185e9.0.2026.05.20.10.19.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 May 2026 10:19:02 -0700 (PDT)
-Message-ID: <4533011a-4128-4823-bfd1-cabd3bd0e646@linaro.org>
-Date: Wed, 20 May 2026 19:19:01 +0200
+ d=1e100.net; s=20251104; t=1779297519; x=1779902319;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=vUC9cAbO+O9/DBX4sEI5SDbdyF9kYUZGrauZeyxTeRs=;
+ b=iyX+ad+HvDm0HgGc+J5YyvCE96WkSPhxrTSj4EDswqeQewsNSqLj+d70aglJ8lHcLv
+ /Ej6Gb84tQVAlwdAVMRp3YAQYYHf12OnOxGXLHrGE5IgVMJ02HDYUbAAxDYHu0khIWY4
+ CRpdV6/S1lfnsJEcF39covPYMn16/lMhZ1Lrr8SE8ZVuhG7MBDUGayedE3sj096pt80R
+ Ub8dLsQ3chD9em/O9DCFnGW18BHy1OTna7+eEETyawIhVEGXX8gIUHeTeASTax+c5Paw
+ IE3vRJYZiEM7f9qNxnEjELiESszYkLbzhibFkLPWmvhWQKqNiK6aEHwrAKlHtCDXB1/g
+ NftQ==
+X-Gm-Message-State: AOJu0Yz9sSH/x84x2c4RZYU8K0m5TVjRzdG9X3lDzrd2Ih+bPhp7UPBe
+ lQVNYvtsWIblsa353OB6KDoC+LAXf8zgFTH3wyiusLE1Y2W7RRa7zCbhKwGY05DPlyfKqZx7ykq
+ HxVITGOQ=
+X-Gm-Gg: Acq92OFndf8HI3qZVKh/i5L0H1ZRFb8NovQmsWlGSoKLy1WF/DEBzW/H9MuY0jtucJm
+ zFN/T1+OWw3q9cSyxX7BRVVulUnQaZHyF0qyxRneJei8+SGIRPTLt/RSqsDe/EjGPLk+4UzEhrs
+ qz4f43H4h7+07t3bddkc/cFlKPLbRLDfS/wQPjydPXNvxIRDAcoO0Ktrum8V615cthB7vThSgo+
+ ybdvcE1c+pG1wxKPqe2kX5M4k1U1rInp/pGK8TAxULjudisbv0UNNokwaXjw91HEtIRY3hua+xK
+ 4AzabNNFcw8Cymcf5e0R/RhDE0WUvesavhEzjJJAPi8C8vplqFh8kiAV3GX1WKicvoj77zOU7T4
+ 64P00vqPpEm2q/QL1rgBbXvSlrfsanwQifEO1vvgOmujqeO9K9ELdYLjK5QB0hy/iXwWLXf6TQH
+ BMaHmlbilIG+XqT7W9lynocLZECKT6
+X-Received: by 2002:a17:90b:4d01:b0:366:3ac:f725 with SMTP id
+ 98e67ed59e1d1-36951cab229mr23453857a91.25.1779297518797; 
+ Wed, 20 May 2026 10:18:38 -0700 (PDT)
+Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-36a3c83f226sm254416a91.0.2026.05.20.10.18.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 20 May 2026 10:18:38 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v5 24/30] fpu: Use get_default_nan_mode everywhere
+Date: Wed, 20 May 2026 10:18:14 -0700
+Message-ID: <20260520171820.848839-25-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260520171820.848839-1-richard.henderson@linaro.org>
+References: <20260520171820.848839-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 0/7] Add RISC-V big-endian target support
-Content-Language: en-US
-To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
- "alistair23@gmail.com" <alistair23@gmail.com>,
- "thuth@redhat.com" <thuth@redhat.com>
-References: <20260511083819.206216-1-djordje.todorovic@htecgroup.com>
- <5d2b27bb-f8d0-4992-b8dd-719b7a17b516@htecgroup.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <5d2b27bb-f8d0-4992-b8dd-719b7a17b516@htecgroup.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,58 +101,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/5/26 16:08, Djordje Todorovic wrote:
-> Hi all,
-> 
-> I am wondering, if there is any comment on v9. :)
-> 
-> Thanks a lot!
-> Djordje
-> 
-> 
-> On 5/11/26 10:38, Djordje Todorovic wrote:
->> Rebase on top of master.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/tcg/helper-a64.c | 12 ++++++------
+ target/arm/tcg/vfp_helper.c | 24 ++++++++++++------------
+ target/m68k/softfloat.c     |  2 +-
+ fpu/softfloat-parts.c.inc   |  8 ++++----
+ 4 files changed, 23 insertions(+), 23 deletions(-)
 
-More than a "rebase" comment I was hoping to read what was the
-conclusion on previous versions about wired endianness bits.
-
->>
->> Djordje Todorovic (7):
->>     target/riscv: Define MSTATUS_SBE and MSTATUS_MBE bit masks
->>     target/riscv: Add big-endian CPU configuration field and reset logic
->>     target/riscv: Implement runtime data endianness via MSTATUS bits
->>     hw/riscv: Make boot code endianness-aware at runtime
->>     target/riscv: Fix page table walk endianness for big-endian harts
->>     target/riscv: Expose big-endian CPU property and add documentation
->>     target/riscv: Add endianness test for RISC-V BE
->>
->>    docs/system/target-riscv.rst                  | 24 ++++++
->>    hw/riscv/boot.c                               | 81 ++++++++++++++++---
->>    include/hw/riscv/boot.h                       |  1 +
->>    target/riscv/cpu.c                            | 11 +--
->>    target/riscv/cpu.h                            | 23 ++++++
->>    target/riscv/cpu_bits.h                       |  2 +
->>    target/riscv/cpu_cfg_fields.h.inc             |  1 +
->>    target/riscv/cpu_helper.c                     | 28 +++++--
->>    target/riscv/insn_trans/trans_rva.c.inc       |  4 +-
->>    target/riscv/insn_trans/trans_rvd.c.inc       |  4 +-
->>    target/riscv/insn_trans/trans_rvf.c.inc       |  4 +-
->>    target/riscv/insn_trans/trans_rvi.c.inc       |  8 +-
->>    target/riscv/insn_trans/trans_rvzacas.c.inc   |  4 +-
->>    target/riscv/insn_trans/trans_rvzalasr.c.inc  |  4 +-
->>    target/riscv/insn_trans/trans_rvzce.c.inc     |  4 +-
->>    target/riscv/insn_trans/trans_rvzfh.c.inc     |  4 +-
->>    target/riscv/insn_trans/trans_rvzicfiss.c.inc |  4 +-
->>    target/riscv/insn_trans/trans_xmips.c.inc     |  8 +-
->>    target/riscv/insn_trans/trans_xthead.c.inc    | 16 ++--
->>    target/riscv/insn_trans/trans_zilsd.c.inc     |  4 +-
->>    target/riscv/internals.h                      |  9 +--
->>    target/riscv/tcg/tcg-cpu.c                    |  3 +
->>    target/riscv/translate.c                      | 22 ++---
->>    tests/functional/riscv64/meson.build          |  1 +
->>    tests/functional/riscv64/test_endianness.py   | 57 +++++++++++++
->>    25 files changed, 251 insertions(+), 80 deletions(-)
->>    create mode 100644 tests/functional/riscv64/test_endianness.py
->>
+diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
+index dd1f9c6dc6..6505ee3c94 100644
+--- a/target/arm/tcg/helper-a64.c
++++ b/target/arm/tcg/helper-a64.c
+@@ -273,11 +273,11 @@ uint32_t HELPER(frecpx_f16)(uint32_t a, float_status *fpst)
+         float16 nan = a;
+         if (float16_is_signaling_nan(a, fpst)) {
+             float_raise(float_flag_invalid, fpst);
+-            if (!fpst->default_nan_mode) {
++            if (!get_default_nan_mode(fpst)) {
+                 nan = float16_silence_nan(a, fpst);
+             }
+         }
+-        if (fpst->default_nan_mode) {
++        if (get_default_nan_mode(fpst)) {
+             nan = float16_default_nan(fpst);
+         }
+         return nan;
+@@ -305,11 +305,11 @@ float32 HELPER(frecpx_f32)(float32 a, float_status *fpst)
+         float32 nan = a;
+         if (float32_is_signaling_nan(a, fpst)) {
+             float_raise(float_flag_invalid, fpst);
+-            if (!fpst->default_nan_mode) {
++            if (!get_default_nan_mode(fpst)) {
+                 nan = float32_silence_nan(a, fpst);
+             }
+         }
+-        if (fpst->default_nan_mode) {
++        if (get_default_nan_mode(fpst)) {
+             nan = float32_default_nan(fpst);
+         }
+         return nan;
+@@ -337,11 +337,11 @@ float64 HELPER(frecpx_f64)(float64 a, float_status *fpst)
+         float64 nan = a;
+         if (float64_is_signaling_nan(a, fpst)) {
+             float_raise(float_flag_invalid, fpst);
+-            if (!fpst->default_nan_mode) {
++            if (!get_default_nan_mode(fpst)) {
+                 nan = float64_silence_nan(a, fpst);
+             }
+         }
+-        if (fpst->default_nan_mode) {
++        if (get_default_nan_mode(fpst)) {
+             nan = float64_default_nan(fpst);
+         }
+         return nan;
+diff --git a/target/arm/tcg/vfp_helper.c b/target/arm/tcg/vfp_helper.c
+index 495ce8a329..8d3f6e3a2e 100644
+--- a/target/arm/tcg/vfp_helper.c
++++ b/target/arm/tcg/vfp_helper.c
+@@ -690,11 +690,11 @@ uint32_t HELPER(recpe_f16)(uint32_t input, float_status *fpst)
+         float16 nan = f16;
+         if (float16_is_signaling_nan(f16, fpst)) {
+             float_raise(float_flag_invalid, fpst);
+-            if (!fpst->default_nan_mode) {
++            if (!get_default_nan_mode(fpst)) {
+                 nan = float16_silence_nan(f16, fpst);
+             }
+         }
+-        if (fpst->default_nan_mode) {
++        if (get_default_nan_mode(fpst)) {
+             nan =  float16_default_nan(fpst);
+         }
+         return nan;
+@@ -743,11 +743,11 @@ static float32 do_recpe_f32(float32 input, float_status *fpst, bool rpres)
+         float32 nan = f32;
+         if (float32_is_signaling_nan(f32, fpst)) {
+             float_raise(float_flag_invalid, fpst);
+-            if (!fpst->default_nan_mode) {
++            if (!get_default_nan_mode(fpst)) {
+                 nan = float32_silence_nan(f32, fpst);
+             }
+         }
+-        if (fpst->default_nan_mode) {
++        if (get_default_nan_mode(fpst)) {
+             nan =  float32_default_nan(fpst);
+         }
+         return nan;
+@@ -802,11 +802,11 @@ float64 HELPER(recpe_f64)(float64 input, float_status *fpst)
+         float64 nan = f64;
+         if (float64_is_signaling_nan(f64, fpst)) {
+             float_raise(float_flag_invalid, fpst);
+-            if (!fpst->default_nan_mode) {
++            if (!get_default_nan_mode(fpst)) {
+                 nan = float64_silence_nan(f64, fpst);
+             }
+         }
+-        if (fpst->default_nan_mode) {
++        if (get_default_nan_mode(fpst)) {
+             nan =  float64_default_nan(fpst);
+         }
+         return nan;
+@@ -945,11 +945,11 @@ uint32_t HELPER(rsqrte_f16)(uint32_t input, float_status *s)
+         float16 nan = f16;
+         if (float16_is_signaling_nan(f16, s)) {
+             float_raise(float_flag_invalid, s);
+-            if (!s->default_nan_mode) {
++            if (!get_default_nan_mode(s)) {
+                 nan = float16_silence_nan(f16, s);
+             }
+         }
+-        if (s->default_nan_mode) {
++        if (get_default_nan_mode(s)) {
+             nan =  float16_default_nan(s);
+         }
+         return nan;
+@@ -994,11 +994,11 @@ static float32 do_rsqrte_f32(float32 input, float_status *s, bool rpres)
+         float32 nan = f32;
+         if (float32_is_signaling_nan(f32, s)) {
+             float_raise(float_flag_invalid, s);
+-            if (!s->default_nan_mode) {
++            if (!get_default_nan_mode(s)) {
+                 nan = float32_silence_nan(f32, s);
+             }
+         }
+-        if (s->default_nan_mode) {
++        if (get_default_nan_mode(s)) {
+             nan =  float32_default_nan(s);
+         }
+         return nan;
+@@ -1056,11 +1056,11 @@ float64 HELPER(rsqrte_f64)(float64 input, float_status *s)
+         float64 nan = f64;
+         if (float64_is_signaling_nan(f64, s)) {
+             float_raise(float_flag_invalid, s);
+-            if (!s->default_nan_mode) {
++            if (!get_default_nan_mode(s)) {
+                 nan = float64_silence_nan(f64, s);
+             }
+         }
+-        if (s->default_nan_mode) {
++        if (get_default_nan_mode(s)) {
+             nan =  float64_default_nan(s);
+         }
+         return nan;
+diff --git a/target/m68k/softfloat.c b/target/m68k/softfloat.c
+index f5d683bcc5..99c2dcbe8c 100644
+--- a/target/m68k/softfloat.c
++++ b/target/m68k/softfloat.c
+@@ -35,7 +35,7 @@ static floatx80 propagateFloatx80NaNOneArg(floatx80 a, float_status *status)
+         a = floatx80_silence_nan(a, status);
+     }
+ 
+-    if (status->default_nan_mode) {
++    if (get_default_nan_mode(status)) {
+         return floatx80_default_nan(status);
+     }
+ 
+diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+index 6a67e6af2c..bef47a932d 100644
+--- a/fpu/softfloat-parts.c.inc
++++ b/fpu/softfloat-parts.c.inc
+@@ -20,14 +20,14 @@ FloatPartsN partsN(return_nan)(const FloatPartsN *a, float_status *s)
+     switch (a->cls) {
+     case float_class_snan:
+         float_raise(float_flag_invalid | float_flag_invalid_snan, s);
+-        if (s->default_nan_mode) {
++        if (get_default_nan_mode(s)) {
+             return partsN(default_nan)(s);
+         } else {
+             return partsN(silence_nan)(a, s);
+         }
+         break;
+     case float_class_qnan:
+-        if (s->default_nan_mode) {
++        if (get_default_nan_mode(s)) {
+             return partsN(default_nan)(s);
+         }
+         break;
+@@ -49,7 +49,7 @@ FloatPartsN partsN(pick_nan)(const FloatPartsN *a, const FloatPartsN *b,
+         have_snan = true;
+     }
+ 
+-    if (s->default_nan_mode) {
++    if (get_default_nan_mode(s)) {
+         return partsN(default_nan)(s);
+     }
+ 
+@@ -134,7 +134,7 @@ static FloatPartsN partsN(pick_nan_muladd)(const FloatPartsN *a,
+         float_raise(float_flag_invalid | float_flag_invalid_imz, s);
+     }
+ 
+-    if (s->default_nan_mode) {
++    if (get_default_nan_mode(s)) {
+         /*
+          * We guarantee not to require the target to tell us how to
+          * pick a NaN if we're always returning the default NaN.
+-- 
+2.43.0
 
 
