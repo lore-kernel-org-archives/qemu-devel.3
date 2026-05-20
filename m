@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C673CD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 06:49:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2CF5CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 06:50:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPajz-0003YO-HZ; Wed, 20 May 2026 02:49:15 -0400
+	id 1wPajb-0002z9-2W; Wed, 20 May 2026 02:48:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wPajx-0003Xx-T7; Wed, 20 May 2026 02:49:13 -0400
+ id 1wPajY-0002vZ-Cj; Wed, 20 May 2026 02:48:48 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wPajv-0001NW-QK; Wed, 20 May 2026 02:49:13 -0400
+ id 1wPajU-0001Nu-Q8; Wed, 20 May 2026 02:48:48 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64K6lnbm096590
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64K6lnbk096590
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 20 May 2026 15:48:19 +0900 (JST)
+ Wed, 20 May 2026 15:48:18 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=7AZuQUmohs7ZB6VnyND7lAhsDMjIqEN9r+C6jbcO76g=; 
+DKIM-Signature: a=rsa-sha256; bh=mtv5CQiiL9+yXaZVzizyS5P1nD5trt4s3x8guX+CpgE=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
  s=rs20250326; t=1779259699; v=1;
- b=tLO0T8VqbibU5UCfb1NJaerYItbixFdxSpWIbgbc8iF24RWd/mAD7H/tYTSXz86f
- Ir5RPPOpleE0Qug3qY92tcc5qJwOFrBHz5ou6dwJe0c4MNhKrNE/jOT0skokUqHZ
- zYXH+MdWHLHcKmMBnlqm5tSm3k4xPk1U3x9lIpRKoXtozCPcxEb36017ORh7nkfd
- eeulEjtEQvDrNaMi1G7JCojM0NSFkYztLBmXofLZCkQzHc3rE8bfoR2g8xYKkBCX
- O0aNXX6bAP+/toJE1yIJh98s+1CABgbYbO7XHZGTGWUVHrorr/tt0QInzzEkWgSm
- ZtZBmPALGa58B9NBylSKEA==
+ b=CoEbsz+0fL02JsRxmUC0UUVP6/JTACObDUsfipwNWL50N/YDK8EFHKTsP8opLa2a
+ sEd/NMCBUB2w3V98nJhMF9LjbyreJEuZFNTrdtK6gXYyxvpGXUzDzaTgT24m1qXl
+ 9hjDK82EjZxiAt4aHctNlZUGjwjfRy0Any3+IYEgGCmI1KvWnezcIxAvHVhTr9iL
+ wHckN0N2eIk1d4h9B09m/ZE1vU+jLSHDNmdMDSGvQdu0ec2zgG7TcOHJqwSTWGbZ
+ zrpYyW+0/2MKX7kW2zQ1mS0yPS65GDQ1oRfIVFnsUU2eyN5xqL9Ny9Y1ZfUv1p6l
+ QEpPvbdLa7lM4GBK0U8yKw==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 20 May 2026 15:48:08 +0900
-Subject: [PATCH v3 25/29] ui/spice: Use Linux key codes
+Date: Wed, 20 May 2026 15:48:06 +0900
+Subject: [PATCH v3 23/29] ui/keymaps: Use Linux key codes
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260520-input-v3-25-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260520-input-v3-23-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260520-input-v3-0-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260520-input-v3-0-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -58,13 +58,13 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.16-dev-16047
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1084;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=998;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=L0N6BRIMKIkMescHTP9EJDsdj8Wd6180kuylCT6g9zw=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZvpFbDovurznAuKDu+w15I5dXvZUKrAy3sL4baZhuc+
- XOzw3RRRykLgxgXg6yYIktK0W5ujejaT4UJ8S0wc1iZQIYwcHEKwEQq7jD84dV7JPOmq3M700S7
- vmjlWU9+Os93/LmN+9Gk0JJG5rvLcxn+WZes9r+id1ohyf7jT56oI1s0s0tfHXt+64bT5o+2O95
- cZgUA
+ bh=JSYEPF6QuhGlyghPcnd/kD7DgQn3AulpARBsJb4qeIk=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZvpEa4ZvKDrLJwl1cfl59zurj7R/cM5/buyZcz65u/n
+ 50uHZ3ZUcrCIMbFICumyJJStJtbI7r2U2FCfAvMHFYmkCEMXJwCMJH+xYwM0/+vq14pknLT4fua
+ iM+hd2aZZS2tsX7VdGL7rV9TiyXnmTEybDjL9Pur/eHF/DWnz/Abcx/9pLPo8f6kkE8b9qiu5/s
+ fwQcA
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -96,30 +96,24 @@ representations.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- ui/spice-input.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ ui/keymaps.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/ui/spice-input.c b/ui/spice-input.c
-index a5c5d78474e7..f0bb915fd77b 100644
---- a/ui/spice-input.c
-+++ b/ui/spice-input.c
-@@ -20,6 +20,7 @@
- #include <spice.h>
- #include <spice/enums.h>
- 
-+#include "standard-headers/linux/input-event-codes.h"
- #include "ui/qemu-spice.h"
- #include "ui/console.h"
- #include "keymaps.h"
-@@ -61,7 +62,7 @@ static void kbd_push_key(SpiceKbdInstance *sin, uint8_t scancode)
-     if (scancode == pauseseq[kbd->pauseseq]) {
-         kbd->pauseseq++;
-         if (kbd->pauseseq == G_N_ELEMENTS(pauseseq)) {
--            qemu_input_event_send_key_qcode(NULL, Q_KEY_CODE_PAUSE, true);
-+            qemu_input_event_send_key_linux(NULL, KEY_PAUSE, true);
-             kbd->pauseseq = 0;
-         }
-         return;
+diff --git a/ui/keymaps.c b/ui/keymaps.c
+index a448efab3202..d145b5dd3a8c 100644
+--- a/ui/keymaps.c
++++ b/ui/keymaps.c
+@@ -255,9 +255,8 @@ int keysym2scancode(kbd_layout_t *k, int keysym,
+          * On keyup: Try find a key which is actually down.
+          */
+         for (i = 0; i < keysym2code->count; i++) {
+-            QKeyCode qcode = qemu_input_key_number_to_qcode
++            unsigned int lnx = qemu_input_key_number_to_linux
+                 (keysym2code->keycodes[i]);
+-            unsigned int lnx = qemu_input_map_qcode_to_linux[qcode];
+             if (kbd && qkbd_state_key_get(kbd, lnx)) {
+                 return keysym2code->keycodes[i];
+             }
 
 -- 
 2.54.0
