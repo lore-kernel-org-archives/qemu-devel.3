@@ -4,96 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D73A9CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 16:37:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0414CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 16:39:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPjuU-0005zQ-58; Wed, 20 May 2026 12:36:42 -0400
+	id 1wPjwo-0006l8-Nu; Wed, 20 May 2026 12:39:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wPjuS-0005yP-1o
- for qemu-devel@nongnu.org; Wed, 20 May 2026 12:36:40 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPjwk-0006ks-N8
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 12:39:02 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wPjuQ-000589-A3
- for qemu-devel@nongnu.org; Wed, 20 May 2026 12:36:39 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-65dead17c24so4862836d50.2
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 09:36:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779294997; cv=none;
- d=google.com; s=arc-20240605;
- b=JnRo1do25zreLbijwbeO0H9c0TDTMwxhVPY2iwK2VdrJwYJWrwbHalTxbP6TlR7bUg
- /Ew98Z6fwQF0yFFI0AxMq3QPo4Q75kE/PcSMbkf56s6XEZeHkuBIYF//rjGvuD+6/c6v
- aSYkUoTnyI9oIATF7UvPSXsMoUiYeUOtHWAVZB/8GW+O8o6m0/5WO4oLZ+QARFzTe5Ke
- BUuluu7afK3kzfV+VQ7B7VtaPgSf3VPaRjC1pUiQlBJRSsTJByeyCpHZZ53mJccwDc5e
- hwT0PZmDjr8zGGNAxyrceQFJ7OYeJX524saX98QidJ3B9NmGCNga6eFlWzulhoahoapk
- fvdQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Da1TtY+MCb2y6fKCYJH5+UfmZOEaNa/rUnc2JG0Qetc=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=d2tUSS1nsmyD9StWnnXe06qCMlCr38fuomssHLWPbOa2IBlibPo8RQnIdEX1bUs6iE
- dGjIgohQCHhzCk2wSw2AWZ4PnE3WxzKLMaKnxcM5yzvyimeZ3FGSaOb5XAQGLxJocAMz
- 6aTExhCMbaOUchm4EACSbACShNojK2k2hMtXD9zQPT0W9HKfUK9MDziNxtjaH9WEgw6o
- fyMQ3JI1CKzZIh4NC5707uwlCtBTRgK3qpRriSIGuJYKnYyly21/tix7BtAD5C5dHytg
- sRvs1j0wFZbEJkAcGX54SiqqD7xvWyA6kUYzgpQMd5gATVHPJZKAgKNIsyBHXOOeIuM1
- Dv3w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPjwi-0005rO-Lp
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 12:39:02 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-48e6db3ff7eso26479245e9.0
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 09:39:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779294997; x=1779899797; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Da1TtY+MCb2y6fKCYJH5+UfmZOEaNa/rUnc2JG0Qetc=;
- b=X7WQNwGRNVo/3FviGb8uO/7gXCho50xn7qZ6yoZ6IqSWDWlEHxm25+YajcL3Kr1Ai9
- W8cNh9Bn5DGRmI+AfD5wthT/Z89NTj/dQ9KBHizvZx6KJACymeVozrzeNqoCmAbKmqte
- MIRtntCmgNcJgYGlwRGG3Fj4hKTavcEWhVpcRD8Tlc1PTKPqNTh9AUkeLaSmGNIVzW+a
- UatAhQgbOVo0ESBpa8g9s0GkAJU04iVyhbhP6wiC8WZWuWHF4tD9eWucCBltViGorEFo
- Dn2nzSRAvbq16BDd2c+mFzk56mjVvrpYvfBbrouoGxkCbsnQGOkrjlxuWyImasp+OZN+
- 1WhQ==
+ d=linaro.org; s=google; t=1779295139; x=1779899939; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8YxNL5lvFbalpvgxrslG1XXzZ2cphqKgTDIEmbPRyQw=;
+ b=xkdlcMOzK19vYLQqiMr73oItGyXjkqcgOEhISlRUPSNay2UK40GdQSnOn3Hxna6Trk
+ oP9kRh16akrQdHixEi18pioUcwN978tFw9JOa/DiinUM5XH141AxJ6IAoz5H2hovGobC
+ vZC018Z+T2kod1Hcf3NFuTN3CI2A0SJ+UY1G5KHwSY8FVFEKqpsdeUhs+hYBAimll8DQ
+ 8QMu7MKLVHydee4OYw3Mk3axLTqQBHuyvLUwdG24uAvNIeQYErt7L4Gboq///4bnrOVA
+ hKUw7qxqeVgN7Vuyh13E4aluuM+ZEI8Ex4sWZ2JrQDbTNeJYXRKIknYEBzhhPyJjr1WV
+ 2OGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779294997; x=1779899797;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Da1TtY+MCb2y6fKCYJH5+UfmZOEaNa/rUnc2JG0Qetc=;
- b=LqaqdtaC2u2AO0FERFCplm4FgnBaDkibV/O1105Lw4uWt5k18xvDSiK6MY/pzNYuXI
- A6eBHle6AXY0m5UphP0PX3UGlyu8M15V1WQp4Yr1TfaUqab+pze5GOrV3LXWfF5iDs35
- +tlAy2V4rq/ubUI/rakKKS+tVm2EL4cHSZOD8UzJ10IpHMMMPsEVwLHw9zROTsiTSTuS
- 2zAlX56qX5P2ZmyfZi2zXHs1A+N6cE23mD0t46sLv1+hNCshS2SUr2+nPpAXNmn/ZrzQ
- XwNMy0jvYsAKxqaTs1jKeaUWp7MrrmTbgghTZE8ALkB78waNXLk3WJRmNBWfhg3qvBs3
- nqXQ==
-X-Gm-Message-State: AOJu0Yz7Dgja3rcTtCm6ETjBaL9hnvMYfxEDFGjZz9KOvNEx4rI1CEBc
- uUIWS50YFSO/oBknVyJGZw5j2iRjfdpVdfEN+LOXkVcr3OhUMDZb4DCjMjuwy9nNIKyOnnwkrba
- CjFqVJJzV7drlBkg2dKYJJxtJqaLv/jwgL2U4JE1S2d3nk9D3KPSL
-X-Gm-Gg: Acq92OHSEk7QdlyDHpzvBoXGj1F9o2g34t0ZS0pUjGONf9wkwV2yozvpzVEad0+oRM3
- m2XeAblKXFQzYdkgMyX8iQCnxksALZgoqY/E9dmGKSlRftQRjnntns4ak2PMf40a0HZ+3/bbdSF
- k6FxBoCGN4bPZQEuchbtHvCDQOGtReXfu6eAcwAeBUPclTu9mHYhCi/d7cz9II6Mr+w6aNnRWAa
- g0ssIh8tv0hmJ7pUaBXpD1EO8CZRUcyitIR3G7k7fWTZrhvdZ+Y19W2FJkigpZ5NT2NMZtsT/2i
- UpIX6SvcpfYRvYjk6WBqwsaDb3M/YhC5xcjAbyQfff/OArT42TZ00fPZE7SQV3V0o/WWkE0khQr
- vdQ==
-X-Received: by 2002:a05:690e:4409:10b0:650:18fc:f557 with SMTP id
- 956f58d0204a3-65e2285bec6mr21425948d50.56.1779294996907; Wed, 20 May 2026
- 09:36:36 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1779295139; x=1779899939;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8YxNL5lvFbalpvgxrslG1XXzZ2cphqKgTDIEmbPRyQw=;
+ b=Lhu2DU8mRnmYybYhDhknkmoBrmRkaEUBvAGPjcd5HOYPM9WMB6rBL7cLNd7RmQPv8K
+ RE4LpLPThv4yGp6fcuxIeZyMMCDcG5Dj9xDwNKGo9UcZOxJ+qM0eDYuzWD3e1L8JhZiO
+ u+XoMn2WUOBe1kViO5YNOOvRCwQrtebPjXLjrh8rl4N6iljLdHGLXX94n41IY1+dEsRv
+ viYQ8SF6S5BBtD/aeXpeeELXu6TlxHic+rfQ/OgW2GCTqukLAcz3iZfCjK1XD8u5bw5T
+ YT9I7vHKsV1x04wTMDOikWx7wLvh8EDCUDDxOZjujG3lGg6TfPKMvA7f+zu+/jV1KeCW
+ BQcA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9v4RmL/CRYXh3WcpzvJat+SRtmXBPjraWu1KbxUY7q+yng7MLQWYg8sMa+txv7z5Wf080rhFHqjc5h@nongnu.org
+X-Gm-Message-State: AOJu0YzCC9YRMjaqGPuu/OzfhENdgxz4cy/ZI+aTgQhzA3k7UJ2xcdoB
+ tUcgutJynPmsIyv2VtRt8seekhGW3mETlCI2rYODjghpnx9Y1Msz8RHmfTCDU7KUIG8=
+X-Gm-Gg: Acq92OEosNYz9xXqn5K5aCBkqROF+brPuuKJqo7utxF18BFfIwn3mGXkr2yXMFzH04o
+ 2x4q9M8/PLvKZpBRtbpgxxerGaWbpEmbwRfmQ7i43jDS05/U3EfWArlxWiHr2JA49lSK3K1TegV
+ ze6GtiFYqxyIFoDjXHiFSBfmWc5tyqB3oUTRbTou7MMl1r06sFEJIWjY1TPHK2KoXPt4QJqwyFf
+ rnEGnvug4Jb9t5HyRFisRP8u+G7e9ffBsiiGhBJe/2pMxDK7tZJ9kEzgqlFS4ZnzXhnylKCT1kD
+ mXP9sIC/yoraZtcieFQuz37cUBMiRvkmRKHtPJBUJy014T5TLJ4dKUtDH51frrsTlZlFvo26VmN
+ 2vLV1DZVQ1uGOWtfW5B54fej22rrb3f4TdPW9dNwiw3O468krnD/nIM1YKMhLmD5McmR5+dFcTj
+ G/q89t1RFMLXdod9RKF5Y6XC7hxSdpiqTq3GFoNTF9e9qt77DhLKuCZUdlIX6tQ5QChDcIwjE=
+X-Received: by 2002:a05:600c:8715:b0:490:b07:5f27 with SMTP id
+ 5b1f17b1804b1-4900b07600fmr274227265e9.24.1779295138887; 
+ Wed, 20 May 2026 09:38:58 -0700 (PDT)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49033d5f21dsm3571905e9.13.2026.05.20.09.38.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 20 May 2026 09:38:58 -0700 (PDT)
+Message-ID: <0894c314-c2f0-4b8e-bdf1-f0a3792ff0e1@linaro.org>
+Date: Wed, 20 May 2026 18:38:57 +0200
 MIME-Version: 1.0
-References: <20260517003002.321430-1-richard.henderson@linaro.org>
- <20260517003002.321430-60-richard.henderson@linaro.org>
-In-Reply-To: <20260517003002.321430-60-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 20 May 2026 17:36:24 +0100
-X-Gm-Features: AVHnY4IXCK4RSvN9X5XqOy5otafM2VpYY22wT_2nQrobFH-jWEoOv2HjD3g8WKw
-Message-ID: <CAFEAcA971nFuXNkQbswiDzRXQ7WsrW9GTVzH5A2rPGym20yMKg@mail.gmail.com>
-Subject: Re: [PATCH v5 59/63] target/arm: Implement FMMLA (FP8 to FP16) for
- AdvSIMD
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 2/3] tests: add PIC32MK functional and qtest coverage
+Content-Language: en-US
+To: Ericson Joseph <ericsonjoseph@gmail.com>, qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+References: <20260429-pic32mk-board-support-v1-0-1dfac14f8e2d@voltumotor.com>
+ <20260429-pic32mk-board-support-v1-2-1dfac14f8e2d@voltumotor.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260429-pic32mk-board-support-v1-2-1dfac14f8e2d@voltumotor.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,82 +106,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 17 May 2026 at 01:35, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On 29/4/26 23:51, Ericson Joseph wrote:
+> Wire the PIC32MK tests into the build system:
+> 
+> - tests/functional/mipsel: register pic32mk as a quick test (30s),
+>    build pic32mk_test_fw.bin from assembly source using the mipsel-linux-gnu
+>    cross toolchain when available, and run test_pic32mk.py which boots the
+>    board and waits for "Hello, PIC32MK!" on UART1.
+> 
+> - tests/qtest/meson.build: add pic32mk-test and pic32mk-canfd-test to
+>    qtests_mipsel (gated on CONFIG_PIC32MK).
+> 
+> Signed-off-by: Ericson Joseph <ericsonjoseph@gmail.com>
 > ---
->  target/arm/cpu-features.h        |  5 +++++
->  target/arm/tcg/helper-fp8-defs.h |  1 +
->  target/arm/tcg/fp8_helper.c      | 26 ++++++++++++++++++++++++++
->  target/arm/tcg/translate-a64.c   |  1 +
->  target/arm/tcg/a64.decode        |  1 +
->  5 files changed, 34 insertions(+)
->
-> diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-> index 8f6cc2974f..fce38dfbb0 100644
-> --- a/target/arm/cpu-features.h
-> +++ b/target/arm/cpu-features.h
-> @@ -1625,6 +1625,11 @@ static inline bool isar_feature_aa64_f8mm8(const ARMISARegisters *id)
->      return FIELD_EX64_IDREG(id, ID_AA64FPFR0, F8MM8);
->  }
->
-> +static inline bool isar_feature_aa64_f8mm4(const ARMISARegisters *id)
-> +{
-> +    return FIELD_EX64_IDREG(id, ID_AA64FPFR0, F8MM4);
-> +}
-> +
->  /*
->   * Combinations of feature tests, for ease of use with TRANS_FEAT.
->   */
-> diff --git a/target/arm/tcg/helper-fp8-defs.h b/target/arm/tcg/helper-fp8-defs.h
-> index 3c74f02022..e942308af4 100644
-> --- a/target/arm/tcg/helper-fp8-defs.h
-> +++ b/target/arm/tcg/helper-fp8-defs.h
-> @@ -37,3 +37,4 @@ DEF_HELPER_FLAGS_5(gvec_fdot_hb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, env, i32)
->  DEF_HELPER_FLAGS_5(gvec_fdot_idx_hb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, env, i32)
->
->  DEF_HELPER_FLAGS_5(gvec_fmmla_sb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, env, i32)
-> +DEF_HELPER_FLAGS_5(gvec_fmmla_hb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, env, i32)
-> diff --git a/target/arm/tcg/fp8_helper.c b/target/arm/tcg/fp8_helper.c
-> index bb1d48c3e0..d5d1fe71c5 100644
-> --- a/target/arm/tcg/fp8_helper.c
-> +++ b/target/arm/tcg/fp8_helper.c
-> @@ -849,3 +849,29 @@ void HELPER(gvec_fmmla_sb)(void *vd, void *vn, void *vm,
->      fp8_mul_finish(env, &ctx);
->      clear_tail(vd, oprsz, simd_maxsz(desc));
->  }
-> +
-> +void HELPER(gvec_fmmla_hb)(void *vd, void *vn, void *vm,
-> +                           CPUARMState *env, uint32_t desc)
-> +{
-> +    FP8MulContext ctx = fp8_mul_start(env, -1);
+>   tests/functional/mipsel/meson.build     | 28 ++++++++++
+>   tests/functional/mipsel/test_pic32mk.py | 99 +++++++++++----------------------
+>   tests/qtest/meson.build                 |  4 +-
+>   3 files changed, 63 insertions(+), 68 deletions(-)
 
-The scale_mask here should be 0xf as this is a halfprec
-output, right?
 
-> +    size_t oprsz = simd_oprsz(desc);
-> +    size_t nseg = oprsz / 16;
-> +    uint32_t *n = vn;
-> +    uint32_t *m = vm;
-> +    float16 *d = vd;
+> diff --git a/tests/functional/mipsel/test_pic32mk.py b/tests/functional/mipsel/test_pic32mk.py
+> index 4af91c4f88..ebfc94f388 100644
+> --- a/tests/functional/mipsel/test_pic32mk.py
+> +++ b/tests/functional/mipsel/test_pic32mk.py
+> @@ -1,9 +1,12 @@
+>   #!/usr/bin/env python3
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+>   #
+> -# Functional tests for the PIC32MK board emulation
+> +# Functional test for the Microchip PIC32MK GPK/MCM board emulation.
+>   #
+> -# Copyright (c) 2026 QEMU contributors
+> -# SPDX-License-Identifier: GPL-2.0-or-later
+> +# The test firmware (pic32mk_test_fw.S) is a minimal MIPS assembly program
+> +# that initialises UART1 and writes "Hello, PIC32MK!\r\n" then spins.
+> +# This verifies that the board boots, the CPU executes code, and UART1 TX
+> +# produces output on the emulated serial console.
+>   
+>   import os
+>   
+> @@ -11,81 +14,43 @@
+>   from qemu_test import wait_for_console_pattern
+>   
+>   
+> +def _fw_path():
+> +    """Return the path to the pre-built test firmware binary."""
+> +    build_dir = os.environ.get('BUILD_DIR', '')
+> +    if build_dir:
+> +        candidate = os.path.join(build_dir,
+> +                                 'tests', 'functional', 'mipsel',
+> +                                 'pic32mk_test_fw.bin')
+> +        if os.path.isfile(candidate):
+> +            return candidate
+> +    # Fallback: look next to this file (for out-of-tree runs)
+> +    here = os.path.dirname(os.path.abspath(__file__))
+> +    return os.path.join(here, 'pic32mk_test_fw.bin')
 > +
-> +    for (size_t seg = 0; seg < nseg; seg++, d += 4, n += 2, m += 2) {
-> +        float16 d0 = f8dotadd_h(n[0], m[0], 4, d[H4(0)], &ctx);
-> +        float16 d1 = f8dotadd_h(n[0], m[1], 4, d[H4(1)], &ctx);
-> +        float16 d2 = f8dotadd_h(n[1], m[0], 4, d[H4(2)], &ctx);
-> +        float16 d3 = f8dotadd_h(n[1], m[1], 4, d[H4(3)], &ctx);
 > +
-> +        d[H4(0)] = d0;
-> +        d[H4(1)] = d1;
-> +        d[H4(2)] = d2;
-> +        d[H4(3)] = d3;
-> +    }
-> +
-> +    fp8_mul_finish(env, &ctx);
-> +    clear_tail(vd, oprsz, simd_maxsz(desc));
-> +}
+>   class PIC32MKMachine(QemuSystemTest):
+>       """
+> -    Tests for the PIC32MK MCU board (-M pic32mk).
+> +    Boot test for the Microchip PIC32MK GPK/MCM board (-M pic32mk).
+>   
+> -    The FreeRTOS firmware is expected to be pre-built at
+> -    tests/freertos/hello_freertos.bin relative to the source tree.
+> +    Requires pic32mk_test_fw.bin built from pic32mk_test_fw.S by meson.
+> +    The binary must be present in the meson build tree under
+> +    tests/functional/mipsel/pic32mk_test_fw.bin.
+>       """
+>   
+>       timeout = 30
+>   
+> -    def get_firmware_path(self):
+> -        """Locate the pre-built FreeRTOS firmware binary."""
+> -        # data_file() resolves relative to tests/functional/
+> -        # We need to go up two levels to reach the source root
+> -        src_root = os.path.join(
+> -            os.path.dirname(__file__), '..', '..', '..')
+> -        fw_path = os.path.realpath(
+> -            os.path.join(src_root, 'tests', 'freertos', 'hello_freertos.bin'))
+> -        if not os.path.isfile(fw_path):
+> +    def test_uart_boot_message(self):
+> +        """Board boots and UART1 TX prints the expected banner."""
+> +        fw = _fw_path()
+> +        if not os.path.isfile(fw):
+>               self.skipTest(
+> -                f'FreeRTOS firmware not built: {fw_path}\n'
+> -                'Run: make -C tests/freertos')
+> -        return fw_path
+> -
+> -    def test_boot_message(self):
+> -        """PIC32MK boots and prints the FreeRTOS banner."""
+> -        self.set_machine('pic32mk')
+> -        self.vm.set_console()
+> -        self.vm.add_args('-bios', self.get_firmware_path(),
+> -                         '-nographic')
+> -        self.vm.launch()
+> -        wait_for_console_pattern(self,
+> -                                 'PIC32MK QEMU booting FreeRTOS...')
+> -
+> -    def test_freertos_hello_task(self):
+> -        """FreeRTOS scheduler starts and the Hello task fires."""
+> -        self.set_machine('pic32mk')
+> -        self.vm.set_console()
+> -        self.vm.add_args('-bios', self.get_firmware_path(),
+> -                         '-nographic')
+> -        self.vm.launch()
+> -        # First: boot banner
+> -        wait_for_console_pattern(self,
+> -                                 'PIC32MK QEMU booting FreeRTOS...')
+> -        # Second: at least one Hello message (proves Timer1 tick + UART TX IRQ)
+> -        wait_for_console_pattern(self,
+> -                                 'Hello from FreeRTOS!')
+> -
+> -    def test_freertos_recurring_ticks(self):
+> -        """Timer1 delivers recurring ticks — multiple Hello messages appear."""
+> -        self.set_machine('pic32mk')
+> -        self.vm.set_console()
+> -        self.vm.add_args('-bios', self.get_firmware_path(),
+> -                         '-nographic')
+> -        self.vm.launch()
+> -        wait_for_console_pattern(self,
+> -                                 'PIC32MK QEMU booting FreeRTOS...')
+> -        # Wait for a second Hello — proves the tick ISR fires repeatedly
+> -        # and context switches work (CS0 yield + Timer1 preemption).
+> -        wait_for_console_pattern(self,
+> -                                 'Hello from FreeRTOS!')
+> -        wait_for_console_pattern(self,
+> -                                 'Hello from FreeRTOS!')
+> -
+> -    def test_freertos_ping_task(self):
+> -        """Second FreeRTOS task (Ping) also runs — proves multitasking."""
+> +                'pic32mk_test_fw.bin not found — '
+> +                'build with: ninja -C <builddir> pic32mk_test_fw.bin')
+>           self.set_machine('pic32mk')
+>           self.vm.set_console()
+> -        self.vm.add_args('-bios', self.get_firmware_path(),
+> -                         '-nographic')
+> +        self.vm.add_args('-bios', fw, '-nographic')
+>           self.vm.launch()
+> -        wait_for_console_pattern(self,
+> -                                 'PIC32MK QEMU booting FreeRTOS...')
+> -        # Ping task fires every 5 seconds
+> -        wait_for_console_pattern(self, 'Ping')
+> +        wait_for_console_pattern(self, 'Hello, PIC32MK!')
 
-thanks
--- PMM
+You just removed the tests you added in the previous patch, is this
+really what you aim for?
 
