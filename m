@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD8C2CD5BA4
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:27:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 378FCCD5BAA
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:27:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPka8-0002FG-0v; Wed, 20 May 2026 13:19:45 -0400
+	id 1wPke8-00047b-B7; Wed, 20 May 2026 13:23:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPkZJ-0001cp-C9
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:55 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPke6-000406-EV
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:23:50 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPkZA-00021o-LS
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:52 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-3664df30f53so3060524a91.1
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:18:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPke2-0003Wl-Hu
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:23:47 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-48fe26a177cso38943015e9.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:23:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779297523; x=1779902323; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779297825; x=1779902625; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TOMzvZ7w5rHqlg6irdyDvso5DcaHIYg0qg8G7j38P8E=;
- b=kc0HPL7x90nrRBDv1nLWXjdFZrfQp4xKHVD/0VVctYsWUI1mnbVpY1TYo/1ljfDR62
- rv6jJePOrkA2qprTEsmL8iOCdDROXzUHtylUCtzNeOooneNcDZlj3SU9OatjllZ7Ygr5
- WiWtpPTDMvof1Cr0hoHLSlnHu98ifq6BhuTQWNdDdWBE1beWV/YciKdVlqHSLiTqIUxK
- G+0U9/HxMveYBVj3sAo0T+sZDhgvQgHFHWmfSr62wkkvACm4gVRYl0hu6sh6OKqNOQrf
- jqjdArANnExk4tz+tMP1pbSM5K3MLt2GhSIWKQ+VH2v/hPaTNXiLuFhDkEQfv3l5CLpy
- 7NMw==
+ bh=JLvsWS0q05lqOyXgNSpk34dhHcgF39sVzumKyZgyZ0U=;
+ b=iDidjUCVGoh02E5X0pJ0dyWTGY/cVJIGAI0uq0bD5nVXqQ7ce0JjQbutqTDEBgs+1o
+ 4PD2VeoDTpla8YBrR51ijWlPxUwqeGVNmRf+1ZAmSfZ2QZ4/nvSON4BbVUUNcMsrG6Xy
+ 1KXcSM5o3nIEfiub5/MQEfqgLNSBa8xT/Xw4AjiWlFTXxCbfwLsUx66RYGr9FN69q/V7
+ U4QHeF6z549ZRUyE/tbUNsjpBAiFfddBg3Cq9+PnISWUXUL4e2ZcL3EWiwZazlcFW/ZP
+ QF8dK+WgTfZO/gjy5CeffZJ4GatAuu5vT0DEpmUa9efHRj7uQ4oVSrPoh1Sm+WTSXbIt
+ E6Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779297523; x=1779902323;
+ d=1e100.net; s=20251104; t=1779297825; x=1779902625;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=TOMzvZ7w5rHqlg6irdyDvso5DcaHIYg0qg8G7j38P8E=;
- b=pO/+AXlG+7o68JyZFVOMjzZiPIF97Ybh0RL+5PFAdXwX3eQkIOUN3Ya8o7nEubuaVM
- +sJfUN3APYrktUdFgEARHhlUwh5eGavvweO94ckg0ak4Q+FJRLoNkCSNbceezT8sbNN4
- NDPnvEgtZiLcFrCwIoOktcaX6F01IU1O87yRbf/NE9BJ3MkMSZhMrM+ZMuH3i98aPZGO
- 5VqwTGW8jbgzNdgVUfHFcVFzrPuU22bCzh2r+cuPRZ8kywIljeXOamXWfbh3L0Nd1GfU
- Lrf08owfUwvaghfSEoatCwMlUYKjSvW2Pgai2ZdtQzu6Ert66olvLxy8Gi7i/YzmwVys
- v/xw==
-X-Gm-Message-State: AOJu0YwUvKklXENPs8s8Srv9n1DMLwrjzDkL+E0ZKqitcAoO9xFjSuq7
- giaiv1IGGjRc5wSciyjfKD5l5YR7maQm18X2jsrueBWiU1FCafFNswB7FsSXci8kfVEzE1CyScN
- LPalszSY=
-X-Gm-Gg: Acq92OFgZQ/B0GubnxIH6ZQXBfVAyg5ZFZVycROECt9KzHLl/OEt+jjPgkUx2PLn/ql
- lNKDfW2rdfu81msYEILi8Hz64mAe1d8vnwBQf5jdQboZpseWGeTt4wnbQ9EcTJ3vn3C4Lyakq/G
- YskfZm7ZZXx3Ms5e/CDAjDP1KbbORg1zy20z0gwCF2j4v6HsjRRMZjN2fSZAv7qF/nDtszUwXmD
- zIRdZnNXbxEqiPSRps7uj/2R+68ydS2azT2D2+I2/W488OP+bthpmWwWbmq6lNHV0BD54L30AWt
- FDn8JsEqtXe91Hk1APCQfHo3SI0sTaGyLOS+W1/I7wW/beElidqewVqxHWLotuDsExzutz/NOMA
- 93oyqzH1kJZV3E9aseOQKcamN6gvInTMY48LXMBghfaWoAUVU4FiXhHbttRsG2mu5qAMoAC/HVh
- Tlw3w8QVqgdRBzRsF0P8C3Vhxhq+Ws
-X-Received: by 2002:a17:90b:5284:b0:367:bafd:9431 with SMTP id
- 98e67ed59e1d1-369519e1633mr24391066a91.8.1779297523036; 
- Wed, 20 May 2026 10:18:43 -0700 (PDT)
-Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-36a3c83f226sm254416a91.0.2026.05.20.10.18.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 10:18:42 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
+ bh=JLvsWS0q05lqOyXgNSpk34dhHcgF39sVzumKyZgyZ0U=;
+ b=Bjh/t5fdj1AidyR5M6W0HC1TQOOQEe83vQKQuhg9RJLysMV+7/14FvUhCdGHUIRHis
+ emsOA2ECAfQim1qSdAjxD69auL3FXjs7zOTm/Lerqw27jcL2RI0edoBW1vwzts9WU4UZ
+ rhT1MHpcxflGuHR2hDm3IAn8ZFjAOx3hX9WBKIfN0Ynk9e0qDOzO1feic3AgxNRuyR2s
+ +J8L+HfJwOSddVd9ekmHdzrSKpRPmEcTCBarcrDG2iPAZElKjD8mAXoir94IksdQBlU3
+ lQxJleEvhvVr72aBgUwkmddcDY0ffcv9kimGGvE+fG2DgQOc1YQFEHGVDgetOGC3yxRU
+ r3Cw==
+X-Gm-Message-State: AOJu0YzRAzZTN28C9dq1bMd7FGev+L/UTNn/qe40oHLgM1bjYVmLjV9S
+ Wjc7PZ8Zq/kvZpp3Puzyru3QC6IEvUavN8geUNtzJBTGU37VgvB4CsqUIGLPQcdEU5PTpD6ulNN
+ UnfRk5G8=
+X-Gm-Gg: Acq92OGaPguWjlb4b1A66L2/p4SfAjTag/X6YUWcQss38cMMvgptQwHj0MgzCOQNOST
+ GGVEh1Q+7JzALXYBT97fIjzbLkQgwq34XIU/WOxSDEMa2CoWwJc54DVSU2kR7XdG0U91MPPKMEX
+ 5Ctiujw6raphk7BqarWS1DUHgsGe0B0pJdQ51/oIyP1ToGpfRpFEJ4fXDMWb3UTUdOX0wNW4oJJ
+ GpU7QOIyKVH/uePCnm2ub1R6xpPmebk7h1888o9iAePBCiBz+mb9gyoBVrtQYikK9BPJa1tiPlt
+ kPMfb4IOxmH7VqXZ0WbwLXP0Sx5uIsd3IJqCaphk1qvAnoKk/Xqgvo9DlOe6m7s32KO8+HHx0sY
+ NNUVlbW8ZEGUeLcQ6Q5vVSQbiC6yAQkhpd0mySJyqadwV6GNPkoYLViKNweEMPrYtA7yhu54vsD
+ A5QXrqLL7zebBK1PiFyo3KUZZjajJMNwl0TE187xibTYFKKyuo9IDbpZWyMbjekRuQHkFw+0tZ
+X-Received: by 2002:a05:600c:6211:b0:48f:e230:72fc with SMTP id
+ 5b1f17b1804b1-48fe663152cmr388092155e9.33.1779297825046; 
+ Wed, 20 May 2026 10:23:45 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48febe79ce3sm138670215e9.31.2026.05.20.10.23.42
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 20 May 2026 10:23:43 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-Subject: [PATCH v5 30/30] fpu: Export floatN_minmax
-Date: Wed, 20 May 2026 10:18:20 -0700
-Message-ID: <20260520171820.848839-31-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260520171820.848839-1-richard.henderson@linaro.org>
-References: <20260520171820.848839-1-richard.henderson@linaro.org>
+Cc: James Hilliard <james.hilliard1@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v12 04/24] target/mips: expose Octeon68XX floating-point
+ support
+Date: Wed, 20 May 2026 19:22:52 +0200
+Message-ID: <20260520172313.23777-5-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260520172313.23777-1-philmd@linaro.org>
+References: <20260520172313.23777-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,304 +101,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow target access to routines using the minmax flags.
-Make the existing min/max wrappers inline.
+From: James Hilliard <james.hilliard1@gmail.com>
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Octeon68XX cores implement CP1. Advertise that in the CPU definition by
+setting Config1.FP, enabling the writable Status bits, and providing the
+FCR0/FCR31 defaults used by this CPU model.
+
+This lets guests observe the expected floating-point feature bits and use
+CP1 with -cpu Octeon68XX.
+
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/fpu/softfloat.h   | 93 ++++++++++++++++++++++-----------------
- fpu/softfloat.c           | 50 +++------------------
- fpu/softfloat-parts.c.inc |  8 ++--
- 3 files changed, 62 insertions(+), 89 deletions(-)
+ target/mips/cpu-defs.c.inc | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/include/fpu/softfloat.h b/include/fpu/softfloat.h
-index e08d1c374d..d48fc6b043 100644
---- a/include/fpu/softfloat.h
-+++ b/include/fpu/softfloat.h
-@@ -132,6 +132,25 @@ enum {
-     float_muladd_suppress_add_product_zero = 8,
- };
- 
-+/*----------------------------------------------------------------------------
-+| Options to indicate which negations to perform in float*_minmax()
-+*----------------------------------------------------------------------------*/
-+
-+/* Flags for parts_minmax. */
-+enum {
-+    /* Set for minimum; clear for maximum. */
-+    float_minmax_ismin = 1,
-+    /* Set for the IEEE 754-2008 minNum() and maxNum() operations. */
-+    float_minmax_isnum = 2,
-+    /* Set for the IEEE 754-2008 minNumMag() and minNumMag() operations. */
-+    float_minmax_ismag = 4,
-+    /*
-+     * Set for the IEEE 754-2019 minimumNumber() and maximumNumber()
-+     * operations.
-+     */
-+    float_minmax_isnumber = 8,
-+};
-+
- /*----------------------------------------------------------------------------
- | Software IEC/IEEE integer-to-floating-point conversion routines.
- *----------------------------------------------------------------------------*/
-@@ -258,14 +277,7 @@ float16 float16_muladd_scalbn(float16, float16, float16,
-                               int, int, float_status *status);
- float16 float16_div(float16, float16, float_status *status);
- float16 float16_scalbn(float16, int, float_status *status);
--float16 float16_min(float16, float16, float_status *status);
--float16 float16_max(float16, float16, float_status *status);
--float16 float16_minnum(float16, float16, float_status *status);
--float16 float16_maxnum(float16, float16, float_status *status);
--float16 float16_minnummag(float16, float16, float_status *status);
--float16 float16_maxnummag(float16, float16, float_status *status);
--float16 float16_minimum_number(float16, float16, float_status *status);
--float16 float16_maximum_number(float16, float16, float_status *status);
-+float16 float16_minmax(float16, float16, float_status *status, int flags);
- float16 float16_sqrt(float16, float_status *status);
- FloatRelation float16_compare(float16, float16, float_status *status);
- FloatRelation float16_compare_quiet(float16, float16, float_status *status);
-@@ -451,14 +463,7 @@ bfloat16 bfloat16_div(bfloat16, bfloat16, float_status *status);
- bfloat16 bfloat16_muladd(bfloat16, bfloat16, bfloat16, int,
-                          float_status *status);
- float16 bfloat16_scalbn(bfloat16, int, float_status *status);
--bfloat16 bfloat16_min(bfloat16, bfloat16, float_status *status);
--bfloat16 bfloat16_max(bfloat16, bfloat16, float_status *status);
--bfloat16 bfloat16_minnum(bfloat16, bfloat16, float_status *status);
--bfloat16 bfloat16_maxnum(bfloat16, bfloat16, float_status *status);
--bfloat16 bfloat16_minnummag(bfloat16, bfloat16, float_status *status);
--bfloat16 bfloat16_maxnummag(bfloat16, bfloat16, float_status *status);
--bfloat16 bfloat16_minimum_number(bfloat16, bfloat16, float_status *status);
--bfloat16 bfloat16_maximum_number(bfloat16, bfloat16, float_status *status);
-+bfloat16 bfloat16_minmax(bfloat16, bfloat16, float_status *status, int flags);
- bfloat16 bfloat16_sqrt(bfloat16, float_status *status);
- FloatRelation bfloat16_compare(bfloat16, bfloat16, float_status *status);
- FloatRelation bfloat16_compare_quiet(bfloat16, bfloat16, float_status *status);
-@@ -622,14 +627,7 @@ float32 float32_exp2(float32, float_status *status);
- float32 float32_log2(float32, float_status *status);
- FloatRelation float32_compare(float32, float32, float_status *status);
- FloatRelation float32_compare_quiet(float32, float32, float_status *status);
--float32 float32_min(float32, float32, float_status *status);
--float32 float32_max(float32, float32, float_status *status);
--float32 float32_minnum(float32, float32, float_status *status);
--float32 float32_maxnum(float32, float32, float_status *status);
--float32 float32_minnummag(float32, float32, float_status *status);
--float32 float32_maxnummag(float32, float32, float_status *status);
--float32 float32_minimum_number(float32, float32, float_status *status);
--float32 float32_maximum_number(float32, float32, float_status *status);
-+float32 float32_minmax(float32, float32, float_status *status, int flags);
- bool float32_is_quiet_nan(float32, float_status *status);
- bool float32_is_signaling_nan(float32, float_status *status);
- float32 float32_silence_nan(float32, float_status *status);
-@@ -818,14 +816,7 @@ float64 float64_sqrt(float64, float_status *status);
- float64 float64_log2(float64, float_status *status);
- FloatRelation float64_compare(float64, float64, float_status *status);
- FloatRelation float64_compare_quiet(float64, float64, float_status *status);
--float64 float64_min(float64, float64, float_status *status);
--float64 float64_max(float64, float64, float_status *status);
--float64 float64_minnum(float64, float64, float_status *status);
--float64 float64_maxnum(float64, float64, float_status *status);
--float64 float64_minnummag(float64, float64, float_status *status);
--float64 float64_maxnummag(float64, float64, float_status *status);
--float64 float64_minimum_number(float64, float64, float_status *status);
--float64 float64_maximum_number(float64, float64, float_status *status);
-+float64 float64_minmax(float64, float64, float_status *status, int flags);
- bool float64_is_quiet_nan(float64 a, float_status *status);
- bool float64_is_signaling_nan(float64, float_status *status);
- float64 float64_silence_nan(float64, float_status *status);
-@@ -1279,14 +1270,7 @@ float128 float128_rem(float128, float128, float_status *status);
- float128 float128_sqrt(float128, float_status *status);
- FloatRelation float128_compare(float128, float128, float_status *status);
- FloatRelation float128_compare_quiet(float128, float128, float_status *status);
--float128 float128_min(float128, float128, float_status *status);
--float128 float128_max(float128, float128, float_status *status);
--float128 float128_minnum(float128, float128, float_status *status);
--float128 float128_maxnum(float128, float128, float_status *status);
--float128 float128_minnummag(float128, float128, float_status *status);
--float128 float128_maxnummag(float128, float128, float_status *status);
--float128 float128_minimum_number(float128, float128, float_status *status);
--float128 float128_maximum_number(float128, float128, float_status *status);
-+float128 float128_minmax(float128, float128, float_status *status, int flags);
- bool float128_is_quiet_nan(float128, float_status *status);
- bool float128_is_signaling_nan(float128, float_status *status);
- float128 float128_silence_nan(float128, float_status *status);
-@@ -1388,4 +1372,33 @@ static inline bool float128_unordered_quiet(float128 a, float128 b,
- *----------------------------------------------------------------------------*/
- float128 float128_default_nan(float_status *status);
- 
-+/*----------------------------------------------------------------------------
-+| Minumum and maximum functions.
-+*----------------------------------------------------------------------------*/
-+
-+#define MINMAX_1(type, name, flags)                                     \
-+    static inline type type##_##name(type a, type b, float_status *s)   \
-+    { return type##_minmax(a, b, s, flags); }
-+
-+#define MINMAX_2(type)                                                  \
-+    MINMAX_1(type, max, 0)                                              \
-+    MINMAX_1(type, maxnum, float_minmax_isnum)                          \
-+    MINMAX_1(type, maxnummag, float_minmax_isnum | float_minmax_ismag)  \
-+    MINMAX_1(type, maximum_number, float_minmax_isnumber)               \
-+    MINMAX_1(type, min, float_minmax_ismin)                             \
-+    MINMAX_1(type, minnum, float_minmax_ismin | float_minmax_isnum)     \
-+    MINMAX_1(type, minnummag,                                           \
-+             float_minmax_ismin | float_minmax_isnum | float_minmax_ismag) \
-+    MINMAX_1(type, minimum_number,                                      \
-+             float_minmax_ismin | float_minmax_isnumber)
-+
-+MINMAX_2(float16)
-+MINMAX_2(bfloat16)
-+MINMAX_2(float32)
-+MINMAX_2(float64)
-+MINMAX_2(float128)
-+
-+#undef MINMAX_1
-+#undef MINMAX_2
-+
- #endif /* SOFTFLOAT_H */
-diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-index 2c3bf01213..bc244a44ff 100644
---- a/fpu/softfloat.c
-+++ b/fpu/softfloat.c
-@@ -397,21 +397,6 @@ float64_gen2(float64 xa, float64 xb, float_status *s,
-     return soft(ua.s, ub.s, s);
- }
- 
--/* Flags for parts_minmax. */
--enum {
--    /* Set for minimum; clear for maximum. */
--    minmax_ismin = 1,
--    /* Set for the IEEE 754-2008 minNum() and maxNum() operations. */
--    minmax_isnum = 2,
--    /* Set for the IEEE 754-2008 minNumMag() and minNumMag() operations. */
--    minmax_ismag = 4,
--    /*
--     * Set for the IEEE 754-2019 minimumNumber() and maximumNumber()
--     * operations.
--     */
--    minmax_isnumber = 8,
--};
--
- /* Simple helpers for checking if, or what kind of, NaN we have */
- static inline __attribute__((unused)) bool is_nan(FloatClass c)
- {
-@@ -4076,7 +4061,7 @@ float128 uint128_to_float128(Int128 a, float_status *status)
-  * Minimum and maximum
-  */
- 
--static float16 float16_minmax(float16 a, float16 b, float_status *s, int flags)
-+float16 float16_minmax(float16 a, float16 b, float_status *s, int flags)
- {
-     FloatParts64 pa = float16_unpack_canonical(a, s);
-     FloatParts64 pb = float16_unpack_canonical(b, s);
-@@ -4085,8 +4070,7 @@ static float16 float16_minmax(float16 a, float16 b, float_status *s, int flags)
-     return float16_round_pack_canonical(pr, s);
- }
- 
--static bfloat16 bfloat16_minmax(bfloat16 a, bfloat16 b,
--                                float_status *s, int flags)
-+bfloat16 bfloat16_minmax(bfloat16 a, bfloat16 b, float_status *s, int flags)
- {
-     FloatParts64 pa = bfloat16_unpack_canonical(a, s);
-     FloatParts64 pb = bfloat16_unpack_canonical(b, s);
-@@ -4095,7 +4079,7 @@ static bfloat16 bfloat16_minmax(bfloat16 a, bfloat16 b,
-     return bfloat16_round_pack_canonical(pr, s);
- }
- 
--static float32 float32_minmax(float32 a, float32 b, float_status *s, int flags)
-+float32 float32_minmax(float32 a, float32 b, float_status *s, int flags)
- {
-     FloatParts64 pa = float32_unpack_canonical(a, s);
-     FloatParts64 pb = float32_unpack_canonical(b, s);
-@@ -4104,7 +4088,7 @@ static float32 float32_minmax(float32 a, float32 b, float_status *s, int flags)
-     return float32_round_pack_canonical(pr, s);
- }
- 
--static float64 float64_minmax(float64 a, float64 b, float_status *s, int flags)
-+float64 float64_minmax(float64 a, float64 b, float_status *s, int flags)
- {
-     FloatParts64 pa = float64_unpack_canonical(a, s);
-     FloatParts64 pb = float64_unpack_canonical(b, s);
-@@ -4113,8 +4097,7 @@ static float64 float64_minmax(float64 a, float64 b, float_status *s, int flags)
-     return float64_round_pack_canonical(pr, s);
- }
- 
--static float128 float128_minmax(float128 a, float128 b,
--                                float_status *s, int flags)
-+float128 float128_minmax(float128 a, float128 b, float_status *s, int flags)
- {
-     FloatParts128 pa = float128_unpack_canonical(a, s);
-     FloatParts128 pb = float128_unpack_canonical(b, s);
-@@ -4123,29 +4106,6 @@ static float128 float128_minmax(float128 a, float128 b,
-     return float128_round_pack_canonical(pr, s);
- }
- 
--#define MINMAX_1(type, name, flags) \
--    type type##_##name(type a, type b, float_status *s) \
--    { return type##_minmax(a, b, s, flags); }
--
--#define MINMAX_2(type) \
--    MINMAX_1(type, max, 0)                                                \
--    MINMAX_1(type, maxnum, minmax_isnum)                                  \
--    MINMAX_1(type, maxnummag, minmax_isnum | minmax_ismag)                \
--    MINMAX_1(type, maximum_number, minmax_isnumber)                       \
--    MINMAX_1(type, min, minmax_ismin)                                     \
--    MINMAX_1(type, minnum, minmax_ismin | minmax_isnum)                   \
--    MINMAX_1(type, minnummag, minmax_ismin | minmax_isnum | minmax_ismag) \
--    MINMAX_1(type, minimum_number, minmax_ismin | minmax_isnumber)        \
--
--MINMAX_2(float16)
--MINMAX_2(bfloat16)
--MINMAX_2(float32)
--MINMAX_2(float64)
--MINMAX_2(float128)
--
--#undef MINMAX_1
--#undef MINMAX_2
--
- /*
-  * Floating point compare
-  */
-diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-index d6687df982..7e10e1662e 100644
---- a/fpu/softfloat-parts.c.inc
-+++ b/fpu/softfloat-parts.c.inc
-@@ -1468,7 +1468,7 @@ static FloatPartsN *partsN(minmax)(FloatPartsN *a, FloatPartsN *b,
-          * if one operand is a QNaN, and the other
-          * operand is numerical, then return numerical argument.
-          */
--        if ((flags & (minmax_isnum | minmax_isnumber))
-+        if ((flags & (float_minmax_isnum | float_minmax_isnumber))
-             && !(ab_mask & float_cmask_snan)
-             && (ab_mask & ~float_cmask_qnan)) {
-             record_denormals_used(ab_mask, s);
-@@ -1486,7 +1486,7 @@ static FloatPartsN *partsN(minmax)(FloatPartsN *a, FloatPartsN *b,
-          *   but unless both operands are NaNs,
-          *   the SNaN is otherwise ignored and not converted to a QNaN.
-          */
--        if ((flags & minmax_isnumber)
-+        if ((flags & float_minmax_isnumber)
-             && (ab_mask & float_cmask_snan)
-             && (ab_mask & ~float_cmask_anynan)) {
-             float_raise(float_flag_invalid, s);
-@@ -1541,7 +1541,7 @@ static FloatPartsN *partsN(minmax)(FloatPartsN *a, FloatPartsN *b,
-      * Take the sign into account.
-      * For ismag, only do this if the magnitudes are equal.
-      */
--    if (!(flags & minmax_ismag) || cmp == 0) {
-+    if (!(flags & float_minmax_ismag) || cmp == 0) {
-         if (a->sign != b->sign) {
-             /* For differing signs, the negative operand is less. */
-             cmp = a->sign ? -1 : 1;
-@@ -1551,7 +1551,7 @@ static FloatPartsN *partsN(minmax)(FloatPartsN *a, FloatPartsN *b,
-         }
-     }
- 
--    if (flags & minmax_ismin) {
-+    if (flags & float_minmax_ismin) {
-         cmp = -cmp;
-     }
-     return cmp < 0 ? b : a;
+diff --git a/target/mips/cpu-defs.c.inc b/target/mips/cpu-defs.c.inc
+index faefab04738..cc1916232f5 100644
+--- a/target/mips/cpu-defs.c.inc
++++ b/target/mips/cpu-defs.c.inc
+@@ -997,7 +997,8 @@ const mips_def_t mips_defs[] =
+         .CP0_PRid = 0x000D9100,
+         .CP0_Config0 = MIPS_CONFIG0 | (0x1 << CP0C0_AR) | (0x2 << CP0C0_AT) |
+                        (MMU_TYPE_R4000 << CP0C0_MT),
+-        .CP0_Config1 = MIPS_CONFIG1 | (0x3F << CP0C1_MMU) |
++        .CP0_Config1 = MIPS_CONFIG1 | (1 << CP0C1_FP) |
++                       (0x3F << CP0C1_MMU) |
+                        (1 << CP0C1_IS) | (4 << CP0C1_IL) | (1 << CP0C1_IA) |
+                        (1 << CP0C1_DS) | (4 << CP0C1_DL) | (1 << CP0C1_DA) |
+                        (1 << CP0C1_PC) | (1 << CP0C1_WR) | (1 << CP0C1_EP),
+@@ -1011,7 +1012,12 @@ const mips_def_t mips_defs[] =
+         .CP0_PageGrain = (1 << CP0PG_ELPA),
+         .SYNCI_Step = 32,
+         .CCRes = 2,
+-        .CP0_Status_rw_bitmask = 0x12F8FFFF,
++        .CP0_Status_rw_bitmask = 0x36F8FFFF,
++        .CP1_fcr0 = (1 << FCR0_F64) | (1 << FCR0_3D) | (1 << FCR0_PS) |
++                    (1 << FCR0_L) | (1 << FCR0_W) | (1 << FCR0_D) |
++                    (1 << FCR0_S) | (0x00 << FCR0_PRID) | (0x0 << FCR0_REV),
++        .CP1_fcr31 = 0,
++        .CP1_fcr31_rw_bitmask = 0xFF83FFFF,
+         .SEGBITS = 42,
+         .PABITS = 49,
+         .insn_flags = CPU_MIPS64R2 | INSN_OCTEON,
 -- 
-2.43.0
+2.53.0
 
 
