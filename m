@@ -4,104 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE91ECD4F5E
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 06:45:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D6B4CD4F5E
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 06:48:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPafq-00022p-06; Wed, 20 May 2026 02:44:59 -0400
+	id 1wPaja-0002wv-Sk; Wed, 20 May 2026 02:48:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <j.neuschaefer@9elements.com>)
- id 1wPafb-000228-9m
- for qemu-devel@nongnu.org; Wed, 20 May 2026 02:44:43 -0400
-Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <j.neuschaefer@9elements.com>)
- id 1wPafX-0000Dp-TF
- for qemu-devel@nongnu.org; Wed, 20 May 2026 02:44:43 -0400
-Received: by mail-wm1-x344.google.com with SMTP id
- 5b1f17b1804b1-49021532ebdso13398205e9.2
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 23:44:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=9elements.com; s=google; t=1779259476; x=1779864276; darn=nongnu.org;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=djIAhYJLRos7jbG4PFFpdw7Hxhmjn3IFqq7O4YAr7DQ=;
- b=Itxnwh+wi+ByN8rb7alWZ4ejXcsbEExWmSEzZ/Qc8XNU1TRjhLOZAbxbSZfbmJbrHH
- qqTo7qvFVvrUB/03FXsCs14+rZfFOW6azbk4lUe9KJ+hYzWSFDZFGoN1/Chwv/thARZY
- jYPe8PD8kNucHJKY0lhqq0jszK3k0EMa/WKm9OAkjaHsVNdzhnxT6detADB7a76mvR2y
- FSqGA4usjFQXRkgWdsSGIlxvl8MNcP3+Jnaq9mmYvlFi1DsWgMAc80XpDlbKLYv3vZgb
- zYEyI+Zv4mqZd607W1PRlLXJD5ephuAbOmQekR7oVR0R5ooVoAt4fq3cxaUu1g8sO5zJ
- ryyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779259476; x=1779864276;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=djIAhYJLRos7jbG4PFFpdw7Hxhmjn3IFqq7O4YAr7DQ=;
- b=k2skEbDGPCLTW+FBvy0vmkKXmyo0HfvDZn3CFUQ1N3KMztdRiGMX0FQY3oIuoaAMUW
- JsUK1REscqv9OvfTE08JjXeodmSTwnmicV8dBlmhLl0GpsAVXlBRwMU9VgVUkUolX3Ij
- b7vZ8xyIXtvR28qhdAlo+1W258DyUGV/ROLEzDxB8e2DOufP8/WFKjUgXHiDOZQ9CZw9
- W1cj01LXmSJjSuP2afR2Xy9YhCHNp0LzcmVq7GKmBNX/hvoU9ODT+NmNzc6q7/3F7jMj
- 1w0ppWvhOleJPSOgvtAS7tkMU6kX7Z/USyCmcsdnCKJEzFUzrSUu5BGm7WftoB0u06CW
- 6zWQ==
-X-Gm-Message-State: AOJu0YwpUDgiF9/aU1BxRcdKlHtlN+n/yUelZWkwUiZeU2Zm+Wxjf5fU
- uLkS9tAmG70ANX3iWcQZw9+eAZl1HswbeXlwPK6Zm8H7azs+h6F2jIlAQSKQyvgfB6bR99w6KMT
- 8w9rjoQ2b1Q==
-X-Gm-Gg: Acq92OGRv1MfQKaEyQ6u+bNslAAqhXsIMMPDa/uZw1DzLwNzelDjEqIXTlYreG8Fajh
- kyEo0haIiZoa5+9Emrf5E2i+NaR/EPRxDCUe11mSg0csrFMDZ0OrnjNFl+Ssy/0Zj1G4cZpzpk+
- dJZrf3gzn00KKn4ZxuQZ1UVUd3P+pwCxU3m4alcLGUQrcL6IDVXb5MR6s774PeoIdf0p874Yr4z
- YSFcICb5aYXHuXGMks2RlxNr6JUwzoh4ge8vFGzCHmGHYNGof0EVM1bCZkyXysRoxvjhA1JAm5z
- l+xxMjJtQP2gnb3nu0HEN5vEChzKUfaGoDYxZyVJuHDSVmayvOGLd1x+6ztNaxxMw4bK+CC1XD4
- S4JlBztJ4DJjzqDgC6pEZWg0a76H7wuHpwt6EhjagE7Jkhnq7QGdByyKTwpvrYreODc5Tn92VcS
- RGVTcKo3ow8wjUl30OkbSM7DqJ91uR5WZzOFOdcJQKI5fhr9Gg3Y6fjuJBpOh5wnMHjhH7P11GB
- xCYoCrqJL0M8lEuEAbDZ/vgk9XgMZBfnQFH
-X-Received: by 2002:a05:600c:858d:b0:48f:e230:80a3 with SMTP id
- 5b1f17b1804b1-48fe6514c31mr274001725e9.33.1779259475887; 
- Tue, 19 May 2026 23:44:35 -0700 (PDT)
-Received: from [127.0.1.1]
- (2a0a-a54a-ed40-0-9db4-bb9-3f9b-5d0a.ipv6dyn.netcologne.de.
- [2a0a:a54a:ed40:0:9db4:bb9:3f9b:5d0a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fe4dac000sm383575385e9.0.2026.05.19.23.44.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 May 2026 23:44:35 -0700 (PDT)
-From: =?utf-8?q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@9elements.com>
-Date: Wed, 20 May 2026 08:44:12 +0200
-Subject: [PATCH] docs/devel: Fix typo (s/exist paths/exit paths/)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wPajY-0002va-D9; Wed, 20 May 2026 02:48:48 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wPajU-0001OZ-U3; Wed, 20 May 2026 02:48:48 -0400
+Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.183]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 64K6lnbj096590
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 20 May 2026 15:48:18 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=zvZRcDF6rPXqdkFSL8eojNejDsFaH8xzSLM1gva1gm8=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-Id:To:Subject:Date;
+ s=rs20250326; t=1779259698; v=1;
+ b=mtR9ZjV6NjwySTemO5TY7tjHCZOn6Xo1I6DGiR8UqEVBdKR7ouqK7BWTDp6zAk6/
+ jfN6PDNJThiNcZ+cO+3ABcQabLBDf9vn4Kz+Sn1m1qwVPaiY+UjTfTrBi7PnIJCk
+ BxFbIYREAXtx+xZ8fc2tZIAV+j1deBeug7LjieA1xQaQ9MwZroSbWPS0jRI+V4t6
+ XZEUz76oaokywvu5NJXJAPUIuLBiZm5Grzh9Jrzamg90MTBC21R7BhaPnR5ZU0Ul
+ B8RSSlDss1e6W80eBSvVuUXJO6hvx6k28zmbGDDaAmzuQR+W+o5647LM/6w8yHdN
+ o+7lC0m4Tgwmq6IVF+rHMA==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 20 May 2026 15:48:05 +0900
+Subject: [PATCH v3 22/29] ui/input-linux: Use Linux key codes
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260520-exist-v1-1-535f929a87ae@9elements.com>
-X-B4-Tracking: v=1; b=H4sIADtYDWoC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDUyMD3dSKzOIS3SQj41RDE+NUy6S0VCWg2oKi1LTMCrA50bG1tQBl8/x
- +VwAAAA==
-X-Change-ID: 20260520-exist-b23e143e9bfe
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260520-input-v3-22-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260520-input-v3-0-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260520-input-v3-0-7c9e4c7abe34@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?utf-8?q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@9elements.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1779259474; l=1032;
- i=j.neuschaefer@9elements.com; s=20260513; h=from:subject:message-id;
- bh=3PYFmH5GbzAjjZHXID7SL3l/x1nFkNT0650hrIOQYfk=;
- b=LGObd4UPGbtO1bWQ/kNDdGd4oSzs9qeKTMBPXe3+Rd4gsJRTOKnjB0SrdWQDfKNWyjQkfQhGU
- uOUc/XqVjgOCJ+mSkK5ZCjts/Frfp2GGWsJoRNtbq/f/C5/E32UPfZ6
-X-Developer-Key: i=j.neuschaefer@9elements.com; a=ed25519;
- pk=mytxDu9ALv0FsWdexvpDMisghxetVpsZ8NdmY/FGsgY=
-Received-SPF: pass client-ip=2a00:1450:4864:20::344;
- envelope-from=j.neuschaefer@9elements.com; helo=mail-wm1-x344.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Jan Kiszka <jan.kiszka@web.de>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Thomas Huth <th.huth+qemu@posteo.eu>,
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-arm@nongnu.org, xen-devel@lists.xenproject.org, qemu-ppc@nongnu.org,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.16-dev-16047
+X-Developer-Signature: v=1; a=openpgp-sha256; l=947;
+ i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
+ bh=kRJ/7J804Tn8eBdIewmzxF/6sh/dIs4sMW2m0FcJ+rk=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQxZvpIZQuYhM5A6ZihB/zzWLur/qvmOaenmR+by13zlSP
+ 5mVPmPsKGVhEONikBVTZEkp2s2tEV37qTAhvgVmDisTyBAGLk4BmIhaJsNvVsOLcRmia38t6viZ
+ 2REnpyEipLztyTGVM637ORmYJfPWMvxkvB/Zl3t8xpab3M0xHuJt/VwMcr/+7Of/zSQVG3jUezU
+ zAA==
+X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
+ fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,33 +90,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the discussion of control flow through a function, "exit paths" were meant.
+QemuInputEvent now stores Linux key codes for key events. Use those
+codes directly instead of translating between internal key code
+representations.
 
-Signed-off-by: J. Neuschäfer <j.neuschaefer@9elements.com>
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- docs/devel/style.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ ui/input-linux.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/docs/devel/style.rst b/docs/devel/style.rst
-index b8edcf9316f059fe15415543098118b28fcaf99c..f4da16a0e83ca6fed205e2516fff4ac2cc941d04 100644
---- a/docs/devel/style.rst
-+++ b/docs/devel/style.rst
-@@ -469,7 +469,7 @@ for a time/space trade-off like ``tlb_mmu_resize_locked`` in the
- SoftMMU TLB code.
+diff --git a/ui/input-linux.c b/ui/input-linux.c
+index 74bc8511428a..f4eee1ffd7ec 100644
+--- a/ui/input-linux.c
++++ b/ui/input-linux.c
+@@ -166,8 +166,7 @@ static void input_linux_handle_keyboard(InputLinux *il,
  
- If the lifetime of the allocation is within the function and there are
--multiple exist paths you can also improve the readability of the code
-+multiple exit paths you can also improve the readability of the code
- by using ``g_autofree`` and related annotations. See :ref:`autofree-ref`
- for more details.
+         /* send event to guest when grab is active */
+         if (il->grab_active && !input_linux_should_skip(il, event)) {
+-            int qcode = qemu_input_linux_to_qcode(event->code);
+-            qemu_input_event_send_key_qcode(NULL, qcode, event->value);
++            qemu_input_event_send_key_linux(NULL, event->code, event->value);
+         }
  
+         /* hotkey -> record switch request ... */
 
----
-base-commit: 6d17fd91f6cf88df5cb2205e578640d72605cc43
-change-id: 20260520-exist-b23e143e9bfe
-
-Best regards,
 -- 
-J. Neuschäfer <j.neuschaefer@9elements.com>
+2.54.0
 
 
