@@ -4,86 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0FF9CD5BAA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAF09CD4F3D
 	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:27:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPkgj-0007ZV-HK; Wed, 20 May 2026 13:26:33 -0400
+	id 1wPkg5-0006Dz-0E; Wed, 20 May 2026 13:25:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPkgS-0007MK-CU
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:26:21 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkfg-0005fo-UI
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:25:34 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPkgP-0004OE-MA
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:26:16 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-8353c9f24d2so2681701b3a.3
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:26:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkfb-00044k-CH
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:25:24 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-49021532ebdso20577175e9.2
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:25:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779297972; x=1779902772; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gLuo/t16axaVgNDuvZNn5zkWfPM5x0pxxDbNPCoQofo=;
- b=EeftiTsGN1hTV8r0iVJiIfFVwNDrUhFz/DaI+BqRt3Zxxf4ALwWPnz+wn0qXnv+917
- XJIQ52suOmaAfWQH4H2z7oQqGu6+rI/BQkAQ4qB1u7kaBAfZE5OhAg6mCfIdBE6FEa/c
- Q53SfvW7MrNB/NTDDPZaEdFPtfTu/7fJFRDah76cd8gqX6ufIZaw3gFdHuLVyfPKZKdl
- HEq9EZMfOIAjzbUxl9XVD9dK2F3lUBdqgywFA302IQYGTHZCo4tOenkV1dHqFxi3YbHZ
- b9EGuAwZtLCiMxy3hYM5hATGJEfYt6in3T4t/LhPJrvitfgSKMmWBpOX25HDoVMJVk1P
- HzIg==
+ d=linaro.org; s=google; t=1779297921; x=1779902721; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Hrcak8XkkPSZfKxs46swbECTBnU0R7NtOAZ2oeIrnRE=;
+ b=Ewurm3Sv3lWkFhplS2T2hObLQumkyAgqhRviCwAO0HgoQYasBqQef8ofpWxR9x1oNK
+ BzSFdbgP7ajD2tgJTdBZuWkPlSbNrV2X2JhPIuch4VRz+MACH8AppDqZwj3jVH3szFfe
+ of2gvhpL6uMW0ibr3zosrbdHgAktsKpwQrQoqBqcjsUJ0qpGQuLQnJ5MdxnbASQk+QOf
+ 40SjI0dX6Z3yQR2ahcgwtin3exy5u4Sv4ebwy3x+F1ahFRiz3A+tAw1pGL8DzAq4XDJg
+ EXbhLd+QWXpdNZSg4RhJS3gNvC18PvFfTy2kV8pzEFw0iSXibpAt2SBBzoHbY1JDzUK+
+ H06w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779297972; x=1779902772;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gLuo/t16axaVgNDuvZNn5zkWfPM5x0pxxDbNPCoQofo=;
- b=jpaDlUiRd0NzjxN5r3+iGeye+3m7/eJzYcqFB/SLhVjVcQQApmszjq++I0CfQhmhCg
- ZQ63JXv6Ia5VQeA+8r+DnQHqI52jKYNynovVGCiAUhtkP6dFQZSZL4d3fmaK8tPB8LlK
- GkrmAkrN1Db16Cazk9ytq2O6pB2qRxAG5ZkB2je9t43GyHy4DboBuktuOP/meHmsNCGX
- p5ZGBm0A8QW0eRBlknedXxUvTeZ0Fdq2jpEnRyiCXJlVS1NaetFC3saqvw2Lp8rPq/O+
- OvE227sPZgyMoJYYqePCJGOwTm4hnuHGUrFZNWYqXukGsTmuACfLJ7k8kHvTgQirZVUs
- WsDQ==
-X-Gm-Message-State: AOJu0Yy9uD9zTqnqukekG+XAcmc+5D6f1V6uZ5y4HCN6L0FcWrFOY9cz
- h7nlFiDsX6APCoPzuL/zutXfMa5RVwv01BmCNqP0JNVvDkot5EUluOCZ58M021jrde0oSQQYH1z
- KSMBYRfI=
-X-Gm-Gg: Acq92OGlHHSkxm6ZXjcTkazY/R9qvvwp1gwOyNAukDgFh0Uz2SHetYXA6iE+Zp8A9/u
- /+nCr2m65UM7653FuD4ZbofTI/ljxTeuUd7Wwl7zGIQEd+BCDtPldbCVcHfSx0cS2M4zPRW1Lce
- 1+xRvdKQCeQvhBfNz77cFuikUsjrg+/4JCVC1KAVclE4erCulgtvqlv00WdVjJqlD8LzPLK411/
- V7l7TMyLlyDYBgy68MRNH4diKrtJFgIA2sDuqUv3RvQkAvgauQ0ocQALQZcKW79NFHwuVz/owFQ
- v3C8kVzxcd25TGFiwDa6WArlcONiNCa6unSIJDlwq56ml89u3tKG5Z2DsOKmn87w0c7DaXwwwls
- F0UjGX7LFwcoy/+tcEasLggEMAt4v4v7DMUlpj5SxYkZW9L2c/k5suusC+ZRL/vwfeZe/fEDh67
- gPG6/qSsMx2+csMG+WIXLpSMt91c6UR/fa4LERcP8JM1AWivo=
-X-Received: by 2002:a05:6a00:908a:b0:838:3404:c2b1 with SMTP id
- d2e1a72fcca58-83f33c9cf52mr24909168b3a.18.1779297972008; 
- Wed, 20 May 2026 10:26:12 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.142.33])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-83f196660f9sm27377330b3a.10.2026.05.20.10.26.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 May 2026 10:26:11 -0700 (PDT)
-Message-ID: <672cc2e2-93cd-4146-bcf2-cc000695a122@linaro.org>
-Date: Wed, 20 May 2026 10:26:08 -0700
+ d=1e100.net; s=20251104; t=1779297921; x=1779902721;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Hrcak8XkkPSZfKxs46swbECTBnU0R7NtOAZ2oeIrnRE=;
+ b=bIOyiQRXwTuQAVKjRxKTefg4xMcqyTf2cKHBDwe+NzYeAnxppOlOPxaMwf9n5qckuV
+ R+TjUvKfcpFj1ogNGmNh5UXI783Q93UJePZn7Jr0VzPk378vbK9L391MsBHcnoyOUhH8
+ H4lIFdExM/bIxCjtIBJGzUBr7P+ARFV6f2PTIjqN8ETP494zyDSJ2XT7m7Tyv5tuTqTy
+ 266LdkClo0lxl57vCHxeLKRVdHlO8pq81PH97OUiunOl1BBCZOVz5i+bspjKHidKP1Yd
+ 7DHMj2U+P347C7NB19OSrR4uAQ4tdbn8Q2DUcHSQzvTFEXly+1HEK99ChMM+MHdFLPgZ
+ 8/hw==
+X-Gm-Message-State: AOJu0Yyy/bFi2Myvnl6QnYRRKkAcIpQI2Vx2mAtNKzOekT+IRVO4J5FQ
+ Wu9Hcd78cGUvta+0k0pWxXZjbSn+95nSO8EBmikGXWuiwUCxPgAF1yuqi4LQv4BZg0LZe8lWuwC
+ F1xeiX88=
+X-Gm-Gg: Acq92OGRaeQy6HJI6x8hSZ8EoNAySBDUrSanAeYdnXOU3qvWa/nZYHKN11U7JEyVE27
+ sy6gI8S99W4HKdEbs8QpXtvk5p1+1gww5EakGWGXpNLgS3PAly9tqK9q5mZCJkfhgyhguClACU8
+ vidflIPXy718bPqCd1pGDZj2Sq1uDp1mAe/XQMzrH2YLcuxwnyVo2FY+YQy0neoC1uPk6FtfL67
+ tFQP5a5SXwOQzde5+PgF0RfLp0oKxMPSHNJRh17nQZvAAMW3CvHCnlCVMSOGnpKnPxouzfmo+dk
+ qhZUhxhh0creZr5FU0VJeXK8JAXovRcAo0a4PcBdK1JsI0GEZYIt39DuZl03J4Otpg/J3ZWJIMh
+ 1MIccYWZUtczdFQbRd6nM/6WavhUqyPLihpzLwREVu8fExgIdVzVHCjZZkEhcF813TB0/1gur8d
+ q84qH6QZz2RCt9gju2QJQdBweCsDl5/zNaYC4m9Q7UDlscZ15hdADU6mA2Ua5vDI0sVYlhTKSR
+X-Received: by 2002:a05:600c:a11c:b0:47e:e2eb:bc22 with SMTP id
+ 5b1f17b1804b1-48fe5fd536amr289864475e9.5.1779297921409; 
+ Wed, 20 May 2026 10:25:21 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45d9e767d0bsm53770476f8f.3.2026.05.20.10.25.20
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 20 May 2026 10:25:20 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: James Hilliard <james.hilliard1@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v12 17/24] target/mips: add Octeon multiplier state
+Date: Wed, 20 May 2026 19:23:05 +0200
+Message-ID: <20260520172313.23777-18-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260520172313.23777-1-philmd@linaro.org>
+References: <20260520172313.23777-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 59/63] target/arm: Implement FMMLA (FP8 to FP16) for
- AdvSIMD
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-References: <20260517003002.321430-1-richard.henderson@linaro.org>
- <20260517003002.321430-60-richard.henderson@linaro.org>
- <CAFEAcA971nFuXNkQbswiDzRXQ7WsrW9GTVzH5A2rPGym20yMKg@mail.gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <CAFEAcA971nFuXNkQbswiDzRXQ7WsrW9GTVzH5A2rPGym20yMKg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,17 +100,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/20/26 09:36, Peter Maydell wrote:
->> +void HELPER(gvec_fmmla_hb)(void *vd, void *vn, void *vm,
->> +                           CPUARMState *env, uint32_t desc)
->> +{
->> +    FP8MulContext ctx = fp8_mul_start(env, -1);
-> 
-> The scale_mask here should be 0xf as this is a halfprec
-> output, right?
+From: James Hilliard <james.hilliard1@gmail.com>
 
-Yep, copy-paste error from fmmla_sb.
+Add per-thread Octeon multiplier state for the MPL and P limb banks used
+by the VMULU/VMM0/V3MULU instruction family.
 
+Octeon3 extends the older MPL0-MPL2/P0-P2 state with high lanes
+MPL3-MPL5/P3-P5, programmed by the two-source MTM/MTP forms. Represent
+both banks as uint64_t arrays so the TC state matches the architected
+64-bit limb layout used by Octeon68XX user-mode code.
 
-r~
+Expose MPL/P as global TCG variables so the multiplier translators can
+expand inline without helper calls.
+
+Migrate the multiplier registers in an Octeon-only subsection so
+non-Octeon CPU models do not grow migration state.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/mips/cpu.h            | 12 ++++++++++++
+ target/mips/tcg/translate.h  |  2 ++
+ target/mips/system/machine.c | 33 +++++++++++++++++++++++++++++++++
+ target/mips/tcg/translate.c  | 18 ++++++++++++++++++
+ 4 files changed, 65 insertions(+)
+
+diff --git a/target/mips/cpu.h b/target/mips/cpu.h
+index b478f834c13..346713705a7 100644
+--- a/target/mips/cpu.h
++++ b/target/mips/cpu.h
+@@ -459,6 +459,14 @@ typedef struct mips_def_t mips_def_t;
+ 
+ 
+ typedef struct TCState TCState;
++
++/*
++ * Octeon3 adds a second bank of multiplier/product limbs used by the
++ * two-source MTM/MTP forms: MPL0..2/P0..2 from rs and MPL3..5/P3..5 from rt.
++ */
++#define OCTEON_MULTIPLIER_LANES 3
++#define OCTEON_MULTIPLIER_REGS (2 * OCTEON_MULTIPLIER_LANES)
++
+ struct TCState {
+     target_ulong gpr[32];
+ #if defined(TARGET_MIPS64)
+@@ -497,6 +505,10 @@ struct TCState {
+     target_ulong CP0_TCScheFBack;
+     int32_t CP0_Debug_tcstatus;
+     target_ulong CP0_UserLocal;
++    struct {
++        uint64_t MPL[OCTEON_MULTIPLIER_REGS];
++        uint64_t P[OCTEON_MULTIPLIER_REGS];
++    } octeon;
+ 
+     int32_t msacsr;
+ 
+diff --git a/target/mips/tcg/translate.h b/target/mips/tcg/translate.h
+index 89dde1e7124..ab2e2173674 100644
+--- a/target/mips/tcg/translate.h
++++ b/target/mips/tcg/translate.h
+@@ -189,6 +189,8 @@ void gen_crc32(DisasContext *ctx, int rd, int rs, int rt, int sz, int crc32c);
+ extern TCGv cpu_gpr[32], cpu_PC;
+ #if defined(TARGET_MIPS64)
+ extern TCGv_i64 cpu_gpr_hi[32];
++extern TCGv_i64 oct_mpl[OCTEON_MULTIPLIER_REGS];
++extern TCGv_i64 oct_p[OCTEON_MULTIPLIER_REGS];
+ #endif
+ extern TCGv cpu_HI[MIPS_DSP_ACC], cpu_LO[MIPS_DSP_ACC];
+ extern TCGv_i32 fpu_fcr0, fpu_fcr31;
+diff --git a/target/mips/system/machine.c b/target/mips/system/machine.c
+index 5880b401b07..f988b3695bc 100644
+--- a/target/mips/system/machine.c
++++ b/target/mips/system/machine.c
+@@ -120,6 +120,17 @@ static const VMStateDescription vmstate_inactive_tc = {
+     .fields = vmstate_tc_fields
+ };
+ 
++static const VMStateDescription vmstate_octeon_multiplier_tc = {
++    .name = "cpu/tc/octeon_multiplier",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT64_ARRAY(octeon.MPL, TCState, OCTEON_MULTIPLIER_REGS),
++        VMSTATE_UINT64_ARRAY(octeon.P, TCState, OCTEON_MULTIPLIER_REGS),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ /* MVP state */
+ 
+ static const VMStateDescription vmstate_mvp = {
+@@ -247,6 +258,27 @@ static const VMStateDescription mips_vmstate_timer = {
+     }
+ };
+ 
++static bool mips_octeon_needed(void *opaque)
++{
++    MIPSCPU *cpu = opaque;
++
++    return cpu->env.insn_flags & INSN_OCTEON;
++}
++
++static const VMStateDescription mips_vmstate_octeon_multiplier = {
++    .name = "cpu/octeon_multiplier",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = mips_octeon_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_STRUCT(env.active_tc, MIPSCPU, 1,
++                       vmstate_octeon_multiplier_tc, TCState),
++        VMSTATE_STRUCT_ARRAY(env.tcs, MIPSCPU, MIPS_SHADOW_SET_MAX, 1,
++                             vmstate_octeon_multiplier_tc, TCState),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ const VMStateDescription vmstate_mips_cpu = {
+     .name = "cpu",
+     .version_id = 21,
+@@ -363,6 +395,7 @@ const VMStateDescription vmstate_mips_cpu = {
+     },
+     .subsections = (const VMStateDescription * const []) {
+         &mips_vmstate_timer,
++        &mips_vmstate_octeon_multiplier,
+         NULL
+     }
+ };
+diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
+index dac30aff8d3..123d2c89c3d 100644
+--- a/target/mips/tcg/translate.c
++++ b/target/mips/tcg/translate.c
+@@ -1179,6 +1179,8 @@ static TCGv cpu_lladdr, cpu_llval;
+ static TCGv_i32 hflags;
+ TCGv_i32 fpu_fcr0, fpu_fcr31;
+ TCGv_i64 fpu_f64[32];
++TCGv_i64 oct_mpl[OCTEON_MULTIPLIER_REGS];
++TCGv_i64 oct_p[OCTEON_MULTIPLIER_REGS];
+ 
+ static const char regnames_HI[][4] = {
+     "HI0", "HI1", "HI2", "HI3",
+@@ -15276,6 +15278,22 @@ void mips_tcg_init(void)
+                                                         active_tc.gpr_hi[i]),
+                                                rname);
+     }
++
++    for (unsigned i = 0; i < OCTEON_MULTIPLIER_REGS; ++i) {
++        static const char mpl_names[OCTEON_MULTIPLIER_REGS][5] = {
++            "MPL0", "MPL1", "MPL2", "MPL3", "MPL4", "MPL5",
++        };
++        static const char p_names[OCTEON_MULTIPLIER_REGS][3] = {
++            "P0", "P1", "P2", "P3", "P4", "P5",
++        };
++
++        oct_mpl[i] = tcg_global_mem_new_i64(
++            tcg_env, offsetof(CPUMIPSState, active_tc.octeon.MPL[i]),
++            mpl_names[i]);
++        oct_p[i] = tcg_global_mem_new_i64(
++            tcg_env, offsetof(CPUMIPSState, active_tc.octeon.P[i]),
++            p_names[i]);
++    }
+ #endif /* !TARGET_MIPS64 */
+     for (unsigned i = 0; i < 32; i++) {
+         int off = offsetof(CPUMIPSState, active_fpu.fpr[i].wr.d[0]);
+-- 
+2.53.0
+
 
