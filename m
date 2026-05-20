@@ -4,62 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05B51CD4F5E
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 04:55:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAA95CD4F5E
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 05:28:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPYxk-0004Nl-Jg; Wed, 20 May 2026 00:55:20 -0400
+	id 1wPZSz-0003Mr-2v; Wed, 20 May 2026 01:27:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wPYxe-0004N4-4I; Wed, 20 May 2026 00:55:14 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wPZSx-0003Mc-Tf
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 01:27:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wPYxY-0007b8-By; Wed, 20 May 2026 00:55:12 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 3BC8FC021A;
- Wed, 20 May 2026 07:55:01 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:429::1:1c] (unknown
- [2a02:6bf:8080:429::1:1c])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id xsJln80MFCg0-FlESj5Lc; Wed, 20 May 2026 07:55:00 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1779252900;
- bh=GPUL6RQQIdiLkTYdSpiBSPHZ14qlEeafHSBirzFwOHU=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=rXIfpQ0OGOmsGt40lAoW2rADRun76ZTohDzOBF0pJK5XpIbb7F3sf2wmyc5x7KEec
- ksfLN5bITVcrWryEV/rDNj2J3nCrCBcHEMFuWsEPQPeylBkHpRyL0AUctcjawgf0LT
- dzZbvuRL3+nI7hgsaLLCa/pIUBgtW4HKti0h4vE8=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <9315f1ea-e590-4da6-9d11-5a640c578adc@yandex-team.ru>
-Date: Wed, 20 May 2026 07:54:59 +0300
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wPZSw-0006I5-3Q
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 01:27:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1779254852;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=o5XbjwV6NTsA2Gds27KSVv5cPEJU9VfwGknHFJJ65/c=;
+ b=eda4/CzOfXZfrj0DpIx3XRlkjGcWa7fXyxEPntCtJ+pcaUKSyEo2OhdDyghF7/WigZ7V+a
+ cliGqZpb0vSJ7HGUw+3C6p1u15k/ryzAf7GNdiwfOVD5Y9536K2yItAfhpAKxOMYvw+72n
+ wAF/oIyrsZryQYc4i7lfVCkSUjyFO2Q=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-312-PjkY_nYhNzOLPLCVTfSRaA-1; Wed, 20 May 2026 01:27:29 -0400
+X-MC-Unique: PjkY_nYhNzOLPLCVTfSRaA-1
+X-Mimecast-MFC-AGG-ID: PjkY_nYhNzOLPLCVTfSRaA_1779254846
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-44d9ace59efso2771938f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 22:27:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779254845; x=1779859645;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=o5XbjwV6NTsA2Gds27KSVv5cPEJU9VfwGknHFJJ65/c=;
+ b=TQDU8T390G5mo+HtNJY4TOSAzaAK7ik79PY0wuLZiPZx54f41OVcHfvZO1fXF7yXAE
+ Ycz2jbtc8UWGRh+D4A170U1kPUx1hys02IFXHQCOZejDTWQK3e+5qtYw/d+2dLL9Gw4D
+ a+BLFod5DEeIyGOqzp856x4QCvuHwPuUiIUyMBAmdNKVTVYtBxrcMDibvufAGMya/c8P
+ HnfnEA2ZW2nZw/mf4LSBfq+rSfK+YCMDJYzVHUZ2qUHJWVA8mYoGqurM42l5UyiTfaE+
+ rkLBOtm5ZTDAL6piVILJ7Joa4cVFQpVddggstMEM4RZFwPKxZKDX1Gw6KHomxdHKV70f
+ 8GDA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/xLzjNaO9kxWfnhWWSVwLy19u0Cwrq5p6VZrnFTUfLc6yRsB2uILcGv5QZqISqbc0JC/oPOvL9mv7S@nongnu.org
+X-Gm-Message-State: AOJu0YxrjuDPMBwcqy/Gxxno4X1yOcfyAb/d2coPnTca8oGQEeAv1z9y
+ 4UYYyZOR3/cnIqgx/5h9Rq9ToF4P5DlocTYlGgRwC7ruPnuD//JN0zyzFJe7ZOZtX9nCowr6AoI
+ mqmt+X0YsBq9P5k9C4SvFF62rYg3yb3yLBtwDID/CPW9kvtie8FtQACfJ
+X-Gm-Gg: Acq92OE/av5zUbjhmIOEpmuTyn5wYNUX8sfskcyaVZC6G6GkHKK6oKunOAaI967ntoh
+ p94+/J2ngAB/WzvyxfDzi9JBYGulMiBvUAj+xIowDESC4uEbBoTULf88tKHA71eTuoKktRFIe1u
+ Zub25+h632SH5wXYU9d9bRbbtEC1myJxLKVHgFQRhYfZ2rXLsHvQ1imxUgbDYkg9Wf4OjCA888D
+ 9AwGF5qqQss3kDeKL+j3FDCW0fyK311OohD9JPcvhoqMySQCeoG4FGxMIqRrwetuq41JnyZtZzo
+ ID9oH/3maCKwDmCjRdaPmZawdxKn6Q63Kwem/MsGiUc1aXN9qu5yQMntOXvs/0wAvZRv1XZvcPQ
+ h3eCF4/GPscJ+UbS0dU5ChahjPLluW2QZMsrd6NE6dvi8o1y0heKyL4dFkQZPHod9ShKXMg==
+X-Received: by 2002:a05:6000:1845:b0:454:86d:b4d2 with SMTP id
+ ffacd0b85a97d-45e5c5b39f7mr35111223f8f.8.1779254845628; 
+ Tue, 19 May 2026 22:27:25 -0700 (PDT)
+X-Received: by 2002:a05:6000:1845:b0:454:86d:b4d2 with SMTP id
+ ffacd0b85a97d-45e5c5b39f7mr35111166f8f.8.1779254845094; 
+ Tue, 19 May 2026 22:27:25 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45da0a1aeafsm53590284f8f.23.2026.05.19.22.27.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 May 2026 22:27:24 -0700 (PDT)
+Message-ID: <b1b5fcf0-bbd9-49dd-87ad-18c106708125@redhat.com>
+Date: Wed, 20 May 2026 07:27:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qcow2: add functionality to repair bitmaps
-To: Jean-Louis Dupond <jean-louis@dupond.be>, qemu-devel@nongnu.org
-Cc: Hanna Reitz <hreitz@redhat.com>, John Snow <jsnow@redhat.com>,
- qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Eric Blake <eblake@redhat.com>
-References: <20260519075813.955333-1-jean-louis@dupond.be>
+Subject: Re: [PATCH v5 08/32] hw/arm/smmuv3-accel: Wire CMDQV ops into accel
+ lifecycle
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20260519075813.955333-1-jean-louis@dupond.be>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
+ nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
+ jgg@nvidia.com, zhenzhong.duan@intel.com, kjaju@nvidia.com,
+ phrdina@redhat.com
+References: <20260519103727.899332-1-skolothumtho@nvidia.com>
+ <20260519103727.899332-9-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260519103727.899332-9-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,221 +116,216 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19.05.26 10:58, Jean-Louis Dupond wrote:
-> In some cases, it might happen that bitmaps become corrupt.
-> For example when adding/removing bitmaps on a live image.
-> 
-> Of course this should not happen, but in case this happens, the image is
-> corrupt and cannot even be opened anymore. You get something like the
-> following for example:
-> qemu-img: Could not open 'disk.qcow2': Bitmap '' doesn't satisfy the constraints
-> 
-> So the image becomes useless, and cannot be repaired. This while in fact
-> only (one) bitmap entry is corrupt, and the rest of the data is just
-> intact.
-> 
-> This commit adds a way to fix this corruption, by just replacing the
-> bitmap list in the qcow2 image with the valid bitmaps, and dropping the
-> bitmaps that are corrupt.
-> 
-> qemu-img: Check failed: Invalid argument
-> qemu-img: Lost persistent bitmaps during inactivation of node '#block195': Bitmap '' doesn't satisfy the constraints
-> 
-> qcow2_free_clusters failed: Invalid argument
-> Leaked cluster 3 refcount=1 reference=0
-> Leaked cluster 26 refcount=1 reference=0
-> Repairing cluster 3 refcount=1 reference=0
-> Repairing cluster 26 refcount=1 reference=0
-> The following inconsistencies were found and repaired:
-> 
->      2 leaked clusters
->      1 corruptions
-> 
-> Double checking the fixed image now...
-> No errors were found on the image.
-> 983056/1048576 = 93.75% allocated, 0.05% fragmented, 0.00% compressed clusters
-> Image end offset: 64435847168
-> 
-> And the image is valid again!
-> Worst case you lose all bitmaps, but at least the image and the data
-> itself is useable again.
-> 
-> Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
+Hi SHameer,
+
+On 5/19/26 12:36 PM, Shameer Kolothum wrote:
+> Add support for selecting and initializing a CMDQV backend based on the
+> cmdqv OnOffAuto property.
+>
+> If set to OFF, CMDQV is not used and the default IOMMUFD-backed allocation
+> path is taken.
+>
+> If set to AUTO, QEMU attempts to probe a CMDQV backend during device setup.
+> If probing succeeds, the selected ops are stored in the accelerated SMMUv3
+> state and used. If probing fails, QEMU silently falls back to the default
+> path.
+>
+> If set to ON, QEMU requires CMDQV support. Probing is performed during
+> setup and failure results in an error.
+>
+> When a CMDQV backend is active, its callbacks are used for vIOMMU
+> allocation, free, and reset handling. Otherwise, the base implementation
+> is used.
+>
+> The current implementation wires up the Tegra241 CMDQV backend through the
+> generic ops interface. Functional CMDQV behaviour is added in subsequent
+> patches.
+>
+> No functional change.
+>
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 > ---
->   block/qcow2-bitmap.c | 78 ++++++++++++++++++++++++++++++++++++++++++++
->   block/qcow2.c        | 22 ++++++++++---
->   block/qcow2.h        |  4 +++
->   3 files changed, 100 insertions(+), 4 deletions(-)
-> 
-> diff --git a/block/qcow2-bitmap.c b/block/qcow2-bitmap.c
-> index 256ec99878..f107de3301 100644
-> --- a/block/qcow2-bitmap.c
-> +++ b/block/qcow2-bitmap.c
-> @@ -1807,3 +1807,81 @@ uint64_t qcow2_get_persistent_dirty_bitmap_size(BlockDriverState *in_bs,
->   
->       return bitmaps_size;
->   }
-> +
-> +/*
-> + * qcow2_check_bitmaps - Check and optionally fix bitmap directory and bitmaps
-> + * This function is called during image check to detect bitmap corruption.
-> + * It attempts to load the bitmap directory and validates the structures.
-> + * If BDRV_FIX_ERRORS is set, it removes corrupted bitmaps.
-> + */
-> +int coroutine_fn GRAPH_RDLOCK
-> +qcow2_check_bitmaps(BlockDriverState *bs, BdrvCheckResult *result,
-> +                    BdrvCheckMode fix)
+>  include/hw/arm/smmuv3.h |  2 +
+>  hw/arm/smmuv3-accel.c   | 96 ++++++++++++++++++++++++++++++++++++++---
+>  2 files changed, 91 insertions(+), 7 deletions(-)
+>
+> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
+> index fe0493c1aa..aa6a79237a 100644
+> --- a/include/hw/arm/smmuv3.h
+> +++ b/include/hw/arm/smmuv3.h
+> @@ -74,6 +74,8 @@ struct SMMUv3State {
+>      OnOffAuto ats;
+>      OasMode oas;
+>      SsidSizeMode ssidsize;
+> +    /* SMMU CMDQV extension */
+> +    OnOffAuto cmdqv;
+>  
+>      Notifier machine_done;
+>  };
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> index 30c498ffcf..202b1aedd9 100644
+> --- a/hw/arm/smmuv3-accel.c
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -19,6 +19,7 @@
+>  #include "smmuv3-internal.h"
+>  #include "smmuv3-accel.h"
+>  #include "system/system.h"
+> +#include "tegra241-cmdqv.h"
+>  
+>  /*
+>   * The root region aliases the global system memory, and shared_as_sysmem
+> @@ -570,6 +571,7 @@ smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *hiodi,
+>                            Error **errp)
+>  {
+>      SMMUv3AccelState *accel = s->s_accel;
+> +    const SMMUv3AccelCmdqvOps *cmdqv_ops = accel->cmdqv_ops;
+>      struct iommu_hwpt_arm_smmuv3 bypass_data = {
+>          .ste = { SMMU_STE_CFG_BYPASS | SMMU_STE_VALID, 0x0ULL },
+>      };
+> @@ -580,10 +582,17 @@ smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *hiodi,
+>      uint32_t viommu_id, hwpt_id;
+>      IOMMUFDViommu *viommu;
+>  
+> -    if (!iommufd_backend_alloc_viommu(hiodi->iommufd, hiodi->devid,
+> -                                      IOMMU_VIOMMU_TYPE_ARM_SMMUV3, s2_hwpt_id,
+> -                                      NULL, 0, &viommu_id, errp)) {
+> -        return false;
+> +    if (cmdqv_ops) {
+> +        if (!cmdqv_ops->alloc_viommu(s, hiodi, &viommu_id, errp)) {
+the doc comment in 6/32 says that alloc_iommu is mandatory if probe is
+implemented. So it looks there are situations where alloc_iommu may be null.
+
+But actually given the implementation of smmuv3_accel_probe_cmdqv below,
+the ops is only non NULL if probe has succeeded. So shouldn't probe be
+also mandatory?
+> +            return false;
+> +        }
+> +    } else {
+> +        if (!iommufd_backend_alloc_viommu(hiodi->iommufd, hiodi->devid,
+> +                                          IOMMU_VIOMMU_TYPE_ARM_SMMUV3,
+> +                                          s2_hwpt_id, NULL, 0, &viommu_id,
+> +                                          errp)) {
+> +            return false;
+> +        }
+>      }
+>  
+>      viommu = g_new0(IOMMUFDViommu, 1);
+> @@ -629,12 +638,72 @@ free_bypass_hwpt:
+>  free_abort_hwpt:
+>      iommufd_backend_free_id(hiodi->iommufd, accel->abort_hwpt_id);
+>  free_viommu:
+> -    iommufd_backend_free_id(hiodi->iommufd, viommu->viommu_id);
+> +    if (cmdqv_ops && cmdqv_ops->free_viommu) {
+> +        cmdqv_ops->free_viommu(s);
+> +    } else {
+> +        iommufd_backend_free_id(hiodi->iommufd, viommu->viommu_id);
+> +    }
+>      g_free(viommu);
+>      accel->viommu = NULL;
+>      return false;
+>  }
+>  
+> +static const SMMUv3AccelCmdqvOps *
+> +smmuv3_accel_probe_cmdqv(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
+> +                         Error **errp)
 > +{
-> +    BDRVQcow2State *s = bs->opaque;
-> +    Qcow2BitmapList *bm_list;
-> +    Qcow2BitmapList *fixed_list = NULL;
-> +    Qcow2Bitmap *bm;
-> +    int valid_bitmaps = 0;
-> +    int ret = 0;
+> +    const SMMUv3AccelCmdqvOps *ops = tegra241_cmdqv_get_ops();
 > +
-> +    if (s->nb_bitmaps == 0) {
-> +        /* No bitmaps - nothing to check */
-> +        return 0;
+> +    if (!ops || !ops->probe) {
+> +        error_setg(errp, "No CMDQV ops found");
+> +        return NULL;
 > +    }
 > +
-> +    /* Try to load the bitmap directory */
-> +    bm_list = bitmap_list_load(bs, s->bitmap_directory_offset,
-> +                               s->bitmap_directory_size, NULL);
-> +    if (bm_list == NULL) {
-> +        /* Bitmap directory is corrupted */
-> +        result->corruptions++;
-> +
-> +        if (fix & BDRV_FIX_ERRORS) {
-> +            ret = update_ext_header_and_dir(bs, bitmap_list_new());
-
-This new empty list is leaked, bitmap_list_free() should be called for it.
-
-> +            if (ret < 0) {
-> +                return ret;
-> +            }
-> +            result->corruptions_fixed++;
-> +        }
-> +
-> +        return 0;
+> +    if (!ops->probe(s, idev, errp)) {
+> +        return NULL;
 > +    }
-> +
-> +    if (fix & BDRV_FIX_ERRORS) {
-> +        fixed_list = bitmap_list_new();
-> +    }
-> +
-> +    /* Validate each bitmap */
-> +    QSIMPLEQ_FOREACH(bm, bm_list, entry) {
-> +        uint64_t *bitmap_table = NULL;
-> +
-> +        /* Try to load the bitmap table */
-> +        ret = bitmap_table_load(bs, &bm->table, &bitmap_table);
-> +        g_free(bitmap_table);
-> +        if (ret < 0) {
-> +            /* Bitmap table is corrupted */
-> +            result->corruptions++;
-> +            continue;
-> +        }
-> +
-> +        if (fix & BDRV_FIX_ERRORS) {
-> +            valid_bitmaps++;
-> +            QSIMPLEQ_INSERT_TAIL(fixed_list, bm, entry);
-> +        }
-> +    }
-> +
-> +    bitmap_list_free(bm_list);
-> +
-> +    /* If fixing, update the bitmap directory with the repaired list */
-> +    if ((fix & BDRV_FIX_ERRORS) && s->nb_bitmaps != valid_bitmaps) {
-> +        ret = update_ext_header_and_dir(bs, fixed_list);
-> +        bitmap_list_free(fixed_list);
-> +        if (ret < 0) {
-> +            return ret;
-> +        }
-> +        result->corruptions_fixed += s->nb_bitmaps - valid_bitmaps;
-> +    }
-
-Hm, we leak fixed_list, if s->nb_bitmaps == valid_bitmaps.
-
-> +
-> +    return 0;
+> +    return ops;
 > +}
-
-
-Actually, in qcow2_check_bitmaps() you partly duplicate logic of
-qcow2_check_bitmaps_refcounts(). Isn't it better to add fixing logic
-directly to qcow2_check_bitmaps_refcounts()? It also goes further and
-check also table entries.
-
-
-> \ No newline at end of file
-> diff --git a/block/qcow2.c b/block/qcow2.c
-> index 81fd299b4c..156fec5de3 100644
-> --- a/block/qcow2.c
-> +++ b/block/qcow2.c
-> @@ -608,12 +608,20 @@ static int coroutine_fn GRAPH_RDLOCK
->   qcow2_co_check_locked(BlockDriverState *bs, BdrvCheckResult *result,
->                         BdrvCheckMode fix)
->   {
-> +    BdrvCheckResult bitmap_res = {};
->       BdrvCheckResult snapshot_res = {};
->       BdrvCheckResult refcount_res = {};
->       int ret;
->   
->       memset(result, 0, sizeof(*result));
->   
-> +    /* Check and fix bitmaps */
-> +    ret = qcow2_check_bitmaps(bs, &bitmap_res, fix);
-> +    qcow2_add_check_result(result, &bitmap_res, false);
-> +    if (ret < 0) {
-> +        return ret;
+> +
+> +static bool
+> +smmuv3_accel_select_cmdqv(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
+> +                          Error **errp)
+> +{
+> +    const SMMUv3AccelCmdqvOps *ops = NULL;
+> +
+> +    if (s->s_accel->cmdqv_ops) {
+> +        return true;
 > +    }
 > +
->       ret = qcow2_check_read_snapshot_table(bs, &snapshot_res, fix);
->       if (ret < 0) {
->           qcow2_add_check_result(result, &snapshot_res, false);
-> @@ -1927,11 +1935,17 @@ qcow2_do_open(BlockDriverState *bs, QDict *options, int flags,
->       if (!(bdrv_get_flags(bs) & BDRV_O_INACTIVE)) {
->           /* It's case 1, 2 or 3.2. Or 3.1 which is BUG in management layer. */
->           bool header_updated;
-> -        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, errp)) {
-> -            ret = -EINVAL;
-> -            goto fail;
-> +        Error *local_err = NULL;
-> +        if (!qcow2_load_dirty_bitmaps(bs, &header_updated, &local_err)) {
-> +            /* Allow this to fail in check mode
-> +             * because otherwise we can't open the image at all.
-> +             */
-> +            if (!(flags & BDRV_O_CHECK)) {
-> +                ret = -EINVAL;
-> +                error_propagate(errp, local_err);
-> +                goto fail;
-> +            }
->           }
-> -
->           update_header = update_header && !header_updated;
->       }
->   
-> diff --git a/block/qcow2.h b/block/qcow2.h
-> index 192a45d596..bf56b071fa 100644
-> --- a/block/qcow2.h
-> +++ b/block/qcow2.h
-> @@ -1036,6 +1036,10 @@ qcow2_check_bitmaps_refcounts(BlockDriverState *bs, BdrvCheckResult *res,
->                                 void **refcount_table,
->                                 int64_t *refcount_table_size);
->   
-> +int coroutine_fn GRAPH_RDLOCK
-> +qcow2_check_bitmaps(BlockDriverState *bs, BdrvCheckResult *result,
-> +                    BdrvCheckMode fix);
+> +    switch (s->cmdqv) {
+> +    case ON_OFF_AUTO_OFF:
+> +        s->s_accel->cmdqv_ops = NULL;
+> +        return true;
+> +    case ON_OFF_AUTO_AUTO:
+> +        ops = smmuv3_accel_probe_cmdqv(s, idev, NULL);
+> +        break;
+> +    case ON_OFF_AUTO_ON:
+> +        ops = smmuv3_accel_probe_cmdqv(s, idev, errp);
+> +        if (!ops) {
+> +            error_append_hint(errp, "CMDQV requested but not supported");
+> +            return false;
+> +        }
+> +        break;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
 > +
->   bool coroutine_fn GRAPH_RDLOCK
->   qcow2_load_dirty_bitmaps(BlockDriverState *bs, bool *header_updated,
->                            Error **errp);
+> +    if (ops) {
+> +        g_assert(ops->alloc_viommu);
+I think I would move the assert at the end of 
+
+smmuv3_accel_probe_cmdqv()
+
+> +    }
+> +
+> +    if (ops && ops->init && !ops->init(s, errp)) {
+> +        return false;
+> +    }
+> +    s->s_accel->cmdqv_ops = ops;
+> +    return true;
+> +}
+> +
+>  static bool smmuv3_accel_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+>                                            HostIOMMUDevice *hiod, Error **errp)
+>  {
+> @@ -669,6 +738,10 @@ static bool smmuv3_accel_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+>          goto done;
+>      }
+>  
+> +    if (!smmuv3_accel_select_cmdqv(s, hiodi, errp)) {
+> +        return false;
+> +    }
+> +
+>      if (!smmuv3_accel_alloc_viommu(s, hiodi, errp)) {
+>          error_append_hint(errp, "Unable to alloc vIOMMU: hiodi devid 0x%x: ",
+>                            hiodi->devid);
+> @@ -946,8 +1019,17 @@ bool smmuv3_accel_attach_gbpa_hwpt(SMMUv3State *s, Error **errp)
+>  
+>  void smmuv3_accel_reset(SMMUv3State *s)
+>  {
+> -     /* Attach a HWPT based on GBPA reset value */
+> -     smmuv3_accel_attach_gbpa_hwpt(s, NULL);
+> +    SMMUv3AccelState *accel = s->s_accel;
+> +
+> +    if (!accel) {
+> +        return;
+> +    }
+> +    /* Attach a HWPT based on GBPA reset value */
+> +    smmuv3_accel_attach_gbpa_hwpt(s, NULL);
+> +
+> +    if (accel->cmdqv_ops && accel->cmdqv_ops->reset) {
+> +        accel->cmdqv_ops->reset(s);
+> +    }
+>  }
+>  
+>  static void smmuv3_accel_as_init(SMMUv3State *s)
+Eric
 
 
--- 
-Best regards,
-Vladimir
 
