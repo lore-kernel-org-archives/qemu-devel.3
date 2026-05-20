@@ -4,75 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F895CD4F5E
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 05:53:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FBAACD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 05:53:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPZrU-0002RW-6v; Wed, 20 May 2026 01:52:56 -0400
+	id 1wPZs2-0002rr-NN; Wed, 20 May 2026 01:53:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPZrF-0002QK-Lv
- for qemu-devel@nongnu.org; Wed, 20 May 2026 01:52:42 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPZs1-0002rI-EQ
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 01:53:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPZrD-0003DW-DU
- for qemu-devel@nongnu.org; Wed, 20 May 2026 01:52:40 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPZrz-0003JI-V9
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 01:53:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779256358;
+ s=mimecast20190719; t=1779256407;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Sh9L79sBgoOWx+eNfn2hf1YXy5IazI4V17rtOvxt0Eo=;
- b=M38DdH4ES2dOl6AtOxL8fnrHnCzWz6+ILYxy1u7+eOY9d6ECISrFSrK+NKzB9yLFzivpu4
- A1EI89OouMirSeA8EQYHL9+COR88aWreJOtLYQAoJaf10Yg0wHwMD29ZgStfMllvtbmik7
- xBToan1sTj5R7nyuEkSCW9Z38mvbwAs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=SPHpvrQ4cv6UTnto2ldyo7kxCoK8YYRp6sYg+R8VQtw=;
+ b=RPy2jDV2mkB26LmenejCtoAAv3Q7nOnl9XS7X4oBGwFUq3EEXQtgzM1LmaNHjQB9acZn/V
+ DdjQ7Bl+yUIlMMenrOaslvWdftW+9psclpupCXeSxWdatBcTuJFwD0mZis12/8pY6qE++Y
+ OeLBlAjcALMxYWgUs2YbVGvT+uotyak=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-610-A7bAuA3GNvOYVfFD6_vmrQ-1; Wed,
- 20 May 2026 01:52:34 -0400
-X-MC-Unique: A7bAuA3GNvOYVfFD6_vmrQ-1
-X-Mimecast-MFC-AGG-ID: A7bAuA3GNvOYVfFD6_vmrQ_1779256353
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-vEYEilb3MomLPXSt0d7j1g-1; Wed,
+ 20 May 2026 01:53:25 -0400
+X-MC-Unique: vEYEilb3MomLPXSt0d7j1g-1
+X-Mimecast-MFC-AGG-ID: vEYEilb3MomLPXSt0d7j1g_1779256405
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4A88E195608C; Wed, 20 May 2026 05:52:33 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D519E18002D6
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 05:53:24 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E29B01681; Wed, 20 May 2026 05:52:32 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9482A30002DC
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 05:53:24 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9FB9C21E6A01; Wed, 20 May 2026 07:52:30 +0200 (CEST)
+ id 3531D21E6A01; Wed, 20 May 2026 07:53:22 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] MAINTAINERS: Correct scripts/coverity-model.c path
-In-Reply-To: <CAPMQPEJ4qx_WZ7iOTs7q8f=fSjD+tc588kczKms95Tf1VGQ8wA@mail.gmail.com>
- ("Philippe =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Tue, 19 May 2026
- 19:20:43 +0200")
-References: <20260519171926.98099-1-philmd@linaro.org>
- <CAPMQPEJ4qx_WZ7iOTs7q8f=fSjD+tc588kczKms95Tf1VGQ8wA@mail.gmail.com>
-Date: Wed, 20 May 2026 07:52:30 +0200
-Message-ID: <87se7m1vc1.fsf@pond.sub.org>
+To: ybendito@redhat.com
+Cc: qemu-devel@nongnu.org,  yvugenfi@redhat.com
+Subject: Re: [PATCH] MAINTAINERS: update ebpf reviewers
+In-Reply-To: <87pl8ph7bz.fsf@pond.sub.org> (Markus Armbruster's message of
+ "Mon, 08 Dec 2025 06:26:56 +0100")
+References: <20251206093345.71031-1-ybendito@redhat.com>
+ <87pl8ph7bz.fsf@pond.sub.org>
+Date: Wed, 20 May 2026 07:53:22 +0200
+Message-ID: <87o6ia1val.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,24 +86,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+Looks like this fell through the cracks.  I'm picking it up.
 
-> On Tue, 19 May 2026 at 19:19, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.=
-org> wrote:
->>
->> Commit e804f892b90 ("coverity-scan: list components, move model
->> to scripts/coverity-scan") moved the file but forgot to update
->> the MAINTAINERS entry.
->>
+Markus Armbruster <armbru@redhat.com> writes:
+
+> ybendito@redhat.com writes:
 >
-> Reported-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>> From: Yuri Benditovich <ybendito@redhat.com>
+>>
+>> Signed-off-by: Yuri Benditovich <ybendito@redhat.com>
+>> ---
+>>  MAINTAINERS | 3 +--
+>>  1 file changed, 1 insertion(+), 2 deletions(-)
+>>
+>> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index 63e9ba521b..1a4a698d78 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -4385,8 +4385,7 @@ F: tests/functional/x86_64/test_vfio_user_client.py
+>>  
+>>  EBPF:
+>>  M: Jason Wang <jasowang@redhat.com>
+>> -R: Andrew Melnychenko <andrew@daynix.com>
 >
->> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-
-I can take care of getting it merged.
-
-Thanks!
+> Not at Daynix anymore (e-mail bounces).
+>
+>> -R: Yuri Benditovich <yuri.benditovich@daynix.com>
+>> +R: Yuri Benditovich <ybendito@redhat.com>
+>>  S: Maintained
+>>  F: docs/devel/ebpf_rss.rst
+>>  F: ebpf/*
+>
+> Acked-by: Markus Armbruster <armbru@redhat.com>
 
 
