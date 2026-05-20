@@ -4,94 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 459BACD4F3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 16:34:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D73A9CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 16:37:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPjry-0004iy-3P; Wed, 20 May 2026 12:34:06 -0400
+	id 1wPjuU-0005zQ-58; Wed, 20 May 2026 12:36:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wPjrj-0004hb-9d
- for qemu-devel@nongnu.org; Wed, 20 May 2026 12:33:51 -0400
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ id 1wPjuS-0005yP-1o
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 12:36:40 -0400
+Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wPjrf-0004E4-5V
- for qemu-devel@nongnu.org; Wed, 20 May 2026 12:33:48 -0400
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-6587cee8b57so6059490d50.2
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 09:33:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779294826; cv=none;
+ id 1wPjuQ-000589-A3
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 12:36:39 -0400
+Received: by mail-yx1-xb133.google.com with SMTP id
+ 956f58d0204a3-65dead17c24so4862836d50.2
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 09:36:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779294997; cv=none;
  d=google.com; s=arc-20240605;
- b=O7uGjTulusgsNBrNILeJj7mVatoS2L5ja3nXta+eYSxAXy/I9IEmvU28cAgpWg4Vcx
- PCsCI2tD6o66mb1FBJqIVHTh1n0tcSVyUsuybIiEqlQR+U2+Z9BmykT9cBnhDaBxPbLl
- VabLD0iKaCDhFklrYmv7pWnwcjJlCmJ85YKid7+0OKVLWVVq3sccY0AqGvre7CCq1Qi2
- X8EitXkEtuuHGjgR6YztCQ+hUWmbmszCfRFivyU06NSPWcxk7mzI4ZqQD8VkKC5Axl8N
- WagzzZ6+mRQAy6dFG4pvFMYf9Fos6ECpl7cKGdzzxeZA+OYd4UrAzPbUxPu70w24Pz1X
- yzpw==
+ b=JnRo1do25zreLbijwbeO0H9c0TDTMwxhVPY2iwK2VdrJwYJWrwbHalTxbP6TlR7bUg
+ /Ew98Z6fwQF0yFFI0AxMq3QPo4Q75kE/PcSMbkf56s6XEZeHkuBIYF//rjGvuD+6/c6v
+ aSYkUoTnyI9oIATF7UvPSXsMoUiYeUOtHWAVZB/8GW+O8o6m0/5WO4oLZ+QARFzTe5Ke
+ BUuluu7afK3kzfV+VQ7B7VtaPgSf3VPaRjC1pUiQlBJRSsTJByeyCpHZZ53mJccwDc5e
+ hwT0PZmDjr8zGGNAxyrceQFJ7OYeJX524saX98QidJ3B9NmGCNga6eFlWzulhoahoapk
+ fvdQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=ilXmKd4vt5E2uTWQGrfTbvCC8r36p1523wjeuX6smhY=;
+ bh=Da1TtY+MCb2y6fKCYJH5+UfmZOEaNa/rUnc2JG0Qetc=;
  fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=VDftD0MjnZfhhmIuDK2O2ahGcnJoKqulaOVHdpFkEiTyesZj22A3PoVSQHUt4SXBWz
- 8ezp/f+Q4t7Vj/04PB5jV0kodAOczEEGh2/qpafBSnD8IcodGHTcq0BFAScR1y0oHTfS
- UHHp47C6Xt7xJ+VXR/YqEzVgzX5Td2wlMTRIXcjRjzhQgypGv8Eyix4jlzpxblXrjvWw
- Txah7vIxM9LbX4NvhVEqgFEzC4doBJFI8uXmBRT78tKnZuwKKnKU2nUvr3+Oy2PdjYrK
- etZKwg24YD/8uwgJlxTEly44xz+wE1hretnOZ8ahDdvkIAXzEkJDJkBt6QDb3pJ6JYne
- xpzg==; darn=nongnu.org
+ b=d2tUSS1nsmyD9StWnnXe06qCMlCr38fuomssHLWPbOa2IBlibPo8RQnIdEX1bUs6iE
+ dGjIgohQCHhzCk2wSw2AWZ4PnE3WxzKLMaKnxcM5yzvyimeZ3FGSaOb5XAQGLxJocAMz
+ 6aTExhCMbaOUchm4EACSbACShNojK2k2hMtXD9zQPT0W9HKfUK9MDziNxtjaH9WEgw6o
+ fyMQ3JI1CKzZIh4NC5707uwlCtBTRgK3qpRriSIGuJYKnYyly21/tix7BtAD5C5dHytg
+ sRvs1j0wFZbEJkAcGX54SiqqD7xvWyA6kUYzgpQMd5gATVHPJZKAgKNIsyBHXOOeIuM1
+ Dv3w==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779294825; x=1779899625; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779294997; x=1779899797; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ilXmKd4vt5E2uTWQGrfTbvCC8r36p1523wjeuX6smhY=;
- b=ydht2wzvCBx86FnaKnE3HX1aakgAt3ntMO8p36EFfbO2gskazRC7L1HLO9+vy5NQsg
- 8LvyOSrg7wHk/tkmRhi+w5GPey8wkAUEKGPwlUvig0z1/GiaE0n7mTnM2E5brndlpfTH
- /Q0T6BJosB2FiuiCE3lmVdXy+GmGmamrZ/wBpjIOVUlG1429zEUtuN+joSrGtSjM9c+G
- DoxSAAazmQeciHhQTX5sP12uR+08q8GD8m5L9h9NiueX7pug2qDf/jbqgx6HTAwLPWCN
- ZwZMr1f1WJkziM6yLaIwoOvWz/UO5PoLsQP9zLBwhq0How70gac8t9dkaX1B9fJ7CmWu
- Jlkw==
+ bh=Da1TtY+MCb2y6fKCYJH5+UfmZOEaNa/rUnc2JG0Qetc=;
+ b=X7WQNwGRNVo/3FviGb8uO/7gXCho50xn7qZ6yoZ6IqSWDWlEHxm25+YajcL3Kr1Ai9
+ W8cNh9Bn5DGRmI+AfD5wthT/Z89NTj/dQ9KBHizvZx6KJACymeVozrzeNqoCmAbKmqte
+ MIRtntCmgNcJgYGlwRGG3Fj4hKTavcEWhVpcRD8Tlc1PTKPqNTh9AUkeLaSmGNIVzW+a
+ UatAhQgbOVo0ESBpa8g9s0GkAJU04iVyhbhP6wiC8WZWuWHF4tD9eWucCBltViGorEFo
+ Dn2nzSRAvbq16BDd2c+mFzk56mjVvrpYvfBbrouoGxkCbsnQGOkrjlxuWyImasp+OZN+
+ 1WhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779294826; x=1779899626;
+ d=1e100.net; s=20251104; t=1779294997; x=1779899797;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ilXmKd4vt5E2uTWQGrfTbvCC8r36p1523wjeuX6smhY=;
- b=fvACsR51G/sK9J/MvJg9Yxr0UUnoOrmHNbcve3DW06rgjHmbdcm8nOT02+9r0O1XOi
- UWeKKtvJTFDy0AqjWftHukEHw/kvfuO2XfL2dh8D20+HyyTgsB6iazoSCGUThU1P0UbB
- 8GH3amn9Deva/K0NWuE2HayMRvn3JLKuQJmxyJlFqE5i6xFOSKt2Y+KrrQwErSZHVfnl
- qFy2Vo9HfocPtM8/uNvp7o6zP9Dg1v21rFXB54h17XTBMqi0uSMkkPwCpzifA7ndUMwa
- W8s8ABrv/GekfmmSQu9ac9vCPCDm+F5lzS/hE5vOIDkyC16K5bUbdLOkGfABg3que24w
- HJcQ==
-X-Gm-Message-State: AOJu0YxX11o+X/0oB5Gbo6HDK2wBCaYUoPNUsxRFL5wszddbSs59vspI
- hRGloq1xUnRPnfL79c6xgozbN7MUPyOFY2cpq9s7E3KXkm7u09AgWqwn2FVqxEP0zbyepDBEeOy
- O3ztoAy34bP39UYkT6/9+zZq54ovdp1sBT0hccqxmsA==
-X-Gm-Gg: Acq92OESLu6sO6tddTdzKUts10XPmjp5lAn4SP1OvyykauVW2U0r8DD6uVQwjFkafbH
- EhVPqgYaYwVTPdYWXV0LWak4GkJJqAgHp2clMfu5w2Yg5rtNx6PhTZEbOCp0MqUMO9boMWLYq3y
- 9n2EK6XTyYMsx7KgUgfuLWCgq3XNR/JiJk6721oH2bVFaG7prH1EhhQcRGBOvb+wIIK0ZZqHL5a
- 7z+SdmPws80BWdirkjfMGp2MUg0JRRS2VP75SsrMa/6LrmGVc1DVcvFhSv0yAekMZMaddKkJThQ
- My/j9UH+aMEmQgRs2RjxnjUelP9NZmMOrwMBi++/oprO9LX703fT8i16gUS1pc9vyw8=
-X-Received: by 2002:a05:690e:419b:b0:650:7841:6dd with SMTP id
- 956f58d0204a3-65e2284edfemr21837183d50.31.1779294825598; Wed, 20 May 2026
- 09:33:45 -0700 (PDT)
+ bh=Da1TtY+MCb2y6fKCYJH5+UfmZOEaNa/rUnc2JG0Qetc=;
+ b=LqaqdtaC2u2AO0FERFCplm4FgnBaDkibV/O1105Lw4uWt5k18xvDSiK6MY/pzNYuXI
+ A6eBHle6AXY0m5UphP0PX3UGlyu8M15V1WQp4Yr1TfaUqab+pze5GOrV3LXWfF5iDs35
+ +tlAy2V4rq/ubUI/rakKKS+tVm2EL4cHSZOD8UzJ10IpHMMMPsEVwLHw9zROTsiTSTuS
+ 2zAlX56qX5P2ZmyfZi2zXHs1A+N6cE23mD0t46sLv1+hNCshS2SUr2+nPpAXNmn/ZrzQ
+ XwNMy0jvYsAKxqaTs1jKeaUWp7MrrmTbgghTZE8ALkB78waNXLk3WJRmNBWfhg3qvBs3
+ nqXQ==
+X-Gm-Message-State: AOJu0Yz7Dgja3rcTtCm6ETjBaL9hnvMYfxEDFGjZz9KOvNEx4rI1CEBc
+ uUIWS50YFSO/oBknVyJGZw5j2iRjfdpVdfEN+LOXkVcr3OhUMDZb4DCjMjuwy9nNIKyOnnwkrba
+ CjFqVJJzV7drlBkg2dKYJJxtJqaLv/jwgL2U4JE1S2d3nk9D3KPSL
+X-Gm-Gg: Acq92OHSEk7QdlyDHpzvBoXGj1F9o2g34t0ZS0pUjGONf9wkwV2yozvpzVEad0+oRM3
+ m2XeAblKXFQzYdkgMyX8iQCnxksALZgoqY/E9dmGKSlRftQRjnntns4ak2PMf40a0HZ+3/bbdSF
+ k6FxBoCGN4bPZQEuchbtHvCDQOGtReXfu6eAcwAeBUPclTu9mHYhCi/d7cz9II6Mr+w6aNnRWAa
+ g0ssIh8tv0hmJ7pUaBXpD1EO8CZRUcyitIR3G7k7fWTZrhvdZ+Y19W2FJkigpZ5NT2NMZtsT/2i
+ UpIX6SvcpfYRvYjk6WBqwsaDb3M/YhC5xcjAbyQfff/OArT42TZ00fPZE7SQV3V0o/WWkE0khQr
+ vdQ==
+X-Received: by 2002:a05:690e:4409:10b0:650:18fc:f557 with SMTP id
+ 956f58d0204a3-65e2285bec6mr21425948d50.56.1779294996907; Wed, 20 May 2026
+ 09:36:36 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260517003002.321430-1-richard.henderson@linaro.org>
- <20260517003002.321430-46-richard.henderson@linaro.org>
-In-Reply-To: <20260517003002.321430-46-richard.henderson@linaro.org>
+ <20260517003002.321430-60-richard.henderson@linaro.org>
+In-Reply-To: <20260517003002.321430-60-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 20 May 2026 17:33:33 +0100
-X-Gm-Features: AVHnY4K2AklTn3F9OotRAPjhpJILGgV9OVczu7Hx9StKnIOJRaPt27OijCdhr58
-Message-ID: <CAFEAcA_Qr+D+qrTd7q0s8Ka0YF5NVM01dDMHm3irQDxiZW0n6g@mail.gmail.com>
-Subject: Re: [PATCH v5 45/63] target/arm: Implement FMLALB, FMLALT for AdvSIMD
+Date: Wed, 20 May 2026 17:36:24 +0100
+X-Gm-Features: AVHnY4IXCK4RSvN9X5XqOy5otafM2VpYY22wT_2nQrobFH-jWEoOv2HjD3g8WKw
+Message-ID: <CAFEAcA971nFuXNkQbswiDzRXQ7WsrW9GTVzH5A2rPGym20yMKg@mail.gmail.com>
+Subject: Re: [PATCH v5 59/63] target/arm: Implement FMMLA (FP8 to FP16) for
+ AdvSIMD
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,63 +116,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 17 May 2026 at 01:36, Richard Henderson
+On Sun, 17 May 2026 at 01:35, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-
-
-
-> +static FP8MulContext fp8_mul_start(CPUARMState *env, int scale_mask)
+> ---
+>  target/arm/cpu-features.h        |  5 +++++
+>  target/arm/tcg/helper-fp8-defs.h |  1 +
+>  target/arm/tcg/fp8_helper.c      | 26 ++++++++++++++++++++++++++
+>  target/arm/tcg/translate-a64.c   |  1 +
+>  target/arm/tcg/a64.decode        |  1 +
+>  5 files changed, 34 insertions(+)
+>
+> diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+> index 8f6cc2974f..fce38dfbb0 100644
+> --- a/target/arm/cpu-features.h
+> +++ b/target/arm/cpu-features.h
+> @@ -1625,6 +1625,11 @@ static inline bool isar_feature_aa64_f8mm8(const ARMISARegisters *id)
+>      return FIELD_EX64_IDREG(id, ID_AA64FPFR0, F8MM8);
+>  }
+>
+> +static inline bool isar_feature_aa64_f8mm4(const ARMISARegisters *id)
 > +{
-> +    uint64_t fpmr = env->vfp.fpmr;
+> +    return FIELD_EX64_IDREG(id, ID_AA64FPFR0, F8MM4);
+> +}
 > +
-> +    FP8MulContext ret = {
-> +        .stat = env->vfp.fp_status[FPST_A64],
-> +        .fmt1 = fp8_input_fmt[FIELD_EX64(fpmr, FPMR, F8S1)],
-> +        .fmt2 = fp8_input_fmt[FIELD_EX64(fpmr, FPMR, F8S2)],
-> +        .scale = -(FIELD_EX64(fpmr, FPMR, LSCALE) & scale_mask),
-> +    };
+>  /*
+>   * Combinations of feature tests, for ease of use with TRANS_FEAT.
+>   */
+> diff --git a/target/arm/tcg/helper-fp8-defs.h b/target/arm/tcg/helper-fp8-defs.h
+> index 3c74f02022..e942308af4 100644
+> --- a/target/arm/tcg/helper-fp8-defs.h
+> +++ b/target/arm/tcg/helper-fp8-defs.h
+> @@ -37,3 +37,4 @@ DEF_HELPER_FLAGS_5(gvec_fdot_hb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, env, i32)
+>  DEF_HELPER_FLAGS_5(gvec_fdot_idx_hb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, env, i32)
+>
+>  DEF_HELPER_FLAGS_5(gvec_fmmla_sb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, env, i32)
+> +DEF_HELPER_FLAGS_5(gvec_fmmla_hb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, env, i32)
+> diff --git a/target/arm/tcg/fp8_helper.c b/target/arm/tcg/fp8_helper.c
+> index bb1d48c3e0..d5d1fe71c5 100644
+> --- a/target/arm/tcg/fp8_helper.c
+> +++ b/target/arm/tcg/fp8_helper.c
+> @@ -849,3 +849,29 @@ void HELPER(gvec_fmmla_sb)(void *vd, void *vn, void *vm,
+>      fp8_mul_finish(env, &ctx);
+>      clear_tail(vd, oprsz, simd_maxsz(desc));
+>  }
 > +
-> +    set_flush_to_zero(0, &ret.stat);
-> +    set_flush_inputs_to_zero(0, &ret.stat);
-> +    set_default_nan_mode(true, &ret.stat);
-> +    set_float_rounding_mode(FIELD_EX64(fpmr, FPMR, OSM)
-> +                            ? float_round_nearest_even_max
-> +                            : float_round_nearest_even, &ret.stat);
+> +void HELPER(gvec_fmmla_hb)(void *vd, void *vn, void *vm,
+> +                           CPUARMState *env, uint32_t desc)
+> +{
+> +    FP8MulContext ctx = fp8_mul_start(env, -1);
+
+The scale_mask here should be 0xf as this is a halfprec
+output, right?
+
+> +    size_t oprsz = simd_oprsz(desc);
+> +    size_t nseg = oprsz / 16;
+> +    uint32_t *n = vn;
+> +    uint32_t *m = vm;
+> +    float16 *d = vd;
 > +
-> +    return ret;
+> +    for (size_t seg = 0; seg < nseg; seg++, d += 4, n += 2, m += 2) {
+> +        float16 d0 = f8dotadd_h(n[0], m[0], 4, d[H4(0)], &ctx);
+> +        float16 d1 = f8dotadd_h(n[0], m[1], 4, d[H4(1)], &ctx);
+> +        float16 d2 = f8dotadd_h(n[1], m[0], 4, d[H4(2)], &ctx);
+> +        float16 d3 = f8dotadd_h(n[1], m[1], 4, d[H4(3)], &ctx);
+> +
+> +        d[H4(0)] = d0;
+> +        d[H4(1)] = d1;
+> +        d[H4(2)] = d2;
+> +        d[H4(3)] = d3;
+> +    }
+> +
+> +    fp8_mul_finish(env, &ctx);
+> +    clear_tail(vd, oprsz, simd_maxsz(desc));
 > +}
 
-This use of float_round_nearest_even_max prompted me to look at
-the uses of it in fpu/, and it looks like the implementation is
-incomplete. Most importantly, although commit 72330260cdb420 added
-it to the first "switch (s->float_rounding_mode)" in uncanon_normal,
-it missed adding it to the one later in the same function, which
-I think means we will generate wrongly-rounded answers for
-denormals. A fix is probably:
-
-diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-index efd130bf16..6cc9429ebe 100644
---- a/fpu/softfloat-parts.c.inc
-+++ b/fpu/softfloat-parts.c.inc
-@@ -450,6 +450,7 @@ static void partsN(uncanon_normal)(FloatPartsN *p,
-float_status *s,
-             /* Need to recompute round-to-even/round-to-odd. */
-             switch (s->float_rounding_mode) {
-             case float_round_nearest_even:
-+            case float_round_nearest_even_max:
-                 if (N > 64 && frac_lsb == 0) {
-                     inc = ((p->frac_hi & 1) ||
-                            (p->frac_lo & round_mask) != frac_lsbm1
-
-There are also other places within fpu/ which switch on the
-rounding mode and have no support for the new even_nearest_max
-enum value. Those ones have a default case that asserts or
-aborts, so at least you'll know it if you run into them.
-They are round_to_int_normal, and roundAndPackFloatx80.
-Is it worth extending the support for this rounding mode to
-either of those?
-
+thanks
 -- PMM
 
