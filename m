@@ -4,91 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 041AACD5BAA
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:26:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C56ECD5BAA
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:26:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPkeB-00048a-GE; Wed, 20 May 2026 13:23:55 -0400
+	id 1wPkZ5-0001PU-Ko; Wed, 20 May 2026 13:18:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPkeA-00048I-Dk
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:23:54 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1wPkZ1-0001NF-AN
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:36 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPke8-0003X0-Qb
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:23:54 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-8367df48711so2228621b3a.1
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:23:52 -0700 (PDT)
+ id 1wPkYy-0001vG-6X
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:35 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-36a15ed5119so1649892a91.3
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:18:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779297831; x=1779902631; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=d8zEbFzN4GE9idsF7GuF8QKRv6nn7yIYDKh0297jS1o=;
- b=ZAqcQ5KyBq55VYC1GR61gnzY0dfck6UjUQssuaantW8ig6jLdRi9AIDZf1Ldm675Sh
- vnUO0tGOaih/mEEsgB0lkB5urHQK0bPYiKU9CJvc9Lp3bWhUHnsDPSxf9dfIKPHECwI5
- +u5HNbs7MjzP66hR2T0uUr2SpkNB4ZOXl8vO2kC2Z4/uvuV29OFe43akDCKxnb/mQLk3
- I7hzKDTOIh5/xIhm1/QWT4SurMfDJwPSCFbUvK40KKJm29fjiHLRasTRjXF1b8nfFvQ8
- IlYYhAEmUVSZNjnD/RSTmZtdQMHvc+Fewp5HXytrihsT8ppL8N2xi1y+dq5DPZcmQGjY
- fLPA==
+ d=linaro.org; s=google; t=1779297510; x=1779902310; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9Qae3c5BjQ+dTxdzUKGbagRfnMHB9QZdBYw5eqt/8KM=;
+ b=hKDKyIoBm6s84TFjKpbOa970eNBog+SrJNa7bg0PravRqEJur7eekcSghJq7QHZepR
+ co5J4+LQmJoAbHGSWBWVTFK0yWi5alI/4fWWSsWZ5SKGhrqk9jcMh/9VmMsufc18rR1D
+ aLzJsTWfwwX+3USTiBss8MvrJNJyHKef3Hy4v1Je2PKPLQwE1/T6bJ0MN6jmDNKY/PvP
+ cUqmDWQWs7bx40kdgkqXmN103wYHmmYq7czy4fF5kQYP09h5JkimIWifD0W8km1/w5/6
+ D+BurqtN2H3s3Ex7wxHpLqoIW2JMM3cDfZUJA3qLuEud9cJzGudWObxyw6f1xwXNdk91
+ LqKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779297831; x=1779902631;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=d8zEbFzN4GE9idsF7GuF8QKRv6nn7yIYDKh0297jS1o=;
- b=a2ZkEYEX28IZsvk1tWUY8PVB4OC38R1uMI/BCyrvFgbigxj/hoseJtW24eALnBq/w/
- +DluFphHiYXvYwTMBSuwO1Yny/DDAu5JBxFjqG8ZTqRlbN6PlJ3frZa8WQyzS/58/gOU
- Ce3srcic9F5XNB0XUXQ0H4M6N2nisaW+MN2vtAXdnbywT7DnGP9OHkmWoflK44ZnLYm9
- wBw1Dkbc7ffJuKKXSAd4CHXWaWWbjviveOB6yxG0jk37aTs13nwrn0ZhnWqFA3WeJUwa
- WxZB9pKa/EOVXaDFr/36HPmikPOgYdC1XCUhwnn6oVr2aUn0IB5Ls0HXGBOWIQjY/4ot
- iZEQ==
-X-Gm-Message-State: AOJu0Yw4oEceCnPEj+2xMh8s0v+19APePP9n+NoKmA4qnPZRyKh6fwWf
- HPYgpOZGy1aLEuxpJDubIFT/RUAnA4XbxiD+6Fy0MIfhM+xP8p0H4TapnzS/fMZv2o0=
-X-Gm-Gg: Acq92OGW/mBCUVlqLdS/9JnvAKJk9TjQMCeHbyxNJvfQ/JvtvIbSXrRBMqa4EzBCZpJ
- R9wA1BttDnTVskxdxGr0FP+oCe2gBXsQPRvQdNAVEhQVu6J0uanoYsWOH91kFzOU11i/Y6kPVAm
- g+PEBFZegVokd9DJEsJB/5BlKKbevAkHlCWQbnxBpT8BwEPARERY6X+q7VZGfBlfdg3xSlvmUNS
- FkDW1AxQlav5hYiHXP+U1VJgdVi8kcsvc8A2rcW+vZxp16KScoPGFaOeZ7dzJvB9y0G30k9ar8q
- /9AZIlr5nU6QVcPBCnZZITiN+J2vaKkPVvLVQOelhqp1zy2wNkMBwKpqhaHZO63TKHVucULwr9F
- h5TwQPW7YfCdRTIXSeV/jKYRTagiW10mLIX7SEbUbIutOTJncpTLKudQF/A84YcfiwsNvsGhZ4T
- 4vNERPbQ0CjN38hiGMKAyEKfAUmXvsb8bDZTzkj2BIMDN42l8=
-X-Received: by 2002:aa7:88d1:0:b0:835:6bdf:c87f with SMTP id
- d2e1a72fcca58-83f33c3353bmr23806083b3a.9.1779297831108; 
- Wed, 20 May 2026 10:23:51 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.142.33])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-83f8b9c2ea5sm8006074b3a.13.2026.05.20.10.23.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 May 2026 10:23:46 -0700 (PDT)
-Message-ID: <c9f4dcce-388c-4d36-9d8a-1fbad9cb933e@linaro.org>
-Date: Wed, 20 May 2026 10:23:40 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 45/63] target/arm: Implement FMLALB, FMLALT for AdvSIMD
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-References: <20260517003002.321430-1-richard.henderson@linaro.org>
- <20260517003002.321430-46-richard.henderson@linaro.org>
- <CAFEAcA_Qr+D+qrTd7q0s8Ka0YF5NVM01dDMHm3irQDxiZW0n6g@mail.gmail.com>
+ d=1e100.net; s=20251104; t=1779297510; x=1779902310;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=9Qae3c5BjQ+dTxdzUKGbagRfnMHB9QZdBYw5eqt/8KM=;
+ b=qFa6VGaAy1CCi4aomXEw5jZs9QfPIsTo+v+ep06WAOiVxBHWxFaV1w37Yhz7NKtNEu
+ hyt0IBxp3QtzyklekSjcWRFD1VT/2F+42bAUm/gHaUKl/gWEaCUjx8SEd8qsYoUaDX4m
+ sd+NT3AIJHcavS9TqtnIUt80KmnQ8/VLRkw/o16mbuiKBMp8261QPr2XNr1FhRvPHJF4
+ jFn6DmMgDIWBCi89gKPJReHoTzQl2N9dT0U7+NSj2VIDk9ZX5qTx5h+tWjQ6PThMJjEr
+ wbtDMoMfFQgcLQJ1jhTIjT8zxd9wuH0UVvsYWOIRPADhVZmk7D03PMNTt2RSffZVGDuI
+ 4+jQ==
+X-Gm-Message-State: AOJu0YwqB1gRY9DB3+bKmmzOSup5qpzQdmWVuRoJbQgzIX5CWxK+GfdL
+ 7o4tyFjnD3HLJvHXDnXKP9q2PXZcF0ffS0rq8GqxqokopeOmGMILF/BQpxemt1EARVdap41hU58
+ aPNuUXa0=
+X-Gm-Gg: Acq92OFjNSqZIFSBUVut4gFdJxglj2X+wb0sYOpw8x5JcYZ3EK8J/xH5YWTCeuHVedT
+ dXXRQGW6w2GsyPiWQRGNR+SIJ+oPumKXVN7cQMt9LLHAapSv3BIlfek2T+qe/qM/+vKpRwzGq/5
+ K4h7O0/PekhDXAdoZR+Mzdi++Jpk0I1Z82TiOBmyoy4jDvOw+DVgrGCRMQ1rrKEZLh+QlXQMCuo
+ hUFBdLdcynGFUQIicX5ZmYfwtl7ZeR8/4TebOpoEXvWVEmsrhSjTGXF4dFDKTGi4ax/VVQcX+lu
+ Py4vJp5/0Sd58EIvMPhF2iDM0yB/FwjGKQYoDBdm/ZOrbGw9no+k/P4ZWUu+7sNERRarg8Ufzi7
+ 9r+YHVLZE4sINt37nF4zy7JAXzwEFemEZ7ErGVZJANyxBqOAKPAN3fb1YXvK/v6wNqqpXYpgJwp
+ x0QxhiBUacn052via/+apw+WmodwlC0ng+/SjP+78=
+X-Received: by 2002:a17:90b:260b:b0:35f:b987:4dac with SMTP id
+ 98e67ed59e1d1-369519f3559mr27533535a91.12.1779297509783; 
+ Wed, 20 May 2026 10:18:29 -0700 (PDT)
+Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-36a3c83f226sm254416a91.0.2026.05.20.10.18.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 20 May 2026 10:18:29 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <CAFEAcA_Qr+D+qrTd7q0s8Ka0YF5NVM01dDMHm3irQDxiZW0n6g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v5 11/30] target/alpha: Use FloatExceptionFlags
+Date: Wed, 20 May 2026 10:18:01 -0700
+Message-ID: <20260520171820.848839-12-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260520171820.848839-1-richard.henderson@linaro.org>
+References: <20260520171820.848839-1-richard.henderson@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,45 +101,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/20/26 09:33, Peter Maydell wrote:
-> This use of float_round_nearest_even_max prompted me to look at
-> the uses of it in fpu/, and it looks like the implementation is
-> incomplete. Most importantly, although commit 72330260cdb420 added
-> it to the first "switch (s->float_rounding_mode)" in uncanon_normal,
-> it missed adding it to the one later in the same function, which
-> I think means we will generate wrongly-rounded answers for
-> denormals. A fix is probably:
-> 
-> diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-> index efd130bf16..6cc9429ebe 100644
-> --- a/fpu/softfloat-parts.c.inc
-> +++ b/fpu/softfloat-parts.c.inc
-> @@ -450,6 +450,7 @@ static void partsN(uncanon_normal)(FloatPartsN *p,
-> float_status *s,
->               /* Need to recompute round-to-even/round-to-odd. */
->               switch (s->float_rounding_mode) {
->               case float_round_nearest_even:
-> +            case float_round_nearest_even_max:
->                   if (N > 64 && frac_lsb == 0) {
->                       inc = ((p->frac_hi & 1) ||
->                              (p->frac_lo & round_mask) != frac_lsbm1
+Fixes a bug in which we were still using uint8_t.
 
-Thanks.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/alpha/fpu_helper.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-> 
-> There are also other places within fpu/ which switch on the
-> rounding mode and have no support for the new even_nearest_max
-> enum value. Those ones have a default case that asserts or
-> aborts, so at least you'll know it if you run into them.
-> They are round_to_int_normal, and roundAndPackFloatx80.
-> Is it worth extending the support for this rounding mode to
-> either of those?
+diff --git a/target/alpha/fpu_helper.c b/target/alpha/fpu_helper.c
+index 30f3c7fd18..9af77777da 100644
+--- a/target/alpha/fpu_helper.c
++++ b/target/alpha/fpu_helper.c
+@@ -40,7 +40,7 @@ void helper_setflushzero(CPUAlphaState *env, uint32_t val)
+ 
+ static uint32_t soft_to_fpcr_exc(CPUAlphaState *env)
+ {
+-    uint8_t exc = get_float_exception_flags(&FP_STATUS);
++    FloatExceptionFlags exc = get_float_exception_flags(&FP_STATUS);
+     uint32_t ret = 0;
+ 
+     if (unlikely(exc)) {
+@@ -455,7 +455,7 @@ static uint64_t do_cvttq(CPUAlphaState *env, uint64_t a, int roundmode)
+     float64 fa;
+     int64_t ret;
+     uint32_t exc = 0;
+-    int flags;
++    FloatExceptionFlags flags;
+ 
+     fa = t_to_float64(a);
+     ret = float64_to_int64_modulo(fa, roundmode, &FP_STATUS);
+-- 
+2.43.0
 
-Probably should, since it's trivial, and then we wouldn't have to think about it.
-
-I wish there were an annotation for default: that doesn't suppress the 
-switch-missed-enumerator warning, for use with g_assert_not_reached().
-
-
-r~
 
