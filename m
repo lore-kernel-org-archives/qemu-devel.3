@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54C9ECD4F3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 12:59:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80F07CD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 13:05:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPgW1-0001xv-KH; Wed, 20 May 2026 08:59:13 -0400
+	id 1wPgbX-0003C4-5W; Wed, 20 May 2026 09:04:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPgVw-0001xB-8s
- for qemu-devel@nongnu.org; Wed, 20 May 2026 08:59:09 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPgbU-0003Bj-Rr
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 09:04:53 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPgVu-0005lm-F9
- for qemu-devel@nongnu.org; Wed, 20 May 2026 08:59:07 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-488ab2db91aso51502795e9.3
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 05:59:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPgbS-0008GU-Br
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 09:04:51 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-48896199cbaso38547335e9.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 06:04:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779281945; x=1779886745; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=linaro.org; s=google; t=1779282287; x=1779887087; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=NfFVXk9zPzwACKkYzWPwHDJ3Uglaw/xAjnVZUJOJ1I0=;
- b=QLcbN0WITsWTG3qs+evtiRfibUtDMk2jex26s41YtQ2Gdg0ZnSrtz2+8SaLfwP5E8g
- sZnXmCbByP96J17DttKVykhiACZp/BE+u+V/BMop8BNMVwRkQojUARXRNM+qLmJ3t0y/
- 2UAnjZA2GkDaZfSHHuyJodO4++nW7tRAMIvWMDwOyFkbP22L10wkeB+8CcPeNnbTAQGe
- z01c9n+z0Zx0SwTuhJ2uoRnJr9UR/HphB+92eE3g2VmIjey8gFZn1pd9dhlghmzFHzLQ
- nx5rR/MSJxRPWZry34p3Ok/gMVckrr1GYR7EC59MyF7zU82z9VCSP4DsrYaWlBLUcTZv
- cULA==
+ bh=d3wk9wJtngh0+WzutkjFnDffu/mtnkSJtT8sAO7G6r4=;
+ b=yH8O6aXmeLaeh86WqMZTgq9eHLz19mtlIlsVVNA/LaIuWysLKL/JHamqHAuUgaDvkk
+ k6bM7fgYWsbmKrXTsE2jUxZNv/m7n3wCjmsTzgYXmiFYpvZUQyNiGetNu6ZECXiNjZRi
+ uq8hNYfMY9fQcYVcyxjj/EKkE+BIj77WG3nQF4gdUiG9mICAHaByL3HM9T9jMq0dpWJW
+ AMuERrktxme6r+JeUymzUb4dQULJzcL3UBflV3+JTf+BF5YoVBQjhek3Rqn+l5xl3h1C
+ HK/2tGne7BnVBQyvDUs1mEXxSyy4T+Y2IAnmS8p5vz2PlGFHOWrrODXxjdRzF25OHk0H
+ ETOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779281945; x=1779886745;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=1e100.net; s=20251104; t=1779282287; x=1779887087;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=NfFVXk9zPzwACKkYzWPwHDJ3Uglaw/xAjnVZUJOJ1I0=;
- b=N2q+pyvSVyz1VZPsOFcAGAGzQsDwhYDp6c5telNmbnVeO/z/WmqvKsXX4pG32cL9Zq
- TlNTi9xelhdAg+oNSzBXvGBX9RO4EF0Jwd90eS2vL8bqc+8ojAYsmFZVdkChlIPeIl9b
- Q+uUckPSnYR5KvOPxbguV3yj2HnMhRm9hIbORE0KI5omxUhUXtVCRSaey6pK4IKsKi/w
- Xizv696JA5A9ohF7UHGzPJvglXpzd2sO+Yc1UNdE8suoOk41zOLQk8pzg/i8jPC3jme1
- TU/MkmQewCPO9Sf2eClVvH+LOeqUiWT1+GKYf/q99mI2MMNxVGUGXBB65iCXWPMuQ/ch
- 5blA==
-X-Gm-Message-State: AOJu0YxE+0dYwkvUErPKa9k2oGtqtFd2w8oMeMHCl4jLaWXbTcDxLFkt
- 8VEr/rdD6hlkVKFSpijaZpBpaJHGpaEU+4dTO58wFVQvPBn2EATg+HnH820i+Bc5Ny+pCRc+QuQ
- uU2fEqN8=
-X-Gm-Gg: Acq92OG7kZ8jmT/C04Wkpx+M3Jh9JrqmNFdiYQAvNRXo2HI82cF6LvvJQ1Yjv9/vMYo
- 5OsefKn4bc/I9aEqhwTNovZEBMB/4aJdqfdyOcxGJXbuppgGrDdUKSmcZAf5O9Lvtr2ij0U/LBx
- MRLeqvAJwjm77+4GY2TjCsHUpsnKE2kSKkvJ5HcaZPeHlHhwWyyOrDjOgNr710+OG/XKhsUVwO0
- EOxCFtL7Q5IRJAUsx1x/FALkaP3XAvKd2PDzVw7HXojaR6DeizJky6CEND2bmSMo1KCLmuB6oxR
- zqZztApEyHinEQXOECqEiF14GOytkFjNYpPttXreDEoVS7rSxpNECstm07+ilvw4TQHQILxgiwT
- gC2a94s4xZcrCF7kx0N0Sh/xfWTkeAmRBgyaTk+7t3BPZiYsDXjxyBgQIKrjiJ9tO/kRpC7cZrD
- 5K59n8c0osDZeJdJmjZmOWvuVRWNM+5bhWkBfMuobkpn6WsEUrC/OoPkq0bPcPwsdaAGLFR8z/L
- HSJ
-X-Received: by 2002:a05:600c:6094:b0:48f:f64c:c2fe with SMTP id
- 5b1f17b1804b1-48ff64cc4b5mr311472095e9.22.1779281944611; 
- Wed, 20 May 2026 05:59:04 -0700 (PDT)
+ bh=d3wk9wJtngh0+WzutkjFnDffu/mtnkSJtT8sAO7G6r4=;
+ b=tKMsT8nRGorOurEJxoKqb5ELTZVmjmoQBtaEFBigGaepYIOxxVaRHCcKDhCYn7rJ7t
+ QSbLl/xC2Oe4YVeyJQzWQCB5l8dzt9ITmXb8x4Igs68Elo3v+J5U9emlBK8TVf0jjBZh
+ osyFOCaYkwqXT8KwbmnpaTPP5nyjYNXeoUdGIx9zR28+BRqCOTq/k25d82mvoFo0UGB6
+ tg/9zguAqdQAQ+zqCg6BPyzPufUMmOft3TLcH5pAOUok09EGFT+0TGg4tJvPdyevNGKx
+ 7+Y16iVz4A7O3t0U30Lpc/wHK34pXUA7DLEgpS1hfy5+srHXKqkOCQbe/JIX1xhg6v+Y
+ 7JVg==
+X-Gm-Message-State: AOJu0YxfBXQiH4OGC4X11W69paNWCWVKkshyxmGjCK+do6eocfD6Z7lt
+ mjuDbQ72FVYd+vYKOxQQy3LF61QsnbwoeZGRm7auW24hJ/1WvLjG6+Oje76dzjPFP3gIT9QbAou
+ 45Qf3grg=
+X-Gm-Gg: Acq92OHW6QdBEGVIbmCBIED4xOC4Zj0rzbt3pechu/IWqxGxiGfZycB81oGW3SUWhx3
+ hEjOzLrHQBYswWp9ixE+MW0RIC7Ky0MPk62BZJW8+sVbQ0asb/uNo8G3RXhi5jlYziX2xEFJ66m
+ zHzPmk2x41tnI1OvgKq/p+074Y6m5SHoDpzm+oG+MwpATuikyRlJZ8aFM8zjV1cKndawjBtJcxN
+ 8DHwTSFY1hSy4gq4V5C9WyA2BaNO7wYeYUWL+kmCAQLC2/6jcl84qtQrbdql7ytdD1F56cHEyJY
+ +IMExH39q5nrrVjogCkuN9pgGE4/e2NOqTVDRLqN2z9Hgkd334FKOEI3QIRZhPruDHaKPivNB29
+ 3VaSw7mYkL8aUXHJ/+9sjeLvuITrMRmdlxzlURAhqHIh0NAmBzbkJcx5iRyA/BmXv6kDMO85xHu
+ LtF3O4gmW/zGvra8Fu3Fpo42ytRtRjaQuMeCbVBz8D1p8UPhXFnFqahEnMmQLEtdi2SA==
+X-Received: by 2002:a05:600d:b:b0:48e:8741:fd42 with SMTP id
+ 5b1f17b1804b1-48fe60ee64amr282704125e9.12.1779282287240; 
+ Wed, 20 May 2026 06:04:47 -0700 (PDT)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fffb9aac4sm530631585e9.9.2026.05.20.05.59.03
+ 5b1f17b1804b1-48fe537c788sm377699595e9.12.2026.05.20.06.04.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 May 2026 05:59:03 -0700 (PDT)
-Message-ID: <57f7a25a-dce1-452f-8529-187d66a6d8de@linaro.org>
-Date: Wed, 20 May 2026 14:59:02 +0200
+ Wed, 20 May 2026 06:04:46 -0700 (PDT)
+Message-ID: <76f05465-97a6-46e7-af04-08823a8f3f56@linaro.org>
+Date: Wed, 20 May 2026 15:04:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Fix hexagon-linux-user.mak path
+Subject: Re: [PATCH v11 18/24] target/mips: add Octeon MTM instructions
 Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: Aleksandar Rikalo <arikalo@gmail.com>,
+ James Hilliard <james.hilliard1@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Aurelien Jarno <aurelien@aurel32.net>
+References: <20260520101807.9971-1-philmd@linaro.org>
+ <20260520101807.9971-19-philmd@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>
-References: <20260520123947.12711-1-philmd@linaro.org>
- <87fr3ms0oi.fsf@pond.sub.org>
- <f52ebf28-1921-4ada-a7c5-ec3342cd3acb@linaro.org>
-In-Reply-To: <f52ebf28-1921-4ada-a7c5-ec3342cd3acb@linaro.org>
+In-Reply-To: <20260520101807.9971-19-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,52 +105,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/5/26 14:57, Philippe Mathieu-Daudé wrote:
-> On 20/5/26 14:52, Markus Armbruster wrote:
->> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
->>
->>> Fixes: 812b31d3f91 ("configs: rename default-configs to configs and 
->>> reorganise")
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>>   MAINTAINERS | 2 +-
->>>   1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/MAINTAINERS b/MAINTAINERS
->>> index b75f3222f2f..2a4d124fb3c 100644
->>> --- a/MAINTAINERS
->>> +++ b/MAINTAINERS
->>> @@ -256,7 +256,7 @@ X: target/hexagon/gen_idef_parser_funcs.py
->>>   F: linux-user/hexagon/
->>>   F: tests/tcg/hexagon/
->>>   F: disas/hexagon.c
->>> -F: configs/targets/hexagon-linux-user/default.mak
->>> +F: configs/targets/hexagon-linux-user.mak
->>>   F: docker/dockerfiles/debian-hexagon-cross.docker
->>
->> This one's wrong, too.
+On 20/5/26 12:17, Philippe Mathieu-Daudé wrote:
+> From: James Hilliard <james.hilliard1@gmail.com>
 > 
-> Already fixed in Alex's tree:
-> https://lore.kernel.org/qemu-devel/20260518102222.80735-2- 
-> philmd@linaro.org/
+> Add the MTM0, MTM1, and MTM2 forms that load the Octeon3 multiplier
+> operand pair from rs/rt into MPL[x] and MPL[x+3], then clear the partial
+> products. For MPL0, also set MPL[1] to zero for backward compatibility
+> with Octeon2 VMULU.
 > 
-> Pierrick suggested to repost patch dependencies already queued in
-> maintainer tree when posting series; while this seem counter
-> productive it could indeed have saved us time.
+> Legacy single-source encodings have rt encoded as $zero, so the same
+> translator path also preserves the older Octeon behavior.
 > 
->> I have an unsent patch fixing both.  In fact, I have an unsent series
->> fixing *all* F: patterns that don't resolve to any file.
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/mips/tcg/octeon.decode      |  7 +++++++
+>   target/mips/tcg/octeon_translate.c | 32 ++++++++++++++++++++++++++++++
+>   2 files changed, 39 insertions(+)
+> 
+> diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
+> index 01ed3b50beb..5139543b153 100644
+> --- a/target/mips/tcg/octeon.decode
+> +++ b/target/mips/tcg/octeon.decode
+> @@ -44,6 +44,13 @@ SNE          011100 ..... ..... ..... 00000 101011 @r3
+>   SEQI         011100 rs:5 rt:5 imm:s10 101110 &cmpi
+>   SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
+>   
+> +&r2          rs rt
+> +@r2          ...... rs:5 rt:5 ..... ..... ...... &r2
+> +
+> +MTM0         011100 ..... ..... 00000 00000 001000 @r2
+> +MTM1         011100 ..... ..... 00000 00000 001100 @r2
+> +MTM2         011100 ..... ..... 00000 00000 001101 @r2
 
-I looked for your series without success, then realized you mentioned
-it is "unsent". This patch is still valid then. Why mention unsent work?
+I suppose you don't use a %lane argument (like later patches) due to
+the odd encoding.
 
-> 
-> Oh :( I already sent various patches about that yesterday :(
-> 
->>
->>>   F: gdbstub/gdb-xml/hexagon*.xml
->>>   T: git https://github.com/quic/qemu.git hex-next
->>
-> 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
