@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF6FACD4F5E
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:51:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46622CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 21:51:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPop4-0000b2-Tx; Wed, 20 May 2026 17:51:26 -0400
+	id 1wPooh-00078L-Gz; Wed, 20 May 2026 17:51:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wPop3-0000YM-8H
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:51:25 -0400
+ id 1wPoog-000784-IK
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:51:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wPop1-0004Se-FH
- for qemu-devel@nongnu.org; Wed, 20 May 2026 17:51:24 -0400
+ id 1wPoof-0004Js-8O
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 17:51:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779313882;
+ s=mimecast20190719; t=1779313860;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pjcl2dWy7e1z/2pEJNDQKBeV0ZyclpnFFu+cLOFkHro=;
- b=ezOPCW+0xUSZAYRyPl45iBR7L0TE26XxZAaLZNtWEibSpBSy592tCVxJ3cKHSdJBDEJVWN
- UxhiJEY87jVw/Km/eMF5xQdFi7yI/TKxDS4EcicaVARauzEV52LR3giDGJ24D7jxxl12qc
- z2FLa/KUd3TlEC8TzFQwMIOazA8c3Ns=
+ bh=1LQv/rhoZBwJsycfF7fcJCSjT/fGpRtfUatVJogJqc8=;
+ b=eii6WlBkNSTWfb/yQWdpxw3cj9/Mwbo2IZK+DShDMBl5UfmNRJ+QrDsAJVW6oXZ9WGQoFw
+ n5crmi6ondQn1FuEJ5pQnpOpzluIa1wL14TWCwZ8wmdhaWDt85lSM3ag5UjAEKUep2Lca8
+ sCsccP947WsCwxBen1gEvO0hNOeEJho=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-235-7OdiUSK5Py2sA8n7W6glfQ-1; Wed,
- 20 May 2026 17:51:20 -0400
-X-MC-Unique: 7OdiUSK5Py2sA8n7W6glfQ-1
-X-Mimecast-MFC-AGG-ID: 7OdiUSK5Py2sA8n7W6glfQ_1779313880
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-0LY_jnmIPNWQFpK0EaILjQ-1; Wed,
+ 20 May 2026 17:50:57 -0400
+X-MC-Unique: 0LY_jnmIPNWQFpK0EaILjQ-1
+X-Mimecast-MFC-AGG-ID: 0LY_jnmIPNWQFpK0EaILjQ_1779313857
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E5C401956046
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 21:51:19 +0000 (UTC)
+ id 0BBE919560BB
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 21:50:57 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.26])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9800618004A3; Wed, 20 May 2026 21:51:18 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id AC7B41681; Wed, 20 May 2026 21:50:55 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Thu, 21 May 2026 01:49:13 +0400
-Subject: [PATCH 12/40] tests: use x-query-usernet
+Date: Thu, 21 May 2026 01:49:09 +0400
+Subject: [PATCH 08/40] hmp: correct the nmi documentation
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260521-qemu-no-hmp-v1-12-d104f809e145@redhat.com>
+Message-Id: <20260521-qemu-no-hmp-v1-8-d104f809e145@redhat.com>
 References: <20260521-qemu-no-hmp-v1-0-d104f809e145@redhat.com>
 In-Reply-To: <20260521-qemu-no-hmp-v1-0-d104f809e145@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2929;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=606;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=+P16oBsYld1xCUKsO57K6aS/d455wRba5dgXW09RuWc=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqDiyDdDRmH0csLE5tn4rA7HTqKlRN1qFANHmwU
- R/POELKAQGJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCag4sgwAKCRDa6OEJdZac
- 5YbVD/97wv36fnrTz0REsCXxfadmCap6A6yu/3786aEJ5J7A0QDslVaPIubs78B0uG4WVr8ZBbM
- MACAYRXmq8lBHrZSShtJgHB+hJWcx9VrXlJr2nsq3+7Rws+xt9lNQMpmyftfP7sL+/zOYcPsQLD
- rb0VQN2JSrZkC3zgtHTbnjOMxXyQtgtXBD4EC3tyFBQNC4XMmAZ+gD7GLmumCa4Y+1tVpNeGdji
- DeJxGAGAURaCm7NxM3QQbiz+DAlzuR486k7j+owSIdInwj9m4hABJduU0+2vwGP2HN1wHWh/FgO
- opSqQYJXvY9cV/ZNvuUSC2EwGPvKWYVHP4OW8RG32WdQ2egfLGQ9qjpcHMJVLH8QkdnxIF5G3Dv
- /iqr3EXmo/1Bn6LSHr5Bn0vVifpgQnTN+L7V6yppKEqBDzz7xQolPVV9LvvUvmh93uYaoOcKAgZ
- 2SZsjCR3P5kjZ+FlY1FD8cfGUFng4PbSUnfuWyNuVEk4iuhs629ba1X6WGs3kJgx7hv/x0n6sr1
- WKBBpCmyzAfG2VxjVFzGxXQKUp7kQIKfBScS3mb7MTX+JSzRMDCMG13y9xY0iFtQ24ZJQapWqlU
- wX3ybRPv1RO40fT0XD/+8wDySNbwpPCnzlUDzqFdKA4P1NpPdNRYbJMGBZBLu847amhtjCRG1zL
- n093sVX1fsO0mKA==
+ bh=ILtXC4u+7Uk/JAKm4bgHcdSs2fKg/MgQMk7bR7QWHBk=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqDiyCN8iBWRoktfYRM71AMLcnaIrrIoV0VM92Y
+ dKZHTJC46+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCag4sggAKCRDa6OEJdZac
+ 5eDBD/9N374Ml4zihuFpMaIuFS5lh8Jm5FEeHVnVAhqZBY/Uox+k3iDqOr1HDfOF8wfXP9tAbrM
+ wevdVaB3olndk52wgockkdf4kGrHaYL1ilIUQ9HGise4JpnHKhsKfrvG+znO6G/r7qKTA5ylTrb
+ Q39u1tQv6DQWF4O+Bki1X5vYE+HBijs7xDAZ3VrIPJKyNT334d7AKnz5OZKdIpRZ3fq81SRjaCE
+ lVIEEpD8b2GQCrwo1eKrxF/lI1OtXZkPvcWe8W7mcKVFg6Hm7mYWmpZcpCKlNpf1tcODUqFcpTT
+ ZPtoeN83yE6pO67+ksS4Cu2mNYpfBPR2jzOtvM5UE/U9TYz8IO7yN0sWclKq6q92eYJzIUtYBxg
+ KlAPVHRT4+sxXZEEgFkPp0jFg3cNt4cJLTtM2QUt9XDrMhRB6YZJiK+UVlbJczSbjI8pidTJpFC
+ ISq6fsqhVv41FRrNzGZrpDR2jm34waFT7Nd4jI53QunnQINKGsYFnW0w3n8kFmozj71BDjDo9AR
+ zLWVTBOfqJD5tmrJmm4K45r4qIQYLfMzF4sCcMihSczePhMb0O88gvE+dCLf/pAJNm5fTXN21Nb
+ zgK+xZFd8kMlEWHFCCnsvJAqCtg0AJXJjqICzDqkq0jxJzJU3pxg1W1Qv/p+qi+Dhs8+xJ0woCL
+ 3KpslH22cjaNHbg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -105,73 +105,25 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- python/qemu/utils/__init__.py       |  5 +++--
- tests/functional/qemu_test/utils.py |  8 ++++++--
- tests/vm/basevm.py                  | 13 ++++++++-----
- 3 files changed, 17 insertions(+), 9 deletions(-)
+ hmp-commands.hx | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/python/qemu/utils/__init__.py b/python/qemu/utils/__init__.py
-index be5daa83634..e32911d4c6d 100644
---- a/python/qemu/utils/__init__.py
-+++ b/python/qemu/utils/__init__.py
-@@ -46,10 +46,11 @@ def get_info_usernet_hostfwd_port(info_usernet_output: str) -> Optional[int]:
-     """
-     Returns the port given to the hostfwd parameter via info usernet
+diff --git a/hmp-commands.hx b/hmp-commands.hx
+index 705c8662f4b..146fb05dc64 100644
+--- a/hmp-commands.hx
++++ b/hmp-commands.hx
+@@ -868,8 +868,9 @@ ERST
+         .cmd        = hmp_nmi,
+     },
+ SRST
+-``nmi`` *cpu*
+-  Inject an NMI on the default CPU (x86/s390) or all CPUs (ppc64).
++``nmi``
++  Inject an NMI on the associated monitor vCPU (``cpu`` command, on s390x) or
++  all vCPUs (on other architectures).
+ ERST
  
--    :param info_usernet_output: output generated by hmp command "info usernet"
-+    :param info_usernet_output: output generated by "info usernet" or
-+        the "info" field from x-query-usernet
-     :return: the port number allocated by the hostfwd option
-     """
--    for line in info_usernet_output.split('\r\n'):
-+    for line in info_usernet_output.splitlines():
-         regex = r'TCP.HOST_FORWARD.*127\.0\.0\.1\s+(\d+)\s+10\.'
-         match = re.search(regex, line)
-         if match is not None:
-diff --git a/tests/functional/qemu_test/utils.py b/tests/functional/qemu_test/utils.py
-index 826c267785b..0992db49ab2 100644
---- a/tests/functional/qemu_test/utils.py
-+++ b/tests/functional/qemu_test/utils.py
-@@ -14,8 +14,12 @@
- 
- 
- def get_usernet_hostfwd_port(vm):
--    res = vm.cmd('human-monitor-command', command_line='info usernet')
--    return get_info_usernet_hostfwd_port(res)
-+    res = vm.cmd('x-query-usernet')
-+    for entry in res:
-+        port = get_info_usernet_hostfwd_port(entry['info'])
-+        if port is not None:
-+            return port
-+    return None
- 
- def pow2ceil(x):
-     """
-diff --git a/tests/vm/basevm.py b/tests/vm/basevm.py
-index 9e879e966a3..198b04e8c37 100644
---- a/tests/vm/basevm.py
-+++ b/tests/vm/basevm.py
-@@ -312,12 +312,15 @@ def boot(self, img, extra_args=[]):
-         self._guest = guest
-         # Init console so we can start consuming the chars.
-         self.console_init()
--        usernet_info = guest.cmd("human-monitor-command",
--                                 command_line="info usernet")
--        self.ssh_port = get_info_usernet_hostfwd_port(usernet_info)
-+        res = guest.cmd("x-query-usernet")
-+        for entry in res:
-+            port = get_info_usernet_hostfwd_port(entry['info'])
-+            if port is not None:
-+                self.ssh_port = port
-+                break
-         if not self.ssh_port:
--            raise Exception("Cannot find ssh port from 'info usernet':\n%s" % \
--                            usernet_info)
-+            raise Exception("Cannot find ssh port from"
-+                            " 'x-query-usernet': %s" % res)
- 
-     def console_init(self, timeout = None):
-         if timeout == None:
+     {
 
 -- 
 2.54.0
