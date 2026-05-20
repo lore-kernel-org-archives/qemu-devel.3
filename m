@@ -4,105 +4,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8D9DCD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 05:56:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4732CD4F5E
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 06:33:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPZuA-00044v-Bh; Wed, 20 May 2026 01:55:42 -0400
+	id 1wPaUA-0005TN-0Q; Wed, 20 May 2026 02:32:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wPZu8-00044c-V6
- for qemu-devel@nongnu.org; Wed, 20 May 2026 01:55:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wPaU8-0005T5-7P
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 02:32:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wPZu6-00041h-2E
- for qemu-devel@nongnu.org; Wed, 20 May 2026 01:55:40 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wPaU5-00053K-Ld
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 02:32:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779256536;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1779258767;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=fLot/bcqkYMwj6pg8qvs615Vg4pSNDH+G22x3IOzf+E=;
- b=LJoo9ygdhO47RtEpYJ652D4GBTfFbsnwxVdJa6VgJXwf1fLLDpdGHGff57ZoOJsF+Gks3m
- RKVZVxKcJi6NcvJ6ZgsIMfF46rTbOjRfIOk4MMBTs55/o/6aL2L961Lr4U1mvk+Dop2yNv
- cxp2w2Yb8uX7sHweWeu5aBfk+VIsPmM=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=T4DOqcybdlND3lT/F7o8QlHfNT3S31zOmp/BLqQ4rSc=;
+ b=gKbUp3uF4GJ7Xzysk+VOCMWJ4t9jL3FmViHww1tGrbpm9oiAWYtB4pX89rk/q0OHsNPdGF
+ oTOZUN12OUNrbrYxuFEqtyNGBYFKPOYLIq6L6mgWxV0pwsK7Gk/a3VFS7uab1dzmu/nNVp
+ 8sJugK6/1JKl9O5LgbH/KQtHzgwZ/Fo=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-323-a8EGfLvkNQeAvjFD9PyJZw-1; Wed, 20 May 2026 01:55:35 -0400
-X-MC-Unique: a8EGfLvkNQeAvjFD9PyJZw-1
-X-Mimecast-MFC-AGG-ID: a8EGfLvkNQeAvjFD9PyJZw_1779256534
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-43d7730e9e3so2484499f8f.2
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 22:55:34 -0700 (PDT)
+ us-mta-614-ygzX_e6aPIeLAMnYI6tFaQ-1; Wed, 20 May 2026 02:32:46 -0400
+X-MC-Unique: ygzX_e6aPIeLAMnYI6tFaQ-1
+X-Mimecast-MFC-AGG-ID: ygzX_e6aPIeLAMnYI6tFaQ_1779258765
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-48e79219704so31463185e9.1
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 23:32:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1779258765; x=1779863565; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=T4DOqcybdlND3lT/F7o8QlHfNT3S31zOmp/BLqQ4rSc=;
+ b=SGO7TUlOxYcGiixfwrHvH4JDL836sj+CUbI5I5dOZxqGK969PxHNuIEaCRZeg4GLNo
+ oVpn301eDsReXtuv31x3yLm+TrescF4Vd7212umMfG250hj77GZ3Pypsx3XfV1cvBnGN
+ zq+nBPAz6OGVT5mwMXmjSvGUx9aj2+TV7BaeA3jT/OlqOjo3LL/mKEgV3K+Leyr3puIb
+ rmPLdHmzI/oXb+ahifZQAone+dBQh7ph3+hf/TS2jQaFJl+469eiFwOQl2kStmu7G5z2
+ aObMX1Bou8LlIRM9lIdE7aztxKKLf2q/87SRICYoVWyujtruFpZF6jQf0gpmkdytglLG
+ s/UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779256534; x=1779861334;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1779258765; x=1779863565;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fLot/bcqkYMwj6pg8qvs615Vg4pSNDH+G22x3IOzf+E=;
- b=hBpKHs0hgmjZ7FMakX6h6La+zlhjUgBsm+E0CqQAIz2Mw8WldBUqYtpu6E7465GjFh
- lkS4x7r2AH7rch5qKElrJpiIg1zTGqOAH7UfeLg/L4eigJZJxHkwxtm5x1Qvheq8LezG
- +G7m/nyqmB8SVr1HzT5bUQagG1qfE/5DFNb2zFsyh/LNLBDnEBNO6cci9Iw7UuIlaDmH
- bhpxOkQZ98T1y11qhVBYyp6uIllNPl4hrWN4D3dsF8wDudCnPhcIyQn9lqdpqNJ2nYgH
- 8vczA3n+IQ9jMm02rrvqphLFVg8N3q8OXNMmpJpp+E+DLksUoBQaqj/ZeFV26dBFP+3i
- O+Fw==
+ bh=T4DOqcybdlND3lT/F7o8QlHfNT3S31zOmp/BLqQ4rSc=;
+ b=ZG/09UAhTEp+p5KnLXvVyfr/jRsPNGsHds2ZMf1xSTZWBZrChfjoSDr3aHkKLQkC2l
+ bGzs44eanm9u+i+8ZhrXcAUwlk3io20MbkHo3SbpUmta96OoyF39BJocfX150dUlvJPi
+ 1+lyy1Net1WNYerO2FADIndXFJYi9m1N9RW0aHQfeBa0C+Swcxd79kiW7pdDXwBccGtl
+ WbSVqORplJmWkgLRDzOx3rXpKEJ30rakhWKcM8Kh/qz0Mw1JWQSDTI5EywiT0yBE7vrB
+ 85J1LfuBScL94jXKLB4PbL6s8IaxC8yy7y5C/akvJpPzx4u/bKl00wAXH136Do7Aw4Jd
+ 8LWQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/EpfnkqfuRJCtjL53CWNVMOA9pkxShOorcxTKfbGoixtm5u1ldsmZaBe4HACSjRn/dCIBbF0F3elsZ@nongnu.org
-X-Gm-Message-State: AOJu0YzLXFez/MxCdLgmIvXQc+Seb9bW29ooFFFq9di4X9sYXcVQ7iyT
- GzwG2IusDaHVSt4qISp0trZ0WqIwd+GbRVmIiToUv+x9yM7aTc+z2NlMWJ62Ds7/07nBEUnEE8V
- CRacpSFxicHUdaug/5ohmjvVHfa308orPdpwhEQ+wCvv06cevQZQfhlIH
-X-Gm-Gg: Acq92OFhQUVIok9uMzVMBNyQ1BYgMxXqdGhNHfAzfjuxLTxi5ABaz/J7gV+qHV0plnB
- /fV2wazP5mJ6/Uzr8S3eYP2urd2MbQsyPefsd8uSY4DZ8qNVF60zbAzehCh/XVEwSmMTVVRS/6q
- Y1rXg8jUutaTEFMNy6sxW3TDTktPrZvjlBStv4C0ZrgAnOW3ld4sJzcgvxknDtnnBdGXBTYb4pw
- mKmvSSYQsScksDdR0T+i71JgAwYMbDRRqljMdhwjtlxaOhhozwSbI24RM3RZrVAkyOn60i97JsY
- N/jkWK8ATu7Wa0RY0TpLnxD+xXnAzTa54DSRTgRgE8tjvNRey1gXmMPC0ixHBaZtPQiXmPVyBid
- H1OnPiMcxY/Py5oZmIjdFBwlbjMrkTtCYih8wFWtrP7ffoC4NSMQQdVjGRHIXQ5KqThGRAA==
-X-Received: by 2002:a05:600c:5298:b0:48e:635a:18d2 with SMTP id
- 5b1f17b1804b1-48fe60e51d1mr348955985e9.2.1779256533693; 
- Tue, 19 May 2026 22:55:33 -0700 (PDT)
-X-Received: by 2002:a05:600c:5298:b0:48e:635a:18d2 with SMTP id
- 5b1f17b1804b1-48fe60e51d1mr348955665e9.2.1779256533284; 
- Tue, 19 May 2026 22:55:33 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ AFNElJ/eqm+LtSTJQV4rCSKOjjZ+J3Iwm019K8mNwoGUGMAbWhNZSp4kJdLh0ABopNkYH4WJ5rVjTvQYucSw@nongnu.org
+X-Gm-Message-State: AOJu0YyRNlmRLSZW4JDCveirzfNR+af6ZRnKUMumlQPTDGcxW+oa/kNn
+ FJdII5FtogHwMStnKApStDtHKpEeN/i/R6HgXAqm6jUXOgTksADfJpVdG75CES3+OBGj79Iju5b
+ EKQrXsIWtBsjQUWk/GYYMwjMq/RqU+riYQyZGQa9wqT4aUHJTLVar0wUY
+X-Gm-Gg: Acq92OHBoXSBfRdhnsTWoKow/H3zcxUZq6MMZIgJVGU4ia0ewXBQ4ZKOI4tHYsdpZRz
+ lTBpxJWpCqXxqEUPNYE+SnkqXURXyC6zz3eoRjcVvdmBSL3bF+T4HVVsafWyPTmWpqkQmvk5oxh
+ 52aSMUu7XbbV1h8SQaVFu5teFDMWTpPWnPl7PM3oZcE6F338Jb5gJtYljvV38ubJVRW/5M7mb89
+ /QcfN5yiwSNVn4dJY7GVT429aiKnCTEx+SlwveVT8IFzb7FlFcLxL78N/06GjeKDWeRYhNzAXyM
+ wwq9RTy6nxyG8Ydepo4j/MAP7yYcgPiczjnEtxdhLjPSBMxm09ZuoZJLgS5NTIJ4DjSevp5mDu8
+ bPPkuOxLKOVJTSQLv/Fk=
+X-Received: by 2002:a05:600c:4f13:b0:485:30d4:6b9e with SMTP id
+ 5b1f17b1804b1-48fe6328bb7mr383688515e9.21.1779258764700; 
+ Tue, 19 May 2026 23:32:44 -0700 (PDT)
+X-Received: by 2002:a05:600c:4f13:b0:485:30d4:6b9e with SMTP id
+ 5b1f17b1804b1-48fe6328bb7mr383687955e9.21.1779258764304; 
+ Tue, 19 May 2026 23:32:44 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.114.232])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fffb9aac4sm484083875e9.9.2026.05.19.22.55.32
+ ffacd0b85a97d-45d9ed2f738sm50083718f8f.16.2026.05.19.23.32.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 May 2026 22:55:32 -0700 (PDT)
-Message-ID: <79d27d57-ee18-4c2b-a2f2-6d14c593202f@redhat.com>
-Date: Wed, 20 May 2026 07:55:31 +0200
+ Tue, 19 May 2026 23:32:43 -0700 (PDT)
+Message-ID: <abfb69ae-6501-4f50-9c5c-c0f9a938fb4c@redhat.com>
+Date: Wed, 20 May 2026 08:32:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 16/32] hw/arm/tegra241-cmdqv: Emulate VCMDQ register
- writes
-Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+Subject: Re: [PATCH v2 1/4] MAINTAINERS: Fix s390x storage key/attribute
+ device paths
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
- nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
- jgg@nvidia.com, zhenzhong.duan@intel.com, kjaju@nvidia.com,
- phrdina@redhat.com
-References: <20260519103727.899332-1-skolothumtho@nvidia.com>
- <20260519103727.899332-17-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260519103727.899332-17-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-s390x@nongnu.org
+References: <20260519171240.97420-1-philmd@linaro.org>
+ <20260519171240.97420-2-philmd@linaro.org>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260519171240.97420-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,263 +163,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 5/19/26 12:36 PM, Shameer Kolothum wrote:
-> From: Nicolin Chen <nicolinc@nvidia.com>
->
-> This is the write side counterpart of the VCMDQ read emulation. Add
-> write handling for both the direct VCMDQ aperture and the VINTF
-> logical aperture using the same index decoding and VINTF-to-VCMDQ
-> translation logic as the read path.
->
-> VINTF aperture writes are translated to their direct-aperture
-> equivalent and update the same cached state. Page 1 registers
-> (BASE, CONS_INDX_BASE) always update the cache. Once
-> IOMMU_HW_QUEUE_ALLOC and viommu_mmap are wired up in a subsequent
-> patch, Page 0 register writes will be forwarded to the hardware-
-> backed mmap'd page.
->
-> Ignore VCMDQ BASE writes if the VCMDQ is already enabled.
->
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> Co-developed-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+On 19/05/2026 19.12, Philippe Mathieu-Daudé wrote:
+> Fixes: 56e34834029 ("MAINTAINERS: split out s390x sections")
+> Reported-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  hw/arm/tegra241-cmdqv.c | 164 +++++++++++++++++++++++++++++++++++++++-
->  hw/arm/trace-events     |   2 +
->  2 files changed, 164 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
-> index f859126ad6..5d2d9d2e26 100644
-> --- a/hw/arm/tegra241-cmdqv.c
-> +++ b/hw/arm/tegra241-cmdqv.c
-> @@ -16,6 +16,16 @@
->  #include "tegra241-cmdqv.h"
->  #include "trace.h"
->  
-> +/*
-> + * Returns true if the per-VCMDQ CMDQ_EN_OK bit is set.
-> + */
-> +static bool tegra241_vcmdq_enabled(Tegra241CMDQV *cmdqv, int index)
-> +{
-> +    uint32_t status = cmdqv->vcmdq_status[index];
-> +
-> +    return status & R_VCMDQ0_STATUS_CMDQ_EN_OK_MASK;
-> +}
-> +
->  /*
->   * Read a VCMDQ Page 0 register (control/status) using VCMDQ0_* offsets.
->   *
-> @@ -116,6 +126,108 @@ static uint64_t tegra241_cmdqv_config_vintf_read(Tegra241CMDQV *cmdqv,
->      }
->  }
->  
-> +/*
-> + * Write a VCMDQ Page 0 register (control/status) using VCMDQ0_* offsets.
-> + *
-> + * The caller normalizes the MMIO offset such that @offset0 always refers
-> + * to a VCMDQ0_* register, while @index selects the VCMDQ instance.
-> + *
-> + * Page 0 registers are all 32-bit; this helper is only called for 4-byte
-> + * writes.
-> + */
-> +static void tegra241_cmdqv_write_vcmdq_page0(Tegra241CMDQV *cmdqv,
-> +                                             hwaddr offset0, int index,
-> +                                             uint32_t value)
-> +{
-> +    switch (offset0) {
-> +    case A_VCMDQ0_CONS_INDX:
-> +        cmdqv->vcmdq_cons_indx[index] = value;
-> +        break;
-> +    case A_VCMDQ0_PROD_INDX:
-> +        cmdqv->vcmdq_prod_indx[index] = value;
-> +        break;
-> +    case A_VCMDQ0_CONFIG:
-> +        if (value & R_VCMDQ0_CONFIG_CMDQ_EN_MASK) {
-> +            cmdqv->vcmdq_status[index] |= R_VCMDQ0_STATUS_CMDQ_EN_OK_MASK;
-> +        } else {
-> +            cmdqv->vcmdq_status[index] &= ~R_VCMDQ0_STATUS_CMDQ_EN_OK_MASK;
-> +        }
-> +        cmdqv->vcmdq_config[index] = value;
-> +        break;
-> +    case A_VCMDQ0_GERRORN:
-> +        cmdqv->vcmdq_gerrorn[index] = value;
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "%s unhandled write access at 0x%" PRIx64 "\n",
-> +                      __func__, offset0);
-> +    }
-> +    trace_tegra241_cmdqv_write_vcmdq_page0(index, offset0, value);
-> +}
-> +
-> +/*
-> + * Write a VCMDQ Page 1 register (base / DRAM address) - 4-byte access.
-> + */
-> +static void tegra241_cmdqv_write_vcmdq_page1(Tegra241CMDQV *cmdqv,
-> +                                             hwaddr offset0, int index,
-> +                                             uint32_t value)
-> +{
-> +    switch (offset0) {
-> +    case A_VCMDQ0_BASE_L:
-> +        if (tegra241_vcmdq_enabled(cmdqv, index)) {
-> +            return;
-> +        }
-> +        cmdqv->vcmdq_base[index] =
-> +            deposit64(cmdqv->vcmdq_base[index], 0, 32, value);
-> +        break;
-> +    case A_VCMDQ0_BASE_H:
-> +        if (tegra241_vcmdq_enabled(cmdqv, index)) {
-> +            return;
-> +        }
-> +        cmdqv->vcmdq_base[index] =
-> +            deposit64(cmdqv->vcmdq_base[index], 32, 32, value);
-> +        break;
-> +    case A_VCMDQ0_CONS_INDX_BASE_DRAM_L:
-> +        cmdqv->vcmdq_cons_indx_base[index] =
-> +            deposit64(cmdqv->vcmdq_cons_indx_base[index], 0, 32, value);
-> +        break;
-> +    case A_VCMDQ0_CONS_INDX_BASE_DRAM_H:
-> +        cmdqv->vcmdq_cons_indx_base[index] =
-> +            deposit64(cmdqv->vcmdq_cons_indx_base[index], 32, 32, value);
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "%s unhandled write access at 0x%" PRIx64 "\n",
-> +                      __func__, offset0);
-> +    }
-> +    trace_tegra241_cmdqv_write_vcmdq_page1(index, offset0, value);
-> +}
-> +
-> +/*
-> + * Write a VCMDQ Page 1 register - 8-byte access at BASE_L or DRAM_L.
-> + */
-> +static void tegra241_cmdqv_write_vcmdq_page1_64(Tegra241CMDQV *cmdqv,
-> +                                                hwaddr offset0, int index,
-> +                                                uint64_t value)
-> +{
-> +    switch (offset0) {
-> +    case A_VCMDQ0_BASE_L:
-> +        if (tegra241_vcmdq_enabled(cmdqv, index)) {
-> +            return;
-> +        }
-> +        cmdqv->vcmdq_base[index] = value;
-> +        break;
-> +    case A_VCMDQ0_CONS_INDX_BASE_DRAM_L:
-> +        cmdqv->vcmdq_cons_indx_base[index] = value;
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "%s unhandled 64-bit write at 0x%" PRIx64 "\n",
-> +                      __func__, offset0);
-> +    }
-> +    trace_tegra241_cmdqv_write_vcmdq_page1(index, offset0, value);
-> +}
-> +
->  static void tegra241_cmdqv_config_vintf_write(Tegra241CMDQV *cmdqv,
->                                                hwaddr offset, uint64_t value)
->  {
-> @@ -235,6 +347,8 @@ out:
->  static void tegra241_cmdqv_writel_mmio(Tegra241CMDQV *cmdqv, hwaddr offset,
->                                         uint32_t value)
->  {
-> +    int index;
-> +
->      switch (offset) {
->      case A_CONFIG:
->          cmdqv->config = value;
-> @@ -253,6 +367,33 @@ static void tegra241_cmdqv_writel_mmio(Tegra241CMDQV *cmdqv, hwaddr offset,
->      case A_VINTF0_CONFIG ... A_VINTF0_LVCMDQ_ERR_MAP_3:
->          tegra241_cmdqv_config_vintf_write(cmdqv, offset, value);
->          break;
-> +    case A_VI_VCMDQ0_CONS_INDX ... A_VI_VCMDQ1_GERRORN:
-> +        /*
-> +         * VINTF Page0 registers are hardware aliases of VCMDQ Page0 registers.
-> +         * Translate the VINTF aperture offset to its VCMDQ Page0 equivalent
-> +         * and fall through to the Page0 dispatch below.
-> +         */
-> +        offset -= CMDQV_VINTF_PAGE0_BASE - CMDQV_VCMDQ_PAGE0_BASE;
-> +        QEMU_FALLTHROUGH;
-> +    case A_VCMDQ0_CONS_INDX ... A_VCMDQ1_GERRORN:
-> +        /*
-> +         * Decode a per-VCMDQ Page 0 access. Each VCMDQ occupies a
-> +         * CMDQV_VCMDQ_STRIDE-byte window; extract the index and normalize
-> +         * to the VCMDQ0_* offset before calling the Page 0 helper.
-> +         */
-> +        index = (offset - CMDQV_VCMDQ_PAGE0_BASE) / CMDQV_VCMDQ_STRIDE;
-> +        tegra241_cmdqv_write_vcmdq_page0(cmdqv,
-> +                offset - index * CMDQV_VCMDQ_STRIDE, index, value);
-> +        break;
-> +    case A_VI_VCMDQ0_BASE_L ... A_VI_VCMDQ1_CONS_INDX_BASE_DRAM_H:
-> +        /* Same VINTF-to-VCMDQ translation as VINTF Page0 case above. */
-> +        offset -= CMDQV_VINTF_PAGE1_BASE - CMDQV_VCMDQ_PAGE1_BASE;
-> +        QEMU_FALLTHROUGH;
-> +    case A_VCMDQ0_BASE_L ... A_VCMDQ1_CONS_INDX_BASE_DRAM_H:
-> +        index = (offset - CMDQV_VCMDQ_PAGE1_BASE) / CMDQV_VCMDQ_STRIDE;
-> +        tegra241_cmdqv_write_vcmdq_page1(cmdqv,
-> +                offset - index * CMDQV_VCMDQ_STRIDE, index, value);
-> +        break;
->      default:
->          qemu_log_mask(LOG_UNIMP, "%s unhandled write access at 0x%" PRIx64 "\n",
->                        __func__, offset);
-> @@ -260,14 +401,33 @@ static void tegra241_cmdqv_writel_mmio(Tegra241CMDQV *cmdqv, hwaddr offset,
->  }
->  
->  /*
-> - * 8-byte MMIO write handler.
-> + * 8-byte MMIO write handler. Only Page 1 BASE / CONS_INDX_BASE_DRAM accept
-> + * full 64-bit writes; other offsets are write-ignored.
->   */
->  static void tegra241_cmdqv_writell_mmio(Tegra241CMDQV *cmdqv, hwaddr offset,
->                                          uint64_t value)
->  {
-> -    qemu_log_mask(LOG_UNIMP,
-> +    int index;
-> +
-> +    switch (offset) {
-> +    case A_VI_VCMDQ0_BASE_L ... A_VI_VCMDQ1_CONS_INDX_BASE_DRAM_H:
-> +        /*
-> +         * VINTF Page1 registers are hardware aliases of VCMDQ Page1 registers.
-> +         * Translate the VINTF aperture offset to its VCMDQ Page1 equivalent
-> +         * and fall through to the Page1 dispatch below.
-> +         */
-> +        offset -= CMDQV_VINTF_PAGE1_BASE - CMDQV_VCMDQ_PAGE1_BASE;
-> +        QEMU_FALLTHROUGH;
-> +    case A_VCMDQ0_BASE_L ... A_VCMDQ1_CONS_INDX_BASE_DRAM_H:
-> +        index = (offset - CMDQV_VCMDQ_PAGE1_BASE) / CMDQV_VCMDQ_STRIDE;
-> +        tegra241_cmdqv_write_vcmdq_page1_64(cmdqv,
-> +                offset - index * CMDQV_VCMDQ_STRIDE, index, value);
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP,
->                        "%s unhandled 64-bit write at 0x%" PRIx64 " (WI)\n",
->                        __func__, offset);
-> +    }
->  }
->  
->  static void tegra241_cmdqv_write_mmio(void *opaque, hwaddr offset,
-> diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-> index 8c34a04b24..c4262bb2be 100644
-> --- a/hw/arm/trace-events
-> +++ b/hw/arm/trace-events
-> @@ -77,6 +77,8 @@ tegra241_cmdqv_read_mmio(uint64_t offset, uint64_t val, unsigned size) "offset:
->  tegra241_cmdqv_write_mmio(uint64_t offset, uint64_t val, unsigned size) "offset: 0x%"PRIx64" val: 0x%"PRIx64" size: 0x%x"
->  tegra241_cmdqv_read_vcmdq_page0(int index, uint64_t offset0, uint64_t val) "vcmdq[%d] page0 offset0: 0x%"PRIx64" val: 0x%"PRIx64
->  tegra241_cmdqv_read_vcmdq_page1(int index, uint64_t offset0, uint64_t val) "vcmdq[%d] page1 offset0: 0x%"PRIx64" val: 0x%"PRIx64
-> +tegra241_cmdqv_write_vcmdq_page0(int index, uint64_t offset0, uint64_t val) "vcmdq[%d] page0 offset0: 0x%"PRIx64" val: 0x%"PRIx64
-> +tegra241_cmdqv_write_vcmdq_page1(int index, uint64_t offset0, uint64_t val) "vcmdq[%d] page1 offset0: 0x%"PRIx64" val: 0x%"PRIx64
-actually would it be possible to improve the trace points by adding the
-info about whether the VI or the global page is accessed. This would
-allow to discriminate both. Same for read
+>   MAINTAINERS | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index eda1e84268a..7749fe7f9bc 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2975,7 +2975,7 @@ M: Halil Pasic <pasic@linux.ibm.com>
+>   M: Christian Borntraeger <borntraeger@linux.ibm.com>
+>   R: Jason Herne <jjherne@linux.ibm.com>
+>   S: Supported
+> -F: hw/s390x/storage-keys.h
+> +F: include/hw/s390x/storage-keys.h
+>   F: hw/s390x/s390-skeys*.c
+>   L: qemu-s390x@nongnu.org
+>   
+> @@ -2984,7 +2984,7 @@ M: Halil Pasic <pasic@linux.ibm.com>
+>   M: Christian Borntraeger <borntraeger@linux.ibm.com>
+>   R: Jason Herne <jjherne@linux.ibm.com>
+>   S: Supported
+> -F: hw/s390x/storage-attributes.h
+> +F: include/hw/s390x/storage-attributes.h
+>   F: hw/s390x/s390-stattrib*.c
+>   L: qemu-s390x@nongnu.org
 
-Eric
->  
->  # strongarm.c
->  strongarm_uart_update_parameters(const char *label, int speed, char parity, int data_bits, int stop_bits) "%s speed=%d parity=%c data=%d stop=%d"
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
