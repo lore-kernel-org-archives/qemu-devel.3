@@ -4,100 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFE9ECD5BA4
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 19:34:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 037CACD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 19:37:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPmfV-0005Fm-8z; Wed, 20 May 2026 15:33:27 -0400
+	id 1wPmjM-0006yL-VM; Wed, 20 May 2026 15:37:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPmfN-0005EC-Eh
- for qemu-devel@nongnu.org; Wed, 20 May 2026 15:33:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wPmfL-0004tP-Ht
- for qemu-devel@nongnu.org; Wed, 20 May 2026 15:33:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779305594;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=N0PvjMYu4v53lEyBT+z1PsEfhXNlX0SSHAMJqJG/lo0=;
- b=fw/eLxt9NWLa3vAr61KFWgjb17HtAhIOV2AIe8q1HlHoMMNj9SiNtuLYZ0YebAjTrRRHto
- EroEjABmfYbWTMWeBcrkOpzlvlcd0iTF2ZxM2Gn0VHBrgXC7GMe+hq/G+IZN7MM8UPaqm8
- 7j6k0RHl/3H1TheXHtzaV+IIXaPnUx0=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-185-dy56DQm5PZCjgzXQ2-zvng-1; Wed, 20 May 2026 15:33:10 -0400
-X-MC-Unique: dy56DQm5PZCjgzXQ2-zvng-1
-X-Mimecast-MFC-AGG-ID: dy56DQm5PZCjgzXQ2-zvng_1779305590
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-50d890580e1so115926341cf.3
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 12:33:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmjI-0006y6-N1
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 15:37:20 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmjG-0006D7-RA
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 15:37:20 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-488b0046078so46600005e9.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 12:37:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779305590; x=1779910390; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=N0PvjMYu4v53lEyBT+z1PsEfhXNlX0SSHAMJqJG/lo0=;
- b=O543ZnMfiuxRYpgqgnKKWKFREtMn8+GfRhdqWK6ei8LPcTr+WNc688mLDLPsEVjcKc
- 59VJCFXjP+gqA4UUUaCl9ppEoAh1DzyOyFi7l8ahnXldDO3qN+fRWZ6FJ+MS/1k7gM2Z
- drZUL5lOmqLOe7r6Gi4mFSjkzvMtR6aKYbI5GDUZ0nqOIRiMtdvGf+tCA8LRVpwgU7dJ
- VftSbYDXhUfwqIg9wXsengTHFEAqpI2R4SxWlC655JZyuqsU0hwn9B0t+/vtLn2+z5xL
- ddQgKPQ1CSVQbGOZ/KKwAGfbQIsUF2PY2TThs2lqlPt+uQNxF2nzNzhMNsSf56hgSHFC
- h0qQ==
+ d=linaro.org; s=google; t=1779305836; x=1779910636; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DgFtYzA9dX+ghkoPZtbWiIEKi6fJOeKrcYSoPgt7hOw=;
+ b=bIAQIlVp5E9AB57ifnWFL/pDE1BBCeor9Z2wZgL6N52R35JSvcs7SYR4aPK4sY56El
+ 93/20u2iCKcfszjjix0h7QcxD0JZz4AOacQUxPNP4mTaeYoWQtDNtc+q/AwKD4txMr7N
+ EYyEJBMcOIv1eWKbzeU/01XVT0ETtUj/TX2SHDT+Yjnm2KHYmR7cN7DDVSIe76Ta+TEi
+ HL0g5npLOp5urZVbhxf9VdjilAsVt+SCBDg5X+gUwCDDT2dtO6S3Bz+/lOziA+LYp9In
+ MqY10loqsbg7KHZ311hR7vNi+9SlS2cGoQB+EznfGMkcQFil4lOzTpuT3Zo9nAV1WZQM
+ rSeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779305590; x=1779910390;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=N0PvjMYu4v53lEyBT+z1PsEfhXNlX0SSHAMJqJG/lo0=;
- b=kwS6/tFHCDZp1NTjHmzWDKFCzErAMawv35EXe5jsxwXmAJ01fIG5x1SQ0mydHpqTub
- fsuhuSGTRranYbQqy46ntZX5R3X97j3j0dsqaqbvQMsxS5XDi/mwwS03RVv5liumaAwd
- G/Zdr+ThGOVfNo/001LvBBPzxuRSCzW3eTgqaY+UPSHFjJO4IAqWBLI66FKP72h5Oa2E
- 5RoAZJ8AXGQBtsEiiIBZOEvWtHgoeNogTbL4n1JTf1HmWRSkZ6WnZTtqZAUuU3+7O9GZ
- xukhzsLFJfhpZV6VK8oXaRFmm4I8kradqi+UKuBScYzJPyyxUyRHPVQvA6kYuUkeqdiZ
- fg0Q==
-X-Gm-Message-State: AOJu0YyV8DH16nSM/VBt4fwgjgzGtuZVZCTtMFQKVWuQd3x6sSg0OHNv
- CNIHCHouhXJpqk9EXMgQ264ACQF27XPg6GZE5frtn5ne7h9WKaJlSF5AxV/P++Di3bK89Z6xfNC
- ha4zCJoThniY398m2g7mdImCm7Cug3jHKxzXlTzP0wmaQcr3WQ6Z4qndX
-X-Gm-Gg: Acq92OGLuD6P/hb6crQI7NqzefNHsC80jj8zwNyo3NhXWxBWOCOye3vJY0lARJC9hFv
- ahanneU6xoQ980h9CzLMU7z4B9migvgVdIZi6+sZ5FHAUA9BrMC8WHMDhlorMjThi1xHvruLoin
- 9QwhwP6G809JoXhFXPU0SstzRBo5F3OW8hdJBRbQjyOrSgCGpD1aQFAE1DSwrhHyzc/xCgEWqK1
- Yfel3PuPZ4UlyJwyoT0F6aNAne54AyhuQMAlWBnb59S1WUHbTrrctT+BlbA+owz2Glqa4eWrq0L
- m1uOMt1ex72tqdNVG3jLhFRoY+SnpSVH5lEpiR1Gd2eUImDXsZxOAJdU0cwf1I+s4/cbh/omFEw
- ZFrkTVvx0cFSRNtLstSb/3ZHFPyFcxjhKmhAFz8+XP3DDuZ0=
-X-Received: by 2002:a05:622a:5814:b0:50d:9b4a:e6f with SMTP id
- d75a77b69052e-5165a012120mr339935461cf.1.1779305589464; 
- Wed, 20 May 2026 12:33:09 -0700 (PDT)
-X-Received: by 2002:a05:622a:5814:b0:50d:9b4a:e6f with SMTP id
- d75a77b69052e-5165a012120mr339934591cf.1.1779305588740; 
- Wed, 20 May 2026 12:33:08 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-5164585cf66sm203711111cf.30.2026.05.20.12.33.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 12:33:08 -0700 (PDT)
-Date: Wed, 20 May 2026 15:33:06 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Bin Guo <guobin@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de
-Subject: Re: [PATCH 0/8] migration: cleanups, fixes and micro-optimizations
-Message-ID: <ag4McsK60Za6k72c@x1.local>
-References: <20260518110112.21395-1-guobin@linux.alibaba.com>
+ d=1e100.net; s=20251104; t=1779305836; x=1779910636;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=DgFtYzA9dX+ghkoPZtbWiIEKi6fJOeKrcYSoPgt7hOw=;
+ b=LzQ7p/UpYWimUMoGJeT+cQ863XqtX1xrtMvm0ESga+LP2leGa7Cw8+Qe0yyF2BzUmv
+ AParr48LVF2l+5kVUIRK6UF+STq+mWWaMGFtRiYVmRH/BBU8rqeUTfkxJfd7GbDfLYkA
+ 0tQP1YWz9t/XLknlYrBeyt9AJeljLZKZHHGp+0DTGrDUXcyb9elhCZGBKIiidTYrUxdi
+ T36Pxlx4U1MNfirfMcfdRoctY+xqdQUBmNu/hfRNfNHSKrZubJQnjOmw1gu3PQQTCkMx
+ ed58phDAHJSRxVewX6JLTV0wFQDUoemMZbGnPM9+izdo5mO3hgFBQMYpNdyMVHMtv4M8
+ C05g==
+X-Gm-Message-State: AOJu0Yzh2tSk8a8C+himC6FBUngxI2+iDr9zRtO7TJEdu3OJEMgrFKw9
+ ux+M4kaFJvo5qEXIb0RnkDZJnMESfrvDB5jtSe6OifFPHQONvJ7AzIH+gfs18lRpjO4=
+X-Gm-Gg: Acq92OH9KjQw08oeWZb4pxduRFkUbYHyh0tD4JhpQXwu/1MEgpcegqsYmNcBb4Mgb8G
+ AG44+2Pw3jX2uS0JYcCT+G9pdl7kICY95BzITJgQuVDzCtxUkQ1PUgsAkG2iaZVWJC1zcbTXSDS
+ aV/XxLBqRsAPFlZQ0L1cazd8JNPKWAq6DF2++1A/4cp/1QjpENKIj7gQh/FWloo8AlG2HNN868h
+ KHuH8P7pXVSAjAkUKVGt5yx3440LrkMJkxIxxR25SmxI4YLD757bSJyBmowpVJqktD3Cu4uwWn/
+ ZF/dEUliDfU0+KrXbJkw0JsGr/46rOBbfOMPp3TaGX4VB2PzgPx1heHkxMxgkntjfLay35ijRCM
+ yejz6m9AxH7PSrS6cGqhTsqg8VzzmKRoRhYvaXgSpdPu6ixXofNlXZTfPM3OvtzNEVHUjaYns/i
+ gshun8jOwSkb3Gp+kj9sIc6ohdHa701A6LunrDI4db/56nATileS3OS64ueG6PNwhSAh0thXUt2
+ gbc
+X-Received: by 2002:a05:600c:1d0d:b0:489:1ff1:74df with SMTP id
+ 5b1f17b1804b1-48fe5fcdf50mr372332845e9.1.1779305835611; 
+ Wed, 20 May 2026 12:37:15 -0700 (PDT)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45d9ec3ac86sm55378341f8f.14.2026.05.20.12.37.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 20 May 2026 12:37:14 -0700 (PDT)
+Message-ID: <3104a00e-4c13-4bf7-95a0-1f2840bec50d@linaro.org>
+Date: Wed, 20 May 2026 21:37:14 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260518110112.21395-1-guobin@linux.alibaba.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] MAINTAINERS: Replace my amsat.org email address
+Content-Language: en-US
+To: Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Thomas Huth <huth@tuxfamily.org>, Akihiko Odaki <akihiko.odaki@gmail.com>
+References: <20221017182005.43015-1-philmd@linaro.org>
+ <87pmeohtj1.fsf@pond.sub.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <87pmeohtj1.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_FILL_THIS_FORM_SHORT=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,50 +104,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 18, 2026 at 07:01:04PM +0800, Bin Guo wrote:
-> This series collects several small improvements to the migration
-> subsystem:
+On 19/10/22 14:44, Markus Armbruster wrote:
+> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
 > 
-> - Bug fix: off-by-one in multifd recv channel ID validation that
->   could allow an out-of-bounds write (patch 5).
-> - Micro-optimizations: cache migrate_multifd_channels() in hot
->   paths (patches 7-8), use stack-allocated bitmap instead of
->   heap (patch 4), avoid per-element heap churn in vmstate ptr
->   marker field (patch 3).
-> - Cleanups: collapse migration_fd_valid into a single boolean
->   expression (patch 1), replace strcpy("") with explicit NUL
->   termination (patch 2), merge thread-join and cleanup loops in
->   multifd_recv_cleanup (patch 6).
+>> The amsat.org domain is having issues with DMARC / SPF / DKIM:
+>> https://lore.kernel.org/qemu-devel/CAMVc7JUy5NeEN0q=4zfZvn_rppgqn9wicV1z=TsLuHKS3RY3Sw@mail.gmail.com/
+>>
+>> Consolidate all of my MAINTAINERS entries on my work address.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   .mailmap    |  4 +++-
+>>   MAINTAINERS | 62 ++++++++++++++++++++++++++---------------------------
+>>   2 files changed, 34 insertions(+), 32 deletions(-)
+>>
+>> diff --git a/.mailmap b/.mailmap
+>> index 1f7319b70b..35dddbe27b 100644
+>> --- a/.mailmap
+>> +++ b/.mailmap
+>> @@ -70,7 +70,9 @@ Paul Burton <paulburton@kernel.org> <paul.burton@mips.com>
+>>   Paul Burton <paulburton@kernel.org> <paul.burton@imgtec.com>
+>>   Paul Burton <paulburton@kernel.org> <paul@archlinuxmips.org>
+>>   Paul Burton <paulburton@kernel.org> <pburton@wavecomp.com>
+>> -Philippe Mathieu-Daudé <f4bug@amsat.org> <philmd@redhat.com>
+>> +Philippe Mathieu-Daudé <philmd@linaro.org> <f4bug@amsat.org>
+>> +Philippe Mathieu-Daudé <philmd@linaro.org> <philmd@redhat.com>
 > 
-> No functional change intended except for the off-by-one fix in
-> patch 5.
+> I think this retroactively credits all your contributions to Linaro.
+> Intentional?
+
+Certainly not intentional. I was seeing this as a git limitation, but
+Alex pointed to me we are doing an invalid use of git-mailmap, since
+it is described as:
+
+   ... the file .mailmap [...] is used to map author and committer
+   names and email addresses to canonical real names and email addresses.
+
+so more for typos, not developers changing email addresses. So our
+"replace old addresses by a more recent one" section might not be
+the best use. I think it was useful for the get_maintainer.pl fallback
+option: when a file is not cover in MAINTAINERS then the script look
+at git history. If all files are well covered, then we shouldn't need
+this fallback anymore, nor this .mailmap translation.
+
 > 
-> Bin Guo (8):
->   migration/fd: collapse migration_fd_valid into single boolean
->     expression
->   migration/global_state: replace strcpy("") with explicit NUL
->     termination
->   migration/vmstate: avoid per-element heap churn in vmsd ptr marker
->     field
->   migration/savevm: use stack-allocated bitmap in
->     configuration_validate_capabilities
->   migration/multifd: fix off-by-one in recv channel ID validation
->   migration/multifd: merge thread-join and cleanup loops in
->     multifd_recv_cleanup
->   migration/multifd: cache migrate_multifd_channels() in send/recv hot
->     paths
->   migration/multifd: cache channel count in multifd_send_sync_main
-
-For patch 1, I tend to agree with Fabiano; I don't clearly see why the
-oneliner is always better.  Oneliners can be harder to read to some (for
-most of the cases, myself included..).
-
-For patch 6, I confess I can't see an issue with the current patch, but
-since there's a discussion, let it happen.
-
-I queued the rest, thanks.
-
--- 
-Peter Xu
+>> +Philippe Mathieu-Daudé <philmd@linaro.org> <philmd@fungible.com>
+>>   Stefan Brankovic <stefan.brankovic@syrmia.com> <stefan.brankovic@rt-rk.com.com>
+>>   Yongbok Kim <yongbok.kim@mips.com> <yongbok.kim@imgtec.com>
+>>   
+> 
+> [...]
+> 
 
 
