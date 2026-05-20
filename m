@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F9FBCD4F3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 16:31:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BF0BCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 16:32:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPjoz-0003YQ-EP; Wed, 20 May 2026 12:31:01 -0400
+	id 1wPjpq-0003g9-6W; Wed, 20 May 2026 12:31:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPjoh-0003XC-SD
- for qemu-devel@nongnu.org; Wed, 20 May 2026 12:30:45 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPjpm-0003fe-FZ
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 12:31:50 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPjof-0003aM-Pa
- for qemu-devel@nongnu.org; Wed, 20 May 2026 12:30:43 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-48e6db3ff7eso26426755e9.0
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 09:30:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPjpj-0003pF-VP
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 12:31:50 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-48ff4f8ef0dso56896915e9.3
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 09:31:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779294640; x=1779899440; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1779294706; x=1779899506; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=NvE211tLDUK+DqhPrGAStWbtnpDgRBNgHSUFuNKIRDQ=;
- b=Yr0BolXsEPifsUfCgxAA9RKmdVd6FlQtTEx7prOEiNyZDYdb2gKSaVT/Sd6UfIq2sI
- 6+3AohOWBIVtmGcVX29Y97iBSmeGR7JtqIWGyzPV5lR9WX7mWCw9z5gb8gGH2oOZgHMw
- 8I1j6Kp41yAnQ8/A+T9khqrbAKC8FjbdN5C2NFQkhmw1fwhbXQdYzr2PPAZuUvYY9qba
- J9nWkkx2ak3/arNUEoUT19nSYcbzCgBY4Wjg3fZxqJOwmPEzPq6eaFpX+JJQ/TLIDWo6
- 1am5nboE6Sn8R9a9evz3duDPNrN81Udxw5akLz+9NCCMvPhbtEiGNQ74b5Zm74KIeTwx
- 9Ubg==
+ bh=Z2EjhU/ZRFtFmSNVNXFcNl7oZ0SpygIFip8yD1TYI7w=;
+ b=kXeabd9QMoMLy9mFL91sE2OFLYeDnuAsuQwR4FnIjgsX92CHDX7AGoXzT0jQxn6GRN
+ fApmuuwxQnAnIIecy4TuPH0GHnbwS3N1RszsYIbtj1LlZtejUjMhZ+SvXrN2F+2+9QYW
+ jXAWMCzrfUThWnT1VThxYNxXGH+aVV3GGo0gTKkACa9WdHB/Gd9rDqHUfGGjVeqyAdcK
+ r9Kh8x5WR0c4/HOH+Vjm6D0Y36JXqNDkxElsIxNkzAcXRm8uQbgAZGCgoPHs+DE56c9v
+ 9DjetuLm/3Hapfdz9SwUuC67YDVzYd3rLSpF8HzkB7b6S29tjabp7DPpwcbxzliB/Kew
+ 52rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779294640; x=1779899440;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1779294706; x=1779899506;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=NvE211tLDUK+DqhPrGAStWbtnpDgRBNgHSUFuNKIRDQ=;
- b=kNnsaPbOOSjMMlyqBpItjOYd6v+bHzLHimPhWgY345JUecVvtjoe6PpKX6Yi9rn5bn
- xfsmYQQ0GWbszGbHTTb7f87MSyiRGcNmMYtXRSKb8jMI/49fKLUErWOz+d8az1vmt+pS
- 2F0qrRFkkXrZNuzqMeNo6PDs0HHYeaE03VqOViv7UJJWCYrzG/eOM4JLP+jcBytlBnpe
- mgH1Cf0ZNEi2QL+iHux9fjKguJEFU85sGsfG8ngwoDQblzAjiHUvxg8fGMarfnsGHAIr
- RxcVlhyGfE4hHE6KygifZSD3At0/IpOgNtv9aNqn+f3tgQEkR8yH1f+LsG85KW261rFz
- FAyQ==
+ bh=Z2EjhU/ZRFtFmSNVNXFcNl7oZ0SpygIFip8yD1TYI7w=;
+ b=kirt0q9Pi/Pqu2N1xNDIxy+saIxwiT9sDzoiMUyl2jptWjlcdHNlbSDLXamiiQ9pIg
+ udjmnnn7yRtJNlJb8+clTyxS4XVuuGKT6KcTzLhxAaezEKNC/PXCU9hbJvd9eHPAmPtt
+ 3dYMGiVz3d5SdVMCpthphfqK4uv25zMnVxq0z6oY0eZz+yauJhzbHE3fWgdfg69CsRWg
+ Y04tu18HVXb6jf0rsfH++hpg6+531B9vDN/BdMe+7dfz5fyFtB7bzNM+X1D18La/Joif
+ eHZDhYEafiaXh7ZhnkO3hGlMvSrlRPqm8pVXNPFASiL2BdnRp9Wa9cDM9n8Ae8G49NSt
+ tuPQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+a32OWY2FSNS0C4wUPy4AEyolv92++TJrNo5x75kp0q2YSKyo3/EqvXBj4YUO6VM+bhTzt663GFqVW@nongnu.org
-X-Gm-Message-State: AOJu0YwNLhJUcHvsBYSYfjrGr+joRpaEBacOTR4riQptSE38e5WgJHkX
- mYS+nWr2lDBoqoy5ZaCOZJSVJf3PHYFBzCYzeYNw2/kWz+hbgqUUC3B9VG3Q+APpaFM=
-X-Gm-Gg: Acq92OHdS4/6WEmswkvV3DOq+7Xi9CY+lKRFua7T29U0LL/6Hqdx3sNWpV+aUouKxJ+
- QdA9hkDTTjSHlJ2kbc1umrxWUWu5UotsYdF6EUyIpKsls6RWKS26LG7rBxvDMDLCMY9ZqsBbvpe
- LXlt/7SbklZu1j3F9+gDXfqPnWe0wetPqyhidizsBMnTb2RqfzzFD4tO6n5+nT/VxBOKiypct/4
- OoMuwf8NW71A5qM/idhkpY5Km0pgFLdMSyzlv65bnkGlqgH38b26udl7VOJyzxwEORsM1icLPUs
- qzm7vzfA20RHe8FcAjhCwgIC+1wmReRLAyBJNxK9cLMJFERRZ/C+XPHp94QW0vhQw2P0wAFI22V
- MjbXElsk/LIAGbqt5t3k6wHny5lZD9E6ivjHIARSI/7tHkBV4XYBiq5lIT7eH8pHVjJRtfFuP3y
- 7gK4/POuSIRLdYW5B4++mke4Z3P9F1zdbGPuRBqva4yXjanG/ZyGz94qJOBzTHyPY1DE6Sc4g=
-X-Received: by 2002:a05:600c:8901:b0:485:ae14:8191 with SMTP id
- 5b1f17b1804b1-48fe60e3663mr334861665e9.5.1779294639702; 
- Wed, 20 May 2026 09:30:39 -0700 (PDT)
+ AFNElJ/ecuxkMua5FlPaMXvgQRnvM/n/uCmHtlQGn65U+ikWkhSy7RtmTd10km3ISQUnGtUYwgg1hp045wgs@nongnu.org
+X-Gm-Message-State: AOJu0YyM4Bu9LdSW7jrW35fPSmhChGPgLHYjq5rMsUkNxHo52qgW9Tsg
+ AR1mZydAhCTq2yKahgDb2PEtLi6DQL8vgWMv0zKkRhq8+byNr8lptfRmhd4beTlLAx0=
+X-Gm-Gg: Acq92OGoHyJ8AKYzXilmW6AZuMWE6xWjivP+N44Jx3fxfAct6mCkQxGjb8u5zHwArEV
+ AQJc9z1jPim+6SWwDgB6fS4FuLrJjq4Qsa6kfymM2Mi7RUpb1UgCUN3TkTmuAi/JDXAvVNPyOnC
+ z0IYX92mYdcyPnVehFqyAkODe7Ej4foTuc6Su3/KgZuGacgq9gf14qsLQ9IBx7DQUnkVvc7MjOS
+ MSIZS2EngyN+4BNCpJPg4JUAVTEk9lv5DhCuevnB7OIbN4DYKtqZV+eihNkDZ1ylPQNeLdZqJgQ
+ dkMVdaV5QJq1IjEZbRiEglcIcMkacYHtUKOfzSNUQGxUF6SLc3QDPGOpZKkZqnzs7budTGEinMC
+ CV05xjWghvQMAb9LjqvzddD8rVAjlsmzo3dFyfPtSa6Z2m3n91Nk4uuKvvxpXVqP5HOueSg1pvf
+ BjpkkYBiTEuUZIF+oyl1Wr0reHpBkUse4ZPY+V3i3+5EJoKSYYB9ZB1sjqjeJEV/QHbxAEnhU=
+X-Received: by 2002:a05:600c:470e:b0:489:1c32:210d with SMTP id
+ 5b1f17b1804b1-48fe60f195amr366534495e9.15.1779294705995; 
+ Wed, 20 May 2026 09:31:45 -0700 (PDT)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48febe6b9efsm207836105e9.5.2026.05.20.09.30.38
+ 5b1f17b1804b1-48febe585absm137476845e9.19.2026.05.20.09.31.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 May 2026 09:30:38 -0700 (PDT)
-Message-ID: <5048812c-5196-4b88-b980-b9b5bb5fdbe5@linaro.org>
-Date: Wed, 20 May 2026 18:30:37 +0200
+ Wed, 20 May 2026 09:31:45 -0700 (PDT)
+Message-ID: <2c9aa5d8-993f-4636-a07b-0a28dad1703b@linaro.org>
+Date: Wed, 20 May 2026 18:31:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 1/3] hw/mips: add Microchip PIC32MK GPK/MCM board
-To: Ericson Joseph <ericsonjoseph@gmail.com>, qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-References: <20260429-pic32mk-board-support-v1-0-1dfac14f8e2d@voltumotor.com>
- <20260429-pic32mk-board-support-v1-1-1dfac14f8e2d@voltumotor.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PULL 26/45] hw/misc: Add basic Aspeed PWM model
 Content-Language: en-US
-In-Reply-To: <20260429-pic32mk-board-support-v1-1-1dfac14f8e2d@voltumotor.com>
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Kane Chen <kane_chen@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>
+References: <20260204103136.1795455-1-clg@redhat.com>
+ <20260204103136.1795455-27-clg@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260204103136.1795455-27-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,99 +105,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Ericson,
+Hi Kane,
 
-On 29/4/26 23:51, Ericson Joseph wrote:
-> Add emulation for the Microchip PIC32MK GPK/MCM family of 32-bit MIPS
-> microcontrollers (DS60001519E). The family uses a MIPS32 microAptiv MCU
-> core running at up to 120 MHz with 256 KB SRAM and 1 MB program flash.
+On 4/2/26 11:31, Cédric Le Goater wrote:
+> From: Kane Chen <kane_chen@aspeedtech.com>
 > 
-> The following peripherals are modelled:
+> Add an initial PWM model for Aspeed SoCs, including device state,
+> register definitions, and basic initialization as a sysbus device.
 > 
->    - EVIC  — 216-source interrupt controller with SET/CLR/INV registers,
->               single-vector and multi-vector modes, and OFFx vector offsets
->    - UART  — 6 instances with TX/RX FIFOs and interrupt generation;
->               UART1 wired to the first serial port
->    - Timer — 9 instances using QEMU ptimer; Timer1 drives a 1 kHz tick
->    - GPIO  — 7 ports (A–G) with TRIS/LAT/PORT/ANSEL/CNPU/CNPD registers
->    - SPI   — 6 instances including master and slave modes
->    - I2C   — 4 instances (register-level stub, interrupt capable)
->    - DMA   — 8 channels with CELL/BLOCK/PATTERN transfer modes
->    - CAN FD — 4 instances exposed via QEMU can-bus; SocketCAN accessible
->               with -object can-bus,id=canbus<n>
->    - USB   — 2 Full-Speed OTG instances exposed as chardev PTY
->    - ADC   — ADCHS high-speed 12-bit ADC with 7 cores and FIFO
->    - NVM   — Flash controller with backed host-file support for persistence
->    - DataEE — Software data EEPROM layer over program flash
->    - OC    — 16 Output Compare units
->    - IC    — 16 Input Capture units
->    - CRU   — Clock and Reset Unit (SYSCLK, PBCLK, RCON, RSWRST)
->    - WDT   — Watchdog timer (write-once WDTKEY protocol)
->    - CFG   — Configuration registers and SYSKEY unlock sequence
-> 
-> All unimplemented SFR ranges log LOG_UNIMP rather than silently ignoring
-> accesses. The SET (+4), CLR (+8), and INV (+C) sub-register convention
-> is implemented for all peripheral register banks.
-> 
-> The boot ROM at 0xBFC00000 contains a j 0xBFC40000 trampoline; firmware
-> is loaded into Boot Flash 1 at physical 0x1FC40000 via -bios.
-> 
-> Reference: Microchip DS60001519E (publicly available from microchip.com)
-> 
-> Signed-off-by: Ericson Joseph <ericsonjoseph@gmail.com>
+> Signed-off-by: Cédric Le Goater <clg@kaod.org>
+> Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
+> Link: https://lore.kernel.org/qemu-devel/20260204082113.3955407-4-kane_chen@aspeedtech.com
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
->   MAINTAINERS                                |    9 +
->   configs/targets/mipsel-softmmu.mak         |    1 +
->   hw/mips/Kconfig                            |    8 +
->   hw/mips/meson.build                        |   21 +
->   hw/mips/pic32mk.c                          |  815 ++++++++++++++++++++
->   hw/mips/pic32mk_adchs.c                    |  583 ++++++++++++++
->   hw/mips/pic32mk_canfd.c                    | 1143 ++++++++++++++++++++++++++++
->   hw/mips/pic32mk_cfg.c                      |  247 ++++++
->   hw/mips/pic32mk_cru.c                      |  375 +++++++++
->   hw/mips/pic32mk_dataee.c                   |  463 +++++++++++
->   hw/mips/pic32mk_dma.c                      |  255 +++++++
->   hw/mips/pic32mk_evic.c                     |  399 ++++++++++
->   hw/mips/pic32mk_gpio.c                     |  418 ++++++++++
->   hw/mips/pic32mk_i2c.c                      |  184 +++++
->   hw/mips/pic32mk_ic.c                       |  384 ++++++++++
->   hw/mips/pic32mk_nvm.c                      |  572 ++++++++++++++
->   hw/mips/pic32mk_oc.c                       |  293 +++++++
->   hw/mips/pic32mk_spi.c                      |  532 +++++++++++++
->   hw/mips/pic32mk_timer.c                    |  294 +++++++
->   hw/mips/pic32mk_uart.c                     |  334 ++++++++
->   hw/mips/pic32mk_usb.c                      | 1033 +++++++++++++++++++++++++
->   hw/mips/pic32mk_wdt.c                      |  230 ++++++
->   include/hw/mips/pic32mk.h                  |  952 +++++++++++++++++++++++
->   include/hw/mips/pic32mk_adchs.h            |   87 +++
->   include/hw/mips/pic32mk_canfd.h            |  210 +++++
->   include/hw/mips/pic32mk_evic.h             |   45 ++
->   include/hw/mips/pic32mk_usb.h              |  181 +++++
->   tests/functional/mipsel/pic32mk_test_fw.S  |   64 ++
->   tests/functional/mipsel/pic32mk_test_fw.ld |   20 +
->   tests/functional/mipsel/test_pic32mk.py    |   92 +++
->   tests/qtest/pic32mk-canfd-test.c           |  411 ++++++++++
->   tests/qtest/pic32mk-test.c                 |  457 +++++++++++
->   32 files changed, 11112 insertions(+)
+>   include/hw/arm/aspeed_soc.h  |   3 +-
+>   include/hw/misc/aspeed_pwm.h |  30 +++++++++
+>   hw/misc/aspeed_pwm.c         | 120 +++++++++++++++++++++++++++++++++++
+>   hw/misc/meson.build          |   1 +
+>   hw/misc/trace-events         |   4 ++
+>   5 files changed, 157 insertions(+), 1 deletion(-)
+>   create mode 100644 include/hw/misc/aspeed_pwm.h
+>   create mode 100644 hw/misc/aspeed_pwm.c
 
-This patch is HUGE, no way my human brain can review it.
-Could you split it in 1 patch per hw model type? Even USB
-or CAN peripherals patch will result in more than 1k LoC each.
 
- > diff --git a/hw/mips/pic32mk_adchs.c b/hw/mips/pic32mk_adchs.c
+> diff --git a/hw/misc/aspeed_pwm.c b/hw/misc/aspeed_pwm.c
 
-> +static void pic32mk_adchs_class_init(ObjectClass *klass, const void *data)
+
+> +static void aspeed_pwm_class_init(ObjectClass *klass, const void *data)
 > +{
 > +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    device_class_set_legacy_reset(dc, pic32mk_adchs_reset);
+> +
+> +    dc->realize = aspeed_pwm_realize;
+> +    device_class_set_legacy_reset(dc, aspeed_pwm_reset);
 
 Also please do not use the legacy API. See for example this
 commit to convert to the newer API:
 https://gitlab.com/qemu-project/qemu/-/commit/ce788d3740f
 
-Regards,
-
-Phil.
-
+> +    dc->desc = "Aspeed PWM Controller";
+> +    dc->vmsd = &vmstate_aspeed_pwm;
 > +}
+
 
