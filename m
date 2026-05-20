@@ -4,98 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48A69CD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 07:37:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7D8ECD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 07:43:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPbTZ-00061B-Rm; Wed, 20 May 2026 03:36:27 -0400
+	id 1wPbZm-0007Kr-37; Wed, 20 May 2026 03:42:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <foss@defmacro.it>)
- id 1wPbSW-0005wl-VO; Wed, 20 May 2026 03:35:24 -0400
-Received: from fhigh-a5-smtp.messagingengine.com ([103.168.172.156])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <foss@defmacro.it>)
- id 1wPbSU-0006aY-Br; Wed, 20 May 2026 03:35:16 -0400
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 39B881400090;
- Wed, 20 May 2026 03:35:10 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-06.internal (MEProxy); Wed, 20 May 2026 03:35:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=defmacro.it; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:message-id:mime-version:reply-to
- :subject:subject:to:to; s=fm3; t=1779262510; x=1779348910; bh=JK
- eN5BOGrJZ/X526a+zMxWSbWG+S2L/h2Tw1iPeeYZI=; b=GI4hNdGdnAYLsEYQR+
- xnLL8NK/v9ziBZbZBY7yClFU8O0uMljoK9so2ioCwrYh01hO/ZCAefRV4TlUwqs4
- ikltl0etAVa3447dOri5bAreUo5jUGC4oRtQ6Jyhxp+7xrwwakGtS/1I7UZQGAxu
- Q4RXl/OYNAHzOdRAn87jrqeHRcjHIZaB8KInYjeCxK9uLBsjEhnl6khgxI5yY+GI
- bmzvfY4FQaJbnw5V/Mrz/rGwsUy24RXrLf1Y80l9ARhIguWppmBfQ7eQZzXiyCaR
- AZpDJPA7EWrWbF65iEu9r7+I983X0CTf7a1VXET7hBjDBGx4dsAcDNCsmOPtcuvc
- D1Og==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; t=1779262510; x=1779348910; bh=JKeN5BOGrJZ/X526a+zMxWSbWG+S
- 2L/h2Tw1iPeeYZI=; b=kkKRrReHJIE3OEqQLfby4uQ/vW5vfn3a2TJv7oeWQu8n
- WPz7JjZFmpJHWbXNDUKhxxP67XgEtiRY2rbClCHEkYI+IXuIWtVv9eUaDoTjNAMV
- hqX/74oPfGWjq/29GQ9acoi1btuVwaEvquRTBxg6wsK/eQeFJ/Z1evdygH5Xdgxl
- MlWGDo7ByYbX9Nq0P2jqZHtH/9cojChdsN/qUx9/BhrN0rH5j8QQ8sdn/eqprAt6
- JoaY2oQmK907p8nop+A4f9wbPYdxJbS/hVfvuVNbRfLmtNCZPCK0IU3/jvob46Jg
- qG3MzUdIwK4NLzOiBFhcokZpLGBiDwcA10CwiK97YQ==
-X-ME-Sender: <xms:LGQNav4rqDx8AA1JH8aNV5Y8pD_RntEVxDStqlB5spbwQsNLW2vNiA>
- <xme:LGQNav0NeUzRqk88qlAgmXU_3JSjNw5QMm5TntsiBfDZMMY0OOwWPJkwPuYgOsX3a
- kFnC4KxK9GMH3v-vyUK8bRjFD_J023UCJdzsPjfReug-8LbvPNQag4>
-X-ME-Received: <xmr:LGQNale5YKs_eLgoMtxYYwvdQ0gCgofyRPnPXMnjeWQ1V_nkUcB1Lnpc1KeR4AytvgMEaLS-RUlG2wzMKuqb_xpUilAkYawbNC3-lR10>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeegtdegucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
- gurhephfffufggtgfgkffvvefosehtjeertdertdejnecuhfhrohhmpeflvghsphgvrhcu
- ffgvvhgrnhhtihgvrhcuoehfohhsshesuggvfhhmrggtrhhordhitheqnecuggftrfgrth
- htvghrnhepieeuheevgfekleetleeghffhveeiheejgefffeeggefffeejgeeivedvveej
- ueevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepfh
- hoshhsseguvghfmhgrtghrohdrihhtpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
- thhpohhuthdprhgtphhtthhopehfohhsshesuggvfhhmrggtrhhordhithdprhgtphhtth
- hopehjrdguvghvrghnthhivghrsehsrghmshhunhhgrdgtohhmpdhrtghpthhtohepihht
- shesihhrrhgvlhgvvhgrnhhtrdgukhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnh
- honhhgnhhurdhorhhgpdhrtghpthhtohepfhhinhesshhplhdrthgvrghmpdhrtghpthht
- ohepqhgvmhhuqdgslhhotghksehnohhnghhnuhdrohhrghdprhgtphhtthhopehksghush
- gthheskhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:LGQNalcYtStcwfuSXyD8qIueksbFeTqcBg_RjrA4qEMSKsJaZZmJlA>
- <xmx:LGQNagxjcR3p_imhLCZ_G3BuubPV06KutdMegHEzANrRJqXjaV8Jng>
- <xmx:LGQNak9iA66Ai_rdNN6JFCrJd8p2zM7oNbNg5wVPtAu0EYdDLfbADA>
- <xmx:LGQNagiqTIx8wV8ivnxpEklw25KlFTxLm_FZywnXIWtJ5_0iin4DMw>
- <xmx:LmQNatKwvKNbLKg1VZa8J6DQ8TL46MQtLSdzL0Nipnm96SX7pvvD_2e3>
-Feedback-ID: ic0014905:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 20 May 2026 03:35:07 -0400 (EDT)
-From: Jesper Devantier <foss@defmacro.it>
-Date: Wed, 20 May 2026 09:35:02 +0200
-Subject: [PATCH] hw/nvme: FDP set FDP events - fixes
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wPbZk-0007KS-CC
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 03:42:44 -0400
+Received: from mail-dy1-x1334.google.com ([2607:f8b0:4864:20::1334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wPbZi-0008Mi-SS
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 03:42:44 -0400
+Received: by mail-dy1-x1334.google.com with SMTP id
+ 5a478bee46e88-2f7ca62a3c4so4465457eec.0
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 00:42:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779262960; cv=none;
+ d=google.com; s=arc-20240605;
+ b=XC67MWTYPKMLue2skl7CCIG8y9MKKUv6OhVVma7CdEkVt6l0c80gz1CUF9Y0uvoXv1
+ t24hZBD0JcVc6GYTECprIe3aLm/8TknQQ1//rer+SL8mIAjFfVHR14tWOFBUoolH1b2W
+ FAePywrfp1LrZTHh6B2tVRNHoFDsVMuNfUJWrCBCsXfCShYsFjYEsJYueiTUi4kH9rWi
+ zTA/8liXh31gtbYcej6Le7diKDi7iMPSP6d0KSKLFeVFLFgSkQAhqZrgGsfzoMg+6dn/
+ bLkd4+60/PPPCbcPskPAbZ/5mil+hyjzlozFuvlUIlEqlEUM1BivZ1fIDGyoOLZvhcQu
+ e3tg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=LLvTiqnLMGczF5R1K3mJC2DJeygJ+p5TdTN24JCwyFw=;
+ fh=cOsNULT/G3KmuphHDOpmhJ0EqPaEyNDPfyDGSK/csWI=;
+ b=aEydD1c+2A7r8rQvlDr6MgE3jaaXgkqLEuztC8o3mNpKqVfkYwOBFypFdTl7kwKizy
+ XRdpf4F+vVq5/ltjuBXND9pka+jNXNdDI+lnrHtj7yK2oNP1IOTwNsaD1KYWvtsaZ7Z7
+ 1SqGbFjYEvB60ZTAWUoIVeYTvptVRoFXhiLXcPQH4hjgO+NFmlHoAo12opJj/zrI7afm
+ 9Ct9QX5djcIoyumvNLsbZQfKEJM8pvzLViuSdC4qqiQi/Z3+Coed0j59ydevJPsRhKkJ
+ qbFPLM/dkKIBH2VEPh9mRZ9V4uttvGtF64dnZM46V0iDagazfHYn6UWif/xqcBjmfUjz
+ aaMA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1779262960; x=1779867760; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LLvTiqnLMGczF5R1K3mJC2DJeygJ+p5TdTN24JCwyFw=;
+ b=sx4J4emo+Eig0K6bQ1pIaKZ9FcP9wAs8NXb9oXBBEFHGwb+oDVhpyMRDbhZdY59k0r
+ f49tKgAXOYxnJPd720ucoJhhWN8YFa/ZGSNHNQW4bsjhsVCzWd40b75a1Shi4MZw4NIf
+ MJBNiHP1uDtc/nKRuFLVsT9zr7Gl4AkavFU2QZNKjLLKy5+eNWWpfGLDkCSmlujOaHwH
+ bjOWUO8WifTHeVJ+9mv/Mcg0YmHQuu5kCbOvjELNCBDmJ4LYPhC+ct1hCLGxoULbpgG0
+ KuZUA4X2A8MQs2F5BsTnUpn+wkrQu67FN8wIDPvMBKg020aH3OxPKNgHFU0NY58ONTif
+ WhHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779262960; x=1779867760;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=LLvTiqnLMGczF5R1K3mJC2DJeygJ+p5TdTN24JCwyFw=;
+ b=Pw+bqALQcjqBrg5dRSJRv8jJKwTZtYYpzES7zNpUY5FDkfUifKth1iQbmZUaQ7Jx+4
+ EB6Gul6jpBKn1oEoe+J0PA9LU09a4JfHCVj3Yxl4H7KeqYXl8X9DmUr2vz11HvfZWqKC
+ xEnHqpyvDx9YqIcyB/PS33INliCzKMYfCXPmOD1W4MTHXCAwiOkmfOgAXh5FCZEepRXp
+ mMGK/qX3WPefAN4WEBN6ysu2w2o3SDAgfodWb3jq4bpkctYlPbCi07edj//dkgAFg/ao
+ Vphy9bxETcQdoMuolrr9inesaYKoRPMiJ2iOPltT4KfPWiapcIfHn/O8Bqv+qIvdzs8/
+ 2qLg==
+X-Gm-Message-State: AOJu0Yw3LuZHMwKwgX8XaiMmziHX/39Ndze7qMaA8A2NoEpdjVP+qRNC
+ IqGo1neeFhTPxmRjCBBkQz/HyLAdEV3T4wJSyr72HuzUQVivPBM6EDgFnr6IjkFW7M04gYaNwW/
+ YTI2gM/aBs+PcvInuZdEPDL47iqG9Y4c=
+X-Gm-Gg: Acq92OFtQBD16FtQhh48SMsvTdXFK7I+OKfFXFZgCOC9PX7W+gEyxRPAbPaNoZd5m3O
+ KmV1E3Er9lc3e1pXOTep0zal+p4gJ8i12oSkuNCftzYgrzGMNKPCXa1bly3rjmAe7/+bCWnsUxX
+ GK1k+N4v5qkvzZ1DZf6HPa1TVGN9AGIopOWLhXXGemSb4PxcMWrQDfVa4ggl4WZw4a+Voik2oJs
+ CzbaZP7VEfm6gAB/FKp8bhMNw3HAF8wjUtLMpFx1ZnwPaiK7YfzHs+fOm9zFzYpqCSh1hzMrrfx
+ CbPawgFwZybFCn6kf6OuDPSTYBarqjG1Zm11en4=
+X-Received: by 2002:a05:7301:608c:b0:2df:c5bb:3720 with SMTP id
+ 5a478bee46e88-303984edb2dmr12944761eec.15.1779262960018; Wed, 20 May 2026
+ 00:42:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260520-patch-review-20260518131523-654-v1-1-ea64f249177c@samsung.com>
-X-B4-Tracking: v=1; b=H4sIACVkDWoC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDU0NL3YLEkuQMXZDS1HJdqKiFobGhqZGxrpmpia6ZuaVlkpmxoWWaRao
- S0JSCotS0zAqwDdGxtbUAf3Ycp3EAAAA=
-X-Change-ID: 20260519-patch-review-20260518131523-654-6799b6319f8e
-To: qemu-devel@nongnu.org, Keith Busch <kbusch@kernel.org>, 
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>, 
- jaeyeong <fin@spl.team>, qemu-block@nongnu.org
-Cc: Jesper Wendel Devantier <j.devantier@samsung.com>
-X-Mailer: b4 0.14.3
-Received-SPF: pass client-ip=103.168.172.156; envelope-from=foss@defmacro.it;
- helo=fhigh-a5-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260520002645.1910740-1-dongwon.kim@intel.com>
+In-Reply-To: <20260520002645.1910740-1-dongwon.kim@intel.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Wed, 20 May 2026 11:42:27 +0400
+X-Gm-Features: AVHnY4JGFAROnVUVgXAvzbcv0uKBj3GpgPGMzzFrhQK8Ryd3u6lV2YTwXaNnuVs
+Message-ID: <CAJ+F1CKt2Xf5KK2tCSa7Dew1iyYn5mrdM3Qh2aj5C6hi79DoNQ@mail.gmail.com>
+Subject: Re: [PATCH] ui/gtk: Fix focus loss on re-attachment with single VC
+To: dongwon.kim@intel.com
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1334;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,140 +115,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jesper Wendel Devantier <j.devantier@samsung.com>
+Hi
 
-Addresses an issue reported whereby user-provided event type values
-could trigger two issues:
+On Wed, May 20, 2026 at 4:33=E2=80=AFAM <dongwon.kim@intel.com> wrote:
+>
+> From: Dongwon Kim <dongwon.kim@intel.com>
+>
+> When QEMU is launched with a single virtual console (e.g., using
+> --nodefaults), detaching and then closing the detached window leaves
+> the main window's notebook without an active focus target which makes
+> keyboard unfunctional on re-attached VC.
+>
+> Fix this by explicitly calling gtk_widget_grab_focus on the active
+> VC's focus widget during the window close handler.
+>
+> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Cc: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Cc: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+> ---
+>  ui/gtk.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/ui/gtk.c b/ui/gtk.c
+> index 2c61b601f7..8eb1a80377 100644
+> --- a/ui/gtk.c
+> +++ b/ui/gtk.c
+> @@ -1475,6 +1475,11 @@ static gboolean gd_tab_window_close(GtkWidget *wid=
+get, GdkEvent *event,
+>          vc->gfx.ectx =3D NULL;
+>      }
+>  #endif
+> +
+> +    if (vc =3D=3D gd_vc_find_by_menu(s)) {
+> +        gtk_widget_grab_focus(vc->focus);
+> +    }
+> +
 
- 1. if provided event_type == 0xff -> out-of-bounds access
+Looks ok to me. But could you share your test case? launching qemu
+with just -nodefaults doesn't help reproduce your issue :)
 
- 2. if provided event_type > 7 -> generate a value too large for the
-    u8 event mask.
+(fwiw, I have a bunch of patches pending to fix/improve dynamic
+console handling, I will try to send them later this week)
 
-This patch fixes (1) by correctly adjusting the length of the look-up
-array to be 256 values.
-This patch fixes (2) by:
-  a. changing the event_type mask to 64bit, matching
-     NvmeRuHandle.event_filter
-  b. Matching the behavior of Get Feature - FDP Events by skipping
-     event type values which we do not support.
-     5.2.26.1.21 of the 2.3 Base specification does not explicitly
-     tell us to reject unsupported event type values.
-  c. Documenting in the event type lookup table, that supporting
-     event types greater than 63 requires refactoring the masking
-     code.
+thanks
 
-Reported-by: jaeyeong <fin@spl.team>
-Signed-off-by: Jesper Wendel Devantier <foss@defmacro.it>
----
-Adresses issues raised by Jaeyeong (thanks!) regarding the
-handling of the user-supplied list of event types to track.
-
-As reported, the event mask is much too small to cover the legal
-range of 256 values (0-255) and would fail even for event types
-0x80 and 0x81 which caused shifts of 32 and 33 places - beyond
-the limit of the u8 event mask.
-
-Secondarily, the report also pointed out that unsupported event
-types would cause a lookup in the bit-shift table to return 0,
-meaning unsupported events would effectively toggle the
-tracking of the event type 0x0 (RU not fully written).
-
-This patch skips processing of unsupported event types,
-increases the event filter mask size to accommodate currently
-supported event types and documents behavior in the lookup
-table.
-
-Signed-off-by: Jesper Wendel Devantier <j.devantier@samsung.com>
----
- hw/nvme/ctrl.c | 22 ++++++++++++++++------
- hw/nvme/nvme.h |  9 ++++++++-
- 2 files changed, 24 insertions(+), 7 deletions(-)
-
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 815f39173c..d60a680dbc 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -6244,10 +6244,6 @@ static uint16_t nvme_get_feature_fdp_events(NvmeCtrl *n, NvmeNamespace *ns,
-     for (uint8_t event_type = 0; event_type < FDP_EVT_MAX; event_type++) {
-         uint8_t shift = nvme_fdp_evf_shifts[event_type];
-         if (!shift && event_type) {
--            /*
--             * only first entry (event_type == 0) has a shift value of 0
--             * other entries are simply unpopulated.
--             */
-             continue;
-         }
- 
-@@ -6492,9 +6488,9 @@ static uint16_t nvme_set_feature_fdp_events(NvmeCtrl *n, NvmeNamespace *ns,
-     uint8_t noet = (cdw11 >> 16) & 0xff;
-     uint16_t ret, ruhid;
-     uint8_t enable = le32_to_cpu(cmd->cdw12) & 0x1;
--    uint8_t event_mask = 0;
-+    uint64_t event_mask = 0;
-     unsigned int i;
--    g_autofree uint8_t *events = g_malloc0(noet);
-+    g_autofree uint8_t *events = NULL;
-     NvmeRuHandle *ruh = NULL;
- 
-     assert(ns);
-@@ -6507,15 +6503,29 @@ static uint16_t nvme_set_feature_fdp_events(NvmeCtrl *n, NvmeNamespace *ns,
-         return NVME_INVALID_FIELD | NVME_DNR;
-     }
- 
-+    if (unlikely(noet == 0)) {
-+        return NVME_SUCCESS;
-+    }
-+
-     ruhid = ns->fdp.phs[ph];
-     ruh = &n->subsys->endgrp.fdp.ruhs[ruhid];
- 
-+    events = g_malloc0(noet);
-+
-     ret = nvme_h2c(n, events, noet, req);
-     if (ret) {
-         return ret;
-     }
- 
-     for (i = 0; i < noet; i++) {
-+        /*
-+         * We ignore requests to enable tracking of unsupported FDP event types
-+         */
-+        uint8_t event_type = events[i];
-+        uint8_t shift = nvme_fdp_evf_shifts[event_type];
-+        if (!shift && event_type) {
-+            continue;
-+        }
-         event_mask |= (1 << nvme_fdp_evf_shifts[events[i]]);
-     }
- 
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index 5ef3ebee29..9de9f347c5 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -160,7 +160,14 @@ typedef struct NvmeZone {
- #define NVME_FDP_MAX_NS_RUHS 32u
- #define FDPVSS 0
- 
--static const uint8_t nvme_fdp_evf_shifts[FDP_EVT_MAX] = {
-+/*
-+ * NOTE: Apart from event type 0, any event type with a shift value of 0 is
-+ * considered unsupported and thus skipped in get/set features calls.
-+ *
-+ * NOTE: NvmeRuHandle uses a 64bit event mask - refactor to support event types
-+ *       of 63 or greater.
-+ */
-+static const uint8_t nvme_fdp_evf_shifts[FDP_EVT_MAX + 1] = {
-     /* Host events */
-     [FDP_EVT_RU_NOT_FULLY_WRITTEN]      = 0,
-     [FDP_EVT_RU_ATL_EXCEEDED]           = 1,
-
----
-base-commit: 91190a4303223c7971856f6b37f221cc91c62689
-change-id: 20260519-patch-review-20260518131523-654-6799b6319f8e
-
-Best regards,
--- 
-Jesper Wendel Devantier <j.devantier@samsung.com>
-
+--=20
+Marc-Andr=C3=A9 Lureau
 
