@@ -4,111 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A39C5CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 13:08:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ADA4CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 13:08:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPgeA-00044I-9C; Wed, 20 May 2026 09:07:38 -0400
+	id 1wPgf4-0004oI-51; Wed, 20 May 2026 09:08:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1wPge8-0003zI-1H
- for qemu-devel@nongnu.org; Wed, 20 May 2026 09:07:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
+ id 1wPgf0-0004jM-1L; Wed, 20 May 2026 09:08:30 -0400
+Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1wPge6-0000q6-Ln
- for qemu-devel@nongnu.org; Wed, 20 May 2026 09:07:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779282453;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=M0qONi2b5od3B1XF03QbJSVKbR3gZRZzbNR/k9BVOeY=;
- b=YyyCBo4e8XE4fb5AL7HadcWAW4rKw7kW0Aq5CqH9AIMDJdir7hV+NYPR0CiOZF0+aArCE/
- n7ip9nzQugLLSJWvxz/UJ03caBdLMbyfgymWgAF5VdMt7yI8AP6HACi+Ve3s0opXfRXn4Q
- 12emcpa4GVRCNimjB4ZYptrI6A/golg=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-673-DS7KItlMNq-ucuTD4GpJSw-1; Wed, 20 May 2026 09:07:31 -0400
-X-MC-Unique: DS7KItlMNq-ucuTD4GpJSw-1
-X-Mimecast-MFC-AGG-ID: DS7KItlMNq-ucuTD4GpJSw_1779282450
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-48ff0eb77b5so46985175e9.0
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 06:07:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1779282450; x=1779887250; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=M0qONi2b5od3B1XF03QbJSVKbR3gZRZzbNR/k9BVOeY=;
- b=l4ym1jCJCkgt6oJDDVmfS5zM5lEv5BgCASwXMkot5R8vx4EhhczbWJ59SumNEtB/6k
- vQwY5hgZaZkgnMI/n+PATXhABk1BKjor2fVsbg+yvVgqyY0KUZoR7Zq6P1ZgSJP1Oror
- 411Uo7sRp45FK1jdUAs0FiDtRh3DCXeOZypPKV6GDopYFExGjZBSCtVgLvrkkefp0Sk+
- XCiIVgpVFNJwPaivD1eGVHAuDQmZUKOWxM25g0aG7rAJR47zhxNUWcHLDvbR4GIyNdSz
- jeFvJ2IiLi/0nDXmCoYoHgRq+lQ2sQAaD7VxUJVNCxOQ0mYs4oj83zyTu8+YdXP65ZvW
- ArYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779282450; x=1779887250;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=M0qONi2b5od3B1XF03QbJSVKbR3gZRZzbNR/k9BVOeY=;
- b=V7Oz4AeXaRo//Hd3zipYv+s//s0zK/MLBazqM/1hq1IpOS5hz90jKflxVkTKftj8nc
- vh0sugkQ3ozO4y5OmHx3kAih9Al+Obwjh2KSXfiqBXZUYwHUUrZ8Qy6Y4damcMCc8pmr
- zzG+QOhqhmiV0AdqyxHjlQ10+IyAgKwNbJiM7D4g+IrpJ2X5MnJrJVad7CLXGqiAV1UH
- UqQ5UhfX82LItxa27mMCVmmEtn4dNkqMUFLLExLNDrspF0M25uNaSEeeK7xOxA9dSLBm
- Bw6ioZCYY06q9Q/sT4TXyC8agjwd5phq5IbCZRKr1lcb9DBEC9sJTi4FHhK3w4iuyIug
- Vo4w==
-X-Gm-Message-State: AOJu0YyFEjX6mfNhoHZVBEWC9qxiw9hEsI9TkbPN7nfczlPESbUCc123
- HzpLd2sDHgT2C/WTi2ZK5fiZg3JfFV7bLrdMBH3PG5+cq/U+xpxUBNtrFs/CEf0ysUctVvjFxiz
- 1KcIx9BZBDaxXnaoFvAbvXXdIDhofcliM2702fL/yIb9t7CLh/MACRngQ
-X-Gm-Gg: Acq92OHWQcgFMz67e0HvCz1KIss+VW3oksYur0bSeaFup0JP9ds8OoBjQTcGrPOu11d
- KByuXIJRuoEVzCEYaV8bezz3TNiDDoY8qKxihMGD8j0zOazv/+aPcLJdT1/XhuyYlD3NmtQJYN4
- EbhFnDUaMEMpnfv1iXvhQCTxHa+i95FhZieKe5b/HySMgW7iW8xii6Z1HMPAWx7MSnZnQqAhADh
- oI5l1BKlwsDdnv0UyJDiGHDJaL2501LIT2V55jqIjZVJiOkM/3J6ZNsQHJ3GdT0zJWK6KW/aF1m
- w5VOqri4X8iRZiF1KVDiewtqHFQDDKPsr5Dr4buZLKSGymoFrxnKl8PY1NKj3orai4f0DfBXyf9
- mFUnEiQ==
-X-Received: by 2002:a05:600c:a406:b0:48a:97b6:7420 with SMTP id
- 5b1f17b1804b1-48fe6329938mr291551515e9.24.1779282450423; 
- Wed, 20 May 2026 06:07:30 -0700 (PDT)
-X-Received: by 2002:a05:600c:a406:b0:48a:97b6:7420 with SMTP id
- 5b1f17b1804b1-48fe6329938mr291551215e9.24.1779282450077; 
- Wed, 20 May 2026 06:07:30 -0700 (PDT)
-Received: from imammedo ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da15a562dsm54912010f8f.33.2026.05.20.06.07.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 06:07:29 -0700 (PDT)
-Date: Wed, 20 May 2026 15:07:28 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org, Eric Auger <eric.auger@redhat.com>, Andrew Jones
- <ajones@ventanamicro.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Fabiano Rosas <farosas@suse.de>, Laurent Vivier
- <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v6 2/4] test/acpi: aarch64/virt: Allow DSDT and MCFG
- changes
-Message-ID: <20260520150728.1ed47623@imammedo>
-In-Reply-To: <20260520-virt-v6-2-d96180454fdf@rsg.ci.i.u-tokyo.ac.jp>
-References: <20260520-virt-v6-0-d96180454fdf@rsg.ci.i.u-tokyo.ac.jp>
- <20260520-virt-v6-2-d96180454fdf@rsg.ci.i.u-tokyo.ac.jp>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
+ id 1wPgex-00013M-Ec; Wed, 20 May 2026 09:08:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
+ Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=x5kMum6V0YeDu77pjrSBmkMKTfn83yMbRY5QBRaL4Jo=; b=ttf6/PHjq5NVGaH
+ utPK85RZ6dRFg/7R8EQQ0xO6QPKFh00VPP1TwspbL54yxW0H0xO28GcWa/aflHma2YItLAoLliBKC
+ aCzEjOYuMcD2Zak7piFctroQDRMTjcnt9zhdd5k/U8BzWomYqVbXKB6vysTCKeuLYvf1pKN8oOfR3
+ D4=;
+Date: Wed, 20 May 2026 15:12:55 +0200
+Subject: [PATCH v3 03/14] hw/riscv: Filter machine types for
+ qemu-system-riscv32/64 binaries
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Message-Id: <20260520-hw-riscv-cpu-int-v3-3-d1123ea63d9c@rev.ng>
+References: <20260520-hw-riscv-cpu-int-v3-0-d1123ea63d9c@rev.ng>
+In-Reply-To: <20260520-hw-riscv-cpu-int-v3-0-d1123ea63d9c@rev.ng>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, philmd@linaro.org, 
+ pierrick.bouvier@oss.qualcomm.com, palmer@dabbelt.com, 
+ alistair.francis@wdc.com
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1779282793; l=7890;
+ i=anjo@rev.ng; s=20260210; h=from:subject:message-id;
+ bh=10wGtVHLTsRtNTOAyjXk6VckFcGfrPUL5eVx6i+8dV0=;
+ b=VAZw7mej+C0o6Hi8LmKqHrz3cSpdcYv92CPxBn+hSPxLbZDchGEp69ETW+ghkQ7MMTNwF8QWT
+ AlVX6sXPwOcClIvC3XqyhgwHx226ydlM7YnXem6Rqe18tPUUA7uSTVn
+X-Developer-Key: i=anjo@rev.ng; a=ed25519;
+ pk=dKsZvj/g3kgDxnV1/SWg8a0YNGSpWtFGNsWIepQYKow=
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,37 +68,228 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 20 May 2026 18:56:31 +0900
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+Register machines able to run in qemu-system-riscv32,
+qemu-system-riscv64, or both.
 
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+---
+ hw/riscv/boston-aia.c           | 3 ++-
+ hw/riscv/microblaze-v-generic.c | 3 ++-
+ hw/riscv/microchip_pfsoc.c      | 2 ++
+ hw/riscv/opentitan.c            | 2 ++
+ hw/riscv/shakti_c.c             | 2 ++
+ hw/riscv/sifive_e.c             | 2 ++
+ hw/riscv/sifive_u.c             | 2 ++
+ hw/riscv/spike.c                | 2 ++
+ hw/riscv/virt.c                 | 3 +++
+ hw/riscv/xiangshan_kmh.c        | 2 ++
+ 10 files changed, 21 insertions(+), 2 deletions(-)
 
-Acked-by: Igor Mammedov <imammedo@redhat.com>
+diff --git a/hw/riscv/boston-aia.c b/hw/riscv/boston-aia.c
+index b90da096ea..965d0f5699 100644
+--- a/hw/riscv/boston-aia.c
++++ b/hw/riscv/boston-aia.c
+@@ -18,6 +18,7 @@
+ #include "hw/ide/ahci-pci.h"
+ #include "hw/core/loader.h"
+ #include "hw/riscv/cps.h"
++#include "hw/riscv/machines-qom.h"
+ #include "hw/pci-host/xilinx-pcie.h"
+ #include "hw/core/qdev-properties.h"
+ #include "qapi/error.h"
+@@ -473,4 +474,4 @@ static void boston_mach_class_init(MachineClass *mc)
+     mc->default_cpu_type = TYPE_RISCV_CPU_MIPS_P8700;
+ }
+ 
+-DEFINE_MACHINE("boston-aia", boston_mach_class_init)
++DEFINE_MACHINE_RISCV64("boston-aia", boston_mach_class_init)
+diff --git a/hw/riscv/microblaze-v-generic.c b/hw/riscv/microblaze-v-generic.c
+index b0494b1ac5..d33ac39a68 100644
+--- a/hw/riscv/microblaze-v-generic.c
++++ b/hw/riscv/microblaze-v-generic.c
+@@ -25,6 +25,7 @@
+ #include "system/address-spaces.h"
+ #include "hw/char/xilinx_uartlite.h"
+ #include "hw/misc/unimp.h"
++#include "hw/riscv/machines-qom.h"
+ 
+ #define LMB_BRAM_SIZE (128 * KiB)
+ #define MEMORY_BASEADDR 0x80000000
+@@ -186,4 +187,4 @@ static void mb_v_generic_machine_init(MachineClass *mc)
+     mc->default_cpus = 1;
+ }
+ 
+-DEFINE_MACHINE("amd-microblaze-v-generic", mb_v_generic_machine_init)
++DEFINE_MACHINE_RISCV32_64("amd-microblaze-v-generic", mb_v_generic_machine_init)
+diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
+index 743f31f005..5e48a29708 100644
+--- a/hw/riscv/microchip_pfsoc.c
++++ b/hw/riscv/microchip_pfsoc.c
+@@ -49,6 +49,7 @@
+ #include "hw/misc/unimp.h"
+ #include "hw/riscv/boot.h"
+ #include "hw/riscv/riscv_hart.h"
++#include "hw/riscv/machines-qom.h"
+ #include "hw/riscv/microchip_pfsoc.h"
+ #include "hw/intc/riscv_aclint.h"
+ #include "hw/intc/sifive_plic.h"
+@@ -751,6 +752,7 @@ static const TypeInfo microchip_icicle_kit_machine_typeinfo = {
+     .class_init = microchip_icicle_kit_machine_class_init,
+     .instance_init = microchip_icicle_kit_machine_instance_init,
+     .instance_size = sizeof(MicrochipIcicleKitState),
++    .interfaces = riscv64_machine_interfaces,
+ };
+ 
+ static void microchip_icicle_kit_machine_init_register_types(void)
+diff --git a/hw/riscv/opentitan.c b/hw/riscv/opentitan.c
+index 309125e854..c8b2f028f2 100644
+--- a/hw/riscv/opentitan.c
++++ b/hw/riscv/opentitan.c
+@@ -26,6 +26,7 @@
+ #include "hw/core/boards.h"
+ #include "hw/misc/unimp.h"
+ #include "hw/riscv/boot.h"
++#include "hw/riscv/machines-qom.h"
+ #include "qemu/units.h"
+ #include "system/system.h"
+ #include "system/address-spaces.h"
+@@ -335,6 +336,7 @@ static const TypeInfo open_titan_types[] = {
+         .parent         = TYPE_MACHINE,
+         .instance_size  = sizeof(OpenTitanState),
+         .class_init     = opentitan_machine_class_init,
++        .interfaces     = riscv32_machine_interfaces,
+     }
+ };
+ 
+diff --git a/hw/riscv/shakti_c.c b/hw/riscv/shakti_c.c
+index 49a39b3021..64207c8d00 100644
+--- a/hw/riscv/shakti_c.c
++++ b/hw/riscv/shakti_c.c
+@@ -19,6 +19,7 @@
+ #include "qemu/osdep.h"
+ #include "hw/core/boards.h"
+ #include "hw/riscv/shakti_c.h"
++#include "hw/riscv/machines-qom.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+ #include "hw/intc/sifive_plic.h"
+@@ -92,6 +93,7 @@ static const TypeInfo shakti_c_machine_type_info = {
+     .class_init = shakti_c_machine_class_init,
+     .instance_init = shakti_c_machine_instance_init,
+     .instance_size = sizeof(ShaktiCMachineState),
++    .interfaces = riscv64_machine_interfaces,
+ };
+ 
+ static void shakti_c_machine_type_info_register(void)
+diff --git a/hw/riscv/sifive_e.c b/hw/riscv/sifive_e.c
+index 1acfea4966..71925583bd 100644
+--- a/hw/riscv/sifive_e.c
++++ b/hw/riscv/sifive_e.c
+@@ -40,6 +40,7 @@
+ #include "hw/riscv/riscv_hart.h"
+ #include "hw/riscv/sifive_e.h"
+ #include "hw/riscv/boot.h"
++#include "hw/riscv/machines-qom.h"
+ #include "hw/char/sifive_uart.h"
+ #include "hw/intc/riscv_aclint.h"
+ #include "hw/intc/sifive_plic.h"
+@@ -167,6 +168,7 @@ static const TypeInfo sifive_e_machine_typeinfo = {
+     .class_init = sifive_e_machine_class_init,
+     .instance_init = sifive_e_machine_instance_init,
+     .instance_size = sizeof(SiFiveEState),
++    .interfaces = riscv32_64_machine_interfaces,
+ };
+ 
+ static void sifive_e_machine_init_register_types(void)
+diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
+index 7ec67b2565..6a637e3b86 100644
+--- a/hw/riscv/sifive_u.c
++++ b/hw/riscv/sifive_u.c
+@@ -51,6 +51,7 @@
+ #include "hw/riscv/riscv_hart.h"
+ #include "hw/riscv/sifive_u.h"
+ #include "hw/riscv/boot.h"
++#include "hw/riscv/machines-qom.h"
+ #include "hw/char/sifive_uart.h"
+ #include "hw/intc/riscv_aclint.h"
+ #include "hw/intc/sifive_plic.h"
+@@ -742,6 +743,7 @@ static const TypeInfo sifive_u_machine_typeinfo = {
+     .class_init = sifive_u_machine_class_init,
+     .instance_init = sifive_u_machine_instance_init,
+     .instance_size = sizeof(SiFiveUState),
++    .interfaces = riscv32_64_machine_interfaces,
+ };
+ 
+ static void sifive_u_machine_init_register_types(void)
+diff --git a/hw/riscv/spike.c b/hw/riscv/spike.c
+index 35c696f891..08ef291b6b 100644
+--- a/hw/riscv/spike.c
++++ b/hw/riscv/spike.c
+@@ -33,6 +33,7 @@
+ #include "hw/riscv/spike.h"
+ #include "hw/riscv/boot.h"
+ #include "hw/riscv/numa.h"
++#include "hw/riscv/machines-qom.h"
+ #include "hw/char/riscv_htif.h"
+ #include "hw/intc/riscv_aclint.h"
+ #include "chardev/char.h"
+@@ -366,6 +367,7 @@ static const TypeInfo spike_machine_typeinfo = {
+     .class_init = spike_machine_class_init,
+     .instance_init = spike_machine_instance_init,
+     .instance_size = sizeof(SpikeState),
++    .interfaces = riscv32_64_machine_interfaces,
+ };
+ 
+ static void spike_machine_init_register_types(void)
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 315049bc86..39caf37c01 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -36,6 +36,7 @@
+ #include "hw/riscv/riscv-iommu-bits.h"
+ #include "hw/riscv/virt.h"
+ #include "hw/riscv/boot.h"
++#include "hw/riscv/machines-qom.h"
+ #include "hw/riscv/numa.h"
+ #include "kvm/kvm_riscv.h"
+ #include "hw/firmware/smbios.h"
+@@ -2001,6 +2002,8 @@ static const TypeInfo virt_machine_typeinfo = {
+     .instance_size = sizeof(RISCVVirtState),
+     .interfaces = (const InterfaceInfo[]) {
+          { TYPE_HOTPLUG_HANDLER },
++         { TYPE_TARGET_RISCV32_MACHINE },
++         { TYPE_TARGET_RISCV64_MACHINE },
+          { }
+     },
+ };
+diff --git a/hw/riscv/xiangshan_kmh.c b/hw/riscv/xiangshan_kmh.c
+index 436e51c1c5..76417ba7ab 100644
+--- a/hw/riscv/xiangshan_kmh.c
++++ b/hw/riscv/xiangshan_kmh.c
+@@ -41,6 +41,7 @@
+ #include "hw/riscv/boot.h"
+ #include "hw/riscv/xiangshan_kmh.h"
+ #include "hw/riscv/riscv_hart.h"
++#include "hw/riscv/machines-qom.h"
+ #include "system/system.h"
+ 
+ static const MemMapEntry xiangshan_kmh_memmap[] = {
+@@ -211,6 +212,7 @@ static const TypeInfo xiangshan_kmh_machine_info = {
+     .parent = TYPE_MACHINE,
+     .instance_size = sizeof(XiangshanKmhState),
+     .class_init = xiangshan_kmh_machine_class_init,
++    .interfaces = riscv64_machine_interfaces,
+ };
+ 
+ static void xiangshan_kmh_machine_register_types(void)
 
-> ---
->  tests/qtest/bios-tables-test-allowed-diff.h | 11 +++++++++++
->  1 file changed, 11 insertions(+)
-> 
-> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-> index dfb8523c8bf4..efb00724d09f 100644
-> --- a/tests/qtest/bios-tables-test-allowed-diff.h
-> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
-> @@ -1 +1,12 @@
->  /* List of comma-separated changed AML files to ignore */
-> +"tests/data/acpi/aarch64/virt/DSDT",
-> +"tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt",
-> +"tests/data/acpi/aarch64/virt/DSDT.acpipcihp",
-> +"tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex",
-> +"tests/data/acpi/aarch64/virt/DSDT.memhp",
-> +"tests/data/acpi/aarch64/virt/DSDT.pxb",
-> +"tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev",
-> +"tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy",
-> +"tests/data/acpi/aarch64/virt/DSDT.topology",
-> +"tests/data/acpi/aarch64/virt/DSDT.viot",
-> +"tests/data/acpi/aarch64/virt/MCFG",
-> 
+-- 
+2.52.0
 
 
