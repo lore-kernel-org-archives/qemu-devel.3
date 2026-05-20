@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C276CD5BA4
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:22:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67E01CD5BA4
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:22:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPkZ9-0001Ul-MX; Wed, 20 May 2026 13:18:43 -0400
+	id 1wPkZ2-0001Mm-F8; Wed, 20 May 2026 13:18:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPkYy-0001Lb-F8
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:33 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1wPkYs-0001J9-Pl
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:26 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPkYv-0001tf-HS
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:32 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-366139223e4so2967268a91.0
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:18:28 -0700 (PDT)
+ id 1wPkYq-0001sM-AU
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:18:25 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-36a35e4eefeso421933a91.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:18:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779297507; x=1779902307; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779297503; x=1779902303; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fCZyoqgqjVXJJtjxCkZlZshfx8C6L5WwhqI7H2CZ8tM=;
- b=G44vvSVKPd+SBHhIuk/cqwqUWVg4PjxJ4M6l/gHw/RnsZVI86Dr3OcgcwD7mPtLM07
- P4W03bH2jrUPh6Gw2HEzl0oYnaWlUbG4JiVgmPO5dZfiiXi2C++/dJfu+uPtiCNU3nmZ
- NWGqGgLblbk7HBOvle9bQPO74jI/OBUcpySzna2hOlb9858Nx/eBCS0kr5ZvD0Y3b3YE
- C9Yni0M8I6PgXBCCWixqegJ+cL6OC4sV+22bg98L3EKimL5/JM6WL2ZtFTig54p00UKB
- 5lWgXMEfUowFXrR//JXHJoCEd8NycTz8E5RsNt5pXCa+BZiG4+nTt4iUaOsT6WyYhBIQ
- 39/A==
+ bh=u/kDXd23+ycS383PGeIrgHSsrr0fsby8WIj0IEq0o18=;
+ b=guMiDFAhSnBL1Vc+fN+1Xd0BXDtknzQRzxOxoMl/H4Yp6Bd76RcfRvbZl/dlGsgWUY
+ gi75IQQjwekxsI2Zp2LWqWFh5PN6iBcSlZnRiLmfzsuc85iQJUThTp6yUeW41L9EloYD
+ 8ZdrVH+oSSkAngAFiCGs9ZVB1B8MRQSDsdn6lBcg7DVg9fX+okltSJrb92DDLHGRIzvz
+ BBkEhgucw0fHwub1tVlqbf5rPmGzG9l91qsYoMYVAr3B9eKVtOvHRDMrdqs1Kk0O+ujz
+ xRyN9o9f6r9DzSYmfFNy3y5Lg4BVOUXGQSAJucg516PwfS55In0HYszpqd1LsGKbTLdG
+ oM5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779297507; x=1779902307;
+ d=1e100.net; s=20251104; t=1779297503; x=1779902303;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=fCZyoqgqjVXJJtjxCkZlZshfx8C6L5WwhqI7H2CZ8tM=;
- b=hcGTb2n09kkGseNdVNyL5z0vPpjyiJmb06dvSub6rtlhOGRw67bhfRyr0eskog+6e1
- 6RygkwC8yO7lPiDAIyE80QvJDc2VPpTRodE4uhZpRSAfb1f2wVL9uR8I/GfCu4928KZk
- //BQOfBXp3KVKyo3JYu98ntrIWJ8sV21yCw/q3LlZT2tpM+IGW7oyleuQ5fb4B/S7f7g
- vOZbVIRb80OqtIc4I1qD+du0ybhaTlHP7fHIJLJKc6wGcbECBh/kkvOIGJq2X7WqpdfH
- AJsbr6HTQX/X865IpanEbEMDFkq7QmLZg2To+MITvcQhjDpK5yvG/3KKGUN/7zf5Fiea
- gBKQ==
-X-Gm-Message-State: AOJu0Ywn+oSsmmp5ij/r0HwlFqyEOjtSLQx/XxET4SEYphyDo6hGzOWd
- SIxeThYERTmmpL293Su6S5sKfIAQ5jF88VuqlaeiJvCvtwfkKrBhfDOxnNt0UFWZt4mnVg+oVxu
- 1//LgV6Y=
-X-Gm-Gg: Acq92OE/pGdr7SP57P/cv782W7HlhgFu2jgYaSDcyeLT9iTjO7RkmMcO2WwGkgi7IZR
- isGo46fYoapv7DBbzpAcnc3Lzo5MrlwoEQjaRzpexl9njsj+8OU/MAAbQd8b45G0BiDmVeKDmMe
- PWhKRv7CScJcV50Y49AiCE1NioFfWXqp2Jh7PkF0Sye3Qvap0AUdO9VfxL18uhdP5MPbkaNJXrQ
- pQQYBEFpcuWVKwymrXUVPUqNIbGkeNvVFsJuwIWb3+QLofIcghaForA/oYho3In6cRB1/z9q8/I
- LVMefA7ElPYJbrkiIwsccbROJZdq4AAJf3mkSU92C5bB3sZhhsb7JXOQfut8TYEerDtoDVaX0+F
- w+wdZGmlWKZHV6TAXFgMr3XijT8Oa0p/7Dwu0SmQov/Yw+ty19SWuawv5COgXHHknvjrYCxWNzM
- vmurqPjJ6W0SR4wpxAG5gJKZ7mm/Gy
-X-Received: by 2002:a17:90b:540d:b0:36a:35df:769c with SMTP id
- 98e67ed59e1d1-36a35df775bmr1874660a91.15.1779297506988; 
- Wed, 20 May 2026 10:18:26 -0700 (PDT)
+ bh=u/kDXd23+ycS383PGeIrgHSsrr0fsby8WIj0IEq0o18=;
+ b=fzrCuSExCOJtu4T6s9x7fqyccAfKJTcTHO9vpPlGY7dA6FFxXboTQM/1sY/q8+ayPI
+ TjMlR4pU+S13LUmesiu625ja23qli9V3B4mJda1GJJF0/7suTLbvZBF2UrV0dzV1OAbC
+ KGL1c7ZYw4QRybgf9nMCZFBFBzAopsO47SGb1ngvMzBIiLApgvbZwp1Mv23/C6xuXfGD
+ ILimWLAWeHaVQYgAb+4tx/UQ305HKAr/noO1uQErodajntTZj0BqMkfoZefT42HydP+g
+ JMxGHJPOJUykDLOs3RhTX/dN9TF9tpOcf20k+8P6HuReTaO8suau+Dt42cF8Gv9TMkLI
+ ACHg==
+X-Gm-Message-State: AOJu0Yx4rFQgyaKarZQc/wqTmoRxF0HlG6vwgfiTdUdAPV1j3mjehNai
+ VYkMy85J7yNiugeDUbeJmFgz0Tcc12tZXCXxCrWI1JuRe/cSMU08omWMJvH6XWLCQedLGneWP+W
+ ZpDwtphc=
+X-Gm-Gg: Acq92OHhSeVmr82prvQUQyRzXHa/gv/8jvup+ccdMpAv60YXBypQmozybbsZgwJUtEd
+ Fo2yttM1H6Z5L+hczIKKXEy9XD67E+MnhulCHSdzXTY9TAg/Ik1bEFDQFl19IddQXVAwTd8whE4
+ OIDupeVLHRZQd35aisWhXbyKowAzyBP/w0Nl7rweAbtXgplsVT/F8bT03CzqmTrafUpHa/pFYwf
+ UvkYoJY5xTyBV2FN2e1zoMaHEGr5EUq48j4RWrUbRHYIcIB43N/DEF7HktzWuQnpzIXjEIC0s9m
+ Yj2VCTAAfrFZorMkeOs00r0RSlRCyBWtq1Dqk5hQYgZydDDo0fU8HfR/tYDVprCIkjxbFpCpcZB
+ pPJvKXPKWY6muzLMgWQeAw51ZaT9PLxw2nRhp6EVivyVg/L7vf1XhYSpZN8hXMbwfD8zqOfNWuB
+ kkoCzBph3RfHg5t6bfled1rABl/T69
+X-Received: by 2002:a17:90b:5848:b0:35f:b714:e516 with SMTP id
+ 98e67ed59e1d1-36951a66993mr24337396a91.16.1779297502661; 
+ Wed, 20 May 2026 10:18:22 -0700 (PDT)
 Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-36a3c83f226sm254416a91.0.2026.05.20.10.18.26
+ 98e67ed59e1d1-36a3c83f226sm254416a91.0.2026.05.20.10.18.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 10:18:26 -0700 (PDT)
+ Wed, 20 May 2026 10:18:22 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v5 07/30] target/s390x: Move float{32,
- 64}_s390_divide_to_integer
-Date: Wed, 20 May 2026 10:17:57 -0700
-Message-ID: <20260520171820.848839-8-richard.henderson@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v5 01/30] fpu: Return struct from parts{64,128}_scalbn
+Date: Wed, 20 May 2026 10:17:51 -0700
+Message-ID: <20260520171820.848839-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260520171820.848839-1-richard.henderson@linaro.org>
 References: <20260520171820.848839-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,339 +101,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that we've exposed enough infrastructure, this can be
-implemented in the backend that needs it.
+At the same time, export.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/fpu/softfloat.h       |  11 ---
- fpu/softfloat.c               | 137 ----------------------------------
- target/s390x/tcg/fpu_helper.c | 135 +++++++++++++++++++++++++++++++++
- 3 files changed, 135 insertions(+), 148 deletions(-)
+ include/fpu/softfloat-parts.h |  3 +++
+ fpu/softfloat.c               | 18 +++++++++---------
+ fpu/softfloat-parts.c.inc     | 14 ++++++++------
+ 3 files changed, 20 insertions(+), 15 deletions(-)
 
-diff --git a/include/fpu/softfloat.h b/include/fpu/softfloat.h
-index 8389a07b04..1580d956d5 100644
---- a/include/fpu/softfloat.h
-+++ b/include/fpu/softfloat.h
-@@ -1386,15 +1386,4 @@ static inline bool float128_unordered_quiet(float128 a, float128 b,
- *----------------------------------------------------------------------------*/
- float128 float128_default_nan(float_status *status);
+diff --git a/include/fpu/softfloat-parts.h b/include/fpu/softfloat-parts.h
+index 9504d0daa0..46618d217e 100644
+--- a/include/fpu/softfloat-parts.h
++++ b/include/fpu/softfloat-parts.h
+@@ -214,4 +214,7 @@ FloatParts128 parts128_round_to_int(const FloatParts128 *a,
+ FloatParts64 parts64_round_to_fmt(const FloatParts64 *p, float_status *s,
+                                   const FloatFmt *fmt);
  
--#define DECLARE_S390_DIVIDE_TO_INTEGER(floatN)                                 \
--void floatN ## _s390_divide_to_integer(floatN a, floatN b,                     \
--                                       int final_quotient_rounding_mode,       \
--                                       bool mask_underflow, bool mask_inexact, \
--                                       floatN *r, floatN *n,                   \
--                                       uint32_t *cc, int *dxc,                 \
--                                       float_status *status)
--DECLARE_S390_DIVIDE_TO_INTEGER(float32);
--DECLARE_S390_DIVIDE_TO_INTEGER(float64);
--
--
- #endif /* SOFTFLOAT_H */
++FloatParts64 parts64_scalbn(const FloatParts64 *a, int n, float_status *s);
++FloatParts128 parts128_scalbn(const FloatParts128 *a, int n, float_status *s);
++
+ #endif
 diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-index 08ea56a71d..a762f4b43a 100644
+index 90ebd83f69..7fc6df461e 100644
 --- a/fpu/softfloat.c
 +++ b/fpu/softfloat.c
-@@ -5151,143 +5151,6 @@ floatx80 floatx80_round(floatx80 a, float_status *status)
+@@ -1910,7 +1910,7 @@ float16 float16_muladd_scalbn(float16 a, float16 b, float16 c,
+ 
+     /* Before rounding, scale. */
+     if (scale) {
+-        parts64_scalbn(pr, scale, status);
++        *pr = parts64_scalbn(pr, scale, status);
+     }
+     parts64_uncanon(pr, status, &float16_params, false);
+     /* After rounding, apply negate result, especially for -0.0. */
+@@ -1937,7 +1937,7 @@ float32_muladd_scalbn(float32 a, float32 b, float32 c,
+ 
+     /* Before rounding, scale. */
+     if (scale) {
+-        parts64_scalbn(pr, scale, status);
++        *pr = parts64_scalbn(pr, scale, status);
+     }
+     parts64_uncanon(pr, status, &float32_params, false);
+     /* After rounding, apply negate result, especially for -0.0. */
+@@ -1958,7 +1958,7 @@ float64_muladd_scalbn(float64 a, float64 b, float64 c,
+ 
+     /* Before rounding, scale. */
+     if (scale) {
+-        parts64_scalbn(pr, scale, status);
++        *pr = parts64_scalbn(pr, scale, status);
+     }
+     parts64_uncanon(pr, status, &float64_params, false);
+     /* After rounding, apply negate result, especially for -0.0. */
+@@ -4312,7 +4312,7 @@ float16 float16_scalbn(float16 a, int n, float_status *status)
+ {
+     FloatParts64 p = float16_unpack_canonical(a, status);
+ 
+-    parts64_scalbn(&p, n, status);
++    p = parts64_scalbn(&p, n, status);
+     return float16_round_pack_canonical(&p, status);
+ }
+ 
+@@ -4320,7 +4320,7 @@ float32 float32_scalbn(float32 a, int n, float_status *status)
+ {
+     FloatParts64 p = float32_unpack_canonical(a, status);
+ 
+-    parts64_scalbn(&p, n, status);
++    p = parts64_scalbn(&p, n, status);
+     return float32_round_pack_canonical(&p, status);
+ }
+ 
+@@ -4328,7 +4328,7 @@ float64 float64_scalbn(float64 a, int n, float_status *status)
+ {
+     FloatParts64 p = float64_unpack_canonical(a, status);
+ 
+-    parts64_scalbn(&p, n, status);
++    p = parts64_scalbn(&p, n, status);
+     return float64_round_pack_canonical(&p, status);
+ }
+ 
+@@ -4336,7 +4336,7 @@ bfloat16 bfloat16_scalbn(bfloat16 a, int n, float_status *status)
+ {
+     FloatParts64 p = bfloat16_unpack_canonical(a, status);
+ 
+-    parts64_scalbn(&p, n, status);
++    p = parts64_scalbn(&p, n, status);
+     return bfloat16_round_pack_canonical(&p, status);
+ }
+ 
+@@ -4344,7 +4344,7 @@ float128 float128_scalbn(float128 a, int n, float_status *status)
+ {
+     FloatParts128 p = float128_unpack_canonical(a, status);
+ 
+-    parts128_scalbn(&p, n, status);
++    p = parts128_scalbn(&p, n, status);
+     return float128_round_pack_canonical(&p, status);
+ }
+ 
+@@ -4355,7 +4355,7 @@ floatx80 floatx80_scalbn(floatx80 a, int n, float_status *status)
+     if (!floatx80_unpack_canonical(&p, a, status)) {
+         return floatx80_default_nan(status);
+     }
+-    parts128_scalbn(&p, n, status);
++    p = parts128_scalbn(&p, n, status);
      return floatx80_round_pack_canonical(&p, status);
  }
  
--static void parts_s390_divide_to_integer(FloatParts64 *a, FloatParts64 *b,
--                                         int final_quotient_rounding_mode,
--                                         bool mask_underflow, bool mask_inexact,
--                                         const FloatFmt *fmt,
--                                         FloatParts64 *r, FloatParts64 *n,
--                                         uint32_t *cc, int *dxc,
--                                         float_status *status)
--{
--    /* POp table "Results: DIVIDE TO INTEGER (Part 1 of 2)" */
--    if ((float_cmask(a->cls) | float_cmask(b->cls)) & float_cmask_anynan) {
--        *r = parts64_pick_nan(a, b, status);
--        *n = *r;
--        *cc = 1;
--    } else if (a->cls == float_class_inf || b->cls == float_class_zero) {
--        *r = parts64_default_nan(status);
--        *n = *r;
--        *cc = 1;
--        status->float_exception_flags |= float_flag_invalid;
--    } else if (b->cls == float_class_inf) {
--        *r = *a;
--        n->cls = float_class_zero;
--        n->sign = a->sign ^ b->sign;
--        *cc = 0;
--    } else {
--        FloatParts64 *q, q_buf, r_precise;
--        int float_exception_flags = 0;
--        bool is_q_smallish;
--        uint32_t r_flags;
--
--        /* Compute precise quotient */
--        q_buf = parts64_div(a, b, status);
--        q = &q_buf;
--
--        /*
--         * Check whether two closest integers can be precisely represented,
--         * i.e., all their bits fit into the fractional part.
--         */
--        is_q_smallish = q->exp < (fmt->frac_size + 1);
--
--        /*
--         * Final quotient is rounded using final-quotient-rounding method, and
--         * partial quotient is rounded toward zero.
--         *
--         * Rounding of partial quotient may be inexact. This is the whole point
--         * of distinguishing partial quotients, so ignore the exception.
--         */
--        *n = parts64_round_to_int(q,
--                                  is_q_smallish
--                                  ? final_quotient_rounding_mode
--                                  : float_round_to_zero,
--                                  0, status, fmt);
--
--        /* Compute precise remainder */
--        r_precise = parts64_muladd(b, n, a,
--                                   float_muladd_negate_product, status);
--
--        /* Round remainder to the target format */
--        *r = r_precise;
--        status->float_exception_flags = 0;
--        *r = parts64_round_to_fmt(r, status, fmt);
--        r_flags = status->float_exception_flags;
--
--        /* POp table "Results: DIVIDE TO INTEGER (Part 2 of 2)" */
--        if (is_q_smallish) {
--            if (r->cls != float_class_zero) {
--                if (r->exp < 2 - (1 << (fmt->exp_size - 1))) {
--                    if (mask_underflow) {
--                        float_exception_flags |= float_flag_underflow;
--                        *dxc = 0x10;
--                        r->exp += fmt->exp_re_bias;
--                    }
--                } else if (r_flags & float_flag_inexact) {
--                    float_exception_flags |= float_flag_inexact;
--                    if (mask_inexact) {
--                        bool saved_r_sign, saved_r_precise_sign;
--
--                        /*
--                         * Check whether remainder was truncated (rounded
--                         * toward zero) or incremented.
--                         */
--                        saved_r_sign = r->sign;
--                        saved_r_precise_sign = r_precise.sign;
--                        r->sign = false;
--                        r_precise.sign = false;
--                        if (parts64_compare(r, &r_precise, status, true) <
--                            float_relation_equal) {
--                            *dxc = 0x8;
--                        } else {
--                            *dxc = 0xc;
--                        }
--                        r->sign = saved_r_sign;
--                        r_precise.sign = saved_r_precise_sign;
--                    }
--                }
--            }
--            *cc = 0;
--        } else if (n->exp > (1 << (fmt->exp_size - 1)) - 1) {
--            n->exp -= fmt->exp_re_bias;
--            *cc = r->cls == float_class_zero ? 1 : 3;
--        } else {
--            *cc = r->cls == float_class_zero ? 0 : 2;
--        }
--
--        /* Adjust signs of zero results */
--        if (r->cls == float_class_zero) {
--            r->sign = a->sign;
--        }
--        if (n->cls == float_class_zero) {
--            n->sign = a->sign ^ b->sign;
--        }
--
--        status->float_exception_flags = float_exception_flags;
--    }
--}
--
--#define DEFINE_S390_DIVIDE_TO_INTEGER(floatN)                                  \
--void floatN ## _s390_divide_to_integer(floatN a, floatN b,                     \
--                                       int final_quotient_rounding_mode,       \
--                                       bool mask_underflow, bool mask_inexact, \
--                                       floatN *r, floatN *n,                   \
--                                       uint32_t *cc, int *dxc,                 \
--                                       float_status *status)                   \
--{                                                                              \
--    FloatParts64 pa = floatN ## _unpack_canonical(a, status);                  \
--    FloatParts64 pb = floatN ## _unpack_canonical(b, status);                  \
--    FloatParts64 pr, pn;                                                       \
--    parts_s390_divide_to_integer(&pa, &pb, final_quotient_rounding_mode,       \
--                                 mask_underflow, mask_inexact,                 \
--                                 &floatN ## _params,                           \
--                                 &pr, &pn, cc, dxc, status);                   \
--    *r = floatN ## _round_pack_canonical(&pr, status);                         \
--    *n = floatN ## _round_pack_canonical(&pn, status);                         \
--}
--
--DEFINE_S390_DIVIDE_TO_INTEGER(float32)
--DEFINE_S390_DIVIDE_TO_INTEGER(float64)
--
- static void __attribute__((constructor)) softfloat_init(void)
+diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+index 2114797aca..3a9c2748cd 100644
+--- a/fpu/softfloat-parts.c.inc
++++ b/fpu/softfloat-parts.c.inc
+@@ -1633,22 +1633,24 @@ FloatRelation partsN(compare)(const FloatPartsN *a, const FloatPartsN *b,
+ /*
+  * Multiply A by 2 raised to the power N.
+  */
+-static void partsN(scalbn)(FloatPartsN *a, int n, float_status *s)
++FloatPartsN partsN(scalbn)(const FloatPartsN *a, int n, float_status *s)
  {
-     union_float64 ua, ub, uc, ur;
-diff --git a/target/s390x/tcg/fpu_helper.c b/target/s390x/tcg/fpu_helper.c
-index 122994960a..33e0f6100d 100644
---- a/target/s390x/tcg/fpu_helper.c
-+++ b/target/s390x/tcg/fpu_helper.c
-@@ -24,6 +24,7 @@
- #include "tcg_s390x.h"
- #include "exec/helper-proto.h"
- #include "fpu/softfloat.h"
-+#include "fpu/softfloat-parts.h"
- 
- /* #define DEBUG_HELPER */
- #ifdef DEBUG_HELPER
-@@ -315,6 +316,140 @@ Int128 HELPER(dxb)(CPUS390XState *env, Int128 a, Int128 b)
-     return RET128(ret);
- }
- 
-+static void parts_s390_divide_to_integer(FloatParts64 *a, FloatParts64 *b,
-+                                         int final_quotient_rounding_mode,
-+                                         bool mask_underflow, bool mask_inexact,
-+                                         const FloatFmt *fmt,
-+                                         FloatParts64 *r, FloatParts64 *n,
-+                                         uint32_t *cc, int *dxc,
-+                                         float_status *status)
-+{
-+    /* POp table "Results: DIVIDE TO INTEGER (Part 1 of 2)" */
-+    if ((float_cmask(a->cls) | float_cmask(b->cls)) & float_cmask_anynan) {
-+        *r = parts64_pick_nan(a, b, status);
-+        *n = *r;
-+        *cc = 1;
-+    } else if (a->cls == float_class_inf || b->cls == float_class_zero) {
-+        *r = parts64_default_nan(status);
-+        *n = *r;
-+        *cc = 1;
-+        status->float_exception_flags |= float_flag_invalid;
-+    } else if (b->cls == float_class_inf) {
-+        *r = *a;
-+        n->cls = float_class_zero;
-+        n->sign = a->sign ^ b->sign;
-+        *cc = 0;
-+    } else {
-+        FloatParts64 *q, q_buf, r_precise;
-+        int float_exception_flags = 0;
-+        bool is_q_smallish;
-+        uint32_t r_flags;
-+
-+        /* Compute precise quotient */
-+        q_buf = parts64_div(a, b, status);
-+        q = &q_buf;
-+
-+        /*
-+         * Check whether two closest integers can be precisely represented,
-+         * i.e., all their bits fit into the fractional part.
-+         */
-+        is_q_smallish = q->exp < (fmt->frac_size + 1);
-+
-+        /*
-+         * Final quotient is rounded using final-quotient-rounding method, and
-+         * partial quotient is rounded toward zero.
-+         *
-+         * Rounding of partial quotient may be inexact. This is the whole point
-+         * of distinguishing partial quotients, so ignore the exception.
-+         */
-+        *n = parts64_round_to_int(q,
-+                                  is_q_smallish
-+                                  ? final_quotient_rounding_mode
-+                                  : float_round_to_zero,
-+                                  0, status, fmt);
-+
-+        /* Compute precise remainder */
-+        r_precise = parts64_muladd(b, n, a,
-+                                   float_muladd_negate_product, status);
-+
-+        /* Round remainder to the target format */
-+        *r = r_precise;
-+        status->float_exception_flags = 0;
-+        *r = parts64_round_to_fmt(r, status, fmt);
-+        r_flags = status->float_exception_flags;
-+
-+        /* POp table "Results: DIVIDE TO INTEGER (Part 2 of 2)" */
-+        if (is_q_smallish) {
-+            if (r->cls != float_class_zero) {
-+                if (r->exp < 2 - (1 << (fmt->exp_size - 1))) {
-+                    if (mask_underflow) {
-+                        float_exception_flags |= float_flag_underflow;
-+                        *dxc = 0x10;
-+                        r->exp += fmt->exp_re_bias;
-+                    }
-+                } else if (r_flags & float_flag_inexact) {
-+                    float_exception_flags |= float_flag_inexact;
-+                    if (mask_inexact) {
-+                        bool saved_r_sign, saved_r_precise_sign;
-+
-+                        /*
-+                         * Check whether remainder was truncated (rounded
-+                         * toward zero) or incremented.
-+                         */
-+                        saved_r_sign = r->sign;
-+                        saved_r_precise_sign = r_precise.sign;
-+                        r->sign = false;
-+                        r_precise.sign = false;
-+                        if (parts64_compare(r, &r_precise, status, true) <
-+                            float_relation_equal) {
-+                            *dxc = 0x8;
-+                        } else {
-+                            *dxc = 0xc;
-+                        }
-+                        r->sign = saved_r_sign;
-+                        r_precise.sign = saved_r_precise_sign;
-+                    }
-+                }
-+            }
-+            *cc = 0;
-+        } else if (n->exp > (1 << (fmt->exp_size - 1)) - 1) {
-+            n->exp -= fmt->exp_re_bias;
-+            *cc = r->cls == float_class_zero ? 1 : 3;
-+        } else {
-+            *cc = r->cls == float_class_zero ? 0 : 2;
+     switch (a->cls) {
+     case float_class_snan:
+     case float_class_qnan:
+-        *a = partsN(return_nan)(a, s);
+-        break;
++        return partsN(return_nan)(a, s);
+     case float_class_zero:
+     case float_class_inf:
+-        break;
++        return *a;
+     case float_class_denormal:
+         float_raise(float_flag_input_denormal_used, s);
+         /* fall through */
+     case float_class_normal:
+-        a->exp += MIN(MAX(n, -0x10000), 0x10000);
+-        break;
++        {
++            FloatPartsN r = *a;
++            r.exp += MIN(MAX(n, -0x10000), 0x10000);
++            return r;
 +        }
-+
-+        /* Adjust signs of zero results */
-+        if (r->cls == float_class_zero) {
-+            r->sign = a->sign;
-+        }
-+        if (n->cls == float_class_zero) {
-+            n->sign = a->sign ^ b->sign;
-+        }
-+
-+        status->float_exception_flags = float_exception_flags;
-+    }
-+}
-+
-+#define DEFINE_S390_DIVIDE_TO_INTEGER(floatN)                                  \
-+static void floatN ## _s390_divide_to_integer(floatN a, floatN b,              \
-+    int final_quotient_rounding_mode, bool mask_underflow, bool mask_inexact,  \
-+    floatN *r, floatN *n, uint32_t *cc, int *dxc, float_status *status)        \
-+{                                                                              \
-+    FloatParts64 pa = floatN ## _unpack_canonical(a, status);                  \
-+    FloatParts64 pb = floatN ## _unpack_canonical(b, status);                  \
-+    FloatParts64 pr, pn;                                                       \
-+    parts_s390_divide_to_integer(&pa, &pb, final_quotient_rounding_mode,       \
-+                                 mask_underflow, mask_inexact,                 \
-+                                 &floatN ## _params,                           \
-+                                 &pr, &pn, cc, dxc, status);                   \
-+    *r = floatN ## _round_pack_canonical(&pr, status);                         \
-+    *n = floatN ## _round_pack_canonical(&pn, status);                         \
-+}
-+
-+DEFINE_S390_DIVIDE_TO_INTEGER(float32)
-+DEFINE_S390_DIVIDE_TO_INTEGER(float64)
-+
- void HELPER(dib)(CPUS390XState *env, uint32_t r1, uint32_t r2, uint32_t r3,
-                  uint32_t m4, uint32_t bits)
- {
+     default:
+         g_assert_not_reached();
+     }
 -- 
 2.43.0
 
