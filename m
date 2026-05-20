@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A5B3CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 13:35:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AC86CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 13:35:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPh3l-0005Z1-Id; Wed, 20 May 2026 09:34:05 -0400
+	id 1wPh4S-0005hS-O0; Wed, 20 May 2026 09:34:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1wPh3j-0005Yt-VU
- for qemu-devel@nongnu.org; Wed, 20 May 2026 09:34:03 -0400
+ (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1wPh44-0005bh-En
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 09:34:26 -0400
 Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1wPh3i-0004Vg-8r
- for qemu-devel@nongnu.org; Wed, 20 May 2026 09:34:03 -0400
+ (Exim 4.90_1) (envelope-from <naveen@kernel.org>) id 1wPh42-0004YL-6g
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 09:34:23 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 12052601FC;
- Wed, 20 May 2026 13:34:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 062A71F000E9;
- Wed, 20 May 2026 13:34:00 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 3FD6260121;
+ Wed, 20 May 2026 13:34:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460571F000E9;
+ Wed, 20 May 2026 13:34:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1779284040;
- bh=E0SC7AD4xg+opLCvydgBAIKYqb02rk7N/+pspd2LlVo=;
+ s=k20260515; t=1779284061;
+ bh=rdJp/J3F9UFFZHU/Ts99uTkuRk+JOQWm2QJtbNtSatc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=GwsRL/bc/KfBjiBFuJXiCTq4Fh/w1aIecd2WZkBHQSzEM/933Oy8fvI7GomsPs376
- PIkGs2/n6IA0tWq5jz+u+pwdlh/HZsfB7TqRq1TsjY0Kh6ob5nLWs0xA2d19g4u5OH
- +KeRZe3cbFf+jNAMwZ+Y6pMpgNV/IQksyMBtFfGwd0bgwV3kiaR6H0Rm6z+YbZyxXO
- GWQqcWFGkuMnRzTBkKbNu4oYW4CpIxxDKAdTJ6FvRG2MnaMAgOGq3GEE1tMQ2FtC7L
- uRyerTVtMIduphf5LFU2JlI1spM03vdChPhci09VPNpQn+9AJOMmDfYW/VWybs1HI6
- HHebWPMrGK6kw==
+ b=KR7GJyaTrnu51b7/fPXkXTheJd419p8gctqT7L7hS6xjvzLQzi2Uz4HOALVX+7ATP
+ pXbSqYLXUg32RDm0BlDfNa+V1D4XwYfBkOp4pjA6Rt7gY1GoRHudSbjA8NixbHQ9fk
+ 33msTcFV9QysOwO531pTSBq7N9GL3uXrD3DoSB6B3jieAuIq8V1R+WsOtwx9OEXd8l
+ ygS8L+OiICFD60vWkS64F7KDk3uoSASTxGE3WqEpYbRg0utBT2eecw5h4Q46uUl+uY
+ C9353JVKYEY+JHFWkxqT5tY1wAVAEuswVZ/EC6NV1ur0FVRRlBGgO8b/HXAEvd7Rxx
+ Lw5vRHqx+ApdQ==
 From: "Naveen N Rao (AMD)" <naveen@kernel.org>
 To: Paolo Bonzini <pbonzini@redhat.com>,
 	qemu-devel <qemu-devel@nongnu.org>
@@ -45,10 +45,10 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Roy Hopkins <roy.hopkins@randomman.co.uk>,
  Srikanth Aithal <srikanth.aithal@amd.com>,
  Kim Phillips <kim.phillips@amd.com>, Joerg Roedel <joro@8bytes.org>
-Subject: [PATCH v4 2/9] target/i386: SEV: Ensure SEV features are only set
- through qemu cli or IGVM
-Date: Wed, 20 May 2026 18:57:55 +0530
-Message-ID: <6939de99f13d7170af68b74e711eb9f03f32f682.1779281646.git.naveen@kernel.org>
+Subject: [PATCH v4 5/9] target/i386: SEV: Enable use of KVM_SEV_INIT2 for
+ SEV-ES guests
+Date: Wed, 20 May 2026 18:57:58 +0530
+Message-ID: <f2a7778ab26b11a8de90e170ff984ccd29dc05a0.1779281646.git.naveen@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <cover.1779281646.git.naveen@kernel.org>
 References: <cover.1779281646.git.naveen@kernel.org>
@@ -77,37 +77,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In preparation for qemu being able to set SEV features through the cli,
-add a check to ensure that SEV features are not also set if using IGVM
-files.
+In preparation for allowing SEV-ES guests to enable VMSA SEV features,
+update sev_init2_required() to return true if any SEV features are
+requested. This enables qemu to use KVM_SEV_INIT2 for SEV-ES guests when
+necessary.
 
+Reviewed-by: Nikunj A Dadhania <nikunj@amd.com>
 Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
 Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
 ---
- target/i386/sev.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ target/i386/sev.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 22c350fe14b7..641a295c42b7 100644
+index 196a70b35c51..4553fe4d6e4a 100644
 --- a/target/i386/sev.c
 +++ b/target/i386/sev.c
-@@ -1908,6 +1908,16 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-          * as SEV_STATE_UNINIT.
-          */
-         if (x86machine->igvm) {
-+            /*
-+             * Test only the user-set SEV features by masking out
-+             * SVM_SEV_FEAT_SNP_ACTIVE which is set by default.
-+             */
-+            if (sev_common->sev_features & ~SVM_SEV_FEAT_SNP_ACTIVE) {
-+                error_setg(errp,
-+                           "%s: SEV features can't be specified when using IGVM files",
-+                           __func__);
-+                return -1;
-+            }
-             if (IGVM_CFG_GET_CLASS(x86machine->igvm)
-                     ->process(x86machine->igvm, machine, true, errp) == -1) {
-                 return -1;
+@@ -1701,8 +1701,7 @@ sev_vm_state_change(void *opaque, bool running, RunState state)
+  */
+ static bool sev_init2_required(SevGuestState *sev_guest)
+ {
+-    /* Currently no KVM_SEV_INIT2-specific options are exposed via QEMU */
+-    return false;
++    return !!SEV_COMMON(sev_guest)->sev_features;
+ }
+ 
+ static int sev_kvm_type(X86ConfidentialGuest *cg)
 -- 
 2.54.0
 
