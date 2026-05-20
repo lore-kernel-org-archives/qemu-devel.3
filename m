@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BEA8CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 19:27:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 070A0CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 19:27:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPmYp-0002yj-2l; Wed, 20 May 2026 15:26:31 -0400
+	id 1wPmZP-0005LE-J1; Wed, 20 May 2026 15:27:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmYk-0002Wl-Uy
- for qemu-devel@nongnu.org; Wed, 20 May 2026 15:26:27 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmZE-0005CG-Fw
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 15:26:57 -0400
 Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmYi-0002cc-Q7
- for qemu-devel@nongnu.org; Wed, 20 May 2026 15:26:26 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmZA-0002hQ-7z
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 15:26:55 -0400
 Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-488d2079582so50989205e9.2
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 12:26:24 -0700 (PDT)
+ 5b1f17b1804b1-488af9fdaa7so26132535e9.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 12:26:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779305183; x=1779909983; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779305210; x=1779910010; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=+IShrOJdoAnXhE6bNJkPoCD2JYelB8KnTrT0I3ViK0Q=;
- b=Bd2SGz2ED+vCEDlg7BkfvT1+A1ShzEsmf4BEniKcqieN/jwcYy/6bd0TVFKNRpbIMy
- HVmqvo11YaqwwKw7iv+x4zYaCwUDCOpqgMQBQTh1Jna/qzGtq/LuOfR9wVzk6tp4Ug1p
- H2EObrW9EQMTPZfPEfBHUib8vEqOIrTjICCQ/z2cBFZBBsFVqDk6proLLiXSpn/jYqw/
- YV1UVwmuew1SuCdHhZjUesc+7J+BEku3JvtHZpUt2a1NVxPN81EJVjOsA5r4aBc6ud6k
- Q0c/KlCxzht14QhPlax2DUzUipK/rdhTDWvViIBwLt1bhTaz6fev7fbMHdHqbZgXjVJD
- 4Uyw==
+ :reply-to; bh=QQe8el8l0dZggGcXo3+tA+kFE0E6zkvuFFTrX++sfb0=;
+ b=sniL1vUrC60VgzwUYg54eJ7fZPMxU7v6//8XWSrvl7on6j+cktTUwlZNMmFvbkT/Bz
+ DU3CKcq3dMUmVBjmHAz+MbJQGKE3GW2P8dMAvU9CH+TF2V7DuLfLjErALcVkUx0qmjbE
+ 9ke4axpVC3xYSUt46YRJ1brYzsHEeOF7moeJfVbDzgBK3LlBKHpvqvO4wvyxKvCJcRxP
+ ZmNWP4NsNVXSGVCSxxHunwpV58zarTVchoRbkXs8mGRTw7xZ4hQ5veu7A6ISUbQu/PwL
+ JHCFUA1filxHwIixRe00R2kR+fdeOtD7padCxzWZoxOk+PktJXDRyulCfu9tdNDXq77E
+ 9xow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779305183; x=1779909983;
+ d=1e100.net; s=20251104; t=1779305210; x=1779910010;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=+IShrOJdoAnXhE6bNJkPoCD2JYelB8KnTrT0I3ViK0Q=;
- b=d3tifDKH8YL61LTdqEnwtDT1sZY/GYP7CkByOZrKNzOksOdhNpQjW+U+gvOMDB4Rrj
- 9zGgWTpK7nBaljUQZG4Au2D424Ab4nTaAft7+xsvkFTqdm9PJk39At1xf6vgsPRurBk1
- UCReDgAfjtIcEZCfyMe6AAtwSknigC4WiDvB+zASXrwmqaO/R/FHRSnSh28w1hNR9Ee5
- YJBymP8iQT8SrLo8k70sVXmZyC8TNQFBufpVJwiexeiRdebvj/qlqVJDTOrkAojPFklV
- ITFmpuJ0H+oKB2VCXQog83C2xQFqAzfE5CymC3owBObzBgzBLhI30JSsQMQ7CAio4KS9
- u2Wg==
-X-Gm-Message-State: AOJu0Ywr7vbjpnD5nSYkl0Xwj7Kl/r+VUIqpRPfFOsb3uPLOsP5wcQTP
- YCv6Zyr/ABixx3zhnUZvge8AN9fKrtgfpt662/Ev126wrNWxMxwKbisjHFtASRSn0M/rGCXys8+
- sX3yGhLE=
-X-Gm-Gg: Acq92OH823YuTuXVNrGECMDVrYnDHRt2g8c80/9zkIihbr8eYNLE5eW1oXeYfznJ3WI
- i+QEVFI0ROXrf5bjamSSSLJ5X4bKSldjcVNvsxPlAGi+FvG83q59mG2bawLMolf6EZLFMNlbqzb
- P2ohAqhIyxG4w8GXIotR+106qXlyqmFvHcPhLcySwYWoOTaAd8QPmMlBwgiI69qKZtX2m7MvNyk
- F1Bci341yemKZ6XfzEUuiqmDuXC4G+XB5BqexwqqQFZwSRKGQb3QgmFd5fal4nM7EfehXJcw/0O
- mW17Hg/cR5LLk38KiUlwyLW/EvRUk9oqh77nEMZNJTjoJPrC0o9iVvQ1Emz4Ql6CfymXpu8VIYa
- oej+iV2W1OxXVWQxMVn5Z/pn0tlCV8MqK0Cq6r3G6tqO6kJZ5vnkVeRj1MzkgmnHedSKkDdyLA4
- F5rYRTZskiUYuIxl7tjrd9NmR1kHf9l3nHGPbbIyFoif9bw+DoeWJtI9Xryk3wYz6ux3LQriSr
-X-Received: by 2002:a05:600c:138f:b0:488:ae6c:42c6 with SMTP id
- 5b1f17b1804b1-48ff4f4f44dmr308996675e9.14.1779305183141; 
- Wed, 20 May 2026 12:26:23 -0700 (PDT)
+ bh=QQe8el8l0dZggGcXo3+tA+kFE0E6zkvuFFTrX++sfb0=;
+ b=Z4jOPtrTb7RFajhmdQNDJhIA0/zbGbuY0aa6UaL5t7ZfhbuY8l7XUxj66G5eJ/Z6uM
+ XhmkHs6e/AV5IG/T4EZUSapm/E4mvUGrLGQnpic591H7cKLhE/VfzprmZVhJ+MR/WAHT
+ s+3hN1D/t9VveBHY+s88VBWYvHeCH687fSxzuiEf4EOH/V62vArKCy1SAT1/g1PY2wFz
+ pKls58vxHvuL24bBidh38w77pLDKF2M9kFvLwqPqk+08ghg1iyFeWhcGkVkKT6Ic7j1Z
+ CB32PXt/bWBhzWb2AvsGG9vjMaIufAvlgHyQWBbe3hxeZn7UTYpJRwQafQEwWnN6MOM9
+ 9o6Q==
+X-Gm-Message-State: AOJu0Yw0vovUR9y2jojRce6lfT/bTuzV1jtyYfXwDriXS5Ox4u5yDlw2
+ +vUiFst3smRUG0hEINJMM+bLPfFmoWikYXZ6G9YFfRP7pquf5rSDfoIUl+CAxLYJ+V/zf+UcVu+
+ e9UMAUcQ=
+X-Gm-Gg: Acq92OFvRcCvgliYWXdpYLLDl1omjolvRT47xoTqyGpou/6u5KduWwUGvYW6xYgW3Ap
+ y4s8DGR6h7Q51o9ZkCRRjSLUMjx8lQe0rR96hhg+CtuYOGJPB86ZR0rFTrFOgK9xLm5WMzo4MSG
+ ZBP6nZ7rhytXlxDCeXnFGlI9VZI8rbYbGrX9iKJ1X/vcv44gXE5Q6iSnzLJxit6f3Z7RIPKJq8G
+ yDgP2fJvl9jo6tRYqKWrDGW7460XyyeTsmrexiN2oa8IaZgYRHpYnj8a+nQWMMm3Bc36JmkBC2K
+ adxLb6CLj+LIY/R75CJ9ITvVwwrJyB++vIdj4gh87NJTux5E+gCiOlQnpEqRaDrPIBSK8LwlnFH
+ 2mo7DTlZ0jmeaSroknm2yTlq4oeZCeUJU9AR60GZbgihcpgDOrWmEiOmG3u/IyN24cqxDY5aQUW
+ JIlfV4KstqHRopG2jZKZKenof99+z4lW74u77HqRR1eZ4fgMTJlFs/0XE72kyuTs8/Kpm5WWms
+X-Received: by 2002:a05:600c:3104:b0:488:ab1d:dcc5 with SMTP id
+ 5b1f17b1804b1-48fe651b57fmr363829845e9.27.1779305210208; 
+ Wed, 20 May 2026 12:26:50 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da0fe2464sm57109780f8f.32.2026.05.20.12.26.22
+ 5b1f17b1804b1-48febe6faeasm138727165e9.26.2026.05.20.12.26.49
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 20 May 2026 12:26:22 -0700 (PDT)
+ Wed, 20 May 2026 12:26:49 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 23/33] tcg: Introduce tcg_zero_i128()
-Date: Wed, 20 May 2026 21:23:28 +0200
-Message-ID: <20260520192338.40036-24-philmd@linaro.org>
+Subject: [PULL 27/33] target/mips: add Octeon MTM instructions
+Date: Wed, 20 May 2026 21:23:32 +0200
+Message-ID: <20260520192338.40036-28-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520192338.40036-1-philmd@linaro.org>
 References: <20260520192338.40036-1-philmd@linaro.org>
@@ -98,71 +98,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extract tcg_zero_i128() helper for re-use.
+From: James Hilliard <james.hilliard1@gmail.com>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260520121644.10835-1-philmd@linaro.org>
-[rth: Move the function to tcg-op.c]
+Add the MTM0, MTM1, and MTM2 forms that load the Octeon3 multiplier
+operand pair from rs/rt into MPL[x] and MPL[x+3], then clear the partial
+products. For MPL0, also set MPL[1] to zero for backward compatibility
+with Octeon2 VMULU.
+
+Legacy single-source encodings have rt encoded as $zero, so the same
+translator path also preserves the older Octeon behavior.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20260520172313.23777-19-philmd@linaro.org>
 ---
- include/tcg/tcg-op-common.h    |  2 ++
- target/arm/tcg/translate-a64.c |  5 +----
- tcg/tcg-op.c                   | 10 ++++++++++
- 3 files changed, 13 insertions(+), 4 deletions(-)
+ target/mips/tcg/octeon.decode      |  7 +++++++
+ target/mips/tcg/octeon_translate.c | 32 ++++++++++++++++++++++++++++++
+ 2 files changed, 39 insertions(+)
 
-diff --git a/include/tcg/tcg-op-common.h b/include/tcg/tcg-op-common.h
-index e02f209c093..aff99754160 100644
---- a/include/tcg/tcg-op-common.h
-+++ b/include/tcg/tcg-op-common.h
-@@ -18,6 +18,8 @@ TCGv_vaddr tcg_constant_vaddr(uintptr_t val);
- TCGv_vec tcg_constant_vec(TCGType type, unsigned vece, int64_t val);
- TCGv_vec tcg_constant_vec_matching(TCGv_vec match, unsigned vece, int64_t val);
+diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
+index 01ed3b50beb..5139543b153 100644
+--- a/target/mips/tcg/octeon.decode
++++ b/target/mips/tcg/octeon.decode
+@@ -44,6 +44,13 @@ SNE          011100 ..... ..... ..... 00000 101011 @r3
+ SEQI         011100 rs:5 rt:5 imm:s10 101110 &cmpi
+ SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
  
-+TCGv_i128 tcg_zero_i128(void);
++&r2          rs rt
++@r2          ...... rs:5 rt:5 ..... ..... ...... &r2
 +
- TCGv_i32 tcg_temp_new_i32(void);
- TCGv_i64 tcg_temp_new_i64(void);
- TCGv_ptr tcg_temp_new_ptr(void);
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 9a27c4c6ec7..3e3971db3fb 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -4804,13 +4804,10 @@ static bool do_STG(DisasContext *s, arg_ldst_tag *a, bool is_zero, bool is_pair)
++MTM0         011100 ..... ..... 00000 00000 001000 @r2
++MTM1         011100 ..... ..... 00000 00000 001100 @r2
++MTM2         011100 ..... ..... 00000 00000 001101 @r2
++
+ &saa         base rt
+ @saa         ...... base:5 rt:5 ................ &saa
+ SAA          011100 ..... ..... 00000 00000 011000 @saa
+diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
+index 5392fed08a8..26b918d649a 100644
+--- a/target/mips/tcg/octeon_translate.c
++++ b/target/mips/tcg/octeon_translate.c
+@@ -209,3 +209,35 @@ static bool trans_ZCB(DisasContext *ctx, arg_ZCB *a)
  
-     if (is_zero) {
-         TCGv_i64 clean_addr = clean_data_tbi(s, addr);
--        TCGv_i64 zero64 = tcg_constant_i64(0);
--        TCGv_i128 zero128 = tcg_temp_new_i128();
-+        TCGv_i128 zero128 = tcg_zero_i128();
-         int mem_index = get_mem_index(s);
-         MemOp mop = finalize_memop(s, MO_128 | MO_ALIGN);
- 
--        tcg_gen_concat_i64_i128(zero128, zero64, zero64);
--
-         /* This is 1 or 2 atomic 16-byte operations. */
-         tcg_gen_qemu_st_i128(zero128, clean_addr, mem_index, mop);
-         if (is_pair) {
-diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-index d8ae57d6047..971ac2fb359 100644
---- a/tcg/tcg-op.c
-+++ b/tcg/tcg-op.c
-@@ -2475,6 +2475,16 @@ void tcg_gen_concat_i64_i128(TCGv_i128 ret, TCGv_i64 lo, TCGv_i64 hi)
-     tcg_gen_mov_i64(TCGV128_HIGH(ret), hi);
+     return true;
  }
- 
-+TCGv_i128 tcg_zero_i128(void)
++
++static void octeon_zero_partial_product_state(void)
 +{
-+    TCGv_i64 zero64 = tcg_constant_i64(0);
-+    TCGv_i128 zero128 = tcg_temp_new_i128();
-+
-+    tcg_gen_concat_i64_i128(zero128, zero64, zero64);
-+
-+    return zero128;
++    for (int i = 0; i < OCTEON_MULTIPLIER_REGS; i++) {
++        tcg_gen_movi_i64(oct_p[i], 0);
++    }
 +}
 +
- void tcg_gen_mov_i128(TCGv_i128 dst, TCGv_i128 src)
- {
-     if (dst != src) {
++static bool trans_mtm(DisasContext *ctx, arg_r2 *a, unsigned int index)
++{
++    /*
++     * Octeon3 two-source MTM forms load lane index from rs and lane index + 3
++     * from rt.  Legacy one-source forms encode rt as $zero.
++     */
++    gen_load_gpr(oct_mpl[index], a->rs);
++    gen_load_gpr(oct_mpl[index + 3], a->rt);
++
++    /*
++     * Octeon3 clears MPL1 with a write to MPL0 so that VMULU sequences remain
++     * backward compatible with Octeon2.
++     */
++    if (index == 0) {
++        tcg_gen_movi_i64(oct_mpl[1], 0);
++    }
++
++    octeon_zero_partial_product_state();
++    return true;
++}
++
++TRANS(MTM0, trans_mtm, 0);
++TRANS(MTM1, trans_mtm, 1);
++TRANS(MTM2, trans_mtm, 2);
 -- 
 2.53.0
 
