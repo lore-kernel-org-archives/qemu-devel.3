@@ -4,109 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20D53CD5BAA
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 04:42:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D36EECD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 04:42:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPYge-00019p-VG; Wed, 20 May 2026 00:37:41 -0400
+	id 1wPYhe-0001o9-DN; Wed, 20 May 2026 00:38:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wPYgd-000191-Fd
- for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wPYgZ-0003nj-1V
- for qemu-devel@nongnu.org; Wed, 20 May 2026 00:37:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779251851;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Gx5elmJ0/YW5NJGNx916OPYDqI0bw0993vlbxSoa/pE=;
- b=Z0QOforH/0McjhUn67/be5qwORcWOWdocbb2K6PFJKcAS6UzWNIrsQ/j86rOEmEcTQqn2G
- I/fxc/cYdEbr94JYgvUT+uqhXVcLfsQX9GChesUv3MYERfKZSgEOhCThfFIhW04hDPGPDA
- zf8JXlzGlX6BDGsdp5qXcnMYndGXxcg=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-134-ZOwQTup8OOaWnnkEV4URMw-1; Wed, 20 May 2026 00:37:29 -0400
-X-MC-Unique: ZOwQTup8OOaWnnkEV4URMw-1
-X-Mimecast-MFC-AGG-ID: ZOwQTup8OOaWnnkEV4URMw_1779251849
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-48fdad6cce4so17787165e9.1
- for <qemu-devel@nongnu.org>; Tue, 19 May 2026 21:37:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
+ id 1wPYh6-0001JK-0l
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 00:38:08 -0400
+Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
+ id 1wPYh4-0003vf-4E
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 00:38:07 -0400
+Received: by mail-ot1-x334.google.com with SMTP id
+ 46e09a7af769-7e568ab0bc5so4967590a34.0
+ for <qemu-devel@nongnu.org>; Tue, 19 May 2026 21:38:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1779251884; x=1779856684; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=CLZ5sDXdDaSKliQIE/7BOIAK/1AMOLwWSmzx5DcRjQI=;
+ b=GukV0yBIWtc5HpcpGZWQZyQ5CtWPny8CWfj9wcWOxdFOloSxkNA+ySjtoduUr5BAMq
+ DRi5f/I+7Uoi1Bz2NISWhOBJL1rrw0LV24odNxIyNX943DtZ5NLvqQhTOKrsRbCg3ACg
+ lCbmalTdNtHIiNu/OX7pgifBkfff1u1KBcZ2tQWQiRJRJd8xucCnzsO2bvhGhb1HoUxw
+ irbk4hrYKKldkgVsxfZnusjuFthos7aAPaQqYwaQobZk7aVJksMR+7lcrrKtuTcjeCXk
+ PXqPVMaeIttwPXSzWFyqGdonzh915ShvCPDtOg5ARVgIF4B04J0m3eNdJET08lg3Mc4c
+ GB0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779251849; x=1779856649;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Gx5elmJ0/YW5NJGNx916OPYDqI0bw0993vlbxSoa/pE=;
- b=Ym6gStNL0qBwANGDSm7R2c3cDxtsOVisidXllAaXRKlIkJkC+7MKv9PQAdym671DGL
- I9XQrVEE2mH2WNQYUEcy40YhL6hE6FEt6UYJd4BC+3Hcq/E05+Y2X74+zNUJSKzGFSuQ
- msXZ8Idx+D8JLZP/1cM93LZ5fQoJJW6mKm4AwBzO9hwIt8BXa6L3WPH64jw1FCAKw7de
- gYfU5JfIJVnKHiegEqWt6VM9xgso8GeXlvmKoP/L0nfd1pZWtfXNVf9/EwMdnt6MxL+k
- 9dzYpcIRE1ogQn6LVFjbMZbAvDJLRfLPfXJ367o45kxIFcLayWgzvE0exhlLtFVdD8O6
- pZ5A==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9QksYnOOOoELp1hIZ7APH41BAUZLYVLuCFctvINea8SnO43nfHbMEnX81TO3mM8xBI0wMumQ0O3EQD@nongnu.org
-X-Gm-Message-State: AOJu0YxhV0mAEuAZZIhJGPt5Ev5Ai24NjgBFuKSsx64+acfSMuM5qHSI
- g3Ym89jlXAmRgOe18PPsgFWx+6QCPoN0BtObHrshyn+5w0Tpk1zvhueQ7pe4U1+TaljrBARCD7w
- 79nUesfQVPiG7P9xS3i0yT/yTNbUEVE2SqBhaC1dL3WSvuLeyRs5ouDcU
-X-Gm-Gg: Acq92OGVouD8SuuyfKW3ixDPWoZ5sr5i9SAk4SEql9tHSl+YKtuJ8hHNWiPpLZhImUU
- wo7kGwZCiKdRBZNFkQ5I18GEY9ABpfjqg3sy0Dmzpiw56c4BZRQJlwtHBXHBiPfpmVjZBpmLOr2
- laQn18jdlGw6uXJaQvZ+rr0xVfbtgHZA28HHcLGFxy6x+iz2fst9zy9GDaIO9mVRsnVCgqtglOC
- wwltZn9BqzaCe3ovEcjuRr1KZzUKvsnr7e4a/kC95F4RxzddIne1x7W907qeIEduplayhxp6OUq
- KbrafgjTLTnlq8TkYzZt6VhyzMBVsYx27q0lGqdYOl8ZoKfZthJyIoB3wMjcvpUCshFZq0AuPnV
- DNN22xLGaLSM5590RzC9zrYnAp5EL7HrwpIyhBsEDpIoymX0mWQo1eFCotEWbgCLRL80YKw==
-X-Received: by 2002:a05:600c:83c7:b0:48f:e230:29f5 with SMTP id
- 5b1f17b1804b1-48fe53a8eccmr336394325e9.16.1779251848676; 
- Tue, 19 May 2026 21:37:28 -0700 (PDT)
-X-Received: by 2002:a05:600c:83c7:b0:48f:e230:29f5 with SMTP id
- 5b1f17b1804b1-48fe53a8eccmr336393875e9.16.1779251848267; 
- Tue, 19 May 2026 21:37:28 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ d=1e100.net; s=20251104; t=1779251884; x=1779856684;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=CLZ5sDXdDaSKliQIE/7BOIAK/1AMOLwWSmzx5DcRjQI=;
+ b=rzgcTZR584lptYSEnlw/D814GNo9esFmUiqqegBEKWV2Rhu2WBmEmMrWY49Ckf/Krb
+ ojZ0CY7Gh+VefkvUBqhyHvD+iA3RV30CGFnKErbA1cpFOVd0BIf/D+kctk+gDJVTl4AI
+ JkD+6e1FRf29IbqyZk3+0C9ZyLenQXf1CkUL6E+t1eTJk58+AyX2GQGLKTV3pJ06fiSf
+ izgr/cHjU9FCAyNFl2AoRxEX2JmSVVjMJ7TMakZvNP9RdniSCXX9k3QYm2qJI4FXADGc
+ BvqZiYpLwgvP2LfpfRyV6+NBGT7UC5tFeRr4umhuGyIqz5R6WUityUxuQWxxP8ibzJM8
+ u7Lw==
+X-Gm-Message-State: AOJu0YwUbFAg/ZOp2jYuwzq/Ir+Tp3jB/QGdQLPijEOb2hXv4q6pAE+s
+ CjT+ZYLPKeLWo3kgMHrpB7Bkfkr7tuvqVqmelQh72huzEnQO0uDaV2Kp
+X-Gm-Gg: Acq92OGuNVPRxfuihW6a/ZMYVQHvDsH0JpFnwPhQd63BM71KA7XjoJwOYiSESyISb/c
+ MRXGIYRA5Tn1xRSTWkbTuUJ6hY5X8YzgMJLSRw2iIlVNp1UpId3v5WKcUkRn364JWfh6rT2HL+C
+ 9wnsdQtEqFe7bwu0QdDzJEKSaKAI2AGpNFrypEzZnJahTlA9VC6b34jSo+82rBFlVdB2i8gC7Ee
+ r2DeK8AKYzAMoiEO1U1oSKotjQXIMnjXACUwP7o1F2+Ltoai/CqSU9sPCHn+8ZOLIQW4Cj0peZ6
+ K8fsOE+S8otHONtAChWnEPo7kTAyqu0GTAks0z9SmVKqsXGoYf3Iw1cHwJz+eAbwtNR5iN/mzzx
+ j9hNRZRJOUKu231nOUHFkuovXPjMfELRjBCH8yvKcrdiSQVTrLmNZxfafzqiqmY95ctUGfJkkaw
+ W3KMYIo2LZUhgozhQbKL0BX76E511Rwq44QMtuEEl0NhERfR6JH1lAdWP3GpFQxoTacBMRbdVjU
+ t1cJ421upsT3+AnFzD9ucDEivI47atJ+3yB/Fq1hXOMn6xRAnBeW5uSU4QjvwNFE6uXM8QDPxIE
+ K54=
+X-Received: by 2002:a05:6830:e03:b0:7dc:e059:c25d with SMTP id
+ 46e09a7af769-7e3f0730079mr10727523a34.0.1779251884379; 
+ Tue, 19 May 2026 21:38:04 -0700 (PDT)
+Received: from mac.localdomain (184-96-146-19.hlrn.qwest.net. [184.96.146.19])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fe4c88495sm362214585e9.4.2026.05.19.21.37.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 May 2026 21:37:27 -0700 (PDT)
-Message-ID: <f74464a4-ca5c-42ae-9dd2-16a24a568b8a@redhat.com>
-Date: Wed, 20 May 2026 06:37:26 +0200
+ 46e09a7af769-7e55bc4f04fsm11574634a34.27.2026.05.19.21.38.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 19 May 2026 21:38:03 -0700 (PDT)
+From: James Hilliard <james.hilliard1@gmail.com>
+Date: Tue, 19 May 2026 22:37:36 -0600
+Subject: [PATCH v10 42/45] target/mips: decode Octeon CHORD and LLM COP2
+ selectors
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/7] hw/arm/smmuv3: Set default ats, ril, ssidsize, oas
- to auto
-Content-Language: en-US
-To: Nathan Chen <nathanc@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Matt Ochs <mochs@nvidia.com>,
- Nicolin Chen <nicolinc@nvidia.com>,
- Shameer Kolothum <skolothumtho@nvidia.com>
-References: <20260512193520.3109172-1-nathanc@nvidia.com>
- <20260512193520.3109172-7-nathanc@nvidia.com>
- <acd61fd5-a0f8-41f9-9144-d6889d6deaf0@redhat.com>
- <bdc232c5-4409-4828-826d-988a620a5d21@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <bdc232c5-4409-4828-826d-988a620a5d21@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260519-mips-octeon-missing-insns-v2-v10-42-306f9edfe15b@gmail.com>
+References: <20260519-mips-octeon-missing-insns-v2-v10-0-306f9edfe15b@gmail.com>
+In-Reply-To: <20260519-mips-octeon-missing-insns-v2-v10-0-306f9edfe15b@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Aurelien Jarno <aurelien@aurel32.net>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>, 
+ James Hilliard <james.hilliard1@gmail.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+X-Mailer: b4 0.15.2
+Received-SPF: pass client-ip=2607:f8b0:4864:20::334;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-ot1-x334.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,143 +108,101 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Nathan,
+Add explicit decodetree entries and translator bindings for the Octeon
+CHORD and sparse LLM COP2 selectors.  CHORD and LLM use their own COP2
+selector window rather than the crypto engine windows covered by the
+preceding decode patches.
 
-On 5/19/26 11:04 PM, Nathan Chen wrote:
->
->
-> On 5/19/2026 8:59 AM, Eric Auger wrote:
->>
->> On 5/12/26 9:35 PM, Nathan Chen wrote:
->>> From: Nathan Chen<nathanc@nvidia.com>
->>>
->>> Set the default value of ATS, RIL, SSIDSIZE, and OAS to auto, in order
->>> to match the host IOMMU properties when accel=on.
->>>
->>> If accel=off and these property values are set to auto, the default
->>> property values defined in smmuv3_init_id_regs() for OAS and RIL will
->>> remain unchanged, while SSIDSIZE and ATS values will remain initialized
->>> at 0.
->>>
->>> Introduce a new compat for the changed defaults.
->>>
->>> Signed-off-by: Nathan Chen<nathanc@nvidia.com>
->>> ---
->>>   hw/arm/smmuv3.c   | 23 +++++++++++++++--------
->>>   hw/core/machine.c |  5 +++++
->>>   2 files changed, 20 insertions(+), 8 deletions(-)
->>>
->>> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
->>> index 31c2eec2f4..665e6a2538 100644
->>> --- a/hw/arm/smmuv3.c
->>> +++ b/hw/arm/smmuv3.c
->>> @@ -2129,12 +2129,19 @@ static const Property smmuv3_properties[] = {
->>>       DEFINE_PROP_BOOL("accel", SMMUv3State, accel, false),
->>>       /* GPA of MSI doorbell, for SMMUv3 accel use. */
->>>       DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
->>> +    /*
->>> +     * AUTO values for accel=off will resolve to:
->>> +     * ril: on
->>> +     * ats: off
->>> +     * oas: 44
->>> +     * ssidsize: 0
->>> +     */
->>>       /* RIL can be turned off for accel cases */
->>> -    DEFINE_PROP_ON_OFF_AUTO("ril", SMMUv3State, ril, ON_OFF_AUTO_ON),
->>> -    DEFINE_PROP_ON_OFF_AUTO("ats", SMMUv3State, ats, ON_OFF_AUTO_OFF),
->>> -    DEFINE_PROP_OAS_MODE("oas", SMMUv3State, oas, OAS_MODE_44),
->>> +    DEFINE_PROP_ON_OFF_AUTO("ril", SMMUv3State, ril,
->>> ON_OFF_AUTO_AUTO),
->>> +    DEFINE_PROP_ON_OFF_AUTO("ats", SMMUv3State, ats,
->>> ON_OFF_AUTO_AUTO),
->>> +    DEFINE_PROP_OAS_MODE("oas", SMMUv3State, oas, OAS_MODE_AUTO),
->>>       DEFINE_PROP_SSIDSIZE_MODE("ssidsize", SMMUv3State, ssidsize,
->>> -                              SSID_SIZE_MODE_0),
->>> +                              SSID_SIZE_MODE_AUTO),
->>>   };
->>>     static void smmuv3_instance_init(Object *obj)
->>> @@ -2162,20 +2169,20 @@ static void smmuv3_class_init(ObjectClass
->>> *klass, const void *data)
->>>           "configured in nested mode for vfio-pci dev assignment");
->>>       object_class_property_set_description(klass, "ril",
->>>           "Enable/disable range invalidation support (for accel=on). "
->>> -        "Valid values are on, off, and auto. Defaults to on. "
->>> +        "Valid values are on, off, and auto. Defaults to auto. "
->>>           "Any attempt to turn it 'on' while the host does not
->>> support "
->>>           "it would fail.");
->>>       object_class_property_set_description(klass, "ats",
->>>           "Enable/disable ATS support (for accel=on). "
->>> -        "Valid values are on, off, and auto. Defaults to off. "
->>> +        "Valid values are on, off, and auto. Defaults to auto. "
->>>           "Please ensure host platform supports ATS before setting it "
->>>           "to on.");
->>>       object_class_property_set_description(klass, "oas",
->>>           "Set Output Address Size in bits (for accel=on). "
->>> -        "Valid values are 44, 48, and auto. Defaults to 44 bits.");
->>> +        "Valid values are 44, 48, and auto. Defaults to auto.");
->> not really related to this patch but I notice that we do not have any
->> "Please ensure host platform supports..." statement as opposed to
->> previous props.
->> While some host requirements are needed to be statistied too.
->>
->> smmuv3-accel.c:    if (FIELD_EX32(info->idr[5], IDR5, OAS) <
->> smmuv3-accel.c:                FIELD_EX32(s->idr[5], IDR5, OAS)) {
->>
->>>       object_class_property_set_description(klass, "ssidsize",
->>>           "Set number of bits used to represent SubstreamIDs (SSIDs). "
->>> -        "Valid values are 0-20 and auto. Defaults to 0. "
->>> +        "Valid values are 0-20 and auto. Defaults to auto. "
->>>           "A value of N allows SSIDs in the range [0 .. 2^N - 1]. "
->>>           "A value of 0 disables SubstreamID support. A value greater "
->>>           "than 0 is required to enable PASID support.");
->> same here.
->>
-> Got it, I will update with host requirement guidance for OAS and
-> SSIDSIZE on the next refresh.
->
->> smmuv3-accel.c:        s->idr[1] = FIELD_DP32(s->idr[1], IDR1, SSIDSIZE,
->> smmuv3-accel.c:                               FIELD_EX32(info->idr[1],
->> IDR1, SSIDSIZE));
->>
->> Also it is not written (for accel=on)
-> I can reword the accel section to something like:
-> "Enable SMMUv3 accelerator support. Allows host SMMUv3 to be
-> configured in nested mode for vfio-pci dev assignment. Please ensure
-> the host SMMUv3 supports hardware-accelerated VFIO-PCI device
-> assignment before enabling."
->
-> Should I create a new patch for this update to the accel guidance or
-> consolidate into the next refresh of this current patch? 
-Yes maybe add another patch that improves the existing doc
+Finish the explicit COP2 selector decode by adding the CP2_Undef fallback
+so unknown Octeon COP2 selectors raise the expected coprocessor-unusable
+exception instead of silently taking a generic path.
 
-Eric
->
-> Thanks,
-> Nathan
->
->>> diff --git a/hw/core/machine.c b/hw/core/machine.c
->>> index 63baff859f..3339da99ee 100644
->>> --- a/hw/core/machine.c
->>> +++ b/hw/core/machine.c
->>> @@ -38,9 +38,14 @@
->>>   #include "hw/virtio/virtio-iommu.h"
->>>   #include "hw/acpi/generic_event_device.h"
->>>   #include "qemu/audio.h"
->>> +#include "hw/arm/smmuv3.h"
->>>     GlobalProperty hw_compat_11_0[] = {
->>>       { "chardev-vc", "encoding", "cp437" },
->>> +    { TYPE_ARM_SMMUV3, "ats", "off" },
->>> +    { TYPE_ARM_SMMUV3, "ril", "on" },
->>> +    { TYPE_ARM_SMMUV3, "ssidsize", "0" },
->>> +    { TYPE_ARM_SMMUV3, "oas", "44" },
->>>   };
->>>   const size_t hw_compat_11_0_len = G_N_ELEMENTS(hw_compat_11_0);
->>>   
->
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+---
+ target/mips/tcg/octeon.decode      | 14 ++++++++++++++
+ target/mips/tcg/octeon_translate.c | 13 +++++++++++++
+ 2 files changed, 27 insertions(+)
+
+diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
+index cd4fc34d26..0ff8c0d7cd 100644
+--- a/target/mips/tcg/octeon.decode
++++ b/target/mips/tcg/octeon.decode
+@@ -160,6 +160,9 @@ LDX          011111 ..... ..... ..... 01000 001010 @lx
+     CVM_MF_GFM_RESINP0                   010010 00001 rt:5 0000 0010 0101 1010 &cp2
+     CVM_MF_GFM_RESINP1                   010010 00001 rt:5 0000 0010 0101 1011 &cp2
+     CVM_MF_GFM_POLY                      010010 00001 rt:5 0000 0010 0101 1110 &cp2
++    CVM_MF_CHORD                         010010 00001 rt:5 0000 0100 0000 0000 &cp2
++    CVM_MF_LLM_DATA0                     010010 00001 rt:5 0000 0100 0000 0010 &cp2
++    CVM_MF_LLM_DATA1                     010010 00001 rt:5 0000 0100 0000 1010 &cp2
+     CVM_MT_HSH_DAT0                      010010 00101 rt:5 0000 0000 0100 0000 &cp2
+     CVM_MT_HSH_DAT1                      010010 00101 rt:5 0000 0000 0100 0001 &cp2
+     CVM_MT_HSH_DAT2                      010010 00101 rt:5 0000 0000 0100 0010 &cp2
+@@ -253,6 +256,16 @@ LDX          011111 ..... ..... ..... 01000 001010 @lx
+     CVM_MT_SHA3_XORDAT15                 010010 00101 rt:5 0000 0010 1100 1111 &cp2
+     CVM_MT_SHA3_XORDAT16                 010010 00101 rt:5 0000 0010 1101 0000 &cp2
+     CVM_MT_SHA3_XORDAT17                 010010 00101 rt:5 0000 0010 1101 0001 &cp2
++    CVM_MT_LLM_READ_ADDR0                010010 00101 rt:5 0000 0100 0000 0000 &cp2
++    CVM_MT_LLM_WRITE_ADDR0               010010 00101 rt:5 0000 0100 0000 0001 &cp2
++    CVM_MT_LLM_DATA0                     010010 00101 rt:5 0000 0100 0000 0010 &cp2
++    CVM_MT_LLM_READ64_ADDR0              010010 00101 rt:5 0000 0100 0000 0100 &cp2
++    CVM_MT_LLM_WRITE64_ADDR0             010010 00101 rt:5 0000 0100 0000 0101 &cp2
++    CVM_MT_LLM_READ_ADDR1                010010 00101 rt:5 0000 0100 0000 1000 &cp2
++    CVM_MT_LLM_WRITE_ADDR1               010010 00101 rt:5 0000 0100 0000 1001 &cp2
++    CVM_MT_LLM_DATA1                     010010 00101 rt:5 0000 0100 0000 1010 &cp2
++    CVM_MT_LLM_READ64_ADDR1              010010 00101 rt:5 0000 0100 0000 1100 &cp2
++    CVM_MT_LLM_WRITE64_ADDR1             010010 00101 rt:5 0000 0100 0000 1101 &cp2
+     CVM_MT_CRC_WRITE_LEN                 010010 00101 rt:5 0001 0010 0000 0010 &cp2
+     CVM_MT_CRC_WRITE_DWORD               010010 00101 rt:5 0001 0010 0000 0111 &cp2
+     CVM_MT_CRC_WRITE_VAR                 010010 00101 rt:5 0001 0010 0000 1000 &cp2
+@@ -287,4 +300,5 @@ LDX          011111 ..... ..... ..... 01000 001010 @lx
+     CVM_MT_HSH_STARTSHA512               010010 00101 rt:5 0100 0010 0100 1111 &cp2
+     CVM_MT_GFM_XORMUL1                   010010 00101 rt:5 0100 0010 0101 1101 &cp2
+   ]
++  CP2_Undef                              010010 ----- ----- ---- ---- ---- ----
+ }
+diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
+index 0037bd02a8..daaf220a40 100644
+--- a/target/mips/tcg/octeon_translate.c
++++ b/target/mips/tcg/octeon_translate.c
+@@ -180,6 +180,9 @@ CP2_MF_I64(CVM_MF_GFM_MUL1, gfm_mul[1]);
+ CP2_MF_I64(CVM_MF_GFM_RESINP0, gfm_resinp[0]);
+ CP2_MF_I64(CVM_MF_GFM_RESINP1, gfm_resinp[1]);
+ CP2_MF_U16(CVM_MF_GFM_POLY, gfm_poly);
++CP2_MF_I64(CVM_MF_CHORD, chord);
++CP2_MF_I64(CVM_MF_LLM_DATA0, llm_data[0]);
++CP2_MF_I64(CVM_MF_LLM_DATA1, llm_data[1]);
+ 
+ CP2_MF_HELPER(CVM_MF_CRC_IV_REFLECT, crc_iv_reflect);
+ CP2_MF_HELPER(CVM_MF_SHA3_DAT24, sha3_dat24);
+@@ -247,6 +250,8 @@ CP2_MT_I64(CVM_MT_GFM_RESINP0, gfm_resinp[0]);
+ CP2_MT_I64(CVM_MT_GFM_RESINP1, gfm_resinp[1]);
+ CP2_MT_HELPER(CVM_MT_GFM_XOR0, gfm_xor0);
+ CP2_MT_U16(CVM_MT_GFM_POLY, gfm_poly);
++CP2_MT_I64(CVM_MT_LLM_DATA0, llm_data[0]);
++CP2_MT_I64(CVM_MT_LLM_DATA1, llm_data[1]);
+ CP2_MT_U8(CVM_MT_CRC_WRITE_LEN, crc_len);
+ CP2_MT_U32(CVM_MT_CRC_WRITE_POLYNOMIAL, crc_poly);
+ CP2_MT_U32(CVM_MT_CRC_WRITE_POLYNOMIAL_REFLECT, crc_poly);
+@@ -335,6 +340,14 @@ CP2_MT_HELPER(CVM_MT_HSH_STARTMD5, hsh_startmd5);
+ CP2_MT_HELPER(CVM_MT_HSH_STARTSHA256, hsh_startsha256);
+ CP2_MT_HELPER(CVM_MT_HSH_STARTSHA, hsh_startsha);
+ CP2_MT_HELPER(CVM_MT_HSH_STARTSHA512, hsh_startsha512);
++CP2_MT_HELPER(CVM_MT_LLM_READ_ADDR0, llm_read_addr0);
++CP2_MT_HELPER(CVM_MT_LLM_WRITE_ADDR0, llm_write_addr0);
++CP2_MT_HELPER(CVM_MT_LLM_READ64_ADDR0, llm_read64_addr0);
++CP2_MT_HELPER(CVM_MT_LLM_WRITE64_ADDR0, llm_write64_addr0);
++CP2_MT_HELPER(CVM_MT_LLM_READ_ADDR1, llm_read_addr1);
++CP2_MT_HELPER(CVM_MT_LLM_WRITE_ADDR1, llm_write_addr1);
++CP2_MT_HELPER(CVM_MT_LLM_READ64_ADDR1, llm_read64_addr1);
++CP2_MT_HELPER(CVM_MT_LLM_WRITE64_ADDR1, llm_write64_addr1);
+ 
+ static bool trans_BBIT(DisasContext *ctx, arg_BBIT *a)
+ {
+
+-- 
+2.54.0
 
 
