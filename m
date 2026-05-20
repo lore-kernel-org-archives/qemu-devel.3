@@ -4,105 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6106CD5BAA
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 18:34:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6D5FCD5BAA
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 18:35:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPlkM-0007lJ-1N; Wed, 20 May 2026 14:34:22 -0400
+	id 1wPldI-0006K8-KE; Wed, 20 May 2026 14:27:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
- id 1wPlkJ-0007gA-At; Wed, 20 May 2026 14:34:20 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
- id 1wPlkG-0004rl-3V; Wed, 20 May 2026 14:34:19 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64KHpFj51950620; Wed, 20 May 2026 18:34:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=ZgBwAXr8emsaabnntqaPrgAxKnEboW2/3RRBNALB2
- w8=; b=EVBj9tZhKavPo1QPLPRCxRMHgnmfkJvTM1zX4S+6Qm+yINU7BZFacmSWN
- bdffMQG0THtujjLnRB2myBnbqXZAJs9jvyMGP6hZs4pTeu92CdnsXDazdPgrwJ4C
- IjD8gd5Vuu0rWPmmpEwXKub9jeOpc97xIitcbo9UWBchkRW7AYAMb7yAdXeZGBpq
- W3j3TJ+Wb3WWlWtlyXnXcB56ble0iJ1cpKkydgZj9EmzwF7wN48zkBaPdQDDQLDz
- DaJAgNG7VBthyh1MA8nEqpTozVmI1YwM5JkhsHLeqVdeLqLZC3fxpk7cFdRVFh+P
- P9PjvvGiY75f3+jt+B9FQ6fJw1PBg==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6h88jdmf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 May 2026 18:34:10 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64KIO6oG004654;
- Wed, 20 May 2026 18:34:09 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e72wq8u4e-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 May 2026 18:34:09 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64KIY8Or23986846
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 20 May 2026 18:34:08 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5DE4258053;
- Wed, 20 May 2026 18:34:08 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B931D58043;
- Wed, 20 May 2026 18:34:07 +0000 (GMT)
-Received: from IBM-GLTZVH3.atx-us.ibm.com (unknown [9.16.58.46])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 20 May 2026 18:34:07 +0000 (GMT)
-From: Jaehoon Kim <jhkim@linux.ibm.com>
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
-Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, cohuck@redhat.com,
- Jaehoon Kim <jhkim@linux.ibm.com>
-Subject: [PATCH v1] hw/s390x/ccw: Mark virtio-pci disable-legacy property as
- optional
-Date: Wed, 20 May 2026 13:33:58 -0500
-Message-ID: <20260520183403.223983-1-jhkim@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wPlcN-0004Jt-50
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 14:26:08 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wPlcE-000288-Qv
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 14:26:04 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-c8016d642b2so2669966a12.0
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 11:25:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779301556; x=1779906356; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mgEG0/OuigOMwClChXrRoaFDD6e1qpvZV0h5+lZSYqk=;
+ b=xxeVcUM4mHFMI3R0Ye5OeymKJH/NC/S4I8vCHkFB3hBaGty99H2WkIXErYA02dA0dc
+ Jes6P8U0ExXmv+AmS4L9GywgcakwoEBYco+33CVrqkRY6cvXeL6tOmd1pA4rMGCE6oAk
+ tAO5ALZoOAjh3SD9blSBwLePvoitPEyKQ8tuPD43dTSudO/FmZupf9j2gbq+Aeu5Ncr+
+ 5MUMJNBS9c7/md26EHLwqrMVrB0ReX/Mv/vkhvFPx40SVcS2E2heYBTTxhxn41P71/g3
+ wgKWTLARh/6/eumG2hrwTgLc6ic5fA+FiT10DmoJtXG8PXvOUC3+jzpwOUA1ejszV16P
+ L0aA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779301556; x=1779906356;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=mgEG0/OuigOMwClChXrRoaFDD6e1qpvZV0h5+lZSYqk=;
+ b=tQWFnFKyu4yfaAFSlBzovs8TG5Mx1+begoHf0TkBViQ3dg8bdTngCinM8O2YGqWurU
+ rmQrUr0Ai1uddVJx5CNmTB+2P4jB6vfB7Wx6/YBXb9J9ir/9f3igngXtD9jcTNWBFzdy
+ MvuyT8pzzYTblmzxC3QNbndTPwf1ws9W8dHJra7amVNTeQZrnIxYwCnYbMY5TmBOP8iy
+ M5+fZmpPZq7OCk/9JlMj5xCxG6TlxPtpbK0EfOWadI/jPt51x46XPKAoJGpQxdfPakIi
+ l4m92nSRSEYujWrlr45deGsuQJDfdkL+zybhHCWWdoIjNceAKZCnanhRn97yf7uzlNnf
+ S8aw==
+X-Gm-Message-State: AOJu0YxiSpAG5i04c01U8falfYFdgE4iN9YvvCmrEtijn5niC6V7hXWD
+ tN64FH5cG+HWkH9SS9Sx0JP4iHL7u6lpJO9eX84tpNakB+jbRiKDKL/GmN/4XqnrqqjbAXOwl2v
+ y1HcC7I8=
+X-Gm-Gg: Acq92OHdiF3rGFsXTIfKJl+1fr4AFoFTQGkHxbnkRptcD8xpQia/f1ZP5CTkYnJb8Fs
+ KIhEMmGpMuFhLoKmKjrDCwb6limrALe/FPHC66QC2/GNUgRpSvFiBi6oK4YySSMMm4rcZiEpStE
+ rFcP0RvjRygzFvaso2mcQBW56BEl/5eQt5v2/3M+SqHOKnXCYmd8BksTw1Z8GoqlOSnxM+WiJlp
+ lsXYlHdZm1gOsRM9pADU1tb3U76Inn+Cl72itJdX0lJTVhtGjKs561xBztX4r4e5frqAK/c7VEd
+ H0qt/mufyMsgquGdle3V+aNZ0y/ZK0pQ0zek/Mkzq0tuuZXPvN9+519LZ0SFiHQiCZrbc0RrdHr
+ 3mE1KifQPaa8iQFzD3W4UcW0mZYYkqoQ/6dsZd9pASfANOsDjlbxEgEHunW8v0l48W0dGFxalLD
+ 0QtnWBq7gsZ3DY9AAKQ8UuUbzm2htV
+X-Received: by 2002:a17:902:fc50:b0:2bc:977b:846d with SMTP id
+ d9443c01a7336-2be9d41df3dmr5381665ad.5.1779301556085; 
+ Wed, 20 May 2026 11:25:56 -0700 (PDT)
+Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2bd5c0605ddsm217413925ad.32.2026.05.20.11.25.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 20 May 2026 11:25:55 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+Subject: [PATCH v6 56/64] target/arm: Enable FEAT_FP8DOT2,
+ FEAT_SSVE_FP8DOT2 for -cpu max
+Date: Wed, 20 May 2026 11:22:05 -0700
+Message-ID: <20260520182213.872945-57-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260520182213.872945-1-richard.henderson@linaro.org>
+References: <20260520182213.872945-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: o-OA1ISbHLTb2-Dqlc91OITyHswAeP80
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDE3NyBTYWx0ZWRfXy0MOogU17Xx0
- wsC+mOZzqbdt2WJA3eIPwd9mPIkbm5sfro6K6nDl68URoAbJJi0R6E2wcyoxDt1VNLnxCdeHmQD
- 6sGDtXo/kbhG2/DGwzZXXH9fJkkz6lq5ZfbAp7PM0ax18PbQy6xeWiWCI27u0tnHBWkbbPX/5JF
- 9IeQA9dRCRC0u+atUEfWakD8hFFyAWys2vH1JhZpn0NAmLf6uSqJzzB1cZ+Hi3hE393nGsYabn2
- xG1O/Hv2u6l3WGRactnF0Wu+F5Ak6NZboDvrzq1GPK8Tnt5xb3kRDbb0Q9PtUz2Z+m6NK1wrFQo
- dVdWcj7uIjdCGbjGld7o/bp02utGqfTje6L90vuXrs8sxP4iiKSo5Vp+wAJeBVJxrpsHhiUPVqq
- Vso+U4eT5GiFb3vR6n6+XEHCn5eEjY5WJr6Hdarlu296/sONyvePWR8GwAnWYY/GI/reNcz3utw
- sK5h6Ksc65rrQ30sQcg==
-X-Proofpoint-GUID: o-OA1ISbHLTb2-Dqlc91OITyHswAeP80
-X-Authority-Analysis: v=2.4 cv=apyCzyZV c=1 sm=1 tr=0 ts=6a0dfea2 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=viQzzXmSu9F1O3B2SAwA:9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-20_03,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 lowpriorityscore=0 priorityscore=1501 impostorscore=0
- bulkscore=0 suspectscore=0 adultscore=0 spamscore=0 phishscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
- definitions=main-2605200177
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jhkim@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,50 +100,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The s390-ccw-virtio-11.0 compatibility property for TYPE_VIRTIO_PCI
-"disable-legacy" causes QEMU to abort when instantiating
-vhost-user-fs-pci devices:
-
-  Unexpected error in object_property_find_err() at
-  ../qom/object.c:1284:
-  qemu-system-s390x: -device vhost-user-fs-pci: can't apply
-  global virtio-pci.disable-legacy=off: Property
-  'vhost-user-fs-pci.disable-legacy' not found
-
-The issue occurs because some vhost-user devices like
-vhost-user-fs-pci only implement the non-transitional variant
-and do not define a generic device type. Non-transitional
-devices have disable-legacy hardcoded to "on" and do not
-expose it as a property, while only generic device types have
-the "disable-legacy" property. This affects users running
-older machine versions (11.0 and earlier) even when using the
-latest QEMU version.
-
-Mark the global property as optional so it only applies to
-devices that actually have the property, allowing vhost-user
-devices without a generic variant to be instantiated
-successfully on older machine versions.
-
-Fixes: 26103c13cff0 ("hw/s390x/ccw: Disable legacy virtio-pci by default (v11.1+)")
-Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/s390x/s390-virtio-ccw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/arm/tcg/cpu64.c        | 2 ++
+ docs/system/arm/emulation.rst | 2 ++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index 4d35f9b10b..25a9fa4955 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -946,7 +946,7 @@ static void ccw_machine_11_0_class_options(MachineClass *mc)
-      * keep legacy virtio-pci enabled.
-      */
-     static GlobalProperty compat[] = {
--        { TYPE_VIRTIO_PCI, "disable-legacy", "off" },
-+        { TYPE_VIRTIO_PCI, "disable-legacy", "off", .optional = true },
-     };
-     ccw_machine_11_1_class_options(mc);
-     compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index 6dec7e045d..a43b6367a4 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1377,6 +1377,7 @@ void aarch64_max_tcg_initfn(Object *obj)
+     SET_IDREG(isar, ID_AA64DFR0, t);
+ 
+     t = GET_IDREG(isar, ID_AA64SMFR0);
++    t = FIELD_DP64(t, ID_AA64SMFR0, SF8DP2, 1);   /* FEAT_SSVE_FP8DOT2 */
+     t = FIELD_DP64(t, ID_AA64SMFR0, SF8DP4, 1);   /* FEAT_SSVE_FP8DOT4 */
+     t = FIELD_DP64(t, ID_AA64SMFR0, SF8FMA, 1);   /* FEAT_SSVE_FP8FMA */
+     t = FIELD_DP64(t, ID_AA64SMFR0, F32F32, 1);   /* FEAT_SME */
+@@ -1397,6 +1398,7 @@ void aarch64_max_tcg_initfn(Object *obj)
+     t = GET_IDREG(isar, ID_AA64FPFR0);
+     t = FIELD_DP64(t, ID_AA64FPFR0, F8E5M2, 1);   /* FEAT_FP8 */
+     t = FIELD_DP64(t, ID_AA64FPFR0, F8E4M3, 1);   /* FEAT_FP8 */
++    t = FIELD_DP64(t, ID_AA64FPFR0, F8DP2, 1);    /* FEAT_FP8DOT2 */
+     t = FIELD_DP64(t, ID_AA64FPFR0, F8DP4, 1);    /* FEAT_FP8DOT4 */
+     t = FIELD_DP64(t, ID_AA64FPFR0, F8FMA, 1);    /* FEAT_FP8FMA */
+     t = FIELD_DP64(t, ID_AA64FPFR0, F8CVT, 1);    /* FEAT_FP8 */
+diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+index bee4e36dc6..875716d18f 100644
+--- a/docs/system/arm/emulation.rst
++++ b/docs/system/arm/emulation.rst
+@@ -75,6 +75,7 @@ the following architecture extensions:
+ - FEAT_FP (Floating Point extensions)
+ - FEAT_FP16 (Half-precision floating-point data processing)
+ - FEAT_FP8 (FP8 convert instructions)
++- FEAT_FP8DOT2 (FP8 2-way dot product to half-precision instructions)
+ - FEAT_FP8DOT4 (FP8 4-way dot product to single-precision instructions)
+ - FEAT_FP8FMA (FP8 multiply-accumulate to half-precision and single-precision instructions)
+ - FEAT_FPAC (Faulting on AUT* instructions)
+@@ -161,6 +162,7 @@ the following architecture extensions:
+ - FEAT_SME_F64F64 (Double-precision floating-point outer product instructions)
+ - FEAT_SME_I16I64 (16-bit to 64-bit integer widening outer product instructions)
+ - FEAT_SME_LUTv2 (Lookup table instructions with 4-bit indices and 8-bit elements)
++- FEAT_SSVE_FP8DOT2 (SVE2 FP8 2-way dot product to half-precision instructions in Streaming SVE mode)
+ - FEAT_SSVE_FP8DOT4 (SVE2 FP8 4-way dot product to single-precision instructions in Streaming SVE mode)
+ - FEAT_SSVE_FP8FMA (SVE2 FP8 multiply-accumulate to half-precision and single-precision instructions in Streaming SVE mode)
+ - FEAT_SVE (Scalable Vector Extension)
 -- 
-2.54.0
+2.43.0
 
 
