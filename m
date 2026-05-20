@@ -4,118 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91E76CD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 18:33:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DABC2CD5BAA
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 18:33:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPlah-0000sO-TT; Wed, 20 May 2026 14:24:25 -0400
+	id 1wPleV-0008Fh-NZ; Wed, 20 May 2026 14:28:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <faithilikerun@gmail.com>)
- id 1wPlaX-0000gi-Co
- for qemu-devel@nongnu.org; Wed, 20 May 2026 14:24:16 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wPlcQ-0004LQ-NR
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 14:26:11 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <faithilikerun@gmail.com>)
- id 1wPlaT-0001HF-Dg
- for qemu-devel@nongnu.org; Wed, 20 May 2026 14:24:13 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-835c98b659eso4571026b3a.0
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 11:24:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779301447; cv=none;
- d=google.com; s=arc-20240605;
- b=Zgv8tQ/CzKkR21XpFnoEGe6va0Wd7TnLnMMJIv5bpnx6MgHdI+/3+W8MTUDjoscK1T
- EvSKyoRaf+G0rnUjU2gjL63Nz0ic0eAB5gyx5sqmT+pmTT19P/pciARCoHXP07hE6StJ
- H9Y1fdAIgZPdLUQTXXNF6k0M3FXKe7MZzRtITKa23lYowm+Zg0urAK7HXyyRLWEjIcs5
- dpdykhL8SgKP5f1zvTu3lWZ1R0QPbFyblFSCXdL2vyizqrVOfj72/1xmIj9Gc+8fOTX6
- issj8AzajyFy9Wej2BssGokzokXJUNUxqa99lJpH4gXU7OdIU53sp9/ZaxSpb3ajsvtE
- u4uQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=qGALzNLJlMs4qbzH6clgU2otML4AF0niaQtSbCxMFEA=;
- fh=55zC4bIfnth6IrZl+xqOWSwSXzYBzli4CDnNHPiVLzY=;
- b=hZtrF5CTsbw7YcGW4r4Wcvl9jC2/q8ncg0DLBJ/PviakxoUkRoSxvmorao6DRoi+VV
- I+dqQmqx9zvEvon+KEZ6u+5UM+Tk7qc87/q1HtZASdymtAUXagh1qchzhR0L7T4fKYFD
- d6gr3LFJNlFKMJtFBBkKC7YBEfHjUADDTCa6g3ap78xVTwEdFsIdEmCq7VA7ZcxoGV2A
- 7aRLkRu+HJ1Q6DRgjXcHIONWVs5IDq7ryblyMOeU9AS+DNsV6zdfL9vsZnnrjjPfYddb
- xIV/eZyWsgC6XvnQPe2X4rD77eRgjKjRKINIVCwUXMHrHfHAXG6Z0fzcrwCaBgycdcyT
- RW9Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wPlcM-0002FI-Je
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 14:26:10 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2ba0fc8b1f0so35733705ad.3
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 11:26:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779301447; x=1779906247; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1779301560; x=1779906360; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qGALzNLJlMs4qbzH6clgU2otML4AF0niaQtSbCxMFEA=;
- b=QYUp35o0fUfvsvXmHe40/izlNN/LHIxcnjXAmGYhmHaV8I8bP7fuTSNMy8HZMcUPhg
- x59DqJQucUzJF6QW7VevLT5cSCcc+wtOKfo35P3vKN/q0ZlwqMgFkaUmWTZ25pXQ69Le
- 3rTCBCDDPRskYLekS3Ic79jPvzRZfjESnSOapitLQjpHlvktM3XNoo9cGT/Nz/SiqJpZ
- kd96zYK30RRS5AxoDKas1sgg1PvMjmdZYbAPYeSdKoK1FDyk9RQLmPc52QS7QR8euEr9
- 33maQZ7rAmtaR4lWvXyKE2JX/GJWo5w8cx6kv7T96kGyqmhQDI8aFTa8W6nzL+wnbC3a
- r9dA==
+ bh=Oa3HEHnmujGMzO7KfPn4oNwAR87TmXmXSZa7aCzJKgA=;
+ b=HTrue1X2NFEEZYiF7a6KhKHCZpfvunNa/aNrCkPcfizFhhi6pQcSlYmlIxN+cVojwt
+ OYu/P7mI2n1mNfF/wvEnjLXYyJoi5XYUMohcRqnjVlbHEj6AskzAUK1cZSf9m0fcPdFQ
+ 4wvSZkW2gSn7ZzDasFZSzUKBZzdomeW4OgV+I9Uw7CvC4yTY0h9NM9lJQPCIhz6hzxpK
+ RHO2QPtPicAMoAyGkKEf/43sFoJ0J0ODWn/0Weg/AQiz5ft/50QaqSWUBAvqRU38vrqT
+ ido3Ig3KFXoE4ey3eFfRnNoVQelP7BFJmBbeVo0UwWLQWfHadlVE2nMQnIzy78n3IHWe
+ nxMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779301447; x=1779906247;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20251104; t=1779301560; x=1779906360;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=qGALzNLJlMs4qbzH6clgU2otML4AF0niaQtSbCxMFEA=;
- b=MObuBoVA2MeOARO2uN1vWTLeOCwKfPkHFTCRKBzDoskT3N9OAFnAOXldnoLFsOzzh3
- BJAGEhKa0MHWg+F2VxLiFpE4IoPMa5pdRp0pbVQLdEzNhFIjxj+BICNahq20HEW0SKMW
- WGiUUDWdU2bT1db6QR7zL8YklmUrZCUmutdxmXu/CGTA00JKYKR2uE/mH2enw35x5z/t
- flFIGFMsWJrsivp71t5EI3Qvbe9klJIQLq8v633oA2ReHIuX3n78CcpTznkVnKmy4N8C
- A7z5i5s1zXbqHetxaFzKZSPIboplw5jU6gWPFP3TTsnwRK5a4wmFmYl9FOnXaP8TKojm
- tNQw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ84JgFSjJ2DPvO5+pgKp2sr+QD/K+PWIhXxJ6+2BzVP2XEXyvKSUAel7rwn/F2CHsh3Ec/MooOW6Wpf@nongnu.org
-X-Gm-Message-State: AOJu0YxAe5CjHItmmaqWHlj1EMfSHUbh2naERjbCnx5Ct/BZIvlbm3BY
- 2mUBvutmrfA9XHK9jXsdOmYXUdt9iRqYkNqisCfSTvJbuCzw5JEfNY6fxP6SQ4WwdOr7LTvvbLV
- JjyIet8zYkGLymU56q+X0J/N/Ui2Fkn4=
-X-Gm-Gg: Acq92OGy4A6uGT3UEBpucmCuF9+oU6NLdnao7Kl1Sn2e1owAb8cYisdMpfpTvVUUjhS
- ekZMDTfvn/JVPgoSDepQC+EH+ey3O4QYbrY/luYFsOESveW14dpYDKZovK0qKoct6HJENCXqnVK
- qEUcglapAHDfqU+20+8AHX96pgn2KT0phivbkrg/bXqzCY0XAR0nCBAo9NDtYDn3aSxuVdFrAeA
- X1ko7xsOZ3TPEV9SCAjp2i12rcF8oT+6LkACiVYM0QV+kbKGSlcHHlDAmpXQ3CkFZvrDMaXQgPT
- hIfNs7I3Now0tN0L4UuD574yjsakeFjwiH3Qiyrzk04HR1MhyVxBvRsXdx2aai3/APDIRBsyHg=
- =
-X-Received: by 2002:a05:6a00:398a:b0:82f:3a1e:5618 with SMTP id
- d2e1a72fcca58-83f33d07d33mr25395092b3a.22.1779301446948; Wed, 20 May 2026
- 11:24:06 -0700 (PDT)
+ bh=Oa3HEHnmujGMzO7KfPn4oNwAR87TmXmXSZa7aCzJKgA=;
+ b=sDmMteUt0bY8HfR5vhvhUj7fxUntSxiTkv37XFuQGg+L5+Y+C3KTcZCOWodsPSq2hD
+ F/JrEfvzlEu5ccYqImg3LedDuLf0o6bsebfpHgyGApTUPezC37v5OH6vxYhXaAWlgwue
+ ut8rdoQEXFP40tt4RAxsMwvkD0fA9xp89nUSYX1/FbfxjsVp2VZd3EseunLDlnybOZq0
+ 9W0a0mR0cJ9o/CwgEVT5IiWgIVCzxSzY/ZkvqLcbpExsoGXkkO8W4Kf6AadLPUWVlqn8
+ Af6ACAykylX0x8O5J+HWXFa7MeiwHcc66w/QltEp8TuW4KgrneiCvIFOyvPfyXe49TcG
+ n/Yg==
+X-Gm-Message-State: AOJu0YwjQJ5RhxDjcwjRTst3yeTnDkYkL7e7U2+onY7cseM1IypU4JJe
+ p6GKsI2lhkzAR8E+LE7mvguPJe58XmjKNsZ2TeBeQgHgP7+dWcgc6RUIbODY86tiPEl+VfDmx5t
+ mve4d6fU=
+X-Gm-Gg: Acq92OHjYkOuG7nxxxKxQPHRtGrd2a9Wmk6wAlxUmXUNlRvs7nFahPZsWLEcQqU7F5H
+ LYo/s5RPaIkWrnylfy9pk3S/hiHdVk4gVX9FErIFVI4a+hkJBUuOBmALj1YV4uOop/bd3j2XyIZ
+ 9LYpR+PcQn0QpDX7LMbbUAtBNk4Z5jfOEbKdelNhcnvOS0E6y/6pC+bTssqyhsd0TZbYaCruGry
+ vdqZa+qEmfDwewm8q2D3W7x4mcuL7nqeyaSe6Dghy0W6UOXcT4vGX4NokygbFQIjYqnEDgZZiRS
+ bd/qqbeG14grbH+8UNwAH28TV/SlPIRvWdsvO9rLvIq5mBiwyJGKYYUf32gae9KLGcNP0DTSCzf
+ yEvwHq1c6cBuCW1ZuxFGgCSsqSp9Qs46P7uRFyxR1HbKpA5tTRafMKxeVE0A0rzQNiQTdDowbYa
+ sexgw3fzBqFlHXy1RBoTtqNwLs7DkY
+X-Received: by 2002:a17:902:8481:b0:2bc:b80f:677e with SMTP id
+ d9443c01a7336-2bd7e94d29fmr170365135ad.25.1779301560254; 
+ Wed, 20 May 2026 11:26:00 -0700 (PDT)
+Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2bd5c0605ddsm217413925ad.32.2026.05.20.11.25.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 20 May 2026 11:25:59 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+Subject: [PATCH v6 62/64] target/arm: Enable FEAT_F8F16MM for -cpu max
+Date: Wed, 20 May 2026 11:22:11 -0700
+Message-ID: <20260520182213.872945-63-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260520182213.872945-1-richard.henderson@linaro.org>
+References: <20260520182213.872945-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-References: <20260510175059.311814-1-faithilikerun@gmail.com>
- <20260510175059.311814-3-faithilikerun@gmail.com>
- <20260514194906.GC1535937@fedora>
- <CAAAx-8K+12SGZqzpLGsxjsr6iGAHwQu-TUXe6Z6rtZA27OpjrQ@mail.gmail.com>
- <20260519154911.GB119642@fedora>
- <CAAAx-8Jooodx88LTJvVjHQYKj-SgkCxXkMTi1=ZdR3v3cpUvUg@mail.gmail.com>
- <20260520175905.GA384978@fedora>
-In-Reply-To: <20260520175905.GA384978@fedora>
-From: Sam Li <faithilikerun@gmail.com>
-Date: Wed, 20 May 2026 20:23:41 +0200
-X-Gm-Features: AVHnY4KMimpMzcrYFEY2w1xnNCox2TDLpW9okz7nzZhRxYaAL8y516mUb-BhgaI
-Message-ID: <CAAAx-8KMLBn1Fb1pMNHwsPsM2FKbJAhFFRFbjhvTvtbZ5FKfpA@mail.gmail.com>
-Subject: Re: [PATCH v10 2/4] qcow2: add configurations for zoned format
- extension
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: dlemoal@kernel.org, qemu-devel@nongnu.org, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, dmitry.fomichev@wdc.com, 
- Kevin Wolf <kwolf@redhat.com>, cassel@kernel.org,
- Markus Armbruster <armbru@redhat.com>, 
- qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, hare@suse.de,
- Hanna Reitz <hreitz@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=faithilikerun@gmail.com; helo=mail-pf1-x42e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,114 +99,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 20, 2026 at 7:59=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.co=
-m> wrote:
->
-> On Tue, May 19, 2026 at 11:20:18PM +0200, Sam Li wrote:
-> > On Tue, May 19, 2026 at 5:49=E2=80=AFPM Stefan Hajnoczi <stefanha@redha=
-t.com> wrote:
-> > >
-> > > On Mon, May 18, 2026 at 12:21:55AM +0200, Sam Li wrote:
-> > > > On Thu, May 14, 2026 at 9:49=E2=80=AFPM Stefan Hajnoczi <stefanha@r=
-edhat.com> wrote:
-> > > > > On Sun, May 10, 2026 at 07:50:57PM +0200, Sam Li wrote:
-> > > > > > +         48 - 55:  zonedmeta_offset
-> > > > > > +                   The offset of zoned metadata structure in t=
-he contained
-> > > > > > +                   image, in bytes.
-> > > > >
-> > > > > Do you want to say anything about the order in which metadata is
-> > > > > persisted to disk when zones used? I guess the data is written in=
-to the
-> > > > > image file first, then the non-zoned qcow2 L1/L2/refcount metadat=
-a is
-> > > > > updated, and finally the write pointer is written. Write pointers=
- are
-> > > > > not guaranteed to be updated on disk until the write request foll=
-owed by
-> > > > > a flush request are both completed.
-> > > >
-> > > > The current ordering is not like that. The write pointer is written
-> > > > persistently first, then the data writes and the non-zoned qcow2
-> > > > L1/L2/refcount metadata updates. On IO failure, the corresponding
-> > > > write pointer is re-read from disk. As noted in the previous commen=
-t,
-> > > > the wp must be updated when issuing the IO, under the assumption th=
-at
-> > > > the write IO will succeed.
-> > > >
-> > > > The ordering has been settled this way since v7 to deal with
-> > > > concurrent zone append writes. If the wp was only updated after dat=
-a
-> > > > I/O, two concurrent appends would both have read the same wp and tr=
-ied
-> > > > to write to the same position.
-> > > >
-> > > > >
-> > > > > (The idea is that the data must be visible in the qcow2 file befo=
-re it
-> > > > > is safe to update the write pointer. Otherwise a power failure wo=
-uld
-> > > > > leave the file in an inconsistent state where the write pointer h=
-as
-> > > > > advanced but the data was not written.)
-> > > >
-> > > > The crash-consistency is a concern...
-> > >
-> > > Yes, I'm thinking about crash-consistency. The ordering you described
-> > > can result in qcow2 images where the write pointer is ahead of the
-> > > actually written data after a power failure or maybe a QEMU crash.
-> > >
-> > > QEMU's block layer must follow the same data integrity behavior that
-> > > real devices guarantee.
-> >
-> > I may have found a solution to deal with both cases. The fix is to
-> > update wp in memory instead of flushing it before qcow2 metadata and
-> > data writes. The zone append write path would become:
-> >
-> > On submission:
-> >
-> > 1) wp_lock()
-> > 2) Check write alignment
-> > 3) wp_update (in memory)
-> > 4) wp_unlock()
-> > 5) Issue write
-> >
-> > And on completion:
-> > 1) If no error: wp_flush with locks and return success
->
-> The data may not be visible in the qcow2 file yet because qcow2's L1/L2/r=
-efcount
-> cache is not written back to the file until a flush request. I think the
-> write pointer updates should have a dependency on the qcow2 metadata so
-> that write pointers are only written after qcow2 metadata.
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/tcg/cpu64.c        | 1 +
+ docs/system/arm/emulation.rst | 1 +
+ 2 files changed, 2 insertions(+)
 
-Indeed. The qcow2 cache was also my concern. Since wp should be
-persisted after corresponding data is flushed, the cache dependency
-would be qcow2 metadata -> data -> wp. Can we set wp's dependency on
-the data so that wp is written after data is persisted? I might be
-missing something here.
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index 7a47af9f5a..492f70fc8d 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1398,6 +1398,7 @@ void aarch64_max_tcg_initfn(Object *obj)
+     t = GET_IDREG(isar, ID_AA64FPFR0);
+     t = FIELD_DP64(t, ID_AA64FPFR0, F8E5M2, 1);   /* FEAT_FP8 */
+     t = FIELD_DP64(t, ID_AA64FPFR0, F8E4M3, 1);   /* FEAT_FP8 */
++    t = FIELD_DP64(t, ID_AA64FPFR0, F8MM4, 1);    /* FEAT_F8F16MM */
+     t = FIELD_DP64(t, ID_AA64FPFR0, F8MM8, 1);    /* FEAT_F8F32MM */
+     t = FIELD_DP64(t, ID_AA64FPFR0, F8DP2, 1);    /* FEAT_FP8DOT2 */
+     t = FIELD_DP64(t, ID_AA64FPFR0, F8DP4, 1);    /* FEAT_FP8DOT4 */
+diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+index 83967da12d..2580246a1d 100644
+--- a/docs/system/arm/emulation.rst
++++ b/docs/system/arm/emulation.rst
+@@ -66,6 +66,7 @@ the following architecture extensions:
+ - FEAT_EPAC (Enhanced pointer authentication)
+ - FEAT_ETS2 (Enhanced Translation Synchronization)
+ - FEAT_EVT (Enhanced Virtualization Traps)
++- FEAT_F8F16MM (8-bit floating-point matrix multiply-accumulate to half-precision)
+ - FEAT_F8F32MM (8-bit floating-point matrix multiply-accumulate to single-precision)
+ - FEAT_F32MM (Single-precision Matrix Multiplication)
+ - FEAT_F64MM (Double-precision Matrix Multiplication)
+-- 
+2.43.0
 
->
-> See block/qcow2-cache.c and qcow2_cache_set_dependency(). The idea is
-> that one type of cached metadata can set a dependency on another type of
-> cached metadata so that ordering is guaranteed.
-
-Thanks, I'll check it out.
-
->
-> > 2) else, wp_lock()
-> > 3) read_wp (from disk) and use the read wp value as the current wp
-> > 4) wp_unlock()
-> > 5) return IO error
-> >
-> > Sam
-> >
-> > >
-> > > Damien: Do real zoned block devices guarantee that the updated write
-> > > pointer is persisted only after appended data has written been
-> > > persisted?
-> > >
-> > > Stefan
-> >
 
