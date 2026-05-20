@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56BBDCD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 19:26:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2B85CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 19:26:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPmYn-0002pA-Kq; Wed, 20 May 2026 15:26:29 -0400
+	id 1wPmYl-0002Uz-35; Wed, 20 May 2026 15:26:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmYZ-00027U-M5
- for qemu-devel@nongnu.org; Wed, 20 May 2026 15:26:17 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmYT-00022S-4Q
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 15:26:12 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmYV-0002Yw-IL
- for qemu-devel@nongnu.org; Wed, 20 May 2026 15:26:14 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4891e86fabeso70066945e9.1
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 12:26:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPmYQ-0002XZ-4D
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 15:26:08 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4896c22fcbaso44232525e9.0
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 12:26:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779305170; x=1779909970; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779305163; x=1779909963; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=vT462afn82wNhErHYgh3JzlrG5paUe6twTvvhdpnxCU=;
- b=IvcdM5TMpIee1PnFTpUWZ3D6kTNW+AvsDG2T1pEuF0k1136+4ye+0TL3LNmKzAnPt1
- 6lToHO2ramJEAIlHb6LGX5XW5QPpWBn1NY//46up75AbQ+Fj9TfEff+VdeXeQ0qPdicM
- tHarFzpHMfm3R7TIV6jjj6euUAXgiuLLV8JrAYXEwQEgFuy1WKhzkxv119bLKS6wiuFh
- +HepVcn3wELoT5rHXUsLWPm8KxW6BU0/PMTb/0PXbwBoJ8n0P1Wm4UIKdwT5UoD6UksQ
- pIRl9nLNxMNjRlflaABrW9QLQKMmtkgwTgw5HUZkkIt5O/tFB5JqVDK5gwNem575uSIl
- anwg==
+ :reply-to; bh=kBr+LBh4ShdLh2TbYc/Cau75o/rd59lVQzLibQM/zcc=;
+ b=QPZKPmAvHLF4q4POBFvK2nmgoqfOmi7Mg8emINlORB67DZMOvGCJV+V9xK5byrR3HI
+ 0wSf+tOK1ukQOMQqefkttBzcFQZ/nNHjoEyCBuap1/MlPacTQGwGa5veJaVC7wg5dqtW
+ H3MXxumlIX1DzkzzE1BvVcU4vTJ9R/uOCD/nWvdsw4QXKwhpMn9RSxBaoDzmsReoyt6s
+ 1Ezsr59O4N1LQYZ19GR6saDioPiXD9i8MdpjsZ89TndrrlJfnAmouAHYvjldGz0FhAzx
+ VxF5SN9X4f0exKyA2TCeHIBMcOzV7aJZ0F6obeQacWqnD0A+oWm6LPWgDMb5vGEg+TBp
+ 2log==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779305170; x=1779909970;
+ d=1e100.net; s=20251104; t=1779305163; x=1779909963;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=vT462afn82wNhErHYgh3JzlrG5paUe6twTvvhdpnxCU=;
- b=ce7Qad9H1zJpGsjKYWv45fhvmJzDZh4xHvUzHki8I6cVlK7MUj7jB1UDN6mtvmOE8Y
- qqNyQd1kG8to0ccgAApsXR3z/mzq9obBr2EuKWddoJmjhoWBNbzdajXRg3JydVBMRzCe
- tBuP6uhCBkw+i+vv1HgqF0JCEdCvsNN/8f7f/66peW1wVWr8fZWFSeYeKOJrN5kCOnMh
- lqwS/3JpqTq7r28w1sQ7xbX0U62T1T9Uscm4iRW4BIHI+j4BIFdYe1JC7YepJPSG/kIK
- GFyfPYTeID+qf+ay+CsDY6tdn0cjcLCHIOzNNqGfWqSxmvoo+tfu9W5Wpn/7JyU2HJkC
- QxFg==
-X-Gm-Message-State: AOJu0Yw0ZsSnh47sx0qi1fiq5XoHeMDmwMOHtNj3Po9gAa9/zK6BddOa
- mwqFPcu7odMkAuUJDNAiM5RAyYVdgnIGkZe9nTFsBLZh5mFUGCd6lV+kO3F+TdA0JoXdAdlEU4f
- av/OnsOM=
-X-Gm-Gg: Acq92OEcEKDPgPrWM12YVLQBjQfHYuzE0qXOeg4yqJ/4gaftZG7+zXlyNx51pYWJYn6
- uQD3tcuI7FDIzr+yFC52tN/kpNFQOjdx8pgHYXHCiG4qMVbH1+qoJkUiY87otALNQJsn3oUQ//i
- oSNRdXFEX4OPed21hQjSqG4cWEyrUB8HEb6REWO9UCQrXp0sOYF59Hc1B9oO57z/KN7HijX/R5q
- YetP/9M74bZ5l6SEsUQdQG1PXOxGR2RUdmUkUniyIHnxdsLRGO3TERbmKn4nrH4Pe41SLYlMPqj
- gMW33HpjgezuBSpvgeD/d76useIUstg7LjBEPRzrmcr2EheLI9IRYdUXcOO08mhR3X5pqCWUjwQ
- jo1Y/iP3xEFCFfYQTk4iMUg2Zuav/ip/RsvEsqOCLRSq0EzWT4USKXFM5PoDftHK9cUs113cYvg
- FE0KXDnuVnySGnk/r592D64HPa58tdGvQMXFXWGEztlbSNt2LkZwkiFQtmcGiJqVKELsdMRbYz
-X-Received: by 2002:a05:600c:34c3:b0:48f:d0f7:78f1 with SMTP id
- 5b1f17b1804b1-48fe60e4e27mr411195505e9.4.1779305169636; 
- Wed, 20 May 2026 12:26:09 -0700 (PDT)
+ bh=kBr+LBh4ShdLh2TbYc/Cau75o/rd59lVQzLibQM/zcc=;
+ b=sColPAaDi4ICD/48NDK6UWOBJ6eJgop0FSXCB3rJ5w2+Bigg/R9zvyjeOj37vASgt1
+ gmlrq57RDN7bdPKPXGCpFcSktiGEM8rz01hV4Awra/G1T4AAR6KpdIrBNKnQzmZOGZlq
+ NVtGXoapA+6rN861SRR6K8c0/N+eFcygyjIeW+ATv2Y9nkzz564rq0DgwZZkoGqzhvFm
+ u7zalXYxKiK/1UzVyI3a5oJ25zEakd4cb5I+sGaqItlTFR+PNaXV9mydLZHn+3otEgcN
+ IGGL8y+Z4pxzoSGyN/3V5505O460xlaPWNaMUUGLjFIQ+0iBx6IOz0ZSJniyyhJbqQ8b
+ 2oSA==
+X-Gm-Message-State: AOJu0YzodRLVZMmgOGchzmc5RhgHrGkpxO+uOJMV+l4BiDwTX21Yc1qe
+ VAM5q7qUTDXtbWk2TIaeg4lY8t/tXhysKH7JwerPSwgFRIsiyKwFyuTAHnPNeyniR1H/GGhBwLI
+ Amt81mHg=
+X-Gm-Gg: Acq92OGQ6KLczIv1nB0PZYAVRQ6GTSeKcMDclvF0BdE34WV3FereyOE7sgC0FTfWVnY
+ QTvLJwtg4FpqmGzYQay61Sn2i6Vguw/3jspUTy5toSIkC1ky/QpfuJVRf3d0D14u6e7s26dWsG5
+ BUZcD77DHuidrgQwi3W2Ku4d8/zuNzBtlSVoS0+pwjRobEjZefMqejqYYdhI69A2clZFkPBJTxY
+ mLdBI9NPUjAfVj9JgWse5V9tyXTMtljX8zn4CJ7AmH+vYdKzQWT31ZdB+SVElFCZFDSjXPQ+8lz
+ I5enSdH41BaMrU4+48jemqmmcaXrEAaV7TXX4+s76Gnevs11uQdTf8jrBOnPmlOlQ7OAwgGh6Cp
+ lYmlGw+Q55jS8xMv2QHQltZmyChkxx4qaPBeO373G4NHGS4J8Hw75HxtUR7E76FoeB/CPPF21Cv
+ Buc+NuwL6p6fdEHjbe3LaY18PAwASalLZS6p31Y2+uvuoJRad1c/+j9AlQMaMcgwkVIHaNoLyiX
+ rBRxbapyaM=
+X-Received: by 2002:a05:600c:6d2:b0:48f:f199:4c02 with SMTP id
+ 5b1f17b1804b1-48ff1994c86mr202027545e9.9.1779305162912; 
+ Wed, 20 May 2026 12:26:02 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49033d4ad9bsm11053775e9.8.2026.05.20.12.26.08
+ 5b1f17b1804b1-49033d8e24bsm11874915e9.10.2026.05.20.12.26.01
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 20 May 2026 12:26:09 -0700 (PDT)
+ Wed, 20 May 2026 12:26:01 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 21/33] target/mips: add Octeon SAA instruction
-Date: Wed, 20 May 2026 21:23:26 +0200
-Message-ID: <20260520192338.40036-22-philmd@linaro.org>
+Subject: [PULL 20/33] target/mips: add Octeon LWUX instruction
+Date: Wed, 20 May 2026 21:23:25 +0200
+Message-ID: <20260520192338.40036-21-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520192338.40036-1-philmd@linaro.org>
 References: <20260520192338.40036-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,63 +101,43 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: James Hilliard <james.hilliard1@gmail.com>
 
-SAA atomically adds rt to the naturally aligned 32-bit word at base and
-discards the old memory value.
+LWUX performs an indexed unsigned word load from base + index and
+zero-extends the result into rd.
 
-Implement the common SAA/SAAD translator with TCG atomic_fetch_add_i64.
-The MemOp selects the word or doubleword transaction size.  QEMU only has
-one Octeon CPU model today, so keep SAA/SAAD under the existing Octeon
-instruction feature bucket instead of adding a finer-grained Octeon+
-feature bit.
+Add the decode entry and route it through the common indexed-load
+translator with MO_UL.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20260520172313.23777-14-philmd@linaro.org>
+Message-Id: <20260520172313.23777-13-philmd@linaro.org>
 ---
- target/mips/tcg/octeon.decode      |  4 ++++
- target/mips/tcg/octeon_translate.c | 15 +++++++++++++++
- 2 files changed, 19 insertions(+)
+ target/mips/tcg/octeon.decode      | 1 +
+ target/mips/tcg/octeon_translate.c | 1 +
+ 2 files changed, 2 insertions(+)
 
 diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index db7d5f55f0a..d6b241de421 100644
+index 8a755075e8e..db7d5f55f0a 100644
 --- a/target/mips/tcg/octeon.decode
 +++ b/target/mips/tcg/octeon.decode
-@@ -44,6 +44,10 @@ SNE          011100 ..... ..... ..... 00000 101011 @r3
- SEQI         011100 rs:5 rt:5 imm:s10 101110 &cmpi
- SNEI         011100 rs:5 rt:5 imm:s10 101111 &cmpi
- 
-+&saa         base rt
-+@saa         ...... base:5 rt:5 ................ &saa
-+SAA          011100 ..... ..... 00000 00000 011000 @saa
-+
- &lx          base index rd
- @lx          ...... base:5 index:5 rd:5 ...... ..... &lx
- LWX          011111 ..... ..... ..... 00000 001010 @lx
+@@ -50,5 +50,6 @@ LWX          011111 ..... ..... ..... 00000 001010 @lx
+ LHX          011111 ..... ..... ..... 00100 001010 @lx
+ LHUX         011111 ..... ..... ..... 10100 001010 @lx
+ LBUX         011111 ..... ..... ..... 00110 001010 @lx
++LWUX         011111 ..... ..... ..... 10000 001010 @lx
+ LBX          011111 ..... ..... ..... 10110 001010 @lx
+ LDX          011111 ..... ..... ..... 01000 001010 @lx
 diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index 401c4bd14bb..33b45611f20 100644
+index f897b42807b..401c4bd14bb 100644
 --- a/target/mips/tcg/octeon_translate.c
 +++ b/target/mips/tcg/octeon_translate.c
-@@ -168,3 +168,18 @@ TRANS(LHUX, trans_lx, MO_UW);
+@@ -166,4 +166,5 @@ TRANS(LBUX, trans_lx, MO_UB);
+ TRANS(LHX,  trans_lx, MO_SW);
+ TRANS(LHUX, trans_lx, MO_UW);
  TRANS(LWX,  trans_lx, MO_SL);
- TRANS(LWUX, trans_lx, MO_UL);
++TRANS(LWUX, trans_lx, MO_UL);
  TRANS(LDX,  trans_lx, MO_UQ);
-+
-+static bool trans_saa(DisasContext *ctx, arg_saa *a, MemOp mop)
-+{
-+    TCGv_i64 addr = tcg_temp_new_i64();
-+    TCGv_i64 value = tcg_temp_new_i64();
-+    TCGv_i64 old = tcg_temp_new_i64();
-+    MemOp amo = mo_endian(ctx) | mop | MO_ALIGN;
-+
-+    gen_base_offset_addr(ctx, addr, a->base, 0);
-+    gen_load_gpr(value, a->rt);
-+    tcg_gen_atomic_fetch_add_i64(old, addr, value, ctx->mem_idx, amo);
-+    return true;
-+}
-+
-+TRANS(SAA,  trans_saa, MO_32);
 -- 
 2.53.0
 
