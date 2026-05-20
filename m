@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D6AACD5BA4
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 09:19:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9953CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 09:19:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPd3D-0000Vn-Rn; Wed, 20 May 2026 05:17:16 -0400
+	id 1wPd0W-0004gz-6h; Wed, 20 May 2026 05:14:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wPd2I-00074H-PS
- for qemu-devel@nongnu.org; Wed, 20 May 2026 05:16:19 -0400
+ id 1wPd0R-0004gG-T8
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 05:14:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wPd2H-0006Mr-0u
- for qemu-devel@nongnu.org; Wed, 20 May 2026 05:16:18 -0400
+ id 1wPd0K-0005eL-Js
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 05:14:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779268576;
+ s=mimecast20190719; t=1779268455;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TiRGP8c1Dq0aQiPmEyOYNIHy4V+WbpPidZD1+6P+U+Y=;
- b=DKpGUzB3TiveA438z1e9+3ukD1xvrMVEW02DP72t70EHnTgYC2wbdhXExCP0O5RwAhmOkW
- 4COQWc7CZpQjNrJpkXLIU0IS4nijvRnfZOS2w2g5n95Z8p1Sl3xv8pRnYKLnyqBWZlyY6Z
- JD4uvKMSVPD6n75M1TOjKMMpZNMWa4Y=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=bDPJ/rA4TRt7vjgNzC7L2s8kaU1MKdXtrs0Sj3PEP7k=;
+ b=CAnA16ZjjFP/lpHDd56vDVZmZMkR8ssL5tMM1HpKGXpKfsh1Z3U9KfHokUI5iAW+vMq7HZ
+ YWm56e6XXrO5PMpbU35Vryp+LJ/9ySVhKp4lNbenACiyEGP+lhbEHPGGzczCWkJszQW9rl
+ +Pc1KlAXw9ZE+GmHlxANwDzDMAyaMsY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-631-BeNokoD2PbSe446AxVdSZA-1; Wed,
- 20 May 2026 05:16:12 -0400
-X-MC-Unique: BeNokoD2PbSe446AxVdSZA-1
-X-Mimecast-MFC-AGG-ID: BeNokoD2PbSe446AxVdSZA_1779268570
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-635-JTv4NIHEO--gY3jlGInGqg-1; Wed,
+ 20 May 2026 05:14:11 -0400
+X-MC-Unique: JTv4NIHEO--gY3jlGInGqg-1
+X-Mimecast-MFC-AGG-ID: JTv4NIHEO--gY3jlGInGqg_1779268450
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A530618005B8; Wed, 20 May 2026 09:16:10 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A8D4619560A6; Wed, 20 May 2026 09:14:09 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.49.211])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D9D301800347; Wed, 20 May 2026 09:16:05 +0000 (UTC)
+ id B19071800673; Wed, 20 May 2026 09:14:04 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -58,11 +58,10 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  John Snow <jsnow@redhat.com>, John Levon <john.levon@nutanix.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 25/29] qom: move object_set_prop_keyval into object.c
-Date: Wed, 20 May 2026 10:13:47 +0100
-Message-ID: <20260520091351.1160442-26-berrange@redhat.com>
+ "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Subject: [PULL 02/29] crypto: fix client side anonymous TLS credentials
+Date: Wed, 20 May 2026 10:13:24 +0100
+Message-ID: <20260520091351.1160442-3-berrange@redhat.com>
 In-Reply-To: <20260520091351.1160442-1-berrange@redhat.com>
 References: <20260520091351.1160442-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -71,13 +70,14 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,186 +93,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This matches the location of the object_set_props and object_set_propv
-methods, since this method is not inherently tied to the user creatable
-interface. As part of this, object_set_props_from_qdict is also exposed
-as a public API since it is still called from object_interfaces.c.
+The previous refactoring of credential creation failed to allocate
+storage fo the anonymous TLS credentials on the client endpoint.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Fixes: 70f9fd8dbf7233bee497055a9b7825e3729ce853
+Reported-by: Maciej S. Szmigiero <mail@maciej.szmigiero.name>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/qom/object.h    | 47 +++++++++++++++++++++++++++--------------
- qom/object.c            | 36 +++++++++++++++++++++++++++++++
- qom/object_interfaces.c | 36 -------------------------------
- 3 files changed, 67 insertions(+), 52 deletions(-)
+ crypto/tlscredsanon.c               |   2 +
+ tests/unit/test-crypto-tlssession.c | 120 +++++++++++++++++++++++++++-
+ 2 files changed, 121 insertions(+), 1 deletion(-)
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index 822f56c87e..be65acff93 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -748,6 +748,37 @@ bool object_set_props(Object *obj, Error **errp, ...) G_GNUC_NULL_TERMINATED;
-  */
- bool object_set_propv(Object *obj, va_list vargs, Error **errp);
- 
-+/**
-+ * object_set_props_from_qdict:
-+ * @obj: a QOM object
-+ * @qdict: a dictionary with the properties to be set
-+ * @v: a visitor to iterate over @dict
-+ * @errp: pointer to error object
-+ *
-+ * For each key in the dictionary, set the corresponding
-+ * property in @obj.
-+ *
-+ * Returns: %true on success, %false on error.
-+ */
-+bool object_set_props_from_qdict(Object *obj, const QDict *qdict,
-+                                 Visitor *v, Error **errp);
+diff --git a/crypto/tlscredsanon.c b/crypto/tlscredsanon.c
+index 1551382e1f..190c9833a7 100644
+--- a/crypto/tlscredsanon.c
++++ b/crypto/tlscredsanon.c
+@@ -73,6 +73,8 @@ qcrypto_tls_creds_anon_load(QCryptoTLSCredsAnon *creds,
+                                              box->dh_params);
+         }
+     } else {
++        box = qcrypto_tls_creds_box_new_client(GNUTLS_CRD_ANON);
 +
-+/**
-+ * object_set_props_from_keyval:
-+ * @obj: a QOM object
-+ * @qdict: a dictionary with the properties to be set
-+ * @from_json: true if leaf values of @qdict are typed, false if they
-+ * are strings
-+ * @errp: pointer to error object
-+ *
-+ * For each key in the dictionary, parse the value string if needed,
-+ * then set the corresponding property in @obj.
-+ *
-+ * Returns: %true on success, %false on error.
-+ */
-+bool object_set_props_from_keyval(Object *obj, const QDict *qdict,
-+                                  bool from_json, Error **errp);
-+
- /**
-  * object_initialize:
-  * @obj: A pointer to the memory to be used for the object.
-@@ -914,22 +945,6 @@ type_init(do_qemu_init_ ## type_array)
-  */
- bool type_print_class_properties(const char *type);
- 
--/**
-- * object_set_props_from_keyval:
-- * @obj: a QOM object
-- * @qdict: a dictionary with the properties to be set
-- * @from_json: true if leaf values of @qdict are typed, false if they
-- * are strings
-- * @errp: pointer to error object
-- *
-- * For each key in the dictionary, parse the value string if needed,
-- * then set the corresponding property in @obj.
-- *
-- * Returns: %true on success, %false on error.
-- */
--bool object_set_props_from_keyval(Object *obj, const QDict *qdict,
--                                  bool from_json, Error **errp);
--
- /**
-  * object_class_dynamic_cast_assert:
-  * @klass: The #ObjectClass to attempt to cast.
-diff --git a/qom/object.c b/qom/object.c
-index ecae322d2a..3f2569d654 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -23,6 +23,7 @@
- #include "qapi/qobject-input-visitor.h"
- #include "qapi/forward-visitor.h"
- #include "qapi/qapi-builtin-visit.h"
-+#include "qobject/qdict.h"
- #include "qobject/qjson.h"
- #include "qemu/id.h"
- #include "qapi/qmp/qerror.h"
-@@ -838,6 +839,41 @@ bool object_set_propv(Object *obj,
-     return true;
+         ret = gnutls_anon_allocate_client_credentials(&box->data.anonclient);
+         if (ret < 0) {
+             error_setg(errp, "Cannot allocate credentials: %s",
+diff --git a/tests/unit/test-crypto-tlssession.c b/tests/unit/test-crypto-tlssession.c
+index 0d06a6892e..dc7a01bb06 100644
+--- a/tests/unit/test-crypto-tlssession.c
++++ b/tests/unit/test-crypto-tlssession.c
+@@ -24,6 +24,7 @@
+ #include "crypto-tls-psk-helpers.h"
+ #include "crypto/tlscredsx509.h"
+ #include "crypto/tlscredspsk.h"
++#include "crypto/tlscredsanon.h"
+ #include "crypto/tlssession.h"
+ #include "qom/object_interfaces.h"
+ #include "qapi/error.h"
+@@ -190,6 +191,121 @@ static void test_crypto_tls_session_psk(void)
  }
  
-+bool object_set_props_from_qdict(Object *obj, const QDict *qdict,
-+                                 Visitor *v, Error **errp)
+ 
++static QCryptoTLSCreds *test_tls_creds_anon_create(
++    QCryptoTLSCredsEndpoint endpoint)
 +{
-+    ERRP_GUARD();
-+    const QDictEntry *e;
++    Object *parent = object_get_objects_root();
++    Object *creds = object_new_with_props(
++        TYPE_QCRYPTO_TLS_CREDS_ANON,
++        parent,
++        (endpoint == QCRYPTO_TLS_CREDS_ENDPOINT_SERVER ?
++         "testtlscredsserver" : "testtlscredsclient"),
++        &error_abort,
++        "endpoint", (endpoint == QCRYPTO_TLS_CREDS_ENDPOINT_SERVER ?
++                     "server" : "client"),
++        "priority", "NORMAL",
++        NULL
++        );
++    return QCRYPTO_TLS_CREDS(creds);
++}
 +
-+    if (!visit_start_struct(v, NULL, NULL, 0, errp)) {
-+        return false;
-+    }
-+    for (e = qdict_first(qdict); e; e = qdict_next(qdict, e)) {
-+        if (!object_property_set(obj, e->key, v, errp)) {
-+            goto out;
++
++static void test_crypto_tls_session_anon(void)
++{
++    QCryptoTLSCreds *clientCreds;
++    QCryptoTLSCreds *serverCreds;
++    QCryptoTLSSession *clientSess = NULL;
++    QCryptoTLSSession *serverSess = NULL;
++    int channel[2];
++    bool clientShake = false;
++    bool serverShake = false;
++    int ret;
++
++    /* We'll use this for our fake client-server connection */
++    ret = qemu_socketpair(AF_UNIX, SOCK_STREAM, 0, channel);
++    g_assert(ret == 0);
++
++    /*
++     * We have an evil loop to do the handshake in a single
++     * thread, so we need these non-blocking to avoid deadlock
++     * of ourselves
++     */
++    qemu_set_blocking(channel[0], false, &error_abort);
++    qemu_set_blocking(channel[1], false, &error_abort);
++
++    clientCreds = test_tls_creds_anon_create(
++        QCRYPTO_TLS_CREDS_ENDPOINT_CLIENT);
++    g_assert(clientCreds != NULL);
++
++    serverCreds = test_tls_creds_anon_create(
++        QCRYPTO_TLS_CREDS_ENDPOINT_SERVER);
++    g_assert(serverCreds != NULL);
++
++    /* Now the real part of the test, setup the sessions */
++    clientSess = qcrypto_tls_session_new(
++        clientCreds, NULL, NULL,
++        QCRYPTO_TLS_CREDS_ENDPOINT_CLIENT, &error_abort);
++    g_assert(clientSess != NULL);
++
++    serverSess = qcrypto_tls_session_new(
++        serverCreds, NULL, NULL,
++        QCRYPTO_TLS_CREDS_ENDPOINT_SERVER, &error_abort);
++    g_assert(serverSess != NULL);
++
++    /* For handshake to work, we need to set the I/O callbacks
++     * to read/write over the socketpair
++     */
++    qcrypto_tls_session_set_callbacks(serverSess,
++                                      testWrite, testRead,
++                                      &channel[0]);
++    qcrypto_tls_session_set_callbacks(clientSess,
++                                      testWrite, testRead,
++                                      &channel[1]);
++
++    /*
++     * Finally we loop around & around doing handshake on each
++     * session until we get an error, or the handshake completes.
++     * This relies on the socketpair being nonblocking to avoid
++     * deadlocking ourselves upon handshake
++     */
++    do {
++        int rv;
++        if (!serverShake) {
++            rv = qcrypto_tls_session_handshake(serverSess,
++                                               &error_abort);
++            g_assert(rv >= 0);
++            if (rv == QCRYPTO_TLS_HANDSHAKE_COMPLETE) {
++                serverShake = true;
++            }
 +        }
-+    }
-+    visit_check_struct(v, errp);
-+out:
-+    visit_end_struct(v, NULL);
++        if (!clientShake) {
++            rv = qcrypto_tls_session_handshake(clientSess,
++                                               &error_abort);
++            g_assert(rv >= 0);
++            if (rv == QCRYPTO_TLS_HANDSHAKE_COMPLETE) {
++                clientShake = true;
++            }
++        }
++    } while (!clientShake || !serverShake);
 +
-+    return *errp == NULL;
++
++    /* Finally make sure the server & client validation is successful. */
++    g_assert(qcrypto_tls_session_check_credentials(serverSess,
++                                                   &error_abort) == 0);
++    g_assert(qcrypto_tls_session_check_credentials(clientSess,
++                                                   &error_abort) == 0);
++
++    object_unparent(OBJECT(serverCreds));
++    object_unparent(OBJECT(clientCreds));
++
++    qcrypto_tls_session_free(serverSess);
++    qcrypto_tls_session_free(clientSess);
++
++    close(channel[0]);
++    close(channel[1]);
 +}
 +
-+bool object_set_props_from_keyval(Object *obj, const QDict *qdict,
-+                                  bool from_json, Error **errp)
-+{
-+    bool ret;
-+    Visitor *v;
-+    if (from_json) {
-+        v = qobject_input_visitor_new(QOBJECT(qdict));
-+    } else {
-+        v = qobject_input_visitor_new_keyval(QOBJECT(qdict));
-+    }
-+    ret = object_set_props_from_qdict(obj, qdict, v, errp);
-+    visit_free(v);
-+    return ret;
-+}
++
+ struct QCryptoTLSSessionTestData {
+     const char *servercacrt;
+     const char *clientcacrt;
+@@ -421,9 +537,11 @@ int main(int argc, char **argv)
+     test_tls_init(KEYFILE);
+     test_tls_psk_init(PSKFILE);
  
- Object *object_dynamic_cast(Object *obj, const char *typename)
- {
-diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
-index 50736b80c8..e0a3cd8d0f 100644
---- a/qom/object_interfaces.c
-+++ b/qom/object_interfaces.c
-@@ -44,42 +44,6 @@ bool user_creatable_can_be_deleted(UserCreatable *uc)
-     }
- }
+-    /* Simple initial test using Pre-Shared Keys. */
++    /* Simple initial tests using Pre-Shared Keys & anon creds */
+     g_test_add_func("/qcrypto/tlssession/psk",
+                     test_crypto_tls_session_psk);
++    g_test_add_func("/qcrypto/tlssession/anon",
++                    test_crypto_tls_session_anon);
  
--static bool object_set_props_from_qdict(Object *obj, const QDict *qdict,
--                                        Visitor *v, Error **errp)
--{
--    ERRP_GUARD();
--    const QDictEntry *e;
--
--    if (!visit_start_struct(v, NULL, NULL, 0, errp)) {
--        return false;
--    }
--    for (e = qdict_first(qdict); e; e = qdict_next(qdict, e)) {
--        if (!object_property_set(obj, e->key, v, errp)) {
--            goto out;
--        }
--    }
--    visit_check_struct(v, errp);
--out:
--    visit_end_struct(v, NULL);
--
--    return *errp == NULL;
--}
--
--bool object_set_props_from_keyval(Object *obj, const QDict *qdict,
--                                  bool from_json, Error **errp)
--{
--    bool ret;
--    Visitor *v;
--    if (from_json) {
--        v = qobject_input_visitor_new(QOBJECT(qdict));
--    } else {
--        v = qobject_input_visitor_new_keyval(QOBJECT(qdict));
--    }
--    ret = object_set_props_from_qdict(obj, qdict, v, errp);
--    visit_free(v);
--    return ret;
--}
--
- Object *user_creatable_add_type(const char *type, const char *id,
-                                 const QDict *qdict,
-                                 Visitor *v, Error **errp)
+     /* More complex tests using X.509 certificates. */
+ # define TEST_SESS_REG(name, caCrt,                                     \
 -- 
 2.54.0
 
