@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49F17CD4F3C
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 08:01:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EA69CD4F3C
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 08:01:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPbrC-0003tG-L2; Wed, 20 May 2026 04:00:46 -0400
+	id 1wPbrC-0003sh-En; Wed, 20 May 2026 04:00:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1wPbqR-0003US-8d
- for qemu-devel@nongnu.org; Wed, 20 May 2026 04:00:08 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1wPbqj-0003f5-5A
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 04:00:30 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1wPbqO-00047u-I7
- for qemu-devel@nongnu.org; Wed, 20 May 2026 03:59:58 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2bcd3ac3307so25417875ad.0
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 00:59:56 -0700 (PDT)
+ id 1wPbqY-0004AM-TL
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 04:00:10 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-c827313dac0so2444266a12.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 01:00:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1779263994; x=1779868794; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1779264000; x=1779868800; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jqta58yhpZd9aYHLNbyGE5K22GTl6WBvggYweOfKiPI=;
- b=QnLon9Kvo0JTu19anuCZ8JrlaxUYgcooyAU/YFC5vmxUsE4+nmRusr5S0zwCZLBLul
- qLKYwhVNEI3SBM2lHl4JwocmTaL+JcObwnipor93zJDu6yt5lc3mvxZUKam2ALq0qOO/
- USHdyQQh2P4gDK7cH6yVR1nfNd/xCdeSzgAo/9U4rDGK0KPkOMgvnksCvPMmMNGrtD8n
- JMFiLkzDxLF9W13Wg216WcvIpdw0iLe6Xn1KlGbOmpIlQL8WD8S16PGcqNRYA8AOzCR2
- RTN/5NY3PCcuK4duN8odHJYn/uWPz/u8kiuFCfccZ4M9yJw0m3M1In/hMx6r9/ROMfxX
- 4mKQ==
+ bh=Q171zmzoZtyUjP/bzaCh8JzygW2pCZmah2r5hRqpdIM=;
+ b=F21tMMub6vD6bXeNGlt026U57nBi6bjHE6tddh4z+T4GQGMIDvFw33EoOBdbWtUsJ3
+ EOomwtX29yFYlUstD6WSgqLUjY4JrncYr290HruUqHK6JJkZyN7dM7fwnyVaDNrY0e9V
+ J3tCsLRaj3SHu0oJbgBtN0p0FeAYTXRHOpLBrmXrFG3YRHvKRQIt2qVpQQ3no4SsAkZn
+ 3w9MO4EDCLySd4909LEgvItIQvq3t69TY5fzqBdeDD5zEiQHCptesRyz/GxL9/fGBKJk
+ 60oRFqRRIhlDwFFQiJE5MvrmEWdsujMn7WyXy9tLsZ/AdR1ZtyKWpL97LmcJa4H5NH9e
+ xN7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779263994; x=1779868794;
+ d=1e100.net; s=20251104; t=1779264000; x=1779868800;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=jqta58yhpZd9aYHLNbyGE5K22GTl6WBvggYweOfKiPI=;
- b=gUvdm9lDNCczG1cpx/Zhtd/XE2uazFqUrS52IxO61DrQJ6WT4UFw+DLmXuTB/KeAjH
- 6tINc5v0Pm3yOxHBhaX6gQ1OP4dlhy03QVsnZWfeEjCDMRH0TuEMUf0OKVyjfbyhBHWh
- NS7OfAUIE+2KE53OMxeNb7wCISI/DaypkZXnp7cWQqP199KcZo9FsuRnu3Q/pyoThqpi
- yWRnZ/Is62hZxWC0KCRQxTQqvQWG0HeVBiQl4O9RyPPUNOCDr0lxubrM9fMgdgKifnXR
- ucAa2JWZtxCtudVoG0dlMPdoVGIbbHRFOaavmqxFbeXYn0hXdsvXLIP9qPMAD0seDB13
- GMOw==
-X-Gm-Message-State: AOJu0YxaUonL4La73aokAGihZF4YGEP06BeAIqna65zQx3fv61Ez91vu
- C7/9aUnEfypRwOclPmZ3FYECg/T86hdbDlmckidi6jyoa0zw3mv2PtD9vLcJlg==
-X-Gm-Gg: Acq92OHIM3JE+r/JCQXFxVVbC9YpNIDLXZqSIiFR8IKCyaDqwzBXECx48ypNyUDcs6W
- YNLwR6HNH2CpYTsUwg8M1phV8W8M1AyKO7IYsJ49tOMGNXKsHwtNkcTsidc+2Xh9GSaQ67h8G86
- +KUMe7YQ37AikEgXs92iZBwwhvfZDymhvepDnW5rfvmgOljXsNcENiSsv/rM0ezdze65jjMrmVh
- O5JZCUfFsri9Qr/gFodlunh65u/fCUSopMTKCrUBddvVe09HI9roJbg1ixf46HEXAE8DeeFSl04
- uxP3zKS9y4dahivzlVMaGMJqgoNukbGiYW6oyfttAkSkBAfbBuDlJi8yAFLrHkjUFH938RcPT4L
- iQkXNqeWn3QBfHS78PfRq7521jZvZqf6tn7AUYIqfVNhyoL7DrYDwC/tzamsZ5XDbZtPw6m7XNg
- yfI+aDA16xfJQs5YvKJx+2Um2Nwwts2j+2fFSR85s=
-X-Received: by 2002:a17:903:94e:b0:2b9:f59e:aca5 with SMTP id
- d9443c01a7336-2bd7e9e7777mr241599135ad.39.1779263994463; 
- Wed, 20 May 2026 00:59:54 -0700 (PDT)
+ bh=Q171zmzoZtyUjP/bzaCh8JzygW2pCZmah2r5hRqpdIM=;
+ b=sSbm34xpJltLwCWzOSwxf2zNSRPGf1fL3voQIGYPla8P8ZNocPFd0jgbIQGiPljE7Q
+ Oq0s9HjqNR7BH7BJfAOWe3lCbO2FCV0TRQqMNDICgVVHtoSRqSL0pu7zr0TWJ0IFQIQo
+ 2vyHb47ZyxZc7O5/LbcsXyCZrnaTfXtAIj2SBSZDxGeai66B3FmMMI3CkXmensAqTm1a
+ Z62tXSBuUPupeHmFKqQnYmKiOVt2K9PDhSgowQwWNW2TDIikaMdkTBCjMmi+XXXg0ova
+ iQwXxzfEGqdZSz5QvJIv748+cERT73P6gERbJHzUubTrS3lqt3cjyBaFvYcn8SZi39hZ
+ R87g==
+X-Gm-Message-State: AOJu0Yx6M80+lmBoRInx4iqXmTeVNmpqzDQo1sZW6+ziq9ewVe91MzLp
+ Z7Y7PY/eJOGr8tH7rovGEq5MkyimkENMSZq/dudEj+NJnHBD6PaMXK6NkOez4Q==
+X-Gm-Gg: Acq92OGg/rKDt+MOWBgyZPgYkGmq/qhNziEu66BdJ7M8mZ9lT5DJ2NtA1IrD5wQg6Ar
+ yFyEHy2ObgBfXTY+tTMHcLIamvx4kwY2omnpfg7M5y/QH3gzLvIm5A1DYU+MXlnuIf3mQ8E/XQ9
+ EwLXhy8RNUfI44xsFdFE0p93s7pWsnT8tUkR3ryhb56mwXNv1xiljHJ5iGXUrxbXuzofqDCJdBg
+ 5ua96awhd8eixHNSN4V4hncgaz+ADNGY+MuAzuBJ1z2wPuhiRggdpA8HYsy3WsscQnSAAUEYFyc
+ nEYYDvmESnTeZvnJ6f/p6RGnPR08Zq5KhwW9A8Fe90V3XWOyppSpptJbjeFNaGXYAsvSfDLEQSw
+ 94ii6CMPitMzyn+mTeppqevNfkuLoyOInzxq2RGjTmTLLZuchGslDNT9qxWEqzeGIgtA4lGz4oc
+ X67PUygRMgg9PoUkZOrwi6oChK+MBF
+X-Received: by 2002:a17:902:d509:b0:2b4:5bf8:a7e1 with SMTP id
+ d9443c01a7336-2bd7e8288acmr207100325ad.6.1779263999848; 
+ Wed, 20 May 2026 00:59:59 -0700 (PDT)
 Received: from jeuk-MS-7D42.. ([211.226.54.223])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2bd5c05ffbesm216608435ad.27.2026.05.20.00.59.52
+ d9443c01a7336-2bd5c05ffbesm216608435ad.27.2026.05.20.00.59.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 00:59:54 -0700 (PDT)
+ Wed, 20 May 2026 00:59:59 -0700 (PDT)
 From: Jeuk Kim <jeuk20.kim@gmail.com>
 To: qemu-devel@nongnu.org,
 	stefanha@redhat.com
@@ -71,23 +71,23 @@ Cc: kwolf@redhat.com, hreitz@redhat.com, farosas@suse.de, lvivier@redhat.com,
  pbonzini@redhat.com, qemu-block@nongnu.org, jeuk20.kim@samsung.com,
  j-young.choi@samsung.com, jaemyung.lee@samsung.com,
  Jaemyung Lee <ldc.jml@gmail.com>
-Subject: [PULL 3/5] hw/ufs: Add idle operation
-Date: Wed, 20 May 2026 16:59:29 +0900
-Message-ID: <9b43508b10469f6cd5dad3223d1cdcf2b448d5c9.1779263628.git.jeuk20.kim@samsung.com>
+Subject: [PULL 5/5] tests/qtest: Add UFS Write Booster QTest
+Date: Wed, 20 May 2026 16:59:31 +0900
+Message-ID: <f50738e34f5bf8d907cfdb8195fedc780341b99a.1779263628.git.jeuk20.kim@samsung.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1779263628.git.jeuk20.kim@samsung.com>
 References: <cover.1779263628.git.jeuk20.kim@samsung.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,133 +105,219 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jaemyung Lee <ldc.jml@gmail.com>
 
-When no I/O occurs, the UFS Device performs various internal operations.
-To emulate this, adds a timer that periodically checks the current I/O
-status of the device and call the ufs_process_idle() function when idle.
+It adds 'wb-init' and 'wb-read-write' TCs into tests/qtest/ufs-test.c.
+'wb-init' tests that the WB support is properly initialized with UFS
+device and 'wb-read-write' tests that WB can be enabled and WRITE I/O
+can be handled/buffered as a WB command.
 
 Signed-off-by: Jaemyung Lee <jaemyung.lee@samsung.com>
 Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
 ---
- hw/ufs/ufs.c | 71 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- hw/ufs/ufs.h |  2 ++
- 2 files changed, 73 insertions(+)
+ tests/qtest/ufs-test.c | 177 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 177 insertions(+)
 
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index 2cf838d20f..237b410668 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -1870,6 +1870,71 @@ static void ufs_sendback_req(void *opaque)
-     ufs_irq_check(u);
+diff --git a/tests/qtest/ufs-test.c b/tests/qtest/ufs-test.c
+index 7f99944155..f677896db0 100644
+--- a/tests/qtest/ufs-test.c
++++ b/tests/qtest/ufs-test.c
+@@ -1182,6 +1182,175 @@ static void ufstest_query_desc_request(void *obj, void *data,
+     ufs_exit(ufs, alloc);
  }
  
-+static void ufs_process_idle(UfsHc *u)
++static void ufstest_wb_init(void *obj, void *data, QGuestAllocator *alloc)
 +{
-+    /* Currently do nothing */
-+    return;
++    QUfs *ufs = obj;
++    enum UtpOcsCodes ocs;
++    UtpUpiuRsp rsp_upiu;
++    uint8_t *desc;
++    uint32_t value;
++
++    ufs_init(ufs, alloc);
++
++    /* Read Device Descriptor */
++    ocs = ufs_send_query(ufs, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
++                         UFS_UPIU_QUERY_OPCODE_READ_DESC,
++                         UFS_QUERY_DESC_IDN_DEVICE, 0, 0, 0, &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.qr.opcode, ==, UFS_UPIU_QUERY_OPCODE_READ_DESC);
++    g_assert_cmpuint(rsp_upiu.qr.idn, ==, UFS_QUERY_DESC_IDN_DEVICE);
++    g_assert_cmpuint(rsp_upiu.qr.data[0], ==, sizeof(DeviceDescriptor));
++    g_assert_cmpuint(rsp_upiu.qr.data[1], ==, UFS_QUERY_DESC_IDN_DEVICE);
++
++    /* Check Write Booster Supportability */
++    desc = rsp_upiu.qr.data;
++
++    value = lduw_be_p(desc + UFS_DEVICE_DESC_PARAM_EXT_WB_SUP);
++    g_assert_cmpuint(value, ==, WB_RESIZE | WB_FIFO | WB_PINNED);
++
++    value = ldl_be_p(desc + UFS_DEVICE_DESC_PARAM_EXT_UFS_FEATURE_SUP);
++    g_assert_cmpuint(value & UFS_DEV_WB_SUPPORT, ==, UFS_DEV_WB_SUPPORT);
++
++    /* Read Geometry Descriptor */
++    ocs = ufs_send_query(ufs, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
++                         UFS_UPIU_QUERY_OPCODE_READ_DESC,
++                         UFS_QUERY_DESC_IDN_GEOMETRY, 0, 0, 0, &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.qr.data[0], ==, sizeof(GeometryDescriptor));
++    g_assert_cmpuint(rsp_upiu.qr.data[1], ==, UFS_QUERY_DESC_IDN_GEOMETRY);
++
++    /* Check Write Booster Configuration */
++    desc = rsp_upiu.qr.data;
++
++    value = ldl_be_p(desc + UFS_GEOMETRY_DESC_PARAM_WB_MAX_ALLOC_UNITS);
++    g_assert_cmpuint(value, ==, 1024);
++
++    value = desc[UFS_GEOMETRY_DESC_PARAM_WB_MAX_WB_LUNS];
++    g_assert_cmpuint(value, ==, 1);
++
++    value = desc[UFS_GEOMETRY_DESC_PARAM_WB_BUFF_CAP_ADJ];
++    g_assert_cmpuint(value, ==, 3);
++
++    value = desc[UFS_GEOMETRY_DESC_PARAM_WB_SUP_RED_TYPE];
++    g_assert_cmpuint(value, ==, 1);
++
++    value = desc[UFS_GEOMETRY_DESC_PARAM_WB_SUP_WB_TYPE];
++    g_assert_cmpuint(value, ==, 1);
++
++    ufs_exit(ufs, alloc);
 +}
 +
-+static inline bool ufs_check_idle(UfsHc *u)
++static void ufstest_wb_read_write(void *obj, void *data, QGuestAllocator *alloc)
 +{
-+    return !u->reg.utrldbr;
++    QUfs *ufs = obj;
++    uint8_t read_buf[4096] = { 0 };
++    uint8_t write_buf[4096] = { 0 };
++    const uint8_t read_capacity_cdb[UFS_CDB_SIZE] = {
++        /* allocation length 4096 */
++        SERVICE_ACTION_IN_16,
++        SAI_READ_CAPACITY_16,
++        0x00,
++        0x00,
++        0x00,
++        0x00,
++        0x00,
++        0x00,
++        0x00,
++        0x00,
++        0x00,
++        0x00,
++        0x10,
++        0x00,
++        0x00,
++        0x00
++    };
++    const uint8_t request_sense_cdb[UFS_CDB_SIZE] = {
++        REQUEST_SENSE,
++    };
++    const uint8_t write_cdb[UFS_CDB_SIZE] = {
++        /* WRITE(10) to LBA 0, transfer length 1 */
++        WRITE_10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00
++    };
++    uint32_t block_size;
++    enum UtpOcsCodes ocs;
++    UtpUpiuRsp rsp_upiu;
++    const int test_lun = 1;
++    uint64_t end_time;
++
++    ufs_init(ufs, alloc);
++
++    /* Clear Unit Attention */
++    ocs = ufs_send_scsi_command(ufs, test_lun, request_sense_cdb, NULL, 0,
++                                read_buf, sizeof(read_buf), &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==, CHECK_CONDITION);
++
++    /* Read capacity */
++    ocs = ufs_send_scsi_command(ufs, test_lun, read_capacity_cdb, NULL, 0,
++                                read_buf, sizeof(read_buf), &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.scsi_status, ==,
++                     UFS_COMMAND_RESULT_SUCCESS);
++    block_size = ldl_be_p(&read_buf[8]);
++    g_assert_cmpuint(block_size, ==, 4096);
++
++    /* Check available buffer size */
++    ocs = ufs_send_query(ufs, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
++                         UFS_UPIU_QUERY_OPCODE_READ_ATTR,
++                         UFS_QUERY_ATTR_IDN_AVAIL_WB_BUFF_SIZE, 0, 0, 0,
++                         &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.qr.opcode, ==, UFS_UPIU_QUERY_OPCODE_READ_ATTR);
++    g_assert_cmpuint(rsp_upiu.qr.idn, ==,
++                     UFS_QUERY_ATTR_IDN_AVAIL_WB_BUFF_SIZE);
++    g_assert_cmpuint(rsp_upiu.qr.value, ==, cpu_to_be32(0xA));
++
++    /* Enable WB */
++    ocs = ufs_send_query(ufs, UFS_UPIU_QUERY_FUNC_STANDARD_WRITE_REQUEST,
++                         UFS_UPIU_QUERY_OPCODE_SET_FLAG,
++                         UFS_QUERY_FLAG_IDN_WB_EN, 0, 0, 0, &rsp_upiu);
++    g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.header.response, ==, UFS_COMMAND_RESULT_SUCCESS);
++    g_assert_cmpuint(rsp_upiu.qr.value, ==, be32_to_cpu(1));
++
++    /* Write data */
++    for (int i = 0; i < 256; i++) {
++        memset(write_buf, 0xab, block_size);
++        ocs = ufs_send_scsi_command(ufs, test_lun, write_cdb, write_buf,
++                                    block_size, NULL, 0, &rsp_upiu);
++        g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++        g_assert_cmpuint(rsp_upiu.header.scsi_status, ==,
++                         UFS_COMMAND_RESULT_SUCCESS);
++    }
++
++    end_time = g_get_monotonic_time() + TIMEOUT_SECONDS * G_TIME_SPAN_SECOND;
++    do {
++        qtest_clock_step(ufs->dev.bus->qts, 100);
++
++        /* Check available buffer size */
++        ocs = ufs_send_query(ufs, UFS_UPIU_QUERY_FUNC_STANDARD_READ_REQUEST,
++                             UFS_UPIU_QUERY_OPCODE_READ_ATTR,
++                             UFS_QUERY_ATTR_IDN_AVAIL_WB_BUFF_SIZE, 0, 0, 0,
++                             &rsp_upiu);
++        g_assert_cmpuint(ocs, ==, UFS_OCS_SUCCESS);
++        g_assert_cmpuint(rsp_upiu.header.response, ==,
++                         UFS_COMMAND_RESULT_SUCCESS);
++        g_assert_cmpuint(rsp_upiu.qr.opcode, ==,
++                         UFS_UPIU_QUERY_OPCODE_READ_ATTR);
++        g_assert_cmpuint(rsp_upiu.qr.idn, ==,
++                         UFS_QUERY_ATTR_IDN_AVAIL_WB_BUFF_SIZE);
++    } while (rsp_upiu.qr.value == cpu_to_be32(0xA) &&
++             g_get_monotonic_time() < end_time);
++
++    /* Check available buffer size */
++    g_assert_cmpuint(rsp_upiu.qr.value, ==, cpu_to_be32(0x9));
++
++    ufs_exit(ufs, alloc);
 +}
 +
-+static inline bool ufs_mcq_check_idle(UfsHc *u)
-+{
-+    if (!u->params.mcq) {
-+        return true;
-+    }
-+
-+    for (int qid = 0; qid < ARRAY_SIZE(u->sq); qid++) {
-+        if (!u->sq[qid]) {
-+            continue;
-+        }
-+
-+        if (!ufs_mcq_sq_empty(u, qid)) {
-+            return false;
-+        }
-+
-+        /* internal ongoing MCQ request check */
-+        UfsSq *sq = u->sq[qid];
-+        for (int i = 0; i < sq->size; i++) {
-+            if (sq->req[i].state != UFS_REQUEST_IDLE) {
-+                return false;
-+            }
-+        }
-+    }
-+
-+    for (int qid = 0; qid < ARRAY_SIZE(u->cq); qid++) {
-+        if (!u->cq[qid]) {
-+            continue;
-+        }
-+
-+        if (!ufs_mcq_cq_empty(u, qid)) {
-+            return false;
-+        }
-+
-+        if (!QTAILQ_EMPTY(&u->cq[qid]->req_list)) {
-+            return false;
-+        }
-+    }
-+
-+    return true;
-+}
-+
-+#define UFS_IDLE_TIMER_TICK 100 /* 0.1s */
-+static void ufs_idle_timer_cb(void *opaque)
-+{
-+    UfsHc *u = opaque;
-+    int64_t now = qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL_RT);
-+
-+    if (ufs_check_idle(u) && ufs_mcq_check_idle(u)) {
-+        ufs_process_idle(u);
-+    }
-+
-+    timer_mod(&u->idle_timer, now + UFS_IDLE_TIMER_TICK);
-+}
-+
- static bool ufs_check_constraints(UfsHc *u, Error **errp)
+ static void drive_destroy(void *path)
  {
-     if (u->params.nutrs > UFS_MAX_NUTRS) {
-@@ -1932,6 +1997,7 @@ static void ufs_init_hc(UfsHc *u)
-     uint32_t cap = 0;
-     uint32_t mcqconfig = 0;
-     uint32_t mcqcap = 0;
-+    int64_t now = qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL_RT);
+     unlink(path);
+@@ -1234,6 +1403,12 @@ static void ufs_register_nodes(void)
+                                           .edge.extra_device_opts =
+                                               "mcq=true,mcq-maxq=1" };
  
-     u->reg_size = pow2ceil(ufs_reg_size(u));
- 
-@@ -2028,6 +2094,9 @@ static void ufs_init_hc(UfsHc *u)
-      * dynamically
-      */
-     u->temperature = UFS_TEMPERATURE;
++    QOSGraphTestOptions wb_test_opts = { .before = ufs_blk_test_setup,
++                                         .edge.extra_device_opts =
++                                             "mcq=false,nutrs=32,nutmrs=8,"
++                                             "wb-max-size=1024,"
++                                             "wb-min-size=256" };
 +
-+    timer_init_ms(&u->idle_timer, QEMU_CLOCK_VIRTUAL_RT, ufs_idle_timer_cb, u);
-+    timer_mod(&u->idle_timer, now + UFS_IDLE_TIMER_TICK);
+     add_qpci_address(&edge_opts, &(QPCIAddress){ .devfn = QPCI_DEVFN(4, 0) });
+ 
+     qos_node_create_driver("ufs", ufs_create);
+@@ -1262,6 +1437,8 @@ static void ufs_register_nodes(void)
+                  &io_test_opts);
+     qos_add_test("query-desciptor", "ufs", ufstest_query_desc_request,
+                  &io_test_opts);
++    qos_add_test("wb-init", "ufs", ufstest_wb_init, &wb_test_opts);
++    qos_add_test("wb-read-write", "ufs", ufstest_wb_read_write, &wb_test_opts);
  }
  
- static void ufs_realize(PCIDevice *pci_dev, Error **errp)
-@@ -2055,6 +2124,8 @@ static void ufs_exit(PCIDevice *pci_dev)
- {
-     UfsHc *u = UFS(pci_dev);
- 
-+    timer_del(&u->idle_timer);
-+
-     qemu_free_irq(u->irq);
- 
-     qemu_bh_delete(u->doorbell_bh);
-diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
-index 9e800cafac..64144b556a 100644
---- a/hw/ufs/ufs.h
-+++ b/hw/ufs/ufs.h
-@@ -148,6 +148,8 @@ typedef struct UfsHc {
-     UfsCq *cq[UFS_MAX_MCQ_QNUM];
- 
-     uint8_t temperature;
-+
-+    QEMUTimer idle_timer;
- } UfsHc;
- 
- static inline uint32_t ufs_mcq_sq_tail(UfsHc *u, uint32_t qid)
+ libqos_init(ufs_register_nodes);
 -- 
 2.43.0
 
