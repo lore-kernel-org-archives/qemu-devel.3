@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C6AACD5BA6
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 11:31:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38CAACD4F3C
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 11:31:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPf8e-0006hO-GF; Wed, 20 May 2026 07:31:00 -0400
+	id 1wPf8h-0006ud-Ef; Wed, 20 May 2026 07:31:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf8Z-0006Wt-4X
- for qemu-devel@nongnu.org; Wed, 20 May 2026 07:30:56 -0400
-Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf8e-0006lI-WF
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 07:31:01 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf8V-00059i-T7
- for qemu-devel@nongnu.org; Wed, 20 May 2026 07:30:53 -0400
-Received: by mail-lj1-x22f.google.com with SMTP id
- 38308e7fff4ca-38ea6a5a0b3so39029691fa.3
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 04:30:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPf8c-0005AR-V7
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 07:31:00 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-670ab084a39so10067144a12.3
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 04:30:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779276650; x=1779881450; darn=nongnu.org;
+ d=linaro.org; s=google; t=1779276657; x=1779881457; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=47pAj8Q5dT/4zHx/2aO2emq23ClpwG7za6Rnn7DWYxI=;
- b=u1DkoxUiwWdzIBGpE6yqRDvABNn/AEVCWskEffsV/oc+871VHRXOHf5K1hr+FbzxGE
- TLbBrmMUPPUEna0ixoWhUXhU1FPd5FH19AAKaNh4uSqGMiZYRz2oh+egvbNtkh9QFR5L
- x2LITz/e42YbiTjJdbbn3NCgH6PeeJJdQH9g+Fy4Ff2JIbuoPvCCvqlkAU7Uw9VXhrmE
- +fUysFmQh1arFP1C3XG8CHzkHd85eM35MEscxNChva+ShjMypZ62LCBqB6sUW0LQsLmM
- Abb8EP0Dr/AW4n7Pzk4JV6zXyYml7+JsSBGKKR0uerpHWVvchqO0TmVTcd6qHttACjpW
- c25Q==
+ bh=9P6kJLGlxBj21okoCV6Px71wWiHku6OLNHzb1zVa5zE=;
+ b=Jdj2VmHhhd3d+anXPW/DdiBij+3+EP+KcnEOtSz76lblILNQnhyhxXjlWkHQe4w5WI
+ cZ91ZH1IHuFBoIvxmc5+7KWKyU5nA2t+TaUUZHa3HCmTd/QUQIoLZrSO6toMO36VUdaz
+ 1JouvJHiAumSgnVGpVfrRcZa1u7Fq5+0tTAkc5WrlbL+mySkGnEoU1MbB+ej7MjFQiJg
+ 6Wtk6g0Td7YgU6Y78kqyiSpO+jbXfqxh/wB1UN3J979FPCgX2HKSS1UgX77oKlQHpBNr
+ GDoeMILIR7trbks1d5D4AK+tR4+zBzI09OkEOjshYFhtv9sCgFJhDuoNC/W1Ai/GJkfD
+ i4RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779276650; x=1779881450;
+ d=1e100.net; s=20251104; t=1779276657; x=1779881457;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=47pAj8Q5dT/4zHx/2aO2emq23ClpwG7za6Rnn7DWYxI=;
- b=ASMuStyAaU4ZaTdxJhnXOI5ZOo9sICAH5RyuljbG6bxLRJsFDCmJFv/Fd6GncxMqDj
- LO8StVOIwR7MeEvT0ilDAi9yOZ1Nx6bcjpf+3Y5ZeBK9LT3dkAiyqpBmR9BHNXQpr5yj
- NKCsx573B5sT4hb+T0XnpcevDDK6cGP4zAxyDYlWhstTx9Z5RBayRjqbjoPfvR7gcMjz
- 3XIgHsnRdm4RgY9Wjyvd2nLO63VMIgUJzQESBOUnuYGgb7FzasnMm+Z2Iib5e7klWZVA
- E8228hKpUJe+6xlQePGq+zUfqog2Riml1Ri0wuRmhMmZHoAO67NZFzu5T78nSa2W8jOl
- JKOw==
-X-Gm-Message-State: AOJu0YyNyUDBIg86P5gPgoCSfYpOyGLJ978pfZw22WOZ1Bl2S42dfYjI
- qFY1gSpgShIheQzi1HNvxhlYanoRNeLp+kru226600E/DH+P8ISHKU/M/PR5Kq8CtvC4X1IYu0i
- QVWu8IBI=
-X-Gm-Gg: Acq92OGfFD5Hus/ziB00lujJ1TgickaektQ6Kfdoqr7hL7/M9hFIoBgpYJ/FJ5E4VmM
- I+1rw1gzATWlha1BIXXlMTovLQ2jWODvVjXUjZszx0qJze3Tms4WL+jhRiwnoihG9/3FI/tKf8C
- ylnGHnpHgtO8fcJHMOtLJkNdE5EX7/G6MUV2kadZPfTounwqtO4bQByP//ju7+TJ3NrsOfK8RH7
- nUNFeMmb1iYn1LGu9pk7GQVfGDfK9Eey5PnkUCoiXo5uyU1zsIdVpMoB+v5wsNzek0tN0THjFDd
- 3ZaF/oA0uhiYCG/DxY7z+X6rAYwEB1y47JY/NZqbSsc006CWCW8I9uv6T7xISJ4axJRBdDiVpds
- jUgiGO/n4EIgVwyAKRmiTe+9kONDFU80YbDF0yJ7Rk+EGDeesPV7m46TgCZtyizPGFO1LO+9KaD
- pomLFYpN/QWb7kbES4PLe26sT6Bnp6racwGgJWO9AMAQ3QhWZWkSSSMqyxuLhhers7H6bfzwc=
-X-Received: by 2002:a05:600c:1d0d:b0:48f:da34:ec4e with SMTP id
- 5b1f17b1804b1-48fe632343dmr336946955e9.19.1779272678362; 
- Wed, 20 May 2026 03:24:38 -0700 (PDT)
+ bh=9P6kJLGlxBj21okoCV6Px71wWiHku6OLNHzb1zVa5zE=;
+ b=XyRwCvxTq8+xj+eNquFfMmRYmfJpksf5Q2D0ov+SVDoXbMBgi+6v5WmWT1ubHzT3Mu
+ B2ZGfvV+MoSrhWCbUewLHTgr2nB2FPg/WsB0pvn514ecpYzrF2ykmBBT2Qz4tc6Rlr6z
+ v/jZlc06UOFHkwdAmpNYhnPx9VaMxBd217XscuyXAx2U02vzEKqH1onb4EIWp+DqJU+v
+ A8vbFlHkfLvaQp5AD41d6jOXSPKt2SuZa2l1RHE67cHAOyXJxT+NI0wqUKCl5QtzyEEg
+ 9bBXjrCN7P2uAqBbekce08KUV8887VCRzDrMYoWxKCPwQXncn/u+dA3RSetW7s5s02/I
+ hu/A==
+X-Gm-Message-State: AOJu0YxO21wGuzvWTi3Aw4d5Npv1vkXVPWXmzLchGuY3yAWXCJ8XLSie
+ J3MjKjqmM6AeAZ8hD0xfqOs+M0fDbyVVd95GRUv9PEvu9fF8X/WXTV+P/2r6Cu3nPK72OyyNEIR
+ SYNEkAZg=
+X-Gm-Gg: Acq92OHnQR7pbHgSUn4e18AXcQECZrGfgHpTIBnvVg7Gc2jQ0rT3YRetTS7IlXxc4uT
+ Mx2dAfzoxPoPffccjDwqtfOri3lQXN1yoVJSMaCCMyuFa8VEgXelZTK1vksA/SmesUWF9sqyQcT
+ ZaTWFf9sBm3GaxGxZh1PLaJrQMSPEuhdlsV3pM4tcAGM9Oq/QOLGVAPKIBcuY4UQ0n2wJg1BlHH
+ m2YtPNucn7In3wqhdpoM8oG5y+egZkEpQCGMbaBZmg/UnVhGRemyERyVxeHJUc+8Wn1Qc4d5ymf
+ oDNqSfkBBqrcGSSuvC7ieeeFAreWlHlWNRLDIOFvqziA0NEDQkpnxHOFRIM48zDLX78Jd3LFiul
+ q31u+EMerhGcGvv2CdsQOHDlGDUVb/pVp2OciEXYy9OgZe2gDd5kb3ETw7EuzTgWRqaaCGRw3BA
+ lrjOUb/QcC0hhnaFaTiUvyTfdabx32dI1lRIdMGTxXmwibJRSCnRNVY0VmxUDQLeFz4OyAsK4=
+X-Received: by 2002:a05:600c:1512:b0:48f:e26a:1744 with SMTP id
+ 5b1f17b1804b1-48fe60ecd67mr213745285e9.9.1779272645236; 
+ Wed, 20 May 2026 03:24:05 -0700 (PDT)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48fe4c90b27sm403746425e9.8.2026.05.20.03.24.37
+ ffacd0b85a97d-45da0fe2464sm54040882f8f.32.2026.05.20.03.24.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 May 2026 03:24:37 -0700 (PDT)
-Message-ID: <eb4de3cc-8eb1-4abb-8eba-6ac90c74b676@linaro.org>
-Date: Wed, 20 May 2026 12:24:36 +0200
+ Wed, 20 May 2026 03:24:04 -0700 (PDT)
+Message-ID: <078d2012-a1cc-4cb8-87cd-95893070d2db@linaro.org>
+Date: Wed, 20 May 2026 12:24:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 14/24] target/mips: add Octeon SAAD instruction
+Subject: Re: [PATCH v11 09/24] target/mips: split Octeon SEQI/SNEI decode
 Content-Language: en-US
 To: qemu-devel@nongnu.org
 Cc: Aleksandar Rikalo <arikalo@gmail.com>,
@@ -76,13 +76,13 @@ Cc: Aleksandar Rikalo <arikalo@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>, Aurelien Jarno <aurelien@aurel32.net>
 References: <20260520101807.9971-1-philmd@linaro.org>
- <20260520101807.9971-15-philmd@linaro.org>
+ <20260520101807.9971-10-philmd@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260520101807.9971-15-philmd@linaro.org>
+In-Reply-To: <20260520101807.9971-10-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,20 +108,21 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 20/5/26 12:17, Philippe Mathieu-Daudé wrote:
 > From: James Hilliard <james.hilliard1@gmail.com>
 > 
-> SAAD is the doubleword form of SAA: it atomically adds rt to the
-> naturally aligned 64-bit doubleword at base and discards the old memory
-> value.
+> Decode the equality and inequality forms as explicit SEQI/SNEI
+> instructions rather than using shared generated SEQNEI entries.
 > 
-> Route it through the common SAA/SAAD translator so the MemOp selects the
-> aligned doubleword transaction size.
+> The explicit decoder names match the architectural mnemonics, which
+> makes the translator entry points and trace/debug output easier to
+> correlate with the instruction set.
 > 
 > Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+> [PMD: Split SEQNE vs SEQNEI (this patch)]
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/mips/tcg/octeon.decode      | 1 +
->   target/mips/tcg/octeon_translate.c | 1 +
->   2 files changed, 2 insertions(+)
+>   target/mips/tcg/octeon.decode      |  4 +++-
+>   target/mips/tcg/octeon_translate.c | 27 +++++++++++++--------------
+>   2 files changed, 16 insertions(+), 15 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
