@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAA4FCD5BAA
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 16:10:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9AABCD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 16:10:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPjUB-0001mi-Bc; Wed, 20 May 2026 12:09:31 -0400
+	id 1wPjUb-0003Xz-Rz; Wed, 20 May 2026 12:09:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wPjU0-0001B9-IJ; Wed, 20 May 2026 12:09:20 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1wPjUQ-00033n-Vh; Wed, 20 May 2026 12:09:48 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wPjTy-0002tI-Ia; Wed, 20 May 2026 12:09:20 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1wPjUO-00032c-32; Wed, 20 May 2026 12:09:45 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64K72NpP2082630; Wed, 20 May 2026 16:09:16 GMT
+ 64K859ba2166376; Wed, 20 May 2026 16:09:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=yYa81c9xmjpjgkAMs
- fonQpKG+Ukv+fo340dFx717y5A=; b=LrItLh2/fa6ir76DVc8jZ8bCqfKhsEv3R
- 6a3AkD8rBIvA4Onp8nXoOuO61T+J8DUmHA+AWQPfGkxV378wNRqboTuHdrSnZ6rH
- WfWpFl2nwWLXN9PvLLNb+z15/sDZfR0CQVXFmoF8Y2fpbKWvX6MCESpbGiFALB0z
- aWChYGhgiJzMc67hryj8pND0VlsjAmYG7WQisHpdiCjq145yGGikDoTZdaxztu97
- DQfqh1bI1zAGGIFHO2/RCriQKs+ouTFIELIy4SOaWcBtBlk0Zu38zDCvg6is13L/
- 1fbXhIpAbpK9Zws/WPHtfq0NJTxROBrs+uSTwGQhQa3S9dI0XVz9A==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6h88hx4f-1
+ :mime-version:references:subject:to; s=pp1; bh=0SoqquIShR3sba9sF
+ lHq/RbxkoTHcg6cBRBbde3DslI=; b=SPXhWfiHuA/5VgcaQfSfnop186m+orkS/
+ AhkWp9NlobPpSYxcSvgg7GrVP8BQ5W2n/EHZKrPjQVRVcZqzi4w9pIGcr4EiHmYq
+ +TgKwqXZEqcsIpttfhtjokuisiB7IGnE1Ux8SKud2KkNz6hDmFwOvWsPIOkuZnXi
+ 1Q+RsuUJ20bbAf7reKq9aatOQL/51+Y0NIQLLmI1KEZZ81hZARZdrgwqcTwtew0m
+ S02ddAhNVAW2KWOll7AMS2bIg8yND6UZgGqpBseq1Ig2iGXAGYA9X1U+lYgCyq/O
+ uSQSO+10QTx91rKXhmlQ/HKVIbFNGORblqROoj267YH2wVzKXbXeg==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6h752x1b-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 May 2026 16:09:16 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64KG9AWl008036;
- Wed, 20 May 2026 16:09:15 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4e739w06qt-1
+ Wed, 20 May 2026 16:09:41 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64KG94Dw024324;
+ Wed, 20 May 2026 16:09:40 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e72wq8aka-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 May 2026 16:09:15 +0000 (GMT)
+ Wed, 20 May 2026 16:09:40 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
  [10.20.54.100])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 64KG9CAv31261038
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64KG9bgg23921292
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 20 May 2026 16:09:12 GMT
+ Wed, 20 May 2026 16:09:37 GMT
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E744E2004B;
- Wed, 20 May 2026 16:09:11 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id E874720040;
+ Wed, 20 May 2026 16:09:36 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DA61E20043;
- Wed, 20 May 2026 16:09:06 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id DA5E420043;
+ Wed, 20 May 2026 16:09:31 +0000 (GMT)
 Received: from li-18a0a34c-33fc-11b2-a85c-d9f1631c5692.ibm.com (unknown
  [9.39.31.153]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 20 May 2026 16:09:06 +0000 (GMT)
+ Wed, 20 May 2026 16:09:31 +0000 (GMT)
 From: Chinmay Rath <rathc@linux.ibm.com>
 To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
  harshpb@linux.ibm.com, richard.henderson@linaro.org,
@@ -66,9 +66,9 @@ Cc: milesg@linux.ibm.com, vishalc@linux.ibm.com, tshah@linux.ibm.com,
  amachhiw@linux.ibm.com, sv@linux.ibm.com, shivani@linux.ibm.com,
  mkchauras@gmail.com, uverma@linux.ibm.com, nikhilks@linux.ibm.com,
  Chinmay Rath <rathc@linux.ibm.com>
-Subject: [RFC PATCH 14/28] target/ppc: Convert b{a, l, la} to decode tree
-Date: Wed, 20 May 2026 21:37:14 +0530
-Message-ID: <20260520160728.2283628-15-rathc@linux.ibm.com>
+Subject: [RFC PATCH 18/28] target/ppc: Move sleep & friends to decodetree
+Date: Wed, 20 May 2026 21:37:18 +0530
+Message-ID: <20260520160728.2283628-19-rathc@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260520160728.2283628-1-rathc@linux.ibm.com>
 References: <20260520160728.2283628-1-rathc@linux.ibm.com>
@@ -76,31 +76,30 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: 4ami-BUnNfGJG6YdSQEt_ubzdIUJ0TXf
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDE1NiBTYWx0ZWRfX1FtffJYpwLFz
- or7NrkDJD3QBGw5Kfk7raC6KV/tCHsic0ZR7wWKoQmFz1XjaT8yvjsp0abwZraWdZp2M6HoEOvR
- iuT7G8U6RJuO7ar8BLBYDWnJ8hVqDRSTMiEPk2t6vfUbJdLUYoscutuzpcDkNLSZDFtHpDg1iTr
- JmaOCRTkFimBX8uu8o5yr7sLe9P+1ALjNLngtPaLmKayPzAlJa061lLMNkLHko3NS/WFXjwp75/
- k23CXtgUeFuoEfMO2jDYRrhSHjQki+GI5Q/baBN9epvoymxQKKmqZHbDd77wHvcY2bVe+RYg03E
- sBE33FCxrSXOqydzNDmMEhPyYEmzX6VkOm8OEpXIcvv2IVVnFlo7duBub0hlmW54u3D3DPKkqoi
- gZp0qb0yo1c7JTN4AMTYbnZKJfS5KervTda2Rigea11UC+7Kx6g9/pWCv5c/szdNTNma0Vm+YeN
- 9/kFmubNmfmfCX+mdKg==
-X-Proofpoint-GUID: aRyxSIGcUuGL9LKRfZrWmGB9tJWpXVmZ
-X-Authority-Analysis: v=2.4 cv=apyCzyZV c=1 sm=1 tr=0 ts=6a0ddcac cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+X-Authority-Analysis: v=2.4 cv=ffCdDUQF c=1 sm=1 tr=0 ts=6a0ddcc5 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=8uLd_aw9J8tj_XdJNvAA:9
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=NiR63QhzpTtrMawuEWMA:9
+X-Proofpoint-ORIG-GUID: cXk9zud7NcKxC38hmINypEYU-GUG5BaZ
+X-Proofpoint-GUID: wcBHPjft0vbmQWgFt1vz5dODIQeD82vz
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDE1NiBTYWx0ZWRfX4QRn0c7xRi/U
+ 63lS436Jnm+sijF51000I0SEtQC+oJhdh2NM7hC3Z+bo/IBvoxawPSIjlZIqkpXKGNCG1Rv8mYm
+ ZMp0b0O8JsN8WXdsvWs9yR30WLNGTavkmXkoyCyam0Ab0B63Nzt9u5G/LZOiqi7ewavy/T31J01
+ h0xGQxByX3mmQGC53HzlkDGwAzD8dhsRcL7zD8fl/e1yKPOQGONzVMHeuc+WaVqdk5lFt9Tuuzk
+ S2xe4ej0rW3DEwB5xuwvhwvnCU9s7Kct3MpiQWnpRYLn43LvDHxZjVndr4Gsj/WJ9DaYAAAhz9D
+ kEYSZaYu+LiHjbqrVnz2FkKoRnufGXzaQ3AcYcOMcd5RoO41NeohRsVE/aaIznTex9BZi7IzMey
+ c0JZOZEYcnKFs8Ur13SIZ5INMTpPEgy2cdlqdRpS48w0MBN68tj3ohIvSUfcuX+K6LNX8K+3sh1
+ DOBAduJU5XQ0kmcgHqQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-20_03,2026-05-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 lowpriorityscore=0 priorityscore=1501 impostorscore=0
- bulkscore=0 suspectscore=0 adultscore=0 spamscore=0 phishscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
- definitions=main-2605200156
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ priorityscore=1501 spamscore=0 phishscore=0 suspectscore=0 adultscore=0
+ clxscore=1015 impostorscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605200156
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -125,130 +124,258 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 
-Convert b, ba, bl and bla to decode tree specification. The functionality
-was tested by comparing the qemu -D log -d op,in_asm output as well as
-single stepping gdb to confirm LR was correctly populated only when LK
-is set.
+Convert the following instructions to decode tree specification:
+
+doze
+nap
+sleep
+rvwinkle
+stop
+
+The functionality was tested by comparing the qemu -D log -d op,in_asm
+output as well as single stepping gdb to confirm behavior was not
+changed for ISA3.x (stop) as well as ISA206 (doze, nap, sleep,
+rvwinkle).
 
 Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 ---
- target/ppc/insn32.decode               |  7 +++++++
- target/ppc/internal.h                  |  7 -------
- target/ppc/translate.c                 | 24 ------------------------
- target/ppc/translate/branch-impl.c.inc | 24 ++++++++++++++++++++++++
- 4 files changed, 31 insertions(+), 31 deletions(-)
+ target/ppc/insn32.decode                      |   8 ++
+ target/ppc/translate.c                        |  85 ---------------
+ .../ppc/translate/processor-ctrl-impl.c.inc   | 101 ++++++++++++++++++
+ 3 files changed, 109 insertions(+), 85 deletions(-)
 
 diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index cbb7a2ed51..b98fe01a84 100644
+index 2c002f8513..a4454a2292 100644
 --- a/target/ppc/insn32.decode
 +++ b/target/ppc/insn32.decode
-@@ -1478,6 +1478,13 @@ MCRF            010011 ... -- ... -- ----- 00000 00000 -       @XL_bfa
- MFBHRBE         011111 ..... ..... ..... 0100101110 -   @XFX_bhrbe
- CLRBHRB         011111 ----- ----- ----- 0110101110 -
+@@ -913,6 +913,14 @@ VPERMR          000100 ..... ..... ..... ..... 111011   @VA
  
-+# Branch Instructions
-+%li             2:24 !function=times_4
-+&I_b            li aa:bool lk:bool
-+@I_b            ...... ........................ aa:1 lk:1 &I_b li=%li
+ VSEL            000100 ..... ..... ..... ..... 101010   @VA
+ 
++## Power Management Instructions
 +
-+B               010010 ........................ . .  @I_b
++DOZE            010011 ----- ----- ----- 0110010010 -
++NAP             010011 ----- ----- ----- 0110110010 -
++SLEEP           010011 ----- ----- ----- 0111010010 -
++RVWINKLE        010011 ----- ----- ----- 0111110010 -
++STOP            010011 ----- ----- ----- 0101110010 -
 +
- ## Misc POWER instructions
+ ## Vector Integer Shift Instruction
  
- ATTN            000000 00000 00000 00000 0100000000 0
-diff --git a/target/ppc/internal.h b/target/ppc/internal.h
-index dda23b6609..fe58cba627 100644
---- a/target/ppc/internal.h
-+++ b/target/ppc/internal.h
-@@ -198,13 +198,6 @@ EXTRACT_HELPER(L, 16, 2);
- EXTRACT_HELPER(WC, 21, 2);
- EXTRACT_HELPER(PL, 16, 2);
- 
--/***                            Jump target decoding                       ***/
--/* Immediate address */
--static inline target_ulong LI(uint32_t opcode)
--{
--    return (opcode >> 0) & 0x03FFFFFC;
--}
--
- static inline uint32_t BD(uint32_t opcode)
- {
-     return (opcode >> 0) & 0xFFFC;
+ VSLB            000100 ..... ..... ..... 00100000100    @VX
 diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 770f52e7d4..37a164951f 100644
+index 4a7fa6a6a9..d1e9ab61e9 100644
 --- a/target/ppc/translate.c
 +++ b/target/ppc/translate.c
-@@ -3089,29 +3089,6 @@ static inline void gen_setlr(DisasContext *ctx, target_ulong nip)
-     tcg_gen_movi_tl(cpu_lr, nip);
- }
+@@ -2728,86 +2728,6 @@ static inline void gen_check_tlb_flush(DisasContext *ctx, bool global) { }
+ #endif
  
--/* b ba bl bla */
--static void gen_b(DisasContext *ctx)
+ #if defined(TARGET_PPC64)
+-static void gen_doze(DisasContext *ctx)
 -{
--    target_ulong li, target;
+-#if defined(CONFIG_USER_ONLY)
+-    GEN_PRIV(ctx);
+-#else
+-    TCGv_i32 t;
 -
--    /* sign extend LI */
--    li = LI(ctx->opcode);
--    li = (li ^ 0x02000000) - 0x02000000;
--    if (likely(AA(ctx->opcode) == 0)) {
--        target = ctx->cia + li;
--    } else {
--        target = li;
--    }
--    if (LK(ctx->opcode)) {
--        gen_setlr(ctx, ctx->base.pc_next);
--        gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_CALL);
--    } else {
--        gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_OTHER);
--    }
--    gen_goto_tb(ctx, 0, target);
--    ctx->base.is_jmp = DISAS_NORETURN;
+-    CHK_HV(ctx);
+-    translator_io_start(&ctx->base);
+-    t = tcg_constant_i32(PPC_PM_DOZE);
+-    gen_helper_pminsn(tcg_env, t);
+-    /* Stop translation, as the CPU is supposed to sleep from now */
+-    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+-#endif /* defined(CONFIG_USER_ONLY) */
 -}
 -
- #define BCOND_IM  0
- #define BCOND_LR  1
- #define BCOND_CTR 2
-@@ -5390,7 +5367,6 @@ GEN_HANDLER(stswx, 0x1F, 0x15, 0x14, 0x00000001, PPC_STRING),
- /* ISA v3.0 changed the extended opcode from 62 to 30 */
- GEN_HANDLER(wait, 0x1F, 0x1E, 0x01, 0x039FF801, PPC_WAIT),
- GEN_HANDLER_E(wait, 0x1F, 0x1E, 0x00, 0x039CF801, PPC_NONE, PPC2_ISA300),
--GEN_HANDLER(b, 0x12, 0xFF, 0xFF, 0x00000000, PPC_FLOW),
- GEN_HANDLER(bc, 0x10, 0xFF, 0xFF, 0x00000000, PPC_FLOW),
- GEN_HANDLER(bcctr, 0x13, 0x10, 0x10, 0x00000000, PPC_FLOW),
- GEN_HANDLER(bclr, 0x13, 0x10, 0x00, 0x00000000, PPC_FLOW),
-diff --git a/target/ppc/translate/branch-impl.c.inc b/target/ppc/translate/branch-impl.c.inc
-index 9ade0c659a..745f71afd1 100644
---- a/target/ppc/translate/branch-impl.c.inc
-+++ b/target/ppc/translate/branch-impl.c.inc
-@@ -31,3 +31,27 @@ static bool trans_RFEBB(DisasContext *ctx, arg_XL_s *arg)
+-static void gen_nap(DisasContext *ctx)
+-{
+-#if defined(CONFIG_USER_ONLY)
+-    GEN_PRIV(ctx);
+-#else
+-    TCGv_i32 t;
+-
+-    CHK_HV(ctx);
+-    translator_io_start(&ctx->base);
+-    t = tcg_constant_i32(PPC_PM_NAP);
+-    gen_helper_pminsn(tcg_env, t);
+-    /* Stop translation, as the CPU is supposed to sleep from now */
+-    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+-#endif /* defined(CONFIG_USER_ONLY) */
+-}
+-
+-static void gen_stop(DisasContext *ctx)
+-{
+-#if defined(CONFIG_USER_ONLY)
+-    GEN_PRIV(ctx);
+-#else
+-    TCGv_i32 t;
+-
+-    CHK_HV(ctx);
+-    translator_io_start(&ctx->base);
+-    t = tcg_constant_i32(PPC_PM_STOP);
+-    gen_helper_pminsn(tcg_env, t);
+-    /* Stop translation, as the CPU is supposed to sleep from now */
+-    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+-#endif /* defined(CONFIG_USER_ONLY) */
+-}
+-
+-static void gen_sleep(DisasContext *ctx)
+-{
+-#if defined(CONFIG_USER_ONLY)
+-    GEN_PRIV(ctx);
+-#else
+-    TCGv_i32 t;
+-
+-    CHK_HV(ctx);
+-    translator_io_start(&ctx->base);
+-    t = tcg_constant_i32(PPC_PM_SLEEP);
+-    gen_helper_pminsn(tcg_env, t);
+-    /* Stop translation, as the CPU is supposed to sleep from now */
+-    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+-#endif /* defined(CONFIG_USER_ONLY) */
+-}
+-
+-static void gen_rvwinkle(DisasContext *ctx)
+-{
+-#if defined(CONFIG_USER_ONLY)
+-    GEN_PRIV(ctx);
+-#else
+-    TCGv_i32 t;
+-
+-    CHK_HV(ctx);
+-    translator_io_start(&ctx->base);
+-    t = tcg_constant_i32(PPC_PM_RVWINKLE);
+-    gen_helper_pminsn(tcg_env, t);
+-    /* Stop translation, as the CPU is supposed to sleep from now */
+-    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+-#endif /* defined(CONFIG_USER_ONLY) */
+-}
+-
+ static inline TCGv gen_write_bhrb(TCGv_ptr base, TCGv offset, TCGv mask, TCGv value)
+ {
+     TCGv_ptr tmp = tcg_temp_new_ptr();
+@@ -5141,11 +5061,6 @@ GEN_HANDLER_E(scv, 0x11, 0x10, 0xFF, 0x03FFF01E, PPC_NONE, PPC2_ISA300),
+ GEN_HANDLER_E(scv, 0x11, 0x00, 0xFF, 0x03FFF01E, PPC_NONE, PPC2_ISA300),
+ GEN_HANDLER_E(rfscv, 0x13, 0x12, 0x02, 0x03FF8001, PPC_NONE, PPC2_ISA300),
+ #endif
+-GEN_HANDLER_E(stop, 0x13, 0x12, 0x0b, 0x03FFF801, PPC_NONE, PPC2_ISA300),
+-GEN_HANDLER_E(doze, 0x13, 0x12, 0x0c, 0x03FFF801, PPC_NONE, PPC2_PM_ISA206),
+-GEN_HANDLER_E(nap, 0x13, 0x12, 0x0d, 0x03FFF801, PPC_NONE, PPC2_PM_ISA206),
+-GEN_HANDLER_E(sleep, 0x13, 0x12, 0x0e, 0x03FFF801, PPC_NONE, PPC2_PM_ISA206),
+-GEN_HANDLER_E(rvwinkle, 0x13, 0x12, 0x0f, 0x03FFF801, PPC_NONE, PPC2_PM_ISA206),
+ GEN_HANDLER(hrfid, 0x13, 0x12, 0x08, 0x03FF8001, PPC_64H),
+ #endif
+ /* Top bit of opc2 corresponds with low bit of LEV, so use two handlers */
+diff --git a/target/ppc/translate/processor-ctrl-impl.c.inc b/target/ppc/translate/processor-ctrl-impl.c.inc
+index 8abbb89630..bdbc195294 100644
+--- a/target/ppc/translate/processor-ctrl-impl.c.inc
++++ b/target/ppc/translate/processor-ctrl-impl.c.inc
+@@ -103,3 +103,104 @@ static bool trans_MSGSYNC(DisasContext *ctx, arg_MSGSYNC *a)
+     /* interpreted as no-op */
      return true;
  }
- #endif
 +
-+static bool trans_B(DisasContext *ctx, arg_I_b *a)
++static bool do_doze(DisasContext *ctx, arg_DOZE *a)
 +{
-+    target_ulong target, li;
++    REQUIRE_64BIT(ctx);
 +
-+    /* sign extend LI */
-+    li = (a->li ^ 0x02000000) - 0x02000000;
++#if defined(CONFIG_USER_ONLY)
++    gen_priv_opc(ctx);
++#else
++    TCGv_i32 t;
 +
-+    if (likely(a->aa == 0)) {
-+        target = ctx->cia + li;
-+    } else {
-+        target = li;
-+    }
-+    if (a->lk) {
-+        gen_setlr(ctx, ctx->base.pc_next);
-+        gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_CALL);
-+    } else {
-+        gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_OTHER);
-+    }
-+    gen_goto_tb(ctx, 0, target);
-+    ctx->base.is_jmp = DISAS_NORETURN;
++    REQUIRE_HV(ctx);
++    translator_io_start(&ctx->base);
++    t = tcg_constant_i32(PPC_PM_DOZE);
++    gen_helper_pminsn(tcg_env, t);
++    /* Stop translation, as the CPU is supposed to sleep from now */
++    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
++#endif /* defined(CONFIG_USER_ONLY) */
 +
 +    return true;
 +}
++TRANS_FLAGS2(PM_ISA206, DOZE, do_doze);
++
++static bool do_nap(DisasContext *ctx, arg_NAP *a)
++{
++    REQUIRE_64BIT(ctx);
++
++#if defined(CONFIG_USER_ONLY)
++    gen_priv_opc(ctx);
++#else
++    TCGv_i32 t;
++
++    REQUIRE_HV(ctx);
++    translator_io_start(&ctx->base);
++    t = tcg_constant_i32(PPC_PM_NAP);
++    gen_helper_pminsn(tcg_env, t);
++    /* Stop translation, as the CPU is supposed to sleep from now */
++    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
++#endif /* defined(CONFIG_USER_ONLY) */
++    return true;
++}
++TRANS_FLAGS2(PM_ISA206, NAP, do_nap);
++
++static bool do_sleep(DisasContext *ctx, arg_SLEEP *a)
++{
++    REQUIRE_64BIT(ctx);
++
++#if defined(CONFIG_USER_ONLY)
++    gen_priv_opc(ctx);
++#else
++    TCGv_i32 t;
++
++    REQUIRE_HV(ctx);
++    translator_io_start(&ctx->base);
++    t = tcg_constant_i32(PPC_PM_SLEEP);
++    gen_helper_pminsn(tcg_env, t);
++    /* Stop translation, as the CPU is supposed to sleep from now */
++    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
++#endif /* defined(CONFIG_USER_ONLY) */
++    return true;
++}
++TRANS_FLAGS2(PM_ISA206, SLEEP, do_sleep);
++
++static bool do_rvwinkle(DisasContext *ctx, arg_RVWINKLE *a)
++{
++    REQUIRE_64BIT(ctx);
++
++#if defined(CONFIG_USER_ONLY)
++    gen_priv_opc(ctx);
++#else
++    TCGv_i32 t;
++
++    REQUIRE_HV(ctx);
++    translator_io_start(&ctx->base);
++    t = tcg_constant_i32(PPC_PM_RVWINKLE);
++    gen_helper_pminsn(tcg_env, t);
++    /* Stop translation, as the CPU is supposed to sleep from now */
++    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
++#endif /* defined(CONFIG_USER_ONLY) */
++    return true;
++}
++TRANS_FLAGS2(PM_ISA206, RVWINKLE, do_rvwinkle);
++
++static bool do_stop(DisasContext *ctx, arg_STOP *a)
++{
++    REQUIRE_64BIT(ctx);
++
++#if defined(CONFIG_USER_ONLY)
++    gen_priv_opc(ctx);
++#else
++    TCGv_i32 t;
++
++    REQUIRE_HV(ctx);
++    translator_io_start(&ctx->base);
++    t = tcg_constant_i32(PPC_PM_STOP);
++    gen_helper_pminsn(tcg_env, t);
++    /* Stop translation, as the CPU is supposed to sleep from now */
++    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
++#endif
++    return true;
++}
++TRANS_FLAGS2(ISA300, STOP, do_stop);
 -- 
 2.53.0
 
