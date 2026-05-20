@@ -4,119 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A161CD5BA4
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 16:45:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2CD8CD4F3D
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 16:45:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPk26-0007sp-OU; Wed, 20 May 2026 12:44:34 -0400
+	id 1wPk2z-0008EU-9E; Wed, 20 May 2026 12:45:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wPk25-0007sZ-9m
- for qemu-devel@nongnu.org; Wed, 20 May 2026 12:44:33 -0400
-Received: from 5.mo533.mail-out.ovh.net ([54.36.140.180])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wPk23-00078t-KF
- for qemu-devel@nongnu.org; Wed, 20 May 2026 12:44:33 -0400
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net [51.68.94.138])
- by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4gLHSM5snxz5wCY;
- Wed, 20 May 2026 16:44:19 +0000 (UTC)
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net. [127.0.0.1])
- by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <kane_chen@aspeedtech.com>; Wed, 20 May 2026 16:44:19 +0000 (UTC)
-Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.188.27])
- by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4gLHSL72wNz7v3d; Wed, 20 May 2026 16:44:18 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.3])
- (Authenticated sender: clg@kaod.org)
- by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 31F511B43B5B;
- Wed, 20 May 2026 16:44:18 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-100R003ca008be8-977b-4a52-b35a-ba99d2f8841f,
- 937D01815274B0585A5ECD04E9CA186A43F9D409) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <368273be-1685-40ab-aa91-7fd811c845d4@kaod.org>
-Date: Wed, 20 May 2026 18:44:17 +0200
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wPk2q-00087t-Ax
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 12:45:23 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wPk2k-0007aG-BF
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 12:45:17 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-65c305f381eso5447290d50.3
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 09:45:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779295512; cv=none;
+ d=google.com; s=arc-20240605;
+ b=UPDFeDmZRtgyHTuNvZyNEDX55uWXqM52bdy5W6BbPIVIFN1ASDFP7tDfJsCs0NijMa
+ wP8mqBJ8vJMb1r5T05tkv7qmnciu/1u2GB6ZDYksMYQwnZrLb4qHr2mJCyRuMxKRtakQ
+ nEHinaIs0nSX6ldA7Xth5KmYzf5TeQwPf1bVAGD4owiKFKmijK0A7WG11vERKn8Vfy38
+ IVGb8xekxRR2ksK30vImyzS95Ct7Kdr/OGadGjh/kpW1jXIsMLLiG5MUfcVN3LtKO3TE
+ DcRlZJjR7sIxAGS8N/27tZPIrzrH3w2vZ+SEgkj8HLHQ89cLZqfkTZTmJBcvFgOP5Bw3
+ bENg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=droMZJx7pXfLSThUKILFkjDK3IIj2NmJDNd7MmlvQFo=;
+ fh=N29p/FXhNwoOx4NbE3K0Gis3hJqX3VFCNNP3tboacQ8=;
+ b=gjIrRHvGOm2mqZO/vOlSQQmLeyDyXUxWFbEiMHHzw8qy+LwL4BBQ91G9a5MjCLrbVb
+ /XwrNilg/wT8ITvN1hM6Jzlei/HWfkIHbpnxGzKWUD8qdbey4xMDmD5ISDaTR4e1alsb
+ JBpyjRcNIlB8NG4mBo2jaMRuIxQ8K8cap/IL80x5t+Bje7hMTktGBuL+YpYns9iZnwAi
+ zDse9LFI0vzZG1AMcBtaFzlW9xzVzsaRkei6JpJU7FfUkyn4syA02NyeqzXfZwKgzKU6
+ qJG43TmRmfRTMN1LtjgCmxwcAucjElXrp8I+UlKXD3RmsIAkzUT84I7vJmkZDeIA3oGh
+ 64FA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779295512; x=1779900312; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=droMZJx7pXfLSThUKILFkjDK3IIj2NmJDNd7MmlvQFo=;
+ b=UBCxhLm7Wgnb6ZiN3EtpYYI6b1u2OtuthENROn5jVLcVl3mhzW1WItBKU8qyDz/12V
+ lK6T965QxYsv0IP9j1klSI8EG3HiDuv5cITgVOt9GpWwTISTR23WJJJSDQl3OBe9gGr8
+ QoYnyswMcfPYqMYX+aG/rNCXQKFcgCYe2g29kD3/mtvMvcNj8pGT9il2z570IiLH4hrw
+ OIMzNucNmm01G14BBOIwIwMGGUw2xgCi2F8szLiDv3G1jbf83/PgGcfvsFiYkkafm1ME
+ jfpu5jjGxqZ1OQAHN79/SNyiVVssjPl/FzUkQYzonsczH9BuswxJpoaky0op4JbUgcXa
+ iBXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779295512; x=1779900312;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=droMZJx7pXfLSThUKILFkjDK3IIj2NmJDNd7MmlvQFo=;
+ b=UytvPvnyF/MTBw1MDeoDtXH/Vf4o5GDvs7OUQb9wMYEAGLMGrypcLa7iHFKV5vDwrW
+ VeS/Ew0kjmO57K/p6KVptalZ+G7RtoWDYtYkVuX/fMYbsrLZXUn3/i+Fx6DChH5uCadh
+ 6VGO7Dk7Rr99RXWVIZaoB4EB3ewK4Cm0JnAdlI3fuVeOFE6nyMWkUhczeHOoPMEkfVNt
+ z35pUCo0NGldh1ZnJxY35bAGp6js0wAXI2A7bcnDpWylLLZX1ePQorzRdsLtMZXw6YEg
+ F20CtIefe0GnpASFnuIeNRrAkdwQWKAoDwk5qw9Y2Q114rJRoNw0mpdxW0G7NW9JOgPQ
+ WjSQ==
+X-Gm-Message-State: AOJu0YyO7ONuuEesX/kneURBtu/uxVeUZSp2ZtYrnFHVHEI6plL4DwFg
+ ApHlt0eODZ4j9M0pfE90R8wG0/QmundgDEVMP/+sb99U+pcvILvKTZcjkn1NYoDqvLSYzgr+jSz
+ t6l831G1umonph7uvrtykEpz9Jp6elQAwMabDctDz3w==
+X-Gm-Gg: Acq92OG/PTZgibhBHhZ/1LPMtZIwbAJ5GNWm07o0Q6OjHRZ02BlHHnjhmBpc6klLZnl
+ UixAnpa/TtEDPcNMo13N63mzXREAjdbtZ3Pur/W9gjn1Zm1MDn8DqSRCEOgzfiVhRgOSQzGeQa+
+ sZ8VvxjgmgWBbdwTDUgxoej2DwCPNx8WkEEz9ENkCdeq6IEkSiCT+0D4yH4vapiQ5Ty0kJY7FGd
+ fLehpQ13ddk0oK9yEXHeqo8sqxSQ9yjFezyjnjWPMZ+Mo+At+JiThSrqhnYkRIWa1CKWySHUuXv
+ ZpMDGCBLg4UgsFvfELjXYFsoOuniZ5VakGi1RY8gur417t9BTaLMj/Go066R4NfsxRRml/U9zD3
+ tHQ==
+X-Received: by 2002:a53:accd:0:20b0:651:97ba:8507 with SMTP id
+ 956f58d0204a3-65e2289b759mr20898368d50.59.1779295511815; Wed, 20 May 2026
+ 09:45:11 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 26/45] hw/misc: Add basic Aspeed PWM model
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Kane Chen <kane_chen@aspeedtech.com>
-References: <20260204103136.1795455-1-clg@redhat.com>
- <20260204103136.1795455-27-clg@redhat.com>
- <2c9aa5d8-993f-4636-a07b-0a28dad1703b@linaro.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <2c9aa5d8-993f-4636-a07b-0a28dad1703b@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 16493026261902470168
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEy+2KPbCIi9WPBqMb2RujwIWGti2SIjz9uW7K7AJQJoOTIJTFLr0H5xZIiVEhU9jiGz+EOsBVYGTuzmFmPcuG2ddJpl5g26T46om/dn0eo3ApOnRH3gMfJQnKtuovlAaEVrU6nqb7bqOb3V3koGgCa8onhUW7B6OCU/mDEZTLzGZBbzpkoOjHr/1O6W7fjlqgFWt4mkmpDg34d2t/eCk6bMbEirvpMAKE2zhss38upbBau/oxAtXdc49rWzL/x33SvjGtLz+rNcG17Jzpgo4eKqv5F62SgSUp4jK/MvHIQiMnVYsi5+cPscXbGOBIfOCD4WaM0Llzp2dZwkVyjO1m0ls5HqeHBsWroGBSFQuqAuT+ZQLomH/3lQgQb/OD787E5kSm1kpGm6BBVH02ThtILeRpl/7M8uSLBKJKAdNL6mAX8L05NlMiLr+nU8WDJhgPAfbEkaZyJW7eG/0bGG5ZmCIk95Ia9ammDprDu/wbb+comrFchPAXdhwlSDpdsfkn4XNobwap2dokx6B0GkIaiimnswzNHH8PBlUGAshcuXKqyZclFK4iT68RV6EAHMhX9f5kxmQgp9IZGyahazV+/00neqpltMw2uc/Zc1W49A7Ii1Rtbj9qo44ESJxHBOsnBwT5trbKgzFRyDexEodj09NOWgtUHSZjjMOstU0SYuA
-DKIM-Signature: a=rsa-sha256; bh=83MJaZT8Vc4S5a/oYR/SJy3+iwzN8jb9rFDMli3joug=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1779295460; v=1;
- b=uWTZgFV4XjHrmBenw3tBsR20MKMR3iWyb/MBeMPYZMZbvEITRHoTIfiS6ftte0ybx79hZM45
- wXcqNy6sdB4ho1CQDsPCaOCQg73eowN3W8CKQjsEUEbin87n0ny8E2uxXdTOC9n9KwcwZdB8kGe
- T8C0r5s2iO2+irGQL8Rx13j6MiylqBGCvk+jy74LUf+qFmtSYVmFmkvAkppCVEt0RiIhiX9LtxO
- 4Asz512WxFwDo4yiBiNpjEieNoGsaSs5oNV5r07THuGv7pZzKNLGuT5zXDO33xV5LyOgSSjnhLo
- llilGyn3IMWO+Jg2YPyE1cVLTyrukCg/FL5+1wo8eGkoQ==
-Received-SPF: pass client-ip=54.36.140.180; envelope-from=clg@kaod.org;
- helo=5.mo533.mail-out.ovh.net
+References: <20260427124738.966578-1-peter.maydell@linaro.org>
+ <20260427124738.966578-40-peter.maydell@linaro.org>
+ <574480d1-49db-4ee9-981c-580d4c2db3b1@linaro.org>
+In-Reply-To: <574480d1-49db-4ee9-981c-580d4c2db3b1@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 20 May 2026 17:45:00 +0100
+X-Gm-Features: AVHnY4L7dDkuxP0IiFoZt42v0be-JW7tgHrvvno9aN6W31I6t79EruzWT1PVMYs
+Message-ID: <CAFEAcA8SN=H+d1OzcRWBZ6kBnhFqVAY0_77Z+PsjdxwAnT4gEw@mail.gmail.com>
+Subject: Re: [PULL 39/63] hw/display: Add i.MX6UL LCDIF device model
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Yucai Liu <1486344514@qq.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,60 +118,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/20/26 18:31, Philippe Mathieu-Daudé wrote:
-> Hi Kane,
-> 
-> On 4/2/26 11:31, Cédric Le Goater wrote:
->> From: Kane Chen <kane_chen@aspeedtech.com>
->>
->> Add an initial PWM model for Aspeed SoCs, including device state,
->> register definitions, and basic initialization as a sysbus device.
->>
->> Signed-off-by: Cédric Le Goater <clg@kaod.org>
->> Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
->> Link: https://lore.kernel.org/qemu-devel/20260204082113.3955407-4-kane_chen@aspeedtech.com
->> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->> ---
->>   include/hw/arm/aspeed_soc.h  |   3 +-
->>   include/hw/misc/aspeed_pwm.h |  30 +++++++++
->>   hw/misc/aspeed_pwm.c         | 120 +++++++++++++++++++++++++++++++++++
->>   hw/misc/meson.build          |   1 +
->>   hw/misc/trace-events         |   4 ++
->>   5 files changed, 157 insertions(+), 1 deletion(-)
->>   create mode 100644 include/hw/misc/aspeed_pwm.h
->>   create mode 100644 hw/misc/aspeed_pwm.c
-> 
-> 
->> diff --git a/hw/misc/aspeed_pwm.c b/hw/misc/aspeed_pwm.c
-> 
-> 
->> +static void aspeed_pwm_class_init(ObjectClass *klass, const void *data)
->> +{
->> +    DeviceClass *dc = DEVICE_CLASS(klass);
->> +
->> +    dc->realize = aspeed_pwm_realize;
->> +    device_class_set_legacy_reset(dc, aspeed_pwm_reset);
-> 
-> Also please do not use the legacy API. See for example this
-> commit to convert to the newer API:
+On Wed, 20 May 2026 at 17:33, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> Hi Yucai,
+>
+> On 27/4/26 14:47, Peter Maydell wrote:
+> > +static void imx6ul_lcdif_class_init(ObjectClass *klass, const void *da=
+ta)
+> > +{
+> > +    DeviceClass *dc =3D DEVICE_CLASS(klass);
+> > +
+> > +    dc->realize =3D imx6ul_lcdif_realize;
+> > +    dc->unrealize =3D imx6ul_lcdif_unrealize;
+> > +    dc->vmsd =3D &vmstate_imx6ul_lcdif;
+> > +    device_class_set_legacy_reset(dc, imx6ul_lcdif_reset);
+>
+> Please do not use the legacy API. See for example this commit
+> to convert to the newer API:
 > https://gitlab.com/qemu-project/qemu/-/commit/ce788d3740f
 
-Oh ! I think this patch is from 2017 and we didn't refresh it when
-it was sent :/
+There's not really a problem with continuing to use the legacy
+reset API for this kind of "leaf class" device. It has identical
+semantics to just providing a 3-phase "hold" reset method, the
+compatibility-code is trivial and not a big maintenance burden,
+and we're unlikely to convert all 400+ existing users. (Unless
+somebody figures out a Coccinelle script for it, in which case
+it's just one more file being autoconverted. IIRC the hitch
+I ran into was that you need to determine whether the reset
+function is called by any other code -- those are probably
+not autoconvertible in the way "function only used as the
+argument to device_class_legacy_reset()" could be.)
 
-So, yes, Kane, if you have time for this QEMU cycle, that would be
-nice.
-
-Thanks,
-
-C.
-
-
-
-> 
->> +    dc->desc = "Aspeed PWM Controller";
->> +    dc->vmsd = &vmstate_aspeed_pwm;
->> +}
-> 
-
+thanks
+-- PMM
 
