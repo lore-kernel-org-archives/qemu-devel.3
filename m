@@ -4,80 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD73CCD4F3D
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:27:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0FF9CD5BAA
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 17:27:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPkfT-0005UG-0Q; Wed, 20 May 2026 13:25:19 -0400
+	id 1wPkgj-0007ZV-HK; Wed, 20 May 2026 13:26:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkf6-0005Nk-3V
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:24:53 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wPkgS-0007MK-CU
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:26:21 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPkez-0003q1-J4
- for qemu-devel@nongnu.org; Wed, 20 May 2026 13:24:47 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-43d734223e4so3423390f8f.0
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:24:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wPkgP-0004OE-MA
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 13:26:16 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-8353c9f24d2so2681701b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 10:26:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779297883; x=1779902683; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xj4LscJe5qbbyCvumcZkKMp4Wyep599tHoKrYhpUv9c=;
- b=bTZxUB2cPVp6dPyugYl5H8QNtlenHSqJ2nNJvguC3uTKuYrHnpAWF9S5KgdbRzdAh4
- q4QNGJCmF6s4qReqG3SbbAA927xmu5oLPgpF9RDMnFpGrkcohu2LvrwOK/GZJ3HLhiAL
- zmMBcH6RnMg551vb7kbsGtFtj41zsxS/1hwIgftxQdBkeNPXEs2Hb4duSq7xTvvBwlm5
- Y/8rKMVIe7e/LqOvlMBbjt0vnx4WijYuqnrigt46R0xpPnHpNL2KIBFr/u/9sjzDxwNT
- 3WEp8wNDurCbs9tS8S7fkgByOz7K/OBZ+6aUePrqsViEGJBJ+l7JVZ82VFb+a0Avblk8
- oM6Q==
+ d=linaro.org; s=google; t=1779297972; x=1779902772; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gLuo/t16axaVgNDuvZNn5zkWfPM5x0pxxDbNPCoQofo=;
+ b=EeftiTsGN1hTV8r0iVJiIfFVwNDrUhFz/DaI+BqRt3Zxxf4ALwWPnz+wn0qXnv+917
+ XJIQ52suOmaAfWQH4H2z7oQqGu6+rI/BQkAQ4qB1u7kaBAfZE5OhAg6mCfIdBE6FEa/c
+ Q53SfvW7MrNB/NTDDPZaEdFPtfTu/7fJFRDah76cd8gqX6ufIZaw3gFdHuLVyfPKZKdl
+ HEq9EZMfOIAjzbUxl9XVD9dK2F3lUBdqgywFA302IQYGTHZCo4tOenkV1dHqFxi3YbHZ
+ b9EGuAwZtLCiMxy3hYM5hATGJEfYt6in3T4t/LhPJrvitfgSKMmWBpOX25HDoVMJVk1P
+ HzIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779297883; x=1779902683;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=xj4LscJe5qbbyCvumcZkKMp4Wyep599tHoKrYhpUv9c=;
- b=s5TPNM8uyjB9eeB9QgjkNWqvQ/cJnoRzNtFUCxVarx+xqyoz+vnPHOnQF3xniaXFjY
- MaUD73HbxYvYEFs5F2LzEHPNffWA/px7yIN5GN9/AEq4yuBgI5y1rh5NoUzM+eYvaapl
- BmJpBXAysPG818NPAQmjl0Firrn9ct+eLF9agUYiNDuSIoMExA6rf6HlGsPC7GPbiOdK
- L1/fxtStWvdRG1b5gIxT5qTXr0uhuycnsyS3YbAjGXW/D6iswOQ9JR8eZptN7L1WiiEQ
- lW9et4sVED/qGiBdPRXSOm6MsReMihZMEG8KvzAYaHzyc5b4YyJTKqyQ8Y0Npj21ca23
- 3tRA==
-X-Gm-Message-State: AOJu0YxlnMJFxH/MCdctPvf7cIJkhD/38i/oWnI8p5rzq9tmkE8ivBj8
- EwqMxbv/CiX+WhdmxWzzKvZ0190R1QP0rGbtJp7ncq47jvtG3xUm3tZX2yG1NoWZ3W6sCIDrEe2
- VSbmvXVY=
-X-Gm-Gg: Acq92OGsdgl+CQdcldL955Os6Hi9U4NNaqsN7zdcihy6+qqhbeWhVY2CEFrKlby0GjI
- F+g/CjX37DNjkkkSHNfs/4PGdMIgckAKJd4pD//d1lyaNY8stWV2JICj+42ytm0Upv/leZEsuou
- XN2TO3oSkW7CbFyT0Pm4oOPJEue8mxN+iwxRtwBhtyTSDnLpDYtFZ73GrCQDtHoIdxDNiQNkL45
- tBIyE6QXMJj662cV7p7TEvRYZ0ki5D2OBFA7YtZmLMluRlAjJ+APp2jBFaL8fPrUFaAMB4cPXjj
- GibrIrFUWEdYu3sMcjkyXbt0Z/maJsUAHUSMX62IPv8wZ+KytmqTROMgtmx9vuBmEKfSlyerIor
- 2h6ieyeo3L/R2v5nO28p3SAtteFv+4WWhj5TwkUVlcTXAi9oTB2BMqwtpoTwl23YKw9rUICVIWI
- bdIaoDB7XoXK4A0xCLDAh4pB5FJmgMSm5Am+1ykCu995PwwOQwwt9PNDOrnctV5rftRC9SlHT1
-X-Received: by 2002:a5d:5d86:0:b0:453:dc4d:9265 with SMTP id
- ffacd0b85a97d-45ea0b1c8fdmr763945f8f.10.1779297883518; 
- Wed, 20 May 2026 10:24:43 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45da15a562dsm56505130f8f.33.2026.05.20.10.24.42
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 20 May 2026 10:24:42 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: James Hilliard <james.hilliard1@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v12 12/24] target/mips: add Octeon LWUX instruction
-Date: Wed, 20 May 2026 19:23:00 +0200
-Message-ID: <20260520172313.23777-13-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260520172313.23777-1-philmd@linaro.org>
-References: <20260520172313.23777-1-philmd@linaro.org>
+ d=1e100.net; s=20251104; t=1779297972; x=1779902772;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=gLuo/t16axaVgNDuvZNn5zkWfPM5x0pxxDbNPCoQofo=;
+ b=jpaDlUiRd0NzjxN5r3+iGeye+3m7/eJzYcqFB/SLhVjVcQQApmszjq++I0CfQhmhCg
+ ZQ63JXv6Ia5VQeA+8r+DnQHqI52jKYNynovVGCiAUhtkP6dFQZSZL4d3fmaK8tPB8LlK
+ GkrmAkrN1Db16Cazk9ytq2O6pB2qRxAG5ZkB2je9t43GyHy4DboBuktuOP/meHmsNCGX
+ p5ZGBm0A8QW0eRBlknedXxUvTeZ0Fdq2jpEnRyiCXJlVS1NaetFC3saqvw2Lp8rPq/O+
+ OvE227sPZgyMoJYYqePCJGOwTm4hnuHGUrFZNWYqXukGsTmuACfLJ7k8kHvTgQirZVUs
+ WsDQ==
+X-Gm-Message-State: AOJu0Yy9uD9zTqnqukekG+XAcmc+5D6f1V6uZ5y4HCN6L0FcWrFOY9cz
+ h7nlFiDsX6APCoPzuL/zutXfMa5RVwv01BmCNqP0JNVvDkot5EUluOCZ58M021jrde0oSQQYH1z
+ KSMBYRfI=
+X-Gm-Gg: Acq92OGlHHSkxm6ZXjcTkazY/R9qvvwp1gwOyNAukDgFh0Uz2SHetYXA6iE+Zp8A9/u
+ /+nCr2m65UM7653FuD4ZbofTI/ljxTeuUd7Wwl7zGIQEd+BCDtPldbCVcHfSx0cS2M4zPRW1Lce
+ 1+xRvdKQCeQvhBfNz77cFuikUsjrg+/4JCVC1KAVclE4erCulgtvqlv00WdVjJqlD8LzPLK411/
+ V7l7TMyLlyDYBgy68MRNH4diKrtJFgIA2sDuqUv3RvQkAvgauQ0ocQALQZcKW79NFHwuVz/owFQ
+ v3C8kVzxcd25TGFiwDa6WArlcONiNCa6unSIJDlwq56ml89u3tKG5Z2DsOKmn87w0c7DaXwwwls
+ F0UjGX7LFwcoy/+tcEasLggEMAt4v4v7DMUlpj5SxYkZW9L2c/k5suusC+ZRL/vwfeZe/fEDh67
+ gPG6/qSsMx2+csMG+WIXLpSMt91c6UR/fa4LERcP8JM1AWivo=
+X-Received: by 2002:a05:6a00:908a:b0:838:3404:c2b1 with SMTP id
+ d2e1a72fcca58-83f33c9cf52mr24909168b3a.18.1779297972008; 
+ Wed, 20 May 2026 10:26:12 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.142.33])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-83f196660f9sm27377330b3a.10.2026.05.20.10.26.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 20 May 2026 10:26:11 -0700 (PDT)
+Message-ID: <672cc2e2-93cd-4146-bcf2-cc000695a122@linaro.org>
+Date: Wed, 20 May 2026 10:26:08 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 59/63] target/arm: Implement FMMLA (FP8 to FP16) for
+ AdvSIMD
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20260517003002.321430-1-richard.henderson@linaro.org>
+ <20260517003002.321430-60-richard.henderson@linaro.org>
+ <CAFEAcA971nFuXNkQbswiDzRXQ7WsrW9GTVzH5A2rPGym20yMKg@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA971nFuXNkQbswiDzRXQ7WsrW9GTVzH5A2rPGym20yMKg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,45 +106,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: James Hilliard <james.hilliard1@gmail.com>
+On 5/20/26 09:36, Peter Maydell wrote:
+>> +void HELPER(gvec_fmmla_hb)(void *vd, void *vn, void *vm,
+>> +                           CPUARMState *env, uint32_t desc)
+>> +{
+>> +    FP8MulContext ctx = fp8_mul_start(env, -1);
+> 
+> The scale_mask here should be 0xf as this is a halfprec
+> output, right?
 
-LWUX performs an indexed unsigned word load from base + index and
-zero-extends the result into rd.
+Yep, copy-paste error from fmmla_sb.
 
-Add the decode entry and route it through the common indexed-load
-translator with MO_UL.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/mips/tcg/octeon.decode      | 1 +
- target/mips/tcg/octeon_translate.c | 1 +
- 2 files changed, 2 insertions(+)
-
-diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index 8a755075e8e..db7d5f55f0a 100644
---- a/target/mips/tcg/octeon.decode
-+++ b/target/mips/tcg/octeon.decode
-@@ -50,5 +50,6 @@ LWX          011111 ..... ..... ..... 00000 001010 @lx
- LHX          011111 ..... ..... ..... 00100 001010 @lx
- LHUX         011111 ..... ..... ..... 10100 001010 @lx
- LBUX         011111 ..... ..... ..... 00110 001010 @lx
-+LWUX         011111 ..... ..... ..... 10000 001010 @lx
- LBX          011111 ..... ..... ..... 10110 001010 @lx
- LDX          011111 ..... ..... ..... 01000 001010 @lx
-diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index f897b42807b..401c4bd14bb 100644
---- a/target/mips/tcg/octeon_translate.c
-+++ b/target/mips/tcg/octeon_translate.c
-@@ -166,4 +166,5 @@ TRANS(LBUX, trans_lx, MO_UB);
- TRANS(LHX,  trans_lx, MO_SW);
- TRANS(LHUX, trans_lx, MO_UW);
- TRANS(LWX,  trans_lx, MO_SL);
-+TRANS(LWUX, trans_lx, MO_UL);
- TRANS(LDX,  trans_lx, MO_UQ);
--- 
-2.53.0
-
+r~
 
