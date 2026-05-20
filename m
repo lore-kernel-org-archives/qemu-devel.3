@@ -4,73 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4E8BCD4F54
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 12:24:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00C8BCD4F54
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 12:40:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPfy1-00076u-8B; Wed, 20 May 2026 08:24:05 -0400
+	id 1wPgDU-0002D8-KM; Wed, 20 May 2026 08:40:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPfxz-000745-MH
- for qemu-devel@nongnu.org; Wed, 20 May 2026 08:24:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wPfxy-0002Gl-BH
- for qemu-devel@nongnu.org; Wed, 20 May 2026 08:24:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1779279841;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=R2bedq2VbbvBK5VddrcO466+1qXbFbTcKAScwBfUPwk=;
- b=XtOQFwJ9odELkmpRYpgIqMndKhLrSm3/c31U87p2TY+5eDkei9ddjvrNVjzlJOyBkIByO1
- ix/R+sun0odsndgN87qAthRyknvCKj6naLCkuCukXmfNKwPPSLYl23mMdUnwLL6ZIeebCE
- yBdzn0IWvzAM1j/L5w82CbCQ/oJAbs8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-33-OZ4jmKm_PiGnmQRNzh6VBw-1; Wed,
- 20 May 2026 08:23:57 -0400
-X-MC-Unique: OZ4jmKm_PiGnmQRNzh6VBw-1
-X-Mimecast-MFC-AGG-ID: OZ4jmKm_PiGnmQRNzh6VBw_1779279836
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9776319560A7; Wed, 20 May 2026 12:23:56 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5B93E1800576; Wed, 20 May 2026 12:23:56 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1A28121E6A01; Wed, 20 May 2026 14:23:54 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] MAINTAINERS: Correct scripts/coverity-model.c path
-In-Reply-To: <87se7m1vc1.fsf@pond.sub.org> (Markus Armbruster's message of
- "Wed, 20 May 2026 07:52:30 +0200")
-References: <20260519171926.98099-1-philmd@linaro.org>
- <CAPMQPEJ4qx_WZ7iOTs7q8f=fSjD+tc588kczKms95Tf1VGQ8wA@mail.gmail.com>
- <87se7m1vc1.fsf@pond.sub.org>
-Date: Wed, 20 May 2026 14:23:54 +0200
-Message-ID: <87pl2qs205.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPgDJ-0002CZ-Q6
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 08:39:56 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wPgDI-0006ns-3G
+ for qemu-devel@nongnu.org; Wed, 20 May 2026 08:39:53 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4891e86fabeso63987145e9.1
+ for <qemu-devel@nongnu.org>; Wed, 20 May 2026 05:39:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1779280790; x=1779885590; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=xUF0UjGwnO2I9AJrPIdq7UBa/lEjw7u0NQLej4z+Tv4=;
+ b=Aef1qDSulRivhiSsagxaulnuEAy5pTK4ScNtDKD6hRLAlzIk+Ei5Vbv9qIVvRkoB/0
+ 6BmJo6bIqN2+v9pQIAA5x8ow7rWZVVX9JeWfZTBUXhaOZnTy69BU7lt3eBRzDgW/yD1j
+ cZngwYnOWtE1ppUXjbBuQYo0Cehk7MZct9XEBcI2siAYKWFJQ2y6dyKyaG1BEyICbD+m
+ fMzlZWris3L5Cwo5RpL3/JnA+RssC2o74fvAJ/hi7AMpfsjfWADQyRL1m61a/mfkxV6x
+ 9i9dw7jfAhppkZNHrNuJf1C1ce378tANexe6ozT1RiBuTyTH1nRH+6pDnRRLAxpnH0co
+ lxsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1779280790; x=1779885590;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xUF0UjGwnO2I9AJrPIdq7UBa/lEjw7u0NQLej4z+Tv4=;
+ b=lw5+2HpvToqIQl/fAKJKvlfIvMLbonNrqkuZn+woOwaaZgP9ZN0a3o6zkXAgF0e/x6
+ U9cqufh+CML/Y+hFR+XYiiy5il/Q+hWW0D9utjXQjdX8yIDemVfU5tqtQyLp81eGBeF0
+ 1DoAsItdSi5m4v+GnqEh87bln5Sig4dMABaohLr9HdOT99iCRb4PC+W6en0ce42AnxmY
+ LgkUFJgIgyzaqRKUVF6CXH9wF5xl4OZjTtWfeMe7fV035w4P3ZzdgJoJq6aYMDEZFkZx
+ Id5HrQNNlgTpyQqjBljKGFRT8FuMd/T2rjz/86cZJoaa9jAm+1pw3hpv68ptlwI0MkP0
+ Y3cg==
+X-Gm-Message-State: AOJu0YyPt8NPueQX4ozYUM/yUccvS8167VYs9tvGnz061uiYrD0k383f
+ Ddehp5dkk8Nj5Txn01poJ1Y/Gieqh4Au/swkb4aXyhEK86YabOd1hrvgPNhb27D60bi2SGrdJOK
+ z354BjkM=
+X-Gm-Gg: Acq92OF8cW38T543nurVf7AfcBwkTDTQgLsJGD9tKbUb3l891mtYmtFe1CqdqyXnvky
+ /7DO8YG8PgcjIsq9Pbnbk4FG+jJxBvFiEdu/9pZltvi9SZ7Dj71RmSW6uDQjlMDWFjk6akLh9Ie
+ A8AMCIvGCDkmSrkbKUKsM1MNrekinFCUNaNaAdQa6XJvZnLkBEpREMa1TTUQ4WvjuZDAuF0lKhH
+ kTyUcfGqGJC1n6n5ZRzQWL+ampDUu3Fh+BASoRgj+q2yXVgvzWztVAZWfMVFaN5RQWzGYabGn3U
+ ML78ImL9dmfchBc+kaoziOTzPEj7iUNJ3c/MYNf3xhElqKxm2vYfm4f/HH+0MkTKYmLAFK5VQZI
+ BFzTe3bj05Nzzzp8spqIP9wUvTj4QOwqbe6KNaY6HINGv6iMOOQs+SQBOzrZOMDwvNdkX1d3H5a
+ gCPOOrEMT8HCcD4fuS83CprrhkSeee+V3NG+lfP0hDJup2hx4o0hO1tDw9YZjgZiYwMS+SCWX9Y
+ Dc5m6J14o5h/GOr4+/1iQ==
+X-Received: by 2002:a05:600d:8:b0:48f:e6b9:c740 with SMTP id
+ 5b1f17b1804b1-48fe6b9c811mr312400645e9.30.1779280789828; 
+ Wed, 20 May 2026 05:39:49 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48fe4c88495sm387518015e9.4.2026.05.20.05.39.48
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 20 May 2026 05:39:49 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] MAINTAINERS: Fix hexagon-linux-user.mak path
+Date: Wed, 20 May 2026 14:39:47 +0200
+Message-ID: <20260520123947.12711-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,6 +99,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are many more bad F: line elsewhere in  I'll fix them.
+Fixes: 812b31d3f91 ("configs: rename default-configs to configs and reorganise")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index b75f3222f2f..2a4d124fb3c 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -256,7 +256,7 @@ X: target/hexagon/gen_idef_parser_funcs.py
+ F: linux-user/hexagon/
+ F: tests/tcg/hexagon/
+ F: disas/hexagon.c
+-F: configs/targets/hexagon-linux-user/default.mak
++F: configs/targets/hexagon-linux-user.mak
+ F: docker/dockerfiles/debian-hexagon-cross.docker
+ F: gdbstub/gdb-xml/hexagon*.xml
+ T: git https://github.com/quic/qemu.git hex-next
+-- 
+2.53.0
 
 
