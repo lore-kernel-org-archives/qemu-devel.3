@@ -4,88 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56E36CD4F3D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6106CD5BAA
 	for <qemu-devel@archiver.kernel.org>; Wed, 20 May 2026 18:34:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wPlZK-0007l0-4T; Wed, 20 May 2026 14:22:58 -0400
+	id 1wPlkM-0007lJ-1N; Wed, 20 May 2026 14:34:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPlZ9-0007L2-AN
- for qemu-devel@nongnu.org; Wed, 20 May 2026 14:22:47 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wPlYt-0000a4-Qe
- for qemu-devel@nongnu.org; Wed, 20 May 2026 14:22:46 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-3697c35eab7so2991009a91.0
- for <qemu-devel@nongnu.org>; Wed, 20 May 2026 11:22:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1779301350; x=1779906150; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VvhMkH32psM3D8lph3Pv20uEhqe8qrK6g7LCI4lgg/I=;
- b=fnxSPWu1T2vIv6FJYKjASW2fNwKG/bg6Utdo2y2BaA//bAkh1kQyPucE0ZfgwmSaA5
- lTa7v40Ei6qE91Ra5ssmSj/5iQ3zXYWBuoJmQPCBX516MAFeinR4iinhbk0CM+JsAc9Z
- kaEaAT0CCu9Ztp0vhMXCB4ZPOMPc2Jb/Cjj/0n7UaTAypTCbeEj7RGRFeZDfSOKAJ0zC
- 40biqPQouH4odBi2Iq52DNKb3k3UiJ8jIOC+OGwl09Fit9MxPIz+C/J/DmYAfQ0r5E59
- nBpROYV4awbDrgKRUKp9ozfZbKue54TuRDt0KBIbJircZ1ELlqQ8U4+S8ua66TV71eJu
- fbdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1779301350; x=1779906150;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=VvhMkH32psM3D8lph3Pv20uEhqe8qrK6g7LCI4lgg/I=;
- b=cFhKzOfuD5tCUU2wvkeajV32hoAJhRo+6LzqLAFryq8Ui0tDaR7b6UYwYSqCkuTBCU
- nP1tYsUGXFi0Tlz8VgqmVTQXUXRDUgtsSu5Z5OllxbeguADI7XDNo0mU/YgpocxbCSCt
- BppXc0mRlY/upB6Q+MSzYrMp4CVSLYUNo2qviOLjYOu32IR1c66uqAmtLS9KounSwGV7
- 4EUfyCT7WuY+EK74pMmIfPPqikOq6IQJ4hUqQst4PfKzYWrvnwx4iQY3Yyl6mzJpa9hO
- CazvB+2fTSZFpUuuovx4RpTFeCqGi6tiPB8kTktOrpSc58EvQJPzZRCeEqCmRSGv9o+f
- /xVg==
-X-Gm-Message-State: AOJu0Yw5HONNV7vSod53QyiPNrlzbEvrg2XS1YqMe7ZHSFnDmie6X+t3
- PTYL622ucrKQqIfx8DubvHK5Dk/mMYjacNSiFLmhqfymC1BHzC6Fddweg0QXtq27uctxaSKCU44
- ZNNpD268=
-X-Gm-Gg: Acq92OE9LOFjENfZipf1rjWCu/BmbkQl9u+u5TGW83FwLAe9kIQTy2H3AQDwpULdiab
- v9qBaD/OqBoBpVeGIKuJ+VVRvrtIZb2aqZjhrbRtdtdMStVRBUkLOpzqy+fIDMQphmM4oJWysBt
- OWSAmnNvSQaOrLX2XMdk6PfZJBwvt2gszLvmAUEmJAnh4iZ6svv6DqdYKwJWnNIOqOB0hnz1hpe
- xcSK86Zd3Z/o00QSDSIo9aQ1j374kqlGuhl/7oobwtH0AcUPzanFkJSF2ZRR06F5mJk6dYraH+c
- S9op9x+DOwGhE+BZffzk8YVvNUxnlZqYUr9liIKx2eWFYZJIW1T1d1SinMDiBQ1TUg5rKCfL4lY
- v1YZ+yiiFvhgE4R8YznuK3JejQC5pKIa4Z13LN0qXOyVlo5sxrkocVSBFF83vcM5f8povwAgTFR
- za71hdD2LXlC5APYWf0hM35TpVHTL8lmdlw7Ng3bNhMRv7k6ONzQ==
-X-Received: by 2002:a17:90b:1344:b0:366:4f8a:9847 with SMTP id
- 98e67ed59e1d1-36951b711dcmr24214420a91.17.1779301349815; 
- Wed, 20 May 2026 11:22:29 -0700 (PDT)
-Received: from stoup.. ([71.212.142.33]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-36a3d210b4esm274764a91.17.2026.05.20.11.22.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 May 2026 11:22:29 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v6 22/64] target/arm: Move vectors_overlap to vec_internal.h
-Date: Wed, 20 May 2026 11:21:31 -0700
-Message-ID: <20260520182213.872945-23-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1wPlkJ-0007gA-At; Wed, 20 May 2026 14:34:20 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1wPlkG-0004rl-3V; Wed, 20 May 2026 14:34:19 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 64KHpFj51950620; Wed, 20 May 2026 18:34:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=ZgBwAXr8emsaabnntqaPrgAxKnEboW2/3RRBNALB2
+ w8=; b=EVBj9tZhKavPo1QPLPRCxRMHgnmfkJvTM1zX4S+6Qm+yINU7BZFacmSWN
+ bdffMQG0THtujjLnRB2myBnbqXZAJs9jvyMGP6hZs4pTeu92CdnsXDazdPgrwJ4C
+ IjD8gd5Vuu0rWPmmpEwXKub9jeOpc97xIitcbo9UWBchkRW7AYAMb7yAdXeZGBpq
+ W3j3TJ+Wb3WWlWtlyXnXcB56ble0iJ1cpKkydgZj9EmzwF7wN48zkBaPdQDDQLDz
+ DaJAgNG7VBthyh1MA8nEqpTozVmI1YwM5JkhsHLeqVdeLqLZC3fxpk7cFdRVFh+P
+ P9PjvvGiY75f3+jt+B9FQ6fJw1PBg==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e6h88jdmf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 20 May 2026 18:34:10 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64KIO6oG004654;
+ Wed, 20 May 2026 18:34:09 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4e72wq8u4e-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 20 May 2026 18:34:09 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 64KIY8Or23986846
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 20 May 2026 18:34:08 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5DE4258053;
+ Wed, 20 May 2026 18:34:08 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B931D58043;
+ Wed, 20 May 2026 18:34:07 +0000 (GMT)
+Received: from IBM-GLTZVH3.atx-us.ibm.com (unknown [9.16.58.46])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 20 May 2026 18:34:07 +0000 (GMT)
+From: Jaehoon Kim <jhkim@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, cohuck@redhat.com,
+ Jaehoon Kim <jhkim@linux.ibm.com>
+Subject: [PATCH v1] hw/s390x/ccw: Mark virtio-pci disable-legacy property as
+ optional
+Date: Wed, 20 May 2026 13:33:58 -0500
+Message-ID: <20260520183403.223983-1-jhkim@linux.ibm.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260520182213.872945-1-richard.henderson@linaro.org>
-References: <20260520182213.872945-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: o-OA1ISbHLTb2-Dqlc91OITyHswAeP80
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDE3NyBTYWx0ZWRfXy0MOogU17Xx0
+ wsC+mOZzqbdt2WJA3eIPwd9mPIkbm5sfro6K6nDl68URoAbJJi0R6E2wcyoxDt1VNLnxCdeHmQD
+ 6sGDtXo/kbhG2/DGwzZXXH9fJkkz6lq5ZfbAp7PM0ax18PbQy6xeWiWCI27u0tnHBWkbbPX/5JF
+ 9IeQA9dRCRC0u+atUEfWakD8hFFyAWys2vH1JhZpn0NAmLf6uSqJzzB1cZ+Hi3hE393nGsYabn2
+ xG1O/Hv2u6l3WGRactnF0Wu+F5Ak6NZboDvrzq1GPK8Tnt5xb3kRDbb0Q9PtUz2Z+m6NK1wrFQo
+ dVdWcj7uIjdCGbjGld7o/bp02utGqfTje6L90vuXrs8sxP4iiKSo5Vp+wAJeBVJxrpsHhiUPVqq
+ Vso+U4eT5GiFb3vR6n6+XEHCn5eEjY5WJr6Hdarlu296/sONyvePWR8GwAnWYY/GI/reNcz3utw
+ sK5h6Ksc65rrQ30sQcg==
+X-Proofpoint-GUID: o-OA1ISbHLTb2-Dqlc91OITyHswAeP80
+X-Authority-Analysis: v=2.4 cv=apyCzyZV c=1 sm=1 tr=0 ts=6a0dfea2 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=viQzzXmSu9F1O3B2SAwA:9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-20_03,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 lowpriorityscore=0 priorityscore=1501 impostorscore=0
+ bulkscore=0 suspectscore=0 adultscore=0 spamscore=0 phishscore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
+ definitions=main-2605200177
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jhkim@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,59 +118,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We will shortly need this outside of sme_helper.c.
+The s390-ccw-virtio-11.0 compatibility property for TYPE_VIRTIO_PCI
+"disable-legacy" causes QEMU to abort when instantiating
+vhost-user-fs-pci devices:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+  Unexpected error in object_property_find_err() at
+  ../qom/object.c:1284:
+  qemu-system-s390x: -device vhost-user-fs-pci: can't apply
+  global virtio-pci.disable-legacy=off: Property
+  'vhost-user-fs-pci.disable-legacy' not found
+
+The issue occurs because some vhost-user devices like
+vhost-user-fs-pci only implement the non-transitional variant
+and do not define a generic device type. Non-transitional
+devices have disable-legacy hardcoded to "on" and do not
+expose it as a property, while only generic device types have
+the "disable-legacy" property. This affects users running
+older machine versions (11.0 and earlier) even when using the
+latest QEMU version.
+
+Mark the global property as optional so it only applies to
+devices that actually have the property, allowing vhost-user
+devices without a generic variant to be instantiated
+successfully on older machine versions.
+
+Fixes: 26103c13cff0 ("hw/s390x/ccw: Disable legacy virtio-pci by default (v11.1+)")
+Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
 ---
- target/arm/tcg/vec_internal.h | 8 ++++++++
- target/arm/tcg/sme_helper.c   | 6 ------
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ hw/s390x/s390-virtio-ccw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/arm/tcg/vec_internal.h b/target/arm/tcg/vec_internal.h
-index b647399b18..dbc098d49a 100644
---- a/target/arm/tcg/vec_internal.h
-+++ b/target/arm/tcg/vec_internal.h
-@@ -21,6 +21,7 @@
- #define TARGET_ARM_VEC_INTERNAL_H
- 
- #include "fpu/softfloat.h"
-+#include "vector-type.h"
- 
- typedef struct CPUArchState CPUARMState;
- 
-@@ -461,6 +462,13 @@ static inline void depositn(uint64_t *p, unsigned pos,
-     }
- }
- 
-+/* Determine if [x, x+nx) overlaps [y, y+ny). */
-+static inline bool vectors_overlap(ARMVectorReg *x, unsigned nx,
-+                                   ARMVectorReg *y, unsigned ny)
-+{
-+    return !(x + nx <= y || y + ny <= x);
-+}
-+
- #define DO_3OP(NAME, FUNC, TYPE) \
- void HELPER(NAME)(void *vd, void *vn, void *vm,                            \
-                   float_status * stat, uint32_t desc)                      \
-diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
-index ab5999c592..0055e97a2b 100644
---- a/target/arm/tcg/sme_helper.c
-+++ b/target/arm/tcg/sme_helper.c
-@@ -33,12 +33,6 @@
- #define HELPER_H "tcg/helper-sme-defs.h"
- #include "exec/helper-info.c.inc"
- 
--static bool vectors_overlap(ARMVectorReg *x, unsigned nx,
--                            ARMVectorReg *y, unsigned ny)
--{
--    return !(x + nx <= y || y + ny <= x);
--}
--
- void helper_set_svcr(CPUARMState *env, uint32_t val, uint32_t mask)
- {
-     aarch64_set_svcr(env, val, mask);
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index 4d35f9b10b..25a9fa4955 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -946,7 +946,7 @@ static void ccw_machine_11_0_class_options(MachineClass *mc)
+      * keep legacy virtio-pci enabled.
+      */
+     static GlobalProperty compat[] = {
+-        { TYPE_VIRTIO_PCI, "disable-legacy", "off" },
++        { TYPE_VIRTIO_PCI, "disable-legacy", "off", .optional = true },
+     };
+     ccw_machine_11_1_class_options(mc);
+     compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
 -- 
-2.43.0
+2.54.0
 
 
